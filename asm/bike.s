@@ -2154,6 +2154,7 @@ _0811A960: .4byte 0x0203724C
 	thumb_func_end BikeClearState
 
 	thumb_func_start Bike_UpdateBikeCounterSpeed
+	@ From src/bike.c
 Bike_UpdateBikeCounterSpeed: @ 0x0811A964
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -2164,7 +2165,7 @@ Bike_UpdateBikeCounterSpeed: @ 0x0811A964
 	strb r0, [r2, #0xb]
 	bx lr
 	.align 2, 0
-_0811A974: .4byte 0x02037230
+_0811A974: .4byte gPlayerAvatar
 	thumb_func_end Bike_UpdateBikeCounterSpeed
 
 	thumb_func_start Bike_SetBikeStill

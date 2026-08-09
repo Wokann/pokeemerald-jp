@@ -36,7 +36,7 @@ can be diffed directly.
 
 ## Converted so far
 
-97 functions across 44 src/ modules (matching pokeemerald layout):
+100 functions across 44 src/ modules (matching pokeemerald layout):
 src/main.c (2), src/util.c (1), src/battle_anim_mons.c (4),
 src/field_specials.c (1), src/menu.c (3), src/mirage_tower.c (1),
 src/overworld.c (1), src/sound.c (1), src/recorded_battle.c (10),

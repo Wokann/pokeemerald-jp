@@ -14,3 +14,9 @@ static void AcroBikeTransition_TurnJump(u8 direction)
 {
     PlayerFaceDirection(direction);
 }
+
+void Bike_UpdateBikeCounterSpeed(u8 counter)
+{
+    gPlayerAvatar.bikeFrameCounter = counter;
+    gPlayerAvatar.bikeSpeed = gPlayerAvatar.bikeFrameCounter + (gPlayerAvatar.bikeFrameCounter >> 1);
+}
