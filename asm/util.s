@@ -37,7 +37,7 @@ _0806F0FC: .4byte 0x020205AC
 
 	thumb_func_start StoreWordInTwoHalfwords
 StoreWordInTwoHalfwords: @ 0x0806F100
-	@ From tools/c_decomp/store_word_in_two_halfwords.c
+	@ From src/util.c
 	strh	r1, [r0]
 	lsrs	r1, r1, #0x10
 	strh	r1, [r0, #2]

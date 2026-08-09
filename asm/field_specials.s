@@ -1902,7 +1902,7 @@ _08138BEC: .4byte 0x085CB038
 
 	thumb_func_start GetBattleOutcome
 GetBattleOutcome: @ 0x08138BF0
-	@ From tools/c_decomp/get_battle_outcome.c
+	@ From src/field_specials.c
 	ldr	r0, .L3
 	ldrb	r0, [r0]
 	bx	lr

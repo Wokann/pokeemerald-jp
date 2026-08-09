@@ -3132,7 +3132,7 @@ _080856E4: .4byte 0x03005B00
 
 	thumb_func_start CB2_OverworldBasic
 CB2_OverworldBasic: @ 0x080856E8
-	@ From tools/c_decomp/cb2_overworld_basic.c (JP calls SafariZoneRetirePrompt)
+	@ From src/overworld.c (JP calls SafariZoneRetirePrompt)
 	push {lr}
 	bl SafariZoneRetirePrompt
 	pop {r0}

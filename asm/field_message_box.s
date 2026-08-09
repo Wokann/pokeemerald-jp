@@ -300,7 +300,7 @@ _08097CB4: .4byte 0x0203725C
 
 	thumb_func_start GetFieldMessageBoxMode
 GetFieldMessageBoxMode: @ 0x08097CB8
-	@ From tools/c_decomp/get_field_message_box_mode.c
+	@ From src/field_message_box.c
 	ldr	r0, .LGetFieldMessageBoxMode
 	ldrb	r0, [r0]
 	bx	lr

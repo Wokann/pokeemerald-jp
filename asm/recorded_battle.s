@@ -369,7 +369,7 @@ _08184F26:
 
 	thumb_func_start GetRecordedBattleApprenticeId
 GetRecordedBattleApprenticeId: @ 0x08184F30
-	@ From tools/c_decomp/get_recorded_battle_apprentice_id.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleApprenticeId
 	ldrb	r0, [r0]
 	bx	lr
@@ -1964,7 +1964,7 @@ CB2_RecordedBattle: @ 0x08185BE4
 
 	thumb_func_start GetRecordedBattleApprenticeLanguage
 GetRecordedBattleApprenticeLanguage: @ 0x08185BF8
-	@ From tools/c_decomp/get_recorded_battle_apprentice_language.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleApprenticeLanguage
 	ldrb	r0, [r0]
 	bx	lr
@@ -1976,7 +1976,7 @@ GetRecordedBattleApprenticeLanguage: @ 0x08185BF8
 
 	thumb_func_start GetRecordedBattleFronterBrainSymbol
 GetRecordedBattleFronterBrainSymbol: @ 0x08185C04
-	@ From tools/c_decomp/get_recorded_battle_fronter_brain_symbol.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleFronterBrainSymbol
 	ldrb	r0, [r0]
 	bx	lr
@@ -2125,7 +2125,7 @@ _08185D00: .4byte 0x0203C481
 
 	thumb_func_start GetRecordedBattleFrontierFacility
 GetRecordedBattleFrontierFacility: @ 0x08185D04
-	@ From tools/c_decomp/get_recorded_battle_frontier_facility.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleFrontierFacility
 	ldrb	r0, [r0]
 	bx	lr
@@ -2137,7 +2137,7 @@ GetRecordedBattleFrontierFacility: @ 0x08185D04
 
 	thumb_func_start GetRecordedBattleRecordMixFriendClass
 GetRecordedBattleRecordMixFriendClass: @ 0x08185D10
-	@ From tools/c_decomp/get_recorded_battle_record_mix_friend_class.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleRecordMixFriendClass
 	ldrb	r0, [r0]
 	bx	lr
@@ -2149,7 +2149,7 @@ GetRecordedBattleRecordMixFriendClass: @ 0x08185D10
 
 	thumb_func_start GetBattleSceneInRecordedBattle
 GetBattleSceneInRecordedBattle: @ 0x08185D1C
-	@ From tools/c_decomp/get_battle_scene_in_recorded_battle.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetBattleScene
 	ldrb	r0, [r0]
 	bx	lr
@@ -2728,7 +2728,7 @@ _0818618C: .4byte 0x02023D10
 
 	thumb_func_start GetAiScriptsInRecordedBattle
 GetAiScriptsInRecordedBattle: @ 0x08186190
-	@ From tools/c_decomp/get_ai_scripts_in_recorded_battle.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetAiScripts
 	ldr	r0, [r0]
 	bx	lr
@@ -2788,7 +2788,7 @@ _081861DC: .4byte 0x0203C99D
 
 	thumb_func_start GetRecordedBattleRecordMixFriendLanguage
 GetRecordedBattleRecordMixFriendLanguage: @ 0x081861E0
-	@ From tools/c_decomp/get_recorded_battle_record_mix_friend_language.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetRecordedBattleRecordMixFriendLanguage
 	ldrb	r0, [r0]
 	bx	lr
@@ -2800,7 +2800,7 @@ GetRecordedBattleRecordMixFriendLanguage: @ 0x081861E0
 
 	thumb_func_start GetTextSpeedInRecordedBattle
 GetTextSpeedInRecordedBattle: @ 0x081861EC
-	@ From tools/c_decomp/get_text_speed_in_recorded_battle.c
+	@ From src/recorded_battle.c
 	ldr	r0, .LGetTextSpeedInRecordedBattle
 	ldrb	r0, [r0]
 	bx	lr

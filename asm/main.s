@@ -230,11 +230,14 @@ _08000584: .4byte 0x02020000
 
 	thumb_func_start GetGeneratedTrainerIdLower
 GetGeneratedTrainerIdLower: @ 0x08000588
-	ldr r0, _08000590
-	ldrh r0, [r0]
-	bx lr
-	.align 2, 0
-_08000590: .4byte 0x02020000
+	@ From src/main.c
+	ldr	r0, .LGetGeneratedTrainerIdLower
+	ldrh	r0, [r0]
+	bx	lr
+.LGetGeneratedTrainerIdLowerPad:
+	.align	2, 0
+.LGetGeneratedTrainerIdLower:
+	.word	sTrainerId
 	thumb_func_end GetGeneratedTrainerIdLower
 
 	thumb_func_start EnableVCountIntrAtLine150

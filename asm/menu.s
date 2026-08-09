@@ -23,7 +23,7 @@ _08196DE4: .4byte 0x0203CA59
 
 	thumb_func_start FreeAllOverworldWindowBuffers
 FreeAllOverworldWindowBuffers: @ 0x08196DE8
-	@ From tools/c_decomp/free_all_overworld_window_buffers.c
+	@ From src/menu.c
 	push {lr}
 	bl FreeAllWindowBuffers
 	pop {r0}
@@ -1323,7 +1323,7 @@ _08197808: .4byte 0x0203CA58
 
 	thumb_func_start GetStartMenuWindowId
 GetStartMenuWindowId: @ 0x0819780C
-	@ From tools/c_decomp/get_start_menu_window_id.c
+	@ From src/menu.c
 	ldr	r0, .LGetStartMenuWindowId
 	ldrb	r0, [r0]
 	bx	lr
@@ -1400,7 +1400,7 @@ _08197878: .4byte 0x0203CA59
 
 	thumb_func_start GetMapNamePopUpWindowId
 GetMapNamePopUpWindowId: @ 0x0819787C
-	@ From tools/c_decomp/get_map_name_popup_window_id.c
+	@ From src/menu.c
 	ldr	r0, .LGetMapNamePopUpWindowId
 	ldrb	r0, [r0]
 	bx	lr

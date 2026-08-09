@@ -44,7 +44,7 @@ _081BE344: .4byte 0x0203CBE4
 
 	thumb_func_start ClearMirageTowerPulseBlend
 ClearMirageTowerPulseBlend: @ 0x081BE348
-	@ From tools/c_decomp/clear_mirage_tower_pulse_blend.c
+	@ From src/mirage_tower.c
 	ldr	r1, .L3
 	movs	r0, #0x0
 	str	r0, [r1]

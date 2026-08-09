@@ -2133,11 +2133,14 @@ _080B0FF4: .4byte 0x02036FF0
 
 	thumb_func_start GetTrainerBattleMode
 GetTrainerBattleMode: @ 0x080B0FF8
-	ldr r0, _080B1000
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_080B1000: .4byte 0x02038868
+	@ From src/battle_setup.c
+	ldr	r0, .LGetTrainerBattleMode
+	ldrb	r0, [r0]
+	bx	lr
+.LGetTrainerBattleModePad:
+	.align	2, 0
+.LGetTrainerBattleMode:
+	.word	sTrainerBattleMode
 	thumb_func_end GetTrainerBattleMode
 
 	thumb_func_start GetTrainerFlag
@@ -3821,4 +3824,3 @@ _080B1C50:
 	bx r1
 	.align 2, 0
 	thumb_func_end CountBattledRematchTeams
-

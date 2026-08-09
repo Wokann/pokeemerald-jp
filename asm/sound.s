@@ -144,7 +144,7 @@ _080A27C8: .4byte 0x03000F4D
 
 	thumb_func_start GetCurrentMapMusic
 GetCurrentMapMusic: @ 0x080A27CC
-	@ From tools/c_decomp/get_current_map_music.c
+	@ From src/sound.c
 	ldr	r0, .L3
 	ldrh	r0, [r0]
 	bx	lr

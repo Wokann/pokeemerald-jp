@@ -4031,7 +4031,7 @@ _0800AE14: .4byte 0x03003198
 
 	thumb_func_start HasLinkErrorOccurred
 HasLinkErrorOccurred: @ 0x0800AE18
-	@ From tools/c_decomp/has_link_error_occurred.c
+	@ From src/link.c
 	ldr	r0, .LHasLinkErrorOccurred
 	ldrb	r0, [r0]
 	bx	lr

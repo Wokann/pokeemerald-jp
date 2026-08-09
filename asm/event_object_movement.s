@@ -22369,6 +22369,7 @@ GroundEffect_WaterReflection: @ 0x08096930
 
 	thumb_func_start GroundEffect_IceReflection
 GroundEffect_IceReflection: @ 0x0809693C
+	@ From src/event_object_movement.c
 	push {lr}
 	movs r2, #1
 	bl SetUpReflection
@@ -24871,4 +24872,3 @@ MovementAction_Finish: @ 0x08097AAC
 	movs r0, #1
 	bx lr
 	thumb_func_end MovementAction_Finish
-

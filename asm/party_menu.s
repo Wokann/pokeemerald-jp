@@ -2431,7 +2431,7 @@ _081B101C:
 
 	thumb_func_start GetCursorSelectionMonId
 GetCursorSelectionMonId: @ 0x081B1024
-	@ From tools/c_decomp/get_cursor_selection_mon_id.c
+	@ From src/party_menu.c
 	ldr	r0, .LGetCursorSelectionMonId
 	ldrb	r0, [r0, #9]
 	bx	lr

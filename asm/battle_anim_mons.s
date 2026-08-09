@@ -844,7 +844,7 @@ _080A5B98: .4byte 0x02023E88
 
 	thumb_func_start StoreSpriteCallbackInData6
 StoreSpriteCallbackInData6: @ 0x080A5B9C
-	@ From tools/c_decomp/store_sprite_callback_in_data6.c
+	@ From src/battle_anim_mons.c
 	strh r1, [r0, #0x3a]
 	lsrs r1, r1, #0x10
 	strh r1, [r0, #0x3c]
@@ -853,7 +853,7 @@ StoreSpriteCallbackInData6: @ 0x080A5B9C
 
 	thumb_func_start SetCallbackToStoredInData6
 SetCallbackToStoredInData6: @ 0x080A5BA4
-	@ From tools/c_decomp/set_callback_to_stored_in_data6.c
+	@ From src/battle_anim_mons.c
 	ldrh r2, [r0, #0x3a]
 	movs r3, #0x3c
 	ldrsh r1, [r0, r3]
@@ -4885,7 +4885,7 @@ _080A790A:
 
 	thumb_func_start StorePointerInVars
 StorePointerInVars: @ 0x080A7910
-	@ From tools/c_decomp/store_pointer_in_vars.c
+	@ From src/battle_anim_mons.c
 	strh	r2, [r0]
 	asrs	r2, r2, #0x10
 	strh	r2, [r1]
@@ -5649,6 +5649,7 @@ _080A7ED4: .4byte 0x082D2F50
 
 	thumb_func_start DestroySpriteAndFreeResources_
 DestroySpriteAndFreeResources_: @ 0x080A7ED8
+	@ From src/battle_anim_mons.c
 	push {lr}
 	bl DestroySpriteAndFreeResources
 	pop {r0}
