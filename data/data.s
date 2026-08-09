@@ -2607,7 +2607,1198 @@ gUnknown_82F0D62: @ 0x82F0D62
 
 	.globl gUnknown_82F0D65
 gUnknown_82F0D65: @ 0x82F0D65
-	.incbin "build/data/data.bin", 0x54fc1, 0x4f3f
+	.incbin "build/data/data.bin", 0x54fc1, 0x2cff
+gUnknown_82F3A64: @ 0x82F3A64
+	.string "{MUS_RG_SEVII_ROUTE}を{BLUE}べ{DYNAMIC_COLOR5}にとぷほぽほぱりrぇぼぞwぺぴシ$"
+	.string "$"
+gUnknown_82F3A7C: @ 0x82F3A7C
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_GOAT_SOLO}を{BLUE}べ{DYNAMIC_COLOR5}にとぷほぽほぱわrげぼぴwセぴミ$"
+	.string "$"
+gUnknown_82F3A98: @ 0x82F3A98
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_GOAT_SOLO}{MUS_RG_CAUGHT}を{BLUE}べ{DYNAMIC_COLOR5}"
+	.string "にとぷほぽほぱわrげぼイwハぴェ$"
+	.string "$"
+gUnknown_82F3AB6: @ 0x82F3AB6
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ゃ{DYNAMIC_COLOR5}フはテよ,ぇゅず2ぼイカウツ$"
+	.string "$"
+gUnknown_82F3ACC: @ 0x82F3ACC
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}{PH_FACE_SOLO}ゃ{DYNAMIC_COLOR5}フはテり,ょゅで2イイタウホ$"
+	.string "$"
+gUnknown_82F3AE4: @ 0x82F3AE4
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}{PH_FACE_SOLO}フ{DARK_GRAY}ゃ{DYNAMIC_COLOR5}"
+	.string "フはテり,ょゅでちぶ2クイフウィ$"
+	.string "$"
+gUnknown_82F3B00: @ 0x82F3B00
+	.string "{MUS_RG_SEVII_ROUTE}ら{BLUE}ダ{DYNAMIC_COLOR5}ホとがはわやqん♀ぎ:ぢェっぎセ$"
+	.string "$"
+gUnknown_82F3B18: @ 0x82F3B18
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ダ{DARK_GRAY}ら{BLUE}ダ{DYNAMIC_COLOR5}ホとがはわよqぇ♀ず:ぼェコぎハ$"
+	.string "$"
+gUnknown_82F3B34: @ 0x82F3B34
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ダ{DARK_GRAY}ホ{DARK_GRAY}ら{BLUE}ダ{DYNAMIC_COLOR5}"
+	.string "ホとがはわよqぇ♀ず:エェホぎギ$"
+	.string "$"
+gUnknown_82F3B52: @ 0x82F3B52
+	.string "{MUS_RG_SEVII_ROUTE}{PH_MOUTH_HELD}$$"
+gUnknown_82F3B58: @ 0x82F3B58
+	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+gUnknown_82F3B5E: @ 0x82F3B5E
+	.string "{PH_CURE_HELD}スとぷはぺふぽほぃやつんたぎざでgっずソ$$"
+gUnknown_82F3B76: @ 0x82F3B76
+	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD}$$"
+gUnknown_82F3B7C: @ 0x82F3B7C
+	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+gUnknown_82F3B82: @ 0x82F3B82
+	.string "{MUS_RG_SEVII_CAVE}まとヤほるりテぇpざればチっひサ$$"
+gUnknown_82F3B96: @ 0x82F3B96
+	.string "{MUS_RG_SEVII_ROUTE}ふ{DYNAMIC_COLOR1}たつツはつよちぇるぜチぺラセ$"
+	.string "$"
+gUnknown_82F3BAA: @ 0x82F3BAA
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_NET_CENTER}{MUS_RG_RIVAL_EXIT}ふ{DYNAMIC_COLOR1}たつツはつりちょるどチカラネ$"
+	.string "$"
+gUnknown_82F3BC2: @ 0x82F3BC2
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_NET_CENTER}{MUS_RG_RIVAL_EXIT}ツ{DARK_GRAY}ふ{DYNAMIC_COLOR1}"
+	.string "たつツはつりちょるどチタラワ$"
+	.string "$"
+gUnknown_82F3BDC: @ 0x82F3BDC
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ツ{DYNAMIC_COLOR5}ペはヤりpょ1でひウ$"
+	.string "$"
+gUnknown_82F3BEE: @ 0x82F3BEE
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ツ{DARK_GRAY}ツ{DYNAMIC_COLOR5}ペは,りpざ1っひナ$"
+	.string "$"
+gUnknown_82F3C02: @ 0x82F3C02
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ろ{DYNAMIC_COLOR5}まはpよぴぉラずだぼチカ$"
+	.string "$"
+gUnknown_82F3C16: @ 0x82F3C16
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_SEVII_CAVE}ろ{DYNAMIC_COLOR5}"
+	.string "まはpゃラぞだっチセ$"
+	.string "$"
+gUnknown_82F3C2C: @ 0x82F3C2C
+	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}りたわはグりヌぇぉぞ\n{SE_BALLOON_RED}ぱ$"
+	.string "ぼメク$$"
+gUnknown_82F3C44: @ 0x82F3C44
+	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_VS_MEWTWO}{MUS_RG_TRAINER_TOWER}"
+	.string "りたわはグりヌぎぉぴ\n{SE_ROULETTE_BALL}ス$"
+	.string "シメミ$$"
+gUnknown_82F3C60: @ 0x82F3C60
+	.string "{PH_FOOT_HELD}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR3}カたツにネほなりオゃチぢキイムト$"
+	.string "$"
+gUnknown_82F3C78: @ 0x82F3C78
+	.string "{PH_FOOT_HELD}{MUS_RG_VS_DEOXYS}ツ{DARK_GRAY}{PH_FOOT_SOLO}$"
+	.string "$"
+gUnknown_82F3C82: @ 0x82F3C82
+	.string "{MUS_RG_VICTORY_TRAINER}マ{DYNAMIC_COLOR3}ふにりめ2んゥざボぼぶサOハ$"
+	.string "$"
+gUnknown_82F3C96: @ 0x82F3C96
+	.string "{MUS_RG_VICTORY_TRAINER}マ{DARK_GRAY}{MUS_RG_NET_CENTER}マ{DYNAMIC_COLOR3}ふにりめ2ぃゥぢボエぶノOワ$"
+	.string "$"
+gUnknown_82F3CAE: @ 0x82F3CAE
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VICTORY_TRAINER}らたねねりめわり{DYNAMIC_COLOR5}ぁボざ{RED}ぷÖセ$"
+	.string "$"
+gUnknown_82F3CC4: @ 0x82F3CC4
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VICTORY_TRAINER}らたねねりやわわ{DYNAMIC_COLOR5}ゅボで{RED}キÖハ$"
+	.string "$"
+gUnknown_82F3CDA: @ 0x82F3CDA
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}{MUS_RG_NEW_GAME_INTRO}{MUS_RG_VS_MEWTWO}めん$"
+	.string "$"
+gUnknown_82F3CE6: @ 0x82F3CE6
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ヤたねねりめほり{DYNAMIC_COLOR5}ぁまざ{RED}ぷみセ$"
+	.string "$"
+gUnknown_82F3CFC: @ 0x82F3CFC
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ヤたねねりやほわ{DYNAMIC_COLOR5}ゅまで{RED}キみハ$"
+	.string "$"
+gUnknown_82F3D12: @ 0x82F3D12
+	.string "{PH_KIT_SOLO}ヤ{DARK_GRAY}{MUS_RG_NEW_GAME_INTRO}{MUS_RG_VS_MEWTWO}ゆん$"
+	.string "$"
+gUnknown_82F3D1E: @ 0x82F3D1E
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}o{DYNAMIC_COLOR1}ぁつ{LIGHT_GRAY}は{DYNAMIC_COLOR1}もヒれマぇヨげぢづxぼムイゅサ$"
+	.string "$"
+gUnknown_82F3D3A: @ 0x82F3D3A
+	.string "{PH_TRAP_BLEND}{MUS_RG_POKE_CENTER}ヒ{DARK_GRAY}ヨ{DARK_GRAY}$"
+	.string "$"
+gUnknown_82F3D44: @ 0x82F3D44
+	.string "{PH_FACE_SOLO}ら{DYNAMIC_COLOR1}んつツは{LIGHT_RED}もヘれほぉゅげgぢみぱウイ$"
+	.string "$"
+gUnknown_82F3D5C: @ 0x82F3D5C
+	.string "{PH_FACE_SOLO}ツ{DARK_GRAY}ヘ{DARK_GRAY}g{DARK_GRAY}ウコ$"
+	.string "$"
+gUnknown_82F3D68: @ 0x82F3D68
+	.string "{PH_TRAP_BLEND}マ{SE_POKENAV_HANG_UP}つぇふSよ{LIGHT_GRAY}ぃピげめでニぺぃケよツ$"
+	.string "$"
+gUnknown_82F3D80: @ 0x82F3D80
+	.string "{PH_TRAP_BLEND}{PH_FACE_BLEND}マ{DARK_GRAY}{MUS_RG_POKE_CENTER}$"
+	.string "$"
+gUnknown_82F3D8A: @ 0x82F3D8A
+	.string "ジ{DARK_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘゃげぜZぶぅウメシ$"
+	.string "$"
+gUnknown_82F3DA0: @ 0x82F3DA0
+	.string "ヌ{DARK_GRAY}ジ{DARK_GRAY}{PH_TRAP_HELD}ょ{LIGHT_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘぎげびZエぅテメミ$"
+	.string "$"
+gUnknown_82F3DBC: @ 0x82F3DBC
+	.string "{PH_GOAT_BLEND}r{DYNAMIC_COLOR5}ぷふぺみぽやぉんxぞっぺ$"
+	.string "$"
+gUnknown_82F3DCE: @ 0x82F3DCE
+	.string "{PH_GOAT_BLEND}r{DARK_GRAY}{PH_CHOICE_BLEND}r{DYNAMIC_COLOR5}ぷふぺみぽやぉぃxばっク$"
+	.string "$"
+gUnknown_82F3DE4: @ 0x82F3DE4
+	.string "{PH_GOAT_BLEND}ぎ{LIGHT_GRAY}{PH_CHOICE_HELD}{PH_GOAT_HELD}っク$"
+	.string "$"
+gUnknown_82F3DF0: @ 0x82F3DF0
+	.string "{MUS_RG_VICTORY_TRAINER}ぺ{DYNAMIC_COLOR5}ぷはジよヅぇ2ずぼぼPカぎテ$"
+	.string "$"
+gUnknown_82F3E04: @ 0x82F3E04
+	.string "{MUS_RG_VICTORY_TRAINER}{PH_CHOICE_HELD}{PH_CHOICE_BLEND}ぺ{DYNAMIC_COLOR5}ぷはジよヅょ2ばぼカPニぎラ$"
+	.string "$"
+gUnknown_82F3E1C: @ 0x82F3E1C
+	.string "{MUS_RG_SEVII_ROUTE}{PH_FACE_BLEND}G{DARK_GRAY}ぃつスめぷりジぇぺぎざぢぽぶセイ$"
+	.string "$"
+gUnknown_82F3E34: @ 0x82F3E34
+	.string "ず{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{PH_FACE_BLEND}G{DARK_GRAY}{PH_TRAP_HELD}ぃつスめぷりジぇぺぎたずざぶぽエセネ$"
+	.string "$"
+gUnknown_82F3E52: @ 0x82F3E52
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_NET_CENTER}を{DYNAMIC_COLOR1}jつサめCぇ2ぢケイコツ$"
+	.string "$"
+gUnknown_82F3E66: @ 0x82F3E66
+	.string "0{DARK_GRAY}{MUS_RG_VICTORY_TRAINER}{MUS_RG_NET_CENTER}{MUS_RG_SLOW_PALLET}を{DYNAMIC_COLOR1}"
+	.string "jつサめCぇぶゅ2ぴケニコィ$"
+	.string "$"
+gUnknown_82F3E80: @ 0x82F3E80
+	.incbin "build/data/data.bin", 0x580dc, 0x14
+gUnknown_82F3E94: @ 0x82F3E94
+	.incbin "build/data/data.bin", 0x580f0, 0x16
+gUnknown_82F3EAA: @ 0x82F3EAA
+	.string "コ{LIGHT_GRAY}{MUS_RG_VICTORY_TRAINER}ら{DYNAMIC_COLOR1}ぇとスみヌんäずボっぎト$"
+	.string "$"
+gUnknown_82F3EBE: @ 0x82F3EBE
+	.string "コ{LIGHT_GRAY}{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}{PH_FACE_BLEND}ら{DYNAMIC_COLOR1}ぇとスみヌんäずボクぎヤ$"
+	.string "$"
+gUnknown_82F3ED6: @ 0x82F3ED6
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}づ{MUS_RG_OBTAIN_KEY_ITEM}ほボれヤょどぢzぺヌコゆニ$"
+	.string "$"
+gUnknown_82F3EEC: @ 0x82F3EEC
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}{PH_PRICE_SOLO}テ{DARK_GRAY}づ{MUS_RG_OBTAIN_KEY_ITEM}"
+	.string "ほボれヤょテぎどぶzコヌフゆン$"
+	.string "$"
+gUnknown_82F3F08: @ 0x82F3F08
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_TEACHY_TV_MENU}ゃ{DYNAMIC_COLOR5}ろはざらやぇ？ず{DYNAMIC_COLOR5}ぱチカゅツ$"
+	.string "$"
+gUnknown_82F3F1E: @ 0x82F3F1E
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_TEACHY_TV_MENU}{PH_FACE_SOLO}ざ{LIGHT_GRAY}öツ$"
+	.string "$"
+gUnknown_82F3F2A: @ 0x82F3F2A
+	.string "ダ{DARK_GRAY}ソ{DYNAMIC_COLOR5}がは{LIGHT_GRAY}よ:ぇめずAぼぎカ$"
+	.string "$"
+gUnknown_82F3F3C: @ 0x82F3F3C
+	.string "ダ{DARK_GRAY}{PH_NURSE_BLEND}{PH_CLOTH_SOLO}ソ{DYNAMIC_COLOR5}がは{LIGHT_GRAY}よ:ょめばAカぎニ$"
+	.string "$"
+gUnknown_82F3F52: @ 0x82F3F52
+	.string "{PH_CLOTH_SOLO}{PH_NURSE_BLEND}{MUS_RG_POKE_CENTER}{PH_PRICE_HELD}ぢば9ニ$"
+	.string "$"
+gUnknown_82F3F60: @ 0x82F3F60
+	.string "ト{DARK_GRAY}$$"
+gUnknown_82F3F64: @ 0x82F3F64
+	.incbin "build/data/data.bin", 0x581c0, 0x1a
+gUnknown_82F3F7E: @ 0x82F3F7E
+	.incbin "build/data/data.bin", 0x581da, 0x1a
+gUnknown_82F3F98: @ 0x82F3F98
+	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{MUS_RG_PEWTER}はどよGわぬぉuずぢぼzっ,カkツ$"
+	.string "$"
+gUnknown_82F3FB2: @ 0x82F3FB2
+	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DARK_GRAY}ヤ{MUS_RG_PEWTER}はどよGわぬぉuぢぢイzシ,ニkヨ$"
+	.string "$"
+gUnknown_82F3FCE: @ 0x82F3FCE
+	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DARK_GRAY}ヤ{MUS_RG_PEWTER}はどよGわぬぉuぢぢイzシ,ニkヨ$"
+	.string "$"
+gUnknown_82F3FEA: @ 0x82F3FEA
+	.string "{MUS_RG_CAUGHT}ぼ{DYNAMIC_COLOR3}もにぽほぷめぺよぉんrざぱぼなコ$"
+	.string "$"
+gUnknown_82F4000: @ 0x82F4000
+	.string "{MUS_RG_CAUGHT}{PH_THOUGHT_BLEND}{MUS_RG_SEVII_123}ぼ{DYNAMIC_COLOR3}もにぽほぷめぺよぉぃrぢぱエなフ$"
+	.string "$"
+gUnknown_82F401A: @ 0x82F401A
+	.string "{MUS_RG_CAUGHT}{PH_CHOICE_SOLO}r{DARK_GRAY}{PH_THOUGHT_HELD}$"
+	.string "$"
+gUnknown_82F4024: @ 0x82F4024
+	.string "{MUS_RG_VS_MEWTWO}ぃ{DYNAMIC_COLOR3}ャねぉよじぇもざミぶヌカぎツ$"
+	.string "$"
+gUnknown_82F4038: @ 0x82F4038
+	.string "{MUS_RG_VS_MEWTWO}{PH_TRAP_HELD}ャ{DARK_GRAY}ぃ{DYNAMIC_COLOR3}ャねぉよじぇもざミぴヌセぎホ$"
+	.string "$"
+gUnknown_82F4050: @ 0x82F4050
+	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{DYNAMIC_COLOR4}クにjみリれSゃセぜケぶベイよシ$"
+	.string "$"
+gUnknown_82F4068: @ 0x82F4068
+	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{LIGHT_GRAY}{PH_GOOSE_SOLO}わ{DYNAMIC_COLOR4}クにjみリれSげセぱケコベハよワ$"
+	.string "$"
+gUnknown_82F4084: @ 0x82F4084
+	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{LIGHT_GRAY}{PH_GOOSE_SOLO}わ{DYNAMIC_COLOR4}クにjみリれSげセぱケコベハよワ$"
+	.string "$"
+gUnknown_82F40A0: @ 0x82F40A0
+	.string "{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR1}らつゃふぬよウぇやずチぴエサンハ$"
+	.string "$"
+gUnknown_82F40B6: @ 0x82F40B6
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}{PH_FACE_SOLO}を{DYNAMIC_COLOR1}"
+	.string "らつゃふぬよウぇやずチぴまっエナンン$"
+	.string "$"
+gUnknown_82F40D4: @ 0x82F40D4
+	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR3}がほスりぇげへでュカセタ$"
+	.string "$"
+gUnknown_82F40EA: @ 0x82F40EA
+	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}を{DYNAMIC_COLOR3}がほスりぇげへでホぼュシセフ$"
+	.string "$"
+gUnknown_82F4104: @ 0x82F4104
+	.string "ぜ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}エ{DYNAMIC_COLOR3}ぃにぅみカれWゃMぞゥぴヌクFト$"
+	.string "$"
+gUnknown_82F411C: @ 0x82F411C
+	.string "ぜ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{PH_FOOT_HELD}{PH_TRAP_HELD}エ{DYNAMIC_COLOR3}ぃにぅみカれWゃMば0クヌハFワ$"
+	.string "$"
+gUnknown_82F4138: @ 0x82F4138
+	.string "{PH_KIT_SOLO}ふ{DYNAMIC_COLOR3}ろにまみはろXゃ{DYNAMIC_COLOR5}ずチぶ2イTシ$"
+	.string "$"
+gUnknown_82F414E: @ 0x82F414E
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}pつまは0れテぇ{STRING}ぢだぼチコ$"
+	.string "$"
+gUnknown_82F4162: @ 0x82F4162
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}p{DARK_GRAY}{MUS_RG_SEVII_CAVE}pつまは0れテぇ{STRING}ぴだセチリ$"
+	.string "$"
+gUnknown_82F417A: @ 0x82F417A
+	.string "{MUS_RG_MYSTERY_GIFT}をつJめずれピげやぼげイgツ$$"
+gUnknown_82F418C: @ 0x82F418C
+	.string "{MUS_RG_MYSTERY_GIFT}{MUS_RG_SLOW_PALLET}J{DARK_GRAY}{PH_KIT_BLEND}をつJめずれピげべどやエげニgィ$"
+	.string "$"
+gUnknown_82F41A6: @ 0x82F41A6
+	.string "ゴ{SE_RG_HELP_CLOSE}{DARK_GRAY}ハ{BLUE}ぇたワはヒよヌゃビでBカ{GREEN}ヒ$"
+	.string "$"
+gUnknown_82F41BC: @ 0x82F41BC
+	.string "ゴ{SE_RG_HELP_CLOSE}{DARK_GRAY}ハ{DARK_GRAY}ハ{BLUE}ぇたワはヒよヌゃビでBセ{GREEN}ロ$"
+	.string "$"
+gUnknown_82F41D4: @ 0x82F41D4
+	.string "{MUS_RG_SEVII_ROUTE}ホ{DARK_GRAY}ぃつずめ♀ぇろぢィイげツ$"
+	.string "$"
+gUnknown_82F41E6: @ 0x82F41E6
+	.string "ホ{DARK_GRAY}{PH_TRAP_HELD}{PH_KIT_BLEND}♀{DARK_GRAY}Eぢォイ$"
+	.string "$"
+gUnknown_82F41F4: @ 0x82F41F4
+	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'たZはーみナれヘぎゲぢHぶ$"
+	.string "$"
+gUnknown_82F4208: @ 0x82F4208
+	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'{DARK_GRAY}'たZはーみナれどぉヘずゲぺHタ$"
+	.string "$"
+gUnknown_82F4220: @ 0x82F4220
+	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'{DARK_GRAY}'たZはーみナれどぉヘずゲぺHタ$"
+	.string "$"
+gUnknown_82F4238: @ 0x82F4238
+	.string "{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}とつクはハれテぇOぢなぼsコぶテよメ$"
+	.string "$"
+gUnknown_82F4250: @ 0x82F4250
+	.incbin "build/data/data.bin", 0x584ac, 0x16
+gUnknown_82F4266: @ 0x82F4266
+	.incbin "build/data/data.bin", 0x584c2, 0x1a
+gUnknown_82F4280: @ 0x82F4280
+	.string "ダ{DARK_GRAY}ろ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}ねハみオぁぬょ{DYNAMIC_COLOR3}で♀イブコ$"
+	.string "$"
+gUnknown_82F4294: @ 0x82F4294
+	.string "ダ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_VICTORY_WILD}ろ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}"
+	.string "ねハみオぁぬょ{DYNAMIC_COLOR3}ぴ♀ツブメ$"
+	.string "$"
+gUnknown_82F42AC: @ 0x82F42AC
+	.string "{DYNAMIC_COLOR3}{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}ヌたぅほWれリょSぞムぼゥエベシÜツ$"
+	.string "$"
+gUnknown_82F42C4: @ 0x82F42C4
+	.string "{DYNAMIC_COLOR3}{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}{PH_TRAP_SOLO}ヌたぅほWれリょSでムイゥタベフÜヨ$"
+	.string "$"
+gUnknown_82F42E0: @ 0x82F42E0
+	.string "ザ{DARK_GRAY}{B_COPY_VAR_1}{PH_NURSE_BLEND}モ{DYNAMIC_COLOR5}べはスよぺぇぷずぽぼぴカ$"
+	.string "$"
+gUnknown_82F42F6: @ 0x82F42F6
+	.string "ザ{DARK_GRAY}{PH_NURSE_BLEND}{PH_CURE_HELD}ぬよルず$"
+	.string "$"
+gUnknown_82F4302: @ 0x82F4302
+	.string "{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}ヲつへはろめヤれパぇテげTぢゆぼLイよコ$"
+	.string "$"
+gUnknown_82F431C: @ 0x82F431C
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}ヲ{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ら{DYNAMIC_COLOR1}"
+	.string "ヲつへはろめヤれパぇテぞTぺゆシLハよレ$"
+	.string "$"
+gUnknown_82F433C: @ 0x82F433C
+	.string "ぬ{LIGHT_GRAY}{MUS_RG_NEW_GAME_INTRO}タ{DYNAMIC_COLOR3}ひにはみねるヤれギゃ9ずGぶQイのシ‘ニ$"
+	.string "$"
+gUnknown_82F4358: @ 0x82F4358
+	.string "ぬ{LIGHT_GRAY}{MUS_RG_SS_ANNE}チ{DYNAMIC_COLOR5}pは¥り{LIGHT_BLUE}ゃ{BLUE}ゃ{LIGHT_GREEN}ゃびだ{LIGHT_RED}"
+	.string "ぴKクでト$"
+	.string "$"
+gUnknown_82F4372: @ 0x82F4372
+	.string "レ{DARK_GRAY}ぃ{DYNAMIC_COLOR5}マねはゆぬんもげぇでなっヌコまヌ$"
+	.string "$"
+gUnknown_82F4388: @ 0x82F4388
+	.string "ゴ{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ロつリめワれフぇメぢベイHコ{GREEN}テ$"
+	.string "$"
+gUnknown_82F439E: @ 0x82F439E
+	.string "ゴ{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ロ{DARK_GRAY}リ{DARK_GRAY}ロつリめワれフぇメぢベクHニ{GREEN}ユ$"
+	.string "$"
+gUnknown_82F43B8: @ 0x82F43B8
+	.string "{MUS_RG_BERRY_PICK}{MUS_RG_VS_DEOXYS}ぬとまほ,ぃセごみぴやカケネlメ$"
+	.string "$"
+gUnknown_82F43CE: @ 0x82F43CE
+	.string "{MUS_RG_BERRY_PICK}{MUS_RG_VS_DEOXYS}{MUS_RG_NEW_GAME_INSTRUCT}{MUS_RG_SEVII_CAVE}ぬとまほ,ぃセごみぴやシケヤlャ$"
+	.string "$"
+gUnknown_82F43E8: @ 0x82F43E8
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}まてガは{LIGHT_GRAY}めヒんぁげルばマイムツよメ$"
+	.string "$"
+gUnknown_82F4402: @ 0x82F4402
+	.string "て{LIGHT_GRAY}ャ{DARK_GRAY}ぽ{BLUE}びとぼはぷよにわとぎぶずぺぼなっだス$"
+	.string "$"
+gUnknown_82F441C: @ 0x82F441C
+	.incbin "build/data/data.bin", 0x58678, 0x16
+gUnknown_82F4432: @ 0x82F4432
+	.string "ダ{DARK_GRAY}フたろほがわ▶げチぶぎカスナ$$"
+gUnknown_82F4444: @ 0x82F4444
+	.string "ダ{DARK_GRAY}フ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{PH_CLOTH_SOLO}フたろほがわ▶げチっぎニスヲ$"
+	.string "$"
+gUnknown_82F445C: @ 0x82F445C
+	.string "{PH_KIT_SOLO}{MUS_RG_VS_DEOXYS}コ{LIGHT_GRAY}ぃとほほ·ぃまげァぴみカチネ$"
+	.string "$"
+gUnknown_82F4472: @ 0x82F4472
+	.string "{PH_KIT_SOLO}{MUS_RG_VS_DEOXYS}コ{LIGHT_GRAY}{PH_TRAP_HELD}ぃとほほ·ぃまげァイみツチレ$"
+	.string "$"
+gUnknown_82F448A: @ 0x82F448A
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}が{DYNAMIC_COLOR3}qとノほゆらゥぃじぎヒぢムぼぢオぎシ$"
+	.string "$"
+gUnknown_82F44A4: @ 0x82F44A4
+	.string "{PH_CLOTH_SOLO}q{DARK_GRAY}ノ{DARK_GRAY}ゥ{DARK_GRAY}ヘぢ$"
+	.string "$"
+gUnknown_82F44B0: @ 0x82F44B0
+	.string "ミ{DARK_GRAY}ス{DYNAMIC_COLOR1}3つタは{LIGHT_GRAY}めムれモれoぇざげにづ{DYNAMIC_COLOR6}ぱたウセコnツgハ$"
+	.string "$"
+gUnknown_82F44D0: @ 0x82F44D0
+	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DYNAMIC_COLOR3}pにTみチれちゃ2ず{DYNAMIC_COLOR5}ぶネイXシ$"
+	.string "$"
+gUnknown_82F44E8: @ 0x82F44E8
+	.string "{MUS_RG_OAK_LAB}レ{DARK_GRAY}ズ{DARK_GRAY}♂{DARK_GRAY}ズつ♂は{LIGHT_GRAY}れ{BLUE}ぇZばぐウめニIメごョ$"
+	.string "$"
+gUnknown_82F4504: @ 0x82F4504
+	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_CELADON}{LIGHT_BLUE}つムめゥぇヌぶオセキヤ$"
+	.string "$"
+gUnknown_82F4518: @ 0x82F4518
+	.string "{PH_FACE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ロ{DARK_GRAY}{MUS_RG_SILPH}ろ{DYNAMIC_COLOR5}ロは{LIGHT_GREEN}"
+	.string "よフぇÄぢゅイヘツンメ$"
+	.string "$"
+gUnknown_82F4532: @ 0x82F4532
+	.string "{MUS_RG_VICTORY_WILD}ヤ{DARK_GRAY}と{DYNAMIC_COLOR5}どはハよぬぉねぜ{DYNAMIC_COLOR3}ぼぢカ{DYNAMIC_COLOR5}ツ$"
+	.string "$"
+gUnknown_82F4548: @ 0x82F4548
+	.string "{MUS_RG_SEVII_ROUTE}ら{BLUE}テたほは,よpゃピでゆカやハ$"
+	.string "$"
+gUnknown_82F455C: @ 0x82F455C
+	.string "バ{DARK_GRAY}むほ·ざ$$"
+gUnknown_82F4564: @ 0x82F4564
+	.string "{MUS_RG_SEVII_67}わりイぇろざ▶ばぎっ:コスナぜホ$$"
+gUnknown_82F4578: @ 0x82F4578
+	.string "{PH_CLOTH_SOLO}{MUS_RG_SLOW_PALLET}{PH_TRAP_BLEND}ょ{DYNAMIC_COLOR5}めはヘよIぇげず:ぼgカぎツべマ$"
+	.string "$"
+gUnknown_82F4592: @ 0x82F4592
+	.string "ゾ{DARK_GRAY}$$"
+gUnknown_82F4596: @ 0x82F4596
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたをみツんわざnぶやエ$"
+	.string "$"
+gUnknown_82F45AA: @ 0x82F45AA
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたがみツんわざずぶメエビセぎネ$"
+	.string "$"
+gUnknown_82F45C2: @ 0x82F45C2
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたエみツんねざれぶカエチセキネ$"
+	.string "$"
+gUnknown_82F45DA: @ 0x82F45DA
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたゃみツんわざウぶロエろセゅネ$"
+	.string "$"
+gUnknown_82F45F2: @ 0x82F45F2
+	.string "⋯{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ッ{DARK_GRAY}チつざねノりポぃMぞ0ぶにケFタ$"
+	.string "$"
+gUnknown_82F460A: @ 0x82F460A
+	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}わはがよオぉろず♀ぼだキüツぎホ$"
+	.string "$"
+gUnknown_82F4620: @ 0x82F4620
+	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}わはがよオぉろず♀ぼォっだスüホぎェ$"
+	.string "$"
+gUnknown_82F463A: @ 0x82F463A
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}びはろよオぉふずQぼぜキぶツüホ$"
+	.string "$"
+gUnknown_82F4650: @ 0x82F4650
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}{PH_GOAT_BLEND}びはろよオぉふずQぼ2っぜスぶホüェ$"
+	.string "$"
+gUnknown_82F466A: @ 0x82F466A
+	.string "{MUS_RG_DEX_RATING}チたわほぃわüげ,ぶやカぜト$$"
+gUnknown_82F467C: @ 0x82F467C
+	.string "{MUS_RG_SEVII_ROUTE}ュ{DYNAMIC_COLOR3}マとAほへよのぅピぎ。ぎめぢぽぱキオSシぜニ$"
+	.string "$"
+gUnknown_82F4698: @ 0x82F4698
+	.string "{MUS_RG_RIVAL_EXIT}♂{DARK_GRAY}ょはチぇ9ぼげツモレごヂべ！$"
+	.string "$"
+gUnknown_82F46AC: @ 0x82F46AC
+	.string "{PH_KIT_SOLO}{PH_FOOT_HELD}カはチぇKぼだツ{DYNAMIC_COLOR3}ロムヂキ9$"
+	.string "$"
+gUnknown_82F46C0: @ 0x82F46C0
+	.string "{MUS_RG_DEX_RATING}{PH_FACE_SOLO}ウはチぇQぼゅツg{MUS_MOVE_DELETED}ヅゼ9$"
+	.string "$"
+gUnknown_82F46D4: @ 0x82F46D4
+	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}カた▶ほイわなげチぶgカNトぜメ$"
+	.string "$"
+gUnknown_82F46EA: @ 0x82F46EA
+	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOOSE_BLEND}▶{DARK_GRAY}カた▶ほイわなげチぴgセNミぜェ$"
+	.string "$"
+gUnknown_82F4704: @ 0x82F4704
+	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOOSE_BLEND}▶{DARK_GRAY}カた▶ほイわなげチぴgセちホNレぜバ$"
+	.string "$"
+gUnknown_82F4720: @ 0x82F4720
+	.incbin "build/data/data.bin", 0x5897c, 0x18
+gUnknown_82F4738: @ 0x82F4738
+	.string "{MUS_RG_OAK_LAB}ゾと{LIGHT_RED}りヨざセっüト$$"
+gUnknown_82F4746: @ 0x82F4746
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ぱたモねぷほwわめげムぶgカぴト$"
+	.string "$"
+gUnknown_82F475C: @ 0x82F475C
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_THOUGHT_HELD}モ{DARK_GRAY}ぱたモねぷほwんめずムぺgセぴホ$"
+	.string "$"
+gUnknown_82F4776: @ 0x82F4776
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_THOUGHT_HELD}モ{DARK_GRAY}ぱたモねぷほwんめずムイgニぴレ$"
+	.string "$"
+gUnknown_82F4790: @ 0x82F4790
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DYNAMIC_COLOR3}ゃねツよ？ょゥぶゅシ$"
+	.string "$"
+gUnknown_82F47A2: @ 0x82F47A2
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DARK_GRAY}フ{DYNAMIC_COLOR3}ゃねツれ？ずゥエゅフ$"
+	.string "$"
+gUnknown_82F47B6: @ 0x82F47B6
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DARK_GRAY}{PH_FACE_SOLO}フ{DYNAMIC_COLOR3}ゃねツれ？ずゥコゅリ$"
+	.string "$"
+gUnknown_82F47CC: @ 0x82F47CC
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DYNAMIC_COLOR5}がはわり,ょ2ばヌカぎネ$"
+	.string "$"
+gUnknown_82F47E0: @ 0x82F47E0
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DARK_GRAY}テ{DYNAMIC_COLOR5}がはわれ,ぎ2ぼヌコぎホ$"
+	.string "$"
+gUnknown_82F47F6: @ 0x82F47F6
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DARK_GRAY}{PH_CLOTH_SOLO}テ{DYNAMIC_COLOR5}"
+	.string "がはわれ,ぎ2ぴヌセぎヤ$"
+	.string "$"
+gUnknown_82F480E: @ 0x82F480E
+	.string "{MUS_RG_VICTORY_TRAINER}マ{BLUE}ツ{DYNAMIC_COLOR5}ボね{DYNAMIC_COLOR5}もなぃ{DYNAMIC_COLOR1}ぜピっュツ$"
+	.string "$"
+gUnknown_82F4822: @ 0x82F4822
+	.string "{MUS_RG_VICTORY_TRAINER}マ{DARK_GRAY}ツ{DARK_GRAY}マ{BLUE}ツ{DYNAMIC_COLOR5}ボね{DYNAMIC_COLOR5}"
+	.string "らなぎ{DYNAMIC_COLOR1}ぱピタュヨ$"
+	.string "$"
+gUnknown_82F483A: @ 0x82F483A
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}G{DYNAMIC_COLOR3}ぞにソみモわやぎスでゲタ$"
+	.string "$"
+gUnknown_82F484E: @ 0x82F484E
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}G{DARK_GRAY}{PH_KIT_SOLO}G{DYNAMIC_COLOR3}ぞにソみモぇやぢスイゲメ$"
+	.string "$"
+gUnknown_82F4866: @ 0x82F4866
+	.string "{MUS_RG_SEVII_ROUTE}ぃた{RED}ほムわモわgわnげゥぶチカよト$"
+	.string "$"
+gUnknown_82F487C: @ 0x82F487C
+	.string "{MUS_RG_SEVII_ROUTE}{PH_TRAP_HELD}ぃた{RED}ほムぃモぃgぃnぢゥエチニよリ$"
+	.string "$"
+gUnknown_82F4894: @ 0x82F4894
+	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD},{DYNAMIC_COLOR3}ャにナめジんボざ8ぼチコセハ$"
+	.string "$"
+gUnknown_82F48AA: @ 0x82F48AA
+	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD},{DARK_GRAY}ャ{DARK_GRAY},{DYNAMIC_COLOR3}ャにナめジぇボで8カチハセン$"
+	.string "$"
+gUnknown_82F48C4: @ 0x82F48C4
+	.string "ヌ{DARK_GRAY}ジ{DARK_GRAY}{PH_TRAP_HELD}ょ{LIGHT_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘぎげびZエぅテメミ$"
+	.string "$"
+gUnknown_82F48E0: @ 0x82F48E0
+	.string "ダ{DARK_GRAY}{PH_GOOSE_BLEND}ぃ{DYNAMIC_COLOR1}·はがめWぇヘげやぼぎイ{DYNAMIC_COLOR3}テ$"
+	.string "$"
+gUnknown_82F48F6: @ 0x82F48F6
+	.string "ダ{DARK_GRAY}{PH_GOOSE_BLEND}{PH_TRAP_HELD}ぃ{DYNAMIC_COLOR1}·はがめWぇヘぞやカぎト{DYNAMIC_COLOR3}ロ$"
+	.string "$"
+gUnknown_82F490E: @ 0x82F490E
+	.string "{PH_FOOT_HELD}R{DARK_GRAY}ら{DYNAMIC_COLOR3}カた/に$"
+	.string "$"
+gUnknown_82F491A: @ 0x82F491A
+	.string "{MUS_RG_OAK_LAB}R{DARK_GRAY}o{BLUE}ぁた/は$"
+	.string "$"
+gUnknown_82F4926: @ 0x82F4926
+	.string "{PH_TRAP_BLEND}R{DARK_GRAY}マ{SE_POKENAV_HANG_UP}つ/ふ$"
+	.string "$"
+gUnknown_82F4932: @ 0x82F4932
+	.string "{MUS_RG_SLOW_PALLET}R{DARK_GRAY}ヨ{DYNAMIC_COLOR3}/にのむoれ{DYNAMIC_COLOR1}ゅちぜgぶよイ$"
+	.string "$"
+gUnknown_82F4948: @ 0x82F4948
+	.string "{MUS_RG_SLOW_PALLET}R{DARK_GRAY}ヨ{DYNAMIC_COLOR3}/にのむoれ{DYNAMIC_COLOR1}ゅちぜgぶよイ$"
+	.string "$"
+gUnknown_82F495E: @ 0x82F495E
+	.incbin "build/data/data.bin", 0x58bba, 0x12
+gUnknown_82F4970: @ 0x82F4970
+	.incbin "build/data/data.bin", 0x58bcc, 0x12
+gUnknown_82F4982: @ 0x82F4982
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}エつカみ”んムざキぼ$"
+	.string "$"
+gUnknown_82F4992: @ 0x82F4992
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_FOOT_HELD}エつカや”ょムぶキコ$"
+	.string "$"
+gUnknown_82F49A4: @ 0x82F49A4
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_FOOT_HELD}{PH_GOOSE_BLEND}エつカや”ょ{LIGHT_BLUE}ざムエキメ$"
+	.string "$"
+gUnknown_82F49BA: @ 0x82F49BA
+	.string "{PH_GOAT_BLEND}r{DARK_GRAY}{PH_CHOICE_HELD}ケ{LIGHT_GRAY}っクぴホ$"
+	.string "$"
+gUnknown_82F49C8: @ 0x82F49C8
+	.string "{MUS_RG_SEVII_ROUTE}マ{GREEN}ら{DYNAMIC_COLOR3}がとSほじれよぎ:ぶぎコ$"
+	.string "$"
+gUnknown_82F49DC: @ 0x82F49DC
+	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}{MUS_RG_VS_DEOXYS}{PH_CLOTH_SOLO}マ{GREEN}ら{DYNAMIC_COLOR3}"
+	.string "がとSほじぃよで:コぎメ$"
+	.string "$"
+gUnknown_82F49F6: @ 0x82F49F6
+	.string "{PH_GOOSE_SOLO}ニ{DARK_GRAY}·つづめプぇぽづ×イなツよメ$"
+	.string "$"
+gUnknown_82F4A0A: @ 0x82F4A0A
+	.string "{PH_CLOTH_SOLO}{PH_NURSE_BLEND}{MUS_RG_POKE_CENTER}I{DARK_GRAY}IばUニ$"
+	.string "$"
+gUnknown_82F4A18: @ 0x82F4A18
+	.string "バ{DARK_GRAY}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}むとぷはぺほぽめべり”ぇぶざ$"
+	.string "$"
+gUnknown_82F4A2E: @ 0x82F4A2E
+	.string "バ{DARK_GRAY}w{DARK_GRAY}{MUS_RG_VS_DEOXYS}{MUS_RG_SEVII_ROUTE}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}"
+	.string "むとぷはぺほぽめべわ”げぶぶ$"
+	.string "$"
+gUnknown_82F4A4A: @ 0x82F4A4A
+	.string "バ{DARK_GRAY}w{DARK_GRAY}{MUS_RG_VS_DEOXYS}{MUS_RG_SEVII_ROUTE}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}"
+	.string "むとぷはぺほぽめべわ”ぢぶク$"
+	.string "$"
+gUnknown_82F4A66: @ 0x82F4A66
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}ふ{DYNAMIC_COLOR3}ょひnやだぉボずゥぴヌカチト$"
+	.string "$"
+gUnknown_82F4A7C: @ 0x82F4A7C
+	.string "{PH_GOAT_BLEND}ぼ{DYNAMIC_COLOR3}ぶはてゆひぉÄざwぼPエ$"
+	.string "$"
+gUnknown_82F4A8E: @ 0x82F4A8E
+	.string "{PH_GOAT_BLEND}{MUS_RG_OAK_LAB}ぼ{DYNAMIC_COLOR3}ぱはてゆぱぉÄざっぼぴエ$"
+	.string "$"
+gUnknown_82F4AA2: @ 0x82F4AA2
+	.string "{MUS_RG_SEVII_ROUTE}G{DARK_GRAY}ツ{DYNAMIC_COLOR5}ネはぅよKぇぃず{STRING}ぼちカヌツ$"
+	.string "$"
+gUnknown_82F4AB8: @ 0x82F4AB8
+	.string "{PH_CLOTH_SOLO}{MUS_RG_VS_DEOXYS}なにオむュれのぜケぶ:イょニメニ$"
+	.string "$"
+gUnknown_82F4ACE: @ 0x82F4ACE
+	.string "{PH_CLOTH_SOLO}{MUS_RG_VS_DEOXYS}なにオむュんのびケエ:ツょレメレ$"
+	.string "$"
+gUnknown_82F4AE4: @ 0x82F4AE4
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたスみツんゥざざぶäエセセvネ$"
+	.string "$"
+gUnknown_82F4AFC: @ 0x82F4AFC
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたpみツんヘざ×ぶZエヌセxネ$"
+	.string "$"
+gUnknown_82F4B14: @ 0x82F4B14
+	.string "{PH_KIT_SOLO}ょてpふメわナょ×ば{DYNAMIC_COLOR4}アZタ$"
+	.string "$"
+gUnknown_82F4B26: @ 0x82F4B26
+	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR3}がほスりぇげへでUカセタ$"
+	.string "$"
+gUnknown_82F4B3C: @ 0x82F4B3C
+	.string "{MUS_RG_SLOW_PALLET}ド{DARK_GRAY}'{DYNAMIC_COLOR3}ょぬヘめZんざざhぼIコみヒ$"
+	.string "$"
+gUnknown_82F4B52: @ 0x82F4B52
+	.string "y{DARK_GRAY}$$"
+gUnknown_82F4B56: @ 0x82F4B56
+	.string "{PH_LOT_BLEND}Ü{DARK_GRAY}g{DARK_GRAY}H{DARK_GRAY}$"
+	.string "$"
+gUnknown_82F4B60: @ 0x82F4B60
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ょ{DYNAMIC_COLOR6}スはぬよざぉチずnぼざカÖツ$"
+	.string "$"
+gUnknown_82F4B76: @ 0x82F4B76
+	.string "{MUS_RG_SEVII_ROUTE}♀{DARK_GRAY}リたやほqわユげベぶEカよト$"
+	.string "$"
+gUnknown_82F4B8A: @ 0x82F4B8A
+	.string "{MUS_RG_SEVII_ROUTE}♀{DARK_GRAY}リ{DARK_GRAY}リたやほqわユげベぺEツよヨ$"
+	.string "$"
+gUnknown_82F4BA0: @ 0x82F4BA0
+	.string "テ{DARK_GRAY}マ{BLUE}のぬグふ'れpぃヌずやでひウ$$"
+gUnknown_82F4BB4: @ 0x82F4BB4
+	.string "{MUS_RG_VS_MEWTWO}ふ{DYNAMIC_COLOR3}ハはツり×ぎ2ぶヌク{DYNAMIC_COLOR3}ネ$"
+	.string "$"
+gUnknown_82F4BC6: @ 0x82F4BC6
+	.string "{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}とつクはハれテぇOぢなぼsコÖツよメ$"
+	.string "$"
+gUnknown_82F4BDE: @ 0x82F4BDE
+	.string "{MUS_RG_SEVII_ROUTE},{DARK_GRAY}ら{BLUE}RたわはレよんゃテでやカÖハ$"
+	.string "$"
+gUnknown_82F4BF4: @ 0x82F4BF4
+	.string "{MUS_RG_SEVII_ROUTE},{DARK_GRAY}ら{BLUE}RたわはレよんぎテぴやツÖレ$"
+	.string "$"
+gUnknown_82F4C0A: @ 0x82F4C0A
+	.string "E{DARK_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_MEWTWO}ハとヒとがよれぎやぼぎシ$"
+	.string "$"
+gUnknown_82F4C1E: @ 0x82F4C1E
+	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DYNAMIC_COLOR3}pにTみチれtゃ2ず{DYNAMIC_COLOR5}ぶネイXシ$"
+	.string "$"
+gUnknown_82F4C36: @ 0x82F4C36
+	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}もつoふgんユぎピぼ$$"
+gUnknown_82F4C46: @ 0x82F4C46
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}ほ{DYNAMIC_COLOR3}Qにまめねぁでざやぼ‘コlハ$"
+	.string "$"
+gUnknown_82F4C5C: @ 0x82F4C5C
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}{DYNAMIC_COLOR4}{LIGHT_GRAY}ツたヌほ×わボげチぶJカ2ト\pメtィ$"
+	.string "$"
+gUnknown_82F4C76: @ 0x82F4C76
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}レ{DYNAMIC_COLOR5}ボはぐら×ぇピず2ぼ。カゆツ$"
+	.string "$"
+gUnknown_82F4C8C: @ 0x82F4C8C
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}レ{DARK_GRAY}ボ{DARK_GRAY}レ{DYNAMIC_COLOR5}"
+	.string "ボはぐら×ぇピず2ぼ。カゆツ$"
+	.string "$"
+gUnknown_82F4CA6: @ 0x82F4CA6
+	.string "の{LIGHT_GRAY}ロ{DARK_GRAY}ゃたクほハわュげゅぶプカめト$"
+	.string "$"
+gUnknown_82F4CBA: @ 0x82F4CBA
+	.string "の{LIGHT_GRAY}ロ{DARK_GRAY}{PH_FACE_SOLO}{PH_GOOSE_SOLO}ゃたクほハわュげゅぶプタめリ$"
+	.string "$"
+gUnknown_82F4CD2: @ 0x82F4CD2
+	.string "{MUS_RG_SEVII_ROUTE}ざ{LIGHT_GRAY}♂とQよやぎょぼごシュホ$"
+	.string "$"
+gUnknown_82F4CE4: @ 0x82F4CE4
+	.string "{MUS_RG_BERRY_PICK}ざ{LIGHT_GRAY}♂{DARK_GRAY}Q{DARK_GRAY}♂とQよやぎまぢょエごミュザ$"
+	.string "$"
+gUnknown_82F4CFC: @ 0x82F4CFC
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DYNAMIC_COLOR3}ダねノめまもじんォぎセどÜぺüコ$"
+	.string "$"
+gUnknown_82F4D12: @ 0x82F4D12
+	.string "{PH_CLOTH_SOLO}Mにざわずわじわヤぢげクぜホ$$"
+gUnknown_82F4D24: @ 0x82F4D24
+	.string "{PH_CLOTH_SOLO}ャにざわずわじわDぇヤぴげフぜザ$$"
+gUnknown_82F4D38: @ 0x82F4D38
+	.string "e{DARK_GRAY}$$"
+gUnknown_82F4D3C: @ 0x82F4D3C
+	.string "{MUS_RG_SEVII_ROUTE}ダ{DARK_GRAY}ぃたじほやわチげちぶタキヘト$"
+	.string "$"
+gUnknown_82F4D50: @ 0x82F4D50
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ふとゥはチみまゃげごYぞEエぜサ$"
+	.string "$"
+gUnknown_82F4D66: @ 0x82F4D66
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_FACE_SOLO}っ{DYNAMIC_COLOR6}ロはんよわぇざぜ×ぼゅカÖツ$"
+	.string "$"
+gUnknown_82F4D7C: @ 0x82F4D7C
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_FACE_SOLO}っ{LIGHT_GRAY}っ{DYNAMIC_COLOR6}ロはんよわょざび×カゅニÖヨ$"
+	.string "$"
+gUnknown_82F4D94: @ 0x82F4D94
+	.string "ダ{DARK_GRAY}フ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{PH_CLOTH_SOLO}フたろほがわ▶げチっぎニスヲ$"
+	.string "$"
+gUnknown_82F4DAC: @ 0x82F4DAC
+	.string "ざ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}マつ·めやぇSぢQイよツ$"
+	.string "$"
+gUnknown_82F4DC0: @ 0x82F4DC0
+	.string "ざ{LIGHT_GRAY}{MUS_RG_BERRY_PICK}{MUS_RG_SLOW_PALLET}マつ·めまぇSぢqイケツ$"
+	.string "$"
+gUnknown_82F4DD4: @ 0x82F4DD4
+	.string "⋯{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ッ{DARK_GRAY}チつざねノりマぃMぞ0ぶにケFタ$"
+	.string "$"
+gUnknown_82F4DEC: @ 0x82F4DEC
+	.string "{MUS_RG_SEVII_ROUTE}ろ{DYNAMIC_COLOR5}ょひソよぬぇふずやぼヘカサテ$"
+	.string "$"
+gUnknown_82F4E00: @ 0x82F4E00
+	.string "5{DARK_GRAY}5に5れ5ず5イ5ニ5レ5ズ515♀$$"
+gUnknown_82F4E16: @ 0x82F4E16
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4E1A: @ 0x82F4E1A
+	.string "ぬ{LIGHT_GRAY}{MUS_RG_UNION_ROOM}ヤ{DYNAMIC_COLOR5}pはツよ6りqぇでずチぼKカひテ$"
+	.string "$"
+gUnknown_82F4E32: @ 0x82F4E32
+	.string "{MUS_RG_OAK_LAB}レ{DARK_GRAY}/つ♂はスれぁぇZぢぐぱセコIツごメ$"
+	.string "$"
+gUnknown_82F4E4A: @ 0x82F4E4A
+	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_BLUE}つムめゥぇヌぢオイキツ$"
+	.string "$"
+gUnknown_82F4E5C: @ 0x82F4E5C
+	.string "{PH_FACE_SOLO}ろ{DYNAMIC_COLOR5}ロは{LIGHT_GREEN}よフぇÄずゅぼヘカンツ$"
+	.string "$"
+gUnknown_82F4E70: @ 0x82F4E70
+	.string "{MUS_RG_SEVII_ROUTE}を{BLUE}マたぬはVよユゃSでめカcハ$"
+	.string "$"
+gUnknown_82F4E84: @ 0x82F4E84
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}ら{BLUE}ま{DYNAMIC_COLOR6}ガと{LIGHT_GRAY}はヒやぁんルぎマぢムっよセ$"
+	.string "$"
+gUnknown_82F4E9E: @ 0x82F4E9E
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}エにんれツずWイモニÖレキズサ2$"
+	.string "$"
+gUnknown_82F4EB4: @ 0x82F4EB4
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}ゃにんれウずぬイゅニUレンズサ2$"
+	.string "$"
+gUnknown_82F4ECA: @ 0x82F4ECA
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}じに:れたずずイょニÜレぎズサ2$"
+	.string "$"
+gUnknown_82F4EE0: @ 0x82F4EE0
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}Oたヌほプわゆげ,ぶÖカケトぜメ$"
+	.string "$"
+gUnknown_82F4EF6: @ 0x82F4EF6
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}O{DARK_GRAY}ヌ{DARK_GRAY}Oたヌほプわゆげ,ぴÖセケミぜェ$"
+	.string "$"
+gUnknown_82F4F10: @ 0x82F4F10
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}O{DARK_GRAY}ヌ{DARK_GRAY}Oたヌほプわゆげ,ぴÖセケレぜバ$"
+	.string "$"
+gUnknown_82F4F2A: @ 0x82F4F2A
+	.incbin "build/data/data.bin", 0x59186, 0x16
+gUnknown_82F4F40: @ 0x82F4F40
+	.incbin "build/data/data.bin", 0x5919c, 0x16
+gUnknown_82F4F56: @ 0x82F4F56
+	.incbin "build/data/data.bin", 0x591b2, 0x14
+gUnknown_82F4F6A: @ 0x82F4F6A
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F6E: @ 0x82F4F6E
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F72: @ 0x82F4F72
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F76: @ 0x82F4F76
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F7A: @ 0x82F4F7A
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F7E: @ 0x82F4F7E
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F82: @ 0x82F4F82
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F86: @ 0x82F4F86
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F8A: @ 0x82F4F8A
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F8E: @ 0x82F4F8E
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F92: @ 0x82F4F92
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F96: @ 0x82F4F96
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F9A: @ 0x82F4F9A
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4F9E: @ 0x82F4F9E
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FA2: @ 0x82F4FA2
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FA6: @ 0x82F4FA6
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FAA: @ 0x82F4FAA
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FAE: @ 0x82F4FAE
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FB2: @ 0x82F4FB2
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FB6: @ 0x82F4FB6
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FBA: @ 0x82F4FBA
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FBE: @ 0x82F4FBE
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FC2: @ 0x82F4FC2
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FC6: @ 0x82F4FC6
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FCA: @ 0x82F4FCA
+	.string "{MUS_RG_SEVII_ROUTE}$$"
+gUnknown_82F4FCE: @ 0x82F4FCE
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}び{DYNAMIC_COLOR3}ツにpみヌれぶゃチずなぶKイPシ$"
+	.string "$"
+gUnknown_82F4FE6: @ 0x82F4FE6
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}ツ{DARK_GRAY}び{DYNAMIC_COLOR3}"
+	.string "ツにXみpめヌんシごチばなイKセTハ$"
+	.string "$"
+gUnknown_82F5004: @ 0x82F5004
+	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}ツ{DARK_GRAY}び{DYNAMIC_COLOR3}"
+	.string "ツにXみpめヌんシごチばなカKニTヨ$"
+	.string "$"
+gUnknown_82F5022: @ 0x82F5022
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DYNAMIC_COLOR5}ゃとぞみふよウぇツぎ2でラぼゅカ$"
+	.string "$"
+gUnknown_82F503A: @ 0x82F503A
+	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}{PH_FACE_SOLO}ヤ{DYNAMIC_COLOR5}"
+	.string "ゃはねみぞめふれウぐツぞ2ぺラカびナ$"
+	.string "$"
+gUnknown_82F5058: @ 0x82F5058
+	.string "{MUS_RG_SILPH}{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}{PH_FACE_SOLO}ヤ{DYNAMIC_COLOR5}"
+	.string "ゃはねみぞめふれウぐツぞろべ2エラツびラ$"
+	.string "$"
+gUnknown_82F507A: @ 0x82F507A
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DYNAMIC_COLOR3}がとユほGよわぅやぎ\lぢ♀ぼぎエひス$"
+	.string "$"
+gUnknown_82F5094: @ 0x82F5094
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DARK_GRAY}{PH_CLOTH_SOLO}C{DYNAMIC_COLOR3}"
+	.string "がとユほオむGりわぉやずぼぱ♀エケシひヒ$"
+	.string "$"
+gUnknown_82F50B4: @ 0x82F50B4
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DARK_GRAY}{PH_CLOTH_SOLO}C{DYNAMIC_COLOR3}"
+	.string "がとユほオむGりわぉやずぼぽ♀シケネひロ$"
+	.string "$"
+gUnknown_82F50D4: @ 0x82F50D4
+	.string "{MUS_RG_SEVII_ROUTE}っ{DYNAMIC_COLOR2}ふつわはざもんれUぇ,げやぢ{DYNAMIC_COLOR4}ぱÖイ7コ$"
+	.string "$"
+gUnknown_82F50EE: @ 0x82F50EE
+	.string "{MUS_RG_SEVII_ROUTE}っ{LIGHT_GRAY}{MUS_RG_NET_CENTER}{MUS_RG_TRAINER_TOWER}っ{DYNAMIC_COLOR2}"
+	.string "ふつわはざもんわUょ,ぞやぼ{DYNAMIC_COLOR4}オÖセ7ネ$"
+	.string "$"
+gUnknown_82F510E: @ 0x82F510E
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}へつふはざもわろれぇキご·ぢピぼAイ$"
+	.string "$"
+gUnknown_82F5128: @ 0x82F5128
+	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}{MUS_RG_MYSTERY_GIFT}ら{DYNAMIC_COLOR1}"
+	.string "へつふはざもわぁボげキび2イピセAハ$"
+	.string "$"
+gUnknown_82F5146: @ 0x82F5146
+	.string "{MUS_RG_SEVII_ROUTE}{PH_MOUTH_HELD}り{DYNAMIC_COLOR1}$"
+	.string "$"
+gUnknown_82F514E: @ 0x82F514E
+	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+gUnknown_82F5154: @ 0x82F5154
+	.string "{PH_GOAT_BLEND}びとたはぺめvりぶぃつょaずずどPぴ$$"
+gUnknown_82F516A: @ 0x82F516A
+	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+gUnknown_82F5170: @ 0x82F5170
+	.string "{PH_CURE_HELD}スとたは♀めxりざぃつょムずずどシぴ$$"
+gUnknown_82F5186: @ 0x82F5186
+	.string "ょ{LIGHT_GRAY}を{GREEN}び{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひょれ:ずぶカ$"
+	.string "$"
+gUnknown_82F5196: @ 0x82F5196
+	.incbin "build/data/data.bin", 0x593f2, 0x16
+gUnknown_82F51AC: @ 0x82F51AC
+	.string "ょ{LIGHT_GRAY}{MUS_RG_SLOW_PALLET}{PH_GOAT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
+	.string "$"
+gUnknown_82F51B6: @ 0x82F51B6
+	.string "ユ{DARK_GRAY}ハ{GREEN}ぼ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひwれÄずベカ$"
+	.string "$"
+gUnknown_82F51C6: @ 0x82F51C6
+	.incbin "build/data/data.bin", 0x59422, 0x16
+gUnknown_82F51DC: @ 0x82F51DC
+	.string "{MUS_RG_OAK_LAB}ハ{DARK_GRAY}{PH_THOUGHT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
+	.string "$"
+gUnknown_82F51E6: @ 0x82F51E6
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DYNAMIC_COLOR1}ふつボふ9よTぇCずtぴサコ$"
+	.string "$"
+gUnknown_82F51FC: @ 0x82F51FC
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DARK_GRAY}{MUS_RG_NET_CENTER}ジ{DYNAMIC_COLOR1}"
+	.string "ふつボふ9よネりXりヌり{DYNAMIC_COLOR5}ぇ2ずチぴnコ$"
+	.string "$"
+gUnknown_82F521C: @ 0x82F521C
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DYNAMIC_COLOR1}ふつボふ9よ'ぇヘず{DYNAMIC}ぴみサ$"
+	.string "$"
+gUnknown_82F5232: @ 0x82F5232
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ヤ{BLUE}ツたちはネよひゅぴどチカ$"
+	.string "$"
+gUnknown_82F5246: @ 0x82F5246
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}ツ{DARK_GRAY}ヤ{BLUE}ツたちはネよひぐぴぷチツ$"
+	.string "$"
+gUnknown_82F525E: @ 0x82F525E
+	.string "{PH_GOAT_BLEND}む{BLUE}ぺ{DYNAMIC_COLOR5}べとぶみへわぷぎぼぶPコヅフ$"
+	.string "$"
+gUnknown_82F5274: @ 0x82F5274
+	.string "{PH_GOAT_BLEND}{MUS_RG_SEVII_ROUTE}{PH_CHOICE_HELD}{PH_GOAT_SOLO}む{BLUE}ぺ{DYNAMIC_COLOR5}"
+	.string "べとぶみへわ¥んでぎびべ9コkフ$"
+	.string "$"
+gUnknown_82F5292: @ 0x82F5292
+	.string "{MUS_RG_SEVII_ROUTE}{B_LINK_OPPONENT_MON1_NAME}×ねざみソんヂょれどäぴよコ·ツゆミ$"
+	.string "$"
+gUnknown_82F52AA: @ 0x82F52AA
+	.string "{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}ぃ{DYNAMIC_COLOR5}ちはょれツずpカチホ$"
+	.string "$"
+gUnknown_82F52BC: @ 0x82F52BC
+	.string "{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}コ{LIGHT_GRAY}{MUS_RG_DEX_RATING}が{GREEN}ぃ{DYNAMIC_COLOR5}"
+	.string "ちはょれ♀ぇ\n{SE_NOTE_G}づ$"
+	.string "セぎレ$$"
+gUnknown_82F52D8: @ 0x82F52D8
+	.string "ダ{DARK_GRAY}ツ{DYNAMIC_COLOR5}rはコらじぇチずょぼメぼ$"
+	.string "$"
+gUnknown_82F52EA: @ 0x82F52EA
+	.string "ダ{DARK_GRAY}ツ{DARK_GRAY}r{DARK_GRAY}コ{LIGHT_GRAY}ツ{DYNAMIC_COLOR5}rはコらたゃ,ぢぺっずソつハ$"
+	.string "$"
+gUnknown_82F5304: @ 0x82F5304
+	.string "バ{DARK_GRAY}を{DYNAMIC_COLOR1}がとSふ\lよょぁタぐょぞピぼづウュシぎト$"
+	.string "$"
+gUnknown_82F531E: @ 0x82F531E
+	.string "バ{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}S{DARK_GRAY}を{DYNAMIC_COLOR1}がとSふ\lよょぁタぐょぞピぼづケュネぎヨ$"
+	.string "$"
+gUnknown_82F533E: @ 0x82F533E
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}ら{GREEN}a{DYNAMIC_COLOR5}ぁは{LIGHT_GRAY}ほつらRぇ×ょキぜcぼよぺ$"
+	.string "$"
+gUnknown_82F5358: @ 0x82F5358
+	.string "{MUS_RG_SLOW_PALLET}a{DARK_GRAY}{PH_TRAP_BLEND}{MUS_RG_POKE_CENTER}$"
+	.string "$"
+gUnknown_82F5362: @ 0x82F5362
+	.string "7{DARK_GRAY}{MUS_RG_VS_DEOXYS}ょ{LIGHT_GRAY}レ{DARK_GRAY}{MUS_RG_VICTORY_TRAINER}と{BLUE}"
+	.string "×{DYNAMIC_COLOR5}ボねざめヌぃ2ず3っüツ$"
+	.string "$"
+gUnknown_82F537E: @ 0x82F537E
+	.string "{PH_CURE_HELD}ハ{GREEN}q{DYNAMIC_COLOR1}C{DYNAMIC_COLOR5}ざにじまリよüぇOずぢぱベコ$"
+	.string "$"
+gUnknown_82F5396: @ 0x82F5396
+	.string "ト{DARK_GRAY}{PH_CURE_HELD}ハ{DARK_GRAY}q{DARK_GRAY}ハ{GREEN}q{DYNAMIC_COLOR1}C{DYNAMIC_COLOR5}"
+	.string "ざにじまリよüぇOずぜぶぢオベホ$"
+	.string "$"
+gUnknown_82F53B6: @ 0x82F53B6
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DYNAMIC_COLOR5}クはぽむカわプぎOずピぼFカMシ$"
+	.string "$"
+gUnknown_82F53CC: @ 0x82F53CC
+	.string "{PH_FACE_SOLO}ロ{BLUE}ー{DYNAMIC_COLOR5}フふウめめり♀ょゅざぺづュっ·カ{WHITE}ス$"
+	.string "$"
+gUnknown_82F53E6: @ 0x82F53E6
+	.incbin "build/data/data.bin", 0x59642, 0x1c
+gUnknown_82F5402: @ 0x82F5402
+	.incbin "build/data/data.bin", 0x5965e, 0x18
+gUnknown_82F541A: @ 0x82F541A
+	.incbin "build/data/data.bin", 0x59676, 0x1e
+gUnknown_82F5438: @ 0x82F5438
+	.string "{MUS_RG_SEVII_ROUTE}R{BLUE}がねチみやぃaぎ/ぶ·っgタ$"
+	.string "$"
+gUnknown_82F544C: @ 0x82F544C
+	.string "ダ{DARK_GRAY}ハ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}とろはじり♀んはゅ{DYNAMIC_COLOR4}だブば{DYNAMIC_COLOR5}"
+	.string "ぴ{DYNAMIC_COLOR3}ク$"
+	.string "$"
+gUnknown_82F5464: @ 0x82F5464
+	.string "ダ{DARK_GRAY}ハ{DARK_GRAY}{MUS_RG_VICTORY_WILD}{MUS_RG_ENCOUNTER_DEOXYS}ハ{DYNAMIC_COLOR5}"
+	.string "{DYNAMIC_COLOR2}とろはじり♀んはゅ{DYNAMIC_COLOR4}どブぺ{DYNAMIC_COLOR5}ク{DYNAMIC_COLOR3}ネ$"
+	.string "$"
+gUnknown_82F5482: @ 0x82F5482
+	.string "バ{DARK_GRAY}むほ·ざ$$"
+gUnknown_82F548A: @ 0x82F548A
+	.string "{PH_CLOTH_SOLO}も{DYNAMIC_COLOR1}コなままタる▶ぇノざ:ばぎっaコgト$"
+	.string "$"
+gUnknown_82F54A2: @ 0x82F54A2
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_TRAINER_TOWER}テ{DYNAMIC_COLOR5}ヤは,みÖわヌぎやずUぼチカ$"
+	.string "$"
+gUnknown_82F54B8: @ 0x82F54B8
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_TRAINER_TOWER}テ{DARK_GRAY}ヤ{DARK_GRAY}テ{DYNAMIC_COLOR5}"
+	.string "ヤは,みÖわヌぎ2ぢ{DYNAMIC_COLOR4}ぷUカェタチハ$"
+	.string "$"
+gUnknown_82F54D6: @ 0x82F54D6
+	.string "{MUS_RG_TRAINER_TOWER}ふつ×めぶぉÖぢサイOツぜメ$$"
+gUnknown_82F54E8: @ 0x82F54E8
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_NET_CENTER}×{DARK_GRAY}ぶ{LIGHT_GRAY}ふつ×めぶぉÖぢmばヌイOツぜメ$"
+	.string "$"
+gUnknown_82F5502: @ 0x82F5502
+	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_NET_CENTER}×{DARK_GRAY}ぶ{LIGHT_GRAY}ふつ×めぶぉÖぢmばヌイOハぜェ$"
+	.string "$"
+gUnknown_82F551C: @ 0x82F551C
+	.incbin "build/data/data.bin", 0x59778, 0x1c
+gUnknown_82F5538: @ 0x82F5538
+	.incbin "build/data/data.bin", 0x59794, 0x20
+gUnknown_82F5558: @ 0x82F5558
+	.string "{MUS_RG_SEVII_ROUTE}カ{BLUE}ろつっのツめWりざぉんぎわぢキぶ{DYNAMIC_COLOR3}ウ$"
+	.string "$"
+gUnknown_82F5570: @ 0x82F5570
+	.string "{MUS_RG_SEVII_ROUTE}{PH_GOOSE_BLEND}{MUS_RG_ENCOUNTER_DEOXYS}っ{LIGHT_GRAY}カ{BLUE}"
+	.string "ろつっのツめWりざぉんずわぺキコ{DYNAMIC_COLOR3}ヒ$"
+	.string "$"
+gUnknown_82F558E: @ 0x82F558E
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}ゃにjよヤぇやげュずケばゅイよツ$"
+	.string "$"
+gUnknown_82F55A4: @ 0x82F55A4
+	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}{PH_FACE_SOLO}j{DARK_GRAY}ゃにjよヤぇやげュずプぢケぼふサコホ$"
+	.string "$"
+gUnknown_82F55C0: @ 0x82F55C0
+	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}ぜピぼ。ぼごカべテ$"
+	.string "$"
+gUnknown_82F55DA: @ 0x82F55DA
+	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DARK_GRAY}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}"
+	.string "ぜピぺ。ぺごセべマ$"
+	.string "$"
+gUnknown_82F55F6: @ 0x82F55F6
+	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DARK_GRAY}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}"
+	.string "ぜピぺ。ぺごトべロ$"
+	.string "$"
+gUnknown_82F5612: @ 0x82F5612
+	.string "{MUS_RG_VS_MEWTWO}{MUS_RG_ENCOUNTER_DEOXYS}び{DYNAMIC_COLOR1}ぼつべはふめれれてぉ×げEぢんぱ”イOコ$"
+	.string "$"
+gUnknown_82F562E: @ 0x82F562E
+	.string "{MUS_RG_VS_MEWTWO}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}{PH_THOUGHT_BLEND}び{DYNAMIC_COLOR1}"
+	.string "ぼつべはふめれれてぉ×げEばんウ”セOハ$"
+	.string "$"
+gUnknown_82F564E: @ 0x82F564E
+	.string "♂{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ネ{DYNAMIC_COLOR5}わとJみへよ♀ぇÖぎげ{PH_LOT_BLEND}ぱごカ$"
+	.string "$"
+gUnknown_82F5666: @ 0x82F5666
+	.string "♂{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ネ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}ネ{DYNAMIC_COLOR5}"
+	.string "わとJみへよ♀ぇÖぎげ{PH_LOT_BLEND}オごハべロ$"
+	.string "$"
+gUnknown_82F5684: @ 0x82F5684
+	.incbin "build/data/data.bin", 0x598e0, 0x16
+gUnknown_82F569A: @ 0x82F569A
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}ス{DYNAMIC_COLOR5}クはウよドぇぢぜプぼぴカベツ$"
+	.string "$"
+gUnknown_82F56B0: @ 0x82F56B0
+	.string "バ{DARK_GRAY}R{GREEN}ら{DYNAMIC_COLOR3}ダとなほがれ$"
+	.string "$"
+gUnknown_82F56BE: @ 0x82F56BE
+	.string "バ{DARK_GRAY}ド{DYNAMIC_COLOR5}ざなざみäよヘぇなぐセでピぼ。ぼエキ$"
+	.string "$"
+gUnknown_82F56D6: @ 0x82F56D6
+	.string "バ{DARK_GRAY}ド{DARK_GRAY}ざ{LIGHT_GRAY}{PH_FLEECE_HELD}ド{DYNAMIC_COLOR5}ざなざみäよヘぇなぐセぼピカ。カエマ$"
+	.string "$"
+gUnknown_82F56F4: @ 0x82F56F4
+	.string "{MUS_RG_SLOW_PALLET}カ{BLUE}ツと{DYNAMIC_COLOR5}ひWよoわぐぐ{DYNAMIC_COLOR3}ぜキぼnっチセ$"
+	.string "$"
+gUnknown_82F570C: @ 0x82F570C
+	.string "{MUS_RG_SLOW_PALLET}カ{BLUE}ツと{DYNAMIC_COLOR5}ひWよoわRぎ{DYNAMIC_COLOR3}ぜキぼnっチセ$"
+	.string "$"
+gUnknown_82F5724: @ 0x82F5724
+	.string "ょ{LIGHT_GRAY}ぐ{DYNAMIC_COLOR4}わにrみ{DYNAMIC_COLOR2}れ×ゃnずÖぶぺウ\n{SE_ROULETTE_BALL}ス$"
+	.string "シ$$"
+gUnknown_82F573E: @ 0x82F573E
+	.string "ユ{DARK_GRAY}タ{BLUE}スつKねyや9わサぐギぞäぴ‘エノタ$$"
+gUnknown_82F5756: @ 0x82F5756
+	.string "{MUS_RG_SILPH}{MUS_RG_CELADON}{MUS_RG_FUCHSIA}ユ{DARK_GRAY}{PH_NURSE_HELD}{PH_CURE_HELD}K{DARK_GRAY}"
+	.string "タ{BLUE}スつKねyや9わサぐギぞäっ‘シノフ$"
+	.string "$"
+gUnknown_82F577A: @ 0x82F577A
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ょちぁにまやgれょぎやずラぴまウIタ$"
+	.string "$"
+gUnknown_82F5792: @ 0x82F5792
+	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ょ{LIGHT_GRAY}{PH_TRAP_BLEND}ょちぁにまやgれょぎやずmばスアまサIフゼヨ$"
+	.string "$"
+gUnknown_82F57B2: @ 0x82F57B2
+	.string "バ{DARK_GRAY}R{DARK_GRAY}o{DARK_GRAY}でほÜほgほHほ$"
+	.string "$"
+gUnknown_82F57C2: @ 0x82F57C2
+	.incbin "build/data/data.bin", 0x59a1e, 0x18
+gUnknown_82F57DA: @ 0x82F57DA
+	.incbin "build/data/data.bin", 0x59a36, 0x1e
+gUnknown_82F57F8: @ 0x82F57F8
+	.string "{PH_GOAT_BLEND}ぼ{DYNAMIC_COLOR1}りつぺはぶめべれケぉぞごPぢrぼてウシコっツぎヒwメ$"
+	.string "$"
+gUnknown_82F5818: @ 0x82F5818
+	.string "{MUS_RG_VICTORY_TRAINER}の{LIGHT_GRAY}o{DYNAMIC_COLOR5}ぁひ×よュぇキぜでぼ·カ$"
+	.string "$"
+gUnknown_82F582C: @ 0x82F582C
+	.string "{MUS_RG_VICTORY_TRAINER}ヤ{DARK_GRAY}o{DARK_GRAY}{B_COPY_VAR_1}o{DYNAMIC_COLOR5}{B_SCR_ACTIVE_ABILITY}"
+	.string "ボよQぇ2ずでぼ{BLUE}キ‘ツ$"
+	.string "$"
+gUnknown_82F5846: @ 0x82F5846
+	.string "{MUS_RG_VICTORY_TRAINER}の{LIGHT_GRAY}o{DARK_GRAY}ぁ{LIGHT_GRAY}o{DYNAMIC_COLOR5}ぁひ×よュぇキぜUぶでぼ·カ$"
+	.string "$"
+gUnknown_82F5860: @ 0x82F5860
+	.string "{MUS_RG_OAK_LAB}の{DYNAMIC_COLOR4}ゴつワふュめoんシぎ\nで$"
+	.string "{SE_NOTE_B}どBぺ$$"
+gUnknown_82F5878: @ 0x82F5878
+	.string "{MUS_RG_OAK_LAB}の{LIGHT_GRAY}ゴ{DARK_GRAY}ワ{DARK_GRAY}の{DYNAMIC_COLOR4}ゴつワふュめoんめゃシず\nっ$"
+	.string "{SE_ESCALATOR}アBタ$$"
+gUnknown_82F5898: @ 0x82F5898
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_RIVAL_EXIT}ぼ{DYNAMIC_COLOR5}ぱにぬめrれつょケぜめぼぴイwセ$"
+	.string "$"
+gUnknown_82F58B0: @ 0x82F58B0
+	.string "{MUS_RG_OAK_LAB}{B_LINK_OPPONENT_MON1_NAME}ょぬっまぃれぬぇヌずんばピイbイぃサ$"
+	.string "$"
+gUnknown_82F58C8: @ 0x82F58C8
+	.string "{MUS_RG_OAK_LAB}{B_COPY_VAR_1}ょ{LIGHT_GRAY}っ{LIGHT_GRAY}{B_LINK_OPPONENT_MON1_NAME}"
+	.string "ょぬっまぃんぬげヌぼんカピニbニぃモ$"
+	.string "$"
+gUnknown_82F58E6: @ 0x82F58E6
+	.string "{MUS_RG_OAK_LAB}{B_COPY_VAR_1}ょ{LIGHT_GRAY}っ{LIGHT_GRAY}{B_LINK_OPPONENT_MON1_NAME}"
+	.string "ょぬっまぃんぬげヌぼぜっんコピホbホぃァ$"
+	.string "$"
+gUnknown_82F5906: @ 0x82F5906
+	.string "ィ{DARK_GRAY}{PH_CLOTH_SOLO}\l{DARK_GRAY}ぺ{LIGHT_GRAY}$"
+	.string "$"
+gUnknown_82F5910: @ 0x82F5910
+	.string "\l{DARK_GRAY}わたヌほタを,げÖぶnカぎト$$"
+gUnknown_82F5922: @ 0x82F5922
+	.string "\l{DARK_GRAY}スたチほタをュげセぶnカぎト$$"
+gUnknown_82F5934: @ 0x82F5934
+	.incbin "build/data/data.bin", 0x59b90, 0x18
+gUnknown_82F594C: @ 0x82F594C
+	.string "は{LIGHT_GRAY}ヌたナはーり'ぇ{LIGHT_RED}だ×ぼ{DYNAMIC}クむテみム$"
+	.string "$"
+gUnknown_82F5962: @ 0x82F5962
+	.string "は{LIGHT_GRAY}ヌ{DARK_GRAY}ナ{DARK_GRAY}ー{DARK_GRAY}ヌたナはーり'ぇ{LIGHT_RED}だ×ぺ{DYNAMIC}タむマみゥ$"
+	.string "$"
+gUnknown_82F597E: @ 0x82F597E
+	.string "{MUS_RG_SEVII_123}レ{DYNAMIC_COLOR5}わとカむヌよグぇÖぎぅどUぼメカ$"
+	.string "$"
+gUnknown_82F5994: @ 0x82F5994
+	.string "{MUS_RG_VICTORY_TRAINER}ろ{BLUE}ツ{DYNAMIC_COLOR5}{DYNAMIC_COLOR5}とXは2よpぇぇぜ{DYNAMIC_COLOR4}ぱKシTホ$"
+	.string "$"
+gUnknown_82F59AC: @ 0x82F59AC
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}がたじまのをやげわべüカピトよメぎィ$"
+	.string "$"
+gUnknown_82F59C4: @ 0x82F59C4
+	.string "{MUS_RG_SEVII_ROUTE}ハ{BLUE}C{DYNAMIC_COLOR5}へとtはぺもんれやぇsげ♀でぜぽよク$"
+	.string "$"
+gUnknown_82F59DE: @ 0x82F59DE
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}C{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ハ{BLUE}C{DYNAMIC_COLOR5}"
+	.string "へとtはぺもんれやぇsげ♀ぼぜサよハ$"
+	.string "$"
+gUnknown_82F59FE: @ 0x82F59FE
+	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}C{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ハ{BLUE}C{DYNAMIC_COLOR5}"
+	.string "へとtはぺもんれやぇsげ♀ぼぜナよン$"
+	.string "$"
+gUnknown_82F5A1E: @ 0x82F5A1E
+	.string "{MUS_RG_SEVII_ROUTE}がとゃと♂と:りÄ{MUS_RG_VS_MEWTWO}るがじ$"
+	.string "$"
+gUnknown_82F5A30: @ 0x82F5A30
+	.string "{MUS_RG_SEVII_ROUTE}ヘ{DYNAMIC_COLOR1}ネつxはツめよろでぉ♀げ{DYNAMIC_COLOR5}づよぼ$"
+	.string "$"
+gUnknown_82F5A46: @ 0x82F5A46
+	.string "{MUS_RG_SEVII_ROUTE}r{DYNAMIC_COLOR1}Rつxはツめちろoぇ{RED}ご{DYNAMIC_COLOR5}づキぱ$"
+	.string "$"
+gUnknown_82F5A5C: @ 0x82F5A5C
+	.string "ょ{LIGHT_GRAY}ャたぉほてをヘげュぶüカ\nト${SE_CONTEST_ICON_CLEAR}ナ$"
+	.string "$"
+gUnknown_82F5A72: @ 0x82F5A72
+	.string "ょ{LIGHT_GRAY}ャ{DARK_GRAY}{PH_FACE_HELD}て{LIGHT_GRAY}ャたぉほてをヘげュぶüタ\nリ$"
+	.string "{SE_M_HARDEN}ル$$"
+gUnknown_82F5A8E: @ 0x82F5A8E
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DYNAMIC_COLOR5}わひがよtぇ♀ずüぼXカ2ツセマ$"
+	.string "$"
+gUnknown_82F5AA4: @ 0x82F5AA4
+	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}わ{LIGHT_GRAY}{PH_CLOTH_SOLO}ハ{DYNAMIC_COLOR5}わひがよtぇ♀ずüぼXシ2ホセゥ$"
+	.string "$"
+gUnknown_82F5AC0: @ 0x82F5AC0
+	.incbin "build/data/data.bin", 0x59d1c, 0x16
+gUnknown_82F5AD6: @ 0x82F5AD6
+	.incbin "build/data/data.bin", 0x59d32, 0x1c
+gUnknown_82F5AF2: @ 0x82F5AF2
+	.incbin "build/data/data.bin", 0x59d4e, 0x1c
+gUnknown_82F5B0E: @ 0x82F5B0E
+	.string "テ{DARK_GRAY}わ{DYNAMIC_COLOR1}ろつへめヤれゃぇmぢ,ぼÖイアテよハ$"
+	.string "$"
+gUnknown_82F5B26: @ 0x82F5B26
+	.string "テ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_MYSTERY_GIFT}わ{DYNAMIC_COLOR1}"
+	.string "ろつへめヤれゃぇ♀ざmぴ,セÖミアゴよピ$"
+	.string "$"
+gUnknown_82F5B46: @ 0x82F5B46
+	.string "テ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_MYSTERY_GIFT}わ{DYNAMIC_COLOR1}"
+	.string "ろつへめヤれゃぇ♀ざmぴ,セてトÖレアポよ/$"
+	.string "$"
+gUnknown_82F5B68: @ 0x82F5B68
+	.string "{MUS_RG_SEVII_45}$$"
+gUnknown_82F5B6C: @ 0x82F5B6C
+	.string "{MUS_RG_SEVII_45}スりtり,ゃpぞセぴぺケゅナチミぜワ$$"
+gUnknown_82F5B82: @ 0x82F5B82
+	.string "{MUS_RG_SEVII_45}{PH_CURE_HELD}t{DARK_GRAY},{DARK_GRAY}スりtり,ゃpぞセぴぺケゅマチャぜボ$"
+	.string "$"
+gUnknown_82F5B9E: @ 0x82F5B9E
+	.string "ベ{DARK_GRAY}クつーめとぉüぢぺウFツMメぜェ$$"
+gUnknown_82F5BB2: @ 0x82F5BB2
+	.string "ベ{DARK_GRAY}JつーめとぉüぢュイFツMメぜェ$$"
+gUnknown_82F5BC6: @ 0x82F5BC6
+	.string "ベ{DARK_GRAY}tつーめとぉüぢぺウュイFツMメぜェ$$"
+gUnknown_82F5BDC: @ 0x82F5BDC
+	.string "タ{LIGHT_GRAY},{DYNAMIC_COLOR1}üほめりサじげばぎコピトべルよェづビ$"
+	.string "$"
+gUnknown_82F5BF4: @ 0x82F5BF4
+	.string "オ{LIGHT_GRAY},{DYNAMIC_COLOR1}üほ2りウじケばンコピトコリぴェふビ$"
+	.string "$"
+gUnknown_82F5C0C: @ 0x82F5C0C
+	.string "▶{DARK_GRAY},{DYNAMIC_COLOR1}üほアるスじÖばてコピトöリNェぜバ$"
+	.string "$"
+gUnknown_82F5C24: @ 0x82F5C24
+	.string "ド{DARK_GRAY}ち{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}なgほmりコぉまじりびセっノコRト$"
+	.string "$"
+gUnknown_82F5C3C: @ 0x82F5C3C
+	.string "ド{DARK_GRAY}{GREEN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}なgほmり♀ぇまじらびセっノコスナ$"
+	.string "$"
+gUnknown_82F5C54: @ 0x82F5C54
+	.incbin "build/data/data.bin", 0x59eb0, 0x1a
+gUnknown_82F5C6E: @ 0x82F5C6E
+	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_SEVII_123}ナ{DYNAMIC_COLOR1}ネとはまpりセぇゥざチばノっツサöト$"
+	.string "$"
+gUnknown_82F5C88: @ 0x82F5C88
+	.incbin "build/data/data.bin", 0x59ee4, 0x1c
 
 	.globl gUnknown_82F5CA4
 gUnknown_82F5CA4: @ 0x82F5CA4
@@ -2615,7 +3806,418 @@ gUnknown_82F5CA4: @ 0x82F5CA4
 
 	.globl gUnknown_82F9D04
 gUnknown_82F9D04: @ 0x82F9D04
-	.incbin "build/data/data.bin", 0x5df60, 0x670
+	.4byte gUnknown_82F3A64             @ 000
+	.4byte gUnknown_82F3A64             @ 001
+	.4byte gUnknown_82F3A7C             @ 002
+	.4byte gUnknown_82F3A98             @ 003
+	.4byte gUnknown_82F3AB6             @ 004
+	.4byte gUnknown_82F3ACC             @ 005
+	.4byte gUnknown_82F3AE4             @ 006
+	.4byte gUnknown_82F3B00             @ 007
+	.4byte gUnknown_82F3B18             @ 008
+	.4byte gUnknown_82F3B34             @ 009
+	.4byte gUnknown_82F3B52             @ 010
+	.4byte gUnknown_82F3B58             @ 011
+	.4byte gUnknown_82F3B5E             @ 012
+	.4byte gUnknown_82F3B76             @ 013
+	.4byte gUnknown_82F3B7C             @ 014
+	.4byte gUnknown_82F3B82             @ 015
+	.4byte gUnknown_82F3B96             @ 016
+	.4byte gUnknown_82F3BAA             @ 017
+	.4byte gUnknown_82F3BC2             @ 018
+	.4byte gUnknown_82F3BDC             @ 019
+	.4byte gUnknown_82F3BEE             @ 020
+	.4byte gUnknown_82F3C02             @ 021
+	.4byte gUnknown_82F3C16             @ 022
+	.4byte gUnknown_82F3C2C             @ 023
+	.4byte gUnknown_82F3C44             @ 024
+	.4byte gUnknown_82F3C60             @ 025
+	.4byte gUnknown_82F3C78             @ 026
+	.4byte gUnknown_82F3C82             @ 027
+	.4byte gUnknown_82F3C96             @ 028
+	.4byte gUnknown_82F3CAE             @ 029
+	.4byte gUnknown_82F3CC4             @ 030
+	.4byte gUnknown_82F3CDA             @ 031
+	.4byte gUnknown_82F3CE6             @ 032
+	.4byte gUnknown_82F3CFC             @ 033
+	.4byte gUnknown_82F3D12             @ 034
+	.4byte gUnknown_82F3D1E             @ 035
+	.4byte gUnknown_82F3D3A             @ 036
+	.4byte gUnknown_82F3D44             @ 037
+	.4byte gUnknown_82F3D5C             @ 038
+	.4byte gUnknown_82F3D68             @ 039
+	.4byte gUnknown_82F3D80             @ 040
+	.4byte gUnknown_82F3D8A             @ 041
+	.4byte gUnknown_82F3DA0             @ 042
+	.4byte gUnknown_82F3DBC             @ 043
+	.4byte gUnknown_82F3DCE             @ 044
+	.4byte gUnknown_82F3DE4             @ 045
+	.4byte gUnknown_82F3DF0             @ 046
+	.4byte gUnknown_82F3E04             @ 047
+	.4byte gUnknown_82F3E1C             @ 048
+	.4byte gUnknown_82F3E34             @ 049
+	.4byte gUnknown_82F3E52             @ 050
+	.4byte gUnknown_82F3E66             @ 051
+	.4byte gUnknown_82F3E80             @ 052
+	.4byte gUnknown_82F3E94             @ 053
+	.4byte gUnknown_82F3EAA             @ 054
+	.4byte gUnknown_82F3EBE             @ 055
+	.4byte gUnknown_82F3ED6             @ 056
+	.4byte gUnknown_82F3EEC             @ 057
+	.4byte gUnknown_82F3F08             @ 058
+	.4byte gUnknown_82F3F1E             @ 059
+	.4byte gUnknown_82F3F2A             @ 060
+	.4byte gUnknown_82F3F3C             @ 061
+	.4byte gUnknown_82F3F52             @ 062
+	.4byte gUnknown_82F3F60             @ 063
+	.4byte gUnknown_82F3F64             @ 064
+	.4byte gUnknown_82F3F7E             @ 065
+	.4byte gUnknown_82F3F98             @ 066
+	.4byte gUnknown_82F3FB2             @ 067
+	.4byte gUnknown_82F3FCE             @ 068
+	.4byte gUnknown_82F3FEA             @ 069
+	.4byte gUnknown_82F4000             @ 070
+	.4byte gUnknown_82F401A             @ 071
+	.4byte gUnknown_82F4024             @ 072
+	.4byte gUnknown_82F4038             @ 073
+	.4byte gUnknown_82F4050             @ 074
+	.4byte gUnknown_82F4068             @ 075
+	.4byte gUnknown_82F4084             @ 076
+	.4byte gUnknown_82F40A0             @ 077
+	.4byte gUnknown_82F40B6             @ 078
+	.4byte gUnknown_82F40D4             @ 079
+	.4byte gUnknown_82F40EA             @ 080
+	.4byte gUnknown_82F4104             @ 081
+	.4byte gUnknown_82F411C             @ 082
+	.4byte gUnknown_82F4138             @ 083
+	.4byte gUnknown_82F414E             @ 084
+	.4byte gUnknown_82F4162             @ 085
+	.4byte gUnknown_82F417A             @ 086
+	.4byte gUnknown_82F418C             @ 087
+	.4byte gUnknown_82F41A6             @ 088
+	.4byte gUnknown_82F41BC             @ 089
+	.4byte gUnknown_82F41D4             @ 090
+	.4byte gUnknown_82F41E6             @ 091
+	.4byte gUnknown_82F41F4             @ 092
+	.4byte gUnknown_82F4208             @ 093
+	.4byte gUnknown_82F4220             @ 094
+	.4byte gUnknown_82F4238             @ 095
+	.4byte gUnknown_82F4250             @ 096
+	.4byte gUnknown_82F4266             @ 097
+	.4byte gUnknown_82F4280             @ 098
+	.4byte gUnknown_82F4294             @ 099
+	.4byte gUnknown_82F42AC             @ 100
+	.4byte gUnknown_82F42C4             @ 101
+	.4byte gUnknown_82F42E0             @ 102
+	.4byte gUnknown_82F42F6             @ 103
+	.4byte gUnknown_82F4302             @ 104
+	.4byte gUnknown_82F431C             @ 105
+	.4byte gUnknown_82F433C             @ 106
+	.4byte gUnknown_82F4358             @ 107
+	.4byte gUnknown_82F4372             @ 108
+	.4byte gUnknown_82F4388             @ 109
+	.4byte gUnknown_82F439E             @ 110
+	.4byte gUnknown_82F43B8             @ 111
+	.4byte gUnknown_82F43CE             @ 112
+	.4byte gUnknown_82F43E8             @ 113
+	.4byte gUnknown_82F4402             @ 114
+	.4byte gUnknown_82F441C             @ 115
+	.4byte gUnknown_82F4432             @ 116
+	.4byte gUnknown_82F4444             @ 117
+	.4byte gUnknown_82F445C             @ 118
+	.4byte gUnknown_82F4472             @ 119
+	.4byte gUnknown_82F448A             @ 120
+	.4byte gUnknown_82F44A4             @ 121
+	.4byte gUnknown_82F44B0             @ 122
+	.4byte gUnknown_82F44D0             @ 123
+	.4byte gUnknown_82F44E8             @ 124
+	.4byte gUnknown_82F4504             @ 125
+	.4byte gUnknown_82F4518             @ 126
+	.4byte gUnknown_82F4532             @ 127
+	.4byte gUnknown_82F4548             @ 128
+	.4byte gUnknown_82F455C             @ 129
+	.4byte gUnknown_82F4564             @ 130
+	.4byte gUnknown_82F4578             @ 131
+	.4byte gUnknown_82F4592             @ 132
+	.4byte gUnknown_82F4596             @ 133
+	.4byte gUnknown_82F45AA             @ 134
+	.4byte gUnknown_82F45C2             @ 135
+	.4byte gUnknown_82F45DA             @ 136
+	.4byte gUnknown_82F45F2             @ 137
+	.4byte gUnknown_82F460A             @ 138
+	.4byte gUnknown_82F4620             @ 139
+	.4byte gUnknown_82F463A             @ 140
+	.4byte gUnknown_82F4650             @ 141
+	.4byte gUnknown_82F466A             @ 142
+	.4byte gUnknown_82F467C             @ 143
+	.4byte gUnknown_82F4698             @ 144
+	.4byte gUnknown_82F46AC             @ 145
+	.4byte gUnknown_82F46C0             @ 146
+	.4byte gUnknown_82F46D4             @ 147
+	.4byte gUnknown_82F46EA             @ 148
+	.4byte gUnknown_82F4704             @ 149
+	.4byte gUnknown_82F4720             @ 150
+	.4byte gUnknown_82F4738             @ 151
+	.4byte gUnknown_82F4746             @ 152
+	.4byte gUnknown_82F475C             @ 153
+	.4byte gUnknown_82F4776             @ 154
+	.4byte gUnknown_82F4790             @ 155
+	.4byte gUnknown_82F47A2             @ 156
+	.4byte gUnknown_82F47B6             @ 157
+	.4byte gUnknown_82F47CC             @ 158
+	.4byte gUnknown_82F47E0             @ 159
+	.4byte gUnknown_82F47F6             @ 160
+	.4byte gUnknown_82F480E             @ 161
+	.4byte gUnknown_82F4822             @ 162
+	.4byte gUnknown_82F483A             @ 163
+	.4byte gUnknown_82F484E             @ 164
+	.4byte gUnknown_82F4866             @ 165
+	.4byte gUnknown_82F487C             @ 166
+	.4byte gUnknown_82F4894             @ 167
+	.4byte gUnknown_82F48AA             @ 168
+	.4byte gUnknown_82F48C4             @ 169
+	.4byte gUnknown_82F48E0             @ 170
+	.4byte gUnknown_82F48F6             @ 171
+	.4byte gUnknown_82F490E             @ 172
+	.4byte gUnknown_82F491A             @ 173
+	.4byte gUnknown_82F4926             @ 174
+	.4byte gUnknown_82F4932             @ 175
+	.4byte gUnknown_82F4948             @ 176
+	.4byte gUnknown_82F495E             @ 177
+	.4byte gUnknown_82F4970             @ 178
+	.4byte gUnknown_82F4982             @ 179
+	.4byte gUnknown_82F4992             @ 180
+	.4byte gUnknown_82F49A4             @ 181
+	.4byte gUnknown_82F49BA             @ 182
+	.4byte gUnknown_82F49C8             @ 183
+	.4byte gUnknown_82F49DC             @ 184
+	.4byte gUnknown_82F49F6             @ 185
+	.4byte gUnknown_82F4A0A             @ 186
+	.4byte gUnknown_82F4A18             @ 187
+	.4byte gUnknown_82F4A2E             @ 188
+	.4byte gUnknown_82F4A4A             @ 189
+	.4byte gUnknown_82F4A66             @ 190
+	.4byte gUnknown_82F4A7C             @ 191
+	.4byte gUnknown_82F4A8E             @ 192
+	.4byte gUnknown_82F4AA2             @ 193
+	.4byte gUnknown_82F4AB8             @ 194
+	.4byte gUnknown_82F4ACE             @ 195
+	.4byte gUnknown_82F4AE4             @ 196
+	.4byte gUnknown_82F4AFC             @ 197
+	.4byte gUnknown_82F4B14             @ 198
+	.4byte gUnknown_82F4B26             @ 199
+	.4byte gUnknown_82F4B3C             @ 200
+	.4byte gUnknown_82F4B52             @ 201
+	.4byte gUnknown_82F4B56             @ 202
+	.4byte gUnknown_82F4B60             @ 203
+	.4byte gUnknown_82F4B76             @ 204
+	.4byte gUnknown_82F4B8A             @ 205
+	.4byte gUnknown_82F4BA0             @ 206
+	.4byte gUnknown_82F4BB4             @ 207
+	.4byte gUnknown_82F4BC6             @ 208
+	.4byte gUnknown_82F4BDE             @ 209
+	.4byte gUnknown_82F4BF4             @ 210
+	.4byte gUnknown_82F4C0A             @ 211
+	.4byte gUnknown_82F4C1E             @ 212
+	.4byte gUnknown_82F4C36             @ 213
+	.4byte gUnknown_82F4C46             @ 214
+	.4byte gUnknown_82F4C5C             @ 215
+	.4byte gUnknown_82F4C76             @ 216
+	.4byte gUnknown_82F4C8C             @ 217
+	.4byte gUnknown_82F4CA6             @ 218
+	.4byte gUnknown_82F4CBA             @ 219
+	.4byte gUnknown_82F4CD2             @ 220
+	.4byte gUnknown_82F4CE4             @ 221
+	.4byte gUnknown_82F4CFC             @ 222
+	.4byte gUnknown_82F4D12             @ 223
+	.4byte gUnknown_82F4D24             @ 224
+	.4byte gUnknown_82F4D38             @ 225
+	.4byte gUnknown_82F4D3C             @ 226
+	.4byte gUnknown_82F4D50             @ 227
+	.4byte gUnknown_82F4D66             @ 228
+	.4byte gUnknown_82F4D7C             @ 229
+	.4byte gUnknown_82F4D94             @ 230
+	.4byte gUnknown_82F4DAC             @ 231
+	.4byte gUnknown_82F4DC0             @ 232
+	.4byte gUnknown_82F4DD4             @ 233
+	.4byte gUnknown_82F4DEC             @ 234
+	.4byte gUnknown_82F4E00             @ 235
+	.4byte gUnknown_82F4E16             @ 236
+	.4byte gUnknown_82F4E1A             @ 237
+	.4byte gUnknown_82F4E32             @ 238
+	.4byte gUnknown_82F4E4A             @ 239
+	.4byte gUnknown_82F4E5C             @ 240
+	.4byte gUnknown_82F4E70             @ 241
+	.4byte gUnknown_82F4E84             @ 242
+	.4byte gUnknown_82F4E9E             @ 243
+	.4byte gUnknown_82F4EB4             @ 244
+	.4byte gUnknown_82F4ECA             @ 245
+	.4byte gUnknown_82F4EE0             @ 246
+	.4byte gUnknown_82F4EF6             @ 247
+	.4byte gUnknown_82F4F10             @ 248
+	.4byte gUnknown_82F4F2A             @ 249
+	.4byte gUnknown_82F4F40             @ 250
+	.4byte gUnknown_82F4F56             @ 251
+	.4byte gUnknown_82F4F6A             @ 252
+	.4byte gUnknown_82F4F6E             @ 253
+	.4byte gUnknown_82F4F72             @ 254
+	.4byte gUnknown_82F4F76             @ 255
+	.4byte gUnknown_82F4F7A             @ 256
+	.4byte gUnknown_82F4F7E             @ 257
+	.4byte gUnknown_82F4F82             @ 258
+	.4byte gUnknown_82F4F86             @ 259
+	.4byte gUnknown_82F4F8A             @ 260
+	.4byte gUnknown_82F4F8E             @ 261
+	.4byte gUnknown_82F4F92             @ 262
+	.4byte gUnknown_82F4F96             @ 263
+	.4byte gUnknown_82F4F9A             @ 264
+	.4byte gUnknown_82F4F9E             @ 265
+	.4byte gUnknown_82F4FA2             @ 266
+	.4byte gUnknown_82F4FA6             @ 267
+	.4byte gUnknown_82F4FAA             @ 268
+	.4byte gUnknown_82F4FAE             @ 269
+	.4byte gUnknown_82F4FB2             @ 270
+	.4byte gUnknown_82F4FB6             @ 271
+	.4byte gUnknown_82F4FBA             @ 272
+	.4byte gUnknown_82F4FBE             @ 273
+	.4byte gUnknown_82F4FC2             @ 274
+	.4byte gUnknown_82F4FC6             @ 275
+	.4byte gUnknown_82F4FCA             @ 276
+	.4byte gUnknown_82F4FCE             @ 277
+	.4byte gUnknown_82F4FE6             @ 278
+	.4byte gUnknown_82F5004             @ 279
+	.4byte gUnknown_82F5022             @ 280
+	.4byte gUnknown_82F503A             @ 281
+	.4byte gUnknown_82F5058             @ 282
+	.4byte gUnknown_82F507A             @ 283
+	.4byte gUnknown_82F5094             @ 284
+	.4byte gUnknown_82F50B4             @ 285
+	.4byte gUnknown_82F50D4             @ 286
+	.4byte gUnknown_82F50EE             @ 287
+	.4byte gUnknown_82F510E             @ 288
+	.4byte gUnknown_82F5128             @ 289
+	.4byte gUnknown_82F5146             @ 290
+	.4byte gUnknown_82F514E             @ 291
+	.4byte gUnknown_82F5154             @ 292
+	.4byte gUnknown_82F516A             @ 293
+	.4byte gUnknown_82F5170             @ 294
+	.4byte gUnknown_82F5186             @ 295
+	.4byte gUnknown_82F5196             @ 296
+	.4byte gUnknown_82F51AC             @ 297
+	.4byte gUnknown_82F51B6             @ 298
+	.4byte gUnknown_82F51C6             @ 299
+	.4byte gUnknown_82F51DC             @ 300
+	.4byte gUnknown_82F51E6             @ 301
+	.4byte gUnknown_82F51FC             @ 302
+	.4byte gUnknown_82F521C             @ 303
+	.4byte gUnknown_82F5232             @ 304
+	.4byte gUnknown_82F5246             @ 305
+	.4byte gUnknown_82F525E             @ 306
+	.4byte gUnknown_82F5274             @ 307
+	.4byte gUnknown_82F5292             @ 308
+	.4byte gUnknown_82F52AA             @ 309
+	.4byte gUnknown_82F52BC             @ 310
+	.4byte gUnknown_82F52D8             @ 311
+	.4byte gUnknown_82F52EA             @ 312
+	.4byte gUnknown_82F5304             @ 313
+	.4byte gUnknown_82F531E             @ 314
+	.4byte gUnknown_82F533E             @ 315
+	.4byte gUnknown_82F5358             @ 316
+	.4byte gUnknown_82F5362             @ 317
+	.4byte gUnknown_82F537E             @ 318
+	.4byte gUnknown_82F5396             @ 319
+	.4byte gUnknown_82F53B6             @ 320
+	.4byte gUnknown_82F53CC             @ 321
+	.4byte gUnknown_82F53E6             @ 322
+	.4byte gUnknown_82F5402             @ 323
+	.4byte gUnknown_82F541A             @ 324
+	.4byte gUnknown_82F5438             @ 325
+	.4byte gUnknown_82F544C             @ 326
+	.4byte gUnknown_82F5464             @ 327
+	.4byte gUnknown_82F5482             @ 328
+	.4byte gUnknown_82F548A             @ 329
+	.4byte gUnknown_82F54A2             @ 330
+	.4byte gUnknown_82F54B8             @ 331
+	.4byte gUnknown_82F54D6             @ 332
+	.4byte gUnknown_82F54E8             @ 333
+	.4byte gUnknown_82F5502             @ 334
+	.4byte gUnknown_82F551C             @ 335
+	.4byte gUnknown_82F5538             @ 336
+	.4byte gUnknown_82F5558             @ 337
+	.4byte gUnknown_82F5570             @ 338
+	.4byte gUnknown_82F558E             @ 339
+	.4byte gUnknown_82F55A4             @ 340
+	.4byte gUnknown_82F55C0             @ 341
+	.4byte gUnknown_82F55DA             @ 342
+	.4byte gUnknown_82F55F6             @ 343
+	.4byte gUnknown_82F5612             @ 344
+	.4byte gUnknown_82F562E             @ 345
+	.4byte gUnknown_82F564E             @ 346
+	.4byte gUnknown_82F5666             @ 347
+	.4byte gUnknown_82F5684             @ 348
+	.4byte gUnknown_82F569A             @ 349
+	.4byte gUnknown_82F56B0             @ 350
+	.4byte gUnknown_82F56BE             @ 351
+	.4byte gUnknown_82F56D6             @ 352
+	.4byte gUnknown_82F56F4             @ 353
+	.4byte gUnknown_82F570C             @ 354
+	.4byte gUnknown_82F5724             @ 355
+	.4byte gUnknown_82F573E             @ 356
+	.4byte gUnknown_82F5756             @ 357
+	.4byte gUnknown_82F577A             @ 358
+	.4byte gUnknown_82F5792             @ 359
+	.4byte gUnknown_82F57B2             @ 360
+	.4byte gUnknown_82F57C2             @ 361
+	.4byte gUnknown_82F57DA             @ 362
+	.4byte gUnknown_82F57F8             @ 363
+	.4byte gUnknown_82F5818             @ 364
+	.4byte gUnknown_82F582C             @ 365
+	.4byte gUnknown_82F5846             @ 366
+	.4byte gUnknown_82F5860             @ 367
+	.4byte gUnknown_82F5878             @ 368
+	.4byte gUnknown_82F5898             @ 369
+	.4byte gUnknown_82F58B0             @ 370
+	.4byte gUnknown_82F58C8             @ 371
+	.4byte gUnknown_82F58E6             @ 372
+	.4byte gUnknown_82F5906             @ 373
+	.4byte gUnknown_82F5910             @ 374
+	.4byte gUnknown_82F5922             @ 375
+	.4byte gUnknown_82F5934             @ 376
+	.4byte gUnknown_82F594C             @ 377
+	.4byte gUnknown_82F5962             @ 378
+	.4byte gUnknown_82F597E             @ 379
+	.4byte gUnknown_82F5994             @ 380
+	.4byte gUnknown_82F59AC             @ 381
+	.4byte gUnknown_82F59C4             @ 382
+	.4byte gUnknown_82F59DE             @ 383
+	.4byte gUnknown_82F59FE             @ 384
+	.4byte gUnknown_82F5A1E             @ 385
+	.4byte gUnknown_82F5A30             @ 386
+	.4byte gUnknown_82F5A46             @ 387
+	.4byte gUnknown_82F5A5C             @ 388
+	.4byte gUnknown_82F5A72             @ 389
+	.4byte gUnknown_82F5A8E             @ 390
+	.4byte gUnknown_82F5AA4             @ 391
+	.4byte gUnknown_82F5AC0             @ 392
+	.4byte gUnknown_82F5AD6             @ 393
+	.4byte gUnknown_82F5AF2             @ 394
+	.4byte gUnknown_82F5B0E             @ 395
+	.4byte gUnknown_82F5B26             @ 396
+	.4byte gUnknown_82F5B46             @ 397
+	.4byte gUnknown_82F5B68             @ 398
+	.4byte gUnknown_82F5B6C             @ 399
+	.4byte gUnknown_82F5B82             @ 400
+	.4byte gUnknown_82F5B9E             @ 401
+	.4byte gUnknown_82F5BB2             @ 402
+	.4byte gUnknown_82F5BC6             @ 403
+	.4byte gUnknown_82F5BDC             @ 404
+	.4byte gUnknown_82F5BF4             @ 405
+	.4byte gUnknown_82F5C0C             @ 406
+	.4byte gUnknown_82F5C24             @ 407
+	.4byte gUnknown_82F5C3C             @ 408
+	.4byte gUnknown_82F5C54             @ 409
+	.4byte gUnknown_82F5C6E             @ 410
+	.4byte gUnknown_82F5C88             @ 411
 
 	.globl gUnknown_82FA374
 gUnknown_82FA374: @ 0x82FA374
