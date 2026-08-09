@@ -221,7 +221,61 @@ gUnknown_82BFB6C: @ 0x82BFB6C
 
 	.globl gUnknown_82BFB8C
 gUnknown_82BFB8C: @ 0x82BFB8C
-	.incbin "build/data/data.bin", 0x23de8, 0x274
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{SE_M_BATON_PASS}{MUS_DUMMY}\n{SE_SUPER_EFFECTIVE}l▶{SE_M_STAT_INCREASE}\n{DYNAMIC_COLOR5}"
+	.string "\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}l▶{SE_M_STAT_INCREASE}{TRANSPARENT}"
+	.string "\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}{SE_M_BATON_PASS}{MUS_DUMMY}{TRANSPARENT}{SE_SUPER_EFFECTIVE}"
+	.string "{TRANSPARENT}l{SE_M_STAT_INCREASE}{TRANSPARENT}l{SE_M_STAT_INCREASE}{TRANSPARENT}"
+	.string "l{SE_M_STAT_INCREASE}{TRANSPARENT}l{SE_M_STAT_INCREASE}{TRANSPARENT}l{SE_M_STAT_INCREASE}"
+	.string "{TRANSPARENT}l{SE_M_STAT_INCREASE}{MUS_DUMMY}{SE_SUPER_EFFECTIVE}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz\n{SE_SUPER_EFFECTIVE}l{SE_M_STAT_INCREASE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}"
+	.string "l▶{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz\n{SE_SUPER_EFFECTIVE}\n$"
+	.string "{SE_SUPER_EFFECTIVE}z\n{DYNAMIC_COLOR5}lz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}{SE_M_BATON_PASS}{SE_SUPER_EFFECTIVE}\nz{SE_M_STAT_INCREASE}"
+	.string "\nz{SE_M_STAT_INCREASE}\nz{SE_M_STAT_INCREASE}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_STAT_INCREASE}{TRANSPARENT}l{SE_M_STAT_INCREASE}{MUS_DUMMY}"
+	.string "{SE_SUPER_EFFECTIVE}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz\n{DYNAMIC_COLOR5}lz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}{SE_M_BATON_PASS}{MUS_DUMMY}\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}"
+	.string "\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}{SE_M_BATON_PASS}"
+	.string "\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}"
+	.string "{TRANSPARENT}{SE_M_BATON_PASS}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}"
+	.string "{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}"
+	.string "\n{DYNAMIC_COLOR5}l{DYNAMIC_COLOR5}{SE_M_SKY_UPPERCUT}l{SE_M_SKY_UPPERCUT}{TRANSPARENT}\n$"
+	.string "{SE_SUPER_EFFECTIVE}\n\n{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\nz\n{DYNAMIC_COLOR5}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}"
+	.string "{TRANSPARENT}\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}l{SE_M_SKY_UPPERCUT}{TRANSPARENT}\n$"
+	.string "{SE_SUPER_EFFECTIVE}\nz{SE_M_STAT_INCREASE}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR5}"
+	.string "\n{DYNAMIC_COLOR5}\nz{SE_M_STAT_INCREASE}\n$"
+	.string "{SE_SUPER_EFFECTIVE}l{SE_M_SKY_UPPERCUT}{TRANSPARENT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}lz{SE_M_SKY_UPPERCUT}lz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\n$"
+	.string "${DYNAMIC_COLOR5}\nz{SE_M_SKY_UPPERCUT}\n{SE_SUPER_EFFECTIVE}{TRANSPARENT}\n{SE_SUPER_EFFECTIVE}"
+	.string "{TRANSPARENT}{SE_M_BATON_PASS}{MUS_DUMMY}{DYNAMIC_COLOR5}つぞ{SE_DOOR}ちゅ{LIGHT_GRAY}で{DYNAMIC_COLOR4}"
+	.string "{SE_RG_SHOP}{DYNAMIC_COLOR5}つぞ{SE_DOOR}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{GREEN}{BLUE}"
+	.string "に{SE_WARP_OUT}ちゅ{LIGHT_GRAY}で{DYNAMIC_COLOR4}{SE_RG_SHOP}{GREEN}{BLUE}に{SE_WARP_OUT}で{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR3}た{SE_RG_SHOP}{GREEN}{BLUE}に{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}"
+	.string "{GREEN}{BLUE}に{SE_WARP_OUT}{SE_WARP_IN}{GREEN}{BLUE}にん$"
+	.string "{GREEN}{BLUE}に{SE_WARP_OUT}{SE_I}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}$"
 
 	.globl gUnknown_82BFE00
 gUnknown_82BFE00: @ 0x82BFE00
@@ -237,7 +291,9 @@ gUnknown_82BFE50: @ 0x82BFE50
 
 	.globl gUnknown_82BFE62
 gUnknown_82BFE62: @ 0x82BFE62
-	.incbin "build/data/data.bin", 0x240be, 0x2b
+	.string "{TRANSPARENT}つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_OAK_LAB}て{SE_BANG}ち{GREEN}{PH_PRICE_SOLO}{SE_SHIP}"
+	.string "{BLUE}だ{MUS_RG_VICTORY_WILD}\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{PH_CLOTH_SOLO}ぶつ{SE_SAVE}"
+	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_BOO}{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_82BFE8D
 gUnknown_82BFE8D: @ 0x82BFE8D
@@ -245,7 +301,8 @@ gUnknown_82BFE8D: @ 0x82BFE8D
 
 	.globl gUnknown_82BFE9F
 gUnknown_82BFE9F: @ 0x82BFE9F
-	.incbin "build/data/data.bin", 0x240fb, 0x19
+	.string "Aボタン{SE_NOTE_B}タイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}$"
+	.string "{HIGHLIGHT}{TRANSPARENT}{MUS_RG_VS_GYM_LEADER}{WHITE}$"
 
 	.globl gUnknown_82BFEB8
 gUnknown_82BFEB8: @ 0x82BFEB8
@@ -401,7 +458,28 @@ gUnknown_82C069C: @ 0x82C069C
 
 	.globl gUnknown_82C06B8
 gUnknown_82C06B8: @ 0x82C06B8
-	.incbin "build/data/data.bin", 0x24914, 0x188
+	.string "{B_COPY_VAR_1}{SE_M_DRAGON_RAGE}れんら{BLUE}まち！\nにんず{LIGHT_GRAY}{SE_SAVE}{DYNAMIC_COLOR6}"
+	.string "ろった{SE_LAVARIDGE_FALL_WARP}STARTボタン{SE_RG_SHOP}{MUS_DUMMY}シングルバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
+	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る$"
+	.string "ダブルバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "マルチバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "ポケモン{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}チャット{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎなカードを{BLUE}ばる$"
+	.string "ふ{DYNAMIC_COLOR3}ぎなニュースを{BLUE}ばる{SE_RG_SHOP}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎなで{LIGHT_GREEN}"
+	.string "ごと{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "なわとび{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{LIGHT_GREEN}のみマッシャー{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{LIGHT_GREEN}のみどり{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{TRANSPARENT}ぐるぐる{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
+	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}ぐるぐるショップ{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
+	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}h{GREEN}わ{BLUE}x{GREEN}わ{BLUE}{FONT}"
+	.string "わ{BLUE}{DYNAMIC_COLOR3}{LIGHT_GREEN}わ{BLUE}み{LIGHT_GREEN}わ{BLUE}ぃ{LIGHT_GREEN}わ{BLUE}ざ{LIGHT_GREEN}"
+	.string "わ{BLUE}ぃ{LIGHT_GREEN}わ{BLUE}タ{LIGHT_GREEN}わ{BLUE}ミ{LIGHT_GREEN}わ{BLUE}ャ{LIGHT_GREEN}わ{BLUE}"
+	.string "ャ{LIGHT_GREEN}わ{BLUE}デ{LIGHT_GREEN}わ{BLUE}7{LIGHT_GREEN}わ{SE_POKENAV_HANG_UP}と1にん\nひつよ{LIGHT_GRAY}"
+	.string "{MUS_RG_VS_CHAMPION}と2にん\nひつよ{LIGHT_GRAY}{MUS_RG_VS_CHAMPION}と3にん\nひつよ{LIGHT_GRAY}"
+	.string "{MUS_RG_VS_CHAMPION}と4にん\nひつよ{LIGHT_GRAY}$"
+	.string "2にん\nプレイ$3にん\nプレイ$4にん\nプレイ$5にん\nプレイ$"
 
 	.globl gUnknown_82C0840
 gUnknown_82C0840: @ 0x82C0840
@@ -433,7 +511,11 @@ gUnknown_82C092C: @ 0x82C092C
 
 	.globl gUnknown_82C0948
 gUnknown_82C0948: @ 0x82C0948
-	.incbin "build/data/data.bin", 0x24ba4, 0x58
+	.string "{B_COPY_VAR_1}{SE_BOO}OKの\nへんじ{SE_WARP_IN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た{SE_RG_SHOP}"
+	.string "{MUS_RG_OAK_LAB}ての\nつご{LIGHT_GRAY}{SE_SAVE}わ{MUS_RG_VS_LEGEND}み{MUS_RG_RIVAL_EXIT}⋯\p{SE_RG_SHOP}"
+	.string "ま{SE_NOTE_F}と{LIGHT_RED}{BLUE}{SE_A}{GREEN}たとは\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_I}で{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR5}ん\p{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}て{SE_A}じゅんびが\nで{LIGHT_GREEN}"
+	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん\p$"
 
 	.globl gUnknown_82C09A0
 gUnknown_82C09A0: @ 0x82C09A0
@@ -473,7 +555,8 @@ gUnknown_82C0AAC: @ 0x82C0AAC
 
 	.globl gUnknown_82C0AC8
 gUnknown_82C0AC8: @ 0x82C0AC8
-	.incbin "build/data/data.bin", 0x24d24, 0x1c
+	.string "ジョイスポット{GREEN}{SE_LAVARIDGE_FALL_WARP}{DYNAMIC_COLOR5}つぞ{BLUE}を\n{DYNAMIC_COLOR5}つだ{SE_WARP_OUT}"
+	.string "{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR3}た⋯$"
 
 	.globl gUnknown_82C0AE4
 gUnknown_82C0AE4: @ 0x82C0AE4
@@ -497,7 +580,9 @@ gUnknown_82C0D3C: @ 0x82C0D3C
 
 	.globl gUnknown_82C0DB8
 gUnknown_82C0DB8: @ 0x82C0DB8
-	.incbin "build/data/data.bin", 0x25014, 0x2c
+	.string "ゾ{DYNAMIC_COLOR4}わ{BLUE}3{DYNAMIC_COLOR4}わ{SE_POKENAV_HANG_UP}{DARK_GRAY}て{SE_A}"
+	.string "へんじを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{B_COPY_VAR_1}{SE_A}"
+	.string "へんじを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_82C0DE4
 gUnknown_82C0DE4: @ 0x82C0DE4
@@ -521,11 +606,14 @@ gUnknown_82C0E68: @ 0x82C0E68
 
 	.globl gUnknown_82C0EA8
 gUnknown_82C0EA8: @ 0x82C0EA8
-	.incbin "build/data/data.bin", 0x25104, 0x2c
+	.string "と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{SE_FAINT}タマゴの\n{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}も{LIGHT_GRAY}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}み{SE_SAVE}{LIGHT_GREEN}"
+	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}\l{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_82C0ED4
 gUnknown_82C0ED4: @ 0x82C0ED4
-	.incbin "build/data/data.bin", 0x25130, 0xc
+	.string "{MUS_RG_POKE_TOWER}わ{SE_SAVE}{LIGHT_GREEN}れま{DYNAMIC_COLOR3}た\p$"
 
 	.globl gUnknown_82C0EE0
 gUnknown_82C0EE0: @ 0x82C0EE0
@@ -533,7 +621,8 @@ gUnknown_82C0EE0: @ 0x82C0EE0
 
 	.globl gUnknown_82C0EF4
 gUnknown_82C0EF4: @ 0x82C0EF4
-	.incbin "build/data/data.bin", 0x25150, 0x10
+	.string "{LIGHT_RED}{DYNAMIC_COLOR2}{MUS_RG_ENCOUNTER_RIVAL}を\n{DYNAMIC_COLOR1}とわ{SE_ICE_STAIRS}"
+	.string "ま{DYNAMIC_COLOR3}た\p$"
 
 	.globl gUnknown_82C0F04
 gUnknown_82C0F04: @ 0x82C0F04
@@ -573,7 +662,8 @@ gUnknown_82C12C4: @ 0x82C12C4
 
 	.globl gUnknown_82C12E4
 gUnknown_82C12E4: @ 0x82C12E4
-	.incbin "build/data/data.bin", 0x25540, 0x2c
+	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}{DYNAMIC_COLOR4}るためには\nレベル30よ{SE_ICE_STAIRS}"
+	.string "ひ{MUS_RG_FUCHSIA}{TRANSPARENT}ポケモンが\l2ひ{SE_WALL_HIT}ひつよ{SE_PC_OFF}だよ\p$"
 
 	.globl gUnknown_82C1310
 gUnknown_82C1310: @ 0x82C1310
@@ -605,7 +695,7 @@ gUnknown_82C1668: @ 0x82C1668
 
 	.globl gUnknown_82C1688
 gUnknown_82C1688: @ 0x82C1688
-	.incbin "build/data/data.bin", 0x258e4, 0x14
+	.string "{B_COPY_VAR_1}は\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{MUS_RG_CELADON}じばん{SE_WARP_IN}みた！\p$"
 
 	.globl gUnknown_82C169C
 gUnknown_82C169C: @ 0x82C169C
@@ -621,7 +711,8 @@ gUnknown_82C17CC: @ 0x82C17CC
 
 	.globl gUnknown_82C17E8
 gUnknown_82C17E8: @ 0x82C17E8
-	.incbin "build/data/data.bin", 0x25a44, 0x20
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}だ{SE_EFFECTIVE}ポケモンを\nてもち{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "{RED}らん{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}\p$"
 
 	.globl gUnknown_82C1808
 gUnknown_82C1808: @ 0x82C1808
@@ -637,7 +728,9 @@ gUnknown_82C1830: @ 0x82C1830
 
 	.globl gUnknown_82C1844
 gUnknown_82C1844: @ 0x82C1844
-	.incbin "build/data/data.bin", 0x25aa0, 0x20
+	.string "と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}{B_COPY_VAR_1}"
+	.string "\nレベル{B_COPY_VAR_2}{SE_WARP_IN}{MUS_RG_POKE_TOWER}じ{SE_CARD}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}"
+	.string "？$"
 
 	.globl gUnknown_82C1864
 gUnknown_82C1864: @ 0x82C1864
@@ -649,11 +742,16 @@ gUnknown_82C1880: @ 0x82C1880
 
 	.globl gUnknown_82C18CC
 gUnknown_82C18CC: @ 0x82C18CC
-	.incbin "build/data/data.bin", 0x25b28, 0x4c
+	.string "{B_COPY_VAR_1}{SE_BOO}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}んを\nも{LIGHT_GRAY}{DYNAMIC_COLOR3}"
+	.string "{DYNAMIC_COLOR1}{SE_FAILURE}ま{DYNAMIC_COLOR4}{GREEN}？{SE_RG_SHOP}{MUS_DUMMY}⋯⋯{MUS_RG_VS_WILD}"
+	.string "{DARK_GRAY}て{SE_A}へんじ{SE_WARP_IN}まっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{MUS_RG_VS_CHAMPION}"
+	.string "なた{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}んにだ{DYNAMIC_COLOR4}\nポケモン{SE_SAVE}と{LIGHT_GRAY}ろ{BLUE}"
+	.string "{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん\p$"
 
 	.globl gUnknown_82C1918
 gUnknown_82C1918: @ 0x82C1918
-	.incbin "build/data/data.bin", 0x25b74, 0x20
+	.string "てもちに\n{B_COPY_VAR_1}{SE_A}ほ{DYNAMIC_COLOR3}がっ{MUS_RG_CAUGHT_INTRO}る\l{B_COPY_VAR_2}ポケモン{SE_SAVE}"
+	.string "{WHITE}りま{DYNAMIC_COLOR5}ん\p$"
 
 	.globl gUnknown_82C1938
 gUnknown_82C1938: @ 0x82C1938
@@ -693,7 +791,13 @@ gUnknown_82C1C94: @ 0x82C1C94
 
 	.globl gUnknown_82C1CB8
 gUnknown_82C1CB8: @ 0x82C1CB8
-	.incbin "build/data/data.bin", 0x25f14, 0x78
+	.string "ジョイスポット{GREEN}らの\nへんじ{SE_WARP_IN}まっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{SE_RG_SHOP}ほ{GREEN}{SE_A}"
+	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}ゃ{SE_SAVE}{DYNAMIC_COLOR6}ろ{LIGHT_GRAY}まで\n{DYNAMIC_COLOR3}"
+	.string "ょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "た{PH_PRICE_BLEND}{SE_SUCCESS}カード{SE_A}{MUS_RG_POKE_JUMP}ふは\n{LIGHT_RED}{DYNAMIC_COLOR1}なわれ{SE_SHIP}"
+	.string "{DARK_GRAY}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}⋯{SE_RG_SHOP}た{PH_PRICE_BLEND}"
+	.string "{SE_SUCCESS}ニュース{SE_A}{MUS_RG_POKE_JUMP}ふは\n{LIGHT_RED}{DYNAMIC_COLOR1}なわれ{SE_SHIP}{DARK_GRAY}"
+	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}⋯$"
 
 	.globl gUnknown_82C1D30
 gUnknown_82C1D30: @ 0x82C1D30
@@ -727,7 +831,7 @@ gUnknown_82C1FA4: @ 0x82C1FA4
 
 	.globl gUnknown_82C1FAC
 gUnknown_82C1FAC: @ 0x82C1FAC
-	.incbin "build/data/data.bin", 0x26208, 0x18
+	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\nみ{LIGHT_RED}わった！{PAUSE}ざ$"
 
 	.globl gUnknown_82C1FC4
 gUnknown_82C1FC4: @ 0x82C1FC4
@@ -866,15 +970,25 @@ gUnknown_82C250C: @ 0x82C250C
 
 	.globl gUnknown_82C253C
 gUnknown_82C253C: @ 0x82C253C
-	.incbin "build/data/data.bin", 0x26798, 0x18
+	.string "とゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ふゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$"
 
 	.globl gUnknown_82C2554
 gUnknown_82C2554: @ 0x82C2554
-	.incbin "build/data/data.bin", 0x267b0, 0x18
+	.string "りゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ぃゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$"
 
 	.globl gUnknown_82C256C
 gUnknown_82C256C: @ 0x82C256C
-	.incbin "build/data/data.bin", 0x267c8, 0x88
+	.string "{MUS_DUMMY}{MUS_DUMMY}アyは{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}{SE_PC_OFF}{SE_PC_OFF}{MUS_DUMMY}"
+	.string "{SE_PIKE_CURTAIN_CLOSE}め{SE_TRUCK_MOVE}{WHITE}よみ{DYNAMIC_COLOR1}む{SE_RG_SHOP}{MUS_DUMMY}{LIGHT_RED}"
+	.string "{BLUE}る$"
+	.string "{DYNAMIC_COLOR4}てる$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ザゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ゾゆわ{MUS_RG_FUCHSIA}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ゾゆわ{MUS_RG_FUCHSIA}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ザゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
+	.string "$$"
 
 	.globl gUnknown_82C25F4
 gUnknown_82C25F4: @ 0x82C25F4
@@ -932,7 +1046,8 @@ gUnknown_82C27B4: @ 0x82C27B4
 
 	.globl gUnknown_82C27DC
 gUnknown_82C27DC: @ 0x82C27DC
-	.incbin "build/data/data.bin", 0x26a38, 0x28
+	.string "ま{SE_NOTE_F}カード{SE_A}{LIGHT_RED}{BLUE}りもの{SE_WARP_IN}もらって\nま{DYNAMIC_COLOR5}ん{SE_SAVE}ほんと{LIGHT_GRAY}"
+	.string "{SE_BOO}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_82C2804
 gUnknown_82C2804: @ 0x82C2804
@@ -948,11 +1063,13 @@ gUnknown_82C2838: @ 0x82C2838
 
 	.globl gUnknown_82C2854
 gUnknown_82C2854: @ 0x82C2854
-	.incbin "build/data/data.bin", 0x26ab0, 0x18
+	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}ニュースが\n{LIGHT_RED}{BLUE}られ{SE_SHIP}{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_82C286C
 gUnknown_82C286C: @ 0x82C286C
-	.incbin "build/data/data.bin", 0x26ac8, 0x18
+	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}スタンプが\n{LIGHT_RED}{BLUE}られ{SE_SHIP}{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_82C2884
 gUnknown_82C2884: @ 0x82C2884
@@ -960,7 +1077,8 @@ gUnknown_82C2884: @ 0x82C2884
 
 	.globl gUnknown_82C28A0
 gUnknown_82C28A0: @ 0x82C28A0
-	.incbin "build/data/data.bin", 0x26afc, 0x18
+	.string "{LIGHT_RED}な{SE_BALL_THROW}ふ{DYNAMIC_COLOR3}ぎなカードを\n{DYNAMIC_COLOR4}で{SE_BOO}もっ{MUS_RG_CAUGHT_INTRO}"
+	.string "ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_82C28B8
 gUnknown_82C28B8: @ 0x82C28B8
@@ -1012,11 +1130,11 @@ gUnknown_82C29C0: @ 0x82C29C0
 
 	.globl gUnknown_82C29D8
 gUnknown_82C29D8: @ 0x82C29D8
-	.incbin "build/data/data.bin", 0x26c34, 0x14
+	.string "{B_COPY_VAR_1}{SE_BOO}ニュー{SE_ROULETTE_BALL2}を\n{LIGHT_RED}{BLUE}{SE_ICE_STAIRS}ま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_82C29EC
 gUnknown_82C29EC: @ 0x82C29EC
-	.incbin "build/data/data.bin", 0x26c48, 0x14
+	.string "{B_COPY_VAR_1}{SE_BOO}スタン{SE_M_WING_ATTACK}を\n{LIGHT_RED}{BLUE}{SE_ICE_STAIRS}ま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_82C2A00
 gUnknown_82C2A00: @ 0x82C2A00
@@ -1040,7 +1158,8 @@ gUnknown_82C2A60: @ 0x82C2A60
 
 	.globl gUnknown_82C2A78
 gUnknown_82C2A78: @ 0x82C2A78
-	.incbin "build/data/data.bin", 0x26cd4, 0x1c
+	.string "{DYNAMIC_COLOR1}{SE_A}{MUS_RG_OAK_LAB}{SE_SHIP}には\nふ{DYNAMIC_COLOR3}ぎな{LIGHT_RED}{BLUE}"
+	.string "りもの{SE_WARP_IN}わた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_82C2A94
 gUnknown_82C2A94: @ 0x82C2A94
@@ -1048,7 +1167,8 @@ gUnknown_82C2A94: @ 0x82C2A94
 
 	.globl gUnknown_82C2AB4
 gUnknown_82C2AB4: @ 0x82C2AB4
-	.incbin "build/data/data.bin", 0x26d10, 0x18
+	.string "ほんと{LIGHT_GRAY}{SE_BOO}ニュースを\n{DYNAMIC_COLOR4}てて{SE_SWITCH}{MUS_RG_POKE_FLUTE}で{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
 
 	.globl gUnknown_82C2ACC
 gUnknown_82C2ACC: @ 0x82C2ACC
@@ -2329,7 +2449,11 @@ gUnknown_82ECD5C: @ 0x82ECD5C
 
 	.globl gUnknown_82ECD64
 gUnknown_82ECD64: @ 0x82ECD64
-	.incbin "build/data/data.bin", 0x50fc0, 0x28
+	.string "{SE_M_THUNDERBOLT}{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_SHINY}\n$"
+	.string "{SE_NOTE_B}{SE_M_COSMIC_POWER}{SE_M_BUBBLE_BEAM}{SE_M_SNORE}{SE_M_TELEPORT}{SE_M_SWAGGER2}"
+	.string "{SE_M_STRENGTH}{SE_M_MIST}{SE_ARENA_TIMEUP2}む{WHITE}{DYNAMIC_COLOR5}{WHITE}キ{WHITE}{DYNAMIC_COLOR6}"
+	.string "{WHITE}{SE_POKENAV_HANG_UP}$"
+	.string "$"
 
 	.globl gUnknown_82ECD8C
 gUnknown_82ECD8C: @ 0x82ECD8C
@@ -2613,7 +2737,7 @@ gUnknown_82FC0E8: @ 0x82FC0E8
 
 	.globl gUnknown_82FC0F8
 gUnknown_82FC0F8: @ 0x82FC0F8
-	.incbin "build/data/data.bin", 0x60354, 0x2
+	.string "\n$"
 
 	.globl gUnknown_82FC0FA
 gUnknown_82FC0FA: @ 0x82FC0FA
@@ -2845,7 +2969,7 @@ gUnknown_8300A4E: @ 0x8300A4E
 
 	.globl gUnknown_8300A8A
 gUnknown_8300A8A: @ 0x8300A8A
-	.incbin "build/data/data.bin", 0x64ce6, 0xb
+	.string "${MUS_RG_VS_GYM_LEADER}{WHITE}{HIGHLIGHT}{TRANSPARENT}{SHADOW}{DARK_GRAY}$"
 
 	.globl gUnknown_8300A95
 gUnknown_8300A95: @ 0x8300A95
@@ -2865,7 +2989,7 @@ gUnknown_8300A9B: @ 0x8300A9B
 
 	.globl gUnknown_8300A9E
 gUnknown_8300A9E: @ 0x8300A9E
-	.incbin "build/data/data.bin", 0x64cfa, 0x2
+	.string "\n$"
 
 	.globl gUnknown_8300AA0
 gUnknown_8300AA0: @ 0x8300AA0
@@ -3064,7 +3188,7 @@ gUnknown_830D204: @ 0x830D204
 
 	.globl gUnknown_830D240
 gUnknown_830D240: @ 0x830D240
-	.incbin "build/data/data.bin", 0x7149c, 0xf
+	.string "{B_COPY_VAR_1}に\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}{BLUE}りま{DYNAMIC_COLOR4}！$"
 
 	.globl gUnknown_830D24F
 gUnknown_830D24F: @ 0x830D24F
@@ -3072,7 +3196,7 @@ gUnknown_830D24F: @ 0x830D24F
 
 	.globl gUnknown_830D258
 gUnknown_830D258: @ 0x830D258
-	.incbin "build/data/data.bin", 0x714b4, 0x12
+	.string "{B_COPY_VAR_1}{GREEN}ら\n{B_COPY_VAR_3}{SE_SAVE}{LIGHT_RED}{BLUE}られて{LIGHT_GREEN}た！$"
 
 	.globl gUnknown_830D26A
 gUnknown_830D26A: @ 0x830D26A
@@ -3112,11 +3236,14 @@ gUnknown_830D774: @ 0x830D774
 
 	.globl gUnknown_830F6AE
 gUnknown_830F6AE: @ 0x830F6AE
-	.incbin "build/data/data.bin", 0x7390a, 0x4d
+	.string "{LIGHT_GREEN}のみブレンダー{SE_WARP_IN}{LIGHT_GREEN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "\pバッグ{GREEN}{SE_LAVARIDGE_FALL_WARP}{LIGHT_GREEN}のみブレンダー{SE_BOO}{DARK_GRAY}れる\n{LIGHT_GREEN}"
+	.string "のみ{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}\p$"
+	.string "カッコイ$カワイイ$ウツクシ$カシコイ$タクマシ$"
 
 	.globl gUnknown_830F6FB
 gUnknown_830F6FB: @ 0x830F6FB
-	.incbin "build/data/data.bin", 0x73957, 0x2
+	.string "\p$"
 
 	.globl gUnknown_830F6FD
 gUnknown_830F6FD: @ 0x830F6FD
@@ -3151,19 +3278,22 @@ gUnknown_830F79B: @ 0x830F79B
 
 	.globl gUnknown_830F7B2
 gUnknown_830F7B2: @ 0x830F7B2
-	.incbin "build/data/data.bin", 0x73a0e, 0x26
+	.string "{LIGHT_GREEN}のみブレンダー{SE_BOO}{DARK_GRAY}れ{SE_ICE_BREAK}{LIGHT_GREEN}のみが\n{MUS_RG_GAME_FREAK}"
+	.string "の{SE_NOTE_B}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
+	.string "ん\p$"
 
 	.globl gUnknown_830F7D8
 gUnknown_830F7D8: @ 0x830F7D8
-	.incbin "build/data/data.bin", 0x73a34, 0x15
+	.string "ポロックケース{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\p$"
 
 	.globl gUnknown_830F7ED
 gUnknown_830F7ED: @ 0x830F7ED
-	.incbin "build/data/data.bin", 0x73a49, 0x1b
+	.string "{SE_I}{LIGHT_GREEN}のみブレンダーに\n{DARK_GRAY}れ{SE_ICE_BREAK}{LIGHT_GREEN}のみが{MUS_RG_GAME_FREAK}"
+	.string "よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_830F808
 gUnknown_830F808: @ 0x830F808
-	.incbin "build/data/data.bin", 0x73a64, 0x17
+	.string "{SE_I}ポロックケースが\n{DARK_GRAY}っ{PH_THOUGHT_HELD}{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\p$"
 
 	.globl gUnknown_830F81F
 gUnknown_830F81F: @ 0x830F81F
@@ -3199,7 +3329,7 @@ gUnknown_830F847: @ 0x830F847
 
 	.globl gUnknown_830F849
 gUnknown_830F849: @ 0x830F849
-	.incbin "build/data/data.bin", 0x73aa5, 0x4
+	.string "\n{SE_RG_SHOP}$"
 
 	.globl gUnknown_830F84D
 gUnknown_830F84D: @ 0x830F84D
@@ -3307,7 +3437,11 @@ gUnknown_830FB50: @ 0x830FB50
 
 	.globl gUnknown_830FB68
 gUnknown_830FB68: @ 0x830FB68
-	.incbin "build/data/data.bin", 0x73dc4, 0x28
+	.string "ü${SE_BANG}{SE_LEDGE}{SE_PC_LOGIN}{SE_USE_ITEM}{SE_RG_CARD_FLIPPING}{SE_BANG}{SE_LEDGE}"
+	.string "\n{MUS_RG_VS_CHAMPION}{TRANSPARENT}ü$"
+	.string "{SE_M_MEGA_KICK}{SE_LEDGE}{SE_PC_LOGIN}$"
+	.string "${SE_RG_CARD_FLIPPING}{SE_M_MEGA_KICK}{SE_LEDGE}\n$"
+	.string "$$"
 
 	.globl gUnknown_830FB90
 gUnknown_830FB90: @ 0x830FB90
@@ -3328,7 +3462,13 @@ gUnknown_830FBB8: @ 0x830FBB8
 
 	.globl gUnknown_830FBC8
 gUnknown_830FBC8: @ 0x830FBC8
-	.incbin "build/data/data.bin", 0x73e24, 0x61
+	.string "ポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{SE_EFFECTIVE}{MUS_DUMMY}"
+	.string "{TRANSPARENT}\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
+	.string "だ{MUS_RG_VICTORY_WILD}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
+	.string "\n{MUS_RG_OAK}TVがで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{SE_FAINT}$"
+	.string "\nダメTVがで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{SE_FAINT}$"
+	.string "{GREEN}{MUS_RG_VS_DEOXYS}{SE_RG_SHOP}{DYNAMIC_COLOR3}{PH_GOAT_HELD}{SE_RG_SHOP}{WHITE}"
+	.string "{MUS_RG_SEVII_CAVE}{SE_RG_SHOP}に{PH_CLOTH_SOLO}{SE_RG_SHOP}{DYNAMIC_COLOR4}っ{PH_THOUGHT_HELD}$"
 
 	.globl gUnknown_830FC29
 gUnknown_830FC29: @ 0x830FC29
@@ -3344,7 +3484,8 @@ gUnknown_830FC33: @ 0x830FC33
 
 	.globl gUnknown_830FC38
 gUnknown_830FC38: @ 0x830FC38
-	.incbin "build/data/data.bin", 0x73e94, 0x18
+	.string "{LIGHT_GREEN}のみブレンダー\n{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR6}{BLUE}"
+	.string "{SE_NOTE_C_HIGH}ランキング！$"
 
 	.globl gUnknown_830FC50
 gUnknown_830FC50: @ 0x830FC50
@@ -4403,7 +4544,7 @@ gUnknown_84E8B40: @ 0x84E8B40
 
 	.globl gUnknown_84E8B84
 gUnknown_84E8B84: @ 0x84E8B84
-	.incbin "build/data/data.bin", 0x24cde0, 0x10
+	.string "サファリボール\nの{DYNAMIC_COLOR1}{SE_ICE_STAIRS}{B_COPY_VAR_1}コ$"
 
 	.globl gUnknown_84E8B94
 gUnknown_84E8B94: @ 0x84E8B94
@@ -5219,55 +5360,55 @@ gUnknown_8537350: @ 0x8537350
 
 	.globl gUnknown_853736C
 gUnknown_853736C: @ 0x853736C
-	.incbin "build/data/data.bin", 0x29b5c8, 0xa
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}{LIGHT_RED}{MUS_RG_ENCOUNTER_RIVAL}$"
 
 	.globl gUnknown_8537376
 gUnknown_8537376: @ 0x8537376
-	.incbin "build/data/data.bin", 0x29b5d2, 0xa
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ふつ{LIGHT_GRAY}$"
 
 	.globl gUnknown_8537380
 gUnknown_8537380: @ 0x8537380
-	.incbin "build/data/data.bin", 0x29b5dc, 0xa
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}は{MUS_RG_SEVII_45}$"
 
 	.globl gUnknown_853738A
 gUnknown_853738A: @ 0x853738A
-	.incbin "build/data/data.bin", 0x29b5e6, 0x9
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}みる$"
 
 	.globl gUnknown_8537393
 gUnknown_8537393: @ 0x8537393
-	.incbin "build/data/data.bin", 0x29b5ef, 0xa
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}み{MUS_RG_GAME_FREAK}$"
 
 	.globl gUnknown_853739D
 gUnknown_853739D: @ 0x853739D
-	.incbin "build/data/data.bin", 0x29b5f9, 0xb
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{MUS_RG_SILPH}れ{GREEN}{RED}$"
 
 	.globl gUnknown_85373A8
 gUnknown_85373A8: @ 0x85373A8
-	.incbin "build/data/data.bin", 0x29b604, 0xb
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}{GREEN}ちぬ{LIGHT_GREEN}$"
 
 	.globl gUnknown_85373B3
 gUnknown_85373B3: @ 0x85373B3
-	.incbin "build/data/data.bin", 0x29b60f, 0xb
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}モノラル$"
 
 	.globl gUnknown_85373BE
 gUnknown_85373BE: @ 0x85373BE
-	.incbin "build/data/data.bin", 0x29b61a, 0xb
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ステレオ$"
 
 	.globl gUnknown_85373C9
 gUnknown_85373C9: @ 0x85373C9
-	.incbin "build/data/data.bin", 0x29b625, 0xa
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}タイプ$"
 
 	.globl gUnknown_85373D3
 gUnknown_85373D3: @ 0x85373D3
-	.incbin "build/data/data.bin", 0x29b62f, 0x7
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}$"
 
 	.globl gUnknown_85373DA
 gUnknown_85373DA: @ 0x85373DA
-	.incbin "build/data/data.bin", 0x29b636, 0xb
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ノーマル$"
 
 	.globl gUnknown_85373E5
 gUnknown_85373E5: @ 0x85373E5
-	.incbin "build/data/data.bin", 0x29b641, 0x9
+	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}LR$"
 
 	.globl gUnknown_85373EE
 gUnknown_85373EE: @ 0x85373EE
@@ -6709,7 +6850,8 @@ gUnknown_8566CA4: @ 0x8566CA4
 
 	.globl gUnknown_8566CB1
 gUnknown_8566CB1: @ 0x8566CB1
-	.incbin "build/data/data.bin", 0x2caf0d, 0x16
+	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{LIGHT_RED}つ{GREEN}"
+	.string "れ{DYNAMIC_COLOR2}まで{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_8566CC7
 gUnknown_8566CC7: @ 0x8566CC7
@@ -7361,7 +7503,7 @@ gUnknown_8571198: @ 0x8571198
 
 	.globl gUnknown_85711B0
 gUnknown_85711B0: @ 0x85711B0
-	.incbin "build/data/data.bin", 0x2d540c, 0x2
+	.string "\n$"
 
 	.globl gUnknown_85711B2
 gUnknown_85711B2: @ 0x85711B2
@@ -7901,7 +8043,541 @@ gUnknown_857D86C: @ 0x857D86C
 
 	.globl gUnknown_857D884
 gUnknown_857D884: @ 0x857D884
-	.incbin "build/data/data.bin", 0x2e1ae0, 0x344c
+	.string "{TRANSPARENT}へふ{DYNAMIC_COLOR5}ほ{SE_U}{WHITE}ぇんほが{DYNAMIC_COLOR1}めま{LIGHT_RED}よんつぬほは{LIGHT_GRAY}"
+	.string "ち{LIGHT_RED}ちね{LIGHT_RED}らぁはぜつめぜにろぁん{MUS_RG_DEX_RATING}をも{DYNAMIC_COLOR4}りぬ{DYNAMIC_COLOR3}"
+	.string "のぁ{DYNAMIC_COLOR5}てぃねみをりめ{WHITE}{LIGHT_GRAY}の{DYNAMIC_COLOR5}れろめなゆめ{DYNAMIC_COLOR1}よぐ{GREEN}"
+	.string "もに{LIGHT_GREEN}ぁめげひごょゅ{DYNAMIC_COLOR1}ろやょ{LIGHT_BLUE}つふぁもんぎわ{LIGHT_RED}れみ{LIGHT_GREEN}とぇぅ{BLUE}"
+	.string "ぬはやをめ{DYNAMIC_COLOR1}にひよろるにちゅ{BLUE}とほ{BLUE}と{LIGHT_RED}ぅとぎぅぬゃぉつち{LIGHT_BLUE}まりじぇゅ{LIGHT_GRAY}"
+	.string "ほざろんた{WHITE}ぬ{LIGHT_GRAY}ずめぬねゃ{BLUE}るの{LIGHT_GRAY}やりじぉぁぅやのひねよ{LIGHT_GREEN}{DYNAMIC_COLOR4}"
+	.string "ゆをぜつぁなゆる{DYNAMIC_COLOR6}つ{LIGHT_GREEN}わつわ{DYNAMIC_COLOR2}よつは{SE_BOO}{DYNAMIC_COLOR2}"
+	.string "ぁにゅやまふめるぉらごぃぬち{GREEN}ゅずぅぁちげゆ{MUS_RG_ENCOUNTER_GYM_LEADER}のぉねゅれみむんぇひごまもぐるれんぅるれ{DYNAMIC_COLOR5}"
+	.string "を{SE_WARP_IN}まぎりひとごろん{RED}よょぃちごむをろぜひみてぅぉ{DYNAMIC_COLOR3}ぃめろろ{MUS_RG_CAUGHT}ほふつふ{DYNAMIC_COLOR6}"
+	.string "ざょぎたをねぁをゅごちがぅててじぁほわぉんがつざまぉぇれら{DYNAMIC_COLOR4}ごふゅれら{LIGHT_BLUE}じらつ{DYNAMIC_COLOR2}ね{DYNAMIC_COLOR3}"
+	.string "なへみ{WHITE}ふ{BLUE}ごふつがぉな{LIGHT_GRAY}われごぅ{DYNAMIC_COLOR6}{RED}ゅ{BLUE}ぬぉぎじれぁゅにたゅにもてわぁ{GREEN}"
+	.string "みらげ{SE_CLICK}ふれ{LIGHT_GRAY}ぐへり{LIGHT_GREEN}はみ{DYNAMIC_COLOR1}が{LIGHT_GREEN}"
+	.string "ゅをなぁわたわもぜるとれむょゃはわふじぉぎろめゅりまじ{DYNAMIC_COLOR6}ふほずひ{DYNAMIC_COLOR3}ずまろぅわぇぐち{LIGHT_RED}{LIGHT_BLUE}ち{RED}"
+	.string "ぎれ{SE_TRUCK_STOP}にて{DYNAMIC_COLOR2}ぅゃれてわめむぐぁながりほ{LIGHT_GREEN}ごをち{LIGHT_GRAY}りをぃほぅちちも{WHITE}"
+	.string "ほじぅゃ{MUS_RG_NET_CENTER}ゃむ{DYNAMIC_COLOR5}ゆじ{LIGHT_GREEN}ぬぉなたるぇぇねまぃをごぃらずにぅなつぃゆぬぉ{GREEN}{SE_TRUCK_DOOR}"
+	.string "るねざ{LIGHT_GRAY}つわ{DYNAMIC_COLOR3}ち{LIGHT_BLUE}ぃぃた{DYNAMIC_COLOR5}ちらにひ{DYNAMIC_COLOR3}"
+	.string "ごんろぉほてををちやるゃずろやほむらはを{RED}ぐにずぉよひんゆ{DYNAMIC_COLOR3}{GREEN}のゆのねへぉぉへりをふたれまゅほ{PH_FACE_SOLO}"
+	.string "たろげと{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}な{DYNAMIC_COLOR3}わたがげの{GREEN}てぬやたゆや{RED}{SE_N}"
+	.string "ゅゃ{SE_BALL_BOUNCE_3}がざ{LIGHT_GREEN}はろりょゃぐぁり{LIGHT_BLUE}まぎぅぃにゆぅねりぅね{DYNAMIC_COLOR3}め{GREEN}"
+	.string "ぐをじみやんらむずねねなざや{GREEN}ひよな{DYNAMIC_COLOR5}め{DYNAMIC_COLOR1}{DYNAMIC_COLOR4}"
+	.string "まねにゃたりむみちちょぇなごんやまをつょんみ{DYNAMIC_COLOR2}ぬぉよ{LIGHT_GRAY}ま{BLUE}のぅれねゆゅををぃぎねふゆとふめり{BLUE}"
+	.string "もむよほぃの{DYNAMIC_COLOR6}なたぁめ{MUS_RG_OBTAIN_KEY_ITEM}ゆざ{WHITE}へ{DYNAMIC_COLOR5}とね{DYNAMIC_COLOR4}"
+	.string "ねぬめ{DYNAMIC_COLOR2}ぅてゃむ{DYNAMIC_COLOR6}をょぐまゆねたまをみみの{DYNAMIC_COLOR2}ぅぉてとんちむを{DYNAMIC_COLOR1}"
+	.string "が{LIGHT_GREEN}なひぇ{RED}ぇ{GREEN}ねひてやつょめにへるふゅぬむょぬろゅぇのれ{DYNAMIC_COLOR6}ん{SE_FAINT}{PH_FACE_SOLO}"
+	.string "{DYNAMIC_COLOR5}りぅぇぇご{LIGHT_RED}みょよつゃ{GREEN}ゃほぅぇゅ{LIGHT_RED}ゃほてななとわるふねややつめるねゃょぃほ{WHITE}"
+	.string "も{DYNAMIC_COLOR3}ざや{DYNAMIC_COLOR1}じにらほも{MUS_RG_GAME_FREAK}つちのれへぅな{LIGHT_GRAY}ごれむのわ{DYNAMIC_COLOR1}"
+	.string "もちゆちはは{DYNAMIC_COLOR1}ゃご{DYNAMIC_COLOR2}ぉむ{DYNAMIC_COLOR2}が{WHITE}ぅりゅへらわぃぅんぐをぃ{LIGHT_RED}"
+	.string "わつれろぐめみなゃふふ{WHITE}なみにめて{RED}ねほてたゆぉなぐ{LIGHT_GRAY}ぅぜょねともたぁほままぬ{MUS_RG_TRAINER_TOWER}"
+	.string "にぅみねぃんねがご{DYNAMIC_COLOR5}ぃたぐやよぐほぃよんつ{WHITE}とがれんむ{GREEN}へれにぇ{LIGHT_BLUE}ぎふ{LIGHT_GREEN}"
+	.string "めぬごをな{LIGHT_GREEN}ほんひんへ{RED}{LIGHT_BLUE}ぃぃをがをゃやねやゆ{DYNAMIC_COLOR5}をよも{DYNAMIC_COLOR1}"
+	.string "につをちむりん{DYNAMIC_COLOR6}{WHITE}む{WHITE}ぅつぜひほむゆろよねてなをゃもむょ{DYNAMIC_COLOR5}んふとめふわ{DYNAMIC_COLOR2}"
+	.string "りはねむむ{LIGHT_GREEN}はやよるろ{DYNAMIC_COLOR1}ゃずらぉつゃひま{WHITE}れん{GREEN}もぁまとね{GREEN}よぅまろめよんほなにみめりながつゆ{RED}"
+	.string "わま{RED}ん{DYNAMIC_COLOR3}てね{LIGHT_GREEN}{DYNAMIC_COLOR2}ょへふれぃめふんつぁろむほにぎぃ{MUS_RG_SS_ANNE}に{LIGHT_RED}"
+	.string "とみぎざぉむひぁとれらぎとひろまろるろゆらょむちめひる{LIGHT_GRAY}ひねやりむをょざわやぉぬまれげむ{DYNAMIC_COLOR1}も{SE_SAVE}{DYNAMIC_COLOR2}"
+	.string "むちぎの{DYNAMIC_COLOR6}{DYNAMIC_COLOR5}ふま{DYNAMIC_COLOR6}がざたがぎぅゅ{LIGHT_GREEN}なりほんのよたぉじゅぁげ{RED}"
+	.string "ゃ{DYNAMIC_COLOR4}ねは{WHITE}をなじはぬぬぜぇ{DYNAMIC_COLOR2}むちほよろ{DYNAMIC_COLOR4}のやん{RED}ひひぉみなむへま{RED}"
+	.string "む{DYNAMIC_COLOR6}つまをれぇ{LIGHT_GRAY}がまゅ{LIGHT_GREEN}らやまぅぁぃな{SE_WIN_OPEN}や{DYNAMIC_COLOR2}"
+	.string "めは{DYNAMIC_COLOR3}ごるとはぬがみゆぜよがげずため{RED}ちりつふ{LIGHT_GRAY}んん{DYNAMIC_COLOR5}ぎり{WHITE}るめほぉの{GREEN}"
+	.string "むらぉの{MUS_RG_POKE_JUMP}{LIGHT_RED}ぬちちわまよほぐまりんぁつめゃてごよぁ{SE_TRUCK_DOOR}とたぅちへをれ{BLUE}{BLUE}がなねゃ{RED}"
+	.string "ろやぁほらめれや{LIGHT_GREEN}とゆ{WHITE}らのる{DYNAMIC_COLOR1}るじふぁ{DYNAMIC_COLOR4}まふやじぇょへやとむには{DYNAMIC_COLOR4}"
+	.string "るぜろれはずゅちりねぇ{LIGHT_RED}なむんゃをとれざ{BLUE}がぜゃほらやふににぉるごのょぁふ{LIGHT_GRAY}ゆわ{DYNAMIC_COLOR2}"
+	.string "にょふへひわらひ{DYNAMIC_COLOR2}まろ{BLUE}たらぜゆぁぉてま{RED}ぅが{DYNAMIC_COLOR5}ぁつ{BLUE}もみげはほぁ{DYNAMIC_COLOR2}"
+	.string "まほみのもごと{SE_FU_ZAKU}らと{RED}ゆょはろらむなりてわ{DYNAMIC_COLOR5}ざゅ{DYNAMIC_COLOR3}をろがになるなへぬゃょ{LIGHT_BLUE}"
+	.string "{DYNAMIC_COLOR1}ぅがめりぬろゅとろつ{BLUE}てまぅてり{GREEN}{LIGHT_GREEN}ゅもげる{DYNAMIC_COLOR6}やん{LIGHT_GREEN}"
+	.string "ゅよ{DYNAMIC_COLOR5}つなもぉわ{DYNAMIC_COLOR5}むよふつゆもへぁ{RED}ゅぉに{WHITE}やじわんゅ{DYNAMIC_COLOR1}"
+	.string "ゆちてゆひひななぐた{DYNAMIC_COLOR2}ゅやげらぃんぁなたまゅひりゅよぃがゃがろ{DYNAMIC_COLOR6}ぃるんぜろぎゃろろぁゆ{DYNAMIC_COLOR4}"
+	.string "りれぉねたむつちまめゃちゆもむぜちよらゆりょつなよぇちねやぇゆがらげぉゅ{LIGHT_GREEN}ふは{DYNAMIC_COLOR5}れほぁ{SE_SUCCESS}"
+	.string "んむひざとぁげぁずぎなはてぁる{DYNAMIC_COLOR4}ぁがぬねぃふゅなゃとりちわわゆれみぜり{DYNAMIC_COLOR3}ゃひぃんゆがふやまゆよ{DYNAMIC_COLOR3}"
+	.string "のゃねたゅ{DYNAMIC_COLOR1}てちゆてみてのちみりへずぃひもやむ{DYNAMIC_COLOR4}ももへりんをつま{DYNAMIC_COLOR5}んろ{DYNAMIC_COLOR2}"
+	.string "ぅぇやざわてざつりにれ{LIGHT_RED}{DYNAMIC_COLOR3}ぇぐ{DYNAMIC_COLOR2}ぇむ{RED}とたぅぇつまもぐんんめじら{DYNAMIC_COLOR3}"
+	.string "ほね{SE_FU_ZAKU}ぬ{GREEN}ぅとてむはとみゅ{DYNAMIC_COLOR1}ごゆぉ{BLUE}り{PH_FLEECE_SOLO}ぉ{SE_SWITCH}"
+	.string "てめむりぃとんとぇょぐもほふちぃがにぃなぅまゃりわゅ{LIGHT_RED}るがぉれふぬんた{GREEN}にぇま{SE_REPEL}るほ{SE_RG_DEOXYS_MOVE}"
+	.string "にごもほひゃれぃちろ{SE_PC_OFF}まへがはげねゆふにわ{RED}ぜぉよもをなわ{MUS_RG_VS_DEOXYS}ゅら{LIGHT_GREEN}ゅぉは{DYNAMIC_COLOR3}"
+	.string "たりよわぁょにが{DYNAMIC_COLOR2}らひじねらまみろれぉ{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}"
+	.string "みゅざぁぉむなをよゃまはむぁわれはぇはごぜむてぜて{DYNAMIC_COLOR6}やめとひたむ{GREEN}りゆゃたん{DYNAMIC_COLOR5}とざずゆに{GREEN}"
+	.string "ぃ{DYNAMIC_COLOR2}{RED}ま{PH_KIT_BLEND}や{DYNAMIC_COLOR3}ぬゆろざをなょぉねもれへたれゅぬ{SE_ICE_STAIRS}"
+	.string "がや{DYNAMIC_COLOR1}ごなへ{DYNAMIC_COLOR2}まざぅゆへ{DYNAMIC_COLOR6}へみてゃちろんも{DYNAMIC_COLOR3}ん{MUS_RG_SEVII_45}"
+	.string "とぅにの{DYNAMIC_COLOR5}もゅはたにと{RED}のをらが{PH_FACE_HELD}{PH_TRAP_SOLO}{RED}に{DYNAMIC_COLOR4}めゆ{SE_FU_ZAKU}"
+	.string "にれぜよみ{DYNAMIC_COLOR3}つぁんゅひ{DYNAMIC_COLOR4}めほ{WHITE}ゃ{LIGHT_RED}めむゃれぇ{DYNAMIC_COLOR2}{LIGHT_BLUE}"
+	.string "へぜぇぁじねを{DYNAMIC_COLOR2}ぎょぐぬりゃ{RED}やょ{DYNAMIC_COLOR5}れぎ{WHITE}とざやめむ{LIGHT_GRAY}ねぇぁつるやぅ{DYNAMIC_COLOR1}"
+	.string "ごつはふみぃぅひはむた{LIGHT_RED}るたよをてに{DYNAMIC_COLOR3}へろ{GREEN}ひ{GREEN}つとぎ{DYNAMIC_COLOR6}ゅもげ{SE_UNLOCK}"
+	.string "のぉるとをれむるとぅとは{GREEN}ほねひりごにるなほつゃ{DYNAMIC_COLOR1}とひ{LIGHT_RED}ら{SE_PIKE_CURTAIN_CLOSE}"
+	.string "よれめゅむみねみがぬとまちへちゆやろぁ{LIGHT_GREEN}ぜまわゆゆれるねちやりぅわれぐ{DYNAMIC_COLOR2}よりたよめ{GREEN}に{LIGHT_BLUE}"
+	.string "わてゃのなげつむへぎもつゆやむぃつがはつやごゆぇなも{DYNAMIC_COLOR4}はたにんよへとにずんま{DYNAMIC_COLOR1}にたへぃろ{RED}げの{BLUE}"
+	.string "をんりほぉ{DYNAMIC_COLOR1}つん{DYNAMIC_COLOR4}{LIGHT_GRAY}ぁよげほゅごれ{LIGHT_GRAY}はねぜ{DYNAMIC_COLOR2}ら{RED}"
+	.string "{LIGHT_RED}ゃょ{DYNAMIC_COLOR2}らごぬち{DYNAMIC_COLOR4}らよわまみよたみゆもをが{LIGHT_BLUE}"
+	.string "てとぬをんじもへはまむぉんりぬてよざょとはぉぇみろのずみ{MUS_RG_VICTORY_GYM_LEADER}をざざれぃぃりゆぜほ{LIGHT_GRAY}"
+	.string "ぬほゅちふひとれりげも{DYNAMIC_COLOR5}まつょむみ{LIGHT_GREEN}ごたものゃ{DYNAMIC_COLOR4}んねぜみゆずごな{DYNAMIC_COLOR2}"
+	.string "んつが{DYNAMIC_COLOR2}もじぇまに{LIGHT_GRAY}らと{DYNAMIC_COLOR3}むね{LIGHT_GRAY}ぃずむて{SE_BALL_OPEN}"
+	.string "ぇぜもに{DYNAMIC_COLOR5}ぅへねふへぃ{DYNAMIC_COLOR5}ほむみもぜ{DYNAMIC_COLOR3}ほとぉめめむなょ{LIGHT_RED}"
+	.string "ほへぅとみちが{DYNAMIC_COLOR4}ぉのゆ{LIGHT_RED}ょほぅみゅげぁぇぁぃともをゅほる{LIGHT_RED}{LIGHT_RED}ひ{LIGHT_BLUE}"
+	.string "まよぁ{DYNAMIC_COLOR2}ななちてるひねふてゅゃぅもらぜぁ{LIGHT_BLUE}ぃのもつ{PH_FACE_SOLO}れむ{LIGHT_BLUE}"
+	.string "ざへ{MUS_RG_VICTORY_GYM_LEADER}ため{LIGHT_RED}ぬめ{BLUE}ひ{DYNAMIC_COLOR1}{DYNAMIC_COLOR6}"
+	.string "{MUS_RG_GAME_FREAK}ちて{WHITE}むめにぐぉやぎゃ{DYNAMIC_COLOR6}ほろろななみめんげぜぅはらろるゃとにぐぁてずにょむ{SE_ROTATING_GATE}"
+	.string "やろやむぃなぅてたがや{BLUE}{LIGHT_GREEN}もむ{LIGHT_BLUE}ゆ{LIGHT_RED}ざぇの{LIGHT_GRAY}ゆ{DYNAMIC_COLOR6}"
+	.string "るろに{LIGHT_GREEN}てずじゆょ{DYNAMIC_COLOR2}りんろに{DYNAMIC_COLOR3}ぅちぃてをよずがるぁんなじぬふんむぉぁた{DYNAMIC_COLOR4}"
+	.string "{LIGHT_RED}へふはつ{DYNAMIC_COLOR5}ねがひちと{GREEN}とむぅ{DYNAMIC_COLOR5}らは{LIGHT_GRAY}{SE_FAINT}"
+	.string "ゃぅぜ{DYNAMIC_COLOR2}へ{DYNAMIC_COLOR6}つまはなた{SE_BALL_OPEN}やず{DYNAMIC_COLOR1}れぃろやよぅたをぁぁぜ{DYNAMIC_COLOR3}"
+	.string "てつ{DYNAMIC_COLOR2}にな{LIGHT_GREEN}まりたぇ{DYNAMIC_COLOR6}ぬな{DYNAMIC_COLOR2}らぉゃへたふげつわらが{DYNAMIC_COLOR1}"
+	.string "はぇ{LIGHT_RED}まむや{DYNAMIC_COLOR4}まふぬやぁごぇごゆた{LIGHT_GRAY}ぁむ{DYNAMIC_COLOR3}たも{DYNAMIC_COLOR5}"
+	.string "げわぉ{LIGHT_GRAY}わつ{GREEN}ふれがぃぜ{WHITE}ほゅにがわぇゅ{LIGHT_RED}ちめる{LIGHT_BLUE}みろ{DYNAMIC_COLOR4}"
+	.string "まね{DYNAMIC_COLOR4}みもぐに{DYNAMIC_COLOR6}げねむゅろょよろも{LIGHT_RED}ぁひ{BLUE}ぬず{LIGHT_BLUE}"
+	.string "にをげがなゅゅる{DYNAMIC_COLOR1}{MUS_RG_OBTAIN_KEY_ITEM}ぐまとゃぉぬへねにへは{WHITE}ぐめほらょぇとよ{DYNAMIC_COLOR1}"
+	.string "ぐょま{DYNAMIC_COLOR4}ほ{DYNAMIC_COLOR2}{DYNAMIC_COLOR1}のゅへゃ{LIGHT_GRAY}つに{DYNAMIC_COLOR3}"
+	.string "てん{DYNAMIC_COLOR3}ゃほたとほもぇ{MUS_RG_VS_DEOXYS}たるゅねぉぉへはざなもずぜめ{MUS_RG_ENCOUNTER_GYM_LEADER}"
+	.string "わり{DYNAMIC_COLOR1}ぁは{GREEN}ゅざぬろ{LIGHT_GRAY}つぬぁ{DYNAMIC_COLOR1}よつぎちょひも{WHITE}ぐゅののぬ{LIGHT_BLUE}"
+	.string "りめほらわゅぉわらゆぅ{GREEN}ぅをはぐりを{RED}ほやずふざぃひぜずがめょ{SE_FLEE}{WHITE}ふつはたつほわまつれぁ{GREEN}のゅはねご{LIGHT_BLUE}"
+	.string "ょゃへ{MUS_RG_CAUGHT_INTRO}{LIGHT_GREEN}たみぁへ{DYNAMIC_COLOR2}{LIGHT_GRAY}ぉふにぅ{LIGHT_RED}てひる{GREEN}"
+	.string "てぃをょれをわのゃふ{DYNAMIC_COLOR6}なつょなわげ{GREEN}ふつへよ{LIGHT_GRAY}ぎへ{SE_RG_HELP_OPEN}をぬんたとぬふゃ{DYNAMIC_COLOR6}"
+	.string "り{LIGHT_BLUE}がひりへよるをょほぬりな{DYNAMIC_COLOR6}ふみをたらにんと{LIGHT_BLUE}つごじむゆは{SE_UNLOCK}めょ{DYNAMIC_COLOR4}"
+	.string "ぃたぬの{SE_U}ごむれりゃを{DYNAMIC_COLOR6}に{DYNAMIC_COLOR1}ぃり{SE_WIN_OPEN}ゆぅんれとぉりょたん{LIGHT_RED}"
+	.string "んののはなわとぬが{DYNAMIC_COLOR6}てぇぬひぐねぇんぇほやへぅつへろと{DYNAMIC_COLOR3}らょんぇ{GREEN}{DYNAMIC_COLOR1}はりりみげげぬ{BLUE}"
+	.string "らょねはたほよひまぉまむぬぁ{WHITE}{BLUE}みゅ{LIGHT_GRAY}の{PH_FLEECE_BLEND}{MUS_RG_TEACHY_TV_SHOW}をも{DYNAMIC_COLOR5}"
+	.string "ぬぇぅるちめぬめげわもゃみ{SE_CONTEST_PLACE}げめゆぉむぉ{RED}ら{RED}ねぇわ{DYNAMIC_COLOR3}ぁりとわぜぃろぃむへ{WHITE}ゆぇ{LIGHT_RED}"
+	.string "もゃやたぃじとひぜぎぁめひぇゆ{LIGHT_GREEN}が{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}へ{LIGHT_GRAY}ほは{DYNAMIC_COLOR6}"
+	.string "ざつちね{SE_O}ゅぁぇねともぃひちじつはにゅり{LIGHT_RED}やぬじがん{LIGHT_BLUE}んねへぬみまねもわぁみぜにぜるんもごるねぐてほぇゅとへれゅ{WHITE}"
+	.string "へずごほめほにねめつずるぉぁとのご{LIGHT_GREEN}な{GREEN}じるゅがもゃへをねつひ{DYNAMIC_COLOR2}てやてぎふま{DYNAMIC_COLOR2}ひてむふ{GREEN}"
+	.string "ぐぇがじよるよなざぉ{SE_LAVARIDGE_FALL_WARP}{WHITE}んなねぅ{DYNAMIC_COLOR4}わてらごみを{WHITE}よもなぃ{SE_CLICK}"
+	.string "ぬがぜぉゆやぅ{GREEN}ごが{LIGHT_GRAY}ねはわゃとへょねげ{RED}もつよなろのはるわょ{WHITE}のへぁ{GREEN}ろ{DYNAMIC_COLOR3}"
+	.string "つよょぇへ{DYNAMIC_COLOR4}つり{LIGHT_GRAY}りてる{GREEN}ぬ{LIGHT_GRAY}ぎむぃわた{SE_BIKE_HOP}"
+	.string "りやごふみず{MUS_RG_CAUGHT_INTRO}{DYNAMIC_COLOR3}のるわはぐぃめれまめとゃわとゆひ{GREEN}ごな{GREEN}ふてな{LIGHT_GRAY}"
+	.string "ねほれひぬゆぁふる{MUS_RG_TEACHY_TV_MENU}ぇほへりゅょ{LIGHT_GRAY}ゃにじれつ{DYNAMIC_COLOR4}てへをむぇぬんはなよめぁなざ{DYNAMIC_COLOR5}"
+	.string "みぁらて{RED}{LIGHT_BLUE}ぇほ{WHITE}ゃ{GREEN}にほんひふりてれぃゃつつぇねへへゅ{LIGHT_GREEN}ふにをじゅふひやむをほた{LIGHT_BLUE}"
+	.string "とじちつ{MUS_RG_SEVII_67}よ{MUS_RG_SEVII_123}のの{LIGHT_RED}と{DYNAMIC_COLOR2}むは{MUS_RG_CELADON}"
+	.string "わねりをほたつんねん{MUS_RG_SEVII_CAVE}わとぬやぐ{BLUE}ぇにとめにりむちたわもょろぐむよ{DYNAMIC_COLOR5}{GREEN}をざずよれひ{SE_SUCCESS}"
+	.string "ざぉゅぜ{SE_BANG}{DYNAMIC_COLOR2}たゃざぬを{LIGHT_GREEN}まやぐら{SE_BOO}へぉろほ{DYNAMIC_COLOR6}{BLUE}ぅげ{LIGHT_BLUE}"
+	.string "て{DYNAMIC_COLOR3}むふれぬゃるらたがひねな{BLUE}ぁまにつまりゃふみめつ{WHITE}つむぅためよほ{WHITE}"
+	.string "じちほらゆじぃやへちめょぃにまずれざらひまるたほ{LIGHT_RED}れ{DYNAMIC_COLOR1}たと{SE_SUCCESS}ん{DYNAMIC_COLOR2}ごね{DYNAMIC_COLOR1}"
+	.string "ぐぃが{DYNAMIC_COLOR2}まへ{DYNAMIC_COLOR1}るずふぉてんりらひほ{MUS_RG_MYSTERY_GIFT}ふ{WHITE}ゆとげたふつ{LIGHT_RED}"
+	.string "れぃみよぁんん{LIGHT_GRAY}{LIGHT_GREEN}やょ{RED}ろちゆをり{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR6}"
+	.string "へなふりぃまもよょつがげぅたわわぁは{DYNAMIC_COLOR4}なぜざぇゅふにぉにりへぜむわずろやもぁぇなれひたゅねがたごほちろにやへによざをちなりりらららごげには{DYNAMIC_COLOR3}"
+	.string "はな{BLUE}ゆ{DYNAMIC_COLOR2}ためはずぬりまほ{WHITE}ほほふぁたゆ{DYNAMIC_COLOR2}ゃず{DYNAMIC_COLOR3}はひたれ{DYNAMIC_COLOR6}"
+	.string "とぬ{DYNAMIC_COLOR6}ぜぬ{LIGHT_GRAY}な{MUS_RG_SEVII_CAVE}ょぬなへね{BLUE}ょたと{DYNAMIC_COLOR4}ろ{DYNAMIC_COLOR1}"
+	.string "{LIGHT_RED}へよつほずねのょねがぬぐん{DYNAMIC_COLOR4}{RED}のにめなずよ{SE_SUCCESS}{GREEN}ぬぉめへろぐろずぅふめぜてぃふぅ{LIGHT_GREEN}"
+	.string "ろとぇゅ{MUS_RG_BERRY_PICK}{LIGHT_GREEN}み{DYNAMIC_COLOR6}ごちみ{LIGHT_GREEN}つれぃへりぎょみ{WHITE}"
+	.string "ぬなみむげひほぎつや{LIGHT_GRAY}ずまるへてみらのつゆみぇぉろぜ{LIGHT_RED}ぅゅざを{MUS_RG_SLOW_PALLET}んたれにぬ{BLUE}ぅぬんろぃほなぅなよ{BLUE}"
+	.string "たぉな{WHITE}らつ{LIGHT_GREEN}ぁるらゃぜ{BLUE}ぅふみはぉ{DYNAMIC_COLOR3}てねぅやがをんむねやげらぅゅずぃげとぉ{DYNAMIC_COLOR6}"
+	.string "はをぃんちはぅへぬざねぉぅもへぐをたへぁやなふゆ{WHITE}ろめにんひゆゅがたよぐ{WHITE}ょぬろと{LIGHT_BLUE}にぬみりもよげよられや{PH_CLOTH_HELD}"
+	.string "わるぃゅょ{WHITE}まりごへもほをちほわぁぇのぜよぅぎほぬ{LIGHT_RED}ね{SE_WARP_OUT}んつゃぜゃにたるみじょぁにゆつぬたむがゅゆがを{WHITE}{BLUE}"
+	.string "ら{LIGHT_GRAY}まる{DYNAMIC_COLOR4}れにげぜぉろのへれまるりわたりぃたぐと{SE_U}ねむり{DYNAMIC_COLOR3}がちたちざぉぇぉょは{SE_CARD}"
+	.string "ふぅひへぎへたざぐらげぜとのつと{DYNAMIC_COLOR4}ま{SE_CONTEST_PLACE}ゆねりふぇら{LIGHT_GRAY}はよをれるりら{DYNAMIC_COLOR1}"
+	.string "れね{DYNAMIC_COLOR1}はぃみはん{GREEN}{DYNAMIC_COLOR2}へ{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
+	.string "ふゅりふじにもむふぅとふんめぇゅ{LIGHT_BLUE}るぃみはたぅぜわ{DYNAMIC_COLOR1}じが{DYNAMIC_COLOR2}んをまめぅ{GREEN}{LIGHT_GREEN}"
+	.string "るめぬをぃちね{DYNAMIC_COLOR3}のな{LIGHT_GREEN}{DYNAMIC_COLOR1}ゃねるらぉ{DYNAMIC_COLOR3}ぃ{LIGHT_GRAY}"
+	.string "はが{SE_RG_POKE_JUMP_FAILURE}を{DYNAMIC_COLOR6}ごろちまがろむょぜもぬぬ{LIGHT_GREEN}ろろ{DYNAMIC_COLOR5}"
+	.string "ぃちぐへる{LIGHT_GRAY}ぉぃ{LIGHT_GRAY}ぁざみよ{LIGHT_GRAY}めとげりゅ{WHITE}りろずなねぃ{LIGHT_GREEN}ぬごわぃな{LIGHT_GREEN}"
+	.string "わぬらへぜほぉ{DYNAMIC_COLOR4}ぬたな{DYNAMIC_COLOR5}ぃ{LIGHT_BLUE}{LIGHT_RED}ぃをみなざじぃ{DYNAMIC_COLOR3}"
+	.string "ぬふは{DYNAMIC_COLOR4}ゆろろ{MUS_RG_ENCOUNTER_GYM_LEADER}にをぬぅ{SE_BALL}{BLUE}"
+	.string "てがゅむほふまろぇふたれにげぉぅぬろれ{DYNAMIC_COLOR3}じちり{DYNAMIC_COLOR1}ぃも{DYNAMIC_COLOR1}よ{DYNAMIC_COLOR1}"
+	.string "とや{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}ぃひほ{MUS_RG_VS_LEGEND}ゅり{PH_FLEECE_BLEND}{SE_BANG}{DYNAMIC_COLOR6}"
+	.string "ゅふざんりぎのひちつ{LIGHT_BLUE}にたん{DYNAMIC_COLOR4}みじ{RED}ぇにわ{MUS_RG_SEVII_67}じね{DYNAMIC_COLOR2}"
+	.string "てふめれふみらめ{LIGHT_RED}よめつへわ{BLUE}{LIGHT_RED}んぜふぬや{DYNAMIC_COLOR4}ぉょ{BLUE}やためるふ{DYNAMIC_COLOR1}"
+	.string "ちゆ{DYNAMIC_COLOR6}たやぎぁゆぇほ{GREEN}れるずげりゃぬぉねぉぬ{LIGHT_GREEN}とまちぬみて{DYNAMIC_COLOR5}"
+	.string "とごふつれてがれゅぇ{PH_TRAP_HELD}{SE_FU_ZAKU}{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{RED}わががぃゆつゆつめむめゅぉ{LIGHT_GREEN}"
+	.string "みをら{DYNAMIC_COLOR5}ぃゃのは{DYNAMIC_COLOR1}ざゆ{LIGHT_GREEN}へろぅげつはじがになにぐてなを{LIGHT_GRAY}ん{GREEN}ぐわ{SE_BOO}"
+	.string "てゅれゅや{WHITE}ねやがりゆひゃゆのぬらぁひら{DYNAMIC_COLOR4}たょざぃざぉもずらほゆをるまつむがぇまちむゅぃ{DYNAMIC_COLOR3}"
+	.string "のゆじよ{MUS_RG_NEW_GAME_INSTRUCT}へとんちぎてぃ{DYNAMIC_COLOR1}ろみほたながぃんほ{RED}わとゃの{BLUE}とね{DYNAMIC_COLOR5}"
+	.string "ふぃはんひまぐぅ{DYNAMIC_COLOR3}ふりずぉも{DYNAMIC_COLOR6}てにゆぐぁとひはりずむをのち{DYNAMIC_COLOR3}ゃぇぐぅのは{BLUE}ゃ{LIGHT_BLUE}"
+	.string "ぁちぃ{RED}{MUS_RG_NET_CENTER}ごひぉむぉ{PH_DRESS_BLEND}はぅぎぇまへにぬたひぇみ{SE_BALL}ぉつむ{DYNAMIC_COLOR6}"
+	.string "らとのらやわがゆ{LIGHT_RED}ぁじゆちつぃはに{LIGHT_GRAY}はと{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}もめ{WHITE}ざたぜをもぅぜも{SE_BALL}"
+	.string "ぉぜ{DYNAMIC_COLOR6}ぁよ{LIGHT_GREEN}なむろれぎぐほ{LIGHT_BLUE}ゆろごぃゆつをてぇのりやふをゅぇよ{DYNAMIC_COLOR4}もほへ{LIGHT_GREEN}"
+	.string "む{DYNAMIC_COLOR2}ゃぬをぇぇげざゅはたぉは{LIGHT_GREEN}めごひれぉまよ{DYNAMIC_COLOR5}ゅはご{DYNAMIC_COLOR1}ふち{LIGHT_GREEN}"
+	.string "ち{DYNAMIC_COLOR4}ざをほがるち{LIGHT_RED}つなぁふやぅにろむひもた{PH_TRAP_SOLO}とるよみにたぬた{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}"
+	.string "ぉ{WHITE}んとむ{DYNAMIC_COLOR5}がはへぁほぃや{RED}とを{SE_FLEE}ぃ{BLUE}れへへめむやわがやちつ{RED}んりへねもざににたぬぅみむつぉずゃ{GREEN}"
+	.string "ててぬぎろと{DYNAMIC_COLOR4}なやごろゃごほね{LIGHT_GREEN}ゃがへま{DYNAMIC_COLOR2}るみつほへはややじりや{DYNAMIC_COLOR2}"
+	.string "つぉひげめとてれぅぎながろんのほわぜひれぉまぉぜなる{WHITE}ほねまめのぉざゃほつめ{DYNAMIC_COLOR4}がわ{DYNAMIC_COLOR6}{BLUE}ぅん{LIGHT_BLUE}"
+	.string "ょ{WHITE}{LIGHT_RED}ほふ{RED}ほ{SE_PIKE_CURTAIN_OPEN}ふるりぁぐをと{LIGHT_BLUE}めょ{RED}ががをぁゅやもひ{BLUE}"
+	.string "みぇみま{PH_FACE_SOLO}ぅのねてょ{GREEN}ろほ{DYNAMIC_COLOR5}ひたぁ{DYNAMIC_COLOR5}ふちぎて{WHITE}"
+	.string "がのとちよぅじぉへひゃゆぅぁち{DYNAMIC_COLOR1}ぁぐぬひ{LIGHT_RED}{DYNAMIC_COLOR5}てるゆめな{DYNAMIC_COLOR4}"
+	.string "みろらむずやられろにやじななぃぅ{DYNAMIC_COLOR6}ぉや{GREEN}にて{GREEN}ぅたんぜた{LIGHT_RED}{DYNAMIC_COLOR4}"
+	.string "ぁざまのつてや{DYNAMIC_COLOR6}ぉょなごぉ{LIGHT_GRAY}{DYNAMIC_COLOR6}れござわょ{LIGHT_BLUE}るちごらりろぅは{DYNAMIC_COLOR5}"
+	.string "ぁぐわぅ{DYNAMIC_COLOR5}ざゅわやぉじちろ{LIGHT_GREEN}ざがとねてへぜんぃつゆよへち{LIGHT_GREEN}ちほゃ{WHITE}ち{DYNAMIC_COLOR2}"
+	.string "ぐむ{MUS_RG_VS_LEGEND}るなたはぃまゅざろれぃごょみはもぇやろなみふゆじょをとぅねもぬね{LIGHT_RED}てゃぃが{DYNAMIC_COLOR5}ぐもへまぬ{WHITE}"
+	.string "なぁ{DYNAMIC_COLOR2}ずひ{DYNAMIC_COLOR4}のんぅぎふなゃなてのるのとらなねもる{DYNAMIC_COLOR3}らを{DYNAMIC_COLOR5}"
+	.string "ぬゃねたごほるゃわめぅ{BLUE}てへねはふ{DYNAMIC_COLOR2}れのほはもらぬご{DYNAMIC_COLOR5}がのろにぁ{BLUE}む{PH_CLOTH_SOLO}"
+	.string "み{DYNAMIC_COLOR2}ぇぃに{LIGHT_RED}ぃて{LIGHT_RED}は{LIGHT_GREEN}ぐの{DYNAMIC_COLOR3}ごれな{LIGHT_RED}"
+	.string "ぃぃ{LIGHT_RED}の{SE_SHIP}つらにれ{DYNAMIC_COLOR6}りら{DYNAMIC_COLOR3}もぁぐりれやゆまねるとに{LIGHT_RED}"
+	.string "はゅぁよ{DYNAMIC_COLOR1}げるゃわょんげなは{DYNAMIC_COLOR1}をにとんゅりれゅ{DYNAMIC_COLOR6}ちちぇのみはりぬはりにぉゆてわる{LIGHT_BLUE}"
+	.string "にぉへらよな{DYNAMIC_COLOR3}ぁめふのるぉたをちひにのん{DYNAMIC_COLOR4}{DYNAMIC_COLOR3}りがげゃれへがぃ{DYNAMIC_COLOR1}"
+	.string "ょやぐひぐ{DYNAMIC_COLOR1}ぇち{LIGHT_GRAY}をぇへぃぎほらんぬねにぬれょごぅぬ{RED}のげゆ{SE_WARP_IN}ょらゆつぉ{GREEN}{DYNAMIC_COLOR1}"
+	.string "とち{LIGHT_RED}ぁ{LIGHT_GRAY}ゅぁ{DYNAMIC_COLOR2}ゃ{SE_ICE_BREAK}ぅてら{DYNAMIC_COLOR6}ふへ{GREEN}"
+	.string "をふぃらぁれらにみぅぉろろ{LIGHT_RED}ぃょるもゅたにぁをみるがてやを{DYNAMIC_COLOR5}ゆ{BLUE}{DYNAMIC_COLOR1}ね{DYNAMIC_COLOR6}"
+	.string "{LIGHT_GRAY}ひぅ{DYNAMIC_COLOR3}がほゃぅひ{DYNAMIC_COLOR5}ゆは{LIGHT_GREEN}ゃ{DYNAMIC_COLOR4}ざ{SE_TRUCK_UNLOAD}"
+	.string "げょ{RED}らつもねや{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}ねぅぇ{SE_SAVE}{DYNAMIC_COLOR4}むぇたつよ{DYNAMIC_COLOR4}"
+	.string "のるやろじむまほひり{DYNAMIC_COLOR4}つりゅほも{DYNAMIC_COLOR1}んめららゅ{WHITE}{DYNAMIC_COLOR5}みぅぐるごやょとたぉねわよ{RED}"
+	.string "をなはちが{DYNAMIC_COLOR6}{DYNAMIC_COLOR2}と{DYNAMIC_COLOR5}わわむぬわにむゅずたた{DYNAMIC_COLOR1}{LIGHT_RED}"
+	.string "ほご{LIGHT_BLUE}てよねほも{DYNAMIC_COLOR3}はぉがま{LIGHT_BLUE}つゅじ{DYNAMIC_COLOR4}なょ{GREEN}やぉぃるご{DYNAMIC_COLOR6}"
+	.string "りゃれ{MUS_RG_TRAINER_TOWER}つゅ{LIGHT_BLUE}めぅごぅふぉめらじゃなとめりりたほむぅたをにむほ{LIGHT_RED}ぉ{DYNAMIC_COLOR6}"
+	.string "ぃぅ{DYNAMIC_COLOR5}はゅぎんりよがほろてぉまほが{DYNAMIC_COLOR1}りやぇふはまぜのぐぐるわひとなれぬぇ{DYNAMIC_COLOR6}"
+	.string "むぃむねもれらじ{LIGHT_GREEN}た{DYNAMIC_COLOR2}ぜぁ{PH_TRAP_SOLO}ん{BLUE}ぐぁぜみねをゃちんゃたよつもゆ{DYNAMIC_COLOR1}"
+	.string "がゃ{LIGHT_BLUE}ゆ{DYNAMIC_COLOR1}ずにはぬちぎふみちむよ{LIGHT_RED}{DYNAMIC_COLOR6}ねよろぇ{DYNAMIC_COLOR1}"
+	.string "{DYNAMIC_COLOR3}に{LIGHT_GRAY}るへるごもにひる{LIGHT_GREEN}{LIGHT_BLUE}ぬぬわふゅぉぃぬつほじはろむへた{DYNAMIC_COLOR1}{BLUE}"
+	.string "ぬとざょりょょごみひてめへてげ{MUS_RG_GAME_FREAK}もわずのとぐざはた{BLUE}ほ{DYNAMIC_COLOR1}てるぜぎわ{LIGHT_GREEN}"
+	.string "もまのれやとざま{DYNAMIC_COLOR4}{RED}がはぁりれへほちがるりらつ{SE_EFFECTIVE}よ{DYNAMIC_COLOR1}ざよまふぉ{RED}"
+	.string "げわやじろよぅぁてふむずつもょ{DYNAMIC_COLOR1}はをほの{LIGHT_RED}まひほ{DYNAMIC_COLOR1}まみ{BLUE}やわ{DYNAMIC_COLOR3}"
+	.string "ぉへまち{DYNAMIC_COLOR5}つたらつのれてぅふ{RED}ぃはぎまわゅゆ{LIGHT_GREEN}{DYNAMIC_COLOR2}ぉ{MUS_RG_SLOW_PALLET}"
+	.string "はれゅゅにぁとちぅぉわぅほざげらざろつらへつょわろゆごゅつじらてものぉわよ{LIGHT_BLUE}ざつなはもむ{LIGHT_GREEN}はめゆみのひわげのゅ{LIGHT_RED}"
+	.string "よへもめゆ{DYNAMIC_COLOR5}ほちてぃつわめゆ{DYNAMIC_COLOR1}へねもず{MUS_RG_MYSTERY_GIFT}りゆむ{DYNAMIC_COLOR5}"
+	.string "みむめがねぉらももぅやははずゆやや{WHITE}ねゃため{SE_WALL_HIT}が{GREEN}みみ{PH_DRESS_SOLO}ろ{LIGHT_GREEN}わわ{LIGHT_BLUE}"
+	.string "ぁれ{WHITE}ぇ{SE_UNLOCK}ゅてろざまょがほみゅへ{DYNAMIC_COLOR3}{LIGHT_GREEN}ぉに{BLUE}つぜょち{DYNAMIC_COLOR2}"
+	.string "まをむみぉぬはんに{WHITE}ぁぁふゃるぅんごぎぅ{DYNAMIC_COLOR4}につ{LIGHT_GREEN}るやぉざゃずほね{PH_TRAP_HELD}ゃれゃひんもね{SE_TRUCK_DOOR}"
+	.string "まみ{DYNAMIC_COLOR5}りなぉがらゅもがずちぇんょ{PH_DRESS_SOLO}{SE_FALL}ょへてるに{BLUE}ろが{MUS_RG_FUCHSIA}"
+	.string "らぇをゃぃょるんたつざんれ{RED}ぉぃぜ{WHITE}めがとへ{SE_LAVARIDGE_FALL_WARP}ぁ{DYNAMIC_COLOR3}ぐよら{RED}むの{BLUE}へ{WHITE}"
+	.string "{RED}ほらひろぅぬま{SE_POKENAV_CALL}をんごまゃやぅぇろや{DYNAMIC_COLOR5}{LIGHT_GREEN}ほ{DYNAMIC_COLOR6}"
+	.string "ぉたにむぇ{PH_DRESS_HELD}はぉじめ{DYNAMIC_COLOR3}ゆはるるりげぇよ{DYNAMIC_COLOR2}てめま{DYNAMIC_COLOR6}ふ{RED}"
+	.string "わみぐはひはれまやてはぅごぉぐもりぅ{LIGHT_GREEN}ぅまたみるぬぇよご{MUS_RG_SLOW_PALLET}ざふ{SE_SUPER_EFFECTIVE}みとずが{WHITE}"
+	.string "{DYNAMIC_COLOR6}を{GREEN}つらぃて{SE_A}ぉれ{DYNAMIC_COLOR3}{LIGHT_GREEN}らちげふな{DYNAMIC_COLOR1}"
+	.string "てま{DYNAMIC_COLOR4}れが{LIGHT_GREEN}れゃゅゃりにら{MUS_RG_POKE_TOWER}ょ{LIGHT_BLUE}もぃ{MUS_RG_PHOTO}"
+	.string "りぐぇゃやゅつつめよ{LIGHT_BLUE}{LIGHT_GREEN}ぉ{DYNAMIC_COLOR6}ず{SE_N}ざぉたがとげ{LIGHT_GRAY}"
+	.string "ゆをほやょょよまざはがぉゆもてまぉ{DYNAMIC_COLOR4}てゆぃほぬ{LIGHT_GRAY}ねねねとぃ{LIGHT_GREEN}めずぉむとがに{SE_BOO}"
+	.string "つわつぁゆぜほやのにに{DYNAMIC_COLOR6}ゅをたちやれりのゆん{DYNAMIC_COLOR3}にまぎむょじはぁごぇつょてる{DYNAMIC_COLOR5}ぃぅの{LIGHT_GREEN}"
+	.string "ぁゆもりみ{BLUE}る{SE_ICE_CRACK}ぃぃぎもほ{DYNAMIC_COLOR6}まごひぃげがぁぐがゅぐをぁまんほはろほとぬみぁ{LIGHT_GRAY}ち{SE_O}"
+	.string "ぃぬろへゅりゆご{DYNAMIC_COLOR6}ち{LIGHT_BLUE}{RED}んもちほてがほががほ{SE_POKENAV_CALL}ぇと{GREEN}ぇち{DYNAMIC_COLOR3}"
+	.string "んょんやなれふめなゃわほゅめらぉのぜをむぉなよはちにずつろやなざ{DYNAMIC_COLOR6}をぅなょぜやへゆ{WHITE}がぉにはま{DYNAMIC_COLOR5}"
+	.string "たぁ{DYNAMIC_COLOR2}つれはゆぬ{DYNAMIC_COLOR1}ゅ{LIGHT_BLUE}り{PH_CLOTH_BLEND}てょゃぁぬ{LIGHT_GRAY}{RED}"
+	.string "ぅずよちゅぉぅめぬもへ{LIGHT_RED}ろんらみ{LIGHT_GRAY}ろへ{WHITE}のほ{DYNAMIC_COLOR5}{LIGHT_RED}"
+	.string "ねにゆ{MUS_RG_NEW_GAME_INSTRUCT}りねの{DYNAMIC_COLOR2}やずゅにんるゆずぎほげぁつとぬをちつぃなぅね{BLUE}{DYNAMIC_COLOR2}"
+	.string "る{SE_WARP_IN}ぉわ{GREEN}はとふん{RED}{BLUE}つひろをれがぉたらわへ{DYNAMIC_COLOR5}ゃ{MUS_RG_TEACHY_TV_SHOW}"
+	.string "つほはん{LIGHT_GREEN}{DYNAMIC_COLOR2}たょほぉろりひぅゆまぎげぁぐぃぁつ{LIGHT_BLUE}と{DYNAMIC_COLOR5}{BLUE}{SE_A}"
+	.string "{DYNAMIC_COLOR4}わひ{DYNAMIC_COLOR5}ゃちゆな{DYNAMIC_COLOR3}をよょわにぅぅわ{LIGHT_GRAY}はにふぇと{DYNAMIC_COLOR1}"
+	.string "ずょぉひらまぇねぉよぉはては{DYNAMIC_COLOR6}ゃふゅわぁぎ{LIGHT_GRAY}ねな{DYNAMIC_COLOR6}らぅるみり{DYNAMIC_COLOR5}"
+	.string "りぅわんなのひた{LIGHT_GRAY}ぁんれぇれらひょ{RED}ほご{RED}む{LIGHT_GREEN}ぁのらへへざじんゆ{BLUE}ぇごゃれ{DYNAMIC_COLOR3}"
+	.string "たてゆゅはぁのり{SE_BALL}ろ{DYNAMIC_COLOR1}ふぬ{DYNAMIC_COLOR1}ちひゅてがるふり{DYNAMIC_COLOR3}"
+	.string "ぅゅざたはひげをげふねめたをふざつぬねれ{DYNAMIC_COLOR2}ろぁを{RED}んざても{WHITE}ふんとにめ{DYNAMIC_COLOR3}やてゅがゃひぃほげふみ{GREEN}{GREEN}"
+	.string "ょ{LIGHT_BLUE}なはひはら{DYNAMIC_COLOR6}ぉゅが{GREEN}もげつ{SE_O}にる{DYNAMIC_COLOR5}"
+	.string "へゅぜぎにれざゃてぇたぬわがるれほゅぁをざれちりてむのほゃ{DYNAMIC_COLOR3}{GREEN}を{LIGHT_BLUE}{RED}ふへぁよぐ{LIGHT_GREEN}にと{RED}"
+	.string "をげぁんるなゅ{MUS_RG_SEVII_45}ょ{PH_KIT_HELD}は{DYNAMIC_COLOR6}ねやにへのとにたるひてな{DYNAMIC_COLOR5}のげんろ{BLUE}"
+	.string "ぃなゅにぃんねゅご{DYNAMIC_COLOR2}ふげねてるてほみてら{RED}へ{SE_TRUCK_DOOR}ぎの{BLUE}ぐぇみたよ{MUS_RG_FUCHSIA}"
+	.string "りぜ{DYNAMIC_COLOR6}にぃまのみをたぎぬふねぅらぉぎぃにぉ{SE_SWITCH}{WHITE}ょ{MUS_RG_VERMILLION}もぐ{RED}ま{DYNAMIC_COLOR5}"
+	.string "ぃや{SE_RG_POKE_JUMP_FAILURE}わゃぉゅにゃんぇにやよぐゃまざへりへがぬなろらぐぃ{DYNAMIC_COLOR2}ひねゅみを{DYNAMIC_COLOR2}"
+	.string "ゅふ{LIGHT_GRAY}{DYNAMIC_COLOR5}む{GREEN}{DYNAMIC_COLOR3}{MUS_RG_TEACHY_TV_SHOW}ねゃほょをに{DYNAMIC_COLOR3}"
+	.string "のゆ{LIGHT_BLUE}わが{LIGHT_RED}んんろわやはとら{RED}たぇぎぉがなゅちぜへももまるぜへはざろひわわぎごょ{RED}てぉわとつは{LIGHT_BLUE}"
+	.string "ひょちやげぜち{WHITE}{DYNAMIC_COLOR5}ろご{LIGHT_GRAY}れ{BLUE}{DYNAMIC_COLOR4}ろろてらげざふげなれ{SE_CLICK}"
+	.string "ぬず{DYNAMIC_COLOR1}な{DYNAMIC_COLOR3}るをまなぃゅねのじががつぎひ{PH_FLEECE_BLEND}み{BLUE}むのんょへなじやめ{DYNAMIC_COLOR3}"
+	.string "らょぜぉぉつちはのまろやつちれねゆぇれわはつよ{GREEN}たちるぉわ{LIGHT_BLUE}とろつろへ{LIGHT_GRAY}{SE_CLICK}つなめじよながは{DYNAMIC_COLOR6}"
+	.string "つがや{WHITE}ねれぬてとごるれのぇをぬぬ{DYNAMIC_COLOR2}わぉ{LIGHT_GREEN}をゃ{LIGHT_GREEN}ぎへまょめち{DYNAMIC_COLOR1}"
+	.string "ぬとちてれぬゆ{WHITE}げふよらぃをごゅげぃゃ{GREEN}げふを{LIGHT_RED}てむぇつずほわげぜをみれゃよ{LIGHT_GRAY}はのらんぅ{RED}よれぜぃゆもれ{BLUE}{BLUE}"
+	.string "ゅわぃほ{BLUE}{LIGHT_RED}ね{GREEN}{LIGHT_BLUE}を{SE_A}ら{DYNAMIC_COLOR4}たの{SE_E}てじ{DYNAMIC_COLOR2}"
+	.string "やんまにじねゃつほななぐゆぉ{DYNAMIC_COLOR6}ぬはふひがるひごぎつへめゃよ{DYNAMIC_COLOR1}ぅにをて{DYNAMIC_COLOR4}"
+	.string "みらやへにんろねにれひやぬ{PH_CLOTH_HELD}{LIGHT_RED}ろがはぬちじわほぁめわるはぁ{RED}ゆょ{DYNAMIC_COLOR3}"
+	.string "ゅぃずつちぃがつむんむぃぬわじやちもとはぇぬぐらね{DYNAMIC_COLOR6}や{SE_A}じがわざふ{DYNAMIC_COLOR2}ぐも{DYNAMIC_COLOR5}{RED}"
+	.string "まふぅ{SE_BANG}{RED}なよれれみゆれ{DYNAMIC_COLOR2}ざぉち{DYNAMIC_COLOR2}んがめん{DYNAMIC_COLOR5}めよねをら{GREEN}"
+	.string "{DYNAMIC_COLOR3}ふよねぁげ{WHITE}れぁぅゃまゃはぅ{LIGHT_RED}たんぬゃねめももむぇ{LIGHT_GREEN}{BLUE}めよふめぅつぁ{BLUE}"
+	.string "またらなれま{DYNAMIC_COLOR2}よぁとゅやまよごもぉみずをぬ{DYNAMIC_COLOR3}なてぐはぃとゆ{LIGHT_BLUE}{LIGHT_GREEN}"
+	.string "ぬぎぎまるやらぬらりひつれろじをのゃふ{WHITE}へた{BLUE}ぐち{DYNAMIC_COLOR5}ょひよてたにりほざりぬずぐゃ{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "んがはてろぉよてわむゆとたに{DYNAMIC_COLOR2}ゅへゅぉむ{BLUE}ぉりむはつ{DYNAMIC_COLOR3}ひょれのわろも{WHITE}{DYNAMIC_COLOR6}"
+	.string "よぬ{DYNAMIC_COLOR3}ね{LIGHT_BLUE}{DYNAMIC_COLOR6}ちろやふ{LIGHT_BLUE}{LIGHT_BLUE}なょ{BLUE}てみぐ{SE_EXP}"
+	.string "げまろょ{PH_TRAP_SOLO}がて{RED}ゃゅがじはぬじてろょぁてほてずちぉらげをほぅは{LIGHT_GRAY}{LIGHT_GRAY}をゆがまち{WHITE}"
+	.string "めふつぬぃげぃぬへる{DYNAMIC_COLOR5}てらはんや{SE_WARP_IN}ふぬりへ{LIGHT_BLUE}まんはをよ{DYNAMIC_COLOR1}てぇ{SE_NOTE_C}"
+	.string "ら{DYNAMIC_COLOR2}ごぃ{BLUE}げをめつほゃへろよめゅぬわぬるてををたたみぅもほぉねぉ{GREEN}をよとらめへれを{GREEN}ね{LIGHT_GREEN}{LIGHT_BLUE}"
+	.string "んむなんむぎもゅ{DYNAMIC_COLOR2}ゃや{DYNAMIC_COLOR2}めほ{WHITE}ぬ{DYNAMIC_COLOR2}やちぬ{LIGHT_GREEN}"
+	.string "みとゆぇは{DYNAMIC_COLOR5}ぁゅぬま{DYNAMIC_COLOR3}{BLUE}むぃゅま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}み{RED}"
+	.string "たちゅちほぉじにほろへはのた{RED}{GREEN}め{LIGHT_GRAY}じやれ{DYNAMIC_COLOR5}ゅ{LIGHT_GRAY}ずぬ{DYNAMIC_COLOR2}"
+	.string "ねょじ{DYNAMIC_COLOR4}よゅつみま{DYNAMIC_COLOR4}にもぇ{SE_I}じよぃのょつ{DYNAMIC_COLOR5}も{WHITE}もりごぅちをふょれ{LIGHT_RED}"
+	.string "にと{DYNAMIC_COLOR5}ぃげがのまぃゆたよぁめちまんろほににむぇねゅもぇはじ{DYNAMIC_COLOR4}のぐ{LIGHT_BLUE}もぃんやほ{DYNAMIC_COLOR6}"
+	.string "や{LIGHT_BLUE}むぅ{LIGHT_RED}{LIGHT_GRAY}ち{LIGHT_RED}めれ{LIGHT_GRAY}{LIGHT_GREEN}が{RED}{BLUE}て{LIGHT_RED}"
+	.string "たゃがとる{DYNAMIC_COLOR1}やぇゃほひつぬん{MUS_RG_OAK_LAB}て{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}{MUS_RG_DEX_RATING}"
+	.string "とて{DYNAMIC_COLOR4}ゆ{SE_SWITCH}{LIGHT_GREEN}はふりゅ{BLUE}{DYNAMIC_COLOR5}わひざなふのへぇては{SE_E}がめひゅぐずとぇ{GREEN}"
+	.string "ぅぬ{LIGHT_RED}ろ{WHITE}{DYNAMIC_COLOR6}みほ{DYNAMIC_COLOR6}ゃね{LIGHT_GRAY}ま{SE_FALL}となげぃゆぃむ{SE_BIKE_BELL}"
+	.string "がやがへるむにや{DYNAMIC_COLOR6}わずなょざをもじざぬはふて{DYNAMIC_COLOR1}るめゆぜよごぐぁへ{BLUE}に{DYNAMIC_COLOR2}のとつ{WHITE}"
+	.string "わゅち{MUS_RG_ENCOUNTER_GYM_LEADER}{TRANSPARENT}てぐれゅ{LIGHT_GREEN}はちや{DYNAMIC_COLOR5}ほ{DYNAMIC_COLOR5}"
+	.string "わな{BLUE}ぅひむへよへふれへやて{SE_USE_ITEM}ねりれがな{DYNAMIC_COLOR6}てたぇょめてぅて{LIGHT_RED}ほぬゅゅご{DYNAMIC_COLOR5}"
+	.string "やゅげへひょひ{LIGHT_GRAY}へや{DYNAMIC_COLOR6}にぃを{LIGHT_BLUE}ゆ{LIGHT_RED}むて{DYNAMIC_COLOR1}らょ{RED}"
+	.string "{DYNAMIC_COLOR4}ふ{GREEN}ずむれらぉり{DYNAMIC_COLOR5}な{DYNAMIC_COLOR2}ぬへへぇを{BLUE}じるむぇぬぉぅめ{DYNAMIC_COLOR5}"
+	.string "{LIGHT_GRAY}む{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}にずれんのょれ{SE_EFFECTIVE}とめ{LIGHT_GREEN}ょ{DYNAMIC_COLOR1}"
+	.string "{LIGHT_BLUE}なとため{LIGHT_GREEN}にわょてな{LIGHT_BLUE}ぁひみごんげげに{DYNAMIC_COLOR4}なれぐてろ{SE_PIKE_CURTAIN_CLOSE}"
+	.string "れてぬほ{BLUE}ぬほ{DYNAMIC_COLOR3}{DYNAMIC_COLOR6}ゃまぅつ{LIGHT_GREEN}げへゅほつやわな{DYNAMIC_COLOR5}"
+	.string "むのゃごぉの{DYNAMIC_COLOR6}りたぁんもらぅぐんねざぜや{LIGHT_GREEN}もぃりてゅて{DYNAMIC_COLOR1}"
+	.string "たゅのぉもりるてぁはげのとがょよみごながぐたざむゃふぎぃな{LIGHT_GREEN}よらむのねちもぃりがぇをまわぜぃへぁよ{WHITE}ちふご{DYNAMIC_COLOR6}"
+	.string "つれぬら{SE_SELECT}ひゆふぇ{RED}めをた{DYNAMIC_COLOR6}ゆ{DYNAMIC_COLOR4}ぐぃ{DYNAMIC_COLOR2}んらをゃなずぃょによれ{LIGHT_RED}"
+	.string "ぜろみごんごふぁ{WHITE}ねににじた{DYNAMIC_COLOR1}まねぬ{DYNAMIC_COLOR6}め{GREEN}てちぎむぬぬ{DYNAMIC_COLOR1}"
+	.string "がふのぃにぎぅぃたょぅぁよざひもぉぁのにゅゆげねまが{WHITE}ほ{DYNAMIC_COLOR4}ねつまふひ{LIGHT_GREEN}ゃを{DYNAMIC_COLOR2}"
+	.string "ぜぉほゃへわてわみみてみ{DYNAMIC_COLOR6}ぅ{BLUE}{DYNAMIC_COLOR6}やねじふょゃらぉれゆをぃよじがよゆちち{LIGHT_GRAY}{LIGHT_RED}ねた{RED}"
+	.string "る{LIGHT_GREEN}んょれるなげ{DYNAMIC_COLOR5}ぉれ{GREEN}るじ{WHITE}るら{DYNAMIC_COLOR5}にへりひたぉろ{DYNAMIC_COLOR3}"
+	.string "とへなぜゆがもほ{RED}わふなゃれ{LIGHT_BLUE}ぁ{MUS_RG_GAME_FREAK}ぜとのわぉぐぇみれねぇぬもむ{DYNAMIC_COLOR2}"
+	.string "をゆやげをぅぜゃねのやほなはぬぉろも{LIGHT_BLUE}よひ{DYNAMIC_COLOR4}なょよりげふと{DYNAMIC_COLOR3}ずたね{GREEN}"
+	.string "ゅがよょむよぬじふわにゆへほ{DYNAMIC_COLOR2}ほへ{DYNAMIC_COLOR4}ぇ{BLUE}まひつふつみれり{GREEN}ごゅぐ{DYNAMIC_COLOR5}"
+	.string "ほぅぃ{MUS_RG_VS_MEWTWO}むと{GREEN}ほるに{LIGHT_BLUE}ふらぇをぐ{LIGHT_GRAY}らる{LIGHT_BLUE}ほひちふりげわ{LIGHT_GRAY}"
+	.string "{LIGHT_GRAY}ねも{LIGHT_BLUE}ぁぃぬも{DYNAMIC_COLOR6}ゆぉ{GREEN}やがめ{LIGHT_BLUE}ぉわ{LIGHT_BLUE}れ{DYNAMIC_COLOR3}"
+	.string "つれりみたなるぉ{DYNAMIC_COLOR6}はててねょんにてざはなげち{PH_FACE_BLEND}{DYNAMIC_COLOR1}わのぐちぅずへぇとぇつんゃずょもがずななゅゃ{WHITE}"
+	.string "げわよゆめ{WHITE}ろがふじぉずたふよぉの{LIGHT_RED}のぬつぎふなざぇぜ{DYNAMIC_COLOR6}{PH_CLOTH_SOLO}ぐぇ{SE_SHIP}"
+	.string "へへわたぐてぅ{DYNAMIC_COLOR6}がの{LIGHT_BLUE}{DYNAMIC_COLOR4}れみぁぇごゃめよとたやじめ{DYNAMIC_COLOR2}ぅもぁをれぃ{RED}"
+	.string "ゅのみれにょがとりがち{DYNAMIC_COLOR2}らへ{GREEN}るゅにんやんるょとれむ{DYNAMIC_COLOR3}まぜぐのらたれほつゃたやゃへてへぬにがらひら{LIGHT_GREEN}"
+	.string "やむがむちがりや{MUS_RG_NEW_GAME_EXIT}ふとつへひやんんげながゃむぉをるぁほゃるざつ{LIGHT_RED}なみ{LIGHT_RED}ずのね{DYNAMIC_COLOR2}"
+	.string "ぃ{PH_TRAP_BLEND}らとふゃつみぃろめひ{GREEN}ぅりなをつ{WHITE}{DYNAMIC_COLOR5}てて{DYNAMIC_COLOR3}り{LIGHT_GREEN}"
+	.string "れとへょとなろよ{LIGHT_GRAY}ゆなずごみゅ{DYNAMIC_COLOR3}ゆろにゅほぅわ{GREEN}{LIGHT_GRAY}るや{LIGHT_GREEN}まぇぁのゆむぅめよ{SE_O}"
+	.string "ひねれやぅみ{GREEN}ぁほぇよぇぐつみ{WHITE}の{DYNAMIC_COLOR6}なならたん{LIGHT_BLUE}ゆのるがぃてふへるを{MUS_RG_POKE_FLUTE}"
+	.string "はにへろふね{RED}ゃりれむなひんに{WHITE}た{LIGHT_RED}{LIGHT_BLUE}とめ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}"
+	.string "ひゃるれもよょてもじはへたやゆろがのやよりてにぬとの{DYNAMIC_COLOR2}ぁゆがゃがぐむひ{DYNAMIC_COLOR6}じを{DYNAMIC_COLOR4}たみ{LIGHT_RED}"
+	.string "{DYNAMIC_COLOR2}を{WHITE}つやねじぇ{LIGHT_BLUE}むよは{DYNAMIC_COLOR5}まぃ{GREEN}ま{DYNAMIC_COLOR2}ざる{LIGHT_GREEN}"
+	.string "ずらてほはて{LIGHT_GREEN}もたゃほぇぬもゅにぅぇんひり{DYNAMIC_COLOR5}めとげもめ{LIGHT_GRAY}るれたみずざらにみつぜやぅ{DYNAMIC_COLOR4}"
+	.string "んぇぁぬをょごぬやもねがへてぬげは{DYNAMIC_COLOR1}じほ{LIGHT_RED}つにぉぇゆへまるゃわよみるゅ{DYNAMIC_COLOR5}ぇぬ{WHITE}"
+	.string "ぐをらやもりぜねぐぎゆもちちのわるぃ{BLUE}りゆらへぬゆむ{LIGHT_BLUE}じにひ{DYNAMIC_COLOR6}わひつめりずよゃた{MUS_RG_UNION_ROOM}"
+	.string "ゃなはるのるちぅつらぬららぁゃらや{LIGHT_GRAY}のょぬへぉのゆはろぐてごぉへらぅゃりぉが{LIGHT_BLUE}ぃひ{LIGHT_GRAY}げらのちま{DYNAMIC_COLOR2}"
+	.string "はゃじれな{RED}やょぃもぃ{DYNAMIC_COLOR6}めひじじやるへつにのん{LIGHT_GRAY}"
+	.string "つぬねゆぉぁもははゅらむよのひぃねろめをわはゃずつのりらなひちつぬなたゃがゆつぜなぅ{DYNAMIC_COLOR4}がずれを{DYNAMIC_COLOR6}"
+	.string "ややざぜまへゃぬはもまが{DYNAMIC_COLOR6}たぇゃゅの{LIGHT_RED}めぉにゃほとほ{BLUE}"
+	.string "てるげがぃへょなるんへぇんもゅぬふょへてもゃゃやはがぁよんほぬはまなまろまの{DYNAMIC_COLOR1}ぉはゅぅやをぬわ{DYNAMIC_COLOR3}むょわゅゅひ{LIGHT_GRAY}"
+	.string "ら{WHITE}{DYNAMIC_COLOR4}へふ{DYNAMIC_COLOR5}ちちろたゆごみまぬのみ{BLUE}ょてぎのひろや{DYNAMIC_COLOR2}"
+	.string "まるらなわがぐたげなんぁちょや{RED}みごれゅらゅゃ{DYNAMIC_COLOR4}ひみためがまぎらぅ{DYNAMIC_COLOR6}りりゆ{SE_PIN}へゆぅりり{DYNAMIC_COLOR2}"
+	.string "げへをてひ{LIGHT_GRAY}がんへりの{BLUE}をめらぐぇぜぁへぉゃりね{BLUE}ぅもまて{DYNAMIC_COLOR4}わもげを{MUS_RG_POKE_JUMP}"
+	.string "ゆてみょゃつろをゅゅゃもみむげのひまろのゅ{DYNAMIC_COLOR5}のよやがね{BLUE}た{DYNAMIC_COLOR3}にをまゃむ{LIGHT_RED}ぎのとむやちぅとずぎるぜ{BLUE}"
+	.string "ゆれまゆゆ{GREEN}り{DYNAMIC_COLOR2}ほとはぎめやねるはちみごげほふよは{LIGHT_RED}ぇのぐれぅ{LIGHT_BLUE}{LIGHT_GREEN}ゆ{LIGHT_RED}"
+	.string "ずにゃよとひぇよ{LIGHT_RED}{BLUE}が{DYNAMIC_COLOR6}{LIGHT_GRAY}みれぐぅ{SE_POKENAV_HANG_UP}"
+	.string "ほへもぅりひりほがとて{DYNAMIC_COLOR5}りれごがぁふりぃぃはょまにず{DYNAMIC_COLOR4}なんにねながみれぉぃろ{DYNAMIC_COLOR5}"
+	.string "ゆねみ{MUS_RG_CAUGHT}のゆ{DYNAMIC_COLOR1}んぃに{LIGHT_GRAY}ち{RED}らゆひふむる{RED}らじみほりぉぅほぐたぅるほ{GREEN}"
+	.string "ゆりのごつ{DYNAMIC_COLOR2}ひふずがみ{DYNAMIC_COLOR1}が{PH_FACE_HELD}わゆなねとごみふめごふやゃゅ{DYNAMIC_COLOR6}"
+	.string "ぁぅごぬゅぃぐが{DYNAMIC_COLOR4}なちた{LIGHT_GRAY}ほはぐぉぁんりふりょりねまな{WHITE}ぃずぇりゃぁも{LIGHT_GREEN}{DYNAMIC_COLOR3}"
+	.string "ょりわゃれ{DYNAMIC_COLOR3}まぜみてろぬらりるれざてょよをれ{DYNAMIC_COLOR1}{GREEN}ほみ{RED}{MUS_RG_POKE_JUMP}{LIGHT_GREEN}"
+	.string "ゅ{DYNAMIC_COLOR5}ね{SE_ROTATING_GATE}ゃゃぁとがむぃまながひげ{DYNAMIC_COLOR2}ぇめめむひゅも{DYNAMIC_COLOR4}{LIGHT_GRAY}"
+	.string "ふもごて{DYNAMIC_COLOR5}へまへぜんぐらん{DYNAMIC_COLOR6}ぎみぅざゅ{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}ん{GREEN}{GREEN}"
+	.string "りゆぐも{DYNAMIC_COLOR1}ぇな{DYNAMIC_COLOR6}へゆ{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}ゃつんむょねままゃひ{LIGHT_RED}"
+	.string "げょろ{WHITE}ぬ{DYNAMIC_COLOR5}にろ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}よ{DYNAMIC_COLOR4}"
+	.string "をたむちらじてぇなゆれひをゅわろよよまみめろつぜじらぃ{DYNAMIC_COLOR1}ょゅまぬむ{BLUE}るへみぉゃちに{LIGHT_RED}ぎを{SE_M_DOUBLE_TEAM}"
+	.string "{SE_M_JUMP_KICK}{SE_M_FLAME_WHEEL}{SE_M_FLAME_WHEEL2}{SE_M_FLAMETHROWER}{SE_M_TAKE_DOWN}"
+	.string "{SE_M_BLIZZARD}{SE_M_BLIZZARD2}{SE_M_FIRE_PUNCH}{SE_M_TOXIC}{SE_M_SACRED_FIRE}{SE_M_SCRATCH}"
+	.string "{SE_M_VICEGRIP}{SE_M_WING_ATTACK}{SE_M_SACRED_FIRE2}{SE_M_EMBER}{SE_M_SURF}{SE_M_FLY}"
+	.string "{SE_M_SAND_ATTACK}{SE_M_DRAGON_RAGE}{SE_M_PSYBEAM}{SE_M_FAINT_ATTACK}{SE_M_SWORDS_DANCE}{SE_M_SNORE}"
+	.string "{SE_M_BRICK_BREAK}{SE_M_GIGA_DRAIN}{SE_M_SKETCH}{SE_M_SWIFT}{SE_M_REFLECT}{SE_M_RAZOR_WIND2}"
+	.string "{SE_M_BITE}{SE_M_HEADBUTT}{SE_M_MIST}{SE_M_POISON_POWDER}{SE_M_BIND}{SE_M_DIZZY_PUNCH}"
+	.string "{SE_M_SELF_DESTRUCT}{SE_M_EXPLOSION}{SE_M_HYDRO_PUMP}{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_M_SING}"
+	.string "{SE_M_PERISH_SONG}{SE_M_PAY_DAY}{SE_M_ABSORB}{SE_M_SCREECH}{SE_M_BUBBLE_BEAM}{SE_M_TAIL_WHIP}"
+	.string "{SE_M_BONEMERANG}{SE_M_LICK}{SE_M_DIG}{SE_M_HEAL_BELL}{SE_M_CONFUSE_RAY}{SE_M_BUBBLE_BEAM2}"
+	.string "{SE_M_TELEPORT}{SE_M_MINIMIZE}{SE_M_SUPERSONIC}{SE_M_BELLY_DRUM}{SE_M_METRONOME}{SE_M_LEER}"
+	.string "{SE_M_SWAGGER}{SE_M_SWAGGER2}{SE_M_PSYBEAM2}{SE_M_SOLAR_BEAM}{SE_M_PETAL_DANCE}{SE_M_BARRIER}"
+	.string "{SE_M_WATERFALL}{SE_M_LOCK_ON}{SE_M_ACID_ARMOR}{SE_M_CHARM}{SE_M_TRI_ATTACK}{SE_M_BATON_PASS}"
+	.string "{SE_M_ATTRACT}{SE_M_SPIT_UP}{SE_M_DIVE}{SE_M_MORNING_SUN}{SE_M_SAND_TOMB}{SE_M_SWEET_SCENT}"
+	.string "{SE_M_YAWN}{SE_M_HEAT_WAVE}{SE_M_HAIL}{A_BUTTON}{UP_ARROW_2}{SE_FU_ZAKU}{SE_WARP_IN}"
+	.string "{SE_CONTEST_CONDITION_LOSE}{SE_WARP_OUT}{SE_LAVARIDGE_FALL_WARP}{SE_REPEL}ぎ{WHITE}ざ{WHITE}ぞ{WHITE}"
+	.string "{SE_ROTATING_GATE}{SE_TRUCK_MOVE}{SE_TRUCK_STOP}{SE_BALL_BOUNCE_1}{SE_BALL_BOUNCE_2}"
+	.string "{SE_BALL_BOUNCE_3}{SE_NOTE_E}{SE_NOTE_F}{SE_BALL_BOUNCE_4}{SE_ITEMFINDER}{SE_DING_DONG}{SE_MUGSHOT}"
+	.string "{SE_ESCALATOR}{SE_THUNDERSTORM}{SE_DEX_SEARCH}{SE_THUNDER2}{SE_ELEVATOR}{SE_APPLAUSE}{SE_TRUCK_DOOR}"
+	.string "{SE_BALL_TRADE}{SE_BERRY_BLENDER}{SE_CARD}{SE_BALL_THROW}{SE_NOTE_C}{SE_CONTEST_ICON_CHANGE}"
+	.string "{SE_CONTEST_ICON_CLEAR}{SE_POKENAV_OFF}{SE_M_THUNDERBOLT2}{SE_TRUCK_UNLOAD}{SE_UNLOCK}{SE_M_CUT}"
+	.string "{SE_M_STRING_SHOT}{SE_M_RAZOR_WIND}{SE_M_ICY_WIND}{SE_VEND}{SE_ORB}{SE_DEX_SCROLL}{SE_DEX_PAGE}"
+	.string "{SE_BALL_TRAY_ENTER}{SE_BALL_TRAY_BALL}{SE_BALL_TRAY_EXIT}{SE_GLASS_FLUTE}{SE_ICE_STAIRS}{SE_SAVE}"
+	.string "{SE_NOTE_D}{SE_M_GUST2}{SE_M_MEGA_KICK2}{SE_M_STRENGTH}{SE_M_ENCORE}ん{WHITE}ょ{WHITE}"
+	.string "{SE_M_STRING_SHOT2}{SE_M_THUNDER_WAVE}{SE_M_TEETER_DANCE}{SE_M_STAT_DECREASE}{SE_M_HAZE}"
+	.string "{SE_CONTEST_HEART}{SE_CONTEST_CURTAIN_RISE}{SE_CONTEST_CURTAIN_FALL}{SE_M_HARDEN}{SE_M_NIGHTMARE}"
+	.string "{SE_M_VITAL_THROW}{SE_M_VITAL_THROW2}{SE_M_BUBBLE}{SE_M_BUBBLE2}{SE_M_BUBBLE3}{SE_M_ABSORB_2}"
+	.string "{SE_NOTE_G}{SE_NOTE_A}{SE_NOTE_B}{SE_BALLOON_RED}{SE_BALLOON_BLUE}{SE_BALLOON_YELLOW}"
+	.string "{SE_THUNDERSTORM_STOP}{SE_DOWNPOUR}{SE_DOWNPOUR_STOP}{SE_NOTE_C_HIGH}{SE_PUDDLE}{SE_BRIDGE_WALK}"
+	.string "{SE_BREAKABLE_DOOR}{SE_MUD_BALL}{SE_FIELD_POISON}{SE_RAIN}{SE_RAIN_STOP}{SE_THUNDER}{SE_LOW_HEALTH}"
+	.string "{SE_EXP_MAX}{SE_ROULETTE_BALL}{SE_ROULETTE_BALL2}{SE_TAILLOW_WING_FLAP}{SE_SHOP}"
+	.string "{SE_CONTEST_MONS_TURN}{SE_SHINY}{SE_INTRO_BLAST}{SE_RG_SS_ANNE_HORN}{SE_RG_HELP_OPEN}"
+	.string "{SE_RG_HELP_CLOSE}{SE_POKENAV_HANG_UP}{SE_ARENA_TIMEUP1}{SE_ARENA_TIMEUP2}た{WHITE}ち{WHITE}つ{WHITE}"
+	.string "{SE_RG_HELP_ERROR}{SE_RG_DEOXYS_MOVE}{SE_RG_POKE_JUMP_SUCCESS}{SE_PIKE_CURTAIN_CLOSE}"
+	.string "{SE_PIKE_CURTAIN_OPEN}{SE_SUDOWOODO_SHAKE}て{WHITE}と{WHITE}な{WHITE}{SE_RG_POKE_JUMP_FAILURE}"
+	.string "{SE_POKENAV_CALL}ね{WHITE}{DYNAMIC_COLOR5}{WHITE}{DYNAMIC_COLOR6}{WHITE}み{WHITE}に{WHITE}ぬ{WHITE}"
+	.string "り{WHITE}の{WHITE}は{WHITE}ひ{WHITE}む{WHITE}め{WHITE}も{WHITE}る{WHITE}れ{WHITE}ろ{WHITE}ぃ{WHITE}ぅ{WHITE}"
+	.string "ぇ{WHITE}ぉ{WHITE}ゃ{WHITE}ふ{WHITE}へ{WHITE}ほ{WHITE}ま{WHITE}や{WHITE}ゆ{WHITE}よ{WHITE}ら{WHITE}わ{WHITE}"
+	.string "を{WHITE}{SE_M_CRABHAMMER}{SE_M_JUMP_KICK}{SE_M_FLAME_WHEEL}{SE_M_FLAME_WHEEL2}{SE_M_FLAMETHROWER}"
+	.string "{SE_M_FIRE_PUNCH}{SE_M_TOXIC}{SE_M_SACRED_FIRE}{SE_M_SACRED_FIRE2}{SE_M_EMBER}{SE_M_TAKE_DOWN}"
+	.string "{SE_M_BLIZZARD}{SE_M_BLIZZARD2}{SE_M_SCRATCH}{SE_M_VICEGRIP}{SE_M_WING_ATTACK}{SE_M_FLY}"
+	.string "{SE_M_SAND_ATTACK}{SE_M_RAZOR_WIND2}{SE_M_BITE}{SE_M_HEADBUTT}{SE_M_SURF}{SE_M_HYDRO_PUMP}"
+	.string "{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_M_TAIL_WHIP}{SE_M_MIST}{SE_M_POISON_POWDER}{SE_M_BIND}"
+	.string "{SE_M_DRAGON_RAGE}{SE_M_SING}{SE_M_PERISH_SONG}{SE_M_PAY_DAY}{SE_M_DIG}{SE_M_DIZZY_PUNCH}"
+	.string "{SE_M_SELF_DESTRUCT}{SE_M_EXPLOSION}{SE_M_ABSORB_2}{SE_M_ABSORB}{SE_M_SCREECH}{SE_M_BUBBLE_BEAM}"
+	.string "{SE_M_BUBBLE_BEAM2}{SE_M_SUPERSONIC}{SE_M_BELLY_DRUM}{SE_M_METRONOME}ひと{SE_ICE_STAIRS}"
+	.string "サイズの\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}つ{BLUE}{RED}$"
+	.string "モンスターボールの\n{GREEN}たちを{DYNAMIC_COLOR3}た\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}つ{BLUE}{RED}$"
+	.string "てつ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}\n{LIGHT_GRAY}{RED}"
+	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "{LIGHT_GREEN}{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}"
+	.string "\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "はっぱ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}\n{LIGHT_GRAY}{RED}"
+	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "ガラス{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
+	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "レンガ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
+	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "まるた{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
+	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "{DARK_GRAY}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}"
+	.string "\nた{BLUE}{DYNAMIC_COLOR2}{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "ひとり{SE_NOTE_B}{DYNAMIC_COLOR4}わる\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "モンスターボールの\n{GREEN}たちを{DYNAMIC_COLOR3}た\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "てつ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "ガラス{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "はっぱ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "{LIGHT_GREEN}{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "レンガ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "まるた{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "{DARK_GRAY}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
+	.string "まっ{GREEN}{SE_PIN}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
+	.string "なんご{BLUE}{SE_A}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
+	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{SE_PC_LOGIN}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}"
+	.string "{LIGHT_GREEN}$"
+	.string "{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ろ{SE_PIN}はなが\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}{SE_PIN}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
+	.string "カサのよ{LIGHT_GRAY}{SE_PIN}{LIGHT_GREEN}が\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}"
+	.string "{SE_PIN}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
+	.string "りっぱ{SE_PIN}{LIGHT_GREEN}が\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}"
+	.string "{LIGHT_GRAY}{RED}{LIGHT_GREEN}{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}"
+	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "{MUS_RG_SILPH}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}"
+	.string "る{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_BLUE}る$"
+	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った{MUS_RG_VS_WILD}{MUS_RG_POKE_TOWER}{TRANSPARENT}ふ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR5}ん\nふむ{SE_BANG}われる$"
+	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った{MUS_RG_VS_WILD}{MUS_RG_SURF}{TRANSPARENT}ふ{LIGHT_GRAY}{DYNAMIC_COLOR5}"
+	.string "ん\nふむ{SE_BANG}われる$"
+	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った\n{MUS_RG_SILPH}{MUS_RG_ENCOUNTER_DEOXYS}{TRANSPARENT}ふ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR5}ん\nふむ{SE_BANG}われる$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{WHITE}{MUS_RG_POKE_TOWER}{TRANSPARENT}テント\nな{GREEN}"
+	.string "{SE_BOO}{MUS_RG_POKE_JUMP}れる$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{WHITE}{MUS_RG_SURF}{TRANSPARENT}テント\nな{GREEN}{SE_BOO}"
+	.string "{MUS_RG_POKE_JUMP}れる{MUS_RG_VS_CHAMPION}な{SE_A}{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}"
+	.string "ば\nむ{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_O}わたれる$"
+	.string "{PH_PRICE_BLEND}{SE_A}{LIGHT_GRAY}{RED}{GREEN}ら\n{DYNAMIC_COLOR4}べっ{SE_SHIP}{DYNAMIC_COLOR3}"
+	.string "たへ\n{DARK_GRAY}{BLUE}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}る$"
+	.string "{MUS_RG_DEX_RATING}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{DYNAMIC_COLOR2}{BLUE}\nと{LIGHT_RED}"
+	.string "る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}$"
+	.string "{MUS_RG_DEX_RATING}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{DYNAMIC_COLOR2}{BLUE}\nと{LIGHT_RED}"
+	.string "る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}$"
+	.string "ふ{MUS_RG_VS_LEGEND}{TRANSPARENT}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}タイヤ\n{LIGHT_GRAY}{RED}"
+	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "{MUS_RG_POKE_TOWER}だん{SE_WARP_IN}のぼって\n{PH_PRICE_BLEND}{SE_BOO}{WHITE}がれる$"
+	.string "ま{MUS_RG_VS_LEGEND}{TRANSPARENT}どろだんご\nふむ{SE_BANG}{DYNAMIC_COLOR1}われる$"
+	.string "と{LIGHT_RED}りぬ{SE_EXIT}で{LIGHT_GREEN}る\n{LIGHT_RED}{GREEN}{DYNAMIC_COLOR3}{SE_PIN}ドア$"
+	.string "{DYNAMIC_COLOR2}わる{SE_BANG}{BLUE}ずれる\n{DYNAMIC_COLOR4}な{SE_A}{LIGHT_RED}{LIGHT_GREEN}もの$"
+	.string "バトルタワーで\n50に{SE_WARP_OUT}{GREEN}ち{MUS_RG_NEW_GAME_INSTRUCT}た\n{LIGHT_GREEN}ねん{SE_A}たて$"
+	.string "バトルタワーで\n100に{SE_WARP_OUT}{GREEN}ち{MUS_RG_NEW_GAME_INSTRUCT}た\n{LIGHT_GREEN}ねん{SE_A}たて$"
+	.string "びじゅつ{GREEN}ん{SE_BOO}{WHITE}る\nゆ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}{SE_PIN}ちょ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR1}{BLUE}を\nガラス{SE_NOTE_B}{GREEN}たどったもの$"
+	.string "{MUS_RG_POKE_JUMP}{DARK_GRAY}ろ{SE_A}{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}な\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
+	.string "タネボー{SE_A}イメージで\nつ{BLUE}られた\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
+	.string "エネコ{SE_A}イメージで\nつ{BLUE}られた\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
+	.string "ふむ{SE_BANG}{LIGHT_GREEN}ら{LIGHT_GREEN}ら{DYNAMIC_COLOR4}る\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}マット$"
+	.string "ふむ{SE_BANG}ジャンプ{DYNAMIC_COLOR4}る\n{DARK_GRAY}たず{SE_LAVARIDGE_FALL_WARP}マット$"
+	.string "ふむ{SE_BANG}{BLUE}る{BLUE}{SE_ICE_BREAK}まわる\n{DARK_GRAY}たず{SE_LAVARIDGE_FALL_WARP}マット$"
+	.string "ふむ{SE_BANG}ドの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}レの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}ミの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}ファの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}ソの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}ラの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}シの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "ふむ{SE_BANG}た{MUS_RG_POKE_TOWER}{TRANSPARENT}ドの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
+	.string "なみのり{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_BLUE}る$"
+	.string "{GREEN}みなり{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_BLUE}る$"
+	.string "{PH_PRICE_BLEND}もんじ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}"
+	.string "{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "{DYNAMIC_COLOR1}なゆ{LIGHT_GREEN}{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "メロメロ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_BLUE}る$"
+	.string "じわれ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_BLUE}る$"
+	.string "ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
+	.string "モンスターボールが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
+	.string "{MUS_RG_VICTORY_WILD}ポスター$"
+	.string "キモリが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
+	.string "{MUS_RG_VICTORY_WILD}ポスター$"
+	.string "アチャモが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
+	.string "{MUS_RG_VICTORY_WILD}ポスター$"
+	.string "ミズゴロウが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
+	.string "{MUS_RG_VICTORY_WILD}ポスター$"
+	.string "ルリリが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
+	.string "{MUS_RG_VICTORY_WILD}ポスター$"
+	.string "ピカチュウ{SE_BANG}ピチューが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}"
+	.string "{LIGHT_RED}{LIGHT_GREEN}なポスター$"
+	.string "ハブネークが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}なポスター$"
+	.string "ジーランスが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}なポスター$"
+	.string "キャモメが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}なポスター$"
+	.string "ムチュールが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}なポスター$"
+	.string "ピチュー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ピカチュウ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "マリル{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "トゲピー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ヒノアラシ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "チコリータ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ワニノコ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "プリン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ニャース{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ピッピ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "メタモン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ムチュール{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "キモリ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "アチャモ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ミズゴロウ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ヨマワル{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ソーナノ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ヤジロン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "カクレオン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ルリリ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "エネコ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "チルット{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ゴクリン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ハスボー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "タネボー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ピカチュウ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "マリルリ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "ムチュール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "ジグザグマ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "パッチール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "ヤミラミ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "ボール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{BLUE}{DYNAMIC_COLOR2}マー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
+	.string "{LIGHT_RED}{BLUE}もの$"
+	.string "ほの{LIGHT_RED}マー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}"
+	.string "{BLUE}もの$"
+	.string "みずマー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
+	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
 
 	.globl gUnknown_8580CD0
 gUnknown_8580CD0: @ 0x8580CD0
@@ -8421,11 +9097,12 @@ gUnknown_8588606: @ 0x8588606
 
 	.globl gUnknown_8588612
 gUnknown_8588612: @ 0x8588612
-	.incbin "build/data/data.bin", 0x2ec86e, 0x15
+	.string "コイン{SE_SAVE}9999{MUS_RG_SEVII_CAVE}\nたまっ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_8588627
 gUnknown_8588627: @ 0x8588627
-	.incbin "build/data/data.bin", 0x2ec883, 0x1a
+	.string "コイン{SE_SAVE}{WHITE}りま{DYNAMIC_COLOR5}ん\nゲーム{SE_WARP_IN}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_8588641
 gUnknown_8588641: @ 0x8588641
@@ -9812,51 +10489,299 @@ gUnknown_85A9544: @ 0x85A9544
 
 	.globl gUnknown_85A9D15
 gUnknown_85A9D15: @ 0x85A9D15
-	.incbin "build/data/data.bin", 0x30df71, 0x24
+	.string "{B_ATK_PREFIX2}\n{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_GREEN}り{SE_BOO}つつまれた！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_GREEN}"
+	.string "りに\nまもられ{MUS_RG_CAUGHT_INTRO}る$"
 
 	.globl gUnknown_85A9D39
 gUnknown_85A9D39: @ 0x85A9D39
-	.incbin "build/data/data.bin", 0x30df95, 0xaa6
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nはり{LIGHT_GREEN}っ{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}の\nはんど{LIGHT_GRAY}"
+	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nまもり{SE_A}{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}{MUS_RG_POKE_JUMP}った！$"
+	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}を\n{LIGHT_RED}"
+	.string "{DYNAMIC_COLOR6}{LIGHT_GRAY}！{MUS_RG_VS_CHAMPION}られ{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}を\n{LIGHT_RED}"
+	.string "{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
+	.string "{B_ATK_PREFIX1}{TRANSPARENT}{SE_RG_BAG_POCKET}の\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}"
+	.string "{LIGHT_GREEN}れた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}に\nたね{SE_WARP_IN}{LIGHT_GRAY}{RED}つ{LIGHT_BLUE}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}"
+	.string "わ{DYNAMIC_COLOR3}た！$"
+	.string "やどりぎ{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}の\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{LIGHT_GRAY}"
+	.string "ば{LIGHT_GRAY}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nぐ{LIGHT_GRAY}ぐ{SE_PC_OFF}ねむっ{MUS_RG_CAUGHT_INTRO}る$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}め{SE_WARP_IN}{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR3}た！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_SCR_ACTIVE_NAME_WITH_PREFIX}が\n{DYNAMIC_COLOR2}"
+	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむれな{GREEN}った！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}わが{DYNAMIC_COLOR3}{BLUE}て\nめ{SE_SAVE}{DYNAMIC_COLOR2}"
+	.string "めた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}わぎだ{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}る！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{LIGHT_RED}とな{DYNAMIC_COLOR3}{BLUE}なった$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR3}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
+	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}つた{BLUE}わ{RED}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}も{SE_PC_OFF}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{LIGHT_GRAY}"
+	.string "\nた{BLUE}わ{RED}られ{MUS_RG_GAME_FREAK}！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
+	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむら{MUS_RG_GAME_FREAK}！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
+	.string "わが{DYNAMIC_COLOR3}{BLUE}{SE_SHIP}ねむれ{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\n{B_DEF_ABILITY}{SE_NOTE_B}ねむら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}がまん{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\nがまん{SE_SAVE}と{GREEN}れた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nつ{GREEN}れはて{SE_SHIP}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}た！$"
+	.string "{B_PLAYER_NAME}{SE_I}{SE_RG_BAG_POCKET}¥\nひろった！\p$"
+	.string "{B_DEF_NAME_WITH_PREFIX}には\nぜんぜん{MUS_RG_SILPH}て{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_BOO}へん{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\nぶん{DYNAMIC_COLOR3}ん{SE_SAVE}{WHITE}らわれた$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_ATK_NAME_WITH_PREFIX}の\nみがわり{SE_I}{DYNAMIC_COLOR4}"
+	.string "で{SE_BOO}で{MUS_RG_CAUGHT_INTRO}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_BOO}{GREEN}わって\nぶん{DYNAMIC_COLOR3}ん{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！\p$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}ぶん{DYNAMIC_COLOR3}んは\n{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}まった⋯⋯\p$"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_A}はんど{LIGHT_GRAY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}"
+	.string "{LIGHT_GRAY}ご{LIGHT_BLUE}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{DARK_GRAY}{GREEN}りの\nボルテージ{SE_SAVE}{WHITE}がっ{MUS_RG_CAUGHT_INTRO}"
+	.string "{BLUE}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ふ{LIGHT_GRAY}じ{DYNAMIC_COLOR1}めた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\n{GREEN}な{DYNAMIC_COLOR3}ばり{SE_SAVE}と{LIGHT_BLUE}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nアンコール{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\nアンコールじょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_SAVE}と{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}に\nね{MUS_RG_VS_DEOXYS}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}だめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}スケッチ{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}てを\nみちづれ{SE_BOO}{DYNAMIC_COLOR3}よ{LIGHT_GRAY}"
+	.string "と{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_ATK_NAME_WITH_PREFIX}を\nみちづれ{SE_BOO}{DYNAMIC_COLOR3}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{MUS_RG_VS_TRAINER}{LIGHT_BLUE}ずった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}{GREEN}ら\n{B_LAST_ITEM}{SE_WARP_IN}{LIGHT_GRAY}"
+	.string "{PH_LOT_SOLO}とった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\nも{SE_PC_OFF}にげられ{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{BLUE}む{SE_WARP_IN}みはじめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{BLUE}む{SE_BOO}{LIGHT_GRAY}な{DYNAMIC_COLOR2}"
+	.string "れ{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\n{LIGHT_BLUE}ずっ{SE_SHIP}"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_BOO}の{MUS_RG_ENCOUNTER_DEOXYS}{SE_WARP_IN}{GREEN}{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nのろわれ{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_DEF_PREFIX1}{SE_RG_SS_ANNE_HORN}{DYNAMIC_COLOR3}もとに\nま{LIGHT_GREEN}び{DYNAMIC_COLOR3}{SE_SAVE}"
+	.string "ちらばった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}の\nダメージ{SE_WARP_IN}{LIGHT_GRAY}"
+	.string "{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
+	.string "{MUS_RG_RIVAL_EXIT}{SE_WARP_IN}みやぶった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}ほろびの\nカウント{SE_SAVE}{SE_RG_BAG_POCKET}になった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}ら{RED}る\n{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}"
+	.string "{MUS_RG_POKE_JUMP}った！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}を\n{DYNAMIC_COLOR1}ら{RED}た！$"
+	.string "マグニチュード{SE_RG_BAG_POCKET}！！${B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}"
+	.string "{LIGHT_BLUE}ずって\nパワーぜん{MUS_RG_POKE_TOWER}{SE_BOO}なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\nほじょ{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
+	.string "{SE_WARP_IN}コピー{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{GREEN}"
+	.string "{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}ほ{LIGHT_GRAY}{DYNAMIC_COLOR2}れた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nやどりぎのタネ{SE_WARP_IN}ふ{LIGHT_GREEN}とば{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}を\nふ{LIGHT_GREEN}とば{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{GREEN}ら\nりだつ{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}み{MUS_RG_VS_DEOXYS}に\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}よち{DYNAMIC_COLOR3}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}の\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_CURRENT_MOVE}を\nみ{MUS_RG_VS_DEOXYS}{SE_BOO}た{BLUE}{DYNAMIC_COLOR3}"
+	.string "た！$"
+	.string "{SE_RG_BAG_POCKET}{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nちゅ{LIGHT_GRAY}も{BLUE}{SE_A}まと{SE_BOO}なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nじゅ{LIGHT_GRAY}でん{SE_WARP_IN}はじめた！$"
+	.string "{DYNAMIC_COLOR3}ぜんのち{GREEN}らは\n{B_CURRENT_MOVE}{SE_BOO}なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{DARK_GRAY}じょ{LIGHT_GRAY}"
+	.string "が\nな{LIGHT_RED}った！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}は\n{DARK_GRAY}ちゃもん{SE_WARP_IN}つ{LIGHT_BLUE}られた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{LIGHT_GRAY}りょ{BLUE}{SE_WARP_IN}た{GREEN}"
+	.string "め{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}\nちょ{LIGHT_GRAY}はつ{SE_BOO}のって{DYNAMIC_COLOR3}まった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}を\nてだ{DYNAMIC_COLOR4}{SE_EXIT}{DYNAMIC_COLOR4}"
+	.string "{SE_ICE_BREAK}{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}{MUS_RG_POKE_JUMP}った！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_RED}た{PH_CLOTH_SOLO}の\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}{DARK_GRAY}"
+	.string "れ{GREEN}{RED}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}を\nて{SE_BOO}{DARK_GRAY}れた！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{MUS_RG_VS_TRAINER}を\nて{SE_BOO}{DARK_GRAY}れた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}を\nて{SE_BOO}{DARK_GRAY}れた！\p{B_DEF_NAME_WITH_PREFIX}"
+	.string "{SE_I}{MUS_RG_VS_TRAINER}を\nて{SE_BOO}{DARK_GRAY}れた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{B_DEF_ABILITY}{SE_WARP_IN}"
+	.string "コピー{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\nね{PH_CLOTH_SOLO}ごと{SE_WARP_IN}{DYNAMIC_COLOR3}た！$"
+	.string "{SE_RG_BAG_POCKET}の\nね{PH_CLOTH_SOLO}ごと{SE_SAVE}{GREEN}なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ね{SE_WARP_IN}はった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ね{GREEN}ら\nよ{LIGHT_GRAY}ぶん{SE_WARP_IN}{MUS_RG_VERMILLION}とった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}ね{SE_WARP_IN}はって\n{LIGHT_GRAY}ご{GREEN}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\nねむ{LIGHT_BLUE}{SE_WARP_IN}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR6}った！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{B_LAST_ITEM}{SE_WARP_IN}はた{LIGHT_GREEN}"
+	.string "{LIGHT_RED}と{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_RED}た{PH_CLOTH_SOLO}の\nと{BLUE}{MUS_RG_PEWTER}{SE_WARP_IN}"
+	.string "{DARK_GRAY}れ{GREEN}{RED}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}ての\nわざ{SE_WARP_IN}ふ{MUS_RG_POKE_CENTER}"
+	.string "ん{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}てに\n{LIGHT_RED}んねん{SE_WARP_IN}{GREEN}{LIGHT_BLUE}"
+	.string "よ{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{SE_RG_BAG_POCKET}は\n{LIGHT_RED}んねん{SE_NOTE_B}わざポイント{SE_SAVE}0{SE_BOO}"
+	.string "なった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{B_CURRENT_MOVE}{SE_BOO}つつまれた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{B_CURRENT_MOVE}は\nマジックコート{SE_BOO}はね{GREEN}{RED}{DYNAMIC_COLOR2}れた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_A}で{GREEN}た{SE_WARP_IN}{LIGHT_GRAY}{GREEN}"
+	.string "がっ{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_NAME_WITH_PREFIX}の\nわざ{SE_WARP_IN}よ{DYNAMIC_COLOR1}"
+	.string "どり{DYNAMIC_COLOR3}た！$"
+	.string "でん{LIGHT_GREEN}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}よわまった！$"
+	.string "ほの{LIGHT_RED}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}よわまった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}を\nひろって{LIGHT_GREEN}た！$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{GREEN}{LIGHT_RED}り{SE_SAVE}ひろがった！$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}つ{GREEN}{LIGHT_GRAY}{DYNAMIC_COLOR1}"
+	.string "とは\nで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！{PAUSE}ぞ$"
+	.string "{B_LAST_ITEM}{SE_I}{B_SCR_ACTIVE_NAME_WITH_PREFIX}には\n{SE_RG_BAG_POCKET}$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}って\nはり{LIGHT_GREEN}"
+	.string "{SE_ICE_STAIRS}だ{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{LIGHT_GRAY}りょ{BLUE}が\nとぎれ{SE_SHIP}"
+	.string "わざ{SE_SAVE}だ{DYNAMIC_COLOR5}な{GREEN}った！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}に\nひ{LIGHT_GREEN}ずりだ{DYNAMIC_COLOR2}"
+	.string "れた！\p$"
+	.string "{GREEN}べ{SE_SAVE}{DYNAMIC_COLOR1}われた！${DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}{GREEN}{SE_SAVE}な{GREEN}った！$"
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_A}で{LIGHT_GREEN}る\nわざ{SE_SAVE}"
+	.string "{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}{GREEN}な{DYNAMIC_COLOR3}ばりで\n{B_CURRENT_MOVE}{SE_SAVE}"
+	.string "だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}{DARK_GRAY}ちゃもん{SE_WARP_IN}つ{LIGHT_BLUE}られたので\nつづ{LIGHT_BLUE}"
+	.string "{SE_SHIP}{LIGHT_RED}な{SE_BALL_THROW}わざ{SE_SAVE}だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}ちょ{LIGHT_GRAY}は{SE_SLIDING_DOOR}{DYNAMIC_COLOR2}れて\n{B_CURRENT_MOVE}"
+	.string "{SE_SAVE}だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}ふ{MUS_RG_POKE_CENTER}んで\n{B_CURRENT_MOVE}{SE_SAVE}だ{DYNAMIC_COLOR5}"
+	.string "{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で{MUS_RG_VS_WILD}め{SE_SAVE}ふりはじめた！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}"
+	.string "{SE_SAVE}{WHITE}がった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_CURRENT_MOVE}"
+	.string "{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{GREEN}{SE_SAVE}な{GREEN}った！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{SE_RG_BAG_POCKET}タイプ{SE_BOO}なった！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nまひ{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nメロメロ{SE_BOO}なら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nど{BLUE}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}"
+	.string "{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}"
+	.string "{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nほの{LIGHT_RED}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}"
+	.string "{WHITE}がった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nはり{MUS_RG_OBTAIN_KEY_ITEM}{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{B_DEF_NAME_WITH_PREFIX}{SE_A}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}りょ{BLUE}{SE_SAVE}{DYNAMIC_COLOR2}がった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\nの{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}"
+	.string "{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_GREEN}"
+	.string "ず{MUS_RG_OBTAIN_KEY_ITEM}た！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}の\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}"
+	.string "トレース{DYNAMIC_COLOR3}た！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_EFF_ABILITY}で\nや{LIGHT_BLUE}ど{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}"
+	.string "{MUS_RG_GAME_FREAK}！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{B_CURRENT_MOVE}{SE_WARP_IN}"
+	.string "{LIGHT_GRAY}{LIGHT_BLUE}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_ATK_ABILITY}で\n{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{DYNAMIC_COLOR4}な{WHITE}"
+	.string "ら{DYNAMIC_COLOR3}{SE_BOO}なった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\nひざ{DYNAMIC_COLOR3}{SE_SAVE}つよ{BLUE}"
+	.string "なった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}{SE_SAVE}"
+	.string "{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}メロメロ{SE_BOO}なった！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_SAVE}{LIGHT_GREEN}{GREEN}"
+	.string "{MUS_RG_GAME_FREAK}！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}じょ{LIGHT_GRAY}"
+	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "ヘドロ{RED}{LIGHT_GREEN}{SE_WARP_IN}{MUS_RG_VERMILLION}とった！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{DYNAMIC_COLOR4}がたが\nへん{GREEN}{DYNAMIC_COLOR3}た！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AA7DF
 gUnknown_85AA7DF: @ 0x85AA7DF
-	.incbin "build/data/data.bin", 0x30ea3b, 0x98
+	.string "{SE_RG_BAG_POCKET}{SE_A}{B_LAST_ABILITY}で\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}もど{DYNAMIC_COLOR4}"
+	.string "{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}"
+	.string "{SE_RG_BAG_POCKET}{SE_I}{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{LIGHT_GRAY}ま{SE_DOOR}{LIGHT_GREEN}"
+	.string "まらな{GREEN}った！$"
+	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_EFF_ABILITY}で\nひるま{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{B_ATK_ABILITY}で\n{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}{SE_I}"
+	.string "{LIGHT_GREEN}{GREEN}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}{SE_SAVE}な{LIGHT_RED}"
+	.string "った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}は\n{B_EFF_NAME_WITH_PREFIX}{SE_BOO}"
+	.string "{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
+	.string "ぐーん{SE_BANG}$"
 
 	.globl gUnknown_85AA877
 gUnknown_85AA877: @ 0x85AA877
-	.incbin "build/data/data.bin", 0x30ead3, 0x1d
+	.string "{WHITE}がった！$が{BLUE}っ{SE_BANG}${DYNAMIC_COLOR2}がった！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
 
 	.globl gUnknown_85AA894
 gUnknown_85AA894: @ 0x85AA894
-	.incbin "build/data/data.bin", 0x30eaf0, 0xdc
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
+	.string "{B_ATK_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}の{LIGHT_GRAY}りょ{BLUE}は\nも{SE_PC_OFF}{WHITE}がら{MUS_RG_GAME_FREAK}！$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}の{LIGHT_GRAY}りょ{BLUE}は\nも{SE_PC_OFF}{DYNAMIC_COLOR2}"
+	.string "がら{MUS_RG_GAME_FREAK}！$"
+	.string "{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たった！$"
+	.string "{DARK_GRAY}ちげ{SE_WALL_HIT}ひっ{DYNAMIC_COLOR2}つ！$"
+	.string "{PAUSE}み{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}"
+	.string "⋯{PAUSE}{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}ポカン！\p$"
+	.string "{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}て⋯⋯！\p${DYNAMIC_COLOR6}れ{SE_I}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}"
+	.string "つ{SE_PIN}わざで{DYNAMIC_COLOR4}\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！\p$"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_I}{DARK_GRAY}まひとつ{SE_A}よ{LIGHT_GRAY}だ$"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_I}ばつぐんだ！$"
 
 	.globl gUnknown_85AA970
 gUnknown_85AA970: @ 0x85AA970
-	.incbin "build/data/data.bin", 0x30ebcc, 0x56
+	.string "{PLAY_SE}{SE_FLEE}{LIGHT_GRAY}ま{SE_DOOR}にげ{LIGHT_GREEN}れた！\p$"
+	.string "{PLAY_SE}{SE_FLEE}{B_ATK_NAME_WITH_PREFIX}{SE_I}もっ{MUS_RG_CAUGHT_INTRO}た\n{B_LAST_ITEM}{SE_WARP_IN}"
+	.string "つ{GREEN}っ{SE_SHIP}にげた\p$"
+	.string "{PLAY_SE}{SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は\n{B_ATK_ABILITY}{SE_WARP_IN}つ{GREEN}っ{SE_SHIP}にげた\p$"
+	.string "{PLAY_SE}{SE_FLEE}や{MUS_RG_PEWTER}{SE_A}{SE_RG_BAG_POCKET}{SE_I}にげだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AA9C6
 gUnknown_85AA9C6: @ 0x85AA9C6
-	.incbin "build/data/data.bin", 0x30ec22, 0x10
+	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}{GREEN}った！$"
 
 	.globl gUnknown_85AA9D6
 gUnknown_85AA9D6: @ 0x85AA9D6
-	.incbin "build/data/data.bin", 0x30ec32, 0x14
+	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
+	.string "{GREEN}った！$"
 
 	.globl gUnknown_85AA9EA
 gUnknown_85AA9EA: @ 0x85AA9EA
-	.incbin "build/data/data.bin", 0x30ec46, 0x10
+	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ま{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AA9FA
 gUnknown_85AA9FA: @ 0x85AA9FA
-	.incbin "build/data/data.bin", 0x30ec56, 0x14
+	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
+	.string "ま{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AAA0E
 gUnknown_85AAA0E: @ 0x85AAA0E
-	.incbin "build/data/data.bin", 0x30ec6a, 0x12
+	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AAA20
 gUnknown_85AAA20: @ 0x85AAA20
-	.incbin "build/data/data.bin", 0x30ec7c, 0x16
+	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
+	.string "ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AAA36
 gUnknown_85AAA36: @ 0x85AAA36
@@ -9864,71 +10789,146 @@ gUnknown_85AAA36: @ 0x85AAA36
 
 	.globl gUnknown_85AAA45
 gUnknown_85AAA45: @ 0x85AAA45
-	.incbin "build/data/data.bin", 0x30eca1, 0x2dd
+	.string "{PLAY_SE}{SE_FLEE}{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}は\nにげだ{DYNAMIC_COLOR3}た！$"
+	.string "ダメだ{SE_M_DRAGON_RAGE}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_A}{MUS_RG_VICTORY_WILD}ちゅ{LIGHT_GRAY}"
+	.string "に{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_BOO}{DYNAMIC_COLOR5}な{GREEN}{SE_I}み{DYNAMIC_COLOR5}"
+	.string "られ{MUS_RG_GAME_FREAK}！\p$"
+	.string "にげる{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
+	.string "オダマキ“{SE_FAILURE}み{DYNAMIC_COLOR4}て{MUS_RG_GAME_FREAK}で{BLUE}れー！”\p$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なにも{LIGHT_RED}{DYNAMIC_COLOR1}ら{MUS_RG_GAME_FREAK}$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{LIGHT_GRAY}ま{SE_DOOR}{LIGHT_GREEN}まらな{GREEN}った！$"
+	.string "わ{LIGHT_BLUE}{SE_SWITCH}わ{GREEN}らず\nじぶん{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR3}た！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}オウムが{RED}{DYNAMIC_COLOR3}は\n{DYNAMIC_COLOR3}"
+	.string "っ{PH_THOUGHT_HELD}に{LIGHT_RED}わった！{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりはじめた！$"
+	.string "{LIGHT_RED}{SE_RG_POKE_JUMP_SUCCESS}め{SE_BOO}なった！{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりつ{PH_PRICE_SOLO}"
+	.string "{MUS_RG_CAUGHT_INTRO}る$"
+	.string "{LIGHT_RED}{SE_RG_POKE_JUMP_SUCCESS}め{SE_SAVE}ふりつ{PH_PRICE_SOLO}{MUS_RG_CAUGHT_INTRO}"
+	.string "る{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりやんだ！$"
+	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{LIGHT_GREEN}はじめた！$"
+	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{SE_POKENAV_CALL}れる$"
+	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}{LIGHT_RED}{DYNAMIC_COLOR2}まった！$"
+	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}つよ{BLUE}なった！$"
+	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}つ{MUS_RG_POKE_FLUTE}$"
+	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}よわ{BLUE}なった！{MUS_RG_VS_CHAMPION}られ{SE_SAVE}ふりはじめた！{MUS_RG_VS_CHAMPION}"
+	.string "られ{SE_SAVE}ふりつ{PH_PRICE_SOLO}{MUS_RG_CAUGHT_INTRO}る{MUS_RG_VS_CHAMPION}られ{SE_SAVE}ふりやんだ！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なに{SE_SWITCH}は{LIGHT_GREEN}だ{DYNAMIC_COLOR5}な{GREEN}った！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なに{SE_SWITCH}のみ{DYNAMIC_COLOR1}めな{GREEN}った！$"
+	.string "{GREEN}ぜ{SE_I}ねっぷ{LIGHT_GRAY}{SE_BOO}なった！$"
+	.string "{DYNAMIC_COLOR4}べて{SE_A}ステータスが\nもと{SE_BOO}もどった！$"
+	.string "{DYNAMIC_COLOR1}ばん{SE_SAVE}{WHITE}たり{SE_BOO}ちらばった！$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}ぶん{DYNAMIC_COLOR3}ん{SE_WARP_IN}だ{DYNAMIC_COLOR4}"
+	.string "には\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}たりな{GREEN}った！$"
+	.string "{LIGHT_RED}た{PH_CLOTH_SOLO}{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\nわ{GREEN}ち{WHITE}った！$"
+	.string "{DYNAMIC_COLOR4}ずのね{SE_SAVE}ひび{LIGHT_GREEN}わたった！$"
+	.string "{LIGHT_RED}た{PH_CLOTH_SOLO}のポケモンは\n3ターンご{SE_BOO}ほろびて{DYNAMIC_COLOR3}ま{LIGHT_GRAY}！$"
+	.string "わざ{SE_A}の{DYNAMIC_COLOR1}りポイント{SE_SAVE}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR3}\nわざ{SE_A}の{DYNAMIC_COLOR1}りポイント{SE_SAVE}な{GREEN}った！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ねむったまま\n{MUS_RG_SEVII_DUNGEON}{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_WARP_IN}"
+	.string "む{DYNAMIC_COLOR3}{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_SEVII_DUNGEON}{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_WARP_IN}"
+	.string "む{DYNAMIC_COLOR3}{DYNAMIC_COLOR3}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ひるね{SE_WARP_IN}はじめた！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}なま{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DARK_GRAY}{LIGHT_GRAY}{DYNAMIC_COLOR1}と{SE_WARP_IN}{LIGHT_GREEN}"
+	.string "{GREEN}{MUS_RG_GAME_FREAK}！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR6}っぽ{SE_WARP_IN}{MUS_RG_SEVII_ROUTE}た！$"
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}らんぷり{DYNAMIC_COLOR3}た！$"
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR6}"
+	.string "{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る\p{B_PLAYER_NAME}{SE_SWITCH}"
+	.string "ポケモンを\n{DARK_GRAY}れ{GREEN}{RED}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
 
 	.globl gUnknown_85AAD22
 gUnknown_85AAD22: @ 0x85AAD22
-	.incbin "build/data/data.bin", 0x30ef7e, 0xea
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}{GREEN}"
+	.string "った！\p$"
+	.string "{B_PLAYER_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BOO}ち{GREEN}{PH_PRICE_SOLO}た！$"
+	.string "{B_PLAYER_NAME}は\n{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}ち{GREEN}づ{LIGHT_BLUE}"
+	.string "{MUS_RG_GAME_FREAK}！$"
+	.string "{B_OPPONENT_MON1_NAME}は\n{DYNAMIC_COLOR1}ちら{SE_A}よ{LIGHT_GRAY}{DYNAMIC_COLOR4}{SE_WARP_IN}"
+	.string "{LIGHT_GRAY}{GREEN}がっ{MUS_RG_CAUGHT_INTRO}る！$"
+	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\n{LIGHT_GREEN}ょ{LIGHT_GRAY}み{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR3}め{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}よ{LIGHT_GRAY}だ！$"
+	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\nむちゅ{LIGHT_GRAY}{SE_BOO}なっ{MUS_RG_CAUGHT_INTRO}"
+	.string "{SE_ICE_BREAK}よ{LIGHT_GRAY}だ！$"
+	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\nみむ{LIGHT_GREEN}{SE_SWITCH}{DYNAMIC_COLOR3}"
+	.string "{MUS_RG_GAME_FREAK}{TRANSPARENT}よ{LIGHT_GRAY}だ！$"
+	.string "{B_PLAYER_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BOO}ポロック{SE_WARP_IN}なげた！$"
+	.string "{PLAY_SE}{SE_DING_DONG}アナウンス“ピンポーン{SE_M_DRAGON_RAGE}サファリボールが\nな{BLUE}なったの{SE_NOTE_B}{DYNAMIC_COLOR3}"
+	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}でー{DYNAMIC_COLOR4}！\p{MUS_RG_VS_CHAMPION}{SE_M_DRAGON_RAGE}"
+	.string "{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}て{LIGHT_GREEN}た！\p$"
 
 	.globl gUnknown_85AAE0C
 gUnknown_85AAE0C: @ 0x85AAE0C
-	.incbin "build/data/data.bin", 0x30f068, 0x16
+	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}"
+	.string "て{LIGHT_GREEN}た！\p$"
 
 	.globl gUnknown_85AAE22
 gUnknown_85AAE22: @ 0x85AAE22
-	.incbin "build/data/data.bin", 0x30f07e, 0x14
+	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}{WHITE}らわれた！\p$"
 
 	.globl gUnknown_85AAE36
 gUnknown_85AAE36: @ 0x85AAE36
-	.incbin "build/data/data.bin", 0x30f092, 0x18
+	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}"
+	.string "て{LIGHT_GREEN}た！{PAUSE}ァ$"
 
 	.globl gUnknown_85AAE4E
 gUnknown_85AAE4E: @ 0x85AAE4E
-	.incbin "build/data/data.bin", 0x30f0aa, 0x1a
+	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}"
+	.string "{SE_SAVE}とびだ{DYNAMIC_COLOR3}て{LIGHT_GREEN}た！\p$"
 
 	.globl gUnknown_85AAE68
 gUnknown_85AAE68: @ 0x85AAE68
-	.incbin "build/data/data.bin", 0x30f0c4, 0x17
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！\p$"
 
 	.globl gUnknown_85AAE7F
 gUnknown_85AAE7F: @ 0x85AAE7F
-	.incbin "build/data/data.bin", 0x30f0db, 0x12
+	.string "{B_LINK_OPPONENT1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}"
+	.string "{LIGHT_BLUE}て{LIGHT_GREEN}た！$"
 
 	.globl gUnknown_85AAE91
 gUnknown_85AAE91: @ 0x85AAE91
-	.incbin "build/data/data.bin", 0x30f0ed, 0x16
+	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！$"
 
 	.globl gUnknown_85AAEA7
 gUnknown_85AAEA7: @ 0x85AAEA7
-	.incbin "build/data/data.bin", 0x30f103, 0x13
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}"
+	.string "りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAEBA
 gUnknown_85AAEBA: @ 0x85AAEBA
-	.incbin "build/data/data.bin", 0x30f116, 0x17
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}"
+	.string "{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAED1
 gUnknown_85AAED1: @ 0x85AAED1
-	.incbin "build/data/data.bin", 0x30f12d, 0x13
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "た！$"
 
 	.globl gUnknown_85AAEE4
 gUnknown_85AAEE4: @ 0x85AAEE4
-	.incbin "build/data/data.bin", 0x30f140, 0xf
+	.string "{B_LINK_OPPONENT1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAEF3
 gUnknown_85AAEF3: @ 0x85AAEF3
-	.incbin "build/data/data.bin", 0x30f14f, 0x13
+	.string "{B_LINK_OPPONENT1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}{SE_WARP_IN}{BLUE}"
+	.string "りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAF06
 gUnknown_85AAF06: @ 0x85AAF06
-	.incbin "build/data/data.bin", 0x30f162, 0x1e
+	.string "{B_LINK_OPPONENT1_NAME}{SE_I}{B_LINK_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "た！\n{B_LINK_OPPONENT2_NAME}{SE_I}{B_LINK_OPPONENT_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAF24
 gUnknown_85AAF24: @ 0x85AAF24
-	.incbin "build/data/data.bin", 0x30f180, 0xf
+	.string "{B_LINK_OPPONENT1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAF33
 gUnknown_85AAF33: @ 0x85AAF33
-	.incbin "build/data/data.bin", 0x30f18f, 0xf
+	.string "{B_LINK_SCR_TRAINER_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AAF42
 gUnknown_85AAF42: @ 0x85AAF42
@@ -9952,39 +10952,40 @@ gUnknown_85AAF6C: @ 0x85AAF6C
 
 	.globl gUnknown_85AAF76
 gUnknown_85AAF76: @ 0x85AAF76
-	.incbin "build/data/data.bin", 0x30f1d2, 0x18
+	.string "{MUS_RG_OAK_LAB}て{SE_SAVE}よわっ{MUS_RG_CAUGHT_INTRO}る！\nチャンスだ{SE_M_DRAGON_RAGE}{SE_RG_BAG_POCKET}！$"
 
 	.globl gUnknown_85AAF8E
 gUnknown_85AAF8E: @ 0x85AAF8E
-	.incbin "build/data/data.bin", 0x30f1ea, 0x18
+	.string "{B_LINK_PARTNER_NAME}{SE_I}{B_LINK_PLAYER_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "た！\nゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_LINK_PLAYER_MON1_NAME}！$"
 
 	.globl gUnknown_85AAFA6
 gUnknown_85AAFA6: @ 0x85AAFA6
-	.incbin "build/data/data.bin", 0x30f202, 0xe
+	.string "{SE_RG_BAG_POCKET}{TRANSPARENT}も{MUS_RG_POKE_CENTER}{DARK_GRAY}！\nもどれ！$"
 
 	.globl gUnknown_85AAFB4
 gUnknown_85AAFB4: @ 0x85AAFB4
-	.incbin "build/data/data.bin", 0x30f210, 0x8
+	.string "{SE_RG_BAG_POCKET}\nもどれ！$"
 
 	.globl gUnknown_85AAFBC
 gUnknown_85AAFBC: @ 0x85AAFBC
-	.incbin "build/data/data.bin", 0x30f218, 0xd
+	.string "{SE_RG_BAG_POCKET}{MUS_RG_PALLET}{DARK_GRAY}ぞ！\nもどれ！$"
 
 	.globl gUnknown_85AAFC9
 gUnknown_85AAFC9: @ 0x85AAFC9
-	.incbin "build/data/data.bin", 0x30f225, 0xf
+	.string "{SE_RG_BAG_POCKET}{TRANSPARENT}よ{BLUE}やった！\nもどれ！$"
 
 	.globl gUnknown_85AAFD8
 gUnknown_85AAFD8: @ 0x85AAFD8
-	.incbin "build/data/data.bin", 0x30f234, 0x13
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
 
 	.globl gUnknown_85AAFEB
 gUnknown_85AAFEB: @ 0x85AAFEB
-	.incbin "build/data/data.bin", 0x30f247, 0xf
+	.string "{B_LINK_OPPONENT1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
 
 	.globl gUnknown_85AAFFA
 gUnknown_85AAFFA: @ 0x85AAFFA
-	.incbin "build/data/data.bin", 0x30f256, 0xf
+	.string "{B_LINK_SCR_TRAINER_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
 
 	.globl gUnknown_85AB009
 gUnknown_85AB009: @ 0x85AB009
@@ -10020,7 +11021,7 @@ gUnknown_85AB02F: @ 0x85AB02F
 
 	.globl gUnknown_85AB034
 gUnknown_85AB034: @ 0x85AB034
-	.incbin "build/data/data.bin", 0x30f290, 0x8
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_RG_BAG_POCKET}\n{MUS_RG_VS_TRAINER}$"
 
 	.globl gUnknown_85AB03C
 gUnknown_85AB03C: @ 0x85AB03C
@@ -10050,7 +11051,25 @@ gUnknown_85AB08C: @ 0x85AB08C
 
 	.globl gUnknown_85AB0D0
 gUnknown_85AB0D0: @ 0x85AB0D0
-	.incbin "build/data/data.bin", 0x30f32c, 0x155
+	.string "？⋯コ{BLUE}‘⋯コ{BLUE}/⋯コ{BLUE}G⋯コ{BLUE}N⋯コ{BLUE}{B_PLAYER_NAME}{SE_I}\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}"
+	.string "った！$"
+	.string "ミツル{SE_I}\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}った！$"
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}った！$"
+	.string "トレーナー{SE_BOO}ボール{SE_WARP_IN}はじ{GREEN}れた！$"
+	.string "ひと{SE_A}もの{SE_WARP_IN}とった{SE_LAVARIDGE_FALL_WARP}どろぼ{LIGHT_GRAY}！$"
+	.string "よ{LIGHT_BLUE}られた！\n{MUS_RG_VICTORY_TRAINER}つ{SE_I}つ{GREEN}まり{DYNAMIC_COLOR6}{LIGHT_GRAY}"
+	.string "に{MUS_RG_GAME_FREAK}ぞ！$"
+	.string "ポケモンに\n{LIGHT_GRAY}ま{SE_DOOR}{WHITE}たらな{GREEN}った！$"
+	.string "だめだ{SE_M_DRAGON_RAGE}ポケモンが\nボール{GREEN}{SE_LAVARIDGE_FALL_WARP}でて{DYNAMIC_COLOR3}"
+	.string "まった！{MUS_RG_VS_CHAMPION}{WHITE}！\nつ{GREEN}ま{RED}た{SE_BANG}{LIGHT_RED}もったのに！$"
+	.string "ざんねん！\nも{LIGHT_GRAY}{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{GREEN}ま{RED}られたのに！$"
+	.string "{LIGHT_RED}{MUS_RG_VICTORY_GYM_LEADER}！{MUS_RG_VS_WILD}{SE_BANG}ちょっと{SE_A}と{DYNAMIC_COLOR1}ろだったのに！$"
+	.string "やったー！\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}つ{GREEN}ま{RED}たぞ！{WAIT_SE}{PLAY_BGM}{MUS_CAUGHT}\p$"
+	.string "やったー！\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}つ{GREEN}ま{RED}たぞ！{WAIT_SE}{PLAY_BGM}{MUS_CAUGHT}{PAUSE}ァ$"
+	.string "つ{GREEN}ま{RED}{SE_FAINT}{B_OPPONENT_MON1_NAME}に\nニックネーム{SE_WARP_IN}つ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
+	.string "{B_OPPONENT_MON1_NAME}{SE_I}{B_PC_CREATOR_NAME}{TRANSPARENT}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR2}れた！$"
 
 	.globl gUnknown_85AB225
 gUnknown_85AB225: @ 0x85AB225
@@ -10058,7 +11077,11 @@ gUnknown_85AB225: @ 0x85AB225
 
 	.globl gUnknown_85AB22A
 gUnknown_85AB22A: @ 0x85AB22A
-	.incbin "build/data/data.bin", 0x30f486, 0x5e
+	.string "マユミの${B_OPPONENT_MON1_NAME}{SE_A}データ{SE_SAVE}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\nポケモンず{GREEN}ん{SE_BOO}"
+	.string "セーブ{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR4}！\p{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふっ{MUS_RG_CAUGHT_INTRO}る$"
+	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{SE_POKENAV_CALL}れ{MUS_RG_CAUGHT_INTRO}る$"
+	.string "ボックス{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で\n{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}"
+	.string "じょ{SE_PC_OFF}つ{GREEN}ま{RED}られ{MUS_RG_GAME_FREAK}！\p$"
 
 	.globl gUnknown_85AB288
 gUnknown_85AB288: @ 0x85AB288
@@ -10066,11 +11089,34 @@ gUnknown_85AB288: @ 0x85AB288
 
 	.globl gUnknown_85AB28D
 gUnknown_85AB28D: @ 0x85AB28D
-	.incbin "build/data/data.bin", 0x30f4e9, 0x130
+	.string "のみ${B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nまひ{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nど{BLUE}{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nや{LIGHT_BLUE}ど{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR1}{LIGHT_RED}りじょ{LIGHT_GRAY}"
+	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nねむり{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "{DYNAMIC_COLOR2}めた！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR1}んらん{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}じょ{LIGHT_GRAY}"
+	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nじょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{DARK_GRAY}"
+	.string "じょ{LIGHT_GRAY}{SE_SAVE}な{LIGHT_RED}った！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}{SE_A}わざポイント{SE_WARP_IN}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nステータス{SE_WARP_IN}もと{SE_BOO}もど{DYNAMIC_COLOR3}"
+	.string "た！$"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}"
+	.string "{SE_NOT_EFFECTIVE}{MUS_RG_POKE_TOWER}ふ{BLUE}$"
+	.string "{B_LAST_ITEM}{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}で\n{B_CURRENT_MOVE}{DYNAMIC_COLOR3}"
+	.string "{SE_WIN_OPEN}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}とがで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
+	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nもち{DYNAMIC_COLOR1}た{RED}た！$"
 
 	.globl gUnknown_85AB3BD
 gUnknown_85AB3BD: @ 0x85AB3BD
-	.incbin "build/data/data.bin", 0x30f619, 0x1f
+	.string "{TRANSPARENT}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_NOTE_B}ボール{SE_WARP_IN}なげるんだね\nぼ{BLUE}"
+	.string "⋯{SE_M_DIZZY_PUNCH}やってみるよ！$"
 
 	.globl gUnknown_85AB3DC
 gUnknown_85AB3DC: @ 0x85AB3DC
@@ -10087,19 +11133,20 @@ gUnknown_85ABAEE: @ 0x85ABAEE
 
 	.globl gUnknown_85ABAFC
 gUnknown_85ABAFC: @ 0x85ABAFC
-	.incbin "build/data/data.bin", 0x30fd58, 0x13
+	.string "⋯⋯{LIGHT_RED}や！？\n{B_COPY_VAR_1}{SE_A}よ{LIGHT_GRAY}{DYNAMIC_COLOR4}が⋯⋯！$"
 
 	.globl gUnknown_85ABB0F
 gUnknown_85ABB0F: @ 0x85ABB0F
-	.incbin "build/data/data.bin", 0x30fd6b, 0x19
+	.string "{LIGHT_RED}めでと{LIGHT_GRAY}{SE_M_DRAGON_RAGE}{B_COPY_VAR_1}は\n{B_COPY_VAR_2}{SE_BOO}{DYNAMIC_COLOR3}"
+	.string "ん{GREEN}{DYNAMIC_COLOR3}た！{WAIT_SE}\p$"
 
 	.globl gUnknown_85ABB28
 gUnknown_85ABB28: @ 0x85ABB28
-	.incbin "build/data/data.bin", 0x30fd84, 0x16
+	.string "{WHITE}れ⋯⋯？\n{B_COPY_VAR_1}{SE_A}へん{GREEN}{SE_SAVE}とまった！\p$"
 
 	.globl gUnknown_85ABB3E
 gUnknown_85ABB3E: @ 0x85ABB3E
-	.incbin "build/data/data.bin", 0x30fd9a, 0x5
+	.string "⋯⋯？\p$"
 
 	.globl gUnknown_85ABB43
 gUnknown_85ABB43: @ 0x85ABB43
@@ -10119,11 +11166,11 @@ gUnknown_85ABB62: @ 0x85ABB62
 
 	.globl gUnknown_85ABB72
 gUnknown_85ABB72: @ 0x85ABB72
-	.incbin "build/data/data.bin", 0x30fdce, 0x14
+	.string "たた{GREEN}{SE_PC_OFF}{TRANSPARENT}バッグ\nポケモ{SE_M_BUBBLE3}{TRANSPARENT}にげる$"
 
 	.globl gUnknown_85ABB86
 gUnknown_85ABB86: @ 0x85ABB86
-	.incbin "build/data/data.bin", 0x30fde2, 0x15
+	.string "ボー{SE_M_NIGHTMARE}{MUS_DUMMY}ポロック\nち{GREEN}づ{SE_DOOR}{TRANSPARENT}にげる$"
 
 	.globl gUnknown_85ABB9B
 gUnknown_85ABB9B: @ 0x85ABB9B
@@ -10131,11 +11178,14 @@ gUnknown_85ABB9B: @ 0x85ABB9B
 
 	.globl gUnknown_85ABBA1
 gUnknown_85ABBA1: @ 0x85ABBA1
-	.incbin "build/data/data.bin", 0x30fdfd, 0x28
+	.string "わざタイプ/${PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$"
+	.string "{PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}ど{SE_A}"
+	.string "わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}？$"
 
 	.globl gUnknown_85ABBC9
 gUnknown_85ABBC9: @ 0x85ABBC9
-	.incbin "build/data/data.bin", 0x30fe25, 0xf
+	.string "{PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}"
+	.string "{MUS_RG_POKE_JUMP}\n{MUS_RG_OAK}{RED}$"
 
 	.globl gUnknown_85ABBD8
 gUnknown_85ABBD8: @ 0x85ABBD8
@@ -10143,15 +11193,15 @@ gUnknown_85ABBD8: @ 0x85ABBD8
 
 	.globl gUnknown_85ABC38
 gUnknown_85ABC38: @ 0x85ABC38
-	.incbin "build/data/data.bin", 0x30fe94, 0xb
+	.string "{HIGHLIGHT}{DARK_GRAY}サファリボール$"
 
 	.globl gUnknown_85ABC43
 gUnknown_85ABC43: @ 0x85ABC43
-	.incbin "build/data/data.bin", 0x30fe9f, 0x8
+	.string "{HIGHLIGHT}{DARK_GRAY}の{DYNAMIC_COLOR1}{SE_ICE_STAIRS}$"
 
 	.globl gUnknown_85ABC4B
 gUnknown_85ABC4B: @ 0x85ABC4B
-	.incbin "build/data/data.bin", 0x30fea7, 0x5
+	.string "{HIGHLIGHT}{DARK_GRAY}{DYNAMIC_COLOR1}$"
 
 	.globl gUnknown_85ABC50
 gUnknown_85ABC50: @ 0x85ABC50
@@ -10187,19 +11237,19 @@ gUnknown_85ABC6C: @ 0x85ABC6C
 
 	.globl gUnknown_85ABC6E
 gUnknown_85ABC6E: @ 0x85ABC6E
-	.incbin "build/data/data.bin", 0x30feca, 0x2
+	.string "\l$"
 
 	.globl gUnknown_85ABC70
 gUnknown_85ABC70: @ 0x85ABC70
-	.incbin "build/data/data.bin", 0x30fecc, 0x2
+	.string "\n$"
 
 	.globl gUnknown_85ABC72
 gUnknown_85ABC72: @ 0x85ABC72
-	.incbin "build/data/data.bin", 0x30fece, 0x3
+	.string "は\n$"
 
 	.globl gUnknown_85ABC75
 gUnknown_85ABC75: @ 0x85ABC75
-	.incbin "build/data/data.bin", 0x30fed1, 0x3
+	.string "は\l$"
 
 	.globl gUnknown_85ABC78
 gUnknown_85ABC78: @ 0x85ABC78
@@ -10211,15 +11261,15 @@ gUnknown_85ABC7E: @ 0x85ABC7E
 
 	.globl gUnknown_85ABC82
 gUnknown_85ABC82: @ 0x85ABC82
-	.incbin "build/data/data.bin", 0x30fede, 0x6
+	.string "{HIGHLIGHT}{TRANSPARENT}{GREEN}ち$"
 
 	.globl gUnknown_85ABC88
 gUnknown_85ABC88: @ 0x85ABC88
-	.incbin "build/data/data.bin", 0x30fee4, 0x6
+	.string "{HIGHLIGHT}{TRANSPARENT}ま{LIGHT_BLUE}$"
 
 	.globl gUnknown_85ABC8E
 gUnknown_85ABC8E: @ 0x85ABC8E
-	.incbin "build/data/data.bin", 0x30feea, 0x8
+	.string "{HIGHLIGHT}{TRANSPARENT}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
 
 	.globl gUnknown_85ABC96
 gUnknown_85ABC96: @ 0x85ABC96
@@ -10244,7 +11294,11 @@ gUnknown_85ABD18: @ 0x85ABD18
 
 	.globl gUnknown_85ABD3C
 gUnknown_85ABD3C: @ 0x85ABD3C
-	.incbin "build/data/data.bin", 0x30ff98, 0x5e
+	.string "めCコ{BLUE}よCコ{BLUE}れCコ{BLUE}ぉCコ{BLUE}{LIGHT_GREEN}{MUS_RG_RIVAL_EXIT}{SE_A}{LIGHT_RED}{LIGHT_RED}"
+	.string "が{SE_FAINT}{DYNAMIC_COLOR3}んじん！\p$"
+	.string "ひがん{SE_A}は{SE_SLIDING_DOOR}ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}なる{GREEN}！？\p$"
+	.string "も{SE_BANG}チャンピオン！\p$ぜん{MUS_RG_POKE_TOWER}{TRANSPARENT}チャンピオン！\p$"
+	.string "むて{LIGHT_GREEN}{SE_A}チャンピオン！\p$"
 
 	.globl gUnknown_85ABD9A
 gUnknown_85ABD9A: @ 0x85ABD9A
@@ -10276,19 +11330,24 @@ gUnknown_85ABDAE: @ 0x85ABDAE
 
 	.globl gUnknown_85ABDBB
 gUnknown_85ABDBB: @ 0x85ABDBB
-	.incbin "build/data/data.bin", 0x310017, 0x26
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}"
+	.string "りだ{DYNAMIC_COLOR3}た！\p{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}は\n{B_OPPONENT_MON2_NAME}{SE_WARP_IN}"
+	.string "{BLUE}りだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85ABDE1
 gUnknown_85ABDE1: @ 0x85ABDE1
-	.incbin "build/data/data.bin", 0x31003d, 0x13
+	.string "{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "た！$"
 
 	.globl gUnknown_85ABDF4
 gUnknown_85ABDF4: @ 0x85ABDF4
-	.incbin "build/data/data.bin", 0x310050, 0x1f
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}と\n{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}"
+	.string "が\l{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！\p$"
 
 	.globl gUnknown_85ABE13
 gUnknown_85ABE13: @ 0x85ABE13
-	.incbin "build/data/data.bin", 0x31006f, 0x1c
+	.string "{B_PARTNER_CLASS}{SE_A}{B_PARTNER_NAME}は\n{B_PLAYER_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "た！\lゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_PLAYER_MON1_NAME}！$"
 
 	.globl gUnknown_85ABE2F
 gUnknown_85ABE2F: @ 0x85ABE2F
@@ -10296,31 +11355,42 @@ gUnknown_85ABE2F: @ 0x85ABE2F
 
 	.globl gUnknown_85AC04C
 gUnknown_85AC04C: @ 0x85AC04C
-	.incbin "build/data/data.bin", 0x3102a8, 0x65
+	.string "BDコ{BLUE}oDコ{BLUE}{GREEN}Eコ{BLUE}をEコ{BLUE}カEコ{BLUE}ゥEコ{BLUE}3Eコ{BLUE}MEコ{BLUE}わFコ{BLUE}"
+	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{WHITE}{LIGHT_GREEN}らめて\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR2}{SE_WARP_OUT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{B_PLAYER_NAME}は\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{WHITE}{LIGHT_GREEN}らめた！$"
+	.string "{B_TRAINER1_WIN_TEXT}${B_TRAINER2_WIN_TEXT}$"
+	.string "{PLAY_SE}{SE_FLEE}{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\nにげだ{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85AC0B1
 gUnknown_85AC0B1: @ 0x85AC0B1
-	.incbin "build/data/data.bin", 0x31030d, 0x15
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ま{LIGHT_BLUE}"
+	.string "た！$"
 
 	.globl gUnknown_85AC0C6
 gUnknown_85AC0C6: @ 0x85AC0C6
-	.incbin "build/data/data.bin", 0x310322, 0x17
+	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
+	.string "ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
 
 	.globl gUnknown_85AC0DD
 gUnknown_85AC0DD: @ 0x85AC0DD
-	.incbin "build/data/data.bin", 0x310339, 0x1e
+	.string "{DARK_GRAY}ま{SE_A}たた{MUS_RG_POKE_TOWER}{SE_WARP_IN}フロンティアパスに\n{LIGHT_GREEN}ろ{SE_DOOR}{DYNAMIC_COLOR3}"
+	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85AC0FB
 gUnknown_85AC0FB: @ 0x85AC0FB
-	.incbin "build/data/data.bin", 0x310357, 0x1d
+	.string "{B_PLAYER_NAME}{SE_A}たた{MUS_RG_POKE_TOWER}が\nフロンティアパス{SE_BOO}{LIGHT_GREEN}ろ{SE_DOOR}{DYNAMIC_COLOR2}"
+	.string "れた！$"
 
 	.globl gUnknown_85AC118
 gUnknown_85AC118: @ 0x85AC118
-	.incbin "build/data/data.bin", 0x310374, 0x15
+	.string "{B_LINK_OPPONENT1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}"
+	.string "{LIGHT_BLUE}て{LIGHT_GREEN}た！{PAUSE}ぅ$"
 
 	.globl gUnknown_85AC12D
 gUnknown_85AC12D: @ 0x85AC12D
-	.incbin "build/data/data.bin", 0x310389, 0x19
+	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！{PAUSE}ぅ$"
 
 	.globl gUnknown_85AC146
 gUnknown_85AC146: @ 0x85AC146
@@ -10525,23 +11595,33 @@ gUnknown_85AD9B2: @ 0x85AD9B2
 
 	.globl gUnknown_85AD9C0
 gUnknown_85AD9C0: @ 0x85AD9C0
-	.incbin "build/data/data.bin", 0x311c1c, 0x14
+	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
 
 	.globl gUnknown_85AD9D4
 gUnknown_85AD9D4: @ 0x85AD9D4
-	.incbin "build/data/data.bin", 0x311c30, 0x53
+	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{SE_DOOR}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
+	.string "{MUS_RG_RIVAL_EXIT}⋯！\p{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_COPY_VAR_1}{SE_I}わざ{SE_WARP_IN}"
+	.string "4つ\n{LIGHT_RED}ぼ{RED}{MUS_RG_CAUGHT_INTRO}るの{SE_NOTE_B}{MUS_RG_PEWTER}{DARK_GRAY}っ{PH_THOUGHT_HELD}"
+	.string "だ！\p{B_COPY_VAR_2}{SE_A}{GREEN}わり{SE_BOO}ほ{GREEN}{SE_A}わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85ADA27
 gUnknown_85ADA27: @ 0x85ADA27
-	.incbin "build/data/data.bin", 0x311c83, 0x1b
+	.string "{DYNAMIC_COLOR6}れでは⋯{SE_M_DIZZY_PUNCH}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}るの{SE_WARP_IN}{WHITE}"
+	.string "{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85ADA42
 gUnknown_85ADA42: @ 0x85ADA42
-	.incbin "build/data/data.bin", 0x311c9e, 0x25
+	.string "{PAUSE}み{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}"
+	.string "⋯{PAUSE}{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}ポカン！\p$"
 
 	.globl gUnknown_85ADA67
 gUnknown_85ADA67: @ 0x85ADA67
-	.incbin "build/data/data.bin", 0x311cc3, 0x48
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_3}{SE_A}つ{MUS_RG_POKE_TOWER}{GREEN}たを\n{LIGHT_GREEN}"
+	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_BOO}わ{DYNAMIC_COLOR4}れた！\p{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
+	.string "て⋯！\p{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
+	.string "た！$"
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}ず{SE_BOO}{LIGHT_RED}わった！$"
 
 	.globl gUnknown_85ADAAF
 gUnknown_85ADAAF: @ 0x85ADAAF
@@ -10839,7 +11919,8 @@ gUnknown_85BE8F0: @ 0x85BE8F0
 
 	.globl gUnknown_85BE910
 gUnknown_85BE910: @ 0x85BE910
-	.incbin "build/data/data.bin", 0x322b6c, 0x20
+	.string "\n$$${STRING}$$$$E$$$ァ$$$$\n$$${STRING}$"
+	.string "$$\p$$${DYNAMIC}$"
 
 	.globl gUnknown_85BE930
 gUnknown_85BE930: @ 0x85BE930
@@ -11389,11 +12470,14 @@ gUnknown_85C8BB6: @ 0x85C8BB6
 
 	.globl gUnknown_85C8BBB
 gUnknown_85C8BBB: @ 0x85C8BBB
-	.incbin "build/data/data.bin", 0x32ce17, 0x37
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ポケモンず{GREEN}んを\nみご{SE_BANG}{GREEN}ん{MUS_RG_PEWTER}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}た\n{DARK_GRAY}{PH_PRICE_BLEND}な{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}{SE_WARP_IN}たた{RED}\n{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}"
+	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85C8BF2
 gUnknown_85C8BF2: @ 0x85C8BF2
-	.incbin "build/data/data.bin", 0x32ce4e, 0xe
+	.string "{MUS_RG_VS_GYM_LEADER}{RED}{SHADOW}{LIGHT_RED}ゲームフリーク$"
 
 	.globl gUnknown_85C8C00
 gUnknown_85C8C00: @ 0x85C8C00
@@ -11493,19 +12577,26 @@ gUnknown_85C8CA7: @ 0x85C8CA7
 
 	.globl gUnknown_85C8CB1
 gUnknown_85C8CB1: @ 0x85C8CB1
-	.incbin "build/data/data.bin", 0x32cf0d, 0x16
+	.string "ワイヤレスアダプ{SE_CONTEST_HEART}が\nつながっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_85C8CC7
 gUnknown_85C8CC7: @ 0x85C8CC7
-	.incbin "build/data/data.bin", 0x32cf23, 0x24
+	.string "ワイヤレスアダプ{SE_CONTEST_HEART}{SE_WARP_IN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}たまま\nふ{DYNAMIC_COLOR3}"
+	.string "ぎなも{MUS_RG_VS_DEOXYS}も{SE_A}{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_85C8CEB
 gUnknown_85C8CEB: @ 0x85C8CEB
-	.incbin "build/data/data.bin", 0x32cf47, 0x59
+	.string "ワイヤレスアダプ{SE_CONTEST_HEART}{SE_WARP_IN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}たまま\nふ{DYNAMIC_COLOR3}"
+	.string "ぎなで{LIGHT_GREEN}ご{SE_BANG}{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
+	.string "{PH_CLOTH_SOLO}ぶデータによ{SE_ICE_STAIRS}レポート{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR3}"
+	.string "ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{SE_DOOR}{LIGHT_RED}まち{BLUE}"
+	.string "だ{MUS_RG_VICTORY_WILD}$"
+	.string "レポート{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85C8D44
 gUnknown_85C8D44: @ 0x85C8D44
-	.incbin "build/data/data.bin", 0x32cfa0, 0x27
+	.string "レポート{SE_SAVE}{MUS_RG_PEWTER}{GREEN}{BLUE}{SE_BOO}{GREEN}{GREEN}れ{MUS_RG_CAUGHT_INTRO}"
+	.string "{MUS_RG_GAME_FREAK}ので\n{DYNAMIC_COLOR6}のま{RED}のレポート{SE_WARP_IN}よみま{DYNAMIC_COLOR4}！$"
 
 	.globl gUnknown_85C8D6B
 gUnknown_85C8D6B: @ 0x85C8D6B
@@ -11518,7 +12609,12 @@ gUnknown_85C8D80: @ 0x85C8D80
 
 	.globl gUnknown_85C8D93
 gUnknown_85C8D93: @ 0x85C8D93
-	.incbin "build/data/data.bin", 0x32cfef, 0x59
+	.string "でんちぎれ{SE_A}ために\nと{MUS_RG_CELADON}{SE_SAVE}{LIGHT_GRAY}ご{GREEN}な{BLUE}なりま{DYNAMIC_COLOR3}"
+	.string "た\pと{MUS_RG_CELADON}{SE_BOO}{GREEN}ん{MUS_RG_CELADON}{DYNAMIC_COLOR4}{SE_ICE_BREAK}で{LIGHT_GREEN}"
+	.string "ごと{SE_I}{LIGHT_RED}{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んが\nゲーム{SE_WARP_IN}つづ{LIGHT_BLUE}{SE_SHIP}{WHITE}"
+	.string "{DYNAMIC_COLOR6}ぶ{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
+	.string "{DYNAMIC_COLOR3}ゅじん{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
+	.string "ポケモンず{GREEN}ん$"
 
 	.globl gUnknown_85C8DEC
 gUnknown_85C8DEC: @ 0x85C8DEC
@@ -11545,7 +12641,7 @@ gUnknown_85C8E8C: @ 0x85C8E8C
 
 	.globl gUnknown_85C8F88
 gUnknown_85C8F88: @ 0x85C8F88
-	.incbin "build/data/data.bin", 0x32d1e4, 0x1a
+	.string "ポケットモンスター\n⋯⋯{DYNAMIC_COLOR4}なわ{SE_FLEE}ポケモン{PAUSE}タ\p$"
 
 	.globl gUnknown_85C8FA2
 gUnknown_85C8FA2: @ 0x85C8FA2
@@ -11603,7 +12699,50 @@ gUnknown_85C900A: @ 0x85C900A
 
 	.globl gUnknown_85C901D
 gUnknown_85C901D: @ 0x85C901D
-	.incbin "build/data/data.bin", 0x32d279, 0x27c
+	.string "{PH_CLOTH_SOLO}と{SE_PC_OFF}{DYNAMIC_COLOR4}{SE_ICE_BREAK}ポケモン{SE_I}{DARK_GRAY}ま{DYNAMIC_COLOR5}"
+	.string "んで{DYNAMIC_COLOR3}た⋯⋯$"
+	.string "じょ{LIGHT_GRAY}{LIGHT_BLUE}ん{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{DYNAMIC_COLOR3}"
+	.string "て\nポケモン{SE_A}{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "ず{GREEN}んリスト{SE_A}ならび{SE_WARP_IN}{LIGHT_GREEN}り{GREEN}{RED}ま{DYNAMIC_COLOR4}$"
+	.string "ず{GREEN}ん{SE_BOO}もどりま{DYNAMIC_COLOR4}$ず{GREEN}んモード{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}"
+	.string "{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "ず{GREEN}ん{SE_A}ならび{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}"
+	.string "ま{DYNAMIC_COLOR4}$"
+	.string "なま{RED}{SE_A}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR3}ょ{SE_A}もじ{SE_WARP_IN}{DYNAMIC_COLOR3}"
+	.string "{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}/みつ{LIGHT_BLUE}"
+	.string "たポケモンのみ$"
+	.string "{GREEN}らだ{SE_A}{DARK_GRAY}ろ{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}/みつ{LIGHT_BLUE}たポケモンのみ$"
+	.string "タイプ{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{SE_RG_BALL_CLICK}/つ{GREEN}ま{RED}たポケモンのみ$"
+	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}/{LIGHT_GREEN}り{GREEN}{RED}{SE_WARP_IN}じっ{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "ホ{PKMN}{SE_M_BUBBLE3}ず{GREEN}ん$ぜん{DYNAMIC_COLOR1}{SE_DOOR}ず{GREEN}ん$"
+	.string "ばんご{SE_PC_OFF}じゅん$ごじゅ{LIGHT_GRAY}{LIGHT_RED}{SE_WARP_OUT}じゅん$"
+	.string "{LIGHT_RED}{MUS_RG_SEVII_123}{TRANSPARENT}じゅん$"
+	.string "{GREEN}{MUS_RG_VS_LEGEND}{TRANSPARENT}じゅん$"
+	.string "た{MUS_RG_POKE_TOWER}{TRANSPARENT}じゅん$ひ{MUS_RG_FUCHSIA}{TRANSPARENT}じゅん{MUS_RG_VS_CHAMPION}{DARK_GRAY}"
+	.string "{LIGHT_GRAY}{RED}{LIGHT_RED}$"
+	.string "{GREEN}{LIGHT_GREEN}{BLUE}{LIGHT_BLUE}{DYNAMIC_COLOR1}$"
+	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$"
+	.string "たちつてと$なにぬねの$はひふへほ$まみむめも$らりるれろ$やゆよわをん{MUS_RG_VS_CHAMPION}{GREEN}{MUS_RG_VS_CHAMPION}{LIGHT_RED}$"
+	.string "{MUS_RG_SILPH}ろ$みどり${BLUE}ろ$ち{PH_FACE_SOLO}ろ$"
+	.string "むら{DYNAMIC_COLOR2}{LIGHT_GREEN}${MUS_RG_POKE_JUMP}{DARK_GRAY}ろ$"
+	.string "{DYNAMIC_COLOR3}ろ$ピンク$ホ{PKMN}ンちほ{SE_PC_OFF}ば{SE_WARP_OUT}ポケモンず{GREEN}ん$"
+	.string "ぜん{DYNAMIC_COLOR1}{SE_DOOR}ば{SE_WARP_OUT}ポケモンず{GREEN}ん$"
+	.string "ポケモンを\nばんご{LIGHT_GRAY}じゅん{SE_NOTE_B}ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "みつ{LIGHT_BLUE}たポケモン{SE_A}なま{RED}を\nごじゅ{LIGHT_GRAY}{LIGHT_RED}んじゅん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
+	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "つ{GREEN}ま{RED}たポケモンを\n{LIGHT_RED}{MUS_RG_SEVII_123}{TRANSPARENT}じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
+	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "つ{GREEN}ま{RED}たポケモンを\n{GREEN}{MUS_RG_VS_LEGEND}{TRANSPARENT}じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
+	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "つ{GREEN}ま{RED}たポケモンを\n{DYNAMIC_COLOR3}んちょ{LIGHT_GRAY}のた{MUS_RG_POKE_TOWER}{TRANSPARENT}"
+	.string "じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "つ{GREEN}ま{RED}たポケモンを\n{DYNAMIC_COLOR3}んちょ{LIGHT_GRAY}のひ{MUS_RG_FUCHSIA}{TRANSPARENT}じゅんばん{SE_NOTE_B}"
+	.string "ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "${DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}$"
+	.string "な{DYNAMIC_COLOR3}$"
 
 	.globl gUnknown_85C9299
 gUnknown_85C9299: @ 0x85C9299
@@ -11611,7 +12750,13 @@ gUnknown_85C9299: @ 0x85C9299
 
 	.globl gUnknown_85C929D
 gUnknown_85C929D: @ 0x85C929D
-	.incbin "build/data/data.bin", 0x32d4f9, 0x74
+	.string "でんど{MUS_RG_POKE_CENTER}{SE_ICE_STAIRS}{LIGHT_RED}めでと{LIGHT_GRAY}！$"
+	.string "みつ{LIGHT_BLUE}{SE_FAINT}ポケモ{SE_M_BUBBLE3}{B_COPY_VAR_1}！\nつ{GREEN}ま{RED}{SE_FAINT}ポケモ{SE_M_BUBBLE3}"
+	.string "{B_COPY_VAR_2}！\pオダマキは{GREEN}{DYNAMIC_COLOR5}の\nポケモンず{GREEN}{SE_WARP_OUT}ひょ{LIGHT_GRAY}{GREEN}"
+	.string "！\pオダマキ“どれどれ\p$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}まで{SE_A}レポート{SE_WARP_IN}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR3}"
+	.string "る{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！\nでんげん{SE_WARP_IN}{LIGHT_GREEN}"
+	.string "ら{MUS_RG_GAME_FREAK}で{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85C9311
 gUnknown_85C9311: @ 0x85C9311
@@ -11644,7 +12789,8 @@ gUnknown_85C935D: @ 0x85C935D
 
 	.globl gUnknown_85C9363
 gUnknown_85C9363: @ 0x85C9363
-	.incbin "build/data/data.bin", 0x32d5bf, 0x23
+	.string "オダマキは{GREEN}{DYNAMIC_COLOR5}{SE_SAVE}ピンチだ！\nポケモン{SE_WARP_IN}だ{DYNAMIC_COLOR3}{SE_SHIP}"
+	.string "た{DYNAMIC_COLOR4}{LIGHT_BLUE}て{WHITE}げよ{LIGHT_GRAY}！$"
 
 	.globl gUnknown_85C9386
 gUnknown_85C9386: @ 0x85C9386
@@ -11760,11 +12906,12 @@ gUnknown_85C9448: @ 0x85C9448
 
 	.globl gUnknown_85C9450
 gUnknown_85C9450: @ 0x85C9450
-	.incbin "build/data/data.bin", 0x32d6ac, 0xc
+	.string "{B_COPY_VAR_1}を\nど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C945C
 gUnknown_85C945C: @ 0x85C945C
-	.incbin "build/data/data.bin", 0x32d6b8, 0x16
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_NOTE_B}メールを\n{GREEN}{BLUE}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85C9472
 gUnknown_85C9472: @ 0x85C9472
@@ -11772,23 +12919,25 @@ gUnknown_85C9472: @ 0x85C9472
 
 	.globl gUnknown_85C947F
 gUnknown_85C947F: @ 0x85C947F
-	.incbin "build/data/data.bin", 0x32d6db, 0xf
+	.string "{B_COPY_VAR_1}を\nど{DYNAMIC_COLOR1}{SE_BOO}{DARK_GRAY}れま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C948E
 gUnknown_85C948E: @ 0x85C948E
-	.incbin "build/data/data.bin", 0x32d6ea, 0x13
+	.string "{B_COPY_VAR_1}を\nもた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85C94A1
 gUnknown_85C94A1: @ 0x85C94A1
-	.incbin "build/data/data.bin", 0x32d6fd, 0x18
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{B_COPY_VAR_1}を\nもた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}"
+	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85C94B9
 gUnknown_85C94B9: @ 0x85C94B9
-	.incbin "build/data/data.bin", 0x32d715, 0x11
+	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
 
 	.globl gUnknown_85C94CA
 gUnknown_85C94CA: @ 0x85C94CA
-	.incbin "build/data/data.bin", 0x32d726, 0x10
+	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_85C94DA
 gUnknown_85C94DA: @ 0x85C94DA
@@ -11797,27 +12946,32 @@ gUnknown_85C94DA: @ 0x85C94DA
 
 	.globl gUnknown_85C94EB
 gUnknown_85C94EB: @ 0x85C94EB
-	.incbin "build/data/data.bin", 0x32d747, 0x1b
+	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つ{SE_PIN}ど{LIGHT_GRAY}ぐは\nパソコン{SE_BOO}\n{DARK_GRAY}"
+	.string "れられま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85C9506
 gUnknown_85C9506: @ 0x85C9506
-	.incbin "build/data/data.bin", 0x32d762, 0x1d
+	.string "{DYNAMIC_COLOR1}れ{SE_I}とても\n{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなモ{SE_APPLAUSE}なので\n{DYNAMIC_COLOR4}"
+	.string "てられま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85C9523
 gUnknown_85C9523: @ 0x85C9523
-	.incbin "build/data/data.bin", 0x32d77f, 0xf
+	.string "{B_COPY_VAR_1}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9532
 gUnknown_85C9532: @ 0x85C9532
-	.incbin "build/data/data.bin", 0x32d78e, 0xe
+	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_85C9540
 gUnknown_85C9540: @ 0x85C9540
-	.incbin "build/data/data.bin", 0x32d79c, 0x16
+	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{DYNAMIC_COLOR4}てても\nよろ{MUS_RG_VICTORY_GYM_LEADER}"
+	.string "で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9556
 gUnknown_85C9556: @ 0x85C9556
-	.incbin "build/data/data.bin", 0x32d7b2, 0x29
+	.string "{LIGHT_RED}と{LIGHT_GRAY}{DYNAMIC_COLOR2}ん{SE_A}{DYNAMIC_COLOR1}とば⋯⋯\n{MUS_RG_VS_TRAINER}"
+	.string "{SE_M_DRAGON_RAGE}{DYNAMIC_COLOR1}{MUS_RG_POKE_CENTER}{LIGHT_GRAY}ものには\lつ{MUS_RG_POKE_TOWER}"
+	.string "ど{LIGHT_GREEN}{SE_SAVE}{WHITE}るんだ！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C957F
 gUnknown_85C957F: @ 0x85C957F
@@ -11825,19 +12979,22 @@ gUnknown_85C957F: @ 0x85C957F
 
 	.globl gUnknown_85C958E
 gUnknown_85C958E: @ 0x85C958E
-	.incbin "build/data/data.bin", 0x32d7ea, 0x28
+	.string "{LIGHT_RED}っ！\nマシン{SE_SAVE}はんの{SE_PC_OFF}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}るぞ！\pち{GREEN}{BLUE}"
+	.string "{SE_BOO}ど{LIGHT_GRAY}ぐ{SE_SAVE}{LIGHT_GRAY}まってる！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C95B6
 gUnknown_85C95B6: @ 0x85C95B6
-	.incbin "build/data/data.bin", 0x32d812, 0x1d
+	.string "マシン{SE_SAVE}{WHITE}{DYNAMIC_COLOR3}もとで\n{DYNAMIC_COLOR4}ご{SE_DOOR}はんの{SE_PC_OFF}{DYNAMIC_COLOR3}"
+	.string "{MUS_RG_CAUGHT_INTRO}るぞ！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C95D3
 gUnknown_85C95D3: @ 0x85C95D3
-	.incbin "build/data/data.bin", 0x32d82f, 0x1d
+	.string "⋯{SE_M_DIZZY_PUNCH}⋯{SE_M_DIZZY_PUNCH}ふ{LIGHT_GRAY}！\n⋯{SE_M_DIZZY_PUNCH}なんに{SE_SWITCH}はんの{SE_PC_OFF}"
+	.string "{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C95F0
 gUnknown_85C95F0: @ 0x85C95F0
-	.incbin "build/data/data.bin", 0x32d84c, 0x10
+	.string "{WHITE}なた{SE_A}コイン\n{B_COPY_VAR_1}{MUS_RG_SEVII_CAVE}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9600
 gUnknown_85C9600: @ 0x85C9600
@@ -11849,23 +13006,28 @@ gUnknown_85C960E: @ 0x85C960E
 
 	.globl gUnknown_85C961D
 gUnknown_85C961D: @ 0x85C961D
-	.incbin "build/data/data.bin", 0x32d879, 0x27
+	.string "な{GREEN}に{SE_I}{B_COPY_VAR_1}が\n{LIGHT_GREEN}ろ{BLUE}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}"
+	.string "た！\p{B_COPY_VAR_1}を\nポケモン{SE_BOO}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
 
 	.globl gUnknown_85C9644
 gUnknown_85C9644: @ 0x85C9644
-	.incbin "build/data/data.bin", 0x32d8a0, 0x10
+	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9654
 gUnknown_85C9654: @ 0x85C9654
-	.incbin "build/data/data.bin", 0x32d8b0, 0x21
+	.string "ま{SE_NOTE_F}ま{RED}{SE_BOO}つ{GREEN}っ{SE_FAINT}スプレーの\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}"
+	.string "の{DYNAMIC_COLOR1}ってま{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9675
 gUnknown_85C9675: @ 0x85C9675
-	.incbin "build/data/data.bin", 0x32d8d1, 0x24
+	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！\pポケモンと\n{DYNAMIC_COLOR6}{LIGHT_GRAY}"
+	.string "ぐ{SE_PC_OFF}{DYNAMIC_COLOR3}や{DYNAMIC_COLOR4}{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9699
 gUnknown_85C9699: @ 0x85C9699
-	.incbin "build/data/data.bin", 0x32d8f5, 0x24
+	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！\pポケモンと\n{DYNAMIC_COLOR6}{LIGHT_GRAY}"
+	.string "ぐ{SE_PC_OFF}{DYNAMIC_COLOR3}に{BLUE}{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C96BD
 gUnknown_85C96BD: @ 0x85C96BD
@@ -11887,7 +13049,7 @@ gUnknown_85C9728: @ 0x85C9728
 
 	.globl gUnknown_85C9738
 gUnknown_85C9738: @ 0x85C9738
-	.incbin "build/data/data.bin", 0x32d994, 0xa
+	.string "{B_COPY_VAR_1}へ\nもどりま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85C9742
 gUnknown_85C9742: @ 0x85C9742
@@ -11964,23 +13126,27 @@ gUnknown_85C9864: @ 0x85C9864
 
 	.globl gUnknown_85C9869
 gUnknown_85C9869: @ 0x85C9869
-	.incbin "build/data/data.bin", 0x32dac5, 0x12
+	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てて{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}"
+	.string "？$"
 
 	.globl gUnknown_85C987B
 gUnknown_85C987B: @ 0x85C987B
-	.incbin "build/data/data.bin", 0x32dad7, 0xa
+	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_85C9885
 gUnknown_85C9885: @ 0x85C9885
-	.incbin "build/data/data.bin", 0x32dae1, 0xf
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\nたべた！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9894
 gUnknown_85C9894: @ 0x85C9894
-	.incbin "build/data/data.bin", 0x32daf0, 0x15
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\nよろ{DYNAMIC_COLOR1}ん{SE_NOTE_B}たべた！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C98A9
 gUnknown_85C98A9: @ 0x85C98A9
-	.incbin "build/data/data.bin", 0x32db05, 0x2c
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\n{DARK_GRAY}や{DYNAMIC_COLOR6}{LIGHT_GRAY}{SE_BOO}"
+	.string "たべた！{PAUSE_UNTIL_PRESS}$"
+	.string "{MUS_RG_POKE_TOWER}{SE_BOO}{LIGHT_GREEN}た$"
+	.string "{LIGHT_GRAY}り{SE_BOO}{LIGHT_GREEN}た$なんでも{MUS_RG_GAME_FREAK}で{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85C98D5
 gUnknown_85C98D5: @ 0x85C98D5
@@ -11992,23 +13158,28 @@ gUnknown_85C98E0: @ 0x85C98E0
 
 	.globl gUnknown_85C98EC
 gUnknown_85C98EC: @ 0x85C98EC
-	.incbin "build/data/data.bin", 0x32db48, 0x17
+	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{LIGHT_RED}{MUS_RG_POKE_TOWER}{WHITE}"
+	.string "げ{SE_BOO}なりま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9903
 gUnknown_85C9903: @ 0x85C9903
-	.incbin "build/data/data.bin", 0x32db5f, 0x1c
+	.string "{B_COPY_VAR_1}{TRANSPARENT}‘{B_COPY_VAR_2}{SE_M_ABSORB}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}"
+	.string "{LIGHT_RED}{MUS_RG_POKE_TOWER}{WHITE}げ{SE_BOO}なりま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C991F
 gUnknown_85C991F: @ 0x85C991F
-	.incbin "build/data/data.bin", 0x32db7b, 0x17
+	.string "{B_COPY_VAR_1}{SE_WARP_IN}{B_COPY_VAR_2}コで\n{B_COPY_VAR_3}{SE_M_BUBBLE_BEAM2}{LIGHT_RED}"
+	.string "{MUS_RG_POKE_TOWER}{WHITE}げで{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9936
 gUnknown_85C9936: @ 0x85C9936
-	.incbin "build/data/data.bin", 0x32db92, 0x15
+	.string "{B_COPY_VAR_1}{TRANSPARENT}だね！\n{B_COPY_VAR_2}{SE_M_BUBBLE_BEAM2}だ{LIGHT_BLUE}{SE_NOTE_C_HIGH}{GREEN}"
+	.string "{LIGHT_GRAY}{MUS_RG_POKE_TOWER}？$"
 
 	.globl gUnknown_85C994B
 gUnknown_85C994B: @ 0x85C994B
-	.incbin "build/data/data.bin", 0x32dba7, 0x17
+	.string "{B_COPY_VAR_1}{TRANSPARENT}で{DYNAMIC_COLOR4}ね！\n{B_COPY_VAR_2}{SE_M_BUBBLE_BEAM2}だ{LIGHT_BLUE}"
+	.string "{SE_NOTE_C_HIGH}{MUS_RG_POKE_TOWER}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9962
 gUnknown_85C9962: @ 0x85C9962
@@ -12017,11 +13188,13 @@ gUnknown_85C9962: @ 0x85C9962
 
 	.globl gUnknown_85C9976
 gUnknown_85C9976: @ 0x85C9976
-	.incbin "build/data/data.bin", 0x32dbd2, 0x22
+	.string "ど{LIGHT_GRAY}{SE_SWITCH}{WHITE}りがと{LIGHT_GRAY}！\nじた{BLUE}{SE_A}パソコン{SE_BOO}{LIGHT_RED}{BLUE}"
+	.string "っ{SE_SHIP}{LIGHT_RED}{LIGHT_GREEN}ま{DYNAMIC_COLOR4}ね！$"
 
 	.globl gUnknown_85C9998
 gUnknown_85C9998: @ 0x85C9998
-	.incbin "build/data/data.bin", 0x32dbf4, 0x20
+	.string "ど{LIGHT_GRAY}{SE_SWITCH}{WHITE}りがと{LIGHT_GRAY}！\nじた{BLUE}{SE_A}パソコン{SE_BOO}{LIGHT_RED}{BLUE}"
+	.string "っ{SE_SHIP}{LIGHT_RED}{BLUE}ね！$"
 
 	.globl gUnknown_85C99B8
 gUnknown_85C99B8: @ 0x85C99B8
@@ -12029,39 +13202,46 @@ gUnknown_85C99B8: @ 0x85C99B8
 
 	.globl gUnknown_85C99C8
 gUnknown_85C99C8: @ 0x85C99C8
-	.incbin "build/data/data.bin", 0x32dc24, 0x16
+	.string "{DYNAMIC_COLOR6}{SE_ICE_CRACK}{DARK_GRAY}じょ{LIGHT_GRAY}\nもち{LIGHT_GREEN}れ{MUS_RG_GAME_FREAK}"
+	.string "{TRANSPARENT}で{DYNAMIC_COLOR4}よ！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C99DE
 gUnknown_85C99DE: @ 0x85C99DE
-	.incbin "build/data/data.bin", 0x32dc3a, 0x17
+	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}れ{SE_ICE_BREAK}ば{DYNAMIC_COLOR3}ょ{SE_SAVE}{DARK_GRAY}"
+	.string "っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C99F5
 gUnknown_85C99F5: @ 0x85C99F5
-	.incbin "build/data/data.bin", 0x32dc51, 0x20
+	.string "{DYNAMIC_COLOR6}{SE_A}ほ{GREEN}{SE_BOO}わた{DYNAMIC_COLOR3}どもで\nなに{SE_WIN_OPEN}{LIGHT_RED}ち{GREEN}"
+	.string "ら{SE_BOO}なれる{DYNAMIC_COLOR1}とは？$"
 
 	.globl gUnknown_85C9A15
 gUnknown_85C9A15: @ 0x85C9A15
-	.incbin "build/data/data.bin", 0x32dc71, 0x18
+	.string "{DYNAMIC_COLOR6}{SE_A}ほ{GREEN}に\nなに{SE_WIN_OPEN}ち{GREEN}ら{SE_BOO}なれる{DYNAMIC_COLOR1}とは？$"
 
 	.globl gUnknown_85C9A2D
 gUnknown_85C9A2D: @ 0x85C9A2D
-	.incbin "build/data/data.bin", 0x32dc89, 0x1a
+	.string "プレミアボー{SE_M_NIGHTMARE}1コ\n{LIGHT_RED}ま{SE_EXIT}{DYNAMIC_COLOR3}て{LIGHT_RED}{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR4}ね！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9A47
 gUnknown_85C9A47: @ 0x85C9A47
-	.incbin "build/data/data.bin", 0x32dca3, 0x16
+	.string "{B_COPY_VAR_2}を\n{MUS_RG_POKE_TOWER}とるわ{LIGHT_BLUE}に{SE_I}{DARK_GRAY}{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
+	.string "ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9A5D
 gUnknown_85C9A5D: @ 0x85C9A5D
-	.incbin "build/data/data.bin", 0x32dcb9, 0xf
+	.string "{B_COPY_VAR_2}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{LIGHT_GRAY}りま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9A6C
 gUnknown_85C9A6C: @ 0x85C9A6C
-	.incbin "build/data/data.bin", 0x32dcc8, 0x1c
+	.string "{B_COPY_VAR_1}¥{SE_NOTE_B}ひ{LIGHT_GREEN}とら{DYNAMIC_COLOR5}{SE_SHIP}{DARK_GRAY}ただ{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR4}\nよろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9A88
 gUnknown_85C9A88: @ 0x85C9A88
-	.incbin "build/data/data.bin", 0x32dce4, 0x15
+	.string "{B_COPY_VAR_2}{TRANSPARENT}{SE_WARP_IN}わた{DYNAMIC_COLOR3}て\n{B_COPY_VAR_1}{SE_M_BUBBLE_BEAM2}"
+	.string "{LIGHT_GRAY}{LIGHT_BLUE}とった！$"
 
 	.globl gUnknown_85C9A9D
 gUnknown_85C9A9D: @ 0x85C9A9D
@@ -12090,79 +13270,95 @@ gUnknown_85C9AF7: @ 0x85C9AF7
 
 	.globl gUnknown_85C9B07
 gUnknown_85C9B07: @ 0x85C9B07
-	.incbin "build/data/data.bin", 0x32dd63, 0x13
+	.string "{DYNAMIC_COLOR6}のポケモンには\nつ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B1A
 gUnknown_85C9B1A: @ 0x85C9B1A
-	.incbin "build/data/data.bin", 0x32dd76, 0x13
+	.string "{B_COPY_VAR_1}{SE_WARP_IN}もど{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}とが\nで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}"
+	.string "！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B2D
 gUnknown_85C9B2D: @ 0x85C9B2D
-	.incbin "build/data/data.bin", 0x32dd89, 0x16
+	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{SE_BOO}で{MUS_RG_CAUGHT_INTRO}"
+	.string "ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B43
 gUnknown_85C9B43: @ 0x85C9B43
-	.incbin "build/data/data.bin", 0x32dd9f, 0x16
+	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR2}"
+	.string "れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B59
 gUnknown_85C9B59: @ 0x85C9B59
-	.incbin "build/data/data.bin", 0x32ddb5, 0x1d
+	.string "{B_COPY_VAR_1}{SE_I}たた{GREEN}{LIGHT_GRAY}ための\nげん{LIGHT_GREEN}{SE_SAVE}の{DYNAMIC_COLOR1}"
+	.string "っ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B76
 gUnknown_85C9B76: @ 0x85C9B76
-	.incbin "build/data/data.bin", 0x32ddd2, 0x27
+	.string "{B_COPY_VAR_1}{SE_A}ポケモン{SE_I}じぶんの\nポケモン{SE_BANG}{DARK_GRAY}れ{GREEN}{RED}る{DYNAMIC_COLOR1}と{SE_I}"
+	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9B9D
 gUnknown_85C9B9D: @ 0x85C9B9D
-	.incbin "build/data/data.bin", 0x32ddf9, 0x1a
+	.string "タマゴを\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{SE_BOO}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9BB7
 gUnknown_85C9BB7: @ 0x85C9BB7
-	.incbin "build/data/data.bin", 0x32de13, 0x1e
+	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}バッジ{SE_WARP_IN}てに{DYNAMIC_COLOR4}るまで\nま{SE_NOTE_F}"
+	.string "つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9BD5
 gUnknown_85C9BD5: @ 0x85C9BD5
-	.incbin "build/data/data.bin", 0x32de31, 0x1c
+	.string "{DYNAMIC_COLOR2}ん{SE_WIN_OPEN}で{LIGHT_GREEN}{SE_ICE_BREAK}ポケモンは\n{B_COPY_VAR_1}ひ{SE_WALL_HIT}"
+	.string "ま{SE_NOTE_B}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9BF1
 gUnknown_85C9BF1: @ 0x85C9BF1
-	.incbin "build/data/data.bin", 0x32de4d, 0x19
+	.string "とっ{SE_FAINT}メール{SE_WARP_IN}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
 
 	.globl gUnknown_85C9C0A
 gUnknown_85C9C0A: @ 0x85C9C0A
-	.incbin "build/data/data.bin", 0x32de66, 0x16
+	.string "メール{SE_WARP_IN}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}"
+	.string "た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9C20
 gUnknown_85C9C20: @ 0x85C9C20
-	.incbin "build/data/data.bin", 0x32de7c, 0x19
+	.string "パソコン{SE_A}メールボックスが\n{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9C39
 gUnknown_85C9C39: @ 0x85C9C39
-	.incbin "build/data/data.bin", 0x32de95, 0x23
+	.string "メール{SE_WARP_IN}とる{SE_BANG}メッセージが\n{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}"
+	.string "ま{DYNAMIC_COLOR4}{SE_SAVE}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9C5C
 gUnknown_85C9C5C: @ 0x85C9C5C
-	.incbin "build/data/data.bin", 0x32deb8, 0x1a
+	.string "メール{SE_WARP_IN}はず{DYNAMIC_COLOR2}{MUS_RG_GAME_FREAK}と\nど{LIGHT_GRAY}ぐ{SE_I}もてま{DYNAMIC_COLOR5}"
+	.string "ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9C76
 gUnknown_85C9C76: @ 0x85C9C76
-	.incbin "build/data/data.bin", 0x32ded2, 0x10
+	.string "{B_COPY_VAR_1}に\n{B_COPY_VAR_2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9C86
 gUnknown_85C9C86: @ 0x85C9C86
-	.incbin "build/data/data.bin", 0x32dee2, 0x27
+	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{B_COPY_VAR_2}{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}"
+	.string "ま{DYNAMIC_COLOR4}\pもっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}ぐを\nとり{GREEN}{RED}"
+	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9CAD
 gUnknown_85C9CAD: @ 0x85C9CAD
-	.incbin "build/data/data.bin", 0x32df09, 0x19
+	.string "{B_COPY_VAR_1}{SE_I}なにも\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}もっ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR5}"
+	.string "ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9CC6
 gUnknown_85C9CC6: @ 0x85C9CC6
-	.incbin "build/data/data.bin", 0x32df22, 0x14
+	.string "{B_COPY_VAR_1}{GREEN}ら\n{B_COPY_VAR_2}{SE_WARP_IN}{WHITE}ず{GREEN}りま{DYNAMIC_COLOR3}"
+	.string "た！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9CDA
 gUnknown_85C9CDA: @ 0x85C9CDA
-	.incbin "build/data/data.bin", 0x32df36, 0x15
+	.string "ポケモン{GREEN}{SE_LAVARIDGE_FALL_WARP}メールを\nとりま{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9CEF
 gUnknown_85C9CEF: @ 0x85C9CEF
@@ -12171,7 +13367,8 @@ gUnknown_85C9CEF: @ 0x85C9CEF
 
 	.globl gUnknown_85C9D0C
 gUnknown_85C9D0C: @ 0x85C9D0C
-	.incbin "build/data/data.bin", 0x32df68, 0x26
+	.string "{DYNAMIC_COLOR4}で{SE_BOO}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}るので\nメール{SE_WARP_IN}"
+	.string "もた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9D32
 gUnknown_85C9D32: @ 0x85C9D32
@@ -12180,111 +13377,168 @@ gUnknown_85C9D32: @ 0x85C9D32
 
 	.globl gUnknown_85C9D47
 gUnknown_85C9D47: @ 0x85C9D47
-	.incbin "build/data/data.bin", 0x32dfa3, 0x21
+	.string "バッグ{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で\nポケモン{SE_A}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}{LIGHT_GRAY}"
+	.string "{LIGHT_BLUE}とれま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9D68
 gUnknown_85C9D68: @ 0x85C9D68
-	.incbin "build/data/data.bin", 0x32dfc4, 0x14
+	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
 
 	.globl gUnknown_85C9D7C
 gUnknown_85C9D7C: @ 0x85C9D7C
-	.incbin "build/data/data.bin", 0x32dfd8, 0x25
+	.string "{B_COPY_VAR_1}{SE_BANG}{B_COPY_VAR_2}は{MUS_RG_VS_WILD}{DARK_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
+	.string "{SE_SAVE}わる{GREEN}った！\p{B_COPY_VAR_2}{SE_I}{LIGHT_RED}ぼ{RED}られ{MUS_RG_GAME_FREAK}！{PAUSE_UNTIL_PRESS}"
+	.string "$"
 
 	.globl gUnknown_85C9DA1
 gUnknown_85C9DA1: @ 0x85C9DA1
-	.incbin "build/data/data.bin", 0x32dffd, 0x51
+	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
+	.string "{MUS_RG_RIVAL_EXIT}⋯⋯！\p{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_COPY_VAR_1}{SE_I}わざ{SE_WARP_IN}"
+	.string "4つ\n{LIGHT_RED}ぼ{RED}るの{SE_NOTE_B}{MUS_RG_PEWTER}{DARK_GRAY}っ{PH_THOUGHT_HELD}だ！\p{B_COPY_VAR_2}"
+	.string "{SE_A}{GREEN}わりに\nほ{GREEN}{SE_A}わざ{SE_WARP_IN}わ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9DF2
 gUnknown_85C9DF2: @ 0x85C9DF2
-	.incbin "build/data/data.bin", 0x32e04e, 0x1b
+	.string "{DYNAMIC_COLOR6}れでは⋯{SE_M_DIZZY_PUNCH}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}るの{SE_WARP_IN}{WHITE}"
+	.string "{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85C9E0D
 gUnknown_85C9E0D: @ 0x85C9E0D
-	.incbin "build/data/data.bin", 0x32e069, 0x16
+	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}ず{SE_BOO}{LIGHT_RED}わった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9E23
 gUnknown_85C9E23: @ 0x85C9E23
-	.incbin "build/data/data.bin", 0x32e07f, 0x12
+	.string "ど{SE_A}わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}？{PAUSE_UNTIL_PRESS}"
+	.string "$"
 
 	.globl gUnknown_85C9E35
 gUnknown_85C9E35: @ 0x85C9E35
-	.incbin "build/data/data.bin", 0x32e091, 0x44
+	.string "{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}"
+	.string "{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}"
+	.string "ポカン！\p{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}の\nつ{MUS_RG_POKE_TOWER}{GREEN}た{SE_WARP_IN}{LIGHT_GREEN}"
+	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_BOO}わ{DYNAMIC_COLOR4}れた！\p{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
+	.string "て⋯⋯！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9E79
 gUnknown_85C9E79: @ 0x85C9E79
-	.incbin "build/data/data.bin", 0x32e0d5, 0x16
+	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
+	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9E8F
 gUnknown_85C9E8F: @ 0x85C9E8F
-	.incbin "build/data/data.bin", 0x32e0eb, 0x17
+	.string "{B_COPY_VAR_1}{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}が\n{B_COPY_VAR_2}{TRANSPARENT}{MUS_RG_POKE_TOWER}"
+	.string "ふ{BLUE}{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9EA6
 gUnknown_85C9EA6: @ 0x85C9EA6
-	.incbin "build/data/data.bin", 0x32e102, 0x1a
+	.string "{B_COPY_VAR_1}{SE_A}ど{BLUE}は\n{LIGHT_GREEN}{MUS_RG_ENCOUNTER_GYM_LEADER}{TRANSPARENT}{DYNAMIC_COLOR2}"
+	.string "っぱ{SE_ICE_STAIRS}な{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9EC0
 gUnknown_85C9EC0: @ 0x85C9EC0
-	.incbin "build/data/data.bin", 0x32e11c, 0x14
+	.string "{B_COPY_VAR_1}{SE_A}{GREEN}らだの\n{DYNAMIC_COLOR3}びれ{SE_SAVE}とれた{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9ED4
 gUnknown_85C9ED4: @ 0x85C9ED4
-	.incbin "build/data/data.bin", 0x32e130, 0xe
+	.string "{B_COPY_VAR_1}は\nめ{SE_WARP_IN}{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9EE2
 gUnknown_85C9EE2: @ 0x85C9EE2
-	.incbin "build/data/data.bin", 0x32e13e, 0x10
+	.string "{B_COPY_VAR_1}の\nや{LIGHT_BLUE}ど{SE_SAVE}な{LIGHT_RED}った{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9EF2
 gUnknown_85C9EF2: @ 0x85C9EF2
-	.incbin "build/data/data.bin", 0x32e14e, 0x14
+	.string "{B_COPY_VAR_1}{SE_A}{GREEN}らだの\n{DYNAMIC_COLOR1}{LIGHT_RED}り{SE_SAVE}と{LIGHT_BLUE}"
+	.string "た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F06
 gUnknown_85C9F06: @ 0x85C9F06
-	.incbin "build/data/data.bin", 0x32e162, 0x25
+	.string "わざポイントが\n{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
+	.string "{B_COPY_VAR_1}は\nげん{LIGHT_GREEN}{SE_WARP_IN}とりもど{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F2B
 gUnknown_85C9F2B: @ 0x85C9F2B
-	.incbin "build/data/data.bin", 0x32e187, 0x10
+	.string "{B_COPY_VAR_1}は\n{LIGHT_BLUE}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}になった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F3B
 gUnknown_85C9F3B: @ 0x85C9F3B
-	.incbin "build/data/data.bin", 0x32e197, 0x13
+	.string "{B_COPY_VAR_1}の\nわざポイント{SE_SAVE}ふ{RED}た！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F4E
 gUnknown_85C9F4E: @ 0x85C9F4E
-	.incbin "build/data/data.bin", 0x32e1aa, 0x11
+	.string "{B_COPY_VAR_1}の\nレベル{SE_SAVE}{B_COPY_VAR_2}になった！$"
 
 	.globl gUnknown_85C9F5F
 gUnknown_85C9F5F: @ 0x85C9F5F
-	.incbin "build/data/data.bin", 0x32e1bb, 0x19
+	.string "{B_COPY_VAR_1}{SE_A}{B_COPY_VAR_2}の\n{LIGHT_GREEN}{SE_BALL_OPEN}ポイント{SE_SAVE}{WHITE}"
+	.string "がった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F78
 gUnknown_85C9F78: @ 0x85C9F78
-	.incbin "build/data/data.bin", 0x32e1d4, 0x23
+	.string "{B_COPY_VAR_1}{SE_SAVE}ちょっ{SE_BANG}な{MUS_RG_OBTAIN_KEY_ITEM}た！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR6}ポイント{SE_SAVE}{DYNAMIC_COLOR2}がった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9F9B
 gUnknown_85C9F9B: @ 0x85C9F9B
-	.incbin "build/data/data.bin", 0x32e1f7, 0x26
+	.string "{B_COPY_VAR_1}{SE_I}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_BOO}"
+	.string "な{MUS_RG_OBTAIN_KEY_ITEM}{MUS_RG_CAUGHT_INTRO}る！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}{DYNAMIC_COLOR6}"
+	.string "ポイント{SE_SAVE}{DYNAMIC_COLOR2}がった！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9FC1
 gUnknown_85C9FC1: @ 0x85C9FC1
-	.incbin "build/data/data.bin", 0x32e21d, 0x26
+	.string "{B_COPY_VAR_1}{SE_I}ちょっ{SE_BANG}な{MUS_RG_OBTAIN_KEY_ITEM}た！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR6}ポイント{SE_I}も{LIGHT_GRAY}{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9FE7
 gUnknown_85C9FE7: @ 0x85C9FE7
-	.incbin "build/data/data.bin", 0x32e243, 0x10
+	.string "{B_COPY_VAR_1}の\n{DYNAMIC_COLOR1}んらん{SE_SAVE}と{LIGHT_BLUE}た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85C9FF7
 gUnknown_85C9FF7: @ 0x85C9FF7
-	.incbin "build/data/data.bin", 0x32e253, 0x10
+	.string "{B_COPY_VAR_1}の\nメロメロ{SE_SAVE}と{LIGHT_BLUE}た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85CA007
 gUnknown_85CA007: @ 0x85CA007
-	.incbin "build/data/data.bin", 0x32e263, 0x11
+	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てて{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}$"
 
 	.globl gUnknown_85CA018
 gUnknown_85CA018: @ 0x85CA018
-	.incbin "build/data/data.bin", 0x32e274, 0x1e3
+	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
+	.string "どのポケモン{SE_BOO}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ポケモン{SE_WARP_IN}{RED}らん{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "ど{DYNAMIC_COLOR1}{SE_BOO}{DARK_GRAY}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "どのポケモン{SE_BOO}{LIGHT_RED}{DYNAMIC_COLOR3}{RED}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "どのポケモン{SE_BOO}つ{MUS_RG_POKE_TOWER}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "どのポケモン{SE_BOO}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{B_COPY_VAR_1}{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR4}る？$"
+	.string "{LIGHT_GREEN}れるもの{SE_SAVE}{WHITE}りま{DYNAMIC_COLOR5}ん！$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}のれま{DYNAMIC_COLOR5}ん$"
+	.string "{DYNAMIC_COLOR4}で{SE_BOO}なみの{SE_ICE_STAIRS}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん$"
+	.string "どれ{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る？$"
+	.string "どれ{SE_WARP_IN}ふや{DYNAMIC_COLOR4}？$もちもの{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
+	.string "{DYNAMIC_COLOR1}れで{SE_I}たた{GREEN}{RED}ま{DYNAMIC_COLOR5}ん！$"
+	.string "どのポケモン{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}たりま{DYNAMIC_COLOR5}ん⋯⋯$"
+	.string "{B_COPY_VAR_1}ひ{SE_WALL_HIT}{DYNAMIC_COLOR6}ろっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん$"
+	.string "{LIGHT_RED}な{SE_BALL_THROW}ポケモン{SE_SAVE}{DARK_GRAY}ま{DYNAMIC_COLOR4}！$"
+	.string "{LIGHT_RED}な{SE_BALL_THROW}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もってま{DYNAMIC_COLOR4}$"
+	.string "ながれ{SE_SAVE}はや{BLUE}{SE_SHIP}ダメだ！$メール{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
+	.string "ポケモン{SE_WIN_OPEN}もどる{SE_WARP_IN}{DYNAMIC_COLOR5}んた{BLUE}$"
+	.string "ポケモン{SE_WARP_IN}{RED}らん{SE_NOTE_B}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}$"
+	.string "サイクリング{SE_WARP_IN}たの{DYNAMIC_COLOR3}も{LIGHT_GRAY}！$"
+	.string "{DYNAMIC_COLOR4}で{SE_BOO}つ{GREEN}っ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！$"
+	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
+	.string "つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん${DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}$"
+	.string "{DARK_GRAY}ちばんめ$にばんめ${DYNAMIC_COLOR2}んばんめ$"
+	.string "でられま{DYNAMIC_COLOR4}$でられま{DYNAMIC_COLOR5}ん$"
+	.string "{LIGHT_RED}ぼ{RED}られる！${LIGHT_RED}ぼ{RED}られ{MUS_RG_GAME_FREAK}$"
+	.string "も{LIGHT_GRAY}{LIGHT_RED}ぼ{RED}てる$もっ{MUS_RG_CAUGHT_INTRO}る$"
+	.string "もっ{MUS_RG_CAUGHT_INTRO}{MUS_RG_GAME_FREAK}$"
+	.string "よんばんめ$"
 
 	.globl gUnknown_85CA1FB
 gUnknown_85CA1FB: @ 0x85CA1FB
@@ -12309,11 +13563,12 @@ gUnknown_85CA238: @ 0x85CA238
 
 	.globl gUnknown_85CA246
 gUnknown_85CA246: @ 0x85CA246
-	.incbin "build/data/data.bin", 0x32e4a2, 0x16
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_WARP_IN}だっ{DYNAMIC_COLOR3}ゅ{SE_SLIDING_DOOR}{DYNAMIC_COLOR3}"
+	.string "て\n{B_COPY_VAR_1}{SE_BOO}もどる？$"
 
 	.globl gUnknown_85CA25C
 gUnknown_85CA25C: @ 0x85CA25C
-	.incbin "build/data/data.bin", 0x32e4b8, 0x17
+	.string "{MUS_RG_VICTORY_WILD}ご{SE_BOO}や{DYNAMIC_COLOR4}んだ\n{B_COPY_VAR_1}{SE_BOO}テレポート{DYNAMIC_COLOR4}る？$"
 
 	.globl gUnknown_85CA273
 gUnknown_85CA273: @ 0x85CA273
@@ -12325,15 +13580,26 @@ gUnknown_85CA276: @ 0x85CA276
 
 	.globl gUnknown_85CA294
 gUnknown_85CA294: @ 0x85CA294
-	.incbin "build/data/data.bin", 0x32e4f0, 0x20
+	.string "{DYNAMIC_COLOR6}のポケモン{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{DYNAMIC_COLOR4}"
+	.string "ると\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}で{LIGHT_GREEN}な{BLUE}なっちゃ{LIGHT_GRAY}よ！$"
 
 	.globl gUnknown_85CA2B4
 gUnknown_85CA2B4: @ 0x85CA2B4
-	.incbin "build/data/data.bin", 0x32e510, 0x18
+	.string "{DYNAMIC_COLOR6}{SE_A}ポケモン{SE_I}{DARK_GRAY}ま\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}"
+	.string "だ{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_85CA2CC
 gUnknown_85CA2CC: @ 0x85CA2CC
-	.incbin "build/data/data.bin", 0x32e528, 0xa3
+	.string "タマゴ{SE_I}{DARK_GRAY}ま\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}だ{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}"
+	.string "ん{MUS_RG_VS_CHAMPION}{DARK_GRAY}て{SE_A}ポケモンとは\n{DARK_GRAY}ま{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
+	.string "{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{DARK_GRAY}ま{SE_I}{DYNAMIC_COLOR6}"
+	.string "のポケモン{SE_WARP_IN}{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_I}{LIGHT_GRAY}{LIGHT_BLUE}とる{DYNAMIC_COLOR1}"
+	.string "と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
+	.string "{DYNAMIC_COLOR6}{SE_A}{MUS_RG_OAK_LAB}てと{SE_I}{DARK_GRAY}ま{SE_I}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
+	.string "{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_A}"
+	.string "ほ{DYNAMIC_COLOR3}がっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}タイプの\nポケモンで{SE_I}{WHITE}りま{DYNAMIC_COLOR5}"
+	.string "ん{SE_RG_SHOP}{DYNAMIC_COLOR6}れ{SE_I}タマゴで{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん$"
+	.string "と{LIGHT_GRAY}ろ{BLUE}{DYNAMIC_COLOR4}る$"
 
 	.globl gUnknown_85CA36F
 gUnknown_85CA36F: @ 0x85CA36F
@@ -12441,43 +13707,57 @@ gUnknown_85CA407: @ 0x85CA407
 
 	.globl gUnknown_85CA40C
 gUnknown_85CA40C: @ 0x85CA40C
-	.incbin "build/data/data.bin", 0x32e668, 0x19
+	.string "{DYNAMIC_COLOR1}{SE_A}タマゴは\n{LIGHT_GRAY}まれるま{SE_NOTE_B}{GREEN}な{SE_ICE_STAIRS}{GREEN}{GREEN}"
+	.string "り{DYNAMIC_COLOR6}{LIGHT_GRAY}$"
 
 	.globl gUnknown_85CA425
 gUnknown_85CA425: @ 0x85CA425
-	.incbin "build/data/data.bin", 0x32e681, 0x23
+	.string "なに{SE_SAVE}{LIGHT_GRAY}まれ{SE_SHIP}{BLUE}るの{GREEN}な？\n{LIGHT_GRAY}まれ{SE_ICE_BREAK}ま{SE_NOTE_B}"
+	.string "まだま{SE_NOTE_F}{GREEN}{GREEN}り{DYNAMIC_COLOR6}{LIGHT_GRAY}$"
 
 	.globl gUnknown_85CA448
 gUnknown_85CA448: @ 0x85CA448
-	.incbin "build/data/data.bin", 0x32e6a4, 0x23
+	.string "と{LIGHT_GREEN}ど{SE_WALL_HIT}{LIGHT_GRAY}{PH_FLEECE_BLEND}{SE_SHIP}{DARK_GRAY}るよ{LIGHT_GRAY}"
+	.string "だ\n{LIGHT_GRAY}まれ{SE_ICE_BREAK}ま{SE_NOTE_B}も{LIGHT_GRAY}ちょっ{SE_BANG}{GREEN}な？$"
 
 	.globl gUnknown_85CA46B
 gUnknown_85CA46B: @ 0x85CA46B
-	.incbin "build/data/data.bin", 0x32e6c7, 0x1c
+	.string "な{GREEN}{GREEN}{SE_LAVARIDGE_FALL_WARP}{LIGHT_RED}と{SE_SAVE}{LIGHT_GREEN}{DYNAMIC_COLOR1}{RED}て{BLUE}"
+	.string "る\nも{LIGHT_GRAY}{DYNAMIC_COLOR4}{SE_BALL_BOUNCE_2}{LIGHT_GRAY}まれ{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
 
 	.globl gUnknown_85CA487
 gUnknown_85CA487: @ 0x85CA487
-	.incbin "build/data/data.bin", 0x32e6e3, 0x1f
+	.string "{DYNAMIC_COLOR6}れ{SE_I}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなわざで{DYNAMIC_COLOR4}\nわ{DYNAMIC_COLOR4}"
+	.string "れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85CA4A6
 gUnknown_85CA4A6: @ 0x85CA4A6
-	.incbin "build/data/data.bin", 0x32e702, 0x26
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
+	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}で{WHITE}った$"
 
 	.globl gUnknown_85CA4CC
 gUnknown_85CA4CC: @ 0x85CA4CC
-	.incbin "build/data/data.bin", 0x32e728, 0x26
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
+	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}{GREEN}{RED}った$"
 
 	.globl gUnknown_85CA4F2
 gUnknown_85CA4F2: @ 0x85CA4F2
-	.incbin "build/data/data.bin", 0x32e74e, 0x20
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}{BLUE}"
+	.string "\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}よっ{SE_SHIP}で{WHITE}った$"
 
 	.globl gUnknown_85CA512
 gUnknown_85CA512: @ 0x85CA512
-	.incbin "build/data/data.bin", 0x32e76e, 0x29
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}\n{LIGHT_GRAY}"
+	.string "ん{MUS_RG_SEVII_DUNGEON}て{LIGHT_GREEN}{SE_PIN}で{MUS_RG_OAK_LAB}{SE_WARP_IN}{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_85CA53B
 gUnknown_85CA53B: @ 0x85CA53B
-	.incbin "build/data/data.bin", 0x32e797, 0x28
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
+	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}{WHITE}ったよ{LIGHT_GRAY}だ$"
 
 	.globl gUnknown_85CA563
 gUnknown_85CA563: @ 0x85CA563
@@ -12486,31 +13766,40 @@ gUnknown_85CA563: @ 0x85CA563
 
 	.globl gUnknown_85CA570
 gUnknown_85CA570: @ 0x85CA570
-	.incbin "build/data/data.bin", 0x32e7cc, 0x23
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
+	.string "\nど{DYNAMIC_COLOR1}{GREEN}{SE_NOTE_B}で{WHITE}った$"
 
 	.globl gUnknown_85CA593
 gUnknown_85CA593: @ 0x85CA593
-	.incbin "build/data/data.bin", 0x32e7ef, 0x23
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
+	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
+	.string "\nど{DYNAMIC_COLOR1}{GREEN}{SE_NOTE_B}{GREEN}{RED}った$"
 
 	.globl gUnknown_85CA5B6
 gUnknown_85CA5B6: @ 0x85CA5B6
-	.incbin "build/data/data.bin", 0x32e812, 0x1f
+	.string "{DYNAMIC_COLOR6}だて{SE_CLICK}ふ{LIGHT_GRAY}{SE_E}{GREEN}{SE_LAVARIDGE_FALL_WARP}もらった\nふ{DYNAMIC_COLOR3}"
+	.string "ぎ{SE_PIN}ポケモンのタマゴ$"
 
 	.globl gUnknown_85CA5D5
 gUnknown_85CA5D5: @ 0x85CA5D5
-	.incbin "build/data/data.bin", 0x32e831, 0x23
+	.string "ステキ{SE_PIN}ば{DYNAMIC_COLOR3}ょ{SE_NOTE_B}て{MUS_RG_CAUGHT}れた\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}"
+	.string "ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
 
 	.globl gUnknown_85CA5F8
 gUnknown_85CA5F8: @ 0x85CA5F8
-	.incbin "build/data/data.bin", 0x32e854, 0x1e
+	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_NOTE_B}て{MUS_RG_CAUGHT}"
+	.string "れた\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
 
 	.globl gUnknown_85CA616
 gUnknown_85CA616: @ 0x85CA616
-	.incbin "build/data/data.bin", 0x32e872, 0x1f
+	.string "{LIGHT_RED}ん{DYNAMIC_COLOR5}んば{WHITE}{DYNAMIC_COLOR2}{SE_WARP_OUT}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "もらった\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
 
 	.globl gUnknown_85CA635
 gUnknown_85CA635: @ 0x85CA635
-	.incbin "build/data/data.bin", 0x32e891, 0x1f
+	.string "たび{SE_A}{LIGHT_RED}じ{DYNAMIC_COLOR2}{SE_WARP_OUT}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "もらった\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
 
 	.globl gUnknown_85CA654
 gUnknown_85CA654: @ 0x85CA654
@@ -12518,7 +13807,8 @@ gUnknown_85CA654: @ 0x85CA654
 
 	.globl gUnknown_85CA658
 gUnknown_85CA658: @ 0x85CA658
-	.incbin "build/data/data.bin", 0x32e8b4, 0x1e
+	.string "{B_COPY_VAR_1}{TRANSPARENT}{SE_A}と{LIGHT_GRAY}ろ{BLUE}を\n{MUS_RG_POKE_TOWER}じ{SE_CARD}{DYNAMIC_COLOR3}"
+	.string "て{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CA676
 gUnknown_85CA676: @ 0x85CA676
@@ -12538,7 +13828,10 @@ gUnknown_85CA6A4: @ 0x85CA6A4
 
 	.globl gUnknown_85CA6C6
 gUnknown_85CA6C6: @ 0x85CA6C6
-	.incbin "build/data/data.bin", 0x32e922, 0x45
+	.string "{MUS_RG_VS_GYM_LEADER}0{SHADOW}0${RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}へや{SE_BOO}{LIGHT_RED}{LIGHT_GREEN}"
+	.string "ま{DYNAMIC_COLOR4}！$"
+	.string "{RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}パソコン{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
+	.string "{DARK_GRAY}らな{BLUE}なっ{SE_FAINT}グッズ{SE_WARP_IN}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}！$"
 
 	.globl gUnknown_85CA70B
 gUnknown_85CA70B: @ 0x85CA70B
@@ -12573,23 +13866,30 @@ gUnknown_85CA768: @ 0x85CA768
 
 	.globl gUnknown_85CA776
 gUnknown_85CA776: @ 0x85CA776
-	.incbin "build/data/data.bin", 0x32e9d2, 0x23
+	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}"
+	.string "ん\nひみつ{LIGHT_GREEN}ち{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}るの{SE_I}{B_COPY_VAR_1}{SE_LEDGE}"
+	.string "までで{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CA799
 gUnknown_85CA799: @ 0x85CA799
-	.incbin "build/data/data.bin", 0x32e9f5, 0x40
+	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}"
+	.string "ん\nへや{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}るの{SE_I}{B_COPY_VAR_1}{SE_LEDGE}までで{DYNAMIC_COLOR4}$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}に{SE_I}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}ん！\nつ{BLUE}{RED}{SE_A}"
+	.string "{LIGHT_GRAY}{RED}など{SE_BOO}{MUS_RG_SURF}て{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
 
 	.globl gUnknown_85CA7D9
 gUnknown_85CA7D9: @ 0x85CA7D9
-	.incbin "build/data/data.bin", 0x32ea35, 0x19
+	.string "{DYNAMIC_COLOR1}{SE_A}グッズは\nじぶん{SE_A}へやに{SE_I}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85CA7F2
 gUnknown_85CA7F2: @ 0x85CA7F2
-	.incbin "build/data/data.bin", 0x32ea4e, 0x20
+	.string "{DYNAMIC_COLOR1}のグッズ{SE_I}{LIGHT_RED}{GREEN}れ{SE_SHIP}{DARK_GRAY}るので\n{DYNAMIC_COLOR4}て{SE_ICE_BREAK}"
+	.string "{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85CA812
 gUnknown_85CA812: @ 0x85CA812
-	.incbin "build/data/data.bin", 0x32ea6e, 0x17
+	.string "{B_COPY_VAR_1}{TRANSPARENT}{SE_I}な{BLUE}なりま{DYNAMIC_COLOR4}が\nよろ{MUS_RG_VICTORY_GYM_LEADER}"
+	.string "{TRANSPARENT}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CA829
 gUnknown_85CA829: @ 0x85CA829
@@ -12627,7 +13927,12 @@ gUnknown_85CA8C7: @ 0x85CA8C7
 
 	.globl gUnknown_85CA8D1
 gUnknown_85CA8D1: @ 0x85CA8D1
-	.incbin "build/data/data.bin", 0x32eb2d, 0x47
+	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}{DYNAMIC_COLOR4}てる$"
+	.string "パソコ{SE_M_BUBBLE3}に\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}$"
+	.string "パソコ{SE_M_BUBBLE3}{GREEN}ら\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "$"
+	.string "パソコ{SE_M_BUBBLE3}{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}る\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CA918
 gUnknown_85CA918: @ 0x85CA918
@@ -12635,15 +13940,19 @@ gUnknown_85CA918: @ 0x85CA918
 
 	.globl gUnknown_85CA925
 gUnknown_85CA925: @ 0x85CA925
-	.incbin "build/data/data.bin", 0x32eb81, 0x13
+	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{LIGHT_GRAY}\nバッグ{SE_BOO}{MUS_RG_POKE_JUMP}"
+	.string "りま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_85CA938
 gUnknown_85CA938: @ 0x85CA938
-	.incbin "build/data/data.bin", 0x32eb94, 0x11
+	.string "{B_COPY_VAR_1}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}？$"
 
 	.globl gUnknown_85CA949
 gUnknown_85CA949: @ 0x85CA949
-	.incbin "build/data/data.bin", 0x32eba5, 0x2d
+	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
+	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_WARP_IN}よむ$"
+	.string "バッグ{SE_BOO}もど{DYNAMIC_COLOR4}$ポケモン{SE_BOO}もた{DYNAMIC_COLOR5}る$"
 
 	.globl gUnknown_85CA976
 gUnknown_85CA976: @ 0x85CA976
@@ -12651,11 +13960,12 @@ gUnknown_85CA976: @ 0x85CA976
 
 	.globl gUnknown_85CA988
 gUnknown_85CA988: @ 0x85CA988
-	.incbin "build/data/data.bin", 0x32ebe4, 0x12
+	.string "{B_COPY_VAR_1}{TRANSPARENT}の\nメール{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CA99A
 gUnknown_85CA99A: @ 0x85CA99A
-	.incbin "build/data/data.bin", 0x32ebf6, 0x19
+	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_I}{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}"
+	.string "ま{DYNAMIC_COLOR4}が\nよろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CA9B3
 gUnknown_85CA9B3: @ 0x85CA9B3
@@ -12663,7 +13973,8 @@ gUnknown_85CA9B3: @ 0x85CA9B3
 
 	.globl gUnknown_85CA9C2
 gUnknown_85CA9C2: @ 0x85CA9C2
-	.incbin "build/data/data.bin", 0x32ec1e, 0x1c
+	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_WARP_IN}{LIGHT_BLUE}{DYNAMIC_COLOR3}{SE_FAINT}メールを\nバッグ{SE_BOO}"
+	.string "{DARK_GRAY}れま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
 
 	.globl gUnknown_85CA9DE
 gUnknown_85CA9DE: @ 0x85CA9DE
@@ -12930,7 +14241,65 @@ gUnknown_85CB0C8: @ 0x85CB0C8
 
 	.globl gUnknown_85CB1B9
 gUnknown_85CB1B9: @ 0x85CB1B9
-	.incbin "build/data/data.bin", 0x32f415, 0x37b
+	.string "やめる$ボックス{SE_WARP_IN}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
+	.string "{GREEN}{SE_M_SING}$"
+	.string "{DYNAMIC_COLOR1}のボックス{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ど{SE_A}テーマに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ど{SE_A}{GREEN}べがみに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ど{SE_A}ボックス{SE_BOO}ジャンプ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ど{SE_A}ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
+	.string "{DYNAMIC_COLOR1}のボックス{SE_I}{DARK_GRAY}っ{PH_THOUGHT_HELD}だ！$"
+	.string "ほんと{LIGHT_GRAY}{SE_BOO}にが{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{DYNAMIC_COLOR6}と{SE_BOO}にが{DYNAMIC_COLOR3}て{WHITE}げた$"
+	.string "{PH_LOT_SOLO}{PH_LOT_SOLO}{TRANSPARENT}{SE_M_HYPER_BEAM2}！$"
+	.string "マーキング{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "たた{GREEN}{LIGHT_GRAY}ポケモン{SE_SAVE}{DARK_GRAY}な{BLUE}なりま{DYNAMIC_COLOR4}！$"
+	.string "てもち{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$"
+	.string "ポケモン{SE_WARP_IN}つ{GREEN}んだままで{DYNAMIC_COLOR4}よ！$"
+	.string "つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}ポケモン{SE_WARP_IN}{RED}らんで！$"
+	.string "タマゴ{SE_WARP_IN}にが{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
+	.string "ボックス{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR2}{SE_WARP_IN}つづ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_I}{GREEN}{RED}って{LIGHT_GREEN}た！$"
+	.string "{DYNAMIC_COLOR3}ん{PH_THOUGHT_HELD}{TRANSPARENT}だったの{GREEN}な⋯⋯$"
+	.string "⋯⋯⋯⋯⋯！$メール{SE_WARP_IN}はず{DYNAMIC_COLOR3}{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
+	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}バッグ{MUS_RG_MYSTERY_GIFT}れた！$"
+	.string "バッグ{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$"
+	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}バッグ{SE_BOO}{DARK_GRAY}れま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！$"
+	.string "{SE_M_HYPER_BEAM2}{SE_BANG}とり{GREEN}{RED}た！$"
+	.string "メール{SE_WARP_IN}{WHITE}ず{GREEN}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
+	.string "やめ{SE_ICE_BREAK}{MUS_DUMMY}{MUS_RG_VS_CHAMPION}ず{LIGHT_BLUE}{SE_ICE_BREAK}{TRANSPARENT}$"
+	.string "つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}${DARK_GRAY}れ{GREEN}{RED}{SE_ICE_BREAK}$"
+	.string "つ{GREEN}{SE_EXP}{MUS_DUMMY}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}に{LIGHT_RED}{SE_DOOR}$"
+	.string "よ{LIGHT_GRAY}{DYNAMIC_COLOR4}をみる$にが{SE_EFFECTIVE}{MUS_DUMMY}$"
+	.string "マーキン{SE_M_ICY_WIND}$なま{SE_PC_ON}{MUS_DUMMY}$"
+	.string "ジャンプ${GREEN}べが{SE_FAILURE}{TRANSPARENT}{MUS_RG_VS_CHAMPION}ず{GREEN}る$"
+	.string "もた{DYNAMIC_COLOR5}る$とり{GREEN}{RED}る$バッグへ$"
+	.string "{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$"
+	.string "ふ{LIGHT_GRAY}{MUS_RG_CELADON}1$ふ{LIGHT_GRAY}{MUS_RG_CELADON}2$"
+	.string "ふ{LIGHT_GRAY}{MUS_RG_CELADON}3$エトセトラ${PH_PRICE_BLEND}{DYNAMIC_COLOR4}{LIGHT_GREEN}$"
+	.string "もり$シティ${DYNAMIC_COLOR2}ば{BLUE}$サバンナ${DARK_GRAY}わやま$"
+	.string "{GREEN}ざん$ゆ{LIGHT_GREEN}やま$ど{LIGHT_GRAY}{BLUE}つ$"
+	.string "{LIGHT_GRAY}みべ${MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}$"
+	.string "{GREEN}わ${DYNAMIC_COLOR6}ら$みずたま$ポケセン${LIGHT_GREEN}{MUS_RG_POKE_TOWER}$"
+	.string "シンプル$なに{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ポケモン{SE_WARP_IN}つれ{MUS_RG_CAUGHT_INTRO}{BLUE}$"
+	.string "ポケモン{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}{SE_ICE_BREAK}$"
+	.string "ボックス{SE_WARP_IN}{MUS_RG_PEWTER}り{DYNAMIC_COLOR4}る$"
+	.string "ど{LIGHT_GRAY}ぐ{MUS_RG_PEWTER}り${DYNAMIC_COLOR2}よ{LIGHT_GRAY}なら$"
+	.string "ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_WARP_IN}\nてもち{SE_BOO}"
+	.string "{BLUE}わ{RED}{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{SE_EFFECTIVE}$"
+	.string "てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}\nボックス{SE_BOO}{WHITE}"
+	.string "ず{LIGHT_BLUE}{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
+	.string "ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_CLICK}\nてもち{SE_A}"
+	.string "ポケモン{SE_WARP_IN}{MUS_RG_PEWTER}{SE_ICE_STAIRS}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
+	.string "ポケモン{SE_SAVE}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}ぐを\n{MUS_RG_PEWTER}{SE_ICE_STAIRS}"
+	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
+	.string "ひと{SE_SLIDING_DOOR}ま{RED}{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
 
 	.globl gUnknown_85CB534
 gUnknown_85CB534: @ 0x85CB534
@@ -12975,7 +14344,23 @@ gUnknown_85CB6AE: @ 0x85CB6AE
 
 	.globl gUnknown_85CB6B8
 gUnknown_85CB6B8: @ 0x85CB6B8
-	.incbin "build/data/data.bin", 0x32f914, 0xea
+	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
+	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_VICTORY_WILD}$"
+	.string "よびだ{DYNAMIC_COLOR4}$やめる${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{MUS_RG_OAK_LAB}て{SE_WARP_IN}"
+	.string "よびだ{SE_EFFECTIVE}{DYNAMIC_COLOR1}とが\nで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}だ$"
+	.string "{DYNAMIC_COLOR2}{BLUE}{DYNAMIC_COLOR5}ん$"
+	.string "もって{SE_ICE_BREAK}ポケモン$じ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_POKE_TOWER}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
+	.string "{A_BUTTON}{GREEN}{BLUE}{PH_PRICE_BLEND}{TRANSPARENT}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}ぜん{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}コンディションをみ{SE_ICE_BREAK}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}マーキン{SE_M_ICY_WIND}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}マークを{RED}ら{SE_ITEMFINDER}{B_BUTTON}やめる$"
+	.string "{A_BUTTON}メニュ{SE_M_PAY_DAY}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}もどる$"
+	.string "{B_BUTTON}もどる${A_BUTTON}リボンをみ{SE_ICE_BREAK}{B_BUTTON}もどる$"
+	.string "{A_BUTTON}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{B_BUTTON}もどる$"
+	.string "{B_BUTTON}もどる$"
 
 	.globl gUnknown_85CB7A2
 gUnknown_85CB7A2: @ 0x85CB7A2
@@ -12983,7 +14368,8 @@ gUnknown_85CB7A2: @ 0x85CB7A2
 
 	.globl gUnknown_85CB7A8
 gUnknown_85CB7A8: @ 0x85CB7A8
-	.incbin "build/data/data.bin", 0x32fa04, 0x1e
+	.string "ち{GREEN}{BLUE}{SE_BOO}{DARK_GRAY}るみ{MUS_RG_RIVAL_EXIT}だ{GREEN}ら\nちょ{BLUE}{DYNAMIC_COLOR5}"
+	.string "{SE_SLIDING_DOOR}{WHITE}っ{SE_SHIP}はな{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
 
 	.globl gUnknown_85CB7C6
 gUnknown_85CB7C6: @ 0x85CB7C6
@@ -13182,27 +14568,42 @@ gUnknown_85CBD57: @ 0x85CBD57
 
 	.globl gUnknown_85CBD6B
 gUnknown_85CBD6B: @ 0x85CBD6B
-	.incbin "build/data/data.bin", 0x32ffc7, 0x47
+	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_BOO}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\nバックアップカートリッジ{SE_A}{LIGHT_BLUE}ん{DYNAMIC_COLOR2}を{DYNAMIC_COLOR3}"
+	.string "ま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{BLUE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}"
+	.string "{MUS_RG_VS_GYM_LEADER}{RED}“1ふんほ{SE_NOTE_C_HIGH}{GREEN}{GREEN}りま{DYNAMIC_COLOR4}”$"
 
 	.globl gUnknown_85CBDB2
 gUnknown_85CBDB2: @ 0x85CBDB2
-	.incbin "build/data/data.bin", 0x33000e, 0x45
+	.string "バックアップ{LIGHT_GREEN}の{LIGHT_GRAY}{SE_A}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}また{SE_I}"
+	.string "じゅみょ{LIGHT_GRAY}が\n{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た。セーブ{DYNAMIC_COLOR4}る{DYNAMIC_COLOR1}と{SE_I}"
+	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_SAVE}{DYNAMIC_COLOR1}のまま\nゲーム{SE_WARP_IN}{WHITE}{DYNAMIC_COLOR6}"
+	.string "ぶ{DYNAMIC_COLOR1}とはで{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CBDF7
 gUnknown_85CBDF7: @ 0x85CBDF7
-	.incbin "build/data/data.bin", 0x330053, 0x29
+	.string "{MUS_RG_VS_GYM_LEADER}{RED}“{DYNAMIC_COLOR1}のま{SE_SUCCESS}ぼ{LIGHT_GRAY}{LIGHT_BLUE}んをつづ{LIGHT_BLUE}"
+	.string "る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん\nタイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}”$"
 
 	.globl gUnknown_85CBE20
 gUnknown_85CBE20: @ 0x85CBE20
-	.incbin "build/data/data.bin", 0x33007c, 0x30
+	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{SE_SAVE}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}"
+	.string "ま{DYNAMIC_COLOR3}た！\nも{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}レポート{SE_WARP_IN}{GREEN}{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{BLUE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}"
+	.string "$"
 
 	.globl gUnknown_85CBE50
 gUnknown_85CBE50: @ 0x85CBE50
-	.incbin "build/data/data.bin", 0x3300ac, 0x40
+	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{MUS_RG_VS_GYM_LEADER}{RED}“{DYNAMIC_COLOR1}のま{SE_SUCCESS}"
+	.string "ぼ{LIGHT_GRAY}{LIGHT_BLUE}んをつづ{LIGHT_BLUE}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
+	.string "ん\nタイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}”$"
 
 	.globl gUnknown_85CBE90
 gUnknown_85CBE90: @ 0x85CBE90
-	.incbin "build/data/data.bin", 0x3300ec, 0x2a
+	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{MUS_RG_VS_GYM_LEADER}{RED}“Aボタン{SE_WARP_IN}{LIGHT_RED}"
+	.string "{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}”$"
 
 	.globl gUnknown_85CBEBA
 gUnknown_85CBEBA: @ 0x85CBEBA
@@ -13218,7 +14619,8 @@ gUnknown_85CBEC7: @ 0x85CBEC7
 
 	.globl gUnknown_85CBECB
 gUnknown_85CBECB: @ 0x85CBECB
-	.incbin "build/data/data.bin", 0x330127, 0x1e
+	.string "RTC{SE_WARP_IN}リセット{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}\nA{SE_NOTE_B}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}"
+	.string "{TRANSPARENT}B{SE_NOTE_B}キャンセル$"
 
 	.globl gUnknown_85CBEE9
 gUnknown_85CBEE9: @ 0x85CBEE9
@@ -13235,7 +14637,9 @@ gUnknown_85CBF09: @ 0x85CBF09
 
 	.globl gUnknown_85CBF1C
 gUnknown_85CBF1C: @ 0x85CBF1C
-	.incbin "build/data/data.bin", 0x330178, 0x27
+	.string "じ{GREEN}ん{SE_WARP_IN}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！\nレポート{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}"
+	.string "ま{SE_EFFECTIVE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CBF43
 gUnknown_85CBF43: @ 0x85CBF43
@@ -13243,15 +14647,18 @@ gUnknown_85CBF43: @ 0x85CBF43
 
 	.globl gUnknown_85CBF52
 gUnknown_85CBF52: @ 0x85CBF52
-	.incbin "build/data/data.bin", 0x3301ae, 0x17
+	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}みに\n{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た⋯$"
 
 	.globl gUnknown_85CBF69
 gUnknown_85CBF69: @ 0x85CBF69
-	.incbin "build/data/data.bin", 0x3301c5, 0x1d
+	.string "レポート{SE_SAVE}{MUS_RG_GAME_FREAK}ので\nじ{GREEN}ん{SE_A}{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{SE_I}"
+	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
 
 	.globl gUnknown_85CBF86
 gUnknown_85CBF86: @ 0x85CBF86
-	.incbin "build/data/data.bin", 0x3301e2, 0x27
+	.string "ゲーム{MUS_RG_GAME_FREAK}{TRANSPARENT}じ{GREEN}ん{SE_A}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}{MUS_RG_PEWTER}"
+	.string "{TRANSPARENT}システムが\nつ{GREEN}{RED}{SE_ICE_BREAK}よ{LIGHT_GRAY}{SE_BOO}なりま{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85CBFAD
 gUnknown_85CBFAD: @ 0x85CBFAD
@@ -13362,7 +14769,7 @@ gUnknown_85CBFEC: @ 0x85CBFEC
 
 	.globl gUnknown_85CC30F
 gUnknown_85CC30F: @ 0x85CC30F
-	.incbin "build/data/data.bin", 0x33056b, 0xc
+	.string "{B_COPY_VAR_1}は\nち{GREEN}らつ{LIGHT_GREEN}た\p$"
 
 	.globl gUnknown_85CC31B
 gUnknown_85CC31B: @ 0x85CC31B
@@ -13428,7 +14835,7 @@ gUnknown_85CC39E: @ 0x85CC39E
 
 	.globl gUnknown_85CC3A7
 gUnknown_85CC3A7: @ 0x85CC3A7
-	.incbin "build/data/data.bin", 0x330603, 0x18
+	.string "{MUS_RG_OAK_LAB}て{SE_SAVE}カード{SE_WARP_IN}み{LIGHT_RED}わるのを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CC3BF
 gUnknown_85CC3BF: @ 0x85CC3BF
@@ -13436,7 +14843,7 @@ gUnknown_85CC3BF: @ 0x85CC3BF
 
 	.globl gUnknown_85CC3CF
 gUnknown_85CC3CF: @ 0x85CC3CF
-	.incbin "build/data/data.bin", 0x33062b, 0xa
+	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{SHADOW}{LIGHT_GRAY}{DYNAMIC_COLOR1}$"
 
 	.globl gUnknown_85CC3D9
 gUnknown_85CC3D9: @ 0x85CC3D9
@@ -13448,7 +14855,7 @@ gUnknown_85CC3EA: @ 0x85CC3EA
 
 	.globl gUnknown_85CC3F8
 gUnknown_85CC3F8: @ 0x85CC3F8
-	.incbin "build/data/data.bin", 0x330654, 0xb
+	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{SHADOW}{LIGHT_GRAY}BP$"
 
 	.globl gUnknown_85CC403
 gUnknown_85CC403: @ 0x85CC403
@@ -13474,7 +14881,7 @@ gUnknown_85CC486: @ 0x85CC486
 
 	.globl gUnknown_85CC48C
 gUnknown_85CC48C: @ 0x85CC48C
-	.incbin "build/data/data.bin", 0x3306e8, 0x7
+	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_GRAY}{SHADOW}{DARK_GRAY}$"
 
 	.globl gUnknown_85CC493
 gUnknown_85CC493: @ 0x85CC493
@@ -13482,7 +14889,7 @@ gUnknown_85CC493: @ 0x85CC493
 
 	.globl gUnknown_85CC497
 gUnknown_85CC497: @ 0x85CC497
-	.incbin "build/data/data.bin", 0x3306f3, 0x6
+	.string "{HIGHLIGHT}{TRANSPARENT}{MUS_RG_VS_GYM_LEADER}$"
 
 	.globl gUnknown_85CC49D
 gUnknown_85CC49D: @ 0x85CC49D
@@ -13522,7 +14929,7 @@ gUnknown_85CC4E4: @ 0x85CC4E4
 
 	.globl gUnknown_85CC4EA
 gUnknown_85CC4EA: @ 0x85CC4EA
-	.incbin "build/data/data.bin", 0x330746, 0x4
+	.string "{HIGHLIGHT}{DARK_GRAY}$"
 
 	.globl gUnknown_85CC4EE
 gUnknown_85CC4EE: @ 0x85CC4EE
@@ -13569,7 +14976,23 @@ gUnknown_85CC663: @ 0x85CC663
 
 	.globl gUnknown_85CC672
 gUnknown_85CC672: @ 0x85CC672
-	.incbin "build/data/data.bin", 0x3308ce, 0xf7
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
+	.string "{SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひ{LIGHT_GREEN}め:$"
+	.string "{SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひ{LIGHT_GREEN}め{SE_I}{DARK_GRAY}ま{DYNAMIC_COLOR5}ん$"
+	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}ゃ{SE_SAVE}{DARK_GRAY}な{BLUE}なったので\n{DYNAMIC_COLOR3}"
+	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
+	.string "リーダー{SE_A}{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}んが\nぬ{LIGHT_BLUE}たの{SE_NOTE_B}{MUS_RG_POKE_TOWER}"
+	.string "{DYNAMIC_COLOR2}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
+	.string "と{LIGHT_GRAY}ろ{BLUE}{SE_SAVE}{GREEN}わりま{DYNAMIC_COLOR3}た\nポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ま{RED}{SE_BOO}{GREEN}{GREEN}れ{SE_FAINT}レポートに\n{LIGHT_GRAY}{RED}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
+	.string "ポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{DYNAMIC_COLOR4}"
+	.string "\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}は\nレポート{SE_BOO}{DYNAMIC_COLOR3}っ{GREEN}{SE_ICE_STAIRS}{GREEN}"
+	.string "{LIGHT_GREEN}の{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}た！$"
+	.string "リーダー{SE_SAVE}やめる{SE_BANG}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん\nになりま{DYNAMIC_COLOR4}{SE_SAVE}"
+	.string "よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CC769
 gUnknown_85CC769: @ 0x85CC769
@@ -13626,7 +15049,7 @@ gUnknown_85CC798: @ 0x85CC798
 
 	.globl gUnknown_85CC874
 gUnknown_85CC874: @ 0x85CC874
-	.incbin "build/data/data.bin", 0x330ad0, 0x14
+	.string "タマゴ{SE_SAVE}{GREEN}{RED}って\n{B_COPY_VAR_1}{SE_SAVE}{LIGHT_GRAY}まれた！$"
 
 	.globl gUnknown_85CC888
 gUnknown_85CC888: @ 0x85CC888
@@ -13713,7 +15136,32 @@ gUnknown_85CCA9E: @ 0x85CCA9E
 
 	.globl gUnknown_85CCAA8
 gUnknown_85CCAA8: @ 0x85CCAA8
-	.incbin "build/data/data.bin", 0x330d04, 0x215
+	.string "バトルポイント$とじる$$バトルフロンティア{SE_A}マップ{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
+	.string "トレーナーカード{SE_WARP_IN}みま{DYNAMIC_COLOR4}${LIGHT_GREEN}ろ{BLUE}{DYNAMIC_COLOR3}{SE_FAINT}"
+	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
+	.string "フロンティアパス{SE_WARP_IN}とじま{DYNAMIC_COLOR4}$"
+	.string "{DARK_GRAY}{SE_SUCCESS}たまっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}バトルポイントで{DYNAMIC_COLOR4}$"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}シンボル{SE_WARP_IN}{WHITE}つめま{DYNAMIC_COLOR4}$"
+	.string "バトルタワ{SE_M_PAY_DAY}アビリティシンボル$バトルドー{SE_EGG_HATCH}タクティクスシンボル$"
+	.string "バトルパレ{SE_ROULETTE_BALL2}スピリットシンボル$バトルアリー{SE_CONTEST_MONS_TURN}ガッツシンボル$"
+	.string "バトルファクトリ{SE_M_PAY_DAY}ノウレッジシンボル$バトルチュー{SE_M_TAKE_DOWN}ラックシンボル$"
+	.string "バトルピラミッ{SE_M_SACRED_FIRE}ブレイブシンボル$げん{PH_FLEECE_HELD}{TRANSPARENT}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}"
+	.string "ん{LIGHT_GREEN}ろ{BLUE}{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん$"
+	.string "バトルタワー$バトルドーム$バトルパレス$バトルアリーナ$バトルファクトリー$バトルチューブ$"
+	.string "バトルピラミッド${GREEN}ちぬ{SE_WALL_HIT}ひた{DYNAMIC_COLOR4}{SE_LAVARIDGE_FALL_WARP}{LIGHT_GRAY}{RED}"
+	.string "{SE_WARP_IN}めざ{DYNAMIC_COLOR4}。\n{MUS_RG_VICTORY_WILD}の{LIGHT_GRAY}{SE_WARP_IN}ため{DYNAMIC_COLOR2}"
+	.string "れる。$"
+	.string "トーナメント{SE_WARP_IN}{GREEN}ちぬ{BLUE}。\n{DYNAMIC_COLOR5}んじゅつ{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
+	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}みまもる。\nポケモンと{SE_A}{LIGHT_GREEN}ずな{SE_WARP_IN}"
+	.string "ため{DYNAMIC_COLOR2}れる。$"
+	.string "つ{MUS_RG_POKE_FLUTE}{TRANSPARENT}ポケモン{SE_A}チーム{SE_NOTE_B}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
+	.string "り{DYNAMIC_COLOR4}る。\nと{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
+	.string "レンタルポケモン{SE_NOTE_B}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}り{DYNAMIC_COLOR4}る。\nち{DYNAMIC_COLOR3}{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
+	.string "3つ{SE_A}みち{GREEN}{SE_LAVARIDGE_FALL_WARP}1つ{RED}ら{SE_BRIDGE_WALK}{GREEN}ち{DYNAMIC_COLOR4}"
+	.string "{DYNAMIC_COLOR4}む。\n{LIGHT_GRAY}ん{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
+	.string "ちょ{LIGHT_GRAY}じょ{LIGHT_GRAY}{SE_WARP_IN}めざ{SE_NOT_EFFECTIVE}ぼ{LIGHT_GRAY}{LIGHT_BLUE}"
+	.string "ん{DYNAMIC_COLOR4}る。\nゆ{LIGHT_GRAY}{LIGHT_GREEN}{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
 
 	.globl gUnknown_85CCCBD
 gUnknown_85CCCBD: @ 0x85CCCBD
@@ -13737,7 +15185,11 @@ gUnknown_85CCCEE: @ 0x85CCCEE
 
 	.globl gUnknown_85CCCF5
 gUnknown_85CCCF5: @ 0x85CCCF5
-	.incbin "build/data/data.bin", 0x330f51, 0x3f
+	.string "ドードリオの{LIGHT_GREEN}のみどり{SE_A}{LIGHT_GREEN}ろ{BLUE}$"
+	.string "{LIGHT_GREEN}のみをとっ{SE_FAINT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
+	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{SE_PC_OFF}と{BLUE}てん$"
+	.string "5にん{SE_NOTE_B}{LIGHT_GREEN}のみを\nつづ{LIGHT_BLUE}てとっ{SE_FAINT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}"
+	.string "{LIGHT_GRAY}$"
 
 	.globl gUnknown_85CCD34
 gUnknown_85CCD34: @ 0x85CCD34
@@ -13759,7 +15211,7 @@ gUnknown_85CCD68: @ 0x85CCD68
 
 	.globl gUnknown_85CCD86
 gUnknown_85CCD86: @ 0x85CCD86
-	.incbin "build/data/data.bin", 0x330fe2, 0x19
+	.string "1ばん{SE_BOO}なっ{SE_FAINT}ひとに\n{SE_M_HYPER_BEAM2}{SE_WARP_IN}プレゼント！！$"
 
 	.globl gUnknown_85CCD9F
 gUnknown_85CCD9F: @ 0x85CCD9F
@@ -13775,7 +15227,8 @@ gUnknown_85CCDBD: @ 0x85CCDBD
 
 	.globl gUnknown_85CCDCB
 gUnknown_85CCDCB: @ 0x85CCDCB
-	.incbin "build/data/data.bin", 0x331027, 0x1c
+	.string "だれ{GREEN}{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CCDE7
 gUnknown_85CCDE7: @ 0x85CCDE7
@@ -13803,11 +15256,12 @@ gUnknown_85CCDFE: @ 0x85CCDFE
 
 	.globl gUnknown_85CCE36
 gUnknown_85CCE36: @ 0x85CCE36
-	.incbin "build/data/data.bin", 0x331092, 0x1c
+	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}{SE_SAVE}よ{GREEN}ったので\n{SE_M_HYPER_BEAM2}{SE_WARP_IN}"
+	.string "{MUS_RG_ROUTE1}{SE_LEDGE}プレゼント！$"
 
 	.globl gUnknown_85CCE52
 gUnknown_85CCE52: @ 0x85CCE52
-	.incbin "build/data/data.bin", 0x3310ae, 0x13
+	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}に\nなって{DYNAMIC_COLOR3}まった！$"
 
 	.globl gUnknown_85CCE65
 gUnknown_85CCE65: @ 0x85CCE65
@@ -13819,7 +15273,8 @@ gUnknown_85CCE71: @ 0x85CCE71
 
 	.globl gUnknown_85CCE7F
 gUnknown_85CCE7F: @ 0x85CCE7F
-	.incbin "build/data/data.bin", 0x3310db, 0x1a
+	.string "だれ{GREEN}がぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}{DYNAMIC_COLOR3}"
+	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CCE99
 gUnknown_85CCE99: @ 0x85CCE99
@@ -13864,15 +15319,19 @@ gUnknown_85CCEDF: @ 0x85CCEDF
 
 	.globl gUnknown_85CCEEC
 gUnknown_85CCEEC: @ 0x85CCEEC
-	.incbin "build/data/data.bin", 0x331148, 0x1f
+	.string "カードeリーダー{PLUS}{TRANSPARENT}で\nふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの{SE_WARP_IN}よみ{DYNAMIC_COLOR1}"
+	.string "みま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CCF0B
 gUnknown_85CCF0B: @ 0x85CCF0B
-	.incbin "build/data/data.bin", 0x331167, 0x1f
+	.string "カードeリーダー{PLUS}{SE_A}メニュー{GREEN}ら\n‘つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'{SE_WARP_IN}{RED}らび$"
 
 	.globl gUnknown_85CCF2A
 gUnknown_85CCF2A: @ 0x85CCF2A
-	.incbin "build/data/data.bin", 0x331186, 0x48
+	.string "‘ゲームボーイアドバンスとつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'\n{SE_WARP_IN}{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR3}"
+	.string "て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "カードeリーダー{PLUS}{SE_A}‘つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'を\n{RED}らん{SE_NOTE_B}Aボタン{SE_WARP_IN}{LIGHT_RED}"
+	.string "{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CCF72
 gUnknown_85CCF72: @ 0x85CCF72
@@ -13880,7 +15339,8 @@ gUnknown_85CCF72: @ 0x85CCF72
 
 	.globl gUnknown_85CCF81
 gUnknown_85CCF81: @ 0x85CCF81
-	.incbin "build/data/data.bin", 0x3311dd, 0x2c
+	.string "カード{SE_A}よみ{DYNAMIC_COLOR1}みを\nちゅ{LIGHT_GRAY}{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
+	.string "カードeリーダー{PLUS}と\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
 
 	.globl gUnknown_85CCFAD
 gUnknown_85CCFAD: @ 0x85CCFAD
@@ -13888,15 +15348,18 @@ gUnknown_85CCFAD: @ 0x85CCFAD
 
 	.globl gUnknown_85CCFB9
 gUnknown_85CCFB9: @ 0x85CCFB9
-	.incbin "build/data/data.bin", 0x331215, 0x1c
+	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}エラーで{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR5}つぞ{BLUE}{SE_WARP_IN}"
+	.string "た{DYNAMIC_COLOR3}{GREEN}め{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CCFD5
 gUnknown_85CCFD5: @ 0x85CCFD5
-	.incbin "build/data/data.bin", 0x331231, 0x1d
+	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}エラーで{DYNAMIC_COLOR4}\nはじめ{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "やりな{LIGHT_RED}{DYNAMIC_COLOR3}{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CCFF2
 gUnknown_85CCFF2: @ 0x85CCFF2
-	.incbin "build/data/data.bin", 0x33124e, 0x1e
+	.string "カードeリーダー{PLUS}{TRANSPARENT}に\nカード{SE_WARP_IN}よみ{DYNAMIC_COLOR1}ま{DYNAMIC_COLOR5}{SE_SHIP}{BLUE}"
+	.string "だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CD010
 gUnknown_85CD010: @ 0x85CD010
@@ -13904,7 +15367,7 @@ gUnknown_85CD010: @ 0x85CD010
 
 	.globl gUnknown_85CD01D
 gUnknown_85CD01D: @ 0x85CD01D
-	.incbin "build/data/data.bin", 0x331279, 0x19
+	.string "{WHITE}らた{SE_PIN}トレーナーが\nホ{PKMN}ン{SE_BOO}やって{LIGHT_GREEN}た！$"
 
 	.globl gUnknown_85CD036
 gUnknown_85CD036: @ 0x85CD036
@@ -13936,11 +15399,13 @@ gUnknown_85CD0C8: @ 0x85CD0C8
 
 	.globl gUnknown_85CD0DC
 gUnknown_85CD0DC: @ 0x85CD0DC
-	.incbin "build/data/data.bin", 0x331338, 0x22
+	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}{SE_WALL_HIT}ちゅ{SE_PC_OFF}"
+	.string "で{DYNAMIC_COLOR4}\n⋯⋯Bボタン{SE_NOTE_B}キャンセ{SE_M_NIGHTMARE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CD0FE
 gUnknown_85CD0FE: @ 0x85CD0FE
-	.incbin "build/data/data.bin", 0x33135a, 0x25
+	.string "Aボタン{SE_NOTE_B}で{LIGHT_GREEN}ごと{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}\n⋯⋯Bボタン{SE_NOTE_B}"
+	.string "キャンセ{SE_M_NIGHTMARE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
 	.globl gUnknown_85CD123
 gUnknown_85CD123: @ 0x85CD123
@@ -13948,15 +15413,27 @@ gUnknown_85CD123: @ 0x85CD123
 
 	.globl gUnknown_85CD133
 gUnknown_85CD133: @ 0x85CD133
-	.incbin "build/data/data.bin", 0x33138f, 0x26
+	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}んケーブル{SE_WARP_IN}ぬ{GREEN}{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
+	.string "だ{MUS_RG_VICTORY_WILD}\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
+	.string "だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CD159
 gUnknown_85CD159: @ 0x85CD159
-	.incbin "build/data/data.bin", 0x3313b5, 0x46
+	.string "で{LIGHT_GREEN}ごと{SE_A}よみ{DYNAMIC_COLOR1}みが\n{MUS_RG_PEWTER}じょ{LIGHT_GRAY}{SE_BOO}{DYNAMIC_COLOR3}"
+	.string "ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
+	.string "{DYNAMIC_COLOR5}つぞ{SE_DOOR}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}{TRANSPARENT}{LIGHT_GREEN}{LIGHT_GREEN}"
+	.string "{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\nただ{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}{LIGHT_GREEN}"
+	.string "{LIGHT_GREEN}{SE_BANG}やりな{LIGHT_RED}{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
 	.globl gUnknown_85CD19F
 gUnknown_85CD19F: @ 0x85CD19F
-	.incbin "build/data/data.bin", 0x3313fb, 0x65
+	.string "エラーがはっ{MUS_RG_PEWTER}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.string "Aボタン{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
+	.string "つながりま{DYNAMIC_COLOR3}た$データ{SE_WARP_IN}じゅ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
+	.string "セーブで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んで{DYNAMIC_COLOR3}た$"
+	.string "セーブで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た$ロードで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んで{DYNAMIC_COLOR3}た$"
+	.string "ロードで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た$"
 
 	.globl gUnknown_85CD204
 gUnknown_85CD204: @ 0x85CD204
@@ -14056,7 +15533,7 @@ gUnknown_85CDB48: @ 0x85CDB48
 
 	.globl gUnknown_85CDB60
 gUnknown_85CDB60: @ 0x85CDB60
-	.incbin "build/data/data.bin", 0x331dbc, 0x1a
+	.string "{DYNAMIC_COLOR4}べて{SE_A}セーブデータエリアを\nクリ{SE_THUNDERSTORM}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CDB7A
 gUnknown_85CDB7A: @ 0x85CDB7A
@@ -14489,7 +15966,7 @@ gUnknown_85D5B68: @ 0x85D5B68
 
 	.globl gUnknown_85D5B78
 gUnknown_85D5B78: @ 0x85D5B78
-	.incbin "build/data/data.bin", 0x339dd4, 0x10
+	.string "\p$$${DYNAMIC}$$$$$▶$$$k$"
 
 	.globl gUnknown_85D5B88
 gUnknown_85D5B88: @ 0x85D5B88
@@ -14653,7 +16130,7 @@ gUnknown_85D7608: @ 0x85D7608
 
 	.globl gUnknown_85D79EC
 gUnknown_85D79EC: @ 0x85D79EC
-	.incbin "build/data/data.bin", 0x33bc48, 0x8
+	.string "⋯⋯⋯⋯⋯⋯\p$"
 
 	.globl gUnknown_85D79F4
 gUnknown_85D79F4: @ 0x85D79F4
@@ -16054,7 +17531,1159 @@ gUnknown_85E7FFC: @ 0x85E7FFC
 
 	.globl gUnknown_85E801C
 gUnknown_85E801C: @ 0x85E801C
-	.incbin "build/data/data.bin", 0x34c278, 0x4e08
+	.string "ッ{DYNAMIC_COLOR6}$$とィセ{BLUE}たィセ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}たÜろ{BLUE}ユsひ{BLUE}て{SE_CLICK}"
+	.string "{DYNAMIC_COLOR3}っぽなど{SE_WARP_IN}つ{MUS_RG_POKE_TOWER}\nて{LIGHT_GREEN}{SE_WARP_IN}は{MUS_RG_RIVAL_EXIT}"
+	.string "{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}チョップ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_RED}"
+	.string "{LIGHT_GRAY}ふ{BLUE}ビンタで\n2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}れんぞ{BLUE}{SE_NOTE_B}なぐりつ{LIGHT_BLUE}\n2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}"
+	.string "れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}ち{GREEN}らを{DYNAMIC_COLOR1}め{SE_FAINT}"
+	.string "パンチで\nて{LIGHT_GREEN}{SE_WARP_IN}なぐっ{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR1}ばんをなげ{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ご{SE_BOO}{LIGHT_RED}{GREEN}ね{SE_SAVE}"
+	.string "てに{MUS_RG_POKE_JUMP}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ほの{LIGHT_RED}を{DYNAMIC_COLOR1}め{SE_FAINT}パンチ{SE_NOTE_B}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{LIGHT_GREEN}を{DYNAMIC_COLOR1}め{SE_FAINT}パンチ{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_RED}ら{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}でんげ{LIGHT_GREEN}を{DYNAMIC_COLOR1}"
+	.string "め{SE_FAINT}パンチ{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR4}る{PH_LOT_HELD}ツメ{SE_WARP_IN}つ{MUS_RG_POKE_TOWER}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ひっ{MUS_RG_POKE_TOWER}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}なハサミ{SE_WARP_IN}"
+	.string "つ{MUS_RG_POKE_TOWER}\nて{LIGHT_GREEN}{SE_WARP_IN}は{DYNAMIC_COLOR2}ん{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}なハサミ{SE_WARP_IN}つ{GREEN}って\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "は{DYNAMIC_COLOR2}{SE_FAILURE}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ふの{LIGHT_GRAY}に{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}1ターンめ{SE_NOTE_B}{GREEN}ぜの{MUS_RG_SEVII_45}ば{SE_WARP_IN}つ{BLUE}"
+	.string "り\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}たた{MUS_RG_POKE_TOWER}{SE_A}{LIGHT_RED}どり{SE_WARP_IN}{LIGHT_RED}どって\n{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}グーンと{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}{DYNAMIC_COLOR4}る{PH_LOT_HELD}カマ{SE_CLICK}ツメなど{SE_WARP_IN}つ{GREEN}って\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{LIGHT_GREEN}りつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}つば{DYNAMIC_COLOR2}{SE_NOTE_B}つ{MUS_RG_POKE_FLUTE}{GREEN}"
+	.string "ぜ{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}\n{DYNAMIC_COLOR6}れ{SE_WARP_IN}て{LIGHT_GREEN}"
+	.string "にぶつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "つば{DYNAMIC_COLOR2}{SE_WARP_IN}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_DOOR}ひろげて\n{DYNAMIC_COLOR6}"
+	.string "のま{SE_SUCCESS}て{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}{WHITE}たり{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}つ{MUS_RG_POKE_FLUTE}{GREEN}ぜ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ふ{LIGHT_GREEN}とば{DYNAMIC_COLOR4}\nふ{LIGHT_GREEN}とば{DYNAMIC_COLOR4}{SE_BANG}{DYNAMIC_COLOR5}"
+	.string "んと{LIGHT_GRAY}{SE_I}{LIGHT_RED}わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}1ターンめ{SE_NOTE_B}{DYNAMIC_COLOR6}"
+	.string "ら{SE_BOO}とびたって\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}な{PH_CLOTH_SOLO}{GREEN}"
+	.string "らだや\nつる{SE_WARP_IN}つ{GREEN}っ{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR3}めつ{LIGHT_BLUE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}な{PH_CLOTH_SOLO}シッポ{SE_CLICK}ツルなどを\nて{LIGHT_GREEN}{SE_BOO}たた{LIGHT_GREEN}つ{LIGHT_BLUE}"
+	.string "{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ムチのよ{LIGHT_GRAY}{SE_BOO}ほ{DYNAMIC_COLOR6}な{PH_CLOTH_SOLO}{TRANSPARENT}"
+	.string "つるを\nて{LIGHT_GREEN}{SE_BOO}たた{LIGHT_GREEN}つ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}な{WHITE}"
+	.string "{DYNAMIC_COLOR3}{SE_NOTE_B}ふみつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}2ほん{SE_A}{WHITE}{DYNAMIC_COLOR3}をつ{GREEN}っ{SE_SHIP}て{LIGHT_GREEN}を\n2{MUS_RG_POKE_TOWER}"
+	.string "{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}ち{GREEN}らを{DYNAMIC_COLOR1}"
+	.string "め{SE_FAINT}キックで\nて{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_BLUE}っとば{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ジャンプ{DYNAMIC_COLOR3}{SE_FAINT}{DARK_GRAY}"
+	.string "{LIGHT_GREEN}{MUS_RG_SURF}{SE_NOTE_B}キックを\n{BLUE}りだ{SE_EFFECTIVE}はず{DYNAMIC_COLOR4}{SE_BANG}"
+	.string "ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}らだ{SE_WARP_IN}{DYNAMIC_COLOR4}ばや{SE_DOOR}"
+	.string "1{MUS_RG_POKE_TOWER}てん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR6}{MUS_RG_NEW_GAME_EXIT}"
+	.string "{LIGHT_GREEN}{MUS_RG_SURF}{SE_NOTE_B}キック{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "て{LIGHT_GREEN}{SE_A}{GREEN}{LIGHT_RED}など{SE_BOO}{DYNAMIC_COLOR4}なを{GREEN}{LIGHT_BLUE}"
+	.string "て\n{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}たま{GREEN}"
+	.string "{SE_LAVARIDGE_FALL_WARP}つっ{DYNAMIC_COLOR1}ん{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}とがっ{SE_FAINT}つの{SE_WARP_IN}つ{MUS_RG_POKE_TOWER}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "つ{MUS_RG_OBTAIN_KEY_ITEM}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}とがっ{SE_FAINT}つのなど{SE_WARP_IN}つ{MUS_RG_POKE_TOWER}"
+	.string "\n2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}つの{SE_WARP_IN}ドリルのよ{LIGHT_GRAY}{SE_BOO}"
+	.string "{MUS_RG_POKE_TOWER}てん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}\nて{LIGHT_GREEN}{SE_WARP_IN}つつ{SE_WALL_HIT}"
+	.string "{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ふの{LIGHT_GRAY}に{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}"
+	.string "らだぜん{MUS_RG_RIVAL_EXIT}{SE_WARP_IN}つ{GREEN}って\nて{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}{WHITE}"
+	.string "たり{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{GREEN}らだご{SE_BANG}た{LIGHT_RED}れ{DYNAMIC_COLOR1}ん{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}"
+	.string "な{PH_CLOTH_SOLO}{GREEN}らだや\nツルをつ{GREEN}っ{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR3}"
+	.string "めつ{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}{LIGHT_GREEN}{MUS_RG_SURF}をつ{LIGHT_BLUE}{SE_SHIP}"
+	.string "て{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}{WHITE}たり\nじぶんも{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}"
+	.string "{SE_NOT_EFFECTIVE}ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "2ー3ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}{WHITE}ばれつづ{LIGHT_BLUE}る{MUS_RG_VS_WILD}ばれた{WHITE}と{SE_I}"
+	.string "{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}のちを{GREEN}"
+	.string "{LIGHT_BLUE}{SE_SHIP}て{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}{WHITE}たり\nじぶんも{DYNAMIC_COLOR4}"
+	.string "{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "て{LIGHT_GREEN}{SE_BOO}{DYNAMIC_COLOR3}っぽをふっ{SE_SHIP}ゆだん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "て\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ど{BLUE}の{WHITE}{SE_ICE_BREAK}ハリ{SE_CLICK}つの{SE_NOTE_B}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_BOO}ど{BLUE}を{WHITE}た{RED}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}りょ{LIGHT_GRAY}て{SE_A}ハリ{SE_WARP_IN}つ{GREEN}"
+	.string "って\nて{LIGHT_GREEN}{SE_WARP_IN}2{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}る{PH_LOT_HELD}"
+	.string "ハリ{SE_WARP_IN}て{LIGHT_GREEN}{SE_BOO}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}て\n2ー5{MUS_RG_POKE_TOWER}"
+	.string "{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}にらん{SE_NOTE_B}{LIGHT_RED}び{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "て\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}る{PH_LOT_HELD}{TRANSPARENT}"
+	.string "は{SE_NOTE_B}{GREEN}み{MUS_RG_OBTAIN_KEY_ITEM}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}{GREEN}{MUS_RG_TRAINER_TOWER}{BLUE}{MUS_RG_GAME_FREAK}{SE_SHIP}て{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}ゆだん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}ほ{RED}{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}にげだ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る\nて{LIGHT_GREEN}{SE_SAVE}にげる{SE_BANG}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{SE_I}{LIGHT_RED}わる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{LIGHT_GRAY}"
+	.string "たご{RED}で\nて{LIGHT_GREEN}{SE_WARP_IN}ふ{MUS_RG_POKE_TOWER}ねむりへ{SE_BANG}{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}"
+	.string "{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}らだ{GREEN}"
+	.string "{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}{LIGHT_RED}んぱ{SE_WARP_IN}はっ{DYNAMIC_COLOR3}"
+	.string "て\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}げ{LIGHT_GREEN}は{SE_NOTE_B}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n20{SE_A}{LIGHT_GREEN}"
+	.string "まったダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ちょ{LIGHT_GRAY}の{LIGHT_GRAY}りょ{BLUE}"
+	.string "{SE_NOTE_B}て{LIGHT_GREEN}{SE_A}{LIGHT_GRAY}ご{LIGHT_GREEN}を\nとめ{SE_SHIP}わざ{SE_WARP_IN}"
+	.string "1{SE_SLIDING_DOOR}つ{GREEN}{RED}な{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}つ{MUS_RG_POKE_FLUTE}"
+	.string "{DYNAMIC_COLOR2}ん{SE_NOTE_B}て{LIGHT_GREEN}{SE_A}ひふ{SE_WARP_IN}と{GREEN}{DYNAMIC_COLOR4}\nぼ{LIGHT_GRAY}"
+	.string "ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}ほの{LIGHT_RED}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}"
+	.string "{PH_FLEECE_BLEND}{TRANSPARENT}ほの{LIGHT_RED}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}"
+	.string "{LIGHT_GREEN}り{SE_NOTE_B}{GREEN}らだ{SE_WARP_IN}{LIGHT_RED}{MUS_RG_SURF}\nの{LIGHT_GRAY}りょ{BLUE}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR2}げられ{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}に{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}みず{SE_WARP_IN}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}て\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}みず{SE_WARP_IN}もの{DYNAMIC_COLOR4}"
+	.string "{PH_FLEECE_BLEND}{MUS_RG_PALLET}{LIGHT_GREEN}{MUS_RG_SURF}で\nはっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}"
+	.string "{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}みず{SE_BOO}なみ{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}"
+	.string "{DYNAMIC_COLOR6}れを\nもの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}ち{GREEN}ら{SE_NOTE_B}"
+	.string "たた{LIGHT_GREEN}つ{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{MUS_RG_ENCOUNTER_GYM_LEADER}"
+	.string "{LIGHT_GREEN}{SE_WARP_IN}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_RED}ら{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ゆ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}つ{MUS_RG_POKE_FLUTE}{GREEN}ぜにの{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_RED}ら{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}"
+	.string "ひ{GREEN}り{SE_WARP_IN}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR4}る\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{SE_RG_SS_ANNE_HORN}わ{SE_WARP_IN}{DARK_GRAY}{LIGHT_GREEN}{MUS_RG_SURF}よ{SE_DOOR}はっ{DYNAMIC_COLOR3}"
+	.string "ゃ{DYNAMIC_COLOR4}る\nて{LIGHT_GREEN}{SE_A}{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}に{PH_FLEECE_SOLO}ろ{SE_A}ひ{GREEN}り{SE_WARP_IN}"
+	.string "はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR4}る\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ダメージ{SE_I}{LIGHT_RED}"
+	.string "{LIGHT_RED}{MUS_RG_SILPH}{SE_SAVE}つ{GREEN}{LIGHT_GRAY}と\nつぎのター{SE_M_BUBBLE3}{LIGHT_GRAY}ご{LIGHT_BLUE}"
+	.string "な{BLUE}なって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{BLUE}ちば{DYNAMIC_COLOR3}"
+	.string "など{SE_WARP_IN}つ{GREEN}って\nて{LIGHT_GREEN}{SE_WARP_IN}つ{MUS_RG_OBTAIN_KEY_ITEM}{SE_SHIP}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{BLUE}ちば{DYNAMIC_COLOR3}{SE_WARP_IN}ちゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_BOO}{GREEN}"
+	.string "らだを\n{MUS_RG_POKE_TOWER}てん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{SE_SHIP}て{LIGHT_GREEN}{SE_BOO}"
+	.string "とっ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}じぶんご{SE_BANG}じめん{SE_BOO}たた{LIGHT_GREEN}"
+	.string "つ{LIGHT_BLUE}る\nじぶんに{SE_SWITCH}{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ダメージ{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{LIGHT_RED}{MUS_RG_SEVII_123}{TRANSPARENT}ポケモンに{SE_I}"
+	.string "より\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{GREEN}ら{LIGHT_GRAY}{LIGHT_BLUE}{SE_FAINT}"
+	.string "ぶつり{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}の\nダメージ{SE_WARP_IN}{PH_LOT_SOLO}に{DYNAMIC_COLOR3}"
+	.string "て{GREEN}{RED}{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_PALLET}んりょ{BLUE}"
+	.string "{SE_WARP_IN}りよ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_SHIP}なげる\nレベルぶん{SE_A}ダメージ{SE_WARP_IN}{WHITE}た{RED}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}ぜん{DYNAMIC_COLOR3}ん{SE_BOO}{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}ち{GREEN}"
+	.string "ら{SE_WARP_IN}ためて\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}{SE_FAINT}"
+	.string "ダメージの\nはんぶ{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}"
+	.string "{SE_FAINT}ダメージの\nはんぶ{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_A}{GREEN}らだ{SE_BOO}"
+	.string "タネを{LIGHT_GRAY}{RED}て\nターンごと{SE_BOO}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_VERMILLION}"
+	.string "とる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}っ{LIGHT_GREEN}{SE_BOO}{GREEN}らだ{SE_WARP_IN}"
+	.string "{MUS_RG_PEWTER}ちょ{LIGHT_GRAY}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}はっぱ{SE_NOTE_B}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_GREEN}りつ{LIGHT_BLUE}る\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}"
+	.string "ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "1ターンめ{SE_NOTE_B}ひ{GREEN}り{SE_WARP_IN}{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}"
+	.string "\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ど{BLUE}{DYNAMIC_COLOR6}{SE_WARP_IN}ふ{BLUE}ん{SE_NOTE_F}{DYNAMIC_COLOR1}な{SE_WARP_IN}"
+	.string "ふりま{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_BOO}ど{BLUE}を{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{DYNAMIC_COLOR3}びれ{SE_ICE_BREAK}{DYNAMIC_COLOR1}な{SE_WARP_IN}ふりま{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ねむ{BLUE}な{SE_ICE_BREAK}"
+	.string "{DYNAMIC_COLOR1}な{SE_WARP_IN}ふりま{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}ねむら{DYNAMIC_COLOR5}"
+	.string "て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "2ー3ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}{WHITE}ばれつづ{LIGHT_BLUE}る{MUS_RG_VS_WILD}ばれた{WHITE}と{SE_I}"
+	.string "{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}と{SE_WARP_IN}"
+	.string "て{LIGHT_GREEN}{SE_A}{GREEN}らだ{SE_BOO}ま{LIGHT_GREEN}つ{LIGHT_BLUE}\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}げ{LIGHT_GREEN}は{SE_NOTE_B}て{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n40{SE_A}{LIGHT_GREEN}まったダメージ{SE_WARP_IN}"
+	.string "{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}て{LIGHT_GREEN}"
+	.string "を\nほの{LIGHT_RED}{SE_A}ちゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_BOO}とじ{DYNAMIC_COLOR1}める{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}でんげ{LIGHT_GREEN}{SE_WARP_IN}{WHITE}び{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}つ{MUS_RG_POKE_FLUTE}"
+	.string "でんげ{LIGHT_GREEN}{SE_WARP_IN}{WHITE}び{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}よ{MUS_RG_TRAINER_TOWER}でんげ{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "て{LIGHT_GREEN}{SE_BOO}ぶつ{LIGHT_BLUE}て\nまひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "て{LIGHT_GREEN}{SE_BOO}む{GREEN}っ{SE_SHIP}{GREEN}みなり{SE_WARP_IN}{LIGHT_RED}と{DYNAMIC_COLOR4}"
+	.string "\nまひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}{DARK_GRAY}わ{SE_WARP_IN}"
+	.string "なげつ{LIGHT_BLUE}て\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}じめん{SE_WARP_IN}"
+	.string "ゆら{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nとんで{SE_ICE_BREAK}"
+	.string "て{MUS_RG_SILPH}{PH_CLOTH_SOLO}{SE_BOO}{PH_PRICE_BLEND}ダメージ{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "じわれ{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "のみ{DYNAMIC_COLOR1}む\nのみ{DYNAMIC_COLOR1}まれる{SE_BANG}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ふの{LIGHT_GRAY}"
+	.string "になる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}1ターンめ{SE_NOTE_B}じめん{SE_BOO}もぐり\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}じょじょ{SE_BOO}ダメージがふ{RED}"
+	.string "{SE_ICE_BREAK}ど{BLUE}を\nて{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ちょ{LIGHT_GRAY}の{LIGHT_GRAY}りょ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "つ{MUS_RG_POKE_FLUTE}ねんり{LIGHT_GREEN}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}{WHITE}んじ{SE_WARP_IN}{GREEN}{LIGHT_BLUE}"
+	.string "て\nふ{MUS_RG_POKE_TOWER}{TRANSPARENT}ねむりへ{SE_BANG}{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}{LIGHT_GRAY}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ヨガのポーズ{SE_NOTE_B}ねむっ{SE_FAINT}"
+	.string "ち{GREEN}らを\nひ{LIGHT_GREEN}だ{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ち{GREEN}ら{SE_WARP_IN}{MUS_RG_NEW_GAME_INSTRUCT}{SE_SHIP}"
+	.string "{GREEN}らだ{SE_WARP_IN}{GREEN}る{BLUE}{DYNAMIC_COLOR3}\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}"
+	.string "グーンと{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}"
+	.string "{TRANSPARENT}はや{DYNAMIC_COLOR2}{SE_NOTE_B}{LIGHT_GRAY}{PH_FLEECE_BLEND}{SE_SHIP}\n{DYNAMIC_COLOR5}"
+	.string "ん{MUS_RG_PEWTER}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{DYNAMIC_COLOR2}れるたび{SE_BOO}{DARK_GRAY}{GREEN}りで\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_SAVE}"
+	.string "{WHITE}がっ{MUS_RG_CAUGHT_INTRO}{BLUE}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ちょ{LIGHT_GRAY}の{LIGHT_GRAY}りょ{BLUE}{SE_WARP_IN}つ{GREEN}って\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{GREEN}"
+	.string "{SE_LAVARIDGE_FALL_WARP}だっ{DYNAMIC_COLOR3}ゅつ{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_BOO}{LIGHT_RED}{DYNAMIC_COLOR6}ろ{MUS_RG_VICTORY_GYM_LEADER}"
+	.string "{TRANSPARENT}まぼろ{DYNAMIC_COLOR3}{SE_WARP_IN}み{DYNAMIC_COLOR5}\nレベルぶん{SE_A}ダメージ{SE_WARP_IN}{WHITE}"
+	.string "た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_SAVE}つ{GREEN}っ{SE_FAINT}わざが\n{DYNAMIC_COLOR6}のと{LIGHT_GREEN}"
+	.string "だ{SE_EXIT}じぶん{SE_A}わざになる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}やな{LIGHT_RED}"
+	.string "と{SE_WARP_IN}だ{DYNAMIC_COLOR3}{SE_SHIP}て{LIGHT_GREEN}の\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}"
+	.string "ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ぶん{DYNAMIC_COLOR3}ん{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}まどわ{DYNAMIC_COLOR5}\n{MUS_RG_POKE_TOWER}"
+	.string "ひりつ{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}キズ{MUS_RG_OBTAIN_KEY_ITEM}{SE_FAINT}{GREEN}らだ{SE_WARP_IN}{MUS_RG_RIVAL_EXIT}りょ{BLUE}"
+	.string "の\nはんぶんだ{SE_EXIT}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ぜん{DYNAMIC_COLOR3}ん{SE_BOO}ち{GREEN}らを{DYNAMIC_COLOR1}{SE_BIKE_HOP}{GREEN}た{BLUE}"
+	.string "なり\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{GREEN}らだ{SE_WARP_IN}ちぢめ{SE_SHIP}{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{BLUE}なり\n{MUS_RG_POKE_TOWER}"
+	.string "ひりつ{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{LIGHT_BLUE}むり{SE_CLICK}スミなど{SE_NOTE_B}て{LIGHT_GREEN}の\n{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}"
+	.string "りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}や{MUS_RG_VICTORY_GYM_LEADER}ひ{GREEN}り{SE_NOTE_B}て{LIGHT_GREEN}"
+	.string "を\nまどわ{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}"
+	.string "{MUS_RG_RIVAL_EXIT}{GREEN}ら{SE_BOO}もぐり{DYNAMIC_COLOR1}んで\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{WHITE}"
+	.string "げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{GREEN}らだ{SE_WARP_IN}まるめ{SE_SHIP}{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょを\n{GREEN}{BLUE}"
+	.string "{SE_NOT_EFFECTIVE}ぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "めのま{RED}{SE_BOO}{GREEN}べ{SE_WARP_IN}つ{BLUE}りだ{DYNAMIC_COLOR3}\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}グーンと{WHITE}"
+	.string "げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ひ{GREEN}りの{GREEN}べ{SE_WARP_IN}"
+	.string "つ{BLUE}り\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_A}ダメージ{SE_WARP_IN}よわめる{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{BLUE}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_GREEN}り{SE_BOO}{LIGHT_RED}"
+	.string "{LIGHT_RED}わ{SE_ICE_CRACK}の{LIGHT_GRAY}りょ{BLUE}の\n{DARK_GRAY}じょ{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "もとにもど{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}べ{SE_WARP_IN}つ{BLUE}"
+	.string "っ{SE_SHIP}ぶつ{SE_ICE_STAIRS}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}の\nダメージ{SE_WARP_IN}"
+	.string "よわめる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_BOO}{SE_POKENAV_CALL}{DARK_GRAY}{SE_WARP_IN}{DYNAMIC_COLOR1}めて\n{LIGHT_GREEN}"
+	.string "ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{DYNAMIC_COLOR4}{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}2ター{SE_M_BUBBLE3}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_BOO}"
+	.string "た{RED}て\n{LIGHT_GRAY}{LIGHT_BLUE}たダメージ{SE_WARP_IN}{PH_LOT_SOLO}に{DYNAMIC_COLOR3}て{GREEN}{RED}"
+	.string "{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ゆび{SE_WARP_IN}ふっ{SE_SHIP}の{LIGHT_GRAY}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR3}げ{LIGHT_GREEN}{DYNAMIC_COLOR3}て\n{DARK_GRAY}ろん{SE_PIN}ワザ{SE_WARP_IN}"
+	.string "ランダムで{BLUE}りだ{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_A}わざ{SE_WARP_IN}まね{DYNAMIC_COLOR3}"
+	.string "て\n{LIGHT_RED}なじわざ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}{PH_PRICE_BLEND}"
+	.string "ダメージ{SE_WARP_IN}{WHITE}た{RED}るが\nつ{GREEN}{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}"
+	.string "ふの{LIGHT_GRAY}{SE_BOO}なる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}タマゴ{SE_WARP_IN}{LIGHT_RED}{MUS_RG_SEVII_123}"
+	.string "っ{LIGHT_GREEN}{SE_ICE_STAIRS}なげつ{LIGHT_BLUE}て\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "な{PH_CLOTH_SOLO}{DYNAMIC_COLOR3}た{SE_NOTE_B}なめまわ{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{MUS_RG_POKE_JUMP}{LIGHT_GREEN}ガス{SE_WARP_IN}"
+	.string "ふ{LIGHT_GREEN}{GREEN}{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}"
+	.string "{SE_BOO}ど{BLUE}を{WHITE}た{RED}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ヘドロ{SE_WARP_IN}"
+	.string "なげつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_BOO}ど{BLUE}"
+	.string "を{WHITE}た{RED}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}てにもっ{SE_FAINT}"
+	.string "ホネ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{PH_PRICE_BLEND}{SE_A}もじ{SE_SAVE}{DYNAMIC_COLOR4}べて{SE_WARP_IN}や{LIGHT_GREEN}つ{BLUE}{DYNAMIC_COLOR4}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}た{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR2}{GREEN}のぼるよ{LIGHT_GRAY}{SE_PIN}"
+	.string "{DARK_GRAY}{LIGHT_GREEN}{MUS_RG_SURF}で\nて{LIGHT_GREEN}{SE_BOO}とっ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}"
+	.string "て{LIGHT_GREEN}を\n{GREEN}ら{SE_BOO}は{DYNAMIC_COLOR2}み{DYNAMIC_COLOR1}んで{DYNAMIC_COLOR3}ま{LIGHT_GRAY}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ぜっ{MUS_RG_RIVAL_EXIT}{SE_BOO}よ{LIGHT_BLUE}"
+	.string "られ{MUS_RG_GAME_FREAK}{TRANSPARENT}ほ{DYNAMIC_COLOR3}がたの\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR5}"
+	.string "ん{SE_WARP_IN}む{DYNAMIC_COLOR4}{LIGHT_GRAY}{SE_BOO}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "1ターンめ{SE_NOTE_B}{WHITE}たま{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めて\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}"
+	.string "る{PH_LOT_HELD}ハリ{SE_WARP_IN}て{LIGHT_GREEN}{SE_BOO}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}"
+	.string "て\n2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_BOO}{GREEN}らみ{MUS_RG_OBTAIN_KEY_ITEM}{SE_SHIP}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}る\nて{LIGHT_GREEN}{SE_A}{DYNAMIC_COLOR4}"
+	.string "ばや{DYNAMIC_COLOR2}{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}"
+	.string "っ{DYNAMIC_COLOR3}ゅ{SE_WARP_OUT}なに{GREEN}{SE_WARP_IN}わ{DYNAMIC_COLOR4}れる{DYNAMIC_COLOR1}とで\nと{BLUE}"
+	.string "ぼ{LIGHT_GRAY}{SE_WARP_IN}グーンと{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_A}"
+	.string "め{SE_WARP_IN}スプーン{SE_BOO}む{LIGHT_BLUE}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\n{MUS_RG_SEVII_DUNGEON}"
+	.string "ちゅ{LIGHT_GRAY}りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}キズ{MUS_RG_OBTAIN_KEY_ITEM}{SE_FAINT}{GREEN}らだ{SE_WARP_IN}{MUS_RG_RIVAL_EXIT}りょ{BLUE}"
+	.string "の\nはんぶんだ{SE_EXIT}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ジャンプ{DYNAMIC_COLOR3}{SE_FAINT}{DARK_GRAY}{LIGHT_GREEN}{MUS_RG_SURF}{SE_NOTE_B}"
+	.string "ひざげりを\n{BLUE}りだ{SE_EFFECTIVE}はず{DYNAMIC_COLOR4}{SE_BANG}ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{LIGHT_RED}な{GREEN}{SE_A}もよ{LIGHT_GRAY}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DARK_GRAY}{GREEN}{BLUE}"
+	.string "{DYNAMIC_COLOR3}\n{LIGHT_RED}び{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{SE_SHIP}まひ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ね{MUS_RG_CAUGHT_INTRO}"
+	.string "るて{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}{SE_FAINT}ダメージの\nはんぶ{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}"
+	.string "{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ど{BLUE}ガス{SE_WARP_IN}"
+	.string "て{LIGHT_GREEN}{SE_BOO}ふ{LIGHT_GREEN}{GREEN}{LIGHT_BLUE}て\nど{BLUE}を{WHITE}た{RED}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ま{MUS_RG_VS_LEGEND}"
+	.string "もの{SE_WARP_IN}て{LIGHT_GREEN}{SE_BOO}なげつ{LIGHT_BLUE}て\n2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}"
+	.string "{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "て{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}{SE_FAINT}ダメージの\nはんぶ{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}"
+	.string "{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR1}{MUS_RG_TRAINER_TOWER}{TRANSPARENT}{GREEN}{LIGHT_RED}{SE_NOTE_B}キス{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR5}まる\nキス{DYNAMIC_COLOR2}れる{SE_BANG}ねむって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}1ターンめ{SE_NOTE_B}じゃ{BLUE}てん{SE_WARP_IN}{DYNAMIC_COLOR2}"
+	.string "が{DYNAMIC_COLOR3}\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_A}ポケモン{SE_BANG}{LIGHT_RED}"
+	.string "な{SE_BALL_THROW}{DYNAMIC_COLOR4}がたに\n{MUS_RG_VICTORY_WILD}ぼ{LIGHT_GRAY}{SE_WARP_IN}へん{GREEN}"
+	.string "{DYNAMIC_COLOR2}{SE_SUPER_EFFECTIVE}へん{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}"
+	.string "わ{SE_WARP_IN}ふ{LIGHT_GREEN}{GREEN}{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_A}{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}{DYNAMIC_COLOR2}"
+	.string "げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}リズミカル{SE_PIN}パンチ{SE_NOTE_B}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{MUS_RG_VICTORY_WILD}みん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}の{WHITE}{SE_ICE_BREAK}ほ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}を\nふりま{SE_WALL_HIT}て{LIGHT_GREEN}{SE_WARP_IN}ねむら{DYNAMIC_COLOR5}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}つ{MUS_RG_POKE_FLUTE}{TRANSPARENT}ひ{GREEN}り{SE_NOTE_B}め{SE_WARP_IN}"
+	.string "{BLUE}らま{DYNAMIC_COLOR5}て\nて{LIGHT_GREEN}{SE_A}{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}りつ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}"
+	.string "ねんぱ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nつ{GREEN}"
+	.string "{LIGHT_GRAY}たび{SE_BOO}{DARK_GRAY}りょ{BLUE}{SE_SAVE}{GREEN}わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "はねるだ{LIGHT_BLUE}{SE_NOTE_B}なにも{LIGHT_RED}{DYNAMIC_COLOR1}ら{MUS_RG_GAME_FREAK}⋯⋯\n{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{GREEN}らだ{SE_WARP_IN}{RED}{LIGHT_GREEN}じょ{LIGHT_GRAY}{SE_BOO}へん{GREEN}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}て\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}グーンと{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ハサミ{SE_WARP_IN}て{LIGHT_GREEN}{SE_BOO}たた{LIGHT_GREEN}つ{LIGHT_BLUE}る\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}て{LIGHT_GREEN}{SE_BOO}{PH_PRICE_BLEND}ダメージ{SE_WARP_IN}{WHITE}た{RED}るが\nつ{GREEN}"
+	.string "{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ふの{LIGHT_GRAY}{SE_BOO}なる{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR4}る{PH_LOT_HELD}ツメやカマなど{SE_NOTE_B}ひっ{MUS_RG_POKE_TOWER}て\n2ー5{MUS_RG_POKE_TOWER}"
+	.string "{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "ホネ{SE_WARP_IN}なげつ{LIGHT_BLUE}{SE_SHIP}{DARK_GRAY}{LIGHT_GREEN}{SE_BANG}{GREEN}{RED}"
+	.string "りで\n2{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ター{SE_M_BUBBLE3}ねむっ{SE_SHIP}{MUS_RG_RIVAL_EXIT}りょ{BLUE}と\n{GREEN}"
+	.string "らだ{MUS_RG_NEW_GAME_EXIT}じょ{LIGHT_GRAY}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{DARK_GRAY}"
+	.string "わ{SE_WARP_IN}なげつ{LIGHT_BLUE}る\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}る{PH_LOT_HELD}"
+	.string "ま{RED}ば{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}ポリゴン{SE_WARP_IN}へら{SE_NOT_EFFECTIVE}カクカクになって\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{LIGHT_RED}ぼ{RED}"
+	.string "{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}わざ{SE_A}タイプの\nどれ{GREEN}{SE_BOO}じぶん{SE_A}タイプ{SE_WARP_IN}{GREEN}"
+	.string "{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}3{DYNAMIC_COLOR3}ゅ{MUS_RG_VS_LEGEND}{SE_A}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}{DYNAMIC_COLOR5}んを\n1つにまとめ{SE_SHIP}て{LIGHT_GREEN}{SE_BOO}はっ{DYNAMIC_COLOR3}"
+	.string "ゃ{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}る{PH_LOT_HELD}"
+	.string "ま{RED}ば{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR3}て\nて{LIGHT_GREEN}{SE_A}"
+	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}はんぶんに{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR4}る{PH_LOT_HELD}カマ{SE_CLICK}ツメなど{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_A}4ぶんの1{SE_WARP_IN}つ{GREEN}って\nじぶん{SE_A}"
+	.string "ぶん{DYNAMIC_COLOR3}んをだ{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "わざポイントがな{BLUE}なる{SE_BANG}でるわざ\nじぶんも{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}"
+	.string "ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_SAVE}つ{GREEN}"
+	.string "ったわざ{SE_WARP_IN}スケッチ{DYNAMIC_COLOR3}て\n{DYNAMIC_COLOR6}のわざ{SE_WARP_IN}じぶんのもの{SE_BOO}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_WARP_IN}3{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}"
+	.string "{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{MUS_RG_VS_WILD}てるたび{SE_BOO}ダメージ{SE_SAVE}{WHITE}"
+	.string "がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_A}"
+	.string "{MUS_RG_VICTORY_WILD}ちゅ{LIGHT_GRAY}{SE_BOO}{DYNAMIC_COLOR4}{LIGHT_GREEN}をみて\nて{LIGHT_GREEN}{SE_SAVE}"
+	.string "もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}ぬ{DYNAMIC_COLOR4}む{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "ネバネバと{DYNAMIC_COLOR3}{SE_FAINT}{DARK_GRAY}と{SE_WARP_IN}{GREEN}らま{DYNAMIC_COLOR5}て\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}にげられな{SE_DOOR}{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "て{LIGHT_GREEN}{SE_A}{LIGHT_GRAY}ご{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}"
+	.string "ろ{SE_NOTE_B}{GREEN}んじて\nつぎ{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}"
+	.string "なら{SE_NOTE_C}{WHITE}てる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_SAVE}ねてる{MUS_RG_OAK_LAB}{SE_NOTE_F}"
+	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\n{MUS_RG_SEVII_CAVE}ター{SE_M_BUBBLE3}4ぶんの{SE_M_HEADBUTT}"
+	.string "へら{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{BLUE}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ほの{LIGHT_RED}{SE_WARP_IN}まとっ{SE_SHIP}"
+	.string "とっ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR4}る\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ね{MUS_RG_CAUGHT_INTRO}"
+	.string "ると{LIGHT_GREEN}だ{SE_EXIT}つ{GREEN}{RED}{SE_ICE_BREAK}わざ\n{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{DARK_GRAY}"
+	.string "び{LIGHT_GREEN}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ゴーストタイプ{SE_BANG}{DYNAMIC_COLOR6}{MUS_RG_ENCOUNTER_GYM_LEADER}"
+	.string "{PH_CLOTH_SOLO}とでは\nわざ{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}ちが{LIGHT_GRAY}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}{DYNAMIC_COLOR4}{BLUE}"
+	.string "{MUS_RG_GAME_FREAK}ほど\nて{LIGHT_GREEN}{SE_BOO}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}なダメージ{SE_WARP_IN}"
+	.string "{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{LIGHT_GRAY}{LIGHT_BLUE}たわざ{SE_A}タイプ{SE_WARP_IN}"
+	.string "じぶんの\n{MUS_RG_CAUGHT_INTRO}{DYNAMIC_COLOR1}{LIGHT_GRAY}りょ{BLUE}{SE_BOO}{GREEN}{RED}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR3}ん{BLUE}{LIGHT_GRAY}は{SE_WARP_IN}"
+	.string "はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n{LIGHT_GREEN}"
+	.string "ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ほ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_IN}まとわりつ{GREEN}{SE_SUPER_EFFECTIVE}て{LIGHT_GREEN}"
+	.string "の\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}"
+	.string "{DYNAMIC_COLOR4}{BLUE}{MUS_RG_GAME_FREAK}ほど\nて{LIGHT_GREEN}{SE_BOO}{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}なダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}て{SE_SAVE}"
+	.string "だ{DYNAMIC_COLOR3}{SE_FAINT}わざ{SE_WARP_IN}{LIGHT_GRAY}らんで\n{DYNAMIC_COLOR6}{SE_A}わざポイント{SE_WARP_IN}"
+	.string "へら{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ゆ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}"
+	.string "ぜにの{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_RED}ら{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR6}のターン{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}{MUS_RG_GAME_FREAK}\nれんぞ{BLUE}{SE_NOTE_B}だ{DYNAMIC_COLOR4}"
+	.string "{SE_BANG}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}{DYNAMIC_COLOR3}や{MUS_RG_VERMILLION}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}はや{DYNAMIC_COLOR2}{SE_NOTE_B}パンチを{BLUE}りだ{DYNAMIC_COLOR3}"
+	.string "\n{DYNAMIC_COLOR5}ん{MUS_RG_PEWTER}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR1}{MUS_RG_TRAINER_TOWER}"
+	.string "{GREEN}{LIGHT_RED}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_RED}び{RED}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}て\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}ガクッと{DYNAMIC_COLOR2}"
+	.string "げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ゆだん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{SE_SHIP}ち{GREEN}づ{LIGHT_GREEN}\nよ{LIGHT_BLUE}"
+	.string "られ{MUS_RG_GAME_FREAK}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{BLUE}"
+	.string "りだ{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}{MUS_RG_TRAINER_TOWER}{SE_PC_LOGIN}"
+	.string "{GREEN}{LIGHT_RED}{SE_NOTE_B}キス{SE_WARP_IN}{DYNAMIC_COLOR5}まる\nキス{DYNAMIC_COLOR2}れる{SE_BANG}"
+	.string "{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{LIGHT_BLUE}ずって\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_WARP_IN}{MUS_RG_VICTORY_WILD}{PH_PRICE_BLEND}ま{SE_NOTE_B}{WHITE}げる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}ヘドロ{SE_WARP_IN}なげつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_BOO}ど{BLUE}を{WHITE}た{RED}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_A}{GREEN}{LIGHT_RED}など{SE_BOO}ドロを{GREEN}{LIGHT_BLUE}"
+	.string "て\n{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}み{SE_A}{GREEN}"
+	.string "たまり{SE_WARP_IN}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}て\n{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}"
+	.string "りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}て{LIGHT_GREEN}{SE_A}{WHITE}{DYNAMIC_COLOR3}ば{SE_BOO}わな{SE_WARP_IN}{DYNAMIC_COLOR3}"
+	.string "{GREEN}{LIGHT_BLUE}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR3}{SE_FAINT}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{WHITE}たりに{MUS_RG_FUCHSIA}{SE_SAVE}ダメージ{SE_I}{LIGHT_RED}{LIGHT_RED}{MUS_RG_SILPH}"
+	.string "{MUS_RG_VS_WILD}たれ{SE_PUDDLE}{GREEN}なら{SE_NOTE_C}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}わざ{SE_SAVE}{WHITE}たりに{BLUE}{BLUE}なっ{SE_FAINT}て{LIGHT_GREEN}に\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_WARP_IN}{WHITE}てられるよ{LIGHT_GRAY}になる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR1}"
+	.string "のわざ{SE_A}{WHITE}と{SE_BOO}た{LIGHT_RED}{DYNAMIC_COLOR2}れると\nて{LIGHT_GREEN}{SE_SWITCH}{DYNAMIC_COLOR5}"
+	.string "んと{LIGHT_GRAY}ふの{LIGHT_GRAY}になる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{MUS_RG_SILPH}"
+	.string "{SE_FAINT}ポケモン{SE_I}3ターンごに\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}ふの{LIGHT_GRAY}{SE_BOO}なって{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}"
+	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{LIGHT_GREEN}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}{DYNAMIC_COLOR2}"
+	.string "げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "て{LIGHT_GREEN}{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}ならずよ{LIGHT_BLUE}"
+	.string "る\nれんぞ{BLUE}{SE_NOTE_B}だ{DYNAMIC_COLOR4}{SE_BANG}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}{DYNAMIC_COLOR3}"
+	.string "や{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}てにもっ{SE_FAINT}ホネ{SE_NOTE_B}2ー5{MUS_RG_POKE_TOWER}\nれんぞ{BLUE}"
+	.string "{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}じゅん{SE_WARP_IN}"
+	.string "{WHITE}わ{DYNAMIC_COLOR5}て\nつぎ{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}"
+	.string "ならず{WHITE}てる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}2ー3ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}{WHITE}ばれつづ{LIGHT_BLUE}"
+	.string "る{MUS_RG_VS_WILD}ばれた{WHITE}と{SE_I}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_WARP_IN}はっ{MUS_RG_PEWTER}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}て\n{MUS_RG_SEVII_CAVE}ター{SE_M_BUBBLE3}ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}{SE_FAINT}"
+	.string "ダメージの\nはんぶ{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR6}のターン{SE_NOTE_B}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}ても\n{GREEN}"
+	.string "なら{SE_NOTE_C}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}1の{DYNAMIC_COLOR1}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{SE_POKENAV_HANG_UP}ま{RED}{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ゆだん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}5ターンの{MUS_RG_OAK_LAB}"
+	.string "{SE_NOTE_F}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{MUS_RG_VS_WILD}"
+	.string "てるたび{SE_BOO}ダメージ{SE_SAVE}{WHITE}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}なら{SE_NOTE_C}{MUS_RG_RIVAL_EXIT}"
+	.string "りょ{BLUE}{SE_SAVE}1の{DYNAMIC_COLOR1}るよ{LIGHT_GRAY}\nて{GREEN}げん{DYNAMIC_COLOR3}{SE_SHIP}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}"
+	.string "んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}るが\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_SWITCH}"
+	.string "グーン{SE_BANG}{WHITE}げて{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}キズ{MUS_RG_OBTAIN_KEY_ITEM}"
+	.string "{SE_FAINT}{GREEN}らだ{SE_WARP_IN}{MUS_RG_RIVAL_EXIT}りょ{BLUE}の\nはんぶんだ{SE_EXIT}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}でん{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "まとっ{SE_SHIP}とっ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR4}る\nて{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "わざ{SE_WARP_IN}{WHITE}てるたびに\n{DARK_GRAY}りょ{BLUE}{SE_SAVE}ぞ{LIGHT_GRAY}{PH_PRICE_BLEND}{DYNAMIC_COLOR3}"
+	.string "{MUS_RG_CAUGHT_INTRO}{BLUE}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}{GREEN}{MUS_RG_RIVAL_EXIT}つば{DYNAMIC_COLOR2}{SE_WARP_IN}{LIGHT_RED}{LIGHT_RED}"
+	.string "{LIGHT_GREEN}{SE_DOOR}ひろげて\n{DYNAMIC_COLOR6}のま{SE_SUCCESS}て{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}"
+	.string "{WHITE}たり{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_WARP_IN}じーっ{SE_BANG}"
+	.string "み{MUS_RG_CAUGHT_INTRO}る{SE_BANG}なぜ{GREEN}\nて{LIGHT_GREEN}{SE_I}にげられな{SE_DOOR}なって{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}オスな{SE_LAVARIDGE_FALL_WARP}メス{SE_BOO}メスな{SE_LAVARIDGE_FALL_WARP}"
+	.string "オスに\nわざ{SE_SAVE}だ{DYNAMIC_COLOR3}に{BLUE}{BLUE}なる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ね{MUS_RG_CAUGHT_INTRO}ると{LIGHT_GREEN}だ{SE_EXIT}つ{GREEN}{RED}{SE_ICE_BREAK}"
+	.string "わざ\nランダム{SE_NOTE_B}じぶんのわざ{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{DYNAMIC_COLOR4}ずのね{SE_WARP_IN}"
+	.string "{LIGHT_GREEN}{GREEN}{DYNAMIC_COLOR5}て\n{DYNAMIC_COLOR4}べて{SE_A}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}"
+	.string "{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}よ{BLUE}"
+	.string "{DYNAMIC_COLOR3}て{BLUE}れ{SE_ICE_BREAK}トレーナー{SE_A}ために\nぜんりょ{BLUE}{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}ば{BLUE}"
+	.string "だん{SE_WARP_IN}プレゼント{DYNAMIC_COLOR4}る\nたま{SE_BOO}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}"
+	.string "て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}む{PH_FLEECE_BLEND}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR3}{LIGHT_GRAY}ち{SE_A}{LIGHT_GRAY}{DYNAMIC_COLOR2}ばら{DYNAMIC_COLOR3}に\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}ぜんりょ{BLUE}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ち{GREEN}ら{SE_NOTE_B}まもられて\nと{BLUE}{DYNAMIC_COLOR3}"
+	.string "{SE_BERRY_BLENDER}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_BOO}ならな{BLUE}なる{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "て{LIGHT_GREEN}{SE_BANG}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\nた{DYNAMIC_COLOR3}{SE_SHIP}"
+	.string "{DYNAMIC_COLOR6}れ{SE_WARP_IN}な{GREEN}よ{SE_DOOR}わ{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR3}んぴて{LIGHT_GREEN}{SE_PIN}ほの{LIGHT_RED}{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}じめん{SE_WARP_IN}ゆら{DYNAMIC_COLOR3}"
+	.string "{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nダメージ{SE_I}"
+	.string "ランダム{SE_NOTE_B}{GREEN}わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{WHITE}たりに{MUS_RG_FUCHSIA}{SE_SAVE}ダメージ{SE_I}"
+	.string "{LIGHT_RED}{LIGHT_RED}{MUS_RG_SILPH}{MUS_RG_VS_WILD}たれ{SE_PUDDLE}{GREEN}なら{SE_NOTE_C}{DYNAMIC_COLOR1}"
+	.string "んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}{MUS_RG_RIVAL_EXIT}つの{SE_WARP_IN}"
+	.string "もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{MUS_RG_PALLET}{LIGHT_GREEN}{MUS_RG_SURF}で\nつ{LIGHT_GREEN}"
+	.string "だ{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{BLUE}ち{GREEN}{SE_LAVARIDGE_FALL_WARP}もの{DYNAMIC_COLOR4}"
+	.string "{PH_FLEECE_BLEND}{MUS_RG_PALLET}{LIGHT_GREEN}を{MUS_RG_POKE_JUMP}て\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_RG_OBTAIN_KEY_ITEM}{GREEN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_IN}"
+	.string "の{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}たまま\nほ{GREEN}{SE_A}ポケモン{SE_BANG}{DARK_GRAY}れ{GREEN}わる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_SAVE}{MUS_RG_VICTORY_WILD}ご{SE_BOO}つ{GREEN}"
+	.string "っ{SE_FAINT}わざを\n2ー6{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}だ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{GREEN}ん{DYNAMIC_COLOR4}ると{LIGHT_GREEN}に\nつ{GREEN}{LIGHT_GRAY}{SE_BANG}{PH_PRICE_BLEND}"
+	.string "ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}らだ{SE_WARP_IN}はや{SE_DOOR}"
+	.string "{MUS_RG_POKE_TOWER}てん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{SE_RG_SS_ANNE_HORN}{MUS_RG_SEVII_CAVE}{GREEN}{LIGHT_RED}り{SE_NOTE_B}{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR5}て\nて{LIGHT_GREEN}{SE_A}{MUS_RG_POKE_TOWER}ひりつ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}"
+	.string "{MUS_RG_RIVAL_EXIT}{TRANSPARENT}シッポ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_A}ぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{GREEN}{MUS_RG_RIVAL_EXIT}ツメ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_SAVE}"
+	.string "{WHITE}がる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{WHITE}"
+	.string "とぜめ{SE_BOO}なる{SE_SAVE}{GREEN}ならず\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_SAVE}{WHITE}"
+	.string "たる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る\nてん{LIGHT_GREEN}"
+	.string "{SE_NOTE_B}{MUS_RG_POKE_TOWER}ふ{BLUE}りょ{LIGHT_GRAY}{SE_SAVE}{GREEN}わる{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "{DYNAMIC_COLOR4}る\nてん{LIGHT_GREEN}{SE_NOTE_B}{MUS_RG_POKE_TOWER}ふ{BLUE}りょ{LIGHT_GRAY}{SE_SAVE}{GREEN}"
+	.string "わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る\nてん{LIGHT_GREEN}{SE_NOTE_B}{MUS_RG_POKE_TOWER}ふ{BLUE}"
+	.string "りょ{LIGHT_GRAY}{SE_SAVE}{GREEN}わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ポケモンによっ{SE_SHIP}"
+	.string "て{LIGHT_GREEN}{SE_BOO}{WHITE}た{RED}る\nダメージ{SE_A}りょ{LIGHT_GRAY}{SE_SAVE}へん{GREEN}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}りょ{LIGHT_GRAY}てチョップ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}"
+	.string "たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}"
+	.string "{TRANSPARENT}{GREEN}ぜ{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}て\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}みずタイプの\nわざ{SE_A}"
+	.string "{DARK_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}ほの{LIGHT_RED}タイプの\nわざ{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}"
+	.string "がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}る{PH_LOT_HELD}{TRANSPARENT}"
+	.string "は{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{GREEN}み{BLUE}だ{BLUE}\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{GREEN}"
+	.string "{SE_LAVARIDGE_FALL_WARP}{LIGHT_GRAY}{LIGHT_BLUE}{SE_FAINT}と{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "の\nダメージ{SE_WARP_IN}{PH_LOT_SOLO}に{DYNAMIC_COLOR3}{SE_SHIP}{GREEN}{RED}{DYNAMIC_COLOR4}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_BOO}{GREEN}{GREEN}っ{MUS_RG_CAUGHT_INTRO}"
+	.string "{SE_ICE_BREAK}ほじょ{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}を\nじぶんに{SE_SWITCH}{GREEN}{LIGHT_BLUE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}もの{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}"
+	.string "{TRANSPARENT}はや{DYNAMIC_COLOR2}{SE_NOTE_B}{LIGHT_GRAY}{PH_FLEECE_BLEND}て\nち{GREEN}"
+	.string "らづ{MUS_RG_POKE_FLUTE}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}を{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}げん{DYNAMIC_COLOR3}{SE_A}ち{GREEN}ら{SE_WARP_IN}"
+	.string "よび{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR4}\nの{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}がる{DYNAMIC_COLOR1}とが{WHITE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{BLUE}{MUS_RG_ENCOUNTER_DEOXYS}{GREEN}たまり{SE_WARP_IN}"
+	.string "なげ{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_PEWTER}"
+	.string "{DYNAMIC_COLOR3}んりょ{BLUE}{SE_WARP_IN}た{GREEN}めて\n2ターンご{SE_BOO}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_RG_PALLET}わ{SE_WARP_IN}{BLUE}だ{SE_DOOR}{DARK_GRAY}{LIGHT_GREEN}{MUS_RG_SURF}{SE_NOTE_B}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_A}ぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}"
+	.string "て{LIGHT_GREEN}を\n{LIGHT_GRAY}ず{SE_A}ちゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_BOO}とじ{DYNAMIC_COLOR1}"
+	.string "める{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}な{GREEN}ま{SE_A}ポケモンが\n{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_BOO}{DYNAMIC_COLOR2}ん{SE_WIN_OPEN}{DYNAMIC_COLOR3}て{BLUE}れる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR5}ん{MUS_RG_PEWTER}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_NOTE_B}ひるま{DYNAMIC_COLOR5}る\n{MUS_RG_VICTORY_WILD}"
+	.string "{DYNAMIC_COLOR3}ょ{SE_A}ターンに{DYNAMIC_COLOR3}{SE_WIN_OPEN}つ{GREEN}{RED}{MUS_RG_GAME_FREAK}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}{DYNAMIC_COLOR2}{MUS_RG_TRAINER_TOWER}で\nだれ{SE_SWITCH}"
+	.string "ねむれ{MUS_RG_GAME_FREAK}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{MUS_RG_VICTORY_WILD}{PH_PRICE_BLEND}{TRANSPARENT}3{MUS_RG_POKE_TOWER}まで\nち{GREEN}ら{SE_WARP_IN}"
+	.string "た{BLUE}わ{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}た{BLUE}わ{RED}{SE_FAINT}ち{GREEN}ら{SE_WARP_IN}は{LIGHT_GREEN}だ{DYNAMIC_COLOR4}"
+	.string "\n{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}{SE_NOTE_B}ダメージ{SE_SAVE}へん{GREEN}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}た{BLUE}わ{RED}{SE_FAINT}ち{GREEN}ら{SE_WARP_IN}のみ{DYNAMIC_COLOR1}"
+	.string "む\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{MUS_RG_OBTAIN_KEY_ITEM}{DARK_GRAY}{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{MUS_RG_OAK_LAB}て{SE_BOO}ふ{LIGHT_GREEN}{GREEN}{LIGHT_BLUE}る\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "や{LIGHT_BLUE}ど{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{SE_RG_SS_ANNE_HORN}られ{SE_WARP_IN}ふら{DYNAMIC_COLOR5}て\n{MUS_RG_SEVII_CAVE}ター{SE_M_BUBBLE3}"
+	.string "ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_RG_OAK_LAB}て{SE_BOO}{DARK_GRAY}ちゃもん{SE_WARP_IN}つ{LIGHT_BLUE}{SE_SHIP}\n{LIGHT_RED}"
+	.string "なじわざ{SE_WARP_IN}れんぞ{BLUE}{SE_NOTE_B}だ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}て{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_RED}だて{SE_SHIP}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}るが\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_SWITCH}{WHITE}げて{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{LIGHT_RED}にのよ{LIGHT_GRAY}{SE_PIN}"
+	.string "ひで{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_WARP_IN}や{LIGHT_BLUE}{SE_NOTE_C_HIGH}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}じぶん{SE_I}ひん{DYNAMIC_COLOR3}{SE_BOO}なる{SE_SAVE}{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_A}"
+	.string "の{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}{DYNAMIC_COLOR2}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ど{SE_DOOR}ま{SE_U}や{LIGHT_BLUE}{SE_NOTE_C_HIGH}のと{LIGHT_GREEN}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_RG_PALLET}りょ{BLUE}{SE_A}た{MUS_RG_POKE_TOWER}{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}わざ\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}もら{LIGHT_GRAY}"
+	.string "{SE_BANG}ひるむ{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}まひ{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}"
+	.string "{SE_ICE_BREAK}{MUS_RG_OAK_LAB}て{SE_BOO}{PH_PRICE_BLEND}ダメージ\n{DYNAMIC_COLOR6}の{GREEN}わ{SE_ICE_STAIRS}"
+	.string "まひ{SE_SAVE}な{LIGHT_RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_WARP_IN}"
+	.string "じぶん{SE_BOO}ちゅ{LIGHT_GRAY}も{BLUE}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_WARP_IN}ぜん{SE_ITEMFINDER}じぶん{SE_SAVE}{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR3}ぜんのち{GREEN}ら{SE_WARP_IN}{GREEN}り{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nば{DYNAMIC_COLOR3}ょによっ{SE_SHIP}で{SE_ICE_BREAK}わざ{SE_SAVE}{GREEN}わる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}でん{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}た{BLUE}わ{RED}る{DYNAMIC_COLOR1}とによって\nつぎにだ{SE_EFFECTIVE}でん{LIGHT_GREEN}{SE_A}"
+	.string "つよ{DYNAMIC_COLOR2}を{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}て{SE_WARP_IN}"
+	.string "ちょ{LIGHT_GRAY}はつ{DYNAMIC_COLOR3}{SE_SHIP}{LIGHT_RED}{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR5}"
+	.string "る{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{SE_WALL_HIT}{DYNAMIC_COLOR3}{GREEN}"
+	.string "で{LIGHT_GREEN}な{BLUE}なる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}てだ{DYNAMIC_COLOR4}{LIGHT_BLUE}{DYNAMIC_COLOR2}れ{SE_FAINT}"
+	.string "{MUS_RG_OAK_LAB}ては\nわざ{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}トリック{SE_WARP_IN}つ{GREEN}って\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_BOO}"
+	.string "なり{LIGHT_GREEN}っ{SE_SHIP}{MUS_RG_OAK_LAB}ての\nと{BLUE}{MUS_RG_PEWTER}{SE_WARP_IN}コピー{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ね{PH_CLOTH_SOLO}"
+	.string "ごとを{DYNAMIC_COLOR3}{SE_SHIP}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る\n{GREEN}な{LIGHT_GRAY}"
+	.string "まで{SE_BOO}ちょっ{SE_BANG}{GREEN}{GREEN}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}み{GREEN}"
+	.string "{SE_FAINT}ポケモン{SE_A}わざ{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nど{SE_A}わざ{SE_SAVE}"
+	.string "でる{GREEN}{SE_I}わ{GREEN}ら{MUS_RG_GAME_FREAK}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ねをはっ{SE_SHIP}ちょっとず{SE_SLIDING_DOOR}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}\nねをはっ{SE_SHIP}{DARK_GRAY}るの{SE_NOTE_B}{DARK_GRAY}れ{GREEN}"
+	.string "われ{MUS_RG_GAME_FREAK}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}ち{GREEN}ら{SE_WARP_IN}"
+	.string "はっ{LIGHT_GREEN}{DYNAMIC_COLOR4}る{SE_SAVE}\nつ{GREEN}れ{SE_SHIP}の{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}"
+	.string "{DYNAMIC_COLOR2}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}と{BLUE}{DYNAMIC_COLOR3}ゅ{SE_PIN}わざ{SE_A}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}を\nはね{GREEN}{RED}{DYNAMIC_COLOR3}{SE_SHIP}{MUS_RG_OAK_LAB}"
+	.string "て{SE_BOO}{GREEN}{LIGHT_BLUE}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_RG_PALLET}ち{SE_NOTE_C_HIGH}つ{GREEN}って{DYNAMIC_COLOR3}まっ{SE_FAINT}ど{LIGHT_GRAY}"
+	.string "ぐを\nも{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}つ{GREEN}{LIGHT_GRAY}{DYNAMIC_COLOR1}と{SE_SAVE}"
+	.string "で{LIGHT_GREEN}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "ダメージ{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}ると\n{DARK_GRAY}りょ{BLUE}{SE_SAVE}{WHITE}"
+	.string "がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}リフレクタ{SE_M_PAY_DAY}など{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}わ{DYNAMIC_COLOR3}て{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_BOO}ダメージ{SE_WARP_IN}{WHITE}た{RED}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{BLUE}び{SE_NOTE_B}{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR6}っ{SE_SHIP}つぎ{SE_A}ターンに{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_WARP_IN}ねむ{SE_ICE_STAIRS}"
+	.string "じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_BOO}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}"
+	.string "て{SE_A}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}はた{LIGHT_GREEN}{LIGHT_RED}と{DYNAMIC_COLOR3}て\n{LIGHT_RED}"
+	.string "わるま{SE_NOTE_B}つ{GREEN}{RED}な{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}{MUS_RG_OAK_LAB}てより\n{DYNAMIC_COLOR4}{BLUE}"
+	.string "{MUS_RG_GAME_FREAK}ほ{SE_NOTE_C_HIGH}ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}じぶん{SE_A}"
+	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}{LIGHT_RED}{MUS_RG_SURF}ほど\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}"
+	.string "{SE_PIN}ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{LIGHT_RED}"
+	.string "た{PH_CLOTH_SOLO}{SE_A}と{BLUE}{MUS_RG_PEWTER}{SE_WARP_IN}\n{DARK_GRAY}れ{GREEN}{RED}る{DYNAMIC_COLOR1}"
+	.string "と{SE_SAVE}で{LIGHT_GREEN}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}じぶん{SE_SAVE}{LIGHT_RED}ぼ{RED}{SE_SHIP}{DARK_GRAY}{SE_ICE_BREAK}わざを{MUS_RG_VS_WILD}"
+	.string "{DARK_GRAY}て{SE_I}つ{GREEN}{LIGHT_GRAY}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}な{BLUE}なる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ど{SE_DOOR}ま{SE_U}や{LIGHT_BLUE}{SE_NOTE_C_HIGH}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}"
+	.string "を\nな{LIGHT_RED}{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}て{LIGHT_GREEN}{SE_A}わざ{SE_NOTE_B}ひん{DYNAMIC_COLOR3}"
+	.string "{SE_BOO}なったと{LIGHT_GREEN}\n{DYNAMIC_COLOR6}{SE_A}わざ{SE_A}ポイント{SE_WARP_IN}0に{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_SAVE}つ{GREEN}{LIGHT_RED}{LIGHT_GRAY}と{DYNAMIC_COLOR3}{SE_FAINT}"
+	.string "わざを\n{LIGHT_GRAY}ばっ{SE_SHIP}じぶん{SE_BOO}つ{GREEN}って{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ひみつ{SE_A}ち{GREEN}ら{SE_WARP_IN}よび{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR4}\nば{DYNAMIC_COLOR3}ょによっ{SE_SHIP}"
+	.string "{MUS_RG_OBTAIN_KEY_ITEM}{GREEN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}がちが{LIGHT_GRAY}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}1ターンめ{SE_NOTE_B}みず{SE_BOO}もぐり\nつぎのターン{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}2ー5{MUS_RG_POKE_TOWER}"
+	.string "{TRANSPARENT}れんぞ{BLUE}{SE_NOTE_B}つっぱり\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "ば{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}わ{DYNAMIC_COLOR5}{SE_SHIP}\nポケモン{SE_A}タイプ{SE_SAVE}へん{GREEN}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ひ{GREEN}"
+	.string "り{SE_WARP_IN}てんめつ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "グーンと{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ひ{GREEN}"
+	.string "り{SE_WARP_IN}ほ{LIGHT_GRAY}{DYNAMIC_COLOR3}ゅつ{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{LIGHT_GREEN}りじょ{LIGHT_GRAY}{SE_A}{LIGHT_GRAY}も{LIGHT_GRAY}"
+	.string "{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{LIGHT_GRAY}も{LIGHT_GRAY}{SE_WARP_IN}ふりま{SE_WALL_HIT}{GREEN}らみつ{GREEN}{DYNAMIC_COLOR5}{SE_SHIP}"
+	.string "\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}"
+	.string "{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}べて{SE_A}ポケモンを\n{DYNAMIC_COLOR1}"
+	.string "んら{SE_WARP_OUT}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_BOO}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}"
+	.string "ょ{SE_BOO}{WHITE}た{SE_ICE_STAIRS}や{DYNAMIC_COLOR4}{BLUE}\nたま{SE_BOO}や{LIGHT_BLUE}{SE_NOTE_C_HIGH}"
+	.string "じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_BOO}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "どろどろ{SE_BOO}なって\nでん{LIGHT_GREEN}タイプ{SE_A}ダメージ{SE_WARP_IN}へら{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}て{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{MUS_RG_VS_WILD}てるたび{SE_BOO}ダメージ{SE_SAVE}"
+	.string "{WHITE}がる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}トゲだら{LIGHT_BLUE}{SE_A}{LIGHT_GRAY}で{SE_NOTE_B}なぐ{SE_ICE_STAIRS}"
+	.string "つ{LIGHT_BLUE}る\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}なま{LIGHT_BLUE}{SE_SHIP}{GREEN}らだ{SE_WARP_IN}{MUS_RG_RIVAL_EXIT}りょ{BLUE}"
+	.string "の\nはんぶんだ{SE_EXIT}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{LIGHT_RED}{LIGHT_RED}ご{RED}{SE_A}{DYNAMIC_COLOR3}んど{LIGHT_GRAY}で\nて{LIGHT_GREEN}{SE_BOO}"
+	.string "ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR4}る{PH_LOT_HELD}キバ{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{SE_WALL_HIT}\nたま{SE_BOO}"
+	.string "も{LIGHT_GRAY}ど{SE_DOOR}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_BOO}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}る{PH_LOT_HELD}ツメ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{LIGHT_GREEN}り{DYNAMIC_COLOR2}{BLUE}\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げる{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ダメージ{SE_I}{LIGHT_RED}{LIGHT_RED}"
+	.string "{MUS_RG_SILPH}{SE_SAVE}つ{GREEN}{LIGHT_GRAY}と\nつぎのター{SE_M_BUBBLE3}{LIGHT_GRAY}ご{LIGHT_BLUE}な{BLUE}"
+	.string "なって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ダメージ{SE_I}{LIGHT_RED}{LIGHT_RED}"
+	.string "{MUS_RG_SILPH}{SE_SAVE}つ{GREEN}{LIGHT_GRAY}と\nつぎのター{SE_M_BUBBLE3}{LIGHT_GRAY}ご{LIGHT_BLUE}な{BLUE}"
+	.string "なって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{MUS_RG_VERMILLION}{MUS_RG_PEWTER}"
+	.string "のごと{SE_DOOR}パンチ{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_SAVE}{WHITE}がる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}て{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}{LIGHT_RED}どろ{GREEN}{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "\nて{LIGHT_GREEN}{SE_WARP_IN}ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}てん{LIGHT_GREEN}{SE_BOO}よって\nタイプ{SE_BANG}{DARK_GRAY}りょ{BLUE}{SE_SAVE}へん{GREEN}"
+	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{GREEN}{LIGHT_RED}り{SE_WARP_IN}"
+	.string "{GREEN}が{DYNAMIC_COLOR5}て\n{DYNAMIC_COLOR4}べて{SE_A}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_WARP_IN}"
+	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_GAME_FREAK}たふり{SE_NOTE_B}"
+	.string "{MUS_RG_OAK_LAB}て{SE_WARP_IN}{DYNAMIC_COLOR1}まら{DYNAMIC_COLOR5}て\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR4}る{PH_LOT_HELD}{TRANSPARENT}{GREEN}ぜ{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR1}"
+	.string "{DYNAMIC_COLOR3}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}"
+	.string "{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "フルパワー{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{SE_WALL_HIT}で{LIGHT_GREEN}るが\nと{BLUE}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}{SE_SAVE}ガクッ{SE_BANG}{DYNAMIC_COLOR2}がって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}わざ{SE_SAVE}{WHITE}たりに{BLUE}{BLUE}なっ{SE_FAINT}て{LIGHT_GREEN}に\n{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{WHITE}てられるよ{LIGHT_GRAY}になる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}"
+	.string "わ{SE_NOTE_B}{LIGHT_GRAY}ご{LIGHT_GREEN}{SE_WARP_IN}ふ{LIGHT_GRAY}じ{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_A}{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_SWITCH}"
+	.string "{DYNAMIC_COLOR2}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}ぜ{SE_BOO}りんぷん{SE_WARP_IN}"
+	.string "の{DYNAMIC_COLOR5}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nの{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}"
+	.string "{WHITE}がる{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}やな{LIGHT_RED}"
+	.string "と{SE_WARP_IN}だ{DYNAMIC_COLOR3}{SE_SHIP}て{LIGHT_GREEN}の\nと{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}"
+	.string "ガクッと{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{BLUE}{DYNAMIC_COLOR2}ぶ{RED}{SE_A}"
+	.string "{MUS_RG_NEW_GAME_INTRO}ろで\nて{LIGHT_GREEN}{SE_WARP_IN}ふ{MUS_RG_POKE_TOWER}ねむりへ{SE_BANG}"
+	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}"
+	.string "て{SE_WARP_IN}{BLUE}{DYNAMIC_COLOR4}ぐ{SE_ICE_STAIRS}わらわ{DYNAMIC_COLOR5}て\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
+	.string "げ{LIGHT_GREEN}{SE_BANG}ぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR3}んぴて{LIGHT_GREEN}{SE_PIN}ち{GREEN}らで\nぼ{LIGHT_GRAY}"
+	.string "ぎょ{SE_BANG}と{BLUE}ぼ{LIGHT_GRAY}{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}{LIGHT_RED}{MUS_RG_SURF}"
+	.string "ほど\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}ダメージ{SE_WARP_IN}{WHITE}た{RED}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ひ{GREEN}り{SE_WARP_IN}はっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR4}"
+	.string "る\nて{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
+	.string "とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}げにまぎれ{SE_SHIP}パンチ{SE_WARP_IN}{BLUE}"
+	.string "りだ{DYNAMIC_COLOR4}\nて{LIGHT_GREEN}{SE_I}ぜっ{MUS_RG_RIVAL_EXIT}{SE_BOO}よ{LIGHT_BLUE}"
+	.string "られ{MUS_RG_GAME_FREAK}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ち{GREEN}ら{SE_NOTE_B}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "ひるま{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{DYNAMIC_COLOR6}ら{SE_BOO}む{GREEN}{LIGHT_GRAY}よ{LIGHT_GRAY}{SE_PIN}{DARK_GRAY}{LIGHT_GREEN}"
+	.string "{MUS_RG_SURF}で\nアッパー{SE_WARP_IN}{BLUE}りだ{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}2ー5ターンの{MUS_RG_OAK_LAB}{SE_NOTE_F}て{LIGHT_GREEN}を\n{LIGHT_GRAY}"
+	.string "ず{SE_A}ちゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_BOO}とじ{DYNAMIC_COLOR1}める{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}ぜっ{MUS_RG_RIVAL_EXIT}{MUS_RG_ENCOUNTER_GYM_LEADER}ど{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{LIGHT_RED}{DYNAMIC_COLOR6}{LIGHT_GRAY}\n{LIGHT_GREEN}まる{SE_BANG}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}"
+	.string "ふの{LIGHT_GRAY}になる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}どろみず{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nたま{SE_BOO}{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}"
+	.string "りつ{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "タネ{SE_WARP_IN}2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}で\nはっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}"
+	.string "{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_NOTE_B}ほんろ{LIGHT_GRAY}{DYNAMIC_COLOR4}"
+	.string "る\nて{LIGHT_GREEN}{SE_I}ぜっ{MUS_RG_RIVAL_EXIT}{SE_BOO}よ{LIGHT_BLUE}られ{MUS_RG_GAME_FREAK}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}つらら{SE_WARP_IN}2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}"
+	.string "れんぞ{BLUE}で\nはっ{DYNAMIC_COLOR3}ゃ{DYNAMIC_COLOR3}{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}"
+	.string "{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{GREEN}らだ{SE_A}ひょ{LIGHT_GRAY}"
+	.string "めん{SE_WARP_IN}{GREEN}た{BLUE}{DYNAMIC_COLOR3}て\nぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}グーンと{WHITE}げる{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}にげみち{SE_WARP_IN}ふ{MUS_RG_VICTORY_WILD}で\nて{LIGHT_GREEN}"
+	.string "{SE_WARP_IN}にげられな{SE_DOOR}{DYNAMIC_COLOR3}て{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ほ{RED}{SE_SHIP}{SE_POKENAV_CALL}{DARK_GRAY}{SE_WARP_IN}"
+	.string "た{GREEN}める{DYNAMIC_COLOR1}とで\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{WHITE}"
+	.string "げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR4}"
+	.string "る{PH_LOT_HELD}ツメ{SE_WARP_IN}つ{MUS_RG_POKE_TOWER}\nて{LIGHT_GREEN}{SE_WARP_IN}ひっ{MUS_RG_POKE_TOWER}"
+	.string "{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}ダメージ{SE_I}{LIGHT_RED}{LIGHT_RED}{MUS_RG_SILPH}{SE_SAVE}つ{GREEN}{LIGHT_GRAY}"
+	.string "と\nつぎのター{SE_M_BUBBLE3}{LIGHT_GRAY}ご{LIGHT_BLUE}な{BLUE}なって{DYNAMIC_COLOR3}ま{LIGHT_GRAY}{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}{GREEN}らだ{SE_WARP_IN}{LIGHT_GREEN}た{RED}て\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_BANG}ぼ{LIGHT_GRAY}ぎょ{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{TRANSPARENT}1ターンめ{SE_NOTE_B}とびは{SE_CONTEST_PLACE}2ターンめで\n{LIGHT_RED}ち{SE_ICE_BREAK}"
+	.string "たま{SE_BOO}て{LIGHT_GREEN}{SE_WARP_IN}まひ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "どろ{SE_WARP_IN}なげつ{LIGHT_BLUE}{SE_SHIP}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\n{DYNAMIC_COLOR4}"
+	.string "ばや{DYNAMIC_COLOR2}{SE_WARP_IN}{DYNAMIC_COLOR2}げ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{SE_RG_SHOP}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}たま{SE_BOO}ど{BLUE}{SE_WARP_IN}{WHITE}た{RED}"
+	.string "{SE_ICE_BREAK}{DYNAMIC_COLOR1}とが{WHITE}り\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょに{SE_SWITCH}"
+	.string "{WHITE}たりや{MUS_RG_VERMILLION}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}{MUS_RG_TRAINER_TOWER}"
+	.string "{SE_DOOR}{WHITE}ま{RED}ながら\nて{LIGHT_GREEN}{SE_SAVE}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}"
+	.string "ぐ{SE_WARP_IN}もら{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}のちを{GREEN}"
+	.string "{LIGHT_BLUE}{SE_SHIP}て{LIGHT_GREEN}{SE_BOO}{MUS_RG_RIVAL_EXIT}{WHITE}たり\nじぶんも{DYNAMIC_COLOR4}"
+	.string "{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}ダメージを{LIGHT_GRAY}{LIGHT_BLUE}る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "ぜっ{MUS_RG_RIVAL_EXIT}{SE_BOO}よ{LIGHT_BLUE}られ{MUS_RG_GAME_FREAK}{TRANSPARENT}\nふ{DYNAMIC_COLOR3}"
+	.string "ぎ{SE_PIN}はっぱ{SE_NOTE_B}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}び{DYNAMIC_COLOR3}ょび{DYNAMIC_COLOR3}ょ{SE_BOO}なって\nほの{LIGHT_RED}"
+	.string "タイプ{SE_A}ダメージ{SE_WARP_IN}へら{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
+	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR3}ん{SE_WARP_IN}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{SE_PC_OFF}"
+	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}て\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_BANG}と{BLUE}ぼ{LIGHT_GRAY}"
+	.string "{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}とがっ{SE_FAINT}はっぱ{SE_NOTE_B}{LIGHT_GREEN}"
+	.string "りつ{LIGHT_BLUE}る\n{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たりや{MUS_RG_VERMILLION}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR3}んぴて{LIGHT_GREEN}{SE_PIN}"
+	.string "{MUS_RG_SEVII_CAVE}{SE_WARP_IN}{LIGHT_RED}どり\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_BANG}"
+	.string "{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}{SE_WARP_IN}{WHITE}げる{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{DARK_GRAY}わ{SE_WARP_IN}2ー5{MUS_RG_POKE_TOWER}{TRANSPARENT}れんぞ{BLUE}で\nはっ{DYNAMIC_COLOR3}"
+	.string "ゃ{DYNAMIC_COLOR3}{SE_SHIP}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
+	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{DYNAMIC_COLOR4}ばや{SE_DOOR}でんげ{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{BLUE}りだ{DYNAMIC_COLOR4}\nて{LIGHT_GREEN}{SE_I}ぜっ{MUS_RG_RIVAL_EXIT}{SE_BOO}よ{LIGHT_BLUE}"
+	.string "られ{MUS_RG_GAME_FREAK}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ちょ{LIGHT_GRAY}{LIGHT_RED}んぱ{SE_NOTE_B}"
+	.string "て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}\nて{LIGHT_GREEN}{SE_WARP_IN}"
+	.string "{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}とが{WHITE}る{SE_RG_SHOP}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{TRANSPARENT}た{BLUE}{DYNAMIC_COLOR2}ん{SE_A}ひ{GREEN}り{SE_SAVE}ふり{DYNAMIC_COLOR6}{DYNAMIC_COLOR6}"
+	.string "ぐ\n2ターンご{SE_BOO}て{LIGHT_GREEN}{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{DYNAMIC_COLOR4}"
+	.string "る{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}フルパワー{SE_NOTE_B}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{SE_WALL_HIT}で{LIGHT_GREEN}"
+	.string "るが\nと{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_SAVE}ガクッ{SE_BANG}{DYNAMIC_COLOR2}がって{DYNAMIC_COLOR3}"
+	.string "ま{LIGHT_GRAY}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}がんばりや$"
+	.string "{DYNAMIC_COLOR2}み{DYNAMIC_COLOR3}がり$ゆ{LIGHT_GRAY}{GREEN}ん$"
+	.string "{DARK_GRAY}じっぱり$やんちゃ$ずぶ{MUS_RG_PHOTO}${DYNAMIC_COLOR4}な{LIGHT_RED}$"
+	.string "のん{LIGHT_GREEN}$わんぱ{BLUE}$の{LIGHT_GRAY}てん{LIGHT_GREEN}$"
+	.string "{LIGHT_RED}{BLUE}びょ{LIGHT_GRAY}${DYNAMIC_COLOR5}っ{GREEN}ち$"
+	.string "まじめ$よ{LIGHT_GRAY}{LIGHT_GREEN}$むじゃ{LIGHT_GREEN}$"
+	.string "ひ{GREEN}{RED}め${LIGHT_RED}っとり${MUS_RG_ENCOUNTER_GYM_LEADER}{MUS_RG_PEWTER}$"
+	.string "てれや${LIGHT_GRAY}っ{GREEN}りや${LIGHT_RED}だや{GREEN}$"
+	.string "{LIGHT_RED}とな{MUS_RG_VICTORY_GYM_LEADER}$"
+	.string "な{MUS_RG_SEVII_CAVE}{LIGHT_GREEN}${DYNAMIC_COLOR3}んちょ{LIGHT_GRAY}$"
+	.string "{LIGHT_GREEN}まぐれ$"
 
 	.globl gUnknown_85ECE24
 gUnknown_85ECE24: @ 0x85ECE24
@@ -16122,19 +18751,19 @@ gUnknown_85ED2B4: @ 0x85ED2B4
 
 	.globl gUnknown_85ED2C4
 gUnknown_85ED2C4: @ 0x85ED2C4
-	.incbin "build/data/data.bin", 0x351520, 0x7
+	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_RED}{SHADOW}{GREEN}$"
 
 	.globl gUnknown_85ED2CB
 gUnknown_85ED2CB: @ 0x85ED2CB
-	.incbin "build/data/data.bin", 0x351527, 0x7
+	.string "{MUS_RG_VS_GYM_LEADER}{WHITE}{SHADOW}{DARK_GRAY}$"
 
 	.globl gUnknown_85ED2D2
 gUnknown_85ED2D2: @ 0x85ED2D2
-	.incbin "build/data/data.bin", 0x35152e, 0xc
+	.string "{SE_M_HYPER_BEAM2}/{MUS_RG_ROUTE1}\n{DYNAMIC}{DARK_GRAY}\n{DYNAMIC}{LIGHT_GRAY}$"
 
 	.globl gUnknown_85ED2DE
 gUnknown_85ED2DE: @ 0x85ED2DE
-	.incbin "build/data/data.bin", 0x35153a, 0x9
+	.string "{SE_M_HYPER_BEAM2}\n{MUS_RG_ROUTE1}\n{DYNAMIC}{DARK_GRAY}$"
 
 	.globl gUnknown_85ED2E7
 gUnknown_85ED2E7: @ 0x85ED2E7
@@ -17446,23 +20075,25 @@ gUnknown_85FCAE4: @ 0x85FCAE4
 
 	.globl gUnknown_85FCAF8
 gUnknown_85FCAF8: @ 0x85FCAF8
-	.incbin "build/data/data.bin", 0x360d54, 0x21
+	.string "{B_COPY_VAR_2}のみ{SE_WARP_IN}て{SE_BOO}{DARK_GRAY}れた！\nトウカジム{SE_A}パパ{GREEN}{SE_LAVARIDGE_FALL_WARP}"
+	.string "{LIGHT_GRAY}{LIGHT_BLUE}とろ{LIGHT_GRAY}！$"
 
 	.globl gUnknown_85FCB19
 gUnknown_85FCB19: @ 0x85FCB19
-	.incbin "build/data/data.bin", 0x360d75, 0x13
+	.string "{B_COPY_VAR_1}のみは\n{B_COPY_VAR_2}のみ{SE_BOO}へん{GREEN}{DYNAMIC_COLOR3}た！$"
 
 	.globl gUnknown_85FCB2C
 gUnknown_85FCB2C: @ 0x85FCB2C
-	.incbin "build/data/data.bin", 0x360d88, 0x11
+	.string "{B_COPY_VAR_1}のみ{SE_I}{DYNAMIC_COLOR4}でに\n{MUS_RG_POKE_JUMP}っ{MUS_RG_CAUGHT_INTRO}た$"
 
 	.globl gUnknown_85FCB3D
 gUnknown_85FCB3D: @ 0x85FCB3D
-	.incbin "build/data/data.bin", 0x360d99, 0x1c
+	.string "てもちのポケモンに\nと{BLUE}べつなリボン{SE_SAVE}{WHITE}た{RED}られた！$"
 
 	.globl gUnknown_85FCB59
 gUnknown_85FCB59: @ 0x85FCB59
-	.incbin "build/data/data.bin", 0x360db5, 0x17
+	.string "ず{GREEN}ん{SE_BOO}ぜん{DYNAMIC_COLOR1}{BLUE}モードが\n{MUS_RG_OBTAIN_KEY_ITEM}{SE_WIN_OPEN}{DYNAMIC_COLOR2}"
+	.string "れた！$"
 
 	.globl gUnknown_85FCB70
 gUnknown_85FCB70: @ 0x85FCB70
@@ -17475,11 +20106,13 @@ gUnknown_85FCB83: @ 0x85FCB83
 
 	.globl gUnknown_85FCB90
 gUnknown_85FCB90: @ 0x85FCB90
-	.incbin "build/data/data.bin", 0x360dec, 0x1a
+	.string "てもち{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}なので\n{B_COPY_VAR_1}{SE_I}もら{RED}な{GREEN}った⋯$"
 
 	.globl gUnknown_85FCBAA
 gUnknown_85FCBAA: @ 0x85FCBAA
-	.incbin "build/data/data.bin", 0x360e06, 0x34
+	.string "{WHITE}らた{SE_PIN}トレーナーが\nホ{PKMN}ン{SE_BOO}やって{LIGHT_GREEN}た$"
+	.string "バトルタワー{SE_BOO}{WHITE}らたな\n{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR3}ゃ{SE_SAVE}{WHITE}"
+	.string "らわれた！$"
 
 	.globl gUnknown_85FCBDE
 gUnknown_85FCBDE: @ 0x85FCBDE

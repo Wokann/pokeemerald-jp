@@ -46,13 +46,24 @@ class Charmap:
                 continue
             m = re.match(r"^'((?:[^'\\]|\\.)*)'\s*=\s*(.+)$", line)
             if m:
-                char = m.group(1).replace("\\n", "\n").replace("\\t", "\t")
-                if len(char) != 1:
-                    continue
+                raw = m.group(1)
                 seq = self._parse_hex(m.group(2))
                 if seq:
-                    self.bytes_to_text[seq] = char
-                    self.text_to_bytes[char] = seq
+                    if raw.startswith("\\") and len(raw) == 2:
+                        # Escape entries like '\n' stay in source form
+                        # (backslash + letter); preproc converts them via
+                        # its Escape table.  \' and \\ are plain chars.
+                        c = raw[1]
+                        if c in ("'", "\\"):
+                            repr = c
+                        else:
+                            repr = raw
+                    elif len(raw) == 1:
+                        repr = raw
+                    else:
+                        continue
+                    self.bytes_to_text[seq] = repr
+                    self.text_to_bytes[repr] = seq
                 continue
             m = re.match(r"^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$", line)
             if m:
@@ -64,6 +75,7 @@ class Charmap:
 
     @staticmethod
     def _parse_hex(s):
+        s = s.split("@", 1)[0]  # comments start with @, like preproc
         vals = re.findall(r"\b[0-9A-Fa-f]{2}\b", s)
         return tuple(int(v, 16) for v in vals) if vals else None
 
@@ -114,6 +126,13 @@ class Charmap:
                     raise ValueError(f"unknown constant {token}")
                 out.extend(self.text_to_bytes[token])
                 i = j + 1
+            elif text[i] == "\\" and i + 1 < len(text):
+                token = text[i : i + 2]
+                if token in self.text_to_bytes:
+                    out.extend(self.text_to_bytes[token])
+                    i += 2
+                    continue
+                raise ValueError(f"unknown escape {token!r} at {i}")
             else:
                 ch = text[i]
                 if ch not in self.text_to_bytes:
@@ -329,7 +348,7 @@ def convert_chunks(targets, data, cm):
             ok = cm.roundtrip(raw)
             if ok:
                 text = cm.decode(raw)
-                ok = text.endswith("$") and '"' not in text and "\\" not in text
+                ok = text.endswith("$") and '"' not in text
             if ok:
                 encoded = cm.preproc_bytes(text)
                 ok = encoded is not None and encoded == raw
