@@ -585,6 +585,7 @@ _080D498C: .4byte 0x0855A71C
 	thumb_func_end CreateBerryTagSprite
 
 	thumb_func_start FreeBerryTagSpritePalette
+	@ From src/item_menu_icons.c
 FreeBerryTagSpritePalette: @ 0x080D4990
 	push {lr}
 	ldr r0, _080D499C

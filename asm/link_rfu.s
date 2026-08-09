@@ -4902,6 +4902,7 @@ _0800DE40: .4byte 0x070003E8
 	thumb_func_end sub_0800DC40
 
 	thumb_func_start CopyTrainerRecord
+	@ From src/link_rfu_3.c
 CopyTrainerRecord: @ 0x0800DE44
 	push {lr}
 	stm r0!, {r1}
