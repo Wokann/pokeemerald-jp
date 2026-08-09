@@ -1,5 +1,8 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
 gMonBackPicTable = ABSOLUTE(0x082D6148);
+sInvisibleSpriteTemplate = ABSOLUTE(0x082FAD34);
+sSpriteDimensions = ABSOLUTE(0x082FAD4C);
+sCrc16Table = ABSOLUTE(0x082FAD64);
 
 SECTIONS {
     . = 0x2000000;
@@ -64,6 +67,7 @@ SECTIONS {
         asm/pokemon.o(.text);
         asm/trig.o(.text);
         asm/random.o(.text);
+        build/src/util.o(.text);
         asm/util.o(.text);
         asm/daycare.o(.text);
         asm/egg_hatch.o(.text);
