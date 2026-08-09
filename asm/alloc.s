@@ -319,6 +319,7 @@ _08000BC4: .4byte 0x03000008
 	thumb_func_end InitHeap
 
 	thumb_func_start Alloc
+	@ From src/malloc.c
 Alloc: @ 0x08000BC8
 	push {lr}
 	adds r1, r0, #0
@@ -328,10 +329,11 @@ Alloc: @ 0x08000BC8
 	pop {r1}
 	bx r1
 	.align 2, 0
-_08000BD8: .4byte 0x03000004
+_08000BD8: .4byte sHeapStart
 	thumb_func_end Alloc
 
 	thumb_func_start AllocZeroed
+	@ From src/malloc.c
 AllocZeroed: @ 0x08000BDC
 	push {lr}
 	adds r1, r0, #0
@@ -341,7 +343,7 @@ AllocZeroed: @ 0x08000BDC
 	pop {r1}
 	bx r1
 	.align 2, 0
-_08000BEC: .4byte 0x03000004
+_08000BEC: .4byte sHeapStart
 	thumb_func_end AllocZeroed
 
 	thumb_func_start Free
@@ -358,6 +360,7 @@ _08000C00: .4byte 0x03000004
 	thumb_func_end Free
 
 	thumb_func_start CheckMemBlock
+	@ From src/malloc.c
 CheckMemBlock: @ 0x08000C04
 	push {lr}
 	adds r1, r0, #0
@@ -367,7 +370,7 @@ CheckMemBlock: @ 0x08000C04
 	pop {r1}
 	bx r1
 	.align 2, 0
-_08000C14: .4byte 0x03000004
+_08000C14: .4byte sHeapStart
 	thumb_func_end CheckMemBlock
 
 	thumb_func_start CheckHeap
