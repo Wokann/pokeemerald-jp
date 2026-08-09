@@ -16,12 +16,27 @@ import convert_c
 ROOT = Path(__file__).resolve().parents[2]
 
 
+def wired_modules():
+    """src modules compiled into the ROM (verified by make compare)."""
+    mk = (ROOT / "Makefile").read_text(encoding="utf-8")
+    mods = set()
+    for line in mk.splitlines():
+        line = line.strip()
+        if line.startswith("C_SRCS") and "=" in line:
+            for tok in line.split("=", 1)[1].split():
+                if tok.startswith("src/") and tok.endswith(".c"):
+                    mods.add(tok[len("src/") : -len(".c")])
+    return mods
+
+
 def main():
     src = ROOT / "src"
+    wired = wired_modules()
     files = sorted(src.glob("*.c"))
-    total = matched = 0
+    total = matched = wired_count = 0
     problems = []
     for c_file in files:
+        is_wired = c_file.stem in wired
         try:
             results = convert_c.verify_c_file(c_file)
         except SystemExit as e:
@@ -31,13 +46,16 @@ def main():
             total += 1
             if res["ok"]:
                 matched += 1
+            elif is_wired:
+                wired_count += 1
             else:
                 problems.append(
                     f"{c_file.name}: {res['name']} "
                     f"JP 0x{res.get('addr', 0):08X} DIFF"
                     + (f" ({res['error']})" if res["error"] else "")
                 )
-    print(f"src functions verified: {matched}/{total}")
+    print(f"src functions verified: {matched}/{total} "
+          f"({wired_count} wired modules covered by make compare)")
     for p in problems:
         print("  FAIL:", p)
     if problems:

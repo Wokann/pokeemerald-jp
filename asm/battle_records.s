@@ -1247,7 +1247,7 @@ _0813C984:
 	movs r0, #3
 	bl LoadTrainerHillRecordsWindowGfx
 	movs r0, #0
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xf0
 	movs r2, #0x20
 	bl LoadPalette

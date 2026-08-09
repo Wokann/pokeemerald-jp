@@ -3,6 +3,9 @@ gMonBackPicTable = ABSOLUTE(0x082D6148);
 sInvisibleSpriteTemplate = ABSOLUTE(0x082FAD34);
 sSpriteDimensions = ABSOLUTE(0x082FAD4C);
 sCrc16Table = ABSOLUTE(0x082FAD64);
+sWindowFrames = ABSOLUTE(0x084E8860);
+gMessageBox_Gfx = ABSOLUTE(0x084E85E0);
+sTextWindowPalettes = ABSOLUTE(0x084E87A0);
 
 SECTIONS {
     . = 0x2000000;
@@ -87,7 +90,7 @@ SECTIONS {
         asm/event_object_movement.o(.text);
         asm/field_message_box.o(.text);
         asm/event_obj_lock.o(.text);
-        asm/text_window.o(.text);
+        build/src/text_window.o(.text);
         asm/script.o(.text);
         asm/scrcmd.o(.text);
         asm/field_control_avatar.o(.text);

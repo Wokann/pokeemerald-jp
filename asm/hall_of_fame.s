@@ -1251,7 +1251,7 @@ sub_08173CC8: @ 0x08173CC8
 	movs r3, #0xd0
 	bl LoadWindowGfx
 	movs r0, #1
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xe0
 	movs r2, #0x20
 	bl LoadPalette

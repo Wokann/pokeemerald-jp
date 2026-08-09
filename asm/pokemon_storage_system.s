@@ -18677,7 +18677,7 @@ _080CFC22:
 	bne _080CFC48
 	bl sub_080CF700
 	movs r0, #3
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xd0
 	movs r2, #0x20
 	bl LoadPalette
@@ -18909,7 +18909,7 @@ _080CFDF0:
 	cmp r0, #0
 	bne _080CFE16
 	movs r0, #3
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xd0
 	movs r2, #0x20
 	bl LoadPalette

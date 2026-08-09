@@ -659,7 +659,7 @@ _080C4F20:
 	movs r2, #0x20
 	bl LoadPalette
 	movs r0, #0
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xf0
 	movs r2, #0x20
 	bl LoadPalette
@@ -2585,7 +2585,7 @@ _080C5ED4:
 	movs r1, #0
 	bl LoadPalette
 	movs r0, #0
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xf0
 	movs r2, #0x20
 	bl LoadPalette

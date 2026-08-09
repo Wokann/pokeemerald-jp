@@ -153,7 +153,7 @@ _0801800C:
 	movs r2, #0x20
 	bl LoadPalette
 	movs r0, #2
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xd0
 	movs r2, #0x20
 	bl LoadPalette

@@ -4442,7 +4442,7 @@ choose_name_or_words_screen_apply_bg_pals: @ 0x080E4460
 	movs r2, #0x20
 	bl LoadPalette
 	movs r0, #2
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xb0
 	movs r2, #0x20
 	bl LoadPalette

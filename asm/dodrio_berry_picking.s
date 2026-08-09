@@ -12319,7 +12319,7 @@ _0802A658:
 	b _0802A68C
 _0802A666:
 	movs r0, #3
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0xd0
 	movs r2, #0x20
 	bl LoadPalette

@@ -231,7 +231,7 @@ _0801B7A0:
 	cmp r6, #0
 	bne _0801B8A2
 	movs r0, #1
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0x20
 	movs r2, #0x20
 	bl LoadPalette
@@ -1771,7 +1771,7 @@ _0801C418:
 	b _0801C570
 _0801C426:
 	movs r0, #1
-	bl stdpal_get
+	bl GetTextWindowPalette
 	movs r1, #0x20
 	movs r2, #0x20
 	bl LoadPalette

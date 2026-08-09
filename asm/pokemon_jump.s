@@ -5484,7 +5484,7 @@ _0802CE6C:
 	movs r0, #0
 	movs r1, #1
 	movs r2, #0xe0
-	bl sub_080985F4
+	bl LoadUserWindowBorderGfxOnBg
 	movs r0, #0
 	bl CopyBgTilemapBufferToVram
 	movs r0, #2
