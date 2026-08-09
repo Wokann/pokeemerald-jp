@@ -3708,12 +3708,15 @@ _0811C4B8:
 
 	thumb_func_start GetDisplayedPersonType
 GetDisplayedPersonType: @ 0x0811C4C0
-	ldr r0, _0811C4C8
-	ldr r0, [r0]
-	ldrb r0, [r0, #0x12]
-	bx lr
-	.align 2, 0
-_0811C4C8: .4byte 0x02039DE4
+	@ From src/easy_chat.c
+	ldr	r0, .LGetDisplayedPersonType
+	ldr	r0, [r0]
+	ldrb	r0, [r0, #0x12]
+	bx	lr
+.LGetDisplayedPersonTypePad:
+	.align	2, 0
+.LGetDisplayedPersonType:
+	.word	sEasyChatScreen
 	thumb_func_end GetDisplayedPersonType
 
 	thumb_func_start GetEachChatScreenTemplateId
@@ -11326,4 +11329,3 @@ unref_sub_811BBF4: @ 0x0811FE2C
 	.align 2, 0
 _0811FE34: .4byte 0x02039DF0
 	thumb_func_end unref_sub_811BBF4
-

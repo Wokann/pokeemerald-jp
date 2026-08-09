@@ -7706,11 +7706,14 @@ _080CA70A:
 
 	thumb_func_start GetCurrentBoxOption
 GetCurrentBoxOption: @ 0x080CA714
-	ldr r0, _080CA71C
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_080CA71C: .4byte 0x020399AD
+	@ From src/pokemon_storage_system.c
+	ldr	r0, .LGetCurrentBoxOption
+	ldrb	r0, [r0]
+	bx	lr
+.LGetCurrentBoxOptionPad:
+	.align	2, 0
+.LGetCurrentBoxOption:
+	.word	sCurrentBoxOption
 	thumb_func_end GetCurrentBoxOption
 
 	thumb_func_start sub_080CA720
@@ -24272,4 +24275,3 @@ _080D254A:
 _080D255C: .4byte 0x040000D4
 _080D2560: .4byte 0x81000800
 	thumb_func_end sub_080D24BC
-
