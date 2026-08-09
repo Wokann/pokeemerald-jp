@@ -1,5 +1,6 @@
 #include "global.h"
 #include "overworld.h"
+#include "link.h"
 
 extern void SafariZoneRetirePrompt(void);
 
@@ -16,4 +17,18 @@ static void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *li
 static void ZeroLinkPlayerObjectEvent(struct LinkPlayerObjectEvent *linkPlayerObjEvent)
 {
     memset(linkPlayerObjEvent, 0, sizeof(struct LinkPlayerObjectEvent));
+}
+
+extern bool8 IsNotWaitingForBGMStop(void);
+
+bool8 BGMusicStopped(void)
+{
+    return IsNotWaitingForBGMStop();
+}
+
+extern void ResetPlayerHeldKeys(u16 *heldKeys);
+
+static void ClearAllPlayerKeys(void)
+{
+    ResetPlayerHeldKeys(gLinkPartnersHeldKeys);
 }

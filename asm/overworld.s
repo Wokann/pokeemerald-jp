@@ -2606,6 +2606,7 @@ _08085304: .4byte 0x0035001D
 
 	thumb_func_start BGMusicStopped
 BGMusicStopped: @ 0x08085308
+	@ From src/overworld.c
 	push {lr}
 	bl IsNotWaitingForBGMStop
 	lsls r0, r0, #0x18
@@ -4893,13 +4894,14 @@ _080865A0: .4byte 0x08086A15
 
 	thumb_func_start ClearAllPlayerKeys
 ClearAllPlayerKeys: @ 0x080865A4
+	@ From src/overworld.c
 	push {lr}
 	ldr r0, _080865B0
 	bl ResetPlayerHeldKeys
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080865B0: .4byte 0x030030C0
+_080865B0: .4byte gLinkPartnersHeldKeys
 	thumb_func_end ClearAllPlayerKeys
 
 	thumb_func_start SetKeyInterceptCallback
