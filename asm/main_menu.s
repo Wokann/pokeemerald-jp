@@ -28,6 +28,7 @@ VBlankCB_MainMenu: @ 0x0802F32C
 
 	thumb_func_start CB2_InitMainMenu
 CB2_InitMainMenu: @ 0x0802F340
+	@ From src/main_menu.c
 	push {lr}
 	movs r0, #0
 	bl InitMainMenu
@@ -6075,4 +6076,3 @@ _080324DC:
 _080324E4: .4byte 0x03005B60
 _080324E8: .4byte 0x08030E45
 	thumb_func_end Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox
-

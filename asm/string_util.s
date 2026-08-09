@@ -821,10 +821,13 @@ _08008D88: .4byte 0x085C8C5E
 
 	thumb_func_start ExpandPlaceholder_Version
 ExpandPlaceholder_Version: @ 0x08008D8C
-	ldr r0, _08008D90
-	bx lr
-	.align 2, 0
-_08008D90: .4byte 0x085C8C36
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Version
+	bx	lr
+.LExpandPlaceholder_VersionPad:
+	.align	2, 0
+.LExpandPlaceholder_Version:
+	.word	gText_ExpandedPlaceholder_Emerald
 	thumb_func_end ExpandPlaceholder_Version
 
 	thumb_func_start ExpandPlaceholder_Aqua
@@ -1146,4 +1149,3 @@ _08008F62:
 	pop {r1}
 	bx r1
 	thumb_func_end sub_08008F38
-

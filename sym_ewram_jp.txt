@@ -20,6 +20,7 @@ sTrainerBattleMode = ABSOLUTE(0x02038868);
 sEasyChatSpeech = ABSOLUTE(0x0203C9A8);
 gMessageBox_Pal = ABSOLUTE(0x084E8840);
 TrainerHill_EventScript_TrainerBattle = ABSOLUTE(0x08276D0C);
+gText_ExpandedPlaceholder_Emerald = ABSOLUTE(0x085C8C36);
 . += 0x2;
 gUnknown_2000002 = .;
 . += 0x1;
