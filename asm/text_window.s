@@ -646,10 +646,13 @@ _080985E8: .4byte 0x084E87A0
 
 	thumb_func_start GetOverworldTextboxPalettePtr
 GetOverworldTextboxPalettePtr: @ 0x080985EC
-	ldr r0, _080985F0
-	bx lr
-	.align 2, 0
-_080985F0: .4byte 0x084E8840
+	@ From src/text_window.c
+	ldr	r0, .LGetOverworldTextboxPalettePtr
+	bx	lr
+.LGetOverworldTextboxPalettePtrPad:
+	.align	2, 0
+.LGetOverworldTextboxPalettePtr:
+	.word	gMessageBox_Pal
 	thumb_func_end GetOverworldTextboxPalettePtr
 
 	thumb_func_start sub_080985F4
@@ -689,4 +692,3 @@ sub_080985F4: @ 0x080985F4
 _08098638: .4byte 0x084E8860
 _0809863C: .4byte 0x03005AF0
 	thumb_func_end sub_080985F4
-

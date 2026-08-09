@@ -2194,10 +2194,13 @@ _081D5C3E:
 
 	thumb_func_start GetTrainerHillTrainerScript
 GetTrainerHillTrainerScript: @ 0x081D5C48
-	ldr r0, _081D5C4C
-	bx lr
-	.align 2, 0
-_081D5C4C: .4byte 0x08276D0C
+	@ From src/trainer_hill.c
+	ldr	r0, .LGetTrainerHillTrainerScript
+	bx	lr
+.LGetTrainerHillTrainerScriptPad:
+	.align	2, 0
+.LGetTrainerHillTrainerScript:
+	.word	TrainerHill_EventScript_TrainerBattle
 	thumb_func_end GetTrainerHillTrainerScript
 
 	thumb_func_start sub_081D5C50
@@ -2749,4 +2752,3 @@ _081D6050: .4byte 0x085FB8B8
 _081D6054: .4byte 0x03005AEC
 _081D6058: .4byte 0x00003D64
 	thumb_func_end sub_081D5F98
-

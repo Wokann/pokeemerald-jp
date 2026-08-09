@@ -2089,6 +2089,7 @@ _080AB874: .4byte 0x000006D4
 
 	thumb_func_start LoadDroughtWeatherPalette
 LoadDroughtWeatherPalette: @ 0x080AB878
+	@ From src/field_weather.c
 	movs r2, #0x20
 	strb r2, [r0]
 	strb r2, [r1]
@@ -2727,4 +2728,3 @@ ResetPreservedPalettesInWeather: @ 0x080ABD24
 _080ABD2C: .4byte 0x03000F50
 _080ABD30: .4byte 0x08526EEC
 	thumb_func_end ResetPreservedPalettesInWeather
-
