@@ -844,6 +844,7 @@ _080A5B98: .4byte 0x02023E88
 
 	thumb_func_start StoreSpriteCallbackInData6
 StoreSpriteCallbackInData6: @ 0x080A5B9C
+	@ From tools/c_decomp/store_sprite_callback_in_data6.c
 	strh r1, [r0, #0x3a]
 	lsrs r1, r1, #0x10
 	strh r1, [r0, #0x3c]
@@ -852,6 +853,7 @@ StoreSpriteCallbackInData6: @ 0x080A5B9C
 
 	thumb_func_start SetCallbackToStoredInData6
 SetCallbackToStoredInData6: @ 0x080A5BA4
+	@ From tools/c_decomp/set_callback_to_stored_in_data6.c
 	ldrh r2, [r0, #0x3a]
 	movs r3, #0x3c
 	ldrsh r1, [r0, r3]

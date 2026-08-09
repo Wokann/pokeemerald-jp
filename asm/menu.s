@@ -23,6 +23,7 @@ _08196DE4: .4byte 0x0203CA59
 
 	thumb_func_start FreeAllOverworldWindowBuffers
 FreeAllOverworldWindowBuffers: @ 0x08196DE8
+	@ From tools/c_decomp/free_all_overworld_window_buffers.c
 	push {lr}
 	bl FreeAllWindowBuffers
 	pop {r0}
@@ -6738,4 +6739,3 @@ _0819A0DE:
 _0819A0E4: .4byte 0x00000867
 _0819A0E8: .4byte 0x0000086E
 	thumb_func_end sub_08199FDC
-

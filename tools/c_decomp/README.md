@@ -33,3 +33,9 @@ generated snippet.  Only functions where it reports MATCH are integrated.
   no globals; JP uses a signed `asrs` shift.
 * `get_battle_outcome.c` - GetBattleOutcome (0x08138BF0, 12 bytes),
   gBattleOutcome mapped to ABSOLUTE(0x02023FDE).
+* `store_sprite_callback_in_data6.c` - StoreSpriteCallbackInData6
+  (0x080A5B9C, 8 bytes); minimal struct Sprite with data[8] at 0x2E.
+* `set_callback_to_stored_in_data6.c` - SetCallbackToStoredInData6
+  (0x080A5BA4, 14 bytes).
+* `free_all_overworld_window_buffers.c` - FreeAllOverworldWindowBuffers
+  (0x08196DE8, 10 bytes); tail-call via bl, resolved at link time.

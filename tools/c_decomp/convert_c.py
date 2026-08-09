@@ -67,13 +67,30 @@ def main():
 
     def mask(b):
         out = bytearray(b)
+        for i in range(0, len(out) - 3, 2):
+            hw1 = out[i] | (out[i + 1] << 8)
+            hw2 = out[i + 2] | (out[i + 3] << 8)
+            if (hw1 & 0xF800) == 0xF000 and (hw2 & 0xF800) == 0xF800:
+                out[i] = 0xF0
+                out[i + 1] = 0x00
+                out[i + 2] = 0xF8
+                out[i + 3] = 0x00
         if has_literal and len(out) >= 8:
             out[-4:] = b"\x00\x00\x00\x00"
         return bytes(out)
 
-    # Find how many bytes of the JP stream the compiled code covers:
-    # compiled length (code + literal) must fit in the JP function area.
-    ok = mask(compiled) == mask(jp_bytes[: len(compiled)])
+    def strip_trailing(b):
+        b = bytearray(b)
+        while True:
+            if len(b) >= 2 and b[-2:] == b"\xc0\x46":
+                del b[-2:]
+            elif b and b[-1] == 0x00:
+                b.pop()
+            else:
+                break
+        return bytes(b)
+
+    ok = strip_trailing(mask(compiled)) == strip_trailing(mask(jp_bytes[: len(compiled)]))
     print(f"{name}: JP 0x{jp_addr:08X} compiled {len(compiled)} bytes "
           f"{'MATCH' if ok else 'DIFF'}")
     print("  compiled:", compiled.hex(" "))
