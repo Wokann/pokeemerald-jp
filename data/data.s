@@ -7936,7 +7936,7 @@ gUnknown_855A940: @ 0x855A940
 
 	.globl gUnknown_855CEE8
 gUnknown_855CEE8: @ 0x855CEE8
-	.incbin "build/data/data.bin", 0x2c1144, 0x3ae8
+	.include "data/tables/items.s"
 
 	.globl gUnknown_85609D0
 gUnknown_85609D0: @ 0x85609D0
@@ -22776,4 +22776,3 @@ gUnknown_8DBC590: @ 0x8DBC590
 	.globl gUnknown_8DBCCBC
 gUnknown_8DBCCBC: @ 0x8DBCCBC
 	.incbin "build/data/data.bin", 0xb20f18, 0x243344
-
