@@ -6,6 +6,9 @@ The JP and US versions share the same engine; if a function's machine
 code matches after masking pointers and branch immediates, its C source
 from pokeemerald can be ported directly.
 
+Function addresses come from the repo's own funcmap_jp.txt /
+funcmap_us.txt (JP/US function position correspondence).
+
 Usage:
     python3 tools/compare_functions.py
     python3 tools/compare_functions.py list [min-size] [count]
@@ -18,41 +21,26 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 JP_ROM = ROOT / "baserom_jp.gba"
 US_ROM = ROOT.parent / "pokeemerald" / "pokeemerald.gba"
-US_MAP = ROOT.parent / "pokeemerald" / "pokeemerald.map"
+JP_MAP = ROOT / "funcmap_jp.txt"
+US_MAP = ROOT / "funcmap_us.txt"
 
-FUNC_RE = re.compile(r"^\s*thumb_func_start\s+(\w+)\s*$")
-LABEL_RE = re.compile(r"^(\w+):\s*@\s*0x([0-9A-Fa-f]+)\s*$")
-MAP_RE = re.compile(r"^\s*0x([0-9A-Fa-f]+)\s+(\S+)\s*$")
-
-
-def jp_functions():
-    funcs = {}
-    for path in sorted((ROOT / "asm").glob("*.s")):
-        current = None
-        for line in path.read_text(encoding="utf-8").splitlines():
-            m = FUNC_RE.match(line)
-            if m:
-                current = m.group(1)
-                continue
-            if current is not None:
-                lm = LABEL_RE.match(line)
-                if lm and lm.group(1) == current:
-                    funcs[current] = int(lm.group(2), 16)
-                    current = None
-    return funcs
+MAP_RE = re.compile(r"^([0-9A-Fa-f]{8})\s+\S+\s+(\S+)\s*$")
 
 
-def us_addresses():
+def load_funcmap(path):
     by_name = {}
+    by_addr = {}
     addrs = []
-    for line in US_MAP.read_text(encoding="utf-8", errors="replace").splitlines():
+    for line in path.read_text(encoding="utf-8").splitlines():
         m = MAP_RE.match(line)
         if m:
             addr = int(m.group(1), 16)
-            by_name[m.group(2)] = addr
+            name = m.group(2)
+            by_name[name] = addr
+            by_addr[addr] = name
             addrs.append(addr)
     addrs.sort()
-    return by_name, addrs
+    return by_name, by_addr, addrs
 
 
 def normalize(data):
@@ -73,8 +61,8 @@ def normalize(data):
 
 
 def main():
-    jp = jp_functions()
-    us, us_addrs = us_addresses()
+    jp, _, jp_addrs = load_funcmap(JP_MAP)
+    us, _, us_addrs = load_funcmap(US_MAP)
     jp_rom = JP_ROM.read_bytes()
     us_rom = US_ROM.read_bytes()
 
