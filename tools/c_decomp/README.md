@@ -72,5 +72,6 @@ src/trig.c (4, full module -- asm/trig.s removed),
 src/dynamic_placeholder_text_util.c (4, full module -- asm/
 dynamic_placeholder_text_util.s removed), src/gym_leader_rematch.c (3,
 full module -- asm/gym_leader_rematch.s removed), src/birch_pc.c (3,
-full module -- asm/birch_pc.s removed), src/hof_pc.c (4, asm/hof_pc.s
+full module -- asm/birch_pc.s removed), src/fldeff_strength.c (4, full
+module -- asm/fldeff_strength.s removed), src/hof_pc.c (4, asm/hof_pc.s
 removed).

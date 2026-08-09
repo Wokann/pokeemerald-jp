@@ -34,6 +34,8 @@ gBirchDexRatingText_LessThan180 = ABSOLUTE(0x082630F0);
 gBirchDexRatingText_LessThan190 = ABSOLUTE(0x0826310C);
 gBirchDexRatingText_LessThan200 = ABSOLUTE(0x0826312D);
 gBirchDexRatingText_DexCompleted = ABSOLUTE(0x0826314F);
+EventScript_UseStrength = ABSOLUTE(0x08256797);
+FieldCallback_PrepareFadeInFromMenu = ABSOLUTE(0x081B53D8);
 
 SECTIONS {
     . = 0x2000000;
@@ -229,7 +231,7 @@ SECTIONS {
         asm/pokedex_cry_screen.o(.text);
         asm/coins.o(.text);
         build/src/landmark.o(.text);
-        asm/fldeff_strength.o(.text);
+        build/src/fldeff_strength.o(.text);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
