@@ -51,6 +51,21 @@ readable; text that contains byte sequences not covered by the charmap
 (JP-specific formatting/control codes) stays as `.incbin` until proper
 charmap entries are added.
 
+Event scripts in `data/event_scripts.s` are decoded into
+`data/scripts/*.inc` via `tools/decompile_scripts.py` and assembled back
+through pokeemerald's script macros (`asm/macros/event.inc`) with the JP
+command table.  Commands whose macros are simple decode to named
+invocations; everything else (JP-specific command layouts, e.g.
+`givemon`, and raw data) stays as `.byte` until proper JP macros are
+written.
+
+Conversion principle: raw ROM data is only converted to readable sources
+when its semantics are confirmed.  Pure-byte data, images (`.bpp`), and
+structured tables (C structs) are handled per pokeemerald's patterns
+rather than force-fitted into strings.  `tools/text_tool.py audit` flags
+converted chunks whose content is mostly control codes and may not be
+text.
+
 Generator/analysis tools under `tools/`:
 
 * `extract_baserom_data.py` - regenerate `build/data/*.bin` from
@@ -62,6 +77,8 @@ Generator/analysis tools under `tools/`:
   convert the pointer tables to symbolic references
 * `text_tool.py` - decode/encode JP text via `charmap.txt` and convert
   text chunks to `.string`
+* `decompile_scripts.py` - decode event-script bytes to `.inc` text using
+  the JP command table and event.inc macro formats
 
 To set up the repository, see [INSTALL.md](INSTALL.md)
 

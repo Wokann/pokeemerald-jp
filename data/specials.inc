@@ -1,3 +1,5 @@
+	.ifndef SPECIAL_TABLE_ENTRY_MACRO
+	.set SPECIAL_TABLE_ENTRY_MACRO, 1
 	.macro def_special ptr:req, waitstate=0
 	.if ALLOCATE_SPECIAL_TABLE
 	.global SPECIAL_\ptr
@@ -7,6 +9,7 @@
 	.set SPECIAL_WAITSTATE_\ptr, \waitstate
 	.set __special__, __special__ + 1
 	.endm
+	.endif
 
 .set __special__, 0
 .if ALLOCATE_SPECIAL_TABLE

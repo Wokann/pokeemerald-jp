@@ -1,6 +1,7 @@
 
 	.section script_data, "aw", %progbits
 	.include "asm/macros.inc"
+	.include "asm/macros/event.inc"
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.align 2
 	.globl gUnknown_81DABAC
@@ -33,7 +34,7 @@ gUnknown_81DB7BC: @ 0x81DB7BC
 
 	.globl gUnknown_81DB7E8
 gUnknown_81DB7E8: @ 0x81DB7E8
-	.incbin "build/data/event_scripts.bin", 0xc3c, 0x260b
+	.include "data/scripts/gUnknown_81DB7E8.inc"
 
 	.globl gUnknown_81DDDF3
 gUnknown_81DDDF3: @ 0x81DDDF3

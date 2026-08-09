@@ -67,6 +67,8 @@ def main():
     waitstate_by_handler = read_reference_specials(ref_path)
 
     lines = [
+        "\t.ifndef SPECIAL_TABLE_ENTRY_MACRO",
+        "\t.set SPECIAL_TABLE_ENTRY_MACRO, 1",
         "\t.macro def_special ptr:req, waitstate=0",
         "\t.if ALLOCATE_SPECIAL_TABLE",
         "\t.global SPECIAL_\\ptr",
@@ -76,6 +78,7 @@ def main():
         "\t.set SPECIAL_WAITSTATE_\\ptr, \\waitstate",
         "\t.set __special__, __special__ + 1",
         "\t.endm",
+        "\t.endif",
         "",
         ".set __special__, 0",
         ".if ALLOCATE_SPECIAL_TABLE",

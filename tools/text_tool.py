@@ -316,6 +316,49 @@ def main():
                     os.unlink(tmp.name)
                 return
         sys.exit(f"no chunk named {target}")
+    elif cmd == "audit":
+        # Review already-converted .string chunks for semantic text-ness.
+        # A converted chunk is suspicious if its decoded text contains
+        # almost no kana/Latin characters (i.e. it is mostly constants or
+        # control codes, which may indicate pure-byte data that happened
+        # to pass the byte-exact gates).
+        threshold = float(sys.argv[2]) if len(sys.argv) > 2 else 0.2
+        lines = DATA_S.read_text(encoding="utf-8").splitlines()
+        current = None
+        texts = {}
+        for line in lines:
+            lm = LABEL_RE.match(line)
+            if lm:
+                current = lm.group(1)
+                texts[current] = []
+                continue
+            sm = re.match(r'\s*\.string\s+"(.*)"\s*$', line)
+            if sm and current is not None:
+                texts[current].append(sm.group(1))
+        rows = []
+        for label, parts in texts.items():
+            if not parts:
+                continue
+            text = "".join(parts)
+            kana_latin = sum(
+                1
+                for ch in text
+                if (
+                    "\u3040" <= ch <= "\u30FF"
+                    or "\u31F0" <= ch <= "\u31FF"
+                    or ch.isascii() and ch.isalpha()
+                )
+            )
+            total = len(text)
+            score = kana_latin / total if total else 0
+            rows.append((score, label, total, kana_latin))
+        rows.sort()
+        print(f"chunks with text score below {threshold} "
+              f"(mostly constants/controls, may be data):")
+        for score, label, total, kana in rows:
+            if score < threshold:
+                print(f"  {score:5.2f} {label:<26} len={total:<5} kana={kana}")
+        print(f"total .string chunks: {len(rows)}")
     else:
         sys.exit(__doc__)
 

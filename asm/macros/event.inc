@@ -1,52 +1,60 @@
+	.set ALLOCATE_SCRIPT_CMD_TABLE, 0
+	.include "data/script_cmd_table.inc"
+
+	.set ALLOCATE_SPECIAL_TABLE, 0
+	.include "data/specials.inc"
+
+	.set _last_implicit_waitstate, -1
+
 	@ Does nothing.
 	.macro nop
-	.byte 0x00
+	.byte SCR_OP_NOP
 	.endm
 
 	@ Does nothing.
 	.macro nop1
-	.byte 0x01
+	.byte SCR_OP_NOP1
 	.endm
 
 	@ Terminates script execution.
 	.macro end
-	.byte 0x02
+	.byte SCR_OP_END
 	.endm
 
 	@ Jumps back to after the last-executed call statement, and continues script execution from there.
 	.macro return
-	.byte 0x03
+	.byte SCR_OP_RETURN
 	.endm
 
 	@ Jumps to destination and continues script execution from there. The location of the calling script is remembered and can be returned to later.
 	.macro call destination:req
-	.byte 0x04
+	.byte SCR_OP_CALL
 	.4byte \destination
 	.endm
 
 	@ Jumps to destination and continues script execution from there.
 	.macro goto destination:req
-	.byte 0x05
+	.byte SCR_OP_GOTO
 	.4byte \destination
 	.endm
 
 	@ If the result of the last comparison matches condition (see Comparison operators), jumps to destination and continues script execution from there.
 	.macro goto_if condition:req, destination:req
-	.byte 0x06
+	.byte SCR_OP_GOTO_IF
 	.byte \condition
 	.4byte \destination
 	.endm
 
 	@ If the result of the last comparison matches condition (see Comparison operators), calls destination.
 	.macro call_if condition:req, destination:req
-	.byte 0x07
+	.byte SCR_OP_CALL_IF
 	.byte \condition
 	.4byte \destination
 	.endm
 
-	@ Jumps to the standard function at index function.
+	@ Jumps to the script in gStdScripts at index function.
 	.macro gotostd function:req
-	.byte 0x08
+	.byte SCR_OP_GOTO_STD
 	.byte \function
 	.endm
 
@@ -56,581 +64,671 @@
 	STD_OBTAIN_DECORATION = 7
 	STD_REGISTER_MATCH_CALL = 8
 
-	@ Calls the standard function at index function.
+	@ Calls the script in gStdScripts at index function.
 	.macro callstd function:req
-	.byte 0x09
+	.byte SCR_OP_CALL_STD
 	.byte \function
 	.endm
 
-	@ If the result of the last comparison matches condition (see Comparison operators), jumps to the standard function at index function.
+	@ If the result of the last comparison matches condition (see Comparison operators), jumps to the script in gStdScripts at index function.
 	.macro gotostd_if condition:req, function:req
-	.byte 0x0a
+	.byte SCR_OP_GOTO_STD_IF
 	.byte \condition
 	.byte \function
 	.endm
 
-	@ If the result of the last comparison matches condition (see Comparison operators), calls the standard function at index function.
+	@ If the result of the last comparison matches condition (see Comparison operators), calls the script in gStdScripts at index function.
 	.macro callstd_if condition:req, function:req
-	.byte 0x0b
+	.byte SCR_OP_CALL_STD_IF
 	.byte \condition
 	.byte \function
 	.endm
 
-	@ Executes a script stored in a default RAM location.
+	@ Equivalent to the 'return' command for a RAM script.
 	.macro returnram
-	.byte 0x0c
+	.byte SCR_OP_RETURNRAM
 	.endm
 
-	@ Terminates script execution and "resets the script RAM".
-	.macro killscript
-	.byte 0x0d
+	@ Equivalent to the 'end' command for a RAM script.
+	.macro endram
+	.byte SCR_OP_ENDRAM
 	.endm
 
-	@ Sets some status related to Mystery Event.
+	@ Sets the Mystery Event script status (MEVENT_STATUS_*).
 	.macro setmysteryeventstatus value:req
-	.byte 0x0e
+	.byte SCR_OP_SETMYSTERYEVENTSTATUS
 	.byte \value
 	.endm
 
-	@ Sets the specified script bank to value.
-	.macro loadword destination:req, value:req
-	.byte 0x0f
-	.byte \destination
+	@ Sets the value at the specified script data index to a fixed 4-byte value.
+	.macro loadword destIndex:req, value:req
+	.byte SCR_OP_LOAD_WORD
+	.byte \destIndex
 	.4byte \value
 	.endm
 
-	@ Sets the specified script bank to value.
-	.macro loadbyte destination:req, value:req
-	.byte 0x10
-	.byte \destination
+	@ Sets the value at the specified script data index to a fixed byte value.
+	.macro loadbyte destIndex:req, value:req
+	.byte SCR_OP_LOAD_BYTE
+	.byte \destIndex
 	.byte \value
 	.endm
 
-	@ Sets the byte at offset to value.
-	.macro writebytetoaddr value:req, offset:req
-	.byte 0x11
+	@ Sets the value at the specified pointer.
+	.macro setptr value:req, ptr:req
+	.byte SCR_OP_SETPTR
 	.byte \value
-	.4byte \offset
+	.4byte \ptr
 	.endm
 
-	@ Copies the byte value at source into the specified script bank.
-	.macro loadbytefromaddr destination:req, source:req
-	.byte 0x12
-	.byte \destination
+	@ Sets the value at the specified script data index to the value at pointer 'source'.
+	.macro loadbytefromptr destIndex:req, source:req
+	.byte SCR_OP_LOADBYTEFROMPTR
+	.byte \destIndex
 	.4byte \source
 	.endm
 
-	@ Not sure. Judging from XSE's description I think it takes the least-significant byte in bank source and writes it to destination.
-	.macro setptrbyte source:req, destination:req
-	.byte 0x13
-	.byte \source
+	@ Sets the value at pointer 'destination' to the contents of the script data at 'srcIndex'.
+	.macro setptrbyte srcIndex:req, destination:req
+	.byte SCR_OP_SETPTRBYTE
+	.byte \srcIndex
 	.4byte \destination
 	.endm
 
-	@ Copies the contents of bank source into bank destination.
-	.macro copylocal destination:req, source:req
-	.byte 0x14
-	.byte \destination
-	.byte \source
+	@ Copies the contents of the script data from one index to another.
+	.macro copylocal destIndex:req, srcIndex:req
+	.byte SCR_OP_COPYLOCAL
+	.byte \destIndex
+	.byte \srcIndex
 	.endm
 
 	@ Copies the byte at source to destination, replacing whatever byte was previously there.
 	.macro copybyte destination:req, source:req
-	.byte 0x15
+	.byte SCR_OP_COPYBYTE
 	.4byte \destination
 	.4byte \source
 	.endm
 
 	@ Changes the value of destination to value.
-	.macro setvar destination:req, value:req
-	.byte 0x16
+	.macro setvar destination:req, value:req, warn=TRUE
+	.if \warn && ((\value >= VARS_START && \value <= VARS_END) || (\value >= SPECIAL_VARS_START && \value <= SPECIAL_VARS_END))
+	.warning "setvar with a value that might be a VAR_ constant; did you mean copyvar instead?"
+	.endif
+	.byte SCR_OP_SETVAR
 	.2byte \destination
 	.2byte \value
 	.endm
 
 	@ Changes the value of destination by adding value to it. Overflow is not prevented (0xFFFF + 1 = 0x0000).
 	.macro addvar destination:req, value:req
-	.byte 0x17
+	.byte SCR_OP_ADDVAR
 	.2byte \destination
 	.2byte \value
 	.endm
 
 	@ Changes the value of destination by subtracting value to it. Overflow is not prevented (0x0000 - 1 = 0xFFFF).
 	.macro subvar destination:req, value:req
-	.byte 0x18
+	.byte SCR_OP_SUBVAR
 	.2byte \destination
 	.2byte \value
 	.endm
 
 	@ Copies the value of source into destination.
-	.macro copyvar destination:req, source:req
-	.byte 0x19
+	.macro copyvar destination:req, source:req, warn=TRUE
+	.if \warn && !((\source >= VARS_START && \source <= VARS_END) || (\source >= SPECIAL_VARS_START && \source <= SPECIAL_VARS_END))
+	.warning "copyvar with a value that is not a VAR_ constant; did you mean setvar instead?"
+	.endif
+	.byte SCR_OP_COPYVAR
 	.2byte \destination
 	.2byte \source
 	.endm
 
 	@ If source is not a variable, then this function acts like setvar. Otherwise, it acts like copyvar.
 	.macro setorcopyvar destination:req, source:req
-	.byte 0x1a
+	.byte SCR_OP_SETORCOPYVAR
 	.2byte \destination
 	.2byte \source
 	.endm
 
-	@ Compares the values of script banks a and b, after forcing the values to bytes.
-	.macro compare_local_to_local byte1:req, byte2:req
-	.byte 0x1b
-	.byte \byte1
-	.byte \byte2
+	@ Compares the values of the script data at indexes 'local1' and 'local2'.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_local_to_local local1:req, local2:req
+	.byte SCR_OP_COMPARE_LOCAL_TO_LOCAL
+	.byte \local1
+	.byte \local2
 	.endm
 
-	@ Compares the least-significant byte of the value of script bank a to a fixed byte value (b).
-	.macro compare_local_to_value a:req, b:req
-	.byte 0x1c
-	.byte \a
-	.byte \b
+	@ Compares the value of the script data at index 'local' to a fixed value.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_local_to_value local:req, value:req
+	.byte SCR_OP_COMPARE_LOCAL_TO_VALUE
+	.byte \local
+	.byte \value
 	.endm
 
-	@ Compares the least-significant byte of the value of script bank a to the byte located at offset b.
-	.macro compare_local_to_addr a:req, b:req
-	.byte 0x1d
-	.byte \a
-	.4byte \b
+	@ Compares the value of the script data at index 'local' to the value at 'ptr'
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_local_to_ptr local:req, ptr:req
+	.byte SCR_OP_COMPARE_LOCAL_TO_PTR
+	.byte \local
+	.4byte \ptr
 	.endm
 
-	@ Compares the byte located at offset a to the least-significant byte of the value of script bank b.
-	.macro compare_addr_to_local a:req, b:req
-	.byte 0x1e
-	.4byte \a
-	.byte \b
+	@ Compares the value at 'ptr' to the value of the script data at index 'local'.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_ptr_to_local ptr:req, local:req
+	.byte SCR_OP_COMPARE_PTR_TO_LOCAL
+	.4byte \ptr
+	.byte \local
 	.endm
 
-	@ Compares the byte located at offset a to a fixed byte value (b).
-	.macro compare_addr_to_value a:req, b:req
-	.byte 0x1f
-	.4byte \a
-	.byte \b
+	@ Compares the value at 'ptr' to a fixed value.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_ptr_to_value ptr:req, value:req
+	.byte SCR_OP_COMPARE_PTR_TO_VALUE
+	.4byte \ptr
+	.byte \value
 	.endm
 
-	@ Compares the byte located at offset a to the byte located at offset b.
-	.macro compare_addr_to_addr a:req, b:req
-	.byte 0x20
-	.4byte \a
-	.4byte \b
+	@ Compares the value at 'ptr1' to the value at 'ptr2'.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
+	.macro compare_ptr_to_ptr ptr1:req, ptr2:req
+	.byte SCR_OP_COMPARE_PTR_TO_PTR
+	.4byte \ptr1
+	.4byte \ptr2
 	.endm
 
-	@ Compares the value of `var` to a fixed word value (b).
+	@ Compares the value of 'var' to a fixed value.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
 	.macro compare_var_to_value var:req, value:req
-	.byte 0x21
+	.byte SCR_OP_COMPARE_VAR_TO_VALUE
 	.2byte \var
 	.2byte \value
 	.endm
 
-	@ Compares the value of `var1` to the value of `var2`.
+	@ Compares the value of 'var1' to the value of 'var2'.
+	@ The result is stored in comparisonResult to be acted on by goto_if / call_if
 	.macro compare_var_to_var var1:req, var2:req
-	.byte 0x22
+	.byte SCR_OP_COMPARE_VAR_TO_VAR
 	.2byte \var1
 	.2byte \var2
 	.endm
 
 	@ Generic compare macro which attempts to deduce argument types based on their values
-	@ Any values between 0x4000 to 0x4FFF and 0x8000 to 0x8FFF are considered event variable identifiers
-	.macro compare arg1:req, arg2:req
-		.if ((\arg1 >> 12) == 4 || (\arg1 >> 12) == 8) && ((\arg2 >> 12) == 4 || (\arg2 >> 12) == 8)
-			compare_var_to_var \arg1, \arg2
-		.elseif ((\arg1 >> 12) == 4 || (\arg1 >> 12) == 8) && (\arg2 >= 0 && \arg2 <= 0xFFFF)
-			compare_var_to_value \arg1, \arg2
+	@ Any values between VARS_START to VARS_END and SPECIAL_VARS_START to SPECIAL_VARS_END are considered event variable identifiers
+	.macro compare var:req, arg:req
+		.if ((\arg >= VARS_START && \arg <= VARS_END) || (\arg >= SPECIAL_VARS_START && \arg <= SPECIAL_VARS_END))
+			compare_var_to_var \var, \arg
 		.else
-			.error "Invalid arguments for 'compare'"
+			compare_var_to_value \var, \arg
 		.endif
 	.endm
 
-	@ Calls the native C function stored at `func`.
+	@ Calls the native C function stored at func.
 	.macro callnative func:req
-	.byte 0x23
+	.byte SCR_OP_CALLNATIVE
 	.4byte \func
 	.endm
 
-	@ Replaces the script with the function stored at `func`. Execution returns to the bytecode script when func returns TRUE.
+	@ Replaces the script with the function stored at func. Execution returns to the bytecode script when func returns TRUE.
 	.macro gotonative func:req
-	.byte 0x24
+	.byte SCR_OP_GOTONATIVE
 	.4byte \func
 	.endm
 
-	@ Calls a special function; that is, a function designed for use by scripts and listed in a table of pointers.
+	@ Calls a function listed in the table in data/specials.inc.
 	.macro special function:req
-	.byte 0x25
+	.byte SCR_OP_SPECIAL
 	.2byte SPECIAL_\function
+	.if SPECIAL_WAITSTATE_\function
+	waitstate implicit=1
+	.endif
 	.endm
 
-	@ Calls a special function. That function's output (if any) will be written to the variable you specify.
+	@ Calls a function listed in the table in data/specials.inc.
+	@ That function's output (if any) will be written to the variable specified by 'output'.
 	.macro specialvar output:req, function:req
-	.byte 0x26
+	.byte SCR_OP_SPECIALVAR
 	.2byte \output
 	.2byte SPECIAL_\function
+	.if SPECIAL_WAITSTATE_\function
+	waitstate implicit=1
+	.endif
 	.endm
 
-	@ temporary solution
-	.macro specialvar_ output:req, functionId:req
-	.byte 0x26
-	.2byte \output
-	.2byte \functionId
+	@ Blocks script execution until a command or C code manually unblocks it. Generally used with specific
+	@ commands and specials. Calling ScriptContext_Enable for instance will allow execution to continue.
+	@
+	@ implicit is set when a waitstate is generated as part of another command (e.g. special)
+	@ if an implicit waitstate is immediately followed by another waitstate, a warning is raised
+	.macro waitstate implicit=0
+	.if _last_implicit_waitstate == .
+	.warning "explicit waitstate follows implicit waitstate, ignoring"
+	.else
+	.byte SCR_OP_WAITSTATE
+	.endif
+	.if \implicit
+	.set _last_implicit_waitstate, .
+	.endif
 	.endm
 
-	@ Blocks script execution until a command or ASM code manually unblocks it. Generally used with specific commands and specials. If this command runs, and a subsequent command or piece of ASM does not unblock state, the script will remain blocked indefinitely (essentially a hang).
-	.macro waitstate
-	.byte 0x27
+	@ Blocks script execution for frames. (Pokemon Emerald runs at just shy of 60 frames per second.)
+	.macro delay frames:req
+	.byte SCR_OP_DELAY
+	.2byte \frames
 	.endm
 
-	@ Blocks script execution for time (frames? milliseconds?).
-	.macro delay time:req
-	.byte 0x28
-	.2byte \time
+	@ Sets flag to TRUE.
+	.macro setflag flag:req
+	.byte SCR_OP_SETFLAG
+	.2byte \flag
 	.endm
 
-	@ Sets a to 1.
-	.macro setflag a:req
-	.byte 0x29
-	.2byte \a
+	@ Sets flag to FALSE.
+	.macro clearflag flag:req
+	.byte SCR_OP_CLEARFLAG
+	.2byte \flag
 	.endm
 
-	@ Sets a to 0.
-	.macro clearflag a:req
-	.byte 0x2a
-	.2byte \a
+	@ Compares flag to TRUE and stores the result in comparisonResult to be used by goto_if, etc
+	@ See additional _if_unset and _if_set macros
+	.macro checkflag flag:req
+	.byte SCR_OP_CHECKFLAG
+	.2byte \flag
 	.endm
 
-	@ Compares a to 1.
-	.macro checkflag a:req
-	.byte 0x2b
-	.2byte \a
-	.endm
-
-	@ Initializes the RTC`s local time offset to the given hour and minute. In FireRed, this command is a nop.
+	@ Initializes the RTC`s local time offset to the given hour and minute.
 	.macro initclock hour:req, minute:req
-	.byte 0x2c
+	.byte SCR_OP_INITCLOCK
 	.2byte \hour
 	.2byte \minute
 	.endm
 
-	@ Runs time based events. In FireRed, this command is a nop.
+	@ Updates local time using the RTC and runs time based events.
 	.macro dotimebasedevents
-	.byte 0x2d
+	.byte SCR_OP_DOTIMEBASEDEVENTS
 	.endm
 
-	@ Sets the values of variables 0x8000, 0x8001, and 0x8002 to the current hour, minute, and second. In FRLG, this command sets those variables to zero.
+	@ Sets the values of variables VAR_0x8000, VAR_0x8001, and VAR_0x8002 to the current hour, minute, and second.
 	.macro gettime
-	.byte 0x2e
+	.byte SCR_OP_GETTIME
 	.endm
 
-	@ Plays the specified (sound_number) sound. Only one sound may play at a time, with newer ones interrupting older ones.
-	.macro playse sound_number:req
-	.byte 0x2f
-	.2byte \sound_number
+	@ Plays the specified sound. Only one sound may play at a time, with newer ones interrupting older ones.
+	.macro playse song:req
+	.byte SCR_OP_PLAYSE
+	.2byte \song
 	.endm
 
 	@ Blocks script execution until the currently-playing sound (triggered by playse) finishes playing.
 	.macro waitse
-	.byte 0x30
+	.byte SCR_OP_WAITSE
 	.endm
 
-	@ Plays the specified (fanfare_number) fanfare.
-	.macro playfanfare fanfare_number:req
-	.byte 0x31
-	.2byte \fanfare_number
+	@ Plays the fanfare specified by the song number. If the specified song is not a fanfare it will instead play the first song in sFanfares.
+	.macro playfanfare song:req
+	.byte SCR_OP_PLAYFANFARE
+	.2byte \song
 	.endm
 
 	@ Blocks script execution until all currently-playing fanfares finish.
 	.macro waitfanfare
-	.byte 0x32
+	.byte SCR_OP_WAITFANFARE
 	.endm
 
-	@ Plays the specified (song_number) song. The byte is apparently supposed to be 0x00.
-	.macro playbgm song_number:req, unknown:req
-	.byte 0x33
-	.2byte \song_number
-	.byte \unknown
+	@ Plays the specified song. If save_song is TRUE, the
+	@ specified song will be saved as if savebgm was called with it.
+	.macro playbgm song:req, save_song:req
+	.byte SCR_OP_PLAYBGM
+	.2byte \song
+	.byte \save_song
 	.endm
 
-	@ Saves the specified (song_number) song to be played later.
-	.macro savebgm song_number:req
-	.byte 0x34
-	.2byte \song_number
+	@ Saves the specified song to be played later. Saved music may be played when Overworld_PlaySpecialMapMusic is called. This occurs on
+	@ exiting most warps.
+	.macro savebgm song:req
+	.byte SCR_OP_SAVEBGM
+	.2byte \song
 	.endm
 
 	@ Crossfades the currently-playing song into the map's default song.
 	.macro fadedefaultbgm
-	.byte 0x35
+	.byte SCR_OP_FADEDEFAULTBGM
 	.endm
 
-	@ Crossfades the currently-playng song into the specified (song_number) song.
-	.macro fadenewbgm song_number:req
-	.byte 0x36
-	.2byte \song_number
+	@ Crossfades the currently-playing song into the specified song.
+	.macro fadenewbgm song:req
+	.byte SCR_OP_FADENEWBGM
+	.2byte \song
 	.endm
 
 	@ Fades out the currently-playing song.
 	.macro fadeoutbgm speed:req
-	.byte 0x37
+	.byte SCR_OP_FADEOUTBGM
 	.byte \speed
 	.endm
 
 	@ Fades the previously-playing song back in.
 	.macro fadeinbgm speed:req
-	.byte 0x38
+	.byte SCR_OP_FADEINBGM
 	.byte \speed
 	.endm
 
-	@ Sends the player to Warp warp on Map bank.map. If the specified warp is 0xFF, then the player will instead be sent to (X, Y) on the map.
-	.macro warp map:req, warp:req, X:req, Y:req
-	.byte 0x39
+	@ Helper macro for warp commands that formats their arguments.
+	@ It allows warp macros to either provide 1. a valid id for which warp location to use,
+	@ or 2. a pair of x/y coordinates to use. Both may be provided but at least one will be
+	@ ignored by SetPlayerCoordsFromWarp. If none are provided it will use dummy arguments,
+	@ and the warp will send the player to the center of the map.
+	@ Examples of valid inputs for a warp command:
+	@ - warp MAP, x, y
+	@ - warp MAP, warpId
+	@ - warp MAP
+	@ - warp MAP, warpId, x, y
+	.macro formatwarp map:req, a, b, c
 	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	.ifb \a @ No arguments provided, use dummy warpId and coords.
+		.byte WARP_ID_NONE
+		.2byte -1 @ x
+		.2byte -1 @ y
+	.else
+	.ifb \b @ Only one argument provided, treat it as a warpId and use dummy coords.
+		.byte \a   @ warpId
+		.2byte -1  @ x
+		.2byte -1  @ y
+	.else
+	.ifb \c @ Only two arguments provided, treat them as a coord pair and use dummy warpId.
+		.byte WARP_ID_NONE
+		.2byte \a  @ x
+		.2byte \b  @ y
+	.else @ All three arguments provided. Output them and let the warp sort out which to use.
+		.byte \a  @ warpId
+		.2byte \b @ x
+		.2byte \c @ y
+	.endif
+	.endif
+	.endif
 	.endm
 
-	@ Clone of warp that does not play a sound effect.
-	.macro warpsilent map:req, warp:req, X:req, Y:req
-	.byte 0x3a
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+
+	@ Warps the player to the specified map.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warp map:req, a, b, c
+	.byte SCR_OP_WARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Clone of warp that plays a door opening animation before stepping upwards into it.
-	.macro warpdoor map:req, warp:req, X:req, Y:req
-	.byte 0x3b
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ Warps the player to the specified map without playing a sound effect.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpsilent map:req, a, b, c
+	.byte SCR_OP_WARPSILENT
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Warps the player to another map using a hole animation.
+	@ Warps the player to the specified map and plays a door opening animation before stepping upwards into it.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpdoor map:req, a, b, c
+	.byte SCR_OP_WARPDOOR
+	formatwarp \map, \a, \b, \c
+	.endm
+
+	@ Warps the player to another map using a hole animation. If the specified map is MAP_UNDEFINED it will instead
+	@ use the map set by setholewarp. In either case the target coordinates on the destination map will be the
+	@ player's current position.
 	.macro warphole map:req
-	.byte 0x3c
+	.byte SCR_OP_WARPHOLE
 	map \map
 	.endm
 
-	@ Clone of warp that uses a teleport effect. It is apparently only used in R/S/E.
-	.macro warpteleport map:req, warp:req, X:req, Y:req
-	.byte 0x3d
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ Warps the player to the specified map using a teleport effect. Effect is similar to warpspinenter but
+	@ this warp has a fade out first and doesn't maintain the original facing direction.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpteleport map:req, a, b, c
+	.byte SCR_OP_WARPTELEPORT
+	formatwarp \map, \a, \b, \c
 	.endm
 
 	@ Sets the warp destination to be used later.
-	.macro setwarp map:req, warp:req, X:req, Y:req
-	.byte 0x3e
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro setwarp map:req, a, b, c
+	.byte SCR_OP_SETWARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Sets the warp destination that a warp to Warp 127 on Map 127.127 will connect to. Useful when a map has warps that need to go to script-controlled locations (i.e. elevators).
-	.macro setdynamicwarp map:req, warp:req, X:req, Y:req
-	.byte 0x3f
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ Sets the dynamic warp destination. Warps with a destination map of MAP_DYNAMIC will target this destination.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro setdynamicwarp map:req, a, b, c
+	.byte SCR_OP_SETDYNAMICWARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Sets the destination that diving or emerging from a dive will take the player to.
-	.macro setdivewarp map:req, warp:req, X:req, Y:req
-	.byte 0x40
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ Sets the destination that diving or emerging from a dive will take the player to. Note that this only
+	@ applies if the current map does not have a dive/emerge connection. If it does have a corresponding
+	@ map connection then that map and the player's current coordinates will be used as the destination instead.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro setdivewarp map:req, a, b, c
+	.byte SCR_OP_SETDIVEWARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
 	@ Sets the destination that falling into a hole will take the player to.
-	.macro setholewarp map:req, warp:req, X:req, Y:req
-	.byte 0x41
-	map \map
-	.byte \warp
-	.2byte \X
-	.2byte \Y
+	@ While it does accept and set the x/y coordinates and warpId, they are ultimately ignored.
+	@ This is only used to set the map the player should fall to. The exact location on the
+	@ map to fall to is determined by warphole.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro setholewarp map:req, a=0, b=0, c
+	.byte SCR_OP_SETHOLEWARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	@ Retrieves the player's zero-indexed X- and Y-coordinates in the map, and stores them in the specified variables.
-	.macro getplayerxy X:req, Y:req
-	.byte 0x42
-	.2byte \X
-	.2byte \Y
-	.endm
-
-	@ Retrieves the number of Pokemon in the player's party, and stores that number in variable 0x800D (LASTRESULT).
-	.macro getpartysize
-	.byte 0x43
-	.endm
-
-	@ Attempts to add quantity of item index to the player's Bag. If the player has enough room, the item will be added and variable 0x800D (LASTRESULT) will be set to 0x0001; otherwise, LASTRESULT is set to 0x0000.
-	.macro giveitem index:req, quantity:req
-	.byte 0x44
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Removes quantity of item index from the player's Bag.
-	.macro takeitem index:req, quantity:req
-	.byte 0x45
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Checks if the player has enough space in their Bag to hold quantity more of item index. Sets variable 0x800D (LASTRESULT) to 0x0001 if there is room, or 0x0000 is there is no room.
-	.macro checkitemspace index:req, quantity:req
-	.byte 0x46
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Checks if the player has quantity or more of item index in their Bag. Sets variable 0x800D (LASTRESULT) to 0x0001 if the player has enough of the item, or 0x0000 if they have fewer than quantity of the item.
-	.macro checkitem index:req, quantity:req
-	.byte 0x47
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Checks which Bag pocket the specified (index) item belongs in, and writes the value to variable 0x800D (LASTRESULT). This script is used to show the name of the proper Bag pocket when the player receives an item via callstd (simplified to giveitem in XSE).
-	.macro checkitemtype index:req
-	.byte 0x48
-	.2byte \index
-	.endm
-
-	@ Adds a quantity amount of item index to the player's PC. Both arguments can be variables.
-	.macro givepcitem index:req, quantity:req
-	.byte 0x49
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Checks for quantity amount of item index in the player's PC. Both arguments can be variables.
-	.macro checkpcitem index:req, quantity:req
-	.byte 0x4a
-	.2byte \index
-	.2byte \quantity
-	.endm
-
-	@ Adds decoration to the player's PC. In FireRed, this command is a nop. (The argument is read, but not used for anything.)
-	.macro givedecoration decoration:req
-	.byte 0x4b
-	.2byte \decoration
-	.endm
-
-	@ Removes a decoration from the player's PC. In FireRed, this command is a nop. (The argument is read, but not used for anything.)
-	.macro takedecoration decoration:req
-	.byte 0x4c
-	.2byte \decoration
-	.endm
-
-	@ Checks for decoration in the player's PC. In FireRed, this command is a nop. (The argument is read, but not used for anything.)
-	.macro checkdecor decoration:req
-	.byte 0x4d
-	.2byte \decoration
-	.endm
-
-	@ Checks if the player has enough space in their PC to hold decoration. Sets variable 0x800D (LASTRESULT) to 0x0001 if there is room, or 0x0000 is there is no room. In FireRed, this command is a nop. (The argument is read, but not used for anything.)
-	.macro checkdecorspace decoration:req
-	.byte 0x4e
-	.2byte \decoration
-	.endm
-
-	@ Applies the movement data at movements to the specified (index) Object. Also closes any standard message boxes that are still open.
-	@ If no map is specified, then the current map is used.
-	.macro applymovement index:req, movements:req, map
-		.ifb \map
-			.byte 0x4f
-			.2byte \index
-			.4byte \movements
-		.else
-			@ Really only useful if the object has followed from one map to another (e.g. Wally during the catching event).
-			.byte 0x50
-			.2byte \index
-			.4byte \movements
-			map \map
-		.endif
-	.endm
-
-	@ Blocks script execution until the movements being applied to the specified (index) Object finish. If the specified Object is 0x0000, then the command will block script execution until all Objects affected by applymovement finish their movements. If the specified Object is not currently being manipulated with applymovement, then this command does nothing.
-	@ If no map is specified, then the current map is used.
-	.macro waitmovement index:req, map
-		.ifb \map
-			.byte 0x51
-			.2byte \index
-		.else
-			.byte 0x52
-			.2byte \index
-			map \map
-		.endif
-	.endm
-
-	@ Attempts to hide the specified (index) Object on the specified (map_group, map_num) map, by setting its visibility flag if it has a valid one. If the Object does not have a valid visibility flag, this command does nothing.
-	@ If no map is specified, then the current map is used.
-	.macro removeobject index:req, map
-		.ifb \map
-			.byte 0x53
-			.2byte \index
-		.else
-			.byte 0x54
-			.2byte \index
-			map \map
-		.endif
-	.endm
-
-	@ Unsets the specified (index) Object's visibility flag on the specified (map_group, map_num) map if it has a valid one. If the Object does not have a valid visibility flag, this command does nothing.
-	@ If no map is specified, then the current map is used.
-	.macro addobject index:req, map
-		.ifb \map
-			.byte 0x55
-			.2byte \index
-		.else
-			.byte 0x56
-			.2byte \index
-			map \map
-		.endif
-	.endm
-
-	@ Sets the specified (index) Object's position on the current map.
-	.macro setobjectxy index:req, x:req, y:req
-	.byte 0x57
-	.2byte \index
+	@ Retrieves the player's zero-indexed x- and y-coordinates in the map, and stores them in the specified variables.
+	.macro getplayerxy x:req, y:req
+	.byte SCR_OP_GETPLAYERXY
 	.2byte \x
 	.2byte \y
 	.endm
 
-	.macro showobjectat index:req, map:req
-	.byte 0x58
-	.2byte \index
+	@ Retrieves the number of Pokemon in the player's party, and stores that number in VAR_RESULT.
+	.macro getpartysize
+	.byte SCR_OP_GETPARTYSIZE
+	.endm
+
+	@ Attempts to add quantity of the specified item to the player's Bag. If the player has enough room, the item will
+	@ be added and VAR_RESULT will be set to TRUE; otherwise, VAR_RESULT is set to FALSE.
+	.macro additem itemId:req, quantity=1
+	.byte SCR_OP_ADDITEM
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Removes quantity of the specified item from the player's Bag. If the player has fewer than 'quantity' in their bag
+	@ then none will be removed and VAR_RESULT will be set to FALSE. Otherwise it will be set to TRUE.
+	.macro removeitem itemId:req, quantity=1
+	.byte SCR_OP_REMOVEITEM
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Checks if the player has enough space in their Bag to hold quantity more of the specified item. Sets VAR_RESULT to
+	@ TRUE if there is room, or FALSE is there is no room.
+	.macro checkitemspace itemId:req, quantity=1
+	.byte SCR_OP_CHECKITEMSPACE
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Checks if the player has quantity or more of the specified item in their Bag. Sets VAR_RESULT to TRUE if the player has
+	@ enough of the item, or FALSE if they have fewer than quantity of the item.
+	.macro checkitem itemId:req, quantity=1
+	.byte SCR_OP_CHECKITEM
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Checks which Bag pocket the specified item belongs in, and writes the pocket value (POCKET_*) to VAR_RESULT.
+	@ This is used to show the name of the proper Bag pocket when the player receives an item via callstd.
+	.macro checkitemtype itemId:req
+	.byte SCR_OP_CHECKITEMTYPE
+	.2byte \itemId
+	.endm
+
+	@ Adds quantity of the specified item to the player's PC.
+	.macro addpcitem itemId:req, quantity=1
+	.byte SCR_OP_ADDPCITEM
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Checks for quantity of the specified item in the player's PC.
+	.macro checkpcitem itemId:req, quantity=1
+	.byte SCR_OP_CHECKPCITEM
+	.2byte \itemId
+	.2byte \quantity
+	.endm
+
+	@ Adds a decoration to the player's PC.
+	.macro adddecoration decoration:req
+	.byte SCR_OP_ADDDECORATION
+	.2byte \decoration
+	.endm
+
+	@ Removes a decoration from the player's PC.
+	.macro removedecoration decoration:req
+	.byte SCR_OP_REMOVEDECORATION
+	.2byte \decoration
+	.endm
+
+	@ Checks for decoration in the player's PC.
+	.macro checkdecor decoration:req
+	.byte SCR_OP_CHECKDECOR
+	.2byte \decoration
+	.endm
+
+	@ Checks if the player has enough space in their PC to hold the decoration.
+	@ Sets VAR_RESULT to TRUE if there is room, or FALSE is there is no room.
+	.macro checkdecorspace decoration:req
+	.byte SCR_OP_CHECKDECORSPACE
+	.2byte \decoration
+	.endm
+
+	@ Applies the movement data at movements to the specified (localId) object. If no map is specified, then the current map is used.
+	.macro applymovement localId:req, movements:req, map
+		.ifb \map
+			.byte SCR_OP_APPLYMOVEMENT
+			.2byte \localId
+			.4byte \movements
+		.else
+			@ Really only useful if the object has followed from one map to another (e.g. Wally during the catching event).
+			.byte SCR_OP_APPLYMOVEMENTAT
+			.2byte \localId
+			.4byte \movements
+			map \map
+		.endif
+	.endm
+
+	@ Blocks script execution until the movements being applied to the specified (localId) object finish.
+	@ If localId is LOCALID_NONE (0), then the id of the last-moved object will be used instead.
+	@ If the specified object is not currently being manipulated with applymovement, then this command does nothing.
+	@ If no map is specified, then the current map is used.
+	.macro waitmovement localId=LOCALID_NONE, map
+		.ifb \map
+			.byte SCR_OP_WAITMOVEMENT
+			.2byte \localId
+		.else
+			.byte SCR_OP_WAITMOVEMENTAT
+			.2byte \localId
+			map \map
+		.endif
+	.endm
+
+	@ Attempts to despawn the specified (localId) object on the specified map.
+	@ It also sets the object's visibility flag if it has one.
+	@ If no map is specified, then the current map is used.
+	.macro removeobject localId:req, map
+		.ifb \map
+			.byte SCR_OP_REMOVEOBJECT
+			.2byte \localId
+		.else
+			.byte SCR_OP_REMOVEOBJECTAT
+			.2byte \localId
+			map \map
+		.endif
+	.endm
+
+	@ Attempts to spawn the specified (localId) object the specified map.
+	@ Note that unlike removeobject this does not modify the object's flag.
+	@ If no map is specified, then the current map is used.
+	.macro addobject localId:req, map
+		.ifb \map
+			.byte SCR_OP_ADDOBJECT
+			.2byte \localId
+		.else
+			.byte SCR_OP_ADDOBJECTAT
+			.2byte \localId
+			map \map
+		.endif
+	.endm
+
+	@ Sets the specified (localId) object's position on the current map.
+	.macro setobjectxy localId:req, x:req, y:req
+	.byte SCR_OP_SETOBJECTXY
+	.2byte \localId
+	.2byte \x
+	.2byte \y
+	.endm
+
+	@ Sets the specified object's invisibility to FALSE.
+	.macro showobjectat localId:req, map:req
+	.byte SCR_OP_SHOWOBJECTAT
+	.2byte \localId
 	map \map
 	.endm
 
-	.macro hideobjectat index:req, map:req
-	.byte 0x59
-	.2byte \index
+	@ Set the player object's invisibility to FALSE.
+	.macro showplayer
+	.byte SCR_OP_SHOWOBJECTAT
+	.2byte LOCALID_PLAYER
+	.byte 0 @ map group
+	.byte 0 @ map num
+	.endm
+
+	@ Sets the specified object's invisibility to TRUE.
+	.macro hideobjectat localId:req, map:req
+	.byte SCR_OP_HIDEOBJECTAT
+	.2byte \localId
 	map \map
 	.endm
 
-	@ If the script was called by an Object, then that Object will turn to face toward the metatile that the player is standing on.
+	@ Set the player object's invisibility to TRUE.
+	.macro hideplayer
+	.byte SCR_OP_HIDEOBJECTAT
+	.2byte LOCALID_PLAYER
+	.byte 0 @ map group
+	.byte 0 @ map num
+	.endm
+
+	@ Turns the currently selected object (if there is one) to face the player.
 	.macro faceplayer
-	.byte 0x5a
+	.byte SCR_OP_FACEPLAYER
 	.endm
 
-	.macro turnobject index:req, direction:req
-	.byte 0x5b
-	.2byte \index
+	@ Turns the specified object in the specified direction.
+	.macro turnobject localId:req, direction:req
+	.byte SCR_OP_TURNOBJECT
+	.2byte \localId
 	.byte \direction
 	.endm
 
-	@ If the Trainer flag for Trainer index is not set, this command does absolutely nothing.
+	@ Configures the arguments for a trainer battle, then jumps to the appropriate script in scripts/trainer_battle.inc
 	.macro trainerbattle type:req, trainer:req, local_id:req, pointer1:req, pointer2, pointer3, pointer4
-	.byte 0x5c
+	.byte SCR_OP_TRAINERBATTLE
 	.byte \type
 	.2byte \trainer
 	.2byte \local_id
@@ -677,7 +775,7 @@
 	.elseif \type == TRAINER_BATTLE_SET_TRAINER_B
 		.4byte \pointer1 @ text
 		.4byte \pointer2 @ text
-	.elseif \type == TRAINER_BATTLE_12
+	.elseif \type == TRAINER_BATTLE_HILL
 		.4byte \pointer1 @ text
 		.4byte \pointer2 @ text
 	.endif
@@ -685,613 +783,710 @@
 
 	NO_MUSIC = FALSE
 
-	@ Starts a single trainer battle, takes a trainer, intro text, loss text, and an optional event script
-	@ when used with an event script, you can also pass in an optional flag to disable music
+	@ Starts a single trainer battle. Takes a trainer, intro text, loss text, and an optional event script.
+	@ When used with an event script, you can also pass in an optional flag to disable music
 	.macro trainerbattle_single trainer:req, intro_text:req, lose_text:req, event_script=FALSE, music=TRUE
 	.if \event_script == FALSE
-	trainerbattle TRAINER_BATTLE_SINGLE, \trainer, 0, \intro_text, \lose_text
+	trainerbattle TRAINER_BATTLE_SINGLE, \trainer, LOCALID_NONE, \intro_text, \lose_text
 	.elseif \music == TRUE
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, \trainer, 0, \intro_text, \lose_text, \event_script
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, \trainer, LOCALID_NONE, \intro_text, \lose_text, \event_script
 	.else
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC, \trainer, 0, \intro_text, \lose_text, \event_script
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC, \trainer, LOCALID_NONE, \intro_text, \lose_text, \event_script
 	.endif
 	.endm
 
-	@ Starts a double trainer battle, takes a trainer, intro text, loss text, text for when you have too few pokemon
-	@ and an optional event script, when used with an event script you can pass in an optional flag to disable music
+	@ Starts a double trainer battle. Takes a trainer, intro text, loss text, text for when you have too few pokemon
+	@ and an optional event script. When used with an event script you can pass in an optional flag to disable music
 	.macro trainerbattle_double trainer:req, intro_text:req, lose_text:req, not_enough_pkmn_text:req, event_script=FALSE, music=TRUE
 	.if \event_script == FALSE
-	trainerbattle TRAINER_BATTLE_DOUBLE, \trainer, 0, \intro_text, \lose_text, \not_enough_pkmn_text
+	trainerbattle TRAINER_BATTLE_DOUBLE, \trainer, LOCALID_NONE, \intro_text, \lose_text, \not_enough_pkmn_text
 	.elseif \music == TRUE
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE, \trainer, 0, \intro_text, \lose_text, \not_enough_pkmn_text, \event_script
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE, \trainer, LOCALID_NONE, \intro_text, \lose_text, \not_enough_pkmn_text, \event_script
 	.else
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC, \trainer, 0, \intro_text, \lose_text, \not_enough_pkmn_text, \event_script
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC, \trainer, LOCALID_NONE, \intro_text, \lose_text, \not_enough_pkmn_text, \event_script
 	.endif
 	.endm
 
-	@ Starts a rematch battle, takes a trainer, intro text and loss text
+	@ Starts a rematch battle. Takes a trainer, intro text and loss text
 	.macro trainerbattle_rematch trainer:req, intro_text:req, lose_text:req
-	trainerbattle TRAINER_BATTLE_REMATCH, \trainer, 0, \intro_text, \lose_text
+	trainerbattle TRAINER_BATTLE_REMATCH, \trainer, LOCALID_NONE, \intro_text, \lose_text
 	.endm
 
-	@ Starts a rematch double battle, takes a trainer, intro text, loss text, and text for when you have too few pokemon
+	@ Starts a rematch double battle. Takes a trainer, intro text, loss text, and text for when you have too few pokemon
 	.macro trainerbattle_rematch_double trainer:req, intro_text:req, lose_text:req, not_enough_pkmn_text:req
-	trainerbattle TRAINER_BATTLE_REMATCH_DOUBLE, \trainer, 0, \intro_text, \lose_text, \not_enough_pkmn_text
+	trainerbattle TRAINER_BATTLE_REMATCH_DOUBLE, \trainer, LOCALID_NONE, \intro_text, \lose_text, \not_enough_pkmn_text
 	.endm
 
-	@ Starts a trainer battle, skipping intro text, takes a trainer and loss text
+	@ Starts a trainer battle, skipping intro text. Takes a trainer and loss text
 	.macro trainerbattle_no_intro trainer:req, lose_text:req
-	trainerbattle TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT, \trainer, 0, \lose_text
+	trainerbattle TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT, \trainer, LOCALID_NONE, \lose_text
 	.endm
 
 
-	@ Starts a trainer battle using the battle information stored in RAM (usually by trainerbattle, which actually calls this command behind-the-scenes), and blocks script execution until the battle finishes.
-	.macro trainerbattlebegin
-	.byte 0x5d
+	@ Starts a trainer battle using the battle information stored in RAM (usually by the scripts in trainer_battle.inc, which
+	@ are run by trainerbattle), and blocks script execution until the battle finishes.
+	.macro dotrainerbattle
+	.byte SCR_OP_DOTRAINERBATTLE
 	.endm
 
 	@ Goes to address after the trainerbattle command (called by the battle functions, see battle_setup.c)
 	.macro gotopostbattlescript
-	.byte 0x5e
+	.byte SCR_OP_GOTOPOSTBATTLESCRIPT
 	.endm
 
 	@ Goes to address specified in the trainerbattle command (called by the battle functions, see battle_setup.c)
 	.macro gotobeatenscript
-	.byte 0x5f
+	.byte SCR_OP_GOTOBEATENSCRIPT
 	.endm
 
-	@ Compares Flag (trainer + 0x500) to 1. (If the flag is set, then the trainer has been defeated by the player.)
+	@ Checks if the trainer has been defeated by the player (by comparing the flag 'trainer + TRAINER_FLAGS_START' to TRUE).
 	.macro checktrainerflag trainer:req
-	.byte 0x60
+	.byte SCR_OP_CHECKTRAINERFLAG
 	.2byte \trainer
 	.endm
 
-	@ Sets Flag (trainer + 0x500).
+	@ Sets the trainer flag (trainer + TRAINER_FLAGS_START) to TRUE (defeated).
 	.macro settrainerflag trainer:req
-	.byte 0x61
+	.byte SCR_OP_SETTRAINERFLAG
 	.2byte \trainer
 	.endm
 
-	@ Clears Flag (trainer + 0x500).
+	@ Sets the trainer flag (trainer + TRAINER_FLAGS_START) to FALSE (not defeated).
 	.macro cleartrainerflag trainer:req
-	.byte 0x62
+	.byte SCR_OP_CLEARTRAINERFLAG
 	.2byte \trainer
 	.endm
 
-	.macro setobjectxyperm index:req, x:req, y:req
-	.byte 0x63
-	.2byte \index
+	@ Sets the coordinates of an object's template, so that if the sprite goes off screen
+	@ it'll still be there when it comes back on screen.
+	.macro setobjectxyperm localId:req, x:req, y:req
+	.byte SCR_OP_SETOBJECTXYPERM
+	.2byte \localId
 	.2byte \x
 	.2byte \y
 	.endm
 
-	.macro moveobjectoffscreen index:req
-	.byte 0x64
-	.2byte \index
+	@ Copies a live object event's xy position to its template, so that if the sprite goes off screen
+	@ it'll still be there when it comes back on screen.
+	.macro copyobjectxytoperm localId:req
+	.byte SCR_OP_COPYOBJECTXYTOPERM
+	.2byte \localId
 	.endm
 
-	.macro setobjectmovementtype word:req, byte:req
-	.byte 0x65
-	.2byte \word
-	.byte \byte
+	@ Sets the movement type (MOVEMENT_TYPE_*) for an object's template.
+	.macro setobjectmovementtype localId:req, movementType:req
+	.byte SCR_OP_SETOBJECTMOVEMENTTYPE
+	.2byte \localId
+	.byte \movementType
 	.endm
 
-	@ If a standard message box (or its text) is being drawn on-screen, this command blocks script execution until the box and its text have been fully drawn.
+	@ If a standard message box (or its text) is being drawn on-screen, this command blocks script execution until the
+	@ box and its text have been fully drawn.
 	.macro waitmessage
-	.byte 0x66
+	.byte SCR_OP_WAITMESSAGE
 	.endm
 
-	@ Starts displaying a standard message box containing the specified text. If text is a pointer, then the string at that offset will be loaded and used. If text is script bank 0, then the value of script bank 0 will be treated as a pointer to the text. (You can use loadpointer to place a string pointer in a script bank.)
+	@ Starts displaying a standard message box containing the specified text. If text is a pointer, then the string at
+	@ that offset will be loaded and used. If text is NULL, then the value of script data 0 will be treated as
+	@ a pointer to the text. The 'loadword 0' in msgbox sets this value, for instance.
 	.macro message text:req
-	.byte 0x67
+	.byte SCR_OP_MESSAGE
 	.4byte \text
 	.endm
 
 	@ Closes the current message box.
 	.macro closemessage
-	.byte 0x68
+	.byte SCR_OP_CLOSEMESSAGE
 	.endm
 
-	@ Ceases movement for all Objects on-screen.
+	@ Freezes all objects immediately except the player. The player is frozen once their movement is finished.
 	.macro lockall
-	.byte 0x69
+	.byte SCR_OP_LOCKALL
 	.endm
 
-	@ If the script was called by an Object, then that Object's movement will cease.
+	@ Freezes all objects immediately except the player and the selected object. The player and selected object are frozen once their movement is finished.
 	.macro lock
-	.byte 0x6a
+	.byte SCR_OP_LOCK
 	.endm
 
-	@ Resumes normal movement for all Objects on-screen, and closes any standard message boxes that are still open.
+	@ Resumes normal movement for all objects on-screen, and closes any standard message boxes that are still open.
 	.macro releaseall
-	.byte 0x6b
+	.byte SCR_OP_RELEASEALL
 	.endm
 
-	@ If the script was called by an Object, then that Object's movement will resume. This command also closes any standard message boxes that are still open.
+	@ Resumes normal movement for the selected object (if there is one) and the player. Also closes any standard message boxes that are still open.
 	.macro release
-	.byte 0x6c
+	.byte SCR_OP_RELEASE
 	.endm
 
-	@ Blocks script execution until the player presses any key.
+	@ Blocks script execution until the player presses the A or B button.
 	.macro waitbuttonpress
-	.byte 0x6d
+	.byte SCR_OP_WAITBUTTONPRESS
 	.endm
 
-	@ Displays a YES/NO multichoice box at the specified coordinates, and blocks script execution until the user makes a selection. Their selection is stored in variable 0x800D (LASTRESULT); 0x0000 for "NO" or if the user pressed B, and 0x0001 for "YES".
+	@ Displays a YES/NO multichoice box at the specified coordinates, and blocks script execution until the user makes a selection.
+	@ Their selection is stored in VAR_RESULT as NO (0) or YES (1). Pressing B is equivalent to answering NO
 	.macro yesnobox x:req, y:req
-	.byte 0x6e
+	.byte SCR_OP_YESNOBOX
 	.byte \x
 	.byte \y
 	.endm
 
-	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (gMultichoiceLists) and the one to be used is specified with list. If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoice x:req, y:req, list:req, b:req
-	.byte 0x6f
+	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made.
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
+	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
+	.macro multichoice x:req, y:req, multichoiceId:req, ignoreBPress:req
+	.byte SCR_OP_MULTICHOICE
 	.byte \x
 	.byte \y
-	.byte \list
-	.byte \b
+	.byte \multichoiceId
+	.byte \ignoreBPress
 	.endm
 
-	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (gMultichoiceLists) and the one to be used is specified with list. The default argument determines the initial position of the cursor when the box is first opened; it is zero-indexed, and if it is too large, it is treated as 0x00. If b is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
-	.macro multichoicedefault x:req, y:req, list:req, default:req, b:req
-	.byte 0x70
+	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made.
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
+	@ The default argument determines the initial position of the cursor when the box is first opened; it is zero-indexed, and if it is too large, it is treated as 0.
+	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
+	.macro multichoicedefault x:req, y:req, multichoiceId:req, default:req, ignoreBPress:req
+	.byte SCR_OP_MULTICHOICEDEFAULT
 	.byte \x
 	.byte \y
-	.byte \list
+	.byte \multichoiceId
 	.byte \default
-	.byte \b
+	.byte \ignoreBPress
 	.endm
 
-	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made. Lists of options are predefined (gMultichoiceLists) and the one to be used is specified with list. The per_row argument determines how many list items will be shown on a single row of the box.
-	.macro multichoicegrid x:req, y:req, list:req, per_row:req, B:req
-	.byte 0x71
+	@ Displays a multichoice box from which the user can choose a selection, and blocks script execution until a selection is made.
+	@ Lists of options are predefined (sMultichoiceLists) and the one to be used is specified with multichoiceId.
+	@ The per_row argument determines how many list items will be shown on a single row of the box.
+	@ If ignoreBPress is set to a non-zero value, then the user will not be allowed to back out of the multichoice with the B button.
+	.macro multichoicegrid x:req, y:req, multichoiceId:req, per_row:req, ignoreBPress:req
+	.byte SCR_OP_MULTICHOICEGRID
 	.byte \x
 	.byte \y
-	.byte \list
+	.byte \multichoiceId
 	.byte \per_row
-	.byte \B
+	.byte \ignoreBPress
 	.endm
 
 	@ Nopped in Emerald.
 	.macro drawbox
-	.byte 0x72
+	.byte SCR_OP_DRAWBOX
 	.endm
 
 	@ Nopped in Emerald, but still consumes parameters.
-	.macro erasebox byte1:req, byte2:req, byte3:req, byte4:req
-	.byte 0x73
-	.byte \byte1
-	.byte \byte2
-	.byte \byte3
-	.byte \byte4
+	.macro erasebox left:req, top:req, right:req, bottom:req
+	.byte SCR_OP_ERASEBOX
+	.byte \left
+	.byte \top
+	.byte \right
+	.byte \bottom
 	.endm
 
 	@ Nopped in Emerald, but still consumes parameters.
-	.macro drawboxtext byte1:req, byte2:req, byte3:req, byte4:req
-	.byte 0x74
-	.byte \byte1
-	.byte \byte2
-	.byte \byte3
-	.byte \byte4
+	.macro drawboxtext left:req, top:req, multichoiceId:req, ignoreBPress:req
+	.byte SCR_OP_DRAWBOXTEXT
+	.byte \left
+	.byte \top
+	.byte \multichoiceId
+	.byte \ignoreBPress
 	.endm
 
-	@ Displays a box containing the front sprite for the specified (species) Pokemon species.
-	.macro drawmonpic species:req, x:req, y:req
-	.byte 0x75
+	@ Displays a box containing the front sprite for the specified Pokemon species.
+	.macro showmonpic species:req, x:req, y:req
+	.byte SCR_OP_SHOWMONPIC
 	.2byte \species
 	.byte \x
 	.byte \y
 	.endm
 
-	@ Hides all boxes displayed with drawmonpic.
-	.macro erasemonpic
-	.byte 0x76
+	@ Hides the box displayed by showmonpic.
+	.macro hidemonpic
+	.byte SCR_OP_HIDEMONPIC
 	.endm
 
-	@ Draws an image of the winner of the contest. In FireRed, this command is a nop. (The argument is discarded.)
-	.macro drawcontestwinner a:req
-	.byte 0x77
-	.byte \a
+	@ Draws an image of the winner of the contest. winnerId is any CONTEST_WINNER_* constant.
+	.macro showcontestpainting winnerId:req
+	.byte SCR_OP_SHOWCONTESTPAINTING
+	.byte \winnerId
 	.endm
 
-	@ Displays the string at pointer as braille text in a standard message box. The string must be formatted to use braille characters and needs to provide six extra starting characters that are skipped (in RS, these characters determined the box's size and position, but in Emerald these are calculated automatically).
+	@ Displays the given string as braille text in a standard message box. The string should use the .braille directive
+	@ to convert text to braille, and be preceded by brailleformat. The brailleformat data is skipped over (in RS, these
+	@ bytes determined the box's size and position, but in Emerald these are calculated automatically).
 	.macro braillemessage text:req
-	.byte 0x78
+	.byte SCR_OP_BRAILLEMESSAGE
 	.4byte \text
 	.endm
 
-	@ Gives the player one of the specified (species) Pokemon at level level holding item. The unknown arguments should all be zeroes.
-	.macro givemon species:req, level:req, item:req, unknown1:req, unknown2:req, unknown3:req
-	.byte 0x79
+	@ Formatting for the braille window, to be put at the start of a pointer used by braillemessage.
+	@ These are from RS and are ignored in Emerald (see ScrCmd_braillemessage, and comment above)
+	.macro brailleformat winLeft:req, winTop:req, winRight:req, winBottom:req, textLeft:req, textTop:req
+	.byte \winLeft
+	.byte \winTop
+	.byte \winRight
+	.byte \winBottom
+	.byte \textLeft
+	.byte \textTop
+	.endm
+
+	@ Gives the player a Pokémon of the specified species and level, holding the specified item. The trailing 0s are unused parameters.
+	@ VAR_RESULT will be set to MON_GIVEN_TO_PARTY, MON_GIVEN_TO_PC, or MON_CANT_GIVE depending on the outcome.
+	.macro givemon species:req, level:req, item=ITEM_NONE
+	.byte SCR_OP_GIVEMON
 	.2byte \species
 	.byte \level
 	.2byte \item
-	.4byte \unknown1
-	.4byte \unknown2
-	.byte \unknown3
+	.4byte 0
+	.4byte 0
+	.byte 0
 	.endm
 
+	@ Gives the player an Egg of the specified species.
+	@ VAR_RESULT will be set to MON_GIVEN_TO_PARTY, MON_GIVEN_TO_PC, or MON_CANT_GIVE depending on the outcome.
 	.macro giveegg species:req
-	.byte 0x7a
+	.byte SCR_OP_GIVEEGG
 	.2byte \species
 	.endm
 
-	.macro setmonmove index:req, slot:req, move:req
-	.byte 0x7b
-	.byte \index
+	@ Replaces the move at 'slot' of the Pokémon in the player's party at 'partyIndex' with the specified move.
+	@ If a value greater than PARTY_SIZE is given for partyIndex it will use the last Pokémon in the party instead.
+	@ Note that this means in vanilla a value equal to PARTY_SIZE for partyIndex will go out of bounds.
+	.macro setmonmove partyIndex:req, slot:req, move:req
+	.byte SCR_OP_SETMONMOVE
+	.byte \partyIndex
 	.byte \slot
 	.2byte \move
 	.endm
 
-	@ Checks if at least one Pokemon in the player's party knows the specified (index) attack. If so, variable 0x800D (LASTRESULT) is set to the (zero-indexed) slot number of the first Pokemon that knows the move. If not, LASTRESULT is set to 0x0006. Variable 0x8004 is also set to this Pokemon's species.
-	.macro checkpartymove index:req
-	.byte 0x7c
-	.2byte \index
+	@ Checks if at least one Pokemon in the player's party knows the specified move. If so, VAR_RESULT is set to the
+	@ (zero-indexed) slot number of the first Pokemon that knows the move. If not, VAR_RESULT is set to PARTY_SIZE.
+	@ VAR_0x8004 is also set to this Pokemon's species.
+	.macro checkpartymove move:req
+	.byte SCR_OP_CHECKPARTYMOVE
+	.2byte \move
 	.endm
 
-	@ Writes the name of the Pokemon at index species to the specified buffer.
-	.macro bufferspeciesname out:req, species:req
-	.byte 0x7d
-	.byte \out
+	@ Converts STR_VAR_1, STR_VAR_2, or STR_VAR_3 to its corresponding index into sScriptStringVars (0, 1, or 2).
+	@ If given anything else it will output it directly.
+	@ Note: Because the STR_VAR_# arguments given to this macro are not part of a processed string they are not
+	@       replaced with their charmap values, they are just passed as the literal characters "STR_VAR_#".
+	.macro stringvar id:req
+	.if \id == STR_VAR_1
+		.byte 0
+	.elseif \id == STR_VAR_2
+		.byte 1
+	.elseif \id == STR_VAR_3
+		.byte 2
+	.else
+		.byte \id
+	.endif
+	.endm
+
+	@ Writes the name of the given Pokemon species to the specified buffer.
+	.macro bufferspeciesname stringVarId:req, species:req
+	.byte SCR_OP_BUFFERSPECIESNAME
+	stringvar \stringVarId
 	.2byte \species
 	.endm
 
 	@ Writes the name of the species of the first Pokemon in the player's party to the specified buffer.
-	.macro bufferleadmonspeciesname out:req
-	.byte 0x7e
-	.byte \out
+	.macro bufferleadmonspeciesname stringVarId:req
+	.byte SCR_OP_BUFFERLEADMONSPECIESNAME
+	stringvar \stringVarId
 	.endm
 
-	@ Writes the nickname of the Pokemon in slot slot (zero-indexed) of the player's party to the specified buffer. If an empty or invalid slot is specified, ten spaces ("") are written to the buffer.
-	.macro bufferpartymonnick out:req, slot:req
-	.byte 0x7f
-	.byte \out
+	@ Writes the nickname of the Pokemon in 'slot' (zero-indexed) of the player's party to the specified buffer.
+	@ If an empty or invalid slot is specified, ten spaces ("") are written to the buffer.
+	.macro bufferpartymonnick stringVarId:req, slot:req
+	.byte SCR_OP_BUFFERPARTYMONNICK
+	stringvar \stringVarId
 	.2byte \slot
 	.endm
 
-	@ Writes the name of the item at index item to the specified buffer. If the specified index is larger than the number of items in the game (0x176), the name of item 0 ("????????") is buffered instead.
-	.macro bufferitemname out:req, item:req
-	.byte 0x80
-	.byte \out
+	@ Writes the name of the specified item to the specified buffer. If itemId is >= ITEMS_COUNT,
+	@ then the name of ITEM_NONE ("????????") is buffered instead.
+	.macro bufferitemname stringVarId:req, item:req
+	.byte SCR_OP_BUFFERITEMNAME
+	stringvar \stringVarId
 	.2byte \item
 	.endm
 
-	@ Writes the name of the decoration at index decoration to the specified buffer. In FireRed, this command is a nop.
-	.macro bufferdecorationname out:req, decoration:req
-	.byte 0x81
-	.byte \out
+	@ Writes the name of the specified decoration to the specified buffer.
+	.macro bufferdecorationname stringVarId:req, decoration:req
+	.byte SCR_OP_BUFFERDECORATIONNAME
+	stringvar \stringVarId
 	.2byte \decoration
 	.endm
 
-	@ Writes the name of the move at index move to the specified buffer.
-	.macro buffermovename out:req, move:req
-	.byte 0x82
-	.byte \out
+	@ Writes the name of the specified move to the specified buffer.
+	.macro buffermovename stringVarId:req, move:req
+	.byte SCR_OP_BUFFERMOVENAME
+	stringvar \stringVarId
 	.2byte \move
 	.endm
 
 	@ Converts the value of input to a decimal string, and writes that string to the specified buffer.
-	.macro buffernumberstring out:req, input:req
-	.byte 0x83
-	.byte \out
+	.macro buffernumberstring stringVarId:req, input:req
+	.byte SCR_OP_BUFFERNUMBERSTRING
+	stringvar \stringVarId
 	.2byte \input
 	.endm
 
-	@ Writes the standard string identified by index to the specified buffer. This command has no protections in place at all, so specifying an invalid standard string (e.x. 0x2B) can and usually will cause data corruption.
-	.macro bufferstdstring out:req, index:req
-	.byte 0x84
-	.byte \out
+	@ Writes the given standard string (STDSTRING_*) to the specified buffer. Invalid std string ids are not handled.
+	.macro bufferstdstring stringVarId:req, index:req
+	.byte SCR_OP_BUFFERSTDSTRING
+	stringvar \stringVarId
 	.2byte \index
 	.endm
 
-	@ Copies the string at offset to the specified buffer.
-	.macro bufferstring out:req, offset:req
-	.byte 0x85
-	.byte \out
-	.4byte \offset
+	@ Copies the string at the given pointer to the specified buffer.
+	.macro bufferstring stringVarId:req, text:req
+	.byte SCR_OP_BUFFERSTRING
+	stringvar \stringVarId
+	.4byte \text
 	.endm
 
 	@ Opens the Pokemart system, offering the specified products for sale.
+	@ Products should be a list of .2byte item values preceded by an .align 2
 	.macro pokemart products:req
-	.byte 0x86
+	.byte SCR_OP_POKEMART
 	.4byte \products
+	.endm
+
+	@ Used as the endpoint for a Pokemart item list
+	.macro pokemartlistend
+	.2byte ITEM_NONE
+	release
+	end
 	.endm
 
 	@ Opens the Pokemart system and treats the list of items as decorations.
+	@ Products should be a list of .2byte decoration values preceded by an .align 2
 	.macro pokemartdecoration products:req
-	.byte 0x87
+	.byte SCR_OP_POKEMARTDECORATION
 	.4byte \products
 	.endm
 
-	@ Apparent clone of pokemartdecoration.
+	@ Identical to pokemartdecoration, but with slight changes to the clerk dialogue. See uses of MART_TYPE_DECOR2.
 	.macro pokemartdecoration2 products:req
-	.byte 0x88
+	.byte SCR_OP_POKEMARTDECORATION2
 	.4byte \products
 	.endm
 
-	@ Starts up the slot machine minigame.
-	.macro playslotmachine word:req
-	.byte 0x89
-	.2byte \word
+	@ Starts up the slot machine minigame. id is a SLOT_MACHINE_* value that influences probabilities of certain reel outcomes.
+	.macro playslotmachine id:req
+	.byte SCR_OP_PLAYSLOTMACHINE
+	.2byte \id
 	.endm
 
-	@ Sets a berry tree's specific berry and growth stage. In FireRed, this command is a nop.
-	.macro setberrytree tree_id:req, berry:req, growth_stage:req
-	.byte 0x8a
-	.byte \tree_id
+	@ Sets a berry tree's berry and growth stage. treeId is any BERRY_TREE_* constant (an index into berryTrees in SaveBlock1),
+	@ berry is any ITEM_TO_BERRY(ITEM_BERRY_NAME) value, and growthStage is any BERRY_STAGE_* constant.
+	.macro setberrytree treeId:req, berry:req, growthStage:req
+	.byte SCR_OP_SETBERRYTREE
+	.byte \treeId
 	.byte \berry
-	.byte \growth_stage
+	.byte \growthStage
 	.endm
 
-	@ This allows you to choose a Pokemon to use in a contest. In FireRed, this command sets the byte at 0x03000EA8 to 0x01.
+	@ Opens the party menu to select a Pokemon for a contest.
 	.macro choosecontestmon
-	.byte 0x8b
+	.byte SCR_OP_CHOOSECONTESTMON
 	.endm
 
-	@ Starts a contest. In FireRed, this command is a nop.
+	@ Starts the appeals round of a contest.
 	.macro startcontest
-	.byte 0x8c
+	.byte SCR_OP_STARTCONTEST
 	.endm
 
-	@ Shows the results of a contest. In FireRed, this command is a nop.
+	@ Shows the results screen of a contest.
 	.macro showcontestresults
-	.byte 0x8d
+	.byte SCR_OP_SHOWCONTESTRESULTS
 	.endm
 
-	@ Starts a contest over a link connection. In FireRed, this command is a nop.
+	@ Starts communication to initialize a link contest.
 	.macro contestlinktransfer
-	.byte 0x8e
+	.byte SCR_OP_CONTESTLINKTRANSFER
 	.endm
 
-	@ Stores a random integer between 0 and limit in variable 0x800D (LASTRESULT).
+	@ Stores a random integer between 0 and limit (exclusive of limit) in VAR_RESULT.
 	.macro random limit:req
-	.byte 0x8f
+	.byte SCR_OP_RANDOM
 	.2byte \limit
 	.endm
 
-	@ If check is 0x00, this command adds value to the player's money.
-	.macro givemoney value:req, check:req
-	.byte 0x90
+	@ Adds value to the player's money. If adding 'value' money would exceed MAX_MONEY, the player's money is set to MAX_MONEY.
+	@ If 'disable' is set to anything but 0 then this command does nothing.
+	.macro addmoney value:req, disable=0
+	.byte SCR_OP_ADDMONEY
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
-	@ If check is 0x00, this command subtracts value from the player's money.
-	.macro takemoney value:req, check:req
-	.byte 0x91
+	@ Subtracts value from the player's money. If the player has less than 'value' money, their money is set to 0.
+	@ If 'disable' is set to anything but 0 then this command does nothing.
+	.macro removemoney value:req, disable=0
+	.byte SCR_OP_REMOVEMONEY
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
-	@ If check is 0x00, this command will check if the player has value or more money; script variable 0x800D (LASTRESULT) is set to 0x0001 if the player has enough money, or 0x0000 if the do not.
-	.macro checkmoney value:req, check:req
-	.byte 0x92
+	@ Checks if the player has money >= value. VAR_RESULT is set to TRUE if the player has enough money, or FALSE if they do not.
+	@ If 'disable' is set to anything but 0 then this command does nothing.
+	.macro checkmoney value:req, disable=0
+	.byte SCR_OP_CHECKMONEY
 	.4byte \value
-	.byte \check
+	.byte \disable
 	.endm
 
-	@ Spawns a secondary box showing how much money the player has.
-	.macro showmoneybox x:req, y:req, check:req
-	.byte 0x93
+	@ Creates a window showing how much money the player has.
+	@ If 'disable' is set to anything but 0 then this command does nothing.
+	.macro showmoneybox x:req, y:req, disable=0
+	.byte SCR_OP_SHOWMONEYBOX
 	.byte \x
 	.byte \y
-	.byte \check
+	.byte \disable
 	.endm
 
-	@ Hides the secondary box spawned by showmoney.
+	@ Destroys the window created by showmoneybox. Consumption of the x and y arguments was dummied out.
 	.macro hidemoneybox
-	.byte 0x94
+	.byte SCR_OP_HIDEMONEYBOX
+	.byte 0  @ \x
+	.byte 0  @ \y
 	.endm
 
-	@ Updates the secondary box spawned by showmoney. Consumes but does not use arguments.
-	.macro updatemoneybox x:req, y:req
-	.byte 0x95
-	.byte \x
-	.byte \y
+	@ Updates the window created by showmoneybox. Consumption of the x and y arguments was dummied out.
+	@ If 'disable' is set to anything but 0 then this command does nothing.
+	.macro updatemoneybox disable=0
+	.byte SCR_OP_UPDATEMONEYBOX
+	.byte 0  @ \x
+	.byte 0  @ \y
+	.byte \disable
 	.endm
 
-	@ Gets the price reduction for the index given. In FireRed, this command is a nop.
-	.macro getpricereduction index:req
-	.byte 0x96
-	.2byte \index
+	@ Gets whether the effects of the specified PokeNews program are active. newsKind is a POKENEWS_* constant.
+	.macro getpokenewsactive newsKind:req
+	.byte SCR_OP_GETPOKENEWSACTIVE
+	.2byte \newsKind
 	.endm
 
-	@ Fades the screen to and from black and white. Mode 0x00 fades from black, mode 0x01 fades out to black, mode 0x2 fades in from white, and mode 0x3 fades out to white.
-	.macro fadescreen effect:req
-	.byte 0x97
-	.byte \effect
+	@ Fades the screen to and from black and white. Modes are FADE_(TO/FROM)_(WHITE/BLACK)
+	.macro fadescreen mode:req
+	.byte SCR_OP_FADESCREEN
+	.byte \mode
 	.endm
 
-	@ Fades the screen to and from black and white. Mode 0x00 fades from black, mode 0x01 fades out to black, mode 0x2 fades in from white, and mode 0x3 fades out to white. Other modes may exist.
-	.macro fadescreenspeed effect:req, speed:req
-	.byte 0x98
-	.byte \effect
+	@ Fades the screen to and from black and white. Modes are FADE_(TO/FROM)_(WHITE/BLACK)
+	.macro fadescreenspeed mode:req, speed:req
+	.byte SCR_OP_FADESCREENSPEED
+	.byte \mode
 	.byte \speed
 	.endm
 
-	.macro setflashradius word:req
-	.byte 0x99
-	.2byte \word
+	@ Sets the flash level. A level of 0 is fully bright, a level of 1 is the largest flash radius, a level
+	@ of 7 is the smallest flash radius, a level of 8 is fully black.
+	.macro setflashlevel level:req
+	.byte SCR_OP_SETFLASHLEVEL
+	.2byte \level
 	.endm
 
-	.macro animateflash byte:req
-	.byte 0x9a
-	.byte \byte
+	@ Animates the flash radius from its current size to the size it would be at the specified level.
+	@ Note that this does not actually change the current flash level. It's typically used just before a setflashlevel.
+	.macro animateflash level:req
+	.byte SCR_OP_ANIMATEFLASH
+	.byte \level
 	.endm
 
-	.macro messageautoscroll pointer:req
-	.byte 0x9b
-	.4byte \pointer
+	@ Automatically scrolls through the message without player input and at a fixed speed.
+	.macro messageautoscroll text:req
+	.byte SCR_OP_MESSAGEAUTOSCROLL
+	.4byte \text
 	.endm
 
-	@ Executes the specified field move animation.
+	@ Executes the specified field effect animation (FLDEFF_*).
 	.macro dofieldeffect animation:req
-	.byte 0x9c
+	.byte SCR_OP_DOFIELDEFFECT
 	.2byte \animation
 	.endm
 
-	@ Sets up the field effect argument argument with the value value.
-	.macro setfieldeffectargument argument:req, param:req
-	.byte 0x9d
-	.byte \argument
-	.2byte \param
+	@ Sets the field effect argument at index 'argNum' to 'value.'
+	.macro setfieldeffectargument argNum:req, value:req
+	.byte SCR_OP_SETFIELDEFFECTARGUMENT
+	.byte \argNum
+	.2byte \value
 	.endm
 
-	@ Blocks script execution until all playing field move animations complete.
+	@ Blocks script execution until all playing field effect animations complete.
 	.macro waitfieldeffect animation:req
-	.byte 0x9e
+	.byte SCR_OP_WAITFIELDEFFECT
 	.2byte \animation
 	.endm
 
-	@ Sets which healing place the player will return to if all of the Pokemon in their party faint.
+	@ Sets which healing location (HEAL_LOCATION_*) the player will return to if all of the Pokemon in their party faint.
 	.macro setrespawn heallocation:req
-	.byte 0x9f
+	.byte SCR_OP_SETRESPAWN
 	.2byte \heallocation
 	.endm
 
-	@ Checks the player's gender. If male, then 0x0000 is stored in variable 0x800D (LASTRESULT). If female, then 0x0001 is stored in LASTRESULT.
+	@ Checks the player's gender. Stores the result (MALE (0) or FEMALE (1)) in VAR_RESULT.
 	.macro checkplayergender
-	.byte 0xa0
+	.byte SCR_OP_CHECKPLAYERGENDER
 	.endm
 
-	@ Plays the specified (species) Pokemon's cry. You can use waitcry to block script execution until the sound finishes.
-	.macro playmoncry species:req, effect:req
-	.byte 0xa1
+	@ Plays the cry of the given species. Mode is any CRY_MODE_* constant.
+	@ You can use waitmoncry to block script execution until the cry finishes.
+	.macro playmoncry species:req, mode:req
+	.byte SCR_OP_PLAYMONCRY
 	.2byte \species
-	.2byte \effect
+	.2byte \mode
 	.endm
 
-	@ Changes the metatile at (x, y) on the current map.
-	.macro setmetatile x:req, y:req, metatile_number:req, has_collision:req
-	.byte 0xa2
+	@ Set the metatile at (x, y) on the current map to the given metatile and impassability.
+	.macro setmetatile x:req, y:req, metatileId:req, impassable:req
+	.byte SCR_OP_SETMETATILE
 	.2byte \x
 	.2byte \y
-	.2byte \metatile_number
-	.2byte \has_collision
+	.2byte \metatileId
+	.2byte \impassable
 	.endm
 
 	@ Queues a weather change to the default weather for the map.
 	.macro resetweather
-	.byte 0xa3
+	.byte SCR_OP_RESETWEATHER
 	.endm
 
 	@ Queues a weather change to type weather.
 	.macro setweather type:req
-	.byte 0xa4
+	.byte SCR_OP_SETWEATHER
 	.2byte \type
 	.endm
 
 	@ Executes the weather change queued with resetweather or setweather. The current weather will smoothly fade into the queued weather.
 	.macro doweather
-	.byte 0xa5
+	.byte SCR_OP_DOWEATHER
 	.endm
 
-	@ This command manages cases in which maps have tiles that change state when stepped on (specifically, cracked/breakable floors).
-	.macro setstepcallback subroutine:req
-	.byte 0xa6
-	.byte \subroutine
+	@ Enables the overworld task specified by stepCbId (STEP_CB_*). Only 1 can be active at a time. See src/field_tasks.c for more.
+	.macro setstepcallback stepCbId:req
+	.byte SCR_OP_SETSTEPCALLBACK
+	.byte \stepCbId
 	.endm
 
+	@ Sets the current map layout to the one specified by index (LAYOUT_*).
+	@ This should be done before the layout is loaded, typically in the ON_TRANSITION map script.
 	.macro setmaplayoutindex index:req
-	.byte 0xa7
+	.byte SCR_OP_SETMAPLAYOUTINDEX
 	.2byte \index
 	.endm
 
-	.macro setobjectpriority index:req, map:req, priority:req
-	.byte 0xa8
-	.2byte \index
+	@ Sets the specified object's sprite's subpriority, and sets fixedPriority to TRUE.
+	@ Only used to hide the player and Briney behind the boat.
+	.macro setobjectsubpriority localId:req, map:req, subpriority:req
+	.byte SCR_OP_SETOBJECTSUBPRIORITY
+	.2byte \localId
 	map \map
-	.byte \priority
+	.byte \subpriority
 	.endm
 
-	.macro resetobjectpriority index:req, map:req
-	.byte 0xa9
-	.2byte \index
+	@ Sets the specified object's fixedPriority to FALSE. Does not change the subpriority field.
+	.macro resetobjectsubpriority localId:req, map:req
+	.byte SCR_OP_RESETOBJECTSUBPRIORITY
+	.2byte \localId
 	map \map
 	.endm
 
-	.macro createvobject sprite:req, byte2:req, x:req, y:req, elevation, direction
-	.byte 0xaa
-	.byte \sprite
-	.byte \byte2
+	@ Creates a sprite with object graphics. Used when creating large groups of static NPCs that exceed
+	@ the object event limit (e.g. Contest / Battle Dome audiences and Union Room group members).
+	@ The specified id can be used to refer to the sprite again later with turnvobject.
+	.macro createvobject graphicsId:req, id:req, x:req, y:req, elevation=3, direction=DIR_SOUTH
+	.byte SCR_OP_CREATEVOBJECT
+	.byte \graphicsId
+	.byte \id
 	.2byte \x
 	.2byte \y
 	.byte \elevation
 	.byte \direction
 	.endm
 
-	.macro turnvobject index:req, direction:req
-	.byte 0xab
-	.byte \index
+	@ Turns a sprite created with createvobject.
+	.macro turnvobject id:req, direction:req
+	.byte SCR_OP_TURNVOBJECT
+	.byte \id
 	.byte \direction
 	.endm
 
-	@ Opens the door metatile at (X, Y) with an animation.
+	@ Opens the door metatile at (x, y) with an animation.
 	.macro opendoor x:req, y:req
-	.byte 0xac
+	.byte SCR_OP_OPENDOOR
 	.2byte \x
 	.2byte \y
 	.endm
 
-	@ Closes the door metatile at (X, Y) with an animation.
+	@ Closes the door metatile at (x, y) with an animation.
 	.macro closedoor x:req, y:req
-	.byte 0xad
+	.byte SCR_OP_CLOSEDOOR
 	.2byte \x
 	.2byte \y
 	.endm
 
 	@ Waits for the door animation started with opendoor or closedoor to finish.
 	.macro waitdooranim
-	.byte 0xae
+	.byte SCR_OP_WAITDOORANIM
 	.endm
 
-	@ Sets the door tile at (x, y) to be open without an animation.
+	@ Sets the door metatile at (x, y) to be open without an animation.
 	.macro setdooropen x:req, y:req
-	.byte 0xaf
+	.byte SCR_OP_SETDOOROPEN
 	.2byte \x
 	.2byte \y
 	.endm
 
-	@ Sets the door tile at (x, y) to be closed without an animation.
+	@ Sets the door metatile at (x, y) to be closed without an animation.
 	.macro setdoorclosed x:req, y:req
-	.byte 0xb0
+	.byte SCR_OP_SETDOORCLOSED
 	.2byte \x
 	.2byte \y
 	.endm
 
-	@ In Emerald, this command consumes its parameters and does nothing. In FireRed, this command is a nop.
+	@ Consumes its parameters and does nothing. It is implemented but unused in Ruby/Sapphire.
 	.macro addelevmenuitem a:req, b:req, c:req, d:req
-	.byte 0xb1
+	.byte SCR_OP_ADDELEVMENUITEM
 	.byte \a
 	.2byte \b
 	.2byte \c
 	.2byte \d
 	.endm
 
-	@ In FireRed and Emerald, this command is a nop.
+	@ Does nothing. It is implemented but unused in Ruby/Sapphire.
 	.macro showelevmenu
-	.byte 0xb2
+	.byte SCR_OP_SHOWELEVMENU
 	.endm
 
+	@ Gets the number of coins the player has and stores it in the variable 'out'.
 	.macro checkcoins out:req
-	.byte 0xb3
+	.byte SCR_OP_CHECKCOINS
 	.2byte \out
 	.endm
 
-	.macro givecoins count:req
-	.byte 0xb4
+	@ Gives 'count' coins to the player, up to a total of MAX_COINS.
+	@ If the player already has MAX_COINS then VAR_RESULT is set to TRUE, otherwise it is set to FALSE.
+	.macro addcoins count:req
+	.byte SCR_OP_ADDCOINS
 	.2byte \count
 	.endm
 
-	.macro takecoins count:req
-	.byte 0xb5
+	@ Takes 'count' coins from the player.
+	@ If the player has fewer than 'count' coins then no coins are taken and VAR_RESULT is set to TRUE.
+	@ Otherwise VAR_RESULT is set to FALSE.
+	.macro removecoins count:req
+	.byte SCR_OP_REMOVECOINS
 	.2byte \count
 	.endm
 
-	@ Prepares to start a wild battle against a species at Level level holding item. Running this command will not affect normal wild battles. You start the prepared battle with dowildbattle.
-	.macro setwildbattle species:req, level:req, item:req
-	.byte 0xb6
+	@ Prepares to start a wild battle against a 'species' at 'level' holding 'item'. Running this command will not affect
+	@ normal wild battles. You start the prepared battle with dowildbattle.
+	.macro setwildbattle species:req, level:req, item=ITEM_NONE
+	.byte SCR_OP_SETWILDBATTLE
 	.2byte \species
 	.byte \level
 	.2byte \item
@@ -1299,257 +1494,290 @@
 
 	@ Starts a wild battle against the Pokemon generated by setwildbattle. Blocks script execution until the battle finishes.
 	.macro dowildbattle
-	.byte 0xb7
+	.byte SCR_OP_DOWILDBATTLE
 	.endm
 
+	@ Sets a relative address to be used by the other vcommands as part of a Mystery Gift script.
 	.macro setvaddress pointer:req
-	.byte 0xb8
+	.byte SCR_OP_SETVADDRESS
 	.4byte \pointer
 	.endm
 
-	.macro vgoto pointer:req
-	.byte 0xb9
-	.4byte \pointer
+	@ Equivalent to goto using the relative address set by setvaddress.
+	.macro vgoto destination:req
+	.byte SCR_OP_VGOTO
+	.4byte \destination
 	.endm
 
-	.macro vcall pointer:req
-	.byte 0xba
-	.4byte \pointer
+	@ Equivalent to call using the relative address set by setvaddress.
+	.macro vcall destination:req
+	.byte SCR_OP_VCALL
+	.4byte \destination
 	.endm
 
-	.macro vgoto_if byte:req, pointer:req
-	.byte 0xbb
-	.byte \byte
-	.4byte \pointer
+	@ Equivalent to goto_if using the relative address set by setvaddress.
+	.macro vgoto_if condition:req, destination:req
+	.byte SCR_OP_VGOTO_IF
+	.byte \condition
+	.4byte \destination
 	.endm
 
-	.macro vcall_if byte:req, pointer:req
-	.byte 0xbc
-	.byte \byte
-	.4byte \pointer
+	@ Equivalent to call_if using the relative address set by setvaddress.
+	.macro vcall_if condition:req, destination:req
+	.byte SCR_OP_VCALL_IF
+	.byte \condition
+	.4byte \destination
 	.endm
 
-	.macro vmessage pointer:req
-	.byte 0xbd
-	.4byte \pointer
+	@ Equivalent to message using the relative address set by setvaddress.
+	.macro vmessage text:req
+	.byte SCR_OP_VMESSAGE
+	.4byte \text
 	.endm
 
-	.macro vloadptr pointer:req
-	.byte 0xbe
-	.4byte \pointer
+	@ Expands the given text at the pointer (- the relative address set by setvaddress) into gStringVar4
+	.macro vbuffermessage text:req
+	.byte SCR_OP_VBUFFERMESSAGE
+	.4byte \text
 	.endm
 
-	.macro vbufferstring byte:req, pointer:req
-	.byte 0xbf
-	.byte \byte
-	.4byte \pointer
+	@ Equivalent to bufferstring using the relative address set by setvaddress.
+	.macro vbufferstring stringVarIndex:req, text:req
+	.byte SCR_OP_VBUFFERSTRING
+	stringvar \stringVarIndex
+	.4byte \text
 	.endm
 
-	@ Spawns a secondary box showing how many Coins the player has.
+	@ Create a window showing how many Coins the player has.
 	.macro showcoinsbox x:req, y:req
-	.byte 0xc0
+	.byte SCR_OP_SHOWCOINSBOX
 	.byte \x
 	.byte \y
 	.endm
 
-	@ Hides the secondary box spawned by showcoins. It consumes its arguments but doesn't use them.
+	@ Destroys the window created by showcoins. It consumes its arguments but doesn't use them.
 	.macro hidecoinsbox x:req, y:req
-	.byte 0xc1
+	.byte SCR_OP_HIDECOINSBOX
 	.byte \x
 	.byte \y
 	.endm
 
-	@ Updates the secondary box spawned by showcoins. It consumes its arguments but doesn't use them.
+	@ Updates the window created by showcoins. It consumes its arguments but doesn't use them.
 	.macro updatecoinsbox x:req, y:req
-	.byte 0xc2
+	.byte SCR_OP_UPDATECOINSBOX
 	.byte \x
 	.byte \y
 	.endm
 
-	@ Increases the value of the specified game stat by 1. The stat's value will not be allowed to exceed 0x00FFFFFF.
+	@ Increases the value of the specified game stat by 1. The maximum value of a stat is 0xFFFFFF. See include/constants/game_stat.h
 	.macro incrementgamestat stat:req
-	.byte 0xc3
+	.byte SCR_OP_INCREMENTGAMESTAT
 	.byte \stat
 	.endm
 
 	@ Sets the destination that using an Escape Rope or Dig will take the player to.
-	.macro setescapewarp map:req, warp:req, x:req, y:req
-	.byte 0xc4
-	map \map
-	.byte \warp
-	.2byte \x
-	.2byte \y
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro setescapewarp map:req, a, b, c
+	.byte SCR_OP_SETESCAPEWARP
+	formatwarp \map, \a, \b, \c
 	.endm
 
 	@ Blocks script execution until cry finishes.
 	.macro waitmoncry
-	.byte 0xc5
+	.byte SCR_OP_WAITMONCRY
 	.endm
 
-	@ Writes the name of the specified (box) PC box to the specified buffer.
-	.macro bufferboxname out:req, box:req
-	.byte 0xc6
-	.byte \out
+	@ Writes the name of the specified PC box to the specified buffer.
+	.macro bufferboxname stringVarId:req, box:req
+	.byte SCR_OP_BUFFERBOXNAME
+	stringvar \stringVarId
 	.2byte \box
 	.endm
 
-	@ Sets the color of the text in standard message boxes. 0x00 produces blue (male) text, 0x01 produces red (female) text, 0xFF resets the color to the default for the current OW's gender, and all other values produce black text.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro textcolor color:req
-	.byte 0xc7
+	.byte SCR_OP_TEXTCOLOR
 	.byte \color
 	.endm
 
-	@ The exact purpose of this command is unknown, but it is related to the blue help-text box that appears on the bottom of the screen when the Main Menu is opened.
-	.macro loadhelp pointer:req
-	.byte 0xc8
-	.4byte \pointer
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
+	.macro loadhelp text:req
+	.byte SCR_OP_LOADHELP
+	.4byte \text
 	.endm
 
-	@ The exact purpose of this command is unknown, but it is related to the blue help-text box that appears on the bottom of the screen when the Main Menu is opened.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro unloadhelp
-	.byte 0xc9
+	.byte SCR_OP_UNLOADHELP
 	.endm
 
-	@ After using this command, all standard message boxes will use the signpost frame.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro signmsg
-	.byte 0xca
+	.byte SCR_OP_SIGNMSG
 	.endm
 
-	@ Ends the effects of signmsg, returning message box frames to normal.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro normalmsg
-	.byte 0xcb
+	.byte SCR_OP_NORMALMSG
 	.endm
 
-	@ Compares the value of a hidden variable to a dword.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro comparehiddenvar a:req, value:req
-	.byte 0xcc
+	.byte SCR_OP_COMPAREHIDDENVAR
 	.byte \a
 	.4byte \value
 	.endm
 
-	@ Makes the Pokemon in the specified slot of the player's party obedient. It will not randomly disobey orders in battle.
-	.macro setmonobedient slot:req
-	.byte 0xcd
+	@ Sets the modernFatefulEncounter bit for the Pokemon in the specified slot of the player's party.
+	.macro setmodernfatefulencounter slot:req
+	.byte SCR_OP_SETMODERNFATEFULENCOUNTER
 	.2byte \slot
 	.endm
 
-	@ Checks if the Pokemon in the specified slot of the player's party is obedient. If the Pokemon is disobedient, 0x0001 is written to script variable 0x800D (LASTRESULT). If the Pokemon is obedient (or if the specified slot is empty or invalid), 0x0000 is written.
-	.macro checkmonobedience slot:req
-	.byte 0xce
+	@ Checks if the modernFatefulEncounter bit is set for the Pokemon in the specified slot of the player's party. If it isn't set,
+	@ VAR_RESULT is TRUE. If the bit is set (or if the specified slot is empty or invalid), VAR_RESULT is FALSE.
+	.macro checkmodernfatefulencounter slot:req
+	.byte SCR_OP_CHECKMODERNFATEFULENCOUNTER
 	.2byte \slot
 	.endm
 
-	@ Depending on factors I haven't managed to understand yet, this command may cause script execution to jump to the offset specified by the pointer at 0x020375C0.
-	.macro gotoram
-	.byte 0xcf
+	@ Jumps to the ram script saved from a Wonder Card. If there is no valid saved Wonder Card or if the
+	@ ram script is invalid then this does nothing.
+	.macro trywondercardscript
+	.byte SCR_OP_TRYWONDERCARDSCRIPT
 	.endm
 
-	@ Sets worldmapflag to 1. This allows the player to Fly to the corresponding map, if that map has a flightspot.
+	@ Used only in FireRed/LeafGreen, does nothing in Emerald.
 	.macro setworldmapflag worldmapflag:req
-	.byte 0xd0
+	.byte SCR_OP_SETWORLDMAPFLAG
 	.2byte \worldmapflag
 	.endm
 
-	@ Clone of warpteleport? It is apparently only used in FR/LG, and only with specials.[source]
-	.macro warpteleport2 map:req, warp:req, x:req, y:req
-	.byte 0xd1
-	map \map
-	.byte \warp
-	.2byte \x
-	.2byte \y
+	@ Warps the player to the specified map using a teleport effect. Effect is similar to warpteleport, but
+	@ this warp has no fade out and maintains the original facing direction.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpspinenter map:req, a, b, c
+	.byte SCR_OP_WARPSPINENTER
+	formatwarp \map, \a, \b, \c
 	.endm
 
 	@ Changes the location where the player caught the Pokemon in the specified slot of their party.
 	.macro setmonmetlocation slot:req, location:req
-	.byte 0xd2
+	.byte SCR_OP_SETMONMETLOCATION
 	.2byte \slot
 	.byte \location
 	.endm
 
-	.macro mossdeepgym1 unknown:req
-	.byte 0xd3
-	.2byte \unknown
+	@ For the rotating tile puzzles in Mossdeep Gym / Trick House Room 7. Moves the objects one rotation
+	@ on the colored puzzle specified by puzzleNumber.
+	.macro moverotatingtileobjects puzzleNumber:req
+	.byte SCR_OP_MOVEROTATINGTILEOBJECTS
+	.2byte \puzzleNumber
 	.endm
 
-	.macro mossdeepgym2
-	.byte 0xd4
+	@ For the rotating tile puzzles in Mossdeep Gym / Trick House Room 7. Updates the facing direction of all objects on the puzzle tiles
+	.macro turnrotatingtileobjects
+	.byte SCR_OP_TURNROTATINGTILEOBJECTS
 	.endm
 
-	@ In FireRed, this command is a nop.
-	.macro mossdeepgym3 var:req
-	.byte 0xd5
-	.2byte \var
+	@ For the rotating tile puzzles in Mossdeep Gym / Trick House Room 7. Allocates memory for the puzzle objects.
+	@ isTrickHouse is needed to determine which of the two maps the puzzle is on, in order to know where in the tileset
+	@ the puzzle tiles start (TRUE for Trick House Room, FALSE for Mossdeep Gym).
+	.macro initrotatingtilepuzzle isTrickHouse:req
+	.byte SCR_OP_INITROTATINGTILEPUZZLE
+	.2byte \isTrickHouse
 	.endm
 
-	.macro mossdeepgym4
-	.byte 0xd6
+	@ For the rotating tile puzzles in Mossdeep Gym / Trick House Room 7. Frees the memory allocated for the puzzle objects.
+	.macro freerotatingtilepuzzle
+	.byte SCR_OP_FREEROTATINGTILEPUZZLE
 	.endm
 
-	.macro warp7 map:req, byte:req, word1:req, word2:req
-	.byte 0xd7
-	map \map
-	.byte \byte
-	.2byte \word1
-	.2byte \word2
+	@ Warp used by the teleport tiles in the Mossdeep Gym. Plays SE_WARP_IN and does a simple fade transition.
+	@ Also skips reloading object events by setting SKIP_OBJECT_EVENT_LOAD.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpmossdeepgym map:req, a, b, c
+	.byte SCR_OP_WARPMOSSDEEPGYM
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	.macro cmdD8
-	.byte 0xd8
+	@ Sets the selected object to the id of the currently approaching trainer.
+	.macro selectapproachingtrainer
+	.byte SCR_OP_SELECTAPPROACHINGTRAINER
 	.endm
 
-	.macro cmdD9
-	.byte 0xd9
+	@ Freezes all objects immediately except the player and the approaching trainers.
+	@ The player and trainers are frozen once their movement is finished.
+	.macro lockfortrainer
+	.byte SCR_OP_LOCKFORTRAINER
 	.endm
 
-	.macro hidebox2
-	.byte 0xda
+	@ Destroys the window created by braillemessage.
+	.macro closebraillemessage
+	.byte SCR_OP_CLOSEBRAILLEMESSAGE
 	.endm
 
-	.macro message3 pointer:req
-	.byte 0xdb
-	.4byte \pointer
+	@ Prints and draws the message all at once rather than character by character.
+	@ Does not wait for player input to continue.
+	.macro messageinstant text:req
+	.byte SCR_OP_MESSAGEINSTANT
+	.4byte \text
 	.endm
 
-	.macro fadescreenswapbuffers byte:req
-	.byte 0xdc
-	.byte \byte
+	@ Equivalent to fadescreen but copies gPlttBufferUnfaded to gPaletteDecompressionBuffer on the fade out
+	@ and the reverse on the fade in, in effect saving gPlttBufferUnfaded to restore it.
+	.macro fadescreenswapbuffers mode:req
+	.byte SCR_OP_FADESCREENSWAPBUFFERS
+	.byte \mode
 	.endm
 
-	.macro buffertrainerclassname out:req, class:req
-	.byte 0xdd
-	.byte \out
-	.2byte \class
+	@ Buffers the specified trainer's class name to the given string var.
+	@ If the trainer id is >= TRAINERS_COUNT it will be treated as TRAINER_NONE.
+	.macro buffertrainerclassname stringVarId:req, trainerId:req
+	.byte SCR_OP_BUFFERTRAINERCLASSNAME
+	stringvar \stringVarId
+	.2byte \trainerId
 	.endm
 
-	.macro buffertrainername out:req, trainer:req
-	.byte 0xde
-	.byte \out
-	.2byte \trainer
+	@ Buffers the specified trainer's name to the given string var.
+	@ If the trainer id is >= TRAINERS_COUNT it will be treated as TRAINER_NONE.
+	.macro buffertrainername stringVarId:req, trainerId:req
+	.byte SCR_OP_BUFFERTRAINERNAME
+	stringvar \stringVarId
+	.2byte \trainerId
 	.endm
 
-	.macro pokenavcall pointer:req
-	.byte 0xdf
-	.4byte \pointer
+	@ Starts a Pokenav call with the given text.
+	.macro pokenavcall text:req
+	.byte SCR_OP_POKENAVCALL
+	.4byte \text
 	.endm
 
-	.macro warp8 map:req, byte:req, word1:req, word2:req
-	.byte 0xe0
-	map \map
-	.byte \byte
-	.2byte \word1
-	.2byte \word2
+	@ Warp with a fade to white. Used during the Sootopolis legendary fight.
+	@ Warp commands can be given either the id of which warp location to go to on the destination map
+	@ or a pair of x/y coordinates to go to directly on the destination map.
+	.macro warpwhitefade map:req, a, b, c
+	.byte SCR_OP_WARPWHITEFADE
+	formatwarp \map, \a, \b, \c
 	.endm
 
-	.macro buffercontesttypestring out:req, word:req
-	.byte 0xe1
-	.byte \out
-	.2byte \word
+	@ Buffers the name of the contest category to the buffer.
+	@ For example a category of CONTEST_CATEGORY_COOL will buffer the string "COOLNESS CONTEST".
+	.macro buffercontestname stringVarId:req, category:req
+	.byte SCR_OP_BUFFERCONTESTNAME
+	stringvar \stringVarId
+	.2byte \category
 	.endm
 
-	@ Writes the name of the specified (item) item to the specified buffer. If the specified item is a Berry (0x85 - 0xAE) or Poke Ball (0x4) and if the quantity is 2 or more, the buffered string will be pluralized ("IES" or "S" appended). If the specified item is the Enigma Berry, I have no idea what this command does (but testing showed no pluralization). If the specified index is larger than the number of items in the game (0x176), the name of item 0 ("????????") is buffered instead.
-	.macro bufferitemnameplural out:req, item:req, quantity:req
-	.byte 0xe2
-	.byte \out
+	@ Writes the name of the specified item to the specified buffer. If 'item' is a Berry or ITEM_POKE_BALL
+	@ and if the quantity is 2 or more, the buffered string will be pluralized ("IES" or "S" appended).
+	@ If the specified item is >= ITEMS_COUNT then the name of ITEM_NONE ("????????") is buffered instead.
+	.macro bufferitemnameplural stringVarId:req, item:req, quantity:req
+	.byte SCR_OP_BUFFERITEMNAMEPLURAL
+	stringvar \stringVarId
 	.2byte \item
 	.2byte \quantity
 	.endm
@@ -1559,70 +1787,128 @@
 
 	.macro goto_if_unset flag:req, dest:req
 	checkflag \flag
-	goto_if 0, \dest
+	goto_if FALSE, \dest
 	.endm
 
 	.macro goto_if_set flag:req, dest:req
 	checkflag \flag
-	goto_if 1, \dest
+	goto_if TRUE, \dest
 	.endm
 
-	.macro goto_if_lt dest:req @ LESS THAN
-	goto_if 0, \dest
-	.endm	
-
-	.macro goto_if_eq dest:req @ EQUAL
-	goto_if 1, \dest
+	@ Allows 'compare' followed by a conditional goto/call to be combined into a single statement.
+	@ The following are examples of the two acceptable formats this facilitates:
+	@ compare VAR_RESULT, TRUE
+	@ goto_if_eq MyScript
+	@ - or -
+	@ goto_if_eq VAR_RESULT, TRUE, MyScript
+	@
+	@ The first two arguments to this macro are the base command, e.g. 'goto_if 1' for goto_if_eq.
+	@ The remaining arguments 'a, b, c' depend on the format:
+	@ For a single statement, 'a' and 'b' are the values to compare and 'c' is the destination pointer.
+	@ For a statement preceded by a compare, 'a' is the destination pointer and 'b/c' are not provided.
+	.macro trycompare jump:req, condition:req, a:req, b, c
+	.ifnb \c
+		compare \a, \b
+		\jump \condition, \c
+	.else
+		\jump \condition, \a
+	.endif
 	.endm
 
-	.macro goto_if_gt dest:req @ GREATER THAN
-	goto_if 2, \dest
+	.macro goto_if_lt a:req, b, c
+	trycompare goto_if, LESS_THAN, \a, \b, \c
 	.endm
 
-	.macro goto_if_le dest:req @ LESS THAN OR EQUAL
-	goto_if 3, \dest
+	.macro goto_if_eq a:req, b, c
+	trycompare goto_if, EQUAL, \a, \b, \c
 	.endm
 
-	.macro goto_if_ge dest:req @ GREATER THAN OR EQUAL
-	goto_if 4, \dest
+	.macro goto_if_gt a:req, b, c
+	trycompare goto_if, GREATER_THAN, \a, \b, \c
 	.endm
 
-	.macro goto_if_ne dest:req @ NOT EQUAL
-	goto_if 5, \dest
+	.macro goto_if_le a:req, b, c
+	trycompare goto_if, LESS_THAN_OR_EQUAL, \a, \b, \c
+	.endm
+
+	.macro goto_if_ge a:req, b, c
+	trycompare goto_if, GREATER_THAN_OR_EQUAL, \a, \b, \c
+	.endm
+
+	.macro goto_if_ne a:req, b, c
+	trycompare goto_if, NOT_EQUAL, \a, \b, \c
 	.endm
 
 	.macro call_if_unset flag:req, dest:req
 	checkflag \flag
-	call_if 0, \dest
+	call_if FALSE, \dest
 	.endm
 
 	.macro call_if_set flag:req, dest:req
 	checkflag \flag
-	call_if 1, \dest
+	call_if TRUE, \dest
 	.endm
 
-	.macro call_if_lt dest:req @ LESS THAN
-	call_if 0, \dest
-	.endm	
-
-	.macro call_if_eq dest:req @ EQUAL
-	call_if 1, \dest
+	.macro call_if_lt a:req, b, c
+	trycompare call_if, LESS_THAN, \a, \b, \c
 	.endm
 
-	.macro call_if_gt dest:req @ GREATER THAN
-	call_if 2, \dest
+	.macro call_if_eq a:req, b, c
+	trycompare call_if, EQUAL, \a, \b, \c
 	.endm
 
-	.macro call_if_le dest:req @ LESS THAN OR EQUAL
-	call_if 3, \dest
+	.macro call_if_gt a:req, b, c
+	trycompare call_if, GREATER_THAN, \a, \b, \c
 	.endm
 
-	.macro call_if_ge dest:req @ GREATER THAN OR EQUAL
-	call_if 4, \dest
+	.macro call_if_le a:req, b, c
+	trycompare call_if, LESS_THAN_OR_EQUAL, \a, \b, \c
 	.endm
 
-	.macro call_if_ne dest:req @ NOT EQUAL
-	call_if 5, \dest
+	.macro call_if_ge a:req, b, c
+	trycompare call_if, GREATER_THAN_OR_EQUAL, \a, \b, \c
+	.endm
+
+	.macro call_if_ne a:req, b, c
+	trycompare call_if, NOT_EQUAL, \a, \b, \c
+	.endm
+
+	.macro vgoto_if_eq a:req, b, c
+	trycompare vgoto_if, TRUE, \a, \b, \c
+	.endm
+
+	.macro vgoto_if_ne a:req, b, c
+	trycompare vgoto_if, FALSE, \a, \b, \c
+	.endm
+
+	.macro vgoto_if_unset flag:req, dest:req
+	checkflag \flag
+	vgoto_if FALSE, \dest
+	.endm
+
+	.macro vgoto_if_set flag:req, dest:req
+	checkflag \flag
+	vgoto_if TRUE, \dest
+	.endm
+
+	.macro goto_if_defeated trainer:req, dest:req
+	checktrainerflag \trainer
+	goto_if TRUE, \dest
+	.endm
+
+	.macro goto_if_not_defeated trainer:req, dest:req
+	checktrainerflag \trainer
+	goto_if FALSE, \dest
+	.endm
+
+	.macro call_if_defeated trainer:req, dest:req
+	checktrainerflag \trainer
+	call_if TRUE, \dest
+	.endm
+
+	.macro call_if_not_defeated trainer:req, dest:req
+	checktrainerflag \trainer
+	call_if FALSE, \dest
 	.endm
 
 	.macro switch var:req
@@ -1640,29 +1926,69 @@
 	MSGBOX_DEFAULT = 4
 	MSGBOX_YESNO = 5
 	MSGBOX_AUTOCLOSE = 6
+	MSGBOX_GETPOINTS = 9
+	MSGBOX_POKENAV = 10
 
 	YES = 1
 	NO  = 0
 
+	@ Buffers the given text and calls the relevant standard message script (see gStdScripts).
 	.macro msgbox text:req, type=MSGBOX_DEFAULT
 	loadword 0, \text
 	callstd \type
 	.endm
 
-	.macro giveitem_std item:req, amount=1, function=0
+	@ Gives 'amount' of the specified 'item' to the player and prints a message with fanfare.
+	@ If the player doesn't have space for all the items then as many are added as possible, the
+	@ message indicates there is no room, and VAR_RESULT is set to FALSE.
+	@ Otherwise VAR_RESULT is set to TRUE, and the message indicates they have received the item(s).
+	.macro giveitem item:req, amount=1
 	setorcopyvar VAR_0x8000, \item
 	setorcopyvar VAR_0x8001, \amount
-	callstd \function
+	callstd STD_OBTAIN_ITEM
 	.endm
 
-	.macro givedecoration_std decoration:req
+	@ For picking up items in the overworld. Similar to giveitem, but with different language and
+	@ sets the flag of the last-talked to object (the item the player picked up).
+	.macro finditem item:req, amount=1
+	setorcopyvar VAR_0x8000, \item
+	setorcopyvar VAR_0x8001, \amount
+	callstd STD_FIND_ITEM
+	.endm
+
+	@ Equivalent to giveitem but for a single decoration.
+	.macro givedecoration decoration:req
 	setorcopyvar VAR_0x8000, \decoration
 	callstd STD_OBTAIN_DECORATION
 	.endm
 
+	@ Registers the specified trainer in Match Call and plays a fanfare with a notification message.
 	.macro register_matchcall trainer:req
 	setvar VAR_0x8004, \trainer
 	special SetMatchCallRegisteredFlag
 	setorcopyvar VAR_0x8000, \trainer
 	callstd STD_REGISTER_MATCH_CALL
+	.endm
+
+	@ Does a sparkle field effect (e.g. when the Trick Master is hiding) at the given coordinates.
+	.macro dofieldeffectsparkle x:req, y:req, priority:req
+	setfieldeffectargument 0, \x
+	setfieldeffectargument 1, \y
+	setfieldeffectargument 2, \priority
+	dofieldeffect FLDEFF_SPARKLE
+	.endm
+
+	@ Prints a braille message, waits for an A or B press, then closes the message.
+	.macro braillemsgbox text:req
+	braillemessage \text
+	waitbuttonpress
+	closebraillemessage
+	.endm
+
+	@ Creates a Pokémon with the modernFatefulEncounter bit set for an encounter
+	.macro seteventmon species:req, level:req, item=ITEM_NONE
+	setvar VAR_0x8004, \species
+	setvar VAR_0x8005, \level
+	setvar VAR_0x8006, \item
+	special CreateEnemyEventMon
 	.endm

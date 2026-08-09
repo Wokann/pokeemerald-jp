@@ -215,16 +215,16 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_SETESCAPEWARP ScrCmd_setescapewarp @ 0xC4
 	script_cmd_table_entry SCR_OP_WAITDOORANIM ScrCmd_waitdooranim @ 0xC5
 	script_cmd_table_entry SCR_OP_BUFFERBOXNAME ScrCmd_bufferboxname @ 0xC6
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xC7
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xC8
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xC9
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xCA
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xCB
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xCC
+	script_cmd_table_entry SCR_OP_C7 ScrCmd_nop1 @ 0xC7
+	script_cmd_table_entry SCR_OP_C8 ScrCmd_nop1 @ 0xC8
+	script_cmd_table_entry SCR_OP_C9 ScrCmd_nop1 @ 0xC9
+	script_cmd_table_entry SCR_OP_CA ScrCmd_nop1 @ 0xCA
+	script_cmd_table_entry SCR_OP_CB ScrCmd_nop1 @ 0xCB
+	script_cmd_table_entry SCR_OP_CC ScrCmd_nop1 @ 0xCC
 	script_cmd_table_entry SCR_OP_CD ScrCmd_setmonobedient @ 0xCD
 	script_cmd_table_entry SCR_OP_CE ScrCmd_checkmonobedience @ 0xCE
 	script_cmd_table_entry SCR_OP_CF ScrCmd_gotoram @ 0xCF
-	script_cmd_table_entry SCR_OP_SETWORLDMAPFLAG ScrCmd_nop1 @ 0xD0
+	script_cmd_table_entry SCR_OP_D0 ScrCmd_nop1 @ 0xD0
 	script_cmd_table_entry SCR_OP_D1 ScrCmd_warpD1 @ 0xD1
 	script_cmd_table_entry SCR_OP_SETMONMETLOCATION ScrCmd_setmonmetlocation @ 0xD2
 	script_cmd_table_entry SCR_OP_D3 ScrCmd_mossdeepgym1 @ 0xD3

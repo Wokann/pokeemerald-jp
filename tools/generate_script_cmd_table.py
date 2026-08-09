@@ -103,12 +103,18 @@ def main():
 
     missing = 0
     unified = 0
+    used = set()
     for i, word in enumerate(words):
         handler = labels.get(word & ~1)
         if handler is None:
             missing += 1
             handler = f"0x{word:08X}"
         const = const_by_handler.get(handler, f"SCR_OP_{i:02X}")
+        if const in used:
+            # Several JP opcodes share a placeholder handler (e.g.
+            # ScrCmd_nop1); the enum requires unique constant names.
+            const = f"SCR_OP_{i:02X}"
+        used.add(const)
         if const != f"SCR_OP_{i:02X}":
             unified += 1
         lines.append(f"\tscript_cmd_table_entry {const} {handler} @ 0x{i:02X}")
