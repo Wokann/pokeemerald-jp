@@ -2049,24 +2049,26 @@ _08138CEE:
 
 	thumb_func_start CB2_FieldShowRegionMap
 CB2_FieldShowRegionMap: @ 0x08138CF4
+	@ From src/field_specials.c
 	push {lr}
 	ldr r0, _08138D00
 	bl FieldInitRegionMap
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08138D00: .4byte 0x08085B35
+_08138D00: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic
 	thumb_func_end CB2_FieldShowRegionMap
 
 	thumb_func_start FieldShowRegionMap
 FieldShowRegionMap: @ 0x08138D04
+	@ From src/field_specials.c
 	push {lr}
 	ldr r0, _08138D10
 	bl SetMainCallback2
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08138D10: .4byte 0x08138CF5
+_08138D10: .4byte CB2_FieldShowRegionMap
 	thumb_func_end FieldShowRegionMap
 
 	thumb_func_start DoLotteryCornerComputerEffect
