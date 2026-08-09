@@ -7,6 +7,7 @@ sWindowFrames = ABSOLUTE(0x084E8860);
 gMessageBox_Gfx = ABSOLUTE(0x084E85E0);
 sTextWindowPalettes = ABSOLUTE(0x084E87A0);
 sHealLocations = ABSOLUTE(0x0857B104);
+sLandmarkLists = ABSOLUTE(0x08598C68);
 
 SECTIONS {
     . = 0x2000000;
@@ -201,7 +202,7 @@ SECTIONS {
         asm/roulette.o(.text);
         asm/pokedex_cry_screen.o(.text);
         asm/coins.o(.text);
-        asm/landmark.o(.text);
+        build/src/landmark.o(.text);
         asm/fldeff_strength.o(.text);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
