@@ -708,7 +708,7 @@ _0818DBFC: .4byte 0x0203CA30
 	thumb_func_start sub_0818DC00
 sub_0818DC00: @ 0x0818DC00
 	push {lr}
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1482,7 +1482,7 @@ _0818E1BC: .4byte 0x02021C68
 	thumb_func_start sub_0818E1C0
 sub_0818E1C0: @ 0x0818E1C0
 	push {lr}
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0

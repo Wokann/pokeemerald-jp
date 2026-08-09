@@ -4861,7 +4861,7 @@ sub_08142A44: @ 0x08142A44
 	movs r1, #0
 	bl DrawStdWindowFrame
 	bl HideCoinsWindow
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}
@@ -4895,7 +4895,7 @@ sub_08142A68: @ 0x08142A68
 	movs r0, #0
 	movs r1, #1
 	bl DrawStdWindowFrame
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 _08142AA6:
@@ -5124,7 +5124,7 @@ _08142C90: .4byte 0x08142A69
 	thumb_func_start PlayRoulette
 PlayRoulette: @ 0x08142C94
 	push {r4, lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl GetCoins
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10

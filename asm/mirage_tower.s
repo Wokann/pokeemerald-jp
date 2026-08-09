@@ -279,7 +279,7 @@ PlayerDescendMirageTower: @ 0x081BE4A4
 	blt _081BE51E
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081BE51E:
 	add sp, #4
 	pop {r4, r5}
@@ -485,7 +485,7 @@ FinishCeilingCrumbleTask: @ 0x081BE69C
 	bl FreeSpriteTilesByTag
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -886,7 +886,7 @@ _081BE9B8:
 	bl CreateTask
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081BE9DC:
 	add sp, #0xc
 	pop {r4, r5}
@@ -1220,7 +1220,7 @@ _081BEC8C:
 _081BEC94:
 	mov r0, sl
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081BEC9E:
 	ldr r0, _081BECC0
 	mov r2, sl
@@ -1481,7 +1481,7 @@ _081BEEB4: .4byte 0x020205AC
 _081BEEB8: .4byte 0x0203CBD8
 _081BEEBC: .4byte 0x08007141
 _081BEEC0:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081BEEC4:
 	ldr r0, _081BEEE0
 	lsls r1, r7, #2

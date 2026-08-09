@@ -2206,7 +2206,7 @@ _081A9CF2:
 sub_081A9CF8: @ 0x081A9CF8
 	push {lr}
 	ldr r0, _081A9D04
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0

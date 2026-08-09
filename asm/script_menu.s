@@ -430,7 +430,7 @@ _080E15FC:
 	bl ClearToTransparentAndRemoveWindow
 	adds r0, r6, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080E160C:
 	pop {r4, r5, r6}
 	pop {r0}
@@ -543,7 +543,7 @@ _080E16C8:
 _080E16CA:
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080E16D4:
 	pop {r4}
 	pop {r0}
@@ -720,7 +720,7 @@ _080E1834:
 	bl ClearToTransparentAndRemoveWindow
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080E1844:
 	pop {r4, r5}
 	pop {r0}

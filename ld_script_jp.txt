@@ -36,6 +36,7 @@ gBirchDexRatingText_LessThan200 = ABSOLUTE(0x0826312D);
 gBirchDexRatingText_DexCompleted = ABSOLUTE(0x0826314F);
 EventScript_UseStrength = ABSOLUTE(0x08256797);
 FieldCallback_PrepareFadeInFromMenu = ABSOLUTE(0x081B53D8);
+EventScript_UseRockSmash = ABSOLUTE(0x082566C6);
 
 SECTIONS {
     . = 0x2000000;
@@ -216,6 +217,7 @@ SECTIONS {
         asm/trader.o(.text);
         asm/starter_choose.o(.text);
         asm/wallclock.o(.text);
+        build/src/fldeff_rocksmash.o(.text);
         asm/fldeff_rocksmash.o(.text);
         asm/pokeblock.spokeblock.o(.text);
         asm/fldeff_flash.o(.text);

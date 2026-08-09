@@ -15092,7 +15092,7 @@ _0807EB18: .4byte 0x03002360
 DoInGameTradeScene: @ 0x0807EB1C
 	push {lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _0807EB44
 	movs r1, #0xa
 	bl CreateTask

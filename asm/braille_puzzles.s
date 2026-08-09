@@ -78,7 +78,7 @@ DoBrailleDigEffect: @ 0x081794F4
 	bl PlaySE
 	ldr r0, _08179560
 	bl FlagSet
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -237,7 +237,7 @@ SealedChamberShakingEffect: @ 0x08179630
 	bne _08179688
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	bl InstallCameraPanAheadCallback
 _08179688:
 	pop {r4, r5}
@@ -353,7 +353,7 @@ DoBrailleRegirockEffect: @ 0x08179718
 	movs r0, #0x8b
 	lsls r0, r0, #4
 	bl FlagSet
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -460,7 +460,7 @@ DoBrailleRegisteelEffect: @ 0x081797FC
 	bl PlaySE
 	ldr r0, _08179868
 	bl FlagSet
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -481,7 +481,7 @@ DoBrailleWait: @ 0x0817986C
 	thumb_func_start FldEff_UsePuzzleEffect
 FldEff_UsePuzzleEffect: @ 0x08179870
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
 	ldr r0, _08179890

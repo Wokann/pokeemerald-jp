@@ -18,7 +18,7 @@ VBlankCB_MoveRelearner: @ 0x0816055C
 TeachMoveRelearnerMove: @ 0x08160570
 	push {lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _08160598
 	movs r1, #0xa
 	bl CreateTask

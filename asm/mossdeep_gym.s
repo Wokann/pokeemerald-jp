@@ -49,7 +49,7 @@ _081A86EE:
 	lsls r0, r0, #2
 	ldr r1, _081A871C
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	pop {r4}
 	pop {r0}

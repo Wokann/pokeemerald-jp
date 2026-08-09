@@ -64,7 +64,7 @@ _081371E2:
 	thumb_func_start hm2_flash
 hm2_flash: @ 0x081371E8
 	push {r4, lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -99,7 +99,7 @@ sub_08137224: @ 0x08137224
 	ldr r0, _0813723C
 	bl FlagSet
 	ldr r0, _08137240
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0

@@ -2108,7 +2108,7 @@ UpdateRepelCounter: @ 0x080B4FC8
 	cmp r4, #0
 	bne _080B501C
 	ldr r0, _080B5018
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _080B501E
 	.align 2, 0

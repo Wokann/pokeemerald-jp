@@ -5620,7 +5620,7 @@ _080F8C8C: .4byte 0x080F8C55
 sub_080F8C90: @ 0x080F8C90
 	push {lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080F8CB8
 	movs r1, #0xa
 	bl CreateTask
@@ -5682,7 +5682,7 @@ _080F8D04: .4byte 0x080F6319
 sub_080F8D08: @ 0x080F8D08
 	push {lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080F8D30
 	movs r1, #0xa
 	bl CreateTask
@@ -5718,7 +5718,7 @@ sub_080F8D48: @ 0x080F8D48
 	adds r5, r0, #0
 	lsls r5, r5, #0x18
 	lsrs r5, r5, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r6, _080F8D80
 	adds r0, r6, #0
 	movs r1, #0
@@ -6067,8 +6067,8 @@ _080F8FD4:
 	rsbs r3, r3, #0
 	movs r0, #0
 	bl SetDynamicWarp
-	bl ScriptContext2_Disable
-	bl EnableBothScriptContexts
+	bl UnlockPlayerFieldControls
+	bl ScriptContext_Enable
 _080F900C:
 	pop {r4, r5, r6, r7}
 	pop {r0}
@@ -6111,8 +6111,8 @@ sub_080F9044: @ 0x080F9044
 	bne _080F9060
 	adds r0, r1, #0
 	bl DestroyTask
-	bl ScriptContext2_Disable
-	bl EnableBothScriptContexts
+	bl UnlockPlayerFieldControls
+	bl ScriptContext_Enable
 _080F9060:
 	pop {r0}
 	bx r0

@@ -810,7 +810,7 @@ ShowStartMenu: @ 0x0809F374
 _0809F38A:
 	ldr r0, _0809F398
 	bl CreateStartMenuTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1215,7 +1215,7 @@ sub_0809F6AC: @ 0x0809F6AC
 	bl ScriptUnfreezeEventObjects
 	ldr r0, _0809F6C8
 	bl CreateStartMenuTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1296,7 +1296,7 @@ _0809F754:
 	movs r1, #1
 	bl ClearDialogWindowAndFrameToTransparent
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl SoftResetInBattlePyramid
 	movs r0, #1
 	b _0809F76E
@@ -1365,9 +1365,9 @@ _0809F7D8:
 	movs r1, #1
 	bl ClearDialogWindowAndFrameToTransparent
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r0, _0809F7F4
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809F7FA
 	.align 2, 0
@@ -1496,7 +1496,7 @@ _0809F8D4:
 _0809F8D8:
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _0809F8E2:
 	pop {r4}
 	pop {r0}
@@ -2614,7 +2614,7 @@ sub_080A016C: @ 0x080A016C
 	bne _080A0188
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080A0188:
 	pop {r4}
 	pop {r0}
@@ -2668,7 +2668,7 @@ HideStartMenuWindow: @ 0x080A01DC
 	bl DrawStdWindowFrame
 	bl RemoveMapNamePopUpWindow
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	pop {r0}
 	bx r0
 	thumb_func_end HideStartMenuWindow

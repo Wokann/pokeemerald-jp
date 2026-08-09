@@ -772,7 +772,7 @@ TrainerExclamationMark: @ 0x080B38D4
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -829,12 +829,12 @@ TrainerMoveToPlayer: @ 0x080B3958
 	adds r5, r1, #0
 	adds r4, r2, #0
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3976
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B39AA
@@ -851,7 +851,7 @@ _080B3976:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #0xe]
 	subs r0, #1
 	strh r0, [r5, #0xe]
@@ -859,7 +859,7 @@ _080B3976:
 _080B399C:
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -877,12 +877,12 @@ PlayerFaceApproachingTrainer: @ 0x080B39B4
 	adds r6, r1, #0
 	adds r5, r2, #0
 	adds r0, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B39D2
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3A60
@@ -915,12 +915,12 @@ _080B39D2:
 	ldr r1, _080B3A6C
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3A2A
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3A60
@@ -944,7 +944,7 @@ _080B3A2A:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r6, #8]
 	adds r0, #1
 	strh r0, [r6, #8]
@@ -971,12 +971,12 @@ WaitPlayerFaceApproachingTrainer: @ 0x080B3A70
 	ldr r1, _080B3AB0
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3A9C
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3AA2
@@ -999,19 +999,19 @@ RevealDisguisedTrainer: @ 0x080B3AB4
 	adds r5, r1, #0
 	adds r4, r2, #0
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3AD2
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3AE0
 _080B3AD2:
 	adds r0, r4, #0
 	movs r1, #0x59
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -1027,7 +1027,7 @@ WaitRevealDisguisedTrainer: @ 0x080B3AE8
 	push {r4, lr}
 	adds r4, r1, #0
 	adds r0, r2, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3AFC
@@ -1046,19 +1046,19 @@ RevealHiddenTrainer: @ 0x080B3B04
 	adds r5, r1, #0
 	adds r4, r2, #0
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3B22
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3B30
 _080B3B22:
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -1075,7 +1075,7 @@ PopOutOfAshHiddenTrainer: @ 0x080B3B38
 	adds r5, r1, #0
 	adds r4, r2, #0
 	adds r0, r4, #0
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3B7E
@@ -1152,7 +1152,7 @@ JumpInPlaceHiddenTrainer: @ 0x080B3B90
 	orrs r1, r2
 	strb r1, [r0, #5]
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	ldrb r0, [r4, #0x18]
 	lsls r0, r0, #0x1c
 	lsrs r0, r0, #0x1c
@@ -1161,7 +1161,7 @@ JumpInPlaceHiddenTrainer: @ 0x080B3B90
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -1320,7 +1320,7 @@ Task_DestroyTrainerApproachTask: @ 0x080B3D14
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0

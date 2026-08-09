@@ -256,7 +256,7 @@ _08133BD0:
 	bl schedule_bg_copy_tilemap_to_vram
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -492,7 +492,7 @@ _08133DB8:
 _08133DC0:
 	adds r0, r6, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
@@ -510,7 +510,7 @@ ExitTraderMenu: @ 0x08133DD8
 	movs r1, #0
 	strh r1, [r2]
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0

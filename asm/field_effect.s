@@ -2044,7 +2044,7 @@ mapldr_080842E8: @ 0x080B6154
 	ldr r0, _080B6174
 	movs r1, #0
 	bl CreateTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r1, _080B6178
 	movs r0, #0
@@ -2147,7 +2147,7 @@ mapldr_08084390: @ 0x080B61FC
 	movs r1, #3
 	bl EventObjectTurn
 _080B623E:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r1, _080B6260
 	movs r0, #0
@@ -2194,7 +2194,7 @@ _080B6296:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B62B0
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl UnfreezeEventObjects
 	adds r0, r5, #0
 	bl DestroyTask
@@ -2212,7 +2212,7 @@ sub_080B62C0: @ 0x080B62C0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r0, _080B62E4
 	movs r1, #0
@@ -2298,7 +2298,7 @@ sub_080B6324: @ 0x080B6324
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	adds r3, r4, #0
 	adds r3, #0x42
 	ldrb r0, [r3]
@@ -2569,7 +2569,7 @@ sub_080B6570: @ 0x080B6570
 	ldr r1, _080B659C
 	movs r0, #0
 	strb r0, [r1, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl CameraObjectReset1
 	bl UnfreezeEventObjects
 	bl InstallCameraPanAheadCallback
@@ -2677,12 +2677,12 @@ sub_080B6638: @ 0x080B6638
 	ldr r1, _080B66A4
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B6662
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B6696
@@ -2695,7 +2695,7 @@ _080B6662:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	movs r1, #0
@@ -2914,7 +2914,7 @@ sub_080B680C: @ 0x080B680C
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080B682C
 	movs r1, #0
 	bl CreateTask
@@ -2977,7 +2977,7 @@ sub_080B686C: @ 0x080B686C
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	mov r4, sp
 	adds r4, #2
 	mov r0, sp
@@ -3218,19 +3218,19 @@ sub_080B6A4C: @ 0x080B6A4C
 	ldr r1, _080B6A9C
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B6A90
 	bl CameraObjectReset1
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	movs r0, #4
 	bl sub_08092CF8
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldr r0, _080B6AA0
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -3322,7 +3322,7 @@ _080B6B24: .4byte 0x02036FF0
 sub_080B6B28: @ 0x080B6B28
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B6B44
 	movs r0, #1
 	strb r0, [r1, #6]
@@ -3342,14 +3342,14 @@ waterfall_1_do_anim_probably: @ 0x080B6B48
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	adds r5, r1, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	adds r0, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B6B78
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	ldr r1, _080B6B80
 	movs r2, #0xa
 	ldrsh r0, [r4, r2]
@@ -3402,7 +3402,7 @@ sub_080B6BA8: @ 0x080B6BA8
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -3419,7 +3419,7 @@ sub_080B6BD0: @ 0x080B6BD0
 	adds r5, r0, #0
 	adds r4, r1, #0
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B6BE6
@@ -3432,7 +3432,7 @@ _080B6BE6:
 	lsrs r4, r0, #0x18
 	cmp r4, #0
 	bne _080B6C1C
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r0, _080B6C14
 	strb r4, [r0, #6]
 	ldr r0, _080B6C18
@@ -3535,7 +3535,7 @@ _080B6CAC: .4byte 0x02037230
 dive_2_unknown: @ 0x080B6CB0
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B6CD4
 	movs r2, #0x26
 	ldrsh r0, [r4, r2]
@@ -3941,7 +3941,7 @@ mapldr_080851BC: @ 0x080B6FC0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080B6FE0
 	movs r1, #0
 	str r1, [r0]
@@ -4099,7 +4099,7 @@ sub_080B70C0: @ 0x080B70C0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 _080B7108:
 	movs r0, #0
 	pop {r4}
@@ -4113,14 +4113,14 @@ _080B7110: .4byte 0x020205AC
 sub_080B7114: @ 0x080B7114
 	push {lr}
 	adds r0, r1, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B713E
 	ldr r1, _080B7144
 	movs r0, #0
 	strb r0, [r1, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl UnfreezeEventObjects
 	ldr r0, _080B7148
 	bl FindTaskIdByFunc
@@ -4295,7 +4295,7 @@ sub_080B7270: @ 0x080B7270
 	adds r4, r1, #0
 	adds r6, r2, #0
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B72E4
@@ -4340,7 +4340,7 @@ _080B72C4:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #0x27
 	bl PlaySE
 _080B72E4:
@@ -4511,7 +4511,7 @@ _080B741C:
 	thumb_func_start StartEscapeRopeFieldEffect
 StartEscapeRopeFieldEffect: @ 0x080B7420
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r0, _080B7438
 	movs r1, #0x50
@@ -4596,12 +4596,12 @@ _080B74B8:
 	ldr r1, _080B7538
 	adds r5, r0, r1
 	adds r0, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B74DE
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B7598
@@ -4670,7 +4670,7 @@ _080B7564:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r1, [r4, #0xc]
 	movs r2, #0xc
 	ldrsh r0, [r4, r2]
@@ -4697,7 +4697,7 @@ mapldr_080859D4: @ 0x080B75A0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r1, _080B75DC
 	movs r0, #0
@@ -4799,12 +4799,12 @@ sub_080B7640: @ 0x080B7640
 	bne _080B7704
 _080B7672:
 	adds r0, r6, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B768A
 	adds r0, r6, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B7718
@@ -4825,7 +4825,7 @@ _080B768A:
 	rsbs r0, r0, #0
 	ands r0, r1
 	strb r0, [r6, #1]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl UnfreezeEventObjects
 	ldr r0, _080B76D0
 	bl FindTaskIdByFunc
@@ -4849,7 +4849,7 @@ _080B76D4:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r6, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r1, [r5, #0xc]
 	movs r2, #0xc
 	ldrsh r0, [r5, r2]
@@ -4921,7 +4921,7 @@ _080B7760: .4byte 0x03005B60
 TeleportFieldEffectTask1: @ 0x080B7764
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl CameraObjectReset2
 	bl GetPlayerFacingDirection
@@ -5168,7 +5168,7 @@ mapldr_08085D88: @ 0x080B7958
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r1, _080B7998
 	movs r0, #0
@@ -5470,7 +5470,7 @@ sub_080B7B68: @ 0x080B7B68
 	lsrs r0, r0, #0x1c
 	cmp r1, r0
 	bne _080B7BDC
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl CameraObjectReset1
 	bl UnfreezeEventObjects
 	ldr r0, _080B7BF0
@@ -6688,7 +6688,7 @@ sub_080B850C: @ 0x080B850C
 	mov r6, r8
 	push {r6}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	ldr r5, _080B8564
 	movs r0, #1
@@ -6739,20 +6739,20 @@ sub_080B856C: @ 0x080B856C
 	ldr r1, _080B85B4
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8596
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B85A8
 _080B8596:
-	bl sub_0808BA78
+	bl SetPlayerAvatarFieldMove
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -6776,7 +6776,7 @@ sub_080B85B8: @ 0x080B85B8
 	lsls r0, r0, #2
 	ldr r1, _080B85F8
 	adds r0, r0, r1
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B85EE
@@ -6824,9 +6824,9 @@ sub_080B8600: @ 0x080B8600
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	ldrb r0, [r4, #0x18]
 	lsrs r0, r0, #4
 	bl sub_08092EB0
@@ -6834,7 +6834,7 @@ sub_080B8600: @ 0x080B8600
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldr r1, _080B8678
 	movs r2, #0xa
 	ldrsh r0, [r6, r2]
@@ -6871,7 +6871,7 @@ sub_080B867C: @ 0x080B867C
 	ldr r1, _080B86E8
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B86DC
@@ -6888,12 +6888,12 @@ sub_080B867C: @ 0x080B867C
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrb r0, [r4, #0x1a]
 	movs r1, #1
 	bl sub_081554E8
 	bl UnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	movs r0, #9
 	bl FieldEffectActiveListRemove
 	ldr r0, _080B86EC
@@ -7227,12 +7227,12 @@ sub_080B895C: @ 0x080B895C
 	ldr r1, _080B89B0
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8986
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B89A4
@@ -7242,10 +7242,10 @@ _080B8986:
 	movs r0, #1
 	strb r0, [r6, #6]
 	bl SetPlayerAvatarStateMask
-	bl sub_0808BA78
+	bl SetPlayerAvatarFieldMove
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r5, #8]
 	adds r0, #1
 	strh r0, [r5, #8]
@@ -7269,7 +7269,7 @@ sub_080B89B4: @ 0x080B89B4
 	lsls r0, r0, #2
 	ldr r1, _080B89F0
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B89E4
@@ -7360,7 +7360,7 @@ sub_080B8A50: @ 0x080B8A50
 	ldr r1, _080B8A90
 	adds r0, r0, r1
 	movs r1, #2
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 _080B8A84:
 	pop {r4}
 	pop {r0}
@@ -7393,7 +7393,7 @@ sub_080B8A94: @ 0x080B8A94
 	bne _080B8AD8
 _080B8ABA:
 	adds r0, r2, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8AD8
@@ -7437,7 +7437,7 @@ sub_080B8AE8: @ 0x080B8AE8
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #4]
 	lsls r0, r1, #4
 	adds r0, r0, r1
@@ -7452,7 +7452,7 @@ sub_080B8AE8: @ 0x080B8AE8
 	strb r0, [r4, #1]
 	adds r0, r4, #0
 	movs r1, #0x48
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r1, [r5, #0x26]
 	movs r0, #8
 	ands r0, r1
@@ -8016,12 +8016,12 @@ sub_080B8F5C: @ 0x080B8F5C
 	ldr r1, _080B9008
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8F86
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8FFE
@@ -8051,7 +8051,7 @@ _080B8FAE:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	bl CameraObjectReset2
 	adds r0, r4, #0
 	movs r1, #3
@@ -8227,10 +8227,10 @@ sub_080B90D0: @ 0x080B90D0
 	movs r1, #2
 	orrs r0, r1
 	strb r0, [r4]
-	bl sub_0808BA78
+	bl SetPlayerAvatarFieldMove
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r6, #8]
 	adds r0, #1
 	strh r0, [r6, #8]
@@ -8255,7 +8255,7 @@ sub_080B9148: @ 0x080B9148
 	lsls r0, r0, #2
 	ldr r1, _080B917C
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B9170
@@ -8337,7 +8337,7 @@ _080B91EC:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	adds r0, r4, #0
 	movs r1, #1
 	bl EventObjectTurn

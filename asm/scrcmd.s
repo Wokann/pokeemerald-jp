@@ -3306,7 +3306,7 @@ ScrCmd_releaseall: @ 0x0809A4CC
 	lsls r0, r0, #2
 	ldr r1, _0809A500
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	bl UnfreezeEventObjects
 	movs r0, #0
@@ -3332,7 +3332,7 @@ ScrCmd_release: @ 0x0809A504
 	cmp r0, #0
 	beq _0809A526
 	adds r0, r1, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 _0809A526:
 	movs r0, #0xff
 	movs r1, #0
@@ -3345,7 +3345,7 @@ _0809A526:
 	adds r0, r0, r1
 	lsls r0, r0, #2
 	adds r0, r0, r4
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	bl UnfreezeEventObjects
 	movs r0, #0

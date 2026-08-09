@@ -113,7 +113,7 @@ _080FC9D8:
 _080FC9DC: .4byte 0x02039D1A
 _080FC9E0:
 	ldr r0, _080FC9EC
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 _080FC9E8:
 	pop {r1}
@@ -126,7 +126,7 @@ _080FC9EC: .4byte 0x082623E8
 SetSafariZoneFlag: @ 0x080FC9F0
 	push {lr}
 	ldr r0, _080FC9FC
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -187,7 +187,7 @@ _080FCA78:
 	cmp r0, #7
 	bne _080FCA8C
 	ldr r0, _080FCA90
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	bl ScriptContext1_Stop
 	ldr r0, _080FCA94
 	bl SetMainCallback2

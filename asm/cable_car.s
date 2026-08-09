@@ -31,7 +31,7 @@ _0814FC74: .4byte 0x0814FCA5
 CableCar: @ 0x0814FC78
 	push {lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _0814FCA0
 	movs r1, #1
 	bl CreateTask

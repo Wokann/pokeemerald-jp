@@ -3081,8 +3081,8 @@ _080221F4:
 	bl RemoveWindow
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
-	bl ScriptContext2_Disable
+	bl ScriptContext_Enable
+	bl UnlockPlayerFieldControls
 	mov r0, sb
 	b _0802221E
 _0802221A:
@@ -3104,7 +3104,7 @@ _08022220:
 	thumb_func_start sub_08022230
 sub_08022230: @ 0x08022230
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _08022278
 	movs r1, #0
 	bl CreateTask

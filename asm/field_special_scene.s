@@ -519,7 +519,7 @@ _080FBD02:
 	bl PlaySE
 	adds r0, r5, #0
 	bl DestroyTask
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 _080FBD48:
 	pop {r4, r5}
 	pop {r0}
@@ -544,7 +544,7 @@ ExecuteTruckSequence: @ 0x080FBD50
 	movs r1, #0xa
 	bl MapGridSetMetatileIdAt
 	bl DrawWholeMapView
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0
 	str r0, [sp]
 	ldr r1, _080FBDA4
@@ -864,7 +864,7 @@ sub_080FBFD8: @ 0x080FBFD8
 	ldr r0, _080FC010
 	movs r1, #0x50
 	bl CreateTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0

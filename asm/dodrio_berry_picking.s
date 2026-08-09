@@ -6621,7 +6621,7 @@ _0802790C:
 	bl RemoveWindow
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _08027926:
 	pop {r4, r5}
 	pop {r0}

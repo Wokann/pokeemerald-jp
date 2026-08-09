@@ -92,12 +92,12 @@ TryInterruptEventObjectSpecialAnim: @ 0x0808A39C
 	lsls r1, r1, #0x18
 	lsrs r5, r1, #0x18
 	adds r6, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808A3F6
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808A3F6
@@ -1163,7 +1163,7 @@ sub_0808AB20: @ 0x0808AB20
 	lsrs r0, r5, #0x10
 	lsrs r1, r4, #0x10
 	movs r2, #3
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0x10
@@ -1490,7 +1490,7 @@ PlayerAvatarTransition_Normal: @ 0x0808ADA4
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -1512,7 +1512,7 @@ PlayerAvatarTransition_MachBike: @ 0x0808ADD0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -1537,7 +1537,7 @@ PlayerAvatarTransition_AcroBike: @ 0x0808AE04
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -1563,7 +1563,7 @@ PlayerAvatarTransition_Surfing: @ 0x0808AE3C
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -1605,7 +1605,7 @@ PlayerAvatarTransition_Underwater: @ 0x0808AE98
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -1752,7 +1752,7 @@ PlayerCheckIfAnimFinishedOrInactive: @ 0x0808AFA0
 	lsls r0, r0, #2
 	ldr r1, _0808AFC0
 	adds r0, r0, r1
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	pop {r1}
@@ -1772,7 +1772,7 @@ PlayerIsAnimActive: @ 0x0808AFC4
 	lsls r0, r0, #2
 	ldr r1, _0808AFE4
 	adds r0, r0, r1
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	pop {r1}
@@ -1858,7 +1858,7 @@ PlayerSetAnimId: @ 0x0808B048
 	ldr r1, _0808B080
 	adds r0, r0, r1
 	adds r1, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 _0808B076:
 	pop {r4, r5}
 	pop {r0}
@@ -2560,8 +2560,8 @@ _0808B5D0: .4byte 0x02036FF0
 _0808B5D4: .4byte 0x02037230
 	thumb_func_end GetPlayerMovementDirection
 
-	thumb_func_start PlayerGetZCoord
-PlayerGetZCoord: @ 0x0808B5D8
+	thumb_func_start PlayerGetElevation
+PlayerGetElevation: @ 0x0808B5D8
 	ldr r2, _0808B5EC
 	ldr r0, _0808B5F0
 	ldrb r1, [r0, #5]
@@ -2575,7 +2575,7 @@ PlayerGetZCoord: @ 0x0808B5D8
 	.align 2, 0
 _0808B5EC: .4byte 0x02036FF0
 _0808B5F0: .4byte 0x02037230
-	thumb_func_end PlayerGetZCoord
+	thumb_func_end PlayerGetElevation
 
 	thumb_func_start sub_0808B5F4
 sub_0808B5F4: @ 0x0808B5F4
@@ -2910,7 +2910,7 @@ IsPlayerFacingSurfableFishableWater: @ 0x0808B7D8
 	lsrs r0, r0, #0x18
 	cmp r0, #3
 	bne _0808B858
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #3
@@ -3226,8 +3226,8 @@ _0808BA70: .4byte 0x02037230
 _0808BA74: .4byte 0x020205AC
 	thumb_func_end sub_0808BA0C
 
-	thumb_func_start sub_0808BA78
-sub_0808BA78: @ 0x0808BA78
+	thumb_func_start SetPlayerAvatarFieldMove
+SetPlayerAvatarFieldMove: @ 0x0808BA78
 	push {r4, r5, lr}
 	ldr r5, _0808BAB4
 	ldrb r0, [r5, #5]
@@ -3242,7 +3242,7 @@ sub_0808BA78: @ 0x0808BA78
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r5, #4]
 	lsls r0, r1, #4
 	adds r0, r0, r1
@@ -3258,7 +3258,7 @@ sub_0808BA78: @ 0x0808BA78
 _0808BAB4: .4byte 0x02037230
 _0808BAB8: .4byte 0x02036FF0
 _0808BABC: .4byte 0x020205AC
-	thumb_func_end sub_0808BA78
+	thumb_func_end SetPlayerAvatarFieldMove
 
 	thumb_func_start sub_0808BAC0
 sub_0808BAC0: @ 0x0808BAC0
@@ -3279,7 +3279,7 @@ sub_0808BAC0: @ 0x0808BAC0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r0, [r6, #4]
 	lsls r4, r0, #4
 	adds r4, r4, r0
@@ -3323,7 +3323,7 @@ sub_0808BB18: @ 0x0808BB18
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r0, [r6, #4]
 	lsls r4, r0, #4
 	adds r4, r4, r0
@@ -3375,7 +3375,7 @@ sub_0808BB8C: @ 0x0808BB8C
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r0, [r6, #4]
 	lsls r4, r0, #4
 	adds r4, r4, r0
@@ -3553,7 +3553,7 @@ _0808BD04: .4byte 0x02037230
 sub_0808BD08: @ 0x0808BD08
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _0808BD24
 	movs r0, #1
 	strb r0, [r1, #6]
@@ -3580,7 +3580,7 @@ do_boulder_dust: @ 0x0808BD28
 	cmp r0, #0
 	beq _0808BD42
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 _0808BD42:
 	adds r0, r4, #0
 	bl EventObjectIsHeldMovementActive
@@ -3588,36 +3588,36 @@ _0808BD42:
 	cmp r0, #0
 	beq _0808BD54
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 _0808BD54:
 	adds r0, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808BDD6
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808BDD6
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	ldrb r0, [r6, #0xc]
 	bl sub_08092F08
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrb r0, [r6, #0xc]
 	bl sub_08092CCC
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldr r2, _0808BDE0
 	movs r1, #0x10
 	ldrsh r0, [r4, r1]
@@ -3661,23 +3661,23 @@ sub_0808BDE8: @ 0x0808BDE8
 	adds r4, r1, #0
 	adds r5, r2, #0
 	adds r0, r4, #0
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808BE2A
 	adds r0, r5, #0
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808BE2A
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	ldr r1, _0808BE34
 	movs r0, #0
 	strb r0, [r1, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r0, _0808BE38
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -3762,7 +3762,7 @@ PlayerAvatar_DoSecretBaseMatJump: @ 0x0808BEA8
 	movs r0, #1
 	strb r0, [r5, #6]
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808BF04
@@ -3776,7 +3776,7 @@ PlayerAvatar_DoSecretBaseMatJump: @ 0x0808BEA8
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrh r0, [r6, #0xa]
 	adds r0, #1
 	strh r0, [r6, #0xa]
@@ -3877,7 +3877,7 @@ PlayerAvatar_SecretBaseMatSpinStep0: @ 0x0808BF80
 	ldr r1, _0808BFA4
 	movs r0, #1
 	strb r0, [r1, #6]
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0x2d
 	bl PlaySE
 	movs r0, #1
@@ -3898,7 +3898,7 @@ PlayerAvatar_SecretBaseMatSpinStep1: @ 0x0808BFA8
 	movs r2, #4
 	bl memcpy
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C010
@@ -3913,7 +3913,7 @@ PlayerAvatar_SecretBaseMatSpinStep1: @ 0x0808BFA8
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldrb r0, [r4, #0xa]
 	cmp r6, r0
 	bne _0808BFEE
@@ -3958,7 +3958,7 @@ PlayerAvatar_SecretBaseMatSpinStep2: @ 0x0808C020
 	movs r2, #5
 	bl memcpy
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C050
@@ -3967,7 +3967,7 @@ PlayerAvatar_SecretBaseMatSpinStep2: @ 0x0808C020
 	add r0, sp
 	ldrb r1, [r0]
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #1
 	strh r0, [r5, #8]
 _0808C050:
@@ -3986,7 +3986,7 @@ PlayerAvatar_SecretBaseMatSpinStep3: @ 0x0808C060
 	adds r4, r0, #0
 	adds r5, r1, #0
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C0A4
@@ -3999,8 +3999,8 @@ PlayerAvatar_SecretBaseMatSpinStep3: @ 0x0808C060
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
-	bl ScriptContext2_Disable
+	bl ObjectEventSetHeldMovement
+	bl UnlockPlayerFieldControls
 	ldr r1, _0808C0AC
 	movs r0, #0
 	strb r0, [r1, #6]
@@ -4025,7 +4025,7 @@ sub_0808C0B4: @ 0x0808C0B4
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_ClearSavedMusic
 	bl Overworld_ChangeMusicToDefault
 	ldr r2, _0808C100
@@ -4072,12 +4072,12 @@ taskFF_0805D1D4: @ 0x0808C10C
 	ldr r1, _0808C16C
 	adds r5, r0, r1
 	adds r0, r5, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C138
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C160
@@ -4096,7 +4096,7 @@ _0808C138:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldr r0, _0808C174
 	str r0, [r4]
 _0808C160:
@@ -4123,7 +4123,7 @@ sub_0808C178: @ 0x0808C178
 	ldr r1, _0808C1E8
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808C1DE
@@ -4133,7 +4133,7 @@ sub_0808C178: @ 0x0808C178
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r0, [r4, #0x18]
 	lsls r0, r0, #0x1c
 	lsrs r0, r0, #0x1c
@@ -4142,10 +4142,10 @@ sub_0808C178: @ 0x0808C178
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #0
 	strb r0, [r6, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldrb r1, [r4, #0x1a]
 	lsls r0, r1, #4
 	adds r0, r0, r1
@@ -4226,7 +4226,7 @@ _0808C258: .4byte 0x03005B60
 Fishing1: @ 0x0808C25C
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _0808C278
 	movs r0, #1
 	strb r0, [r1, #6]
@@ -4750,7 +4750,7 @@ _0808C62C:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -4803,7 +4803,7 @@ _0808C6C8:
 	ldr r1, _0808C6FC
 	movs r0, #0
 	strb r0, [r1, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldrh r0, [r5, #0x26]
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -4975,7 +4975,7 @@ Fishing15: @ 0x0808C7FC
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldrb r1, [r4, #0x18]
 	lsrs r1, r1, #4
 	adds r0, r4, #0
@@ -5036,7 +5036,7 @@ Fishing16: @ 0x0808C89C
 	bne _0808C8D8
 	ldr r0, _0808C8E0
 	strb r1, [r0, #6]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl UnfreezeEventObjects
 	movs r0, #0
 	movs r1, #1
@@ -5257,7 +5257,7 @@ _0808CA58:
 	b _0808CAFA
 _0808CA5E:
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808CAFA
@@ -5616,7 +5616,7 @@ sub_0808CCFC: @ 0x0808CCFC
 	ble _0808CD54
 _0808CD18:
 	adds r0, r5, #0
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0808CD54

@@ -647,7 +647,7 @@ _080AC20C:
 	strh r0, [r4, #8]
 	b _080AC21E
 _080AC214:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r5, #0
 	bl DestroyTask
 _080AC21E:

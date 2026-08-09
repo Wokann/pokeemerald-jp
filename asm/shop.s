@@ -10,7 +10,7 @@ CB2_BuyMenu: @ 0x080DEFF0
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r5, _080DF018
 	strb r4, [r5, #0xf]
 	cmp r4, #0
@@ -243,7 +243,7 @@ Task_HandleShopMenuQuit: @ 0x080DF1B4
 	ldrb r0, [r5, #0xe]
 	bl RemoveWindow
 	bl SaveRecordedItemPurchasesForTVShow
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 	ldr r5, [r5]

@@ -6017,8 +6017,8 @@ _080DA060: .4byte 0x08085A31
 	thumb_func_start sub_080DA064
 sub_080DA064: @ 0x080DA064
 	push {lr}
-	bl ScriptContext2_Disable
-	bl EnableBothScriptContexts
+	bl UnlockPlayerFieldControls
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0

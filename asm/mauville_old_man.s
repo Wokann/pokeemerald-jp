@@ -1009,7 +1009,7 @@ _08120D4E:
 	bne _08120D74
 	movs r0, #6
 	bl FadeOutBGM
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r6, #0
 	bl DestroyTask
 	b _08120E0C
@@ -1961,7 +1961,7 @@ _08121454:
 	bl ClearToTransparentAndRemoveWindow
 	adds r0, r6, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _08121466:
 	pop {r4, r5, r6}
 	pop {r0}

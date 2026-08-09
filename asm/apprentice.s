@@ -83,7 +83,7 @@ _0819F924: .4byte 0x02021C7C
 	thumb_func_start Apprentice_EnableBothScriptContexts
 Apprentice_EnableBothScriptContexts: @ 0x0819F928
 	push {lr}
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1822,7 +1822,7 @@ _081A0630:
 	bl RemoveAndHideWindow
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081A0640:
 	pop {r4, r5}
 	pop {r0}
@@ -2237,7 +2237,7 @@ Task_WaitForPrintingMessage: @ 0x081A08FC
 _081A0924: .4byte 0x02037282
 _081A0928: .4byte 0x080988C5
 _081A092C:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _081A0930:
 	pop {r4}
 	pop {r0}
@@ -2500,7 +2500,7 @@ _081A0B2E:
 _081A0B34: .4byte 0x085DC51C
 _081A0B38: .4byte 0x03005AF0
 _081A0B3C:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	b _081A0B56
 _081A0B42:
 	ldr r0, _081A0B5C
@@ -2521,7 +2521,7 @@ _081A0B60: .4byte 0x081A08FD
 	thumb_func_start Script_PrintMessage
 Script_PrintMessage: @ 0x081A0B64
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B1C8
 	bl sub_0808B658

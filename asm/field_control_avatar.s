@@ -357,7 +357,7 @@ GetPlayerPosition: @ 0x0809BA54
 	adds r4, r0, #0
 	adds r1, r4, #2
 	bl PlayerGetDestCoords
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	strb r0, [r4, #4]
 	pop {r4}
 	pop {r0}
@@ -387,7 +387,7 @@ GetInFrontOfPlayerPosition: @ 0x0809BA6C
 	lsrs r0, r0, #0x18
 	cmp r0, #0
 	beq _0809BA9E
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 _0809BA9E:
 	strb r0, [r5, #4]
 	add sp, #4
@@ -459,7 +459,7 @@ _0809BAEC:
 	bl PlaySE
 _0809BB1C:
 	adds r0, r4, #0
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 _0809BB24:
 	pop {r4}
@@ -558,7 +558,7 @@ _0809BBC8:
 	lsrs r1, r1, #0x10
 _0809BBE6:
 	ldrb r2, [r4, #4]
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r3, r0, #0x18
 	cmp r3, #0x10
@@ -627,7 +627,7 @@ GetInteractedEventObjectScript: @ 0x0809BC5C
 	ldrh r0, [r5]
 	ldrh r1, [r5, #2]
 	ldrb r2, [r5, #4]
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0x10
@@ -664,7 +664,7 @@ _0809BC8C:
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	ldrb r2, [r5, #4]
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0x10
@@ -1233,7 +1233,7 @@ TrySetupDiveDownScript: @ 0x0809C140
 	cmp r0, #2
 	bne _0809C16C
 	ldr r0, _0809C168
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809C16E
 	.align 2, 0
@@ -1265,7 +1265,7 @@ TrySetupDiveEmergeScript: @ 0x0809C174
 	cmp r0, #1
 	bne _0809C1AC
 	ldr r0, _0809C1A8
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809C1AE
 	.align 2, 0
@@ -1344,7 +1344,7 @@ TryStartCoordEventScript: @ 0x0809C210
 	bl GetCoordEventScriptAtPosition
 	cmp r0, #0
 	beq _0809C23C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809C23E
 	.align 2, 0
@@ -1380,7 +1380,7 @@ _0809C260:
 	beq _0809C27C
 	ldr r0, _0809C278
 _0809C26E:
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809C2C2
 	.align 2, 0
@@ -1456,7 +1456,7 @@ _0809C2DC:
 	cmp r0, #1
 	bne _0809C320
 	ldr r0, _0809C31C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C318: .4byte 0x02037230
@@ -1469,7 +1469,7 @@ _0809C320:
 	movs r0, #0xd
 	bl IncrementGameStat
 	ldr r0, _0809C338
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C338: .4byte 0x08257A89
@@ -1480,7 +1480,7 @@ _0809C33C:
 	cmp r0, #1
 	bne _0809C354
 	ldr r0, _0809C350
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C350: .4byte 0x08244749
@@ -1491,7 +1491,7 @@ _0809C354:
 	cmp r0, #1
 	bne _0809C36C
 	ldr r0, _0809C368
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C368: .4byte 0x0821B7F4
@@ -1500,7 +1500,7 @@ _0809C36C:
 	cmp r0, #1
 	bne _0809C380
 	ldr r0, _0809C37C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C37C: .4byte 0x081DDDF3
@@ -1509,7 +1509,7 @@ _0809C380:
 	cmp r0, #1
 	bne _0809C394
 	ldr r0, _0809C390
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C390: .4byte 0x081ED2AD
@@ -1518,7 +1518,7 @@ _0809C394:
 	cmp r0, #1
 	bne _0809C3A8
 	ldr r0, _0809C3A4
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C3A4: .4byte 0x081F1A71
@@ -1527,7 +1527,7 @@ _0809C3A8:
 	cmp r0, #1
 	bne _0809C3BC
 	ldr r0, _0809C3B8
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C3B8: .4byte 0x08202410
@@ -1536,7 +1536,7 @@ _0809C3BC:
 	cmp r0, #1
 	bne _0809C3D0
 	ldr r0, _0809C3CC
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C3CC: .4byte 0x0820DA9F
@@ -1551,7 +1551,7 @@ _0809C3D0:
 	cmp r0, #1
 	bne _0809C3F4
 	ldr r0, _0809C3F0
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0809C400
 	.align 2, 0
 _0809C3F0: .4byte 0x0821DEC7
@@ -1860,7 +1860,7 @@ _0809C628:
 	cmp r0, #1
 	bne _0809C644
 	ldr r0, _0809C640
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _0809C664
 	.align 2, 0

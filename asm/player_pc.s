@@ -427,7 +427,7 @@ PlayerPC_TurnOff: @ 0x0816AF60
 	cmp r0, #0
 	bne _0816AF8C
 	ldr r0, _0816AF88
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0816AF9C
 	.align 2, 0
 _0816AF80: .4byte 0x0203B980
@@ -435,12 +435,12 @@ _0816AF84: .4byte 0x03005AF0
 _0816AF88: .4byte 0x081F01EE
 _0816AF8C:
 	ldr r0, _0816AF94
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0816AF9C
 	.align 2, 0
 _0816AF94: .4byte 0x081F0DDB
 _0816AF98:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _0816AF9C:
 	adds r0, r4, #0
 	bl DestroyTask

@@ -272,25 +272,25 @@ ScriptReadWord: @ 0x080987AC
 	bx r1
 	thumb_func_end ScriptReadWord
 
-	thumb_func_start ScriptContext2_Enable
-ScriptContext2_Enable: @ 0x080987DC
+	thumb_func_start LockPlayerFieldControls
+LockPlayerFieldControls: @ 0x080987DC
 	ldr r1, _080987E4
 	movs r0, #1
 	strb r0, [r1]
 	bx lr
 	.align 2, 0
 _080987E4: .4byte 0x03000F2C
-	thumb_func_end ScriptContext2_Enable
+	thumb_func_end LockPlayerFieldControls
 
-	thumb_func_start ScriptContext2_Disable
-ScriptContext2_Disable: @ 0x080987E8
+	thumb_func_start UnlockPlayerFieldControls
+UnlockPlayerFieldControls: @ 0x080987E8
 	ldr r1, _080987F0
 	movs r0, #0
 	strb r0, [r1]
 	bx lr
 	.align 2, 0
 _080987F0: .4byte 0x03000F2C
-	thumb_func_end ScriptContext2_Disable
+	thumb_func_end UnlockPlayerFieldControls
 
 	thumb_func_start ScriptContext2_IsEnabled
 ScriptContext2_IsEnabled: @ 0x080987F4
@@ -348,7 +348,7 @@ ScriptContext2_RunScript: @ 0x08098844
 	beq _08098878
 	cmp r0, #1
 	beq _08098878
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _0809886C
 	bl RunScriptCommand
 	lsls r0, r0, #0x18
@@ -362,7 +362,7 @@ _0809886C: .4byte 0x03000E40
 _08098870:
 	movs r0, #2
 	strb r0, [r4]
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 _08098878:
 	movs r0, #0
 _0809887A:
@@ -371,8 +371,8 @@ _0809887A:
 	bx r1
 	thumb_func_end ScriptContext2_RunScript
 
-	thumb_func_start ScriptContext1_SetupScript
-ScriptContext1_SetupScript: @ 0x08098880
+	thumb_func_start ScriptContext_SetupScript
+ScriptContext_SetupScript: @ 0x08098880
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	ldr r4, _080988A8
@@ -383,7 +383,7 @@ ScriptContext1_SetupScript: @ 0x08098880
 	adds r0, r4, #0
 	adds r1, r5, #0
 	bl SetupBytecodeScript
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080988B4
 	movs r0, #0
 	strb r0, [r1]
@@ -395,7 +395,7 @@ _080988A8: .4byte 0x03000E40
 _080988AC: .4byte 0x081DABAC
 _080988B0: .4byte 0x081DAF30
 _080988B4: .4byte 0x03000E38
-	thumb_func_end ScriptContext1_SetupScript
+	thumb_func_end ScriptContext_SetupScript
 
 	thumb_func_start ScriptContext1_Stop
 ScriptContext1_Stop: @ 0x080988B8
@@ -407,18 +407,18 @@ ScriptContext1_Stop: @ 0x080988B8
 _080988C0: .4byte 0x03000E38
 	thumb_func_end ScriptContext1_Stop
 
-	thumb_func_start EnableBothScriptContexts
-EnableBothScriptContexts: @ 0x080988C4
+	thumb_func_start ScriptContext_Enable
+ScriptContext_Enable: @ 0x080988C4
 	push {lr}
 	ldr r1, _080988D4
 	movs r0, #0
 	strb r0, [r1]
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
 _080988D4: .4byte 0x03000E38
-	thumb_func_end EnableBothScriptContexts
+	thumb_func_end ScriptContext_Enable
 
 	thumb_func_start ScriptContext2_RunNewScript
 ScriptContext2_RunNewScript: @ 0x080988D8
@@ -610,7 +610,7 @@ TryRunOnFrameMapScript: @ 0x08098A04
 	bl MapHeaderCheckScriptTable
 	cmp r0, #0
 	beq _08098A18
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #1
 	b _08098A1A
 _08098A18:

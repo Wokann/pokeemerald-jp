@@ -18633,8 +18633,8 @@ task_hm_without_phase_2: @ 0x081B9080
 	beq _081B909E
 	adds r0, r4, #0
 	bl DestroyTask
-	bl ScriptContext2_Disable
-	bl EnableBothScriptContexts
+	bl UnlockPlayerFieldControls
+	bl ScriptContext_Enable
 _081B909E:
 	pop {r4}
 	pop {r0}
@@ -18644,7 +18644,7 @@ _081B909E:
 	thumb_func_start sub_081B90A4
 sub_081B90A4: @ 0x081B90A4
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -18729,7 +18729,7 @@ _081B914C: .4byte 0x08085A31
 	thumb_func_start sub_081B9150
 sub_081B9150: @ 0x081B9150
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -18783,7 +18783,7 @@ _081B91B8: .4byte 0x081B9031
 	thumb_func_start sub_081B91BC
 sub_081B91BC: @ 0x081B91BC
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -18916,7 +18916,7 @@ _081B92BC: .4byte 0x02024190
 	thumb_func_start sub_081B92C0
 sub_081B92C0: @ 0x081B92C0
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen

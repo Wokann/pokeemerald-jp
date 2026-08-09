@@ -41,7 +41,7 @@ _081C4728: .4byte 0x0805996D
 	thumb_func_start sub_081C472C
 sub_081C472C: @ 0x081C472C
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen

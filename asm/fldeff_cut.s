@@ -424,7 +424,7 @@ _080D3308: .4byte 0x020388A8
 	thumb_func_start FldEff_UseCutOnGrass
 FldEff_UseCutOnGrass: @ 0x080D330C
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080D3334
@@ -455,7 +455,7 @@ FieldCallback_CutTree: @ 0x080D333C
 	lsrs r0, r0, #0x18
 	str r0, [r1]
 	ldr r0, _080D3358
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -466,7 +466,7 @@ _080D3358: .4byte 0x08256612
 	thumb_func_start FldEff_UseCutOnTree
 FldEff_UseCutOnTree: @ 0x080D335C
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080D3384
@@ -1404,14 +1404,14 @@ _080D3A74:
 	movs r0, #0
 	str r0, [r6]
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl IsMewPlayingHideAndSeek
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _080D3ACA
 	ldr r0, _080D3AD8
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 _080D3ACA:
 	pop {r4, r5, r6}
 	pop {r0}
@@ -1576,7 +1576,7 @@ StartCutTreeFieldEffect: @ 0x080D3BF4
 	bl PlaySE
 	movs r0, #2
 	bl FieldEffectActiveListRemove
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0

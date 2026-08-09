@@ -172,7 +172,7 @@ _080AEA1C:
 	thumb_func_start sub_080AEA24
 sub_080AEA24: @ 0x080AEA24
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_black
 	ldr r0, _080AEA40
@@ -194,7 +194,7 @@ task0A_asap_script_env_2_enable_and_set_ctx_running: @ 0x080AEA44
 	bne _080AEA5C
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080AEA5C:
 	pop {r4}
 	pop {r0}
@@ -205,7 +205,7 @@ _080AEA5C:
 	thumb_func_start FieldCallback_ReturnToEventScript2
 FieldCallback_ReturnToEventScript2: @ 0x080AEA64
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_black
 	ldr r0, _080AEA80
@@ -220,7 +220,7 @@ _080AEA80: .4byte 0x080AEA45
 	thumb_func_start sub_080AEA84
 sub_080AEA84: @ 0x080AEA84
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl pal_fill_black
 	ldr r0, _080AEA9C
 	movs r1, #0xa
@@ -282,7 +282,7 @@ _080AEAF8:
 	bl WaitForWeatherFadeIn
 	cmp r0, #1
 	bne _080AEB0A
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080AEB0A:
@@ -294,7 +294,7 @@ _080AEB0A:
 	thumb_func_start sub_080AEB10
 sub_080AEB10: @ 0x080AEB10
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_PlaySpecialMapMusic
 	bl palette_bg_faded_fill_black
 	ldr r0, _080AEB2C
@@ -363,7 +363,7 @@ _080AEB94:
 	cmp r0, #1
 	bne _080AEBAA
 	bl sub_08009AB0
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080AEBAA:
@@ -413,7 +413,7 @@ _080AEBEE:
 _080AEBF6:
 	bl sub_08009AB0
 	bl ResetAllMultiplayerState
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080AEC08:
@@ -426,7 +426,7 @@ _080AEC08:
 	thumb_func_start sub_080AEC10
 sub_080AEC10: @ 0x080AEC10
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_PlaySpecialMapMusic
 	bl palette_bg_faded_fill_black
 	ldr r0, _080AEC2C
@@ -493,7 +493,7 @@ mapldr_default: @ 0x080AEC94
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_for_maplights
 	bl sub_080AEC30
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -505,7 +505,7 @@ sub_080AECAC: @ 0x080AECAC
 	bl Overworld_PlaySpecialMapMusic
 	bl sub_080AE988
 	bl sub_080AEC30
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -521,7 +521,7 @@ sub_080AECC4: @ 0x080AECC4
 _080AECD2:
 	bl pal_fill_black
 	bl sub_080AEC30
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -537,7 +537,7 @@ sub_080AECE4: @ 0x080AECE4
 	ldr r0, _080AED04
 	movs r1, #0xa
 	bl CreateTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -554,7 +554,7 @@ sub_080AED08: @ 0x080AED08
 	ldr r0, _080AED30
 	movs r1, #0xa
 	bl CreateTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0xe
 	bl sub_08084EA8
 	pop {r0}
@@ -630,7 +630,7 @@ _080AEDA0:
 	ldr r1, _080AEDD4
 	adds r0, r0, r1
 	movs r1, #8
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #2
 	strh r0, [r5, #8]
 	b _080AEE46
@@ -661,7 +661,7 @@ _080AEDD8:
 	lsls r0, r0, #2
 	ldr r1, _080AEE18
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	movs r0, #3
 	strh r0, [r5, #8]
 	b _080AEE46
@@ -685,7 +685,7 @@ _080AEE32:
 	strh r0, [r5, #8]
 	b _080AEE46
 _080AEE3C:
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 _080AEE46:
@@ -760,7 +760,7 @@ _080AEE9E:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #2
 	strh r0, [r5, #8]
 	b _080AEF06
@@ -776,7 +776,7 @@ _080AEEE8:
 	strh r0, [r5, #8]
 	b _080AEF06
 _080AEEFC:
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 _080AEF06:
@@ -806,7 +806,7 @@ task_map_chg_seq_0807E2CC: @ 0x080AEF0C
 _080AEF2C: .4byte 0x03005B60
 _080AEF30:
 	bl FreezeEventObjects
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]
@@ -816,7 +816,7 @@ _080AEF40:
 	cmp r0, #0
 	beq _080AEF56
 	bl UnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080AEF56:
@@ -853,7 +853,7 @@ sub_080AEF84: @ 0x080AEF84
 	ldr r0, _080AEF9C
 	movs r1, #0x50
 	bl CreateTask
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -877,7 +877,7 @@ task_mpl_807E3C8: @ 0x080AEFAC
 	bl WaitForWeatherFadeIn
 	cmp r0, #1
 	bne _080AEFC8
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 	bl ScriptUnfreezeEventObjects
@@ -891,7 +891,7 @@ _080AEFC8:
 	thumb_func_start sub_080AEFD0
 sub_080AEFD0: @ 0x080AEFD0
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl pal_fill_black
 	ldr r0, _080AEFE8
 	movs r1, #0xa
@@ -905,7 +905,7 @@ _080AEFE8: .4byte 0x080AEFAD
 	thumb_func_start sub_080AEFEC
 sub_080AEFEC: @ 0x080AEFEC
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl Overworld_PlaySpecialMapMusic
 	bl pal_fill_black
 	ldr r0, _080AF008
@@ -947,7 +947,7 @@ _080AF02C:
 	thumb_func_start DoWarp
 DoWarp: @ 0x080AF030
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	bl PlayRainStoppingSoundEffect
@@ -970,7 +970,7 @@ _080AF064: .4byte 0x080AF309
 	thumb_func_start DoDiveWarp
 DoDiveWarp: @ 0x080AF068
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	bl PlayRainStoppingSoundEffect
@@ -991,7 +991,7 @@ _080AF094: .4byte 0x080AF309
 	thumb_func_start sub_080AF098
 sub_080AF098: @ 0x080AF098
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	movs r0, #3
 	movs r1, #8
@@ -1014,7 +1014,7 @@ _080AF0C8: .4byte 0x080AF309
 	thumb_func_start DoDoorWarp
 DoDoorWarp: @ 0x080AF0CC
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080AF0E4
 	ldr r1, _080AF0E8
 	str r1, [r0]
@@ -1049,7 +1049,7 @@ sub_080AF108: @ 0x080AF108
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	adds r0, r4, #0
 	movs r1, #0xa
 	bl sub_080B65A4
@@ -1062,7 +1062,7 @@ sub_080AF108: @ 0x080AF108
 	thumb_func_start sub_080AF124
 sub_080AF124: @ 0x080AF124
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0xa
 	bl sub_080B6D30
 	pop {r0}
@@ -1072,7 +1072,7 @@ sub_080AF124: @ 0x080AF124
 	thumb_func_start sub_080AF134
 sub_080AF134: @ 0x080AF134
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0xa
 	bl sub_080B71CC
 	pop {r0}
@@ -1082,7 +1082,7 @@ sub_080AF134: @ 0x080AF134
 	thumb_func_start sub_080AF144
 sub_080AF144: @ 0x080AF144
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	movs r0, #0x2d
@@ -1106,7 +1106,7 @@ sub_080AF178: @ 0x080AF178
 	push {lr}
 	movs r0, #1
 	bl sub_08084EA8
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl SaveObjectEvents
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
@@ -1129,7 +1129,7 @@ _080AF1B0: .4byte 0x080AED09
 	thumb_func_start sub_080AF1B4
 sub_080AF1B4: @ 0x080AF1B4
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl WarpFadeScreen
 	ldr r0, _080AF1D0
 	movs r1, #0xa
@@ -1171,7 +1171,7 @@ _080AF204:
 	beq _080AF22A
 	b _080AF23A
 _080AF20A:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	b _080AF222
 _080AF210:
 	bl PaletteFadeActive
@@ -1203,7 +1203,7 @@ _080AF240: .4byte 0x080859DD
 	thumb_func_start sub_080AF244
 sub_080AF244: @ 0x080AF244
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	movs r0, #9
@@ -1323,7 +1323,7 @@ _080AF330:
 	b _080AF378
 _080AF336:
 	bl FreezeEventObjects
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	b _080AF360
 _080AF340:
 	bl PaletteFadeActive
@@ -1458,7 +1458,7 @@ _080AF422:
 	lsls r0, r0, #2
 	adds r0, r0, r4
 	movs r1, #9
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	movs r0, #2
 	strh r0, [r5, #8]
 	b _080AF4E4
@@ -1490,7 +1490,7 @@ _080AF468:
 	lsls r0, r0, #2
 	ldr r1, _080AF4B0
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	movs r0, #0
 	bl sub_080AE9F0
 	movs r0, #3
@@ -1557,7 +1557,7 @@ _080AF518:
 	b _080AF552
 _080AF51E:
 	bl FreezeEventObjects
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	b _080AF53A
 _080AF528:
 	bl PaletteFadeActive
@@ -1589,7 +1589,7 @@ _080AF558: .4byte 0x0808598D
 	thumb_func_start sub_080AF55C
 sub_080AF55C: @ 0x080AF55C
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	bl PlayRainStoppingSoundEffect
@@ -2023,7 +2023,7 @@ sub_080AF88C: @ 0x080AF88C
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080AF8A8
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _080AF8A8:
@@ -2187,7 +2187,7 @@ _080AF9B2:
 	movs r1, #0x50
 	bl sub_080AF8D8
 	bl sub_080AF8B4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	add sp, #8
 	pop {r4, r5}
 	pop {r0}
@@ -2278,7 +2278,7 @@ task0A_mpl_807E31C: @ 0x080AFA5C
 _080AFA7C: .4byte 0x03005B60
 _080AFA80:
 	bl FreezeEventObjects
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl sub_0808CB04
 	ldrh r0, [r4, #8]
 	adds r0, #1
@@ -2292,7 +2292,7 @@ _080AFA94:
 	cmp r0, #1
 	beq _080AFAB2
 	bl UnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080AFAB2:
@@ -2330,7 +2330,7 @@ _080AFAE0:
 	b _080AFB36
 _080AFAEA:
 	bl FreezeEventObjects
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #0x2d
 	bl PlaySE
 	bl sub_0808CB38
@@ -2371,7 +2371,7 @@ _080AFB3C: .4byte 0x08085935
 	thumb_func_start sub_080AFB40
 sub_080AFB40: @ 0x080AFB40
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080AFB58
 	movs r1, #0xa
 	bl CreateTask
@@ -2389,7 +2389,7 @@ _080AFB60: .4byte 0x080AECE5
 	thumb_func_start sub_080AFB64
 sub_080AFB64: @ 0x080AFB64
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080AFB7C
 	ldr r1, _080AFB80
 	str r1, [r0]
@@ -2624,7 +2624,7 @@ _080AFD4C:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080AFE28
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	movs r0, #3
 	strh r0, [r5]
 	b _080AFE28
@@ -2715,7 +2715,7 @@ _080AFDEE:
 	ldrh r1, [r5, #0x14]
 	movs r0, #0x4a
 	bl SetGpuReg
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _080AFE28:
@@ -2820,7 +2820,7 @@ task50_0807F0C8: @ 0x080AFEC8
 	bne _080AFEE4
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080AFEE4:
 	pop {r4}
 	pop {r0}

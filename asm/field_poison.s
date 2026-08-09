@@ -234,7 +234,7 @@ _080F9FA4:
 	ldr r0, _080F9FB8
 	strh r1, [r0]
 _080F9FA8:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r6, #0
 	bl DestroyTask
 _080F9FB2:

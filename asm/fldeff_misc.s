@@ -678,7 +678,7 @@ FieldCallback_SecretBaseCave: @ 0x080FA94C
 	lsrs r0, r0, #0x18
 	str r0, [r1]
 	ldr r0, _080FA968
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -689,7 +689,7 @@ _080FA968: .4byte 0x08245B35
 	thumb_func_start FldEff_UseSecretPowerCave
 FldEff_UseSecretPowerCave: @ 0x080FA96C
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080FA990
@@ -810,7 +810,7 @@ CaveEntranceSpriteCallbackEnd: @ 0x080FAA48
 	push {lr}
 	movs r1, #0x37
 	bl FieldEffectStop
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	thumb_func_end CaveEntranceSpriteCallbackEnd
@@ -824,7 +824,7 @@ FieldCallback_SecretBaseShrub: @ 0x080FAA58
 	lsrs r0, r0, #0x18
 	str r0, [r1]
 	ldr r0, _080FAA74
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -835,7 +835,7 @@ _080FAA74: .4byte 0x08245B8E
 	thumb_func_start FldEff_UseSecretPowerShrub
 FldEff_UseSecretPowerShrub: @ 0x080FAA78
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080FAA9C
@@ -998,7 +998,7 @@ TreeEntranceSpriteCallbackEnd: @ 0x080FABAC
 	push {lr}
 	movs r1, #0x38
 	bl FieldEffectStop
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	thumb_func_end TreeEntranceSpriteCallbackEnd
@@ -1012,7 +1012,7 @@ FieldCallback_SecretBaseTree: @ 0x080FABBC
 	lsrs r0, r0, #0x18
 	str r0, [r1]
 	ldr r0, _080FABD8
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1023,7 +1023,7 @@ _080FABD8: .4byte 0x08245BE7
 	thumb_func_start FldEff_UseSecretPowerTree
 FldEff_UseSecretPowerTree: @ 0x080FABDC
 	push {lr}
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080FAC00
@@ -1144,7 +1144,7 @@ ShrubEntranceSpriteCallbackEnd: @ 0x080FACB8
 	push {lr}
 	movs r1, #0x39
 	bl FieldEffectStop
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	thumb_func_end ShrubEntranceSpriteCallbackEnd
@@ -1265,7 +1265,7 @@ _080FADB0:
 	bl CurrentMapDrawMetatileAt
 	movs r0, #0x3d
 	bl FieldEffectActiveListRemove
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r5, #0
 	bl DestroyTask
 	b _080FADE4
@@ -1894,7 +1894,7 @@ _080FB2E8: .4byte 0x080FB215
 FldEff_SandPillar: @ 0x080FB2EC
 	push {r4, lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	mov r4, sp
 	adds r4, #2
 	mov r0, sp
@@ -2128,7 +2128,7 @@ SpriteCB_SandPillar_2: @ 0x080FB4D8
 	push {lr}
 	movs r1, #0x34
 	bl FieldEffectStop
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	thumb_func_end SpriteCB_SandPillar_2
@@ -2462,12 +2462,12 @@ Task_WateringBerryTreeAnim_1: @ 0x080FB760
 	ldr r1, _080FB7C8
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080FB78C
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080FB7BE
@@ -2484,7 +2484,7 @@ _080FB78C:
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	ldr r1, _080FB7CC
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -2516,7 +2516,7 @@ Task_WateringBerryTreeAnim_2: @ 0x080FB7D4
 	ldr r1, _080FB82C
 	adds r5, r0, r1
 	adds r0, r5, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080FB838
@@ -2540,7 +2540,7 @@ Task_WateringBerryTreeAnim_2: @ 0x080FB7D4
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r5, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	b _080FB838
 	.align 2, 0
 _080FB828: .4byte 0x02037230
@@ -2569,7 +2569,7 @@ Task_WateringBerryTreeAnim_3: @ 0x080FB844
 	bl SetPlayerAvatarTransitionFlags
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r4}
 	pop {r0}
 	bx r0

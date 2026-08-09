@@ -24,6 +24,13 @@ byte-identity.
    - update ld_script_jp.txt: replace/extend the asm object entries
      with `build/src/xxx.o(.text.*)` at the exact ROM position;
    - `make` must produce a byte-identical ROM (`make compare`).
+
+   When the C module calls functions that the JP splitter named
+   differently, rename the JP asm labels to pokeemerald's names (judged
+   by functionality + call-site logic, not by name or address) instead
+   of adding `ABSOLUTE()` aliases in the linker script: a Thumb `bl` to
+   an `ABSOLUTE()` symbol makes the linker emit ARM interworking veneers
+   (`.text.__stub`), which shifts the layout and breaks `make compare`.
 3. **Commit** only after `make compare` passes.
 
 The pokeemerald include tree (include/) is ported wholesale, so C files
@@ -75,4 +82,16 @@ full module -- asm/gym_leader_rematch.s removed), src/birch_pc.c (3,
 full module -- asm/birch_pc.s removed), src/fldeff_strength.c (4, full
 module -- asm/fldeff_strength.s removed), src/fldeff_teleport.c (4, full
 module -- asm/fldeff_teleport.s removed), src/hof_pc.c (4, asm/hof_pc.s
-removed).
+removed), src/fldeff_rocksmash.c (10, asm/fldeff_rocksmash.s trimmed to the
+remaining 4 EscapeRope helper functions).
+
+The rocksmash conversion also aligned the JP asm names of the called
+helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
+-> PlayerGetElevation, GetEventObjectIdByXYZ -> GetObjectEventIdByPosition,
+MovementAction_AcroEndWheelieFaceLeft_Step0 ->
+ObjectEventClearHeldMovementIfFinished, ScriptContext1_SetupScript ->
+ScriptContext_SetupScript, ScriptContext2_Enable/Disable ->
+LockPlayerFieldControls/UnlockPlayerFieldControls, EnableBothScriptContexts
+-> ScriptContext_Enable).  funcmap_jp.txt and sym_ewram_jp.txt were updated
+accordingly (gPlayerFacingPosition 0x0203A80C, gSpecialVar_LastTalked
+0x02037292).

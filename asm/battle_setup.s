@@ -112,7 +112,7 @@ BattleSetup_StartBattlePikeWildBattle: @ 0x080AFFAC
 	thumb_func_start DoStandardWildBattle
 DoStandardWildBattle: @ 0x080AFFB8
 	push {r4, lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B658
 	ldr r1, _080B0018
@@ -158,7 +158,7 @@ _080B0024: .4byte 0x0000400E
 	thumb_func_start BattleSetup_StartRoamerBattle
 BattleSetup_StartRoamerBattle: @ 0x080B0028
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B658
 	ldr r1, _080B006C
@@ -190,7 +190,7 @@ _080B0074: .4byte 0x02022C90
 	thumb_func_start DoSafariBattle
 DoSafariBattle: @ 0x080B0078
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B658
 	ldr r1, _080B00A4
@@ -215,7 +215,7 @@ _080B00AC: .4byte 0x02022C90
 	thumb_func_start DoBattlePikeWildBattle
 DoBattlePikeWildBattle: @ 0x080B00B0
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B658
 	ldr r1, _080B00F4
@@ -301,7 +301,7 @@ StartWallyTutorialBattle: @ 0x080B0168
 	lsls r1, r1, #1
 	movs r2, #5
 	bl CreateMaleMon
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B0198
 	ldr r0, _080B019C
 	str r0, [r1, #8]
@@ -324,7 +324,7 @@ _080B01A0: .4byte 0x02022C90
 	thumb_func_start BattleSetup_StartScriptedWildBattle
 BattleSetup_StartScriptedWildBattle: @ 0x080B01A4
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B01DC
 	ldr r0, _080B01E0
 	str r0, [r1, #8]
@@ -353,7 +353,7 @@ _080B01E4: .4byte 0x02022C90
 	thumb_func_start BattleSetup_StartLatiBattle
 BattleSetup_StartLatiBattle: @ 0x080B01E8
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B0224
 	ldr r0, _080B0228
 	str r0, [r1, #8]
@@ -383,7 +383,7 @@ _080B022C: .4byte 0x02022C90
 	thumb_func_start BattleSetup_StartLegendaryBattle
 BattleSetup_StartLegendaryBattle: @ 0x080B0230
 	push {r4, lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B0270
 	ldr r0, _080B0274
 	str r0, [r1, #8]
@@ -492,7 +492,7 @@ _080B02FA:
 	thumb_func_start StartGroudonKyogreBattle
 StartGroudonKyogreBattle: @ 0x080B0314
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B033C
 	ldr r0, _080B0340
 	str r0, [r1, #8]
@@ -534,7 +534,7 @@ _080B0356:
 	thumb_func_start StartRegiBattle
 StartRegiBattle: @ 0x080B0370
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _080B03A8
 	ldr r0, _080B03AC
 	str r0, [r1, #8]
@@ -2037,8 +2037,8 @@ ConfigureAndSetUpOneTrainerBattle: @ 0x080B0F18
 	adds r0, r1, #0
 	bl BattleSetup_ConfigureTrainerBattle
 	ldr r0, _080B0F58
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -2080,8 +2080,8 @@ _080B0F8C: .4byte 0x02036FF0
 SetUpTwoTrainersBattle: @ 0x080B0F90
 	push {lr}
 	ldr r0, _080B0FA0
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0

@@ -2144,8 +2144,8 @@ _0808DD60: .4byte 0x02037230
 _0808DD64: .4byte 0x02036FF0
 	thumb_func_end SetPlayerAvatarEventObjectIdAndObjectId
 
-	thumb_func_start EventObjectSetGraphicsId
-EventObjectSetGraphicsId: @ 0x0808DD68
+	thumb_func_start ObjectEventSetGraphicsId
+ObjectEventSetGraphicsId: @ 0x0808DD68
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -2277,7 +2277,7 @@ _0808DE68:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end EventObjectSetGraphicsId
+	thumb_func_end ObjectEventSetGraphicsId
 
 	thumb_func_start EventObjectSetGraphicsIdByLocalIdAndMap
 EventObjectSetGraphicsIdByLocalIdAndMap: @ 0x0808DE74
@@ -2304,7 +2304,7 @@ EventObjectSetGraphicsIdByLocalIdAndMap: @ 0x0808DE74
 	ldr r1, _0808DEB0
 	adds r0, r0, r1
 	adds r1, r4, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 _0808DEA8:
 	add sp, #4
 	pop {r4}
@@ -2458,7 +2458,7 @@ _0808DFB8:
 	adds r0, r0, r6
 	ldrb r1, [r0]
 	adds r0, r5, #0
-	bl EventObjectSetGraphicsId
+	bl ObjectEventSetGraphicsId
 	ldr r0, _0808DFFC
 	adds r0, r4, r0
 	ldr r0, [r0]
@@ -3321,8 +3321,8 @@ _0808E5E0: .4byte 0x02036FD4
 _0808E5E4: .4byte 0x02036FF0
 	thumb_func_end UpdateEventObjectCoordsForCameraUpdate
 
-	thumb_func_start GetEventObjectIdByXYZ
-GetEventObjectIdByXYZ: @ 0x0808E5E8
+	thumb_func_start GetObjectEventIdByPosition
+GetObjectEventIdByPosition: @ 0x0808E5E8
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -3377,7 +3377,7 @@ _0808E644:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end GetEventObjectIdByXYZ
+	thumb_func_end GetObjectEventIdByPosition
 
 	thumb_func_start EventObjectDoesZCoordMatch
 EventObjectDoesZCoordMatch: @ 0x0808E650
@@ -13272,8 +13272,8 @@ EventObjectMoveDestCoords: @ 0x08092ADC
 	.align 2, 0
 	thumb_func_end EventObjectMoveDestCoords
 
-	thumb_func_start EventObjectIsMovementOverridden
-EventObjectIsMovementOverridden: @ 0x08092AFC
+	thumb_func_start ObjectEventIsMovementOverridden
+ObjectEventIsMovementOverridden: @ 0x08092AFC
 	push {lr}
 	ldrb r1, [r0]
 	movs r0, #0x42
@@ -13288,7 +13288,7 @@ _08092B0E:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end EventObjectIsMovementOverridden
+	thumb_func_end ObjectEventIsMovementOverridden
 
 	thumb_func_start EventObjectIsHeldMovementActive
 EventObjectIsHeldMovementActive: @ 0x08092B14
@@ -13310,13 +13310,13 @@ _08092B2C:
 	bx r1
 	thumb_func_end EventObjectIsHeldMovementActive
 
-	thumb_func_start EventObjectSetHeldMovement
-EventObjectSetHeldMovement: @ 0x08092B30
+	thumb_func_start ObjectEventSetHeldMovement
+ObjectEventSetHeldMovement: @ 0x08092B30
 	push {r4, r5, r6, lr}
 	adds r4, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r5, r1, #0x18
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
 	cmp r6, #0
@@ -13347,7 +13347,7 @@ _08092B72:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-	thumb_func_end EventObjectSetHeldMovement
+	thumb_func_end ObjectEventSetHeldMovement
 
 	thumb_func_start EventObjectForceSetHeldMovement
 EventObjectForceSetHeldMovement: @ 0x08092B78
@@ -13358,7 +13358,7 @@ EventObjectForceSetHeldMovement: @ 0x08092B78
 	bl EventObjectClearHeldMovementIfActive
 	adds r0, r5, #0
 	adds r1, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -13411,8 +13411,8 @@ EventObjectClearHeldMovement: @ 0x08092BAC
 _08092BDC: .4byte 0x020205AC
 	thumb_func_end EventObjectClearHeldMovement
 
-	thumb_func_start EventObjectCheckHeldMovementStatus
-EventObjectCheckHeldMovementStatus: @ 0x08092BE0
+	thumb_func_start ObjectEventCheckHeldMovementStatus
+ObjectEventCheckHeldMovementStatus: @ 0x08092BE0
 	push {lr}
 	ldrb r1, [r0]
 	lsls r0, r1, #0x19
@@ -13425,13 +13425,13 @@ _08092BEE:
 _08092BF0:
 	pop {r1}
 	bx r1
-	thumb_func_end EventObjectCheckHeldMovementStatus
+	thumb_func_end ObjectEventCheckHeldMovementStatus
 
-	thumb_func_start MovementAction_AcroEndWheelieFaceLeft_Step0
-MovementAction_AcroEndWheelieFaceLeft_Step0: @ 0x08092BF4
+	thumb_func_start ObjectEventClearHeldMovementIfFinished
+ObjectEventClearHeldMovementIfFinished: @ 0x08092BF4
 	push {r4, r5, lr}
 	adds r5, r0, #0
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
@@ -13446,7 +13446,7 @@ _08092C0E:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end MovementAction_AcroEndWheelieFaceLeft_Step0
+	thumb_func_end ObjectEventClearHeldMovementIfFinished
 
 	thumb_func_start EventObjectGetHeldMovementActionId
 EventObjectGetHeldMovementActionId: @ 0x08092C18
@@ -13958,7 +13958,7 @@ EventObjectFaceOppositeDirection: @ 0x08092F8C
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	pop {r4}

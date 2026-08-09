@@ -8,7 +8,7 @@ Special_ShowDiploma: @ 0x08137D24
 	push {lr}
 	ldr r0, _08137D34
 	bl SetMainCallback2
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -23,7 +23,7 @@ Special_ViewWallClock: @ 0x08137D38
 	str r1, [r0, #8]
 	ldr r0, _08137D58
 	bl SetMainCallback2
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1607,7 +1607,7 @@ Task_PetalburgGym: @ 0x08138980
 	bne _081389E0
 	adds r0, r6, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	b _081389E0
 	.align 2, 0
 _081389C8: .4byte 0x085925C4
@@ -3373,7 +3373,7 @@ sub_08139690: @ 0x08139690
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -4077,7 +4077,7 @@ sub_08139B68: @ 0x08139B68
 	bl PlaySE
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	bl InstallCameraPanAheadCallback
 _08139BC8:
 	pop {r4, r5}
@@ -5028,7 +5028,7 @@ sub_0813A318: @ 0x0813A318
 	lsls r0, r0, #3
 	ldr r1, _0813A410
 	adds r5, r0, r1
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r1, _0813A414
 	movs r0, #0
 	strh r0, [r1]
@@ -5297,7 +5297,7 @@ _0813A560:
 	bl sub_0813A740
 	ldr r0, _0813A574
 	str r0, [r6]
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _0813A56E:
 	pop {r4, r5, r6}
 	pop {r0}
@@ -5359,7 +5359,7 @@ sub_0813A578: @ 0x0813A578
 	bl RemoveWindow
 	adds r0, r5, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	add sp, #4
 	pop {r4, r5}
 	pop {r0}
@@ -5406,7 +5406,7 @@ sub_0813A638: @ 0x0813A638
 	lsrs r2, r0, #0x18
 	cmp r2, #0xff
 	bne _0813A654
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	b _0813A664
 	.align 2, 0
 _0813A650: .4byte 0x0813A609
@@ -5432,7 +5432,7 @@ sub_0813A66C: @ 0x0813A66C
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	adds r0, r4, #0
 	bl sub_0813A69C
 	ldr r1, _0813A694
@@ -6724,7 +6724,7 @@ _0813B094:
 	movs r0, #2
 _0813B0A2:
 	strh r0, [r1]
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _0813B0A8:
 	adds r0, r7, #0
 	bl DestroyTask
@@ -6851,7 +6851,7 @@ WaitForDeoxysRockMovement: @ 0x0813B198
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0813B1B4
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _0813B1B4:
@@ -7656,7 +7656,7 @@ _0813B7EC:
 	ldr r1, _0813B80C
 	ldr r1, [r1]
 	str r1, [r0]
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _0813B7FE:
@@ -7861,7 +7861,7 @@ _0813B92C:
 	bne _0813B986
 	mov r0, sb
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _0813B986:
 	pop {r3, r4, r5}
 	mov r8, r3

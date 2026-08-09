@@ -3188,7 +3188,7 @@ DoCB1_Overworld: @ 0x08085714
 	bl ProcessPlayerFieldInput
 	cmp r0, #1
 	bne _08085758
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl HideMapNamePopUpWindow
 	b _08085762
 _08085758:
@@ -3349,7 +3349,7 @@ CB2_NewGame: @ 0x08085860
 	bl ResetInitialPlayerAvatarState
 	bl PlayTimeCounter_Start
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r1, _080858A8
 	ldr r0, _080858AC
 	str r0, [r1]
@@ -3395,7 +3395,7 @@ CB2_WhiteOut: @ 0x080858C0
 	bl DoWhiteOut
 	bl ResetInitialPlayerAvatarState
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r1, _08085924
 	ldr r0, _08085928
 	str r0, [r1]
@@ -3426,7 +3426,7 @@ CB2_LoadMap: @ 0x08085934
 	push {lr}
 	bl FieldClearVBlankHBlankCallbacks
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	movs r0, #0
 	bl SetMainCallback1
 	ldr r0, _08085958
@@ -3472,7 +3472,7 @@ sub_0808598C: @ 0x0808598C
 	bne _080859AE
 	bl FieldClearVBlankHBlankCallbacks
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	movs r0, #0
 	bl SetMainCallback1
 _080859AE:
@@ -3621,7 +3621,7 @@ _08085ADC:
 _08085AE0:
 	str r0, [r1]
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl CB2_ReturnToField
 	pop {r0}
 	bx r0
@@ -3774,7 +3774,7 @@ _08085C1E:
 _08085C22:
 	bl PlayTimeCounter_Start
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl InitMatchCallCounters
 	bl UseContinueGameWarp
 	cmp r0, #1
@@ -3949,7 +3949,7 @@ _08085D78: @ jump table
 _08085DB0:
 	bl InitOverworldBgs
 	bl ScriptContext1_Init
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl sub_0808612C
 	bl sub_0808613C
 	b _08085E6A
@@ -5561,7 +5561,7 @@ KeyInterCB_DeferToRecvQueue: @ 0x08086A80
 	cmp r0, #2
 	bhi _08086A98
 	movs r4, #0x1a
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r0, _08086AA0
 	bl SetKeyInterceptCallback
 _08086A98:
@@ -5581,7 +5581,7 @@ KeyInterCB_DeferToSendQueue: @ 0x08086AA4
 	cmp r0, #2
 	bhi _08086ABC
 	movs r4, #0x1a
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	ldr r0, _08086AC4
 	bl SetKeyInterceptCallback
 _08086ABC:
@@ -5667,7 +5667,7 @@ _08086B38:
 	cmp r0, #1
 	bne _08086B4E
 	ldr r0, _08086B58
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	ldr r0, _08086B5C
 	bl SetKeyInterceptCallback
 _08086B4E:
@@ -6120,7 +6120,7 @@ _08086E6E:
 	thumb_func_start sub_08086E74
 sub_08086E74: @ 0x08086E74
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -6132,7 +6132,7 @@ InitLinkRoomStartMenuScript: @ 0x08086E80
 	movs r0, #6
 	bl PlaySE
 	bl ShowStartMenu
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	thumb_func_end InitLinkRoomStartMenuScript
@@ -6144,8 +6144,8 @@ InitMenuBasedScript: @ 0x08086E94
 	movs r0, #5
 	bl PlaySE
 	adds r0, r4, #0
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -6158,8 +6158,8 @@ CreateConfirmLeaveTradeRoomPrompt: @ 0x08086EB0
 	movs r0, #6
 	bl PlaySE
 	ldr r0, _08086EC8
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -6173,8 +6173,8 @@ sub_08086ECC: @ 0x08086ECC
 	movs r0, #5
 	bl PlaySE
 	adds r0, r4, #0
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -6185,8 +6185,8 @@ sub_08086ECC: @ 0x08086ECC
 sub_08086EE8: @ 0x08086EE8
 	push {lr}
 	ldr r0, _08086EF8
-	bl ScriptContext1_SetupScript
-	bl ScriptContext2_Enable
+	bl ScriptContext_SetupScript
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0

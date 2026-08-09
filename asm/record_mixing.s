@@ -774,7 +774,7 @@ _080E6AD0:
 	bl DrawDialogueFrame
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080E6AE2:
 	pop {r4, r5}
 	pop {r0}

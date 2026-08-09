@@ -1065,7 +1065,7 @@ _080B24C8:
 	adds r0, r0, r1
 	ldrh r0, [r0, #0x12]
 	bl sub_080B1CF8
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	lsls r0, r4, #0x18
 	lsrs r0, r0, #0x18
 	bl DestroyTask
@@ -1166,7 +1166,7 @@ sub_080B258C: @ 0x080B258C
 	adds r4, r4, r0
 	ldrh r0, [r4, #0x12]
 	bl sub_080B1CF8
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	ldrb r0, [r4, #0x12]
 	bl RemoveWindow
 	adds r0, r5, #0
@@ -1199,7 +1199,7 @@ sub_080B25C8: @ 0x080B25C8
 	bl sub_08097CFC
 	ldrb r0, [r4, #0x12]
 	bl RemoveWindow
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r5, #0
 	bl DestroyTask
 	pop {r4, r5}
@@ -1229,7 +1229,7 @@ sub_080B2608: @ 0x080B2608
 	ldrb r0, [r4, #0x12]
 	bl RemoveWindow
 	bl HideFieldMessageBox
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r5, #0
 	bl DestroyTask
 	pop {r4, r5}
@@ -2350,7 +2350,7 @@ _080B2F14:
 	bl sub_081978F0
 	adds r0, r4, #0
 	bl DestroyTask
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 _080B2F28:
 	pop {r4, r5}
 	pop {r0}
@@ -2407,7 +2407,7 @@ _080B2F80:
 	beq _080B2FCC
 	b _080B2FE0
 _080B2F8A:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -2483,7 +2483,7 @@ _080B3018:
 	beq _080B3064
 	b _080B3078
 _080B3022:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -2735,7 +2735,7 @@ sub_080B3204: @ 0x080B3204
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _080B321C
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _080B321C:

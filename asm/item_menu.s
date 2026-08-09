@@ -5205,7 +5205,7 @@ _081AD348:
 	lsrs r6, r0, #0x18
 	cmp r6, #1
 	bne _081AD3BC
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B1C8
 	bl sub_0808B658
@@ -5238,7 +5238,7 @@ _081AD3BC:
 	strh r7, [r0]
 _081AD3C2:
 	ldr r0, _081AD3D0
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 _081AD3C8:
 	movs r0, #1
 _081AD3CA:

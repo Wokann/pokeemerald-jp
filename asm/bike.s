@@ -1885,7 +1885,7 @@ IsRunningDisallowedByMetatile: @ 0x0811A768
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0811A796
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	movs r1, #1
 	ands r1, r0
 	cmp r1, #0

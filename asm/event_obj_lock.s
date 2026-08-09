@@ -213,7 +213,7 @@ ScriptUnfreezeEventObjects: @ 0x08097E7C
 	lsls r0, r0, #2
 	ldr r1, _08097EA8
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	bl UnfreezeEventObjects
 	pop {r0}
@@ -237,7 +237,7 @@ sub_08097EAC: @ 0x08097EAC
 	cmp r0, #0
 	beq _08097ECA
 	adds r0, r1, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 _08097ECA:
 	movs r0, #0xff
 	movs r1, #0
@@ -250,7 +250,7 @@ _08097ECA:
 	adds r0, r0, r1
 	lsls r0, r0, #2
 	adds r0, r0, r4
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	bl UnfreezeEventObjects
 	pop {r4}

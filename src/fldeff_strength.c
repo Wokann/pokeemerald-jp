@@ -17,9 +17,9 @@ extern void FieldCallback_PrepareFadeInFromMenu(void);
 extern u16 gSpecialVar_Result;  // EWRAM @ 0x02037290
 // JP names for the pokeemerald equivalents (CreateFieldMoveTask,
 // ScriptContext_SetupScript, ScriptContext_Enable).
-extern u8 oei_task_add(void);
-extern void ScriptContext1_SetupScript(const u8 *script);
-extern void EnableBothScriptContexts(void);
+extern u8 CreateFieldMoveTask(void);
+extern void ScriptContext_SetupScript(const u8 *script);
+extern void ScriptContext_Enable(void);
 
 bool8 SetUpFieldMove_Strength(void)
 {
@@ -36,12 +36,12 @@ bool8 SetUpFieldMove_Strength(void)
 static void FieldCallback_Strength(void)
 {
     gFieldEffectArguments[0] = GetCursorSelectionMonId();
-    ScriptContext1_SetupScript(EventScript_UseStrength);
+    ScriptContext_SetupScript(EventScript_UseStrength);
 }
 
 bool8 FldEff_UseStrength(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
     gTasks[taskId].data[8] = (u32)StartStrengthFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartStrengthFieldEffect;
     GetMonNickname(&gPlayerParty[gFieldEffectArguments[0]], gStringVar1);
@@ -51,5 +51,5 @@ bool8 FldEff_UseStrength(void)
 static void StartStrengthFieldEffect(void)
 {
     FieldEffectActiveListRemove(FLDEFF_USE_STRENGTH);
-    EnableBothScriptContexts();
+    ScriptContext_Enable();
 }

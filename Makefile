@@ -19,7 +19,7 @@ ASFILE := $(wildcard asm/*.s)
 # once every function in its asm file has been converted to C (or the
 # asm file has been split so the C functions fill a contiguous ROM
 # range), then remove the asm object from ld_script_jp.txt.
-C_SRCS := src/load_save.c src/hof_pc.c src/decompress.c src/util.c src/text_window.c src/random.c src/heal_location.c src/landmark.c src/trig.c src/dynamic_placeholder_text_util.c src/gym_leader_rematch.c src/birch_pc.c src/fldeff_strength.c src/fldeff_teleport.c
+C_SRCS := src/load_save.c src/hof_pc.c src/decompress.c src/util.c src/text_window.c src/random.c src/heal_location.c src/landmark.c src/trig.c src/dynamic_placeholder_text_util.c src/gym_leader_rematch.c src/birch_pc.c src/fldeff_strength.c src/fldeff_teleport.c src/fldeff_rocksmash.c
 C_BUILDDIR := build/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o
@@ -47,7 +47,7 @@ $(DATA_BIN): tools/extract_baserom_data.py baserom_jp.gba
 	mkdir -p build/data
 	python3 tools/extract_baserom_data.py
 
-$(ELF): %.elf: $(OBJFILE) ld_script_jp.txt
+$(ELF): %.elf: $(OBJFILE) ld_script_jp.txt sym_ewram_jp.txt sym_iwram_jp.txt
 	$(LD) -T ld_script_jp.txt -Map $*.map -o $@ $(OBJFILE) -L tools/agbcc/lib -lgcc -lc
 	$(GBAFIX) -t"$(TITLE)" -c$(GAMECODE) -m01 --silent $@
 

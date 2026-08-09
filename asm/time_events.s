@@ -181,7 +181,7 @@ Task_WaitWeather: @ 0x08137A48
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08137A62
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _08137A62:

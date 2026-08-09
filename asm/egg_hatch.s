@@ -475,7 +475,7 @@ VBlankCB_EggHatch: @ 0x08071134
 	thumb_func_start EggHatch
 EggHatch: @ 0x08071148
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _08071164
 	movs r1, #0xa
 	bl CreateTask

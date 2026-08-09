@@ -562,7 +562,7 @@ sub_080D2F44: @ 0x080D2F44
 	cmp r0, #0
 	beq _080D2F7C
 	adds r0, r4, #0
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D2FAE
@@ -580,7 +580,7 @@ _080D2F7C:
 _080D2F94: .4byte 0x02036FF0
 _080D2F98:
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D2FAE

@@ -1196,7 +1196,7 @@ _080129D4:
 	strb r0, [r5, #0xc]
 	b _08012A54
 _080129EA:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 	ldr r1, _080129FC
@@ -1206,7 +1206,7 @@ _080129EA:
 	.align 2, 0
 _080129FC: .4byte 0x02037290
 _08012A00:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 	ldr r1, _08012A14
@@ -3995,7 +3995,7 @@ _0801426C:
 	ldrb r0, [r0]
 	cmp r0, #0x44
 	beq _08014284
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 _08014284:
 	add sp, #4
 	pop {r4}
@@ -4129,7 +4129,7 @@ _080143C0:
 	adds r0, r4, #0
 	bl DestroyTask
 _080143CA:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	movs r0, #1
 	strh r0, [r7]
 	b _080144BA
@@ -4217,7 +4217,7 @@ _08014488:
 	strh r0, [r7]
 	b _080144BA
 _0801448E:
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 	b _080144BA
@@ -4232,7 +4232,7 @@ _080144A4:
 	cmp r0, #0
 	bne _080144BA
 	bl DestroyWirelessStatusIndicatorSprite
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _080144BA:
@@ -9211,7 +9211,7 @@ sub_08016E74: @ 0x08016E74
 	thumb_func_start sub_08016E98
 sub_08016E98: @ 0x08016E98
 	push {lr}
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -11072,7 +11072,7 @@ sub_08017C48: @ 0x08017C48
 	push {r4, lr}
 	adds r4, r0, #0
 	bl sub_08016E74
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	bl sub_08097EAC
 	ldr r1, _08017C80
 	movs r0, #0
@@ -11100,7 +11100,7 @@ _08017C84: .4byte 0x020228F4
 	thumb_func_start sub_08017C88
 sub_08017C88: @ 0x08017C88
 	push {lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl ScriptFreezeEventObjects
 	pop {r0}
 	bx r0

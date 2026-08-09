@@ -250,13 +250,13 @@ SetUnionRoomPlayerEnterExitMovement: @ 0x080194D0
 	ldr r1, _08019524
 	adds r4, r0, r1
 	adds r0, r4, #0
-	bl EventObjectIsMovementOverridden
+	bl ObjectEventIsMovementOverridden
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08019536
 	ldrb r1, [r5]
 	adds r0, r4, #0
-	bl EventObjectSetHeldMovement
+	bl ObjectEventSetHeldMovement
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08019528

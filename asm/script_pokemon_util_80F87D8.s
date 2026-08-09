@@ -1157,7 +1157,7 @@ sub_080F9918: @ 0x080F9918
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _080F9964
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r5, #0
 	bl DestroyTask
 	b _080F9964

@@ -375,7 +375,7 @@ StartMatchCall: @ 0x08195CA8
 	ldrb r0, [r0, #7]
 	cmp r0, #0
 	bne _08195CC2
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl FreezeEventObjects
 	bl sub_0808B1C8
 	bl sub_0808B658
@@ -812,10 +812,10 @@ sub_08195FF0: @ 0x08195FF0
 	lsls r0, r0, #2
 	ldr r1, _08196050
 	adds r0, r0, r1
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
 	bl UnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 _08196046:
 	movs r0, #1
 	b _08196056

@@ -159,7 +159,7 @@ InitDecorationActionsWindow: @ 0x08126A84
 	ldr r1, _08126A9C
 	movs r0, #0
 	strb r0, [r1]
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl AddDecorationActionsWindow
 	bl PrintCurMainMenuDescription
 	pop {r0}
@@ -494,7 +494,7 @@ DecorationMenuAction_Cancel: @ 0x08126D34
 	cmp r0, #0
 	bne _08126D60
 	ldr r0, _08126D5C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	adds r0, r4, #0
 	bl DestroyTask
 	b _08126D66
@@ -3682,7 +3682,7 @@ _0812861E:
 	ldr r2, [sp, #0xc]
 	lsrs r1, r2, #0x10
 	movs r2, #0
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
@@ -3805,7 +3805,7 @@ _08128712:
 	ldr r2, [sp, #0x20]
 	lsrs r1, r2, #0x10
 	movs r2, #0
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0x10
@@ -3909,7 +3909,7 @@ _081287E0:
 	ldr r2, [sp, #0x20]
 	lsrs r1, r2, #0x10
 	movs r2, #0
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
@@ -4049,7 +4049,7 @@ _081288F4:
 	ldr r2, [sp, #0x20]
 	lsrs r1, r2, #0x10
 	movs r2, #0
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0x10
@@ -4204,7 +4204,7 @@ _08128A24:
 	subs r0, #7
 	strh r0, [r2]
 	ldr r0, _08128A7C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 _08128A44:
 	ldr r2, _08128A80
 	ldr r0, _08128A84
@@ -4429,7 +4429,7 @@ c1_overworld_prev_quest: @ 0x08128BCC
 	.align 2, 0
 _08128BEC: .4byte 0x03005B60
 _08128BF0:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _08128C0C
 	ldrb r1, [r0, #7]
 	movs r0, #0x80
@@ -4497,12 +4497,12 @@ _08128C76:
 	b _08128C8C
 _08128C7C:
 	ldr r0, _08128C84
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _08128C8C
 	.align 2, 0
 _08128C84: .4byte 0x08245DBB
 _08128C88:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 _08128C8C:
 	ldrh r0, [r4, #4]
 	adds r0, #1
@@ -4530,7 +4530,7 @@ _08128CB0: .4byte 0x081275F9
 	thumb_func_start sub_08128CB4
 sub_08128CB4: @ 0x08128CB4
 	push {r4, lr}
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl pal_fill_black
 	ldr r0, _08128CE8
 	movs r1, #8
@@ -6182,7 +6182,7 @@ _08129918:
 	bne _08129984
 	bl DrawWholeMapView
 	ldr r0, _08129940
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	movs r0, #0
 	movs r1, #1
 	bl DrawDialogueFrame
@@ -6193,7 +6193,7 @@ _08129918:
 _0812993C: .4byte 0x02037C74
 _08129940: .4byte 0x08245DDD
 _08129944:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	adds r0, r5, #0
 	bl IdentifyOwnedDecorationsCurrentlyInUseInternal
 	bl pal_fill_black
@@ -7450,12 +7450,12 @@ _0812A302:
 	b _0812A318
 _0812A308:
 	ldr r0, _0812A310
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _0812A318
 	.align 2, 0
 _0812A310: .4byte 0x08245DBB
 _0812A314:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 _0812A318:
 	ldrh r0, [r4, #4]
 	adds r0, #1

@@ -227,7 +227,7 @@ CleanUpAfterFailingToUseRegisteredKeyItemOnField: @ 0x080FDA4C
 	adds r0, r4, #0
 	bl DestroyTask
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -413,7 +413,7 @@ _080FDBCC:
 	bl GetOnOffBike
 _080FDBD2:
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}
@@ -722,7 +722,7 @@ sub_080FDE20: @ 0x080FDE20
 	movs r1, #1
 	bl DrawDialogueFrame
 	bl ScriptUnfreezeEventObjects
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}
@@ -1348,7 +1348,7 @@ sub_080FE278: @ 0x080FE278
 	lsls r0, r0, #2
 	ldr r4, _080FE2E4
 	adds r0, r0, r4
-	bl MovementAction_AcroEndWheelieFaceLeft_Step0
+	bl ObjectEventClearHeldMovementIfFinished
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
@@ -1399,7 +1399,7 @@ sub_080FE2E8: @ 0x080FE2E8
 	lsls r0, r0, #2
 	ldr r1, _080FE324
 	adds r0, r0, r1
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -1441,7 +1441,7 @@ sub_080FE330: @ 0x080FE330
 	lsls r0, r0, #2
 	ldr r1, _080FE3B0
 	adds r0, r0, r1
-	bl EventObjectCheckHeldMovementStatus
+	bl ObjectEventCheckHeldMovementStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -1743,9 +1743,9 @@ sub_080FE5C8: @ 0x080FE5C8
 	ldrh r0, [r0]
 	movs r1, #1
 	bl RemoveBagItem
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080FE5F4
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}
@@ -1812,9 +1812,9 @@ sub_080FE65C: @ 0x080FE65C
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080FE67C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}
@@ -1833,14 +1833,14 @@ sub_080FE680: @ 0x080FE680
 	mov r0, sp
 	adds r1, r4, #0
 	bl GetXYCoordsOneStepInFrontOfPlayer
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r0, sp
 	ldrh r0, [r0]
 	ldrh r1, [r4]
-	bl GetEventObjectIdByXYZ
+	bl GetObjectEventIdByPosition
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
 	cmp r2, #0x10
@@ -1874,9 +1874,9 @@ sub_080FE6D0: @ 0x080FE6D0
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	ldr r0, _080FE6F0
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	adds r0, r4, #0
 	bl DestroyTask
 	pop {r4}

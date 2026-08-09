@@ -767,7 +767,7 @@ SetLoweredForetreeBridgeMetatile: @ 0x0809D700
 	lsrs r4, r0, #0x10
 	lsls r1, r1, #0x10
 	lsrs r5, r1, #0x10
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
@@ -819,7 +819,7 @@ SetNormalFortreeBridgeMetatile: @ 0x0809D764
 	lsrs r4, r0, #0x10
 	lsls r1, r1, #0x10
 	lsrs r5, r1, #0x10
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
@@ -983,7 +983,7 @@ _0809D884:
 	bl MetatileBehavior_IsFortreeBridge
 	lsls r0, r0, #0x18
 	lsrs r7, r0, #0x18
-	bl PlayerGetZCoord
+	bl PlayerGetElevation
 	movs r1, #0
 	ands r5, r0
 	lsls r0, r5, #0x18

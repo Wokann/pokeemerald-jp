@@ -40,7 +40,7 @@ _08159E64: .4byte 0x020388A8
 FldEff_SweetScent: @ 0x08159E68
 	push {lr}
 	bl sub_080ABCCC
-	bl oei_task_add
+	bl CreateFieldMoveTask
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _08159E90
@@ -221,7 +221,7 @@ FailSweetScentEncounter: @ 0x08159FCC
 	bl CpuFastSet
 	bl sub_080ABCE0
 	ldr r0, _0815A00C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	adds r0, r4, #0
 	bl DestroyTask
 _08159FFA:

@@ -12,7 +12,7 @@ static void StartTeleportFieldEffect(void);
 
 extern void FieldCallback_PrepareFadeInFromMenu(void);
 // JP name for pokeemerald's CreateFieldMoveTask.
-extern u8 oei_task_add(void);
+extern u8 CreateFieldMoveTask(void);
 extern void FldEff_TeleportWarpOut(void);
 
 bool8 SetUpFieldMove_Teleport(void)
@@ -35,7 +35,7 @@ static void FieldCallback_Teleport(void)
 
 bool8 FldEff_UseTeleport(void)
 {
-    u8 taskId = oei_task_add();
+    u8 taskId = CreateFieldMoveTask();
     gTasks[taskId].data[8] = (u32)StartTeleportFieldEffect >> 16;
     gTasks[taskId].data[9] = (u32)StartTeleportFieldEffect;
     SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);

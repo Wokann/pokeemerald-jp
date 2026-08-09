@@ -1983,7 +1983,7 @@ _081A7C9C:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081A7CB0
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _081A7CB0:

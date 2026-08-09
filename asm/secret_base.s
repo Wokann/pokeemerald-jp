@@ -813,7 +813,7 @@ EnterNewlyCreatedSecretBase_WaitFadeIn: @ 0x080E9D54
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _080E9D84
-	bl EnableBothScriptContexts
+	bl ScriptContext_Enable
 	adds r0, r4, #0
 	bl DestroyTask
 _080E9D84:
@@ -829,7 +829,7 @@ _080E9D90: .4byte 0x02036FF0
 EnterNewlyCreatedSecretBase_StartFadeIn: @ 0x080E9D94
 	push {r4, lr}
 	sub sp, #4
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl HideMapNamePopUpWindow
 	mov r4, sp
 	adds r4, #2
@@ -1518,7 +1518,7 @@ WarpIntoSecretBase: @ 0x080EA308
 	bl SetCurSecretBaseIdFromPosition
 	bl TrySetCurSecretBaseIndex
 	ldr r0, _080EA31C
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1572,7 +1572,7 @@ _080EA36C:
 	beq _080EA394
 	b _080EA3B4
 _080EA372:
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	movs r0, #1
 	strh r0, [r4, #8]
 	b _080EA3B4
@@ -1597,7 +1597,7 @@ _080EA394:
 	str r1, [r0]
 	ldr r0, _080EA3C4
 	bl SetMainCallback2
-	bl ScriptContext2_Disable
+	bl UnlockPlayerFieldControls
 	adds r0, r5, #0
 	bl DestroyTask
 _080EA3B4:
@@ -2299,7 +2299,7 @@ Task_ShowSecretBaseRegistryMenu: @ 0x080EA8FC
 	ldr r0, _080EA960
 	mov r8, r0
 	adds r5, r7, r0
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	bl GetNumRegisteredSecretBases
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -2927,14 +2927,14 @@ GoToSecretBasePCMainMenu: @ 0x080EAE18
 	cmp r0, #0
 	bne _080EAE3C
 	ldr r0, _080EAE38
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 	b _080EAE42
 	.align 2, 0
 _080EAE34: .4byte 0x00004054
 _080EAE38: .4byte 0x0821D3D7
 _080EAE3C:
 	ldr r0, _080EAE50
-	bl ScriptContext1_SetupScript
+	bl ScriptContext_SetupScript
 _080EAE42:
 	adds r0, r4, #0
 	bl DestroyTask

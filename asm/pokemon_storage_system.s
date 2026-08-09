@@ -575,8 +575,8 @@ _080C6C5C:
 	lsrs r0, r0, #0x18
 	movs r1, #1
 	bl DrawStdWindowFrame
-	bl ScriptContext2_Disable
-	bl EnableBothScriptContexts
+	bl UnlockPlayerFieldControls
+	bl ScriptContext_Enable
 	ldrh r0, [r5, #0x26]
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -787,7 +787,7 @@ ShowPokemonStorageSystemPC: @ 0x080C6E04
 	movs r0, #0
 	strh r0, [r1, #8]
 	strh r0, [r1, #0xa]
-	bl ScriptContext2_Enable
+	bl LockPlayerFieldControls
 	pop {r0}
 	bx r0
 	.align 2, 0
