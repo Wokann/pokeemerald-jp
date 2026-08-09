@@ -365,7 +365,7 @@ Task_StarterChoose1: @ 0x081341B4
 	movs r0, #0
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _08134210
 	str r0, [r4]
 	add sp, #0xc
@@ -558,7 +558,7 @@ Task_StarterChoose4: @ 0x08134348
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081343B0
 	movs r2, #0xa6
 	lsls r2, r2, #2
@@ -850,7 +850,7 @@ _08134558:
 	ldrb r0, [r4]
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	mov r0, sb
 	ldrb r1, [r0]
 	lsls r0, r1, #0x1b
@@ -917,7 +917,7 @@ sub_0813464C: @ 0x0813464C
 	movs r1, #0
 	bl SetGpuReg
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0

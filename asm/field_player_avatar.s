@@ -2837,7 +2837,7 @@ _0808B78E:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0808B776
 _0808B7A8:
@@ -4479,7 +4479,7 @@ _0808C444:
 	ldr r4, _0808C494
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0808C47C
 	adds r0, r4, #0

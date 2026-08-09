@@ -178,7 +178,7 @@ _081700F8:
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0x23
@@ -315,7 +315,7 @@ PrintRegionMapSecName: @ 0x08170214
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _08170254
 	.align 2, 0
 _08170240: .4byte 0x0203B99C

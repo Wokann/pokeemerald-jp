@@ -108,12 +108,12 @@ _081379B6:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081379E8
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _081379E4
 	ands r1, r0
 	cmp r1, r6

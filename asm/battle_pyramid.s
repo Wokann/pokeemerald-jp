@@ -1287,7 +1287,7 @@ _081A95E4:
 	adds r0, r0, r6
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	ldr r3, _081A9638
 	ldr r1, [sp, #0x10]
@@ -1295,7 +1295,7 @@ _081A95E4:
 	movs r1, #0xb
 	movs r2, #0
 	str r3, [sp, #0x14]
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x14]
 	cmp r4, r0
 	bne _081A96B4
@@ -1333,14 +1333,14 @@ _081A963E:
 	adds r1, r5, #0
 	adds r1, #0xd
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r1, r6, #0
 	adds r1, #0xd
 	mov r2, sl
 	adds r0, r7, r2
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	cmp r4, r0
 	bne _081A963C
 _081A9666:
@@ -1794,7 +1794,7 @@ _081A99CE:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	subs r0, #1
 	str r0, [sp, #0x10]
 	lsls r2, r0, #1
@@ -1917,7 +1917,7 @@ _081A9AC4:
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #1
 	ands r1, r0
 	str r1, [sp, #0xc]

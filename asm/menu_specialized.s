@@ -1566,7 +1566,7 @@ _081D1EAA:
 	bl DrawStdFrameWithCustomTileAndPalette
 	bl sub_081D1EE0
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -2031,7 +2031,7 @@ _081D2292:
 	adds r0, r0, r1
 	adds r1, r2, #0
 	adds r2, r3, #0
-	bl GetMonData
+	bl GetMonData3
 	b _081D22DE
 	.align 2, 0
 _081D22A4: .4byte 0x02024190
@@ -2041,7 +2041,7 @@ _081D22A8:
 	ldr r1, _081D22B8
 	adds r0, r0, r1
 	adds r1, r2, #0
-	bl GetMonData
+	bl GetMonData3
 	b _081D22DE
 	.align 2, 0
 _081D22B8: .4byte 0x02024190
@@ -2133,7 +2133,7 @@ _081D2334:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
@@ -3681,27 +3681,27 @@ GetMonLevelUpWindowStats: @ 0x081D2EB8
 	adds r4, r0, #0
 	adds r5, r1, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #2]
 	adds r0, r4, #0
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #4]
 	adds r0, r4, #0
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #6]
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #8]
 	adds r0, r4, #0
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0xa]
 	pop {r4, r5}
 	pop {r0}

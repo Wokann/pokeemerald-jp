@@ -38,6 +38,8 @@ EventScript_UseStrength = ABSOLUTE(0x08256797);
 FieldCallback_PrepareFadeInFromMenu = ABSOLUTE(0x081B53D8);
 EventScript_UseRockSmash = ABSOLUTE(0x082566C6);
 EventScript_FailSweetScent = ABSOLUTE(0x08256A14);
+gText_PkmnHPRestoredByVar2 = ABSOLUTE(0x085C9E8F);
+gText_CantBeUsedOnPkmn = ABSOLUTE(0x085C9B07);
 
 SECTIONS {
     . = 0x2000000;
@@ -251,7 +253,7 @@ SECTIONS {
         build/src/fldeff_sweetscent.o(.text);
         asm/battle_anim_effects_3.o(.text);
         asm/move_relearner.o(.text);
-        asm/fldeff_softboiled.o(.text);
+        build/src/fldeff_softboiled.o(.text);
         asm/decoration_inventory.o(.text);
         asm/roamer.o(.text);
         asm/battle_tower.o(.text);

@@ -164,7 +164,7 @@ _081AFE34:
 	ldr r1, _081AFE7C
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081AFE56
 _081AFE52:
@@ -497,7 +497,7 @@ _081B0108:
 	ldr r0, [r4]
 	ldrh r0, [r0, #0xa]
 	lsrs r0, r0, #2
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B015C
 	.align 2, 0
 _081B0120: .4byte 0x0203CB90
@@ -657,7 +657,7 @@ AllocPartyMenuBg: @ 0x081B0228
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -1005,7 +1005,7 @@ _081B050E:
 	ldrb r0, [r0, #8]
 	bl PutWindowTilemap
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081B0616
 	.align 2, 0
 _081B0530: .4byte 0x0203CBA8
@@ -1015,7 +1015,7 @@ _081B0534:
 	ldr r1, _081B056C
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B0574
 	ldr r4, _081B0570
@@ -1090,7 +1090,7 @@ _081B05CE:
 	bne _081B05E8
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	b _081B0602
 	.align 2, 0
 _081B05E4: .4byte 0x0203CB94
@@ -1101,12 +1101,12 @@ _081B05E8:
 	bne _081B05FA
 	adds r0, r5, #0
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	b _081B0602
 _081B05FA:
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 _081B0602:
 	lsls r5, r5, #4
 _081B0604:
@@ -1116,7 +1116,7 @@ _081B0604:
 	ldrb r0, [r0, #8]
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081B0616:
 	pop {r4, r5}
 	pop {r0}
@@ -1138,7 +1138,7 @@ DisplayPartyPokemonData: @ 0x081B0620
 	adds r7, r1, r0
 	adds r0, r7, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	cmp r2, #0
 	beq _081B0678
@@ -1256,7 +1256,7 @@ DisplayPartyPokemonSelectData: @ 0x081B06E8
 	bl DisplayPartyPokemonNickname
 	adds r0, r6, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B0754
 	ldr r1, [r7]
@@ -1452,7 +1452,7 @@ DisplayPartyPokemonSelectHeldItemRelated: @ 0x081B089C
 	ldr r1, _081B08C0
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B08C4
 	adds r0, r4, #0
@@ -1526,7 +1526,7 @@ _081B0932:
 _081B093E:
 	adds r0, r6, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B095A
 	adds r0, r6, #0
@@ -1814,7 +1814,7 @@ _081B0B68:
 	adds r6, r1, r0
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B0BAC
 	ldr r4, _081B0BC0
@@ -1952,7 +1952,7 @@ _081B0C6C:
 	ldr r0, _081B0C98
 	ldrb r0, [r0, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 _081B0C8C:
 	add sp, #0xc
 	pop {r4}
@@ -1963,8 +1963,8 @@ _081B0C94: .4byte 0xFFFC07FF
 _081B0C98: .4byte 0x0203CB94
 	thumb_func_end sub_081B0BF8
 
-	thumb_func_start sub_081B0C9C
-sub_081B0C9C: @ 0x081B0C9C
+	thumb_func_start AnimatePartySlot
+AnimatePartySlot: @ 0x081B0C9C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -1983,7 +1983,7 @@ sub_081B0C9C: @ 0x081B0C9C
 	ldr r1, _081B0D00
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B0DB8
 	ldr r6, _081B0D04
@@ -2102,7 +2102,7 @@ _081B0DAA:
 	mov r1, r8
 	bl sub_081B5C38
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081B0DB8:
 	add sp, #8
 	pop {r3}
@@ -2112,7 +2112,7 @@ _081B0DB8:
 	bx r0
 	.align 2, 0
 _081B0DC4: .4byte 0x0203CB90
-	thumb_func_end sub_081B0C9C
+	thumb_func_end AnimatePartySlot
 
 	thumb_func_start GetPartyBoxPalBitfield
 GetPartyBoxPalBitfield: @ 0x081B0DC8
@@ -2131,7 +2131,7 @@ _081B0DDA:
 	ldr r1, _081B0E54
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B0DF0
 	movs r0, #2
@@ -2286,7 +2286,7 @@ sub_081B0EDC: @ 0x081B0EDC
 	movs r3, #0x12
 	bl CopyToBgTilemapBufferRect_ChangePalette
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4, r5, r6}
 	pop {r0}
@@ -2452,8 +2452,8 @@ sub_081B1030: @ 0x081B1030
 _081B103C: .4byte 0x0203CB94
 	thumb_func_end sub_081B1030
 
-	thumb_func_start sub_081B1040
-sub_081B1040: @ 0x081B1040
+	thumb_func_start Task_HandleChooseMonInput
+Task_HandleChooseMonInput: @ 0x081B1040
 	push {r4, r5, r6, lr}
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
@@ -2513,7 +2513,7 @@ _081B10B0:
 	bx r0
 	.align 2, 0
 _081B10B8: .4byte 0x0203CB90
-	thumb_func_end sub_081B1040
+	thumb_func_end Task_HandleChooseMonInput
 
 	thumb_func_start sub_081B10BC
 sub_081B10BC: @ 0x081B10BC
@@ -2595,7 +2595,7 @@ _081B1156:
 	adds r0, #0xd
 	bl sub_081B2CB0
 	adds r0, r5, #0
-	bl sub_081614AC
+	bl Task_TryUseSoftboiledOnPartyMon
 	b _081B126E
 	.align 2, 0
 _081B1168: .4byte 0x0203CB90
@@ -2726,7 +2726,7 @@ sub_081B1274: @ 0x081B1274
 	ldr r1, _081B1290
 	adds r0, r0, r1
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	beq _081B1294
 	movs r0, #1
@@ -2849,7 +2849,7 @@ _081B135A:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B1394
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -2877,7 +2877,7 @@ sub_081B13A4: @ 0x081B13A4
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -3074,10 +3074,10 @@ _081B14FA:
 	bl PlaySE
 	lsrs r0, r4, #0x18
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	ldrb r0, [r5]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 _081B151C:
 	pop {r4, r5}
 	pop {r0}
@@ -3357,7 +3357,7 @@ _081B16F4:
 	bne _081B1724
 	ldr r0, _081B1720
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B17C4
 	strb r6, [r4]
@@ -3383,7 +3383,7 @@ _081B172C:
 	ldr r0, _081B1754
 _081B1740:
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B17C4
 	strb r5, [r4]
@@ -3394,7 +3394,7 @@ _081B1754: .4byte 0x02024384
 _081B1758:
 	ldr r0, _081B1768
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B17C4
 	movs r0, #4
@@ -3478,7 +3478,7 @@ _081B17DA:
 	ldr r1, _081B1804
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B17DA
 	adds r0, r4, #0
@@ -3501,7 +3501,7 @@ GetMonNickname: @ 0x081B1814
 	adds r4, r1, #0
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl StringGetEnd10
 	pop {r4}
@@ -3509,8 +3509,8 @@ GetMonNickname: @ 0x081B1814
 	bx r1
 	thumb_func_end GetMonNickname
 
-	thumb_func_start sub_081B182C
-sub_081B182C: @ 0x081B182C
+	thumb_func_start DisplayPartyMenuMessage
+DisplayPartyMenuMessage: @ 0x081B182C
 	push {r4, lr}
 	lsls r4, r1, #0x18
 	lsrs r4, r4, #0x18
@@ -3532,7 +3532,7 @@ sub_081B182C: @ 0x081B182C
 	.align 2, 0
 _081B1854: .4byte 0x081B185D
 _081B1858: .4byte 0x03005B60
-	thumb_func_end sub_081B182C
+	thumb_func_end DisplayPartyMenuMessage
 
 	thumb_func_start sub_081B185C
 sub_081B185C: @ 0x081B185C
@@ -3571,8 +3571,8 @@ _081B1898:
 _081B18A0: .4byte 0x03005B60
 	thumb_func_end sub_081B185C
 
-	thumb_func_start sub_081B18A4
-sub_081B18A4: @ 0x081B18A4
+	thumb_func_start IsPartyMenuTextPrinterActive
+IsPartyMenuTextPrinterActive: @ 0x081B18A4
 	push {lr}
 	ldr r0, _081B18B4
 	bl FuncIsActiveTask
@@ -3582,7 +3582,7 @@ sub_081B18A4: @ 0x081B18A4
 	bx r1
 	.align 2, 0
 _081B18B4: .4byte 0x081B185D
-	thumb_func_end sub_081B18A4
+	thumb_func_end IsPartyMenuTextPrinterActive
 
 	thumb_func_start sub_081B18B8
 sub_081B18B8: @ 0x081B18B8
@@ -3595,7 +3595,7 @@ sub_081B18B8: @ 0x081B18B8
 	cmp r0, #1
 	beq _081B18DE
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B18E4
 	lsls r1, r4, #2
 	adds r1, r1, r4
@@ -3618,7 +3618,7 @@ sub_081B18EC: @ 0x081B18EC
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	adds r5, r4, #0
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -3645,7 +3645,7 @@ _081B1928: .4byte 0x03005B60
 _081B192C: .4byte 0x081B18B9
 _081B1930:
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B194C
 	lsls r1, r5, #2
 	adds r1, r1, r5
@@ -3683,9 +3683,9 @@ sub_081B1954: @ 0x081B1954
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -3716,9 +3716,9 @@ sub_081B19A0: @ 0x081B19A0
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -3749,9 +3749,9 @@ sub_081B19EC: @ 0x081B19EC
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -3784,9 +3784,9 @@ sub_081B1A38: @ 0x081B1A38
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -3842,7 +3842,7 @@ TryTakeMonItem: @ 0x081B1AD0
 	sub sp, #4
 	adds r4, r0, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, sp
@@ -3980,8 +3980,8 @@ _081B1BE0: .4byte 0x0203CBA8
 _081B1BE4: .4byte 0x02021C54
 	thumb_func_end sub_081B1B30
 
-	thumb_func_start sub_081B1BE8
-sub_081B1BE8: @ 0x081B1BE8
+	thumb_func_start PartyMenuModifyHP
+PartyMenuModifyHP: @ 0x081B1BE8
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -4018,11 +4018,11 @@ sub_081B1BE8: @ 0x081B1BE8
 	adds r4, r4, r0
 	adds r0, r6, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4]
 	adds r0, r6, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #2]
 	lsls r5, r5, #0x18
 	asrs r5, r5, #0x18
@@ -4048,7 +4048,7 @@ sub_081B1BE8: @ 0x081B1BE8
 _081B1C6C: .4byte 0x02024190
 _081B1C70: .4byte 0x03005B68
 _081B1C74: .4byte 0x081B1B31
-	thumb_func_end sub_081B1BE8
+	thumb_func_end PartyMenuModifyHP
 
 	thumb_func_start sub_081B1C78
 sub_081B1C78: @ 0x081B1C78
@@ -4158,7 +4158,7 @@ GetMonAilment: @ 0x081B1D2C
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B1D3E
 	movs r0, #7
@@ -4166,7 +4166,7 @@ GetMonAilment: @ 0x081B1D2C
 _081B1D3E:
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -4272,12 +4272,12 @@ sub_081B1E04: @ 0x081B1E04
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	beq _081B1E2A
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl sub_0802C5FC
@@ -4299,12 +4299,12 @@ sub_081B1E34: @ 0x081B1E34
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	beq _081B1E52
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x55
 	bne _081B1E52
 	movs r0, #1
@@ -4366,9 +4366,9 @@ _081B1EAC:
 	bl PlaySE
 	ldr r0, _081B1ED4
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B1ED8
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -4394,9 +4394,9 @@ sub_081B1EE0: @ 0x081B1EE0
 	lsrs r4, r4, #0x18
 	ldr r0, _081B1F0C
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B1F10
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -4418,7 +4418,7 @@ sub_081B1F18: @ 0x081B1F18
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -4503,7 +4503,7 @@ CanMonLearnTMTutor: @ 0x081B1FA8
 	lsrs r6, r2, #0x18
 	mov r8, r6
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B1FCA
 	movs r0, #3
@@ -4527,7 +4527,7 @@ _081B1FCA:
 _081B1FEC:
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r6, #0
@@ -4779,7 +4779,7 @@ _081B21DA:
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081B21EE:
 	add sp, #0x14
 	pop {r4, r5}
@@ -5410,7 +5410,7 @@ DisplayPartyPokemonNickname: @ 0x081B270C
 	lsls r2, r2, #0x18
 	lsrs r4, r2, #0x18
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B275C
 	cmp r4, #1
@@ -5459,7 +5459,7 @@ DisplayPartyPokemonLevelCheck: @ 0x081B2764
 	lsrs r4, r2, #0x18
 	mov r8, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B27D0
 	adds r0, r6, #0
@@ -5495,7 +5495,7 @@ _081B27B8:
 	beq _081B27D0
 	adds r0, r6, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	adds r1, r7, #0
@@ -5581,7 +5581,7 @@ _081B285A:
 	lsrs r4, r4, #0x18
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -5712,7 +5712,7 @@ DisplayPartyPokemonHPCheck: @ 0x081B2970
 	lsrs r4, r2, #0x18
 	mov r8, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B29CA
 	cmp r4, #0
@@ -5739,7 +5739,7 @@ _081B29B2:
 	beq _081B29CA
 	adds r0, r7, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r6, #0
@@ -5792,7 +5792,7 @@ DisplayPartyPokemonMaxHPCheck: @ 0x081B2A08
 	lsrs r4, r2, #0x18
 	mov r8, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B2A64
 	cmp r4, #0
@@ -5820,7 +5820,7 @@ _081B2A4C:
 	beq _081B2A64
 	adds r0, r7, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r6, #0
@@ -5875,18 +5875,18 @@ DisplayPartyPokemonHPBarCheck: @ 0x081B2ABC
 	adds r5, r0, #0
 	adds r6, r1, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B2AF0
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -6126,7 +6126,7 @@ sub_081B2CB0: @ 0x081B2CB0
 	movs r0, #0xff
 	strb r0, [r4]
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081B2CD0:
 	pop {r4}
 	pop {r0}
@@ -6134,8 +6134,8 @@ _081B2CD0:
 	.align 2, 0
 	thumb_func_end sub_081B2CB0
 
-	thumb_func_start display_pokemon_menu_message
-display_pokemon_menu_message: @ 0x081B2CD8
+	thumb_func_start DisplayPartyMenuStdMessage
+DisplayPartyMenuStdMessage: @ 0x081B2CD8
 	push {r4, r5, r6, lr}
 	sub sp, #0xc
 	adds r6, r0, #0
@@ -6246,7 +6246,7 @@ _081B2D88:
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081B2DC0:
 	add sp, #0xc
 	pop {r4, r5, r6}
@@ -6255,7 +6255,7 @@ _081B2DC0:
 	.align 2, 0
 _081B2DC8: .4byte 0x02021C7C
 _081B2DCC: .4byte 0x085E13AC
-	thumb_func_end display_pokemon_menu_message
+	thumb_func_end DisplayPartyMenuStdMessage
 
 	thumb_func_start sub_081B2DD0
 sub_081B2DD0: @ 0x081B2DD0
@@ -6280,17 +6280,17 @@ _081B2DEE:
 	adds r4, r7, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B2E1E
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B2E18
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B2E1E
 _081B2E18:
@@ -6472,7 +6472,7 @@ _081B2F4E:
 	movs r3, #2
 	bl sub_0819844C
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, [r4]
 _081B2F74:
 	ldrb r0, [r0, #0xc]
@@ -6684,7 +6684,7 @@ _081B30FA:
 	adds r0, r1, r6
 	adds r1, r7, #0
 	adds r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r4, #1
 	adds r1, r1, r5
 	ldrh r1, [r1]
@@ -6726,7 +6726,7 @@ _081B3140:
 	mov r0, sb
 	adds r0, #0x64
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B3172
 	ldr r0, _081B31A4
@@ -6743,7 +6743,7 @@ _081B3172:
 	adds r0, r1, #0
 	add r0, sb
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIsMail
@@ -6829,7 +6829,7 @@ _081B3234:
 	beq _081B324C
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B329E
 _081B324C:
@@ -6862,7 +6862,7 @@ _081B3278:
 _081B327C:
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #6
 	cmp r0, #0
 	beq _081B32A0
@@ -6928,7 +6928,7 @@ sub_081B32A8: @ 0x081B32A8
 	movs r0, #0
 	bl sub_081B2E34
 	movs r0, #0x15
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B338A
 	.align 2, 0
 _081B3304: .4byte 0x0203CB94
@@ -6938,7 +6938,7 @@ _081B3310: .4byte 0x0203CB90
 _081B3314:
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	cmp r6, #0
@@ -6949,9 +6949,9 @@ _081B3314:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B3358
 	mov r2, r8
 	lsls r0, r2, #2
@@ -6983,7 +6983,7 @@ _081B3360:
 	adds r0, r6, #0
 	bl CopyItemName
 	movs r0, #0x1a
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B338A:
 	movs r0, #1
 _081B338C:
@@ -7248,10 +7248,10 @@ CursorCb_Switch: @ 0x081B357C
 	adds r0, #0xc
 	bl sub_081B2CB0
 	movs r0, #3
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldrb r0, [r5, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	ldrb r0, [r5, #9]
 	strb r0, [r5, #0xa]
 	ldr r1, _081B35D0
@@ -7436,10 +7436,10 @@ _081B36CE:
 	strb r0, [r4, #0xb]
 	ldrb r0, [r4, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	ldrb r0, [r4, #0xa]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	adds r0, r7, #0
 	bl sub_081B3960
 	ldr r1, _081B3770
@@ -7779,7 +7779,7 @@ _081B39A0:
 	bl sub_081B37E0
 _081B39CE:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r4, r5, r6}
 	pop {r0}
@@ -7957,7 +7957,7 @@ sub_081B3B00: @ 0x081B3B00
 	ldrb r0, [r0, #8]
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081B3B7C
 	ldr r0, [r0]
 	bl Free
@@ -8192,14 +8192,14 @@ sub_081B3D1C: @ 0x081B3D1C
 	strb r0, [r4, #0xb]
 	ldrb r0, [r4, #9]
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	ldrb r0, [r4, #0xa]
 	strb r0, [r4, #9]
 	ldrb r0, [r4, #0xa]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r1, _081B3D6C
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -8238,14 +8238,14 @@ CursorCb_Cancel1: @ 0x081B3D74
 	cmp r0, #6
 	bne _081B3DB0
 	movs r0, #0xf
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B3DB6
 	.align 2, 0
 _081B3DA8: .4byte 0x0203CB90
 _081B3DAC: .4byte 0x0203CB94
 _081B3DB0:
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B3DB6:
 	ldr r0, _081B3DCC
 	lsls r1, r5, #2
@@ -8285,7 +8285,7 @@ CursorCb_Item: @ 0x081B3DD4
 	movs r0, #1
 	bl sub_081B2E34
 	movs r0, #0x18
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r1, _081B3E30
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -8391,7 +8391,7 @@ _081B3EC4:
 	ldr r7, _081B3F10
 	adds r0, r0, r7
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4]
 	lsls r0, r0, #0x10
 	cmp r0, #0
@@ -8567,7 +8567,7 @@ sub_081B4048: @ 0x081B4048
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -8629,7 +8629,7 @@ _081B40A2:
 	bl pokemon_item_not_removed
 	ldr r0, _081B40EC
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B40F0
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -8724,7 +8724,7 @@ sub_081B419C: @ 0x081B419C
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -8755,7 +8755,7 @@ sub_081B41CC: @ 0x081B41CC
 	ldr r1, _081B4208
 	adds r0, r0, r1
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _081B420C
@@ -8795,7 +8795,7 @@ sub_081B4218: @ 0x081B4218
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
@@ -8930,7 +8930,7 @@ sub_081B433C: @ 0x081B433C
 	muls r1, r0, r1
 	ldr r0, _081B439C
 	adds r6, r1, r0
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -8950,7 +8950,7 @@ sub_081B433C: @ 0x081B433C
 	bne _081B43B6
 	adds r0, r6, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B43A4
 	movs r0, #9
@@ -8999,7 +8999,7 @@ CursorCb_TakeItem: @ 0x081B43C4
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	movs r0, #5
@@ -9048,10 +9048,10 @@ _081B444C:
 	ldr r0, _081B4474
 _081B4454:
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 _081B445A:
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081B4478
 	lsls r1, r7, #2
 	adds r1, r1, r7
@@ -9082,7 +9082,7 @@ CursorCb_Toss: @ 0x081B4480
 	adds r7, r1, r0
 	adds r0, r7, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	movs r0, #5
@@ -9105,7 +9105,7 @@ CursorCb_Toss: @ 0x081B4480
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B44FC
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -9132,7 +9132,7 @@ _081B4504:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4540
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -9157,7 +9157,7 @@ sub_081B4548: @ 0x081B4548
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -9213,7 +9213,7 @@ _081B45B4:
 _081B45BA:
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _081B45F0
@@ -9224,7 +9224,7 @@ _081B45BA:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B45FC
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -9272,7 +9272,7 @@ sub_081B4628: @ 0x081B4628
 	muls r1, r0, r1
 	ldr r0, _081B4698
 	adds r5, r1, r0
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -9343,7 +9343,7 @@ CursorCb_Mail: @ 0x081B46A8
 	movs r0, #2
 	bl sub_081B2E34
 	movs r0, #0x19
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r1, _081B4704
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -9397,7 +9397,7 @@ sub_081B4738: @ 0x081B4738
 	ldr r1, _081B4770
 	adds r0, r0, r1
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, _081B4774
 	lsls r1, r0, #3
 	adds r1, r1, r0
@@ -9468,7 +9468,7 @@ CursorCb_TakeMail: @ 0x081B47C0
 	bl sub_081B2CB0
 	ldr r0, _081B4800
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4804
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -9491,7 +9491,7 @@ sub_081B480C: @ 0x081B480C
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -9549,7 +9549,7 @@ _081B4866:
 	beq _081B48AC
 	ldr r0, _081B48A0
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B48A4
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -9566,7 +9566,7 @@ _081B48A8: .4byte 0x081B433D
 _081B48AC:
 	ldr r0, _081B48C4
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B48C8
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -9584,7 +9584,7 @@ _081B48D0:
 _081B48D6:
 	ldr r0, _081B48F4
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B48F8
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -9608,7 +9608,7 @@ sub_081B4900: @ 0x081B4900
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -9664,7 +9664,7 @@ _081B495E:
 	ldr r6, _081B49B4
 	adds r0, r0, r6
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r4, #0
@@ -9682,7 +9682,7 @@ _081B495E:
 	bl TakeMailFromMon
 	ldr r0, _081B49B8
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B49BC
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -9702,7 +9702,7 @@ _081B49C4:
 	bl pokemon_item_not_removed
 	ldr r0, _081B49E4
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B49E8
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -9778,7 +9778,7 @@ CursorCb_Cancel2: @ 0x081B4A18
 	movs r0, #0
 	bl sub_081B2E34
 	movs r0, #0x15
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B4AA2
 	.align 2, 0
 _081B4A78: .4byte 0x0203CB94
@@ -9789,13 +9789,13 @@ _081B4A84:
 	bl sub_081B2E34
 	adds r0, r7, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _081B4AC0
 	bl CopyItemName
 	movs r0, #0x1a
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B4AA2:
 	ldr r1, _081B4AC4
 	mov r2, r8
@@ -9845,7 +9845,7 @@ _081B4AFC:
 	bl sub_081B2CB0
 	ldr r0, _081B4B20
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4B24
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -9922,7 +9922,7 @@ _081B4B66:
 	bl sub_081B4C28
 _081B4BA4:
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B4BC8
 	mov r1, r8
 	str r0, [r1]
@@ -9954,7 +9954,7 @@ _081B4BD6:
 	bl PlaySE
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4C20
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -9983,11 +9983,11 @@ sub_081B4C28: @ 0x081B4C28
 	ldr r4, _081B4C44
 	ldrb r0, [r4, #9]
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	movs r0, #6
 	strb r0, [r4, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -10102,7 +10102,7 @@ _081B4D0E:
 	blt _081B4CEE
 _081B4D18:
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B4D44
 	mov r2, r8
 	adds r1, r7, r2
@@ -10160,7 +10160,7 @@ CursorCb_Register: @ 0x081B4D68
 	ldr r4, _081B4DF8
 	adds r0, r0, r4
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r6, r0, #0
 	lsls r6, r6, #0x10
 	lsrs r6, r6, #0x10
@@ -10172,7 +10172,7 @@ CursorCb_Register: @ 0x081B4D68
 	adds r0, r1, #0
 	adds r0, r0, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
@@ -10184,7 +10184,7 @@ CursorCb_Register: @ 0x081B4D68
 	adds r0, r1, #0
 	adds r0, r0, r4
 	movs r1, #0x50
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -10234,7 +10234,7 @@ _081B4E18:
 	bl StringAppend
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4E6C
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -10277,7 +10277,7 @@ CursorCb_Trade1: @ 0x081B4E74
 	ldr r4, _081B4F40
 	adds r0, r0, r4
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	mov r1, sb
 	lsls r1, r1, #0x10
@@ -10289,7 +10289,7 @@ CursorCb_Trade1: @ 0x081B4E74
 	muls r0, r6, r0
 	adds r0, r0, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
@@ -10299,7 +10299,7 @@ CursorCb_Trade1: @ 0x081B4E74
 	muls r0, r6, r0
 	adds r0, r0, r4
 	movs r1, #0x50
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -10340,7 +10340,7 @@ CursorCb_Trade1: @ 0x081B4E74
 	bl StringAppend
 	adds r0, r5, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B4F60
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -10454,7 +10454,7 @@ _081B5008:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B5058
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -10479,7 +10479,7 @@ _081B5060:
 	bl StringAppend
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B5094
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -10503,7 +10503,7 @@ sub_081B509C: @ 0x081B509C
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -10610,7 +10610,7 @@ _081B5166:
 	cmp r0, #1
 	bhi _081B5184
 	movs r0, #0xd
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B52F6
 	.align 2, 0
 _081B517C: .4byte 0x0203CB90
@@ -10630,7 +10630,7 @@ _081B5188:
 	beq _081B51C4
 	ldr r0, _081B51B8
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B51BC
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -10678,7 +10678,7 @@ _081B51F4: @ jump table
 	.4byte _081B5214 @ case 7
 _081B5214:
 	adds r0, r6, #0
-	bl sub_08161464
+	bl ChooseMonForSoftboiled
 	b _081B5304
 _081B521C:
 	ldr r0, _081B5248
@@ -10776,7 +10776,7 @@ _081B52EA:
 _081B52F0:
 	ldrb r0, [r5, #4]
 _081B52F2:
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B52F6:
 	ldr r0, _081B530C
 	lsls r1, r6, #2
@@ -10802,7 +10802,7 @@ sub_081B5314: @ 0x081B5314
 	lsrs r4, r4, #0x18
 	ldr r0, _081B5338
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B533C
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -10824,7 +10824,7 @@ sub_081B5344: @ 0x081B5344
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -10951,7 +10951,7 @@ brm_get_selected_species: @ 0x081B542C
 	ldr r1, _081B5450
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	pop {r1}
@@ -10996,13 +10996,13 @@ sub_081B547C: @ 0x081B547C
 	cmp r0, #1
 	bne _081B5498
 	movs r0, #0xc
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B549E
 	.align 2, 0
 _081B5494: .4byte 0x00000888
 _081B5498:
 	movs r0, #0xd
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B549E:
 	pop {r0}
 	bx r0
@@ -11068,11 +11068,11 @@ sub_081B5504: @ 0x081B5504
 	cmp r0, #0
 	beq _081B551A
 	movs r0, #9
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	b _081B5520
 _081B551A:
 	movs r0, #8
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 _081B5520:
 	pop {r0}
 	bx r0
@@ -11268,13 +11268,13 @@ party_menu_icon_anim: @ 0x081B5654
 _081B568A:
 	adds r0, r5, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	str r6, [sp]
 	adds r0, r4, #0
@@ -11438,13 +11438,13 @@ sub_081B57D8: @ 0x081B57D8
 	lsrs r5, r5, #0x18
 	adds r0, r6, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r6, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	lsls r2, r2, #0x10
 	lsrs r2, r2, #0x10
@@ -11557,7 +11557,7 @@ party_menu_held_item_object: @ 0x081B58B4
 	adds r5, r0, #0
 	adds r4, r1, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B58DC
 	ldr r0, _081B58E4
@@ -11622,7 +11622,7 @@ sub_081B5934: @ 0x081B5934
 	push {r4, lr}
 	adds r4, r1, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r4, #0
@@ -11737,7 +11737,7 @@ _081B5A08:
 	ldr r1, _081B5A44
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -11770,7 +11770,7 @@ _081B5A4C:
 	ldr r1, _081B5A8C
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -11918,7 +11918,7 @@ party_menu_pokeball_object: @ 0x081B5B6C
 	push {r4, lr}
 	adds r4, r1, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B5B8A
 	ldr r0, _081B5B90
@@ -12134,7 +12134,7 @@ party_menu_status_condition_object: @ 0x081B5D04
 	adds r5, r0, #0
 	adds r4, r1, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B5D2C
 	ldr r0, _081B5D34
@@ -12330,12 +12330,12 @@ _081B5E78:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B5E9A
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B5E50
 _081B5E9A:
@@ -12680,7 +12680,7 @@ UsingHPEVItemOnShedinja: @ 0x081B6170
 	bne _081B619C
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _081B6198
 	cmp r0, r1
 	bne _081B619C
@@ -12808,13 +12808,13 @@ ItemUseCB_Medicine: @ 0x081B6228
 	bne _081B628E
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov sl, r0
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	cmp sl, r0
 	bne _081B628E
 	movs r1, #0
@@ -12904,11 +12904,11 @@ _081B6334:
 	bne _081B6348
 	ldrb r0, [r7, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 _081B6348:
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	mov r1, sl
 	subs r3, r3, r1
@@ -12919,7 +12919,7 @@ _081B6348:
 	str r0, [sp]
 	mov r0, sb
 	movs r2, #1
-	bl sub_081B1BE8
+	bl PartyMenuModifyHP
 	mov r0, sb
 	movs r1, #0
 	mov r2, sl
@@ -12939,9 +12939,9 @@ _081B6384:
 	ldr r0, _081B63C4
 _081B6394:
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B63C8
 	mov r2, sb
 	lsls r0, r2, #2
@@ -12986,9 +12986,9 @@ sub_081B63CC: @ 0x081B63CC
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl HandleBattleLowHpMusicChange
 	ldr r1, _081B642C
 	lsls r0, r5, #2
@@ -13015,7 +13015,7 @@ sub_081B6434: @ 0x081B6434
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -13066,7 +13066,7 @@ sub_081B6468: @ 0x081B6468
 	lsrs r7, r0, #0x18
 	adds r0, r5, #0
 	movs r1, #0x20
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	str r0, [sp, #4]
@@ -13085,7 +13085,7 @@ sub_081B6468: @ 0x081B6468
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x20
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov sb, r0
@@ -13164,9 +13164,9 @@ _081B6580:
 	ldr r0, _081B65B0
 _081B6582:
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B65B8
 	mov r2, sl
 	lsls r0, r2, #2
@@ -13216,7 +13216,7 @@ _081B65DC: @ jump table
 _081B65F4:
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _081B6608
 	cmp r0, r1
 	beq _081B6632
@@ -13245,7 +13245,7 @@ _081B6624:
 	adds r0, r4, #0
 	movs r1, #0x1f
 _081B6628:
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	b _081B6634
@@ -13351,7 +13351,7 @@ _081B66E0:
 	adds r1, #0xd
 	ldr r2, [sp, #0xc]
 	adds r0, r2, r0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
@@ -13405,7 +13405,7 @@ _081B673C:
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0x10
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -13499,7 +13499,7 @@ _081B6814:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0x16
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B683C
 	ldrb r0, [r0, #9]
 	bl sub_081B66B0
@@ -13564,7 +13564,7 @@ sub_081B687C: @ 0x081B687C
 	adds r0, #0xc
 	bl sub_081B2CB0
 	movs r0, #5
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -13622,7 +13622,7 @@ _081B68F4:
 	ldrsh r1, [r7, r0]
 	adds r1, #0xd
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	ldr r0, _081B6964
@@ -13635,9 +13635,9 @@ _081B68F4:
 	ldr r0, _081B696C
 _081B693A:
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B6970
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -13667,7 +13667,7 @@ dp05_pp_up: @ 0x081B6978
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0x17
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B69A8
 	ldrb r0, [r0, #9]
 	bl sub_081B66B0
@@ -13744,7 +13744,7 @@ _081B6A06:
 	adds r1, r4, #0
 	adds r1, #0xd
 	adds r0, r6, #0
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, r5
 	bne _081B6A18
 	movs r0, #1
@@ -13772,9 +13772,9 @@ sub_081B6A2C: @ 0x081B6A2C
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -13959,9 +13959,9 @@ _081B6BA4:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B6C08
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -13990,7 +13990,7 @@ sub_081B6C10: @ 0x081B6C10
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14068,7 +14068,7 @@ sub_081B6CA4: @ 0x081B6CA4
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14114,7 +14114,7 @@ _081B6CF8:
 _081B6CFE:
 	ldr r0, _081B6D18
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	ldr r1, _081B6D1C
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -14145,7 +14145,7 @@ sub_081B6D38: @ 0x081B6D38
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14267,7 +14267,7 @@ sub_081B6E04: @ 0x081B6E04
 	lsrs r1, r1, #0x18
 	adds r1, #0xd
 	adds r0, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -14308,7 +14308,7 @@ sub_081B6E84: @ 0x081B6E84
 	push {r4, r5, r6, lr}
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14366,9 +14366,9 @@ sub_081B6EE0: @ 0x081B6EE0
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B6F3C
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -14394,7 +14394,7 @@ sub_081B6F44: @ 0x081B6F44
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14464,7 +14464,7 @@ _081B6FB6:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r1, #0x10
 	ldrsh r0, [r7, r1]
 	cmp r0, #1
@@ -14546,7 +14546,7 @@ sub_081B7090: @ 0x081B7090
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14587,7 +14587,7 @@ dp05_rare_candy: @ 0x081B70B0
 	mov r8, r2
 	adds r0, r5, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x64
 	beq _081B7124
 	adds r0, r5, #0
@@ -14624,9 +14624,9 @@ _081B7126:
 	strb r0, [r1]
 	ldr r0, _081B7158
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B715C
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -14658,7 +14658,7 @@ _081B7160:
 	ldr r4, _081B71E4
 	adds r0, r5, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r4, #0
 	movs r2, #0
@@ -14670,9 +14670,9 @@ _081B7160:
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B71F0
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -14752,9 +14752,9 @@ _081B7234:
 	bl sub_081B57D8
 	adds r0, r7, #0
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
@@ -14773,7 +14773,7 @@ sub_081B7280: @ 0x081B7280
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081B72CC
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -14875,7 +14875,7 @@ sub_081B7328: @ 0x081B7328
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r4, r5}
 	pop {r0}
@@ -14906,7 +14906,7 @@ sub_081B7374: @ 0x081B7374
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #4
 	pop {r4}
 	pop {r0}
@@ -15135,9 +15135,9 @@ sub_081B7528: @ 0x081B7528
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrh r0, [r6]
 	mov r1, r8
 	strh r0, [r1, #0xe]
@@ -15198,9 +15198,9 @@ sub_081B75B8: @ 0x081B75B8
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	mov r0, r8
 	strh r5, [r0, #0xe]
 	ldr r1, _081B763C
@@ -15233,27 +15233,27 @@ sub_081B7644: @ 0x081B7644
 	adds r4, r0, #0
 	adds r5, r1, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #2]
 	adds r0, r4, #0
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #4]
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #8]
 	adds r0, r4, #0
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0xa]
 	adds r0, r4, #0
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #6]
 	pop {r4, r5}
 	pop {r0}
@@ -15312,12 +15312,12 @@ sub_081B76CC: @ 0x081B76CC
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B7712
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	ldrb r0, [r6, #9]
@@ -15382,13 +15382,13 @@ _081B777A:
 	adds r0, r0, r1
 	ldrb r0, [r0]
 	movs r1, #0
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	ldrb r0, [r6, #9]
 	movs r1, #1
-	bl sub_081B0C9C
+	bl AnimatePartySlot
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	subs r3, r3, r7
 	lsls r3, r3, #0x10
@@ -15398,7 +15398,7 @@ _081B777A:
 	str r0, [sp]
 	mov r0, r8
 	movs r2, #1
-	bl sub_081B1BE8
+	bl PartyMenuModifyHP
 	mov r0, r8
 	movs r1, #0
 	adds r2, r7, #0
@@ -15432,7 +15432,7 @@ task_sacred_ash_party_loop: @ 0x081B77F0
 	push {r4, r5, r6, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -15474,9 +15474,9 @@ _081B7826:
 	strb r1, [r0]
 	ldr r0, _081B7868
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081B787C
 	.align 2, 0
 _081B7858: .4byte 0x0203CB90
@@ -15540,9 +15540,9 @@ sub_081B78B4: @ 0x081B78B4
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B7910
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -15588,9 +15588,9 @@ sub_081B7918: @ 0x081B7918
 	strb r0, [r1]
 	ldr r0, _081B7974
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B7978
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -16009,7 +16009,7 @@ sub_081B7C4C: @ 0x081B7C4C
 	ldr r7, _081B7C94
 	adds r0, r0, r7
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	lsls r0, r0, #0x10
 	cmp r0, #0
@@ -16159,7 +16159,7 @@ sub_081B7DA4: @ 0x081B7DA4
 	lsrs r5, r0, #0x18
 	ldr r0, _081B7DE0
 	ldrb r4, [r0, #9]
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -16204,7 +16204,7 @@ sub_081B7DEC: @ 0x081B7DEC
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _081B7E3C
@@ -16243,7 +16243,7 @@ sub_081B7E48: @ 0x081B7E48
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	ldr r0, _081B7EA0
@@ -16354,7 +16354,7 @@ sub_081B7F40: @ 0x081B7F40
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl sub_081B18A4
+	bl IsPartyMenuTextPrinterActive
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -16415,7 +16415,7 @@ _081B7F9A:
 	bl pokemon_item_not_removed
 	ldr r0, _081B7FD4
 	movs r1, #0
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	b _081B8018
 	.align 2, 0
 _081B7FCC: .4byte 0x0203CB94
@@ -16491,9 +16491,9 @@ sub_081B8058: @ 0x081B8058
 	lsrs r4, r4, #0x18
 	ldr r0, _081B8084
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081B8088
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -16614,12 +16614,12 @@ sub_081B8114: @ 0x081B8114
 	adds r4, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B817C
 	ldr r0, _081B8178
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 	b _081B8192
 	.align 2, 0
 _081B8160: .4byte 0x0203CB94
@@ -16637,10 +16637,10 @@ _081B817C:
 	bl ClearMailStruct
 	ldr r0, _081B81AC
 	movs r1, #1
-	bl sub_081B182C
+	bl DisplayPartyMenuMessage
 _081B8192:
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081B81B0
 	lsls r1, r6, #2
 	adds r1, r1, r6
@@ -16743,12 +16743,12 @@ GetBattleEntryEligibility: @ 0x081B824C
 	adds r5, r0, #0
 	movs r6, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B82A8
 	adds r0, r5, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	bl sub_081B8528
 	lsls r0, r0, #0x18
@@ -16763,7 +16763,7 @@ GetBattleEntryEligibility: @ 0x081B824C
 	bne _081B828A
 	adds r0, r5, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B82A8
 _081B828A:
@@ -16777,7 +16777,7 @@ _081B828A:
 	bne _081B82B8
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B82EA
 _081B82A8:
@@ -16790,7 +16790,7 @@ _081B82B4: .4byte 0x000040CF
 _081B82B8:
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r3, _081B82F4
@@ -16892,7 +16892,7 @@ _081B836E:
 	ldr r3, _081B840C
 	adds r0, r3, r0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov sl, r0
@@ -16903,7 +16903,7 @@ _081B836E:
 	ldr r3, _081B840C
 	adds r0, r3, r0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r1, r5, #1
@@ -16922,7 +16922,7 @@ _081B83AE:
 	ldr r1, _081B840C
 	adds r0, r1, r0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp sl, r0
 	beq _081B8358
 	cmp r6, #0
@@ -16933,7 +16933,7 @@ _081B83AE:
 	ldr r3, _081B840C
 	adds r0, r3, r0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r6, r0
 	beq _081B835C
 _081B83DE:
@@ -17007,7 +17007,7 @@ sub_081B843C: @ 0x081B843C
 	movs r0, #0x20
 	bl PlaySE
 	adds r0, r4, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B846C
 	lsls r1, r5, #2
 	adds r1, r1, r5
@@ -17050,7 +17050,7 @@ _081B84A2:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl display_pokemon_menu_message
+	bl DisplayPartyMenuStdMessage
 	ldr r0, _081B84C8
 	lsls r1, r4, #2
 	adds r1, r1, r4
@@ -17354,12 +17354,12 @@ sub_081B86CC: @ 0x081B86CC
 	adds r4, r0, #0
 	ldr r0, _081B86F4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B8714
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B8714
 	ldr r0, _081B86F8
@@ -17431,7 +17431,7 @@ _081B8764:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081B8798
 	ldr r1, _081B878C
@@ -17481,7 +17481,7 @@ _081B87C4:
 	adds r6, r0, r1
 	adds r0, r6, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B8800
 	ldr r0, _081B87F8
@@ -18236,12 +18236,12 @@ _081B8D7E:
 	adds r5, r0, r1
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B8DCC
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B8DCC
 	movs r0, #0
@@ -18900,7 +18900,7 @@ _081B929A:
 	ldr r1, _081B92BC
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B9294
 	movs r0, #1
@@ -19015,7 +19015,7 @@ _081B937C:
 	adds r0, r0, r1
 	adds r1, r4, #0
 	adds r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081B939A
 	ldrh r0, [r5]
@@ -19050,7 +19050,7 @@ sub_081B93B8: @ 0x081B93B8
 	ldrh r1, [r0]
 	adds r1, #0xd
 	adds r0, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -19149,7 +19149,7 @@ sub_081B947C: @ 0x081B947C
 	str r0, [sp, #8]
 	mov r0, r8
 	ldr r1, [sp, #8]
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	adds r1, #2
 	str r1, [sp, #0x14]
@@ -19159,7 +19159,7 @@ sub_081B947C: @ 0x081B947C
 	str r3, [sp, #0xc]
 	mov r0, r8
 	adds r1, r3, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1]
 	adds r7, r5, #0
@@ -19167,7 +19167,7 @@ sub_081B947C: @ 0x081B947C
 	str r7, [sp, #0x10]
 	mov r0, r8
 	adds r1, r7, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	adds r1, #5
 	str r1, [sp, #0x18]
@@ -19177,13 +19177,13 @@ sub_081B947C: @ 0x081B947C
 	str r3, [sp, #0x1c]
 	mov r0, r8
 	adds r1, r3, #0
-	bl GetMonData
+	bl GetMonData3
 	add r7, sp, #4
 	mov sl, r7
 	strb r0, [r7]
 	mov r0, r8
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	mov r6, sp
 	adds r6, #6
 	strb r0, [r6]
@@ -19261,7 +19261,7 @@ sub_081B957C: @ 0x081B957C
 	ldr r1, _081B95A4
 	adds r0, r0, r1
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	cmp r1, #0
 	beq _081B95AC
@@ -19300,7 +19300,7 @@ sub_081B95B8: @ 0x081B95B8
 	ldr r1, _081B95F4
 	ldrh r1, [r1]
 	adds r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
@@ -19327,7 +19327,7 @@ _081B960A:
 	adds r1, r4, #0
 	adds r1, #0xd
 	adds r0, r5, r7
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x39
 	beq _081B963C
 	adds r4, #1

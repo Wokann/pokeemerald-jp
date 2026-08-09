@@ -719,7 +719,7 @@ _081A731E:
 	bls _081A731E
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	lsls r2, r0, #0x10
 	mov r1, sp
 	strb r0, [r1]
@@ -732,7 +732,7 @@ _081A731E:
 	bl SetMonData
 	adds r0, r5, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
 	movs r4, #0
@@ -740,7 +740,7 @@ _081A735A:
 	adds r1, r4, #0
 	adds r1, #0xd
 	adds r0, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r6, #0
@@ -1050,14 +1050,14 @@ _081A7590:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A75E0
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081A75E0
 	mov r0, r8
@@ -1067,7 +1067,7 @@ _081A7590:
 	mov r8, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r1, [r7]
@@ -1153,14 +1153,14 @@ _081A765C:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A76C6
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081A76C6
 	mov r0, r8
@@ -1170,7 +1170,7 @@ _081A765C:
 	mov r8, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r7, _081A76F0
@@ -1251,14 +1251,14 @@ _081A7722:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A7754
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081A7754
 	adds r0, r6, #1
@@ -1533,7 +1533,7 @@ TryGenerateBattlePikeWildMon: @ 0x081A7910
 	ldr r0, _081A7998
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r0, r5, #0x10
 	lsrs r0, r0, #0x10
@@ -2066,12 +2066,12 @@ _081A7D30:
 	adds r7, r1, r0
 	adds r0, r7, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r7, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	str r4, [sp, #8]
@@ -2079,7 +2079,7 @@ _081A7D30:
 	blo _081A7DC4
 	adds r0, r7, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	cmp r0, #0
@@ -2092,7 +2092,7 @@ _081A7D78: .4byte 0x02024190
 _081A7D7C:
 	adds r0, r7, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	mov sb, r0
@@ -2108,7 +2108,7 @@ _081A7D94:
 	adds r1, r4, #0
 	adds r1, #0xd
 	adds r0, r7, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, sb
@@ -2119,7 +2119,7 @@ _081A7D94:
 	adds r1, r4, #0
 	adds r1, #0x11
 	adds r0, r7, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	cmp r5, r6
@@ -2790,7 +2790,7 @@ AtLeastTwoAliveMons: @ 0x081A82D4
 _081A82DC:
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081A82EE
 	adds r0, r6, #1
@@ -2997,26 +2997,26 @@ _081A8454:
 	adds r7, r1, r0
 	adds r0, r7, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r7, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	cmp r4, r5
 	blo _081A84E2
 	adds r0, r7, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A84E2
 	adds r0, r7, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	mov r8, r0
@@ -3035,7 +3035,7 @@ _081A84B2:
 	adds r1, r6, #0
 	adds r1, #0xd
 	adds r0, r7, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, r8
@@ -3046,7 +3046,7 @@ _081A84B2:
 	adds r1, r6, #0
 	adds r1, #0x11
 	adds r0, r7, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	cmp r4, r5
@@ -3103,7 +3103,7 @@ _081A851C:
 	ldr r0, [r7]
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r6]
 	ldr r2, _081A8564
 	adds r1, r1, r2
@@ -3229,7 +3229,7 @@ CanEncounterWildMon: @ 0x081A8630
 	ldr r4, _081A8680
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081A8684
 	adds r0, r4, #0
@@ -3243,7 +3243,7 @@ CanEncounterWildMon: @ 0x081A8630
 _081A8656:
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5

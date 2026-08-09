@@ -1136,11 +1136,11 @@ sub_081D691C: @ 0x081D691C
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -2903,11 +2903,11 @@ sub_081D774C: @ 0x081D774C
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -3474,13 +3474,13 @@ sub_081D7BEC: @ 0x081D7BEC
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -4133,13 +4133,13 @@ sub_081D8164: @ 0x081D8164
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0xc1
 	lsls r1, r1, #6
 	movs r0, #0
@@ -4615,11 +4615,11 @@ sub_081D8574: @ 0x081D8574
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0xc1
 	lsls r1, r1, #6
 	movs r0, #0

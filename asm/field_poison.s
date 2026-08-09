@@ -7,7 +7,7 @@
 IsMonValidSpecies: @ 0x080F9DF8
 	push {lr}
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -39,7 +39,7 @@ _080F9E22:
 	beq _080F9E40
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080F9E40
 	movs r0, #0
@@ -82,7 +82,7 @@ FaintFromFieldPoison: @ 0x080F9E50
 	adds r0, r4, #0
 	movs r1, #2
 	adds r2, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r5, #0
 	bl StringGetEnd10
 	add sp, #4
@@ -109,12 +109,12 @@ MonFaintedFromPoison: @ 0x080F9E9C
 	beq _080F9EDC
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080F9EDC
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -269,12 +269,12 @@ DoPoisonFieldEffect: @ 0x080F9FD4
 _080F9FE0:
 	adds r0, r4, #0
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080FA024
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	bl pokemon_ailments_get_primary
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -282,7 +282,7 @@ _080F9FE0:
 	bne _080FA024
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp]
 	cmp r0, #0
 	beq _080FA016
@@ -341,45 +341,45 @@ sub_080FA058: @ 0x080FA058
 	sub sp, #8
 	adds r5, r0, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	str r0, [sp, #4]
 	lsrs r0, r0, #0x10
 	str r0, [sp]
 	adds r0, r5, #0
 	movs r1, #0x27
-	bl GetMonData
+	bl GetMonData3
 	adds r7, r0, #0
 	movs r6, #0xf
 	ands r7, r6
 	adds r0, r5, #0
 	movs r1, #0x28
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	mov r1, r8
 	ands r1, r6
 	mov r8, r1
 	adds r0, r5, #0
 	movs r1, #0x29
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	mov r3, sb
 	ands r3, r6
 	mov sb, r3
 	adds r0, r5, #0
 	movs r1, #0x2a
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	ands r0, r6
 	mov sl, r0
 	adds r0, r5, #0
 	movs r1, #0x2b
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	ands r4, r6
 	adds r0, r5, #0
 	movs r1, #0x2c
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	ands r2, r6
 	mov r1, r8
@@ -556,12 +556,12 @@ _080FA20C:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	beq _080FA22E
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, r6
 	beq _080FA238
 _080FA22E:
@@ -790,12 +790,12 @@ _080FA3DA:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080FA40C
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080FA40C
 	mov r1, sp

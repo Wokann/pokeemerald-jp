@@ -112,19 +112,19 @@ _08161ADC:
 	strb r1, [r0, #0x13]
 	adds r0, r6, #0
 	movs r1, #0x42
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	str r0, [r1]
 	adds r0, r6, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	str r0, [r1, #4]
 	adds r0, r6, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	movs r2, #0
@@ -132,31 +132,31 @@ _08161ADC:
 	strh r0, [r1, #0xa]
 	adds r0, r6, #0
 	movs r1, #0x16
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	strb r0, [r1, #0xe]
 	adds r0, r6, #0
 	movs r1, #0x17
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	strb r0, [r1, #0xf]
 	adds r0, r6, #0
 	movs r1, #0x18
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	strb r0, [r1, #0x10]
 	adds r0, r6, #0
 	movs r1, #0x21
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	strb r0, [r1, #0x11]
 	adds r0, r6, #0
 	movs r1, #0x2f
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r7]
 	adds r1, r1, r5
 	strb r0, [r1, #0x12]
@@ -494,7 +494,7 @@ UpdateRoamerHPStatus: @ 0x08161E2C
 	push {r4, r5, r6, lr}
 	adds r6, r0, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	ldr r5, _08161E58
 	ldr r1, [r5]
 	ldr r4, _08161E5C
@@ -502,7 +502,7 @@ UpdateRoamerHPStatus: @ 0x08161E2C
 	strh r0, [r1, #0xa]
 	adds r0, r6, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r5]
 	adds r1, r1, r4
 	strb r0, [r1, #0xd]

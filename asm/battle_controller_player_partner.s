@@ -638,19 +638,19 @@ _081BAF7E:
 	adds r6, r1, r0
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r6, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r6, #0
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #4]
 	ldr r3, _081BB044
 	adds r4, #1
@@ -807,19 +807,19 @@ Task_PrepareToGiveExpWithExpBar: @ 0x081BB0B0
 	adds r6, r6, r0
 	adds r0, r6, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r6, #0
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	ldr r6, _081BB170
 	lsls r1, r4, #2
@@ -931,17 +931,17 @@ _081BB1B0:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #4]
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r3, _081BB280
@@ -1104,7 +1104,7 @@ sub_081BB324: @ 0x081BB324
 	adds r7, r1, r0
 	adds r0, r7, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	bl IsDoubleBattle
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1178,7 +1178,7 @@ DestroyExpTaskAndCompleteOnInactiveTextPrinter: @ 0x081BB3DC
 	ldr r1, _081BB41C
 	adds r0, r0, r1
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldrb r0, [r4, #0xc]
 	ldr r1, _081BB420
 	lsls r0, r0, #2
@@ -1226,7 +1226,7 @@ sub_081BB428: @ 0x081BB428
 	ldr r1, _081BB4BC
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl sub_0805DB50
@@ -1951,12 +1951,12 @@ _081BBAA4:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #0x2e]
 	movs r6, #0
@@ -1984,12 +1984,12 @@ _081BBAF0:
 	adds r1, r6, #0
 	adds r1, #0xd
 	mov r0, r8
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4]
 	adds r1, r6, #0
 	adds r1, #0x11
 	mov r0, r8
-	bl GetMonData
+	bl GetMonData3
 	mov r2, sb
 	adds r1, r2, r6
 	strb r0, [r1]
@@ -2004,21 +2004,21 @@ _081BBAF0:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sl
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x20
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [sp, #0x80]
 	strb r0, [r2]
 	adds r0, r4, #0
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x44]
 	adds r0, r4, #0
 	movs r1, #0x27
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	movs r5, #0x1f
 	ands r0, r5
@@ -2030,7 +2030,7 @@ _081BBAF0:
 	strb r1, [r3, #0x14]
 	adds r0, r4, #0
 	movs r1, #0x28
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	movs r6, #0x1f
 	ands r0, r6
@@ -2042,7 +2042,7 @@ _081BBAF0:
 	strh r1, [r3, #0x14]
 	adds r0, r4, #0
 	movs r1, #0x29
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	ands r0, r5
 	lsls r0, r0, #2
@@ -2054,7 +2054,7 @@ _081BBAF0:
 	strb r1, [r3, #0x15]
 	adds r0, r4, #0
 	movs r1, #0x2a
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0x1f
 	ands r1, r0
 	lsls r1, r1, #0xf
@@ -2065,7 +2065,7 @@ _081BBAF0:
 	str r0, [sp, #0x14]
 	adds r0, r4, #0
 	movs r1, #0x2b
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	ands r0, r6
 	lsls r0, r0, #4
@@ -2076,7 +2076,7 @@ _081BBAF0:
 	strh r1, [r3, #0x16]
 	adds r0, r4, #0
 	movs r1, #0x2c
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	ands r0, r5
 	lsls r0, r0, #1
@@ -2088,55 +2088,55 @@ _081BBAF0:
 	strb r1, [r3, #0x17]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x48]
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x4c]
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [sp, #0x7c]
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #0x28]
 	adds r0, r4, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #0x2c]
 	adds r0, r4, #0
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #2]
 	adds r0, r4, #0
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #4]
 	adds r0, r4, #0
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #6]
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #8]
 	adds r0, r4, #0
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1, #0xa]
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	movs r1, #1
 	ands r0, r1
@@ -2149,7 +2149,7 @@ _081BBAF0:
 	strb r1, [r3, #0x17]
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	mov r3, sp
 	lsls r0, r0, #7
 	ldrb r2, [r3, #0x17]
@@ -2159,19 +2159,19 @@ _081BBAF0:
 	strb r1, [r3, #0x17]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x54]
 	adds r0, r4, #0
 	movs r1, #2
 	ldr r2, [sp, #0x8c]
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, [sp, #0x84]
 	ldr r1, [sp, #0x8c]
 	bl StringCopy10
 	adds r0, r4, #0
 	movs r1, #7
 	ldr r2, [sp, #0x88]
-	bl GetMonData
+	bl GetMonData3
 	mov r2, sp
 	movs r6, #0
 _081BBCA8:
@@ -2222,13 +2222,13 @@ _081BBCFE:
 	adds r1, r6, #0
 	adds r1, #0xd
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	strh r0, [r1]
 	adds r1, r6, #0
 	adds r1, #0x11
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r2, sl
 	adds r1, r2, r6
 	strb r0, [r1]
@@ -2242,7 +2242,7 @@ _081BBCFE:
 	ldr r1, _081BBD4C
 	adds r0, r0, r1
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	strb r0, [r1, #0xc]
 	mov r2, sb
@@ -2284,7 +2284,7 @@ _081BBD78:
 	adds r1, #0x11
 	mov r2, r8
 	adds r0, r4, r2
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r7, r6
 	strb r0, [r1]
 	adds r6, #1
@@ -2295,7 +2295,7 @@ _081BBD78:
 	ldr r1, _081BBDA4
 	adds r0, r0, r1
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r7, r6
 	strb r0, [r1]
 	adds r6, #1
@@ -2332,7 +2332,7 @@ _081BBDD4:
 	adds r0, r0, r1
 	movs r1, #0x19
 _081BBDDE:
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	strb r1, [r7]
 	movs r0, #0xff
@@ -2465,27 +2465,27 @@ _081BBEC4:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0x27
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7]
 	adds r0, r4, #0
 	movs r1, #0x28
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #1]
 	adds r0, r4, #0
 	movs r1, #0x29
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #2]
 	adds r0, r4, #0
 	movs r1, #0x2a
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #3]
 	adds r0, r4, #0
 	movs r1, #0x2b
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #4]
 	adds r0, r4, #0
 	movs r1, #0x2c
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #5]
 	movs r6, #6
 	b _081BC10A
@@ -2570,7 +2570,7 @@ _081BBF94:
 	adds r0, r0, r1
 	movs r1, #0x37
 _081BBF9E:
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	strb r1, [r7]
 	movs r0, #0xff
@@ -2659,7 +2659,7 @@ _081BC038:
 	adds r0, r0, r1
 	movs r1, #0x3f
 _081BC042:
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	strb r0, [r7]
@@ -2766,7 +2766,7 @@ _081BC0F8:
 	adds r0, r0, r1
 	movs r1, #0x36
 _081BC102:
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7]
 	movs r6, #1
 _081BC10A:
@@ -4057,7 +4057,7 @@ PlayerPartnerHandleLoadMonSprite: @ 0x081BCBF4
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -4241,7 +4241,7 @@ sub_081BCD80: @ 0x081BCD80
 	ldr r1, _081BCEDC
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
@@ -5550,7 +5550,7 @@ _081BD840:
 	ldr r1, _081BD890
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081BD83E
 	ldr r1, _081BD894
@@ -5633,7 +5633,7 @@ PlayerPartnerHandleHealthBarUpdate: @ 0x081BD8AC
 	ldr r4, _081BD934
 	adds r0, r0, r4
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	mov r1, sb
 	ldrb r0, [r1]
@@ -5643,7 +5643,7 @@ PlayerPartnerHandleHealthBarUpdate: @ 0x081BD8AC
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	mov r1, sb
 	ldrb r0, [r1]
@@ -5671,7 +5671,7 @@ _081BD93C:
 	ldr r1, _081BD988
 	adds r0, r0, r1
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	mov r1, sb
 	ldrb r0, [r1]
@@ -5722,7 +5722,7 @@ PlayerPartnerHandleExpUpdate: @ 0x081BD99C
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x63
 	bls _081BD9D4
 	bl PlayerPartnerBufferExecCompleted
@@ -5736,7 +5736,7 @@ _081BD9D4:
 	bl LoadBattleBarGfx
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r6]
 	lsls r1, r1, #9
 	adds r0, r5, #2
@@ -6206,7 +6206,7 @@ PlayerPartnerHandleFaintingCry: @ 0x081BDD34
 	ldr r1, _081BDD70
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	movs r1, #0x19

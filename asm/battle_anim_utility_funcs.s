@@ -832,7 +832,7 @@ _081174E0:
 _081174F0:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 _081174FC:
@@ -1308,7 +1308,7 @@ _081178F8:
 _0811790A:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 _08117914:
 	strh r0, [r1, #0x14]
@@ -2433,7 +2433,7 @@ _081181D8:
 _081181E6:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 _081181F2:

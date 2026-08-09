@@ -136,7 +136,7 @@ _080A5628:
 _080A5646:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	b _080A5662
@@ -223,7 +223,7 @@ _080A56CC:
 	ldr r1, _080A5700
 	adds r0, r0, r1
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	b _080A570A
 	.align 2, 0
@@ -323,7 +323,7 @@ _080A5790:
 	ldr r1, _080A57C8
 	adds r0, r0, r1
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	b _080A57D2
 	.align 2, 0
@@ -735,7 +735,7 @@ _080A5AAC:
 _080A5ACA:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	b _080A5AE6
@@ -2011,7 +2011,7 @@ _080A63B8:
 _080A63C6:
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080A63E0
 _080A63D2:
@@ -4798,7 +4798,7 @@ _080A7840:
 	ldr r1, _080A7884
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r2, r0, #0x10
 	b _080A788A
@@ -4838,7 +4838,7 @@ _080A78A0:
 	ldr r1, _080A78D4
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r2, r0, #0x10
 	b _080A78DA
@@ -5770,14 +5770,14 @@ _080A7F8C:
 	ldr r5, _080A7FE0
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	ldrh r0, [r4]
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	b _080A7FEC
 	.align 2, 0
@@ -5867,14 +5867,14 @@ _080A8058:
 	ldr r5, _080A80A0
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	ldrh r0, [r4]
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	b _080A80AC
 	.align 2, 0

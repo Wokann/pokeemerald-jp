@@ -704,7 +704,7 @@ MEScrCmd_givepokemon: @ 0x08153C04
 	bl memcpy
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	movs r0, #0xce
@@ -768,7 +768,7 @@ _08153C88:
 _08153CC2:
 	adds r0, r7, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIsMail

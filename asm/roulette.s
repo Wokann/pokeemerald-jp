@@ -386,7 +386,7 @@ _08140634:
 	ldr r1, _08140670
 	adds r0, r0, r1
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0x98
 	lsls r0, r0, #1

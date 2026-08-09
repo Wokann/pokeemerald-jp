@@ -50,6 +50,7 @@ TrainerHill_EventScript_TrainerBattle = ABSOLUTE(0x08276D0C);
 gText_ExpandedPlaceholder_Emerald = ABSOLUTE(0x085C8C36);
 sUnknownStringVar = ABSOLUTE(0x02022064);
 gStringVar1 = ABSOLUTE(0x02021C40);
+gStringVar4 = ABSOLUTE(0x02021C7C);
 gStringVar2 = ABSOLUTE(0x02021C54);
 gStringVar3 = ABSOLUTE(0x02021C68);
 gText_ExpandedPlaceholder_Aqua = ABSOLUTE(0x085C8C3C);

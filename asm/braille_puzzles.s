@@ -97,7 +97,7 @@ CheckRelicanthWailord: @ 0x08179564
 	adds r0, r4, #0
 	movs r1, #0x41
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0x9d
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -112,7 +112,7 @@ CheckRelicanthWailord: @ 0x08179564
 	adds r0, r0, r1
 	movs r1, #0x41
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _081795A8
 	cmp r0, r1
 	bne _081795AC

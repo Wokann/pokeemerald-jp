@@ -7537,7 +7537,7 @@ _080498F0:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #0x20]
 _0804990E:
 	ldr r2, _08049A38
@@ -8462,12 +8462,12 @@ _0804A058:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804A0C6
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804A0C6
 	ldr r0, _0804A0AC
@@ -8482,7 +8482,7 @@ _0804A058:
 _0804A08C:
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, #0xaf
@@ -8602,7 +8602,7 @@ _0804A178:
 	ldr r1, _0804A1B0
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, #0xaf
@@ -8652,7 +8652,7 @@ _0804A1EC:
 	ldr r1, _0804A21C
 	adds r0, r0, r1
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x64
 	bne _0804A228
 	ldr r1, [r5]
@@ -8703,7 +8703,7 @@ _0804A256:
 	ldr r1, _0804A29C
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804A270
 	b _0804A45A
@@ -8979,7 +8979,7 @@ _0804A48A:
 	ldr r5, _0804A570
 	adds r0, r0, r5
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804A55A
 	ldr r0, [r7]
@@ -8987,7 +8987,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x64
 	beq _0804A55A
 	ldr r0, [r7]
@@ -8995,7 +8995,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	ldr r4, _0804A574
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
@@ -9005,7 +9005,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
 	strh r0, [r1, #2]
@@ -9014,7 +9014,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
 	strh r0, [r1, #4]
@@ -9023,7 +9023,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
 	strh r0, [r1, #6]
@@ -9032,7 +9032,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
 	strh r0, [r1, #8]
@@ -9041,7 +9041,7 @@ _0804A48A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r1, [r1, #0x10]
 	strh r0, [r1, #0xa]
@@ -9155,7 +9155,7 @@ _0804A5E2:
 	ldr r7, _0804A834
 	adds r0, r0, r7
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4, #4]
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -9210,7 +9210,7 @@ _0804A5E2:
 	muls r0, r2, r0
 	adds r0, r0, r7
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r4, #0
 	adds r1, #0x2a
 	strb r0, [r1]
@@ -9222,7 +9222,7 @@ _0804A5E2:
 	adds r0, r1, #0
 	adds r0, r0, r7
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #0x28]
 	mov r2, sb
 	ldr r0, [r2]
@@ -9232,7 +9232,7 @@ _0804A5E2:
 	adds r0, r3, #0
 	adds r0, r0, r7
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #0x2c]
 	mov r1, sb
 	ldr r0, [r1]
@@ -9242,7 +9242,7 @@ _0804A5E2:
 	adds r0, r2, #0
 	adds r0, r0, r7
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #2]
 	mov r3, sb
 	ldr r0, [r3]
@@ -9252,7 +9252,7 @@ _0804A5E2:
 	adds r0, r1, #0
 	adds r0, r0, r7
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #4]
 	mov r2, sb
 	ldr r0, [r2]
@@ -9262,7 +9262,7 @@ _0804A5E2:
 	adds r0, r3, #0
 	adds r0, r0, r7
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #6]
 	mov r1, sb
 	ldr r0, [r1]
@@ -9272,7 +9272,7 @@ _0804A5E2:
 	adds r0, r2, #0
 	adds r0, r0, r7
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #6]
 	mov r3, sb
 	ldr r0, [r3]
@@ -9282,7 +9282,7 @@ _0804A5E2:
 	adds r0, r1, #0
 	adds r0, r0, r7
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #8]
 	mov r2, sb
 	ldr r0, [r2]
@@ -9292,7 +9292,7 @@ _0804A5E2:
 	adds r0, r3, #0
 	adds r0, r0, r7
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #0xa]
 _0804A74E:
 	ldr r0, _0804A830
@@ -9323,7 +9323,7 @@ _0804A75E:
 	ldr r4, _0804A834
 	adds r0, r0, r4
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xda
 	strb r0, [r1]
@@ -9332,7 +9332,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	strh r0, [r1]
 	ldr r0, [r7]
@@ -9340,7 +9340,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xdc
 	strh r0, [r1]
@@ -9349,7 +9349,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xb2
 	strh r0, [r1]
@@ -9358,7 +9358,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xb4
 	strh r0, [r1]
@@ -9367,7 +9367,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	movs r2, #0xb6
 	adds r2, r2, r6
 	mov r8, r2
@@ -9377,7 +9377,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3d
-	bl GetMonData
+	bl GetMonData3
 	mov r3, r8
 	strh r0, [r3]
 	ldr r0, [r7]
@@ -9385,7 +9385,7 @@ _0804A75E:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xb8
 	strh r0, [r1]
@@ -9523,17 +9523,17 @@ _0804A92C:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804A95C
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804A95C
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r6, r0
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
@@ -9558,12 +9558,12 @@ _0804A97A:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804A9D2
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804A9D2
 	ldr r0, _0804AAF4
@@ -9589,7 +9589,7 @@ _0804A97A:
 _0804A9C4:
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r6, r0
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
@@ -9616,12 +9616,12 @@ _0804A9EA:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804AA40
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804AA40
 	ldr r0, _0804AAF4
@@ -9646,7 +9646,7 @@ _0804A9EA:
 _0804AA32:
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r6, r0
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
@@ -13594,17 +13594,17 @@ _0804C894:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804C8CE
 	adds r0, r5, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804C8CE
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804C8CE
 	ldr r0, _0804C8E0
@@ -13699,17 +13699,17 @@ _0804C96A:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804C9A4
 	adds r0, r5, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804C9A4
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804C9A4
 	ldr r0, _0804C9AC
@@ -13763,17 +13763,17 @@ _0804C9EE:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804CA2A
 	adds r0, r5, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804CA2A
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804CA2A
 	ldr r0, _0804CA34
@@ -13858,17 +13858,17 @@ _0804CAB4:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804CAF6
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804CAF6
 	adds r0, r5, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0804CAF6
 	ldr r1, _0804CB20
@@ -16255,7 +16255,7 @@ _0804DE54:
 	adds r0, r0, r7
 	adds r1, r5, #0
 	adds r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r4, #0
@@ -17078,12 +17078,12 @@ _0804E4E8:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0804E50C
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -17103,11 +17103,11 @@ _0804E528: .4byte 0x0000FFFF
 _0804E52C:
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 _0804E53E:
 	str r0, [r6]
 	adds r6, #8
@@ -18217,7 +18217,7 @@ PutLevelAndGenderOnLvlUpBox: @ 0x0804EE38
 	ldr r4, _0804EF04
 	adds r0, r0, r4
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
@@ -18391,7 +18391,7 @@ PutMonIconOnLvlUpBox: @ 0x0804EF90
 	ldr r5, _0804F03C
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -18401,7 +18401,7 @@ PutMonIconOnLvlUpBox: @ 0x0804EF90
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r4, #0
 	movs r2, #1
@@ -22338,17 +22338,17 @@ _08050ED4:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08050F06
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _08050F06
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08050F06
 	ldr r0, [sp, #4]
@@ -22403,17 +22403,17 @@ _08050F42:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08050F42
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	beq _08050F42
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08050F42
 _08050F88:
@@ -23628,23 +23628,23 @@ _0805192C:
 	adds r4, r1, r0
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov sl, r0
 	adds r0, r5, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r7, r0, #0
 	ldr r5, _08051990
 	ldrb r0, [r5]
@@ -26709,12 +26709,12 @@ _0805318E:
 	add r4, sl
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r5, #0
@@ -28951,21 +28951,21 @@ _08054360:
 	muls r0, r5, r0
 	adds r0, r7, r0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080543A4
 	ldrb r0, [r6]
 	muls r0, r5, r0
 	adds r0, r7, r0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080543A4
 	ldrb r0, [r4]
 	muls r0, r5, r0
 	adds r0, r7, r0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -28974,7 +28974,7 @@ _08054360:
 	muls r0, r5, r0
 	adds r0, r7, r0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080543B4
 _080543A4:
@@ -29016,7 +29016,7 @@ _080543B4:
 	muls r0, r4, r0
 	adds r0, r7, r0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #3
 	subs r1, r1, r0
 	lsls r1, r1, #2
@@ -29040,7 +29040,7 @@ _080543B4:
 	muls r0, r4, r0
 	adds r0, r7, r0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #1
 	movs r1, #5
 	bl __udivsi3
@@ -31022,12 +31022,12 @@ _0805535E:
 	adds r4, r0, r6
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08055404
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -31046,7 +31046,7 @@ _080553A8:
 	adds r1, #0xd
 	ldr r0, [sp]
 	add r0, sb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r4, #0
@@ -31620,16 +31620,16 @@ _0805583A:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7]
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0805587C
 	lsls r0, r5, #3
@@ -31695,17 +31695,17 @@ _080558DE:
 	adds r4, r4, r7
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sl
 	strh r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08055940
 	lsls r0, r5, #3
@@ -31774,7 +31774,7 @@ _0805594C:
 	muls r0, r6, r0
 	adds r0, r0, r7
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	subs r0, #1
 	movs r1, #0xa
 	bl __udivsi3
@@ -32955,7 +32955,7 @@ atkF0_givecaughtmon: @ 0x080562B8
 	add r0, r8
 	ldr r2, _08056340
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	b _0805638E
 	.align 2, 0
 _08056328: .4byte 0x02023D12
@@ -32984,7 +32984,7 @@ _08056344:
 	add r0, r8
 	ldr r2, _0805643C
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	ldr r4, _08056440
 	bl get_unknown_box_id
 	lsls r0, r0, #0x18
@@ -33026,7 +33026,7 @@ _080563A2:
 	adds r0, r0, r6
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r5, _08056458
 	strh r0, [r5, #0x28]
 	mov r1, sb
@@ -33042,7 +33042,7 @@ _080563A2:
 	adds r2, r5, #0
 	adds r2, #0x2a
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	ldrb r0, [r1]
 	eors r4, r0
@@ -33055,7 +33055,7 @@ _080563A2:
 	adds r0, r0, r6
 	movs r1, #0x26
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xf
 	ands r0, r1
 	lsls r0, r0, #2
@@ -33097,13 +33097,13 @@ atkF1_trysetcaughtmondexflags: @ 0x08056460
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r0, r5, #0
 	bl HoennToNationalOrder
@@ -33158,7 +33158,7 @@ atkF2_displaydexinfo: @ 0x080564DC
 	ldr r0, _08056504
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r0, _08056508
@@ -33705,7 +33705,7 @@ _0805691A:
 	ldr r2, [r1]
 	adds r2, #0x6d
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	bl FreeAllWindowBuffers
 	mov r2, sl
 	ldrb r0, [r2]
@@ -33718,7 +33718,7 @@ _0805691A:
 	adds r0, r1, #0
 	add r0, r8
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r6, r0, #0
 	lsls r6, r6, #0x10
 	lsrs r6, r6, #0x10
@@ -33748,7 +33748,7 @@ _0805691A:
 	add r0, r8
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, _080569D8
 	ldr r1, [r2]
 	adds r1, #0x6d

@@ -84,7 +84,7 @@ MonHasMail: @ 0x080D3C90
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIsMail
@@ -93,7 +93,7 @@ MonHasMail: @ 0x080D3C90
 	beq _080D3CB8
 	adds r0, r4, #0
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0xff
 	beq _080D3CB8
 	movs r0, #1
@@ -423,7 +423,7 @@ TakeMailFromMon: @ 0x080D3F04
 	beq _080D3F56
 	adds r0, r4, #0
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	add r2, sp, #4
 	strb r0, [r2]
 	ldr r0, _080D3F60
@@ -517,7 +517,7 @@ _080D3FA8:
 	adds r0, r5, #0
 	movs r1, #0x40
 	str r3, [sp, #8]
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	ldr r2, [r1]
 	lsls r1, r0, #3
@@ -534,7 +534,7 @@ _080D3FA8:
 	stm r4!, {r0, r2, r3}
 	adds r0, r5, #0
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	ldr r2, [r1]
 	lsls r1, r0, #3

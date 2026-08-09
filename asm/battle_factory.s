@@ -765,7 +765,7 @@ _081A61A0:
 	adds r0, r5, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r2, r8
 	ldr r1, [r2]
 	ldr r2, _081A6250

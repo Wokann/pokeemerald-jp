@@ -180,7 +180,7 @@ _080A3370:
 _080A3376:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r6, #2
 	adds r5, #2

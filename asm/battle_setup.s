@@ -394,7 +394,7 @@ BattleSetup_StartLegendaryBattle: @ 0x080B0230
 	ldr r0, _080B027C
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0xca
 	lsls r0, r0, #1
@@ -544,7 +544,7 @@ StartRegiBattle: @ 0x080B0370
 	str r0, [r1]
 	ldr r0, _080B03B4
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	adds r2, r1, #0
@@ -928,7 +928,7 @@ _080B068E:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0xce
 	lsls r0, r0, #1
@@ -938,12 +938,12 @@ _080B068E:
 	beq _080B06D2
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080B06D2
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r7, r0
 	lsls r0, r0, #0x18
 	lsrs r7, r0, #0x18
@@ -1095,7 +1095,7 @@ GetWildBattleTransition: @ 0x080B07B8
 	adds r6, r5, #0
 	ldr r0, _080B07F0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -1263,7 +1263,7 @@ sub_080B08F8: @ 0x080B08F8
 	adds r5, r0, #0
 	ldr r0, _080B0928
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18

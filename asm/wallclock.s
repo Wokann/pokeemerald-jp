@@ -378,7 +378,7 @@ CB2_StartWallClock: @ 0x08134A3C
 	movs r0, #1
 	bl PutWindowTilemap
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -540,7 +540,7 @@ _08134BEC:
 	movs r0, #1
 	bl PutWindowTilemap
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0x10
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -736,7 +736,7 @@ Task_SetClock3: @ 0x08134E10
 	movs r0, #0
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _08134E78
 	str r5, [sp]
 	movs r1, #0xd

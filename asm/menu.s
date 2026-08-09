@@ -5308,8 +5308,8 @@ clear_scheduled_bg_copies_to_vram: @ 0x08199640
 _08199650: .4byte 0x0203CA70
 	thumb_func_end clear_scheduled_bg_copies_to_vram
 
-	thumb_func_start schedule_bg_copy_tilemap_to_vram
-schedule_bg_copy_tilemap_to_vram: @ 0x08199654
+	thumb_func_start ScheduleBgCopyTilemapToVram
+ScheduleBgCopyTilemapToVram: @ 0x08199654
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _08199664
@@ -5319,7 +5319,7 @@ schedule_bg_copy_tilemap_to_vram: @ 0x08199654
 	bx lr
 	.align 2, 0
 _08199664: .4byte 0x0203CA70
-	thumb_func_end schedule_bg_copy_tilemap_to_vram
+	thumb_func_end ScheduleBgCopyTilemapToVram
 
 	thumb_func_start do_scheduled_bg_tilemap_copies_to_vram
 do_scheduled_bg_tilemap_copies_to_vram: @ 0x08199668

@@ -6126,7 +6126,7 @@ _080DA104:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6134,7 +6134,7 @@ _080DA104:
 	adds r0, r4, #0
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	ldrb r0, [r5]
@@ -6145,7 +6145,7 @@ _080DA104:
 	bl StringCopy
 	adds r0, r4, #0
 	movs r1, #0x16
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6153,7 +6153,7 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x17
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6161,7 +6161,7 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x18
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6169,7 +6169,7 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x21
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6177,7 +6177,7 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x2f
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6185,7 +6185,7 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x30
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
@@ -6193,35 +6193,35 @@ _080DA104:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
 	strh r0, [r1, #0x1e]
 	adds r0, r4, #0
 	movs r1, #0xe
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
 	strh r0, [r1, #0x20]
 	adds r0, r4, #0
 	movs r1, #0xf
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
 	strh r0, [r1, #0x22]
 	adds r0, r4, #0
 	movs r1, #0x10
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r1, r1, r6
 	strh r0, [r1, #0x24]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r2, r6, #0
@@ -6230,7 +6230,7 @@ _080DA104:
 	str r0, [r1]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	ldrb r1, [r5]
 	lsls r1, r1, #6
 	adds r2, r6, #0
@@ -6239,7 +6239,7 @@ _080DA104:
 	str r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r2, r0, #0x10
 	mov ip, r2
@@ -6694,7 +6694,7 @@ sub_080DA58C: @ 0x080DA58C
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080DA59E
 	movs r0, #3
@@ -6702,7 +6702,7 @@ sub_080DA58C: @ 0x080DA58C
 _080DA59E:
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080DA5AE
 	movs r0, #4
@@ -6746,7 +6746,7 @@ _080DA5F4:
 	adds r0, r4, #0
 	movs r1, #0x36
 _080DA5F8:
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
 	b _080DA606

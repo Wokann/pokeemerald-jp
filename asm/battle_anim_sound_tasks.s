@@ -425,7 +425,7 @@ _08158D98:
 _08158DA6:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 _08158DB2:
@@ -561,7 +561,7 @@ _08158EA8:
 _08158EB6:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 _08158EC2:

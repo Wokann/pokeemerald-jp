@@ -2411,7 +2411,7 @@ sub_081D5DCC: @ 0x081D5DCC
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r5, _081D5E28

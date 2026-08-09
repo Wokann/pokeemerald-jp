@@ -934,7 +934,7 @@ _081709DC:
 _081709EC:
 	adds r0, r0, r1
 	movs r1, #0x26
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIdToBallId
@@ -5406,11 +5406,11 @@ sub_08172CD4: @ 0x08172CD4
 	strb r1, [r0]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r0, r6, #0
 	bl IsBattlerSpriteVisible

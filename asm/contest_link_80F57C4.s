@@ -5091,7 +5091,7 @@ _080F886C:
 	adds r0, r2, #0
 	movs r1, #0x36
 _080F8870:
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _080F8888
 	ldrh r1, [r1]
 	cmp r0, r1
@@ -5149,7 +5149,7 @@ _080F88D8:
 	ldr r4, _080F8940
 	adds r0, r0, r4
 	movs r1, #0x32
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
 	mov r0, sp
@@ -5203,7 +5203,7 @@ _080F8948:
 	ldr r5, _080F89AC
 	adds r0, r0, r5
 	movs r1, #0x33
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4]
 	mov r0, sp
 	ldrb r2, [r0]
@@ -5255,7 +5255,7 @@ _080F89B4:
 	ldr r5, _080F8A18
 	adds r0, r0, r5
 	movs r1, #0x34
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4]
 	mov r0, sp
 	ldrb r2, [r0]
@@ -5305,7 +5305,7 @@ _080F8A20:
 	ldr r5, _080F8A80
 	adds r0, r0, r5
 	movs r1, #0x35
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4]
 	mov r0, sp
 	ldrb r2, [r0]
@@ -5351,7 +5351,7 @@ _080F8A88:
 	ldr r5, _080F8AEC
 	adds r0, r0, r5
 	movs r1, #0x36
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4]
 	mov r0, sp
 	ldrb r2, [r0]

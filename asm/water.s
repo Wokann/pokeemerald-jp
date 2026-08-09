@@ -2349,12 +2349,12 @@ _08108C18:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r3, r0, #0x10
 	lsrs r4, r4, #0x12

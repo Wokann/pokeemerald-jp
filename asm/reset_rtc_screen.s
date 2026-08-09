@@ -370,7 +370,7 @@ HideChooseTimeWindow: @ 0x0809E478
 	adds r0, r4, #0
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -539,7 +539,7 @@ ShowChooseTimeWindow: @ 0x0809E58C
 	movs r3, #0x80
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r3, r4}
 	mov r8, r3
@@ -954,7 +954,7 @@ sub_0809E920: @ 0x0809E920
 	movs r2, #1
 	bl InitBgsFromTemplates
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -1018,7 +1018,7 @@ ShowMessage: @ 0x0809E998
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -1109,7 +1109,7 @@ _0809E9F4:
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrh r0, [r6]
 	adds r0, #1
 	strh r0, [r6]

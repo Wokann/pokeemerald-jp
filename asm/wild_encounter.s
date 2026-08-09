@@ -564,7 +564,7 @@ _080B43E2:
 	ldr r5, _080B4434
 	adds r0, r5, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B4442
 	adds r0, r5, #0
@@ -757,7 +757,7 @@ _080B4566:
 	ldr r4, _080B459C
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B45A4
 	adds r0, r4, #0
@@ -775,7 +775,7 @@ _080B4566:
 	bne _080B45A4
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	b _080B45AC
 	.align 2, 0
 _080B459C: .4byte 0x02024190
@@ -831,7 +831,7 @@ _080B45F0:
 	ldr r5, _080B4654
 	adds r0, r5, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B4680
 	adds r0, r5, #0
@@ -850,13 +850,13 @@ _080B45F0:
 	beq _080B4680
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r4, #0
 	bl GetGenderFromSpeciesAndPersonality
@@ -1222,7 +1222,7 @@ _080B48F2:
 	ldr r4, _080B4934
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B496E
 	adds r0, r4, #0
@@ -2141,17 +2141,17 @@ _080B5038:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080B5078
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B5078
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r6, r0
@@ -2185,7 +2185,7 @@ IsAbilityAllowingEncounter: @ 0x080B508C
 	ldr r4, _080B50DC
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B50E0
 	adds r0, r4, #0
@@ -2199,7 +2199,7 @@ IsAbilityAllowingEncounter: @ 0x080B508C
 _080B50B2:
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5
@@ -2346,7 +2346,7 @@ TryGetAbilityInfluencedWildMonIndex: @ 0x080B51A8
 	ldr r4, _080B51F8
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080B51FC
 	adds r0, r4, #0
@@ -2423,7 +2423,7 @@ ApplyCleanseTagEncounterRateMod: @ 0x080B5248
 	adds r4, r0, #0
 	ldr r0, _080B526C
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0xbe
 	bne _080B5264
 	ldr r0, [r4]

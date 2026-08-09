@@ -245,13 +245,13 @@ _08173524:
 	adds r6, r1, r0
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	cmp r5, #0
 	beq _081735F0
 	adds r0, r6, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	ldr r3, [r1]
 	lsls r4, r7, #2
@@ -269,14 +269,14 @@ _08173524:
 	strh r1, [r3, #8]
 	adds r0, r6, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov r2, sb
 	ldr r1, [r2]
 	adds r1, r1, r4
 	str r0, [r1]
 	adds r0, r6, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r5, sb
 	ldr r1, [r5]
 	adds r1, #4
@@ -284,7 +284,7 @@ _08173524:
 	str r0, [r1]
 	adds r0, r6, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [r5]
 	adds r2, r2, r4
 	lsls r0, r0, #1
@@ -296,7 +296,7 @@ _08173524:
 	adds r0, r6, #0
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	movs r2, #0
 	mov r6, r8
 	lsls r5, r6, #2

@@ -633,7 +633,7 @@ BagMenu_InitBGs: @ 0x081AADC0
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -2060,7 +2060,7 @@ DisplayItemMessage: @ 0x081AB8F8
 	movs r3, #0xd
 	bl DisplayMessageAndContinueTask
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0x10
 	pop {r3, r4}
 	mov r8, r3
@@ -2116,7 +2116,7 @@ BagMenu_InitListsMenu: @ 0x081AB968
 	lsrs r0, r0, #0x18
 	strh r0, [r5]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r6, #0
 	bl set_callback3_to_bag
 	pop {r3}
@@ -2442,7 +2442,7 @@ set_callback3_to_bag: @ 0x081ABC58
 	movs r0, #1
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081ABC94
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -2581,7 +2581,7 @@ SwitchBagPocket: @ 0x081ABD34
 	adds r2, r2, r3
 	bl DestroyListMenuTask
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r3, _081ABE04
 	ldr r0, _081ABE08
 	ldr r2, [r0]
@@ -2685,7 +2685,7 @@ _081ABE46:
 	movs r3, #2
 	bl FillBgTilemapBufferRect_Palette0
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add r0, sp, #8
 	ldrb r0, [r0]
 	movs r1, #1
@@ -2853,7 +2853,7 @@ _081ABFA0:
 	movs r0, #2
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl bag_menu_add_pocket_scroll_arrow_indicators_maybe
 	bl bag_menu_add_list_scroll_arrow_indicators_maybe
 	adds r0, r7, #0
@@ -2886,7 +2886,7 @@ bag_menu_leave_maybe: @ 0x081AC000
 	movs r2, #0xe
 	bl FillBgTilemapBufferRect_Palette0
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -2928,7 +2928,7 @@ _081AC05C:
 	bl FillBgTilemapBufferRect_Palette0
 _081AC072:
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -3806,7 +3806,7 @@ _081AC7D6:
 	movs r0, #4
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081AC84A
 	.align 2, 0
 _081AC800: .4byte 0x0203CB20
@@ -4399,7 +4399,7 @@ _081ACCB0:
 	movs r1, #0
 	bl FillWindowPixelBuffer
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081ACCD8
 	ldrb r0, [r0, #5]
 	cmp r0, #3
@@ -4751,7 +4751,7 @@ Task_ActuallyToss: @ 0x081ACF48
 	lsrs r0, r0, #0x18
 	strh r0, [r5]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r6, #0
 	bl set_callback3_to_bag
 _081ACFC6:
@@ -4822,7 +4822,7 @@ _081AD032:
 	lsrs r0, r0, #0x18
 	strh r0, [r7]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r4, #0
 	bl ItemMenu_Cancel
 	pop {r4, r5, r6, r7}
@@ -4991,9 +4991,9 @@ ItemMenu_Cancel: @ 0x081AD190
 	ldrsh r0, [r4, r1]
 	bl BagMenu_PrintDescription
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrb r0, [r4]
 	movs r1, #0
 	bl BagMenu_PrintCursor_
@@ -6411,9 +6411,9 @@ _081ADD60:
 	cmp r4, #2
 	bls _081ADD60
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -6518,7 +6518,7 @@ BagMenu_AddWindow: @ 0x081ADE14
 	movs r3, #0xe
 	bl DrawStdFrameWithCustomTileAndPalette
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081ADE4A:
 	ldrb r0, [r4]
 	pop {r4}
@@ -6550,7 +6550,7 @@ BagMenu_RemoveWindow: @ 0x081ADE5C
 	ldrb r0, [r4]
 	bl RemoveWindow
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0xff
 	strb r0, [r4]
 _081ADE90:
@@ -6611,7 +6611,7 @@ bag_menu_RemoveBagItem_message_window: @ 0x081ADED0
 	ldrb r0, [r4]
 	bl RemoveWindow
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0xff
 	strb r0, [r4]
 _081ADF04:

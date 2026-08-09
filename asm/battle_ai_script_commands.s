@@ -3617,17 +3617,17 @@ _08132384:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081323C8
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081323C8
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -4282,17 +4282,17 @@ _08132884:
 	add r4, sb
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	cmp r5, #0
 	beq _081328BC
 	cmp r5, sl
@@ -4378,17 +4378,17 @@ _08132940:
 	add r4, sl
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	cmp r5, #0
 	beq _08132984
 	movs r1, #0xce

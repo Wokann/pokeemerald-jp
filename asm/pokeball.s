@@ -114,7 +114,7 @@ _08074EBC:
 _08074ECA:
 	adds r0, r0, r1
 	movs r1, #0x26
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIdToBallId
@@ -1243,7 +1243,7 @@ _080757DC:
 	mov r8, r2
 	adds r0, r7, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov sb, r0
@@ -2984,7 +2984,7 @@ _08076548:
 _08076556:
 	adds r0, r0, r1
 	movs r1, #0x26
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	pop {r4}

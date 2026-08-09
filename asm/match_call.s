@@ -79,7 +79,7 @@ CheckMatchCallChance: @ 0x08195A8C
 	ldr r4, _08195ACC
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _08195AAE
 	adds r0, r4, #0

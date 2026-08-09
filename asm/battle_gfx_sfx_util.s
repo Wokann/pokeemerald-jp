@@ -1407,7 +1407,7 @@ BattleLoadOpponentMonSpriteGfx: @ 0x0805D828
 	lsrs r1, r1, #0x18
 	mov r8, r1
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp]
 	ldr r0, _0805D868
 	ldr r0, [r0]
@@ -1420,7 +1420,7 @@ BattleLoadOpponentMonSpriteGfx: @ 0x0805D828
 	bne _0805D86C
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	ldr r6, [sp]
@@ -1435,7 +1435,7 @@ _0805D86C:
 _0805D874:
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	mov r0, r8
 	bl GetBattlerPosition
@@ -1574,7 +1574,7 @@ BattleLoadPlayerMonSpriteGfx: @ 0x0805D998
 	lsrs r1, r1, #0x18
 	mov r8, r1
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp]
 	ldr r0, _0805D9D8
 	ldr r0, [r0]
@@ -1587,7 +1587,7 @@ BattleLoadPlayerMonSpriteGfx: @ 0x0805D998
 	bne _0805D9DC
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	ldr r4, [sp]
@@ -1602,7 +1602,7 @@ _0805D9DC:
 _0805D9E4:
 	adds r0, r6, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #4]
 	mov r0, r8
 	bl GetBattlerPosition
@@ -2579,7 +2579,7 @@ _0805E1A8:
 _0805E1B8:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
@@ -2597,13 +2597,13 @@ _0805E1B8:
 	ldr r5, _0805E224
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldrh r0, [r4]
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	mov r1, r8
 	lsls r0, r1, #3
@@ -2640,13 +2640,13 @@ _0805E234:
 	ldr r5, _0805E3AC
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldrh r0, [r4]
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	mov r1, r8
 	lsls r0, r1, #3
@@ -3060,13 +3060,13 @@ HandleLowHpMusicChange: @ 0x0805E5AC
 	lsrs r6, r1, #0x18
 	adds r7, r6, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
@@ -3203,13 +3203,13 @@ GetMonHPBarLevel: @ 0x0805E6D0
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
@@ -3272,7 +3272,7 @@ HandleBattleLowHpMusicChange: @ 0x0805E704
 	adds r4, r0, r6
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0805E776
 	adds r0, r4, #0
@@ -3288,7 +3288,7 @@ _0805E776:
 	adds r4, r0, r6
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0805E79A
 	adds r0, r4, #0
@@ -4031,20 +4031,20 @@ ShouldPlayNormalMonCry: @ 0x0805ED2C
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _0805ED70
 	ands r1, r0
 	cmp r1, #0
 	bne _0805ED74
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10

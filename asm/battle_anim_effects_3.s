@@ -5991,7 +5991,7 @@ _0815CE54:
 	ldr r7, _0815CED0
 	adds r0, r0, r7
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldrb r0, [r4]
 	lsls r0, r0, #1
@@ -6000,7 +6000,7 @@ _0815CE54:
 	muls r0, r5, r0
 	adds r0, r0, r7
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	ldr r0, _0815CED4
 	ldr r0, [r0]
@@ -6039,7 +6039,7 @@ _0815CED8:
 	adds r0, r0, r1
 _0815CEE6:
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	b _0815CEFA
@@ -6065,7 +6065,7 @@ _0815CF00:
 	ldr r7, _0815CF6C
 	adds r0, r0, r7
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldrb r0, [r4]
 	lsls r0, r0, #1
@@ -6074,7 +6074,7 @@ _0815CF00:
 	muls r0, r5, r0
 	adds r0, r0, r7
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	ldr r0, _0815CF70
 	ldr r0, [r0]
@@ -6113,7 +6113,7 @@ _0815CF78:
 	adds r0, r0, r7
 _0815CF84:
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	b _0815CF92
@@ -11577,7 +11577,7 @@ _0815F960:
 	ldr r5, _0815F9CC
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	ldrb r0, [r4]
 	lsls r0, r0, #1
@@ -11586,7 +11586,7 @@ _0815F960:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldr r0, _0815F9D0
 	ldr r0, [r0]
@@ -11603,7 +11603,7 @@ _0815F960:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	b _0815F9D6
@@ -11646,7 +11646,7 @@ _0815FA00:
 	ldr r5, _0815FA5C
 	adds r0, r0, r5
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	ldrb r0, [r4]
 	lsls r0, r0, #1
@@ -11655,7 +11655,7 @@ _0815FA00:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	ldr r0, _0815FA60
 	ldr r0, [r0]
@@ -11672,7 +11672,7 @@ _0815FA00:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	b _0815FA66

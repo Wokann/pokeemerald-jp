@@ -262,9 +262,9 @@ AddBerryTagTextToBg0: @ 0x08177CFC
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -490,9 +490,9 @@ _08177F08:
 	cmp r4, #3
 	bls _08177F08
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -566,7 +566,7 @@ PrintBerrySize: @ 0x08177F78
 	movs r0, #3
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r0}
 	bx r0

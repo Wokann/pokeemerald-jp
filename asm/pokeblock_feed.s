@@ -284,7 +284,7 @@ HandleInitBackgrounds: @ 0x08179C54
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -340,12 +340,12 @@ _08179CDC: @ jump table
 _08179D00:
 	adds r0, r6, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r6, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r0, r5, #3
 	ldr r1, _08179D30
@@ -366,16 +366,16 @@ _08179D38: .4byte 0x0203B9E4
 _08179D3C:
 	adds r0, r6, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r6, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r0, r6, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r5, #0
 	adds r2, r4, #0
@@ -515,7 +515,7 @@ HandleInitWindows: @ 0x08179E64
 	movs r0, #0
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -945,7 +945,7 @@ CreateMonSprite: @ 0x0817A210
 	push {r6, r7}
 	adds r5, r0, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10

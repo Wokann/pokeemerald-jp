@@ -1781,37 +1781,37 @@ GetAverageEVs: @ 0x080EA50C
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	movs r1, #0x1a
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x1b
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x1c
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x1d
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x1e
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0x1f
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -1910,12 +1910,12 @@ _080EA5CE:
 	adds r4, r5, r3
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080EA6B4
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080EA6B4
 	movs r4, #0
@@ -1932,7 +1932,7 @@ _080EA63A:
 	adds r1, #0xd
 	adds r0, r5, r2
 	str r2, [sp, #0x20]
-	bl GetMonData
+	bl GetMonData3
 	mov r3, r8
 	adds r1, r3, r4
 	lsls r1, r1, #1
@@ -1952,25 +1952,25 @@ _080EA63A:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [sp, #0xc]
 	adds r1, r2, r7
 	strh r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x10]
 	adds r1, r3, r7
 	strh r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [sp, #0x18]
 	add r1, sl
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [sp]
 	add r1, r8
 	str r0, [r1]
@@ -2488,7 +2488,7 @@ FinalizeRegistryMenu: @ 0x080EAA60
 	adds r0, r5, #0
 	bl AddRegistryMenuScrollArrows
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -2580,7 +2580,7 @@ _080EAB28:
 	ldrb r0, [r4, #0xc]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _080EAB68
 	ldr r0, [r0]
 	bl Free
@@ -2640,7 +2640,7 @@ ShowRegistryMenuActions: @ 0x080EAB80
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	subs r6, #8
 	adds r4, r4, r6
 	ldr r0, _080EABF4
@@ -2719,7 +2719,7 @@ ShowRegistryMenuDeleteConfirmation: @ 0x080EAC44
 	ldrb r0, [r4, #0xe]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _080EACA4
 	ldrb r1, [r4, #8]
 	bl GetSecretBaseMapName
@@ -2903,7 +2903,7 @@ ReturnToMainRegistryMenu: @ 0x080EADD4
 	ldrb r0, [r5, #0xe]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	subs r6, #8
 	adds r4, r4, r6
 	ldr r0, _080EAE14

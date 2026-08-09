@@ -846,7 +846,7 @@ _08160CA0:
 	adds r0, r0, r5
 	ldrb r1, [r2]
 	adds r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	ldr r0, _08160D24
@@ -1113,7 +1113,7 @@ _08160EE4:
 	strb r2, [r4, #4]
 _08160EF4:
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl GetCurrentSelectedMove
 	bl MoveRelearnerShowHideHearts
 	b _08160F5C
@@ -1504,7 +1504,7 @@ _081611FE:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _08161274
 	mov r1, sp
 	bl StringCopy10

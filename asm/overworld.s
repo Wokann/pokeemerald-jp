@@ -2757,7 +2757,7 @@ _08085424:
 	ldr r4, _08085470
 	adds r0, r0, r4
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0808541E
 	adds r0, r4, #0
@@ -4490,11 +4490,11 @@ InitOverworldGraphicsRegisters: @ 0x080861DC
 	bl SetGpuReg
 	bl InitOverworldBgs
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0

@@ -182,7 +182,7 @@ _0816AD12:
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816ADA8
 	mov r2, r8
 	lsls r0, r2, #2
@@ -249,7 +249,7 @@ _0816ADDC:
 	ldrb r0, [r4, #8]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816AE24
 	lsls r0, r6, #2
 	adds r0, r0, r6
@@ -270,7 +270,7 @@ _0816AE2C:
 	ldrb r0, [r4, #8]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _0816AE6C
 	lsls r1, r6, #2
 	adds r1, r1, r6
@@ -499,7 +499,7 @@ InitItemStorageMenu: @ 0x0816AFA8
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _0816B03C
 	lsls r5, r5, #2
 	adds r5, r5, r0
@@ -892,7 +892,7 @@ sub_0816B300: @ 0x0816B300
 	ldrb r0, [r4, #8]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1052,7 +1052,7 @@ Mailbox_DrawMailboxMenu: @ 0x0816B41C
 	movs r3, #2
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r4, _0816B480
 	adds r0, r4, #0
 	bl sub_081D13F4
@@ -1142,7 +1142,7 @@ _0816B4FE:
 	mov r2, r8
 	bl DestroyListMenuTask
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	mov r1, r8
 	ldrb r0, [r1, #9]
 	bl RemoveScrollIndicatorArrowPair
@@ -1225,7 +1225,7 @@ Mailbox_ReturnToPlayerPC: @ 0x0816B5A4
 	movs r2, #0
 	bl DestroyListMenuTask
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl sub_081D1508
 	adds r0, r5, #0
 	bl ReshowPlayerPC
@@ -1278,7 +1278,7 @@ Mailbox_PrintMailOptions: @ 0x0816B5E8
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816B664
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -1784,7 +1784,7 @@ Mailbox_Cancel: @ 0x0816BA14
 	adds r0, r4, #0
 	bl Mailbox_DrawMailboxMenu
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816BA4C
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -1881,7 +1881,7 @@ sub_0816BABC: @ 0x0816BABC
 	movs r3, #0xe
 	bl DrawStdFrameWithCustomTileAndPalette
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _0816BAF4:
 	ldrb r0, [r4]
 	pop {r4}
@@ -1911,7 +1911,7 @@ sub_0816BB04: @ 0x0816BB04
 	ldrb r0, [r4]
 	bl ClearWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrb r0, [r4]
 	bl RemoveWindow
 	movs r0, #0xff
@@ -2553,7 +2553,7 @@ _0816C002:
 	strh r0, [r6, #0xa]
 	bl ItemStorage_StartScrollIndicator
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816C068
 	lsls r0, r5, #2
 	adds r0, r0, r5
@@ -3069,7 +3069,7 @@ _0816C43A:
 	mov r1, r8
 	strh r0, [r1, #0xa]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _0816C4A0
 	lsls r0, r7, #2
 	adds r0, r0, r7

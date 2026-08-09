@@ -3936,7 +3936,7 @@ ScrCmd_bufferleadmonspeciesname: @ 0x0809A950
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #1
 	adds r1, r1, r0
 	lsls r1, r1, #1
@@ -3977,7 +3977,7 @@ ScrCmd_bufferpartymonnick: @ 0x0809A9A0
 	ldr r4, [r4]
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl StringGetEnd10
 	movs r0, #0
@@ -4360,7 +4360,7 @@ _0809ACC8: .4byte 0x02037290
 _0809ACCC:
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0809ACFC
 	adds r0, r4, #0
@@ -4393,7 +4393,7 @@ _0809AD02:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	cmp r5, #0
@@ -5547,7 +5547,7 @@ ScrCmd_checkmonobedience: @ 0x0809B554
 	adds r0, r0, r1
 	movs r1, #0x50
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4]
 	movs r0, #0
 	pop {r4}

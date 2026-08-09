@@ -385,7 +385,7 @@ sub_081C49E4: @ 0x081C49E4
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -2430,7 +2430,7 @@ _081C5A54:
 	movs r1, #0
 	bl FillWindowPixelBuffer
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrh r0, [r4]
 	bl sub_080D6DF8
 	adds r1, r0, #0
@@ -2458,9 +2458,9 @@ BagAction_Cancel: @ 0x081C5A84
 	ldrsh r0, [r4, r1]
 	bl PrintItemDescription
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrb r0, [r4]
 	movs r1, #0
 	bl sub_081C5294
@@ -2751,7 +2751,7 @@ _081C5CF8:
 	movs r0, #3
 	bl ClearWindowTilemap
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r5, #0
 	bl sub_081C5B7C
 	b _081C5D54
@@ -2770,7 +2770,7 @@ _081C5D2C:
 	movs r0, #3
 	bl ClearWindowTilemap
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r6, #0
 	bl DontTossItem
 _081C5D54:
@@ -2875,7 +2875,7 @@ sub_081C5DDC: @ 0x081C5DDC
 	lsrs r0, r0, #0x18
 	strh r0, [r4]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r5, #0
 	bl SetTaskToMainPyramidBagInputHandler
 _081C5E3E:
@@ -3465,7 +3465,7 @@ _081C6310:
 	muls r0, r6, r0
 	add r0, sb
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, sp
@@ -3597,9 +3597,9 @@ _081C641C:
 	movs r0, #1
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -3665,7 +3665,7 @@ sub_081C64AC: @ 0x081C64AC
 	movs r3, #0xe
 	bl DrawStdFrameWithCustomTileAndPalette
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -3711,7 +3711,7 @@ sub_081C64E4: @ 0x081C64E4
 	movs r3, #0xe
 	bl DrawStdFrameWithCustomTileAndPalette
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081C6518:
 	ldrb r0, [r4]
 	pop {r4}
@@ -3743,7 +3743,7 @@ sub_081C652C: @ 0x081C652C
 	ldrb r0, [r4]
 	bl RemoveWindow
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0xff
 	strb r0, [r4]
 _081C655E:
@@ -3806,7 +3806,7 @@ DisplayItemMessageInBattlePyramid: @ 0x081C6598
 	movs r3, #0xd
 	bl DisplayMessageAndContinueTask
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0x10
 	pop {r4, r5, r6}
 	pop {r0}
@@ -3823,7 +3823,7 @@ sub_081C65DC: @ 0x081C65DC
 	movs r0, #2
 	bl ClearWindowTilemap
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0

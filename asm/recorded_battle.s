@@ -2557,7 +2557,7 @@ _08186022:
 	adds r0, r0, r4
 	movs r1, #0x15
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	adds r3, r1, r5
 	lsls r2, r5, #1
@@ -2587,7 +2587,7 @@ _0818605C:
 	ldrb r1, [r4]
 	adds r1, #0xd
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r6]
 	ldrh r0, [r7]
 	mov r2, sb
@@ -2597,7 +2597,7 @@ _0818605C:
 	ldrb r1, [r4]
 	adds r1, #0x11
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x34]
 	adds r1, r3, r5
 	strb r0, [r1]
@@ -3657,7 +3657,7 @@ _08186852:
 	ldr r1, _08186964
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -3685,7 +3685,7 @@ _081868B6:
 	ldr r1, _08186964
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -4332,7 +4332,7 @@ _08186DE2:
 	ldr r1, _08186E60
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10

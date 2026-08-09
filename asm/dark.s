@@ -1985,7 +1985,7 @@ _08114E90:
 _08114EA0:
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 _08114EAC:

@@ -591,7 +591,7 @@ _081D9750:
 	adds r0, r0, r1
 	movs r1, #0x36
 _081D9760:
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4]
 	ldr r5, _081D97AC
 	ldr r4, _081D97B0

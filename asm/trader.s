@@ -208,7 +208,7 @@ _08133B48:
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4, r5, r6}
 	pop {r0}
@@ -253,7 +253,7 @@ _08133BD0:
 	ldrb r0, [r4, #6]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r5, #0
 	bl DestroyTask
 	bl ScriptContext_Enable

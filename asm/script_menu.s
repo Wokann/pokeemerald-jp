@@ -254,7 +254,7 @@ DrawMultichoiceMenu: @ 0x080E13FC
 	movs r3, #2
 	bl sub_081984B0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	mov r0, sl
 	adds r1, r6, #0
 	adds r2, r4, #0
@@ -1504,7 +1504,7 @@ ScriptMenu_ShowPokemonPic: @ 0x080E1DF4
 	movs r1, #1
 	bl SetStandardWindowBorderStyle
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
 	b _080E1EAE
 	.align 2, 0

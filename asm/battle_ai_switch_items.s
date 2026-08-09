@@ -202,17 +202,17 @@ _08062958:
 	adds r4, r1, r5
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08062A08
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08062A08
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -227,10 +227,10 @@ _08062958:
 	beq _08062A08
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sl
 	bl GetBattlerAtPosition
 	lsls r0, r0, #0x18
@@ -248,7 +248,7 @@ _080629C4:
 	adds r1, #0xd
 	mov r0, sb
 	add r0, r8
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, #0
@@ -512,17 +512,17 @@ _08062BD4:
 	adds r6, r1, r0
 	adds r0, r6, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08062C8A
 	adds r0, r6, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08062C8A
 	adds r0, r6, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -553,12 +553,12 @@ _08062BD4:
 	beq _08062C8A
 	adds r0, r6, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r6, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08062C6C
 	lsls r0, r4, #3
@@ -1118,21 +1118,21 @@ _080630A0:
 	adds r5, r1, r0
 	adds r0, r5, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080630B6
 	b _080631C8
 _080630B6:
 	adds r0, r5, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080630C4
 	b _080631C8
 _080630C4:
 	adds r0, r5, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -1166,12 +1166,12 @@ _080630C4:
 	beq _080631C8
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r5, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0806313C
 	lsls r0, r4, #3
@@ -1228,7 +1228,7 @@ _08063186:
 	adds r1, #0xd
 	ldr r0, [sp, #0xc]
 	add r0, r8
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, #0
@@ -1473,17 +1473,17 @@ _0806336E:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080633D0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080633D0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1
@@ -1695,7 +1695,7 @@ _08063546:
 	muls r0, r4, r0
 	add r0, r8
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08063584
 	ldr r1, _080635B4
@@ -2037,14 +2037,14 @@ _080637E4:
 	adds r4, r2, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	cmp r5, #0
 	beq _080638BC
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080638BC
 	mov r4, r8
@@ -2157,7 +2157,7 @@ _080638E6:
 	adds r1, #0xd
 	ldr r2, [sp, #0x20]
 	adds r0, r2, r5
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	cmp r4, #0
@@ -2232,7 +2232,7 @@ _0806396E:
 	adds r4, r0, r6
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	adds r1, r7, #1
 	mov sl, r1
@@ -2240,7 +2240,7 @@ _0806396E:
 	beq _08063A2A
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08063A2A
 	ldr r1, _08063A58
@@ -2278,7 +2278,7 @@ _080639D2:
 	adds r1, #0xd
 	ldr r0, [sp, #0x20]
 	add r0, sb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	movs r0, #0
@@ -2448,17 +2448,17 @@ _08063B0C:
 	adds r4, r5, r0
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08063B48
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _08063B48
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	movs r1, #0xce
 	lsls r1, r1, #1
 	cmp r0, r1

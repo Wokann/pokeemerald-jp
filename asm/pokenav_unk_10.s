@@ -419,7 +419,7 @@ GetCurrMonInfo1: @ 0x081CFD94
 	adds r0, r4, #0
 	movs r1, #2
 	adds r2, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl GetLevelFromMonExp
 	strb r0, [r7]
@@ -476,15 +476,15 @@ GetCurrMonInfo2: @ 0x081CFE10
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r6]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	b _081CFE80
 	.align 2, 0
 _081CFE58: .4byte 0x02024190
@@ -534,7 +534,7 @@ _081CFEAA:
 	ldr r1, _081CFEC0
 	adds r0, r0, r1
 	movs r1, #0x52
-	bl GetMonData
+	bl GetMonData3
 _081CFEBA:
 	pop {r1}
 	bx r1
@@ -564,7 +564,7 @@ sub_081CFEC4: @ 0x081CFEC4
 	ldr r1, _081CFEF4
 	adds r0, r0, r1
 	movs r1, #0x53
-	bl GetMonData
+	bl GetMonData3
 	b _081CFF02
 	.align 2, 0
 _081CFEF4: .4byte 0x02024190

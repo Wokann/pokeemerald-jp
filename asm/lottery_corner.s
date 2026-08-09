@@ -98,17 +98,17 @@ _08177488:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081774E4
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081774DA
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	ldr r0, _081775B0
 	ldrh r0, [r0]
@@ -229,7 +229,7 @@ _0817755E:
 	adds r0, r0, r1
 	ldr r2, _081775C4
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	b _081775F4
 	.align 2, 0
 _081775A8: .4byte 0x02037280

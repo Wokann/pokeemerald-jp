@@ -833,7 +833,7 @@ _0818ED16:
 	add r0, sb
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r5, r8
 	ldr r1, [r5]
 	ldr r7, _0818EE70
@@ -857,7 +857,7 @@ _0818ED44:
 	adds r1, r5, #0
 	adds r1, #0xd
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r2, r8
 	ldr r1, [r2]
 	ldr r3, _0818EE74
@@ -882,7 +882,7 @@ _0818ED78:
 	adds r1, r5, #0
 	adds r1, #0x1a
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r6]
 	adds r2, r5, r7
 	ldr r3, _0818EE78
@@ -1189,7 +1189,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3b
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [sp, #0x18]
 	ldrh r1, [r2]
 	adds r1, r1, r0
@@ -1197,7 +1197,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3c
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x18]
 	ldrh r1, [r3]
 	adds r1, r1, r0
@@ -1205,7 +1205,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3e
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [sp, #0x18]
 	ldrh r1, [r2]
 	adds r1, r1, r0
@@ -1213,7 +1213,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3f
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x18]
 	ldrh r1, [r3]
 	adds r1, r1, r0
@@ -1221,7 +1221,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3d
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [sp, #0x18]
 	ldrh r1, [r2]
 	adds r1, r1, r0
@@ -1229,7 +1229,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0x3a
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #0x18]
 	ldrh r1, [r3]
 	adds r1, r1, r0
@@ -1237,7 +1237,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #3
 	subs r1, r1, r0
 	lsls r1, r1, #2
@@ -1250,7 +1250,7 @@ _0818EFE6:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #3
 	subs r1, r1, r0
 	lsls r1, r1, #2
@@ -2006,14 +2006,14 @@ InitDomeOpponentParty: @ 0x0818F67C
 	adds r0, r4, #0
 	movs r1, #0x3a
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r5, _0818F6C8
 	str r0, [r5]
 	adds r4, #0x64
 	adds r0, r4, #0
 	movs r1, #0x3a
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r5]
 	adds r1, r1, r0
 	str r1, [r5]
@@ -2416,7 +2416,7 @@ _0818F9BC:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r4, #0
 	movs r2, #0
@@ -2542,7 +2542,7 @@ _0818FAB8:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	adds r0, r4, #0
 	movs r2, #1
@@ -12401,14 +12401,14 @@ _081949BE:
 	adds r1, #0xd
 	movs r2, #0
 	str r3, [sp, #4]
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r1, r6, #0
 	adds r1, #0xd
 	ldr r2, _08194A40
 	adds r0, r7, r2
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, [sp, #4]
 	cmp r4, r0
 	bne _081949BC
@@ -12488,7 +12488,7 @@ _08194A50:
 	adds r0, r0, r1
 	movs r1, #0xc
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1]
 	ldr r0, _08194AB0

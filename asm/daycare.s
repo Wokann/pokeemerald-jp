@@ -10,7 +10,7 @@ GetBoxMonNick: @ 0x0806F4B0
 	adds r4, r1, #0
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	mov r1, sp
 	bl StringCopy10
@@ -177,7 +177,7 @@ StorePokemonInDaycare: @ 0x0806F5BC
 	bl GetBoxMonNick
 	adds r0, r5, #0
 	movs r1, #0x40
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _0806F644
@@ -372,12 +372,12 @@ TakeSelectedPokemonFromDaycare: @ 0x0806F750
 	bl BoxMonToMon
 	mov r0, sp
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0x64
 	beq _0806F79E
 	mov r0, sp
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r5, #0
 	adds r1, #0x88
 	ldr r1, [r1]
@@ -1267,7 +1267,7 @@ GetEggMoves: @ 0x0806FE20
 	movs r6, #0
 	movs r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r3, r0, #0x10
 	movs r2, #0
@@ -1403,7 +1403,7 @@ _0806FF1C:
 	bls _0806FF1C
 	adds r0, r7, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _0806FFDC
@@ -2216,17 +2216,17 @@ _0807055C:
 _08070584:
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080705DC
 	adds r0, r4, #0
 	movs r1, #4
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080705DC
 	adds r0, r4, #0
 	movs r1, #0x20
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	str r1, [sp]
 	cmp r0, #0

@@ -75,7 +75,7 @@ sub_081269BC: @ 0x081269BC
 	movs r3, #0xe
 	bl DrawStdFrameWithCustomTileAndPalette
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldrb r0, [r4]
 	pop {r4}
 	pop {r1}
@@ -101,7 +101,7 @@ RemoveDecorationWindow: @ 0x081269F8
 	ldrb r0, [r4]
 	bl RemoveWindow
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -718,7 +718,7 @@ _08126EE8:
 	movs r3, #8
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4, r5, r6, r7}
 	pop {r0}

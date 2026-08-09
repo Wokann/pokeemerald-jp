@@ -85,7 +85,8 @@ module -- asm/fldeff_teleport.s removed), src/hof_pc.c (4, asm/hof_pc.s
 removed), src/fldeff_rocksmash.c (10, asm/fldeff_rocksmash.s trimmed to the
 remaining 4 EscapeRope helper functions), src/fldeff_dig.c (4, full module --
 asm/fldeff_rocksmash.s removed), src/fldeff_sweetscent.c (6, full module --
-asm/fldeff_sweetscent.s removed).
+asm/fldeff_sweetscent.s removed), src/fldeff_softboiled.c (8, full module --
+asm/fldeff_softboiled.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -115,3 +116,17 @@ splitter's "SetWeatherScreenFadeOut" at 0x080AAB88 was actually an empty
 do-nothing (renamed sub_080AAB88) while the real SetWeatherScreenFadeOut is
 0x080ABCCC.  Added gPaletteDecompressionBuffer (0x02037C88) and
 EventScript_FailSweetScent (0x08256A14) symbols.
+
+src/fldeff_softboiled.c (SetUpFieldMove_SoftBoiled, ChooseMonForSoftboiled,
+Task_TryUseSoftboiledOnPartyMon, Task_SoftboiledRestoreHealth,
+Task_DisplayHPRestoredMessage, Task_FinishSoftboiled,
+Task_ChooseNewMonForSoftboiled, CantUseSoftboiledOnMon) is the seventeenth
+wired module.  Renamed the JP party-menu helper labels to pokeemerald
+(sub_081B1040 -> Task_HandleChooseMonInput, display_pokemon_menu_message ->
+DisplayPartyMenuStdMessage, sub_081B182C -> DisplayPartyMenuMessage,
+sub_081B1BE8 -> PartyMenuModifyHP, sub_081B0C9C -> AnimatePartySlot,
+sub_081B18A4 -> IsPartyMenuTextPrinterActive,
+schedule_bg_copy_tilemap_to_vram -> ScheduleBgCopyTilemapToVram) and
+GetMonData -> GetMonData3 (2-arg form kept as GetMonData2 alias, as in
+pokeemerald).  Added gStringVar4 (0x02021C7C), gText_PkmnHPRestoredByVar2
+(0x085C9E8F) and gText_CantBeUsedOnPkmn (0x085C9B07) symbols.

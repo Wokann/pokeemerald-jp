@@ -481,7 +481,7 @@ sub_08135C2C: @ 0x08135C2C
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -640,9 +640,9 @@ _08135DA0:
 	cmp r4, #0xa
 	bls _08135DA0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1069,9 +1069,9 @@ _081360EA:
 	bl CopyWindowToVram
 _08136138:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r3}
 	mov r8, r3
@@ -1099,7 +1099,7 @@ sub_08136150: @ 0x08136150
 	movs r2, #0xf
 	bl FillBgTilemapBufferRect_Palette0
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -2080,7 +2080,7 @@ _081368FA:
 	lsrs r0, r0, #0x18
 	strh r0, [r6]
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _0813695C
 	ldr r0, [r0]
 	ldr r1, _08136968
@@ -2199,7 +2199,7 @@ _081369B2:
 	ldrb r0, [r7, #2]
 	bl PutWindowTilemap
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _08136A48
 	mov r2, sb
 	lsls r0, r2, #2
@@ -2501,9 +2501,9 @@ sub_08136C30: @ 0x08136C30
 	ldr r1, _08136CC0
 	bl sub_08136150
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r7, #0
 	bl sub_08136CC4
 _08136CA6:
@@ -2529,7 +2529,7 @@ sub_08136CC4: @ 0x08136CC4
 	movs r1, #0
 	bl ClearDialogWindowAndFrameToTransparent
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl sub_081363FC
 	ldr r1, _08136CF4
 	lsls r0, r4, #2
@@ -2722,7 +2722,7 @@ sub_08136E58: @ 0x08136E58
 	movs r1, #0
 	bl ClearStdWindowAndFrameToTransparent
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl sub_081363FC
 	subs r5, #8
 	adds r4, r4, r5

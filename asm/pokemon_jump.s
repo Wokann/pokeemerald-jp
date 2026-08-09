@@ -331,15 +331,15 @@ sub_0802A920: @ 0x0802A920
 	adds r4, r1, #0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #4]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #8]
 	pop {r4, r5}
 	pop {r0}
@@ -4266,12 +4266,12 @@ _0802C618:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0802C650
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl sub_0802C5FC

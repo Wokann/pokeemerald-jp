@@ -408,17 +408,17 @@ _081C6B4C:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081C6B7A
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081C6B7A
 	adds r0, r4, #0
 	movs r1, #0x52
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081C6BA2
 _081C6B7A:

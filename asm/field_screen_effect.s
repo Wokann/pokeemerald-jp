@@ -2565,7 +2565,7 @@ _080AFC64:
 	movs r3, #0x1e
 	bl sub_081998C8
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r4, _080AFD18
 	movs r2, #4
 	ldrsh r1, [r5, r2]

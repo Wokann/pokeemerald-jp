@@ -2054,7 +2054,7 @@ _08072CDA:
 	ldr r1, _08072D60
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
@@ -2161,7 +2161,7 @@ _08072DD8:
 	ldr r1, _08072E54
 	adds r0, r0, r1
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
@@ -2177,7 +2177,7 @@ _08072DD8:
 _08072E32:
 	adds r0, r0, r2
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
@@ -3839,7 +3839,7 @@ UpdateNickInHealthbox: @ 0x08073AE4
 	adds r0, r4, #0
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	adds r0, r5, #0
@@ -3852,7 +3852,7 @@ UpdateNickInHealthbox: @ 0x08073AE4
 	lsrs r5, r0, #0x18
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r2, r0, #0
@@ -4180,7 +4180,7 @@ TryAddPokeballIconToHealthbox: @ 0x08073D80
 	ldr r1, _08073E28
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl HoennToNationalOrder
@@ -4284,7 +4284,7 @@ UpdateStatusIconInHealthbox: @ 0x08073E68
 	ldr r1, _08073ED4
 	adds r0, r0, r1
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	bl IsDoubleBattle
 	lsls r0, r0, #0x18
@@ -4309,7 +4309,7 @@ _08073ED8:
 	ldr r1, _08073F18
 	adds r0, r0, r1
 	movs r1, #0x37
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	movs r1, #0x11
 	mov r8, r1
@@ -4969,7 +4969,7 @@ _08074448:
 _08074450:
 	mov r0, r8
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -4980,7 +4980,7 @@ _08074464:
 	bhi _0807447E
 	mov r0, r8
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
@@ -4995,7 +4995,7 @@ _0807447E:
 _08074486:
 	mov r0, r8
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
@@ -5012,11 +5012,11 @@ _080744A4:
 	bl LoadBattleBarGfx
 	mov r0, r8
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	mov r0, r8
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	movs r0, #0
 	str r0, [sp]
@@ -5045,19 +5045,19 @@ _080744EE:
 	bl LoadBattleBarGfx
 	mov r0, r8
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	mov r0, r8
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	mov r0, r8
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	ldr r0, _080745A0
 	mov ip, r0
@@ -5135,7 +5135,7 @@ _080745A8:
 _080745B0:
 	mov r0, r8
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -5151,11 +5151,11 @@ _080745CC:
 	bl LoadBattleBarGfx
 	mov r0, r8
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	mov r0, r8
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	movs r0, #0
 	str r0, [sp]
@@ -5481,7 +5481,7 @@ _08074830:
 	ldr r1, _080748DC
 	adds r0, r0, r1
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	adds r7, r5, #0

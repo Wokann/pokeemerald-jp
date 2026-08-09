@@ -638,7 +638,7 @@ GiveMonArtistRibbon: @ 0x080F950C
 	ldr r4, _080F9590
 	adds r0, r0, r4
 	movs r1, #0x46
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	mov r1, sp
@@ -1303,7 +1303,7 @@ _080F9A2E:
 	add r4, sl
 	adds r0, r4, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #0x10
 	strb r0, [r6]
 	lsrs r1, r1, #0x18
@@ -1314,7 +1314,7 @@ _080F9A2E:
 	bl SetMonData
 	adds r0, r4, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r7, r0, #0x18
 	movs r5, #0
@@ -1325,7 +1325,7 @@ _080F9A64:
 	adds r1, r5, #0
 	adds r1, #0xd
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r7, #0
@@ -1508,7 +1508,7 @@ _080F9BBC:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, #0
@@ -1517,7 +1517,7 @@ _080F9BBC:
 	beq _080F9BF0
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, r6
 	bne _080F9BF0
 	movs r0, #1

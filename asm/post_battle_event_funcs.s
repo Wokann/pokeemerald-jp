@@ -78,17 +78,17 @@ _0813782C:
 	strb r0, [r5, #1]
 	adds r0, r4, #0
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _0813787A
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0813787A
 	adds r0, r4, #0
 	movs r1, #0x43
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _0813787A
 	movs r0, #1

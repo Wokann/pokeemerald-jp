@@ -135,7 +135,7 @@ EvolutionScene: @ 0x0813DB90
 	adds r0, r4, #0
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _0813DE44
 	mov r1, sp
 	bl StringCopy10
@@ -149,17 +149,17 @@ EvolutionScene: @ 0x0813DB90
 	bl StringCopy
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x20]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	lsls r0, r5, #3
 	ldr r1, _0813DE50
@@ -377,11 +377,11 @@ CB2_EvolutionSceneLoadGraphics: @ 0x0813DE80
 	ldrh r5, [r0, #0xc]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r6, r0, #0
 	movs r0, #0
 	bl SetHBlankCallback
@@ -684,11 +684,11 @@ _0813E1A8: .4byte 0x03002360
 _0813E1AC:
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r0, r6, #3
 	ldr r1, _0813E1EC
@@ -835,7 +835,7 @@ TradeEvolutionScene: @ 0x0813E2D8
 	str r3, [sp, #0x14]
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _0813E448
 	mov r1, sp
 	bl StringCopy10
@@ -851,18 +851,18 @@ TradeEvolutionScene: @ 0x0813E2D8
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r8, r0
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r7, r0, #0
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	mov sl, r0
 	ldr r1, _0813E458
 	mov sb, r1
@@ -1759,7 +1759,7 @@ _0813EB26:
 	mov r0, sb
 	movs r1, #2
 	add r2, sp, #4
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _0813EB54
 	add r1, sp, #4
 	bl StringCopy10
@@ -2382,7 +2382,7 @@ _0813F090:
 	adds r1, r6, #0
 	adds r1, #0xd
 	mov r0, sb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r4, #0
@@ -3046,7 +3046,7 @@ _0813F648:
 	mov r0, sb
 	movs r1, #2
 	add r2, sp, #0xc
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _0813F69C
 	add r1, sp, #0xc
 	bl StringCopy10
@@ -3648,7 +3648,7 @@ _0813FBB4:
 	adds r1, r6, #0
 	adds r1, #0xd
 	mov r0, sb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r0, r4, #0

@@ -4831,22 +4831,22 @@ _081A3D4A:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r0, _081A3DB4
@@ -5202,7 +5202,7 @@ _081A403E:
 	adds r0, r0, r1
 	movs r1, #0xc
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sp
 	strh r0, [r1]
 	adds r0, r4, #0
@@ -5346,12 +5346,12 @@ _081A4152:
 	adds r1, r5, #0
 	adds r1, #0xd
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	adds r0, r7, #0
 	mov r1, r8
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	cmp r4, r0
 	beq _081A4194
 	adds r0, r5, #1

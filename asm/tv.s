@@ -1523,7 +1523,7 @@ InterviewAfter_ContestLiveUpdates: @ 0x080ED5CC
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #0x12]
 	ldrh r0, [r6, #2]
 	strh r0, [r4, #2]
@@ -2296,7 +2296,7 @@ BravoTrainerPokemonProfile_BeforeInterview2: @ 0x080EDBE4
 	adds r0, r0, r4
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #2]
 	ldrb r0, [r6]
 	muls r0, r5, r0
@@ -2304,12 +2304,12 @@ BravoTrainerPokemonProfile_BeforeInterview2: @ 0x080EDBE4
 	ldr r2, _080EDCA8
 	add r2, r8
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	ldrb r0, [r6]
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r7, #0x1f]
 _080EDC7C:
 	pop {r3}
@@ -2555,7 +2555,7 @@ PutNameRaterShowOnTheAir: @ 0x080EDE68
 	ldr r4, _080EDF4C
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, _080EDF50
 	mov sb, r1
 	ldr r0, [r1]
@@ -2591,7 +2591,7 @@ PutNameRaterShowOnTheAir: @ 0x080EDE68
 	adds r0, r0, r6
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #2]
 	bl Random
 	lsls r0, r0, #0x10
@@ -2618,7 +2618,7 @@ PutNameRaterShowOnTheAir: @ 0x080EDE68
 	adds r0, r0, r6
 	adds r2, r4, #4
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl tv_store_id_2x
 	ldr r0, _080EDF60
@@ -2809,7 +2809,7 @@ InterviewAfter_FanClubLetter: @ 0x080EE07C
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #2]
 	adds r0, r4, #0
 	bl tv_store_id_2x
@@ -2896,7 +2896,7 @@ InterviewAfter_PkmnFanClubOpinions: @ 0x080EE144
 	adds r0, r0, r5
 	movs r1, #0x20
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsrs r0, r0, #4
 	movs r1, #0xf
 	ands r0, r1
@@ -2925,7 +2925,7 @@ InterviewAfter_PkmnFanClubOpinions: @ 0x080EE144
 	adds r2, r4, #0
 	adds r2, #0x10
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	bl GetLeadMonIndex
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -2933,7 +2933,7 @@ InterviewAfter_PkmnFanClubOpinions: @ 0x080EE144
 	adds r0, r0, r5
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r4, #2]
 	adds r0, r4, #0
 	bl tv_store_id_2x
@@ -2948,7 +2948,7 @@ InterviewAfter_PkmnFanClubOpinions: @ 0x080EE144
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	bne _080EE218
 _080EE1F8:
@@ -2969,7 +2969,7 @@ _080EE218:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r4, #0xe]
 _080EE22C:
 	pop {r4, r5, r6, r7}
@@ -4099,17 +4099,17 @@ _080EEAEA:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080EEBB4
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080EEBB4
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, _080EEC20
 	mov r3, sb
 	lsls r1, r3, #3
@@ -4117,12 +4117,12 @@ _080EEAEA:
 	strb r0, [r6]
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r6, #2]
 	movs r5, #0
 	adds r0, r4, #0
 	movs r1, #0xd
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -4133,7 +4133,7 @@ _080EEAEA:
 _080EEB40:
 	adds r0, r4, #0
 	movs r1, #0xe
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -4147,7 +4147,7 @@ _080EEB40:
 _080EEB5C:
 	adds r0, r4, #0
 	movs r1, #0xf
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -4161,7 +4161,7 @@ _080EEB5C:
 _080EEB78:
 	adds r0, r4, #0
 	movs r1, #0x10
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0
@@ -4768,7 +4768,7 @@ sub_080EEFFC: @ 0x080EEFFC
 	adds r2, r4, #4
 	adds r0, r5, #0
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r5, #0
 	bl GetRibbonCount
 	strb r0, [r4, #2]
@@ -4784,7 +4784,7 @@ sub_080EEFFC: @ 0x080EEFFC
 	beq _080EF090
 	adds r0, r5, #0
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #1
 	bne _080EF0A8
 _080EF090:
@@ -4799,7 +4799,7 @@ _080EF0A4: .4byte 0x0829BDA5
 _080EF0A8:
 	adds r0, r5, #0
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 _080EF0B0:
 	strb r0, [r4, #0x10]
 _080EF0B2:
@@ -4815,103 +4815,103 @@ GetRibbonCount: @ 0x080EF0BC
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	movs r1, #0x32
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x33
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x34
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x35
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x36
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x43
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x44
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x45
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x46
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x47
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x48
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x49
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x4a
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x4b
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x4c
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x4d
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
 	movs r1, #0x4e
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r4, r0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -5295,19 +5295,19 @@ _080EF490:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #4]
 	adds r0, r4, #0
 	adds r0, #0x64
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #6]
 	adds r4, #0xc8
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #8]
 	b _080EF55E
 	.align 2, 0
@@ -5317,26 +5317,26 @@ _080EF4C0:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #4]
 	adds r0, r4, #0
 	adds r0, #0x64
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #6]
 	adds r0, r4, #0
 	adds r0, #0xc8
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #8]
 	movs r1, #0x96
 	lsls r1, r1, #1
 	adds r0, r4, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #0xa]
 	b _080EF55E
 	.align 2, 0
@@ -5346,7 +5346,7 @@ _080EF500:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #4]
 	adds r4, #0x64
 	adds r0, r4, #0
@@ -5371,7 +5371,7 @@ _080EF518:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #4]
 	ldr r0, [r6]
 	ldr r2, _080EF580
@@ -5386,7 +5386,7 @@ _080EF518:
 _080EF554:
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r7, #6]
 _080EF55E:
 	adds r0, r7, #0
@@ -6958,7 +6958,7 @@ InterviewBefore_FanClubLetter: @ 0x080F0150
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #1
 	adds r1, r1, r0
 	lsls r1, r1, #1
@@ -7044,7 +7044,7 @@ InterviewBefore_PkmnFanClubOpinions: @ 0x080F0208
 	adds r0, r0, r4
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r0, #1
 	adds r1, r1, r0
 	lsls r1, r1, #1
@@ -7060,7 +7060,7 @@ InterviewBefore_PkmnFanClubOpinions: @ 0x080F0208
 	ldr r4, _080F0290
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl StringGetEnd10
 	ldr r2, _080F0294
@@ -7238,11 +7238,11 @@ sub_080F0390: @ 0x080F0390
 	adds r0, r4, #0
 	movs r1, #2
 	adds r2, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r0, r1, #1
 	adds r0, r0, r1
@@ -7927,7 +7927,7 @@ TV_PutNameRaterShowOnTheAirIfNicknameChanged: @ 0x080F0864
 	ldr r4, _080F0898
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, _080F089C
 	adds r1, r4, #0
 	bl StringCompare
@@ -7969,7 +7969,7 @@ ChangePokemonNickname: @ 0x080F08A8
 	adds r0, r0, r6
 	ldr r2, _080F0958
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	ldrh r0, [r1]
 	mov r1, r8
@@ -7980,7 +7980,7 @@ ChangePokemonNickname: @ 0x080F08A8
 	mov sl, r1
 	movs r1, #2
 	mov r2, sl
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	ldrh r0, [r1]
 	mov r1, r8
@@ -7989,7 +7989,7 @@ ChangePokemonNickname: @ 0x080F08A8
 	adds r0, r0, r6
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
@@ -8011,7 +8011,7 @@ ChangePokemonNickname: @ 0x080F08A8
 	adds r0, r0, r6
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp]
 	ldr r0, _080F0960
 	str r0, [sp, #4]
@@ -8146,7 +8146,7 @@ TV_CopyNicknameToStringVar1AndEnsureTerminated: @ 0x080F0A38
 	ldr r4, _080F0A64
 	movs r1, #2
 	adds r2, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl StringGetEnd10
 	pop {r4}
@@ -8171,7 +8171,7 @@ TV_CheckMonOTIDEqualsPlayerID: @ 0x080F0A68
 	adds r0, r0, r1
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	cmp r4, r0
 	bne _080F0A9C
 	ldr r1, _080F0A98

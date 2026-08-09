@@ -5552,15 +5552,15 @@ FldEff_FieldMoveShowMonInit: @ 0x080B7C50
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #4]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #8]
 	ldr r0, [r5]
 	orrs r0, r6

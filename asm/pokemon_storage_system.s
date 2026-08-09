@@ -79,12 +79,12 @@ _080C689A:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080C68C2
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080C68C2
 	adds r0, r6, #1
@@ -122,17 +122,17 @@ _080C68E6:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080C691E
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080C691E
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080C691E
 	adds r0, r6, #1
@@ -178,7 +178,7 @@ _080C6956:
 	ldr r1, _080C6984
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080C696E
 	adds r0, r5, #1
@@ -5943,7 +5943,7 @@ LoadPSSMenuGfx: @ 0x080C98B8
 	movs r0, #1
 	bl ShowBg
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #4
 	pop {r4, r5}
 	pop {r0}
@@ -6161,7 +6161,7 @@ RefreshCursorMonData: @ 0x080C9AA4
 	bl PrintCursorMonInfo
 	bl sub_080C9EC0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -6740,7 +6740,7 @@ _080C9F4A:
 	movs r0, #0
 	bl sub_080D21B8
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #4
 	pop {r4}
 	pop {r0}
@@ -6822,7 +6822,7 @@ _080C9FF4:
 	bl sub_080D21B8
 _080CA016:
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _080CA030
 	ldr r0, [r0]
 	ldr r1, _080CA034
@@ -6894,7 +6894,7 @@ ShowPartyMenu: @ 0x080CA070
 	movs r0, #1
 	bl sub_080D21B8
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #8
 	bl sub_080CB364
 	ldr r1, [r4]
@@ -7014,7 +7014,7 @@ HidePartyMenu: @ 0x080CA12C
 	cmp r0, #0x14
 	beq _080CA1B0
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
 	b _080CA1DA
 	.align 2, 0
@@ -7036,7 +7036,7 @@ _080CA1B0:
 	movs r0, #2
 	bl sub_080D21B8
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _080CA1D8:
 	movs r0, #0
 _080CA1DA:
@@ -7073,7 +7073,7 @@ _080CA210:
 	movs r0, #2
 	bl sub_080D21B8
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #4
 	pop {r0}
 	bx r0
@@ -7186,7 +7186,7 @@ _080CA2DC:
 	ldr r1, _080CA308
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	rsbs r1, r0, #0
 	orrs r1, r0
 	lsrs r1, r1, #0x1f
@@ -7283,7 +7283,7 @@ sub_080CA384: @ 0x080CA384
 	movs r0, #1
 	bl sub_080D21B8
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #4
 	pop {r0}
 	bx r0
@@ -7561,7 +7561,7 @@ _080CA594:
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4, r5, r6}
 	pop {r0}
@@ -7610,7 +7610,7 @@ ClearBottomWindow: @ 0x080CA638
 	movs r1, #0
 	bl ClearStdWindowAndFrameToTransparent
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	thumb_func_end ClearBottomWindow
@@ -7869,12 +7869,12 @@ CreateMovingMonIcon: @ 0x080CA838
 	ldr r4, _080CA890
 	adds r0, r0, r4
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r6, r0, #0
 	ldr r0, [r5]
 	adds r0, r0, r4
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -8931,12 +8931,12 @@ CreatePartyMonsSprites: @ 0x080CB05C
 	ldr r4, _080CB100
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #1
 	str r0, [sp]
@@ -8962,14 +8962,14 @@ _080CB0A4:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	cmp r5, #0
 	beq _080CB108
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	subs r0, r6, #1
 	lsls r3, r0, #1
@@ -9069,7 +9069,7 @@ _080CB16E:
 	ldr r1, _080CB1C0
 	adds r0, r0, r1
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _080CB1A6
 	ldr r0, [r7]
@@ -12721,7 +12721,7 @@ sub_080CCD80: @ 0x080CCD80
 	ldr r1, _080CCDB0
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	b _080CCDBE
 	.align 2, 0
 _080CCDA8: .4byte 0x02039A18
@@ -14721,7 +14721,7 @@ _080CDD10:
 	adds r0, r2, r1
 	adds r2, r2, r4
 	movs r1, #0x51
-	bl GetMonData
+	bl GetMonData3
 	ldr r2, [r5]
 	ldr r3, _080CDD5C
 	adds r1, r2, r3
@@ -14785,7 +14785,7 @@ _080CDDA6:
 	ldr r1, _080CDDCC
 	adds r0, r0, r1
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080CDDBA
 	adds r5, #1
@@ -14889,7 +14889,7 @@ _080CDE60:
 	ldr r1, _080CDEB8
 	adds r2, r2, r1
 	movs r1, #0x51
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r1, [r5]
@@ -15289,7 +15289,7 @@ _080CE1A4:
 	adds r4, r0, r1
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	cmp r0, #0
 	beq _080CE1DC
@@ -15477,7 +15477,7 @@ CanShiftMon: @ 0x080CE2E8
 	ldr r2, _080CE340
 	adds r0, r1, r2
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080CE344
 _080CE328:
@@ -15694,7 +15694,7 @@ SetCursorMonData: @ 0x080CE47C
 	adds r6, r4, #0
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	mov r2, r8
 	ldr r1, [r2]
 	ldr r3, _080CE4E8
@@ -15707,7 +15707,7 @@ SetCursorMonData: @ 0x080CE47C
 _080CE4C0:
 	adds r0, r4, #0
 	movs r1, #4
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	mov sl, r0
@@ -15728,7 +15728,7 @@ _080CE4EC: .4byte 0x00000CED
 _080CE4F0:
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	mov r3, r8
 	ldr r1, [r3]
 	ldr r2, _080CE578
@@ -15741,27 +15741,27 @@ _080CE502:
 	adds r2, r2, r5
 	adds r0, r6, #0
 	movs r1, #2
-	bl GetMonData
+	bl GetMonData3
 	ldr r0, [r4]
 	adds r0, r0, r5
 	bl StringGetEnd10
 	adds r0, r6, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r3, _080CE584
 	adds r1, r1, r3
 	strb r0, [r1]
 	adds r0, r6, #0
 	movs r1, #8
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r2, _080CE588
 	adds r1, r1, r2
 	strb r0, [r1]
 	adds r0, r6, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	movs r3, #0xce
 	lsls r3, r3, #4
@@ -15780,7 +15780,7 @@ _080CE502:
 	mov sb, r0
 	adds r0, r6, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [r4]
 	ldr r3, _080CE590
 	adds r1, r1, r3
@@ -18274,7 +18274,7 @@ AddMenu: @ 0x080CF84C
 	movs r3, #2
 	bl sub_081984F0
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, [r5]
 	ldr r2, _080CF944
 	adds r0, r0, r2
@@ -20072,12 +20072,12 @@ _080D067A:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #5
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _080D06E2
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 _080D069C:
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
@@ -20342,7 +20342,7 @@ _080D08BC:
 	adds r4, r4, r0
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r6, r0, #0x10
 	mov r0, r8
@@ -21583,7 +21583,7 @@ _080D1220:
 	movs r3, #0xc
 	bl FillBgTilemapBufferRect
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
 _080D1244:
 	add sp, #0x10
@@ -21655,7 +21655,7 @@ _080D128C:
 	movs r3, #0x14
 	bl FillBgTilemapBufferRect
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0xc
 	pop {r4, r5, r6, r7}
 	pop {r0}

@@ -2373,7 +2373,7 @@ _0819B41E:
 	adds r0, r5, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r2, r8
 	ldr r1, [r2]
 	ldr r2, _0819B4B0
@@ -2661,7 +2661,7 @@ Select_PrintMonSpecies: @ 0x0819B688
 	adds r0, #0x14
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r4, _0819B6FC
@@ -3056,7 +3056,7 @@ Select_PrintMonCategory: @ 0x0819B99C
 	adds r0, #0x14
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl HoennToNationalOrder
@@ -3144,19 +3144,19 @@ Summary_ShowMonSprite: @ 0x0819BA58
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0x58
 	str r0, [sp]
@@ -3266,19 +3266,19 @@ Select_ShowSummaryMonSprite: @ 0x0819BB1C
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0x58
 	str r0, [sp]
@@ -3375,19 +3375,19 @@ _0819BC30:
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r6, r0, #0
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r0, r7, #3
 	adds r0, r0, r7
@@ -4538,7 +4538,7 @@ CopySwappedMonData: @ 0x0819C4F8
 	add r0, sb
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	ldr r2, [r1]
 	ldr r4, [r5]
@@ -8965,7 +8965,7 @@ _0819E8D6:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r4, _0819E930
@@ -9449,7 +9449,7 @@ _0819ECD2:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r4, _0819ED2C
@@ -9577,7 +9577,7 @@ _0819EDEA:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r4, _0819EE44
@@ -9660,7 +9660,7 @@ _0819EE9A:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl HoennToNationalOrder
@@ -10133,19 +10133,19 @@ Swap_ShowSummaryMonSprite: @ 0x0819F1F0
 	adds r0, r4, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	lsls r5, r5, #0x10
 	lsrs r5, r5, #0x10
 	adds r0, r4, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	mov sb, r0
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r2, r0, #0
 	movs r0, #0x58
 	str r0, [sp]
@@ -10418,7 +10418,7 @@ Swap_AlreadyHasSameSpecies: @ 0x0819F488
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	movs r4, #0
@@ -10434,7 +10434,7 @@ _0819F4A4:
 	adds r0, r0, r1
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r0, r5
@@ -10853,19 +10853,19 @@ _0819F7F4:
 	adds r0, r6, #0
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r6, #0
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r5, r0, #0
 	adds r0, r6, #0
 	movs r1, #1
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	movs r0, #0x58
 	str r0, [sp]

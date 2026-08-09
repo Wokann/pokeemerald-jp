@@ -627,11 +627,11 @@ InitBGs: @ 0x081BF784
 	bl SetBgTilemapBuffer
 	bl ResetAllBgsCoordinates
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0
@@ -954,35 +954,35 @@ _081BFA8A:
 _081BFA8C:
 	adds r0, r4, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5]
 	adds r0, r4, #0
 	movs r1, #0x41
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #2]
 	adds r0, r4, #0
 	movs r1, #0x19
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #0x10]
 	adds r0, r4, #0
 	movs r1, #0x38
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #5]
 	adds r0, r4, #0
 	movs r1, #0x2e
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #8]
 	adds r0, r4, #0
 	movs r1, #0xc
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x2e]
 	adds r0, r4, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #0xc]
 	adds r0, r4, #0
 	movs r1, #4
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xa5
 	strb r0, [r1]
@@ -995,7 +995,7 @@ _081BFA8C:
 _081BFAEC:
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #4]
 	b _081BFC58
 _081BFAF8:
@@ -1010,12 +1010,12 @@ _081BFB06:
 	adds r1, r5, #0
 	adds r1, #0xd
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r6]
 	adds r1, r5, #0
 	adds r1, #0x11
 	adds r0, r4, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r7, r5
 	strb r0, [r1]
 	adds r6, #2
@@ -1024,7 +1024,7 @@ _081BFB06:
 	bls _081BFB06
 	adds r0, r4, #0
 	movs r1, #0x15
-	bl GetMonData
+	bl GetMonData3
 	mov r1, r8
 	strb r0, [r1]
 	b _081BFC58
@@ -1046,27 +1046,27 @@ _081BFB48:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x20]
 	adds r0, r4, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x22]
 	adds r0, r4, #0
 	movs r1, #0x3b
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x24]
 	adds r0, r4, #0
 	movs r1, #0x3c
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x26]
 	adds r0, r4, #0
 	movs r1, #0x3e
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x28]
 	adds r0, r4, #0
 	movs r1, #0x3f
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x2a]
 	adds r0, r4, #0
 	movs r1, #0x3d
@@ -1082,32 +1082,32 @@ _081BFBA0:
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #0x39
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x20]
 	adds r0, r4, #0
 	movs r1, #0x3a
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x22]
 	adds r0, r4, #0
 	movs r1, #0x54
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x24]
 	adds r0, r4, #0
 	movs r1, #0x55
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x26]
 	adds r0, r4, #0
 	movs r1, #0x57
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x28]
 	adds r0, r4, #0
 	movs r1, #0x58
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x2a]
 	adds r0, r4, #0
 	movs r1, #0x56
 _081BFBEC:
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x2c]
 	b _081BFC58
 _081BFBF4:
@@ -1115,41 +1115,41 @@ _081BFBF4:
 	adds r2, #0xa6
 	adds r0, r4, #0
 	movs r1, #7
-	bl GetMonData
+	bl GetMonData3
 	adds r0, r4, #0
 	bl GetMonAilment
 	strb r0, [r5, #7]
 	adds r0, r4, #0
 	movs r1, #0x31
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r6, #0
 	adds r1, #0xa2
 	strb r0, [r1]
 	adds r0, r4, #0
 	movs r1, #1
-	bl GetMonData
+	bl GetMonData3
 	str r0, [r5, #0x48]
 	adds r0, r4, #0
 	movs r1, #0x23
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #9]
 	adds r0, r4, #0
 	movs r1, #0x24
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #0xa]
 	adds r0, r4, #0
 	movs r1, #0x25
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #0xb]
 	adds r0, r4, #0
 	movs r1, #0x20
-	bl GetMonData
+	bl GetMonData3
 	strh r0, [r5, #0x30]
 	b _081BFC58
 _081BFC4A:
 	adds r0, r4, #0
 	movs r1, #0x52
-	bl GetMonData
+	bl GetMonData3
 	strb r0, [r5, #6]
 	movs r0, #1
 	b _081BFC68
@@ -1593,7 +1593,7 @@ _081BFFCA:
 	movs r0, #0xd
 	bl ClearWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	movs r1, #2
 	bl sub_081C19A8
@@ -1939,7 +1939,7 @@ _081C02D0:
 	muls r0, r4, r0
 	adds r0, r7, r0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081C029C
 	adds r0, r4, #0
@@ -2038,7 +2038,7 @@ sub_081C0384: @ 0x081C0384
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	beq _081C03B8
 	ldr r0, _081C03B0
@@ -2050,7 +2050,7 @@ sub_081C0384: @ 0x081C0384
 	bne _081C03AC
 	adds r0, r4, #0
 	movs r1, #0x2d
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _081C03B8
 _081C03AC:
@@ -2221,7 +2221,7 @@ PssScrollRight: @ 0x081C04C0
 	movs r2, #2
 	bl SetBgAttribute
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081C0532
 	.align 2, 0
 _081C0508: .4byte 0x03005B68
@@ -2239,7 +2239,7 @@ _081C0514:
 	movs r2, #2
 	bl SetBgAttribute
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081C0532:
 	ldrb r0, [r4, #2]
 	movs r1, #0
@@ -2423,7 +2423,7 @@ PssScrollLeftEnd: @ 0x081C0678
 	movs r2, #2
 	bl SetBgAttribute
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081C06DA
 	.align 2, 0
 _081C06B4: .4byte 0x03005B68
@@ -2439,7 +2439,7 @@ _081C06C0:
 	movs r2, #2
 	bl SetBgAttribute
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081C06DA:
 	ldr r6, _081C0748
 	ldr r2, [r6]
@@ -2592,11 +2592,11 @@ _081C07F8:
 	bl PrintNewMoveDetailsOrCancelText
 	bl SetNewMoveTypeIcon
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #8
 	bl sub_081C4300
 	ldr r1, _081C0870
@@ -2836,9 +2836,9 @@ _081C0A16:
 	adds r0, r5, #0
 	bl DrawContestMoveHearts
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r5, #0
 	bl PrintMoveDetails
 	mov r1, r8
@@ -2879,7 +2879,7 @@ _081C0A4C:
 	bl ClearWindowTilemap
 _081C0A76:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r4, #3
 	rsbs r4, r4, #0
 	movs r0, #9
@@ -2910,7 +2910,7 @@ _081C0A92:
 	movs r0, #0xf
 	bl ClearWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	movs r1, #3
 	bl sub_081C16D8
@@ -3005,11 +3005,11 @@ sub_081C0B28: @ 0x081C0B28
 	bl sub_081C1830
 _081C0B92:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081C0BC8
 	lsls r1, r5, #2
 	adds r1, r1, r5
@@ -3259,9 +3259,9 @@ _081C0D98:
 	adds r0, r4, #0
 	bl DrawContestMoveHearts
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r1, _081C0DE8
 	lsls r0, r7, #2
 	adds r0, r0, r7
@@ -3819,7 +3819,7 @@ ShowHMMovesCantBeForgottenWindow: @ 0x081C1228
 	movs r0, #0xf
 	bl ClearWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	movs r1, #3
 	bl sub_081C16D8
@@ -4089,7 +4089,7 @@ _081C146C:
 	adds r0, r5, #0
 	bl PrintMoveDetails
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r4, #3
 	rsbs r4, r4, #0
 	movs r0, #9
@@ -4263,7 +4263,7 @@ _081C15AC:
 	movs r3, #0
 	bl CopyToBgTilemapBufferRect_ChangePalette
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r4, #0
 	bl Free
 	add sp, #0xc
@@ -4553,14 +4553,14 @@ _081C1802:
 	bl PutWindowTilemap
 _081C1808:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r6, #0
 	bl DestroyTask
 _081C1814:
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
@@ -4736,14 +4736,14 @@ _081C197A:
 	bl PutWindowTilemap
 _081C1980:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	adds r0, r6, #0
 	bl DestroyTask
 _081C198C:
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
@@ -4863,7 +4863,7 @@ _081C1A64:
 	movs r3, #0
 	bl sub_081C15E4
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r1, #2
 	ldrsh r0, [r5, r1]
 	cmp r0, #0
@@ -4880,7 +4880,7 @@ _081C1A96:
 	movs r0, #0xd
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081C1AAE:
 	adds r0, r6, #0
 	bl DestroyTask
@@ -5009,7 +5009,7 @@ _081C1B9A:
 	adds r0, r0, r1
 	strh r2, [r0]
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -5049,7 +5049,7 @@ _081C1BE0:
 	bl sub_081998C8
 _081C1BF4:
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -5201,14 +5201,14 @@ _081C1CFC:
 	cmp r0, r1
 	bne _081C1D2C
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081C1D32
 	.align 2, 0
 _081C1D24: .4byte 0x0203CBE8
 _081C1D28: .4byte 0x000010BC
 _081C1D2C:
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 _081C1D32:
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -5493,7 +5493,7 @@ _081C1F4C:
 	bl Summary_PrintEggInfo
 _081C1F50:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -6144,7 +6144,7 @@ _081C24EE:
 	cmp r4, #7
 	bls _081C24EE
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -6272,7 +6272,7 @@ _081C2604:
 	cmp r4, #7
 	bls _081C2604
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -8412,7 +8412,7 @@ _081C3768:
 	bl ClearWindowTilemap
 _081C376E:
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #8
 	pop {r4, r5, r6}
 	pop {r0}
@@ -9731,7 +9731,7 @@ CreateMonMarkingsSprite: @ 0x081C418C
 	beq _081C41D6
 	adds r0, r5, #0
 	movs r1, #8
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -9785,7 +9785,7 @@ _081C420C: .4byte 0x00007533
 CreateCaughtBallSprite: @ 0x081C4210
 	push {r4, lr}
 	movs r1, #0x26
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl ItemIdToBallId

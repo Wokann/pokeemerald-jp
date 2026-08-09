@@ -959,7 +959,7 @@ _0814E944:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -980,7 +980,7 @@ _0814E978:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1001,7 +1001,7 @@ _0814E9AC:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1022,7 +1022,7 @@ _0814E9E0:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1046,7 +1046,7 @@ _0814EA14:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1073,7 +1073,7 @@ _0814EA50:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1100,7 +1100,7 @@ _0814EA90:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1127,7 +1127,7 @@ _0814EAD0:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	mov r0, sp
 	bl StringGetEnd10
 	bl _0814F5DA
@@ -1185,7 +1185,7 @@ _0814EB4E:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814EBB6
 	.align 2, 0
 _0814EB84: .4byte 0x02023D12
@@ -1208,7 +1208,7 @@ _0814EB8C:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814EBB6:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1241,7 +1241,7 @@ _0814EBC8:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814EC3C
 	.align 2, 0
 _0814EC04: .4byte 0x02023EAF
@@ -1266,7 +1266,7 @@ _0814EC10:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814EC3C:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1318,7 +1318,7 @@ _0814EC90:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814ECDA
 	.align 2, 0
 _0814ECA8: .4byte 0x02023EAF
@@ -1339,7 +1339,7 @@ _0814ECC0:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814ECDA:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1391,7 +1391,7 @@ _0814ED2C:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814ED76
 	.align 2, 0
 _0814ED44: .4byte 0x02023EB0
@@ -1412,7 +1412,7 @@ _0814ED5C:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814ED76:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1464,7 +1464,7 @@ _0814EDC8:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814EE12
 	.align 2, 0
 _0814EDE0: .4byte 0x02023EB2
@@ -1485,7 +1485,7 @@ _0814EDF8:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814EE12:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1537,7 +1537,7 @@ _0814EE64:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814EEAE
 	.align 2, 0
 _0814EE7C: .4byte 0x02023D08
@@ -1558,7 +1558,7 @@ _0814EE94:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814EEAE:
 	mov r0, sp
 	bl StringGetEnd10
@@ -1610,7 +1610,7 @@ _0814EF00:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814EF4A
 	.align 2, 0
 _0814EF18: .4byte 0x02024118
@@ -1631,7 +1631,7 @@ _0814EF30:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814EF4A:
 	mov r0, sp
 	bl StringGetEnd10
@@ -2184,7 +2184,7 @@ _0814F392:
 	add r0, ip
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814F3D8
 	.align 2, 0
 _0814F3A8: .4byte 0x02024118
@@ -2204,7 +2204,7 @@ _0814F3C0:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814F3D8:
 	mov r0, sp
 	bl StringGetEnd10
@@ -2686,7 +2686,7 @@ _0814F760:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 	b _0814F7C0
 	.align 2, 0
 _0814F780: .4byte 0x02024190
@@ -2717,7 +2717,7 @@ _0814F7AC:
 	adds r0, r0, r1
 	movs r1, #2
 	mov r2, sp
-	bl GetMonData
+	bl GetMonData3
 _0814F7C0:
 	mov r0, sp
 	bl StringGetEnd10
@@ -2761,7 +2761,7 @@ _0814F7FE:
 	adds r0, r0, r1
 	movs r1, #2
 	adds r2, r6, #0
-	bl GetMonData
+	bl GetMonData3
 	b _0814F836
 	.align 2, 0
 _0814F820: .4byte 0x02024190
@@ -2773,7 +2773,7 @@ _0814F824:
 	adds r0, r0, r1
 	movs r1, #2
 	adds r2, r6, #0
-	bl GetMonData
+	bl GetMonData3
 _0814F836:
 	adds r0, r6, #0
 	bl StringGetEnd10

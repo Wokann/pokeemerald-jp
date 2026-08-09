@@ -14,7 +14,7 @@ CreatedHatchedMon: @ 0x08070D68
 	adds r5, r0, #0
 	adds r6, r1, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	str r0, [sp, #0x3c]
@@ -39,7 +39,7 @@ _08070DA6:
 	adds r1, r4, #0
 	adds r1, #0xd
 	adds r0, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r4, #1
 	add r1, sp
 	adds r1, #0x10
@@ -51,14 +51,14 @@ _08070DA6:
 	bls _08070DA6
 	adds r0, r5, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	mov r8, r0
 	movs r4, #0
 _08070DCE:
 	adds r1, r4, #0
 	adds r1, #0x27
 	adds r0, r5, #0
-	bl GetMonData
+	bl GetMonData3
 	lsls r1, r4, #2
 	adds r1, r7, r1
 	str r0, [r1]
@@ -69,26 +69,26 @@ _08070DCE:
 	bls _08070DCE
 	adds r0, r5, #0
 	movs r1, #3
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sb
 	strb r0, [r1]
 	adds r0, r5, #0
 	movs r1, #0x25
-	bl GetMonData
+	bl GetMonData3
 	mov r1, sl
 	strb r0, [r1]
 	adds r0, r5, #0
 	movs r1, #8
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [sp, #0x40]
 	strb r0, [r1]
 	adds r0, r5, #0
 	movs r1, #0x22
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp, #0x38]
 	adds r0, r5, #0
 	movs r1, #0x50
-	bl GetMonData
+	bl GetMonData3
 	ldr r1, [sp, #0x48]
 	strb r0, [r1]
 	movs r0, #1
@@ -195,7 +195,7 @@ AddHatchedMonToParty: @ 0x08070ED0
 	bl SetMonData
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
@@ -389,13 +389,13 @@ _0807108C: .4byte 0x02024190
 _08071090:
 	adds r0, r5, #0
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	adds r0, r5, #0
 	movs r1, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r3, r0, #0
 	lsls r0, r4, #3
 	ldr r1, _080710D8
@@ -974,7 +974,7 @@ _080715C0:
 	ldr r1, _080715F8
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	ldr r0, [r5]
@@ -1165,7 +1165,7 @@ _0807174C:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	lsls r0, r0, #0x10
 	lsrs r7, r0, #0x10
 	mov r1, r8
@@ -1184,7 +1184,7 @@ _0807174C:
 	adds r0, r0, r5
 	movs r1, #0
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	str r0, [sp]
 	ldr r0, _080717C0
 	str r0, [sp, #4]
@@ -1385,7 +1385,7 @@ SpriteCB_Egg_2: @ 0x08071900
 	ldr r1, _08071964
 	adds r0, r0, r1
 	movs r1, #0xb
-	bl GetMonData
+	bl GetMonData3
 	ldr r3, _08071968
 	ldr r2, [r4]
 	ldrb r1, [r2, #1]
@@ -1847,7 +1847,7 @@ _08071CAC:
 	adds r4, r1, r0
 	adds r0, r4, #0
 	movs r1, #6
-	bl GetMonData
+	bl GetMonData3
 	cmp r0, #0
 	bne _08071CDC
 	adds r0, r4, #0

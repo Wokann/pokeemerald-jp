@@ -3640,7 +3640,7 @@ _08124818:
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	b _081248A8
 	.align 2, 0
 _08124850: .4byte 0x0857D528
@@ -3812,7 +3812,7 @@ _08124930:
 	movs r3, #0x10
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _081249BC
 	str r7, [r0]
 	b _081249CA
@@ -3854,7 +3854,7 @@ _081249EA:
 	movs r3, #0
 	bl AddTextPrinterParameterized
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	str r7, [r4]
 	b _08124A4A
 	.align 2, 0
@@ -3881,7 +3881,7 @@ _08124A30:
 	movs r1, #2
 	bl CopyWindowToVram
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #0
 	str r0, [r4]
 _08124A4A:

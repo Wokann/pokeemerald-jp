@@ -1284,7 +1284,7 @@ BuyMenuDisplayMessage: @ 0x080DFA2C
 	movs r3, #0xe
 	bl DisplayMessageAndContinueTask
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	add sp, #0x10
 	pop {r4, r5, r6}
 	pop {r0}
@@ -1312,13 +1312,13 @@ BuyMenuDrawGraphics: @ 0x080DFA68
 	movs r2, #0xd
 	bl PrintMoneyAmount
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #1
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #2
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	movs r0, #3
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -2295,7 +2295,7 @@ Task_BuyHowManyDialogueInit: @ 0x080E01F0
 	adds r0, r6, #0
 	bl BuyMenuPrintItemQuantityAndPrice
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	ldr r0, _080E02A0
 	ldr r0, [r0]
 	movs r1, #0x92
@@ -2737,7 +2737,7 @@ BuyMenuReturnToItemList: @ 0x080E05EC
 	movs r0, #2
 	bl PutWindowTilemap
 	movs r0, #0
-	bl schedule_bg_copy_tilemap_to_vram
+	bl ScheduleBgCopyTilemapToVram
 	bl BuyMenuAddScrollIndicatorArrows
 	subs r5, #8
 	adds r4, r4, r5

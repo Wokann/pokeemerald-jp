@@ -796,7 +796,7 @@ _080B2270:
 	adds r0, r0, r5
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r4, #0
 	adds r1, #0x54
 	strh r0, [r1]
@@ -806,7 +806,7 @@ _080B2270:
 	adds r0, r0, r5
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, #0x56
 	strh r0, [r4]
 	ldr r0, _080B22E0
@@ -895,7 +895,7 @@ _080B2348:
 	adds r0, r0, r5
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r1, r4, #0
 	adds r1, #0x54
 	strh r0, [r1]
@@ -905,7 +905,7 @@ _080B2348:
 	adds r0, r0, r5
 	movs r1, #0xb
 	movs r2, #0
-	bl GetMonData
+	bl GetMonData3
 	adds r4, #0x56
 	strh r0, [r4]
 	ldr r1, _080B23C8
