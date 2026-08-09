@@ -1,6 +1,7 @@
 gUnknown_2000000 = .;
 gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 gBattleOutcome = ABSOLUTE(0x02023FDE);
+sMirageTowerPulseBlend = ABSOLUTE(0x0203CBE4);
 . += 0x2;
 gUnknown_2000002 = .;
 . += 0x1;

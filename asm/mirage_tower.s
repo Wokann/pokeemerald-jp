@@ -44,12 +44,15 @@ _081BE344: .4byte 0x0203CBE4
 
 	thumb_func_start ClearMirageTowerPulseBlend
 ClearMirageTowerPulseBlend: @ 0x081BE348
-	ldr r1, _081BE350
-	movs r0, #0
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_081BE350: .4byte 0x0203CBE4
+	@ From tools/c_decomp/clear_mirage_tower_pulse_blend.c
+	ldr	r1, .L3
+	movs	r0, #0x0
+	str	r0, [r1]
+	bx	lr
+.L4:
+	.align	2, 0
+.L3:
+	.word	sMirageTowerPulseBlend
 	thumb_func_end ClearMirageTowerPulseBlend
 
 	thumb_func_start TryStartMirageTowerPulseBlendEffect
@@ -1498,4 +1501,3 @@ _081BEED4:
 	.align 2, 0
 _081BEEE0: .4byte 0x03005B60
 	thumb_func_end DoFossilFallAndSink
-

@@ -39,3 +39,5 @@ generated snippet.  Only functions where it reports MATCH are integrated.
   (0x080A5BA4, 14 bytes).
 * `free_all_overworld_window_buffers.c` - FreeAllOverworldWindowBuffers
   (0x08196DE8, 10 bytes); tail-call via bl, resolved at link time.
+* `clear_mirage_tower_pulse_blend.c` - ClearMirageTowerPulseBlend
+  (0x081BE348, 12 bytes); static pointer mapped to ABSOLUTE(0x0203CBE4).
