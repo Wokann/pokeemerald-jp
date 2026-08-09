@@ -2134,11 +2134,14 @@ _08185D18: .4byte 0x0203C482
 
 	thumb_func_start GetBattleSceneInRecordedBattle
 GetBattleSceneInRecordedBattle: @ 0x08185D1C
-	ldr r0, _08185D24
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08185D24: .4byte 0x0203C483
+	@ From tools/c_decomp/get_battle_scene_in_recorded_battle.c
+	ldr	r0, .LGetBattleScene
+	ldrb	r0, [r0]
+	bx	lr
+.LGetBattleScenePad:
+	.align	2, 0
+.LGetBattleScene:
+	.word	sBattleScene
 	thumb_func_end GetBattleSceneInRecordedBattle
 
 	thumb_func_start RecordedBattle_CopyBattlerMoves
@@ -2710,11 +2713,14 @@ _0818618C: .4byte 0x02023D10
 
 	thumb_func_start GetAiScriptsInRecordedBattle
 GetAiScriptsInRecordedBattle: @ 0x08186190
-	ldr r0, _08186198
-	ldr r0, [r0]
-	bx lr
-	.align 2, 0
-_08186198: .4byte 0x0203C488
+	@ From tools/c_decomp/get_ai_scripts_in_recorded_battle.c
+	ldr	r0, .LGetAiScripts
+	ldr	r0, [r0]
+	bx	lr
+.LGetAiScriptsPad:
+	.align	2, 0
+.LGetAiScripts:
+	.word	sAI_Scripts
 	thumb_func_end GetAiScriptsInRecordedBattle
 
 	thumb_func_start sub_0818619C
@@ -4381,4 +4387,3 @@ _08186ECA:
 _08186ED0: .4byte 0x02024174
 _08186ED4: .4byte 0x02023D08
 	thumb_func_end sub_08186EA8
-
