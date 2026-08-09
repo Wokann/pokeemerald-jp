@@ -2601,10 +2601,13 @@ _08019324: .4byte 0x08018139
 
 	thumb_func_start GetMysteryGiftBaseBlock
 GetMysteryGiftBaseBlock: @ 0x08019328
-	ldr r0, _0801932C
-	bx lr
-	.align 2, 0
-_0801932C: .4byte 0x000001A9
+	@ From src/mystery_gift_menu.c
+	ldr	r0, .LGetMysteryGiftBaseBlock
+	bx	lr
+.LGetMysteryGiftBaseBlockPad:
+	.align	2, 0
+.LGetMysteryGiftBaseBlock:
+	.word	0x000001A9
 	thumb_func_end GetMysteryGiftBaseBlock
 
 	thumb_func_start bgid_upload_textbox_1
@@ -2625,4 +2628,3 @@ bgid_upload_textbox_1: @ 0x08019330
 	.align 2, 0
 _0801934C: .4byte 0x082C2474
 	thumb_func_end bgid_upload_textbox_1
-

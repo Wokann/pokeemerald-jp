@@ -2824,10 +2824,13 @@ _08186208: .4byte 0x02023FDE
 
 	thumb_func_start GetRecordedBattleEasyChatSpeech
 GetRecordedBattleEasyChatSpeech: @ 0x0818620C
-	ldr r0, _08186210
-	bx lr
-	.align 2, 0
-_08186210: .4byte 0x0203C9A8
+	@ From src/recorded_battle.c
+	ldr	r0, .LGetRecordedBattleEasyChatSpeech
+	bx	lr
+.LGetRecordedBattleEasyChatSpeechPad:
+	.align	2, 0
+.LGetRecordedBattleEasyChatSpeech:
+	.word	sEasyChatSpeech
 	thumb_func_end GetRecordedBattleEasyChatSpeech
 
 	thumb_func_start sub_08186214

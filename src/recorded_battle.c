@@ -54,3 +54,10 @@ u8 GetRecordedBattleRecordMixFriendLanguage(void)
 {
     return sRecordMixFriendLanguage;
 }
+
+extern u32 sEasyChatSpeech;
+
+u32 GetRecordedBattleEasyChatSpeech(void)
+{
+    return (u32)&sEasyChatSpeech;
+}
