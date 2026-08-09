@@ -1,4 +1,5 @@
 gUnknown_3000000 = .;
+gCurrentMapMusic = ABSOLUTE(0x03000F48);
 . += 0x4;
 gUnknown_3000004 = .;
 . += 0x4;

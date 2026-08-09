@@ -144,11 +144,14 @@ _080A27C8: .4byte 0x03000F4D
 
 	thumb_func_start GetCurrentMapMusic
 GetCurrentMapMusic: @ 0x080A27CC
-	ldr r0, _080A27D4
-	ldrh r0, [r0]
-	bx lr
-	.align 2, 0
-_080A27D4: .4byte 0x03000F48
+	@ From tools/c_decomp/get_current_map_music.c
+	ldr	r0, .L3
+	ldrh	r0, [r0]
+	bx	lr
+.L4:
+	.align	2, 0
+.L3:
+	.word	gCurrentMapMusic
 	thumb_func_end GetCurrentMapMusic
 
 	thumb_func_start PlayNewMapMusic
@@ -1521,4 +1524,3 @@ _080A31F6:
 	bx r1
 	.align 2, 0
 	thumb_func_end IsSpecialSEPlaying
-

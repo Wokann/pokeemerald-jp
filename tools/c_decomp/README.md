@@ -41,3 +41,8 @@ generated snippet.  Only functions where it reports MATCH are integrated.
   (0x08196DE8, 10 bytes); tail-call via bl, resolved at link time.
 * `clear_mirage_tower_pulse_blend.c` - ClearMirageTowerPulseBlend
   (0x081BE348, 12 bytes); static pointer mapped to ABSOLUTE(0x0203CBE4).
+* `cb2_overworld_basic.c` - CB2_OverworldBasic (0x080856E8, 10 bytes);
+  JP version calls SafariZoneRetirePrompt (differs from US).
+* `get_current_map_music.c` - GetCurrentMapMusic (0x080A27CC, 8 bytes);
+  JP reads a u16 from IWRAM (gCurrentMapMusic = ABSOLUTE(0x03000F48)),
+  differs from US SaveBlock-based version.
