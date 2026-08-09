@@ -2399,8 +2399,8 @@ _080FEB04: .4byte 0x03005B60
 _080FEB08: .4byte 0x080FEA21
 	thumb_func_end ItemUseOutOfBattle_BlackWhiteFlute
 
-	thumb_func_start task08_080A1C44
-task08_080A1C44: @ 0x080FEB0C
+	thumb_func_start Task_UseDigEscapeRopeOnField
+Task_UseDigEscapeRopeOnField: @ 0x080FEB0C
 	push {r4, lr}
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
@@ -2412,7 +2412,7 @@ task08_080A1C44: @ 0x080FEB0C
 	pop {r4}
 	pop {r0}
 	bx r0
-	thumb_func_end task08_080A1C44
+	thumb_func_end Task_UseDigEscapeRopeOnField
 
 	thumb_func_start re_escape_rope
 re_escape_rope: @ 0x080FEB28
@@ -2420,7 +2420,7 @@ re_escape_rope: @ 0x080FEB28
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl Overworld_ResetStateAfterFly
+	bl Overworld_ResetStateAfterDigEscRope
 	bl sub_080FE8A8
 	ldr r1, _080FEB58
 	lsls r0, r4, #2
@@ -2442,8 +2442,8 @@ _080FEB5C: .4byte 0x02021C7C
 _080FEB60: .4byte 0x080FEB0D
 	thumb_func_end re_escape_rope
 
-	thumb_func_start CanUseEscapeRopeOnCurrMap
-CanUseEscapeRopeOnCurrMap: @ 0x080FEB64
+	thumb_func_start CanUseDigOrEscapeRopeOnCurMap
+CanUseDigOrEscapeRopeOnCurMap: @ 0x080FEB64
 	push {lr}
 	ldr r0, _080FEB78
 	ldrb r1, [r0, #0x1a]
@@ -2461,14 +2461,14 @@ _080FEB7E:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end CanUseEscapeRopeOnCurrMap
+	thumb_func_end CanUseDigOrEscapeRopeOnCurMap
 
 	thumb_func_start ItemUseOutOfBattle_EscapeRope
 ItemUseOutOfBattle_EscapeRope: @ 0x080FEB84
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl CanUseEscapeRopeOnCurrMap
+	bl CanUseDigOrEscapeRopeOnCurMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

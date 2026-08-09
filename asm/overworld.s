@@ -31,8 +31,8 @@ _08083FE0: .4byte 0x082428F1
 _08083FE4: .4byte 0x03005AEC
 	thumb_func_end DoWhiteOut
 
-	thumb_func_start Overworld_ResetStateAfterDigEscRope
-Overworld_ResetStateAfterDigEscRope: @ 0x08083FE8
+	thumb_func_start Overworld_ResetStateAfterFly
+Overworld_ResetStateAfterFly: @ 0x08083FE8
 	push {lr}
 	bl ResetInitialPlayerAvatarState
 	ldr r0, _08084010
@@ -53,7 +53,7 @@ _08084014: .4byte 0x0000088D
 _08084018: .4byte 0x0000088C
 _0808401C: .4byte 0x00000889
 _08084020: .4byte 0x00000888
-	thumb_func_end Overworld_ResetStateAfterDigEscRope
+	thumb_func_end Overworld_ResetStateAfterFly
 
 	thumb_func_start Overworld_ResetStateAfterTeleport
 Overworld_ResetStateAfterTeleport: @ 0x08084024
@@ -82,8 +82,8 @@ _08084064: .4byte 0x00000888
 _08084068: .4byte 0x082428FC
 	thumb_func_end Overworld_ResetStateAfterTeleport
 
-	thumb_func_start Overworld_ResetStateAfterFly
-Overworld_ResetStateAfterFly: @ 0x0808406C
+	thumb_func_start Overworld_ResetStateAfterDigEscRope
+Overworld_ResetStateAfterDigEscRope: @ 0x0808406C
 	push {lr}
 	bl ResetInitialPlayerAvatarState
 	ldr r0, _08084094
@@ -104,7 +104,7 @@ _08084098: .4byte 0x0000088D
 _0808409C: .4byte 0x0000088C
 _080840A0: .4byte 0x00000889
 _080840A4: .4byte 0x00000888
-	thumb_func_end Overworld_ResetStateAfterFly
+	thumb_func_end Overworld_ResetStateAfterDigEscRope
 
 	thumb_func_start Overworld_ResetStateAfterWhiteOut
 Overworld_ResetStateAfterWhiteOut: @ 0x080840A8

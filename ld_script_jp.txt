@@ -218,7 +218,7 @@ SECTIONS {
         asm/starter_choose.o(.text);
         asm/wallclock.o(.text);
         build/src/fldeff_rocksmash.o(.text);
-        asm/fldeff_rocksmash.o(.text);
+        build/src/fldeff_dig.o(.text);
         asm/pokeblock.spokeblock.o(.text);
         asm/fldeff_flash.o(.text);
         asm/post_battle_event_funcs.o(.text);

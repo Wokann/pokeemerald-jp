@@ -83,7 +83,8 @@ full module -- asm/birch_pc.s removed), src/fldeff_strength.c (4, full
 module -- asm/fldeff_strength.s removed), src/fldeff_teleport.c (4, full
 module -- asm/fldeff_teleport.s removed), src/hof_pc.c (4, asm/hof_pc.s
 removed), src/fldeff_rocksmash.c (10, asm/fldeff_rocksmash.s trimmed to the
-remaining 4 EscapeRope helper functions).
+remaining 4 EscapeRope helper functions), src/fldeff_dig.c (4, full module --
+asm/fldeff_rocksmash.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -95,3 +96,11 @@ LockPlayerFieldControls/UnlockPlayerFieldControls, EnableBothScriptContexts
 -> ScriptContext_Enable).  funcmap_jp.txt and sym_ewram_jp.txt were updated
 accordingly (gPlayerFacingPosition 0x0203A80C, gSpecialVar_LastTalked
 0x02037292).
+
+src/fldeff_dig.c (SetUpFieldMove_Dig, FieldCallback_Dig, FldEff_UseDig,
+StartDigFieldEffect) completes the module; the JP splitter had swapped the
+Overworld_ResetStateAfterFly / Overworld_ResetStateAfterDigEscRope labels
+(0x0808406C is the dig/escape-rope reset, 0x08083FE8 the fly reset, judged
+by call-site logic in item_use.s and field_effect.s), and
+CanUseEscapeRopeOnCurrMap / task08_080A1C44 were renamed to pokeemerald's
+CanUseDigOrEscapeRopeOnCurMap / Task_UseDigEscapeRopeOnField.

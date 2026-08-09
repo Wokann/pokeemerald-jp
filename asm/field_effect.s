@@ -2094,7 +2094,7 @@ _080B61BC:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B61E2
-	bl Overworld_ResetStateAfterDigEscRope
+	bl Overworld_ResetStateAfterFly
 	bl WarpIntoMap
 	ldr r0, _080B61F0
 	bl SetMainCallback2
