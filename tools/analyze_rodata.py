@@ -12,7 +12,8 @@ the words point to:
     data         not a uniform pointer table
 
 Usage:
-    python3 tools/analyze_rodata.py [top N]
+    python3 tools/analyze_rodata.py          # pointer-table classification
+    python3 tools/analyze_rodata.py records  # fixed-width text-record scan
 """
 
 import re
@@ -101,6 +102,35 @@ def main():
     for kind, label, addr, size, n, targets in sorted(tables, key=lambda t: -t[4]):
         shown = " ".join(targets[:5])
         print(f"{kind:<11} {label:<24} 0x{addr:07X} 0x{size:05X} {n:>5}  {shown}")
+
+    if len(sys.argv) > 1 and sys.argv[1] == "records":
+        print("\nfixed-width text-record candidates (record size x count):")
+        for label, addr, rel, size in chunks:
+            if size < 64:
+                continue
+            raw = data[rel : rel + size]
+            for record_size in range(4, 33):
+                if size % record_size:
+                    continue
+                count = size // record_size
+                if count < 8 or count > 2000:
+                    continue
+                good = 0
+                for k in range(count):
+                    rec = raw[k * record_size : (k + 1) * record_size]
+                    texty = sum(
+                        1
+                        for b in rec
+                        if b == 0xFF
+                        or b == 0x00
+                        or 0x01 <= b <= 0x50
+                        or 0xB9 <= b <= 0xE9
+                    )
+                    if texty >= record_size - 2:
+                        good += 1
+                if good == count:
+                    print(f"  {label:<26} 0x{addr:07X} 0x{size:05X} "
+                          f"{record_size:>2} x {count}")
 
 
 if __name__ == "__main__":
