@@ -245,8 +245,7 @@ gUnknown_82BFE8D: @ 0x82BFE8D
 
 	.globl gUnknown_82BFE9F
 gUnknown_82BFE9F: @ 0x82BFE9F
-	.string "Aボタン{SE_NOTE_B}タイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}$"
-	.string "{UNK_FC02}{TRANSPARENT}{MUS_RG_VS_GYM_LEADER}{WHITE}$"
+	.incbin "build/data/data.bin", 0x240fb, 0x19
 
 	.globl gUnknown_82BFEB8
 gUnknown_82BFEB8: @ 0x82BFEB8
@@ -2014,30 +2013,7 @@ gUnknown_82D25C8: @ 0x82D25C8
 
 	.globl gUnknown_82D277C
 gUnknown_82D277C: @ 0x82D277C
-	.string "{SE_FAINT}{SE_SELECT}じ{WHITE}た{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "っ{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_GIRL}▶{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_CAUGHT}"
-	.string "{LIGHT_GRAY}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_CAUGHT}ル{RED}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_CAUGHT}{SE_SELECT}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}$"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}$"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "F{MUS_RG_ENCOUNTER_GIRL}っ{WHITE}{SE_FAINT}{SE_FLEE}{SE_SLIDING_DOOR}{TRANSPARENT}{SE_SHIP}{SE_BANG}"
-	.string "{SE_PIN}{SE_BOO}{TRANSPARENT}{SE_BALL}ぬ{RED}に{RED}な{SE_RG_DEOXYS_MOVE}と{RED}て{RED}つ{RED}ち{WHITE}"
-	.string "ホF:ぅ{MUS_MT_PYRE}{SE_FAILURE}{SE_EXP}{SE_BIKE_HOP}{TRANSPARENT}{SE_SWITCH}{SE_CLICK}{SE_FU_ZAKU}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{TRANSPARENT}{SE_LAVARIDGE_FALL_WARP}ら{RED}よ{RED}ゆ{SE_PC_ON}や{RED}も{RED}"
-	.string "め{RED}む{RED}タみ:ぜ{MUS_TRICK_HOUSE}{SE_CONTEST_PLACE}{SE_A}{SE_I}{TRANSPARENT}{SE_U}{SE_E}{SE_O}{SE_N}"
-	.string "{TRANSPARENT}{SE_SUCCESS}ま{RED}ほ{RED}{SE_O}{RED}ふ{RED}ひ{RED}は{RED}のぃ{RED}ね:ぜ{MUS_TRICK_HOUSE}"
-	.string "{SE_ICE_STAIRS}{SE_ICE_BREAK}{TRANSPARENT}{SE_ICE_CRACK}{SE_FALL}{SE_UNLOCK}{SE_WARP_IN}{TRANSPARENT}"
-	.string "{SE_WARP_OUT}{SE_REPEL}ぁ{RED}ん{SE_PC_ON}を{RED}わ{RED}ろ{RED}れ{RED}まる{RED}り:ぜ{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}$"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}$"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{UNK_F8F0}{WHITE}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}{MUS_RG_ENCOUNTER_GIRL}"
-	.string "{MUS_VS_KYOGRE_GROUDON}{MUS_DUMMY}{DYNAMIC_COLOR1}$"
+	.incbin "build/data/data.bin", 0x369d8, 0x12a
 
 	.globl gUnknown_82D28A6
 gUnknown_82D28A6: @ 0x82D28A6
@@ -2869,7 +2845,7 @@ gUnknown_8300A4E: @ 0x8300A4E
 
 	.globl gUnknown_8300A8A
 gUnknown_8300A8A: @ 0x8300A8A
-	.string "${MUS_RG_VS_GYM_LEADER}{WHITE}{UNK_FC02}{TRANSPARENT}{UNK_FC03}{DARK_GRAY}$"
+	.incbin "build/data/data.bin", 0x64ce6, 0xb
 
 	.globl gUnknown_8300A95
 gUnknown_8300A95: @ 0x8300A95
@@ -5231,11 +5207,7 @@ gUnknown_8537298: @ 0x8537298
 
 	.globl gUnknown_85372B0
 gUnknown_85372B0: @ 0x85372B0
-	.string "{MUS_DUMMY}$ァkれ{B_BUTTON}ぜぢk{DYNAMIC_COLOR3}るゆコ{SE_INTRO_BLAST}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$$$$$$$$$$$$$$$$$$$$$まちち{UNK_F88F}ギギ{UNK_F8FF}$"
-	.string "$$まちち{UNK_F88F}ギギ{UNK_F8FF}$$$$$$$$$"
-	.string "$$$$$$$$$$"
+	.incbin "build/data/data.bin", 0x29b50c, 0x60
 
 	.globl gUnknown_8537310
 gUnknown_8537310: @ 0x8537310
@@ -5247,55 +5219,55 @@ gUnknown_8537350: @ 0x8537350
 
 	.globl gUnknown_853736C
 gUnknown_853736C: @ 0x853736C
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}{LIGHT_RED}{MUS_RG_ENCOUNTER_RIVAL}$"
+	.incbin "build/data/data.bin", 0x29b5c8, 0xa
 
 	.globl gUnknown_8537376
 gUnknown_8537376: @ 0x8537376
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}ふつ{LIGHT_GRAY}$"
+	.incbin "build/data/data.bin", 0x29b5d2, 0xa
 
 	.globl gUnknown_8537380
 gUnknown_8537380: @ 0x8537380
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}は{MUS_RG_SEVII_45}$"
+	.incbin "build/data/data.bin", 0x29b5dc, 0xa
 
 	.globl gUnknown_853738A
 gUnknown_853738A: @ 0x853738A
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}みる$"
+	.incbin "build/data/data.bin", 0x29b5e6, 0x9
 
 	.globl gUnknown_8537393
 gUnknown_8537393: @ 0x8537393
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}み{MUS_RG_GAME_FREAK}$"
+	.incbin "build/data/data.bin", 0x29b5ef, 0xa
 
 	.globl gUnknown_853739D
 gUnknown_853739D: @ 0x853739D
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{MUS_RG_SILPH}れ{GREEN}{RED}$"
+	.incbin "build/data/data.bin", 0x29b5f9, 0xb
 
 	.globl gUnknown_85373A8
 gUnknown_85373A8: @ 0x85373A8
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}{GREEN}ちぬ{LIGHT_GREEN}$"
+	.incbin "build/data/data.bin", 0x29b604, 0xb
 
 	.globl gUnknown_85373B3
 gUnknown_85373B3: @ 0x85373B3
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}モノラル$"
+	.incbin "build/data/data.bin", 0x29b60f, 0xb
 
 	.globl gUnknown_85373BE
 gUnknown_85373BE: @ 0x85373BE
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}ステレオ$"
+	.incbin "build/data/data.bin", 0x29b61a, 0xb
 
 	.globl gUnknown_85373C9
 gUnknown_85373C9: @ 0x85373C9
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}タイプ$"
+	.incbin "build/data/data.bin", 0x29b625, 0xa
 
 	.globl gUnknown_85373D3
 gUnknown_85373D3: @ 0x85373D3
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}$"
+	.incbin "build/data/data.bin", 0x29b62f, 0x7
 
 	.globl gUnknown_85373DA
 gUnknown_85373DA: @ 0x85373DA
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}ノーマル$"
+	.incbin "build/data/data.bin", 0x29b636, 0xb
 
 	.globl gUnknown_85373E5
 gUnknown_85373E5: @ 0x85373E5
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{UNK_FC03}{LIGHT_GREEN}LR$"
+	.incbin "build/data/data.bin", 0x29b641, 0x9
 
 	.globl gUnknown_85373EE
 gUnknown_85373EE: @ 0x85373EE
@@ -6509,9 +6481,7 @@ gUnknown_8565858: @ 0x8565858
 
 	.globl gUnknown_85658A0
 gUnknown_85658A0: @ 0x85658A0
-	.string "{DPAD_NONE}{DARK_GRAY}ど{SE_PC_OFF}{TRANSPARENT}{R_BUTTON}{UNK_F9CF}{EMOJI_UNDERSCORE}{UNK_F9CD}"
-	.string "{UNK_F9CE}{MUS_DUMMY}{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}"
-	.string "もど{SE_ICE_BREAK}$"
+	.incbin "build/data/data.bin", 0x2c9afc, 0x21
 
 	.globl gUnknown_85658C1
 gUnknown_85658C1: @ 0x85658C1
@@ -9431,64 +9401,7 @@ gUnknown_8598C68: @ 0x8598C68
 
 	.globl gUnknown_8598DE0
 gUnknown_8598DE0: @ 0x8598DE0
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "ちちちちちちちちちちちちちちちちちちちちちちちちちちちちちちちちででででででででででででででででででででででででででででででで{SE_NOTE_B}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{SE_M_HEAT_WAVE}{TRANSPARENT}:{SE_RG_SHOP}:$"
-	.string "{SE_A}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_M_HEAT_WAVE}{TRANSPARENT}$"
-	.string "$:$$の$ポちちポちちちちちち{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}:$"
-	.string "$$$$ポ$ちちちちちちちちちちちちちちちちちちち:$$$$$$$のちちちちちちちちちちちちちちちちちちちちちち{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_M_HEAT_WAVE}"
-	.string "{MUS_DUMMY}{SE_RG_SHOP}{TRANSPARENT}$"
-	.string "{SE_SUCCESS}:ポち:$ちち$のちちポちちち:$のち$ちちちのちちちちちちちちちちちちちちちちちちちちちち{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_RG_SHOP}{TRANSPARENT}:{SE_SUCCESS}"
-	.string "{TRANSPARENT}$"
-	.string "{SE_FLEE}:の{SE_FLEE}ポちち:まちち$ちちちまちち{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_RG_SHOP}{TRANSPARENT}:{SE_SUCCESS}{TRANSPARENT}:{SE_A}"
-	.string "{TRANSPARENT}$"
-	.string "{SE_FLEE}:ま{SE_FLEE}:の{SE_FLEE}$ちち:まち{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}"
-	.string "{SE_M_SAND_ATTACK}{TRANSPARENT}:ま:のちち$"
-	.string "ちちちまちちちまちちちのちちちちちちちちちちちちちち{SE_FLEE}{TRANSPARENT}:{SE_SUCCESS}{TRANSPARENT}$"
-	.string "{SE_FLEE}{TRANSPARENT}${SE_FLEE}{TRANSPARENT}ポ{SE_FLEE}:ま{SE_FLEE}:ま{SE_FLEE}:の{SE_FLEE}$"
-	.string "ち{SE_FLEE}$ち{SE_FLEE}$ち{SE_FLEE}まちち:まちち:まちち:まちち:のちち:のちち:ちちち$"
-	.string "ちちち$ちちちポちちちポちちちポちちち$$${SE_RG_SHOP}:$$ちちちちちちちちちちちちちちちちちちちちちちちち$"
-	.string "$$$$$${SE_RG_SHOP}:$$$$$$ゼでででゼでででゼででで$ででで$"
-	.string "ででで:ででで$$$$$$$$でででででででででででででででででででででででで:ぼでで:ぼでで:ぽでで:ぽでで:ぽで{SE_NOTE_B}·で{SE_NOTE_B}$"
-	.string "で{SE_NOTE_B}$で{SE_NOTE_B}$で{SE_NOTE_B}:ぼ{SE_NOTE_B}:ぽ{SE_NOTE_B}:ぽ{SE_NOTE_B}{TRANSPARENT}"
-	.string "·{SE_NOTE_B}{TRANSPARENT}$"
-	.string "{SE_NOTE_B}{TRANSPARENT}${SE_BALLOON_RED}{TRANSPARENT}:{SE_FIELD_POISON}{TRANSPARENT}"
-	.string ":{SE_FIELD_POISON}{MUS_DUMMY}{SE_M_DIG}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}"
-	.string "{SE_M_HEAT_WAVE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
-	.string "ででででででででででででぼでででぽででで·ででで$"
-	.string "ででで:ぼでで:ぽで{SE_NOTE_B}$で{SE_NOTE_B}:ぼ{SE_NOTE_B}:ぽ{SE_NOTE_B}{TRANSPARENT}$"
-	.string "{SE_NOTE_B}{TRANSPARENT}:{SE_BALLOON_RED}{TRANSPARENT}:{SE_FIELD_POISON}{MUS_DUMMY}{SE_RG_SHOP}"
-	.string "{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ぽででで$"
-	.string "ででで:ぽで{SE_NOTE_B}·で{SE_NOTE_B}:ぼ{SE_NOTE_B}{TRANSPARENT}$"
-	.string "{SE_NOTE_B}{TRANSPARENT}:{SE_FIELD_POISON}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ぽででで$"
-	.string "ぼでで:$で{SE_NOTE_B}:·{SE_NOTE_B}{TRANSPARENT}$"
-	.string "{SE_FIELD_POISON}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{TRANSPARENT}"
-	.string "ででででででででででででででででででででぼででで$"
-	.string "ででで:$ぼ{SE_NOTE_B}:${SE_BALLOON_RED}{TRANSPARENT}:{SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}"
-	.string "ででででぽででで$"
-	.string "·でで:$${SE_BALLOON_RED}{TRANSPARENT}${SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{TRANSPARENT}でででででででででででででででで$"
-	.string "9でで$$${SE_RG_SHOP}:${SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}でででででででででででででででででででで9ぼでで$"
-	.string "$$$:$$$ちちちちちちちちちちちダちちち{CIRCLE_8}ちダ$ちち{UNK_F9FF}ちダ$"
-	.string "$ちÄ$ぽちち{UNK_F9FF}ダ$$$$$$$$$ァオ$ソでで·でででででででででででち$"
-	.string "$でダ$·でÄ$びでÄ$でで{UNK_F9FF}でで$ァでで$·でで$ソででででö$"
-	.string "でä·でで·ででäぼででöででで·でででぽでででぽででで$ぽでで$ぽでで$·でで{DYNAMIC}ァでで{UNK_FAFF}ででä$"
-	.string "びで3$ぽでで$$でぽでででぽででで·でででöでででäぼででで·でででä·でででö$"
-	.string "で{UNK_FAFF}ぽでヤ$$でで{DYNAMIC}$ででヤ$ででで{DYNAMIC}ででででででででででででででででででででぽででで$"
-	.string "びでで$$ァオ$$$$ヤ$$$で3{DYNAMIC}$"
+	.incbin "build/data/data.bin", 0x2fd03c, 0x580
 
 	.globl gUnknown_8599360
 gUnknown_8599360: @ 0x8599360
@@ -10230,15 +10143,15 @@ gUnknown_85ABBD8: @ 0x85ABBD8
 
 	.globl gUnknown_85ABC38
 gUnknown_85ABC38: @ 0x85ABC38
-	.string "{UNK_FC02}{DARK_GRAY}サファリボール$"
+	.incbin "build/data/data.bin", 0x30fe94, 0xb
 
 	.globl gUnknown_85ABC43
 gUnknown_85ABC43: @ 0x85ABC43
-	.string "{UNK_FC02}{DARK_GRAY}の{DYNAMIC_COLOR1}{SE_ICE_STAIRS}$"
+	.incbin "build/data/data.bin", 0x30fe9f, 0x8
 
 	.globl gUnknown_85ABC4B
 gUnknown_85ABC4B: @ 0x85ABC4B
-	.string "{UNK_FC02}{DARK_GRAY}{DYNAMIC_COLOR1}$"
+	.incbin "build/data/data.bin", 0x30fea7, 0x5
 
 	.globl gUnknown_85ABC50
 gUnknown_85ABC50: @ 0x85ABC50
@@ -10298,15 +10211,15 @@ gUnknown_85ABC7E: @ 0x85ABC7E
 
 	.globl gUnknown_85ABC82
 gUnknown_85ABC82: @ 0x85ABC82
-	.string "{UNK_FC02}{TRANSPARENT}{GREEN}ち$"
+	.incbin "build/data/data.bin", 0x30fede, 0x6
 
 	.globl gUnknown_85ABC88
 gUnknown_85ABC88: @ 0x85ABC88
-	.string "{UNK_FC02}{TRANSPARENT}ま{LIGHT_BLUE}$"
+	.incbin "build/data/data.bin", 0x30fee4, 0x6
 
 	.globl gUnknown_85ABC8E
 gUnknown_85ABC8E: @ 0x85ABC8E
-	.string "{UNK_FC02}{TRANSPARENT}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
+	.incbin "build/data/data.bin", 0x30feea, 0x8
 
 	.globl gUnknown_85ABC96
 gUnknown_85ABC96: @ 0x85ABC96
@@ -11480,7 +11393,7 @@ gUnknown_85C8BBB: @ 0x85C8BBB
 
 	.globl gUnknown_85C8BF2
 gUnknown_85C8BF2: @ 0x85C8BF2
-	.string "{MUS_RG_VS_GYM_LEADER}{RED}{UNK_FC03}{LIGHT_RED}ゲームフリーク$"
+	.incbin "build/data/data.bin", 0x32ce4e, 0xe
 
 	.globl gUnknown_85C8C00
 gUnknown_85C8C00: @ 0x85C8C00
@@ -12275,9 +12188,7 @@ gUnknown_85C9D68: @ 0x85C9D68
 
 	.globl gUnknown_85C9D7C
 gUnknown_85C9D7C: @ 0x85C9D7C
-	.string "{B_COPY_VAR_1}{SE_BANG}{B_COPY_VAR_2}は{MUS_RG_VS_WILD}{DARK_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
-	.string "{SE_SAVE}わる{GREEN}った！{UNK_FBFD}{LIGHT_GRAY}{SE_I}{LIGHT_RED}ぼ{RED}られ{MUS_RG_GAME_FREAK}"
-	.string "！{PAUSE_UNTIL_PRESS}$"
+	.incbin "build/data/data.bin", 0x32dfd8, 0x25
 
 	.globl gUnknown_85C9DA1
 gUnknown_85C9DA1: @ 0x85C9DA1
@@ -12627,10 +12538,7 @@ gUnknown_85CA6A4: @ 0x85CA6A4
 
 	.globl gUnknown_85CA6C6
 gUnknown_85CA6C6: @ 0x85CA6C6
-	.string "{MUS_RG_VS_GYM_LEADER}0{UNK_FC03}0${RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}へや{SE_BOO}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}ま{DYNAMIC_COLOR4}！$"
-	.string "{RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}パソコン{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
-	.string "{DARK_GRAY}らな{BLUE}なっ{SE_FAINT}グッズ{SE_WARP_IN}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}！$"
+	.incbin "build/data/data.bin", 0x32e922, 0x45
 
 	.globl gUnknown_85CA70B
 gUnknown_85CA70B: @ 0x85CA70B
@@ -13528,7 +13436,7 @@ gUnknown_85CC3BF: @ 0x85CC3BF
 
 	.globl gUnknown_85CC3CF
 gUnknown_85CC3CF: @ 0x85CC3CF
-	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{UNK_FC03}{LIGHT_GRAY}{DYNAMIC_COLOR1}$"
+	.incbin "build/data/data.bin", 0x33062b, 0xa
 
 	.globl gUnknown_85CC3D9
 gUnknown_85CC3D9: @ 0x85CC3D9
@@ -13540,7 +13448,7 @@ gUnknown_85CC3EA: @ 0x85CC3EA
 
 	.globl gUnknown_85CC3F8
 gUnknown_85CC3F8: @ 0x85CC3F8
-	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{UNK_FC03}{LIGHT_GRAY}BP$"
+	.incbin "build/data/data.bin", 0x330654, 0xb
 
 	.globl gUnknown_85CC403
 gUnknown_85CC403: @ 0x85CC403
@@ -13566,7 +13474,7 @@ gUnknown_85CC486: @ 0x85CC486
 
 	.globl gUnknown_85CC48C
 gUnknown_85CC48C: @ 0x85CC48C
-	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_GRAY}{UNK_FC03}{DARK_GRAY}$"
+	.incbin "build/data/data.bin", 0x3306e8, 0x7
 
 	.globl gUnknown_85CC493
 gUnknown_85CC493: @ 0x85CC493
@@ -13574,7 +13482,7 @@ gUnknown_85CC493: @ 0x85CC493
 
 	.globl gUnknown_85CC497
 gUnknown_85CC497: @ 0x85CC497
-	.string "{UNK_FC02}{TRANSPARENT}{MUS_RG_VS_GYM_LEADER}$"
+	.incbin "build/data/data.bin", 0x3306f3, 0x6
 
 	.globl gUnknown_85CC49D
 gUnknown_85CC49D: @ 0x85CC49D
@@ -13614,7 +13522,7 @@ gUnknown_85CC4E4: @ 0x85CC4E4
 
 	.globl gUnknown_85CC4EA
 gUnknown_85CC4EA: @ 0x85CC4EA
-	.string "{UNK_FC02}{DARK_GRAY}$"
+	.incbin "build/data/data.bin", 0x330746, 0x4
 
 	.globl gUnknown_85CC4EE
 gUnknown_85CC4EE: @ 0x85CC4EE
@@ -14581,7 +14489,7 @@ gUnknown_85D5B68: @ 0x85D5B68
 
 	.globl gUnknown_85D5B78
 gUnknown_85D5B78: @ 0x85D5B78
-	.string "{UNK_FBFF}$${DYNAMIC}$$$$$▶$$$k$"
+	.incbin "build/data/data.bin", 0x339dd4, 0x10
 
 	.globl gUnknown_85D5B88
 gUnknown_85D5B88: @ 0x85D5B88
@@ -16214,11 +16122,11 @@ gUnknown_85ED2B4: @ 0x85ED2B4
 
 	.globl gUnknown_85ED2C4
 gUnknown_85ED2C4: @ 0x85ED2C4
-	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_RED}{UNK_FC03}{GREEN}$"
+	.incbin "build/data/data.bin", 0x351520, 0x7
 
 	.globl gUnknown_85ED2CB
 gUnknown_85ED2CB: @ 0x85ED2CB
-	.string "{MUS_RG_VS_GYM_LEADER}{WHITE}{UNK_FC03}{DARK_GRAY}$"
+	.incbin "build/data/data.bin", 0x351527, 0x7
 
 	.globl gUnknown_85ED2D2
 gUnknown_85ED2D2: @ 0x85ED2D2

@@ -131,7 +131,6 @@ class Charmap:
     def preproc_bytes(self, text):
         """Run preproc on the .string lines and return the encoded bytes,
         or None if preproc is unavailable."""
-        self.ensure_unk_constants(text)
         preproc = ROOT / "tools" / "preproc" / "preproc"
         if not preproc.is_file():
             return None
@@ -156,24 +155,6 @@ class Charmap:
         for line in result.stdout.splitlines():
             vals.extend(int(m.group(1), 16) for m in re.finditer(r"0x([0-9A-Fa-f]{2})", line))
         return bytes(vals)
-
-    def ensure_unk_constants(self, text):
-        """Append missing {UNK_XXXX} entries to charmap.txt so preproc
-        can encode them, and register them in memory."""
-        missing = set()
-        for m in re.finditer(r"\{UNK_([0-9A-Fa-f]{4})\}", text):
-            token = m.group(1).upper()
-            if f"{{UNK_{token}}}" not in self.text_to_bytes:
-                missing.add(token)
-        if missing:
-            with CHARMAP_FILE.open("a", encoding="utf-8") as f:
-                for token in sorted(missing):
-                    f.write(f"UNK_{token} = {token[0:2]} {token[2:4]}\n")
-            for token in missing:
-                seq = (int(token[0:2], 16), int(token[2:4], 16))
-                self.bytes_to_text[seq] = f"{{UNK_{token}}}"
-                self.text_to_bytes[f"{{UNK_{token}}}"] = seq
-        return missing
 
 
 def parse_chunks():
@@ -291,6 +272,31 @@ def main():
             print(f"{reason:<20} {count}")
             for label, addr, size in samples[reason][:3]:
                 print(f"    {label} 0x{addr:07X} 0x{size:05X}")
+    elif cmd == "preproc-check":
+        target = sys.argv[2]
+        for label, addr, rel, size in parse_chunks():
+            if label == target:
+                raw = data[rel : rel + size]
+                text = cm.decode(raw)
+                tmp = tempfile.NamedTemporaryFile(
+                    "w", suffix=".s", delete=False, encoding="utf-8"
+                )
+                try:
+                    for seg in split_strings(text):
+                        tmp.write(f'\t.string "{seg}"\n')
+                    tmp.close()
+                    result = subprocess.run(
+                        [str(ROOT / "tools" / "preproc" / "preproc"),
+                         tmp.name, str(CHARMAP_FILE)],
+                        capture_output=True,
+                        text=True,
+                    )
+                    print("stderr:", result.stderr[:800])
+                    print("rc:", result.returncode)
+                finally:
+                    os.unlink(tmp.name)
+                return
+        sys.exit(f"no chunk named {target}")
     else:
         sys.exit(__doc__)
 
