@@ -4,6 +4,7 @@
 .syntax unified
 
 	thumb_func_start CoordEventWeather_Clouds
+	@ From src/coord_event_weather.c
 CoordEventWeather_Clouds: @ 0x0809D094
 	push {lr}
 	movs r0, #1
@@ -13,6 +14,7 @@ CoordEventWeather_Clouds: @ 0x0809D094
 	thumb_func_end CoordEventWeather_Clouds
 
 	thumb_func_start CoordEventWeather_Sunny
+	@ From src/coord_event_weather.c
 CoordEventWeather_Sunny: @ 0x0809D0A0
 	push {lr}
 	movs r0, #2
@@ -40,6 +42,7 @@ CoordEventWeather_Sandstorm: @ 0x0809D0B8
 	thumb_func_end CoordEventWeather_Sandstorm
 
 	thumb_func_start CoordEventWeather_Thunderstorm
+	@ From src/coord_event_weather.c
 CoordEventWeather_Thunderstorm: @ 0x0809D0C4
 	push {lr}
 	movs r0, #5
@@ -67,6 +70,7 @@ CoordEventWeather_Snow: @ 0x0809D0DC
 	thumb_func_end CoordEventWeather_Snow
 
 	thumb_func_start CoordEventWeather_Ash
+	@ From src/coord_event_weather.c
 CoordEventWeather_Ash: @ 0x0809D0E8
 	push {lr}
 	movs r0, #7
@@ -94,6 +98,7 @@ CoordEventWeather_DiagonalFog: @ 0x0809D100
 	thumb_func_end CoordEventWeather_DiagonalFog
 
 	thumb_func_start CoordEventWeather_Drought
+	@ From src/coord_event_weather.c
 CoordEventWeather_Drought: @ 0x0809D10C
 	push {lr}
 	movs r0, #0xc
@@ -103,6 +108,7 @@ CoordEventWeather_Drought: @ 0x0809D10C
 	thumb_func_end CoordEventWeather_Drought
 
 	thumb_func_start CoordEventWeather_Route119Cycle
+	@ From src/coord_event_weather.c
 CoordEventWeather_Route119Cycle: @ 0x0809D118
 	push {lr}
 	movs r0, #0x14
@@ -112,6 +118,7 @@ CoordEventWeather_Route119Cycle: @ 0x0809D118
 	thumb_func_end CoordEventWeather_Route119Cycle
 
 	thumb_func_start CoordEventWeather_Route123Cycle
+	@ From src/coord_event_weather.c
 CoordEventWeather_Route123Cycle: @ 0x0809D124
 	push {lr}
 	movs r0, #0x15
