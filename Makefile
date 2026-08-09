@@ -19,7 +19,7 @@ ASFILE := $(wildcard asm/*.s)
 # once every function in its asm file has been converted to C (or the
 # asm file has been split so the C functions fill a contiguous ROM
 # range), then remove the asm object from ld_script_jp.txt.
-C_SRCS := src/load_save.c src/hof_pc.c src/decompress.c src/util.c src/text_window.c src/random.c src/heal_location.c src/landmark.c src/trig.c src/dynamic_placeholder_text_util.c
+C_SRCS := src/load_save.c src/hof_pc.c src/decompress.c src/util.c src/text_window.c src/random.c src/heal_location.c src/landmark.c src/trig.c src/dynamic_placeholder_text_util.c src/gym_leader_rematch.c
 C_BUILDDIR := build/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o

@@ -10,6 +10,9 @@ sHealLocations = ABSOLUTE(0x0857B104);
 sLandmarkLists = ABSOLUTE(0x08598C68);
 gSineTable = ABSOLUTE(0x082FA8CC);
 gSineDegreeTable = ABSOLUTE(0x082FAB4C);
+GymLeaderRematches_AfterNewMauville = ABSOLUTE(0x085FC01C);
+GymLeaderRematches_BeforeNewMauville = ABSOLUTE(0x085FC02C);
+gRematchTable = ABSOLUTE(0x0852AD40);
 
 SECTIONS {
     . = 0x2000000;
@@ -299,7 +302,7 @@ SECTIONS {
         asm/rayquaza_scene.o(.text);
         asm/walda_phrase.o(.text);
         asm/contest_link_81D9DE4.o(.text);
-        asm/gym_leader_rematch.o(.text);
+        build/src/gym_leader_rematch.o(.text);
         asm/unk_transition.o(.text);
     } =0
     script_data :
