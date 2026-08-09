@@ -6359,6 +6359,7 @@ _08087024: .4byte 0x000008D2
 
 	thumb_func_start ZeroLinkPlayerEventObject
 ZeroLinkPlayerEventObject: @ 0x08087028
+	@ From src/overworld.c (ZeroLinkPlayerObjectEvent)
 	movs r1, #0
 	str r1, [r0]
 	bx lr
@@ -6907,6 +6908,7 @@ FacingHandler_ForcedFacingChange: @ 0x080873EC
 
 	thumb_func_start MovementStatusHandler_EnterFreeMode
 MovementStatusHandler_EnterFreeMode: @ 0x08087404
+	@ From src/overworld.c
 	movs r1, #0
 	strb r1, [r0, #3]
 	bx lr

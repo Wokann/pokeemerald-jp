@@ -121,6 +121,7 @@ InitTilesetAnimations: @ 0x080A02E0
 
 	thumb_func_start InitSecondaryTilesetAnimation
 InitSecondaryTilesetAnimation: @ 0x080A02F4
+	@ From src/tileset_anims.c
 	push {lr}
 	bl _InitSecondaryTilesetAnimation
 	pop {r0}
@@ -2101,4 +2102,3 @@ _080A11B0: .4byte 0x02037C74
 _080A11B4: .4byte 0x03000F3C
 _080A11B8: .4byte 0x03000F44
 	thumb_func_end BlendAnimPalette_BattleDome_FloorLightsNoBlend
-

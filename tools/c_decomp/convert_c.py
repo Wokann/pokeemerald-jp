@@ -37,19 +37,20 @@ def main():
         use_func_extract = True
         args = args[1:]
     name, c_file = args[0], Path(args[1])
+    jp_name = args[2] if len(args) > 2 else name
 
     # JP address + bytes from the asm label comment.
     jp_addr = None
     for path in sorted((ROOT / "asm").glob("*.s")):
         for line in path.read_text(encoding="utf-8").splitlines():
-            m = re.match(rf"^{name}:\s*@\s*0x([0-9A-Fa-f]+)\s*$", line)
+            m = re.match(rf"^{jp_name}:\s*@\s*0x([0-9A-Fa-f]+)\s*$", line)
             if m:
                 jp_addr = int(m.group(1), 16)
                 break
         if jp_addr:
             break
     if jp_addr is None:
-        sys.exit(f"no asm label for {name}")
+        sys.exit(f"no asm label for {jp_name}")
 
     # Compile: system cpp with the pokeemerald-style include tree, then
     # the pret agbcc compiler.  -P strips cpp linemarkers that agbcc's

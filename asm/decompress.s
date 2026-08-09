@@ -5,6 +5,7 @@
 
 	thumb_func_start LZDecompressVram
 LZDecompressVram: @ 0x08034370
+	@ From src/decompress.c (JP calls LZ77UnCompWram)
 	push {lr}
 	bl LZ77UnCompWram
 	pop {r0}
@@ -1024,4 +1025,3 @@ _08034AA2:
 	.align 2, 0
 _08034AA8: .4byte 0x04000200
 	thumb_func_end DuplicateDeoxysTiles
-
