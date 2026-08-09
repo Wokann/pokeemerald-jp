@@ -1480,7 +1480,7 @@ _081531AA:
 	movs r0, #0xa
 	bl IncrementGameStat
 _081531BC:
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	ldr r0, _081531F0
 	ldr r1, _081531F4
 	bl save_write_to_flash
@@ -1504,7 +1504,7 @@ _081531F0: .4byte 0x0000FFFF
 _081531F4: .4byte 0x03005F60
 _081531F8: .4byte 0x0201C000
 _081531FC:
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	ldr r0, _0815320C
 	ldr r1, _08153210
 	bl save_write_to_flash
@@ -1513,7 +1513,7 @@ _081531FC:
 _0815320C: .4byte 0x0000FFFF
 _08153210: .4byte 0x03005F60
 _08153214:
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	movs r4, #0
 _0815321A:
 	adds r0, r4, #0
@@ -1539,7 +1539,7 @@ _08153238:
 	lsrs r4, r0, #0x18
 	cmp r4, #0x1f
 	bls _08153238
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	ldr r0, _08153268
 	ldr r1, _0815326C
 	bl save_write_to_flash
@@ -1604,7 +1604,7 @@ sub_081532BC: @ 0x081532BC
 	cmp r0, #1
 	bne _081532E0
 	bl UpdateSaveAddresses
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	ldr r0, _081532DC
 	bl RestoreSaveBackupVarsAndIncrement
 	movs r0, #0
@@ -1700,7 +1700,7 @@ FullSaveGame: @ 0x0815336C
 	cmp r0, #1
 	bne _081533A8
 	bl UpdateSaveAddresses
-	bl SaveSerializedGame
+	bl CopyPartyAndObjectsToSave
 	ldr r4, _081533A0
 	adds r0, r4, #0
 	bl RestoreSaveBackupVars
@@ -1801,7 +1801,7 @@ _08153438:
 	bl sub_08152D20
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl LoadSerializedGame
+	bl CopyPartyAndObjectsFromSave
 	ldr r0, _0815345C
 	strh r4, [r0]
 	ldr r1, _08153460
@@ -2159,4 +2159,3 @@ _081536FE:
 	.align 2, 0
 _08153704: .4byte 0x030027A0
 	thumb_func_end sub_081535C4
-

@@ -1107,7 +1107,7 @@ sub_080AF178: @ 0x080AF178
 	movs r0, #1
 	bl sub_08084EA8
 	bl ScriptContext2_Enable
-	bl SaveEventObjects
+	bl SaveObjectEvents
 	bl TryFadeOutOldMapMusic
 	bl WarpFadeScreen
 	movs r0, #0x2d
@@ -2827,4 +2827,3 @@ _080AFEE4:
 	bx r0
 	.align 2, 0
 	thumb_func_end task50_0807F0C8
-

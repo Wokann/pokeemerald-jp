@@ -6,6 +6,7 @@ sFindThatGamerCoinsSpent = ABSOLUTE(0x02039CF4);
 sFindThatGamerWhichGame = ABSOLUTE(0x02039CF6);
 gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
+gObjectEvents = ABSOLUTE(0x02036FF0);
 sMirageTowerPulseBlend = ABSOLUTE(0x0203CBE4);
 sAI_Scripts = ABSOLUTE(0x0203C488);
 sBattleScene = ABSOLUTE(0x0203C483);

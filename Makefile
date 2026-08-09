@@ -12,7 +12,7 @@ CPPFLAGS := -iquote include -Wno-trigraphs \
 SHELL := /bin/bash
 
 ASFLAGS := -mcpu=arm7tdmi
-CFLAGS := -mthumb-interwork -O2 -ffunction-sections -fhex-asm
+CFLAGS := -mthumb-interwork -O2 -fhex-asm
 
 ASFILE := $(wildcard asm/*.s)
 # Modules fully converted and wired into the build.  Add a module here
@@ -56,8 +56,8 @@ $(ASFILE:.s=.o): %.o: %.s
 
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(C_BUILDDIR)
-	@set -o pipefail; $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o $(C_BUILDDIR)/$*.s -
-	$(AS) $(ASFLAGS) -o $@ $(C_BUILDDIR)/$*.s
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
+		printf '.text\n\t.align\t2, 0\n'; } | $(AS) $(ASFLAGS) -o $@ -
 
 data/event_scripts.o: data/event_scripts.s build/data/event_scripts.bin
 	$(AS) $(ASFLAGS) -o $@ $<

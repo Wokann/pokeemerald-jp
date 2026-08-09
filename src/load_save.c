@@ -47,3 +47,31 @@ void LoadPlayerParty(void)
     for (i = 0; i < PARTY_SIZE; i++)
         gPlayerParty[i] = gSaveBlock1Ptr->playerParty[i];
 }
+
+void SaveObjectEvents(void)
+{
+    int i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        gSaveBlock1Ptr->objectEvents[i] = gObjectEvents[i];
+}
+
+void LoadObjectEvents(void)
+{
+    int i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+        gObjectEvents[i] = gSaveBlock1Ptr->objectEvents[i];
+}
+
+void CopyPartyAndObjectsToSave(void)
+{
+    SavePlayerParty();
+    SaveObjectEvents();
+}
+
+void CopyPartyAndObjectsFromSave(void)
+{
+    LoadPlayerParty();
+    LoadObjectEvents();
+}
