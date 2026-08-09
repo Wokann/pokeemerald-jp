@@ -6,6 +6,7 @@ sCrc16Table = ABSOLUTE(0x082FAD64);
 sWindowFrames = ABSOLUTE(0x084E8860);
 gMessageBox_Gfx = ABSOLUTE(0x084E85E0);
 sTextWindowPalettes = ABSOLUTE(0x084E87A0);
+sHealLocations = ABSOLUTE(0x0857B104);
 
 SECTIONS {
     . = 0x2000000;
@@ -176,7 +177,7 @@ SECTIONS {
         asm/mail.o(.text);
         asm/menu_helpers.o(.text);
         asm/dewford_trend.o(.text);
-        asm/heal_location.o(.text);
+        build/src/heal_location.o(.text);
         asm/region_map.o(.text);
         asm/contest_painting_effects.o(.text);
         asm/decoration.o(.text);

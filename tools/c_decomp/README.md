@@ -66,4 +66,5 @@ asm/load_save_rest.s were removed), src/decompress.c (21, full module --
 asm/decompress.s removed), src/util.c (11, full module -- asm/util.s
 removed), src/text_window.c (11, full module -- asm/text_window.s
 removed), src/random.c (4, full module -- asm/random.s removed),
+src/heal_location.c (3, full module -- asm/heal_location.s removed),
 src/hof_pc.c (4, asm/hof_pc.s removed).
