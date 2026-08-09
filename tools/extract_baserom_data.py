@@ -35,6 +35,14 @@ SOURCES = {
     "data/data.s": "build/data/data.bin",
 }
 
+# Fixed start of each region in the ROM.  Kept constant so re-running the
+# script is stable even when chunks at the region start are replaced by
+# structured sources (and therefore no longer appear as .incbin lines).
+REGION_START = {
+    "data/event_scripts.s": 0x1DABAC,
+    "data/data.s": 0x29BDA4,
+}
+
 INCINBIN_RE = re.compile(
     r'^(\s*\.incbin\s+)"[^"]+",\s*(0x[0-9A-Fa-f]+)'
     r'(,\s*)(0x[0-9A-Fa-f]+)(\s*)$'
@@ -73,7 +81,7 @@ def main():
             print(f"{src_rel}: no .incbin lines, skipping")
             continue
 
-        start = min(off for off, _ in chunks)
+        start = min(REGION_START[src_rel], min(off for off, _ in chunks))
         end = max(off + length for off, length in chunks)
         if end > len(rom):
             sys.exit(f"{src_rel}: region end 0x{end:x} exceeds ROM size 0x{len(rom):x}")
