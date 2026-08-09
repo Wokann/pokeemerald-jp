@@ -13,6 +13,27 @@ gSineDegreeTable = ABSOLUTE(0x082FAB4C);
 GymLeaderRematches_AfterNewMauville = ABSOLUTE(0x085FC01C);
 GymLeaderRematches_BeforeNewMauville = ABSOLUTE(0x085FC02C);
 gRematchTable = ABSOLUTE(0x0852AD40);
+gBirchDexRatingText_LessThan10 = ABSOLUTE(0x08262E5F);
+gBirchDexRatingText_LessThan20 = ABSOLUTE(0x08262E81);
+gBirchDexRatingText_LessThan30 = ABSOLUTE(0x08262EA6);
+gBirchDexRatingText_LessThan40 = ABSOLUTE(0x08262ECF);
+gBirchDexRatingText_LessThan50 = ABSOLUTE(0x08262EF5);
+gBirchDexRatingText_LessThan60 = ABSOLUTE(0x08262F18);
+gBirchDexRatingText_LessThan70 = ABSOLUTE(0x08262F3F);
+gBirchDexRatingText_LessThan80 = ABSOLUTE(0x08262F61);
+gBirchDexRatingText_LessThan90 = ABSOLUTE(0x08262F8A);
+gBirchDexRatingText_LessThan100 = ABSOLUTE(0x08262FAD);
+gBirchDexRatingText_LessThan110 = ABSOLUTE(0x08262FE1);
+gBirchDexRatingText_LessThan120 = ABSOLUTE(0x0826300C);
+gBirchDexRatingText_LessThan130 = ABSOLUTE(0x08263032);
+gBirchDexRatingText_LessThan140 = ABSOLUTE(0x08263050);
+gBirchDexRatingText_LessThan150 = ABSOLUTE(0x08263072);
+gBirchDexRatingText_LessThan160 = ABSOLUTE(0x08263095);
+gBirchDexRatingText_LessThan170 = ABSOLUTE(0x082630C7);
+gBirchDexRatingText_LessThan180 = ABSOLUTE(0x082630F0);
+gBirchDexRatingText_LessThan190 = ABSOLUTE(0x0826310C);
+gBirchDexRatingText_LessThan200 = ABSOLUTE(0x0826312D);
+gBirchDexRatingText_DexCompleted = ABSOLUTE(0x0826314F);
 
 SECTIONS {
     . = 0x2000000;
@@ -198,7 +219,7 @@ SECTIONS {
         asm/fldeff_flash.o(.text);
         asm/post_battle_event_funcs.o(.text);
         asm/time_events.o(.text);
-        asm/birch_pc.o(.text);
+        build/src/birch_pc.o(.text);
         build/src/hof_pc.o(.text);
         asm/field_specials.o(.text);
         asm/battle_records.o(.text);
