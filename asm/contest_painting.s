@@ -47,6 +47,7 @@ CB2_ContestPainting: @ 0x0812FE24
 	thumb_func_end CB2_ContestPainting
 
 	thumb_func_start CB2_HoldContestPainting
+	@ From src/contest_painting.c
 CB2_HoldContestPainting: @ 0x0812FE30
 	push {lr}
 	bl HoldContestPainting

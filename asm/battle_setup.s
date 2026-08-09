@@ -1493,6 +1493,7 @@ _080B0AEC: .4byte 0x080365B5
 	thumb_func_end CB2_StartFirstBattle
 
 	thumb_func_start CB2_EndFirstBattle
+	@ From src/battle_setup.c
 CB2_EndFirstBattle: @ 0x080B0AF0
 	push {lr}
 	bl Overworld_ClearSavedMusic
@@ -1501,7 +1502,7 @@ CB2_EndFirstBattle: @ 0x080B0AF0
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080B0B00: .4byte 0x08085B35
+_080B0B00: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic
 	thumb_func_end CB2_EndFirstBattle
 
 	thumb_func_start sub_080B0B04
