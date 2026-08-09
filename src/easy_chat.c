@@ -14,3 +14,8 @@ static int FooterHasFourOptions_(void)
 {
     return FooterHasFourOptions();
 }
+
+static u8 GetEasyChatScreenType(void)
+{
+    return sEasyChatScreen->type;
+}

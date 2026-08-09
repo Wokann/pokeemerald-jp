@@ -100,6 +100,7 @@ _080AFFA8:
 	thumb_func_end BattleSetup_StartWildBattle
 
 	thumb_func_start BattleSetup_StartBattlePikeWildBattle
+	@ From src/battle_setup.c
 BattleSetup_StartBattlePikeWildBattle: @ 0x080AFFAC
 	push {lr}
 	bl DoBattlePikeWildBattle

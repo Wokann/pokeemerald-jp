@@ -3307,6 +3307,7 @@ _0811C25C: .4byte 0x02039DE4
 	thumb_func_end FooterHasFourOptions
 
 	thumb_func_start GetEasyChatScreenType
+	@ From src/easy_chat.c
 GetEasyChatScreenType: @ 0x0811C260
 	ldr r0, _0811C268
 	ldr r0, [r0]

@@ -6,3 +6,10 @@ u8 GetTrainerBattleMode(void)
 {
     return sTrainerBattleMode;
 }
+
+extern void DoBattlePikeWildBattle(void);
+
+void BattleSetup_StartBattlePikeWildBattle(void)
+{
+    DoBattlePikeWildBattle();
+}
