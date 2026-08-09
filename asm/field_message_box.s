@@ -300,11 +300,14 @@ _08097CB4: .4byte 0x0203725C
 
 	thumb_func_start GetFieldMessageBoxMode
 GetFieldMessageBoxMode: @ 0x08097CB8
-	ldr r0, _08097CC0
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08097CC0: .4byte 0x0203725C
+	@ From tools/c_decomp/get_field_message_box_mode.c
+	ldr	r0, .LGetFieldMessageBoxMode
+	ldrb	r0, [r0]
+	bx	lr
+.LGetFieldMessageBoxModePad:
+	.align	2, 0
+.LGetFieldMessageBoxMode:
+	.word	sFieldMessageBoxMode
 	thumb_func_end GetFieldMessageBoxMode
 
 	thumb_func_start IsFieldMessageBoxHidden
@@ -354,4 +357,3 @@ sub_08097CFC: @ 0x08097CFC
 	.align 2, 0
 _08097D0C: .4byte 0x0203725C
 	thumb_func_end sub_08097CFC
-

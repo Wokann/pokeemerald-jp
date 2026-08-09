@@ -58,3 +58,7 @@ that agbcc's own preprocessor rejects), then pipes to agbcc.
   ABSOLUTE(0x0203C483).
 * `destroy_sprite_and_free_resources_.c` -
   DestroySpriteAndFreeResources_ (0x080A7ED8, 10 bytes); tail call.
+* `get_field_message_box_mode.c` - GetFieldMessageBoxMode
+  (0x08097CB8, 8 bytes); sFieldMessageBoxMode at ABSOLUTE(0x0203725C).
+* `get_cursor_selection_mon_id.c` - GetCursorSelectionMonId
+  (0x081B1024, 8 bytes); gPartyMenu.slotId (real party_menu.h struct).

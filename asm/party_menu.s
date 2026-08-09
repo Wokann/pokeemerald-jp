@@ -2431,11 +2431,14 @@ _081B101C:
 
 	thumb_func_start GetCursorSelectionMonId
 GetCursorSelectionMonId: @ 0x081B1024
-	ldr r0, _081B102C
-	ldrb r0, [r0, #9]
-	bx lr
-	.align 2, 0
-_081B102C: .4byte 0x0203CB94
+	@ From tools/c_decomp/get_cursor_selection_mon_id.c
+	ldr	r0, .LGetCursorSelectionMonId
+	ldrb	r0, [r0, #9]
+	bx	lr
+.LGetCursorSelectionMonIdPad:
+	.align	2, 0
+.LGetCursorSelectionMonId:
+	.word	gPartyMenu
 	thumb_func_end GetCursorSelectionMonId
 
 	thumb_func_start sub_081B1030
@@ -19356,4 +19359,3 @@ _081B9648: .4byte 0x02037280
 _081B964C: .4byte 0x02024190
 _081B9650: .4byte 0x02037290
 	thumb_func_end sub_081B95B8
-
