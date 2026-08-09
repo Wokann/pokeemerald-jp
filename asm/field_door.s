@@ -434,6 +434,7 @@ _0808A080:
 	thumb_func_end StartDoorAnimationTask
 
 	thumb_func_start DrawClosedDoor
+	@ From src/field_door.c
 DrawClosedDoor: @ 0x0808A08C
 	push {lr}
 	bl DrawClosedDoorTiles

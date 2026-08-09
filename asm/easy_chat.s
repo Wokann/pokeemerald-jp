@@ -3658,6 +3658,7 @@ _0811C46E:
 	thumb_func_end sub_0811C430
 
 	thumb_func_start FooterHasFourOptions_
+	@ From src/easy_chat.c
 FooterHasFourOptions_: @ 0x0811C474
 	push {lr}
 	bl FooterHasFourOptions

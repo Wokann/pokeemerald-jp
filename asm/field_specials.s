@@ -2277,6 +2277,7 @@ _08138E8C: .4byte 0x03005AEC
 	thumb_func_end PCTurnOnEffect_1
 
 	thumb_func_start DoPCTurnOffEffect
+	@ From src/field_specials.c
 DoPCTurnOffEffect: @ 0x08138E90
 	push {lr}
 	bl PCTurnOffEffect
