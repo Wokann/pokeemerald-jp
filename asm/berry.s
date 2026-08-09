@@ -892,13 +892,14 @@ _080E1150: .4byte 0x02021C40
 
 	thumb_func_start Bag_ChooseBerry
 Bag_ChooseBerry: @ 0x080E1154
+	@ From src/berry.c
 	push {lr}
 	ldr r0, _080E1160
 	bl SetMainCallback2
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080E1160: .4byte 0x081AA955
+_080E1160: .4byte CB2_ChooseBerry
 	thumb_func_end Bag_ChooseBerry
 
 	thumb_func_start EventObjectInteractionPlantBerryTree
@@ -1080,4 +1081,3 @@ _080E12AC:
 	.align 2, 0
 _080E12C4: .4byte 0x02036FF0
 	thumb_func_end ResetBerryTreeSparkleFlags
-

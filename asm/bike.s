@@ -889,6 +889,7 @@ _0811A030: .4byte 0x02037230
 
 	thumb_func_start AcroBikeTransition_TurnJump
 AcroBikeTransition_TurnJump: @ 0x0811A034
+	@ From src/bike.c (JP calls PlayerFaceDirection)
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
