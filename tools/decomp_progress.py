@@ -22,8 +22,9 @@ JP_ASM = ROOT / "asm"
 JP_SRC = ROOT / "src"
 
 FUNC_DEF_RE = re.compile(
-    r"^(?:static\s+)?(?:u8|u16|u32|s8|s16|s32|bool8|bool16|void|int|const\s+\w+)"
-    r"\s+([A-Za-z_]\w*)\s*\(",
+    r"^(?:static\s+)?(?:const\s+)?"
+    r"(?:u8|u16|u32|s8|s16|s32|bool8|bool16|void|int|\w+)\s*\*?\s+"
+    r"([A-Za-z_]\w*)\s*\(",
     re.MULTILINE,
 )
 ASM_FUNC_RE = re.compile(r"^\s*thumb_func_start\s+(\w+)\s*$")
