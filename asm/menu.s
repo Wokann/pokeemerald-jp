@@ -1323,11 +1323,14 @@ _08197808: .4byte 0x0203CA58
 
 	thumb_func_start GetStartMenuWindowId
 GetStartMenuWindowId: @ 0x0819780C
-	ldr r0, _08197814
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08197814: .4byte 0x0203CA58
+	@ From tools/c_decomp/get_start_menu_window_id.c
+	ldr	r0, .LGetStartMenuWindowId
+	ldrb	r0, [r0]
+	bx	lr
+.LGetStartMenuWindowIdPad:
+	.align	2, 0
+.LGetStartMenuWindowId:
+	.word	sStartMenuWindowId
 	thumb_func_end GetStartMenuWindowId
 
 	thumb_func_start RemoveMapNamePopUpWindow
@@ -1397,11 +1400,14 @@ _08197878: .4byte 0x0203CA59
 
 	thumb_func_start GetMapNamePopUpWindowId
 GetMapNamePopUpWindowId: @ 0x0819787C
-	ldr r0, _08197884
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08197884: .4byte 0x0203CA59
+	@ From tools/c_decomp/get_map_name_popup_window_id.c
+	ldr	r0, .LGetMapNamePopUpWindowId
+	ldrb	r0, [r0]
+	bx	lr
+.LGetMapNamePopUpWindowIdPad:
+	.align	2, 0
+.LGetMapNamePopUpWindowId:
+	.word	sMapNamePopupWindowId
 	thumb_func_end GetMapNamePopUpWindowId
 
 	thumb_func_start RemoveStartMenuWindow

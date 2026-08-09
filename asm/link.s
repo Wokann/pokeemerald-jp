@@ -4031,11 +4031,14 @@ _0800AE14: .4byte 0x03003198
 
 	thumb_func_start HasLinkErrorOccurred
 HasLinkErrorOccurred: @ 0x0800AE18
-	ldr r0, _0800AE20
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_0800AE20: .4byte 0x0300310C
+	@ From tools/c_decomp/has_link_error_occurred.c
+	ldr	r0, .LHasLinkErrorOccurred
+	ldrb	r0, [r0]
+	bx	lr
+.LHasLinkErrorOccurredPad:
+	.align	2, 0
+.LHasLinkErrorOccurred:
+	.word	gLinkErrorOccurred
 	thumb_func_end HasLinkErrorOccurred
 
 	thumb_func_start sub_0800AE24
@@ -5549,4 +5552,3 @@ _0800B970: .4byte 0x00000FBD
 _0800B974: .4byte 0x00000FBC
 _0800B978: .4byte 0x0000EFFF
 	thumb_func_end ResetRecvBuffer
-

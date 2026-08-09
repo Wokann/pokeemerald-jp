@@ -62,3 +62,8 @@ that agbcc's own preprocessor rejects), then pipes to agbcc.
   (0x08097CB8, 8 bytes); sFieldMessageBoxMode at ABSOLUTE(0x0203725C).
 * `get_cursor_selection_mon_id.c` - GetCursorSelectionMonId
   (0x081B1024, 8 bytes); gPartyMenu.slotId (real party_menu.h struct).
+* `has_link_error_occurred.c` - HasLinkErrorOccurred (0x0800AE18,
+  8 bytes); gLinkErrorOccurred at ABSOLUTE(0x0300310C) (IWRAM).
+* `get_start_menu_window_id.c` / `get_map_name_popup_window_id.c` -
+  window-id getters (0x0819780C / 0x0819787C); EWRAM statics at
+  0x0203CA58 / 0x0203CA59.
