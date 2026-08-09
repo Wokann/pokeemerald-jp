@@ -15006,6 +15006,7 @@ _0806EA72:
 
 	thumb_func_start FacilityClassToPicIndex
 FacilityClassToPicIndex: @ 0x0806EA7C
+	@ From src/pokemon.c
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _0806EA88
@@ -15013,7 +15014,7 @@ FacilityClassToPicIndex: @ 0x0806EA7C
 	ldrb r0, [r0]
 	bx lr
 	.align 2, 0
-_0806EA88: .4byte 0x082EFF00
+_0806EA88: .4byte gFacilityClassToPicIndex
 	thumb_func_end FacilityClassToPicIndex
 
 	thumb_func_start PlayerGenderToFrontTrainerPicId

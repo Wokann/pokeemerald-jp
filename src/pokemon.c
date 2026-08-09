@@ -6,3 +6,10 @@ void CopyMon(void *dest, void *src, unsigned int size)
 {
     memcpy(dest, src, size);
 }
+
+extern const u8 gFacilityClassToPicIndex[];
+
+u16 FacilityClassToPicIndex(u16 facilityClass)
+{
+    return gFacilityClassToPicIndex[facilityClass];
+}

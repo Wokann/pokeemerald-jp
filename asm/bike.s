@@ -2168,13 +2168,14 @@ _0811A974: .4byte 0x02037230
 
 	thumb_func_start Bike_SetBikeStill
 Bike_SetBikeStill: @ 0x0811A978
+	@ From src/bike.c
 	ldr r1, _0811A984
 	movs r0, #0
 	strb r0, [r1, #0xa]
 	strb r0, [r1, #0xb]
 	bx lr
 	.align 2, 0
-_0811A984: .4byte 0x02037230
+_0811A984: .4byte gPlayerAvatar
 	thumb_func_end Bike_SetBikeStill
 
 	thumb_func_start GetPlayerSpeed
@@ -2293,4 +2294,3 @@ _0811AA56:
 	bx r1
 	.align 2, 0
 	thumb_func_end IsRunningDisallowed
-
