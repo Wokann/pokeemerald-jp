@@ -7,17 +7,15 @@
 gUnknown_81DABAC:
 	.include "data/script_cmd_table.inc"
 
-	.globl gUnknown_81DAF30
-gUnknown_81DAF30: @ 0x81DAF30
-	.incbin "build/data/event_scripts.bin", 0x384, 0x4
-
 	.globl gUnknown_81DAF34
 gUnknown_81DAF34: @ 0x81DAF34
 	.incbin "build/data/event_scripts.bin", 0x388, 0x58
 
+	.set ALLOCATE_SPECIAL_TABLE, 1
+	.align 2
 	.globl gUnknown_81DAF8C
-gUnknown_81DAF8C: @ 0x81DAF8C
-	.incbin "build/data/event_scripts.bin", 0x3e0, 0x830
+gUnknown_81DAF8C:
+	.include "data/specials.inc"
 
 	.globl gUnknown_81DB7BC
 gUnknown_81DB7BC: @ 0x81DB7BC
@@ -1651,9 +1649,10 @@ gUnknown_828A480: @ 0x828A480
 gUnknown_828C8D8: @ 0x828C8D8
 	.incbin "build/data/event_scripts.bin", 0xb1d2c, 0x9dc
 
+	.align 2
 	.globl gUnknown_828D2B4
-gUnknown_828D2B4: @ 0x828D2B4
-	.incbin "build/data/event_scripts.bin", 0xb2708, 0x44
+gUnknown_828D2B4:
+	.include "data/mystery_event_script_cmd_table.inc"
 
 	.globl gUnknown_828D2F8
 gUnknown_828D2F8: @ 0x828D2F8

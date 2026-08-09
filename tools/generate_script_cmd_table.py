@@ -69,6 +69,8 @@ def main():
     baserom = Path(sys.argv[1]) if len(sys.argv) > 1 else BASEROM_DEFAULT
     ref_path = Path(sys.argv[2]) if len(sys.argv) > 2 else POKEEMERALD_TABLE
     rom = baserom.read_bytes()
+    if TABLE_OFFSET + TABLE_SIZE > len(rom):
+        sys.exit(f"table range out of ROM bounds ({len(rom)} bytes)")
     raw = rom[TABLE_OFFSET : TABLE_OFFSET + TABLE_SIZE]
     words = [int.from_bytes(raw[i : i + 4], "little") for i in range(0, TABLE_SIZE, 4)]
     if len(words) != 225:
@@ -110,6 +112,21 @@ def main():
         if const != f"SCR_OP_{i:02X}":
             unified += 1
         lines.append(f"\tscript_cmd_table_entry {const} {handler} @ 0x{i:02X}")
+
+    # pokeemerald ends the table with a sentinel pointer to ScrCmd_nop;
+    # the JP ROM has the same 4-byte sentinel at 0x81DAF30.
+    lines.extend(
+        [
+            "",
+            "\t.if ALLOCATE_SCRIPT_CMD_TABLE",
+            "\t.globl gScriptCmdTableEnd",
+            "gScriptCmdTableEnd:",
+            "\t.globl gUnknown_81DAF30",
+            "gUnknown_81DAF30:",
+            "\t.4byte ScrCmd_nop",
+            "\t.endif",
+        ]
+    )
 
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"wrote {OUT} ({len(words)} entries, {missing} unresolved, "

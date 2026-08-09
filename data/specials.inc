@@ -1,0 +1,540 @@
+	.macro def_special ptr:req, waitstate=0
+	.if ALLOCATE_SPECIAL_TABLE
+	.global SPECIAL_\ptr
+	.set SPECIAL_\ptr, __special__
+	.4byte \ptr
+	.endif
+	.set SPECIAL_WAITSTATE_\ptr, \waitstate
+	.set __special__, __special__ + 1
+	.endm
+
+.set __special__, 0
+.if ALLOCATE_SPECIAL_TABLE
+		.align 2
+	.globl gSpecials
+gSpecials:
+.endif
+	def_special HealPlayerParty
+	def_special SetCableClubWarp
+	def_special sub_080AF244
+	def_special sub_080AF2F4
+	def_special CleanupLinkRoomState
+	def_special ExitLinkRoom
+	def_special SetPlayerSecretBase
+	def_special CheckPlayerHasSecretBase
+	def_special EnterSecretBase
+	def_special ClearAndLeaveSecretBase
+	def_special MoveOutOfSecretBase
+	def_special IsCurSecretBaseOwnedByAnotherPlayer
+	def_special GetCurSecretBaseRegistrationValidity
+	def_special ToggleCurSecretBaseRegistry
+	def_special ShowSecretBaseDecorationMenu
+	def_special ShowSecretBaseRegistryMenu
+	def_special PrepSecretBaseBattleFlags
+	def_special GetSecretBaseOwnerInteractionState
+	def_special InitSecretBaseDecorationSprites
+	def_special sub_08127DEC
+	def_special sub_08129798
+	def_special GetSecretBaseTypeInFrontOfPlayer
+	def_special SetSecretBaseOwnerGfxId
+	def_special sub_081296F0
+	def_special EnterNewlyCreatedSecretBase, waitstate=1
+	def_special sub_080EAF54
+	def_special DoSecretBasePCTurnOffEffect
+	def_special RecordMixingPlayerSpotTriggered, waitstate=1
+	def_special sub_080B2680
+	def_special sub_080B2728
+	def_special sub_080B2750
+	def_special CloseLink
+	def_special ColosseumPlayerSpotTriggered, waitstate=1
+	def_special PlayerEnteredTradeSeat, waitstate=1
+	def_special nullsub_37
+	def_special sub_080B2A00
+	def_special sub_080B2784
+	def_special GetLinkPartnerNames
+	def_special SpawnLinkPartnerEventObject
+	def_special SavePlayerParty
+	def_special LoadPlayerParty
+	def_special ChooseHalfPartyForBattle, waitstate=1
+	def_special sp02A_crash_sound
+	def_special EventObjectInteractionGetBerryTreeData
+	def_special Bag_ChooseBerry, waitstate=1
+	def_special EventObjectInteractionPlantBerryTree
+	def_special EventObjectInteractionPickBerryTree
+	def_special EventObjectInteractionRemoveBerryTree
+	def_special EventObjectInteractionWaterBerryTree
+	def_special PlayerHasBerries
+	def_special IsEnigmaBerryValid
+	def_special GetTrainerBattleMode
+	def_special ShowTrainerIntroSpeech
+	def_special ShowTrainerCantBattleSpeech
+	def_special GetTrainerFlag
+	def_special EndTrainerApproach
+	def_special SetUpTrainerEncounterMusic
+	def_special ShouldTryRematchBattle
+	def_special IsTrainerReadyForRematch
+	def_special BattleSetup_StartRematchBattle, waitstate=1
+	def_special ShowPokemonStorageSystemPC, waitstate=1
+	def_special HasEnoughMonsForDoubleBattle
+	def_special TurnOffTVScreen
+	def_special DoTVShow
+	def_special DoPokeNews
+	def_special special_0x44
+	def_special special_0x45
+	def_special InterviewBefore
+	def_special InterviewAfter
+	def_special sub_080F03E4
+	def_special SetContestCategoryStringVarForInterview
+	def_special special_0x4a
+	def_special TV_IsScriptShowKindAlreadyInQueue
+	def_special CheckForBigMovieOrEmergencyNewsOnTV
+	def_special GetMomOrDadStringForTVMessage
+	def_special ResetTVShowState
+	def_special sub_080F8BA4
+	def_special sub_080F8D34
+	def_special sub_080F90A4
+	def_special sub_080F8BD4
+	def_special sub_080F8C14
+	def_special sub_080F90E0
+	def_special sub_080F8B3C
+	def_special SetContestTrainerGfxIds
+	def_special sub_080F87C0
+	def_special sub_080F9200
+	def_special sub_080F938C
+	def_special sub_080F8B84
+	def_special sub_080F880C
+	def_special sub_080F888C
+	def_special sub_080F95B4
+	def_special GiveMonArtistRibbon
+	def_special sub_080B27AC
+	def_special SaveGame, waitstate=1
+	def_special DoWateringBerryTreeAnim, waitstate=1
+	def_special ShowEasyChatScreen
+	def_special sub_0811F3AC
+	def_special ScrSpecial_GetCurrentMauvilleMan
+	def_special ScrSpecial_HasBardSongBeenChanged
+	def_special ScrSpecial_SaveBardSongLyrics
+	def_special ScrSpecial_GetHipsterSpokenFlag
+	def_special ScrSpecial_SetHipsterSpokenFlag
+	def_special ScrSpecial_HipsterTeachWord
+	def_special ScrSpecial_PlayBardSong
+	def_special ScrSpecial_SetMauvilleOldManEventObjGfx
+	def_special ScrSpecial_GenerateGiddyLine
+	def_special ScrSpecial_GiddyShouldTellAnotherTale
+	def_special ScrSpecial_StorytellerInitializeRandomStat
+	def_special sub_0812148C
+	def_special ScrSpecial_StorytellerStoryListMenu
+	def_special ScrSpecial_StorytellerUpdateStat
+	def_special SanitizeReceivedEmeraldOldMan
+	def_special ScrSpecial_HasStorytellerAlreadyRecorded
+	def_special ScrSpecial_TraderMenuGetDecoration
+	def_special ScrSpecial_GetTraderTradedFlag
+	def_special ScrSpecial_DoesPlayerHaveNoDecorations
+	def_special sub_08133CD4
+	def_special CreateAvailableDecorationsMenu
+	def_special ScrSpecial_TraderDoDecorationTrade
+	def_special sub_080FA300
+	def_special sub_080FA31C
+	def_special sub_080FA358
+	def_special sub_080FA374
+	def_special TV_PutNameRaterShowOnTheAirIfNicknameChanged
+	def_special TV_CopyNicknameToStringVar1AndEnsureTerminated
+	def_special TV_CheckMonOTIDEqualsPlayerID
+	def_special BufferTrendyPhraseString
+	def_special TrendyPhraseIsOld
+	def_special sub_0811F44C
+	def_special GetDewfordHallPaintingNameIndex
+	def_special SwapRegisteredBike
+	def_special CalculatePlayerPartyCount
+	def_special CountPartyNonEggMons
+	def_special CountPartyAliveNonEggMons_IgnoreVar0x8004Slot
+	def_special sub_080F9178
+	def_special sub_080F916C
+	def_special sub_080F90F4
+	def_special CountPlayerContestPaintings
+	def_special ShowContestWinner
+	def_special MauvilleGymSpecial2
+	def_special MauvilleGymSpecial1
+	def_special ShowFieldMessageStringVar4
+	def_special DrawWholeMapView
+	def_special StorePlayerCoordsInVars
+	def_special MauvilleGymSpecial3
+	def_special PetalburgGymSpecial1
+	def_special PetalburgGymSpecial2
+	def_special GetPlayerTrainerIdOnesDigit
+	def_special GetPlayerBigGuyGirlString
+	def_special GetRivalSonDaughterString
+	def_special SetFlagInVar
+	def_special CableCarWarp
+	def_special CableCar, waitstate=1
+	def_special Overworld_PlaySpecialMapMusic
+	def_special StartWallClock, waitstate=1
+	def_special Special_ViewWallClock, waitstate=1
+	def_special ChooseStarter, waitstate=1
+	def_special StartWallyTutorialBattle, waitstate=1
+	def_special ChangePokemonNickname, waitstate=1
+	def_special sub_081B9150
+	def_special sub_08136F64
+	def_special DoBerryBlending, waitstate=1
+	def_special PlayRoulette, waitstate=1
+	def_special ShouldMoveLilycoveFanClubMember
+	def_special GetNumMovedLilycoveFanClubMembers
+	def_special BufferStreakTrainerText
+	def_special sub_0813BA68
+	def_special UpdateMovedLilycoveFanClubMembers
+	def_special sub_0813BF84
+	def_special sub_0813BA98
+	def_special sub_0813BFA0
+	def_special RockSmashWildEncounter
+	def_special GabbyAndTyGetBattleNum
+	def_special GabbyAndTyAfterInterview
+	def_special GabbyAndTyBeforeInterview
+	def_special DoTVShowInSearchOfTrainers
+	def_special IsTVShowInSearchOfTrainersAiring
+	def_special GabbyAndTyGetLastQuote
+	def_special GabbyAndTyGetLastBattleTrivia
+	def_special GabbyAndTySetScriptVarsToEventObjectLocalIds
+	def_special GetBattleOutcome
+	def_special GetDaycareMonNicknames
+	def_special GetDaycareState
+	def_special RejectEggFromDayCare
+	def_special GiveEggFromDaycare
+	def_special SetDaycareCompatibilityString
+	def_special GetSelectedMonNickAndSpecies
+	def_special StoreSelectedPokemonInDaycare
+	def_special ChooseSendDaycareMon, waitstate=1
+	def_special ShowDaycareLevelMenu, waitstate=1
+	def_special GetNumLevelsGainedFromDaycare
+	def_special GetDaycareCost
+	def_special TakePokemonFromDaycare
+	def_special ScriptHatchMon
+	def_special EggHatch, waitstate=1
+	def_special sub_0807101C
+	def_special ShowLinkBattleRecords
+	def_special IsEnoughForCostInVar0x8005
+	def_special SubtractMoneyFromVar0x8005
+	def_special ExecuteWhiteOut
+	def_special sp0C8_whiteout_maybe
+	def_special RotatingGate_InitPuzzle
+	def_special RotatingGate_InitPuzzleAndGraphics
+	def_special SetSSTidalFlag
+	def_special ResetSSTidalFlag
+	def_special EnterSafariMode
+	def_special ExitSafariMode
+	def_special GetPokeblockFeederInFront
+	def_special sub_08135958
+	def_special IsMirageIslandPresent
+	def_special UpdateShoalTideFlag
+	def_special InitBirchState
+	def_special ScriptGetPokedexInfo
+	def_special ShowPokedexRatingMessage
+	def_special DoLotteryCornerComputerEffect
+	def_special DoPCTurnOffEffect
+	def_special SetDepartmentStoreFloorVar
+	def_special DoPCTurnOnEffect
+	def_special EndLotteryCornerComputerEffect
+	def_special sub_081B91BC
+	def_special sub_081B932C
+	def_special sub_081B9410
+	def_special sub_081B93B8
+	def_special sub_081B9370
+	def_special TeachMoveRelearnerMove, waitstate=1
+	def_special GetRecordedCyclingRoadResults
+	def_special Special_BeginCyclingRoadChallenge
+	def_special GetPlayerAvatarBike
+	def_special FinishCyclingRoadChallenge
+	def_special UpdateCyclingRoadState
+	def_special GetLeadMonFriendshipScore
+	def_special CallFrontierUtilFunc
+	def_special sub_08161E88
+	def_special sub_0818E608
+	def_special CallBattlePalaceFunction
+	def_special CopyEReaderTrainerGreeting
+	def_special DoSpecialTrainerBattle, waitstate=1
+	def_special CallBattleArenaFunction
+	def_special CallBattleFactoryFunction
+	def_special CallBattlePikeFunction
+	def_special CallBattlePyramidFunction
+	def_special StopMapMusic
+	def_special sub_081B9654
+	def_special sub_081B9820
+	def_special sub_081B99A8
+	def_special sub_080F9D20
+	def_special ValidateEReaderTrainer
+	def_special GetBestBattleTowerStreak
+	def_special ReducePlayerPartyToSelectedMons
+	def_special BedroomPC, waitstate=1
+	def_special PlayerPC, waitstate=1
+	def_special FieldShowRegionMap, waitstate=1
+	def_special GetInGameTradeSpeciesInfo
+	def_special CreateInGameTradePokemon
+	def_special DoInGameTradeScene, waitstate=1
+	def_special GetTradeSpecies
+	def_special GetWeekCount
+	def_special RetrieveLotteryNumber
+	def_special PickLotteryCornerTicket
+	def_special ShowBerryBlenderRecordWindow
+	def_special SetTrickHouseEndRoomFlag
+	def_special ResetTrickHouseEndRoomFlag
+	def_special sub_080E1850
+	def_special AccessHallOfFamePC, waitstate=1
+	def_special Special_ShowDiploma, waitstate=1
+	def_special CheckLeadMonCool
+	def_special CheckLeadMonBeauty
+	def_special CheckLeadMonCute
+	def_special CheckLeadMonSmart
+	def_special CheckLeadMonTough
+	def_special sub_080FC014
+	def_special DoSoftReset
+	def_special GameClear, waitstate=1
+	def_special ShakeScreenInElevator
+	def_special nullsub_55
+	def_special SpawnCameraObject
+	def_special RemoveCameraObject
+	def_special GetPokeblockNameByMonNature
+	def_special GetSecretBaseNearbyMapName
+	def_special CheckRelicanthWailord
+	def_special ShouldDoBrailleRegirockEffectOld
+	def_special sub_080AFE30
+	def_special sub_080AFE88
+	def_special WaitWeather, waitstate=1
+	def_special BufferEReaderTrainerName
+	def_special GetSlotMachineId
+	def_special GetPlayerFacingDirection
+	def_special FoundAbandonedShipRoom1Key
+	def_special FoundAbandonedShipRoom2Key
+	def_special FoundAbandonedShipRoom4Key
+	def_special FoundAbandonedShipRoom6Key
+	def_special LeadMonHasEffortRibbon
+	def_special GiveLeadMonEffortRibbon
+	def_special Special_AreLeadMonEVsMaxedOut
+	def_special sub_08097EFC
+	def_special sub_08097F24
+	def_special InitRoamer
+	def_special TryUpdateRusturfTunnelState
+	def_special IsGrassTypeInParty
+	def_special sub_080AF55C
+	def_special PutZigzagoonInPlayerParty
+	def_special IsStarterInParty
+	def_special DeleteRegistry_Yes
+	def_special ScriptCheckFreePokemonStorageSpace
+	def_special DoSealedChamberShakingEffect1
+	def_special sub_08139BD4
+	def_special GetShieldToyTVDecorationInfo
+	def_special IsPokerusInParty
+	def_special SetSootopolisGymCrackedIceMetatiles
+	def_special sub_081395D0
+	def_special StartGroudonKyogreBattle
+	def_special BattleSetup_StartLegendaryBattle, waitstate=1
+	def_special StartRegiBattle, waitstate=1
+	def_special SetUpTrainerMovement
+	def_special DoSealedChamberShakingEffect2
+	def_special FoundBlackGlasses
+	def_special StartDroughtWeatherBlend
+	def_special DoDiveWarp
+	def_special DoFallWarp, waitstate=1
+	def_special ShowContestEntryMonPic
+	def_special sub_080F9748
+	def_special SetEReaderTrainerGfxId
+	def_special BattleSetup_StartLatiBattle, waitstate=1
+	def_special SetRoute119Weather
+	def_special SetRoute123Weather
+	def_special ScriptGetMultiplayerId
+	def_special ScriptGetPartyMonSpecies
+	def_special sub_081B957C
+	def_special nullsub_54
+	def_special MoveOutOfSecretBaseFromOutside
+	def_special LoadPlayerBag
+	def_special sub_080AFEB0
+	def_special SetPacifidlogTMReceivedDay
+	def_special GetDaysUntilPacifidlogTMAvailable
+	def_special HasAllHoennMons
+	def_special MonOTNameMatchesPlayer
+	def_special BufferLottoTicketNumber
+	def_special sub_08165248
+	def_special sub_080F9C00
+	def_special ScriptRandom
+	def_special sub_081AFAA8
+	def_special sub_080EE808
+	def_special sub_080EEDEC
+	def_special sub_080EF244
+	def_special sub_080EF2D8
+	def_special nullsub_55
+	def_special PutFanClubSpecialOnTheAir
+	def_special sub_080EF814
+	def_special sub_080EF838
+	def_special sub_080EBD4C
+	def_special SetSecretBaseSecretsTvFlags_SandOrnament
+	def_special sub_080EBEA0
+	def_special GetSecretBaseName
+	def_special sub_080EBF08
+	def_special CopyCurSecretBaseOwnerName_StrVar1
+	def_special sub_080EBE30
+	def_special sub_080EBE68
+	def_special SetSecretBaseSecretsTvFlags_MiscFurnature
+	def_special SetSecretBaseSecretsTvFlags_LargeDecorationSpot
+	def_special SetSecretBaseSecretsTvFlags_SmallDecorationSpot
+	def_special SetSecretBaseSecretsTvFlags_Poster
+	def_special sub_0818D6EC
+	def_special sub_0818D818
+	def_special sub_0818D914
+	def_special sub_0818D958
+	def_special sub_0818D98C
+	def_special sub_0818D9E4
+	def_special sub_0818DA30
+	def_special sub_0818DA60
+	def_special sub_0818DA84
+	def_special sub_0818DB50
+	def_special sub_0818DB68
+	def_special sub_0818DBAC
+	def_special sub_0818DBE8
+	def_special sub_0818DD44
+	def_special sub_0818DD78
+	def_special sub_0818DF34
+	def_special sub_0811B0A8
+	def_special sub_0818DF58
+	def_special sub_0818DF64
+	def_special sub_0818DFB4
+	def_special sub_0818DFD8
+	def_special sub_0818DEF4
+	def_special sub_0818DFF8
+	def_special sub_0818E018
+	def_special sub_0818E03C
+	def_special sub_0818E08C
+	def_special sub_0818E0D8
+	def_special sub_0818E0EC
+	def_special sub_081398CC
+	def_special sub_0818E100
+	def_special sub_0818E16C
+	def_special sub_0818E194
+	def_special sub_0818DED0
+	def_special sub_0818E048
+	def_special sub_0818E53C
+	def_special sub_0818E510
+	def_special sub_0818E570
+	def_special sub_0818E588
+	def_special sub_0818E59C
+	def_special sub_0818E5BC
+	def_special sub_0818E5EC
+	def_special PutLilycoveContestLadyShowOnTheAir
+	def_special sub_0813B8B8
+	def_special CallApprenticeFunction
+	def_special ShouldTryGetTrainerScript
+	def_special ShowMapNamePopup
+	def_special ShowMapNamePopup
+	def_special DoMirageTowerCeilingCrumble, waitstate=1
+	def_special SetMirageTowerVisibility
+	def_special StartPlayerDescendMirageTower, waitstate=1
+	def_special sub_08139938
+	def_special IsWirelessAdapterConnected
+	def_special BerryBlenderLinkBecomeLeader
+	def_special BerryBlenderLinkJoinGroup
+	def_special UnionRoomSpecial
+	def_special sub_08019EE4
+	def_special sub_08016448
+	def_special sp182_move_string
+	def_special sub_0801DA30
+	def_special sub_081B85F8
+	def_special sub_08017B4C
+	def_special sub_08139980
+	def_special ValidateReceivedWonderCard
+	def_special HasAtLeastOneBerry
+	def_special sub_0802C614
+	def_special sub_0802E0BC
+	def_special sub_0802781C
+	def_special sub_0802786C
+	def_special sub_081399F4
+	def_special sub_08139A68
+	def_special sub_08139DD4
+	def_special sub_080F98EC
+	def_special sub_0800AFEC
+	def_special sub_080F996C
+	def_special sub_080F999C
+	def_special sub_080F99F0
+	def_special ShowRankingHallRecordsWindow
+	def_special ScrollRankingHallRecordsWindow
+	def_special sub_08139F5C
+	def_special sub_080F99C4
+	def_special sub_080F99E4
+	def_special sub_080B27D4
+	def_special sub_0813A164
+	def_special sub_0813A638
+	def_special sub_0813A0BC
+	def_special sub_081C62AC
+	def_special sub_081C472C
+	def_special sub_081B9280
+	def_special sub_081B92C0
+	def_special sub_0813A774
+	def_special sub_0813A7C0
+	def_special sub_0813A904
+	def_special sub_0813A98C
+	def_special sub_0813A9D4
+	def_special sub_0813AA1C
+	def_special sub_0813A9F0
+	def_special sub_0813AA50
+	def_special sub_0813AA64
+	def_special sub_0813AA90
+	def_special DisplayBerryPowderVendorMenu
+	def_special RemoveBerryPowderVendorMenu
+	def_special HasEnoughBerryPowder
+	def_special TakeBerryPowder
+	def_special PrintPlayerBerryPowderAmount
+	def_special sub_0813A828
+	def_special sub_0813A85C
+	def_special sub_0813B810
+	def_special sub_081C6A64
+	def_special convert_pixel_width_to_tile_width
+	def_special CountPlayerTrainerStars
+	def_special sub_0813ACC8
+	def_special sub_0813ADF0
+	def_special sub_0813AE0C
+	def_special sub_081B85CC
+	def_special sub_0813AEEC
+	def_special sub_0813AF80
+	def_special DoDeoxysRockInteraction, waitstate=1
+	def_special sub_0813B208
+	def_special CreateObedientEnemyMon
+	def_special StartMirageTowerDisintegration, waitstate=1
+	def_special StartMirageTowerFossilFallAndSink, waitstate=1
+	def_special StartMirageTowerShake, waitstate=1
+	def_special ChangeBoxPokemonNickname, waitstate=1
+	def_special get_unknown_box_id
+	def_special sub_0813B254
+	def_special SetMatchCallRegisteredFlag
+	def_special sub_08175184
+	def_special CreateUnusualWeatherEvent
+	def_special GetUnusualWeatherMapNameAndType
+	def_special sub_0813B4C8
+	def_special sub_080A0194
+	def_special Unused_SetWeatherSunny
+	def_special sub_081AFA78
+	def_special sub_0813B518
+	def_special ShouldDoBrailleRegicePuzzle
+	def_special EnableNationalPokedex
+	def_special display_text_and_get_width_internal
+	def_special sub_080E1D6C
+	def_special TurnOnTVScreen
+	def_special sub_081D4110
+	def_special sub_0813B54C
+	def_special sub_0813B5A0
+	def_special sub_0813B56C
+	def_special CallTrainerHillFunction
+	def_special sub_0813B810
+	def_special sub_0813B844
+	def_special sub_081D426C
+	def_special sub_08022230
+	def_special TryBufferWaldaPhrase
+	def_special DoWaldaNamingScreen, waitstate=1
+	def_special TryGetWallpaperWithWaldaPhrase
+	def_special sub_08139F0C
+	def_special sub_0813B9A0
+	def_special sub_080F9424
+	def_special ShowTrainerHillRecords, waitstate=1
+	def_special sub_080B3F60
+	def_special sub_0813B9D8
+	def_special sub_081B95B8
+	def_special sub_08071CF0
+	def_special TryPrepareSecondApproachingTrainer
+	def_special RemoveRecordsWindow
+	def_special sub_08139C4C
+	def_special sub_080B331C

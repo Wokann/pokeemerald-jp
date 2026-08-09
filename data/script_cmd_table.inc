@@ -241,3 +241,11 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_BUFFERTRAINERNAME ScrCmd_buffertrainername @ 0xDE
 	script_cmd_table_entry SCR_OP_POKENAVCALL ScrCmd_pokenavcall @ 0xDF
 	script_cmd_table_entry SCR_OP_E0 ScrCmd_warpE0 @ 0xE0
+
+	.if ALLOCATE_SCRIPT_CMD_TABLE
+	.globl gScriptCmdTableEnd
+gScriptCmdTableEnd:
+	.globl gUnknown_81DAF30
+gUnknown_81DAF30:
+	.4byte ScrCmd_nop
+	.endif
