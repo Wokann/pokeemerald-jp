@@ -5998,6 +5998,7 @@ _08164E6E:
 	thumb_func_end CalcRubyBattleTowerChecksum
 
 	thumb_func_start ClearBattleTowerRecord
+	@ From src/battle_tower.c
 ClearBattleTowerRecord: @ 0x08164E84
 	push {lr}
 	movs r1, #0
@@ -8304,4 +8305,3 @@ _08166004: .4byte 0x082F0D54
 _08166008: .4byte 0x082F00B4
 _0816600C: .4byte 0x020243E8
 	thumb_func_end sub_08165F94
-

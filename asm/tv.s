@@ -3897,6 +3897,7 @@ _080EE98C: .4byte 0x0829BDA5
 	thumb_func_end AlertTVOfNewCoinTotal
 
 	thumb_func_start AlertTVThatPlayerPlayedSlotMachine
+	@ From src/tv.c
 AlertTVThatPlayerPlayedSlotMachine: @ 0x080EE990
 	ldr r2, _080EE99C
 	movs r1, #0
@@ -3905,11 +3906,12 @@ AlertTVThatPlayerPlayedSlotMachine: @ 0x080EE990
 	strh r0, [r1]
 	bx lr
 	.align 2, 0
-_080EE99C: .4byte 0x02039CF6
-_080EE9A0: .4byte 0x02039CF4
+_080EE99C: .4byte sFindThatGamerWhichGame
+_080EE9A0: .4byte sFindThatGamerCoinsSpent
 	thumb_func_end AlertTVThatPlayerPlayedSlotMachine
 
 	thumb_func_start AlertTVThatPlayerPlayedRoulette
+	@ From src/tv.c
 AlertTVThatPlayerPlayedRoulette: @ 0x080EE9A4
 	ldr r2, _080EE9B0
 	movs r1, #1
@@ -3918,8 +3920,8 @@ AlertTVThatPlayerPlayedRoulette: @ 0x080EE9A4
 	strh r0, [r1]
 	bx lr
 	.align 2, 0
-_080EE9B0: .4byte 0x02039CF6
-_080EE9B4: .4byte 0x02039CF4
+_080EE9B0: .4byte sFindThatGamerWhichGame
+_080EE9B4: .4byte sFindThatGamerCoinsSpent
 	thumb_func_end AlertTVThatPlayerPlayedRoulette
 
 	thumb_func_start sub_080EE9B8
@@ -18083,4 +18085,3 @@ ResetTVShowState: @ 0x080F5FB0
 	.align 2, 0
 _080F5FB8: .4byte 0x02039CFC
 	thumb_func_end ResetTVShowState
-

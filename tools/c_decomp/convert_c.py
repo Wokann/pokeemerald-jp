@@ -113,8 +113,13 @@ def main():
                 out[i + 1] = 0x00
                 out[i + 2] = 0xF8
                 out[i + 3] = 0x00
-        if has_literal and len(out) >= 8:
-            out[-4:] = b"\x00\x00\x00\x00"
+        # Mask literal-pool words that hold absolute addresses (ROM,
+        # EWRAM/IWRAM).  They resolve at link time; several functions
+        # carry more than one literal, so scan the whole word stream.
+        for i in range(0, len(out) - 3, 4):
+            v = int.from_bytes(out[i : i + 4], "little")
+            if 0x02000000 <= v < 0x04000000 or 0x08000000 <= v <= 0x09FFFFFF:
+                out[i : i + 4] = b"\x00\x00\x00\x00"
         return bytes(out)
 
     def strip_trailing(b):

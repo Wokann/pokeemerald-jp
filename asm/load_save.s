@@ -221,6 +221,7 @@ _08076738: .4byte 0x03005AF0
 	thumb_func_end UseContinueGameWarp
 
 	thumb_func_start ClearContinueGameWarpStatus2
+	@ From src/load_save.c
 ClearContinueGameWarpStatus2: @ 0x0807673C
 	ldr r0, _0807674C
 	ldr r2, [r0]
@@ -230,10 +231,11 @@ ClearContinueGameWarpStatus2: @ 0x0807673C
 	strb r0, [r2, #9]
 	bx lr
 	.align 2, 0
-_0807674C: .4byte 0x03005AF0
+_0807674C: .4byte gSaveBlock2Ptr
 	thumb_func_end ClearContinueGameWarpStatus2
 
 	thumb_func_start SetContinueGameWarpStatus
+	@ From src/load_save.c
 SetContinueGameWarpStatus: @ 0x08076750
 	ldr r0, _08076760
 	ldr r2, [r0]
@@ -243,10 +245,11 @@ SetContinueGameWarpStatus: @ 0x08076750
 	strb r0, [r2, #9]
 	bx lr
 	.align 2, 0
-_08076760: .4byte 0x03005AF0
+_08076760: .4byte gSaveBlock2Ptr
 	thumb_func_end SetContinueGameWarpStatus
 
 	thumb_func_start SetContinueGameWarpStatusToDynamicWarp
+	@ From src/load_save.c
 SetContinueGameWarpStatusToDynamicWarp: @ 0x08076764
 	push {lr}
 	movs r0, #0
@@ -260,10 +263,11 @@ SetContinueGameWarpStatusToDynamicWarp: @ 0x08076764
 	pop {r0}
 	bx r0
 	.align 2, 0
-_0807677C: .4byte 0x03005AF0
+_0807677C: .4byte gSaveBlock2Ptr
 	thumb_func_end SetContinueGameWarpStatusToDynamicWarp
 
 	thumb_func_start ClearContinueGameWarpStatus
+	@ From src/load_save.c
 ClearContinueGameWarpStatus: @ 0x08076780
 	ldr r0, _08076790
 	ldr r2, [r0]
@@ -273,7 +277,7 @@ ClearContinueGameWarpStatus: @ 0x08076780
 	strb r0, [r2, #9]
 	bx lr
 	.align 2, 0
-_08076790: .4byte 0x03005AF0
+_08076790: .4byte gSaveBlock2Ptr
 	thumb_func_end ClearContinueGameWarpStatus
 
 	thumb_func_start SavePlayerParty
@@ -802,4 +806,3 @@ ApplyNewEncryptionKeyToAllEncryptedData: @ 0x08076B38
 _08076B70: .4byte 0x03005AEC
 _08076B74: .4byte 0x00000494
 	thumb_func_end ApplyNewEncryptionKeyToAllEncryptedData
-

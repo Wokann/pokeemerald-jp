@@ -4,6 +4,7 @@
 .syntax unified
 
 	thumb_func_start AccessHallOfFamePC
+	@ From src/hof_pc.c (JP calls ScriptContext2_Enable instead of LockPlayerFieldControls)
 AccessHallOfFamePC: @ 0x08137C98
 	push {lr}
 	ldr r0, _08137CA8
@@ -12,10 +13,11 @@ AccessHallOfFamePC: @ 0x08137C98
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08137CA8: .4byte 0x08173F79
+_08137CA8: .4byte CB2_DoHallOfFamePC
 	thumb_func_end AccessHallOfFamePC
 
 	thumb_func_start ReturnFromHallOfFamePC
+	@ From src/hof_pc.c
 ReturnFromHallOfFamePC: @ 0x08137CAC
 	push {lr}
 	ldr r0, _08137CC0
@@ -26,12 +28,13 @@ ReturnFromHallOfFamePC: @ 0x08137CAC
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08137CC0: .4byte 0x08085A31
-_08137CC4: .4byte 0x03005B0C
-_08137CC8: .4byte 0x08137CCD
+_08137CC0: .4byte CB2_ReturnToField
+_08137CC4: .4byte gFieldCallback
+_08137CC8: .4byte ReshowPCMenuAfterHallOfFamePC
 	thumb_func_end ReturnFromHallOfFamePC
 
 	thumb_func_start ReshowPCMenuAfterHallOfFamePC
+	@ From src/hof_pc.c (JP calls ScriptContext2_Enable instead of LockPlayerFieldControls)
 ReshowPCMenuAfterHallOfFamePC: @ 0x08137CCC
 	push {lr}
 	sub sp, #4
@@ -53,10 +56,11 @@ ReshowPCMenuAfterHallOfFamePC: @ 0x08137CCC
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08137D00: .4byte 0x08137D05
+_08137D00: .4byte Task_WaitForPaletteFade
 	thumb_func_end ReshowPCMenuAfterHallOfFamePC
 
 	thumb_func_start Task_WaitForPaletteFade
+	@ From src/hof_pc.c
 Task_WaitForPaletteFade: @ 0x08137D04
 	push {lr}
 	lsls r0, r0, #0x18
@@ -73,6 +77,5 @@ _08137D1C:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_08137D20: .4byte 0x02037C74
+_08137D20: .4byte gPaletteFade
 	thumb_func_end Task_WaitForPaletteFade
-

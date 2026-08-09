@@ -2,6 +2,7 @@ gUnknown_3000000 = .;
 gCurrentMapMusic = ABSOLUTE(0x03000F48);
 gLinkErrorOccurred = ABSOLUTE(0x0300310C);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
+gFieldCallback = ABSOLUTE(0x03005B0C);
 gLinkPartnersHeldKeys = ABSOLUTE(0x030030C0);
 sHeapStart = ABSOLUTE(0x03000004);
 . += 0x4;
