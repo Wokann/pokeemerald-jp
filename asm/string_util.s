@@ -736,10 +736,13 @@ _08008D0A:
 
 	thumb_func_start ExpandPlaceholder_UnknownStringVar
 ExpandPlaceholder_UnknownStringVar: @ 0x08008D18
-	ldr r0, _08008D1C
-	bx lr
-	.align 2, 0
-_08008D1C: .4byte 0x02022064
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_UnknownStringVar
+	bx	lr
+.LExpandPlaceholder_UnknownStringVarPad:
+	.align	2, 0
+.LExpandPlaceholder_UnknownStringVar:
+	.word	sUnknownStringVar
 	thumb_func_end ExpandPlaceholder_UnknownStringVar
 
 	thumb_func_start ExpandPlaceholder_PlayerName
@@ -753,26 +756,35 @@ _08008D28: .4byte 0x03005AF0
 
 	thumb_func_start ExpandPlaceholder_StringVar1
 ExpandPlaceholder_StringVar1: @ 0x08008D2C
-	ldr r0, _08008D30
-	bx lr
-	.align 2, 0
-_08008D30: .4byte 0x02021C40
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_StringVar1
+	bx	lr
+.LExpandPlaceholder_StringVar1Pad:
+	.align	2, 0
+.LExpandPlaceholder_StringVar1:
+	.word	gStringVar1
 	thumb_func_end ExpandPlaceholder_StringVar1
 
 	thumb_func_start ExpandPlaceholder_StringVar2
 ExpandPlaceholder_StringVar2: @ 0x08008D34
-	ldr r0, _08008D38
-	bx lr
-	.align 2, 0
-_08008D38: .4byte 0x02021C54
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_StringVar2
+	bx	lr
+.LExpandPlaceholder_StringVar2Pad:
+	.align	2, 0
+.LExpandPlaceholder_StringVar2:
+	.word	gStringVar2
 	thumb_func_end ExpandPlaceholder_StringVar2
 
 	thumb_func_start ExpandPlaceholder_StringVar3
 ExpandPlaceholder_StringVar3: @ 0x08008D3C
-	ldr r0, _08008D40
-	bx lr
-	.align 2, 0
-_08008D40: .4byte 0x02021C68
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_StringVar3
+	bx	lr
+.LExpandPlaceholder_StringVar3Pad:
+	.align	2, 0
+.LExpandPlaceholder_StringVar3:
+	.word	gStringVar3
 	thumb_func_end ExpandPlaceholder_StringVar3
 
 	thumb_func_start ExpandPlaceholder_KunChan
@@ -832,50 +844,68 @@ ExpandPlaceholder_Version: @ 0x08008D8C
 
 	thumb_func_start ExpandPlaceholder_Aqua
 ExpandPlaceholder_Aqua: @ 0x08008D94
-	ldr r0, _08008D98
-	bx lr
-	.align 2, 0
-_08008D98: .4byte 0x085C8C3C
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Aqua
+	bx	lr
+.LExpandPlaceholder_AquaPad:
+	.align	2, 0
+.LExpandPlaceholder_Aqua:
+	.word	gText_ExpandedPlaceholder_Aqua
 	thumb_func_end ExpandPlaceholder_Aqua
 
 	thumb_func_start ExpandPlaceholder_Magma
 ExpandPlaceholder_Magma: @ 0x08008D9C
-	ldr r0, _08008DA0
-	bx lr
-	.align 2, 0
-_08008DA0: .4byte 0x085C8C40
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Magma
+	bx	lr
+.LExpandPlaceholder_MagmaPad:
+	.align	2, 0
+.LExpandPlaceholder_Magma:
+	.word	gText_ExpandedPlaceholder_Magma
 	thumb_func_end ExpandPlaceholder_Magma
 
 	thumb_func_start ExpandPlaceholder_Archie
 ExpandPlaceholder_Archie: @ 0x08008DA4
-	ldr r0, _08008DA8
-	bx lr
-	.align 2, 0
-_08008DA8: .4byte 0x085C8C44
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Archie
+	bx	lr
+.LExpandPlaceholder_ArchiePad:
+	.align	2, 0
+.LExpandPlaceholder_Archie:
+	.word	gText_ExpandedPlaceholder_Archie
 	thumb_func_end ExpandPlaceholder_Archie
 
 	thumb_func_start ExpandPlaceholder_Maxie
 ExpandPlaceholder_Maxie: @ 0x08008DAC
-	ldr r0, _08008DB0
-	bx lr
-	.align 2, 0
-_08008DB0: .4byte 0x085C8C49
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Maxie
+	bx	lr
+.LExpandPlaceholder_MaxiePad:
+	.align	2, 0
+.LExpandPlaceholder_Maxie:
+	.word	gText_ExpandedPlaceholder_Maxie
 	thumb_func_end ExpandPlaceholder_Maxie
 
 	thumb_func_start ExpandPlaceholder_Kyogre
 ExpandPlaceholder_Kyogre: @ 0x08008DB4
-	ldr r0, _08008DB8
-	bx lr
-	.align 2, 0
-_08008DB8: .4byte 0x085C8C4E
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Kyogre
+	bx	lr
+.LExpandPlaceholder_KyogrePad:
+	.align	2, 0
+.LExpandPlaceholder_Kyogre:
+	.word	gText_ExpandedPlaceholder_Kyogre
 	thumb_func_end ExpandPlaceholder_Kyogre
 
 	thumb_func_start ExpandPlaceholder_Groudon
 ExpandPlaceholder_Groudon: @ 0x08008DBC
-	ldr r0, _08008DC0
-	bx lr
-	.align 2, 0
-_08008DC0: .4byte 0x085C8C54
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_Groudon
+	bx	lr
+.LExpandPlaceholder_GroudonPad:
+	.align	2, 0
+.LExpandPlaceholder_Groudon:
+	.word	gText_ExpandedPlaceholder_Groudon
 	thumb_func_end ExpandPlaceholder_Groudon
 
 	thumb_func_start GetExpandedPlaceholder
