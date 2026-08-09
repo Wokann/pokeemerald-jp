@@ -68,6 +68,8 @@ SECTIONS {
         asm/smokescreen.o(.text);
         asm/pokeball.o(.text);
         asm/load_save.o(.text);
+        build/src/load_save.o(.text.*);
+        asm/load_save_rest.o(.text);
         asm/trade.o(.text);
         asm/berry_blender.o(.text);
         asm/play_time.o(.text);
@@ -183,7 +185,7 @@ SECTIONS {
         asm/post_battle_event_funcs.o(.text);
         asm/time_events.o(.text);
         asm/birch_pc.o(.text);
-        asm/hof_pc.o(.text);
+        build/src/hof_pc.o(.text.*);
         asm/field_specials.o(.text);
         asm/battle_records.o(.text);
         asm/pokedex_area_screen.o(.text);

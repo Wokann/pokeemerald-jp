@@ -4,12 +4,25 @@ OBJCOPY := tools/binutils/bin/arm-none-eabi-objcopy
 SHA1SUM := sha1sum -c
 GBAFIX := tools/gbafix/gbafix
 PREPROC := tools/preproc/preproc
+CPP := cpp
+CC := ../pokeemerald/tools/agbcc/bin/agbcc
+CPPFLAGS := -iquote include -Wno-trigraphs \
+	-I ../pokeemerald/tools/agbcc/include -I ../pokeemerald/tools/agbcc \
+	-nostdinc -undef -std=gnu89
 SHELL := /bin/bash
 
 ASFLAGS := -mcpu=arm7tdmi
+CFLAGS := -mthumb-interwork -O2 -ffunction-sections -fhex-asm
 
 ASFILE := $(wildcard asm/*.s)
-OBJFILE := $(ASFILE:.s=.o) data/event_scripts.o data/data.o
+# Modules fully converted and wired into the build.  Add a module here
+# once every function in its asm file has been converted to C (or the
+# asm file has been split so the C functions fill a contiguous ROM
+# range), then remove the asm object from ld_script_jp.txt.
+C_SRCS := src/load_save.c src/hof_pc.c
+C_BUILDDIR := build/src
+C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
+OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o
 DATA_BIN := build/data/event_scripts.bin build/data/data.bin
 NAME := pokeemerald_jp
 ROM := $(NAME).gba
@@ -25,7 +38,7 @@ compare: $(ROM)
 	$(SHA1SUM) rom_jp.sha1
 
 clean:
-	rm -f $(ROM) $(ELF) $(OBJFILE) $(DATA_BIN)
+	rm -rf build $(ROM) $(ELF) $(OBJFILE) $(DATA_BIN)
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
@@ -40,6 +53,11 @@ $(ELF): %.elf: $(OBJFILE) ld_script_jp.txt
 
 $(ASFILE:.s=.o): %.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
+
+$(C_BUILDDIR)/%.o: src/%.c
+	@mkdir -p $(C_BUILDDIR)
+	@set -o pipefail; $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o $(C_BUILDDIR)/$*.s -
+	$(AS) $(ASFLAGS) -o $@ $(C_BUILDDIR)/$*.s
 
 data/event_scripts.o: data/event_scripts.s build/data/event_scripts.bin
 	$(AS) $(ASFLAGS) -o $@ $<

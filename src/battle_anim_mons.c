@@ -1,7 +1,6 @@
 #include "global.h"
 #include "sprite.h"
-
-typedef long intptr_t;
+#include <stdint.h>
 
 void StorePointerInVars(s16 *lo, s16 *hi, const void *ptr)
 {
@@ -20,8 +19,6 @@ void SetCallbackToStoredInData6(struct Sprite *sprite)
     u32 callback = (u16)sprite->data[6] | (sprite->data[7] << 16);
     sprite->callback = (void (*)(struct Sprite *))callback;
 }
-
-extern void DestroySpriteAndFreeResources(void *sprite);
 
 void DestroySpriteAndFreeResources_(void *sprite)
 {

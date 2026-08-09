@@ -6359,14 +6359,14 @@ _08087020: .4byte 0x030050A0
 _08087024: .4byte 0x000008D2
 	thumb_func_end GetLinkSendQueueLength
 
-	thumb_func_start ZeroLinkPlayerEventObject
-ZeroLinkPlayerEventObject: @ 0x08087028
+	thumb_func_start ZeroLinkPlayerObjectEvent
+ZeroLinkPlayerObjectEvent: @ 0x08087028
 	@ From src/overworld.c (ZeroLinkPlayerObjectEvent)
 	movs r1, #0
 	str r1, [r0]
 	bx lr
 	.align 2, 0
-	thumb_func_end ZeroLinkPlayerEventObject
+	thumb_func_end ZeroLinkPlayerObjectEvent
 
 	thumb_func_start ClearLinkPlayerEventObjects
 ClearLinkPlayerEventObjects: @ 0x08087030
@@ -6429,7 +6429,7 @@ SpawnLinkPlayerEventObject: @ 0x08087054
 	ldr r0, _080870FC
 	adds r5, r5, r0
 	adds r0, r4, #0
-	bl ZeroLinkPlayerEventObject
+	bl ZeroLinkPlayerObjectEvent
 	adds r0, r5, #0
 	bl ZeroEventObject
 	movs r2, #0

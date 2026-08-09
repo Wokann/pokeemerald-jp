@@ -729,8 +729,8 @@ _080E1844:
 _080E184C: .4byte 0x02037290
 	thumb_func_end Task_HandleMultichoiceGridInput
 
-	thumb_func_start sub_080E1850
-sub_080E1850: @ 0x080E1850
+	thumb_func_start ScriptMenu_CreatePCMultichoice
+ScriptMenu_CreatePCMultichoice: @ 0x080E1850
 	push {lr}
 	ldr r0, _080E1870
 	bl FuncIsActiveTask
@@ -753,7 +753,7 @@ _080E187A:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_080E1850
+	thumb_func_end ScriptMenu_CreatePCMultichoice
 
 	thumb_func_start CreatePCMenu
 CreatePCMenu: @ 0x080E1880
@@ -1966,4 +1966,3 @@ _080E2238: .4byte 0x02039C30
 _080E223C: .4byte 0x080E1569
 _080E2240: .4byte 0x03005B60
 	thumb_func_end sub_080E21F8
-

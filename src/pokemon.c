@@ -1,8 +1,7 @@
 #include "global.h"
+#include "pokemon.h"
 
-extern void *memcpy(void *dest, const void *src, unsigned int size);
-
-void CopyMon(void *dest, void *src, unsigned int size)
+void CopyMon(void *dest, void *src, size_t size)
 {
     memcpy(dest, src, size);
 }

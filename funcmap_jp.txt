@@ -3456,7 +3456,7 @@ overworld.s
 08086f98 overworld.s sub_08086F98_jp
 08086fd0 overworld.s sub_08086FD0_jp
 08086ff4 overworld.s GetLinkSendQueueLength
-08087028 overworld.s ZeroLinkPlayerEventObject
+08087028 overworld.s ZeroLinkPlayerObjectEvent
 08087030 overworld.s ClearLinkPlayerEventObjects
 08087044 overworld.s ZeroEventObject
 08087054 overworld.s SpawnLinkPlayerEventObject
@@ -7658,7 +7658,7 @@ script_menu.s
 080e166c script_menu.s Task_HandleYesNoInput
 080e16e0 script_menu.s sp106_CreateStartMenu
 080e17ec script_menu.s Task_HandleMultichoiceGridInput
-080e1850 script_menu.s sub_080E1850_jp
+080e1850 script_menu.s ScriptMenu_CreatePCMultichoice
 080e1880 script_menu.s CreatePCMenu
 080e1a0c script_menu.s ScriptMenu_DisplayPCStartupPrompt
 080e1a40 script_menu.s display_text_and_get_width_internal

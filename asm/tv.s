@@ -4,6 +4,7 @@
 .syntax unified
 
 	thumb_func_start ClearTVShowData
+	@ From src/tv.c
 ClearTVShowData: @ 0x080ECA80
 	push {r4, r5, r6, r7, lr}
 	movs r3, #0
@@ -47,7 +48,7 @@ _080ECAAA:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080ECAD0: .4byte 0x03005AEC
+_080ECAD0: .4byte gSaveBlock1Ptr
 _080ECAD4: .4byte 0x000027CE
 _080ECAD8: .4byte 0x000027CC
 	thumb_func_end ClearTVShowData
@@ -316,6 +317,7 @@ _080ECCC0:
 	thumb_func_end SetTVMetatilesOnMap
 
 	thumb_func_start TurnOffTVScreen
+	@ From src/tv.c
 TurnOffTVScreen: @ 0x080ECCD0
 	push {lr}
 	ldr r1, _080ECCE8
@@ -327,10 +329,11 @@ TurnOffTVScreen: @ 0x080ECCD0
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080ECCE8: .4byte 0x03005B20
+_080ECCE8: .4byte gBackupMapLayout
 	thumb_func_end TurnOffTVScreen
 
 	thumb_func_start TurnOnTVScreen
+	@ From src/tv.c
 TurnOnTVScreen: @ 0x080ECCEC
 	push {lr}
 	ldr r1, _080ECD04
@@ -342,7 +345,7 @@ TurnOnTVScreen: @ 0x080ECCEC
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080ECD04: .4byte 0x03005B20
+_080ECD04: .4byte gBackupMapLayout
 	thumb_func_end TurnOnTVScreen
 
 	thumb_func_start special_0x45

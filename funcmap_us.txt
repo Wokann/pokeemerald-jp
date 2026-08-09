@@ -3373,7 +3373,7 @@
 08087634 overworld.s sub_8087634
 0808766c overworld.s sub_808766C
 08087690 overworld.s GetLinkSendQueueLength
-080876c4 overworld.s ZeroLinkPlayerEventObject
+080876c4 overworld.s ZeroLinkPlayerObjectEvent
 080876cc overworld.s ClearLinkPlayerEventObjects
 080876e0 overworld.s ZeroEventObject
 080876f0 overworld.s SpawnLinkPlayerEventObject
