@@ -175,6 +175,7 @@ _0809CD42:
 	thumb_func_end IsNationalPokedexEnabled
 
 	thumb_func_start DisableMysteryEvent
+	@ From src/event_data.c
 DisableMysteryEvent: @ 0x0809CD48
 	push {lr}
 	ldr r0, _0809CD54
@@ -186,6 +187,7 @@ _0809CD54: .4byte 0x000008AC
 	thumb_func_end DisableMysteryEvent
 
 	thumb_func_start EnableMysteryEvent
+	@ From src/event_data.c
 EnableMysteryEvent: @ 0x0809CD58
 	push {lr}
 	ldr r0, _0809CD64
@@ -210,6 +212,7 @@ _0809CD78: .4byte 0x000008AC
 	thumb_func_end IsMysteryEventEnabled
 
 	thumb_func_start DisableMysteryGift
+	@ From src/event_data.c
 DisableMysteryGift: @ 0x0809CD7C
 	push {lr}
 	ldr r0, _0809CD88
@@ -221,6 +224,7 @@ _0809CD88: .4byte 0x000008DB
 	thumb_func_end DisableMysteryGift
 
 	thumb_func_start EnableMysteryGift
+	@ From src/event_data.c
 EnableMysteryGift: @ 0x0809CD8C
 	push {lr}
 	ldr r0, _0809CD98
