@@ -8,6 +8,8 @@ gMessageBox_Gfx = ABSOLUTE(0x084E85E0);
 sTextWindowPalettes = ABSOLUTE(0x084E87A0);
 sHealLocations = ABSOLUTE(0x0857B104);
 sLandmarkLists = ABSOLUTE(0x08598C68);
+gSineTable = ABSOLUTE(0x082FA8CC);
+gSineDegreeTable = ABSOLUTE(0x082FAB4C);
 
 SECTIONS {
     . = 0x2000000;
@@ -70,7 +72,7 @@ SECTIONS {
         asm/battle_ai_switch_items.o(.text);
         asm/battle_controller_link_opponent.o(.text);
         asm/pokemon.o(.text);
-        asm/trig.o(.text);
+        build/src/trig.o(.text);
         build/src/random.o(.text);
         build/src/util.o(.text);
         asm/daycare.o(.text);
