@@ -18,6 +18,11 @@ thumb_func_start/end and the local literal pool).  Global data referenced
 by the C must be defined at its JP address with ABSOLUTE() in
 sym_ewram_jp.txt / sym_iwram_jp.txt so the literal resolves correctly.
 
+`tools/c_decomp/convert_c.py <function> <file.c>` automates this: it
+reads the JP function address from the asm label, compiles with agbcc,
+compares the code bytes (masking the trailing literal), and prints the
+generated snippet.  Only functions where it reports MATCH are integrated.
+
 ## Converted so far
 
 * `trainer_hill_vblank.c` - ClearTrainerHillVBlankCounter (0x080008E8,
