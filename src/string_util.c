@@ -11,6 +11,12 @@ extern const u8 gText_ExpandedPlaceholder_Archie[];
 extern const u8 gText_ExpandedPlaceholder_Maxie[];
 extern const u8 gText_ExpandedPlaceholder_Kyogre[];
 extern const u8 gText_ExpandedPlaceholder_Groudon[];
+extern struct SaveBlock2 *gSaveBlock2Ptr;
+
+static const u8 *ExpandPlaceholder_PlayerName(void)
+{
+    return gSaveBlock2Ptr->playerName;
+}
 
 static const u8 *ExpandPlaceholder_Version(void)
 {

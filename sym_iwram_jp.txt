@@ -1,6 +1,7 @@
 gUnknown_3000000 = .;
 gCurrentMapMusic = ABSOLUTE(0x03000F48);
 gLinkErrorOccurred = ABSOLUTE(0x0300310C);
+gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 . += 0x4;
 gUnknown_3000004 = .;
 . += 0x4;

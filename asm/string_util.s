@@ -747,11 +747,14 @@ ExpandPlaceholder_UnknownStringVar: @ 0x08008D18
 
 	thumb_func_start ExpandPlaceholder_PlayerName
 ExpandPlaceholder_PlayerName: @ 0x08008D20
-	ldr r0, _08008D28
-	ldr r0, [r0]
-	bx lr
-	.align 2, 0
-_08008D28: .4byte 0x03005AF0
+	@ From src/string_util.c
+	ldr	r0, .LExpandPlaceholder_PlayerName
+	ldr	r0, [r0]
+	bx	lr
+.LExpandPlaceholder_PlayerNamePad:
+	.align	2, 0
+.LExpandPlaceholder_PlayerName:
+	.word	gSaveBlock2Ptr
 	thumb_func_end ExpandPlaceholder_PlayerName
 
 	thumb_func_start ExpandPlaceholder_StringVar1
