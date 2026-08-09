@@ -69,7 +69,7 @@ SECTIONS {
         asm/battle_controller_link_opponent.o(.text);
         asm/pokemon.o(.text);
         asm/trig.o(.text);
-        asm/random.o(.text);
+        build/src/random.o(.text);
         build/src/util.o(.text);
         asm/daycare.o(.text);
         asm/egg_hatch.o(.text);
