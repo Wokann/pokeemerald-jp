@@ -1,8 +1,11 @@
 gUnknown_3000000 = .;
 gCurrentMapMusic = ABSOLUTE(0x03000F48);
+gMain = ABSOLUTE(0x03002360);
 gLinkErrorOccurred = ABSOLUTE(0x0300310C);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 gSaveBlock1Ptr = ABSOLUTE(0x03005AEC);
+gFlashMemoryPresent = ABSOLUTE(0x03005AE8);
+gPokemonStoragePtr = ABSOLUTE(0x03005AF4);
 gFieldCallback = ABSOLUTE(0x03005B0C);
 gBackupMapLayout = ABSOLUTE(0x03005B20);
 gLinkPartnersHeldKeys = ABSOLUTE(0x030030C0);

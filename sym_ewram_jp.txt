@@ -1,4 +1,8 @@
 gUnknown_2000000 = .;
+gHeap = ABSOLUTE(0x02000000);
+gSaveblock2 = ABSOLUTE(0x020246F8);
+gSaveblock1 = ABSOLUTE(0x020256A4);
+gPokemonStorage = ABSOLUTE(0x020294AC);
 gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 gBattleOutcome = ABSOLUTE(0x02023FDE);
 gPaletteFade = ABSOLUTE(0x02037C74);
@@ -7,6 +11,8 @@ sFindThatGamerWhichGame = ABSOLUTE(0x02039CF6);
 gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
 gObjectEvents = ABSOLUTE(0x02036FF0);
+gLoadedSaveData = ABSOLUTE(0x020318FC);
+gLastEncryptionKey = ABSOLUTE(0x02031E24);
 sMirageTowerPulseBlend = ABSOLUTE(0x0203CBE4);
 sAI_Scripts = ABSOLUTE(0x0203C488);
 sBattleScene = ABSOLUTE(0x0203C483);

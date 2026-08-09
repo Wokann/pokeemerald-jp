@@ -61,5 +61,6 @@ src/tv.c (5), src/battle_tower.c (2).
 All verified byte-identical with `python3 tools/c_decomp/verify_all.py`.
 
 Wired into the build (compiled from C, linked into the ROM):
-src/load_save.c (6), src/hof_pc.c (4) -- asm/load_save.s was split into
-load_save.s + load_save_rest.s and asm/hof_pc.s was removed.
+src/load_save.c (16, full module -- asm/load_save.s and
+asm/load_save_rest.s were removed), src/hof_pc.c (4, asm/hof_pc.s
+removed).

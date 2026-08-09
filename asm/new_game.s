@@ -233,7 +233,7 @@ WarpToTruck: @ 0x08083DD4
 	thumb_func_start Sav2_ClearSetDefault
 Sav2_ClearSetDefault: @ 0x08083DF4
 	push {lr}
-	bl ClearSav1
+	bl ClearSav2
 	bl SetDefaultOptions
 	pop {r0}
 	bx r0
@@ -281,7 +281,7 @@ _08083E3A:
 	bl ZeroEnemyPartyMons
 	bl ResetPokedex
 	bl ClearFrontierRecord
-	bl ClearSav2
+	bl ClearSav1
 	bl ClearMailData
 	ldr r0, [r4]
 	strb r5, [r0, #9]
@@ -397,4 +397,3 @@ ResetMiniGamesResults: @ 0x08083F54
 _08083FA0: .4byte 0x03005AF0
 _08083FA4: .4byte 0x01000008
 	thumb_func_end ResetMiniGamesResults
-

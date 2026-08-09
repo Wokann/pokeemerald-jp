@@ -146,7 +146,27 @@ def verify_function(name, c_file, jp_name=None):
     if compiled is None:
         return {"ok": False, "error": f"{name}: symbol not in compiled object"}
     jp_bytes = JP_ROM_BYTES[(jp_addr & 0xFFFFFF) : (jp_addr & 0xFFFFFF) + len(compiled)]
-    ok = strip_trailing(mask(compiled)) == strip_trailing(mask(jp_bytes))
+    mc = strip_trailing(mask(compiled))
+    mj = strip_trailing(mask(jp_bytes))
+    ok = mc == mj
+    if not ok:
+        # Unresolved symbol references in a standalone object show only
+        # their addend (e.g. gHeap+0xF2C -> 0x00000F2C); after linking
+        # they resolve to the absolute address that the JP literal pool
+        # already holds (and which mask() zeroes).  Accept that pattern
+        # inside the trailing literal pool.
+        ok = True
+        lit_start = max(0, len(mc) - 32)
+        for i in range(0, len(mc), 4):
+            if i >= lit_start:
+                cv = int.from_bytes(mc[i : i + 4], "little")
+                jv = int.from_bytes(mj[i : i + 4], "little")
+                if cv != jv and not (jv == 0 and cv < 0x10000):
+                    ok = False
+                    break
+            elif mc[i : i + 4] != mj[i : i + 4]:
+                ok = False
+                break
     has_literal = bool(re.search(r"\.word\s+\S+\s*$", asm_text, re.M))
     literal = None
     if has_literal and len(jp_bytes) >= 4:

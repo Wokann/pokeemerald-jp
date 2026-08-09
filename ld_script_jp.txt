@@ -67,9 +67,7 @@ SECTIONS {
         asm/battle_interface.o(.text);
         asm/smokescreen.o(.text);
         asm/pokeball.o(.text);
-        asm/load_save.o(.text);
         build/src/load_save.o(.text);
-        asm/load_save_rest.o(.text);
         asm/trade.o(.text);
         asm/berry_blender.o(.text);
         asm/play_time.o(.text);
