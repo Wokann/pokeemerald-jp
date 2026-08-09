@@ -22,3 +22,9 @@ sym_ewram_jp.txt / sym_iwram_jp.txt so the literal resolves correctly.
 
 * `trainer_hill_vblank.c` - ClearTrainerHillVBlankCounter (0x080008E8,
   12 bytes), verified byte-identical.
+* `store_word_in_two_halfwords.c` - StoreWordInTwoHalfwords (0x0806F100,
+  8 bytes), no globals.
+* `store_pointer_in_vars.c` - StorePointerInVars (0x080A7910, 8 bytes),
+  no globals; JP uses a signed `asrs` shift.
+* `get_battle_outcome.c` - GetBattleOutcome (0x08138BF0, 12 bytes),
+  gBattleOutcome mapped to ABSOLUTE(0x02023FDE).

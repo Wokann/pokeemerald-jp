@@ -37,10 +37,11 @@ _0806F0FC: .4byte 0x020205AC
 
 	thumb_func_start StoreWordInTwoHalfwords
 StoreWordInTwoHalfwords: @ 0x0806F100
-	strh r1, [r0]
-	lsrs r1, r1, #0x10
-	strh r1, [r0, #2]
-	bx lr
+	@ From tools/c_decomp/store_word_in_two_halfwords.c
+	strh	r1, [r0]
+	lsrs	r1, r1, #0x10
+	strh	r1, [r0, #2]
+	bx	lr
 	thumb_func_end StoreWordInTwoHalfwords
 
 	thumb_func_start LoadWordFromTwoHalfwords
@@ -560,4 +561,3 @@ _0806F496:
 _0806F4A8: .4byte 0x020373B4
 _0806F4AC: .4byte 0x020377B4
 	thumb_func_end BlendPalette
-

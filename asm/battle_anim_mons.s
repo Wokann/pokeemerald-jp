@@ -4883,10 +4883,11 @@ _080A790A:
 
 	thumb_func_start StorePointerInVars
 StorePointerInVars: @ 0x080A7910
-	strh r2, [r0]
-	asrs r2, r2, #0x10
-	strh r2, [r1]
-	bx lr
+	@ From tools/c_decomp/store_pointer_in_vars.c
+	strh	r2, [r0]
+	asrs	r2, r2, #0x10
+	strh	r2, [r1]
+	bx	lr
 	thumb_func_end StorePointerInVars
 
 	thumb_func_start LoadPointerFromVars
@@ -6839,4 +6840,3 @@ _080A87FA:
 _080A8810: .4byte 0x080A67B5
 _080A8814: .4byte 0x080A34C5
 	thumb_func_end sub_080A87AC
-

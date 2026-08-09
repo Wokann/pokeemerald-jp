@@ -1902,11 +1902,14 @@ _08138BEC: .4byte 0x085CB038
 
 	thumb_func_start GetBattleOutcome
 GetBattleOutcome: @ 0x08138BF0
-	ldr r0, _08138BF8
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08138BF8: .4byte 0x02023FDE
+	@ From tools/c_decomp/get_battle_outcome.c
+	ldr	r0, .L3
+	ldrb	r0, [r0]
+	bx	lr
+.L4:
+	.align	2, 0
+.L3:
+	.word	gBattleOutcome
 	thumb_func_end GetBattleOutcome
 
 	thumb_func_start CableCarWarp
@@ -8662,4 +8665,3 @@ sub_0813BFA0: @ 0x0813BFA0
 	.align 2, 0
 _0813BFB4: .4byte 0x02037280
 	thumb_func_end sub_0813BFA0
-
