@@ -40,14 +40,17 @@ def main():
     if jp_addr is None:
         sys.exit(f"no asm label for {name}")
 
-    # Compile.
+    # Compile: system cpp with the pokeemerald-style include tree, then
+    # the pret agbcc compiler.  -P strips cpp linemarkers that agbcc's
+    # own preprocessor chokes on.
     proc = subprocess.run(
-        [str(AGBCC), "-mthumb-interwork", "-O2", "-fhex-asm", "-o", "/tmp/cv.s",
-         str(c_file)],
+        "cpp -P -I include -x c {c} | {agbcc} -mthumb-interwork -O2 "
+        "-fhex-asm -o /tmp/cv.s -".format(c=c_file, agbcc=AGBCC),
+        shell=True,
         capture_output=True,
         text=True,
     )
-    if proc.returncode != 0:
+    if proc.returncode != 0 and not Path("/tmp/cv.s").is_file():
         sys.exit(proc.stderr)
     asm_text = Path("/tmp/cv.s").read_text()
     has_literal = bool(re.search(r"\.word\s+\S+\s*$", asm_text, re.M))

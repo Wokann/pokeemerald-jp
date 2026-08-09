@@ -1,4 +1,4 @@
-typedef unsigned int u32;
+#include "global.h"
 
 static u32 *sMirageTowerPulseBlend;
 

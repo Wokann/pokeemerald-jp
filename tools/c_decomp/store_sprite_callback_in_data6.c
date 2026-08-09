@@ -1,10 +1,5 @@
-typedef unsigned int u32;
-typedef signed short s16;
-
-struct Sprite {
-    unsigned char pad[0x2E];
-    s16 data[8];
-};
+#include "global.h"
+#include "sprite.h"
 
 void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite *))
 {

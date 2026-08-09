@@ -1,4 +1,4 @@
-typedef unsigned char u8;
+#include "global.h"
 
 extern u8 gBattleOutcome;
 

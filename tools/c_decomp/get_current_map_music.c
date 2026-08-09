@@ -1,4 +1,4 @@
-typedef unsigned short u16;
+#include "global.h"
 
 extern u16 gCurrentMapMusic;
 

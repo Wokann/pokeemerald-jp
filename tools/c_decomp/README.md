@@ -23,6 +23,11 @@ reads the JP function address from the asm label, compiles with agbcc,
 compares the code bytes (masking the trailing literal), and prints the
 generated snippet.  Only functions where it reports MATCH are integrated.
 
+The pokeemerald include tree (include/) is ported wholesale, so C files
+use the real headers (`#include "global.h"`, `"sprite.h"`, ...).  The
+compile step runs `cpp -P -I include` first (the `-P` strips linemarkers
+that agbcc's own preprocessor rejects), then pipes to agbcc.
+
 ## Converted so far
 
 * `trainer_hill_vblank.c` - ClearTrainerHillVBlankCounter (0x080008E8,
@@ -46,3 +51,10 @@ generated snippet.  Only functions where it reports MATCH are integrated.
 * `get_current_map_music.c` - GetCurrentMapMusic (0x080A27CC, 8 bytes);
   JP reads a u16 from IWRAM (gCurrentMapMusic = ABSOLUTE(0x03000F48)),
   differs from US SaveBlock-based version.
+* `get_ai_scripts_in_recorded_battle.c` - GetAiScriptsInRecordedBattle
+  (0x08186190, 8 bytes); sAI_Scripts at ABSOLUTE(0x0203C488).
+* `get_battle_scene_in_recorded_battle.c` -
+  GetBattleSceneInRecordedBattle (0x08185D1C, 8 bytes); sBattleScene at
+  ABSOLUTE(0x0203C483).
+* `destroy_sprite_and_free_resources_.c` -
+  DestroySpriteAndFreeResources_ (0x080A7ED8, 10 bytes); tail call.
