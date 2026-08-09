@@ -68,7 +68,6 @@ SECTIONS {
         asm/trig.o(.text);
         asm/random.o(.text);
         build/src/util.o(.text);
-        asm/util.o(.text);
         asm/daycare.o(.text);
         asm/egg_hatch.o(.text);
         asm/battle_interface.o(.text);

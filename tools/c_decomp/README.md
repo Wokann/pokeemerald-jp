@@ -63,6 +63,5 @@ All verified byte-identical with `python3 tools/c_decomp/verify_all.py`.
 Wired into the build (compiled from C, linked into the ROM):
 src/load_save.c (16, full module -- asm/load_save.s and
 asm/load_save_rest.s were removed), src/decompress.c (21, full module --
-asm/decompress.s removed), src/util.c (10 of 11 -- BlendPalette still
-in asm/util.s pending register-allocation match), src/hof_pc.c (4,
-asm/hof_pc.s removed).
+asm/decompress.s removed), src/util.c (11, full module -- asm/util.s
+removed), src/hof_pc.c (4, asm/hof_pc.s removed).
