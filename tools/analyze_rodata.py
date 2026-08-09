@@ -13,7 +13,8 @@ the words point to:
 
 Usage:
     python3 tools/analyze_rodata.py          # pointer-table classification
-    python3 tools/analyze_rodata.py records  # fixed-width text-record scan
+    python3 tools/analyze_rodata.py records   # fixed-width text-record scan
+    python3 tools/analyze_rodata.py structs   # name-led struct-table scan
 """
 
 import re
@@ -131,6 +132,36 @@ def main():
                 if good == count:
                     print(f"  {label:<26} 0x{addr:07X} 0x{size:05X} "
                           f"{record_size:>2} x {count}")
+
+    if len(sys.argv) > 1 and sys.argv[1] == "structs":
+        print("\nname-led struct-table candidates (name_len x count):")
+        for label, addr, rel, size in chunks:
+            if size < 128:
+                continue
+            raw = data[rel : rel + size]
+            for name_len in (7, 11, 14, 16):
+                for record_size in range(name_len + 4, 48):
+                    if size % record_size:
+                        continue
+                    count = size // record_size
+                    if not 100 <= count <= 800:
+                        continue
+                    good = 0
+                    for k in range(count):
+                        rec = raw[k * record_size : (k + 1) * record_size]
+                        name = rec[:name_len]
+                        texty = sum(
+                            1
+                            for b in name
+                            if b == 0xFF
+                            or 0x01 <= b <= 0x50
+                            or 0xB9 <= b <= 0xE9
+                        )
+                        if texty >= name_len - 2:
+                            good += 1
+                    if good == count:
+                        print(f"  {label:<26} 0x{addr:07X} 0x{size:05X} "
+                              f"name{name_len} rec{record_size} x {count}")
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ from pokeemerald can be ported directly.
 
 Usage:
     python3 tools/compare_functions.py
+    python3 tools/compare_functions.py list [min-size] [count]
 """
 
 import re
@@ -88,6 +89,7 @@ def main():
     missing_us = 0
     compared = 0
     missing_samples = []
+    matched_list = []
     for name, addr in jp_sorted:
         us_addr = us.get(name)
         if us_addr is None:
@@ -107,6 +109,19 @@ def main():
         us_bytes = us_rom[us_addr & 0xFFFFFF : (us_addr & 0xFFFFFF) + size]
         if normalize(jp_bytes) == normalize(us_bytes):
             matched += 1
+            matched_list.append((size, name, addr, us_addr))
+
+    if len(sys.argv) > 1 and sys.argv[1] == "list":
+        min_size = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+        count = int(sys.argv[3]) if len(sys.argv) > 3 else 30
+        for size, name, addr, us_addr in sorted(matched_list):
+            if size < min_size:
+                continue
+            print(f"{size:5d} {name:<40} JP 0x{addr:08X} US 0x{us_addr:08X}")
+            count -= 1
+            if count <= 0:
+                break
+        return
 
     print(f"JP functions: {len(jp)}")
     print(f"compared (have US symbol + same size): {compared}")
