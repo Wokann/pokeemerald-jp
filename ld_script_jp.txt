@@ -272,7 +272,7 @@ SECTIONS {
         asm/intro_credits_graphics.o(.text);
         asm/evolution_graphics.o(.text);
         asm/bard_music.o(.text);
-        asm/fldeff_teleport.o(.text);
+        build/src/fldeff_teleport.o(.text);
         asm/battle_tv.o(.text);
         asm/pokemon_animation.o(.text);
         asm/recorded_battle.o(.text);

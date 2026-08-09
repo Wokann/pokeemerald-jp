@@ -4880,8 +4880,8 @@ _080B7718:
 	bx r0
 	thumb_func_end sub_080B7640
 
-	thumb_func_start sub_080B7720
-sub_080B7720: @ 0x080B7720
+	thumb_func_start FldEff_TeleportWarpOut
+FldEff_TeleportWarpOut: @ 0x080B7720
 	push {lr}
 	ldr r0, _080B7730
 	movs r1, #0
@@ -4890,7 +4890,7 @@ sub_080B7720: @ 0x080B7720
 	bx r0
 	.align 2, 0
 _080B7730: .4byte 0x080B7735
-	thumb_func_end sub_080B7720
+	thumb_func_end FldEff_TeleportWarpOut
 
 	thumb_func_start sub_080B7734
 sub_080B7734: @ 0x080B7734
@@ -9004,4 +9004,3 @@ _080B9704:
 	.align 2, 0
 _080B970C: .4byte 0x02036FF0
 	thumb_func_end sub_080B9634
-
