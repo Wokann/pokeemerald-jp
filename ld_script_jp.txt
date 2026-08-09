@@ -1,3 +1,6 @@
+gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
+gMonBackPicTable = ABSOLUTE(0x082D6148);
+
 SECTIONS {
     . = 0x2000000;
     ewram (NOLOAD) :
@@ -46,7 +49,7 @@ SECTIONS {
         asm/rtc.o(.text);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
-        asm/decompress.o(.text);
+        build/src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
         asm/battle_bg.o(.text);
         asm/battle_main.o(.text);

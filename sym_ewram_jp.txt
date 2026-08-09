@@ -3,6 +3,7 @@ gHeap = ABSOLUTE(0x02000000);
 gSaveblock2 = ABSOLUTE(0x020246F8);
 gSaveblock1 = ABSOLUTE(0x020256A4);
 gPokemonStorage = ABSOLUTE(0x020294AC);
+gDecompressionBuffer = ABSOLUTE(0x0201C000);
 gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 gBattleOutcome = ABSOLUTE(0x02023FDE);
 gPaletteFade = ABSOLUTE(0x02037C74);
