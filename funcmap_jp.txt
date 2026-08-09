@@ -5794,7 +5794,7 @@ field_weather.s
 080aaaac field_weather.s Task_WeatherMain
 080aab4c field_weather.s None_Main
 080aab68 None_Init None_Init
-080aab88 field_weather.s SetWeatherScreenFadeOut
+080aab88 sub_080AAB88 sub_080AAB88
 080aab8c field_weather.s None_Finish
 080aab90 BuildColorMaps BuildColorMaps
 080aaca4 UpdateWeatherGammaShift UpdateWeatherColorMap

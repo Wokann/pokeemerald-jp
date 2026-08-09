@@ -364,11 +364,11 @@ _080AAB80: .4byte 0x000006C1
 _080AAB84: .4byte 0x000006C2
 	thumb_func_end None_Init
 
-	thumb_func_start SetWeatherScreenFadeOut
-SetWeatherScreenFadeOut: @ 0x080AAB88
+	thumb_func_start sub_080AAB88
+sub_080AAB88: @ 0x080AAB88
 	bx lr
 	.align 2, 0
-	thumb_func_end SetWeatherScreenFadeOut
+	thumb_func_end sub_080AAB88
 
 	thumb_func_start None_Finish
 None_Finish: @ 0x080AAB8C
@@ -2667,8 +2667,8 @@ _080ABCC4: .4byte 0x020380F4
 _080ABCC8: .4byte 0x000006D3
 	thumb_func_end IsWeatherChangeComplete
 
-	thumb_func_start sub_080ABCCC
-sub_080ABCCC: @ 0x080ABCCC
+	thumb_func_start SetWeatherScreenFadeOut
+SetWeatherScreenFadeOut: @ 0x080ABCCC
 	ldr r0, _080ABCD8
 	ldr r1, _080ABCDC
 	adds r0, r0, r1
@@ -2678,10 +2678,10 @@ sub_080ABCCC: @ 0x080ABCCC
 	.align 2, 0
 _080ABCD8: .4byte 0x020380F4
 _080ABCDC: .4byte 0x000006C6
-	thumb_func_end sub_080ABCCC
+	thumb_func_end SetWeatherScreenFadeOut
 
-	thumb_func_start sub_080ABCE0
-sub_080ABCE0: @ 0x080ABCE0
+	thumb_func_start SetWeatherPalStateIdle
+SetWeatherPalStateIdle: @ 0x080ABCE0
 	ldr r0, _080ABCEC
 	ldr r1, _080ABCF0
 	adds r0, r0, r1
@@ -2691,7 +2691,7 @@ sub_080ABCE0: @ 0x080ABCE0
 	.align 2, 0
 _080ABCEC: .4byte 0x020380F4
 _080ABCF0: .4byte 0x000006C6
-	thumb_func_end sub_080ABCE0
+	thumb_func_end SetWeatherPalStateIdle
 
 	thumb_func_start PreservePaletteInWeather
 PreservePaletteInWeather: @ 0x080ABCF4

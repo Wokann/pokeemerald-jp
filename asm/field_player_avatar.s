@@ -2622,14 +2622,14 @@ sub_0808B634: @ 0x0808B634
 _0808B63C: .4byte 0x02037230
 	thumb_func_end sub_0808B634
 
-	thumb_func_start GetPlayerAvatarObjectId
-GetPlayerAvatarObjectId: @ 0x0808B640
+	thumb_func_start GetPlayerAvatarSpriteId
+GetPlayerAvatarSpriteId: @ 0x0808B640
 	ldr r0, _0808B648
 	ldrb r0, [r0, #4]
 	bx lr
 	.align 2, 0
 _0808B648: .4byte 0x02037230
-	thumb_func_end GetPlayerAvatarObjectId
+	thumb_func_end GetPlayerAvatarSpriteId
 
 	thumb_func_start sub_0808B64C
 sub_0808B64C: @ 0x0808B64C

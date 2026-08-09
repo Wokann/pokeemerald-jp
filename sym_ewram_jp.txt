@@ -7,6 +7,7 @@ gDecompressionBuffer = ABSOLUTE(0x0201C000);
 gSprites = ABSOLUTE(0x020205AC);
 gPlttBufferUnfaded = ABSOLUTE(0x020373B4);
 gPlttBufferFaded = ABSOLUTE(0x020377B4);
+gPaletteDecompressionBuffer = ABSOLUTE(0x02037C88);
 gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 gBattleOutcome = ABSOLUTE(0x02023FDE);
 gPaletteFade = ABSOLUTE(0x02037C74);

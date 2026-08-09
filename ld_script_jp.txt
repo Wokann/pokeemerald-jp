@@ -37,6 +37,7 @@ gBirchDexRatingText_DexCompleted = ABSOLUTE(0x0826314F);
 EventScript_UseStrength = ABSOLUTE(0x08256797);
 FieldCallback_PrepareFadeInFromMenu = ABSOLUTE(0x081B53D8);
 EventScript_UseRockSmash = ABSOLUTE(0x082566C6);
+EventScript_FailSweetScent = ABSOLUTE(0x08256A14);
 
 SECTIONS {
     . = 0x2000000;
@@ -247,7 +248,7 @@ SECTIONS {
         asm/contest_ai.o(.text);
         asm/battle_anim_sound_tasks.o(.text);
         asm/battle_controller_safari.o(.text);
-        asm/fldeff_sweetscent.o(.text);
+        build/src/fldeff_sweetscent.o(.text);
         asm/battle_anim_effects_3.o(.text);
         asm/move_relearner.o(.text);
         asm/fldeff_softboiled.o(.text);

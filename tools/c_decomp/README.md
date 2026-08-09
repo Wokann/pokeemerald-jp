@@ -84,7 +84,8 @@ module -- asm/fldeff_strength.s removed), src/fldeff_teleport.c (4, full
 module -- asm/fldeff_teleport.s removed), src/hof_pc.c (4, asm/hof_pc.s
 removed), src/fldeff_rocksmash.c (10, asm/fldeff_rocksmash.s trimmed to the
 remaining 4 EscapeRope helper functions), src/fldeff_dig.c (4, full module --
-asm/fldeff_rocksmash.s removed).
+asm/fldeff_rocksmash.s removed), src/fldeff_sweetscent.c (6, full module --
+asm/fldeff_sweetscent.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -104,3 +105,13 @@ Overworld_ResetStateAfterFly / Overworld_ResetStateAfterDigEscRope labels
 by call-site logic in item_use.s and field_effect.s), and
 CanUseEscapeRopeOnCurrMap / task08_080A1C44 were renamed to pokeemerald's
 CanUseDigOrEscapeRopeOnCurMap / Task_UseDigEscapeRopeOnField.
+
+src/fldeff_sweetscent.c (SetUpFieldMove_SweetScent, FieldCallback_SweetScent,
+FldEff_SweetScent, StartSweetScentFieldEffect, TrySweetScentEncounter,
+FailSweetScentEncounter) is the sixteenth wired module.  Renamed
+GetPlayerAvatarObjectId -> GetPlayerAvatarSpriteId (0x0808B640 returns
+gPlayerAvatar.spriteId) and sub_080ABCE0 -> SetWeatherPalStateIdle; the
+splitter's "SetWeatherScreenFadeOut" at 0x080AAB88 was actually an empty
+do-nothing (renamed sub_080AAB88) while the real SetWeatherScreenFadeOut is
+0x080ABCCC.  Added gPaletteDecompressionBuffer (0x02037C88) and
+EventScript_FailSweetScent (0x08256A14) symbols.

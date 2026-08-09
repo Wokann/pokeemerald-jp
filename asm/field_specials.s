@@ -2772,7 +2772,7 @@ _08139218: .4byte 0x02036FF0
 	thumb_func_start RemoveCameraObject
 RemoveCameraObject: @ 0x0813921C
 	push {lr}
-	bl GetPlayerAvatarObjectId
+	bl GetPlayerAvatarSpriteId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	bl CameraObjectSetFollowedObjectId

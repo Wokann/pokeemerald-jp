@@ -190,7 +190,7 @@ _0814609C: .4byte 0x03005B60
 Transition_Phase1: @ 0x081460A0
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_080ABCCC
+	bl SetWeatherScreenFadeOut
 	ldr r0, _081460CC
 	ldr r1, _081460D0
 	ldr r2, _081460D4
