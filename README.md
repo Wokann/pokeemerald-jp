@@ -47,8 +47,9 @@ Text chunks in `data/data.s` are converted from `.incbin` to readable
 `.string` lines.  The build routes `data/data.s` through
 `tools/preproc` with `charmap.txt`, which encodes the text back to game
 bytes (byte-exact, verified by `make compare`).  Kana/Latin text is
-readable; unmapped byte sequences become `{KANJI_XXXX}` placeholders for
-future JP kanji mapping work.
+readable; unmapped byte sequences (JP formatting/control codes) become
+`{UNK_XXXX}` placeholders that are appended to `charmap.txt` as named
+constants so the build stays byte-exact.
 
 Generator/analysis tools under `tools/`:
 

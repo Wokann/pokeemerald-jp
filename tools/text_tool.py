@@ -4,7 +4,7 @@
 The JP ROM stores text in the game's charmap encoding.  This tool:
 
   * decodes ROM bytes into readable text (kana/Latin via charmap.txt,
-    unmapped sequences as {KANJI_XXXX} placeholders),
+    unmapped byte sequences as {UNK_XXXX} placeholders),
   * encodes text back into ROM bytes (round-trip is byte-exact),
   * scans data.s chunks to find text-like chunks.
 
@@ -83,7 +83,7 @@ class Charmap:
                 out.append(self.bytes_to_text[seq])
                 i += size
             elif i + 1 < len(data):
-                out.append(f"{{KANJI_{data[i]:02X}{data[i+1]:02X}}}")
+                out.append(f"{{UNK_{data[i]:02X}{data[i+1]:02X}}}")
                 i += 2
             else:
                 out.append(f"{{BYTE_{data[i]:02X}}}")
@@ -99,7 +99,7 @@ class Charmap:
                 if j == -1:
                     raise ValueError(f"unterminated constant at {i}")
                 token = text[i : j + 1]
-                m = re.match(r"^\{KANJI_([0-9A-Fa-f]{4})\}$", token)
+                m = re.match(r"^\{UNK_([0-9A-Fa-f]{4})\}$", token)
                 if m:
                     out.append(int(m.group(1)[0:2], 16))
                     out.append(int(m.group(1)[2:4], 16))
@@ -131,6 +131,7 @@ class Charmap:
     def preproc_bytes(self, text):
         """Run preproc on the .string lines and return the encoded bytes,
         or None if preproc is unavailable."""
+        self.ensure_unk_constants(text)
         preproc = ROOT / "tools" / "preproc" / "preproc"
         if not preproc.is_file():
             return None
@@ -155,6 +156,24 @@ class Charmap:
         for line in result.stdout.splitlines():
             vals.extend(int(m.group(1), 16) for m in re.finditer(r"0x([0-9A-Fa-f]{2})", line))
         return bytes(vals)
+
+    def ensure_unk_constants(self, text):
+        """Append missing {UNK_XXXX} entries to charmap.txt so preproc
+        can encode them, and register them in memory."""
+        missing = set()
+        for m in re.finditer(r"\{UNK_([0-9A-Fa-f]{4})\}", text):
+            token = m.group(1).upper()
+            if f"{{UNK_{token}}}" not in self.text_to_bytes:
+                missing.add(token)
+        if missing:
+            with CHARMAP_FILE.open("a", encoding="utf-8") as f:
+                for token in sorted(missing):
+                    f.write(f"UNK_{token} = {token[0:2]} {token[2:4]}\n")
+            for token in missing:
+                seq = (int(token[0:2], 16), int(token[2:4], 16))
+                self.bytes_to_text[seq] = f"{{UNK_{token}}}"
+                self.text_to_bytes[f"{{UNK_{token}}}"] = seq
+        return missing
 
 
 def parse_chunks():
@@ -246,6 +265,32 @@ def main():
         raw = bytes.fromhex(sys.argv[2])
         print(cm.decode(raw))
         print(f"roundtrip: {cm.roundtrip(raw)}")
+    elif cmd == "skip-reasons":
+        reasons = {}
+        samples = {}
+        for label, addr, rel, size in parse_chunks():
+            raw = data[rel : rel + size]
+            text = cm.decode(raw)
+            if not cm.roundtrip(raw):
+                reason = "not-text"
+            elif not text.endswith("$"):
+                reason = "unterminated"
+            elif '"' in text or "\\" in text:
+                reason = "quotes"
+            else:
+                encoded = cm.preproc_bytes(text)
+                if encoded is None:
+                    reason = "preproc-error"
+                elif encoded != raw:
+                    reason = "preproc-divergence"
+                else:
+                    reason = "ok"
+            reasons[reason] = reasons.get(reason, 0) + 1
+            samples.setdefault(reason, []).append((label, addr, size))
+        for reason, count in sorted(reasons.items(), key=lambda kv: -kv[1]):
+            print(f"{reason:<20} {count}")
+            for label, addr, size in samples[reason][:3]:
+                print(f"    {label} 0x{addr:07X} 0x{size:05X}")
     else:
         sys.exit(__doc__)
 
