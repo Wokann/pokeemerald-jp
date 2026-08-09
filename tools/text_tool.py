@@ -16,6 +16,9 @@ Usage:
 
 import re
 import sys
+import subprocess
+import tempfile
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -125,6 +128,34 @@ class Charmap:
         except ValueError:
             return False
 
+    def preproc_bytes(self, text):
+        """Run preproc on the .string lines and return the encoded bytes,
+        or None if preproc is unavailable."""
+        preproc = ROOT / "tools" / "preproc" / "preproc"
+        if not preproc.is_file():
+            return None
+        tmp = tempfile.NamedTemporaryFile(
+            "w", suffix=".s", delete=False, encoding="utf-8"
+        )
+        try:
+            for seg in split_strings(text):
+                tmp.write(f'\t.string "{seg}"\n')
+            tmp.close()
+            result = subprocess.run(
+                [str(preproc), tmp.name, str(CHARMAP_FILE)],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError:
+            return None
+        finally:
+            os.unlink(tmp.name)
+        vals = []
+        for line in result.stdout.splitlines():
+            vals.extend(int(m.group(1), 16) for m in re.finditer(r"0x([0-9A-Fa-f]{2})", line))
+        return bytes(vals)
+
 
 def parse_chunks():
     chunks = []
@@ -197,39 +228,15 @@ def main():
         sys.exit(f"no chunk named {target}")
     elif cmd == "convert":
         target = sys.argv[2]
-        lines = DATA_S.read_text(encoding="utf-8").splitlines(keepends=True)
-        out = []
-        label = None
-        converted = False
-        for line in lines:
-            lm = LABEL_RE.match(line.rstrip("\r\n"))
-            if lm:
-                label = lm.group(1)
-                out.append(line)
-                continue
-            m = INCINBIN_RE.match(line)
-            if m and label == target:
-                rel = int(m.group(1), 16)
-                size = int(m.group(2), 16)
-                raw = data[rel : rel + size]
-                if not cm.roundtrip(raw):
-                    sys.exit(f"{target}: roundtrip FAIL, refusing to convert")
-                text = cm.decode(raw)
-                if not text.endswith("$"):
-                    sys.exit(f"{target}: does not end with a 0xFF terminator, "
-                             f"refusing to convert")
-                if '"' in text or "\\" in text:
-                    sys.exit(f"{target}: contains quote/backslash, refusing")
-                for seg in split_strings(text):
-                    out.append(f'\t.string "{seg}"\n')
-                converted = True
-                label = None
-                continue
-            out.append(line)
+        converted, _ = convert_chunks([target], data, cm)
         if not converted:
             sys.exit(f"{target}: not found or already converted")
-        DATA_S.write_text("".join(out), encoding="utf-8")
         print(f"converted {target} to .string")
+    elif cmd == "convert-all":
+        targets = [label for label, _, _, _ in parse_chunks()]
+        converted, skipped = convert_chunks(targets, data, cm)
+        print(f"converted {len(converted)} chunks, "
+              f"{sum(c[1] for c in converted)} bytes, skipped {len(skipped)}")
     elif cmd == "map":
         name = sys.argv[2]
         token = name if name.startswith("{") else "{" + name + "}"
@@ -241,6 +248,52 @@ def main():
         print(f"roundtrip: {cm.roundtrip(raw)}")
     else:
         sys.exit(__doc__)
+
+
+def convert_chunks(targets, data, cm):
+    """Convert the given chunk labels from .incbin to .string lines.
+    Only chunks that pass every gate are converted:
+    - decode/encode round-trips byte-exactly,
+    - the text ends with the 0xFF terminator,
+    - no quote/backslash characters,
+    - preproc re-encodes the .string lines to the exact original bytes.
+    Returns (converted, skipped) lists of (label, size)."""
+    targets = set(targets)
+    lines = DATA_S.read_text(encoding="utf-8").splitlines(keepends=True)
+    out = []
+    label = None
+    converted = []
+    skipped = []
+    for line in lines:
+        lm = LABEL_RE.match(line.rstrip("\r\n"))
+        if lm:
+            label = lm.group(1)
+            out.append(line)
+            continue
+        m = INCINBIN_RE.match(line)
+        if m and label in targets:
+            rel = int(m.group(1), 16)
+            size = int(m.group(2), 16)
+            raw = data[rel : rel + size]
+            ok = cm.roundtrip(raw)
+            if ok:
+                text = cm.decode(raw)
+                ok = text.endswith("$") and '"' not in text and "\\" not in text
+            if ok:
+                encoded = cm.preproc_bytes(text)
+                ok = encoded is not None and encoded == raw
+            if ok:
+                for seg in split_strings(text):
+                    out.append(f'\t.string "{seg}"\n')
+                converted.append((label, size))
+            else:
+                skipped.append((label, size))
+                out.append(line)
+            label = None
+            continue
+        out.append(line)
+    DATA_S.write_text("".join(out), encoding="utf-8")
+    return converted, skipped
 
 
 def split_strings(text):
