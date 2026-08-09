@@ -72,3 +72,9 @@ that agbcc's own preprocessor rejects), then pipes to agbcc.
   `get_text_speed_in_recorded_battle.c` - recorded-battle getters
   (0x08184F30 / 0x08185D04 / 0x081861EC); EWRAM statics at 0x0203C478 /
   0x0203C481 / 0x0203C9A6.
+* `get_recorded_battle_apprentice_language.c`,
+  `get_recorded_battle_fronter_brain_symbol.c`,
+  `get_recorded_battle_record_mix_friend_class.c`,
+  `get_recorded_battle_record_mix_friend_language.c` - four more
+  recorded-battle getters (0x08185BF8 / 0x08185C04 / 0x08185D10 /
+  0x081861E0).

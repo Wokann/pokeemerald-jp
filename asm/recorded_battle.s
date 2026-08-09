@@ -1964,20 +1964,26 @@ CB2_RecordedBattle: @ 0x08185BE4
 
 	thumb_func_start GetRecordedBattleApprenticeLanguage
 GetRecordedBattleApprenticeLanguage: @ 0x08185BF8
-	ldr r0, _08185C00
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08185C00: .4byte 0x0203C47A
+	@ From tools/c_decomp/get_recorded_battle_apprentice_language.c
+	ldr	r0, .LGetRecordedBattleApprenticeLanguage
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleApprenticeLanguagePad:
+	.align	2, 0
+.LGetRecordedBattleApprenticeLanguage:
+	.word	sApprenticeLanguage
 	thumb_func_end GetRecordedBattleApprenticeLanguage
 
 	thumb_func_start GetRecordedBattleFronterBrainSymbol
 GetRecordedBattleFronterBrainSymbol: @ 0x08185C04
-	ldr r0, _08185C0C
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08185C0C: .4byte 0x0203C47B
+	@ From tools/c_decomp/get_recorded_battle_fronter_brain_symbol.c
+	ldr	r0, .LGetRecordedBattleFronterBrainSymbol
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleFronterBrainSymbolPad:
+	.align	2, 0
+.LGetRecordedBattleFronterBrainSymbol:
+	.word	sFrontierBrainSymbol
 	thumb_func_end GetRecordedBattleFronterBrainSymbol
 
 	thumb_func_start RecordedBattle_RestoreSavedParties
@@ -2131,11 +2137,14 @@ GetRecordedBattleFrontierFacility: @ 0x08185D04
 
 	thumb_func_start GetRecordedBattleRecordMixFriendClass
 GetRecordedBattleRecordMixFriendClass: @ 0x08185D10
-	ldr r0, _08185D18
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08185D18: .4byte 0x0203C482
+	@ From tools/c_decomp/get_recorded_battle_record_mix_friend_class.c
+	ldr	r0, .LGetRecordedBattleRecordMixFriendClass
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleRecordMixFriendClassPad:
+	.align	2, 0
+.LGetRecordedBattleRecordMixFriendClass:
+	.word	sRecordMixFriendClass
 	thumb_func_end GetRecordedBattleRecordMixFriendClass
 
 	thumb_func_start GetBattleSceneInRecordedBattle
@@ -2779,11 +2788,14 @@ _081861DC: .4byte 0x0203C99D
 
 	thumb_func_start GetRecordedBattleRecordMixFriendLanguage
 GetRecordedBattleRecordMixFriendLanguage: @ 0x081861E0
-	ldr r0, _081861E8
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_081861E8: .4byte 0x0203C9A5
+	@ From tools/c_decomp/get_recorded_battle_record_mix_friend_language.c
+	ldr	r0, .LGetRecordedBattleRecordMixFriendLanguage
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleRecordMixFriendLanguagePad:
+	.align	2, 0
+.LGetRecordedBattleRecordMixFriendLanguage:
+	.word	sRecordMixFriendLanguage
 	thumb_func_end GetRecordedBattleRecordMixFriendLanguage
 
 	thumb_func_start GetTextSpeedInRecordedBattle
