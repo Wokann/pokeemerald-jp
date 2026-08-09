@@ -3145,7 +3145,7 @@ gUnknown_830F837: @ 0x830F837
 
 	.globl gUnknown_830F83B
 gUnknown_830F83B: @ 0x830F83B
-	.incbin "build/data/data.bin", 0x73a97, 0x8
+	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR6}{BLUE}ど$"
 
 	.globl gUnknown_830F843
 gUnknown_830F843: @ 0x830F843
@@ -13193,7 +13193,7 @@ gUnknown_85CCECD: @ 0x85CCECD
 
 	.globl gUnknown_85CCED5
 gUnknown_85CCED5: @ 0x85CCED5
-	.incbin "build/data/data.bin", 0x331131, 0xa
+	.string "ふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの$"
 
 	.globl gUnknown_85CCEDF
 gUnknown_85CCEDF: @ 0x85CCEDF
@@ -16177,7 +16177,7 @@ gUnknown_85F7C48: @ 0x85F7C48
 
 	.globl gUnknown_85F7C50
 gUnknown_85F7C50: @ 0x85F7C50
-	.incbin "build/data/data.bin", 0x35beac, 0x7
+	.string "たた{GREEN}{LIGHT_GRAY}わざ$"
 
 	.globl gUnknown_85F7C57
 gUnknown_85F7C57: @ 0x85F7C57

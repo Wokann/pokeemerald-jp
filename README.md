@@ -43,6 +43,13 @@ The script-data region (0x1DABAC-0x28D2F8) is being converted from raw
   pointer table and labelled (`gUnknown_XXXXXXXX`), making the boundaries
   of the referenced scripts/data visible.
 
+Text chunks in `data/data.s` are converted from `.incbin` to readable
+`.string` lines.  The build routes `data/data.s` through
+`tools/preproc` with `charmap.txt`, which encodes the text back to game
+bytes (byte-exact, verified by `make compare`).  Kana/Latin text is
+readable; unmapped byte sequences become `{KANJI_XXXX}` placeholders for
+future JP kanji mapping work.
+
 Generator/analysis tools under `tools/`:
 
 * `extract_baserom_data.py` - regenerate `build/data/*.bin` from
@@ -52,6 +59,8 @@ Generator/analysis tools under `tools/`:
 * `analyze_chunks.py` - classify every chunk in `data/event_scripts.s`
 * `split_script_region.py` - split raw chunks at pointer-table targets and
   convert the pointer tables to symbolic references
+* `text_tool.py` - decode/encode JP text via `charmap.txt` and convert
+  text chunks to `.string`
 
 To set up the repository, see [INSTALL.md](INSTALL.md)
 
