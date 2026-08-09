@@ -1706,6 +1706,7 @@ _080072F8: .4byte 0x0000FFFF
 	thumb_func_end FreeSpriteTiles
 
 	thumb_func_start FreeSpritePalette
+	@ From src/sprite.c
 FreeSpritePalette: @ 0x080072FC
 	push {lr}
 	ldr r0, [r0, #0x14]

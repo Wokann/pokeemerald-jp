@@ -77,6 +77,7 @@ _08145FCC: .4byte 0x080857B9
 	thumb_func_end BattleTransition_StartOnField
 
 	thumb_func_start BattleTransition_Start
+	@ From src/battle_transition.c
 BattleTransition_Start: @ 0x08145FD0
 	push {lr}
 	lsls r0, r0, #0x18
