@@ -28,6 +28,31 @@ Build tooling: `sh build_tools.sh` for the host tools, and an
 `arm-none-eabi` binutils plus agbcc's `libgcc.a`/`libc.a` installed under
 `tools/binutils` and `tools/agbcc` respectively.
 
+## Data structure
+
+The script-data region (0x1DABAC-0x28D2F8) is being converted from raw
+`.incbin` chunks into structured sources, following pokeemerald's layout:
+
+* `data/script_cmd_table.inc` - `gScriptCmdTable` (225 script commands
+  plus the `gScriptCmdTableEnd` sentinel)
+* `data/specials.inc` - `gSpecials` (524 special commands)
+* `data/mystery_event_script_cmd_table.inc` - `gMysteryEventScriptCmdTable`
+  (17 commands)
+* `data/event_scripts.s` - remaining data.  Pointer tables are symbolic
+  `.4byte` lists; raw chunks are split at every address referenced by a
+  pointer table and labelled (`gUnknown_XXXXXXXX`), making the boundaries
+  of the referenced scripts/data visible.
+
+Generator/analysis tools under `tools/`:
+
+* `extract_baserom_data.py` - regenerate `build/data/*.bin` from
+  `baserom_jp.gba`
+* `generate_script_cmd_table.py`, `generate_specials.py`,
+  `generate_mystery_event_cmd_table.py` - regenerate the tables above
+* `analyze_chunks.py` - classify every chunk in `data/event_scripts.s`
+* `split_script_region.py` - split raw chunks at pointer-table targets and
+  convert the pointer tables to symbolic references
+
 To set up the repository, see [INSTALL.md](INSTALL.md)
 
 ## See also

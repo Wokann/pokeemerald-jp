@@ -19,7 +19,17 @@ gUnknown_81DAF8C:
 
 	.globl gUnknown_81DB7BC
 gUnknown_81DB7BC: @ 0x81DB7BC
-	.incbin "build/data/event_scripts.bin", 0xc10, 0x2c
+	.4byte gUnknown_8242B6D                  @ 000
+	.4byte gUnknown_8242C95                  @ 001
+	.4byte gUnknown_82423AF                  @ 002
+	.4byte gUnknown_82423BA                  @ 003
+	.4byte gUnknown_82423C4                  @ 004
+	.4byte gUnknown_82423CC                  @ 005
+	.4byte gUnknown_824252E                  @ 006
+	.4byte gUnknown_8242C4F                  @ 007
+	.4byte gUnknown_8244CF3                  @ 008
+	.4byte gUnknown_82423D6                  @ 009
+	.4byte gUnknown_82423E1                  @ 010
 
 	.globl gUnknown_81DB7E8
 gUnknown_81DB7E8: @ 0x81DB7E8
@@ -155,7 +165,19 @@ gUnknown_823B5A9: @ 0x823B5A9
 
 	.globl gUnknown_823CFFB
 gUnknown_823CFFB: @ 0x823CFFB
-	.incbin "build/data/event_scripts.bin", 0x6244f, 0x53f3
+	.incbin "build/data/event_scripts.bin", 0x6244f, 0x53b4
+gUnknown_82423AF: @ 0x82423AF
+	.incbin "build/data/event_scripts.bin", 0x67803, 0xb
+gUnknown_82423BA: @ 0x82423BA
+	.incbin "build/data/event_scripts.bin", 0x6780e, 0xa
+gUnknown_82423C4: @ 0x82423C4
+	.incbin "build/data/event_scripts.bin", 0x67818, 0x8
+gUnknown_82423CC: @ 0x82423CC
+	.incbin "build/data/event_scripts.bin", 0x67820, 0xa
+gUnknown_82423D6: @ 0x82423D6
+	.incbin "build/data/event_scripts.bin", 0x6782a, 0xb
+gUnknown_82423E1: @ 0x82423E1
+	.incbin "build/data/event_scripts.bin", 0x67835, 0xd
 
 	.globl gUnknown_82423EE
 gUnknown_82423EE: @ 0x82423EE
@@ -179,7 +201,9 @@ gUnknown_824246B: @ 0x824246B
 
 	.globl gUnknown_8242492
 gUnknown_8242492: @ 0x8242492
-	.incbin "build/data/event_scripts.bin", 0x678e6, 0x1e6
+	.incbin "build/data/event_scripts.bin", 0x678e6, 0x9c
+gUnknown_824252E: @ 0x824252E
+	.incbin "build/data/event_scripts.bin", 0x67982, 0x14a
 
 	.globl gUnknown_8242678
 gUnknown_8242678: @ 0x8242678
@@ -191,7 +215,13 @@ gUnknown_82428F1: @ 0x82428F1
 
 	.globl gUnknown_82428FC
 gUnknown_82428FC: @ 0x82428FC
-	.incbin "build/data/event_scripts.bin", 0x67d50, 0x44d
+	.incbin "build/data/event_scripts.bin", 0x67d50, 0x271
+gUnknown_8242B6D: @ 0x8242B6D
+	.incbin "build/data/event_scripts.bin", 0x67fc1, 0xe2
+gUnknown_8242C4F: @ 0x8242C4F
+	.incbin "build/data/event_scripts.bin", 0x680a3, 0x46
+gUnknown_8242C95: @ 0x8242C95
+	.incbin "build/data/event_scripts.bin", 0x680e9, 0xb4
 
 	.globl gUnknown_8242D49
 gUnknown_8242D49: @ 0x8242D49
@@ -255,7 +285,9 @@ gUnknown_8244245: @ 0x8244245
 
 	.globl gUnknown_8244749
 gUnknown_8244749: @ 0x8244749
-	.incbin "build/data/event_scripts.bin", 0x69b9d, 0x5c7
+	.incbin "build/data/event_scripts.bin", 0x69b9d, 0x5aa
+gUnknown_8244CF3: @ 0x8244CF3
+	.incbin "build/data/event_scripts.bin", 0x6a147, 0x1d
 
 	.globl gUnknown_8244D10
 gUnknown_8244D10: @ 0x8244D10
@@ -859,19 +891,1174 @@ gUnknown_82772F0: @ 0x82772F0
 
 	.globl gUnknown_82772F8
 gUnknown_82772F8: @ 0x82772F8
-	.incbin "build/data/event_scripts.bin", 0x9c74c, 0x590
+	.4byte gUnknown_8277924                  @ 000
+	.4byte gUnknown_8277924                  @ 001
+	.4byte gUnknown_828063A                  @ 002
+	.4byte gUnknown_8277955                  @ 003
+	.4byte gUnknown_827884F                  @ 004
+	.4byte gUnknown_82786D9                  @ 005
+	.4byte gUnknown_8279E41                  @ 006
+	.4byte gUnknown_8281204                  @ 007
+	.4byte gUnknown_827DC85                  @ 008
+	.4byte gUnknown_827E01B                  @ 009
+	.4byte gUnknown_827E2CB                  @ 010
+	.4byte gUnknown_8279D6D                  @ 011
+	.4byte gUnknown_8279DB5                  @ 012
+	.4byte gUnknown_8281F08                  @ 013
+	.4byte gUnknown_8279030                  @ 014
+	.4byte gUnknown_8278D16                  @ 015
+	.4byte gUnknown_827FF98                  @ 016
+	.4byte gUnknown_827FFE9                  @ 017
+	.4byte gUnknown_827A375                  @ 018
+	.4byte gUnknown_828056D                  @ 019
+	.4byte gUnknown_828164F                  @ 020
+	.4byte gUnknown_8279495                  @ 021
+	.4byte gUnknown_827951D                  @ 022
+	.4byte gUnknown_8278CB6                  @ 023
+	.4byte gUnknown_82807E8                  @ 024
+	.4byte gUnknown_82787B3                  @ 025
+	.4byte gUnknown_82806F5                  @ 026
+	.4byte gUnknown_827ABC6                  @ 027
+	.4byte gUnknown_827E873                  @ 028
+	.4byte gUnknown_827AC49                  @ 029
+	.4byte gUnknown_827ACA6                  @ 030
+	.4byte gUnknown_827AD13                  @ 031
+	.4byte gUnknown_827AD90                  @ 032
+	.4byte gUnknown_8277E82                  @ 033
+	.4byte gUnknown_8277EC0                  @ 034
+	.4byte gUnknown_8281689                  @ 035
+	.4byte gUnknown_8278276                  @ 036
+	.4byte gUnknown_827AF0D                  @ 037
+	.4byte gUnknown_8278306                  @ 038
+	.4byte gUnknown_8278CFD                  @ 039
+	.4byte gUnknown_8278419                  @ 040
+	.4byte gUnknown_827846E                  @ 041
+	.4byte gUnknown_82780EC                  @ 042
+	.4byte gUnknown_8281317                  @ 043
+	.4byte gUnknown_827EAE1                  @ 044
+	.4byte gUnknown_827E4A8                  @ 045
+	.4byte gUnknown_827E411                  @ 046
+	.4byte gUnknown_827AF8C                  @ 047
+	.4byte gUnknown_8277F4D                  @ 048
+	.4byte gUnknown_82788C7                  @ 049
+	.4byte gUnknown_8281FEE                  @ 050
+	.4byte gUnknown_827FC59                  @ 051
+	.4byte gUnknown_8278665                  @ 052
+	.4byte gUnknown_8280365                  @ 053
+	.4byte gUnknown_8281170                  @ 054
+	.4byte gUnknown_82801CA                  @ 055
+	.4byte gUnknown_827F33F                  @ 056
+	.4byte gUnknown_8280351                  @ 057
+	.4byte gUnknown_827EC4C                  @ 058
+	.4byte gUnknown_827F0B9                  @ 059
+	.4byte gUnknown_828169F                  @ 060
+	.4byte gUnknown_827A6FF                  @ 061
+	.4byte gUnknown_827ED90                  @ 062
+	.4byte gUnknown_82832F7                  @ 063
+	.4byte gUnknown_8280086                  @ 064
+	.4byte gUnknown_8279554                  @ 065
+	.4byte gUnknown_8280BEB                  @ 066
+	.4byte gUnknown_827B060                  @ 067
+	.4byte gUnknown_82809A9                  @ 068
+	.4byte gUnknown_8285087                  @ 069
+	.4byte gUnknown_8277DEE                  @ 070
+	.4byte gUnknown_827F526                  @ 071
+	.4byte gUnknown_827F63E                  @ 072
+	.4byte gUnknown_827860F                  @ 073
+	.4byte gUnknown_827A33F                  @ 074
+	.4byte gUnknown_8280EDB                  @ 075
+	.4byte gUnknown_827EE64                  @ 076
+	.4byte gUnknown_82779A8                  @ 077
+	.4byte gUnknown_8277AD9                  @ 078
+	.4byte gUnknown_8277C07                  @ 079
+	.4byte gUnknown_8280DA3                  @ 080
+	.4byte gUnknown_8281D95                  @ 081
+	.4byte gUnknown_827E9B9                  @ 082
+	.4byte gUnknown_8279222                  @ 083
+	.4byte gUnknown_8278928                  @ 084
+	.4byte gUnknown_8278996                  @ 085
+	.4byte gUnknown_8278B4C                  @ 086
+	.4byte gUnknown_827DEC1                  @ 087
+	.4byte gUnknown_827A4EB                  @ 088
+	.4byte gUnknown_827B0BD                  @ 089
+	.4byte gUnknown_827B10A                  @ 090
+	.4byte gUnknown_827B22D                  @ 091
+	.4byte gUnknown_827FA82                  @ 092
+	.4byte gUnknown_827DDB0                  @ 093
+	.4byte gUnknown_827DE11                  @ 094
+	.4byte gUnknown_8281739                  @ 095
+	.4byte gUnknown_827B349                  @ 096
+	.4byte gUnknown_827B366                  @ 097
+	.4byte gUnknown_827B3B0                  @ 098
+	.4byte gUnknown_827B408                  @ 099
+	.4byte gUnknown_827B47E                  @ 100
+	.4byte gUnknown_8281B0A                  @ 101
+	.4byte gUnknown_82820C6                  @ 102
+	.4byte gUnknown_8277FA5                  @ 103
+	.4byte gUnknown_827B497                  @ 104
+	.4byte gUnknown_828201C                  @ 105
+	.4byte gUnknown_827DA50                  @ 106
+	.4byte gUnknown_827B4DE                  @ 107
+	.4byte gUnknown_827A89C                  @ 108
+	.4byte gUnknown_827A41D                  @ 109
+	.4byte gUnknown_827ED83                  @ 110
+	.4byte gUnknown_8279908                  @ 111
+	.4byte gUnknown_827E67E                  @ 112
+	.4byte gUnknown_827E579                  @ 113
+	.4byte gUnknown_82811D1                  @ 114
+	.4byte gUnknown_827E62B                  @ 115
+	.4byte gUnknown_8281C56                  @ 116
+	.4byte gUnknown_8281C96                  @ 117
+	.4byte gUnknown_827B4F1                  @ 118
+	.4byte gUnknown_8277924                  @ 119
+	.4byte gUnknown_82793A5                  @ 120
+	.4byte gUnknown_8281B52                  @ 121
+	.4byte gUnknown_8281C2F                  @ 122
+	.4byte gUnknown_827E771                  @ 123
+	.4byte gUnknown_827FAF1                  @ 124
+	.4byte gUnknown_827FDA7                  @ 125
+	.4byte gUnknown_82784E1                  @ 126
+	.4byte gUnknown_82795AD                  @ 127
+	.4byte gUnknown_827EBEF                  @ 128
+	.4byte gUnknown_8277D35                  @ 129
+	.4byte gUnknown_827B51B                  @ 130
+	.4byte gUnknown_8278F7D                  @ 131
+	.4byte gUnknown_8282111                  @ 132
+	.4byte gUnknown_827B5E1                  @ 133
+	.4byte gUnknown_827B605                  @ 134
+	.4byte gUnknown_8282239                  @ 135
+	.4byte gUnknown_8280752                  @ 136
+	.4byte gUnknown_827B656                  @ 137
+	.4byte gUnknown_828136E                  @ 138
+	.4byte gUnknown_8281571                  @ 139
+	.4byte gUnknown_827B6BF                  @ 140
+	.4byte gUnknown_827F9D6                  @ 141
+	.4byte gUnknown_82825BC                  @ 142
+	.4byte gUnknown_827B707                  @ 143
+	.4byte gUnknown_8283161                  @ 144
+	.4byte gUnknown_827E69B                  @ 145
+	.4byte gUnknown_82790E8                  @ 146
+	.4byte gUnknown_8280D3E                  @ 147
+	.4byte gUnknown_827B89F                  @ 148
+	.4byte gUnknown_8281799                  @ 149
+	.4byte gUnknown_827B8AC                  @ 150
+	.4byte gUnknown_827B8C1                  @ 151
+	.4byte gUnknown_8280257                  @ 152
+	.4byte gUnknown_8279801                  @ 153
+	.4byte gUnknown_8282603                  @ 154
+	.4byte gUnknown_827FD53                  @ 155
+	.4byte gUnknown_827DD70                  @ 156
+	.4byte gUnknown_827A577                  @ 157
+	.4byte gUnknown_8282AB5                  @ 158
+	.4byte gUnknown_827B8DA                  @ 159
+	.4byte gUnknown_827A995                  @ 160
+	.4byte gUnknown_8282B1C                  @ 161
+	.4byte gUnknown_827B8E6                  @ 162
+	.4byte gUnknown_827B967                  @ 163
+	.4byte gUnknown_8283D8E                  @ 164
+	.4byte gUnknown_827B9A1                  @ 165
+	.4byte gUnknown_827BA07                  @ 166
+	.4byte gUnknown_828081A                  @ 167
+	.4byte gUnknown_827A6B8                  @ 168
+	.4byte gUnknown_8281E67                  @ 169
+	.4byte gUnknown_827DB4D                  @ 170
+	.4byte gUnknown_827BA2F                  @ 171
+	.4byte gUnknown_8277FF2                  @ 172
+	.4byte gUnknown_827E4E9                  @ 173
+	.4byte gUnknown_8282179                  @ 174
+	.4byte gUnknown_827BA85                  @ 175
+	.4byte gUnknown_827AAAA                  @ 176
+	.4byte gUnknown_82800AD                  @ 177
+	.4byte gUnknown_8280CE4                  @ 178
+	.4byte gUnknown_8278E31                  @ 179
+	.4byte gUnknown_827BAC2                  @ 180
+	.4byte gUnknown_827F245                  @ 181
+	.4byte gUnknown_8279941                  @ 182
+	.4byte gUnknown_827BAF1                  @ 183
+	.4byte gUnknown_82824F0                  @ 184
+	.4byte gUnknown_827E7EC                  @ 185
+	.4byte gUnknown_8282553                  @ 186
+	.4byte gUnknown_827DA65                  @ 187
+	.4byte gUnknown_827FB33                  @ 188
+	.4byte gUnknown_827E91B                  @ 189
+	.4byte gUnknown_828110A                  @ 190
+	.4byte gUnknown_827FE54                  @ 191
+	.4byte gUnknown_828181F                  @ 192
+	.4byte gUnknown_827BB79                  @ 193
+	.4byte gUnknown_827BBB8                  @ 194
+	.4byte gUnknown_8282891                  @ 195
+	.4byte gUnknown_827A7DC                  @ 196
+	.4byte gUnknown_827995E                  @ 197
+	.4byte gUnknown_827FE09                  @ 198
+	.4byte gUnknown_827A470                  @ 199
+	.4byte gUnknown_8279E94                  @ 200
+	.4byte gUnknown_8280402                  @ 201
+	.4byte gUnknown_827F7CE                  @ 202
+	.4byte gUnknown_827BC13                  @ 203
+	.4byte gUnknown_827BCA7                  @ 204
+	.4byte gUnknown_827BCEA                  @ 205
+	.4byte gUnknown_827BD2B                  @ 206
+	.4byte gUnknown_827BDB2                  @ 207
+	.4byte gUnknown_827BDFA                  @ 208
+	.4byte gUnknown_827A02F                  @ 209
+	.4byte gUnknown_82792D6                  @ 210
+	.4byte gUnknown_8281904                  @ 211
+	.4byte gUnknown_827A4A6                  @ 212
+	.4byte gUnknown_827A246                  @ 213
+	.4byte gUnknown_82829FA                  @ 214
+	.4byte gUnknown_82822BB                  @ 215
+	.4byte gUnknown_8284055                  @ 216
+	.4byte gUnknown_8282718                  @ 217
+	.4byte gUnknown_82799BC                  @ 218
+	.4byte gUnknown_8279C83                  @ 219
+	.4byte gUnknown_8279CC5                  @ 220
+	.4byte gUnknown_827E0E4                  @ 221
+	.4byte gUnknown_827BE3C                  @ 222
+	.4byte gUnknown_82808E1                  @ 223
+	.4byte gUnknown_827FEAB                  @ 224
+	.4byte gUnknown_827E2FD                  @ 225
+	.4byte gUnknown_828286F                  @ 226
+	.4byte gUnknown_8282D4E                  @ 227
+	.4byte gUnknown_8278F0C                  @ 228
+	.4byte gUnknown_827BECD                  @ 229
+	.4byte gUnknown_828320D                  @ 230
+	.4byte gUnknown_82819B3                  @ 231
+	.4byte gUnknown_8281A77                  @ 232
+	.4byte gUnknown_8280A78                  @ 233
+	.4byte gUnknown_8283179                  @ 234
+	.4byte gUnknown_827FA58                  @ 235
+	.4byte gUnknown_827BF3A                  @ 236
+	.4byte gUnknown_8278D48                  @ 237
+	.4byte gUnknown_828068C                  @ 238
+	.4byte gUnknown_82855AB                  @ 239
+	.4byte gUnknown_827EA96                  @ 240
+	.4byte gUnknown_8280C8E                  @ 241
+	.4byte gUnknown_827EB3F                  @ 242
+	.4byte gUnknown_827E605                  @ 243
+	.4byte gUnknown_8279076                  @ 244
+	.4byte gUnknown_827BFCA                  @ 245
+	.4byte gUnknown_8280FE2                  @ 246
+	.4byte gUnknown_8281BEC                  @ 247
+	.4byte gUnknown_827DE74                  @ 248
+	.4byte gUnknown_8280AF3                  @ 249
+	.4byte gUnknown_828048A                  @ 250
+	.4byte gUnknown_8278BBB                  @ 251
+	.4byte gUnknown_82824B5                  @ 252
+	.4byte gUnknown_827C088                  @ 253
+	.4byte gUnknown_8282EBB                  @ 254
+	.4byte gUnknown_8282F72                  @ 255
+	.4byte gUnknown_82830B5                  @ 256
+	.4byte gUnknown_827C152                  @ 257
+	.4byte gUnknown_827C202                  @ 258
+	.4byte gUnknown_827C23A                  @ 259
+	.4byte gUnknown_8283439                  @ 260
+	.4byte gUnknown_8282C90                  @ 261
+	.4byte gUnknown_827C27E                  @ 262
+	.4byte gUnknown_827C2C2                  @ 263
+	.4byte gUnknown_8283F8E                  @ 264
+	.4byte gUnknown_827C2E2                  @ 265
+	.4byte gUnknown_827C33D                  @ 266
+	.4byte gUnknown_8280FE2                  @ 267
+	.4byte gUnknown_827C35C                  @ 268
+	.4byte gUnknown_827C3F7                  @ 269
+	.4byte gUnknown_827C44B                  @ 270
+	.4byte gUnknown_8282DF5                  @ 271
+	.4byte gUnknown_8283535                  @ 272
+	.4byte gUnknown_8282E73                  @ 273
+	.4byte gUnknown_827C4BE                  @ 274
+	.4byte gUnknown_8282667                  @ 275
+	.4byte gUnknown_827C52F                  @ 276
+	.4byte gUnknown_82851E4                  @ 277
+	.4byte gUnknown_827C5EA                  @ 278
+	.4byte gUnknown_8283CB8                  @ 279
+	.4byte gUnknown_827C61E                  @ 280
+	.4byte gUnknown_827C7DF                  @ 281
+	.4byte gUnknown_828536A                  @ 282
+	.4byte gUnknown_827C822                  @ 283
+	.4byte gUnknown_827C897                  @ 284
+	.4byte gUnknown_827C964                  @ 285
+	.4byte gUnknown_827C9AF                  @ 286
+	.4byte gUnknown_8283592                  @ 287
+	.4byte gUnknown_827C9F2                  @ 288
+	.4byte gUnknown_8284AAA                  @ 289
+	.4byte gUnknown_8285557                  @ 290
+	.4byte gUnknown_8284AC4                  @ 291
+	.4byte gUnknown_82837EE                  @ 292
+	.4byte gUnknown_827CA1A                  @ 293
+	.4byte gUnknown_827CA60                  @ 294
+	.4byte gUnknown_827CAA3                  @ 295
+	.4byte gUnknown_827CBBA                  @ 296
+	.4byte gUnknown_827CC49                  @ 297
+	.4byte gUnknown_827CD19                  @ 298
+	.4byte gUnknown_82835D5                  @ 299
+	.4byte gUnknown_827CD84                  @ 300
+	.4byte gUnknown_828582B                  @ 301
+	.4byte gUnknown_827CEBB                  @ 302
+	.4byte gUnknown_827D06B                  @ 303
+	.4byte gUnknown_828365D                  @ 304
+	.4byte gUnknown_8283D4F                  @ 305
+	.4byte gUnknown_827D083                  @ 306
+	.4byte gUnknown_8284569                  @ 307
+	.4byte gUnknown_8284F0D                  @ 308
+	.4byte gUnknown_8283C31                  @ 309
+	.4byte gUnknown_828503F                  @ 310
+	.4byte gUnknown_82859FA                  @ 311
+	.4byte gUnknown_827D0F2                  @ 312
+	.4byte gUnknown_827D254                  @ 313
+	.4byte gUnknown_827D2E4                  @ 314
+	.4byte gUnknown_8284C1B                  @ 315
+	.4byte gUnknown_827D346                  @ 316
+	.4byte gUnknown_82847AB                  @ 317
+	.4byte gUnknown_8284892                  @ 318
+	.4byte gUnknown_8283F3E                  @ 319
+	.4byte gUnknown_827D390                  @ 320
+	.4byte gUnknown_827D483                  @ 321
+	.4byte gUnknown_82844E4                  @ 322
+	.4byte gUnknown_827D4EF                  @ 323
+	.4byte gUnknown_827F43E                  @ 324
+	.4byte gUnknown_827D51D                  @ 325
+	.4byte gUnknown_827D578                  @ 326
+	.4byte gUnknown_828545E                  @ 327
+	.4byte gUnknown_82836F1                  @ 328
+	.4byte gUnknown_82837C9                  @ 329
+	.4byte gUnknown_8283883                  @ 330
+	.4byte gUnknown_8283895                  @ 331
+	.4byte gUnknown_827D5E0                  @ 332
+	.4byte gUnknown_82781B1                  @ 333
+	.4byte gUnknown_827D64A                  @ 334
+	.4byte gUnknown_827D674                  @ 335
+	.4byte gUnknown_827D683                  @ 336
+	.4byte gUnknown_828392B                  @ 337
+	.4byte gUnknown_8283D9A                  @ 338
+	.4byte gUnknown_827D6A5                  @ 339
+	.4byte gUnknown_82805D7                  @ 340
+	.4byte gUnknown_8283B94                  @ 341
+	.4byte gUnknown_8281A11                  @ 342
+	.4byte gUnknown_827D6C3                  @ 343
+	.4byte gUnknown_827D720                  @ 344
+	.4byte gUnknown_828570A                  @ 345
+	.4byte gUnknown_827D818                  @ 346
+	.4byte gUnknown_827D83E                  @ 347
+	.4byte gUnknown_827D8BC                  @ 348
+	.4byte gUnknown_827D93F                  @ 349
+	.4byte gUnknown_8284B7E                  @ 350
+	.4byte gUnknown_827D9AE                  @ 351
+	.4byte gUnknown_8285201                  @ 352
+	.4byte gUnknown_82853FA                  @ 353
+	.4byte gUnknown_82852F6                  @ 354
+	.4byte gUnknown_8285C76                  @ 355
 
 	.globl gUnknown_8277888
 gUnknown_8277888: @ 0x8277888
-	.incbin "build/data/event_scripts.bin", 0x9ccdc, 0x24
+	.4byte gUnknown_82862E1                  @ 000
+	.4byte gUnknown_828630C                  @ 001
+	.4byte gUnknown_8286315                  @ 002
+	.4byte gUnknown_8286345                  @ 003
+	.4byte gUnknown_828637A                  @ 004
+	.4byte gUnknown_82863A6                  @ 005
+	.4byte gUnknown_82863C0                  @ 006
+	.4byte gUnknown_82863DB                  @ 007
+	.4byte gUnknown_8286400                  @ 008
 
 	.globl gUnknown_82778AC
 gUnknown_82778AC: @ 0x82778AC
-	.incbin "build/data/event_scripts.bin", 0x9cd00, 0x5c
+	.4byte gUnknown_8286425                  @ 000
+	.4byte gUnknown_828645B                  @ 001
+	.4byte gUnknown_8286464                  @ 002
+	.4byte gUnknown_82864A1                  @ 003
+	.4byte gUnknown_82864A9                  @ 004
+	.4byte gUnknown_82864F1                  @ 005
+	.4byte gUnknown_82864FC                  @ 006
+	.4byte gUnknown_828668F                  @ 007
+	.4byte gUnknown_8286703                  @ 008
+	.4byte gUnknown_82867DF                  @ 009
+	.4byte gUnknown_828682C                  @ 010
+	.4byte gUnknown_8286875                  @ 011
+	.4byte gUnknown_828687A                  @ 012
+	.4byte gUnknown_828687F                  @ 013
+	.4byte gUnknown_8286884                  @ 014
+	.4byte gUnknown_8286892                  @ 015
+	.4byte gUnknown_82868C3                  @ 016
+	.4byte gUnknown_82868E8                  @ 017
+	.4byte gUnknown_8286946                  @ 018
+	.4byte gUnknown_82869A5                  @ 019
+	.4byte gUnknown_8286A6A                  @ 020
+	.4byte gUnknown_8286AAA                  @ 021
+	.4byte gUnknown_8286AED                  @ 022
 
 	.globl gUnknown_8277908
 gUnknown_8277908: @ 0x8277908
-	.incbin "build/data/event_scripts.bin", 0x9cd5c, 0xf328
+	.incbin "build/data/event_scripts.bin", 0x9cd5c, 0x1c
+gUnknown_8277924: @ 0x8277924
+	.incbin "build/data/event_scripts.bin", 0x9cd78, 0x31
+gUnknown_8277955: @ 0x8277955
+	.incbin "build/data/event_scripts.bin", 0x9cda9, 0x53
+gUnknown_82779A8: @ 0x82779A8
+	.incbin "build/data/event_scripts.bin", 0x9cdfc, 0x131
+gUnknown_8277AD9: @ 0x8277AD9
+	.incbin "build/data/event_scripts.bin", 0x9cf2d, 0x12e
+gUnknown_8277C07: @ 0x8277C07
+	.incbin "build/data/event_scripts.bin", 0x9d05b, 0x12e
+gUnknown_8277D35: @ 0x8277D35
+	.incbin "build/data/event_scripts.bin", 0x9d189, 0xb9
+gUnknown_8277DEE: @ 0x8277DEE
+	.incbin "build/data/event_scripts.bin", 0x9d242, 0x94
+gUnknown_8277E82: @ 0x8277E82
+	.incbin "build/data/event_scripts.bin", 0x9d2d6, 0x3e
+gUnknown_8277EC0: @ 0x8277EC0
+	.incbin "build/data/event_scripts.bin", 0x9d314, 0x8d
+gUnknown_8277F4D: @ 0x8277F4D
+	.incbin "build/data/event_scripts.bin", 0x9d3a1, 0x58
+gUnknown_8277FA5: @ 0x8277FA5
+	.incbin "build/data/event_scripts.bin", 0x9d3f9, 0x4d
+gUnknown_8277FF2: @ 0x8277FF2
+	.incbin "build/data/event_scripts.bin", 0x9d446, 0xfa
+gUnknown_82780EC: @ 0x82780EC
+	.incbin "build/data/event_scripts.bin", 0x9d540, 0xc5
+gUnknown_82781B1: @ 0x82781B1
+	.incbin "build/data/event_scripts.bin", 0x9d605, 0xc5
+gUnknown_8278276: @ 0x8278276
+	.incbin "build/data/event_scripts.bin", 0x9d6ca, 0x90
+gUnknown_8278306: @ 0x8278306
+	.incbin "build/data/event_scripts.bin", 0x9d75a, 0x113
+gUnknown_8278419: @ 0x8278419
+	.incbin "build/data/event_scripts.bin", 0x9d86d, 0x55
+gUnknown_827846E: @ 0x827846E
+	.incbin "build/data/event_scripts.bin", 0x9d8c2, 0x73
+gUnknown_82784E1: @ 0x82784E1
+	.incbin "build/data/event_scripts.bin", 0x9d935, 0x12e
+gUnknown_827860F: @ 0x827860F
+	.incbin "build/data/event_scripts.bin", 0x9da63, 0x56
+gUnknown_8278665: @ 0x8278665
+	.incbin "build/data/event_scripts.bin", 0x9dab9, 0x74
+gUnknown_82786D9: @ 0x82786D9
+	.incbin "build/data/event_scripts.bin", 0x9db2d, 0xda
+gUnknown_82787B3: @ 0x82787B3
+	.incbin "build/data/event_scripts.bin", 0x9dc07, 0x9c
+gUnknown_827884F: @ 0x827884F
+	.incbin "build/data/event_scripts.bin", 0x9dca3, 0x78
+gUnknown_82788C7: @ 0x82788C7
+	.incbin "build/data/event_scripts.bin", 0x9dd1b, 0x61
+gUnknown_8278928: @ 0x8278928
+	.incbin "build/data/event_scripts.bin", 0x9dd7c, 0x6e
+gUnknown_8278996: @ 0x8278996
+	.incbin "build/data/event_scripts.bin", 0x9ddea, 0x1b6
+gUnknown_8278B4C: @ 0x8278B4C
+	.incbin "build/data/event_scripts.bin", 0x9dfa0, 0x6f
+gUnknown_8278BBB: @ 0x8278BBB
+	.incbin "build/data/event_scripts.bin", 0x9e00f, 0xfb
+gUnknown_8278CB6: @ 0x8278CB6
+	.incbin "build/data/event_scripts.bin", 0x9e10a, 0x47
+gUnknown_8278CFD: @ 0x8278CFD
+	.incbin "build/data/event_scripts.bin", 0x9e151, 0x19
+gUnknown_8278D16: @ 0x8278D16
+	.incbin "build/data/event_scripts.bin", 0x9e16a, 0x32
+gUnknown_8278D48: @ 0x8278D48
+	.incbin "build/data/event_scripts.bin", 0x9e19c, 0xe9
+gUnknown_8278E31: @ 0x8278E31
+	.incbin "build/data/event_scripts.bin", 0x9e285, 0xdb
+gUnknown_8278F0C: @ 0x8278F0C
+	.incbin "build/data/event_scripts.bin", 0x9e360, 0x71
+gUnknown_8278F7D: @ 0x8278F7D
+	.incbin "build/data/event_scripts.bin", 0x9e3d1, 0xb3
+gUnknown_8279030: @ 0x8279030
+	.incbin "build/data/event_scripts.bin", 0x9e484, 0x46
+gUnknown_8279076: @ 0x8279076
+	.incbin "build/data/event_scripts.bin", 0x9e4ca, 0x72
+gUnknown_82790E8: @ 0x82790E8
+	.incbin "build/data/event_scripts.bin", 0x9e53c, 0x13a
+gUnknown_8279222: @ 0x8279222
+	.incbin "build/data/event_scripts.bin", 0x9e676, 0xb4
+gUnknown_82792D6: @ 0x82792D6
+	.incbin "build/data/event_scripts.bin", 0x9e72a, 0xcf
+gUnknown_82793A5: @ 0x82793A5
+	.incbin "build/data/event_scripts.bin", 0x9e7f9, 0xf0
+gUnknown_8279495: @ 0x8279495
+	.incbin "build/data/event_scripts.bin", 0x9e8e9, 0x88
+gUnknown_827951D: @ 0x827951D
+	.incbin "build/data/event_scripts.bin", 0x9e971, 0x37
+gUnknown_8279554: @ 0x8279554
+	.incbin "build/data/event_scripts.bin", 0x9e9a8, 0x59
+gUnknown_82795AD: @ 0x82795AD
+	.incbin "build/data/event_scripts.bin", 0x9ea01, 0x254
+gUnknown_8279801: @ 0x8279801
+	.incbin "build/data/event_scripts.bin", 0x9ec55, 0x107
+gUnknown_8279908: @ 0x8279908
+	.incbin "build/data/event_scripts.bin", 0x9ed5c, 0x39
+gUnknown_8279941: @ 0x8279941
+	.incbin "build/data/event_scripts.bin", 0x9ed95, 0x1d
+gUnknown_827995E: @ 0x827995E
+	.incbin "build/data/event_scripts.bin", 0x9edb2, 0x5e
+gUnknown_82799BC: @ 0x82799BC
+	.incbin "build/data/event_scripts.bin", 0x9ee10, 0x2c7
+gUnknown_8279C83: @ 0x8279C83
+	.incbin "build/data/event_scripts.bin", 0x9f0d7, 0x42
+gUnknown_8279CC5: @ 0x8279CC5
+	.incbin "build/data/event_scripts.bin", 0x9f119, 0xa8
+gUnknown_8279D6D: @ 0x8279D6D
+	.incbin "build/data/event_scripts.bin", 0x9f1c1, 0x48
+gUnknown_8279DB5: @ 0x8279DB5
+	.incbin "build/data/event_scripts.bin", 0x9f209, 0x8c
+gUnknown_8279E41: @ 0x8279E41
+	.incbin "build/data/event_scripts.bin", 0x9f295, 0x53
+gUnknown_8279E94: @ 0x8279E94
+	.incbin "build/data/event_scripts.bin", 0x9f2e8, 0x19b
+gUnknown_827A02F: @ 0x827A02F
+	.incbin "build/data/event_scripts.bin", 0x9f483, 0x217
+gUnknown_827A246: @ 0x827A246
+	.incbin "build/data/event_scripts.bin", 0x9f69a, 0xf9
+gUnknown_827A33F: @ 0x827A33F
+	.incbin "build/data/event_scripts.bin", 0x9f793, 0x36
+gUnknown_827A375: @ 0x827A375
+	.incbin "build/data/event_scripts.bin", 0x9f7c9, 0xa8
+gUnknown_827A41D: @ 0x827A41D
+	.incbin "build/data/event_scripts.bin", 0x9f871, 0x53
+gUnknown_827A470: @ 0x827A470
+	.incbin "build/data/event_scripts.bin", 0x9f8c4, 0x36
+gUnknown_827A4A6: @ 0x827A4A6
+	.incbin "build/data/event_scripts.bin", 0x9f8fa, 0x45
+gUnknown_827A4EB: @ 0x827A4EB
+	.incbin "build/data/event_scripts.bin", 0x9f93f, 0x8c
+gUnknown_827A577: @ 0x827A577
+	.incbin "build/data/event_scripts.bin", 0x9f9cb, 0x141
+gUnknown_827A6B8: @ 0x827A6B8
+	.incbin "build/data/event_scripts.bin", 0x9fb0c, 0x47
+gUnknown_827A6FF: @ 0x827A6FF
+	.incbin "build/data/event_scripts.bin", 0x9fb53, 0xdd
+gUnknown_827A7DC: @ 0x827A7DC
+	.incbin "build/data/event_scripts.bin", 0x9fc30, 0xc0
+gUnknown_827A89C: @ 0x827A89C
+	.incbin "build/data/event_scripts.bin", 0x9fcf0, 0xf9
+gUnknown_827A995: @ 0x827A995
+	.incbin "build/data/event_scripts.bin", 0x9fde9, 0x115
+gUnknown_827AAAA: @ 0x827AAAA
+	.incbin "build/data/event_scripts.bin", 0x9fefe, 0x11c
+gUnknown_827ABC6: @ 0x827ABC6
+	.incbin "build/data/event_scripts.bin", 0xa001a, 0x83
+gUnknown_827AC49: @ 0x827AC49
+	.incbin "build/data/event_scripts.bin", 0xa009d, 0x5d
+gUnknown_827ACA6: @ 0x827ACA6
+	.incbin "build/data/event_scripts.bin", 0xa00fa, 0x6d
+gUnknown_827AD13: @ 0x827AD13
+	.incbin "build/data/event_scripts.bin", 0xa0167, 0x7d
+gUnknown_827AD90: @ 0x827AD90
+	.incbin "build/data/event_scripts.bin", 0xa01e4, 0x17d
+gUnknown_827AF0D: @ 0x827AF0D
+	.incbin "build/data/event_scripts.bin", 0xa0361, 0x7f
+gUnknown_827AF8C: @ 0x827AF8C
+	.incbin "build/data/event_scripts.bin", 0xa03e0, 0xd4
+gUnknown_827B060: @ 0x827B060
+	.incbin "build/data/event_scripts.bin", 0xa04b4, 0x5d
+gUnknown_827B0BD: @ 0x827B0BD
+	.incbin "build/data/event_scripts.bin", 0xa0511, 0x4d
+gUnknown_827B10A: @ 0x827B10A
+	.incbin "build/data/event_scripts.bin", 0xa055e, 0x123
+gUnknown_827B22D: @ 0x827B22D
+	.incbin "build/data/event_scripts.bin", 0xa0681, 0x11c
+gUnknown_827B349: @ 0x827B349
+	.incbin "build/data/event_scripts.bin", 0xa079d, 0x1d
+gUnknown_827B366: @ 0x827B366
+	.incbin "build/data/event_scripts.bin", 0xa07ba, 0x4a
+gUnknown_827B3B0: @ 0x827B3B0
+	.incbin "build/data/event_scripts.bin", 0xa0804, 0x58
+gUnknown_827B408: @ 0x827B408
+	.incbin "build/data/event_scripts.bin", 0xa085c, 0x76
+gUnknown_827B47E: @ 0x827B47E
+	.incbin "build/data/event_scripts.bin", 0xa08d2, 0x19
+gUnknown_827B497: @ 0x827B497
+	.incbin "build/data/event_scripts.bin", 0xa08eb, 0x47
+gUnknown_827B4DE: @ 0x827B4DE
+	.incbin "build/data/event_scripts.bin", 0xa0932, 0x13
+gUnknown_827B4F1: @ 0x827B4F1
+	.incbin "build/data/event_scripts.bin", 0xa0945, 0x2a
+gUnknown_827B51B: @ 0x827B51B
+	.incbin "build/data/event_scripts.bin", 0xa096f, 0xc6
+gUnknown_827B5E1: @ 0x827B5E1
+	.incbin "build/data/event_scripts.bin", 0xa0a35, 0x24
+gUnknown_827B605: @ 0x827B605
+	.incbin "build/data/event_scripts.bin", 0xa0a59, 0x51
+gUnknown_827B656: @ 0x827B656
+	.incbin "build/data/event_scripts.bin", 0xa0aaa, 0x69
+gUnknown_827B6BF: @ 0x827B6BF
+	.incbin "build/data/event_scripts.bin", 0xa0b13, 0x48
+gUnknown_827B707: @ 0x827B707
+	.incbin "build/data/event_scripts.bin", 0xa0b5b, 0x198
+gUnknown_827B89F: @ 0x827B89F
+	.incbin "build/data/event_scripts.bin", 0xa0cf3, 0xd
+gUnknown_827B8AC: @ 0x827B8AC
+	.incbin "build/data/event_scripts.bin", 0xa0d00, 0x15
+gUnknown_827B8C1: @ 0x827B8C1
+	.incbin "build/data/event_scripts.bin", 0xa0d15, 0x19
+gUnknown_827B8DA: @ 0x827B8DA
+	.incbin "build/data/event_scripts.bin", 0xa0d2e, 0xc
+gUnknown_827B8E6: @ 0x827B8E6
+	.incbin "build/data/event_scripts.bin", 0xa0d3a, 0x81
+gUnknown_827B967: @ 0x827B967
+	.incbin "build/data/event_scripts.bin", 0xa0dbb, 0x3a
+gUnknown_827B9A1: @ 0x827B9A1
+	.incbin "build/data/event_scripts.bin", 0xa0df5, 0x66
+gUnknown_827BA07: @ 0x827BA07
+	.incbin "build/data/event_scripts.bin", 0xa0e5b, 0x28
+gUnknown_827BA2F: @ 0x827BA2F
+	.incbin "build/data/event_scripts.bin", 0xa0e83, 0x56
+gUnknown_827BA85: @ 0x827BA85
+	.incbin "build/data/event_scripts.bin", 0xa0ed9, 0x3d
+gUnknown_827BAC2: @ 0x827BAC2
+	.incbin "build/data/event_scripts.bin", 0xa0f16, 0x2f
+gUnknown_827BAF1: @ 0x827BAF1
+	.incbin "build/data/event_scripts.bin", 0xa0f45, 0x88
+gUnknown_827BB79: @ 0x827BB79
+	.incbin "build/data/event_scripts.bin", 0xa0fcd, 0x3f
+gUnknown_827BBB8: @ 0x827BBB8
+	.incbin "build/data/event_scripts.bin", 0xa100c, 0x5b
+gUnknown_827BC13: @ 0x827BC13
+	.incbin "build/data/event_scripts.bin", 0xa1067, 0x94
+gUnknown_827BCA7: @ 0x827BCA7
+	.incbin "build/data/event_scripts.bin", 0xa10fb, 0x43
+gUnknown_827BCEA: @ 0x827BCEA
+	.incbin "build/data/event_scripts.bin", 0xa113e, 0x41
+gUnknown_827BD2B: @ 0x827BD2B
+	.incbin "build/data/event_scripts.bin", 0xa117f, 0x87
+gUnknown_827BDB2: @ 0x827BDB2
+	.incbin "build/data/event_scripts.bin", 0xa1206, 0x48
+gUnknown_827BDFA: @ 0x827BDFA
+	.incbin "build/data/event_scripts.bin", 0xa124e, 0x42
+gUnknown_827BE3C: @ 0x827BE3C
+	.incbin "build/data/event_scripts.bin", 0xa1290, 0x91
+gUnknown_827BECD: @ 0x827BECD
+	.incbin "build/data/event_scripts.bin", 0xa1321, 0x6d
+gUnknown_827BF3A: @ 0x827BF3A
+	.incbin "build/data/event_scripts.bin", 0xa138e, 0x90
+gUnknown_827BFCA: @ 0x827BFCA
+	.incbin "build/data/event_scripts.bin", 0xa141e, 0xbe
+gUnknown_827C088: @ 0x827C088
+	.incbin "build/data/event_scripts.bin", 0xa14dc, 0xca
+gUnknown_827C152: @ 0x827C152
+	.incbin "build/data/event_scripts.bin", 0xa15a6, 0xb0
+gUnknown_827C202: @ 0x827C202
+	.incbin "build/data/event_scripts.bin", 0xa1656, 0x38
+gUnknown_827C23A: @ 0x827C23A
+	.incbin "build/data/event_scripts.bin", 0xa168e, 0x44
+gUnknown_827C27E: @ 0x827C27E
+	.incbin "build/data/event_scripts.bin", 0xa16d2, 0x44
+gUnknown_827C2C2: @ 0x827C2C2
+	.incbin "build/data/event_scripts.bin", 0xa1716, 0x20
+gUnknown_827C2E2: @ 0x827C2E2
+	.incbin "build/data/event_scripts.bin", 0xa1736, 0x5b
+gUnknown_827C33D: @ 0x827C33D
+	.incbin "build/data/event_scripts.bin", 0xa1791, 0x1f
+gUnknown_827C35C: @ 0x827C35C
+	.incbin "build/data/event_scripts.bin", 0xa17b0, 0x9b
+gUnknown_827C3F7: @ 0x827C3F7
+	.incbin "build/data/event_scripts.bin", 0xa184b, 0x54
+gUnknown_827C44B: @ 0x827C44B
+	.incbin "build/data/event_scripts.bin", 0xa189f, 0x73
+gUnknown_827C4BE: @ 0x827C4BE
+	.incbin "build/data/event_scripts.bin", 0xa1912, 0x71
+gUnknown_827C52F: @ 0x827C52F
+	.incbin "build/data/event_scripts.bin", 0xa1983, 0xbb
+gUnknown_827C5EA: @ 0x827C5EA
+	.incbin "build/data/event_scripts.bin", 0xa1a3e, 0x34
+gUnknown_827C61E: @ 0x827C61E
+	.incbin "build/data/event_scripts.bin", 0xa1a72, 0x1c1
+gUnknown_827C7DF: @ 0x827C7DF
+	.incbin "build/data/event_scripts.bin", 0xa1c33, 0x43
+gUnknown_827C822: @ 0x827C822
+	.incbin "build/data/event_scripts.bin", 0xa1c76, 0x75
+gUnknown_827C897: @ 0x827C897
+	.incbin "build/data/event_scripts.bin", 0xa1ceb, 0xcd
+gUnknown_827C964: @ 0x827C964
+	.incbin "build/data/event_scripts.bin", 0xa1db8, 0x4b
+gUnknown_827C9AF: @ 0x827C9AF
+	.incbin "build/data/event_scripts.bin", 0xa1e03, 0x43
+gUnknown_827C9F2: @ 0x827C9F2
+	.incbin "build/data/event_scripts.bin", 0xa1e46, 0x28
+gUnknown_827CA1A: @ 0x827CA1A
+	.incbin "build/data/event_scripts.bin", 0xa1e6e, 0x46
+gUnknown_827CA60: @ 0x827CA60
+	.incbin "build/data/event_scripts.bin", 0xa1eb4, 0x43
+gUnknown_827CAA3: @ 0x827CAA3
+	.incbin "build/data/event_scripts.bin", 0xa1ef7, 0x117
+gUnknown_827CBBA: @ 0x827CBBA
+	.incbin "build/data/event_scripts.bin", 0xa200e, 0x8f
+gUnknown_827CC49: @ 0x827CC49
+	.incbin "build/data/event_scripts.bin", 0xa209d, 0xd0
+gUnknown_827CD19: @ 0x827CD19
+	.incbin "build/data/event_scripts.bin", 0xa216d, 0x6b
+gUnknown_827CD84: @ 0x827CD84
+	.incbin "build/data/event_scripts.bin", 0xa21d8, 0x137
+gUnknown_827CEBB: @ 0x827CEBB
+	.incbin "build/data/event_scripts.bin", 0xa230f, 0x1b0
+gUnknown_827D06B: @ 0x827D06B
+	.incbin "build/data/event_scripts.bin", 0xa24bf, 0x18
+gUnknown_827D083: @ 0x827D083
+	.incbin "build/data/event_scripts.bin", 0xa24d7, 0x6f
+gUnknown_827D0F2: @ 0x827D0F2
+	.incbin "build/data/event_scripts.bin", 0xa2546, 0x162
+gUnknown_827D254: @ 0x827D254
+	.incbin "build/data/event_scripts.bin", 0xa26a8, 0x90
+gUnknown_827D2E4: @ 0x827D2E4
+	.incbin "build/data/event_scripts.bin", 0xa2738, 0x62
+gUnknown_827D346: @ 0x827D346
+	.incbin "build/data/event_scripts.bin", 0xa279a, 0x4a
+gUnknown_827D390: @ 0x827D390
+	.incbin "build/data/event_scripts.bin", 0xa27e4, 0xf3
+gUnknown_827D483: @ 0x827D483
+	.incbin "build/data/event_scripts.bin", 0xa28d7, 0x6c
+gUnknown_827D4EF: @ 0x827D4EF
+	.incbin "build/data/event_scripts.bin", 0xa2943, 0x2e
+gUnknown_827D51D: @ 0x827D51D
+	.incbin "build/data/event_scripts.bin", 0xa2971, 0x5b
+gUnknown_827D578: @ 0x827D578
+	.incbin "build/data/event_scripts.bin", 0xa29cc, 0x68
+gUnknown_827D5E0: @ 0x827D5E0
+	.incbin "build/data/event_scripts.bin", 0xa2a34, 0x6a
+gUnknown_827D64A: @ 0x827D64A
+	.incbin "build/data/event_scripts.bin", 0xa2a9e, 0x2a
+gUnknown_827D674: @ 0x827D674
+	.incbin "build/data/event_scripts.bin", 0xa2ac8, 0xf
+gUnknown_827D683: @ 0x827D683
+	.incbin "build/data/event_scripts.bin", 0xa2ad7, 0x22
+gUnknown_827D6A5: @ 0x827D6A5
+	.incbin "build/data/event_scripts.bin", 0xa2af9, 0x1e
+gUnknown_827D6C3: @ 0x827D6C3
+	.incbin "build/data/event_scripts.bin", 0xa2b17, 0x5d
+gUnknown_827D720: @ 0x827D720
+	.incbin "build/data/event_scripts.bin", 0xa2b74, 0xf8
+gUnknown_827D818: @ 0x827D818
+	.incbin "build/data/event_scripts.bin", 0xa2c6c, 0x26
+gUnknown_827D83E: @ 0x827D83E
+	.incbin "build/data/event_scripts.bin", 0xa2c92, 0x7e
+gUnknown_827D8BC: @ 0x827D8BC
+	.incbin "build/data/event_scripts.bin", 0xa2d10, 0x83
+gUnknown_827D93F: @ 0x827D93F
+	.incbin "build/data/event_scripts.bin", 0xa2d93, 0x6f
+gUnknown_827D9AE: @ 0x827D9AE
+	.incbin "build/data/event_scripts.bin", 0xa2e02, 0xa2
+gUnknown_827DA50: @ 0x827DA50
+	.incbin "build/data/event_scripts.bin", 0xa2ea4, 0x15
+gUnknown_827DA65: @ 0x827DA65
+	.incbin "build/data/event_scripts.bin", 0xa2eb9, 0xe8
+gUnknown_827DB4D: @ 0x827DB4D
+	.incbin "build/data/event_scripts.bin", 0xa2fa1, 0x138
+gUnknown_827DC85: @ 0x827DC85
+	.incbin "build/data/event_scripts.bin", 0xa30d9, 0xeb
+gUnknown_827DD70: @ 0x827DD70
+	.incbin "build/data/event_scripts.bin", 0xa31c4, 0x40
+gUnknown_827DDB0: @ 0x827DDB0
+	.incbin "build/data/event_scripts.bin", 0xa3204, 0x61
+gUnknown_827DE11: @ 0x827DE11
+	.incbin "build/data/event_scripts.bin", 0xa3265, 0x63
+gUnknown_827DE74: @ 0x827DE74
+	.incbin "build/data/event_scripts.bin", 0xa32c8, 0x4d
+gUnknown_827DEC1: @ 0x827DEC1
+	.incbin "build/data/event_scripts.bin", 0xa3315, 0x15a
+gUnknown_827E01B: @ 0x827E01B
+	.incbin "build/data/event_scripts.bin", 0xa346f, 0xc9
+gUnknown_827E0E4: @ 0x827E0E4
+	.incbin "build/data/event_scripts.bin", 0xa3538, 0x1e7
+gUnknown_827E2CB: @ 0x827E2CB
+	.incbin "build/data/event_scripts.bin", 0xa371f, 0x32
+gUnknown_827E2FD: @ 0x827E2FD
+	.incbin "build/data/event_scripts.bin", 0xa3751, 0x114
+gUnknown_827E411: @ 0x827E411
+	.incbin "build/data/event_scripts.bin", 0xa3865, 0x97
+gUnknown_827E4A8: @ 0x827E4A8
+	.incbin "build/data/event_scripts.bin", 0xa38fc, 0x41
+gUnknown_827E4E9: @ 0x827E4E9
+	.incbin "build/data/event_scripts.bin", 0xa393d, 0x90
+gUnknown_827E579: @ 0x827E579
+	.incbin "build/data/event_scripts.bin", 0xa39cd, 0x8c
+gUnknown_827E605: @ 0x827E605
+	.incbin "build/data/event_scripts.bin", 0xa3a59, 0x26
+gUnknown_827E62B: @ 0x827E62B
+	.incbin "build/data/event_scripts.bin", 0xa3a7f, 0x53
+gUnknown_827E67E: @ 0x827E67E
+	.incbin "build/data/event_scripts.bin", 0xa3ad2, 0x1d
+gUnknown_827E69B: @ 0x827E69B
+	.incbin "build/data/event_scripts.bin", 0xa3aef, 0xd6
+gUnknown_827E771: @ 0x827E771
+	.incbin "build/data/event_scripts.bin", 0xa3bc5, 0x7b
+gUnknown_827E7EC: @ 0x827E7EC
+	.incbin "build/data/event_scripts.bin", 0xa3c40, 0x87
+gUnknown_827E873: @ 0x827E873
+	.incbin "build/data/event_scripts.bin", 0xa3cc7, 0xa8
+gUnknown_827E91B: @ 0x827E91B
+	.incbin "build/data/event_scripts.bin", 0xa3d6f, 0x9e
+gUnknown_827E9B9: @ 0x827E9B9
+	.incbin "build/data/event_scripts.bin", 0xa3e0d, 0xdd
+gUnknown_827EA96: @ 0x827EA96
+	.incbin "build/data/event_scripts.bin", 0xa3eea, 0x4b
+gUnknown_827EAE1: @ 0x827EAE1
+	.incbin "build/data/event_scripts.bin", 0xa3f35, 0x5e
+gUnknown_827EB3F: @ 0x827EB3F
+	.incbin "build/data/event_scripts.bin", 0xa3f93, 0xb0
+gUnknown_827EBEF: @ 0x827EBEF
+	.incbin "build/data/event_scripts.bin", 0xa4043, 0x5d
+gUnknown_827EC4C: @ 0x827EC4C
+	.incbin "build/data/event_scripts.bin", 0xa40a0, 0x137
+gUnknown_827ED83: @ 0x827ED83
+	.incbin "build/data/event_scripts.bin", 0xa41d7, 0xd
+gUnknown_827ED90: @ 0x827ED90
+	.incbin "build/data/event_scripts.bin", 0xa41e4, 0xd4
+gUnknown_827EE64: @ 0x827EE64
+	.incbin "build/data/event_scripts.bin", 0xa42b8, 0x255
+gUnknown_827F0B9: @ 0x827F0B9
+	.incbin "build/data/event_scripts.bin", 0xa450d, 0x18c
+gUnknown_827F245: @ 0x827F245
+	.incbin "build/data/event_scripts.bin", 0xa4699, 0xfa
+gUnknown_827F33F: @ 0x827F33F
+	.incbin "build/data/event_scripts.bin", 0xa4793, 0xff
+gUnknown_827F43E: @ 0x827F43E
+	.incbin "build/data/event_scripts.bin", 0xa4892, 0xe8
+gUnknown_827F526: @ 0x827F526
+	.incbin "build/data/event_scripts.bin", 0xa497a, 0x118
+gUnknown_827F63E: @ 0x827F63E
+	.incbin "build/data/event_scripts.bin", 0xa4a92, 0x190
+gUnknown_827F7CE: @ 0x827F7CE
+	.incbin "build/data/event_scripts.bin", 0xa4c22, 0x208
+gUnknown_827F9D6: @ 0x827F9D6
+	.incbin "build/data/event_scripts.bin", 0xa4e2a, 0x82
+gUnknown_827FA58: @ 0x827FA58
+	.incbin "build/data/event_scripts.bin", 0xa4eac, 0x2a
+gUnknown_827FA82: @ 0x827FA82
+	.incbin "build/data/event_scripts.bin", 0xa4ed6, 0x6f
+gUnknown_827FAF1: @ 0x827FAF1
+	.incbin "build/data/event_scripts.bin", 0xa4f45, 0x42
+gUnknown_827FB33: @ 0x827FB33
+	.incbin "build/data/event_scripts.bin", 0xa4f87, 0x126
+gUnknown_827FC59: @ 0x827FC59
+	.incbin "build/data/event_scripts.bin", 0xa50ad, 0xfa
+gUnknown_827FD53: @ 0x827FD53
+	.incbin "build/data/event_scripts.bin", 0xa51a7, 0x54
+gUnknown_827FDA7: @ 0x827FDA7
+	.incbin "build/data/event_scripts.bin", 0xa51fb, 0x62
+gUnknown_827FE09: @ 0x827FE09
+	.incbin "build/data/event_scripts.bin", 0xa525d, 0x4b
+gUnknown_827FE54: @ 0x827FE54
+	.incbin "build/data/event_scripts.bin", 0xa52a8, 0x57
+gUnknown_827FEAB: @ 0x827FEAB
+	.incbin "build/data/event_scripts.bin", 0xa52ff, 0xed
+gUnknown_827FF98: @ 0x827FF98
+	.incbin "build/data/event_scripts.bin", 0xa53ec, 0x51
+gUnknown_827FFE9: @ 0x827FFE9
+	.incbin "build/data/event_scripts.bin", 0xa543d, 0x9d
+gUnknown_8280086: @ 0x8280086
+	.incbin "build/data/event_scripts.bin", 0xa54da, 0x27
+gUnknown_82800AD: @ 0x82800AD
+	.incbin "build/data/event_scripts.bin", 0xa5501, 0x11d
+gUnknown_82801CA: @ 0x82801CA
+	.incbin "build/data/event_scripts.bin", 0xa561e, 0x8d
+gUnknown_8280257: @ 0x8280257
+	.incbin "build/data/event_scripts.bin", 0xa56ab, 0xfa
+gUnknown_8280351: @ 0x8280351
+	.incbin "build/data/event_scripts.bin", 0xa57a5, 0x14
+gUnknown_8280365: @ 0x8280365
+	.incbin "build/data/event_scripts.bin", 0xa57b9, 0x9d
+gUnknown_8280402: @ 0x8280402
+	.incbin "build/data/event_scripts.bin", 0xa5856, 0x88
+gUnknown_828048A: @ 0x828048A
+	.incbin "build/data/event_scripts.bin", 0xa58de, 0xe3
+gUnknown_828056D: @ 0x828056D
+	.incbin "build/data/event_scripts.bin", 0xa59c1, 0x6a
+gUnknown_82805D7: @ 0x82805D7
+	.incbin "build/data/event_scripts.bin", 0xa5a2b, 0x63
+gUnknown_828063A: @ 0x828063A
+	.incbin "build/data/event_scripts.bin", 0xa5a8e, 0x52
+gUnknown_828068C: @ 0x828068C
+	.incbin "build/data/event_scripts.bin", 0xa5ae0, 0x69
+gUnknown_82806F5: @ 0x82806F5
+	.incbin "build/data/event_scripts.bin", 0xa5b49, 0x5d
+gUnknown_8280752: @ 0x8280752
+	.incbin "build/data/event_scripts.bin", 0xa5ba6, 0x96
+gUnknown_82807E8: @ 0x82807E8
+	.incbin "build/data/event_scripts.bin", 0xa5c3c, 0x32
+gUnknown_828081A: @ 0x828081A
+	.incbin "build/data/event_scripts.bin", 0xa5c6e, 0xc7
+gUnknown_82808E1: @ 0x82808E1
+	.incbin "build/data/event_scripts.bin", 0xa5d35, 0xc8
+gUnknown_82809A9: @ 0x82809A9
+	.incbin "build/data/event_scripts.bin", 0xa5dfd, 0xcf
+gUnknown_8280A78: @ 0x8280A78
+	.incbin "build/data/event_scripts.bin", 0xa5ecc, 0x7b
+gUnknown_8280AF3: @ 0x8280AF3
+	.incbin "build/data/event_scripts.bin", 0xa5f47, 0xf8
+gUnknown_8280BEB: @ 0x8280BEB
+	.incbin "build/data/event_scripts.bin", 0xa603f, 0xa3
+gUnknown_8280C8E: @ 0x8280C8E
+	.incbin "build/data/event_scripts.bin", 0xa60e2, 0x56
+gUnknown_8280CE4: @ 0x8280CE4
+	.incbin "build/data/event_scripts.bin", 0xa6138, 0x5a
+gUnknown_8280D3E: @ 0x8280D3E
+	.incbin "build/data/event_scripts.bin", 0xa6192, 0x65
+gUnknown_8280DA3: @ 0x8280DA3
+	.incbin "build/data/event_scripts.bin", 0xa61f7, 0x138
+gUnknown_8280EDB: @ 0x8280EDB
+	.incbin "build/data/event_scripts.bin", 0xa632f, 0x107
+gUnknown_8280FE2: @ 0x8280FE2
+	.incbin "build/data/event_scripts.bin", 0xa6436, 0x128
+gUnknown_828110A: @ 0x828110A
+	.incbin "build/data/event_scripts.bin", 0xa655e, 0x66
+gUnknown_8281170: @ 0x8281170
+	.incbin "build/data/event_scripts.bin", 0xa65c4, 0x61
+gUnknown_82811D1: @ 0x82811D1
+	.incbin "build/data/event_scripts.bin", 0xa6625, 0x33
+gUnknown_8281204: @ 0x8281204
+	.incbin "build/data/event_scripts.bin", 0xa6658, 0x113
+gUnknown_8281317: @ 0x8281317
+	.incbin "build/data/event_scripts.bin", 0xa676b, 0x57
+gUnknown_828136E: @ 0x828136E
+	.incbin "build/data/event_scripts.bin", 0xa67c2, 0x203
+gUnknown_8281571: @ 0x8281571
+	.incbin "build/data/event_scripts.bin", 0xa69c5, 0xde
+gUnknown_828164F: @ 0x828164F
+	.incbin "build/data/event_scripts.bin", 0xa6aa3, 0x3a
+gUnknown_8281689: @ 0x8281689
+	.incbin "build/data/event_scripts.bin", 0xa6add, 0x16
+gUnknown_828169F: @ 0x828169F
+	.incbin "build/data/event_scripts.bin", 0xa6af3, 0x9a
+gUnknown_8281739: @ 0x8281739
+	.incbin "build/data/event_scripts.bin", 0xa6b8d, 0x60
+gUnknown_8281799: @ 0x8281799
+	.incbin "build/data/event_scripts.bin", 0xa6bed, 0x86
+gUnknown_828181F: @ 0x828181F
+	.incbin "build/data/event_scripts.bin", 0xa6c73, 0xe5
+gUnknown_8281904: @ 0x8281904
+	.incbin "build/data/event_scripts.bin", 0xa6d58, 0xaf
+gUnknown_82819B3: @ 0x82819B3
+	.incbin "build/data/event_scripts.bin", 0xa6e07, 0x5e
+gUnknown_8281A11: @ 0x8281A11
+	.incbin "build/data/event_scripts.bin", 0xa6e65, 0x66
+gUnknown_8281A77: @ 0x8281A77
+	.incbin "build/data/event_scripts.bin", 0xa6ecb, 0x93
+gUnknown_8281B0A: @ 0x8281B0A
+	.incbin "build/data/event_scripts.bin", 0xa6f5e, 0x48
+gUnknown_8281B52: @ 0x8281B52
+	.incbin "build/data/event_scripts.bin", 0xa6fa6, 0x9a
+gUnknown_8281BEC: @ 0x8281BEC
+	.incbin "build/data/event_scripts.bin", 0xa7040, 0x43
+gUnknown_8281C2F: @ 0x8281C2F
+	.incbin "build/data/event_scripts.bin", 0xa7083, 0x27
+gUnknown_8281C56: @ 0x8281C56
+	.incbin "build/data/event_scripts.bin", 0xa70aa, 0x40
+gUnknown_8281C96: @ 0x8281C96
+	.incbin "build/data/event_scripts.bin", 0xa70ea, 0xff
+gUnknown_8281D95: @ 0x8281D95
+	.incbin "build/data/event_scripts.bin", 0xa71e9, 0xd2
+gUnknown_8281E67: @ 0x8281E67
+	.incbin "build/data/event_scripts.bin", 0xa72bb, 0xa1
+gUnknown_8281F08: @ 0x8281F08
+	.incbin "build/data/event_scripts.bin", 0xa735c, 0xe6
+gUnknown_8281FEE: @ 0x8281FEE
+	.incbin "build/data/event_scripts.bin", 0xa7442, 0x2e
+gUnknown_828201C: @ 0x828201C
+	.incbin "build/data/event_scripts.bin", 0xa7470, 0xaa
+gUnknown_82820C6: @ 0x82820C6
+	.incbin "build/data/event_scripts.bin", 0xa751a, 0x4b
+gUnknown_8282111: @ 0x8282111
+	.incbin "build/data/event_scripts.bin", 0xa7565, 0x68
+gUnknown_8282179: @ 0x8282179
+	.incbin "build/data/event_scripts.bin", 0xa75cd, 0xc0
+gUnknown_8282239: @ 0x8282239
+	.incbin "build/data/event_scripts.bin", 0xa768d, 0x82
+gUnknown_82822BB: @ 0x82822BB
+	.incbin "build/data/event_scripts.bin", 0xa770f, 0x1fa
+gUnknown_82824B5: @ 0x82824B5
+	.incbin "build/data/event_scripts.bin", 0xa7909, 0x3b
+gUnknown_82824F0: @ 0x82824F0
+	.incbin "build/data/event_scripts.bin", 0xa7944, 0x63
+gUnknown_8282553: @ 0x8282553
+	.incbin "build/data/event_scripts.bin", 0xa79a7, 0x69
+gUnknown_82825BC: @ 0x82825BC
+	.incbin "build/data/event_scripts.bin", 0xa7a10, 0x47
+gUnknown_8282603: @ 0x8282603
+	.incbin "build/data/event_scripts.bin", 0xa7a57, 0x64
+gUnknown_8282667: @ 0x8282667
+	.incbin "build/data/event_scripts.bin", 0xa7abb, 0xb1
+gUnknown_8282718: @ 0x8282718
+	.incbin "build/data/event_scripts.bin", 0xa7b6c, 0x157
+gUnknown_828286F: @ 0x828286F
+	.incbin "build/data/event_scripts.bin", 0xa7cc3, 0x22
+gUnknown_8282891: @ 0x8282891
+	.incbin "build/data/event_scripts.bin", 0xa7ce5, 0x169
+gUnknown_82829FA: @ 0x82829FA
+	.incbin "build/data/event_scripts.bin", 0xa7e4e, 0xbb
+gUnknown_8282AB5: @ 0x8282AB5
+	.incbin "build/data/event_scripts.bin", 0xa7f09, 0x67
+gUnknown_8282B1C: @ 0x8282B1C
+	.incbin "build/data/event_scripts.bin", 0xa7f70, 0x174
+gUnknown_8282C90: @ 0x8282C90
+	.incbin "build/data/event_scripts.bin", 0xa80e4, 0xbe
+gUnknown_8282D4E: @ 0x8282D4E
+	.incbin "build/data/event_scripts.bin", 0xa81a2, 0xa7
+gUnknown_8282DF5: @ 0x8282DF5
+	.incbin "build/data/event_scripts.bin", 0xa8249, 0x7e
+gUnknown_8282E73: @ 0x8282E73
+	.incbin "build/data/event_scripts.bin", 0xa82c7, 0x48
+gUnknown_8282EBB: @ 0x8282EBB
+	.incbin "build/data/event_scripts.bin", 0xa830f, 0xb7
+gUnknown_8282F72: @ 0x8282F72
+	.incbin "build/data/event_scripts.bin", 0xa83c6, 0x143
+gUnknown_82830B5: @ 0x82830B5
+	.incbin "build/data/event_scripts.bin", 0xa8509, 0xac
+gUnknown_8283161: @ 0x8283161
+	.incbin "build/data/event_scripts.bin", 0xa85b5, 0x18
+gUnknown_8283179: @ 0x8283179
+	.incbin "build/data/event_scripts.bin", 0xa85cd, 0x94
+gUnknown_828320D: @ 0x828320D
+	.incbin "build/data/event_scripts.bin", 0xa8661, 0xea
+gUnknown_82832F7: @ 0x82832F7
+	.incbin "build/data/event_scripts.bin", 0xa874b, 0x142
+gUnknown_8283439: @ 0x8283439
+	.incbin "build/data/event_scripts.bin", 0xa888d, 0xfc
+gUnknown_8283535: @ 0x8283535
+	.incbin "build/data/event_scripts.bin", 0xa8989, 0x5d
+gUnknown_8283592: @ 0x8283592
+	.incbin "build/data/event_scripts.bin", 0xa89e6, 0x43
+gUnknown_82835D5: @ 0x82835D5
+	.incbin "build/data/event_scripts.bin", 0xa8a29, 0x88
+gUnknown_828365D: @ 0x828365D
+	.incbin "build/data/event_scripts.bin", 0xa8ab1, 0x94
+gUnknown_82836F1: @ 0x82836F1
+	.incbin "build/data/event_scripts.bin", 0xa8b45, 0xd8
+gUnknown_82837C9: @ 0x82837C9
+	.incbin "build/data/event_scripts.bin", 0xa8c1d, 0x25
+gUnknown_82837EE: @ 0x82837EE
+	.incbin "build/data/event_scripts.bin", 0xa8c42, 0x95
+gUnknown_8283883: @ 0x8283883
+	.incbin "build/data/event_scripts.bin", 0xa8cd7, 0x12
+gUnknown_8283895: @ 0x8283895
+	.incbin "build/data/event_scripts.bin", 0xa8ce9, 0x96
+gUnknown_828392B: @ 0x828392B
+	.incbin "build/data/event_scripts.bin", 0xa8d7f, 0x269
+gUnknown_8283B94: @ 0x8283B94
+	.incbin "build/data/event_scripts.bin", 0xa8fe8, 0x9d
+gUnknown_8283C31: @ 0x8283C31
+	.incbin "build/data/event_scripts.bin", 0xa9085, 0x87
+gUnknown_8283CB8: @ 0x8283CB8
+	.incbin "build/data/event_scripts.bin", 0xa910c, 0x97
+gUnknown_8283D4F: @ 0x8283D4F
+	.incbin "build/data/event_scripts.bin", 0xa91a3, 0x3f
+gUnknown_8283D8E: @ 0x8283D8E
+	.incbin "build/data/event_scripts.bin", 0xa91e2, 0xc
+gUnknown_8283D9A: @ 0x8283D9A
+	.incbin "build/data/event_scripts.bin", 0xa91ee, 0x1a4
+gUnknown_8283F3E: @ 0x8283F3E
+	.incbin "build/data/event_scripts.bin", 0xa9392, 0x50
+gUnknown_8283F8E: @ 0x8283F8E
+	.incbin "build/data/event_scripts.bin", 0xa93e2, 0xc7
+gUnknown_8284055: @ 0x8284055
+	.incbin "build/data/event_scripts.bin", 0xa94a9, 0x48f
+gUnknown_82844E4: @ 0x82844E4
+	.incbin "build/data/event_scripts.bin", 0xa9938, 0x85
+gUnknown_8284569: @ 0x8284569
+	.incbin "build/data/event_scripts.bin", 0xa99bd, 0x242
+gUnknown_82847AB: @ 0x82847AB
+	.incbin "build/data/event_scripts.bin", 0xa9bff, 0xe7
+gUnknown_8284892: @ 0x8284892
+	.incbin "build/data/event_scripts.bin", 0xa9ce6, 0x218
+gUnknown_8284AAA: @ 0x8284AAA
+	.incbin "build/data/event_scripts.bin", 0xa9efe, 0x1a
+gUnknown_8284AC4: @ 0x8284AC4
+	.incbin "build/data/event_scripts.bin", 0xa9f18, 0xba
+gUnknown_8284B7E: @ 0x8284B7E
+	.incbin "build/data/event_scripts.bin", 0xa9fd2, 0x9d
+gUnknown_8284C1B: @ 0x8284C1B
+	.incbin "build/data/event_scripts.bin", 0xaa06f, 0x2f2
+gUnknown_8284F0D: @ 0x8284F0D
+	.incbin "build/data/event_scripts.bin", 0xaa361, 0x132
+gUnknown_828503F: @ 0x828503F
+	.incbin "build/data/event_scripts.bin", 0xaa493, 0x48
+gUnknown_8285087: @ 0x8285087
+	.incbin "build/data/event_scripts.bin", 0xaa4db, 0x15d
+gUnknown_82851E4: @ 0x82851E4
+	.incbin "build/data/event_scripts.bin", 0xaa638, 0x1d
+gUnknown_8285201: @ 0x8285201
+	.incbin "build/data/event_scripts.bin", 0xaa655, 0xf5
+gUnknown_82852F6: @ 0x82852F6
+	.incbin "build/data/event_scripts.bin", 0xaa74a, 0x74
+gUnknown_828536A: @ 0x828536A
+	.incbin "build/data/event_scripts.bin", 0xaa7be, 0x90
+gUnknown_82853FA: @ 0x82853FA
+	.incbin "build/data/event_scripts.bin", 0xaa84e, 0x64
+gUnknown_828545E: @ 0x828545E
+	.incbin "build/data/event_scripts.bin", 0xaa8b2, 0xf9
+gUnknown_8285557: @ 0x8285557
+	.incbin "build/data/event_scripts.bin", 0xaa9ab, 0x54
+gUnknown_82855AB: @ 0x82855AB
+	.incbin "build/data/event_scripts.bin", 0xaa9ff, 0x15f
+gUnknown_828570A: @ 0x828570A
+	.incbin "build/data/event_scripts.bin", 0xaab5e, 0x121
+gUnknown_828582B: @ 0x828582B
+	.incbin "build/data/event_scripts.bin", 0xaac7f, 0x1cf
+gUnknown_82859FA: @ 0x82859FA
+	.incbin "build/data/event_scripts.bin", 0xaae4e, 0x27c
+gUnknown_8285C76: @ 0x8285C76
+	.incbin "build/data/event_scripts.bin", 0xab0ca, 0x66b
+gUnknown_82862E1: @ 0x82862E1
+	.incbin "build/data/event_scripts.bin", 0xab735, 0x2b
+gUnknown_828630C: @ 0x828630C
+	.incbin "build/data/event_scripts.bin", 0xab760, 0x9
+gUnknown_8286315: @ 0x8286315
+	.incbin "build/data/event_scripts.bin", 0xab769, 0x30
+gUnknown_8286345: @ 0x8286345
+	.incbin "build/data/event_scripts.bin", 0xab799, 0x35
+gUnknown_828637A: @ 0x828637A
+	.incbin "build/data/event_scripts.bin", 0xab7ce, 0x2c
+gUnknown_82863A6: @ 0x82863A6
+	.incbin "build/data/event_scripts.bin", 0xab7fa, 0x1a
+gUnknown_82863C0: @ 0x82863C0
+	.incbin "build/data/event_scripts.bin", 0xab814, 0x1b
+gUnknown_82863DB: @ 0x82863DB
+	.incbin "build/data/event_scripts.bin", 0xab82f, 0x25
+gUnknown_8286400: @ 0x8286400
+	.incbin "build/data/event_scripts.bin", 0xab854, 0x25
+gUnknown_8286425: @ 0x8286425
+	.incbin "build/data/event_scripts.bin", 0xab879, 0x36
+gUnknown_828645B: @ 0x828645B
+	.incbin "build/data/event_scripts.bin", 0xab8af, 0x9
+gUnknown_8286464: @ 0x8286464
+	.incbin "build/data/event_scripts.bin", 0xab8b8, 0x3d
+gUnknown_82864A1: @ 0x82864A1
+	.incbin "build/data/event_scripts.bin", 0xab8f5, 0x8
+gUnknown_82864A9: @ 0x82864A9
+	.incbin "build/data/event_scripts.bin", 0xab8fd, 0x48
+gUnknown_82864F1: @ 0x82864F1
+	.incbin "build/data/event_scripts.bin", 0xab945, 0xb
+gUnknown_82864FC: @ 0x82864FC
+	.incbin "build/data/event_scripts.bin", 0xab950, 0x193
+gUnknown_828668F: @ 0x828668F
+	.incbin "build/data/event_scripts.bin", 0xabae3, 0x74
+gUnknown_8286703: @ 0x8286703
+	.incbin "build/data/event_scripts.bin", 0xabb57, 0xdc
+gUnknown_82867DF: @ 0x82867DF
+	.incbin "build/data/event_scripts.bin", 0xabc33, 0x4d
+gUnknown_828682C: @ 0x828682C
+	.incbin "build/data/event_scripts.bin", 0xabc80, 0x49
+gUnknown_8286875: @ 0x8286875
+	.incbin "build/data/event_scripts.bin", 0xabcc9, 0x5
+gUnknown_828687A: @ 0x828687A
+	.incbin "build/data/event_scripts.bin", 0xabcce, 0x5
+gUnknown_828687F: @ 0x828687F
+	.incbin "build/data/event_scripts.bin", 0xabcd3, 0x5
+gUnknown_8286884: @ 0x8286884
+	.incbin "build/data/event_scripts.bin", 0xabcd8, 0xe
+gUnknown_8286892: @ 0x8286892
+	.incbin "build/data/event_scripts.bin", 0xabce6, 0x31
+gUnknown_82868C3: @ 0x82868C3
+	.incbin "build/data/event_scripts.bin", 0xabd17, 0x25
+gUnknown_82868E8: @ 0x82868E8
+	.incbin "build/data/event_scripts.bin", 0xabd3c, 0x5e
+gUnknown_8286946: @ 0x8286946
+	.incbin "build/data/event_scripts.bin", 0xabd9a, 0x5f
+gUnknown_82869A5: @ 0x82869A5
+	.incbin "build/data/event_scripts.bin", 0xabdf9, 0xc5
+gUnknown_8286A6A: @ 0x8286A6A
+	.incbin "build/data/event_scripts.bin", 0xabebe, 0x40
+gUnknown_8286AAA: @ 0x8286AAA
+	.incbin "build/data/event_scripts.bin", 0xabefe, 0x43
+gUnknown_8286AED: @ 0x8286AED
+	.incbin "build/data/event_scripts.bin", 0xabf41, 0x143
 
 	.globl gUnknown_8286C30
 gUnknown_8286C30: @ 0x8286C30
@@ -1611,19 +2798,40 @@ gUnknown_8289F5C: @ 0x8289F5C
 
 	.globl gUnknown_828A290
 gUnknown_828A290: @ 0x828A290
-	.incbin "build/data/event_scripts.bin", 0xaf6e4, 0x34
+	.4byte gUnknown_828A2F0                  @ 000
+	.4byte gUnknown_828A2F0                  @ 001
+	.4byte gUnknown_828A2F0                  @ 002
+	.4byte gUnknown_828A2F0                  @ 003
+	.4byte gUnknown_828A2F0                  @ 004
+	.4byte gUnknown_828A306                  @ 005
+	.4byte gUnknown_828A2F0                  @ 006
+	.4byte gUnknown_828A2F0                  @ 007
+	.4byte gUnknown_828A2F0                  @ 008
+	.4byte gUnknown_828A2F0                  @ 009
+	.4byte gUnknown_828A2F0                  @ 010
+	.4byte gUnknown_828A2F0                  @ 011
+	.4byte gUnknown_828A2F0                  @ 012
 
 	.globl gUnknown_828A2C4
 gUnknown_828A2C4: @ 0x828A2C4
-	.incbin "build/data/event_scripts.bin", 0xaf718, 0x18
+	.4byte gUnknown_828A39A                  @ 000
+	.4byte gUnknown_828A3A4                  @ 001
+	.4byte gUnknown_828A3A4                  @ 002
+	.4byte gUnknown_828A3D3                  @ 003
+	.4byte gUnknown_828A3F7                  @ 004
+	.4byte gUnknown_828A419                  @ 005
 
 	.globl gUnknown_828A2DC
 gUnknown_828A2DC: @ 0x828A2DC
-	.incbin "build/data/event_scripts.bin", 0xaf730, 0x4
+	.4byte gUnknown_828A43B                  @ 000
 
 	.globl gUnknown_828A2E0
 gUnknown_828A2E0: @ 0x828A2E0
-	.incbin "build/data/event_scripts.bin", 0xaf734, 0x2c
+	.incbin "build/data/event_scripts.bin", 0xaf734, 0x10
+gUnknown_828A2F0: @ 0x828A2F0
+	.incbin "build/data/event_scripts.bin", 0xaf744, 0x16
+gUnknown_828A306: @ 0x828A306
+	.incbin "build/data/event_scripts.bin", 0xaf75a, 0x6
 
 	.globl gUnknown_828A30C
 gUnknown_828A30C: @ 0x828A30C
@@ -1639,7 +2847,19 @@ gUnknown_828A35C: @ 0x828A35C
 
 	.globl gUnknown_828A38A
 gUnknown_828A38A: @ 0x828A38A
-	.incbin "build/data/event_scripts.bin", 0xaf7de, 0xf6
+	.incbin "build/data/event_scripts.bin", 0xaf7de, 0x10
+gUnknown_828A39A: @ 0x828A39A
+	.incbin "build/data/event_scripts.bin", 0xaf7ee, 0xa
+gUnknown_828A3A4: @ 0x828A3A4
+	.incbin "build/data/event_scripts.bin", 0xaf7f8, 0x2f
+gUnknown_828A3D3: @ 0x828A3D3
+	.incbin "build/data/event_scripts.bin", 0xaf827, 0x24
+gUnknown_828A3F7: @ 0x828A3F7
+	.incbin "build/data/event_scripts.bin", 0xaf84b, 0x22
+gUnknown_828A419: @ 0x828A419
+	.incbin "build/data/event_scripts.bin", 0xaf86d, 0x22
+gUnknown_828A43B: @ 0x828A43B
+	.incbin "build/data/event_scripts.bin", 0xaf88f, 0x45
 
 	.globl gUnknown_828A480
 gUnknown_828A480: @ 0x828A480
