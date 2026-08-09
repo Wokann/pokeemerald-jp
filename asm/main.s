@@ -691,12 +691,14 @@ _080008E4: .4byte 0x0203CC28
 
 	thumb_func_start ClearTrainerHillVBlankCounter
 ClearTrainerHillVBlankCounter: @ 0x080008E8
-	ldr r1, _080008F0
-	movs r0, #0
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_080008F0: .4byte 0x0203CC28
+	ldr	r1, .L3
+	movs	r0, #0x0
+	str	r0, [r1]
+	bx	lr
+.L4:
+	.align	2, 0
+.L3:
+	.word	gTrainerHillVBlankCounter
 	thumb_func_end ClearTrainerHillVBlankCounter
 
 	thumb_func_start DoSoftReset
@@ -769,4 +771,3 @@ ClearPokemonCrySongs: @ 0x08000964
 _08000980: .4byte 0x030070D0
 _08000984: .4byte 0x01000034
 	thumb_func_end ClearPokemonCrySongs
-

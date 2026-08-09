@@ -1,4 +1,5 @@
 gUnknown_2000000 = .;
+gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 . += 0x2;
 gUnknown_2000002 = .;
 . += 0x1;
