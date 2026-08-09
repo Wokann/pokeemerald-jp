@@ -37,6 +37,7 @@ _0812FE20: .4byte 0x00002E90
 	thumb_func_end sub_0812FDE0
 
 	thumb_func_start CB2_ContestPainting
+	@ From src/contest_painting.c
 CB2_ContestPainting: @ 0x0812FE24
 	push {lr}
 	bl ShowContestPainting

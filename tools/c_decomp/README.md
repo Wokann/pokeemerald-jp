@@ -36,7 +36,7 @@ can be diffed directly.
 
 ## Converted so far
 
-62 functions across 27 src/ modules (matching pokeemerald layout):
+65 functions across 29 src/ modules (matching pokeemerald layout):
 src/main.c (2), src/util.c (1), src/battle_anim_mons.c (4),
 src/field_specials.c (1), src/menu.c (3), src/mirage_tower.c (1),
 src/overworld.c (1), src/sound.c (1), src/recorded_battle.c (10),
@@ -45,5 +45,6 @@ src/battle_setup.c (1), src/event_object_movement.c (2), src/script.c (2),
 src/mystery_gift_menu.c (1), src/text_window.c (1), src/trainer_hill.c (1),
 src/field_weather.c (1), src/string_util.c (11), src/main_menu.c (1),
 src/tileset_anims.c (1), src/decompress.c (1), src/item.c (1),
-src/pokemon.c (1), src/record_mixing.c (1), src/coord_event_weather.c (7).
+src/pokemon.c (1), src/record_mixing.c (1), src/coord_event_weather.c (7),
+src/contest_painting.c (1), src/intro.c (1).
 All verified byte-identical with tools/c_decomp/convert_c.py -f.

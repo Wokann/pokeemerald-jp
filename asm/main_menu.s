@@ -37,6 +37,7 @@ CB2_InitMainMenu: @ 0x0802F340
 	thumb_func_end CB2_InitMainMenu
 
 	thumb_func_start CB2_ReinitMainMenu
+	@ From src/main_menu.c
 CB2_ReinitMainMenu: @ 0x0802F34C
 	push {lr}
 	movs r0, #1

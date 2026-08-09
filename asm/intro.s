@@ -349,6 +349,7 @@ _0816CCEC: .4byte 0x02000000
 	thumb_func_end CB2_InitCopyrightScreenAfterBootup
 
 	thumb_func_start CB2_InitCopyrightScreenAfterTitleScreen
+	@ From src/intro.c
 CB2_InitCopyrightScreenAfterTitleScreen: @ 0x0816CCF0
 	push {lr}
 	bl SetUpCopyrightScreen
