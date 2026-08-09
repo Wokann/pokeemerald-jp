@@ -2266,6 +2266,7 @@ _080B2E74: .4byte 0x02037280
 
 	thumb_func_start ExitLinkRoom
 ExitLinkRoom: @ 0x080B2E78
+	@ From src/cable_club.c
 	push {lr}
 	bl QueueExitLinkRoomKey
 	pop {r0}
@@ -2887,4 +2888,3 @@ _080B3334: .4byte 0x0300319C
 _080B3338: .4byte 0x0202267E
 _080B333C: .4byte 0x00002288
 	thumb_func_end sub_080B331C
-

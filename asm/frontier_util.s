@@ -446,6 +446,7 @@ _081A19C0: .4byte 0x00000CAA
 
 	thumb_func_start DoSoftReset_
 DoSoftReset_: @ 0x081A19C4
+	@ From src/frontier_util.c
 	push {lr}
 	bl DoSoftReset
 	pop {r0}
@@ -6953,4 +6954,3 @@ _081A4E18:
 _081A4E20: .4byte 0x02021C7C
 _081A4E24: .4byte 0x085DD5F0
 	thumb_func_end CopyFrontierBrainText
-

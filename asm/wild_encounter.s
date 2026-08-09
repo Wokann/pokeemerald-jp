@@ -5,11 +5,14 @@
 
 	thumb_func_start DisableWildEncounters
 DisableWildEncounters: @ 0x080B4010
-	ldr r1, _080B4018
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_080B4018: .4byte 0x020388A0
+	@ From src/wild_encounter.c
+	ldr	r1, .LDisableWildEncounters
+	strb	r0, [r1]
+	bx	lr
+.LDisableWildEncountersPad:
+	.align	2, 0
+.LDisableWildEncounters:
+	.word	sWildEncountersDisabled
 	thumb_func_end DisableWildEncounters
 
 	thumb_func_start GetRoute119WaterTileNum
@@ -2434,4 +2437,3 @@ _080B5264:
 	.align 2, 0
 _080B526C: .4byte 0x02024190
 	thumb_func_end ApplyCleanseTagEncounterRateMod
-
