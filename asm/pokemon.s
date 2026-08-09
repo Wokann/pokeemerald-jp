@@ -7223,6 +7223,7 @@ _0806AECC: .4byte 0xFFFFFE0F
 
 	thumb_func_start CopyMon
 CopyMon: @ 0x0806AED0
+	@ From src/pokemon.c
 	push {lr}
 	bl memcpy
 	pop {r0}
@@ -15732,4 +15733,3 @@ _0806EFB4:
 	pop {r1}
 	bx r1
 	thumb_func_end EvolutionRenameMon
-

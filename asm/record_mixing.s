@@ -1416,6 +1416,7 @@ LoadPtrFromTaskData: @ 0x080E6FD4
 
 	thumb_func_start StorePtrInTaskData
 StorePtrInTaskData: @ 0x080E6FE0
+	@ From src/record_mixing.c
 	strh r0, [r1]
 	lsrs r0, r0, #0x10
 	strh r0, [r1, #2]
@@ -6434,4 +6435,3 @@ sub_080E9750: @ 0x080E9750
 	bx r0
 	.align 2, 0
 	thumb_func_end sub_080E9750
-

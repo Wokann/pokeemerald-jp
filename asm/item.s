@@ -98,6 +98,7 @@ _080D5E64: .4byte 0x02039A78
 
 	thumb_func_start ApplyNewEncryptionKeyToBagItems_
 ApplyNewEncryptionKeyToBagItems_: @ 0x080D5E68
+	@ From src/item.c
 	push {lr}
 	bl ApplyNewEncryptionKeyToBagItems
 	pop {r0}
@@ -2326,4 +2327,3 @@ sub_080D6E6C: @ 0x080D6E6C
 	.align 2, 0
 _080D6E90: .4byte 0x0855CEE8
 	thumb_func_end sub_080D6E6C
-
