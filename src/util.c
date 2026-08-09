@@ -1,5 +1,4 @@
-typedef unsigned short u16;
-typedef unsigned int u32;
+#include "global.h"
 
 void StoreWordInTwoHalfwords(u16 *h, u32 w)
 {

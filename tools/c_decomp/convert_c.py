@@ -4,6 +4,11 @@ bytes with the JP ROM, and print the assembly snippet to inline.
 
 Usage:
     python3 tools/c_decomp/convert_c.py <function-name> <c-file>
+    python3 tools/c_decomp/convert_c.py -f <function-name> <c-file>
+
+With -f, the C file may contain several functions (matching pokeemerald
+src layout); the named function's bytes are extracted from the object
+via arm-none-eabi-nm -S and compared against the JP ROM.
 
 The JP function address is read from the asm label comment; the final
 literal pool word is masked for the comparison (it resolves at link
@@ -20,12 +25,18 @@ ROOT = Path(__file__).resolve().parents[2]
 AGBCC = ROOT.parent / "pokeemerald" / "tools" / "agbcc" / "bin" / "agbcc"
 AS = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-as"
 OBJCOPY = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-objcopy"
+NM = ROOT / "tools" / "binutils" / "bin" / "arm-none-eabi-nm"
 JP_ROM = ROOT / "baserom_jp.gba"
 
 def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
-    name, c_file = sys.argv[1], Path(sys.argv[2])
+    use_func_extract = False
+    args = sys.argv[1:]
+    if args and args[0] == "-f":
+        use_func_extract = True
+        args = args[1:]
+    name, c_file = args[0], Path(args[1])
 
     # JP address + bytes from the asm label comment.
     jp_addr = None
@@ -61,7 +72,30 @@ def main():
          "/tmp/cv.o", "/tmp/cv.bin"],
         check=True,
     )
-    compiled = Path("/tmp/cv.bin").read_bytes()
+    if use_func_extract:
+        nm = subprocess.run(
+            [str(NM), "-S", "/tmp/cv.o"], capture_output=True, text=True
+        ).stdout
+        found = None
+        for line in nm.splitlines():
+            parts = line.split()
+            if len(parts) >= 4 and parts[3] == name:
+                off = int(parts[0], 16)
+                size = int(parts[1], 16)
+                found = (off, size)
+                break
+        if found is None:
+            sys.exit(f"{name}: symbol not found in compiled object")
+        off, size = found
+        objcopy = subprocess.run(
+            [str(OBJCOPY), "-O", "binary", "--only-section=.text",
+             "/tmp/cv.o", "/tmp/cv.bin"],
+            check=True,
+        )
+        whole = Path("/tmp/cv.bin").read_bytes()
+        compiled = whole[off : off + size]
+    else:
+        compiled = Path("/tmp/cv.bin").read_bytes()
 
     jp_size = len(compiled) + 8
     jp_bytes = JP_ROM.read_bytes()[
