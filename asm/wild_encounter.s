@@ -277,13 +277,14 @@ _080B420C: .4byte 0x00003039
 
 	thumb_func_start FeebasSeedRng
 FeebasSeedRng: @ 0x080B4210
+	@ From src/wild_encounter.c
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _080B421C
 	str r0, [r1]
 	bx lr
 	.align 2, 0
-_080B421C: .4byte 0x020388A4
+_080B421C: .4byte sFeebasRngValue
 	thumb_func_end FeebasSeedRng
 
 	thumb_func_start ChooseWildMonIndex_Land

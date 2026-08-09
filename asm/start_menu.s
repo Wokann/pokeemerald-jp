@@ -2685,6 +2685,7 @@ HideStartMenu: @ 0x080A01FC
 
 	thumb_func_start AppendToList
 AppendToList: @ 0x080A020C
+	@ From src/start_menu.c
 	ldrb r3, [r1]
 	adds r0, r0, r3
 	strb r2, [r0]
@@ -2694,4 +2695,3 @@ AppendToList: @ 0x080A020C
 	bx lr
 	.align 2, 0
 	thumb_func_end AppendToList
-
