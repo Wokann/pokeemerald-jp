@@ -69,4 +69,6 @@ removed), src/random.c (4, full module -- asm/random.s removed),
 src/heal_location.c (3, full module -- asm/heal_location.s removed),
 src/landmark.c (2, full module -- asm/landmark.s removed),
 src/trig.c (4, full module -- asm/trig.s removed),
-src/hof_pc.c (4, asm/hof_pc.s removed).
+src/dynamic_placeholder_text_util.c (4, full module -- asm/
+dynamic_placeholder_text_util.s removed), src/hof_pc.c (4, asm/hof_pc.s
+removed).

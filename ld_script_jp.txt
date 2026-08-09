@@ -268,7 +268,7 @@ SECTIONS {
         asm/battle_pyramid.o(.text);
         asm/item_menu.o(.text);
         asm/list_menu.o(.text);
-        asm/dynamic_placeholder_text_util.o(.text);
+        build/src/dynamic_placeholder_text_util.o(.text);
         asm/save_location.o(.text);
         asm/item_icon.o(.text);
         asm/party_menu.o(.text);
