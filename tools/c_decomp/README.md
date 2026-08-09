@@ -67,3 +67,8 @@ that agbcc's own preprocessor rejects), then pipes to agbcc.
 * `get_start_menu_window_id.c` / `get_map_name_popup_window_id.c` -
   window-id getters (0x0819780C / 0x0819787C); EWRAM statics at
   0x0203CA58 / 0x0203CA59.
+* `get_recorded_battle_apprentice_id.c`,
+  `get_recorded_battle_frontier_facility.c`,
+  `get_text_speed_in_recorded_battle.c` - recorded-battle getters
+  (0x08184F30 / 0x08185D04 / 0x081861EC); EWRAM statics at 0x0203C478 /
+  0x0203C481 / 0x0203C9A6.

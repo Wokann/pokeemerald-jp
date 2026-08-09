@@ -369,11 +369,14 @@ _08184F26:
 
 	thumb_func_start GetRecordedBattleApprenticeId
 GetRecordedBattleApprenticeId: @ 0x08184F30
-	ldr r0, _08184F38
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08184F38: .4byte 0x0203C478
+	@ From tools/c_decomp/get_recorded_battle_apprentice_id.c
+	ldr	r0, .LGetRecordedBattleApprenticeId
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleApprenticeIdPad:
+	.align	2, 0
+.LGetRecordedBattleApprenticeId:
+	.word	sApprenticeId
 	thumb_func_end GetRecordedBattleApprenticeId
 
 	thumb_func_start sub_08184F3C
@@ -2116,11 +2119,14 @@ _08185D00: .4byte 0x0203C481
 
 	thumb_func_start GetRecordedBattleFrontierFacility
 GetRecordedBattleFrontierFacility: @ 0x08185D04
-	ldr r0, _08185D0C
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08185D0C: .4byte 0x0203C481
+	@ From tools/c_decomp/get_recorded_battle_frontier_facility.c
+	ldr	r0, .LGetRecordedBattleFrontierFacility
+	ldrb	r0, [r0]
+	bx	lr
+.LGetRecordedBattleFrontierFacilityPad:
+	.align	2, 0
+.LGetRecordedBattleFrontierFacility:
+	.word	sFrontierFacility
 	thumb_func_end GetRecordedBattleFrontierFacility
 
 	thumb_func_start GetRecordedBattleRecordMixFriendClass
@@ -2782,11 +2788,14 @@ _081861E8: .4byte 0x0203C9A5
 
 	thumb_func_start GetTextSpeedInRecordedBattle
 GetTextSpeedInRecordedBattle: @ 0x081861EC
-	ldr r0, _081861F4
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_081861F4: .4byte 0x0203C9A6
+	@ From tools/c_decomp/get_text_speed_in_recorded_battle.c
+	ldr	r0, .LGetTextSpeedInRecordedBattle
+	ldrb	r0, [r0]
+	bx	lr
+.LGetTextSpeedInRecordedBattlePad:
+	.align	2, 0
+.LGetTextSpeedInRecordedBattle:
+	.word	sTextSpeed
 	thumb_func_end GetTextSpeedInRecordedBattle
 
 	thumb_func_start RecordedBattle_SaveBattleOutcome
