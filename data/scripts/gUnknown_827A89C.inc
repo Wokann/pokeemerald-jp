@@ -1,0 +1,146 @@
+	nop 
+	.byte 0x20
+	.byte 0x27
+	nop 
+	compare_var_to_value 0x1927, 0x87
+	showcoinsbox 0x2, 0x58
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x82
+	goto_if 0x14, 0x0
+	nop 
+	nop 
+	nop 
+	callnative 0x5FFE700
+	return 
+	.byte 0x9D
+	checkplayergender 
+	copybyte 0x4000208, 0x9F1902
+	.byte 0x3F
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xFFF40000
+	closemessage 
+	nop 
+	nop 
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xFFF40000
+	checkitemtype 0x100
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xFFFA0000
+	fadeinbgm 0x0
+	setworldmapflag 0x4B00
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xFFFA0000
+	.byte 0x58
+	nop 
+	nop 
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x0
+	fadeinbgm 0x0
+	nop 
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x0
+	.byte 0x58
+	nop 
+	setworldmapflag 0x4B00
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x60000
+	checkitemtype 0x0
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x60000
+	closemessage 
+	nop 
+	setworldmapflag 0x4B00
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xC0000
+	checkitemtype 0x0
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0xC0000
+	fadeinbgm 0x0
+	setworldmapflag 0x4B00
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x120000
+	.byte 0x50
+	nop 
+	nop 
+	nop 
+	.byte 0x4B
+	nop 
+	end 
+	.byte 0x40
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x84
+	goto 0x120000
+	checkitemtype 0x100
+	nop 
+	.byte 0x4B
+	nop 
+	.byte 0x05
+	.byte 0x08

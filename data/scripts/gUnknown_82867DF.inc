@@ -1,0 +1,44 @@
+	end 
+	.byte 0x58
+	gettime 
+	setobjectxy 0x8, 0x205, 0x700
+	nop 
+	nop 
+	nop 
+	callstd 0x0
+	.byte 0x1F
+	nop 
+	.byte 0x19
+	turnvobject 0x0, 0xC0
+	return 
+	.byte 0xCD
+	.byte 0xDA
+	copybyte 0x1E070508, 0x8000
+	nop 
+	setworldmapflag 0x200
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x500
+	end 
+	.byte 0x58
+	gettime 
+	setobjectxy 0x8, 0x205, 0x400
+	nop 
+	callstd 0x0
+	nop 
+	nop 
+	.byte 0x1F
+	nop 
+	goto 0x88020604
+	.byte 0xA9
+	.byte 0x55
+	gotostd 0x0
+	return 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x0F
+	nop 
+	.byte 0x08

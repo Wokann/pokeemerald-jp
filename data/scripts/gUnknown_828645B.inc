@@ -1,0 +1,7 @@
+	return 
+	.byte 0x55
+	animateflash 0xA
+	gotostd 0x5
+	nop 
+	.byte 0x05
+	.byte 0x08

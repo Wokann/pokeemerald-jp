@@ -1,0 +1,122 @@
+	nop 
+	vgoto_if 0x27, 0x19271B00
+	setberrytree 0x0, 0xC0, 0x2
+	checkitemtype 0x5713
+	gotostd 0x83
+	goto_if 0xA, 0x0
+	nop 
+	nop 
+	nop 
+	.byte 0x1E
+	nop 
+	nop 
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0x1E
+	nop 
+	nop 
+	nop 
+	delay 0x0
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0x1E
+	nop 
+	.byte 0x40
+	nop 
+	delay 0x100
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0x1E
+	nop 
+	.byte 0x80
+	nop 
+	delay 0x0
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0x1E
+	nop 
+	showcoinsbox 0x0, 0x28
+	nop 
+	end 
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	gotostd 0x0
+	.byte 0x1E
+	nop 
+	.byte 0x20
+	nop 
+	delay 0x0
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	gotostd 0x0
+	.byte 0x1E
+	nop 
+	checktrainerflag 0x2800
+	nop 
+	setworldmapflag 0x200
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	gotostd 0x0
+	.byte 0x1E
+	nop 
+	checkplayergender 
+	nop 
+	delay 0x0
+	nop 
+	end 
+	.byte 0x74
+	setptrbyte 0x57, 0xA078408
+	nop 
+	nop 
+	nop 
+	gotostd 0x0
+	.byte 0x1E
+	nop 
+	.byte 0xE0
+	nop 
+	delay 0x200
+	nop 
+	goto 0xD4B5503
+	gotostd 0x2
+	goto 0x40001
+	nop 
+	nop 
+	goto 0x4000100
+	loadword 0x1D, 0x133F0077
+	setmysteryeventstatus 0x71
+	settrainerflag 0x828
+	.byte 0x05
+	.byte 0x08

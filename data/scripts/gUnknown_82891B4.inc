@@ -1,0 +1,16 @@
+	setptrbyte 0xCC, 0x12085AB9
+	.byte 0x40
+	nop 
+	setflag 0xDB00
+	.byte 0x3F
+	end 
+	end 
+	end 
+	.byte 0xCE
+	.byte 0x91
+	delay 0x4508
+	setworldmapflag 0xA
+	nop 
+	nop 
+	nop 
+	.byte 0x3E

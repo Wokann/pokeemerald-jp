@@ -1,0 +1,4 @@
+	gettime 
+	initclock 0x241, 0xF02
+	.byte 0x49
+	setworldmapflag 0x3D00

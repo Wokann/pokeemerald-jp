@@ -1,0 +1,5 @@
+	.byte 0x56
+	setworldmapflag 0x4039
+	nop 
+	setorcopyvar 0x1B01, 0x1001
+	compare_local_to_value 0x0, 0x3C

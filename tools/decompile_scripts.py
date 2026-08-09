@@ -10,6 +10,8 @@ Usage:
     python3 tools/decompile_scripts.py dump <chunk-label>
     python3 tools/decompile_scripts.py check <chunk-label>
     python3 tools/decompile_scripts.py convert <chunk-label>
+    python3 tools/decompile_scripts.py scan [min-size]
+    python3 tools/decompile_scripts.py convert-all [readability-threshold]
 """
 
 import re
@@ -171,6 +173,14 @@ def parse_chunks():
     return chunks
 
 
+def readability(text):
+    lines = text.splitlines()
+    if not lines:
+        return 0.0
+    macro = sum(1 for l in lines if not l.strip().startswith(".byte"))
+    return macro / len(lines)
+
+
 def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
@@ -200,6 +210,66 @@ def main():
             out_path = SCRIPTS_DIR / f"{label}.inc"
             out_path.write_text(text, encoding="utf-8")
             print(f"wrote {out_path}")
+        return
+
+    if cmd == "scan":
+        min_size = int(sys.argv[2]) if len(sys.argv) > 2 else 0
+        rows = []
+        for label, addr, rel, size in parse_chunks():
+            if size < min_size:
+                continue
+            raw = data[rel : rel + size]
+            text = decode_chunk(raw, opcode_table, formats)
+            rows.append((readability(text), label, size))
+        rows.sort(reverse=True)
+        for ratio, label, size in rows:
+            print(f"{ratio:5.2f} {label:<26} 0x{size:05X}")
+        return
+
+    if cmd == "convert-all":
+        threshold = float(sys.argv[2]) if len(sys.argv) > 2 else 0.55
+        converted = []
+        for label, addr, rel, size in parse_chunks():
+            raw = data[rel : rel + size]
+            # Skip pointer tables: most 4-byte words pointing into ROM/RAM
+            # means this is data, not script.
+            if size % 4 == 0 and size >= 8:
+                words = [int.from_bytes(raw[j : j + 4], "little")
+                         for j in range(0, size, 4)]
+                ptr = sum(
+                    1
+                    for w in words
+                    if 0x08000000 <= w <= 0x09FFFFFF
+                    or 0x02000000 <= w < 0x04000000
+                )
+                if ptr * 10 >= len(words) * 7:
+                    continue
+            text = decode_chunk(raw, opcode_table, formats)
+            if readability(text) < threshold:
+                continue
+            if encode_lines(text, opcode_table, formats) != raw:
+                continue
+            SCRIPTS_DIR.mkdir(exist_ok=True)
+            (SCRIPTS_DIR / f"{label}.inc").write_text(text, encoding="utf-8")
+            converted.append(label)
+        # Replace the incbin lines of converted chunks with .include.
+        lines = EVENT_S.read_text(encoding="utf-8").splitlines(keepends=True)
+        out = []
+        label = None
+        for line in lines:
+            lm = LABEL_RE.match(line.rstrip("\r\n"))
+            if lm:
+                label = lm.group(1)
+                out.append(line)
+                continue
+            m = INCINBIN_RE.match(line)
+            if m and label in converted:
+                out.append(f'\t.include "data/scripts/{label}.inc"\n')
+                label = None
+                continue
+            out.append(line)
+        EVENT_S.write_text("".join(out), encoding="utf-8")
+        print(f"converted {len(converted)} chunks (threshold {threshold})")
         return
     sys.exit(f"no chunk named {target}")
 

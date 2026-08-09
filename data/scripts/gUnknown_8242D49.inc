@@ -1,0 +1,74 @@
+	lockall 
+	waitse 
+	.byte 0x44
+	goto 0x19000180
+	call_if 0x80, 0x180800D
+	goto 0x80054880
+	call 0x8242BA0
+	compare_var_to_value 0x8007, 0x1
+	goto_if 0x1, 0x8242D78
+	compare_var_to_value 0x8007, 0x0
+	goto_if 0x1, 0x8242DD3
+	end 
+	.byte 0x19
+	gotostd 0x80
+	call 0x80041980
+	goto 0x800D2680
+	messageautoscroll 0x800D2101
+	setworldmapflag 0x600
+	setworldmapflag 0x2D9E
+	gotonative 0x800D2108
+	nop 
+	nop 
+	goto_if 0x1, 0x8242DAD
+	end 
+	.byte 0x80
+	nop 
+	call 0x3DB36780
+	gotonative 0x2DB80508
+	gotonative 0x69670208
+	.byte 0x39
+	gotonative 0x2DB80508
+	gotonative 0x32660208
+	.byte 0x80
+	setworldmapflag 0x8004
+	.byte 0x19
+	call 0xF800880
+	nop 
+	.byte 0x53
+	.byte 0x39
+	gotonative 0x25040908
+	.byte 0x55
+	setworldmapflag 0x9625
+	nop 
+	releaseall 
+	end 
+	loadword 0x0, 0x8243969
+	callstd 0x4
+	loadword 0x0, 0x8243977
+	callstd 0x4
+	.byte 0x16
+	.byte 0x0D
+	.byte 0x80
+	nop 
+	nop 
+	releaseall 
+	end 
+	lock 
+	faceplayer 
+	loadword 0x0, 0x8243690
+	callstd 0x5
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x8242E0F
+	compare_var_to_value 0x800D, 0x0
+	goto_if 0x1, 0x8242E15
+	goto 0x8242E15
+	.byte 0x25
+	compare_local_to_local 0x0, 0x27
+	lock 
+	faceplayer 
+	message 0x82436A4
+	waitmessage 
+	waitbuttonpress 
+	release 
+	end 

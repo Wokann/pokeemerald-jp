@@ -1,0 +1,25 @@
+	compare_local_to_value 0x94, 0x0
+	.byte 0x3F
+	.byte 0x0D
+	goto_if 0x3, 0x80D4B55
+	end 
+	goto 0x10000
+	nop 
+	nop 
+	.byte 0x12
+	nop 
+	end 
+	nop 
+	return 
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x2, 0x2000200
+	nop 
+	nop 
+	nop 
+	returnram 
+	nop 
+	.byte 0x1E
+	.byte 0x7C
+	.byte 0x08

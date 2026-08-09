@@ -1,0 +1,20 @@
+	giveegg 0xAE9F
+	.byte 0x64
+	fadeoutbgm 0x0
+	goto_if 0x9, 0x442E0E1F
+	returnram 
+	loadbyte 0xFB, 0x96
+	checkplayergender 
+	.byte 0x58
+	.byte 0x51
+	checkplayergender 
+	.byte 0x9D
+	.byte 0x56
+	waitmoncry 
+	.byte 0x64
+	braillemessage 0xFE2D8DA0
+	gotostd_if 0x3, 0x6
+	gettime 
+	returnram 
+	setptrbyte 0x8, 0xAB020B41
+	.byte 0xFF

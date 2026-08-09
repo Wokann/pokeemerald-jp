@@ -1,0 +1,21 @@
+	loadbyte 0x38, 0x1
+	.byte 0x12
+	.byte 0x40
+	nop 
+	fadescreenspeed 0x1, 0x3F
+	gettime 
+	playse 0x241
+	end 
+	nop 
+	.byte 0xE7
+	playse 0x412F
+	end 
+	end 
+	setworldmapflag 0x2F2D
+	.byte 0x41
+	end 
+	end 
+	loadbyte 0x3D, 0x2
+	end 
+	setworldmapflag 0x9A1B
+	delay 0x3C08

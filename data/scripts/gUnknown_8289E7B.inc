@@ -1,0 +1,96 @@
+	multichoice 0xB, 0x3A, 0x6F, 0xC
+	.byte 0x3A
+	hidemonpic 
+	setworldmapflag 0x5415
+	callstd 0x1
+	.byte 0x39
+	gotostd 0x0
+	.byte 0x54
+	callstd 0x1
+	.byte 0x39
+	.byte 0x40
+	nop 
+	hidemonpic 
+	setworldmapflag 0x760E
+	setworldmapflag 0x7610
+	setworldmapflag 0x3911
+	.byte 0x40
+	nop 
+	gettime 
+	.byte 0xD6
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	hidemonpic 
+	setworldmapflag 0x3909
+	.byte 0x40
+	nop 
+	hidemonpic 
+	setworldmapflag 0x7609
+	end 
+	loadbyte 0x76, 0x2
+	.byte 0x11
+	hidemonpic 
+	setworldmapflag 0x7609
+	return 
+	loadbyte 0x76, 0x3
+	.byte 0x11
+	hidemonpic 
+	setworldmapflag 0x7609
+	call 0x11047610
+	hidemonpic 
+	setworldmapflag 0x2909
+	nop 
+	.byte 0xD7
+	.byte 0x3F
+	end 
+	end 
+	return 
+	.byte 0xFB
+	waitfieldeffect 0x828
+	setflag 0xD700
+	.byte 0x3F
+	end 
+	end 
+	call 0x8289F1A
+	hidemonpic 
+	goto 0x11057610
+	hidemonpic 
+	setworldmapflag 0x7609
+	setworldmapflag 0x100F
+	erasebox 0x1, 0x12, 0x40, 0x0
+	.byte 0x56
+	returnram 
+	hidemonpic 
+	setworldmapflag 0x1A12
+	returnram 
+	compare_local_to_local 0xC, 0x76
+	setworldmapflag 0x3E0A
+	hidemonpic 
+	goto_if 0x10, 0x76110676
+	setworldmapflag 0x7609
+	setworldmapflag 0x100F
+	drawboxtext 0x1, 0x12, 0x40, 0x0
+	.byte 0x56
+	callstd_if 0x76, 0x1
+	.byte 0x12
+	setorcopyvar 0x1B0B, 0x760B
+	setworldmapflag 0x3E0B
+	hidemonpic 
+	call_if 0x10, 0x76110776
+	setworldmapflag 0x7609
+	setworldmapflag 0x100F
+	.byte 0x74
+	setworldmapflag 0x4012
+	nop 
+	.byte 0x56
+	callstd_if 0x76, 0x1
+	.byte 0x12
+	setorcopyvar 0x1B0B, 0x560B
+	returnram 
+	hidemonpic 
+	setworldmapflag 0x1A12
+	returnram 
+	compare_local_to_local 0xC, 0x76
+	setworldmapflag 0x3E0C

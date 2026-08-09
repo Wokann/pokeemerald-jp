@@ -1,0 +1,3 @@
+	loadword 0x0, 0x8243A80
+	callstd 0x3
+	end 

@@ -1,0 +1,10 @@
+	.byte 0x16
+	goto 0x25000180
+	compare_var_to_value 0x2700, 0x1602
+	goto 0x25000280
+	compare_var_to_value 0x2700, 0x1602
+	goto 0x25000380
+	.byte 0x21
+	nop 
+	.byte 0x27
+	end 

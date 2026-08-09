@@ -1,0 +1,58 @@
+	nop 
+	.byte 0xDB
+	.byte 0x27
+	nop 
+	.byte 0x41
+	.byte 0x27
+	call 0x981900
+	showcoinsbox 0x3, 0xB1
+	faceplayer 
+	.byte 0x0D
+	gotostd 0x2
+	call 0x800010
+	nop 
+	nop 
+	end 
+	nop 
+	goto 0xC0009819
+	return 
+	addelevmenuitem 0x5A, 0x80D, 0x402, 0x10
+	.byte 0x80
+	nop 
+	nop 
+	nop 
+	end 
+	nop 
+	goto 0xC0009819
+	return 
+	addelevmenuitem 0x5A, 0x80D, 0x402, 0x10
+	.byte 0x80
+	nop 
+	nop 
+	nop 
+	end 
+	nop 
+	goto 0xC000E419
+	setmysteryeventstatus 0x3B
+	gotopostbattlescript 
+	delay 0x508
+	.byte 0x19
+	waitmessage 
+	nop 
+	showcoinsbox 0x2, 0x58
+	gettime 
+	setobjectxy 0x208, 0x205, 0x300
+	nop 
+	call_if 0x0, 0x67F10000
+	end 
+	nop 
+	.byte 0xF4
+	.byte 0x56
+	gotostd 0x3
+	call 0x0
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x05
+	.byte 0x08

@@ -1,0 +1,33 @@
+	loadbyte 0x41, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	setobjectmovementtype 0x701, 0x0
+	nop 
+	nop 
+	setflag 0xDB00
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	pokemartdecoration 0x76082898
+	setworldmapflag 0x800
+	loadbyte 0xE6, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	setmysteryeventstatus 0x5C
+	setworldmapflag 0x353A
+	gotonative 0x2023F
+	setworldmapflag 0x10
+	callstd_if 0x1, 0xC
+	setworldmapflag 0x120F
+	.byte 0x40
+	nop 
+	.byte 0x19
+	setworldmapflag 0x0
+	nop 
+	nop 
+	nop 
+	delay 0x6FD6
+	delay 0x3C08

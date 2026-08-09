@@ -1,0 +1,50 @@
+	.byte 0x45
+	setworldmapflag 0x280E
+	.byte 0x41
+	end 
+	end 
+	fadedefaultbgm 
+	gotonative 0x2023F
+	setworldmapflag 0x10
+	callstd_if 0x1, 0xC
+	setworldmapflag 0x9431
+	.byte 0x3E
+	end 
+	end 
+	fadescreenspeed 0x3E, 0x2
+	end 
+	call 0xCF40011E
+	checkmoney 0x800828, 0x2E
+	.byte 0xDB
+	.byte 0x3F
+	end 
+	end 
+	return 
+	delay 0x92D5
+	delay 0x2E08
+	.byte 0xDB
+	.byte 0x3F
+	end 
+	end 
+	call 0x23F2435
+	end 
+	nop 
+	setworldmapflag 0x10
+	callstd_if 0x0, 0xC
+	nop 
+	setptrbyte 0xE4, 0x12085AB9
+	.byte 0x40
+	nop 
+	.byte 0x19
+	setworldmapflag 0x0
+	nop 
+	nop 
+	nop 
+	.byte 0x19
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x3E

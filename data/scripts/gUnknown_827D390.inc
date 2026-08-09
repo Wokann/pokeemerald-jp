@@ -1,0 +1,118 @@
+	nop 
+	.byte 0x58
+	.byte 0x27
+	end 
+	.byte 0x58
+	gettime 
+	setobjectxy 0x208, 0x105, 0x200
+	nop 
+	nop 
+	nop 
+	call 0x533F200
+	return 
+	.byte 0x39
+	savebgm 0x810
+	end 
+	nop 
+	goto 0xC000E71B
+	.byte 0x3F
+	end 
+	nop 
+	end 
+	.byte 0xEC
+	.byte 0xEB
+	.byte 0x56
+	gotostd 0x82
+	return 
+	call_if 0x0, 0x1
+	call 0xEBEC0205
+	.byte 0x56
+	gotostd 0x82
+	return 
+	goto_if 0x0, 0x1
+	call 0xEBEC0205
+	.byte 0x56
+	gotostd 0x82
+	return 
+	setworldmapflag 0x100
+	nop 
+	nop 
+	nop 
+	call 0xEBEC0205
+	.byte 0x56
+	gotostd 0x82
+	return 
+	end 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0205
+	.byte 0x56
+	gotostd 0x82
+	return 
+	return 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	end 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	goto 0x100
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	goto_if 0x0, 0x1
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	end 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	end 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	setworldmapflag 0x100
+	nop 
+	nop 
+	nop 
+	call 0xEBEC0204
+	.byte 0x56
+	gotostd 0x82
+	return 
+	goto 0x100
+	nop 
+	call 0xF1030504
+	savebgm 0x810
+	end 
+	nop 
+	end 
+	.byte 0x58
+	gettime 
+	setobjectxy 0x208, 0x105, 0x400
+	nop 
+	call 0xF2000000
+	.byte 0x33
+	.byte 0x05
+	.byte 0x08

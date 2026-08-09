@@ -1,0 +1,9 @@
+	gettime 
+	initclock 0x241, 0x2
+	.byte 0x49
+	nop 
+	nop 
+	.byte 0x3D
+	playbgm 0x3F20, 0x2
+	end 
+	setworldmapflag 0x302

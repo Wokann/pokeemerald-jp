@@ -1,0 +1,31 @@
+	nop 
+	setstepcallback 0x27
+	.byte 0x19
+	.byte 0x7E
+	nop 
+	showcoinsbox 0x2, 0x8C
+	.byte 0x1D
+	setobjectxy 0x8208, 0x1404, 0x0
+	nop 
+	delay 0x0
+	nop 
+	goto 0xD4A3103
+	gotostd 0x5
+	goto 0x30001
+	nop 
+	nop 
+	goto 0x3000100
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x4, 0x2000100
+	nop 
+	nop 
+	nop 
+	returnram 
+	nop 
+	.byte 0x1E
+	checkpartymove 0xF80E
+	gotopostbattlescript 
+	delay 0x508
+	.byte 0x08

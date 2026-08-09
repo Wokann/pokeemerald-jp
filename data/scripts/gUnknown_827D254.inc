@@ -1,0 +1,76 @@
+	nop 
+	turnvobject 0x27, 0x0
+	.byte 0xE1
+	.byte 0x27
+	nop 
+	.byte 0x58
+	.byte 0x27
+	return 
+	.byte 0x99
+	multichoicedefault 0x11, 0x8, 0x5, 0x5, 0xAB
+	.byte 0x27
+	nop 
+	nop 
+	call 0x6C000400
+	.byte 0x7D
+	goto 0x15C3B503
+	gotostd 0x5
+	return 
+	nop 
+	nop 
+	end 
+	nop 
+	setworldmapflag 0x1C00
+	setmaplayoutindex 0xC000
+	returnram 
+	call 0xCC020804
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	nop 
+	nop 
+	end 
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	setworldmapflag 0x400
+	gotostd 0x2
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	end 
+	nop 
+	end 
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	return 
+	nop 
+	call 0x2CCC0208
+	setobjectxy 0x208, 0x2, 0x0
+	nop 
+	end 
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	setworldmapflag 0x400
+	gotostd 0x2
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	end 
+	nop 
+	end 
+	.byte 0xCC
+	initclock 0x857, 0x202
+	nop 
+	nop 
+	return 
+	nop 
+	.byte 0x05
+	.byte 0x08

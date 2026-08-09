@@ -1,0 +1,71 @@
+	nop 
+	drawbox 
+	.byte 0x27
+	end 
+	setvaddress 0x208571F
+	goto 0xFFF80000
+	setworldmapflag 0x3C00
+	nop 
+	nop 
+	nop 
+	end 
+	setvaddress 0x208571F
+	goto 0x0
+	setworldmapflag 0x3C00
+	nop 
+	setworldmapflag 0x200
+	setvaddress 0x208571F
+	goto 0x80000
+	setworldmapflag 0x3C00
+	nop 
+	end 
+	nop 
+	end 
+	setvaddress 0x208571F
+	goto 0x100000
+	setworldmapflag 0x3C00
+	nop 
+	return 
+	nop 
+	end 
+	setvaddress 0x208571F
+	goto 0x180000
+	setworldmapflag 0x3C00
+	nop 
+	call 0x1FB80200
+	setobjectxy 0x208, 0x5, 0x2000
+	nop 
+	setworldmapflag 0x3C00
+	nop 
+	nop 
+	nop 
+	call 0x871C05
+	.byte 0x3F
+	gotostd_if 0x4, 0x3
+	.byte 0x55
+	.byte 0x4B
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x40001
+	nop 
+	nop 
+	loadword 0x0, 0x1D040001
+	return 
+	.byte 0xB5
+	.byte 0x50
+	.byte 0x0D
+	gotostd 0x2
+	goto 0xC0001
+	goto_if 0x0, 0x50001
+	call 0x811907
+	.byte 0x3F
+	return 
+	fadedefaultbgm 
+	.byte 0x56
+	.byte 0x0D
+	gotostd 0x5
+	end 
+	setworldmapflag 0x800
+	nop 
+	.byte 0x05
+	.byte 0x08

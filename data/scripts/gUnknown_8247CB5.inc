@@ -1,0 +1,19 @@
+	.byte 0xFD
+	end 
+	.byte 0x16
+	gettime 
+	.byte 0x44
+	nop 
+	.byte 0x12
+	return 
+	returnram 
+	gettime 
+	dotimebasedevents 
+	nop 
+	setorcopyvar 0x223D, 0xD1F
+	.byte 0xFE
+	vgoto_if 0x9A, 0x9B07E60
+	.byte 0x50
+	setptrbyte 0x2, 0x609ABC00
+	.byte 0x7E
+	setdoorclosed 0x4523, 0xFF29

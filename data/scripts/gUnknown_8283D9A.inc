@@ -1,0 +1,192 @@
+	nop 
+	.byte 0xEF
+	.byte 0x27
+	nop 
+	fadescreen 0x27
+	gotostd_if 0x1, 0x28
+	setworldmapflag 0xC0C
+	gotostd 0x2
+	.byte 0x58
+	gettime 
+	setobjectxy 0x8, 0x105, 0x200
+	nop 
+	nop 
+	nop 
+	goto 0x5000000
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0xA, 0x2000800
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x64
+	nop 
+	.byte 0x19
+	messageautoscroll 0x504C000
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x14, 0xFEFFF800
+	.byte 0xFF
+	nop 
+	nop 
+	setworldmapflag 0x5F00
+	nop 
+	.byte 0x19
+	messageautoscroll 0x504D500
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x1E, 0xFC000800
+	.byte 0xFF
+	nop 
+	nop 
+	nop 
+	nop 
+	faceplayer 
+	nop 
+	.byte 0x19
+	messageautoscroll 0x504EA00
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x28, 0x4FFF800
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x5500
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5040000
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x32, 0x800
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x55
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5041500
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x3C, 0xFEFFF800
+	.byte 0xFF
+	nop 
+	nop 
+	setworldmapflag 0x5500
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5042A00
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x4B, 0x800
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x55
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5043F00
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x55, 0x6001000
+	nop 
+	nop 
+	nop 
+	return 
+	nop 
+	.byte 0x50
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5043F00
+	end 
+	checkitemtype 0x56E1
+	gotostd 0x2
+	goto_if 0x55, 0xFAFFF000
+	.byte 0xFF
+	nop 
+	nop 
+	end 
+	nop 
+	.byte 0x4B
+	nop 
+	.byte 0x19
+	messageautoscroll 0x5043F00
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0xFFF6FFF6
+	setworldmapflag 0x300
+	nop 
+	.byte 0x19
+	pokemart 0x31033F00
+	checkpcitem 0x80D, 0x503
+	setworldmapflag 0x800
+	nop 
+	nop 
+	nop 
+	copylocal 0x0, 0x1
+	nop 
+	call 0x2F3C0203
+	setobjectxy 0x208, 0xA04, 0x800
+	nop 
+	setworldmapflag 0x300
+	nop 
+	.byte 0x19
+	pokemart 0x3043F00
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0xFFFD000A
+	setworldmapflag 0x200
+	nop 
+	.byte 0x19
+	pokemart 0x3043F00
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0x1FFFD
+	setworldmapflag 0x200
+	nop 
+	.byte 0x19
+	pokemart 0x2043F00
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0x1FFF6
+	setworldmapflag 0x100
+	nop 
+	.byte 0x19
+	pokemart 0x2043F00
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0xA0000
+	setworldmapflag 0x100
+	nop 
+	.byte 0x19
+	pokemart 0x2053F00
+	.byte 0x58
+	gettime 
+	setobjectxy 0x8, 0x105, 0x200
+	nop 
+	goto 0x0
+	nop 
+	goto 0x80D010B

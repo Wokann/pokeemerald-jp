@@ -1,0 +1,3 @@
+	call 0x8242966
+	goto 0x82428FC
+	end 

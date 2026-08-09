@@ -1,0 +1,4 @@
+	message 0x0
+	waitmessage 
+	yesnobox 0x14, 0x8
+	return 

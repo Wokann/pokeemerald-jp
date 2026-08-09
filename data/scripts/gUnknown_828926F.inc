@@ -1,0 +1,10 @@
+	setptrbyte 0x86, 0x12085ABA
+	.byte 0x40
+	nop 
+	checkitemspace 0x2801, 0x241
+	end 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x3F

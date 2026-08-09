@@ -1,0 +1,30 @@
+	nop 
+	fadescreen 0x27
+	nop 
+	faceplayer 
+	.byte 0x27
+	nop 
+	checkpcitem 0xA27, 0x2803
+	setworldmapflag 0xC0C
+	gotostd 0x3
+	waitdooranim 
+	addvar 0x811, 0x2
+	goto 0xD5C0D03
+	gotostd 0x2
+	goto 0x10000
+	.byte 0x1E
+	nop 
+	setworldmapflag 0x0
+	nop 
+	end 
+	.byte 0x3C
+	playse 0x857
+	call 0x4
+	nop 
+	setworldmapflag 0x200
+	nop 
+	.byte 0x19
+	choosecontestmon 
+	nop 
+	.byte 0x3F
+	goto 0x80D030B

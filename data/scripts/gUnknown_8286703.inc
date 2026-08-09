@@ -1,0 +1,105 @@
+	nop 
+	end 
+	delay 0xA
+	returnram 
+	returnram 
+	call 0xF190004
+	nop 
+	.byte 0x3F
+	end 
+	.byte 0x3C
+	.byte 0xD5
+	faceplayer 
+	gotostd 0x80
+	call 0x200000
+	compare_local_to_value 0x0, 0x1E
+	nop 
+	call 0xF1904
+	.byte 0x3F
+	end 
+	.byte 0x3C
+	.byte 0xD5
+	faceplayer 
+	gotostd 0x7F
+	call 0xC0002
+	copylocal 0x0, 0x1E
+	nop 
+	call 0xF190C
+	.byte 0x3F
+	end 
+	.byte 0x3C
+	.byte 0xD5
+	faceplayer 
+	gotostd 0x7E
+	call 0xFFE40002
+	call 0x4001E00
+	returnram 
+	.byte 0x19
+	loadword 0x0, 0xD53C023F
+	faceplayer 
+	gotostd 0x7C
+	call 0xE0002
+	.byte 0xEC
+	.byte 0xFF
+	.byte 0x1E
+	nop 
+	call 0xF1904
+	.byte 0x3F
+	return 
+	.byte 0x39
+	.byte 0x3F
+	.byte 0x11
+	gotostd 0x2
+	setworldmapflag 0x2
+	end 
+	.byte 0x3C
+	.byte 0xD5
+	faceplayer 
+	gotostd 0x7B
+	call 0x40003
+	call 0x4001E00
+	setmysteryeventstatus 0x19
+	loadword 0x0, 0xD53C023F
+	faceplayer 
+	gotostd 0x7A
+	call 0xFFF20003
+	.byte 0x12
+	nop 
+	gettime 
+	nop 
+	call 0xD53C0200
+	faceplayer 
+	gotostd 0x79
+	call 0xE0003
+	.byte 0xF2
+	.byte 0xFF
+	gettime 
+	nop 
+	call 0xD53C0200
+	faceplayer 
+	gotostd 0x78
+	call 0xFFF40003
+	.byte 0xF6
+	.byte 0xFF
+	gettime 
+	nop 
+	call 0xD53C0200
+	faceplayer 
+	gotostd 0x77
+	call 0xE0003
+	setmysteryeventstatus 0x0
+	gettime 
+	nop 
+	call 0xD53C0200
+	faceplayer 
+	gotostd 0x76
+	call 0x3
+	nop 
+	nop 
+	gettime 
+	nop 
+	goto 0x2B000B
+	.byte 0x04
+	nop 
+	.byte 0x0D
+	.byte 0x08

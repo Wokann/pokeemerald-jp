@@ -1,0 +1,23 @@
+	nop 
+	.byte 0x26
+	delay 0xA
+	returnram 
+	nop 
+	loadbyte 0x4, 0x1
+	end 
+	setvaddress 0x2085AD7
+	nop 
+	compare_local_to_value 0x98, 0x0
+	showcoinsbox 0x18, 0x3
+	goto 0xA746103
+	gotostd 0x5
+	goto 0x7FFF0000
+	returnram 
+	nop 
+	end 
+	nop 
+	setworldmapflag 0x1900
+	fadescreenspeed 0x0, 0xC0
+	goto 0x4000B0D
+	.byte 0x01
+	.byte 0x08

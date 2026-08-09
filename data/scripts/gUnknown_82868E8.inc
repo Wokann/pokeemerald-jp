@@ -1,0 +1,33 @@
+	nop 
+	.byte 0xF0
+	.byte 0x27
+	return 
+	.byte 0xE5
+	pokemart 0x20811
+	setmysteryeventstatus 0x2A
+	releaseall 
+	delay 0x408
+	setworldmapflag 0x3D03
+	setobjectxy 0x80D, 0x502, 0x0
+	goto 0x4140000
+	nop 
+	setworldmapflag 0x500
+	return 
+	copybyte 0x2081187, 0x72100
+	nop 
+	.byte 0x26
+	lockall 
+	delay 0x1308
+	fadenewbgm 0x2869
+	gotostd 0x5
+	setmysteryeventstatus 0x4A
+	releaseall 
+	delay 0x808
+	.byte 0x19
+	pokemartdecoration 0x2D03C000
+	.byte 0xF8
+	copybyte 0x13000208, 0x828691F
+	.byte 0x19
+	pokemartdecoration 0xFD03C000
+	.byte 0xFE
+	copybyte 0x13000208, 0x828691F

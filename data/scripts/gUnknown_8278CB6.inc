@@ -1,0 +1,31 @@
+	nop 
+	setrespawn 0x27
+	fadescreen 0x27
+	gotostd_if 0x1, 0xC
+	returnram 
+	gotostd 0x19
+	pokemartdecoration 0x44023F00
+	compare_local_to_local 0x57, 0x8
+	return 
+	return 
+	nop 
+	nop 
+	.byte 0xE0
+	.byte 0xFF
+	loadword 0x0, 0x3C021304
+	playse 0x857
+	end 
+	call 0xFFF80000
+	setworldmapflag 0x100
+	nop 
+	return 
+	playfanfare 0xD4A
+	gotostd 0x2
+	goto 0x1
+	call 0x1000900
+	nop 
+	.byte 0x19
+	choosecontestmon 
+	nop 
+	.byte 0x3F
+	goto 0x80D010B

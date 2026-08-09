@@ -1,0 +1,17 @@
+	call 0x9070605
+	gotostd_if 0xE, 0x5C
+	nop 
+	.byte 0x3A
+	callstd_if 0x0, 0xC
+	nop 
+	.byte 0x0D
+	.byte 0x12
+	.byte 0x40
+	nop 
+	loadword 0x12, 0x19150040
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 

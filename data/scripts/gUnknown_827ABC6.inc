@@ -1,0 +1,58 @@
+	nop 
+	setrespawn 0x27
+	fadescreen 0x27
+	gotostd_if 0x1, 0xC
+	returnram 
+	gotostd 0x3
+	.byte 0xB5
+	.byte 0x50
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x120000
+	goto_if 0x0, 0x40001
+	.byte 0x19
+	pokemartdecoration 0x604C000
+	.byte 0x19
+	pokemartdecoration 0x205C000
+	checkplayergender 
+	.byte 0xA9
+	.byte 0x55
+	gotostd 0x2
+	goto 0x140000
+	nop 
+	nop 
+	nop 
+	nop 
+	call 0x1AC40200
+	setobjectxy 0x208, 0xE806, 0xFF
+	nop 
+	waitse 
+	nop 
+	gotostd_if 0x0, 0xA0
+	nop 
+	nop 
+	nop 
+	call 0x7B1905
+	.byte 0x3F
+	end 
+	.byte 0x3C
+	playse 0x857
+	end 
+	call 0xFFF8
+	setworldmapflag 0x200
+	nop 
+	return 
+	playfanfare 0xD4A
+	gotostd 0x2
+	goto 0x50001
+	nop 
+	nop 
+	goto_if 0x0, 0x2050001
+	pokemartdecoration2 0x20855A9
+	return 
+	nop 
+	nop 
+	setworldmapflag 0x800
+	nop 
+	callstd_if 0x1, 0xD
+	.byte 0x08

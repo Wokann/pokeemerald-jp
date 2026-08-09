@@ -1,0 +1,25 @@
+	nop 
+	compare_local_to_value 0x28, 0x0
+	setweather 0xA27
+	return 
+	returnram 
+	returnram 
+	gotostd 0x3
+	fadedefaultbgm 
+	playslotmachine 0x810
+	goto 0xA21900
+	showcoinsbox 0x4, 0x2C
+	.byte 0x19
+	.byte 0xE9
+	nop 
+	showcoinsbox 0x5, 0x4
+	loadbyte 0x3, 0x19
+	contestlinktransfer 
+	loadbyte 0x8, 0x5
+	nop 
+	.byte 0x19
+	doweather 
+	nop 
+	.byte 0x3F
+	callstd_if 0x3, 0xD
+	.byte 0x08

@@ -1,0 +1,4 @@
+	playse 0xC300
+	nop 
+	.byte 0x40
+	setworldmapflag 0xFFFF

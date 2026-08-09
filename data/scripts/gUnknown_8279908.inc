@@ -1,0 +1,34 @@
+	nop 
+	.byte 0xFA
+	.byte 0x27
+	compare_local_to_value 0xDC, 0x0
+	showcoinsbox 0x12, 0x3
+	return 
+	.byte 0xED
+	.byte 0x50
+	.byte 0x11
+	gotostd 0x5
+	end 
+	nop 
+	nop 
+	nop 
+	nop 
+	return 
+	showmonpic 0x15B2, 0x8, 0x5
+	nop 
+	goto 0x5AD14002
+	gotostd 0x2
+	call 0x60000
+	nop 
+	nop 
+	setworldmapflag 0x500
+	return 
+	.byte 0xED
+	.byte 0x50
+	.byte 0x11
+	gotostd 0x5
+	end 
+	nop 
+	nop 
+	setworldmapflag 0x500
+	.byte 0x08

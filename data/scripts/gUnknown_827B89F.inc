@@ -1,0 +1,9 @@
+	.byte 0x19
+	showcoinsbox 0x0, 0xC0
+	return 
+	.byte 0xE5
+	checkpartymove 0x811
+	end 
+	nop 
+	.byte 0x05
+	.byte 0x08

@@ -1,0 +1,35 @@
+	return 
+	dotimebasedevents 
+	turnobject 0x811, 0x5
+	return 
+	goto 0x32000A00
+	nop 
+	return 
+	dotimebasedevents 
+	turnobject 0x811, 0x5
+	return 
+	call 0x32000A00
+	nop 
+	.byte 0x19
+	.byte 0xEA
+	nop 
+	nop 
+	call 0x2E70020A
+	setobjectxy 0x208, 0x107, 0x300
+	nop 
+	setworldmapflag 0x0
+	nop 
+	setmysteryeventstatus 0x0
+	.byte 0xFF
+	.byte 0x7F
+	setmysteryeventstatus 0x0
+	call 0x2E700210
+	setobjectxy 0x208, 0x107, 0x300
+	nop 
+	setworldmapflag 0x0
+	nop 
+	setmysteryeventstatus 0x0
+	.byte 0xFF
+	.byte 0x7F
+	setmysteryeventstatus 0x0
+	.byte 0x08

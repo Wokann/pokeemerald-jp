@@ -1,0 +1,9 @@
+	.byte 0x16
+	call 0x16000080
+	goto 0x25000080
+	.byte 0x12
+	nop 
+	.byte 0x16
+	playslotmachine 0x140
+	nop 
+	end 

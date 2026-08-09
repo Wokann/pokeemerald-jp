@@ -1,0 +1,12 @@
+	.byte 0x45
+	setworldmapflag 0x7
+	nop 
+	nop 
+	nop 
+	loadbyte 0x2B, 0x1
+	.byte 0x12
+	.byte 0x40
+	nop 
+	lock 
+	.byte 0x01
+	.byte 0x3E

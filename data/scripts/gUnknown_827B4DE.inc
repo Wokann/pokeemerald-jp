@@ -1,0 +1,11 @@
+	returnram 
+	gotostd_if 0x8, 0x3
+	waitdooranim 
+	checkdecorspace 0x810
+	end 
+	nop 
+	compare_local_to_value 0xCC, 0x0
+	showcoinsbox 0x22, 0x3
+	.byte 0x05
+	.byte 0x0D
+	.byte 0x08

@@ -1,0 +1,7 @@
+	goto 0x822D60B
+	setobjectxyperm 0x645D, 0xA072, 0xAE5E
+	choosecontestmon 
+	nop 
+	.byte 0x44
+	.byte 0x0D
+	.byte 0xFF

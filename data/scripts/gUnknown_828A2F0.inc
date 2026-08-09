@@ -1,0 +1,10 @@
+	checkflag 0x9004
+	initclock 0x202, 0x200
+	nop 
+	nop 
+	end 
+	doweather 
+	delay 0x1008
+	setworldmapflag 0xEF01
+	loadbyte 0x2, 0x1
+	.byte 0xEF

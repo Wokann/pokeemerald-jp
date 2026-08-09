@@ -1,0 +1,7 @@
+	return 
+	setworldmapflag 0x1733
+	gotostd 0x5
+	nop 
+	call 0xF5261300
+	.byte 0x27
+	.byte 0x08

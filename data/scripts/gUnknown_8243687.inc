@@ -1,0 +1,30 @@
+	loadword 0x0, 0x8264313
+	callstd 0x3
+	end 
+	goto 0x11412314
+	copylocal 0x0, 0x7A
+	setrespawn 0x64AE
+	dotimebasedevents 
+	.byte 0xFE
+	.byte 0x1F
+	.byte 0x3F
+	.byte 0x1F
+	.byte 0x0D
+	goto_if 0xAC, 0x19101FFF
+	.byte 0xFE
+	.byte 0x3B
+	delay 0x326
+	dotimebasedevents 
+	nop 
+	goto 0xC00111F
+	setptrbyte 0x1F, 0xFDFFAB0D
+	setworldmapflag 0xFE1A
+	messageautoscroll 0x197E5A5F
+	nop 
+	dotrainerbattle 
+	.byte 0x52
+	checkplayergender 
+	settrainerflag 0x2D
+	end 
+	clearflag 0xAB10
+	.byte 0xFF

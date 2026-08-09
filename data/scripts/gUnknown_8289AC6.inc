@@ -1,0 +1,14 @@
+	end 
+	.byte 0x39
+	.byte 0x20
+	nop 
+	loadbyte 0x4E, 0x1
+	.byte 0x12
+	.byte 0x40
+	nop 
+	fadedefaultbgm 
+	gotonative 0x2023F
+	.byte 0x04
+	nop 
+	nop 
+	.byte 0x3C

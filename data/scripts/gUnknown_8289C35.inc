@@ -1,0 +1,27 @@
+	setflag 0xDB01
+	.byte 0x3F
+	end 
+	end 
+	call 0x8289C4F
+	gettime 
+	.byte 0xD6
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	hidemonpic 
+	setworldmapflag 0x2E18
+	.byte 0xDB
+	.byte 0x3F
+	end 
+	end 
+	call 0x5ABAA613
+	gotostd 0x12
+	.byte 0x40
+	nop 
+	gettime 
+	initclock 0x241, 0x2
+	.byte 0x49
+	end 
+	.byte 0x10
+	.byte 0x3D

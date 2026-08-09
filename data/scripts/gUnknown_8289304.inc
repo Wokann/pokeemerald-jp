@@ -1,0 +1,36 @@
+	nop 
+	gettime 
+	.byte 0xD9
+	.byte 0x3F
+	end 
+	end 
+	returnram 
+	subvar 0x1001, 0x79
+	.byte 0x12
+	.byte 0x40
+	nop 
+	setworldmapflag 0x6FEB
+	delay 0x8
+	nop 
+	goto_if 0x36, 0x2023F20
+	goto_if 0x31, 0x2023E94
+	compare_local_to_value 0x41, 0x2
+	end 
+	call 0x41302E69
+	end 
+	end 
+	setworldmapflag 0xA09
+	setmysteryeventstatus 0x5C
+	nop 
+	.byte 0x3A
+	callstd_if 0x0, 0xC
+	nop 
+	loadword 0x12, 0x190040
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	delay 0x6FD6
+	.byte 0x28
+	.byte 0x08

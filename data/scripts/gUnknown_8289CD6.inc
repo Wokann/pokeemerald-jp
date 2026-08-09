@@ -1,0 +1,3 @@
+	.byte 0x41
+	fadescreenswapbuffers 0x9C
+	delay 0x3E08

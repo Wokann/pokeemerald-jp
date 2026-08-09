@@ -1,0 +1,73 @@
+	nop 
+	.byte 0x45
+	.byte 0x27
+	gotostd_if 0x0, 0x28
+	nop 
+	returnram 
+	gotostd 0x8
+	return 
+	.byte 0xD9
+	choosecontestmon 
+	copybyte 0x20208, 0x3000200
+	.byte 0xE9
+	.byte 0x58
+	.byte 0x0D
+	gotostd 0x5
+	goto 0xFFFBFFFB
+	gotostd_if 0x0, 0x0
+	nop 
+	setworldmapflag 0xE00
+	setobjectxy 0x27E4, 0x408, 0x314
+	fadedefaultbgm 
+	.byte 0x56
+	.byte 0x0D
+	gotostd 0x5
+	end 
+	setworldmapflag 0x200
+	nop 
+	goto 0x50D000B
+	return 
+	.byte 0xB5
+	random 0x815
+	goto 0x2080500
+	fadescreenswapbuffers 0xD5
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0xF800, 0xFF
+	nop 
+	end 
+	fadescreenswapbuffers 0xD5
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0x0, 0x200
+	nop 
+	end 
+	fadescreenswapbuffers 0xD5
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0x800, 0x100
+	nop 
+	call 0xD5DC020F
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0xF800, 0xFF
+	nop 
+	end 
+	fadescreenswapbuffers 0xD5
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0x0, 0x200
+	nop 
+	end 
+	fadescreenswapbuffers 0xD5
+	faceplayer 
+	gotostd 0x2
+	return 
+	subvar 0x800, 0x100
+	nop 
+	.byte 0x0F

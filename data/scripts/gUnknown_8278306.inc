@@ -1,0 +1,134 @@
+	nop 
+	fadescreen 0x27
+	.byte 0x19
+	.byte 0xCE
+	nop 
+	showcoinsbox 0x2, 0x70
+	gettime 
+	setobjectxy 0x208, 0x207, 0x400
+	nop 
+	end 
+	nop 
+	.byte 0xFF
+	.byte 0x7F
+	gotostd_if 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	goto 0xC1190A04
+	nop 
+	showcoinsbox 0x1D, 0xC1
+	nop 
+	showcoinsbox 0x8, 0x3
+	.byte 0xB5
+	.byte 0x50
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x120000
+	goto_if 0x0, 0x40002
+	goto 0x572E5802
+	gotostd 0x2
+	goto 0x1
+	loadbyte 0x0, 0x10
+	nop 
+	.byte 0xFF
+	.byte 0x7F
+	end 
+	checkplayergender 
+	.byte 0xA9
+	.byte 0x55
+	gotostd 0x2
+	goto 0x140000
+	nop 
+	nop 
+	nop 
+	nop 
+	call 0x5030400
+	.byte 0x19
+	choosecontestmon 
+	nop 
+	.byte 0x3F
+	end 
+	.byte 0x3C
+	playse 0x857
+	.byte 0x84
+	call 0xFFF6
+	setworldmapflag 0x0
+	nop 
+	end 
+	checkplayergender 
+	.byte 0xA9
+	.byte 0x55
+	gotostd 0x2
+	goto 0xFFE00001
+	nop 
+	nop 
+	nop 
+	nop 
+	return 
+	nop 
+	goto 0xD59B903
+	gotostd 0x2
+	call 0xFF000008
+	nop 
+	nop 
+	nop 
+	nop 
+	return 
+	vgoto 0x2080D59
+	call 0xFF000008
+	setworldmapflag 0x0
+	nop 
+	return 
+	callstd 0x4D
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x40000
+	nop 
+	nop 
+	returnram 
+	nop 
+	setworldmapflag 0x300
+	callstd 0x4D
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x40001
+	nop 
+	nop 
+	returnram 
+	nop 
+	setworldmapflag 0x200
+	.byte 0x58
+	gettime 
+	setobjectxy 0x208, 0x105, 0x200
+	nop 
+	loadbyte 0x0, 0x0
+	nop 
+	.byte 0xFF
+	.byte 0x7F
+	goto 0xD59B903
+	gotostd 0x2
+	call 0xFF000008
+	nop 
+	nop 
+	setworldmapflag 0x300
+	vgoto 0x2080D59
+	call 0xFF000008
+	setworldmapflag 0x100
+	nop 
+	goto 0x55A98802
+	gotostd 0x2
+	return 
+	nop 
+	nop 
+	nop 
+	nop 
+	goto 0x2030400
+	pokemartdecoration2 0x20855A9
+	return 
+	setworldmapflag 0x0
+	nop 
+	.byte 0x07
+	nop 
+	.byte 0x05
+	.byte 0x08

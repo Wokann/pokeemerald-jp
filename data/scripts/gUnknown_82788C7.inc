@@ -1,0 +1,42 @@
+	nop 
+	setptrbyte 0x27, 0xA279700
+	return 
+	delay 0xC01
+	returnram 
+	gotostd 0xE
+	.byte 0xFE
+	pokemartdecoration2 0xFE0E0827
+	pokemartdecoration2 0xFE0E0827
+	pokemartdecoration2 0x31030827
+	checkpcitem 0x80D, 0x502
+	setworldmapflag 0x300
+	nop 
+	nop 
+	nop 
+	gotostd_if 0x0, 0x1
+	nop 
+	setmysteryeventstatus 0x16
+	playslotmachine 0x827
+	goto 0x80D030B
+	.byte 0x19
+	checkplayergender 
+	nop 
+	showcoinsbox 0x2, 0x7C
+	.byte 0xEF
+	.byte 0x56
+	gotostd 0x82
+	goto 0x10
+	nop 
+	nop 
+	nop 
+	nop 
+	loadword 0x0, 0x20F0404
+	.byte 0x3C
+	playse 0x857
+	.byte 0x83
+	call 0x0
+	setworldmapflag 0x200
+	nop 
+	.byte 0x04
+	.byte 0x04
+	.byte 0x0F

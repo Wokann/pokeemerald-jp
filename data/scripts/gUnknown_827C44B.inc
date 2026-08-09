@@ -1,0 +1,62 @@
+	nop 
+	call_if 0x28, 0x15EB8103
+	gotostd 0x5
+	nop 
+	end 
+	.byte 0xB4
+	.byte 0xD6
+	faceplayer 
+	gotostd 0x28
+	setworldmapflag 0x0
+	end 
+	.byte 0xB4
+	.byte 0xD6
+	faceplayer 
+	gotostd 0x28
+	setworldmapflag 0x1
+	call 0xDE1913
+	nop 
+	return 
+	.byte 0x55
+	.byte 0x4B
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x20002
+	nop 
+	nop 
+	goto 0x4000100
+	setmysteryeventstatus 0x19
+	.byte 0xDE
+	nop 
+	nop 
+	return 
+	.byte 0x55
+	.byte 0x4B
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x20002
+	nop 
+	nop 
+	goto 0x4000100
+	copylocal 0x19, 0xDE
+	nop 
+	nop 
+	return 
+	.byte 0x55
+	.byte 0x4B
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x30002
+	nop 
+	nop 
+	gotostd_if 0x0, 0x1
+	nop 
+	return 
+	settrainerflag 0xA74
+	gotostd 0x2
+	goto 0x3FF0002
+	returnram 
+	nop 
+	setworldmapflag 0x100
+	nop 
+	.byte 0x08

@@ -1,0 +1,82 @@
+	loadbyte 0xA2, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	setflag 0xDB01
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	playslotmachine 0x2895
+	gotostd 0x1
+	.byte 0xE0
+	.byte 0x95
+	delay 0xF808
+	nop 
+	delay 0x9590
+	delay 0x108
+	.byte 0xE0
+	.byte 0x95
+	delay 0x6108
+	setworldmapflag 0x2908
+	setworldmapflag 0x3FDB
+	end 
+	end 
+	nop 
+	.byte 0xA8
+	.byte 0x95
+	delay 0x4508
+	setworldmapflag 0x12
+	nop 
+	nop 
+	nop 
+	delay 0x95AF
+	delay 0x4508
+	setworldmapflag 0x13
+	nop 
+	nop 
+	nop 
+	setmysteryeventstatus 0x5C
+	nop 
+	.byte 0x3A
+	callstd_if 0x0, 0xC
+	nop 
+	loadword 0x12, 0x190040
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	gotonative 0x82895C7
+	gettime 
+	initclock 0x241, 0x2
+	.byte 0x49
+	setworldmapflag 0x2E00
+	initclock 0x241, 0xB02
+	.byte 0x49
+	end 
+	setmysteryeventstatus 0x2E
+	.byte 0x20
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	.byte 0x3E
+	.byte 0x39
+	.byte 0x20
+	nop 
+	gettime 
+	.byte 0x20
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	playbgm 0x3F20, 0x2
+	end 
+	.byte 0x20
+	loadword 0x12, 0x202E0040
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	.byte 0x3E

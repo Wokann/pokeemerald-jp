@@ -1,0 +1,114 @@
+	nop 
+	.byte 0x1E
+	delay 0x30A
+	setflag 0xCA19
+	nop 
+	.byte 0x3F
+	call 0x1F6C0200
+	setobjectxy 0x8008, 0x8, 0xF000
+	.byte 0xFF
+	.byte 0x40
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x400
+	goto_if 0x2, 0x8571F6C
+	.byte 0x80
+	gotostd 0x0
+	nop 
+	.byte 0xF0
+	.byte 0xFF
+	.byte 0x20
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x200
+	release 
+	.byte 0x1F
+	setobjectxy 0x8008, 0x8, 0xF000
+	.byte 0xFF
+	nop 
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x400
+	goto_if 0x2, 0x8571F6C
+	.byte 0x80
+	gotostd 0x0
+	nop 
+	.byte 0xF0
+	.byte 0xFF
+	.byte 0xE0
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x200
+	release 
+	.byte 0x1F
+	setobjectxy 0x8008, 0x8, 0xF000
+	.byte 0xFF
+	.byte 0x80
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x400
+	goto_if 0x2, 0x8571F6C
+	.byte 0x80
+	gotostd 0x0
+	nop 
+	.byte 0xF0
+	.byte 0xFF
+	showcoinsbox 0x0, 0x2
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x200
+	release 
+	.byte 0x1F
+	setobjectxy 0x8008, 0x8, 0xF000
+	.byte 0xFF
+	checkplayergender 
+	nop 
+	end 
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x400
+	goto_if 0x2, 0x8571F6C
+	.byte 0x80
+	gotostd 0x0
+	nop 
+	.byte 0xF0
+	.byte 0xFF
+	checktrainerflag 0x200
+	nop 
+	closemessage 
+	nop 
+	delay 0x202C
+	nop 
+	setworldmapflag 0x500
+	callstd_if 0x3, 0x8

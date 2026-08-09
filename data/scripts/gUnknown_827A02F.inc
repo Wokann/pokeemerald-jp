@@ -1,0 +1,253 @@
+	nop 
+	fadescreen 0x27
+	nop 
+	compare_local_to_local 0x27, 0x4
+	nop 
+	return 
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x3, 0x1FFE100
+	nop 
+	goto 0xFF000500
+	turnobject 0x7719, 0x0
+	showcoinsbox 0x2, 0x30
+	setptrbyte 0x57, 0x20070008
+	nop 
+	subvar 0xBE00, 0xC00
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0x13300200
+	setobjectxy 0x8, 0x5007, 0x1800
+	nop 
+	.byte 0x16
+	nop 
+	returnram 
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	end 
+	waitse 
+	setptrbyte 0x57, 0x9C070008
+	nop 
+	subvar 0x7900, 0xD00
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x100
+	nop 
+	call 0x62550300
+	.byte 0x11
+	gotostd 0x2
+	goto_if 0x3, 0x1FFE100
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0xFF
+	turnobject 0xA04, 0x3
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x3, 0x1FFE100
+	nop 
+	goto 0xFF000500
+	turnobject 0x7719, 0x0
+	showcoinsbox 0x2, 0x30
+	setptrbyte 0x57, 0x64070008
+	nop 
+	subvar 0x3C00, 0xA00
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	end 
+	waitse 
+	setptrbyte 0x57, 0xAA070008
+	nop 
+	subvar 0x2A00, 0xB00
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x100
+	nop 
+	call 0x13300200
+	setobjectxy 0x8, 0xEE07, 0x1800
+	nop 
+	resetweather 
+	nop 
+	gotostd_if 0x0, 0x0
+	nop 
+	setworldmapflag 0x100
+	nop 
+	call 0x62550300
+	.byte 0x11
+	gotostd 0x2
+	goto_if 0x3, 0x1FFE100
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0xFF
+	turnobject 0x1404, 0x3
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x3, 0x1FFE100
+	nop 
+	call_if 0x0, 0x5BFF0007
+	.byte 0x19
+	.byte 0x77
+	nop 
+	showcoinsbox 0x2, 0xDC
+	setptrbyte 0x57, 0x80408
+	nop 
+	nop 
+	nop 
+	.byte 0x20
+	nop 
+	returnram 
+	nop 
+	nop 
+	nop 
+	copylocal 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	.byte 0x20
+	nop 
+	returnram 
+	nop 
+	.byte 0x40
+	nop 
+	copylocal 0x0, 0x1
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	.byte 0x20
+	nop 
+	returnram 
+	nop 
+	.byte 0x80
+	nop 
+	copylocal 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	.byte 0x20
+	nop 
+	returnram 
+	nop 
+	showcoinsbox 0x0, 0x14
+	nop 
+	end 
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	loadbyte 0x0, 0xC
+	nop 
+	.byte 0x20
+	nop 
+	copylocal 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	loadbyte 0x0, 0xC
+	nop 
+	checktrainerflag 0x1400
+	nop 
+	setworldmapflag 0x0
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	loadbyte 0x0, 0xC
+	nop 
+	checkplayergender 
+	nop 
+	copylocal 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	end 
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
+	nop 
+	loadbyte 0x0, 0xC
+	nop 
+	.byte 0xE0
+	nop 
+	copylocal 0x0, 0x2
+	nop 
+	nop 
+	nop 
+	call 0x55030504
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x3, 0x1FFE100
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0xFF
+	turnobject 0x5802, 0xA9
+	.byte 0x55
+	gotostd 0x2
+	end 
+	call 0x4000400
+	call 0x3F00D719
+	end 
+	.byte 0x3C
+	playse 0x857
+	.byte 0x82
+	call 0x0
+	setworldmapflag 0x200
+	nop 
+	return 
+	playfanfare 0xD4A
+	gotostd 0x2
+	goto 0x30001
+	nop 
+	nop 
+	goto_if 0x0, 0x3050001
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x4, 0x2FFE100
+	nop 
+	nop 
+	nop 
+	goto_if 0x0, 0x710E5BFF
+	settrainerflag 0x828
+	.byte 0x05
+	.byte 0x08

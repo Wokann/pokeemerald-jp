@@ -1,0 +1,67 @@
+	nop 
+	fadescreen 0x27
+	gotostd_if 0x3, 0xC
+	returnram 
+	gotostd 0x3
+	.byte 0xD5
+	.byte 0x54
+	.byte 0x0D
+	gotostd 0x5
+	call_if 0x0, 0x8FFE800
+	nop 
+	addvar 0xA00, 0x2800
+	nop 
+	gotostd_if 0x0, 0x4
+	callnative 0x572E7002
+	gotostd 0x2
+	call_if 0x1F, 0x1000300
+	nop 
+	nop 
+	nop 
+	gotostd_if 0x0, 0x0
+	nop 
+	nop 
+	nop 
+	end 
+	.byte 0x3C
+	playse 0x857
+	call 0xFFF604
+	nop 
+	setworldmapflag 0x0
+	nop 
+	.byte 0x19
+	choosecontestmon 
+	nop 
+	.byte 0x3F
+	call 0xA9A00201
+	.byte 0x55
+	gotostd 0x2
+	goto 0xFFF00001
+	nop 
+	nop 
+	nop 
+	nop 
+	call 0x9030500
+	checkdecor 0x80D
+	end 
+	goto 0x40001
+	nop 
+	nop 
+	returnram 
+	nop 
+	setworldmapflag 0x500
+	call 0xA9880202
+	.byte 0x55
+	gotostd 0x2
+	return 
+	nop 
+	nop 
+	nop 
+	nop 
+	goto 0x2030400
+	pokemartdecoration2 0x20855A9
+	return 
+	setworldmapflag 0x0
+	nop 
+	call_if 0x0, 0xD030B05
+	.byte 0x08

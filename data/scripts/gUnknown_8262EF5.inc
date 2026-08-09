@@ -1,0 +1,12 @@
+	copybyte 0x61506, 0x6000202
+	gettime 
+	.byte 0x3D
+	nop 
+	.byte 0x41
+	copybyte 0x190AFEAB, 0x3361100
+	returnram 
+	.byte 0x44
+	nop 
+	fadeoutbgm 0x2E
+	checkitemspace 0x1350, 0x800
+	clearflag 0xFF26

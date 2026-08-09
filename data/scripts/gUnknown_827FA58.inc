@@ -1,0 +1,24 @@
+	nop 
+	playse 0x27
+	.byte 0x41
+	.byte 0x27
+	return 
+	.byte 0x55
+	cleartrainerflag 0x811
+	end 
+	goto_if 0x2, 0x2000200
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0xFB
+	.byte 0x4B
+	.byte 0x19
+	startcontest 
+	nop 
+	showcoinsbox 0xE, 0x3B
+	gotopostbattlescript 
+	delay 0x508
+	setmysteryeventstatus 0x66
+	gotopostbattlescript 
+	delay 0x508
+	.byte 0x08

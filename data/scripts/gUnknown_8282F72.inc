@@ -1,0 +1,162 @@
+	nop 
+	.byte 0xFD
+	.byte 0x27
+	nop 
+	fadescreen 0x27
+	.byte 0x19
+	fadescreenspeed 0x0, 0xC0
+	return 
+	.byte 0xF1
+	.byte 0xB5
+	copybyte 0x3000508, 0x80D4B55
+	end 
+	goto 0x10000
+	nop 
+	nop 
+	gotostd 0x0
+	end 
+	nop 
+	call 0xE8192D
+	showcoinsbox 0x4, 0x3
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	nop 
+	nop 
+	returnram 
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	.byte 0x20
+	nop 
+	returnram 
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	.byte 0x40
+	nop 
+	returnram 
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	checktrainerflag 0xC00
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	.byte 0x80
+	nop 
+	returnram 
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	checkplayergender 
+	nop 
+	returnram 
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	showcoinsbox 0x0, 0xC
+	nop 
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	end 
+	.byte 0xE0
+	nop 
+	returnram 
+	nop 
+	call 0x3F021205
+	waitse 
+	delay 0x1208
+	return 
+	closemessage 
+	waitse 
+	delay 0x408
+	goto 0xD5C0D03
+	gotostd 0x2
+	goto 0x10000
+	gotostd 0x0
+	setworldmapflag 0x0
+	nop 
+	.byte 0x19
+	pokemart 0xCC023F00
+	playse 0x857
+	.byte 0x83
+	call 0xAFFF4
+	setworldmapflag 0x100
+	nop 
+	call 0x861905
+	.byte 0x3F
+	end 
+	.byte 0xCC
+	playse 0x857
+	.byte 0x83
+	call 0xFFF6000C
+	setworldmapflag 0x100
+	nop 
+	goto 0xF6340208
+	.byte 0x56
+	gotostd 0x2
+	setworldmapflag 0x10
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x50
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x90
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0xD0
+	setptrbyte 0x2, 0x2082830
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x10
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x30
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x50
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x70
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0x90
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0xB0
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0xD0
+	end 
+	savebgm 0x56F6
+	gotostd 0x2
+	setworldmapflag 0xF0
+	.byte 0x13
+	end 
+	waitse 
+	.byte 0x28
+	.byte 0x08

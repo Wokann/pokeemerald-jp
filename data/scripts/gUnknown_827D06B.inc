@@ -1,0 +1,14 @@
+	nop 
+	playse 0x327
+	.byte 0x7D
+	call 0x1020816
+	nop 
+	nop 
+	.byte 0x19
+	.byte 0xED
+	nop 
+	showcoinsbox 0x5, 0xE
+	waitmessage 
+	gotopostbattlescript 
+	delay 0x508
+	.byte 0x08

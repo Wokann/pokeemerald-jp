@@ -1,0 +1,66 @@
+	nop 
+	setworldmapflag 0x28
+	playse 0x327
+	hidecoinsbox 0xBA, 0x15
+	gotostd 0x5
+	nop 
+	call 0x6E710308
+	.byte 0x11
+	gotostd 0xA
+	goto 0x80781
+	nop 
+	nop 
+	returnram 
+	nop 
+	.byte 0xFF
+	.byte 0x7F
+	call 0x31FF0E0E
+	delay 0xE08
+	.byte 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	setmysteryeventstatus 0xFF
+	playfanfare 0x828
+	return 
+	multichoicegrid 0x6E, 0x11, 0x8, 0xA, 0x5
+	.byte 0x81
+	call_if 0x3, 0xC00
+	nop 
+	.byte 0xFF
+	.byte 0x7F
+	goto 0x5F660E20
+	delay 0x808
+	end 
+	.byte 0x94
+	setmonmetlocation 0x85A, 0x2
+	end 
+	.byte 0x1E
+	nop 
+	.byte 0x80
+	end 
+	.byte 0x04
+	.byte 0x05
+	.byte 0x0F

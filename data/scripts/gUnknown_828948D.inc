@@ -1,0 +1,15 @@
+	loadbyte 0x97, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	fadedefaultbgm 
+	gotonative 0x2023F
+	setworldmapflag 0x10
+	callstd_if 0x1, 0xC
+	setworldmapflag 0x119
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	.byte 0x3E

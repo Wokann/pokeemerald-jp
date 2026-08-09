@@ -1,0 +1,16 @@
+	.byte 0x45
+	setworldmapflag 0x7
+	nop 
+	nop 
+	nop 
+	playslotmachine 0xE341
+	.byte 0x9D
+	delay 0x2E08
+	.byte 0xDB
+	.byte 0x3F
+	end 
+	end 
+	call 0x28725C41
+	gotostd 0x6A
+	.byte 0x01
+	.byte 0x3E

@@ -1,0 +1,31 @@
+	checkflag 0x9004
+	initclock 0x202, 0x8000
+	nop 
+	nop 
+	.byte 0xCB
+	contestlinktransfer 
+	delay 0x1008
+	.byte 0x41
+	setworldmapflag 0xCE28
+	contestlinktransfer 
+	delay 0x1008
+	releaseall 
+	setworldmapflag 0x153
+	.byte 0x3A
+	loadbyte 0xC, 0x0
+	checkflag 0x9005
+	initclock 0x202, 0x8000
+	nop 
+	nop 
+	.byte 0xEB
+	contestlinktransfer 
+	delay 0xF808
+	setworldmapflag 0x533A
+	return 
+	.byte 0x3A
+	loadbyte 0x6C, 0x1
+	dotrainerbattle 
+	loadbyte 0x1E, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 

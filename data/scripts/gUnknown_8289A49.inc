@@ -1,0 +1,61 @@
+	gettime 
+	setdoorclosed 0x23E, 0x2
+	gettime 
+	waitfanfare 
+	.byte 0x41
+	end 
+	end 
+	.byte 0x91
+	.byte 0xE1
+	doweather 
+	animateflash 0x28
+	gotostd 0x1D
+	nop 
+	nop 
+	nop 
+	nop 
+	setworldmapflag 0x9A98
+	delay 0x1E08
+	nop 
+	.byte 0x1D
+	setweather 0x289A
+	gotostd 0x1E
+	nop 
+	savebgm 0x9AA4
+	delay 0x1E08
+	nop 
+	.byte 0x49
+	setweather 0x289A
+	gotostd 0x89
+	compare_var_to_value 0x9A98, 0x828
+	setflag 0xDB02
+	.byte 0x3F
+	end 
+	end 
+	setworldmapflag 0x9A98
+	delay 0x4708
+	.byte 0x45
+	nop 
+	setworldmapflag 0x4128
+	end 
+	end 
+	loadbyte 0xCD, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	playse 0x3EB0
+	end 
+	end 
+	setworldmapflag 0x5528
+	animateflash 0x28
+	gotostd 0x3C
+	.byte 0x39
+	.byte 0x20
+	nop 
+	loadbyte 0x55, 0x1
+	.byte 0x12
+	.byte 0x40
+	nop 
+	delay 0x9A98
+	.byte 0x28
+	.byte 0x08

@@ -1,0 +1,33 @@
+	nop 
+	.byte 0xC7
+	.byte 0x27
+	end 
+	loadbyte 0xE9, 0x56
+	gotostd 0x82
+	return 
+	setworldmapflag 0xF800
+	.byte 0xFF
+	nop 
+	nop 
+	.byte 0x19
+	pokemartdecoration2 0x4043F00
+	end 
+	loadbyte 0xE9, 0x56
+	gotostd 0x82
+	return 
+	setworldmapflag 0x800
+	nop 
+	nop 
+	nop 
+	return 
+	.byte 0x55
+	.byte 0x4B
+	.byte 0x0D
+	gotostd 0x2
+	goto 0x40001
+	nop 
+	nop 
+	.byte 0x12
+	nop 
+	setworldmapflag 0x1900
+	pokemartdecoration2 0x8053F00

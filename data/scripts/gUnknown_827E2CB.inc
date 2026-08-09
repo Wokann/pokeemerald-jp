@@ -1,0 +1,22 @@
+	nop 
+	.byte 0x99
+	.byte 0x27
+	gotostd_if 0x1, 0xC
+	returnram 
+	gotostd 0x19
+	messageautoscroll 0x28023F00
+	.byte 0xCE
+	faceplayer 
+	gotostd 0x2
+	call 0x0
+	setworldmapflag 0x0
+	nop 
+	return 
+	playfanfare 0xD4A
+	gotostd 0x2
+	goto 0x30001
+	nop 
+	nop 
+	goto_if 0x0, 0xB050001
+	setworldmapflag 0x50D
+	.byte 0x08

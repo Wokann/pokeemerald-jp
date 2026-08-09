@@ -1,0 +1,22 @@
+	setptrbyte 0x7E, 0x12085ABA
+	.byte 0x40
+	nop 
+	checkflag 0x9005
+	initclock 0x202, 0x80
+	nop 
+	nop 
+	playslotmachine 0x28A3
+	gotostd 0x29
+	setworldmapflag 0x9D18
+	return 
+	end 
+	nop 
+	playslotmachine 0x28A3
+	gotostd 0x10
+	compare_var_to_var 0x1201, 0x40
+	gettime 
+	.byte 0xDE
+	.byte 0x3F
+	end 
+	end 
+	gotostd 0xF6

@@ -1,0 +1,20 @@
+	loadbyte 0x2A, 0x0
+	.byte 0x12
+	.byte 0x40
+	nop 
+	.byte 0x64
+	setworldmapflag 0x2435
+	.byte 0x3F
+	end 
+	end 
+	nop 
+	setworldmapflag 0x10
+	callstd_if 0x1, 0xC
+	setworldmapflag 0x119
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	gotonative 0x82897E6
+	.byte 0x3E
