@@ -9,3 +9,8 @@ void GroundEffect_IceReflection(struct ObjectEvent *objEvent, struct Sprite *spr
 {
     SetUpReflection(objEvent, sprite, TRUE);
 }
+
+void GroundEffect_WaterReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
+{
+    SetUpReflection(objEvent, sprite, FALSE);
+}

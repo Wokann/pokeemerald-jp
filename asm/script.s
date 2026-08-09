@@ -51,6 +51,7 @@ SetupBytecodeScript: @ 0x0809867C
 
 	thumb_func_start SetupNativeScript
 SetupNativeScript: @ 0x08098688
+	@ From src/script.c
 	movs r2, #2
 	strb r2, [r0, #1]
 	str r1, [r0, #4]
@@ -59,6 +60,7 @@ SetupNativeScript: @ 0x08098688
 
 	thumb_func_start StopScript
 StopScript: @ 0x08098690
+	@ From src/script.c
 	movs r1, #0
 	strb r1, [r0, #1]
 	str r1, [r0, #8]
@@ -908,4 +910,3 @@ _08098C3A:
 	.align 2, 0
 _08098C50: .4byte 0x000003E3
 	thumb_func_end InitRamScript_NoEventObject
-

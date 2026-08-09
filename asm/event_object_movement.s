@@ -22360,6 +22360,7 @@ _0809692C: .4byte 0x03005AEC
 
 	thumb_func_start GroundEffect_WaterReflection
 GroundEffect_WaterReflection: @ 0x08096930
+	@ From src/event_object_movement.c
 	push {lr}
 	movs r2, #0
 	bl SetUpReflection
