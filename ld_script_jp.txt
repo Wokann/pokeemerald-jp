@@ -206,7 +206,7 @@ SECTIONS {
         build/src/load_save.o(.text);
         asm/trade.o(.text);
         asm/berry_blender.o(.text);
-        asm/play_time.o(.text);
+        build/src/play_time.o(.text);
         asm/new_game.o(.text);
         asm/overworld.o(.text);
         asm/fieldmap.o(.text);

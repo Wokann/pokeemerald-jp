@@ -166,6 +166,7 @@ gUnknown_3000E04 = .;
 gUnknown_3000E06 = .;
 . += 0x2;
 gUnknown_3000E08 = .;
+sPlayTimeCounterState = ABSOLUTE(0x03000E08);
 . += 0x4;
 gUnknown_3000E0C = .;
 . += 0x4;
