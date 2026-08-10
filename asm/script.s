@@ -292,14 +292,14 @@ UnlockPlayerFieldControls: @ 0x080987E8
 _080987F0: .4byte 0x03000F2C
 	thumb_func_end UnlockPlayerFieldControls
 
-	thumb_func_start ScriptContext2_IsEnabled
-ScriptContext2_IsEnabled: @ 0x080987F4
+	thumb_func_start ArePlayerFieldControlsLocked
+ArePlayerFieldControlsLocked: @ 0x080987F4
 	ldr r0, _080987FC
 	ldrb r0, [r0]
 	bx lr
 	.align 2, 0
 _080987FC: .4byte 0x03000F2C
-	thumb_func_end ScriptContext2_IsEnabled
+	thumb_func_end ArePlayerFieldControlsLocked
 
 	thumb_func_start ScriptContext1_IsScriptSetUp
 ScriptContext1_IsScriptSetUp: @ 0x08098800

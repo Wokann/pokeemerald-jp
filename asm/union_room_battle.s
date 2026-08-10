@@ -38,7 +38,7 @@ _08019584: .4byte 0x082C2BC4
 _08019588: .4byte 0x03005AEC
 _0801958C: .4byte 0x02036FF0
 _08019590:
-	bl ScriptContext2_IsEnabled
+	bl ArePlayerFieldControlsLocked
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080195A2

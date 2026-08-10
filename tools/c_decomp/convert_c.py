@@ -156,6 +156,8 @@ def verify_function(name, c_file, jp_name=None):
         # already holds (and which mask() zeroes).  Accept that pattern
         # for any literal-pool word (mid-function pools are legal too).
         ok = True
+        if len(mj) < len(mc):
+            mj = mj + b"\x00" * (len(mc) - len(mj))
         for i in range(0, len(mc), 4):
             cv = int.from_bytes(mc[i : i + 4], "little")
             jv = int.from_bytes(mj[i : i + 4], "little")

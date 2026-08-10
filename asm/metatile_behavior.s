@@ -1814,8 +1814,8 @@ _080890C4:
 	bx r1
 	thumb_func_end MetatileBehavior_IsFortreeBridge
 
-	thumb_func_start MetatileBehavior_IsPacifilogVerticalLog1
-MetatileBehavior_IsPacifilogVerticalLog1: @ 0x080890C8
+	thumb_func_start MetatileBehavior_IsPacifidlogVerticalLogTop
+MetatileBehavior_IsPacifidlogVerticalLogTop: @ 0x080890C8
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1828,10 +1828,10 @@ _080890D6:
 _080890D8:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsPacifilogVerticalLog1
+	thumb_func_end MetatileBehavior_IsPacifidlogVerticalLogTop
 
-	thumb_func_start MetatileBehavior_IsPacifilogVerticalLog2
-MetatileBehavior_IsPacifilogVerticalLog2: @ 0x080890DC
+	thumb_func_start MetatileBehavior_IsPacifidlogVerticalLogBottom
+MetatileBehavior_IsPacifidlogVerticalLogBottom: @ 0x080890DC
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1844,10 +1844,10 @@ _080890EA:
 _080890EC:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsPacifilogVerticalLog2
+	thumb_func_end MetatileBehavior_IsPacifidlogVerticalLogBottom
 
-	thumb_func_start MetatileBehavior_IsPacifilogHorizontalLog1
-MetatileBehavior_IsPacifilogHorizontalLog1: @ 0x080890F0
+	thumb_func_start MetatileBehavior_IsPacifidlogHorizontalLogLeft
+MetatileBehavior_IsPacifidlogHorizontalLogLeft: @ 0x080890F0
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1860,10 +1860,10 @@ _080890FE:
 _08089100:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsPacifilogHorizontalLog1
+	thumb_func_end MetatileBehavior_IsPacifidlogHorizontalLogLeft
 
-	thumb_func_start MetatileBehavior_IsPacifilogHorizontalLog2
-MetatileBehavior_IsPacifilogHorizontalLog2: @ 0x08089104
+	thumb_func_start MetatileBehavior_IsPacifidlogHorizontalLogRight
+MetatileBehavior_IsPacifidlogHorizontalLogRight: @ 0x08089104
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1876,7 +1876,7 @@ _08089112:
 _08089114:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsPacifilogHorizontalLog2
+	thumb_func_end MetatileBehavior_IsPacifidlogHorizontalLogRight
 
 	thumb_func_start MetatileBehavior_IsPacifidlogLog
 MetatileBehavior_IsPacifidlogLog: @ 0x08089118

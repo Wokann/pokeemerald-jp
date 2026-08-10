@@ -6095,7 +6095,7 @@ _0801550A:
 	strh r1, [r4]
 	bl _0801638C
 _08015512:
-	bl ScriptContext2_IsEnabled
+	bl ArePlayerFieldControlsLocked
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

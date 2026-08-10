@@ -3180,7 +3180,7 @@ DoCB1_Overworld: @ 0x08085714
 	adds r1, r5, #0
 	adds r2, r4, #0
 	bl FieldGetPlayerInput
-	bl ScriptContext2_IsEnabled
+	bl ArePlayerFieldControlsLocked
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08085762
@@ -5493,7 +5493,7 @@ _08086A06:
 KeyInterCB_SelfIdle: @ 0x08086A14
 	push {r4, lr}
 	adds r4, r0, #0
-	bl ScriptContext2_IsEnabled
+	bl ArePlayerFieldControlsLocked
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -5535,7 +5535,7 @@ sub_08086A50: @ 0x08086A50
 	thumb_func_start KeyInterCB_DeferToEventScript
 KeyInterCB_DeferToEventScript: @ 0x08086A5C
 	push {r4, lr}
-	bl ScriptContext2_IsEnabled
+	bl ArePlayerFieldControlsLocked
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r4, #0x11

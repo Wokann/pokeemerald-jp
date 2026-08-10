@@ -96,7 +96,8 @@ src/pokemon_size_record.c and are still in asm), src/pokemon_size_record.c
 asm/field_poison.s removed, src/field_door.c (23, full module --
 asm/field_door.s removed), src/rotating_gate.c (21, full module --
 asm/rotating_gate.s removed), src/field_message_box.c (17, full module --
-asm/field_message_box.s removed).
+asm/field_message_box.s removed), src/field_tasks.c (28, full module --
+asm/field_tasks.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -252,3 +253,25 @@ DrawDialogueFrame (0x08196FB8) / ClearDialogWindowAndFrame (0x08197028) and
 DrawStdWindowFrame (0x08196FF0) / ClearStdWindowAndFrame (0x08197060);
 sub_08196F98 -> LoadMessageBoxAndBorderGfx.  Renames applied across asm
 callers (C files keep the pokeemerald names).
+
+src/field_tasks.c (Task_RunPerStepCallback, RunTimeBasedEvents,
+Task_RunTimeBasedEvents, SetUpFieldTasks, ActivatePerStepCallback,
+ResetFieldTasksArgs, DummyPerStepCallback,
+GetPacifidlogBridgeMetatileOffsets, TrySetPacifidlogBridgeMetatiles,
+TrySetLogBridgeHalfSubmerged/FullySubmerged/Floating,
+ShouldRaise/ShouldSinkPacifidlogLogs, PacifidlogBridgePerStepCallback,
+TryLower/TryRaiseFortreeBridge, FortreeBridgePerStepCallback,
+CoordInIcePuzzleRegion, MarkIcePuzzleCoordVisited,
+IsIcePuzzleCoordVisited, SetSootopolisGymCrackedIceMetatiles,
+SootopolisGymIcePerStepCallback, AshGrassPerStepCallback,
+SetCrackedFloorHoleMetatile, CrackedFloorPerStepCallback,
+SetMuddySlopeMetatile, Task_MuddySlope) is the twenty-sixth wired module.
+The six data tables (sPerStepCallbacks 0x084E898C, the three bridge-offset
+tables 0x084E89AC/CC/EC, sSootopolisGymIceRowVars 0x084E8A0C,
+sMuddySlopeMetatiles 0x084E8A40) stay in the ROM data region; ARRAY_COUNT
+needed sized externs (8/4).  Renamed ScriptContext2_IsEnabled ->
+ArePlayerFieldControlsLocked and the four misspelled
+MetatileBehavior_IsPacifilog* labels to the pokeemerald Pacifidlog names;
+added gCamera (0x02036FD4).  verify_all now covers every src function
+(381/381); its linker-addend fallback was fixed to pad the JP side before
+the word-by-word comparison.
