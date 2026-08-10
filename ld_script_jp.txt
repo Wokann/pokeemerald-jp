@@ -152,6 +152,8 @@ gText_Diploma_3 = ABSOLUTE(0x085C8BBB);
 gText_Diploma_National = ABSOLUTE(0x085C8BB6);
 gText_Diploma_Hoenn = ABSOLUTE(0x085C8BB1);
 gText_Diploma_4 = ABSOLUTE(0x085C8BF2);
+gItemIconSpriteTemplate = ABSOLUTE(0x085E08AC);
+gItemIconTable = ABSOLUTE(0x085DFCC8);
 
 SECTIONS {
     . = 0x2000000;
@@ -418,7 +420,7 @@ SECTIONS {
         asm/list_menu.o(.text);
         build/src/dynamic_placeholder_text_util.o(.text);
         build/src/save_location.o(.text);
-        asm/item_icon.o(.text);
+        build/src/item_icon.o(.text);
         asm/party_menu.o(.text);
         asm/battle_tent.o(.text);
         asm/unk_text_util_2.o(.text);
