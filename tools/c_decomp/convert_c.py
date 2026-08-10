@@ -34,16 +34,20 @@ FUNCMAP = ROOT / "funcmap_jp.txt"
 
 def find_jp_addr(name):
     """Return the JP ROM address for an asm function label, or None."""
+    # Prefer funcmap_jp.txt: its third column is maintained against the
+    # pokeemerald names, so it stays correct even when the JP asm still
+    # carries a differently-named label at the same address (e.g. the
+    # safari_zone flag helpers whose JP labels and US names are swapped).
+    for line in FUNCMAP.read_text(encoding="utf-8").splitlines():
+        m = re.match(rf"^([0-9A-Fa-f]{{8}})\s+\S+\s+{re.escape(name)}\s*$", line)
+        if m:
+            return int(m.group(1), 16)
+    # Fall back to asm labels for functions not yet listed in funcmap.
     for path in sorted((ROOT / "asm").glob("*.s")):
         for line in path.read_text(encoding="utf-8").splitlines():
             m = re.match(rf"^{name}:\s*@\s*0x([0-9A-Fa-f]+)\s*$", line)
             if m:
                 return int(m.group(1), 16)
-    # Fall back to funcmap_jp.txt (covers functions already moved to C).
-    for line in FUNCMAP.read_text(encoding="utf-8").splitlines():
-        m = re.match(rf"^([0-9A-Fa-f]{{8}})\s+\S+\s+{re.escape(name)}\s*$", line)
-        if m:
-            return int(m.group(1), 16)
     return None
 
 

@@ -3135,7 +3135,7 @@ _080856E4: .4byte 0x03005B00
 CB2_OverworldBasic: @ 0x080856E8
 	@ From src/overworld.c (JP calls SafariZoneRetirePrompt)
 	push {lr}
-	bl SafariZoneRetirePrompt
+	bl ResetSafariZoneFlag
 	pop {r0}
 	bx r0
 	.align 2, 0

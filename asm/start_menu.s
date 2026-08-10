@@ -1159,7 +1159,7 @@ StartMenuSafariZoneRetireCallback: @ 0x0809F64C
 	push {lr}
 	bl RemoveExtraStartMenuWindows
 	bl HideStartMenu
-	bl SetSafariZoneFlag
+	bl SafariZoneRetirePrompt
 	movs r0, #1
 	pop {r1}
 	bx r1
