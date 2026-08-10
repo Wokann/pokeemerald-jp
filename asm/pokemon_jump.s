@@ -8907,7 +8907,7 @@ _0802E948:
 	lsls r1, r1, #4
 	adds r0, r4, #0
 	movs r2, #0x1a
-	bl sub_08007B30
+	bl SetSpriteMatrixAnchor
 	ldrh r0, [r4, #0x2e]
 	adds r0, #1
 	strh r0, [r4, #0x2e]
