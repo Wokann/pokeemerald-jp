@@ -1330,6 +1330,7 @@ gUnknown_203A860 = .;
 gUnknown_203A864 = .;
 . += 0x4;
 gUnknown_203A868 = .;
+sCoinsWindowId = ABSOLUTE(0x0203A868);
 . += 0x4;
 gUnknown_203A86C = .;
 . += 0x4;

@@ -5348,7 +5348,7 @@ ScrCmd_givecoins: @ 0x0809B3F8
 	bl VarGet
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
-	bl GiveCoins
+	bl AddCoins
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -5379,7 +5379,7 @@ ScrCmd_takecoins: @ 0x0809B430
 	bl VarGet
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
-	bl TakeCoins
+	bl RemoveCoins
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -5833,4 +5833,3 @@ ScrCmd_warpE0: @ 0x0809B72C
 	bx r1
 	.align 2, 0
 	thumb_func_end ScrCmd_warpE0
-

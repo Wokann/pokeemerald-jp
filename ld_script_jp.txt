@@ -129,6 +129,7 @@ sFontGlyphData_BD25C = ABSOLUTE(0x082BD25C);
 sGlyphWidthTable_ACF14 = ABSOLUTE(0x082ACF14);
 sGlyphWidthTable_B502C = ABSOLUTE(0x082B502C);
 sGlyphWidthTable_BD144 = ABSOLUTE(0x082BD144);
+gText_Coins = ABSOLUTE(0x085C9443);
 
 SECTIONS {
     . = 0x2000000;
@@ -326,7 +327,7 @@ SECTIONS {
         asm/evolution_scene.o(.text);
         asm/roulette.o(.text);
         asm/pokedex_cry_screen.o(.text);
-        asm/coins.o(.text);
+        build/src/coins.o(.text);
         build/src/landmark.o(.text);
         build/src/fldeff_strength.o(.text);
         asm/battle_transition.o(.text);
