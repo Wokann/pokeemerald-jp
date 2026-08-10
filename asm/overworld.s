@@ -6223,8 +6223,8 @@ _08086F24:
 _08086F28: .4byte 0x03000E18
 	thumb_func_end sub_08086EFC
 
-	thumb_func_start sub_08086F2C
-sub_08086F2C: @ 0x08086F2C
+	thumb_func_start Overworld_RecvKeysFromLinkIsRunning
+Overworld_RecvKeysFromLinkIsRunning: @ 0x08086F2C
 	push {lr}
 	bl GetLinkRecvQueueLength
 	cmp r0, #1
@@ -6275,10 +6275,10 @@ _08086F92:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_08086F2C
+	thumb_func_end Overworld_RecvKeysFromLinkIsRunning
 
-	thumb_func_start sub_08086F98
-sub_08086F98: @ 0x08086F98
+	thumb_func_start Overworld_SendKeysToLinkIsRunning
+Overworld_SendKeysToLinkIsRunning: @ 0x08086F98
 	push {lr}
 	bl GetLinkSendQueueLength
 	cmp r0, #1
@@ -6306,7 +6306,7 @@ _08086FCA:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_08086F98
+	thumb_func_end Overworld_SendKeysToLinkIsRunning
 
 	thumb_func_start sub_08086FD0
 sub_08086FD0: @ 0x08086FD0

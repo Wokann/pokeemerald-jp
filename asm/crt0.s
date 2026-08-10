@@ -66,8 +66,8 @@ _08000240: .4byte 0x03007FFC
 _08000244: .4byte 0x080003A5
 	arm_func_end _init.ret
 
-	arm_func_start _intr
-_intr: @ 0x08000248
+	arm_func_start IntrMain
+IntrMain: @ 0x08000248
 	mov r3, #0x4000000
 	add r3, r3, #0x200
 	ldr r2, [r3]
@@ -145,10 +145,10 @@ _08000320:
 	stmdb sp!, {lr}
 	add lr, pc, #0
 	bx r0
-	arm_func_end _intr
+	arm_func_end IntrMain
 
-	arm_func_start _intr.ret
-_intr.ret: @ 0x08000374
+	arm_func_start IntrMain.ret
+IntrMain.ret: @ 0x08000374
 	ldm sp!, {lr}
 	mrs r3, cpsr
 	bic r3, r3, #0xdf
@@ -162,5 +162,5 @@ _intr.ret: @ 0x08000374
 	.align 2, 0
 _0800039C: .4byte 0x03007608
 _080003A0: .4byte 0x030027B0
-	arm_func_end _intr.ret
+	arm_func_end IntrMain.ret
 

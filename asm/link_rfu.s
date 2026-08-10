@@ -4644,8 +4644,8 @@ _0800DC3C:
 	bx r0
 	thumb_func_end sub_0800DC28
 
-	thumb_func_start sub_0800DC40
-sub_0800DC40: @ 0x0800DC40
+	thumb_func_start UpdateWirelessStatusIndicatorSprite
+UpdateWirelessStatusIndicatorSprite: @ 0x0800DC40
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -4899,7 +4899,7 @@ _0800DE34: .4byte 0x00000424
 _0800DE38: .4byte 0x000003FF
 _0800DE3C: .4byte 0xFFFFFC00
 _0800DE40: .4byte 0x070003E8
-	thumb_func_end sub_0800DC40
+	thumb_func_end UpdateWirelessStatusIndicatorSprite
 
 	thumb_func_start CopyTrainerRecord
 	@ From src/link_rfu_3.c
@@ -5338,8 +5338,8 @@ _0800E18C: .4byte 0x020226A0
 _0800E190: .4byte 0x01000046
 	thumb_func_end sub_0800E0C8
 
-	thumb_func_start sub_0800E194
-sub_0800E194: @ 0x0800E194
+	thumb_func_start InitRFU
+InitRFU: @ 0x0800E194
 	push {r4, r5, r6, lr}
 	ldr r4, _0800E1BC
 	ldr r5, [r4, #4]
@@ -5360,7 +5360,7 @@ sub_0800E194: @ 0x0800E194
 	.align 2, 0
 _0800E1BC: .4byte 0x030027B0
 _0800E1C0: .4byte 0x04000208
-	thumb_func_end sub_0800E194
+	thumb_func_end InitRFU
 
 	thumb_func_start sub_0800E1C4
 sub_0800E1C4: @ 0x0800E1C4
@@ -12157,14 +12157,14 @@ Rfu_IsMaster: @ 0x0801159C
 _080115A4: .4byte 0x030050A0
 	thumb_func_end Rfu_IsMaster
 
-	thumb_func_start ReadU16
-ReadU16: @ 0x080115A8
+	thumb_func_start RfuVSync
+RfuVSync: @ 0x080115A8
 	push {lr}
 	bl rfu_syncVBlank_
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end ReadU16
+	thumb_func_end RfuVSync
 
 	thumb_func_start sub_080115B4
 sub_080115B4: @ 0x080115B4
