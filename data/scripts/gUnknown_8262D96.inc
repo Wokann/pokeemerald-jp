@@ -1,8 +1,5 @@
 	faceplayer 
-	.byte 0x52
-	bufferleadmonspeciesname 0x37
-	nop 
-	.byte 0x15
+	waitmovement_at 0x377E, 0x15
 	gotostd 0x15
 	delay 0xC1F
 	.byte 0x10

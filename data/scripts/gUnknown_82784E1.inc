@@ -93,10 +93,7 @@
 	.byte 0xFE
 	.byte 0xFF
 	end 
-	.byte 0x50
-	writebytetoaddr 0x57, 0x58208
-	nop 
-	nop 
+	applymovement_at 0x5711, 0x58208, 0x0
 	nop 
 	killscript 
 	nop 
@@ -105,10 +102,7 @@
 	nop 
 	nop 
 	end 
-	.byte 0x50
-	writebytetoaddr 0x57, 0x58208
-	nop 
-	nop 
+	applymovement_at 0x5711, 0x58208, 0x0
 	nop 
 	killscript 
 	nop 
@@ -117,17 +111,11 @@
 	nop 
 	nop 
 	end 
-	.byte 0x50
-	writebytetoaddr 0x57, 0x58208
-	nop 
-	nop 
+	applymovement_at 0x5711, 0x58208, 0x0
 	nop 
 	loadword 0x0, 0x2FFFE
 	end 
-	.byte 0x50
-	writebytetoaddr 0x57, 0x58208
-	nop 
-	nop 
+	applymovement_at 0x5711, 0x58208, 0x0
 	nop 
 	loadword 0x0, 0x20002
 	.byte 0x0F

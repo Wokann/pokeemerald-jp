@@ -228,8 +228,8 @@
 	nop 
 	killscript 
 	nop 
-	.byte 0x52
-	checkpcitem 0x3103, 0xD4A
+	waitmovement_at 0x34A, 0x314A
+	killscript 
 	gotostd 0x5
 	goto 0x30000
 	nop 
@@ -257,6 +257,8 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x52
-	checkpcitem 0x305, 0x84C1
-	writebytetoaddr 0x8, 0x8050005
+	waitmovement_at 0x54A, 0x3C1
+	bufferstdstring 0x11, 0x508
+	nop 
+	.byte 0x05
+	.byte 0x08

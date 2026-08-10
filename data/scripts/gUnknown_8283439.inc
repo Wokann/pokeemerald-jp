@@ -23,10 +23,8 @@
 	nop 
 	.byte 0xF8
 	.byte 0xFF
-	.byte 0x50
-	nop 
-	call 0xA9700200
-	addobject 0x208
+	applymovement_at 0x400, 0xA9700200, 0x5508
+	end 
 	return 
 	goto 0x1000200
 	nop 

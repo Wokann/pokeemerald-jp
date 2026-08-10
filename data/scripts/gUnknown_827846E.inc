@@ -27,9 +27,7 @@
 	nop 
 	nop 
 	goto 0x2000100
-	.byte 0x54
-	playse 0x857
-	return 
+	removeobject_at 0x572F, 0x803
 	call 0xFFFC0000
 	setworldmapflag 0x300
 	nop 

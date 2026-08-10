@@ -1,10 +1,8 @@
 	nop 
-	.byte 0x56
-	waitstate 
+	addobject_at 0x27, 0xB827
+	returnram 
 	nop 
-	setvaddress 0x10000C27
-	end 
-	mossdeepgym2 
+	loadbyte 0x2, 0x74
 	compare_var_to_value 0x857, 0x301
 	delay 0x0
 	nop 

@@ -41,23 +41,17 @@
 	gotostd 0x0
 	copylocal 0x0, 0x5
 	end 
-	.byte 0x54
-	playse 0x857
-	return 
+	removeobject_at 0x572F, 0x803
 	call 0xFFF8FFF8
 	setworldmapflag 0x200
 	nop 
 	end 
-	.byte 0x54
-	playse 0x857
-	return 
+	removeobject_at 0x572F, 0x803
 	call 0x0
 	setworldmapflag 0x200
 	nop 
 	end 
-	.byte 0x54
-	playse 0x857
-	return 
+	removeobject_at 0x572F, 0x803
 	call 0x80008
 	setworldmapflag 0x200
 	nop 

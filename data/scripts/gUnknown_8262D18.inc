@@ -1,7 +1,5 @@
 	faceplayer 
-	.byte 0x52
-	bufferleadmonspeciesname 0x37
-	nop 
-	loadbyte 0x28, 0x1F
-	setmysteryeventstatus 0x2E
+	waitmovement_at 0x377E, 0x10
+	delay 0xE1F
+	gettime 
 	.byte 0xFF

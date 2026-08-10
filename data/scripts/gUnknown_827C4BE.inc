@@ -30,13 +30,13 @@
 	faceplayer 
 	gotostd 0x32
 	goto 0x80006C
-	.byte 0x54
+	removeobject_at 0xF000, 0xFF24
 	nop 
-	.byte 0xF0
-	.byte 0xFF
-	gotonative 0x9B1900
-	nop 
-	call 0xD60C0202
+	copyvar 0x9B, 0x400
+	end 
+	end 
+	returnram 
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x32
 	goto 0x38FFF0

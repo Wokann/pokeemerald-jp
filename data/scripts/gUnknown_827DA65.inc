@@ -5,9 +5,10 @@
 	waitfanfare 
 	cmdDB 0x80020827
 	.byte 0xEC
-	.byte 0x56
-	gotostd 0x2
-	call 0x0
+	addobject_at 0x208, 0x400
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -34,9 +35,10 @@
 	setmysteryeventstatus 0x17
 	cmdDB 0x80020827
 	.byte 0xEC
-	.byte 0x56
-	gotostd 0x2
-	call 0x20001
+	addobject_at 0x208, 0x401
+	nop 
+	end 
+	nop 
 	nop 
 	nop 
 	bufferitemname 0x0, 0xB919
@@ -45,10 +47,11 @@
 	setmysteryeventstatus 0x32
 	cmdDB 0x80020827
 	.byte 0xEC
-	.byte 0x56
-	gotostd 0x2
-	call 0x10000
-	setworldmapflag 0x0
+	addobject_at 0x208, 0x400
+	nop 
+	setworldmapflag 0x100
+	nop 
+	nop 
 	nop 
 	copyvar 0xB9, 0x4C0
 	call_if 0xE, 0x827DB17
@@ -67,9 +70,8 @@
 	end 
 	nop 
 	goto 0xEC4C0208
-	.byte 0x56
-	gotostd 0x3
-	setworldmapflag 0x0
+	addobject_at 0x308, 0x100
+	nop 
 	return 
 	playfanfare 0xD4A
 	gotostd 0x2

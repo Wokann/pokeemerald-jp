@@ -27,9 +27,11 @@
 	gotostd 0x19
 	setvaddress 0xC02C000
 	.byte 0xF0
-	.byte 0x56
-	gotostd 0x82
-	goto_if 0x10, 0x0
+	addobject_at 0x8208, 0x610
+	nop 
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 

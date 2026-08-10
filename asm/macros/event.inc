@@ -648,6 +648,33 @@
 		.endif
 	.endm
 
+	@ JP engine names the *_at opcodes with raw hex consts
+	@ (SCR_OP_50/52/54/56), so give them dedicated JP macros.
+	.macro applymovement_at localId:req, movements:req, map:req
+	.byte SCR_OP_50
+	.2byte \localId
+	.4byte \movements
+	map \map
+	.endm
+
+	.macro waitmovement_at localId:req, map:req
+	.byte SCR_OP_52
+	.2byte \localId
+	map \map
+	.endm
+
+	.macro removeobject_at localId:req, map:req
+	.byte SCR_OP_54
+	.2byte \localId
+	map \map
+	.endm
+
+	.macro addobject_at localId:req, map:req
+	.byte SCR_OP_56
+	.2byte \localId
+	map \map
+	.endm
+
 	@ Attempts to despawn the specified (localId) object on the specified map.
 	@ It also sets the object's visibility flag if it has one.
 	@ If no map is specified, then the current map is used.

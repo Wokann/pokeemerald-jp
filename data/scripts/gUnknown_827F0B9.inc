@@ -49,13 +49,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x50
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x400
+	applymovement_at 0x0, 0x1000000, 0x4
 	return 
 	end 
 	checkpartymove 0x5717
@@ -77,13 +71,7 @@
 	nop 
 	.byte 0xF6
 	.byte 0xFF
-	.byte 0x50
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x400
+	applymovement_at 0x0, 0x1000000, 0x4
 	return 
 	end 
 	checkpartymove 0x5717
@@ -129,13 +117,7 @@
 	nop 
 	.byte 0xEC
 	.byte 0xFF
-	.byte 0x50
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x400
+	applymovement_at 0x0, 0x1000000, 0x4
 	return 
 	end 
 	checkpartymove 0x5717
@@ -152,13 +134,7 @@
 	nop 
 	nop 
 	loadword 0x0, 0xF0000
-	.byte 0x50
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x400
+	applymovement_at 0x0, 0x1000000, 0x4
 	return 
 	end 
 	checkpartymove 0x5717
@@ -180,13 +156,7 @@
 	nop 
 	.byte 0xEC
 	.byte 0xFF
-	.byte 0x50
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x400
+	applymovement_at 0x0, 0x1000000, 0x4
 	return 
 	end 
 	checkpartymove 0x5717

@@ -8,11 +8,7 @@
 	compare_addr_to_addr 0x4020857, 0x0
 	killscript 
 	nop 
-	.byte 0x50
-	setworldmapflag 0x1905
-	.byte 0xE9
-	nop 
-	showcoinsbox 0x2, 0xB0
+	applymovement_at 0x501, 0xC000E919, 0x2B0
 	compare_addr_to_addr 0x1030857, 0x110E0000
 	givedecoration 0x828
 	setmysteryeventstatus 0x11

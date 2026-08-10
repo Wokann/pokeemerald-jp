@@ -1,9 +1,7 @@
 	nop 
 	loadbytefromaddr 0x3010A27
 	waitdooranim 
-	.byte 0x56
-	loadbyte 0x8, 0x2
-	nop 
+	addobject_at 0x810, 0x200
 	end 
 	setvaddress 0x820856F2
 	nop 

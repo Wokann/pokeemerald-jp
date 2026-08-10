@@ -9,9 +9,10 @@
 	end 
 	nop 
 	call 0xE0780207
-	.byte 0x56
-	gotostd 0x83
-	call 0x0
+	addobject_at 0x8308, 0x400
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	end 
@@ -22,9 +23,10 @@
 	setworldmapflag 0x200
 	nop 
 	call 0xE0780207
-	.byte 0x56
-	gotostd 0x83
-	call 0xFFF80000
+	addobject_at 0x8308, 0x400
+	nop 
+	.byte 0xF8
+	.byte 0xFF
 	setworldmapflag 0x200
 	nop 
 	call 0x4B550308

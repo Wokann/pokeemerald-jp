@@ -1,13 +1,5 @@
 	nop 
-	.byte 0x50
-	waitstate 
-	nop 
-	.byte 0xE1
-	waitstate 
-	end 
-	.byte 0xF8
-	.byte 0xEC
-	.byte 0x56
+	applymovement_at 0x27, 0xF80227E1, 0xEC56
 	gotostd 0xB
 	end 
 	nop 
@@ -17,9 +9,8 @@
 	end 
 	checkplayergender 
 	.byte 0xED
-	.byte 0x56
-	gotostd 0xC
-	setworldmapflag 0x0
+	addobject_at 0xC08, 0x100
+	nop 
 	call 0xA71C18
 	showcoinsbox 0x16, 0x3
 	.byte 0x05

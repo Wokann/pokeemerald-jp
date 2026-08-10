@@ -6,93 +6,82 @@
 	end 
 	.byte 0xEC
 	.byte 0xEB
-	.byte 0x56
-	gotostd 0x82
-	return 
-	call_if 0x0, 0xC0000
-	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto_if 0x0, 0xC0001
-	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	setworldmapflag 0x200
+	addobject_at 0x8208, 0x307
+	nop 
+	nop 
 	nop 
 	returnram 
 	nop 
 	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
+	addobject_at 0x8208, 0x306
+	nop 
+	setworldmapflag 0xC00
+	nop 
+	call 0xEBEC0205
+	addobject_at 0x8208, 0x301
+	nop 
 	end 
 	nop 
+	returnram 
+	nop 
+	call 0xEBEC0205
+	addobject_at 0x8208, 0x302
+	nop 
 	return 
 	nop 
 	returnram 
 	nop 
 	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	return 
+	addobject_at 0x8208, 0x303
 	nop 
 	nop 
 	nop 
 	returnram 
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x302
 	nop 
 	setworldmapflag 0xC00
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto 0xC000200
+	addobject_at 0x8208, 0x305
+	nop 
+	end 
+	nop 
+	returnram 
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
+	addobject_at 0x8208, 0x306
+	nop 
 	return 
-	goto_if 0x0, 0xC0003
+	nop 
+	returnram 
+	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x302
 	nop 
 	nop 
 	nop 
 	returnram 
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x302
 	nop 
 	setworldmapflag 0xC00
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	setworldmapflag 0x200
+	addobject_at 0x8208, 0x301
+	nop 
+	end 
 	nop 
 	returnram 
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
+	addobject_at 0x8208, 0x305
+	nop 
 	return 
-	goto 0xC000300
+	nop 
+	returnram 
 	nop 
 	call 0x30B0504
 	return 

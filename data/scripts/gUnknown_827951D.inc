@@ -8,10 +8,7 @@
 	goto_if 0x19, 0x23F009B
 	.byte 0xCC
 	.byte 0xE4
-	.byte 0x56
-	gotostd 0x82
-	end 
-	nop 
+	addobject_at 0x8208, 0x200
 	nop 
 	nop 
 	nop 

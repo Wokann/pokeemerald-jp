@@ -33,9 +33,10 @@
 	end 
 	nop 
 	.byte 0xF4
-	.byte 0x56
-	gotostd 0x3
-	call 0x0
+	addobject_at 0x308, 0x400
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 

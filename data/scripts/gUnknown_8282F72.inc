@@ -94,9 +94,8 @@
 	setworldmapflag 0x100
 	nop 
 	goto 0xF6340208
-	.byte 0x56
-	gotostd 0x2
-	setworldmapflag 0x10
+	addobject_at 0x208, 0x110
+	nop 
 	end 
 	savebgm 0x56F6
 	gotostd 0x2

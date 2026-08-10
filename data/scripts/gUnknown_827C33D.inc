@@ -1,9 +1,7 @@
 	nop 
-	.byte 0x50
-	waitstate 
-	end 
-	setvaddress 0x20856ED
-	setworldmapflag 0x0
+	applymovement_at 0x227, 0x856EDB8, 0x201
+	nop 
+	nop 
 	copyvar 0xA7, 0x4C0
 	loadbytefromaddr 0xC000E219
 	call 0xA71C47

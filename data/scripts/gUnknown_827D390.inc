@@ -14,87 +14,64 @@
 	end 
 	.byte 0xEC
 	.byte 0xEB
-	.byte 0x56
-	gotostd 0x82
-	return 
-	call_if 0x0, 0x1
-	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto_if 0x0, 0x1
-	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	setworldmapflag 0x100
-	nop 
-	nop 
-	nop 
-	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x307
 	nop 
 	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0205
-	.byte 0x56
-	gotostd 0x82
-	return 
-	return 
+	addobject_at 0x8208, 0x306
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0205
+	addobject_at 0x8208, 0x301
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0205
+	addobject_at 0x8208, 0x302
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0205
+	addobject_at 0x8208, 0x303
 	nop 
 	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x302
 	nop 
 	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto 0x100
-	nop 
-	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto_if 0x0, 0x1
-	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x305
 	nop 
 	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	end 
+	addobject_at 0x8208, 0x306
 	nop 
 	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	setworldmapflag 0x100
+	addobject_at 0x8208, 0x302
 	nop 
-	nop 
+	setworldmapflag 0x0
 	nop 
 	call 0xEBEC0204
-	.byte 0x56
-	gotostd 0x82
-	return 
-	goto 0x100
+	addobject_at 0x8208, 0x302
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	addobject_at 0x8208, 0x301
+	nop 
+	setworldmapflag 0x0
+	nop 
+	call 0xEBEC0204
+	addobject_at 0x8208, 0x305
+	nop 
+	setworldmapflag 0x0
 	nop 
 	call 0xF1030504
 	savebgm 0x810

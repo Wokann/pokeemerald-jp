@@ -15,10 +15,7 @@
 	returnram 
 	nop 
 	call 0xF7640200
-	.byte 0x56
-	gotostd 0x2
-	return 
-	nop 
+	addobject_at 0x208, 0x300
 	nop 
 	nop 
 	nop 

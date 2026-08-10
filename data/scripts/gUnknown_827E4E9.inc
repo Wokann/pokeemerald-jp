@@ -35,9 +35,11 @@
 	end 
 	.byte 0xD0
 	.byte 0xF2
-	.byte 0x56
-	gotostd 0x2
-	call_if 0x0, 0xD6000000
+	addobject_at 0x208, 0x700
+	nop 
+	nop 
+	nop 
+	buffercontesttype 
 	.byte 0xFF
 	mossdeepgym4 
 	.byte 0xFF
@@ -46,9 +48,11 @@
 	end 
 	.byte 0xD0
 	.byte 0xF2
-	.byte 0x56
-	gotostd 0x2
-	call_if 0x0, 0x0
+	addobject_at 0x208, 0x700
+	nop 
+	nop 
+	nop 
+	nop 
 	nop 
 	buffercontesttype 
 	.byte 0xFF
@@ -57,11 +61,11 @@
 	end 
 	.byte 0xD0
 	.byte 0xF2
-	.byte 0x56
-	gotostd 0x2
-	call_if 0x0, 0x2A000000
+	addobject_at 0x208, 0x700
 	nop 
-	mossdeepgym4 
+	nop 
+	nop 
+	clearflag 0xDA00
 	.byte 0xFF
 	subvar 0x0, 0x0
 	nop 

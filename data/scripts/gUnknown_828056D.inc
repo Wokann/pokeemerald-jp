@@ -7,9 +7,7 @@
 	call 0x0
 	killscript 
 	nop 
-	.byte 0x50
-	setworldmapflag 0x7C13
-	goto 0x30A0828
+	applymovement_at 0x1301, 0x828057C, 0xA03
 	returnram 
 	returnram 
 	gotostd 0x19

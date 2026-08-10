@@ -18,10 +18,7 @@
 	setworldmapflag 0xE00
 	setobjectxy 0x27E4, 0x408, 0x314
 	fadedefaultbgm 
-	.byte 0x56
-	killscript 
-	gotostd 0x5
-	end 
+	addobject_at 0x80D, 0x502
 	setworldmapflag 0x200
 	nop 
 	goto 0x50D000B

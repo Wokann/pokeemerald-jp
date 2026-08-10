@@ -31,10 +31,10 @@
 	checkitemtype 0x2831
 	gotostd 0x12
 	return 
-	.byte 0x52
-	playfanfare 0x828
-	goto 0x285F660E
-	gotostd 0x8
+	waitmovement_at 0x2831, 0x805
+	setmysteryeventstatus 0x66
+	gotopostbattlescript 
+	delay 0x808
 	end 
 	compare_addr_to_addr 0x2085AD2, 0xF8000002
 	.byte 0xFF

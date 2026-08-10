@@ -4,7 +4,4 @@
 	end 
 	returnram 
 	.byte 0xE2
-	.byte 0x56
-	gotostd 0x82
-	nop 
-	.byte 0x08
+	addobject_at 0x8208, 0x8

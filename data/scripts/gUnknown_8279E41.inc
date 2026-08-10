@@ -10,9 +10,10 @@
 	nop 
 	showcoinsbox 0x2, 0xBC
 	.byte 0xF0
-	.byte 0x56
-	gotostd 0x2
-	goto 0x14
+	addobject_at 0x208, 0x514
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -30,10 +31,7 @@
 	end 
 	.byte 0xD4
 	.byte 0xF0
-	.byte 0x56
-	gotostd 0x2
-	nop 
-	return 
+	addobject_at 0x208, 0x3
 	addobject 0xD4B
 	gotostd 0x2
 	goto 0x10001

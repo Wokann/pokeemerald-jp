@@ -52,9 +52,7 @@
 	messageautoscroll 0x197E5A5F
 	nop 
 	dotrainerbattle 
-	.byte 0x52
-	checkplayergender 
-	settrainerflag 0x2D
+	waitmovement_at 0x61A0, 0x2D00
 	end 
 	clearflag 0xAB10
 	.byte 0xFF
@@ -105,11 +103,8 @@
 	return 
 	copyvar 0x1000, 0xFF13
 	compare_addr_to_local 0x19232E, 0xF
-	.byte 0x50
-	gotostd 0x28
-	copyvar 0x5500, 0x6173
-	bufferstdstring 0x19, 0x7A63
-	fadescreen 0xFE
+	applymovement_at 0x2808, 0x73550019, 0x6184
+	copyvar 0x7A63, 0xFE97
 	returnram 
 	waitstate 
 	copybyte 0x141B0002, 0x10200037
@@ -145,28 +140,22 @@
 	nop 
 	returnram 
 	compare_addr_to_value 0xFFAC060D, 0x1B
-	.byte 0x50
-	gotostd_if 0xC, 0x0
-	goto_if 0x2E, 0xAB033628
-	.byte 0xFB
-	compare_local_to_local 0x20, 0x12
-	copyvar 0x611, 0x2D27
-	nop 
-	loadbytefromaddr 0xD1F0206
-	goto_if 0xAC, 0x67D304FF
-	gotonative 0xD260208
-	bufferitemname 0xF5, 0x2101
-	killscript 
-	bufferitemname 0x1, 0x600
-	setworldmapflag 0x67F9
-	gotonative 0x800D2608
-	setmaplayoutindex 0x2101
-	killscript 
-	bufferitemname 0x0, 0x600
-	setworldmapflag 0x67FD
-	gotonative 0x67F90508
-	gotonative 0xBE2A0208
+	applymovement_at 0xC0A, 0x282E0600, 0x3603
+	turnvobject 0xFB, 0x1B
+	compare_addr_to_addr 0x6111912, 0x12002D27
+	goto_if 0x2, 0xAC060D1F
+	.byte 0xFF
+	call 0x82467D3
 	end 
+	specialvar 0x800D, sub_0813B54C
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x82467F9
+	specialvar 0x800D, ValidateReceivedWonderCard
+	compare_var_to_value 0x800D, 0x0
+	goto_if 0x1, 0x82467FD
+	goto 0x82467F9
+	end 
+	clearflag 0x2BE
 	return 
 	setflag 0x2BE
 	return 

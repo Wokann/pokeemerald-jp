@@ -26,9 +26,11 @@
 	nop 
 	nop 
 	compare_addr_to_addr 0x4003C00, 0xE7600208
-	.byte 0x56
-	gotostd 0x2
-	goto_if 0xC, 0xFFFB00
+	addobject_at 0x208, 0x60C
+	nop 
+	.byte 0xFB
+	.byte 0xFF
+	nop 
 	nop 
 	nop 
 	nop 

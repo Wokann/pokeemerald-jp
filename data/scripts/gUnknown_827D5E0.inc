@@ -16,10 +16,9 @@
 	end 
 	nop 
 	.byte 0xE6
-	.byte 0x56
-	gotostd 0x2
-	return 
-	delay 0xE000
+	addobject_at 0x208, 0x328
+	nop 
+	.byte 0xE0
 	.byte 0xFF
 	nop 
 	nop 

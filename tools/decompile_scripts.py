@@ -148,6 +148,18 @@ def build_specials_map():
     return specials
 
 
+# The US event.inc names some *_at commands with SCR_OP_*AT constants
+# (SCR_OP_APPLYMOVEMENTAT etc.), while the JP command table uses raw hex
+# const names for those opcodes (SCR_OP_50 etc.).  Decode them under the
+# JP macro names so the .inc output assembles against asm/macros/event.inc.
+JP_CONST_ALIASES = {
+    "SCR_OP_APPLYMOVEMENTAT": ("SCR_OP_50", "applymovement_at"),
+    "SCR_OP_WAITMOVEMENTAT": ("SCR_OP_52", "waitmovement_at"),
+    "SCR_OP_REMOVEOBJECTAT": ("SCR_OP_54", "removeobject_at"),
+    "SCR_OP_ADDOBJECTAT": ("SCR_OP_56", "addobject_at"),
+}
+
+
 def build_macro_formats(opcode_by_name):
     """Return (formats, formats_by_name).
 
@@ -187,9 +199,12 @@ def build_macro_formats(opcode_by_name):
         for path in paths:
             if not path or path[0][0] != "op":
                 continue
-            opcode = opcode_by_name.get(path[0][1])
+            alias = JP_CONST_ALIASES.get(path[0][1])
+            const = alias[0] if alias else path[0][1]
+            opcode = opcode_by_name.get(const)
             if opcode is None:
                 continue
+            format_name = alias[1] if alias else name
             argfmt = []
             ok = True
             for em in path[1:]:
@@ -208,13 +223,13 @@ def build_macro_formats(opcode_by_name):
                     break
             if not ok or opcode in formats:
                 continue
-            formats[opcode] = (name, argfmt)
+            formats[opcode] = (format_name, argfmt)
             nargs = sum(
                 1
                 for sz, kind, an in argfmt
                 if kind in ("arg", "special") or kind == "arg_hi"
             )
-            formats_by_name[(name, nargs)] = (opcode, argfmt)
+            formats_by_name[(format_name, nargs)] = (opcode, argfmt)
     return formats, formats_by_name
 
 

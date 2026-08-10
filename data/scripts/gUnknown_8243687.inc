@@ -19,9 +19,7 @@
 	messageautoscroll 0x197E5A5F
 	nop 
 	dotrainerbattle 
-	.byte 0x52
-	checkplayergender 
-	settrainerflag 0x2D
+	waitmovement_at 0x61A0, 0x2D00
 	end 
 	clearflag 0xAB10
 	.byte 0xFF
