@@ -304,6 +304,9 @@ sub_081BA8CC = MultiBootCheckComplete;
 MultiBootInit = GetGlyphWidthFont6;
 gTrainerBackPicCoords = gUnknown_82D95BC;
 gMonFrontAnimsPtrTable = gUnknown_82DD33C;
+SpriteCB_VsLetterInit = sub_08038828;
+gGameVersion = gUnknown_829BDA4;
+sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
 FillAroundBattleWindows = sub_0805EB30;
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
@@ -679,7 +682,7 @@ SECTIONS {
         asm/ground.o(.text);
         asm/normal.o(.text);
         asm/battle_anim_utility_funcs.o(.text);
-        asm/battle_intro.o(.text);
+        build/src/battle_intro.o(.text);
         asm/bike.o(.text);
         asm/easy_chat.o(.text);
         build/src/mon_markings.o(.text);
