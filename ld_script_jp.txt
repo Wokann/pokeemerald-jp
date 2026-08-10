@@ -90,6 +90,7 @@ sEscalatorMetatiles_1F_3 = ABSOLUTE(0x08562A50);
 sEscalatorMetatiles_2F_0 = ABSOLUTE(0x08562A56);
 sEscalatorMetatiles_2F_1 = ABSOLUTE(0x08562A5C);
 sEscalatorMetatiles_2F_2 = ABSOLUTE(0x08562A62);
+sCoordEventWeatherFuncs = ABSOLUTE(0x084E8924);
 
 SECTIONS {
     . = 0x2000000;
@@ -180,7 +181,7 @@ SECTIONS {
         asm/scrcmd.o(.text);
         asm/field_control_avatar.o(.text);
         asm/event_data.o(.text);
-        asm/coord_event_weather.o(.text);
+        build/src/coord_event_weather.o(.text);
         build/src/field_tasks.o(.text);
         asm/clock.o(.text);
         asm/reset_rtc_screen.o(.text);
