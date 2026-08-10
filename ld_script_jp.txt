@@ -183,7 +183,7 @@ SECTIONS {
         asm/main.o(.text);
         asm/alloc.o(.text);
         asm/dma3_manager.o(.text);
-        asm/gpu_regs.o(.text);
+        build/src/gpu_regs.o(.text);
         asm/bg.o(.text);
         asm/blit.o(.text);
         asm/window.o(.text);
