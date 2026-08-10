@@ -895,10 +895,10 @@ void InitMoveRelearnerWindows(bool8 useContestWindow)
 //   0x085F7C5F: "タイプ/" (type/)
 //   0x085F7C64: "PP/"
 //   0x085F7C68: "いりょく/" (power/)
-//   0x085F7C6E: "めいちゅう/" (accuracy/)
+//   0x085F7C6E: "{MUS_RG_SEVII_DUNGEON}めいちゅう/" (accuracy/)
 //   0x085F7C57: "コンテストわざ" (contest moves)
 //   0x085F7C75: "アピール" (appeal)
-//   0x085F7C7A: "ぼうがい" (jam)
+//   0x085F7C7A: "ぼうがい{PH_CLOTH_SOLO}" (jam)
 __attribute__((naked)) void sub_081D1EE0(void)
 {
     __asm__(".syntax unified\n\t"

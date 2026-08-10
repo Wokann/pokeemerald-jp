@@ -138,6 +138,64 @@ def strip_trailing(b):
     return bytes(out)
 
 
+def bl_positions(b):
+    """Offsets (from function start) of Thumb bl instructions."""
+    pos = set()
+    for i in range(0, len(b) - 3, 2):
+        hw1 = b[i] | (b[i + 1] << 8)
+        hw2 = b[i + 2] | (b[i + 3] << 8)
+        if (hw1 & 0xF800) == 0xF000 and (hw2 & 0xF800) == 0xF800:
+            pos.add(i)
+    return pos
+
+
+def literal_pool_offsets(b):
+    """Offsets of 4-byte words loaded via ldr rX, [pc, #imm]."""
+    offs = set()
+    for i in range(0, len(b) - 3, 2):
+        hw = b[i] | (b[i + 1] << 8)
+        if (hw & 0xF800) == 0x4800:  # ldr r0-r7, [pc, #imm8*4]
+            imm = (hw & 0xFF) * 4
+            pc = (i + 4) & ~3
+            offs.add(pc + imm)
+        elif (hw & 0xFFF8) == 0xF8D0:  # Thumb-2 ldr rX, [pc, #imm12]
+            imm12 = ((hw & 0xFF) << 4) | ((b[i + 2] >> 4) & 0xF)
+            pc = (i + 4) & ~3
+            offs.add(pc + imm12)
+    return offs
+
+
+def byte_compare(compiled, jp):
+    """Strict byte compare that only tolerates literal-pool words and
+    bl targets (both resolved at link time, not in a standalone object).
+    Bl instruction *positions* must still match exactly."""
+    c = strip_trailing(compiled)
+    j = strip_trailing(jp)
+    if len(c) != len(j):
+        return False
+    if bl_positions(c) != bl_positions(j):
+        return False
+    pool = literal_pool_offsets(c)
+    n = len(c)
+    for i in range(0, n, 2):
+        if i in pool or i in bl_positions(c):
+            continue
+        if c[i : i + 2] != j[i : i + 2]:
+            return False
+    for off in pool:
+        if off + 4 > n:
+            continue
+        cv = int.from_bytes(c[off : off + 4], "little")
+        jv = int.from_bytes(j[off : off + 4], "little")
+        if cv == jv:
+            continue
+        # Standalone object holds only the reloc addend (0 or small);
+        # the JP ROM holds the resolved absolute address.
+        if not (cv < 0x10000 and 0x02000000 <= jv < 0x0A000000):
+            return False
+    return True
+
+
 def verify_function(name, c_file, jp_name=None):
     """Compile c_file and byte-compare one named function against the
     JP ROM.  Returns a dict with ok/addr/compiled/jp/literal."""
@@ -150,24 +208,7 @@ def verify_function(name, c_file, jp_name=None):
     if compiled is None:
         return {"ok": False, "error": f"{name}: symbol not in compiled object"}
     jp_bytes = JP_ROM_BYTES[(jp_addr & 0xFFFFFF) : (jp_addr & 0xFFFFFF) + len(compiled)]
-    mc = strip_trailing(mask(compiled))
-    mj = strip_trailing(mask(jp_bytes))
-    ok = mc == mj
-    if not ok:
-        # Unresolved symbol references in a standalone object show only
-        # their addend (e.g. gHeap+0xF2C -> 0x00000F2C); after linking
-        # they resolve to the absolute address that the JP literal pool
-        # already holds (and which mask() zeroes).  Accept that pattern
-        # for any literal-pool word (mid-function pools are legal too).
-        ok = True
-        if len(mj) < len(mc):
-            mj = mj + b"\x00" * (len(mc) - len(mj))
-        for i in range(0, len(mc), 4):
-            cv = int.from_bytes(mc[i : i + 4], "little")
-            jv = int.from_bytes(mj[i : i + 4], "little")
-            if mc[i : i + 4] != mj[i : i + 4] and not (jv == 0 and cv < 0x10000):
-                ok = False
-                break
+    ok = byte_compare(compiled, jp_bytes)
     has_literal = bool(re.search(r"\.word\s+\S+\s*$", asm_text, re.M))
     literal = None
     if has_literal and len(jp_bytes) >= 4:
