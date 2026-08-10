@@ -8441,7 +8441,7 @@ sub_080F0C84: @ 0x080F0C84
 	ldrb r1, [r0, #5]
 	ldrb r2, [r0, #4]
 	movs r0, #5
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	ldr r0, _080F0CB0
 	bl FlagSet
 	pop {r0}

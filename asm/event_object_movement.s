@@ -682,8 +682,8 @@ RemoveEventObject: @ 0x0808D220
 	bx r0
 	thumb_func_end RemoveEventObject
 
-	thumb_func_start RemoveEventObjectByLocalIdAndMap
-RemoveEventObjectByLocalIdAndMap: @ 0x0808D234
+	thumb_func_start RemoveObjectEventByLocalIdAndMap
+RemoveObjectEventByLocalIdAndMap: @ 0x0808D234
 	push {lr}
 	sub sp, #4
 	lsls r0, r0, #0x18
@@ -717,7 +717,7 @@ _0808D272:
 	bx r0
 	.align 2, 0
 _0808D278: .4byte 0x02036FF0
-	thumb_func_end RemoveEventObjectByLocalIdAndMap
+	thumb_func_end RemoveObjectEventByLocalIdAndMap
 
 	thumb_func_start RemoveEventObjectInternal
 RemoveEventObjectInternal: @ 0x0808D27C
@@ -1003,8 +1003,8 @@ _0808D49C:
 _0808D4AC: .4byte 0x020205AC
 	thumb_func_end TrySetupEventObjectSprite
 
-	thumb_func_start TrySpawnEventObjectTemplate
-TrySpawnEventObjectTemplate: @ 0x0808D4B0
+	thumb_func_start TrySpawnObjectEventTemplate
+TrySpawnObjectEventTemplate: @ 0x0808D4B0
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -1102,7 +1102,7 @@ _0808D562:
 	.align 2, 0
 _0808D570: .4byte 0x020205AC
 _0808D574: .4byte 0x02036FF0
-	thumb_func_end TrySpawnEventObjectTemplate
+	thumb_func_end TrySpawnObjectEventTemplate
 
 	thumb_func_start SpawnSpecialEventObject
 SpawnSpecialEventObject: @ 0x0808D578
@@ -1125,7 +1125,7 @@ SpawnSpecialEventObject: @ 0x0808D578
 	ldrsh r0, [r4, r6]
 	str r0, [sp]
 	adds r0, r5, #0
-	bl TrySpawnEventObjectTemplate
+	bl TrySpawnObjectEventTemplate
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	add sp, #8
@@ -1190,8 +1190,8 @@ SpawnSpecialEventObjectParameterized: @ 0x0808D5B4
 _0808D618: .4byte 0xFFF90000
 	thumb_func_end SpawnSpecialEventObjectParameterized
 
-	thumb_func_start TrySpawnEventObject
-TrySpawnEventObject: @ 0x0808D61C
+	thumb_func_start TrySpawnObjectEvent
+TrySpawnObjectEvent: @ 0x0808D61C
 	push {r4, r5, r6, r7, lr}
 	sub sp, #8
 	lsls r0, r0, #0x18
@@ -1220,7 +1220,7 @@ TrySpawnEventObject: @ 0x0808D61C
 	adds r0, r5, #0
 	adds r1, r7, #0
 	adds r2, r6, #0
-	bl TrySpawnEventObjectTemplate
+	bl TrySpawnObjectEventTemplate
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	b _0808D664
@@ -1231,7 +1231,7 @@ _0808D664:
 	pop {r4, r5, r6, r7}
 	pop {r1}
 	bx r1
-	thumb_func_end TrySpawnEventObject
+	thumb_func_end TrySpawnObjectEvent
 
 	thumb_func_start MakeObjectTemplateFromEventObjectGraphicsInfo
 MakeObjectTemplateFromEventObjectGraphicsInfo: @ 0x0808D66C
@@ -1557,8 +1557,8 @@ _0808D8DC:
 	.align 2, 0
 	thumb_func_end sprite_new
 
-	thumb_func_start TrySpawnEventObjects
-TrySpawnEventObjects: @ 0x0808D8F0
+	thumb_func_start TrySpawnObjectEvents
+TrySpawnObjectEvents: @ 0x0808D8F0
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -1674,7 +1674,7 @@ _0808D974:
 	str r0, [sp]
 	adds r0, r4, #0
 	asrs r3, r3, #0x10
-	bl TrySpawnEventObjectTemplate
+	bl TrySpawnObjectEventTemplate
 _0808D9DE:
 	adds r0, r5, #1
 	lsls r0, r0, #0x18
@@ -1692,7 +1692,7 @@ _0808D9E8:
 	bx r0
 	.align 2, 0
 _0808D9F8: .4byte 0x03005AEC
-	thumb_func_end TrySpawnEventObjects
+	thumb_func_end TrySpawnObjectEvents
 
 	thumb_func_start RemoveEventObjectsOutsideView
 RemoveEventObjectsOutsideView: @ 0x0808D9FC
@@ -3421,7 +3421,7 @@ UpdateObjectEventsForCameraUpdate: @ 0x0808E678
 	asrs r5, r5, #0x10
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl TrySpawnEventObjects
+	bl TrySpawnObjectEvents
 	bl RemoveEventObjectsOutsideView
 	pop {r4, r5}
 	pop {r0}

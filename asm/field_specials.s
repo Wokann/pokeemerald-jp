@@ -2781,7 +2781,7 @@ RemoveCameraObject: @ 0x0813921C
 	ldrb r1, [r0, #5]
 	ldrb r2, [r0, #4]
 	movs r0, #0x7f
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	pop {r0}
 	bx r0
 	.align 2, 0

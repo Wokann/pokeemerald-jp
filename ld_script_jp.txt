@@ -162,6 +162,12 @@ sClearSaveYesNo = ABSOLUTE(0x085CDBA8);
 sContestWinnerPicDummy = ABSOLUTE(0x0830FC68);
 EventScript_ResetAllMapFlags = ABSOLUTE(0x08242678);
 sLotteryPrizes = ABSOLUTE(0x085C7A2C);
+sUnionRoomObjGfxIds = ABSOLUTE(0x082C2B7C);
+sUnionRoomPlayerCoords = ABSOLUTE(0x082C2B90);
+sUnionRoomGroupOffsets = ABSOLUTE(0x082C2BB0);
+sUnionRoomLocalIds = ABSOLUTE(0x082C2BC4);
+gAssertFile_rfu_union_tool = ABSOLUTE(0x082C2BDC);
+gAssertCond_UnionObjWork = ABSOLUTE(0x082C2BF0);
 
 SECTIONS {
     . = 0x2000000;
@@ -195,7 +201,7 @@ SECTIONS {
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
-        asm/union_room_player_avatar.o(.text);
+        build/src/union_room_player_avatar.o(.text);
         asm/union_room_battle.o(.text);
         asm/mevent2.o(.text);
         asm/mevent_801BAAC.o(.text);

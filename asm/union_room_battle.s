@@ -133,7 +133,7 @@ _08019640:
 	cmp r0, #0
 	beq _0801965E
 	adds r0, r4, #0
-	bl RemoveUnionRoomPlayerEventObject
+	bl RemoveUnionRoomPlayerObjectEvent
 	adds r0, r4, #0
 	bl HideUnionRoomPlayer
 	movs r0, #0
@@ -185,7 +185,7 @@ _0801968A:
 	ldrsh r3, [r4, r0]
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #1
 	beq _08019716
 	mov r0, sp
@@ -198,14 +198,14 @@ _0801968A:
 	ldrsh r3, [r4, r0]
 	adds r0, r5, #0
 	movs r1, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #1
 	beq _08019716
 	ldrb r1, [r7, #1]
 	adds r0, r5, #0
 	bl SetUnionRoomPlayerGfx
 	adds r0, r5, #0
-	bl CreateUnionRoomPlayerEventObject
+	bl CreateUnionRoomPlayerObjectEvent
 	adds r0, r5, #0
 	bl ShowUnionRoomPlayer
 	ldrb r0, [r6]
@@ -263,7 +263,7 @@ _08019740:
 	strb r0, [r4, #3]
 	adds r0, r5, #0
 	adds r1, r6, #0
-	bl sub_08019370
+	bl GetUnionRoomPlayerGraphicsId
 	strb r0, [r4, #1]
 	ldrb r0, [r4]
 	cmp r0, #0
@@ -356,7 +356,7 @@ _080197D8:
 	strb r1, [r4]
 	strb r1, [r4, #2]
 	adds r0, r5, #0
-	bl RemoveUnionRoomPlayerEventObject
+	bl RemoveUnionRoomPlayerObjectEvent
 	adds r0, r5, #0
 	bl HideUnionRoomPlayer
 	b _0801982E
@@ -489,7 +489,7 @@ _080198DC:
 	cmp r0, #0
 	bne _080198F2
 	adds r0, r4, #0
-	bl RemoveUnionRoomPlayerEventObject
+	bl RemoveUnionRoomPlayerObjectEvent
 	adds r0, r4, #0
 	bl HideUnionRoomPlayer
 _080198F2:
@@ -620,7 +620,7 @@ _080199D4:
 	adds r1, r4, #0
 	mov r2, sp
 	adds r3, r7, #0
-	bl sub_08019388
+	bl GetUnionRoomPlayerCoords
 	ldr r0, [sp]
 	ldr r1, [sp, #4]
 	movs r2, #0
@@ -731,7 +731,7 @@ _08019A7E:
 	adds r0, r5, #0
 	adds r1, r6, #0
 	mov r2, sp
-	bl sub_08019388
+	bl GetUnionRoomPlayerCoords
 	ldr r0, [sp]
 	ldr r1, [sp, #4]
 	movs r2, #1
@@ -763,7 +763,7 @@ sub_08019AC8: @ 0x08019AC8
 	adds r0, r4, #0
 	adds r1, r5, #0
 	mov r2, sp
-	bl sub_08019388
+	bl GetUnionRoomPlayerCoords
 	ldr r0, [sp]
 	ldr r1, [sp, #4]
 	movs r2, #0
@@ -814,7 +814,7 @@ sub_08019B00: @ 0x08019B00
 	ldrsh r3, [r0, r1]
 	adds r0, r7, #0
 	movs r1, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #1
 	beq _08019BF8
 	movs r0, #0
@@ -823,7 +823,7 @@ sub_08019B00: @ 0x08019B00
 	ldrsh r3, [r6, r1]
 	adds r0, r7, #0
 	movs r1, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #1
 	beq _08019BF8
 	mov r2, r8
@@ -831,7 +831,7 @@ sub_08019B00: @ 0x08019B00
 	lsls r0, r0, #0x1f
 	lsrs r0, r0, #0x1f
 	ldrb r1, [r2, #2]
-	bl sub_08019370
+	bl GetUnionRoomPlayerGraphicsId
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
@@ -860,7 +860,7 @@ _08019BA2:
 	ldrsh r3, [r0, r1]
 	adds r0, r7, #0
 	adds r1, r5, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #0
 	bne _08019BF0
 	mov r0, sb
@@ -870,7 +870,7 @@ _08019BA2:
 	ldrsh r3, [r6, r0]
 	adds r0, r7, #0
 	adds r1, r5, #0
-	bl sub_080193D8
+	bl IsUnionRoomPlayerAt
 	cmp r0, #0
 	bne _08019BF0
 	ldrb r2, [r4]
@@ -879,7 +879,7 @@ _08019BA2:
 	ands r0, r1
 	movs r1, #7
 	ands r1, r2
-	bl sub_08019370
+	bl GetUnionRoomPlayerGraphicsId
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18

@@ -8649,7 +8649,7 @@ sub_080B9434: @ 0x080B9434
 	ldrb r0, [r4, #0xc]
 	ldrb r1, [r4, #0xe]
 	ldrb r2, [r4, #0x10]
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	movs r0, #0x41
 	bl FieldEffectActiveListRemove
 	adds r0, r5, #0

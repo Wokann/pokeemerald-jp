@@ -1297,7 +1297,7 @@ _080EA0FE:
 	ldr r2, [r5]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl TrySpawnEventObject
+	bl TrySpawnObjectEvent
 	ldrb r0, [r6]
 	ldr r2, [r5]
 	ldrb r1, [r2, #5]
@@ -1413,7 +1413,7 @@ _080EA228:
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	adds r0, r4, #0
 	bl FlagSet
 _080EA256:

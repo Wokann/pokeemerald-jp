@@ -2777,7 +2777,7 @@ ScrCmd_removeobject: @ 0x0809A0C8
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	movs r0, #0
 	pop {r1}
 	bx r1
@@ -2802,7 +2802,7 @@ ScrCmd_removeobject_at: @ 0x0809A0F0
 	str r3, [r4, #8]
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl RemoveEventObjectByLocalIdAndMap
+	bl RemoveObjectEventByLocalIdAndMap
 	movs r0, #0
 	pop {r4}
 	pop {r1}
@@ -2823,7 +2823,7 @@ ScrCmd_addobject: @ 0x0809A120
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl TrySpawnEventObject
+	bl TrySpawnObjectEvent
 	movs r0, #0
 	pop {r1}
 	bx r1
@@ -2848,7 +2848,7 @@ ScrCmd_addobject_at: @ 0x0809A148
 	str r3, [r4, #8]
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl TrySpawnEventObject
+	bl TrySpawnObjectEvent
 	movs r0, #0
 	pop {r4}
 	pop {r1}

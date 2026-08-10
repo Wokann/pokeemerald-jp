@@ -4596,7 +4596,7 @@ sub_08086340: @ 0x08086340
 	bl ResetEventObjects
 	movs r0, #0
 	movs r1, #0
-	bl TrySpawnEventObjects
+	bl TrySpawnObjectEvents
 	bl TryRunOnWarpIntoMapScript
 	pop {r0}
 	bx r0
@@ -4637,7 +4637,7 @@ mli4_mapscripts_and_other: @ 0x08086368
 	bl ResetInitialPlayerAvatarState
 	movs r0, #0
 	movs r1, #0
-	bl TrySpawnEventObjects
+	bl TrySpawnObjectEvents
 	bl TryRunOnWarpIntoMapScript
 	add sp, #4
 	pop {r4, r5}

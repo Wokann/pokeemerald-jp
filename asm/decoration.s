@@ -2731,7 +2731,7 @@ _08127E56:
 	ldr r2, [r5]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl TrySpawnEventObject
+	bl TrySpawnObjectEvent
 	ldrb r0, [r6]
 	ldr r2, [r5]
 	ldrb r1, [r2, #5]
