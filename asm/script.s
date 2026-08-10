@@ -420,8 +420,8 @@ ScriptContext_Enable: @ 0x080988C4
 _080988D4: .4byte 0x03000E38
 	thumb_func_end ScriptContext_Enable
 
-	thumb_func_start ScriptContext2_RunNewScript
-ScriptContext2_RunNewScript: @ 0x080988D8
+	thumb_func_start RunScriptImmediately
+RunScriptImmediately: @ 0x080988D8
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	ldr r4, _08098904
@@ -446,7 +446,7 @@ _080988F0:
 _08098904: .4byte 0x03000EB8
 _08098908: .4byte 0x081DABAC
 _0809890C: .4byte 0x081DAF30
-	thumb_func_end ScriptContext2_RunNewScript
+	thumb_func_end RunScriptImmediately
 
 	thumb_func_start MapHeaderGetScriptTable
 MapHeaderGetScriptTable: @ 0x08098910
@@ -497,7 +497,7 @@ MapHeaderRunScriptType: @ 0x08098950
 	bl MapHeaderGetScriptTable
 	cmp r0, #0
 	beq _08098962
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 _08098962:
 	pop {r0}
 	bx r0
@@ -628,7 +628,7 @@ TryRunOnWarpIntoMapScript: @ 0x08098A20
 	bl MapHeaderCheckScriptTable
 	cmp r0, #0
 	beq _08098A30
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 _08098A30:
 	pop {r0}
 	bx r0

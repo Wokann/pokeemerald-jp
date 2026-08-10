@@ -3,8 +3,8 @@
 .text
 .syntax unified
 
-	thumb_func_start ClearMailData
-ClearMailData: @ 0x080D3C0C
+	thumb_func_start ClearAllMail
+ClearAllMail: @ 0x080D3C0C
 	push {r4, r5, lr}
 	movs r4, #0
 	ldr r5, _080D3C34
@@ -28,7 +28,7 @@ _080D3C12:
 	.align 2, 0
 _080D3C34: .4byte 0x03005AEC
 _080D3C38: .4byte 0x00002BE0
-	thumb_func_end ClearMailData
+	thumb_func_end ClearAllMail
 
 	thumb_func_start ClearMailStruct
 ClearMailStruct: @ 0x080D3C3C

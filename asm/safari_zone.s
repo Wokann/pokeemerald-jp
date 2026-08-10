@@ -170,7 +170,7 @@ _080FCA48:
 	cmp r0, #8
 	bne _080FCA78
 	ldr r0, _080FCA68
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 	bl WarpIntoMap
 	ldr r1, _080FCA6C
 	ldr r0, _080FCA70

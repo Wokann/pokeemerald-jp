@@ -7,7 +7,7 @@
 DoWhiteOut: @ 0x08083FA8
 	push {r4, lr}
 	ldr r0, _08083FE0
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 	ldr r0, _08083FE4
 	ldr r4, [r0]
 	movs r0, #0x92
@@ -70,7 +70,7 @@ Overworld_ResetStateAfterTeleport: @ 0x08084024
 	ldr r0, _08084064
 	bl FlagClear
 	ldr r0, _08084068
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 	pop {r0}
 	bx r0
 	.align 2, 0

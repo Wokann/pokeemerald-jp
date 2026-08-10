@@ -7727,8 +7727,8 @@ sub_0802E024: @ 0x0802E024
 _0802E030: .4byte 0x03005AF0
 	thumb_func_end sub_0802E024
 
-	thumb_func_start ResetPokeJumpResults
-ResetPokeJumpResults: @ 0x0802E034
+	thumb_func_start ResetPokemonJumpRecords
+ResetPokemonJumpRecords: @ 0x0802E034
 	push {lr}
 	bl sub_0802E024
 	movs r1, #0
@@ -7740,7 +7740,7 @@ ResetPokeJumpResults: @ 0x0802E034
 	strh r1, [r0, #2]
 	pop {r0}
 	bx r0
-	thumb_func_end ResetPokeJumpResults
+	thumb_func_end ResetPokemonJumpRecords
 
 	thumb_func_start sub_0802E04C
 sub_0802E04C: @ 0x0802E04C

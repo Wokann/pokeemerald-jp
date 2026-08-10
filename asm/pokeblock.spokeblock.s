@@ -1252,8 +1252,8 @@ _08136286:
 	bx r0
 	thumb_func_end sub_081361F0
 
-	thumb_func_start sub_0813628C
-sub_0813628C: @ 0x0813628C
+	thumb_func_start ResetPokeblockScrollPositions
+ResetPokeblockScrollPositions: @ 0x0813628C
 	ldr r1, _08136298
 	movs r0, #0
 	strh r0, [r1, #4]
@@ -1261,7 +1261,7 @@ sub_0813628C: @ 0x0813628C
 	bx lr
 	.align 2, 0
 _08136298: .4byte 0x0203A814
-	thumb_func_end sub_0813628C
+	thumb_func_end ResetPokeblockScrollPositions
 
 	thumb_func_start sub_0813629C
 sub_0813629C: @ 0x0813629C
@@ -2788,8 +2788,8 @@ _08136EF0: .4byte 0x00000849
 _08136EF4: .4byte 0x0000084E
 	thumb_func_end sub_08136E90
 
-	thumb_func_start sub_08136EF8
-sub_08136EF8: @ 0x08136EF8
+	thumb_func_start ClearPokeblocks
+ClearPokeblocks: @ 0x08136EF8
 	push {r4, lr}
 	movs r4, #0
 _08136EFC:
@@ -2804,7 +2804,7 @@ _08136EFC:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08136EF8
+	thumb_func_end ClearPokeblocks
 
 	thumb_func_start sub_08136F14
 sub_08136F14: @ 0x08136F14

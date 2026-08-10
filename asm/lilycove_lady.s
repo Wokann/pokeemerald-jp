@@ -67,8 +67,8 @@ _0818D750:
 _0818D758: .4byte 0x02037290
 	thumb_func_end sub_0818D6EC
 
-	thumb_func_start SetLilycoveLady
-SetLilycoveLady: @ 0x0818D75C
+	thumb_func_start InitLilycoveLady
+InitLilycoveLady: @ 0x0818D75C
 	push {lr}
 	ldr r0, _0818D784
 	ldr r0, [r0]
@@ -106,7 +106,7 @@ _0818D79E:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end SetLilycoveLady
+	thumb_func_end InitLilycoveLady
 
 	thumb_func_start sub_0818D7A4
 sub_0818D7A4: @ 0x0818D7A4
@@ -139,8 +139,8 @@ _0818D7D2:
 	.align 2, 0
 	thumb_func_end sub_0818D7A4
 
-	thumb_func_start SetLilycoveLadyRandomly
-SetLilycoveLadyRandomly: @ 0x0818D7D8
+	thumb_func_start InitLilycoveLadyRandomly
+InitLilycoveLadyRandomly: @ 0x0818D7D8
 	push {lr}
 	bl Random
 	lsls r0, r0, #0x10
@@ -173,7 +173,7 @@ _0818D812:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end SetLilycoveLadyRandomly
+	thumb_func_end InitLilycoveLadyRandomly
 
 	thumb_func_start sub_0818D818
 sub_0818D818: @ 0x0818D818

@@ -159,6 +159,8 @@ gText_ClearingData = ABSOLUTE(0x085CDB7A);
 sClearSaveBgTemplates = ABSOLUTE(0x085CDB90);
 sClearSaveTextWindow = ABSOLUTE(0x085CDB98);
 sClearSaveYesNo = ABSOLUTE(0x085CDBA8);
+sContestWinnerPicDummy = ABSOLUTE(0x0830FC68);
+EventScript_ResetAllMapFlags = ABSOLUTE(0x08242678);
 
 SECTIONS {
     . = 0x2000000;
@@ -233,7 +235,7 @@ SECTIONS {
         asm/trade.o(.text);
         asm/berry_blender.o(.text);
         build/src/play_time.o(.text);
-        asm/new_game.o(.text);
+        build/src/new_game.o(.text);
         asm/overworld.o(.text);
         asm/fieldmap.o(.text);
         asm/metatile_behavior.o(.text);

@@ -618,6 +618,7 @@ gUnknown_2031F5C = .;
 gUnknown_2031F70 = .;
 . += 0x4;
 gUnknown_2031F74 = .;
+gDifferentSaveFile = ABSOLUTE(0x02031F74);
 . += 0x1;
 gUnknown_2031F75 = .;
 . += 0x3;

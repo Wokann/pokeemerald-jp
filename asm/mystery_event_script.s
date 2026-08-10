@@ -441,7 +441,7 @@ MEScrCmd_runscript: @ 0x08153A08
 	subs r0, r0, r1
 	ldr r1, [r4, #0x64]
 	adds r0, r0, r1
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 	movs r0, #0
 	pop {r4}
 	pop {r1}

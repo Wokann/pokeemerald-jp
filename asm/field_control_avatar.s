@@ -2277,7 +2277,7 @@ _0809C93A:
 	b _0809C95C
 _0809C954:
 	adds r0, r1, #0
-	bl ScriptContext2_RunNewScript
+	bl RunScriptImmediately
 _0809C95A:
 	movs r0, #0
 _0809C95C:

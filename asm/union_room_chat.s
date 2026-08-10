@@ -2671,8 +2671,8 @@ sub_0801EFE0: @ 0x0801EFE0
 _0801EFE8: .4byte 0x02022938
 	thumb_func_end sub_0801EFE0
 
-	thumb_func_start copy_strings_to_sav1
-copy_strings_to_sav1: @ 0x0801EFEC
+	thumb_func_start InitUnionRoomChatRegisteredTexts
+InitUnionRoomChatRegisteredTexts: @ 0x0801EFEC
 	push {r4, lr}
 	ldr r4, _0801F070
 	ldr r0, [r4]
@@ -2750,7 +2750,7 @@ _0801F0B4: .4byte 0x00003D30
 _0801F0B8: .4byte 0x085CC792
 _0801F0BC: .4byte 0x00003D45
 _0801F0C0: .4byte 0x085CC798
-	thumb_func_end copy_strings_to_sav1
+	thumb_func_end InitUnionRoomChatRegisteredTexts
 
 	thumb_func_start sub_0801F0C4
 sub_0801F0C4: @ 0x0801F0C4

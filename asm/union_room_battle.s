@@ -2664,8 +2664,8 @@ _0801AAA4: .4byte 0x082C32E1
 _0801AAA8: .4byte 0x08085A31
 	thumb_func_end sub_0801A728
 
-	thumb_func_start sub_0801AAAC
-sub_0801AAAC: @ 0x0801AAAC
+	thumb_func_start ClearMysteryGift
+ClearMysteryGift: @ 0x0801AAAC
 	push {lr}
 	sub sp, #4
 	movs r0, #0
@@ -2686,5 +2686,5 @@ sub_0801AAAC: @ 0x0801AAAC
 _0801AAD4: .4byte 0x03005AEC
 _0801AAD8: .4byte 0x0000322C
 _0801AADC: .4byte 0x0500007A
-	thumb_func_end sub_0801AAAC
+	thumb_func_end ClearMysteryGift
 
