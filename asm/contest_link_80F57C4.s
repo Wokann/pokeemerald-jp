@@ -6120,3 +6120,12 @@ _080F9060:
 _080F9064: .4byte 0x030031C4
 	thumb_func_end sub_080F9044
 
+
+	.globl ChooseContestMon
+	.set ChooseContestMon, sub_080F8D08
+
+	.globl ContestLinkTransfer
+	.set ContestLinkTransfer, sub_080F8D48
+
+	.globl StartContest
+	.set StartContest, sub_080F8C90

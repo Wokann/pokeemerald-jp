@@ -24873,3 +24873,18 @@ MovementAction_Finish: @ 0x08097AAC
 	movs r0, #1
 	bx lr
 	thumb_func_end MovementAction_Finish
+
+	.globl CreateVirtualObject
+	.set CreateVirtualObject, sprite_new
+
+	.globl ObjectEventFaceOppositeDirection
+	.set ObjectEventFaceOppositeDirection, EventObjectFaceOppositeDirection
+
+	.globl ObjectEventTurnByLocalIdAndMap
+	.set ObjectEventTurnByLocalIdAndMap, EventObjectTurnByLocalIdAndMap
+
+	.globl TryMoveObjectEventToMapCoords
+	.set TryMoveObjectEventToMapCoords, TryMoveEventObjectToMapCoords
+
+	.globl TurnVirtualObject
+	.set TurnVirtualObject, sub_080974E8

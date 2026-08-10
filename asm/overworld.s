@@ -7256,3 +7256,12 @@ _080876A0:
 	bx r0
 	.align 2, 0
 	thumb_func_end SpriteCB_LinkPlayer
+
+	.globl SetObjEventTemplateCoords
+	.set SetObjEventTemplateCoords, Overworld_SetEventObjTemplateCoords
+
+	.globl SetObjEventTemplateMovementType
+	.set SetObjEventTemplateMovementType, Overworld_SetEventObjTemplateMovementType
+
+	.globl IsOverworldLinkActive
+	.set IsOverworldLinkActive, IsUpdateLinkStateCBActive

@@ -5722,3 +5722,9 @@ _080AE8F2:
 	.align 2, 0
 	thumb_func_end UpdateRainCounter
 
+
+	.globl SetSavedWeather
+	.set SetSavedWeather, SetSav1Weather
+
+	.globl SetSavedWeatherFromCurrMapHeader
+	.set SetSavedWeatherFromCurrMapHeader, DoCurrentWeather

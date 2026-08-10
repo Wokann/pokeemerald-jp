@@ -1526,3 +1526,6 @@ _080A31F6:
 	bx r1
 	.align 2, 0
 	thumb_func_end IsSpecialSEPlaying
+
+	.globl PlayCry_Script
+	.set PlayCry_Script, PlayCry5

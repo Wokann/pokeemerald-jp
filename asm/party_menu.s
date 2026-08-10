@@ -19359,3 +19359,6 @@ _081B9648: .4byte 0x02037280
 _081B964C: .4byte 0x02024190
 _081B9650: .4byte 0x02037290
 	thumb_func_end sub_081B95B8
+
+	.globl ShowContestResults
+	.set ShowContestResults, sub_081B90A4

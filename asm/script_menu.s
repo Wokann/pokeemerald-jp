@@ -1966,3 +1966,9 @@ _080E2238: .4byte 0x02039C30
 _080E223C: .4byte 0x080E1569
 _080E2240: .4byte 0x03005B60
 	thumb_func_end sub_080E21F8
+
+	.globl ScriptMenu_HidePokemonPic
+	.set ScriptMenu_HidePokemonPic, ScriptMenu_GetPicboxWaitFunc
+
+	.globl ScriptMenu_MultichoiceGrid
+	.set ScriptMenu_MultichoiceGrid, sp106_CreateStartMenu

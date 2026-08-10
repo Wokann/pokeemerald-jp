@@ -501,3 +501,9 @@ _080980DA:
 	bx r1
 	.align 2, 0
 	thumb_func_end sub_080980BC
+
+	.globl FreezeObjects_WaitForPlayer
+	.set FreezeObjects_WaitForPlayer, ScriptFreezeEventObjects
+
+	.globl FreezeObjects_WaitForPlayerAndSelected
+	.set FreezeObjects_WaitForPlayerAndSelected, LockSelectedEventObject

@@ -841,7 +841,7 @@ gUnknown_8276F97: @ 0x8276F97
 
 	.globl gUnknown_8276FBB
 gUnknown_8276FBB: @ 0x8276FBB
-	.incbin "build/data/event_scripts.bin", 0x9c40f, 0x18
+	.include "data/scripts/gUnknown_8276FBB.inc"
 
 	.globl gUnknown_8276FD3
 gUnknown_8276FD3: @ 0x8276FD3
@@ -2108,7 +2108,7 @@ gUnknown_8288D32: @ 0x8288D32
 
 	.globl gUnknown_8288D3F
 gUnknown_8288D3F: @ 0x8288D3F
-	.incbin "build/data/event_scripts.bin", 0xae193, 0xd
+	.include "data/scripts/gUnknown_8288D3F.inc"
 
 	.globl gUnknown_8288D4C
 gUnknown_8288D4C: @ 0x8288D4C
