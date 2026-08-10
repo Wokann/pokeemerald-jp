@@ -16,6 +16,8 @@ gPokenavHeader_Gfx = ABSOLUTE(0x085EFA00);
 gPokenavHeader_Tilemap = ABSOLUTE(0x085EFC2C);
 gPokenavHeader_Pal = ABSOLUTE(0x085EF9E0);
 gPokenavLeftHeader_Pal = ABSOLUTE(0x085F021C);
+sLastCursorPositions = ABSOLUTE(0x085F1618);
+sMenuItems = ABSOLUTE(0x085F161D);
 gMonBackPicTable = ABSOLUTE(0x082D6148);
 sInvisibleSpriteTemplate = ABSOLUTE(0x082FAD34);
 sSpriteDimensions = ABSOLUTE(0x082FAD4C);
@@ -551,7 +553,7 @@ SECTIONS {
         build/src/pokenav.o(.text);
         build/src/pokenav_main_menu.o(.text);
         asm/pokenav_match_call_ui.o(.text);
-        asm/pokenav_unk_1.o(.text);
+        build/src/pokenav_menu_handler.o(.text);
         asm/pokenav_unk_2.o(.text);
         asm/pokenav_unk_3.o(.text);
         asm/pokenav_unk_4.o(.text);

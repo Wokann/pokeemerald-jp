@@ -52,7 +52,6 @@ static void CB2_InitPokenavForTutorial(void);
 // JP names for cross-module functions not yet converted to C.
 extern bool32 IsUpdateLinkStateCBActive(void);
 extern bool32 sub_08086EFC(void);
-extern void sub_081C8BDC(void);
 
 // Data lives at fixed ROM/EWRAM addresses from the original game;
 // symbol definitions are in ld_script_jp.txt / sym_ewram_jp.txt.
@@ -344,7 +343,7 @@ static void Task_Pokenav(u8 taskId)
         {
             bool32 calledFromScript = (gPokenavResources->mode != POKENAV_MODE_NORMAL);
 
-            sub_081C8BDC();
+            FreeMenuHandlerSubstruct1();
             FreePokenavResources();
             if (calledFromScript)
                 SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);

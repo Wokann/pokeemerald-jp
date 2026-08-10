@@ -323,10 +323,10 @@ _081C92EA:
 	movs r1, #0x30
 	movs r2, #0x20
 	bl CopyPaletteIntoBufferUnfaded
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	cmp r0, #3
 	beq _081C9322
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	cmp r0, #4
 	bne _081C9282
 _081C9322:
@@ -379,7 +379,7 @@ _081C938C:
 	movs r0, #3
 	bl PokenavFadeScreen
 _081C9398:
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	cmp r0, #3
 	beq _081C93AA
 	cmp r0, #4
@@ -398,7 +398,7 @@ _081C93BA:
 	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081C9408
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	cmp r0, #3
 	beq _081C93D8
 	cmp r0, #4
@@ -817,7 +817,7 @@ _081C96E4:
 	beq _081C975C
 	b _081C9768
 _081C96EE:
-	bl sub_081C9070
+	bl GetHelpBarTextId
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl PrintHelpBarText
@@ -830,7 +830,7 @@ _081C96FE:
 	bl SlideMenuHeaderUp
 	bl sub_081CA174
 	bl sub_081C9A88
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	cmp r0, #3
 	beq _081C9726
 	cmp r0, #4
@@ -1012,7 +1012,7 @@ _081C9856:
 	thumb_func_start sub_081C9874
 sub_081C9874: @ 0x081C9874
 	push {lr}
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	lsls r2, r0, #3
 	subs r2, r2, r0
 	lsls r2, r2, #2
@@ -1186,7 +1186,7 @@ sub_081C99B8: @ 0x081C99B8
 	movs r0, #2
 	bl GetSubstructPtr
 	adds r6, r0, #0
-	bl sub_081C9050
+	bl GetPokenavCursorPos
 	mov r8, r0
 	movs r7, #0
 	movs r5, #0
@@ -1242,7 +1242,7 @@ sub_081C9A24: @ 0x081C9A24
 	movs r0, #2
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl sub_081C9050
+	bl GetPokenavCursorPos
 	adds r3, r0, #0
 	movs r2, #0
 	movs r5, #0
@@ -1878,7 +1878,7 @@ sub_081C9EC0: @ 0x081C9EC0
 	movs r0, #2
 	bl GetSubstructPtr
 	adds r5, r0, #0
-	bl sub_081C9060
+	bl GetCurrentMenuItemId
 	ldr r1, _081C9F14
 	lsls r0, r0, #2
 	adds r0, r0, r1
@@ -2286,9 +2286,9 @@ sub_081CA1E8: @ 0x081CA1E8
 	mov r5, r8
 	push {r5, r6}
 	sub sp, #8
-	bl sub_081C9040
+	bl GetPokenavMenuType
 	adds r4, r0, #0
-	bl sub_081C9050
+	bl GetPokenavCursorPos
 	ldr r2, _081CA274
 	lsls r1, r4, #3
 	subs r1, r1, r4
