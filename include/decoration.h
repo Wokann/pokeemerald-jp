@@ -43,11 +43,15 @@ enum DecorationCategory
 struct Decoration
 {
     u8 id;
-    u8 name[16];
+    u8 name[4];
     u8 permission;
     u8 shape;
-    u8 category;
+    u8 filler7;
+    u32 filler8;
     u16 price;
+    u8 category;
+    u8 fillerF;
+    u32 price2;
     const u8 *description;
     const u16 *tiles;
 };

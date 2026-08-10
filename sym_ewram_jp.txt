@@ -20,6 +20,7 @@ sSafariZoneStepCounter = ABSOLUTE(0x02039D1A);
 sSafariZoneCaughtMons = ABSOLUTE(0x02039D1C);
 sSafariZonePkblkUses = ABSOLUTE(0x02039D1D);
 sPokeblockFeeders = ABSOLUTE(0x02039D20);
+gDecorationInventories = ABSOLUTE(0x0203B90C);
 gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
 gEnemyParty = ABSOLUTE(0x020243E8);
