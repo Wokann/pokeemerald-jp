@@ -3,2514 +3,14 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_081CC718
-sub_081CC718: @ 0x081CC718
-	push {r4, lr}
-	ldr r1, _081CC748
-	movs r0, #0xb
-	bl AllocSubstruct
-	adds r4, r0, #0
-	cmp r4, #0
-	beq _081CC75C
-	ldr r1, _081CC74C
-	adds r0, r4, r1
-	bl sub_081D151C
-	bl sub_081CD0D0
-	ldr r1, _081CC750
-	movs r0, #0x14
-	strh r0, [r1]
-	ldr r0, _081CC754
-	adds r1, r4, r0
-	ldr r0, _081CC758
-	str r0, [r1]
-	movs r0, #1
-	b _081CC75E
-	.align 2, 0
-_081CC748: .4byte 0x0000678C
-_081CC74C: .4byte 0x00006428
-_081CC750: .4byte 0x03002350
-_081CC754: .4byte 0x00006304
-_081CC758: .4byte 0x081CC7CD
-_081CC75C:
-	movs r0, #0
-_081CC75E:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CC718
-
-	thumb_func_start sub_081CC764
-sub_081CC764: @ 0x081CC764
-	push {r4, lr}
-	ldr r1, _081CC794
-	movs r0, #0xb
-	bl AllocSubstruct
-	adds r4, r0, #0
-	cmp r4, #0
-	beq _081CC7A8
-	ldr r1, _081CC798
-	adds r0, r4, r1
-	bl sub_081D151C
-	bl sub_081CD158
-	ldr r1, _081CC79C
-	movs r0, #0x14
-	strh r0, [r1]
-	ldr r0, _081CC7A0
-	adds r1, r4, r0
-	ldr r0, _081CC7A4
-	str r0, [r1]
-	movs r0, #1
-	b _081CC7AA
-	.align 2, 0
-_081CC794: .4byte 0x0000678C
-_081CC798: .4byte 0x00006428
-_081CC79C: .4byte 0x03002350
-_081CC7A0: .4byte 0x00006304
-_081CC7A4: .4byte 0x081CC7CD
-_081CC7A8:
-	movs r0, #0
-_081CC7AA:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CC764
-
-	thumb_func_start sub_081CC7B0
-sub_081CC7B0: @ 0x081CC7B0
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r2, _081CC7C8
-	adds r1, r0, r2
-	ldr r1, [r1]
-	bl _call_via_r1
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CC7C8: .4byte 0x00006304
-	thumb_func_end sub_081CC7B0
-
-	thumb_func_start sub_081CC7CC
-sub_081CC7CC: @ 0x081CC7CC
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	adds r0, r4, #0
-	bl sub_081CC924
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #0
-	bne _081CC840
-	ldr r0, _081CC824
-	ldrh r1, [r0, #0x2e]
-	movs r0, #2
-	ands r0, r1
-	cmp r0, #0
-	bne _081CC810
-	movs r0, #1
-	ands r0, r1
-	cmp r0, #0
-	beq _081CC840
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r4, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _081CC830
-	ldrh r1, [r5, #2]
-	ldrh r0, [r5]
-	subs r0, #1
-	cmp r1, r0
-	bne _081CC840
-_081CC810:
-	movs r0, #5
-	bl PlaySE
-	ldr r0, _081CC828
-	adds r1, r4, r0
-	ldr r0, _081CC82C
-	str r0, [r1]
-	movs r2, #2
-	b _081CC840
-	.align 2, 0
-_081CC824: .4byte 0x03002360
-_081CC828: .4byte 0x00006304
-_081CC82C: .4byte 0x081CC8DD
-_081CC830:
-	movs r0, #5
-	bl PlaySE
-	movs r2, #5
-	ldr r0, _081CC848
-	adds r1, r4, r0
-	ldr r0, _081CC84C
-	str r0, [r1]
-_081CC840:
-	adds r0, r2, #0
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CC848: .4byte 0x00006304
-_081CC84C: .4byte 0x081CC851
-	thumb_func_end sub_081CC7CC
-
-	thumb_func_start sub_081CC850
-sub_081CC850: @ 0x081CC850
-	push {r4, r5, r6, lr}
-	sub sp, #4
-	adds r6, r0, #0
-	movs r4, #0
-	bl HandleMonMarkingsMenuInput
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _081CC8CA
-	bl sub_081CE648
-	ldr r1, _081CC8A8
-	adds r5, r6, r1
-	movs r1, #0
-	ldrsb r1, [r5, r1]
-	ldr r2, _081CC8AC
-	adds r4, r6, r2
-	adds r1, r4, r1
-	strb r0, [r1]
-	movs r0, #0x12
-	bl GetSubstructPtr
-	ldrh r1, [r0, #2]
-	lsls r1, r1, #2
-	adds r0, r0, r1
-	ldrb r2, [r0, #4]
-	ldrb r3, [r0, #5]
-	movs r0, #0
-	ldrsb r0, [r5, r0]
-	adds r4, r4, r0
-	ldrb r1, [r4]
-	mov r0, sp
-	strb r1, [r0]
-	cmp r2, #0xe
-	bne _081CC8B4
-	movs r0, #0x64
-	muls r0, r3, r0
-	ldr r1, _081CC8B0
-	adds r0, r0, r1
-	movs r1, #8
-	mov r2, sp
-	bl SetMonData
-	b _081CC8C0
-	.align 2, 0
-_081CC8A8: .4byte 0x00006786
-_081CC8AC: .4byte 0x00006783
-_081CC8B0: .4byte 0x02024190
-_081CC8B4:
-	adds r0, r2, #0
-	adds r1, r3, #0
-	movs r2, #8
-	mov r3, sp
-	bl SetBoxMonDataAt
-_081CC8C0:
-	ldr r0, _081CC8D4
-	adds r1, r6, r0
-	ldr r0, _081CC8D8
-	str r0, [r1]
-	movs r4, #6
-_081CC8CA:
-	adds r0, r4, #0
-	add sp, #4
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CC8D4: .4byte 0x00006304
-_081CC8D8: .4byte 0x081CC7CD
-	thumb_func_end sub_081CC850
-
-	thumb_func_start sub_081CC8DC
-sub_081CC8DC: @ 0x081CC8DC
-	push {lr}
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _081CC8F4
-	ldr r0, _081CC8F0
-	b _081CC8F6
-	.align 2, 0
-_081CC8F0: .4byte 0x000186AA
-_081CC8F4:
-	ldr r0, _081CC8FC
-_081CC8F6:
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CC8FC: .4byte 0x000186A2
-	thumb_func_end sub_081CC8DC
-
-	thumb_func_start sub_081CC900
-sub_081CC900: @ 0x081CC900
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _081CC91A
-	movs r0, #0x12
-	bl FreePokenavSubstruct
-_081CC91A:
-	movs r0, #0xb
-	bl FreePokenavSubstruct
-	pop {r0}
-	bx r0
-	thumb_func_end sub_081CC900
-
-	thumb_func_start sub_081CC924
-sub_081CC924: @ 0x081CC924
-	push {r4, lr}
-	adds r4, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r2, r0, #0
-	movs r3, #0
-	ldr r0, _081CC95C
-	ldrh r1, [r0, #0x2c]
-	movs r0, #0x40
-	ands r0, r1
-	cmp r0, #0
-	beq _081CC960
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r4, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _081CC950
-	ldrh r0, [r2, #2]
-	cmp r0, #0
-	beq _081CC98E
-_081CC950:
-	movs r0, #5
-	bl PlaySE
-	movs r0, #1
-	b _081CC986
-	.align 2, 0
-_081CC95C: .4byte 0x03002360
-_081CC960:
-	movs r0, #0x80
-	ands r0, r1
-	cmp r0, #0
-	beq _081CC98E
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r4, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _081CC97E
-	ldrh r1, [r2, #2]
-	ldrh r0, [r2]
-	subs r0, #1
-	cmp r1, r0
-	bge _081CC98E
-_081CC97E:
-	movs r0, #5
-	bl PlaySE
-	movs r0, #0
-_081CC986:
-	bl sub_081CC998
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-_081CC98E:
-	adds r0, r3, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CC924
-
-	thumb_func_start sub_081CC998
-sub_081CC998: @ 0x081CC998
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	mov r8, r0
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r4, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	mov r0, r8
-	cmp r0, #0
-	beq _081CC9C4
-	ldr r1, _081CC9C0
-	adds r0, r4, r1
-	b _081CC9C8
-	.align 2, 0
-_081CC9C0: .4byte 0x00006788
-_081CC9C4:
-	ldr r2, _081CCA08
-	adds r0, r4, r2
-_081CC9C8:
-	ldrb r0, [r0]
-	lsls r0, r0, #0x18
-	asrs r0, r0, #0x18
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	adds r7, r0, #0
-	ldr r1, _081CCA0C
-	adds r0, r4, r1
-	ldr r2, _081CCA10
-	adds r1, r4, r2
-	movs r2, #0
-	ldrsb r2, [r1, r2]
-	lsls r1, r2, #2
-	adds r1, r1, r2
-	lsls r1, r1, #2
-	ldr r3, _081CCA14
-	adds r1, r1, r3
-	adds r1, r4, r1
-	lsls r2, r7, #2
-	adds r2, r2, r7
-	lsls r2, r2, #2
-	adds r2, r2, r3
-	adds r2, r4, r2
-	bl sub_081D15CC
-	ldrh r6, [r5, #2]
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CCA18
-	ldrh r1, [r5]
-	b _081CCA1C
-	.align 2, 0
-_081CCA08: .4byte 0x00006787
-_081CCA0C: .4byte 0x00006428
-_081CCA10: .4byte 0x00006786
-_081CCA14: .4byte 0x0000643C
-_081CCA18:
-	ldrh r1, [r5]
-	subs r1, #1
-_081CCA1C:
-	eors r1, r6
-	rsbs r0, r1, #0
-	orrs r0, r1
-	lsrs r0, r0, #0x1f
-	adds r6, r0, #0
-	mov r0, r8
-	cmp r0, #0
-	beq _081CCA72
-	ldr r1, _081CCA60
-	adds r2, r4, r1
-	ldrb r0, [r2]
-	adds r1, #1
-	adds r3, r4, r1
-	strb r0, [r3]
-	ldr r0, _081CCA64
-	adds r1, r4, r0
-	ldrb r0, [r1]
-	strb r0, [r2]
-	strb r7, [r1]
-	ldrb r1, [r3]
-	ldr r2, _081CCA68
-	adds r0, r4, r2
-	strb r1, [r0]
-	ldrh r0, [r5, #2]
-	cmp r0, #0
-	bne _081CCA52
-	ldrh r0, [r5]
-_081CCA52:
-	subs r1, r0, #1
-	strh r1, [r5, #2]
-	lsls r0, r1, #0x10
-	cmp r0, #0
-	beq _081CCA6C
-	subs r1, #1
-	b _081CCAC4
-	.align 2, 0
-_081CCA60: .4byte 0x00006787
-_081CCA64: .4byte 0x00006786
-_081CCA68: .4byte 0x00006789
-_081CCA6C:
-	ldrh r0, [r5]
-	subs r1, r0, #1
-	b _081CCAC4
-_081CCA72:
-	ldr r0, _081CCAA0
-	adds r2, r4, r0
-	ldrb r0, [r2]
-	ldr r1, _081CCAA4
-	adds r3, r4, r1
-	strb r0, [r3]
-	ldr r0, _081CCAA8
-	adds r1, r4, r0
-	ldrb r0, [r1]
-	strb r0, [r2]
-	strb r7, [r1]
-	ldrb r1, [r3]
-	ldr r2, _081CCAAC
-	adds r0, r4, r2
-	strb r1, [r0]
-	ldrh r1, [r5, #2]
-	ldrh r0, [r5]
-	subs r0, #1
-	cmp r1, r0
-	bge _081CCAB0
-	adds r0, r1, #1
-	b _081CCAB2
-	.align 2, 0
-_081CCAA0: .4byte 0x00006788
-_081CCAA4: .4byte 0x00006787
-_081CCAA8: .4byte 0x00006786
-_081CCAAC: .4byte 0x00006789
-_081CCAB0:
-	movs r0, #0
-_081CCAB2:
-	strh r0, [r5, #2]
-	ldrh r1, [r5, #2]
-	ldrh r0, [r5]
-	subs r0, #1
-	cmp r1, r0
-	bge _081CCAC2
-	adds r1, #1
-	b _081CCAC4
-_081CCAC2:
-	movs r1, #0
-_081CCAC4:
-	ldr r2, _081CCAD8
-	adds r0, r4, r2
-	strh r1, [r0]
-	ldrh r4, [r5, #2]
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CCADC
-	ldrh r1, [r5]
-	b _081CCAE0
-	.align 2, 0
-_081CCAD8: .4byte 0x00006302
-_081CCADC:
-	ldrh r1, [r5]
-	subs r1, #1
-_081CCAE0:
-	eors r1, r4
-	rsbs r0, r1, #0
-	orrs r0, r1
-	lsrs r0, r0, #0x1f
-	cmp r6, #0
-	bne _081CCAF0
-	movs r0, #3
-	b _081CCAFA
-_081CCAF0:
-	cmp r0, #0
-	beq _081CCAF8
-	movs r0, #1
-	b _081CCAFA
-_081CCAF8:
-	movs r0, #4
-_081CCAFA:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CC998
-
-	thumb_func_start sub_081CCB04
-sub_081CCB04: @ 0x081CCB04
-	push {r4, lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r4, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r2, r0, #0
-	ldr r1, _081CCB2C
-	adds r0, r4, r1
-	ldrb r0, [r0]
-	cmp r0, #9
-	bls _081CCB22
-	b _081CCC70
-_081CCB22:
-	lsls r0, r0, #2
-	ldr r1, _081CCB30
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_081CCB2C: .4byte 0x0000678A
-_081CCB30: .4byte 0x081CCB34
-_081CCB34: @ jump table
-	.4byte _081CCB5C @ case 0
-	.4byte _081CCB68 @ case 1
-	.4byte _081CCB74 @ case 2
-	.4byte _081CCB80 @ case 3
-	.4byte _081CCBD0 @ case 4
-	.4byte _081CCBE8 @ case 5
-	.4byte _081CCC00 @ case 6
-	.4byte _081CCC18 @ case 7
-	.4byte _081CCC30 @ case 8
-	.4byte _081CCC48 @ case 9
-_081CCB5C:
-	movs r1, #2
-	ldrsh r0, [r2, r1]
-	movs r1, #0
-	bl sub_081CCF84
-	b _081CCC70
-_081CCB68:
-	movs r1, #2
-	ldrsh r0, [r2, r1]
-	movs r1, #0
-	bl sub_081CD17C
-	b _081CCC70
-_081CCB74:
-	movs r1, #2
-	ldrsh r0, [r2, r1]
-	movs r1, #0
-	bl sub_081CD2F8
-	b _081CCC70
-_081CCB80:
-	ldrh r0, [r2]
-	cmp r0, #1
-	bne _081CCBA8
-	ldr r2, _081CCBA4
-	adds r0, r4, r2
-	movs r1, #0
-	strb r1, [r0]
-	adds r2, #1
-	adds r0, r4, r2
-	strb r1, [r0]
-	adds r2, #1
-	adds r0, r4, r2
-	strb r1, [r0]
-	adds r2, #2
-	adds r0, r4, r2
-	strb r1, [r0]
-	movs r0, #1
-	b _081CCC7C
-	.align 2, 0
-_081CCBA4: .4byte 0x00006786
-_081CCBA8:
-	ldr r0, _081CCBC4
-	adds r1, r4, r0
-	movs r0, #0
-	strb r0, [r1]
-	ldr r2, _081CCBC8
-	adds r1, r4, r2
-	movs r0, #1
-	strb r0, [r1]
-	ldr r0, _081CCBCC
-	adds r1, r4, r0
-	movs r0, #2
-	strb r0, [r1]
-	b _081CCC70
-	.align 2, 0
-_081CCBC4: .4byte 0x00006786
-_081CCBC8: .4byte 0x00006787
-_081CCBCC: .4byte 0x00006788
-_081CCBD0:
-	ldrh r0, [r2, #2]
-	adds r0, #1
-	ldrh r2, [r2]
-	cmp r0, r2
-	blt _081CCBDC
-	movs r0, #0
-_081CCBDC:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #1
-	bl sub_081CCF84
-	b _081CCC70
-_081CCBE8:
-	ldrh r0, [r2, #2]
-	adds r0, #1
-	ldrh r2, [r2]
-	cmp r0, r2
-	blt _081CCBF4
-	movs r0, #0
-_081CCBF4:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #1
-	bl sub_081CD17C
-	b _081CCC70
-_081CCC00:
-	ldrh r0, [r2, #2]
-	adds r0, #1
-	ldrh r2, [r2]
-	cmp r0, r2
-	blt _081CCC0C
-	movs r0, #0
-_081CCC0C:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #1
-	bl sub_081CD2F8
-	b _081CCC70
-_081CCC18:
-	ldrh r0, [r2, #2]
-	subs r0, #1
-	cmp r0, #0
-	bge _081CCC24
-	ldrh r0, [r2]
-	subs r0, #1
-_081CCC24:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #2
-	bl sub_081CCF84
-	b _081CCC70
-_081CCC30:
-	ldrh r0, [r2, #2]
-	subs r0, #1
-	cmp r0, #0
-	bge _081CCC3C
-	ldrh r0, [r2]
-	subs r0, #1
-_081CCC3C:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #2
-	bl sub_081CD17C
-	b _081CCC70
-_081CCC48:
-	ldrh r0, [r2, #2]
-	subs r0, #1
-	cmp r0, #0
-	bge _081CCC54
-	ldrh r0, [r2]
-	subs r0, #1
-_081CCC54:
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #2
-	bl sub_081CD2F8
-	ldr r2, _081CCC6C
-	adds r1, r4, r2
-	movs r0, #0
-	strb r0, [r1]
-	movs r0, #1
-	b _081CCC7C
-	.align 2, 0
-_081CCC6C: .4byte 0x0000678A
-_081CCC70:
-	ldr r0, _081CCC84
-	adds r1, r4, r0
-	ldrb r0, [r1]
-	adds r0, #1
-	strb r0, [r1]
-	movs r0, #0
-_081CCC7C:
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CCC84: .4byte 0x0000678A
-	thumb_func_end sub_081CCB04
-
-	thumb_func_start sub_081CCC88
-sub_081CCC88: @ 0x081CCC88
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	adds r5, r4, #0
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r1, r0, #0
-	cmp r4, #1
-	beq _081CCCC8
-	cmp r4, #1
-	bgt _081CCCA6
-	cmp r4, #0
-	beq _081CCCAC
-	b _081CCD04
-_081CCCA6:
-	cmp r5, #2
-	beq _081CCCE4
-	b _081CCD04
-_081CCCAC:
-	ldr r2, _081CCCC0
-	adds r0, r1, r2
-	movs r2, #0
-	ldrsh r0, [r0, r2]
-	ldr r2, _081CCCC4
-	adds r1, r1, r2
-	ldrb r1, [r1]
-	bl sub_081CCF84
-	b _081CCD04
-	.align 2, 0
-_081CCCC0: .4byte 0x00006302
-_081CCCC4: .4byte 0x00006789
-_081CCCC8:
-	ldr r2, _081CCCDC
-	adds r0, r1, r2
-	movs r2, #0
-	ldrsh r0, [r0, r2]
-	ldr r2, _081CCCE0
-	adds r1, r1, r2
-	ldrb r1, [r1]
-	bl sub_081CD17C
-	b _081CCD04
-	.align 2, 0
-_081CCCDC: .4byte 0x00006302
-_081CCCE0: .4byte 0x00006789
-_081CCCE4:
-	ldr r2, _081CCCFC
-	adds r0, r1, r2
-	movs r2, #0
-	ldrsh r0, [r0, r2]
-	ldr r2, _081CCD00
-	adds r1, r1, r2
-	ldrb r1, [r1]
-	bl sub_081CD2F8
-	movs r0, #1
-	b _081CCD06
-	.align 2, 0
-_081CCCFC: .4byte 0x00006302
-_081CCD00: .4byte 0x00006789
-_081CCD04:
-	movs r0, #0
-_081CCD06:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CCC88
-
-	thumb_func_start sub_081CCD0C
-sub_081CCD0C: @ 0x081CCD0C
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r2, r2, #0x10
-	lsrs r2, r2, #0x10
-	b _081CCD24
-_081CCD16:
-	strb r3, [r4]
-	adds r1, #1
-	adds r4, #1
-	lsls r0, r2, #0x10
-	ldr r2, _081CCD60
-	adds r0, r0, r2
-	lsrs r2, r0, #0x10
-_081CCD24:
-	ldrb r3, [r1]
-	adds r0, r3, #0
-	cmp r0, #0xff
-	bne _081CCD16
-	adds r1, r2, #0
-	lsls r0, r1, #0x10
-	ldr r2, _081CCD60
-	adds r0, r0, r2
-	lsrs r2, r0, #0x10
-	lsls r1, r1, #0x10
-	cmp r1, #0
-	ble _081CCD52
-	movs r3, #0
-_081CCD3E:
-	strb r3, [r4]
-	adds r4, #1
-	adds r1, r2, #0
-	lsls r0, r1, #0x10
-	ldr r2, _081CCD60
-	adds r0, r0, r2
-	lsrs r2, r0, #0x10
-	lsls r1, r1, #0x10
-	cmp r1, #0
-	bgt _081CCD3E
-_081CCD52:
-	movs r0, #0xff
-	strb r0, [r4]
-	adds r0, r4, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CCD60: .4byte 0xFFFF0000
-	thumb_func_end sub_081CCD0C
-
-	thumb_func_start sub_081CCD64
-sub_081CCD64: @ 0x081CCD64
-	push {r4, r5, r6, r7, lr}
-	mov r7, sl
-	mov r6, sb
-	mov r5, r8
-	push {r5, r6, r7}
-	adds r5, r0, #0
-	adds r4, r1, #0
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	lsls r2, r2, #0x18
-	lsrs r2, r2, #0x18
-	mov sl, r2
-	movs r0, #0x12
-	bl GetSubstructPtr
-	lsls r4, r4, #2
-	adds r0, r0, r4
-	ldrb r4, [r0, #4]
-	mov r8, r4
-	ldrb r6, [r0, #5]
-	mov sb, r6
-	movs r0, #0xfc
-	strb r0, [r5]
-	adds r5, #1
-	movs r0, #4
-	strb r0, [r5]
-	adds r5, #1
-	movs r0, #8
-	strb r0, [r5]
-	adds r5, #1
-	movs r0, #0
-	strb r0, [r5]
-	adds r5, #1
-	movs r0, #9
-	strb r0, [r5]
-	adds r5, #1
-	adds r0, r4, #0
-	adds r1, r6, #0
-	movs r2, #0x2d
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	cmp r0, #0
-	beq _081CCDD0
-	ldr r1, _081CCDCC
-	adds r0, r5, #0
-	movs r2, #0
-	movs r3, #0xc
-	bl StringCopyPadded
-	b _081CCF6C
-	.align 2, 0
-_081CCDCC: .4byte 0x085C8C62
-_081CCDD0:
-	adds r0, r4, #0
-	adds r1, r6, #0
-	movs r2, #2
-	adds r3, r5, #0
-	bl GetBoxOrPartyMonData
-	adds r0, r5, #0
-	bl StringGet_Nickname
-	adds r0, r4, #0
-	adds r1, r6, #0
-	movs r2, #0xb
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	lsls r0, r0, #0x10
-	lsrs r7, r0, #0x10
-	cmp r4, #0xe
-	bne _081CCE20
-	movs r0, #0x64
-	adds r4, r6, #0
-	muls r4, r0, r4
-	ldr r0, _081CCE1C
-	adds r4, r4, r0
-	adds r0, r4, #0
-	movs r1, #0x38
-	bl GetMonData3
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	mov r8, r0
-	adds r0, r4, #0
-	bl GetMonGender
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	b _081CCE3E
-	.align 2, 0
-_081CCE1C: .4byte 0x02024190
-_081CCE20:
-	mov r0, r8
-	mov r1, sb
-	bl GetBoxedMonPtr
-	adds r4, r0, #0
-	bl GetBoxMonGender
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	adds r0, r4, #0
-	bl GetLevelFromBoxMonExp
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	mov r8, r0
-_081CCE3E:
-	cmp r7, #0x1d
-	beq _081CCE46
-	cmp r7, #0x20
-	bne _081CCE5C
-_081CCE46:
-	lsls r1, r7, #1
-	adds r1, r1, r7
-	lsls r1, r1, #1
-	ldr r0, _081CCE64
-	adds r1, r1, r0
-	adds r0, r5, #0
-	bl StringCompare
-	cmp r0, #0
-	bne _081CCE5C
-	movs r6, #0xff
-_081CCE5C:
-	adds r3, r5, #0
-	movs r4, #0
-	b _081CCE70
-	.align 2, 0
-_081CCE64: .4byte 0x082EA31C
-_081CCE68:
-	adds r3, #1
-	adds r0, r4, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-_081CCE70:
-	ldrb r0, [r3]
-	cmp r0, #0xff
-	bne _081CCE68
-	adds r1, r4, #0
-	adds r0, r1, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-	cmp r1, #4
-	bhi _081CCE94
-	movs r2, #0
-_081CCE84:
-	strb r2, [r3]
-	adds r3, #1
-	adds r1, r4, #0
-	adds r0, r1, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-	cmp r1, #4
-	bls _081CCE84
-_081CCE94:
-	movs r0, #0
-	strb r0, [r3]
-	adds r3, #1
-	cmp r6, #0
-	beq _081CCEA4
-	cmp r6, #0xfe
-	beq _081CCECA
-	b _081CCEEE
-_081CCEA4:
-	movs r1, #0xfc
-	strb r1, [r3]
-	adds r3, #1
-	movs r0, #1
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #4
-	strb r0, [r3]
-	adds r3, #1
-	strb r1, [r3]
-	adds r3, #1
-	movs r0, #3
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #5
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #0xb5
-	b _081CCEEE
-_081CCECA:
-	movs r1, #0xfc
-	strb r1, [r3]
-	adds r3, #1
-	movs r0, #1
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #6
-	strb r0, [r3]
-	adds r3, #1
-	strb r1, [r3]
-	adds r3, #1
-	movs r0, #3
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #7
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #0xb6
-_081CCEEE:
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #0xfc
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #4
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #8
-	strb r0, [r3]
-	adds r3, #1
-	movs r5, #0
-	strb r5, [r3]
-	adds r3, #1
-	movs r0, #9
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #0xba
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #0xf9
-	strb r0, [r3]
-	adds r3, #1
-	movs r0, #5
-	strb r0, [r3]
-	adds r3, #1
-	adds r4, r3, #0
-	adds r0, r4, #0
-	mov r1, r8
-	movs r2, #0
-	movs r3, #3
-	bl ConvertIntToDecimalStringN
-	adds r3, r0, #0
-	subs r4, r3, r4
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	strb r5, [r3]
-	adds r3, #1
-	mov r0, sl
-	cmp r0, #0
-	bne _081CCF66
-	movs r0, #3
-	subs r0, r0, r4
-	lsls r0, r0, #0x10
-	ldr r1, _081CCF7C
-	adds r0, r0, r1
-	lsrs r4, r0, #0x10
-	ldr r0, _081CCF80
-	cmp r4, r0
-	beq _081CCF66
-	movs r2, #0
-	adds r1, r0, #0
-_081CCF58:
-	strb r2, [r3]
-	adds r3, #1
-	subs r0, r4, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-	cmp r4, r1
-	bne _081CCF58
-_081CCF66:
-	movs r0, #0xff
-	strb r0, [r3]
-	adds r0, r3, #0
-_081CCF6C:
-	pop {r3, r4, r5}
-	mov r8, r3
-	mov sb, r4
-	mov sl, r5
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CCF7C: .4byte 0xFFFF0000
-_081CCF80: .4byte 0x0000FFFF
-	thumb_func_end sub_081CCD64
-
-	thumb_func_start sub_081CCF84
-sub_081CCF84: @ 0x081CCF84
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	mov r8, r0
-	lsls r1, r1, #0x18
-	lsrs r6, r1, #0x18
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r7, r0, #0
-	mov r1, r8
-	lsls r0, r1, #0x10
-	asrs r4, r0, #0x10
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CCFBA
-	ldrh r2, [r7]
-	cmp r4, r2
-	bne _081CCFC2
-	b _081CD060
-_081CCFBA:
-	ldrh r0, [r7]
-	subs r0, #1
-	cmp r4, r0
-	beq _081CD060
-_081CCFC2:
-	lsls r0, r6, #6
-	ldr r1, _081CD024
-	adds r0, r0, r1
-	adds r0, r5, r0
-	mov r2, r8
-	lsls r4, r2, #0x10
-	lsrs r1, r4, #0x10
-	movs r2, #0
-	bl sub_081CCD64
-	asrs r4, r4, #0xe
-	adds r4, r7, r4
-	ldrb r3, [r4, #4]
-	lsls r0, r6, #1
-	adds r0, r0, r6
-	lsls r4, r0, #3
-	ldr r1, _081CD028
-	adds r0, r5, r1
-	adds r0, r0, r4
-	movs r2, #0
-	movs r1, #0xfc
-	strb r1, [r0]
-	ldr r1, _081CD02C
-	adds r0, r5, r1
-	adds r0, r0, r4
-	movs r1, #4
-	strb r1, [r0]
-	ldr r1, _081CD030
-	adds r0, r5, r1
-	adds r0, r0, r4
-	movs r1, #8
-	strb r1, [r0]
-	ldr r1, _081CD034
-	adds r0, r5, r1
-	adds r0, r0, r4
-	strb r2, [r0]
-	ldr r2, _081CD038
-	adds r0, r5, r2
-	adds r0, r0, r4
-	movs r1, #9
-	strb r1, [r0]
-	cmp r3, #0xe
-	bne _081CD044
-	adds r0, r4, r5
-	ldr r1, _081CD03C
-	adds r0, r0, r1
-	ldr r1, _081CD040
-	b _081CD054
-	.align 2, 0
-_081CD024: .4byte 0x00006368
-_081CD028: .4byte 0x00006320
-_081CD02C: .4byte 0x00006321
-_081CD030: .4byte 0x00006322
-_081CD034: .4byte 0x00006323
-_081CD038: .4byte 0x00006324
-_081CD03C: .4byte 0x00006325
-_081CD040: .4byte 0x085CB7C6
-_081CD044:
-	adds r4, r4, r5
-	ldr r2, _081CD05C
-	adds r4, r4, r2
-	adds r0, r3, #0
-	bl GetBoxNamePtr
-	adds r1, r0, #0
-	adds r0, r4, #0
-_081CD054:
-	movs r2, #8
-	bl sub_081CCD0C
-	b _081CD0BC
-	.align 2, 0
-_081CD05C: .4byte 0x00006325
-_081CD060:
-	movs r1, #0
-	lsls r4, r6, #6
-	lsls r0, r6, #1
-	mov r8, r0
-	adds r3, r4, #0
-	ldr r0, _081CD0C8
-	adds r2, r5, r0
-	movs r7, #0
-_081CD070:
-	adds r0, r1, r3
-	adds r0, r2, r0
-	strb r7, [r0]
-	adds r0, r1, #1
-	lsls r0, r0, #0x10
-	lsrs r1, r0, #0x10
-	cmp r1, #0xb
-	bls _081CD070
-	adds r1, r1, r4
-	ldr r2, _081CD0C8
-	adds r0, r5, r2
-	adds r0, r0, r1
-	movs r1, #0xff
-	strb r1, [r0]
-	movs r1, #0
-	mov r2, r8
-	adds r0, r2, r6
-	lsls r3, r0, #3
-	ldr r0, _081CD0CC
-	adds r2, r5, r0
-	movs r4, #0
-_081CD09A:
-	adds r0, r1, r3
-	adds r0, r2, r0
-	strb r4, [r0]
-	adds r0, r1, #1
-	lsls r0, r0, #0x10
-	lsrs r1, r0, #0x10
-	cmp r1, #7
-	bls _081CD09A
-	mov r2, r8
-	adds r0, r2, r6
-	lsls r0, r0, #3
-	adds r0, r1, r0
-	ldr r2, _081CD0CC
-	adds r1, r5, r2
-	adds r1, r1, r0
-	movs r0, #0xff
-	strb r0, [r1]
-_081CD0BC:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD0C8: .4byte 0x00006368
-_081CD0CC: .4byte 0x00006320
-	thumb_func_end sub_081CCF84
-
-	thumb_func_start sub_081CD0D0
-sub_081CD0D0: @ 0x081CD0D0
-	push {r4, r5, r6, r7, lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r7, r0, #0
-	ldr r1, _081CD0F4
-	movs r0, #0x12
-	bl AllocSubstruct
-	adds r6, r0, #0
-	movs r0, #0xc6
-	lsls r0, r0, #7
-	adds r1, r7, r0
-	movs r0, #0
-	strb r0, [r1]
-	movs r4, #0
-	movs r5, #0
-	b _081CD124
-	.align 2, 0
-_081CD0F4: .4byte 0x000006AC
-_081CD0F8:
-	movs r0, #0x64
-	muls r0, r4, r0
-	ldr r1, _081CD150
-	adds r0, r0, r1
-	movs r1, #0x2d
-	bl GetMonData3
-	adds r2, r0, #0
-	cmp r2, #0
-	bne _081CD11E
-	lsls r1, r5, #2
-	adds r1, r6, r1
-	movs r0, #0xe
-	strb r0, [r1, #4]
-	strb r4, [r1, #5]
-	strh r2, [r1, #6]
-	adds r0, r5, #1
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-_081CD11E:
-	adds r0, r4, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-_081CD124:
-	bl CalculatePlayerPartyCount
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r4, r0
-	blo _081CD0F8
-	lsls r0, r5, #2
-	adds r0, r6, r0
-	movs r1, #0
-	strb r1, [r0, #4]
-	strb r1, [r0, #5]
-	movs r2, #0
-	strh r1, [r0, #6]
-	strh r1, [r6, #2]
-	adds r0, r5, #1
-	strh r0, [r6]
-	ldr r1, _081CD154
-	adds r0, r7, r1
-	strb r2, [r0]
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD150: .4byte 0x02024190
-_081CD154: .4byte 0x0000678A
-	thumb_func_end sub_081CD0D0
-
-	thumb_func_start sub_081CD158
-sub_081CD158: @ 0x081CD158
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r2, r0, r1
-	movs r3, #0
-	movs r1, #1
-	strb r1, [r2]
-	ldr r1, _081CD178
-	adds r0, r0, r1
-	strb r3, [r0]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD178: .4byte 0x0000678A
-	thumb_func_end sub_081CD158
-
-	thumb_func_start sub_081CD17C
-sub_081CD17C: @ 0x081CD17C
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	lsls r0, r0, #0x10
-	lsrs r6, r0, #0x10
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	mov sb, r1
-	movs r0, #0xb
-	bl GetSubstructPtr
-	mov r8, r0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r4, r0, #0
-	lsls r0, r6, #0x10
-	asrs r5, r0, #0x10
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CD1B2
-	ldrh r0, [r4]
-	cmp r5, r0
-	bne _081CD1BA
-	b _081CD2A8
-_081CD1B2:
-	ldrh r0, [r4]
-	subs r0, #1
-	cmp r5, r0
-	beq _081CD2A8
-_081CD1BA:
-	lsls r0, r6, #0x10
-	asrs r0, r0, #0xe
-	adds r0, r4, r0
-	ldrb r6, [r0, #4]
-	ldrb r7, [r0, #5]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x16
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	mov r1, sb
-	lsls r5, r1, #2
-	adds r4, r5, r1
-	ldr r1, _081CD25C
-	add r1, r8
-	adds r1, r1, r4
-	strb r0, [r1]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x2f
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	ldr r1, _081CD260
-	add r1, r8
-	adds r1, r1, r4
-	strb r0, [r1]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x21
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	ldr r1, _081CD264
-	add r1, r8
-	adds r1, r1, r4
-	strb r0, [r1]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x18
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	ldr r1, _081CD268
-	add r1, r8
-	adds r1, r1, r4
-	strb r0, [r1]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x17
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	ldr r1, _081CD26C
-	add r1, r8
-	adds r1, r1, r4
-	strb r0, [r1]
-	movs r0, #0xcf
-	lsls r0, r0, #7
-	add r0, r8
-	mov r2, sb
-	adds r4, r0, r2
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x30
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	cmp r0, #0xff
-	beq _081CD270
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #0x30
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	movs r1, #0x1d
-	bl __udivsi3
-	b _081CD272
-	.align 2, 0
-_081CD25C: .4byte 0x00006428
-_081CD260: .4byte 0x00006429
-_081CD264: .4byte 0x0000642A
-_081CD268: .4byte 0x0000642B
-_081CD26C: .4byte 0x0000642C
-_081CD270:
-	movs r0, #9
-_081CD272:
-	strb r0, [r4]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	movs r2, #8
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	ldr r1, _081CD2A0
-	add r1, r8
-	add r1, sb
-	strb r0, [r1]
-	mov r0, sb
-	adds r1, r5, r0
-	ldr r2, _081CD2A4
-	adds r0, r1, r2
-	add r0, r8
-	lsls r1, r1, #2
-	adds r2, #0x14
-	adds r1, r1, r2
-	add r1, r8
-	bl sub_081D1D70
-	b _081CD2E0
-	.align 2, 0
-_081CD2A0: .4byte 0x00006783
-_081CD2A4: .4byte 0x00006428
-_081CD2A8:
-	movs r2, #0
-	mov r0, sb
-	lsls r5, r0, #2
-	add r5, sb
-	ldr r4, _081CD2EC
-	add r4, r8
-	lsls r3, r5, #2
-	mov sb, r2
-	ldr r7, _081CD2F0
-	movs r6, #0x9b
-_081CD2BC:
-	adds r0, r2, r5
-	adds r0, r4, r0
-	mov r1, sb
-	strb r1, [r0]
-	lsls r0, r2, #2
-	adds r0, r0, r3
-	add r0, r8
-	adds r1, r0, r7
-	strh r6, [r1]
-	ldr r1, _081CD2F4
-	adds r0, r0, r1
-	movs r1, #0x5b
-	strh r1, [r0]
-	adds r0, r2, #1
-	lsls r0, r0, #0x10
-	lsrs r2, r0, #0x10
-	cmp r2, #4
-	bls _081CD2BC
-_081CD2E0:
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD2EC: .4byte 0x00006428
-_081CD2F0: .4byte 0x0000643C
-_081CD2F4: .4byte 0x0000643E
-	thumb_func_end sub_081CD17C
-
-	thumb_func_start sub_081CD2F8
-sub_081CD2F8: @ 0x081CD2F8
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	sub sp, #4
-	lsls r0, r0, #0x10
-	lsrs r6, r0, #0x10
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	mov sb, r1
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r7, r0, #0
-	movs r0, #0x12
-	bl GetSubstructPtr
-	adds r4, r0, #0
-	lsls r0, r6, #0x10
-	asrs r5, r0, #0x10
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CD32C
-	ldrh r0, [r4]
-	b _081CD330
-_081CD32C:
-	ldrh r0, [r4]
-	subs r0, #1
-_081CD330:
-	cmp r5, r0
-	beq _081CD39E
-	lsls r0, r6, #0x10
-	asrs r0, r0, #0xe
-	adds r0, r4, r0
-	ldrb r5, [r0, #4]
-	ldrb r6, [r0, #5]
-	adds r0, r5, #0
-	adds r1, r6, #0
-	movs r2, #0x41
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	adds r4, r0, #0
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	adds r0, r5, #0
-	adds r1, r6, #0
-	movs r2, #1
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	mov r8, r0
-	adds r0, r5, #0
-	adds r1, r6, #0
-	movs r2, #0
-	movs r3, #0
-	bl GetBoxOrPartyMonData
-	adds r5, r0, #0
-	lsls r0, r4, #3
-	ldr r1, _081CD3AC
-	adds r0, r0, r1
-	mov r2, sb
-	lsls r1, r2, #0xd
-	movs r2, #0xc0
-	lsls r2, r2, #2
-	adds r1, r1, r2
-	adds r1, r7, r1
-	movs r2, #1
-	str r2, [sp]
-	adds r2, r4, #0
-	adds r3, r5, #0
-	bl LoadSpecialPokePic
-	adds r0, r4, #0
-	mov r1, r8
-	adds r2, r5, #0
-	bl GetMonSpritePalFromSpeciesAndPersonality
-	mov r2, sb
-	lsls r1, r2, #7
-	adds r1, r7, r1
-	bl LZ77UnCompWram
-_081CD39E:
-	add sp, #4
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD3AC: .4byte 0x082DDA1C
-	thumb_func_end sub_081CD2F8
-
-	thumb_func_start sub_081CD3B0
-sub_081CD3B0: @ 0x081CD3B0
-	push {lr}
-	movs r0, #0x12
-	bl GetSubstructPtr
-	ldrh r0, [r0]
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD3B0
-
-	thumb_func_start sub_081CD3C0
-sub_081CD3C0: @ 0x081CD3C0
-	push {lr}
-	movs r0, #0x12
-	bl GetSubstructPtr
-	ldrh r0, [r0, #2]
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD3C0
-
-	thumb_func_start sub_081CD3D0
-sub_081CD3D0: @ 0x081CD3D0
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r1, _081CD3E0
-	adds r0, r0, r1
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD3E0: .4byte 0x00006428
-	thumb_func_end sub_081CD3D0
-
-	thumb_func_start sub_081CD3E4
-sub_081CD3E4: @ 0x081CD3E4
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r1, _081CD3F8
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD3F8: .4byte 0x00006786
-	thumb_func_end sub_081CD3E4
-
-	thumb_func_start sub_081CD3FC
-sub_081CD3FC: @ 0x081CD3FC
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r1, _081CD410
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD410: .4byte 0x00006302
-	thumb_func_end sub_081CD3FC
-
-	thumb_func_start sub_081CD414
-sub_081CD414: @ 0x081CD414
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	movs r0, #0xb
-	bl GetSubstructPtr
-	lsls r4, r4, #0xd
-	movs r1, #0xc0
-	lsls r1, r1, #2
-	adds r4, r4, r1
-	adds r0, r0, r4
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD414
-
-	thumb_func_start sub_081CD434
-sub_081CD434: @ 0x081CD434
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	movs r0, #0xb
-	bl GetSubstructPtr
-	lsls r4, r4, #7
-	adds r0, r0, r4
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CD434
-
-	thumb_func_start sub_081CD44C
-sub_081CD44C: @ 0x081CD44C
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r1, _081CD460
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD460: .4byte 0x00006789
-	thumb_func_end sub_081CD44C
-
-	thumb_func_start sub_081CD464
-sub_081CD464: @ 0x081CD464
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	movs r0, #0xb
-	bl GetSubstructPtr
-	lsls r4, r4, #6
-	ldr r1, _081CD480
-	adds r4, r4, r1
-	adds r0, r0, r4
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD480: .4byte 0x00006368
-	thumb_func_end sub_081CD464
-
-	thumb_func_start sub_081CD484
-sub_081CD484: @ 0x081CD484
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	movs r0, #0xb
-	bl GetSubstructPtr
-	lsls r1, r4, #1
-	adds r1, r1, r4
-	lsls r1, r1, #3
-	ldr r2, _081CD4A4
-	adds r1, r1, r2
-	adds r0, r0, r1
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD4A4: .4byte 0x00006320
-	thumb_func_end sub_081CD484
-
-	thumb_func_start sub_081CD4A8
-sub_081CD4A8: @ 0x081CD4A8
-	push {lr}
-	movs r0, #0x12
-	bl GetSubstructPtr
-	ldrh r1, [r0, #2]
-	lsls r1, r1, #2
-	adds r0, r0, r1
-	ldrh r0, [r0, #6]
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CD4A8
-
-	thumb_func_start sub_081CD4BC
-sub_081CD4BC: @ 0x081CD4BC
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	cmp r0, #1
-	beq _081CD4D4
-	movs r0, #0
-	b _081CD4D6
-_081CD4D4:
-	movs r0, #1
-_081CD4D6:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD4BC
-
-	thumb_func_start sub_081CD4DC
-sub_081CD4DC: @ 0x081CD4DC
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	adds r2, r0, #0
-	movs r1, #0xc6
-	lsls r1, r1, #7
-	adds r0, r2, r1
-	ldrb r0, [r0]
-	cmp r0, #1
-	beq _081CD4F6
-	movs r0, #0
-	b _081CD506
-_081CD4F6:
-	ldr r3, _081CD50C
-	adds r0, r2, r3
-	movs r1, #0
-	ldrsb r1, [r0, r1]
-	subs r3, #3
-	adds r0, r2, r3
-	adds r0, r0, r1
-	ldrb r0, [r0]
-_081CD506:
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD50C: .4byte 0x00006786
-	thumb_func_end sub_081CD4DC
-
-	thumb_func_start sub_081CD510
-sub_081CD510: @ 0x081CD510
-	push {lr}
-	movs r0, #0xb
-	bl GetSubstructPtr
-	ldr r2, _081CD530
-	adds r1, r0, r2
-	ldrb r1, [r1]
-	lsls r1, r1, #0x18
-	asrs r1, r1, #0x18
-	subs r2, #6
-	adds r0, r0, r2
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	pop {r1}
-	bx r1
-	.align 2, 0
-_081CD530: .4byte 0x00006786
-	thumb_func_end sub_081CD510
-
-	thumb_func_start sub_081CD534
-sub_081CD534: @ 0x081CD534
-	push {r4, lr}
-	ldr r1, _081CD56C
-	movs r0, #0xc
-	bl AllocSubstruct
-	adds r4, r0, #0
-	cmp r4, #0
-	beq _081CD584
-	ldr r0, _081CD570
-	adds r1, r4, r0
-	movs r0, #0xff
-	strb r0, [r1]
-	ldr r0, _081CD574
-	movs r1, #1
-	bl CreateLoopedTask
-	str r0, [r4]
-	ldr r0, _081CD578
-	adds r1, r4, r0
-	ldr r0, _081CD57C
-	str r0, [r1]
-	ldr r0, _081CD580
-	adds r1, r4, r0
-	movs r0, #0
-	strb r0, [r1]
-	movs r0, #1
-	b _081CD586
-	.align 2, 0
-_081CD56C: .4byte 0x000038AC
-_081CD570: .4byte 0x00001816
-_081CD574: .4byte 0x081CD5F5
-_081CD578: .4byte 0x00001810
-_081CD57C: .4byte 0x081CD5E1
-_081CD580: .4byte 0x00002908
-_081CD584:
-	movs r0, #0
-_081CD586:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CD534
-
-	thumb_func_start sub_081CD58C
-sub_081CD58C: @ 0x081CD58C
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	movs r0, #0xc
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	ldr r0, _081CD5B8
-	lsls r4, r4, #2
-	adds r4, r4, r0
-	ldr r0, [r4]
-	movs r1, #1
-	bl CreateLoopedTask
-	str r0, [r5]
-	ldr r0, _081CD5BC
-	adds r5, r5, r0
-	ldr r0, _081CD5C0
-	str r0, [r5]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081CD5B8: .4byte 0x085F5990
-_081CD5BC: .4byte 0x00001810
-_081CD5C0: .4byte 0x081CD5E1
-	thumb_func_end sub_081CD58C
-
-	thumb_func_start sub_081CD5C4
-sub_081CD5C4: @ 0x081CD5C4
-	push {lr}
-	movs r0, #0xc
-	bl GetSubstructPtr
-	ldr r1, _081CD5DC
-	adds r0, r0, r1
-	ldr r0, [r0]
-	bl _call_via_r0
-	pop {r1}
-	thumb_func_end sub_081CD5C4
-
-	thumb_func_start sub_081CD5D8
-sub_081CD5D8: @ 0x081CD5D8
-	bx r1
-	.align 2, 0
-_081CD5DC: .4byte 0x00001810
-	thumb_func_end sub_081CD5D8
-
-	thumb_func_start sub_081CD5E0
-sub_081CD5E0: @ 0x081CD5E0
-	push {lr}
-	movs r0, #0xc
-	bl GetSubstructPtr
-	ldr r0, [r0]
-	bl IsLoopedTaskActive
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD5E0
-
-	thumb_func_start sub_081CD5F4
-sub_081CD5F4: @ 0x081CD5F4
-	push {r4, r5, r6, lr}
-	sub sp, #0xc
-	adds r4, r0, #0
-	movs r0, #0xc
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	cmp r4, #0x14
-	bls _081CD608
-	b _081CDA24
-_081CD608:
-	lsls r0, r4, #2
-	ldr r1, _081CD614
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_081CD614: .4byte 0x081CD618
-_081CD618: @ jump table
-	.4byte _081CD66C @ case 0
-	.4byte _081CD678 @ case 1
-	.4byte _081CD6F4 @ case 2
-	.4byte _081CD718 @ case 3
-	.4byte _081CD790 @ case 4
-	.4byte _081CD7D4 @ case 5
-	.4byte _081CD810 @ case 6
-	.4byte _081CD878 @ case 7
-	.4byte _081CD880 @ case 8
-	.4byte _081CD886 @ case 9
-	.4byte _081CD896 @ case 10
-	.4byte _081CD8A6 @ case 11
-	.4byte _081CD8B6 @ case 12
-	.4byte _081CD8CC @ case 13
-	.4byte _081CD928 @ case 14
-	.4byte _081CD94C @ case 15
-	.4byte _081CD978 @ case 16
-	.4byte _081CD99C @ case 17
-	.4byte _081CD9AA @ case 18
-	.4byte _081CD9BA @ case 19
-	.4byte _081CD9C2 @ case 20
-_081CD66C:
-	bl sub_081CCB04
-	cmp r0, #1
-	beq _081CD676
-	b _081CDA20
-_081CD676:
-	b _081CD710
-_081CD678:
-	ldr r0, _081CD6E0
-	movs r1, #3
-	bl InitBgTemplates
-	movs r0, #1
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgX
-	movs r0, #1
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgY
-	movs r0, #2
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgX
-	movs r0, #2
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgY
-	movs r0, #3
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgX
-	movs r0, #3
-	movs r1, #0
-	movs r2, #0
-	bl ChangeBgY
-	ldr r1, _081CD6E4
-	movs r0, #0
-	bl SetGpuReg
-	ldr r1, _081CD6E8
-	movs r0, #0x50
-	bl SetGpuReg
-	ldr r1, _081CD6EC
-	movs r0, #0x52
-	bl SetGpuReg
-	ldr r1, _081CD6F0
-	movs r0, #0
-	str r0, [sp]
-	movs r0, #3
-	b _081CD708
-	.align 2, 0
-_081CD6E0: .4byte 0x085F5964
-_081CD6E4: .4byte 0x00007940
-_081CD6E8: .4byte 0x00000844
-_081CD6EC: .4byte 0x0000040B
-_081CD6F0: .4byte 0x085F4E6C
-_081CD6F4:
-	bl FreeTempTileDataBuffersIfPossible
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0
-	beq _081CD702
-	b _081CDA20
-_081CD702:
-	ldr r1, _081CD714
-	str r0, [sp]
-	movs r0, #2
-_081CD708:
-	movs r2, #0
-	movs r3, #0
-	bl DecompressAndCopyTileDataToVram
-_081CD710:
-	movs r0, #0
-	b _081CDA26
-	.align 2, 0
-_081CD714: .4byte 0x085F57EC
-_081CD718:
-	bl FreeTempTileDataBuffersIfPossible
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _081CD724
-	b _081CDA20
-_081CD724:
-	ldr r0, _081CD778
-	adds r4, r5, #4
-	adds r1, r4, #0
-	bl LZ77UnCompVram
-	movs r0, #3
-	adds r1, r4, #0
-	bl SetBgTilemapBuffer
-	bl sub_081CD4BC
-	cmp r0, #1
-	bne _081CD752
-	ldr r1, _081CD77C
-	movs r0, #9
-	str r0, [sp]
-	movs r0, #4
-	str r0, [sp, #4]
-	movs r0, #3
-	movs r2, #0
-	movs r3, #5
-	bl CopyToBgTilemapBufferRect
-_081CD752:
-	movs r0, #3
-	bl CopyBgTilemapBufferToVram
-	ldr r0, _081CD780
-	movs r1, #0x10
-	movs r2, #0x20
-	bl CopyPaletteIntoBufferUnfaded
-	ldr r0, _081CD784
-	movs r1, #0xf0
-	movs r2, #0x20
-	bl CopyPaletteIntoBufferUnfaded
-	ldr r0, _081CD788
-	adds r1, r5, r0
-	ldr r0, _081CD78C
-	strh r0, [r1]
-	b _081CD710
-	.align 2, 0
-_081CD778: .4byte 0x085F5600
-_081CD77C: .4byte 0x085F58FC
-_081CD780: .4byte 0x085F4E0C
-_081CD784: .4byte 0x085F4E4C
-_081CD788: .4byte 0x00001814
-_081CD78C: .4byte 0x0000FFB0
-_081CD790:
-	bl FreeTempTileDataBuffersIfPossible
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _081CD79C
-	b _081CDA20
-_081CD79C:
-	ldr r0, _081CD7C8
-	ldr r1, _081CD7CC
-	adds r4, r5, r1
-	adds r1, r4, #0
-	bl LZ77UnCompVram
-	movs r0, #2
-	adds r1, r4, #0
-	bl SetBgTilemapBuffer
-	movs r0, #2
-	bl CopyBgTilemapBufferToVram
-	ldr r0, _081CD7D0
-	movs r1, #0x30
-	movs r2, #0x20
-	bl CopyPaletteIntoBufferUnfaded
-	movs r0, #2
-	bl sub_081D1824
-	b _081CD710
-	.align 2, 0
-_081CD7C8: .4byte 0x085F5800
-_081CD7CC: .4byte 0x00001004
-_081CD7D0: .4byte 0x085F4E2C
-_081CD7D4:
-	movs r0, #1
-	movs r1, #0
-	movs r2, #0
-	movs r3, #1
-	bl BgDmaFill
-	movs r0, #1
-	movs r1, #0x11
-	movs r2, #1
-	movs r3, #1
-	bl BgDmaFill
-	movs r0, #0
-	str r0, [sp, #8]
-	ldr r2, _081CD808
-	adds r4, r5, r2
-	ldr r2, _081CD80C
-	add r0, sp, #8
-	adds r1, r4, #0
-	bl CpuSet
-	movs r0, #1
-	adds r1, r4, #0
-	bl SetBgTilemapBuffer
-	b _081CD710
-	.align 2, 0
-_081CD808: .4byte 0x00000804
-_081CD80C: .4byte 0x05000200
-_081CD810:
-	bl FreeTempTileDataBuffersIfPossible
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _081CD81C
-	b _081CDA20
-_081CD81C:
-	ldr r0, _081CD85C
-	bl AddWindow
-	movs r2, #0xc1
-	lsls r2, r2, #5
-	adds r1, r5, r2
-	strb r0, [r1]
-	bl sub_081CD4BC
-	cmp r0, #1
-	bne _081CD856
-	ldr r0, _081CD860
-	bl AddWindow
-	ldr r2, _081CD864
-	adds r1, r5, r2
-	strb r0, [r1]
-	ldr r0, _081CD868
-	bl AddWindow
-	ldr r2, _081CD86C
-	adds r1, r5, r2
-	strb r0, [r1]
-	ldr r0, _081CD870
-	bl AddWindow
-	ldr r2, _081CD874
-	adds r1, r5, r2
-	strb r0, [r1]
-_081CD856:
-	bl DeactivateAllTextPrinters
-	b _081CD710
-	.align 2, 0
-_081CD85C: .4byte 0x085F5970
-_081CD860: .4byte 0x085F5978
-_081CD864: .4byte 0x00001821
-_081CD868: .4byte 0x085F5980
-_081CD86C: .4byte 0x00001822
-_081CD870: .4byte 0x085F5988
-_081CD874: .4byte 0x00001823
-_081CD878:
-	movs r0, #0
-	bl sub_081CE464
-	b _081CD710
-_081CD880:
-	bl sub_081CE118
-	b _081CD710
-_081CD886:
-	bl sub_081CD4BC
-	cmp r0, #1
-	beq _081CD890
-	b _081CD710
-_081CD890:
-	bl sub_081CE068
-	b _081CD710
-_081CD896:
-	bl sub_081CD3E4
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	asrs r1, r1, #8
-	lsrs r1, r1, #0x10
-	movs r0, #0
-	b _081CD8C4
-_081CD8A6:
-	bl sub_081CD3E4
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	asrs r1, r1, #8
-	lsrs r1, r1, #0x10
-	movs r0, #1
-	b _081CD8C4
-_081CD8B6:
-	bl sub_081CD3E4
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	asrs r1, r1, #8
-	lsrs r1, r1, #0x10
-	movs r0, #2
-_081CD8C4:
-	movs r2, #1
-	bl sub_081CDEB4
-	b _081CD710
-_081CD8CC:
-	bl sub_081CD3E4
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	asrs r1, r1, #8
-	lsrs r1, r1, #0x10
-	movs r0, #3
-	movs r2, #1
-	bl sub_081CDEB4
-	cmp r0, #1
-	beq _081CD8E6
-	b _081CDA20
-_081CD8E6:
-	movs r1, #0xc1
-	lsls r1, r1, #5
-	adds r0, r5, r1
-	ldrb r0, [r0]
-	bl PutWindowTilemap
-	bl sub_081CD4BC
-	cmp r0, #1
-	beq _081CD8FC
-	b _081CD710
-_081CD8FC:
-	ldr r2, _081CD91C
-	adds r0, r5, r2
-	ldrb r0, [r0]
-	bl PutWindowTilemap
-	ldr r1, _081CD920
-	adds r0, r5, r1
-	ldrb r0, [r0]
-	bl PutWindowTilemap
-	ldr r2, _081CD924
-	adds r0, r5, r2
-	ldrb r0, [r0]
-	bl PutWindowTilemap
-	b _081CD710
-	.align 2, 0
-_081CD91C: .4byte 0x00001821
-_081CD920: .4byte 0x00001822
-_081CD924: .4byte 0x00001823
-_081CD928:
-	movs r0, #1
-	bl ShowBg
-	movs r0, #2
-	bl HideBg
-	movs r0, #3
-	bl ShowBg
-	bl sub_081CD4BC
-	cmp r0, #1
-	beq _081CD944
-	b _081CD710
-_081CD944:
-	movs r0, #4
-	bl PrintHelpBarText
-	b _081CD710
-_081CD94C:
-	movs r0, #1
-	bl PokenavFadeScreen
-	bl sub_081CD4BC
-	cmp r0, #0
-	beq _081CD95C
-	b _081CD710
-_081CD95C:
-	movs r0, #6
-	bl LoadLeftHeaderGfxForIndex
-	movs r0, #1
-	movs r1, #1
-	movs r2, #0
-	bl ShowLeftHeaderGfx
-	movs r0, #6
-	movs r1, #1
-	movs r2, #0
-	bl ShowLeftHeaderGfx
-	b _081CD710
-_081CD978:
-	bl IsPaletteFadeActive
-	cmp r0, #0
-	bne _081CDA20
-	bl sub_081CD4BC
-	cmp r0, #0
-	bne _081CD990
-	bl AreLeftHeaderSpritesMoving
-	cmp r0, #0
-	bne _081CDA20
-_081CD990:
-	ldr r0, _081CD998
-	bl SetVBlankCallback_
-	b _081CD710
-	.align 2, 0
-_081CD998: .4byte 0x081CE579
-_081CD99C:
-	bl sub_081CE5C4
-	bl sub_081CD3D0
-	bl sub_081D16F4
-	b _081CD710
-_081CD9AA:
-	bl sub_081CD3D0
-	bl sub_081D1704
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _081CDA20
-	b _081CD710
-_081CD9BA:
-	movs r0, #1
-	bl sub_081CE5A8
-	b _081CD710
-_081CD9C2:
-	bl sub_081CD3D0
-	ldr r2, _081CDA14
-	adds r1, r5, r2
-	bl sub_081D27A8
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _081CDA20
-	ldr r0, _081CDA18
-	adds r6, r5, r0
-	adds r0, r6, #0
-	bl sub_081D2A94
-	bl sub_081CD4BC
-	cmp r0, #1
-	beq _081CD9F8
-	bl sub_081CD3C0
-	adds r4, r0, #0
-	bl sub_081CD3B0
-	lsls r4, r4, #0x10
-	lsls r0, r0, #0x10
-	cmp r4, r0
-	beq _081CDA24
-_081CD9F8:
-	ldr r1, _081CDA1C
-	adds r0, r5, r1
-	ldrb r4, [r0]
-	bl sub_081CD510
-	adds r2, r0, #0
-	lsls r2, r2, #0x18
-	lsrs r2, r2, #0x18
-	adds r0, r6, #0
-	adds r1, r4, #0
-	bl sub_081D2AB0
-	b _081CDA24
-	.align 2, 0
-_081CDA14: .4byte 0x00001814
-_081CDA18: .4byte 0x000028E0
-_081CDA1C: .4byte 0x00001816
-_081CDA20:
-	movs r0, #2
-	b _081CDA26
-_081CDA24:
-	movs r0, #4
-_081CDA26:
-	add sp, #0xc
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_081CD5F4
-
-	thumb_func_start sub_081CDA30
-sub_081CDA30: @ 0x081CDA30
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	movs r0, #0xc
-	bl GetSubstructPtr
-	adds r5, r0, #0
-	cmp r4, #1
-	beq _081CDA68
-	cmp r4, #1
-	bgt _081CDA4A
-	cmp r4, #0
-	beq _081CDA54
-	b _081CDAD4
-_081CDA4A:
-	cmp r4, #2
-	beq _081CDA88
-	cmp r4, #3
-	beq _081CDA9E
-	b _081CDAD4
-_081CDA54:
-	bl sub_081CE5FC
-	ldr r1, _081CDA64
-	adds r0, r5, r1
-	bl sub_081D2B50
-	movs r0, #1
-	b _081CDAD6
-	.align 2, 0
-_081CDA64: .4byte 0x000028E0
-_081CDA68:
-	bl sub_081CD3D0
-	ldr r2, _081CDA84
-	adds r1, r5, r2
-	bl sub_081D27D4
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _081CDAAE
-	movs r0, #0
-	bl sub_081CE5A8
-	movs r0, #1
-	b _081CDAD6
-	.align 2, 0
-_081CDA84: .4byte 0x00001814
-_081CDA88:
-	movs r0, #0
-	bl PokenavFadeScreen
-	bl sub_081CD4BC
-	cmp r0, #0
-	bne _081CDA9A
-	bl SlideMenuHeaderDown
-_081CDA9A:
-	movs r0, #0
-	b _081CDAD6
-_081CDA9E:
-	bl IsPaletteFadeActive
-	cmp r0, #0
-	bne _081CDAAE
-	bl MainMenuLoopedTaskIsBusy
-	cmp r0, #0
-	beq _081CDAB2
-_081CDAAE:
-	movs r0, #2
-	b _081CDAD6
-_081CDAB2:
-	ldr r1, _081CDAD0
-	adds r0, r5, r1
-	bl nullsub_79
-	movs r0, #1
-	bl HideBg
-	movs r0, #2
-	bl HideBg
-	movs r0, #3
-	bl HideBg
-	movs r0, #1
-	b _081CDAD6
-	.align 2, 0
-_081CDAD0: .4byte 0x000028E0
-_081CDAD4:
-	movs r0, #4
-_081CDAD6:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081CDA30
-
-	thumb_func_start sub_081CDADC
-sub_081CDADC: @ 0x081CDADC
+	thumb_func_start LoopedTask_TransitionMons
+LoopedTask_TransitionMons: @ 0x081CDADC
 	push {r4, r5, r6, lr}
 	adds r4, r0, #0
 	movs r0, #0xc
 	bl GetSubstructPtr
 	adds r6, r0, #0
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	adds r2, r0, #0
 	cmp r4, #9
 	bls _081CDAF4
@@ -2540,39 +40,39 @@ _081CDB2C:
 _081CDB30:
 	movs r0, #1
 _081CDB32:
-	bl sub_081CCC88
+	bl LoadNextConditionMenuMonData
 _081CDB36:
 	movs r0, #1
 	b _081CDC32
 _081CDB3A:
 	movs r0, #2
-	bl sub_081CCC88
+	bl LoadNextConditionMenuMonData
 	ldr r1, _081CDB4C
 	adds r0, r6, r1
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	b _081CDB36
 	.align 2, 0
 _081CDB4C: .4byte 0x000028E0
 _081CDB50:
 	adds r0, r2, #0
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	b _081CDB36
 _081CDB58:
 	ldr r1, _081CDB74
 	adds r0, r6, r1
-	bl sub_081D2780
+	bl MoveConditionMonOffscreen
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CDC2C
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_081CE464
+	bl CreateConditionMonPic
 	b _081CDB36
 	.align 2, 0
 _081CDB74: .4byte 0x00001814
 _081CDB78:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2580,7 +80,7 @@ _081CDB78:
 	movs r0, #0
 	b _081CDBA6
 _081CDB88:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2588,7 +88,7 @@ _081CDB88:
 	movs r0, #1
 	b _081CDBA6
 _081CDB98:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2599,7 +99,7 @@ _081CDBA6:
 	bl sub_081CDEB4
 	b _081CDB36
 _081CDBAE:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2611,24 +111,24 @@ _081CDBAE:
 	beq _081CDB36
 	b _081CDC2C
 _081CDBC8:
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	adds r2, r0, #0
 	ldr r0, _081CDC20
 	adds r1, r6, r0
 	adds r0, r2, #0
-	bl sub_081D27A8
+	bl ConditionMenu_UpdateMonEnter
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CDC2C
 	ldr r1, _081CDC24
 	adds r0, r6, r1
-	bl sub_081D2A94
-	bl sub_081CD4BC
+	bl ResetConditionSparkleSprites
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	beq _081CDC00
-	bl sub_081CD3C0
+	bl GetConditionGraphCurrentListIndex
 	adds r4, r0, #0
-	bl sub_081CD3B0
+	bl GetMonListCount
 	lsls r4, r4, #0x10
 	lsls r0, r0, #0x10
 	cmp r4, r0
@@ -2639,13 +139,13 @@ _081CDC00:
 	ldr r1, _081CDC28
 	adds r0, r6, r1
 	ldrb r4, [r0]
-	bl sub_081CD510
+	bl GetNumConditionMonSparkles
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	adds r0, r5, #0
 	adds r1, r4, #0
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 	b _081CDB36
 	.align 2, 0
 _081CDC20: .4byte 0x00001814
@@ -2660,10 +160,10 @@ _081CDC32:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CDADC
+	thumb_func_end LoopedTask_TransitionMons
 
-	thumb_func_start sub_081CDC38
-sub_081CDC38: @ 0x081CDC38
+	thumb_func_start LoopedTask_MoveCursorNoTransition
+LoopedTask_MoveCursorNoTransition: @ 0x081CDC38
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	movs r0, #0xc
@@ -2697,18 +197,18 @@ _081CDC80:
 _081CDC84:
 	movs r0, #2
 _081CDC86:
-	bl sub_081CCC88
+	bl LoadNextConditionMenuMonData
 	movs r0, #1
 	b _081CDD3E
 _081CDC8E:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_081CE464
+	bl CreateConditionMonPic
 	movs r0, #1
 	b _081CDD3E
 _081CDC9E:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2716,7 +216,7 @@ _081CDC9E:
 	movs r0, #0
 	b _081CDCCC
 _081CDCAE:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2724,7 +224,7 @@ _081CDCAE:
 	movs r0, #1
 	b _081CDCCC
 _081CDCBE:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2736,7 +236,7 @@ _081CDCCC:
 	movs r0, #1
 	b _081CDD3E
 _081CDCD6:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2749,27 +249,27 @@ _081CDCD6:
 	movs r0, #1
 	b _081CDD3E
 _081CDCF2:
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	ldr r2, _081CDD2C
 	adds r1, r5, r2
-	bl sub_081D27A8
+	bl ConditionMenu_UpdateMonEnter
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CDD38
 	ldr r0, _081CDD30
 	adds r4, r5, r0
 	adds r0, r4, #0
-	bl sub_081D2A94
+	bl ResetConditionSparkleSprites
 	ldr r1, _081CDD34
 	adds r0, r5, r1
 	ldrb r5, [r0]
-	bl sub_081CD510
+	bl GetNumConditionMonSparkles
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 	movs r0, #1
 	b _081CDD3E
 	.align 2, 0
@@ -2785,10 +285,10 @@ _081CDD3E:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CDC38
+	thumb_func_end LoopedTask_MoveCursorNoTransition
 
-	thumb_func_start sub_081CDD44
-sub_081CDD44: @ 0x081CDD44
+	thumb_func_start LoopedTask_SlideMonOut
+LoopedTask_SlideMonOut: @ 0x081CDD44
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	movs r0, #0xc
@@ -2818,24 +318,24 @@ _081CDD84:
 _081CDD88:
 	movs r0, #1
 _081CDD8A:
-	bl sub_081CCC88
+	bl LoadNextConditionMenuMonData
 _081CDD8E:
 	movs r0, #1
 	b _081CDE14
 _081CDD92:
 	movs r0, #2
-	bl sub_081CCC88
+	bl LoadNextConditionMenuMonData
 	ldr r1, _081CDDA4
 	adds r0, r5, r1
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	b _081CDD8E
 	.align 2, 0
 _081CDDA4: .4byte 0x000028E0
 _081CDDA8:
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	ldr r2, _081CDDBC
 	adds r1, r5, r2
-	bl sub_081D27D4
+	bl ConditionMenu_UpdateMonExit
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081CDD8E
@@ -2843,7 +343,7 @@ _081CDDA8:
 	.align 2, 0
 _081CDDBC: .4byte 0x00001814
 _081CDDC0:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2851,7 +351,7 @@ _081CDDC0:
 	movs r0, #0
 	b _081CDDEE
 _081CDDD0:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2859,7 +359,7 @@ _081CDDD0:
 	movs r0, #1
 	b _081CDDEE
 _081CDDE0:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2870,7 +370,7 @@ _081CDDEE:
 	bl sub_081CDEB4
 	b _081CDD8E
 _081CDDF6:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	asrs r1, r1, #8
@@ -2890,10 +390,10 @@ _081CDE14:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CDD44
+	thumb_func_end LoopedTask_SlideMonOut
 
-	thumb_func_start sub_081CDE1C
-sub_081CDE1C: @ 0x081CDE1C
+	thumb_func_start LoopedTask_OpenMonMarkingsWindow
+LoopedTask_OpenMonMarkingsWindow: @ 0x081CDE1C
 	push {lr}
 	cmp r0, #1
 	beq _081CDE46
@@ -2907,7 +407,7 @@ _081CDE2C:
 	beq _081CDE4E
 	b _081CDE5A
 _081CDE32:
-	bl sub_081CD4DC
+	bl TryGetMonMarkId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0xb0
@@ -2931,10 +431,10 @@ _081CDE5A:
 _081CDE5C:
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CDE1C
+	thumb_func_end LoopedTask_OpenMonMarkingsWindow
 
-	thumb_func_start sub_081CDE60
-sub_081CDE60: @ 0x081CDE60
+	thumb_func_start LoopedTask_CloseMonMarkingsWindow
+LoopedTask_CloseMonMarkingsWindow: @ 0x081CDE60
 	push {lr}
 	cmp r0, #1
 	beq _081CDE7E
@@ -2967,10 +467,10 @@ _081CDE92:
 _081CDE94:
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CDE60
+	thumb_func_end LoopedTask_CloseMonMarkingsWindow
 
-	thumb_func_start sub_081CDE98
-sub_081CDE98: @ 0x081CDE98
+	thumb_func_start UnusedPrintNumberString
+UnusedPrintNumberString: @ 0x081CDE98
 	push {lr}
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -2983,7 +483,7 @@ sub_081CDE98: @ 0x081CDE98
 	bx r1
 	.align 2, 0
 _081CDEB0: .4byte 0x085CB7CE
-	thumb_func_end sub_081CDE98
+	thumb_func_end UnusedPrintNumberString
 
 	thumb_func_start sub_081CDEB4
 sub_081CDEB4: @ 0x081CDEB4
@@ -3018,7 +518,7 @@ _081CDEE4:
 	ldrb r0, [r0]
 	movs r1, #0
 	bl FillWindowPixelBuffer
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	beq _081CDEFC
 	b _081CE05C
@@ -3032,24 +532,24 @@ _081CDEFC:
 	.align 2, 0
 _081CDF0C: .4byte 0x00001821
 _081CDF10:
-	bl sub_081CD3C0
+	bl GetConditionGraphCurrentListIndex
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
-	bl sub_081CD3B0
+	bl GetMonListCount
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	subs r0, #1
 	cmp r4, r0
 	bne _081CDF32
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	beq _081CDF32
 	b _081CE05C
 _081CDF32:
 	lsls r0, r5, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_081CD464
+	bl GetConditionMonNameText
 	adds r2, r0, #0
 	movs r1, #0xc1
 	lsls r1, r1, #5
@@ -3063,14 +563,14 @@ _081CDF32:
 	movs r1, #1
 	b _081CDFC4
 _081CDF52:
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	beq _081CDF5C
 	b _081CE05C
 _081CDF5C:
 	lsls r0, r5, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_081CD484
+	bl GetConditionMonLocationText
 	adds r2, r0, #0
 	movs r1, #0xc1
 	lsls r1, r1, #5
@@ -3097,12 +597,12 @@ _081CDF5C:
 	strb r0, [r1, #4]
 	mov r4, sp
 	adds r4, #0x11
-	bl sub_081CD4A8
+	bl GetConditionMonDataBuffer
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_081CDE98
+	bl UnusedPrintNumberString
 	ldr r4, _081CDFCC
 	adds r0, r4, #0
 	add r1, sp, #0xc
@@ -3151,7 +651,7 @@ _081CDFFC:
 	movs r1, #2
 	bl CopyWindowToVram
 _081CE00A:
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	bne _081CE048
 	ldr r0, _081CE020
@@ -3199,8 +699,8 @@ _081CE05E:
 	.align 2, 0
 	thumb_func_end sub_081CDEB4
 
-	thumb_func_start sub_081CE068
-sub_081CE068: @ 0x081CE068
+	thumb_func_start CopyUnusedConditionWindowsToVram
+CopyUnusedConditionWindowsToVram: @ 0x081CE068
 	push {r4, lr}
 	movs r0, #0xc
 	bl GetSubstructPtr
@@ -3221,15 +721,15 @@ sub_081CE068: @ 0x081CE068
 	.align 2, 0
 _081CE090: .4byte 0x00001822
 _081CE094: .4byte 0x00001823
-	thumb_func_end sub_081CE068
+	thumb_func_end CopyUnusedConditionWindowsToVram
 
-	thumb_func_start sub_081CE098
-sub_081CE098: @ 0x081CE098
+	thumb_func_start SpriteCB_PartyPokeball
+SpriteCB_PartyPokeball: @ 0x081CE098
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	movs r0, #0x2e
 	ldrsh r4, [r5, r0]
-	bl sub_081CD3C0
+	bl GetConditionGraphCurrentListIndex
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	cmp r4, r0
@@ -3246,17 +746,17 @@ _081CE0BE:
 	pop {r4, r5}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CE098
+	thumb_func_end SpriteCB_PartyPokeball
 
-	thumb_func_start sub_081CE0C4
-sub_081CE0C4: @ 0x081CE0C4
+	thumb_func_start HighlightCurrentPartyIndexPokeball
+HighlightCurrentPartyIndexPokeball: @ 0x081CE0C4
 	push {r4, r5, lr}
 	adds r5, r0, #0
-	bl sub_081CD3C0
+	bl GetConditionGraphCurrentListIndex
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
-	bl sub_081CD3B0
+	bl GetMonListCount
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	subs r0, #1
@@ -3277,13 +777,13 @@ _081CE0E6:
 	pop {r4, r5}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CE0C4
+	thumb_func_end HighlightCurrentPartyIndexPokeball
 
-	thumb_func_start sub_081CE0FC
-sub_081CE0FC: @ 0x081CE0FC
+	thumb_func_start MonMarkingsCallback
+MonMarkingsCallback: @ 0x081CE0FC
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_081CD4DC
+	bl TryGetMonMarkId
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -3293,10 +793,10 @@ sub_081CE0FC: @ 0x081CE0FC
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CE0FC
+	thumb_func_end MonMarkingsCallback
 
-	thumb_func_start sub_081CE118
-sub_081CE118: @ 0x081CE118
+	thumb_func_start CreateMonMarkingsOrPokeballIndicators
+CreateMonMarkingsOrPokeballIndicators: @ 0x081CE118
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -3311,8 +811,8 @@ sub_081CE118: @ 0x081CE118
 	mov r0, sp
 	adds r1, r4, #0
 	adds r2, r5, #0
-	bl sub_081D284C
-	bl sub_081CD4BC
+	bl LoadConditionSelectionIcons
+	bl IsConditionMenuSearchMode
 	adds r7, r4, #0
 	mov sl, r5
 	cmp r0, #1
@@ -3413,7 +913,7 @@ _081CE216:
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 _081CE21C:
-	bl sub_081CD3B0
+	bl GetMonListCount
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	subs r0, #1
@@ -3525,7 +1025,7 @@ _081CE2F0:
 _081CE2FA:
 	mov r0, r8
 	mov r1, sl
-	bl sub_081D28E0
+	bl LoadConditionSparkle
 	mov r0, r8
 	bl LoadSpriteSheet
 	movs r0, #0
@@ -3543,13 +1043,13 @@ _081CE2FA:
 	bx r0
 	.align 2, 0
 _081CE324: .4byte 0x00001806
-	thumb_func_end sub_081CE118
+	thumb_func_end CreateMonMarkingsOrPokeballIndicators
 
-	thumb_func_start sub_081CE328
-sub_081CE328: @ 0x081CE328
+	thumb_func_start FreeConditionMenuGfx
+FreeConditionMenuGfx: @ 0x081CE328
 	push {r4, r5, lr}
 	adds r5, r0, #0
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	bne _081CE35C
 	ldr r1, _081CE358
@@ -3620,10 +1120,10 @@ _081CE3C2:
 _081CE3C8: .4byte 0x00001806
 _081CE3CC: .4byte 0x020205AC
 _081CE3D0: .4byte 0x00001816
-	thumb_func_end sub_081CE328
+	thumb_func_end FreeConditionMenuGfx
 
-	thumb_func_start sub_081CE3D4
-sub_081CE3D4: @ 0x081CE3D4
+	thumb_func_start FreeConditionGraphMenuSubstruct2
+FreeConditionGraphMenuSubstruct2: @ 0x081CE3D4
 	push {r4, lr}
 	movs r0, #0xc
 	bl GetSubstructPtr
@@ -3633,7 +1133,7 @@ sub_081CE3D4: @ 0x081CE3D4
 	adds r0, r4, r1
 	ldrb r0, [r0]
 	bl RemoveWindow
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	bne _081CE420
 	ldr r1, _081CE414
@@ -3661,17 +1161,17 @@ _081CE424:
 	movs r0, #0
 	bl SetGpuReg
 	adds r0, r4, #0
-	bl sub_081CE328
-	bl sub_081CE59C
+	bl FreeConditionMenuGfx
+	bl SetExitVBlank
 	movs r0, #0xc
 	bl FreePokenavSubstruct
 	pop {r4}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CE3D4
+	thumb_func_end FreeConditionGraphMenuSubstruct2
 
-	thumb_func_start sub_081CE444
-sub_081CE444: @ 0x081CE444
+	thumb_func_start MonPicGfxSpriteCallback
+MonPicGfxSpriteCallback: @ 0x081CE444
 	push {r4, lr}
 	adds r4, r0, #0
 	movs r0, #0xc
@@ -3686,10 +1186,10 @@ sub_081CE444: @ 0x081CE444
 	bx r0
 	.align 2, 0
 _081CE460: .4byte 0x00001814
-	thumb_func_end sub_081CE444
+	thumb_func_end MonPicGfxSpriteCallback
 
-	thumb_func_start sub_081CE464
-sub_081CE464: @ 0x081CE464
+	thumb_func_start CreateConditionMonPic
+CreateConditionMonPic: @ 0x081CE464
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -3709,12 +1209,12 @@ sub_081CE464: @ 0x081CE464
 	adds r0, r5, #0
 	mov r1, sp
 	adds r2, r4, #0
-	bl sub_081D2800
+	bl LoadConditionMonPicTemplate
 	adds r0, r6, #0
-	bl sub_081CD414
+	bl GetConditionMonPicGfx
 	str r0, [sp, #0x18]
 	adds r0, r6, #0
-	bl sub_081CD434
+	bl GetConditionMonPal
 	str r0, [sp, #0x20]
 	adds r0, r4, #0
 	bl LoadSpritePalette
@@ -3781,7 +1281,7 @@ _081CE528: .4byte 0x0000181C
 _081CE52C: .4byte 0x06010000
 _081CE530:
 	adds r0, r6, #0
-	bl sub_081CD414
+	bl GetConditionMonPicGfx
 	ldr r1, _081CE568
 	add r1, r8
 	ldr r2, [r1]
@@ -3792,7 +1292,7 @@ _081CE530:
 	str r0, [r1, #8]
 	ldr r0, [r1, #8]
 	adds r0, r6, #0
-	bl sub_081CD434
+	bl GetConditionMonPal
 	ldr r1, _081CE574
 	add r1, r8
 	ldrh r1, [r1]
@@ -3810,35 +1310,35 @@ _081CE568: .4byte 0x0000181C
 _081CE56C: .4byte 0x040000D4
 _081CE570: .4byte 0x80000400
 _081CE574: .4byte 0x00001818
-	thumb_func_end sub_081CE464
+	thumb_func_end CreateConditionMonPic
 
-	thumb_func_start sub_081CE578
-sub_081CE578: @ 0x081CE578
+	thumb_func_start VBlankCB_PokenavConditionGraph
+VBlankCB_PokenavConditionGraph: @ 0x081CE578
 	push {r4, lr}
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	adds r4, r0, #0
 	bl LoadOam
 	bl ProcessSpriteCopyRequests
 	bl TransferPlttBuffer
 	adds r0, r4, #0
-	bl sub_081D1750
+	bl ConditionGraph_Draw
 	bl ScanlineEffect_InitHBlankDmaTransfer
 	pop {r4}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CE578
+	thumb_func_end VBlankCB_PokenavConditionGraph
 
-	thumb_func_start sub_081CE59C
-sub_081CE59C: @ 0x081CE59C
+	thumb_func_start SetExitVBlank
+SetExitVBlank: @ 0x081CE59C
 	push {lr}
 	bl SetPokenavVBlankCallback
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CE59C
+	thumb_func_end SetExitVBlank
 
-	thumb_func_start sub_081CE5A8
-sub_081CE5A8: @ 0x081CE5A8
+	thumb_func_start ToggleGraphData
+ToggleGraphData: @ 0x081CE5A8
 	push {lr}
 	lsls r0, r0, #0x18
 	cmp r0, #0
@@ -3853,14 +1353,14 @@ _081CE5BE:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CE5A8
+	thumb_func_end ToggleGraphData
 
-	thumb_func_start sub_081CE5C4
-sub_081CE5C4: @ 0x081CE5C4
+	thumb_func_start DoConditionGraphEnterTransition
+DoConditionGraphEnterTransition: @ 0x081CE5C4
 	push {r4, lr}
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	adds r4, r0, #0
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _081CE5F8
@@ -3873,36 +1373,36 @@ sub_081CE5C4: @ 0x081CE5C4
 	adds r2, #0x14
 	adds r2, r4, r2
 	adds r0, r4, #0
-	bl sub_081D15CC
+	bl ConditionGraph_SetNewPositions
 	adds r0, r4, #0
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	pop {r4}
 	pop {r0}
 	bx r0
 	.align 2, 0
 _081CE5F8: .4byte 0x030012B0
-	thumb_func_end sub_081CE5C4
+	thumb_func_end DoConditionGraphEnterTransition
 
-	thumb_func_start sub_081CE5FC
-sub_081CE5FC: @ 0x081CE5FC
+	thumb_func_start DoConditionGraphExitTransition
+DoConditionGraphExitTransition: @ 0x081CE5FC
 	push {r4, r5, lr}
-	bl sub_081CD3D0
+	bl GetConditionGraphPtr
 	adds r5, r0, #0
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #0
 	bne _081CE624
-	bl sub_081CD3C0
+	bl GetConditionGraphCurrentListIndex
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
-	bl sub_081CD3B0
+	bl GetMonListCount
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	subs r0, #1
 	cmp r4, r0
 	beq _081CE640
 _081CE624:
-	bl sub_081CD3E4
+	bl GetConditionGraphMenuCurrentLoadIndex
 	lsls r0, r0, #0x18
 	asrs r0, r0, #0x18
 	lsls r1, r0, #2
@@ -3913,21 +1413,21 @@ _081CE624:
 	adds r2, r5, #0
 	adds r2, #0x50
 	adds r0, r5, #0
-	bl sub_081D15CC
+	bl ConditionGraph_SetNewPositions
 _081CE640:
 	pop {r4, r5}
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CE5FC
+	thumb_func_end DoConditionGraphExitTransition
 
-	thumb_func_start sub_081CE648
-sub_081CE648: @ 0x081CE648
+	thumb_func_start GetMonMarkingsData
+GetMonMarkingsData: @ 0x081CE648
 	push {r4, lr}
 	movs r0, #0xc
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl sub_081CD4BC
+	bl IsConditionMenuSearchMode
 	cmp r0, #1
 	beq _081CE65E
 	movs r0, #0
@@ -3942,10 +1442,10 @@ _081CE664:
 	bx r1
 	.align 2, 0
 _081CE66C: .4byte 0x00001828
-	thumb_func_end sub_081CE648
+	thumb_func_end GetMonMarkingsData
 
-	thumb_func_start sub_081CE670
-sub_081CE670: @ 0x081CE670
+	thumb_func_start PokenavCallback_Init_ConditionSearch
+PokenavCallback_Init_ConditionSearch: @ 0x081CE670
 	push {r4, lr}
 	movs r0, #7
 	movs r1, #0x24
@@ -3986,10 +1486,10 @@ _081CE6C6:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE670
+	thumb_func_end PokenavCallback_Init_ConditionSearch
 
-	thumb_func_start sub_081CE6CC
-sub_081CE6CC: @ 0x081CE6CC
+	thumb_func_start PokenavCallback_Init_ReturnToMonSearchList
+PokenavCallback_Init_ReturnToMonSearchList: @ 0x081CE6CC
 	push {r4, lr}
 	movs r0, #7
 	movs r1, #0x24
@@ -4021,10 +1521,10 @@ _081CE70A:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE6CC
+	thumb_func_end PokenavCallback_Init_ReturnToMonSearchList
 
-	thumb_func_start sub_081CE710
-sub_081CE710: @ 0x081CE710
+	thumb_func_start GetConditionSearchResultsCallback
+GetConditionSearchResultsCallback: @ 0x081CE710
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4033,10 +1533,10 @@ sub_081CE710: @ 0x081CE710
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CE710
+	thumb_func_end GetConditionSearchResultsCallback
 
-	thumb_func_start sub_081CE724
-sub_081CE724: @ 0x081CE724
+	thumb_func_start FreeSearchResultSubstruct1
+FreeSearchResultSubstruct1: @ 0x081CE724
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4051,7 +1551,7 @@ _081CE738:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CE724
+	thumb_func_end FreeSearchResultSubstruct1
 
 	thumb_func_start sub_081CE744
 sub_081CE744: @ 0x081CE744
@@ -4072,8 +1572,8 @@ _081CE756:
 _081CE760: .4byte 0x081CE765
 	thumb_func_end sub_081CE744
 
-	thumb_func_start sub_081CE764
-sub_081CE764: @ 0x081CE764
+	thumb_func_start HandleConditionSearchInput
+HandleConditionSearchInput: @ 0x081CE764
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	ldr r2, _081CE778
@@ -4144,26 +1644,26 @@ _081CE7DA:
 	bx r1
 	.align 2, 0
 _081CE7E0: .4byte 0x081CE7ED
-	thumb_func_end sub_081CE764
+	thumb_func_end HandleConditionSearchInput
 
-	thumb_func_start sub_081CE7E4
-sub_081CE7E4: @ 0x081CE7E4
+	thumb_func_start ReturnToConditionSearchList
+ReturnToConditionSearchList: @ 0x081CE7E4
 	ldr r0, _081CE7E8
 	bx lr
 	.align 2, 0
 _081CE7E8: .4byte 0x000186A3
-	thumb_func_end sub_081CE7E4
+	thumb_func_end ReturnToConditionSearchList
 
-	thumb_func_start sub_081CE7EC
-sub_081CE7EC: @ 0x081CE7EC
+	thumb_func_start OpenConditionGraphFromSearchList
+OpenConditionGraphFromSearchList: @ 0x081CE7EC
 	ldr r0, _081CE7F0
 	bx lr
 	.align 2, 0
 _081CE7F0: .4byte 0x000186A9
-	thumb_func_end sub_081CE7EC
+	thumb_func_end OpenConditionGraphFromSearchList
 
-	thumb_func_start sub_081CE7F4
-sub_081CE7F4: @ 0x081CE7F4
+	thumb_func_start GetReturningFromGraph
+GetReturningFromGraph: @ 0x081CE7F4
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4171,10 +1671,10 @@ sub_081CE7F4: @ 0x081CE7F4
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CE7F4
+	thumb_func_end GetReturningFromGraph
 
-	thumb_func_start sub_081CE804
-sub_081CE804: @ 0x081CE804
+	thumb_func_start GetSearchResultsMonDataList
+GetSearchResultsMonDataList: @ 0x081CE804
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4182,10 +1682,10 @@ sub_081CE804: @ 0x081CE804
 	adds r0, #4
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE804
+	thumb_func_end GetSearchResultsMonDataList
 
-	thumb_func_start sub_081CE814
-sub_081CE814: @ 0x081CE814
+	thumb_func_start GetSearchResultsMonListCount
+GetSearchResultsMonListCount: @ 0x081CE814
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4193,10 +1693,10 @@ sub_081CE814: @ 0x081CE814
 	ldrh r0, [r0]
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE814
+	thumb_func_end GetSearchResultsMonListCount
 
-	thumb_func_start sub_081CE824
-sub_081CE824: @ 0x081CE824
+	thumb_func_start GetSearchResultsSelectedMonRank
+GetSearchResultsSelectedMonRank: @ 0x081CE824
 	push {r4, lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4209,10 +1709,10 @@ sub_081CE824: @ 0x081CE824
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE824
+	thumb_func_end GetSearchResultsSelectedMonRank
 
-	thumb_func_start sub_081CE840
-sub_081CE840: @ 0x081CE840
+	thumb_func_start GetSearchResultsCurrentListIndex
+GetSearchResultsCurrentListIndex: @ 0x081CE840
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4220,10 +1720,10 @@ sub_081CE840: @ 0x081CE840
 	ldrh r0, [r0, #2]
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE840
+	thumb_func_end GetSearchResultsCurrentListIndex
 
-	thumb_func_start sub_081CE850
-sub_081CE850: @ 0x081CE850
+	thumb_func_start MysteryGiftServer_CallFunc
+MysteryGiftServer_CallFunc: @ 0x081CE850
 	push {lr}
 	ldr r2, _081CE864
 	lsls r1, r0, #2
@@ -4234,10 +1734,10 @@ sub_081CE850: @ 0x081CE850
 	bx r1
 	.align 2, 0
 _081CE864: .4byte 0x085F59C0
-	thumb_func_end sub_081CE850
+	thumb_func_end MysteryGiftServer_CallFunc
 
-	thumb_func_start sub_081CE868
-sub_081CE868: @ 0x081CE868
+	thumb_func_start BuildPartyMonSearchResults
+BuildPartyMonSearchResults: @ 0x081CE868
 	push {r4, r5, r6, lr}
 	sub sp, #4
 	movs r0, #7
@@ -4289,7 +1789,7 @@ _081CE88C:
 	str r1, [sp]
 	adds r0, r6, #0
 	mov r1, sp
-	bl sub_081CE9F8
+	bl InsertMonListItem
 _081CE8D8:
 	adds r5, #1
 	cmp r5, #5
@@ -4305,10 +1805,10 @@ _081CE8E8: .4byte 0xFFFFFF00
 _081CE8EC: .4byte 0x02024190
 _081CE8F0: .4byte 0xFFFF00FF
 _081CE8F4: .4byte 0x0000FFFF
-	thumb_func_end sub_081CE868
+	thumb_func_end BuildPartyMonSearchResults
 
-	thumb_func_start sub_081CE8F8
-sub_081CE8F8: @ 0x081CE8F8
+	thumb_func_start InitBoxMonSearchResults
+InitBoxMonSearchResults: @ 0x081CE8F8
 	push {lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4318,10 +1818,10 @@ sub_081CE8F8: @ 0x081CE8F8
 	movs r0, #1
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE8F8
+	thumb_func_end InitBoxMonSearchResults
 
-	thumb_func_start sub_081CE90C
-sub_081CE90C: @ 0x081CE90C
+	thumb_func_start BuildBoxMonSearchResults
+BuildBoxMonSearchResults: @ 0x081CE90C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -4368,7 +1868,7 @@ _081CE930:
 	str r1, [sp]
 	adds r0, r6, #0
 	mov r1, sp
-	bl sub_081CE9F8
+	bl InsertMonListItem
 _081CE96E:
 	movs r0, #1
 	add r8, r0
@@ -4402,10 +1902,10 @@ _081CE99E:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CE90C
+	thumb_func_end BuildBoxMonSearchResults
 
-	thumb_func_start sub_081CE9AC
-sub_081CE9AC: @ 0x081CE9AC
+	thumb_func_start ConvertConditionsToListRanks
+ConvertConditionsToListRanks: @ 0x081CE9AC
 	push {r4, r5, r6, lr}
 	movs r0, #7
 	bl GetSubstructPtr
@@ -4447,10 +1947,10 @@ _081CE9EC:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CE9AC
+	thumb_func_end ConvertConditionsToListRanks
 
-	thumb_func_start sub_081CE9F8
-sub_081CE9F8: @ 0x081CE9F8
+	thumb_func_start InsertMonListItem
+InsertMonListItem: @ 0x081CE9F8
 	push {r4, r5, r6, r7, lr}
 	adds r5, r0, #0
 	adds r7, r1, #0
@@ -4511,10 +2011,10 @@ _081CEA4C:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CE9F8
+	thumb_func_end InsertMonListItem
 
-	thumb_func_start sub_081CEA64
-sub_081CEA64: @ 0x081CEA64
+	thumb_func_start OpenConditionSearchResults
+OpenConditionSearchResults: @ 0x081CEA64
 	push {r4, lr}
 	movs r1, #0x81
 	lsls r1, r1, #4
@@ -4542,10 +2042,10 @@ _081CEA96:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CEA64
+	thumb_func_end OpenConditionSearchResults
 
-	thumb_func_start sub_081CEA9C
-sub_081CEA9C: @ 0x081CEA9C
+	thumb_func_start OpenConditionSearchListFromGraph
+OpenConditionSearchListFromGraph: @ 0x081CEA9C
 	push {r4, lr}
 	movs r1, #0x81
 	lsls r1, r1, #4
@@ -4572,10 +2072,10 @@ _081CEACE:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CEA9C
+	thumb_func_end OpenConditionSearchListFromGraph
 
-	thumb_func_start sub_081CEAD4
-sub_081CEAD4: @ 0x081CEAD4
+	thumb_func_start CreateSearchResultsLoopedTask
+CreateSearchResultsLoopedTask: @ 0x081CEAD4
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	movs r0, #8
@@ -4596,17 +2096,17 @@ sub_081CEAD4: @ 0x081CEAD4
 	.align 2, 0
 _081CEAFC: .4byte 0x085F5BA4
 _081CEB00: .4byte 0x081CEB19
-	thumb_func_end sub_081CEAD4
+	thumb_func_end CreateSearchResultsLoopedTask
 
-	thumb_func_start sub_081CEB04
-sub_081CEB04: @ 0x081CEB04
+	thumb_func_start IsRibbonsMonListLoopedTaskActive
+IsRibbonsMonListLoopedTaskActive: @ 0x081CEB04
 	push {lr}
 	movs r0, #8
 	bl GetSubstructPtr
 	ldr r0, [r0]
 	bl _call_via_r0
 	pop {r1}
-	thumb_func_end sub_081CEB04
+	thumb_func_end IsRibbonsMonListLoopedTaskActive
 
 	thumb_func_start sub_081CEB14
 sub_081CEB14: @ 0x081CEB14
@@ -4614,8 +2114,8 @@ sub_081CEB14: @ 0x081CEB14
 	.align 2, 0
 	thumb_func_end sub_081CEB14
 
-	thumb_func_start sub_081CEB18
-sub_081CEB18: @ 0x081CEB18
+	thumb_func_start GetSearchResultCurrentLoopedTaskActive
+GetSearchResultCurrentLoopedTaskActive: @ 0x081CEB18
 	push {lr}
 	movs r0, #8
 	bl GetSubstructPtr
@@ -4624,10 +2124,10 @@ sub_081CEB18: @ 0x081CEB18
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CEB18
+	thumb_func_end GetSearchResultCurrentLoopedTaskActive
 
-	thumb_func_start sub_081CEB2C
-sub_081CEB2C: @ 0x081CEB2C
+	thumb_func_start FreeSearchResultSubstruct2
+FreeSearchResultSubstruct2: @ 0x081CEB2C
 	push {r4, lr}
 	movs r0, #8
 	bl GetSubstructPtr
@@ -4640,10 +2140,10 @@ sub_081CEB2C: @ 0x081CEB2C
 	pop {r4}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CEB2C
+	thumb_func_end FreeSearchResultSubstruct2
 
-	thumb_func_start sub_081CEB4C
-sub_081CEB4C: @ 0x081CEB4C
+	thumb_func_start LoopedTask_OpenConditionSearchResults
+LoopedTask_OpenConditionSearchResults: @ 0x081CEB4C
 	push {r4, r5, lr}
 	sub sp, #4
 	adds r4, r0, #0
@@ -4709,7 +2209,7 @@ _081CEBE0:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CEC9E
-	bl sub_081CE7F4
+	bl GetReturningFromGraph
 	cmp r0, #0
 	beq _081CEC9E
 	b _081CEBCC
@@ -4722,7 +2222,7 @@ _081CEBF4:
 	movs r1, #0x20
 	movs r2, #0x20
 	bl CopyPaletteIntoBufferUnfaded
-	bl sub_081CEF4C
+	bl CreateSearchResultsList
 	b _081CEBCC
 	.align 2, 0
 _081CEC10: .4byte 0x085F5B7C
@@ -4731,7 +2231,7 @@ _081CEC14:
 	cmp r0, #0
 	bne _081CEC9E
 	adds r0, r5, #0
-	bl sub_081CEEBC
+	bl AddSearchResultListMenuWindow
 	movs r0, #3
 	bl PrintHelpBarText
 	b _081CEBCC
@@ -4793,7 +2293,7 @@ _081CECA4:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CEB4C
+	thumb_func_end LoopedTask_OpenConditionSearchResults
 
 	thumb_func_start sub_081CECAC
 sub_081CECAC: @ 0x081CECAC
@@ -5035,8 +2535,8 @@ _081CEE46:
 	bx r1
 	thumb_func_end sub_081CEDE4
 
-	thumb_func_start sub_081CEE4C
-sub_081CEE4C: @ 0x081CEE4C
+	thumb_func_start LoopedTask_ExitConditionSearchMenu
+LoopedTask_ExitConditionSearchMenu: @ 0x081CEE4C
 	push {lr}
 	cmp r0, #0
 	beq _081CEE58
@@ -5069,10 +2569,10 @@ _081CEE86:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CEE4C
+	thumb_func_end LoopedTask_ExitConditionSearchMenu
 
-	thumb_func_start sub_081CEE8C
-sub_081CEE8C: @ 0x081CEE8C
+	thumb_func_start LoopedTask_SelectSearchResult
+LoopedTask_SelectSearchResult: @ 0x081CEE8C
 	push {lr}
 	cmp r0, #0
 	beq _081CEE98
@@ -5098,10 +2598,10 @@ _081CEEB6:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CEE8C
+	thumb_func_end LoopedTask_SelectSearchResult
 
-	thumb_func_start sub_081CEEBC
-sub_081CEEBC: @ 0x081CEEBC
+	thumb_func_start AddSearchResultListMenuWindow
+AddSearchResultListMenuWindow: @ 0x081CEEBC
 	push {r4, lr}
 	adds r4, r0, #0
 	ldr r0, _081CEEE4
@@ -5120,14 +2620,14 @@ sub_081CEEBC: @ 0x081CEEBC
 	bx r0
 	.align 2, 0
 _081CEEE4: .4byte 0x085F5BC0
-	thumb_func_end sub_081CEEBC
+	thumb_func_end AddSearchResultListMenuWindow
 
 	thumb_func_start sub_081CEEE8
 sub_081CEEE8: @ 0x081CEEE8
 	push {r4, r5, r6, lr}
 	sub sp, #0xc
 	adds r6, r0, #0
-	bl sub_081CE824
+	bl GetSearchResultsSelectedMonRank
 	adds r5, r0, #0
 	bl DynamicPlaceholderTextUtil_Reset
 	ldr r4, _081CEF40
@@ -5167,19 +2667,19 @@ _081CEF44: .4byte 0x02021C54
 _081CEF48: .4byte 0x085CB81B
 	thumb_func_end sub_081CEEE8
 
-	thumb_func_start sub_081CEF4C
-sub_081CEF4C: @ 0x081CEF4C
+	thumb_func_start CreateSearchResultsList
+CreateSearchResultsList: @ 0x081CEF4C
 	push {r4, lr}
 	sub sp, #0x18
-	bl sub_081CE804
+	bl GetSearchResultsMonDataList
 	str r0, [sp]
-	bl sub_081CE814
+	bl GetSearchResultsMonListCount
 	mov r1, sp
 	movs r4, #0
 	strh r0, [r1, #4]
 	movs r0, #4
 	strb r0, [r1, #8]
-	bl sub_081CE840
+	bl GetSearchResultsCurrentListIndex
 	mov r1, sp
 	strh r0, [r1, #6]
 	movs r0, #0xe
@@ -5205,7 +2705,7 @@ sub_081CEF4C: @ 0x081CEF4C
 	.align 2, 0
 _081CEF98: .4byte 0x081CEFA1
 _081CEF9C: .4byte 0x085F5BA0
-	thumb_func_end sub_081CEF4C
+	thumb_func_end CreateSearchResultsList
 
 	thumb_func_start sub_081CEFA0
 sub_081CEFA0: @ 0x081CEFA0
@@ -5315,8 +2815,8 @@ _081CF07A:
 _081CF08C: .4byte 0x085CB7FE
 	thumb_func_end sub_081CEFA0
 
-	thumb_func_start sub_081CF090
-sub_081CF090: @ 0x081CF090
+	thumb_func_start PokenavCallback_Init_MonRibbonList
+PokenavCallback_Init_MonRibbonList: @ 0x081CF090
 	push {r4, lr}
 	movs r0, #9
 	movs r1, #0x20
@@ -5350,10 +2850,10 @@ _081CF0D2:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF090
+	thumb_func_end PokenavCallback_Init_MonRibbonList
 
-	thumb_func_start sub_081CF0D8
-sub_081CF0D8: @ 0x081CF0D8
+	thumb_func_start PokenavCallback_Init_RibbonsMonListFromSummary
+PokenavCallback_Init_RibbonsMonListFromSummary: @ 0x081CF0D8
 	push {r4, lr}
 	movs r0, #9
 	movs r1, #0x20
@@ -5377,10 +2877,10 @@ _081CF102:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF0D8
+	thumb_func_end PokenavCallback_Init_RibbonsMonListFromSummary
 
-	thumb_func_start sub_081CF108
-sub_081CF108: @ 0x081CF108
+	thumb_func_start GetRibbonsMonListCallback
+GetRibbonsMonListCallback: @ 0x081CF108
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5389,10 +2889,10 @@ sub_081CF108: @ 0x081CF108
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF108
+	thumb_func_end GetRibbonsMonListCallback
 
-	thumb_func_start sub_081CF11C
-sub_081CF11C: @ 0x081CF11C
+	thumb_func_start FreeRibbonsMonList
+FreeRibbonsMonList: @ 0x081CF11C
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5407,7 +2907,7 @@ _081CF130:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081CF11C
+	thumb_func_end FreeRibbonsMonList
 
 	thumb_func_start sub_081CF13C
 sub_081CF13C: @ 0x081CF13C
@@ -5428,8 +2928,8 @@ _081CF14E:
 _081CF158: .4byte 0x081CF15D
 	thumb_func_end sub_081CF13C
 
-	thumb_func_start sub_081CF15C
-sub_081CF15C: @ 0x081CF15C
+	thumb_func_start HandleRibbonsMonListInput
+HandleRibbonsMonListInput: @ 0x081CF15C
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	ldr r2, _081CF170
@@ -5500,26 +3000,26 @@ _081CF1D2:
 	bx r1
 	.align 2, 0
 _081CF1D8: .4byte 0x081CF1E5
-	thumb_func_end sub_081CF15C
+	thumb_func_end HandleRibbonsMonListInput
 
-	thumb_func_start sub_081CF1DC
-sub_081CF1DC: @ 0x081CF1DC
+	thumb_func_start RibbonsMonMenu_ReturnToMainMenu
+RibbonsMonMenu_ReturnToMainMenu: @ 0x081CF1DC
 	ldr r0, _081CF1E0
 	bx lr
 	.align 2, 0
 _081CF1E0: .4byte 0x000186A5
-	thumb_func_end sub_081CF1DC
+	thumb_func_end RibbonsMonMenu_ReturnToMainMenu
 
-	thumb_func_start sub_081CF1E4
-sub_081CF1E4: @ 0x081CF1E4
+	thumb_func_start RibbonsMonMenu_ToSummaryScreen
+RibbonsMonMenu_ToSummaryScreen: @ 0x081CF1E4
 	ldr r0, _081CF1E8
 	bx lr
 	.align 2, 0
 _081CF1E8: .4byte 0x000186AD
-	thumb_func_end sub_081CF1E4
+	thumb_func_end RibbonsMonMenu_ToSummaryScreen
 
-	thumb_func_start sub_081CF1EC
-sub_081CF1EC: @ 0x081CF1EC
+	thumb_func_start UpdateMonListBgs
+UpdateMonListBgs: @ 0x081CF1EC
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5527,10 +3027,10 @@ sub_081CF1EC: @ 0x081CF1EC
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF1EC
+	thumb_func_end UpdateMonListBgs
 
-	thumb_func_start sub_081CF1FC
-sub_081CF1FC: @ 0x081CF1FC
+	thumb_func_start GetMonRibbonMonListData
+GetMonRibbonMonListData: @ 0x081CF1FC
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5538,10 +3038,10 @@ sub_081CF1FC: @ 0x081CF1FC
 	adds r0, #4
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF1FC
+	thumb_func_end GetMonRibbonMonListData
 
-	thumb_func_start sub_081CF20C
-sub_081CF20C: @ 0x081CF20C
+	thumb_func_start GetRibbonsMonListCount
+GetRibbonsMonListCount: @ 0x081CF20C
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5549,10 +3049,10 @@ sub_081CF20C: @ 0x081CF20C
 	ldrh r0, [r0]
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF20C
+	thumb_func_end GetRibbonsMonListCount
 
-	thumb_func_start sub_081CF21C
-sub_081CF21C: @ 0x081CF21C
+	thumb_func_start GetMonRibbonSelectedMonData
+GetMonRibbonSelectedMonData: @ 0x081CF21C
 	push {r4, lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5565,10 +3065,10 @@ sub_081CF21C: @ 0x081CF21C
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF21C
+	thumb_func_end GetMonRibbonSelectedMonData
 
-	thumb_func_start sub_081CF238
-sub_081CF238: @ 0x081CF238
+	thumb_func_start GetRibbonListMenuCurrIndex
+GetRibbonListMenuCurrIndex: @ 0x081CF238
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5576,10 +3076,10 @@ sub_081CF238: @ 0x081CF238
 	ldrh r0, [r0, #2]
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF238
+	thumb_func_end GetRibbonListMenuCurrIndex
 
-	thumb_func_start sub_081CF248
-sub_081CF248: @ 0x081CF248
+	thumb_func_start GetConditionSearchLoopedTask
+GetConditionSearchLoopedTask: @ 0x081CF248
 	push {lr}
 	ldr r2, _081CF25C
 	lsls r1, r0, #2
@@ -5590,10 +3090,10 @@ sub_081CF248: @ 0x081CF248
 	bx r1
 	.align 2, 0
 _081CF25C: .4byte 0x085F5BC8
-	thumb_func_end sub_081CF248
+	thumb_func_end GetConditionSearchLoopedTask
 
-	thumb_func_start sub_081CF260
-sub_081CF260: @ 0x081CF260
+	thumb_func_start BuildPartyMonRibbonList
+BuildPartyMonRibbonList: @ 0x081CF260
 	push {r4, r5, r6, lr}
 	sub sp, #4
 	movs r0, #9
@@ -5667,10 +3167,10 @@ _081CF2F0: .4byte 0xFFFFFF00
 _081CF2F4: .4byte 0x02024190
 _081CF2F8: .4byte 0xFFFF00FF
 _081CF2FC: .4byte 0x0000FFFF
-	thumb_func_end sub_081CF260
+	thumb_func_end BuildPartyMonRibbonList
 
-	thumb_func_start sub_081CF300
-sub_081CF300: @ 0x081CF300
+	thumb_func_start InitBoxMonRibbonList
+InitBoxMonRibbonList: @ 0x081CF300
 	push {lr}
 	movs r0, #9
 	bl GetSubstructPtr
@@ -5680,10 +3180,10 @@ sub_081CF300: @ 0x081CF300
 	movs r0, #1
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF300
+	thumb_func_end InitBoxMonRibbonList
 
-	thumb_func_start sub_081CF314
-sub_081CF314: @ 0x081CF314
+	thumb_func_start BuildBoxMonRibbonList
+BuildBoxMonRibbonList: @ 0x081CF314
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -5769,7 +3269,7 @@ _081CF3B0:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF314
+	thumb_func_end BuildBoxMonRibbonList
 
 	thumb_func_start sub_081CF3C0
 sub_081CF3C0: @ 0x081CF3C0
@@ -5835,8 +3335,8 @@ _081CF414:
 	bx r0
 	thumb_func_end sub_081CF3C0
 
-	thumb_func_start sub_081CF42C
-sub_081CF42C: @ 0x081CF42C
+	thumb_func_start PlayerHasRibbonsMon
+PlayerHasRibbonsMon: @ 0x081CF42C
 	push {r4, r5, r6, lr}
 	movs r5, #0
 _081CF430:
@@ -5898,10 +3398,10 @@ _081CF49E:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF42C
+	thumb_func_end PlayerHasRibbonsMon
 
-	thumb_func_start sub_081CF4A4
-sub_081CF4A4: @ 0x081CF4A4
+	thumb_func_start OpenRibbonsMonList
+OpenRibbonsMonList: @ 0x081CF4A4
 	push {r4, lr}
 	movs r1, #0x81
 	lsls r1, r1, #4
@@ -5929,10 +3429,10 @@ _081CF4D6:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF4A4
+	thumb_func_end OpenRibbonsMonList
 
-	thumb_func_start sub_081CF4DC
-sub_081CF4DC: @ 0x081CF4DC
+	thumb_func_start OpenRibbonsMonListFromRibbonsSummary
+OpenRibbonsMonListFromRibbonsSummary: @ 0x081CF4DC
 	push {r4, lr}
 	movs r1, #0x81
 	lsls r1, r1, #4
@@ -5959,10 +3459,10 @@ _081CF50E:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF4DC
+	thumb_func_end OpenRibbonsMonListFromRibbonsSummary
 
-	thumb_func_start sub_081CF514
-sub_081CF514: @ 0x081CF514
+	thumb_func_start CreateRibbonsMonListLoopedTask
+CreateRibbonsMonListLoopedTask: @ 0x081CF514
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	movs r0, #0xa
@@ -5983,17 +3483,17 @@ sub_081CF514: @ 0x081CF514
 	.align 2, 0
 _081CF53C: .4byte 0x085F5DA8
 _081CF540: .4byte 0x081CF559
-	thumb_func_end sub_081CF514
+	thumb_func_end CreateRibbonsMonListLoopedTask
 
-	thumb_func_start sub_081CF544
-sub_081CF544: @ 0x081CF544
+	thumb_func_start IsRibbonsSummaryLoopedTaskActive
+IsRibbonsSummaryLoopedTaskActive: @ 0x081CF544
 	push {lr}
 	movs r0, #0xa
 	bl GetSubstructPtr
 	ldr r0, [r0]
 	bl _call_via_r0
 	pop {r1}
-	thumb_func_end sub_081CF544
+	thumb_func_end IsRibbonsSummaryLoopedTaskActive
 
 	thumb_func_start sub_081CF554
 sub_081CF554: @ 0x081CF554
@@ -6001,8 +3501,8 @@ sub_081CF554: @ 0x081CF554
 	.align 2, 0
 	thumb_func_end sub_081CF554
 
-	thumb_func_start sub_081CF558
-sub_081CF558: @ 0x081CF558
+	thumb_func_start GetRibbonsMonCurrentLoopedTaskActive
+GetRibbonsMonCurrentLoopedTaskActive: @ 0x081CF558
 	push {lr}
 	movs r0, #0xa
 	bl GetSubstructPtr
@@ -6011,10 +3511,10 @@ sub_081CF558: @ 0x081CF558
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF558
+	thumb_func_end GetRibbonsMonCurrentLoopedTaskActive
 
-	thumb_func_start sub_081CF56C
-sub_081CF56C: @ 0x081CF56C
+	thumb_func_start FreeRibbonsMonMenu
+FreeRibbonsMonMenu: @ 0x081CF56C
 	push {r4, lr}
 	movs r0, #0xa
 	bl GetSubstructPtr
@@ -6027,10 +3527,10 @@ sub_081CF56C: @ 0x081CF56C
 	pop {r4}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081CF56C
+	thumb_func_end FreeRibbonsMonMenu
 
-	thumb_func_start sub_081CF58C
-sub_081CF58C: @ 0x081CF58C
+	thumb_func_start LoopedTask_OpenRibbonsMonList
+LoopedTask_OpenRibbonsMonList: @ 0x081CF58C
 	push {r4, r5, lr}
 	sub sp, #4
 	adds r4, r0, #0
@@ -6094,7 +3594,7 @@ _081CF61C:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CF6C2
-	bl sub_081CF1EC
+	bl UpdateMonListBgs
 	cmp r0, #0
 	beq _081CF6C2
 	movs r0, #1
@@ -6117,7 +3617,7 @@ _081CF64A:
 	movs r1, #0x20
 	movs r2, #0x20
 	bl CopyPaletteIntoBufferUnfaded
-	bl sub_081CF9A4
+	bl CreateRibbonMonsList
 	b _081CF606
 	.align 2, 0
 _081CF664: .4byte 0x085F5D80
@@ -6168,7 +3668,7 @@ _081CF6C8:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081CF58C
+	thumb_func_end LoopedTask_OpenRibbonsMonList
 
 	thumb_func_start sub_081CF6D0
 sub_081CF6D0: @ 0x081CF6D0
@@ -6410,8 +3910,8 @@ _081CF86A:
 	bx r1
 	thumb_func_end sub_081CF808
 
-	thumb_func_start sub_081CF870
-sub_081CF870: @ 0x081CF870
+	thumb_func_start LoopedTask_RibbonsListReturnToMainMenu
+LoopedTask_RibbonsListReturnToMainMenu: @ 0x081CF870
 	push {lr}
 	cmp r0, #0
 	beq _081CF87C
@@ -6444,10 +3944,10 @@ _081CF8AA:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF870
+	thumb_func_end LoopedTask_RibbonsListReturnToMainMenu
 
-	thumb_func_start sub_081CF8B0
-sub_081CF8B0: @ 0x081CF8B0
+	thumb_func_start LoopedTask_RibbonsListOpenSummary
+LoopedTask_RibbonsListOpenSummary: @ 0x081CF8B0
 	push {lr}
 	cmp r0, #0
 	beq _081CF8BC
@@ -6473,7 +3973,7 @@ _081CF8DA:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081CF8B0
+	thumb_func_end LoopedTask_RibbonsListOpenSummary
 
 	thumb_func_start sub_081CF8E0
 sub_081CF8E0: @ 0x081CF8E0
@@ -6487,7 +3987,7 @@ sub_081CF8E0: @ 0x081CF8E0
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	bl PutWindowTilemap
-	bl sub_081CF20C
+	bl GetRibbonsMonListCount
 	adds r1, r0, #0
 	ldr r4, _081CF950
 	adds r0, r4, #0
@@ -6563,19 +4063,19 @@ sub_081CF95C: @ 0x081CF95C
 _081CF9A0: .4byte 0x02021C40
 	thumb_func_end sub_081CF95C
 
-	thumb_func_start sub_081CF9A4
-sub_081CF9A4: @ 0x081CF9A4
+	thumb_func_start CreateRibbonMonsList
+CreateRibbonMonsList: @ 0x081CF9A4
 	push {r4, lr}
 	sub sp, #0x18
-	bl sub_081CF1FC
+	bl GetMonRibbonMonListData
 	str r0, [sp]
-	bl sub_081CF20C
+	bl GetRibbonsMonListCount
 	mov r1, sp
 	movs r4, #0
 	strh r0, [r1, #4]
 	movs r0, #4
 	strb r0, [r1, #8]
-	bl sub_081CF238
+	bl GetRibbonListMenuCurrIndex
 	mov r1, sp
 	strh r0, [r1, #6]
 	movs r0, #0xe
@@ -6601,7 +4101,7 @@ sub_081CF9A4: @ 0x081CF9A4
 	.align 2, 0
 _081CF9F0: .4byte 0x081CF9F9
 _081CF9F4: .4byte 0x085F5DA4
-	thumb_func_end sub_081CF9A4
+	thumb_func_end CreateRibbonMonsList
 
 	thumb_func_start sub_081CF9F8
 sub_081CF9F8: @ 0x081CF9F8

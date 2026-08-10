@@ -163,7 +163,7 @@ sub_0816614C: @ 0x0816614C
 	ldr r0, [r0]
 	ldr r1, _08166174
 	adds r0, r0, r1
-	bl sub_081D1750
+	bl ConditionGraph_Draw
 	bl ScanlineEffect_InitHBlankDmaTransfer
 	pop {r0}
 	bx r0
@@ -233,7 +233,7 @@ _081661F4:
 	ldr r0, [r2]
 	ldr r2, _08166214
 	adds r0, r0, r2
-	bl sub_081D151C
+	bl ConditionGraph_Init
 	b _08166348
 	.align 2, 0
 _0816620C: .4byte 0x0203B978
@@ -325,10 +325,10 @@ _081662C8:
 	adds r0, r1, r4
 	ldr r2, _081662EC
 	adds r1, r1, r2
-	bl sub_081D1D70
+	bl ConditionGraph_CalcPositions
 	ldr r0, [r5]
 	adds r0, r0, r4
-	bl sub_081D16F4
+	bl ConditionGraph_InitResetScanline
 	b _08166348
 	.align 2, 0
 _081662E4: .4byte 0x0203B978
@@ -339,7 +339,7 @@ _081662F0:
 	ldr r0, [r4]
 	ldr r1, _08166318
 	adds r0, r0, r1
-	bl sub_081D1704
+	bl ConditionGraph_ResetScanline
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08166362
@@ -349,7 +349,7 @@ _081662F0:
 	adds r1, #0x14
 	adds r2, r2, r1
 	adds r1, r2, #0
-	bl sub_081D15CC
+	bl ConditionGraph_SetNewPositions
 	b _08166348
 	.align 2, 0
 _08166314: .4byte 0x0203B978
@@ -447,7 +447,7 @@ _081663CC:
 	ldr r0, [r4]
 	ldr r1, _0816642C
 	adds r0, r0, r1
-	bl sub_081D2A94
+	bl ResetConditionSparkleSprites
 	ldr r4, [r4]
 	ldr r2, _08166430
 	adds r0, r4, r2
@@ -471,7 +471,7 @@ _081663CC:
 	subs r3, #0xc
 	adds r1, r4, r3
 	ldrb r1, [r1]
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 _08166416:
 	ldr r0, _0816643C
 	bl sub_08166178
@@ -533,7 +533,7 @@ _08166484:
 	ldr r0, [r0]
 	ldr r1, _081664BC
 	adds r0, r0, r1
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	ldr r0, _081664C0
 	ldr r0, [r0]
 	adds r0, #0x50
@@ -557,7 +557,7 @@ _081664C4:
 	ldr r0, [r0]
 	ldr r2, _081664F4
 	adds r0, r0, r2
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	ldr r0, _081664F8
 	ldr r0, [r0]
 	adds r0, #0x50
@@ -936,7 +936,7 @@ _08166800:
 	ldr r0, [r0]
 	ldr r1, _08166834
 	adds r0, r0, r1
-	bl sub_081D2A94
+	bl ResetConditionSparkleSprites
 	ldr r0, _08166838
 	bl sub_08166178
 	ldr r0, _0816683C
@@ -1001,7 +1001,7 @@ _0816687C:
 	str r1, [r4, #0xc]
 	ldr r3, _081668B4
 	adds r0, r0, r3
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	b _081669B6
 	.align 2, 0
 _081668A8: .4byte 0x02024190
@@ -1029,7 +1029,7 @@ _081668CC:
 	ldr r1, [r4]
 	ldr r5, _08166914
 	adds r1, r1, r5
-	bl sub_081D1D70
+	bl ConditionGraph_CalcPositions
 	ldr r2, [r4]
 	ldr r4, _08166918
 	adds r0, r2, r4
@@ -1044,7 +1044,7 @@ _081668CC:
 	adds r1, r1, r4
 	adds r1, r2, r1
 	adds r2, r2, r5
-	bl sub_081D15CC
+	bl ConditionGraph_SetNewPositions
 	bl sub_0816713C
 	ldr r1, [r6]
 	b _081669B8
@@ -1059,7 +1059,7 @@ _08166920:
 	ldr r0, [r5]
 	ldr r1, _08166988
 	adds r0, r0, r1
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
 	cmp r6, #0
@@ -1094,7 +1094,7 @@ _08166920:
 	subs r4, #0xc
 	adds r1, r3, r4
 	ldrb r1, [r1]
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 _08166978:
 	ldr r1, _0816699C
 	ldr r0, [r1]
@@ -1221,7 +1221,7 @@ _08166A68:
 	ldr r0, [r0]
 	ldr r1, _08166B30
 	adds r0, r0, r1
-	bl nullsub_79
+	bl FreeConditionSparkles
 	movs r4, #0
 _08166A7C:
 	ldr r5, _08166B2C
@@ -2469,7 +2469,7 @@ sub_0816740C: @ 0x0816740C
 	adds r0, r5, #0
 	mov r1, sp
 	adds r2, r4, #0
-	bl sub_081D2800
+	bl LoadConditionMonPicTemplate
 	lsls r0, r6, #0xd
 	movs r1, #0xc1
 	lsls r1, r1, #2
@@ -2621,7 +2621,7 @@ sub_08167564: @ 0x08167564
 	mov r0, sp
 	adds r1, r5, #0
 	adds r2, r4, #0
-	bl sub_081D284C
+	bl LoadConditionSelectionIcons
 	mov r0, sp
 	bl LoadSpriteSheets
 	adds r0, r4, #0
@@ -2814,7 +2814,7 @@ _081676F8:
 _08167706:
 	mov r0, sb
 	mov r1, sl
-	bl sub_081D28E0
+	bl LoadConditionSparkle
 	mov r0, sb
 	bl LoadSpriteSheet
 	mov r0, sl
@@ -3067,7 +3067,7 @@ _0816793C:
 	movs r2, #0x20
 	bl LoadPalette
 	movs r0, #2
-	bl sub_081D1824
+	bl ConditionGraph_InitWindow
 	b _08167982
 	.align 2, 0
 _0816796C: .4byte 0x0203B978
@@ -3260,7 +3260,7 @@ _08167AD0:
 	lsls r3, r3, #2
 	adds r3, r3, r4
 	adds r2, r2, r3
-	bl sub_081D15CC
+	bl ConditionGraph_SetNewPositions
 	ldr r4, [r5]
 	ldr r1, _08167B94
 	adds r0, r4, r1
@@ -3417,7 +3417,7 @@ _08167C26:
 	lsrs r4, r1, #0x1f
 	ldr r1, _08167C6C
 	adds r0, r0, r1
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	mov r2, r8
 	cmp r2, #0
 	bne _08167C78
@@ -3515,7 +3515,7 @@ _08167D10:
 	adds r0, r1, r2
 	ldr r6, _08167D44
 	adds r1, r1, r6
-	bl sub_081D27A8
+	bl ConditionMenu_UpdateMonEnter
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08167DA4
@@ -3543,7 +3543,7 @@ _08167D4C: .4byte 0x00007FB6
 _08167D50:
 	ldr r2, _08167D98
 	adds r0, r1, r2
-	bl sub_081D2A94
+	bl ResetConditionSparkleSprites
 	ldr r3, [r4]
 	ldr r6, _08167D9C
 	adds r0, r3, r6
@@ -3567,7 +3567,7 @@ _08167D50:
 	subs r6, #0xc
 	adds r1, r3, r6
 	ldrb r1, [r1]
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 _08167D8A:
 	ldr r0, [r4]
 	adds r0, r0, r5
@@ -3616,7 +3616,7 @@ _08167DDA:
 	adds r0, r1, r2
 	ldr r2, _08167DF4
 	adds r1, r1, r2
-	bl sub_081D27D4
+	bl ConditionMenu_UpdateMonExit
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08167E46
@@ -3700,11 +3700,11 @@ _08167E74:
 _08167E7E:
 	ldr r2, _08167EA4
 	adds r0, r1, r2
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	ldr r0, [r4]
 	ldr r6, _08167EA8
 	adds r0, r0, r6
-	bl sub_081D2780
+	bl MoveConditionMonOffscreen
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08167F68
@@ -3740,7 +3740,7 @@ _08167ED4:
 	adds r0, r1, r2
 	ldr r6, _08167F08
 	adds r1, r1, r6
-	bl sub_081D27A8
+	bl ConditionMenu_UpdateMonEnter
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08167F68
@@ -3768,7 +3768,7 @@ _08167F10: .4byte 0x00007FB6
 _08167F14:
 	ldr r2, _08167F5C
 	adds r0, r1, r2
-	bl sub_081D2A94
+	bl ResetConditionSparkleSprites
 	ldr r3, [r4]
 	ldr r6, _08167F60
 	adds r0, r3, r6
@@ -3792,7 +3792,7 @@ _08167F14:
 	subs r6, #0xc
 	adds r1, r3, r6
 	ldrb r1, [r1]
-	bl sub_081D2AB0
+	bl CreateConditionSparkleSprites
 _08167F4E:
 	ldr r0, [r4]
 	adds r0, r0, r5

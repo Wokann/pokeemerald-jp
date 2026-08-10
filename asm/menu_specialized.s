@@ -260,8 +260,8 @@ sub_081D1508: @ 0x081D1508
 _081D1518: .4byte 0x0203CC18
 	thumb_func_end sub_081D1508
 
-	thumb_func_start sub_081D151C
-sub_081D151C: @ 0x081D151C
+	thumb_func_start ConditionGraph_Init
+ConditionGraph_Init: @ 0x081D151C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -352,10 +352,10 @@ _081D1564:
 	bx r0
 	.align 2, 0
 _081D15C8: .4byte 0x00000352
-	thumb_func_end sub_081D151C
+	thumb_func_end ConditionGraph_Init
 
-	thumb_func_start sub_081D15CC
-sub_081D15CC: @ 0x081D15CC
+	thumb_func_start ConditionGraph_SetNewPositions
+ConditionGraph_SetNewPositions: @ 0x081D15CC
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -476,10 +476,10 @@ _081D165A:
 	bx r0
 	.align 2, 0
 _081D16B8: .4byte 0x00000352
-	thumb_func_end sub_081D15CC
+	thumb_func_end ConditionGraph_SetNewPositions
 
-	thumb_func_start sub_081D16BC
-sub_081D16BC: @ 0x081D16BC
+	thumb_func_start ConditionGraph_TryUpdate
+ConditionGraph_TryUpdate: @ 0x081D16BC
 	push {r4, lr}
 	adds r1, r0, #0
 	ldr r0, _081D16D0
@@ -508,10 +508,10 @@ _081D16EE:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081D16BC
+	thumb_func_end ConditionGraph_TryUpdate
 
-	thumb_func_start sub_081D16F4
-sub_081D16F4: @ 0x081D16F4
+	thumb_func_start ConditionGraph_InitResetScanline
+ConditionGraph_InitResetScanline: @ 0x081D16F4
 	ldr r1, _081D1700
 	adds r0, r0, r1
 	movs r1, #0
@@ -519,10 +519,10 @@ sub_081D16F4: @ 0x081D16F4
 	bx lr
 	.align 2, 0
 _081D1700: .4byte 0x00000355
-	thumb_func_end sub_081D16F4
+	thumb_func_end ConditionGraph_InitResetScanline
 
-	thumb_func_start sub_081D1704
-sub_081D1704: @ 0x081D1704
+	thumb_func_start ConditionGraph_ResetScanline
+ConditionGraph_ResetScanline: @ 0x081D1704
 	push {r4, r5, lr}
 	sub sp, #0xc
 	ldr r1, _081D1718
@@ -563,10 +563,10 @@ _081D1744:
 	bx r1
 	.align 2, 0
 _081D174C: .4byte 0x085F7B0C
-	thumb_func_end sub_081D1704
+	thumb_func_end ConditionGraph_ResetScanline
 
-	thumb_func_start sub_081D1750
-sub_081D1750: @ 0x081D1750
+	thumb_func_start ConditionGraph_Draw
+ConditionGraph_Draw: @ 0x081D1750
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -670,10 +670,10 @@ _081D1806:
 _081D1818: .4byte 0x020388C8
 _081D181C: .4byte 0x0000FFFF
 _081D1820: .4byte 0x0000024A
-	thumb_func_end sub_081D1750
+	thumb_func_end ConditionGraph_Draw
 
-	thumb_func_start sub_081D1824
-sub_081D1824: @ 0x081D1824
+	thumb_func_start ConditionGraph_InitWindow
+ConditionGraph_InitWindow: @ 0x081D1824
 	push {r4, r5, lr}
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
@@ -710,7 +710,7 @@ _081D1830:
 	.align 2, 0
 _081D1870: .4byte 0x00003879
 _081D1874: .4byte 0x00003F3F
-	thumb_func_end sub_081D1824
+	thumb_func_end ConditionGraph_InitWindow
 
 	thumb_func_start sub_081D1878
 sub_081D1878: @ 0x081D1878
@@ -1390,8 +1390,8 @@ _081D1D62:
 _081D1D6C: .4byte 0x0000024A
 	thumb_func_end sub_081D1C48
 
-	thumb_func_start sub_081D1D70
-sub_081D1D70: @ 0x081D1D70
+	thumb_func_start ConditionGraph_CalcPositions
+ConditionGraph_CalcPositions: @ 0x081D1D70
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -1500,7 +1500,7 @@ _081D1E1C:
 	.align 2, 0
 _081D1E38: .4byte 0x085F7B18
 _081D1E3C: .4byte 0x082FA8CC
-	thumb_func_end sub_081D1D70
+	thumb_func_end ConditionGraph_CalcPositions
 
 	thumb_func_start InitMoveRelearnerWindows
 InitMoveRelearnerWindows: @ 0x081D1E40
@@ -2549,7 +2549,7 @@ _081D2676:
 	lsls r1, r1, #2
 	adds r1, #0x14
 	add r1, r8
-	bl sub_081D1D70
+	bl ConditionGraph_CalcPositions
 	b _081D26B6
 _081D268C:
 	movs r2, #0
@@ -2683,8 +2683,8 @@ _081D2770:
 	.align 2, 0
 	thumb_func_end sub_081D275C
 
-	thumb_func_start sub_081D2780
-sub_081D2780: @ 0x081D2780
+	thumb_func_start MoveConditionMonOffscreen
+MoveConditionMonOffscreen: @ 0x081D2780
 	push {lr}
 	adds r1, r0, #0
 	ldrh r0, [r1]
@@ -2706,13 +2706,13 @@ _081D2798:
 	lsrs r0, r0, #0x1f
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081D2780
+	thumb_func_end MoveConditionMonOffscreen
 
-	thumb_func_start sub_081D27A8
-sub_081D27A8: @ 0x081D27A8
+	thumb_func_start ConditionMenu_UpdateMonEnter
+ConditionMenu_UpdateMonEnter: @ 0x081D27A8
 	push {r4, r5, lr}
 	adds r5, r1, #0
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -2732,18 +2732,18 @@ _081D27CC:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081D27A8
+	thumb_func_end ConditionMenu_UpdateMonEnter
 
-	thumb_func_start sub_081D27D4
-sub_081D27D4: @ 0x081D27D4
+	thumb_func_start ConditionMenu_UpdateMonExit
+ConditionMenu_UpdateMonExit: @ 0x081D27D4
 	push {r4, r5, lr}
 	adds r5, r1, #0
-	bl sub_081D16BC
+	bl ConditionGraph_TryUpdate
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	adds r0, r5, #0
-	bl sub_081D2780
+	bl MoveConditionMonOffscreen
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0
@@ -2758,10 +2758,10 @@ _081D27F8:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_081D27D4
+	thumb_func_end ConditionMenu_UpdateMonExit
 
-	thumb_func_start sub_081D2800
-sub_081D2800: @ 0x081D2800
+	thumb_func_start LoadConditionMonPicTemplate
+LoadConditionMonPicTemplate: @ 0x081D2800
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0x20
 	ldr r3, _081D2840
@@ -2797,10 +2797,10 @@ sub_081D2800: @ 0x081D2800
 _081D2840: .4byte 0x085FA898
 _081D2844: .4byte 0x085FA8A0
 _081D2848: .4byte 0x085FA8B8
-	thumb_func_end sub_081D2800
+	thumb_func_end LoadConditionMonPicTemplate
 
-	thumb_func_start sub_081D284C
-sub_081D284C: @ 0x081D284C
+	thumb_func_start LoadConditionSelectionIcons
+LoadConditionSelectionIcons: @ 0x081D284C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -2874,10 +2874,10 @@ _081D28AA:
 _081D28D4: .4byte 0x085FA8C0
 _081D28D8: .4byte 0x085FA8E0
 _081D28DC: .4byte 0x085FA8F8
-	thumb_func_end sub_081D284C
+	thumb_func_end LoadConditionSelectionIcons
 
-	thumb_func_start sub_081D28E0
-sub_081D28E0: @ 0x081D28E0
+	thumb_func_start LoadConditionSparkle
+LoadConditionSparkle: @ 0x081D28E0
 	push {r4, r5, lr}
 	ldr r2, _081D28FC
 	ldr r4, [r2]
@@ -2895,7 +2895,7 @@ sub_081D28E0: @ 0x081D28E0
 	.align 2, 0
 _081D28FC: .4byte 0x085FA910
 _081D2900: .4byte 0x085FA918
-	thumb_func_end sub_081D28E0
+	thumb_func_end LoadConditionSparkle
 
 	thumb_func_start sub_081D2904
 sub_081D2904: @ 0x081D2904
@@ -3119,8 +3119,8 @@ _081D2A8C: .4byte 0x020205AC
 _081D2A90: .4byte 0x081D2B95
 	thumb_func_end sub_081D2A38
 
-	thumb_func_start sub_081D2A94
-sub_081D2A94: @ 0x081D2A94
+	thumb_func_start ResetConditionSparkleSprites
+ResetConditionSparkleSprites: @ 0x081D2A94
 	push {lr}
 	adds r2, r0, #0
 	movs r1, #0
@@ -3136,10 +3136,10 @@ _081D2A9C:
 	bls _081D2A9C
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081D2A94
+	thumb_func_end ResetConditionSparkleSprites
 
-	thumb_func_start sub_081D2AB0
-sub_081D2AB0: @ 0x081D2AB0
+	thumb_func_start CreateConditionSparkleSprites
+CreateConditionSparkleSprites: @ 0x081D2AB0
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -3220,10 +3220,10 @@ _081D2B2E:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_081D2AB0
+	thumb_func_end CreateConditionSparkleSprites
 
-	thumb_func_start sub_081D2B50
-sub_081D2B50: @ 0x081D2B50
+	thumb_func_start DestroyConditionSparkleSprites
+DestroyConditionSparkleSprites: @ 0x081D2B50
 	push {r4, r5, r6, lr}
 	adds r6, r0, #0
 	movs r5, #0
@@ -3247,12 +3247,12 @@ _081D2B74:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_081D2B50
+	thumb_func_end DestroyConditionSparkleSprites
 
-	thumb_func_start nullsub_79
-nullsub_79: @ 0x081D2B7C
+	thumb_func_start FreeConditionSparkles
+FreeConditionSparkles: @ 0x081D2B7C
 	push {lr}
-	bl sub_081D2B50
+	bl DestroyConditionSparkleSprites
 	movs r0, #0x68
 	bl FreeSpriteTilesByTag
 	movs r0, #0x68
@@ -3260,7 +3260,7 @@ nullsub_79: @ 0x081D2B7C
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end nullsub_79
+	thumb_func_end FreeConditionSparkles
 
 	thumb_func_start sub_081D2B94
 sub_081D2B94: @ 0x081D2B94
