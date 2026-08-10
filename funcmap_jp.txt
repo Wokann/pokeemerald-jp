@@ -10215,7 +10215,7 @@ slot_machine.s
 0812df78 sub_0812DF78_jp AddDigitalDisplaySprite
 0812dfec DestroyDigitalDisplayScene DestroyDigitalDisplayScene
 0812e064 slot_machine.s sub_0812E064_jp
-0812e0c0 sub_0812E0C0_jp MatchCall_GetEnabled
+0812e0c0 sub_0812E0C0_jp sub_0812E0C0
 0812e0f0 slot_machine.s sub_0812E0F0_jp
 0812e0f4 CreateReelSymbolSprites CreateReelSymbolSprites
 0812e164 SpriteCB_ReelSymbol SpriteCB_ReelSymbol
@@ -15135,7 +15135,7 @@ pokenav_unk_3.s
 081ca640 sub_081CA640_jp GetMatchCallList
 081ca650 sub_081CA650_jp GetMatchCallMapSec
 081ca668 ShouldDrawRematchPokeballIcon ShouldDrawRematchPokeballIcon
-081ca6b0 pokenav_unk_3.s sub_081CA6B0_jp
+081ca6b0 pokenav_unk_3.s GetMatchCallTrainerPic
 081ca71c GetMatchCallMessageText GetMatchCallMessageText
 081ca77c GetMatchCallFlavorText GetMatchCallFlavorText
 081ca7c0 sub_081CA7C0_jp GetMatchCallOptionCursorPos
@@ -15144,7 +15144,7 @@ pokenav_unk_3.s
 081ca86c sub_081CA86C_jp GetMatchTableMapSectionId
 081ca888 GetIndexDeltaOfNextCheckPageDown GetIndexDeltaOfNextCheckPageDown
 081ca8cc sub_081CA8CC GetIndexDeltaOfNextCheckPageUp
-081ca910 pokenav_unk_3.s unref_sub_81CB16C
+081ca910 pokenav_unk_3.s HasRematchEntry
 081ca974 ShouldDoNearbyMessage ShouldDoNearbyMessage
 pokenav_unk_4.s
 081caa04 OpenMatchCall OpenMatchCall

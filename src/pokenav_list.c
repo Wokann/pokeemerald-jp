@@ -101,7 +101,7 @@ extern const struct SpriteTemplate sSpriteTemplate_UpDownArrow;
 extern const u8 lineOffsets[CHECK_PAGE_ENTRY_COUNT];
 extern const u8 sPokenavCheckPageColors[3];
 extern const u8 sPokenavFieldNameColors[3];
-extern const u8 *sub_081CA77C(u32 trainerId, u32 checkPageEntry);
+extern const u8 *GetMatchCallFlavorText(u32 trainerId, u32 checkPageEntry);
 extern void sub_081CB4B8(u32 windowId, s32 offset);
 
 bool32 CreatePokenavList(const struct BgTemplate *bgTemplate, struct PokenavListTemplate *listTemplate, u32 tileOffset)
@@ -817,7 +817,7 @@ __attribute__((naked)) void PrintMatchCallFieldNames(struct PokenavList *list, u
 static void PrintMatchCallFlavorText(struct PokenavListWindowState *windowState, struct PokenavList *list, u32 checkPageEntry)
 {
     u32 r7 = (list->listWindow.unkA + lineOffsets[checkPageEntry]) & 0xF;
-    const u8 *str = sub_081CA77C(windowState->windowTopIndex, checkPageEntry);
+    const u8 *str = GetMatchCallFlavorText(windowState->windowTopIndex, checkPageEntry);
 
     if (str != NULL)
         StringCopyPadded(list->itemTextBuffer, str, 0, list->listWindow.width);

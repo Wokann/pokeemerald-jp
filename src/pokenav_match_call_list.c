@@ -1,0 +1,590 @@
+#include "global.h"
+#include "battle_setup.h"
+#include "data.h"
+#include "event_data.h"
+#include "gym_leader_rematch.h"
+#include "international_string_util.h"
+#include "main.h"
+#include "match_call.h"
+#include "overworld.h"
+#include "pokemon.h"
+#include "pokenav.h"
+#include "sound.h"
+#include "string_util.h"
+#include "strings.h"
+#include "constants/songs.h"
+
+struct Pokenav_MatchCallMenu
+{
+    u16 optionCursorPos;
+    u16 maxOptionId;
+    const u8 *matchCallOptions;
+    u16 headerId;
+    u16 numRegistered;
+    u16 numSpecialTrainers;
+    bool32 initFinished;
+    u32 loopedTaskId;
+    u32 (*callback)(struct Pokenav_MatchCallMenu *);
+    struct PokenavMatchCallEntry matchCallEntries[MAX_REMATCH_ENTRIES - 1];
+};
+
+static u32 CB2_HandleMatchCallInput(struct Pokenav_MatchCallMenu *);
+static u32 GetExitMatchCallMenuId(struct Pokenav_MatchCallMenu *);
+static u32 CB2_HandleMatchCallOptionsInput(struct Pokenav_MatchCallMenu *);
+static u32 CB2_HandleCheckPageInput(struct Pokenav_MatchCallMenu *);
+static u32 CB2_HandleCallExitInput(struct Pokenav_MatchCallMenu *);
+static u32 LoopedTask_BuildMatchCallList(s32);
+static bool32 ShouldDoNearbyMessage(void);
+
+// JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
+extern const u8 sMatchCallOptionsNoCheckPage[2];
+extern const u8 sMatchCallOptionsHasCheckPage[3];
+extern const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT];
+extern void sub_081D1178(u32 headerId, const u8 **className, const u8 **trainerName);
+extern bool32 sub_081D0F04(u16 headerId);
+extern bool32 MatchCallFlagGetByIndex(u32 rematchIndex);
+extern int sub_081D12CC(u32 headerId);
+extern const u8 *sub_081D123C(u16 headerId, u32 checkPageEntry);
+extern u8 MatchCallMapSecGetByIndex(u16 headerId);
+extern bool32 sub_081D12F4(u16 headerId);
+
+bool32 PokenavCallback_Init_MatchCall(void)
+{
+    struct Pokenav_MatchCallMenu *state = AllocSubstruct(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN, sizeof(struct Pokenav_MatchCallMenu));
+    if (!state)
+        return FALSE;
+
+    state->callback = CB2_HandleMatchCallInput;
+    state->headerId = 0;
+    state->initFinished = FALSE;
+    state->loopedTaskId = CreateLoopedTask(LoopedTask_BuildMatchCallList, 1);
+    return TRUE;
+}
+
+u32 GetMatchCallCallback(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->callback(state);
+}
+
+void FreeMatchCallSubstruct1(void)
+{
+    FreePokenavSubstruct(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+}
+
+static u32 CB2_HandleMatchCallInput(struct Pokenav_MatchCallMenu *state)
+{
+    int selection;
+
+    if (JOY_REPEAT(DPAD_UP))
+        return POKENAV_MC_FUNC_UP;
+    if (JOY_REPEAT(DPAD_DOWN))
+        return POKENAV_MC_FUNC_DOWN;
+    if (JOY_REPEAT(DPAD_LEFT))
+        return POKENAV_MC_FUNC_PG_UP;
+    if (JOY_REPEAT(DPAD_RIGHT))
+        return POKENAV_MC_FUNC_PG_DOWN;
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        state->callback = CB2_HandleMatchCallOptionsInput;
+        state->optionCursorPos = 0;
+        selection = PokenavList_GetSelectedIndex();
+
+        if (!state->matchCallEntries[selection].isSpecialTrainer || sub_081D0F04(state->matchCallEntries[selection].headerId))
+        {
+            state->matchCallOptions = sMatchCallOptionsHasCheckPage;
+            state->maxOptionId = ARRAY_COUNT(sMatchCallOptionsHasCheckPage) - 1;
+        }
+        else
+        {
+            state->matchCallOptions = sMatchCallOptionsNoCheckPage;
+            state->maxOptionId = ARRAY_COUNT(sMatchCallOptionsNoCheckPage) - 1;
+        }
+
+        return POKENAV_MC_FUNC_SELECT;
+    }
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        if (GetPokenavMode() != POKENAV_MODE_FORCE_CALL_READY)
+        {
+            state->callback = GetExitMatchCallMenuId;
+            return POKENAV_MC_FUNC_EXIT;
+        }
+        else
+        {
+            // Cant exit Match Call menu before calling Mr Stone during tutorial
+            PlaySE(SE_FAILURE);
+        }
+    }
+
+    return POKENAV_MC_FUNC_NONE;
+}
+
+static u32 GetExitMatchCallMenuId(struct Pokenav_MatchCallMenu *state)
+{
+    return POKENAV_MAIN_MENU_CURSOR_ON_MATCH_CALL;
+}
+
+static u32 CB2_HandleMatchCallOptionsInput(struct Pokenav_MatchCallMenu *state)
+{
+    if (JOY_NEW(DPAD_UP) && state->optionCursorPos)
+    {
+        state->optionCursorPos--;
+        return POKENAV_MC_FUNC_MOVE_OPTIONS_CURSOR;
+    }
+
+    if (JOY_NEW(DPAD_DOWN) && state->optionCursorPos < state->maxOptionId)
+    {
+        state->optionCursorPos++;
+        return POKENAV_MC_FUNC_MOVE_OPTIONS_CURSOR;
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        switch (state->matchCallOptions[state->optionCursorPos])
+        {
+        case MATCH_CALL_OPTION_CANCEL:
+            state->callback = CB2_HandleMatchCallInput;
+            return POKENAV_MC_FUNC_CANCEL;
+        case MATCH_CALL_OPTION_CALL:
+            if (GetPokenavMode() == POKENAV_MODE_FORCE_CALL_READY)
+                SetPokenavMode(POKENAV_MODE_FORCE_CALL_EXIT);
+
+            state->callback = CB2_HandleCallExitInput;
+            if (ShouldDoNearbyMessage())
+                return POKENAV_MC_FUNC_NEARBY_MSG;
+
+            return POKENAV_MC_FUNC_CALL_MSG;
+        case MATCH_CALL_OPTION_CHECK:
+            state->callback = CB2_HandleCheckPageInput;
+            return POKENAV_MC_FUNC_SHOW_CHECK_PAGE;
+        }
+    }
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        state->callback = CB2_HandleMatchCallInput;
+        return POKENAV_MC_FUNC_CANCEL;
+    }
+
+    return POKENAV_MC_FUNC_NONE;
+}
+
+static u32 CB2_HandleCheckPageInput(struct Pokenav_MatchCallMenu *state)
+{
+    if (JOY_REPEAT(DPAD_UP))
+        return POKENAV_MC_FUNC_CHECK_PAGE_UP;
+    if (JOY_REPEAT(DPAD_DOWN))
+        return POKENAV_MC_FUNC_CHECK_PAGE_DOWN;
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        state->callback = CB2_HandleMatchCallInput;
+        return POKENAV_MC_FUNC_EXIT_CHECK_PAGE;
+    }
+
+    return POKENAV_MC_FUNC_NONE;
+}
+
+static u32 CB2_HandleCallExitInput(struct Pokenav_MatchCallMenu *state)
+{
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        state->callback = CB2_HandleMatchCallInput;
+        return POKENAV_MC_FUNC_EXIT_CALL;
+    }
+
+    return POKENAV_MC_FUNC_NONE;
+}
+
+// agbcc assigns the JP loop counters (r5/r6) differently from this C form;
+// kept as naked asm to preserve the exact byte layout.
+__attribute__((naked)) static u32 LoopedTask_BuildMatchCallList(s32 taskState)
+{
+    __asm__(".syntax unified\n\t"
+            ".code 16\n\t"
+            "push {r4, r5, r6, r7, lr}\n\t"
+            "adds r5, r0, #0\n\t"
+            "movs r0, #5\n\t"
+            "bl GetSubstructPtr\n\t"
+            "adds r4, r0, #0\n\t"
+            "cmp r5, #1\n\t"
+            "beq _ltb_4F8\n\t"
+            "cmp r5, #1\n\t"
+            "bgt _ltb_4E6\n\t"
+            "cmp r5, #0\n\t"
+            "beq _ltb_4F0\n\t"
+            "b _ltb_5AC\n\t"
+            "_ltb_4E6:\n\t"
+            "cmp r5, #2\n\t"
+            "beq _ltb_548\n\t"
+            "cmp r5, #3\n\t"
+            "beq _ltb_5A8\n\t"
+            "b _ltb_5AC\n\t"
+            "_ltb_4F0:\n\t"
+            "strh r5, [r4, #8]\n\t"
+            "strh r5, [r4, #0xa]\n\t"
+            "_ltb_4F4:\n\t"
+            "movs r0, #1\n\t"
+            "b _ltb_5AE\n\t"
+            "_ltb_4F8:\n\t"
+            "movs r6, #0\n\t"
+            "ldrh r5, [r4, #8]\n\t"
+            "_ltb_4FC:\n\t"
+            "adds r0, r5, #0\n\t"
+            "bl MatchCallFlagGetByIndex\n\t"
+            "cmp r0, #0\n\t"
+            "beq _ltb_52C\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "lsls r0, r0, #2\n\t"
+            "adds r0, r4, r0\n\t"
+            "strh r5, [r0, #0x1e]\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "lsls r0, r0, #2\n\t"
+            "adds r0, r4, r0\n\t"
+            "movs r1, #1\n\t"
+            "strb r1, [r0, #0x1c]\n\t"
+            "adds r0, r5, #0\n\t"
+            "bl MatchCallMapSecGetByIndex\n\t"
+            "ldrh r1, [r4, #0xa]\n\t"
+            "lsls r1, r1, #2\n\t"
+            "adds r1, r4, r1\n\t"
+            "strb r0, [r1, #0x1d]\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "adds r0, #1\n\t"
+            "strh r0, [r4, #0xa]\n\t"
+            "_ltb_52C:\n\t"
+            "ldrh r0, [r4, #8]\n\t"
+            "adds r1, r0, #1\n\t"
+            "movs r2, #0\n\t"
+            "strh r1, [r4, #8]\n\t"
+            "lsls r0, r1, #0x10\n\t"
+            "lsrs r0, r0, #0x10\n\t"
+            "cmp r0, #0x14\n\t"
+            "bhi _ltb_5A2\n\t"
+            "adds r6, #1\n\t"
+            "adds r5, #1\n\t"
+            "cmp r6, #0x1d\n\t"
+            "ble _ltb_4FC\n\t"
+            "movs r0, #3\n\t"
+            "b _ltb_5AE\n\t"
+            "_ltb_548:\n\t"
+            "movs r6, #0\n\t"
+            "ldrh r5, [r4, #8]\n\t"
+            "movs r7, #0\n\t"
+            "_ltb_54E:\n\t"
+            "ldrh r0, [r4, #8]\n\t"
+            "bl sub_081D12F4\n\t"
+            "cmp r0, #0\n\t"
+            "bne _ltb_588\n\t"
+            "ldrh r0, [r4, #8]\n\t"
+            "bl IsRematchEntryRegistered\n\t"
+            "cmp r0, #0\n\t"
+            "beq _ltb_588\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "lsls r0, r0, #2\n\t"
+            "adds r0, r4, r0\n\t"
+            "ldrh r1, [r4, #8]\n\t"
+            "strh r1, [r0, #0x1e]\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "lsls r0, r0, #2\n\t"
+            "adds r0, r4, r0\n\t"
+            "strb r7, [r0, #0x1c]\n\t"
+            "adds r0, r5, #0\n\t"
+            "bl GetMatchTableMapSectionId\n\t"
+            "ldrh r1, [r4, #0xa]\n\t"
+            "lsls r1, r1, #2\n\t"
+            "adds r1, r4, r1\n\t"
+            "strb r0, [r1, #0x1d]\n\t"
+            "ldrh r0, [r4, #0xa]\n\t"
+            "adds r0, #1\n\t"
+            "strh r0, [r4, #0xa]\n\t"
+            "_ltb_588:\n\t"
+            "ldrh r0, [r4, #8]\n\t"
+            "adds r0, #1\n\t"
+            "strh r0, [r4, #8]\n\t"
+            "lsls r0, r0, #0x10\n\t"
+            "lsrs r0, r0, #0x10\n\t"
+            "cmp r0, #0x4d\n\t"
+            "bhi _ltb_4F4\n\t"
+            "adds r6, #1\n\t"
+            "adds r5, #1\n\t"
+            "cmp r6, #0x1d\n\t"
+            "ble _ltb_54E\n\t"
+            "movs r0, #3\n\t"
+            "b _ltb_5AE\n\t"
+            "_ltb_5A2:\n\t"
+            "strh r1, [r4, #0xc]\n\t"
+            "strh r2, [r4, #8]\n\t"
+            "b _ltb_4F4\n\t"
+            "_ltb_5A8:\n\t"
+            "movs r0, #1\n\t"
+            "str r0, [r4, #0x10]\n\t"
+            "_ltb_5AC:\n\t"
+            "movs r0, #4\n\t"
+            "_ltb_5AE:\n\t"
+            "pop {r4, r5, r6, r7}\n\t"
+            "pop {r1}\n\t"
+            "bx r1\n\t"
+            ".syntax divided");
+}
+bool32 IsRematchEntryRegistered(int rematchIndex)
+{
+    if (rematchIndex < REMATCH_TABLE_ENTRIES)
+        return FlagGet(TRAINER_REGISTERED_FLAGS_START + rematchIndex);
+
+    return FALSE;
+}
+
+int IsMatchCallListInitFinished(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->initFinished;
+}
+
+int GetNumberRegistered(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->numRegistered;
+}
+
+static int UNUSED GetNumSpecialTrainers(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->numSpecialTrainers;
+}
+
+static int UNUSED GetNumNormalTrainers(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->numRegistered - state->numSpecialTrainers;
+}
+
+static int UNUSED GetNormalTrainerHeaderId(int index)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    index += state->numSpecialTrainers;
+    if (index >= state->numRegistered)
+        return REMATCH_TABLE_ENTRIES;
+
+    return state->matchCallEntries[index].headerId;
+}
+
+struct PokenavMatchCallEntry *GetMatchCallList(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->matchCallEntries;
+}
+
+mapsec_u16_t GetMatchCallMapSec(int index)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->matchCallEntries[index].mapSec;
+}
+
+bool32 ShouldDrawRematchPokeballIcon(int index)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    if (!state->matchCallEntries[index].isSpecialTrainer)
+        index = state->matchCallEntries[index].headerId;
+    else
+        index = MatchCall_GetRematchTableIdx(state->matchCallEntries[index].headerId);
+
+    if (index == REMATCH_TABLE_ENTRIES)
+        return FALSE;
+
+    return gSaveBlock1Ptr->trainerRematches[index] != 0;
+}
+
+int GetMatchCallTrainerPic(int index)
+{
+    int headerId;
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    if (!state->matchCallEntries[index].isSpecialTrainer)
+    {
+        index = GetTrainerIdxByRematchIdx(state->matchCallEntries[index].headerId);
+        return gTrainers[index].trainerPic;
+    }
+
+    headerId = state->matchCallEntries[index].headerId;
+    index = MatchCall_GetRematchTableIdx(headerId);
+    if (index != REMATCH_TABLE_ENTRIES)
+    {
+        index = GetTrainerIdxByRematchIdx(index);
+        return gTrainers[index].trainerPic;
+    }
+
+    index = sub_081D12CC(headerId);
+    return gFacilityClassToPicIndex[index];
+}
+
+const u8 *GetMatchCallMessageText(int index, bool8 *newRematchRequest)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    *newRematchRequest = FALSE;
+    if (!Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType))
+        return gText_CallCantBeMadeHere;
+
+    if (!state->matchCallEntries[index].isSpecialTrainer)
+        *newRematchRequest = SelectMatchCallMessage(GetTrainerIdxByRematchIdx(state->matchCallEntries[index].headerId), gStringVar4);
+    else
+        MatchCall_GetMessage(state->matchCallEntries[index].headerId, gStringVar4);
+
+    return gStringVar4;
+}
+
+const u8 *GetMatchCallFlavorText(int index, int checkPageEntry)
+{
+    int rematchId;
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    if (state->matchCallEntries[index].isSpecialTrainer)
+    {
+        rematchId = MatchCall_GetRematchTableIdx(state->matchCallEntries[index].headerId);
+        if (rematchId == REMATCH_TABLE_ENTRIES)
+            return sub_081D123C(state->matchCallEntries[index].headerId, checkPageEntry);
+    }
+    else
+    {
+        rematchId = state->matchCallEntries[index].headerId;
+    }
+
+    return gMatchCallFlavorTexts[rematchId][checkPageEntry];
+}
+
+u16 GetMatchCallOptionCursorPos(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    return state->optionCursorPos;
+}
+
+u16 GetMatchCallOptionId(int optionId)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    if (state->maxOptionId < optionId)
+        return MATCH_CALL_OPTION_COUNT;
+
+    return state->matchCallOptions[optionId];
+}
+
+void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntry *matchCallEntry, u8 *str)
+{
+    const u8 *trainerName;
+    const u8 *className;
+
+    StringFill(str, 0, 0xf);
+    if (!matchCallEntry->isSpecialTrainer)
+    {
+        int index = GetTrainerIdxByRematchIdx(matchCallEntry->headerId);
+        const struct Trainer *trainer = &gTrainers[index];
+        int class = trainer->trainerClass;
+        className = gTrainerClassNames[class];
+        trainerName = trainer->trainerName;
+    }
+    else
+    {
+        sub_081D1178(matchCallEntry->headerId, &className, &trainerName);
+    }
+
+    if (className && trainerName)
+    {
+        u8 *s = StringCopy(str, className);
+        *s = 0;
+        s = StringCopy(str + 0xa, trainerName);
+        *s = 0;
+        str[0xf] = 0xFF;
+    }
+}
+
+mapsec_u8_t GetMatchTableMapSectionId(int rematchIndex)
+{
+    int mapGroup = gRematchTable[rematchIndex].mapGroup;
+    int mapNum = gRematchTable[rematchIndex].mapNum;
+    return Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId;
+}
+
+int GetIndexDeltaOfNextCheckPageDown(int index)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    int count = 1;
+    while (++index < state->numRegistered)
+    {
+        if (!state->matchCallEntries[index].isSpecialTrainer)
+            return count;
+        if (sub_081D0F04(state->matchCallEntries[index].headerId))
+            return count;
+
+        count++;
+    }
+
+    return 0;
+}
+
+int GetIndexDeltaOfNextCheckPageUp(int index)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    int count = -1;
+    while (--index >= 0)
+    {
+        if (!state->matchCallEntries[index].isSpecialTrainer)
+            return count;
+        if (sub_081D0F04(state->matchCallEntries[index].headerId))
+            return count;
+
+        count--;
+    }
+
+    return 0;
+}
+
+static bool32 UNUSED HasRematchEntry(void)
+{
+    int i;
+
+    for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
+    {
+        if (IsRematchEntryRegistered(i) && gSaveBlock1Ptr->trainerRematches[i])
+            return TRUE;
+    }
+
+    for (i = 0; i < MC_HEADER_COUNT; i++)
+    {
+        if (MatchCallFlagGetByIndex(i))
+        {
+            int index = MatchCall_GetRematchTableIdx(i);
+            if (gSaveBlock1Ptr->trainerRematches[index])
+                return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+static bool32 ShouldDoNearbyMessage(void)
+{
+    struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
+    int selection = PokenavList_GetSelectedIndex();
+    if (!state->matchCallEntries[selection].isSpecialTrainer)
+    {
+        if (GetMatchCallMapSec(selection) == gMapHeader.regionMapSectionId)
+        {
+            if (!gSaveBlock1Ptr->trainerRematches[state->matchCallEntries[selection].headerId])
+                return TRUE;
+        }
+    }
+    else
+    {
+        if (state->matchCallEntries[selection].headerId == MC_HEADER_WATTSON)
+        {
+            if (GetMatchCallMapSec(selection) == gMapHeader.regionMapSectionId
+             && FlagGet(FLAG_BADGE05_GET) == TRUE)
+            {
+                if (!FlagGet(FLAG_WATTSON_REMATCH_AVAILABLE))
+                    return TRUE;
+            }
+        }
+    }
+
+    return FALSE;
+}

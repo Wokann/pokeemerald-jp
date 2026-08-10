@@ -247,7 +247,7 @@ _081CAC0C:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CAC9E
-	bl sub_081CA5D4
+	bl IsMatchCallListInitFinished
 	cmp r0, #0
 	beq _081CAC9E
 	bl sub_081CB32C
@@ -611,7 +611,7 @@ sub_081CAEA8: @ 0x081CAEA8
 	movs r0, #6
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl sub_081CA7C0
+	bl GetMatchCallOptionCursorPos
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -964,7 +964,7 @@ _081CB15C: @ jump table
 	.4byte _081CB1BE @ case 4
 _081CB170:
 	bl PokenavList_GetTopIndex
-	bl sub_081CA888
+	bl GetIndexDeltaOfNextCheckPageDown
 	adds r5, r0, #0
 	cmp r5, #0
 	beq _081CB1D4
@@ -1096,7 +1096,7 @@ _081CB268: @ jump table
 	.4byte _081CB2CA @ case 4
 _081CB27C:
 	bl PokenavList_GetTopIndex
-	bl sub_081CA8CC
+	bl GetIndexDeltaOfNextCheckPageUp
 	adds r5, r0, #0
 	cmp r5, #0
 	beq _081CB2E0
@@ -1189,9 +1189,9 @@ _081CB328:
 sub_081CB32C: @ 0x081CB32C
 	push {lr}
 	sub sp, #0x18
-	bl sub_081CA640
+	bl GetMatchCallList
 	str r0, [sp]
-	bl sub_081CA5E4
+	bl GetNumberRegistered
 	mov r1, sp
 	movs r2, #0
 	strh r0, [r1, #4]
@@ -1351,7 +1351,7 @@ sub_081CB45C: @ 0x081CB45C
 	adds r4, #0x3a
 	adds r6, r6, r4
 	adds r0, r5, #0
-	bl sub_081CA668
+	bl ShouldDrawRematchPokeballIcon
 	cmp r0, #0
 	beq _081CB4A0
 	movs r1, #0xa0
@@ -1483,7 +1483,7 @@ sub_081CB57C: @ 0x081CB57C
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
-	bl sub_081CA5E4
+	bl GetNumberRegistered
 	adds r1, r0, #0
 	mov r0, sp
 	movs r2, #0
@@ -1589,7 +1589,7 @@ sub_081CB640: @ 0x081CB640
 	adds r4, r1, #0
 	bl PokenavList_GetSelectedIndex
 	adds r0, r0, r4
-	bl sub_081CA650
+	bl GetMatchCallMapSec
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #0xd5
@@ -1668,7 +1668,7 @@ _081CB6E8:
 	cmp r4, #2
 	bhi _081CB6FA
 	adds r0, r4, #0
-	bl sub_081CA7D0
+	bl GetMatchCallOptionId
 	lsls r0, r0, #0x10
 	lsrs r1, r0, #0x10
 	cmp r1, #3
@@ -1696,7 +1696,7 @@ sub_081CB710: @ 0x081CB710
 	movs r0, #1
 	b _081CB734
 _081CB722:
-	bl sub_081CA7C0
+	bl GetMatchCallOptionCursorPos
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
@@ -1917,7 +1917,7 @@ sub_081CB8AC: @ 0x081CB8AC
 	bl PokenavList_GetSelectedIndex
 	adds r1, r4, #0
 	adds r1, #0xf
-	bl sub_081CA71C
+	bl GetMatchCallMessageText
 	adds r5, r0, #0
 	bl GetPlayerTextSpeedDelay
 	lsls r0, r0, #0x18
@@ -2217,7 +2217,7 @@ sub_081CBAF0: @ 0x081CBAF0
 	push {r4, r5, r6, r7, lr}
 	adds r7, r0, #0
 	bl PokenavList_GetSelectedIndex
-	bl sub_081CA6B0
+	bl GetMatchCallTrainerPic
 	cmp r0, #0
 	blt _081CBB54
 	lsls r4, r0, #3

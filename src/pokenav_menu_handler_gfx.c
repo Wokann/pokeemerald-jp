@@ -51,8 +51,8 @@ struct Pokenav_MenuGfx
 };
 
 // Cross-module functions still in asm with JP names.
-extern u8 sub_081CA86C(s32 mapSectionId);
-extern bool32 sub_081CA5B4(s32 rematchIndex);
+extern u8 GetMatchTableMapSectionId(s32 mapSectionId);
+extern bool32 IsRematchEntryRegistered(s32 rematchIndex);
 
 static struct Pokenav_MenuGfx * OpenPokenavMenu(void);
 static bool32 GetCurrentLoopedTaskActive(void);
@@ -155,8 +155,8 @@ static bool32 AreAnyTrainerRematchesNearby(void)
 
     for (i = 0; i < REMATCH_TABLE_ENTRIES; i++)
     {
-        if (sub_081CA86C(i) == gMapHeader.regionMapSectionId
-            && sub_081CA5B4(i)
+        if (GetMatchTableMapSectionId(i) == gMapHeader.regionMapSectionId
+            && IsRematchEntryRegistered(i)
             && gSaveBlock1Ptr->trainerRematches[i])
             return TRUE;
     }
