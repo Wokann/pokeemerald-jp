@@ -40,13 +40,13 @@ static bool32 ShouldDoNearbyMessage(void);
 extern const u8 sMatchCallOptionsNoCheckPage[2];
 extern const u8 sMatchCallOptionsHasCheckPage[3];
 extern const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT];
-extern void sub_081D1178(u32 headerId, const u8 **className, const u8 **trainerName);
-extern bool32 sub_081D0F04(u16 headerId);
-extern bool32 MatchCallFlagGetByIndex(u32 rematchIndex);
-extern int sub_081D12CC(u32 headerId);
-extern const u8 *sub_081D123C(u16 headerId, u32 checkPageEntry);
-extern u8 MatchCallMapSecGetByIndex(u16 headerId);
-extern bool32 sub_081D12F4(u16 headerId);
+extern void MatchCall_GetNameAndDesc(u32 headerId, const u8 **className, const u8 **trainerName);
+extern bool32 MatchCall_HasCheckPage(u16 headerId);
+extern bool32 MatchCall_GetEnabled(u32 rematchIndex);
+extern int MatchCall_GetOverrideFacilityClass(u32 headerId);
+extern const u8 *MatchCall_GetOverrideFlavorText(u16 headerId, u32 checkPageEntry);
+extern u8 MatchCall_GetMapSec(u16 headerId);
+extern bool32 MatchCall_HasRematchId(u16 headerId);
 
 bool32 PokenavCallback_Init_MatchCall(void)
 {
@@ -91,7 +91,7 @@ static u32 CB2_HandleMatchCallInput(struct Pokenav_MatchCallMenu *state)
         state->optionCursorPos = 0;
         selection = PokenavList_GetSelectedIndex();
 
-        if (!state->matchCallEntries[selection].isSpecialTrainer || sub_081D0F04(state->matchCallEntries[selection].headerId))
+        if (!state->matchCallEntries[selection].isSpecialTrainer || MatchCall_HasCheckPage(state->matchCallEntries[selection].headerId))
         {
             state->matchCallOptions = sMatchCallOptionsHasCheckPage;
             state->maxOptionId = ARRAY_COUNT(sMatchCallOptionsHasCheckPage) - 1;
@@ -234,7 +234,7 @@ __attribute__((naked)) static u32 LoopedTask_BuildMatchCallList(s32 taskState)
             "ldrh r5, [r4, #8]\n\t"
             "_ltb_4FC:\n\t"
             "adds r0, r5, #0\n\t"
-            "bl MatchCallFlagGetByIndex\n\t"
+            "bl MatchCall_GetEnabled\n\t"
             "cmp r0, #0\n\t"
             "beq _ltb_52C\n\t"
             "ldrh r0, [r4, #0xa]\n\t"
@@ -247,7 +247,7 @@ __attribute__((naked)) static u32 LoopedTask_BuildMatchCallList(s32 taskState)
             "movs r1, #1\n\t"
             "strb r1, [r0, #0x1c]\n\t"
             "adds r0, r5, #0\n\t"
-            "bl MatchCallMapSecGetByIndex\n\t"
+            "bl MatchCall_GetMapSec\n\t"
             "ldrh r1, [r4, #0xa]\n\t"
             "lsls r1, r1, #2\n\t"
             "adds r1, r4, r1\n\t"
@@ -276,7 +276,7 @@ __attribute__((naked)) static u32 LoopedTask_BuildMatchCallList(s32 taskState)
             "movs r7, #0\n\t"
             "_ltb_54E:\n\t"
             "ldrh r0, [r4, #8]\n\t"
-            "bl sub_081D12F4\n\t"
+            "bl MatchCall_HasRematchId\n\t"
             "cmp r0, #0\n\t"
             "bne _ltb_588\n\t"
             "ldrh r0, [r4, #8]\n\t"
@@ -416,7 +416,7 @@ int GetMatchCallTrainerPic(int index)
         return gTrainers[index].trainerPic;
     }
 
-    index = sub_081D12CC(headerId);
+    index = MatchCall_GetOverrideFacilityClass(headerId);
     return gFacilityClassToPicIndex[index];
 }
 
@@ -443,7 +443,7 @@ const u8 *GetMatchCallFlavorText(int index, int checkPageEntry)
     {
         rematchId = MatchCall_GetRematchTableIdx(state->matchCallEntries[index].headerId);
         if (rematchId == REMATCH_TABLE_ENTRIES)
-            return sub_081D123C(state->matchCallEntries[index].headerId, checkPageEntry);
+            return MatchCall_GetOverrideFlavorText(state->matchCallEntries[index].headerId, checkPageEntry);
     }
     else
     {
@@ -484,7 +484,7 @@ void BufferMatchCallNameAndDesc(struct PokenavMatchCallEntry *matchCallEntry, u8
     }
     else
     {
-        sub_081D1178(matchCallEntry->headerId, &className, &trainerName);
+        MatchCall_GetNameAndDesc(matchCallEntry->headerId, &className, &trainerName);
     }
 
     if (className && trainerName)
@@ -512,7 +512,7 @@ int GetIndexDeltaOfNextCheckPageDown(int index)
     {
         if (!state->matchCallEntries[index].isSpecialTrainer)
             return count;
-        if (sub_081D0F04(state->matchCallEntries[index].headerId))
+        if (MatchCall_HasCheckPage(state->matchCallEntries[index].headerId))
             return count;
 
         count++;
@@ -529,7 +529,7 @@ int GetIndexDeltaOfNextCheckPageUp(int index)
     {
         if (!state->matchCallEntries[index].isSpecialTrainer)
             return count;
-        if (sub_081D0F04(state->matchCallEntries[index].headerId))
+        if (MatchCall_HasCheckPage(state->matchCallEntries[index].headerId))
             return count;
 
         count--;
@@ -550,7 +550,7 @@ static bool32 UNUSED HasRematchEntry(void)
 
     for (i = 0; i < MC_HEADER_COUNT; i++)
     {
-        if (MatchCallFlagGetByIndex(i))
+        if (MatchCall_GetEnabled(i))
         {
             int index = MatchCall_GetRematchTableIdx(i);
             if (gSaveBlock1Ptr->trainerRematches[index])
