@@ -52,6 +52,7 @@ gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
 sIsRegisteelPuzzle = ABSOLUTE(0x0203B9E0);
 gContestResources = ABSOLUTE(0x02039BD4);
+sMysteryEventScriptContext = ABSOLUTE(0x0203B88C);
 gContestantTurnOrder = ABSOLUTE(0x02039BC6);
 gEnemyParty = ABSOLUTE(0x020243E8);
 gBattlersCount = ABSOLUTE(0x02023D10);
