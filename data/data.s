@@ -16919,64 +16919,64 @@ gUnknown_85CCED5: @ 0x85CCED5
 gUnknown_85CCEDF: @ 0x85CCEDF
 	.string "{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}やめる$"
 
-	.globl gUnknown_85CCEEC
-gUnknown_85CCEEC: @ 0x85CCEEC
+	.globl gJPText_ReceiveMysteryGiftWithEReader
+gJPText_ReceiveMysteryGiftWithEReader: @ 0x85CCEEC
 	.string "カードeリーダー{PLUS}{TRANSPARENT}で\nふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの{SE_WARP_IN}よみ{DYNAMIC_COLOR1}"
 	.string "みま{DYNAMIC_COLOR4}$"
 
-	.globl gUnknown_85CCF0B
-gUnknown_85CCF0B: @ 0x85CCF0B
+	.globl gJPText_SelectConnectFromEReaderMenu
+gJPText_SelectConnectFromEReaderMenu: @ 0x85CCF0B
 	.string "カードeリーダー{PLUS}{SE_A}メニュー{GREEN}ら\n‘つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'{SE_WARP_IN}{RED}らび$"
 
-	.globl gUnknown_85CCF2A
-gUnknown_85CCF2A: @ 0x85CCF2A
+	.globl gJPText_SelectConnectWithGBA
+gJPText_SelectConnectWithGBA: @ 0x85CCF2A
 	.string "‘ゲームボーイアドバンスとつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'\n{SE_WARP_IN}{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR3}"
 	.string "て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 	.string "カードeリーダー{PLUS}{SE_A}‘つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん'を\n{RED}らん{SE_NOTE_B}Aボタン{SE_WARP_IN}{LIGHT_RED}"
 	.string "{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
-	.globl gUnknown_85CCF72
-gUnknown_85CCF72: @ 0x85CCF72
+	.globl gJPText_LinkIsIncorrect
+gJPText_LinkIsIncorrect: @ 0x85CCF72
 	.string "{DYNAMIC_COLOR5}つぞ{BLUE}{SE_SAVE}まちがっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
 
-	.globl gUnknown_85CCF81
-gUnknown_85CCF81: @ 0x85CCF81
+	.globl gJPText_CardReadingHasBeenHalted
+gJPText_CardReadingHasBeenHalted: @ 0x85CCF81
 	.string "カード{SE_A}よみ{DYNAMIC_COLOR1}みを\nちゅ{LIGHT_GRAY}{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
 	.string "カードeリーダー{PLUS}と\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
 
-	.globl gUnknown_85CCFAD
-gUnknown_85CCFAD: @ 0x85CCFAD
+	.globl gJPText_Connecting
+gJPText_Connecting: @ 0x85CCFAD
 	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}ちゅ{SE_PC_OFF}で{DYNAMIC_COLOR4}$"
 
-	.globl gUnknown_85CCFB9
-gUnknown_85CCFB9: @ 0x85CCFB9
+	.globl gJPText_ConnectionErrorCheckLink
+gJPText_ConnectionErrorCheckLink: @ 0x85CCFB9
 	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}エラーで{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR5}つぞ{BLUE}{SE_WARP_IN}"
 	.string "た{DYNAMIC_COLOR3}{GREEN}め{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
-	.globl gUnknown_85CCFD5
-gUnknown_85CCFD5: @ 0x85CCFD5
+	.globl gJPText_ConnectionErrorTryAgain
+gJPText_ConnectionErrorTryAgain: @ 0x85CCFD5
 	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}エラーで{DYNAMIC_COLOR4}\nはじめ{GREEN}{SE_LAVARIDGE_FALL_WARP}"
 	.string "やりな{LIGHT_RED}{DYNAMIC_COLOR3}{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
-	.globl gUnknown_85CCFF2
-gUnknown_85CCFF2: @ 0x85CCFF2
+	.globl gJPText_AllowEReaderToLoadCard
+gJPText_AllowEReaderToLoadCard: @ 0x85CCFF2
 	.string "カードeリーダー{PLUS}{TRANSPARENT}に\nカード{SE_WARP_IN}よみ{DYNAMIC_COLOR1}ま{DYNAMIC_COLOR5}{SE_SHIP}{BLUE}"
 	.string "だ{MUS_RG_VICTORY_WILD}$"
 
-	.globl gUnknown_85CD010
-gUnknown_85CD010: @ 0x85CD010
+	.globl gJPText_ConnectionComplete
+gJPText_ConnectionComplete: @ 0x85CD010
 	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}！$"
 
-	.globl gUnknown_85CD01D
-gUnknown_85CD01D: @ 0x85CD01D
+	.globl gJPText_NewTrainerHasComeToHoenn
+gJPText_NewTrainerHasComeToHoenn: @ 0x85CD01D
 	.string "{WHITE}らた{SE_PIN}トレーナーが\nホ{PKMN}ン{SE_BOO}やって{LIGHT_GREEN}た！$"
 
-	.globl gUnknown_85CD036
-gUnknown_85CD036: @ 0x85CD036
+	.globl gJPText_PleaseWaitAMoment
+gJPText_PleaseWaitAMoment: @ 0x85CD036
 	.string "{DYNAMIC_COLOR3}ばら{SE_DOOR}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
 
-	.globl gUnknown_85CD043
-gUnknown_85CD043: @ 0x85CD043
+	.globl gJPText_WriteErrorUnableToSaveData
+gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
 	.incbin "build/data/data.bin", 0x33129f, 0x25
 
 	.globl gUnknown_85CD068
