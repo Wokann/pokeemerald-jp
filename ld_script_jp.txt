@@ -134,6 +134,10 @@ sSaveLocationPokeCenterList = ABSOLUTE(0x085DFC74);
 sSaveLocationReloadLocList = ABSOLUTE(0x085DFCC2);
 sEmptyMapList = ABSOLUTE(0x085DFCC6);
 gShoalTideTable = ABSOLUTE(0x08592590);
+gText_PokedollarVar1 = ABSOLUTE(0x085C9A9D);
+sSpriteSheet_MoneyLabel = ABSOLUTE(0x08565FBC);
+sSpritePalette_MoneyLabel = ABSOLUTE(0x08565FC4);
+sSpriteTemplate_MoneyLabel = ABSOLUTE(0x08565FA4);
 
 SECTIONS {
     . = 0x2000000;
@@ -265,7 +269,7 @@ SECTIONS {
         asm/berry.o(.text);
         asm/script_menu.o(.text);
         asm/naming_screen.o(.text);
-        asm/money.o(.text);
+        build/src/money.o(.text);
         asm/contest_effect.o(.text);
         asm/record_mixing.o(.text);
         asm/secret_base.o(.text);
