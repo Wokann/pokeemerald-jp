@@ -8153,7 +8153,7 @@ _080BECB8:
 	str r0, [sp, #8]
 	add r0, sp, #4
 	movs r1, #2
-	bl sub_08145420
+	bl LoadCryWaveformWindow
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080BECFE
@@ -8200,7 +8200,7 @@ _080BED34:
 	orrs r1, r2
 	str r1, [r0, #4]
 	movs r1, #3
-	bl sub_0814591C
+	bl LoadCryMeter
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080BED74
@@ -8322,7 +8322,7 @@ sub_080BEE68: @ 0x080BEE68
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	movs r0, #2
-	bl sub_08145528
+	bl UpdateCryWaveformWindow
 	bl IsCryPlaying
 	lsls r0, r0, #0x18
 	cmp r0, #0
@@ -8349,7 +8349,7 @@ _080BEE8E:
 	bl NationalPokedexNumToSpecies
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
-	bl sub_08145600
+	bl CryScreenPlayButton
 	b _080BF00E
 	.align 2, 0
 _080BEEB8: .4byte 0x03002360
@@ -8530,7 +8530,7 @@ sub_080BF02C: @ 0x080BF02C
 	ands r0, r1
 	cmp r0, #0
 	bne _080BF08C
-	bl sub_081459E0
+	bl FreeCryScreen
 	ldr r1, _080BF070
 	lsls r0, r4, #2
 	adds r0, r0, r4

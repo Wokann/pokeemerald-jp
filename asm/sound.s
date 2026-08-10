@@ -669,6 +669,8 @@ _080A2B84: .4byte 0x0203808C
 
 	thumb_func_start PlayCry2
 PlayCry2: @ 0x080A2B88
+	.globl PlayCry_NormalNoDucking
+	.set PlayCry_NormalNoDucking, PlayCry2
 	push {r4, lr}
 	sub sp, #4
 	lsls r0, r0, #0x10
