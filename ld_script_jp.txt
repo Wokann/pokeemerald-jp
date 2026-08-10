@@ -277,6 +277,7 @@ sub_08153498 = GetSaveBlocksPointersBaseOffset;
 TryReadSpecialSaveSection = TryReadSpecialSaveSector;
 TryWriteSpecialSaveSection = TryWriteSpecialSaveSector;
 sub_081535C4 = Task_LinkFullSave;
+sub_0816FEF0 = ReloadSave;
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
 gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
@@ -712,7 +713,7 @@ SECTIONS {
         asm/battle_controller_wally.o(.text);
         asm/player_pc.o(.text);
         asm/intro.o(.text);
-        asm/reset_save_heap.o(.text);
+        build/src/reload_save.o(.text);
         build/src/field_region_map.o(.text);
         asm/battle_anim_special.o(.text);
         asm/hall_of_fame.o(.text);
