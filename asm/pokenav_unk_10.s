@@ -1021,7 +1021,7 @@ _081D0288:
 	adds r0, r5, #0
 	bl sub_081D09F4
 	movs r0, #0xa
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081D02FA
 _081D0298:
@@ -1054,11 +1054,11 @@ _081D0298:
 	movs r0, #3
 	bl HideBg
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081D02FA
 _081D02EC:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	beq _081D02F8
 _081D02F4:
@@ -1086,11 +1086,11 @@ _081D0310:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081D032E
 _081D0320:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	beq _081D032C
 	movs r0, #2
@@ -1216,7 +1216,7 @@ _081D040C:
 	adds r0, r5, #0
 	bl sub_081D05AC
 	movs r0, #0xb
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081D0436
 _081D0426:
@@ -1330,7 +1330,7 @@ _081D04E0:
 	adds r0, r5, #0
 	bl sub_081D0534
 	movs r0, #0xa
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081D050A
 _081D04FA:
@@ -1765,7 +1765,7 @@ sub_081D0864: @ 0x081D0864
 	strh r0, [r4, #0x10]
 	movs r0, #0xf
 	movs r1, #0
-	bl sub_081C7150
+	bl PokenavFillPalette
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -2309,4 +2309,3 @@ _081D0C86:
 	.align 2, 0
 _081D0C8C: .4byte 0x08007141
 	thumb_func_end sub_081D0C54
-

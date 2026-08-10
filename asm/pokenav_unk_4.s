@@ -290,16 +290,16 @@ _081CAC4A:
 	movs r0, #3
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081CACAA
 _081CAC8E:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CAC9E
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	beq _081CACA2
 _081CAC9E:
@@ -584,7 +584,7 @@ _081CAE7A:
 	adds r0, r5, #0
 	bl sub_081CB6AC
 	movs r0, #7
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081CAEA0
 _081CAE90:
@@ -641,7 +641,7 @@ _081CAEE6:
 	adds r0, r5, #0
 	bl sub_081CB73C
 	movs r0, #6
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081CAF0C
 _081CAEFC:
@@ -842,10 +842,10 @@ _081CB06C:
 	movs r6, #2
 _081CB078:
 	movs r0, #6
-	bl sub_081C7364
+	bl PrintHelpBarText
 	b _081CB0A8
 _081CB080:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #0
 	bne _081CB060
 	ldrb r0, [r4, #0xf]
@@ -907,7 +907,7 @@ _081CB0E8:
 	cmp r0, #0
 	bne _081CB12E
 	movs r0, #8
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081CB134
 _081CB104:
@@ -925,7 +925,7 @@ _081CB114:
 	bl sub_081CBB80
 	cmp r0, #0
 	bne _081CB12E
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #0
 	beq _081CB132
 _081CB12E:
@@ -1051,7 +1051,7 @@ _081CB210:
 	cmp r0, #0
 	bne _081CB23C
 	movs r0, #6
-	bl sub_081C7364
+	bl PrintHelpBarText
 	adds r0, r5, #0
 	bl sub_081CB530
 	movs r0, #0
@@ -1162,12 +1162,12 @@ _081CB2F4:
 	movs r0, #0
 	bl sub_081CB3A8
 	movs r0, #0
-	bl sub_081C7280
-	bl sub_081C7060
+	bl PokenavFadeScreen
+	bl SlideMenuHeaderDown
 	movs r0, #0
 	b _081CB328
 _081CB30E:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CB31E
 	bl MainMenuLoopedTaskIsBusy
@@ -1177,7 +1177,7 @@ _081CB31E:
 	movs r0, #2
 	b _081CB328
 _081CB322:
-	bl sub_081C7784
+	bl SetLeftHeaderSpritesInvisibility
 _081CB326:
 	movs r0, #4
 _081CB328:
@@ -1308,7 +1308,7 @@ sub_081CB3D4: @ 0x081CB3D4
 	str r4, [sp, #4]
 	movs r2, #0x10
 	movs r3, #0x10
-	bl sub_081C717C
+	bl PokenavCopyPalette
 	ldr r0, _081CB450
 	ldrb r1, [r0, #7]
 	movs r0, #0x80
@@ -1761,7 +1761,7 @@ sub_081CB780: @ 0x081CB780
 	movs r1, #1
 	movs r2, #4
 	bl sub_08196D78
-	bl sub_081C7300
+	bl FadeToBlackExceptPrimary
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1789,7 +1789,7 @@ sub_081CB7A4: @ 0x081CB7A4
 	ldrb r0, [r4, #0x14]
 	movs r1, #3
 	bl CopyWindowToVram
-	bl PauseSpinningPokenavSprite
+	bl GetSpinningPokenavSprite
 	movs r2, #0
 	movs r1, #0x18
 	strh r1, [r0, #0x20]
@@ -1982,7 +1982,7 @@ _081CB92C: .4byte 0x030030B4
 sub_081CB930: @ 0x081CB930
 	push {lr}
 	sub sp, #8
-	bl ResumeSpinningPokenavSprite
+	bl HideSpinningPokenavSprite
 	movs r0, #0x20
 	str r0, [sp]
 	movs r0, #0x14
@@ -2785,7 +2785,7 @@ _081CBF22:
 	bne _081CBF8E
 	adds r0, r5, #0
 	bl sub_081CC260
-	bl sub_081C7300
+	bl FadeToBlackExceptPrimary
 	b _081CBED0
 _081CBF36:
 	adds r0, r5, #0
@@ -2814,15 +2814,15 @@ _081CBF66:
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #1
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	b _081CBED0
 _081CBF7E:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CBF8E
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	beq _081CBF0E
 _081CBF8E:
@@ -2897,11 +2897,11 @@ _081CBFF6:
 	cmp r0, #0
 	bne _081CC01A
 	movs r0, #1
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081CC026
 _081CC012:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #0
 	beq _081CC01E
 _081CC01A:
@@ -2909,7 +2909,7 @@ _081CC01A:
 	b _081CC026
 _081CC01E:
 	movs r0, #4
-	bl sub_081C75D4
+	bl UpdateRegionMapRightHeaderTiles
 _081CC024:
 	movs r0, #4
 _081CC026:
@@ -2964,11 +2964,11 @@ _081CC078:
 	cmp r0, #0
 	bne _081CC09C
 	movs r0, #2
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081CC0A8
 _081CC094:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #0
 	beq _081CC0A0
 _081CC09C:
@@ -2976,7 +2976,7 @@ _081CC09C:
 	b _081CC0A8
 _081CC0A0:
 	movs r0, #5
-	bl sub_081C75D4
+	bl UpdateRegionMapRightHeaderTiles
 _081CC0A6:
 	movs r0, #4
 _081CC0A8:
@@ -3004,15 +3004,15 @@ _081CC0C6:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081CC10E
 _081CC0D6:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CC0F2
-	bl sub_081C7784
-	bl sub_081C7060
+	bl SetLeftHeaderSpritesInvisibility
+	bl SlideMenuHeaderDown
 	movs r0, #0
 	b _081CC10E
 _081CC0EA:
@@ -6135,11 +6135,11 @@ _081CD928:
 	b _081CD710
 _081CD944:
 	movs r0, #4
-	bl sub_081C7364
+	bl PrintHelpBarText
 	b _081CD710
 _081CD94C:
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	bl sub_081CD4BC
 	cmp r0, #0
 	beq _081CD95C
@@ -6150,20 +6150,20 @@ _081CD95C:
 	movs r0, #1
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	movs r0, #6
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	b _081CD710
 _081CD978:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CDA20
 	bl sub_081CD4BC
 	cmp r0, #0
 	bne _081CD990
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081CDA20
 _081CD990:
@@ -6284,16 +6284,16 @@ _081CDA68:
 _081CDA84: .4byte 0x00001814
 _081CDA88:
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	bl sub_081CD4BC
 	cmp r0, #0
 	bne _081CDA9A
-	bl sub_081C7060
+	bl SlideMenuHeaderDown
 _081CDA9A:
 	movs r0, #0
 	b _081CDAD6
 _081CDA9E:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CDAAE
 	bl MainMenuLoopedTaskIsBusy
@@ -6739,10 +6739,10 @@ _081CDE42:
 	b _081CDE5C
 _081CDE46:
 	movs r0, #5
-	bl sub_081C7364
+	bl PrintHelpBarText
 	b _081CDE42
 _081CDE4E:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #1
 	bne _081CDE42
 	movs r0, #2
@@ -6775,10 +6775,10 @@ _081CDE7A:
 	b _081CDE94
 _081CDE7E:
 	movs r0, #4
-	bl sub_081C7364
+	bl PrintHelpBarText
 	b _081CDE7A
 _081CDE86:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #1
 	bne _081CDE7A
 	movs r0, #2
@@ -7169,7 +7169,7 @@ sub_081CE118: @ 0x081CE118
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0
-	bl sub_081C7150
+	bl PokenavFillPalette
 	add r3, sp, #0x50
 	mov r8, r3
 	b _081CE2FA
@@ -7475,7 +7475,7 @@ _081CE414: .4byte 0x00001821
 _081CE418: .4byte 0x00001822
 _081CE41C: .4byte 0x00001823
 _081CE420:
-	bl sub_081C7784
+	bl SetLeftHeaderSpritesInvisibility
 _081CE424:
 	movs r1, #0x8a
 	lsls r1, r1, #5
@@ -8554,7 +8554,7 @@ _081CEC14:
 	adds r0, r5, #0
 	bl sub_081CEEBC
 	movs r0, #3
-	bl sub_081C7364
+	bl PrintHelpBarText
 	b _081CEBCC
 _081CEC2A:
 	bl FreeTempTileDataBuffersIfPossible
@@ -8588,20 +8588,20 @@ _081CEC2A:
 	adds r0, r4, #0
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	movs r0, #1
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 _081CEC86:
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	b _081CEBCC
 _081CEC8E:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CEC9E
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	beq _081CECA2
 _081CEC9E:
@@ -8868,12 +8868,12 @@ _081CEE58:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
-	bl sub_081C7060
+	bl PokenavFadeScreen
+	bl SlideMenuHeaderDown
 	movs r0, #0
 	b _081CEE86
 _081CEE6C:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CEE7C
 	bl MainMenuLoopedTaskIsBusy
@@ -8883,7 +8883,7 @@ _081CEE7C:
 	movs r0, #2
 	b _081CEE86
 _081CEE80:
-	bl sub_081C7784
+	bl SetLeftHeaderSpritesInvisibility
 _081CEE84:
 	movs r0, #4
 _081CEE86:
@@ -8904,11 +8904,11 @@ _081CEE98:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081CEEB6
 _081CEEA8:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	beq _081CEEB4
 	movs r0, #2
@@ -9959,9 +9959,9 @@ _081CF678:
 	movs r0, #3
 	bl HideBg
 	movs r0, #9
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	ldr r0, [r5, #0xc]
 	cmp r0, #0
 	bne _081CF606
@@ -9970,13 +9970,13 @@ _081CF678:
 	movs r0, #2
 	movs r1, #1
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	b _081CF606
 _081CF6B2:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CF6C2
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	beq _081CF6C6
 _081CF6C2:
@@ -10243,12 +10243,12 @@ _081CF87C:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
-	bl sub_081C7060
+	bl PokenavFadeScreen
+	bl SlideMenuHeaderDown
 	movs r0, #0
 	b _081CF8AA
 _081CF890:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081CF8A0
 	bl MainMenuLoopedTaskIsBusy
@@ -10258,7 +10258,7 @@ _081CF8A0:
 	movs r0, #2
 	b _081CF8AA
 _081CF8A4:
-	bl sub_081C7784
+	bl SetLeftHeaderSpritesInvisibility
 _081CF8A8:
 	movs r0, #4
 _081CF8AA:
@@ -10279,11 +10279,11 @@ _081CF8BC:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081CF8DA
 _081CF8CC:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	beq _081CF8D8
 	movs r0, #2

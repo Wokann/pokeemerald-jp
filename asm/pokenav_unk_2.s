@@ -371,13 +371,13 @@ _081C936C:
 	cmp r0, #0
 	beq _081C938C
 	movs r0, #1
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	b _081C9398
 _081C938C:
 	movs r0, #0x6e
 	bl PlaySE
 	movs r0, #3
-	bl sub_081C7280
+	bl PokenavFadeScreen
 _081C9398:
 	bl sub_081C9040
 	cmp r0, #3
@@ -395,7 +395,7 @@ _081C93B2:
 	bl LoadLeftHeaderGfxForIndex
 	b _081C9282
 _081C93BA:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	bne _081C9408
 	bl sub_081C9040
@@ -406,18 +406,18 @@ _081C93BA:
 	movs r0, #7
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 _081C93D8:
 	movs r0, #1
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	b _081C93EE
 _081C93E4:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 _081C93EE:
 	bl sub_081C99B8
 	bl sub_081CA0D8
@@ -426,7 +426,7 @@ _081C93F8:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C9408
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	beq _081C940C
 _081C9408:
@@ -496,7 +496,7 @@ _081C946E:
 	bl sub_081C9A88
 	movs r0, #0
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
@@ -505,7 +505,7 @@ _081C9488:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C94E0
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C94E0
 	bl sub_081C9874
@@ -518,7 +518,7 @@ _081C94A6:
 	movs r0, #1
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	bl sub_081C9FC4
 	bl sub_081C9EC0
 	movs r0, #0
@@ -527,7 +527,7 @@ _081C94C0:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C94E0
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C94E0
 	bl sub_081CA048
@@ -570,14 +570,14 @@ _081C950A:
 	bl sub_081C9A88
 	movs r0, #1
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 	movs r0, #0
 	b _081C9580
 _081C951E:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C9576
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C9576
 	bl sub_081C9874
@@ -590,7 +590,7 @@ _081C953C:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	bl sub_081CA010
 	bl sub_081C9EC0
 	movs r0, #0
@@ -599,7 +599,7 @@ _081C9556:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C9576
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C9576
 	bl sub_081CA048
@@ -657,7 +657,7 @@ _081C95C6:
 	movs r0, #7
 	movs r1, #0
 	movs r2, #0
-	bl sub_081C7748
+	bl ShowLeftHeaderGfx
 	bl sub_081C9EC0
 	movs r0, #0
 	b _081C95FE
@@ -665,7 +665,7 @@ _081C95DC:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C95F4
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C95F4
 	bl sub_081CA048
@@ -705,14 +705,14 @@ _081C961E:
 	bl sub_081C9A88
 	movs r0, #7
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 	movs r0, #0
 	b _081C9670
 _081C9632:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C9666
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C9666
 	bl sub_081C9874
@@ -820,14 +820,14 @@ _081C96EE:
 	bl sub_081C9070
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
-	bl sub_081C7364
+	bl PrintHelpBarText
 	movs r0, #0
 	b _081C976A
 _081C96FE:
-	bl sub_081C73A8
+	bl WaitForHelpBar
 	cmp r0, #0
 	bne _081C9764
-	bl sub_081C7040
+	bl SlideMenuHeaderUp
 	bl sub_081CA174
 	bl sub_081C9A88
 	bl sub_081C9040
@@ -837,16 +837,16 @@ _081C96FE:
 	bne _081C9730
 	movs r0, #7
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 _081C9726:
 	movs r0, #1
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 	b _081C9738
 _081C9730:
 	movs r0, #0
 	movs r1, #0
-	bl sub_081C776C
+	bl HideMainOrSubMenuLeftHeader
 _081C9738:
 	movs r0, #5
 	bl PlaySE
@@ -856,15 +856,15 @@ _081C9742:
 	bl sub_081C9AD0
 	cmp r0, #0
 	bne _081C9764
-	bl sub_081C77B8
+	bl AreLeftHeaderSpritesMoving
 	cmp r0, #0
 	bne _081C9764
 	movs r0, #0
-	bl sub_081C7280
+	bl PokenavFadeScreen
 	movs r0, #0
 	b _081C976A
 _081C975C:
-	bl IsDma3ManagerBusyWithBgCopy_
+	bl IsPaletteFadeActive
 	cmp r0, #0
 	beq _081C9768
 _081C9764:
@@ -2116,7 +2116,7 @@ sub_081CA05C: @ 0x081CA05C
 	adds r0, r5, #0
 	movs r2, #2
 	movs r3, #0xc
-	bl sub_081C717C
+	bl PokenavCopyPalette
 	add r0, sp, #8
 	movs r1, #0x31
 	movs r2, #4

@@ -52,9 +52,6 @@ static void CB2_InitPokenavForTutorial(void);
 // JP names for cross-module functions not yet converted to C.
 extern bool32 IsUpdateLinkStateCBActive(void);
 extern bool32 sub_08086EFC(void);
-extern void sub_081C6FF4(void *createLoopTask, void *isLoopTaskActive);
-extern void sub_081C7010(u32 state);
-extern u32 sub_081C702C(void);
 extern void sub_081C8BDC(void);
 
 // Data lives at fixed ROM/EWRAM addresses from the original game;
@@ -307,7 +304,7 @@ static void Task_Pokenav(u8 taskId)
         tState = 4;
         break;
     case 2:
-        if (sub_081C702C())
+        if (IsActiveMenuLoopTaskActive())
             break;
         tState = 3;
     case 3:
@@ -333,8 +330,8 @@ static void Task_Pokenav(u8 taskId)
         }
         else if (menuId != 0)
         {
-            sub_081C7010(menuId);
-            if (sub_081C702C())
+            RunMainMenuLoopedTask(menuId);
+            if (IsActiveMenuLoopTaskActive())
                 tState = 2;
         }
         break;
@@ -370,7 +367,7 @@ static bool32 SetActivePokenavMenu(u32 menuId)
     if (!PokenavMenuCallbacks[index].open())
         return FALSE;
 
-    sub_081C6FF4(PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
+    SetActiveMenuLoopTasks(PokenavMenuCallbacks[index].createLoopTask, PokenavMenuCallbacks[index].isLoopTaskActive);
     gPokenavResources->currentMenuCb1 = PokenavMenuCallbacks[index].callback;
     gPokenavResources->currentMenuIndex = index;
     return TRUE;
@@ -378,7 +375,7 @@ static bool32 SetActivePokenavMenu(u32 menuId)
 
 static u32 IsActiveMenuLoopTaskActive_(void)
 {
-    return sub_081C702C();
+    return IsActiveMenuLoopTaskActive();
 }
 
 static u32 GetCurrentMenuCB(void)
