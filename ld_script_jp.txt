@@ -198,6 +198,13 @@ FarawayIsland_Interior_EventScript_HideMewWhenGrassCut = ABSOLUTE(0x0823B5A9);
 gText_PkmnFainted_FldPsn = ABSOLUTE(0x085CC30F);
 gSpeciesNamesJP = ABSOLUTE(0x082EA31C);
 gIntrTableTemplate = ABSOLUTE(0x0829BDBC);
+sMallocAssertFile = ABSOLUTE(0x0829BDF4);
+sMallocAssertAlloc = ABSOLUTE(0x0829BE08);
+sMallocAssertPNull = ABSOLUTE(0x0829BE0C);
+sMallocAssertMagic = ABSOLUTE(0x0829BE18);
+sMallocAssertFlag = ABSOLUTE(0x0829BE40);
+sMallocAssertNextMagic = ABSOLUTE(0x0829BE54);
+sMallocAssertPrevMagic = ABSOLUTE(0x0829BE80);
 gSpeciesInfo = ABSOLUTE(0x082F0D54);
 gExperienceTables = ABSOLUTE(0x082F00B4);
 gNatureNamePointers = ABSOLUTE(0x085ECE24);
@@ -549,7 +556,7 @@ SECTIONS {
     {
         asm/crt0.o(.text);
         build/src/main.o(.text);
-        asm/alloc.o(.text);
+        build/src/malloc.o(.text);
         build/src/dma3_manager.o(.text);
         build/src/gpu_regs.o(.text);
         build/src/bg.o(.text);
