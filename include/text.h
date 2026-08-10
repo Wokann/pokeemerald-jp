@@ -92,8 +92,6 @@ struct TextPrinter
     u8 textSpeed;
     u8 delayCounter;
     u8 scrollDistance;
-    u8 minLetterSpacing;  // 0x20
-    u8 japanese;
 };
 
 struct FontInfo
