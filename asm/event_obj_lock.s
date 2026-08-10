@@ -198,8 +198,8 @@ _08097E74: .4byte 0x02036FF0
 _08097E78: .4byte 0x03005B60
 	thumb_func_end LockSelectedEventObject
 
-	thumb_func_start ScriptUnfreezeEventObjects
-ScriptUnfreezeEventObjects: @ 0x08097E7C
+	thumb_func_start ScriptUnfreezeObjectEvents
+ScriptUnfreezeObjectEvents: @ 0x08097E7C
 	push {lr}
 	movs r0, #0xff
 	movs r1, #0
@@ -220,7 +220,7 @@ ScriptUnfreezeEventObjects: @ 0x08097E7C
 	bx r0
 	.align 2, 0
 _08097EA8: .4byte 0x02036FF0
-	thumb_func_end ScriptUnfreezeEventObjects
+	thumb_func_end ScriptUnfreezeObjectEvents
 
 	thumb_func_start sub_08097EAC
 sub_08097EAC: @ 0x08097EAC

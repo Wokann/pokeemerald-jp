@@ -226,7 +226,7 @@ CleanUpAfterFailingToUseRegisteredKeyItemOnField: @ 0x080FDA4C
 	bl DrawDialogueFrame
 	adds r0, r4, #0
 	bl DestroyTask
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	pop {r4}
 	pop {r0}
@@ -412,7 +412,7 @@ _080FDBCC:
 	movs r0, #4
 	bl GetOnOffBike
 _080FDBD2:
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
@@ -474,7 +474,7 @@ _080FDC40:
 	ldrsh r0, [r0, r1]
 	movs r2, #0
 	ldrsh r1, [r4, r2]
-	bl MapGridIsImpassableAt
+	bl MapGridGetCollisionAt
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080FDC3C
@@ -721,7 +721,7 @@ sub_080FDE20: @ 0x080FDE20
 	movs r0, #0
 	movs r1, #1
 	bl DrawDialogueFrame
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask

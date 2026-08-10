@@ -2603,8 +2603,8 @@ EventObjectGetLocalIdAndMap: @ 0x0808E0B8
 	bx r0
 	thumb_func_end EventObjectGetLocalIdAndMap
 
-	thumb_func_start sub_0808E0CC
-sub_0808E0CC: @ 0x0808E0CC
+	thumb_func_start AllowObjectAtPosTriggerGroundEffects
+AllowObjectAtPosTriggerGroundEffects: @ 0x0808E0CC
 	push {lr}
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
@@ -2629,7 +2629,7 @@ _0808E0F4:
 	bx r0
 	.align 2, 0
 _0808E0F8: .4byte 0x02036FF0
-	thumb_func_end sub_0808E0CC
+	thumb_func_end AllowObjectAtPosTriggerGroundEffects
 
 	thumb_func_start sub_0808E0FC
 sub_0808E0FC: @ 0x0808E0FC
@@ -12504,7 +12504,7 @@ GetCollisionAtCoords: @ 0x08092538
 _0809256E:
 	adds r0, r5, #0
 	adds r1, r4, #0
-	bl MapGridIsImpassableAt
+	bl MapGridGetCollisionAt
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080925B0
@@ -12604,7 +12604,7 @@ GetCollisionFlagsAtCoords: @ 0x080925FC
 	lsrs r4, r1, #0x1f
 	adds r0, r6, #0
 	adds r1, r5, #0
-	bl MapGridIsImpassableAt
+	bl MapGridGetCollisionAt
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08092674
@@ -21267,7 +21267,7 @@ sub_0809615C: @ 0x0809615C
 	push {r4, lr}
 	adds r4, r1, #0
 	ldrb r0, [r0, #0x1e]
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08096174
@@ -21287,7 +21287,7 @@ GetGroundEffectFlags_LongGrassOnBeginStep: @ 0x0809617C
 	push {r4, lr}
 	adds r4, r1, #0
 	ldrb r0, [r0, #0x1e]
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08096194
@@ -21897,12 +21897,12 @@ SetEventObjectSpriteOamTableForLongGrass: @ 0x080965D8
 	cmp r0, #0
 	blt _0809662C
 	ldrb r0, [r5, #0x1e]
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809662C
 	ldrb r0, [r5, #0x1f]
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809662C
@@ -21950,7 +21950,7 @@ IsZCoordMismatchAt: @ 0x08096634
 	asrs r0, r0, #0x10
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -22081,14 +22081,14 @@ EventObjectUpdateZCoord: @ 0x08096728
 	ldrsh r0, [r4, r1]
 	movs r2, #0x12
 	ldrsh r1, [r4, r2]
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
 	movs r1, #0x14
 	ldrsh r0, [r4, r1]
 	movs r2, #0x16
 	ldrsh r1, [r4, r2]
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r5, #0xf

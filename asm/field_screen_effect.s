@@ -880,7 +880,7 @@ task_mpl_807E3C8: @ 0x080AEFAC
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 _080AEFC8:
 	pop {r4}
 	pop {r0}

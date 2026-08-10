@@ -549,8 +549,8 @@ _08087A9C:
 _08087AA4: .4byte 0x03005B20
 	thumb_func_end FillEastConnection
 
-	thumb_func_start MapGridGetZCoordAt
-MapGridGetZCoordAt: @ 0x08087AA8
+	thumb_func_start MapGridGetElevationAt
+MapGridGetElevationAt: @ 0x08087AA8
 	push {r4, lr}
 	adds r2, r0, #0
 	adds r4, r1, #0
@@ -608,10 +608,10 @@ _08087B0E:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end MapGridGetZCoordAt
+	thumb_func_end MapGridGetElevationAt
 
-	thumb_func_start MapGridIsImpassableAt
-MapGridIsImpassableAt: @ 0x08087B14
+	thumb_func_start MapGridGetCollisionAt
+MapGridGetCollisionAt: @ 0x08087B14
 	push {r4, lr}
 	adds r2, r0, #0
 	adds r4, r1, #0
@@ -672,7 +672,7 @@ _08087B82:
 	pop {r4}
 	pop {r1}
 	bx r1
-	thumb_func_end MapGridIsImpassableAt
+	thumb_func_end MapGridGetCollisionAt
 
 	thumb_func_start MapGridGetMetatileIdAt
 MapGridGetMetatileIdAt: @ 0x08087B88

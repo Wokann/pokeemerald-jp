@@ -47,6 +47,10 @@ sCaveTransitionPalette_Black = ABSOLUTE(0x085922BC);
 sCaveTransitionPalette_Enter = ABSOLUTE(0x085922DC);
 sCaveTransitionTilemap = ABSOLUTE(0x085922FC);
 sCaveTransitionTiles = ABSOLUTE(0x085924DC);
+sHyperCutStruct = ABSOLUTE(0x08557164);
+sSpriteTemplate_CutGrass = ABSOLUTE(0x085571C8);
+EventScript_UseCut = ABSOLUTE(0x08256612);
+FarawayIsland_Interior_EventScript_HideMewWhenGrassCut = ABSOLUTE(0x0823B5A9);
 
 SECTIONS {
     . = 0x2000000;
@@ -165,7 +169,7 @@ SECTIONS {
         asm/pokemon_storage_system.o(.text);
         asm/pokemon_icon.o(.text);
         asm/script_movement.o(.text);
-        asm/fldeff_cut.o(.text);
+        build/src/fldeff_cut.o(.text);
         asm/mail_data.o(.text);
         asm/map_name_popup.o(.text);
         asm/item_menu_icons.o(.text);

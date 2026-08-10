@@ -1155,7 +1155,7 @@ sub_0808AB20: @ 0x0808AB20
 	asrs r0, r5, #0x10
 	lsls r4, r4, #0x10
 	asrs r1, r4, #0x10
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #3

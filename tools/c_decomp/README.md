@@ -87,7 +87,8 @@ remaining 4 EscapeRope helper functions), src/fldeff_dig.c (4, full module --
 asm/fldeff_rocksmash.s removed), src/fldeff_sweetscent.c (6, full module --
 asm/fldeff_sweetscent.s removed), src/fldeff_softboiled.c (8, full module --
 asm/fldeff_softboiled.s removed), src/fldeff_flash.c (20, full module --
-asm/fldeff_flash.s removed).
+asm/fldeff_flash.s removed), src/fldeff_cut.c (17, full module --
+asm/fldeff_cut.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -144,3 +145,22 @@ sub_* labels were renamed to the pokeemerald names; the module's data
 data region and is referenced via ABSOLUTE symbols, with EventScript_UseFlash
 (0x08257EE2) added.  Two bogus funcmap_jp entries (0x080E82DC and 0x081347FC
 mislabeled as CB2_ChangeMapMain / VBC_ChangeMapVBlank) were corrected.
+
+src/fldeff_cut.c (SetUpFieldMove_Cut, FieldCallback_CutGrass/CutTree,
+FldEff_UseCutOnGrass/OnTree, StartCutGrass/CutTreeFieldEffect, FldEff_CutGrass,
+SetCutGrassMetatile, GetLongGrassCaseAt, SetCutGrassMetatiles,
+HandleLongGrassOnHyper, CutGrassSpriteCallback1/2/End,
+FixLongGrassMetatilesWindowTop/Bottom) is the nineteenth wired module.  The
+module's IWRAM vars (sCutSquareSide/sTileCountFromPlayer_X/Y 0x03001100-02,
+sHyperCutTiles 0x03001108), EWRAM pointer (sCutGrassSpriteArrayPtr
+0x02039A70) and rodata (sHyperCutStruct 0x08557164, sSpriteTemplate_CutGrass
+0x085571C8, EventScript_UseCut 0x08256612,
+FarawayIsland_Interior_EventScript_HideMewWhenGrassCut 0x0823B5A9) stay in
+the ROM data region and are referenced via symbols.  Renamed the JP labels
+MapGridGetZCoordAt -> MapGridGetElevationAt, MapGridIsImpassableAt ->
+MapGridGetCollisionAt, sub_0808E0CC -> AllowObjectAtPosTriggerGroundEffects,
+ScriptUnfreezeEventObjects -> ScriptUnfreezeObjectEvents, and swapped the
+mislabeled MetatileBehavior_IsLongGrass / _Duplicate pair (0x08089480 is the
+Duplicate check used by fldeff_cut; 0x08088DC0 is the generic one).
+verify_all's linker-addend fallback was extended to mid-function literal
+pools (sHyperCutStruct+2 style relocations).

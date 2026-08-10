@@ -1212,7 +1212,7 @@ sub_0809F6AC: @ 0x0809F6AC
 	movs r0, #0
 	movs r1, #0
 	bl ClearDialogWindowAndFrameToTransparent
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	ldr r0, _0809F6C8
 	bl CreateStartMenuTask
 	bl LockPlayerFieldControls
@@ -1295,7 +1295,7 @@ _0809F754:
 	movs r0, #0
 	movs r1, #1
 	bl ClearDialogWindowAndFrameToTransparent
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	bl SoftResetInBattlePyramid
 	movs r0, #1
@@ -1364,7 +1364,7 @@ _0809F7D8:
 	movs r0, #0
 	movs r1, #1
 	bl ClearDialogWindowAndFrameToTransparent
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	ldr r0, _0809F7F4
 	bl ScriptContext_SetupScript
@@ -2667,7 +2667,7 @@ HideStartMenuWindow: @ 0x080A01DC
 	movs r1, #1
 	bl DrawStdWindowFrame
 	bl RemoveMapNamePopUpWindow
-	bl ScriptUnfreezeEventObjects
+	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	pop {r0}
 	bx r0

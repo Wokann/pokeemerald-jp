@@ -7060,7 +7060,7 @@ _0808750C:
 	bls _080874C8
 	asrs r0, r3, #0x10
 	asrs r1, r5, #0x10
-	bl MapGridIsImpassableAt
+	bl MapGridGetCollisionAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 _08087522:

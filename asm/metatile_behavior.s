@@ -1259,8 +1259,8 @@ _08088DBC:
 	bx r1
 	thumb_func_end MetatileBehavior_IsTallGrass
 
-	thumb_func_start MetatileBehavior_IsLongGrass_Duplicate
-MetatileBehavior_IsLongGrass_Duplicate: @ 0x08088DC0
+	thumb_func_start MetatileBehavior_IsLongGrass
+MetatileBehavior_IsLongGrass: @ 0x08088DC0
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -1273,7 +1273,7 @@ _08088DCE:
 _08088DD0:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsLongGrass_Duplicate
+	thumb_func_end MetatileBehavior_IsLongGrass
 
 	thumb_func_start MetatileBehavior_IsBerryTreeSoil
 MetatileBehavior_IsBerryTreeSoil: @ 0x08088DD4
@@ -2553,8 +2553,8 @@ _0808947C:
 	bx r1
 	thumb_func_end MetatileBehavior_IsQuestionnaire
 
-	thumb_func_start MetatileBehavior_IsLongGrass
-MetatileBehavior_IsLongGrass: @ 0x08089480
+	thumb_func_start MetatileBehavior_IsLongGrass_Duplicate
+MetatileBehavior_IsLongGrass_Duplicate: @ 0x08089480
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -2567,7 +2567,7 @@ _0808948E:
 _08089490:
 	pop {r1}
 	bx r1
-	thumb_func_end MetatileBehavior_IsLongGrass
+	thumb_func_end MetatileBehavior_IsLongGrass_Duplicate
 
 	thumb_func_start MetatileBehavior_IsLongGrassSouthEdge
 MetatileBehavior_IsLongGrassSouthEdge: @ 0x08089494

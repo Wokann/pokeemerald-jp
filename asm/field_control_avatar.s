@@ -382,7 +382,7 @@ GetInFrontOfPlayerPosition: @ 0x0809BA6C
 	ldrsh r0, [r0, r1]
 	movs r2, #0
 	ldrsh r1, [r4, r2]
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -1065,7 +1065,7 @@ _0809BFF4:
 	ldrsh r0, [r6, r1]
 	movs r2, #2
 	ldrsh r1, [r6, r2]
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r4, r0

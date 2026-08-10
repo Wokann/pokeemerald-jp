@@ -764,7 +764,7 @@ _080FC5C2:
 	asrs r1, r1, #0x18
 	add r1, r8
 	str r3, [sp, #8]
-	bl MapGridIsImpassableAt
+	bl MapGridGetCollisionAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r3, [sp, #8]

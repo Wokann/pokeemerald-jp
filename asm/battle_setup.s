@@ -723,7 +723,7 @@ BattleSetup_GetTerrainId: @ 0x080B04CC
 	b _080B0616
 _080B0502:
 	adds r0, r4, #0
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B0512

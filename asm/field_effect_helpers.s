@@ -1259,7 +1259,7 @@ _08154788:
 	cmp r0, #0
 	bne _081547DC
 	adds r0, r4, #0
-	bl MetatileBehavior_IsLongGrass_Duplicate
+	bl MetatileBehavior_IsLongGrass
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081547DC
@@ -3209,7 +3209,7 @@ _08155672:
 	ldrsh r0, [r6, r1]
 	movs r2, #0
 	ldrsh r1, [r7, r2]
-	bl MapGridGetZCoordAt
+	bl MapGridGetElevationAt
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #3
