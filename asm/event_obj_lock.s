@@ -214,7 +214,7 @@ ScriptUnfreezeObjectEvents: @ 0x08097E7C
 	ldr r1, _08097EA8
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	bl UnfreezeObjectEvents
 	pop {r0}
 	bx r0
@@ -251,7 +251,7 @@ _08097ECA:
 	lsls r0, r0, #2
 	adds r0, r0, r4
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	bl UnfreezeObjectEvents
 	pop {r4}
 	pop {r0}
@@ -501,4 +501,3 @@ _080980DA:
 	bx r1
 	.align 2, 0
 	thumb_func_end sub_080980BC
-

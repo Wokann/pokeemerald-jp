@@ -3307,7 +3307,7 @@ ScrCmd_releaseall: @ 0x0809A4CC
 	ldr r1, _0809A500
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	bl UnfreezeObjectEvents
 	movs r0, #0
 	pop {r1}
@@ -3346,7 +3346,7 @@ _0809A526:
 	lsls r0, r0, #2
 	adds r0, r0, r4
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	bl UnfreezeObjectEvents
 	movs r0, #0
 	pop {r4}

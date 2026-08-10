@@ -50,7 +50,7 @@ _081A86EE:
 	ldr r1, _081A871C
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -724,4 +724,3 @@ _081A8BF6:
 	pop {r0}
 	bx r0
 	thumb_func_end sub_081A8B14
-

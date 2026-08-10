@@ -14,6 +14,7 @@ gPaletteFade = ABSOLUTE(0x02037C74);
 sFindThatGamerCoinsSpent = ABSOLUTE(0x02039CF4);
 sFindThatGamerWhichGame = ABSOLUTE(0x02039CF6);
 sPopupTaskId = ABSOLUTE(0x02039A74);
+sMovementScripts = ABSOLUTE(0x02039A30);
 gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
 gEnemyParty = ABSOLUTE(0x020243E8);

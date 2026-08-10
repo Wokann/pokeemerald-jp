@@ -59,6 +59,7 @@ sMapPopUp_OutlineTable = ABSOLUTE(0x08558860);
 sMapPopUp_Palette_Underwater = ABSOLUTE(0x08559FA0);
 sMapPopUp_PaletteTable = ABSOLUTE(0x08559EE0);
 sMapPopUp_Table = ABSOLUTE(0x085571E0);
+gBitTable = ABSOLUTE(0x082FACB4);
 sBigMonSizeTable = ABSOLUTE(0x085694D0);
 gText_DecimalPoint = ABSOLUTE(0x08569550);
 gText_Marco = ABSOLUTE(0x085CC31B);
@@ -293,7 +294,7 @@ SECTIONS {
         asm/frontier_pass.o(.text);
         asm/pokemon_storage_system.o(.text);
         asm/pokemon_icon.o(.text);
-        asm/script_movement.o(.text);
+        build/src/script_movement.o(.text);
         build/src/fldeff_cut.o(.text);
         build/src/mail_data.o(.text);
         build/src/map_name_popup.o(.text);

@@ -813,7 +813,7 @@ sub_08195FF0: @ 0x08195FF0
 	ldr r1, _08196050
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
-	bl sub_080D2C2C
+	bl ScriptMovement_UnfreezeObjectEvents
 	bl UnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 _08196046:
@@ -2641,4 +2641,3 @@ sub_08196DB8: @ 0x08196DB8
 	bx r0
 	.align 2, 0
 	thumb_func_end sub_08196DB8
-
