@@ -309,8 +309,6 @@ gGameVersion = gUnknown_829BDA4;
 sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
 FillAroundBattleWindows = sub_0805EB30;
-gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
-gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
 sRibbonIconsSmall_Gfx = ABSOLUTE(0x085F65A0);
 sRibbonIconsBig_Gfx = ABSOLUTE(0x085F6730);
@@ -902,6 +900,9 @@ SECTIONS {
     ALIGN(4)
     {
         data/data.o(.rodata);
+        data/multiboot_ereader.o(.rodata);
+        data/multiboot_berry_glitch_fix.o(.rodata);
+        data/data_rest.o(.rodata);
     } =0
     /* DWARF debug sections.
     Symbols in the DWARF debugging sections are relative to the beginning

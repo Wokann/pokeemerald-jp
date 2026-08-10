@@ -36,3 +36,4 @@ porymap.project.cfg
 .ropeproject/
 .ccls-cache/
 __pycache__/
+.git_commit_template

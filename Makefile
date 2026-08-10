@@ -35,8 +35,8 @@ $(C_BUILDDIR)/libisagbprn_a.o: CFLAGS := -O0 -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/libisagbprn_putc.o: CFLAGS := -O2 -mthumb-interwork -fhex-asm
 $(C_BUILDDIR)/libisagbprn_b.o: CFLAGS := -O0 -mthumb-interwork -fhex-asm
 
-OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o
-DATA_BIN := build/data/event_scripts.bin build/data/data.bin
+OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o data/data_rest.o data/multiboot_ereader.o data/multiboot_berry_glitch_fix.o
+DATA_BIN := build/data/event_scripts.bin build/data/data.bin build/data/data_rest.bin build/data/mb_ereader.gba build/data/mb_berry_fix.gba
 NAME := pokeemerald_jp
 ROM := $(NAME).gba
 ELF := $(NAME).elf
@@ -76,4 +76,13 @@ data/event_scripts.o: data/event_scripts.s build/data/event_scripts.bin
 	$(AS) $(ASFLAGS) -o $@ $<
 
 data/data.o: data/data.s charmap.txt
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+
+data/data_rest.o: data/data_rest.s build/data/data_rest.bin
+	$(AS) $(ASFLAGS) -o $@ $<
+
+data/multiboot_ereader.o: data/multiboot_ereader.s build/data/mb_ereader.gba
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+
+data/multiboot_berry_glitch_fix.o: data/multiboot_berry_glitch_fix.s build/data/mb_berry_fix.gba
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -

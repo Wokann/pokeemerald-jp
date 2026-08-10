@@ -33,6 +33,7 @@ BASEROM_DEFAULT = ROOT / "baserom_jp.gba"
 SOURCES = {
     "data/event_scripts.s": "build/data/event_scripts.bin",
     "data/data.s": "build/data/data.bin",
+    "data/data_rest.s": "build/data/data_rest.bin",
 }
 
 # Fixed start of each region in the ROM.  Kept constant so re-running the
@@ -41,6 +42,16 @@ SOURCES = {
 REGION_START = {
     "data/event_scripts.s": 0x1DABAC,
     "data/data.s": 0x29BDA4,
+    "data/data_rest.s": 0x89158E0,
+}
+
+# Fixed multiboot program chunks extracted from the JP ROM.  These are
+# standalone GBA multiboot ROMs embedded in the main ROM (e-Reader driver
+# and the berry-glitch-fix program); the JP ROM has no colosseum program,
+# unlike the US build.
+MB_CHUNKS = {
+    "build/data/mb_ereader.gba": (0x0890F374, 0x30E0),
+    "build/data/mb_berry_fix.gba": (0x08912454, 0x348C),
 }
 
 INCINBIN_RE = re.compile(
@@ -115,6 +126,13 @@ def main():
             f"(0x{start:x}..0x{end:x}, {end - start} bytes, "
             f"{gaps} gap bytes filled)"
         )
+
+    for bin_rel, (mb_addr, mb_size) in MB_CHUNKS.items():
+        out = ROOT / bin_rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        off = mb_addr & 0xFFFFFF
+        out.write_bytes(rom[off : off + mb_size])
+        print(f"{bin_rel}: {mb_size} bytes from 0x{mb_addr:x}")
 
     print("done")
 
