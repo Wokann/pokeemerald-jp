@@ -1,0 +1,7 @@
+	.byte 0xFD
+	end 
+	.byte 0xFE
+	.byte 0xFD
+	return 
+	nop 
+	copyvar 0xFD00, 0xFF04

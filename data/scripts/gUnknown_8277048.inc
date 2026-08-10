@@ -1,18 +1,15 @@
 	giveegg 0xAE9F
-	.byte 0x64
-	fadeoutbgm 0x0
+	moveobjectoffscreen 0x37
 	goto_if 0x9, 0x442E0E1F
 	returnram 
 	loadbyte 0xFB, 0x96
 	checkplayergender 
-	.byte 0x58
-	.byte 0x51
-	checkplayergender 
-	.byte 0x9D
-	.byte 0x56
+	showobject_at 0xA051, 0x9D56
 	waitmoncry 
-	.byte 0x64
-	braillemessage 0xFE2D8DA0
+	moveobjectoffscreen 0xA078
+	choosecontestmon 
+	dotimebasedevents 
+	.byte 0xFE
 	gotostd_if 0x3, 0x6
 	gettime 
 	returnram 

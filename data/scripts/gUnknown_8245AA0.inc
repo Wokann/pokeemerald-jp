@@ -1,14 +1,10 @@
-	.byte 0x25
-	copybyte 0x72500, 0x1800D21
-	nop 
+	special GetSecretBaseTypeInFrontOfPlayer
+	special CheckPlayerHasSecretBase
+	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8245C97
 	checkpartymove 0x122
-	.byte 0x9D
-	nop 
-	.byte 0x0D
-	.byte 0x80
-	.byte 0x82
-	setworldmapflag 0x122
+	setfieldeffectarg 0x0, 0x800D
+	bufferdecorationname 0x1, 0x122
 	compare_var_to_value 0x8007, 0x1
 	goto_if 0x1, 0x8245AFF
 	compare_var_to_value 0x8007, 0x2
@@ -25,10 +21,7 @@
 	lockall 
 	compare_var_to_value 0x800D, 0x6
 	goto_if 0x1, 0x8245B40
-	.byte 0x7F
-	nop 
-	.byte 0x0D
-	.byte 0x80
+	bufferpartymonnick 0x0, 0x800D
 	loadword 0x0, 0x821D5E0
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
@@ -37,6 +30,6 @@
 	callstd 0x4
 	closemessage 
 	dofieldeffect 0xB
-	.byte 0x27
+	waitstate 
 	goto 0x8245B4A
 	end 

@@ -22,9 +22,8 @@
 	nop 
 	goto 0x3F008B19
 	end 
-	.byte 0x3C
-	playse 0x857
-	return 
+	warphole 0x2F57
+	gotostd 0x3
 	call 0x0
 	setworldmapflag 0x200
 	nop 
@@ -36,5 +35,5 @@
 	nop 
 	goto_if 0x0, 0xB050001
 	return 
-	.byte 0x0D
+	killscript 
 	.byte 0x08

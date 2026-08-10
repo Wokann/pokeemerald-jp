@@ -1,36 +1,25 @@
 	nop 
 	.byte 0xFE
-	.byte 0x27
-	.byte 0x19
-	.byte 0xEC
-	nop 
-	showcoinsbox 0x2, 0x4C
-	.byte 0xD3
-	faceplayer 
+	waitstate 
+	copyvar 0xEC, 0x2C0
+	takedecoration 0x5AD3
 	gotostd 0x2
 	return 
-	.byte 0x64
+	moveobjectoffscreen 0x0
 	nop 
-	nop 
-	nop 
-	.byte 0x64
-	nop 
-	call 0xE001A19
-	.byte 0x51
+	moveobjectoffscreen 0x400
+	copyvar 0x1A, 0x510E
 	waitfanfare 
 	delay 0x208
-	.byte 0x4C
-	.byte 0xD3
-	faceplayer 
+	takedecoration 0x5AD3
 	gotostd 0x2
 	end 
 	fadeoutbgm 0x0
 	nop 
 	nop 
 	setorcopyvar 0x33F, 0x6255
-	.byte 0x11
-	gotostd 0x2
-	goto_if 0x14, 0x5000100
+	writebytetoaddr 0x8, 0x140602
+	setworldmapflag 0x500
 	nop 
 	goto 0xBF000D00
 	.byte 0x56
@@ -38,9 +27,7 @@
 	waitfanfare 
 	delay 0x508
 	gotostd 0x2
-	.byte 0x4C
-	.byte 0xD3
-	faceplayer 
+	takedecoration 0x5AD3
 	gotostd 0x2
 	return 
 	checkitemspace 0x100, 0x4000
@@ -49,14 +36,9 @@
 	faceplayer 
 	gotostd 0x2
 	return 
-	.byte 0x3C
+	warphole 0x0
 	nop 
-	nop 
-	nop 
-	.byte 0x40
-	nop 
-	call 0xD34C0205
-	faceplayer 
+	setdivewarp 0x4, 0x5, 0x4C02, 0x5AD3
 	gotostd 0x2
 	return 
 	.byte 0x50
@@ -67,44 +49,29 @@
 	faceplayer 
 	gotostd 0x2
 	return 
-	.byte 0x3A
-	nop 
-	nop 
-	nop 
-	braillemessage 0x2020400
-	.byte 0x4C
-	.byte 0xD3
-	faceplayer 
+	warpsilent 0x0, 0x0, 0x78, 0x204
+	end 
+	takedecoration 0x5AD3
 	gotostd 0x2
 	return 
-	.byte 0x64
-	nop 
-	nop 
+	moveobjectoffscreen 0x0
 	nop 
 	braillemessage 0x2020400
-	.byte 0x4C
-	.byte 0xD3
-	faceplayer 
+	takedecoration 0x5AD3
 	gotostd 0x2
 	return 
 	faceplayer 
 	nop 
 	nop 
 	nop 
-	.byte 0x40
-	nop 
-	call 0xD34C0202
-	faceplayer 
+	setdivewarp 0x4, 0x2, 0x4C02, 0x5AD3
 	gotostd 0x2
 	return 
 	waitse 
 	nop 
 	nop 
 	nop 
-	.byte 0x40
-	nop 
-	call 0xD34C0202
-	faceplayer 
+	setdivewarp 0x4, 0x2, 0x4C02, 0x5AD3
 	gotostd 0x2
 	return 
 	gotopostbattlescript 
@@ -115,26 +82,17 @@
 	faceplayer 
 	gotostd 0x2
 	return 
-	.byte 0x64
-	nop 
-	nop 
+	moveobjectoffscreen 0x0
 	nop 
 	braillemessage 0x2020400
-	.byte 0x4C
-	.byte 0xD3
-	faceplayer 
+	takedecoration 0x5AD3
 	gotostd 0x2
 	return 
-	.byte 0x4B
+	givedecoration 0x100
 	nop 
-	setworldmapflag 0x4000
-	nop 
-	call 0xD34C0202
-	faceplayer 
+	setdivewarp 0x4, 0x2, 0x4C02, 0x5AD3
 	gotostd 0x2
 	return 
-	.byte 0x55
-	nop 
-	nop 
+	addobject 0x0
 	nop 
 	braillemessage 0xF020400

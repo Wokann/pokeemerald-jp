@@ -1,8 +1,6 @@
-	.byte 0x19
-	waitdooranim 
-	nop 
-	showcoinsbox 0x0, 0xF4
-	.byte 0x27
+	copyvar 0xC5, 0xC0
+	.byte 0xF4
+	waitstate 
 	end 
 	release 
 	.byte 0xE8

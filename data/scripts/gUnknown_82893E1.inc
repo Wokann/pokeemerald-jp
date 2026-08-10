@@ -9,9 +9,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x19
-	setworldmapflag 0x201
-	.byte 0x94
+	copyvar 0x101, 0x9402
 	delay 0x3C08
 	gettime 
 	savebgm 0x241
@@ -21,9 +19,7 @@
 	end 
 	end 
 	nop 
-	.byte 0x49
-	nop 
-	nop 
-	delay 0x8D55
+	givepcitem 0x0, 0x5528
+	choosecontestmon 
 	.byte 0x28
 	.byte 0x08

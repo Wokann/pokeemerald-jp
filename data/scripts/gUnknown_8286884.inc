@@ -3,5 +3,5 @@
 	gotostd 0x5
 	nop 
 	call 0xF5261300
-	.byte 0x27
+	waitstate 
 	.byte 0x08

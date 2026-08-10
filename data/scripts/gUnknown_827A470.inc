@@ -1,10 +1,5 @@
 	nop 
-	.byte 0x1E
-	.byte 0x27
-	end 
-	.byte 0x84
-	.byte 0xE8
-	.byte 0x56
+	compare_addr_to_local 0xE8840227, 0x56
 	gotostd 0x28
 	nop 
 	end 

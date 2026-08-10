@@ -1,13 +1,10 @@
 	nop 
 	faceplayer 
-	.byte 0x27
-	.byte 0x19
-	setrespawn 0xC000
-	end 
+	waitstate 
+	copyvar 0x9F, 0x2C0
 	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0xFFF60000
 	nop 
 	nop 
@@ -26,7 +23,7 @@
 	nop 
 	setmysteryeventstatus 0x61
 	.byte 0xE9
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	settrainerflag 0x27E9
 	gotostd 0xE

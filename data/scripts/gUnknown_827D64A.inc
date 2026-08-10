@@ -1,9 +1,11 @@
 	compare_local_to_value 0x66, 0x0
 	showcoinsbox 0x1C, 0x2
 	return 
-	.byte 0x49
-	checkdecor 0x811
-	goto 0x3
+	givepcitem 0x114D, 0x508
+	return 
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 

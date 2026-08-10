@@ -18,12 +18,12 @@
 	showcoinsbox 0x3F, 0x1
 	nop 
 	setmysteryeventstatus 0xE
-	.byte 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0x308
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	return 
 	playfanfare 0xD4A
 	gotostd 0x5
 	goto 0x30001
@@ -32,24 +32,23 @@
 	checkflag 0x100
 	nop 
 	setmysteryeventstatus 0xE
-	.byte 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0xE08
-	setmysteryeventstatus 0x3C
-	delay 0x508
-	callstd_if 0x3, 0xD
-	gotostd 0x2
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	setmysteryeventstatus 0xE
+	warphole 0x2808
+	goto 0x80D030B
+	end 
 	.byte 0xE0
 	returnram 
 	setobjectxy 0x308, 0xA04, 0xA00

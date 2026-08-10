@@ -1,14 +1,11 @@
 	nop 
 	vcall 0x10000C27
-	.byte 0x1D
-	.byte 0xD0
-	nop 
-	showcoinsbox 0xF, 0x2
+	compare_local_to_addr 0xD0, 0x20FC000
 	setweather 0x5721
 	gotostd 0x3
 	return 
 	delay 0x0
 	nop 
 	vcall 0x1040527
-	.byte 0x0D
+	killscript 
 	.byte 0x08

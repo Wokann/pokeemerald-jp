@@ -1,9 +1,5 @@
-	.byte 0xDD
-	nop 
-	nop 
-	.byte 0x80
-	.byte 0xDE
-	setworldmapflag 0x8000
+	buffertrainerclassname 0x0, 0x8000
+	buffertrainername 0x1, 0x8000
 	closemessage 
 	delay 0x1E
 	playfanfare 0x1CC

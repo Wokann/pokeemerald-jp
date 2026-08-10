@@ -1,0 +1,8 @@
+	loadbytefromaddr 0x3100040
+	setworldmapflag 0x4012
+	nop 
+	loadbyte 0x4, 0x1
+	.byte 0x12
+	.byte 0x40
+	nop 
+	.byte 0xF6

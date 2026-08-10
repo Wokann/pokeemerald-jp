@@ -3,10 +3,7 @@
 	gotostd_if 0x1, 0xC
 	returnram 
 	gotostd 0x19
-	.byte 0x80
-	nop 
-	.byte 0x3F
-	end 
+	bufferitemname 0x0, 0x23F
 	nop 
 	.byte 0xE6
 	.byte 0x56
@@ -17,7 +14,7 @@
 	nop 
 	nop 
 	call 0x4A310305
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x1
 	return 

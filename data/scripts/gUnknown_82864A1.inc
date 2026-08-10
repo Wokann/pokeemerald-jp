@@ -1,0 +1,4 @@
+	return 
+	takeitem 0x15F1, 0x208
+	nop 
+	.byte 0x08

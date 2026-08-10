@@ -1,17 +1,14 @@
 	nop 
 	returnram 
 	delay 0xC02
-	.byte 0xD6
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x32
 	goto 0xFFF00070
 	startcontest 
 	nop 
-	.byte 0x80
-	nop 
-	gotonative 0x2020400
-	returnram 
-	.byte 0xD6
+	bufferitemname 0x0, 0x24
+	call 0xD60C0202
 	faceplayer 
 	gotostd 0x32
 	goto 0x8000D0

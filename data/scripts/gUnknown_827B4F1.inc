@@ -1,0 +1,26 @@
+	nop 
+	.byte 0x50
+	waitstate 
+	nop 
+	.byte 0xE1
+	waitstate 
+	end 
+	.byte 0xF8
+	.byte 0xEC
+	.byte 0x56
+	gotostd 0xB
+	end 
+	nop 
+	nop 
+	moveobjectoffscreen 0x1900
+	vcall 0x604C000
+	end 
+	checkplayergender 
+	.byte 0xED
+	.byte 0x56
+	gotostd 0xC
+	setworldmapflag 0x0
+	call 0xA71C18
+	showcoinsbox 0x16, 0x3
+	.byte 0x05
+	.byte 0x08

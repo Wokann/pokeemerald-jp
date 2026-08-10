@@ -3,17 +3,12 @@
 	setworldmapflag 0x10
 	callstd_if 0x0, 0xC
 	nop 
-	.byte 0x41
-	pokemart 0x19082894
+	setholewarp 0x8694, 0x28, 0x1908, 0x0
 	nop 
 	nop 
 	nop 
 	nop 
-	nop 
-	nop 
-	.byte 0x19
-	nop 
-	setworldmapflag 0x9439
+	copyvar 0x100, 0x9439
 	delay 0x3C08
 	gettime 
 	savebgm 0x241
@@ -23,9 +18,7 @@
 	end 
 	end 
 	nop 
-	.byte 0x49
-	nop 
-	nop 
-	delay 0x8D55
+	givepcitem 0x0, 0x5528
+	choosecontestmon 
 	.byte 0x28
 	.byte 0x08

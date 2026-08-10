@@ -2,7 +2,7 @@
 	fadescreen 0x27
 	nop 
 	faceplayer 
-	.byte 0x27
+	waitstate 
 	nop 
 	checkpcitem 0xA27, 0x2803
 	setworldmapflag 0xC0C
@@ -12,19 +12,13 @@
 	goto 0xD5C0D03
 	gotostd 0x2
 	goto 0x10000
-	.byte 0x1E
-	nop 
-	setworldmapflag 0x0
-	nop 
+	compare_addr_to_local 0x100, 0x0
 	end 
-	.byte 0x3C
-	playse 0x857
-	call 0x4
-	nop 
+	warphole 0x2F57
+	gotostd 0x4
+	call 0x0
 	setworldmapflag 0x200
 	nop 
-	.byte 0x19
-	choosecontestmon 
-	nop 
-	.byte 0x3F
-	goto 0x80D030B
+	copyvar 0x8D, 0x53F
+	callstd_if 0x3, 0xD
+	.byte 0x08

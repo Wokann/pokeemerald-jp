@@ -1,6 +1,6 @@
 	nop 
 	gettime 
-	.byte 0x27
+	waitstate 
 	nop 
 	compare_var_to_value 0x1927, 0x8D
 	showcoinsbox 0x2, 0xE0

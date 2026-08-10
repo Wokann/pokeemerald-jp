@@ -1,8 +1,7 @@
 	nop 
 	checkcoins 0xE27
-	.byte 0x58
-	cleartrainerflag 0x828
-	setmysteryeventstatus 0x6C
+	showobject_at 0x2862, 0x80E
+	release 
 	addvar 0x828, 0x6C0E
 	addvar 0x828, 0x6C0E
 	addvar 0x828, 0x5503
@@ -15,24 +14,19 @@
 	returnram 
 	nop 
 	gotopostbattlescript 
-	.byte 0x7E
-	goto 0x640E0104
-	cleartrainerflag 0x828
-	gotostd 0x19
-	setvaddress 0x2002C000
-	compare_var_to_var 0x857, 0x682
+	bufferleadmonspeciesname 0x5
+	call 0x62640E01
+	delay 0x808
+	copyvar 0xB8, 0x2C0
+	compare_addr_to_addr 0x82085722, 0x8000006
 	nop 
-	nop 
-	gotostd 0x0
 	nop 
 	nop 
 	gotostd 0x0
 	compare_local_to_local 0x0, 0x0
 	nop 
 	end 
-	.byte 0x20
-	compare_var_to_var 0x857, 0x682
-	loadbyte 0x0, 0xF8
+	compare_addr_to_addr 0x82085722, 0xF8001006
 	.byte 0xFF
 	nop 
 	nop 

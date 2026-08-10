@@ -1,21 +1,10 @@
 	end 
 	return 
 	.byte 0xED
-	.byte 0x45
-	nop 
-	.byte 0x11
-	nop 
-	nop 
+	takeitem 0x1100, 0x0
 	nop 
 	nop 
 	loadbyte 0xC0, 0x0
-	.byte 0x12
-	.byte 0x40
-	nop 
-	fadedefaultbgm 
-	gotonative 0x2023F
-	returnram 
-	.byte 0x80
-	nop 
-	gotopostbattlescript 
+	loadbytefromaddr 0x24350040
+	setdynamicwarp 0x202, 0x0, 0x800C, 0x5F00
 	.byte 0x3C

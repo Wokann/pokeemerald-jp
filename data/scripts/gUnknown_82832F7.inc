@@ -1,11 +1,9 @@
 	nop 
 	doweather 
-	.byte 0x27
+	waitstate 
 	end 
-	.byte 0x58
-	gettime 
-	setobjectxy 0x208, 0x105, 0x400
-	nop 
+	showobject_at 0x572E, 0x802
+	goto 0x40001
 	nop 
 	nop 
 	loadbyte 0x0, 0x0
@@ -13,9 +11,8 @@
 	goto 0xD7190A04
 	nop 
 	showcoinsbox 0x3, 0x55
-	.byte 0x4B
-	.byte 0x0D
-	gotostd 0x2
+	givedecoration 0x80D
+	end 
 	goto 0x10000
 	nop 
 	nop 
@@ -27,7 +24,7 @@
 	nop 
 	nop 
 	goto 0x4A310300
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x0
 	call 0x1003200
@@ -37,10 +34,7 @@
 	setobjectmovementtype 0x811, 0x2
 	call_if 0xA3, 0xC000127
 	nop 
-	.byte 0x1F
-	nop 
-	loadbyte 0x0, 0x0
-	nop 
+	compare_addr_to_value 0x1000, 0x0
 	nop 
 	nop 
 	setmysteryeventstatus 0x28
@@ -54,9 +48,7 @@
 	setmysteryeventstatus 0x28
 	savebgm 0x828
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x40001
 	nop 
@@ -115,25 +107,20 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x39
-	message 0x2E580205
-	setobjectxy 0x208, 0x105, 0x400
-	nop 
+	warp 0x6705, 0x2, 0x2E58, 0x857
+	end 
+	goto 0x40001
 	loadbyte 0x0, 0x0
 	nop 
 	nop 
 	nop 
 	gotostd 0x2
 	release 
-	.byte 0xDE
-	.byte 0x56
-	gotostd 0x82
+	buffertrainername 0x56, 0x8208
 	nop 
 	end 
 	release 
-	.byte 0xDE
-	.byte 0x56
-	gotostd 0x82
+	buffertrainername 0x56, 0x8208
 	nop 
 	.byte 0x04
 	.byte 0x01

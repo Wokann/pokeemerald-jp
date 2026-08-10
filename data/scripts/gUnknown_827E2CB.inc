@@ -1,13 +1,10 @@
 	nop 
-	.byte 0x99
-	.byte 0x27
-	gotostd_if 0x1, 0xC
-	returnram 
+	setflashradius 0xA27
+	setworldmapflag 0xC0C
 	gotostd 0x19
 	messageautoscroll 0x28023F00
-	.byte 0xCE
-	faceplayer 
-	gotostd 0x2
+	checkmonobedience 0x85A
+	end 
 	call 0x0
 	setworldmapflag 0x0
 	nop 

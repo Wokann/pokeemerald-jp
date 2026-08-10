@@ -1,14 +1,11 @@
 	.byte 0xFD
 	end 
 	setorcopyvar 0x500, 0x3D15
-	.byte 0x51
-	dofieldeffect 0x79AE
+	waitmovement 0xAE9C
+	.byte 0x79
 	dotimebasedevents 
 	.byte 0xFE
-	.byte 0x12
-	getpartysize 
-	callstd 0x13
-	nop 
+	loadbytefromaddr 0x130943
 	fadeoutbgm 0x50
 	goto_if 0x28, 0x102A0B00
 	turnvobject 0xFC, 0x8

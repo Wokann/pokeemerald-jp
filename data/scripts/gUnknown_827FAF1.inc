@@ -1,11 +1,10 @@
 	nop 
 	setstepcallback 0x27
-	.byte 0x19
-	.byte 0x7E
+	copyvar 0x7E, 0x2C0
+	startcontest 
+	compare_local_to_addr 0x57, 0x14048208
 	nop 
-	showcoinsbox 0x2, 0x8C
-	.byte 0x1D
-	setobjectxy 0x8208, 0x1404, 0x0
+	nop 
 	nop 
 	delay 0x0
 	nop 
@@ -15,17 +14,14 @@
 	nop 
 	nop 
 	goto 0x3000100
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x4, 0x2000100
 	nop 
 	nop 
 	nop 
 	returnram 
 	nop 
-	.byte 0x1E
-	checkpartymove 0xF80E
-	gotopostbattlescript 
-	delay 0x508
+	compare_addr_to_local 0x5FF80E7C, 0x28
+	gotostd 0x5
 	.byte 0x08

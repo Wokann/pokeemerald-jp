@@ -1,16 +1,12 @@
 	nop 
 	.byte 0xFA
-	.byte 0x27
+	waitstate 
 	compare_local_to_value 0xDC, 0x0
 	showcoinsbox 0x12, 0x3
 	return 
 	.byte 0xED
 	.byte 0x50
-	.byte 0x11
-	gotostd 0x5
-	end 
-	nop 
-	nop 
+	writebytetoaddr 0x8, 0x205
 	nop 
 	nop 
 	return 
@@ -25,10 +21,6 @@
 	return 
 	.byte 0xED
 	.byte 0x50
-	.byte 0x11
-	gotostd 0x5
-	end 
-	nop 
-	nop 
+	writebytetoaddr 0x8, 0x205
 	setworldmapflag 0x500
 	.byte 0x08

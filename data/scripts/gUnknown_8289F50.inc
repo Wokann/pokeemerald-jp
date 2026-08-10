@@ -1,0 +1,6 @@
+	loadbyte 0x76, 0x1
+	loadbytefromaddr 0x12570040
+	.byte 0x40
+	nop 
+	.byte 0x3E
+	nop 

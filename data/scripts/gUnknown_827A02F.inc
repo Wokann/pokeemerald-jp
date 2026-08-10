@@ -4,9 +4,8 @@
 	compare_local_to_local 0x27, 0x4
 	nop 
 	return 
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x3, 0x1FFE100
 	nop 
 	goto 0xFF000500
@@ -23,11 +22,7 @@
 	call 0x13300200
 	setobjectxy 0x8, 0x5007, 0x1800
 	nop 
-	.byte 0x16
-	nop 
-	returnram 
-	nop 
-	nop 
+	setvar 0xC00, 0x0
 	nop 
 	setworldmapflag 0x0
 	nop 
@@ -42,19 +37,17 @@
 	setworldmapflag 0x100
 	nop 
 	call 0x62550300
-	.byte 0x11
-	gotostd 0x2
-	goto_if 0x3, 0x1FFE100
-	nop 
-	nop 
+	writebytetoaddr 0x8, 0x30602
+	.byte 0xE1
+	.byte 0xFF
+	setworldmapflag 0x0
 	nop 
 	nop 
 	nop 
 	.byte 0xFF
 	turnobject 0xA04, 0x3
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x3, 0x1FFE100
 	nop 
 	goto 0xFF000500
@@ -88,37 +81,25 @@
 	setworldmapflag 0x100
 	nop 
 	call 0x62550300
-	.byte 0x11
-	gotostd 0x2
-	goto_if 0x3, 0x1FFE100
-	nop 
-	nop 
+	writebytetoaddr 0x8, 0x30602
+	.byte 0xE1
+	.byte 0xFF
+	setworldmapflag 0x0
 	nop 
 	nop 
 	nop 
 	.byte 0xFF
 	turnobject 0x1404, 0x3
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x3, 0x1FFE100
 	nop 
 	call_if 0x0, 0x5BFF0007
-	.byte 0x19
-	.byte 0x77
+	copyvar 0x77, 0x2C0
+	fadescreenswapbuffers 0x13
+	setobjectxy 0x408, 0x8, 0x0
 	nop 
-	showcoinsbox 0x2, 0xDC
-	setptrbyte 0x57, 0x80408
-	nop 
-	nop 
-	nop 
-	.byte 0x20
-	nop 
-	returnram 
-	nop 
-	nop 
-	nop 
-	copylocal 0x0, 0x0
+	compare_addr_to_addr 0xC00, 0x1400
 	nop 
 	nop 
 	nop 
@@ -126,13 +107,7 @@
 	fadescreenswapbuffers 0x13
 	setobjectxy 0x408, 0x8, 0x0
 	nop 
-	.byte 0x20
-	nop 
-	returnram 
-	nop 
-	.byte 0x40
-	nop 
-	copylocal 0x0, 0x1
+	compare_addr_to_addr 0x40000C00, 0x1001400
 	nop 
 	nop 
 	nop 
@@ -140,13 +115,7 @@
 	fadescreenswapbuffers 0x13
 	setobjectxy 0x408, 0x8, 0x0
 	nop 
-	.byte 0x20
-	nop 
-	returnram 
-	nop 
-	.byte 0x80
-	nop 
-	copylocal 0x0, 0x0
+	compare_addr_to_addr 0x80000C00, 0x1400
 	nop 
 	nop 
 	nop 
@@ -154,13 +123,7 @@
 	fadescreenswapbuffers 0x13
 	setobjectxy 0x408, 0x8, 0x0
 	nop 
-	.byte 0x20
-	nop 
-	returnram 
-	nop 
-	showcoinsbox 0x0, 0x14
-	nop 
-	end 
+	compare_addr_to_addr 0xC0000C00, 0x2001400
 	nop 
 	nop 
 	nop 
@@ -170,13 +133,7 @@
 	nop 
 	loadbyte 0x0, 0xC
 	nop 
-	.byte 0x20
-	nop 
-	copylocal 0x0, 0x0
-	nop 
-	nop 
-	nop 
-	end 
+	compare_addr_to_addr 0x1400, 0x2000000
 	fadescreenswapbuffers 0x13
 	setobjectxy 0x408, 0x8, 0x0
 	nop 
@@ -221,15 +178,13 @@
 	nop 
 	.byte 0xFF
 	turnobject 0x5802, 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	end 
 	call 0x4000400
 	call 0x3F00D719
 	end 
-	.byte 0x3C
-	playse 0x857
-	.byte 0x82
+	warphole 0x2F57
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x200
 	nop 
@@ -240,9 +195,8 @@
 	nop 
 	nop 
 	goto_if 0x0, 0x3050001
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x4, 0x2FFE100
 	nop 
 	nop 

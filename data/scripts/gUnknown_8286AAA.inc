@@ -1,30 +1,26 @@
 	nop 
 	doweather 
-	.byte 0x27
+	waitstate 
 	nop 
 	playse 0xA27
 	return 
 	returnram 
 	returnram 
 	gotostd 0x2
-	.byte 0x58
-	gettime 
-	setobjectxy 0x208, 0x105, 0x100
-	nop 
+	showobject_at 0x572E, 0x802
+	goto 0x10001
 	nop 
 	nop 
 	call 0x533ED00
 	call 0xF5950E03
-	.byte 0x27
+	waitstate 
 	gotostd 0x5
 	call 0x5F660E0F
 	delay 0x508
 	end 
-	.byte 0x58
-	gettime 
-	setobjectxy 0x208, 0x105, 0x100
-	nop 
+	showobject_at 0x572E, 0x802
+	goto 0x10001
 	call 0xED000000
 	playbgm 0xB05, 0x3
-	.byte 0x0D
+	killscript 
 	.byte 0x08

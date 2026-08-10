@@ -6,8 +6,7 @@
 	gotostd 0x2
 	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0xFFE80000
 	nop 
 	nop 
@@ -16,8 +15,7 @@
 	gotostd 0x0
 	goto 0x88020A04
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	return 
 	nop 
 	nop 
@@ -36,18 +34,17 @@
 	nop 
 	setworldmapflag 0x100
 	nop 
-	.byte 0x19
-	random 0x3F00
-	goto 0x572F3C02
+	copyvar 0x8F, 0x53F
+	end 
+	warphole 0x2F57
 	gotostd 0x2
 	call 0x0
 	setworldmapflag 0x100
 	nop 
-	.byte 0x19
-	setmonmove 0x0, 0x3F, 0xA002
+	copyvar 0x7B, 0x23F
+	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0xFFE40001
 	nop 
 	nop 
@@ -56,7 +53,7 @@
 	return 
 	nop 
 	call 0x4D090303
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x30001
 	nop 
@@ -65,8 +62,7 @@
 	nop 
 	goto 0x88020504
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	return 
 	setworldmapflag 0x0
 	nop 

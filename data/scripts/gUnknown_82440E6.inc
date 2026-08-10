@@ -1,8 +1,6 @@
 	lockall 
-	.byte 0x25
-	.byte 0xC7
-	nop 
-	.byte 0x27
+	special TryFieldPoisonWhiteOut
+	waitstate 
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8244103
 	compare_var_to_value 0x800D, 0x2
@@ -12,61 +10,43 @@
 	message 0x8243B4E
 	waitmessage 
 	waitbuttonpress 
-	.byte 0x25
-	.byte 0x4B
-	setworldmapflag 0x9727
-	setworldmapflag 0x6C2B
-	nop 
+	special Script_FadeOutMapMusic
+	waitstate 
+	fadescreen 0x1
+	checkflag 0x6C
 	call_if 0x1, 0x824411E
-	.byte 0x25
-	.byte 0xC8
-	nop 
-	.byte 0x27
+	special SetCB2WhiteOut
+	waitstate 
 	end 
 	setrespawn 0x10
 	return 
 	message 0x8243B4E
 	waitmessage 
 	waitbuttonpress 
-	.byte 0x16
-	call 0x25001080
-	.byte 0xEF
-	nop 
+	setvar 0x8004, 0x10
+	special CallBattlePikeFunction
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x82746AB
-	.byte 0x16
-	call 0x25000C80
-	.byte 0xF0
-	nop 
+	setvar 0x8004, 0xC
+	special CallBattlePyramidFunction
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x822D60B
 	compare_var_to_value 0x800D, 0x2
 	goto_if 0x1, 0x822D60B
-	.byte 0x16
-	call 0x25000A80
-	.byte 0xF8
-	setworldmapflag 0xD21
-	.byte 0x80
-	setworldmapflag 0x600
-	setworldmapflag 0x6CE5
-	.byte 0x27
-	gotostd 0x25
-	.byte 0x4B
-	setworldmapflag 0x9727
-	setworldmapflag 0xC825
-	nop 
-	.byte 0x27
+	setvar 0x8004, 0xA
+	special CallTrainerHillFunction
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x8276CE5
+	special Script_FadeOutMapMusic
+	waitstate 
+	fadescreen 0x1
+	special SetCB2WhiteOut
+	waitstate 
 	end 
 	return 
-	.byte 0x16
-	.byte 0x0D
-	.byte 0x80
-	setworldmapflag 0x300
-	.byte 0x16
-	.byte 0x0D
-	.byte 0x80
-	nop 
-	nop 
+	setvar 0x800D, 0x1
+	return 
+	setvar 0x800D, 0x0
 	return 
 	call 0x82471FA
 	end 
@@ -75,73 +55,53 @@
 	call 0x8247383
 	end 
 	fadescreenswapbuffers 0x1
-	.byte 0x53
-	loadword 0x80, 0x26C00DC
+	removeobject 0x800F
+	fadescreenswapbuffers 0x0
+	release 
+	end 
 	fadescreenswapbuffers 0x1
-	.byte 0x53
-	loadword 0x80, 0x7D00DC
-	call 0xF4000F80
-	.byte 0x3D
-	gotonative 0x6C040908
+	removeobject 0x800F
+	fadescreenswapbuffers 0x0
+	buffermovename 0x0, 0x8004
+	loadword 0x0, 0x8243DF4
+	callstd 0x4
+	release 
 	end 
 	getpartysize 
 	subvar 0x800D, 0x1
-	.byte 0x19
-	call 0x3800D80
+	copyvar 0x8004, 0x800D
+	return 
 	fadescreen 0x1
-	.byte 0x25
-	.byte 0xE3
-	setworldmapflag 0x6A27
+	special ChangeBoxPokemonNickname
+	lock 
 	faceplayer 
 	return 
-	.byte 0xC6
-	nop 
-	fadenewbgm 0x7D40
-	setworldmapflag 0x4001
+	bufferboxname 0x0, 0x4036
+	buffermovename 0x1, 0x4001
 	checkflag 0x8AB
 	call_if 0x0, 0x82441E5
 	checkflag 0x8AB
 	call_if 0x1, 0x8244210
 	return 
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xE5
-	setworldmapflag 0xD21
-	.byte 0x80
-	setworldmapflag 0x600
-	setworldmapflag 0x41FE
-	gotonative 0x8000F08
-	.byte 0x3E
-	gotonative 0x3040908
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xE4
-	setworldmapflag 0x2C6
-	.byte 0x0D
-	.byte 0x80
+	specialvar 0x800D, sub_0813B254
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x82441FE
+	loadword 0x0, 0x8243E08
+	callstd 0x4
+	return 
+	specialvar 0x800D, get_unknown_box_id
+	bufferboxname 0x2, 0x800D
 	loadword 0x0, 0x8243E4C
 	callstd 0x4
 	return 
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xE5
-	setworldmapflag 0xD21
-	.byte 0x80
-	setworldmapflag 0x600
-	setworldmapflag 0x4229
-	gotonative 0x2A000F08
-	.byte 0x3E
-	gotonative 0x3040908
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xE4
-	setworldmapflag 0x2C6
-	.byte 0x0D
-	.byte 0x80
+	specialvar 0x800D, sub_0813B254
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x8244229
+	loadword 0x0, 0x8243E2A
+	callstd 0x4
+	return 
+	specialvar 0x800D, get_unknown_box_id
+	bufferboxname 0x2, 0x800D
 	loadword 0x0, 0x8243E80
 	callstd 0x4
 	return 

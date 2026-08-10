@@ -1,12 +1,3 @@
-	.byte 0x12
-	return 
-	returnram 
-	gettime 
-	nop 
+	loadbytefromaddr 0x2E0C03
 	loadbyte 0x2, 0x7
-	.byte 0x11
-	fadedefaultbgm 
-	return 
-	.byte 0xB0
-	.byte 0xB0
-	.byte 0xFF
+	writebytetoaddr 0x35, 0xFFB0B003

@@ -1,6 +1,6 @@
 	loadword 0x0, 0x8247E95
 	callstd 0x4
 	fadescreen 0x1
-	.byte 0x25
-	clearflag 0x2700
+	special sp02A_crash_sound
+	waitstate 
 	end 

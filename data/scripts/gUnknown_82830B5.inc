@@ -1,15 +1,15 @@
 	nop 
 	.byte 0xFC
-	.byte 0x27
+	waitstate 
 	nop 
 	playse 0x1927
 	fadescreenspeed 0x0, 0xC0
 	return 
-	.byte 0xB5
-	setwildbattle 0x815, 0x5, 0x300
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	takecoins 0x15B6
+	gotostd 0x5
+	nop 
+	return 
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x10000
 	nop 
@@ -19,9 +19,8 @@
 	nop 
 	call 0xE81926
 	showcoinsbox 0x3, 0x55
-	.byte 0x4B
-	.byte 0x0D
-	gotostd 0x2
+	givedecoration 0x80D
+	end 
 	goto 0x20000
 	nop 
 	nop 
@@ -37,12 +36,7 @@
 	goto 0x285F660E
 	gotostd 0x8
 	end 
-	.byte 0x20
-	setmonmetlocation 0x85A, 0x2
-	end 
-	nop 
-	nop 
-	.byte 0xF8
+	compare_addr_to_addr 0x2085AD2, 0xF8000002
 	.byte 0xFF
 	call 0xD2200201
 	faceplayer 

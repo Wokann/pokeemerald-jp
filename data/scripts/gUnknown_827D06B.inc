@@ -1,14 +1,10 @@
 	nop 
 	playse 0x327
-	.byte 0x7D
-	call 0x1020816
-	nop 
-	nop 
-	.byte 0x19
-	.byte 0xED
-	nop 
-	showcoinsbox 0x5, 0xE
-	waitmessage 
+	buffermovename 0x4, 0x816
+	end 
+	setworldmapflag 0x0
+	copyvar 0xED, 0x5C0
+	setmysteryeventstatus 0x66
 	gotopostbattlescript 
 	delay 0x508
 	.byte 0x08

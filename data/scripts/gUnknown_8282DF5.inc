@@ -1,12 +1,12 @@
 	nop 
 	.byte 0xF0
-	.byte 0x27
+	waitstate 
 	nop 
 	pokenavcall 0xE2CC0227
 	.byte 0x56
 	gotostd 0x2
 	end 
-	.byte 0xD8
+	cmdD8 
 	.byte 0xFF
 	.byte 0x50
 	nop 
@@ -16,7 +16,7 @@
 	.byte 0x56
 	gotostd 0x2
 	end 
-	.byte 0xD8
+	cmdD8 
 	.byte 0xFF
 	.byte 0xD0
 	nop 

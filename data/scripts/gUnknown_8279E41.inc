@@ -1,6 +1,6 @@
 	nop 
-	.byte 0x74
-	.byte 0x27
+	mossdeepgym2 
+	waitstate 
 	nop 
 	fadescreen 0x27
 	gotostd_if 0x1, 0x28
@@ -17,13 +17,11 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x80
-	call 0xAE1905
-	.byte 0x3F
-	end 
-	.byte 0x3C
-	playse 0x857
-	setworldmapflag 0x4
+	bufferitemname 0x4, 0x1905
+	waitmoncry 
+	nop 
+	setdynamicwarp 0x23C, 0x2F, 0x857, 0x401
+	nop 
 	nop 
 	nop 
 	nop 
@@ -36,9 +34,7 @@
 	gotostd 0x2
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x10001
 	nop 

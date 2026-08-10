@@ -1,8 +1,6 @@
 	lockall 
-	.byte 0x25
-	checkflag 0x400
-	.byte 0xF2
-	checkdecorspace 0x824
+	special EventObjectInteractionGetBerryTreeData
+	call 0x8244EF2
 	releaseall 
 	end 
 	checkitem 0x10C, 0x1

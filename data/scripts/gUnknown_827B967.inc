@@ -1,6 +1,6 @@
 	nop 
 	.byte 0xC7
-	.byte 0x27
+	waitstate 
 	end 
 	loadbyte 0xE9, 0x56
 	gotostd 0x82
@@ -9,10 +9,8 @@
 	.byte 0xFF
 	nop 
 	nop 
-	.byte 0x19
-	pokemartdecoration2 0x4043F00
-	end 
-	loadbyte 0xE9, 0x56
+	copyvar 0x88, 0x43F
+	call 0x56E91002
 	gotostd 0x82
 	return 
 	setworldmapflag 0x800
@@ -20,14 +18,10 @@
 	nop 
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x40001
 	nop 
 	nop 
-	.byte 0x12
-	nop 
-	setworldmapflag 0x1900
+	loadbytefromaddr 0x19000100
 	pokemartdecoration2 0x8053F00

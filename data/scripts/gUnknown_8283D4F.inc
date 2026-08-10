@@ -1,16 +1,16 @@
 	nop 
 	.byte 0xD0
-	.byte 0x27
+	waitstate 
 	nop 
 	setstepcallback 0x27
-	.byte 0x19
-	playmoncry 0x3F00, 0xE402
-	.byte 0xCF
+	copyvar 0xA1, 0x23F
+	.byte 0xE4
+	gotoram 
 	faceplayer 
 	gotostd 0x82
 	nop 
 	call 0x4A31030A
-	.byte 0x0D
+	killscript 
 	gotostd 0x3
 	goto 0x30001
 	nop 

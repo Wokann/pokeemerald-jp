@@ -1,7 +1,5 @@
-	.byte 0x16
-	goto 0x5000080
-	.byte 0xD9
-	dotrainerbattle 
-	gotonative 0x13250208
-	nop 
+	setvar 0x8005, 0x0
+	goto 0x8245DD9
+	end 
+	special sub_08127DEC
 	end 

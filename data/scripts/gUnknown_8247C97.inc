@@ -1,0 +1,11 @@
+	loadword 0x2B, 0x271050
+	vgoto_if 0x9A, 0x447E60
+	killscript 
+	killscript 
+	compare_var_to_value 0xB0FE, 0xBCB0
+	animateflash 0x60
+	bufferleadmonspeciesname 0x44
+	nop 
+	.byte 0x57
+	bufferstdstring 0x7E, 0x795E
+	.byte 0xFF

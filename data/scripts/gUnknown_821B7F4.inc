@@ -4,9 +4,7 @@
 	setmetatile 0x7, 0x14, 0x232, 0x1
 	setmetatile 0x8, 0x14, 0x233, 0x0
 	setmetatile 0x9, 0x14, 0x234, 0x1
-	.byte 0x25
-	contestlinktransfer 
-	nop 
+	special DrawWholeMapView
 	playse 0x14
 	setflag 0x8B1
 	end 
@@ -17,14 +15,12 @@
 	goto_if 0x1, 0x821B858
 	braillemessage 0x826377A
 	setflag 0x2
-	.byte 0x25
-	.byte 0xEF
-	setworldmapflag 0x8605
-	setvaddress 0xF020821
-	nop 
-	.byte 0xDA
-	.byte 0x3C
-	gotonative 0x6B040908
+	special ShouldDoBrailleRegicePuzzle
+	goto 0x821B886
+	end 
+	loadword 0x0, 0x8243CDA
+	callstd 0x4
+	releaseall 
 	end 
 	lockall 
 	checkflag 0x3
@@ -33,28 +29,16 @@
 	checkflag 0x8B1
 	goto_if 0x1, 0x821B886
 	setflag 0x2
-	.byte 0x25
-	.byte 0xEF
-	setworldmapflag 0x8605
-	setvaddress 0x6D020821
-	.byte 0xDA
+	special ShouldDoBrailleRegicePuzzle
+	goto 0x821B886
+	end 
+	waitbuttonpress 
+	mossdeepgym4 
 	releaseall 
 	end 
-	.byte 0x16
-	.byte 0x3B
-	.byte 0x40
-	nop 
-	nop 
-	.byte 0x16
-	.byte 0x3C
-	.byte 0x40
-	nop 
-	nop 
-	.byte 0x16
-	.byte 0x3D
-	.byte 0x40
-	nop 
-	nop 
+	setvar 0x403B, 0x0
+	setvar 0x403C, 0x0
+	setvar 0x403D, 0x0
 	clearflag 0x3
 	return 
 	lock 
@@ -65,15 +49,9 @@
 	waitdooranim 
 	setwildbattle 0x192, 0x28, 0x0
 	setflag 0x8C1
-	.byte 0x25
-	fadeinbgm 0x1
-	.byte 0x27
+	special StartRegiBattle
 	clearflag 0x8C1
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xB4
-	nop 
+	specialvar 0x800D, GetBattleOutcome
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x821B8E4
 	compare_var_to_value 0x800D, 0x4
@@ -86,24 +64,23 @@
 	setflag 0x1BC
 	goto 0x8244197
 	end 
-	.byte 0x16
-	call 0x5019280
-	checkplayergender 
-	.byte 0x41
-	gotonative 0x8050208
-	vgoto 0x37010821
-	vgoto 0x26030821
-	vgoto 0x2B000821
-	hidecoinsbox 0x8, 0x7
+	setvar 0x8004, 0x192
+	goto 0x82441A0
+	end 
+	goto 0x821B908
+	setworldmapflag 0xB937
+	compare_var_to_value 0x308, 0xB926
+	compare_var_to_value 0x8, 0xC12B
+	gotostd 0x7
 	setworldmapflag 0xB912
 	compare_var_to_value 0x208, 0xD26
-	.byte 0x80
-	.byte 0xB4
-	nop 
-	compare_var_to_value 0x800D, 0x7
-	goto_if 0x5, 0x8244178
-	.byte 0x53
-	loadword 0x80, 0x8B92903
+	bufferitemname 0xB4, 0x2100
+	killscript 
+	bufferitemname 0x7, 0x600
+	goto 0x8244178
+	removeobject 0x800F
+	return 
+	setflag 0x8B9
 	checkflag 0x1BD
 	call_if 0x0, 0x821B933
 	end 
@@ -124,7 +101,7 @@
 	goto_if 0x1, 0x821B98B
 	braillemessage 0x8263799
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	loadword 0x0, 0x8243CDA
@@ -134,7 +111,7 @@
 	lockall 
 	braillemessage 0x8263799
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lock 
@@ -145,15 +122,9 @@
 	waitdooranim 
 	setwildbattle 0x193, 0x28, 0x0
 	setflag 0x8C1
-	.byte 0x25
-	fadeinbgm 0x1
-	.byte 0x27
+	special StartRegiBattle
 	clearflag 0x8C1
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0xB4
-	nop 
+	specialvar 0x800D, GetBattleOutcome
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x821B9E6
 	compare_var_to_value 0x800D, 0x4
@@ -166,17 +137,12 @@
 	setflag 0x1BD
 	goto 0x8244197
 	end 
-	.byte 0x16
-	call 0x5019380
-	checkplayergender 
-	.byte 0x41
-	gotonative 0x50208
-	vcall 0x40000821
+	setvar 0x8004, 0x193
+	goto 0x82441A0
+	end 
+	goto 0x821BA00
 	nop 
-	playfanfare 0x3CFF
-	nop 
-	.byte 0x1F
-	nop 
+	setdivewarp 0x31, 0xFF, 0x3C, 0x1F
 	end 
 	goto_if 0xF, 0x821BA
 	getplayerxy 0x8004, 0x8005
@@ -185,20 +151,14 @@
 	compare_var_to_value 0x8005, 0x2C
 	goto_if 0x5, 0x821BA2F
 	goto 0x821BA38
-	.byte 0x40
-	nop 
-	playfanfare 0x3CFF
-	nop 
-	.byte 0x1F
-	nop 
+	setdivewarp 0x31, 0xFF, 0x3C, 0x1F
 	end 
-	.byte 0x40
-	subvar 0xFF47, 0xA
-	setptrbyte 0x0, 0xD2786902
-	fadedefaultbgm 
-	.byte 0x26
-	gotostd 0x6D
-	.byte 0xDA
+	setdivewarp 0x1847, 0xFF, 0xA, 0x13
+	end 
+	lockall 
+	braillemessage 0x82635D2
+	waitbuttonpress 
+	mossdeepgym4 
 	releaseall 
 	end 
 	goto 0x821BA5B
@@ -226,61 +186,61 @@
 	lockall 
 	braillemessage 0x82635E2
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x82635EE
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x82635FA
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x8263606
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x8263612
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x826361E
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x826362A
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x8263636
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x8263640
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x826364C
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
@@ -288,7 +248,7 @@
 	goto_if 0x1, 0x821BB28
 	braillemessage 0x8263656
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	loadword 0x0, 0x8243CDA
@@ -298,42 +258,35 @@
 	lockall 
 	braillemessage 0x8263656
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	nop 
 	lockall 
 	braillemessage 0x8263668
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	checkflag 0xE4
 	goto_if 0x1, 0x821BB98
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	addvar 0x2101, 0x800D
-	nop 
-	nop 
+	specialvar 0x800D, CheckRelicanthWailord
+	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x821BB98
 	fadeoutbgm 0x0
 	playse 0x31
-	.byte 0x25
-	waitse 
-	setworldmapflag 0x2827
-	delay 0x2500
-	.byte 0x3A
-	setworldmapflag 0x2F27
-	gotostd 0x0
+	special DoSealedChamberShakingEffect1
+	waitstate 
 	delay 0x28
-	.byte 0x25
-	.byte 0x3A
-	setworldmapflag 0x2F27
-	gotostd 0x0
+	special DoSealedChamberShakingEffect2
+	waitstate 
+	playse 0x8
 	delay 0x28
-	.byte 0x25
-	.byte 0x3A
-	setworldmapflag 0x2F27
-	gotostd 0x0
+	special DoSealedChamberShakingEffect2
+	waitstate 
+	playse 0x8
+	delay 0x28
+	special DoSealedChamberShakingEffect2
+	waitstate 
+	playse 0x8
 	delay 0x28
 	loadword 0x0, 0x8243CBE
 	callstd 0x4
@@ -347,37 +300,37 @@
 	lockall 
 	braillemessage 0x8263698
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x82636C3
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x82636DD
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x8263700
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x826370F
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	lockall 
 	braillemessage 0x826372E
 	waitbuttonpress 
-	.byte 0xDA
+	mossdeepgym4 
 	releaseall 
 	end 
 	return 
@@ -396,13 +349,11 @@
 	vgoto_if 0x21, 0xBC220108
 	compare_var_to_value 0x208, 0xBC3F
 	compare_var_to_value 0x8, 0x5E21
-	.byte 0x40
-	return 
-	nop 
-	call_if 0x1, 0x821BC14
-	compare_var_to_value 0x405E, 0x4
-	call_if 0x4, 0x821BC18
-	end 
+	setdivewarp 0x300, 0x7, 0x1401, 0x21BC
+	gotostd 0x21
+	gotobeatenscript 
+	setdivewarp 0x400, 0x7, 0x1804, 0x21BC
+	gotostd 0x2
 	setflag 0x4000
 	return 
 	checkflag 0x88A
@@ -415,79 +366,45 @@
 	setmetatile 0xE, 0x5, 0x2B2, 0x0
 	return 
 	gotobeatenscript 
-	.byte 0x40
-	return 
+	setdivewarp 0x300, 0x49, 0x21BC, 0x8
 	nop 
-	.byte 0x49
-	vcall_if 0x21, 0x69000008
-	.byte 0x4F
-	setworldmapflag 0x1800
-	vmessage 0x510821
-	nop 
-	.byte 0x4F
-	.byte 0xFF
-	nop 
-	.byte 0x27
-	fadenewbgm 0x824
-	.byte 0x51
-	nop 
-	nop 
+	lockall 
+	applymovement 0x1, 0x821BD18
+	waitmovement 0x0
+	applymovement 0xFF, 0x8243627
+	waitmovement 0x0
 	loadword 0x0, 0x821BD56
 	callstd 0x4
 	closemessage 
 	delay 0x1E
-	.byte 0x16
-	call 0x16000180
-	goto 0x16000180
-	goto_if 0x80, 0x7160008
-	.byte 0x80
-	return 
-	nop 
-	.byte 0x25
-	fadedefaultbgm 
-	setworldmapflag 0x2827
-	delay 0xF00
-	nop 
-	.byte 0xB5
-	vmessage 0x4090821
+	setvar 0x8004, 0x1
+	setvar 0x8005, 0x1
+	setvar 0x8006, 0x8
+	setvar 0x8007, 0x3
+	special sub_081395D0
+	waitstate 
+	delay 0x28
+	loadword 0x0, 0x821BDB5
+	callstd 0x4
 	closemessage 
-	.byte 0x4F
-	.byte 0xFF
-	nop 
-	waitse 
-	vmessage 0x14F0821
-	nop 
-	callnative 0x510821BD
-	nop 
-	nop 
-	.byte 0x16
-	call 0x16000180
-	goto 0x16000380
-	goto_if 0x80, 0x7160014
-	.byte 0x80
-	goto 0x1352500
-	.byte 0x27
+	applymovement 0xFF, 0x821BD30
+	applymovement 0x1, 0x821BD23
+	waitmovement 0x0
+	setvar 0x8004, 0x1
+	setvar 0x8005, 0x3
+	setvar 0x8006, 0x14
+	setvar 0x8007, 0x5
+	special sub_081395D0
+	waitstate 
 	delay 0x14
-	.byte 0x4F
-	setworldmapflag 0x2700
-	fadenewbgm 0x824
-	.byte 0x51
-	nop 
-	nop 
+	applymovement 0x1, 0x8243627
+	waitmovement 0x0
 	delay 0xA
-	.byte 0x4F
-	setworldmapflag 0x2B00
-	fadenewbgm 0x824
-	.byte 0x51
-	nop 
-	nop 
+	applymovement 0x1, 0x824362B
+	waitmovement 0x0
 	delay 0x14
-	.byte 0x4F
-	setworldmapflag 0x2D00
-	fadenewbgm 0x824
-	.byte 0x51
-	nop 
-	nop 
+	applymovement 0x1, 0x824362D
+	waitmovement 0x0
 	delay 0x1E
 	loadword 0x0, 0x821BDD5
 	callstd 0x4
@@ -495,8 +412,7 @@
 	setflag 0x88A
 	setweather 0xF
 	resetweather 
-	.byte 0x25
-	compare_local_to_local 0x1, 0x27
+	special WaitWeather
 	delay 0x1E
 	loadword 0x0, 0x821BDF8
 	callstd 0x4
@@ -504,10 +420,8 @@
 	playse 0x9
 	fadescreenswapbuffers 0x1
 	clearflag 0x4000
-	.byte 0x16
-	gotobeatenscript 
-	.byte 0x40
-	call 0x15300
+	setvar 0x405E, 0x4
+	removeobject 0x1
 	clearflag 0x330
 	fadescreenswapbuffers 0x0
 	releaseall 

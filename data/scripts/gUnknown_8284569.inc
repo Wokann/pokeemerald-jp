@@ -1,6 +1,6 @@
 	nop 
 	playbgm 0x27, 0x97
-	.byte 0x27
+	waitstate 
 	gotostd_if 0x3, 0xC
 	returnram 
 	gotostd 0x19
@@ -221,9 +221,8 @@
 	nop 
 	nop 
 	end 
-	.byte 0x3C
-	playse 0x857
-	.byte 0x82
+	warphole 0x2F57
+	gotostd 0x82
 	call 0x3FFFC
 	setworldmapflag 0x0
 	nop 
@@ -238,9 +237,9 @@
 	return 
 	.byte 0xF5
 	lock 
-	.byte 0x11
-	gotostd 0x2
-	call 0x2
+	writebytetoaddr 0x8, 0x20402
+	nop 
+	nop 
 	gotostd_if 0x0, 0x1
 	nop 
 	end 

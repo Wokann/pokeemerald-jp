@@ -13,17 +13,12 @@
 	setworldmapflag 0x300
 	nop 
 	return 
-	.byte 0x0D
+	killscript 
 	.byte 0x5C
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x10000
-	.byte 0x1E
-	nop 
-	setworldmapflag 0x0
-	nop 
-	.byte 0x19
-	choosecontestmon 
-	nop 
-	.byte 0x3F
-	goto 0x80D010B
+	compare_addr_to_local 0x100, 0x0
+	copyvar 0x8D, 0x53F
+	callstd_if 0x1, 0xD
+	.byte 0x08

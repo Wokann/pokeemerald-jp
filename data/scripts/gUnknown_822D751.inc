@@ -3,5 +3,5 @@
 	choosecontestmon 
 	nop 
 	.byte 0x44
-	.byte 0x0D
+	killscript 
 	.byte 0xFF

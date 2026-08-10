@@ -18,27 +18,26 @@
 	setworldmapflag 0x200
 	nop 
 	return 
-	.byte 0x0D
+	killscript 
 	.byte 0x5C
-	.byte 0x0D
+	killscript 
 	gotostd 0x5
 	goto 0x10000
 	goto_if 0x0, 0x1
 	setptrbyte 0x22, 0x1908278F
 	showcontestresults 
 	nop 
-	.byte 0x3F
-	end 
-	.byte 0x3C
-	playse 0x857
-	return 
-	call 0x0
+	setdynamicwarp 0x23C, 0x2F, 0x857, 0x403
+	nop 
+	nop 
+	nop 
+	nop 
 	setworldmapflag 0x100
 	nop 
 	return 
-	.byte 0x0D
+	killscript 
 	.byte 0x5C
-	.byte 0x0D
+	killscript 
 	gotostd 0x5
 	goto 0x10000
 	goto_if 0x0, 0x1

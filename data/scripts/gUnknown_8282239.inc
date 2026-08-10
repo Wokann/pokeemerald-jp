@@ -1,13 +1,9 @@
 	nop 
-	.byte 0xDA
-	.byte 0x27
+	mossdeepgym4 
+	waitstate 
 	nop 
-	.byte 0xDB
-	.byte 0x27
-	nop 
-	playse 0xA27
-	end 
-	.byte 0x19
+	cmdDB 0x272F0027
+	gotostd_if 0x2, 0x19
 	setmaplayoutindex 0xC000
 	return 
 	playfanfare 0xD4A
@@ -58,8 +54,8 @@
 	nop 
 	nop 
 	setworldmapflag 0x400
-	.byte 0x3C
-	loadbyte 0x7, 0xFF
+	warphole 0x1007
+	.byte 0xFF
 	.byte 0xFF
 	goto 0xAF0E020B
 	gotopostbattlescript 

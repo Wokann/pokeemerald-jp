@@ -1,6 +1,6 @@
 	nop 
 	faceplayer 
-	.byte 0x27
+	waitstate 
 	gotostd_if 0x2, 0x28
 	nop 
 	returnram 
@@ -10,8 +10,7 @@
 	end 
 	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0xFFF60000
 	nop 
 	nop 
@@ -30,22 +29,22 @@
 	nop 
 	setmysteryeventstatus 0xC3
 	.byte 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	incrementgamestat 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	incrementgamestat 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	incrementgamestat 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	incrementgamestat 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
 	incrementgamestat 0xE8
-	.byte 0x27
+	waitstate 
 	gotostd 0x5
 	callstd_if 0x2, 0xD
 	gotostd 0x2

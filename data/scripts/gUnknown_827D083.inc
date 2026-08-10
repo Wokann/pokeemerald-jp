@@ -1,31 +1,24 @@
 	nop 
 	dowildbattle 
-	.byte 0x27
+	waitstate 
 	nop 
 	fadeoutbgm 0x27
 	nop 
 	.byte 0xE0
-	.byte 0x27
+	waitstate 
 	gotostd_if 0x1, 0xC
 	returnram 
 	gotostd 0x2
-	.byte 0x58
-	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	showobject_at 0x55A9, 0x802
 	end 
 	goto_if 0x0, 0x4040004
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20001
 	nop 
 	nop 
-	.byte 0x12
-	nop 
-	setworldmapflag 0x200
+	loadbytefromaddr 0x2000100
 	compare_local_to_value 0x2D, 0x57
 	gotostd 0x82
 	return 
@@ -43,8 +36,8 @@
 	.byte 0xFF
 	gotostd_if 0x0, 0x0
 	nop 
-	.byte 0x19
-	pokemartdecoration2 0xC043F00
+	copyvar 0x88, 0x43F
+	returnram 
 	end 
 	compare_local_to_value 0x2D, 0x57
 	gotostd 0x82

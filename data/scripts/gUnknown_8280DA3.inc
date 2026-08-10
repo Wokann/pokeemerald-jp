@@ -7,7 +7,7 @@
 	nop 
 	showcoinsbox 0x3, 0xB5
 	.byte 0x50
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0xC0000
 	goto_if 0x0, 0x30006
@@ -25,17 +25,13 @@
 	subvar 0x56DF, 0x208
 	call 0xFFE80010
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	end 
+	moveobjectoffscreen 0x200
 	subvar 0x56DF, 0x208
 	call 0xFFE8FFF0
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	call 0xDF00020F
-	.byte 0x56
-	gotostd 0x2
+	moveobjectoffscreen 0x400
+	loadword 0x2, 0x856DF00
+	end 
 	call 0xFFE80000
 	gotostd 0x0
 	startcontest 
@@ -44,17 +40,13 @@
 	subvar 0x56DF, 0x208
 	call 0xFFE80020
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	end 
+	moveobjectoffscreen 0x200
 	subvar 0x56DF, 0x208
 	call 0xFFE8FFE0
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	call 0xDF00020F
-	.byte 0x56
-	gotostd 0x2
+	moveobjectoffscreen 0x400
+	loadword 0x2, 0x856DF00
+	end 
 	call 0xFFE80000
 	gotostd 0x0
 	startcontest 
@@ -63,32 +55,24 @@
 	subvar 0x56DF, 0x208
 	call 0xFFE80018
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	end 
+	moveobjectoffscreen 0x200
 	subvar 0x56DF, 0x208
 	call 0xFFE8FFE8
 	gotostd 0x0
-	.byte 0x64
-	nop 
-	call 0xDF18021E
-	.byte 0x56
-	gotostd 0x2
+	moveobjectoffscreen 0x400
+	compare_addr_to_local 0x56DF1802, 0x8
+	end 
 	call 0xFFE80010
 	nop 
 	nop 
-	.byte 0x64
-	nop 
-	end 
+	moveobjectoffscreen 0x200
 	subvar 0x56DF, 0x208
 	call 0xFFE8FFF0
 	nop 
 	nop 
-	.byte 0x64
-	nop 
-	call 0xDF18021E
-	.byte 0x56
-	gotostd 0x2
+	moveobjectoffscreen 0x400
+	compare_addr_to_local 0x56DF1802, 0x8
+	end 
 	call 0xFFF00014
 	setmysteryeventstatus 0x0
 	.byte 0x50
@@ -108,12 +92,11 @@
 	goto 0x19030400
 	choosecontestmon 
 	nop 
-	.byte 0x3F
-	end 
-	.byte 0x3C
-	playse 0x857
-	return 
-	call 0x0
+	setdynamicwarp 0x23C, 0x2F, 0x857, 0x403
+	nop 
+	nop 
+	nop 
+	nop 
 	setworldmapflag 0x0
 	nop 
 	return 
@@ -125,8 +108,7 @@
 	gotostd 0x0
 	setworldmapflag 0x500
 	call 0xA9880208
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	return 
 	nop 
 	nop 

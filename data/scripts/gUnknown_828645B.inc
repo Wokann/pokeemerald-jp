@@ -1,6 +1,5 @@
 	return 
-	.byte 0x55
-	animateflash 0xA
+	addobject 0xA9A
 	gotostd 0x5
 	nop 
 	.byte 0x05

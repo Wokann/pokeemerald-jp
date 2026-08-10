@@ -2,8 +2,5 @@
 	waitmessage 
 	return 
 	return 
-	.byte 0x25
-	dotrainerbattle 
-	nop 
-	.byte 0x27
+	special SaveGame
 	return 

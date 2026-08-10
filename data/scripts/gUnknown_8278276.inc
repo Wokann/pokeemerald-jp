@@ -3,9 +3,7 @@
 	gotostd_if 0x3, 0xC
 	returnram 
 	gotostd 0x3
-	.byte 0xD5
-	.byte 0x54
-	.byte 0x0D
+	mossdeepgym3 0xD54
 	gotostd 0x5
 	call_if 0x0, 0x8FFE800
 	nop 
@@ -23,19 +21,15 @@
 	nop 
 	nop 
 	end 
-	.byte 0x3C
-	playse 0x857
-	call 0xFFF604
-	nop 
+	warphole 0x2F57
+	gotostd 0x4
+	call 0xFFF6
 	setworldmapflag 0x0
 	nop 
-	.byte 0x19
-	choosecontestmon 
-	nop 
-	.byte 0x3F
-	call 0xA9A00201
-	.byte 0x55
-	gotostd 0x2
+	copyvar 0x8D, 0x43F
+	setworldmapflag 0xA002
+	.byte 0xA9
+	addobject 0x208
 	goto 0xFFF00001
 	nop 
 	nop 
@@ -51,8 +45,7 @@
 	nop 
 	setworldmapflag 0x500
 	call 0xA9880202
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	return 
 	nop 
 	nop 

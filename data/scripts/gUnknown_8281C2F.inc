@@ -7,9 +7,7 @@
 	nop 
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x10001
 	nop 

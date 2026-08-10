@@ -4,8 +4,7 @@
 	end 
 	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0x140000
 	nop 
 	nop 
@@ -30,8 +29,8 @@
 	call 0x1800006
 	setworldmapflag 0x200
 	nop 
-	.byte 0x19
-	setmonmove 0x0, 0x3F, 0x205
+	copyvar 0x7B, 0x53F
+	end 
 	pokemartdecoration2 0x20855A9
 	return 
 	nop 

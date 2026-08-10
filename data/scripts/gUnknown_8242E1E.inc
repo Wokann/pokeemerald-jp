@@ -1,8 +1,6 @@
 	lockall 
-	.byte 0x16
-	call 0x25000080
-	.byte 0xD6
-	nop 
+	setvar 0x8004, 0x0
+	special DoLotteryCornerComputerEffect
 	playse 0x4
 	loadword 0x0, 0x82436B8
 	callstd 0x4
@@ -10,12 +8,11 @@
 	end 
 	message 0x82436CD
 	waitmessage 
-	.byte 0x25
-	goto_if 0x1, 0x2E480527
-	gotonative 0x190208
-	.byte 0x80
-	.byte 0x0D
-	.byte 0x80
+	special ScriptMenu_CreatePCMultichoice
+	waitstate 
+	goto 0x8242E48
+	end 
+	copyvar 0x8000, 0x800D
 	compare_var_to_value 0x8000, 0x0
 	goto_if 0x1, 0x8242E9A
 	compare_var_to_value 0x8000, 0x1
@@ -30,10 +27,7 @@
 	playse 0x2
 	loadword 0x0, 0x8243716
 	callstd 0x4
-	.byte 0x25
-	.byte 0xFA
-	nop 
-	.byte 0x27
+	special PlayerPC
 	goto 0x8242E38
 	end 
 	playse 0x2
@@ -43,10 +37,7 @@
 	call_if 0x1, 0x8242ECA
 	loadword 0x0, 0x82436FE
 	callstd 0x4
-	.byte 0x25
-	.byte 0x3C
-	nop 
-	.byte 0x27
+	special ShowPokemonStorageSystemPC
 	goto 0x8242E38
 	end 
 	loadword 0x0, 0x82436EA
@@ -55,49 +46,34 @@
 	loadword 0x0, 0x8243728
 	callstd 0x4
 	return 
-	.byte 0x16
-	call 0x2F000080
-	return 
-	nop 
-	.byte 0x25
-	.byte 0xD7
-	nop 
+	setvar 0x8004, 0x0
+	playse 0x3
+	special DoPCTurnOffEffect
 	releaseall 
 	end 
 	checkflag 0x864
 	goto_if 0x0, 0x8242ED3
 	playse 0x2
-	.byte 0x25
-	call_if 0x1, 0x2E480527
-	gotonative 0xF0208
-	.byte 0xD6
-	.byte 0x39
-	gotonative 0x2030908
+	special AccessHallOfFamePC
+	goto 0x8242E48
+	end 
+	loadword 0x0, 0x82439D6
+	callstd 0x3
+	end 
 	loadword 0x0, 0x82439F5
 	callstd 0x3
 	end 
 	fadescreen 0x1
-	.byte 0x25
-	gotopostbattlescript 
-	nop 
+	special ShowEasyChatScreen
 	fadescreen 0x0
 	return 
 	clearflag 0x30D
 	setflag 0x128
 	return 
 	dotimebasedevents 
-	.byte 0x16
-	call 0x25000080
-	.byte 0x7E
-	nop 
+	setvar 0x8004, 0x0
+	special BufferTrendyPhraseString
 	return 
-	.byte 0x19
-	gotostd 0x80
-	.byte 0x96
-	.byte 0x40
-	.byte 0x16
-	.byte 0x96
-	.byte 0x40
-	nop 
-	nop 
+	copyvar 0x8008, 0x4096
+	setvar 0x4096, 0x0
 	return 

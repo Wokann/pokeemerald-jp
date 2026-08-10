@@ -3,36 +3,25 @@
 	gotostd 0x5
 	nop 
 	end 
-	.byte 0xB4
-	.byte 0xD6
-	faceplayer 
+	givecoins 0x5AD6
 	gotostd 0x28
 	setworldmapflag 0x0
 	end 
-	.byte 0xB4
-	.byte 0xD6
-	faceplayer 
+	givecoins 0x5AD6
 	gotostd 0x28
 	setworldmapflag 0x1
 	call 0xDE1913
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20002
 	nop 
 	nop 
 	goto 0x4000100
 	setmysteryeventstatus 0x19
-	.byte 0xDE
-	nop 
-	nop 
-	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	buffertrainername 0x0, 0x300
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20002
 	nop 
@@ -42,9 +31,7 @@
 	nop 
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x30002
 	nop 

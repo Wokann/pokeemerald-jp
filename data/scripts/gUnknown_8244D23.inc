@@ -1,10 +1,6 @@
-	.byte 0x25
-	checkflag 0x1900
-	nop 
-	.byte 0x80
-	call 0x80002180
-	.byte 0xFF
-	nop 
+	special EventObjectInteractionGetBerryTreeData
+	copyvar 0x8000, 0x8004
+	compare_var_to_value 0x8000, 0xFF
 	goto_if 0x1, 0x8244D79
 	compare_var_to_value 0x8000, 0x0
 	goto_if 0x1, 0x8244D83
@@ -27,16 +23,13 @@
 	end 
 	lock 
 	faceplayer 
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	playfanfare 0x2100
-	.byte 0x0D
-	.byte 0x80
-	setworldmapflag 0x600
-	setworldmapflag 0x4D9E
-	gotonative 0x4F026708
-	gotonative 0x6C6D6608
+	specialvar 0x800D, PlayerHasBerries
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x8244D9E
+	message 0x8244F02
+	waitmessage 
+	waitbuttonpress 
+	release 
 	end 
 	loadword 0x0, 0x8244F0D
 	callstd 0x5
@@ -47,17 +40,11 @@
 	end 
 	fadescreen 0x1
 	closemessage 
-	.byte 0x25
-	initclock 0x2700, 0xE21
-	.byte 0x80
-	nop 
-	nop 
+	special Bag_ChooseBerry
+	compare_var_to_value 0x800E, 0x0
 	goto_if 0x1, 0x8244DD9
-	.byte 0x45
-	setmysteryeventstatus 0x80
-	setworldmapflag 0x400
-	.byte 0xF2
-	checkdecorspace 0x824
+	takeitem 0x800E, 0x1
+	call 0x8244EF2
 	release 
 	end 
 	lockall 
@@ -85,15 +72,13 @@
 	goto_if 0x1, 0x8244E38
 	compare_var_to_value 0x8005, 0x4
 	goto_if 0x1, 0x8244E31
-	.byte 0x85
-	setworldmapflag 0x4F8D
-	gotonative 0x1850308
-	.byte 0x7F
-	.byte 0x4F
-	gotonative 0x1850308
-	pokemartdecoration2 0x308244F
-	.byte 0x83
-	setworldmapflag 0x8006
+	bufferstring 0x1, 0x8244F8D
+	return 
+	bufferstring 0x1, 0x8244F7F
+	return 
+	bufferstring 0x1, 0x8244F88
+	return 
+	buffernumberstring 0x1, 0x8006
 	lock 
 	faceplayer 
 	loadword 0x0, 0x8244F92
@@ -102,15 +87,11 @@
 	goto_if 0x1, 0x8244E63
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x8244E94
-	.byte 0x25
-	gettime 
-	nop 
+	special EventObjectInteractionPickBerryTree
 	compare_var_to_value 0x8004, 0x0
 	goto_if 0x1, 0x8244E8B
-	.byte 0x25
-	.byte 0x5C
-	setworldmapflag 0x2F25
-	nop 
+	special sub_080EF838
+	special EventObjectInteractionRemoveBerryTree
 	message 0x8244FAF
 	playfanfare 0x183
 	waitmessage 

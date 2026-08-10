@@ -2,6 +2,7 @@
 	.section script_data, "aw", %progbits
 	.include "asm/macros.inc"
 	.include "asm/macros/event.inc"
+	.include "constants/constants.inc"
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 1
 	.align 2
 	.globl gUnknown_81DABAC
@@ -154,7 +155,7 @@ gUnknown_822D751: @ 0x822D751
 
 	.globl gUnknown_822D762
 gUnknown_822D762: @ 0x822D762
-	.incbin "build/data/event_scripts.bin", 0x52bb6, 0x2d
+	.include "data/scripts/gUnknown_822D762.inc"
 
 	.globl gUnknown_822D78F
 gUnknown_822D78F: @ 0x822D78F
@@ -182,11 +183,11 @@ gUnknown_82423E1: @ 0x82423E1
 
 	.globl gUnknown_82423EE
 gUnknown_82423EE: @ 0x82423EE
-	.incbin "build/data/event_scripts.bin", 0x67842, 0xe
+	.include "data/scripts/gUnknown_82423EE.inc"
 
 	.globl gUnknown_82423FC
 gUnknown_82423FC: @ 0x82423FC
-	.incbin "build/data/event_scripts.bin", 0x67850, 0x28
+	.include "data/scripts/gUnknown_82423FC.inc"
 
 	.globl gUnknown_8242424
 gUnknown_8242424: @ 0x8242424
@@ -380,7 +381,7 @@ gUnknown_8245DDD: @ 0x8245DDD
 
 	.globl gUnknown_82465B5
 gUnknown_82465B5: @ 0x82465B5
-	.incbin "build/data/event_scripts.bin", 0x6ba09, 0x4
+	.include "data/scripts/gUnknown_82465B5.inc"
 
 	.globl gUnknown_82465B9
 gUnknown_82465B9: @ 0x82465B9
@@ -392,11 +393,11 @@ gUnknown_8247044: @ 0x8247044
 
 	.globl gUnknown_8247053
 gUnknown_8247053: @ 0x8247053
-	.incbin "build/data/event_scripts.bin", 0x6c4a7, 0xa
+	.include "data/scripts/gUnknown_8247053.inc"
 
 	.globl gUnknown_824705D
 gUnknown_824705D: @ 0x824705D
-	.incbin "build/data/event_scripts.bin", 0x6c4b1, 0xa
+	.include "data/scripts/gUnknown_824705D.inc"
 
 	.globl gUnknown_8247067
 gUnknown_8247067: @ 0x8247067
@@ -416,7 +417,7 @@ gUnknown_82470B8: @ 0x82470B8
 
 	.globl gUnknown_82470D4
 gUnknown_82470D4: @ 0x82470D4
-	.incbin "build/data/event_scripts.bin", 0x6c528, 0xa
+	.include "data/scripts/gUnknown_82470D4.inc"
 
 	.globl gUnknown_82470DE
 gUnknown_82470DE: @ 0x82470DE
@@ -448,7 +449,7 @@ gUnknown_824716C: @ 0x824716C
 
 	.globl gUnknown_824717B
 gUnknown_824717B: @ 0x824717B
-	.incbin "build/data/event_scripts.bin", 0x6c5cf, 0x53
+	.include "data/scripts/gUnknown_824717B.inc"
 
 	.globl gUnknown_82471CE
 gUnknown_82471CE: @ 0x82471CE
@@ -468,11 +469,11 @@ gUnknown_8247869: @ 0x8247869
 
 	.globl gUnknown_8247C79
 gUnknown_8247C79: @ 0x8247C79
-	.incbin "build/data/event_scripts.bin", 0x6d0cd, 0x1e
+	.include "data/scripts/gUnknown_8247C79.inc"
 
 	.globl gUnknown_8247C97
 gUnknown_8247C97: @ 0x8247C97
-	.incbin "build/data/event_scripts.bin", 0x6d0eb, 0x1e
+	.include "data/scripts/gUnknown_8247C97.inc"
 
 	.globl gUnknown_8247CB5
 gUnknown_8247CB5: @ 0x8247CB5
@@ -488,7 +489,7 @@ gUnknown_824B317: @ 0x824B317
 
 	.globl gUnknown_824B32D
 gUnknown_824B32D: @ 0x824B32D
-	.incbin "build/data/event_scripts.bin", 0x70781, 0x19
+	.include "data/scripts/gUnknown_824B32D.inc"
 
 	.globl gUnknown_824B346
 gUnknown_824B346: @ 0x824B346
@@ -532,7 +533,7 @@ gUnknown_824BFE6: @ 0x824BFE6
 
 	.globl gUnknown_824C008
 gUnknown_824C008: @ 0x824C008
-	.incbin "build/data/event_scripts.bin", 0x7145c, 0x21
+	.include "data/scripts/gUnknown_824C008.inc"
 
 	.globl gUnknown_824C029
 gUnknown_824C029: @ 0x824C029
@@ -576,7 +577,7 @@ gUnknown_824C140: @ 0x824C140
 
 	.globl gUnknown_824C1F5
 gUnknown_824C1F5: @ 0x824C1F5
-	.incbin "build/data/event_scripts.bin", 0x71649, 0xb
+	.include "data/scripts/gUnknown_824C1F5.inc"
 
 	.globl gUnknown_824C200
 gUnknown_824C200: @ 0x824C200
@@ -644,7 +645,7 @@ gUnknown_8262393: @ 0x8262393
 
 	.globl gUnknown_82623AA
 gUnknown_82623AA: @ 0x82623AA
-	.incbin "build/data/event_scripts.bin", 0x877fe, 0x23
+	.include "data/scripts/gUnknown_82623AA.inc"
 
 	.globl gUnknown_82623CD
 gUnknown_82623CD: @ 0x82623CD
@@ -664,7 +665,7 @@ gUnknown_826240A: @ 0x826240A
 
 	.globl gUnknown_8262CF3
 gUnknown_8262CF3: @ 0x8262CF3
-	.incbin "build/data/event_scripts.bin", 0x88147, 0x25
+	.include "data/scripts/gUnknown_8262CF3.inc"
 
 	.globl gUnknown_8262D18
 gUnknown_8262D18: @ 0x8262D18
@@ -672,7 +673,7 @@ gUnknown_8262D18: @ 0x8262D18
 
 	.globl gUnknown_8262D23
 gUnknown_8262D23: @ 0x8262D23
-	.incbin "build/data/event_scripts.bin", 0x88177, 0x1c
+	.include "data/scripts/gUnknown_8262D23.inc"
 
 	.globl gUnknown_8262D3F
 gUnknown_8262D3F: @ 0x8262D3F
@@ -692,11 +693,11 @@ gUnknown_8262D74: @ 0x8262D74
 
 	.globl gUnknown_8262D79
 gUnknown_8262D79: @ 0x8262D79
-	.incbin "build/data/event_scripts.bin", 0x881cd, 0x1d
+	.include "data/scripts/gUnknown_8262D79.inc"
 
 	.globl gUnknown_8262D96
 gUnknown_8262D96: @ 0x8262D96
-	.incbin "build/data/event_scripts.bin", 0x881ea, 0xd
+	.include "data/scripts/gUnknown_8262D96.inc"
 
 	.globl gUnknown_8262DA3
 gUnknown_8262DA3: @ 0x8262DA3
@@ -704,7 +705,7 @@ gUnknown_8262DA3: @ 0x8262DA3
 
 	.globl gUnknown_8262DB0
 gUnknown_8262DB0: @ 0x8262DB0
-	.incbin "build/data/event_scripts.bin", 0x88204, 0x25
+	.include "data/scripts/gUnknown_8262DB0.inc"
 
 	.globl gUnknown_8262DD5
 gUnknown_8262DD5: @ 0x8262DD5
@@ -712,11 +713,11 @@ gUnknown_8262DD5: @ 0x8262DD5
 
 	.globl gUnknown_8262DF5
 gUnknown_8262DF5: @ 0x8262DF5
-	.incbin "build/data/event_scripts.bin", 0x88249, 0x44
+	.include "data/scripts/gUnknown_8262DF5.inc"
 
 	.globl gUnknown_8262E39
 gUnknown_8262E39: @ 0x8262E39
-	.incbin "build/data/event_scripts.bin", 0x8828d, 0x26
+	.include "data/scripts/gUnknown_8262E39.inc"
 
 	.globl gUnknown_8262E5F
 gUnknown_8262E5F: @ 0x8262E5F
@@ -748,7 +749,7 @@ gUnknown_8262F3F: @ 0x8262F3F
 
 	.globl gUnknown_8262F61
 gUnknown_8262F61: @ 0x8262F61
-	.incbin "build/data/event_scripts.bin", 0x883b5, 0x29
+	.include "data/scripts/gUnknown_8262F61.inc"
 
 	.globl gUnknown_8262F8A
 gUnknown_8262F8A: @ 0x8262F8A
@@ -756,7 +757,7 @@ gUnknown_8262F8A: @ 0x8262F8A
 
 	.globl gUnknown_8262FAD
 gUnknown_8262FAD: @ 0x8262FAD
-	.incbin "build/data/event_scripts.bin", 0x88401, 0x34
+	.include "data/scripts/gUnknown_8262FAD.inc"
 
 	.globl gUnknown_8262FE1
 gUnknown_8262FE1: @ 0x8262FE1
@@ -776,7 +777,7 @@ gUnknown_8263050: @ 0x8263050
 
 	.globl gUnknown_8263072
 gUnknown_8263072: @ 0x8263072
-	.incbin "build/data/event_scripts.bin", 0x884c6, 0x23
+	.include "data/scripts/gUnknown_8263072.inc"
 
 	.globl gUnknown_8263095
 gUnknown_8263095: @ 0x8263095
@@ -784,7 +785,7 @@ gUnknown_8263095: @ 0x8263095
 
 	.globl gUnknown_82630C7
 gUnknown_82630C7: @ 0x82630C7
-	.incbin "build/data/event_scripts.bin", 0x8851b, 0x29
+	.include "data/scripts/gUnknown_82630C7.inc"
 
 	.globl gUnknown_82630F0
 gUnknown_82630F0: @ 0x82630F0
@@ -828,11 +829,11 @@ gUnknown_8276D3D: @ 0x8276D3D
 
 	.globl gUnknown_8276F58
 gUnknown_8276F58: @ 0x8276F58
-	.incbin "build/data/event_scripts.bin", 0x9c3ac, 0x1f
+	.include "data/scripts/gUnknown_8276F58.inc"
 
 	.globl gUnknown_8276F77
 gUnknown_8276F77: @ 0x8276F77
-	.incbin "build/data/event_scripts.bin", 0x9c3cb, 0x20
+	.include "data/scripts/gUnknown_8276F77.inc"
 
 	.globl gUnknown_8276F97
 gUnknown_8276F97: @ 0x8276F97
@@ -1471,7 +1472,7 @@ gUnknown_827B497: @ 0x827B497
 gUnknown_827B4DE: @ 0x827B4DE
 	.include "data/scripts/gUnknown_827B4DE.inc"
 gUnknown_827B4F1: @ 0x827B4F1
-	.incbin "build/data/event_scripts.bin", 0xa0945, 0x2a
+	.include "data/scripts/gUnknown_827B4F1.inc"
 gUnknown_827B51B: @ 0x827B51B
 	.include "data/scripts/gUnknown_827B51B.inc"
 gUnknown_827B5E1: @ 0x827B5E1
@@ -1679,7 +1680,7 @@ gUnknown_827E67E: @ 0x827E67E
 gUnknown_827E69B: @ 0x827E69B
 	.include "data/scripts/gUnknown_827E69B.inc"
 gUnknown_827E771: @ 0x827E771
-	.incbin "build/data/event_scripts.bin", 0xa3bc5, 0x7b
+	.include "data/scripts/gUnknown_827E771.inc"
 gUnknown_827E7EC: @ 0x827E7EC
 	.include "data/scripts/gUnknown_827E7EC.inc"
 gUnknown_827E873: @ 0x827E873
@@ -1941,7 +1942,7 @@ gUnknown_8283CB8: @ 0x8283CB8
 gUnknown_8283D4F: @ 0x8283D4F
 	.include "data/scripts/gUnknown_8283D4F.inc"
 gUnknown_8283D8E: @ 0x8283D8E
-	.incbin "build/data/event_scripts.bin", 0xa91e2, 0xc
+	.include "data/scripts/gUnknown_8283D8E.inc"
 gUnknown_8283D9A: @ 0x8283D9A
 	.include "data/scripts/gUnknown_8283D9A.inc"
 gUnknown_8283F3E: @ 0x8283F3E
@@ -1991,7 +1992,7 @@ gUnknown_82855AB: @ 0x82855AB
 gUnknown_828570A: @ 0x828570A
 	.include "data/scripts/gUnknown_828570A.inc"
 gUnknown_828582B: @ 0x828582B
-	.incbin "build/data/event_scripts.bin", 0xaac7f, 0x1cf
+	.include "data/scripts/gUnknown_828582B.inc"
 gUnknown_82859FA: @ 0x82859FA
 	.include "data/scripts/gUnknown_82859FA.inc"
 gUnknown_8285C76: @ 0x8285C76
@@ -1999,11 +2000,11 @@ gUnknown_8285C76: @ 0x8285C76
 gUnknown_82862E1: @ 0x82862E1
 	.include "data/scripts/gUnknown_82862E1.inc"
 gUnknown_828630C: @ 0x828630C
-	.incbin "build/data/event_scripts.bin", 0xab760, 0x9
+	.include "data/scripts/gUnknown_828630C.inc"
 gUnknown_8286315: @ 0x8286315
 	.include "data/scripts/gUnknown_8286315.inc"
 gUnknown_8286345: @ 0x8286345
-	.incbin "build/data/event_scripts.bin", 0xab799, 0x35
+	.include "data/scripts/gUnknown_8286345.inc"
 gUnknown_828637A: @ 0x828637A
 	.include "data/scripts/gUnknown_828637A.inc"
 gUnknown_82863A6: @ 0x82863A6
@@ -2021,11 +2022,11 @@ gUnknown_828645B: @ 0x828645B
 gUnknown_8286464: @ 0x8286464
 	.include "data/scripts/gUnknown_8286464.inc"
 gUnknown_82864A1: @ 0x82864A1
-	.incbin "build/data/event_scripts.bin", 0xab8f5, 0x8
+	.include "data/scripts/gUnknown_82864A1.inc"
 gUnknown_82864A9: @ 0x82864A9
 	.include "data/scripts/gUnknown_82864A9.inc"
 gUnknown_82864F1: @ 0x82864F1
-	.incbin "build/data/event_scripts.bin", 0xab945, 0xb
+	.include "data/scripts/gUnknown_82864F1.inc"
 gUnknown_82864FC: @ 0x82864FC
 	.include "data/scripts/gUnknown_82864FC.inc"
 gUnknown_828668F: @ 0x828668F
@@ -2211,11 +2212,11 @@ gUnknown_828926F: @ 0x828926F
 
 	.globl gUnknown_8289282
 gUnknown_8289282: @ 0x8289282
-	.incbin "build/data/event_scripts.bin", 0xae6d6, 0x11
+	.include "data/scripts/gUnknown_8289282.inc"
 
 	.globl gUnknown_8289293
 gUnknown_8289293: @ 0x8289293
-	.incbin "build/data/event_scripts.bin", 0xae6e7, 0xa
+	.include "data/scripts/gUnknown_8289293.inc"
 
 	.globl gUnknown_828929D
 gUnknown_828929D: @ 0x828929D
@@ -2239,7 +2240,7 @@ gUnknown_8289360: @ 0x8289360
 
 	.globl gUnknown_828938B
 gUnknown_828938B: @ 0x828938B
-	.incbin "build/data/event_scripts.bin", 0xae7df, 0xa
+	.include "data/scripts/gUnknown_828938B.inc"
 
 	.globl gUnknown_8289395
 gUnknown_8289395: @ 0x8289395
@@ -2323,7 +2324,7 @@ gUnknown_82895FE: @ 0x82895FE
 
 	.globl gUnknown_8289602
 gUnknown_8289602: @ 0x8289602
-	.incbin "build/data/event_scripts.bin", 0xaea56, 0xf
+	.include "data/scripts/gUnknown_8289602.inc"
 
 	.globl gUnknown_8289611
 gUnknown_8289611: @ 0x8289611
@@ -2359,7 +2360,7 @@ gUnknown_828969F: @ 0x828969F
 
 	.globl gUnknown_82896F0
 gUnknown_82896F0: @ 0x82896F0
-	.incbin "build/data/event_scripts.bin", 0xaeb44, 0xe
+	.include "data/scripts/gUnknown_82896F0.inc"
 
 	.globl gUnknown_82896FE
 gUnknown_82896FE: @ 0x82896FE
@@ -2403,7 +2404,7 @@ gUnknown_8289787: @ 0x8289787
 
 	.globl gUnknown_828979B
 gUnknown_828979B: @ 0x828979B
-	.incbin "build/data/event_scripts.bin", 0xaebef, 0xd
+	.include "data/scripts/gUnknown_828979B.inc"
 
 	.globl gUnknown_82897A8
 gUnknown_82897A8: @ 0x82897A8
@@ -2419,11 +2420,11 @@ gUnknown_82897C5: @ 0x82897C5
 
 	.globl gUnknown_82897E7
 gUnknown_82897E7: @ 0x82897E7
-	.incbin "build/data/event_scripts.bin", 0xaec3b, 0xb
+	.include "data/scripts/gUnknown_82897E7.inc"
 
 	.globl gUnknown_82897F2
 gUnknown_82897F2: @ 0x82897F2
-	.incbin "build/data/event_scripts.bin", 0xaec46, 0xd
+	.include "data/scripts/gUnknown_82897F2.inc"
 
 	.globl gUnknown_82897FF
 gUnknown_82897FF: @ 0x82897FF
@@ -2435,7 +2436,7 @@ gUnknown_828980A: @ 0x828980A
 
 	.globl gUnknown_8289813
 gUnknown_8289813: @ 0x8289813
-	.incbin "build/data/event_scripts.bin", 0xaec67, 0x10
+	.include "data/scripts/gUnknown_8289813.inc"
 
 	.globl gUnknown_8289823
 gUnknown_8289823: @ 0x8289823
@@ -2463,7 +2464,7 @@ gUnknown_828988F: @ 0x828988F
 
 	.globl gUnknown_8289896
 gUnknown_8289896: @ 0x8289896
-	.incbin "build/data/event_scripts.bin", 0xaecea, 0x12
+	.include "data/scripts/gUnknown_8289896.inc"
 
 	.globl gUnknown_82898A8
 gUnknown_82898A8: @ 0x82898A8
@@ -2471,7 +2472,7 @@ gUnknown_82898A8: @ 0x82898A8
 
 	.globl gUnknown_82898AF
 gUnknown_82898AF: @ 0x82898AF
-	.incbin "build/data/event_scripts.bin", 0xaed03, 0xd
+	.include "data/scripts/gUnknown_82898AF.inc"
 
 	.globl gUnknown_82898BC
 gUnknown_82898BC: @ 0x82898BC
@@ -2499,15 +2500,15 @@ gUnknown_82899AA: @ 0x82899AA
 
 	.globl gUnknown_82899B8
 gUnknown_82899B8: @ 0x82899B8
-	.incbin "build/data/event_scripts.bin", 0xaee0c, 0x14
+	.include "data/scripts/gUnknown_82899B8.inc"
 
 	.globl gUnknown_82899CC
 gUnknown_82899CC: @ 0x82899CC
-	.incbin "build/data/event_scripts.bin", 0xaee20, 0xe
+	.include "data/scripts/gUnknown_82899CC.inc"
 
 	.globl gUnknown_82899DA
 gUnknown_82899DA: @ 0x82899DA
-	.incbin "build/data/event_scripts.bin", 0xaee2e, 0xa
+	.include "data/scripts/gUnknown_82899DA.inc"
 
 	.globl gUnknown_82899E4
 gUnknown_82899E4: @ 0x82899E4
@@ -2515,7 +2516,7 @@ gUnknown_82899E4: @ 0x82899E4
 
 	.globl gUnknown_82899F8
 gUnknown_82899F8: @ 0x82899F8
-	.incbin "build/data/event_scripts.bin", 0xaee4c, 0x14
+	.include "data/scripts/gUnknown_82899F8.inc"
 
 	.globl gUnknown_8289A0C
 gUnknown_8289A0C: @ 0x8289A0C
@@ -2527,7 +2528,7 @@ gUnknown_8289A31: @ 0x8289A31
 
 	.globl gUnknown_8289A40
 gUnknown_8289A40: @ 0x8289A40
-	.incbin "build/data/event_scripts.bin", 0xaee94, 0x9
+	.include "data/scripts/gUnknown_8289A40.inc"
 
 	.globl gUnknown_8289A49
 gUnknown_8289A49: @ 0x8289A49
@@ -2535,7 +2536,7 @@ gUnknown_8289A49: @ 0x8289A49
 
 	.globl gUnknown_8289AB2
 gUnknown_8289AB2: @ 0x8289AB2
-	.incbin "build/data/event_scripts.bin", 0xaef06, 0x14
+	.include "data/scripts/gUnknown_8289AB2.inc"
 
 	.globl gUnknown_8289AC6
 gUnknown_8289AC6: @ 0x8289AC6
@@ -2543,11 +2544,11 @@ gUnknown_8289AC6: @ 0x8289AC6
 
 	.globl gUnknown_8289ADA
 gUnknown_8289ADA: @ 0x8289ADA
-	.incbin "build/data/event_scripts.bin", 0xaef2e, 0xe
+	.include "data/scripts/gUnknown_8289ADA.inc"
 
 	.globl gUnknown_8289AE8
 gUnknown_8289AE8: @ 0x8289AE8
-	.incbin "build/data/event_scripts.bin", 0xaef3c, 0xe
+	.include "data/scripts/gUnknown_8289AE8.inc"
 
 	.globl gUnknown_8289AF6
 gUnknown_8289AF6: @ 0x8289AF6
@@ -2563,7 +2564,7 @@ gUnknown_8289B19: @ 0x8289B19
 
 	.globl gUnknown_8289B1A
 gUnknown_8289B1A: @ 0x8289B1A
-	.incbin "build/data/event_scripts.bin", 0xaef6e, 0x15
+	.include "data/scripts/gUnknown_8289B1A.inc"
 
 	.globl gUnknown_8289B2F
 gUnknown_8289B2F: @ 0x8289B2F
@@ -2575,7 +2576,7 @@ gUnknown_8289B30: @ 0x8289B30
 
 	.globl gUnknown_8289B4F
 gUnknown_8289B4F: @ 0x8289B4F
-	.incbin "build/data/event_scripts.bin", 0xaefa3, 0xa
+	.include "data/scripts/gUnknown_8289B4F.inc"
 
 	.globl gUnknown_8289B59
 gUnknown_8289B59: @ 0x8289B59
@@ -2591,23 +2592,23 @@ gUnknown_8289B71: @ 0x8289B71
 
 	.globl gUnknown_8289B7D
 gUnknown_8289B7D: @ 0x8289B7D
-	.incbin "build/data/event_scripts.bin", 0xaefd1, 0xe
+	.include "data/scripts/gUnknown_8289B7D.inc"
 
 	.globl gUnknown_8289B8B
 gUnknown_8289B8B: @ 0x8289B8B
-	.incbin "build/data/event_scripts.bin", 0xaefdf, 0x1c
+	.include "data/scripts/gUnknown_8289B8B.inc"
 
 	.globl gUnknown_8289BA7
 gUnknown_8289BA7: @ 0x8289BA7
-	.incbin "build/data/event_scripts.bin", 0xaeffb, 0x10
+	.include "data/scripts/gUnknown_8289BA7.inc"
 
 	.globl gUnknown_8289BB7
 gUnknown_8289BB7: @ 0x8289BB7
-	.incbin "build/data/event_scripts.bin", 0xaf00b, 0x10
+	.include "data/scripts/gUnknown_8289BB7.inc"
 
 	.globl gUnknown_8289BC7
 gUnknown_8289BC7: @ 0x8289BC7
-	.incbin "build/data/event_scripts.bin", 0xaf01b, 0xe
+	.include "data/scripts/gUnknown_8289BC7.inc"
 
 	.globl gUnknown_8289BD5
 gUnknown_8289BD5: @ 0x8289BD5
@@ -2631,7 +2632,7 @@ gUnknown_8289C07: @ 0x8289C07
 
 	.globl gUnknown_8289C0A
 gUnknown_8289C0A: @ 0x8289C0A
-	.incbin "build/data/event_scripts.bin", 0xaf05e, 0xa
+	.include "data/scripts/gUnknown_8289C0A.inc"
 
 	.globl gUnknown_8289C14
 gUnknown_8289C14: @ 0x8289C14
@@ -2639,11 +2640,11 @@ gUnknown_8289C14: @ 0x8289C14
 
 	.globl gUnknown_8289C1D
 gUnknown_8289C1D: @ 0x8289C1D
-	.incbin "build/data/event_scripts.bin", 0xaf071, 0x10
+	.include "data/scripts/gUnknown_8289C1D.inc"
 
 	.globl gUnknown_8289C2D
 gUnknown_8289C2D: @ 0x8289C2D
-	.incbin "build/data/event_scripts.bin", 0xaf081, 0x8
+	.include "data/scripts/gUnknown_8289C2D.inc"
 
 	.globl gUnknown_8289C35
 gUnknown_8289C35: @ 0x8289C35
@@ -2651,11 +2652,11 @@ gUnknown_8289C35: @ 0x8289C35
 
 	.globl gUnknown_8289C61
 gUnknown_8289C61: @ 0x8289C61
-	.incbin "build/data/event_scripts.bin", 0xaf0b5, 0x17
+	.include "data/scripts/gUnknown_8289C61.inc"
 
 	.globl gUnknown_8289C78
 gUnknown_8289C78: @ 0x8289C78
-	.incbin "build/data/event_scripts.bin", 0xaf0cc, 0xb
+	.include "data/scripts/gUnknown_8289C78.inc"
 
 	.globl gUnknown_8289C83
 gUnknown_8289C83: @ 0x8289C83
@@ -2703,7 +2704,7 @@ gUnknown_8289CF4: @ 0x8289CF4
 
 	.globl gUnknown_8289D06
 gUnknown_8289D06: @ 0x8289D06
-	.incbin "build/data/event_scripts.bin", 0xaf15a, 0x6
+	.include "data/scripts/gUnknown_8289D06.inc"
 
 	.globl gUnknown_8289D0C
 gUnknown_8289D0C: @ 0x8289D0C
@@ -2719,7 +2720,7 @@ gUnknown_8289D22: @ 0x8289D22
 
 	.globl gUnknown_8289D36
 gUnknown_8289D36: @ 0x8289D36
-	.incbin "build/data/event_scripts.bin", 0xaf18a, 0x6
+	.include "data/scripts/gUnknown_8289D36.inc"
 
 	.globl gUnknown_8289D3C
 gUnknown_8289D3C: @ 0x8289D3C
@@ -2791,7 +2792,7 @@ gUnknown_8289F49: @ 0x8289F49
 
 	.globl gUnknown_8289F50
 gUnknown_8289F50: @ 0x8289F50
-	.incbin "build/data/event_scripts.bin", 0xaf3a4, 0xc
+	.include "data/scripts/gUnknown_8289F50.inc"
 
 	.globl gUnknown_8289F5C
 gUnknown_8289F5C: @ 0x8289F5C
@@ -2840,7 +2841,7 @@ gUnknown_828A30C: @ 0x828A30C
 
 	.globl gUnknown_828A352
 gUnknown_828A352: @ 0x828A352
-	.incbin "build/data/event_scripts.bin", 0xaf7a6, 0xa
+	.include "data/scripts/gUnknown_828A352.inc"
 
 	.globl gUnknown_828A35C
 gUnknown_828A35C: @ 0x828A35C
@@ -2848,7 +2849,7 @@ gUnknown_828A35C: @ 0x828A35C
 
 	.globl gUnknown_828A38A
 gUnknown_828A38A: @ 0x828A38A
-	.incbin "build/data/event_scripts.bin", 0xaf7de, 0x10
+	.include "data/scripts/gUnknown_828A38A.inc"
 gUnknown_828A39A: @ 0x828A39A
 	.include "data/scripts/gUnknown_828A39A.inc"
 gUnknown_828A3A4: @ 0x828A3A4
@@ -2860,7 +2861,7 @@ gUnknown_828A3F7: @ 0x828A3F7
 gUnknown_828A419: @ 0x828A419
 	.include "data/scripts/gUnknown_828A419.inc"
 gUnknown_828A43B: @ 0x828A43B
-	.incbin "build/data/event_scripts.bin", 0xaf88f, 0x45
+	.include "data/scripts/gUnknown_828A43B.inc"
 
 	.globl gUnknown_828A480
 gUnknown_828A480: @ 0x828A480

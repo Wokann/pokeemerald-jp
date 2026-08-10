@@ -7,13 +7,13 @@
 	gotostd 0x19
 	dofieldeffect 0x3F00
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	.byte 0xF1
 	.byte 0x56
 	gotostd 0x2
 	setworldmapflag 0x0
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	.byte 0xF1
 	.byte 0x56
 	gotostd 0x2
@@ -24,9 +24,7 @@
 	setworldmapflag 0x200
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x5
 	goto 0x20001
 	nop 

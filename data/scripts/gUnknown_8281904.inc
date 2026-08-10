@@ -1,14 +1,13 @@
 	nop 
-	.byte 0x19
-	.byte 0x27
-	nop 
-	fadescreen 0x27
+	copyvar 0x27, 0x2797
 	compare_local_to_value 0x78, 0x0
 	showcoinsbox 0x1C, 0x2
 	return 
-	.byte 0x49
-	checkdecor 0x811
-	goto 0x3
+	givepcitem 0x114D, 0x508
+	return 
+	nop 
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -16,9 +15,8 @@
 	returnram 
 	returnram 
 	gotostd 0x1C
-	.byte 0x9D
-	nop 
-	showcoinsbox 0x14, 0x2
+	setfieldeffectarg 0x0, 0x14C0
+	end 
 	return 
 	vmessage 0x2080D4F
 	goto 0xC0000
@@ -59,14 +57,13 @@
 	setworldmapflag 0x100
 	nop 
 	end 
-	.byte 0x3C
-	playse 0x857
-	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0xFFF0
 	setworldmapflag 0x100
 	nop 
-	.byte 0x19
-	pokemartdecoration2 0x2053F00
+	copyvar 0x88, 0x53F
+	end 
 	pokemartdecoration2 0x20855A9
 	return 
 	nop 

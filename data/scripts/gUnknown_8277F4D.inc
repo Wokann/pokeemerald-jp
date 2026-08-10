@@ -4,9 +4,7 @@
 	clearflag 0xC00
 	returnram 
 	gotostd 0x3
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20000
 	nop 
@@ -14,29 +12,17 @@
 	gotostd 0x0
 	setworldmapflag 0xE00
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0xE
+	bufferpartymonnick 0x27, 0xE08
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0xE
+	bufferpartymonnick 0x27, 0xE08
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0xE
+	bufferpartymonnick 0x27, 0xE08
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0xE
+	bufferpartymonnick 0x27, 0xE08
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0xE
+	bufferpartymonnick 0x27, 0xE08
 	showcontestresults 
-	.byte 0x7F
-	.byte 0x27
-	gotostd 0x5
+	bufferpartymonnick 0x27, 0x508
 	callstd_if 0x2, 0xD
 	gotostd 0x19
 	setvaddress 0xC02C000
@@ -47,10 +33,5 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x1E
-	nop 
-	nop 
-	nop 
-	.byte 0x04
-	end 
+	compare_addr_to_local 0x4000000, 0x2
 	.byte 0x0F

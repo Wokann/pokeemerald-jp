@@ -1,7 +1,7 @@
 	nop 
 	call_if 0x28, 0x2280F00
 	release 
-	.byte 0xD6
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x82
 	return 
@@ -11,7 +11,7 @@
 	nop 
 	end 
 	release 
-	.byte 0xD6
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x82
 	return 
@@ -23,14 +23,13 @@
 	copybyte 0x1020308, 0x1C000200
 	pokemart 0x20C3F00
 	goto 0x55030404
-	.byte 0x4B
-	.byte 0x0D
-	gotostd 0x2
+	givedecoration 0x80D
+	end 
 	goto 0x20001
 	nop 
 	nop 
 	goto_if 0x0, 0x9C020002
-	.byte 0xD6
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x82
 	return 

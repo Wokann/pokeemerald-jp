@@ -1,6 +1,6 @@
 	nop 
 	waitbuttonpress 
-	.byte 0x27
+	waitstate 
 	setmysteryeventstatus 0x58
 	cleartrainerflag 0x828
 	call 0x23280208

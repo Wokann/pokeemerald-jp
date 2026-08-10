@@ -1,9 +1,9 @@
 	nop 
-	.byte 0x0D
+	killscript 
 	delay 0xA
 	setflag 0x214
-	.byte 0x19
-	vmessage 0x317C000
+	copyvar 0xBD, 0x17C0
+	return 
 	vmessage 0x3081134
 	nop 
 	compare_local_to_value 0x97, 0x0

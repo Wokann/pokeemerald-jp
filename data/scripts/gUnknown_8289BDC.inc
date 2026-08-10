@@ -4,11 +4,9 @@
 	callstd_if 0x1, 0xC
 	setworldmapflag 0xCF10
 	nop 
-	.byte 0x12
-	.byte 0x40
+	loadbytefromaddr 0x1190040
 	nop 
-	.byte 0x19
-	setworldmapflag 0x0
+	nop 
 	nop 
 	nop 
 	nop 

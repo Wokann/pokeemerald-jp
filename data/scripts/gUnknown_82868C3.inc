@@ -1,12 +1,14 @@
 	nop 
 	.byte 0xF0
-	.byte 0x27
+	waitstate 
 	return 
-	.byte 0x81
-	pokemartdecoration 0x20811
+	bufferspeciesname 0x87, 0x811
+	end 
+	nop 
 	return 
-	.byte 0xB5
-	initclock 0x817, 0x2
+	takecoins 0x172C
+	gotostd 0x2
+	nop 
 	call 0xE2540201
 	.byte 0x56
 	gotostd 0x2

@@ -7,12 +7,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x1E
-	nop 
-	nop 
-	nop 
-	end 
-	.byte 0x74
+	compare_addr_to_local 0x2000000, 0x74
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
@@ -24,31 +19,25 @@
 	delay 0x0
 	nop 
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	loadbyte 0x0, 0x1E
 	nop 
-	.byte 0x40
-	nop 
-	delay 0x100
-	nop 
-	end 
-	.byte 0x74
+	setdivewarp 0x28, 0x0, 0x1, 0x7402
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	loadbyte 0x0, 0x1E
 	nop 
-	.byte 0x80
+	bufferitemname 0x0, 0x28
 	nop 
-	delay 0x0
 	nop 
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
@@ -60,54 +49,42 @@
 	end 
 	nop 
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	gotostd 0x0
-	.byte 0x1E
+	compare_addr_to_local 0x28002000, 0x0
 	nop 
-	.byte 0x20
-	nop 
-	delay 0x0
 	nop 
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	gotostd 0x0
-	.byte 0x1E
-	nop 
-	checktrainerflag 0x2800
-	nop 
+	compare_addr_to_local 0x28006000, 0x0
 	setworldmapflag 0x200
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	gotostd 0x0
-	.byte 0x1E
+	compare_addr_to_local 0x2800A000, 0x0
 	nop 
-	checkplayergender 
-	nop 
-	delay 0x0
 	nop 
 	end 
-	.byte 0x74
+	mossdeepgym2 
 	setptrbyte 0x57, 0xA078408
 	nop 
 	nop 
 	nop 
 	gotostd 0x0
-	.byte 0x1E
-	nop 
-	.byte 0xE0
-	nop 
-	delay 0x200
+	compare_addr_to_local 0x2800E000, 0x0
+	end 
 	nop 
 	goto 0xD4B5503
 	gotostd 0x2

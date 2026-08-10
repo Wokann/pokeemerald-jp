@@ -1,9 +1,8 @@
 	nop 
 	.byte 0xE2
-	.byte 0x27
+	waitstate 
 	return 
-	.byte 0xB5
-	incrementgamestat 0x15
+	takecoins 0x15C3
 	gotostd 0x5
 	return 
 	nop 
@@ -44,7 +43,5 @@
 	end 
 	copylocal 0x0, 0x14
 	nop 
-	.byte 0x19
-	.byte 0xD4
-	nop 
-	showcoinsbox 0x5, 0x8
+	copyvar 0xD4, 0x5C0
+	.byte 0x08

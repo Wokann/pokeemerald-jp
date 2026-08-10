@@ -1,9 +1,5 @@
 	nop 
-	.byte 0x16
-	.byte 0x27
-	end 
-	nop 
-	.byte 0xF1
+	setvar 0x227, 0xF100
 	.byte 0x56
 	gotostd 0x82
 	end 
@@ -22,15 +18,12 @@
 	copylocal 0x0, 0x0
 	nop 
 	call 0x4B550305
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x20001
 	nop 
 	nop 
-	.byte 0x1E
-	nop 
-	setworldmapflag 0x200
-	nop 
+	compare_addr_to_local 0x2000100, 0x0
 	.byte 0xF1
 	.byte 0x56
 	gotostd 0x82

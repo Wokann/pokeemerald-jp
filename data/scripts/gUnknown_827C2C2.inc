@@ -1,11 +1,17 @@
 	nop 
 	return 
 	delay 0xE103
-	.byte 0xDB
-	copybyte 0x20208, 0x3000300
-	.byte 0x49
-	.byte 0xDE
-	copybyte 0x20208, 0x1C004800
+	cmdDB 0x2020815
+	nop 
+	nop 
+	return 
+	nop 
+	return 
+	givepcitem 0x15DE, 0x208
+	end 
+	nop 
+	nop 
+	checkitemtype 0x1C00
 	hidecoinsbox 0x0, 0xC0
 	.byte 0x18
 	return 

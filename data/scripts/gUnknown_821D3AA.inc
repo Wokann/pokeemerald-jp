@@ -2,7 +2,7 @@
 	playse 0x2
 	message 0x8246669
 	dofieldeffect 0x3D
-	.byte 0x27
+	waitstate 
 	waitmessage 
 	waitbuttonpress 
 	playse 0x5

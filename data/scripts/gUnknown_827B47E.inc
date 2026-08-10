@@ -3,11 +3,7 @@
 	return 
 	choosecontestmon 
 	nop 
-	.byte 0x11
-	gotostd 0x2
-	nop 
-	.byte 0x19
-	.byte 0xCB
+	writebytetoaddr 0x8, 0xCB190002
 	nop 
 	showcoinsbox 0x4, 0xF
 	setmysteryeventstatus 0x64

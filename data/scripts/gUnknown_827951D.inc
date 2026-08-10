@@ -2,10 +2,7 @@
 	playse 0x1928
 	random 0xC000
 	end 
-	.byte 0x58
-	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	showobject_at 0x55A9, 0x802
 	end 
 	call 0x4000600
 	goto_if 0x19, 0x23F009B
@@ -19,7 +16,7 @@
 	nop 
 	nop 
 	call 0x4B550306
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x20001
 	nop 

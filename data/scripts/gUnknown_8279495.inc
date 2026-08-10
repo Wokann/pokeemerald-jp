@@ -8,17 +8,14 @@
 	nop 
 	showcoinsbox 0x2, 0xA0
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0x140000
 	return 
 	nop 
 	nop 
 	nop 
 	call 0x2010400
-	.byte 0xB4
-	.byte 0xE4
-	.byte 0x56
+	givecoins 0x56E4
 	gotostd 0x2
 	end 
 	nop 
@@ -26,19 +23,17 @@
 	nop 
 	nop 
 	call 0x8D1903
-	.byte 0x3F
-	end 
-	.byte 0x3C
-	playse 0x857
-	return 
-	call 0x0
+	setdynamicwarp 0x23C, 0x2F, 0x857, 0x403
+	nop 
+	nop 
+	nop 
+	nop 
 	setworldmapflag 0x100
 	nop 
 	end 
 	checkplayergender 
 	.byte 0xA9
-	.byte 0x55
-	gotostd 0x2
+	addobject 0x208
 	goto 0xFFF40001
 	gotostd_if 0x0, 0x0
 	nop 
@@ -53,7 +48,7 @@
 	nop 
 	goto 0x3030400
 	callstd 0x4D
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x1
 	return 

@@ -1,13 +1,11 @@
 	faceplayer 
 	.byte 0x52
-	.byte 0x7E
-	fadeoutbgm 0x0
+	bufferleadmonspeciesname 0x37
+	nop 
 	end 
 	.byte 0x50
-	.byte 0x4B
-	end 
-	.byte 0x44
-	.byte 0x0D
+	givedecoration 0x4402
+	killscript 
 	turnvobject 0xFE, 0x9
 	end 
 	compare_local_to_local 0x2E, 0x14

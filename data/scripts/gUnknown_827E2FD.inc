@@ -1,15 +1,16 @@
 	nop 
 	dotimebasedevents 
-	.byte 0x27
+	waitstate 
 	gotostd_if 0x3, 0x28
 	setworldmapflag 0x901C
 	nop 
 	showcoinsbox 0x7, 0x7
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -17,10 +18,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -32,12 +34,8 @@
 	call 0x100
 	nop 
 	callstd 0x0
-	.byte 0x1F
-	nop 
-	end 
-	.byte 0xD8
-	clearflag 0x857
-	.byte 0x82
+	compare_addr_to_value 0x2AD80200, 0x57
+	gotostd 0x82
 	goto 0x0
 	nop 
 	nop 
@@ -46,27 +44,15 @@
 	copylocal 0x0, 0x4
 	end 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20001
 	nop 
 	nop 
 	copybyte 0x2000100, 0x8572AD8
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
 	nop 
 	nop 
-	nop 
-	nop 
-	copylocal 0x0, 0x4
-	end 
-	end 
-	.byte 0xD8
-	clearflag 0x857
-	.byte 0x82
-	goto 0x0
 	nop 
 	nop 
 	nop 
@@ -74,10 +60,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -85,10 +72,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -96,10 +84,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -107,10 +96,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -118,10 +108,11 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -129,10 +120,23 @@
 	copylocal 0x0, 0x4
 	end 
 	end 
-	.byte 0xD8
+	cmdD8 
 	clearflag 0x857
-	.byte 0x82
-	goto 0x0
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	copylocal 0x0, 0x4
+	end 
+	end 
+	cmdD8 
+	clearflag 0x857
+	bufferdecorationname 0x5, 0x0
+	nop 
+	nop 
 	nop 
 	nop 
 	nop 
@@ -144,7 +148,4 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x1F
-	nop 
-	.byte 0x05
-	callstd_if 0x3, 0x8
+	compare_addr_to_value 0x30B0500, 0x8

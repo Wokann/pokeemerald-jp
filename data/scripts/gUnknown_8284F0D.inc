@@ -1,6 +1,6 @@
 	nop 
 	resetweather 
-	.byte 0x27
+	waitstate 
 	nop 
 	setweather 0xA27
 	return 
@@ -10,7 +10,7 @@
 	doweather 
 	nop 
 	showcoinsbox 0x2, 0xA4
-	.byte 0x0D
+	killscript 
 	setobjectxy 0x8208, 0x400, 0x30A
 	settrainerflag 0x1167
 	gotostd 0x2
@@ -21,9 +21,7 @@
 	showcoinsbox 0x3F, 0x2
 	nop 
 	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x308
-	playfanfare 0xD4A
+	applymovement 0x828, 0xD4A3103
 	gotostd 0x5
 	goto 0xA0001
 	nop 
@@ -33,52 +31,38 @@
 	end 
 	release 
 	playse 0x857
-	.byte 0x82
+	bufferdecorationname 0x4, 0x0
+	nop 
+	nop 
+	setworldmapflag 0x0
+	nop 
+	setmysteryeventstatus 0xD7
+	applymovement 0x828, 0x572F6C02
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x0
 	nop 
 	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x208
-	release 
-	playse 0x857
-	.byte 0x82
+	applymovement 0x828, 0x572F6C02
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x0
 	nop 
 	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x208
-	release 
-	playse 0x857
-	.byte 0x82
+	applymovement 0x828, 0x572F6C02
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x0
 	nop 
 	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x208
-	release 
-	playse 0x857
-	.byte 0x82
+	applymovement 0x828, 0x572F6C02
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x0
 	nop 
 	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x208
-	release 
-	playse 0x857
-	.byte 0x82
-	call 0x0
-	setworldmapflag 0x0
-	nop 
-	setmysteryeventstatus 0xD7
-	.byte 0x4F
-	delay 0x208
-	release 
-	playse 0x857
-	.byte 0x82
+	applymovement 0x828, 0x572F6C02
+	gotostd 0x82
 	call 0x0
 	setworldmapflag 0x0
 	nop 

@@ -3,8 +3,7 @@
 	nop 
 	return 
 	resetweather 
-	.byte 0x81
-	loadbyte 0x8, 0x2
+	bufferspeciesname 0x10, 0x208
 	setworldmapflag 0x1
 	.byte 0x05
 	.byte 0x08

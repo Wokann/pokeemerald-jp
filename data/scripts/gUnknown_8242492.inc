@@ -1,61 +1,36 @@
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	.byte 0x3A
-	nop 
+	specialvar 0x800D, IsTrainerReadyForRematch
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x82424C1
-	.byte 0x25
-	.byte 0x3D
-	nop 
+	special HasEnoughMonsForDoubleBattle
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x5, 0x82424C2
-	.byte 0x25
-	fadeinbgm 0x0
-	.byte 0x25
-	.byte 0x39
-	setworldmapflag 0x3425
-	nop 
+	special SetUpTrainerEncounterMusic
+	special SetUpTrainerMovement
+	special ShowTrainerIntroSpeech
 	waitmessage 
 	waitbuttonpress 
-	.byte 0x25
-	.byte 0x3B
-	nop 
-	.byte 0x27
+	special BattleSetup_StartRematchBattle
 	releaseall 
 	end 
 	gotobeatenscript 
-	.byte 0x25
-	fadedefaultbgm 
-	nop 
+	special ShowTrainerCantBattleSpeech
 	waitmessage 
 	waitbuttonpress 
 	release 
 	end 
-	.byte 0x4F
-	loadword 0x80, 0x82424D4
-	.byte 0x51
-	nop 
-	nop 
+	applymovement 0x800F, 0x82424D4
+	waitmovement 0x0
 	return 
-	.byte 0x59
-	.byte 0xFE
-	.byte 0x25
-	savebgm 0x6600
+	hideobject_at 0x25FE, 0x3400
+	waitmessage 
 	waitbuttonpress 
-	.byte 0x25
-	gotostd 0x2
+	special TryPrepareSecondApproachingTrainer
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x82423F0
 	goto 0x82424EE
 	dotrainerbattle 
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	playbgm 0x2100, 0xD
-	.byte 0x80
-	nop 
-	nop 
+	specialvar 0x800D, GetTrainerBattleMode
+	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x824252B
 	compare_var_to_value 0x800D, 0x2
 	goto_if 0x1, 0x824252B

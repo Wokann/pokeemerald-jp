@@ -1943,9 +1943,9 @@
 	@ message indicates there is no room, and VAR_RESULT is set to FALSE.
 	@ Otherwise VAR_RESULT is set to TRUE, and the message indicates they have received the item(s).
 	.macro giveitem item:req, amount=1
-	setorcopyvar VAR_0x8000, \item
-	setorcopyvar VAR_0x8001, \amount
-	callstd STD_OBTAIN_ITEM
+	.byte SCR_OP_44
+	.2byte \item
+	.2byte \amount
 	.endm
 
 	@ For picking up items in the overworld. Similar to giveitem, but with different language and
@@ -1958,8 +1958,8 @@
 
 	@ Equivalent to giveitem but for a single decoration.
 	.macro givedecoration decoration:req
-	setorcopyvar VAR_0x8000, \decoration
-	callstd STD_OBTAIN_DECORATION
+	.byte SCR_OP_4B
+	.2byte \decoration
 	.endm
 
 	@ Registers the specified trainer in Match Call and plays a fanfare with a notification message.
@@ -1991,4 +1991,180 @@
 	setvar VAR_0x8005, \level
 	setvar VAR_0x8006, \item
 	special CreateEnemyEventMon
+	.endm
+
+@ ==================================================================
+@ JP-only script commands (the JP engine has dedicated opcodes where
+@ US pokeemerald uses multi-command macro sequences or has no command
+@ at all).  Argument layouts are taken from the JP asm/scrcmd.s
+@ handlers (ScriptRead* + direct ctx byte reads).
+@ ==================================================================
+	.macro killscript
+	.byte SCR_OP_0D
+	.endm
+
+	.macro writebytetoaddr value:req, address:req
+	.byte SCR_OP_11
+	.byte \value
+	.4byte \address
+	.endm
+
+	.macro loadbytefromaddr address:req
+	.byte SCR_OP_12
+	.4byte \address
+	.endm
+
+	.macro compare_local_to_addr local:req, address:req
+	.byte SCR_OP_1D
+	.byte \local
+	.4byte \address
+	.endm
+
+	.macro compare_addr_to_local address:req, local:req
+	.byte SCR_OP_1E
+	.4byte \address
+	.byte \local
+	.endm
+
+	.macro compare_addr_to_value address:req, value:req
+	.byte SCR_OP_1F
+	.4byte \address
+	.byte \value
+	.endm
+
+	.macro compare_addr_to_addr address1:req, address2:req
+	.byte SCR_OP_20
+	.4byte \address1
+	.4byte \address2
+	.endm
+
+	.macro takeitem item:req, amount=1
+	.byte SCR_OP_45
+	.2byte \item
+	.2byte \amount
+	.endm
+
+	.macro givepcitem item:req, amount=1
+	.byte SCR_OP_49
+	.2byte \item
+	.2byte \amount
+	.endm
+
+	.macro takedecoration decoration:req
+	.byte SCR_OP_4C
+	.2byte \decoration
+	.endm
+
+	.macro showobject_at localId:req, map:req
+	.byte SCR_OP_58
+	.2byte \localId
+	map \map
+	.endm
+
+	.macro hideobject_at localId:req, map:req
+	.byte SCR_OP_59
+	.2byte \localId
+	map \map
+	.endm
+
+	.macro moveobjectoffscreen localId:req
+	.byte SCR_OP_64
+	.2byte \localId
+	.endm
+
+	.macro mossdeepgym2
+	.byte SCR_OP_74
+	.endm
+
+	.macro showcontestwinner mode:req
+	.byte SCR_OP_77
+	.byte \mode
+	.endm
+
+	.macro givemoney amount:req, silent=0
+	.byte SCR_OP_90
+	.4byte \amount
+	.byte \silent
+	.endm
+
+	.macro takemoney amount:req, silent=0
+	.byte SCR_OP_91
+	.4byte \amount
+	.byte \silent
+	.endm
+
+	.macro getpricereduction item:req
+	.byte SCR_OP_96
+	.2byte \item
+	.endm
+
+	.macro setflashradius radius:req
+	.byte SCR_OP_99
+	.2byte \radius
+	.endm
+
+	.macro setfieldeffectarg index:req, value:req
+	.byte SCR_OP_9D
+	.byte \index
+	.2byte \value
+	.endm
+
+	.macro givecoins coins:req
+	.byte SCR_OP_B4
+	.2byte \coins
+	.endm
+
+	.macro takecoins coins:req
+	.byte SCR_OP_B5
+	.2byte \coins
+	.endm
+
+	.macro vloadword address:req
+	.byte SCR_OP_BE
+	.4byte \address
+	.endm
+
+	.macro setmonobedient partySlot:req
+	.byte SCR_OP_CD
+	.2byte \partySlot
+	.endm
+
+	.macro checkmonobedience partySlot:req
+	.byte SCR_OP_CE
+	.2byte \partySlot
+	.endm
+
+	.macro gotoram
+	.byte SCR_OP_CF
+	.endm
+
+	.macro mossdeepgym1 a:req
+	.byte SCR_OP_D3
+	.2byte \a
+	.endm
+
+	.macro mossdeepgym3 a:req
+	.byte SCR_OP_D5
+	.2byte \a
+	.endm
+
+	.macro buffercontesttype
+	.byte SCR_OP_D6
+	.endm
+
+	.macro cmdD8
+	.byte SCR_OP_D8
+	.endm
+
+	.macro cmdD9
+	.byte SCR_OP_D9
+	.endm
+
+	.macro mossdeepgym4
+	.byte SCR_OP_DA
+	.endm
+
+	.macro cmdDB address:req
+	.byte SCR_OP_DB
+	.4byte \address
 	.endm

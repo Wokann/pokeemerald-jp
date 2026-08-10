@@ -1,7 +1,5 @@
 	nop 
-	.byte 0x12
-	.byte 0x27
-	gotostd_if 0x1, 0x3
+	loadbytefromaddr 0x3010A27
 	waitdooranim 
 	.byte 0x56
 	loadbyte 0x8, 0x2
@@ -10,8 +8,8 @@
 	setvaddress 0x820856F2
 	nop 
 	goto 0x8903010B
-	.byte 0x51
-	loadbyte 0x8, 0x2
+	waitmovement 0x810
+	end 
 	end 
 	nop 
 	nop 

@@ -1,6 +1,6 @@
 	nop 
 	.byte 0xF9
-	.byte 0x27
+	waitstate 
 	nop 
 	fadescreen 0x27
 	nop 
@@ -15,47 +15,33 @@
 	goto 0xFFC0FFD0
 	checkitemtype 0x2000
 	nop 
-	.byte 0x1E
-	nop 
-	call 0xD6E4020A
+	compare_addr_to_local 0x20A0400, 0xE4
+	buffercontesttype 
 	faceplayer 
 	gotostd 0x83
 	goto 0xFFC0FF90
 	gotostd 0x0
-	.byte 0x20
-	nop 
-	.byte 0x1E
-	nop 
-	call 0x1AF80228
+	compare_addr_to_addr 0x4001E00, 0x1AF80228
 	setobjectxy 0x8308, 0x4, 0x0
 	nop 
 	nop 
 	nop 
-	.byte 0x1E
-	nop 
-	end 
-	.byte 0xE4
-	.byte 0xD6
-	faceplayer 
+	compare_addr_to_local 0xD6E40200, 0x5A
 	gotostd 0x83
 	goto 0xFFC0FFB0
 	delay 0x2000
 	nop 
-	.byte 0x1E
+	compare_addr_to_local 0x19140400, 0x7B
 	nop 
-	call 0x7B1914
-	.byte 0x3F
-	end 
-	.byte 0x3C
-	playse 0x857
-	.byte 0x83
-	call 0x0
+	setdynamicwarp 0x23C, 0x2F, 0x857, 0x483
+	nop 
+	nop 
+	nop 
+	nop 
 	setworldmapflag 0x100
 	nop 
 	return 
-	.byte 0x55
-	.byte 0x4B
-	.byte 0x0D
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x50001
 	nop 

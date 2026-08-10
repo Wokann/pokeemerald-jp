@@ -1,12 +1,12 @@
 	nop 
 	waitmessage 
-	.byte 0x27
+	waitstate 
 	return 
 	goto 0x2081053
 	nop 
-	.byte 0x19
-	hidecoinsbox 0x0, 0xC0
-	goto 0x56F23C02
+	copyvar 0xC1, 0x5C0
+	end 
+	warphole 0xF256
 	gotostd 0x2
 	nop 
 	compare_local_to_value 0xC1, 0x0

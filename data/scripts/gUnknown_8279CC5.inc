@@ -1,13 +1,13 @@
 	nop 
 	.byte 0xFF
-	.byte 0x27
+	waitstate 
 	end 
 	fadescreenspeed 0xD3, 0x5A
 	gotostd 0x2
 	return 
 	.byte 0xF8
 	.byte 0xFF
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	nop 
 	nop 
@@ -17,7 +17,7 @@
 	return 
 	.byte 0xF8
 	.byte 0xFF
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	setworldmapflag 0x400
 	gotostd_if 0x19, 0xC2
@@ -36,7 +36,7 @@
 	return 
 	.byte 0xE8
 	.byte 0xFF
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	nop 
 	nop 
@@ -46,7 +46,7 @@
 	return 
 	.byte 0xE8
 	.byte 0xFF
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	setworldmapflag 0x400
 	gotostd_if 0x19, 0xC2
@@ -64,7 +64,7 @@
 	gotostd 0x2
 	return 
 	gotostd 0x0
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	nop 
 	nop 
@@ -73,7 +73,7 @@
 	gotostd 0x82
 	return 
 	gotostd 0x0
-	.byte 0xD6
+	buffercontesttype 
 	.byte 0xFF
 	setworldmapflag 0x400
 	gotostd_if 0x19, 0xC2

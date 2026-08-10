@@ -1,6 +1,6 @@
 	lockall 
 	dofieldeffect 0x1B
-	.byte 0x27
+	waitstate 
 	goto 0x8245BFC
 	end 
 	loadword 0x0, 0x82450B0
@@ -13,40 +13,30 @@
 	end 
 	closemessage 
 	playse 0x9
-	.byte 0x16
-	fadescreen 0x40
-	nop 
-	nop 
+	setvar 0x4097, 0x0
 	setflag 0xAD
-	.byte 0x25
-	goto_if 0x0, 0x16000825
-	call 0x16000080
-	goto 0x25000080
-	.byte 0x12
-	nop 
-	.byte 0x16
-	playslotmachine 0x140
-	nop 
-	.byte 0x27
+	special SetPlayerSecretBase
+	special EnterSecretBase
+	setvar 0x8004, 0x0
+	setvar 0x8005, 0x0
+	special InitSecretBaseDecorationSprites
+	setvar 0x4089, 0x1
+	waitstate 
 	end 
-	.byte 0x4F
-	.byte 0xFF
-	nop 
-	setobjectxyperm 0x245C, 0x5108, 0x0
-	.byte 0x16
-	fadescreen 0x40
-	setworldmapflag 0xF00
-	nop 
-	setptrbyte 0xD6, 0x5090821
+	applymovement 0xFF, 0x8245C63
+	waitmovement 0x0
+	setvar 0x4097, 0x1
+	loadword 0x0, 0x821D613
+	callstd 0x5
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x8245C5A
 	closemessage 
 	playse 0x9
-	.byte 0x25
-	callstd 0x0
+	special ClearAndLeaveSecretBase
 	end 
 	closemessage 
 	setflag 0x60
-	.byte 0x25
-	subvar 0x2700, 0x902
-	callstd 0xFE
+	special EnterNewlyCreatedSecretBase
+	end 
+	callstd 0x9
+	.byte 0xFE

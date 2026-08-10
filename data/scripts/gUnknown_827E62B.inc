@@ -8,7 +8,7 @@
 	delay 0x0
 	nop 
 	dowildbattle 
-	.byte 0x27
+	waitstate 
 	call 0x21D80214
 	setobjectxy 0x208, 0x1E04, 0x0
 	nop 

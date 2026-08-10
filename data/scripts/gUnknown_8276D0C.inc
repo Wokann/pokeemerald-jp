@@ -16,9 +16,7 @@
 	gotobeatenscript 
 	waitmoncry 
 	choosecontestmon 
-	.byte 0x44
-	.byte 0x0D
-	turnvobject 0xFE, 0x6
+	giveitem 0xAB0D, 0x6FE
 	gettime 
 	checkitemspace 0x2E, 0xD44
 	.byte 0xFF

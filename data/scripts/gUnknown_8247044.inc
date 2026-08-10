@@ -1,10 +1,7 @@
 	lockall 
-	.byte 0x16
-	call 0x25000080
-	.byte 0xC4
-	nop 
+	setvar 0x8004, 0x0
+	special ShowLinkBattleRecords
 	waitbuttonpress 
-	.byte 0x25
-	callstd 0x2
+	special RemoveRecordsWindow
 	releaseall 
 	end 

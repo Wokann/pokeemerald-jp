@@ -1,14 +1,10 @@
 	setrespawn 0x7359
-	.byte 0x7E
-	gotostd_if 0x3, 0x6
-	gettime 
-	nop 
-	.byte 0x0D
-	clearflag 0xFE46
+	bufferleadmonspeciesname 0xA
+	return 
+	goto_if 0x2E, 0x462A0D00
+	.byte 0xFE
 	callnative 0x1001450
-	.byte 0x12
-	.byte 0x1F
-	setflag 0x2306
+	loadbytefromaddr 0x2306291F
 	nop 
 	returnram 
 	clearflag 0x215

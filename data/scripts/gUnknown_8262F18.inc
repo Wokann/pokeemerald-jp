@@ -1,11 +1,13 @@
-	.byte 0x12
-	delay 0x53C
-	setorcopyvar 0x1200, 0x5006
-	setptrbyte 0x0, 0x15062902
+	loadbytefromaddr 0x1A053C28
+	nop 
+	loadbytefromaddr 0x135006
+	end 
+	setflag 0x1506
 	opendoor 0x3FE, 0x1620
 	callnative 0x73599F00
-	.byte 0x7E
-	setorcopyvar 0x1000, 0xB08
+	bufferleadmonspeciesname 0x1A
+	nop 
+	loadbyte 0x8, 0xB
 	gettime 
 	nop 
 	end 

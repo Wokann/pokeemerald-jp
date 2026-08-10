@@ -1,6 +1,6 @@
 	lockall 
 	dofieldeffect 0xB
-	.byte 0x27
+	waitstate 
 	goto 0x8245B4A
 	end 
 	loadword 0x0, 0x821D5CF
@@ -14,10 +14,7 @@
 	lockall 
 	compare_var_to_value 0x800D, 0x6
 	goto_if 0x1, 0x8245B99
-	.byte 0x7F
-	nop 
-	.byte 0x0D
-	.byte 0x80
+	bufferpartymonnick 0x0, 0x800D
 	loadword 0x0, 0x824507E
 	callstd 0x5
 	compare_var_to_value 0x800D, 0x0
@@ -26,6 +23,6 @@
 	callstd 0x4
 	closemessage 
 	dofieldeffect 0x1A
-	.byte 0x27
+	waitstate 
 	goto 0x8245BA3
 	end 

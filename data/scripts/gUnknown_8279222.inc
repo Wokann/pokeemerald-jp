@@ -1,11 +1,7 @@
 	nop 
 	dotimebasedevents 
-	.byte 0x27
-	.byte 0x19
-	.byte 0x96
-	nop 
-	.byte 0x3F
-	return 
+	waitstate 
+	copyvar 0x96, 0x33F
 	playfanfare 0xD4A
 	gotostd 0x5
 	goto 0x1
@@ -15,17 +11,18 @@
 	nop 
 	setmysteryeventstatus 0x4B
 	checkmoney 0x4B0E0827, 0x92
-	.byte 0x27
+	waitstate 
 	gotostd 0xE
-	.byte 0x4B
-	checkmoney 0x8050827, 0x2
+	givedecoration 0x2792
+	gotostd 0x5
+	gotostd 0x2
 	release 
-	.byte 0x27
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x1C00
 	nop 
 	loadbyte 0x2, 0x1E
 	nop 
-	.byte 0x0D
+	killscript 
 	nop 
 	waitfanfare 
 	nop 
@@ -33,7 +30,7 @@
 	end 
 	end 
 	release 
-	.byte 0x27
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x2000
 	nop 
 	.byte 0xE0
@@ -44,40 +41,36 @@
 	end 
 	end 
 	release 
-	.byte 0x27
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x2100
 	nop 
-	.byte 0x40
+	setdivewarp 0x214, 0x0, 0x8, 0x2A
+	setworldmapflag 0x400
 	end 
-	copylocal 0x0, 0x8
-	nop 
-	clearflag 0x100
-	nop 
-	call 0x276C0202
+	end 
+	release 
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x1F00
 	nop 
-	.byte 0x90
-	setworldmapflag 0x19
-	callstd_if 0x0, 0xD6
+	givemoney 0xB001901, 0x0
+	buffercontesttype 
 	.byte 0xFF
 	setworldmapflag 0x400
 	end 
 	end 
 	release 
-	.byte 0x27
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x1C00
 	nop 
 	nop 
 	end 
-	.byte 0x19
-	nop 
-	loadbyte 0x0, 0x2E
+	copyvar 0x1000, 0x2E00
 	nop 
 	setworldmapflag 0x400
 	end 
 	end 
 	release 
-	.byte 0x27
+	waitstate 
 	setobjectxy 0x8208, 0x7, 0x2100
 	nop 
 	.byte 0xD0

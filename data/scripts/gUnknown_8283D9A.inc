@@ -1,15 +1,13 @@
 	nop 
 	.byte 0xEF
-	.byte 0x27
+	waitstate 
 	nop 
 	fadescreen 0x27
 	gotostd_if 0x1, 0x28
 	setworldmapflag 0xC0C
 	gotostd 0x2
-	.byte 0x58
-	gettime 
-	setobjectxy 0x8, 0x105, 0x200
-	nop 
+	showobject_at 0x572E, 0x800
+	goto 0x20001
 	nop 
 	nop 
 	goto 0x5000000
@@ -22,9 +20,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x64
-	nop 
-	.byte 0x19
+	moveobjectoffscreen 0x1900
 	messageautoscroll 0x504C000
 	end 
 	checkitemtype 0x56E1
@@ -35,10 +31,8 @@
 	nop 
 	setworldmapflag 0x5F00
 	nop 
-	.byte 0x19
-	messageautoscroll 0x504D500
-	end 
-	checkitemtype 0x56E1
+	copyvar 0x9B, 0x4D5
+	goto 0x56E14802
 	gotostd 0x2
 	goto_if 0x1E, 0xFC000800
 	.byte 0xFF
@@ -48,10 +42,8 @@
 	nop 
 	faceplayer 
 	nop 
-	.byte 0x19
-	messageautoscroll 0x504EA00
-	end 
-	checkitemtype 0x56E1
+	copyvar 0x9B, 0x4EA
+	goto 0x56E14802
 	gotostd 0x2
 	goto_if 0x28, 0x4FFF800
 	nop 
@@ -59,10 +51,8 @@
 	nop 
 	setworldmapflag 0x5500
 	nop 
-	.byte 0x19
-	messageautoscroll 0x5040000
-	end 
-	checkitemtype 0x56E1
+	copyvar 0x9B, 0x400
+	goto 0x56E14802
 	gotostd 0x2
 	goto_if 0x32, 0x800
 	nop 
@@ -70,9 +60,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x55
-	nop 
-	.byte 0x19
+	addobject 0x1900
 	messageautoscroll 0x5041500
 	end 
 	checkitemtype 0x56E1
@@ -83,10 +71,8 @@
 	nop 
 	setworldmapflag 0x5500
 	nop 
-	.byte 0x19
-	messageautoscroll 0x5042A00
-	end 
-	checkitemtype 0x56E1
+	copyvar 0x9B, 0x42A
+	goto 0x56E14802
 	gotostd 0x2
 	goto_if 0x4B, 0x800
 	nop 
@@ -94,9 +80,7 @@
 	nop 
 	nop 
 	nop 
-	.byte 0x55
-	nop 
-	.byte 0x19
+	addobject 0x1900
 	messageautoscroll 0x5043F00
 	end 
 	checkitemtype 0x56E1
@@ -109,10 +93,8 @@
 	nop 
 	.byte 0x50
 	nop 
-	.byte 0x19
-	messageautoscroll 0x5043F00
-	end 
-	checkitemtype 0x56E1
+	copyvar 0x9B, 0x43F
+	goto 0x56E14802
 	gotostd 0x2
 	goto_if 0x55, 0xFAFFF000
 	.byte 0xFF
@@ -120,22 +102,18 @@
 	nop 
 	end 
 	nop 
-	.byte 0x4B
-	nop 
-	.byte 0x19
+	givedecoration 0x1900
 	messageautoscroll 0x5043F00
 	end 
-	.byte 0x3C
-	playse 0x857
-	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0xFFF6FFF6
 	setworldmapflag 0x300
 	nop 
-	.byte 0x19
-	pokemart 0x31033F00
-	checkpcitem 0x80D, 0x503
-	setworldmapflag 0x800
-	nop 
+	copyvar 0x86, 0x33F
+	playfanfare 0xD4A
+	gotostd 0x3
+	goto 0x80001
 	nop 
 	nop 
 	copylocal 0x0, 0x1
@@ -145,48 +123,42 @@
 	nop 
 	setworldmapflag 0x300
 	nop 
-	.byte 0x19
-	pokemart 0x3043F00
+	copyvar 0x86, 0x43F
+	return 
 	end 
-	.byte 0x3C
-	playse 0x857
-	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0xFFFD000A
 	setworldmapflag 0x200
 	nop 
-	.byte 0x19
-	pokemart 0x3043F00
+	copyvar 0x86, 0x43F
+	return 
 	end 
-	.byte 0x3C
-	playse 0x857
-	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0x1FFFD
 	setworldmapflag 0x200
 	nop 
-	.byte 0x19
-	pokemart 0x2043F00
+	copyvar 0x86, 0x43F
 	end 
-	.byte 0x3C
-	playse 0x857
 	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0x1FFF6
 	setworldmapflag 0x100
 	nop 
-	.byte 0x19
-	pokemart 0x2043F00
+	copyvar 0x86, 0x43F
 	end 
-	.byte 0x3C
-	playse 0x857
 	end 
+	warphole 0x2F57
+	gotostd 0x2
 	call 0xA0000
 	setworldmapflag 0x100
 	nop 
-	.byte 0x19
-	pokemart 0x2053F00
-	.byte 0x58
-	gettime 
-	setobjectxy 0x8, 0x105, 0x200
-	nop 
+	copyvar 0x86, 0x53F
+	end 
+	showobject_at 0x572E, 0x800
+	goto 0x20001
 	goto 0x0
 	nop 
 	goto 0x80D010B

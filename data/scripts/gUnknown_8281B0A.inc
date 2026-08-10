@@ -1,16 +1,13 @@
 	gotostd_if 0x0, 0x28
 	nop 
-	.byte 0x19
-	vmessage 0x214C000
+	copyvar 0xBD, 0x14C0
+	end 
 	addvar 0xA04, 0xC019
 	nop 
 	showcoinsbox 0x3, 0xDD
-	.byte 0x20
-	.byte 0x11
-	gotostd 0x5
-	setworldmapflag 0x55
-	call 0x4B550346
-	.byte 0x0D
+	compare_addr_to_addr 0x1050811, 0x46040055
+	return 
+	addobject 0xD4B
 	gotostd 0x2
 	goto 0x20001
 	nop 
@@ -18,14 +15,13 @@
 	returnram 
 	nop 
 	setworldmapflag 0x300
-	.byte 0x55
-	cleartrainerflag 0x811
-	end 
+	addobject 0x1162
+	gotostd 0x2
 	goto_if 0x4, 0x2000000
 	nop 
 	nop 
 	nop 
-	.byte 0x0D
+	killscript 
 	nop 
 	nop 
 	nop 

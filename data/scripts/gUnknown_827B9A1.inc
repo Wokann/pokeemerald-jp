@@ -2,12 +2,12 @@
 	fadescreen 0x27
 	nop 
 	.byte 0xE7
-	.byte 0x27
+	waitstate 
 	gotostd_if 0x1, 0xC
 	returnram 
 	gotostd 0x3
 	callstd 0x4D
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x30000
 	nop 
@@ -25,9 +25,7 @@
 	end 
 	nop 
 	end 
-	.byte 0x64
-	.byte 0xF7
-	.byte 0x56
+	moveobjectoffscreen 0x56F7
 	gotostd 0x2
 	return 
 	nop 
@@ -43,7 +41,7 @@
 	nop 
 	return 
 	callstd 0x4D
-	.byte 0x0D
+	killscript 
 	gotostd 0x2
 	goto 0x30001
 	nop 

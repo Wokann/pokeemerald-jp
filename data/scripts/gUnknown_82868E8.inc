@@ -1,6 +1,6 @@
 	nop 
 	.byte 0xF0
-	.byte 0x27
+	waitstate 
 	return 
 	.byte 0xE5
 	pokemart 0x20811
@@ -23,11 +23,11 @@
 	setmysteryeventstatus 0x4A
 	releaseall 
 	delay 0x808
-	.byte 0x19
-	pokemartdecoration 0x2D03C000
+	copyvar 0x87, 0x3C0
+	dotimebasedevents 
 	.byte 0xF8
 	copybyte 0x13000208, 0x828691F
-	.byte 0x19
-	pokemartdecoration 0xFD03C000
+	copyvar 0x87, 0x3C0
+	.byte 0xFD
 	.byte 0xFE
 	copybyte 0x13000208, 0x828691F

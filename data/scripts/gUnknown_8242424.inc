@@ -1,27 +1,16 @@
 	lock 
 	faceplayer 
 	call 0x82424C9
-	.byte 0x26
-	.byte 0x0D
-	.byte 0x80
-	fadenewbgm 0x2100
-	.byte 0x0D
-	.byte 0x80
-	nop 
-	nop 
+	specialvar 0x800D, GetTrainerFlag
+	compare_var_to_value 0x800D, 0x0
 	goto_if 0x5, 0x824245B
-	.byte 0x25
-	.byte 0x3D
-	nop 
+	special HasEnoughMonsForDoubleBattle
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x5, 0x8242454
-	.byte 0x25
-	fadeinbgm 0x0
-	.byte 0x25
-	.byte 0x39
-	setworldmapflag 0xD605
-	gotonative 0x35250824
-	nop 
+	special SetUpTrainerEncounterMusic
+	special SetUpTrainerMovement
+	goto 0x82424D6
+	special ShowTrainerCantBattleSpeech
 	waitmessage 
 	waitbuttonpress 
 	release 
