@@ -5248,8 +5248,8 @@ nullsub_5: @ 0x0800E0C4
 	.align 2, 0
 	thumb_func_end nullsub_5
 
-	thumb_func_start sub_0800E0C8
-sub_0800E0C8: @ 0x0800E0C8
+	thumb_func_start ResetLinkRfuGFLayer
+ResetLinkRfuGFLayer: @ 0x0800E0C8
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -5336,7 +5336,7 @@ _0800E184: .4byte 0x03003130
 _0800E188: .4byte 0x01000028
 _0800E18C: .4byte 0x020226A0
 _0800E190: .4byte 0x01000046
-	thumb_func_end sub_0800E0C8
+	thumb_func_end ResetLinkRfuGFLayer
 
 	thumb_func_start InitRFU
 InitRFU: @ 0x0800E194
@@ -5380,7 +5380,7 @@ InitRFUAPI: @ 0x0800E1C4
 	bl sub_0800A6B8
 	movs r0, #0
 	bl sub_08010CA0
-	bl sub_0800E0C8
+	bl ResetLinkRfuGFLayer
 	adds r1, r4, #4
 	movs r0, #3
 	bl rfu_setTimerInterrupt
@@ -6192,7 +6192,7 @@ _0800E8B6:
 	adds r0, #0x67
 	ldrb r0, [r0]
 	bl DestroyTask
-	bl sub_0800E0C8
+	bl ResetLinkRfuGFLayer
 	b _0800E8F8
 	.align 2, 0
 _0800E8D4: .4byte 0x0800E411
@@ -6209,7 +6209,7 @@ _0800E8D8:
 	adds r0, #0x67
 	ldrb r0, [r0]
 	bl DestroyTask
-	bl sub_0800E0C8
+	bl ResetLinkRfuGFLayer
 _0800E8F8:
 	movs r5, #0
 	ldr r6, _0800E934
@@ -7360,8 +7360,8 @@ _0800F1B4: .4byte 0x03005740
 _0800F1B8: .4byte 0x0300510E
 	thumb_func_end sub_0800F0F8
 
-	thumb_func_start sub_0800F1BC
-sub_0800F1BC: @ 0x0800F1BC
+	thumb_func_start Rfu_SetBlockReceivedFlag
+Rfu_SetBlockReceivedFlag: @ 0x0800F1BC
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
@@ -7385,10 +7385,10 @@ _0800F1DC:
 _0800F1E4:
 	pop {r0}
 	bx r0
-	thumb_func_end sub_0800F1BC
+	thumb_func_end Rfu_SetBlockReceivedFlag
 
-	thumb_func_start sub_0800F1E8
-sub_0800F1E8: @ 0x0800F1E8
+	thumb_func_start Rfu_ResetBlockReceivedFlag
+Rfu_ResetBlockReceivedFlag: @ 0x0800F1E8
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r3, _0800F208
@@ -7406,7 +7406,7 @@ sub_0800F1E8: @ 0x0800F1E8
 	bx lr
 	.align 2, 0
 _0800F208: .4byte 0x030050A0
-	thumb_func_end sub_0800F1E8
+	thumb_func_end Rfu_ResetBlockReceivedFlag
 
 	thumb_func_start sub_0800F20C
 sub_0800F20C: @ 0x0800F20C
@@ -7512,8 +7512,8 @@ _0800F2BC: .4byte 0x030050A0
 _0800F2C0: .4byte 0x0800F255
 	thumb_func_end IsSendingKeysToRfu
 
-	thumb_func_start sub_0800F2C4
-sub_0800F2C4: @ 0x0800F2C4
+	thumb_func_start StartSendingKeysToRfu
+StartSendingKeysToRfu: @ 0x0800F2C4
 	push {r4, lr}
 	ldr r4, _0800F2E4
 	ldr r0, [r4]
@@ -7536,17 +7536,17 @@ _0800F2E8: .4byte 0x082C053C
 _0800F2EC: .4byte 0x000005E6
 _0800F2F0: .4byte 0x082C0544
 _0800F2F4: .4byte 0x0800F255
-	thumb_func_end sub_0800F2C4
+	thumb_func_end StartSendingKeysToRfu
 
-	thumb_func_start Rfu_set_zero
-Rfu_set_zero: @ 0x0800F2F8
+	thumb_func_start ClearLinkRfuCallback
+ClearLinkRfuCallback: @ 0x0800F2F8
 	ldr r1, _0800F300
 	movs r0, #0
 	str r0, [r1]
 	bx lr
 	.align 2, 0
 _0800F300: .4byte 0x030050A0
-	thumb_func_end Rfu_set_zero
+	thumb_func_end ClearLinkRfuCallback
 
 	thumb_func_start sub_0800F304
 sub_0800F304: @ 0x0800F304
@@ -7573,8 +7573,8 @@ _0800F32C: .4byte 0x030031B0
 _0800F330: .4byte 0x02022078
 	thumb_func_end sub_0800F304
 
-	thumb_func_start sub_0800F334
-sub_0800F334: @ 0x0800F334
+	thumb_func_start Rfu_SetBerryBlenderLinkCallback
+Rfu_SetBerryBlenderLinkCallback: @ 0x0800F334
 	push {lr}
 	ldr r1, _0800F348
 	ldr r0, [r1]
@@ -7588,7 +7588,7 @@ _0800F342:
 	.align 2, 0
 _0800F348: .4byte 0x030050A0
 _0800F34C: .4byte 0x0800F305
-	thumb_func_end sub_0800F334
+	thumb_func_end Rfu_SetBerryBlenderLinkCallback
 
 	thumb_func_start sub_0800F350
 sub_0800F350: @ 0x0800F350
@@ -7857,7 +7857,7 @@ _0800F540:
 	mov r1, r8
 	lsls r0, r1, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_0800F1BC
+	bl Rfu_SetBlockReceivedFlag
 	bl sub_0800F29C
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
@@ -7897,7 +7897,7 @@ _0800F590:
 	adds r2, #4
 	adds r1, r1, r2
 	ldrh r1, [r1]
-	bl sub_0800F968
+	bl Rfu_InitBlockSend
 	b _0800F6E8
 	.align 2, 0
 _0800F5AC: .4byte 0x082C0408
@@ -8171,8 +8171,8 @@ sub_0800F7A8: @ 0x0800F7A8
 	bx lr
 	thumb_func_end sub_0800F7A8
 
-	thumb_func_start sub_0800F7BC
-sub_0800F7BC: @ 0x0800F7BC
+	thumb_func_start Rfu_GetBlockReceivedStatus
+Rfu_GetBlockReceivedStatus: @ 0x0800F7BC
 	push {r4, lr}
 	movs r2, #0
 	movs r1, #0
@@ -8204,7 +8204,7 @@ _0800F7E2:
 	bx r1
 	.align 2, 0
 _0800F7F4: .4byte 0x030050A0
-	thumb_func_end sub_0800F7BC
+	thumb_func_end Rfu_GetBlockReceivedStatus
 
 	thumb_func_start sub_0800F7F8
 sub_0800F7F8: @ 0x0800F7F8
@@ -8399,8 +8399,8 @@ _0800F960: .4byte 0x030031B0
 _0800F964: .4byte 0x03005192
 	thumb_func_end sub_0800F934
 
-	thumb_func_start sub_0800F968
-sub_0800F968: @ 0x0800F968
+	thumb_func_start Rfu_InitBlockSend
+Rfu_InitBlockSend: @ 0x0800F968
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -8508,7 +8508,7 @@ _0800FA32:
 _0800FA40: .4byte 0x0202257C
 _0800FA44: .4byte 0x030050A0
 _0800FA48: .4byte 0x0800FA4D
-	thumb_func_end sub_0800F968
+	thumb_func_end Rfu_InitBlockSend
 
 	thumb_func_start rfufunc_80F9F44
 rfufunc_80F9F44: @ 0x0800FA4C
@@ -8734,8 +8734,8 @@ _0800FBF4:
 	bx r0
 	thumb_func_end rfufunc_80FA020
 
-	thumb_func_start sub_0800FC00
-sub_0800FC00: @ 0x0800FC00
+	thumb_func_start Rfu_SendBlockRequest
+Rfu_SendBlockRequest: @ 0x0800FC00
 	push {lr}
 	ldr r1, _0800FC18
 	adds r1, #0x5a
@@ -8748,7 +8748,7 @@ sub_0800FC00: @ 0x0800FC00
 	bx r1
 	.align 2, 0
 _0800FC18: .4byte 0x030050A0
-	thumb_func_end sub_0800FC00
+	thumb_func_end Rfu_SendBlockRequest
 
 	thumb_func_start sub_0800FC1C
 sub_0800FC1C: @ 0x0800FC1C
@@ -8949,8 +8949,8 @@ _0800FD8C: .4byte 0x00000991
 _0800FD90: .4byte 0x0800FD2D
 	thumb_func_end sub_0800FD64
 
-	thumb_func_start task_add_05_task_del_08FA224_when_no_RfuFunc
-task_add_05_task_del_08FA224_when_no_RfuFunc: @ 0x0800FD94
+	thumb_func_start Rfu_SetCloseLinkCallback
+Rfu_SetCloseLinkCallback: @ 0x0800FD94
 	push {r4, lr}
 	ldr r4, _0800FDB4
 	adds r0, r4, #0
@@ -8967,7 +8967,7 @@ _0800FDAC:
 	bx r0
 	.align 2, 0
 _0800FDB4: .4byte 0x0800FD65
-	thumb_func_end task_add_05_task_del_08FA224_when_no_RfuFunc
+	thumb_func_end Rfu_SetCloseLinkCallback
 
 	thumb_func_start sub_0800FDB8
 sub_0800FDB8: @ 0x0800FDB8
@@ -9163,8 +9163,8 @@ _0800FF2C: .4byte 0x030031B0
 _0800FF30: .4byte 0x0800FE59
 	thumb_func_end sub_0800FE90
 
-	thumb_func_start sub_0800FF34
-sub_0800FF34: @ 0x0800FF34
+	thumb_func_start Rfu_SetLinkStandbyCallback
+Rfu_SetLinkStandbyCallback: @ 0x0800FF34
 	push {lr}
 	ldr r1, _0800FF4C
 	ldr r2, [r1]
@@ -9181,7 +9181,7 @@ _0800FF48:
 	.align 2, 0
 _0800FF4C: .4byte 0x030050A0
 _0800FF50: .4byte 0x0800FE91
-	thumb_func_end sub_0800FF34
+	thumb_func_end Rfu_SetLinkStandbyCallback
 
 	thumb_func_start sub_0800FF54
 sub_0800FF54: @ 0x0800FF54
@@ -9256,8 +9256,8 @@ _0800FFC8: .4byte 0x030050A0
 _0800FFCC: .4byte 0x00000991
 	thumb_func_end sub_0800FFB0
 
-	thumb_func_start rfu_get_multiplayer_id
-rfu_get_multiplayer_id: @ 0x0800FFD0
+	thumb_func_start Rfu_GetMultiplayerId
+Rfu_GetMultiplayerId: @ 0x0800FFD0
 	push {lr}
 	ldr r1, _0800FFE4
 	ldrb r0, [r1, #0xc]
@@ -9276,19 +9276,19 @@ _0800FFEE:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end rfu_get_multiplayer_id
+	thumb_func_end Rfu_GetMultiplayerId
 
-	thumb_func_start sub_0800FFF4
-sub_0800FFF4: @ 0x0800FFF4
+	thumb_func_start Rfu_GetLinkPlayerCount
+Rfu_GetLinkPlayerCount: @ 0x0800FFF4
 	ldr r0, _0800FFFC
 	ldrb r0, [r0, #0xd]
 	bx lr
 	.align 2, 0
 _0800FFFC: .4byte 0x030050A0
-	thumb_func_end sub_0800FFF4
+	thumb_func_end Rfu_GetLinkPlayerCount
 
-	thumb_func_start sub_08010000
-sub_08010000: @ 0x08010000
+	thumb_func_start IsLinkRfuTaskFinished
+IsLinkRfuTaskFinished: @ 0x08010000
 	push {lr}
 	ldr r2, _08010014
 	adds r0, r2, #0
@@ -9311,7 +9311,7 @@ _08010022:
 _08010024:
 	pop {r1}
 	bx r1
-	thumb_func_end sub_08010000
+	thumb_func_end IsLinkRfuTaskFinished
 
 	thumb_func_start sub_08010028
 sub_08010028: @ 0x08010028
@@ -9877,7 +9877,7 @@ _08010458:
 	bl sub_0800AE80
 	lsls r0, r4, #0x18
 	lsrs r0, r0, #0x18
-	bl sub_0800F1E8
+	bl Rfu_ResetBlockReceivedFlag
 	adds r4, #1
 	ldrb r2, [r5, #0xd]
 	cmp r4, r2
@@ -10547,8 +10547,8 @@ _080109A8:
 _080109AC: .4byte 0x030041E0
 	thumb_func_end rfu_REQ_recvData_then_sendData
 
-	thumb_func_start sub_080109B0
-sub_080109B0: @ 0x080109B0
+	thumb_func_start RfuMain1
+RfuMain1: @ 0x080109B0
 	push {r4, r5, lr}
 	movs r5, #0
 	ldr r4, _080109E4
@@ -10593,10 +10593,10 @@ _08010A04:
 	pop {r4, r5}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_080109B0
+	thumb_func_end RfuMain1
 
-	thumb_func_start sub_08010A0C
-sub_08010A0C: @ 0x08010A0C
+	thumb_func_start RfuMain2
+RfuMain2: @ 0x08010A0C
 	push {r4, lr}
 	movs r4, #0
 	ldr r1, _08010A34
@@ -10619,7 +10619,7 @@ _08010A2C:
 	bx r1
 	.align 2, 0
 _08010A34: .4byte 0x030050A0
-	thumb_func_end sub_08010A0C
+	thumb_func_end RfuMain2
 
 	thumb_func_start sub_08010A38
 sub_08010A38: @ 0x08010A38
@@ -13456,3 +13456,12 @@ sub_08011FC0: @ 0x08011FC0
 _08011FCC: .4byte 0x030050A0
 _08011FD0: .4byte 0x0000069E
 	thumb_func_end sub_08011FC0
+
+	.globl Rfu_set_zero
+	.set Rfu_set_zero, ClearLinkRfuCallback
+	.globl sub_0800FF34
+	.set sub_0800FF34, Rfu_SetLinkStandbyCallback
+	.globl task_add_05_task_del_08FA224_when_no_RfuFunc
+	.set task_add_05_task_del_08FA224_when_no_RfuFunc, Rfu_SetCloseLinkCallback
+	.globl sub_08010000
+	.set sub_08010000, IsLinkRfuTaskFinished

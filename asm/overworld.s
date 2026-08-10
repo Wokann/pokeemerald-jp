@@ -6308,8 +6308,8 @@ _08086FCA:
 	.align 2, 0
 	thumb_func_end Overworld_SendKeysToLinkIsRunning
 
-	thumb_func_start sub_08086FD0
-sub_08086FD0: @ 0x08086FD0
+	thumb_func_start IsSendingKeysOverCable
+IsSendingKeysOverCable: @ 0x08086FD0
 	push {lr}
 	ldr r0, _08086FE8
 	ldrb r0, [r0]
@@ -6328,7 +6328,7 @@ _08086FEE:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_08086FD0
+	thumb_func_end IsSendingKeysOverCable
 
 	thumb_func_start GetLinkSendQueueLength
 GetLinkSendQueueLength: @ 0x08086FF4

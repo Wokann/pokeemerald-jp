@@ -6732,8 +6732,8 @@ _0807A188:
 	.align 2, 0
 	thumb_func_end sub_0807A064
 
-	thumb_func_start sub_0807A198
-sub_0807A198: @ 0x0807A198
+	thumb_func_start GetGameProgressForLinkTrade
+GetGameProgressForLinkTrade: @ 0x0807A198
 	push {r4, r5, r6, r7, lr}
 	ldr r0, _0807A218
 	ldrb r0, [r0]
@@ -6807,7 +6807,7 @@ _0807A226:
 	pop {r4, r5, r6, r7}
 	pop {r1}
 	bx r1
-	thumb_func_end sub_0807A198
+	thumb_func_end GetGameProgressForLinkTrade
 
 	thumb_func_start IsDeoxysOrMewUntradable
 IsDeoxysOrMewUntradable: @ 0x0807A22C
