@@ -437,7 +437,7 @@ _080C204C:
 	.align 2, 0
 _080C2054: .4byte 0x02039988
 _080C2058:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #0
 	movs r1, #1
 	bl DrawDialogueFrame

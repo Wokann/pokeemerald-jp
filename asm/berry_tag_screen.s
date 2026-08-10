@@ -1992,7 +1992,7 @@ _08178B20:
 	lsrs r0, r0, #0x18
 	cmp r0, #3
 	bne _08178B64
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r4, _08178B5C
 	adds r0, r4, #0
 	movs r1, #1
@@ -2104,7 +2104,7 @@ _08178C10:
 	adds r1, r4, r0
 	b _08178CF4
 _08178C18:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, _08178C28
 	movs r2, #0x87
 	lsls r2, r2, #3

@@ -113,7 +113,7 @@ BattleSetup_StartBattlePikeWildBattle: @ 0x080AFFAC
 DoStandardWildBattle: @ 0x080AFFB8
 	push {r4, lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B658
 	ldr r1, _080B0018
 	ldr r0, _080B001C
@@ -159,7 +159,7 @@ _080B0024: .4byte 0x0000400E
 BattleSetup_StartRoamerBattle: @ 0x080B0028
 	push {lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B658
 	ldr r1, _080B006C
 	ldr r0, _080B0070
@@ -191,7 +191,7 @@ _080B0074: .4byte 0x02022C90
 DoSafariBattle: @ 0x080B0078
 	push {lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B658
 	ldr r1, _080B00A4
 	ldr r0, _080B00A8
@@ -216,7 +216,7 @@ _080B00AC: .4byte 0x02022C90
 DoBattlePikeWildBattle: @ 0x080B00B0
 	push {lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B658
 	ldr r1, _080B00F4
 	ldr r0, _080B00F8
@@ -877,7 +877,7 @@ GetBattleTransitionTypeByMap: @ 0x080B0620
 	bl MapGridGetMetatileBehaviorAt
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
-	bl Overworld_GetFlashLevel
+	bl GetFlashLevel
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B0650
@@ -1783,7 +1783,7 @@ SetMapVarsToTrainer: @ 0x080B0CE4
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	ldr r1, _080B0D18
 	strb r0, [r1]
 _080B0D06:

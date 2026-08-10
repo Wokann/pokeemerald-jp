@@ -691,7 +691,7 @@ _08009504:
 	ands r0, r1
 	cmp r0, #0
 	beq _08009512
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _08009512:
 	ldr r0, _0800954C
 	ldrb r0, [r0]
@@ -1412,8 +1412,8 @@ _08009AA8: .4byte 0x03002354
 _08009AAC: .4byte 0x030031B0
 	thumb_func_end BuildSendCmd
 
-	thumb_func_start sub_08009AB0
-sub_08009AB0: @ 0x08009AB0
+	thumb_func_start StartSendingKeysToLink
+StartSendingKeysToLink: @ 0x08009AB0
 	push {lr}
 	ldr r0, _08009AC8
 	ldrb r0, [r0]
@@ -1430,7 +1430,7 @@ _08009ABE:
 _08009AC8: .4byte 0x0300319C
 _08009ACC: .4byte 0x030031E0
 _08009AD0: .4byte 0x08009B09
-	thumb_func_end sub_08009AB0
+	thumb_func_end StartSendingKeysToLink
 
 	thumb_func_start IsSendingKeysToLink
 IsSendingKeysToLink: @ 0x08009AD4
@@ -3288,8 +3288,8 @@ _0800A7F0: .4byte 0x03003184
 _0800A7F4: .4byte 0x03003194
 	thumb_func_end sub_0800A7B8
 
-	thumb_func_start sub_0800A7F8
-sub_0800A7F8: @ 0x0800A7F8
+	thumb_func_start SetCloseLinkCallback
+SetCloseLinkCallback: @ 0x0800A7F8
 	push {lr}
 	ldr r0, _0800A808
 	ldrb r0, [r0]
@@ -3326,7 +3326,7 @@ _0800A834:
 _0800A838: .4byte 0x0800A845
 _0800A83C: .4byte 0x03003184
 _0800A840: .4byte 0x03003194
-	thumb_func_end sub_0800A7F8
+	thumb_func_end SetCloseLinkCallback
 
 	thumb_func_start sub_0800A844
 sub_0800A844: @ 0x0800A844
@@ -3401,8 +3401,8 @@ _0800A8CC: .4byte 0x030031E0
 _0800A8D0: .4byte 0x03003184
 	thumb_func_end sub_0800A870
 
-	thumb_func_start sub_0800A8D4
-sub_0800A8D4: @ 0x0800A8D4
+	thumb_func_start SetLinkStandbyCallback
+SetLinkStandbyCallback: @ 0x0800A8D4
 	push {lr}
 	ldr r0, _0800A8E4
 	ldrb r0, [r0]
@@ -3430,7 +3430,7 @@ _0800A8FA:
 _0800A900: .4byte 0x030031E0
 _0800A904: .4byte 0x0800A90D
 _0800A908: .4byte 0x03003184
-	thumb_func_end sub_0800A8D4
+	thumb_func_end SetLinkStandbyCallback
 
 	thumb_func_start sub_0800A90C
 sub_0800A90C: @ 0x0800A90C

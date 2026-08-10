@@ -2483,7 +2483,7 @@ _081D5E5C: .4byte 0x03005AF0
 	thumb_func_start sub_081D5E60
 sub_081D5E60: @ 0x081D5E60
 	push {lr}
-	bl sub_081D5ED4
+	bl OnTrainerHillEReaderChallengeFloor
 	cmp r0, #1
 	bne _081D5E74
 	ldr r0, _081D5E78
@@ -2546,8 +2546,8 @@ _081D5ECC: .4byte 0x03005AF0
 _081D5ED0: .4byte 0x00000EF9
 	thumb_func_end nullsub_2
 
-	thumb_func_start sub_081D5ED4
-sub_081D5ED4: @ 0x081D5ED4
+	thumb_func_start OnTrainerHillEReaderChallengeFloor
+OnTrainerHillEReaderChallengeFloor: @ 0x081D5ED4
 	push {lr}
 	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
@@ -2573,7 +2573,7 @@ _081D5F02:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081D5ED4
+	thumb_func_end OnTrainerHillEReaderChallengeFloor
 
 	thumb_func_start sub_081D5F08
 sub_081D5F08: @ 0x081D5F08

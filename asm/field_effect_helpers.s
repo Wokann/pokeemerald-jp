@@ -592,7 +592,7 @@ FldEff_Shadow: @ 0x0815427C
 	ldrb r0, [r5]
 	ldrb r1, [r5, #4]
 	ldrb r2, [r5, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _0815430C
@@ -1384,7 +1384,7 @@ FldEff_ShortGrass: @ 0x081548A8
 	ldrb r0, [r6]
 	ldrb r1, [r6, #4]
 	ldrb r2, [r6, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	lsls r1, r0, #3
@@ -1843,7 +1843,7 @@ FldEff_Splash: @ 0x08154C28
 	ldrb r0, [r6]
 	ldrb r1, [r6, #4]
 	ldrb r2, [r6, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	lsls r1, r0, #3
@@ -2108,7 +2108,7 @@ FldEff_FeetInFlowingWater: @ 0x08154E38
 	ldrb r0, [r7]
 	ldrb r1, [r7, #4]
 	ldrb r2, [r7, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	lsls r1, r0, #3
@@ -2327,7 +2327,7 @@ FldEff_HotSpringsWater: @ 0x08154FF0
 	ldrb r0, [r6]
 	ldrb r1, [r6, #4]
 	ldrb r2, [r6, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	lsls r1, r0, #3
@@ -3452,7 +3452,7 @@ FldEff_SandPile: @ 0x0815583C
 	ldrb r0, [r7]
 	ldrb r1, [r7, #4]
 	ldrb r2, [r7, #8]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	lsls r1, r0, #3

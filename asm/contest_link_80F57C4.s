@@ -686,7 +686,7 @@ _080F660C:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080F66D2
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]
@@ -1852,7 +1852,7 @@ sub_080F6F40: @ 0x080F6F40
 	bne _080F6F92
 	ldr r0, _080F6F7C
 	bl sub_080F78E8
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r0, _080F6F80
 	str r0, [r4]
 	b _080F6F92
@@ -6084,7 +6084,7 @@ sub_080F901C: @ 0x080F901C
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, _080F903C
 	lsls r0, r4, #2
 	adds r0, r0, r4

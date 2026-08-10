@@ -2395,13 +2395,13 @@ _080379B4:
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _080379E8
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _08037A5A
 	.align 2, 0
 _080379E0: .4byte 0x02037C74
 _080379E4: .4byte 0x0300319C
 _080379E8:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _08037A5A
 _080379EE:
 	ldr r0, _08037A24
@@ -4851,7 +4851,7 @@ _08038DE0:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _08038E7A
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _08038DFC
 	movs r1, #0
 	bl sub_0814FA04
@@ -4875,7 +4875,7 @@ _08038E1A:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08038E26
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _08038E26:
 	ldr r1, _08038E34
 _08038E28:
@@ -5364,7 +5364,7 @@ _0803923E:
 	ands r0, r1
 	cmp r0, #0
 	beq _08039268
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _08039278
 	movs r1, #0
 	bl sub_0814FA04
@@ -5399,7 +5399,7 @@ _0803928E:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _080392AA
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _080392AA:
 	ldr r1, _080392C0
 	ldrb r0, [r1]
@@ -5506,7 +5506,7 @@ _0803935C:
 	ands r0, r1
 	cmp r0, #0
 	beq _0803939E
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _080393B4
 	movs r1, #0
 	bl sub_0814FA04

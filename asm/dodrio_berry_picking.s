@@ -1678,7 +1678,7 @@ _08025428:
 	beq _08025444
 	b _0802545A
 _0802542E:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #7
 	bl sub_0802900C
 	b _08025450

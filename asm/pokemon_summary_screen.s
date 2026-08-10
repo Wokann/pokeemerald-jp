@@ -5035,7 +5035,7 @@ Summary_SetDexNumberColor: @ 0x081C1BC0
 	movs r1, #1
 	movs r2, #4
 	movs r3, #8
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 	b _081C1BF4
 _081C1BE0:
 	movs r0, #8
@@ -5046,7 +5046,7 @@ _081C1BE0:
 	movs r1, #1
 	movs r2, #4
 	movs r3, #8
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 _081C1BF4:
 	movs r0, #3
 	bl ScheduleBgCopyTilemapToVram

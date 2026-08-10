@@ -418,7 +418,7 @@ _080FBC58:
 	asrs r0, r0, #0x10
 	cmp r0, #0x96
 	bne _080FBD48
-	bl pal_fill_black
+	bl FadeInFromBlack
 	movs r0, #0
 	strh r0, [r4, #2]
 	movs r0, #2
@@ -845,8 +845,8 @@ _080FBFCE:
 	.align 2, 0
 	thumb_func_end sub_080FBF5C
 
-	thumb_func_start sub_080FBFD8
-sub_080FBFD8: @ 0x080FBFD8
+	thumb_func_start FieldCB_ShowPortholeView
+FieldCB_ShowPortholeView: @ 0x080FBFD8
 	push {lr}
 	bl sub_080FBF5C
 	ldr r2, _080FC008
@@ -860,7 +860,7 @@ sub_080FBFD8: @ 0x080FBFD8
 	movs r2, #0x20
 	orrs r1, r2
 	strb r1, [r0, #1]
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080FC010
 	movs r1, #0x50
 	bl CreateTask
@@ -871,7 +871,7 @@ sub_080FBFD8: @ 0x080FBFD8
 _080FC008: .4byte 0x02036FF0
 _080FC00C: .4byte 0x02037230
 _080FC010: .4byte 0x080FBE59
-	thumb_func_end sub_080FBFD8
+	thumb_func_end FieldCB_ShowPortholeView
 
 	thumb_func_start sub_080FC014
 sub_080FC014: @ 0x080FC014
@@ -894,7 +894,7 @@ sub_080FC014: @ 0x080FC014
 	movs r0, #0
 	bl SetDynamicWarp
 	bl sub_080FBE0C
-	bl sub_080AF1B4
+	bl DoPortholeWarp
 	pop {r0}
 	bx r0
 	.align 2, 0

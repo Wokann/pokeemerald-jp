@@ -821,7 +821,7 @@ FieldCb_ReturnToPcMenu: @ 0x080C6E34
 	bl _call_via_r4
 	adds r0, r5, #0
 	bl SetVBlankCallback
-	bl pal_fill_black
+	bl FadeInFromBlack
 	pop {r4, r5}
 	pop {r0}
 	bx r0

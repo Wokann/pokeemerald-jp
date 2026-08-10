@@ -104,7 +104,7 @@ _080FD974: .4byte 0x02039DC0
 	thumb_func_start MapPostLoadHook_UseItem
 MapPostLoadHook_UseItem: @ 0x080FD978
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080FD98C
 	movs r1, #8
 	bl CreateTask
@@ -1339,7 +1339,7 @@ sub_080FE278: @ 0x080FE278
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -1352,7 +1352,7 @@ sub_080FE278: @ 0x080FE278
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -1364,7 +1364,7 @@ sub_080FE278: @ 0x080FE278
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -1390,7 +1390,7 @@ sub_080FE2E8: @ 0x080FE2E8
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -1432,7 +1432,7 @@ sub_080FE330: @ 0x080FE330
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18

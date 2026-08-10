@@ -1978,8 +1978,8 @@ _08084E74: .4byte 0x0852AB14
 _08084E78: .4byte 0x03005AEC
 	thumb_func_end Overworld_SetFlashLevel
 
-	thumb_func_start Overworld_GetFlashLevel
-Overworld_GetFlashLevel: @ 0x08084E7C
+	thumb_func_start GetFlashLevel
+GetFlashLevel: @ 0x08084E7C
 	ldr r0, _08084E88
 	ldr r0, [r0]
 	adds r0, #0x30
@@ -1987,7 +1987,7 @@ Overworld_GetFlashLevel: @ 0x08084E7C
 	bx lr
 	.align 2, 0
 _08084E88: .4byte 0x03005AEC
-	thumb_func_end Overworld_GetFlashLevel
+	thumb_func_end GetFlashLevel
 
 	thumb_func_start SetCurrentMapLayout
 SetCurrentMapLayout: @ 0x08084E8C
@@ -2005,14 +2005,14 @@ _08084EA0: .4byte 0x03005AEC
 _08084EA4: .4byte 0x02036FB8
 	thumb_func_end SetCurrentMapLayout
 
-	thumb_func_start sub_08084EA8
-sub_08084EA8: @ 0x08084EA8
+	thumb_func_start SetObjectEventLoadFlag
+SetObjectEventLoadFlag: @ 0x08084EA8
 	ldr r1, _08084EB0
 	strb r0, [r1]
 	bx lr
 	.align 2, 0
 _08084EB0: .4byte 0x02031F78
-	thumb_func_end sub_08084EA8
+	thumb_func_end SetObjectEventLoadFlag
 
 	thumb_func_start sub_08084EB4
 sub_08084EB4: @ 0x08084EB4
@@ -3324,7 +3324,7 @@ _08085834:
 	.align 2, 0
 _08085844: .4byte 0x03005B0C
 _08085848:
-	bl mapldr_default
+	bl FieldCB_DefaultWarpExit
 _0808584C:
 	ldr r1, _0808585C
 	movs r0, #0
@@ -3460,8 +3460,8 @@ _08085984: .4byte 0x0808576D
 _08085988: .4byte 0x080857C5
 	thumb_func_end CB2_LoadMap2
 
-	thumb_func_start sub_0808598C
-sub_0808598C: @ 0x0808598C
+	thumb_func_start CB2_ReturnToFieldContestHall
+CB2_ReturnToFieldContestHall: @ 0x0808598C
 	push {r4, lr}
 	ldr r0, _080859D0
 	movs r1, #0x87
@@ -3494,10 +3494,10 @@ _080859CA:
 _080859D0: .4byte 0x03002360
 _080859D4: .4byte 0x0808576D
 _080859D8: .4byte 0x080857C5
-	thumb_func_end sub_0808598C
+	thumb_func_end CB2_ReturnToFieldContestHall
 
-	thumb_func_start sub_080859DC
-sub_080859DC: @ 0x080859DC
+	thumb_func_start CB2_ReturnToFieldCableClub
+CB2_ReturnToFieldCableClub: @ 0x080859DC
 	push {lr}
 	bl FieldClearVBlankHBlankCallbacks
 	ldr r0, _080859F4
@@ -3511,7 +3511,7 @@ sub_080859DC: @ 0x080859DC
 _080859F4: .4byte 0x03005B0C
 _080859F8: .4byte 0x080AEC11
 _080859FC: .4byte 0x08085A01
-	thumb_func_end sub_080859DC
+	thumb_func_end CB2_ReturnToFieldCableClub
 
 	thumb_func_start c2_80567AC
 c2_80567AC: @ 0x08085A00
@@ -3706,7 +3706,7 @@ sub_08085B6C: @ 0x08085B6C
 	bne _08085B8A
 	bl ShowMapNamePopup
 _08085B8A:
-	bl sub_080AECC4
+	bl FieldCB_WarpExitFadeFromBlack
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -3750,7 +3750,7 @@ _08085BDC:
 _08085BEA:
 	bl LoadSaveblockEventObjScripts
 _08085BEE:
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	bl DoTimeBasedEvents
 	bl sub_08084110
 	ldr r0, _08085C0C
@@ -3897,7 +3897,7 @@ InitCurrentFlashLevelScanlineEffect: @ 0x08085D14
 	.align 2, 0
 _08085D34: .4byte 0x0830FD08
 _08085D38:
-	bl Overworld_GetFlashLevel
+	bl GetFlashLevel
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0

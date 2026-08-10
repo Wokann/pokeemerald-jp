@@ -719,7 +719,7 @@ sub_0809F2D8: @ 0x0809F2D8
 	bl InitStartMenuStep
 	cmp r0, #0
 	beq _0809F2EA
-	bl sub_080AEF84
+	bl ReturnToFieldOpenStartMenu
 	movs r0, #1
 	b _0809F2EC
 _0809F2EA:
@@ -729,8 +729,8 @@ _0809F2EC:
 	bx r1
 	thumb_func_end sub_0809F2D8
 
-	thumb_func_start sub_0809F2F0
-sub_0809F2F0: @ 0x0809F2F0
+	thumb_func_start ShowReturnToFieldStartMenu
+ShowReturnToFieldStartMenu: @ 0x0809F2F0
 	ldr r1, _0809F300
 	movs r0, #0
 	strb r0, [r1]
@@ -743,10 +743,10 @@ sub_0809F2F0: @ 0x0809F2F0
 _0809F300: .4byte 0x020372B9
 _0809F304: .4byte 0x03005B10
 _0809F308: .4byte 0x0809F2D9
-	thumb_func_end sub_0809F2F0
+	thumb_func_end ShowReturnToFieldStartMenu
 
-	thumb_func_start sub_0809F30C
-sub_0809F30C: @ 0x0809F30C
+	thumb_func_start Task_ShowStartMenu
+Task_ShowStartMenu: @ 0x0809F30C
 	push {r4, r5, lr}
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
@@ -796,7 +796,7 @@ _0809F36A:
 	bx r0
 	.align 2, 0
 _0809F370: .4byte 0x03005B54
-	thumb_func_end sub_0809F30C
+	thumb_func_end Task_ShowStartMenu
 
 	thumb_func_start ShowStartMenu
 ShowStartMenu: @ 0x0809F374
@@ -804,7 +804,7 @@ ShowStartMenu: @ 0x0809F374
 	bl IsUpdateLinkStateCBActive
 	cmp r0, #0
 	bne _0809F38A
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B1C8
 	bl sub_0808B658
 _0809F38A:

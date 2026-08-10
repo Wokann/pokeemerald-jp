@@ -239,7 +239,7 @@ _080FCF10:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080FCF24
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _080FCF1E:
 	ldrh r0, [r4]
 	adds r0, #1

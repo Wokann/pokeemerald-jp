@@ -2979,7 +2979,7 @@ _08128080:
 	adds r0, r6, #0
 	adds r1, r5, #0
 	bl SetUpPlacingDecorationPlayerAvatar
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldrb r1, [r4, #8]
 	movs r0, #0x7f
 	ands r0, r1
@@ -4531,7 +4531,7 @@ _08128CB0: .4byte 0x081275F9
 sub_08128CB4: @ 0x08128CB4
 	push {r4, lr}
 	bl LockPlayerFieldControls
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _08128CE8
 	movs r1, #8
 	bl CreateTask
@@ -6196,7 +6196,7 @@ _08129944:
 	bl LockPlayerFieldControls
 	adds r0, r5, #0
 	bl IdentifyOwnedDecorationsCurrentlyInUseInternal
-	bl pal_fill_black
+	bl FadeInFromBlack
 	movs r0, #3
 	strh r0, [r4, #0xc]
 	b _08129984
@@ -6408,7 +6408,7 @@ _08129ADA:
 _08129AF8: .4byte 0x02037C74
 _08129AFC:
 	bl SetUpPuttingAwayDecorationPlayerAvatar
-	bl pal_fill_black
+	bl FadeInFromBlack
 	movs r0, #2
 	strh r0, [r4, #4]
 	b _08129B1E
@@ -7483,7 +7483,7 @@ _0812A33C: .4byte 0x08126B49
 	thumb_func_start sub_0812A340
 sub_0812A340: @ 0x0812A340
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	movs r0, #0
 	movs r1, #1
 	bl DrawDialogueFrame

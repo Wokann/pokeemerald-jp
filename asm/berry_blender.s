@@ -1271,7 +1271,7 @@ _0807FC00:
 	adds r1, r1, r5
 	movs r2, #0x10
 	bl memcpy
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, [r4]
 	movs r3, #0x84
 	lsls r3, r3, #1
@@ -1609,7 +1609,7 @@ _0807FED8:
 	.align 2, 0
 _0807FEE8: .4byte 0x0830FB1C
 _0807FEEC:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _0807FF00
 _0807FEF2:
 	bl IsLinkTaskFinished
@@ -5720,7 +5720,7 @@ _08081F40: @ jump table
 	.4byte _0808201C @ case 5
 	.4byte _08082036 @ case 6
 _08081F5C:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _08081F70
 	ldr r2, [r0]
 	movs r3, #0xd0
@@ -5767,7 +5767,7 @@ _08081FB0:
 	str r0, [r1]
 	cmp r0, #0xa
 	bne _08082058
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r1, [r4]
 	movs r3, #0xd0
 	lsls r3, r3, #1
@@ -6025,7 +6025,7 @@ _080821C6:
 	ldr r1, _080821E0
 	movs r2, #0
 	bl Blender_PrintText
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _080822D6
 	.align 2, 0
 _080821DC: .4byte 0x000011B4
@@ -6074,7 +6074,7 @@ _08082234:
 	ldrb r0, [r1]
 	adds r0, #1
 	strb r0, [r1]
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _080822F8
 _08082244:
 	bl IsLinkTaskFinished
@@ -6141,7 +6141,7 @@ _080822C0:
 	str r0, [r1]
 	cmp r0, #0x1e
 	ble _080822F8
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _080822D6:
 	ldr r1, [r6]
 _080822D8:

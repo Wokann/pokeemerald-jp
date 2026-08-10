@@ -2399,14 +2399,14 @@ sub_080583C0: @ 0x080583C0
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _08058400
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _08058404
 	.align 2, 0
 _080583F4: .4byte 0x02037C74
 _080583F8: .4byte 0x02022C90
 _080583FC: .4byte 0x0300319C
 _08058400:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _08058404:
 	ldr r1, _08058414
 	ldr r0, _08058418

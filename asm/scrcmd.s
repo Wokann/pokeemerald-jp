@@ -1355,7 +1355,7 @@ ScrCmd_animateflash: @ 0x080995F8
 	adds r1, #1
 	str r1, [r0, #8]
 	adds r0, r2, #0
-	bl sub_080AF998
+	bl AnimateFlash
 	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
@@ -1972,7 +1972,7 @@ ScrCmd_warpteleport: @ 0x08099A50
 	adds r2, r6, #0
 	adds r3, r4, #0
 	bl SetWarpDestination
-	bl sub_080AF144
+	bl DoTeleportTileWarp
 	bl ResetInitialPlayerAvatarState
 	movs r0, #1
 	add sp, #4
@@ -2037,7 +2037,7 @@ ScrCmd_warpD7: @ 0x08099AD8
 	adds r2, r6, #0
 	adds r3, r4, #0
 	bl SetWarpDestination
-	bl sub_080AF178
+	bl DoMossdeepGymWarp
 	bl ResetInitialPlayerAvatarState
 	movs r0, #1
 	add sp, #4
@@ -3297,7 +3297,7 @@ ScrCmd_releaseall: @ 0x0809A4CC
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -3308,7 +3308,7 @@ ScrCmd_releaseall: @ 0x0809A4CC
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	movs r0, #0
 	pop {r1}
 	bx r1
@@ -3337,7 +3337,7 @@ _0809A526:
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -3347,7 +3347,7 @@ _0809A526:
 	adds r0, r0, r4
 	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	movs r0, #0
 	pop {r4}
 	pop {r1}
@@ -5637,7 +5637,7 @@ ScrCmd_warpD1: @ 0x0809B5B4
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	bl sub_0808C9E4
-	bl sub_080AFB40
+	bl DoSpinEnterWarp
 	bl ResetInitialPlayerAvatarState
 	movs r0, #1
 	add sp, #4
@@ -5821,7 +5821,7 @@ ScrCmd_warpE0: @ 0x0809B72C
 	adds r2, r6, #0
 	adds r3, r4, #0
 	bl SetWarpDestination
-	bl sub_080AF098
+	bl DoWhiteFadeWarp
 	bl ResetInitialPlayerAvatarState
 	movs r0, #1
 	add sp, #4

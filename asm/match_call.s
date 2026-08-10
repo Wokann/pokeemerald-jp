@@ -376,7 +376,7 @@ StartMatchCall: @ 0x08195CA8
 	cmp r0, #0
 	bne _08195CC2
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B1C8
 	bl sub_0808B658
 _08195CC2:
@@ -803,7 +803,7 @@ sub_08195FF0: @ 0x08195FF0
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -814,7 +814,7 @@ sub_08195FF0: @ 0x08195FF0
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 _08196046:
 	movs r0, #1

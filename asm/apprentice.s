@@ -2522,7 +2522,7 @@ _081A0B60: .4byte 0x081A08FD
 Script_PrintMessage: @ 0x081A0B64
 	push {lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B1C8
 	bl sub_0808B658
 	movs r0, #0

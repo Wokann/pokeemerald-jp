@@ -2534,7 +2534,7 @@ _0802B9E2:
 	ands r0, r1
 	cmp r0, #0
 	bne _0802BA18
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _0802B9F2:
 	ldr r0, _0802BA04
 	ldr r1, [r0]

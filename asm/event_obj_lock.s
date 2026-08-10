@@ -3,8 +3,8 @@
 .text
 .syntax unified
 
-	thumb_func_start walkrun_is_standing_still
-walkrun_is_standing_still: @ 0x08097D10
+	thumb_func_start IsPlayerStandingStill
+IsPlayerStandingStill: @ 0x08097D10
 	push {lr}
 	ldr r0, _08097D20
 	ldrb r0, [r0, #3]
@@ -20,14 +20,14 @@ _08097D26:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end walkrun_is_standing_still
+	thumb_func_end IsPlayerStandingStill
 
 	thumb_func_start sub_08097D2C
 sub_08097D2C: @ 0x08097D2C
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl walkrun_is_standing_still
+	bl IsPlayerStandingStill
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08097D46
@@ -64,7 +64,7 @@ _08097D6A:
 	thumb_func_start ScriptFreezeEventObjects
 ScriptFreezeEventObjects: @ 0x08097D70
 	push {lr}
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r0, _08097D84
 	movs r1, #0x50
 	bl CreateTask
@@ -88,7 +88,7 @@ sub_08097D88: @ 0x08097D88
 	ldrsh r0, [r5, r1]
 	cmp r0, #0
 	bne _08097DB2
-	bl walkrun_is_standing_still
+	bl IsPlayerStandingStill
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #1
@@ -204,7 +204,7 @@ ScriptUnfreezeObjectEvents: @ 0x08097E7C
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -215,7 +215,7 @@ ScriptUnfreezeObjectEvents: @ 0x08097E7C
 	adds r0, r0, r1
 	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -242,7 +242,7 @@ _08097ECA:
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -252,7 +252,7 @@ _08097ECA:
 	adds r0, r0, r4
 	bl ObjectEventClearHeldMovementIfFinished
 	bl sub_080D2C2C
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -292,7 +292,7 @@ sub_08097F24: @ 0x08097F24
 	lsls r0, r0, #2
 	ldr r1, _08097F40
 	adds r0, r0, r1
-	bl EventObjectClearHeldMovementIfActive
+	bl ObjectEventClearHeldMovementIfActive
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -315,7 +315,7 @@ sub_08097F44: @ 0x08097F44
 	ldrsh r0, [r5, r1]
 	cmp r0, #0
 	bne _08097F70
-	bl walkrun_is_standing_still
+	bl IsPlayerStandingStill
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #1

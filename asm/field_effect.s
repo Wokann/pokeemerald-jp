@@ -2040,12 +2040,12 @@ _080B6150: .4byte 0x080B6155
 	thumb_func_start mapldr_080842E8
 mapldr_080842E8: @ 0x080B6154
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080B6174
 	movs r1, #0
 	bl CreateTask
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r1, _080B6178
 	movs r0, #0
 	str r0, [r1]
@@ -2119,7 +2119,7 @@ _080B61F8: .4byte 0x080B61FD
 mapldr_08084390: @ 0x080B61FC
 	push {r4, lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080B6254
 	movs r1, #0
 	bl CreateTask
@@ -2148,7 +2148,7 @@ mapldr_08084390: @ 0x080B61FC
 	bl EventObjectTurn
 _080B623E:
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r1, _080B6260
 	movs r0, #0
 	str r0, [r1]
@@ -2195,7 +2195,7 @@ _080B6296:
 	cmp r0, #0
 	bne _080B62B0
 	bl UnlockPlayerFieldControls
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	adds r0, r5, #0
 	bl DestroyTask
 _080B62B0:
@@ -2207,13 +2207,13 @@ _080B62B8: .4byte 0x03005B60
 _080B62BC: .4byte 0x02037C74
 	thumb_func_end c3_080843F8
 
-	thumb_func_start sub_080B62C0
-sub_080B62C0: @ 0x080B62C0
+	thumb_func_start FieldCB_FallWarpExit
+FieldCB_FallWarpExit: @ 0x080B62C0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_for_maplights
+	bl WarpFadeInScreen
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r0, _080B62E4
 	movs r1, #0
 	bl CreateTask
@@ -2225,7 +2225,7 @@ sub_080B62C0: @ 0x080B62C0
 	.align 2, 0
 _080B62E4: .4byte 0x080B62ED
 _080B62E8: .4byte 0x03005B0C
-	thumb_func_end sub_080B62C0
+	thumb_func_end FieldCB_FallWarpExit
 
 	thumb_func_start sub_080B62EC
 sub_080B62EC: @ 0x080B62EC
@@ -2571,7 +2571,7 @@ sub_080B6570: @ 0x080B6570
 	strb r0, [r1, #6]
 	bl UnlockPlayerFieldControls
 	bl CameraObjectReset1
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	bl InstallCameraPanAheadCallback
 	ldr r0, _080B65A0
 	bl FindTaskIdByFunc
@@ -2586,8 +2586,8 @@ _080B659C: .4byte 0x02037230
 _080B65A0: .4byte 0x080B62ED
 	thumb_func_end sub_080B6570
 
-	thumb_func_start sub_080B65A4
-sub_080B65A4: @ 0x080B65A4
+	thumb_func_start StartEscalatorWarp
+StartEscalatorWarp: @ 0x080B65A4
 	push {r4, lr}
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
@@ -2616,7 +2616,7 @@ _080B65D0:
 	.align 2, 0
 _080B65D8: .4byte 0x080B65E1
 _080B65DC: .4byte 0x03005B60
-	thumb_func_end sub_080B65A4
+	thumb_func_end StartEscalatorWarp
 
 	thumb_func_start sub_080B65E0
 sub_080B65E0: @ 0x080B65E0
@@ -2652,7 +2652,7 @@ _080B6614: .4byte 0x08537090
 sub_080B6618: @ 0x080B6618
 	push {r4, lr}
 	adds r4, r0, #0
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl CameraObjectReset2
 	ldrb r0, [r4, #0xa]
 	bl StartEscalator
@@ -2866,7 +2866,7 @@ _080B67A4: .4byte 0x020205AC
 sub_080B67A8: @ 0x080B67A8
 	push {lr}
 	bl TryFadeOutOldMapMusic
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -2913,7 +2913,7 @@ _080B6808: .4byte 0x080B65E1
 sub_080B680C: @ 0x080B680C
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_for_maplights
+	bl WarpFadeInScreen
 	bl LockPlayerFieldControls
 	ldr r0, _080B682C
 	movs r1, #0
@@ -3594,8 +3594,8 @@ _080B6D28: .4byte 0x02037230
 _080B6D2C: .4byte 0x080B6C65
 	thumb_func_end dive_3_unknown
 
-	thumb_func_start sub_080B6D30
-sub_080B6D30: @ 0x080B6D30
+	thumb_func_start StartLavaridgeGym1FWarp
+StartLavaridgeGym1FWarp: @ 0x080B6D30
 	push {lr}
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
@@ -3606,7 +3606,7 @@ sub_080B6D30: @ 0x080B6D30
 	bx r0
 	.align 2, 0
 _080B6D44: .4byte 0x080B6D49
-	thumb_func_end sub_080B6D30
+	thumb_func_end StartLavaridgeGym1FWarp
 
 	thumb_func_start sub_080B6D48
 sub_080B6D48: @ 0x080B6D48
@@ -3659,7 +3659,7 @@ sub_080B6DA4: @ 0x080B6DA4
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	adds r5, r1, #0
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl CameraObjectReset2
 	movs r0, #0
 	bl SetCameraPanningCallback
@@ -3888,7 +3888,7 @@ sub_080B6F50: @ 0x080B6F50
 	push {r4, lr}
 	adds r4, r0, #0
 	bl TryFadeOutOldMapMusic
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]
@@ -3940,7 +3940,7 @@ _080B6FBC: .4byte 0x080B6D49
 mapldr_080851BC: @ 0x080B6FC0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_for_maplights
+	bl WarpFadeInScreen
 	bl LockPlayerFieldControls
 	ldr r0, _080B6FE0
 	movs r1, #0
@@ -4006,7 +4006,7 @@ sub_080B7044: @ 0x080B7044
 	adds r5, r0, #0
 	adds r4, r1, #0
 	bl CameraObjectReset2
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r1, _080B7070
 	movs r0, #1
 	strb r0, [r1, #6]
@@ -4121,7 +4121,7 @@ sub_080B7114: @ 0x080B7114
 	movs r0, #0
 	strb r0, [r1, #6]
 	bl UnlockPlayerFieldControls
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	ldr r0, _080B7148
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -4203,8 +4203,8 @@ _080B71C8:
 	bx r0
 	thumb_func_end sub_080B71B0
 
-	thumb_func_start sub_080B71CC
-sub_080B71CC: @ 0x080B71CC
+	thumb_func_start StartLavaridgeGymB1FWarp
+StartLavaridgeGymB1FWarp: @ 0x080B71CC
 	push {lr}
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
@@ -4215,7 +4215,7 @@ sub_080B71CC: @ 0x080B71CC
 	bx r0
 	.align 2, 0
 _080B71E0: .4byte 0x080B71E5
-	thumb_func_end sub_080B71CC
+	thumb_func_end StartLavaridgeGymB1FWarp
 
 	thumb_func_start sub_080B71E4
 sub_080B71E4: @ 0x080B71E4
@@ -4268,7 +4268,7 @@ sub_080B7240: @ 0x080B7240
 	push {r4, r5, lr}
 	adds r5, r0, #0
 	adds r4, r1, #0
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl CameraObjectReset2
 	ldr r1, _080B726C
 	movs r0, #1
@@ -4392,7 +4392,7 @@ sub_080B7324: @ 0x080B7324
 	cmp r0, #0
 	bne _080B7342
 	bl TryFadeOutOldMapMusic
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]
@@ -4512,7 +4512,7 @@ _080B741C:
 StartEscapeRopeFieldEffect: @ 0x080B7420
 	push {lr}
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r0, _080B7438
 	movs r1, #0x50
 	bl CreateTask
@@ -4586,7 +4586,7 @@ EscapeRopeFieldEffect_Step1: @ 0x080B748C
 	cmp r0, #0
 	bne _080B74B8
 	bl TryFadeOutOldMapMusic
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 _080B74B8:
 	ldr r0, _080B7534
 	ldrb r1, [r0, #5]
@@ -4696,9 +4696,9 @@ _080B7598:
 mapldr_080859D4: @ 0x080B75A0
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_for_maplights
+	bl WarpFadeInScreen
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r1, _080B75DC
 	movs r0, #0
 	str r0, [r1]
@@ -4826,7 +4826,7 @@ _080B768A:
 	ands r0, r1
 	strb r0, [r6, #1]
 	bl UnlockPlayerFieldControls
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	ldr r0, _080B76D0
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -4922,7 +4922,7 @@ TeleportFieldEffectTask1: @ 0x080B7764
 	push {r4, lr}
 	adds r4, r0, #0
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl CameraObjectReset2
 	bl GetPlayerFacingDirection
 	lsls r0, r0, #0x18
@@ -5103,7 +5103,7 @@ _080B78C0:
 	adds r0, #1
 	strh r0, [r4, #8]
 	bl TryFadeOutOldMapMusic
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 _080B78D6:
 	add sp, #8
 	pop {r4, r5}
@@ -5167,9 +5167,9 @@ _080B7954: .4byte 0x080B7735
 mapldr_08085D88: @ 0x080B7958
 	push {lr}
 	bl Overworld_PlaySpecialMapMusic
-	bl pal_fill_for_maplights
+	bl WarpFadeInScreen
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r1, _080B7998
 	movs r0, #0
 	str r0, [r1]
@@ -5472,7 +5472,7 @@ sub_080B7B68: @ 0x080B7B68
 	bne _080B7BDC
 	bl UnlockPlayerFieldControls
 	bl CameraObjectReset1
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	ldr r0, _080B7BF0
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -6689,7 +6689,7 @@ sub_080B850C: @ 0x080B850C
 	push {r6}
 	adds r4, r0, #0
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	ldr r5, _080B8564
 	movs r0, #1
 	strb r0, [r5, #6]
@@ -6892,7 +6892,7 @@ sub_080B867C: @ 0x080B867C
 	ldrb r0, [r4, #0x1a]
 	movs r1, #1
 	bl sub_081554E8
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	movs r0, #9
 	bl FieldEffectActiveListRemove
@@ -7499,7 +7499,7 @@ sub_080B8B70: @ 0x080B8B70
 	ldr r0, _080B8BC8
 	adds r4, r4, r0
 	adds r0, r4, #0
-	bl EventObjectClearHeldMovementIfActive
+	bl ObjectEventClearHeldMovementIfActive
 	ldrb r1, [r4, #1]
 	movs r0, #0x11
 	rsbs r0, r0, #0
@@ -7535,7 +7535,7 @@ sub_080B8BCC: @ 0x080B8BCC
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B8BE6
-	bl WarpFadeScreen
+	bl WarpFadeOutScreen
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]

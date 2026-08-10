@@ -5652,8 +5652,8 @@ _081998C2:
 	bx r1
 	thumb_func_end copy_decompressed_tile_data_to_vram
 
-	thumb_func_start sub_081998C8
-sub_081998C8: @ 0x081998C8
+	thumb_func_start SetBgTilemapPalette
+SetBgTilemapPalette: @ 0x081998C8
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -5727,7 +5727,7 @@ _08199940:
 	bx r0
 	.align 2, 0
 _08199950: .4byte 0x00000FFF
-	thumb_func_end sub_081998C8
+	thumb_func_end SetBgTilemapPalette
 
 	thumb_func_start sub_08199954
 sub_08199954: @ 0x08199954
@@ -5893,8 +5893,8 @@ ResetBgPositions: @ 0x08199A30
 	.align 2, 0
 	thumb_func_end ResetBgPositions
 
-	thumb_func_start sub_08199A88
-sub_08199A88: @ 0x08199A88
+	thumb_func_start BgDmaFill
+BgDmaFill: @ 0x08199A88
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -5950,7 +5950,7 @@ _08199AAE:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_08199A88
+	thumb_func_end BgDmaFill
 
 	thumb_func_start AddTextPrinterParameterized3
 AddTextPrinterParameterized3: @ 0x08199AFC

@@ -6662,7 +6662,7 @@ _0800EBD8:
 	adds r1, r4, #0
 	bl sub_08011554
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	b _0800EC92
 	.align 2, 0
 _0800EC34: .4byte 0x00000993
@@ -6827,7 +6827,7 @@ _0800ED24:
 	bls _0800EE1C
 	movs r0, #0x81
 	lsls r0, r0, #8
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	b _0800EE1C
 	.align 2, 0
 _0800ED80: .4byte 0x030050A0
@@ -7197,7 +7197,7 @@ _0800F04C:
 	adds r1, r4, #0
 	bl sub_08011554
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 _0800F078:
 	ldr r0, _0800F0DC
 	strb r5, [r0, #5]
@@ -10514,7 +10514,7 @@ _0801096C:
 	adds r1, r4, #0
 	bl sub_08011554
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 _0801097E:
 	pop {r4, r5, r6, r7}
 	pop {r0}
@@ -10916,8 +10916,8 @@ _08010C58: .4byte 0x020226A0
 _08010C5C: .4byte 0x00000996
 	thumb_func_end sub_08010BA8
 
-	thumb_func_start sub_08010C60
-sub_08010C60: @ 0x08010C60
+	thumb_func_start RfuSetErrorParams
+RfuSetErrorParams: @ 0x08010C60
 	push {r4, lr}
 	adds r4, r0, #0
 	ldr r2, _08010C88
@@ -10942,7 +10942,7 @@ _08010C82:
 	.align 2, 0
 _08010C88: .4byte 0x030050A0
 _08010C8C: .4byte 0x030041E0
-	thumb_func_end sub_08010C60
+	thumb_func_end RfuSetErrorParams
 
 	thumb_func_start sub_08010C90
 sub_08010C90: @ 0x08010C90
@@ -11217,7 +11217,7 @@ _08010E5C:
 	cmp r2, #0
 	bne _08010E9C
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	b _08010EA0
 	.align 2, 0
 _08010E8C: .4byte 0x030050A0
@@ -11236,7 +11236,7 @@ _08010EAA:
 	movs r1, #0xf3
 	bl sub_08011554
 	movs r0, #0xf3
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	ldr r0, _08010EC0
 	adds r0, #0xef
 	b _08010EDA
@@ -11244,7 +11244,7 @@ _08010EAA:
 _08010EC0: .4byte 0x030050A0
 _08010EC4:
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	movs r0, #1
 	adds r1, r4, #0
 	bl sub_08011554
@@ -11445,7 +11445,7 @@ _08011034:
 	cmp r0, #1
 	bne _080110CE
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	b _080110CE
 	.align 2, 0
 _08011050: .4byte 0x030050A0
@@ -11485,7 +11485,7 @@ _0801109C:
 	movs r1, #0xf3
 	bl sub_08011554
 	movs r0, #0xf3
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	ldr r0, _080110B0
 	adds r0, #0xef
 	b _080110CA
@@ -11496,7 +11496,7 @@ _080110B4:
 	adds r1, r4, #0
 	bl sub_08011554
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	ldr r0, _080110D4
 	ldr r1, _080110D8
 	adds r0, r0, r1
@@ -11984,7 +11984,7 @@ _08011448:
 	cmp r0, #0
 	bne _08011480
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	b _080114A4
 	.align 2, 0
 _08011470: .4byte 0x030050A0
@@ -12005,7 +12005,7 @@ _08011486:
 	cmp r0, #1
 	bne _080114A4
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	movs r0, #0
 	bl sub_0800BD38
 _080114A4:
@@ -12052,7 +12052,7 @@ _080114FC:
 	movs r1, #0xf3
 	bl sub_08011554
 	movs r0, #0xf3
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	ldr r0, _08011514
 	adds r0, #0xef
 	movs r1, #1
@@ -12061,7 +12061,7 @@ _080114FC:
 _08011514: .4byte 0x030050A0
 _08011518:
 	adds r0, r4, #0
-	bl sub_08010C60
+	bl RfuSetErrorParams
 	movs r0, #1
 	adds r1, r4, #0
 	bl sub_08011554

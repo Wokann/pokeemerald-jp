@@ -156,13 +156,13 @@ sub_081C7A8C: @ 0x081C7A8C
 	ldrh r2, [r5, #6]
 	movs r1, #0x11
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	ldrb r0, [r5]
 	ldrh r2, [r5, #6]
 	adds r2, #1
 	movs r1, #0x44
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	ldrb r0, [r5]
 	adds r1, r5, #0
 	adds r1, #0x88

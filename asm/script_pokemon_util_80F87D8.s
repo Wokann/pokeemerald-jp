@@ -543,7 +543,7 @@ _080F944A:
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r2, _080F94AC
@@ -1168,7 +1168,7 @@ _080F9950:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080F9964
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _080F995E:
 	ldrh r0, [r4, #8]
 	adds r0, #1

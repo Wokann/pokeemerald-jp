@@ -188,7 +188,7 @@ _081CAB84:
 	movs r1, #0
 	movs r2, #0
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	adds r1, r5, #0
 	adds r1, #0x24
 	movs r0, #1
@@ -3096,12 +3096,12 @@ sub_081CC170: @ 0x081CC170
 	movs r1, #0
 	movs r2, #0x40
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	movs r0, #1
 	movs r1, #0x11
 	movs r2, #0x41
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	add r1, sp, #4
 	movs r2, #0x82
 	lsls r2, r2, #5
@@ -5977,12 +5977,12 @@ _081CD7D4:
 	movs r1, #0
 	movs r2, #0
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	movs r0, #1
 	movs r1, #0x11
 	movs r2, #1
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	movs r0, #0
 	str r0, [sp, #8]
 	ldr r2, _081CD808

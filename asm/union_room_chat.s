@@ -981,7 +981,7 @@ _0801E384:
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E3E0
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r0, _0801E3A4
 	ldr r1, [r0]
 	strh r4, [r1, #0xa]
@@ -1073,7 +1073,7 @@ _0801E428:
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E486
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, [r5]
 	strh r4, [r1, #0xa]
 	b _0801E466
@@ -1190,7 +1190,7 @@ _0801E514:
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E580
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r0, _0801E544
 	ldr r1, [r0]
 	strh r4, [r1, #0xa]

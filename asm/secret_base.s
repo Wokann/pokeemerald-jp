@@ -860,7 +860,7 @@ EnterNewlyCreatedSecretBase_StartFadeIn: @ 0x080E9D94
 	movs r2, #0
 	ldrsh r1, [r4, r2]
 	bl CurrentMapDrawMetatileAt
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080E9DF4
 	movs r1, #0
 	bl CreateTask

@@ -40,7 +40,7 @@ _081A86EE:
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -190,7 +190,7 @@ _081A87F4:
 	ldr r2, [r6]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0x10
@@ -351,7 +351,7 @@ _081A8934:
 	ldr r2, [r1]
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
 	cmp r2, #0x10

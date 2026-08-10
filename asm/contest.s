@@ -781,7 +781,7 @@ _080D7530:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D75CA
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _080D7550
 	adds r1, r6, r5
 	lsls r1, r1, #3

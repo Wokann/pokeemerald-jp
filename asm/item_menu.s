@@ -5206,7 +5206,7 @@ _081AD348:
 	cmp r6, #1
 	bne _081AD3BC
 	bl LockPlayerFieldControls
-	bl FreezeEventObjects
+	bl FreezeObjectEvents
 	bl sub_0808B1C8
 	bl sub_0808B658
 	ldr r2, _081AD3B4

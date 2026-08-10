@@ -166,8 +166,8 @@ _0808CE8E:
 	bx r1
 	thumb_func_end GetFirstInactiveEventObjectId
 
-	thumb_func_start GetEventObjectIdByLocalIdAndMap
-GetEventObjectIdByLocalIdAndMap: @ 0x0808CE94
+	thumb_func_start GetObjectEventIdByLocalIdAndMap
+GetObjectEventIdByLocalIdAndMap: @ 0x0808CE94
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -186,7 +186,7 @@ _0808CEB0:
 	lsrs r0, r0, #0x18
 	pop {r1}
 	bx r1
-	thumb_func_end GetEventObjectIdByLocalIdAndMap
+	thumb_func_end GetObjectEventIdByLocalIdAndMap
 
 	thumb_func_start TryGetEventObjectIdByLocalIdAndMap
 TryGetEventObjectIdByLocalIdAndMap: @ 0x0808CEB8
@@ -198,7 +198,7 @@ TryGetEventObjectIdByLocalIdAndMap: @ 0x0808CEB8
 	lsrs r1, r1, #0x18
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	strb r0, [r4]
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -13355,7 +13355,7 @@ EventObjectForceSetHeldMovement: @ 0x08092B78
 	adds r5, r0, #0
 	lsls r4, r1, #0x18
 	lsrs r4, r4, #0x18
-	bl EventObjectClearHeldMovementIfActive
+	bl ObjectEventClearHeldMovementIfActive
 	adds r0, r5, #0
 	adds r1, r4, #0
 	bl ObjectEventSetHeldMovement
@@ -13365,8 +13365,8 @@ EventObjectForceSetHeldMovement: @ 0x08092B78
 	.align 2, 0
 	thumb_func_end EventObjectForceSetHeldMovement
 
-	thumb_func_start EventObjectClearHeldMovementIfActive
-EventObjectClearHeldMovementIfActive: @ 0x08092B94
+	thumb_func_start ObjectEventClearHeldMovementIfActive
+ObjectEventClearHeldMovementIfActive: @ 0x08092B94
 	push {lr}
 	adds r1, r0, #0
 	ldrb r0, [r1]
@@ -13379,7 +13379,7 @@ _08092BA6:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end EventObjectClearHeldMovementIfActive
+	thumb_func_end ObjectEventClearHeldMovementIfActive
 
 	thumb_func_start EventObjectClearHeldMovement
 EventObjectClearHeldMovement: @ 0x08092BAC
@@ -13439,7 +13439,7 @@ ObjectEventClearHeldMovementIfFinished: @ 0x08092BF4
 	cmp r4, #0x10
 	beq _08092C0E
 	adds r0, r5, #0
-	bl EventObjectClearHeldMovementIfActive
+	bl ObjectEventClearHeldMovementIfActive
 _08092C0E:
 	adds r0, r4, #0
 	pop {r4, r5}
@@ -23042,8 +23042,8 @@ _08096DFE:
 	bx r1
 	thumb_func_end FreezeEventObject
 
-	thumb_func_start FreezeEventObjects
-FreezeEventObjects: @ 0x08096E04
+	thumb_func_start FreezeObjectEvents
+FreezeObjectEvents: @ 0x08096E04
 	push {r4, r5, lr}
 	movs r4, #0
 	ldr r5, _08096E38
@@ -23074,7 +23074,7 @@ _08096E28:
 	.align 2, 0
 _08096E38: .4byte 0x02036FF0
 _08096E3C: .4byte 0x02037230
-	thumb_func_end FreezeEventObjects
+	thumb_func_end FreezeObjectEvents
 
 	thumb_func_start FreezeEventObjectsExceptOne
 FreezeEventObjectsExceptOne: @ 0x08096E40
@@ -23169,8 +23169,8 @@ _08096EE4: .4byte 0x00000101
 _08096EE8: .4byte 0x020205AC
 	thumb_func_end UnfreezeEventObject
 
-	thumb_func_start UnfreezeEventObjects
-UnfreezeEventObjects: @ 0x08096EEC
+	thumb_func_start UnfreezeObjectEvents
+UnfreezeObjectEvents: @ 0x08096EEC
 	push {r4, r5, lr}
 	movs r4, #0
 	ldr r5, _08096F18
@@ -23196,7 +23196,7 @@ _08096F08:
 	bx r0
 	.align 2, 0
 _08096F18: .4byte 0x02036FF0
-	thumb_func_end UnfreezeEventObjects
+	thumb_func_end UnfreezeObjectEvents
 
 	thumb_func_start Step1
 Step1: @ 0x08096F1C

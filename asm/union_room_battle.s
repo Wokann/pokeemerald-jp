@@ -2554,7 +2554,7 @@ _0801A97A:
 _0801A9AC: .4byte 0x0202207C
 _0801A9B0: .4byte 0x03002360
 _0801A9B4:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r4, _0801A9D8
 	bl GetMultiplayerId
 	lsls r0, r0, #0x18
@@ -2589,7 +2589,7 @@ _0801A9F8:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801AA82
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r1, _0801AA10
 	movs r2, #0x87
 	lsls r2, r2, #3

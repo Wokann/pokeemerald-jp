@@ -168,7 +168,7 @@ _08076C8A:
 	thumb_func_start sub_08076C90
 sub_08076C90: @ 0x08076C90
 	push {lr}
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -582,7 +582,7 @@ _08077008:
 _08077032:
 	movs r0, #1
 	bl sub_0800FF8C
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _0807752A
 	.align 2, 0
 _08077040: .4byte 0x030031C4
@@ -4318,7 +4318,7 @@ sub_08078EA4: @ 0x08078EA4
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08078EC8
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _08078ECE
 	.align 2, 0
 _08078EC0: .4byte 0x02037C74
@@ -4403,7 +4403,7 @@ sub_08078F64: @ 0x08078F64
 	bl sub_08079AD4
 	cmp r0, #0
 	bne _08078F88
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	ldr r0, _08078F8C
 	ldr r0, [r0]
 	adds r0, #0x6f
@@ -14973,7 +14973,7 @@ _0807EA04: .4byte 0x0300319C
 _0807EA08: .4byte 0x03002360
 _0807EA0C: .4byte 0x08076DB5
 _0807EA10:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _0807EA14:
 	ldr r1, _0807EA24
 	movs r2, #0x87

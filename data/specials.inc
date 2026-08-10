@@ -19,8 +19,8 @@ gSpecials:
 .endif
 	def_special HealPlayerParty
 	def_special SetCableClubWarp
-	def_special sub_080AF244
-	def_special sub_080AF2F4
+	def_special DoCableClubWarp
+	def_special ReturnFromLinkRoom
 	def_special CleanupLinkRoomState
 	def_special ExitLinkRoom
 	def_special SetPlayerSecretBase
@@ -298,8 +298,8 @@ gSpecials:
 	def_special GetSecretBaseNearbyMapName
 	def_special CheckRelicanthWailord
 	def_special ShouldDoBrailleRegirockEffectOld
-	def_special sub_080AFE30
-	def_special sub_080AFE88
+	def_special DoOrbEffect
+	def_special FadeOutOrbEffect
 	def_special WaitWeather, waitstate=1
 	def_special BufferEReaderTrainerName
 	def_special GetSlotMachineId
@@ -316,7 +316,7 @@ gSpecials:
 	def_special InitRoamer
 	def_special TryUpdateRusturfTunnelState
 	def_special IsGrassTypeInParty
-	def_special sub_080AF55C
+	def_special DoContestHallWarp
 	def_special PutZigzagoonInPlayerParty
 	def_special IsStarterInParty
 	def_special DeleteRegistry_Yes
@@ -348,7 +348,7 @@ gSpecials:
 	def_special nullsub_54
 	def_special MoveOutOfSecretBaseFromOutside
 	def_special LoadPlayerBag
-	def_special sub_080AFEB0
+	def_special Script_FadeOutMapMusic
 	def_special SetPacifidlogTMReceivedDay
 	def_special GetDaysUntilPacifidlogTMAvailable
 	def_special HasAllHoennMons

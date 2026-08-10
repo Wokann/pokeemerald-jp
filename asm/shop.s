@@ -293,7 +293,7 @@ _080DF228: .4byte 0x02037C74
 	thumb_func_start MapPostLoadHook_ReturnToShopMenu
 MapPostLoadHook_ReturnToShopMenu: @ 0x080DF22C
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _080DF240
 	movs r1, #8
 	bl CreateTask

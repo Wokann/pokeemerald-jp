@@ -1352,7 +1352,7 @@ IsPlayerCollidingWithFarawayIslandMew: @ 0x0808AC88
 	movs r0, #1
 	movs r1, #0x39
 	movs r2, #0x1a
-	bl GetEventObjectIdByLocalIdAndMap
+	bl GetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
 	adds r6, r4, #0
@@ -3171,8 +3171,8 @@ _0808BA04: .4byte 0x02036FF0
 _0808BA08: .4byte 0x02037230
 	thumb_func_end InitPlayerAvatar
 
-	thumb_func_start sub_0808BA0C
-sub_0808BA0C: @ 0x0808BA0C
+	thumb_func_start SetPlayerInvisibility
+SetPlayerInvisibility: @ 0x0808BA0C
 	push {r4, r5, r6, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
@@ -3224,7 +3224,7 @@ _0808BA64:
 _0808BA6C: .4byte 0x02036FF0
 _0808BA70: .4byte 0x02037230
 _0808BA74: .4byte 0x020205AC
-	thumb_func_end sub_0808BA0C
+	thumb_func_end SetPlayerInvisibility
 
 	thumb_func_start SetPlayerAvatarFieldMove
 SetPlayerAvatarFieldMove: @ 0x0808BA78
@@ -4287,7 +4287,7 @@ Fishing2: @ 0x0808C27C
 	lsls r4, r4, #2
 	adds r4, r4, r3
 	adds r0, r4, #0
-	bl EventObjectClearHeldMovementIfActive
+	bl ObjectEventClearHeldMovementIfActive
 	ldrb r0, [r4, #1]
 	movs r1, #8
 	orrs r0, r1
@@ -5037,7 +5037,7 @@ Fishing16: @ 0x0808C89C
 	ldr r0, _0808C8E0
 	strb r1, [r0, #6]
 	bl UnlockPlayerFieldControls
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	movs r0, #0
 	movs r1, #1
 	bl ClearDialogWindowAndFrame
@@ -5211,8 +5211,8 @@ _0808C9FC:
 _0808CA00: .4byte 0x02036FEC
 	thumb_func_end sub_0808C9F0
 
-	thumb_func_start sub_0808CA04
-sub_0808CA04: @ 0x0808CA04
+	thumb_func_start Task_DoPlayerSpinExit
+Task_DoPlayerSpinExit: @ 0x0808CA04
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -5337,10 +5337,10 @@ _0808CAFA:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_0808CA04
+	thumb_func_end Task_DoPlayerSpinExit
 
-	thumb_func_start sub_0808CB04
-sub_0808CB04: @ 0x0808CB04
+	thumb_func_start DoPlayerSpinEntrance
+DoPlayerSpinEntrance: @ 0x0808CB04
 	push {r4, lr}
 	ldr r4, _0808CB20
 	adds r0, r4, #0
@@ -5354,10 +5354,10 @@ sub_0808CB04: @ 0x0808CB04
 	bx r0
 	.align 2, 0
 _0808CB20: .4byte 0x0808CB6D
-	thumb_func_end sub_0808CB04
+	thumb_func_end DoPlayerSpinEntrance
 
-	thumb_func_start sub_0808CB24
-sub_0808CB24: @ 0x0808CB24
+	thumb_func_start IsPlayerSpinEntranceActive
+IsPlayerSpinEntranceActive: @ 0x0808CB24
 	push {lr}
 	ldr r0, _0808CB34
 	bl FuncIsActiveTask
@@ -5367,10 +5367,10 @@ sub_0808CB24: @ 0x0808CB24
 	bx r1
 	.align 2, 0
 _0808CB34: .4byte 0x0808CB6D
-	thumb_func_end sub_0808CB24
+	thumb_func_end IsPlayerSpinEntranceActive
 
-	thumb_func_start sub_0808CB38
-sub_0808CB38: @ 0x0808CB38
+	thumb_func_start DoPlayerSpinExit
+DoPlayerSpinExit: @ 0x0808CB38
 	push {r4, lr}
 	ldr r4, _0808CB54
 	adds r0, r4, #0
@@ -5384,10 +5384,10 @@ sub_0808CB38: @ 0x0808CB38
 	bx r0
 	.align 2, 0
 _0808CB54: .4byte 0x0808CA05
-	thumb_func_end sub_0808CB38
+	thumb_func_end DoPlayerSpinExit
 
-	thumb_func_start sub_0808CB58
-sub_0808CB58: @ 0x0808CB58
+	thumb_func_start IsPlayerSpinExitActive
+IsPlayerSpinExitActive: @ 0x0808CB58
 	push {lr}
 	ldr r0, _0808CB68
 	bl FuncIsActiveTask
@@ -5397,10 +5397,10 @@ sub_0808CB58: @ 0x0808CB58
 	bx r1
 	.align 2, 0
 _0808CB68: .4byte 0x0808CA05
-	thumb_func_end sub_0808CB58
+	thumb_func_end IsPlayerSpinExitActive
 
-	thumb_func_start sub_0808CB6C
-sub_0808CB6C: @ 0x0808CB6C
+	thumb_func_start Task_DoPlayerSpinEntrance
+Task_DoPlayerSpinEntrance: @ 0x0808CB6C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -5596,7 +5596,7 @@ _0808CCEE:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_0808CB6C
+	thumb_func_end Task_DoPlayerSpinEntrance
 
 	thumb_func_start sub_0808CCFC
 sub_0808CCFC: @ 0x0808CCFC

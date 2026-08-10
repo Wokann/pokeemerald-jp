@@ -18,6 +18,7 @@ gFieldCamera = ABSOLUTE(0x03005B30);
 gTotalCameraPixelOffsetX = ABSOLUTE(0x03005B4C);
 gTotalCameraPixelOffsetY = ABSOLUTE(0x03005B48);
 gLinkErrorOccurred = ABSOLUTE(0x0300310C);
+gReceivedRemoteLinkPlayers = ABSOLUTE(0x030031C4);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 gSaveBlock1Ptr = ABSOLUTE(0x03005AEC);
 gFlashMemoryPresent = ABSOLUTE(0x03005AE8);

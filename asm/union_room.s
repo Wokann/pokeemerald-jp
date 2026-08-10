@@ -4165,7 +4165,7 @@ _08014410: .4byte 0x02037C74
 _08014414: .4byte 0x020228E0
 _08014418: .4byte 0x08076DB5
 _0801441C:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #3
 	strh r0, [r7]
 	b _080144BA
@@ -4222,7 +4222,7 @@ _0801448E:
 	bl DestroyTask
 	b _080144BA
 _0801449A:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #8
 	strh r0, [r7]
 	b _080144BA
@@ -4833,7 +4833,7 @@ _080149B0:
 	bl Free
 	ldr r0, [r5, #4]
 	bl Free
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _080149E2:
 	ldrb r0, [r5, #0xc]
 	adds r0, #1
@@ -5253,7 +5253,7 @@ _08014D8C:
 	ldrb r0, [r7, #8]
 	adds r0, #1
 	strb r0, [r7, #8]
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _08014DA8
 _08014D98:
 	bl IsLinkTaskFinished
@@ -5647,7 +5647,7 @@ _080150F0:
 	ldrb r0, [r5, #8]
 	adds r0, #1
 	strb r0, [r5, #8]
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	b _0801510C
 _080150FC:
 	bl IsLinkTaskFinished
@@ -6491,7 +6491,7 @@ _08015894:
 	.align 2, 0
 _080158A0: .4byte 0x082C10A4
 _080158A4:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #0x24
 	bl _0801638A
 _080158AE:
@@ -6610,7 +6610,7 @@ _080159B0:
 	movs r4, #0
 	movs r0, #0x29
 	strb r0, [r6, #0x14]
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	adds r0, r6, #0
 	adds r0, #0x80
 	strh r4, [r0]
@@ -7085,7 +7085,7 @@ _08015DBA:
 _08015DD8: .4byte 0x02021C7C
 _08015DDC: .4byte 0x020228E0
 _08015DE0:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #0x24
 	b _0801638A
 _08015DE8:
@@ -7138,7 +7138,7 @@ _08015E30:
 _08015E4C: .4byte 0x02021C7C
 _08015E50: .4byte 0x020228E0
 _08015E54:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #0xf
 	b _0801638A
 _08015E5C:
@@ -7852,7 +7852,7 @@ _08016430:
 	bne _08016440
 	movs r0, #0x24
 	strb r0, [r4, #0x14]
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	movs r0, #0
 	b _08016442
 _08016440:

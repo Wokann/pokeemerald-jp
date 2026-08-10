@@ -755,7 +755,7 @@ sub_080B21F4: @ 0x080B21F4
 	lsrs r0, r0, #0x10
 	cmp r0, #1
 	bhi _080B2258
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	bl HideFieldMessageBox
 	ldr r0, _080B2254
 	b _080B22C0
@@ -845,14 +845,14 @@ sub_080B22E4: @ 0x080B22E4
 	bl Link_AnyPartnersPlayingRubyOrSapphire
 	cmp r0, #0
 	bne _080B2326
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _080B232A
 	.align 2, 0
 _080B2310: .4byte 0x02037290
 _080B2314:
 	cmp r0, #3
 	bne _080B231E
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _080B232A
 _080B231E:
 	cmp r0, #7
@@ -1042,7 +1042,7 @@ _080B248E:
 	beq _080B24C8
 	movs r0, #0xb
 	strh r0, [r5]
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, _080B24C0
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -1073,7 +1073,7 @@ _080B24C8:
 	.align 2, 0
 _080B24E8: .4byte 0x03005B60
 _080B24EC:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r0, _080B2504
 	lsls r1, r4, #2
 	adds r1, r1, r4
@@ -1466,8 +1466,8 @@ _080B27F4: .4byte 0x00006602
 _080B27F8: .4byte 0x02022C90
 	thumb_func_end sub_080B27D4
 
-	thumb_func_start sub_080B27FC
-sub_080B27FC: @ 0x080B27FC
+	thumb_func_start CreateTask_ReestablishCableClubLink
+CreateTask_ReestablishCableClubLink: @ 0x080B27FC
 	push {lr}
 	ldr r0, _080B2810
 	bl FuncIsActiveTask
@@ -1574,7 +1574,7 @@ _080B28E0:
 _080B28E4: .4byte 0x0202267E
 _080B28E8: .4byte 0x00003322
 _080B28EC: .4byte 0x080B28F1
-	thumb_func_end sub_080B27FC
+	thumb_func_end CreateTask_ReestablishCableClubLink
 
 	thumb_func_start sub_080B28F0
 sub_080B28F0: @ 0x080B28F0
@@ -1705,7 +1705,7 @@ sub_080B29CC: @ 0x080B29CC
 	cmp r0, #1
 	bne _080B29F4
 	bl sub_0800A6DC
-	bl sub_08009AB0
+	bl StartSendingKeysToLink
 	adds r0, r4, #0
 	bl DestroyTask
 _080B29F4:
@@ -1833,7 +1833,7 @@ _080B2AD4:
 	ble _080B2B4C
 	b _080B2AF2
 _080B2AE4:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _080B2AF2
 _080B2AEA:
 	ldr r0, _080B2AFC
@@ -2018,7 +2018,7 @@ _080B2C58:
 	strh r0, [r5]
 	b _080B2CDA
 _080B2C6C:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #6
 	strh r0, [r5]
 	b _080B2CDA
@@ -2103,7 +2103,7 @@ _080B2D1C:
 	beq _080B2D54
 	b _080B2D5A
 _080B2D22:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	bl sub_08009C40
 	cmp r0, #0
 	beq _080B2D34
@@ -2429,7 +2429,7 @@ _080B2FB0:
 	strb r0, [r1]
 	strb r0, [r1, #1]
 	bl m4aMPlayAllStop
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _080B2FC0:
 	ldrh r0, [r4, #8]
 	adds r0, #1
@@ -2505,7 +2505,7 @@ _080B3048:
 	strb r0, [r1]
 	strb r0, [r1, #1]
 	bl m4aMPlayAllStop
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _080B3058:
 	ldrh r0, [r4]
 	adds r0, #1
@@ -2752,7 +2752,7 @@ sub_080B3228: @ 0x080B3228
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, _080B3248
 	lsls r0, r4, #2
 	adds r0, r0, r4

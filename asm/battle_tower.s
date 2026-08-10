@@ -5725,7 +5725,7 @@ _08164C6C: .4byte 0x030031C4
 _08164C70: .4byte 0x0300319C
 _08164C74: .4byte 0x02037290
 _08164C78:
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	ldr r1, _08164C84
 	movs r0, #5
 	b _08164C94
@@ -5761,7 +5761,7 @@ sub_08164CAC: @ 0x08164CAC
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08164CBA
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 _08164CBA:
 	pop {r0}
 	bx r0

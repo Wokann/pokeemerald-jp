@@ -2049,7 +2049,7 @@ _08153620:
 	.align 2, 0
 _0815362C: .4byte 0x030027A0
 _08153630:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #2
 	strh r0, [r4]
 	b _081536FE
@@ -2112,7 +2112,7 @@ _0815369E:
 	bne _081536AA
 	bl ClearContinueGameWarpStatus
 _081536AA:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #8
 	strh r0, [r4]
 	b _081536FE
@@ -2126,7 +2126,7 @@ _081536B4:
 	strh r0, [r4]
 	b _081536FE
 _081536C8:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 	movs r0, #0xa
 	strh r0, [r4]
 	b _081536FE

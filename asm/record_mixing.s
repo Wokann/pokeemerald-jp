@@ -719,7 +719,7 @@ _080E6A44:
 	ldrb r0, [r0]
 	cmp r0, #0
 	bne _080E6A6E
-	bl sub_080B27FC
+	bl CreateTask_ReestablishCableClubLink
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	strh r0, [r5, #0x14]
@@ -2540,7 +2540,7 @@ _080E7864:
 	asrs r0, r0, #0x10
 	cmp r0, #0xa
 	ble _080E78F2
-	bl sub_0800A7F8
+	bl SetCloseLinkCallback
 	b _080E78DA
 _080E7878:
 	ldr r0, _080E7888
@@ -2587,7 +2587,7 @@ _080E78D0:
 	strh r0, [r4, #8]
 	b _080E78F2
 _080E78D6:
-	bl sub_0800A8D4
+	bl SetLinkStandbyCallback
 _080E78DA:
 	ldrh r0, [r4, #8]
 	adds r0, #1

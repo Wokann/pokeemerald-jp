@@ -92,6 +92,10 @@ sEscalatorMetatiles_2F_1 = ABSOLUTE(0x08562A5C);
 sEscalatorMetatiles_2F_2 = ABSOLUTE(0x08562A62);
 sCoordEventWeatherFuncs = ABSOLUTE(0x084E8924);
 gSpecialVars = ABSOLUTE(0x081DAF34);
+sFlashLevelToRadius = ABSOLUTE(0x0852AB00);
+gMaxFlashLevel = ABSOLUTE(0x0852AB14);
+sFlashEffectParams = ABSOLUTE(0x0852AB18);
+gOrbEffectBackgroundLayerFlags = ABSOLUTE(0x082BF434);
 
 SECTIONS {
     . = 0x2000000;
@@ -198,7 +202,7 @@ SECTIONS {
         asm/title_screen.o(.text);
         asm/field_weather.o(.text);
         asm/field_weather_effect.o(.text);
-        asm/field_screen_effect.o(.text);
+        build/src/field_screen_effect.o(.text);
         asm/battle_setup.o(.text);
         asm/cable_club.o(.text);
         asm/trainer_see.o(.text);

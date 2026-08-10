@@ -1342,7 +1342,7 @@ TryPrepareSecondApproachingTrainer: @ 0x080B3D28
 	ldr r1, _080B3D5C
 	movs r0, #1
 	strh r0, [r1]
-	bl UnfreezeEventObjects
+	bl UnfreezeObjectEvents
 	ldr r0, _080B3D60
 	ldrb r0, [r0, #0xc]
 	bl FreezeEventObjectsExceptOne

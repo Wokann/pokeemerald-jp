@@ -2023,7 +2023,7 @@ _081B0D08:
 	movs r1, #0x17
 	movs r2, #0x10
 	movs r3, #7
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 	b _081B0D34
 _081B0D22:
 	movs r0, #2
@@ -2033,7 +2033,7 @@ _081B0D22:
 	movs r1, #0x17
 	movs r2, #0x10
 	movs r3, #7
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 _081B0D34:
 	ldr r0, _081B0D40
 	ldr r0, [r0]
@@ -2081,7 +2081,7 @@ _081B0D76:
 	movs r2, #0x12
 _081B0D88:
 	movs r3, #7
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 	b _081B0DA2
 _081B0D90:
 	movs r0, #2
@@ -2091,7 +2091,7 @@ _081B0D90:
 	movs r1, #0x17
 	movs r2, #0x12
 	movs r3, #7
-	bl sub_081998C8
+	bl SetBgTilemapPalette
 _081B0DA2:
 	ldr r0, _081B0DC4
 	ldr r0, [r0]
@@ -10900,7 +10900,7 @@ _081B53D4: .4byte 0x0203CBB8
 	thumb_func_start FieldCallback_PrepareFadeInFromMenu
 FieldCallback_PrepareFadeInFromMenu: @ 0x081B53D8
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _081B53EC
 	movs r1, #8
 	bl CreateTask
@@ -18611,7 +18611,7 @@ _081B9064: .4byte 0x08085A31
 	thumb_func_start hm_add_c3_without_phase_2
 hm_add_c3_without_phase_2: @ 0x081B9068
 	push {lr}
-	bl pal_fill_black
+	bl FadeInFromBlack
 	ldr r0, _081B907C
 	movs r1, #0xa
 	bl CreateTask

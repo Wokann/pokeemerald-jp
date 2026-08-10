@@ -679,7 +679,7 @@ Mailbox_DoRedrawMailboxMenuAfterReturn: @ 0x0816B160
 	lsrs r0, r0, #0x18
 	movs r1, #1
 	bl InitItemStorageMenu
-	bl pal_fill_black
+	bl FadeInFromBlack
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1446,7 +1446,7 @@ _0816B794:
 	adds r0, r4, #0
 	bl DestroyTask
 _0816B79A:
-	bl pal_fill_black
+	bl FadeInFromBlack
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1749,7 +1749,7 @@ _0816B9E8:
 	adds r0, r6, #0
 	bl DestroyTask
 _0816B9EE:
-	bl pal_fill_black
+	bl FadeInFromBlack
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0

@@ -1807,7 +1807,7 @@ TryStartWarpEventScript: @ 0x0809C574
 	cmp r0, #1
 	bne _0809C5D0
 	adds r0, r4, #0
-	bl sub_080AF108
+	bl DoEscalatorWarp
 	movs r0, #1
 	b _0809C664
 	.align 2, 0
@@ -1819,7 +1819,7 @@ _0809C5D0:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0809C5E6
-	bl sub_080AF124
+	bl DoLavaridgeGym1FWarp
 	movs r0, #1
 	b _0809C664
 _0809C5E6:
@@ -1829,7 +1829,7 @@ _0809C5E6:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0809C5FC
-	bl sub_080AF134
+	bl DoLavaridgeGymB1FWarp
 	movs r0, #1
 	b _0809C664
 _0809C5FC:
@@ -1839,7 +1839,7 @@ _0809C5FC:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0809C612
-	bl sub_080AF144
+	bl DoTeleportTileWarp
 	movs r0, #1
 	b _0809C664
 _0809C612:
@@ -1849,7 +1849,7 @@ _0809C612:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0809C628
-	bl sub_080AFB64
+	bl DoSpinExitWarp
 	movs r0, #1
 	b _0809C664
 _0809C628:
@@ -1872,7 +1872,7 @@ _0809C644:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0809C65A
-	bl sub_080AF178
+	bl DoMossdeepGymWarp
 	movs r0, #1
 	b _0809C664
 _0809C65A:

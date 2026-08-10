@@ -935,7 +935,7 @@ _081D01C2:
 	movs r1, #0
 	movs r2, #0
 	movs r3, #1
-	bl sub_08199A88
+	bl BgDmaFill
 	ldr r1, _081D0214
 	str r4, [sp]
 	movs r0, #1
