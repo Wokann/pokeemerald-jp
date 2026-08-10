@@ -1339,6 +1339,7 @@ gUnknown_203A870 = .;
 gUnknown_203A874 = .;
 . += 0x4;
 gUnknown_203A878 = .;
+gGroundTilemapData = ABSOLUTE(0x0203A878);
 . += 0x4;
 gUnknown_203A87C = .;
 . += 0x1;

@@ -1461,12 +1461,12 @@ _080C55A0:
 	strb r1, [r0]
 	movs r1, #2
 	ldrsh r0, [r6, r1]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	ldr r1, [r4]
 	strh r0, [r1, #0x2e]
 	movs r1, #4
 	ldrsh r0, [r6, r1]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	ldr r1, [r4]
 	strh r0, [r1, #0x30]
 	b _080C5698
@@ -1486,13 +1486,13 @@ _080C55D0:
 	strh r0, [r6, #4]
 	movs r1, #2
 	ldrsh r0, [r6, r1]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	ldr r4, _080C5614
 	ldr r1, [r4]
 	strh r0, [r1, #0x2e]
 	movs r1, #4
 	ldrsh r0, [r6, r1]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	ldr r1, [r4]
 	strh r0, [r1, #0x30]
 	movs r1, #0
@@ -1868,12 +1868,12 @@ _080C58F0:
 	movs r4, #0xfe
 	lsls r4, r4, #1
 	adds r0, r4, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r6, r0, #0
 	lsls r6, r6, #0x10
 	asrs r6, r6, #0x10
 	adds r0, r4, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
 	ldr r5, _080C5968
@@ -1924,12 +1924,12 @@ _080C5970:
 	movs r4, #0x80
 	lsls r4, r4, #1
 	adds r0, r4, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r6, r0, #0
 	lsls r6, r6, #0x10
 	asrs r6, r6, #0x10
 	adds r0, r4, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
 	ldr r5, _080C59E8

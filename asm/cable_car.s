@@ -477,7 +477,7 @@ _08150068: .4byte 0x03002360
 _0815006C:
 	ldr r0, _0815015C
 	ldrb r0, [r0]
-	bl sub_081514A4
+	bl InitGroundTilemapData
 	ldr r1, _08150160
 	mov sb, r1
 	ldr r0, [r1]
@@ -2419,8 +2419,8 @@ _08151050:
 _08151060: .4byte 0x020205AC
 	thumb_func_end LoadCableCarSprites
 
-	thumb_func_start sub_08151064
-sub_08151064: @ 0x08151064
+	thumb_func_start BufferNextGroundSegment
+BufferNextGroundSegment: @ 0x08151064
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -2526,7 +2526,7 @@ _081510A8:
 	.align 2, 0
 _08151130: .4byte 0x0203A878
 _08151134: .4byte 0x000040FC
-	thumb_func_end sub_08151064
+	thumb_func_end BufferNextGroundSegment
 
 	thumb_func_start sub_08151138
 sub_08151138: @ 0x08151138
@@ -2617,7 +2617,7 @@ _081511D8:
 	ldrb r0, [r0, #0x1d]
 	cmp r0, #0x10
 	bls _081511E4
-	bl sub_08151364
+	bl DrawNextGroundSegmentGoingDown
 _081511E4:
 	pop {r4, r5}
 	pop {r0}
@@ -2775,7 +2775,7 @@ _0815124A:
 	ldr r1, [r4]
 	movs r0, #0xc
 	strb r0, [r1, #0x18]
-	bl sub_08151064
+	bl BufferNextGroundSegment
 	ldr r0, [r4]
 	ldrb r1, [r0, #0x1a]
 	adds r2, r1, #1
@@ -2810,8 +2810,8 @@ _0815135C: .4byte 0x0203A87C
 _08151360: .4byte 0x0203A87D
 	thumb_func_end sub_081511F0
 
-	thumb_func_start sub_08151364
-sub_08151364: @ 0x08151364
+	thumb_func_start DrawNextGroundSegmentGoingDown
+DrawNextGroundSegmentGoingDown: @ 0x08151364
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -2951,7 +2951,7 @@ _081513B0:
 	ldr r1, [r5]
 	movs r0, #0xfe
 	strb r0, [r1, #0x18]
-	bl sub_08151064
+	bl BufferNextGroundSegment
 _08151482:
 	add sp, #0xc
 	pop {r3, r4, r5}
@@ -2966,5 +2966,5 @@ _08151494: .4byte 0x0203A878
 _08151498: .4byte 0x0203A881
 _0815149C: .4byte 0x0203A87F
 _081514A0: .4byte 0x0203A880
-	thumb_func_end sub_08151364
+	thumb_func_end DrawNextGroundSegmentGoingDown
 

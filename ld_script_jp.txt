@@ -334,7 +334,7 @@ SECTIONS {
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
         asm/cable_car.o(.text);
-        asm/math_util.o(.text);
+        build/src/math_util.o(.text);
         asm/roulette_util.o(.text);
         asm/rom_81520A8.o(.text);
         asm/save.o(.text);

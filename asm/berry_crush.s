@@ -315,7 +315,7 @@ sub_08020B74: @ 0x08020B74
 	movs r1, #0xf0
 	lsls r1, r1, #6
 	adds r0, r2, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r2, r0, #0
 	ldr r0, [r4]
 	adds r0, #0x72
@@ -323,7 +323,7 @@ sub_08020B74: @ 0x08020B74
 	lsls r3, r3, #8
 	adds r0, r3, #0
 	adds r1, r2, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r3, r0, #0
 	ldr r0, _08020BBC
 	ands r3, r0
@@ -1173,7 +1173,7 @@ _08021288:
 	movs r1, #0xfe
 	lsls r1, r1, #6
 	str r3, [sp, #4]
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	adds r4, r0, #0
 	ldr r0, [r6]
 	ldrh r0, [r0, #0x20]
@@ -1186,12 +1186,12 @@ _08021288:
 	asrs r4, r4, #0x10
 	movs r0, #7
 	adds r2, r4, #0
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	strh r0, [r5, #6]
 	movs r0, #7
 	adds r1, r4, #0
 	movs r2, #0x55
-	bl sub_0815152C
+	bl MathUtil_Mul16Shift
 	adds r2, r0, #0
 	movs r0, #0
 	strh r0, [r5, #8]
@@ -1200,7 +1200,7 @@ _08021288:
 	movs r0, #7
 	movs r1, #0xfe
 	lsls r1, r1, #6
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	strh r0, [r5, #0xa]
 	ldrh r0, [r5, #0xe]
 	ldr r2, _08021334
@@ -1711,7 +1711,7 @@ sub_08021674: @ 0x08021674
 	lsls r0, r0, #0x18
 	asrs r0, r0, #0x10
 	movs r1, #4
-	bl sub_08151510
+	bl MathUtil_Mul16
 	adds r2, r7, #0
 	lsls r0, r0, #0x10
 	asrs r3, r0, #0x10
@@ -3939,7 +3939,7 @@ sub_0802288C: @ 0x0802288C
 	adds r2, #0x20
 	asrs r2, r2, #1
 	movs r0, #7
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	adds r5, r0, #0
 	ldrh r0, [r6, #0x20]
 	lsls r0, r0, #7
@@ -3951,12 +3951,12 @@ sub_0802288C: @ 0x0802288C
 	movs r0, #7
 	adds r1, r4, #0
 	adds r2, r5, #0
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	strh r0, [r7, #6]
 	movs r0, #7
 	adds r1, r5, #0
 	movs r2, #0x55
-	bl sub_0815152C
+	bl MathUtil_Mul16Shift
 	adds r2, r0, #0
 	mov r1, r8
 	strh r1, [r7, #8]
@@ -3965,7 +3965,7 @@ sub_0802288C: @ 0x0802288C
 	lsls r2, r2, #0x10
 	asrs r2, r2, #0x10
 	movs r0, #7
-	bl sub_081515B0
+	bl MathUtil_Div16Shift
 	strh r0, [r7, #0xa]
 	movs r2, #0x24
 	ldrsh r0, [r6, r2]
@@ -4594,7 +4594,7 @@ _08022D8A:
 	lsls r0, r0, #8
 	movs r1, #0x80
 	lsls r1, r1, #6
-	bl sub_081515D8
+	bl MathUtil_Div32
 	str r0, [r5, #0x20]
 	b _08022DCC
 	.align 2, 0
@@ -5250,7 +5250,7 @@ _08023268:
 	lsls r2, r2, #8
 	ldr r1, [r5, #0x20]
 	adds r0, r2, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r2, r0, #0
 	asrs r2, r2, #8
 	adds r0, r5, #0
@@ -6410,13 +6410,13 @@ _08023B52:
 	movs r4, #0xc8
 	lsls r4, r4, #6
 	adds r1, r4, #0
-	bl sub_08151550
+	bl MathUtil_Mul32
 	adds r2, r0, #0
 	movs r0, #0x32
 	ldrsh r1, [r5, r0]
 	lsls r1, r1, #8
 	adds r0, r2, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r2, r0, r4
 	asrs r2, r2, #8
 	movs r1, #0x7f
@@ -6429,7 +6429,7 @@ _08023B52:
 	movs r1, #0xc8
 	lsls r1, r1, #7
 	adds r0, r2, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r2, r0, #0
 	ldrb r1, [r5, #9]
 	ldr r0, [r5, #0x1c]
@@ -6437,7 +6437,7 @@ _08023B52:
 	lsls r4, r0, #8
 	adds r0, r4, #0
 	adds r1, r2, #0
-	bl sub_08151550
+	bl MathUtil_Mul32
 	adds r4, r0, #0
 	asrs r0, r4, #8
 	str r0, [r5, #0x68]
@@ -6509,7 +6509,7 @@ _08023C4C:
 	adds r0, r2, #0
 	movs r1, #0xc8
 	lsls r1, r1, #7
-	bl sub_08151550
+	bl MathUtil_Mul32
 	adds r2, r0, #0
 	ldrh r4, [r5]
 	b _08023CBA
@@ -6524,7 +6524,7 @@ _08023C6A:
 	adds r0, r2, #0
 	movs r1, #0xc8
 	lsls r1, r1, #7
-	bl sub_08151550
+	bl MathUtil_Mul32
 	adds r2, r0, #0
 	ldrh r4, [r5]
 	b _08023CBA
@@ -6552,14 +6552,14 @@ _08023CA6:
 	adds r0, r2, #0
 	movs r1, #0xc8
 	lsls r1, r1, #7
-	bl sub_08151550
+	bl MathUtil_Mul32
 	adds r2, r0, #0
 	mov r3, r8
 	ldrh r4, [r3, #0x28]
 _08023CBA:
 	lsls r4, r4, #8
 	adds r1, r4, #0
-	bl sub_081515D8
+	bl MathUtil_Div32
 	adds r4, r0, #0
 _08023CC4:
 	asrs r4, r4, #4

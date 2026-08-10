@@ -907,7 +907,7 @@ _08104358:
 	strh r0, [r6, #0x12]
 	movs r0, #0x80
 	lsls r0, r0, #5
-	bl sub_08151600
+	bl MathUtil_Inv16
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
 	ldrh r0, [r7, #0x24]
@@ -960,35 +960,35 @@ _081043BE:
 	lsls r5, r5, #0x10
 	asrs r5, r5, #0x10
 	adds r1, r5, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
 	movs r6, #0xe0
 	lsls r6, r6, #1
 	adds r0, r6, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	strh r0, [r7, #0x34]
 	mov r1, r8
 	lsls r0, r1, #0x10
 	asrs r0, r0, #0x10
 	adds r1, r5, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	adds r4, r0, #0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
 	adds r0, r6, #0
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	strh r0, [r7, #0x36]
 	ldr r0, _08104430
 	str r0, [r7, #0x1c]
@@ -1347,12 +1347,12 @@ _081046DA:
 	ands r0, r1
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	ldr r2, _08104754
 	mov r3, r8
 	adds r1, r3, r7
@@ -1362,7 +1362,7 @@ _081046DA:
 	movs r1, #0x12
 	ldrsh r0, [r6, r1]
 	movs r1, #0x80
-	bl sub_08151510
+	bl MathUtil_Mul16
 	strh r0, [r6, #0x14]
 	ldrh r0, [r5, #4]
 	strh r0, [r6, #0x16]
@@ -1378,12 +1378,12 @@ _081046DA:
 	asrs r4, r4, #0x10
 	movs r1, #0x12
 	ldrsh r0, [r6, r1]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	movs r1, #2
 	rsbs r1, r1, #0
 	ands r1, r0
@@ -1398,12 +1398,12 @@ _08104758:
 	asrs r4, r4, #0x10
 	movs r2, #0x12
 	ldrsh r0, [r6, r2]
-	bl sub_08151600
+	bl MathUtil_Inv16
 	adds r1, r0, #0
 	lsls r1, r1, #0x10
 	asrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08151510
+	bl MathUtil_Mul16
 	movs r1, #1
 	orrs r0, r1
 	strh r0, [r6, #0x18]

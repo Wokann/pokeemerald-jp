@@ -11344,11 +11344,11 @@ math_util.s
 08151510 MathUtil_Mul16 MathUtil_Mul16
 0815152c MathUtil_Mul16Shift MathUtil_Mul16Shift
 08151550 MathUtil_Mul32 MathUtil_Mul32
-0815158c math_util.s sub_0815158C_jp
+0815158c MathUtil_Div16 MathUtil_Div16
 081515b0 MathUtil_Div16Shift MathUtil_Div16Shift
 081515d8 MathUtil_Div32 MathUtil_Div32
-08151600 math_util.s sub_08151600_jp
-08151618 math_util.s sub_08151618_jp
+08151600 MathUtil_Inv16 MathUtil_Inv16
+08151618 MathUtil_Inv16Shift MathUtil_Inv16Shift
 roulette_util.s
 08151638 MathUtil_Inv32 MathUtil_Inv32
 08151654 RouletteFlash_Reset RouletteFlash_Reset
