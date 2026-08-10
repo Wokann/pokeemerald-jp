@@ -5,17 +5,6 @@
 
 
 
-thumb_func_start __malloc_lock
-__malloc_lock: @ 0x0829AD7C
-	bx lr
-	.align 2, 0
-	thumb_func_end __malloc_lock
-
-thumb_func_start __malloc_unlock
-__malloc_unlock: @ 0x0829AD80
-	bx lr
-	.align 2, 0
-	thumb_func_end __malloc_unlock
 
 thumb_func_start _Balloc
 _Balloc: @ 0x0829AD84

@@ -1062,7 +1062,9 @@ build/src/link.o(.text.IsWirelessAdapterConnected);
 		asm/libc_rest_0.o(.text);
 		build/src/libc/memchr.o(.text.memchr);
 		build/src/libc/memmove.o(.text.memmove);
-		asm/libc_rest_1.o(.text);
+		build/src/libc/mlock.o(.text.__malloc_lock);
+		build/src/libc/mlock.o(.text.__malloc_unlock);
+		asm/libc_rest_1a.o(.text);
 		build/src/libc/strlen.o(.text.strlen);
 		asm/libc_rest_2.o(.text);
 		/*
