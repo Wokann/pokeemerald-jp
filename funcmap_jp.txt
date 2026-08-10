@@ -10589,7 +10589,7 @@ time_events.s
 081379ac IsMirageIslandPresent IsMirageIslandPresent
 081379f8 UpdateShoalTideFlag UpdateShoalTideFlag
 08137a48 Task_WaitWeather Task_WaitWeather
-08137a68 WaitWeather DoExitCaveTransition
+08137a68 WaitWeather WaitWeather
 08137a7c InitBirchState InitBirchState
 08137a90 UpdateBirchState UpdateBirchState
 birch_pc.s

@@ -133,6 +133,7 @@ gText_Coins = ABSOLUTE(0x085C9443);
 sSaveLocationPokeCenterList = ABSOLUTE(0x085DFC74);
 sSaveLocationReloadLocList = ABSOLUTE(0x085DFCC2);
 sEmptyMapList = ABSOLUTE(0x085DFCC6);
+gShoalTideTable = ABSOLUTE(0x08592590);
 
 SECTIONS {
     . = 0x2000000;
@@ -321,7 +322,7 @@ SECTIONS {
         asm/pokeblock.spokeblock.o(.text);
         build/src/fldeff_flash.o(.text);
         build/src/post_battle_event_funcs.o(.text);
-        asm/time_events.o(.text);
+        build/src/time_events.o(.text);
         build/src/birch_pc.o(.text);
         build/src/hof_pc.o(.text);
         asm/field_specials.o(.text);
