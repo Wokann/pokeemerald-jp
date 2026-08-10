@@ -259,9 +259,9 @@ gSpecials:
 	def_special CallBattlePikeFunction
 	def_special CallBattlePyramidFunction
 	def_special StopMapMusic
-	def_special sub_081B9654
-	def_special sub_081B9820
-	def_special sub_081B99A8
+	def_special CallVerdanturfTentFunction
+	def_special CallFallarborTentFunction
+	def_special CallSlateportTentFunction
 	def_special sub_080F9D20
 	def_special ValidateEReaderTrainer
 	def_special GetBestBattleTowerStreak

@@ -39,6 +39,7 @@ gActiveBattler = ABSOLUTE(0x02023D08);
 gBattlescriptCurrInstr = ABSOLUTE(0x02023EB8);
 gTrainerBattleOpponent_A = ABSOLUTE(0x0203886A);
 gFacilityTrainers = ABSOLUTE(0x0203B954);
+gFacilityTrainerMons = ABSOLUTE(0x0203B958);
 gTrainerCards = ABSOLUTE(0x020397F8);
 gLinkPlayers = ABSOLUTE(0x020226A0);
 gRecordsWindowId = ABSOLUTE(0x0203A840);

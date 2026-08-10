@@ -386,11 +386,11 @@ _081A5F10: .4byte 0x00000CA8
 _081A5F14: .4byte 0x00000CA9
 	thumb_func_end sub_081A5ED4
 
-	thumb_func_start SwapRentalMons
-SwapRentalMons: @ 0x081A5F18
+	thumb_func_start sub_081A5F18
+sub_081A5F18: @ 0x081A5F18
 	bx lr
 	.align 2, 0
-	thumb_func_end SwapRentalMons
+	thumb_func_end sub_081A5F18
 
 	thumb_func_start nullsub_123
 nullsub_123: @ 0x081A5F1C
@@ -427,8 +427,8 @@ SetPerformedRentalSwap: @ 0x081A5F3C
 _081A5F44: .4byte 0x03001284
 	thumb_func_end SetPerformedRentalSwap
 
-	thumb_func_start GenerateOpponentMons
-GenerateOpponentMons: @ 0x081A5F48
+	thumb_func_start sub_081A5F48
+sub_081A5F48: @ 0x081A5F48
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -686,7 +686,7 @@ _081A6140: .4byte 0x0203B958
 _081A6144: .4byte 0x00000351
 _081A6148: .4byte 0x085ADBF4
 _081A614C: .4byte 0x03005FD8
-	thumb_func_end GenerateOpponentMons
+	thumb_func_end sub_081A5F48
 
 	thumb_func_start SetOpponentGfxVar
 SetOpponentGfxVar: @ 0x081A6150
@@ -1212,8 +1212,8 @@ _081A657C: .4byte 0x020243E8
 _081A6580: .4byte 0x00000E9D
 	thumb_func_end SetPlayerAndOpponentParties
 
-	thumb_func_start GenerateInitialRentalMons
-GenerateInitialRentalMons: @ 0x081A6584
+	thumb_func_start sub_081A6584
+sub_081A6584: @ 0x081A6584
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -1482,7 +1482,7 @@ _081A6782:
 _081A6794: .4byte 0x03005AF0
 _081A6798: .4byte 0x0203B958
 _081A679C: .4byte 0x085ADBF4
-	thumb_func_end GenerateInitialRentalMons
+	thumb_func_end sub_081A6584
 
 	thumb_func_start GetOpponentMostCommonMonType
 GetOpponentMostCommonMonType: @ 0x081A67A0
@@ -2319,4 +2319,3 @@ _081A6DCC:
 	pop {r0}
 	bx r0
 	thumb_func_end SetMonMoveAvoidReturn
-
