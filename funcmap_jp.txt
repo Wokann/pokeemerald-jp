@@ -3744,7 +3744,7 @@ field_player_avatar.s
 0808a400 npc_clear_strange_bits npc_clear_strange_bits
 0808a424 field_player_avatar.s MovePlayerAvatarUsingKeypadInput
 0808a45c PlayerAllowForcedMovementIfMovingSameDirection PlayerAllowForcedMovementIfMovingSameDirection
-0808a478 TryDoMetatileBehaviorForcedMovement DoRegionMapInputCallback
+0808a478 TryDoMetatileBehaviorForcedMovement TryDoMetatileBehaviorForcedMovement
 0808a48c field_player_avatar.s sub_0808a48c
 0808a49c GetForcedMovementByMetatileBehavior GetForcedMovementByMetatileBehavior
 0808a4f8 ForcedMovement_None ForcedMovement_None
@@ -9791,12 +9791,12 @@ heal_location.s
 08122cc8 heal_location.s GetHealLocation
 region_map.s
 08122ce8 InitRegionMap InitRegionMap
-08122d04 region_map.s sub_08122D04_jp
+08122d04 region_map.s InitRegionMapData
 08122d94 ShowRegionMapForPokedexAreaScreen ShowRegionMapForPokedexAreaScreen
 08122dbc sub_08122DBC_jp LoadRegionMapGfx
 0812303c BlendRegionMap BlendRegionMap
 08123068 FreeRegionMapIconResources FreeRegionMapIconResources
-081230b8 region_map.s sub_081230B8_jp
+081230b8 region_map.s DoRegionMapInputCallback
 081230c4 region_map.s sub_081230C4_jp
 081230d0 ProcessRegionMapInput_Full ProcessRegionMapInput_Full
 0812319c MoveRegionMapCursor_Full MoveRegionMapCursor_Full
@@ -15236,10 +15236,10 @@ pokenav_unk_4.s
 081cc140 sub_081CC140 FreeCityZoomViewGfx
 081cc170 LoadPokenavRegionMapGfx LoadPokenavRegionMapGfx
 081cc250 sub_081CC250 TryFreeTempTileDataBuffers
-081cc260 pokenav_unk_4.s sub_081CC260
+081cc260 pokenav_unk_4.s UpdateMapSecInfoWindow
 081cc38c sub_081CC38C IsDma3ManagerBusyWithBgCopy_
 081cc39c ChangeBgYForZoom ChangeBgYForZoom
-081cc3c8 pokenav_unk_4.s sub_081CC3C8
+081cc3c8 pokenav_unk_4.s IsChangeBgYForZoomActive
 081cc3dc Task_ChangeBgYForZoom Task_ChangeBgYForZoom
 081cc450 sub_081CC450 DecompressCityMaps
 081cc464 sub_081CC464 IsDecompressCityMapsActive
@@ -15247,7 +15247,7 @@ pokenav_unk_4.s
 081cc4b0 DrawCityMap DrawCityMap
 081cc528 sub_081CC528 PrintLandmarkNames
 081cc598 CreateCityZoomTextSprites CreateCityZoomTextSprites
-081cc634 pokenav_unk_4.s sub_081CC634
+081cc634 pokenav_unk_4.s SpriteCB_CityZoomText
 081cc6b8 sub_081CC6B8 UpdateCityZoomTextPosition
 081cc6e4 SetCityZoomTextInvisibility SetCityZoomTextInvisibility
 081cc718 sub_081CC718 PokenavCallback_Init_ConditionGraph_Party

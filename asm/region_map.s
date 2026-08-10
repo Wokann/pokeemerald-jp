@@ -9,9 +9,9 @@ InitRegionMap: @ 0x08122CE8
 	lsls r2, r1, #0x18
 	lsrs r2, r2, #0x18
 	movs r1, #0
-	bl sub_08122D04
+	bl InitRegionMapData
 _08122CF4:
-	bl sub_08122DBC
+	bl LoadRegionMapGfx
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08122CF4
@@ -20,8 +20,8 @@ _08122CF4:
 	.align 2, 0
 	thumb_func_end InitRegionMap
 
-	thumb_func_start sub_08122D04
-sub_08122D04: @ 0x08122D04
+	thumb_func_start InitRegionMapData
+InitRegionMapData: @ 0x08122D04
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	lsls r2, r2, #0x18
@@ -95,7 +95,7 @@ _08122D8C:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08122D04
+	thumb_func_end InitRegionMapData
 
 	thumb_func_start sub_08122D94
 sub_08122D94: @ 0x08122D94
@@ -120,8 +120,8 @@ sub_08122D94: @ 0x08122D94
 _08122DB8: .4byte 0x02039E10
 	thumb_func_end sub_08122D94
 
-	thumb_func_start sub_08122DBC
-sub_08122DBC: @ 0x08122DBC
+	thumb_func_start LoadRegionMapGfx
+LoadRegionMapGfx: @ 0x08122DBC
 	push {r4, r5, lr}
 	sub sp, #0xc
 	ldr r0, _08122DD8
@@ -418,10 +418,10 @@ _0812302E:
 	bx r1
 	.align 2, 0
 _08123038: .4byte 0x02039E10
-	thumb_func_end sub_08122DBC
+	thumb_func_end LoadRegionMapGfx
 
-	thumb_func_start sub_0812303C
-sub_0812303C: @ 0x0812303C
+	thumb_func_start BlendRegionMap
+BlendRegionMap: @ 0x0812303C
 	push {lr}
 	adds r2, r0, #0
 	lsls r2, r2, #0x10
@@ -440,7 +440,7 @@ sub_0812303C: @ 0x0812303C
 	.align 2, 0
 _08123060: .4byte 0x02037894
 _08123064: .4byte 0x02037494
-	thumb_func_end sub_0812303C
+	thumb_func_end BlendRegionMap
 
 	thumb_func_start FreeRegionMapIconResources
 FreeRegionMapIconResources: @ 0x08123068
@@ -952,8 +952,8 @@ _0812341E:
 	bx r1
 	thumb_func_end MoveRegionMapCursor_Zoomed
 
-	thumb_func_start sub_08123424
-sub_08123424: @ 0x08123424
+	thumb_func_start SetRegionMapDataForZoom
+SetRegionMapDataForZoom: @ 0x08123424
 	push {r4, r5, r6, lr}
 	ldr r1, _081234A0
 	ldr r2, [r1]
@@ -1083,10 +1083,10 @@ _08123506:
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08123424
+	thumb_func_end SetRegionMapDataForZoom
 
-	thumb_func_start sub_08123520
-sub_08123520: @ 0x08123520
+	thumb_func_start UpdateRegionMapZoom
+UpdateRegionMapZoom: @ 0x08123520
 	push {r4, r5, r6, lr}
 	sub sp, #0xc
 	ldr r0, _08123538
@@ -1313,7 +1313,7 @@ _081236C4:
 	bx r1
 	.align 2, 0
 _081236CC: .4byte 0x02039E10
-	thumb_func_end sub_08123520
+	thumb_func_end UpdateRegionMapZoom
 
 	thumb_func_start CalcZoomScrollParams
 CalcZoomScrollParams: @ 0x081236D0
@@ -2944,7 +2944,7 @@ CreateRegionMapPlayerIcon: @ 0x08124294
 	str r0, [sp, #0x14]
 	ldr r0, _08124308
 	ldrb r0, [r0, #0x14]
-	bl sub_08124674
+	bl IsEventIslandMapSecId
 	cmp r0, #0
 	beq _08124310
 	ldr r0, _0812430C
@@ -3275,8 +3275,8 @@ _08124554:
 	bx r0
 	thumb_func_end RegionMapPlayerIconSpriteCallback
 
-	thumb_func_start sub_08124558
-sub_08124558: @ 0x08124558
+	thumb_func_start TrySetPlayerIconBlink
+TrySetPlayerIconBlink: @ 0x08124558
 	push {lr}
 	ldr r0, _08124574
 	ldr r1, [r0]
@@ -3293,7 +3293,7 @@ _0812456E:
 	bx r0
 	.align 2, 0
 _08124574: .4byte 0x02039E10
-	thumb_func_end sub_08124558
+	thumb_func_end TrySetPlayerIconBlink
 
 	thumb_func_start GetMapName
 GetMapName: @ 0x08124578
@@ -3431,8 +3431,8 @@ sub_0812463C: @ 0x0812463C
 _08124660: .4byte 0x0857CD6C
 	thumb_func_end sub_0812463C
 
-	thumb_func_start sub_08124664
-sub_08124664: @ 0x08124664
+	thumb_func_start IsRegionMapZoomed
+IsRegionMapZoomed: @ 0x08124664
 	ldr r0, _08124670
 	ldr r0, [r0]
 	adds r0, #0x78
@@ -3440,10 +3440,10 @@ sub_08124664: @ 0x08124664
 	bx lr
 	.align 2, 0
 _08124670: .4byte 0x02039E10
-	thumb_func_end sub_08124664
+	thumb_func_end IsRegionMapZoomed
 
-	thumb_func_start sub_08124674
-sub_08124674: @ 0x08124674
+	thumb_func_start IsEventIslandMapSecId
+IsEventIslandMapSecId: @ 0x08124674
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r2, r0, #0x18
@@ -3466,7 +3466,7 @@ _08124690:
 _08124698:
 	pop {r1}
 	bx r1
-	thumb_func_end sub_08124674
+	thumb_func_end IsEventIslandMapSecId
 
 	thumb_func_start MCB2_FlyMap
 MCB2_FlyMap: @ 0x0812469C
