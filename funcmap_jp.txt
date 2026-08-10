@@ -9840,7 +9840,7 @@ region_map.s
 08124664 IsRegionMapZoomed IsRegionMapZoomed
 08124674 IsEventIslandMapSecId IsEventIslandMapSecId
 0812469c MCB2_FlyMap CB2_OpenFlyMap
-081248cc sub_081248CC VBlankCB_WallClock
+081248cc sub_081248CC sub_081248CC
 081248e0 region_map.s sub_081248E0_jp
 081248f0 region_map.s sub_081248F0_jp
 08124900 SetFlyMapCallback SetFlyMapCallback
@@ -10458,19 +10458,19 @@ starter_choose.s
 08134784 SpriteCB_Pokeball SpriteCB_Pokeball
 081347bc SpriteCB_StarterPokemon SpriteCB_StarterPokemon
 wallclock.s
-081347fc WallClockVblankCallback sub_081347FC_jp
+081347fc WallClockVblankCallback VBlankCB_WallClock
 08134810 LoadWallClockGraphics LoadWallClockGraphics
 081349d4 WallClockInit WallClockInit
 08134a3c CB2_StartWallClock CB2_StartWallClock
 08134b8c CB2_ViewWallClock CB2_ViewWallClock
-08134ce8 WallClockMainCallback CB2_PokeblockMenu
-08134d04 wallclock.s Task_ViewClock1
+08134ce8 WallClockMainCallback CB2_WallClock
+08134d04 wallclock.s Task_ViewClock_WaitFadeIn
 08134d34 Task_SetClock_HandleInput Task_SetClock_HandleInput
-08134e10 wallclock.s Task_SetClock3
+08134e10 wallclock.s Task_SetClock_AskConfirm
 08134e84 Task_SetClock_HandleConfirmInput Task_SetClock_HandleConfirmInput
 08134ef8 Task_SetClock_Confirmed Task_SetClock_Confirmed
 08134f3c Task_SetClock_Exit Task_SetClock_Exit
-08134f64 wallclock.s Task_SetClock1
+08134f64 wallclock.s Task_SetClock_WaitFadeIn
 08134f94 Task_ViewClock_HandleInput Task_ViewClock_HandleInput
 08134fcc Task_ViewClock3 Task_ViewClock_FadeOut
 08135004 Task_ViewClock_Exit Task_ViewClock_Exit
