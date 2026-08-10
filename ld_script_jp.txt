@@ -784,7 +784,9 @@ SECTIONS {
 		asm/librfu_intr.o(.text);
 		asm/librfu_rfu.o(.text);
 		asm/librfu.o(.text);
-		asm/libisagbprn.o(.text);
+		build/src/libisagbprn_a.o(.text);
+		build/src/libisagbprn_putc.o(.text);
+		build/src/libisagbprn_b.o(.text);
 		asm/libagbsyscall.o(.text);
 		asm/libgcc.o(.text);
 		asm/libc.o(.text);
