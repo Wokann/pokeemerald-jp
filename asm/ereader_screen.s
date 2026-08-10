@@ -23,8 +23,8 @@ sub_081D43D0: @ 0x081D43D0
 	str r0, [r1, #4]
 	ldr r0, _081D4430
 	str r0, [r1, #8]
-	bl sub_081D3820
-	bl sub_081D38B8
+	bl EReaderHelper_SaveRegsState
+	bl EReaderHelper_ClearSendRecvMgr
 	ldr r2, _081D4434
 	ldrh r0, [r2]
 	movs r1, #4
@@ -62,8 +62,8 @@ sub_081D4438: @ 0x081D4438
 	strh r0, [r1]
 	movs r0, #0
 	strh r0, [r4]
-	bl sub_081D38B8
-	bl sub_081D3874
+	bl EReaderHelper_ClearSendRecvMgr
+	bl EReaderHelper_RestoreRegsState
 	bl RestoreSerialTimer3IntrHandlers
 	mov r0, sp
 	ldrh r0, [r0]
@@ -85,7 +85,7 @@ sub_081D4468: @ 0x081D4468
 	ldr r2, [r4, #8]
 	movs r0, #1
 	movs r3, #0
-	bl sub_081D33F0
+	bl EReaderHandleTransfer
 	adds r1, r0, #0
 	strh r1, [r4]
 	movs r0, #0x13
@@ -773,7 +773,7 @@ _081D4A06:
 	b _081D4B0A
 _081D4A10:
 	ldr r0, _081D4A24
-	bl EReader_IsReceivedDataValid
+	bl ValidateTrainerHillData
 	strb r0, [r4, #0xe]
 	ldrb r0, [r4, #0xe]
 	bl sub_0800A7B8

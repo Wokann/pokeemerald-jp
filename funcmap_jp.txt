@@ -15572,7 +15572,7 @@ ereader_helpers.s
 081d35e8 StartTm3 StartTm3
 081d361c sub_081D361C_jp EReaderHelper_Timer3Callback
 081d362c EReaderHelper_SerialCallback EReaderHelper_SerialCallback
-081d37bc ereader_helpers.s sub_081D37BC_jp
+081d37bc ereader_helpers.s EnableSio
 081d37cc DisableTm3 DisableTm3
 081d37f0 GetKeyInput GetKeyInput
 081d3820 EReaderHelper_SaveRegsState EReaderHelper_SaveRegsState
