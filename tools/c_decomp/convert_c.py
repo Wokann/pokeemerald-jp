@@ -163,8 +163,9 @@ def literal_pool_offsets(b):
             imm = (hw & 0xFF) * 4
             pc = (i + 4) & ~3
             offs.add(pc + imm)
-        elif (hw & 0xFFF8) == 0xF8D0:  # Thumb-2 ldr rX, [pc, #imm12]
-            imm12 = ((hw & 0xFF) << 4) | ((b[i + 2] >> 4) & 0xF)
+        elif (hw & 0xF9FF) == 0xF8DF:  # Thumb-2 ldr (literal), U=0 or U=1
+            hw2 = b[i + 2] | (b[i + 3] << 8)
+            imm12 = hw2 & 0xFFF
             pc = (i + 4) & ~3
             offs.add(pc + imm12)
     return offs
