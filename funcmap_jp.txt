@@ -7932,7 +7932,7 @@ record_mixing.s
 080e96c8 sub_080E96C8 ResetWindowDimensions
 080e96dc sub_080E96DC ResetAllBgsCoordinates
 080e9734 DrawTrainerCardWindow DrawTrainerCardWindow
-080e9750 sub_080E9750 RemoveTrainerHillRecordsWindow
+080e9750 battle_palace.s sub_080E9750
 secret_base.s
 080e977c ClearSecretBase ClearSecretBase
 080e97b4 ClearSecretBases ClearSecretBases
@@ -9419,7 +9419,7 @@ bike.s
 0811aa2c IsRunningDisallowed IsRunningDisallowed
 easy_chat.s
 0811aa5c DoEasyChatScreen DoEasyChatScreen
-0811aac8 MainCallback_EasyChatScreen MainCB2_TrainerHillRecords
+0811aac8 MainCallback_EasyChatScreen MainCallback_EasyChatScreen
 0811aae0 VBlankCallback_EasyChatScreen VBlankCB_FlyMap
 0811aaf4 StartEasyChatScreen StartEasyChatScreen
 0811ab10 Task_InitEasyChatScreen Task_InitEasyChatScreen
@@ -9747,7 +9747,7 @@ mail.s
 08121d00 mail.s CB2_ExitMailReadFreeVars
 menu_helpers.s
 08121d90 ResetVramOamAndBgCntRegs ResetVramOamAndBgCntRegs
-08121e00 ResetAllBgsCoordinates ResetBgCoordinates
+08121e00 ResetAllBgsCoordinates ResetAllBgsCoordinates
 08121e58 SetVBlankHBlankCallbacksToNull SetVBlankHBlankCallbacksToNull
 08121e6c DisplayMessageAndContinueTask DisplayMessageAndContinueTask
 08121f10 RunTextPrintersRetIsActive RunTextPrintersRetIsActive
@@ -10503,7 +10503,7 @@ pokeblock.spokeblock.s
 08135944 sub_08135944 CB2_OpenPokeblockFromBag
 08135958 sub_08135958 OpenPokeblockCaseInBattle
 0813596c sub_0813596C CB2_BerryTagScreen
-08135988 sub_08135988 VblankCB_TrainerHillRecords
+08135988 sub_08135988 sub_08135988
 0813599c sub_0813599C CB2_InitPokeblockMenu
 081359c8 pokeblock.spokeblock.s sub_081359C8
 08135c2c sub_08135C2C HandleInitBackgrounds
@@ -10818,11 +10818,11 @@ battle_records.s
 0813c684 battle_records.s RemoveTrainerHillRecordsWindow
 0813c6b0 ClearVramOamPlttRegs ClearVramOamPlttRegs
 0813c7e8 ClearTasksAndGraphicalStructs ClearTasksAndGraphicalStructs
-0813c804 ResetBgCoordinates ResetBgPositions
+0813c804 ResetBgCoordinates ResetBgCoordinates
 0813c85c SetDispcntReg SetDispcntReg
 0813c86c LoadTrainerHillRecordsWindowGfx LoadTrainerHillRecordsWindowGfx
-0813c8b4 VblankCB_TrainerHillRecords VBlankCB_MoveRelearner
-0813c8c8 MainCB2_TrainerHillRecords CB2_EvolutionSceneUpdate
+0813c8b4 VblankCB_TrainerHillRecords VblankCB_TrainerHillRecords
+0813c8c8 MainCB2_TrainerHillRecords MainCB2_TrainerHillRecords
 0813c8e0 ShowTrainerHillRecords ShowTrainerHillRecords
 0813c8f8 CB2_ShowTrainerHillRecords CB2_ShowTrainerHillRecords
 pokedex_area_screen.s
