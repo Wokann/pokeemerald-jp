@@ -1055,7 +1055,11 @@ build/src/link.o(.text.IsWirelessAdapterConnected);
 		build/src/libisagbprn_b.o(.text);
 		asm/libagbsyscall.o(.text);
 		asm/libgcc.o(.text);
-		asm/libc.o(.text);
+		build/src/libc.o(.text.memcpy);
+		asm/libc_mid_0.o(.text);
+		build/src/libc.o(.text.strcmp);
+		build/src/libc.o(.text.strcpy);
+		asm/libc_rest.o(.text);
 		/*
 		*libgcc.a:_call_via_rX.o(.text);
 		*libgcc.a:_divdi3.o(.text);

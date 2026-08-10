@@ -3,215 +3,8 @@
 .text
 .syntax unified
 
-	thumb_func_start memcpy
-memcpy: @ 0x08297D0C
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	adds r4, r5, #0
-	adds r3, r1, #0
-	cmp r2, #0xf
-	bls _08297D4C
-	adds r0, r3, #0
-	orrs r0, r5
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _08297D4C
-	adds r1, r5, #0
-_08297D26:
-	ldm r3!, {r0}
-	stm r1!, {r0}
-	ldm r3!, {r0}
-	stm r1!, {r0}
-	ldm r3!, {r0}
-	stm r1!, {r0}
-	ldm r3!, {r0}
-	stm r1!, {r0}
-	subs r2, #0x10
-	cmp r2, #0xf
-	bhi _08297D26
-	cmp r2, #3
-	bls _08297D4A
-_08297D40:
-	ldm r3!, {r0}
-	stm r1!, {r0}
-	subs r2, #4
-	cmp r2, #3
-	bhi _08297D40
-_08297D4A:
-	adds r4, r1, #0
-_08297D4C:
-	subs r2, #1
-	movs r0, #1
-	rsbs r0, r0, #0
-	cmp r2, r0
-	beq _08297D66
-	adds r1, r0, #0
-_08297D58:
-	ldrb r0, [r3]
-	strb r0, [r4]
-	adds r3, #1
-	adds r4, #1
-	subs r2, #1
-	cmp r2, r1
-	bne _08297D58
-_08297D66:
-	adds r0, r5, #0
-	pop {r4, r5, pc}
-	.align 2, 0
-	thumb_func_end memcpy
 
-	thumb_func_start memset
-memset: @ 0x08297D6C
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	adds r4, r1, #0
-	adds r3, r5, #0
-	cmp r2, #3
-	bls _08297DB2
-	movs r0, #3
-	ands r0, r5
-	cmp r0, #0
-	bne _08297DB2
-	adds r1, r5, #0
-	movs r0, #0xff
-	ands r4, r0
-	lsls r3, r4, #8
-	orrs r3, r4
-	lsls r0, r3, #0x10
-	orrs r3, r0
-	cmp r2, #0xf
-	bls _08297DA6
-_08297D92:
-	stm r1!, {r3}
-	stm r1!, {r3}
-	stm r1!, {r3}
-	stm r1!, {r3}
-	subs r2, #0x10
-	cmp r2, #0xf
-	bhi _08297D92
-	b _08297DA6
-_08297DA2:
-	stm r1!, {r3}
-	subs r2, #4
-_08297DA6:
-	cmp r2, #3
-	bhi _08297DA2
-	adds r3, r1, #0
-	b _08297DB2
-_08297DAE:
-	strb r4, [r3]
-	adds r3, #1
-_08297DB2:
-	adds r0, r2, #0
-	subs r2, #1
-	cmp r0, #0
-	bne _08297DAE
-	adds r0, r5, #0
-	pop {r4, r5, pc}
-	.align 2, 0
-	thumb_func_end memset
-
-	thumb_func_start strcmp
-strcmp: @ 0x08297DC0
-	push {r4, r5, lr}
-	adds r2, r0, #0
-	adds r3, r1, #0
-	orrs r0, r3
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _08297E06
-	ldr r1, [r2]
-	ldr r0, [r3]
-	cmp r1, r0
-	bne _08297E06
-	ldr r5, _08297DEC
-	ldr r4, _08297DF0
-_08297DDC:
-	ldr r1, [r2]
-	adds r0, r1, r5
-	bics r0, r1
-	ands r0, r4
-	cmp r0, #0
-	beq _08297DF4
-	movs r0, #0
-	b _08297E18
-	.align 2, 0
-_08297DEC: .4byte 0xFEFEFEFF
-_08297DF0: .4byte 0x80808080
-_08297DF4:
-	adds r2, #4
-	adds r3, #4
-	ldr r1, [r2]
-	ldr r0, [r3]
-	cmp r1, r0
-	beq _08297DDC
-	b _08297E06
-_08297E02:
-	adds r2, #1
-	adds r3, #1
-_08297E06:
-	ldrb r0, [r2]
-	cmp r0, #0
-	beq _08297E12
-	ldrb r1, [r3]
-	cmp r0, r1
-	beq _08297E02
-_08297E12:
-	ldrb r2, [r2]
-	ldrb r3, [r3]
-	subs r0, r2, r3
-_08297E18:
-	pop {r4, r5, pc}
-	.align 2, 0
-	thumb_func_end strcmp
-
-	thumb_func_start strcpy
-strcpy: @ 0x08297E1C
-	push {r4, r5, r6, lr}
-	adds r6, r0, #0
-	adds r3, r6, #0
-	adds r2, r1, #0
-	adds r0, r2, #0
-	orrs r0, r6
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _08297E54
-	ldr r1, [r2]
-	ldr r5, _08297E3C
-	adds r0, r1, r5
-	bics r0, r1
-	ldr r4, _08297E40
-	b _08297E4E
-	.align 2, 0
-_08297E3C: .4byte 0xFEFEFEFF
-_08297E40: .4byte 0x80808080
-_08297E44:
-	ldm r2!, {r0}
-	stm r3!, {r0}
-	ldr r1, [r2]
-	adds r0, r1, r5
-	bics r0, r1
-_08297E4E:
-	ands r0, r4
-	cmp r0, #0
-	beq _08297E44
-_08297E54:
-	ldrb r0, [r2]
-	strb r0, [r3]
-	lsls r0, r0, #0x18
-	adds r2, #1
-	adds r3, #1
-	cmp r0, #0
-	bne _08297E54
-	adds r0, r6, #0
-	pop {r4, r5, r6, pc}
-	.align 2, 0
-	thumb_func_end strcpy
-
-	thumb_func_start vsprintf
+thumb_func_start vsprintf
 vsprintf: @ 0x08297E68
 	push {r4, r5, lr}
 	sub sp, #0x58
@@ -239,7 +32,7 @@ _08297E94: .4byte 0x7FFFFFFF
 _08297E98: .4byte 0x0203CF1C
 	thumb_func_end vsprintf
 
-	thumb_func_start sub_08297E9C
+thumb_func_start sub_08297E9C
 sub_08297E9C: @ 0x08297E9C
 	push {r4, lr}
 	adds r4, r1, #0
@@ -260,7 +53,7 @@ _08297EB8:
 	.align 2, 0
 	thumb_func_end sub_08297E9C
 
-	thumb_func_start sub_08297EBC
+thumb_func_start sub_08297EBC
 sub_08297EBC: @ 0x08297EBC
 	push {r4, r5, lr}
 	ldr r4, _08297F2C
@@ -321,7 +114,7 @@ _08297F20:
 _08297F2C: .4byte 0xFFFFFBA8
 	thumb_func_end sub_08297EBC
 
-	thumb_func_start vfprintf
+thumb_func_start vfprintf
 vfprintf: @ 0x08297F30
 	push {r4, r5, lr}
 	adds r4, r0, #0
@@ -334,7 +127,7 @@ vfprintf: @ 0x08297F30
 	pop {r4, r5, pc}
 	thumb_func_end vfprintf
 
-	thumb_func_start _vfprintf_r
+thumb_func_start _vfprintf_r
 _vfprintf_r: @ 0x08297F44
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -2345,7 +2138,7 @@ _08298E94:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end _vfprintf_r
 
-	thumb_func_start sub_08298EA4
+thumb_func_start sub_08298EA4
 sub_08298EA4: @ 0x08298EA4
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -2477,7 +2270,7 @@ _08298F90: .4byte 0x00000000
 _08298F94: .4byte 0x00000000
 	thumb_func_end sub_08298EA4
 
-	thumb_func_start sub_08298F98
+thumb_func_start sub_08298F98
 sub_08298F98: @ 0x08298F98
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0x134
@@ -2541,7 +2334,7 @@ _08299000:
 	.align 2, 0
 	thumb_func_end sub_08298F98
 
-	thumb_func_start __swsetup
+thumb_func_start __swsetup
 __swsetup: @ 0x08299008
 	push {r4, r5, lr}
 	adds r4, r0, #0
@@ -2639,7 +2432,7 @@ _082990B2:
 	pop {r4, r5, pc}
 	thumb_func_end __swsetup
 
-	thumb_func_start sub_082990B4
+thumb_func_start sub_082990B4
 sub_082990B4: @ 0x082990B4
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -2825,7 +2618,7 @@ _08299204:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end sub_082990B4
 
-	thumb_func_start _dtoa_r
+thumb_func_start _dtoa_r
 _dtoa_r: @ 0x08299210
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -4462,7 +4255,7 @@ _08299EFA:
 	.align 2, 0
 	thumb_func_end _dtoa_r
 
-	thumb_func_start fflush
+thumb_func_start fflush
 fflush: @ 0x08299F08
 	push {r4, r5, r6, lr}
 	adds r4, r0, #0
@@ -4544,7 +4337,7 @@ _08299F9A:
 	pop {r4, r5, r6, pc}
 	thumb_func_end fflush
 
-	thumb_func_start sub_08299F9C
+thumb_func_start sub_08299F9C
 sub_08299F9C: @ 0x08299F9C
 	push {r4, lr}
 	movs r4, #0
@@ -4573,7 +4366,7 @@ _08299FCC: .4byte 0x0829B739
 _08299FD0: .4byte 0x0829B779
 	thumb_func_end sub_08299F9C
 
-	thumb_func_start __sfmoreglue
+thumb_func_start __sfmoreglue
 __sfmoreglue: @ 0x08299FD4
 	push {r4, r5, r6, lr}
 	adds r5, r1, #0
@@ -4601,7 +4394,7 @@ _0829A002:
 	pop {r4, r5, r6, pc}
 	thumb_func_end __sfmoreglue
 
-	thumb_func_start __sfp
+thumb_func_start __sfp
 __sfp: @ 0x0829A004
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -4667,7 +4460,7 @@ _0829A070:
 _0829A074: .4byte 0x0000FFFF
 	thumb_func_end __sfp
 
-	thumb_func_start _cleanup_r
+thumb_func_start _cleanup_r
 _cleanup_r: @ 0x0829A078
 	push {lr}
 	ldr r1, _0829A084
@@ -4677,7 +4470,7 @@ _cleanup_r: @ 0x0829A078
 _0829A084: .4byte 0x08299F09
 	thumb_func_end _cleanup_r
 
-	thumb_func_start _cleanup
+thumb_func_start _cleanup
 _cleanup: @ 0x0829A088
 	push {lr}
 	ldr r0, _0829A094
@@ -4688,7 +4481,7 @@ _cleanup: @ 0x0829A088
 _0829A094: .4byte 0x0203CF1C
 	thumb_func_end _cleanup
 
-	thumb_func_start __sinit
+thumb_func_start __sinit
 __sinit: @ 0x0829A098
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -4737,7 +4530,7 @@ __sinit: @ 0x0829A098
 _0829A0F4: .4byte 0x0829A079
 	thumb_func_end __sinit
 
-	thumb_func_start _free_r
+thumb_func_start _free_r
 _free_r: @ 0x0829A0F8
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
@@ -4977,7 +4770,7 @@ _0829A2AE:
 	.align 2, 0
 	thumb_func_end _free_r
 
-	thumb_func_start _malloc_trim_r
+thumb_func_start _malloc_trim_r
 _malloc_trim_r: @ 0x0829A2B8
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -5069,7 +4862,7 @@ _0829A36C:
 _0829A374: .4byte 0x0203D350
 	thumb_func_end _malloc_trim_r
 
-	thumb_func_start __sfvwrite
+thumb_func_start __sfvwrite
 __sfvwrite: @ 0x0829A378
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -5372,7 +5165,7 @@ _0829A596:
 	.align 2, 0
 	thumb_func_end __sfvwrite
 
-	thumb_func_start _fwalk
+thumb_func_start _fwalk
 _fwalk: @ 0x0829A5A4
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -5412,7 +5205,7 @@ _0829A5DC:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end _fwalk
 
-	thumb_func_start _setlocale_r
+thumb_func_start _setlocale_r
 _setlocale_r: @ 0x0829A5E4
 	push {r4, r5, r6, lr}
 	adds r5, r0, #0
@@ -5446,7 +5239,7 @@ _0829A61A:
 _0829A61C: .4byte 0x0890F224
 	thumb_func_end _setlocale_r
 
-	thumb_func_start _localeconv_r
+thumb_func_start _localeconv_r
 _localeconv_r: @ 0x0829A620
 	ldr r0, _0829A624
 	bx lr
@@ -5454,7 +5247,7 @@ _localeconv_r: @ 0x0829A620
 _0829A624: .4byte 0x0890F1EC
 	thumb_func_end _localeconv_r
 
-	thumb_func_start setlocale
+thumb_func_start setlocale
 setlocale: @ 0x0829A628
 	push {lr}
 	adds r3, r0, #0
@@ -5468,7 +5261,7 @@ setlocale: @ 0x0829A628
 _0829A63C: .4byte 0x0203CF1C
 	thumb_func_end setlocale
 
-	thumb_func_start localeconv
+thumb_func_start localeconv
 localeconv: @ 0x0829A640
 	push {lr}
 	ldr r0, _0829A64C
@@ -5479,7 +5272,7 @@ localeconv: @ 0x0829A640
 _0829A64C: .4byte 0x0203CF1C
 	thumb_func_end localeconv
 
-	thumb_func_start __smakebuf
+thumb_func_start __smakebuf
 __smakebuf: @ 0x0829A650
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0x3c
@@ -5597,7 +5390,7 @@ _0829A722:
 _0829A728: .4byte 0x0829A079
 	thumb_func_end __smakebuf
 
-	thumb_func_start sub_0829A72C
+thumb_func_start sub_0829A72C
 sub_0829A72C: @ 0x0829A72C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -5774,7 +5567,7 @@ _0829A880: .4byte 0x0203D348
 _0829A884: .4byte 0x0203D34C
 	thumb_func_end sub_0829A72C
 
-	thumb_func_start _malloc_r
+thumb_func_start _malloc_r
 _malloc_r: @ 0x0829A888
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -6305,7 +6098,7 @@ _0829AC38:
 _0829AC44: .4byte 0x0203CF34
 	thumb_func_end _malloc_r
 
-	thumb_func_start _mbtowc_r
+thumb_func_start _mbtowc_r
 _mbtowc_r: @ 0x0829AC48
 	sub sp, #4
 	cmp r1, #0
@@ -6335,7 +6128,7 @@ _0829AC6E:
 	.align 2, 0
 	thumb_func_end _mbtowc_r
 
-	thumb_func_start memchr
+thumb_func_start memchr
 memchr: @ 0x0829AC74
 	push {r4, r5, r6, r7, lr}
 	adds r5, r1, #0
@@ -6411,7 +6204,7 @@ _0829ACF2:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end memchr
 
-	thumb_func_start memmove
+thumb_func_start memmove
 memmove: @ 0x0829ACF4
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -6491,19 +6284,19 @@ _0829AD78:
 	pop {r4, r5, pc}
 	thumb_func_end memmove
 
-	thumb_func_start __malloc_lock
+thumb_func_start __malloc_lock
 __malloc_lock: @ 0x0829AD7C
 	bx lr
 	.align 2, 0
 	thumb_func_end __malloc_lock
 
-	thumb_func_start __malloc_unlock
+thumb_func_start __malloc_unlock
 __malloc_unlock: @ 0x0829AD80
 	bx lr
 	.align 2, 0
 	thumb_func_end __malloc_unlock
 
-	thumb_func_start _Balloc
+thumb_func_start _Balloc
 _Balloc: @ 0x0829AD84
 	push {r4, r5, r6, lr}
 	adds r4, r0, #0
@@ -6555,7 +6348,7 @@ _0829ADD8:
 	.align 2, 0
 	thumb_func_end _Balloc
 
-	thumb_func_start _Bfree
+thumb_func_start _Bfree
 _Bfree: @ 0x0829ADDC
 	adds r3, r0, #0
 	adds r2, r1, #0
@@ -6572,7 +6365,7 @@ _0829ADF2:
 	bx lr
 	thumb_func_end _Bfree
 
-	thumb_func_start _multadd
+thumb_func_start _multadd
 _multadd: @ 0x0829ADF4
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
@@ -6652,7 +6445,7 @@ _0829AE7E:
 _0829AE88: .4byte 0x0000FFFF
 	thumb_func_end _multadd
 
-	thumb_func_start _s2b
+thumb_func_start _s2b
 _s2b: @ 0x0829AE8C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -6725,7 +6518,7 @@ _0829AF06:
 	.align 2, 0
 	thumb_func_end _s2b
 
-	thumb_func_start _hi0bits
+thumb_func_start _hi0bits
 _hi0bits: @ 0x0829AF10
 	adds r1, r0, #0
 	movs r2, #0
@@ -6778,7 +6571,7 @@ _0829AF66:
 	bx lr
 	thumb_func_end _hi0bits
 
-	thumb_func_start _lo0bits
+thumb_func_start _lo0bits
 _lo0bits: @ 0x0829AF68
 	adds r3, r0, #0
 	ldr r1, [r3]
@@ -6856,7 +6649,7 @@ _0829AFE8:
 	.align 2, 0
 	thumb_func_end _lo0bits
 
-	thumb_func_start _i2b
+thumb_func_start _i2b
 _i2b: @ 0x0829AFEC
 	push {r4, lr}
 	adds r4, r1, #0
@@ -6869,7 +6662,7 @@ _i2b: @ 0x0829AFEC
 	.align 2, 0
 	thumb_func_end _i2b
 
-	thumb_func_start _multiply
+thumb_func_start _multiply
 _multiply: @ 0x0829B000
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -7067,7 +6860,7 @@ _0829B156:
 	.align 2, 0
 	thumb_func_end _multiply
 
-	thumb_func_start _pow5mult
+thumb_func_start _pow5mult
 _pow5mult: @ 0x0829B16C
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -7146,7 +6939,7 @@ _0829B1FC:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end _pow5mult
 
-	thumb_func_start _lshift
+thumb_func_start _lshift
 _lshift: @ 0x0829B204
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -7235,7 +7028,7 @@ _0829B288:
 	.align 2, 0
 	thumb_func_end _lshift
 
-	thumb_func_start __mcmp
+thumb_func_start __mcmp
 __mcmp: @ 0x0829B2A4
 	push {r4, r5, lr}
 	adds r2, r0, #0
@@ -7275,7 +7068,7 @@ _0829B2E0:
 	.align 2, 0
 	thumb_func_end __mcmp
 
-	thumb_func_start __mdiff
+thumb_func_start __mdiff
 __mdiff: @ 0x0829B2E4
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -7404,7 +7197,7 @@ _0829B3C6:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end __mdiff
 
-	thumb_func_start _ulp
+thumb_func_start _ulp
 _ulp: @ 0x0829B3D4
 	push {r4, lr}
 	ldr r2, _0829B3E8
@@ -7450,7 +7243,7 @@ _0829B41A:
 	pop {r4, pc}
 	thumb_func_end _ulp
 
-	thumb_func_start _b2d
+thumb_func_start _b2d
 _b2d: @ 0x0829B420
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -7555,7 +7348,7 @@ _0829B4CC:
 _0829B4D8: .4byte 0x3FF00000
 	thumb_func_end _b2d
 
-	thumb_func_start _d2b
+thumb_func_start _d2b
 _d2b: @ 0x0829B4DC
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
@@ -7676,7 +7469,7 @@ _0829B5B0:
 _0829B5C0: .4byte 0xFFFFFBCE
 	thumb_func_end _d2b
 
-	thumb_func_start _ratio
+thumb_func_start _ratio
 _ratio: @ 0x0829B5C4
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0x10
@@ -7719,7 +7512,7 @@ _0829B604:
 	pop {r4, r5, r6, r7, pc}
 	thumb_func_end _ratio
 
-	thumb_func_start _mprec_log10
+thumb_func_start _mprec_log10
 _mprec_log10: @ 0x0829B614
 	push {r4, lr}
 	adds r4, r0, #0
@@ -7754,7 +7547,7 @@ _0829B64C: .4byte 0x40240000
 _0829B650: .4byte 0x00000000
 	thumb_func_end _mprec_log10
 
-	thumb_func_start isinf
+thumb_func_start isinf
 isinf: @ 0x0829B654
 	ldr r3, _0829B670
 	ands r3, r0
@@ -7775,7 +7568,7 @@ _0829B670: .4byte 0x7FFFFFFF
 _0829B674: .4byte 0x7FF00000
 	thumb_func_end isinf
 
-	thumb_func_start isnan
+thumb_func_start isnan
 isnan: @ 0x0829B678
 	ldr r3, _0829B690
 	ands r3, r0
@@ -7793,7 +7586,7 @@ _0829B690: .4byte 0x7FFFFFFF
 _0829B694: .4byte 0x7FF00000
 	thumb_func_end isnan
 
-	thumb_func_start _sbrk_r
+thumb_func_start _sbrk_r
 _sbrk_r: @ 0x0829B698
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -7818,7 +7611,7 @@ _0829B6BA:
 _0829B6C0: .4byte 0x0300764C
 	thumb_func_end _sbrk_r
 
-	thumb_func_start __sread
+thumb_func_start __sread
 __sread: @ 0x0829B6C4
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -7848,7 +7641,7 @@ _0829B6EE:
 _0829B6F4: .4byte 0xFFFFEFFF
 	thumb_func_end __sread
 
-	thumb_func_start __swrite
+thumb_func_start __swrite
 __swrite: @ 0x0829B6F8
 	push {r4, r5, r6, lr}
 	adds r4, r0, #0
@@ -7882,7 +7675,7 @@ _0829B71A:
 _0829B734: .4byte 0xFFFFEFFF
 	thumb_func_end __swrite
 
-	thumb_func_start __sseek
+thumb_func_start __sseek
 __sseek: @ 0x0829B738
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -7919,7 +7712,7 @@ _0829B772:
 	.align 2, 0
 	thumb_func_end __sseek
 
-	thumb_func_start __sclose
+thumb_func_start __sclose
 __sclose: @ 0x0829B778
 	push {lr}
 	ldr r2, [r0, #0x54]
@@ -7930,7 +7723,7 @@ __sclose: @ 0x0829B778
 	pop {pc}
 	thumb_func_end __sclose
 
-	thumb_func_start strlen
+thumb_func_start strlen
 strlen: @ 0x0829B788
 	push {r4, r5, lr}
 	adds r1, r0, #0
@@ -7971,7 +7764,7 @@ _0829B7C0:
 	.align 2, 0
 	thumb_func_end strlen
 
-	thumb_func_start sub_0829B7CC
+thumb_func_start sub_0829B7CC
 sub_0829B7CC: @ 0x0829B7CC
 	adds r3, r0, #0
 	movs r1, #0
@@ -7994,7 +7787,7 @@ _0829B7E6:
 	.align 2, 0
 	thumb_func_end sub_0829B7CC
 
-	thumb_func_start sub_0829B7EC
+thumb_func_start sub_0829B7EC
 sub_0829B7EC: @ 0x0829B7EC
 	adds r2, r0, #0
 	ldr r0, _0829B800
@@ -8038,7 +7831,7 @@ _0829B830:
 _0829B834: .4byte 0x03001AAC
 	thumb_func_end sub_0829B7EC
 
-	thumb_func_start initialise_monitor_handles
+thumb_func_start initialise_monitor_handles
 initialise_monitor_handles: @ 0x0829B838
 	push {r4, r5, lr}
 	sub sp, #0xc
@@ -8095,7 +7888,7 @@ _0829B8A0: .4byte 0x03001AAC
 _0829B8A4: .4byte 0x03001AB0
 	thumb_func_end initialise_monitor_handles
 
-	thumb_func_start sub_0829B8A8
+thumb_func_start sub_0829B8A8
 sub_0829B8A8: @ 0x0829B8A8
 	push {r4, lr}
 	movs r3, #0x13
@@ -8109,7 +7902,7 @@ sub_0829B8A8: @ 0x0829B8A8
 	.align 2, 0
 	thumb_func_end sub_0829B8A8
 
-	thumb_func_start sub_0829B8BC
+thumb_func_start sub_0829B8BC
 sub_0829B8BC: @ 0x0829B8BC
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8121,7 +7914,7 @@ sub_0829B8BC: @ 0x0829B8BC
 	pop {r4, r5, pc}
 	thumb_func_end sub_0829B8BC
 
-	thumb_func_start sub_0829B8D0
+thumb_func_start sub_0829B8D0
 sub_0829B8D0: @ 0x0829B8D0
 	push {lr}
 	adds r1, r0, #0
@@ -8138,7 +7931,7 @@ _0829B8E6:
 	pop {pc}
 	thumb_func_end sub_0829B8D0
 
-	thumb_func_start _swiread
+thumb_func_start _swiread
 _swiread: @ 0x0829B8E8
 	push {r4, r5, lr}
 	sub sp, #0xc
@@ -8159,7 +7952,7 @@ _swiread: @ 0x0829B8E8
 	.align 2, 0
 	thumb_func_end _swiread
 
-	thumb_func_start _read
+thumb_func_start _read
 _read: @ 0x0829B90C
 	push {r4, r5, r6, r7, lr}
 	adds r4, r0, #0
@@ -8197,7 +7990,7 @@ _0829B94C:
 _0829B950: .4byte 0x03001AB0
 	thumb_func_end _read
 
-	thumb_func_start _swilseek
+thumb_func_start _swilseek
 _swilseek: @ 0x0829B954
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -8269,7 +8062,7 @@ _0829B9CC:
 _0829B9D4: .4byte 0x03001AB0
 	thumb_func_end _swilseek
 
-	thumb_func_start _lseek
+thumb_func_start _lseek
 _lseek: @ 0x0829B9D8
 	push {lr}
 	bl _swilseek
@@ -8277,7 +8070,7 @@ _lseek: @ 0x0829B9D8
 	pop {pc}
 	thumb_func_end _lseek
 
-	thumb_func_start _swiwrite
+thumb_func_start _swiwrite
 _swiwrite: @ 0x0829B9E4
 	push {r4, r5, lr}
 	sub sp, #0xc
@@ -8298,7 +8091,7 @@ _swiwrite: @ 0x0829B9E4
 	.align 2, 0
 	thumb_func_end _swiwrite
 
-	thumb_func_start _write
+thumb_func_start _write
 _write: @ 0x0829BA08
 	push {r4, r5, r6, r7, lr}
 	adds r4, r0, #0
@@ -8340,7 +8133,7 @@ _0829BA4E:
 _0829BA50: .4byte 0x03001AB0
 	thumb_func_end _write
 
-	thumb_func_start _swiopen
+thumb_func_start _swiopen
 _swiopen: @ 0x0829BA54
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
@@ -8427,7 +8220,7 @@ _0829BAEA:
 	.align 2, 0
 	thumb_func_end _swiopen
 
-	thumb_func_start _open
+thumb_func_start _open
 _open: @ 0x0829BAF4
 	push {r1, r2, r3}
 	push {lr}
@@ -8439,7 +8232,7 @@ _open: @ 0x0829BAF4
 	bx r3
 	thumb_func_end _open
 
-	thumb_func_start _swiclose
+thumb_func_start _swiclose
 _swiclose: @ 0x0829BB08
 	push {lr}
 	sub sp, #4
@@ -8468,7 +8261,7 @@ _0829BB28:
 _0829BB38: .4byte 0x03001AB0
 	thumb_func_end _swiclose
 
-	thumb_func_start _close
+thumb_func_start _close
 _close: @ 0x0829BB3C
 	push {lr}
 	bl _swiclose
@@ -8476,7 +8269,7 @@ _close: @ 0x0829BB3C
 	pop {pc}
 	thumb_func_end _close
 
-	thumb_func_start _exit
+thumb_func_start _exit
 _exit: @ 0x0829BB48
 	mov ip, r3
 	mov r3, r8
@@ -8495,7 +8288,7 @@ _exit: @ 0x0829BB48
 _0829BB64: .4byte 0x00020026
 	thumb_func_end _exit
 
-	thumb_func_start _kill
+thumb_func_start _kill
 _kill: @ 0x0829BB68
 	mov ip, r3
 	mov r3, r8
@@ -8514,13 +8307,13 @@ _kill: @ 0x0829BB68
 _0829BB84: .4byte 0x00020026
 	thumb_func_end _kill
 
-	thumb_func_start _getpid
+thumb_func_start _getpid
 _getpid: @ 0x0829BB88
 	movs r0, #1
 	bx lr
 	thumb_func_end _getpid
 
-	thumb_func_start _sbrk
+thumb_func_start _sbrk
 _sbrk: @ 0x0829BB8C
 	push {r4, r5, r6, lr}
 	adds r6, r0, #0
@@ -8552,7 +8345,7 @@ _0829BBC0: .4byte 0x088BA568
 _0829BBC4: .4byte 0x0890F350
 	thumb_func_end _sbrk
 
-	thumb_func_start _fstat
+thumb_func_start _fstat
 _fstat: @ 0x0829BBC8
 	movs r0, #0x80
 	lsls r0, r0, #6
@@ -8562,7 +8355,7 @@ _fstat: @ 0x0829BBC8
 	.align 2, 0
 	thumb_func_end _fstat
 
-	thumb_func_start _unlink
+thumb_func_start _unlink
 _unlink: @ 0x0829BBD4
 	movs r0, #1
 	rsbs r0, r0, #0
@@ -8570,13 +8363,13 @@ _unlink: @ 0x0829BBD4
 	.align 2, 0
 	thumb_func_end _unlink
 
-	thumb_func_start _raise
+thumb_func_start _raise
 _raise: @ 0x0829BBDC
 	bx lr
 	.align 2, 0
 	thumb_func_end _raise
 
-	thumb_func_start _gettimeofday
+thumb_func_start _gettimeofday
 _gettimeofday: @ 0x0829BBE0
 	push {r4, r5, lr}
 	adds r2, r0, #0
@@ -8604,7 +8397,7 @@ _0829BC08:
 	pop {r4, r5, pc}
 	thumb_func_end _gettimeofday
 
-	thumb_func_start _times
+thumb_func_start _times
 _times: @ 0x0829BC0C
 	push {r4, r5, lr}
 	adds r2, r0, #0
@@ -8627,7 +8420,7 @@ _0829BC2A:
 	.align 2, 0
 	thumb_func_end _times
 
-	thumb_func_start _write_r
+thumb_func_start _write_r
 _write_r: @ 0x0829BC30
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8654,7 +8447,7 @@ _0829BC56:
 _0829BC5C: .4byte 0x0300764C
 	thumb_func_end _write_r
 
-	thumb_func_start _calloc_r
+thumb_func_start _calloc_r
 _calloc_r: @ 0x0829BC60
 	push {r4, lr}
 	muls r1, r2, r1
@@ -8705,7 +8498,7 @@ _0829BCB6:
 	pop {r4, pc}
 	thumb_func_end _calloc_r
 
-	thumb_func_start _close_r
+thumb_func_start _close_r
 _close_r: @ 0x0829BCB8
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8730,7 +8523,7 @@ _0829BCDA:
 _0829BCE0: .4byte 0x0300764C
 	thumb_func_end _close_r
 
-	thumb_func_start __errno
+thumb_func_start __errno
 __errno: @ 0x0829BCE4
 	ldr r0, _0829BCEC
 	ldr r0, [r0]
@@ -8739,7 +8532,7 @@ __errno: @ 0x0829BCE4
 _0829BCEC: .4byte 0x0203CF1C
 	thumb_func_end __errno
 
-	thumb_func_start _fstat_r
+thumb_func_start _fstat_r
 _fstat_r: @ 0x0829BCF0
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8765,7 +8558,7 @@ _0829BD14:
 _0829BD18: .4byte 0x0300764C
 	thumb_func_end _fstat_r
 
-	thumb_func_start abort
+thumb_func_start abort
 abort: @ 0x0829BD1C
 	mov ip, r3
 	mov r3, r8
@@ -8784,19 +8577,19 @@ abort: @ 0x0829BD1C
 _0829BD38: .4byte 0x00020022
 	thumb_func_end abort
 
-	thumb_func_start isatty
+thumb_func_start isatty
 isatty: @ 0x0829BD3C
 	movs r0, #1
 	bx lr
 	thumb_func_end isatty
 
-	thumb_func_start alarm
+thumb_func_start alarm
 alarm: @ 0x0829BD40
 	bx lr
 	.align 2, 0
 	thumb_func_end alarm
 
-	thumb_func_start _lseek_r
+thumb_func_start _lseek_r
 _lseek_r: @ 0x0829BD44
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8823,7 +8616,7 @@ _0829BD6A:
 _0829BD70: .4byte 0x0300764C
 	thumb_func_end _lseek_r
 
-	thumb_func_start _read_r
+thumb_func_start _read_r
 _read_r: @ 0x0829BD74
 	push {r4, r5, lr}
 	adds r5, r0, #0
@@ -8848,3 +8641,4 @@ _0829BD9A:
 	pop {r4, r5, pc}
 	.align 2, 0
 _0829BDA0: .4byte 0x0300764C
+
