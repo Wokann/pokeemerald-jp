@@ -4144,7 +4144,7 @@ FldEff_LavaridgeGymWarp: @ 0x080B714C
 	adds r0, r4, #0
 	movs r2, #8
 	movs r3, #8
-	bl sub_08092A50
+	bl SetSpritePosToOffsetMapCoords
 	ldr r0, _080B71A8
 	adds r0, #0x84
 	ldr r0, [r0]
@@ -4449,7 +4449,7 @@ FldEff_PopOutOfAsh: @ 0x080B73A0
 	adds r0, r4, #0
 	movs r2, #8
 	movs r3, #8
-	bl sub_08092A50
+	bl SetSpritePosToOffsetMapCoords
 	ldr r0, _080B73FC
 	adds r0, #0x80
 	ldr r0, [r0]
@@ -6891,7 +6891,7 @@ sub_080B867C: @ 0x080B867C
 	bl ObjectEventSetHeldMovement
 	ldrb r0, [r4, #0x1a]
 	movs r1, #1
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 	bl UnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	movs r0, #9
@@ -7315,10 +7315,10 @@ sub_080B89F8: @ 0x080B89F8
 	beq _080B8A30
 	ldrb r0, [r5, #0x1a]
 	movs r1, #2
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 	ldrb r0, [r5, #0x1a]
 	movs r1, #0
-	bl sub_08155514
+	bl SetSurfBlob_DontSyncAnim
 _080B8A30:
 	bl sub_080B8C1C
 	lsls r0, r0, #0x18
@@ -8043,7 +8043,7 @@ _080B8F86:
 	beq _080B8FAE
 	ldrb r0, [r4, #0x1a]
 	movs r1, #0
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 _080B8FAE:
 	movs r0, #3
 	bl GetPlayerAvatarGraphicsIdByStateId
@@ -8329,7 +8329,7 @@ sub_080B91B8: @ 0x080B91B8
 	movs r7, #3
 	ldrb r0, [r4, #0x1a]
 	movs r1, #1
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 _080B91EC:
 	adds r0, r7, #0
 	bl GetPlayerAvatarGraphicsIdByStateId
@@ -8371,7 +8371,7 @@ sub_080B9234: @ 0x080B9234
 	ldrb r1, [r4, #4]
 	ldrb r2, [r4, #8]
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B9284
@@ -8815,7 +8815,7 @@ Fldeff_MoveDeoxysRock_Step: @ 0x080B9580
 	ldrb r1, [r7, #4]
 	ldrb r2, [r7, #8]
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B9616

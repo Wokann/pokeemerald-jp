@@ -188,8 +188,8 @@ _0808CEB0:
 	bx r1
 	thumb_func_end GetObjectEventIdByLocalIdAndMap
 
-	thumb_func_start TryGetEventObjectIdByLocalIdAndMap
-TryGetEventObjectIdByLocalIdAndMap: @ 0x0808CEB8
+	thumb_func_start TryGetObjectEventIdByLocalIdAndMap
+TryGetObjectEventIdByLocalIdAndMap: @ 0x0808CEB8
 	push {r4, lr}
 	adds r4, r3, #0
 	lsls r0, r0, #0x18
@@ -213,7 +213,7 @@ _0808CEDC:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end TryGetEventObjectIdByLocalIdAndMap
+	thumb_func_end TryGetObjectEventIdByLocalIdAndMap
 
 	thumb_func_start GetEventObjectIdByXY
 GetEventObjectIdByXY: @ 0x0808CEE4
@@ -693,7 +693,7 @@ RemoveEventObjectByLocalIdAndMap: @ 0x0808D234
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808D272
@@ -725,7 +725,7 @@ RemoveEventObjectInternal: @ 0x0808D27C
 	sub sp, #8
 	adds r4, r0, #0
 	ldrb r0, [r4, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldrh r2, [r0, #6]
 	ldr r1, _0808D2C0
 	ldr r0, [sp, #4]
@@ -825,7 +825,7 @@ _0808D338:
 	ldr r1, _0808D360
 	adds r6, r0, r1
 	ldrb r0, [r6, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r7, r0, #0
 	ldrb r0, [r7, #0xc]
 	lsls r0, r0, #0x1c
@@ -985,7 +985,7 @@ _0808D486:
 	lsrs r0, r0, #4
 	adds r1, r4, #0
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 	adds r0, r6, #0
 	adds r1, r4, #0
 	bl UpdateEventObjectVisibility
@@ -1029,7 +1029,7 @@ TrySpawnEventObjectTemplate: @ 0x0808D4B0
 	str r0, [sp, #0x20]
 	mov r1, sb
 	ldrb r0, [r1, #1]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r7, r0, #0
 	add r2, sp, #0x20
 	mov r0, sb
@@ -1241,7 +1241,7 @@ MakeObjectTemplateFromEventObjectGraphicsInfo: @ 0x0808D66C
 	adds r6, r3, #0
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldrh r1, [r0]
 	strh r1, [r4]
 	ldrh r1, [r0, #2]
@@ -1403,7 +1403,7 @@ sprite_new: @ 0x0808D77C
 	lsrs r4, r4, #0x18
 	mov sl, r4
 	adds r0, r5, #0
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r4, r0, #0
 	ldr r1, _0808D87C
 	add r3, sp, #0x1c
@@ -1427,7 +1427,7 @@ sprite_new: @ 0x0808D77C
 	adds r1, r6, #0
 	movs r2, #8
 	movs r3, #0x10
-	bl sub_08092A50
+	bl SetSpritePosToOffsetMapCoords
 	mov r2, r8
 	movs r0, #0
 	ldrsh r1, [r2, r0]
@@ -1536,7 +1536,7 @@ _0808D8B8:
 	adds r0, r7, #0
 	adds r1, r5, #0
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 	mov r0, sl
 	bl GetJumpInPlaceMovementAction
 	adds r1, r0, #0
@@ -1901,7 +1901,7 @@ _0808DB5C:
 	movs r0, #0
 	str r0, [sp, #0x20]
 	ldrb r0, [r6, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r5, r0, #0
 	ldrh r2, [r5, #6]
 	ldr r1, _0808DBC0
@@ -2071,7 +2071,7 @@ _0808DCD2:
 	lsrs r0, r0, #4
 	adds r1, r4, #0
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 _0808DCE4:
 	add sp, #0x28
 	pop {r3, r4, r5}
@@ -2154,7 +2154,7 @@ ObjectEventSetGraphicsId: @ 0x0808DD68
 	lsrs r1, r1, #0x18
 	mov r8, r1
 	mov r0, r8
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r6, r0, #0
 	ldrb r1, [r7, #4]
 	lsls r0, r1, #4
@@ -2292,7 +2292,7 @@ EventObjectSetGraphicsIdByLocalIdAndMap: @ 0x0808DE74
 	lsls r3, r3, #0x18
 	lsrs r4, r3, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808DEA8
@@ -2368,7 +2368,7 @@ EventObjectTurnByLocalIdAndMap: @ 0x0808DF04
 	lsls r3, r3, #0x18
 	lsrs r4, r3, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808DF38
@@ -2487,8 +2487,8 @@ _0808DFFC: .4byte 0x084E4C04
 _0808E000: .4byte 0x084E4CB0
 	thumb_func_end get_berry_tree_graphics
 
-	thumb_func_start GetEventObjectGraphicsInfo
-GetEventObjectGraphicsInfo: @ 0x0808E004
+	thumb_func_start GetObjectEventGraphicsInfo
+GetObjectEventGraphicsInfo: @ 0x0808E004
 	push {lr}
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
@@ -2526,7 +2526,7 @@ _0808E042:
 	bx r1
 	.align 2, 0
 _0808E048: .4byte 0x084DDA74
-	thumb_func_end GetEventObjectGraphicsInfo
+	thumb_func_end GetObjectEventGraphicsInfo
 
 	thumb_func_start SetEventObjectDynamicGraphicsId
 SetEventObjectDynamicGraphicsId: @ 0x0808E04C
@@ -2559,7 +2559,7 @@ npc_by_local_id_and_map_set_field_1_bit_x20: @ 0x0808E068
 	lsls r3, r3, #0x18
 	lsrs r4, r3, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808E0AA
@@ -2644,7 +2644,7 @@ sub_0808E0FC: @ 0x0808E0FC
 	lsls r3, r3, #0x18
 	lsrs r4, r3, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808E142
@@ -2688,7 +2688,7 @@ sub_0808E154: @ 0x0808E154
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808E190
@@ -2732,7 +2732,7 @@ sub_0808E19C: @ 0x0808E19C
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808E1E0
@@ -3145,7 +3145,7 @@ MoveEventObjectToMapCoords: @ 0x0808E478
 	ldr r1, _0808E514
 	adds r7, r0, r1
 	ldrb r0, [r6, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	mov r8, r0
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
@@ -3222,7 +3222,7 @@ TryMoveEventObjectToMapCoords: @ 0x0808E518
 	lsls r4, r4, #0x10
 	lsrs r4, r4, #0x10
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808E560
@@ -3919,7 +3919,7 @@ sub_0808E9F0: @ 0x0808E9F0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808EA24
@@ -3968,7 +3968,7 @@ sub_0808EA44: @ 0x0808EA44
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808EA78
@@ -4197,7 +4197,7 @@ TryOverrideEventObjectTemplateCoords: @ 0x0808EBC4
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808EBF2
@@ -4230,7 +4230,7 @@ OverrideSecretBaseDecorationSpriteScript: @ 0x0808EBFC
 	lsls r3, r3, #0x18
 	lsrs r4, r3, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0808EC58
@@ -12867,7 +12867,7 @@ IsBerryTreeSparkling: @ 0x0809280C
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08092858
@@ -12913,7 +12913,7 @@ sub_08092860: @ 0x08092860
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0809289E
@@ -13172,8 +13172,8 @@ _08092A48: .4byte 0xFFF00000
 _08092A4C: .4byte 0x03005AEC
 	thumb_func_end SetSpritePosToMapCoords
 
-	thumb_func_start sub_08092A50
-sub_08092A50: @ 0x08092A50
+	thumb_func_start SetSpritePosToOffsetMapCoords
+SetSpritePosToOffsetMapCoords: @ 0x08092A50
 	push {r4, r5, r6, lr}
 	mov r6, r8
 	push {r6}
@@ -13211,7 +13211,7 @@ sub_08092A50: @ 0x08092A50
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08092A50
+	thumb_func_end SetSpritePosToOffsetMapCoords
 
 	thumb_func_start GetEventObjectMovingCameraOffset
 GetEventObjectMovingCameraOffset: @ 0x08092A9C
@@ -17641,7 +17641,7 @@ MovementAction_FacePlayer_Step0: @ 0x080948A8
 	movs r1, #0
 	movs r2, #0
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080948F2
@@ -17688,7 +17688,7 @@ MovementAction_FaceAwayPlayer_Step0: @ 0x08094904
 	movs r1, #0
 	movs r2, #0
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08094956
@@ -18432,7 +18432,7 @@ MovementAction_RestoreAnimation_Step0: @ 0x08094E00
 	adds r4, r0, #0
 	adds r5, r1, #0
 	ldrb r0, [r4, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldrb r1, [r0, #0xc]
 	lsls r1, r1, #0x19
 	lsrs r1, r1, #0x1f
@@ -18554,7 +18554,7 @@ _08094ECE:
 	cmp r0, #1
 	bhi _08094EF0
 	adds r0, r4, #0
-	bl sub_08155CB4
+	bl StartRevealDisguise
 	movs r0, #1
 	strh r0, [r5, #0x32]
 	adds r0, r4, #0
@@ -18577,7 +18577,7 @@ _08094EF6:
 MovementAction_RevealTrainer_Step1: @ 0x08094EFC
 	push {r4, lr}
 	adds r4, r1, #0
-	bl sub_08155CDC
+	bl UpdateRevealDisguise
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08094F0E
@@ -20910,7 +20910,7 @@ sub_08095EA0: @ 0x08095EA0
 	ands r0, r1
 	strb r0, [r5, #1]
 	ldrb r0, [r5, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	adds r6, r0, #0
 	adds r0, r4, #0
 	adds r0, #0x3e
@@ -21652,7 +21652,7 @@ EventObjectCheckForReflectiveSurface: @ 0x080963FC
 	sub sp, #8
 	adds r5, r0, #0
 	ldrb r0, [r5, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	movs r2, #8
 	ldrsh r1, [r0, r2]
 	adds r1, #8
@@ -21917,7 +21917,7 @@ SetEventObjectSpriteOamTableForLongGrass: @ 0x080965D8
 	strb r0, [r4]
 	ldrb r0, [r5, #0xb]
 	lsrs r0, r0, #4
-	bl sub_08096718
+	bl ElevationToPriority
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -22061,8 +22061,8 @@ _08096710: .4byte 0x084E6A98
 _08096714: .4byte 0x084E6A88
 	thumb_func_end InitObjectPriorityByZCoord
 
-	thumb_func_start sub_08096718
-sub_08096718: @ 0x08096718
+	thumb_func_start ElevationToPriority
+ElevationToPriority: @ 0x08096718
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	ldr r1, _08096724
@@ -22071,7 +22071,7 @@ sub_08096718: @ 0x08096718
 	bx lr
 	.align 2, 0
 _08096724: .4byte 0x084E6A88
-	thumb_func_end sub_08096718
+	thumb_func_end ElevationToPriority
 
 	thumb_func_start EventObjectUpdateZCoord
 EventObjectUpdateZCoord: @ 0x08096728
@@ -22118,8 +22118,8 @@ _08096776:
 	bx r0
 	thumb_func_end EventObjectUpdateZCoord
 
-	thumb_func_start SetObjectSubpriorityByZCoord
-SetObjectSubpriorityByZCoord: @ 0x0809677C
+	thumb_func_start SetObjectSubpriorityByElevation
+SetObjectSubpriorityByElevation: @ 0x0809677C
 	push {r4, r5, lr}
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -22155,7 +22155,7 @@ SetObjectSubpriorityByZCoord: @ 0x0809677C
 	.align 2, 0
 _080967BC: .4byte 0x02021B3A
 _080967C0: .4byte 0x084E6A78
-	thumb_func_end SetObjectSubpriorityByZCoord
+	thumb_func_end SetObjectSubpriorityByElevation
 
 	thumb_func_start EventObjectUpdateSubpriority
 EventObjectUpdateSubpriority: @ 0x080967C4
@@ -22168,7 +22168,7 @@ EventObjectUpdateSubpriority: @ 0x080967C4
 	ldrb r0, [r2, #0xb]
 	lsrs r0, r0, #4
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 _080967DA:
 	pop {r0}
 	bx r0
@@ -22395,7 +22395,7 @@ GroundEffect_SandTracks: @ 0x08096958
 	adds r4, r0, #0
 	adds r5, r1, #0
 	ldrb r0, [r4, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldr r1, _08096980
 	ldrb r0, [r0, #0xd]
 	lsls r0, r0, #2
@@ -22418,7 +22418,7 @@ sub_08096984: @ 0x08096984
 	adds r4, r0, #0
 	adds r5, r1, #0
 	ldrb r0, [r4, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldr r1, _080969AC
 	ldrb r0, [r0, #0xd]
 	lsls r0, r0, #2
@@ -23420,8 +23420,8 @@ _08097090:
 	.align 2, 0
 	thumb_func_end sub_0809705C
 
-	thumb_func_start sub_08097098
-sub_08097098: @ 0x08097098
+	thumb_func_start GetFigure8YOffset
+GetFigure8YOffset: @ 0x08097098
 	ldr r1, _080970A8
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
@@ -23432,10 +23432,10 @@ sub_08097098: @ 0x08097098
 	bx lr
 	.align 2, 0
 _080970A8: .4byte 0x084E6C0E
-	thumb_func_end sub_08097098
+	thumb_func_end GetFigure8YOffset
 
-	thumb_func_start sub_080970AC
-sub_080970AC: @ 0x080970AC
+	thumb_func_start GetFigure8XOffset
+GetFigure8XOffset: @ 0x080970AC
 	ldr r1, _080970BC
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
@@ -23446,7 +23446,7 @@ sub_080970AC: @ 0x080970AC
 	bx lr
 	.align 2, 0
 _080970BC: .4byte 0x084E6BC6
-	thumb_func_end sub_080970AC
+	thumb_func_end GetFigure8XOffset
 
 	thumb_func_start sub_080970C0
 sub_080970C0: @ 0x080970C0
@@ -23479,7 +23479,7 @@ _080970E0:
 _080970EA:
 	movs r2, #0x3a
 	ldrsh r0, [r5, r2]
-	bl sub_080970AC
+	bl GetFigure8XOffset
 	ldrh r1, [r5, #0x24]
 	adds r0, r0, r1
 	strh r0, [r5, #0x24]
@@ -23492,7 +23492,7 @@ _080970FE:
 	subs r0, r4, r0
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
-	bl sub_080970AC
+	bl GetFigure8XOffset
 	ldrh r1, [r5, #0x24]
 	subs r1, r1, r0
 	strh r1, [r5, #0x24]
@@ -23501,14 +23501,14 @@ _080970FE:
 	lsls r4, r4, #0x10
 	asrs r4, r4, #0x10
 	adds r0, r4, #0
-	bl sub_08097098
+	bl GetFigure8YOffset
 	ldrh r2, [r5, #0x26]
 	adds r0, r0, r2
 	b _08097160
 _08097126:
 	movs r1, #0x3a
 	ldrsh r0, [r5, r1]
-	bl sub_080970AC
+	bl GetFigure8XOffset
 	ldrh r1, [r5, #0x24]
 	subs r1, r1, r0
 	strh r1, [r5, #0x24]
@@ -23521,7 +23521,7 @@ _0809713A:
 	subs r0, r4, r0
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x10
-	bl sub_080970AC
+	bl GetFigure8XOffset
 	ldrh r2, [r5, #0x24]
 	adds r0, r0, r2
 	strh r0, [r5, #0x24]
@@ -23531,7 +23531,7 @@ _0809713A:
 	asrs r4, r4, #0x10
 	adds r0, r4, #0
 _08097158:
-	bl sub_08097098
+	bl GetFigure8YOffset
 	ldrh r1, [r5, #0x26]
 	adds r0, r0, r1
 _08097160:
@@ -23811,8 +23811,8 @@ _08097340:
 	bx r1
 	thumb_func_end SpriteAnimEnded
 
-	thumb_func_start UpdateEventObjectSpriteVisibility
-UpdateEventObjectSpriteVisibility: @ 0x08097344
+	thumb_func_start UpdateObjectEventSpriteInvisibility
+UpdateObjectEventSpriteInvisibility: @ 0x08097344
 	push {r4, r5, r6, lr}
 	mov ip, r0
 	lsls r1, r1, #0x18
@@ -23940,7 +23940,7 @@ _08097432:
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
-	thumb_func_end UpdateEventObjectSpriteVisibility
+	thumb_func_end UpdateObjectEventSpriteInvisibility
 
 	thumb_func_start UpdateEventObjectSpriteSubpriorityAndVisibility
 UpdateEventObjectSpriteSubpriorityAndVisibility: @ 0x08097438
@@ -23952,12 +23952,12 @@ UpdateEventObjectSpriteSubpriorityAndVisibility: @ 0x08097438
 	lsrs r0, r0, #0x18
 	adds r1, r4, #0
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 	ldrh r1, [r4, #0x32]
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
-	bl UpdateEventObjectSpriteVisibility
+	bl UpdateObjectEventSpriteInvisibility
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -24089,7 +24089,7 @@ sub_08097524: @ 0x08097524
 	ldr r1, _08097588
 	adds r4, r0, r1
 	adds r0, r5, #0
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldrh r3, [r4, #4]
 	lsls r3, r3, #0x16
 	ldr r1, [r0, #0x10]
@@ -24434,7 +24434,7 @@ DoRippleFieldEffect: @ 0x0809779C
 	push {r4, lr}
 	adds r4, r1, #0
 	ldrb r0, [r0, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldr r2, _080977D4
 	movs r3, #0x20
 	ldrsh r1, [r4, r3]
@@ -24591,7 +24591,7 @@ _080978BE:
 	cmp r7, #1
 	bne _080978F0
 	ldrb r0, [r6, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	ldrb r1, [r0, #0xc]
 	lsls r1, r1, #0x19
 	lsrs r1, r1, #0x1f

@@ -15,7 +15,7 @@ ScriptMovement_StartObjectMovementScript: @ 0x080D2B88
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D2BAA
@@ -59,7 +59,7 @@ ScriptMovement_IsObjectMovementFinished: @ 0x080D2BE0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D2C22

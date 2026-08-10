@@ -238,7 +238,7 @@ SetUnionRoomPlayerEnterExitMovement: @ 0x080194D0
 	ldrb r1, [r2, #5]
 	ldrb r2, [r2, #4]
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08019536

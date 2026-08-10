@@ -96,6 +96,20 @@ sFlashLevelToRadius = ABSOLUTE(0x0852AB00);
 gMaxFlashLevel = ABSOLUTE(0x0852AB14);
 sFlashEffectParams = ABSOLUTE(0x0852AB18);
 gOrbEffectBackgroundLayerFlags = ABSOLUTE(0x082BF434);
+gDummySpriteAnimTable = ABSOLUTE(0x082BF304);
+gDummySpriteAffineAnimTable = ABSOLUTE(0x082BF310);
+gDummySpriteTemplate = ABSOLUTE(0x082BF314);
+gReflectionEffectPaletteMap = ABSOLUTE(0x0846FA18);
+gFieldEffectObjectTemplatePointers = ABSOLUTE(0x084DDE4C);
+sShadowEffectTemplateIds = ABSOLUTE(0x085ACA46);
+gShadowVerticalOffsets = ABSOLUTE(0x085ACA4A);
+gFadeFootprintsTireTracksFuncs = ABSOLUTE(0x085ACA54);
+gAshFieldEffectFuncs = ABSOLUTE(0x085ACA5C);
+sFigure8XOffsets = ABSOLUTE(0x084E6BC6);
+sFigure8YOffsets = ABSOLUTE(0x084E6C0E);
+sBridgeReflectionVerticalOffsets = ABSOLUTE(0x085ACA40);
+sSurfBlobDirectionAnims = ABSOLUTE(0x085ACA68);
+sBobbingIntervals = ABSOLUTE(0x085ACA72);
 
 SECTIONS {
     . = 0x2000000;
@@ -305,7 +319,9 @@ SECTIONS {
         asm/rom_81520A8.o(.text);
         asm/save.o(.text);
         asm/mystery_event_script.o(.text);
-        asm/field_effect_helpers.o(.text);
+        build/src/field_effect_helpers.o(.text);
+        build/src/field_effect_helpers_get.o(.text);
+        build/src/field_effect_helpers_rest.o(.text);
         asm/contest_ai.o(.text);
         asm/battle_anim_sound_tasks.o(.text);
         asm/battle_controller_safari.o(.text);

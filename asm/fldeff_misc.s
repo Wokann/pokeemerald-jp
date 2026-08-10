@@ -1833,7 +1833,7 @@ DoSecretBaseGlitterMatSparkle: @ 0x080FB240
 	adds r1, r4, #0
 	movs r2, #8
 	movs r3, #4
-	bl sub_08092A50
+	bl SetSpritePosToOffsetMapCoords
 	ldr r0, _080FB2E0
 	ldr r0, [r0, #0x58]
 	mov r1, sp

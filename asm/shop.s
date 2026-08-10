@@ -1819,7 +1819,7 @@ _080DFE4E:
 	lsls r0, r0, #2
 	add r0, sl
 	ldrb r0, [r0, #5]
-	bl GetEventObjectGraphicsInfo
+	bl GetObjectEventGraphicsInfo
 	mov r4, r8
 	ldr r3, [r4]
 	ldr r2, _080DFF44

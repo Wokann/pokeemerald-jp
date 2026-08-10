@@ -7190,10 +7190,10 @@ SpriteCB_LinkPlayer: @ 0x080875F0
 	lsrs r0, r0, #4
 	adds r1, r5, #0
 	movs r2, #1
-	bl SetObjectSubpriorityByZCoord
+	bl SetObjectSubpriorityByElevation
 	ldrb r0, [r6, #0xb]
 	lsrs r0, r0, #4
-	bl sub_08096718
+	bl ElevationToPriority
 	movs r1, #3
 	ands r1, r0
 	lsls r1, r1, #2
@@ -7228,7 +7228,7 @@ _0808765C:
 _0808766E:
 	adds r0, r5, #0
 	movs r1, #0
-	bl UpdateEventObjectSpriteVisibility
+	bl UpdateObjectEventSpriteInvisibility
 	ldrb r0, [r6]
 	lsls r0, r0, #0x1d
 	cmp r0, #0

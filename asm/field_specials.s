@@ -6777,7 +6777,7 @@ ChangeDeoxysRockLevel: @ 0x0813B0EC
 	ldrb r2, [r0, #4]
 	movs r0, #1
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	cmp r4, #0
 	bne _0813B128
 	movs r0, #0xc4

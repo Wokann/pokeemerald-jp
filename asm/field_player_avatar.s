@@ -1586,7 +1586,7 @@ PlayerAvatarTransition_Surfing: @ 0x0808AE3C
 	lsrs r0, r0, #0x18
 	strb r0, [r4, #0x1a]
 	movs r1, #1
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1613,7 +1613,7 @@ PlayerAvatarTransition_Underwater: @ 0x0808AE98
 	movs r0, #0x10
 	bl SetPlayerAvatarStateMask
 	ldrb r0, [r4, #4]
-	bl sub_0815573C
+	bl StartUnderwaterSurfBlobBobbing
 	strb r0, [r4, #0x1a]
 	pop {r4}
 	pop {r0}
@@ -4084,7 +4084,7 @@ taskFF_0805D1D4: @ 0x0808C10C
 _0808C138:
 	ldrb r0, [r5, #0x1a]
 	movs r1, #2
-	bl sub_081554E8
+	bl SetSurfBlob_BobState
 	ldr r0, _0808C170
 	lsls r4, r6, #2
 	adds r4, r4, r6
@@ -4768,7 +4768,7 @@ _0808C62C:
 	ldrb r0, [r1, #0x1a]
 	movs r1, #0
 	movs r2, #0
-	bl sub_08155540
+	bl SetSurfBlob_PlayerOffset
 _0808C68A:
 	ldr r2, _0808C6BC
 	ldrb r1, [r7, #4]
@@ -4993,7 +4993,7 @@ Fishing15: @ 0x0808C7FC
 	ldrb r0, [r1, #0x1a]
 	movs r1, #0
 	movs r2, #0
-	bl sub_08155540
+	bl SetSurfBlob_PlayerOffset
 _0808C862:
 	ldrb r1, [r5, #4]
 	lsls r0, r1, #4
@@ -5175,7 +5175,7 @@ _0808C9AA:
 	movs r1, #0x26
 	ldrsh r2, [r4, r1]
 	movs r1, #1
-	bl sub_08155540
+	bl SetSurfBlob_PlayerOffset
 _0808C9CE:
 	pop {r4, r5, r6, r7}
 	pop {r0}

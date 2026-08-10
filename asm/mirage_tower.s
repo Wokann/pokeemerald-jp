@@ -232,7 +232,7 @@ PlayerDescendMirageTower: @ 0x081BE4A4
 	ldrb r2, [r0, #4]
 	movs r0, #0x2d
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	mov r0, sp
 	ldrb r0, [r0]
 	lsls r2, r0, #3

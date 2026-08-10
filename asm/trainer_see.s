@@ -1516,7 +1516,7 @@ SpriteCB_TrainerIcons: @ 0x080B3E7C
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B3EAE

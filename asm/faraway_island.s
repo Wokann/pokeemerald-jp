@@ -13,7 +13,7 @@ GetMewEventObjectId: @ 0x081D38D8
 	ldrb r2, [r0, #4]
 	movs r0, #1
 	mov r3, sp
-	bl TryGetEventObjectIdByLocalIdAndMap
+	bl TryGetObjectEventIdByLocalIdAndMap
 	mov r0, sp
 	ldrb r0, [r0]
 	add sp, #4
@@ -1166,7 +1166,7 @@ _081D41BA:
 	adds r1, r4, #0
 	movs r2, #8
 	movs r3, #8
-	bl sub_08092A50
+	bl SetSpritePosToOffsetMapCoords
 	ldr r0, _081D4260
 	ldr r0, [r0, #0x3c]
 	mov r1, sp
