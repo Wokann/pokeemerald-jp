@@ -164,7 +164,9 @@ SECTIONS {
         asm/overworld.o(.text);
         asm/fieldmap.o(.text);
         asm/metatile_behavior.o(.text);
-        asm/field_camera.o(.text);
+        build/src/field_camera.o(.text);
+        asm/field_camera_rest.o(.text);
+        build/src/field_camera_rest.o(.text);
         build/src/field_door.o(.text);
         asm/field_player_avatar.o(.text);
         asm/event_object_movement.o(.text);

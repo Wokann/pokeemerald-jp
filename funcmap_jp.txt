@@ -3686,7 +3686,7 @@ metatile_behavior.s
 field_camera.s
 080894bc ResetCameraOffset ResetCameraOffset
 080894cc AddCameraTileOffset AddCameraTileOffset
-080894e8 field_camera.s coords8_add
+080894e8 AddCameraPixelOffset AddCameraPixelOffset
 080894f8 move_tilemap_camera_to_upper_left_corner ResetFieldCamera
 08089508 FieldUpdateBgTilemapScroll FieldUpdateBgTilemapScroll
 0808956c GetCameraOffsetWithPan GetCameraOffsetWithPan

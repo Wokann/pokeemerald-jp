@@ -97,7 +97,11 @@ asm/field_poison.s removed, src/field_door.c (23, full module --
 asm/field_door.s removed), src/rotating_gate.c (21, full module --
 asm/rotating_gate.s removed), src/field_message_box.c (17, full module --
 asm/field_message_box.s removed), src/field_tasks.c (28, full module --
-asm/field_tasks.s removed).
+asm/field_tasks.s removed), src/field_camera.c (8) + src/field_camera_rest.c
+(12) partial -- the 8 middle functions (RedrawMapSlicesForCameraUpdate,
+RedrawMapSliceN/S/E/W, CurrentMapDrawMetatileAt, DrawDoorMetatileAt,
+DrawMetatileAt) are JP variants with inline offset math and stay in
+asm/field_camera_rest.s.
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -275,3 +279,25 @@ MetatileBehavior_IsPacifilog* labels to the pokeemerald Pacifidlog names;
 added gCamera (0x02036FD4).  verify_all now covers every src function
 (381/381); its linker-addend fallback was fixed to pad the JP side before
 the word-by-word comparison.
+
+src/field_camera.c (ResetCameraOffset, AddCameraTileOffset,
+AddCameraPixelOffset, ResetFieldCamera, FieldUpdateBgTilemapScroll,
+GetCameraOffsetWithPan, DrawWholeMapView, DrawWholeMapViewInternal) and
+src/field_camera_rest.c (DrawMetatile, MapPosToBgTilemapOffset,
+CameraUpdateCallback, ResetCameraUpdateInfo, InitCameraUpdateCallback,
+CameraUpdate, MoveCameraAndRedrawMap, SetCameraPanningCallback,
+SetCameraPanning, InstallCameraPanAheadCallback, UpdateCameraPanning,
+CameraPanningCB_PanAhead) are the twenty-seventh wired module (partial).
+The middle 8 functions are JP variants (inline tilemap offset math, no
+RequestBgCopy, different metatile decompression path in DrawMetatileAt)
+and stay in asm/field_camera_rest.s; MapPosToBgTilemapOffset/DrawMetatile
+were made global so the asm can call them.  JP variants: ResetCameraOffset
+clears tile offsets first and leaves copyBGToVRAM set; AddCameraTileOffset
+mods each offset right after adding; AddCameraPixelOffset has no modulo.
+Renamed UpdateEventObjectsForCameraUpdate -> UpdateObjectEventsForCameraUpdate,
+ResetBerryTreeSparkleFlags -> SetBerryTreesSeen, move_tilemap_camera_to_upper_left_corner
+-> ResetFieldCamera and sub_0808956C -> GetCameraOffsetWithPan.  Added the
+camera IWRAM vars (sFieldCameraOffset 0x03000E20, pans/flags 0x03000E28-30,
+gOverworldTilemapBuffer_Bg1/2/3 0x03005B00/AFC/B04, gFieldCamera 0x03005B30,
+gTotalCameraPixelOffsetX/Y 0x03005B4C/48) and gUnusedBikeCameraAheadPanback
+(0x02036FE8).

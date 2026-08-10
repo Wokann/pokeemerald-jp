@@ -3405,8 +3405,8 @@ _0808E672:
 	.align 2, 0
 	thumb_func_end EventObjectDoesZCoordMatch
 
-	thumb_func_start UpdateEventObjectsForCameraUpdate
-UpdateEventObjectsForCameraUpdate: @ 0x0808E678
+	thumb_func_start UpdateObjectEventsForCameraUpdate
+UpdateObjectEventsForCameraUpdate: @ 0x0808E678
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	adds r5, r1, #0
@@ -3426,7 +3426,7 @@ UpdateEventObjectsForCameraUpdate: @ 0x0808E678
 	pop {r4, r5}
 	pop {r0}
 	bx r0
-	thumb_func_end UpdateEventObjectsForCameraUpdate
+	thumb_func_end UpdateObjectEventsForCameraUpdate
 
 	thumb_func_start AddCameraObject
 AddCameraObject: @ 0x0808E6A4

@@ -434,7 +434,7 @@ _08084300:
 	thumb_func_start mapdata_load_assets_to_gpu_and_full_redraw
 mapdata_load_assets_to_gpu_and_full_redraw: @ 0x08084308
 	push {r4, lr}
-	bl move_tilemap_camera_to_upper_left_corner
+	bl ResetFieldCamera
 	ldr r4, _0808432C
 	ldr r0, [r4]
 	bl copy_map_tileset1_tileset2_to_vram
@@ -3973,7 +3973,7 @@ _08085DE8:
 	bl sub_08196DF4
 	b _08085E6A
 _08085DF6:
-	bl move_tilemap_camera_to_upper_left_corner
+	bl ResetFieldCamera
 	b _08085E6A
 _08085DFC:
 	ldr r0, _08085E08
@@ -4096,7 +4096,7 @@ _08085EFC:
 	bl sub_08196DF4
 	b _08085F86
 _08085F0A:
-	bl move_tilemap_camera_to_upper_left_corner
+	bl ResetFieldCamera
 	b _08085F86
 _08085F10:
 	ldr r0, _08085F1C
@@ -4271,7 +4271,7 @@ _08086074:
 	bl sub_08196DF4
 	b _080860F6
 _08086082:
-	bl move_tilemap_camera_to_upper_left_corner
+	bl ResetFieldCamera
 	b _080860F6
 _08086088:
 	ldr r0, _08086094

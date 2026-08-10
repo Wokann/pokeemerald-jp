@@ -1000,8 +1000,8 @@ PlayerHasBerries: @ 0x080E121C
 	bx r1
 	thumb_func_end PlayerHasBerries
 
-	thumb_func_start ResetBerryTreeSparkleFlags
-ResetBerryTreeSparkleFlags: @ 0x080E122C
+	thumb_func_start SetBerryTreesSeen
+SetBerryTreesSeen: @ 0x080E122C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -1080,4 +1080,4 @@ _080E12AC:
 	bx r0
 	.align 2, 0
 _080E12C4: .4byte 0x02036FF0
-	thumb_func_end ResetBerryTreeSparkleFlags
+	thumb_func_end SetBerryTreesSeen

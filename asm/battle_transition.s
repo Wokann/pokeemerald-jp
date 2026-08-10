@@ -8419,7 +8419,7 @@ sub_08149FC8: @ 0x08149FC8
 	adds r0, r1, #0
 	adds r0, #0x14
 	adds r1, #0x16
-	bl sub_0808956C
+	bl GetCameraOffsetWithPan
 	pop {r4}
 	pop {r0}
 	bx r0
