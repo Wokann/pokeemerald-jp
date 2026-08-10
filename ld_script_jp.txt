@@ -168,6 +168,7 @@ sUnionRoomGroupOffsets = ABSOLUTE(0x082C2BB0);
 sUnionRoomLocalIds = ABSOLUTE(0x082C2BC4);
 gAssertFile_rfu_union_tool = ABSOLUTE(0x082C2BDC);
 gAssertCond_UnionObjWork = ABSOLUTE(0x082C2BF0);
+sRoamerLocations = ABSOLUTE(0x085ADB74);
 
 SECTIONS {
     . = 0x2000000;
@@ -388,7 +389,7 @@ SECTIONS {
         asm/move_relearner.o(.text);
         build/src/fldeff_softboiled.o(.text);
         asm/decoration_inventory.o(.text);
-        asm/roamer.o(.text);
+        build/src/roamer.o(.text);
         asm/battle_tower.o(.text);
         asm/use_pokeblock.o(.text);
         asm/battle_controller_wally.o(.text);
