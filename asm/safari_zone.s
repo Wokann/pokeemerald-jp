@@ -188,7 +188,7 @@ _080FCA78:
 	bne _080FCA8C
 	ldr r0, _080FCA90
 	bl ScriptContext_SetupScript
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	ldr r0, _080FCA94
 	bl SetMainCallback2
 _080FCA8C:

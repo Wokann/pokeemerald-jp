@@ -445,7 +445,7 @@ _081CFDE0:
 	bl GetBoxMonData
 _081CFE02:
 	adds r0, r5, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0

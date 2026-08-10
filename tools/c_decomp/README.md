@@ -89,7 +89,9 @@ asm/fldeff_sweetscent.s removed), src/fldeff_softboiled.c (8, full module --
 asm/fldeff_softboiled.s removed), src/fldeff_flash.c (20, full module --
 asm/fldeff_flash.s removed), src/fldeff_cut.c (17, full module --
 asm/fldeff_cut.s removed), src/fldeff_escalator.c (6, full module --
-asm/fldeff_escalator.s removed).
+asm/fldeff_escalator.s removed), src/field_poison.c (7, asm/field_poison.s
+split; the remaining 13 functions belong to pokeemerald's
+src/pokemon_size_record.c and are still in asm).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -172,3 +174,14 @@ twentieth wired module.  The seven sEscalatorMetatiles_* tables
 (0x08562A3E-0x08562A62) and sEscalatorAnim_TaskId (0x02039C2C) stay in the
 ROM data region; the JP sub_080E0AA4/ABC/AD0 labels were renamed to
 StartEscalator/StopEscalator/IsEscalatorMoving.
+
+src/field_poison.c (IsMonValidSpecies, AllMonsFainted, FaintFromFieldPoison,
+MonFaintedFromPoison, Task_TryFieldPoisonWhiteOut, TryFieldPoisonWhiteOut,
+DoPoisonFieldEffect) is the twenty-first wired module (partial: the JP
+field_poison.s region also holds pokemon_size_record.c's functions, which
+stay in asm for now).  Renamed StringGetEnd10 -> StringGet_Nickname
+(0x0800885C), pokemon_ailments_get_primary -> GetAilmentFromStatus
+(0x081B1CE4), InBattlePyramid -> CurrentBattlePyramidLocation (0x081A9BB8),
+sub_081D52F0 -> InTrainerHillChallenge (0x081D52F0), ScriptContext1_Stop ->
+ScriptContext_Stop, and updated data/specials.inc (ExecuteWhiteOut ->
+TryFieldPoisonWhiteOut).  Added gText_PkmnFainted_FldPsn (0x085CC30F).

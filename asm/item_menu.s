@@ -42,7 +42,7 @@ _081AA924: .4byte 0x08085AFD
 	thumb_func_start sub_081AA928
 sub_081AA928: @ 0x081AA928
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081AA944
@@ -5169,7 +5169,7 @@ UseRegisteredKeyItemOnField: @ 0x081AD318
 	bl InUnionRoom
 	cmp r0, #1
 	beq _081AD344
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081AD344

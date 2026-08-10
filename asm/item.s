@@ -229,7 +229,7 @@ CheckBagHasItem: @ 0x080D5F3C
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D5FCE
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D5F6A
@@ -354,7 +354,7 @@ CheckBagHasSpace: @ 0x080D6018
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D611E
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D6050
@@ -512,7 +512,7 @@ AddBagItem: @ 0x080D6140
 	movs r0, #0
 	b _080D62AA
 _080D6164:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D617C
@@ -702,7 +702,7 @@ RemoveBagItem: @ 0x080D62BC
 	mov r0, r8
 	cmp r0, #0
 	beq _080D6350
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080D62F8

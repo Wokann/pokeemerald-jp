@@ -159,7 +159,7 @@ _080B3476:
 	bl GetEventObjectScriptPointerByEventObjectId
 _080B347C:
 	adds r7, r0, #0
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3496

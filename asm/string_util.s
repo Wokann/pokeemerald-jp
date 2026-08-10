@@ -36,8 +36,8 @@ _08008854:
 	.align 2, 0
 	thumb_func_end StringCopy10
 
-	thumb_func_start StringGetEnd10
-StringGetEnd10: @ 0x0800885C
+	thumb_func_start StringGet_Nickname
+StringGet_Nickname: @ 0x0800885C
 	push {r4, lr}
 	adds r3, r0, #0
 	movs r4, #5
@@ -63,7 +63,7 @@ _08008880:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end StringGetEnd10
+	thumb_func_end StringGet_Nickname
 
 	thumb_func_start StringCopy7
 StringCopy7: @ 0x08008888

@@ -1642,7 +1642,7 @@ _081B09FC:
 	adds r1, r5, #0
 	bl StringCopy
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldrb r0, [r6, #8]
 	ldr r3, [r6]
 	adds r3, #4
@@ -1788,7 +1788,7 @@ _081B0B38:
 	adds r0, #0x14
 	add r0, r8
 	ldr r0, [r0]
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	lsrs r3, r0, #0x18
 _081B0B48:
@@ -3503,7 +3503,7 @@ GetMonNickname: @ 0x081B1814
 	adds r2, r4, #0
 	bl GetMonData3
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	pop {r4}
 	pop {r1}
 	bx r1
@@ -4107,8 +4107,8 @@ _081B1CDA:
 _081B1CE0: .4byte 0x081B1B31
 	thumb_func_end sub_081B1C78
 
-	thumb_func_start pokemon_ailments_get_primary
-pokemon_ailments_get_primary: @ 0x081B1CE4
+	thumb_func_start GetAilmentFromStatus
+GetAilmentFromStatus: @ 0x081B1CE4
 	push {lr}
 	adds r1, r0, #0
 	movs r0, #0x88
@@ -4151,7 +4151,7 @@ _081B1D26:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end pokemon_ailments_get_primary
+	thumb_func_end GetAilmentFromStatus
 
 	thumb_func_start GetMonAilment
 GetMonAilment: @ 0x081B1D2C
@@ -4167,7 +4167,7 @@ _081B1D3E:
 	adds r0, r4, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -8331,7 +8331,7 @@ _081B3E60: .4byte 0x081B3E65
 	thumb_func_start sub_081B3E64
 sub_081B3E64: @ 0x081B3E64
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081B3E80
@@ -12387,7 +12387,7 @@ _081B5EF0: .4byte 0x081B1041
 	thumb_func_start c2_815ABFC
 c2_815ABFC: @ 0x081B5EF4
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081B5F0C
@@ -15954,7 +15954,7 @@ _081B7BFC: .4byte 0x08085AFD
 sub_081B7C00: @ 0x081B7C00
 	push {lr}
 	sub sp, #0xc
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	ldr r1, _081B7C38
 	cmp r0, #0

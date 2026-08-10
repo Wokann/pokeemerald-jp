@@ -51,6 +51,7 @@ sHyperCutStruct = ABSOLUTE(0x08557164);
 sSpriteTemplate_CutGrass = ABSOLUTE(0x085571C8);
 EventScript_UseCut = ABSOLUTE(0x08256612);
 FarawayIsland_Interior_EventScript_HideMewWhenGrassCut = ABSOLUTE(0x0823B5A9);
+gText_PkmnFainted_FldPsn = ABSOLUTE(0x085CC30F);
 sEscalatorMetatiles_1F_0 = ABSOLUTE(0x08562A3E);
 sEscalatorMetatiles_1F_1 = ABSOLUTE(0x08562A44);
 sEscalatorMetatiles_1F_2 = ABSOLUTE(0x08562A4A);
@@ -195,6 +196,7 @@ SECTIONS {
         asm/tv.o(.text);
         asm/contest_link_80F57C4.o(.text);
         asm/script_pokemon_util_80F87D8.o(.text);
+        build/src/field_poison.o(.text);
         asm/field_poison.o(.text);
         asm/fldeff_misc.o(.text);
         asm/field_special_scene.o(.text);

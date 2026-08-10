@@ -6050,7 +6050,7 @@ _080F8FD4:
 	orrs r0, r7
 	strb r0, [r4, #0x10]
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r4, #0x40
 	subs r5, #1
 	cmp r5, #0

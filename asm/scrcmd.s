@@ -106,7 +106,7 @@ sub_08098CE0: @ 0x08098CE0
 	thumb_func_start ScrCmd_waitstate
 ScrCmd_waitstate: @ 0x08098CE4
 	push {lr}
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -1356,7 +1356,7 @@ ScrCmd_animateflash: @ 0x080995F8
 	str r1, [r0, #8]
 	adds r0, r2, #0
 	bl sub_080AF998
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -3526,7 +3526,7 @@ ScrCmd_yesnobox: @ 0x0809A65C
 	movs r0, #0
 	b _0809A684
 _0809A67E:
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 _0809A684:
 	pop {r1}
@@ -3558,7 +3558,7 @@ ScrCmd_multichoice: @ 0x0809A688
 	movs r0, #0
 	b _0809A6BC
 _0809A6B6:
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 _0809A6BC:
 	pop {r4, r5}
@@ -3600,7 +3600,7 @@ ScrCmd_multichoicedefault: @ 0x0809A6C4
 	movs r0, #0
 	b _0809A708
 _0809A702:
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 _0809A708:
 	add sp, #4
@@ -3650,7 +3650,7 @@ ScrCmd_multichoicegrid: @ 0x0809A718
 	movs r0, #0
 	b _0809A75C
 _0809A756:
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 _0809A75C:
 	add sp, #4
@@ -3739,7 +3739,7 @@ ScrCmd_showcontestwinner: @ 0x0809A7D0
 	bl sub_0812FDE0
 _0809A7E4:
 	bl ShowContestWinner
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -3979,7 +3979,7 @@ ScrCmd_bufferpartymonnick: @ 0x0809A9A0
 	adds r2, r4, #0
 	bl GetMonData3
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	movs r0, #0
 	pop {r4}
 	pop {r1}
@@ -4744,7 +4744,7 @@ ScrCmd_setwildbattle: @ 0x0809AF4C
 ScrCmd_dowildbattle: @ 0x0809AF80
 	push {lr}
 	bl BattleSetup_StartScriptedWildBattle
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4755,7 +4755,7 @@ ScrCmd_pokemart: @ 0x0809AF90
 	push {lr}
 	bl ScriptReadWord
 	bl CreatePokemartMenu
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4766,7 +4766,7 @@ ScrCmd_pokemartdecoration: @ 0x0809AFA4
 	push {lr}
 	bl ScriptReadWord
 	bl CreateDecorationShop1Menu
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4777,7 +4777,7 @@ ScrCmd_pokemartdecoration2: @ 0x0809AFB8
 	push {lr}
 	bl ScriptReadWord
 	bl CreateDecorationShop2Menu
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4794,7 +4794,7 @@ ScrCmd_playslotmachine: @ 0x0809AFCC
 	lsrs r0, r0, #0x18
 	ldr r1, _0809AFF0
 	bl PlaySlotMachine
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4862,7 +4862,7 @@ _0809B058: .4byte 0x02037290
 ScrCmd_showcontestresults: @ 0x0809B05C
 	push {lr}
 	bl sub_081B90A4
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4872,7 +4872,7 @@ ScrCmd_showcontestresults: @ 0x0809B05C
 ScrCmd_startcontest: @ 0x0809B06C
 	push {lr}
 	bl sub_080F8C90
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4882,7 +4882,7 @@ ScrCmd_startcontest: @ 0x0809B06C
 ScrCmd_choosecontestmon: @ 0x0809B07C
 	push {lr}
 	bl sub_080F8D08
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1
@@ -4894,7 +4894,7 @@ ScrCmd_contestlinktransfer: @ 0x0809B08C
 	ldr r0, _0809B0A0
 	ldrb r0, [r0]
 	bl sub_080F8D48
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	movs r0, #1
 	pop {r1}
 	bx r1

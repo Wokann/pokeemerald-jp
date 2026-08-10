@@ -985,7 +985,7 @@ CB2_ReturnFromRecord: @ 0x080C51D0
 	movs r1, #0
 	movs r2, #8
 	bl memset
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

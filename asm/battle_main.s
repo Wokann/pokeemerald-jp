@@ -16031,7 +16031,7 @@ _0803E8DC:
 	ldrb r6, [r0]
 	cmp r6, #0x32
 	bne _0803E99C
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0803E978
@@ -16132,7 +16132,7 @@ _0803E9C0:
 	ands r0, r1
 	cmp r0, #0
 	bne _0803EA46
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0803E9FC

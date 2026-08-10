@@ -2085,7 +2085,7 @@ UpdateRepelCounter: @ 0x080B4FC8
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B501C
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B501C

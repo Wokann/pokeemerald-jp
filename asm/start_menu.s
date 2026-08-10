@@ -53,7 +53,7 @@ _0809ED50:
 	bl BuildBattlePikeStartMenu
 	b _0809ED84
 _0809ED60:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809ED70
@@ -409,7 +409,7 @@ RemoveExtraStartMenuWindows: @ 0x0809F04C
 	ldrb r0, [r4]
 	bl RemoveWindow
 _0809F06E:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809F088
@@ -592,7 +592,7 @@ _0809F1E4:
 	beq _0809F1F0
 	bl ShowSafariBallsWindow
 _0809F1F0:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809F1FE
@@ -1095,7 +1095,7 @@ _0809F5CE:
 	thumb_func_start StartMenuSaveCallback
 StartMenuSaveCallback: @ 0x0809F5D4
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809F5E4
@@ -1605,7 +1605,7 @@ SaveConfirmSaveCallback: @ 0x0809F978
 	bl DrawStdWindowFrame
 	bl RemoveMapNamePopUpWindow
 	bl ShowSaveInfoWindow
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0809F9AC

@@ -1003,8 +1003,8 @@ _081D52E2:
 _081D52EC: .4byte 0x02037290
 	thumb_func_end sub_081D5238
 
-	thumb_func_start sub_081D52F0
-sub_081D52F0: @ 0x081D52F0
+	thumb_func_start InTrainerHillChallenge
+InTrainerHillChallenge: @ 0x081D52F0
 	push {lr}
 	ldr r0, _081D5320
 	bl VarGet
@@ -1037,12 +1037,12 @@ _081D532E:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_081D52F0
+	thumb_func_end InTrainerHillChallenge
 
 	thumb_func_start sub_081D5334
 sub_081D5334: @ 0x081D5334
 	push {lr}
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
 	cmp r1, #0
@@ -2549,7 +2549,7 @@ _081D5ED0: .4byte 0x00000EF9
 	thumb_func_start sub_081D5ED4
 sub_081D5ED4: @ 0x081D5ED4
 	push {lr}
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081D5F00

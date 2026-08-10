@@ -327,7 +327,7 @@ ScrSpecial_PlayBardSong: @ 0x08120820
 	ldr r0, _08120834
 	ldrb r0, [r0]
 	bl StartBardSong
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	pop {r0}
 	bx r0
 	.align 2, 0

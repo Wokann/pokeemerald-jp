@@ -4707,7 +4707,7 @@ _081CCDD0:
 	adds r3, r5, #0
 	bl GetBoxOrPartyMonData
 	adds r0, r5, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r4, #0
 	adds r1, r6, #0
 	movs r2, #0xb
@@ -9080,7 +9080,7 @@ _081CEFE8:
 _081CF00E:
 	ldr r4, _081CF060
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldr r6, _081CF064
 	adds r0, r6, #0
 	adds r1, r4, #0
@@ -10477,7 +10477,7 @@ _081CFA44:
 _081CFA6A:
 	ldr r4, _081CFAD0
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldr r0, _081CFAD4
 	mov r8, r0
 	adds r1, r4, #0

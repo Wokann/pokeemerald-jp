@@ -29,7 +29,7 @@ _080FD8DE:
 	subs r0, #1
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FD90C
@@ -150,7 +150,7 @@ DisplayCannotUseItemMessage: @ 0x080FD9B8
 	bl StringExpandPlaceholders
 	cmp r4, #0
 	bne _080FDA08
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FD9F4
@@ -2129,7 +2129,7 @@ sub_080FE8A8: @ 0x080FE8A8
 	ldr r0, _080FE8F4
 	ldr r1, _080FE8F8
 	bl StringExpandPlaceholders
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FE8FC
@@ -2183,7 +2183,7 @@ _080FE930: .4byte 0x00004021
 _080FE934: .4byte 0x03005B60
 _080FE938: .4byte 0x080FE975
 _080FE93C:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FE95C
@@ -2265,7 +2265,7 @@ sub_080FE9B4: @ 0x080FE9B4
 	adds r0, r4, #0
 	bl VarSet
 	bl sub_080FE8A8
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEA08
@@ -2314,7 +2314,7 @@ sub_080FEA20: @ 0x080FEA20
 	ble _080FEA76
 	movs r0, #0x75
 	bl PlaySE
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEA6C
@@ -2529,7 +2529,7 @@ ItemUseInBattle_PokeBall: @ 0x080FEBE4
 	ldrh r0, [r0]
 	movs r1, #1
 	bl RemoveBagItem
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEC18
@@ -2543,7 +2543,7 @@ _080FEC18:
 	bl sub_081C5310
 	b _080FEC4A
 _080FEC20:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEC40
@@ -2582,7 +2582,7 @@ sub_080FEC58: @ 0x080FEC58
 	ands r0, r1
 	cmp r0, #0
 	beq _080FEC8A
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEC84
@@ -2624,7 +2624,7 @@ sub_080FEC90: @ 0x080FEC90
 	ldrh r0, [r4]
 	movs r1, #1
 	bl RemoveBagItem
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FECEC
@@ -2680,7 +2680,7 @@ ItemUseInBattle_StatIncrease: @ 0x080FED08
 	lsrs r2, r0, #0x18
 	cmp r2, #0
 	beq _080FED7C
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FED68
@@ -2729,7 +2729,7 @@ sub_080FED9C: @ 0x080FED9C
 	push {r4, lr}
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEDC4
@@ -2819,7 +2819,7 @@ ItemUseInBattle_Escape: @ 0x080FEE34
 	cmp r0, #0
 	bne _080FEE84
 	bl sub_080FE8A8
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080FEE70

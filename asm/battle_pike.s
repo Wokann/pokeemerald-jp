@@ -1051,7 +1051,7 @@ _081A7590:
 	adds r0, r5, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A75E0
@@ -1154,7 +1154,7 @@ _081A765C:
 	adds r0, r5, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A76C6
@@ -1252,7 +1252,7 @@ _081A7722:
 	adds r0, r4, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A7754
@@ -2080,7 +2080,7 @@ _081A7D30:
 	adds r0, r7, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081A7D7C
@@ -3010,7 +3010,7 @@ _081A8454:
 	adds r0, r7, #0
 	movs r1, #0x37
 	bl GetMonData3
-	bl pokemon_ailments_get_primary
+	bl GetAilmentFromStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081A84E2

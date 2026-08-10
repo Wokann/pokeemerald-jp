@@ -397,15 +397,15 @@ _080988B0: .4byte 0x081DAF30
 _080988B4: .4byte 0x03000E38
 	thumb_func_end ScriptContext_SetupScript
 
-	thumb_func_start ScriptContext1_Stop
-ScriptContext1_Stop: @ 0x080988B8
+	thumb_func_start ScriptContext_Stop
+ScriptContext_Stop: @ 0x080988B8
 	ldr r1, _080988C0
 	movs r0, #1
 	strb r0, [r1]
 	bx lr
 	.align 2, 0
 _080988C0: .4byte 0x03000E38
-	thumb_func_end ScriptContext1_Stop
+	thumb_func_end ScriptContext_Stop
 
 	thumb_func_start ScriptContext_Enable
 ScriptContext_Enable: @ 0x080988C4

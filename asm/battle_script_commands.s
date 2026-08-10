@@ -31604,7 +31604,7 @@ atkE5_pickup: @ 0x08055810
 	beq _08055828
 	b _080559E8
 _08055828:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080558D4

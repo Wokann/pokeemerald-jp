@@ -2116,7 +2116,7 @@ _081D2334:
 	adds r3, r5, #0
 	bl GetBoxOrPartyMonData
 	adds r0, r5, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r4, #0
 	adds r1, r6, #0
 	movs r2, #0xb

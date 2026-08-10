@@ -264,7 +264,7 @@ _081775C8:
 	bl GetBoxMonData
 _081775F4:
 	ldr r0, _08177614
-	bl StringGetEnd10
+	bl StringGet_Nickname
 _081775FA:
 	add sp, #8
 	pop {r3, r4, r5}

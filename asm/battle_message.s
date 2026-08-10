@@ -961,7 +961,7 @@ _0814E944:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814E970: .4byte 0x02023D12
@@ -982,7 +982,7 @@ _0814E978:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814E9A4: .4byte 0x02023D12
@@ -1003,7 +1003,7 @@ _0814E9AC:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814E9D8: .4byte 0x02023D12
@@ -1024,7 +1024,7 @@ _0814E9E0:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EA0C: .4byte 0x02023D12
@@ -1048,7 +1048,7 @@ _0814EA14:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EA44: .4byte 0x02023D12
@@ -1075,7 +1075,7 @@ _0814EA50:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EA84: .4byte 0x02023D12
@@ -1102,7 +1102,7 @@ _0814EA90:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EAC4: .4byte 0x02023D12
@@ -1129,7 +1129,7 @@ _0814EAD0:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EB04: .4byte 0x02023D12
@@ -1211,7 +1211,7 @@ _0814EB8C:
 	bl GetMonData3
 _0814EBB6:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EBC0: .4byte 0x02023D12
@@ -1269,7 +1269,7 @@ _0814EC10:
 	bl GetMonData3
 _0814EC3C:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EC48: .4byte 0x02023D12
@@ -1342,7 +1342,7 @@ _0814ECC0:
 	bl GetMonData3
 _0814ECDA:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814ECE4: .4byte 0x02023D12
@@ -1415,7 +1415,7 @@ _0814ED5C:
 	bl GetMonData3
 _0814ED76:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814ED80: .4byte 0x02023D12
@@ -1488,7 +1488,7 @@ _0814EDF8:
 	bl GetMonData3
 _0814EE12:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	bl _0814F5DA
 	.align 2, 0
 _0814EE1C: .4byte 0x02023D12
@@ -1561,7 +1561,7 @@ _0814EE94:
 	bl GetMonData3
 _0814EEAE:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	b _0814F5DA
 	.align 2, 0
 _0814EEB8: .4byte 0x02023D12
@@ -1634,7 +1634,7 @@ _0814EF30:
 	bl GetMonData3
 _0814EF4A:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	b _0814F5DA
 	.align 2, 0
 _0814EF54: .4byte 0x02023D12
@@ -2207,7 +2207,7 @@ _0814F3C0:
 	bl GetMonData3
 _0814F3D8:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	b _0814F5DA
 	.align 2, 0
 _0814F3E0: .4byte 0x02024140
@@ -2720,7 +2720,7 @@ _0814F7AC:
 	bl GetMonData3
 _0814F7C0:
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r6, #0
 	mov r1, sp
 	bl StringAppend
@@ -2776,7 +2776,7 @@ _0814F824:
 	bl GetMonData3
 _0814F836:
 	adds r0, r6, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	b _0814F8F6
 	.align 2, 0
 _0814F840: .4byte 0x020243E8

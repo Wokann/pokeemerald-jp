@@ -1334,7 +1334,7 @@ sub_08166B50: @ 0x08166B50
 	add r2, sp, #0xc
 	bl GetMonData3
 	add r0, sp, #0xc
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldr r1, _08166BE4
 	add r0, sp, #0xc
 	bl StringAppend

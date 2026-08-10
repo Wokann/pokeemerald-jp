@@ -6136,7 +6136,7 @@ _080DA104:
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldrb r0, [r5]
 	lsls r0, r0, #6
 	adds r1, r6, #2

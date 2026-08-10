@@ -121,7 +121,7 @@ DoStandardWildBattle: @ 0x080AFFB8
 	ldr r4, _080B0020
 	movs r0, #0
 	str r0, [r4]
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080AFFEE
@@ -264,7 +264,7 @@ DoTrainerBattle: @ 0x080B0100
 	thumb_func_start sub_080B0124
 sub_080B0124: @ 0x080B0124
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B0142
@@ -616,7 +616,7 @@ CB2_EndWildBattle: @ 0x080B03F4
 	bl IsPlayerDefeated
 	cmp r0, #1
 	bne _080B0448
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B0448
@@ -667,7 +667,7 @@ CB2_EndScriptedWildBattle: @ 0x080B0468
 	bl IsPlayerDefeated
 	cmp r0, #1
 	bne _080B04BC
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B04B0
@@ -1105,7 +1105,7 @@ GetWildBattleTransition: @ 0x080B07B8
 	lsrs r0, r0, #0x18
 	cmp r4, r0
 	bhs _080B0800
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B07F4
@@ -1120,7 +1120,7 @@ _080B07F4:
 	.align 2, 0
 _080B07FC: .4byte 0x0852AB24
 _080B0800:
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B081C
@@ -2148,7 +2148,7 @@ GetTrainerBattleMode: @ 0x080B0FF8
 	thumb_func_start GetTrainerFlag
 GetTrainerFlag: @ 0x080B1004
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B1020
@@ -2274,7 +2274,7 @@ _080B10E8:
 	movs r0, #8
 _080B10EC:
 	str r0, [r1]
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B1170
@@ -2328,7 +2328,7 @@ _080B1166:
 	.align 2, 0
 _080B116C: .4byte 0x0202444C
 _080B1170:
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B11A4
@@ -2366,11 +2366,11 @@ _080B11A4:
 	ldr r1, _080B11EC
 	ldr r0, _080B11F0
 	str r0, [r1, #8]
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B11D4
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B11F4
@@ -2387,7 +2387,7 @@ _080B11F0: .4byte 0x080B1205
 _080B11F4:
 	bl DoTrainerBattle
 _080B11F8:
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -2408,11 +2408,11 @@ CB2_EndTrainerBattle: @ 0x080B1204
 	bl IsPlayerDefeated
 	cmp r0, #1
 	bne _080B1254
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B1232
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B1248
@@ -2433,11 +2433,11 @@ _080B1250: .4byte 0x080858C1
 _080B1254:
 	ldr r0, _080B127C
 	bl SetMainCallback2
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B1276
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B1276
@@ -2500,7 +2500,7 @@ BattleSetup_StartRematchBattle: @ 0x080B12D8
 	ldr r0, _080B12FC
 	str r0, [r1, #8]
 	bl DoTrainerBattle
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -2512,7 +2512,7 @@ _080B12FC: .4byte 0x080B1281
 	thumb_func_start ShowTrainerIntroSpeech
 ShowTrainerIntroSpeech: @ 0x080B1300
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B1368
@@ -2555,7 +2555,7 @@ _080B135C: .4byte 0x02036FF0
 _080B1360: .4byte 0x03005DF0
 _080B1364: .4byte 0x0203889C
 _080B1368:
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B13D8

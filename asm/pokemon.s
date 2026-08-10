@@ -11929,7 +11929,7 @@ GetTrainerEncounterMusicId: @ 0x0806D324
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	adds r5, r4, #0
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0806D33E
@@ -11937,7 +11937,7 @@ GetTrainerEncounterMusicId: @ 0x0806D324
 	bl GetBattlePyramindTrainerEncounterMusicId
 	b _0806D362
 _0806D33E:
-	bl sub_081D52F0
+	bl InTrainerHillChallenge
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0806D35C
@@ -15191,7 +15191,7 @@ _0806EBA6:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0806EBC8
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0806EBDC

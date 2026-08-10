@@ -1015,7 +1015,7 @@ _081A93E0: .4byte 0x00000E1E
 GetInBattlePyramid: @ 0x081A93E4
 	push {r4, lr}
 	ldr r4, _081A93F8
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	strh r0, [r4]
@@ -2019,8 +2019,8 @@ GetPyramidRunMultiplier: @ 0x081A9BA0
 _081A9BB4: .4byte 0x085DEE88
 	thumb_func_end GetPyramidRunMultiplier
 
-	thumb_func_start InBattlePyramid
-InBattlePyramid: @ 0x081A9BB8
+	thumb_func_start CurrentBattlePyramidLocation
+CurrentBattlePyramidLocation: @ 0x081A9BB8
 	push {lr}
 	ldr r0, _081A9BC8
 	ldrh r1, [r0, #0x12]
@@ -2045,7 +2045,7 @@ _081A9BDE:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end InBattlePyramid
+	thumb_func_end CurrentBattlePyramidLocation
 
 	thumb_func_start InBattlePyramid_
 InBattlePyramid_: @ 0x081A9BE4
@@ -2073,7 +2073,7 @@ _081A9C04: .4byte 0x00000169
 	thumb_func_start sub_081A9C08
 sub_081A9C08: @ 0x081A9C08
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081A9C30
@@ -2100,7 +2100,7 @@ _081A9C3C: .4byte 0x0000400E
 	thumb_func_start SoftResetInBattlePyramid
 SoftResetInBattlePyramid: @ 0x081A9C40
 	push {lr}
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081A9C50

@@ -7062,7 +7062,7 @@ InterviewBefore_PkmnFanClubOpinions: @ 0x080F0208
 	adds r2, r4, #0
 	bl GetMonData3
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	ldr r2, _080F0294
 	ldr r0, _080F0298
 	movs r1, #0
@@ -8148,7 +8148,7 @@ TV_CopyNicknameToStringVar1AndEnsureTerminated: @ 0x080F0A38
 	adds r2, r4, #0
 	bl GetMonData3
 	adds r0, r4, #0
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	pop {r4}
 	pop {r0}
 	bx r0

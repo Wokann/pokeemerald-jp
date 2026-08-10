@@ -3841,7 +3841,7 @@ UpdateNickInHealthbox: @ 0x08073AE4
 	mov r2, sp
 	bl GetMonData3
 	mov r0, sp
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r5, #0
 	mov r1, sp
 	bl StringAppend

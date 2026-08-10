@@ -2371,7 +2371,7 @@ sub_080B2F30: @ 0x080B2F30
 	adds r1, r4, #0
 	adds r2, r5, #0
 	bl SetTaskFuncWithFollowupFunc
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	pop {r4, r5}
 	pop {r0}
 	bx r0
@@ -2604,7 +2604,7 @@ sub_080B3100: @ 0x080B3100
 	ldr r0, _080B3114
 	movs r1, #0x50
 	bl CreateTask
-	bl ScriptContext1_Stop
+	bl ScriptContext_Stop
 	pop {r0}
 	bx r0
 	.align 2, 0

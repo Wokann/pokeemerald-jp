@@ -15744,7 +15744,7 @@ _080CE502:
 	bl GetMonData3
 	ldr r0, [r4]
 	adds r0, r0, r5
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r6, #0
 	movs r1, #0x38
 	bl GetMonData3
@@ -15853,7 +15853,7 @@ _080CE5FA:
 	bl GetBoxMonData
 	ldr r0, [r5]
 	adds r0, r0, r4
-	bl StringGetEnd10
+	bl StringGet_Nickname
 	adds r0, r7, #0
 	bl GetLevelFromBoxMonExp
 	ldr r1, [r5]

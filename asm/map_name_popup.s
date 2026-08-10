@@ -244,7 +244,7 @@ _080D4230: .4byte 0x02039A74
 ShowMapNamePopUpWindow: @ 0x080D4234
 	push {r4, r5, lr}
 	sub sp, #0x24
-	bl InBattlePyramid
+	bl CurrentBattlePyramidLocation
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080D428C
