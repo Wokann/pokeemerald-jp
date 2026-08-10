@@ -2246,7 +2246,7 @@ _080C799C:
 	ldr r1, _080C79D8
 	strh r1, [r2]
 	bl unref_sub_811BBF4
-	bl sub_0811FFB0
+	bl BufferMonMarkingsMenuTiles
 	b _080C7A34
 	.align 2, 0
 _080C79CC: .4byte 0x020399A8
@@ -4083,7 +4083,7 @@ _080C8958:
 	ldrb r0, [r0]
 	movs r1, #0xb0
 	movs r2, #0x10
-	bl sub_0811FFC4
+	bl OpenMonMarkingsMenu
 	ldr r1, [r4]
 	ldrb r0, [r1]
 	adds r0, #1
@@ -4093,11 +4093,11 @@ _080C8958:
 _080C8984: .4byte 0x00000CEB
 _080C8988: .4byte 0x00000DA8
 _080C898C:
-	bl sub_081200C4
+	bl HandleMonMarkingsMenuInput
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080C89B4
-	bl sub_08120018
+	bl FreeMonMarkingsMenu
 	bl ClearBottomWindow
 	ldr r0, [r4]
 	ldr r1, _080C89BC
@@ -6045,7 +6045,7 @@ sub_080C99C8: @ 0x080C99C8
 	ldr r1, _080C9A28
 	movs r0, #0x10
 	movs r2, #0
-	bl sub_081204D4
+	bl CreateMonMarkingComboSprite
 	ldr r4, _080C9A2C
 	ldr r1, [r4]
 	ldr r3, _080C9A30
@@ -6632,7 +6632,7 @@ _080C9E52:
 	adds r2, #0xb5
 	adds r1, r1, r2
 	ldr r1, [r1]
-	bl sub_081205A4
+	bl UpdateMonMarkingTiles
 	ldr r0, [r4]
 	ldr r1, _080C9E9C
 	adds r0, r0, r1

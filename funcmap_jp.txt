@@ -6849,7 +6849,7 @@ pokemon_storage_system.s
 080c9918 InitPSSWindows InitPokeStorageWindows
 080c993c LoadWaveformSpritePalette LoadWaveformSpritePalette
 080c994c InitPalettesAndSprites InitPalettesAndSprites
-080c99c8 CreateMarkingComboSprite CreateMarkingComboSprite
+080c99c8 pokemon_storage_system.s sub_080C99C8
 080c9a38 CreateWaveformSprites CreateWaveformSprites
 080c9aa4 RefreshDisplayMonData RefreshDisplayMonData
 080c9ad4 StartDisplayMonMosaicEffect StartDisplayMonMosaicEffect
@@ -9591,7 +9591,7 @@ easy_chat.s
 0811e670 SetWindowDimensions SetWindowDimensions
 0811e6a4 LoadEasyChatGfx LoadEasyChatGfx
 0811e6d8 easy_chat.s sub_0811E6D8_jp
-0811e734 SpriteCB_Cursor SpriteCB_Cursor
+0811e734 easy_chat.s sub_0811E734_jp
 0811e76c easy_chat.s sub_0811E76C_jp
 0811e7a0 StopMainCursorAnim StopMainCursorAnim
 0811e7c0 StartMainCursorAnim StartMainCursorAnim
@@ -9660,7 +9660,7 @@ easy_chat.s
 0811fdb4 IsEasyChatWordUnlocked IsEasyChatWordUnlocked
 0811fde0 InitializeEasyChatWordArray InitializeEasyChatWordArray
 0811fe10 InitQuestionnaireWords InitQuestionnaireWords
-0811fe2c easy_chat.s unref_sub_811BBF4
+0811fe2c easy_chat.s InitMonMarkingsMenu
 mon_markings.s
 0811fe38 BufferMenuWindowTiles BufferMenuWindowTiles
 0811fe80 BufferMenuFrameTiles BufferMenuFrameTiles
@@ -9669,7 +9669,7 @@ mon_markings.s
 08120018 FreeMonMarkingsMenu FreeMonMarkingsMenu
 081200c4 sub_081200C4_jp HandleMonMarkingsMenuInput
 081201a0 CreateMonMarkingsMenuSprites CreateMonMarkingsMenuSprites
-0812045c mon_markings.s TaskDummy7
+0812045c mon_markings.s SpriteCB_Dummy
 08120460 sub_08120460_jp SpriteCB_Marking
 0812049c SpriteCB_Cursor SpriteCB_Cursor
 081204b4 CreateMonMarkingAllCombosSprite CreateMonMarkingAllCombosSprite

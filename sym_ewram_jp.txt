@@ -23,6 +23,7 @@ sPokeblockFeeders = ABSOLUTE(0x02039D20);
 gDecorationInventories = ABSOLUTE(0x0203B90C);
 gCurDecorationItems = ABSOLUTE(0x02039E18);
 gCurDecorationIndex = ABSOLUTE(0x02039E3E);
+sMenu = ABSOLUTE(0x02039DF0);
 gPlayerPartyCount = ABSOLUTE(0x0202418D);
 gPlayerParty = ABSOLUTE(0x02024190);
 gEnemyParty = ABSOLUTE(0x020243E8);

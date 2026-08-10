@@ -3982,7 +3982,7 @@ sub_081CC850: @ 0x081CC850
 	sub sp, #4
 	adds r6, r0, #0
 	movs r4, #0
-	bl sub_081200C4
+	bl HandleMonMarkingsMenuInput
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CC8CA
@@ -6733,7 +6733,7 @@ _081CDE32:
 	lsrs r0, r0, #0x18
 	movs r1, #0xb0
 	movs r2, #0x20
-	bl sub_0811FFC4
+	bl OpenMonMarkingsMenu
 _081CDE42:
 	movs r0, #1
 	b _081CDE5C
@@ -6769,7 +6769,7 @@ _081CDE70:
 	beq _081CDE86
 	b _081CDE92
 _081CDE76:
-	bl sub_08120018
+	bl FreeMonMarkingsMenu
 _081CDE7A:
 	movs r0, #1
 	b _081CDE94
@@ -7146,11 +7146,11 @@ sub_081CE118: @ 0x081CE118
 	adds r1, r6, r3
 	strh r2, [r1]
 	bl unref_sub_811BBF4
-	bl sub_0811FFB0
+	bl BufferMonMarkingsMenuTiles
 	ldr r2, _081CE1A0
 	movs r0, #0x69
 	movs r1, #0x69
-	bl sub_081204B4
+	bl CreateMonMarkingAllCombosSprite
 	ldrb r1, [r0, #5]
 	movs r2, #0xc
 	orrs r1, r2
@@ -10541,4 +10541,3 @@ _081CFAEA:
 	.align 2, 0
 _081CFAFC: .4byte 0x085F5E03
 	thumb_func_end sub_081CF9F8
-

@@ -9722,7 +9722,7 @@ CreateMonMarkingsSprite: @ 0x081C418C
 	ldr r1, _081C41DC
 	ldr r2, _081C41E0
 	adds r0, r1, #0
-	bl sub_081204B4
+	bl CreateMonMarkingAllCombosSprite
 	adds r4, r0, #0
 	ldr r6, _081C41E4
 	ldr r0, [r6]
@@ -10229,4 +10229,3 @@ _081C456C: .4byte 0x0203CBE8
 _081C4570: .4byte 0x000040D3
 _081C4574: .4byte 0x020205AC
 	thumb_func_end sub_081C4520
-
