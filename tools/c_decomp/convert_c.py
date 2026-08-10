@@ -125,16 +125,21 @@ def mask(b):
     return bytes(out)
 
 
-def strip_trailing(b):
-    """Drop nop/zero padding that differs only in alignment."""
+def strip_trailing(b, pool=()):
+    """Drop nop/zero padding that differs only in alignment.
+    Bytes belonging to literal-pool words are never trimmed."""
+    pool = set(pool)
     out = bytearray(b)
-    while True:
+    while len(out):
         if len(out) >= 2 and out[-2:] == b"\xc0\x46":
             del out[-2:]
-        elif out and out[-1] == 0x00:
-            out.pop()
-        else:
-            break
+            continue
+        if out[-1] == 0x00 and (len(out) - 1) not in pool:
+            # Trim a trailing zero only as part of a zero padding run.
+            if len(out) >= 2 and out[-2] == 0x00 and (len(out) - 2) not in pool:
+                out.pop()
+                continue
+        break
     return bytes(out)
 
 
@@ -169,16 +174,21 @@ def byte_compare(compiled, jp):
     """Strict byte compare that only tolerates literal-pool words and
     bl targets (both resolved at link time, not in a standalone object).
     Bl instruction *positions* must still match exactly."""
-    c = strip_trailing(compiled)
-    j = strip_trailing(jp)
+    pool = literal_pool_offsets(compiled)
+    pool_bytes = set()
+    for off in pool:
+        pool_bytes.update(range(off, off + 4))
+    c = strip_trailing(compiled, pool_bytes)
+    j = strip_trailing(jp, pool_bytes)
     if len(c) != len(j):
         return False
     if bl_positions(c) != bl_positions(j):
         return False
-    pool = literal_pool_offsets(c)
+    bls = bl_positions(c)
     n = len(c)
     for i in range(0, n, 2):
-        if i in pool or i in bl_positions(c):
+        # Skip both halfwords of a bl (i is the high halfword start).
+        if i in pool_bytes or i in bls or (i - 2) in bls:
             continue
         if c[i : i + 2] != j[i : i + 2]:
             return False
