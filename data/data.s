@@ -16977,8 +16977,8 @@ gJPText_PleaseWaitAMoment: @ 0x85CD036
 
 	.globl gJPText_WriteErrorUnableToSaveData
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
-	.incbin "build/data/data.bin", 0x33129f, 0x25
-
+	.string "かきこ{SE_FAILURE}エラ{SE_M_PAY_DAY}です\nデータ{SE_SAVE}ほぞ{SE_WARP_OUT}できませんでした$"
+	.incbin "build/data/data.bin", 0x3312bd, 0x7
 	.globl gUnknown_85CD068
 gUnknown_85CD068: @ 0x85CD068
 	.incbin "build/data/data.bin", 0x3312c4, 0x10
