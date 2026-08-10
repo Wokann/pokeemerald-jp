@@ -918,7 +918,7 @@ _0808D3D4:
 	adds r2, #0x20
 	adds r3, r4, #0
 	adds r3, #0x22
-	bl sub_08092960
+	bl GetMapCoordsFromSpritePos
 	ldrh r0, [r7, #8]
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x11
@@ -1991,7 +1991,7 @@ _0808DBEE:
 	adds r2, #0x20
 	adds r3, r4, #0
 	adds r3, #0x22
-	bl sub_08092960
+	bl GetMapCoordsFromSpritePos
 	ldrh r0, [r5, #8]
 	lsls r0, r0, #0x10
 	asrs r0, r0, #0x11
@@ -13048,8 +13048,8 @@ _08092954:
 _0809295C: .4byte 0x084E5FD0
 	thumb_func_end MoveCoordsInDirection
 
-	thumb_func_start sub_08092960
-sub_08092960: @ 0x08092960
+	thumb_func_start GetMapCoordsFromSpritePos
+GetMapCoordsFromSpritePos: @ 0x08092960
 	push {r4, r5, lr}
 	ldr r5, _0809299C
 	ldr r4, [r5]
@@ -13083,7 +13083,7 @@ sub_08092960: @ 0x08092960
 _0809299C: .4byte 0x03005AEC
 _080929A0: .4byte 0x03005B4C
 _080929A4: .4byte 0x03005B48
-	thumb_func_end sub_08092960
+	thumb_func_end GetMapCoordsFromSpritePos
 
 	thumb_func_start SetSpritePosToMapCoords
 SetSpritePosToMapCoords: @ 0x080929A8

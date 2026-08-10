@@ -2612,7 +2612,7 @@ CreateRecordMixingSprite: @ 0x080FB87C
 	adds r3, #0x22
 	movs r0, #0x10
 	movs r1, #0xd
-	bl sub_08092960
+	bl GetMapCoordsFromSpritePos
 	adds r2, r4, #0
 	adds r2, #0x3e
 	ldrb r0, [r2]

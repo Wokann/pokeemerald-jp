@@ -94,7 +94,8 @@ split; the remaining 13 functions belong to pokeemerald's
 src/pokemon_size_record.c and are still in asm), src/pokemon_size_record.c
 (12) + src/give_gift_ribbon_to_party.c (1) complete the region --
 asm/field_poison.s removed, src/field_door.c (23, full module --
-asm/field_door.s removed).
+asm/field_door.s removed), src/rotating_gate.c (21, full module --
+asm/rotating_gate.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -218,3 +219,21 @@ sBigDoorOpenAnimFrames (0x0846F3D4) and sDoorAnimGraphicsTable
 The JP splitter's door_build_blockdef / cur_mapdata_get_door_x2_at /
 unref_sub_808A83C / sub_0808A2C8 labels were renamed to BuildDoorTiles /
 GetDoorSoundType / Debug_FieldAnimateDoorOpen / ShouldUseMultiCorridorDoor.
+
+src/rotating_gate.c (GetCurrentMapRotatingGatePuzzleType,
+RotatingGate_ResetAllGateOrientations, _GetGateOrientation,
+_SetGateOrientation, _RotateInDirection, _LoadPuzzleConfig,
+_CreateGatesWithinViewport, _CreateGate, SpriteCallback_RotatingGate,
+_HideGatesOutsideViewport, LoadRotatingGatePics,
+_DestroyGatesOutsideViewport, _CanRotate, _HasArm,
+_TriggerRotationAnimation, _GetRotationInfo, _InitPuzzle,
+RotatingGatePuzzleCameraUpdate, _InitPuzzleAndGraphics,
+CheckForRotatingGatePuzzleCollision[WithoutAnimation]) is the
+twenty-fourth wired module.  All puzzle-config/graphics/sprite-template/
+rotation-info/arm tables stay in the ROM data region (0x0856A494-0x0856DC5C)
+and the three EWRAM vars (sRotatingGate_GateSpriteIds 0x02039D04,
+_PuzzleConfig 0x02039D10, _PuzzleCount 0x02039D14) are in sym_ewram.
+ARRAY_COUNT needed sized externs (8/11) to avoid folding to 0; the JP
+Regular/Large sprite-template addresses are swapped vs the US declaration
+order.  Renamed sub_08092960 -> GetMapCoordsFromSpritePos and added
+gSpriteCoordOffsetX/Y (0x02021B38/3A).
