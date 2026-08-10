@@ -93,7 +93,8 @@ asm/fldeff_escalator.s removed), src/field_poison.c (7, asm/field_poison.s
 split; the remaining 13 functions belong to pokeemerald's
 src/pokemon_size_record.c and are still in asm), src/pokemon_size_record.c
 (12) + src/give_gift_ribbon_to_party.c (1) complete the region --
-asm/field_poison.s removed.
+asm/field_poison.s removed, src/field_door.c (23, full module --
+asm/field_door.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -200,3 +201,20 @@ Added sBigMonSizeTable (0x085694D0), gText_DecimalPoint (0x08569550),
 gText_Marco (0x085CC31B) and sGiftRibbonsMonDataIds (0x08569552); specials.inc
 updated (sub_080FA300/31C/358/374 -> GetSeedotSizeRecordInfo/CompareSeedotSize/
 GetLotadSizeRecordInfo/CompareLotadSize).
+
+src/field_door.c (CopyDoorTilesToVram, BuildDoorTiles,
+DrawCurrentDoorAnimFrame, DrawClosedDoorTiles, DrawDoor, AnimateDoorFrame,
+Task_AnimateDoor, GetLastDoorFrame, GetDoorGraphics,
+StartDoorAnimationTask, DrawClosedDoor, DrawOpenedDoor,
+StartDoorOpenAnimation, StartDoorCloseAnimation, GetDoorSoundType,
+Debug_FieldAnimateDoorOpen, FieldSetDoorOpened, FieldSetDoorClosed,
+FieldAnimateDoorClose, FieldAnimateDoorOpen, FieldIsDoorAnimationRunning,
+GetDoorSoundEffect, ShouldUseMultiCorridorDoor) is the twenty-third wired
+module.  The door-animation data (the huge tiles/palette arrays) stays in
+the ROM data region; only the four top-level tables are referenced:
+sDoorOpenAnimFrames (0x0846F3AC), sDoorCloseAnimFrames (0x0846F3C0),
+sBigDoorOpenAnimFrames (0x0846F3D4) and sDoorAnimGraphicsTable
+(0x0846F594).  JP variant: DoorAnimFrame.offset is u16 (US uses s16).
+The JP splitter's door_build_blockdef / cur_mapdata_get_door_x2_at /
+unref_sub_808A83C / sub_0808A2C8 labels were renamed to BuildDoorTiles /
+GetDoorSoundType / Debug_FieldAnimateDoorOpen / ShouldUseMultiCorridorDoor.
