@@ -10318,8 +10318,8 @@ _080BFE94:
 	.align 2, 0
 	thumb_func_end sub_080BFE70
 
-	thumb_func_start sub_080BFE9C
-sub_080BFE9C: @ 0x080BFE9C
+	thumb_func_start HasAllMons
+HasAllMons: @ 0x080BFE9C
 	push {r4, r5, lr}
 	movs r0, #0
 _080BFEA0:
@@ -10376,7 +10376,7 @@ _080BFF00:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_080BFE9C
+	thumb_func_end HasAllMons
 
 	thumb_func_start sub_080BFF08
 sub_080BFF08: @ 0x080BFF08

@@ -522,7 +522,7 @@ _080C4DF0:
 	bl ResetSpriteData
 	bl FreeAllSpritePalettes
 	bl ResetPaletteFade
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	b _080C4FF0
 _080C4E06:
 	bl AllocateFrontierPassGfx
@@ -589,13 +589,13 @@ _080C4E6C:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _080C4EC8
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _080C4FF0
 	.align 2, 0
 _080C4EB4: .4byte 0x0854AE1C
@@ -605,7 +605,7 @@ _080C4EC0: .4byte 0x08549DE8
 _080C4EC4: .4byte 0x085469A4
 _080C4EC8: .4byte 0x08549E20
 _080C4ECC:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080C4ED8
@@ -2501,7 +2501,7 @@ _080C5E12:
 	bl ResetSpriteData
 	bl FreeAllSpritePalettes
 	bl ResetPaletteFade
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	b _080C5F80
 _080C5E24:
 	movs r0, #0
@@ -2569,13 +2569,13 @@ _080C5EAC:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _080C5F80
 	.align 2, 0
 _080C5ECC: .4byte 0x0854AF4C
 _080C5ED0: .4byte 0x08548168
 _080C5ED4:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080C5F8A

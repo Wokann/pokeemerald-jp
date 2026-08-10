@@ -12288,7 +12288,7 @@ _0802A61C:
 	.align 2, 0
 _0802A628: .4byte 0x082CB67C
 _0802A62C:
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	b _0802A67E
 _0802A632:
 	ldr r1, _0802A63C
@@ -12306,12 +12306,12 @@ _0802A640:
 _0802A648:
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _0802A67E
 	.align 2, 0
 _0802A654: .4byte 0x082CC1A0
 _0802A658:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

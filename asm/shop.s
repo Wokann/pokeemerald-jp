@@ -452,7 +452,7 @@ _080DF36C:
 	add r0, sp, #8
 	bl CpuFastSet
 	bl ScanlineEffect_Stop
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	bl FreeAllSpritePalettes
 	bl ResetPaletteFade
 	bl ResetSpriteData
@@ -520,7 +520,7 @@ _080DF424: .4byte 0x0000200B
 _080DF428: .4byte 0x0000200D
 _080DF42C: .4byte 0x0000200E
 _080DF430:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080DF440
@@ -1179,7 +1179,7 @@ BuyMenuDecompressBgGraphics: @ 0x080DF968
 	movs r0, #0
 	str r0, [sp]
 	movs r0, #1
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _080DF9A0
 	ldr r1, _080DF9A4
 	ldr r1, [r1]

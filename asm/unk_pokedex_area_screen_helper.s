@@ -30,7 +30,7 @@ sub_081C4578: @ 0x081C4578
 	lsrs r3, r3, #0x18
 	str r4, [sp]
 	movs r2, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, [r5]
 	lsls r0, r0, #0x1e
 	lsrs r0, r0, #0x1e
@@ -39,7 +39,7 @@ sub_081C4578: @ 0x081C4578
 	str r2, [sp]
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, [r5]
 	lsls r1, r1, #0x16
 	lsrs r1, r1, #0x18
@@ -72,7 +72,7 @@ _081C45E4:
 	lsrs r3, r3, #0x18
 	movs r2, #0
 	str r2, [sp]
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, [r5]
 	lsls r0, r0, #0x1e
 	lsrs r0, r0, #0x1e
@@ -81,7 +81,7 @@ _081C45E4:
 	str r4, [sp]
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, [r5]
 	lsls r1, r1, #0x16
 	lsrs r1, r1, #0x18
@@ -134,7 +134,7 @@ _081C4694: .4byte 0x0203CBF4
 	thumb_func_start sub_081C4698
 sub_081C4698: @ 0x081C4698
 	push {lr}
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081C46A8

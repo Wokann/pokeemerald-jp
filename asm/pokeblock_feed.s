@@ -431,14 +431,14 @@ _08179DCC: .4byte 0x0203CB48
 _08179DD0: .4byte 0x0203B9E8
 _08179DD4: .4byte 0x0203B9E4
 _08179DD8:
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _08179DF4
 	movs r0, #0
 	str r0, [sp]
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _08179DF8
 	ldr r1, [r0]
 	b _08179E16
@@ -446,7 +446,7 @@ _08179DD8:
 _08179DF4: .4byte 0x08D7C4E4
 _08179DF8: .4byte 0x0203B9E4
 _08179DFC:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

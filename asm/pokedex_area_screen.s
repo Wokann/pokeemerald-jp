@@ -61,7 +61,7 @@ _0813CA96:
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _0813CAC4
 	ldr r1, [r0]
 	movs r0, #0x8b
@@ -77,7 +77,7 @@ _0813CA96:
 _0813CAC0: .4byte 0x0859383C
 _0813CAC4: .4byte 0x0203A848
 _0813CAC8:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0813CB10

@@ -482,7 +482,7 @@ _08140718:
 	bl ResetPaletteFade
 	bl ResetSpriteData
 	bl ResetTasks
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	b _081408C0
 _0814072A:
 	ldr r0, _08140758
@@ -496,20 +496,20 @@ _0814072A:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _08140760
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _081408C0
 	.align 2, 0
 _08140758: .4byte 0x085957A8
 _0814075C: .4byte 0x08DBC590
 _08140760: .4byte 0x08DBCCBC
 _08140764:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08140770

@@ -2127,7 +2127,7 @@ _080885C4:
 	str r0, [sp]
 	movs r0, #2
 	adds r3, r7, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _080885D4:
 	add sp, #4
 	pop {r4, r5, r6, r7}

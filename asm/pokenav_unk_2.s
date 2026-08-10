@@ -220,7 +220,7 @@ _081C9208:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	adds r1, r5, #0
 	adds r1, #0x8c
 	movs r0, #1
@@ -269,7 +269,7 @@ _081C928C: .4byte 0x085F1730
 _081C9290: .4byte 0x085F1780
 _081C9294: .4byte 0x085F1710
 _081C9298:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -281,14 +281,14 @@ _081C92A6:
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081C92D4
 	movs r0, #1
 	str r0, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _081C92D8
 	movs r1, #0x20
 	movs r2, #0x20
@@ -299,7 +299,7 @@ _081C92D0: .4byte 0x085F1858
 _081C92D4: .4byte 0x085F1AE0
 _081C92D8: .4byte 0x085F1838
 _081C92DC:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -311,14 +311,14 @@ _081C92EA:
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081C932C
 	movs r0, #1
 	str r0, [sp]
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _081C9330
 	movs r1, #0x30
 	movs r2, #0x20
@@ -337,7 +337,7 @@ _081C9328: .4byte 0x085F165C
 _081C932C: .4byte 0x085F1670
 _081C9330: .4byte 0x085F163C
 _081C9334:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081C9408

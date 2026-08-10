@@ -118,7 +118,7 @@ _081C6F40:
 	movs r2, #1
 	bl InitBgsFromTemplates
 	bl ResetBgPositions
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	movs r0, #1
 	b _081C6FEC
 	.align 2, 0
@@ -132,7 +132,7 @@ _081C6F70:
 	str r0, [sp]
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	adds r4, #0x2c
 	movs r0, #0
 	adds r1, r4, #0
@@ -155,7 +155,7 @@ _081C6FB0: .4byte 0x085EFA00
 _081C6FB4: .4byte 0x085EFC2C
 _081C6FB8: .4byte 0x085EF9E0
 _081C6FBC:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081C6FD8

@@ -570,7 +570,7 @@ _080711F4:
 	bl GetCurrentMapMusic
 	ldr r1, _080712B8
 	strh r0, [r1]
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	movs r0, #0
 	bl ResetBgsAndClearDma3BusyFlags
 	ldr r1, _080712BC

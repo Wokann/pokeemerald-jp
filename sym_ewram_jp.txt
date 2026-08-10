@@ -1432,6 +1432,7 @@ gUnknown_203B9B8 = .;
 gUnknown_203B9BA = .;
 . += 0x2;
 gUnknown_203B9BC = .;
+sDiplomaTilemapPtr = ABSOLUTE(0x0203B9BC);
 . += 0x4;
 gUnknown_203B9C0 = .;
 . += 0x4;

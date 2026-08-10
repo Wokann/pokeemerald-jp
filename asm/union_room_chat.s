@@ -3044,7 +3044,7 @@ sub_0801F2E0: @ 0x0801F2E0
 	bl InitBgsFromTemplates
 	ldr r0, _0801F338
 	bl InitWindows
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	bl sub_0802048C
 	ldr r0, [r4]
 	bl sub_0801F384
@@ -3240,7 +3240,7 @@ _0801F464: .4byte 0x0202293C
 sub_0801F468: @ 0x0801F468
 	push {r4, lr}
 	adds r4, r0, #0
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -5157,7 +5157,7 @@ sub_080202D0: @ 0x080202D0
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _0802031C
 	movs r0, #1
 	movs r2, #0
@@ -5189,7 +5189,7 @@ sub_08020320: @ 0x08020320
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	adds r5, r0, #0
 	cmp r5, #0
 	beq _0802036A

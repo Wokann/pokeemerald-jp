@@ -3675,8 +3675,8 @@ _08085B48: .4byte 0x03005B0C
 _08085B4C: .4byte 0x080AEA65
 	thumb_func_end CB2_ReturnToFieldContinueScriptPlayMapMusic
 
-	thumb_func_start sub_08085B50
-sub_08085B50: @ 0x08085B50
+	thumb_func_start CB2_ReturnToFieldFadeFromBlack
+CB2_ReturnToFieldFadeFromBlack: @ 0x08085B50
 	push {lr}
 	bl FieldClearVBlankHBlankCallbacks
 	ldr r1, _08085B64
@@ -3688,7 +3688,7 @@ sub_08085B50: @ 0x08085B50
 	.align 2, 0
 _08085B64: .4byte 0x03005B0C
 _08085B68: .4byte 0x080AECC5
-	thumb_func_end sub_08085B50
+	thumb_func_end CB2_ReturnToFieldFadeFromBlack
 
 	thumb_func_start sub_08085B6C
 sub_08085B6C: @ 0x08085B6C
@@ -3990,7 +3990,7 @@ _08085E0C:
 	.align 2, 0
 _08085E18: .4byte 0x02036FB8
 _08085E1C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -4113,7 +4113,7 @@ _08085F20:
 	.align 2, 0
 _08085F2C: .4byte 0x02036FB8
 _08085F30:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -4288,7 +4288,7 @@ _08086098:
 	.align 2, 0
 _080860A4: .4byte 0x02036FB8
 _080860A8:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -4450,7 +4450,7 @@ sub_080861C4: @ 0x080861C4
 InitOverworldGraphicsRegisters: @ 0x080861DC
 	push {r4, lr}
 	bl ClearScheduledBgCopiesToVram
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	movs r0, #0x4c
 	movs r1, #0
 	bl SetGpuReg

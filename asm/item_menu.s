@@ -685,19 +685,19 @@ _081AAE58: @ jump table
 	.4byte _081AAEE4 @ case 3
 	.4byte _081AAF18 @ case 4
 _081AAE6C:
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081AAE84
 	movs r0, #0
 	str r0, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _081AAF1E
 	.align 2, 0
 _081AAE84: .4byte 0x08D9A7CC
 _081AAE88:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1

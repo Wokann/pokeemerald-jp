@@ -12520,7 +12520,7 @@ lottery_corner.s
 08177700 sub_08177700 VBlankCB_SelectScreen
 08177714 CB2_ShowDiploma CB2_ShowDiploma
 option_menu.s
-08177894 MainCB2 CB2_SelectScreen
+08177894 MainCB2 MainCB2
 081778ac option_menu.s Task_DiplomaFadeIn
 081778dc Task_DiplomaWaitForKeyPress Task_DiplomaWaitForKeyPress
 08177924 Task_DiplomaFadeOut Task_DiplomaFadeOut

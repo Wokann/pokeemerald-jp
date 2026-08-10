@@ -176,7 +176,7 @@ _0814FDB4:
 	bl ResetTasks
 	bl FreeAllSpritePalettes
 	bl ResetPaletteFade
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	bl StartWeather
 	movs r4, #0
 	ldr r0, _0814FE48
@@ -297,7 +297,7 @@ _0814FE72:
 	str r0, [sp]
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _0814FF28
 	movs r2, #0x87
 	lsls r2, r2, #3
@@ -321,7 +321,7 @@ _0814FF20: .4byte 0x085AC924
 _0814FF24: .4byte 0x08DBA860
 _0814FF28: .4byte 0x03002360
 _0814FF2C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0814FF38

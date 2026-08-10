@@ -5407,7 +5407,7 @@ _0802CE6C:
 	bl InitBgsFromTemplates
 	ldr r0, _0802CF60
 	bl InitWindows
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r0, [r6]
 	bl sub_0802C668
 	bl sub_0802DA00
@@ -5420,14 +5420,14 @@ _0802CE6C:
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _0802CF6C
 	movs r4, #1
 	str r4, [sp]
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _0802CF70
 	movs r1, #0x30
 	movs r2, #0x20
@@ -5437,13 +5437,13 @@ _0802CE6C:
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _0802CF78
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _0802CF7C
 	movs r1, #0x10
 	movs r2, #0x20
@@ -5453,13 +5453,13 @@ _0802CE6C:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _0802CF84
 	str r4, [sp]
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _0802CF88
 	movs r1, #0x20
 	movs r2, #0x20
@@ -5507,7 +5507,7 @@ _0802CF80: .4byte 0x082D0A14
 _0802CF84: .4byte 0x082D14C4
 _0802CF88: .4byte 0x082CF8B0
 _0802CF8C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0802CFCE

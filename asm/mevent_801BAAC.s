@@ -201,7 +201,7 @@ _0801B70C:
 	movs r0, #2
 	movs r2, #0
 	movs r3, #8
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r4, _0801B79C
 	adds r0, r4, #0
 	bl AddWindow
@@ -225,7 +225,7 @@ _0801B70C:
 _0801B798: .4byte 0x02022928
 _0801B79C: .4byte 0x082C3348
 _0801B7A0:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
 	cmp r6, #0
@@ -1745,7 +1745,7 @@ _0801C37C:
 	movs r0, #3
 	movs r2, #0
 	movs r3, #8
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r4, _0801C414
 	adds r0, r4, #0
 	bl AddWindow
@@ -1763,7 +1763,7 @@ _0801C37C:
 _0801C410: .4byte 0x0202292C
 _0801C414: .4byte 0x082C4314
 _0801C418:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r7, r0, #0x18
 	cmp r7, #0

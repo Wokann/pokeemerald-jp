@@ -182,7 +182,7 @@ _08122E38:
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08122E70
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08122E50
@@ -197,7 +197,7 @@ _08122E50:
 	movs r2, #0
 _08122E5E:
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _08123020
 	.align 2, 0
 _08122E68: .4byte 0x02039E10
@@ -211,7 +211,7 @@ _08122E70:
 _08122E7C: .4byte 0x0857C0B0
 _08122E80: .4byte 0x0600E000
 _08122E84:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08122E90

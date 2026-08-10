@@ -5364,8 +5364,8 @@ _081996AC:
 _081996B4: .4byte 0x0203CA70
 	thumb_func_end DoScheduledBgTilemapCopiesToVram
 
-	thumb_func_start reset_temp_tile_data_buffers
-reset_temp_tile_data_buffers: @ 0x081996B8
+	thumb_func_start ResetTempTileDataBuffers
+ResetTempTileDataBuffers: @ 0x081996B8
 	push {lr}
 	ldr r3, _081996D4
 	ldr r1, _081996D8
@@ -5384,10 +5384,10 @@ _081996C4:
 	.align 2, 0
 _081996D4: .4byte 0x0203CA74
 _081996D8: .4byte 0x0203CA78
-	thumb_func_end reset_temp_tile_data_buffers
+	thumb_func_end ResetTempTileDataBuffers
 
-	thumb_func_start free_temp_tile_data_buffers_if_possible
-free_temp_tile_data_buffers_if_possible: @ 0x081996DC
+	thumb_func_start FreeTempTileDataBuffersIfPossible
+FreeTempTileDataBuffersIfPossible: @ 0x081996DC
 	push {r4, r5, r6, lr}
 	bl IsDma3ManagerBusyWithBgCopy
 	lsls r0, r0, #0x18
@@ -5428,10 +5428,10 @@ _08199722:
 	pop {r4, r5, r6}
 	pop {r1}
 	bx r1
-	thumb_func_end free_temp_tile_data_buffers_if_possible
+	thumb_func_end FreeTempTileDataBuffersIfPossible
 
-	thumb_func_start decompress_and_copy_tile_data_to_vram
-decompress_and_copy_tile_data_to_vram: @ 0x08199728
+	thumb_func_start DecompressAndCopyTileDataToVram
+DecompressAndCopyTileDataToVram: @ 0x08199728
 	push {r4, r5, r6, r7, lr}
 	mov r7, sb
 	mov r6, r8
@@ -5493,7 +5493,7 @@ _08199792:
 	pop {r4, r5, r6, r7}
 	pop {r1}
 	bx r1
-	thumb_func_end decompress_and_copy_tile_data_to_vram
+	thumb_func_end DecompressAndCopyTileDataToVram
 
 	thumb_func_start DecompressAndLoadBgGfxUsingHeap
 DecompressAndLoadBgGfxUsingHeap: @ 0x081997A0

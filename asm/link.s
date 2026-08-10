@@ -3625,7 +3625,7 @@ _0800AA68:
 	cmp r0, #0
 	beq _0800AB18
 	bl DeactivateAllTextPrinters
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	movs r0, #0x50
 	movs r1, #0
 	bl SetGpuReg

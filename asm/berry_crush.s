@@ -623,7 +623,7 @@ _08020DC8:
 	movs r1, #0
 	bl SetGpuReg
 	bl ScanlineEffect_Stop
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	b _08021028
 _08020DE6:
 	add r0, sp, #8
@@ -748,12 +748,12 @@ _08020EEA:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	b _08021028
 	.align 2, 0
 _08020F14: .4byte 0x082C6104
 _08020F18:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08020F24

@@ -2395,7 +2395,7 @@ _0801A820:
 	movs r0, #0
 	movs r2, #1
 	bl InitBgsFromTemplates
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r0, _0801A8C4
 	bl InitWindows
 	lsls r0, r0, #0x10

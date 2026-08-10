@@ -1168,15 +1168,15 @@ _081D69A4: .4byte 0x00001004
 sub_081D69A8: @ 0x081D69A8
 	push {r4, lr}
 	sub sp, #4
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081D6A30
 	movs r0, #0
 	str r0, [sp]
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _081D69BE:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081D69BE
@@ -2935,28 +2935,28 @@ _081D77D4: .4byte 0x00001004
 sub_081D77D8: @ 0x081D77D8
 	push {r4, lr}
 	sub sp, #4
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081D7858
 	movs r4, #0
 	str r4, [sp]
 	movs r0, #0
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D785C
 	str r4, [sp]
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D7860
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _081D780C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081D780C
@@ -3511,23 +3511,23 @@ _081D7C90: .4byte 0x00001804
 sub_081D7C94: @ 0x081D7C94
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0xc
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081D7D40
 	movs r4, #0
 	str r4, [sp]
 	movs r0, #0
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D7D44
 	str r4, [sp]
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	add r7, sp, #8
 _081D7CBC:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r6, r0, #0x18
 	cmp r6, #0
@@ -4170,28 +4170,28 @@ _081D8208: .4byte 0x00001804
 sub_081D820C: @ 0x081D820C
 	push {r4, lr}
 	sub sp, #4
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081D828C
 	movs r4, #0
 	str r4, [sp]
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D8290
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D8294
 	str r4, [sp]
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _081D8240:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081D8240
@@ -4647,22 +4647,22 @@ _081D85FC: .4byte 0x00001004
 sub_081D8600: @ 0x081D8600
 	push {r4, lr}
 	sub sp, #4
-	bl reset_temp_tile_data_buffers
+	bl ResetTempTileDataBuffers
 	ldr r1, _081D86A4
 	movs r4, #0
 	str r4, [sp]
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r1, _081D86A8
 	str r4, [sp]
 	movs r0, #0
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _081D8626:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081D8626

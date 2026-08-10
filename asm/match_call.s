@@ -482,7 +482,7 @@ _08195D88:
 	movs r0, #0
 	str r0, [sp]
 	movs r2, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	cmp r0, #0
 	beq _08195DD8
 	ldrb r0, [r5, #4]
@@ -534,7 +534,7 @@ MoveMatchCallWindowToVram: @ 0x08195DF0
 	lsls r1, r1, #3
 	ldr r0, _08195E5C
 	adds r4, r1, r0
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08195E68

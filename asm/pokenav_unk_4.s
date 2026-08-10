@@ -153,7 +153,7 @@ _081CAB0C:
 	movs r0, #2
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _081CAB6C
 	adds r1, r5, r0
 	movs r0, #2
@@ -178,7 +178,7 @@ _081CAB6C: .4byte 0x00001024
 _081CAB70: .4byte 0x085F3F74
 _081CAB74: .4byte 0x085F3EB0
 _081CAB78:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081CAB84
@@ -215,7 +215,7 @@ _081CABBC:
 	.align 2, 0
 _081CABC4: .4byte 0x085F4080
 _081CABC8:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #0
@@ -227,7 +227,7 @@ _081CABC8:
 	movs r0, #3
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldr r0, _081CAC04
 	movs r1, #0x30
 	movs r2, #0x20
@@ -243,7 +243,7 @@ _081CAC00: .4byte 0x085F4100
 _081CAC04: .4byte 0x085F40A0
 _081CAC08: .4byte 0x085F40C0
 _081CAC0C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CAC9E
@@ -3134,7 +3134,7 @@ sub_081CC170: @ 0x081CC170
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	ldrb r0, [r5, #8]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -3186,7 +3186,7 @@ _081CC23E:
 	thumb_func_start sub_081CC250
 sub_081CC250: @ 0x081CC250
 	push {lr}
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	pop {r1}
@@ -5876,7 +5876,7 @@ _081CD6E8: .4byte 0x00000844
 _081CD6EC: .4byte 0x0000040B
 _081CD6F0: .4byte 0x085F4E6C
 _081CD6F4:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0
@@ -5889,14 +5889,14 @@ _081CD702:
 _081CD708:
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 _081CD710:
 	movs r0, #0
 	b _081CDA26
 	.align 2, 0
 _081CD714: .4byte 0x085F57EC
 _081CD718:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081CD724
@@ -5945,7 +5945,7 @@ _081CD784: .4byte 0x085F4E4C
 _081CD788: .4byte 0x00001814
 _081CD78C: .4byte 0x0000FFB0
 _081CD790:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081CD79C
@@ -5999,7 +5999,7 @@ _081CD7D4:
 _081CD808: .4byte 0x00000804
 _081CD80C: .4byte 0x05000200
 _081CD810:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _081CD81C
@@ -8499,7 +8499,7 @@ _081CEB88:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	adds r1, r5, #0
 	adds r1, #0x10
 	movs r0, #1
@@ -8526,7 +8526,7 @@ _081CEBD4: .4byte 0x085F59F0
 _081CEBD8: .4byte 0x085F5AB8
 _081CEBDC: .4byte 0x085F59D0
 _081CEBE0:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CEC9E
@@ -8535,7 +8535,7 @@ _081CEBE0:
 	beq _081CEC9E
 	b _081CEBCC
 _081CEBF4:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CEC9E
@@ -8557,7 +8557,7 @@ _081CEC14:
 	bl sub_081C7364
 	b _081CEBCC
 _081CEC2A:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CEC9E
@@ -9886,7 +9886,7 @@ _081CF5C8:
 	movs r0, #1
 	movs r2, #0
 	movs r3, #0
-	bl decompress_and_copy_tile_data_to_vram
+	bl DecompressAndCopyTileDataToVram
 	adds r1, r5, #0
 	adds r1, #0x10
 	movs r0, #1
@@ -9911,7 +9911,7 @@ _081CF610: .4byte 0x085F5BF4
 _081CF614: .4byte 0x085F5CBC
 _081CF618: .4byte 0x085F5BD4
 _081CF61C:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CF6C2
@@ -9930,7 +9930,7 @@ _081CF61C:
 	bl ShowBg
 	b _081CF606
 _081CF64A:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CF6C2
@@ -9950,7 +9950,7 @@ _081CF668:
 	bl sub_081CF8E0
 	b _081CF606
 _081CF678:
-	bl free_temp_tile_data_buffers_if_possible
+	bl FreeTempTileDataBuffersIfPossible
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _081CF6C2
