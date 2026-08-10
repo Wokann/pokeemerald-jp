@@ -32,20 +32,143 @@ extern s16 sVerticalCameraPan;
 extern bool8 sBikeCameraPanFlag;
 extern void (*sFieldCameraPanningCallback)(void);
 
-// Defined in asm/field_camera_rest.s (JP variants that still use inline
-// offset math); the later functions are defined here.
-extern void DrawMetatileAt(const struct MapLayout *mapLayout, u16 offset, int x, int y);
-extern void CurrentMapDrawMetatileAt(int x, int y);
-extern void DrawDoorMetatileAt(int x, int y, u16 *tiles);
 extern void AddCameraTileOffset(struct FieldCameraOffset *cameraOffset, u32 xOffset, u32 yOffset);
 extern void AddCameraPixelOffset(struct FieldCameraOffset *cameraOffset, u32 xOffset, u32 yOffset);
 
-// Made global because the remaining asm functions call these
+static void RedrawMapSliceNorth(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout);
+static void RedrawMapSliceSouth(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout);
+static void RedrawMapSliceEast(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout);
+static void RedrawMapSliceWest(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout);
+void DrawMetatileAt(const struct MapLayout *mapLayout, u16 offset, int x, int y);
+void CurrentMapDrawMetatileAt(int x, int y);
+void DrawDoorMetatileAt(int x, int y, u16 *tiles);
 u32 MapPosToBgTilemapOffset(struct FieldCameraOffset *cameraOffset, s32 x, s32 y);
 void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset);
 
 static void CameraUpdateCallback(struct CameraObject *fieldCamera);
 static void CameraPanningCB_PanAhead(void);
+
+static void RedrawMapSlicesForCameraUpdate(struct FieldCameraOffset *cameraOffset, int x, int y)
+{
+    const struct MapLayout *mapLayout = gMapHeader.mapLayout;
+
+    if (x > 0)
+        RedrawMapSliceWest(cameraOffset, mapLayout);
+    if (x < 0)
+        RedrawMapSliceEast(cameraOffset, mapLayout);
+    if (y > 0)
+        RedrawMapSliceNorth(cameraOffset, mapLayout);
+    if (y < 0)
+        RedrawMapSliceSouth(cameraOffset, mapLayout);
+    cameraOffset->copyBGToVRAM = TRUE;
+}
+
+static void RedrawMapSliceNorth(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout)
+{
+    u8 i;
+    u8 temp;
+    u32 r7;
+
+    temp = cameraOffset->yTileOffset + 28;
+    if (temp >= 32)
+        temp -= 32;
+    r7 = temp * 32;
+    for (i = 0; i < 32; i += 2)
+    {
+        temp = cameraOffset->xTileOffset + i;
+        if (temp >= 32)
+            temp -= 32;
+        DrawMetatileAt(mapLayout, r7 + temp, gSaveBlock1Ptr->pos.x + i / 2, gSaveBlock1Ptr->pos.y + 14);
+    }
+}
+
+static void RedrawMapSliceSouth(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout)
+{
+    u8 i;
+    u8 temp;
+    u32 r7 = cameraOffset->yTileOffset * 32;
+
+    for (i = 0; i < 32; i += 2)
+    {
+        temp = cameraOffset->xTileOffset + i;
+        if (temp >= 32)
+            temp -= 32;
+        DrawMetatileAt(mapLayout, r7 + temp, gSaveBlock1Ptr->pos.x + i / 2, gSaveBlock1Ptr->pos.y);
+    }
+}
+
+static void RedrawMapSliceEast(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout)
+{
+    u8 i;
+    u8 temp;
+    u32 r6 = cameraOffset->xTileOffset;
+
+    for (i = 0; i < 32; i += 2)
+    {
+        temp = cameraOffset->yTileOffset + i;
+        if (temp >= 32)
+            temp -= 32;
+        DrawMetatileAt(mapLayout, temp * 32 + r6, gSaveBlock1Ptr->pos.x, gSaveBlock1Ptr->pos.y + i / 2);
+    }
+}
+
+static void RedrawMapSliceWest(struct FieldCameraOffset *cameraOffset, const struct MapLayout *mapLayout)
+{
+    u8 i;
+    u8 temp;
+    u8 r5 = cameraOffset->xTileOffset + 28;
+
+    if (r5 >= 32)
+        r5 -= 32;
+    for (i = 0; i < 32; i += 2)
+    {
+        temp = cameraOffset->yTileOffset + i;
+        if (temp >= 32)
+            temp -= 32;
+        DrawMetatileAt(mapLayout, temp * 32 + r5, gSaveBlock1Ptr->pos.x + 14, gSaveBlock1Ptr->pos.y + i / 2);
+    }
+}
+
+void CurrentMapDrawMetatileAt(int x, int y)
+{
+    int offset = MapPosToBgTilemapOffset(&sFieldCameraOffset, x, y);
+
+    if (offset >= 0)
+    {
+        DrawMetatileAt(gMapHeader.mapLayout, offset, x, y);
+        sFieldCameraOffset.copyBGToVRAM = TRUE;
+    }
+}
+
+void DrawDoorMetatileAt(int x, int y, u16 *tiles)
+{
+    int offset = MapPosToBgTilemapOffset(&sFieldCameraOffset, x, y);
+
+    if (offset >= 0)
+    {
+        DrawMetatile(METATILE_LAYER_TYPE_COVERED, tiles, offset);
+        sFieldCameraOffset.copyBGToVRAM = TRUE;
+    }
+}
+
+void DrawMetatileAt(const struct MapLayout *mapLayout, u16 offset, int x, int y)
+{
+    u16 metatileId = MapGridGetMetatileIdAt(x, y);
+    const u16 *metatiles;
+
+    if (metatileId > NUM_METATILES_TOTAL)
+        metatileId = 0;
+    if (metatileId < NUM_METATILES_IN_PRIMARY)
+    {
+        metatiles = mapLayout->primaryTileset->metatiles;
+    }
+    else
+    {
+        metatiles = mapLayout->secondaryTileset->metatiles;
+        metatileId -= NUM_METATILES_IN_PRIMARY;
+    }
+    DrawMetatile(MapGridGetMetatileLayerTypeAt(x, y), metatiles + metatileId * NUM_TILES_PER_METATILE, offset);
+}
 
 void DrawMetatile(s32 metatileLayerType, const u16 *tiles, u16 offset)
 {
