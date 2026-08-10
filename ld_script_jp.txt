@@ -161,6 +161,7 @@ sClearSaveTextWindow = ABSOLUTE(0x085CDB98);
 sClearSaveYesNo = ABSOLUTE(0x085CDBA8);
 sContestWinnerPicDummy = ABSOLUTE(0x0830FC68);
 EventScript_ResetAllMapFlags = ABSOLUTE(0x08242678);
+sLotteryPrizes = ABSOLUTE(0x085C7A2C);
 
 SECTIONS {
     . = 0x2000000;
@@ -392,7 +393,7 @@ SECTIONS {
         asm/battle_anim_special.o(.text);
         asm/hall_of_fame.o(.text);
         asm/credits.o(.text);
-        asm/lottery_corner.o(.text);
+        build/src/lottery_corner.o(.text);
         build/src/diploma.o(.text);
         asm/berry_tag_screen.o(.text);
         asm/save_failed_screen.o(.text);

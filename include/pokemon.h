@@ -442,11 +442,9 @@ void SetMultiuseSpriteTemplateToTrainerFront(u16 trainerPicId, u8 battlerPositio
  * arguments. The two functions are aliases of each other, but they
  * differ for matching purposes in the caller's codegen. */
 #define GetMonData(...) CAT(GetMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
-#define GetBoxMonData(...) CAT(GetBoxMonData, NARG_8(__VA_ARGS__))(__VA_ARGS__)
 u32 GetMonData3(struct Pokemon *mon, s32 field, u8 *data);
 u32 GetMonData2(struct Pokemon *mon, s32 field);
-u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data);
-u32 GetBoxMonData2(struct BoxPokemon *boxMon, s32 field);
+u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, ...);
 
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg);
