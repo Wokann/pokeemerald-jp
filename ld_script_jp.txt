@@ -295,6 +295,7 @@ sub_08122350 = CreateSwapLineSprites;
 sub_081223BC = DestroySwapLineSprites;
 sub_08122408 = SetSwapLineSpritesInvisibility;
 sub_08122454 = UpdateSwapLineSpritesPos;
+BgTileAllocOp = DummiedOutFireRedLeafGreenTileAllocFunc;
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
 gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
@@ -528,7 +529,7 @@ SECTIONS {
         build/src/gpu_regs.o(.text);
         asm/bg.o(.text);
         build/src/blit.o(.text);
-        asm/window.o(.text);
+        build/src/window.o(.text);
         build/src/text.o(.text);
         asm/sprite.o(.text);
         asm/string_util.o(.text);
