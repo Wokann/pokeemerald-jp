@@ -225,7 +225,7 @@ SECTIONS {
         build/src/event_data.o(.text);
         build/src/coord_event_weather.o(.text);
         build/src/field_tasks.o(.text);
-        asm/clock.o(.text);
+        build/src/clock.o(.text);
         asm/reset_rtc_screen.o(.text);
         asm/start_menu.o(.text);
         asm/tileset_anims.o(.text);

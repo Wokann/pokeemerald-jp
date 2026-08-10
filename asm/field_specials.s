@@ -7923,8 +7923,8 @@ _0813B9EE:
 _0813B9F4: .4byte 0x03005AEC
 	thumb_func_end sub_0813B9D8
 
-	thumb_func_start sub_0813B9F8
-sub_0813B9F8: @ 0x0813B9F8
+	thumb_func_start InPokemonCenter
+InPokemonCenter: @ 0x0813B9F8
 	push {r4, lr}
 	ldr r0, _0813BA28
 	ldr r0, [r0]
@@ -7967,7 +7967,7 @@ _0813BA40:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_0813B9F8
+	thumb_func_end InPokemonCenter
 
 	thumb_func_start ResetFanClub
 ResetFanClub: @ 0x0813BA48

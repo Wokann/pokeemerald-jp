@@ -558,6 +558,7 @@ gUnknown_3005A2D = .;
 gUnknown_3005A36 = .;
 . += 0x1a;
 gUnknown_3005A50 = .;
+gLocalTime = ABSOLUTE(0x03005A50);
 . += 0x10;
 gUnknown_3005A60 = .;
 . += 0x4;
