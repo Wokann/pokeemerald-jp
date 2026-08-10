@@ -296,6 +296,8 @@ sub_081223BC = DestroySwapLineSprites;
 sub_08122408 = SetSwapLineSpritesInvisibility;
 sub_08122454 = UpdateSwapLineSpritesPos;
 DummiedOutFireRedLeafGreenTileAllocFunc = BgTileAllocOp;
+ResetPaletteStructByUid = PaletteStruct_ResetById;
+sub_080A250C = BlendPalettesGradually;
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
 gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
@@ -600,7 +602,7 @@ SECTIONS {
         asm/reset_rtc_screen.o(.text);
         asm/start_menu.o(.text);
         asm/tileset_anims.o(.text);
-        asm/palette.o(.text);
+        build/src/palette.o(.text);
         asm/sound.o(.text);
         asm/battle_anim.o(.text);
         asm/battle_anim_mons.o(.text);
