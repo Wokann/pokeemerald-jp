@@ -723,6 +723,7 @@ gWindowBgTilemapBuffers = ABSOLUTE(0x03003010);
 sGpuBgConfigs = ABSOLUTE(0x030008E0);
 sGpuBgConfigs2 = ABSOLUTE(0x030008F8);
 sDmaBusyBitfield = ABSOLUTE(0x03000938);
+MultiBoot_required_data = ABSOLUTE(0x03001298);
 . += 0x4;
 gUnknown_3005E14 = .;
 . += 0x4;
