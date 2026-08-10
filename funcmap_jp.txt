@@ -7610,7 +7610,7 @@ fldeff_escalator.s
 080e0a58 CreateEscalatorTask CreateEscalatorTask
 080e0aa4 StartEscalator StartEscalator
 080e0abc sub_080E0ABC_jp StopEscalator
-080e0ad0 fldeff_escalator.s sub_080E0AD0_jp
+080e0ad0 IsEscalatorMoving IsEscalatorMoving
 berry.s
 080e0b04 ClearEnigmaBerries ClearEnigmaBerries
 080e0b30 SetEnigmaBerry SetEnigmaBerry

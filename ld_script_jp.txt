@@ -51,6 +51,13 @@ sHyperCutStruct = ABSOLUTE(0x08557164);
 sSpriteTemplate_CutGrass = ABSOLUTE(0x085571C8);
 EventScript_UseCut = ABSOLUTE(0x08256612);
 FarawayIsland_Interior_EventScript_HideMewWhenGrassCut = ABSOLUTE(0x0823B5A9);
+sEscalatorMetatiles_1F_0 = ABSOLUTE(0x08562A3E);
+sEscalatorMetatiles_1F_1 = ABSOLUTE(0x08562A44);
+sEscalatorMetatiles_1F_2 = ABSOLUTE(0x08562A4A);
+sEscalatorMetatiles_1F_3 = ABSOLUTE(0x08562A50);
+sEscalatorMetatiles_2F_0 = ABSOLUTE(0x08562A56);
+sEscalatorMetatiles_2F_1 = ABSOLUTE(0x08562A5C);
+sEscalatorMetatiles_2F_2 = ABSOLUTE(0x08562A62);
 
 SECTIONS {
     . = 0x2000000;
@@ -177,7 +184,7 @@ SECTIONS {
         asm/item.o(.text);
         asm/contest.o(.text);
         asm/shop.o(.text);
-        asm/fldeff_escalator.o(.text);
+        build/src/fldeff_escalator.o(.text);
         asm/berry.o(.text);
         asm/script_menu.o(.text);
         asm/naming_screen.o(.text);

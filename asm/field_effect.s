@@ -2655,7 +2655,7 @@ sub_080B6618: @ 0x080B6618
 	bl FreezeEventObjects
 	bl CameraObjectReset2
 	ldrb r0, [r4, #0xa]
-	bl sub_080E0AA4
+	bl StartEscalator
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]
@@ -2886,7 +2886,7 @@ sub_080B67B8: @ 0x080B67B8
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _080B67F4
-	bl sub_080E0ABC
+	bl StopEscalator
 	bl WarpIntoMap
 	ldr r1, _080B67FC
 	ldr r0, _080B6800
@@ -3009,7 +3009,7 @@ _080B68D4:
 	movs r1, #0
 _080B68D6:
 	adds r0, r1, #0
-	bl sub_080E0AA4
+	bl StartEscalator
 	movs r0, #1
 	add sp, #4
 	pop {r4, r5}
@@ -3189,11 +3189,11 @@ _080B6A24: .4byte 0x020205AC
 sub_080B6A28: @ 0x080B6A28
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_080E0AD0
+	bl IsEscalatorMoving
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080B6A44
-	bl sub_080E0ABC
+	bl StopEscalator
 	ldrh r0, [r4, #8]
 	adds r0, #1
 	strh r0, [r4, #8]

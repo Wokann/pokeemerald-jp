@@ -88,7 +88,8 @@ asm/fldeff_rocksmash.s removed), src/fldeff_sweetscent.c (6, full module --
 asm/fldeff_sweetscent.s removed), src/fldeff_softboiled.c (8, full module --
 asm/fldeff_softboiled.s removed), src/fldeff_flash.c (20, full module --
 asm/fldeff_flash.s removed), src/fldeff_cut.c (17, full module --
-asm/fldeff_cut.s removed).
+asm/fldeff_cut.s removed), src/fldeff_escalator.c (6, full module --
+asm/fldeff_escalator.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -164,3 +165,10 @@ mislabeled MetatileBehavior_IsLongGrass / _Duplicate pair (0x08089480 is the
 Duplicate check used by fldeff_cut; 0x08088DC0 is the generic one).
 verify_all's linker-addend fallback was extended to mid-function literal
 pools (sHyperCutStruct+2 style relocations).
+
+src/fldeff_escalator.c (SetEscalatorMetatile, Task_DrawEscalator,
+CreateEscalatorTask, StartEscalator, StopEscalator, IsEscalatorMoving) is the
+twentieth wired module.  The seven sEscalatorMetatiles_* tables
+(0x08562A3E-0x08562A62) and sEscalatorAnim_TaskId (0x02039C2C) stay in the
+ROM data region; the JP sub_080E0AA4/ABC/AD0 labels were renamed to
+StartEscalator/StopEscalator/IsEscalatorMoving.
