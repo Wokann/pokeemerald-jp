@@ -15,6 +15,9 @@ def main():
         if r is None:
             print(f"{f}: no result")
             continue
+        if r.get("error"):
+            print(f"{f}: {r['error']}")
+            continue
         status = "MATCH" if r["ok"] else "DIFF"
         extra = f" ({r.get('error')})" if not r["ok"] and r.get("error") else ""
         print(f"{f}: JP 0x{r['addr']:08X} {status}{extra}")

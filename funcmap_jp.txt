@@ -2911,8 +2911,8 @@ egg_hatch.s
 08071cf0 CountPartyAliveNonEggMons CountPartyAliveNonEggMons
 battle_interface.s
 08071d14 DummiedOutFunction DummiedOutFunction
-08071d18 battle_interface.s sub_08071D18
-08071eb8 battle_interface.s sub_08071EB8
+08071d18 battle_interface.s Debug_DrawNumber
+08071eb8 battle_interface.s Debug_DrawNumberPair
 08071eec CreateBattlerHealthboxSprites CreateBattlerHealthboxSprites
 08072214 CreateSafariPlayerHealthboxSprites CreateSafariPlayerHealthboxSprites
 080722b4 GetHealthboxElementGfxPtr GetHealthboxElementGfxPtr
@@ -2927,7 +2927,7 @@ battle_interface.s
 08072498 UpdateOamPriorityInAllHealthboxes UpdateOamPriorityInAllHealthboxes
 08072528 InitBattlerHealthboxCoords InitBattlerHealthboxCoords
 080725a4 battle_interface.s UpdateLvlInHealthbox
-080726f4 battle_interface.s sub_080726F4_jp
+080726f4 battle_interface.s UpdateHpTextInHealthbox
 080727fc battle_interface.s UpdateHpTextInHealthboxInDoubles
 080729d0 PrintSafariMonInfo PrintSafariMonInfo
 08072c10 SwapHpBarsWithHpText SwapHpBarsWithHpText
@@ -2946,7 +2946,7 @@ battle_interface.s
 08073e68 UpdateStatusIconInHealthbox UpdateStatusIconInHealthbox
 08074118 battle_interface.s GetStatusIconForBattlerId
 080741e0 battle_interface.s AddTextPrinterAndCreateWindowOnHealthbox
-08074320 battle_interface.s sub_08074320_jp
+08074320 battle_interface.s UpdateLeftNoOfBallsTextOnHealthbox
 080743f0 UpdateHealthboxAttribute UpdateHealthboxAttribute
 08074630 MoveBattleBar MoveBattleBar
 0807472c MoveBattleBarGraphically MoveBattleBarGraphically
