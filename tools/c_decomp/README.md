@@ -101,7 +101,8 @@ asm/field_tasks.s removed), src/field_camera.c (8) + src/field_camera_rest.c
 (12) partial -- the 8 middle functions (RedrawMapSlicesForCameraUpdate,
 RedrawMapSliceN/S/E/W, CurrentMapDrawMetatileAt, DrawDoorMetatileAt,
 DrawMetatileAt) are JP variants with inline offset math and stay in
-asm/field_camera_rest.s.
+asm/field_camera_rest.s, src/berry_powder.c (14, full module --
+asm/berry_powder.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -301,3 +302,14 @@ camera IWRAM vars (sFieldCameraOffset 0x03000E20, pans/flags 0x03000E28-30,
 gOverworldTilemapBuffer_Bg1/2/3 0x03005B00/AFC/B04, gFieldCamera 0x03005B30,
 gTotalCameraPixelOffsetX/Y 0x03005B4C/48) and gUnusedBikeCameraAheadPanback
 (0x02036FE8).
+
+src/berry_powder.c (DecryptBerryPowder, SetBerryPowder,
+ApplyNewEncryptionKeyToBerryPowder, HasEnoughBerryPowder_/HasEnoughBerryPowder,
+GiveBerryPowder, TakeBerryPowder_/TakeBerryPowder, GetBerryPowder,
+PrintBerryPowderAmount, DrawPlayerPowderAmount, PrintPlayerBerryPowderAmount,
+DisplayBerryPowderVendorMenu, RemoveBerryPowderVendorMenu) is the
+twenty-eighth wired module.  Only data needed: sBerryPowderVendorWindowId
+(0x02022948) and gText_Powder (0x085CCCEE); the UNUSED bg/window templates
+stay in the ROM data region.  JP variants: amount printed with FONT_SMALL at
+(16,12), the "Powder" label at y=0, and the vendor window template uses
+height 3 / baseBlock 0x20.

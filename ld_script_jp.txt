@@ -79,6 +79,7 @@ sFullySubmergedBridgeMetatileOffsets = ABSOLUTE(0x084E89CC);
 sFloatingBridgeMetatileOffsets = ABSOLUTE(0x084E89EC);
 sSootopolisGymIceRowVars = ABSOLUTE(0x084E8A0C);
 sMuddySlopeMetatiles = ABSOLUTE(0x084E8A40);
+gText_Powder = ABSOLUTE(0x085CCCEE);
 sEscalatorMetatiles_1F_0 = ABSOLUTE(0x08562A3E);
 sEscalatorMetatiles_1F_1 = ABSOLUTE(0x08562A44);
 sEscalatorMetatiles_1F_2 = ABSOLUTE(0x08562A4A);
@@ -129,7 +130,7 @@ SECTIONS {
         asm/mevent_news.o(.text);
         asm/union_room_chat.o(.text);
         asm/berry_crush.o(.text);
-        asm/berry_powder.o(.text);
+        build/src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);
         asm/pokemon_jump.o(.text);
         asm/rtc.o(.text);
