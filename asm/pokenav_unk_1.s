@@ -158,7 +158,7 @@ sub_081C8B14: @ 0x081C8B14
 	movs r4, #0
 	movs r0, #4
 	strh r0, [r5]
-	bl sub_081C6E6C
+	bl GetSelectedConditionSearch
 	strh r0, [r5, #2]
 	adds r0, #8
 	strh r0, [r5, #4]
@@ -350,7 +350,7 @@ _081C8C80:
 	.align 2, 0
 _081C8C88: .4byte 0x000186AB
 _081C8C8C:
-	bl sub_081C6E78
+	bl CanViewRibbonsMenu
 	cmp r0, #0
 	beq _081C8CA8
 	movs r0, #9
@@ -669,7 +669,7 @@ _081C8EB8:
 	cmp r0, #0xd
 	beq _081C8F2C
 	subs r0, #8
-	bl sub_081C6E54
+	bl SetSelectedConditionSearch
 	ldr r1, _081C8EFC
 	adds r0, r4, #0
 	bl sub_081C8F5C
@@ -909,4 +909,3 @@ sub_081C9070: @ 0x081C9070
 	bx r1
 	.align 2, 0
 	thumb_func_end sub_081C9070
-

@@ -2395,7 +2395,7 @@ battle_gfx_sfx_util.s
 0805d408 SpriteCB_TrainerSlideVertical SpriteCB_TrainerSlideVertical
 0805d424 InitAndLaunchChosenStatusAnimation InitAndLaunchChosenStatusAnimation
 0805d524 TryHandleLaunchBattleTableAnimation TryHandleLaunchBattleTableAnimation
-0805d664 nullsub_23 GetCurrentMenuCB
+0805d664 nullsub_23 nullsub_23
 0805d674 battle_gfx_sfx_util.s Task_ClearBitWhenBattleTableAnimDone
 0805d6bc battle_gfx_sfx_util.s ShouldAnimBeDoneRegardlessOfSubsitute
 0805d6e0 InitAndLaunchSpecialAnimation InitAndLaunchSpecialAnimation
@@ -14920,11 +14920,10 @@ pokenav.s
 081c6bc0 pokenav.s CB2_Pokenav
 081c6bd8 pokenav.s VBlankCB_Pokenav
 081c6bec Task_Pokenav Task_Pokenav
-081c6d2c CanViewRibbonsMenu CallBattleTowerFunc
-081c6d48 pokenav.s SetActivePokenavMenu
+081c6d2c CanViewRibbonsMenu SetActivePokenavMenu
 081c6d94 sub_081C6D94_jp IsActiveMenuLoopTaskActive_
-081c6da0 pokenav.s sub_081C6DA0_jp
-081c6dac pokenav.s sub_081C6DAC_jp
+081c6da0 pokenav.s GetCurrentMenuCB
+081c6dac pokenav.s sub_081C6DAC
 081c6db4 SetVBlankCallback_ InitKeys_
 081c6dc0 InitKeys_ SetVBlankCallback_
 081c6dcc SetPokenavVBlankCallback SetPokenavVBlankCallback

@@ -2716,7 +2716,7 @@ _081CBE68: @ jump table
 	.4byte _081CBF7E @ case 7
 _081CBE88:
 	movs r0, #0
-	bl InitKeys_
+	bl SetVBlankCallback_
 	movs r0, #1
 	bl HideBg
 	movs r0, #2
@@ -2797,7 +2797,7 @@ _081CBF36:
 	movs r0, #2
 	bl ShowBg
 	ldr r0, _081CBF54
-	bl InitKeys_
+	bl SetVBlankCallback_
 	b _081CBED0
 	.align 2, 0
 _081CBF54: .4byte 0x081CBDF9
@@ -6168,7 +6168,7 @@ _081CD978:
 	bne _081CDA20
 _081CD990:
 	ldr r0, _081CD998
-	bl InitKeys_
+	bl SetVBlankCallback_
 	b _081CD710
 	.align 2, 0
 _081CD998: .4byte 0x081CE579
@@ -7788,7 +7788,7 @@ sub_081CE670: @ 0x081CE670
 	str r0, [r4, #4]
 	movs r0, #0
 	str r0, [r4, #0x18]
-	bl sub_081C6E6C
+	bl GetSelectedConditionSearch
 	ldr r1, _081CE6C0
 	lsls r0, r0, #2
 	adds r0, r0, r1
@@ -7825,7 +7825,7 @@ sub_081CE6CC: @ 0x081CE6CC
 	str r0, [r4]
 	movs r0, #1
 	str r0, [r4, #0x18]
-	bl sub_081C6E6C
+	bl GetSelectedConditionSearch
 	ldr r1, _081CE704
 	lsls r0, r0, #2
 	adds r0, r0, r1
@@ -8578,7 +8578,7 @@ _081CEC2A:
 	ldr r0, [r5, #0xc]
 	cmp r0, #0
 	bne _081CEC86
-	bl sub_081C6E6C
+	bl GetSelectedConditionSearch
 	adds r4, r0, #0
 	adds r4, #8
 	lsls r4, r4, #0x18

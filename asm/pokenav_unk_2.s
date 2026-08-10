@@ -2178,7 +2178,7 @@ sub_081CA0D8: @ 0x081CA0D8
 	ldr r2, [r2, #8]
 	bl ScanlineEffect_SetParams
 	ldr r0, _081CA138
-	bl InitKeys_
+	bl SetVBlankCallback_
 	ldr r0, _081CA13C
 	movs r1, #3
 	bl CreateTask
@@ -2360,4 +2360,3 @@ sub_081CA288: @ 0x081CA288
 	bx r0
 	.align 2, 0
 	thumb_func_end sub_081CA288
-

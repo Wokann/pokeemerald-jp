@@ -1,4 +1,5 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
+PokenavMenuCallbacks = ABSOLUTE(0x085EF83C);
 gMonBackPicTable = ABSOLUTE(0x082D6148);
 sInvisibleSpriteTemplate = ABSOLUTE(0x082FAD34);
 sSpriteDimensions = ABSOLUTE(0x082FAD4C);
@@ -531,7 +532,7 @@ SECTIONS {
         asm/pokemon_summary_screen.o(.text);
         asm/unk_pokedex_area_screen_helper.o(.text);
         asm/battle_pyramid_bag.o(.text);
-        asm/pokenav.o(.text);
+        build/src/pokenav.o(.text);
         asm/pokenav_main_menu.o(.text);
         asm/pokenav_match_call_ui.o(.text);
         asm/pokenav_unk_1.o(.text);

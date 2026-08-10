@@ -485,7 +485,7 @@ gSpecials:
 	def_special sub_0813A828
 	def_special sub_0813A85C
 	def_special sub_0813B810
-	def_special sub_081C6A64
+	def_special OpenPokenavForTutorial
 	def_special convert_pixel_width_to_tile_width
 	def_special CountPlayerTrainerStars
 	def_special sub_0813ACC8
