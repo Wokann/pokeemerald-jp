@@ -2,846 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-
-	thumb_func_start IsWirelessAdapterConnected
-IsWirelessAdapterConnected: @ 0x08008F68
-	push {lr}
-	bl sub_0800AF5C
-	bl sub_0800E1C4
-	bl sub_0800B97C
-	ldr r1, _08008F8C
-	cmp r0, r1
-	beq _08008F90
-	bl sub_0800AF78
-	bl CloseLink
-	bl RestoreSerialTimer3IntrHandlers
-	movs r0, #0
-	b _08008F9A
-	.align 2, 0
-_08008F8C: .4byte 0x00008001
-_08008F90:
-	bl rfu_REQ_stopMode
-	bl rfu_waitREQComplete
-	movs r0, #1
-_08008F9A:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end IsWirelessAdapterConnected
-
-	thumb_func_start Task_DestroySelf
-Task_DestroySelf: @ 0x08008FA0
-	push {lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	bl DestroyTask
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end Task_DestroySelf
-
-	thumb_func_start InitLinkTestBG
-InitLinkTestBG: @ 0x08008FB0
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	adds r5, r0, #0
-	ldr r4, [sp, #0x18]
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	mov r8, r1
-	lsls r2, r2, #0x18
-	lsrs r6, r2, #0x18
-	lsls r3, r3, #0x18
-	lsrs r7, r3, #0x18
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	ldr r0, _0800900C
-	lsls r1, r5, #4
-	movs r2, #0x20
-	bl LoadPalette
-	ldr r3, _08009010
-	ldr r0, _08009014
-	str r0, [r3]
-	lsls r2, r7, #0xe
-	lsls r0, r4, #5
-	movs r1, #0xc0
-	lsls r1, r1, #0x13
-	adds r0, r0, r1
-	adds r2, r2, r0
-	str r2, [r3, #4]
-	ldr r0, _08009018
-	str r0, [r3, #8]
-	ldr r0, [r3, #8]
-	ldr r0, _0800901C
-	str r6, [r0]
-	str r5, [r0, #4]
-	str r4, [r0, #8]
-	mov r0, r8
-	cmp r0, #2
-	beq _0800903A
-	cmp r0, #2
-	bgt _08009020
-	cmp r0, #1
-	beq _08009028
-	b _0800905C
-	.align 2, 0
-_0800900C: .4byte 0x082BFB6C
-_08009010: .4byte 0x040000D4
-_08009014: .4byte 0x082BFB8C
-_08009018: .4byte 0x80000110
-_0800901C: .4byte 0x030031D0
-_08009020:
-	mov r0, r8
-	cmp r0, #3
-	beq _0800904C
-	b _0800905C
-_08009028:
-	lsls r1, r6, #8
-	movs r0, #1
-	orrs r1, r0
-	lsls r0, r7, #2
-	orrs r1, r0
-	movs r0, #0xa
-	bl SetGpuReg
-	b _0800905C
-_0800903A:
-	lsls r1, r6, #8
-	movs r0, #1
-	orrs r1, r0
-	lsls r0, r7, #2
-	orrs r1, r0
-	movs r0, #0xc
-	bl SetGpuReg
-	b _0800905C
-_0800904C:
-	lsls r1, r6, #8
-	movs r0, #1
-	orrs r1, r0
-	lsls r0, r7, #2
-	orrs r1, r0
-	movs r0, #0xe
-	bl SetGpuReg
-_0800905C:
-	mov r0, r8
-	lsls r4, r0, #2
-	adds r0, r4, #0
-	adds r0, #0x10
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	movs r1, #0
-	bl SetGpuReg
-	adds r4, #0x12
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	adds r0, r4, #0
-	movs r1, #0
-	bl SetGpuReg
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end InitLinkTestBG
-
-	thumb_func_start sub_08009088
-sub_08009088: @ 0x08009088
-	push {r4, r5, r6, lr}
-	mov r6, r8
-	push {r6}
-	mov r8, r0
-	adds r6, r1, #0
-	adds r4, r2, #0
-	adds r5, r3, #0
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	mov r8, r0
-	lsls r6, r6, #0x18
-	lsrs r6, r6, #0x18
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	ldr r0, _080090F4
-	mov r2, r8
-	lsls r1, r2, #4
-	movs r2, #0x20
-	bl LoadPalette
-	ldr r2, _080090F8
-	ldr r0, _080090FC
-	str r0, [r2]
-	lsls r0, r5, #0xe
-	movs r1, #0xc0
-	lsls r1, r1, #0x13
-	adds r0, r0, r1
-	str r0, [r2, #4]
-	ldr r0, _08009100
-	str r0, [r2, #8]
-	ldr r0, [r2, #8]
-	ldr r0, _08009104
-	str r4, [r0]
-	mov r1, r8
-	str r1, [r0, #4]
-	movs r1, #0
-	str r1, [r0, #8]
-	ldr r0, _08009108
-	adds r6, r6, r0
-	ldrb r0, [r6]
-	lsls r4, r4, #8
-	lsls r5, r5, #2
-	orrs r4, r5
-	adds r1, r4, #0
-	bl SetGpuReg
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080090F4: .4byte 0x082BFB6C
-_080090F8: .4byte 0x040000D4
-_080090FC: .4byte 0x082BFB8C
-_08009100: .4byte 0x80000110
-_08009104: .4byte 0x030031D0
-_08009108: .4byte 0x082BFF20
-	thumb_func_end sub_08009088
-
-	thumb_func_start LinkTestScreen
-LinkTestScreen: @ 0x0800910C
-	push {r4, lr}
-	sub sp, #4
-	bl ResetSpriteData
-	bl FreeAllSpritePalettes
-	bl ResetTasks
-	ldr r0, _080091A0
-	bl SetVBlankCallback
-	bl ResetBlockSend
-	ldr r1, _080091A4
-	ldr r2, _080091A8
-	adds r0, r2, #0
-	strh r0, [r1]
-	bl OpenLink
-	ldr r0, _080091AC
-	ldrh r0, [r0, #0x24]
-	bl SeedRng
-	movs r4, #0
-_0800913C:
-	bl Random
-	ldr r1, _080091B0
-	ldr r1, [r1]
-	adds r1, #0xa
-	adds r1, r1, r4
-	strb r0, [r1]
-	adds r4, #1
-	cmp r4, #3
-	ble _0800913C
-	movs r4, #0
-	str r4, [sp]
-	movs r0, #0
-	movs r1, #2
-	movs r2, #4
-	movs r3, #0
-	bl InitLinkTestBG
-	movs r1, #0xaa
-	lsls r1, r1, #5
-	movs r0, #0
-	bl SetGpuReg
-	ldr r0, _080091B4
-	movs r1, #0
-	bl CreateTask
-	bl RunTasks
-	bl AnimateSprites
-	bl BuildOamBuffer
-	bl UpdatePaletteFade
-	ldr r0, _080091B8
-	str r4, [r0]
-	bl InitLocalLinkPlayer
-	ldr r0, _080091BC
-	movs r1, #0
-	bl CreateTask
-	ldr r0, _080091C0
-	bl SetMainCallback2
-	add sp, #4
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080091A0: .4byte 0x08009259
-_080091A4: .4byte 0x0202267E
-_080091A8: .4byte 0x00001111
-_080091AC: .4byte 0x03002360
-_080091B0: .4byte 0x03005AF0
-_080091B4: .4byte 0x08008FA1
-_080091B8: .4byte 0x03000D60
-_080091BC: .4byte 0x0800A415
-_080091C0: .4byte 0x08009559
-	thumb_func_end LinkTestScreen
-
-	thumb_func_start SetLocalLinkPlayerId
-SetLocalLinkPlayerId: @ 0x080091C4
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r1, _080091D0
-	strh r0, [r1, #0x18]
-	bx lr
-	.align 2, 0
-_080091D0: .4byte 0x02022684
-	thumb_func_end SetLocalLinkPlayerId
-
-	thumb_func_start InitLocalLinkPlayer
-InitLocalLinkPlayer: @ 0x080091D4
-	push {r4, r5, lr}
-	ldr r5, _08009240
-	ldr r4, _08009244
-	ldr r1, [r4]
-	ldrb r2, [r1, #0xa]
-	ldrb r0, [r1, #0xb]
-	lsls r0, r0, #8
-	orrs r2, r0
-	ldrb r0, [r1, #0xc]
-	lsls r0, r0, #0x10
-	orrs r2, r0
-	ldrb r0, [r1, #0xd]
-	lsls r0, r0, #0x18
-	orrs r2, r0
-	str r2, [r5, #4]
-	adds r0, r5, #0
-	adds r0, #8
-	bl StringCopy
-	ldr r0, [r4]
-	ldrb r0, [r0, #8]
-	strb r0, [r5, #0x13]
-	ldr r0, _08009248
-	ldrh r0, [r0]
-	str r0, [r5, #0x14]
-	ldr r0, _0800924C
-	ldrb r0, [r0]
-	strh r0, [r5, #0x1a]
-	ldr r0, _08009250
-	ldrb r0, [r0]
-	movs r2, #0x80
-	lsls r2, r2, #7
-	adds r1, r2, #0
-	adds r0, r0, r1
-	strh r0, [r5]
-	movs r0, #0x80
-	lsls r0, r0, #8
-	strh r0, [r5, #2]
-	bl IsNationalPokedexEnabled
-	strb r0, [r5, #0x10]
-	ldr r0, _08009254
-	bl FlagGet
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _0800923A
-	ldrb r0, [r5, #0x10]
-	movs r1, #0x10
-	orrs r0, r1
-	strb r0, [r5, #0x10]
-_0800923A:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08009240: .4byte 0x02022684
-_08009244: .4byte 0x03005AF0
-_08009248: .4byte 0x0202267E
-_0800924C: .4byte 0x0829BDA5
-_08009250: .4byte 0x0829BDA4
-_08009254: .4byte 0x0000087F
-	thumb_func_end InitLocalLinkPlayer
-
-	thumb_func_start sub_08009258
-sub_08009258: @ 0x08009258
-	push {lr}
-	bl LoadOam
-	bl ProcessSpriteCopyRequests
-	bl TransferPlttBuffer
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08009258
-
-	thumb_func_start InitLink
-InitLink: @ 0x0800926C
-	push {lr}
-	ldr r3, _0800928C
-	ldr r1, _08009290
-	ldr r2, _08009294
-	adds r0, r1, #0
-	adds r0, #0xe
-_08009278:
-	strh r2, [r0]
-	subs r0, #2
-	cmp r0, r1
-	bge _08009278
-	movs r0, #1
-	strb r0, [r3]
-	bl EnableSerial
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800928C: .4byte 0x0202267C
-_08009290: .4byte 0x030031B0
-_08009294: .4byte 0x0000EFFF
-	thumb_func_end InitLink
-
-	thumb_func_start Task_TriggerHandshake
-Task_TriggerHandshake: @ 0x08009298
-	push {lr}
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	ldr r0, _080092C8
-	lsls r1, r2, #2
-	adds r1, r1, r2
-	lsls r1, r1, #3
-	adds r1, r1, r0
-	ldrh r0, [r1, #8]
-	adds r0, #1
-	strh r0, [r1, #8]
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	cmp r0, #5
-	bne _080092C2
-	ldr r1, _080092CC
-	movs r0, #1
-	strb r0, [r1]
-	adds r0, r2, #0
-	bl DestroyTask
-_080092C2:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080092C8: .4byte 0x03005B60
-_080092CC: .4byte 0x030031E4
-	thumb_func_end Task_TriggerHandshake
-
-	thumb_func_start OpenLink
-OpenLink: @ 0x080092D0
-	push {r4, r5, r6, lr}
-	ldr r0, _08009318
-	ldrb r4, [r0]
-	cmp r4, #0
-	bne _08009344
-	bl ResetSerial
-	bl InitLink
-	ldr r1, _0800931C
-	ldr r0, _08009320
-	str r0, [r1]
-	ldr r0, _08009324
-	strb r4, [r0]
-	ldr r0, _08009328
-	strb r4, [r0]
-	ldr r0, _0800932C
-	strb r4, [r0]
-	bl ResetBlockReceivedFlags
-	bl ResetBlockSend
-	ldr r0, _08009330
-	str r4, [r0]
-	ldr r0, _08009334
-	strb r4, [r0]
-	ldr r0, _08009338
-	strb r4, [r0]
-	ldr r0, _0800933C
-	strh r4, [r0]
-	ldr r0, _08009340
-	movs r1, #2
-	bl CreateTask
-	b _08009348
-	.align 2, 0
-_08009318: .4byte 0x0300319C
-_0800931C: .4byte 0x030031E0
-_08009320: .4byte 0x0800A3E9
-_08009324: .4byte 0x030027E8
-_08009328: .4byte 0x0300310C
-_0800932C: .4byte 0x03003198
-_08009330: .4byte 0x03000D54
-_08009334: .4byte 0x03003188
-_08009338: .4byte 0x03003184
-_0800933C: .4byte 0x03003194
-_08009340: .4byte 0x08009299
-_08009344:
-	bl sub_0800E1C4
-_08009348:
-	ldr r1, _08009374
-	movs r0, #0
-	strb r0, [r1]
-	movs r1, #0
-	ldr r6, _08009378
-	movs r2, #0
-	movs r5, #1
-	ldr r4, _0800937C
-	ldr r3, _08009380
-_0800935A:
-	adds r0, r1, r6
-	strb r5, [r0]
-	adds r0, r1, r4
-	strb r2, [r0]
-	adds r0, r1, r3
-	strb r2, [r0]
-	adds r1, #1
-	cmp r1, #3
-	ble _0800935A
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08009374: .4byte 0x030031C4
-_08009378: .4byte 0x03003118
-_0800937C: .4byte 0x03003190
-_08009380: .4byte 0x0300318C
-	thumb_func_end OpenLink
-
-	thumb_func_start CloseLink
-CloseLink: @ 0x08009384
-	push {r4, lr}
-	ldr r0, _080093A8
-	movs r4, #0
-	strb r4, [r0]
-	ldr r0, _080093AC
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08009398
-	bl sub_0800E894
-_08009398:
-	ldr r0, _080093B0
-	strb r4, [r0]
-	bl DisableSerial
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080093A8: .4byte 0x030031C4
-_080093AC: .4byte 0x0300319C
-_080093B0: .4byte 0x0202267C
-	thumb_func_end CloseLink
-
-	thumb_func_start TestBlockTransfer
-TestBlockTransfer: @ 0x080093B4
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	ldr r5, _08009478
-	ldr r4, _0800947C
-	ldrb r0, [r5]
-	ldrh r1, [r4]
-	cmp r0, r1
-	beq _080093D8
-	ldrh r0, [r4]
-	movs r1, #2
-	movs r2, #3
-	movs r3, #2
-	bl LinkTest_prnthex
-	ldrh r0, [r4]
-	strb r0, [r5]
-_080093D8:
-	movs r5, #0
-	ldr r7, _08009480
-_080093DC:
-	ldr r0, _08009484
-	adds r6, r5, r0
-	lsls r0, r5, #1
-	adds r0, r0, r5
-	lsls r0, r0, #2
-	adds r4, r0, r7
-	ldrb r0, [r6]
-	ldrh r1, [r4]
-	cmp r0, r1
-	beq _08009404
-	ldrh r0, [r4]
-	adds r2, r5, #4
-	lsls r2, r2, #0x18
-	lsrs r2, r2, #0x18
-	movs r1, #2
-	movs r3, #2
-	bl LinkTest_prnthex
-	ldrh r0, [r4]
-	strb r0, [r6]
-_08009404:
-	adds r0, r5, #1
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	cmp r5, #3
-	bls _080093DC
-	bl GetBlockReceivedStatus
-	lsls r0, r0, #0x18
-	lsrs r7, r0, #0x18
-	cmp r7, #0xf
-	bne _0800946A
-	movs r5, #0
-	ldr r0, _08009480
-	mov sb, r0
-	ldr r1, _08009488
-	mov r8, r1
-_08009424:
-	adds r0, r7, #0
-	asrs r0, r5
-	movs r1, #1
-	ands r0, r1
-	cmp r0, #0
-	beq _08009460
-	lsls r0, r5, #8
-	ldr r1, _0800948C
-	adds r0, r0, r1
-	lsls r4, r5, #1
-	adds r1, r4, r5
-	lsls r1, r1, #2
-	add r1, sb
-	ldrh r1, [r1, #2]
-	bl LinkTestCalcBlockChecksum
-	ldr r1, _08009490
-	adds r4, r4, r1
-	movs r6, #0
-	strh r0, [r4]
-	adds r0, r5, #0
-	bl ResetBlockReceivedFlag
-	ldrh r0, [r4]
-	cmp r0, r8
-	beq _08009460
-	ldr r0, _08009494
-	strb r6, [r0]
-	ldr r0, _08009498
-	strb r6, [r0]
-_08009460:
-	adds r0, r5, #1
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	cmp r5, #3
-	bls _08009424
-_0800946A:
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08009478: .4byte 0x03000D64
-_0800947C: .4byte 0x03000D10
-_08009480: .4byte 0x03000D20
-_08009484: .4byte 0x03000D68
-_08009488: .4byte 0x00000342
-_0800948C: .4byte 0x0202207C
-_08009490: .4byte 0x030031E8
-_08009494: .4byte 0x02022074
-_08009498: .4byte 0x02022075
-	thumb_func_end TestBlockTransfer
-
-	thumb_func_start LinkTestProcessKeyInput
-LinkTestProcessKeyInput: @ 0x0800949C
-	push {r4, r5, lr}
-	sub sp, #4
-	ldr r4, _0800953C
-	ldrh r1, [r4, #0x2e]
-	movs r0, #1
-	ands r0, r1
-	cmp r0, #0
-	beq _080094B2
-	ldr r1, _08009540
-	movs r0, #1
-	strb r0, [r1]
-_080094B2:
-	ldrh r1, [r4, #0x2c]
-	movs r5, #2
-	adds r0, r5, #0
-	ands r0, r1
-	cmp r0, #0
-	beq _080094C6
-	ldr r0, _08009544
-	ldr r1, _08009548
-	bl InitBlockSend
-_080094C6:
-	ldrh r1, [r4, #0x2e]
-	movs r0, #0x80
-	lsls r0, r0, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _080094E2
-	movs r0, #1
-	rsbs r0, r0, #0
-	str r5, [sp]
-	movs r1, #0
-	movs r2, #0x10
-	movs r3, #0
-	bl BeginNormalPaletteFade
-_080094E2:
-	ldrh r1, [r4, #0x2e]
-	movs r0, #8
-	ands r0, r1
-	cmp r0, #0
-	beq _080094F2
-	movs r0, #1
-	bl SetSuppressLinkErrorMessage
-_080094F2:
-	ldrh r1, [r4, #0x2e]
-	movs r0, #0x80
-	lsls r0, r0, #1
-	ands r0, r1
-	cmp r0, #0
-	beq _08009504
-	movs r0, #1
-	bl TrySavingData
-_08009504:
-	ldrh r1, [r4, #0x2e]
-	movs r0, #4
-	ands r0, r1
-	cmp r0, #0
-	beq _08009512
-	bl SetCloseLinkCallback
-_08009512:
-	ldr r0, _0800954C
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08009532
-	ldr r2, [r4, #0x24]
-	ldr r0, _08009550
-	ldrb r1, [r0]
-	ldr r0, _08009554
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _0800952C
-	movs r0, #0x10
-	orrs r1, r0
-_0800952C:
-	adds r0, r2, #0
-	bl SetLinkDebugValues
-_08009532:
-	add sp, #4
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800953C: .4byte 0x03002360
-_08009540: .4byte 0x030031E4
-_08009544: .4byte 0x02004000
-_08009548: .4byte 0x00002004
-_0800954C: .4byte 0x02022074
-_08009550: .4byte 0x030027E8
-_08009554: .4byte 0x030031E0
-	thumb_func_end LinkTestProcessKeyInput
-
-	thumb_func_start CB2_LinkTest
-CB2_LinkTest: @ 0x08009558
-	push {lr}
-	bl LinkTestProcessKeyInput
-	movs r0, #1
-	movs r1, #1
-	movs r2, #0
-	bl TestBlockTransfer
-	bl RunTasks
-	bl AnimateSprites
-	bl BuildOamBuffer
-	bl UpdatePaletteFade
-	pop {r0}
-	bx r0
-	thumb_func_end CB2_LinkTest
-
-	thumb_func_start LinkMain2
-LinkMain2: @ 0x0800957C
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	ldr r0, _0800958C
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _08009590
-	movs r0, #0
-	b _080095D8
-	.align 2, 0
-_0800958C: .4byte 0x0202267C
-_08009590:
-	movs r1, #0
-	ldr r5, _080095E0
-	ldr r3, _080095E4
-	movs r2, #0
-_08009598:
-	lsls r0, r1, #1
-	adds r0, r0, r3
-	strh r2, [r0]
-	adds r0, r1, #1
-	lsls r0, r0, #0x18
-	lsrs r1, r0, #0x18
-	cmp r1, #7
-	bls _08009598
-	ldrh r0, [r4]
-	strh r0, [r5]
-	ldr r0, _080095E8
-	ldr r0, [r0]
-	movs r1, #0x40
-	ands r0, r1
-	cmp r0, #0
-	beq _080095D4
-	ldr r0, _080095EC
-	ldr r0, [r0]
-	lsls r0, r0, #0x1a
-	lsrs r0, r0, #0x1e
-	bl ProcessRecvCmds
-	ldr r0, _080095F0
-	ldr r0, [r0]
-	cmp r0, #0
-	beq _080095D0
-	bl _call_via_r0
-_080095D0:
-	bl CheckErrorStatus
-_080095D4:
-	ldr r0, _080095E8
-	ldrh r0, [r0]
-_080095D8:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_080095E0: .4byte 0x03003124
-_080095E4: .4byte 0x030031B0
-_080095E8: .4byte 0x03003180
-_080095EC: .4byte 0x04000128
-_080095F0: .4byte 0x030031E0
-	thumb_func_end LinkMain2
-
-	thumb_func_start HandleReceiveRemoteLinkPlayer
-HandleReceiveRemoteLinkPlayer: @ 0x080095F4
-	push {r4, r5, r6, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	movs r5, #0
-	ldr r1, _08009608
-	adds r0, r0, r1
-	strb r5, [r0]
-	movs r4, #0
-	adds r6, r1, #0
-	b _08009614
-	.align 2, 0
-_08009608: .4byte 0x03003118
-_0800960C:
-	adds r0, r4, r6
-	ldrb r0, [r0]
-	adds r5, r5, r0
-	adds r4, #1
-_08009614:
-	bl GetLinkPlayerCount_2
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r4, r0
-	blt _0800960C
-	cmp r5, #0
-	bne _08009630
-	ldr r1, _08009638
-	ldrb r0, [r1]
-	cmp r0, #0
-	bne _08009630
-	movs r0, #1
-	strb r0, [r1]
-_08009630:
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08009638: .4byte 0x030031C4
-	thumb_func_end HandleReceiveRemoteLinkPlayer
-
 	thumb_func_start ProcessRecvCmds
 ProcessRecvCmds: @ 0x0800963C
 	push {r4, r5, r6, r7, lr}
@@ -2573,8 +1733,8 @@ LinkTest_prntchar: @ 0x0800A274
 _0800A2A8: .4byte 0x030031D0
 	thumb_func_end LinkTest_prntchar
 
-	thumb_func_start LinkTest_prnthex
-LinkTest_prnthex: @ 0x0800A2AC
+	thumb_func_start LinkTest_PrintHex
+LinkTest_PrintHex: @ 0x0800A2AC
 	push {r4, r5, r6, r7, lr}
 	sub sp, #0x10
 	adds r5, r0, #0
@@ -2620,7 +1780,7 @@ _0800A2F8:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end LinkTest_prnthex
+	thumb_func_end LinkTest_PrintHex
 
 	thumb_func_start LinkTest_prntint
 LinkTest_prntint: @ 0x0800A300
@@ -2790,19 +1950,19 @@ Task_PrintTestData: @ 0x0800A414
 	movs r1, #2
 	movs r2, #1
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r4, _0800A53C
 	ldr r0, [r4]
 	movs r1, #0xf
 	movs r2, #1
 	movs r3, #8
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, _0800A540
 	ldrb r0, [r0, #1]
 	movs r1, #2
 	movs r2, #0xa
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, [r4]
 	movs r1, #0x1c
 	ands r0, r1
@@ -2810,73 +1970,73 @@ Task_PrintTestData: @ 0x0800A414
 	movs r1, #0xf
 	movs r2, #0xa
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl GetMultiplayerId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0xf
 	movs r2, #0xc
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, _0800A544
 	ldrb r0, [r0]
 	movs r1, #0x19
 	movs r2, #1
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, _0800A548
 	ldrb r0, [r0]
 	movs r1, #0x19
 	movs r2, #2
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl GetBlockReceivedStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0xf
 	movs r2, #5
 	movs r3, #2
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, _0800A54C
 	ldr r0, [r0]
 	movs r1, #2
 	movs r2, #0xc
 	movs r3, #8
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	ldr r0, _0800A550
 	ldr r0, [r0]
 	movs r1, #2
 	movs r2, #0xd
 	movs r3, #8
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl GetSioMultiSI
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0x19
 	movs r2, #5
 	movs r3, #1
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl IsSioMultiMaster
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0x19
 	movs r2, #6
 	movs r3, #1
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl IsLinkConnectionEstablished
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0x19
 	movs r2, #7
 	movs r3, #1
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	bl HasLinkErrorOccurred
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0x19
 	movs r2, #8
 	movs r3, #1
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	movs r6, #0
 	movs r5, #0x80
 	lsls r5, r5, #0x13
@@ -2886,7 +2046,7 @@ _0800A512:
 	lsrs r2, r5, #0x18
 	movs r1, #0xa
 	movs r3, #4
-	bl LinkTest_prnthex
+	bl LinkTest_PrintHex
 	movs r0, #0x80
 	lsls r0, r0, #0x11
 	adds r5, r5, r0
@@ -3505,8 +2665,8 @@ _0800A988: .4byte 0x0300318C
 _0800A98C: .4byte 0x030031E0
 	thumb_func_end sub_0800A938
 
-	thumb_func_start CheckErrorStatus
-CheckErrorStatus: @ 0x0800A990
+	thumb_func_start TrySetLinkErrorBuffer
+TrySetLinkErrorBuffer: @ 0x0800A990
 	push {lr}
 	ldr r0, _0800A9D4
 	ldrb r0, [r0]
@@ -3550,7 +2710,7 @@ _0800A9E4: .4byte 0x030041D0
 _0800A9E8: .4byte 0x03003200
 _0800A9EC: .4byte 0x0800AA0D
 _0800A9F0: .4byte 0x0300310C
-	thumb_func_end CheckErrorStatus
+	thumb_func_end TrySetLinkErrorBuffer
 
 	thumb_func_start sub_0800A9F4
 sub_0800A9F4: @ 0x0800A9F4
@@ -4191,8 +3351,8 @@ _0800AF56:
 	bx r1
 	thumb_func_end HandleLinkConnection
 
-	thumb_func_start sub_0800AF5C
-sub_0800AF5C: @ 0x0800AF5C
+	thumb_func_start SetWirelessCommType1
+SetWirelessCommType1: @ 0x0800AF5C
 	push {lr}
 	ldr r0, _0800AF70
 	ldrb r0, [r0]
@@ -4207,10 +3367,13 @@ _0800AF6C:
 	.align 2, 0
 _0800AF70: .4byte 0x030031C4
 _0800AF74: .4byte 0x0300319C
-	thumb_func_end sub_0800AF5C
+	thumb_func_end SetWirelessCommType1
+	.globl sub_0800AF5C
+	.set sub_0800AF5C, SetWirelessCommType1
 
-	thumb_func_start sub_0800AF78
-sub_0800AF78: @ 0x0800AF78
+
+	thumb_func_start SetWirelessCommType0_Internal
+SetWirelessCommType0_Internal: @ 0x0800AF78
 	push {lr}
 	ldr r0, _0800AF8C
 	ldrb r1, [r0]
@@ -4224,7 +3387,7 @@ _0800AF86:
 	.align 2, 0
 _0800AF8C: .4byte 0x030031C4
 _0800AF90: .4byte 0x0300319C
-	thumb_func_end sub_0800AF78
+	thumb_func_end SetWirelessCommType0_Internal
 
 	thumb_func_start sub_0800AF94
 sub_0800AF94: @ 0x0800AF94

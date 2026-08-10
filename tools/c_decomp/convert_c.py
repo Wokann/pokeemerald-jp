@@ -68,7 +68,7 @@ def compile_c(c_file, out_prefix="/tmp/cv"):
         text=True,
     )
     asm_path = Path(out_prefix + ".s")
-    if proc.returncode != 0 and not asm_path.is_file():
+    if proc.returncode != 0:
         sys.exit(proc.stderr)
     asm_text = asm_path.read_text()
     subprocess.run(

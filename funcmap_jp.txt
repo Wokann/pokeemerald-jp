@@ -441,7 +441,7 @@ link.s
 0800ae80 link.s sub_0800AE80_jp
 0800aee0 HandleLinkConnection HandleLinkConnection
 0800af5c SetWirelessCommType1 SetWirelessCommType1
-0800af78 link.s sub_0800AF78_jp
+0800af78 SetWirelessCommType0_Internal SetWirelessCommType0_Internal
 0800af94 link.s sub_0800AF94
 0800afb0 GetLinkRecvQueueLength GetLinkRecvQueueLength
 0800afd8 IsLinkRecvQueueAtOverworldMax IsLinkRecvQueueAtOverworldMax

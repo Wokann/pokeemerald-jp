@@ -1839,3 +1839,10 @@ sShouldProcessSpriteCopyRequests = ABSOLUTE(0x020217B0);
 sSpriteCopyRequestCount = ABSOLUTE(0x020217B1);
 gOamMatrices = ABSOLUTE(0x02021B3C);
 gAffineAnimsDisabled = ABSOLUTE(0x02021C3C);
+
+/* link module (asm/link.s, converted part) */
+sLinkOpen = ABSOLUTE(0x0202267C);
+gLocalLinkPlayer = ABSOLUTE(0x02022684);
+gBlockRecvBuffer = ABSOLUTE(0x0202207C);
+sLinkTestDebugValuesEnabled = ABSOLUTE(0x02022074);
+sDummyFlag = ABSOLUTE(0x02022075);

@@ -3,8 +3,8 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0800B97C
-sub_0800B97C: @ 0x0800B97C
+	thumb_func_start rfu_LMAN_REQBN_softReset_and_checkID
+rfu_LMAN_REQBN_softReset_and_checkID: @ 0x0800B97C
 	push {r4, lr}
 	bl rfu_REQBN_softReset_and_checkID
 	adds r4, r0, #0
@@ -41,7 +41,7 @@ _0800B9A4:
 	.align 2, 0
 _0800B9C0: .4byte 0x00008001
 _0800B9C4: .4byte 0x030041E0
-	thumb_func_end sub_0800B97C
+	thumb_func_end rfu_LMAN_REQBN_softReset_and_checkID
 
 	thumb_func_start rfu_REQ_sendData_wrapper
 rfu_REQ_sendData_wrapper: @ 0x0800B9C8
@@ -956,7 +956,7 @@ _0800C060: @ jump table
 	.4byte _0800C1B2 @ case 21
 	.4byte _0800C0BC @ case 22
 _0800C0BC:
-	bl sub_0800B97C
+	bl rfu_LMAN_REQBN_softReset_and_checkID
 	ldr r1, _0800C0D8
 	movs r2, #0xff
 	cmp r0, r1
@@ -973,7 +973,7 @@ _0800C0CA:
 _0800C0D8: .4byte 0x00008001
 _0800C0DC: .4byte 0x030041E0
 _0800C0E0:
-	bl sub_0800B97C
+	bl rfu_LMAN_REQBN_softReset_and_checkID
 	ldr r1, _0800C0F8
 	cmp r0, r1
 	bne _0800C100
@@ -5344,7 +5344,7 @@ InitRFU: @ 0x0800E194
 	ldr r4, _0800E1BC
 	ldr r5, [r4, #4]
 	ldr r6, [r4, #8]
-	bl sub_0800E1C4
+	bl InitRFUAPI
 	bl rfu_REQ_stopMode
 	bl rfu_waitREQComplete
 	ldr r1, _0800E1C0
@@ -5362,8 +5362,8 @@ _0800E1BC: .4byte 0x030027B0
 _0800E1C0: .4byte 0x04000208
 	thumb_func_end InitRFU
 
-	thumb_func_start sub_0800E1C4
-sub_0800E1C4: @ 0x0800E1C4
+	thumb_func_start InitRFUAPI
+InitRFUAPI: @ 0x0800E1C4
 	push {r4, lr}
 	ldr r0, _0800E1FC
 	ldr r1, _0800E200
@@ -5393,7 +5393,9 @@ _0800E1FC: .4byte 0x03004230
 _0800E200: .4byte 0x00000E64
 _0800E204: .4byte 0x030027B4
 _0800E208: .4byte 0x0202267E
-	thumb_func_end sub_0800E1C4
+	thumb_func_end InitRFUAPI
+	.globl sub_0800E1C4
+	.set sub_0800E1C4, InitRFUAPI
 
 	thumb_func_start sub_0800E20C
 sub_0800E20C: @ 0x0800E20C
@@ -6163,8 +6165,8 @@ _0800E88C: .4byte 0x030050A0
 _0800E890: .4byte 0x00000993
 	thumb_func_end sub_0800E87C
 
-	thumb_func_start sub_0800E894
-sub_0800E894: @ 0x0800E894
+	thumb_func_start LinkRfu_Shutdown
+LinkRfu_Shutdown: @ 0x0800E894
 	push {r4, r5, r6, lr}
 	bl sub_0800BB04
 	ldr r4, _0800E8A8
@@ -6238,7 +6240,9 @@ _0800E91E:
 	.align 2, 0
 _0800E930: .4byte 0x0800E609
 _0800E934: .4byte 0x082C0530
-	thumb_func_end sub_0800E894
+	thumb_func_end LinkRfu_Shutdown
+	.globl sub_0800E894
+	.set sub_0800E894, LinkRfu_Shutdown
 
 	thumb_func_start sub_0800E938
 sub_0800E938: @ 0x0800E938
@@ -6676,7 +6680,7 @@ _0800EC4C:
 	ldrb r4, [r0]
 	cmp r4, #0
 	bne _0800EC68
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	ldr r0, _0800EC64
 	strb r4, [r0]
 	b _0800EC92
@@ -13452,4 +13456,3 @@ sub_08011FC0: @ 0x08011FC0
 _08011FCC: .4byte 0x030050A0
 _08011FD0: .4byte 0x0000069E
 	thumb_func_end sub_08011FC0
-
