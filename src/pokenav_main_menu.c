@@ -67,10 +67,6 @@ extern const struct SpriteTemplate sSpinningPokenavSpriteTemplate;
 extern const struct SpriteTemplate sLeftHeaderSpriteTemplate;
 extern const struct SpriteTemplate sSubmenuLeftHeaderSpriteTemplate;
 
-// Cross-module functions still in asm with JP names.
-extern void sub_081CA288(void);
-extern void sub_081C9180(void);
-
 bool32 InitPokenavMainMenu(void)
 {
     struct Pokenav_MainMenu *menu;
@@ -94,7 +90,7 @@ u32 PokenavMainMenuLoopedTaskIsActive(void)
 void ShutdownPokenav(void)
 {
     PlaySE(SE_POKENAV_OFF);
-    sub_081CA288();
+    ResetBldCnt_();
     BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
 }
 
@@ -102,7 +98,7 @@ bool32 WaitForPokenavShutdownFade(void)
 {
     if (!gPaletteFade.active)
     {
-        sub_081C9180();
+        FreeMenuHandlerSubstruct2();
         CleanupPokenavMainMenuResources();
         FreeAllWindowBuffers();
         return FALSE;
