@@ -9,7 +9,7 @@ CB2_PokeblockFeed: @ 0x08179A20
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -69,7 +69,7 @@ _08179AB0:
 	bl AllocZeroed
 	str r0, [r4]
 	bl SetVBlankHBlankCallbacksToNull
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	ldr r1, _08179AD4
 	movs r2, #0x87
 	lsls r2, r2, #3

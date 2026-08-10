@@ -71,7 +71,7 @@ CB2_InitLearnMove: @ 0x081605D8
 	bl ResetSpriteData
 	bl FreeAllSpritePalettes
 	bl ResetTasks
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	ldr r6, _08160658
 	movs r0, #0x8c
 	lsls r0, r0, #1
@@ -133,7 +133,7 @@ CB2_InitLearnMoveReturnFromSelectMove: @ 0x08160678
 	bl ResetSpriteData
 	bl FreeAllSpritePalettes
 	bl ResetTasks
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	ldr r5, _08160700
 	movs r0, #0x8c
 	lsls r0, r0, #1
@@ -228,7 +228,7 @@ CB2_MoveRelearnerMain: @ 0x08160764
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0

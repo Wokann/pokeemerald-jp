@@ -3234,7 +3234,7 @@ OverworldBasic: @ 0x0808578C
 	bl BuildOamBuffer
 	bl UpdatePaletteFade
 	bl UpdateTilesetAnimations
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -4449,7 +4449,7 @@ sub_080861C4: @ 0x080861C4
 	thumb_func_start InitOverworldGraphicsRegisters
 InitOverworldGraphicsRegisters: @ 0x080861DC
 	push {r4, lr}
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	bl reset_temp_tile_data_buffers
 	movs r0, #0x4c
 	movs r1, #0

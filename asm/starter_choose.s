@@ -144,7 +144,7 @@ CB2_ChooseStarter: @ 0x08133EC4
 	movs r0, #0
 	movs r2, #0xd0
 	bl LoadUserWindowBorderGfx
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	bl ScanlineEffect_Stop
 	bl ResetTasks
 	bl ResetSpriteData
@@ -327,7 +327,7 @@ MainCallback2_StarterChoose: @ 0x08134198
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0

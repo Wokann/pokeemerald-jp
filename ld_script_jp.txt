@@ -80,6 +80,9 @@ sFloatingBridgeMetatileOffsets = ABSOLUTE(0x084E89EC);
 sSootopolisGymIceRowVars = ABSOLUTE(0x084E8A0C);
 sMuddySlopeMetatiles = ABSOLUTE(0x084E8A40);
 gText_Powder = ABSOLUTE(0x085CCCEE);
+sFieldRegionMapBgTemplates = ABSOLUTE(0x085C6124);
+sFieldRegionMapWindowTemplates = ABSOLUTE(0x085C612C);
+gText_Hoenn = ABSOLUTE(0x085C611C);
 sEscalatorMetatiles_1F_0 = ABSOLUTE(0x08562A3E);
 sEscalatorMetatiles_1F_1 = ABSOLUTE(0x08562A44);
 sEscalatorMetatiles_1F_2 = ABSOLUTE(0x08562A4A);
@@ -313,7 +316,7 @@ SECTIONS {
         asm/player_pc.o(.text);
         asm/intro.o(.text);
         asm/reset_save_heap.o(.text);
-        asm/field_region_map.o(.text);
+        build/src/field_region_map.o(.text);
         asm/battle_anim_special.o(.text);
         asm/hall_of_fame.o(.text);
         asm/credits.o(.text);

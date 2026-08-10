@@ -1706,4 +1706,5 @@ gSpriteCoordOffsetY = ABSOLUTE(0x02021B3A);
 gCamera = ABSOLUTE(0x02036FD4);
 gUnusedBikeCameraAheadPanback = ABSOLUTE(0x02036FE8);
 sBerryPowderVendorWindowId = ABSOLUTE(0x02022948);
+sFieldRegionMapHandler = ABSOLUTE(0x0203B99C);
 sFieldMessageBoxMode = ABSOLUTE(0x0203725C);

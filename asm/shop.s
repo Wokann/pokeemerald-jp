@@ -365,7 +365,7 @@ BuyMenuPrintPriceInList: @ 0x080DF2B0
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -457,7 +457,7 @@ _080DF36C:
 	bl ResetPaletteFade
 	bl ResetSpriteData
 	bl ResetTasks
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	ldr r4, _080DF41C
 	ldr r0, _080DF420
 	bl AllocZeroed

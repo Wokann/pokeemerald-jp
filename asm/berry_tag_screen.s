@@ -38,7 +38,7 @@ CB2_BerryTagScreen: @ 0x08177B3C
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -122,7 +122,7 @@ _08177BC0: @ jump table
 _08177C00:
 	bl SetVBlankHBlankCallbacksToNull
 	bl ResetVramOamAndBgCntRegs
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _08177CC4
 _08177C0E:
 	bl ScanlineEffect_Stop

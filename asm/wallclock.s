@@ -179,7 +179,7 @@ _0813494E:
 	movs r0, #0
 	movs r2, #0xd0
 	bl LoadUserWindowBorderGfx
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	bl ScanlineEffect_Stop
 	bl ResetTasks
 	bl ResetSpriteData
@@ -564,7 +564,7 @@ WallClockMainCallback: @ 0x08134CE8
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0

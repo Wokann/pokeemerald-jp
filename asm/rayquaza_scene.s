@@ -47,7 +47,7 @@ _081D60AC: .4byte 0x081D60B1
 CB2_InitRayquazaScene: @ 0x081D60B0
 	push {lr}
 	bl SetVBlankHBlankCallbacksToNull
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	bl ScanlineEffect_Stop
 	bl FreeAllSpritePalettes
 	bl ResetPaletteFade
@@ -85,7 +85,7 @@ CB2_RayquazaScene: @ 0x081D610C
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0

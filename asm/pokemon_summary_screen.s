@@ -206,7 +206,7 @@ SummaryScreen_VBlank: @ 0x081BF414
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -299,7 +299,7 @@ _081BF498: @ jump table
 _081BF4FC:
 	bl SetVBlankHBlankCallbacksToNull
 	bl ResetVramOamAndBgCntRegs
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _081BF746
 _081BF50A:
 	bl ScanlineEffect_Stop

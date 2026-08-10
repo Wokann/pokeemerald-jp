@@ -481,14 +481,14 @@ _081230AC:
 _081230B4: .4byte 0x02039E10
 	thumb_func_end FreeRegionMapIconResources
 
-	thumb_func_start sub_081230B8
-sub_081230B8: @ 0x081230B8
+	thumb_func_start DoRegionMapInputCallback
+DoRegionMapInputCallback: @ 0x081230B8
 	push {lr}
 	ldr r0, _081230CC
 	ldr r0, [r0]
 	ldr r0, [r0, #0x18]
 	bl _call_via_r0
-	thumb_func_end sub_081230B8
+	thumb_func_end DoRegionMapInputCallback
 
 	thumb_func_start sub_081230C4
 sub_081230C4: @ 0x081230C4
@@ -3572,7 +3572,7 @@ _08124798:
 	movs r1, #0x51
 	movs r2, #0xd0
 	bl LoadUserWindowBorderGfx
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _081248A8
 _081247A8:
 	ldr r4, _081247E4
@@ -3720,7 +3720,7 @@ sub_081248E0: @ 0x081248E0
 	thumb_func_start sub_081248F0
 sub_081248F0: @ 0x081248F0
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -4286,7 +4286,7 @@ sub_08124D4C: @ 0x08124D4C
 	ldrh r0, [r0, #4]
 	cmp r0, #0
 	bne _08124DE0
-	bl sub_081230B8
+	bl DoRegionMapInputCallback
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5

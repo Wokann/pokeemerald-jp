@@ -5295,8 +5295,8 @@ _0819963A:
 	bx r1
 	thumb_func_end sub_081995A0
 
-	thumb_func_start clear_scheduled_bg_copies_to_vram
-clear_scheduled_bg_copies_to_vram: @ 0x08199640
+	thumb_func_start ClearScheduledBgCopiesToVram
+ClearScheduledBgCopiesToVram: @ 0x08199640
 	push {lr}
 	ldr r0, _08199650
 	movs r1, #0
@@ -5306,7 +5306,7 @@ clear_scheduled_bg_copies_to_vram: @ 0x08199640
 	bx r0
 	.align 2, 0
 _08199650: .4byte 0x0203CA70
-	thumb_func_end clear_scheduled_bg_copies_to_vram
+	thumb_func_end ClearScheduledBgCopiesToVram
 
 	thumb_func_start ScheduleBgCopyTilemapToVram
 ScheduleBgCopyTilemapToVram: @ 0x08199654
@@ -5321,8 +5321,8 @@ ScheduleBgCopyTilemapToVram: @ 0x08199654
 _08199664: .4byte 0x0203CA70
 	thumb_func_end ScheduleBgCopyTilemapToVram
 
-	thumb_func_start do_scheduled_bg_tilemap_copies_to_vram
-do_scheduled_bg_tilemap_copies_to_vram: @ 0x08199668
+	thumb_func_start DoScheduledBgTilemapCopiesToVram
+DoScheduledBgTilemapCopiesToVram: @ 0x08199668
 	push {r4, lr}
 	ldr r4, _081996B4
 	ldrb r0, [r4]
@@ -5362,7 +5362,7 @@ _081996AC:
 	bx r0
 	.align 2, 0
 _081996B4: .4byte 0x0203CA70
-	thumb_func_end do_scheduled_bg_tilemap_copies_to_vram
+	thumb_func_end DoScheduledBgTilemapCopiesToVram
 
 	thumb_func_start reset_temp_tile_data_buffers
 reset_temp_tile_data_buffers: @ 0x081996B8

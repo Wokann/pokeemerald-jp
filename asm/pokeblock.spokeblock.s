@@ -149,7 +149,7 @@ sub_0813596C: @ 0x0813596C
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -235,7 +235,7 @@ _081359F0: @ jump table
 	.4byte _08135BD4 @ case 18
 _08135A3C:
 	bl SetVBlankHBlankCallbacksToNull
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _08135BEE
 _08135A46:
 	bl ScanlineEffect_Stop

@@ -273,7 +273,7 @@ c2_bag_3: @ 0x081AAAD4
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -362,7 +362,7 @@ _081AAB58: @ jump table
 	.4byte _081AAD68 @ case 20
 _081AABAC:
 	bl SetVBlankHBlankCallbacksToNull
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _081AAD82
 _081AABB6:
 	bl ScanlineEffect_Stop

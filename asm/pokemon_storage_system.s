@@ -1806,7 +1806,7 @@ _080C75EC: .4byte 0x020399A8
 Cb2_PSS: @ 0x080C75F0
 	push {lr}
 	bl RunTasks
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl ScrollBackground
 	bl sub_080CA278
 	bl AnimateSprites
@@ -1970,7 +1970,7 @@ sub_080C7734: @ 0x080C7734
 	ldr r1, _080C77AC
 	movs r0, #0x14
 	strh r0, [r1]
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	movs r0, #3
 	bl sub_080D1E3C
 	ldr r2, _080C77B0

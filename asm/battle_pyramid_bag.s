@@ -165,7 +165,7 @@ sub_081C4824: @ 0x081C4824
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -249,7 +249,7 @@ _081C48A8: @ jump table
 	.4byte _081C4990 @ case 16
 _081C48EC:
 	bl SetVBlankHBlankCallbacksToNull
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	b _081C49AA
 _081C48F6:
 	bl ScanlineEffect_Stop

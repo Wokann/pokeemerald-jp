@@ -201,7 +201,7 @@ PartyMenuCallback: @ 0x081AFE88
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
@@ -293,7 +293,7 @@ _081AFF0C: @ jump table
 _081AFF68:
 	bl SetVBlankHBlankCallbacksToNull
 	bl ResetVramOamAndBgCntRegs
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	ldr r1, _081AFF80
 	movs r0, #0x87
 	lsls r0, r0, #3

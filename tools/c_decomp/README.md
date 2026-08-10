@@ -102,7 +102,8 @@ asm/field_tasks.s removed), src/field_camera.c (8) + src/field_camera_rest.c
 RedrawMapSliceN/S/E/W, CurrentMapDrawMetatileAt, DrawDoorMetatileAt,
 DrawMetatileAt) are JP variants with inline offset math and stay in
 asm/field_camera_rest.s, src/berry_powder.c (14, full module --
-asm/berry_powder.s removed).
+asm/berry_powder.s removed), src/field_region_map.c (6, full module --
+asm/field_region_map.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -313,3 +314,14 @@ twenty-eighth wired module.  Only data needed: sBerryPowderVendorWindowId
 stay in the ROM data region.  JP variants: amount printed with FONT_SMALL at
 (16,12), the "Powder" label at y=0, and the vendor window template uses
 height 3 / baseBlock 0x20.
+
+src/field_region_map.c (FieldInitRegionMap, MCB2_InitRegionMapRegisters,
+VBCB/MCB2_FieldUpdateRegionMap, FieldUpdateRegionMap,
+PrintRegionMapSecName) is the twenty-ninth wired module.  Only data needed:
+sFieldRegionMapHandler (0x0203B99C), sFieldRegionMapBgTemplates
+(0x085C6124), sFieldRegionMapWindowTemplates (0x085C612C) and gText_Hoenn
+(0x085C611C).  JP variants: window-border tile 0x23 instead of 0x27, the
+title/name text printed at y=2 (and the title at x=0 without the centered
+offset), and no FillWindowPixelBuffer before the section name.  Renamed
+clear_scheduled_bg_copies_to_vram / do_scheduled_bg_tilemap_copies_to_vram
+and sub_081230B8 to the pokeemerald names.

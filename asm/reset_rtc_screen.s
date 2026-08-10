@@ -946,7 +946,7 @@ _0809E91C: .4byte 0x0809EAD9
 	thumb_func_start sub_0809E920
 sub_0809E920: @ 0x0809E920
 	push {lr}
-	bl clear_scheduled_bg_copies_to_vram
+	bl ClearScheduledBgCopiesToVram
 	movs r0, #0
 	bl ResetBgsAndClearDma3BusyFlags
 	ldr r1, _0809E960
@@ -978,7 +978,7 @@ CB2_ResetRtcScreen: @ 0x0809E968
 	bl RunTasks
 	bl AnimateSprites
 	bl BuildOamBuffer
-	bl do_scheduled_bg_tilemap_copies_to_vram
+	bl DoScheduledBgTilemapCopiesToVram
 	bl UpdatePaletteFade
 	pop {r0}
 	bx r0
