@@ -685,7 +685,7 @@ GiveMonArtistRibbon: @ 0x080F950C
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x46
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 _080F9586:
 	movs r0, #1
 	b _080F95AA

@@ -3046,7 +3046,7 @@ GiveLeadMonEffortRibbon: @ 0x081393E0
 	bls _08139426
 	adds r0, r4, #0
 	movs r1, #0x47
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 _08139426:
 	add sp, #4
 	pop {r4}

@@ -4719,8 +4719,8 @@ _080EEFF4: .4byte 0x03005AF0
 _080EEFF8: .4byte 0x0829BDA5
 	thumb_func_end sub_080EEF6C
 
-	thumb_func_start sub_080EEFFC
-sub_080EEFFC: @ 0x080EEFFC
+	thumb_func_start TryPutSpotTheCutiesOnAir
+TryPutSpotTheCutiesOnAir: @ 0x080EEFFC
 	push {r4, r5, r6, r7, lr}
 	mov r7, r8
 	push {r7}
@@ -4808,7 +4808,7 @@ _080EF0B2:
 	pop {r4, r5, r6, r7}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_080EEFFC
+	thumb_func_end TryPutSpotTheCutiesOnAir
 
 	thumb_func_start GetRibbonCount
 GetRibbonCount: @ 0x080EF0BC

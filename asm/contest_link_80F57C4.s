@@ -5188,7 +5188,7 @@ _080F892C:
 	muls r0, r5, r0
 	adds r0, r0, r4
 	movs r1, #0x32
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 	b _080F8AE0
 	.align 2, 0
 _080F893C: .4byte 0x02039BC4
@@ -5240,7 +5240,7 @@ _080F899A:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x33
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 	b _080F8AE0
 	.align 2, 0
 _080F89A8: .4byte 0x02039BC4
@@ -5290,7 +5290,7 @@ _080F89DE:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x34
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 	b _080F8AE0
 	.align 2, 0
 _080F8A14: .4byte 0x02039BC4
@@ -5336,7 +5336,7 @@ _080F8A20:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x35
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 	b _080F8AE0
 	.align 2, 0
 _080F8A7C: .4byte 0x02039BC4
@@ -5382,7 +5382,7 @@ _080F8A88:
 	muls r0, r6, r0
 	adds r0, r0, r5
 	movs r1, #0x36
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 _080F8AE0:
 	add sp, #4
 	pop {r4, r5, r6, r7}

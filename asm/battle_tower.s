@@ -6157,7 +6157,7 @@ _08164F88:
 	ldr r0, [r2]
 	adds r0, r0, r1
 	mov r1, sb
-	bl sub_080EEFFC
+	bl TryPutSpotTheCutiesOnAir
 _08164FB2:
 	add sp, #0xc
 	pop {r3, r4}

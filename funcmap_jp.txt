@@ -8103,7 +8103,7 @@ tv.s
 080eedec TryPutLotteryWinnerReportOnAir TryPutLotteryWinnerReportOnAir
 080eee7c TryPutBattleSeminarOnAir TryPutBattleSeminarOnAir
 080eef6c TryPutSafariFanClubOnAir TryPutSafariFanClubOnAir
-080eeffc tv.s sub_080EEFFC_jp
+080eeffc TryPutSpotTheCutiesOnAir TryPutSpotTheCutiesOnAir
 080ef0bc GetRibbonCount GetRibbonCount
 080ef1b4 MonDataIdxToRibbon MonDataIdxToRibbon
 080ef244 TryPutTrainerFanClubOnAir TryPutTrainerFanClubOnAir

@@ -320,7 +320,7 @@ SECTIONS {
         build/src/fldeff_dig.o(.text);
         asm/pokeblock.spokeblock.o(.text);
         build/src/fldeff_flash.o(.text);
-        asm/post_battle_event_funcs.o(.text);
+        build/src/post_battle_event_funcs.o(.text);
         asm/time_events.o(.text);
         build/src/birch_pc.o(.text);
         build/src/hof_pc.o(.text);
