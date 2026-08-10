@@ -15603,7 +15603,7 @@ ereader_screen.s
 081d4540 sub_081D4540_jp IsChildConnected
 081d4564 TryReceiveCard TryReceiveCard
 081d4694 task_add_00_ereader CreateEReaderTask
-081d46dc ereader_screen.s sub_081D46DC_jp
+081d46dc ereader_screen.s ResetTimer
 081d46e4 UpdateTimer UpdateTimer
 081d4704 Task_EReader Task_EReader
 trainer_hill.s

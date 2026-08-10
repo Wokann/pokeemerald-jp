@@ -275,7 +275,7 @@ c2_ereader: @ 0x08018110
 	ldr r1, _08018134
 	movs r0, #1
 	strb r0, [r1]
-	bl task_add_00_ereader
+	bl CreateEReaderTask
 _0801812C:
 	pop {r0}
 	bx r0
@@ -534,6 +534,8 @@ _0801831E:
 
 	thumb_func_start AddTextPrinterToWindow1
 AddTextPrinterToWindow1: @ 0x0801832C
+	.globl MG_AddMessageTextPrinter
+	.set MG_AddMessageTextPrinter, AddTextPrinterToWindow1
 	push {r4, lr}
 	sub sp, #0x14
 	adds r1, r0, #0
@@ -591,6 +593,8 @@ ClearTextWindow: @ 0x08018388
 
 	thumb_func_start MG_PrintTextOnWindow1AndWaitButton
 MG_PrintTextOnWindow1AndWaitButton: @ 0x080183A4
+	.globl PrintMysteryGiftMenuMessage
+	.set PrintMysteryGiftMenuMessage, MG_PrintTextOnWindow1AndWaitButton
 	push {r4, lr}
 	sub sp, #0xc
 	adds r4, r0, #0

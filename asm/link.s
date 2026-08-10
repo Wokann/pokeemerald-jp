@@ -3256,6 +3256,8 @@ _0800A7B4: .4byte 0x03000D58
 
 	thumb_func_start sub_0800A7B8
 sub_0800A7B8: @ 0x0800A7B8
+	.globl SetCloseLinkCallbackAndType
+	.set SetCloseLinkCallbackAndType, sub_0800A7B8
 	push {lr}
 	lsls r0, r0, #0x10
 	lsrs r3, r0, #0x10
