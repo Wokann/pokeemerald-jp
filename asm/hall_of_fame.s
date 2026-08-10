@@ -509,7 +509,7 @@ _0817373A:
 	bl memcpy
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0817379C
 	movs r0, #0
 	str r0, [sp]
@@ -780,7 +780,7 @@ _08173904:
 	strh r0, [r1]
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r4, r4, r5
 	ldr r0, _081739A0
 	str r0, [r4]
@@ -1325,7 +1325,7 @@ _08173DB4:
 	bl HallOfFame_PrintPlayerInfo
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _08173E04
 	str r5, [sp]
 	movs r0, #2
@@ -2511,7 +2511,7 @@ Task_HofPC_PrintDataIsCorrupted: @ 0x08174784
 	bl sub_08198244
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _081747E0
 	movs r0, #0
 	str r0, [sp]

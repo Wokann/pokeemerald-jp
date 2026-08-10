@@ -195,7 +195,7 @@ _080D41D0:
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #5
 	strh r0, [r4, #8]
 	b _080D41EA
@@ -224,7 +224,7 @@ HideMapNamePopUpWindow: @ 0x080D41F8
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl RemoveStartMenuWindow
 	movs r0, #0x12
 	movs r1, #0

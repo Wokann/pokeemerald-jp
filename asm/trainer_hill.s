@@ -2210,7 +2210,7 @@ sub_081D5C50: @ 0x081D5C50
 	ldrh r1, [r0]
 	movs r0, #5
 	bl CopyTrainerHillTrainerText
-	bl sub_08097C40
+	bl ShowFieldMessageFromBuffer
 	pop {r0}
 	bx r0
 	.align 2, 0

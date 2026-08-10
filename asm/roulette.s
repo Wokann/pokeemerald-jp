@@ -550,7 +550,7 @@ _081407A8:
 	ldr r4, _08140808
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _0814080C
 	movs r1, #2
@@ -798,7 +798,7 @@ sub_081409DC: @ 0x081409DC
 	ldr r5, _08140A24
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	ldr r2, _08140A28
 	movs r1, #2
@@ -834,7 +834,7 @@ sub_08140A30: @ 0x08140A30
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldr r1, _08140A54
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -2777,7 +2777,7 @@ sub_08141964: @ 0x08141964
 	ldr r4, _081419AC
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _081419B0
 	b _081419CA
@@ -2793,7 +2793,7 @@ _081419B4:
 	ldr r4, _081419E8
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _081419EC
 _081419CA:
@@ -2819,7 +2819,7 @@ _081419F0:
 	ldr r4, _08141A3C
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _08141A40
 	movs r1, #2
@@ -2966,7 +2966,7 @@ sub_08141AE0: @ 0x08141AE0
 	ldr r5, _08141B80
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	movs r1, #2
 	str r1, [sp]
@@ -3175,7 +3175,7 @@ _08141C78:
 	ldr r4, _08141D14
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _08141D18
 	movs r1, #2
@@ -3210,7 +3210,7 @@ _08141D20:
 	ldr r4, _08141D68
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _08141D6C
 	movs r1, #2
@@ -3248,7 +3248,7 @@ _08141D84:
 	ldr r4, _08141DC8
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _08141DCC
 	movs r1, #2
@@ -3338,7 +3338,7 @@ _08141E0C:
 	ldr r4, _08141E8C
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	ldr r2, _08141E90
 	movs r1, #2
@@ -4813,7 +4813,7 @@ sub_081429E0: @ 0x081429E0
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl HideCoinsWindow
 	bl FreeAllWindowBuffers
 	movs r0, #1
@@ -4859,7 +4859,7 @@ sub_08142A44: @ 0x08142A44
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl HideCoinsWindow
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
@@ -4894,7 +4894,7 @@ sub_08142A68: @ 0x08142A68
 	bl HideCoinsWindow
 	movs r0, #0
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0
 	bl DestroyTask
@@ -4940,7 +4940,7 @@ sub_08142AB8: @ 0x08142AB8
 	bl StringExpandPlaceholders
 	movs r0, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0xff
@@ -5024,7 +5024,7 @@ Task_Roulette_0: @ 0x08142B50
 	beq _08142BF0
 	movs r0, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r2, _08142BE8
 	movs r0, #2
 	str r0, [sp]
@@ -5055,7 +5055,7 @@ _08142BF0:
 	bl StringExpandPlaceholders
 	movs r0, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0xff
@@ -5089,7 +5089,7 @@ _08142C40:
 	bl StringExpandPlaceholders
 	movs r0, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0xff

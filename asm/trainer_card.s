@@ -440,7 +440,7 @@ _080C2058:
 	bl sub_0800A7F8
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _080C208C
 	movs r0, #2
 	str r0, [sp]
@@ -1658,7 +1658,7 @@ InitBgsAndWindows: @ 0x080C29B8
 	ldr r0, _080C2A30
 	bl InitWindows
 	bl DeactivateAllTextPrinters
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	pop {r0}
 	bx r0
 	.align 2, 0

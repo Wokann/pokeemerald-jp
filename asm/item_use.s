@@ -223,7 +223,7 @@ CleanUpAfterFailingToUseRegisteredKeyItemOnField: @ 0x080FDA4C
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl DestroyTask
 	bl ScriptUnfreezeObjectEvents
@@ -720,7 +720,7 @@ sub_080FDE20: @ 0x080FDE20
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls
 	adds r0, r4, #0

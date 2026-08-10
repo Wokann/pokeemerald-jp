@@ -1057,7 +1057,7 @@ _080E2B1A:
 	bl StringExpandPlaceholders
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _080E2B94
 	ldrb r0, [r2]
 	movs r1, #1

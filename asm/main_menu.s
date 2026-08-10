@@ -1453,28 +1453,28 @@ _0802FF9A:
 _0802FFBA:
 	movs r0, #0
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #1
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #2
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #3
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #4
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #5
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #6
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #7
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl IsWirelessAdapterConnected
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18

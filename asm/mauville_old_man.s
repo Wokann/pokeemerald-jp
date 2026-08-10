@@ -829,7 +829,7 @@ ScrSpecial_StorytellerDisplayStory: @ 0x08120BE8
 	adds r5, r0, #0
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r4, #1

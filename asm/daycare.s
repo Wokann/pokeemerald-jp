@@ -3161,7 +3161,7 @@ _08070C6E:
 	bl DestroyListMenuTask
 	ldrb r0, [r4, #0xa]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0xa]
 	bl RemoveWindow
 	adds r0, r5, #0
@@ -3185,7 +3185,7 @@ _08070CA4:
 	bl DestroyListMenuTask
 	ldrb r0, [r4, #0xa]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0xa]
 	bl RemoveWindow
 	adds r0, r5, #0
@@ -3210,7 +3210,7 @@ ShowDaycareLevelMenu: @ 0x08070CE0
 	lsrs r4, r4, #0x18
 	adds r0, r4, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	mov r1, sp
 	ldr r0, _08070D44
 	ldm r0!, {r2, r3, r5}

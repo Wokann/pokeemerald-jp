@@ -964,7 +964,7 @@ sub_0809E920: @ 0x0809E920
 	ldr r0, _0809E964
 	bl InitWindows
 	bl DeactivateAllTextPrinters
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	pop {r0}
 	bx r0
 	.align 2, 0

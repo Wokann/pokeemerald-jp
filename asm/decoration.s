@@ -416,7 +416,7 @@ _08126CA0:
 	bl RemoveDecorationWindow
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
@@ -544,7 +544,7 @@ SecretBasePC_PrepMenuForSelectingStoredDecors: @ 0x08126D94
 	bl LoadPalette
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #0
 	bl RemoveDecorationWindow
 	adds r0, r4, #0
@@ -989,7 +989,7 @@ ReturnToDecorationCategoriesAfterInvalidSelection: @ 0x08127138
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl sub_08126DC4
 	pop {r4}
@@ -1036,7 +1036,7 @@ ReturnToActionsMenuFromCategories: @ 0x08127184
 	bl AddDecorationActionsWindow
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	bl PrintCurMainMenuDescription
 	ldr r1, _081271B8
 	lsls r0, r4, #2
@@ -1065,7 +1065,7 @@ ShowDecorationCategoriesWindow: @ 0x081271C0
 	bl LoadPalette
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r1, _08127200
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -2119,7 +2119,7 @@ sub_081279E0: @ 0x081279E0
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r1, _08127A04
 	lsls r0, r4, #2
 	adds r0, r0, r4
@@ -2148,7 +2148,7 @@ sub_08127A0C: @ 0x08127A0C
 	beq _08127A32
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #1
 	bl sub_081269BC
 	adds r0, r4, #0
@@ -4157,7 +4157,7 @@ sub_081289CC: @ 0x081289CC
 	lsrs r4, r0, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl sub_08128A8C
 	ldr r2, _08128A14
@@ -4375,7 +4375,7 @@ sub_08128B80: @ 0x08128B80
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl sub_08128B9C
 	pop {r4}
@@ -4941,7 +4941,7 @@ sub_08128FB8: @ 0x08128FB8
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r2, _08128FF0
 	ldr r0, _08128FF4
 	ldrb r1, [r0]
@@ -6185,7 +6185,7 @@ _08129918:
 	bl ScriptContext_SetupScript
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #2
 	strh r0, [r4, #0xc]
 	b _08129984
@@ -6435,7 +6435,7 @@ sub_08129B24: @ 0x08129B24
 	lsrs r5, r5, #0x18
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r4, _08129BA4
 	ldr r3, _08129BA8
 	ldrb r1, [r3]
@@ -7332,7 +7332,7 @@ sub_0812A21C: @ 0x0812A21C
 	lsrs r4, r4, #0x18
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl sub_0812A238
 	pop {r4}
@@ -7486,7 +7486,7 @@ sub_0812A340: @ 0x0812A340
 	bl pal_fill_black
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	bl InitDecorationActionsWindow
 	ldr r0, _0812A370
 	movs r1, #8

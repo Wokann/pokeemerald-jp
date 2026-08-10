@@ -1703,3 +1703,4 @@ sRotatingGate_PuzzleConfig = ABSOLUTE(0x02039D10);
 sRotatingGate_PuzzleCount = ABSOLUTE(0x02039D14);
 gSpriteCoordOffsetX = ABSOLUTE(0x02021B38);
 gSpriteCoordOffsetY = ABSOLUTE(0x02021B3A);
+sFieldMessageBoxMode = ABSOLUTE(0x0203725C);

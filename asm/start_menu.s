@@ -280,7 +280,7 @@ ShowSafariBallsWindow: @ 0x0809EF2C
 	bl PutWindowTilemap
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _0809EF90
 	ldr r1, _0809EF94
 	ldrb r1, [r1]
@@ -348,7 +348,7 @@ _0809EFCC:
 	bl PutWindowTilemap
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _0809F034
 	ldr r2, _0809F038
 	ldr r1, _0809F03C
@@ -571,14 +571,14 @@ _0809F1B0:
 	.align 2, 0
 _0809F1B8: .4byte 0x020372B9
 _0809F1BC:
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	ldr r0, _0809F1DC
 	ldrb r0, [r0]
 	bl sub_081977C8
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r1, _0809F1E0
 	movs r0, #0
 	strb r0, [r1, #1]
@@ -1510,7 +1510,7 @@ sub_0809F8EC: @ 0x0809F8EC
 	push {lr}
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -1602,7 +1602,7 @@ SaveConfirmSaveCallback: @ 0x0809F978
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl RemoveMapNamePopUpWindow
 	bl ShowSaveInfoWindow
 	bl CurrentBattlePyramidLocation
@@ -1973,7 +1973,7 @@ BattlePyramidConfirmRetireCallback: @ 0x0809FC34
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl RemoveMapNamePopUpWindow
 	ldr r0, _0809FC58
 	ldr r1, _0809FC5C
@@ -2417,7 +2417,7 @@ _0809FFC4:
 	strb r0, [r6]
 	ldrb r0, [r6]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r1, _080A0104
 	ldr r0, [r1]
 	ldrb r0, [r0, #8]
@@ -2592,7 +2592,7 @@ RemoveSaveInfoWindow: @ 0x080A0150
 	ldr r4, _080A0168
 	ldrb r0, [r4]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4]
 	bl RemoveWindow
 	pop {r4}
@@ -2665,7 +2665,7 @@ HideStartMenuWindow: @ 0x080A01DC
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl RemoveMapNamePopUpWindow
 	bl ScriptUnfreezeObjectEvents
 	bl UnlockPlayerFieldControls

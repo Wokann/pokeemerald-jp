@@ -799,7 +799,7 @@ sub_08195FF0: @ 0x08195FF0
 	ldrb r0, [r0, #7]
 	cmp r0, #0
 	bne _08196046
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0xff
 	movs r1, #0
 	movs r2, #0

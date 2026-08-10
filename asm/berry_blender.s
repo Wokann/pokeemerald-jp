@@ -8824,7 +8824,7 @@ ShowBerryBlenderRecordWindow: @ 0x080837C8
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer

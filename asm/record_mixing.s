@@ -541,7 +541,7 @@ PrintTextOnRecordMixing: @ 0x080E68CC
 	adds r4, r0, #0
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0
@@ -771,7 +771,7 @@ _080E6A98:
 _080E6AD0:
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl DestroyTask
 	bl ScriptContext_Enable
@@ -4026,7 +4026,7 @@ _080E83C8:
 	ldr r0, _080E83E0
 	bl InitWindows
 	bl DeactivateAllTextPrinters
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	ldr r1, _080E83E4
 	movs r0, #0x87
 	lsls r0, r0, #3

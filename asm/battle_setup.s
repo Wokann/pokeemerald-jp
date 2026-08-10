@@ -2597,7 +2597,7 @@ _080B1398:
 	movs r0, #2
 	bl CopyTrainerHillTrainerText
 _080B13C4:
-	bl sub_08097C40
+	bl ShowFieldMessageFromBuffer
 	b _080B13E0
 	.align 2, 0
 _080B13CC: .4byte 0x02036FF0

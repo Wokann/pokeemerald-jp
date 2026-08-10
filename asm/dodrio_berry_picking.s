@@ -11596,7 +11596,7 @@ _0802A098:
 _0802A0A2:
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0802A0C8
 	str r4, [sp]
 	movs r0, #2

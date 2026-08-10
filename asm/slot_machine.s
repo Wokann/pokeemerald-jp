@@ -1032,7 +1032,7 @@ SlotAction_PrintYouDontHaveThreeCoins: @ 0x0812AD04
 	sub sp, #0xc
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0812AD3C
 	movs r0, #2
 	str r0, [sp]
@@ -1069,7 +1069,7 @@ SlotAction_ExitMessage_9999Coins: @ 0x0812AD44
 	beq _0812AD62
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r0, _0812AD6C
 	ldr r1, [r0]
 	movs r0, #5
@@ -1623,7 +1623,7 @@ SlotAction_PrintQuitTheGame: @ 0x0812B168
 	sub sp, #0xc
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0812B1B8
 	movs r0, #2
 	str r0, [sp]
@@ -1670,7 +1670,7 @@ SlotAction_SeeIfPlayerQuits: @ 0x0812B1C0
 	bne _0812B1FC
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #0
 	bl sub_0812CEC8
 	movs r0, #1
@@ -1697,7 +1697,7 @@ _0812B1FC:
 _0812B208:
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r0, _0812B220
 	ldr r1, [r0]
 	movs r0, #5
@@ -1717,7 +1717,7 @@ SlotAction_PrintMessage_9999Coins: @ 0x0812B224
 	sub sp, #0xc
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0812B25C
 	movs r0, #2
 	str r0, [sp]
@@ -1754,7 +1754,7 @@ SlotAction_ExitYouDontHaveThreeCoinsMessage: @ 0x0812B264
 	beq _0812B282
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r0, _0812B28C
 	ldr r1, [r0]
 	movs r0, #5
@@ -1774,7 +1774,7 @@ SlotAction_PrintMessage_NoMoreCoins: @ 0x0812B290
 	sub sp, #0xc
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _0812B2C8
 	movs r0, #2
 	str r0, [sp]
@@ -1811,7 +1811,7 @@ SlotAction_ExitMessage_NoMoreCoins: @ 0x0812B2D0
 	beq _0812B2EE
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r0, _0812B2F8
 	ldr r1, [r0]
 	movs r0, #0x1b

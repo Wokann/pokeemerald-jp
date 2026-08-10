@@ -838,7 +838,7 @@ ShowTowerResultsWindow: @ 0x081A1C9C
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -1156,7 +1156,7 @@ ShowDomeResultsWindow: @ 0x081A1F30
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -1530,7 +1530,7 @@ ShowPalaceResultsWindow: @ 0x081A2250
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -1801,7 +1801,7 @@ ShowPikeResultsWindow: @ 0x081A2490
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -2128,7 +2128,7 @@ ShowArenaResultsWindow: @ 0x081A2758
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -2516,7 +2516,7 @@ ShowFactoryResultsWindow: @ 0x081A2A78
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -2819,7 +2819,7 @@ ShowPyramidResultsWindow: @ 0x081A2CFC
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -2924,7 +2924,7 @@ PrintHallRecords: @ 0x081A2DE4
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -6008,7 +6008,7 @@ ShowRankingHallRecordsWindow: @ 0x081A469C
 	strb r0, [r4]
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer

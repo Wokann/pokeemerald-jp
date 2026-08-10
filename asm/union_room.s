@@ -514,7 +514,7 @@ _0801243C:
 	bl CopyWindowToVram
 	ldrb r0, [r5, #0xf]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _080124C4
 	adds r2, r0, #0
 	ldr r1, _080124C8
@@ -530,7 +530,7 @@ _0801243C:
 	strb r0, [r5, #0x12]
 	ldrb r0, [r5, #0x11]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r5, #0x11]
 	bl PutWindowTilemap
 	ldrb r0, [r5, #0x11]
@@ -1259,7 +1259,7 @@ sub_08012A64: @ 0x08012A64
 	bl ClearWindowTilemap
 	ldrb r0, [r4, #0x11]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0x12]
 	movs r1, #0
 	movs r2, #0
@@ -1268,7 +1268,7 @@ sub_08012A64: @ 0x08012A64
 	bl ClearWindowTilemap
 	ldrb r0, [r4, #0xf]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #0
 	bl CopyBgTilemapBufferToVram
 	ldrb r0, [r4, #0x11]
@@ -2063,7 +2063,7 @@ _08013110:
 	bl CopyWindowToVram
 	ldrb r0, [r6, #0xb]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _080131D4
 	adds r2, r0, #0
 	ldr r1, _080131D8
@@ -2079,7 +2079,7 @@ _08013110:
 	strb r0, [r6, #0xe]
 	ldrb r0, [r6, #0xd]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r6, #0xd]
 	bl PutWindowTilemap
 	ldrb r0, [r6, #0xd]
@@ -2517,7 +2517,7 @@ _08013590:
 	bl ClearWindowTilemap
 	ldrb r0, [r6, #0xd]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r6, #0xe]
 	movs r1, #0
 	movs r2, #0
@@ -2526,7 +2526,7 @@ _08013590:
 	bl ClearWindowTilemap
 	ldrb r0, [r6, #0xb]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	movs r0, #0
 	bl CopyBgTilemapBufferToVram
 	ldrb r0, [r6, #0xd]
@@ -8766,10 +8766,10 @@ _08016B2C: .4byte 0x03005B68
 sub_08016B30: @ 0x08016B30
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r0, _08016B58
 	adds r1, r4, #0
 	bl StringExpandPlaceholders
@@ -8813,10 +8813,10 @@ PrintOnTextbox: @ 0x08016B74
 	beq _08016BAC
 	b _08016BBE
 _08016B86:
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r0, _08016BA8
 	adds r1, r5, #0
 	bl StringExpandPlaceholders
@@ -8911,7 +8911,7 @@ sub_08016C28: @ 0x08016C28
 	lsrs r4, r4, #0x18
 	adds r0, r4, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	adds r0, r4, #0
 	movs r1, #0xff
 	bl FillWindowPixelBuffer
@@ -8970,7 +8970,7 @@ _08016CA4:
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _08016CE0
 	adds r2, r0, #0
 	ldr r1, [sp, #0x1c]
@@ -9011,7 +9011,7 @@ _08016CE4:
 	bl DestroyListMenuTask
 	ldrb r0, [r5]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r5]
 	bl RemoveWindow
 	movs r0, #0
@@ -9032,7 +9032,7 @@ _08016D20:
 	bl DestroyListMenuTask
 	ldrb r0, [r5]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r5]
 	bl RemoveWindow
 	strb r4, [r7]
@@ -9085,7 +9085,7 @@ _08016D84:
 	strb r0, [r5]
 	ldrb r0, [r5]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldr r0, _08016DC4
 	adds r2, r0, #0
 	ldr r1, [sp, #0x24]
@@ -9161,7 +9161,7 @@ _08016E24:
 	bl DestroyListMenuTask
 	ldrb r0, [r5]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r5]
 	bl RemoveWindow
 	mov r3, r8

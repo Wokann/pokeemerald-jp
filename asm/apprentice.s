@@ -2527,7 +2527,7 @@ Script_PrintMessage: @ 0x081A0B64
 	bl sub_0808B658
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	bl PrintMessage
 	pop {r0}
 	bx r0

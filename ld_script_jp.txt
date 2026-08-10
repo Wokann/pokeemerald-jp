@@ -162,7 +162,7 @@ SECTIONS {
         build/src/field_door.o(.text);
         asm/field_player_avatar.o(.text);
         asm/event_object_movement.o(.text);
-        asm/field_message_box.o(.text);
+        build/src/field_message_box.o(.text);
         asm/event_obj_lock.o(.text);
         build/src/text_window.o(.text);
         asm/script.o(.text);

@@ -673,7 +673,7 @@ ShowLinkBattleRecords: @ 0x0813C4B0
 	strb r0, [r6]
 	ldrb r0, [r6]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r6]
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -756,7 +756,7 @@ RemoveRecordsWindow: @ 0x0813C57C
 	ldr r4, _0813C594
 	ldrb r0, [r4]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4]
 	bl RemoveWindow
 	pop {r4}

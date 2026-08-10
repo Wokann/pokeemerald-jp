@@ -95,7 +95,8 @@ src/pokemon_size_record.c and are still in asm), src/pokemon_size_record.c
 (12) + src/give_gift_ribbon_to_party.c (1) complete the region --
 asm/field_poison.s removed, src/field_door.c (23, full module --
 asm/field_door.s removed), src/rotating_gate.c (21, full module --
-asm/rotating_gate.s removed).
+asm/rotating_gate.s removed), src/field_message_box.c (17, full module --
+asm/field_message_box.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -237,3 +238,17 @@ ARRAY_COUNT needed sized externs (8/11) to avoid folding to 0; the JP
 Regular/Large sprite-template addresses are swapped vs the US declaration
 order.  Renamed sub_08092960 -> GetMapCoordsFromSpritePos and added
 gSpriteCoordOffsetX/Y (0x02021B38/3A).
+
+src/field_message_box.c (InitFieldMessageBox, Task_DrawFieldMessage,
+CreateTask/DestroyTask_DrawFieldMessage, ShowFieldMessage,
+Task_HidePokenavMessageWhenDone, ShowPokenavFieldMessage,
+ShowFieldAutoScrollMessage, ForceShowFieldAutoScrollMessage,
+ShowFieldMessageFromBuffer, ExpandStringAndStartDrawFieldMessage,
+StartDrawFieldMessage, HideFieldMessageBox, GetFieldMessageBoxMode,
+IsFieldMessageBoxHidden, ReplaceFieldMessageWithFrame, StopFieldMessage) is
+the twenty-fifth wired module.  Only data needed: sFieldMessageBoxMode
+(0x0203725C) and gTextFlags (0x030030B4).  The JP splitter had swapped
+DrawDialogueFrame (0x08196FB8) / ClearDialogWindowAndFrame (0x08197028) and
+DrawStdWindowFrame (0x08196FF0) / ClearStdWindowAndFrame (0x08197060);
+sub_08196F98 -> LoadMessageBoxAndBorderGfx.  Renames applied across asm
+callers (C files keep the pokeemerald names).

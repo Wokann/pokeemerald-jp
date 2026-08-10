@@ -432,10 +432,10 @@ _080C6B38:
 	adds r1, r5, #0
 	adds r1, #0x26
 	bl sub_080C6E88
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r0, #0
 	movs r1, #0x11
 	bl FillWindowPixelBuffer
@@ -574,7 +574,7 @@ _080C6C5C:
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	bl UnlockPlayerFieldControls
 	bl ScriptContext_Enable
 	ldrh r0, [r5, #0x26]
@@ -853,7 +853,7 @@ sub_080C6E88: @ 0x080C6E88
 	lsrs r4, r4, #0x18
 	adds r0, r4, #0
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	movs r0, #1
 	movs r1, #0
 	bl GetFontAttribute

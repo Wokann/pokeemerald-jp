@@ -89,7 +89,7 @@ sub_080B1CF8: @ 0x080B1CF8
 	lsrs r4, r4, #0x18
 	adds r0, r4, #0
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	adds r0, r4, #0
 	movs r1, #3
 	bl CopyWindowToVram
@@ -1196,7 +1196,7 @@ sub_080B25C8: @ 0x080B25C8
 	adds r4, r4, r0
 	ldrh r0, [r4, #0x12]
 	bl sub_080B1CF8
-	bl sub_08097CFC
+	bl StopFieldMessage
 	ldrb r0, [r4, #0x12]
 	bl RemoveWindow
 	bl ScriptContext_Enable

@@ -5,6 +5,7 @@ sCutSquareSide = ABSOLUTE(0x03001100);
 sTileCountFromPlayer_X = ABSOLUTE(0x03001101);
 sTileCountFromPlayer_Y = ABSOLUTE(0x03001102);
 sHyperCutTiles = ABSOLUTE(0x03001108);
+gTextFlags = ABSOLUTE(0x030030B4);
 gLinkErrorOccurred = ABSOLUTE(0x0300310C);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 gSaveBlock1Ptr = ABSOLUTE(0x03005AEC);

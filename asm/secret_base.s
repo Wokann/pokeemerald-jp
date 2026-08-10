@@ -2311,7 +2311,7 @@ Task_ShowSecretBaseRegistryMenu: @ 0x080EA8FC
 	strh r0, [r5, #4]
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldr r4, _080EA964
 	movs r0, #0x84
 	lsls r0, r0, #1
@@ -2574,7 +2574,7 @@ _080EAB28:
 	bl RemoveScrollIndicatorArrowPair
 	ldrb r0, [r4, #0xc]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0xc]
 	bl ClearWindowTilemap
 	ldrb r0, [r4, #0xc]
@@ -2708,10 +2708,10 @@ ShowRegistryMenuDeleteConfirmation: @ 0x080EAC44
 	adds r4, r4, r0
 	ldrb r0, [r4, #0xc]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0xe]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4, #0xc]
 	bl ClearWindowTilemap
 	ldrb r0, [r4, #0xe]
@@ -2777,7 +2777,7 @@ DeleteRegistry_Yes_Callback: @ 0x080EACD4
 	adds r6, r5, r0
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldrb r0, [r6, #0xa]
 	adds r1, r6, #4
 	mov sb, r1
@@ -2860,7 +2860,7 @@ DeleteRegistry_No: @ 0x080EAD84
 	adds r6, r4, r0
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldrb r0, [r6, #0xa]
 	adds r1, r6, #4
 	adds r6, #2
@@ -2897,7 +2897,7 @@ ReturnToMainRegistryMenu: @ 0x080EADD4
 	bl AddRegistryMenuScrollArrows
 	ldrb r0, [r5, #0xe]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r5, #0xe]
 	bl ClearWindowTilemap
 	ldrb r0, [r5, #0xe]

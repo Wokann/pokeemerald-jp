@@ -125,7 +125,7 @@ _081AE20C:
 	bgt _081AE21E
 	ldrb r0, [r5, #5]
 	movs r1, #0
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 _081AE21E:
 	ldr r0, _081AE22C
 	ldrb r0, [r0, #5]

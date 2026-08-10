@@ -4785,7 +4785,7 @@ _0808C68A:
 	strh r6, [r0, #0x26]
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	ldrh r0, [r5, #0xa]
 	adds r0, #1
 	strh r0, [r5, #0xa]
@@ -5040,7 +5040,7 @@ Fishing16: @ 0x0808C89C
 	bl UnfreezeEventObjects
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #0
 	bl sub_080EE470
 	ldr r0, _0808C8E4

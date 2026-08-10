@@ -93,7 +93,7 @@ HideCoinsWindow: @ 0x08145CD4
 	ldr r4, _08145CEC
 	ldrb r0, [r4]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4]
 	bl RemoveWindow
 	pop {r4}

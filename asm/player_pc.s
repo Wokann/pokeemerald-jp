@@ -373,7 +373,7 @@ _0816AEF0:
 	bne _0816AF38
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl Mailbox_DrawMailboxMenu
 	ldr r0, _0816AF30
@@ -525,7 +525,7 @@ ItemStorageMenuPrint: @ 0x0816B040
 	adds r4, r0, #0
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0
@@ -668,10 +668,10 @@ _0816B15C: .4byte 0x08085A31
 	thumb_func_start Mailbox_DoRedrawMailboxMenuAfterReturn
 Mailbox_DoRedrawMailboxMenuAfterReturn: @ 0x0816B160
 	push {lr}
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r0, _0816B188
 	movs r1, #0
 	bl CreateTask
@@ -824,7 +824,7 @@ ItemStorage_WithdrawToss_Helper: @ 0x0816B254
 	bl sub_08122350
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	subs r6, #8
 	adds r5, r5, r6
 	ldr r0, _0816B2C4
@@ -1423,7 +1423,7 @@ _0816B75C: .4byte 0x08085A31
 	thumb_func_start pal_fill_for_maplights_or_black
 pal_fill_for_maplights_or_black: @ 0x0816B760
 	push {r4, lr}
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	ldr r0, _0816B78C
 	movs r1, #0
 	bl CreateTask
@@ -1731,7 +1731,7 @@ Mailbox_UpdateMailListAfterDeposit: @ 0x0816B988
 _0816B9BE:
 	adds r0, r6, #0
 	bl ItemStorage_SetItemAndMailCount
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	ldr r0, _0816B9E4
 	ldrb r0, [r0, #5]
 	bl sub_081D1340
@@ -1780,7 +1780,7 @@ Mailbox_Cancel: @ 0x0816BA14
 	bl MoveRelearnerCursorCallback
 	movs r0, #0
 	movs r1, #0
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r4, #0
 	bl Mailbox_DrawMailboxMenu
 	movs r0, #0
@@ -2792,7 +2792,7 @@ ItemStorage_GoBackToPlayerPCMenu_InitStorage: @ 0x0816C1EC
 	bl sub_0816BA98
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r1, #6
 	ldrsh r0, [r4, r1]
 	cmp r0, #0

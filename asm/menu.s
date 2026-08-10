@@ -43,7 +43,7 @@ sub_08196DF4: @ 0x08196DF4
 	movs r2, #0
 	bl ChangeBgY
 	bl DeactivateAllTextPrinters
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -250,8 +250,8 @@ _08196F90: .4byte 0x030030B4
 _08196F94: .4byte 0x02021C7C
 	thumb_func_end AddTextPrinterWithCustomSpeedForMessage
 
-	thumb_func_start sub_08196F98
-sub_08196F98: @ 0x08196F98
+	thumb_func_start LoadMessageBoxAndBorderGfx
+LoadMessageBoxAndBorderGfx: @ 0x08196F98
 	push {lr}
 	movs r1, #0x80
 	lsls r1, r1, #2
@@ -266,10 +266,10 @@ sub_08196F98: @ 0x08196F98
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08196F98
+	thumb_func_end LoadMessageBoxAndBorderGfx
 
-	thumb_func_start ClearDialogWindowAndFrame
-ClearDialogWindowAndFrame: @ 0x08196FB8
+	thumb_func_start DrawDialogueFrame
+DrawDialogueFrame: @ 0x08196FB8
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	lsls r0, r0, #0x18
@@ -295,10 +295,10 @@ _08196FE6:
 	bx r0
 	.align 2, 0
 _08196FEC: .4byte 0x081971E9
-	thumb_func_end ClearDialogWindowAndFrame
+	thumb_func_end DrawDialogueFrame
 
-	thumb_func_start ClearStdWindowAndFrame
-ClearStdWindowAndFrame: @ 0x08196FF0
+	thumb_func_start DrawStdWindowFrame
+DrawStdWindowFrame: @ 0x08196FF0
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	lsls r0, r0, #0x18
@@ -324,10 +324,10 @@ _0819701E:
 	bx r0
 	.align 2, 0
 _08197024: .4byte 0x08197099
-	thumb_func_end ClearStdWindowAndFrame
+	thumb_func_end DrawStdWindowFrame
 
-	thumb_func_start DrawDialogueFrame
-DrawDialogueFrame: @ 0x08197028
+	thumb_func_start ClearDialogWindowAndFrame
+ClearDialogWindowAndFrame: @ 0x08197028
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	lsls r0, r0, #0x18
@@ -353,10 +353,10 @@ _08197056:
 	bx r0
 	.align 2, 0
 _0819705C: .4byte 0x081975E9
-	thumb_func_end DrawDialogueFrame
+	thumb_func_end ClearDialogWindowAndFrame
 
-	thumb_func_start DrawStdWindowFrame
-DrawStdWindowFrame: @ 0x08197060
+	thumb_func_start ClearStdWindowAndFrame
+ClearStdWindowAndFrame: @ 0x08197060
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	lsls r0, r0, #0x18
@@ -382,7 +382,7 @@ _0819708E:
 	bx r0
 	.align 2, 0
 _08197094: .4byte 0x081975A1
-	thumb_func_end DrawStdWindowFrame
+	thumb_func_end ClearStdWindowAndFrame
 
 	thumb_func_start WindowFunc_DrawStandardFrame
 WindowFunc_DrawStandardFrame: @ 0x08197098
@@ -1157,7 +1157,7 @@ DisplayItemMessageOnField: @ 0x081976D0
 	adds r6, r2, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	bl GetPlayerTextSpeedDelay
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18

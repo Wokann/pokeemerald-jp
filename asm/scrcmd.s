@@ -3383,7 +3383,7 @@ ScrCmd_pokenavcall: @ 0x0809A578
 	bne _0809A586
 	ldr r0, [r4, #0x64]
 _0809A586:
-	bl sub_08097BC0
+	bl ShowPokenavFieldMessage
 	movs r0, #0
 	pop {r4}
 	pop {r1}
@@ -3429,10 +3429,10 @@ ScrCmd_cmdDB: @ 0x0809A5C4
 	bne _0809A5D6
 	ldr r4, [r5, #0x64]
 _0809A5D6:
-	bl sub_08196F98
+	bl LoadMessageBoxAndBorderGfx
 	movs r0, #0
 	movs r1, #1
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0
@@ -3826,7 +3826,7 @@ ScrCmd_braillemessage: @ 0x0809A7F4
 	bl LoadUserWindowBorderGfx
 	ldrb r0, [r4]
 	movs r1, #0
-	bl ClearStdWindowAndFrame
+	bl DrawStdWindowFrame
 	ldrb r0, [r4]
 	bl PutWindowTilemap
 	ldrb r0, [r4]
@@ -5692,7 +5692,7 @@ ScrCmd_bufferitemnameplural: @ 0x0809B68C
 	ldr r4, _0809B6A4
 	ldrb r0, [r4]
 	movs r1, #1
-	bl DrawStdWindowFrame
+	bl ClearStdWindowAndFrame
 	ldrb r0, [r4]
 	bl RemoveWindow
 	pop {r4}

@@ -4204,7 +4204,7 @@ _08022A9C:
 _08022AA6:
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldrb r1, [r5, #1]
 	movs r0, #2
 	mov r8, r0
@@ -4290,7 +4290,7 @@ _08022B4C:
 	beq _08022B5E
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 _08022B5E:
 	ldrb r0, [r7, #0xe]
 	movs r1, #1
@@ -4604,7 +4604,7 @@ _08022DAC: .4byte 0x08563604
 _08022DB0:
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r0, #0xa
 	movs r1, #1
 	movs r2, #0
@@ -6911,7 +6911,7 @@ _08023F6E:
 	beq _08023FE6
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldr r2, _08023FB0
 	movs r0, #0
 	str r0, [sp]
@@ -7035,7 +7035,7 @@ _0802406C:
 _0802406E:
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	movs r4, #0
 	str r4, [sp]
 	adds r0, r6, #0
@@ -7216,7 +7216,7 @@ _080241B2:
 _080241BE:
 	movs r0, #0
 	movs r1, #1
-	bl DrawDialogueFrame
+	bl ClearDialogWindowAndFrame
 	adds r0, r5, #0
 	bl sub_080211B4
 	movs r0, #1
@@ -7274,7 +7274,7 @@ _08024222:
 _08024228:
 	movs r0, #0
 	movs r1, #0
-	bl ClearDialogWindowAndFrame
+	bl DrawDialogueFrame
 	ldrh r1, [r5, #0x14]
 	cmp r1, #3
 	bne _08024258
