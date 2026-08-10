@@ -1146,7 +1146,14 @@ build/src/contest_effect.o(.text.AreMovesContestCombo);
 		build/src/libc/memmove.o(.text.memmove);
 		build/src/libc/mlock.o(.text.__malloc_lock);
 		build/src/libc/mlock.o(.text.__malloc_unlock);
-		asm/libc_rest_1a.o(.text);
+		asm/libc_rest_1b_0.o(.text);
+		build/src/libc/mprec.o(.text._Bfree);
+		asm/libc_rest_1b_1.o(.text);
+		build/src/libc/mprec.o(.text._hi0bits);
+		build/src/libc/mprec.o(.text._lo0bits);
+		asm/libc_rest_1b_2.o(.text);
+		build/src/libc/mprec.o(.text.__mcmp);
+		asm/libc_rest_1b_3.o(.text);
 		build/src/libc/strlen.o(.text.strlen);
 		asm/libc_rest_2.o(.text);
 		/*
