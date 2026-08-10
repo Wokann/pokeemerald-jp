@@ -145,7 +145,7 @@ void SaveTextColors(u8 *fgColor, u8 *bgColor, u8 *shadowColor);
 void RestoreTextColors(u8 *fgColor, u8 *bgColor, u8 *shadowColor);
 void DecompressGlyphTile(const void *src_, void *dest_);
 void CopyGlyphToWindow(struct TextPrinter *textPrinter);
-void ClearTextSpan(struct TextPrinter *textPrinter, u32 width);
+void ClearTextSpan(struct Window *window, u16 x, u16 y, u16 width, u16 height);
 
 void TextPrinterInitDownArrowCounters(struct TextPrinter *textPrinter);
 void TextPrinterDrawDownArrow(struct TextPrinter *textPrinter);

@@ -113,6 +113,22 @@ sBobbingIntervals = ABSOLUTE(0x085ACA72);
 sFontInfos = ABSOLUTE(0x0829CEA4);
 sMenuCursorDimensions = ABSOLUTE(0x0829CF04);
 sKeypadIcons = ABSOLUTE(0x0829C670);
+sGlyphWidthFuncs = ABSOLUTE(0x0829C640);
+sWindowVerticalScrollSpeeds = ABSOLUTE(0x0829C63C);
+sDownArrowTiles = ABSOLUTE(0x0829BFB8);
+sDarkDownArrowTiles = ABSOLUTE(0x0829C078);
+sDownArrowYCoords = ABSOLUTE(0x0829C638);
+sKeypadIconTiles = ABSOLUTE(0x0829C6A4);
+sGlyphPaletteIdxTable = ABSOLUTE(0x0829BEB8);
+sFontGlyphData_A0F14 = ABSOLUTE(0x082A0F14);
+sFontGlyphData_A4F14 = ABSOLUTE(0x082A4F14);
+sFontGlyphData_AD02C = ABSOLUTE(0x082AD02C);
+sFontGlyphData_B5144 = ABSOLUTE(0x082B5144);
+sFontGlyphData_9CF14 = ABSOLUTE(0x0829CF14);
+sFontGlyphData_BD25C = ABSOLUTE(0x082BD25C);
+sGlyphWidthTable_ACF14 = ABSOLUTE(0x082ACF14);
+sGlyphWidthTable_B502C = ABSOLUTE(0x082B502C);
+sGlyphWidthTable_BD144 = ABSOLUTE(0x082BD144);
 
 SECTIONS {
     . = 0x2000000;
@@ -139,7 +155,7 @@ SECTIONS {
         asm/bg.o(.text);
         asm/blit.o(.text);
         asm/window.o(.text);
-        asm/text.o(.text);
+        build/src/text.o(.text);
         asm/sprite.o(.text);
         asm/string_util.o(.text);
         asm/link.o(.text);

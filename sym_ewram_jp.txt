@@ -323,6 +323,7 @@ gUnknown_2022C1E = .;
 gUnknown_2022C2C = .;
 . += 0x64;
 gUnknown_2022C90 = .;
+gBattleTypeFlags = ABSOLUTE(0x02022C90);
 . += 0x4;
 gUnknown_2022C94 = .;
 . += 0x4;

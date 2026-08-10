@@ -179,7 +179,7 @@ text.s
 08005c48 GetStringWidthFixedWidthFont GetStringWidthFixedWidthFont
 08005d7c text.s GetFontWidthFunc
 08005dac text.s GetStringWidth
-08005f7c RenderTextFont9 RenderTextHandleBold
+08005f7c RenderTextFont9 RenderTextFont9
 08006124 DrawKeypadIcon DrawKeypadIcon
 08006174 GetKeypadIconTileOffset GetKeypadIconTileOffset
 08006184 GetKeypadIconWidth GetKeypadIconWidth
@@ -187,7 +187,7 @@ text.s
 080061a4 text.s SetDefaultFontsPointer
 080061b4 GetFontAttribute GetFontAttribute
 0800629c text.s GetMenuCursorDimensionByFont
-080062b4 DecompressGlyph_Bold DecompressGlyph_Bold
+080062b4 DecompressGlyphFont9 DecompressGlyphFont9
 08006300 text.s sub_08006300
 08006304 text.s sub_08006304
 08006350 text.s sub_08006350
@@ -199,7 +199,7 @@ text.s
 0800655c text.s sub_0800655C
 0800657c text.s sub_0800657C
 08006620 text.s sub_08006620
-08006640 DecompressGlyph_Bold DecompressGlyph_Bold
+08006640 sub_08006640 sub_08006640
 sprite.s
 0800668c ResetSpriteData ResetSpriteData
 080066d8 AnimateSprites AnimateSprites

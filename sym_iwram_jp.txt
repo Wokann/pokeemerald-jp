@@ -770,6 +770,7 @@ gUnknown_3007350 = .;
 gUnknown_3007490 = .;
 . += 0x40;
 gUnknown_30074D0 = .;
+gMPlayInfo_BGM = ABSOLUTE(0x030074D0);
 . += 0x40;
 gUnknown_3007510 = .;
 . += 0x40;
