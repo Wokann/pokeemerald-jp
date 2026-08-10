@@ -309,8 +309,8 @@ _08083E3A:
 	bl ResetGameStats
 	bl ClearAllContestWinnerPics
 	bl ClearPlayerLinkBattleRecords
-	bl sub_080FA2EC
-	bl sub_080FA344
+	bl InitSeedotSizeRecord
+	bl InitLotadSizeRecord
 	ldr r0, _08083F48
 	strb r5, [r0]
 	bl ZeroPlayerPartyMons

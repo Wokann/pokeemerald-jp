@@ -548,7 +548,7 @@ MEScrCmd_giveribbon: @ 0x08153AEC
 	ldrb r1, [r2]
 	adds r2, #1
 	str r2, [r4, #8]
-	bl sub_080FA3A0
+	bl GiveGiftRibbonToParty
 	ldr r0, _08153B18
 	ldr r1, _08153B1C
 	bl StringExpandPlaceholders

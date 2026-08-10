@@ -8375,7 +8375,7 @@ field_poison.s
 080fa058 GetMonSizeHash GetMonSizeHash
 080fa0fc TranslateBigMonSizeTableIndex TranslateBigMonSizeTableIndex
 080fa12c GetMonSize GetMonSize
-080fa1a0 field_poison.s sub_080FA1A0
+080fa1a0 FormatMonSizeRecord FormatMonSizeRecord
 080fa1f0 sub_080FA1F0 CompareMonSize
 080fa280 sub_080FA280 GetMonSizeRecordInfo
 080fa2ec InitSeedotSizeRecord InitSeedotSizeRecord

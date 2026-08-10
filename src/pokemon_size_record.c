@@ -1,0 +1,172 @@
+#include "global.h"
+#include "data.h"
+#include "event_data.h"
+#include "pokedex.h"
+#include "pokemon.h"
+#include "pokemon_size_record.h"
+#include "string_util.h"
+#include "text.h"
+#include "constants/party_menu.h"
+#include "constants/pokemon_size_record.h"
+
+#define DEFAULT_MAX_SIZE 0x8000 // was 0x8100 in Ruby/Sapphire
+
+struct UnknownStruct
+{
+    u16 unk0;
+    u8 unk2;
+    u16 unk4;
+};
+
+// JP ROM data (the 16-entry size table stays in the ROM data region)
+extern const struct UnknownStruct sBigMonSizeTable[];
+extern const u8 gText_DecimalPoint[];
+extern const u8 gText_Marco[];
+// JP species-name table uses 5 kana + EOS per entry (6 bytes), unlike US
+extern const u8 gSpeciesNamesJP[][6];
+
+#define CM_PER_INCH 2.54
+
+static u32 GetMonSizeHash(struct Pokemon *pkmn)
+{
+    u16 personality = GetMonData(pkmn, MON_DATA_PERSONALITY);
+    u16 hpIV = GetMonData(pkmn, MON_DATA_HP_IV) & 0xF;
+    u16 attackIV = GetMonData(pkmn, MON_DATA_ATK_IV) & 0xF;
+    u16 defenseIV = GetMonData(pkmn, MON_DATA_DEF_IV) & 0xF;
+    u16 speedIV = GetMonData(pkmn, MON_DATA_SPEED_IV) & 0xF;
+    u16 spAtkIV = GetMonData(pkmn, MON_DATA_SPATK_IV) & 0xF;
+    u16 spDefIV = GetMonData(pkmn, MON_DATA_SPDEF_IV) & 0xF;
+    u32 hibyte = ((attackIV ^ defenseIV) * hpIV) ^ (personality & 0xFF);
+    u32 lobyte = ((spAtkIV ^ spDefIV) * speedIV) ^ (personality >> 8);
+
+    return (hibyte << 8) + lobyte;
+}
+
+static u8 TranslateBigMonSizeTableIndex(u16 a)
+{
+    u8 i;
+
+    for (i = 1; i < 15; i++)
+    {
+        if (a < sBigMonSizeTable[i].unk4)
+            return i - 1;
+    }
+    return i;
+}
+
+static u32 GetMonSize(u16 species, u16 b)
+{
+    u64 unk2;
+    u64 unk4;
+    u64 unk0;
+    u32 height;
+    u32 var;
+
+    // JP variant: uses HoennToNationalOrder (as in birch_pc) rather than
+    // SpeciesToNationalPokedexNum
+    height = GetPokedexHeightWeight(HoennToNationalOrder(species), 0);
+    var = TranslateBigMonSizeTableIndex(b);
+    unk0 = sBigMonSizeTable[var].unk0;
+    unk2 = sBigMonSizeTable[var].unk2;
+    unk4 = sBigMonSizeTable[var].unk4;
+    unk0 += (b - unk4) / unk2;
+    return height * unk0 / 10;
+}
+
+static void FormatMonSizeRecord(u8 *string, u32 size)
+{
+    u8 decimalPoint[2];
+
+    memcpy(decimalPoint, gText_DecimalPoint, 2);
+    string = ConvertIntToDecimalStringN(string, size / 10, STR_CONV_MODE_LEFT_ALIGN, 8);
+    string = StringAppend(string, decimalPoint);
+    ConvertIntToDecimalStringN(string, size % 10, STR_CONV_MODE_LEFT_ALIGN, 1);
+}
+
+static u8 CompareMonSize(u16 species, u16 *sizeRecord)
+{
+    if (gSpecialVar_Result == PARTY_NOTHING_CHOSEN)
+    {
+        return COMPARE_SIZE_NONE;
+    }
+    else
+    {
+        struct Pokemon *pkmn = &gPlayerParty[gSpecialVar_Result];
+
+        if (GetMonData(pkmn, MON_DATA_IS_EGG) == TRUE || GetMonData(pkmn, MON_DATA_SPECIES) != species)
+        {
+            return COMPARE_SIZE_INCORRECT_SPECIES;
+        }
+        else
+        {
+            u32 oldSize;
+            u32 newSize;
+            u16 sizeParams;
+
+            *(&sizeParams) = GetMonSizeHash(pkmn);
+            newSize = GetMonSize(species, sizeParams);
+            oldSize = GetMonSize(species, *sizeRecord);
+            FormatMonSizeRecord(gStringVar2, newSize);
+            if (newSize <= oldSize)
+            {
+                return COMPARE_SIZE_SMALLER;
+            }
+            else
+            {
+                *sizeRecord = sizeParams;
+                return COMPARE_SIZE_LARGER;
+            }
+        }
+    }
+}
+
+// Stores species name in gStringVar1, trainer's name in gStringVar2, and size in gStringVar3
+static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
+{
+    u32 size = GetMonSize(species, *sizeRecord);
+
+    FormatMonSizeRecord(gStringVar3, size);
+    StringCopy(gStringVar1, gSpeciesNamesJP[species]);
+    if (*sizeRecord == DEFAULT_MAX_SIZE)
+        StringCopy(gStringVar2, gText_Marco);
+    else
+        StringCopy(gStringVar2, gSaveBlock2Ptr->playerName);
+}
+
+void InitSeedotSizeRecord(void)
+{
+    VarSet(VAR_SEEDOT_SIZE_RECORD, DEFAULT_MAX_SIZE);
+}
+
+void GetSeedotSizeRecordInfo(void)
+{
+    u16 *sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
+
+    GetMonSizeRecordInfo(SPECIES_SEEDOT, sizeRecord);
+}
+
+void CompareSeedotSize(void)
+{
+    u16 *sizeRecord = GetVarPointer(VAR_SEEDOT_SIZE_RECORD);
+
+    gSpecialVar_Result = CompareMonSize(SPECIES_SEEDOT, sizeRecord);
+}
+
+void InitLotadSizeRecord(void)
+{
+    VarSet(VAR_LOTAD_SIZE_RECORD, DEFAULT_MAX_SIZE);
+}
+
+void GetLotadSizeRecordInfo(void)
+{
+    u16 *sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
+
+    GetMonSizeRecordInfo(SPECIES_LOTAD, sizeRecord);
+}
+
+void CompareLotadSize(void)
+{
+    u16 *sizeRecord = GetVarPointer(VAR_LOTAD_SIZE_RECORD);
+
+    gSpecialVar_Result = CompareMonSize(SPECIES_LOTAD, sizeRecord);
+}

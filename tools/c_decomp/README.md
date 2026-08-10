@@ -91,7 +91,9 @@ asm/fldeff_flash.s removed), src/fldeff_cut.c (17, full module --
 asm/fldeff_cut.s removed), src/fldeff_escalator.c (6, full module --
 asm/fldeff_escalator.s removed), src/field_poison.c (7, asm/field_poison.s
 split; the remaining 13 functions belong to pokeemerald's
-src/pokemon_size_record.c and are still in asm).
+src/pokemon_size_record.c and are still in asm), src/pokemon_size_record.c
+(12) + src/give_gift_ribbon_to_party.c (1) complete the region --
+asm/field_poison.s removed.
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -185,3 +187,16 @@ stay in asm for now).  Renamed StringGetEnd10 -> StringGet_Nickname
 sub_081D52F0 -> InTrainerHillChallenge (0x081D52F0), ScriptContext1_Stop ->
 ScriptContext_Stop, and updated data/specials.inc (ExecuteWhiteOut ->
 TryFieldPoisonWhiteOut).  Added gText_PkmnFainted_FldPsn (0x085CC30F).
+
+src/pokemon_size_record.c (GetMonSizeHash, TranslateBigMonSizeTableIndex,
+GetMonSize, FormatMonSizeRecord, CompareMonSize, GetMonSizeRecordInfo,
+InitSeedotSizeRecord, GetSeedotSizeRecordInfo, CompareSeedotSize,
+InitLotadSizeRecord, GetLotadSizeRecordInfo, CompareLotadSize) and
+src/give_gift_ribbon_to_party.c (GiveGiftRibbonToParty) finish the JP
+field_poison region.  JP variants handled: FormatMonSizeRecord copies the
+2-byte decimal point to a local before appending; species names use 6-byte
+rows (gSpeciesNamesJP 0x082EA31C) and GetMonSize uses HoennToNationalOrder.
+Added sBigMonSizeTable (0x085694D0), gText_DecimalPoint (0x08569550),
+gText_Marco (0x085CC31B) and sGiftRibbonsMonDataIds (0x08569552); specials.inc
+updated (sub_080FA300/31C/358/374 -> GetSeedotSizeRecordInfo/CompareSeedotSize/
+GetLotadSizeRecordInfo/CompareLotadSize).

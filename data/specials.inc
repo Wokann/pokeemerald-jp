@@ -136,10 +136,10 @@ gSpecials:
 	def_special sub_08133CD4
 	def_special CreateAvailableDecorationsMenu
 	def_special ScrSpecial_TraderDoDecorationTrade
-	def_special sub_080FA300
-	def_special sub_080FA31C
-	def_special sub_080FA358
-	def_special sub_080FA374
+	def_special GetSeedotSizeRecordInfo
+	def_special CompareSeedotSize
+	def_special GetLotadSizeRecordInfo
+	def_special CompareLotadSize
 	def_special TV_PutNameRaterShowOnTheAirIfNicknameChanged
 	def_special TV_CopyNicknameToStringVar1AndEnsureTerminated
 	def_special TV_CheckMonOTIDEqualsPlayerID
