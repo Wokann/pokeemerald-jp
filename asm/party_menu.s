@@ -11376,7 +11376,7 @@ _081B5754:
 	ldr r1, _081B5770
 	adds r0, r0, r1
 	movs r1, #0
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 	b _081B57CC
 	.align 2, 0
 _081B5770: .4byte 0x020205AC
@@ -11387,7 +11387,7 @@ _081B5774:
 	ldr r1, _081B5788
 	adds r0, r0, r1
 	movs r1, #1
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 	b _081B57CC
 	.align 2, 0
 _081B5788: .4byte 0x020205AC
@@ -11398,7 +11398,7 @@ _081B578C:
 	ldr r1, _081B57A0
 	adds r0, r0, r1
 	movs r1, #2
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 	b _081B57CC
 	.align 2, 0
 _081B57A0: .4byte 0x020205AC
@@ -11409,7 +11409,7 @@ _081B57A4:
 	ldr r1, _081B57B8
 	adds r0, r0, r1
 	movs r1, #3
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 	b _081B57CC
 	.align 2, 0
 _081B57B8: .4byte 0x020205AC
@@ -11420,7 +11420,7 @@ _081B57BC:
 	ldr r1, _081B57D4
 	adds r0, r0, r1
 	movs r1, #4
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 _081B57CC:
 	pop {r4}
 	pop {r0}

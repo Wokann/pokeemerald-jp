@@ -490,7 +490,7 @@ _08121990:
 	adds r0, #0xd4
 	ldr r0, [r0]
 	ldrh r0, [r0, #0x1e]
-	bl sub_080D2724
+	bl GetIconSpeciesNoPersonality
 	lsls r0, r0, #0x10
 	lsrs r4, r0, #0x10
 	ldr r0, [r5]
@@ -526,7 +526,7 @@ _081219D0:
 	movs r2, #0x28
 _081219E2:
 	movs r3, #0x80
-	bl sub_080D2618
+	bl CreateMonIconNoPersonality
 	ldr r1, [r5]
 	adds r1, #0xdc
 	strb r0, [r1]
@@ -958,7 +958,7 @@ CB2_ExitMailReadFreeVars: @ 0x08121D00
 	adds r0, #0xd4
 	ldr r0, [r0]
 	ldrh r0, [r0, #0x1e]
-	bl sub_080D2724
+	bl GetIconSpeciesNoPersonality
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	bl FreeMonIconPalette
@@ -970,7 +970,7 @@ CB2_ExitMailReadFreeVars: @ 0x08121D00
 	lsls r0, r0, #2
 	ldr r1, _08121D88
 	adds r0, r0, r1
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08121D4E:
 	ldr r4, _08121D84
 	ldr r0, [r4]
@@ -998,4 +998,3 @@ _08121D84: .4byte 0x02039E00
 _08121D88: .4byte 0x020205AC
 _08121D8C: .4byte 0x000020EC
 	thumb_func_end CB2_ExitMailReadFreeVars
-

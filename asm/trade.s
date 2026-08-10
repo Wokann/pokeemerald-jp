@@ -6509,7 +6509,7 @@ _08079FD8:
 	subs r1, r1, r2
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
-	bl sub_080D2B68
+	bl SetPartyHPBarSprite
 	adds r4, #1
 	ldr r0, [r6]
 	adds r0, #0x36
@@ -15872,4 +15872,3 @@ _0807F152:
 _0807F168: .4byte 0x030027A0
 _0807F16C: .4byte 0x0807EAA1
 	thumb_func_end sub_0807EE9C
-

@@ -6920,7 +6920,7 @@ pokemon_storage_system.s
 080cb974 SpriteCB_HeldMon SpriteCB_HeldMon
 080cb998 TryLoadMonIconTiles TryLoadMonIconTiles
 080cba54 RemoveSpeciesFromIconList RemoveSpeciesFromIconList
-080cbaa4 sub_080CBAA4_jp CreateMonIconSprite
+080cbaa4 sub_080CBAA4_jp sub_080CBAA4_jp
 080cbb88 DestroyBoxMonIcon DestroyBoxMonIcon
 080cbba0 CreateInitBoxTask CreateInitBoxTask
 080cbbd0 pokemon_storage_system.s sub_080CBBD0_jp
@@ -7167,7 +7167,7 @@ pokemon_icon.s
 080d283c FreeMonIconPalettes FreeMonIconPalettes
 080d2860 SafeFreeMonIconPalette SafeFreeMonIconPalette
 080d2890 FreeMonIconPalette FreeMonIconPalette
-080d28b4 sub_080D28B4 SpriteCB_UpdatePartyMonIcon
+080d28b4 sub_080D28B4 SpriteCB_MonIcon
 080d28c0 GetMonIconTiles GetMonIconTiles
 080d28ec TryLoadAllMonIconPalettesAtOffset TryLoadAllMonIconPalettesAtOffset
 080d2920 GetValidMonIconPalIndex GetValidMonIconPalIndex
@@ -7176,7 +7176,7 @@ pokemon_icon.s
 080d297c UpdateMonIconFrame UpdateMonIconFrame
 080d2a54 CreateMonIconSprite CreateMonIconSprite
 080d2b2c FreeAndDestroyMonIconSprite_ FreeAndDestroyMonIconSprite_
-080d2b68 pokemon_icon.s sub_080D2B68_jp
+080d2b68 pokemon_icon.s SetPartyHPBarSprite
 script_movement.s
 080d2b88 ScriptMovement_StartObjectMovementScript ScriptMovement_StartObjectMovementScript
 080d2be0 ScriptMovement_IsObjectMovementFinished ScriptMovement_IsObjectMovementFinished

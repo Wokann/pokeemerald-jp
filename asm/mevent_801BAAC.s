@@ -1318,7 +1318,7 @@ sub_0801C04C: @ 0x0801C04C
 	ldrh r0, [r1]
 	cmp r0, #0
 	beq _0801C0A8
-	bl sub_080D2724
+	bl GetIconSpeciesNoPersonality
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	ldr r1, _0801C168
@@ -1326,7 +1326,7 @@ sub_0801C04C: @ 0x0801C04C
 	str r7, [sp, #4]
 	movs r2, #0xdc
 	movs r3, #0x14
-	bl sub_080D2618
+	bl CreateMonIconNoPersonality
 	ldr r1, [r4]
 	adds r1, #0xd4
 	strb r0, [r1]
@@ -1408,7 +1408,7 @@ _0801C0E6:
 	ldrh r0, [r1]
 	cmp r0, #0
 	beq _0801C148
-	bl sub_080D2724
+	bl GetIconSpeciesNoPersonality
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	mov r1, r8
@@ -1417,7 +1417,7 @@ _0801C0E6:
 	ldr r1, _0801C168
 	adds r2, r5, #0
 	movs r3, #0x88
-	bl sub_080D2618
+	bl CreateMonIconNoPersonality
 	ldr r1, [r6]
 	adds r1, #0xd6
 	adds r1, r1, r4
@@ -1464,7 +1464,7 @@ sub_0801C17C: @ 0x0801C17C
 	lsls r0, r0, #2
 	ldr r1, _0801C220
 	adds r0, r0, r1
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _0801C19E:
 	ldr r0, [r4]
 	ldrb r2, [r0, #9]
@@ -1508,7 +1508,7 @@ _0801C1B6:
 	adds r0, r0, r1
 	lsls r0, r0, #2
 	adds r0, r0, r5
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _0801C1F6:
 	adds r0, r6, #1
 	lsls r0, r0, #0x18
@@ -2646,4 +2646,3 @@ _0801CB1E:
 	pop {r0}
 	bx r0
 	thumb_func_end sub_0801CA6C
-

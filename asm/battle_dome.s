@@ -4014,7 +4014,7 @@ _08190600:
 	movs r1, #0xff
 	strb r1, [r0]
 	adds r0, r4, #0
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _0819061C:
 	pop {r4}
 	pop {r0}
@@ -4080,7 +4080,7 @@ _08190678:
 	movs r1, #0xff
 	strb r1, [r0]
 	adds r0, r4, #0
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08190698:
 	pop {r4}
 	pop {r0}
@@ -4146,7 +4146,7 @@ _081906F8:
 	movs r1, #0xff
 	strb r1, [r0]
 	adds r0, r4, #0
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08190714:
 	pop {r4}
 	pop {r0}
@@ -4213,7 +4213,7 @@ _08190770:
 	movs r1, #0xff
 	strb r1, [r0]
 	adds r0, r4, #0
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08190790:
 	pop {r4}
 	pop {r0}
@@ -6923,7 +6923,7 @@ _08191D90:
 	lsls r0, r0, #2
 	ldr r1, _08191DC8
 	adds r0, r0, r1
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08191DAA:
 	adds r6, #1
 	cmp r6, #7
@@ -6955,7 +6955,7 @@ _08191DD0:
 	lsls r0, r0, #2
 	ldr r1, _08191E14
 	adds r0, r0, r1
-	bl sub_080D2798
+	bl FreeAndDestroyMonIconSprite
 _08191DEA:
 	adds r6, #1
 	cmp r6, #0xf
@@ -13893,4 +13893,3 @@ _08195540:
 	.align 2, 0
 _0819555C: .4byte 0x082E9D00
 	thumb_func_end CopyDomeBrainTrainerName
-

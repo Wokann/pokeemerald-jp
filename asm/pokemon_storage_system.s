@@ -18544,7 +18544,7 @@ _080CFB0E:
 	movs r0, #0
 	bl HideBg
 	movs r0, #0x80
-	bl sub_080D28EC
+	bl TryLoadAllMonIconPalettesAtOffset
 	b _080CFBAE
 _080CFB1C:
 	adds r0, r1, #2
