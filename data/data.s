@@ -16168,44 +16168,39 @@ gUnknown_85CBD57: @ 0x85CBD57
 	.string "も{SE_PC_OFF}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}たべ{MUS_RG_GAME_FREAK}"
 	.string "{TRANSPARENT}み{MUS_RG_RIVAL_EXIT}⋯$"
 
-	.globl gUnknown_85CBD6B
-gUnknown_85CBD6B: @ 0x85CBD6B
-	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_BOO}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\nバックアップカートリッジ{SE_A}{LIGHT_BLUE}ん{DYNAMIC_COLOR2}を{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{BLUE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}"
-	.string "{MUS_RG_VS_GYM_LEADER}{RED}“1ふんほ{SE_NOTE_C_HIGH}{GREEN}{GREEN}りま{DYNAMIC_COLOR4}”$"
+	.globl gText_SaveFailedCheckingBackup
+gText_SaveFailedCheckingBackup: @ 0x85CBD6B
+	.string "レポートの　かきこみに　しっぱいしました\n"
+	.string "バックアップカートリッジの　けんさをします\n"
+	.string "しばらくおまちください{COLOR}{RED}“1ふんほど　かかります”$"
 
-	.globl gUnknown_85CBDB2
-gUnknown_85CBDB2: @ 0x85CBDB2
-	.string "バックアップ{LIGHT_GREEN}の{LIGHT_GRAY}{SE_A}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}また{SE_I}"
-	.string "じゅみょ{LIGHT_GRAY}が\n{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た。セーブ{DYNAMIC_COLOR4}る{DYNAMIC_COLOR1}と{SE_I}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_SAVE}{DYNAMIC_COLOR1}のまま\nゲーム{SE_WARP_IN}{WHITE}{DYNAMIC_COLOR6}"
-	.string "ぶ{DYNAMIC_COLOR1}とはで{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
+	.globl gText_BackupMemoryDamaged
+gText_BackupMemoryDamaged: @ 0x85CBDB2
+	.string "バックアップきのうの　こしょう　または　じゅみょうが\n"
+	.string "きました。セーブすることは　できませんが　このまま\n"
+	.string "ゲームを　あそぶことはできます$"
 
-	.globl gUnknown_85CBDF7
-gUnknown_85CBDF7: @ 0x85CBDF7
-	.string "{MUS_RG_VS_GYM_LEADER}{RED}“{DYNAMIC_COLOR1}のま{SE_SUCCESS}ぼ{LIGHT_GRAY}{LIGHT_BLUE}んをつづ{LIGHT_BLUE}"
-	.string "る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん\nタイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}”$"
+	.globl gText_GamePlayCannotBeContinued
+gText_GamePlayCannotBeContinued: @ 0x85CBDF7
+	.string "{COLOR}{RED}“このまま　ぼうけんをつづけることは　できません\n"
+	.string "タイトルに　もどります”$"
 
-	.globl gUnknown_85CBE20
-gUnknown_85CBE20: @ 0x85CBE20
-	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{SE_SAVE}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR3}た！\nも{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}レポート{SE_WARP_IN}{GREEN}{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{BLUE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}"
-	.string "$"
+	.globl gText_CheckCompleted
+gText_CheckCompleted: @ 0x85CBE20
+	.string "けんさが　しゅうりょうしました！\n"
+	.string "もういちど　レポートを　かきこみます\n"
+	.string "しばらくおまちください$"
 
-	.globl gUnknown_85CBE50
-gUnknown_85CBE50: @ 0x85CBE50
-	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{MUS_RG_VS_GYM_LEADER}{RED}“{DYNAMIC_COLOR1}のま{SE_SUCCESS}"
-	.string "ぼ{LIGHT_GRAY}{LIGHT_BLUE}んをつづ{LIGHT_BLUE}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
-	.string "ん\nタイトル{SE_BOO}もどりま{DYNAMIC_COLOR4}”$"
+	.globl gText_SaveCompleteGameCannotContinue
+gText_SaveCompleteGameCannotContinue: @ 0x85CBE50
+	.string "レポートの　かきこみは　しゅうりょうしました\n"
+	.string "{COLOR}{RED}“このまま　ぼうけんをつづけることは　できません\n"
+	.string "タイトルに　もどります”$"
 
-	.globl gUnknown_85CBE90
-gUnknown_85CBE90: @ 0x85CBE90
-	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}み{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{MUS_RG_VS_GYM_LEADER}{RED}“Aボタン{SE_WARP_IN}{LIGHT_RED}"
-	.string "{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}”$"
+	.globl gText_SaveCompletePressA
+gText_SaveCompletePressA: @ 0x85CBE90
+	.string "レポートの　かきこみは　しゅうりょうしました\n"
+	.string "{COLOR}{RED}“Aボタンを　おしてください”$"
 
 	.globl gUnknown_85CBEBA
 gUnknown_85CBEBA: @ 0x85CBEBA
@@ -17049,36 +17044,36 @@ gUnknown_85CD204: @ 0x85CD204
 gUnknown_85CD208: @ 0x85CD208
 	.incbin "build/data/data.bin", 0x331464, 0x18
 
-	.globl gUnknown_85CD220
-gUnknown_85CD220: @ 0x85CD220
+	.globl sClockOamData
+sClockOamData: @ 0x85CD220
 	.incbin "build/data/data.bin", 0x33147c, 0x8
 
-	.globl gUnknown_85CD228
-gUnknown_85CD228: @ 0x85CD228
+	.globl sSaveFailedBgTemplates
+sSaveFailedBgTemplates: @ 0x85CD228
 	.incbin "build/data/data.bin", 0x331484, 0xc
 
-	.globl gUnknown_85CD234
-gUnknown_85CD234: @ 0x85CD234
+	.globl sDummyWindowTemplate
+sDummyWindowTemplate: @ 0x85CD234
 	.incbin "build/data/data.bin", 0x331490, 0x8
 
-	.globl gUnknown_85CD23C
-gUnknown_85CD23C: @ 0x85CD23C
+	.globl sWindowTemplate_Text
+sWindowTemplate_Text: @ 0x85CD23C
 	.incbin "build/data/data.bin", 0x331498, 0x8
 
-	.globl gUnknown_85CD244
-gUnknown_85CD244: @ 0x85CD244
+	.globl sWindowTemplate_Clock
+sWindowTemplate_Clock: @ 0x85CD244
 	.incbin "build/data/data.bin", 0x3314a0, 0x8
 
-	.globl gUnknown_85CD24C
-gUnknown_85CD24C: @ 0x85CD24C
+	.globl sClockFrames
+sClockFrames: @ 0x85CD24C
 	.incbin "build/data/data.bin", 0x3314a8, 0x18
 
-	.globl gUnknown_85CD264
-gUnknown_85CD264: @ 0x85CD264
+	.globl sSaveFailedClockPal
+sSaveFailedClockPal: @ 0x85CD264
 	.incbin "build/data/data.bin", 0x3314c0, 0x20
 
-	.globl gUnknown_85CD284
-gUnknown_85CD284: @ 0x85CD284
+	.globl sSaveFailedClockGfx
+sSaveFailedClockGfx: @ 0x85CD284
 	.incbin "build/data/data.bin", 0x3314e0, 0x90
 
 	.globl gUnknown_85CD314

@@ -12565,7 +12565,7 @@ berry_tag_screen.s
 save_failed_screen.s
 08178dfc SaveFailedScreenTextPrint SaveFailedScreenTextPrint
 08178e48 DoSaveFailedScreen DoSaveFailedScreen
-08178e80 sub_08178E80 VBlankCB_PartyMenu
+08178e80 sub_08178E80 VBlankCB
 08178e94 CB2_SaveFailedScreen CB2_SaveFailedScreen
 08179140 CB2_WipeSave CB2_WipeSave
 08179248 CB2_GameplayCannotBeContinued CB2_GameplayCannotBeContinued
