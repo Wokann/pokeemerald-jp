@@ -13345,13 +13345,13 @@ battle_dome.s
 08195538 CopyDomeBrainTrainerName CopyDomeBrainTrainerName
 battle_palace.s
 08195560 battle_palace.s CallBattlePalaceFunction
-08195574 battle_palace.s sub_08195574_jp
+08195574 battle_palace.s sub_08195574
 08195580 InitPalaceChallenge InitPalaceChallenge
 08195638 GetPalaceData GetPalaceData
 081956e4 SetPalaceData SetPalaceData
 081957b0 GetPalaceCommentId GetPalaceCommentId
 08195820 sub_08195820_jp SetPalaceOpponent
-08195850 battle_palace.s sub_08195850_jp
+08195850 battle_palace.s BufferOpponentIntroSpeech
 0819587c IncrementPalaceStreak IncrementPalaceStreak
 081958e4 sub_081958E4_jp SavePalaceChallenge
 08195928 SetRandomPalacePrize SetRandomPalacePrize
