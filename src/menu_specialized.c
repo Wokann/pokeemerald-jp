@@ -890,6 +890,15 @@ void InitMoveRelearnerWindows(bool8 useContestWindow)
 
 // JP 0x081D1EE0: prints the eight static hint lines in the move
 // relearner window. The US build calls an empty dummy here instead.
+// Texts (decoded with tools/decode_jp_text.py from the JP ROM):
+//   0x085F7C50: "たたかうわざ" (battle moves)
+//   0x085F7C5F: "タイプ/" (type/)
+//   0x085F7C64: "PP/"
+//   0x085F7C68: "いりょく/" (power/)
+//   0x085F7C6E: "めいちゅう/" (accuracy/)
+//   0x085F7C57: "コンテストわざ" (contest moves)
+//   0x085F7C75: "アピール" (appeal)
+//   0x085F7C7A: "ぼうがい" (jam)
 __attribute__((naked)) void sub_081D1EE0(void)
 {
     __asm__(".syntax unified\n\t"

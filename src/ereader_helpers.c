@@ -49,6 +49,9 @@ extern u16 sSavedIe;
 extern u16 sSavedTm3Cnt;
 extern u16 sSavedSioCnt;
 extern u16 sSavedRCnt;
+// JP-only trainer hill templates at 0x085FA9E4 (bound in ld_script_jp.txt).
+// Decoded with tools/decode_jp_text.py: first trainer's name is "マキエ",
+// its mons are "マルノーム"/"ドクケイル"/"ジーランス".
 extern const struct TrainerHillTrainer sTrainerHillTrainerTemplates_JP[];
 
 static u8 GetTrainerHillUnkVal(void)
