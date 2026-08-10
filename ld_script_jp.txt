@@ -248,6 +248,7 @@ gStdScripts = ABSOLUTE(0x081DB7BC);
 gStdScripts_End = ABSOLUTE(0x081DB7E8);
 gStdStrings = ABSOLUTE(0x085645A0);
 gNullScriptPtr = ABSOLUTE(0x084E8900);
+sSetupInfos = ABSOLUTE(0x0890ED54);
 IsFreezePlayerFinished = ABSOLUTE(0x08097D4D);
 IsFreezeSelectedObjectAndPlayerFinished = ABSOLUTE(0x08097E05);
 ScriptContext1_IsScriptSetUp = ScriptContext_IsEnabled;
@@ -775,7 +776,9 @@ SECTIONS {
     {
 		asm/libgcnmultiboot.o(.text);
 		asm/m4a.o(.text);
-		asm/agb_flash.o(.text);
+        build/src/agb_flash.o(.text);
+        build/src/agb_flash_1m.o(.text);
+        build/src/agb_flash_mx.o(.text);
 		asm/siirtc.o(.text);
 		asm/librfu_stwi.o(.text);
 		asm/librfu_intr.o(.text);
