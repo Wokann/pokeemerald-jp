@@ -224,6 +224,8 @@ sSpriteTemplate_ConditionSparkle = ABSOLUTE(0x085FA964);
 sConditionSparkleCoords = ABSOLUTE(0x085FA97C);
 gText_InParty = ABSOLUTE(0x085CB7C6);
 sTrainerHillTrainerTemplates_JP = ABSOLUTE(0x085FA9E4);
+sFarawayIslandRockCoords = ABSOLUTE(0x085FAF28);
+gSpritePalette_GeneralFieldEffect1 = ABSOLUTE(0x084E4E1C);
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
 gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
@@ -725,7 +727,7 @@ SECTIONS {
         build/src/pokenav_match_call_data.o(.text);
         build/src/menu_specialized.o(.text);
         build/src/ereader_helpers.o(.text);
-        asm/faraway_island.o(.text);
+        build/src/faraway_island.o(.text);
         build/src/ereader_screen.o(.text);
         asm/trainer_hill.o(.text);
         asm/rayquaza_scene.o(.text);

@@ -517,14 +517,14 @@ gSpecials:
 	def_special display_text_and_get_width_internal
 	def_special sub_080E1D6C
 	def_special TurnOnTVScreen
-	def_special sub_081D4110
+	def_special SetMewAboveGrass
 	def_special sub_0813B54C
 	def_special sub_0813B5A0
 	def_special sub_0813B56C
 	def_special CallTrainerHillFunction
 	def_special sub_0813B810
 	def_special sub_0813B844
-	def_special sub_081D426C
+	def_special DestroyMewEmergingGrassSprite
 	def_special sub_08022230
 	def_special TryBufferWaldaPhrase
 	def_special DoWaldaNamingScreen, waitstate=1
