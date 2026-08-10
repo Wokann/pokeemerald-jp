@@ -102,7 +102,7 @@ extern const u8 lineOffsets[CHECK_PAGE_ENTRY_COUNT];
 extern const u8 sPokenavCheckPageColors[3];
 extern const u8 sPokenavFieldNameColors[3];
 extern const u8 *GetMatchCallFlavorText(u32 trainerId, u32 checkPageEntry);
-extern void sub_081CB4B8(u32 windowId, s32 offset);
+extern void ClearRematchPokeballIcon(u16 windowId, u32 tileOffset);
 
 bool32 CreatePokenavList(const struct BgTemplate *bgTemplate, struct PokenavListTemplate *listTemplate, u32 tileOffset)
 {
@@ -686,7 +686,7 @@ static void EraseListEntry(struct PokenavListMenuWindow *listWindow, s32 offset,
     }
 
     for (entries--; entries != -1; offset = (offset + 1) & 0xF, entries--)
-        sub_081CB4B8(listWindow->windowId, offset);
+        ClearRematchPokeballIcon(listWindow->windowId, offset);
 
     CopyWindowToVram(listWindow->windowId, COPYWIN_MAP);
 }

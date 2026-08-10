@@ -433,8 +433,8 @@ _08195D24: .4byte 0x03005B68
 _08195D28: .4byte 0x085D79F4
 	thumb_func_end ExecuteMatchCall
 
-	thumb_func_start LoadMatchCallWindowGfx
-LoadMatchCallWindowGfx: @ 0x08195D2C
+	thumb_func_start MatchCall_LoadGfx
+MatchCall_LoadGfx: @ 0x08195D2C
 	push {r4, r5, r6, lr}
 	sub sp, #4
 	lsls r0, r0, #0x18
@@ -521,7 +521,7 @@ _08195DE6:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end LoadMatchCallWindowGfx
+	thumb_func_end MatchCall_LoadGfx
 
 	thumb_func_start MoveMatchCallWindowToVram
 MoveMatchCallWindowToVram: @ 0x08195DF0
@@ -545,7 +545,7 @@ MoveMatchCallWindowToVram: @ 0x08195DF0
 	movs r1, #0x9c
 	lsls r1, r1, #2
 	movs r2, #0xe
-	bl DrawMatchCallTextBoxBorder
+	bl DrawMatchCallTextBoxBorder_Internal
 	ldr r1, _08195E60
 	movs r0, #4
 	str r0, [sp]
@@ -830,8 +830,8 @@ _08196056:
 	.align 2, 0
 	thumb_func_end sub_08195FF0
 
-	thumb_func_start DrawMatchCallTextBoxBorder
-DrawMatchCallTextBoxBorder: @ 0x0819605C
+	thumb_func_start DrawMatchCallTextBoxBorder_Internal
+DrawMatchCallTextBoxBorder_Internal: @ 0x0819605C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -1008,7 +1008,7 @@ DrawMatchCallTextBoxBorder: @ 0x0819605C
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end DrawMatchCallTextBoxBorder
+	thumb_func_end DrawMatchCallTextBoxBorder_Internal
 
 	thumb_func_start InitMatchCallTextPrinter
 InitMatchCallTextPrinter: @ 0x081961D8
@@ -2601,8 +2601,8 @@ _08196D70: .4byte 0x085D7AB0
 _08196D74: .4byte 0x0826316A
 	thumb_func_end sub_08196C74
 
-	thumb_func_start sub_08196D78
-sub_08196D78: @ 0x08196D78
+	thumb_func_start LoadMatchCallWindowGfx
+LoadMatchCallWindowGfx: @ 0x08196D78
 	push {r4, r5, lr}
 	adds r4, r1, #0
 	adds r5, r2, #0
@@ -2631,13 +2631,13 @@ sub_08196D78: @ 0x08196D78
 	.align 2, 0
 _08196DB0: .4byte 0x085D74E8
 _08196DB4: .4byte 0x085D74C8
-	thumb_func_end sub_08196D78
+	thumb_func_end LoadMatchCallWindowGfx
 
-	thumb_func_start sub_08196DB8
-sub_08196DB8: @ 0x08196DB8
+	thumb_func_start DrawMatchCallTextBoxBorder
+DrawMatchCallTextBoxBorder: @ 0x08196DB8
 	push {lr}
-	bl DrawMatchCallTextBoxBorder
+	bl DrawMatchCallTextBoxBorder_Internal
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_08196DB8
+	thumb_func_end DrawMatchCallTextBoxBorder
