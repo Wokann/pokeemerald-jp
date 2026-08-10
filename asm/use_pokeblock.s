@@ -307,7 +307,7 @@ _081662A8:
 	ldr r0, [r0]
 	ldr r1, _081662C0
 	adds r0, r0, r1
-	bl sub_081D275C
+	bl MoveConditionMonOnscreen
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08166362
@@ -359,7 +359,7 @@ _0816631C:
 	ldr r0, [r0]
 	ldr r2, _08166330
 	adds r0, r0, r2
-	bl sub_081D1878
+	bl ConditionGraph_Update
 	b _08166348
 	.align 2, 0
 _0816632C: .4byte 0x0203B978
@@ -2397,7 +2397,7 @@ sub_08167340: @ 0x08167340
 	str r2, [sp, #8]
 	adds r2, r7, #0
 	mov r3, sl
-	bl sub_081D2504
+	bl GetConditionMenuMonNameAndLocString
 	mov r3, sb
 	ldr r1, [r3]
 	ldr r2, _08167404
@@ -2411,7 +2411,7 @@ sub_08167340: @ 0x08167340
 	str r2, [sp, #0xc]
 	adds r2, r7, #0
 	mov r3, sl
-	bl sub_081D25A8
+	bl GetConditionMenuMonConditions
 	lsls r0, r4, #0xd
 	movs r1, #0xc1
 	lsls r1, r1, #2
@@ -2428,7 +2428,7 @@ sub_08167340: @ 0x08167340
 	str r2, [sp, #8]
 	adds r2, r7, #0
 	mov r3, sl
-	bl sub_081D26C4
+	bl GetConditionMenuMonGfx
 	add sp, #0x10
 	pop {r3, r4, r5}
 	mov r8, r3

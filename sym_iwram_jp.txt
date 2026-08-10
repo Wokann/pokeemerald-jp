@@ -31,6 +31,7 @@ sLastTextFgColor = ABSOLUTE(0x030009EC);
 sLastTextShadowColor = ABSOLUTE(0x030009EE);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 gSaveBlock1Ptr = ABSOLUTE(0x03005AEC);
+gMultiuseListMenuTemplate = ABSOLUTE(0x03006050);
 gFlashMemoryPresent = ABSOLUTE(0x03005AE8);
 gPokemonStoragePtr = ABSOLUTE(0x03005AF4);
 gRngValue = ABSOLUTE(0x03005AE0);

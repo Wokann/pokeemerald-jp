@@ -366,7 +366,7 @@ _0816AEF0:
 	adds r0, r4, #0
 	bl ItemStorage_SetItemAndMailCount
 	ldrb r0, [r5, #5]
-	bl sub_081D1340
+	bl MailboxMenu_Alloc
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -1035,12 +1035,12 @@ Mailbox_DrawMailboxMenu: @ 0x0816B41C
 	lsls r5, r5, #0x18
 	lsrs r5, r5, #0x18
 	movs r0, #0
-	bl sub_081D1380
+	bl MailboxMenu_AddWindow
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	movs r0, #1
-	bl sub_081D1380
+	bl MailboxMenu_AddWindow
 	ldr r2, _0816B47C
 	movs r0, #2
 	str r0, [sp]
@@ -1055,7 +1055,7 @@ Mailbox_DrawMailboxMenu: @ 0x0816B41C
 	bl ScheduleBgCopyTilemapToVram
 	ldr r4, _0816B480
 	adds r0, r4, #0
-	bl sub_081D13F4
+	bl MailboxMenu_CreateList
 	ldr r2, _0816B484
 	lsls r1, r5, #2
 	adds r1, r1, r5
@@ -1065,7 +1065,7 @@ Mailbox_DrawMailboxMenu: @ 0x0816B41C
 	lsrs r0, r0, #0x18
 	strh r0, [r1, #0x12]
 	adds r0, r4, #0
-	bl sub_081D14D8
+	bl MailboxMenu_AddScrollArrows
 	add sp, #0xc
 	pop {r4, r5}
 	pop {r0}
@@ -1134,9 +1134,9 @@ _0816B4FE:
 	movs r0, #5
 	bl PlaySE
 	movs r0, #0
-	bl MoveRelearnerCursorCallback
+	bl MailboxMenu_RemoveWindow
 	movs r0, #1
-	bl MoveRelearnerCursorCallback
+	bl MailboxMenu_RemoveWindow
 	ldrb r0, [r4, #0xa]
 	adds r1, r7, #0
 	mov r2, r8
@@ -1217,16 +1217,16 @@ Mailbox_ReturnToPlayerPC: @ 0x0816B5A4
 	ldr r0, _0816B5E4
 	adds r4, r4, r0
 	movs r0, #0
-	bl MoveRelearnerCursorCallback
+	bl MailboxMenu_RemoveWindow
 	movs r0, #1
-	bl MoveRelearnerCursorCallback
+	bl MailboxMenu_RemoveWindow
 	ldrb r0, [r4, #0xa]
 	movs r1, #0
 	movs r2, #0
 	bl DestroyListMenuTask
 	movs r0, #0
 	bl ScheduleBgCopyTilemapToVram
-	bl sub_081D1508
+	bl MailboxMenu_Free
 	adds r0, r5, #0
 	bl ReshowPlayerPC
 	pop {r4, r5}
@@ -1246,7 +1246,7 @@ Mailbox_PrintMailOptions: @ 0x0816B5E8
 	lsls r5, r5, #0x18
 	lsrs r5, r5, #0x18
 	movs r0, #2
-	bl sub_081D1380
+	bl MailboxMenu_AddWindow
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -1372,7 +1372,7 @@ Mailbox_FadeAndReadMail: @ 0x0816B6E4
 	ands r0, r1
 	cmp r0, #0
 	bne _0816B726
-	bl sub_081D1508
+	bl MailboxMenu_Free
 	bl CleanupOverworldWindowsAndTilemaps
 	ldr r2, _0816B730
 	ldr r1, _0816B734
@@ -1431,7 +1431,7 @@ pal_fill_for_maplights_or_black: @ 0x0816B760
 	lsrs r4, r0, #0x18
 	ldr r0, _0816B790
 	ldrb r0, [r0, #5]
-	bl sub_081D1340
+	bl MailboxMenu_Alloc
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -1673,7 +1673,7 @@ Mailbox_DoGiveMailPokeMenu: @ 0x0816B938
 	ands r0, r1
 	cmp r0, #0
 	bne _0816B95C
-	bl sub_081D1508
+	bl MailboxMenu_Free
 	bl CleanupOverworldWindowsAndTilemaps
 	bl sub_081B80E8
 	adds r0, r4, #0
@@ -1734,7 +1734,7 @@ _0816B9BE:
 	bl LoadMessageBoxAndBorderGfx
 	ldr r0, _0816B9E4
 	ldrb r0, [r0, #5]
-	bl sub_081D1340
+	bl MailboxMenu_Alloc
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -1777,7 +1777,7 @@ Mailbox_Cancel: @ 0x0816BA14
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	movs r0, #2
-	bl MoveRelearnerCursorCallback
+	bl MailboxMenu_RemoveWindow
 	movs r0, #0
 	movs r1, #0
 	bl ClearDialogWindowAndFrame

@@ -243,7 +243,7 @@ FormatAndPrintText: @ 0x08160784
 	adds r0, r4, #0
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
-	bl MoveRelearnerPrintText
+	bl MoveRelearnerPrintMessage
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -1129,7 +1129,7 @@ _08160F04:
 	adds r0, r4, #0
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
-	bl MoveRelearnerPrintText
+	bl MoveRelearnerPrintMessage
 	b _08160F5C
 	.align 2, 0
 _08160F28: .4byte 0x02021C7C
@@ -1151,7 +1151,7 @@ _08160F30:
 	adds r0, r4, #0
 	bl StringExpandPlaceholders
 	adds r0, r4, #0
-	bl MoveRelearnerPrintText
+	bl MoveRelearnerPrintMessage
 _08160F5C:
 	pop {r4, r5, r6, r7}
 	pop {r0}
