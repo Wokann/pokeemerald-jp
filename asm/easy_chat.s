@@ -6568,7 +6568,7 @@ sub_0811DAE4: @ 0x0811DAE4
 	movs r1, #1
 	movs r2, #0
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0xc
 	pop {r0}
 	bx r0

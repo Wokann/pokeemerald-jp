@@ -7590,7 +7590,7 @@ ShowYesNoWindow: @ 0x080CA600
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	lsls r4, r4, #0x18
 	asrs r4, r4, #0x18
 	adds r0, r4, #0

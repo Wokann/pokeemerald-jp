@@ -1197,7 +1197,7 @@ DisplayYesNoMenuDefaultYes: @ 0x08197714
 	movs r1, #1
 	movs r2, #0
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0xc
 	pop {r0}
 	bx r0
@@ -1222,7 +1222,7 @@ DisplayYesNoMenuWithDefault: @ 0x0819773C
 	movs r1, #1
 	movs r2, #0
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0xc
 	pop {r0}
 	bx r0
@@ -3939,8 +3939,8 @@ sub_08198BB4: @ 0x08198BB4
 	.align 2, 0
 	thumb_func_end sub_08198BB4
 
-	thumb_func_start sub_08198C08
-sub_08198C08: @ 0x08198C08
+	thumb_func_start CreateYesNoMenuAtPos
+CreateYesNoMenuAtPos: @ 0x08198C08
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -4086,7 +4086,7 @@ sub_08198C08: @ 0x08198C08
 	.align 2, 0
 _08198D3C: .4byte 0x0203CA6B
 _08198D40: .4byte 0x085D7B40
-	thumb_func_end sub_08198C08
+	thumb_func_end CreateYesNoMenuAtPos
 
 	thumb_func_start sub_08198D44
 sub_08198D44: @ 0x08198D44
@@ -4103,7 +4103,7 @@ sub_08198D44: @ 0x08198D44
 	movs r2, #0
 	str r2, [sp, #8]
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0xc
 	pop {r0}
 	bx r0

@@ -745,7 +745,7 @@ Task_SetClock3: @ 0x08134E10
 	str r1, [sp, #8]
 	movs r2, #0
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r1, _08134E7C
 	lsls r0, r4, #2
 	adds r0, r0, r4

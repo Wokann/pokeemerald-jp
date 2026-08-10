@@ -1125,7 +1125,7 @@ _080716FE:
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r1, [r5]
 	b _080717D8
 	.align 2, 0

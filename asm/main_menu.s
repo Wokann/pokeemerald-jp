@@ -5635,7 +5635,7 @@ CreateYesNoMenuParameterized: @ 0x080320C4
 	movs r1, #1
 	movs r2, #0
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0x20
 	pop {r3}
 	mov r8, r3

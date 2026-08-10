@@ -940,7 +940,7 @@ _08018622:
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 _0801863E:
 	ldrb r0, [r5]
 	adds r0, #1

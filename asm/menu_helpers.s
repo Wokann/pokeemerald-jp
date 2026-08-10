@@ -275,7 +275,7 @@ CreateYesNoMenuWithCallbacks: @ 0x08121F84
 	str r5, [sp, #4]
 	movs r4, #0
 	str r4, [sp, #8]
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r2, _08121FDC
 	ldr r0, [r7]
 	ldr r1, [r7, #4]

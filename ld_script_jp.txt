@@ -154,6 +154,11 @@ gText_Diploma_Hoenn = ABSOLUTE(0x085C8BB1);
 gText_Diploma_4 = ABSOLUTE(0x085C8BF2);
 gItemIconSpriteTemplate = ABSOLUTE(0x085E08AC);
 gItemIconTable = ABSOLUTE(0x085DFCC8);
+gText_ClearAllSaveData = ABSOLUTE(0x085CDB60);
+gText_ClearingData = ABSOLUTE(0x085CDB7A);
+sClearSaveBgTemplates = ABSOLUTE(0x085CDB90);
+sClearSaveTextWindow = ABSOLUTE(0x085CDB98);
+sClearSaveYesNo = ABSOLUTE(0x085CDBA8);
 
 SECTIONS {
     . = 0x2000000;
@@ -391,8 +396,7 @@ SECTIONS {
         asm/save_failed_screen.o(.text);
         asm/braille_puzzles.o(.text);
         asm/pokeblock_feed.o(.text);
-        asm/clear_save_data_screen.o(.text);
-        asm/diploma.o(.text);
+        build/src/clear_save_data_screen.o(.text);
         asm/intro_credits_graphics.o(.text);
         asm/evolution_graphics.o(.text);
         asm/bard_music.o(.text);

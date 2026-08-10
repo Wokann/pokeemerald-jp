@@ -3453,7 +3453,7 @@ _0813F9E4:
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r3, _0813FA30
 	strb r4, [r3, #1]
 	ldr r0, _0813FA28

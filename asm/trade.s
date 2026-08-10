@@ -3541,7 +3541,7 @@ _080788B2:
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r0, [r4]
 	adds r0, #0x6f
 	movs r1, #4
@@ -4223,7 +4223,7 @@ Wait2SecondsAndCreateYesNoMenu: @ 0x08078DCC
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	ldr r0, [r4]
 	adds r0, #0xa8
 	strb r5, [r0]

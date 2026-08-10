@@ -6542,7 +6542,7 @@ sub_081B2FDC: @ 0x081B2FDC
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0xc
 	pop {r0}
 	bx r0

@@ -6665,7 +6665,7 @@ sub_0802D808: @ 0x0802D808
 	movs r1, #1
 	movs r2, #2
 	movs r3, #2
-	bl sub_08198C08
+	bl CreateYesNoMenuAtPos
 	add sp, #0x14
 	pop {r4, r5}
 	pop {r0}
