@@ -11,6 +11,7 @@ gPaletteDecompressionBuffer = ABSOLUTE(0x02037C88);
 gTrainerHillVBlankCounter = ABSOLUTE(0x0203CC28);
 gNextLoopedTaskId = ABSOLUTE(0x0203CC08);
 gPokenavResources = ABSOLUTE(0x0203CC0C);
+sMoveWindowDownIndex = ABSOLUTE(0x0203CC10);
 gBattleOutcome = ABSOLUTE(0x02023FDE);
 gPaletteFade = ABSOLUTE(0x02037C74);
 sFindThatGamerCoinsSpent = ABSOLUTE(0x02039CF4);

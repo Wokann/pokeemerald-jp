@@ -254,7 +254,7 @@ _081CAC0C:
 	movs r0, #0
 	b _081CACAA
 _081CAC26:
-	bl sub_081C79CC
+	bl IsCreatePokenavListTaskActive
 	cmp r0, #0
 	bne _081CAC9E
 	adds r0, r5, #0
@@ -341,7 +341,7 @@ _081CACCE:
 _081CACD8:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorDown
+	bl PokenavList_MoveCursorDown
 	cmp r0, #1
 	beq _081CACF0
 	cmp r0, #1
@@ -353,7 +353,7 @@ _081CACF0:
 	movs r0, #7
 	b _081CAD18
 _081CACF4:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CAD12
 _081CACFC:
@@ -403,7 +403,7 @@ _081CAD3A:
 _081CAD44:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorUp
+	bl PokenavList_MoveCursorUp
 	cmp r0, #1
 	beq _081CAD5C
 	cmp r0, #1
@@ -415,7 +415,7 @@ _081CAD5C:
 	movs r0, #7
 	b _081CAD84
 _081CAD60:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CAD7E
 _081CAD68:
@@ -465,7 +465,7 @@ _081CADA6:
 _081CADB0:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageDown
+	bl PokenavList_PageDown
 	cmp r0, #1
 	beq _081CADC8
 	cmp r0, #1
@@ -477,7 +477,7 @@ _081CADC8:
 	movs r0, #7
 	b _081CADF0
 _081CADCC:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CADEA
 _081CADD4:
@@ -527,7 +527,7 @@ _081CAE12:
 _081CAE1C:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageUp
+	bl PokenavList_PageUp
 	cmp r0, #1
 	beq _081CAE34
 	cmp r0, #1
@@ -539,7 +539,7 @@ _081CAE34:
 	movs r0, #7
 	b _081CAE5C
 _081CAE38:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CAE56
 _081CAE40:
@@ -682,7 +682,7 @@ _081CAF2E:
 	b _081CAF8E
 _081CAF38:
 	movs r0, #1
-	bl ToggleMatchCallVerticalArrows
+	bl PokenavList_ToggleVerticalArrows
 	adds r0, r5, #0
 	bl sub_081CB7A4
 	movs r0, #0
@@ -752,7 +752,7 @@ _081CAFB8:
 	adds r0, r5, #0
 	bl sub_081CB7E8
 	movs r0, #1
-	bl ToggleMatchCallVerticalArrows
+	bl PokenavList_ToggleVerticalArrows
 	movs r0, #1
 	strb r0, [r5, #0xe]
 	movs r0, #0
@@ -851,7 +851,7 @@ _081CB080:
 	ldrb r0, [r4, #0xf]
 	cmp r0, #0
 	beq _081CB0A0
-	bl sub_081C7FE0
+	bl PokenavList_DrawCurrentItemIcon
 	movs r6, #1
 	b _081CB0A8
 _081CB096:
@@ -861,7 +861,7 @@ _081CB096:
 	bne _081CB060
 _081CB0A0:
 	movs r0, #0
-	bl ToggleMatchCallVerticalArrows
+	bl PokenavList_ToggleVerticalArrows
 	movs r6, #4
 _081CB0A8:
 	adds r0, r6, #0
@@ -893,13 +893,13 @@ _081CB0CA:
 _081CB0D4:
 	movs r0, #5
 	bl PlaySE
-	bl sub_081C7F24
+	bl PokenavList_EraseListForCheckPage
 	adds r0, r5, #0
 	bl sub_081CB760
 	movs r0, #0
 	b _081CB134
 _081CB0E8:
-	bl sub_081C7FC8
+	bl PokenavList_IsTaskActive
 	cmp r0, #0
 	bne _081CB12E
 	adds r0, r5, #0
@@ -912,13 +912,13 @@ _081CB0E8:
 	b _081CB134
 _081CB104:
 	movs r0, #0
-	bl sub_081C7F54
+	bl PrintCheckPageInfo
 	adds r0, r5, #0
 	bl sub_081CBAF0
 	movs r0, #0
 	b _081CB134
 _081CB114:
-	bl sub_081C7FC8
+	bl PokenavList_IsTaskActive
 	cmp r0, #0
 	bne _081CB12E
 	adds r0, r5, #0
@@ -963,7 +963,7 @@ _081CB15C: @ jump table
 	.4byte _081CB1B4 @ case 3
 	.4byte _081CB1BE @ case 4
 _081CB170:
-	bl GetMatchCallListTopIndex
+	bl PokenavList_GetTopIndex
 	bl sub_081CA888
 	adds r5, r0, #0
 	cmp r5, #0
@@ -989,7 +989,7 @@ _081CB190:
 _081CB1A8:
 	movs r1, #0x16
 	ldrsh r0, [r4, r1]
-	bl sub_081C7F54
+	bl PrintCheckPageInfo
 	movs r0, #0
 	b _081CB1D6
 _081CB1B4:
@@ -998,7 +998,7 @@ _081CB1B4:
 	movs r0, #0
 	b _081CB1D6
 _081CB1BE:
-	bl sub_081C7FC8
+	bl PokenavList_IsTaskActive
 	cmp r0, #0
 	bne _081CB1D0
 	adds r0, r4, #0
@@ -1039,11 +1039,11 @@ _081CB1FC:
 	bl PlaySE
 	adds r0, r5, #0
 	bl sub_081CBB74
-	bl sub_081C7F98
+	bl PokenavList_ReshowListFromCheckPage
 	movs r0, #0
 	b _081CB242
 _081CB210:
-	bl sub_081C7FC8
+	bl PokenavList_IsTaskActive
 	cmp r0, #0
 	bne _081CB23C
 	adds r0, r5, #0
@@ -1095,7 +1095,7 @@ _081CB268: @ jump table
 	.4byte _081CB2C0 @ case 3
 	.4byte _081CB2CA @ case 4
 _081CB27C:
-	bl GetMatchCallListTopIndex
+	bl PokenavList_GetTopIndex
 	bl sub_081CA8CC
 	adds r5, r0, #0
 	cmp r5, #0
@@ -1121,7 +1121,7 @@ _081CB29C:
 _081CB2B4:
 	movs r1, #0x16
 	ldrsh r0, [r4, r1]
-	bl sub_081C7F54
+	bl PrintCheckPageInfo
 	movs r0, #0
 	b _081CB2E2
 _081CB2C0:
@@ -1130,7 +1130,7 @@ _081CB2C0:
 	movs r0, #0
 	b _081CB2E2
 _081CB2CA:
-	bl sub_081C7FC8
+	bl PokenavList_IsTaskActive
 	cmp r0, #0
 	bne _081CB2DC
 	adds r0, r4, #0
@@ -1215,7 +1215,7 @@ sub_081CB32C: @ 0x081CB32C
 	str r0, [sp, #0x14]
 	ldr r0, _081CB384
 	movs r2, #2
-	bl sub_081C797C
+	bl CreatePokenavList
 	ldr r0, _081CB388
 	movs r1, #7
 	bl CreateTask
@@ -1232,7 +1232,7 @@ _081CB388: .4byte 0x081CB3D5
 	thumb_func_start sub_081CB38C
 sub_081CB38C: @ 0x081CB38C
 	push {lr}
-	bl sub_081C79DC
+	bl DestroyPokenavList
 	ldr r0, _081CB3A4
 	bl FindTaskIdByFunc
 	lsls r0, r0, #0x18
@@ -1587,7 +1587,7 @@ sub_081CB640: @ 0x081CB640
 	sub sp, #0x1c
 	adds r5, r0, #0
 	adds r4, r1, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	adds r0, r0, r4
 	bl sub_081CA650
 	lsls r0, r0, #0x10
@@ -1914,7 +1914,7 @@ sub_081CB8AC: @ 0x081CB8AC
 	push {r4, r5, lr}
 	sub sp, #0xc
 	adds r4, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	adds r1, r4, #0
 	adds r1, #0xf
 	bl sub_081CA71C
@@ -2216,7 +2216,7 @@ _081CBAEC: .4byte 0x020205AC
 sub_081CBAF0: @ 0x081CBAF0
 	push {r4, r5, r6, r7, lr}
 	adds r7, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	bl sub_081CA6B0
 	cmp r0, #0
 	blt _081CBB54
@@ -7952,7 +7952,7 @@ _081CE7BC:
 	movs r0, #0
 	b _081CE7DA
 _081CE7CA:
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	ldr r1, [r4, #0x20]
 	strh r0, [r1, #2]
 	str r5, [r4, #0x1c]
@@ -8022,7 +8022,7 @@ sub_081CE824: @ 0x081CE824
 	movs r0, #7
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	ldr r1, [r4, #0x20]
 	lsls r0, r0, #2
 	adds r1, r1, r0
@@ -8453,7 +8453,7 @@ sub_081CEB2C: @ 0x081CEB2C
 	movs r0, #8
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl sub_081C79DC
+	bl DestroyPokenavList
 	ldrb r0, [r4, #8]
 	bl RemoveWindow
 	movs r0, #8
@@ -8548,7 +8548,7 @@ _081CEBF4:
 	.align 2, 0
 _081CEC10: .4byte 0x085F5B7C
 _081CEC14:
-	bl sub_081C79CC
+	bl IsCreatePokenavListTaskActive
 	cmp r0, #0
 	bne _081CEC9E
 	adds r0, r5, #0
@@ -8639,7 +8639,7 @@ _081CECC6:
 _081CECD0:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorUp
+	bl PokenavList_MoveCursorUp
 	cmp r0, #1
 	beq _081CECE8
 	cmp r0, #1
@@ -8651,7 +8651,7 @@ _081CECE8:
 	movs r0, #7
 	b _081CED0E
 _081CECEC:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CED08
 _081CECF4:
@@ -8699,7 +8699,7 @@ _081CED2E:
 _081CED38:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorDown
+	bl PokenavList_MoveCursorDown
 	cmp r0, #1
 	beq _081CED50
 	cmp r0, #1
@@ -8711,7 +8711,7 @@ _081CED50:
 	movs r0, #7
 	b _081CED76
 _081CED54:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CED70
 _081CED5C:
@@ -8759,7 +8759,7 @@ _081CED96:
 _081CEDA0:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageUp
+	bl PokenavList_PageUp
 	cmp r0, #1
 	beq _081CEDB8
 	cmp r0, #1
@@ -8771,7 +8771,7 @@ _081CEDB8:
 	movs r0, #7
 	b _081CEDDE
 _081CEDBC:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CEDD8
 _081CEDC4:
@@ -8819,7 +8819,7 @@ _081CEDFE:
 _081CEE08:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageDown
+	bl PokenavList_PageDown
 	cmp r0, #1
 	beq _081CEE20
 	cmp r0, #1
@@ -8831,7 +8831,7 @@ _081CEE20:
 	movs r0, #7
 	b _081CEE46
 _081CEE24:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CEE40
 _081CEE2C:
@@ -9018,7 +9018,7 @@ sub_081CEF4C: @ 0x081CEF4C
 	str r4, [sp, #0x14]
 	ldr r0, _081CEF9C
 	movs r2, #0
-	bl sub_081C797C
+	bl CreatePokenavList
 	add sp, #0x18
 	pop {r4}
 	pop {r0}
@@ -9308,7 +9308,7 @@ _081CF1B4:
 	movs r0, #0
 	b _081CF1D2
 _081CF1C2:
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	ldr r1, [r4, #0x1c]
 	strh r0, [r1, #2]
 	str r5, [r4, #0x18]
@@ -9378,7 +9378,7 @@ sub_081CF21C: @ 0x081CF21C
 	movs r0, #9
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	ldr r1, [r4, #0x1c]
 	lsls r0, r0, #2
 	adds r1, r1, r0
@@ -9840,7 +9840,7 @@ sub_081CF56C: @ 0x081CF56C
 	movs r0, #0xa
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl sub_081C79DC
+	bl DestroyPokenavList
 	ldrb r0, [r4, #8]
 	bl RemoveWindow
 	movs r0, #0xa
@@ -9943,7 +9943,7 @@ _081CF64A:
 	.align 2, 0
 _081CF664: .4byte 0x085F5D80
 _081CF668:
-	bl sub_081C79CC
+	bl IsCreatePokenavListTaskActive
 	cmp r0, #0
 	bne _081CF6C2
 	adds r0, r5, #0
@@ -10014,7 +10014,7 @@ _081CF6EA:
 _081CF6F4:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorUp
+	bl PokenavList_MoveCursorUp
 	cmp r0, #1
 	beq _081CF70C
 	cmp r0, #1
@@ -10026,7 +10026,7 @@ _081CF70C:
 	movs r0, #7
 	b _081CF732
 _081CF710:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CF72C
 _081CF718:
@@ -10074,7 +10074,7 @@ _081CF752:
 _081CF75C:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_MoveCursorDown
+	bl PokenavList_MoveCursorDown
 	cmp r0, #1
 	beq _081CF774
 	cmp r0, #1
@@ -10086,7 +10086,7 @@ _081CF774:
 	movs r0, #7
 	b _081CF79A
 _081CF778:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CF794
 _081CF780:
@@ -10134,7 +10134,7 @@ _081CF7BA:
 _081CF7C4:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageUp
+	bl PokenavList_PageUp
 	cmp r0, #1
 	beq _081CF7DC
 	cmp r0, #1
@@ -10146,7 +10146,7 @@ _081CF7DC:
 	movs r0, #7
 	b _081CF802
 _081CF7E0:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CF7FC
 _081CF7E8:
@@ -10194,7 +10194,7 @@ _081CF822:
 _081CF82C:
 	movs r0, #5
 	bl PlaySE
-	bl MatchCall_PageDown
+	bl PokenavList_PageDown
 	cmp r0, #1
 	beq _081CF844
 	cmp r0, #1
@@ -10206,7 +10206,7 @@ _081CF844:
 	movs r0, #7
 	b _081CF86A
 _081CF848:
-	bl sub_081C7DD8
+	bl PokenavList_IsMoveWindowTaskActive
 	cmp r0, #0
 	bne _081CF864
 _081CF850:
@@ -10354,7 +10354,7 @@ sub_081CF95C: @ 0x081CF95C
 	push {r4, r5, lr}
 	sub sp, #0xc
 	adds r5, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	adds r1, r0, #0
 	ldr r4, _081CF9A0
 	adds r1, #1
@@ -10414,7 +10414,7 @@ sub_081CF9A4: @ 0x081CF9A4
 	str r4, [sp, #0x14]
 	ldr r0, _081CF9F4
 	movs r2, #0
-	bl sub_081C797C
+	bl CreatePokenavList
 	add sp, #0x18
 	pop {r4}
 	pop {r0}

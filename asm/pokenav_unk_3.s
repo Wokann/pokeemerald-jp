@@ -103,7 +103,7 @@ _081CA330:
 	ldr r0, _081CA364
 	str r0, [r4, #0x18]
 	strh r2, [r4]
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	lsls r0, r0, #2
 	adds r1, r4, r0
 	ldrb r0, [r1, #0x1c]
@@ -1009,7 +1009,7 @@ sub_081CA974: @ 0x081CA974
 	movs r0, #5
 	bl GetSubstructPtr
 	adds r4, r0, #0
-	bl GetSelectedMatchCall
+	bl PokenavList_GetSelectedIndex
 	adds r1, r0, #0
 	lsls r0, r1, #2
 	adds r4, r4, r0
