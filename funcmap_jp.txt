@@ -7219,14 +7219,14 @@ mail_data.s
 080d3c0c ClearAllMail ClearAllMail
 080d3c3c ClearMail ClearMail
 080d3c90 MonHasMail MonHasMail
-080d3cc0 mail_data.s GiveMailToMon
+080d3cc0 GiveMailToMon GiveMailToMonByItemId
 080d3e4c SpeciesToMailSpecies SpeciesToMailSpecies
 080d3e6c mail_data.s MailSpeciesToSpecies
 080d3e90 GiveMailToMon2 GiveMailToMon
 080d3f00 mail_data.s DummyMailFunc
 080d3f04 TakeMailFromMon TakeMailFromMon
 080d3f64 ClearMailItemId ClearMailItemId
-080d3f84 mail_data.s TakeMailFromMon2
+080d3f84 TakeMailFromMon2 TakeMailFromMonAndSave
 080d4040 ItemIsMail ItemIsMail
 map_name_popup.s
 080d4058 sub_080D4058_jp StartMenu_ShowMapNamePopup

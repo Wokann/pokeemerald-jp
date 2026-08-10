@@ -289,7 +289,7 @@ SECTIONS {
         asm/pokemon_icon.o(.text);
         asm/script_movement.o(.text);
         build/src/fldeff_cut.o(.text);
-        asm/mail_data.o(.text);
+        build/src/mail_data.o(.text);
         asm/map_name_popup.o(.text);
         asm/item_menu_icons.o(.text);
         asm/battle_anim_mon_movement.o(.text);

@@ -3813,7 +3813,7 @@ sub_081B1A88: @ 0x081B1A88
 	bne _081B1AB2
 	adds r0, r6, #0
 	adds r1, r4, #0
-	bl GiveMailToMon
+	bl GiveMailToMonByItemId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0xff
@@ -9542,7 +9542,7 @@ _081B4866:
 	muls r0, r1, r0
 	ldr r1, _081B489C
 	adds r0, r0, r1
-	bl TakeMailFromMon2
+	bl TakeMailFromMonAndSave
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #0xff
@@ -16632,9 +16632,9 @@ _081B8178: .4byte 0x085C9D0C
 _081B817C:
 	adds r0, r5, #0
 	adds r1, r4, #0
-	bl GiveMailToMon2
+	bl GiveMailToMon
 	adds r0, r4, #0
-	bl ClearMailStruct
+	bl ClearMail
 	ldr r0, _081B81AC
 	movs r1, #1
 	bl DisplayPartyMenuMessage

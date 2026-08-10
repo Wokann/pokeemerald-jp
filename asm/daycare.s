@@ -407,7 +407,7 @@ _0806F79E:
 	adds r4, #0x50
 	adds r0, r6, #0
 	adds r1, r4, #0
-	bl GiveMailToMon2
+	bl GiveMailToMon
 	adds r0, r4, #0
 	bl ClearDaycareMonMail
 _0806F7CC:
@@ -702,7 +702,7 @@ _0806F9F6:
 	subs r1, #1
 	cmp r1, r2
 	bge _0806F9F6
-	bl ClearMailStruct
+	bl ClearMail
 	pop {r0}
 	bx r0
 	.align 2, 0

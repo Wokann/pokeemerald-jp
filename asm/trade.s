@@ -8463,7 +8463,7 @@ sub_0807AF08: @ 0x0807AF08
 	adds r1, r1, r2
 	ldr r0, [r0]
 	adds r0, r0, r1
-	bl ClearMailStruct
+	bl ClearMail
 _0807AF62:
 	ldr r4, _0807AFE4
 	ldr r0, [r4]
@@ -8500,7 +8500,7 @@ _0807AF9E:
 	ldr r0, _0807AFE8
 	adds r1, r1, r0
 	adds r0, r7, #0
-	bl GiveMailToMon2
+	bl GiveMailToMon
 _0807AFB4:
 	mov r0, sb
 	bl sub_0807AE9C

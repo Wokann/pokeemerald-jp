@@ -777,7 +777,7 @@ _08153CC2:
 	beq _08153CE0
 	adds r0, r7, #0
 	mov r1, sp
-	bl GiveMailToMon2
+	bl GiveMailToMon
 _08153CE0:
 	bl CompactPartySlots
 	bl CalculatePlayerPartyCount

@@ -1592,7 +1592,7 @@ _0816B8A8:
 	adds r0, r6, #0
 	bl DisplayItemMessageOnField
 	adds r0, r5, #0
-	bl ClearMailStruct
+	bl ClearMail
 	bl Mailbox_UpdateMailList
 	ldrb r0, [r4, #5]
 	subs r0, #1
