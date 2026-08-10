@@ -2760,563 +2760,181 @@ u8 GetMenuCursorDimensionByFont(u8 fontId, u8 whichDimension)
 }
 
 // JP-specific glyph functions (JP ROM 0x080062B4-0x0800668C)
-__attribute__((naked)) void DecompressGlyphFont9(u16 glyphId)
+void DecompressGlyphFont9(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x14\n\t"
-            "lsls r4, r4, #9\n\t"
-            "movs r1, #0xf0\n\t"
-            "lsls r1, r1, #0xc\n\t"
-            "ands r1, r0\n\t"
-            "lsrs r1, r1, #0xc\n\t"
-            "ldr r0, _080062F8\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r4, r4, r1\n\t"
-            "ldr r5, _080062FC\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x80\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1]\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r5]\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_080062F8: .4byte 0x0829CF14\n\t"
-            "_080062FC: .4byte 0x03003030\n\t"
-            ".syntax divided");
+    const u8 *glyphs = sFontGlyphData_9CF14 + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+    DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+    gCurGlyph.width = 8;
+    gCurGlyph.height = 12;
 }
 
-__attribute__((naked)) u32 sub_08006300(u16 glyphId)
+u32 sub_08006300(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "movs r0, #8\n\t"
-            "bx lr\n\t"
-            ".syntax divided");
+    return 8;
 }
 
-__attribute__((naked)) void sub_08006304(u16 glyphId)
+void sub_08006304(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x14\n\t"
-            "lsls r4, r4, #9\n\t"
-            "movs r1, #0xf0\n\t"
-            "lsls r1, r1, #0xc\n\t"
-            "ands r1, r0\n\t"
-            "lsrs r1, r1, #0xc\n\t"
-            "ldr r0, _08006348\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r4, r4, r1\n\t"
-            "ldr r5, _0800634C\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x80\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1]\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r0, #0x10\n\t"
-            "strb r0, [r5]\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_08006348: .4byte 0x082A0F14\n\t"
-            "_0800634C: .4byte 0x03003030\n\t"
-            ".syntax divided");
+    const u8 *glyphs = sFontGlyphData_A0F14 + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+    DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+    gCurGlyph.width = 8;
+    gCurGlyph.height = 16;
 }
 
-__attribute__((naked)) u32 sub_08006350(u16 glyphId)
+u32 sub_08006350(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "movs r0, #8\n\t"
-            "bx lr\n\t"
-            ".syntax divided");
+    return 8;
 }
 
-__attribute__((naked)) void sub_08006354(u16 glyphId)
+void sub_08006354(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r6, r0, #0x10\n\t"
-            "cmp r6, #0\n\t"
-            "bne _08006390\n\t"
-            "movs r0, #2\n\t"
-            "bl GetLastTextColor\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "movs r1, #0\n\t"
-            "ldr r3, _0800638C\n\t"
-            "lsls r2, r0, #4\n\t"
-            "orrs r2, r0\n\t"
-            "adds r7, r3, #0\n\t"
-            "adds r7, #0x80\n\t"
-            "movs r6, #0xa\n\t"
-            "adds r5, r3, #0\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r4, #0xc\n\t"
-            "_0800637C:\n\t"
-            "adds r0, r1, r3\n\t"
-            "strb r2, [r0]\n\t"
-            "strb r6, [r7]\n\t"
-            "strb r4, [r5]\n\t"
-            "adds r1, #1\n\t"
-            "cmp r1, #0x7f\n\t"
-            "ble _0800637C\n\t"
-            "b _080063E6\n\t"
-            ".align 2, 0\n\t"
-            "_0800638C: .4byte 0x03003030\n\t"
-            "_08006390:\n\t"
-            "lsrs r2, r0, #0x13\n\t"
-            "lsls r2, r2, #9\n\t"
-            "movs r0, #7\n\t"
-            "ands r0, r6\n\t"
-            "lsls r0, r0, #5\n\t"
-            "ldr r1, _080063EC\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r4, r2, r0\n\t"
-            "ldr r5, _080063F0\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r0, #0x10\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x20\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x80\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x88\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x60\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "ldr r0, _080063F4\n\t"
-            "adds r0, r6, r0\n\t"
-            "ldrb r1, [r0]\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r0, #0x80\n\t"
-            "strb r1, [r0]\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x81\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r1]\n\t"
-            "_080063E6:\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_080063EC: .4byte 0x082A4F14\n\t"
-            "_080063F0: .4byte 0x03003030\n\t"
-            "_080063F4: .4byte 0x082ACF14\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+    {
+        u8 color = GetLastTextColor(2);
+        s32 i = 0;
+        u8 *buf = (u8 *)gCurGlyph.gfxBufferTop;
+        u32 v = (color << 4) | color;
+        for (; i < 0x80; i++)
+        {
+            *(u8 *)((u32)i + (u32)buf) = v;
+            gCurGlyph.width = 10;
+            gCurGlyph.height = 12;
+        }
+    }
+    else
+    {
+        u32 hi = (glyphId >> 3) * 0x200;
+        u32 lo = (glyphId & 7) * 0x20;
+        const u8 *glyphs = sFontGlyphData_A4F14 + hi + lo;
+        DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+        DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
+        DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+        DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
+        gCurGlyph.width = sGlyphWidthTable_ACF14[glyphId];
+        gCurGlyph.height = 12;
+    }
 }
 
-__attribute__((naked)) u32 sub_080063F8(u16 glyphId)
+u32 sub_080063F8(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "beq _08006410\n\t"
-            "ldr r0, _0800640C\n\t"
-            "adds r0, r1, r0\n\t"
-            "ldrb r0, [r0]\n\t"
-            "b _08006412\n\t"
-            ".align 2, 0\n\t"
-            "_0800640C: .4byte 0x082ACF14\n\t"
-            "_08006410:\n\t"
-            "movs r0, #0xa\n\t"
-            "_08006412:\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+        return 10;
+    return sGlyphWidthTable_ACF14[glyphId];
 }
 
-__attribute__((naked)) void sub_08006418(u16 glyphId)
+void sub_08006418(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "bne _08006454\n\t"
-            "movs r0, #2\n\t"
-            "bl GetLastTextColor\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "movs r1, #0\n\t"
-            "ldr r3, _08006450\n\t"
-            "lsls r2, r0, #4\n\t"
-            "orrs r2, r0\n\t"
-            "adds r7, r3, #0\n\t"
-            "adds r7, #0x80\n\t"
-            "movs r6, #0xa\n\t"
-            "adds r5, r3, #0\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r4, #0xc\n\t"
-            "_08006440:\n\t"
-            "adds r0, r1, r3\n\t"
-            "strb r2, [r0]\n\t"
-            "strb r6, [r7]\n\t"
-            "strb r4, [r5]\n\t"
-            "adds r1, #1\n\t"
-            "cmp r1, #0x7f\n\t"
-            "ble _08006440\n\t"
-            "b _080064A4\n\t"
-            ".align 2, 0\n\t"
-            "_08006450: .4byte 0x03003030\n\t"
-            "_08006454:\n\t"
-            "lsrs r2, r0, #0x13\n\t"
-            "lsls r2, r2, #9\n\t"
-            "movs r0, #7\n\t"
-            "ands r0, r1\n\t"
-            "lsls r0, r0, #5\n\t"
-            "ldr r1, _080064AC\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r5, r2, r0\n\t"
-            "ldr r4, _080064B0\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r0, #0x10\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r1, #0x20\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x80\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x88\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r5, r1\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r1, #0x60\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r1, r4, #0\n\t"
-            "adds r1, #0x80\n\t"
-            "movs r0, #0xa\n\t"
-            "strb r0, [r1]\n\t"
-            "adds r1, #1\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r1]\n\t"
-            "_080064A4:\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_080064AC: .4byte 0x082A4F14\n\t"
-            "_080064B0: .4byte 0x03003030\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+    {
+        u8 color = GetLastTextColor(2);
+        s32 i = 0;
+        u8 *buf = (u8 *)gCurGlyph.gfxBufferTop;
+        u32 v = (color << 4) | color;
+        for (; i < 0x80; i++)
+        {
+            *(u8 *)((u32)i + (u32)buf) = v;
+            gCurGlyph.width = 10;
+            gCurGlyph.height = 12;
+        }
+    }
+    else
+    {
+        u32 hi = (glyphId >> 3) * 0x200;
+        u32 lo = (glyphId & 7) * 0x20;
+        const u8 *glyphs = sFontGlyphData_A4F14 + hi + lo;
+        DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+        DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
+        DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+        DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
+        gCurGlyph.width = 10;
+        gCurGlyph.height = 12;
+    }
 }
 
-__attribute__((naked)) u32 sub_080064B4(u16 glyphId)
+u32 sub_080064B4(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "movs r0, #0xa\n\t"
-            "bx lr\n\t"
-            ".syntax divided");
+    return 10;
 }
 
-__attribute__((naked)) void sub_080064B8(u16 glyphId)
+void sub_080064B8(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r6, r0, #0x10\n\t"
-            "cmp r6, #0\n\t"
-            "bne _080064F4\n\t"
-            "movs r0, #2\n\t"
-            "bl GetLastTextColor\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "movs r1, #0\n\t"
-            "ldr r3, _080064F0\n\t"
-            "lsls r2, r0, #4\n\t"
-            "orrs r2, r0\n\t"
-            "adds r7, r3, #0\n\t"
-            "adds r7, #0x80\n\t"
-            "movs r6, #0xa\n\t"
-            "adds r5, r3, #0\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r4, #0xc\n\t"
-            "_080064E0:\n\t"
-            "adds r0, r1, r3\n\t"
-            "strb r2, [r0]\n\t"
-            "strb r6, [r7]\n\t"
-            "strb r4, [r5]\n\t"
-            "adds r1, #1\n\t"
-            "cmp r1, #0x7f\n\t"
-            "ble _080064E0\n\t"
-            "b _0800654A\n\t"
-            ".align 2, 0\n\t"
-            "_080064F0: .4byte 0x03003030\n\t"
-            "_080064F4:\n\t"
-            "lsrs r2, r0, #0x13\n\t"
-            "lsls r2, r2, #9\n\t"
-            "movs r0, #7\n\t"
-            "ands r0, r6\n\t"
-            "lsls r0, r0, #5\n\t"
-            "ldr r1, _08006550\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r4, r2, r0\n\t"
-            "ldr r5, _08006554\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r0, #0x10\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x20\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x80\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x88\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x60\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "ldr r0, _08006558\n\t"
-            "adds r0, r6, r0\n\t"
-            "ldrb r1, [r0]\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r0, #0x80\n\t"
-            "strb r1, [r0]\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x81\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r1]\n\t"
-            "_0800654A:\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_08006550: .4byte 0x082AD02C\n\t"
-            "_08006554: .4byte 0x03003030\n\t"
-            "_08006558: .4byte 0x082B502C\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+    {
+        u8 color = GetLastTextColor(2);
+        s32 i = 0;
+        u8 *buf = (u8 *)gCurGlyph.gfxBufferTop;
+        u32 v = (color << 4) | color;
+        for (; i < 0x80; i++)
+        {
+            *(u8 *)((u32)i + (u32)buf) = v;
+            gCurGlyph.width = 10;
+            gCurGlyph.height = 12;
+        }
+    }
+    else
+    {
+        u32 hi = (glyphId >> 3) * 0x200;
+        u32 lo = (glyphId & 7) * 0x20;
+        const u8 *glyphs = sFontGlyphData_AD02C + hi + lo;
+        DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+        DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
+        DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+        DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
+        gCurGlyph.width = sGlyphWidthTable_B502C[glyphId];
+        gCurGlyph.height = 12;
+    }
 }
 
-__attribute__((naked)) u32 sub_0800655C(u16 glyphId)
+u32 sub_0800655C(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "beq _08006574\n\t"
-            "ldr r0, _08006570\n\t"
-            "adds r0, r1, r0\n\t"
-            "ldrb r0, [r0]\n\t"
-            "b _08006576\n\t"
-            ".align 2, 0\n\t"
-            "_08006570: .4byte 0x082B502C\n\t"
-            "_08006574:\n\t"
-            "movs r0, #0xa\n\t"
-            "_08006576:\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+        return 10;
+    return sGlyphWidthTable_B502C[glyphId];
 }
 
-__attribute__((naked)) void sub_0800657C(u16 glyphId)
+void sub_0800657C(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r6, r0, #0x10\n\t"
-            "cmp r6, #0\n\t"
-            "bne _080065B8\n\t"
-            "movs r0, #2\n\t"
-            "bl GetLastTextColor\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "movs r1, #0\n\t"
-            "ldr r3, _080065B4\n\t"
-            "lsls r2, r0, #4\n\t"
-            "orrs r2, r0\n\t"
-            "adds r7, r3, #0\n\t"
-            "adds r7, #0x80\n\t"
-            "movs r6, #0xa\n\t"
-            "adds r5, r3, #0\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r4, #0xc\n\t"
-            "_080065A4:\n\t"
-            "adds r0, r1, r3\n\t"
-            "strb r2, [r0]\n\t"
-            "strb r6, [r7]\n\t"
-            "strb r4, [r5]\n\t"
-            "adds r1, #1\n\t"
-            "cmp r1, #0x7f\n\t"
-            "ble _080065A4\n\t"
-            "b _0800660E\n\t"
-            ".align 2, 0\n\t"
-            "_080065B4: .4byte 0x03003030\n\t"
-            "_080065B8:\n\t"
-            "lsrs r2, r0, #0x13\n\t"
-            "lsls r2, r2, #9\n\t"
-            "movs r0, #7\n\t"
-            "ands r0, r6\n\t"
-            "lsls r0, r0, #5\n\t"
-            "ldr r1, _08006614\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r4, r2, r0\n\t"
-            "ldr r5, _08006618\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r0, #0x10\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x20\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x80\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r1, #0x88\n\t"
-            "lsls r1, r1, #1\n\t"
-            "adds r0, r4, r1\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x60\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "ldr r0, _0800661C\n\t"
-            "adds r0, r6, r0\n\t"
-            "ldrb r1, [r0]\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r0, #0x80\n\t"
-            "strb r1, [r0]\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x81\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r1]\n\t"
-            "_0800660E:\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_08006614: .4byte 0x082B5144\n\t"
-            "_08006618: .4byte 0x03003030\n\t"
-            "_0800661C: .4byte 0x082BD144\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+    {
+        u8 color = GetLastTextColor(2);
+        s32 i = 0;
+        u8 *buf = (u8 *)gCurGlyph.gfxBufferTop;
+        u32 v = (color << 4) | color;
+        for (; i < 0x80; i++)
+        {
+            *(u8 *)((u32)i + (u32)buf) = v;
+            gCurGlyph.width = 10;
+            gCurGlyph.height = 12;
+        }
+    }
+    else
+    {
+        u32 hi = (glyphId >> 3) * 0x200;
+        u32 lo = (glyphId & 7) * 0x20;
+        const u8 *glyphs = sFontGlyphData_B5144 + hi + lo;
+        DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+        DecompressGlyphTile(glyphs + 0x10, (u8 *)gCurGlyph.gfxBufferTop + 0x20);
+        DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+        DecompressGlyphTile(glyphs + 0x110, (u8 *)gCurGlyph.gfxBufferBottom + 0x20);
+        gCurGlyph.width = sGlyphWidthTable_BD144[glyphId];
+        gCurGlyph.height = 12;
+    }
 }
 
-__attribute__((naked)) u32 sub_08006620(u16 glyphId)
+u32 sub_08006620(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r1, r0, #0x10\n\t"
-            "cmp r1, #0\n\t"
-            "beq _08006638\n\t"
-            "ldr r0, _08006634\n\t"
-            "adds r0, r1, r0\n\t"
-            "ldrb r0, [r0]\n\t"
-            "b _0800663A\n\t"
-            ".align 2, 0\n\t"
-            "_08006634: .4byte 0x082BD144\n\t"
-            "_08006638:\n\t"
-            "movs r0, #0xa\n\t"
-            "_0800663A:\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
+    if (glyphId == 0)
+        return 10;
+    return sGlyphWidthTable_BD144[glyphId];
 }
 
-__attribute__((naked)) void sub_08006640(u16 glyphId)
+void sub_08006640(u16 glyphId)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r4, r0, #0x14\n\t"
-            "lsls r4, r4, #9\n\t"
-            "movs r1, #0xf0\n\t"
-            "lsls r1, r1, #0xc\n\t"
-            "ands r1, r0\n\t"
-            "lsrs r1, r1, #0xc\n\t"
-            "ldr r0, _08006684\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r4, r4, r1\n\t"
-            "ldr r5, _08006688\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #1\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x40\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DecompressGlyphTile\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x80\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1]\n\t"
-            "adds r5, #0x81\n\t"
-            "movs r0, #0xc\n\t"
-            "strb r0, [r5]\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_08006684: .4byte 0x082BD25C\n\t"
-            "_08006688: .4byte 0x03003030\n\t"
-            ".syntax divided");
+    const u8 *glyphs = sFontGlyphData_BD25C + (0x200 * (glyphId >> 4)) + (0x10 * (glyphId & 0xF));
+    DecompressGlyphTile(glyphs, gCurGlyph.gfxBufferTop);
+    DecompressGlyphTile(glyphs + 0x100, gCurGlyph.gfxBufferBottom);
+    gCurGlyph.width = 8;
+    gCurGlyph.height = 12;
 }
