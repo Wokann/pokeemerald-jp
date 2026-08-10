@@ -130,12 +130,12 @@ gSpecials:
 	def_special ScrSpecial_StorytellerUpdateStat
 	def_special SanitizeReceivedEmeraldOldMan
 	def_special ScrSpecial_HasStorytellerAlreadyRecorded
-	def_special ScrSpecial_TraderMenuGetDecoration
-	def_special ScrSpecial_GetTraderTradedFlag
-	def_special ScrSpecial_DoesPlayerHaveNoDecorations
-	def_special sub_08133CD4
-	def_special CreateAvailableDecorationsMenu
-	def_special ScrSpecial_TraderDoDecorationTrade
+	def_special TraderMenuGetDecoration
+	def_special GetTraderTradedFlag
+	def_special DoesPlayerHaveNoDecorations
+	def_special IsDecorationCategoryFull
+	def_special TraderShowDecorationMenu
+	def_special TraderDoDecorationTrade
 	def_special GetSeedotSizeRecordInfo
 	def_special CompareSeedotSize
 	def_special GetLotadSizeRecordInfo
