@@ -3647,6 +3647,8 @@ _080EE77C: .4byte 0x0829BDA5
 
 	thumb_func_start sub_080EE780
 sub_080EE780: @ 0x080EE780
+	.globl TryPutTrendWatcherOnAir
+	.set TryPutTrendWatcherOnAir, sub_080EE780
 	push {r4, r5, r6, r7, lr}
 	adds r5, r0, #0
 	ldr r7, _080EE7F4

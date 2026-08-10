@@ -9782,7 +9782,7 @@ dewford_trend.s
 08122a3c GetDewfordHallPaintingNameIndex GetDewfordHallPaintingNameIndex
 08122a64 CompareTrends CompareTrends
 08122b34 SeedTrendRng SeedTrendRng
-08122bbc dewford_trend.s SB1ContainsWords
+08122bbc dewford_trend.s IsPhraseInSavedTrends
 08122bfc dewford_trend.s IsEasyChatPairEqual
 08122c28 GetSavedTrendIndex GetSavedTrendIndex
 heal_location.s

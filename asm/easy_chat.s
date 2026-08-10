@@ -4028,7 +4028,7 @@ _0811C6F4:
 	ldr r4, _0811C70C
 	ldr r0, [r5]
 	adds r0, #0x3c
-	bl sub_081226E4
+	bl TrySetTrendyPhrase
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	strh r0, [r4]
@@ -9829,6 +9829,8 @@ _0811F308:
 	thumb_func_end sub_0811F2A4
 
 	thumb_func_start sub_0811F318
+	.globl GetRandomEasyChatWordFromGroup
+	.set GetRandomEasyChatWordFromGroup, sub_0811F318
 sub_0811F318: @ 0x0811F318
 	push {r4, lr}
 	lsls r0, r0, #0x10

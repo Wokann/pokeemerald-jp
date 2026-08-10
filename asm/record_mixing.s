@@ -424,7 +424,7 @@ ReceiveExchangePacket: @ 0x080E6738
 	adds r0, r0, r1
 	adds r1, r6, #0
 	adds r2, r4, #0
-	bl ReceiveEasyChatPairsData
+	bl ReceiveDewfordTrendData
 	ldr r0, [r5]
 	ldr r1, _080E67E8
 	adds r0, r0, r1
@@ -477,7 +477,7 @@ _080E67EC:
 	adds r0, r0, r1
 	adds r1, r6, #0
 	adds r2, r4, #0
-	bl ReceiveEasyChatPairsData
+	bl ReceiveDewfordTrendData
 	ldr r3, [r5]
 	ldr r1, _080E68B4
 	adds r0, r3, r1
