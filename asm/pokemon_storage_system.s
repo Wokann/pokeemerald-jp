@@ -2245,7 +2245,7 @@ _080C799C:
 	adds r2, r2, r1
 	ldr r1, _080C79D8
 	strh r1, [r2]
-	bl unref_sub_811BBF4
+	bl InitMonMarkingsMenu
 	bl BufferMonMarkingsMenuTiles
 	b _080C7A34
 	.align 2, 0
