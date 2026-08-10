@@ -2498,7 +2498,7 @@ GetEventObjectGraphicsInfo: @ 0x0808E004
 	adds r0, #0x10
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl VarGetEventObjectGraphicsId
+	bl VarGetObjectEventGraphicsId
 	adds r1, r0, #0
 _0808E01C:
 	cmp r1, #0x45
@@ -2538,7 +2538,7 @@ SetEventObjectDynamicGraphicsId: @ 0x0808E04C
 	adds r0, #0x10
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
-	bl VarGetEventObjectGraphicsId
+	bl VarGetObjectEventGraphicsId
 	strb r0, [r4, #5]
 _0808E062:
 	pop {r4}

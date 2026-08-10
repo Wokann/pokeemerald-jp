@@ -1696,6 +1696,7 @@ gUnknown_203D350 = .;
 . += 0x2cb0;
 gPlayerFacingPosition = ABSOLUTE(0x0203A80C);
 gSpecialVar_LastTalked = ABSOLUTE(0x02037292);
+sSpecialFlags = ABSOLUTE(0x0203729C);
 sCutGrassSpriteArrayPtr = ABSOLUTE(0x02039A70);
 sEscalatorAnim_TaskId = ABSOLUTE(0x02039C2C);
 sRotatingGate_GateSpriteIds = ABSOLUTE(0x02039D04);

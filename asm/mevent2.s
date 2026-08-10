@@ -274,8 +274,8 @@ DestroyWonderCard: @ 0x0801ACB0
 	bl sub_0801AE28
 	bl sub_0801B524
 	bl ClearRamScript
-	bl sub_0809CDB0
-	bl sub_0809CE48
+	bl ClearMysteryGiftFlags
+	bl ClearMysteryGiftVars
 	ldr r0, _0801ACDC
 	ldr r0, [r0]
 	ldr r1, _0801ACE0
