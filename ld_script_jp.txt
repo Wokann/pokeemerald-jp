@@ -130,6 +130,9 @@ sGlyphWidthTable_ACF14 = ABSOLUTE(0x082ACF14);
 sGlyphWidthTable_B502C = ABSOLUTE(0x082B502C);
 sGlyphWidthTable_BD144 = ABSOLUTE(0x082BD144);
 gText_Coins = ABSOLUTE(0x085C9443);
+sSaveLocationPokeCenterList = ABSOLUTE(0x085DFC74);
+sSaveLocationReloadLocList = ABSOLUTE(0x085DFCC2);
+sEmptyMapList = ABSOLUTE(0x085DFCC6);
 
 SECTIONS {
     . = 0x2000000;
@@ -395,7 +398,7 @@ SECTIONS {
         asm/item_menu.o(.text);
         asm/list_menu.o(.text);
         build/src/dynamic_placeholder_text_util.o(.text);
-        asm/save_location.o(.text);
+        build/src/save_location.o(.text);
         asm/item_icon.o(.text);
         asm/party_menu.o(.text);
         asm/battle_tent.o(.text);

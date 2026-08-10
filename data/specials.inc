@@ -357,7 +357,7 @@ gSpecials:
 	def_special sub_08165248
 	def_special sub_080F9C00
 	def_special ScriptRandom
-	def_special sub_081AFAA8
+	def_special SetChampionSaveWarp
 	def_special sub_080EE808
 	def_special sub_080EEDEC
 	def_special sub_080EF244
@@ -510,7 +510,7 @@ gSpecials:
 	def_special sub_0813B4C8
 	def_special sub_080A0194
 	def_special Unused_SetWeatherSunny
-	def_special sub_081AFA78
+	def_special SetUnlockedPokedexFlags
 	def_special sub_0813B518
 	def_special ShouldDoBrailleRegicePuzzle
 	def_special EnableNationalPokedex
