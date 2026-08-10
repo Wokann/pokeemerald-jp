@@ -153,9 +153,10 @@ def build_maps():
             continue
         m = re.match(r"'((?:[^'\\]|\\.)*)'\s*=\s*([0-9A-Fa-f ]+)", line)
         if m:
+            key = m.group(1).replace("\\'", "'")
             vals = [int(x, 16) for x in m.group(2).split()]
             if len(vals) == 1:
-                single[vals[0]] = m.group(1)
+                single[vals[0]] = key
             continue
         m = re.match(r"([A-Za-z0-9_]+)\s*=\s*([0-9A-Fa-f ]+)", line)
         if m:
@@ -193,16 +194,21 @@ def decode(data, single, multi, sounds):
             out.append("\\n")
             i += 1
             continue
-        matched = False
-        for ln in range(max_len, 0, -1):
-            seq = bytes(data[i : i + ln])
-            if seq in multi:
-                out.append("{%s}" % multi[seq])
-                i += ln
-                matched = True
-                break
-        if matched:
-            continue
+        # Multi-byte macros (SE_*/MUS_* etc.) are only meaningful after an
+        # FC control code; in normal text positions the same byte values are
+        # single-byte kana/symbols. Only try a macro when the first byte is
+        # not an ordinary single-byte glyph.
+        if b not in single:
+            matched = False
+            for ln in range(max_len, 0, -1):
+                seq = bytes(data[i : i + ln])
+                if seq in multi:
+                    out.append("{%s}" % multi[seq])
+                    i += ln
+                    matched = True
+                    break
+            if matched:
+                continue
         out.append(single.get(b, "?%02X" % b))
         i += 1
     return "".join(out)
