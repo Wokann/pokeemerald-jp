@@ -304,6 +304,8 @@ sub_081BA8CC = MultiBootCheckComplete;
 MultiBootInit = GetGlyphWidthFont6;
 gTrainerBackPicCoords = gUnknown_82D95BC;
 gMonFrontAnimsPtrTable = gUnknown_82DD33C;
+nullsub_35 = ReshowBattleScreenDummy;
+FillAroundBattleWindows = sub_0805EB30;
 gMultiBootProgram_EReader_Start = ABSOLUTE(0x0890F374);
 gMultiBootProgram_EReader_End = ABSOLUTE(0x08912454);
 sRibbonData = ABSOLUTE(0x085F5E14);
@@ -613,7 +615,7 @@ SECTIONS {
         asm/battle_anim.o(.text);
         asm/battle_anim_mons.o(.text);
         build/src/task.o(.text);
-        asm/reshow_battle_screen.o(.text);
+        build/src/reshow_battle_screen.o(.text);
         asm/battle_anim_status_effects.o(.text);
         asm/title_screen.o(.text);
         asm/field_weather.o(.text);
