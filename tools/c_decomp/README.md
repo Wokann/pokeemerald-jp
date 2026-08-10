@@ -86,7 +86,8 @@ removed), src/fldeff_rocksmash.c (10, asm/fldeff_rocksmash.s trimmed to the
 remaining 4 EscapeRope helper functions), src/fldeff_dig.c (4, full module --
 asm/fldeff_rocksmash.s removed), src/fldeff_sweetscent.c (6, full module --
 asm/fldeff_sweetscent.s removed), src/fldeff_softboiled.c (8, full module --
-asm/fldeff_softboiled.s removed).
+asm/fldeff_softboiled.s removed), src/fldeff_flash.c (20, full module --
+asm/fldeff_flash.s removed).
 
 The rocksmash conversion also aligned the JP asm names of the called
 helpers with pokeemerald (EventObject* -> ObjectEvent*, PlayerGetZCoord
@@ -130,3 +131,16 @@ schedule_bg_copy_tilemap_to_vram -> ScheduleBgCopyTilemapToVram) and
 GetMonData -> GetMonData3 (2-arg form kept as GetMonData2 alias, as in
 pokeemerald).  Added gStringVar4 (0x02021C7C), gText_PkmnHPRestoredByVar2
 (0x085C9E8F) and gText_CantBeUsedOnPkmn (0x085C9B07) symbols.
+
+src/fldeff_flash.c (SetUpFieldMove_Flash, FieldCallback_Flash,
+FldEff_UseFlash, CB2_ChangeMapMain, VBC_ChangeMapVBlank, CB2_DoChangeMap,
+TryDoMapTransition, GetMapPairFadeToType, GetMapPairFadeFromType, the
+DoExitCaveTransition/Task_ExitCaveTransition1-5 and
+DoEnterCaveTransition/Task_EnterCaveTransition1-4 cave-transition tasks) is
+the eighteenth wired module.  The JP splitter's hm2_flash / c2_change_map /
+sub_* labels were renamed to the pokeemerald names; the module's data
+(sTransitionTypes 0x08592214, the three cave-transition palettes
+0x0859229C/BC/DC, tilemap 0x085922FC and tiles 0x085924DC) stays in the ROM
+data region and is referenced via ABSOLUTE symbols, with EventScript_UseFlash
+(0x08257EE2) added.  Two bogus funcmap_jp entries (0x080E82DC and 0x081347FC
+mislabeled as CB2_ChangeMapMain / VBC_ChangeMapVBlank) were corrected.

@@ -38,8 +38,15 @@ EventScript_UseStrength = ABSOLUTE(0x08256797);
 FieldCallback_PrepareFadeInFromMenu = ABSOLUTE(0x081B53D8);
 EventScript_UseRockSmash = ABSOLUTE(0x082566C6);
 EventScript_FailSweetScent = ABSOLUTE(0x08256A14);
+EventScript_UseFlash = ABSOLUTE(0x08257EE2);
 gText_PkmnHPRestoredByVar2 = ABSOLUTE(0x085C9E8F);
 gText_CantBeUsedOnPkmn = ABSOLUTE(0x085C9B07);
+sTransitionTypes = ABSOLUTE(0x08592214);
+sCaveTransitionPalette_White = ABSOLUTE(0x0859229C);
+sCaveTransitionPalette_Black = ABSOLUTE(0x085922BC);
+sCaveTransitionPalette_Enter = ABSOLUTE(0x085922DC);
+sCaveTransitionTilemap = ABSOLUTE(0x085922FC);
+sCaveTransitionTiles = ABSOLUTE(0x085924DC);
 
 SECTIONS {
     . = 0x2000000;
@@ -223,7 +230,7 @@ SECTIONS {
         build/src/fldeff_rocksmash.o(.text);
         build/src/fldeff_dig.o(.text);
         asm/pokeblock.spokeblock.o(.text);
-        asm/fldeff_flash.o(.text);
+        build/src/fldeff_flash.o(.text);
         asm/post_battle_event_funcs.o(.text);
         asm/time_events.o(.text);
         build/src/birch_pc.o(.text);
