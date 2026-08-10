@@ -12253,7 +12253,7 @@ _0803C98E:
 	adds r1, r4, r1
 	adds r1, #0x5c
 	ldrb r1, [r1]
-	bl sub_08056DEC
+	bl SwitchPartyOrderInGameMulti
 _0803C9AA:
 	adds r4, #1
 	ldr r0, _0803C9E0
@@ -16883,4 +16883,3 @@ _0803F000: .4byte 0x020240A4
 _0803F004: .4byte 0x02023FD6
 _0803F008: .4byte 0x0202414C
 	thumb_func_end HandleAction_ActionFinished
-

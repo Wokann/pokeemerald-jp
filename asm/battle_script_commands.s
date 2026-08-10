@@ -15270,7 +15270,7 @@ _0804D644:
 	adds r1, r0, r1
 	adds r1, #0x5c
 	ldrb r1, [r1]
-	bl sub_08056DEC
+	bl SwitchPartyOrderInGameMulti
 	b _0804D666
 _0804D660:
 	ldrb r0, [r7]
@@ -19555,7 +19555,7 @@ _0804F924: .4byte 0x02023D08
 _0804F928:
 	ldr r0, _0804F938
 	ldrb r0, [r0]
-	bl sub_08056E6C
+	bl BattlePalace_TryEscapeStatus
 _0804F930:
 	cmp r0, #0
 	bne _0804F984
@@ -22478,7 +22478,7 @@ _08050FEE:
 	ldrb r0, [r0]
 	lsls r1, r6, #0x18
 	lsrs r1, r1, #0x18
-	bl sub_08056DEC
+	bl SwitchPartyOrderInGameMulti
 	b _08051024
 	.align 2, 0
 _0805100C: .4byte 0x02023EB0
@@ -33946,4 +33946,3 @@ atkF8_trainerslideout: @ 0x08056B08
 _08056B30: .4byte 0x02023EB8
 _08056B34: .4byte 0x02023D08
 	thumb_func_end atkF8_trainerslideout
-
