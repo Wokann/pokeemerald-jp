@@ -185,6 +185,7 @@ static u32 InitBoxMonSearchResults(s32 state);
 static u32 BuildBoxMonSearchResults(s32 state);
 static u32 ConvertConditionsToListRanks(s32 state);
 static void InsertMonListItem(struct Pokenav_SearchResults *menu, struct PokenavMonListItem *item);
+static void InsertRibbonsMonListItem(struct Pokenav_RibbonsMonList *list, struct PokenavMonListItem *item);
 static bool32 OpenConditionSearchResults(void);
 static bool32 OpenConditionSearchListFromGraph(void);
 static void CreateSearchResultsLoopedTask(s32 idx);
@@ -243,6 +244,9 @@ extern const struct WindowTemplate sSearchResultListMenuWindowTemplate;
 extern const u8 sText_MaleSymbol[];
 extern const u8 sText_FemaleSymbol[];
 extern const u8 sText_NoGenderSymbol[];
+extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6, "{STR_VAR_1} {COLOR}♂..."
+extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
+extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
 extern const u16 sPokenavMonMarkings_Pal[];
 extern const LoopedTask sMonRibbonListLoopTaskFuncs[];
 extern const u16 sMonRibbonListFramePal[];
@@ -1581,115 +1585,47 @@ void CreateSearchResultsList(void)
 #endif
 
 
-__attribute__((naked)) void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
+static void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "adds r4, r0, #0\n\t"
-            "mov r8, r1\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "ldrb r0, [r4]\n\t"
-            "cmp r0, #0xe\n\t"
-            "bne _081CEFE8\n\t"
-            "ldrb r1, [r4, #1]\n\t"
-            "movs r0, #0x64\n\t"
-            "adds r4, r1, #0\n\t"
-            "muls r4, r0, r4\n\t"
-            "ldr r0, _081CEFE0\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r7, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r5, r0, #0x18\n\t"
-            "ldr r2, _081CEFE4\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl GetMonData3\n\t"
-            "b _081CF00E\n\t"
-            ".align 2, 0\n\t"
-            "_081CEFE0: .4byte gPlayerParty\n\t"
-            "_081CEFE4: .4byte gStringVar3\n\t"
-            "_081CEFE8:\n\t"
-            "ldrb r0, [r4]\n\t"
-            "ldrb r1, [r4, #1]\n\t"
-            "bl GetBoxedMonPtr\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl GetBoxMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r7, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromBoxMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r5, r0, #0x18\n\t"
-            "ldr r2, _081CF060\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl GetBoxMonData\n\t"
-            "_081CF00E:\n\t"
-            "ldr r4, _081CF060\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl StringGet_Nickname\n\t"
-            "ldr r6, _081CF064\n\t"
-            "adds r0, r6, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #5\n\t"
-            "bl StringCopyPadded\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldr r5, _081CF068\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl StringCopyPadded\n\t"
-            "movs r0, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "movs r0, #1\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "cmp r7, #0xfe\n\t"
-            "beq _081CF070\n\t"
-            "cmp r7, #0xfe\n\t"
-            "bgt _081CF078\n\t"
-            "cmp r7, #0\n\t"
-            "bne _081CF078\n\t"
-            "ldr r1, _081CF06C\n\t"
-            "b _081CF07A\n\t"
-            ".align 2, 0\n\t"
-            "_081CF060: .4byte gStringVar3\n\t"
-            "_081CF064: .4byte gStringVar1\n\t"
-            "_081CF068: .4byte gStringVar2\n\t"
-            "_081CF06C: .4byte 0x085CB7D6\n\t"
-            "_081CF070:\n\t"
-            "ldr r1, _081CF074\n\t"
-            "b _081CF07A\n\t"
-            ".align 2, 0\n\t"
-            "_081CF074: .4byte 0x085CB7EA\n\t"
-            "_081CF078:\n\t"
-            "ldr r1, _081CF08C\n\t"
-            "_081CF07A:\n\t"
-            "mov r0, r8\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CF08C: .4byte 0x085CB7FE\n\t"
-            ".syntax divided");
+    u8 gender;
+    u8 level;
+    const u8 *genderStr;
+
+    DynamicPlaceholderTextUtil_Reset();
+    if (item->boxId == TOTAL_BOXES_COUNT)
+    {
+        struct Pokemon *mon = &gPlayerParty[item->monId];
+        gender = GetMonGender(mon);
+        level = GetLevelFromMonExp(mon);
+        GetMonData(mon, MON_DATA_NICKNAME, gStringVar3);
+    }
+    else
+    {
+        struct BoxPokemon *boxMon = GetBoxedMonPtr(item->boxId, item->monId);
+        gender = GetBoxMonGender(boxMon);
+        level = GetLevelFromBoxMonExp(boxMon);
+        GetBoxMonData(boxMon, MON_DATA_NICKNAME, gStringVar3);
+    }
+    StringGet_Nickname(gStringVar3);
+    StringCopyPadded(gStringVar1, gStringVar3, 0, 5);
+    ConvertIntToDecimalStringN(gStringVar3, level, 0, 3);
+    StringCopyPadded(gStringVar2, gStringVar3, 0, 3);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gStringVar2);
+    switch (gender)
+    {
+    case MON_MALE:
+        genderStr = sText_ConditionSearchMonMale;
+        break;
+    case MON_FEMALE:
+        genderStr = sText_ConditionSearchMonFemale;
+        break;
+    case MON_GENDERLESS:
+    default:
+        genderStr = sText_ConditionSearchMonUnknown;
+        break;
+    }
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, genderStr);
 }
 
 bool32 PokenavCallback_Init_MonRibbonList(void)
@@ -1847,7 +1783,7 @@ static u32 BuildPartyMonRibbonList(s32 state)
             {
                 item.monId = i;
                 item.data = ribbonCount;
-                sub_081CF3C0(list, &item);
+                InsertRibbonsMonListItem(list, &item);
             }
         }
     }
@@ -1883,7 +1819,7 @@ static u32 BuildBoxMonRibbonList(s32 state)
                     item.boxId = boxId;
                     item.monId = monId;
                     item.data = ribbonCount;
-                    sub_081CF3C0(list, &item);
+                    InsertRibbonsMonListItem(list, &item);
                 }
             }
             boxCount++;
@@ -1903,71 +1839,24 @@ static u32 BuildBoxMonRibbonList(s32 state)
     return LT_FINISH;
 }
 
-__attribute__((naked)) void sub_081CF3C0(struct Pokenav_SearchResults *menu, struct PokenavMonListItem *item)
+static void InsertRibbonsMonListItem(struct Pokenav_RibbonsMonList *list, struct PokenavMonListItem *item)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "adds r5, r0, #0\n\t"
-            "adds r7, r1, #0\n\t"
-            "movs r1, #0\n\t"
-            "ldr r0, [r5, #0x1c]\n\t"
-            "ldrh r2, [r0]\n\t"
-            "lsrs r3, r2, #1\n\t"
-            "cmp r2, r3\n\t"
-            "beq _081CF3F0\n\t"
-            "adds r6, r0, #0\n\t"
-            "ldrh r4, [r7, #2]\n\t"
-            "_081CF3D6:\n\t"
-            "lsls r0, r3, #2\n\t"
-            "adds r0, r6, r0\n\t"
-            "ldrh r0, [r0, #6]\n\t"
-            "cmp r4, r0\n\t"
-            "bls _081CF3E4\n\t"
-            "adds r2, r3, #0\n\t"
-            "b _081CF3E6\n\t"
-            "_081CF3E4:\n\t"
-            "adds r1, r3, #1\n\t"
-            "_081CF3E6:\n\t"
-            "subs r0, r2, r1\n\t"
-            "lsrs r0, r0, #1\n\t"
-            "adds r3, r1, r0\n\t"
-            "cmp r2, r3\n\t"
-            "bne _081CF3D6\n\t"
-            "_081CF3F0:\n\t"
-            "ldr r0, [r5, #0x1c]\n\t"
-            "ldrh r2, [r0]\n\t"
-            "lsls r6, r3, #2\n\t"
-            "cmp r2, r3\n\t"
-            "bls _081CF414\n\t"
-            "lsls r0, r2, #2\n\t"
-            "subs r4, r0, #4\n\t"
-            "_081CF3FE:\n\t"
-            "ldr r0, [r5, #0x1c]\n\t"
-            "lsls r1, r2, #2\n\t"
-            "adds r0, #4\n\t"
-            "adds r1, r0, r1\n\t"
-            "adds r0, r0, r4\n\t"
-            "ldr r0, [r0]\n\t"
-            "str r0, [r1]\n\t"
-            "subs r4, #4\n\t"
-            "subs r2, #1\n\t"
-            "cmp r2, r3\n\t"
-            "bhi _081CF3FE\n\t"
-            "_081CF414:\n\t"
-            "ldr r0, [r5, #0x1c]\n\t"
-            "adds r0, #4\n\t"
-            "adds r0, r0, r6\n\t"
-            "ldr r1, [r7]\n\t"
-            "str r1, [r0]\n\t"
-            "ldr r1, [r5, #0x1c]\n\t"
-            "ldrh r0, [r1]\n\t"
-            "adds r0, #1\n\t"
-            "strh r0, [r1]\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".syntax divided");
+    u32 left = 0;
+    u32 right = list->monList->listCount;
+    u32 insertionIdx = left + (right - left) / 2;
+
+    while (right != insertionIdx)
+    {
+        if (item->data > list->monList->monData[insertionIdx].data)
+            right = insertionIdx;
+        else
+            left = insertionIdx + 1;
+        insertionIdx = left + (right - left) / 2;
+    }
+    for (right = list->monList->listCount; right > insertionIdx; right--)
+        list->monList->monData[right] = list->monList->monData[right - 1];
+    list->monList->monData[insertionIdx] = *item;
+    list->monList->listCount++;
 }
 
 static bool32 UNUSED PlayerHasRibbonsMon(void)
