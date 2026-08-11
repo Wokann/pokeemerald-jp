@@ -193,6 +193,7 @@ enum {
 // instead of US COMMON_DATA / EWRAM_DATA definitions).
 extern EWRAM_DATA u8 gPlayerCurrActivity;
 extern EWRAM_DATA u8 sPlayerActivityGroupSize;
+extern EWRAM_DATA u8 sUnionRoomPlayerName[12];
 extern EWRAM_DATA union
 {
     struct WirelessLink_Leader *leader;
@@ -325,6 +326,7 @@ extern u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
 extern bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
+static void Task_InitUnionRoom(u8 taskId);
 extern s32 ListMenuHandler_AllItemsAvailable(u8 *textState, u8 *a2, u8 *a3, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate);
 extern s32 TradeBoardMenuHandler(u8 *textState, u8 *a2, u8 *a3, u8 *a4, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate, struct RfuPlayerList *playerList);
 extern void UR_ClearBg0(void);
@@ -3428,4 +3430,101 @@ static s32 GetChatLeaderActionRequestMessage(u8 *dst, u32 gender, u16 *activityD
     }
 
     return result;
+}
+
+void InitUnionRoom(void)
+{
+    struct WirelessLink_URoom *data;
+
+    sUnionRoomPlayerName[0] = EOS;
+    CreateTask(Task_InitUnionRoom, 0);
+    sWirelessLinkMain.uRoom = sWirelessLinkMain.uRoom; // Needed to match.
+    sWirelessLinkMain.uRoom = data = AllocZeroed(sizeof(struct WirelessLink_URoom));
+    sURoom = sWirelessLinkMain.uRoom;
+    data->state = 0;
+    data->textState = 0;
+    data->unknown = 0;
+    data->unreadPlayerId = 0;
+    sUnionRoomPlayerName[0] = EOS;
+}
+
+static void Task_InitUnionRoom(u8 taskId)
+{
+    s32 i;
+    struct WirelessLink_URoom *data = sWirelessLinkMain.uRoom;
+
+    switch (data->state)
+    {
+    case 0:
+        data->state = 1;
+        break;
+    case 1:
+        SetHostRfuGameData(ACTIVITY_SEARCH, 0, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_EnterUnionRoom();
+        RfuSetIgnoreError(TRUE);
+        data->state = 2;
+        break;
+    case 2:
+        data->incomingChildList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        ClearIncomingPlayerList(data->incomingChildList, RFU_CHILD_MAX);
+        data->incomingParentList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        ClearIncomingPlayerList(data->incomingParentList, RFU_CHILD_MAX);
+        data->playerList = AllocZeroed(MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer));
+        ClearRfuPlayerList(data->playerList->players, MAX_UNION_ROOM_LEADERS);
+        data->spawnPlayer = AllocZeroed(sizeof(struct RfuPlayer));
+        ClearRfuPlayerList(&data->spawnPlayer->players[0], 1);
+        data->searchTaskId = CreateTask_SearchForChildOrParent(data->incomingParentList, data->incomingChildList, LINK_GROUP_UNION_ROOM_INIT);
+        data->state = 3;
+        break;
+    case 3:
+        switch (HandlePlayerListUpdate())
+        {
+        case PLIST_NEW_PLAYER:
+        case PLIST_RECENT_UPDATE:
+            if (sUnionRoomPlayerName[0] == EOS)
+            {
+                for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+                {
+                    if (data->playerList->players[i].groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+                    {
+                        if (PlayerHasMetTrainerBefore(ReadAsU16(data->playerList->players[i].rfu.data.compatibility.playerTrainerId), data->playerList->players[i].rfu.name))
+                        {
+                            StringCopy(sUnionRoomPlayerName, data->playerList->players[i].rfu.name);
+                            break;
+                        }
+                    }
+                }
+            }
+            break;
+        case PLIST_UNUSED:
+            break;
+        }
+        break;
+    case 4:
+        Free(data->spawnPlayer);
+        Free(data->playerList);
+        Free(data->incomingParentList);
+        Free(data->incomingChildList);
+        DestroyTask(data->searchTaskId);
+        Free(sWirelessLinkMain.uRoom);
+        LinkRfu_Shutdown();
+        DestroyTask(taskId);
+        break;
+    }
+}
+
+bool16 BufferUnionRoomPlayerName(void)
+{
+    if (sUnionRoomPlayerName[0] != EOS)
+    {
+        StringCopy(gStringVar1, sUnionRoomPlayerName);
+        sUnionRoomPlayerName[0] = EOS;
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }

@@ -1516,6 +1516,9 @@ SECTIONS {
         src/union_room.o(.text.SetUsingUnionRoomStartMenu);
         src/union_room.o(.text.ReceiveUnionRoomActivityPacket);
         src/union_room.o(.text.HandleContactFromOtherPlayer);
+        src/union_room.o(.text.InitUnionRoom);
+        src/union_room.o(.text.Task_InitUnionRoom);
+        src/union_room.o(.text.BufferUnionRoomPlayerName);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);

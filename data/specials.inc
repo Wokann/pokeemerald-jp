@@ -434,8 +434,8 @@ gSpecials:
 	def_special BerryBlenderLinkJoinGroup
 	def_special UnionRoomSpecial
 	def_special sub_08019EE4
-	def_special sub_08016448
-	def_special sp182_move_string
+	def_special InitUnionRoom
+	def_special BufferUnionRoomPlayerName
 	def_special sub_0801DA30
 	def_special sub_081B85F8
 	def_special sub_08017B4C

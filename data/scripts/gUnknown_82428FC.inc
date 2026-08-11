@@ -95,7 +95,7 @@
 	specialvar 0x800D, sub_08139F0C
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x8242A7C
-	specialvar 0x800D, sp182_move_string
+	specialvar 0x800D, BufferUnionRoomPlayerName
 	copyvar 0x8008, 0x800D
 	compare_var_to_value 0x8008, 0x0
 	goto_if 0x1, 0x8242A7C

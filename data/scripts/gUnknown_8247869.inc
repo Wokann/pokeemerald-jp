@@ -33,7 +33,7 @@
 	setmetatile 0x5, 0x2, 0x22A, 0x1
 	setmetatile 0x5, 0x3, 0x232, 0x1
 	return 
-	special sub_08016448
+	special InitUnionRoom
 	end 
 	lock 
 	faceplayer 

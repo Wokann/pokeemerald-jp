@@ -152,6 +152,7 @@ gText_ExpandedPlaceholder_Emerald = ABSOLUTE(0x085C8C36);
 sUnknownStringVar = ABSOLUTE(0x02022064);
 gStringVar1 = ABSOLUTE(0x02021C40);
 gStringVar4 = ABSOLUTE(0x02021C7C);
+sUnionRoomPlayerName = ABSOLUTE(0x020228D8);
 gPlayerCurrActivity = ABSOLUTE(0x020228E0);
 sWirelessLinkMain = ABSOLUTE(0x020228E4);
 sPlayerActivityGroupSize = ABSOLUTE(0x020228E1);
