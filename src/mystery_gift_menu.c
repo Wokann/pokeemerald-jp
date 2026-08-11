@@ -33,6 +33,12 @@ extern const u8 sMG_Ereader_TextColor_2[];
 extern u8 sDownArrowCounterAndYCoordIdx[2];
 extern const u8 gText_WhatToDoWithCards[];
 extern const u8 gText_WhatToDoWithNews[];
+extern const u8 sText_DiscardWonderCard[];
+extern const u8 sText_DiscardWonderNews[];
+extern const u8 sText_WasThrownAwayWonderCard[];
+extern const u8 sText_WasThrownAwayWonderNews[];
+extern const u8 sText_SavingGame1[];
+extern const u8 sText_SavingGame2[];
 extern const struct ListMenuTemplate sListMenuTemplate_ThreeOptions;
 extern const struct ListMenuItem sListMenuItems_CardsOrNews[];
 extern const struct ListMenuItem sListMenuItems_WirelessOrFriend[];
@@ -496,4 +502,40 @@ bool32 TearDownCardOrNews_ReturnToTopMenu(bool32 isWonderNews)
             return FALSE;
     }
     return TRUE;
+}
+
+s8 mevent_message_prompt_discard(u8 *textState, u16 *windowId, bool32 isWonderNews)
+{
+    if (isWonderNews == 0)
+        return DoMysteryGiftYesNo(textState, windowId, 1, sText_DiscardWonderCard);
+    else
+        return DoMysteryGiftYesNo(textState, windowId, 1, sText_DiscardWonderNews);
+}
+
+bool32 mevent_save_game(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        MG_AddMessageTextPrinter(sText_SavingGame1);
+        (*state)++;
+        break;
+    case 1:
+        TrySavingData(0);
+        (*state)++;
+        break;
+    case 2:
+        MG_AddMessageTextPrinter(sText_SavingGame2);
+        (*state)++;
+        break;
+    case 3:
+        if (JOY_NEW(A_BUTTON | B_BUTTON))
+            (*state)++;
+        break;
+    case 4:
+        *state = 0;
+        ClearMessage();
+        return TRUE;
+    }
+    return FALSE;
 }
