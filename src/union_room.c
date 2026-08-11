@@ -13,6 +13,8 @@
 #include "list_menu.h"
 #include "malloc.h"
 #include "menu.h"
+#include "mystery_gift.h"
+#include "mystery_gift_menu.h"
 #include "overworld.h"
 #include "palette.h"
 #include "party_menu.h"
@@ -133,6 +135,8 @@ extern const u8 sText_PlayerContactedYouAddToMembers[];
 extern const u8 sText_OfferDeclined1[];
 extern const u8 sText_OfferDeclined2[];
 extern const u8 sText_AwaitingPlayersResponse[];
+extern const u8 sText_LinkWithFriendDropped[];
+extern const u8 sText_PleaseStartOver[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_PlayerOKdRegistration[];
@@ -1784,4 +1788,198 @@ void CreateTask_SendMysteryGift(u32 activity)
     data->textState = 0;
     data->activity = activity;
     gSpecialVar_Result = LINKUP_ONGOING;
+}
+
+static void Task_SendMysteryGift(u8 taskId)
+{
+    struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
+    struct WindowTemplate winTemplate;
+    s32 val;
+
+    switch (data->state)
+    {
+    case 0:
+        gPlayerCurrActivity = data->activity;
+        sPlayerActivityGroupSize = 2;
+        SetHostRfuGameData(data->activity, 0, FALSE);
+        SetHostRfuWonderFlags(FALSE, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_LinkLeader(2);
+        data->state = 1;
+        break;
+    case 1:
+        data->incomingPlayerList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        data->playerList = AllocZeroed(MAX_RFU_PLAYERS * sizeof(struct RfuPlayer));
+        data->playerListBackup = AllocZeroed(MAX_RFU_PLAYERS * sizeof(struct RfuPlayer));
+        ClearIncomingPlayerList(data->incomingPlayerList, RFU_CHILD_MAX);
+        ClearRfuPlayerList(data->playerList->players, MAX_RFU_PLAYERS);
+        CopyHostRfuGameDataAndUsername(&data->playerList->players[0].rfu.data, data->playerList->players[0].rfu.name);
+        data->playerList->players[0].timeoutCounter = 0;
+        data->playerList->players[0].groupScheduledAnim = UNION_ROOM_SPAWN_IN;
+        data->playerList->players[0].useRedText = FALSE;
+        data->playerList->players[0].newPlayerCountdown = 0;
+        data->listenTaskId = CreateTask_ListenForCompatiblePartners(data->incomingPlayerList, 0xFF);
+
+        winTemplate = sWindowTemplate_PlayerList;
+        winTemplate.baseBlock = GetMysteryGiftBaseBlock();
+        winTemplate.paletteNum = 12;
+        data->listWindowId = AddWindow(&winTemplate);
+        MG_DrawTextBorder(data->listWindowId);
+        gMultiuseListMenuTemplate = sListMenuTemplate_PossibleGroupMembers;
+        gMultiuseListMenuTemplate.windowId = data->listWindowId;
+        data->listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+
+        CopyBgTilemapBufferToVram(0);
+        data->playerCount = 1;
+        data->state = 2;
+        break;
+    case 2:
+        StringCopy(gStringVar1, sLinkGroupActivityNameTexts[gPlayerCurrActivity]);
+        GetAwaitingCommunicationText(gStringVar4, gPlayerCurrActivity);
+        data->state = 3;
+        break;
+    case 3:
+        MG_AddMessageTextPrinter(gStringVar4);
+        data->state = 4;
+        break;
+    case 4:
+        Leader_SetStateIfMemberListChanged(data, 5, 6);
+        if (JOY_NEW(B_BUTTON))
+        {
+            data->state = 13;
+            DestroyWirelessStatusIndicatorSprite();
+        }
+        break;
+    case 6:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sText_LinkWithFriendDropped))
+        {
+            data->playerCount = LeaderPrunePlayerList(data->playerList);
+            RedrawListMenu(data->listTaskId);
+            data->state = 2;
+        }
+        break;
+    case 5:
+        data->state = 7;
+        break;
+    case 7:
+        switch (DoMysteryGiftYesNo(&data->textState, &data->yesNoWindowId, FALSE, gStringVar4))
+        {
+        case 0:
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(0, 0);
+            data->playerList->players[data->playerCount].newPlayerCountdown = 0;
+            RedrawListMenu(data->listTaskId);
+            data->joinRequestAnswer = RFU_STATUS_JOIN_GROUP_OK;
+            SendRfuStatusToPartner(data->joinRequestAnswer, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+            data->state = 8;
+            break;
+        case 1:
+        case MENU_B_PRESSED:
+            data->joinRequestAnswer = RFU_STATUS_JOIN_GROUP_NO;
+            SendRfuStatusToPartner(data->joinRequestAnswer, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+            data->state = 8;
+            break;
+        }
+        break;
+    case 8:
+        val = WaitSendRfuStatusToPartner(ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+        if (val == 1) // Send complete
+        {
+            if (data->joinRequestAnswer == RFU_STATUS_JOIN_GROUP_OK)
+            {
+                data->playerList->players[data->playerCount].newPlayerCountdown = 0;
+                RedrawListMenu(data->listTaskId);
+                data->playerCount++;
+                StringCopy7(gStringVar1, &data->playerList->players[data->playerCount - 1].rfu.name);
+                StringExpandPlaceholders(gStringVar4, sText_AnOKWasSentToPlayer);
+                data->state = 9;
+                LinkRfu_StopManagerAndFinalizeSlots();
+            }
+            else
+            {
+                RequestDisconnectSlotByTrainerNameAndId(data->playerList->players[data->playerCount].rfu.name, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId));
+                data->playerList->players[data->playerCount].groupScheduledAnim = UNION_ROOM_SPAWN_NONE;
+                LeaderPrunePlayerList(data->playerList);
+                RedrawListMenu(data->listTaskId);
+                data->state = 2;
+            }
+
+            data->joinRequestAnswer = 0;
+        }
+        else if (val == 2) // Member disconnected
+        {
+            RfuSetStatus(RFU_STATUS_OK, 0);
+            data->state = 2;
+        }
+        break;
+    case 9:
+        MG_AddMessageTextPrinter(gStringVar4);
+        data->state = 10;
+        break;
+    case 10:
+        if (++data->delayTimerAfterOk > 120)
+            data->state = 11;
+        break;
+    case 11:
+        if (!Leader_SetStateIfMemberListChanged(data, 5, 6))
+            data->state = 12;
+        break;
+    case 12:
+        if (LmanAcceptSlotFlagIsNotZero())
+        {
+            WaitRfuState(FALSE);
+            data->state = 15;
+        }
+        else
+        {
+            data->state = 6;
+        }
+        break;
+    case 13:
+        DestroyWirelessStatusIndicatorSprite();
+        LinkRfu_Shutdown();
+        DestroyListMenuTask(data->listTaskId, 0, 0);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(data->listWindowId);
+        DestroyTask(data->listenTaskId);
+        Free(data->playerListBackup);
+        Free(data->playerList);
+        Free(data->incomingPlayerList);
+        data->state++;
+        break;
+    case 14:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sText_PleaseStartOver))
+        {
+            DestroyTask(taskId);
+            gSpecialVar_Result = LINKUP_FAILED;
+        }
+        break;
+    case 15:
+        if (RfuGetStatus() == RFU_STATUS_FATAL_ERROR || RfuGetStatus() == RFU_STATUS_CONNECTION_ERROR)
+        {
+            data->state = 13;
+        }
+        else if (gReceivedRemoteLinkPlayers)
+        {
+            UpdateGameData_GroupLockedIn(TRUE);
+            data->state++;
+        }
+        break;
+    case 16:
+        DestroyListMenuTask(data->listTaskId, 0, 0);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(data->listWindowId);
+        DestroyTask(data->listenTaskId);
+        Free(data->playerListBackup);
+        Free(data->playerList);
+        Free(data->incomingPlayerList);
+        SetLinkStandbyCallback();
+        data->state++;
+        break;
+    case 17:
+        if (IsLinkTaskFinished())
+            DestroyTask(taskId);
+        break;
+    }
 }
