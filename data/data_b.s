@@ -19688,36 +19688,36 @@ gUnknown_85F7C18: @ 0x85F7C18
 gUnknown_85F7C48: @ 0x85F7C48
 	.incbin "baserom_jp.gba", 0x5f7c48, 0x8
 
-	.globl gUnknown_85F7C50
-gUnknown_85F7C50: @ 0x85F7C50
+	.globl gText_MoveRelearnerBattleMoves
+gText_MoveRelearnerBattleMoves: @ 0x85F7C50
 	.string "たた{GREEN}{LIGHT_GRAY}わざ$"
 
-	.globl gUnknown_85F7C57
-gUnknown_85F7C57: @ 0x85F7C57
+	.globl gText_MoveRelearnerContestMovesTitle
+gText_MoveRelearnerContestMovesTitle: @ 0x85F7C57
 	.string "コンテストわざ$"
 
-	.globl gUnknown_85F7C5F
-gUnknown_85F7C5F: @ 0x85F7C5F
+	.globl gText_MoveRelearnerType
+gText_MoveRelearnerType: @ 0x85F7C5F
 	.string "タイプ/$"
 
-	.globl gUnknown_85F7C64
-gUnknown_85F7C64: @ 0x85F7C64
+	.globl gText_MoveRelearnerPP
+gText_MoveRelearnerPP: @ 0x85F7C64
 	.string "PP/$"
 
-	.globl gUnknown_85F7C68
-gUnknown_85F7C68: @ 0x85F7C68
+	.globl gText_MoveRelearnerPower
+gText_MoveRelearnerPower: @ 0x85F7C68
 	.string "{DARK_GRAY}りょ{BLUE}/$"
 
-	.globl gUnknown_85F7C6E
-gUnknown_85F7C6E: @ 0x85F7C6E
+	.globl gText_MoveRelearnerAccuracy
+gText_MoveRelearnerAccuracy: @ 0x85F7C6E
 	.string "{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}/$"
 
-	.globl gUnknown_85F7C75
-gUnknown_85F7C75: @ 0x85F7C75
+	.globl gText_MoveRelearnerAppeal
+gText_MoveRelearnerAppeal: @ 0x85F7C75
 	.string "アピール$"
 
-	.globl gUnknown_85F7C7A
-gUnknown_85F7C7A: @ 0x85F7C7A
+	.globl gText_MoveRelearnerJam
+gText_MoveRelearnerJam: @ 0x85F7C7A
 	.incbin "baserom_jp.gba", 0x5f7c7a, 0x6
 
 	.globl gUnknown_85F7C80

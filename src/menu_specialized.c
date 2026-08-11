@@ -38,6 +38,14 @@ extern const struct WindowTemplate sMoveRelearnerWindowTemplates[6];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
+extern const u8 gText_MoveRelearnerBattleMoves[];
+extern const u8 gText_MoveRelearnerContestMovesTitle[];
+extern const u8 gText_MoveRelearnerType[];
+extern const u8 gText_MoveRelearnerPP[];
+extern const u8 gText_MoveRelearnerPower[];
+extern const u8 gText_MoveRelearnerAccuracy[];
+extern const u8 gText_MoveRelearnerAppeal[];
+extern const u8 gText_MoveRelearnerJam[];
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
 extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
@@ -940,118 +948,17 @@ void InitMoveRelearnerWindows(bool8 useContestWindow)
 //   0x085F7C57: "コンテストわざ" (contest moves)
 //   0x085F7C75: "アピール" (appeal)
 //   0x085F7C7A: "ぼうがい{PH_CLOTH_SOLO}" (jam)
-__attribute__((naked)) void sub_081D1EE0(void)
+void sub_081D1EE0(void)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "mov r6, sl\n\t"
-            "mov r5, sb\n\t"
-            "mov r4, r8\n\t"
-            "push {r4, r5, r6}\n\t"
-            "sub sp, #0xc\n\t"
-            "ldr r2, _081D1FB8\n\t"
-            "movs r0, #2\n\t"
-            "mov sb, r0\n\t"
-            "str r0, [sp]\n\t"
-            "movs r5, #0xff\n\t"
-            "str r5, [sp, #4]\n\t"
-            "movs r4, #0\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x30\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r0, _081D1FBC\n\t"
-            "mov sl, r0\n\t"
-            "movs r0, #0x1a\n\t"
-            "mov r8, r0\n\t"
-            "str r0, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "mov r2, sl\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FC0\n\t"
-            "mov r0, r8\n\t"
-            "str r0, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x50\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FC4\n\t"
-            "movs r6, #0x2a\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #8\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FC8\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x48\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FCC\n\t"
-            "mov r0, sb\n\t"
-            "str r0, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x2c\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "mov r0, r8\n\t"
-            "str r0, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "mov r2, sl\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FD0\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r2, _081D1FD4\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x50\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D1FB8: .4byte 0x085F7C50\n\t"
-            "_081D1FBC: .4byte 0x085F7C5F\n\t"
-            "_081D1FC0: .4byte 0x085F7C68\n\t"
-            "_081D1FC4: .4byte 0x085F7C64\n\t"
-            "_081D1FC8: .4byte 0x085F7C6E\n\t"
-            "_081D1FCC: .4byte 0x085F7C57\n\t"
-            "_081D1FD0: .4byte 0x085F7C75\n\t"
-            "_081D1FD4: .4byte 0x085F7C7A\n\t"
-            ".syntax divided\n");
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gText_MoveRelearnerBattleMoves, 0x30, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gText_MoveRelearnerType, 0, 0x1A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gText_MoveRelearnerPower, 0x50, 0x1A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gText_MoveRelearnerPP, 8, 0x2A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gText_MoveRelearnerAccuracy, 0x48, 0x2A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gText_MoveRelearnerContestMovesTitle, 0x2C, 2, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gText_MoveRelearnerType, 0, 0x1A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gText_MoveRelearnerAppeal, 0, 0x2A, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gText_MoveRelearnerJam, 0x50, 0x2A, TEXT_SKIP_DRAW, NULL);
 }
 
 u8 LoadMoveRelearnerMovesList(const struct ListMenuItem *items, u16 numChoices)
