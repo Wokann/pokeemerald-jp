@@ -89,6 +89,7 @@ struct Pokenav_RibbonsMonMenu
 
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
 extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
+extern const struct BgTemplate sSearchResultsBgTemplates[]; // JP 0x085F5BA0
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -1772,6 +1773,9 @@ void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
 #endif
 
 
+#ifndef NONMATCHING
+// JP naked asm: builds the search-results list template on the stack; C form
+// differs, so asm stays default.
 __attribute__((naked)) void CreateSearchResultsList(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1814,6 +1818,26 @@ __attribute__((naked)) void CreateSearchResultsList(void)
             "_081CEF9C: .4byte 0x085F5BA0\n\t"
             ".syntax divided");
 }
+#else
+void CreateSearchResultsList(void)
+{
+    struct PokenavListTemplate template;
+
+    template.list = GetSearchResultsMonDataList();
+    template.count = GetSearchResultsMonListCount();
+    template.startIndex = GetSearchResultsCurrentListIndex();
+    template.itemSize = 4;
+    template.item_X = 0xE;
+    template.windowWidth = 0xF;
+    template.listTop = 1;
+    template.maxShowed = 8;
+    template.fillValue = 2;
+    template.bufferItemFunc = BufferSearchMonListItem;
+    template.iconDrawFunc = NULL;
+    CreatePokenavList(sSearchResultsBgTemplates, &template, 0);
+}
+#endif
+
 
 __attribute__((naked)) void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
 {
