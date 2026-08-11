@@ -1093,6 +1093,18 @@ SECTIONS {
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_managerChangeAgbClockMaster);
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_requestChangeAgbClockMaster);
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_forceChangeSP);
+        src/link_rfu_3.o(.text.RfuRecvQueue_Reset);
+        src/link_rfu_3.o(.text.RfuSendQueue_Reset);
+        src/link_rfu_3.o(.text.RfuUnusedQueue_Reset);
+        src/link_rfu_3.o(.text.RfuRecvQueue_Enqueue);
+        src/link_rfu_3.o(.text.RfuSendQueue_Enqueue);
+        src/link_rfu_3.o(.text.RfuRecvQueue_Dequeue);
+        src/link_rfu_3.o(.text.RfuSendQueue_Dequeue);
+        src/link_rfu_3.o(.text.RfuBackupQueue_Enqueue);
+        src/link_rfu_3.o(.text.RfuBackupQueue_Dequeue);
+        src/link_rfu_3.o(.text.RfuUnusedQueue_Enqueue);
+        src/link_rfu_3.o(.text.RfuUnusedQueue_Dequeue);
+        src/link_rfu_3.o(.text.PopulateArrayWithSequence);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

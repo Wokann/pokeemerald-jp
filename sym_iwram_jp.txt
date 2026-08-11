@@ -978,3 +978,4 @@ lman = ABSOLUTE(0x030041E0);
 gRfuLinkStatus = ABSOLUTE(0x03007630);
 gRfuSlotStatusNI = ABSOLUTE(0x03007620);
 gRfuSlotStatusUNI = ABSOLUTE(0x03007610);
+sSequenceArrayValOffset = ABSOLUTE(0x03000D74);

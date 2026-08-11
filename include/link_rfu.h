@@ -26,7 +26,9 @@
 #define RFU_SERIAL_END                 0xFFFF
 
 #define COMM_SLOT_LENGTH 14
-#define RECV_QUEUE_NUM_SLOTS 32
+// JP uses 20 receive-queue slots (US uses 32); the whole RfuManager layout in
+// the JP ROM (sendQueue at gRfu+0x6A0, sizeof(gRfu)==0x9AC) depends on this.
+#define RECV_QUEUE_NUM_SLOTS 20
 #define SEND_QUEUE_NUM_SLOTS 40
 #define BACKUP_QUEUE_NUM_SLOTS 2
 
