@@ -99,112 +99,42 @@ static u8 UNUSED MailboxMenu_GetWindowId(u8 windowIdx)
     return sMailboxWindowIds[windowIdx];
 }
 
-// JP 0x081D13F4: the JP build lays the list item names out inside a
-// separate 0x28-per-entry block (base at 0x03005AEC) and leaves
-// itemPrintFunc unset, so this is kept as asm.
-__attribute__((naked)) u8 MailboxMenu_CreateList(struct PlayerPCItemPageStruct *page)
+// JP 0x081D13F4: differs from the US build in that each list entry's name
+// points at the mail's playerName inside the PC mailbox slots (mail[PARTY_SIZE + i])
+// rather than sEmptyItemName, item_X comes from GetFontAttribute(FONT_NORMAL, ...),
+// and itemPrintFunc is left unset.
+u8 MailboxMenu_CreateList(struct PlayerPCItemPageStruct *page)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "adds r7, r0, #0\n\t"
-            "movs r3, #0\n\t"
-            "ldr r0, _081D14A8\n\t"
-            "mov r8, r0\n\t"
-            "ldr r1, _081D14AC\n\t"
-            "mov sb, r1\n\t"
-            "ldr r6, _081D14B0\n\t"
-            "ldr r0, _081D14B4\n\t"
-            "mov sl, r0\n\t"
-            "ldrb r1, [r7, #5]\n\t"
-            "cmp r3, r1\n\t"
-            "bhs _081D1440\n\t"
-            "mov ip, r8\n\t"
-            "ldr r5, _081D14B8\n\t"
-            "ldr r4, _081D14BC\n\t"
-            "_081D141C:\n\t"
-            "mov r0, ip\n\t"
-            "ldr r2, [r0]\n\t"
-            "lsls r0, r3, #3\n\t"
-            "adds r2, r0, r2\n\t"
-            "adds r0, r0, r3\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r4\n\t"
-            "ldr r1, [r5]\n\t"
-            "adds r1, r1, r0\n\t"
-            "adds r1, #0x12\n\t"
-            "str r1, [r2]\n\t"
-            "str r3, [r2, #4]\n\t"
-            "adds r0, r3, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r3, r0, #0x10\n\t"
-            "ldrb r1, [r7, #5]\n\t"
-            "cmp r3, r1\n\t"
-            "blo _081D141C\n\t"
-            "_081D1440:\n\t"
-            "mov r0, r8\n\t"
-            "ldr r2, [r0]\n\t"
-            "lsls r0, r3, #3\n\t"
-            "adds r0, r0, r2\n\t"
-            "mov r1, sb\n\t"
-            "str r1, [r0]\n\t"
-            "movs r1, #2\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "str r1, [r0, #4]\n\t"
-            "str r2, [r6]\n\t"
-            "ldrb r0, [r7, #5]\n\t"
-            "adds r0, #1\n\t"
-            "movs r4, #0\n\t"
-            "movs r5, #0\n\t"
-            "strh r0, [r6, #0xc]\n\t"
-            "mov r1, sl\n\t"
-            "ldrb r0, [r1, #1]\n\t"
-            "strb r0, [r6, #0x10]\n\t"
-            "strb r4, [r6, #0x11]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "bl GetFontAttribute\n\t"
-            "strb r0, [r6, #0x12]\n\t"
-            "strb r4, [r6, #0x13]\n\t"
-            "movs r0, #8\n\t"
-            "strh r0, [r6, #0xe]\n\t"
-            "movs r0, #0x2a\n\t"
-            "strb r0, [r6, #0x14]\n\t"
-            "movs r0, #0x31\n\t"
-            "strb r0, [r6, #0x15]\n\t"
-            "ldr r0, _081D14C0\n\t"
-            "str r0, [r6, #4]\n\t"
-            "str r5, [r6, #8]\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r6, #0x17]\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r6, #0x16]\n\t"
-            "ldrh r1, [r7, #2]\n\t"
-            "ldrh r2, [r7]\n\t"
-            "adds r0, r6, #0\n\t"
-            "bl ListMenuInit\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081D14A8: .4byte sMailboxList\n\t"
-            "_081D14AC: .4byte gText_Exit\n\t"
-            "_081D14B0: .4byte gMultiuseListMenuTemplate\n\t"
-            "_081D14B4: .4byte sMailboxWindowIds\n\t"
-            "_081D14B8: .4byte gSaveBlock1Ptr\n\t"
-            "_081D14BC: .4byte 0x00002CB8\n\t"
-            "_081D14C0: .4byte MailboxMenu_MoveCursorFunc\n\t"
-            ".syntax divided\n");
+    u16 i;
+
+    for (i = 0; i < page->count; i++)
+    {
+        sMailboxList[i].name = gSaveBlock1Ptr->mail[PARTY_SIZE + i].playerName;
+        sMailboxList[i].id = i;
+    }
+
+    sMailboxList[i].name = gText_Exit;
+    sMailboxList[i].id = LIST_CANCEL;
+
+    gMultiuseListMenuTemplate.items = sMailboxList;
+    gMultiuseListMenuTemplate.totalItems = page->count + 1;
+    gMultiuseListMenuTemplate.windowId = sMailboxWindowIds[MAILBOXWIN_LIST];
+    gMultiuseListMenuTemplate.header_X = 0;
+    gMultiuseListMenuTemplate.item_X = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH);
+    gMultiuseListMenuTemplate.cursor_X = 0;
+    gMultiuseListMenuTemplate.maxShowed = 8;
+    gMultiuseListMenuTemplate.upText_Y = 10;
+    gMultiuseListMenuTemplate.cursorPal = 2;
+    gMultiuseListMenuTemplate.fillValue = 1;
+    gMultiuseListMenuTemplate.cursorShadowPal = 3;
+    gMultiuseListMenuTemplate.moveCursorFunc = MailboxMenu_MoveCursorFunc;
+    gMultiuseListMenuTemplate.itemPrintFunc = NULL;
+    gMultiuseListMenuTemplate.fontId = FONT_NORMAL;
+    gMultiuseListMenuTemplate.cursorKind = CURSOR_BLACK_ARROW;
+    gMultiuseListMenuTemplate.lettersSpacing = 0;
+    gMultiuseListMenuTemplate.itemVerticalPadding = 0;
+    gMultiuseListMenuTemplate.scrollMultiple = LIST_NO_MULTIPLE_SCROLL;
+    return ListMenuInit(&gMultiuseListMenuTemplate, page->itemsAbove, page->cursorPos);
 }
 
 static void MailboxMenu_MoveCursorFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list)
