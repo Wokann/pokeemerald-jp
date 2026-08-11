@@ -1310,57 +1310,6 @@ static void AddSearchResultListMenuWindow(struct Pokenav_SearchResultsGfx *gfx)
     PrintSearchResultListMenuItems(gfx);
 }
 
-#ifndef NONMATCHING
-// JP naked asm: byte-exact search-result list row printer; C form differs,
-// so asm stays default.
-__attribute__((naked)) void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r6, r0, #0\n\t"
-            "bl GetSearchResultsSelectedMonRank\n\t"
-            "adds r5, r0, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "ldr r4, _081CEF40\n\t"
-            "movs r0, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldr r4, _081CEF44\n\t"
-            "ldr r1, _081CEF48\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "ldrb r0, [r6, #8]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r6, #8]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CEF40: .4byte gStringVar1\n\t"
-            "_081CEF44: .4byte gStringVar2\n\t"
-            "_081CEF48: .4byte 0x085CB81B\n\t"
-            ".syntax divided");
-}
-#else
 void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
 {
     s32 rank = GetSearchResultsSelectedMonRank();
@@ -1371,63 +1320,16 @@ void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
     AddTextPrinterParameterized(gfx->winid, FONT_NORMAL, gStringVar2, 0, 2, 0xFF, NULL);
     CopyWindowToVram(gfx->winid, COPYWIN_GFX);
 }
-#endif
 
 
-#ifndef NONMATCHING
-// JP naked asm: builds the search-results list template on the stack; C form
-// differs, so asm stays default.
-__attribute__((naked)) void CreateSearchResultsList(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, lr}\n\t"
-            "sub sp, #0x18\n\t"
-            "bl GetSearchResultsMonDataList\n\t"
-            "str r0, [sp]\n\t"
-            "bl GetSearchResultsMonListCount\n\t"
-            "mov r1, sp\n\t"
-            "movs r4, #0\n\t"
-            "strh r0, [r1, #4]\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r1, #8]\n\t"
-            "bl GetSearchResultsCurrentListIndex\n\t"
-            "mov r1, sp\n\t"
-            "strh r0, [r1, #6]\n\t"
-            "movs r0, #0xe\n\t"
-            "strb r0, [r1, #9]\n\t"
-            "movs r0, #0xf\n\t"
-            "strb r0, [r1, #0xa]\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r1, #0xb]\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1, #0xc]\n\t"
-            "movs r0, #2\n\t"
-            "strb r0, [r1, #0xd]\n\t"
-            "ldr r0, _081CEF98\n\t"
-            "str r0, [sp, #0x10]\n\t"
-            "str r4, [sp, #0x14]\n\t"
-            "ldr r0, _081CEF9C\n\t"
-            "movs r2, #0\n\t"
-            "bl CreatePokenavList\n\t"
-            "add sp, #0x18\n\t"
-            "pop {r4}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CEF98: .4byte BufferSearchMonListItem + 1\n\t"
-            "_081CEF9C: .4byte 0x085F5BA0\n\t"
-            ".syntax divided");
-}
-#else
 void CreateSearchResultsList(void)
 {
     struct PokenavListTemplate template;
 
     template.list = GetSearchResultsMonDataList();
     template.count = GetSearchResultsMonListCount();
-    template.startIndex = GetSearchResultsCurrentListIndex();
     template.itemSize = 4;
+    template.startIndex = GetSearchResultsCurrentListIndex();
     template.item_X = 0xE;
     template.windowWidth = 0xF;
     template.listTop = 1;
@@ -1437,7 +1339,6 @@ void CreateSearchResultsList(void)
     template.iconDrawFunc = NULL;
     CreatePokenavList(sSearchResultsBgTemplates, &template, 0);
 }
-#endif
 
 
 static void BufferSearchMonListItem(struct PokenavMonListItem *item, u8 *dest)
@@ -2038,60 +1939,14 @@ static void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu)
 }
 
 
-#ifndef NONMATCHING
-// JP naked asm: builds the ribbons-mon-list template on the stack; C form
-// differs, so asm stays default.
-__attribute__((naked)) void CreateRibbonMonsList(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, lr}\n\t"
-            "sub sp, #0x18\n\t"
-            "bl GetMonRibbonMonListData\n\t"
-            "str r0, [sp]\n\t"
-            "bl GetRibbonsMonListCount\n\t"
-            "mov r1, sp\n\t"
-            "movs r4, #0\n\t"
-            "strh r0, [r1, #4]\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r1, #8]\n\t"
-            "bl GetRibbonListMenuCurrIndex\n\t"
-            "mov r1, sp\n\t"
-            "strh r0, [r1, #6]\n\t"
-            "movs r0, #0xe\n\t"
-            "strb r0, [r1, #9]\n\t"
-            "movs r0, #0x10\n\t"
-            "strb r0, [r1, #0xa]\n\t"
-            "movs r0, #1\n\t"
-            "strb r0, [r1, #0xb]\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1, #0xc]\n\t"
-            "movs r0, #2\n\t"
-            "strb r0, [r1, #0xd]\n\t"
-            "ldr r0, _081CF9F0\n\t"
-            "str r0, [sp, #0x10]\n\t"
-            "str r4, [sp, #0x14]\n\t"
-            "ldr r0, _081CF9F4\n\t"
-            "movs r2, #0\n\t"
-            "bl CreatePokenavList\n\t"
-            "add sp, #0x18\n\t"
-            "pop {r4}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CF9F0: .4byte BufferRibbonMonInfoText + 1\n\t"
-            "_081CF9F4: .4byte 0x085F5DA4\n\t"
-            ".syntax divided");
-}
-#else
 void CreateRibbonMonsList(void)
 {
     struct PokenavListTemplate template;
 
     template.list = GetMonRibbonMonListData();
     template.count = GetRibbonsMonListCount();
-    template.startIndex = GetRibbonListMenuCurrIndex();
     template.itemSize = 4;
+    template.startIndex = GetRibbonListMenuCurrIndex();
     template.item_X = 0xE;
     template.windowWidth = 0x10;
     template.listTop = 1;
@@ -2101,7 +1956,6 @@ void CreateRibbonMonsList(void)
     template.iconDrawFunc = NULL;
     CreatePokenavList(sRibbonsMonListBgTemplates, &template, 0);
 }
-#endif
 
 
 static void BufferRibbonMonInfoText(struct PokenavListItem *listItem, u8 *dest)
