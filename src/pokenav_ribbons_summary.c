@@ -44,6 +44,9 @@ extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[];
 extern const union AffineAnimCmd *const sAffineAnims_RibbonIconBig;
 extern const struct SpriteTemplate sSpriteTemplate_RibbonIconBig;
 extern const u8 sText_MaleSymbol[];
+extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6
+extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
+extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
 extern const u8 sText_FemaleSymbol[];
 extern const u8 sGenderlessIconString[];
 extern const struct ScanlineEffectParams sConditionGraphScanline[];
@@ -1350,171 +1353,36 @@ static void AddRibbonSummaryMonNameWindow(struct Pokenav_RibbonsSummaryMenu *men
 }
 
 
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "sub sp, #0x10\n\t"
-            "adds r7, r0, #0\n\t"
-            "ldr r4, _081D070C\n\t"
-            "movs r0, #0xd\n\t"
-            "add r0, sp\n\t"
-            "mov r8, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "add r1, sp, #0xc\n\t"
-            "mov r2, r8\n\t"
-            "bl GetMonNicknameLevelGender\n\t"
-            "ldr r6, _081D0710\n\t"
-            "adds r0, r6, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #5\n\t"
-            "bl StringCopyPadded\n\t"
-            "add r0, sp, #0xc\n\t"
-            "ldrb r1, [r0]\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldr r5, _081D0714\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl StringCopyPadded\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "movs r0, #0\n\t"
-            "adds r1, r6, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "movs r0, #1\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "mov r1, r8\n\t"
-            "ldrb r0, [r1]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D071C\n\t"
-            "cmp r0, #0xfe\n\t"
-            "beq _081D0724\n\t"
-            "ldr r1, _081D0718\n\t"
-            "b _081D0726\n\t"
-            ".align 2, 0\n\t"
-            "_081D070C: .4byte gStringVar3\n\t"
-            "_081D0710: .4byte gStringVar1\n\t"
-            "_081D0714: .4byte gStringVar2\n\t"
-            "_081D0718: .4byte 0x085CB7FE\n\t"
-            "_081D071C:\n\t"
-            "ldr r1, _081D0720\n\t"
-            "b _081D0726\n\t"
-            ".align 2, 0\n\t"
-            "_081D0720: .4byte 0x085CB7D6\n\t"
-            "_081D0724:\n\t"
-            "ldr r1, _081D0764\n\t"
-            "_081D0726:\n\t"
-            "ldr r4, _081D0768\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "ldrb r0, [r7, #8]\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldrb r0, [r7, #8]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r7, #8]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0x10\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D0764: .4byte 0x085CB7EA\n\t"
-            "_081D0768: .4byte gStringVar4\n\t"
-            ".syntax divided");
-}
-#else
 void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
 {
+    u8 level;
+    u8 gender;
     const u8 *genderTxt;
-    u8 *txtPtr;
-    u8 level, gender;
-    u16 windowId = menu->nameWindowId;
 
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
     GetMonNicknameLevelGender(gStringVar3, &level, &gender);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar3, 0, 1, TEXT_SKIP_DRAW, NULL);
+    StringCopyPadded(gStringVar1, gStringVar3, CHAR_SPACE, 5);
+    ConvertIntToDecimalStringN(gStringVar3, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringCopyPadded(gStringVar2, gStringVar3, CHAR_SPACE, 3);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gStringVar2);
     switch (gender)
     {
     case MON_MALE:
-        genderTxt = sText_MaleSymbol;
+        genderTxt = sText_ConditionSearchMonMale;
         break;
     case MON_FEMALE:
-        genderTxt = sText_FemaleSymbol;
+        genderTxt = sText_ConditionSearchMonFemale;
         break;
     default:
-        genderTxt = sGenderlessIconString;
+        genderTxt = sText_ConditionSearchMonUnknown;
         break;
     }
-
-    txtPtr = StringCopy(gStringVar1, genderTxt);
-    *(txtPtr++) = CHAR_SLASH;
-    *(txtPtr++) = CHAR_EXTRA_SYMBOL;
-    *(txtPtr++) = CHAR_LV_2;
-    ConvertIntToDecimalStringN(txtPtr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 60, 1, TEXT_SKIP_DRAW, NULL);
-    CopyWindowToVram(windowId, COPYWIN_GFX);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, genderTxt);
+    FillWindowPixelBuffer(menu->nameWindowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(menu->nameWindowId, FONT_NORMAL, gStringVar4, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(menu->nameWindowId, COPYWIN_GFX);
 }
-#endif
-
-#else
-void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    const u8 *genderTxt;
-    u8 *txtPtr;
-    u8 level, gender;
-    u16 windowId = menu->nameWindowId;
-
-    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
-    GetMonNicknameLevelGender(gStringVar3, &level, &gender);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar3, 0, 1, TEXT_SKIP_DRAW, NULL);
-    switch (gender)
-    {
-    case MON_MALE:
-        genderTxt = sText_MaleSymbol;
-        break;
-    case MON_FEMALE:
-        genderTxt = sText_FemaleSymbol;
-        break;
-    default:
-        genderTxt = sGenderlessIconString;
-        break;
-    }
-
-    txtPtr = StringCopy(gStringVar1, genderTxt);
-    *(txtPtr++) = CHAR_SLASH;
-    *(txtPtr++) = CHAR_EXTRA_SYMBOL;
-    *(txtPtr++) = CHAR_LV_2;
-    ConvertIntToDecimalStringN(txtPtr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
-    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 60, 1, TEXT_SKIP_DRAW, NULL);
-    CopyWindowToVram(windowId, COPYWIN_GFX);
-}
-#endif
 
 
 
