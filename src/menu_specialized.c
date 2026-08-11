@@ -33,6 +33,7 @@ extern EWRAM_DATA struct ListMenuItem *sMailboxList;
 extern const struct WindowTemplate sWindowTemplates_MailboxMenu[MAILBOXWIN_COUNT];
 extern const struct ScanlineEffectParams sConditionGraphScanline;
 extern const u8 sConditionToLineLength[MAX_CONDITION + 1];
+extern const u8 *const sLvlUpStatStrings[];
 extern const struct WindowTemplate sMoveRelearnerWindowTemplates[6];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
@@ -2046,304 +2047,110 @@ static void ShowAllConditionSparkles(struct Sprite *sprite)
 
 // JP 0x081D2C70: the JP build allocates registers differently from the
 // US C port, so this is kept as asm.
-__attribute__((naked)) void DrawLevelUpWindowPg1(u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bgClr, u8 fgClr, u8 shadowClr)
+void DrawLevelUpWindowPg1(u16 windowId, u16 *statsBefore, u16 *statsAfter, u8 bgClr, u8 fgClr, u8 shadowClr)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "sub sp, #0x2c\n\t"
-            "mov r8, r0\n\t"
-            "adds r6, r1, #0\n\t"
-            "adds r5, r2, #0\n\t"
-            "adds r4, r3, #0\n\t"
-            "ldr r3, [sp, #0x4c]\n\t"
-            "ldr r0, [sp, #0x50]\n\t"
-            "mov sb, r0\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "lsls r3, r3, #0x18\n\t"
-            "lsrs r3, r3, #0x18\n\t"
-            "mov r1, sb\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "lsrs r1, r1, #0x18\n\t"
-            "mov sb, r1\n\t"
-            "mov r0, r8\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "mov r8, r0\n\t"
-            "lsls r1, r4, #4\n\t"
-            "orrs r1, r4\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "lsrs r1, r1, #0x18\n\t"
-            "str r3, [sp, #0x28]\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "add r2, sp, #0xc\n\t"
-            "ldrh r0, [r5]\n\t"
-            "ldrh r1, [r6]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2]\n\t"
-            "ldrh r0, [r5, #2]\n\t"
-            "ldrh r1, [r6, #2]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2, #2]\n\t"
-            "ldrh r0, [r5, #4]\n\t"
-            "ldrh r1, [r6, #4]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2, #4]\n\t"
-            "ldrh r0, [r5, #8]\n\t"
-            "ldrh r1, [r6, #8]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2, #6]\n\t"
-            "ldrh r0, [r5, #0xa]\n\t"
-            "ldrh r1, [r6, #0xa]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2, #8]\n\t"
-            "ldrh r0, [r5, #6]\n\t"
-            "ldrh r1, [r6, #6]\n\t"
-            "subs r0, r0, r1\n\t"
-            "strh r0, [r2, #0xa]\n\t"
-            "add r0, sp, #0x24\n\t"
-            "strb r4, [r0]\n\t"
-            "ldr r3, [sp, #0x28]\n\t"
-            "strb r3, [r0, #1]\n\t"
-            "mov r1, sb\n\t"
-            "strb r1, [r0, #2]\n\t"
-            "movs r7, #0\n\t"
-            "mov sl, r0\n\t"
-            "movs r0, #1\n\t"
-            "rsbs r0, r0, #0\n\t"
-            "mov sb, r0\n\t"
-            "add r6, sp, #0x18\n\t"
-            "_081D2CFA:\n\t"
-            "lsls r0, r7, #4\n\t"
-            "subs r0, r0, r7\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r5, r0, #0x18\n\t"
-            "mov r1, sl\n\t"
-            "str r1, [sp]\n\t"
-            "mov r0, sb\n\t"
-            "str r0, [sp, #4]\n\t"
-            "ldr r1, _081D2DA8\n\t"
-            "lsls r0, r7, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "str r0, [sp, #8]\n\t"
-            "mov r0, r8\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "lsls r0, r7, #1\n\t"
-            "mov r4, sp\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r4, #0xc\n\t"
-            "movs r1, #0\n\t"
-            "ldrsh r0, [r4, r1]\n\t"
-            "ldr r1, _081D2DAC\n\t"
-            "cmp r0, #0\n\t"
-            "blt _081D2D34\n\t"
-            "ldr r1, _081D2DB0\n\t"
-            "_081D2D34:\n\t"
-            "adds r0, r6, #0\n\t"
-            "bl StringCopy\n\t"
-            "mov r0, sl\n\t"
-            "str r0, [sp]\n\t"
-            "mov r1, sb\n\t"
-            "str r1, [sp, #4]\n\t"
-            "str r6, [sp, #8]\n\t"
-            "mov r0, r8\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0x36\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "movs r0, #0\n\t"
-            "ldrsh r1, [r4, r0]\n\t"
-            "adds r0, r1, #0\n\t"
-            "cmp r1, #0\n\t"
-            "bge _081D2D5C\n\t"
-            "rsbs r0, r1, #0\n\t"
-            "_081D2D5C:\n\t"
-            "movs r4, #8\n\t"
-            "cmp r0, #9\n\t"
-            "bgt _081D2D64\n\t"
-            "movs r4, #0x10\n\t"
-            "_081D2D64:\n\t"
-            "cmp r1, #0\n\t"
-            "bge _081D2D6A\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "_081D2D6A:\n\t"
-            "adds r0, r6, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #2\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "adds r2, r4, #0\n\t"
-            "adds r2, #0x36\n\t"
-            "mov r1, sl\n\t"
-            "str r1, [sp]\n\t"
-            "mov r0, sb\n\t"
-            "str r0, [sp, #4]\n\t"
-            "str r6, [sp, #8]\n\t"
-            "mov r0, r8\n\t"
-            "movs r1, #1\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "adds r0, r7, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r7, r0, #0x10\n\t"
-            "cmp r7, #5\n\t"
-            "bls _081D2CFA\n\t"
-            "add sp, #0x2c\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D2DA8: .4byte 0x085FA9CC\n\t"
-            "_081D2DAC: .4byte 0x085FA9C7\n\t"
-            "_081D2DB0: .4byte 0x085FA9C4\n\t"
-            ".syntax divided\n");
+    u16 i, x;
+    s16 statsDiff[NUM_STATS];
+    u8 text[12];
+    u8 color[3];
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(bgClr));
+
+    statsDiff[0] = statsAfter[STAT_HP]    - statsBefore[STAT_HP];
+    statsDiff[1] = statsAfter[STAT_ATK]   - statsBefore[STAT_ATK];
+    statsDiff[2] = statsAfter[STAT_DEF]   - statsBefore[STAT_DEF];
+    statsDiff[3] = statsAfter[STAT_SPATK] - statsBefore[STAT_SPATK];
+    statsDiff[4] = statsAfter[STAT_SPDEF] - statsBefore[STAT_SPDEF];
+    statsDiff[5] = statsAfter[STAT_SPEED] - statsBefore[STAT_SPEED];
+
+    color[0] = bgClr;
+    color[1] = fgClr;
+    color[2] = shadowClr;
+
+    for (i = 0; i < NUM_STATS; i++)
+    {
+        AddTextPrinterParameterized3(windowId,
+                                     FONT_NORMAL,
+                                     0,
+                                     15 * i,
+                                     color,
+                                     TEXT_SKIP_DRAW,
+                                     sLvlUpStatStrings[i]);
+
+        StringCopy(text, (statsDiff[i] >= 0) ? gText_Plus : gText_Dash);
+        AddTextPrinterParameterized3(windowId,
+                                     FONT_NORMAL,
+                                     54,
+                                     15 * i,
+                                     color,
+                                     TEXT_SKIP_DRAW,
+                                     text);
+        if (abs(statsDiff[i]) <= 9)
+            x = 16;
+        else
+            x = 8;
+
+        ConvertIntToDecimalStringN(text, abs(statsDiff[i]), STR_CONV_MODE_LEFT_ALIGN, 2);
+        AddTextPrinterParameterized3(windowId,
+                                     FONT_NORMAL,
+                                     54 + x,
+                                     15 * i,
+                                     color,
+                                     TEXT_SKIP_DRAW,
+                                     text);
+    }
 }
 
 // JP 0x081D2DB4: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) void DrawLevelUpWindowPg2(u16 windowId, u16 *currStats, u8 bgClr, u8 fgClr, u8 shadowClr)
+void DrawLevelUpWindowPg2(u16 windowId, u16 *currStats, u8 bgClr, u8 fgClr, u8 shadowClr)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "sub sp, #0x2c\n\t"
-            "mov r8, r0\n\t"
-            "adds r5, r1, #0\n\t"
-            "adds r4, r2, #0\n\t"
-            "adds r6, r3, #0\n\t"
-            "ldr r2, [sp, #0x4c]\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "lsls r6, r6, #0x18\n\t"
-            "lsrs r6, r6, #0x18\n\t"
-            "lsls r2, r2, #0x18\n\t"
-            "lsrs r2, r2, #0x18\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "mov r8, r0\n\t"
-            "lsls r1, r4, #4\n\t"
-            "orrs r1, r4\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "lsrs r1, r1, #0x18\n\t"
-            "str r2, [sp, #0x28]\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "add r1, sp, #0xc\n\t"
-            "ldrh r0, [r5]\n\t"
-            "strh r0, [r1]\n\t"
-            "ldrh r0, [r5, #2]\n\t"
-            "strh r0, [r1, #2]\n\t"
-            "ldrh r0, [r5, #4]\n\t"
-            "strh r0, [r1, #4]\n\t"
-            "ldrh r0, [r5, #8]\n\t"
-            "strh r0, [r1, #6]\n\t"
-            "ldrh r0, [r5, #0xa]\n\t"
-            "strh r0, [r1, #8]\n\t"
-            "ldrh r0, [r5, #6]\n\t"
-            "strh r0, [r1, #0xa]\n\t"
-            "add r0, sp, #0x24\n\t"
-            "strb r4, [r0]\n\t"
-            "strb r6, [r0, #1]\n\t"
-            "ldr r2, [sp, #0x28]\n\t"
-            "strb r2, [r0, #2]\n\t"
-            "movs r6, #0\n\t"
-            "add r1, sp, #0x18\n\t"
-            "mov sb, r1\n\t"
-            "mov r7, r8\n\t"
-            "mov sl, r0\n\t"
-            "movs r2, #1\n\t"
-            "rsbs r2, r2, #0\n\t"
-            "mov r8, r2\n\t"
-            "_081D2E1E:\n\t"
-            "lsls r1, r6, #1\n\t"
-            "mov r0, sp\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r0, #0xc\n\t"
-            "movs r2, #0\n\t"
-            "ldrsh r0, [r0, r2]\n\t"
-            "movs r5, #3\n\t"
-            "cmp r0, #0x63\n\t"
-            "bgt _081D2E38\n\t"
-            "movs r5, #1\n\t"
-            "cmp r0, #9\n\t"
-            "ble _081D2E38\n\t"
-            "movs r5, #2\n\t"
-            "_081D2E38:\n\t"
-            "mov r0, sp\n\t"
-            "adds r0, r0, r1\n\t"
-            "adds r0, #0xc\n\t"
-            "movs r2, #0\n\t"
-            "ldrsh r1, [r0, r2]\n\t"
-            "mov r0, sb\n\t"
-            "movs r2, #0\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "movs r4, #3\n\t"
-            "subs r4, r4, r5\n\t"
-            "lsls r4, r4, #0x13\n\t"
-            "lsrs r4, r4, #0x10\n\t"
-            "lsls r5, r6, #4\n\t"
-            "subs r5, r5, r6\n\t"
-            "lsls r5, r5, #0x18\n\t"
-            "lsrs r5, r5, #0x18\n\t"
-            "mov r0, sl\n\t"
-            "str r0, [sp]\n\t"
-            "mov r1, r8\n\t"
-            "str r1, [sp, #4]\n\t"
-            "ldr r1, _081D2EB4\n\t"
-            "lsls r0, r6, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "str r0, [sp, #8]\n\t"
-            "adds r0, r7, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "adds r4, #0x36\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "mov r2, sl\n\t"
-            "str r2, [sp]\n\t"
-            "mov r0, r8\n\t"
-            "str r0, [sp, #4]\n\t"
-            "mov r1, sb\n\t"
-            "str r1, [sp, #8]\n\t"
-            "adds r0, r7, #0\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "adds r0, r6, #1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r6, r0, #0x10\n\t"
-            "cmp r6, #5\n\t"
-            "bls _081D2E1E\n\t"
-            "add sp, #0x2c\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D2EB4: .4byte 0x085FA9CC\n\t"
-            ".syntax divided\n");
+    u16 i, numDigits, x;
+    s16 stats[NUM_STATS];
+    u8 text[12];
+    u8 color[3];
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(bgClr));
+
+    stats[0] = currStats[STAT_HP];
+    stats[1] = currStats[STAT_ATK];
+    stats[2] = currStats[STAT_DEF];
+    stats[3] = currStats[STAT_SPATK];
+    stats[4] = currStats[STAT_SPDEF];
+    stats[5] = currStats[STAT_SPEED];
+
+    color[0] = bgClr;
+    color[1] = fgClr;
+    color[2] = shadowClr;
+
+    for (i = 0; i < NUM_STATS; i++)
+    {
+        if (stats[i] > 99)
+            numDigits = 3;
+        else if (stats[i] > 9)
+            numDigits = 2;
+        else
+            numDigits = 1;
+
+        ConvertIntToDecimalStringN(text, stats[i], STR_CONV_MODE_LEFT_ALIGN, numDigits);
+        x = (3 - numDigits) * 8;
+
+        AddTextPrinterParameterized3(windowId,
+                                     FONT_NORMAL,
+                                     0,
+                                     15 * i,
+                                     color,
+                                     TEXT_SKIP_DRAW,
+                                     sLvlUpStatStrings[i]);
+
+        x += 54;
+        AddTextPrinterParameterized3(windowId,
+                                     FONT_NORMAL,
+                                     x,
+                                     15 * i,
+                                     color,
+                                     TEXT_SKIP_DRAW,
+                                     text);
+    }
 }
 
 void GetMonLevelUpWindowStats(struct Pokemon *mon, u16 *currStats)
