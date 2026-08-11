@@ -31,64 +31,6 @@
 
 
 
-	thumb_func_start sub_08017044
-sub_08017044: @ 0x08017044
-	push {r4, r5, r6, r7, lr}
-	mov r7, sl
-	mov r6, sb
-	mov r5, r8
-	push {r5, r6, r7}
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	cmp r1, #0
-	beq _0801709C
-	ldr r2, _080170AC
-	mov r8, r2
-	movs r5, #0
-	mov sb, r5
-	movs r6, #4
-	rsbs r6, r6, #0
-	mov ip, r6
-	adds r2, r0, #0
-	adds r2, #0x18
-	adds r4, r0, #0
-	movs r7, #0xff
-	mov sl, r7
-	adds r3, r1, #0
-_08017070:
-	adds r1, r4, #0
-	mov r0, r8
-	ldm r0!, {r5, r6, r7}
-	stm r1!, {r5, r6, r7}
-	ldm r0!, {r5, r6, r7}
-	stm r1!, {r5, r6, r7}
-	mov r0, sl
-	strh r0, [r2]
-	ldrb r1, [r2, #2]
-	mov r0, ip
-	ands r0, r1
-	movs r1, #5
-	rsbs r1, r1, #0
-	ands r0, r1
-	strb r0, [r2, #2]
-	mov r5, sb
-	strb r5, [r2, #3]
-	adds r2, #0x20
-	adds r4, #0x20
-	subs r3, #1
-	cmp r3, #0
-	bne _08017070
-_0801709C:
-	pop {r3, r4, r5}
-	mov r8, r3
-	mov sb, r4
-	mov sl, r5
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080170AC: .4byte 0x082C2364
-	thumb_func_end sub_08017044
 
 	thumb_func_start sub_080170B0
 sub_080170B0: @ 0x080170B0
