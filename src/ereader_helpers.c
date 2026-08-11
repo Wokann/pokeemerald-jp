@@ -304,37 +304,17 @@ bool32 TryWriteTrainerHill(struct EReaderTrainerHillSet *hillSet)
     return result;
 }
 
-// JP 0x081D3158: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static bool32 TryReadTrainerHill_Internal(struct EReaderTrainerHillSet *dest, u8 *buffer)
+// JP 0x081D3158
+static bool32 TryReadTrainerHill_Internal(struct EReaderTrainerHillSet *dest, u8 *buffer)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r5, r0, #0\n\t"
-            "adds r4, r1, #0\n\t"
-            "movs r0, #0x1e\n\t"
-            "bl TryReadSpecialSaveSection\n\t"
-            "cmp r0, #1\n\t"
-            "bne _081D3184\n\t"
-            "ldr r2, _081D3180\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl memcpy\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl ValidateTrainerHillChecksum\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D3184\n\t"
-            "movs r0, #1\n\t"
-            "b _081D3186\n\t"
-            ".align 2, 0\n\t"
-            "_081D3180: .4byte 0x00000EC8\n\t"
-            "_081D3184:\n\t"
-            "movs r0, #0\n\t"
-            "_081D3186:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided\n");
+    if (TryReadSpecialSaveSector(SECTOR_ID_TRAINER_HILL, buffer) != SAVE_STATUS_OK)
+        return FALSE;
+
+    memcpy(dest, buffer, sizeof(struct EReaderTrainerHillSet));
+    if (!ValidateTrainerHillChecksum(dest))
+        return FALSE;
+
+    return TRUE;
 }
 
 bool32 TryReadTrainerHill(struct EReaderTrainerHillSet *hillSet)
