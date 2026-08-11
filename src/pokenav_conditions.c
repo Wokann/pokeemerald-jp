@@ -77,6 +77,7 @@ extern const struct WindowTemplate sListIndexWindowTemplate;
 extern const struct WindowTemplate sUnusedWindowTemplate1;
 extern const struct WindowTemplate sUnusedWindowTemplate2;
 extern const LoopedTask sLoopedTaskFuncs[];
+void VBlankCB_PokenavConditionGraph(void);
 
 typedef u8 ALIGNED(4) TilemapBuffer[BG_SCREEN_SIZE];
 
@@ -1116,467 +1117,150 @@ static u32 GetConditionGraphMenuLoopedTaskActive(void)
     return IsLoopedTaskActive(menu->loopedTaskId);
 }
 
-__attribute__((naked)) u32 LoopedTask_OpenConditionGraphMenu(s32 state)
+static u32 LoopedTask_OpenConditionGraphMenu(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xc\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #0x14\n\t"
-            "bls _081CD608\n\t"
-            "b _081CDA24\n\t"
-            "_081CD608:\n\t"
-            "lsls r0, r4, #2\n\t"
-            "ldr r1, _081CD614\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "mov pc, r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CD614: .4byte _081CD618\n\t"
-            "_081CD618: @ jump table\n\t"
-            ".4byte _081CD66C @ case 0\n\t"
-            ".4byte _081CD678 @ case 1\n\t"
-            ".4byte _081CD6F4 @ case 2\n\t"
-            ".4byte _081CD718 @ case 3\n\t"
-            ".4byte _081CD790 @ case 4\n\t"
-            ".4byte _081CD7D4 @ case 5\n\t"
-            ".4byte _081CD810 @ case 6\n\t"
-            ".4byte _081CD878 @ case 7\n\t"
-            ".4byte _081CD880 @ case 8\n\t"
-            ".4byte _081CD886 @ case 9\n\t"
-            ".4byte _081CD896 @ case 10\n\t"
-            ".4byte _081CD8A6 @ case 11\n\t"
-            ".4byte _081CD8B6 @ case 12\n\t"
-            ".4byte _081CD8CC @ case 13\n\t"
-            ".4byte _081CD928 @ case 14\n\t"
-            ".4byte _081CD94C @ case 15\n\t"
-            ".4byte _081CD978 @ case 16\n\t"
-            ".4byte _081CD99C @ case 17\n\t"
-            ".4byte _081CD9AA @ case 18\n\t"
-            ".4byte _081CD9BA @ case 19\n\t"
-            ".4byte _081CD9C2 @ case 20\n\t"
-            "_081CD66C:\n\t"
-            "bl LoadConditionGraphMenuGfx\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD676\n\t"
-            "b _081CDA20\n\t"
-            "_081CD676:\n\t"
-            "b _081CD710\n\t"
-            "_081CD678:\n\t"
-            "ldr r0, _081CD6E0\n\t"
-            "movs r1, #3\n\t"
-            "bl InitBgTemplates\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgX\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgY\n\t"
-            "movs r0, #2\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgX\n\t"
-            "movs r0, #2\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgY\n\t"
-            "movs r0, #3\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgX\n\t"
-            "movs r0, #3\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgY\n\t"
-            "ldr r1, _081CD6E4\n\t"
-            "movs r0, #0\n\t"
-            "bl SetGpuReg\n\t"
-            "ldr r1, _081CD6E8\n\t"
-            "movs r0, #0x50\n\t"
-            "bl SetGpuReg\n\t"
-            "ldr r1, _081CD6EC\n\t"
-            "movs r0, #0x52\n\t"
-            "bl SetGpuReg\n\t"
-            "ldr r1, _081CD6F0\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #3\n\t"
-            "b _081CD708\n\t"
-            ".align 2, 0\n\t"
-            "_081CD6E0: .4byte sMenuBgTemplates\n\t"
-            "_081CD6E4: .4byte 0x00007940\n\t"
-            "_081CD6E8: .4byte 0x00000844\n\t"
-            "_081CD6EC: .4byte 0x0000040B\n\t"
-            "_081CD6F0: .4byte gPokenavCondition_Gfx\n\t"
-            "_081CD6F4:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CD702\n\t"
-            "b _081CDA20\n\t"
-            "_081CD702:\n\t"
-            "ldr r1, _081CD714\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #2\n\t"
-            "_081CD708:\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl DecompressAndCopyTileDataToVram\n\t"
-            "_081CD710:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CDA26\n\t"
-            ".align 2, 0\n\t"
-            "_081CD714: .4byte sConditionGraphData_Gfx\n\t"
-            "_081CD718:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CD724\n\t"
-            "b _081CDA20\n\t"
-            "_081CD724:\n\t"
-            "ldr r0, _081CD778\n\t"
-            "adds r4, r5, #4\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl LZ77UnCompVram\n\t"
-            "movs r0, #3\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl SetBgTilemapBuffer\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "bne _081CD752\n\t"
-            "ldr r1, _081CD77C\n\t"
-            "movs r0, #9\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #4\n\t"
-            "str r0, [sp, #4]\n\t"
-            "movs r0, #3\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #5\n\t"
-            "bl CopyToBgTilemapBufferRect\n\t"
-            "_081CD752:\n\t"
-            "movs r0, #3\n\t"
-            "bl CopyBgTilemapBufferToVram\n\t"
-            "ldr r0, _081CD780\n\t"
-            "movs r1, #0x10\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "ldr r0, _081CD784\n\t"
-            "movs r1, #0xf0\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "ldr r0, _081CD788\n\t"
-            "adds r1, r5, r0\n\t"
-            "ldr r0, _081CD78C\n\t"
-            "strh r0, [r1]\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD778: .4byte gPokenavCondition_Tilemap\n\t"
-            "_081CD77C: .4byte gPokenavOptions_Tilemap\n\t"
-            "_081CD780: .4byte gPokenavCondition_Pal\n\t"
-            "_081CD784: .4byte gConditionText_Pal\n\t"
-            "_081CD788: .4byte 0x00001814\n\t"
-            "_081CD78C: .4byte 0x0000FFB0\n\t"
-            "_081CD790:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CD79C\n\t"
-            "b _081CDA20\n\t"
-            "_081CD79C:\n\t"
-            "ldr r0, _081CD7C8\n\t"
-            "ldr r1, _081CD7CC\n\t"
-            "adds r4, r5, r1\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl LZ77UnCompVram\n\t"
-            "movs r0, #2\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl SetBgTilemapBuffer\n\t"
-            "movs r0, #2\n\t"
-            "bl CopyBgTilemapBufferToVram\n\t"
-            "ldr r0, _081CD7D0\n\t"
-            "movs r1, #0x30\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "movs r0, #2\n\t"
-            "bl ConditionGraph_InitWindow\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD7C8: .4byte sConditionGraphData_Tilemap\n\t"
-            "_081CD7CC: .4byte 0x00001004\n\t"
-            "_081CD7D0: .4byte gConditionGraphData_Pal\n\t"
-            "_081CD7D4:\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #1\n\t"
-            "bl BgDmaFill\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #1\n\t"
-            "bl BgDmaFill\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp, #8]\n\t"
-            "ldr r2, _081CD808\n\t"
-            "adds r4, r5, r2\n\t"
-            "ldr r2, _081CD80C\n\t"
-            "add r0, sp, #8\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl CpuSet\n\t"
-            "movs r0, #1\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl SetBgTilemapBuffer\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD808: .4byte 0x00000804\n\t"
-            "_081CD80C: .4byte OBJ_PLTT\n\t"
-            "_081CD810:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CD81C\n\t"
-            "b _081CDA20\n\t"
-            "_081CD81C:\n\t"
-            "ldr r0, _081CD85C\n\t"
-            "bl AddWindow\n\t"
-            "movs r2, #0xc1\n\t"
-            "lsls r2, r2, #5\n\t"
-            "adds r1, r5, r2\n\t"
-            "strb r0, [r1]\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "bne _081CD856\n\t"
-            "ldr r0, _081CD860\n\t"
-            "bl AddWindow\n\t"
-            "ldr r2, _081CD864\n\t"
-            "adds r1, r5, r2\n\t"
-            "strb r0, [r1]\n\t"
-            "ldr r0, _081CD868\n\t"
-            "bl AddWindow\n\t"
-            "ldr r2, _081CD86C\n\t"
-            "adds r1, r5, r2\n\t"
-            "strb r0, [r1]\n\t"
-            "ldr r0, _081CD870\n\t"
-            "bl AddWindow\n\t"
-            "ldr r2, _081CD874\n\t"
-            "adds r1, r5, r2\n\t"
-            "strb r0, [r1]\n\t"
-            "_081CD856:\n\t"
-            "bl DeactivateAllTextPrinters\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD85C: .4byte sMonNameGenderWindowTemplate\n\t"
-            "_081CD860: .4byte sListIndexWindowTemplate\n\t"
-            "_081CD864: .4byte 0x00001821\n\t"
-            "_081CD868: .4byte sUnusedWindowTemplate1\n\t"
-            "_081CD86C: .4byte 0x00001822\n\t"
-            "_081CD870: .4byte sUnusedWindowTemplate2\n\t"
-            "_081CD874: .4byte 0x00001823\n\t"
-            "_081CD878:\n\t"
-            "movs r0, #0\n\t"
-            "bl CreateConditionMonPic\n\t"
-            "b _081CD710\n\t"
-            "_081CD880:\n\t"
-            "bl CreateMonMarkingsOrPokeballIndicators\n\t"
-            "b _081CD710\n\t"
-            "_081CD886:\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD890\n\t"
-            "b _081CD710\n\t"
-            "_081CD890:\n\t"
-            "bl CopyUnusedConditionWindowsToVram\n\t"
-            "b _081CD710\n\t"
-            "_081CD896:\n\t"
-            "bl GetConditionGraphMenuCurrentLoadIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "asrs r1, r1, #8\n\t"
-            "lsrs r1, r1, #0x10\n\t"
-            "movs r0, #0\n\t"
-            "b _081CD8C4\n\t"
-            "_081CD8A6:\n\t"
-            "bl GetConditionGraphMenuCurrentLoadIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "asrs r1, r1, #8\n\t"
-            "lsrs r1, r1, #0x10\n\t"
-            "movs r0, #1\n\t"
-            "b _081CD8C4\n\t"
-            "_081CD8B6:\n\t"
-            "bl GetConditionGraphMenuCurrentLoadIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "asrs r1, r1, #8\n\t"
-            "lsrs r1, r1, #0x10\n\t"
-            "movs r0, #2\n\t"
-            "_081CD8C4:\n\t"
-            "movs r2, #1\n\t"
-            "bl UpdateConditionGraphMenuWindows\n\t"
-            "b _081CD710\n\t"
-            "_081CD8CC:\n\t"
-            "bl GetConditionGraphMenuCurrentLoadIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "asrs r1, r1, #8\n\t"
-            "lsrs r1, r1, #0x10\n\t"
-            "movs r0, #3\n\t"
-            "movs r2, #1\n\t"
-            "bl UpdateConditionGraphMenuWindows\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD8E6\n\t"
-            "b _081CDA20\n\t"
-            "_081CD8E6:\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r5, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD8FC\n\t"
-            "b _081CD710\n\t"
-            "_081CD8FC:\n\t"
-            "ldr r2, _081CD91C\n\t"
-            "adds r0, r5, r2\n\t"
-            "ldrb r0, [r0]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldr r1, _081CD920\n\t"
-            "adds r0, r5, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldr r2, _081CD924\n\t"
-            "adds r0, r5, r2\n\t"
-            "ldrb r0, [r0]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD91C: .4byte 0x00001821\n\t"
-            "_081CD920: .4byte 0x00001822\n\t"
-            "_081CD924: .4byte 0x00001823\n\t"
-            "_081CD928:\n\t"
-            "movs r0, #1\n\t"
-            "bl ShowBg\n\t"
-            "movs r0, #2\n\t"
-            "bl HideBg\n\t"
-            "movs r0, #3\n\t"
-            "bl ShowBg\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD944\n\t"
-            "b _081CD710\n\t"
-            "_081CD944:\n\t"
-            "movs r0, #4\n\t"
-            "bl PrintHelpBarText\n\t"
-            "b _081CD710\n\t"
-            "_081CD94C:\n\t"
-            "movs r0, #1\n\t"
-            "bl PokenavFadeScreen\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CD95C\n\t"
-            "b _081CD710\n\t"
-            "_081CD95C:\n\t"
-            "movs r0, #6\n\t"
-            "bl LoadLeftHeaderGfxForIndex\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl ShowLeftHeaderGfx\n\t"
-            "movs r0, #6\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl ShowLeftHeaderGfx\n\t"
-            "b _081CD710\n\t"
-            "_081CD978:\n\t"
-            "bl IsPaletteFadeActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CDA20\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CD990\n\t"
-            "bl AreLeftHeaderSpritesMoving\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CDA20\n\t"
-            "_081CD990:\n\t"
-            "ldr r0, _081CD998\n\t"
-            "bl SetVBlankCallback_\n\t"
-            "b _081CD710\n\t"
-            ".align 2, 0\n\t"
-            "_081CD998: .4byte VBlankCB_PokenavConditionGraph + 1\n\t"
-            "_081CD99C:\n\t"
-            "bl DoConditionGraphEnterTransition\n\t"
-            "bl GetConditionGraphPtr\n\t"
-            "bl ConditionGraph_InitResetScanline\n\t"
-            "b _081CD710\n\t"
-            "_081CD9AA:\n\t"
-            "bl GetConditionGraphPtr\n\t"
-            "bl ConditionGraph_ResetScanline\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CDA20\n\t"
-            "b _081CD710\n\t"
-            "_081CD9BA:\n\t"
-            "movs r0, #1\n\t"
-            "bl ToggleGraphData\n\t"
-            "b _081CD710\n\t"
-            "_081CD9C2:\n\t"
-            "bl GetConditionGraphPtr\n\t"
-            "ldr r2, _081CDA14\n\t"
-            "adds r1, r5, r2\n\t"
-            "bl ConditionMenu_UpdateMonEnter\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CDA20\n\t"
-            "ldr r0, _081CDA18\n\t"
-            "adds r6, r5, r0\n\t"
-            "adds r0, r6, #0\n\t"
-            "bl ResetConditionSparkleSprites\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CD9F8\n\t"
-            "bl GetConditionGraphCurrentListIndex\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl GetMonListCount\n\t"
-            "lsls r4, r4, #0x10\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "cmp r4, r0\n\t"
-            "beq _081CDA24\n\t"
-            "_081CD9F8:\n\t"
-            "ldr r1, _081CDA1C\n\t"
-            "adds r0, r5, r1\n\t"
-            "ldrb r4, [r0]\n\t"
-            "bl GetNumConditionMonSparkles\n\t"
-            "adds r2, r0, #0\n\t"
-            "lsls r2, r2, #0x18\n\t"
-            "lsrs r2, r2, #0x18\n\t"
-            "adds r0, r6, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl CreateConditionSparkleSprites\n\t"
-            "b _081CDA24\n\t"
-            ".align 2, 0\n\t"
-            "_081CDA14: .4byte 0x00001814\n\t"
-            "_081CDA18: .4byte 0x000028E0\n\t"
-            "_081CDA1C: .4byte 0x00001816\n\t"
-            "_081CDA20:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CDA26\n\t"
-            "_081CDA24:\n\t"
-            "movs r0, #4\n\t"
-            "_081CDA26:\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
+    u32 zero;
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+
+    switch (state)
+    {
+    case 0:
+        if (LoadConditionGraphMenuGfx() != TRUE)
+            return LT_PAUSE;
+        return LT_INC_AND_PAUSE;
+    case 1:
+        InitBgTemplates(sMenuBgTemplates, ARRAY_COUNT(sMenuBgTemplates));
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_BG3_ON);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG2 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG3);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(11, 4));
+        DecompressAndCopyTileDataToVram(3, gPokenavCondition_Gfx, 0, 0, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        DecompressAndCopyTileDataToVram(2, sConditionGraphData_Gfx, 0, 0, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        LZ77UnCompVram(gPokenavCondition_Tilemap, menu->tilemapBuffers[0]);
+        SetBgTilemapBuffer(3, menu->tilemapBuffers[0]);
+        if (IsConditionMenuSearchMode() == TRUE)
+            CopyToBgTilemapBufferRect(3, gPokenavOptions_Tilemap, 0, 5, 9, 4);
+        CopyBgTilemapBufferToVram(3);
+        CopyPaletteIntoBufferUnfaded(gPokenavCondition_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyPaletteIntoBufferUnfaded(gConditionText_Pal, BG_PLTT_ID(15), PLTT_SIZE_4BPP);
+        menu->monTransitionX = -80;
+        return LT_INC_AND_PAUSE;
+    case 4:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        LZ77UnCompVram(sConditionGraphData_Tilemap, menu->tilemapBuffers[2]);
+        SetBgTilemapBuffer(2, menu->tilemapBuffers[2]);
+        CopyBgTilemapBufferToVram(2);
+        CopyPaletteIntoBufferUnfaded(gConditionGraphData_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        ConditionGraph_InitWindow(2);
+        return LT_INC_AND_PAUSE;
+    case 5:
+        BgDmaFill(1, 0, 0, 1);
+        BgDmaFill(1, 17, 1, 1);
+        zero = 0;
+        CpuSet(&zero, menu->tilemapBuffers[1], OBJ_PLTT);
+        SetBgTilemapBuffer(1, menu->tilemapBuffers[1]);
+        return LT_INC_AND_PAUSE;
+    case 6:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        menu->nameGenderWindowId = AddWindow(&sMonNameGenderWindowTemplate);
+        if (IsConditionMenuSearchMode() == TRUE)
+        {
+            menu->listIndexWindowId = AddWindow(&sListIndexWindowTemplate);
+            menu->unusedWindowId1 = AddWindow(&sUnusedWindowTemplate1);
+            menu->unusedWindowId2 = AddWindow(&sUnusedWindowTemplate2);
+        }
+        DeactivateAllTextPrinters();
+        return LT_INC_AND_PAUSE;
+    case 7:
+        CreateConditionMonPic(0);
+        return LT_INC_AND_PAUSE;
+    case 8:
+        CreateMonMarkingsOrPokeballIndicators();
+        return LT_INC_AND_PAUSE;
+    case 9:
+        if (IsConditionMenuSearchMode() == TRUE)
+            CopyUnusedConditionWindowsToVram();
+        return LT_INC_AND_PAUSE;
+    case 10:
+        UpdateConditionGraphMenuWindows(0, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 11:
+        UpdateConditionGraphMenuWindows(1, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 12:
+        UpdateConditionGraphMenuWindows(2, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE);
+        return LT_INC_AND_PAUSE;
+    case 13:
+        if (UpdateConditionGraphMenuWindows(3, (u16)(s8)GetConditionGraphMenuCurrentLoadIndex(), TRUE) != TRUE)
+            return LT_PAUSE;
+        PutWindowTilemap(menu->nameGenderWindowId);
+        if (IsConditionMenuSearchMode() == TRUE)
+        {
+            PutWindowTilemap(menu->listIndexWindowId);
+            PutWindowTilemap(menu->unusedWindowId1);
+            PutWindowTilemap(menu->unusedWindowId2);
+        }
+        return LT_INC_AND_PAUSE;
+    case 14:
+        ShowBg(1);
+        HideBg(2);
+        ShowBg(3);
+        if (IsConditionMenuSearchMode() == TRUE)
+            PrintHelpBarText(HELPBAR_CONDITION_MON_STATUS);
+        return LT_INC_AND_PAUSE;
+    case 15:
+        PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+        if (!IsConditionMenuSearchMode())
+        {
+            LoadLeftHeaderGfxForIndex(POKENAV_GFX_PARTY_MENU);
+            ShowLeftHeaderGfx(POKENAV_GFX_CONDITION_MENU, TRUE, FALSE);
+            ShowLeftHeaderGfx(POKENAV_GFX_PARTY_MENU, TRUE, FALSE);
+        }
+        return LT_INC_AND_PAUSE;
+    case 16:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+        if (!IsConditionMenuSearchMode() && AreLeftHeaderSpritesMoving())
+            return LT_PAUSE;
+        SetVBlankCallback_(VBlankCB_PokenavConditionGraph);
+        return LT_INC_AND_PAUSE;
+    case 17:
+        DoConditionGraphEnterTransition();
+        ConditionGraph_InitResetScanline(GetConditionGraphPtr());
+        return LT_INC_AND_PAUSE;
+    case 18:
+        if (ConditionGraph_ResetScanline(GetConditionGraphPtr()))
+            return LT_PAUSE;
+        return LT_INC_AND_PAUSE;
+    case 19:
+        ToggleGraphData(TRUE);
+        return LT_INC_AND_PAUSE;
+    case 20:
+        if (!ConditionMenu_UpdateMonEnter(GetConditionGraphPtr(), &menu->monTransitionX))
+        {
+            ResetConditionSparkleSprites(menu->conditionSparkleSprites);
+            if (IsConditionMenuSearchMode() == TRUE || GetConditionGraphCurrentListIndex() != GetMonListCount())
+                CreateConditionSparkleSprites(menu->conditionSparkleSprites, menu->monPicSpriteId, GetNumConditionMonSparkles());
+            return LT_FINISH;
+        }
+        return LT_PAUSE;
+    }
+    return LT_FINISH;
 }
 
 static u32 LoopedTask_ExitConditionGraphMenu(s32 state)
