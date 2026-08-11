@@ -475,6 +475,8 @@ static void ConditionGraph_CalcLine(struct ConditionGraph *graph, u16 *scanline,
 }
 
 // JP 0x081D1AEC: kept as asm (compiler register allocation differs from US).
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
 {
     __asm__(".syntax unified\n\t"
@@ -822,6 +824,105 @@ __attribute__((naked)) static void ConditionGraph_CalcLeftHalf(struct ConditionG
             "_081D1D6C: .4byte 0x0000024A\n\t"
             ".syntax divided\n");
 }
+#else
+static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
+{
+    u16 i, y, bottom;
+
+    // Calculate Cool -> Beauty line
+    if (graph->curPositions[GRAPH_COOL].y < graph->curPositions[GRAPH_BEAUTY].y)
+    {
+        y = graph->curPositions[GRAPH_COOL].y;
+        ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_COOL], &graph->curPositions[GRAPH_BEAUTY], TRUE, NULL);
+    }
+    else
+    {
+        y = graph->curPositions[GRAPH_BEAUTY].y;
+        ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_BEAUTY], &graph->curPositions[GRAPH_COOL], FALSE, NULL);
+    }
+
+    // Calculate Beauty -> Cute line
+    // No need for conditional, positions on the Beauty line are always above the Cute line
+    ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_BEAUTY], &graph->curPositions[GRAPH_CUTE], TRUE, NULL);
+
+    // Calculate Cute -> Smart line (includes left scanline because this crosses the halfway point)
+    i = (graph->curPositions[GRAPH_CUTE].y <= graph->curPositions[GRAPH_SMART].y);
+    ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_CUTE], &graph->curPositions[GRAPH_SMART], i, graph->scanlineLeft[0]);
+
+    // Clear down to new top
+    for (i = CONDITION_GRAPH_TOP_Y; i < y; i++)
+    {
+        graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] = 0;
+        graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][1] = 0;
+    }
+
+    for (i = graph->curPositions[GRAPH_COOL].y; i <= graph->bottom; i++)
+        graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] = CONDITION_GRAPH_CENTER_X;
+
+    // Clear after new bottom
+    bottom = max(graph->bottom, graph->curPositions[GRAPH_CUTE].y);
+    for (i = bottom + 1; i <= CONDITION_GRAPH_BOTTOM_Y; i++)
+    {
+        graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] = 0;
+        graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][1] = 0;
+    }
+
+    for (i = CONDITION_GRAPH_TOP_Y; i <= CONDITION_GRAPH_BOTTOM_Y; i++)
+    {
+        if (graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] == 0
+         && graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][1] != 0)
+            graph->scanlineRight[i - CONDITION_GRAPH_TOP_Y][0] = CONDITION_GRAPH_CENTER_X;
+    }
+}
+static void ConditionGraph_CalcLeftHalf(struct ConditionGraph *graph)
+{
+    s32 i, y, bottom;
+
+    // Calculate Cool -> Tough line
+    if (graph->curPositions[GRAPH_COOL].y < graph->curPositions[GRAPH_TOUGH].y)
+    {
+        y = graph->curPositions[GRAPH_COOL].y;
+        ConditionGraph_CalcLine(graph, graph->scanlineLeft[0], &graph->curPositions[GRAPH_COOL], &graph->curPositions[GRAPH_TOUGH], FALSE, NULL);
+    }
+    else
+    {
+        y = graph->curPositions[GRAPH_TOUGH].y;
+        ConditionGraph_CalcLine(graph, graph->scanlineLeft[0], &graph->curPositions[GRAPH_TOUGH], &graph->curPositions[GRAPH_COOL], TRUE, NULL);
+    }
+
+    // Calculate Tough -> Smart line
+    // No need for conditional, positions on the Tough line are always above the Smart line
+    ConditionGraph_CalcLine(graph, graph->scanlineLeft[0], &graph->curPositions[GRAPH_TOUGH], &graph->curPositions[GRAPH_SMART], FALSE, NULL);
+
+    // Clear down to new top
+    for (i = CONDITION_GRAPH_TOP_Y; i < y; i++)
+    {
+        graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][0] = 0;
+        graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][1] = 0;
+    }
+
+    for (i = graph->curPositions[GRAPH_COOL].y; i <= graph->bottom; i++)
+        graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][1] = CONDITION_GRAPH_CENTER_X;
+
+    // Clear after new bottom
+    bottom = max(graph->bottom, graph->curPositions[GRAPH_SMART].y + 1);
+    for (i = bottom; i <= CONDITION_GRAPH_BOTTOM_Y; i++)
+    {
+        graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][0] = 0;
+        graph->scanlineLeft[i - CONDITION_GRAPH_TOP_Y][1] = 0;
+    }
+
+    for (i = 0; i < CONDITION_GRAPH_HEIGHT; i++)
+    {
+        if (graph->scanlineLeft[i][0] >= graph->scanlineLeft[i][1])
+        {
+            graph->scanlineLeft[i][1] = 0;
+            graph->scanlineLeft[i][0] = 0;
+        }
+    }
+}
+#endif
+
 
 void ConditionGraph_CalcPositions(u8 *conditions, struct UCoords16 *positions)
 {
