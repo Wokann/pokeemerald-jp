@@ -81,7 +81,10 @@ Generator/analysis tools under `tools/`:
 * `decompile_scripts.py` - decode event-script bytes to `.inc` text using
   the JP command table and event.inc macro formats
 
-To set up the repository, see [INSTALL.md](INSTALL.md)
+Set up the build environment and see the skip-already-installed flow in
+[INSTALL.md](INSTALL.md).  If you are contributing decompilation work,
+the asm-to-C conversion procedure and the mandatory `make compare`
+verification are documented in [DECOMPILING.md](DECOMPILING.md).
 
 ## See also
 
