@@ -262,103 +262,6 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y)
 // Kept as naked asm: agbcc cannot reproduce the JP register allocation
 // for the record loop (r4 counter, r5 entry offset, r6 y in the high
 // byte, r7 save-block pointer).
-#ifndef NONMATCHING
-__attribute__((naked)) void ShowLinkBattleRecords(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sb\n\t"
-            "mov r6, r8\n\t"
-            "push {r6, r7}\n\t"
-            "sub sp, #0xc\n\t"
-            "ldr r6, _0813C560\n\t"
-            "ldr r0, _0813C564\n\t"
-            "bl AddWindow\n\t"
-            "strb r0, [r6]\n\t"
-            "ldrb r0, [r6]\n\t"
-            "movs r1, #0\n\t"
-            "bl DrawStdWindowFrame\n\t"
-            "ldrb r0, [r6]\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldr r5, _0813C568\n\t"
-            "ldr r1, _0813C56C\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringExpandPlaceholders\n\t"
-            "ldrb r0, [r6]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r4, #0\n\t"
-            "str r4, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r5, #0\n\t"
-            "movs r3, #0x30\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r0, _0813C570\n\t"
-            "mov r8, r0\n\t"
-            "ldr r0, [r0]\n\t"
-            "ldr r1, _0813C574\n\t"
-            "mov sb, r1\n\t"
-            "add r0, sb\n\t"
-            "bl PrintLinkBattleWinsLossesDraws\n\t"
-            "ldr r1, _0813C578\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl StringExpandPlaceholders\n\t"
-            "ldrb r0, [r6]\n\t"
-            "movs r1, #0x2a\n\t"
-            "str r1, [sp]\n\t"
-            "str r4, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r5, #0\n\t"
-            "movs r3, #0x50\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "mov r7, r8\n\t"
-            "movs r6, #0xe0\n\t"
-            "lsls r6, r6, #0x13\n\t"
-            "mov r5, sb\n\t"
-            "movs r4, #4\n\t"
-            "_0813C52A:\n\t"
-            "ldr r0, [r7]\n\t"
-            "adds r0, r0, r5\n\t"
-            "lsrs r1, r6, #0x18\n\t"
-            "bl PrintLinkBattleRecord\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #0x12\n\t"
-            "adds r6, r6, r0\n\t"
-            "adds r5, #0x10\n\t"
-            "subs r4, #1\n\t"
-            "cmp r4, #0\n\t"
-            "bge _0813C52A\n\t"
-            "ldr r4, _0813C560\n\t"
-            "ldrb r0, [r4]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #3\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r3, r4}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_0813C560: .4byte gRecordsWindowId\n\t"
-            "_0813C564: .4byte sLinkBattleRecordsWindow\n\t"
-            "_0813C568: .4byte gStringVar4\n\t"
-            "_0813C56C: .4byte gText_PlayersBattleResults\n\t"
-            "_0813C570: .4byte gSaveBlock1Ptr\n\t"
-            "_0813C574: .4byte 0x00003150\n\t"
-            "_0813C578: .4byte gText_WinLoseDraw\n\t"
-            ".syntax divided");
-}
-
-#else
-// 可读的 C 版本（NONMATCHING）：与汇编版语义相同（JP 用固定标题 x、2 参数
-// PrintLinkBattleRecord），但不保证逐字节一致。启用方式见 include/config.h。
 void ShowLinkBattleRecords(void)
 {
     s32 i;
@@ -367,7 +270,7 @@ void ShowLinkBattleRecords(void)
     DrawStdWindowFrame(gRecordsWindowId, FALSE);
     FillWindowPixelBuffer(gRecordsWindowId, PIXEL_FILL(1));
     StringExpandPlaceholders(gStringVar4, gText_PlayersBattleResults);
-    AddTextPrinterParameterized(gRecordsWindowId, FONT_NORMAL, gStringVar4, 0x30, 1, 0, NULL);
+    AddTextPrinterParameterized(gRecordsWindowId, FONT_NORMAL, gStringVar4, 0x30, 2, 0, NULL);
     PrintLinkBattleWinsLossesDraws(gSaveBlock1Ptr->linkBattleRecords.entries);
     StringExpandPlaceholders(gStringVar4, gText_WinLoseDraw);
     AddTextPrinterParameterized(gRecordsWindowId, FONT_NORMAL, gStringVar4, 0x50, 0x2A, 0, NULL);
@@ -378,7 +281,6 @@ void ShowLinkBattleRecords(void)
     PutWindowTilemap(gRecordsWindowId);
     CopyWindowToVram(gRecordsWindowId, COPYWIN_FULL);
 }
-#endif
 
 void RemoveRecordsWindow(void)
 {
