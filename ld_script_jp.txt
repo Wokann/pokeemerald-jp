@@ -984,6 +984,7 @@ MysteryGift_DisableStats = sub_0801B458;
 MysteryGift_TryEnableStatsByFlagId = sub_0801B464;
 CB2_ReturnFromCableClubBattle = sub_080B2D68;
 JPPlayBattleBGM = GetFlavorRelationByPersonality;
+JPGenerateCardForLinkPlayer = TrainerCard_GenerateCardForPlayer;
 PrintUnionRoomText = sub_08016EA4;
 CreateTask_ListenForCompatiblePartners = sub_08016AD0;
 PrintGroupCandidateOnWindow = sub_08017360;
@@ -1393,6 +1394,8 @@ SECTIONS {
         src/union_room.o(.text.StartUnionRoomBattle);
         src/union_room.o(.text.WarpForWirelessMinigame);
         src/union_room.o(.text.WarpForCableClubActivity);
+        src/union_room.o(.text.CB2_TransitionToCableClub);
+        src/union_room.o(.text.CreateTrainerCardInBuffer);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
         src/union_room_player_avatar.o(.text);

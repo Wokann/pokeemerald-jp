@@ -172,6 +172,10 @@ extern bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
 // real PlayBattleBGM is at 0x0806E0D8 (bound via ld_script_jp.txt). Will
 // revert to PlayBattleBGM() when asm/pokemon.s labels are fixed.
 extern void JPPlayBattleBGM(void);
+// JP: asm/trainer_card.s has TrainerCard_GenerateCardForLinkPlayer /
+// TrainerCard_GenerateCardForPlayer labels swapped; 0x080C26D4 is the link
+// version (bound via ld_script_jp.txt). Revert when labels are fixed.
+extern void JPGenerateCardForLinkPlayer(struct TrainerCard *trainerCard);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 static void Leader_DestroyResources(struct WirelessLink_Leader *data);
@@ -1502,4 +1506,36 @@ void WarpForCableClubActivity(s8 mapGroup, s8 mapNum, s32 x, s32 y, u16 linkServ
     SetCableClubWarp();
     SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, x, y);
     WarpIntoMap();
+}
+
+static void CB2_TransitionToCableClub(void)
+{
+    switch (gMain.state)
+    {
+    case 0:
+        CreateTask(Task_ExchangeCards, 5);
+        gMain.state++;
+        break;
+    case 1:
+        if (!FuncIsActiveTask(Task_ExchangeCards))
+            SetMainCallback2(CB2_ReturnToFieldCableClub);
+        break;
+    }
+
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+}
+
+void CreateTrainerCardInBuffer(void *dest, bool32 setWonderCard)
+{
+    struct TrainerCard *card = (struct TrainerCard *)dest;
+    JPGenerateCardForLinkPlayer(card);
+
+    // Below field is re-used, to be read by Task_ExchangeCards
+    if (setWonderCard)
+        card->hasAllFrontierSymbols = GetWonderCardFlagID();
+    else
+        card->hasAllFrontierSymbols = 0;
 }

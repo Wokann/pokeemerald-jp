@@ -5,75 +5,6 @@
 
 
 
-	thumb_func_start sub_08013E8C
-sub_08013E8C: @ 0x08013E8C
-	push {r4, lr}
-	ldr r0, _08013EA4
-	movs r1, #135	@ 0x87
-	lsls r1, r1, #3
-	adds r4, r0, r1
-	ldrb r0, [r4]
-	cmp r0, #0
-	beq _08013EA8
-	cmp r0, #1
-	beq _08013EBC
-	b _08013ECE
-	.align 2, 0
-_08013EA4: .4byte 0x03002360
-_08013EA8:
-	ldr r0, _08013EB8
-	movs r1, #5
-	bl CreateTask
-	ldrb r0, [r4]
-	adds r0, #1
-	strb r0, [r4]
-	b _08013ECE
-	.align 2, 0
-_08013EB8: .4byte 0x08013BE9
-_08013EBC:
-	ldr r0, _08013EE4
-	bl FuncIsActiveTask
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _08013ECE
-	ldr r0, _08013EE8
-	bl SetMainCallback2
-_08013ECE:
-	bl RunTasks
-	bl RunTextPrinters
-	bl AnimateSprites
-	bl BuildOamBuffer
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08013EE4: .4byte 0x08013BE9
-_08013EE8: .4byte 0x080859DD
-	thumb_func_end sub_08013E8C
-
-	thumb_func_start sub_08013EEC
-sub_08013EEC: @ 0x08013EEC
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	adds r5, r1, #0
-	bl TrainerCard_GenerateCardForPlayer
-	cmp r5, #0
-	beq _08013F06
-	bl GetWonderCardFlagID
-	adds r1, r4, #0
-	adds r1, #0x60
-	strh r0, [r1]
-	b _08013F0C
-_08013F06:
-	adds r0, r4, #0
-	adds r0, #0x60
-	strh r5, [r0]
-_08013F0C:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08013EEC
 
 	thumb_func_start sub_08013F14
 sub_08013F14: @ 0x08013F14
@@ -226,7 +157,7 @@ _080140FC:
 	bl CleanupOverworldWindowsAndTilemaps
 	ldr r0, _08014124
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	bl HealPlayerParty
 	bl SavePlayerParty
 	bl LoadPlayerBag
@@ -246,7 +177,7 @@ _08014128:
 	bl LoadPlayerBag
 	ldr r0, _08014150
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	movs r0, #2
 	str r0, [sp]
 	movs r0, #0x19
@@ -263,7 +194,7 @@ _08014154:
 	bl LoadPlayerBag
 	ldr r0, _0801417C
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	movs r0, #5
 	str r0, [sp]
 	movs r0, #0x19
@@ -276,7 +207,7 @@ _0801417C: .4byte 0x0202257C
 _08014180:
 	ldr r0, _0801419C
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	bl CleanupOverworldWindowsAndTilemaps
 	movs r0, #3
 	str r0, [sp]
@@ -290,7 +221,7 @@ _0801419C: .4byte 0x0202257C
 _080141A0:
 	ldr r0, _080141C4
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	bl CleanupOverworldWindowsAndTilemaps
 	movs r0, #4
 	str r0, [sp]
@@ -333,7 +264,7 @@ _080141FE:
 _08014204:
 	ldr r0, _08014214
 	movs r1, #0
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	ldr r0, _08014218
 	bl SetMainCallback2
 	b _0801426C
@@ -2683,7 +2614,7 @@ _080156C6:
 _080156D2:
 	ldr r0, _080156F4
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	ldr r0, _080156F8
 	movs r1, #5
 	bl CreateTask
@@ -3254,7 +3185,7 @@ _08015BE2:
 _08015BEE:
 	ldr r0, _08015C08
 	movs r1, #1
-	bl sub_08013EEC
+	bl CreateTrainerCardInBuffer
 	ldr r0, _08015C0C
 	movs r1, #5
 	bl CreateTask
