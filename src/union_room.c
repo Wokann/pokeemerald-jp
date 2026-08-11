@@ -355,14 +355,14 @@ extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
-extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
+static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
-extern bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
+static bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
 extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
 extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
 static void JoinGroup_EnableScriptContexts(void);
-extern bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
+static bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
 extern void MysteryGift_DisableStats(void);
 extern bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
 // JP: the asm label PlayBattleBGM currently points to 0x0806C820, but the
@@ -3963,6 +3963,67 @@ static void ClearIncomingPlayerList(struct RfuIncomingPlayerList *list, u8 count
         list->players[i].rfu = sUnionRoomPlayer_DummyRfu;
         list->players[i].active = FALSE;
     }
+}
+
+static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayer)
+{
+    u8 result = 0xFF; // None
+    s32 i;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (incomingPlayer[i].active && !ArePlayersDifferent(&player->rfu, &incomingPlayer[i].rfu))
+        {
+            result = i;
+            incomingPlayer[i].active = FALSE;
+        }
+    }
+
+    return result;
+}
+
+static bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2)
+{
+    s32 i;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (player1->data.compatibility.playerTrainerId[i] != player2->data.compatibility.playerTrainerId[i])
+            return TRUE;
+    }
+
+    for (i = 0; i < PLAYER_NAME_LENGTH + 1; i++)
+    {
+        if (player1->name[i] != player2->name[i])
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+static bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2)
+{
+    s32 i;
+
+    if (player1->data.activity != player2->data.activity)
+        return TRUE;
+
+    if (player1->data.startedActivity != player2->data.startedActivity)
+        return TRUE;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (player1->data.partnerInfo[i] != player2->data.partnerInfo[i])
+            return TRUE;
+    }
+
+    if (player1->data.tradeSpecies != player2->data.tradeSpecies)
+        return TRUE;
+
+    if (player1->data.tradeType != player2->data.tradeType)
+        return TRUE;
+
+    return FALSE;
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
