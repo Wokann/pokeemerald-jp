@@ -20,6 +20,7 @@ extern const u8 sUnionRoomObjGfxIds[][NUM_UNION_ROOM_CLASSES + 2];
 extern const s16 sUnionRoomPlayerCoords[][2];
 extern const s8 sUnionRoomGroupOffsets[][2];
 extern const u8 sMemberFacingDirections[];
+extern const u8 sOppositeFacingDirection[];
 extern const u8 sUnionRoomLocalIds[];
 extern const char gAssertFile_rfu_union_tool[];
 extern const char gAssertCond_UnionObjWork[];
@@ -28,7 +29,6 @@ extern u32 sUnionObjRefreshTimer;
 extern void DestroyTask_AnimateUnionRoomPlayers(void);
 extern bool32 SpawnGroupLeader(u32 leaderId, u32 gender, u32 id);
 extern bool32 DespawnGroupLeader(u32 leaderId);
-extern void SetUnionRoomObjectFacingDirection(s32 memberId, s32 leaderId, u8 facingDirection);
 
 bool32 is_walking_or_running(void)
 {
@@ -282,4 +282,55 @@ void HandleUnionRoomPlayerRefresh(struct WirelessLink_URoom *uroom)
 {
     if (++sUnionObjRefreshTimer > 300)
         UpdateUnionRoomPlayerSprites(uroom);
+}
+
+void SetUnionRoomObjectFacingDirection(s32 memberId, s32 leaderId, u8 newDirection)
+{
+    // should be UR_PLAYER_SPRITE_ID(leaderId, memberId) - UR_SPRITE_START_ID,
+    // but the order is swapped in the base ROM
+    TurnVirtualObject(MAX_RFU_PLAYERS * leaderId - UR_SPRITE_START_ID + memberId, newDirection);
+}
+
+void UpdateUnionRoomMemberFacing(u32 memberId, u32 leaderId, struct RfuPlayerList *list)
+{
+    return SetUnionRoomObjectFacingDirection(memberId, leaderId, GetNewFacingDirectionForUnionRoomPlayer(memberId, leaderId, &list->players[leaderId].rfu.data));
+}
+
+bool32 TryInteractWithUnionRoomMember(struct RfuPlayerList *list, s16 *memberIdPtr, s16 *leaderIdPtr, u8 *spriteIds)
+{
+    s16 x, y;
+    s32 i, memberId;
+    struct RfuPlayer *leaders;
+    if (!is_walking_or_running())
+        return FALSE;
+
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+    for (i = 0, leaders = list->players; i < MAX_UNION_ROOM_LEADERS; i++)
+    {
+        for (memberId = 0; memberId < MAX_RFU_PLAYERS; memberId++)
+        {
+            s32 id = UR_PLAYER_SPRITE_ID(i, memberId);
+
+            // Is the player in front of a group member position?
+            if (x != sUnionRoomPlayerCoords[i][0] + sUnionRoomGroupOffsets[memberId][0] + 7)
+                continue;
+            if (y != sUnionRoomPlayerCoords[i][1] + sUnionRoomGroupOffsets[memberId][1] + 7)
+                continue;
+
+            // Has a group member spawned at this position?
+            if (IsVirtualObjectInvisible(id - UR_SPRITE_START_ID))
+                continue;
+            if (IsVirtualObjectAnimating(id - UR_SPRITE_START_ID))
+                continue;
+            if (leaders[i].groupScheduledAnim != UNION_ROOM_SPAWN_IN)
+                continue;
+
+            // Interaction attempt successful, face player
+            SetUnionRoomObjectFacingDirection(memberId, i, sOppositeFacingDirection[GetPlayerFacingDirection()]);
+            *memberIdPtr = memberId;
+            *leaderIdPtr = i;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }

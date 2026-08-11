@@ -24889,6 +24889,12 @@ MovementAction_Finish: @ 0x08097AAC
 	.globl SetVirtualObjectSpriteAnim
 	.set SetVirtualObjectSpriteAnim, sub_08097634
 
+	.globl TurnVirtualObject
+	.set TurnVirtualObject, sub_080974E8
+
+	.globl IsVirtualObjectAnimating
+	.set IsVirtualObjectAnimating, sub_08097724
+
 	.globl ObjectEventFaceOppositeDirection
 	.set ObjectEventFaceOppositeDirection, EventObjectFaceOppositeDirection
 
