@@ -246,6 +246,8 @@ extern const u8 sText_TrainerCardInfoPage1[];
 extern const u8 sText_TrainerCardInfoPage2[];
 extern const u8 sText_FinishedCheckingPlayersTrainerCard[];
 extern const u8 *const sGladToMeetYouTexts[];
+extern const u8 sText_EggTrade[];
+extern void blit_move_info_icon(u8 windowId, u8 type, u16 x, u16 y);
 extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
@@ -336,7 +338,7 @@ static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8
                                  const struct WindowTemplate *winTemplate,
                                  const struct ListMenuTemplate *menuTemplate,
                                  struct RfuPlayerList *list);
-extern s32 GetIndexOfNthTradeBoardOffer(struct RfuPlayer *players, s32 n);
+static s32 GetIndexOfNthTradeBoardOffer(struct RfuPlayer *players, s32 n);
 static s32 ListMenuHandler_AllItemsAvailable(u8 *state, u8 *windowId, u8 *listMenuId, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *menuTemplate);
 static void Task_SearchForChildOrParent(u8 taskId);
 static void Task_ListenForCompatiblePartners(u8 taskId);
@@ -352,6 +354,8 @@ static bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trad
 static bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
 static void StartScriptInteraction(void);
 static u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
+static void TradeBoardPrintItemInfo(u8 windowId, u8 y, struct RfuGameData *gameData, const u8 *playerName, u8 colorIdx);
+static void TradeBoardListMenuItemPrintFunc(u8 windowId, u32 itemId, u8 y);
 static bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
@@ -4359,6 +4363,79 @@ static u8 GetActivePartnersInfo(struct WirelessLink_URoom *data)
     }
 
     return retVal;
+}
+
+static void TradeBoardPrintItemInfo(u8 windowId, u8 y, struct RfuGameData *gameData, const u8 *playerName, u8 colorIdx)
+{
+    u8 levelStr[4];
+    u16 species = gameData->tradeSpecies;
+    u8 type = gameData->tradeType;
+    u8 level = gameData->tradeLevel;
+    u16 width;
+
+    PrintUnionRoomText(windowId, FONT_NORMAL, playerName, 10, y, colorIdx);
+    if (species == SPECIES_EGG)
+    {
+        PrintUnionRoomText(windowId, FONT_NORMAL, sText_EggTrade, 70, y, colorIdx);
+    }
+    else
+    {
+        blit_move_info_icon(windowId, type + 1, 70, y);
+        PrintUnionRoomText(windowId, FONT_NORMAL, gSpeciesNamesJP[species], 120, y, colorIdx);
+        ConvertIntToDecimalStringN(levelStr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+        width = GetStringWidth(1, levelStr, 0);
+        PrintUnionRoomText(windowId, FONT_NORMAL, levelStr, 220 - width, y, colorIdx);
+    }
+}
+
+static void TradeBoardListMenuItemPrintFunc(u8 windowId, u32 itemId, u8 y)
+{
+    struct WirelessLink_Leader *leader = sWirelessLinkMain.leader;
+    struct RfuGameData *gameData;
+    s32 i, j;
+    u8 playerName[RFU_USER_NAME_LENGTH];
+
+    if (itemId == LIST_HEADER && y == 1)
+    {
+        gameData = GetHostRfuGameData();
+        if (gameData->tradeSpecies != SPECIES_NONE)
+            TradeBoardPrintItemInfo(windowId, 1, gameData, gSaveBlock2Ptr->playerName, UR_COLOR_TRADE_BOARD_SELF);
+    }
+    else
+    {
+        j = 0;
+        for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+        {
+            if (leader->playerList->players[i].groupScheduledAnim == UNION_ROOM_SPAWN_IN
+             && leader->playerList->players[i].rfu.data.tradeSpecies != SPECIES_NONE)
+                j++;
+
+            if (j == itemId + 1)
+            {
+                StringCopy(playerName, leader->playerList->players[i].rfu.name);
+                TradeBoardPrintItemInfo(windowId, y, &leader->playerList->players[i].rfu.data, playerName, UR_COLOR_TRADE_BOARD_OTHER);
+                break;
+            }
+        }
+    }
+}
+
+static s32 GetIndexOfNthTradeBoardOffer(struct RfuPlayer *players, s32 n)
+{
+    s32 i;
+    s32 j = 0;
+
+    for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+    {
+        if (players[i].groupScheduledAnim == UNION_ROOM_SPAWN_IN
+         && players[i].rfu.data.tradeSpecies != SPECIES_NONE)
+            j++;
+
+        if (j == n + 1)
+            return i;
+    }
+
+    return -1;
 }
 
 static void ViewURoomPartnerTrainerCard(u8 *unused, struct WirelessLink_URoom *data, bool8 isParent)
