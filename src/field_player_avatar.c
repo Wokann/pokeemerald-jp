@@ -1,12 +1,15 @@
 #include "global.h"
 #include "bike.h"
 #include "event_data.h"
+#include "field_effect_helpers.h"
+#include "field_effect.h"
 #include "event_object_movement.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "overworld.h"
 #include "random.h"
 #include "rotating_gate.h"
+#include "constants/field_effects.h"
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
 
@@ -48,6 +51,11 @@ u8 CheckForPlayerAvatarCollision(u8 direction);
 u8 CheckForPlayerAvatarStaticCollision(u8 direction);
 u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u8 direction, u8 metatileBehavior);
 bool8 IsPlayerCollidingWithFarawayIslandMew(u8 direction);
+bool8 PlayerIsAnimActive(void);
+bool8 PlayerCheckIfAnimFinishedOrInactive(void);
+bool8 PlayerAnimIsMultiFrameStationary(void);
+bool8 PlayerAnimIsMultiFrameStationaryAndStateNotTurning(void);
+void UpdatePlayerAvatarTransitionState(void);
 
 void MovementType_Player(struct Sprite *sprite)
 {
@@ -535,4 +543,142 @@ bool8 IsPlayerCollidingWithFarawayIslandMew(u8 direction)
         }
     }
     return FALSE;
+}
+
+// JP: avatar state transitions (batch 4)
+u8 GetPlayerAvatarGraphicsIdByStateId(u8 state);
+void SetPlayerAvatarStateMask(u8 flags);
+void SetSurfBlob_BobState(u8 spriteId, u8 state);
+u8 StartUnderwaterSurfBlobBobbing(u8 spriteId);
+
+// JP ROM table: sPlayerAvatarTransitionFuncs @ 0x0846F8D8
+extern void (*const sPlayerAvatarTransitionFuncs[8])(struct ObjectEvent *objEvent); // JP table has 8 entries
+
+void SetPlayerAvatarTransitionFlags(u16 transitionFlags)
+{
+    gPlayerAvatar.transitionFlags |= transitionFlags;
+    DoPlayerAvatarTransition();
+}
+
+void DoPlayerAvatarTransition(void)
+{
+    u8 i;
+    u8 flags = gPlayerAvatar.transitionFlags;
+
+    if (flags != 0)
+    {
+        for (i = 0; i < ARRAY_COUNT(sPlayerAvatarTransitionFuncs); i++, flags >>= 1)
+        {
+            if (flags & 1)
+                sPlayerAvatarTransitionFuncs[i](&gObjectEvents[gPlayerAvatar.objectEventId]);
+        }
+        gPlayerAvatar.transitionFlags = 0;
+    }
+}
+
+void PlayerAvatarTransition_Dummy(struct ObjectEvent *objEvent)
+{
+
+}
+
+void PlayerAvatarTransition_Normal(struct ObjectEvent *objEvent)
+{
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_NORMAL));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_ON_FOOT);
+}
+
+void PlayerAvatarTransition_MachBike(struct ObjectEvent *objEvent)
+{
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_MACH_BIKE));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_MACH_BIKE);
+    BikeClearState(0, 0);
+}
+
+void PlayerAvatarTransition_AcroBike(struct ObjectEvent *objEvent)
+{
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_ACRO_BIKE));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_ACRO_BIKE);
+    BikeClearState(0, 0);
+    Bike_HandleBumpySlopeJump();
+}
+
+void PlayerAvatarTransition_Surfing(struct ObjectEvent *objEvent)
+{
+    u8 spriteId;
+
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_SURFING));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_SURFING);
+    gFieldEffectArguments[0] = objEvent->currentCoords.x;
+    gFieldEffectArguments[1] = objEvent->currentCoords.y;
+    gFieldEffectArguments[2] = gPlayerAvatar.objectEventId;
+    spriteId = FieldEffectStart(FLDEFF_SURF_BLOB);
+    objEvent->fieldEffectSpriteId = spriteId;
+    SetSurfBlob_BobState(spriteId, BOB_PLAYER_AND_MON);
+}
+
+void PlayerAvatarTransition_Underwater(struct ObjectEvent *objEvent)
+{
+    ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_UNDERWATER));
+    ObjectEventTurn(objEvent, objEvent->movementDirection);
+    SetPlayerAvatarStateMask(PLAYER_AVATAR_FLAG_UNDERWATER);
+    objEvent->fieldEffectSpriteId = StartUnderwaterSurfBlobBobbing(objEvent->spriteId);
+}
+
+void PlayerAvatarTransition_ReturnToField(struct ObjectEvent *objEvent)
+{
+    gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_CONTROLLABLE;
+}
+
+void UpdatePlayerAvatarTransitionState(void) // JP: sub_0808AEDC
+{
+    gPlayerAvatar.tileTransitionState = T_NOT_MOVING;
+    if (PlayerCheckIfAnimFinishedOrInactive()) // JP: 0x0808AFA0 (IsMovementOverridden)
+    {
+        if (!PlayerIsAnimActive())
+        {
+            if (!PlayerAnimIsMultiFrameStationary())
+                gPlayerAvatar.tileTransitionState = T_TILE_TRANSITION;
+        }
+        else
+        {
+            if (!PlayerAnimIsMultiFrameStationaryAndStateNotTurning())
+                gPlayerAvatar.tileTransitionState = T_TILE_CENTER;
+        }
+    }
+}
+
+bool8 PlayerAnimIsMultiFrameStationary(void) // JP: player_is_anim_in_certain_ranges
+{
+    u8 movementActionId = gObjectEvents[gPlayerAvatar.objectEventId].movementActionId;
+
+    if (movementActionId <= MOVEMENT_ACTION_FACE_RIGHT
+     || (movementActionId >= MOVEMENT_ACTION_DELAY_1 && movementActionId <= MOVEMENT_ACTION_DELAY_16)
+     || (movementActionId >= MOVEMENT_ACTION_WALK_IN_PLACE_SLOW_DOWN && movementActionId <= MOVEMENT_ACTION_WALK_IN_PLACE_FASTER_RIGHT)
+     || (movementActionId >= MOVEMENT_ACTION_ACRO_WHEELIE_FACE_DOWN && movementActionId <= MOVEMENT_ACTION_ACRO_END_WHEELIE_FACE_RIGHT)
+     || (movementActionId >= MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_DOWN && movementActionId <= MOVEMENT_ACTION_ACRO_WHEELIE_IN_PLACE_RIGHT))
+        return TRUE;
+    else
+        return FALSE;
+}
+
+bool8 PlayerAnimIsMultiFrameStationaryAndStateNotTurning(void) // JP: sub_0808AF7C
+{
+    if (PlayerAnimIsMultiFrameStationary() && gPlayerAvatar.runningState != TURN_DIRECTION)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+bool8 PlayerCheckIfAnimFinishedOrInactive(void)
+{
+    return ObjectEventIsMovementOverridden(&gObjectEvents[gPlayerAvatar.objectEventId]); // JP: swapped
+}
+
+bool8 PlayerIsAnimActive(void)
+{
+    return ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]); // JP: swapped
 }
