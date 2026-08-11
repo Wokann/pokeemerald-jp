@@ -232,6 +232,8 @@ extern const u8 sText_ShowTrainerCard[];
 extern const u8 sText_ChatDropped[];
 extern const u8 sText_OfferToTradeEgg[];
 extern const u8 sText_OfferToTradeMon[];
+extern const u8 sText_NameWantedOfferLv[];
+extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
 extern const u8 sText_WirelessLinkDropped[];
@@ -313,6 +315,14 @@ extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *li
 static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
 static bool32 UR_RunTextPrinters(void);
 static u8 HandlePlayerListUpdate(void);
+static u8 CreateTradeBoardWindow(const struct WindowTemplate *template);
+static void DeleteTradeBoardWindow(u8 windowId);
+static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
+                                 const struct WindowTemplate *winTemplate,
+                                 const struct ListMenuTemplate *menuTemplate,
+                                 struct RfuPlayerList *list);
+extern s32 GetIndexOfNthTradeBoardOffer(struct RfuPlayer *players, s32 n);
+static s32 ListMenuHandler_AllItemsAvailable(u8 *state, u8 *windowId, u8 *listMenuId, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *menuTemplate);
 static void Task_SearchForChildOrParent(u8 taskId);
 static void Task_ListenForCompatiblePartners(u8 taskId);
 static bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
@@ -331,8 +341,6 @@ extern bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
 static void Task_InitUnionRoom(u8 taskId);
-extern s32 ListMenuHandler_AllItemsAvailable(u8 *textState, u8 *a2, u8 *a3, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate);
-extern s32 TradeBoardMenuHandler(u8 *textState, u8 *a2, u8 *a3, u8 *a4, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate, struct RfuPlayerList *playerList);
 extern void UR_ClearBg0(void);
 extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
@@ -3792,4 +3800,119 @@ static s8 UnionRoomHandleYesNo(u8 *state, bool32 noDraw)
         break;
     }
     return MENU_NOTHING_CHOSEN;
+}
+
+static u8 CreateTradeBoardWindow(const struct WindowTemplate *template)
+{
+    u8 windowId = AddWindow(template);
+    DrawStdWindowFrame(windowId, FALSE);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(15));
+    PrintUnionRoomText(windowId, FONT_NORMAL, sText_NameWantedOfferLv, 8, 1, UR_COLOR_TRADE_BOARD_OTHER);
+    CopyWindowToVram(windowId, COPYWIN_GFX);
+    PutWindowTilemap(windowId);
+    return windowId;
+}
+
+static void DeleteTradeBoardWindow(u8 windowId)
+{
+    RemoveWindow(windowId);
+}
+
+static s32 ListMenuHandler_AllItemsAvailable(u8 *state, u8 *windowId, u8 *listMenuId, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *menuTemplate)
+{
+    s32 input;
+
+    switch (*state)
+    {
+    case 0:
+        *windowId = AddWindow(winTemplate);
+        DrawStdWindowFrame(*windowId, FALSE);
+        gMultiuseListMenuTemplate = *menuTemplate;
+        gMultiuseListMenuTemplate.windowId = *windowId;
+        *listMenuId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+        CopyWindowToVram(*windowId, COPYWIN_MAP);
+        (*state)++;
+        break;
+    case 1:
+        input = ListMenu_ProcessInput(*listMenuId);
+        if (JOY_NEW(A_BUTTON))
+        {
+            DestroyListMenuTask(*listMenuId, NULL, NULL);
+            ClearStdWindowAndFrame(*windowId, TRUE);
+            RemoveWindow(*windowId);
+            *state = 0;
+            return input;
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            DestroyListMenuTask(*listMenuId, NULL, NULL);
+            ClearStdWindowAndFrame(*windowId, TRUE);
+            RemoveWindow(*windowId);
+            *state = 0;
+            return LIST_CANCEL;
+        }
+        break;
+    }
+
+    return LIST_NOTHING_CHOSEN;
+}
+
+static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
+                                const struct WindowTemplate *winTemplate,
+                                const struct ListMenuTemplate *menuTemplate,
+                                struct RfuPlayerList *list)
+{
+    s32 input;
+    s32 idx;
+
+    switch (*state)
+    {
+    case 0:
+        *headerWindowId = CreateTradeBoardWindow(&sWindowTemplate_TradingBoardHeader);
+        *mainWindowId = AddWindow(winTemplate);
+        DrawStdWindowFrame(*mainWindowId, FALSE);
+        gMultiuseListMenuTemplate = *menuTemplate;
+        gMultiuseListMenuTemplate.windowId = *mainWindowId;
+        *listMenuId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 1);
+        (*state)++;
+        break;
+    case 1:
+        CopyWindowToVram(*mainWindowId, COPYWIN_MAP);
+        (*state)++;
+        break;
+    case 2:
+        input = ListMenu_ProcessInput(*listMenuId);
+        if (JOY_NEW(A_BUTTON | B_BUTTON))
+        {
+            // Exit or B button
+            if (input == 8 || JOY_NEW(B_BUTTON))
+            {
+                DestroyListMenuTask(*listMenuId, NULL, NULL);
+                RemoveWindow(*mainWindowId);
+                DeleteTradeBoardWindow(*headerWindowId);
+                *state = 0;
+                return LIST_CANCEL;
+            }
+            else
+            {
+                idx = GetIndexOfNthTradeBoardOffer(list->players, input);
+                if (idx >= 0)
+                {
+                    DestroyListMenuTask(*listMenuId, NULL, NULL);
+                    ClearStdWindowAndFrame(*mainWindowId, TRUE);
+                    RemoveWindow(*mainWindowId);
+                    DeleteTradeBoardWindow(*headerWindowId);
+                    *state = 0;
+                    return idx;
+                }
+                else
+                {
+                    PlaySE(SE_WALL_HIT);
+                }
+            }
+        }
+        break;
+    }
+
+    return LIST_NOTHING_CHOSEN;
 }
