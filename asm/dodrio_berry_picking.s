@@ -6871,7 +6871,7 @@ sub_08027AFC: @ 0x08027AFC
 	orrs r1, r0
 	str r1, [sp, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -7313,7 +7313,7 @@ sub_08027B5C: @ 0x08027B5C
 	ands r5, r7
 	orrs r5, r4
 	strb r5, [r0, #0xb]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #0x20
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -7544,7 +7544,7 @@ sub_08028018: @ 0x08028018
 	orrs r1, r0
 	str r1, [sp, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #8
 	pop {r0}
 	bx r0
@@ -7599,7 +7599,7 @@ sub_0802807C: @ 0x0802807C
 	str r1, [sp]
 	str r0, [sp, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #8
 	pop {r0}
 	bx r0

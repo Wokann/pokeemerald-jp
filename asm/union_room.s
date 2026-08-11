@@ -6397,7 +6397,7 @@ _080157BA:
 	adds r0, #0x4c
 	movs r1, #0x40
 	strh r1, [r0]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	ldr r0, _080157E0
 	ldr r2, _080157E4
 	ldr r1, _080157E8
@@ -6441,7 +6441,7 @@ _08015820:
 	adds r0, r6, #0
 	adds r0, #0x4c
 	strh r1, [r0]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0x1b
 	bl _0801638A
 	.align 2, 0
@@ -6508,7 +6508,7 @@ _080158AE:
 	adds r1, r6, #0
 	adds r1, #0x50
 	strh r2, [r1]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0x1d
 	bl _0801638A
 	.align 2, 0
@@ -7034,7 +7034,7 @@ _08015D4A:
 	movs r0, #0x52
 	strh r0, [r5]
 	adds r0, r5, #0
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0xa
 	strb r0, [r6, #0x14]
 	ldr r0, _08015D80
@@ -7047,14 +7047,14 @@ _08015D80: .4byte 0x02021C7C
 _08015D84: .4byte 0x082C1310
 _08015D88:
 	adds r0, r5, #0
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0xd
 	b _0801638A
 _08015D92:
 	cmp r0, #0x48
 	bne _08015DB0
 	adds r0, r5, #0
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	ldr r0, _08015DAC
 	adds r1, r6, #0
 	movs r2, #1
@@ -7065,7 +7065,7 @@ _08015D92:
 _08015DAC: .4byte 0x02021C7C
 _08015DB0:
 	adds r0, r5, #0
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0xd
 	b _0801638A
 _08015DBA:
@@ -7073,7 +7073,7 @@ _08015DBA:
 	adds r0, #0x4c
 	movs r1, #0x52
 	strh r1, [r0]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	movs r0, #0xa
 	strb r0, [r6, #0x14]
 	ldr r0, _08015DD8

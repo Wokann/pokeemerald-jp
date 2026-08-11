@@ -7377,7 +7377,7 @@ sub_0802DDA4: @ 0x0802DDA4
 	ldr r0, [r0, #8]
 	str r0, [sp, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #0xc
 	pop {r0}
 	bx r0
@@ -7439,7 +7439,7 @@ sub_0802DE18: @ 0x0802DE18
 	strb r1, [r2]
 	str r0, [sp, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #0xc
 	pop {r0}
 	bx r0
@@ -7501,7 +7501,7 @@ sub_0802DE30: @ 0x0802DE30
 	ldrh r0, [r0, #0xe]
 	strh r0, [r1, #4]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #0xc
 	pop {r3}
 	mov r8, r3
@@ -7597,7 +7597,7 @@ sub_0802DF2C: @ 0x0802DF2C
 	mov r0, sp
 	strb r1, [r0, #6]
 	strh r2, [r0, #8]
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	add sp, #0xc
 	pop {r4}
 	pop {r0}
@@ -8664,7 +8664,7 @@ _0802E73C:
 	ldrh r0, [r4, #0x18]
 	strh r0, [r1, #2]
 	mov r0, sp
-	bl sub_0800F934
+	bl Rfu_SendPacket
 	b _0802E77E
 	.align 2, 0
 _0802E768: .4byte 0x03005B68

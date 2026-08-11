@@ -5684,7 +5684,7 @@ _080235AA:
 	movs r2, #0xc
 	bl memcpy
 	adds r0, r4, #0
-	bl sub_0800F934
+	bl Rfu_SendPacket
 _080235DC:
 	pop {r3}
 	mov r8, r3

@@ -921,6 +921,10 @@ sAcceptedSerialNos = ABSOLUTE(0x082C0430);
 sShutdownTasks = ABSOLUTE(0x082C0530);
 sAssertFile_rfu = ABSOLUTE(0x082C053C);
 sAssertExpr_RfuFuncNull = ABSOLUTE(0x082C0544);
+sAssertExpr_SizeLe252 = ABSOLUTE(0x082C0558);
+sAllBlocksReceived = ABSOLUTE(0x082C0378);
+sBlockRequests = ABSOLUTE(0x082C0408);
+sPlayerBitsToCount = ABSOLUTE(0x082C03E5);
 
 SECTIONS {
     . = 0x2000000;
@@ -1180,6 +1184,22 @@ SECTIONS {
         src/link_rfu_2.o(.text.ClearLinkRfuCallback);
         src/link_rfu_2.o(.text.Rfu_BerryBlenderSendHeldKeys);
         src/link_rfu_2.o(.text.Rfu_SetBerryBlenderLinkCallback);
+        src/link_rfu_2.o(.text.RfuHandleReceiveCommand);
+        src/link_rfu_2.o(.text.AreAllPlayersReadyToReceive);
+        src/link_rfu_2.o(.text.AreAllPlayersFinishedReceiving);
+        src/link_rfu_2.o(.text.ResetSendDataManager);
+        src/link_rfu_2.o(.text.Rfu_GetBlockReceivedStatus);
+        src/link_rfu_2.o(.text.RfuPrepareSendBuffer);
+        src/link_rfu_2.o(.text.Rfu_SendPacket);
+        src/link_rfu_2.o(.text.Rfu_InitBlockSend);
+        src/link_rfu_2.o(.text.HandleBlockSend);
+        src/link_rfu_2.o(.text.SendNextBlock);
+        src/link_rfu_2.o(.text.SendLastBlock);
+        src/link_rfu_2.o(.text.Rfu_SendBlockRequest);
+        src/link_rfu_2.o(.text.RfuShutdownAfterDisconnect);
+        src/link_rfu_2.o(.text.DisconnectRfu);
+        src/link_rfu_2.o(.text.TryDisconnectRfu);
+        src/link_rfu_2.o(.text.LinkRfu_FatalError);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
