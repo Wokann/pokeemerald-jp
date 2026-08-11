@@ -3011,7 +3011,7 @@ _0801F2B8:
 	cmp r0, #0
 	bne _0801F2D0
 	ldrb r0, [r1, #0xd]
-	bl sub_08010BA8
+	bl SetUnionRoomChatPlayerData
 _0801F2D0:
 	movs r0, #1
 _0801F2D2:

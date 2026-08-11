@@ -404,7 +404,7 @@ _0801234C:
 	ldrb r0, [r2]
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	ldrb r1, [r4]
@@ -1232,10 +1232,10 @@ _08012A26:
 	bl sub_080121D4
 	cmp r0, #0
 	beq _08012A3E
-	bl sub_08010B2C
+	bl GetOtherPlayersInfoFlags
 _08012A3E:
 	movs r0, #1
-	bl sub_08010B58
+	bl UpdateGameData_GroupLockedIn
 	bl sub_080144CC
 	adds r0, r5, #0
 	bl sub_08012A64
@@ -1981,7 +1981,7 @@ _08013094:
 	ldrb r0, [r2]
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011748
@@ -2693,7 +2693,7 @@ sub_080136DC: @ 0x080136DC
 	ldrb r0, [r0]
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	ldrb r1, [r4, #0xf]
 	lsls r1, r1, #5
 	ldr r0, [r4]
@@ -2780,12 +2780,12 @@ _080137D8:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011748
 	movs r0, #1
-	bl sub_08010CA0
+	bl RfuSetIgnoreError
 	movs r0, #0x70
 	bl AllocZeroed
 	str r0, [r4, #4]
@@ -3938,7 +3938,7 @@ _080141F0:
 	movs r0, #0x45
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010A74
+	bl SetHostRfuGameData
 _080141FE:
 	bl sub_0801DBBC
 	b _0801426C
@@ -4362,10 +4362,10 @@ _080145B8:
 	ldrb r0, [r5, #0x18]
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	movs r0, #0
 	movs r1, #0
-	bl sub_08010A90
+	bl SetHostRfuWonderFlags
 	bl sub_0800AF5C
 	bl OpenLink
 	movs r0, #2
@@ -4812,7 +4812,7 @@ _0801499A:
 	cmp r0, #0
 	beq _080149FA
 	movs r0, #1
-	bl sub_08010B58
+	bl UpdateGameData_GroupLockedIn
 	b _080149E2
 	.align 2, 0
 _080149AC: .4byte 0x030031C4
@@ -4932,7 +4932,7 @@ _08014AAC:
 	lsrs r0, r0, #0x18
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011748
@@ -5346,7 +5346,7 @@ _08014E60:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011748
@@ -5666,7 +5666,7 @@ _0801510C:
 	thumb_func_start UnionRoomSpecial
 UnionRoomSpecial: @ 0x08015114
 	push {r4, lr}
-	bl sub_08010A50
+	bl ResetHostRfuGameData
 	ldr r0, _08015150
 	movs r1, #0xa
 	bl CreateTask
@@ -5921,12 +5921,12 @@ _08015380:
 	movs r0, #0x40
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	ldr r2, _080153C8
 	ldrh r0, [r2, #2]
 	ldrh r1, [r2, #0xa]
 	ldrh r2, [r2, #0xc]
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011770
@@ -5978,7 +5978,7 @@ _08015408:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	cmp r5, #5
 	bls _08015434
 	adds r0, r4, #0
@@ -5986,7 +5986,7 @@ _08015408:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _08015430
 	bl sub_08015194
 	b _08015496
@@ -6025,7 +6025,7 @@ _08015474:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	ldr r1, _080154A0
 	movs r0, #0x44
 	strb r0, [r1]
@@ -6058,7 +6058,7 @@ _080154AE:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	movs r0, #2
 	bl PlaySE
 	ldr r0, _080154E0
@@ -6078,7 +6078,7 @@ _080154E8:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	movs r1, #0
 	movs r0, #0x17
 	b _0801550A
@@ -6130,7 +6130,7 @@ _08015554:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	movs r0, #2
 	bl PlaySE
 	bl sub_08017C88
@@ -6172,7 +6172,7 @@ _080155B2:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	adds r0, r6, #0
 	bl sub_08017C98
 	adds r1, r0, #0
@@ -6180,7 +6180,7 @@ _080155B2:
 	lsrs r1, r1, #0x18
 	movs r0, #0x53
 	movs r2, #0
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 _080155D8:
 	adds r0, r6, #0
 	bl sub_08019D3C
@@ -6196,7 +6196,7 @@ _080155F2:
 	movs r0, #0x40
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	movs r0, #4
 	bl _0801638A
 	.align 2, 0
@@ -6211,7 +6211,7 @@ _08015608:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	ldr r0, [r6]
 	ldrb r1, [r7]
 	ldrb r2, [r7, #2]
@@ -6693,7 +6693,7 @@ _08015A64:
 	movs r0, #0x45
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	movs r2, #2
 	ldrsh r0, [r7, r2]
 	lsls r0, r0, #5
@@ -6765,7 +6765,7 @@ _08015AFC:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	bl sub_0801167C
 	cmp r0, #1
 	bne _08015B30
@@ -6807,7 +6807,7 @@ _08015B52:
 	movs r0, #0x54
 	movs r1, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	bl sub_0801167C
 	cmp r0, #1
 	bne _08015B8C
@@ -6995,13 +6995,13 @@ _08015CFA:
 	movs r4, #0x40
 	orrs r4, r1
 	movs r0, #1
-	bl sub_08010AFC
+	bl GetLinkPlayerInfoFlags
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
 	movs r2, #0
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 	b _08015D4A
 	.align 2, 0
 _08015D28: .4byte 0x020228E0
@@ -7012,13 +7012,13 @@ _08015D2C:
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
 	movs r0, #1
-	bl sub_08010AFC
+	bl GetLinkPlayerInfoFlags
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
 	adds r0, r4, #0
 	movs r2, #1
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 _08015D4A:
 	ldr r1, [r6, #8]
 	movs r0, #0
@@ -7388,7 +7388,7 @@ _08016068:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _0801608C
 	bl sub_08015194
 	b _0801638C
@@ -7409,7 +7409,7 @@ _0801609C:
 	ldrh r0, [r2, #2]
 	ldrh r1, [r2, #0xa]
 	ldrh r2, [r2, #0xc]
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _080160B4
 	bl sub_08015194
 	b _0801638C
@@ -7457,7 +7457,7 @@ _080160FE:
 	movs r0, #0
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _0801611C
 	bl sub_08017B38
 	movs r0, #1
@@ -7931,12 +7931,12 @@ _080164CE:
 	movs r0, #0xc
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010A74
+	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
 	bl sub_08011770
 	movs r0, #1
-	bl sub_08010CA0
+	bl RfuSetIgnoreError
 	movs r0, #2
 	strb r0, [r4, #0x14]
 	b _080165D8
@@ -11083,11 +11083,11 @@ sub_08017C48: @ 0x08017C48
 	ldrh r0, [r2, #2]
 	ldrh r1, [r2, #0xa]
 	ldrh r2, [r2, #0xc]
-	bl sub_08010ABC
+	bl SetTradeBoardRegisteredMonInfo
 	movs r0, #0x40
 	movs r1, #0
 	movs r2, #0
-	bl sub_08010B80
+	bl UpdateGameData_SetActivity
 _08017C78:
 	pop {r4}
 	pop {r0}

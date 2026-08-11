@@ -14,8 +14,8 @@ vblankcb_mystery_gift_e_reader_run: @ 0x08017EBC
 	.align 2, 0
 	thumb_func_end vblankcb_mystery_gift_e_reader_run
 
-	thumb_func_start c2_mystery_gift_e_reader_run
-c2_mystery_gift_e_reader_run: @ 0x08017ED0
+	thumb_func_start CB2_MysteryGiftEReader
+CB2_MysteryGiftEReader: @ 0x08017ED0
 	push {lr}
 	bl RunTasks
 	bl RunTextPrinters
@@ -24,7 +24,7 @@ c2_mystery_gift_e_reader_run: @ 0x08017ED0
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end c2_mystery_gift_e_reader_run
+	thumb_func_end CB2_MysteryGiftEReader
 
 	thumb_func_start HandleMysteryGiftOrEReaderSetup
 HandleMysteryGiftOrEReaderSetup: @ 0x08017EE8

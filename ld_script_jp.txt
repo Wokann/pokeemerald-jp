@@ -925,6 +925,8 @@ sAssertExpr_SizeLe252 = ABSOLUTE(0x082C0558);
 sAllBlocksReceived = ABSOLUTE(0x082C0378);
 sBlockRequests = ABSOLUTE(0x082C0408);
 sPlayerBitsToCount = ABSOLUTE(0x082C03E5);
+sSlotToLinkPlayerTableId = ABSOLUTE(0x082C03DC);
+sASCII_PokemonSioInfo = ABSOLUTE(0x082C0564);
 
 SECTIONS {
     . = 0x2000000;
@@ -1223,6 +1225,29 @@ SECTIONS {
         src/link_rfu_2.o(.text.WaitSendRfuStatusToPartner);
         src/link_rfu_2.o(.text.UpdateChildStatuses);
         src/link_rfu_2.o(.text.GetJoinGroupStatus);
+        src/link_rfu_2.o(.text.Task_PlayerExchange);
+        src/link_rfu_2.o(.text.ClearSelectedLinkPlayerIds);
+        src/link_rfu_2.o(.text.ReceiveRfuLinkPlayers);
+        src/link_rfu_2.o(.text.ValidateAndReceivePokemonSioInfo);
+        src/link_rfu_2.o(.text.Task_PlayerExchangeUpdate);
+        src/link_rfu_2.o(.text.Task_PlayerExchangeChat);
+        src/link_rfu_2.o(.text.RfuCheckErrorStatus);
+        src/link_rfu_2.o(.text.RfuMain1_UnionRoom);
+        src/link_rfu_2.o(.text.RfuMain1);
+        src/link_rfu_2.o(.text.RfuMain2);
+        src/link_rfu_2.o(.text.SetHostRfuUsername);
+        src/link_rfu_2.o(.text.ResetHostRfuGameData);
+        src/link_rfu_2.o(.text.SetHostRfuGameData);
+        src/link_rfu_2.o(.text.SetHostRfuWonderFlags);
+        src/link_rfu_2.o(.text.SetTradeBoardRegisteredMonInfo);
+        src/link_rfu_2.o(.text.GetLinkPlayerInfoFlags);
+        src/link_rfu_2.o(.text.GetOtherPlayersInfoFlags);
+        src/link_rfu_2.o(.text.UpdateGameData_GroupLockedIn);
+        src/link_rfu_2.o(.text.UpdateGameData_SetActivity);
+        src/link_rfu_2.o(.text.SetUnionRoomChatPlayerData);
+        src/link_rfu_2.o(.text.RfuSetErrorParams);
+        src/link_rfu_2.o(.text.ResetErrorState);
+        src/link_rfu_2.o(.text.RfuSetIgnoreError);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
