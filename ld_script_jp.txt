@@ -911,6 +911,10 @@ gAssertCond_UnionObjWork = ABSOLUTE(0x082C2BF0);
 sRoamerLocations = ABSOLUTE(0x085ADB74);
 sWireless_ASCIItoRSETable = ABSOLUTE(0x082C00C0);
 sWireless_RSEtoASCIITable = ABSOLUTE(0x082C01C0);
+sWirelessStatusIndicatorOamData = ABSOLUTE(0x082C02C0);
+sWirelessStatusIndicatorSpriteSheet = ABSOLUTE(0x082C0330);
+sWirelessStatusIndicatorSpritePalette = ABSOLUTE(0x082C0338);
+sWirelessStatusIndicatorSpriteTemplate = ABSOLUTE(0x082C0340);
 
 SECTIONS {
     . = 0x2000000;
@@ -1114,6 +1118,12 @@ SECTIONS {
         src/link_rfu_3.o(.text.Rfu_GetCompatiblePlayerData);
         src/link_rfu_3.o(.text.Rfu_GetWonderDistributorPlayerData);
         src/link_rfu_3.o(.text.CopyHostRfuGameDataAndUsername);
+        src/link_rfu_3.o(.text.CreateWirelessStatusIndicatorSprite);
+        src/link_rfu_3.o(.text.DestroyWirelessStatusIndicatorSprite);
+        src/link_rfu_3.o(.text.LoadWirelessStatusIndicatorSpriteGfx);
+        src/link_rfu_3.o(.text.GetParentSignalStrength);
+        src/link_rfu_3.o(.text.SetWirelessStatusIndicatorAnim);
+        src/link_rfu_3.o(.text.UpdateWirelessStatusIndicatorSprite);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

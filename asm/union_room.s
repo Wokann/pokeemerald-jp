@@ -2279,7 +2279,7 @@ _08013378:
 	strb r0, [r6, #8]
 	b _08013686
 _0801337E:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	subs r0, #1
@@ -2426,7 +2426,7 @@ _080134EC:
 _080134EE:
 	strb r0, [r6, #0x15]
 _080134F0:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080134FC
@@ -2463,7 +2463,7 @@ _0801352C: .4byte 0x082C0A64
 _08013530:
 	adds r4, r6, #0
 	adds r4, #9
-	bl sub_08011564
+	bl RfuGetStatus
 	adds r1, r0, #0
 	lsls r1, r1, #0x18
 	lsrs r1, r1, #0x18
@@ -2503,7 +2503,7 @@ _08013576:
 	bl RedrawListMenu
 	b _08013686
 _0801357E:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0801358A
@@ -2550,7 +2550,7 @@ _080135E8:
 	adds r5, r6, #0
 	adds r5, #9
 	ldr r4, _08013610
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x16
 	adds r0, r0, r4
@@ -2578,7 +2578,7 @@ _08013628:
 	adds r5, r6, #0
 	adds r5, #9
 	ldr r4, _08013644
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x16
 	adds r0, r0, r4
@@ -4792,12 +4792,12 @@ _08014956:
 _08014974: .4byte 0x082C064C
 _08014978: .4byte 0x02037290
 _0801497C:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	beq _08014994
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #2
@@ -5165,7 +5165,7 @@ _08014CAC:
 	movs r0, #0xa
 	strb r0, [r7, #8]
 _08014CCA:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5
@@ -5221,7 +5221,7 @@ _08014D42:
 	adds r5, r7, #0
 	adds r5, #9
 	ldr r4, _08014D64
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x16
 	adds r0, r0, r4
@@ -5552,7 +5552,7 @@ _0801500C:
 	movs r0, #0xc
 	strb r0, [r5, #8]
 _0801502A:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #5
@@ -6256,7 +6256,7 @@ _08015670:
 _0801567C: .4byte 0x02021C7C
 _08015680:
 	bl sub_08016B5C
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #1
@@ -6741,7 +6741,7 @@ _08015AD2:
 	strh r1, [r7, #4]
 	bl _0801638C
 _08015ADE:
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	cmp r4, #3

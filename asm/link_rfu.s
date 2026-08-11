@@ -3,488 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start CreateWirelessStatusIndicatorSprite
-CreateWirelessStatusIndicatorSprite: @ 0x0800DA80
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	lsls r1, r1, #0x18
-	lsrs r2, r1, #0x18
-	cmp r3, #0
-	bne _0800DA96
-	cmp r2, #0
-	bne _0800DA96
-	movs r3, #0xe7
-	movs r2, #8
-_0800DA96:
-	ldr r0, _0800DAD8
-	ldr r0, [r0]
-	ldrb r0, [r0]
-	cmp r0, #1
-	bne _0800DAF0
-	ldr r0, _0800DADC
-	adds r1, r3, #0
-	movs r3, #0
-	bl CreateSprite
-	adds r5, r0, #0
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	ldr r0, _0800DAE0
-	lsls r4, r5, #4
-	adds r4, r4, r5
-	lsls r4, r4, #2
-	adds r4, r4, r0
-	ldr r0, _0800DAE4
-	strh r0, [r4, #0x3c]
-	ldr r0, _0800DAE8
-	ldrh r0, [r0, #6]
-	bl GetSpriteTileStartByTag
-	strh r0, [r4, #0x3a]
-	adds r4, #0x3e
-	ldrb r0, [r4]
-	movs r1, #4
-	orrs r0, r1
-	strb r0, [r4]
-	ldr r0, _0800DAEC
-	strb r5, [r0]
-	b _0800DB36
-	.align 2, 0
-_0800DAD8: .4byte 0x03007630
-_0800DADC: .4byte 0x082C0340
-_0800DAE0: .4byte 0x020205AC
-_0800DAE4: .4byte 0x00001234
-_0800DAE8: .4byte 0x082C0330
-_0800DAEC: .4byte 0x020227C8
-_0800DAF0:
-	ldr r0, _0800DB3C
-	adds r1, r3, #0
-	movs r3, #0
-	bl CreateSprite
-	ldr r4, _0800DB40
-	strb r0, [r4]
-	ldr r5, _0800DB44
-	ldrb r1, [r4]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r5
-	ldr r1, _0800DB48
-	strh r1, [r0, #0x3c]
-	ldr r0, _0800DB4C
-	ldrh r0, [r0, #6]
-	bl GetSpriteTileStartByTag
-	ldrb r2, [r4]
-	lsls r1, r2, #4
-	adds r1, r1, r2
-	lsls r1, r1, #2
-	adds r1, r1, r5
-	strh r0, [r1, #0x3a]
-	ldrb r1, [r4]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r5
-	adds r0, #0x3e
-	ldrb r1, [r0]
-	movs r2, #4
-	orrs r1, r2
-	strb r1, [r0]
-_0800DB36:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800DB3C: .4byte 0x082C0340
-_0800DB40: .4byte 0x020227C8
-_0800DB44: .4byte 0x020205AC
-_0800DB48: .4byte 0x00001234
-_0800DB4C: .4byte 0x082C0330
-	thumb_func_end CreateWirelessStatusIndicatorSprite
-
-	thumb_func_start DestroyWirelessStatusIndicatorSprite
-DestroyWirelessStatusIndicatorSprite: @ 0x0800DB50
-	push {r4, lr}
-	ldr r4, _0800DB9C
-	ldr r3, _0800DBA0
-	ldrb r1, [r3]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r2, r0, r4
-	movs r0, #0x3c
-	ldrsh r1, [r2, r0]
-	ldr r0, _0800DBA4
-	cmp r1, r0
-	bne _0800DB96
-	movs r0, #0
-	strh r0, [r2, #0x3c]
-	ldrb r1, [r3]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r4
-	bl DestroySprite
-	ldr r3, _0800DBA8
-	movs r0, #0x84
-	lsls r0, r0, #3
-	adds r3, r3, r0
-	ldr r0, _0800DBAC
-	ldr r1, [r0]
-	ldr r2, [r0, #4]
-	str r1, [r3]
-	str r2, [r3, #4]
-	ldr r1, _0800DBB0
-	movs r2, #4
-	bl CpuSet
-_0800DB96:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800DB9C: .4byte 0x020205AC
-_0800DBA0: .4byte 0x020227C8
-_0800DBA4: .4byte 0x00001234
-_0800DBA8: .4byte 0x03002360
-_0800DBAC: .4byte 0x082BF2F8
-_0800DBB0: .4byte 0x070003E8
-	thumb_func_end DestroyWirelessStatusIndicatorSprite
-
-	thumb_func_start LoadWirelessStatusIndicatorSpriteGfx
-LoadWirelessStatusIndicatorSpriteGfx: @ 0x0800DBB4
-	push {r4, lr}
-	ldr r4, _0800DBE0
-	ldrh r0, [r4, #6]
-	bl GetSpriteTileStartByTag
-	lsls r0, r0, #0x10
-	ldr r1, _0800DBE4
-	cmp r0, r1
-	bne _0800DBCC
-	adds r0, r4, #0
-	bl LoadCompressedSpriteSheet
-_0800DBCC:
-	ldr r0, _0800DBE8
-	bl LoadSpritePalette
-	ldr r1, _0800DBEC
-	movs r0, #0xff
-	strb r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800DBE0: .4byte 0x082C0330
-_0800DBE4: .4byte 0xFFFF0000
-_0800DBE8: .4byte 0x082C0338
-_0800DBEC: .4byte 0x020227C8
-	thumb_func_end LoadWirelessStatusIndicatorSpriteGfx
-
-	thumb_func_start sub_0800DBF0
-sub_0800DBF0: @ 0x0800DBF0
-	push {r4, lr}
-	ldr r1, _0800DC10
-	ldr r0, [r1]
-	ldrb r2, [r0, #2]
-	movs r3, #0
-	movs r4, #1
-_0800DBFC:
-	adds r0, r2, #0
-	ands r0, r4
-	cmp r0, #0
-	beq _0800DC14
-	ldr r0, [r1]
-	adds r0, #0xa
-	adds r0, r0, r3
-	ldrb r0, [r0]
-	b _0800DC22
-	.align 2, 0
-_0800DC10: .4byte 0x03007630
-_0800DC14:
-	lsrs r2, r2, #1
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #3
-	bls _0800DBFC
-	movs r0, #0
-_0800DC22:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0800DBF0
-
-	thumb_func_start sub_0800DC28
-sub_0800DC28: @ 0x0800DC28
-	push {lr}
-	adds r2, r0, #0
-	movs r3, #0x32
-	ldrsh r0, [r2, r3]
-	cmp r0, r1
-	beq _0800DC3C
-	movs r0, #0
-	strh r1, [r2, #0x32]
-	strh r0, [r2, #0x34]
-	strh r0, [r2, #0x36]
-_0800DC3C:
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0800DC28
-
-	thumb_func_start UpdateWirelessStatusIndicatorSprite
-UpdateWirelessStatusIndicatorSprite: @ 0x0800DC40
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	ldr r1, _0800DC84
-	ldrb r0, [r1]
-	cmp r0, #0xff
-	bne _0800DC50
-	b _0800DE12
-_0800DC50:
-	ldr r2, _0800DC88
-	adds r1, r0, #0
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r2, r0, r2
-	movs r0, #0x3c
-	ldrsh r1, [r2, r0]
-	ldr r0, _0800DC8C
-	cmp r1, r0
-	beq _0800DC68
-	b _0800DE12
-_0800DC68:
-	adds r6, r2, #0
-	movs r5, #0xff
-	movs r4, #0
-	ldr r0, _0800DC90
-	ldr r0, [r0]
-	ldrb r0, [r0]
-	cmp r0, #1
-	bne _0800DCC2
-	adds r7, r6, #0
-	adds r7, #0x28
-	movs r1, #0x29
-	adds r1, r1, r6
-	mov r8, r1
-	b _0800DCB2
-	.align 2, 0
-_0800DC84: .4byte 0x020227C8
-_0800DC88: .4byte 0x020205AC
-_0800DC8C: .4byte 0x00001234
-_0800DC90: .4byte 0x03007630
-_0800DC94:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	adds r0, r4, #0
-	bl GetConnectedChildStrength
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r5, r0
-	blo _0800DCB2
-	adds r0, r4, #0
-	bl GetConnectedChildStrength
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-_0800DCB2:
-	bl GetLinkPlayerCount
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	subs r0, #1
-	cmp r4, r0
-	blt _0800DC94
-	b _0800DCD4
-_0800DCC2:
-	bl sub_0800DBF0
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	adds r7, r6, #0
-	adds r7, #0x28
-	movs r2, #0x29
-	adds r2, r2, r6
-	mov r8, r2
-_0800DCD4:
-	bl sub_08011D10
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #1
-	bne _0800DCE4
-	movs r0, #4
-	b _0800DD12
-_0800DCE4:
-	cmp r5, #0x18
-	bhi _0800DCEC
-	movs r0, #3
-	b _0800DD12
-_0800DCEC:
-	adds r0, r5, #0
-	subs r0, #0x19
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0x65
-	bhi _0800DCFC
-	movs r0, #2
-	b _0800DD12
-_0800DCFC:
-	adds r0, r5, #0
-	subs r0, #0x7f
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0x65
-	bhi _0800DD0C
-	movs r0, #1
-	b _0800DD12
-_0800DD0C:
-	cmp r5, #0xe4
-	bls _0800DD14
-	movs r0, #0
-_0800DD12:
-	strh r0, [r6, #0x2e]
-_0800DD14:
-	movs r3, #0x2e
-	ldrsh r1, [r6, r3]
-	movs r2, #0x30
-	ldrsh r0, [r6, r2]
-	cmp r1, r0
-	beq _0800DD2A
-	adds r0, r6, #0
-	bl sub_0800DC28
-	ldrh r0, [r6, #0x2e]
-	strh r0, [r6, #0x30]
-_0800DD2A:
-	movs r0, #0x32
-	ldrsh r1, [r6, r0]
-	ldr r2, [r6, #8]
-	lsls r1, r1, #2
-	adds r1, r1, r2
-	movs r3, #0x36
-	ldrsh r0, [r6, r3]
-	ldr r1, [r1]
-	lsls r0, r0, #2
-	adds r0, r0, r1
-	ldr r0, [r0]
-	lsls r0, r0, #0xa
-	lsrs r0, r0, #0x1a
-	movs r3, #0x34
-	ldrsh r1, [r6, r3]
-	cmp r0, r1
-	bge _0800DD78
-	ldrh r0, [r6, #0x36]
-	adds r0, #1
-	movs r3, #0
-	strh r0, [r6, #0x36]
-	strh r3, [r6, #0x34]
-	movs r1, #0x32
-	ldrsh r0, [r6, r1]
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	movs r2, #0x36
-	ldrsh r1, [r6, r2]
-	ldr r0, [r0]
-	lsls r1, r1, #2
-	adds r1, r1, r0
-	movs r0, #0
-	ldrsh r1, [r1, r0]
-	movs r0, #2
-	rsbs r0, r0, #0
-	cmp r1, r0
-	bne _0800DD7E
-	strh r3, [r6, #0x36]
-	b _0800DD7E
-_0800DD78:
-	ldrh r0, [r6, #0x34]
-	adds r0, #1
-	strh r0, [r6, #0x34]
-_0800DD7E:
-	ldr r4, _0800DE1C
-	movs r1, #0x84
-	lsls r1, r1, #3
-	adds r0, r4, r1
-	ldr r1, _0800DE20
-	ldr r2, [r1, #4]
-	ldr r1, [r1]
-	str r1, [r0]
-	str r2, [r0, #4]
-	movs r3, #0x20
-	ldrsh r2, [r6, r3]
-	movs r1, #0
-	ldrsb r1, [r7, r1]
-	adds r2, r2, r1
-	ldr r1, _0800DE24
-	adds r5, r4, r1
-	ldr r3, _0800DE28
-	adds r1, r3, #0
-	ands r2, r1
-	ldrh r3, [r5]
-	ldr r1, _0800DE2C
-	ands r1, r3
-	orrs r1, r2
-	strh r1, [r5]
-	ldrh r1, [r6, #0x22]
-	mov r2, r8
-	ldrb r2, [r2]
-	adds r1, r1, r2
-	strb r1, [r0]
-	ldrb r2, [r6, #5]
-	ldr r3, _0800DE30
-	adds r5, r4, r3
-	lsrs r2, r2, #4
-	lsls r2, r2, #4
-	ldrb r3, [r5]
-	movs r1, #0xf
-	ands r1, r3
-	orrs r1, r2
-	strb r1, [r5]
-	movs r1, #0x32
-	ldrsh r2, [r6, r1]
-	ldr r1, [r6, #8]
-	lsls r2, r2, #2
-	adds r2, r2, r1
-	movs r3, #0x36
-	ldrsh r1, [r6, r3]
-	ldr r2, [r2]
-	lsls r1, r1, #2
-	adds r1, r1, r2
-	ldrh r2, [r1]
-	ldrh r6, [r6, #0x3a]
-	adds r2, r2, r6
-	ldr r1, _0800DE34
-	adds r4, r4, r1
-	ldr r3, _0800DE38
-	adds r1, r3, #0
-	ands r2, r1
-	ldrh r3, [r4]
-	ldr r1, _0800DE3C
-	ands r1, r3
-	orrs r1, r2
-	strh r1, [r4]
-	ldr r1, _0800DE40
-	movs r2, #4
-	bl CpuSet
-	bl sub_08011564
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #1
-	bne _0800DE12
-	bl DestroyWirelessStatusIndicatorSprite
-_0800DE12:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800DE1C: .4byte 0x03002360
-_0800DE20: .4byte 0x082C02C0
-_0800DE24: .4byte 0x00000422
-_0800DE28: .4byte 0x000001FF
-_0800DE2C: .4byte 0xFFFFFE00
-_0800DE30: .4byte 0x00000425
-_0800DE34: .4byte 0x00000424
-_0800DE38: .4byte 0x000003FF
-_0800DE3C: .4byte 0xFFFFFC00
-_0800DE40: .4byte 0x070003E8
-	thumb_func_end UpdateWirelessStatusIndicatorSprite
-
 	thumb_func_start CopyTrainerRecord
 	@ From src/link_rfu_3.c
 CopyTrainerRecord: @ 0x0800DE44
@@ -1473,7 +991,7 @@ sub_0800E608: @ 0x0800E608
 	ands r0, r1
 	cmp r0, #0x54
 	bne _0800E63C
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #4
@@ -2753,7 +2271,7 @@ _0800EFD4:
 	orrs r0, r1
 	bl rfu_REQ_disconnect
 	bl rfu_waitREQComplete
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -6050,7 +5568,7 @@ _080108D4:
 	adds r0, r5, r1
 	ldrb r0, [r0]
 	adds r6, r0, #0
-	bl sub_08011564
+	bl RfuGetStatus
 	movs r3, #0
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -7695,20 +7213,20 @@ sub_08011554: @ 0x08011554
 _08011560: .4byte 0x030050A0
 	thumb_func_end sub_08011554
 
-	thumb_func_start sub_08011564
-sub_08011564: @ 0x08011564
+	thumb_func_start RfuGetStatus
+RfuGetStatus: @ 0x08011564
 	ldr r0, _0801156C
 	adds r0, #0xf1
 	ldrb r0, [r0]
 	bx lr
 	.align 2, 0
 _0801156C: .4byte 0x030050A0
-	thumb_func_end sub_08011564
+	thumb_func_end RfuGetStatus
 
 	thumb_func_start sub_08011570
 sub_08011570: @ 0x08011570
 	push {lr}
-	bl sub_08011564
+	bl RfuGetStatus
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	subs r0, #1
@@ -8682,8 +8200,8 @@ _08011D0A:
 	bx r0
 	thumb_func_end sub_08011C74
 
-	thumb_func_start sub_08011D10
-sub_08011D10: @ 0x08011D10
+	thumb_func_start IsRfuRecoveringFromLinkLoss
+IsRfuRecoveringFromLinkLoss: @ 0x08011D10
 	push {lr}
 	ldr r0, _08011D20
 	adds r0, #0xf0
@@ -8700,7 +8218,7 @@ _08011D26:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_08011D10
+	thumb_func_end IsRfuRecoveringFromLinkLoss
 
 	thumb_func_start sub_08011D2C
 sub_08011D2C: @ 0x08011D2C

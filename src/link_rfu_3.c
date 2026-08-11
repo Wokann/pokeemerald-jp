@@ -3,6 +3,7 @@
 #include "random.h"
 #include "event_data.h"
 #include "text.h"
+#include "sprite.h"
 
 // JP ROM/RAM data (bound in sym_iwram_jp.txt; JP uses a fixed IWRAM address
 // instead of US's file-static variable).
@@ -12,6 +13,31 @@ extern IWRAM_DATA u8 sSequenceArrayValOffset;
 // they are bound in ld_script_jp.txt instead of being defined in C.
 extern const u8 sWireless_ASCIItoRSETable[256];
 extern const u8 sWireless_RSEtoASCIITable[256];
+
+// JP: the wireless status indicator sprite data lives at fixed JP ROM
+// addresses (bound in ld_script_jp.txt) instead of being defined in C.
+extern const struct OamData sWirelessStatusIndicatorOamData;
+extern const struct CompressedSpriteSheet sWirelessStatusIndicatorSpriteSheet;
+extern const struct SpritePalette sWirelessStatusIndicatorSpritePalette;
+extern const struct SpriteTemplate sWirelessStatusIndicatorSpriteTemplate;
+
+enum {
+    WIRELESS_STATUS_ANIM_3_BARS,
+    WIRELESS_STATUS_ANIM_2_BARS,
+    WIRELESS_STATUS_ANIM_1_BAR,
+    WIRELESS_STATUS_ANIM_SEARCHING,
+    WIRELESS_STATUS_ANIM_ERROR,
+};
+
+#define STATUS_INDICATOR_ACTIVE 0x1234 // Used to validate active indicator
+
+#define sNextAnimNum  data[0]
+#define sSavedAnimNum data[1]
+#define sCurrAnimNum  data[2]
+#define sFrameDelay   data[3]
+#define sFrameIdx     data[4]
+#define sTileStart    data[6]
+#define sValidator    data[7]
 
 // JP-specific: US uses RECV_QUEUE_NUM_SLOTS == 32, JP == 20 (see link_rfu.h).
 // These queue constants are only used by the functions in this file.
@@ -455,3 +481,140 @@ void CopyHostRfuGameDataAndUsername(struct RfuGameData *gameData, u8 *username)
     memcpy(gameData, &gHostRfuGameData, RFU_GAME_NAME_LENGTH);
     memcpy(username, gHostRfuUsername, RFU_USER_NAME_LENGTH);
 }
+
+void CreateWirelessStatusIndicatorSprite(u8 x, u8 y)
+{
+    u8 sprId;
+
+    if (x == 0 && y == 0)
+    {
+        x = 231;
+        y = 8;
+    }
+    if (gRfuLinkStatus->parentChild == MODE_PARENT)
+    {
+        sprId = CreateSprite(&sWirelessStatusIndicatorSpriteTemplate, x, y, 0);
+        gSprites[sprId].sValidator = STATUS_INDICATOR_ACTIVE;
+        gSprites[sprId].sTileStart = GetSpriteTileStartByTag(sWirelessStatusIndicatorSpriteSheet.tag);
+        gSprites[sprId].invisible = TRUE;
+        gWirelessStatusIndicatorSpriteId = sprId;
+    }
+    else
+    {
+        gWirelessStatusIndicatorSpriteId = CreateSprite(&sWirelessStatusIndicatorSpriteTemplate, x, y, 0);
+        gSprites[gWirelessStatusIndicatorSpriteId].sValidator = STATUS_INDICATOR_ACTIVE;
+        gSprites[gWirelessStatusIndicatorSpriteId].sTileStart = GetSpriteTileStartByTag(sWirelessStatusIndicatorSpriteSheet.tag);
+        gSprites[gWirelessStatusIndicatorSpriteId].invisible = TRUE;
+    }
+}
+
+void DestroyWirelessStatusIndicatorSprite(void)
+{
+    if (gSprites[gWirelessStatusIndicatorSpriteId].sValidator == STATUS_INDICATOR_ACTIVE)
+    {
+        gSprites[gWirelessStatusIndicatorSpriteId].sValidator = 0;
+        DestroySprite(&gSprites[gWirelessStatusIndicatorSpriteId]);
+        gMain.oamBuffer[125] = gDummyOamData;
+        CpuCopy16(&gDummyOamData, (struct OamData *)OAM + 125, sizeof(struct OamData));
+    }
+}
+
+void LoadWirelessStatusIndicatorSpriteGfx(void)
+{
+    if (GetSpriteTileStartByTag(sWirelessStatusIndicatorSpriteSheet.tag) == 0xFFFF)
+        LoadCompressedSpriteSheet(&sWirelessStatusIndicatorSpriteSheet);
+    LoadSpritePalette(&sWirelessStatusIndicatorSpritePalette);
+    gWirelessStatusIndicatorSpriteId = SPRITE_NONE;
+}
+
+static u8 GetParentSignalStrength(void)
+{
+    u8 i;
+    u8 flags = gRfuLinkStatus->connSlotFlag;
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (flags & 1)
+            return gRfuLinkStatus->strength[i];
+        flags >>= 1;
+    }
+    return 0;
+}
+
+static void SetWirelessStatusIndicatorAnim(struct Sprite *sprite, s32 animNum)
+{
+    if (sprite->sCurrAnimNum != animNum)
+    {
+        sprite->sCurrAnimNum = animNum;
+        sprite->sFrameDelay = 0;
+        sprite->sFrameIdx = 0;
+    }
+}
+
+void UpdateWirelessStatusIndicatorSprite(void)
+{
+    if (gWirelessStatusIndicatorSpriteId != SPRITE_NONE && gSprites[gWirelessStatusIndicatorSpriteId].sValidator == STATUS_INDICATOR_ACTIVE)
+    {
+        struct Sprite *sprite = &gSprites[gWirelessStatusIndicatorSpriteId];
+        u8 signalStrength = RFU_LINK_ICON_LEVEL4_MAX;
+        u8 i = 0;
+
+        // Get weakest signal strength
+        if (gRfuLinkStatus->parentChild == MODE_PARENT)
+        {
+            for (i = 0; i < GetLinkPlayerCount() - 1; i++)
+            {
+                if (signalStrength >= GetConnectedChildStrength(i + 1))
+                    signalStrength = GetConnectedChildStrength(i + 1);
+            }
+        }
+        else
+        {
+            signalStrength = GetParentSignalStrength();
+        }
+
+        // Set signal strength sprite anim number
+        if (IsRfuRecoveringFromLinkLoss() == TRUE)
+            sprite->sNextAnimNum = WIRELESS_STATUS_ANIM_ERROR;
+        else if (signalStrength <= RFU_LINK_ICON_LEVEL1_MAX)
+            sprite->sNextAnimNum = WIRELESS_STATUS_ANIM_SEARCHING;
+        else if (signalStrength >= RFU_LINK_ICON_LEVEL2_MIN && signalStrength <= RFU_LINK_ICON_LEVEL2_MAX)
+            sprite->sNextAnimNum = WIRELESS_STATUS_ANIM_1_BAR;
+        else if (signalStrength >= RFU_LINK_ICON_LEVEL3_MIN && signalStrength <= RFU_LINK_ICON_LEVEL3_MAX)
+            sprite->sNextAnimNum = WIRELESS_STATUS_ANIM_2_BARS;
+        else if (signalStrength >= RFU_LINK_ICON_LEVEL4_MIN)
+            sprite->sNextAnimNum = WIRELESS_STATUS_ANIM_3_BARS;
+
+        if (sprite->sNextAnimNum != sprite->sSavedAnimNum)
+        {
+            SetWirelessStatusIndicatorAnim(sprite, sprite->sNextAnimNum);
+            sprite->sSavedAnimNum = sprite->sNextAnimNum;
+        }
+        if (sprite->anims[sprite->sCurrAnimNum][sprite->sFrameIdx].frame.duration < sprite->sFrameDelay)
+        {
+            sprite->sFrameIdx++;
+            sprite->sFrameDelay = 0;
+            if (sprite->anims[sprite->sCurrAnimNum][sprite->sFrameIdx].type == -2)
+                sprite->sFrameIdx = 0;
+        }
+        else
+        {
+            sprite->sFrameDelay++;
+        }
+        gMain.oamBuffer[125] = sWirelessStatusIndicatorOamData;
+        gMain.oamBuffer[125].x = sprite->x + sprite->centerToCornerVecX;
+        gMain.oamBuffer[125].y = sprite->y + sprite->centerToCornerVecY;
+        gMain.oamBuffer[125].paletteNum = sprite->oam.paletteNum;
+        gMain.oamBuffer[125].tileNum = sprite->sTileStart + sprite->anims[sprite->sCurrAnimNum][sprite->sFrameIdx].frame.imageValue;
+        CpuCopy16(&gMain.oamBuffer[125], (struct OamData *)OAM + 125, sizeof(struct OamData));
+        if (RfuGetStatus() == RFU_STATUS_FATAL_ERROR)
+            DestroyWirelessStatusIndicatorSprite();
+    }
+}
+
+#undef sNextAnimNum
+#undef sSavedAnimNum
+#undef sCurrAnimNum
+#undef sFrameDelay
+#undef sFrameIdx
+#undef sTileStart
+#undef sValidator
