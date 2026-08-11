@@ -1060,7 +1060,6 @@ RegisterTradeMonAndGetIsEgg = sub_08017B5C;
 HasAtLeastTwoMonsOfLevel30OrLower = sub_08017AE0;
 StartScriptInteraction = sub_08017C88;
 GetActivePartnersInfo = sub_08017C98;
-IsPlayerFacingTradingBoard = sub_080173FC;
 GetURoomActivityStartMsg = sub_080178C0;
 GetIndexOfNthTradeBoardOffer = sub_08017770;
 ViewURoomPartnerTrainerCard = sub_08017CDC;
@@ -1531,6 +1530,7 @@ SECTIONS {
         src/union_room.o(.text.TryAddIncomingPlayerToList);
         src/union_room.o(.text.PrintGroupMemberOnWindow);
         src/union_room.o(.text.PrintGroupCandidateOnWindow);
+        src/union_room.o(.text.IsPlayerFacingTradingBoard);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);

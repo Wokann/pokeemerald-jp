@@ -340,7 +340,7 @@ extern bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trad
 extern bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
 extern void StartScriptInteraction(void);
 extern u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
-extern bool32 IsPlayerFacingTradingBoard(void);
+static bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
 static void Task_InitUnionRoom(u8 taskId);
@@ -4084,6 +4084,23 @@ static void PrintGroupCandidateOnWindow(u8 windowId, u8 x, u8 y, struct RfuPlaye
         StringAppend(gStringVar4, trainerId);
         PrintUnionRoomText(windowId, FONT_NORMAL, gStringVar4, x + 0x38, y, colorIdx);
     }
+}
+
+static bool32 IsPlayerFacingTradingBoard(void)
+{
+    s16 x, y;
+    GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
+
+    if (x != 2 + MAP_OFFSET)
+        return FALSE;
+
+    if (y != 1 + MAP_OFFSET)
+        return FALSE;
+
+    if (gPlayerAvatar.tileTransitionState == T_TILE_CENTER || gPlayerAvatar.tileTransitionState == T_NOT_MOVING)
+        return TRUE;
+
+    return FALSE;
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

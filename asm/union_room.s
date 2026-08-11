@@ -39,44 +39,6 @@
 
 
 
-	thumb_func_start sub_080173FC
-sub_080173FC: @ 0x080173FC
-	push {r4, lr}
-	sub sp, #4
-	mov r4, sp
-	adds r4, #2
-	mov r0, sp
-	adds r1, r4, #0
-	bl GetXYCoordsOneStepInFrontOfPlayer
-	mov r0, sp
-	movs r1, #0
-	ldrsh r0, [r0, r1]
-	cmp r0, #9
-	bne _08017434
-	movs r1, #0
-	ldrsh r0, [r4, r1]
-	cmp r0, #8
-	bne _08017434
-	ldr r0, _08017430
-	ldrb r0, [r0, #3]
-	cmp r0, #2
-	beq _0801742A
-	cmp r0, #0
-	bne _08017434
-_0801742A:
-	movs r0, #1
-	b _08017436
-	.align 2, 0
-_08017430: .4byte 0x02037230
-_08017434:
-	movs r0, #0
-_08017436:
-	add sp, #4
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_080173FC
 
 	thumb_func_start sub_08017440
 sub_08017440: @ 0x08017440
