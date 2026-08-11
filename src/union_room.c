@@ -237,6 +237,7 @@ extern const u8 sText_Colon[];
 extern const u8 *const sBattleDeclinedTexts[];
 extern const u8 *const sShowTrainerCardDeclinedTexts[];
 extern const u8 sText_TradeOfferRejected[];
+extern const u8 *const sStartActivityTexts[][2][3];
 extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
@@ -348,7 +349,7 @@ static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
 static void Task_InitUnionRoom(u8 taskId);
 void UR_ClearBg0(void);
-extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
+static void GetURoomActivityStartMsg(u8 *dst, u8 acitivty);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
 static void GetURoomActivityRejectMsg(u8 *dst, s32 acitivty, u32 playerGender);
 static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
@@ -4174,6 +4175,25 @@ static void GetURoomActivityRejectMsg(u8 *dst, s32 acitivty, u32 playerGender)
         break;
     case ACTIVITY_CARD | IN_UNION_ROOM:
         StringExpandPlaceholders(dst, sShowTrainerCardDeclinedTexts[playerGender]);
+        break;
+    }
+}
+
+static void GetURoomActivityStartMsg(u8 *dst, u8 acitivty)
+{
+    u8 mpId = GetMultiplayerId();
+    u8 gender = gLinkPlayers[mpId ^ 1].gender;
+
+    switch (acitivty)
+    {
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+        StringCopy(dst, sStartActivityTexts[mpId][gender][0]);
+        break;
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+        StringCopy(dst, sStartActivityTexts[mpId][gender][2]);
+        break;
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+        StringCopy(dst, sStartActivityTexts[mpId][gender][1]);
         break;
     }
 }
