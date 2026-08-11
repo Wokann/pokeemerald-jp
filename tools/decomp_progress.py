@@ -51,8 +51,10 @@ def jp_asm_functions():
 
 
 def main():
-    jp_c = {p.stem: c_functions(p) for p in sorted(JP_SRC.glob("*.c"))}
-    us_c = {p.stem: c_functions(p) for p in sorted(US_SRC.glob("*.c"))}
+    # Recurse into subdirectories (src/libc/, src/data/) so converted
+    # newlib/libc functions are counted too.
+    jp_c = {p.stem: c_functions(p) for p in sorted(JP_SRC.glob("**/*.c"))}
+    us_c = {p.stem: c_functions(p) for p in sorted(US_SRC.glob("**/*.c"))}
     jp_asm = jp_asm_functions()
 
     converted = set()

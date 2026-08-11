@@ -2223,7 +2223,7 @@ build/src/mystery_event_script.o(.text.CheckCompatibility);
 		asm/libagbsyscall.o(.text);
 		asm/libgcc.o(.text);
 		build/src/libc/memcpy.o(.text.memcpy);
-		asm/libc_mid_0.o(.text);
+		build/src/libc/memset.o(.text.memset);
 		build/src/libc/strcmp.o(.text.strcmp);
 		build/src/libc/strcpy.o(.text.strcpy);
 		asm/libc_rest_0.o(.text);
