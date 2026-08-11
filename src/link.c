@@ -118,7 +118,7 @@ void LinkCB_Standby(void);
 void LinkCB_StandbyForAll(void);
 
 void TrySetLinkErrorBuffer(void);
-void CB2_PrintErrorMessage(void);
+static void CB2_PrintErrorMessage(void);
 bool8 IsSioMultiMaster(void);
 void SetWirelessCommType0_Internal(void);
 void DisableSerial(void);
@@ -138,6 +138,16 @@ void SendRecvDone(void);
 // JP const data lives in data.s (bound in ld_script_jp.txt).
 extern const u16 sLinkTestDigitsPal[];
 extern const u16 sLinkTestDigitsGfx[0x110];
+extern const u16 sCommErrorBg_Gfx[];
+extern const u16 sWirelessLinkDisplayPal[];
+extern const u32 sWirelessLinkDisplayGfx[];
+extern const u32 sWirelessLinkDisplayTilemap[];
+extern const u8 sTextColors[];
+extern const u8 gText_CommErrorEllipsis[];
+extern const u8 gText_MoveCloserToLinkPartner[];
+extern const u8 gText_CommErrorCheckConnections[];
+extern const u8 gText_ABtnTitleScreen[];
+extern const u8 gText_ABtnRegistrationCounter[];
 static const struct BlockRequest sBlockRequests[] = {
     [BLOCK_REQ_SIZE_NONE] = {gBlockSendBuffer, 200},
     [BLOCK_REQ_SIZE_200]  = {gBlockSendBuffer, 200},
@@ -1430,6 +1440,88 @@ void CB2_LinkError(void)
         UpdatePaletteFade();
         SetMainCallback2(CB2_PrintErrorMessage);
     }
+}
+
+static void ErrorMsg_MoveCloserToPartner(void)
+{
+    LoadBgTiles(0, sCommErrorBg_Gfx, 0x20, 0);
+    DecompressAndLoadBgGfxUsingHeap(1, sWirelessLinkDisplayGfx, FALSE, 0, 0);
+    CopyToBgTilemapBuffer(1, sWirelessLinkDisplayTilemap, 0, 0);
+    CopyBgTilemapBufferToVram(1);
+    LoadPalette(sWirelessLinkDisplayPal, BG_PLTT_ID(0), 0x20);
+    FillWindowPixelBuffer(WIN_LINK_ERROR_TOP, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_LINK_ERROR_BOTTOM, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(WIN_LINK_ERROR_TOP, FONT_SHORT_COPY_1, 0x18, 5, sTextColors, 0, gText_CommErrorEllipsis);
+    AddTextPrinterParameterized3(WIN_LINK_ERROR_BOTTOM, FONT_SHORT_COPY_1, 3, 2, sTextColors, 0, gText_MoveCloserToLinkPartner);
+    PutWindowTilemap(WIN_LINK_ERROR_TOP);
+    PutWindowTilemap(WIN_LINK_ERROR_BOTTOM);
+    CopyWindowToVram(WIN_LINK_ERROR_TOP, COPYWIN_NONE);
+    CopyWindowToVram(WIN_LINK_ERROR_BOTTOM, COPYWIN_FULL);
+}
+
+static void ErrorMsg_CheckConnections(void)
+{
+    LoadBgTiles(0, sCommErrorBg_Gfx, 0x20, 0);
+    FillWindowPixelBuffer(WIN_LINK_ERROR_MID, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_LINK_ERROR_BOTTOM, PIXEL_FILL(0));
+    AddTextPrinterParameterized3(WIN_LINK_ERROR_MID, FONT_SHORT_COPY_1, 3, 0, sTextColors, 0, gText_CommErrorCheckConnections);
+    PutWindowTilemap(WIN_LINK_ERROR_MID);
+    PutWindowTilemap(WIN_LINK_ERROR_BOTTOM);
+    CopyWindowToVram(WIN_LINK_ERROR_MID, COPYWIN_NONE);
+    CopyWindowToVram(WIN_LINK_ERROR_BOTTOM, COPYWIN_FULL);
+}
+
+static void CB2_PrintErrorMessage(void)
+{
+    switch (gMain.state)
+    {
+        case  00:
+            if (sLinkErrorBuffer.disconnected)
+                ErrorMsg_MoveCloserToPartner();
+            else
+                ErrorMsg_CheckConnections();
+            break;
+        case  02:
+            ShowBg(0);
+            if (sLinkErrorBuffer.disconnected)
+                ShowBg(1);
+            break;
+        case  30:
+        case  60:
+        case  90:
+            PlaySE(SE_BOO);
+            break;
+        case 130:
+            if (gWirelessCommType == 2)
+                AddTextPrinterParameterized3(WIN_LINK_ERROR_TOP, FONT_SHORT_COPY_1, 0x18, 0x12, sTextColors, 0, gText_ABtnTitleScreen);
+            else if (gWirelessCommType == 1)
+                AddTextPrinterParameterized3(WIN_LINK_ERROR_TOP, FONT_SHORT_COPY_1, 0x18, 0x12, sTextColors, 0, gText_ABtnRegistrationCounter);
+            break;
+    }
+    if (gMain.state == 160)
+    {
+        if (gWirelessCommType == 1)
+        {
+            if (JOY_NEW(A_BUTTON))
+            {
+                PlaySE(SE_PIN);
+                gWirelessCommType = 0;
+                sLinkErrorBuffer.disconnected = FALSE;
+                ReloadSave();
+            }
+        }
+        else if (gWirelessCommType == 2)
+        {
+            if (JOY_NEW(A_BUTTON))
+            {
+                rfu_REQ_stopMode();
+                rfu_waitREQComplete();
+                DoSoftReset();
+            }
+        }
+    }
+    if (gMain.state != 160)
+        gMain.state++;
 }
 
 bool8 GetSioMultiSI(void)
