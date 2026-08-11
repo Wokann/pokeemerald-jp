@@ -450,7 +450,7 @@ gSpecials:
 	def_special sub_08139A68
 	def_special sub_08139DD4
 	def_special sub_080F98EC
-	def_special sub_0800AFEC
+	def_special GetWirelessCommType
 	def_special sub_080F996C
 	def_special sub_080F999C
 	def_special sub_080F99F0

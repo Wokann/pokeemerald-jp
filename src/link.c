@@ -1423,6 +1423,12 @@ void SetWirelessCommType0_Internal(void)
         gWirelessCommType = 0;
 }
 
+void SetWirelessCommType0(void)
+{
+    if (gReceivedRemoteLinkPlayers == 0)
+        gWirelessCommType = 0;
+}
+
 u32 GetLinkRecvQueueLength(void)
 {
     if (gWirelessCommType != 0)
@@ -1437,6 +1443,12 @@ bool32 IsLinkRecvQueueAtOverworldMax(void)
         return TRUE;
 
     return FALSE;
+}
+
+// Unused
+u8 GetWirelessCommType(void)
+{
+    return gWirelessCommType;
 }
 
 void DisableSerial(void)

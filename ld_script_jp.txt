@@ -1028,10 +1028,10 @@ SECTIONS {
         src/link.o(.text.HandleLinkConnection);
         src/link.o(.text.SetWirelessCommType1);
         src/link.o(.text.SetWirelessCommType0_Internal);
-        asm/link_mid_7.o(.text);
+        src/link.o(.text.SetWirelessCommType0);
         src/link.o(.text.GetLinkRecvQueueLength);
         src/link.o(.text.IsLinkRecvQueueAtOverworldMax);
-        asm/link_mid_8.o(.text);
+        src/link.o(.text.GetWirelessCommType);
         src/link.o(.text.DisableSerial);
         src/link.o(.text.EnableSerial);
         src/link.o(.text.ResetSerial);

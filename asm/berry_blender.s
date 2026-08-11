@@ -2164,7 +2164,7 @@ _08080314: @ jump table
 	.4byte _080806CA @ case 20
 	.4byte _080806E0 @ case 21
 _0808036C:
-	bl sub_0800AF94
+	bl SetWirelessCommType0
 	bl sub_0807FF90
 	ldr r4, _080803F0
 	ldrh r1, [r4]
@@ -9266,4 +9266,3 @@ _08083B64:
 	pop {r1}
 	bx r1
 	thumb_func_end Blender_PrintText
-
