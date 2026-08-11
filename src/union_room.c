@@ -309,14 +309,16 @@ void CopyPlayerListToBuffer(struct WirelessLink_URoom *uroom);
 void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
-extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
-extern bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
 static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
 extern void UR_RunTextPrinters(void);
 static u8 HandlePlayerListUpdate(void);
 static void Task_SearchForChildOrParent(u8 taskId);
 static void Task_ListenForCompatiblePartners(u8 taskId);
+static bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
+static void Task_ListenForWonderDistributor(u8 taskId);
+static u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 linkGroup);
+static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 linkGroup);
 extern s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
 extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
 extern void HandleCancelActivity(bool32 setData);
@@ -3667,4 +3669,58 @@ static void Task_ListenForCompatiblePartners(u8 taskId)
         }
         list[0]->players[i].active = ArePlayersDifferent(&list[0]->players[i].rfu, &sUnionRoomPlayer_DummyRfu);
     }
+}
+
+static bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup)
+{
+    if (linkGroup == LINK_GROUP_WONDER_CARD)
+    {
+        if (!data->compatibility.hasCard)
+            return FALSE;
+        else
+            return TRUE;
+    }
+    else if (linkGroup == LINK_GROUP_WONDER_NEWS)
+    {
+        if (!data->compatibility.hasNews)
+            return FALSE;
+        else
+            return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+static void Task_ListenForWonderDistributor(u8 taskId)
+{
+    s32 i;
+    struct RfuIncomingPlayerList **list = (void *) gTasks[taskId].data;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (Rfu_GetWonderDistributorPlayerData(&list[0]->players[i].rfu.data, list[0]->players[i].rfu.name, i))
+            HasWonderCardOrNewsByLinkGroup(&list[0]->players[i].rfu.data, gTasks[taskId].data[2]);
+
+        list[0]->players[i].active = ArePlayersDifferent(&list[0]->players[i].rfu, &sUnionRoomPlayer_DummyRfu);
+    }
+}
+
+static u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 linkGroup)
+{
+    u8 taskId = CreateTask(Task_ListenForCompatiblePartners, 0);
+    struct RfuIncomingPlayerList **oldList = (void *) gTasks[taskId].data;
+    oldList[0] = list;
+    gTasks[taskId].data[2] = linkGroup;
+    return taskId;
+}
+
+static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 linkGroup)
+{
+    u8 taskId = CreateTask(Task_ListenForWonderDistributor, 0);
+    struct RfuIncomingPlayerList **oldList = (void *) gTasks[taskId].data;
+    oldList[0] = list;
+    gTasks[taskId].data[2] = linkGroup;
+    return taskId;
 }
