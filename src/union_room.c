@@ -1764,3 +1764,9 @@ static void CreateTask_RunScriptAndFadeToActivity(void)
 {
     CreateTask(Task_RunScriptAndFadeToActivity, 0);
 }
+
+void CreateTask_StartActivity(void)
+{
+    u8 taskId = CreateTask(Task_StartActivity, 0);
+    gTasks[taskId].data[0] = 0;
+}

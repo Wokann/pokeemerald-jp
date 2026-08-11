@@ -4,31 +4,6 @@
 .syntax unified
 
 
-
-
-
-	thumb_func_start sub_080144E0
-sub_080144E0: @ 0x080144E0
-	push {lr}
-	ldr r0, _08014500
-	movs r1, #0
-	bl CreateTask
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _08014504
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	adds r1, r1, r2
-	movs r0, #0
-	strh r0, [r1, #8]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08014500: .4byte 0x08013F15
-_08014504: .4byte 0x03005B60
-	thumb_func_end sub_080144E0
-
 	thumb_func_start MEvent_CreateTask_Leader
 MEvent_CreateTask_Leader: @ 0x08014508
 	push {r4, lr}
@@ -2940,7 +2915,7 @@ _08015EBA:
 	ldr r0, _08015ED4
 	ldr r0, [r0]
 	bl Free
-	bl sub_080144E0
+	bl CreateTask_StartActivity
 	b _0801638C
 	.align 2, 0
 _08015ED4: .4byte 0x020228E4
