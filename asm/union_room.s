@@ -28,25 +28,6 @@
 
 
 
-	thumb_func_start sub_08016E74
-sub_08016E74: @ 0x08016E74
-	push {lr}
-	sub sp, #0xc
-	movs r0, #0x20
-	str r0, [sp]
-	str r0, [sp, #4]
-	movs r0, #0
-	str r0, [sp, #8]
-	movs r1, #0
-	movs r2, #0
-	movs r3, #0
-	bl FillBgTilemapBufferRect
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	add sp, #0xc
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08016E74
 
 	thumb_func_start sub_08016E98
 sub_08016E98: @ 0x08016E98

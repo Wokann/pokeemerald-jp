@@ -341,7 +341,7 @@ extern bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
 static void Task_InitUnionRoom(u8 taskId);
-extern void UR_ClearBg0(void);
+void UR_ClearBg0(void);
 extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
 extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
@@ -3855,6 +3855,12 @@ static s32 ListMenuHandler_AllItemsAvailable(u8 *state, u8 *windowId, u8 *listMe
     }
 
     return LIST_NOTHING_CHOSEN;
+}
+
+void UR_ClearBg0(void)
+{
+    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
+    CopyBgTilemapBufferToVram(0);
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

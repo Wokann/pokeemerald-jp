@@ -257,7 +257,7 @@ _08017C44: .4byte 0x0202418D
 sub_08017C48: @ 0x08017C48
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_08016E74
+	bl UR_ClearBg0
 	bl UnlockPlayerFieldControls
 	bl sub_08097EAC
 	ldr r1, _08017C80
