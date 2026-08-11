@@ -191,6 +191,7 @@ extern void sub_08196C74(u8 *dest);
 
 // JP builds this as a jump table with a trailing 2-byte .align that the
 // Makefile pipeline does not emit between functions; kept as naked asm.
+#ifndef NONMATCHING
 __attribute__((naked)) static u32 MatchCallGetFunctionIndex(match_call_t matchCall)
 {
     __asm__(".syntax unified\n\t"
@@ -232,6 +233,29 @@ __attribute__((naked)) static u32 MatchCallGetFunctionIndex(match_call_t matchCa
             ".align 2, 0\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
+static u32 MatchCallGetFunctionIndex(match_call_t matchCall)
+{
+    switch (matchCall.common->type)
+    {
+        default:
+        case MC_TYPE_NPC:
+            return 0;
+        case MC_TYPE_TRAINER:
+        case MC_TYPE_LEADER:
+            return 1;
+        case MC_TYPE_WALLY:
+            return 2;
+        case MC_TYPE_RIVAL:
+            return 3;
+        case MC_TYPE_BIRCH:
+            return 4;
+    }
+}
+#endif
+
 u32 GetTrainerIdxByRematchIdx(u32 rematchIdx)
 {
     return gRematchTable[rematchIdx].trainerIds[0];
@@ -462,6 +486,7 @@ static void MatchCall_GetMessage_Birch(match_call_t matchCall, u8 *dest)
 {
     sub_08196C74(dest);
 }
+#ifndef NONMATCHING
 __attribute__((naked)) static void sub_081D103C(const match_call_text_data_t *textData, u8 *dest)
 {
     __asm__(".syntax unified\n\t"
@@ -517,6 +542,27 @@ __attribute__((naked)) static void sub_081D103C(const match_call_text_data_t *te
             "_t_1098: .4byte 0x0000FFFF\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：JP 特有实现（无 REMATCH_CALL_START 特判），
+// 语义与汇编版相同，但不保证逐字节一致。
+static void sub_081D103C(const match_call_text_data_t *textData, u8 *dest)
+{
+    u32 i;
+
+    for (i = 0; textData[i].text != NULL; i++)
+    {
+        if (textData[i].availabilityFlag != ALWAYS_AVAILABLE && !FlagGet(textData[i].availabilityFlag))
+            break;
+    }
+    if (i)
+        i--;
+    if (textData[i].flagToSetOnCompletion != NO_FLAG_TO_SET)
+        FlagSet(textData[i].flagToSetOnCompletion);
+    StringExpandPlaceholders(dest, textData[i].text);
+}
+#endif
+
 static void MatchCall_BufferCallMessageTextByRematchTeam(const match_call_text_data_t *textData, u16 idx, u8 *dest)
 {
     u32 i;
