@@ -2518,7 +2518,7 @@ _080B3064:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080B3078
-	bl sub_08013A80
+	bl EvolutionSparkles_CircleInward
 	adds r0, r5, #0
 	bl DestroyTask
 _080B3078:

@@ -8,6 +8,7 @@
 #include "list_menu.h"
 #include "malloc.h"
 #include "menu.h"
+#include "overworld.h"
 #include "script.h"
 #include "save_location.h"
 #include "sound.h"
@@ -15,6 +16,7 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
+#include "trade.h"
 #include "union_room.h"
 #include "window.h"
 
@@ -99,6 +101,7 @@ extern EWRAM_DATA union
 } sWirelessLinkMain;
 extern IWRAM_DATA struct WirelessLink_Leader *sLeader;
 extern IWRAM_DATA struct WirelessLink_Group *sGroup;
+extern EWRAM_DATA struct UnionRoomTrade sUnionRoomTrade;
 
 // JP: ROM data bound via ld_script_jp.txt.
 extern const u8 *const sPlayersNeededOrModeTexts[][5];
@@ -153,6 +156,8 @@ extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct Rfu
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
+extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
+extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
 extern void JoinGroup_EnableScriptContexts(void);
 extern bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
@@ -1341,4 +1346,55 @@ u8 GetNewLeaderCandidate(void)
     }
 
     return ret;
+}
+
+static void Task_CreateTradeMenu(u8 taskId)
+{
+    CB2_StartCreateTradeMenu();
+    DestroyTask(taskId);
+}
+
+u8 EvolutionSparkles_CircleInward(void)
+{
+    return CreateTask(Task_CreateTradeMenu, 0);
+}
+
+static void Task_StartUnionRoomTrade(u8 taskId)
+{
+    u32 monId = GetPartyPositionOfRegisteredMon(&sUnionRoomTrade, GetMultiplayerId());
+
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        gTasks[taskId].data[0]++;
+        SendBlock(0, &gPlayerParty[monId], sizeof(struct Pokemon));
+        break;
+    case 1:
+        if (GetBlockReceivedStatus() == 3)
+        {
+            gEnemyParty[0] = *(struct Pokemon *)(gBlockRecvBuffer[GetMultiplayerId() ^ 1]);
+            IncrementGameStat(GAME_STAT_NUM_UNION_ROOM_BATTLES);
+            ResetBlockReceivedFlags();
+            gTasks[taskId].data[0]++;
+        }
+        break;
+    case 2:
+        memcpy(gBlockSendBuffer, gSaveBlock1Ptr->mail, sizeof(struct Mail) * PARTY_SIZE + 4);
+        if (SendBlock(0, gBlockSendBuffer, sizeof(struct Mail) * PARTY_SIZE + 4))
+            gTasks[taskId].data[0]++;
+        break;
+    case 3:
+        if (GetBlockReceivedStatus() == 3)
+        {
+            memcpy(gTradeMail, gBlockRecvBuffer[GetMultiplayerId() ^ 1], sizeof(struct Mail) * PARTY_SIZE);
+            ResetBlockReceivedFlags();
+            gSelectedTradeMonPositions[TRADE_PLAYER] = monId;
+            gSelectedTradeMonPositions[TRADE_PARTNER] = PARTY_SIZE;
+            gMain.savedCallback = CB2_ReturnToField;
+            SetMainCallback2(CB2_LinkTrade);
+            ResetUnionRoomTrade(&sUnionRoomTrade);
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
