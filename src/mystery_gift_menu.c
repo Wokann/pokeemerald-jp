@@ -39,6 +39,7 @@ extern const u8 sText_WasThrownAwayWonderCard[];
 extern const u8 sText_WasThrownAwayWonderNews[];
 extern const u8 sText_SavingGame1[];
 extern const u8 sText_SavingGame2[];
+extern const u32 sTextboxBorder_Gfx[];
 extern const struct ListMenuTemplate sListMenuTemplate_ThreeOptions;
 extern const struct ListMenuItem sListMenuItems_CardsOrNews[];
 extern const struct ListMenuItem sListMenuItems_WirelessOrFriend[];
@@ -538,4 +539,14 @@ bool32 mevent_save_game(u8 *state)
         return TRUE;
     }
     return FALSE;
+}
+
+u16 GetMysteryGiftBaseBlock(void)
+{
+    return 0x1A9;
+}
+
+void bgid_upload_textbox_1(u8 bgId)
+{
+    DecompressAndLoadBgGfxUsingHeap(bgId, sTextboxBorder_Gfx, 0x100, 0, 0);
 }

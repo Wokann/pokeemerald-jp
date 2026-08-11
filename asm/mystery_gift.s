@@ -1234,33 +1234,3 @@ _0801931A:
 	.align 2, 0
 _08019324: .4byte 0x08018139
 	thumb_func_end task00_mystery_gift
-
-	thumb_func_start GetMysteryGiftBaseBlock
-GetMysteryGiftBaseBlock: @ 0x08019328
-	@ From src/mystery_gift_menu.c
-	ldr	r0, .LGetMysteryGiftBaseBlock
-	bx	lr
-.LGetMysteryGiftBaseBlockPad:
-	.align	2, 0
-.LGetMysteryGiftBaseBlock:
-	.word	0x000001A9
-	thumb_func_end GetMysteryGiftBaseBlock
-
-	thumb_func_start bgid_upload_textbox_1
-bgid_upload_textbox_1: @ 0x08019330
-	push {lr}
-	sub sp, #4
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r1, _0801934C
-	movs r2, #0x80
-	lsls r2, r2, #1
-	movs r3, #0
-	str r3, [sp]
-	bl DecompressAndLoadBgGfxUsingHeap
-	add sp, #4
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0801934C: .4byte 0x082C2474
-	thumb_func_end bgid_upload_textbox_1

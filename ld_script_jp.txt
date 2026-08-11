@@ -1021,6 +1021,7 @@ sText_EggTrade = ABSOLUTE(0x082C19AC);
 sBGTemplates = ABSOLUTE(0x082C24A4);
 sMainWindows = ABSOLUTE(0x082C24B4);
 sTextboxBorder_Pal = ABSOLUTE(0x082C2454);
+sTextboxBorder_Gfx = ABSOLUTE(0x082C2474);
 sTextColors_Header = ABSOLUTE(0x082C2B64);
 gText_MysteryGift = ABSOLUTE(0x082C2B44);
 gText_PickOKExit = ABSOLUTE(0x082C2B50);
@@ -1618,6 +1619,8 @@ SECTIONS {
         asm/mystery_gift_3.o(.text);
         src/mystery_gift_menu.o(.text.mevent_save_game);
         asm/mystery_gift.o(.text);
+        src/mystery_gift_menu.o(.text.GetMysteryGiftBaseBlock);
+        src/mystery_gift_menu.o(.text.bgid_upload_textbox_1);
         src/union_room_player_avatar.o(.text);
         asm/union_room_battle.o(.text);
         asm/mevent2.o(.text);
