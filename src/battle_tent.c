@@ -73,41 +73,13 @@ extern const u16 sSlateportTentRewards[1];
 // code
 // Kept as naked asm with the 2-byte placeholder: agbcc would place the
 // literal pool inside the function and shift the module layout.
-#ifndef NONMATCHING
-__attribute__((naked)) void CallVerdanturfTentFunction(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "ldr r1, _081B966C\n\t"
-            "ldr r0, _081B9670\n\t"
-            "ldrh r0, [r0]\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r0}\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) void sub_081B9668(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081B966C: .4byte sVerdanturfTentFuncs\n\t"
-            "_081B9670: .4byte gSpecialVar_0x8004\n\t"
-            ".syntax divided");
-}
-
-#else
-// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
 void CallVerdanturfTentFunction(void)
 {
     sVerdanturfTentFuncs[gSpecialVar_0x8004]();
 }
-#endif
+
+// JP-only alias: the shared bx r0 tail (and literal pool) is labeled sub_081B9668.
+__asm__(".set sub_081B9668, CallVerdanturfTentFunction + 0x14");
 
 static void InitVerdanturfTentChallenge(void)
 {
@@ -166,40 +138,13 @@ static void GiveVerdanturfTentPrize(void)
     }
 }
 
-#ifndef NONMATCHING
-__attribute__((naked)) void CallFallarborTentFunction(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "ldr r1, _081B9838\n\t"
-            "ldr r0, _081B983C\n\t"
-            "ldrh r0, [r0]\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r0}\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) void sub_081B9834(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081B9838: .4byte sFallarborTentFuncs\n\t"
-            "_081B983C: .4byte gSpecialVar_0x8004\n\t"
-            ".syntax divided");
-}
-
-#else
 void CallFallarborTentFunction(void)
 {
     sFallarborTentFuncs[gSpecialVar_0x8004]();
 }
-#endif
+
+// JP-only alias: the shared bx r0 tail (and literal pool) is labeled sub_081B9834.
+__asm__(".set sub_081B9834, CallFallarborTentFunction + 0x14");
 
 static void InitFallarborTentChallenge(void)
 {
@@ -251,40 +196,13 @@ static void BufferFallarborTentTrainerName(void)
     GetFrontierTrainerName(gStringVar1, gTrainerBattleOpponent_A);
 }
 
-#ifndef NONMATCHING
-__attribute__((naked)) void CallSlateportTentFunction(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "ldr r1, _081B99C0\n\t"
-            "ldr r0, _081B99C4\n\t"
-            "ldrh r0, [r0]\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r0}\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) void sub_081B99BC(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081B99C0: .4byte sSlateportTentFuncs\n\t"
-            "_081B99C4: .4byte gSpecialVar_0x8004\n\t"
-            ".syntax divided");
-}
-
-#else
 void CallSlateportTentFunction(void)
 {
     sSlateportTentFuncs[gSpecialVar_0x8004]();
 }
-#endif
+
+// JP-only alias: the shared bx r0 tail (and literal pool) is labeled sub_081B99BC.
+__asm__(".set sub_081B99BC, CallSlateportTentFunction + 0x14");
 
 static void InitSlateportTentChallenge(void)
 {
