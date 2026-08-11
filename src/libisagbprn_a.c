@@ -25,6 +25,9 @@ struct AGBPrintStruct
 // JP 0x08295600: kept as asm (agbcc -O0 register allocation differs from the
 // official library build: it uses r0-r3 for the clearing temps, the JP ROM
 // uses r4 and a different pPrint reload register).
+#ifndef NONMATCHING
+// Verified: the official -O0 AGBPrintInit spills locals and evaluates in an order
+// agbcc -O0 cannot reproduce, so the byte-exact naked asm stays the default.
 __attribute__((naked)) void AGBPrintInit(void)
 {
     __asm__(".syntax unified\n\t"
@@ -97,6 +100,22 @@ __attribute__((naked)) void AGBPrintInit(void)
             "_08295684: .4byte AGB_PRINT_PROTECT_ADDR\n\t"
             ".syntax divided\n");
 }
+#else
+void AGBPrintInit(void)
+{
+    volatile struct AGBPrintStruct *pPrint = (struct AGBPrintStruct *)AGB_PRINT_STRUCT_ADDR;
+    vu16 *pWSCNT = &REG_WAITCNT;
+    u16 *pProtect = (u16 *)AGB_PRINT_PROTECT_ADDR;
+    u16 nOldWSCNT = *pWSCNT;
+    *pWSCNT = WSCNT_DATA;
+    *pProtect = 0x20;
+    pPrint->m_nRequest = pPrint->m_nGet = pPrint->m_nPut = 0;
+    pPrint->m_nBank = 0xFD;
+    *pProtect = 0;
+    *pWSCNT = nOldWSCNT;
+}
+#endif
+
 
 void AGBPutcInternal(const char cChr)
 {
