@@ -13,6 +13,7 @@
 #include "move_relearner.h"
 #include "palette.h"
 #include "player_pc.h"
+#include "pokemon.h"
 #include "pokemon_summary_screen.h"
 #include "pokemon_storage_system.h"
 #include "scanline_effect.h"
@@ -46,6 +47,7 @@ extern const u8 gText_MoveRelearnerPower[];
 extern const u8 gText_MoveRelearnerAccuracy[];
 extern const u8 gText_MoveRelearnerAppeal[];
 extern const u8 gText_MoveRelearnerJam[];
+extern const u8 gUnknown_85E7FFC[]; // JP inline move-description table (0x38-byte entries)
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
 extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
@@ -978,242 +980,55 @@ u8 LoadMoveRelearnerMovesList(const struct ListMenuItem *items, u16 numChoices)
 // JP 0x081D200C: the JP build merges the cursor SE, the battle move
 // description and the contest move description into one callback that
 // redraws both windows with FillWindowPixelRect. Kept as asm.
-__attribute__((naked)) void sub_081D200C(u32 chosenMove, bool8 onInit)
+void sub_081D200C(u32 chosenMove, bool8 onInit)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "sub sp, #0x14\n\t"
-            "adds r7, r0, #0\n\t"
-            "lsls r1, r1, #0x18\n\t"
-            "lsrs r1, r1, #0x18\n\t"
-            "cmp r1, #1\n\t"
-            "beq _081D2024\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "_081D2024:\n\t"
-            "movs r6, #0x20\n\t"
-            "str r6, [sp]\n\t"
-            "movs r4, #0x10\n\t"
-            "str r4, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0x20\n\t"
-            "movs r3, #0x1a\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "movs r5, #0x18\n\t"
-            "str r5, [sp]\n\t"
-            "str r4, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0x78\n\t"
-            "movs r3, #0x1a\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "str r4, [sp]\n\t"
-            "str r4, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0x20\n\t"
-            "movs r3, #0x2a\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "str r5, [sp]\n\t"
-            "str r4, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0x78\n\t"
-            "movs r3, #0x2a\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "movs r5, #0x90\n\t"
-            "str r5, [sp]\n\t"
-            "str r6, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0x42\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "movs r0, #0x28\n\t"
-            "str r0, [sp]\n\t"
-            "str r4, [sp, #4]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0x20\n\t"
-            "movs r3, #0x1a\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "str r5, [sp]\n\t"
-            "str r6, [sp, #4]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0x42\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "movs r0, #2\n\t"
-            "rsbs r0, r0, #0\n\t"
-            "cmp r7, r0\n\t"
-            "bne _081D20B8\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "b _081D21E4\n\t"
-            "_081D20B8:\n\t"
-            "ldr r1, _081D20F4\n\t"
-            "lsls r4, r7, #1\n\t"
-            "adds r0, r4, r7\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r5, r0, r1\n\t"
-            "ldrb r0, [r5, #2]\n\t"
-            "lsls r2, r0, #2\n\t"
-            "adds r2, r2, r0\n\t"
-            "ldr r0, _081D20F8\n\t"
-            "adds r2, r2, r0\n\t"
-            "movs r0, #0x1a\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0xff\n\t"
-            "str r0, [sp, #4]\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x20\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r5, #1]\n\t"
-            "adds r6, r4, #0\n\t"
-            "cmp r0, #1\n\t"
-            "bhi _081D2100\n\t"
-            "ldr r1, _081D20FC\n\t"
-            "add r0, sp, #0xc\n\t"
-            "bl StringCopy\n\t"
-            "b _081D210C\n\t"
-            ".align 2, 0\n\t"
-            "_081D20F4: .4byte 0x082ED220\n\t"
-            "_081D20F8: .4byte gTypeNames\n\t"
-            "_081D20FC: .4byte 0x085C9406\n\t"
-            "_081D2100:\n\t"
-            "ldrb r1, [r5, #1]\n\t"
-            "add r0, sp, #0xc\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "_081D210C:\n\t"
-            "movs r0, #0x1a\n\t"
-            "str r0, [sp]\n\t"
-            "movs r5, #0xff\n\t"
-            "str r5, [sp, #4]\n\t"
-            "movs r4, #0\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "add r2, sp, #0xc\n\t"
-            "movs r3, #0x78\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r1, _081D215C\n\t"
-            "adds r0, r6, r7\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r6, r0, r1\n\t"
-            "ldrb r1, [r6, #4]\n\t"
-            "add r0, sp, #0xc\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #2\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "movs r0, #0x2a\n\t"
-            "str r0, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "add r2, sp, #0xc\n\t"
-            "movs r3, #0x20\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r6, #3]\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081D2164\n\t"
-            "ldr r1, _081D2160\n\t"
-            "add r0, sp, #0xc\n\t"
-            "bl StringCopy\n\t"
-            "b _081D2170\n\t"
-            ".align 2, 0\n\t"
-            "_081D215C: .4byte 0x082ED220\n\t"
-            "_081D2160: .4byte 0x085C9406\n\t"
-            "_081D2164:\n\t"
-            "ldrb r1, [r6, #3]\n\t"
-            "add r0, sp, #0xc\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "_081D2170:\n\t"
-            "movs r0, #0x2a\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0xff\n\t"
-            "mov r8, r0\n\t"
-            "str r0, [sp, #4]\n\t"
-            "movs r5, #0\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "add r2, sp, #0xc\n\t"
-            "movs r3, #0x78\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "lsls r4, r7, #3\n\t"
-            "subs r2, r4, r7\n\t"
-            "lsls r2, r2, #3\n\t"
-            "ldr r0, _081D21F8\n\t"
-            "adds r2, r2, r0\n\t"
-            "movs r6, #0x42\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r0, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r1, _081D21FC\n\t"
-            "ldr r0, _081D2200\n\t"
-            "adds r4, r4, r0\n\t"
-            "ldrb r0, [r4, #1]\n\t"
-            "lsls r0, r0, #0x1d\n\t"
-            "lsrs r0, r0, #0x1b\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r2, [r0]\n\t"
-            "movs r0, #0x1a\n\t"
-            "str r0, [sp]\n\t"
-            "mov r0, r8\n\t"
-            "str r0, [sp, #4]\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0x20\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldr r1, _081D2204\n\t"
-            "ldrb r0, [r4]\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r2, [r0]\n\t"
-            "str r6, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "_081D21E4:\n\t"
-            "adds r0, r7, #0\n\t"
-            "bl MoveRelearnerShowHideHearts\n\t"
-            "add sp, #0x14\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D21F8: .4byte 0x085E7FFC\n\t"
-            "_081D21FC: .4byte 0x08560CAC\n\t"
-            "_081D2200: .4byte gContestMoves\n\t"
-            "_081D2204: .4byte 0x08560BB4\n\t"
-            ".syntax divided\n");
+    u8 buffer[8];
+
+    if (onInit != TRUE)
+        PlaySE(SE_SELECT);
+
+    FillWindowPixelRect(RELEARNERWIN_DESC_BATTLE, PIXEL_FILL(1), 0x20, 0x1A, 0x20, 0x10);
+    FillWindowPixelRect(RELEARNERWIN_DESC_BATTLE, PIXEL_FILL(1), 0x78, 0x1A, 0x18, 0x10);
+    FillWindowPixelRect(RELEARNERWIN_DESC_BATTLE, PIXEL_FILL(1), 0x20, 0x2A, 0x10, 0x10);
+    FillWindowPixelRect(RELEARNERWIN_DESC_BATTLE, PIXEL_FILL(1), 0x78, 0x2A, 0x18, 0x10);
+    FillWindowPixelRect(RELEARNERWIN_DESC_BATTLE, PIXEL_FILL(1), 0, 0x42, 0x90, 0x20);
+    FillWindowPixelRect(RELEARNERWIN_DESC_CONTEST, PIXEL_FILL(1), 0x20, 0x1A, 0x28, 0x10);
+    FillWindowPixelRect(RELEARNERWIN_DESC_CONTEST, PIXEL_FILL(1), 0, 0x42, 0x90, 0x20);
+
+    if (chosenMove == LIST_CANCEL)
+    {
+        CopyWindowToVram(RELEARNERWIN_DESC_BATTLE, COPYWIN_GFX);
+        CopyWindowToVram(RELEARNERWIN_DESC_CONTEST, COPYWIN_GFX);
+    }
+    else
+    {
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, gTypeNames[gBattleMoves[chosenMove].type], 0x20, 0x1A, TEXT_SKIP_DRAW, NULL);
+
+        if (gBattleMoves[chosenMove].power < 2)
+            StringCopy(buffer, gText_ThreeDashes);
+        else
+            ConvertIntToDecimalStringN(buffer, gBattleMoves[chosenMove].power, STR_CONV_MODE_LEFT_ALIGN, 3);
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, buffer, 0x78, 0x1A, TEXT_SKIP_DRAW, NULL);
+
+        ConvertIntToDecimalStringN(buffer, gBattleMoves[chosenMove].pp, STR_CONV_MODE_LEFT_ALIGN, 2);
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, buffer, 0x20, 0x2A, TEXT_SKIP_DRAW, NULL);
+
+        if (gBattleMoves[chosenMove].accuracy == 0)
+            StringCopy(buffer, gText_ThreeDashes);
+        else
+            ConvertIntToDecimalStringN(buffer, gBattleMoves[chosenMove].accuracy, STR_CONV_MODE_LEFT_ALIGN, 3);
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, buffer, 0x78, 0x2A, TEXT_SKIP_DRAW, NULL);
+
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, (const u8 *)gUnknown_85E7FFC + chosenMove * 56, 0, 0x42, 0, NULL);
+
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gContestMoveTypeTextPointers[gContestMoves[chosenMove].contestCategory], 0x20, 0x1A, TEXT_SKIP_DRAW, NULL);
+
+        AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, gContestEffectDescriptionPointers[gContestMoves[chosenMove].effect], 0, 0x42, 0, NULL);
+    }
+
+    MoveRelearnerShowHideHearts(chosenMove);
 }
+
 
 void MoveRelearnerPrintMessage(u8 *str)
 {

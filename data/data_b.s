@@ -2205,8 +2205,8 @@ gUnknown_82ED050: @ 0x82ED050
 gUnknown_82ED13C: @ 0x82ED13C
 	.incbin "baserom_jp.gba", 0x2ed13c, 0xe4
 
-	.globl gUnknown_82ED220
-gUnknown_82ED220: @ 0x82ED220
+	.globl gBattleMoves
+gBattleMoves: @ 0x82ED220
 	.incbin "baserom_jp.gba", 0x2ed220, 0x4
 
 	.globl gUnknown_82ED224
@@ -7684,12 +7684,12 @@ gUnknown_8560B7C: @ 0x8560B7C
 gUnknown_8560B94: @ 0x8560B94
 	.incbin "baserom_jp.gba", 0x560b94, 0x20
 
-	.globl gUnknown_8560BB4
-gUnknown_8560BB4: @ 0x8560BB4
+	.globl gContestEffectDescriptionPointers
+gContestEffectDescriptionPointers: @ 0x8560BB4
 	.incbin "baserom_jp.gba", 0x560bb4, 0xf8
 
-	.globl gUnknown_8560CAC
-gUnknown_8560CAC: @ 0x8560CAC
+	.globl gContestMoveTypeTextPointers
+gContestMoveTypeTextPointers: @ 0x8560CAC
 	.incbin "baserom_jp.gba", 0x560cac, 0x48
 
 	.globl gUnknown_8560CF4
@@ -14128,8 +14128,8 @@ gUnknown_85C9401: @ 0x85C9401
 gUnknown_85C9403: @ 0x85C9403
 	.string "ーー$"
 
-	.globl gUnknown_85C9406
-gUnknown_85C9406: @ 0x85C9406
+	.globl gText_ThreeDashes
+gText_ThreeDashes: @ 0x85C9406
 	.string "ーーー$"
 
 	.globl gUnknown_85C940A
