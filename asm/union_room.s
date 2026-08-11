@@ -3,319 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start Task_Idle
-Task_Idle: @ 0x08011FD4
-	bx lr
-	.align 2, 0
-	thumb_func_end Task_Idle
-
-	thumb_func_start sub_08011FD8
-sub_08011FD8: @ 0x08011FD8
-	push {r4, r5, r6, lr}
-	sub sp, #8
-	adds r4, r1, #0
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r2, r2, #0x18
-	lsrs r5, r2, #0x18
-	adds r0, r6, #0
-	movs r1, #0x11
-	bl FillWindowPixelBuffer
-	lsls r4, r4, #8
-	movs r0, #0x90
-	lsls r0, r0, #6
-	cmp r4, r0
-	beq _08012074
-	cmp r4, r0
-	bgt _08012012
-	movs r0, #0x80
-	lsls r0, r0, #2
-	cmp r4, r0
-	beq _08012024
-	movs r0, #0x80
-	lsls r0, r0, #3
-	cmp r4, r0
-	beq _08012030
-	b _08012092
-_08012012:
-	movs r0, #0x94
-	lsls r0, r0, #6
-	cmp r4, r0
-	beq _08012040
-	movs r0, #0xd4
-	lsls r0, r0, #6
-	cmp r4, r0
-	beq _08012050
-	b _08012092
-_08012024:
-	ldr r1, _0801202C
-	subs r0, r5, #1
-	lsls r0, r0, #2
-	b _08012058
-	.align 2, 0
-_0801202C: .4byte 0x082C0840
-_08012030:
-	ldr r1, _0801203C
-	subs r0, r5, #1
-	lsls r0, r0, #2
-	adds r1, #0x14
-	b _08012058
-	.align 2, 0
-_0801203C: .4byte 0x082C0840
-_08012040:
-	ldr r1, _0801204C
-	subs r0, r5, #1
-	lsls r0, r0, #2
-	adds r1, #0x28
-	b _08012058
-	.align 2, 0
-_0801204C: .4byte 0x082C0840
-_08012050:
-	ldr r1, _08012070
-	subs r0, r5, #1
-	lsls r0, r0, #2
-	adds r1, #0x3c
-_08012058:
-	adds r0, r0, r1
-	ldr r2, [r0]
-	movs r0, #3
-	str r0, [sp]
-	movs r0, #0
-	str r0, [sp, #4]
-	adds r0, r6, #0
-	movs r1, #1
-	movs r3, #2
-	bl sub_08016EA4
-	b _08012092
-	.align 2, 0
-_08012070: .4byte 0x082C0840
-_08012074:
-	ldr r1, _080120A4
-	subs r0, r5, #1
-	lsls r0, r0, #2
-	adds r1, #0x50
-	adds r0, r0, r1
-	ldr r2, [r0]
-	movs r0, #3
-	str r0, [sp]
-	movs r0, #0
-	str r0, [sp, #4]
-	adds r0, r6, #0
-	movs r1, #1
-	movs r3, #2
-	bl sub_08016EA4
-_08012092:
-	adds r0, r6, #0
-	movs r1, #2
-	bl CopyWindowToVram
-	add sp, #8
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080120A4: .4byte 0x082C0840
-	thumb_func_end sub_08011FD8
-
-	thumb_func_start sub_080120A8
-sub_080120A8: @ 0x080120A8
-	push {r4, r5, r6, lr}
-	mov r6, sb
-	mov r5, r8
-	push {r5, r6}
-	sub sp, #0x28
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	ldr r0, _0801212C
-	mov r8, r0
-	ldr r1, [r0]
-	add r0, sp, #8
-	movs r2, #5
-	bl StringCopyN_Multibyte
-	movs r0, #3
-	str r0, [sp]
-	movs r1, #0
-	mov sb, r1
-	str r1, [sp, #4]
-	adds r0, r4, #0
-	movs r1, #1
-	add r2, sp, #8
-	movs r3, #2
-	bl sub_08016EA4
-	add r5, sp, #0x1c
-	ldr r1, _08012130
-	adds r0, r5, #0
-	bl StringCopy
-	add r6, sp, #0x10
-	mov r1, r8
-	ldr r0, [r1]
-	adds r0, #0xa
-	bl ReadAsU16
-	adds r1, r0, #0
-	lsls r1, r1, #0x10
-	lsrs r1, r1, #0x10
-	adds r0, r6, #0
-	movs r2, #2
-	movs r3, #5
-	bl ConvertIntToDecimalStringN
-	adds r0, r5, #0
-	adds r1, r6, #0
-	bl StringAppend
-	movs r0, #0x10
-	str r0, [sp]
-	mov r0, sb
-	str r0, [sp, #4]
-	adds r0, r4, #0
-	movs r1, #1
-	adds r2, r5, #0
-	movs r3, #2
-	bl sub_08016EA4
-	add sp, #0x28
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0801212C: .4byte 0x03005AF0
-_08012130: .4byte 0x082C0648
-	thumb_func_end sub_080120A8
-
-	thumb_func_start sub_08012134
-sub_08012134: @ 0x08012134
-	push {lr}
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	subs r0, r1, #1
-	cmp r0, #0x1b
-	bhi _080121C8
-	lsls r0, r0, #2
-	ldr r1, _0801214C
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_0801214C: .4byte 0x08012150
-_08012150: @ jump table
-	.4byte _080121C0 @ case 0
-	.4byte _080121C0 @ case 1
-	.4byte _080121C0 @ case 2
-	.4byte _080121C0 @ case 3
-	.4byte _080121C8 @ case 4
-	.4byte _080121C0 @ case 5
-	.4byte _080121C0 @ case 6
-	.4byte _080121C8 @ case 7
-	.4byte _080121C0 @ case 8
-	.4byte _080121C0 @ case 9
-	.4byte _080121C0 @ case 10
-	.4byte _080121C8 @ case 11
-	.4byte _080121C8 @ case 12
-	.4byte _080121C0 @ case 13
-	.4byte _080121C0 @ case 14
-	.4byte _080121C0 @ case 15
-	.4byte _080121C8 @ case 16
-	.4byte _080121C8 @ case 17
-	.4byte _080121C8 @ case 18
-	.4byte _080121C8 @ case 19
-	.4byte _080121C8 @ case 20
-	.4byte _080121C8 @ case 21
-	.4byte _080121C0 @ case 22
-	.4byte _080121C0 @ case 23
-	.4byte _080121C0 @ case 24
-	.4byte _080121C0 @ case 25
-	.4byte _080121C0 @ case 26
-	.4byte _080121C0 @ case 27
-_080121C0:
-	ldr r0, _080121CC
-	ldr r1, _080121D0
-	bl StringExpandPlaceholders
-_080121C8:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080121CC: .4byte 0x02021C7C
-_080121D0: .4byte 0x082C069C
-	thumb_func_end sub_08012134
-
-	thumb_func_start sub_080121D4
-sub_080121D4: @ 0x080121D4
-	push {lr}
-	subs r0, #9
-	cmp r0, #0x12
-	bhi _0801223C
-	lsls r0, r0, #2
-	ldr r1, _080121E8
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_080121E8: .4byte 0x080121EC
-_080121EC: @ jump table
-	.4byte _08012238 @ case 0
-	.4byte _08012238 @ case 1
-	.4byte _08012238 @ case 2
-	.4byte _0801223C @ case 3
-	.4byte _0801223C @ case 4
-	.4byte _0801223C @ case 5
-	.4byte _08012238 @ case 6
-	.4byte _08012238 @ case 7
-	.4byte _0801223C @ case 8
-	.4byte _0801223C @ case 9
-	.4byte _0801223C @ case 10
-	.4byte _0801223C @ case 11
-	.4byte _0801223C @ case 12
-	.4byte _0801223C @ case 13
-	.4byte _08012238 @ case 14
-	.4byte _08012238 @ case 15
-	.4byte _08012238 @ case 16
-	.4byte _08012238 @ case 17
-	.4byte _08012238 @ case 18
-_08012238:
-	movs r0, #1
-	b _0801223E
-_0801223C:
-	movs r0, #0
-_0801223E:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_080121D4
-
-	thumb_func_start BerryBlenderLinkBecomeLeader
-BerryBlenderLinkBecomeLeader: @ 0x08012244
-	push {lr}
-	ldr r0, _08012274
-	movs r1, #0
-	bl CreateTask
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _08012278
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	ldr r0, _0801227C
-	adds r1, r1, r0
-	str r1, [r2]
-	ldr r0, _08012280
-	str r1, [r0]
-	movs r0, #0
-	strb r0, [r1, #0xc]
-	strb r0, [r1, #0xd]
-	ldr r1, _08012284
-	strh r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08012274: .4byte 0x08012289
-_08012278: .4byte 0x020228E4
-_0801227C: .4byte 0x03005B68
-_08012280: .4byte 0x03000DA0
-_08012284: .4byte 0x02037290
-	thumb_func_end BerryBlenderLinkBecomeLeader
-
 	thumb_func_start sub_08012288
 sub_08012288: @ 0x08012288
 	push {r4, r5, r6, r7, lr}
@@ -592,13 +279,13 @@ _0801252C: .4byte 0x082C069C
 _08012530:
 	ldr r0, _0801254C
 	ldrb r1, [r4]
-	bl sub_08012134
+	bl GetAwaitingCommunicationText
 _08012538:
 	ldrb r0, [r5, #0x11]
 	ldr r1, _08012550
 	ldrb r1, [r1]
 	ldrb r2, [r5, #0x13]
-	bl sub_08011FD8
+	bl PrintNumPlayersWaitingForMsg
 	movs r0, #5
 	strb r0, [r5, #0xc]
 	b _08012A54
@@ -938,7 +625,7 @@ _080127E4:
 	ldr r1, _08012804
 	ldrb r1, [r1]
 	ldrb r2, [r5, #0x13]
-	bl sub_08011FD8
+	bl PrintNumPlayersWaitingForMsg
 	b _08012848
 	.align 2, 0
 _080127F8: .4byte 0x02021C40
@@ -1229,7 +916,7 @@ _08012A26:
 	beq _08012A54
 	ldr r0, _08012A60
 	ldrb r0, [r0]
-	bl sub_080121D4
+	bl IsActivityWithVariableGroupSize
 	cmp r0, #0
 	beq _08012A3E
 	bl GetOtherPlayersInfoFlags
@@ -2083,7 +1770,7 @@ _08013110:
 	ldrb r0, [r6, #0xd]
 	bl PutWindowTilemap
 	ldrb r0, [r6, #0xd]
-	bl sub_080120A8
+	bl PrintPlayerNameAndIdOnWindow
 	ldrb r0, [r6, #0xd]
 	movs r1, #2
 	bl CopyWindowToVram
@@ -4476,7 +4163,7 @@ _080146C4:
 	bl StringCopy
 	ldr r0, _080146F0
 	ldrb r1, [r4]
-	bl sub_08012134
+	bl GetAwaitingCommunicationText
 	movs r0, #3
 	strb r0, [r5, #0xc]
 	b _080149FA
@@ -5022,7 +4709,7 @@ _08014AF0:
 	ldrb r0, [r7, #0xd]
 	bl PutWindowTilemap
 	ldrb r0, [r7, #0xd]
-	bl sub_080120A8
+	bl PrintPlayerNameAndIdOnWindow
 	ldrb r0, [r7, #0xd]
 	movs r1, #2
 	bl CopyWindowToVram

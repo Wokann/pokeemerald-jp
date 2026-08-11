@@ -934,6 +934,12 @@ sASCII_30Spaces = ABSOLUTE(0x082C05A8);
 sASCII_15Spaces = ABSOLUTE(0x082C05C7);
 sASCII_8Spaces = ABSOLUTE(0x082C05D7);
 sASCII_NowSlot = ABSOLUTE(0x082C05E4);
+sText_ID = ABSOLUTE(0x082C0648);
+sText_AwaitingCommunication = ABSOLUTE(0x082C069C);
+sPlayersNeededOrModeTexts = ABSOLUTE(0x082C0840);
+BerryBlenderLinkBecomeLeader = TryBecomeLinkLeader;
+PrintUnionRoomText = sub_08016EA4;
+Task_TryBecomeLinkLeader = sub_08012288;
 Debug_PrintString = nullsub_13;
 Debug_PrintNum = nullsub_5;
 
@@ -1299,6 +1305,12 @@ SECTIONS {
         src/link_rfu_2.o(.text.Debug_PrintStatus);
         src/link_rfu_2.o(.text.GetRfuSendQueueLength);
         src/link_rfu_2.o(.text.GetRfuRecvQueueLength);
+        src/union_room.o(.text.Task_Idle);
+        src/union_room.o(.text.PrintNumPlayersWaitingForMsg);
+        src/union_room.o(.text.PrintPlayerNameAndIdOnWindow);
+        src/union_room.o(.text.GetAwaitingCommunicationText);
+        src/union_room.o(.text.IsActivityWithVariableGroupSize);
+        src/union_room.o(.text.TryBecomeLinkLeader);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
         src/union_room_player_avatar.o(.text);
