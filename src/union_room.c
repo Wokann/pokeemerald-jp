@@ -355,6 +355,7 @@ bool32 UR_PrintFieldMessage(const u8 *str);
 extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 static void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
+static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y);
 static void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
@@ -4122,6 +4123,10 @@ static u32 GetResponseIdx_InviteToURoomActivity(s32 activity)
 static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player)
 {
     return PlayerHasMetTrainerBefore(ReadAsU16(player->rfu.data.compatibility.playerTrainerId), player->rfu.name);
+}
+
+static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
+{
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
