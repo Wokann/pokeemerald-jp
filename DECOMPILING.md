@@ -85,11 +85,13 @@ therefore exactly three edit points per conversion:
 
    becomes:
 
-	   build/src/link.o(.text.ProcessRecvCmds);
+	   src/link.o(.text.ProcessRecvCmds);
 
    (or list several `.text.<function>` sections if the asm file sits
    between other objects).  Then remove the asm file from
-   `$(ASFILE)`/ld_script.
+   `$(ASFILE)`/ld_script.  Paths in ld_script are relative to `build/`
+   (the linker runs with `cd build`), so asm objects are written as
+   `asm/<file>.o` and C objects as `src/<file>.o` - no `build/` prefix.
 2. **`UNPORTED_SRCS` in the Makefile**: if a US `src/` file is copied for
    reference but its functions are not all converted yet, list it here so
    the wildcard does not compile it (that would duplicate symbols with

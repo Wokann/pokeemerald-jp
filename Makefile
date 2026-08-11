@@ -15,6 +15,7 @@ ASFLAGS := -mcpu=arm7tdmi
 CFLAGS := -mthumb-interwork -O2 -fhex-asm
 
 ASFILE := $(wildcard asm/*.s)
+AS_OBJS := $(patsubst asm/%.s,build/asm/%.o,$(ASFILE))
 # Modules fully converted and wired into the build.  Add a module here
 # once every function in its asm file has been converted to C (or the
 # asm file has been split so the C functions fill a contiguous ROM
@@ -105,7 +106,9 @@ $(C_BUILDDIR)/battle_interface.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffu
 # functions (ProcessRecvCmds onward) stay in asm/link_mid.s.
 $(C_BUILDDIR)/link.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
-OBJFILE := $(ASFILE:.s=.o) $(C_OBJECTS) data/event_scripts.o data/data.o data/data_rest.o data/multiboot_ereader.o data/multiboot_berry_glitch_fix.o
+DATA_OBJS := build/data/event_scripts.o build/data/data.o build/data/data_rest.o build/data/multiboot_ereader.o build/data/multiboot_berry_glitch_fix.o
+OBJFILE := $(AS_OBJS) $(C_OBJECTS) $(DATA_OBJS)
+OBJFILE_REL := $(patsubst build/%,%,$(OBJFILE))
 NAME := pokeemerald_jp
 ROM := $(NAME).gba
 ELF := $(NAME).elf
@@ -120,16 +123,17 @@ compare: $(ROM)
 	$(SHA1SUM) rom_jp.sha1
 
 clean:
-	rm -rf build $(ROM) $(ELF) $(OBJFILE)
+	rm -rf build $(ROM) $(ELF)
 
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
 
 $(ELF): %.elf: $(OBJFILE) ld_script_jp.txt sym_ewram_jp.txt sym_iwram_jp.txt
-	$(LD) -T ld_script_jp.txt -Map $*.map -o $@ $(OBJFILE) -L tools/agbcc/lib -lgcc
+	cd build && ../$(LD) -T ../ld_script_jp.txt -Map ../$*.map -o ../$@ $(OBJFILE_REL) -L ../tools/agbcc/lib -lgcc
 	$(GBAFIX) -t"$(TITLE)" -c$(GAMECODE) -m01 --silent $@
 
-$(ASFILE:.s=.o): %.o: %.s
+$(AS_OBJS): build/asm/%.o: asm/%.s
+	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(C_BUILDDIR)/%.o: src/%.c
@@ -148,19 +152,24 @@ $(C_BUILDDIR)/link.o: src/link.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
-data/event_scripts.o: data/event_scripts.s baserom_jp.gba
+build/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
+	@mkdir -p build/data
 	$(AS) $(ASFLAGS) -o $@ $<
 
-data/data.o: data/data.s charmap.txt baserom_jp.gba
+build/data/data.o: data/data.s charmap.txt baserom_jp.gba
+	@mkdir -p build/data
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-data/data_rest.o: data/data_rest.s baserom_jp.gba
+build/data/data_rest.o: data/data_rest.s baserom_jp.gba
+	@mkdir -p build/data
 	$(AS) $(ASFLAGS) -o $@ $<
 
-data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
+build/data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
+	@mkdir -p build/data
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-data/multiboot_berry_glitch_fix.o: data/multiboot_berry_glitch_fix.s data/mb_berry_fix.gba
+build/data/multiboot_berry_glitch_fix.o: data/multiboot_berry_glitch_fix.s data/mb_berry_fix.gba
+	@mkdir -p build/data
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(C_BUILDDIR)/libc/mprec.o: src/libc/mprec.c
