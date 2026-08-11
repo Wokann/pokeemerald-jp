@@ -314,7 +314,7 @@ extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *li
 extern bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
 extern u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *incomingParentList, struct RfuIncomingPlayerList *incomingChildList, u8 linkGroup);
 extern void UR_RunTextPrinters(void);
-extern u8 HandlePlayerListUpdate(void);
+static u8 HandlePlayerListUpdate(void);
 extern s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
 extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
 extern void HandleCancelActivity(bool32 setData);
@@ -343,6 +343,7 @@ extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct Rfu
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
+extern bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
 extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
 extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
@@ -3527,4 +3528,76 @@ bool16 BufferUnionRoomPlayerName(void)
     {
         return FALSE;
     }
+}
+
+static u8 HandlePlayerListUpdate(void)
+{
+    s32 i;
+    u8 j;
+    struct WirelessLink_URoom *data = sWirelessLinkMain.uRoom;
+    s32 retVal = PLIST_NONE;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (ArePlayersDifferent(&data->incomingParentList->players[i].rfu, &sUnionRoomPlayer_DummyRfu) == TRUE)
+        {
+            data->spawnPlayer->players[0].rfu = data->incomingParentList->players[i].rfu;
+            data->spawnPlayer->players[0].timeoutCounter = 0;
+            data->spawnPlayer->players[0].groupScheduledAnim = UNION_ROOM_SPAWN_IN;
+            data->spawnPlayer->players[0].newPlayerCountdown = 1;
+            return PLIST_CONTACTED;
+        }
+    }
+    for (j = 0; j < MAX_UNION_ROOM_LEADERS; j++)
+    {
+        if (data->playerList->players[j].groupScheduledAnim != UNION_ROOM_SPAWN_NONE)
+        {
+            i = GetNewIncomingPlayerId(&data->playerList->players[j], &data->incomingChildList->players[0]);
+            if (i != 0xFF)
+            {
+                if (data->playerList->players[j].groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+                {
+                    if (ArePlayerDataDifferent(&data->playerList->players[j].rfu, &data->incomingChildList->players[i].rfu))
+                    {
+                        data->playerList->players[j].rfu = data->incomingChildList->players[i].rfu;
+                        data->playerList->players[j].newPlayerCountdown = 64;
+                        retVal = PLIST_NEW_PLAYER;
+                    }
+                    else if (data->playerList->players[j].newPlayerCountdown != 0)
+                    {
+                        data->playerList->players[j].newPlayerCountdown--;
+                        if (data->playerList->players[j].newPlayerCountdown == 0)
+                            retVal = PLIST_RECENT_UPDATE;
+                    }
+                }
+                else
+                {
+                    data->playerList->players[j].groupScheduledAnim = UNION_ROOM_SPAWN_IN;
+                    data->playerList->players[j].newPlayerCountdown = 0;
+                    retVal = PLIST_RECENT_UPDATE;
+                }
+                data->playerList->players[j].timeoutCounter = 0;
+            }
+            else if (data->playerList->players[j].groupScheduledAnim != UNION_ROOM_SPAWN_OUT)
+            {
+                data->playerList->players[j].timeoutCounter++;
+                if (data->playerList->players[j].timeoutCounter >= 600)
+                {
+                    data->playerList->players[j].groupScheduledAnim = UNION_ROOM_SPAWN_OUT;
+                    retVal = PLIST_RECENT_UPDATE;
+                }
+            }
+            else if (data->playerList->players[j].groupScheduledAnim == UNION_ROOM_SPAWN_OUT)
+            {
+                data->playerList->players[j].timeoutCounter++;
+                if (data->playerList->players[j].timeoutCounter >= 900)
+                    ClearRfuPlayerList(&data->playerList->players[j], 1);
+            }
+        }
+    }
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+        if (TryAddIncomingPlayerToList(&data->playerList->players[0], &data->incomingChildList->players[i], MAX_UNION_ROOM_LEADERS) != 0xFF)
+            retVal = PLIST_NEW_PLAYER;
+
+    return retVal;
 }
