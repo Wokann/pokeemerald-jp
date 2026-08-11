@@ -40,6 +40,22 @@ extern const u8 sText_WasThrownAwayWonderNews[];
 extern const u8 sText_SavingGame1[];
 extern const u8 sText_SavingGame2[];
 extern const u32 sTextboxBorder_Gfx[];
+extern const u8 sJPText_MeventMsg0[];
+extern const u8 sJPText_MeventMsg1[];
+extern const u8 sJPText_MeventMsg2a[];
+extern const u8 sJPText_MeventMsg2b[];
+extern const u8 sJPText_MeventMsg3a[];
+extern const u8 sJPText_MeventMsg3b[];
+extern const u8 sJPText_MeventMsg4[];
+extern const u8 sJPText_MeventMsg5[];
+extern const u8 sJPText_MeventMsg6[];
+extern const u8 sJPText_MeventMsg7[];
+extern const u8 sJPText_MeventMsg8[];
+extern const u8 sJPText_MeventMsg9[];
+extern const u8 sJPText_MeventMsg10a[];
+extern const u8 sJPText_MeventMsg10b[];
+extern const u8 sJPText_MeventMsg11[];
+extern const u8 sJPText_MeventMsg12[];
 extern const struct ListMenuTemplate sListMenuTemplate_ThreeOptions;
 extern const struct ListMenuItem sListMenuItems_CardsOrNews[];
 extern const struct ListMenuItem sListMenuItems_WirelessOrFriend[];
@@ -549,4 +565,30 @@ u16 GetMysteryGiftBaseBlock(void)
 void bgid_upload_textbox_1(u8 bgId)
 {
     DecompressAndLoadBgGfxUsingHeap(bgId, sTextboxBorder_Gfx, 0x100, 0, 0);
+}
+
+const u8 *mevent_message(u32 *out, u8 param1, u8 param2, u32 msgId)
+{
+    const u8 *ret = NULL;
+
+    *out = 0;
+    switch (msgId)
+    {
+    case 0: *out = 0; ret = sJPText_MeventMsg0; break;
+    case 1: *out = 0; ret = sJPText_MeventMsg1; break;
+    case 2: *out = 1; ret = sJPText_MeventMsg2a; if (param2 == 0) ret = sJPText_MeventMsg2b; break;
+    case 3: *out = 1; ret = sJPText_MeventMsg3a; if (param2 == 0) ret = sJPText_MeventMsg3b; break;
+    case 4: *out = 1; ret = sJPText_MeventMsg4; break;
+    case 5: *out = 0; ret = sJPText_MeventMsg5; break;
+    case 6: *out = 0; ret = sJPText_MeventMsg6; break;
+    case 7: *out = 0; ret = sJPText_MeventMsg7; break;
+    case 8: *out = 0; ret = sJPText_MeventMsg8; break;
+    case 9: *out = 0; ret = sJPText_MeventMsg9; break;
+    case 10: *out = 0; ret = sJPText_MeventMsg10a; if (param1 == 0) ret = sJPText_MeventMsg10b; break;
+    case 11: *out = 0; ret = sJPText_MeventMsg11; break;
+    case 12: *out = 1; ret = sJPText_MeventMsg12; break;
+    case 13: *out = 1; break;
+    case 14: *out = 0; break;
+    }
+    return ret;
 }
