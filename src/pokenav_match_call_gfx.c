@@ -260,295 +260,27 @@ static u32 LoopedTask_OpenMatchCall(s32 state)
     }
 }
 
-#ifndef NONMATCHING
-// JP naked asm: agbcc cannot reproduce the JP register allocation for these
-// match-call list cursor/page tasks; byte-exact asm stays the default.
-__attribute__((naked)) u32 MatchCallListCursorDown(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #6\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CACF4\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CACCE\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CACD8\n\t"
-            "b _081CAD16\n\t"
-            "_081CACCE:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CACFC\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CAD08\n\t"
-            "b _081CAD16\n\t"
-            "_081CACD8:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CACF0\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CAD04\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAD04\n\t"
-            "b _081CAD16\n\t"
-            "_081CACF0:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CAD18\n\t"
-            "_081CACF4:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAD12\n\t"
-            "_081CACFC:\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r1, #0\n\t"
-            "bl PrintMatchCallLocation\n\t"
-            "_081CAD04:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CAD18\n\t"
-            "_081CAD08:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CAD16\n\t"
-            "_081CAD12:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CAD18\n\t"
-            "_081CAD16:\n\t"
-            "movs r0, #4\n\t"
-            "_081CAD18:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) u32 MatchCallListCursorUp(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #6\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CAD60\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CAD3A\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CAD44\n\t"
-            "b _081CAD82\n\t"
-            "_081CAD3A:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CAD68\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CAD74\n\t"
-            "b _081CAD82\n\t"
-            "_081CAD44:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CAD5C\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CAD70\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAD70\n\t"
-            "b _081CAD82\n\t"
-            "_081CAD5C:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CAD84\n\t"
-            "_081CAD60:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAD7E\n\t"
-            "_081CAD68:\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r1, #0\n\t"
-            "bl PrintMatchCallLocation\n\t"
-            "_081CAD70:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CAD84\n\t"
-            "_081CAD74:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CAD82\n\t"
-            "_081CAD7E:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CAD84\n\t"
-            "_081CAD82:\n\t"
-            "movs r0, #4\n\t"
-            "_081CAD84:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) u32 MatchCallListPageDown(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #6\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CADCC\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CADA6\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CADB0\n\t"
-            "b _081CADEE\n\t"
-            "_081CADA6:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CADD4\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CADE0\n\t"
-            "b _081CADEE\n\t"
-            "_081CADB0:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CADC8\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CADDC\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CADDC\n\t"
-            "b _081CADEE\n\t"
-            "_081CADC8:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CADF0\n\t"
-            "_081CADCC:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CADEA\n\t"
-            "_081CADD4:\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r1, #0\n\t"
-            "bl PrintMatchCallLocation\n\t"
-            "_081CADDC:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CADF0\n\t"
-            "_081CADE0:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CADEE\n\t"
-            "_081CADEA:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CADF0\n\t"
-            "_081CADEE:\n\t"
-            "movs r0, #4\n\t"
-            "_081CADF0:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
-}
-
-__attribute__((naked)) u32 MatchCallListPageUp(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #6\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CAE38\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CAE12\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CAE1C\n\t"
-            "b _081CAE5A\n\t"
-            "_081CAE12:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CAE40\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CAE4C\n\t"
-            "b _081CAE5A\n\t"
-            "_081CAE1C:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CAE34\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CAE48\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAE48\n\t"
-            "b _081CAE5A\n\t"
-            "_081CAE34:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CAE5C\n\t"
-            "_081CAE38:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CAE56\n\t"
-            "_081CAE40:\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r1, #0\n\t"
-            "bl PrintMatchCallLocation\n\t"
-            "_081CAE48:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CAE5C\n\t"
-            "_081CAE4C:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CAE5A\n\t"
-            "_081CAE56:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CAE5C\n\t"
-            "_081CAE5A:\n\t"
-            "movs r0, #4\n\t"
-            "_081CAE5C:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
-}
-#else
 static u32 MatchCallListCursorDown(s32 state)
 {
     struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
     switch (state)
     {
     case 0:
+        PlaySE(SE_SELECT);
         switch (PokenavList_MoveCursorDown())
         {
         case 0:
-            break;
+            return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
-            // fall through
         default:
             return LT_INC_AND_PAUSE;
         }
-        break;
     case 1:
         if (PokenavList_IsMoveWindowTaskActive())
             return LT_PAUSE;
-
-        PrintMatchCallLocation(gfx, 0);
-        return LT_INC_AND_PAUSE;
+        // fallthrough
     case 2:
         PrintMatchCallLocation(gfx, 0);
         return LT_INC_AND_PAUSE;
@@ -559,32 +291,28 @@ static u32 MatchCallListCursorDown(s32 state)
     }
     return LT_FINISH;
 }
+
 static u32 MatchCallListCursorUp(s32 state)
 {
     struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
     switch (state)
     {
     case 0:
+        PlaySE(SE_SELECT);
         switch (PokenavList_MoveCursorUp())
         {
         case 0:
-            break;
+            return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
-            // fall through
         default:
             return LT_INC_AND_PAUSE;
         }
-        break;
     case 1:
         if (PokenavList_IsMoveWindowTaskActive())
             return LT_PAUSE;
-
-        PrintMatchCallLocation(gfx, 0);
-        return LT_INC_AND_PAUSE;
+        // fallthrough
     case 2:
         PrintMatchCallLocation(gfx, 0);
         return LT_INC_AND_PAUSE;
@@ -595,32 +323,28 @@ static u32 MatchCallListCursorUp(s32 state)
     }
     return LT_FINISH;
 }
+
 static u32 MatchCallListPageDown(s32 state)
 {
     struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
     switch (state)
     {
     case 0:
+        PlaySE(SE_SELECT);
         switch (PokenavList_PageDown())
         {
         case 0:
-            break;
+            return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
-            // fall through
         default:
             return LT_INC_AND_PAUSE;
         }
-        break;
     case 1:
         if (PokenavList_IsMoveWindowTaskActive())
             return LT_PAUSE;
-
-        PrintMatchCallLocation(gfx, 0);
-        return LT_INC_AND_PAUSE;
+        // fallthrough
     case 2:
         PrintMatchCallLocation(gfx, 0);
         return LT_INC_AND_PAUSE;
@@ -631,32 +355,28 @@ static u32 MatchCallListPageDown(s32 state)
     }
     return LT_FINISH;
 }
+
 static u32 MatchCallListPageUp(s32 state)
 {
     struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
     switch (state)
     {
     case 0:
+        PlaySE(SE_SELECT);
         switch (PokenavList_PageUp())
         {
         case 0:
-            break;
+            return LT_FINISH;
         case 1:
-            PlaySE(SE_SELECT);
             return LT_SET_STATE(2);
         case 2:
-            PlaySE(SE_SELECT);
-            // fall through
         default:
             return LT_INC_AND_PAUSE;
         }
-        break;
     case 1:
         if (PokenavList_IsMoveWindowTaskActive())
             return LT_PAUSE;
-
-        PrintMatchCallLocation(gfx, 0);
-        return LT_INC_AND_PAUSE;
+        // fallthrough
     case 2:
         PrintMatchCallLocation(gfx, 0);
         return LT_INC_AND_PAUSE;
@@ -667,7 +387,6 @@ static u32 MatchCallListPageUp(s32 state)
     }
     return LT_FINISH;
 }
-#endif
 
 
 static u32 SelectMatchCallEntry(s32 state)
