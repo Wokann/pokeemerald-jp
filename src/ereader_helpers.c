@@ -10,6 +10,11 @@
 #include "task.h"
 #include "util.h"
 #include "trainer_hill.h"
+
+// I/O register alias for use inside inline asm strings (REG_ADDR_SIOCNT is a
+// C macro and cannot be expanded in asm text).
+__asm__(".equ REG_ADDR_SIOCNT, 0x04000128");
+
 #include "constants/trainers.h"
 #include "constants/moves.h"
 #include "constants/items.h"
@@ -753,7 +758,7 @@ __attribute__((naked)) static void EnableSio(void)
             "strh r1, [r0]\n\t"
             "bx lr\n\t"
             ".align 2, 0\n\t"
-            "_081D37C8: .4byte 0x04000128\n\t"
+            "_081D37C8: .4byte REG_ADDR_SIOCNT\n\t"
             ".syntax divided\n");
 }
 

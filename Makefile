@@ -11,6 +11,13 @@ CPPFLAGS := -iquote include -Wno-trigraphs \
 	-nostdinc -undef -std=gnu89
 SHELL := /bin/bash
 
+# Compile with `make NONMATCHING=1` to use the readable C implementations
+# instead of the byte-exact inline-asm versions (see include/config.h).
+# Default (no NONMATCHING) keeps the ROM byte-identical to baserom_jp.gba.
+ifdef NONMATCHING
+CPPFLAGS += -DNONMATCHING
+endif
+
 ASFLAGS := -mcpu=arm7tdmi
 CFLAGS := -mthumb-interwork -O2 -fhex-asm
 

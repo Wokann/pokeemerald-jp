@@ -22,6 +22,10 @@
 #include "window.h"
 #include "constants/songs.h"
 
+// Palette memory alias for use inside inline asm strings (OBJ_PLTT is a C
+// macro and cannot be expanded in asm text).
+__asm__(".equ OBJ_PLTT, 0x05000200");
+
 #define CONDITION_MONS_LOADED 3
 
 struct Pokenav_ConditionMenu
@@ -1322,7 +1326,7 @@ __attribute__((naked)) u32 LoopedTask_OpenConditionGraphMenu(s32 state)
             "b _081CD710\n\t"
             ".align 2, 0\n\t"
             "_081CD808: .4byte 0x00000804\n\t"
-            "_081CD80C: .4byte 0x05000200\n\t"
+            "_081CD80C: .4byte OBJ_PLTT\n\t"
             "_081CD810:\n\t"
             "bl FreeTempTileDataBuffersIfPossible\n\t"
             "lsls r0, r0, #0x18\n\t"

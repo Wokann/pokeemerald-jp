@@ -1,5 +1,8 @@
 #include "gba/gba.h"
 
+// I/O register alias for use inside inline asm strings (see libisagbprn_a.c).
+__asm__(".equ REG_ADDR_WAITCNT, 0x04000204");
+
 void AGBPutcInternal(const char cChr);
 
 // JP 0x08295774: kept as asm (same -O0 register allocation mismatch; this
@@ -53,7 +56,7 @@ __attribute__((naked)) void AGBPutc(const char cChr)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_082957CC: .4byte 0x04000204\n\t"
+            "_082957CC: .4byte REG_ADDR_WAITCNT\n\t"
             "_082957D0: .4byte 0x09FE20F8\n\t"
             ".syntax divided\n");
 }

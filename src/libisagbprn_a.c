@@ -2,6 +2,11 @@
 #include "gba/gba.h"
 #include "malloc.h"
 
+// I/O register alias for use inside inline asm strings. The C macro
+// REG_ADDR_WAITCNT cannot be expanded in asm text, so define the same value
+// as an assembler symbol here.
+__asm__(".equ REG_ADDR_WAITCNT, 0x04000204");
+
 #define AGB_PRINT_STRUCT_ADDR 0x9FE20F8
 #define AGB_PRINT_PROTECT_ADDR 0x9FE2FFE
 #define WSCNT_DATA (WAITCNT_PHI_OUT_16MHZ | WAITCNT_WS0_S_2 | WAITCNT_WS0_N_4)
@@ -85,7 +90,7 @@ __attribute__((naked)) void AGBPrintInit(void)
             "bx r0\n\t"
             ".align 2, 0\n\t"
             "_0829567C: .4byte 0x09FE20F8\n\t"
-            "_08295680: .4byte 0x04000204\n\t"
+            "_08295680: .4byte REG_ADDR_WAITCNT\n\t"
             "_08295684: .4byte 0x09FE2FFE\n\t"
             ".syntax divided\n");
 }

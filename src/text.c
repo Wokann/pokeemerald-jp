@@ -187,6 +187,8 @@ static u32 RenderFont(struct TextPrinter *textPrinter)
     }
 }
 
+#ifndef NONMATCHING
+// 逐字节匹配版本：与 baserom_jp.gba 的原始编译结果完全一致。
 __attribute__((naked)) void GenerateFontHalfRowLookupTable(u8 fgColor, u8 bgColor, u8 shadowColor)
 {
     __asm__(".syntax unified\n\t"
@@ -284,6 +286,32 @@ __attribute__((naked)) void GenerateFontHalfRowLookupTable(u8 fgColor, u8 bgColo
             "_08004794: .4byte sFontHalfRowLookupTable\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：语义与汇编版相同，但不保证逐字节一致，
+// 便于阅读、修改和进一步反编译。启用方式见 include/config.h。
+void GenerateFontHalfRowLookupTable(u8 fgColor, u8 bgColor, u8 shadowColor)
+{
+    u32 colors[3] = { bgColor, fgColor, shadowColor };
+    s32 i, j, k, count;
+    u32 *ptr;
+    u16 *lookup = sFontHalfRowLookupTable;
+    u32 ip = 0;
+
+    sLastTextBgColor = bgColor;
+    sLastTextFgColor = fgColor;
+    sLastTextShadowColor = shadowColor;
+
+    for (i = 0; i <= 2; i++)
+        for (j = 0; j <= 2; j++)
+            for (k = 0; k <= 2; k++)
+            {
+                ptr = colors;
+                for (count = 2; count >= 0; count--, ptr++)
+                    lookup[ip++] = (*ptr << 12) | (colors[k] << 8) | (colors[j] << 4) | colors[i];
+            }
+}
+#endif
 
 void SaveTextColors(u8 *fgColor, u8 *bgColor, u8 *shadowColor)
 {
@@ -680,7 +708,7 @@ __attribute__((naked)) void CopyGlyphToWindow(struct TextPrinter *textPrinter)
             "b _08004E38\n\t"
             ".align 2, 0\n\t"
             "_08004A9C: .4byte gWindows\n\t"
-            "_08004AA0: .4byte 0x03003050\n\t"
+            "_08004AA0: .4byte gCurGlyph + 0x20\n\t"
             "_08004AA4:\n\t"
             "adds r1, r3, #0\n\t"
             "movs r2, #0\n\t"
@@ -844,7 +872,7 @@ __attribute__((naked)) void CopyGlyphToWindow(struct TextPrinter *textPrinter)
             "b _08004E38\n\t"
             ".align 2, 0\n\t"
             "_08004BD4: .4byte gWindows\n\t"
-            "_08004BD8: .4byte 0x03003070\n\t"
+            "_08004BD8: .4byte gCurGlyph + 0x40\n\t"
             "_08004BDC:\n\t"
             "mov r2, r8\n\t"
             "movs r3, #0\n\t"
@@ -1006,8 +1034,8 @@ __attribute__((naked)) void CopyGlyphToWindow(struct TextPrinter *textPrinter)
             "b _08004D92\n\t"
             ".align 2, 0\n\t"
             "_08004D0C: .4byte gWindows\n\t"
-            "_08004D10: .4byte 0x03003050\n\t"
-            "_08004D14: .4byte 0x03003070\n\t"
+            "_08004D10: .4byte gCurGlyph + 0x20\n\t"
+            "_08004D14: .4byte gCurGlyph + 0x40\n\t"
             "_08004D18:\n\t"
             "ldm r3!, {r0}\n\t"
             "mov sb, r0\n\t"
@@ -1171,7 +1199,7 @@ __attribute__((naked)) void CopyGlyphToWindow(struct TextPrinter *textPrinter)
             "bx r0\n\t"
             ".align 2, 0\n\t"
             "_08004E48: .4byte gWindows\n\t"
-            "_08004E4C: .4byte 0x03003090\n\t"
+            "_08004E4C: .4byte gCurGlyph + 0x60\n\t"
             ".syntax divided");
 }
 
@@ -1458,7 +1486,7 @@ __attribute__((naked)) void ClearTextSpan(struct Window *window, u16 x, u16 y, u
             "blt _08004FDE\n\t"
             "b _0800533C\n\t"
             ".align 2, 0\n\t"
-            "_08005054: .4byte 0x03003050\n\t"
+            "_08005054: .4byte gCurGlyph + 0x20\n\t"
             "_08005058:\n\t"
             "adds r0, r2, #0\n\t"
             "movs r1, #0\n\t"
@@ -1595,7 +1623,7 @@ __attribute__((naked)) void ClearTextSpan(struct Window *window, u16 x, u16 y, u
             "blt _080050E4\n\t"
             "b _0800533C\n\t"
             ".align 2, 0\n\t"
-            "_08005154: .4byte 0x03003070\n\t"
+            "_08005154: .4byte gCurGlyph + 0x40\n\t"
             "_08005158:\n\t"
             "movs r2, #0\n\t"
             "ldr r4, [sp, #8]\n\t"
@@ -1864,9 +1892,9 @@ __attribute__((naked)) void ClearTextSpan(struct Window *window, u16 x, u16 y, u
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_0800534C: .4byte 0x03003050\n\t"
-            "_08005350: .4byte 0x03003070\n\t"
-            "_08005354: .4byte 0x03003090\n\t"
+            "_0800534C: .4byte gCurGlyph + 0x20\n\t"
+            "_08005350: .4byte gCurGlyph + 0x40\n\t"
+            "_08005354: .4byte gCurGlyph + 0x60\n\t"
             ".syntax divided");
 }
 
