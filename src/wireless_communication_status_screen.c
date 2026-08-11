@@ -1,0 +1,371 @@
+#include "global.h"
+#include "bg.h"
+#include "decompress.h"
+#include "dynamic_placeholder_text_util.h"
+#include "event_data.h"
+#include "gpu_regs.h"
+#include "link.h"
+#include "link_rfu.h"
+#include "main.h"
+#include "malloc.h"
+#include "menu.h"
+#include "overworld.h"
+#include "palette.h"
+#include "scanline_effect.h"
+#include "sound.h"
+#include "string_util.h"
+#include "task.h"
+#include "text.h"
+#include "text_window.h"
+#include "union_room.h"
+#include "window.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
+
+enum {
+    COLORMODE_NORMAL,
+    COLORMODE_WHITE_LGRAY,
+    COLORMODE_RED,
+    COLORMODE_GREEN,
+    COLORMODE_WHITE_DGRAY,
+};
+
+enum {
+    WIN_TITLE,
+    WIN_GROUP_NAMES,
+    WIN_GROUP_COUNTS,
+};
+
+enum {
+    GROUPTYPE_TRADE,
+    GROUPTYPE_BATTLE,
+    GROUPTYPE_UNION,
+    GROUPTYPE_TOTAL,
+    NUM_GROUPTYPES
+};
+
+#define GROUPTYPE_NONE 0xFF
+
+struct WirelessCommunicationStatusScreen
+{
+    u32 groupCounts[NUM_GROUPTYPES];
+    u32 prevGroupCounts[NUM_GROUPTYPES];
+    u32 activities[NUM_TASK_DATA];
+    u8 taskId;
+    u8 rfuTaskId;
+    u8 filler[10];
+};
+
+// JP: ROM data bound via ld_script_jp.txt.
+extern struct WirelessCommunicationStatusScreen *sWirelessStatusScreen;
+extern const struct BgTemplate sWirelessScreenBgTemplates[];
+extern const u32 sWirelessScreenBgTiles_Gfx[];
+extern const u32 sWirelessScreenBgTiles_Tilemap[];
+extern const struct WindowTemplate sWirelessScreenWindowTemplates[];
+extern const u16 sWirelessScreenPalettes[][16];
+extern const u8 *const sWirelessScreenHeaderTexts[];
+extern const u8 sWirelessScreenActivityGroupInfo[][3];
+extern const u8 sWirelessScreenActivityCountTexts[][6];
+extern const u8 sWirelessScreenTextColors[];
+extern u8 gStringVar4[];
+
+static void CB2_InitWirelessCommunicationScreen(void);
+static void Task_WirelessCommunicationScreen(u8);
+static void WCSS_AddTextPrinterParameterized(u8, u8, const u8 *, u8, u8, u8);
+static bool32 UpdateCommunicationCounts(u32 *, u32 *, u32 *, u8);
+
+static void CB2_RunWirelessCommunicationScreen(void)
+{
+    if (!IsDma3ManagerBusyWithBgCopy())
+    {
+        RunTasks();
+        RunTextPrinters();
+        AnimateSprites();
+        BuildOamBuffer();
+        UpdatePaletteFade();
+    }
+}
+
+static void VBlankCB_WirelessCommunicationScreen(void)
+{
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+}
+
+void ShowWirelessCommunicationScreen(void)
+{
+    SetMainCallback2(CB2_InitWirelessCommunicationScreen);
+}
+
+static void CB2_InitWirelessCommunicationScreen(void)
+{
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    sWirelessStatusScreen = AllocZeroed(sizeof(struct WirelessCommunicationStatusScreen));
+    SetVBlankCallback(NULL);
+    ResetBgsAndClearDma3BusyFlags(0);
+    InitBgsFromTemplates(0, sWirelessScreenBgTemplates, 2);
+    SetBgTilemapBuffer(1, Alloc(BG_SCREEN_SIZE));
+    SetBgTilemapBuffer(0, Alloc(BG_SCREEN_SIZE));
+    DecompressAndLoadBgGfxUsingHeap(1, sWirelessScreenBgTiles_Gfx, 0, 0, 0);
+    CopyToBgTilemapBuffer(1, sWirelessScreenBgTiles_Tilemap, 0, 0);
+    InitWindows(sWirelessScreenWindowTemplates);
+    DeactivateAllTextPrinters();
+    ResetPaletteFade();
+    ResetSpriteData();
+    ResetTasks();
+    ScanlineEffect_Stop();
+    m4aSoundVSyncOn();
+    SetVBlankCallback(VBlankCB_WirelessCommunicationScreen);
+    sWirelessStatusScreen->taskId = CreateTask(Task_WirelessCommunicationScreen, 0);
+    sWirelessStatusScreen->rfuTaskId = CreateTask_ListenToWireless();
+    sWirelessStatusScreen->prevGroupCounts[GROUPTYPE_TOTAL] = 1;
+    ChangeBgX(0, 0, BG_COORD_SET);
+    ChangeBgY(0, 0, BG_COORD_SET);
+    ChangeBgX(1, 0, BG_COORD_SET);
+    ChangeBgY(1, 0, BG_COORD_SET);
+    LoadPalette(sWirelessScreenPalettes[0], BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    Menu_LoadStdPalAt(BG_PLTT_ID(15));
+    DynamicPlaceholderTextUtil_Reset();
+    FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 15);
+    CopyBgTilemapBufferToVram(1);
+    SetMainCallback2(CB2_RunWirelessCommunicationScreen);
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
+static void CB2_ExitWirelessCommunicationStatusScreen(void)
+{
+    s32 i;
+    FreeAllWindowBuffers();
+    for (i = 0; i < 2; i++)
+    {
+        Free(GetBgTilemapBuffer(i));
+    }
+    Free(sWirelessStatusScreen);
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
+}
+
+// Cycle through palettes that relocate various shades of blue to create the wave effect at the bottom of the screen.
+static void CyclePalette(s16 *counter, s16 *palIdx)
+{
+    s32 idx;
+    if (++(*counter) > 5)
+    {
+        if (++(*palIdx) == 14)
+            *palIdx = 0;
+
+        *counter = 0;
+    }
+    idx = *palIdx + 2; // +2 skips over default.pal and the empty black palette after it
+    LoadPalette(sWirelessScreenPalettes[idx], BG_PLTT_ID(0), PLTT_SIZEOF(8));
+}
+
+static void PrintHeaderTexts(void)
+{
+    s32 i;
+    FillWindowPixelBuffer(WIN_TITLE, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_GROUP_NAMES, PIXEL_FILL(0));
+    FillWindowPixelBuffer(WIN_GROUP_COUNTS, PIXEL_FILL(0));
+
+    // Print title
+    WCSS_AddTextPrinterParameterized(WIN_TITLE, FONT_NORMAL, sWirelessScreenHeaderTexts[0], 2, 6, COLORMODE_GREEN);
+
+    // Print label for each group (excluding total)
+    for (i = 0; i < NUM_GROUPTYPES - 1; i++)
+        WCSS_AddTextPrinterParameterized(WIN_GROUP_NAMES, FONT_NORMAL, sWirelessScreenHeaderTexts[i + 1], 0, (((i * 15) << 25) + (0xA0 << 20)) >> 24, COLORMODE_WHITE_LGRAY);
+
+    // Print label for total
+    WCSS_AddTextPrinterParameterized(WIN_GROUP_NAMES, FONT_NORMAL, sWirelessScreenHeaderTexts[i + 1], 0, (((i * 15) << 25) + (0xA0 << 20)) >> 24, COLORMODE_RED);
+
+    PutWindowTilemap(WIN_TITLE);
+    CopyWindowToVram(WIN_TITLE, COPYWIN_GFX);
+    PutWindowTilemap(WIN_GROUP_NAMES);
+    CopyWindowToVram(WIN_GROUP_NAMES, COPYWIN_GFX);
+}
+
+#define tState data[0]
+
+static void Task_WirelessCommunicationScreen(u8 taskId)
+{
+    s32 i;
+    u8 countBuffer[12];
+    switch (gTasks[taskId].tState)
+    {
+    case 0:
+        PrintHeaderTexts();
+        gTasks[taskId].tState++;
+        break;
+    case 1:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        ShowBg(1);
+        CopyBgTilemapBufferToVram(0);
+        ShowBg(0);
+        gTasks[taskId].tState++;
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+            gTasks[taskId].tState++;
+        break;
+    case 3:
+        if (UpdateCommunicationCounts(sWirelessStatusScreen->groupCounts, sWirelessStatusScreen->prevGroupCounts, sWirelessStatusScreen->activities, sWirelessStatusScreen->rfuTaskId))
+        {
+            FillWindowPixelBuffer(WIN_GROUP_COUNTS, PIXEL_FILL(0));
+            for (i = 0; i < NUM_GROUPTYPES; i++)
+            {
+                ConvertIntToDecimalStringN(countBuffer, sWirelessStatusScreen->groupCounts[i], STR_CONV_MODE_RIGHT_ALIGN, 2);
+                DynamicPlaceholderTextUtil_SetPlaceholderPtr(i, countBuffer);
+                DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, sWirelessScreenActivityCountTexts[i]);
+                if (i != GROUPTYPE_TOTAL)
+                    WCSS_AddTextPrinterParameterized(WIN_GROUP_COUNTS, FONT_NORMAL, gStringVar4, 0, ((0xA0 << 20) + i * (0xF0 << 21)) >> 24, COLORMODE_WHITE_LGRAY);
+                else
+                    WCSS_AddTextPrinterParameterized(WIN_GROUP_COUNTS, FONT_NORMAL, gStringVar4, 0, 100, COLORMODE_RED);
+            }
+            PutWindowTilemap(WIN_GROUP_COUNTS);
+            CopyWindowToVram(WIN_GROUP_COUNTS, COPYWIN_FULL);
+        }
+        if (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gTasks[sWirelessStatusScreen->rfuTaskId].data[15] = 0xFF;
+            gTasks[taskId].tState++;
+        }
+        CyclePalette(&gTasks[taskId].data[7], &gTasks[taskId].data[8]);
+        break;
+    case 4:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gTasks[taskId].tState++;
+        break;
+    case 5:
+        if (!gPaletteFade.active)
+        {
+            SetMainCallback2(CB2_ExitWirelessCommunicationStatusScreen);
+            DestroyTask(taskId);
+        }
+        break;
+    }
+}
+
+#undef tState
+
+static void WCSS_AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 mode)
+{
+    u8 color[3];
+
+    switch (mode)
+    {
+    case COLORMODE_NORMAL:
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_DARK_GRAY;
+        color[2] = TEXT_COLOR_LIGHT_GRAY;
+        break;
+    case COLORMODE_WHITE_LGRAY:
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_WHITE;
+        color[2] = TEXT_COLOR_LIGHT_GRAY;
+        break;
+    case COLORMODE_RED:
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_RED;
+        color[2] = TEXT_COLOR_LIGHT_RED;
+        break;
+    case COLORMODE_GREEN:
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_LIGHT_GREEN;
+        color[2] = TEXT_COLOR_GREEN;
+        break;
+    case COLORMODE_WHITE_DGRAY:
+        color[0] = TEXT_COLOR_TRANSPARENT;
+        color[1] = TEXT_COLOR_WHITE;
+        color[2] = TEXT_COLOR_DARK_GRAY;
+        break;
+    }
+
+    AddTextPrinterParameterized4(windowId, fontId, x, y, 0, 0, color, TEXT_SKIP_DRAW, str);
+}
+
+static u32 CountPlayersInGroupAndGetActivity(struct RfuPlayer *player, u32 *groupCounts)
+{
+    u32 i;
+    int j, k;
+    u32 activity = player->rfu.data.activity;
+
+    #define group_activity(i) (sWirelessScreenActivityGroupInfo[(i)][0])
+    #define group_type(i)     (sWirelessScreenActivityGroupInfo[(i)][1])
+    #define group_players(i)  (sWirelessScreenActivityGroupInfo[(i)][2])
+
+    for (i = 0; i < 31; i++)
+    {
+        if (activity == group_activity(i) && player->groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+        {
+            if (group_players(i) == 0)
+            {
+                k = 0;
+                for (j = 0; j < RFU_CHILD_MAX; j++)
+                    if (player->rfu.data.partnerInfo[j] != 0) k++;
+                k++;
+                groupCounts[group_type(i)] += k;
+            }
+            else
+            {
+                groupCounts[group_type(i)] += group_players(i);
+            }
+        }
+    }
+    return activity;
+
+    #undef group_activity
+    #undef group_type
+    #undef group_players
+}
+
+static bool32 HaveCountsChanged(u32 *currCounts, u32 *prevCounts)
+{
+    s32 i;
+    for (i = 0; i < NUM_GROUPTYPES; i++)
+    {
+        if (currCounts[i] != prevCounts[i])
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static bool32 UpdateCommunicationCounts(u32 *groupCounts, u32 *prevGroupCounts, u32 *activities, u8 taskId)
+{
+    bool32 activitiesChanged = FALSE;
+    u32 groupCountBuffer[NUM_GROUPTYPES] = {0, 0, 0, 0};
+    struct RfuPlayer **players = (void *)gTasks[taskId].data;
+    s32 i;
+
+    for (i = 0; i < NUM_TASK_DATA; i++)
+    {
+        u32 activity = CountPlayersInGroupAndGetActivity(&(*players)[i], groupCountBuffer);
+        if (activity != activities[i])
+        {
+            activities[i] = activity;
+            activitiesChanged = TRUE;
+        }
+    }
+
+    if (!HaveCountsChanged(groupCountBuffer, prevGroupCounts))
+    {
+        if (activitiesChanged == TRUE)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    else
+    {
+        memcpy(groupCounts,     groupCountBuffer, sizeof(groupCountBuffer));
+        memcpy(prevGroupCounts, groupCountBuffer, sizeof(groupCountBuffer));
+
+        groupCounts[GROUPTYPE_TOTAL] = groupCounts[GROUPTYPE_TRADE]
+                                     + groupCounts[GROUPTYPE_BATTLE]
+                                     + groupCounts[GROUPTYPE_UNION]
+                                     + groupCounts[GROUPTYPE_TOTAL];
+        return TRUE;
+    }
+}
