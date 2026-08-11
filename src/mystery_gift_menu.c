@@ -502,6 +502,35 @@ bool32 ValidateCardOrNews(bool32 isWonderNews)
         return ValidateReceivedWonderNews();
 }
 
+bool32 HandleLoadWonderCardOrNews(u8 *state, bool32 isWonderNews)
+{
+    switch (*state)
+    {
+    case 0:
+        if (!isWonderNews)
+            InitWonderCardResources(GetSavedWonderCard(), sav1_get_mevent_buffer_2());
+        else
+            InitWonderNewsResources(GetSavedWonderNews());
+        (*state)++;
+        break;
+    case 1:
+        if (!isWonderNews)
+        {
+            if (!FadeToWonderCardMenu())
+                return FALSE;
+        }
+        else
+        {
+            if (!FadeToWonderNewsMenu())
+                return FALSE;
+        }
+        *state = 0;
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 bool32 DestroyNewsOrCard(bool32 isWonderNews)
 {
     if (!isWonderNews)
@@ -536,6 +565,14 @@ s8 mevent_message_prompt_discard(u8 *textState, u16 *windowId, bool32 isWonderNe
         return DoMysteryGiftYesNo(textState, windowId, 1, sText_DiscardWonderCard);
     else
         return DoMysteryGiftYesNo(textState, windowId, 1, sText_DiscardWonderNews);
+}
+
+bool32 mevent_message_was_thrown_away(u8 *state, bool32 isWonderNews)
+{
+    if (!isWonderNews)
+        return PrintMysteryGiftMenuMessage(state, sText_WasThrownAwayWonderCard);
+    else
+        return PrintMysteryGiftMenuMessage(state, sText_WasThrownAwayWonderNews);
 }
 
 bool32 mevent_save_game(u8 *state)
@@ -628,4 +665,42 @@ bool32 PrintMGSuccessMessage(u8 *state, const u8 *str, u16 *counter)
         break;
     }
     return FALSE;
+}
+
+const u8 *mevent_message_stamp_card_etc_send_status(u32 *out, u8 unused, u32 status)
+{
+    const u8 *ret = sJPText_MeventMsg11;
+
+    *out = 0;
+    switch (status)
+    {
+    case 0: ret = sJPText_MeventMsg0; break;
+    case 1: ret = sJPText_MeventMsg1; break;
+    case 2: ret = sJPText_StampMsg2; *out = 1; break;
+    case 3: ret = sJPText_StampMsg3; *out = 1; break;
+    case 4: ret = sJPText_StampMsg4; break;
+    case 5: ret = sJPText_StampMsg5; break;
+    case 6: ret = sJPText_StampMsg6; break;
+    case 7: ret = sJPText_StampMsg7; break;
+    case 8: ret = sJPText_MeventMsg8; break;
+    case 9: ret = sJPText_StampMsg9; break;
+    case 10: ret = sJPText_StampMsg14; break;
+    case 11: ret = sJPText_MeventMsg11; break;
+    case 12: ret = sJPText_StampMsg12; break;
+    case 13: ret = sJPText_StampMsg12; break;
+    case 14: ret = sJPText_StampMsg14; break;
+    default: break;
+    }
+    return ret;
+}
+
+bool32 PrintMGSendStatus(u8 *state, u16 *counter, u8 unused, u32 status)
+{
+    u32 out;
+    const u8 *str = mevent_message_stamp_card_etc_send_status(&out, unused, status);
+
+    if (out != 0)
+        return PrintMGSuccessMessage(state, str, counter);
+    else
+        return PrintMysteryGiftMenuMessage(state, str);
 }
