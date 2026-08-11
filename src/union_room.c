@@ -94,6 +94,7 @@ extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_PlayerOKdRegistration[];
 extern const u8 *const sPlayerUnavailableTexts[];
+extern const struct RfuPlayerData sUnionRoomPlayer_DummyRfu;
 extern const u32 sLinkGroupToActivityAndCapacity[];
 extern const u8 *const sLinkGroupActivityNameTexts[];
 extern const struct WindowTemplate sWindowTemplate_BButtonCancel;
@@ -106,16 +107,19 @@ extern const struct ListMenuTemplate sListMenuTemplate_PossibleGroupMembers;
 // names until converted.
 extern void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
 extern u16 ReadAsU16(const u8 *ptr);
-extern u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
 extern void CreateTask_RunScriptAndFadeToActivity(void);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
+extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
+extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
+extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 static void Leader_DestroyResources(struct WirelessLink_Leader *data);
 bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 joinedState, u32 droppedState);
+u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
 
 void Task_Idle(u8 taskId)
 {
@@ -692,4 +696,110 @@ bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 j
     }
 
     return FALSE;
+}
+
+static void ItemPrintFunc_PossibleGroupMembers(u8 windowId, u32 id, u8 y)
+{
+    struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
+    u8 colorIdx = UR_COLOR_DEFAULT;
+
+    switch (data->playerList->players[id].groupScheduledAnim)
+    {
+    case UNION_ROOM_SPAWN_IN:
+        if (data->playerList->players[id].newPlayerCountdown != 0)
+            colorIdx = UR_COLOR_GREEN;
+        break;
+    case UNION_ROOM_SPAWN_OUT:
+        colorIdx = UR_COLOR_RED;
+        break;
+    }
+
+    PrintGroupCandidateOnWindow(windowId, 1, y, &data->playerList->players[id], colorIdx, id);
+}
+
+u8 LeaderUpdateGroupMembership(struct RfuPlayerList *list)
+{
+    struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
+    u8 ret = UNION_ROOM_SPAWN_NONE;
+    u8 i;
+    s32 id;
+
+    for (i = 1; i < MAX_RFU_PLAYERS; i++)
+    {
+        u16 var = data->playerList->players[i].groupScheduledAnim;
+        if (var == UNION_ROOM_SPAWN_IN)
+        {
+            id = GetNewIncomingPlayerId(&data->playerList->players[i], data->incomingPlayerList->players);
+            if (id != 0xFF)
+            {
+                // New incoming player
+                data->playerList->players[i].rfu = data->incomingPlayerList->players[id].rfu;
+                data->playerList->players[i].timeoutCounter = 1;
+            }
+            else
+            {
+                // No new incoming player
+                data->playerList->players[i].groupScheduledAnim = UNION_ROOM_SPAWN_OUT;
+                ret = UNION_ROOM_SPAWN_OUT;
+            }
+        }
+    }
+
+    for (id = 0; id < RFU_CHILD_MAX; id++)
+        TryAddIncomingPlayerToList(data->playerList->players, &data->incomingPlayerList->players[id], MAX_RFU_PLAYERS);
+
+    if (ret != UNION_ROOM_SPAWN_OUT)
+    {
+        for (id = 0; id < MAX_RFU_PLAYERS; id++)
+        {
+            if (data->playerList->players[id].newPlayerCountdown != 0)
+                ret = UNION_ROOM_SPAWN_IN;
+        }
+    }
+
+    return ret;
+}
+
+u8 LeaderPrunePlayerList(struct RfuPlayerList *list)
+{
+    struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
+    u8 copiedCount;
+    s32 i;
+    u8 playerCount;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        data->playerListBackup->players[i] = data->playerList->players[i];
+
+    copiedCount = 0;
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (data->playerListBackup->players[i].groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+        {
+            data->playerList->players[copiedCount] = data->playerListBackup->players[i];
+            copiedCount++;
+        }
+    }
+
+    playerCount = copiedCount;
+    for (; copiedCount < MAX_RFU_PLAYERS; copiedCount++)
+    {
+        data->playerList->players[copiedCount].rfu = sUnionRoomPlayer_DummyRfu;
+        data->playerList->players[copiedCount].timeoutCounter = 0;
+        data->playerList->players[copiedCount].groupScheduledAnim = UNION_ROOM_SPAWN_NONE;
+        data->playerList->players[copiedCount].useRedText = FALSE;
+        data->playerList->players[copiedCount].newPlayerCountdown = 0;
+    }
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (data->playerList->players[i].groupScheduledAnim != UNION_ROOM_SPAWN_IN)
+            continue;
+        if (data->playerList->players[i].newPlayerCountdown != 64)
+            continue;
+
+        playerCount = i;
+        break;
+    }
+
+    return playerCount;
 }
