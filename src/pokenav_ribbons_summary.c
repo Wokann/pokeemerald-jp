@@ -431,150 +431,6 @@ static u32 GetCurrMonRibbonCount(void)
 
 // JP 0x081CFEC4 uses high registers (r8/sb/sl) and calls GetMonData3
 // directly with a pointer into gPlayerParty, so it is kept as asm.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "adds r5, r0, #0\n\t"
-            "ldr r0, [r5, #8]\n\t"
-            "ldrh r1, [r0, #2]\n\t"
-            "lsls r1, r1, #2\n\t"
-            "adds r1, #4\n\t"
-            "adds r1, r0, r1\n\t"
-            "ldrb r0, [r1]\n\t"
-            "cmp r0, #0xe\n\t"
-            "bne _081CFEF8\n\t"
-            "ldrb r1, [r1, #1]\n\t"
-            "movs r0, #0x64\n\t"
-            "muls r0, r1, r0\n\t"
-            "ldr r1, _081CFEF4\n\t"
-            "adds r0, r0, r1\n\t"
-            "movs r1, #0x53\n\t"
-            "bl GetMonData3\n\t"
-            "b _081CFF02\n\t"
-            ".align 2, 0\n\t"
-            "_081CFEF4: .4byte gPlayerParty\n\t"
-            "_081CFEF8:\n\t"
-            "ldrb r0, [r1]\n\t"
-            "ldrb r1, [r1, #1]\n\t"
-            "movs r2, #0x53\n\t"
-            "bl GetBoxMonDataAt\n\t"
-            "_081CFF02:\n\t"
-            "mov ip, r0\n\t"
-            "movs r0, #0\n\t"
-            "strh r0, [r5, #0x10]\n\t"
-            "strh r0, [r5, #0x12]\n\t"
-            "movs r6, #0\n\t"
-            "ldr r0, _081CFF58\n\t"
-            "mov sb, r0\n\t"
-            "mov sl, sb\n\t"
-            "_081CFF12:\n\t"
-            "lsls r2, r6, #2\n\t"
-            "mov r3, sb\n\t"
-            "adds r1, r2, r3\n\t"
-            "movs r0, #1\n\t"
-            "ldrb r3, [r1]\n\t"
-            "lsls r0, r3\n\t"
-            "subs r4, r0, #1\n\t"
-            "mov r0, ip\n\t"
-            "ands r4, r0\n\t"
-            "ldrb r0, [r1, #3]\n\t"
-            "adds r7, r2, #0\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CFF5C\n\t"
-            "movs r3, #0\n\t"
-            "adds r6, #1\n\t"
-            "mov r8, r6\n\t"
-            "cmp r3, r4\n\t"
-            "bge _081CFF86\n\t"
-            "adds r6, r5, #0\n\t"
-            "adds r6, #0x14\n\t"
-            "mov r1, sl\n\t"
-            "adds r0, r7, r1\n\t"
-            "ldrb r2, [r0, #2]\n\t"
-            "_081CFF40:\n\t"
-            "ldrh r0, [r5, #0x10]\n\t"
-            "adds r1, r0, #1\n\t"
-            "strh r1, [r5, #0x10]\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0xe\n\t"
-            "adds r0, r6, r0\n\t"
-            "adds r1, r2, r3\n\t"
-            "str r1, [r0]\n\t"
-            "adds r3, #1\n\t"
-            "cmp r3, r4\n\t"
-            "blt _081CFF40\n\t"
-            "b _081CFF86\n\t"
-            ".align 2, 0\n\t"
-            "_081CFF58: .4byte sRibbonData\n\t"
-            "_081CFF5C:\n\t"
-            "movs r3, #0\n\t"
-            "adds r6, #1\n\t"
-            "mov r8, r6\n\t"
-            "cmp r3, r4\n\t"
-            "bge _081CFF86\n\t"
-            "adds r6, r5, #0\n\t"
-            "adds r6, #0x78\n\t"
-            "mov r1, sl\n\t"
-            "adds r0, r7, r1\n\t"
-            "ldrb r2, [r0, #2]\n\t"
-            "_081CFF70:\n\t"
-            "ldrh r0, [r5, #0x12]\n\t"
-            "adds r1, r0, #1\n\t"
-            "strh r1, [r5, #0x12]\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0xe\n\t"
-            "adds r0, r6, r0\n\t"
-            "adds r1, r2, r3\n\t"
-            "str r1, [r0]\n\t"
-            "adds r3, #1\n\t"
-            "cmp r3, r4\n\t"
-            "blt _081CFF70\n\t"
-            "_081CFF86:\n\t"
-            "mov r3, sb\n\t"
-            "adds r0, r7, r3\n\t"
-            "mov r1, ip\n\t"
-            "ldrb r0, [r0]\n\t"
-            "lsrs r1, r0\n\t"
-            "mov ip, r1\n\t"
-            "mov r6, r8\n\t"
-            "cmp r6, #0x10\n\t"
-            "bls _081CFF12\n\t"
-            "ldrh r0, [r5, #0x10]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CFFB0\n\t"
-            "subs r0, #1\n\t"
-            "movs r1, #9\n\t"
-            "bl __divsi3\n\t"
-            "lsls r1, r0, #3\n\t"
-            "adds r1, r1, r0\n\t"
-            "movs r0, #0\n\t"
-            "strh r1, [r5, #0xe]\n\t"
-            "b _081CFFB4\n\t"
-            "_081CFFB0:\n\t"
-            "strh r0, [r5, #0xe]\n\t"
-            "movs r0, #0x1b\n\t"
-            "_081CFFB4:\n\t"
-            "strh r0, [r5, #0xc]\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".syntax divided\n");
-}
-#else
 static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
 {
     u32 ribbonFlags;
@@ -589,10 +445,8 @@ static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
 
     list->numNormalRibbons = 0;
     list->numGiftRibbons = 0;
-    for (i = 0; i < ARRAY_COUNT(sRibbonData); i++)
+    for (i = 0; i <= ARRAY_COUNT(sRibbonData); i++)
     {
-        // For all non-contest ribbons, numRibbons will be 1 if they have it, 0 if they don't
-        // For contest ribbons, numRibbons will be 0-4
         s32 numRibbons = ((1 << sRibbonData[i].numBits) - 1) & ribbonFlags;
         if (!sRibbonData[i].isGiftRibbon)
         {
@@ -614,59 +468,10 @@ static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
     }
     else
     {
-        // There are no normal ribbons, move cursor to first gift ribbon
         list->normalRibbonLastRowStart = 0;
         list->selectedPos = GIFT_RIBBON_START_POS;
     }
 }
-#endif
-
-#else
-static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
-{
-    u32 ribbonFlags;
-    s32 i, j;
-    struct PokenavMonList *mons = list->monList;
-    struct PokenavMonListItem *monInfo = &mons->monData[mons->currIndex];
-
-    if (monInfo->boxId == TOTAL_BOXES_COUNT)
-        ribbonFlags = GetMonData(&gPlayerParty[monInfo->monId], MON_DATA_RIBBONS);
-    else
-        ribbonFlags = GetBoxMonDataAt(monInfo->boxId, monInfo->monId, MON_DATA_RIBBONS);
-
-    list->numNormalRibbons = 0;
-    list->numGiftRibbons = 0;
-    for (i = 0; i < ARRAY_COUNT(sRibbonData); i++)
-    {
-        // For all non-contest ribbons, numRibbons will be 1 if they have it, 0 if they don't
-        // For contest ribbons, numRibbons will be 0-4
-        s32 numRibbons = ((1 << sRibbonData[i].numBits) - 1) & ribbonFlags;
-        if (!sRibbonData[i].isGiftRibbon)
-        {
-            for (j = 0; j < numRibbons; j++)
-                list->ribbonIds[list->numNormalRibbons++] = sRibbonData[i].ribbonId + j;
-        }
-        else
-        {
-            for (j = 0; j < numRibbons; j++)
-                list->giftRibbonIds[list->numGiftRibbons++] = sRibbonData[i].ribbonId + j;
-        }
-        ribbonFlags >>= sRibbonData[i].numBits;
-    }
-
-    if (list->numNormalRibbons != 0)
-    {
-        list->normalRibbonLastRowStart = ((list->numNormalRibbons - 1) / RIBBONS_PER_ROW) * RIBBONS_PER_ROW;
-        list->selectedPos = 0;
-    }
-    else
-    {
-        // There are no normal ribbons, move cursor to first gift ribbon
-        list->normalRibbonLastRowStart = 0;
-        list->selectedPos = GIFT_RIBBON_START_POS;
-    }
-}
-#endif
 
 
 static u32 *GetNormalRibbonIds(u32 *size)
