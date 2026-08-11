@@ -106,7 +106,7 @@ static void CreateSearchResultsList(void);
 static u32 GetMonRibbonListLoopTaskFunc(s32 state);
 static u32 LoopedTask_OpenRibbonsMonList(s32 state);
 static void DrawListIndexNumber(u16 windowId, u16 index);
-static void AddRibbonsMonListWindow(u16 windowId);
+static void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu);
 static void CreateRibbonMonsList(void);
 static void BufferRibbonMonInfoText(u8 windowId, u16 index);
 static bool32 IsRibbonsMonListLoopedTaskActive(void);
@@ -1414,256 +1414,132 @@ __attribute__((naked)) u32 LoopedTask_OpenConditionSearchResults(s32 state)
             ".syntax divided");
 }
 
-__attribute__((naked)) u32 LoopedTask_MoveSearchListCursorUp(s32 state)
+static u32 LoopedTask_MoveSearchListCursorUp(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CECEC\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CECC6\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CECD0\n\t"
-            "b _081CED0C\n\t"
-            "_081CECC6:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CECF4\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CECFE\n\t"
-            "b _081CED0C\n\t"
-            "_081CECD0:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CECE8\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CECFA\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CECFA\n\t"
-            "b _081CED0C\n\t"
-            "_081CECE8:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CED0E\n\t"
-            "_081CECEC:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CED08\n\t"
-            "_081CECF4:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl PrintSearchResultListMenuItems\n\t"
-            "_081CECFA:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CED0E\n\t"
-            "_081CECFE:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CED0C\n\t"
-            "_081CED08:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CED0E\n\t"
-            "_081CED0C:\n\t"
-            "movs r0, #4\n\t"
-            "_081CED0E:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_SearchResultsGfx *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_MoveCursorUp())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        PrintSearchResultListMenuItems(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_MoveSearchListCursorDown(s32 state)
+static u32 LoopedTask_MoveSearchListCursorDown(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CED54\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CED2E\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CED38\n\t"
-            "b _081CED74\n\t"
-            "_081CED2E:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CED5C\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CED66\n\t"
-            "b _081CED74\n\t"
-            "_081CED38:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CED50\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CED62\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CED62\n\t"
-            "b _081CED74\n\t"
-            "_081CED50:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CED76\n\t"
-            "_081CED54:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CED70\n\t"
-            "_081CED5C:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl PrintSearchResultListMenuItems\n\t"
-            "_081CED62:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CED76\n\t"
-            "_081CED66:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CED74\n\t"
-            "_081CED70:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CED76\n\t"
-            "_081CED74:\n\t"
-            "movs r0, #4\n\t"
-            "_081CED76:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_SearchResultsGfx *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_MoveCursorDown())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        PrintSearchResultListMenuItems(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_MoveSearchListPageUp(s32 state)
+static u32 LoopedTask_MoveSearchListPageUp(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CEDBC\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CED96\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CEDA0\n\t"
-            "b _081CEDDC\n\t"
-            "_081CED96:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CEDC4\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CEDCE\n\t"
-            "b _081CEDDC\n\t"
-            "_081CEDA0:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CEDB8\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CEDCA\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEDCA\n\t"
-            "b _081CEDDC\n\t"
-            "_081CEDB8:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CEDDE\n\t"
-            "_081CEDBC:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEDD8\n\t"
-            "_081CEDC4:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl PrintSearchResultListMenuItems\n\t"
-            "_081CEDCA:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CEDDE\n\t"
-            "_081CEDCE:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CEDDC\n\t"
-            "_081CEDD8:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CEDDE\n\t"
-            "_081CEDDC:\n\t"
-            "movs r0, #4\n\t"
-            "_081CEDDE:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_SearchResultsGfx *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_PageUp())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        PrintSearchResultListMenuItems(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_MoveSearchListPageDown(s32 state)
+static u32 LoopedTask_MoveSearchListPageDown(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CEE24\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CEDFE\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CEE08\n\t"
-            "b _081CEE44\n\t"
-            "_081CEDFE:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CEE2C\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CEE36\n\t"
-            "b _081CEE44\n\t"
-            "_081CEE08:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CEE20\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CEE32\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEE32\n\t"
-            "b _081CEE44\n\t"
-            "_081CEE20:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CEE46\n\t"
-            "_081CEE24:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEE40\n\t"
-            "_081CEE2C:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl PrintSearchResultListMenuItems\n\t"
-            "_081CEE32:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CEE46\n\t"
-            "_081CEE36:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CEE44\n\t"
-            "_081CEE40:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CEE46\n\t"
-            "_081CEE44:\n\t"
-            "movs r0, #4\n\t"
-            "_081CEE46:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_SearchResultsGfx *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_PageDown())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        PrintSearchResultListMenuItems(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
 static u32 LoopedTask_ExitConditionSearchMenu(s32 state)
@@ -2516,256 +2392,132 @@ __attribute__((naked)) u32 LoopedTask_OpenRibbonsMonList(s32 state)
             ".syntax divided");
 }
 
-__attribute__((naked)) u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
+static u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CF710\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CF6EA\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CF6F4\n\t"
-            "b _081CF730\n\t"
-            "_081CF6EA:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CF718\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CF722\n\t"
-            "b _081CF730\n\t"
-            "_081CF6F4:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CF70C\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CF71E\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF71E\n\t"
-            "b _081CF730\n\t"
-            "_081CF70C:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CF732\n\t"
-            "_081CF710:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF72C\n\t"
-            "_081CF718:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddRibbonsMonListWindow\n\t"
-            "_081CF71E:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF732\n\t"
-            "_081CF722:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF730\n\t"
-            "_081CF72C:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF732\n\t"
-            "_081CF730:\n\t"
-            "movs r0, #4\n\t"
-            "_081CF732:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_MoveCursorUp())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        AddRibbonsMonListWindow(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_RibbonsListMoveCursorDown(s32 state)
+static u32 LoopedTask_RibbonsListMoveCursorDown(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CF778\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CF752\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CF75C\n\t"
-            "b _081CF798\n\t"
-            "_081CF752:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CF780\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CF78A\n\t"
-            "b _081CF798\n\t"
-            "_081CF75C:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_MoveCursorDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CF774\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CF786\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF786\n\t"
-            "b _081CF798\n\t"
-            "_081CF774:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CF79A\n\t"
-            "_081CF778:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF794\n\t"
-            "_081CF780:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddRibbonsMonListWindow\n\t"
-            "_081CF786:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF79A\n\t"
-            "_081CF78A:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF798\n\t"
-            "_081CF794:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF79A\n\t"
-            "_081CF798:\n\t"
-            "movs r0, #4\n\t"
-            "_081CF79A:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_MoveCursorDown())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        AddRibbonsMonListWindow(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_RibbonsListMovePageUp(s32 state)
+static u32 LoopedTask_RibbonsListMovePageUp(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CF7E0\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CF7BA\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CF7C4\n\t"
-            "b _081CF800\n\t"
-            "_081CF7BA:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CF7E8\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CF7F2\n\t"
-            "b _081CF800\n\t"
-            "_081CF7C4:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageUp\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CF7DC\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CF7EE\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF7EE\n\t"
-            "b _081CF800\n\t"
-            "_081CF7DC:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CF802\n\t"
-            "_081CF7E0:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF7FC\n\t"
-            "_081CF7E8:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddRibbonsMonListWindow\n\t"
-            "_081CF7EE:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF802\n\t"
-            "_081CF7F2:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF800\n\t"
-            "_081CF7FC:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF802\n\t"
-            "_081CF800:\n\t"
-            "movs r0, #4\n\t"
-            "_081CF802:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_PageUp())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        AddRibbonsMonListWindow(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
-__attribute__((naked)) u32 LoopedTask_RibbonsListMovePageDown(s32 state)
+static u32 LoopedTask_RibbonsListMovePageDown(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #1\n\t"
-            "beq _081CF848\n\t"
-            "cmp r4, #1\n\t"
-            "bgt _081CF822\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CF82C\n\t"
-            "b _081CF868\n\t"
-            "_081CF822:\n\t"
-            "cmp r4, #2\n\t"
-            "beq _081CF850\n\t"
-            "cmp r4, #3\n\t"
-            "beq _081CF85A\n\t"
-            "b _081CF868\n\t"
-            "_081CF82C:\n\t"
-            "movs r0, #5\n\t"
-            "bl PlaySE\n\t"
-            "bl PokenavList_PageDown\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CF844\n\t"
-            "cmp r0, #1\n\t"
-            "bgt _081CF856\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF856\n\t"
-            "b _081CF868\n\t"
-            "_081CF844:\n\t"
-            "movs r0, #7\n\t"
-            "b _081CF86A\n\t"
-            "_081CF848:\n\t"
-            "bl PokenavList_IsMoveWindowTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF864\n\t"
-            "_081CF850:\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddRibbonsMonListWindow\n\t"
-            "_081CF856:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF86A\n\t"
-            "_081CF85A:\n\t"
-            "bl IsDma3ManagerBusyWithBgCopy\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF868\n\t"
-            "_081CF864:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF86A\n\t"
-            "_081CF868:\n\t"
-            "movs r0, #4\n\t"
-            "_081CF86A:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    switch (state)
+    {
+    case 0:
+        PlaySE(SE_SELECT);
+        switch (PokenavList_PageDown())
+        {
+        case 0:
+            return LT_FINISH;
+        case 1:
+            return LT_SET_STATE(2);
+        case 2:
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+        // fallthrough
+    case 2:
+        AddRibbonsMonListWindow(ptr);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
 static u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state)
@@ -2860,7 +2612,7 @@ __attribute__((naked)) void DrawListIndexNumber(u16 windowId, u16 index)
             ".syntax divided");
 }
 
-__attribute__((naked)) void AddRibbonsMonListWindow(u16 windowId)
+__attribute__((naked)) void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu)
 {
     __asm__(".syntax unified\n\t"
             ".code 16\n\t"
