@@ -1,7 +1,9 @@
 #include "global.h"
 #include "battle.h"
+#include "berry_crush.h"
 #include "bg.h"
 #include "cable_club.h"
+#include "constants/map_groups.h"
 #include "constants/songs.h"
 #include "event_data.h"
 #include "fieldmap.h"
@@ -11,6 +13,9 @@
 #include "malloc.h"
 #include "menu.h"
 #include "overworld.h"
+#include "party_menu.h"
+#include "pokemon_jump.h"
+#include "dodrio_berry_picking.h"
 #include "script.h"
 #include "save_location.h"
 #include "sound.h"
@@ -22,6 +27,8 @@
 #include "text.h"
 #include "trade.h"
 #include "trainer_card.h"
+#include "union_room_battle.h"
+#include "union_room_chat.h"
 #include "union_room.h"
 #include "window.h"
 
@@ -1538,4 +1545,111 @@ void CreateTrainerCardInBuffer(void *dest, bool32 setWonderCard)
         card->hasAllFrontierSymbols = GetWonderCardFlagID();
     else
         card->hasAllFrontierSymbols = 0;
+}
+
+static void Task_StartActivity(u8 taskId)
+{
+    MysteryGift_DisableStats();
+    switch (gPlayerCurrActivity)
+    {
+    case ACTIVITY_BATTLE_SINGLE:
+    case ACTIVITY_BATTLE_DOUBLE:
+    case ACTIVITY_BATTLE_MULTI:
+    case ACTIVITY_TRADE:
+    case ACTIVITY_POKEMON_JUMP:
+    case ACTIVITY_BERRY_CRUSH:
+    case ACTIVITY_BERRY_PICK:
+    case ACTIVITY_SPIN_TRADE:
+    case ACTIVITY_RECORD_CORNER:
+        SaveLinkTrainerNames();
+        break;
+    }
+
+    switch (gPlayerCurrActivity)
+    {
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+    case ACTIVITY_ACCEPT | IN_UNION_ROOM:
+        CleanupOverworldWindowsAndTilemaps();
+        gMain.savedCallback = CB2_UnionRoomBattle;
+        InitChooseHalfPartyForBattle(3);
+        break;
+    case ACTIVITY_BATTLE_SINGLE:
+        CleanupOverworldWindowsAndTilemaps();
+        CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+        HealPlayerParty();
+        SavePlayerParty();
+        LoadPlayerBag();
+        WarpForCableClubActivity(MAP_GROUP(MAP_BATTLE_COLOSSEUM_2P), MAP_NUM(MAP_BATTLE_COLOSSEUM_2P), 6, 8, USING_SINGLE_BATTLE);
+        SetMainCallback2(CB2_TransitionToCableClub);
+        break;
+    case ACTIVITY_BATTLE_DOUBLE:
+        CleanupOverworldWindowsAndTilemaps();
+        HealPlayerParty();
+        SavePlayerParty();
+        LoadPlayerBag();
+        CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+        WarpForCableClubActivity(MAP_GROUP(MAP_BATTLE_COLOSSEUM_2P), MAP_NUM(MAP_BATTLE_COLOSSEUM_2P), 6, 8, USING_DOUBLE_BATTLE);
+        SetMainCallback2(CB2_TransitionToCableClub);
+        break;
+    case ACTIVITY_BATTLE_MULTI:
+        CleanupOverworldWindowsAndTilemaps();
+        HealPlayerParty();
+        SavePlayerParty();
+        LoadPlayerBag();
+        CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+        WarpForCableClubActivity(MAP_GROUP(MAP_BATTLE_COLOSSEUM_4P), MAP_NUM(MAP_BATTLE_COLOSSEUM_4P), 5, 8, USING_MULTI_BATTLE);
+        SetMainCallback2(CB2_TransitionToCableClub);
+        break;
+    case ACTIVITY_TRADE:
+        CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+        CleanupOverworldWindowsAndTilemaps();
+        WarpForCableClubActivity(MAP_GROUP(MAP_TRADE_CENTER), MAP_NUM(MAP_TRADE_CENTER), 5, 8, USING_TRADE_CENTER);
+        SetMainCallback2(CB2_TransitionToCableClub);
+        break;
+    case ACTIVITY_RECORD_CORNER:
+        CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+        CleanupOverworldWindowsAndTilemaps();
+        WarpForCableClubActivity(MAP_GROUP(MAP_RECORD_CORNER), MAP_NUM(MAP_RECORD_CORNER), 8, 9, USING_RECORD_CORNER);
+        SetMainCallback2(CB2_TransitionToCableClub);
+        break;
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+        CleanupOverworldWindowsAndTilemaps();
+        CreateTask(Task_StartUnionRoomTrade, 0);
+        break;
+    case ACTIVITY_CHAT:
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+        if (GetMultiplayerId() == 0)
+        {
+            LinkRfu_CreateConnectionAsParent();
+        }
+        else
+        {
+            LinkRfu_StopManagerBeforeEnteringChat();
+            SetHostRfuGameData(ACTIVITY_CHAT | IN_UNION_ROOM, 0, TRUE);
+        }
+        EnterUnionRoomChat();
+        break;
+    case ACTIVITY_CARD:
+    case ACTIVITY_CARD | IN_UNION_ROOM:
+        CreateTrainerCardInBuffer(gBlockSendBuffer, FALSE);
+        SetMainCallback2(CB2_ShowCard);
+        break;
+    case ACTIVITY_POKEMON_JUMP:
+        WarpForWirelessMinigame(USING_MINIGAME, 5, 1);
+        StartPokemonJump(GetCursorSelectionMonId(), CB2_LoadMap);
+        break;
+    case ACTIVITY_BERRY_CRUSH:
+        WarpForWirelessMinigame(USING_BERRY_CRUSH, 9, 1);
+        StartBerryCrush(CB2_LoadMap);
+        break;
+    case ACTIVITY_BERRY_PICK:
+        WarpForWirelessMinigame(USING_MINIGAME, 5, 1);
+        StartDodrioBerryPicking(GetCursorSelectionMonId(), CB2_LoadMap);
+        break;
+    }
+
+    DestroyTask(taskId);
+    gSpecialVar_Result = LINKUP_SUCCESS;
+    if (gPlayerCurrActivity != (ACTIVITY_TRADE | IN_UNION_ROOM))
+        UnlockPlayerFieldControls();
 }
