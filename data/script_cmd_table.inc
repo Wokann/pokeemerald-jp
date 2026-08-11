@@ -233,7 +233,7 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_D6 ScrCmd_buffercontesttype @ 0xD6
 	script_cmd_table_entry SCR_OP_D7 ScrCmd_warpD7 @ 0xD7
 	script_cmd_table_entry SCR_OP_D8 ScrCmd_cmdD8 @ 0xD8
-	script_cmd_table_entry SCR_OP_D9 ScrCmd_cmdD9 @ 0xD9
+	script_cmd_table_entry SCR_OP_D9 ScrCmd_lockfortrainer @ 0xD9
 	script_cmd_table_entry SCR_OP_DA ScrCmd_mossdeepgym4 @ 0xDA
 	script_cmd_table_entry SCR_OP_DB ScrCmd_cmdDB @ 0xDB
 	script_cmd_table_entry SCR_OP_FADESCREENSWAPBUFFERS ScrCmd_fadescreenswapbuffers @ 0xDC

@@ -2211,43 +2211,18 @@ bool8 ScrCmd_cmdD8(struct ScriptContext *ctx)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ScrCmd_cmdD9(struct ScriptContext *ctx)
+bool8 ScrCmd_lockfortrainer(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl IsUpdateLinkStateCBActive\n\t"
-            "cmp r0, #0\n\t"
-            "beq 1f\n\t"
-            "movs r0, #0\n\t"
-            "b 3f\n\t"
-            "1:\n\t"
-            "ldr r2, 4f\n\t"
-            "ldr r0, 5f\n\t"
-            "ldrb r1, [r0]\n\t"
-            "lsls r0, r1, #3\n\t"
-            "adds r0, r0, r1\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r0, r0, r2\n\t"
-            "ldrb r0, [r0]\n\t"
-            "lsls r0, r0, #0x1f\n\t"
-            "cmp r0, #0\n\t"
-            "beq 2f\n\t"
-            "bl sub_08097FB8\n\t"
-            "ldr r1, 6f\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl SetupNativeScript\n\t"
-            "2:\n\t"
-            "movs r0, #1\n\t"
-            "3:\n\t"
-            "pop {r4}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".2byte 0\n\t"
-            "4: .word 0x02036FF0\n\t"
-            "5: .word 0x03005B50\n\t"
-            "6: .word 0x080980BD\n\t.syntax divided\n");
+    if (IsOverworldLinkActive())
+        return FALSE;
+    if (gObjectEvents[gSelectedObjectEvent].active)
+    {
+        FreezeForApproachingTrainers();
+        SetupNativeScript(ctx, IsFreezeObjectAndPlayerFinished);
+    }
+    return TRUE;
 }
+
 
 
 bool8 ScrCmd_setmonobedient(struct ScriptContext *ctx)
