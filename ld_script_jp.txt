@@ -1607,7 +1607,7 @@ build/src/link.o(.text.IsWirelessAdapterConnected);
         build/src/wild_encounter.o(.text.WildEncounterCheck);
         build/src/wild_encounter.o(.text.AllowWildCheckOnNewMetatile);
         build/src/wild_encounter.o(.text.AreLegendariesInSootopolisPreventingEncounters);
-        asm/wild_encounter_std.o(.text);
+        build/src/wild_encounter.o(.text.StandardWildEncounter);
         build/src/wild_encounter.o(.text.RockSmashWildEncounter);
         build/src/wild_encounter.o(.text.SweetScentWildEncounter);
         build/src/wild_encounter.o(.text.DoesCurrentMapHaveFishingMons);
