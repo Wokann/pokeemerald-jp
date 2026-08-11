@@ -316,6 +316,7 @@ static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parent
 static bool32 UR_RunTextPrinters(void);
 static u8 HandlePlayerListUpdate(void);
 static void ClearRfuPlayerList(struct RfuPlayer *players, u8 count);
+static void ClearIncomingPlayerList(struct RfuIncomingPlayerList *list, u8 count);
 static u8 CreateTradeBoardWindow(const struct WindowTemplate *template);
 static void DeleteTradeBoardWindow(u8 windowId);
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
@@ -3950,6 +3951,17 @@ static void ClearRfuPlayerList(struct RfuPlayer *players, u8 count)
         players[i].groupScheduledAnim = UNION_ROOM_SPAWN_NONE;
         players[i].useRedText = FALSE;
         players[i].newPlayerCountdown = 0;
+    }
+}
+
+static void ClearIncomingPlayerList(struct RfuIncomingPlayerList *list, u8 count)
+{
+    s32 i;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        list->players[i].rfu = sUnionRoomPlayer_DummyRfu;
+        list->players[i].active = FALSE;
     }
 }
 

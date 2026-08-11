@@ -32,44 +32,6 @@
 
 
 
-	thumb_func_start sub_080170B0
-sub_080170B0: @ 0x080170B0
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	ldr r1, _080170F0
-	mov ip, r1
-	movs r5, #2
-	rsbs r5, r5, #0
-	mov r8, r5
-	adds r2, r0, #0
-	adds r2, #0x18
-	adds r3, r0, #0
-	movs r4, #3
-_080170C8:
-	adds r1, r3, #0
-	mov r0, ip
-	ldm r0!, {r5, r6, r7}
-	stm r1!, {r5, r6, r7}
-	ldm r0!, {r5, r6, r7}
-	stm r1!, {r5, r6, r7}
-	ldrb r1, [r2]
-	mov r0, r8
-	ands r0, r1
-	strb r0, [r2]
-	adds r2, #0x1c
-	adds r3, #0x1c
-	subs r4, #1
-	cmp r4, #0
-	bge _080170C8
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080170F0: .4byte 0x082C2364
-	thumb_func_end sub_080170B0
 
 	thumb_func_start sub_080170F4
 sub_080170F4: @ 0x080170F4

@@ -1085,7 +1085,6 @@ PrintGroupCandidateOnWindow = sub_08017360;
 PrintGroupMemberOnWindow = sub_0801727C;
 GetNewIncomingPlayerId = sub_080171A8;
 TryAddIncomingPlayerToList = sub_080171F8;
-ClearIncomingPlayerList = sub_080170B0;
 Debug_PrintString = nullsub_13;
 Debug_PrintNum = nullsub_5;
 
@@ -1530,6 +1529,7 @@ SECTIONS {
         src/union_room.o(.text.JoinGroup_EnableScriptContexts);
         src/union_room.o(.text.PrintUnionRoomText);
         src/union_room.o(.text.ClearRfuPlayerList);
+        src/union_room.o(.text.ClearIncomingPlayerList);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);
