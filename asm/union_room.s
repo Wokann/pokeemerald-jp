@@ -7,19 +7,6 @@
 
 
 
-
-	thumb_func_start sub_080144CC
-sub_080144CC: @ 0x080144CC
-	push {lr}
-	ldr r0, _080144DC
-	movs r1, #0
-	bl CreateTask
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080144DC: .4byte 0x08014299
-	thumb_func_end sub_080144CC
-
 	thumb_func_start sub_080144E0
 sub_080144E0: @ 0x080144E0
 	push {lr}

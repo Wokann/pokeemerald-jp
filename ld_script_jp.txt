@@ -999,7 +999,6 @@ PrintGroupMemberOnWindow = sub_0801727C;
 GetNewIncomingPlayerId = sub_080171A8;
 TryAddIncomingPlayerToList = sub_080171F8;
 UnionRoomHandleYesNo = sub_08016BC8;
-CreateTask_RunScriptAndFadeToActivity = sub_080144CC;
 ClearIncomingPlayerList = sub_080170B0;
 ClearRfuPlayerList = sub_08017044;
 Debug_PrintString = nullsub_13;
@@ -1405,6 +1404,7 @@ SECTIONS {
         src/union_room.o(.text.CreateTrainerCardInBuffer);
         src/union_room.o(.text.Task_StartActivity);
         src/union_room.o(.text.Task_RunScriptAndFadeToActivity);
+        src/union_room.o(.text.CreateTask_RunScriptAndFadeToActivity);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
         src/union_room_player_avatar.o(.text);

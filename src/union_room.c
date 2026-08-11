@@ -164,7 +164,6 @@ extern u16 ReadAsU16(const u8 *ptr);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
-extern void CreateTask_RunScriptAndFadeToActivity(void);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
@@ -196,6 +195,7 @@ static u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *group,
 static void AskToJoinRfuGroup(struct WirelessLink_Group *data, s32 id);
 static void Task_ListenToWireless(u8 taskId);
 u8 GetNewLeaderCandidate(void);
+static void CreateTask_RunScriptAndFadeToActivity(void);
 
 void Task_Idle(u8 taskId)
 {
@@ -1758,4 +1758,9 @@ static void Task_RunScriptAndFadeToActivity(u8 taskId)
         }
         break;
     }
+}
+
+static void CreateTask_RunScriptAndFadeToActivity(void)
+{
+    CreateTask(Task_RunScriptAndFadeToActivity, 0);
 }
