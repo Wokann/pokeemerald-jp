@@ -2192,7 +2192,7 @@ _080B2DCC:
 	adds r1, r1, r4
 	ldr r1, [r1]
 	movs r0, #0
-	bl sub_0801B4A8
+	bl MysteryGift_TryIncrementStat
 	b _080B2E0E
 	.align 2, 0
 _080B2DEC: .4byte 0x020226A0
@@ -2209,7 +2209,7 @@ _080B2DF0:
 	adds r1, r1, r4
 	ldr r1, [r1]
 	movs r0, #1
-	bl sub_0801B4A8
+	bl MysteryGift_TryIncrementStat
 _080B2E0E:
 	bl InUnionRoom
 	cmp r0, #1

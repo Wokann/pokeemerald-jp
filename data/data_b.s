@@ -982,16 +982,16 @@ gUnknown_82C32E1: @ 0x82C32E1
 gUnknown_82C32F3: @ 0x82C32F3
 	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}{DYNAMIC_COLOR1}とわりま{DYNAMIC_COLOR3}た{PAUSE}ざ$"
 
-	.globl gUnknown_82C3304
-gUnknown_82C3304: @ 0x82C3304
+	.globl sReceivedGiftFlags
+sReceivedGiftFlags: @ 0x82C3304
 	.incbin "baserom_jp.gba", 0x2c3304, 0x28
 
-	.globl gUnknown_82C332C
-gUnknown_82C332C: @ 0x82C332C
+	.globl sMeventAssertFile
+sMeventAssertFile: @ 0x82C332C
 	.incbin "baserom_jp.gba", 0x2c332c, 0xc
 
-	.globl gUnknown_82C3338
-gUnknown_82C3338: @ 0x82C3338
+	.globl sMeventAssertExpr0
+sMeventAssertExpr0: @ 0x82C3338
 	.incbin "baserom_jp.gba", 0x2c3338, 0x4
 
 	.globl gUnknown_82C333C

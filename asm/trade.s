@@ -14743,7 +14743,7 @@ _0807E806:
 	adds r1, r1, r4
 	ldr r1, [r1]
 	movs r0, #2
-	bl sub_0801B4A8
+	bl MysteryGift_TryIncrementStat
 _0807E82E:
 	bl SetContinueGameWarpStatusToDynamicWarp
 	bl sub_081532BC

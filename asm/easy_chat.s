@@ -681,7 +681,7 @@ _0811AFFC:
 	.align 2, 0
 _0811B008: .4byte 0x03005AF0
 _0811B00C:
-	bl sub_0801AB30
+	bl GetQuestionnaireWordsPtr
 	adds r4, r0, #0
 _0811B012:
 	bl CleanupOverworldWindowsAndTilemaps
@@ -11310,7 +11310,7 @@ _0811FE0C: .4byte 0x0000FFFF
 	thumb_func_start sub_0811FE10
 sub_0811FE10: @ 0x0811FE10
 	push {lr}
-	bl sub_0801AB30
+	bl GetQuestionnaireWordsPtr
 	ldr r1, _0811FE28
 	adds r2, r1, #0
 	adds r1, r0, #6

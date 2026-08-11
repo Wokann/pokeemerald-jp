@@ -101,8 +101,11 @@
 #define MOVE_NAME_LENGTH 12
 #define NUM_QUESTIONNAIRE_WORDS 4
 #define QUIZ_QUESTION_LEN 9
-#define WONDER_CARD_TEXT_LENGTH 40
-#define WONDER_NEWS_TEXT_LENGTH 40
+#define WONDER_CARD_TITLE_LENGTH 18 // JP text lengths differ per card field
+#define WONDER_CARD_SUBTITLE_LENGTH 13
+#define WONDER_CARD_BODY_LENGTH 20
+#define WONDER_CARD_FOOTER_LENGTH 20
+#define WONDER_NEWS_TEXT_LENGTH 20 // JP news title/body lines are 20 bytes
 #define WONDER_CARD_BODY_TEXT_LINES 4
 #define WONDER_NEWS_BODY_TEXT_LINES 10
 #define TYPE_NAME_LENGTH 4 // JP type names are 4 kana + EOS (5 bytes); US is 6 + EOS.

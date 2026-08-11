@@ -396,7 +396,7 @@ _0801D568:
 _0801D574:
 	ldr r0, [r4, #0x14]
 	ldr r1, [r4, #0x4c]
-	bl sub_0801B040
+	bl MysteryGift_LoadLinkGameData
 	adds r0, r4, #0
 	adds r0, #0x24
 	ldr r2, [r4, #0x14]
@@ -412,15 +412,15 @@ _0801D58C:
 	b _0801D614
 _0801D598:
 	ldr r0, [r4, #0x18]
-	bl sub_0801ACE4
+	bl SaveWonderCard
 	b _0801D614
 _0801D5A0:
 	ldr r0, [r4, #0x18]
-	bl sub_0801AC74
+	bl IsWonderNewsSameAsSaved
 	cmp r0, #0
 	bne _0801D5BC
 	ldr r0, [r4, #0x18]
-	bl sub_0801AB50
+	bl SaveWonderNews
 	adds r0, r4, #0
 	movs r1, #0x13
 	movs r2, #0
@@ -437,7 +437,7 @@ _0801D5C8:
 	b _0801D60E
 _0801D5CC:
 	ldr r0, [r4, #0x18]
-	bl sub_0801AFC8
+	bl MysteryGift_TrySaveStamp
 	b _0801D614
 _0801D5D4:
 	ldr r0, [r4, #0x18]

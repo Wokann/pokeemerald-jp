@@ -150,7 +150,7 @@
 	specialvar 0x800D, sub_0813B54C
 	compare_var_to_value 0x800D, 0x1
 	goto_if 0x1, 0x82467F9
-	specialvar 0x800D, ValidateReceivedWonderCard
+	specialvar 0x800D, ValidateSavedWonderCard
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x82467FD
 	goto 0x82467F9

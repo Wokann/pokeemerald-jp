@@ -440,7 +440,7 @@ gSpecials:
 	def_special sub_081B85F8
 	def_special sub_08017B4C
 	def_special sub_08139980
-	def_special ValidateReceivedWonderCard
+	def_special ValidateSavedWonderCard
 	def_special HasAtLeastOneBerry
 	def_special sub_0802C614
 	def_special sub_0802E0BC

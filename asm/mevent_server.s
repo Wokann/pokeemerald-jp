@@ -442,7 +442,7 @@ _0801CE92:
 	ldr r0, [r5, #0x20]
 	movs r1, #1
 _0801CE96:
-	bl sub_0801B160
+	bl MysteryGift_ValidateLinkGameData
 	str r0, [r5, #4]
 	b _0801D238
 	.align 2, 0
@@ -478,7 +478,7 @@ _0801CED8:
 	bl mevent_first_if_not_null_else_second
 	adds r2, r0, #0
 	ldr r1, [r5, #0x20]
-	bl sub_0801B1AC
+	bl MysteryGift_CompareCardFlags
 	str r0, [r5, #4]
 	b _0801D238
 	.align 2, 0
@@ -530,7 +530,7 @@ _0801CF48:
 	bl mevent_first_if_not_null_else_second
 	adds r2, r0, #0
 	ldr r1, [r5, #0x20]
-	bl sub_0801B1C8
+	bl MysteryGift_CheckStamps
 	str r0, [r5, #4]
 	b _0801D238
 	.align 2, 0
@@ -548,7 +548,7 @@ _0801CF68:
 _0801CF7A:
 	ldr r0, [r5, #0x20]
 	ldr r1, [r4, #4]
-	bl MEventStruct_Unk1442CC_GetValueNFrom_unk_20
+	bl MysteryGift_GetCardStatFromLinkData
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	str r0, [r5, #4]
@@ -570,7 +570,7 @@ _0801CF98:
 _0801CFAC:
 	ldr r0, [r5, #0x20]
 	ldr r1, [r4, #8]
-	bl MEventStruct_Unk1442CC_CompareField_unk_16
+	bl MysteryGift_DoesQuestionnaireMatch
 	str r0, [r5, #4]
 	b _0801D238
 	.align 2, 0
@@ -816,7 +816,7 @@ _0801D1A6:
 	movs r2, #0xa4
 	bl memcpy
 	ldr r0, [r5, #0x18]
-	bl WonderCard_ResetInternalReceivedFlag
+	bl DisableWonderCardSending
 	b _0801D238
 	.align 2, 0
 _0801D1C0: .4byte 0x082C4A74

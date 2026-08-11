@@ -905,12 +905,12 @@ struct WonderCard
     u8 bgType:4;
     u8 sendType:2; // SEND_TYPE_*
     u8 maxStamps;
-    u8 titleText[WONDER_CARD_TEXT_LENGTH];
-    u8 subtitleText[WONDER_CARD_TEXT_LENGTH];
-    u8 bodyText[WONDER_CARD_BODY_TEXT_LINES][WONDER_CARD_TEXT_LENGTH];
-    u8 footerLine1Text[WONDER_CARD_TEXT_LENGTH];
-    u8 footerLine2Text[WONDER_CARD_TEXT_LENGTH];
-    //u8 padding[2];
+    u8 titleText[WONDER_CARD_TITLE_LENGTH];
+    u8 subtitleText[WONDER_CARD_SUBTITLE_LENGTH];
+    u8 bodyText[WONDER_CARD_BODY_TEXT_LINES][WONDER_CARD_BODY_LENGTH];
+    u8 footerLine1Text[WONDER_CARD_FOOTER_LENGTH];
+    u8 footerLine2Text[WONDER_CARD_FOOTER_LENGTH];
+    u8 padding[3]; // JP card is 0xA4 bytes
 };
 
 struct WonderCardMetadata
@@ -1063,8 +1063,8 @@ struct SaveBlock1
     /*0x31C7*/ struct ExternalEventFlags externalEventFlags;
     /*0x31DC*/ struct Roamer roamer;
     /*0x31F8*/ struct EnigmaBerry enigmaBerry;
-    /*0x322C*/ struct MysteryGiftSave mysteryGift;
-    /*0x3598*/ u8 unused_3598[0x180];
+    /*0x322C*/ struct MysteryGiftSave mysteryGift; // JP: 0x1E8 bytes (news 0xE0, card 0xA4)
+    /*0x3414*/ u8 unused_3414[0x304];
     /*0x3718*/ u32 trainerHillTimes[NUM_TRAINER_HILL_MODES];
     /*0x3728*/ struct RamScript ramScript;
     /*0x3B14*/ struct RecordMixingGift recordMixingGift;

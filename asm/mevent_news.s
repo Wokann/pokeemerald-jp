@@ -7,7 +7,7 @@
 GenerateRandomNews: @ 0x0801D978
 	push {r4, r5, lr}
 	adds r4, r0, #0
-	bl sub_0801AB1C
+	bl GetSavedWonderNewsMetadata
 	adds r5, r0, #0
 	movs r0, #3
 	adds r1, r4, #0
@@ -54,7 +54,7 @@ _0801D9C8:
 	thumb_func_start sub_0801D9D0
 sub_0801D9D0: @ 0x0801D9D0
 	push {lr}
-	bl sub_0801AB1C
+	bl GetSavedWonderNewsMetadata
 	movs r1, #0
 	strb r1, [r0]
 	strb r1, [r0, #1]
@@ -72,7 +72,7 @@ sub_0801D9EC: @ 0x0801D9EC
 	ldr r0, _0801DA28
 	bl GetVarPointer
 	adds r4, r0, #0
-	bl sub_0801AB1C
+	bl GetSavedWonderNewsMetadata
 	adds r2, r0, #0
 	ldr r0, [r2]
 	lsls r0, r0, #0x18
@@ -105,12 +105,12 @@ _0801DA2C: .4byte 0x01F30000
 sub_0801DA30: @ 0x0801DA30
 	push {r4, r5, r6, lr}
 	ldr r6, _0801DA50
-	bl sub_0801AB1C
+	bl GetSavedWonderNewsMetadata
 	adds r4, r0, #0
 	bl IsMysteryEventEnabled
 	cmp r0, #0
 	beq _0801DA4A
-	bl ValidateReceivedWonderNews
+	bl ValidateSavedWonderNews
 	cmp r0, #0
 	bne _0801DA54
 _0801DA4A:

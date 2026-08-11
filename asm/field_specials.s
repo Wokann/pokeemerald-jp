@@ -3715,7 +3715,7 @@ _08139908:
 _0813990C:
 	movs r0, #2
 _0813990E:
-	bl mevent_081445C0
+	bl MysteryGift_GetCardStat
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	b _08139926

@@ -86,13 +86,13 @@ extern const struct ListMenuTemplate sListMenu_Receive;
 extern const struct ListMenuTemplate sListMenu_ReceiveSendToss;
 extern const struct ListMenuTemplate sListMenu_ReceiveSend;
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
-extern bool32 ValidateReceivedWonderCard(void);
-extern bool32 ValidateReceivedWonderNews(void);
+extern bool32 ValidateSavedWonderCard(void);
+extern bool32 ValidateSavedWonderNews(void);
 extern struct WonderCard *GetSavedWonderCard(void);
 extern struct WonderNews *GetSavedWonderNews(void);
 extern void InitWonderCardResources(struct WonderCard *card, u8 *meventBuffer);
 extern void InitWonderNewsResources(struct WonderNews *news);
-extern u8 *sav1_get_mevent_buffer_2(void);
+extern struct WonderCardMetadata *GetSavedWonderCardMetadata(void);
 extern bool32 FadeToWonderCardMenu(void);
 extern bool32 FadeToWonderNewsMenu(void);
 extern void DestroyWonderCard(void);
@@ -502,9 +502,9 @@ s32 HandleGiftSelectMenu(u8 *textState, u16 *windowId, bool32 cannotToss, bool32
 bool32 ValidateCardOrNews(bool32 isWonderNews)
 {
     if (!isWonderNews)
-        return ValidateReceivedWonderCard();
+        return ValidateSavedWonderCard();
     else
-        return ValidateReceivedWonderNews();
+        return ValidateSavedWonderNews();
 }
 
 bool32 HandleLoadWonderCardOrNews(u8 *state, bool32 isWonderNews)
@@ -513,7 +513,7 @@ bool32 HandleLoadWonderCardOrNews(u8 *state, bool32 isWonderNews)
     {
     case 0:
         if (!isWonderNews)
-            InitWonderCardResources(GetSavedWonderCard(), sav1_get_mevent_buffer_2());
+            InitWonderCardResources(GetSavedWonderCard(), (u8 *)GetSavedWonderCardMetadata());
         else
             InitWonderNewsResources(GetSavedWonderNews());
         (*state)++;
@@ -781,9 +781,9 @@ extern void mevent_srv_new_wcard(void);
 extern void mevent_srv_init_wnews(void);
 extern u32 mevent_srv_common_do_exec(u16 *var);
 extern void GenerateRandomNews(u32 newsId);
-extern bool32 CheckReceivedGiftFromWonderCard(void);
-extern bool32 WonderCard_Test_Unk_08_6(void);
-extern bool32 WonderNews_Test_Unk_02(void);
+extern bool32 IsSavedWonderCardGiftNotReceived(void);
+extern bool32 IsSendingSavedWonderCardAllowed(void);
+extern bool32 IsSendingSavedWonderNewsAllowed(void);
 extern u32 MENews_GetInput(u16 newKeys);
 extern void MENews_RemoveScrollIndicatorArrowPair(void);
 extern void MENews_AddScrollIndicatorArrowPair(void);
@@ -839,14 +839,14 @@ void task00_mystery_gift(u8 taskId)
         {
         case 0: // "Wonder Cards"
             data->isWonderNews = FALSE;
-            if (ValidateReceivedWonderCard() == TRUE)
+            if (ValidateSavedWonderCard() == TRUE)
                 data->state = MG_STATE_LOAD_GIFT;
             else
                 data->state = MG_STATE_DONT_HAVE_ANY;
             break;
         case 1: // "Wonder News"
             data->isWonderNews = TRUE;
-            if (ValidateReceivedWonderNews() == TRUE)
+            if (ValidateSavedWonderNews() == TRUE)
                 data->state = MG_STATE_LOAD_GIFT;
             else
                 data->state = MG_STATE_DONT_HAVE_ANY;
@@ -993,7 +993,7 @@ void task00_mystery_gift(u8 taskId)
         switch (input)
         {
         case 0: // Yes
-            if (CheckReceivedGiftFromWonderCard() == TRUE)
+            if (IsSavedWonderCardGiftNotReceived() == TRUE)
                 data->state = MG_STATE_CLIENT_ASK_TOSS_UNRECEIVED;
             else
             {
@@ -1108,14 +1108,14 @@ void task00_mystery_gift(u8 taskId)
 
         if (!data->isWonderNews)
         {
-            if (WonderCard_Test_Unk_08_6())
+            if (IsSendingSavedWonderCardAllowed())
                 result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, FALSE);
             else
                 result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, TRUE);
         }
         else
         {
-            if (WonderNews_Test_Unk_02())
+            if (IsSendingSavedWonderNewsAllowed())
                 result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, FALSE);
             else
                 result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, TRUE);
@@ -1144,7 +1144,7 @@ void task00_mystery_gift(u8 taskId)
         switch (mevent_message_prompt_discard(&data->textState, &data->var, data->isWonderNews))
         {
         case 0: // Yes
-            if (!data->isWonderNews && CheckReceivedGiftFromWonderCard() == TRUE)
+            if (!data->isWonderNews && IsSavedWonderCardGiftNotReceived() == TRUE)
                 data->state = MG_STATE_ASK_TOSS_UNRECEIVED;
             else
                 data->state = MG_STATE_TOSS;
