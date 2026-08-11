@@ -976,3 +976,4 @@ sSpriteTileRanges = ABSOLUTE(0x03000A70);
 sSpritePaletteTags = ABSOLUTE(0x03000CF0);
 lman = ABSOLUTE(0x030041E0);
 gRfuLinkStatus = ABSOLUTE(0x03007630);
+gRfuSlotStatusNI = ABSOLUTE(0x03007620);
