@@ -1958,26 +1958,26 @@ _08018E24:
 	cmp r0, #1
 	bne _08018E32
 	movs r0, #6
-	bl MEvent_CreateTask_CardOrNewsWithFriend
+	bl CreateTask_LinkMysteryGiftWithFriend
 	b _08018E56
 _08018E32:
 	cmp r0, #0
 	bne _08018E56
 	movs r0, #6
-	bl MEvent_CreateTask_CardOrNewsOverWireless
+	bl CreateTask_LinkMysteryGiftOverWireless
 	b _08018E56
 _08018E3E:
 	ldrb r0, [r5, #0xd]
 	cmp r0, #1
 	bne _08018E4C
 	movs r0, #7
-	bl MEvent_CreateTask_CardOrNewsWithFriend
+	bl CreateTask_LinkMysteryGiftWithFriend
 	b _08018E56
 _08018E4C:
 	cmp r0, #0
 	bne _08018E56
 	movs r0, #7
-	bl MEvent_CreateTask_CardOrNewsOverWireless
+	bl CreateTask_LinkMysteryGiftOverWireless
 _08018E56:
 	movs r0, #6
 	b _08018D22

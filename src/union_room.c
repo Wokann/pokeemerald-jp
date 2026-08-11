@@ -139,13 +139,21 @@ extern const u8 sText_LinkWithFriendDropped[];
 extern const u8 sText_PleaseStartOver[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 sText_PlayerSentBackOK[];
+extern const u8 sText_WirelessLinkEstablished[];
+extern const u8 sText_WirelessLinkDropped[];
+extern const u8 sText_WirelessSearchCanceled[];
 extern const u8 sText_PlayerOKdRegistration[];
 extern const u8 sText_ChooseJoinCancel[];
+extern const u8 sText_ChooseTrainer[];
 extern const u8 sText_AwaitingOtherMembers[];
 extern const u8 sText_QuitBeingMember[];
 extern const u8 *const sPlayerUnavailableTexts[];
+extern const u8 *const sLinkDroppedTexts[];
 extern const struct RfuPlayerData sUnionRoomPlayer_DummyRfu;
 extern const u8 *const sChooseTrainerTexts[];
+extern const u8 sText_SearchingForWirelessSystemWait[];
+extern const u8 sText_AwaitingResponseFromWirelessSystem[];
+extern const u8 *const sNoWonderSharedTexts[];
 extern const u8 *const sCantTransmitToTrainerTexts[];
 extern const u8 *const sPlayerDisconnectedTexts[];
 extern const u8 *const sAcceptedActivityIds[23];
@@ -168,6 +176,8 @@ extern u16 ReadAsU16(const u8 *ptr);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
+extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
+extern bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
@@ -201,6 +211,8 @@ static void Task_ListenToWireless(u8 taskId);
 u8 GetNewLeaderCandidate(void);
 static void CreateTask_RunScriptAndFadeToActivity(void);
 static void Task_SendMysteryGift(u8 taskId);
+static void Task_CardOrNewsWithFriend(u8 taskId);
+static void Task_CardOrNewsOverWireless(u8 taskId);
 
 void Task_Idle(u8 taskId)
 {
@@ -1978,6 +1990,353 @@ static void Task_SendMysteryGift(u8 taskId)
         data->state++;
         break;
     case 17:
+        if (IsLinkTaskFinished())
+            DestroyTask(taskId);
+        break;
+    }
+}
+
+void CreateTask_LinkMysteryGiftWithFriend(u32 activity)
+{
+    u8 taskId;
+    struct WirelessLink_Group *data;
+
+    taskId = CreateTask(Task_CardOrNewsWithFriend, 0);
+    sWirelessLinkMain.group = data = (void *)(gTasks[taskId].data);
+    sGroup = data;
+
+    data->state = 0;
+    data->textState = 0;
+    data->isWonderNews = activity - ACTIVITY_WONDER_CARD_DUP;
+    gSpecialVar_Result = LINKUP_ONGOING;
+}
+
+static void Task_CardOrNewsWithFriend(u8 taskId)
+{
+    s32 id;
+    struct WindowTemplate listWinTemplate, playerNameWinTemplate;
+    struct WirelessLink_Group *data = sWirelessLinkMain.group;
+
+    switch (data->state)
+    {
+    case 0:
+        SetHostRfuGameData(data->isWonderNews + ACTIVITY_WONDER_CARD_DUP, 0, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_JoinGroup();
+        data->incomingPlayerList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        data->playerList = AllocZeroed(MAX_RFU_PLAYER_LIST_SIZE * sizeof(struct RfuPlayer));
+        data->state = 1;
+        break;
+    case 1:
+        MG_AddMessageTextPrinter(sText_ChooseTrainer);
+        data->state = 2;
+        break;
+    case 2:
+        ClearIncomingPlayerList(data->incomingPlayerList, RFU_CHILD_MAX);
+        ClearRfuPlayerList(data->playerList->players, MAX_RFU_PLAYER_LIST_SIZE);
+        data->listenTaskId = CreateTask_ListenForCompatiblePartners(data->incomingPlayerList, data->isWonderNews + LINK_GROUP_WONDER_CARD);
+
+        listWinTemplate = sWindowTemplate_GroupList;
+        listWinTemplate.baseBlock = GetMysteryGiftBaseBlock();
+        listWinTemplate.paletteNum = 12;
+        data->listWindowId = AddWindow(&listWinTemplate);
+
+        playerNameWinTemplate = sWindowTemplate_PlayerNameAndId;
+        playerNameWinTemplate.paletteNum = 12;
+        data->playerNameAndIdWindowId = AddWindow(&playerNameWinTemplate);
+
+        MG_DrawTextBorder(data->listWindowId);
+        gMultiuseListMenuTemplate = sListMenuTemplate_UnionRoomGroups;
+        gMultiuseListMenuTemplate.windowId = data->listWindowId;
+        data->listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+
+        MG_DrawTextBorder(data->playerNameAndIdWindowId);
+        FillWindowPixelBuffer(data->playerNameAndIdWindowId, PIXEL_FILL(1));
+        PutWindowTilemap(data->playerNameAndIdWindowId);
+        PrintPlayerNameAndIdOnWindow(data->playerNameAndIdWindowId);
+        CopyWindowToVram(data->playerNameAndIdWindowId, COPYWIN_GFX);
+
+        CopyBgTilemapBufferToVram(0);
+        data->leaderId = 0;
+        data->state = 3;
+        break;
+    case 3:
+        id = GetNewLeaderCandidate();
+        switch (id)
+        {
+        case 1:
+            PlaySE(SE_PC_LOGIN);
+        default:
+            RedrawListMenu(data->listTaskId);
+            break;
+        case 0:
+            id = ListMenu_ProcessInput(data->listTaskId);
+            if (JOY_NEW(A_BUTTON) && id != LIST_NOTHING_CHOSEN)
+            {
+                // Needed to match
+                u32 UNUSED activity = data->playerList->players[id].rfu.data.activity;
+
+                if (data->playerList->players[id].groupScheduledAnim == UNION_ROOM_SPAWN_IN && !data->playerList->players[id].rfu.data.startedActivity)
+                {
+                    data->leaderId = id;
+                    LoadWirelessStatusIndicatorSpriteGfx();
+                    CreateWirelessStatusIndicatorSprite(0, 0);
+                    RedrawListMenu(data->listTaskId);
+                    StringCopy(gStringVar1, &data->playerList->players[data->leaderId].rfu.name);
+                    CreateTask_RfuReconnectWithParent(data->playerList->players[data->leaderId].rfu.name, ReadAsU16(data->playerList->players[data->leaderId].rfu.data.compatibility.playerTrainerId));
+                    PlaySE(SE_POKENAV_ON);
+                    data->state = 4;
+                }
+                else
+                {
+                    PlaySE(SE_WALL_HIT);
+                }
+            }
+            else if (JOY_NEW(B_BUTTON))
+            {
+                data->state = 6;
+            }
+            break;
+        }
+        break;
+    case 4:
+        MG_AddMessageTextPrinter(sText_AwaitingPlayersResponse);
+        StringCopy(gStringVar1, &data->playerList->players[data->leaderId].rfu.name);
+        data->state = 5;
+        break;
+    case 5:
+        if (gReceivedRemoteLinkPlayers)
+        {
+            gPlayerCurrActivity = data->playerList->players[data->leaderId].rfu.data.activity;
+            data->state = 10;
+        }
+
+        switch (RfuGetStatus())
+        {
+        case RFU_STATUS_FATAL_ERROR:
+        case RFU_STATUS_CONNECTION_ERROR:
+        case RFU_STATUS_JOIN_GROUP_NO:
+            data->state = 8;
+            break;
+        case RFU_STATUS_JOIN_GROUP_OK:
+            MG_AddMessageTextPrinter(sText_PlayerSentBackOK);
+            RfuSetStatus(RFU_STATUS_OK, 0);
+            break;
+        }
+        break;
+    case 6:
+    case 8:
+    case 10:
+        DestroyListMenuTask(data->listTaskId, 0, 0);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(data->playerNameAndIdWindowId);
+        RemoveWindow(data->listWindowId);
+        DestroyTask(data->listenTaskId);
+        Free(data->playerList);
+        Free(data->incomingPlayerList);
+        data->state++;
+        break;
+    case 9:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sLinkDroppedTexts[RfuGetStatus()]))
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            DestroyTask(taskId);
+            LinkRfu_Shutdown();
+            gSpecialVar_Result = LINKUP_FAILED;
+        }
+        break;
+    case 7:
+        DestroyWirelessStatusIndicatorSprite();
+        MG_AddMessageTextPrinter(sText_PleaseStartOver);
+        DestroyTask(taskId);
+        LinkRfu_Shutdown();
+        gSpecialVar_Result = LINKUP_FAILED;
+        break;
+    case 11:
+        data->state++;
+        SetLinkStandbyCallback();
+        break;
+    case 12:
+        if (IsLinkTaskFinished())
+            DestroyTask(taskId);
+        break;
+    }
+}
+
+void CreateTask_LinkMysteryGiftOverWireless(u32 activity)
+{
+    u8 taskId;
+    struct WirelessLink_Group *data;
+
+    taskId = CreateTask(Task_CardOrNewsOverWireless, 0);
+    sWirelessLinkMain.group = data = (void *)(gTasks[taskId].data);
+    sGroup = data;
+
+    data->state = 0;
+    data->textState = 0;
+    data->isWonderNews = activity - ACTIVITY_WONDER_CARD_DUP;
+    gSpecialVar_Result = LINKUP_ONGOING;
+}
+
+static void Task_CardOrNewsOverWireless(u8 taskId)
+{
+    s32 id;
+    struct WindowTemplate winTemplate;
+    struct WirelessLink_Group *data = sWirelessLinkMain.group;
+
+    switch (data->state)
+    {
+    case 0:
+        SetHostRfuGameData(ACTIVITY_NONE, 0, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_JoinGroup();
+        data->incomingPlayerList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        data->playerList = AllocZeroed(MAX_RFU_PLAYER_LIST_SIZE * sizeof(struct RfuPlayer));
+        data->state = 1;
+        break;
+    case 1:
+        MG_AddMessageTextPrinter(sText_SearchingForWirelessSystemWait);
+        data->state = 2;
+        break;
+    case 2:
+        ClearIncomingPlayerList(data->incomingPlayerList, RFU_CHILD_MAX);
+        ClearRfuPlayerList(data->playerList->players, MAX_RFU_PLAYER_LIST_SIZE);
+        data->listenTaskId = CreateTask_ListenForWonderDistributor(data->incomingPlayerList, data->isWonderNews + LINK_GROUP_WONDER_CARD);
+
+        if (data->showListMenu)
+        {
+            winTemplate = sWindowTemplate_GroupList;
+            winTemplate.baseBlock = GetMysteryGiftBaseBlock();
+            data->listWindowId = AddWindow(&winTemplate);
+
+            MG_DrawTextBorder(data->listWindowId);
+            gMultiuseListMenuTemplate = sListMenuTemplate_UnionRoomGroups;
+            gMultiuseListMenuTemplate.windowId = data->listWindowId;
+            data->listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+
+            CopyBgTilemapBufferToVram(0);
+        }
+
+        data->leaderId = 0;
+        data->state = 3;
+        break;
+    case 3:
+        id = GetNewLeaderCandidate();
+        switch (id)
+        {
+        case 1:
+            PlaySE(SE_PC_LOGIN);
+        default:
+            if (data->showListMenu)
+                RedrawListMenu(data->listTaskId);
+            break;
+        case 0:
+            if (data->showListMenu)
+                id = ListMenu_ProcessInput(data->listTaskId);
+            if (data->refreshTimer > 120)
+            {
+                if (data->playerList->players[0].groupScheduledAnim == UNION_ROOM_SPAWN_IN && !data->playerList->players[0].rfu.data.startedActivity)
+                {
+                    if (HasWonderCardOrNewsByLinkGroup(&data->playerList->players[0].rfu.data, data->isWonderNews + LINK_GROUP_WONDER_CARD))
+                    {
+                        data->leaderId = 0;
+                        data->refreshTimer = 0;
+                        LoadWirelessStatusIndicatorSpriteGfx();
+                        CreateWirelessStatusIndicatorSprite(0, 0);
+                        CreateTask_RfuReconnectWithParent(data->playerList->players[0].rfu.name, ReadAsU16(data->playerList->players[0].rfu.data.compatibility.playerTrainerId));
+                        PlaySE(SE_POKENAV_ON);
+                        data->state = 4;
+                    }
+                    else
+                    {
+                        PlaySE(SE_BOO);
+                        data->state = 10;
+                    }
+                }
+            }
+            else if (JOY_NEW(B_BUTTON))
+            {
+                data->state = 6;
+                data->refreshTimer = 0;
+            }
+            data->refreshTimer++;
+            break;
+        }
+        break;
+    case 4:
+        MG_AddMessageTextPrinter(sText_AwaitingResponseFromWirelessSystem);
+        StringCopy(gStringVar1, &data->playerList->players[data->leaderId].rfu.name);
+        data->state = 5;
+        break;
+    case 5:
+        if (gReceivedRemoteLinkPlayers)
+        {
+            gPlayerCurrActivity = data->playerList->players[data->leaderId].rfu.data.activity;
+            data->state = 12;
+        }
+
+        switch (RfuGetStatus())
+        {
+        case RFU_STATUS_FATAL_ERROR:
+        case RFU_STATUS_CONNECTION_ERROR:
+        case RFU_STATUS_JOIN_GROUP_NO:
+            data->state = 8;
+            break;
+        case RFU_STATUS_JOIN_GROUP_OK:
+            MG_AddMessageTextPrinter(sText_WirelessLinkEstablished);
+            RfuSetStatus(RFU_STATUS_OK, 0);
+            break;
+        }
+        break;
+    case 6:
+    case 8:
+    case 10:
+    case 12:
+        if (data->showListMenu)
+        {
+            DestroyListMenuTask(data->listTaskId, 0, 0);
+            CopyBgTilemapBufferToVram(0);
+            RemoveWindow(data->listWindowId);
+        }
+        DestroyTask(data->listenTaskId);
+        Free(data->playerList);
+        Free(data->incomingPlayerList);
+        data->state++;
+        break;
+    case 9:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sText_WirelessLinkDropped))
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            DestroyTask(taskId);
+            LinkRfu_Shutdown();
+            gSpecialVar_Result = LINKUP_FAILED;
+        }
+        break;
+    case 7:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sText_WirelessSearchCanceled))
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            DestroyTask(taskId);
+            LinkRfu_Shutdown();
+            gSpecialVar_Result = LINKUP_FAILED;
+        }
+        break;
+    case 11:
+        if (PrintMysteryGiftMenuMessage(&data->textState, sNoWonderSharedTexts[data->isWonderNews]))
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            DestroyTask(taskId);
+            LinkRfu_Shutdown();
+            gSpecialVar_Result = LINKUP_FAILED;
+        }
+        break;
+    case 13:
+        data->state++;
+        SetLinkStandbyCallback();
+        break;
+    case 14:
         if (IsLinkTaskFinished())
             DestroyTask(taskId);
         break;
