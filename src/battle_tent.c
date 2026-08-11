@@ -73,6 +73,7 @@ extern const u16 sSlateportTentRewards[1];
 // code
 // Kept as naked asm with the 2-byte placeholder: agbcc would place the
 // literal pool inside the function and shift the module layout.
+#ifndef NONMATCHING
 __attribute__((naked)) void CallVerdanturfTentFunction(void)
 {
     __asm__(".syntax unified\n\t"
@@ -99,6 +100,14 @@ __attribute__((naked)) void sub_081B9668(void)
             "_081B9670: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
+void CallVerdanturfTentFunction(void)
+{
+    sVerdanturfTentFuncs[gSpecialVar_0x8004]();
+}
+#endif
 
 static void InitVerdanturfTentChallenge(void)
 {
@@ -157,6 +166,7 @@ static void GiveVerdanturfTentPrize(void)
     }
 }
 
+#ifndef NONMATCHING
 __attribute__((naked)) void CallFallarborTentFunction(void)
 {
     __asm__(".syntax unified\n\t"
@@ -183,6 +193,13 @@ __attribute__((naked)) void sub_081B9834(void)
             "_081B983C: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
+
+#else
+void CallFallarborTentFunction(void)
+{
+    sFallarborTentFuncs[gSpecialVar_0x8004]();
+}
+#endif
 
 static void InitFallarborTentChallenge(void)
 {
@@ -234,6 +251,7 @@ static void BufferFallarborTentTrainerName(void)
     GetFrontierTrainerName(gStringVar1, gTrainerBattleOpponent_A);
 }
 
+#ifndef NONMATCHING
 __attribute__((naked)) void CallSlateportTentFunction(void)
 {
     __asm__(".syntax unified\n\t"
@@ -260,6 +278,13 @@ __attribute__((naked)) void sub_081B99BC(void)
             "_081B99C4: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
+
+#else
+void CallSlateportTentFunction(void)
+{
+    sSlateportTentFuncs[gSpecialVar_0x8004]();
+}
+#endif
 
 static void InitSlateportTentChallenge(void)
 {
