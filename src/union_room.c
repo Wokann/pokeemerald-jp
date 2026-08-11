@@ -348,7 +348,7 @@ void UR_ClearBg0(void);
 extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
 extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
-extern u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
+static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
 static u32 GetResponseIdx_InviteToURoomActivity(s32 activity);
 extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies);
 bool32 UR_PrintFieldMessage(const u8 *str);
@@ -4117,6 +4117,11 @@ static u32 GetResponseIdx_InviteToURoomActivity(s32 activity)
     default:
         return 0;
     }
+}
+
+static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player)
+{
+    return PlayerHasMetTrainerBefore(ReadAsU16(player->rfu.data.compatibility.playerTrainerId), player->rfu.name);
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

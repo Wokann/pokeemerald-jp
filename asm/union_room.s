@@ -41,21 +41,6 @@
 
 
 
-	thumb_func_start sub_08017468
-sub_08017468: @ 0x08017468
-	push {r4, lr}
-	adds r4, r0, #0
-	adds r0, r4, #2
-	bl ReadAsU16
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	adds r4, #0x10
-	adds r1, r4, #0
-	bl PlayerHasMetTrainerBefore
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08017468
 
 	thumb_func_start sub_08017484
 sub_08017484: @ 0x08017484
