@@ -1055,7 +1055,6 @@ ListMenuLoadStdPalAt = sub_08199F54;
 CreateTask_ListenForCompatiblePartners = sub_08016AD0;
 CreateTask_ListenForWonderDistributor = sub_08016B00;
 HasWonderCardOrNewsByLinkGroup = sub_08016A2C;
-CreateTask_SearchForChildOrParent = sub_08016900;
 UR_RunTextPrinters = sub_08016B5C;
 GetUnionRoomPlayerGender = sub_080177B8;
 UnionRoomGetPlayerInteractionResponse = sub_08017484;
@@ -1520,6 +1519,9 @@ SECTIONS {
         src/union_room.o(.text.Task_InitUnionRoom);
         src/union_room.o(.text.BufferUnionRoomPlayerName);
         src/union_room.o(.text.HandlePlayerListUpdate);
+        src/union_room.o(.text.Task_SearchForChildOrParent);
+        src/union_room.o(.text.CreateTask_SearchForChildOrParent);
+        src/union_room.o(.text.Task_ListenForCompatiblePartners);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);

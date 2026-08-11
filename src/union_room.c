@@ -312,9 +312,11 @@ extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
 extern bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
-extern u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *incomingParentList, struct RfuIncomingPlayerList *incomingChildList, u8 linkGroup);
+static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
 extern void UR_RunTextPrinters(void);
 static u8 HandlePlayerListUpdate(void);
+static void Task_SearchForChildOrParent(u8 taskId);
+static void Task_ListenForCompatiblePartners(u8 taskId);
 extern s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
 extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
 extern void HandleCancelActivity(bool32 setData);
@@ -3600,4 +3602,69 @@ static u8 HandlePlayerListUpdate(void)
             retVal = PLIST_NEW_PLAYER;
 
     return retVal;
+}
+
+static void Task_SearchForChildOrParent(u8 taskId)
+{
+    s32 i, j;
+    struct RfuPlayerData rfu;
+    struct RfuIncomingPlayerList **list = (void *) gTasks[taskId].data;
+    bool8 isParent;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        isParent = Rfu_GetCompatiblePlayerData(&rfu.data, rfu.name, i);
+
+        if (!IsPartnerActivityAcceptable(rfu.data.activity, gTasks[taskId].data[4]))
+            rfu = sUnionRoomPlayer_DummyRfu;
+        if (rfu.data.compatibility.language != LANGUAGE_JAPANESE)
+            rfu = sUnionRoomPlayer_DummyRfu;
+
+        if (!isParent)
+        {
+            for (j = 0; j < i; j++)
+            {
+                if (!ArePlayersDifferent(&list[1]->players[j].rfu, &rfu))
+                    rfu = sUnionRoomPlayer_DummyRfu;
+            }
+            list[1]->players[i].rfu = rfu;
+            list[1]->players[i].active = ArePlayersDifferent(&list[1]->players[i].rfu, &sUnionRoomPlayer_DummyRfu);
+        }
+        else
+        {
+            list[0]->players[i].rfu = rfu;
+            list[0]->players[i].active = ArePlayersDifferent(&list[0]->players[i].rfu, &sUnionRoomPlayer_DummyRfu);
+        }
+    }
+}
+
+static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup)
+{
+    u8 taskId = CreateTask(Task_SearchForChildOrParent, 0);
+    struct RfuIncomingPlayerList **data = (void *)gTasks[taskId].data;
+    data[0] = parentList;
+    data[1] = childList;
+    gTasks[taskId].data[4] = linkGroup;
+    return taskId;
+}
+
+static void Task_ListenForCompatiblePartners(u8 taskId)
+{
+    s32 i, j;
+    struct RfuIncomingPlayerList **list = (void *) gTasks[taskId].data;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        Rfu_GetCompatiblePlayerData(&list[0]->players[i].rfu.data, list[0]->players[i].rfu.name, i);
+        if (!IsPartnerActivityAcceptable(list[0]->players[i].rfu.data.activity, gTasks[taskId].data[2]))
+        {
+            list[0]->players[i].rfu = sUnionRoomPlayer_DummyRfu;
+        }
+        for (j = 0; j < i; j++)
+        {
+            if (!ArePlayersDifferent(&list[0]->players[j].rfu, &list[0]->players[i].rfu))
+                list[0]->players[i].rfu = sUnionRoomPlayer_DummyRfu;
+        }
+        list[0]->players[i].active = ArePlayersDifferent(&list[0]->players[i].rfu, &sUnionRoomPlayer_DummyRfu);
+    }
 }
