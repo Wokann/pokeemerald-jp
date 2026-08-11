@@ -2272,6 +2272,9 @@ void CreateRibbonsMonListLoopedTask(s32 idx)
     menu->callback = GetRibbonsMonCurrentLoopedTaskActive;
 }
 
+#ifndef NONMATCHING
+// Verified: agbcc -O2 loads the menu pointer differently, so the byte-exact
+// naked asm stays the default.
 __attribute__((naked)) bool32 IsRibbonsSummaryLoopedTaskActive(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2284,6 +2287,14 @@ __attribute__((naked)) bool32 IsRibbonsSummaryLoopedTaskActive(void)
             "pop {r1}\n\t"
             ".syntax divided");
 }
+#else
+bool32 IsRibbonsSummaryLoopedTaskActive(void)
+{
+    struct Pokenav_RibbonsMonMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    return menu->callback();
+}
+#endif
+
 
 __attribute__((naked)) u32 sub_081CF554(s32 state)
 {
