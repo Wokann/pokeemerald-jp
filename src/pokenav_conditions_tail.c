@@ -1208,6 +1208,9 @@ void CreateSearchResultsLoopedTask(s32 idx)
     gfx->callback = GetSearchResultCurrentLoopedTaskActive;
 }
 
+#ifndef NONMATCHING
+// Verified: agbcc -O2 loads the substruct pointer differently, so the
+// byte-exact naked asm stays the default.
 __attribute__((naked)) bool32 IsRibbonsMonListLoopedTaskActive(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1220,6 +1223,14 @@ __attribute__((naked)) bool32 IsRibbonsMonListLoopedTaskActive(void)
             "pop {r1}\n\t"
             ".syntax divided");
 }
+#else
+bool32 IsRibbonsMonListLoopedTaskActive(void)
+{
+    struct Pokenav_SearchResultsGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    return gfx->callback();
+}
+#endif
+
 
 __attribute__((naked)) u32 sub_081CEB14(s32 state)
 {
