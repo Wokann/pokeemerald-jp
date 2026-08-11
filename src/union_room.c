@@ -10,6 +10,7 @@
 #include "constants/songs.h"
 #include "data.h"
 #include "decompress.h"
+#include "dynamic_placeholder_text_util.h"
 #include "event_data.h"
 #include "field_screen_effect.h"
 #include "fieldmap.h"
@@ -224,6 +225,12 @@ extern const u8 sText_PleaseStartOver[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 gSpeciesNamesJP[][6];
 extern const u8 gTypeNamesJP[][5];
+extern const u8 sText_BattleChallenge[];
+extern const u8 sText_ChatInvitation[];
+extern const u8 sText_ShowTrainerCard[];
+extern const u8 sText_ChatDropped[];
+extern const u8 sText_OfferToTradeEgg[];
+extern const u8 sText_OfferToTradeMon[];
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
 extern const u8 sText_WirelessLinkDropped[];
@@ -316,8 +323,8 @@ extern bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
 extern void StartScriptInteraction(void);
 extern u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
 extern bool32 IsPlayerFacingTradingBoard(void);
-extern void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
-extern bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
+static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
+static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
 extern s32 ListMenuHandler_AllItemsAvailable(u8 *textState, u8 *a2, u8 *a3, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate);
 extern s32 TradeBoardMenuHandler(u8 *textState, u8 *a2, u8 *a3, u8 *a4, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate, struct RfuPlayerList *playerList);
 extern void UR_ClearBg0(void);
@@ -3322,4 +3329,103 @@ static void Task_RunUnionRoom(u8 taskId)
             uroom->state = uroom->stateAfterPrint;
         break;
     }
+}
+
+void SetUsingUnionRoomStartMenu(void)
+{
+    if (InUnionRoom() == TRUE)
+        gSpecialVar_Result = UR_INTERACT_START_MENU;
+}
+
+static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data)
+{
+    if (gRecvCmds[1][1] != 0 && (gRecvCmds[1][0] & RFUCMD_MASK) == RFUCMD_SEND_PACKET)
+    {
+        data->recvActivityRequest[0] = gRecvCmds[1][1];
+        if (gRecvCmds[1][1] == (ACTIVITY_TRADE | IN_UNION_ROOM))
+        {
+            data->recvActivityRequest[1] = gRecvCmds[1][2];
+            data->recvActivityRequest[2] = gRecvCmds[1][3];
+        }
+    }
+}
+
+static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom)
+{
+    if (uroom->recvActivityRequest[0] != 0)
+    {
+        s32 id = GetChatLeaderActionRequestMessage(gStringVar4, gLinkPlayers[1].gender, &uroom->recvActivityRequest[0], uroom);
+        if (id == 0) // Error
+        {
+            return TRUE;
+        }
+        else if (id == 1) // Recieve activity request
+        {
+            uroom->state = UR_STATE_RECV_ACTIVITY_REQUEST;
+            gPlayerCurrActivity = uroom->recvActivityRequest[0];
+            return FALSE;
+        }
+        else if (id == 2) // No activity
+        {
+            uroom->state = UR_STATE_CANCEL_REQUEST_PRINT_MSG;
+            SetCloseLinkCallback();
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
+
+static s32 GetChatLeaderActionRequestMessage(u8 *dst, u32 gender, u16 *activityData, struct WirelessLink_URoom *uroom)
+{
+    s32 result = 0;
+    u16 species = SPECIES_NONE;
+    s32 i;
+
+    switch (activityData[0])
+    {
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_BattleChallenge);
+        result = 1;
+        break;
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_ChatInvitation);
+        result = 1;
+        break;
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+        ConvertIntToDecimalStringN(uroom->activityRequestStrbufs[0], sUnionRoomTrade.playerLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+        StringCopy(uroom->activityRequestStrbufs[1], gSpeciesNamesJP[sUnionRoomTrade.playerSpecies]);
+        for (i = 0; i < RFU_CHILD_MAX; i++)
+        {
+            if (gRfuLinkStatus->partner[i].serialNo == RFU_SERIAL_GAME)
+            {
+                ConvertIntToDecimalStringN(uroom->activityRequestStrbufs[2], activityData[2], STR_CONV_MODE_LEFT_ALIGN, 3);
+                StringCopy(uroom->activityRequestStrbufs[3], gSpeciesNamesJP[activityData[1]]);
+                species = activityData[1];
+                break;
+            }
+        }
+        if (species == SPECIES_EGG)
+        {
+            StringCopy(dst, sText_OfferToTradeEgg);
+        }
+        else
+        {
+            for (i = 0; i < RFU_CHILD_MAX; i++)
+                DynamicPlaceholderTextUtil_SetPlaceholderPtr(i, uroom->activityRequestStrbufs[i]);
+            DynamicPlaceholderTextUtil_ExpandPlaceholders(dst, sText_OfferToTradeMon);
+        }
+        result = 1;
+        break;
+    case ACTIVITY_CARD | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_ShowTrainerCard);
+        result = 1;
+        break;
+    case ACTIVITY_NONE | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_ChatDropped);
+        result = 2;
+        break;
+    }
+
+    return result;
 }

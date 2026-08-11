@@ -127,7 +127,7 @@ struct WirelessLink_URoom
     u8 tradeBoardListMenuId;                             // 0x4A
     u8 filler_0x4B;                                      // 0x4B
     u16 playerSendBuffer[6];                             // 0x4C-0x57
-    u8 filler_0x58[0x80 - 0x58];                         // 0x58-0x7F
+    u8 activityRequestStrbufs[4][10];                    // 0x58-0x7F
     u16 partnerYesNoResponse;                            // 0x80
     u16 recvActivityRequest[3];                          // 0x82-0x87
     struct UnionRoomObject objects[MAX_UNION_ROOM_LEADERS]; // 0x88-0xA7
