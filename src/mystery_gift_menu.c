@@ -9,6 +9,7 @@
 #include "bg.h"
 #include "window.h"
 #include "strings.h"
+#include "list_menu.h"
 #include "menu.h"
 #include "palette.h"
 #include "constants/songs.h"
@@ -30,6 +31,14 @@ extern const u8 gJPText_MysteryGift[];
 extern const u8 gJPText_DecideStop[];
 extern const u8 sMG_Ereader_TextColor_2[];
 extern u8 sDownArrowCounterAndYCoordIdx[2];
+extern const struct ListMenuTemplate sListMenuTemplate_ThreeOptions;
+extern const struct ListMenuItem sListMenuItems_CardsOrNews[];
+extern const struct ListMenuItem sListMenuItems_WirelessOrFriend[];
+extern const struct WindowTemplate sWindowTemplate_ThreeOptions;
+extern const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide;
+extern const struct WindowTemplate sWindowTemplate_YesNoMsg;
+extern const struct WindowTemplate sWindowTemplate_YesNoBox;
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 // JP: still in asm/mystery_gift.s; revert to C names as they are converted.
 extern void bgid_upload_textbox_1(u8 bgId);
 extern void task_add_00_mystery_gift(void);
@@ -300,4 +309,75 @@ bool32 PrintStringAndWait2Seconds(u8 *counter, const u8 *str)
     {
         return FALSE;
     }
+}
+
+u32 MysteryGift_HandleThreeOptionMenu(u8 *unused0, u16 *unused1, u8 whichMenu)
+{
+    struct ListMenuTemplate listMenuTemplate = sListMenuTemplate_ThreeOptions;
+    s32 response;
+
+    if (whichMenu == 0)
+        listMenuTemplate.items = sListMenuItems_CardsOrNews;
+    else
+        listMenuTemplate.items = sListMenuItems_WirelessOrFriend;
+
+    response = DoMysteryGiftListMenu(&sWindowTemplate_ThreeOptions, &listMenuTemplate, 1, 0xA, 0xE0);
+    if (response != LIST_NOTHING_CHOSEN)
+    {
+        ClearWindowTilemap(WIN_UNK);
+        CopyWindowToVram(WIN_UNK, COPYWIN_MAP);
+    }
+    return response;
+}
+
+s8 DoMysteryGiftYesNo(u8 *textState, u16 *windowId, bool8 yesNoBoxPlacement, const u8 *str)
+{
+    struct WindowTemplate windowTemplate;
+    s8 input;
+
+    switch (*textState)
+    {
+    case 0:
+        StringExpandPlaceholders(gStringVar4, str);
+        if (yesNoBoxPlacement == 0)
+            *windowId = AddWindow(&sWindowTemplate_YesNoMsg_Wide);
+        else
+            *windowId = AddWindow(&sWindowTemplate_YesNoMsg);
+        FillWindowPixelBuffer(*windowId, 0x11);
+        AddTextPrinterParameterized4(*windowId, FONT_NORMAL, 2, 2, 0, 1, sMG_Ereader_TextColor_2, 0, gStringVar4);
+        DrawTextBorderOuter(*windowId, 0x001, 0x0F);
+        CopyWindowToVram(*windowId, COPYWIN_GFX);
+        PutWindowTilemap(*windowId);
+        (*textState)++;
+        break;
+    case 1:
+        windowTemplate = sWindowTemplate_YesNoBox;
+        if (yesNoBoxPlacement == 0)
+            windowTemplate.tilemapTop = 9;
+        else
+            windowTemplate.tilemapTop = 15;
+        CreateYesNoMenuAtPos(&windowTemplate, FONT_NORMAL, 2, 2, 10, 14, 0);
+        (*textState)++;
+        break;
+    case 2:
+        input = Menu_ProcessInputNoWrapClearOnChoose();
+        if (input == MENU_B_PRESSED || input == 0 || input == 1)
+        {
+            *textState = 0;
+            rbox_fill_rectangle(*windowId);
+            ClearWindowTilemap(*windowId);
+            CopyWindowToVram(*windowId, COPYWIN_MAP);
+            RemoveWindow(*windowId);
+            return input;
+        }
+        break;
+    case 0xFF:
+        *textState = 0;
+        rbox_fill_rectangle(*windowId);
+        ClearWindowTilemap(*windowId);
+        CopyWindowToVram(*windowId, COPYWIN_MAP);
+        RemoveWindow(*windowId);
+        return MENU_B_PRESSED;
+    }
+    return MENU_NOTHING_CHOSEN;
 }
