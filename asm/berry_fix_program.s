@@ -3,8 +3,8 @@
 .text
 .syntax unified
 
-	thumb_func_start berry_fix_text_update
-berry_fix_text_update: @ 0x081BEEE4
+	thumb_func_start SpriteCB_FallingFossil
+SpriteCB_FallingFossil: @ 0x081BEEE4
 	push {r4, r5, lr}
 	sub sp, #4
 	adds r5, r0, #0
@@ -41,7 +41,7 @@ _081BEF10:
 	movs r2, #0
 	str r2, [sp]
 	movs r3, #0x10
-	bl CB2_InitBerryFixProgram
+	bl UpdateDisintegrationEffect
 	adds r0, r4, #1
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
@@ -61,10 +61,10 @@ _081BEF4C:
 	pop {r4, r5}
 	pop {r0}
 	bx r0
-	thumb_func_end berry_fix_text_update
+	thumb_func_end SpriteCB_FallingFossil
 
-	thumb_func_start CB2_InitBerryFixProgram
-CB2_InitBerryFixProgram: @ 0x081BEF54
+	thumb_func_start UpdateDisintegrationEffect
+UpdateDisintegrationEffect: @ 0x081BEF54
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -165,7 +165,7 @@ CB2_InitBerryFixProgram: @ 0x081BEF54
 	bx r0
 	.align 2, 0
 _081BF01C: .4byte 0x030012A0
-	thumb_func_end CB2_InitBerryFixProgram
+	thumb_func_end UpdateDisintegrationEffect
 
 	thumb_func_start berry_fix_bg_hide
 berry_fix_bg_hide: @ 0x081BF020
@@ -447,4 +447,3 @@ _081BF272:
 	.align 2, 0
 _081BF27C: .4byte 0x03002360
 	thumb_func_end berry_fix_main
-
