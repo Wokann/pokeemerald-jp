@@ -19,6 +19,11 @@
 #include "union_room.h"
 #include "title_screen.h"
 #include "ereader_screen.h"
+#include "mystery_gift_client.h"
+#include "mystery_gift_server.h"
+#include "mystery_gift_view.h"
+#include "constants/cable_club.h"
+#include "event_data.h"
 
 // JP: ROM data bound via ld_script_jp.txt (JP uses fixed ROM addresses).
 extern const struct BgTemplate sBGTemplates[];
@@ -559,7 +564,9 @@ bool32 TearDownCardOrNews_ReturnToTopMenu(bool32 isWonderNews)
     return TRUE;
 }
 
-s8 mevent_message_prompt_discard(u8 *textState, u16 *windowId, bool32 isWonderNews)
+// JP: declared s32 so callers treat the result as already sign-extended
+// (the base ROM's callers do not re-sign-extend this s8 value).
+s32 mevent_message_prompt_discard(u8 *textState, u16 *windowId, bool32 isWonderNews)
 {
     if (isWonderNews == 0)
         return DoMysteryGiftYesNo(textState, windowId, 1, sText_DiscardWonderCard);
@@ -703,4 +710,578 @@ bool32 PrintMGSendStatus(u8 *state, u16 *counter, u8 unused, u32 status)
         return PrintMGSuccessMessage(state, str, counter);
     else
         return PrintMysteryGiftMenuMessage(state, str);
+}
+
+// States for task00_mystery_gift.  Mirrors the US MG_STATE_* enum; JP uses
+// the same values (0..37).
+enum {
+    MG_STATE_TO_MAIN_MENU,
+    MG_STATE_MAIN_MENU,
+    MG_STATE_DONT_HAVE_ANY,
+    MG_STATE_SOURCE_PROMPT,
+    MG_STATE_SOURCE_PROMPT_INPUT,
+    MG_STATE_CLIENT_LINK_START,
+    MG_STATE_CLIENT_LINK_WAIT,
+    MG_STATE_CLIENT_COMMUNICATING,
+    MG_STATE_CLIENT_LINK,
+    MG_STATE_CLIENT_YES_NO,
+    MG_STATE_CLIENT_MESSAGE,
+    MG_STATE_CLIENT_ASK_TOSS,
+    MG_STATE_CLIENT_ASK_TOSS_UNRECEIVED,
+    MG_STATE_CLIENT_LINK_END,
+    MG_STATE_CLIENT_COMM_COMPLETED,
+    MG_STATE_CLIENT_RESULT_MSG,
+    MG_STATE_CLIENT_ERROR,
+    MG_STATE_SAVE_LOAD_GIFT,
+    MG_STATE_LOAD_GIFT,
+    MG_STATE_UNUSED,
+    MG_STATE_HANDLE_GIFT_INPUT,
+    MG_STATE_HANDLE_GIFT_SELECT,
+    MG_STATE_ASK_TOSS,
+    MG_STATE_ASK_TOSS_UNRECEIVED,
+    MG_STATE_TOSS,
+    MG_STATE_TOSS_SAVE,
+    MG_STATE_TOSSED,
+    MG_STATE_GIFT_INPUT_EXIT,
+    MG_STATE_RECEIVE,
+    MG_STATE_SEND,
+    MG_STATE_SERVER_LINK_WAIT,
+    MG_STATE_SERVER_LINK_START,
+    MG_STATE_SERVER_LINK,
+    MG_STATE_SERVER_LINK_END,
+    MG_STATE_SERVER_LINK_END_WAIT,
+    MG_STATE_SERVER_RESULT_MSG,
+    MG_STATE_SERVER_ERROR,
+    MG_STATE_EXIT,
+};
+
+struct MysteryGiftTaskData
+{
+    u16 var; // Multipurpose
+    u16 unused1;
+    u16 unused2;
+    u16 unused3;
+    u8 state;
+    u8 textState;
+    u8 unused4;
+    u8 unused5;
+    bool8 isWonderNews;
+    bool8 sourceIsFriend;
+    u8 msgId;
+    u8 *clientMsg;
+};
+
+// JP: still in asm/mevent*.s; revert to C names as they are converted.
+extern void mevent_client_do_init(u8 isWonderNews);
+extern u32 mevent_client_do_exec(u16 *var);
+extern const u8 *mevent_client_get_buffer(void);
+extern void mevent_client_set_param(u32 param);
+extern void mevent_client_inc_flag(void);
+extern void mevent_srv_new_wcard(void);
+extern void mevent_srv_init_wnews(void);
+extern u32 mevent_srv_common_do_exec(u16 *var);
+extern void GenerateRandomNews(u32 newsId);
+extern bool32 CheckReceivedGiftFromWonderCard(void);
+extern bool32 WonderCard_Test_Unk_08_6(void);
+extern bool32 WonderNews_Test_Unk_02(void);
+extern u32 MENews_GetInput(u16 newKeys);
+extern void MENews_RemoveScrollIndicatorArrowPair(void);
+extern void MENews_AddScrollIndicatorArrowPair(void);
+
+// JP: text bound via ld_script_jp.txt.
+extern const u8 sJPText_MgDontHaveCard[];
+extern const u8 sJPText_MgDontHaveNews[];
+extern const u8 sJPText_MgWhereCard[];
+extern const u8 sJPText_MgWhereNews[];
+extern const u8 sJPText_MgCommunicating[];
+extern const u8 sJPText_MgCommCompleted[];
+extern const u8 sJPText_MgThrowAwayCard[];
+extern const u8 sJPText_MgHaventReceived[];
+extern const u8 sJPText_MgDiscardConfirm[];
+extern const u8 sJPText_MgSendingCard[];
+extern const u8 sJPText_MgSendingNews[];
+
+void task00_mystery_gift(u8 taskId);
+
+void task_add_00_mystery_gift(void)
+{
+    u8 taskId = CreateTask(task00_mystery_gift, 0);
+    struct MysteryGiftTaskData *data = (void *)gTasks[taskId].data;
+
+    data->state = MG_STATE_TO_MAIN_MENU;
+    data->textState = 0;
+    data->unused4 = 0;
+    data->unused5 = 0;
+    data->isWonderNews = FALSE;
+    data->sourceIsFriend = FALSE;
+    data->var = 0;
+    data->unused1 = 0;
+    data->unused2 = 0;
+    data->unused3 = 0;
+    data->msgId = 0;
+    data->clientMsg = AllocZeroed(0x40);
+}
+
+void task00_mystery_gift(u8 taskId)
+{
+    struct MysteryGiftTaskData *data = (void *)gTasks[taskId].data;
+    u32 successMsg, input;
+    const u8 *msg;
+
+    switch (data->state)
+    {
+    case MG_STATE_TO_MAIN_MENU:
+        data->state = MG_STATE_MAIN_MENU;
+        break;
+    case MG_STATE_MAIN_MENU:
+        // Main Mystery Gift menu, player can select Wonder Cards or News (or exit)
+        switch (MysteryGift_HandleThreeOptionMenu(&data->textState, &data->var, FALSE))
+        {
+        case 0: // "Wonder Cards"
+            data->isWonderNews = FALSE;
+            if (ValidateReceivedWonderCard() == TRUE)
+                data->state = MG_STATE_LOAD_GIFT;
+            else
+                data->state = MG_STATE_DONT_HAVE_ANY;
+            break;
+        case 1: // "Wonder News"
+            data->isWonderNews = TRUE;
+            if (ValidateReceivedWonderNews() == TRUE)
+                data->state = MG_STATE_LOAD_GIFT;
+            else
+                data->state = MG_STATE_DONT_HAVE_ANY;
+            break;
+        case LIST_CANCEL:
+            data->state = MG_STATE_EXIT;
+            break;
+        }
+        break;
+    case MG_STATE_DONT_HAVE_ANY:
+        if (!data->isWonderNews)
+        {
+            if (PrintMysteryGiftMenuMessage(&data->textState, sJPText_MgDontHaveCard))
+                data->state = MG_STATE_SOURCE_PROMPT;
+        }
+        else
+        {
+            if (PrintMysteryGiftMenuMessage(&data->textState, sJPText_MgDontHaveNews))
+                data->state = MG_STATE_SOURCE_PROMPT;
+        }
+        break;
+    case MG_STATE_SOURCE_PROMPT:
+        if (!data->isWonderNews)
+            MG_AddMessageTextPrinter(sJPText_MgWhereCard);
+        else
+            MG_AddMessageTextPrinter(sJPText_MgWhereNews);
+        data->state = MG_STATE_SOURCE_PROMPT_INPUT;
+        break;
+    case MG_STATE_SOURCE_PROMPT_INPUT:
+        // Choose where to access the Wonder Card/News from
+        switch (MysteryGift_HandleThreeOptionMenu(&data->textState, &data->var, TRUE))
+        {
+        case 0: // "Wireless Communication"
+            ClearMessage();
+            data->state = MG_STATE_CLIENT_LINK_START;
+            data->sourceIsFriend = FALSE;
+            break;
+        case 1: // "Friend"
+            ClearMessage();
+            data->state = MG_STATE_CLIENT_LINK_START;
+            data->sourceIsFriend = TRUE;
+            break;
+        case LIST_CANCEL:
+            ClearMessage();
+            if (ValidateCardOrNews(data->isWonderNews))
+                data->state = MG_STATE_LOAD_GIFT;
+            else
+                data->state = MG_STATE_TO_MAIN_MENU;
+            break;
+        }
+        break;
+    case MG_STATE_CLIENT_LINK_START:
+        *gStringVar1 = EOS;
+        *gStringVar2 = EOS;
+        *gStringVar3 = EOS;
+
+        switch (data->isWonderNews)
+        {
+        case FALSE:
+            if (data->sourceIsFriend == TRUE)
+                CreateTask_LinkMysteryGiftWithFriend(ACTIVITY_WONDER_CARD_DUP);
+            else if (data->sourceIsFriend == FALSE)
+                CreateTask_LinkMysteryGiftOverWireless(ACTIVITY_WONDER_CARD_DUP);
+            break;
+        case TRUE:
+            if (data->sourceIsFriend == TRUE)
+                CreateTask_LinkMysteryGiftWithFriend(ACTIVITY_WONDER_NEWS_DUP);
+            else if (data->sourceIsFriend == FALSE)
+                CreateTask_LinkMysteryGiftOverWireless(ACTIVITY_WONDER_NEWS_DUP);
+            break;
+        }
+        data->state = MG_STATE_CLIENT_LINK_WAIT;
+        break;
+    case MG_STATE_CLIENT_LINK_WAIT:
+        if (gReceivedRemoteLinkPlayers)
+        {
+            ClearScreenInBg0(TRUE);
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            mevent_client_do_init(data->isWonderNews);
+        }
+        else if (gSpecialVar_Result == LINKUP_FAILED)
+        {
+            // Link failed, return to link start menu
+            ClearScreenInBg0(TRUE);
+            data->state = MG_STATE_SOURCE_PROMPT;
+        }
+        break;
+    case MG_STATE_CLIENT_COMMUNICATING:
+        MG_AddMessageTextPrinter(sJPText_MgCommunicating);
+        data->state = MG_STATE_CLIENT_LINK;
+        break;
+    case MG_STATE_CLIENT_LINK:
+        switch (mevent_client_do_exec(&data->var) - 2)
+        {
+        case 4: // link end
+            Rfu_SetCloseLinkCallback();
+            data->msgId = data->var;
+            data->state = MG_STATE_CLIENT_LINK_END;
+            break;
+        case 3: // copy message
+            memcpy(data->clientMsg, mevent_client_get_buffer(), 0x40);
+            mevent_client_inc_flag();
+            break;
+        case 1: // print message
+            data->state = MG_STATE_CLIENT_MESSAGE;
+            break;
+        case 0: // yes/no prompt
+            data->state = MG_STATE_CLIENT_YES_NO;
+            break;
+        case 2: // ask toss
+            data->state = MG_STATE_CLIENT_ASK_TOSS;
+            StringCopy(gStringVar1, gLinkPlayers[0].name);
+            break;
+        }
+        break;
+    case MG_STATE_CLIENT_YES_NO:
+        input = DoMysteryGiftYesNo(&data->textState, &data->var, FALSE, mevent_client_get_buffer());
+        switch (input)
+        {
+        case 0: // Yes
+            mevent_client_set_param(FALSE);
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            break;
+        case 1: // No
+        case MENU_B_PRESSED:
+            mevent_client_set_param(TRUE);
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            break;
+        }
+        break;
+    case MG_STATE_CLIENT_MESSAGE:
+        if (PrintMysteryGiftMenuMessage(&data->textState, mevent_client_get_buffer()))
+        {
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+        }
+        break;
+    case MG_STATE_CLIENT_ASK_TOSS:
+        // Player is receiving a new Wonder Card/News but needs to toss an existing one to make room.
+        // Ask for confirmation.
+        input = DoMysteryGiftYesNo(&data->textState, &data->var, FALSE, sJPText_MgThrowAwayCard);
+        switch (input)
+        {
+        case 0: // Yes
+            if (CheckReceivedGiftFromWonderCard() == TRUE)
+                data->state = MG_STATE_CLIENT_ASK_TOSS_UNRECEIVED;
+            else
+            {
+                mevent_client_set_param(FALSE);
+                mevent_client_inc_flag();
+                data->state = MG_STATE_CLIENT_COMMUNICATING;
+            }
+            break;
+        case 1: // No
+        case MENU_B_PRESSED:
+            mevent_client_set_param(TRUE);
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            break;
+        }
+        break;
+    case MG_STATE_CLIENT_ASK_TOSS_UNRECEIVED:
+        // Player has selected to toss a Wonder Card that they haven't received the gift for.
+        // Ask for confirmation again.
+        input = DoMysteryGiftYesNo(&data->textState, &data->var, FALSE, sJPText_MgHaventReceived);
+        switch (input)
+        {
+        case 0: // Yes
+            mevent_client_set_param(FALSE);
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            break;
+        case 1: // No
+        case MENU_B_PRESSED:
+            mevent_client_set_param(TRUE);
+            mevent_client_inc_flag();
+            data->state = MG_STATE_CLIENT_COMMUNICATING;
+            break;
+        }
+        break;
+    case MG_STATE_CLIENT_LINK_END:
+        if (gReceivedRemoteLinkPlayers == 0)
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            data->state = MG_STATE_CLIENT_COMM_COMPLETED;
+        }
+        break;
+    case MG_STATE_CLIENT_COMM_COMPLETED:
+        if (PrintStringAndWait2Seconds(&data->textState, sJPText_MgCommCompleted))
+        {
+            if (data->sourceIsFriend == TRUE)
+                StringCopy(gStringVar1, gLinkPlayers[0].name);
+            data->state = MG_STATE_CLIENT_RESULT_MSG;
+        }
+        break;
+    case MG_STATE_CLIENT_RESULT_MSG:
+        msg = mevent_message(&successMsg, data->isWonderNews, data->sourceIsFriend, data->msgId);
+        if (msg == NULL)
+            msg = data->clientMsg;
+        if (successMsg)
+            input = PrintMGSuccessMessage(&data->textState, msg, &data->var);
+        else
+            input = PrintMysteryGiftMenuMessage(&data->textState, msg);
+        // input var re-used, here it is TRUE if the message is finished
+        if (input)
+        {
+            if (data->msgId == CLI_MSG_NEWS_RECEIVED)
+            {
+                if (data->sourceIsFriend == TRUE)
+                    GenerateRandomNews(1);
+                else
+                    GenerateRandomNews(2);
+            }
+            if (!successMsg)
+                data->state = MG_STATE_TO_MAIN_MENU;
+            else
+                data->state = MG_STATE_SAVE_LOAD_GIFT;
+        }
+        break;
+    case MG_STATE_SAVE_LOAD_GIFT:
+        if (mevent_save_game(&data->textState))
+            data->state = MG_STATE_LOAD_GIFT;
+        break;
+    case MG_STATE_LOAD_GIFT:
+        if (HandleLoadWonderCardOrNews(&data->textState, data->isWonderNews))
+            data->state = MG_STATE_HANDLE_GIFT_INPUT;
+        break;
+    case MG_STATE_UNUSED:
+        break;
+    case MG_STATE_HANDLE_GIFT_INPUT:
+        if (!data->isWonderNews)
+        {
+            // Handle Wonder Card input
+            if (JOY_NEW(A_BUTTON))
+                data->state = MG_STATE_HANDLE_GIFT_SELECT;
+            if (JOY_NEW(B_BUTTON))
+                data->state = MG_STATE_GIFT_INPUT_EXIT;
+        }
+        else
+        {
+            switch (MENews_GetInput(gMain.newKeys))
+            {
+            case NEWS_INPUT_A:
+                MENews_RemoveScrollIndicatorArrowPair();
+                data->state = MG_STATE_HANDLE_GIFT_SELECT;
+                break;
+            case NEWS_INPUT_B:
+                data->state = MG_STATE_GIFT_INPUT_EXIT;
+                break;
+            }
+        }
+        break;
+    case MG_STATE_HANDLE_GIFT_SELECT:
+    {
+        // A Wonder Card/News has been selected, handle its menu
+        u32 result;
+
+        if (!data->isWonderNews)
+        {
+            if (WonderCard_Test_Unk_08_6())
+                result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, FALSE);
+            else
+                result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, TRUE);
+        }
+        else
+        {
+            if (WonderNews_Test_Unk_02())
+                result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, FALSE);
+            else
+                result = HandleGiftSelectMenu(&data->textState, &data->var, data->isWonderNews, TRUE);
+        }
+        switch (result)
+        {
+        case 0: // Receive
+            data->state = MG_STATE_RECEIVE;
+            break;
+        case 1: // Send
+            data->state = MG_STATE_SEND;
+            break;
+        case 2: // Toss
+            data->state = MG_STATE_ASK_TOSS;
+            break;
+        case LIST_CANCEL:
+            if (data->isWonderNews == TRUE)
+                MENews_AddScrollIndicatorArrowPair();
+            data->state = MG_STATE_HANDLE_GIFT_INPUT;
+            break;
+        }
+        break;
+    }
+    case MG_STATE_ASK_TOSS:
+        // Player is attempting to discard a saved Wonder Card/News
+        switch (mevent_message_prompt_discard(&data->textState, &data->var, data->isWonderNews))
+        {
+        case 0: // Yes
+            if (!data->isWonderNews && CheckReceivedGiftFromWonderCard() == TRUE)
+                data->state = MG_STATE_ASK_TOSS_UNRECEIVED;
+            else
+                data->state = MG_STATE_TOSS;
+            break;
+        case 1: // No
+        case MENU_B_PRESSED:
+            data->state = MG_STATE_HANDLE_GIFT_SELECT;
+            break;
+        }
+        break;
+    case MG_STATE_ASK_TOSS_UNRECEIVED:
+        // Player has selected to toss a Wonder Card that they haven't received the gift for.
+        // Ask for confirmation again.
+        input = DoMysteryGiftYesNo(&data->textState, &data->var, TRUE, sJPText_MgDiscardConfirm);
+        switch (input)
+        {
+        case 0: // Yes
+            data->state = MG_STATE_TOSS;
+            break;
+        case 1: // No
+        case MENU_B_PRESSED:
+            data->state = MG_STATE_HANDLE_GIFT_SELECT;
+            break;
+        }
+        break;
+    case MG_STATE_TOSS:
+        if (TearDownCardOrNews_ReturnToTopMenu(data->isWonderNews))
+        {
+            DestroyNewsOrCard(data->isWonderNews);
+            data->state = MG_STATE_TOSS_SAVE;
+        }
+        break;
+    case MG_STATE_TOSS_SAVE:
+        if (mevent_save_game(&data->textState))
+            data->state = MG_STATE_TOSSED;
+        break;
+    case MG_STATE_TOSSED:
+        if (mevent_message_was_thrown_away(&data->textState, data->isWonderNews))
+            data->state = MG_STATE_TO_MAIN_MENU;
+        break;
+    case MG_STATE_GIFT_INPUT_EXIT:
+        if (TearDownCardOrNews_ReturnToTopMenu(data->isWonderNews))
+            data->state = MG_STATE_TO_MAIN_MENU;
+        break;
+    case MG_STATE_RECEIVE:
+        if (TearDownCardOrNews_ReturnToTopMenu(data->isWonderNews))
+            data->state = MG_STATE_SOURCE_PROMPT;
+        break;
+    case MG_STATE_SEND:
+        if (TearDownCardOrNews_ReturnToTopMenu(data->isWonderNews))
+        {
+            switch (data->isWonderNews)
+            {
+            case FALSE:
+                CreateTask_SendMysteryGift(ACTIVITY_WONDER_CARD_DUP);
+                break;
+            case TRUE:
+                CreateTask_SendMysteryGift(ACTIVITY_WONDER_NEWS_DUP);
+                break;
+            }
+            data->sourceIsFriend = TRUE;
+            data->state = MG_STATE_SERVER_LINK_WAIT;
+        }
+        break;
+    case MG_STATE_SERVER_LINK_WAIT:
+        if (gReceivedRemoteLinkPlayers)
+        {
+            ClearScreenInBg0(TRUE);
+            data->state = MG_STATE_SERVER_LINK_START;
+        }
+        else if (gSpecialVar_Result == LINKUP_FAILED)
+        {
+            ClearScreenInBg0(TRUE);
+            data->state = MG_STATE_LOAD_GIFT;
+        }
+        break;
+    case MG_STATE_SERVER_LINK_START:
+        *gStringVar1 = EOS;
+        *gStringVar2 = EOS;
+        *gStringVar3 = EOS;
+
+        if (!data->isWonderNews)
+        {
+            MG_AddMessageTextPrinter(sJPText_MgSendingCard);
+            mevent_srv_new_wcard();
+        }
+        else
+        {
+            MG_AddMessageTextPrinter(sJPText_MgSendingNews);
+            mevent_srv_init_wnews();
+        }
+        data->state = MG_STATE_SERVER_LINK;
+        break;
+    case MG_STATE_SERVER_LINK:
+        if (mevent_srv_common_do_exec(&data->var) == SVR_RET_END)
+        {
+            data->msgId = data->var;
+            data->state = MG_STATE_SERVER_LINK_END;
+        }
+        break;
+    case MG_STATE_SERVER_LINK_END:
+        Rfu_SetCloseLinkCallback();
+        StringCopy(gStringVar1, gLinkPlayers[1].name);
+        data->state = MG_STATE_SERVER_LINK_END_WAIT;
+        break;
+    case MG_STATE_SERVER_LINK_END_WAIT:
+        if (gReceivedRemoteLinkPlayers == 0)
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            data->state = MG_STATE_SERVER_RESULT_MSG;
+        }
+        break;
+    case MG_STATE_SERVER_RESULT_MSG:
+        if (PrintMGSendStatus(&data->textState, &data->var, data->sourceIsFriend, data->msgId))
+        {
+            if (data->sourceIsFriend == TRUE && data->msgId == SVR_MSG_NEWS_SENT)
+            {
+                GenerateRandomNews(3);
+                data->state = MG_STATE_SAVE_LOAD_GIFT;
+            }
+            else
+            {
+                data->state = MG_STATE_TO_MAIN_MENU;
+            }
+        }
+        break;
+    case MG_STATE_SERVER_ERROR:
+    case MG_STATE_CLIENT_ERROR:
+        // There was an error during the link process.
+        if (PrintMysteryGiftMenuMessage(&data->textState, sJPText_MeventMsg11))
+            data->state = MG_STATE_TO_MAIN_MENU;
+        break;
+    case MG_STATE_EXIT:
+        CloseLink();
+        Free(data->clientMsg);
+        DestroyTask(taskId);
+        SetMainCallback2(MainCB_FreeAllBuffersAndReturnToInitTitleScreen);
+        break;
+    }
 }
