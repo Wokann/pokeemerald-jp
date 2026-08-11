@@ -1531,119 +1531,41 @@ bool8 ScrCmd_showcontestwinner(struct ScriptContext *ctx)
     return TRUE;
 }
 
-__attribute__((naked)) bool8 ScrCmd_braillemessage(struct ScriptContext *ctx)
+bool8 ScrCmd_braillemessage(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sl\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6, r7}\n\t"
-            "sub sp, #0x20\n\t"
-            "bl ScriptReadWord\n\t"
-            "adds r1, r0, #0\n\t"
-            "ldrb r0, [r1]\n\t"
-            "mov sb, r0\n\t"
-            "ldrb r0, [r1, #1]\n\t"
-            "mov sl, r0\n\t"
-            "ldrb r4, [r1, #2]\n\t"
-            "ldrb r5, [r1, #3]\n\t"
-            "ldrb r0, [r1, #4]\n\t"
-            "mov r8, r0\n\t"
-            "ldrb r6, [r1, #5]\n\t"
-            "ldr r7, 1f\n\t"
-            "adds r1, #6\n\t"
-            "adds r0, r7, #0\n\t"
-            "bl StringExpandPlaceholders\n\t"
-            "mov r2, sb\n\t"
-            "adds r2, #1\n\t"
-            "lsls r2, r2, #0x18\n\t"
-            "lsrs r2, r2, #0x18\n\t"
-            "mov r3, sl\n\t"
-            "adds r3, #1\n\t"
-            "lsls r3, r3, #0x18\n\t"
-            "lsrs r3, r3, #0x18\n\t"
-            "mov r1, sb\n\t"
-            "subs r4, r4, r1\n\t"
-            "subs r4, #1\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "mov r0, sl\n\t"
-            "subs r5, r5, r0\n\t"
-            "subs r5, #1\n\t"
-            "lsls r5, r5, #0x18\n\t"
-            "lsrs r5, r5, #0x18\n\t"
-            "mov r0, r8\n\t"
-            "subs r0, r0, r1\n\t"
-            "mov r8, r0\n\t"
-            "movs r1, #1\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "add r8, r1\n\t"
-            "mov r0, r8\n\t"
-            "lsls r0, r0, #0x1b\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "mov r8, r0\n\t"
-            "mov r1, sl\n\t"
-            "subs r6, r6, r1\n\t"
-            "subs r6, #1\n\t"
-            "lsls r6, r6, #0x1b\n\t"
-            "lsrs r6, r6, #0x18\n\t"
-            "str r4, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "movs r0, #0xf\n\t"
-            "str r0, [sp, #8]\n\t"
-            "movs r0, #1\n\t"
-            "str r0, [sp, #0xc]\n\t"
-            "add r0, sp, #0x10\n\t"
-            "movs r1, #0\n\t"
-            "bl CreateWindowTemplate\n\t"
-            "ldr r0, [sp, #0x10]\n\t"
-            "ldr r1, [sp, #0x14]\n\t"
-            "str r0, [sp, #0x18]\n\t"
-            "str r1, [sp, #0x1c]\n\t"
-            "ldr r4, 2f\n\t"
-            "add r0, sp, #0x18\n\t"
-            "bl AddWindow\n\t"
-            "strb r0, [r4]\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #0x85\n\t"
-            "lsls r1, r1, #2\n\t"
-            "movs r2, #0xe0\n\t"
-            "bl LoadUserWindowBorderGfx\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #0\n\t"
-            "bl DrawStdWindowFrame\n\t"
-            "ldrb r0, [r4]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldrb r0, [r4]\n\t"
-            "str r6, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #6\n\t"
-            "adds r2, r7, #0\n\t"
-            "mov r3, r8\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #3\n\t"
-            "bl CopyWindowToVram\n\t"
-            "movs r0, #0\n\t"
-            "add sp, #0x20\n\t"
-            "pop {r3, r4, r5}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "mov sl, r5\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2\n\t"
-            "1: .word 0x02021C7C\n\t"
-            "2: .word 0x03000F30\n\t.syntax divided\n");
+    u8 *ptr = (u8 *)ScriptReadWord(ctx);
+    struct WindowTemplate winTemplate;
+    u8 x1, y1, x2, y2, x3, y3;
+    u8 xWindow, yWindow, width, height, xText, yText;
+
+    // JP build positions the window/text from the six bytes of the
+    // brailleformat macro directly; the US build ignores them.
+    x1 = ptr[0];
+    y1 = ptr[1];
+    x2 = ptr[2];
+    y2 = ptr[3];
+    x3 = ptr[4];
+    y3 = ptr[5];
+    StringExpandPlaceholders(gStringVar4, ptr + 6);
+
+    xWindow = x1 + 1;
+    yWindow = y1 + 1;
+    width = x2 - x1 - 1;
+    height = y2 - y1 - 1;
+    xText = (x3 - x1 - 1) * 8;
+    yText = (y3 - y1 - 1) * 8;
+
+    winTemplate = CreateWindowTemplate(0, xWindow, yWindow, width, height, 0xF, 1);
+    sBrailleWindowId = AddWindow(&winTemplate);
+    LoadUserWindowBorderGfx(sBrailleWindowId, 0x214, BG_PLTT_ID(14));
+    DrawStdWindowFrame(sBrailleWindowId, FALSE);
+    PutWindowTilemap(sBrailleWindowId);
+    FillWindowPixelBuffer(sBrailleWindowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(sBrailleWindowId, FONT_BRAILLE, gStringVar4, xText, yText, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sBrailleWindowId, COPYWIN_FULL);
+    return FALSE;
 }
+
 
 
 
