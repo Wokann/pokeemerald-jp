@@ -55,8 +55,6 @@ typedef u16 (*SpecialFunc)(void);
 typedef void (*NativeFunc)(void);
 
 
-static u8 sBrailleWindowId;
-
 extern const SpecialFunc gSpecials[];
 extern const u8 *gStdScripts[];
 extern const u8 *gStdScripts_End[];
@@ -1651,7 +1649,7 @@ __attribute__((naked)) bool8 ScrCmd_braillemessage(struct ScriptContext *ctx)
 
 bool8 ScrCmd_mossdeepgym4(struct ScriptContext *ctx)
 {
-    ScrCmd_bufferitemnameplural(ctx);
+    ScrCmd_closebraillemessage(ctx);
     return FALSE;
 }
 
@@ -2384,20 +2382,10 @@ bool8 ScrCmd_setmonmetlocation(struct ScriptContext *ctx)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ScrCmd_bufferitemnameplural(struct ScriptContext *ctx)
+void ScrCmd_closebraillemessage(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, lr}\n\t"
-            "ldr r4, 1f\n\t"
-            "ldrb r0, [r4]\n\t"
-            "movs r1, #1\n\t"
-            "bl ClearStdWindowAndFrame\n\t"
-            "ldrb r0, [r4]\n\t"
-            "bl RemoveWindow\n\t"
-            "pop {r4}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            "1: .word 0x03000F30\n\t.syntax divided\n");
+    ClearStdWindowAndFrame(sBrailleWindowId, TRUE);
+    RemoveWindow(sBrailleWindowId);
 }
 
 bool8 ScrCmd_buffertrainerclassname(struct ScriptContext *ctx)
