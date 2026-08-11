@@ -6110,16 +6110,16 @@ gUnknown_84E8A0C: @ 0x84E8A0C
 gUnknown_84E8A40: @ 0x84E8A40
 	.incbin "build/data/data.bin", 0x24cc9c, 0x8
 
-	.globl gUnknown_84E8A48
-gUnknown_84E8A48: @ 0x84E8A48
+	.globl gResetRtcBgTemplates
+gResetRtcBgTemplates: @ 0x84E8A48
 	.incbin "build/data/data.bin", 0x24cca4, 0x4
 
-	.globl gUnknown_84E8A4C
-gUnknown_84E8A4C: @ 0x84E8A4C
+	.globl gResetRtcWindowTemplates
+gResetRtcWindowTemplates: @ 0x84E8A4C
 	.incbin "build/data/data.bin", 0x24cca8, 0x18
 
-	.globl gUnknown_84E8A64
-gUnknown_84E8A64: @ 0x84E8A64
+	.globl gResetRtcInputTimeWindow
+gResetRtcInputTimeWindow: @ 0x84E8A64
 	.incbin "build/data/data.bin", 0x24ccc0, 0x8
 
 	.globl gUnknown_84E8A6C
@@ -6134,15 +6134,21 @@ gUnknown_84E8A6F: @ 0x84E8A6F
 gUnknown_84E8A71: @ 0x84E8A71
 	.incbin "build/data/data.bin", 0x24cccd, 0xa3
 
-	.globl gUnknown_84E8B14
-gUnknown_84E8B14: @ 0x84E8B14
+	.globl gResetRtcArrowPalette
+gResetRtcArrowPalette: @ 0x84E8B14
 	.incbin "build/data/data.bin", 0x24cd70, 0x2c
 
-	.globl gUnknown_84E8B40
-gUnknown_84E8B40: @ 0x84E8B40
-	.string "${SE_RG_SHOP}た’ゲぺ{BLUE}ゃゴぺ{BLUE}{RED}ゴぺ{BLUE}たÜろ{BLUE}だ{SE_EGG_HATCH}{BLUE}ず{GREEN}ん$"
-	.string "ポケモン$バッグ$ポケナビ${MUS_RG_VS_TRAINER}$レポート${DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}$"
-	.string "とじる$リタイア$や{DYNAMIC_COLOR4}む$"
+	.globl gResetRtcArrowSpriteTemplate
+gResetRtcArrowSpriteTemplate: @ 0x84E8B40
+	.incbin "build/data/data.bin", 0x24cd9c, 0x18
+
+	.globl gUnknown_84E8B58
+gUnknown_84E8B58: @ 0x84E8B58
+	.incbin "build/data/data.bin", 0x24cdb4, 0x4
+
+	.globl gUnknown_84E8B5C
+gUnknown_84E8B5C: @ 0x84E8B5C
+	.incbin "build/data/data.bin", 0x24cdb8, 0x28
 
 	.globl gUnknown_84E8B84
 gUnknown_84E8B84: @ 0x84E8B84
