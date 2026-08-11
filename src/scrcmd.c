@@ -128,24 +128,12 @@ bool8 ScrCmd_gotonative(struct ScriptContext *ctx)
     return TRUE;
 }
 
-__attribute__((naked)) bool8 ScrCmd_special(struct ScriptContext *ctx)
+bool8 ScrCmd_special(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {lr}\n\t"
-            "bl ScriptReadHalfword\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "ldr r1, 1f\n\t"
-            "lsrs r0, r0, #0xe\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            ".globl ScrCmd_showelevmenu\n\t"
-            "ScrCmd_showelevmenu:\n\t"
-            "movs r0, #0\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".2byte 0\n\t"
-            "1: .word 0x081DAF8C\n\t.syntax divided\n");
+    u16 index = ScriptReadHalfword(ctx);
+
+    gSpecials[index]();
+    return FALSE;
 }
 
 
@@ -154,33 +142,12 @@ __attribute__((naked)) bool8 ScrCmd_special(struct ScriptContext *ctx)
 
 
 
-__attribute__((naked)) bool8 ScrCmd_specialvar(struct ScriptContext *ctx)
+bool8 ScrCmd_specialvar(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "adds r5, r0, #0\n\t"
-            "bl ScriptReadHalfword\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "bl GetVarPointer\n\t"
-            "adds r6, r0, #0\n\t"
-            "ldr r4, 1f\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl ScriptReadHalfword\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0xe\n\t"
-            "adds r0, r0, r4\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "strh r0, [r6]\n\t"
-            ".globl ScrCmd_cmdDA\n\t"
-            "ScrCmd_cmdDA:\n\t"
-            "movs r0, #0\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2\n\t"
-            "1: .word 0x081DAF8C\n\t.syntax divided\n");
+    u16 *var = GetVarPointer(ScriptReadHalfword(ctx));
+
+    *var = gSpecials[ScriptReadHalfword(ctx)]();
+    return FALSE;
 }
 
 
@@ -188,18 +155,18 @@ __attribute__((naked)) bool8 ScrCmd_specialvar(struct ScriptContext *ctx)
 
 
 
-__attribute__((naked)) bool8 ScrCmd_callnative(struct ScriptContext *ctx)
+bool8 ScrCmd_callnative(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {lr}\n\t"
-            "bl ScriptReadWord\n\t"
-            "bl _call_via_r0\n\t"
-            "movs r0, #0\n\t"
-            ".globl sub_08098CE0\n\t"
-            "sub_08098CE0:\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t.syntax divided\n");
+    NativeFunc func = (NativeFunc)ScriptReadWord(ctx);
+
+    func();
+    return FALSE;
 }
+
+// JP ROM labels aliased to the shared return-FALSE tails of the handlers above.
+__asm__(".set ScrCmd_showelevmenu, ScrCmd_special + 0x14");
+__asm__(".set ScrCmd_cmdDA, ScrCmd_specialvar + 0x28");
+__asm__(".set sub_08098CE0, ScrCmd_callnative + 0x0C");
 
 
 
