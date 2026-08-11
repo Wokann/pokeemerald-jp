@@ -909,6 +909,8 @@ sUnionRoomLocalIds = ABSOLUTE(0x082C2BC4);
 gAssertFile_rfu_union_tool = ABSOLUTE(0x082C2BDC);
 gAssertCond_UnionObjWork = ABSOLUTE(0x082C2BF0);
 sRoamerLocations = ABSOLUTE(0x085ADB74);
+sWireless_ASCIItoRSETable = ABSOLUTE(0x082C00C0);
+sWireless_RSEtoASCIITable = ABSOLUTE(0x082C01C0);
 
 SECTIONS {
     . = 0x2000000;
@@ -1105,6 +1107,13 @@ SECTIONS {
         src/link_rfu_3.o(.text.RfuUnusedQueue_Enqueue);
         src/link_rfu_3.o(.text.RfuUnusedQueue_Dequeue);
         src/link_rfu_3.o(.text.PopulateArrayWithSequence);
+        src/link_rfu_3.o(.text.PkmnStrToASCII);
+        src/link_rfu_3.o(.text.ASCIIToPkmnStr);
+        src/link_rfu_3.o(.text.GetConnectedChildStrength);
+        src/link_rfu_3.o(.text.InitHostRfuGameData);
+        src/link_rfu_3.o(.text.Rfu_GetCompatiblePlayerData);
+        src/link_rfu_3.o(.text.Rfu_GetWonderDistributorPlayerData);
+        src/link_rfu_3.o(.text.CopyHostRfuGameDataAndUsername);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

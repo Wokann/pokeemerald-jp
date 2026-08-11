@@ -21,7 +21,8 @@
 #define RFUCMD_DISCONNECT_PARENT   0xEE00
 
 #define RFU_SERIAL_GAME                0x0002 // Serial number for Pokémon game (FRLG or Emerald)
-#define RFU_SERIAL_WONDER_DISTRIBUTOR  0x7F7D // Serial number for distributing Wonder Cards / News
+// JP uses 0x7F7F here (US uses 0x7F7D); verified against the JP ROM.
+#define RFU_SERIAL_WONDER_DISTRIBUTOR  0x7F7F // Serial number for distributing Wonder Cards / News
 #define RFU_SERIAL_UNKNOWN             0x0000 // Unreferenced acceptable serial number. Gamecube?
 #define RFU_SERIAL_END                 0xFFFF
 

@@ -440,7 +440,7 @@ _080123A4:
 	ldr r0, [r5]
 	adds r1, r0, #0
 	adds r1, #0x10
-	bl sub_0800DA5C
+	bl CopyHostRfuGameDataAndUsername
 	ldr r1, [r5]
 	movs r3, #0
 	movs r0, #0
@@ -4395,7 +4395,7 @@ _080145F4:
 	ldr r0, [r5]
 	adds r1, r0, #0
 	adds r1, #0x10
-	bl sub_0800DA5C
+	bl CopyHostRfuGameDataAndUsername
 	ldr r1, [r5]
 	movs r3, #0
 	movs r0, #0
@@ -8316,7 +8316,7 @@ _080167D4:
 	lsrs r2, r2, #0x18
 	mov r0, sp
 	ldr r1, [sp, #0x18]
-	bl sub_0800D948
+	bl Rfu_GetCompatiblePlayerData
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	mov r0, sp
@@ -8520,7 +8520,7 @@ _08016952:
 	lsls r2, r3, #0x18
 	lsrs r2, r2, #0x18
 	str r3, [sp]
-	bl sub_0800D948
+	bl Rfu_GetCompatiblePlayerData
 	ldr r0, [r6]
 	adds r0, r0, r5
 	ldrb r0, [r0, #0xa]
@@ -8670,7 +8670,7 @@ _08016A72:
 	adds r1, #0x10
 	lsls r2, r6, #0x18
 	lsrs r2, r2, #0x18
-	bl sub_0800DA00
+	bl Rfu_GetWonderDistributorPlayerData
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08016A96

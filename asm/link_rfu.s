@@ -3,413 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start PkmnStrToASCII
-PkmnStrToASCII: @ 0x0800D780
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	movs r3, #0
-	ldrb r0, [r1]
-	cmp r0, #0xff
-	beq _0800D7A4
-	ldr r5, _0800D7B0
-	adds r2, r1, #0
-_0800D790:
-	adds r1, r4, r3
-	ldrb r0, [r2]
-	adds r0, r0, r5
-	ldrb r0, [r0]
-	strb r0, [r1]
-	adds r2, #1
-	adds r3, #1
-	ldrb r0, [r2]
-	cmp r0, #0xff
-	bne _0800D790
-_0800D7A4:
-	adds r1, r4, r3
-	movs r0, #0
-	strb r0, [r1]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800D7B0: .4byte 0x082C01C0
-	thumb_func_end PkmnStrToASCII
-
-	thumb_func_start ASCIIToPkmnStr
-ASCIIToPkmnStr: @ 0x0800D7B4
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	movs r3, #0
-	ldrb r0, [r1]
-	cmp r0, #0
-	beq _0800D7D8
-	ldr r5, _0800D7E4
-	adds r2, r1, #0
-_0800D7C4:
-	adds r1, r4, r3
-	ldrb r0, [r2]
-	adds r0, r0, r5
-	ldrb r0, [r0]
-	strb r0, [r1]
-	adds r2, #1
-	adds r3, #1
-	ldrb r0, [r2]
-	cmp r0, #0
-	bne _0800D7C4
-_0800D7D8:
-	adds r1, r4, r3
-	movs r0, #0xff
-	strb r0, [r1]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800D7E4: .4byte 0x082C00C0
-	thumb_func_end ASCIIToPkmnStr
-
-	thumb_func_start sub_0800D7E8
-sub_0800D7E8: @ 0x0800D7E8
-	push {r4, r5, r6, r7, lr}
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	movs r6, #0
-	ldr r0, _0800D810
-	ldr r4, [r0]
-	ldrb r2, [r4, #2]
-	ldrb r1, [r4]
-	adds r7, r0, #0
-	cmp r1, #1
-	bne _0800D83E
-	movs r3, #0
-	ands r1, r2
-	cmp r1, #0
-	beq _0800D81A
-	cmp r5, #1
-	bne _0800D814
-	ldrb r0, [r4, #0xa]
-	b _0800D858
-	.align 2, 0
-_0800D810: .4byte 0x03007630
-_0800D814:
-	adds r0, r6, #1
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-_0800D81A:
-	lsrs r2, r2, #1
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #3
-	bhi _0800D856
-	movs r0, #1
-	ands r0, r2
-	cmp r0, #0
-	beq _0800D81A
-	adds r0, r6, #1
-	cmp r5, r0
-	bne _0800D814
-_0800D834:
-	ldr r0, [r7]
-	adds r0, #0xa
-	adds r0, r0, r3
-	ldrb r0, [r0]
-	b _0800D858
-_0800D83E:
-	movs r3, #0
-	movs r1, #1
-_0800D842:
-	adds r0, r2, #0
-	ands r0, r1
-	cmp r0, #0
-	bne _0800D834
-	lsrs r2, r2, #1
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #3
-	bls _0800D842
-_0800D856:
-	movs r0, #0
-_0800D858:
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0800D7E8
-
-	thumb_func_start sub_0800D860
-sub_0800D860: @ 0x0800D860
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	adds r7, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	mov sb, r1
-	movs r4, #0
-	ldr r0, _0800D93C
-	mov r8, r0
-	adds r6, r7, #2
-	ldr r0, [r0]
-	adds r5, r0, #0
-	adds r5, #0xa
-_0800D87E:
-	adds r0, r6, r4
-	adds r1, r5, r4
-	ldrb r1, [r1]
-	strb r1, [r0]
-	adds r4, #1
-	cmp r4, #1
-	ble _0800D87E
-	movs r4, #0
-	lsls r2, r2, #7
-	mov ip, r2
-	adds r1, r7, #4
-_0800D894:
-	adds r0, r1, r4
-	strb r3, [r0]
-	asrs r3, r3, #8
-	adds r4, #1
-	cmp r4, #3
-	ble _0800D894
-	mov r1, r8
-	ldr r0, [r1]
-	ldrb r0, [r0, #8]
-	movs r6, #1
-	movs r1, #1
-	ands r1, r0
-	ldrb r2, [r7, #0xb]
-	movs r5, #2
-	rsbs r5, r5, #0
-	adds r0, r5, #0
-	ands r0, r2
-	orrs r0, r1
-	strb r0, [r7, #0xb]
-	movs r4, #0x7f
-	mov r1, sb
-	ands r1, r4
-	ldrb r2, [r7, #0xa]
-	movs r0, #0x80
-	rsbs r0, r0, #0
-	ands r0, r2
-	orrs r0, r1
-	ands r0, r4
-	mov r1, ip
-	orrs r0, r1
-	strb r0, [r7, #0xa]
-	ldrb r0, [r7]
-	movs r1, #0x10
-	rsbs r1, r1, #0
-	ands r1, r0
-	orrs r1, r6
-	ldrb r2, [r7, #1]
-	movs r0, #0x3d
-	rsbs r0, r0, #0
-	ands r0, r2
-	movs r2, #0xc
-	orrs r0, r2
-	strb r0, [r7, #1]
-	movs r0, #0x11
-	rsbs r0, r0, #0
-	ands r1, r0
-	subs r0, #0x10
-	ands r1, r0
-	subs r0, #0x20
-	ands r1, r0
-	strb r1, [r7]
-	ldr r0, _0800D940
-	bl FlagGet
-	lsls r0, r0, #7
-	ldrb r1, [r7]
-	ands r4, r1
-	orrs r4, r0
-	strb r4, [r7]
-	bl IsNationalPokedexEnabled
-	ands r0, r6
-	ldrb r1, [r7, #1]
-	ands r5, r1
-	orrs r5, r0
-	strb r5, [r7, #1]
-	ldr r0, _0800D944
-	bl FlagGet
-	ands r6, r0
-	lsls r6, r6, #1
-	ldrb r1, [r7, #1]
-	movs r0, #3
-	rsbs r0, r0, #0
-	ands r0, r1
-	orrs r0, r6
-	strb r0, [r7, #1]
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800D93C: .4byte 0x03005AF0
-_0800D940: .4byte 0x0000087F
-_0800D944: .4byte 0x00000864
-	thumb_func_end sub_0800D860
-
-	thumb_func_start sub_0800D948
-sub_0800D948: @ 0x0800D948
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	adds r7, r0, #0
-	mov r8, r1
-	lsls r2, r2, #0x18
-	lsrs r5, r2, #0x18
-	ldr r0, _0800D99C
-	ldrb r0, [r0, #6]
-	cmp r0, #1
-	bne _0800D9A4
-	movs r0, #1
-	mov sb, r0
-	ldr r6, _0800D9A0
-	ldr r0, [r6]
-	lsls r4, r5, #5
-	adds r0, r0, r4
-	ldrh r0, [r0, #0x18]
-	bl sub_0800FF54
-	cmp r0, #0
-	beq _0800D984
-	ldr r1, [r6]
-	ldrb r0, [r1, #7]
-	asrs r0, r5
-	mov r2, sb
-	ands r0, r2
-	cmp r0, #0
-	bne _0800D9BC
-_0800D984:
-	adds r0, r7, #0
-	movs r1, #0
-	movs r2, #0xd
-	bl memset
-	mov r0, r8
-	movs r1, #0
-	movs r2, #8
-	bl memset
-	b _0800D9F0
-	.align 2, 0
-_0800D99C: .4byte 0x030041E0
-_0800D9A0: .4byte 0x03007630
-_0800D9A4:
-	movs r0, #0
-	mov sb, r0
-	ldr r6, _0800D9D8
-	ldr r0, [r6]
-	lsls r4, r5, #5
-	adds r0, r0, r4
-	ldrh r0, [r0, #0x18]
-	bl sub_0800FF54
-	cmp r0, #0
-	beq _0800D9DC
-	ldr r1, [r6]
-_0800D9BC:
-	adds r1, r4, r1
-	adds r1, #0x1a
-	adds r0, r7, #0
-	movs r2, #0xd
-	bl memcpy
-	ldr r1, [r6]
-	adds r1, r4, r1
-	adds r1, #0x29
-	mov r0, r8
-	movs r2, #8
-	bl memcpy
-	b _0800D9F0
-	.align 2, 0
-_0800D9D8: .4byte 0x03007630
-_0800D9DC:
-	adds r0, r7, #0
-	movs r1, #0
-	movs r2, #0xd
-	bl memset
-	mov r0, r8
-	movs r1, #0
-	movs r2, #8
-	bl memset
-_0800D9F0:
-	mov r0, sb
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0800D948
-
-	thumb_func_start sub_0800DA00
-sub_0800DA00: @ 0x0800DA00
-	push {r4, r5, r6, r7, lr}
-	adds r3, r0, #0
-	adds r5, r1, #0
-	lsls r2, r2, #0x18
-	movs r7, #0
-	ldr r6, _0800DA38
-	ldr r0, [r6]
-	lsrs r4, r2, #0x13
-	adds r2, r0, r4
-	ldrh r1, [r2, #0x18]
-	ldr r0, _0800DA3C
-	cmp r1, r0
-	bne _0800DA40
-	adds r1, r2, #0
-	adds r1, #0x1a
-	adds r0, r3, #0
-	movs r2, #0xd
-	bl memcpy
-	ldr r1, [r6]
-	adds r1, r4, r1
-	adds r1, #0x29
-	adds r0, r5, #0
-	movs r2, #8
-	bl memcpy
-	movs r7, #1
-	b _0800DA54
-	.align 2, 0
-_0800DA38: .4byte 0x03007630
-_0800DA3C: .4byte 0x00007F7F
-_0800DA40:
-	adds r0, r3, #0
-	movs r1, #0
-	movs r2, #0xd
-	bl memset
-	adds r0, r5, #0
-	movs r1, #0
-	movs r2, #8
-	bl memset
-_0800DA54:
-	adds r0, r7, #0
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0800DA00
-
-	thumb_func_start sub_0800DA5C
-sub_0800DA5C: @ 0x0800DA5C
-	push {r4, lr}
-	adds r4, r1, #0
-	ldr r1, _0800DA78
-	movs r2, #0xd
-	bl memcpy
-	ldr r1, _0800DA7C
-	adds r0, r4, #0
-	movs r2, #8
-	bl memcpy
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800DA78: .4byte 0x020227CC
-_0800DA7C: .4byte 0x020227DA
-	thumb_func_end sub_0800DA5C
-
 	thumb_func_start CreateWirelessStatusIndicatorSprite
 CreateWirelessStatusIndicatorSprite: @ 0x0800DA80
 	push {r4, r5, lr}
@@ -683,13 +276,13 @@ _0800DC94:
 	lsls r0, r0, #0x18
 	lsrs r4, r0, #0x18
 	adds r0, r4, #0
-	bl sub_0800D7E8
+	bl GetConnectedChildStrength
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r5, r0
 	blo _0800DCB2
 	adds r0, r4, #0
-	bl sub_0800D7E8
+	bl GetConnectedChildStrength
 	lsls r0, r0, #0x18
 	lsrs r5, r0, #0x18
 _0800DCB2:
@@ -5174,8 +4767,8 @@ _0800FF4C: .4byte 0x030050A0
 _0800FF50: .4byte 0x0800FE91
 	thumb_func_end Rfu_SetLinkStandbyCallback
 
-	thumb_func_start sub_0800FF54
-sub_0800FF54: @ 0x0800FF54
+	thumb_func_start IsRfuSerialNumberValid
+IsRfuSerialNumberValid: @ 0x0800FF54
 	push {r4, lr}
 	adds r3, r0, #0
 	ldr r1, _0800FF70
@@ -5206,7 +4799,7 @@ _0800FF84:
 	pop {r1}
 	bx r1
 	.align 2, 0
-	thumb_func_end sub_0800FF54
+	thumb_func_end IsRfuSerialNumberValid
 
 	thumb_func_start sub_0800FF8C
 sub_0800FF8C: @ 0x0800FF8C
@@ -6638,7 +6231,7 @@ sub_08010A50: @ 0x08010A50
 	movs r1, #0
 	movs r2, #0
 	movs r3, #0
-	bl sub_0800D860
+	bl InitHostRfuGameData
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -6655,7 +6248,7 @@ sub_08010A74: @ 0x08010A74
 	lsrs r4, r4, #0x18
 	ldr r0, _08010A8C
 	adds r1, r4, #0
-	bl sub_0800D860
+	bl InitHostRfuGameData
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -8451,7 +8044,7 @@ _080117EE:
 	ldr r0, [r1]
 	adds r0, r0, r4
 	ldrh r0, [r0, #0x18]
-	bl sub_0800FF54
+	bl IsRfuSerialNumberValid
 	cmp r0, #0
 	beq _08011838
 	mov r0, r8

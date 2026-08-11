@@ -27,7 +27,8 @@
 #define NUM_LANGUAGES     7
 
 #define GAME_VERSION (VERSION_EMERALD)
-#define GAME_LANGUAGE (LANGUAGE_ENGLISH)
+// JP build: the JP ROM reports Japanese (byte at gGameLanguage == 0x01).
+#define GAME_LANGUAGE (LANGUAGE_JAPANESE)
 
 // party sizes
 #define PARTY_SIZE 6
