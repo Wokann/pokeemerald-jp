@@ -356,7 +356,7 @@ static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
 static u32 GetResponseIdx_InviteToURoomActivity(s32 activity);
 static s32 IsRequestedTradeInPlayerParty(u32 type, u32 species);
 bool32 UR_PrintFieldMessage(const u8 *str);
-extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
+static bool32 PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 static void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y);
@@ -4200,6 +4200,24 @@ static void GetURoomActivityStartMsg(u8 *dst, u8 acitivty)
 
 static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
 {
+}
+
+static bool32 PollPartnerYesNoResponse(struct WirelessLink_URoom *data)
+{
+    if (gRecvCmds[0][1] != 0)
+    {
+        if (gRecvCmds[0][1] == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
+        {
+            data->partnerYesNoResponse = ACTIVITY_ACCEPT | IN_UNION_ROOM;
+            return TRUE;
+        }
+        else if (gRecvCmds[0][1] == (ACTIVITY_DECLINE | IN_UNION_ROOM))
+        {
+            data->partnerYesNoResponse = ACTIVITY_DECLINE | IN_UNION_ROOM;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

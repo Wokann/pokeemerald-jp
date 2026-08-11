@@ -3,34 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_08017A94
-sub_08017A94: @ 0x08017A94
-	push {lr}
-	adds r2, r0, #0
-	ldr r0, _08017AB4
-	ldrh r1, [r0, #2]
-	cmp r1, #0
-	beq _08017AB8
-	cmp r1, #0x51
-	beq _08017AA8
-	cmp r1, #0x52
-	bne _08017AB8
-_08017AA8:
-	adds r0, r2, #0
-	adds r0, #0x80
-	strh r1, [r0]
-	movs r0, #1
-	b _08017ABA
-	.align 2, 0
-_08017AB4: .4byte 0x03003130
-_08017AB8:
-	movs r0, #0
-_08017ABA:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08017A94
-
 	thumb_func_start InUnionRoom
 InUnionRoom: @ 0x08017AC0
 	push {lr}
