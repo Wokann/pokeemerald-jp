@@ -40,6 +40,9 @@ extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
 extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
 extern const struct SpritePalette sConditionMonPicPalDescriptor;     // JP 0x085FA8B8
+extern const struct SpriteSheet sConditionSelectionIconsSheets[4];   // JP 0x085FA8C0
+extern const struct SpritePalette sConditionSelectionIconsPals[3];   // JP 0x085FA8E0
+extern const struct SpriteTemplate sConditionSelectionIconsTemplate; // JP 0x085FA8F8
 extern const struct SpriteSheet sConditionSparkleSheetDescriptor; // JP 0x085FA910
 extern const struct SpritePalette sConditionSparklePalDescriptor; // JP 0x085FA918
 extern const s16 sConditionSparkleCoords[MAX_CONDITION_SPARKLES][2];
@@ -1816,84 +1819,22 @@ void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplat
 }
 
 // JP 0x081D284C: kept as asm (JP data layout differs from US).
-__attribute__((naked)) void LoadConditionSelectionIcons(struct SpriteSheet *sheets, struct SpriteTemplate *template, struct SpritePalette *pals)
+void LoadConditionSelectionIcons(struct SpriteSheet *sheets, struct SpriteTemplate *template, struct SpritePalette *pals)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "sub sp, #0x50\n\t"
-            "adds r5, r0, #0\n\t"
-            "mov ip, r1\n\t"
-            "mov r8, r2\n\t"
-            "mov r1, sp\n\t"
-            "ldr r0, _081D28D4\n\t"
-            "ldm r0!, {r2, r3, r4}\n\t"
-            "stm r1!, {r2, r3, r4}\n\t"
-            "ldm r0!, {r2, r6, r7}\n\t"
-            "stm r1!, {r2, r6, r7}\n\t"
-            "ldm r0!, {r3, r4}\n\t"
-            "stm r1!, {r3, r4}\n\t"
-            "add r3, sp, #0x20\n\t"
-            "adds r1, r3, #0\n\t"
-            "ldr r0, _081D28D8\n\t"
-            "ldm r0!, {r2, r6, r7}\n\t"
-            "stm r1!, {r2, r6, r7}\n\t"
-            "ldm r0!, {r4, r6, r7}\n\t"
-            "stm r1!, {r4, r6, r7}\n\t"
-            "add r2, sp, #0x38\n\t"
-            "adds r1, r2, #0\n\t"
-            "ldr r0, _081D28DC\n\t"
-            "ldm r0!, {r4, r6, r7}\n\t"
-            "stm r1!, {r4, r6, r7}\n\t"
-            "ldm r0!, {r4, r6, r7}\n\t"
-            "stm r1!, {r4, r6, r7}\n\t"
-            "movs r4, #0\n\t"
-            "_081D2888:\n\t"
-            "lsls r0, r4, #3\n\t"
-            "add r0, sp\n\t"
-            "ldr r1, [r0, #4]\n\t"
-            "ldr r0, [r0]\n\t"
-            "stm r5!, {r0, r1}\n\t"
-            "adds r0, r4, #1\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r4, r0, #0x18\n\t"
-            "cmp r4, #3\n\t"
-            "bls _081D2888\n\t"
-            "mov r1, ip\n\t"
-            "adds r0, r2, #0\n\t"
-            "ldm r0!, {r2, r4, r5}\n\t"
-            "stm r1!, {r2, r4, r5}\n\t"
-            "ldm r0!, {r2, r6, r7}\n\t"
-            "stm r1!, {r2, r6, r7}\n\t"
-            "movs r4, #0\n\t"
-            "_081D28AA:\n\t"
-            "lsls r0, r4, #3\n\t"
-            "adds r0, r3, r0\n\t"
-            "ldr r1, [r0, #4]\n\t"
-            "ldr r0, [r0]\n\t"
-            "mov r5, r8\n\t"
-            "adds r5, #8\n\t"
-            "mov r8, r5\n\t"
-            "subs r5, #8\n\t"
-            "stm r5!, {r0, r1}\n\t"
-            "adds r0, r4, #1\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r4, r0, #0x18\n\t"
-            "cmp r4, #2\n\t"
-            "bls _081D28AA\n\t"
-            "add sp, #0x50\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D28D4: .4byte 0x085FA8C0\n\t"
-            "_081D28D8: .4byte 0x085FA8E0\n\t"
-            "_081D28DC: .4byte 0x085FA8F8\n\t"
-            ".syntax divided\n");
+    u8 i;
+    struct SpriteSheet dataSheets[4];
+    struct SpritePalette dataPals[3];
+    struct SpriteTemplate dataTemplate;
+
+    memcpy(dataSheets, sConditionSelectionIconsSheets, sizeof(dataSheets));
+    memcpy(dataPals, sConditionSelectionIconsPals, sizeof(dataPals));
+    dataTemplate = sConditionSelectionIconsTemplate;
+
+    for (i = 0; i < 4; i++)
+        *(sheets++) = dataSheets[i];
+    *template = dataTemplate;
+    for (i = 0; i < 3; i++)
+        *(pals++) = dataPals[i];
 }
 
 #define sSparkleId           data[0]
