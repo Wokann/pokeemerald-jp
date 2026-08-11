@@ -356,7 +356,7 @@ extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
-extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
+static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
 static bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
 extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
 extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
@@ -4024,6 +4024,29 @@ static bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPl
         return TRUE;
 
     return FALSE;
+}
+
+static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 max)
+{
+    s32 i;
+
+    if (incomingPlayer->active)
+    {
+        for (i = 0; i < max; i++)
+        {
+            if (players[i].groupScheduledAnim == UNION_ROOM_SPAWN_NONE)
+            {
+                players[i].rfu = incomingPlayer->rfu;
+                players[i].timeoutCounter = 0;
+                players[i].groupScheduledAnim = UNION_ROOM_SPAWN_IN;
+                players[i].newPlayerCountdown = 64;
+                incomingPlayer->active = FALSE;
+                return i;
+            }
+        }
+    }
+
+    return 0xFF;
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

@@ -1081,7 +1081,6 @@ GetPartyMenuType = sub_081B1030;
 ChooseMonForTradingBoard = sub_081B85A4;
 PrintGroupCandidateOnWindow = sub_08017360;
 PrintGroupMemberOnWindow = sub_0801727C;
-TryAddIncomingPlayerToList = sub_080171F8;
 Debug_PrintString = nullsub_13;
 Debug_PrintNum = nullsub_5;
 
@@ -1530,6 +1529,7 @@ SECTIONS {
         src/union_room.o(.text.ArePlayersDifferent);
         src/union_room.o(.text.ArePlayerDataDifferent);
         src/union_room.o(.text.GetNewIncomingPlayerId);
+        src/union_room.o(.text.TryAddIncomingPlayerToList);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);
