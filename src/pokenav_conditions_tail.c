@@ -131,7 +131,7 @@ static void FreeConditionMenuGfx(struct Pokenav_ConditionMenuGfx *menu);
 static void FreeConditionGraphMenuSubstruct2(void);
 static void MonPicGfxSpriteCallback(struct Sprite *sprite);
 void CreateConditionMonPic(u8 id);
-static void VBlankCB_PokenavConditionGraph(void);
+void VBlankCB_PokenavConditionGraph(void);
 static void SetExitVBlank(void);
 void ToggleGraphData(bool8 showBg);
 void DoConditionGraphEnterTransition(void);
@@ -842,7 +842,7 @@ void CreateConditionMonPic(u8 id)
     }
 }
 
-static void VBlankCB_PokenavConditionGraph(void)
+void VBlankCB_PokenavConditionGraph(void)
 {
     struct ConditionGraph *graph = GetConditionGraphPtr();
     LoadOam();
@@ -995,7 +995,7 @@ __attribute__((naked)) u32 HandleConditionSearchInput(struct Pokenav_SearchResul
             "movs r0, #5\n\t"
             "b _081CE7DA\n\t"
             ".align 2, 0\n\t"
-            "_081CE7B8: .4byte 0x081CE7E5\n\t"
+            "_081CE7B8: .4byte ReturnToConditionSearchList + 1\n\t"
             "_081CE7BC:\n\t"
             "movs r5, #1\n\t"
             "adds r0, r5, #0\n\t"
@@ -1017,7 +1017,7 @@ __attribute__((naked)) u32 HandleConditionSearchInput(struct Pokenav_SearchResul
             "pop {r1}\n\t"
             "bx r1\n\t"
             ".align 2, 0\n\t"
-            "_081CE7E0: .4byte 0x081CE7ED\n\t"
+            "_081CE7E0: .4byte OpenConditionGraphFromSearchList + 1\n\t"
             ".syntax divided");
 }
 
@@ -1264,7 +1264,7 @@ __attribute__((naked)) u32 LoopedTask_OpenConditionSearchResults(s32 state)
             "ldr r0, [r0]\n\t"
             "mov pc, r0\n\t"
             ".align 2, 0\n\t"
-            "_081CEB6C: .4byte 0x081CEB70\n\t"
+            "_081CEB6C: .4byte _081CEB70\n\t"
             "_081CEB70: @ jump table\n\t"
             ".4byte _081CEB88 @ case 0\n\t"
             ".4byte _081CEBE0 @ case 1\n\t"
@@ -1782,7 +1782,7 @@ __attribute__((naked)) void CreateSearchResultsList(void)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081CEF98: .4byte 0x081CEFA1\n\t"
+            "_081CEF98: .4byte BufferSearchMonListItem + 1\n\t"
             "_081CEF9C: .4byte 0x085F5BA0\n\t"
             ".syntax divided");
 }
@@ -1998,7 +1998,7 @@ __attribute__((naked)) u32 HandleRibbonsMonListInput(struct Pokenav_RibbonsMonLi
             "movs r0, #5\n\t"
             "b _081CF1D2\n\t"
             ".align 2, 0\n\t"
-            "_081CF1B0: .4byte 0x081CF1DD\n\t"
+            "_081CF1B0: .4byte RibbonsMonMenu_ReturnToMainMenu + 1\n\t"
             "_081CF1B4:\n\t"
             "movs r5, #1\n\t"
             "adds r0, r5, #0\n\t"
@@ -2020,7 +2020,7 @@ __attribute__((naked)) u32 HandleRibbonsMonListInput(struct Pokenav_RibbonsMonLi
             "pop {r1}\n\t"
             "bx r1\n\t"
             ".align 2, 0\n\t"
-            "_081CF1D8: .4byte 0x081CF1E5\n\t"
+            "_081CF1D8: .4byte RibbonsMonMenu_ToSummaryScreen + 1\n\t"
             ".syntax divided");
 }
 
@@ -2328,7 +2328,7 @@ __attribute__((naked)) u32 LoopedTask_OpenRibbonsMonList(s32 state)
             "ldr r0, [r0]\n\t"
             "mov pc, r0\n\t"
             ".align 2, 0\n\t"
-            "_081CF5AC: .4byte 0x081CF5B0\n\t"
+            "_081CF5AC: .4byte _081CF5B0\n\t"
             "_081CF5B0: @ jump table\n\t"
             ".4byte _081CF5C8 @ case 0\n\t"
             ".4byte _081CF61C @ case 1\n\t"
@@ -2873,7 +2873,7 @@ __attribute__((naked)) void CreateRibbonMonsList(void)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081CF9F0: .4byte 0x081CF9F9\n\t"
+            "_081CF9F0: .4byte BufferRibbonMonInfoText + 1\n\t"
             "_081CF9F4: .4byte 0x085F5DA4\n\t"
             ".syntax divided");
 }

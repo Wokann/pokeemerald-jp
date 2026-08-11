@@ -686,7 +686,7 @@ __attribute__((naked)) u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
             "ldr r0, [r0]\n\t"
             "mov pc, r0\n\t"
             ".align 2, 0\n\t"
-            "_081D013C: .4byte 0x081D0140\n\t"
+            "_081D013C: .4byte _081D0140\n\t"
             "_081D0140: @ jump table\n\t"
             ".4byte _081D0168 @ case 0\n\t"
             ".4byte _081D01B4 @ case 1\n\t"

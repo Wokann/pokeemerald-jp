@@ -2,6 +2,8 @@
 
 // I/O register alias for use inside inline asm strings (see libisagbprn_a.c).
 __asm__(".equ REG_ADDR_WAITCNT, 0x04000204");
+// AGBPrint memory address (same value as the C macro in libisagbprn_a.c).
+__asm__(".equ AGB_PRINT_STRUCT_ADDR, 0x09FE20F8");
 
 void AGBPutcInternal(const char cChr);
 
@@ -57,6 +59,6 @@ __attribute__((naked)) void AGBPutc(const char cChr)
             "bx r0\n\t"
             ".align 2, 0\n\t"
             "_082957CC: .4byte REG_ADDR_WAITCNT\n\t"
-            "_082957D0: .4byte 0x09FE20F8\n\t"
+            "_082957D0: .4byte AGB_PRINT_STRUCT_ADDR\n\t"
             ".syntax divided\n");
 }
