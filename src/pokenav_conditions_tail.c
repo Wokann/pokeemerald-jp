@@ -135,7 +135,7 @@ static u32 LoopedTask_OpenRibbonsMonList(s32 state);
 static void DrawListIndexNumber(struct Pokenav_RibbonsMonMenu *menu);
 static void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu);
 static void CreateRibbonMonsList(void);
-static void BufferRibbonMonInfoText(u8 windowId, u16 index);
+static void BufferRibbonMonInfoText(struct PokenavListItem *listItem, u8 *dest);
 static bool32 IsRibbonsMonListLoopedTaskActive(void);
 static u32 LoopedTask_MoveSearchListCursorUp(s32 state);
 static u32 LoopedTask_MoveSearchListCursorDown(s32 state);
@@ -247,6 +247,10 @@ extern const u8 sText_NoGenderSymbol[];
 extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6, "{STR_VAR_1} {COLOR}♂..."
 extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
 extern const u8 sText_ConditionSearchMonUnknown[]; // JP 0x085CB7FE
+extern const u8 gText_RibbonsMonListCount[];       // JP 0x085F5DCC
+extern const u8 sText_RibbonsMonListItemMale[];    // JP 0x085F5DD3
+extern const u8 sText_RibbonsMonListItemFemale[];  // JP 0x085F5DEB
+extern const u8 sText_RibbonsMonListItemUnknown[]; // JP 0x085F5E03
 extern const u16 sPokenavMonMarkings_Pal[];
 extern const LoopedTask sMonRibbonListLoopTaskFuncs[];
 extern const u16 sMonRibbonListFramePal[];
@@ -2157,98 +2161,29 @@ static u32 LoopedTask_RibbonsListOpenSummary(s32 state)
     return LT_FINISH;
 }
 
-__attribute__((naked)) void DrawListIndexNumber(struct Pokenav_RibbonsMonMenu *menu)
+static void DrawListIndexNumber(struct Pokenav_RibbonsMonMenu *menu)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r5, r0, #0\n\t"
-            "ldr r0, _081CF94C\n\t"
-            "bl AddWindow\n\t"
-            "movs r6, #0\n\t"
-            "strh r0, [r5, #8]\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "bl PutWindowTilemap\n\t"
-            "bl GetRibbonsMonListCount\n\t"
-            "adds r1, r0, #0\n\t"
-            "ldr r4, _081CF950\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "movs r0, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "ldr r4, _081CF954\n\t"
-            "ldr r1, _081CF958\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "ldrb r0, [r5, #8]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "str r6, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r5, #8]\n\t"
-            "movs r1, #1\n\t"
-            "bl CopyWindowToVram\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddRibbonsMonListWindow\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CF94C: .4byte sRibbonsMonListWindowTemplate\n\t"
-            "_081CF950: .4byte gStringVar1\n\t"
-            "_081CF954: .4byte gStringVar2\n\t"
-            "_081CF958: .4byte 0x085F5DCC\n\t"
-            ".syntax divided");
+    s32 listCount;
+
+    menu->winid = AddWindow(&sRibbonsMonListWindowTemplate);
+    PutWindowTilemap(menu->winid);
+    listCount = GetRibbonsMonListCount();
+    ConvertIntToDecimalStringN(gStringVar1, listCount, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar2, gText_RibbonsMonListCount);
+    AddTextPrinterParameterized(menu->winid, FONT_NORMAL, gStringVar2, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(menu->winid, COPYWIN_MAP);
+    AddRibbonsMonListWindow(menu);
 }
 
-__attribute__((naked)) void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu)
+static void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r5, r0, #0\n\t"
-            "bl PokenavList_GetSelectedIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "ldr r4, _081CF9A0\n\t"
-            "adds r1, #1\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldrb r0, [r5, #8]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r5, #8]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CF9A0: .4byte gStringVar1\n\t"
-            ".syntax divided");
+    s32 listIndex = PokenavList_GetSelectedIndex();
+
+    ConvertIntToDecimalStringN(gStringVar1, listIndex + 1, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    AddTextPrinterParameterized(menu->winid, FONT_NORMAL, gStringVar1, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(menu->winid, COPYWIN_GFX);
 }
 
 
@@ -2318,123 +2253,48 @@ void CreateRibbonMonsList(void)
 #endif
 
 
-__attribute__((naked)) void BufferRibbonMonInfoText(u8 windowId, u16 index)
+static void BufferRibbonMonInfoText(struct PokenavListItem *listItem, u8 *dest)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, sb\n\t"
-            "mov r6, r8\n\t"
-            "push {r6, r7}\n\t"
-            "mov sb, r1\n\t"
-            "adds r7, r0, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "ldrb r0, [r7]\n\t"
-            "cmp r0, #0xe\n\t"
-            "bne _081CFA44\n\t"
-            "ldrb r1, [r7, #1]\n\t"
-            "movs r0, #0x64\n\t"
-            "adds r4, r1, #0\n\t"
-            "muls r4, r0, r4\n\t"
-            "ldr r0, _081CFA3C\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r5, r0, #0x18\n\t"
-            "ldr r2, _081CFA40\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl GetMonData3\n\t"
-            "b _081CFA6A\n\t"
-            ".align 2, 0\n\t"
-            "_081CFA3C: .4byte gPlayerParty\n\t"
-            "_081CFA40: .4byte gStringVar3\n\t"
-            "_081CFA44:\n\t"
-            "ldrb r0, [r7]\n\t"
-            "ldrb r1, [r7, #1]\n\t"
-            "bl GetBoxedMonPtr\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl GetBoxMonGender\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r6, r0, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl GetLevelFromBoxMonExp\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r5, r0, #0x18\n\t"
-            "ldr r2, _081CFAD0\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl GetBoxMonData\n\t"
-            "_081CFA6A:\n\t"
-            "ldr r4, _081CFAD0\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl StringGet_Nickname\n\t"
-            "ldr r0, _081CFAD4\n\t"
-            "mov r8, r0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #5\n\t"
-            "bl StringCopyPadded\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r1, r5, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldr r5, _081CFAD8\n\t"
-            "adds r0, r5, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #3\n\t"
-            "bl StringCopyPadded\n\t"
-            "ldrh r1, [r7, #2]\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #2\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "movs r0, #0\n\t"
-            "mov r1, r8\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "movs r0, #1\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "movs r0, #2\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "cmp r6, #0xfe\n\t"
-            "beq _081CFAE0\n\t"
-            "cmp r6, #0xfe\n\t"
-            "bgt _081CFAE8\n\t"
-            "cmp r6, #0\n\t"
-            "bne _081CFAE8\n\t"
-            "ldr r1, _081CFADC\n\t"
-            "b _081CFAEA\n\t"
-            ".align 2, 0\n\t"
-            "_081CFAD0: .4byte gStringVar3\n\t"
-            "_081CFAD4: .4byte gStringVar1\n\t"
-            "_081CFAD8: .4byte gStringVar2\n\t"
-            "_081CFADC: .4byte 0x085F5DD3\n\t"
-            "_081CFAE0:\n\t"
-            "ldr r1, _081CFAE4\n\t"
-            "b _081CFAEA\n\t"
-            ".align 2, 0\n\t"
-            "_081CFAE4: .4byte 0x085F5DEB\n\t"
-            "_081CFAE8:\n\t"
-            "ldr r1, _081CFAFC\n\t"
-            "_081CFAEA:\n\t"
-            "mov r0, sb\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "pop {r3, r4}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CFAFC: .4byte 0x085F5E03\n\t"
-            ".syntax divided");
+    u8 gender;
+    u8 level;
+    const u8 *genderStr;
+    struct PokenavMonListItem *item = (struct PokenavMonListItem *)listItem;
+
+    DynamicPlaceholderTextUtil_Reset();
+    if (item->boxId == TOTAL_BOXES_COUNT)
+    {
+        struct Pokemon *mon = &gPlayerParty[item->monId];
+        gender = GetMonGender(mon);
+        level = GetLevelFromMonExp(mon);
+        GetMonData(mon, MON_DATA_NICKNAME, gStringVar3);
+    }
+    else
+    {
+        struct BoxPokemon *boxMon = GetBoxedMonPtr(item->boxId, item->monId);
+        gender = GetBoxMonGender(boxMon);
+        level = GetLevelFromBoxMonExp(boxMon);
+        GetBoxMonData(boxMon, MON_DATA_NICKNAME, gStringVar3);
+    }
+    StringGet_Nickname(gStringVar3);
+    StringCopyPadded(gStringVar1, gStringVar3, CHAR_SPACE, 5);
+    ConvertIntToDecimalStringN(gStringVar3, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    StringCopyPadded(gStringVar2, gStringVar3, CHAR_SPACE, 3);
+    ConvertIntToDecimalStringN(gStringVar3, item->data, STR_CONV_MODE_RIGHT_ALIGN, 2);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, gStringVar2);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(2, gStringVar3);
+    switch (gender)
+    {
+    case MON_MALE:
+        genderStr = sText_RibbonsMonListItemMale;
+        break;
+    case MON_FEMALE:
+        genderStr = sText_RibbonsMonListItemFemale;
+        break;
+    case MON_GENDERLESS:
+    default:
+        genderStr = sText_RibbonsMonListItemUnknown;
+        break;
+    }
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, genderStr);
 }
