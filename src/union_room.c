@@ -6,6 +6,7 @@
 #include "constants/map_groups.h"
 #include "constants/field_weather.h"
 #include "constants/songs.h"
+#include "decompress.h"
 #include "event_data.h"
 #include "fieldmap.h"
 #include "link.h"
@@ -40,6 +41,67 @@
 #define GROUP_MAX(capacity) (capacity & 0x0F)
 #define GROUP_MIN(capacity) (capacity >> 4)
 #define GROUP_MIN2(capacity) (capacity & 0xF0) // Unnecessary to have both, but needed to match
+
+// States for Task_RunUnionRoom
+enum {
+    UR_STATE_INIT,
+    UR_STATE_INIT_OBJECTS,
+    UR_STATE_INIT_LINK,
+    UR_STATE_CHECK_SELECTING_MON,
+    UR_STATE_MAIN,
+    UR_STATE_DO_SOMETHING_PROMPT,
+    UR_STATE_HANDLE_DO_SOMETHING_PROMPT_INPUT,
+    UR_STATE_DO_SOMETHING_PROMPT_2,
+    UR_STATE_PRINT_MSG,
+    UR_STATE_HANDLE_ACTIVITY_REQUEST,
+    UR_STATE_DECLINE_ACTIVITY_REQUEST,
+    UR_STATE_PLAYER_CONTACTED_YOU,
+    UR_STATE_RECV_CONTACT_DATA,
+    UR_STATE_PRINT_START_ACTIVITY_MSG,
+    UR_STATE_START_ACTIVITY_LINK,
+    UR_STATE_START_ACTIVITY_WAIT_FOR_LINK,
+    UR_STATE_START_ACTIVITY_FREE_UROOM,
+    UR_STATE_START_ACTIVITY_FADE,
+    UR_STATE_START_ACTIVITY,
+    UR_STATE_RECV_JOIN_CHAT_REQUEST,
+    UR_STATE_TRY_ACCEPT_CHAT_REQUEST_DELAY,
+    UR_STATE_TRY_ACCEPT_CHAT_REQUEST,
+    UR_STATE_ACCEPT_CHAT_REQUEST,
+    UR_STATE_WAIT_FOR_START_MENU,
+    UR_STATE_INTERACT_WITH_PLAYER,
+    UR_STATE_TRY_COMMUNICATING,
+    UR_STATE_PRINT_AND_EXIT,
+    UR_STATE_SEND_ACTIVITY_REQUEST,
+    UR_STATE_TRAINER_APPEARS_BUSY,
+    UR_STATE_WAIT_FOR_RESPONSE_TO_REQUEST,
+    UR_STATE_CANCEL_ACTIVITY_LINK_ERROR,
+    UR_STATE_SEND_TRADE_REQUST,
+    UR_STATE_REQUEST_DECLINED,
+    UR_STATE_PRINT_CONTACT_MSG,
+    UR_STATE_HANDLE_CONTACT_DATA,
+    UR_STATE_RECV_ACTIVITY_REQUEST,
+    UR_STATE_CANCEL_REQUEST_PRINT_MSG,
+    UR_STATE_CANCEL_REQUEST_RESTART_LINK,
+    UR_STATE_COMMUNICATING_WAIT_FOR_DATA,
+    UR_STATE_WAIT_FOR_CONTACT_DATA,
+    UR_STATE_PRINT_CARD_INFO,
+    UR_STATE_WAIT_FINISH_READING_CARD,
+    UR_STATE_INTERACT_WITH_ATTENDANT,
+    UR_STATE_REGISTER_PROMPT,
+    UR_STATE_CANCEL_REGISTRATION_PROMPT,
+    UR_STATE_CHECK_TRADING_BOARD,
+    UR_STATE_TRADING_BOARD_LOAD,
+    UR_STATE_REGISTER_PROMPT_HANDLE_INPUT,
+    UR_STATE_TRADING_BOARD_HANDLE_INPUT,
+    UR_STATE_TRADE_PROMPT,
+    UR_STATE_TRADE_SELECT_MON,
+    UR_STATE_TRADE_OFFER_MON,
+    UR_STATE_REGISTER_REQUEST_TYPE,
+    UR_STATE_REGISTER_SELECT_MON_FADE,
+    UR_STATE_REGISTER_SELECT_MON,
+    UR_STATE_REGISTER_COMPLETE,
+    UR_STATE_CANCEL_REGISTRATION,
+};
 
 // States for Task_TryBecomeLinkLeader
 enum {
@@ -117,6 +179,7 @@ extern EWRAM_DATA union
 } sWirelessLinkMain;
 extern IWRAM_DATA struct WirelessLink_Leader *sLeader;
 extern IWRAM_DATA struct WirelessLink_Group *sGroup;
+extern IWRAM_DATA struct WirelessLink_URoom *sURoom;
 extern EWRAM_DATA struct UnionRoomTrade sUnionRoomTrade;
 
 // JP: ROM data bound via ld_script_jp.txt.
@@ -172,7 +235,11 @@ extern const struct ListMenuTemplate sListMenuTemplate_UnionRoomGroups;
 // JP: these helpers are still in asm/union_room.s; referenced by their sub_
 // names until converted.
 extern void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
-extern u16 ReadAsU16(const u8 *ptr);
+u16 ReadAsU16(const u8 *ptr);
+void ScheduleFieldMessageWithFollowupState(u32 nextState, const u8 *src);
+void ScheduleFieldMessageAndExit(const u8 *src);
+void CopyPlayerListToBuffer(struct WirelessLink_URoom *uroom);
+void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
@@ -213,6 +280,8 @@ static void CreateTask_RunScriptAndFadeToActivity(void);
 static void Task_SendMysteryGift(u8 taskId);
 static void Task_CardOrNewsWithFriend(u8 taskId);
 static void Task_CardOrNewsOverWireless(u8 taskId);
+extern void Task_RunUnionRoom(u8 taskId);
+void RunUnionRoom(void);
 
 void Task_Idle(u8 taskId)
 {
@@ -2341,4 +2410,65 @@ static void Task_CardOrNewsOverWireless(u8 taskId)
             DestroyTask(taskId);
         break;
     }
+}
+
+void RunUnionRoom(void)
+{
+    struct WirelessLink_URoom *uroom;
+
+    ResetHostRfuGameData();
+    CreateTask(Task_RunUnionRoom, 10);
+
+    // dumb line needed to match
+    sWirelessLinkMain.uRoom = sWirelessLinkMain.uRoom;
+
+    uroom = AllocZeroed(sizeof(*sWirelessLinkMain.uRoom));
+    sWirelessLinkMain.uRoom = uroom;
+    sURoom = uroom;
+
+    uroom->state = UR_STATE_INIT;
+    uroom->textState = 0;
+    uroom->unknown = 0;
+    uroom->unreadPlayerId = 0;
+
+    gSpecialVar_Result = 0;
+    ListMenuLoadStdPalAt(BG_PLTT_ID(13), 1);
+}
+
+u16 ReadAsU16(const u8 *ptr)
+{
+    return (ptr[1] << 8) | (ptr[0]);
+}
+
+void ScheduleFieldMessageWithFollowupState(u32 nextState, const u8 *src)
+{
+    struct WirelessLink_URoom *uroom = sWirelessLinkMain.uRoom;
+
+    uroom->state = UR_STATE_PRINT_MSG;
+    uroom->stateAfterPrint = nextState;
+    if (src != gStringVar4)
+        StringExpandPlaceholders(gStringVar4, src);
+}
+
+void ScheduleFieldMessageAndExit(const u8 *src)
+{
+    struct WirelessLink_URoom *uroom = sWirelessLinkMain.uRoom;
+
+    uroom->state = UR_STATE_PRINT_AND_EXIT;
+    if (src != gStringVar4)
+        StringExpandPlaceholders(gStringVar4, src);
+}
+
+void CopyPlayerListToBuffer(struct WirelessLink_URoom *uroom)
+{
+    memcpy(&gDecompressionBuffer[sizeof(gDecompressionBuffer) - (MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer))],
+            uroom->playerList,
+            MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer));
+}
+
+void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom)
+{
+    memcpy(uroom->playerList,
+           &gDecompressionBuffer[sizeof(gDecompressionBuffer) - (MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer))],
+           MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer));
 }

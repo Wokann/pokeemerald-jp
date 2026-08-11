@@ -103,33 +103,21 @@ struct UnionRoomObject
 
 struct WirelessLink_URoom
 {
-    struct RfuPlayerList *playerList;
-    struct RfuIncomingPlayerList *incomingChildList;
-    struct RfuPlayerList *spawnPlayer;
-    struct RfuIncomingPlayerList *incomingParentList;
-    u16 unknown; // Never read
-    u16 unreadPlayerId;
-    u8 state;
-    u8 stateAfterPrint;
-    u8 textState;
-    u8 filler[4];
-    u8 topListMenuWindowId;
-    u8 topListMenuId;
-    u8 tradeBoardMainWindowId;
-    u8 tradeBoardHeaderWindowId;
-    u8 unused1;
-    u8 searchTaskId;
-    u8 spriteIds[NUM_UNION_ROOM_SPRITES];
-    u8 unused2;
-    u8 tradeBoardListMenuId;
-    u16 playerSendBuffer[6];
-    u8 activityRequestStrbufs[4][16];
-    u16 partnerYesNoResponse;
-    u16 recvActivityRequest[3];
-    struct UnionRoomObject objects[MAX_UNION_ROOM_LEADERS];
-    u8 trainerCardStrBuffer[12][15];
-    u8 trainerCardColorStrBuffer[48];
-    u8 trainerCardMsgStrBuffer[200];
+    // JP: the US WirelessLink_URoom (0x26C bytes) is more compact in the JP
+    // ROM (0x224 bytes). Offsets 0x00-0x16 match US; the tail differs and is
+    // filled in as sub_080151E8 (Task_RunUnionRoom) is decompiled.
+    struct RfuPlayerList *playerList;                    // 0x00
+    struct RfuIncomingPlayerList *incomingChildList;     // 0x04
+    struct RfuPlayerList *spawnPlayer;                   // 0x08
+    struct RfuIncomingPlayerList *incomingParentList;    // 0x0C
+    u16 unknown; // Never read                           // 0x10
+    u16 unreadPlayerId;                                  // 0x12
+    u8 state;                                            // 0x14
+    u8 stateAfterPrint;                                  // 0x15
+    u8 textState;                                        // 0x16
+    u8 filler_0x17[9];                                   // 0x17-0x1F
+    u8 searchTaskId;                                     // 0x20
+    u8 filler_0x21[0x224 - 0x21];                        // 0x21-0x223
 };
 
 struct UnionRoomTrade

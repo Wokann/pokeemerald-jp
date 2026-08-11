@@ -6,122 +6,6 @@
 
 
 
-	thumb_func_start UnionRoomSpecial
-UnionRoomSpecial: @ 0x08015114
-	push {r4, lr}
-	bl ResetHostRfuGameData
-	ldr r0, _08015150
-	movs r1, #0xa
-	bl CreateTask
-	ldr r4, _08015154
-	movs r0, #0x89
-	lsls r0, r0, #2
-	bl AllocZeroed
-	str r0, [r4]
-	ldr r1, _08015158
-	str r0, [r1]
-	movs r1, #0
-	strb r1, [r0, #0x14]
-	strb r1, [r0, #0x16]
-	strh r1, [r0, #0x10]
-	strh r1, [r0, #0x12]
-	ldr r0, _0801515C
-	strh r1, [r0]
-	movs r0, #0xd0
-	movs r1, #1
-	bl sub_08199F54
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08015150: .4byte 0x080151E9
-_08015154: .4byte 0x020228E4
-_08015158: .4byte 0x03000DA8
-_0801515C: .4byte 0x02037290
-	thumb_func_end UnionRoomSpecial
-
-	thumb_func_start ReadAsU16
-ReadAsU16: @ 0x08015160
-	ldrb r1, [r0, #1]
-	lsls r1, r1, #8
-	ldrb r0, [r0]
-	orrs r0, r1
-	bx lr
-	.align 2, 0
-	thumb_func_end ReadAsU16
-
-	thumb_func_start sub_0801516C
-sub_0801516C: @ 0x0801516C
-	push {lr}
-	adds r3, r1, #0
-	ldr r1, _0801518C
-	ldr r2, [r1]
-	movs r1, #8
-	strb r1, [r2, #0x14]
-	strb r0, [r2, #0x15]
-	ldr r0, _08015190
-	cmp r3, r0
-	beq _08015186
-	adds r1, r3, #0
-	bl StringExpandPlaceholders
-_08015186:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0801518C: .4byte 0x020228E4
-_08015190: .4byte 0x02021C7C
-	thumb_func_end sub_0801516C
-
-	thumb_func_start sub_08015194
-sub_08015194: @ 0x08015194
-	push {lr}
-	adds r2, r0, #0
-	ldr r0, _080151B0
-	ldr r1, [r0]
-	movs r0, #0x1a
-	strb r0, [r1, #0x14]
-	ldr r0, _080151B4
-	cmp r2, r0
-	beq _080151AC
-	adds r1, r2, #0
-	bl StringExpandPlaceholders
-_080151AC:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080151B0: .4byte 0x020228E4
-_080151B4: .4byte 0x02021C7C
-	thumb_func_end sub_08015194
-
-	thumb_func_start sub_080151B8
-sub_080151B8: @ 0x080151B8
-	push {lr}
-	ldr r3, _080151CC
-	ldr r1, [r0]
-	movs r2, #0x80
-	lsls r2, r2, #1
-	adds r0, r3, #0
-	bl memcpy
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080151CC: .4byte 0x0201FF00
-	thumb_func_end sub_080151B8
-
-	thumb_func_start sub_080151D0
-sub_080151D0: @ 0x080151D0
-	push {lr}
-	ldr r0, [r0]
-	ldr r1, _080151E4
-	movs r2, #0x80
-	lsls r2, r2, #1
-	bl memcpy
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080151E4: .4byte 0x0201FF00
-	thumb_func_end sub_080151D0
-
 	thumb_func_start sub_080151E8
 sub_080151E8: @ 0x080151E8
 	push {r4, r5, r6, r7, lr}
@@ -331,7 +215,7 @@ _08015408:
 	movs r2, #0
 	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _08015430
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _08015496
 	.align 2, 0
 _08015430: .4byte 0x082C1808
@@ -345,7 +229,7 @@ _08015434:
 	bne _08015454
 	ldr r1, _08015450
 	movs r0, #0x34
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _08015496
 	.align 2, 0
 _08015450: .4byte 0x082C17CC
@@ -354,13 +238,13 @@ _08015454:
 	b _08015494
 _08015458:
 	adds r0, r6, #0
-	bl sub_080151D0
+	bl CopyPlayerListFromBuffer
 	ldrb r0, [r4, #8]
 	strh r0, [r7, #2]
 	cmp r5, #5
 	bls _08015474
 	ldr r0, _08015470
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _08015496
 	.align 2, 0
 _08015470: .4byte 0x082C1830
@@ -593,7 +477,7 @@ _0801566C: .4byte 0x020228E0
 _08015670:
 	ldr r1, _0801567C
 	movs r0, #0x13
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	bl _0801638C
 	.align 2, 0
 _0801567C: .4byte 0x02021C7C
@@ -617,14 +501,14 @@ _080156A2:
 	cmp r0, #1
 	bne _080156B8
 	ldr r0, _080156B4
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _080156C0
 	.align 2, 0
 _080156B4: .4byte 0x082C0FE0
 _080156B8:
 	ldr r1, _080156E8
 	movs r0, #0x1e
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 _080156C0:
 	ldr r1, _080156EC
 	movs r0, #0x40
@@ -664,7 +548,7 @@ _0801570C:
 	bne _0801572C
 	ldr r1, _08015728
 	movs r0, #0x1f
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	bl _0801638C
 	.align 2, 0
 _08015720: .4byte 0x08013BE9
@@ -770,7 +654,7 @@ _080157EC:
 	bne _08015820
 	ldr r1, _0801581C
 	movs r0, #5
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	bl _0801638C
 	.align 2, 0
 _08015814: .4byte 0x020228E0
@@ -936,7 +820,7 @@ _08015964:
 	adds r0, r0, r2
 	ldr r1, [r0]
 	movs r0, #6
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	bl _0801638C
 	.align 2, 0
 _08015998: .4byte 0x082C0D3C
@@ -1064,7 +948,7 @@ _08015AA0:
 	lsls r0, r4, #2
 	adds r0, r0, r1
 	ldr r0, [r0]
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	bl _0801638C
 	.align 2, 0
 _08015ABC: .4byte 0x082C1364
@@ -1116,7 +1000,7 @@ _08015AFC:
 	lsls r1, r4, #2
 	adds r1, r1, r0
 	ldr r0, [r1]
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _08015B48
 	.align 2, 0
 _08015B2C: .4byte 0x082C13C4
@@ -1126,7 +1010,7 @@ _08015B30:
 	adds r1, r1, r0
 	ldr r1, [r1]
 	movs r0, #0x1e
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _08015B48
 	.align 2, 0
 _08015B40: .4byte 0x082C13C4
@@ -1158,7 +1042,7 @@ _08015B52:
 	lsls r1, r4, #2
 	adds r1, r1, r0
 	ldr r0, [r1]
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _08015B9A
 	.align 2, 0
 _08015B88: .4byte 0x082C13C4
@@ -1168,7 +1052,7 @@ _08015B8C:
 	adds r1, r1, r0
 	ldr r1, [r1]
 	movs r0, #0x1e
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 _08015B9A:
 	ldr r0, _08015BB0
 	ldrb r0, [r0]
@@ -1301,7 +1185,7 @@ _08015CC0: .4byte 0x082C0F04
 _08015CC4:
 	ldr r1, _08015CD0
 	movs r0, #9
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _08015CD0: .4byte 0x02021C7C
@@ -1443,7 +1327,7 @@ _08015DF2:
 	strb r0, [r1]
 	ldr r1, _08015E20
 	movs r0, #0x25
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	adds r0, r6, #0
 	adds r0, #0x4c
 	movs r1, #0
@@ -1475,7 +1359,7 @@ _08015E30:
 	bl sub_080178C0
 	movs r0, #0xe
 	adds r1, r4, #0
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _08015E4C: .4byte 0x02021C7C
@@ -1593,7 +1477,7 @@ _08015F14:
 _08015F4C:
 	ldr r1, _08015F64
 	movs r0, #0x2c
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _08015F58: .4byte 0x02021C40
@@ -1656,14 +1540,14 @@ _08015FC8:
 _08015FD2:
 	ldr r1, _08015FDC
 	movs r0, #0x35
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _08015FDC: .4byte 0x082C17E8
 _08015FE0:
 	ldr r1, _08015FEC
 	movs r0, #0x2f
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _08015FEC: .4byte 0x082C16E0
@@ -1733,7 +1617,7 @@ _08016068:
 	movs r2, #0
 	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _0801608C
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _0801638C
 	.align 2, 0
 _08016080: .4byte 0x082C219C
@@ -1754,7 +1638,7 @@ _0801609C:
 	ldrh r2, [r2, #0xc]
 	bl SetTradeBoardRegisteredMonInfo
 	ldr r0, _080160B4
-	bl sub_08015194
+	bl ScheduleFieldMessageAndExit
 	b _0801638C
 	.align 2, 0
 _080160B0: .4byte 0x020228F4
@@ -1894,7 +1778,7 @@ _080161B8:
 	bl StringCopy
 	ldr r1, _080161D4
 	movs r0, #0x31
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	strh r5, [r7, #2]
 	b _0801638C
 	.align 2, 0
@@ -1942,7 +1826,7 @@ _08016210:
 	ldr r1, _08016248
 _08016234:
 	movs r0, #0x2e
-	bl sub_0801516C
+	bl ScheduleFieldMessageWithFollowupState
 	b _0801638C
 	.align 2, 0
 _0801623C: .4byte 0x02021C40
@@ -2024,7 +1908,7 @@ _08016292:
 	movs r0, #9
 	bl sub_081B85A4
 	adds r0, r6, #0
-	bl sub_080151B8
+	bl CopyPlayerListToBuffer
 	ldrh r0, [r7, #2]
 	strb r0, [r4, #8]
 	b _0801638C
