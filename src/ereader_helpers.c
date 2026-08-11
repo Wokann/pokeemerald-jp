@@ -336,7 +336,7 @@ __attribute__((naked)) static bool32 TryWriteTrainerHill_Internal(struct EReader
             "movs r0, #1\n\t"
             "b _081D311E\n\t"
             ".align 2, 0\n\t"
-            "_081D3118: .4byte 0x085FA9E4\n\t"
+            "_081D3118: .4byte sTrainerHillTrainerTemplates_JP\n\t"
             "_081D311C:\n\t"
             "movs r0, #0\n\t"
             "_081D311E:\n\t"

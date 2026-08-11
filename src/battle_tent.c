@@ -95,8 +95,8 @@ __attribute__((naked)) void sub_081B9668(void)
             ".code 16\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081B966C: .4byte 0x085E196C\n\t"
-            "_081B9670: .4byte 0x02037280\n\t"
+            "_081B966C: .4byte sVerdanturfTentFuncs\n\t"
+            "_081B9670: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
 
@@ -179,8 +179,8 @@ __attribute__((naked)) void sub_081B9834(void)
             ".code 16\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081B9838: .4byte 0x085E1990\n\t"
-            "_081B983C: .4byte 0x02037280\n\t"
+            "_081B9838: .4byte sFallarborTentFuncs\n\t"
+            "_081B983C: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
 
@@ -256,8 +256,8 @@ __attribute__((naked)) void sub_081B99BC(void)
             ".code 16\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081B99C0: .4byte 0x085E19B0\n\t"
-            "_081B99C4: .4byte 0x02037280\n\t"
+            "_081B99C0: .4byte sSlateportTentFuncs\n\t"
+            "_081B99C4: .4byte gSpecialVar_0x8004\n\t"
             ".syntax divided");
 }
 
@@ -455,11 +455,11 @@ __attribute__((naked)) void GenerateInitialRentalMons(void)
             "mov sl, r1\n\t"
             "b _081B9C74\n\t"
             ".align 2, 0\n\t"
-            "_081B9C58: .4byte 0x0203B954\n\t"
-            "_081B9C5C: .4byte 0x085BC958\n\t"
-            "_081B9C60: .4byte 0x0203B958\n\t"
-            "_081B9C64: .4byte 0x085BCF70\n\t"
-            "_081B9C68: .4byte 0x085ADBF4\n\t"
+            "_081B9C58: .4byte gFacilityTrainers\n\t"
+            "_081B9C5C: .4byte gSlateportBattleTentTrainers\n\t"
+            "_081B9C60: .4byte gFacilityTrainerMons\n\t"
+            "_081B9C64: .4byte gSlateportBattleTentMons\n\t"
+            "_081B9C68: .4byte gBattleFrontierHeldItems\n\t"
             "_081B9C6C:\n\t"
             "adds r4, #2\n\t"
             "adds r2, #1\n\t"
@@ -517,9 +517,9 @@ __attribute__((naked)) void GenerateInitialRentalMons(void)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081B9CD4: .4byte 0x03005AF0\n\t"
-            "_081B9CD8: .4byte 0x0203B958\n\t"
-            "_081B9CDC: .4byte 0x085ADBF4\n\t"
+            "_081B9CD4: .4byte gSaveBlock2Ptr\n\t"
+            "_081B9CD8: .4byte gFacilityTrainerMons\n\t"
+            "_081B9CDC: .4byte gBattleFrontierHeldItems\n\t"
             ".syntax divided");
 }
 

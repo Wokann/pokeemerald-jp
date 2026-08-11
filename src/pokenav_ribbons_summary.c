@@ -455,7 +455,7 @@ __attribute__((naked)) static void GetMonRibbons(struct Pokenav_RibbonsSummaryLi
             "bl GetMonData3\n\t"
             "b _081CFF02\n\t"
             ".align 2, 0\n\t"
-            "_081CFEF4: .4byte 0x02024190\n\t"
+            "_081CFEF4: .4byte gPlayerParty\n\t"
             "_081CFEF8:\n\t"
             "ldrb r0, [r1]\n\t"
             "ldrb r1, [r1, #1]\n\t"
@@ -508,7 +508,7 @@ __attribute__((naked)) static void GetMonRibbons(struct Pokenav_RibbonsSummaryLi
             "blt _081CFF40\n\t"
             "b _081CFF86\n\t"
             ".align 2, 0\n\t"
-            "_081CFF58: .4byte 0x085F5E14\n\t"
+            "_081CFF58: .4byte sRibbonData\n\t"
             "_081CFF5C:\n\t"
             "movs r3, #0\n\t"
             "adds r6, #1\n\t"
@@ -1070,8 +1070,8 @@ __attribute__((naked)) void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSum
             "bx r0\n\t"
             ".align 2, 0\n\t"
             "_081D059C: .4byte 0x085F723C\n\t"
-            "_081D05A0: .4byte 0x02021C40\n\t"
-            "_081D05A4: .4byte 0x02021C7C\n\t"
+            "_081D05A0: .4byte gStringVar1\n\t"
+            "_081D05A4: .4byte gStringVar4\n\t"
             "_081D05A8: .4byte 0x085CB821\n\t"
             ".syntax divided");
 }
@@ -1175,7 +1175,7 @@ __attribute__((naked)) void PrintRibbonNameAndDescription(struct Pokenav_Ribbons
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081D0670: .4byte 0x03005AEC\n\t"
+            "_081D0670: .4byte gSaveBlock1Ptr\n\t"
             "_081D0674: .4byte 0x0000318F\n\t"
             "_081D0678: .4byte 0x085F628C\n\t"
             ".syntax divided");
@@ -1241,9 +1241,9 @@ __attribute__((naked)) void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSu
             "ldr r1, _081D0718\n\t"
             "b _081D0726\n\t"
             ".align 2, 0\n\t"
-            "_081D070C: .4byte 0x02021C68\n\t"
-            "_081D0710: .4byte 0x02021C40\n\t"
-            "_081D0714: .4byte 0x02021C54\n\t"
+            "_081D070C: .4byte gStringVar3\n\t"
+            "_081D0710: .4byte gStringVar1\n\t"
+            "_081D0714: .4byte gStringVar2\n\t"
             "_081D0718: .4byte 0x085CB7FE\n\t"
             "_081D071C:\n\t"
             "ldr r1, _081D0720\n\t"
@@ -1281,7 +1281,7 @@ __attribute__((naked)) void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSu
             "bx r0\n\t"
             ".align 2, 0\n\t"
             "_081D0764: .4byte 0x085CB7EA\n\t"
-            "_081D0768: .4byte 0x02021C7C\n\t"
+            "_081D0768: .4byte gStringVar4\n\t"
             ".syntax divided");
 }
 
@@ -1371,7 +1371,7 @@ __attribute__((naked)) u32 sub_081D07B8(s32 state)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081D0818: .4byte 0x02021C40\n\t"
+            "_081D0818: .4byte gStringVar1\n\t"
             ".syntax divided");
 }
 
@@ -1409,7 +1409,7 @@ __attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSumma
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_081D0860: .4byte 0x02021C40\n\t"
+            "_081D0860: .4byte gStringVar1\n\t"
             ".syntax divided");
 }
 

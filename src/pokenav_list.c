@@ -808,8 +808,8 @@ __attribute__((naked)) void PrintMatchCallFieldNames(struct PokenavList *list, u
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_pkmf_15AC: .4byte 0x085F15AC\n\t"
-            "_pkmf_15B8: .4byte 0x085F15B8\n\t"
+            "_pkmf_15AC: .4byte sPokenavMatchCallFieldNames\n\t"
+            "_pkmf_15B8: .4byte sPokenavFieldNameColors\n\t"
             ".syntax divided");
 }
 

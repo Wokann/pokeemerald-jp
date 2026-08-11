@@ -345,13 +345,13 @@ __attribute__((naked)) void ShowLinkBattleRecords(void)
             "pop {r0}\n\t"
             "bx r0\n\t"
             ".align 2, 0\n\t"
-            "_0813C560: .4byte 0x0203A840\n\t"
-            "_0813C564: .4byte 0x085937D8\n\t"
-            "_0813C568: .4byte 0x02021C7C\n\t"
-            "_0813C56C: .4byte 0x085937E0\n\t"
-            "_0813C570: .4byte 0x03005AEC\n\t"
+            "_0813C560: .4byte gRecordsWindowId\n\t"
+            "_0813C564: .4byte sLinkBattleRecordsWindow\n\t"
+            "_0813C568: .4byte gStringVar4\n\t"
+            "_0813C56C: .4byte gText_PlayersBattleResults\n\t"
+            "_0813C570: .4byte gSaveBlock1Ptr\n\t"
             "_0813C574: .4byte 0x00003150\n\t"
-            "_0813C578: .4byte 0x08593801\n\t"
+            "_0813C578: .4byte gText_WinLoseDraw\n\t"
             ".syntax divided");
 }
 
