@@ -88,6 +88,7 @@ struct Pokenav_RibbonsMonMenu
 };
 
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
+extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -1707,6 +1708,9 @@ static void AddSearchResultListMenuWindow(struct Pokenav_SearchResultsGfx *gfx)
     PrintSearchResultListMenuItems(gfx);
 }
 
+#ifndef NONMATCHING
+// JP naked asm: byte-exact search-result list row printer; C form differs,
+// so asm stays default.
 __attribute__((naked)) void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
 {
     __asm__(".syntax unified\n\t"
@@ -1754,6 +1758,19 @@ __attribute__((naked)) void PrintSearchResultListMenuItems(struct Pokenav_Search
             "_081CEF48: .4byte 0x085CB81B\n\t"
             ".syntax divided");
 }
+#else
+void PrintSearchResultListMenuItems(struct Pokenav_SearchResultsGfx *gfx)
+{
+    s32 rank = GetSearchResultsSelectedMonRank();
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    ConvertIntToDecimalStringN(gStringVar1, rank, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar2, gText_SearchResultRank);
+    AddTextPrinterParameterized(gfx->winid, FONT_NORMAL, gStringVar2, 0, 2, 0xFF, NULL);
+    CopyWindowToVram(gfx->winid, COPYWIN_GFX);
+}
+#endif
+
 
 __attribute__((naked)) void CreateSearchResultsList(void)
 {
