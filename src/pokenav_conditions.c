@@ -390,6 +390,9 @@ bool32 LoadNextConditionMenuMonData(u8 mode)
     return FALSE;
 }
 
+#ifndef NONMATCHING
+// Verified: agbcc -O2 cannot reproduce the JP loop structure (count handling
+// via 0xFFFF0000 wraparound), so the byte-exact naked asm stays the default.
 __attribute__((naked)) void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
 {
     __asm__(".syntax unified\n\t"
@@ -442,6 +445,23 @@ __attribute__((naked)) void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
             ".align 2, 0\n\t"
             "_081CCD60: .4byte 0xFFFF0000");
 }
+#else
+void sub_081CCD0C(u8 *dest, const u8 *src, u16 count)
+{
+    while (*src != EOS)
+    {
+        *dest++ = *src++;
+        count--;
+    }
+    while (count)
+    {
+        *dest++ = 0;
+        count--;
+    }
+    *dest = EOS;
+}
+#endif
+
 
 __attribute__((naked)) void sub_081CCD64(u8 *dest, u16 boxId, u8 unused)
 {
