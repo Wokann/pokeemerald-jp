@@ -6360,9 +6360,13 @@ gUnknown_84FCF98: @ 0x84FCF98
 gUnknown_84FCFA8: @ 0x84FCFA8
 	.incbin "build/data/data.bin", 0x261204, 0x20
 
-	.globl gUnknown_84FCFC8
-gUnknown_84FCFC8: @ 0x84FCFC8
-	.incbin "build/data/data.bin", 0x261224, 0x288
+	.globl sFanfares
+sFanfares: @ 0x84FCFC8
+	.incbin "build/data/data.bin", 0x261224, 0x48
+
+	.globl gUnknown_84FD010
+gUnknown_84FD010: @ 0x84FD010
+	.incbin "build/data/data.bin", 0x26126c, 0x240
 
 	.globl gUnknown_84FD250
 gUnknown_84FD250: @ 0x84FD250
@@ -21767,37 +21771,41 @@ gUnknown_85FD7B8: @ 0x85FD7B8
 gUnknown_85FD7EC: @ 0x85FD7EC
 	.incbin "build/data/data.bin", 0x361a48, 0x28028
 
-	.globl gUnknown_8625814
-gUnknown_8625814: @ 0x8625814
+	.globl gJP_CryTable_Normal_0
+gJP_CryTable_Normal_0: @ 0x8625814
 	.incbin "build/data/data.bin", 0x389a70, 0x600
 
-	.globl gUnknown_8625E14
-gUnknown_8625E14: @ 0x8625E14
+	.globl gJP_CryTable_Normal_1
+gJP_CryTable_Normal_1: @ 0x8625E14
 	.incbin "build/data/data.bin", 0x38a070, 0x600
 
-	.globl gUnknown_8626414
-gUnknown_8626414: @ 0x8626414
+	.globl gJP_CryTable_Normal_2
+gJP_CryTable_Normal_2: @ 0x8626414
 	.incbin "build/data/data.bin", 0x38a670, 0x600
 
-	.globl gUnknown_8626A14
-gUnknown_8626A14: @ 0x8626A14
+	.globl gJP_CryTable_Normal_3
+gJP_CryTable_Normal_3: @ 0x8626A14
 	.incbin "build/data/data.bin", 0x38ac70, 0x30
 
-	.globl gUnknown_8626A44
-gUnknown_8626A44: @ 0x8626A44
+	.globl gJP_CryTable_Reverse_0
+gJP_CryTable_Reverse_0: @ 0x8626A44
 	.incbin "build/data/data.bin", 0x38aca0, 0x600
 
-	.globl gUnknown_8627044
-gUnknown_8627044: @ 0x8627044
+	.globl gJP_CryTable_Reverse_1
+gJP_CryTable_Reverse_1: @ 0x8627044
 	.incbin "build/data/data.bin", 0x38b2a0, 0x600
 
-	.globl gUnknown_8627644
-gUnknown_8627644: @ 0x8627644
+	.globl gJP_CryTable_Reverse_2
+gJP_CryTable_Reverse_2: @ 0x8627644
 	.incbin "build/data/data.bin", 0x38b8a0, 0x600
 
-	.globl gUnknown_8627C44
-gUnknown_8627C44: @ 0x8627C44
-	.incbin "build/data/data.bin", 0x38bea0, 0x14638
+	.globl gJP_CryTable_Reverse_3
+gJP_CryTable_Reverse_3: @ 0x8627C44
+	.incbin "build/data/data.bin", 0x38bea0, 0x600
+
+	.globl gUnknown_8628244
+gUnknown_8628244: @ 0x8628244
+	.incbin "build/data/data.bin", 0x38c4a0, 0x14038
 
 	.globl gUnknown_863C27C
 gUnknown_863C27C: @ 0x863C27C

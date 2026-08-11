@@ -5364,7 +5364,7 @@ _080E8EBA:
 	b _080E8F60
 	.align 2, 0
 _080E8ECC: .4byte 0x02039CE4
-_080E8ED0: .4byte 0x08626A44
+_080E8ED0: .4byte gJP_CryTable_Reverse_0
 _080E8ED4:
 	lsls r0, r1, #1
 	adds r0, r0, r1
@@ -5372,7 +5372,7 @@ _080E8ED4:
 	ldr r1, _080E8EE0
 	b _080E8F60
 	.align 2, 0
-_080E8EE0: .4byte 0x08625814
+_080E8EE0: .4byte gJP_CryTable_Normal_0
 _080E8EE4:
 	ldr r0, _080E8EF8
 	ldrb r0, [r0]
@@ -5385,7 +5385,7 @@ _080E8EE4:
 	b _080E8F60
 	.align 2, 0
 _080E8EF8: .4byte 0x02039CE4
-_080E8EFC: .4byte 0x08627044
+_080E8EFC: .4byte gJP_CryTable_Reverse_1
 _080E8F00:
 	lsls r0, r1, #1
 	adds r0, r0, r1
@@ -5393,7 +5393,7 @@ _080E8F00:
 	ldr r1, _080E8F0C
 	b _080E8F60
 	.align 2, 0
-_080E8F0C: .4byte 0x08625E14
+_080E8F0C: .4byte gJP_CryTable_Normal_1
 _080E8F10:
 	ldr r0, _080E8F24
 	ldrb r0, [r0]
@@ -5406,7 +5406,7 @@ _080E8F10:
 	b _080E8F60
 	.align 2, 0
 _080E8F24: .4byte 0x02039CE4
-_080E8F28: .4byte 0x08627644
+_080E8F28: .4byte gJP_CryTable_Reverse_2
 _080E8F2C:
 	lsls r0, r1, #1
 	adds r0, r0, r1
@@ -5414,7 +5414,7 @@ _080E8F2C:
 	ldr r1, _080E8F38
 	b _080E8F60
 	.align 2, 0
-_080E8F38: .4byte 0x08626414
+_080E8F38: .4byte gJP_CryTable_Normal_2
 _080E8F3C:
 	ldr r0, _080E8F50
 	ldrb r0, [r0]
@@ -5427,7 +5427,7 @@ _080E8F3C:
 	b _080E8F60
 	.align 2, 0
 _080E8F50: .4byte 0x02039CE4
-_080E8F54: .4byte 0x08627C44
+_080E8F54: .4byte gJP_CryTable_Reverse_3
 _080E8F58:
 	lsls r0, r1, #1
 	adds r0, r0, r1
@@ -5461,7 +5461,7 @@ _080E8F8E:
 	pop {r0}
 	bx r0
 	.align 2, 0
-_080E8F94: .4byte 0x08626A14
+_080E8F94: .4byte gJP_CryTable_Normal_3
 _080E8F98: .4byte 0x03005E1C
 _080E8F9C: .4byte 0x02039CBD
 _080E8FA0: .4byte 0x02039CBE
