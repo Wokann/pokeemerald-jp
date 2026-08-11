@@ -19,7 +19,7 @@ extern const u8 *const gGiftRibbonDescriptionPointers[][2];
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 extern const struct RibbonGfxData sRibbonGfxData[];
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
-extern const struct RibbonData sRibbonData[];
+extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 16 entries
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
 extern const u16 sRibbonIcons1_Pal[];
@@ -27,10 +27,10 @@ extern const u16 sRibbonIcons2_Pal[];
 extern const u16 sRibbonIcons3_Pal[];
 extern const u16 sRibbonIcons4_Pal[];
 extern const u16 sRibbonIcons5_Pal[];
-extern const u16 sMonInfo_Pal[];
+extern const u16 sMonInfo_Pal[16]; // ROM 0x085F6670, 16 colors
 extern const u32 sRibbonIconsSmall_Gfx[];
 extern const u32 sRibbonIconsBig_Gfx[];
-extern const struct BgTemplate sBgTemplates[];
+extern const struct BgTemplate sBgTemplates[2]; // ROM 0x085F7210
 extern const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[];
 extern const struct WindowTemplate sRibbonCountWindowTemplate;
 extern const struct WindowTemplate sRibbonSummaryMonNameWindowTemplate;
@@ -428,6 +428,10 @@ static u32 GetCurrMonRibbonCount(void)
 
 // JP 0x081CFEC4 uses high registers (r8/sb/sl) and calls GetMonData3
 // directly with a pointer into gPlayerParty, so it is kept as asm.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
 {
     __asm__(".syntax unified\n\t"
@@ -567,6 +571,100 @@ __attribute__((naked)) static void GetMonRibbons(struct Pokenav_RibbonsSummaryLi
             "bx r0\n\t"
             ".syntax divided\n");
 }
+#else
+static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
+{
+    u32 ribbonFlags;
+    s32 i, j;
+    struct PokenavMonList *mons = list->monList;
+    struct PokenavMonListItem *monInfo = &mons->monData[mons->currIndex];
+
+    if (monInfo->boxId == TOTAL_BOXES_COUNT)
+        ribbonFlags = GetMonData(&gPlayerParty[monInfo->monId], MON_DATA_RIBBONS);
+    else
+        ribbonFlags = GetBoxMonDataAt(monInfo->boxId, monInfo->monId, MON_DATA_RIBBONS);
+
+    list->numNormalRibbons = 0;
+    list->numGiftRibbons = 0;
+    for (i = 0; i < ARRAY_COUNT(sRibbonData); i++)
+    {
+        // For all non-contest ribbons, numRibbons will be 1 if they have it, 0 if they don't
+        // For contest ribbons, numRibbons will be 0-4
+        s32 numRibbons = ((1 << sRibbonData[i].numBits) - 1) & ribbonFlags;
+        if (!sRibbonData[i].isGiftRibbon)
+        {
+            for (j = 0; j < numRibbons; j++)
+                list->ribbonIds[list->numNormalRibbons++] = sRibbonData[i].ribbonId + j;
+        }
+        else
+        {
+            for (j = 0; j < numRibbons; j++)
+                list->giftRibbonIds[list->numGiftRibbons++] = sRibbonData[i].ribbonId + j;
+        }
+        ribbonFlags >>= sRibbonData[i].numBits;
+    }
+
+    if (list->numNormalRibbons != 0)
+    {
+        list->normalRibbonLastRowStart = ((list->numNormalRibbons - 1) / RIBBONS_PER_ROW) * RIBBONS_PER_ROW;
+        list->selectedPos = 0;
+    }
+    else
+    {
+        // There are no normal ribbons, move cursor to first gift ribbon
+        list->normalRibbonLastRowStart = 0;
+        list->selectedPos = GIFT_RIBBON_START_POS;
+    }
+}
+#endif
+
+#else
+static void GetMonRibbons(struct Pokenav_RibbonsSummaryList *list)
+{
+    u32 ribbonFlags;
+    s32 i, j;
+    struct PokenavMonList *mons = list->monList;
+    struct PokenavMonListItem *monInfo = &mons->monData[mons->currIndex];
+
+    if (monInfo->boxId == TOTAL_BOXES_COUNT)
+        ribbonFlags = GetMonData(&gPlayerParty[monInfo->monId], MON_DATA_RIBBONS);
+    else
+        ribbonFlags = GetBoxMonDataAt(monInfo->boxId, monInfo->monId, MON_DATA_RIBBONS);
+
+    list->numNormalRibbons = 0;
+    list->numGiftRibbons = 0;
+    for (i = 0; i < ARRAY_COUNT(sRibbonData); i++)
+    {
+        // For all non-contest ribbons, numRibbons will be 1 if they have it, 0 if they don't
+        // For contest ribbons, numRibbons will be 0-4
+        s32 numRibbons = ((1 << sRibbonData[i].numBits) - 1) & ribbonFlags;
+        if (!sRibbonData[i].isGiftRibbon)
+        {
+            for (j = 0; j < numRibbons; j++)
+                list->ribbonIds[list->numNormalRibbons++] = sRibbonData[i].ribbonId + j;
+        }
+        else
+        {
+            for (j = 0; j < numRibbons; j++)
+                list->giftRibbonIds[list->numGiftRibbons++] = sRibbonData[i].ribbonId + j;
+        }
+        ribbonFlags >>= sRibbonData[i].numBits;
+    }
+
+    if (list->numNormalRibbons != 0)
+    {
+        list->normalRibbonLastRowStart = ((list->numNormalRibbons - 1) / RIBBONS_PER_ROW) * RIBBONS_PER_ROW;
+        list->selectedPos = 0;
+    }
+    else
+    {
+        // There are no normal ribbons, move cursor to first gift ribbon
+        list->normalRibbonLastRowStart = 0;
+        list->selectedPos = GIFT_RIBBON_START_POS;
+    }
+}
+#endif
+
 
 static u32 *GetNormalRibbonIds(u32 *size)
 {
@@ -666,6 +764,10 @@ static bool32 GetCurrentLoopedTaskActive(void)
     return IsLoopedTaskActive(menu->loopedTaskId);
 }
 
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
 {
     __asm__(".syntax unified\n\t"
@@ -879,6 +981,184 @@ __attribute__((naked)) u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
             ".align 2, 0\n\t"
             ".syntax divided");
 }
+#else
+u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
+{
+    struct Pokenav_RibbonsSummaryMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_SUMMARY_MENU);
+    switch (state)
+    {
+    case 0:
+        InitBgTemplates(sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        DecompressAndCopyTileDataToVram(2, gPokenavRibbonsSummaryBg_Gfx, 0, 0, 0);
+        SetBgTilemapBuffer(2, menu->tilemapBuffers[0]);
+        CopyToBgTilemapBuffer(2, gPokenavRibbonsSummaryBg_Tilemap, 0, 0);
+        CopyPaletteIntoBufferUnfaded(gPokenavRibbonsSummaryBg_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyBgTilemapBufferToVram(2);
+        return LT_INC_AND_PAUSE;
+    case 1:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            BgDmaFill(1, 0, 0, 1);
+            DecompressAndCopyTileDataToVram(1, sRibbonIconsSmall_Gfx, 0, 1, 0);
+            SetBgTilemapBuffer(1, menu->tilemapBuffers[1]);
+            FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 32, 20);
+            CopyPaletteIntoBufferUnfaded(sRibbonIcons1_Pal, BG_PLTT_ID(2), 5 * PLTT_SIZE_4BPP);
+            CopyPaletteIntoBufferUnfaded(sMonInfo_Pal, BG_PLTT_ID(10), sizeof(sMonInfo_Pal));
+            CopyBgTilemapBufferToVram(1);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 2:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonCountWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 3:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonSummaryMonNameWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 4:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonListIndexWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 5:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CopyBgTilemapBufferToVram(2);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 6:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            ResetSpritesAndDrawMonFrontPic(menu);
+            return LT_INC_AND_CONTINUE;
+        }
+        return LT_PAUSE;
+    case 7:
+        DrawAllRibbonsSmall(menu);
+        PrintHelpBarText(HELPBAR_RIBBONS_LIST);
+        return LT_INC_AND_PAUSE;
+    case 8:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CreateBigRibbonSprite(menu);
+            ChangeBgX(1, 0, BG_COORD_SET);
+            ChangeBgY(1, 0, BG_COORD_SET);
+            ChangeBgX(2, 0, BG_COORD_SET);
+            ChangeBgY(2, 0, BG_COORD_SET);
+            ShowBg(1);
+            ShowBg(2);
+            HideBg(3);
+            PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 9:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+    }
+    return LT_FINISH;
+}
+#endif
+
+#else
+u32 LoopedTask_OpenRibbonsSummaryMenu(s32 state)
+{
+    struct Pokenav_RibbonsSummaryMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_SUMMARY_MENU);
+    switch (state)
+    {
+    case 0:
+        InitBgTemplates(sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        DecompressAndCopyTileDataToVram(2, gPokenavRibbonsSummaryBg_Gfx, 0, 0, 0);
+        SetBgTilemapBuffer(2, menu->tilemapBuffers[0]);
+        CopyToBgTilemapBuffer(2, gPokenavRibbonsSummaryBg_Tilemap, 0, 0);
+        CopyPaletteIntoBufferUnfaded(gPokenavRibbonsSummaryBg_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyBgTilemapBufferToVram(2);
+        return LT_INC_AND_PAUSE;
+    case 1:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            BgDmaFill(1, 0, 0, 1);
+            DecompressAndCopyTileDataToVram(1, sRibbonIconsSmall_Gfx, 0, 1, 0);
+            SetBgTilemapBuffer(1, menu->tilemapBuffers[1]);
+            FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 32, 20);
+            CopyPaletteIntoBufferUnfaded(sRibbonIcons1_Pal, BG_PLTT_ID(2), 5 * PLTT_SIZE_4BPP);
+            CopyPaletteIntoBufferUnfaded(sMonInfo_Pal, BG_PLTT_ID(10), sizeof(sMonInfo_Pal));
+            CopyBgTilemapBufferToVram(1);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 2:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonCountWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 3:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonSummaryMonNameWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 4:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            AddRibbonListIndexWindow(menu);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 5:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CopyBgTilemapBufferToVram(2);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 6:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            ResetSpritesAndDrawMonFrontPic(menu);
+            return LT_INC_AND_CONTINUE;
+        }
+        return LT_PAUSE;
+    case 7:
+        DrawAllRibbonsSmall(menu);
+        PrintHelpBarText(HELPBAR_RIBBONS_LIST);
+        return LT_INC_AND_PAUSE;
+    case 8:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CreateBigRibbonSprite(menu);
+            ChangeBgX(1, 0, BG_COORD_SET);
+            ChangeBgY(1, 0, BG_COORD_SET);
+            ChangeBgX(2, 0, BG_COORD_SET);
+            ChangeBgY(2, 0, BG_COORD_SET);
+            ShowBg(1);
+            ShowBg(2);
+            HideBg(3);
+            PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+            return LT_INC_AND_PAUSE;
+        }
+        return LT_PAUSE;
+    case 9:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+    }
+    return LT_FINISH;
+}
+#endif
+
 
 static u32 LoopedTask_ExitRibbonsSummaryMenu(s32 state)
 {
@@ -1021,6 +1301,10 @@ static void AddRibbonCountWindow(struct Pokenav_RibbonsSummaryMenu *menu)
     PrintCurrentMonRibbonCount(menu);
 }
 
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1075,7 +1359,41 @@ __attribute__((naked)) void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSum
             "_081D05A8: .4byte 0x085CB821\n\t"
             ".syntax divided");
 }
+#else
+void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 
+    ConvertIntToDecimalStringN(gStringVar1, GetCurrMonRibbonCount(), STR_CONV_MODE_LEFT_ALIGN, 2);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_RibbonsF700);
+    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
+    AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 1, color, TEXT_SKIP_DRAW, gStringVar4);
+    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
+}
+#endif
+
+#else
+void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+
+    ConvertIntToDecimalStringN(gStringVar1, GetCurrMonRibbonCount(), STR_CONV_MODE_LEFT_ALIGN, 2);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_RibbonsF700);
+    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
+    AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 1, color, TEXT_SKIP_DRAW, gStringVar4);
+    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
+}
+#endif
+
+
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1180,6 +1498,76 @@ __attribute__((naked)) void PrintRibbonNameAndDescription(struct Pokenav_Ribbons
             "_081D0678: .4byte 0x085F628C\n\t"
             ".syntax divided");
 }
+#else
+void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    s32 i;
+    u32 ribbonId = GetRibbonId();
+    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+
+    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
+    if (ribbonId < FIRST_GIFT_RIBBON)
+    {
+        // Print normal ribbon name/description
+        for (i = 0; i < 2; i++)
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gRibbonDescriptionPointers[ribbonId][i]);
+    }
+    else
+    {
+        // ribbonId here is one of the 'gift' ribbon slots, used to read
+        // its actual value from giftRibbons to determine which specific
+        // gift ribbon it is
+        ribbonId = gSaveBlock1Ptr->giftRibbons[ribbonId - FIRST_GIFT_RIBBON];
+
+        // If 0, this gift ribbon slot is unoccupied
+        if (ribbonId == 0)
+            return;
+
+        // Print gift ribbon name/description
+        ribbonId--;
+        for (i = 0; i < 2; i++)
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gGiftRibbonDescriptionPointers[ribbonId][i]);
+    }
+
+    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
+}
+#endif
+
+#else
+void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    s32 i;
+    u32 ribbonId = GetRibbonId();
+    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+
+    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
+    if (ribbonId < FIRST_GIFT_RIBBON)
+    {
+        // Print normal ribbon name/description
+        for (i = 0; i < 2; i++)
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gRibbonDescriptionPointers[ribbonId][i]);
+    }
+    else
+    {
+        // ribbonId here is one of the 'gift' ribbon slots, used to read
+        // its actual value from giftRibbons to determine which specific
+        // gift ribbon it is
+        ribbonId = gSaveBlock1Ptr->giftRibbons[ribbonId - FIRST_GIFT_RIBBON];
+
+        // If 0, this gift ribbon slot is unoccupied
+        if (ribbonId == 0)
+            return;
+
+        // Print gift ribbon name/description
+        ribbonId--;
+        for (i = 0; i < 2; i++)
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gGiftRibbonDescriptionPointers[ribbonId][i]);
+    }
+
+    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
+}
+#endif
+
 
 
 static void AddRibbonSummaryMonNameWindow(struct Pokenav_RibbonsSummaryMenu *menu)
@@ -1190,6 +1578,10 @@ static void AddRibbonSummaryMonNameWindow(struct Pokenav_RibbonsSummaryMenu *men
 }
 
 
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1284,8 +1676,80 @@ __attribute__((naked)) void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSu
             "_081D0768: .4byte gStringVar4\n\t"
             ".syntax divided");
 }
+#else
+void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    const u8 *genderTxt;
+    u8 *txtPtr;
+    u8 level, gender;
+    u16 windowId = menu->nameWindowId;
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    GetMonNicknameLevelGender(gStringVar3, &level, &gender);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar3, 0, 1, TEXT_SKIP_DRAW, NULL);
+    switch (gender)
+    {
+    case MON_MALE:
+        genderTxt = sText_MaleSymbol;
+        break;
+    case MON_FEMALE:
+        genderTxt = sText_FemaleSymbol;
+        break;
+    default:
+        genderTxt = sGenderlessIconString;
+        break;
+    }
+
+    txtPtr = StringCopy(gStringVar1, genderTxt);
+    *(txtPtr++) = CHAR_SLASH;
+    *(txtPtr++) = CHAR_EXTRA_SYMBOL;
+    *(txtPtr++) = CHAR_LV_2;
+    ConvertIntToDecimalStringN(txtPtr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 60, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(windowId, COPYWIN_GFX);
+}
+#endif
+
+#else
+void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    const u8 *genderTxt;
+    u8 *txtPtr;
+    u8 level, gender;
+    u16 windowId = menu->nameWindowId;
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    GetMonNicknameLevelGender(gStringVar3, &level, &gender);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar3, 0, 1, TEXT_SKIP_DRAW, NULL);
+    switch (gender)
+    {
+    case MON_MALE:
+        genderTxt = sText_MaleSymbol;
+        break;
+    case MON_FEMALE:
+        genderTxt = sText_FemaleSymbol;
+        break;
+    default:
+        genderTxt = sGenderlessIconString;
+        break;
+    }
+
+    txtPtr = StringCopy(gStringVar1, genderTxt);
+    *(txtPtr++) = CHAR_SLASH;
+    *(txtPtr++) = CHAR_EXTRA_SYMBOL;
+    *(txtPtr++) = CHAR_LV_2;
+    ConvertIntToDecimalStringN(txtPtr, level, STR_CONV_MODE_LEFT_ALIGN, 3);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 60, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(windowId, COPYWIN_GFX);
+}
+#endif
 
 
+
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1321,6 +1785,26 @@ __attribute__((naked)) void AddRibbonListIndexWindow(struct Pokenav_RibbonsSumma
             "_081D07B4: .4byte 0x085F7248\n\t"
             ".syntax divided");
 }
+#else
+void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    menu->listIdxWindowId = AddWindow(sRibbonMonListIndexWindowTemplate);
+    FillWindowPixelBuffer(menu->listIdxWindowId, PIXEL_FILL(1));
+    PutWindowTilemap(menu->listIdxWindowId);
+    PrintRibbonsMonListIndex(menu);
+}
+#endif
+
+#else
+void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    menu->listIdxWindowId = AddWindow(sRibbonMonListIndexWindowTemplate);
+    FillWindowPixelBuffer(menu->listIdxWindowId, PIXEL_FILL(1));
+    PutWindowTilemap(menu->listIdxWindowId);
+    PrintRibbonsMonListIndex(menu);
+}
+#endif
+
 
 // JP 0x081D07B8: prints the list index row above the ribbons list.
 // JP-only function (no US counterpart) kept as asm.
@@ -1375,6 +1859,10 @@ __attribute__((naked)) u32 sub_081D07B8(s32 state)
             ".syntax divided");
 }
 
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+#ifndef NONMATCHING
+// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
 __attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1412,6 +1900,40 @@ __attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSumma
             "_081D0860: .4byte gStringVar1\n\t"
             ".syntax divided");
 }
+#else
+void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    s32 x;
+    u8 *txtPtr;
+    u32 id = GetRibbonsSummaryCurrentIndex() + 1;
+    u32 count = GetRibbonsSummaryMonListCount();
+
+    txtPtr = ConvertIntToDecimalStringN(gStringVar1, id, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    *(txtPtr++) = CHAR_SLASH;
+    ConvertIntToDecimalStringN(txtPtr, count, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    x = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 56);
+    AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, x, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(menu->listIdxWindowId, COPYWIN_GFX);
+}
+#endif
+
+#else
+void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
+{
+    s32 x;
+    u8 *txtPtr;
+    u32 id = GetRibbonsSummaryCurrentIndex() + 1;
+    u32 count = GetRibbonsSummaryMonListCount();
+
+    txtPtr = ConvertIntToDecimalStringN(gStringVar1, id, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    *(txtPtr++) = CHAR_SLASH;
+    ConvertIntToDecimalStringN(txtPtr, count, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    x = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 56);
+    AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, x, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(menu->listIdxWindowId, COPYWIN_GFX);
+}
+#endif
+
 
 static void ResetSpritesAndDrawMonFrontPic(struct Pokenav_RibbonsSummaryMenu *menu)
 {
