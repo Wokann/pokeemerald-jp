@@ -14,6 +14,10 @@ SHELL := /bin/bash
 ASFLAGS := -mcpu=arm7tdmi
 CFLAGS := -mthumb-interwork -O2 -fhex-asm
 
+# The per-file CFLAGS rules below would otherwise become the default goal;
+# keep `make` (no target) building the ROM like the US pokeemerald Makefile.
+.DEFAULT_GOAL := all
+
 # Build flavor.  Keep the current decompilation build under
 # build/pokeemerald-jp/; alternate builds (e.g. BUILD_NAME=pokeemerald-jp-rev10)
 # get their own subdirectory under build/, like pokefirered's BUILD_NAME.
