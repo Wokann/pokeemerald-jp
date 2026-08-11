@@ -1188,7 +1188,7 @@ _080129CA:
 _080129D0: .4byte 0x082C09A8
 _080129D4:
 	bl DestroyWirelessStatusIndicatorSprite
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	adds r0, r5, #0
 	bl sub_08012A64
 	ldrb r0, [r5, #0xc]
@@ -2610,7 +2610,7 @@ _0801366C:
 	adds r0, r4, #0
 	bl DestroyTask
 	bl sub_08016E98
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	b _08013686
 _0801367C:
 	bl sub_080144CC
@@ -2842,13 +2842,13 @@ _08013860:
 	bl Free
 	ldr r0, [r4, #4]
 	bl Free
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	ldrb r0, [r4, #8]
 	adds r0, #1
 	strb r0, [r4, #8]
 	b _08013888
 _0801387E:
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	adds r0, r5, #0
 	bl DestroyTask
 _08013888:
@@ -3931,10 +3931,10 @@ _080141E0:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080141F0
-	bl sub_0800E7D0
+	bl LinkRfu_CreateConnectionAsParent
 	b _080141FE
 _080141F0:
-	bl sub_0800E7E8
+	bl LinkRfu_StopManagerBeforeEnteringChat
 	movs r0, #0x45
 	movs r1, #0
 	movs r2, #1
@@ -4757,7 +4757,7 @@ _08014918:
 	b _080149FA
 _0801491E:
 	bl DestroyWirelessStatusIndicatorSprite
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	ldrb r0, [r5, #0x12]
 	movs r1, #0
 	movs r2, #0
@@ -5241,7 +5241,7 @@ _08014D68:
 _08014D72:
 	adds r0, r6, #0
 	bl DestroyTask
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	ldr r1, _08014D88
 	movs r0, #5
 	strh r0, [r1]
@@ -5635,7 +5635,7 @@ _080150CA:
 	bl DestroyWirelessStatusIndicatorSprite
 	adds r0, r4, #0
 	bl DestroyTask
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	ldr r1, _080150EC
 	movs r0, #5
 	strh r0, [r1]
@@ -8036,7 +8036,7 @@ _080165A4:
 	ldr r0, _080165E0
 	ldr r0, [r0]
 	bl Free
-	bl sub_0800E894
+	bl LinkRfu_Shutdown
 	adds r0, r5, #0
 	bl DestroyTask
 _080165D8:

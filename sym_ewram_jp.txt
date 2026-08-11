@@ -1861,3 +1861,5 @@ sReadyCloseLinkAttempts = ABSOLUTE(0x020227C0);
 gHostRfuGameData = ABSOLUTE(0x020227CC);
 gHostRfuUsername = ABSOLUTE(0x020227DA);
 gWirelessStatusIndicatorSpriteId = ABSOLUTE(0x020227C8);
+sRfuReqConfig = ABSOLUTE(0x020227E4);
+sRfuDebug = ABSOLUTE(0x020227FC);

@@ -58,7 +58,7 @@ sub_08076BC4: @ 0x08076BC4
 	ldr r4, _08076BEC
 	ldr r0, _08076BF0
 	ldrb r0, [r0]
-	bl sub_0800E340
+	bl Rfu_GetIndexOfNewestChild
 	lsls r0, r0, #2
 	adds r0, r0, r4
 	ldr r0, [r0]

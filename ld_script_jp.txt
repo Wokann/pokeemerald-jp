@@ -915,6 +915,10 @@ sWirelessStatusIndicatorOamData = ABSOLUTE(0x082C02C0);
 sWirelessStatusIndicatorSpriteSheet = ABSOLUTE(0x082C0330);
 sWirelessStatusIndicatorSpritePalette = ABSOLUTE(0x082C0338);
 sWirelessStatusIndicatorSpriteTemplate = ABSOLUTE(0x082C0340);
+sRfuReqConfigTemplate = ABSOLUTE(0x082C0358);
+sPlayerBitsToNewChildIdx = ABSOLUTE(0x082C03F5);
+sAcceptedSerialNos = ABSOLUTE(0x082C0430);
+sShutdownTasks = ABSOLUTE(0x082C0530);
 
 SECTIONS {
     . = 0x2000000;
@@ -1129,6 +1133,23 @@ SECTIONS {
         src/link_rfu_3.o(.text.SaveLinkTrainerNames);
         src/link_rfu_3.o(.text.PlayerHasMetTrainerBefore);
         src/link_rfu_3.o(.text.WipeTrainerNameRecords);
+        src/link_rfu_2.o(.text.nullsub_13);
+        src/link_rfu_2.o(.text.nullsub_5);
+        src/link_rfu_2.o(.text.ResetLinkRfuGFLayer);
+        src/link_rfu_2.o(.text.InitRFU);
+        src/link_rfu_2.o(.text.InitRFUAPI);
+        src/link_rfu_2.o(.text.Task_ParentSearchForChildren);
+        src/link_rfu_2.o(.text.Rfu_GetIndexOfNewestChild);
+        src/link_rfu_2.o(.text.SetLinkPlayerIdsFromSlots);
+        src/link_rfu_2.o(.text.Task_ChildSearchForParent);
+        src/link_rfu_2.o(.text.InitChildRecvBuffers);
+        src/link_rfu_2.o(.text.InitParentSendData);
+        src/link_rfu_2.o(.text.Task_UnionRoomListen);
+        src/link_rfu_2.o(.text.LinkRfu_CreateConnectionAsParent);
+        src/link_rfu_2.o(.text.LinkRfu_StopManagerBeforeEnteringChat);
+        src/link_rfu_2.o(.text.MSCCallback_Child);
+        src/link_rfu_2.o(.text.MSCCallback_Parent);
+        src/link_rfu_2.o(.text.LinkRfu_Shutdown);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

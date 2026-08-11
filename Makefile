@@ -114,6 +114,8 @@ $(C_BUILDDIR)/link.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-secti
 
 $(C_BUILDDIR)/AgbRfu_LinkManager.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
+$(C_BUILDDIR)/link_rfu_2.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+
 # link_rfu_3 is wired function-by-function (see ld_script_jp.txt); the
 # still-asm functions stay in asm/link_rfu.s.
 $(C_BUILDDIR)/link_rfu_3.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
@@ -126,6 +128,11 @@ $(C_BUILDDIR)/AgbRfu_LinkManager.o: src/AgbRfu_LinkManager.c
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
 $(C_BUILDDIR)/link_rfu_3.o: src/link_rfu_3.c
+	@mkdir -p $(C_BUILDDIR)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
+		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
+
+$(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 	@mkdir -p $(C_BUILDDIR)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
