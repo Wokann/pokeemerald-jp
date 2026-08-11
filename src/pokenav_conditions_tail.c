@@ -90,6 +90,7 @@ struct Pokenav_RibbonsMonMenu
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
 extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
 extern const struct BgTemplate sSearchResultsBgTemplates[]; // JP 0x085F5BA0
+extern const struct BgTemplate sRibbonsMonListBgTemplates[]; // JP 0x085F5DA4
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -2898,6 +2899,9 @@ __attribute__((naked)) void AddRibbonsMonListWindow(u16 windowId)
 }
 
 
+#ifndef NONMATCHING
+// JP naked asm: builds the ribbons-mon-list template on the stack; C form
+// differs, so asm stays default.
 __attribute__((naked)) void CreateRibbonMonsList(void)
 {
     __asm__(".syntax unified\n\t"
@@ -2940,6 +2944,26 @@ __attribute__((naked)) void CreateRibbonMonsList(void)
             "_081CF9F4: .4byte 0x085F5DA4\n\t"
             ".syntax divided");
 }
+#else
+void CreateRibbonMonsList(void)
+{
+    struct PokenavListTemplate template;
+
+    template.list = GetMonRibbonMonListData();
+    template.count = GetRibbonsMonListCount();
+    template.startIndex = GetRibbonListMenuCurrIndex();
+    template.itemSize = 4;
+    template.item_X = 0xE;
+    template.windowWidth = 0x10;
+    template.listTop = 1;
+    template.maxShowed = 8;
+    template.fillValue = 2;
+    template.bufferItemFunc = BufferRibbonMonInfoText;
+    template.iconDrawFunc = NULL;
+    CreatePokenavList(sRibbonsMonListBgTemplates, &template, 0);
+}
+#endif
+
 
 __attribute__((naked)) void BufferRibbonMonInfoText(u8 windowId, u16 index)
 {

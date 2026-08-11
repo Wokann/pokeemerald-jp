@@ -42,6 +42,7 @@ sPokenavMainMenuScanlineEffectParams = ABSOLUTE(0x085F28EC);
 gText_NoRibbonWinners = ABSOLUTE(0x085CB5DC);
 gText_SearchResultRank = ABSOLUTE(0x085CB81B);
 sSearchResultsBgTemplates = ABSOLUTE(0x085F5BA0);
+sRibbonsMonListBgTemplates = ABSOLUTE(0x085F5DA4);
 gText_Peekaboo = ABSOLUTE(0x085FC010);
 sPokenavCheckPageColors = ABSOLUTE(0x085F15A8);
 sPokenavMatchCallFieldNames = ABSOLUTE(0x085F15AC);
