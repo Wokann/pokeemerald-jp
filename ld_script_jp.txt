@@ -959,7 +959,7 @@ SECTIONS {
         src/link.o(.text.ClearLinkCallback_2);
         src/link.o(.text.GetLinkPlayerCount);
         src/link.o(.text.AreAnyLinkPlayersUsingVersions);
-        asm/link_mid_1.o(.text);
+        src/link.o(.text.AreAnyLinkPlayersNotJapanese);
         src/link.o(.text.IsFullLinkGroupWithNoRS);
         src/link.o(.text.Link_AnyPartnersPlayingRubyOrSapphire);
         src/link.o(.text.Link_AnyPartnersPlayingFRLG_JP);

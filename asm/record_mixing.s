@@ -250,7 +250,7 @@ PrepareExchangePacket: @ 0x080E6604
 	bl Link_AnyPartnersPlayingRubyOrSapphire
 	cmp r0, #0
 	beq _080E6640
-	bl sub_08009BD4
+	bl AreAnyLinkPlayersNotJapanese
 	cmp r0, #0
 	bne _080E6630
 	ldr r0, _080E662C

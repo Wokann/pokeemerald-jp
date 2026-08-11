@@ -579,6 +579,29 @@ int AreAnyLinkPlayersUsingVersions(u32 version1, u32 version2)
     return -1;
 }
 
+// JP variant: occupies US LinkDummy_Return2's slot (which just returns 2),
+// but actually scans the partners' languages.  Returns TRUE if any partner
+// is not Japanese; FALSE if every partner is Japanese.
+bool32 AreAnyLinkPlayersNotJapanese(void)
+{
+    struct LinkPlayer *linkPlayer;
+    int i;
+
+    i = 0;
+    linkPlayer = gLinkPlayers;
+    while (i < GetLinkPlayerCount())
+    {
+        if (linkPlayer->language == LANGUAGE_JAPANESE)
+        {
+            linkPlayer++;
+            i++;
+            continue;
+        }
+        return TRUE;
+    }
+    return FALSE;
+}
+
 bool32 UNUSED IsFullLinkGroupWithNoRS(void)
 {
     if (GetLinkPlayerCount() != MAX_LINK_PLAYERS || AreAnyLinkPlayersUsingVersions(VERSION_RUBY, VERSION_SAPPHIRE) < 0)
