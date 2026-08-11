@@ -1067,6 +1067,11 @@ SECTIONS {
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_clearVariables);
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_powerDownRFU);
         src/AgbRfu_LinkManager.o(.text.rfu_LMAN_establishConnection);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_CHILD_connectParent);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_PARENT_stopWaitLinkRecoveryAndDisconnect);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_stopManager);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_linkWatcher);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_syncVBlank);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

@@ -3,554 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0800BBE8
-sub_0800BBE8: @ 0x0800BBE8
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	lsls r0, r0, #0x10
-	lsrs r6, r0, #0x10
-	lsls r1, r1, #0x10
-	lsrs r1, r1, #0x10
-	mov r8, r1
-	ldr r1, _0800BC1C
-	ldrb r0, [r1, #4]
-	cmp r0, #0
-	beq _0800BC20
-	subs r0, #9
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #2
-	bls _0800BC20
-	movs r0, #1
-	strh r0, [r1, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #1
-	b _0800BCC0
-	.align 2, 0
-_0800BC1C: .4byte 0x030041E0
-_0800BC20:
-	bl rfu_getMasterSlave
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0800BC40
-	ldr r1, _0800BC3C
-	movs r0, #2
-	strh r0, [r1, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #2
-	b _0800BCC0
-	.align 2, 0
-_0800BC3C: .4byte 0x030041E0
-_0800BC40:
-	movs r2, #0
-	ldr r0, _0800BC8C
-	ldr r1, [r0]
-	ldrb r3, [r1, #8]
-	ldr r5, _0800BC90
-	adds r7, r0, #0
-	cmp r2, r3
-	bhs _0800BC6E
-	ldrh r0, [r1, #0x14]
-	cmp r0, r6
-	beq _0800BC6E
-	adds r4, r1, #0
-	adds r1, r3, #0
-_0800BC5A:
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, r1
-	bhs _0800BC6E
-	lsls r0, r2, #5
-	adds r0, r4, r0
-	ldrh r0, [r0, #0x14]
-	cmp r0, r6
-	bne _0800BC5A
-_0800BC6E:
-	ldr r0, [r7]
-	ldrb r0, [r0, #8]
-	cmp r0, #0
-	beq _0800BC7A
-	cmp r2, r0
-	bne _0800BC94
-_0800BC7A:
-	movs r0, #3
-	strh r0, [r5, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #3
-	b _0800BCC0
-	.align 2, 0
-_0800BC8C: .4byte 0x03007630
-_0800BC90: .4byte 0x030041E0
-_0800BC94:
-	ldrb r0, [r5, #4]
-	cmp r0, #0
-	beq _0800BC9E
-	cmp r0, #9
-	bne _0800BCA6
-_0800BC9E:
-	movs r0, #0xc
-	strb r0, [r5, #4]
-	movs r0, #0xd
-	b _0800BCAC
-_0800BCA6:
-	movs r0, #0xb
-	strb r0, [r5, #4]
-	movs r0, #0xc
-_0800BCAC:
-	strb r0, [r5, #5]
-	strh r6, [r5, #0x1e]
-	mov r0, r8
-	strh r0, [r5, #0x1a]
-	ldrb r0, [r5, #7]
-	cmp r0, #0
-	beq _0800BCBE
-	movs r0, #7
-	strb r0, [r5, #7]
-_0800BCBE:
-	movs r0, #0
-_0800BCC0:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0800BBE8
-
-	thumb_func_start sub_0800BCCC
-sub_0800BCCC: @ 0x0800BCCC
-	push {r4, r5, r6, r7, lr}
-	lsls r0, r0, #0x18
-	lsrs r1, r0, #0x18
-	ldr r6, _0800BD30
-	adds r3, r6, #0
-	adds r3, #0x30
-	ldrb r2, [r3]
-	adds r0, r1, #0
-	ands r0, r2
-	cmp r0, #0
-	beq _0800BD28
-	adds r0, r2, #0
-	bics r0, r1
-	strb r0, [r3]
-	movs r4, #0
-	ldr r7, _0800BD34
-	movs r5, #1
-	adds r3, #4
-	movs r2, #0
-_0800BCF2:
-	adds r0, r1, #0
-	asrs r0, r4
-	ands r0, r5
-	cmp r0, #0
-	beq _0800BD02
-	lsls r0, r4, #1
-	adds r0, r0, r3
-	strh r2, [r0]
-_0800BD02:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #3
-	bls _0800BCF2
-	ldr r0, [r7]
-	ldrb r4, [r0, #3]
-	ands r4, r1
-	cmp r4, #0
-	beq _0800BD1C
-	adds r0, r4, #0
-	bl sub_0800CDF0
-_0800BD1C:
-	ldr r0, _0800BD30
-	strh r4, [r0, #0x14]
-	movs r0, #0x33
-	adds r1, r4, #0
-	bl sub_0800CDC8
-_0800BD28:
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800BD30: .4byte 0x030041E0
-_0800BD34: .4byte 0x03007630
-	thumb_func_end sub_0800BCCC
-
-	thumb_func_start sub_0800BD38
-sub_0800BD38: @ 0x0800BD38
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	movs r2, #0
-	ldr r1, _0800BD54
-	strb r2, [r1, #7]
-	adds r5, r1, #0
-	cmp r0, #0
-	beq _0800BD58
-	bl rfu_LMAN_clearVariables
-	movs r0, #0x17
-	strb r0, [r5, #4]
-	b _0800BE22
-	.align 2, 0
-_0800BD54: .4byte 0x030041E0
-_0800BD58:
-	ldrb r0, [r5, #4]
-	subs r0, #5
-	cmp r0, #0xd
-	bhi _0800BE0E
-	lsls r0, r0, #2
-	ldr r1, _0800BD6C
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_0800BD6C: .4byte 0x0800BD70
-_0800BD70: @ jump table
-	.4byte _0800BDA8 @ case 0
-	.4byte _0800BDB4 @ case 1
-	.4byte _0800BDB4 @ case 2
-	.4byte _0800BE14 @ case 3
-	.4byte _0800BDBE @ case 4
-	.4byte _0800BDC8 @ case 5
-	.4byte _0800BDC8 @ case 6
-	.4byte _0800BDD2 @ case 7
-	.4byte _0800BDDC @ case 8
-	.4byte _0800BDDC @ case 9
-	.4byte _0800BE14 @ case 10
-	.4byte _0800BDE2 @ case 11
-	.4byte _0800BE08 @ case 12
-	.4byte _0800BE08 @ case 13
-_0800BDA8:
-	movs r1, #0
-	movs r0, #8
-	strb r0, [r5, #4]
-	strb r1, [r5, #5]
-	movs r2, #0x13
-	b _0800BE14
-_0800BDB4:
-	movs r0, #7
-	strb r0, [r5, #4]
-	movs r0, #8
-	strb r0, [r5, #5]
-	b _0800BE14
-_0800BDBE:
-	movs r0, #0
-	strb r0, [r5, #5]
-	strb r0, [r5, #4]
-	movs r2, #0x21
-	b _0800BE14
-_0800BDC8:
-	movs r1, #0
-	movs r0, #0xb
-	strb r0, [r5, #4]
-	strb r1, [r5, #5]
-	b _0800BE14
-_0800BDD2:
-	movs r0, #0
-	strb r0, [r5, #5]
-	strb r0, [r5, #4]
-	movs r2, #0x23
-	b _0800BE14
-_0800BDDC:
-	movs r0, #0xe
-	strb r0, [r5, #4]
-	b _0800BE14
-_0800BDE2:
-	ldrb r0, [r5, #0x11]
-	strb r0, [r5, #4]
-	ldrb r0, [r5, #0x12]
-	strb r0, [r5, #5]
-	ldr r4, _0800BE04
-	ldr r0, [r4]
-	ldrb r0, [r0, #3]
-	bl sub_0800CDF0
-	ldr r0, [r4]
-	ldrb r0, [r0, #3]
-	strh r0, [r5, #0x14]
-	movs r0, #0x33
-	movs r1, #1
-	bl sub_0800CDC8
-	b _0800BE22
-	.align 2, 0
-_0800BE04: .4byte 0x03007630
-_0800BE08:
-	movs r0, #0x12
-	strb r0, [r5, #4]
-	b _0800BE14
-_0800BE0E:
-	strb r2, [r5, #5]
-	strb r2, [r5, #4]
-	movs r2, #0x43
-_0800BE14:
-	ldrb r0, [r5, #4]
-	cmp r0, #0
-	bne _0800BE22
-	adds r0, r2, #0
-	movs r1, #0
-	bl sub_0800CDC8
-_0800BE22:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0800BD38
-
-	thumb_func_start sub_0800BE28
-sub_0800BE28: @ 0x0800BE28
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	sub sp, #4
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	movs r1, #0
-	mov r8, r1
-	mov r5, sp
-	adds r5, #1
-	mov r4, sp
-	adds r4, #2
-	mov r1, sp
-	adds r2, r5, #0
-	adds r3, r4, #0
-	bl rfu_REQBN_watchLink
-	mov r0, sp
-	ldrb r0, [r0]
-	adds r7, r4, #0
-	cmp r0, #0
-	beq _0800BEFA
-	ldr r1, _0800BEC4
-	mov r0, sp
-	ldrb r0, [r0]
-	strh r0, [r1, #0x14]
-	ldrb r0, [r5]
-	strh r0, [r1, #0x16]
-	ldrb r0, [r1, #9]
-	adds r6, r1, #0
-	cmp r0, #0
-	beq _0800BEE2
-	movs r0, #1
-	strb r0, [r6, #0xa]
-	ldrb r0, [r6, #6]
-	cmp r0, #0
-	bne _0800BE7E
-	ldrb r0, [r5]
-	cmp r0, #0
-	bne _0800BE7E
-	movs r0, #4
-	strb r0, [r6, #0xa]
-_0800BE7E:
-	ldrb r0, [r6, #0xa]
-	cmp r0, #1
-	bne _0800BEC8
-	movs r2, #0
-	mov r4, sp
-	movs r5, #1
-	mov ip, r6
-	mov r3, ip
-	adds r3, #0x30
-	movs r6, #0x34
-	add r6, ip
-	mov sb, r6
-_0800BE96:
-	ldrb r0, [r4]
-	asrs r0, r2
-	ands r0, r5
-	cmp r0, #0
-	beq _0800BEB4
-	adds r0, r5, #0
-	lsls r0, r2
-	ldrb r1, [r3]
-	orrs r0, r1
-	strb r0, [r3]
-	lsls r0, r2, #1
-	add r0, sb
-	mov r6, ip
-	ldrh r1, [r6, #0x32]
-	strh r1, [r0]
-_0800BEB4:
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #3
-	bls _0800BE96
-	movs r0, #0x31
-	b _0800BEDA
-	.align 2, 0
-_0800BEC4: .4byte 0x030041E0
-_0800BEC8:
-	movs r0, #0
-	strb r0, [r6, #0xa]
-	mov r0, sp
-	ldrb r0, [r0]
-	bl sub_0800CDF0
-	movs r0, #1
-	mov r8, r0
-	movs r0, #0x33
-_0800BEDA:
-	movs r1, #1
-	bl sub_0800CDC8
-	b _0800BEF6
-_0800BEE2:
-	mov r0, sp
-	ldrb r0, [r0]
-	bl sub_0800CDF0
-	movs r1, #1
-	mov r8, r1
-	movs r0, #0x30
-	movs r1, #2
-	bl sub_0800CDC8
-_0800BEF6:
-	bl sub_0800D0CC
-_0800BEFA:
-	ldr r0, _0800BFE4
-	ldr r0, [r0]
-	ldrb r0, [r0]
-	cmp r0, #1
-	bne _0800BFD4
-	ldrb r0, [r7]
-	cmp r0, #0
-	beq _0800BF58
-	movs r2, #0
-	ldr r6, _0800BFE8
-	movs r3, #1
-	adds r4, r6, #0
-	adds r4, #0x34
-	adds r6, #0x30
-	adds r5, r7, #0
-_0800BF18:
-	ldrb r0, [r6]
-	asrs r0, r2
-	ands r0, r3
-	cmp r0, #0
-	beq _0800BF34
-	ldrb r0, [r5]
-	asrs r0, r2
-	ands r0, r3
-	cmp r0, #0
-	beq _0800BF34
-	lsls r0, r2, #1
-	adds r0, r0, r4
-	movs r1, #0
-	strh r1, [r0]
-_0800BF34:
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #3
-	bls _0800BF18
-	ldr r3, _0800BFE8
-	adds r2, r3, #0
-	adds r2, #0x30
-	ldrb r1, [r7]
-	ldrb r0, [r2]
-	bics r0, r1
-	strb r0, [r2]
-	ldrb r0, [r7]
-	strh r0, [r3, #0x14]
-	movs r0, #0x32
-	movs r1, #1
-	bl sub_0800CDC8
-_0800BF58:
-	ldr r0, _0800BFE8
-	adds r3, r0, #0
-	adds r3, #0x30
-	ldrb r1, [r3]
-	adds r6, r0, #0
-	cmp r1, #0
-	beq _0800BFD0
-	movs r4, #0
-	movs r2, #0
-	movs r5, #1
-_0800BF6C:
-	ldrb r0, [r3]
-	asrs r0, r2
-	ands r0, r5
-	cmp r0, #0
-	beq _0800BF9E
-	lsls r1, r2, #1
-	adds r0, r6, #0
-	adds r0, #0x34
-	adds r1, r1, r0
-	ldrh r0, [r1]
-	cmp r0, #0
-	beq _0800BF9E
-	subs r0, #1
-	strh r0, [r1]
-	lsls r0, r0, #0x10
-	cmp r0, #0
-	bne _0800BF9E
-	adds r0, r5, #0
-	lsls r0, r2
-	ldrb r1, [r3]
-	bics r1, r0
-	strb r1, [r3]
-	orrs r4, r0
-	lsls r0, r4, #0x18
-	lsrs r4, r0, #0x18
-_0800BF9E:
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #3
-	bls _0800BF6C
-	cmp r4, #0
-	beq _0800BFC2
-	adds r0, r4, #0
-	bl sub_0800CDF0
-	movs r6, #1
-	mov r8, r6
-	ldr r0, _0800BFE8
-	strh r4, [r0, #0x14]
-	movs r0, #0x33
-	movs r1, #1
-	bl sub_0800CDC8
-_0800BFC2:
-	ldr r0, _0800BFE8
-	adds r1, r0, #0
-	adds r1, #0x30
-	ldrb r1, [r1]
-	adds r6, r0, #0
-	cmp r1, #0
-	bne _0800BFD4
-_0800BFD0:
-	movs r0, #0
-	strb r0, [r6, #0xa]
-_0800BFD4:
-	mov r0, r8
-	add sp, #4
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0800BFE4: .4byte 0x03007630
-_0800BFE8: .4byte 0x030041E0
-	thumb_func_end sub_0800BE28
-
-	thumb_func_start rfu_syncVBlank_
-rfu_syncVBlank_: @ 0x0800BFEC
-	push {lr}
-	bl rfu_syncVBlank
-	lsls r0, r0, #0x10
-	cmp r0, #0
-	beq _0800C004
-	movs r0, #0xf1
-	movs r1, #0
-	bl sub_0800CDC8
-	bl sub_0800D0CC
-_0800C004:
-	pop {r0}
-	bx r0
-	thumb_func_end rfu_syncVBlank_
-
 	thumb_func_start sub_0800C008
 sub_0800C008: @ 0x0800C008
 	push {r4, lr}
@@ -759,7 +211,7 @@ _0800C1CC:
 	cmp r0, #1
 	bne _0800C1E2
 	movs r0, #0
-	bl sub_0800BE28
+	bl rfu_LMAN_linkWatcher
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0800C1F2
@@ -1486,7 +938,7 @@ _0800C76C:
 	movs r1, #1
 	strb r1, [r0, #5]
 	movs r0, #0x29
-	bl sub_0800BE28
+	bl rfu_LMAN_linkWatcher
 	movs r6, #0
 _0800C7A2:
 	mov r4, r8
@@ -1744,7 +1196,7 @@ sub_0800C96C: @ 0x0800C96C
 	cmp r5, #0
 	bne _0800C9A8
 	adds r0, r6, #0
-	bl sub_0800BE28
+	bl rfu_LMAN_linkWatcher
 	ldrb r0, [r4, #2]
 	cmp r0, #1
 	beq _0800C9C0
@@ -5143,7 +4595,7 @@ _0800E2D0: .4byte 0x082C0430
 _0800E2D4: .4byte 0x03005B60
 _0800E2D8:
 	movs r0, #0
-	bl sub_0800BD38
+	bl rfu_LMAN_stopManager
 	ldr r1, _0800E2E8
 	movs r0, #5
 	strh r0, [r1, #4]
@@ -5682,7 +5134,7 @@ _0800E74C:
 _0800E758: .4byte 0x0801034D
 _0800E75C:
 	movs r0, #0
-	bl sub_0800BD38
+	bl rfu_LMAN_stopManager
 	ldr r1, _0800E76C
 	movs r0, #0xf
 	strh r0, [r1, #4]
@@ -5750,7 +5202,7 @@ _0800E7E4: .4byte 0x082C0430
 sub_0800E7E8: @ 0x0800E7E8
 	push {lr}
 	movs r0, #0
-	bl sub_0800BD38
+	bl rfu_LMAN_stopManager
 	pop {r0}
 	bx r0
 	thumb_func_end sub_0800E7E8
@@ -5967,7 +5419,7 @@ sub_0800E97C: @ 0x0800E97C
 	adds r1, r1, r0
 	ldrh r0, [r1, #0x14]
 	movs r1, #0xf0
-	bl sub_0800BBE8
+	bl rfu_LMAN_CHILD_connectParent
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _0800E9B8
@@ -8914,7 +8366,7 @@ sub_0800FFB0: @ 0x0800FFB0
 	movs r1, #1
 	strb r1, [r0]
 	movs r0, #0
-	bl sub_0800BD38
+	bl rfu_LMAN_stopManager
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -11677,7 +11129,7 @@ _08011486:
 	adds r0, r4, #0
 	bl RfuSetErrorParams
 	movs r0, #0
-	bl sub_0800BD38
+	bl rfu_LMAN_stopManager
 _080114A4:
 	ldr r0, _080114DC
 	ldr r0, [r0]
@@ -11830,7 +11282,7 @@ _080115A4: .4byte 0x030050A0
 	thumb_func_start RfuVSync
 RfuVSync: @ 0x080115A8
 	push {lr}
-	bl rfu_syncVBlank_
+	bl rfu_LMAN_syncVBlank
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -12658,7 +12110,7 @@ _08011BD0:
 	beq _08011C68
 	ldrh r0, [r1, #0x14]
 	movs r1, #0x5a
-	bl sub_0800BBE8
+	bl rfu_LMAN_CHILD_connectParent
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08011C68

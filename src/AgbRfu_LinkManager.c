@@ -19,6 +19,7 @@
 extern void sub_0800C96C(u16 REQ_commandID);
 extern void sub_0800C270(u16 reqCommandId, u16 reqResult);
 extern void sub_0800CDC8(u8 msg, u8 param_count);
+extern void sub_0800CDF0(u8 bmDisconnectedSlot);
 extern void sub_0800D0CC(void);
 
 // JP: these are called from still-asm Link Manager functions, so unlike the
@@ -176,4 +177,253 @@ u8 rfu_LMAN_establishConnection(u8 parent_child, u16 connect_period, u16 name_ac
     lman.nameAcceptTimer.count_max = name_accept_period;
     lman.acceptable_serialNo_list = acceptable_serialNo_list;
     return 0;
+}
+
+u8 rfu_LMAN_CHILD_connectParent(u16 parentId, u16 connect_period)
+{
+    u8 i;
+
+    if (lman.state != LMAN_STATE_READY && (lman.state < 9 || lman.state > 11))
+    {
+        lman.param[0] = 1;
+        sub_0800CDC8(LMAN_MSG_LMAN_API_ERROR_RETURN, 1);
+        return LMAN_ERROR_MANAGER_BUSY;
+    }
+    if (rfu_getMasterSlave() == AGB_CLK_SLAVE)
+    {
+        lman.param[0] = 2;
+        sub_0800CDC8(LMAN_MSG_LMAN_API_ERROR_RETURN, 1);
+        return LMAN_ERROR_AGB_CLK_SLAVE;
+    }
+    for (i = 0; i < gRfuLinkStatus->findParentCount; i++)
+    {
+        if (gRfuLinkStatus->partner[i].id == parentId)
+        {
+            break;
+        }
+    }
+    if (gRfuLinkStatus->findParentCount == 0 || i == gRfuLinkStatus->findParentCount)
+    {
+        lman.param[0] = 3;
+        sub_0800CDC8(LMAN_MSG_LMAN_API_ERROR_RETURN, 1);
+        return LMAN_ERROR_PID_NOT_FOUND;
+    }
+    if (lman.state == LMAN_STATE_READY || lman.state == LMAN_STATE_START_SEARCH_PARENT)
+    {
+        lman.state = LMAN_STATE_START_CONNECT_PARENT;
+        lman.next_state = LMAN_STATE_POLL_CONNECT_PARENT;
+    }
+    else
+    {
+        lman.state = LMAN_STATE_END_SEARCH_PARENT;
+        lman.next_state = LMAN_STATE_START_CONNECT_PARENT;
+    }
+    lman.work = parentId;
+    lman.connect_period = connect_period;
+    if (lman.pcswitch_flag != 0)
+    {
+        lman.pcswitch_flag = PCSWITCH_CP;
+    }
+    return 0;
+}
+
+static void rfu_LMAN_PARENT_stopWaitLinkRecoveryAndDisconnect(u8 bm_targetSlot)
+{
+    u8 i;
+
+    if ((bm_targetSlot & lman.linkRecoveryTimer.active) == 0)
+        return;
+    lman.linkRecoveryTimer.active &= ~bm_targetSlot;
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if ((bm_targetSlot >> i) & 1)
+        {
+            lman.linkRecoveryTimer.count[i] = 0;
+        }
+    }
+    i = gRfuLinkStatus->linkLossSlotFlag & bm_targetSlot;
+    if (i)
+    {
+        sub_0800CDF0(i);
+    }
+    lman.param[0] = i;
+    sub_0800CDC8(LMAN_MSG_LINK_RECOVERY_FAILED_AND_DISCONNECTED, i);
+}
+
+void rfu_LMAN_stopManager(u8 forced_stop_and_RFU_reset_flag)
+{
+    u8 msg = 0;
+
+    lman.pcswitch_flag = 0;
+    if (forced_stop_and_RFU_reset_flag)
+    {
+        rfu_LMAN_clearVariables();
+        lman.state = LMAN_FORCED_STOP_AND_RFU_RESET;
+        return;
+    }
+    switch (lman.state)
+    {
+    case LMAN_STATE_START_SEARCH_CHILD:
+        lman.state = LMAN_STATE_WAIT_RECV_CHILD_NAME;
+        lman.next_state = LMAN_STATE_READY;
+        msg = LMAN_MSG_SEARCH_CHILD_PERIOD_EXPIRED;
+        break;
+    case LMAN_STATE_POLL_SEARCH_CHILD:
+        lman.state = LMAN_STATE_END_SEARCH_CHILD;
+        lman.next_state = LMAN_STATE_WAIT_RECV_CHILD_NAME;
+        break;
+    case LMAN_STATE_END_SEARCH_CHILD:
+        lman.state = LMAN_STATE_END_SEARCH_CHILD;
+        lman.next_state = LMAN_STATE_WAIT_RECV_CHILD_NAME;
+        break;
+    case LMAN_STATE_WAIT_RECV_CHILD_NAME:
+        break;
+    case LMAN_STATE_START_SEARCH_PARENT:
+        lman.state = lman.next_state = LMAN_STATE_READY;
+        msg = LMAN_MSG_SEARCH_PARENT_PERIOD_EXPIRED;
+        break;
+    case LMAN_STATE_POLL_SEARCH_PARENT:
+        lman.state = LMAN_STATE_END_SEARCH_PARENT;
+        lman.next_state = LMAN_STATE_READY;
+        break;
+    case LMAN_STATE_END_SEARCH_PARENT:
+        lman.state = LMAN_STATE_END_SEARCH_PARENT;
+        lman.next_state = LMAN_STATE_READY;
+        break;
+    case LMAN_STATE_START_CONNECT_PARENT:
+        lman.state = lman.next_state = LMAN_STATE_READY;
+        msg = LMAN_MSG_CONNECT_PARENT_FAILED;
+        break;
+    case LMAN_STATE_POLL_CONNECT_PARENT:
+        lman.state = LMAN_STATE_END_CONNECT_PARENT;
+        break;
+    case LMAN_STATE_END_CONNECT_PARENT:
+        lman.state = LMAN_STATE_END_CONNECT_PARENT;
+        break;
+    case LMAN_STATE_SEND_CHILD_NAME:
+        break;
+    case LMAN_STATE_START_LINK_RECOVERY:
+        lman.state = lman.state_bak[0];
+        lman.next_state = lman.state_bak[1];
+        sub_0800CDF0(gRfuLinkStatus->linkLossSlotFlag);
+        lman.param[0] = gRfuLinkStatus->linkLossSlotFlag;
+        sub_0800CDC8(LMAN_MSG_LINK_RECOVERY_FAILED_AND_DISCONNECTED, 1);
+        return;
+    case LMAN_STATE_POLL_LINK_RECOVERY:
+        lman.state = LMAN_STATE_END_LINK_RECOVERY;
+        break;
+    case LMAN_STATE_END_LINK_RECOVERY:
+        lman.state = LMAN_STATE_END_LINK_RECOVERY;
+        break;
+    default:
+        lman.state = lman.next_state = LMAN_STATE_READY;
+        msg = LMAN_MSG_MANAGER_STOPPED;
+        break;
+    }
+    if (lman.state == LMAN_STATE_READY)
+    {
+        sub_0800CDC8(msg, 0);
+    }
+}
+
+// JP: still called from asm rfu_LMAN_manager_entity / rfu_LMAN_REQ_callback,
+// so unlike US it stays non-static.
+bool8 rfu_LMAN_linkWatcher(u16 REQ_commandID)
+{
+    u8 i;
+    u8 bm_linkLossSlot;
+    u8 reason;
+    u8 bm_linkRecoverySlot;
+    u8 bm_disconnectSlot;
+
+    bool8 disconnect_occure_flag = FALSE;
+    rfu_REQBN_watchLink(REQ_commandID, &bm_linkLossSlot, &reason, &bm_linkRecoverySlot);
+    if (bm_linkLossSlot)
+    {
+        lman.param[0] = bm_linkLossSlot;
+        lman.param[1] = reason;
+        if (lman.linkRecovery_enable)
+        {
+            lman.linkRecovery_start_flag = LINK_RECOVERY_START;
+            if (lman.parent_child == MODE_CHILD && reason == REASON_DISCONNECTED)
+            {
+                lman.linkRecovery_start_flag = LINK_RECOVERY_IMPOSSIBLE;
+            }
+            if (lman.linkRecovery_start_flag == LINK_RECOVERY_START)
+            {
+                for (i = 0; i < RFU_CHILD_MAX; i++)
+                {
+                    if ((bm_linkLossSlot >> i) & 1)
+                    {
+                        lman.linkRecoveryTimer.active |= (1 << i);
+                        lman.linkRecoveryTimer.count[i] = lman.linkRecoveryTimer.count_max;
+                    }
+                }
+                sub_0800CDC8(LMAN_MSG_LINK_LOSS_DETECTED_AND_START_RECOVERY, 1);
+            }
+            else
+            {
+                lman.linkRecovery_start_flag = 0;
+                sub_0800CDF0(bm_linkLossSlot);
+                disconnect_occure_flag = TRUE;
+                sub_0800CDC8(LMAN_MSG_LINK_RECOVERY_FAILED_AND_DISCONNECTED, 1);
+            }
+        }
+        else
+        {
+            sub_0800CDF0(bm_linkLossSlot);
+            disconnect_occure_flag = TRUE;
+            sub_0800CDC8(LMAN_MSG_LINK_LOSS_DETECTED_AND_DISCONNECTED, 2);
+        }
+        sub_0800D0CC();
+    }
+    if (gRfuLinkStatus->parentChild == MODE_PARENT)
+    {
+        if (bm_linkRecoverySlot)
+        {
+            for (i = 0; i < RFU_CHILD_MAX; i++)
+            {
+                if ((lman.linkRecoveryTimer.active >> i) & 1 && (bm_linkRecoverySlot >> i) & 1)
+                {
+                    lman.linkRecoveryTimer.count[i] = 0;
+                }
+            }
+            lman.linkRecoveryTimer.active &= ~bm_linkRecoverySlot;
+            lman.param[0] = bm_linkRecoverySlot;
+            sub_0800CDC8(LMAN_MSG_LINK_RECOVERY_SUCCESSED, 1);
+        }
+        if (lman.linkRecoveryTimer.active)
+        {
+            bm_disconnectSlot = 0;
+            for (i = 0; i < RFU_CHILD_MAX; i++)
+            {
+                if ((lman.linkRecoveryTimer.active >> i) & 1 && lman.linkRecoveryTimer.count[i] && --lman.linkRecoveryTimer.count[i] == 0)
+                {
+                    lman.linkRecoveryTimer.active &= ~(1 << i);
+                    bm_disconnectSlot |= (1 << i);
+                }
+            }
+            if (bm_disconnectSlot)
+            {
+                sub_0800CDF0(bm_disconnectSlot);
+                disconnect_occure_flag = TRUE;
+                lman.param[0] = bm_disconnectSlot;
+                sub_0800CDC8(LMAN_MSG_LINK_RECOVERY_FAILED_AND_DISCONNECTED, 1);
+            }
+        }
+        if (!lman.linkRecoveryTimer.active)
+        {
+            lman.linkRecovery_start_flag = 0;
+        }
+    }
+    return disconnect_occure_flag;
+}
+
+void rfu_LMAN_syncVBlank(void)
+{
+    if (rfu_syncVBlank())
+    {
+        sub_0800CDC8(LMAN_MSG_WATCH_DOG_TIMER_ERROR, 0);
+        sub_0800D0CC();
+    }
 }
