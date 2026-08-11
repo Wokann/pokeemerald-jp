@@ -449,221 +449,72 @@ static u8 UNUSED *UnusedPrintNumberString(u8 *dst, u16 num)
     return txtPtr;
 }
 
-__attribute__((naked)) bool32 UpdateConditionGraphMenuWindows(u8 mode, u16 bufferIndex, bool8 winMode)
+bool32 UpdateConditionGraphMenuWindows(u8 mode, u16 bufferIndex, bool8 winMode)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "sub sp, #0x1c\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r7, r0, #0x18\n\t"
-            "lsls r1, r1, #0x10\n\t"
-            "lsrs r5, r1, #0x10\n\t"
-            "lsls r2, r2, #0x18\n\t"
-            "lsrs r4, r2, #0x18\n\t"
-            "movs r0, #0xc\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r6, r0, #0\n\t"
-            "cmp r7, #1\n\t"
-            "beq _081CDF10\n\t"
-            "cmp r7, #1\n\t"
-            "bgt _081CDEDA\n\t"
-            "cmp r7, #0\n\t"
-            "beq _081CDEE4\n\t"
-            "b _081CE05C\n\t"
-            "_081CDEDA:\n\t"
-            "cmp r7, #2\n\t"
-            "beq _081CDF52\n\t"
-            "cmp r7, #3\n\t"
-            "beq _081CDFD4\n\t"
-            "b _081CE05C\n\t"
-            "_081CDEE4:\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #0\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CDEFC\n\t"
-            "b _081CE05C\n\t"
-            "_081CDEFC:\n\t"
-            "ldr r1, _081CDF0C\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #0\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "b _081CE05C\n\t"
-            ".align 2, 0\n\t"
-            "_081CDF0C: .4byte 0x00001821\n\t"
-            "_081CDF10:\n\t"
-            "bl GetConditionGraphCurrentListIndex\n\t"
-            "adds r4, r0, #0\n\t"
-            "lsls r4, r4, #0x10\n\t"
-            "lsrs r4, r4, #0x10\n\t"
-            "bl GetMonListCount\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "subs r0, #1\n\t"
-            "cmp r4, r0\n\t"
-            "bne _081CDF32\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CDF32\n\t"
-            "b _081CE05C\n\t"
-            "_081CDF32:\n\t"
-            "lsls r0, r5, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "bl GetConditionMonNameText\n\t"
-            "adds r2, r0, #0\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #4]\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "b _081CDFC4\n\t"
-            "_081CDF52:\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CDF5C\n\t"
-            "b _081CE05C\n\t"
-            "_081CDF5C:\n\t"
-            "lsls r0, r5, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "bl GetConditionMonLocationText\n\t"
-            "adds r2, r0, #0\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #0x12\n\t"
-            "str r1, [sp]\n\t"
-            "movs r5, #0\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "add r1, sp, #0xc\n\t"
-            "movs r0, #0xfc\n\t"
-            "strb r0, [r1]\n\t"
-            "movs r0, #4\n\t"
-            "strb r0, [r1, #1]\n\t"
-            "movs r0, #8\n\t"
-            "strb r0, [r1, #2]\n\t"
-            "adds r0, r1, #0\n\t"
-            "strb r5, [r0, #3]\n\t"
-            "movs r0, #9\n\t"
-            "strb r0, [r1, #4]\n\t"
-            "mov r4, sp\n\t"
-            "adds r4, #0x11\n\t"
-            "bl GetConditionMonDataBuffer\n\t"
-            "adds r1, r0, #0\n\t"
-            "lsls r1, r1, #0x10\n\t"
-            "lsrs r1, r1, #0x10\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl UnusedPrintNumberString\n\t"
-            "ldr r4, _081CDFCC\n\t"
-            "adds r0, r4, #0\n\t"
-            "add r1, sp, #0xc\n\t"
-            "bl StringExpandPlaceholders\n\t"
-            "ldr r1, _081CDFD0\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "str r7, [sp]\n\t"
-            "str r5, [sp, #4]\n\t"
-            "str r5, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "_081CDFC4:\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "b _081CE05C\n\t"
-            ".align 2, 0\n\t"
-            "_081CDFCC: .4byte gStringVar4\n\t"
-            "_081CDFD0: .4byte 0x00001821\n\t"
-            "_081CDFD4:\n\t"
-            "ldr r1, _081CDFE4\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CDFE8\n\t"
-            "cmp r0, #1\n\t"
-            "beq _081CE024\n\t"
-            "b _081CE05C\n\t"
-            ".align 2, 0\n\t"
-            "_081CDFE4: .4byte 0x00002908\n\t"
-            "_081CDFE8:\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CDFFC\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #3\n\t"
-            "bl CopyWindowToVram\n\t"
-            "b _081CE00A\n\t"
-            "_081CDFFC:\n\t"
-            "movs r1, #0xc1\n\t"
-            "lsls r1, r1, #5\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "_081CE00A:\n\t"
-            "bl IsConditionMenuSearchMode\n\t"
-            "cmp r0, #1\n\t"
-            "bne _081CE048\n\t"
-            "ldr r0, _081CE020\n\t"
-            "adds r1, r6, r0\n\t"
-            "ldrb r0, [r1]\n\t"
-            "adds r0, #1\n\t"
-            "strb r0, [r1]\n\t"
-            "b _081CE05C\n\t"
-            ".align 2, 0\n\t"
-            "_081CE020: .4byte 0x00002908\n\t"
-            "_081CE024:\n\t"
-            "cmp r4, #0\n\t"
-            "beq _081CE03C\n\t"
-            "ldr r1, _081CE038\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #3\n\t"
-            "bl CopyWindowToVram\n\t"
-            "b _081CE048\n\t"
-            ".align 2, 0\n\t"
-            "_081CE038: .4byte 0x00001821\n\t"
-            "_081CE03C:\n\t"
-            "ldr r1, _081CE054\n\t"
-            "adds r0, r6, r1\n\t"
-            "ldrb r0, [r0]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "_081CE048:\n\t"
-            "ldr r0, _081CE058\n\t"
-            "adds r1, r6, r0\n\t"
-            "movs r0, #0\n\t"
-            "strb r0, [r1]\n\t"
-            "movs r0, #1\n\t"
-            "b _081CE05E\n\t"
-            ".align 2, 0\n\t"
-            "_081CE054: .4byte 0x00001821\n\t"
-            "_081CE058: .4byte 0x00002908\n\t"
-            "_081CE05C:\n\t"
-            "movs r0, #0\n\t"
-            "_081CE05E:\n\t"
-            "add sp, #0x1c\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
+    u8 text[16];
+    const u8 *str;
+    struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+
+    switch (mode)
+    {
+    case 0:
+        FillWindowPixelBuffer(menu->nameGenderWindowId, 0);
+        if (IsConditionMenuSearchMode() == TRUE)
+            FillWindowPixelBuffer(menu->listIndexWindowId, 0);
+        break;
+    case 1:
+        if (GetConditionGraphCurrentListIndex() != GetMonListCount() - 1 || IsConditionMenuSearchMode() == TRUE)
+        {
+            str = GetConditionMonNameText(bufferIndex);
+            AddTextPrinterParameterized(menu->nameGenderWindowId, FONT_NORMAL, str, 0, 2, 0, NULL);
+        }
+        break;
+    case 2:
+        if (IsConditionMenuSearchMode() == TRUE)
+        {
+            str = GetConditionMonLocationText(bufferIndex);
+            AddTextPrinterParameterized(menu->nameGenderWindowId, FONT_NORMAL, str, 0, 18, 0, NULL);
+            text[0] = EXT_CTRL_CODE_BEGIN;
+            text[1] = EXT_CTRL_CODE_COLOR_HIGHLIGHT_SHADOW;
+            text[2] = TEXT_COLOR_BLUE;
+            text[3] = TEXT_COLOR_TRANSPARENT;
+            text[4] = TEXT_COLOR_LIGHT_BLUE;
+            UnusedPrintNumberString(&text[5], GetConditionMonDataBuffer());
+            StringExpandPlaceholders(gStringVar4, text);
+            AddTextPrinterParameterized(menu->listIndexWindowId, FONT_NORMAL, gStringVar4, 0, 2, 0, NULL);
+        }
+        break;
+    case 3:
+        switch (menu->windowModeState)
+        {
+        case 0:
+            if (winMode)
+                CopyWindowToVram(menu->nameGenderWindowId, COPYWIN_FULL);
+            else
+                CopyWindowToVram(menu->nameGenderWindowId, COPYWIN_GFX);
+
+            if (IsConditionMenuSearchMode() == TRUE)
+            {
+                menu->windowModeState++;
+                return FALSE;
+            }
+            else
+            {
+                menu->windowModeState = 0;
+                return TRUE;
+            }
+        case 1:
+            if (winMode)
+                CopyWindowToVram(menu->listIndexWindowId, COPYWIN_FULL);
+            else
+                CopyWindowToVram(menu->listIndexWindowId, COPYWIN_GFX);
+
+            menu->windowModeState = 0;
+            return TRUE;
+        }
+    }
+
+    return FALSE;
 }
 
 void CopyUnusedConditionWindowsToVram(void)
