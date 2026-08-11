@@ -24,7 +24,10 @@ extern const u8 sUnionRoomLocalIds[];
 extern const char gAssertFile_rfu_union_tool[];
 extern const char gAssertCond_UnionObjWork[];
 extern struct UnionRoomObject *sUnionObjWork;
+extern u32 sUnionObjRefreshTimer;
 extern void DestroyTask_AnimateUnionRoomPlayers(void);
+extern bool32 SpawnGroupLeader(u32 leaderId, u32 gender, u32 id);
+extern bool32 DespawnGroupLeader(u32 leaderId);
 extern void SetUnionRoomObjectFacingDirection(s32 memberId, s32 leaderId, u8 facingDirection);
 
 bool32 is_walking_or_running(void)
@@ -191,4 +194,92 @@ void DespawnGroupMember(u32 leaderId, u32 memberId)
     SetVirtualObjectSpriteAnim(UR_PLAYER_SPRITE_ID(leaderId, memberId) - UR_SPRITE_START_ID, UNION_ROOM_SPAWN_OUT);
     GetUnionRoomPlayerCoords(leaderId, memberId, &x, &y);
     MapGridSetMetatileImpassabilityAt(x, y, FALSE);
+}
+
+void AssembleGroup(u32 leaderId, struct RfuGameData *gameData)
+{
+    s16 x, y, x2, y2;
+    s32 i;
+
+    PlayerGetDestCoords(&x, &y);
+    player_get_pos_including_state_based_drift(&x2, &y2);
+    if (IsVirtualObjectInvisible(UR_PLAYER_SPRITE_ID(leaderId, 0) - UR_SPRITE_START_ID) == TRUE)
+    {
+        if (IsUnionRoomPlayerAt(leaderId, 0, x, y) == TRUE || IsUnionRoomPlayerAt(leaderId, 0, x2, y2) == TRUE)
+            return;
+        SpawnGroupMember(leaderId, 0, GetUnionRoomPlayerGraphicsId(gameData->playerGender, gameData->compatibility.playerTrainerId[0]), gameData);
+    }
+    for (i = 1; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (gameData->partnerInfo[i - 1] == 0)
+        {
+            DespawnGroupMember(leaderId, i);
+        }
+        else if (IsUnionRoomPlayerAt(leaderId, i, x, y) == FALSE && IsUnionRoomPlayerAt(leaderId, i, x2, y2) == FALSE)
+        {
+            SpawnGroupMember(leaderId, i, GetUnionRoomPlayerGraphicsId((gameData->partnerInfo[i - 1] >> PINFO_GENDER_SHIFT) & 1,
+                                                                        gameData->partnerInfo[i - 1] & PINFO_TID_MASK),
+                                                                        gameData);
+        }
+    }
+}
+
+void SpawnGroupLeaderAndMembers(u32 leaderId, struct RfuGameData *gameData)
+{
+    u32 i;
+    switch (gameData->activity)
+    {
+    case ACTIVITY_NONE | IN_UNION_ROOM:
+    case ACTIVITY_PLYRTALK | IN_UNION_ROOM:
+        SpawnGroupLeader(leaderId, gameData->playerGender, gameData->compatibility.playerTrainerId[0]);
+        for (i = 0; i < MAX_RFU_PLAYERS; i++)
+            DespawnGroupMember(leaderId, i);
+        break;
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+    case ACTIVITY_CARD | IN_UNION_ROOM:
+    case ACTIVITY_ACCEPT | IN_UNION_ROOM:
+    case ACTIVITY_DECLINE | IN_UNION_ROOM:
+    case ACTIVITY_NPCTALK | IN_UNION_ROOM:
+        DespawnGroupLeader(leaderId);
+        AssembleGroup(leaderId, gameData);
+        break;
+    default:
+        AGBAssert(gAssertFile_rfu_union_tool, 0x3D3, gAssertCond_UnionObjWork, TRUE);
+        break;
+    }
+}
+
+void DespawnGroupLeaderAndMembers(u32 leaderId, struct RfuGameData *gameData)
+{
+    s32 i;
+    DespawnGroupLeader(leaderId);
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        DespawnGroupMember(leaderId, i);
+}
+
+void UpdateUnionRoomPlayerSprites(struct WirelessLink_URoom *uroom)
+{
+    s32 i;
+    struct RfuPlayer *leaders;
+    sUnionObjRefreshTimer = 0;
+    for (i = 0, leaders = uroom->playerList->players; i < MAX_UNION_ROOM_LEADERS; i++)
+    {
+        if (leaders[i].groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+            SpawnGroupLeaderAndMembers(i, &leaders[i].rfu.data);
+        else if (leaders[i].groupScheduledAnim == UNION_ROOM_SPAWN_OUT)
+            DespawnGroupLeaderAndMembers(i, &leaders[i].rfu.data);
+    }
+}
+
+void ScheduleUnionRoomPlayerRefresh(struct WirelessLink_URoom *uroom)
+{
+    sUnionObjRefreshTimer = 300;
+}
+
+void HandleUnionRoomPlayerRefresh(struct WirelessLink_URoom *uroom)
+{
+    if (++sUnionObjRefreshTimer > 300)
+        UpdateUnionRoomPlayerSprites(uroom);
 }
