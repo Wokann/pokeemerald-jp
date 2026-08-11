@@ -23,60 +23,6 @@
 
 
 
-	thumb_func_start sub_08016BC8
-sub_08016BC8: @ 0x08016BC8
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	adds r5, r1, #0
-	ldrb r0, [r4]
-	cmp r0, #0
-	beq _08016BDA
-	cmp r0, #1
-	beq _08016BF0
-	b _08016C1C
-_08016BDA:
-	cmp r5, #0
-	beq _08016BE4
-	movs r0, #3
-	rsbs r0, r0, #0
-	b _08016C20
-_08016BE4:
-	bl DisplayYesNoMenuDefaultYes
-	ldrb r0, [r4]
-	adds r0, #1
-	strb r0, [r4]
-	b _08016C1C
-_08016BF0:
-	cmp r5, #0
-	beq _08016C02
-	bl sub_08198D88
-	movs r0, #0
-	strb r0, [r4]
-	movs r0, #3
-	rsbs r0, r0, #0
-	b _08016C20
-_08016C02:
-	bl Menu_ProcessInputNoWrapClearOnChoose
-	lsls r0, r0, #0x18
-	asrs r1, r0, #0x18
-	movs r2, #0x80
-	lsls r2, r2, #0x11
-	adds r0, r0, r2
-	lsrs r0, r0, #0x18
-	cmp r0, #2
-	bhi _08016C1C
-	strb r5, [r4]
-	adds r0, r1, #0
-	b _08016C20
-_08016C1C:
-	movs r0, #2
-	rsbs r0, r0, #0
-_08016C20:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08016BC8
 
 	thumb_func_start sub_08016C28
 sub_08016C28: @ 0x08016C28

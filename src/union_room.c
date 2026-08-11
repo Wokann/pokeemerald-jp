@@ -307,7 +307,7 @@ void ScheduleFieldMessageWithFollowupState(u32 nextState, const u8 *src);
 void ScheduleFieldMessageAndExit(const u8 *src);
 void CopyPlayerListToBuffer(struct WirelessLink_URoom *uroom);
 void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom);
-extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
+static s8 UnionRoomHandleYesNo(u8 *state, bool32 noDraw);
 static bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
 static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
@@ -3762,4 +3762,34 @@ static bool8 PrintOnTextbox(u8 *textState, const u8 *str)
         break;
     }
     return FALSE;
+}
+
+static s8 UnionRoomHandleYesNo(u8 *state, bool32 noDraw)
+{
+    s8 input;
+
+    switch (*state)
+    {
+    case 0:
+        if (noDraw)
+            return -3;
+        DisplayYesNoMenuDefaultYes();
+        (*state)++;
+        break;
+    case 1:
+        if (noDraw)
+        {
+            EraseYesNoWindow();
+            *state = 0;
+            return -3;
+        }
+        input = Menu_ProcessInputNoWrapClearOnChoose();
+        if (input == MENU_B_PRESSED || input == 0 || input == 1)
+        {
+            *state = 0;
+            return input;
+        }
+        break;
+    }
+    return MENU_NOTHING_CHOSEN;
 }
