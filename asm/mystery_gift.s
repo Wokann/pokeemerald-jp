@@ -2457,11 +2457,11 @@ _080191E8:
 	b _08019202
 _080191F4:
 	movs r0, #6
-	bl MEvent_CreateTask_Leader
+	bl CreateTask_SendMysteryGift
 	b _08019202
 _080191FC:
 	movs r0, #7
-	bl MEvent_CreateTask_Leader
+	bl CreateTask_SendMysteryGift
 _08019202:
 	movs r0, #1
 	strb r0, [r5, #0xd]

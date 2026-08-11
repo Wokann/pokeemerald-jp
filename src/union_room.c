@@ -196,6 +196,7 @@ static void AskToJoinRfuGroup(struct WirelessLink_Group *data, s32 id);
 static void Task_ListenToWireless(u8 taskId);
 u8 GetNewLeaderCandidate(void);
 static void CreateTask_RunScriptAndFadeToActivity(void);
+static void Task_SendMysteryGift(u8 taskId);
 
 void Task_Idle(u8 taskId)
 {
@@ -1769,4 +1770,18 @@ void CreateTask_StartActivity(void)
 {
     u8 taskId = CreateTask(Task_StartActivity, 0);
     gTasks[taskId].data[0] = 0;
+}
+
+void CreateTask_SendMysteryGift(u32 activity)
+{
+    u8 taskId;
+    struct WirelessLink_Leader *data;
+
+    taskId = CreateTask(Task_SendMysteryGift, 0);
+    sWirelessLinkMain.leader = data = (void *)(gTasks[taskId].data);
+
+    data->state = 0;
+    data->textState = 0;
+    data->activity = activity;
+    gSpecialVar_Result = LINKUP_ONGOING;
 }

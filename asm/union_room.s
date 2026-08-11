@@ -4,37 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start MEvent_CreateTask_Leader
-MEvent_CreateTask_Leader: @ 0x08014508
-	push {r4, lr}
-	adds r4, r0, #0
-	ldr r0, _08014538
-	movs r1, #0
-	bl CreateTask
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _0801453C
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	ldr r0, _08014540
-	adds r1, r1, r0
-	str r1, [r2]
-	movs r2, #0
-	strb r2, [r1, #0xc]
-	strb r2, [r1, #0xd]
-	strb r4, [r1, #0x18]
-	ldr r0, _08014544
-	strh r2, [r0]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08014538: .4byte 0x08014549
-_0801453C: .4byte 0x020228E4
-_08014540: .4byte 0x03005B68
-_08014544: .4byte 0x02037290
-	thumb_func_end MEvent_CreateTask_Leader
 
 	thumb_func_start sub_08014548
 sub_08014548: @ 0x08014548
