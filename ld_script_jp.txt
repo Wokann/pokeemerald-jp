@@ -1052,7 +1052,6 @@ EraseYesNoWindow = sub_08198D88;
 UnionRoomSpecial = RunUnionRoom;
 var_800D_set_xB = SetUsingUnionRoomStartMenu;
 ListMenuLoadStdPalAt = sub_08199F54;
-GetUnionRoomPlayerGender = sub_080177B8;
 UnionRoomGetPlayerInteractionResponse = sub_08017484;
 HandleCancelActivity = sub_08017C48;
 RegisterTradeMon = sub_08017BA4;
@@ -1534,6 +1533,8 @@ SECTIONS {
         asm/union_room_3.o(.text);
         src/union_room.o(.text.ItemPrintFunc_EmptyList);
         asm/union_room.o(.text);
+        src/union_room.o(.text.GetUnionRoomPlayerGender);
+        asm/union_room_4.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);
         asm/mystery_gift.o(.text);

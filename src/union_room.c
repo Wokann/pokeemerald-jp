@@ -332,7 +332,7 @@ static bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkG
 static void Task_ListenForWonderDistributor(u8 taskId);
 static u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 linkGroup);
 static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 linkGroup);
-extern s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
+static s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
 extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
 extern void HandleCancelActivity(bool32 setData);
 extern void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade);
@@ -4123,6 +4123,11 @@ static u32 GetResponseIdx_InviteToURoomActivity(s32 activity)
 static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player)
 {
     return PlayerHasMetTrainerBefore(ReadAsU16(player->rfu.data.compatibility.playerTrainerId), player->rfu.name);
+}
+
+static s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *list)
+{
+    return list->players[playerIdx].rfu.data.playerGender;
 }
 
 static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
