@@ -4,329 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08012A64
-sub_08012A64: @ 0x08012A64
-	push {r4, lr}
-	adds r4, r0, #0
-	ldrb r0, [r4, #0x11]
-	bl ClearWindowTilemap
-	ldrb r0, [r4, #0x11]
-	movs r1, #0
-	bl ClearStdWindowAndFrame
-	ldrb r0, [r4, #0x12]
-	movs r1, #0
-	movs r2, #0
-	bl DestroyListMenuTask
-	ldrb r0, [r4, #0x10]
-	bl ClearWindowTilemap
-	ldrb r0, [r4, #0xf]
-	movs r1, #0
-	bl ClearStdWindowAndFrame
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	ldrb r0, [r4, #0x11]
-	bl RemoveWindow
-	ldrb r0, [r4, #0xf]
-	bl RemoveWindow
-	ldrb r0, [r4, #0x10]
-	bl RemoveWindow
-	ldrb r0, [r4, #0x17]
-	bl DestroyTask
-	ldr r0, [r4, #8]
-	bl Free
-	ldr r0, [r4]
-	bl Free
-	ldr r0, [r4, #4]
-	bl Free
-	pop {r4}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08012A64
-
-	thumb_func_start sub_08012AC4
-sub_08012AC4: @ 0x08012AC4
-	push {lr}
-	adds r2, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	subs r0, r1, #1
-	cmp r0, #0x1b
-	bhi _08012B70
-	lsls r0, r0, #2
-	ldr r1, _08012ADC
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_08012ADC: .4byte 0x08012AE0
-_08012AE0: @ jump table
-	.4byte _08012B50 @ case 0
-	.4byte _08012B50 @ case 1
-	.4byte _08012B68 @ case 2
-	.4byte _08012B50 @ case 3
-	.4byte _08012B70 @ case 4
-	.4byte _08012B58 @ case 5
-	.4byte _08012B58 @ case 6
-	.4byte _08012B70 @ case 7
-	.4byte _08012B68 @ case 8
-	.4byte _08012B68 @ case 9
-	.4byte _08012B68 @ case 10
-	.4byte _08012B70 @ case 11
-	.4byte _08012B70 @ case 12
-	.4byte _08012B50 @ case 13
-	.4byte _08012B68 @ case 14
-	.4byte _08012B68 @ case 15
-	.4byte _08012B70 @ case 16
-	.4byte _08012B70 @ case 17
-	.4byte _08012B70 @ case 18
-	.4byte _08012B70 @ case 19
-	.4byte _08012B70 @ case 20
-	.4byte _08012B70 @ case 21
-	.4byte _08012B68 @ case 22
-	.4byte _08012B68 @ case 23
-	.4byte _08012B68 @ case 24
-	.4byte _08012B68 @ case 25
-	.4byte _08012B68 @ case 26
-	.4byte _08012B50 @ case 27
-_08012B50:
-	ldr r1, _08012B54
-	b _08012B5A
-	.align 2, 0
-_08012B54: .4byte 0x082C08C4
-_08012B58:
-	ldr r1, _08012B64
-_08012B5A:
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-	b _08012B70
-	.align 2, 0
-_08012B64: .4byte 0x082C08DC
-_08012B68:
-	ldr r1, _08012B74
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-_08012B70:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08012B74: .4byte 0x082C08F8
-	thumb_func_end sub_08012AC4
-
-	thumb_func_start sub_08012B78
-sub_08012B78: @ 0x08012B78
-	push {lr}
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	adds r2, r1, #0
-	cmp r1, #0x44
-	beq _08012B98
-	cmp r1, #0x44
-	bgt _08012B8E
-	cmp r1, #0x41
-	beq _08012B98
-	b _08012BAA
-_08012B8E:
-	cmp r2, #0x45
-	beq _08012BA4
-	cmp r2, #0x48
-	beq _08012BA4
-	b _08012BAA
-_08012B98:
-	ldr r1, _08012BA0
-	bl StringExpandPlaceholders
-	b _08012BAA
-	.align 2, 0
-_08012BA0: .4byte 0x082C0EE0
-_08012BA4:
-	ldr r1, _08012BB0
-	bl StringExpandPlaceholders
-_08012BAA:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08012BB0: .4byte 0x082C0EF4
-	thumb_func_end sub_08012B78
-
-	thumb_func_start sub_08012BB4
-sub_08012BB4: @ 0x08012BB4
-	push {lr}
-	adds r2, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	subs r0, r1, #1
-	cmp r0, #0x1b
-	bhi _08012C58
-	lsls r0, r0, #2
-	ldr r1, _08012BCC
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_08012BCC: .4byte 0x08012BD0
-_08012BD0: @ jump table
-	.4byte _08012C40 @ case 0
-	.4byte _08012C40 @ case 1
-	.4byte _08012C50 @ case 2
-	.4byte _08012C40 @ case 3
-	.4byte _08012C58 @ case 4
-	.4byte _08012C40 @ case 5
-	.4byte _08012C40 @ case 6
-	.4byte _08012C58 @ case 7
-	.4byte _08012C50 @ case 8
-	.4byte _08012C50 @ case 9
-	.4byte _08012C50 @ case 10
-	.4byte _08012C58 @ case 11
-	.4byte _08012C58 @ case 12
-	.4byte _08012C40 @ case 13
-	.4byte _08012C50 @ case 14
-	.4byte _08012C50 @ case 15
-	.4byte _08012C58 @ case 16
-	.4byte _08012C58 @ case 17
-	.4byte _08012C58 @ case 18
-	.4byte _08012C58 @ case 19
-	.4byte _08012C58 @ case 20
-	.4byte _08012C58 @ case 21
-	.4byte _08012C50 @ case 22
-	.4byte _08012C50 @ case 23
-	.4byte _08012C50 @ case 24
-	.4byte _08012C50 @ case 25
-	.4byte _08012C50 @ case 26
-	.4byte _08012C40 @ case 27
-_08012C40:
-	ldr r1, _08012C4C
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-	b _08012C58
-	.align 2, 0
-_08012C4C: .4byte 0x082C1C80
-_08012C50:
-	ldr r1, _08012C5C
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-_08012C58:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08012C5C: .4byte 0x082C1C94
-	thumb_func_end sub_08012BB4
-
-	thumb_func_start sub_08012C60
-sub_08012C60: @ 0x08012C60
-	push {lr}
-	adds r2, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	subs r0, r1, #1
-	cmp r0, #0x1b
-	bhi _08012D04
-	lsls r0, r0, #2
-	ldr r1, _08012C78
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_08012C78: .4byte 0x08012C7C
-_08012C7C: @ jump table
-	.4byte _08012CEC @ case 0
-	.4byte _08012CEC @ case 1
-	.4byte _08012CFC @ case 2
-	.4byte _08012CEC @ case 3
-	.4byte _08012D04 @ case 4
-	.4byte _08012CEC @ case 5
-	.4byte _08012CEC @ case 6
-	.4byte _08012D04 @ case 7
-	.4byte _08012CFC @ case 8
-	.4byte _08012CFC @ case 9
-	.4byte _08012CFC @ case 10
-	.4byte _08012D04 @ case 11
-	.4byte _08012D04 @ case 12
-	.4byte _08012CEC @ case 13
-	.4byte _08012CFC @ case 14
-	.4byte _08012CFC @ case 15
-	.4byte _08012D04 @ case 16
-	.4byte _08012D04 @ case 17
-	.4byte _08012D04 @ case 18
-	.4byte _08012D04 @ case 19
-	.4byte _08012D04 @ case 20
-	.4byte _08012D04 @ case 21
-	.4byte _08012CFC @ case 22
-	.4byte _08012CFC @ case 23
-	.4byte _08012CFC @ case 24
-	.4byte _08012CFC @ case 25
-	.4byte _08012CFC @ case 26
-	.4byte _08012CEC @ case 27
-_08012CEC:
-	ldr r1, _08012CF8
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-	b _08012D04
-	.align 2, 0
-_08012CF8: .4byte 0x082C09F8
-_08012CFC:
-	ldr r1, _08012D08
-	adds r0, r2, #0
-	bl StringExpandPlaceholders
-_08012D04:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08012D08: .4byte 0x082C0A10
-	thumb_func_end sub_08012C60
-
-	thumb_func_start sub_08012D0C
-sub_08012D0C: @ 0x08012D0C
-	push {r4, r5, r6, lr}
-	adds r4, r0, #0
-	adds r6, r1, #0
-	adds r5, r2, #0
-	ldr r0, [r4]
-	bl sub_08012DD8
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #1
-	beq _08012D28
-	cmp r0, #2
-	beq _08012D60
-	b _08012D74
-_08012D28:
-	movs r0, #2
-	bl PlaySE
-	ldrb r0, [r4, #0x12]
-	bl RedrawListMenu
-	ldr r0, _08012D54
-	ldrb r2, [r4, #0x13]
-	lsls r2, r2, #5
-	ldr r1, [r4]
-	adds r1, r1, r2
-	adds r1, #0x10
-	bl StringCopy7
-	ldr r0, _08012D58
-	ldr r1, _08012D5C
-	ldrb r1, [r1]
-	bl sub_08012AC4
-	strb r6, [r4, #0xc]
-	b _08012D74
-	.align 2, 0
-_08012D54: .4byte 0x02021C54
-_08012D58: .4byte 0x02021C7C
-_08012D5C: .4byte 0x020228E0
-_08012D60:
-	movs r0, #0
-	movs r1, #0
-	bl RfuSetStatus
-	ldrb r0, [r4, #0x12]
-	bl RedrawListMenu
-	strb r5, [r4, #0xc]
-	movs r0, #1
-	b _08012D76
-_08012D74:
-	movs r0, #0
-_08012D76:
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08012D0C
-
 	thumb_func_start sub_08012D7C
 sub_08012D7C: @ 0x08012D7C
 	push {r4, r5, r6, lr}
@@ -946,7 +623,7 @@ _0801328C:
 	ldr r0, _080132C0
 	ldrb r1, [r0]
 	adds r0, r4, #0
-	bl sub_08012BB4
+	bl GetYouAskedToJoinGroupPleaseWaitMessage
 	adds r0, r6, #0
 	adds r0, #9
 	adds r1, r4, #0
@@ -1070,7 +747,7 @@ _080133CC:
 	ldr r4, _08013404
 	ldrb r1, [r4]
 	adds r0, r5, #0
-	bl sub_08012C60
+	bl GetGroupLeaderSentAnOKMessage
 	adds r0, r6, #0
 	adds r0, #9
 	adds r1, r5, #0
@@ -3250,7 +2927,7 @@ _08014704:
 	adds r0, r5, #0
 	movs r1, #5
 	movs r2, #6
-	bl sub_08012D0C
+	bl Leader_SetStateIfMemberListChanged
 	ldr r0, _08014728
 	ldrh r1, [r0, #0x2e]
 	movs r0, #2
@@ -3485,7 +3162,7 @@ _080148EA:
 	adds r0, r5, #0
 	movs r1, #5
 	movs r2, #6
-	bl sub_08012D0C
+	bl Leader_SetStateIfMemberListChanged
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _080148FC
@@ -5832,7 +5509,7 @@ _08015DBA:
 	ldr r0, _08015DD8
 	ldr r1, _08015DDC
 	ldrb r1, [r1]
-	bl sub_08012B78
+	bl GetYouDeclinedTheOfferMessage
 	b _0801638C
 	.align 2, 0
 _08015DD8: .4byte 0x02021C7C

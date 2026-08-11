@@ -1,6 +1,7 @@
 #include "global.h"
 #include "bg.h"
 #include "cable_club.h"
+#include "constants/songs.h"
 #include "event_data.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -8,6 +9,7 @@
 #include "malloc.h"
 #include "menu.h"
 #include "script.h"
+#include "sound.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -82,6 +84,15 @@ extern const u8 sText_AreTheseMembersOK[];
 extern const u8 sText_CancelModeWithTheseMembers[];
 extern const u8 sText_ModeWithTheseMembersWillBeCanceled[];
 extern const u8 sText_AnOKWasSentToPlayer[];
+extern const u8 sText_PlayerContactedYouForXAccept[];
+extern const u8 sText_PlayerContactedYouShareX[];
+extern const u8 sText_PlayerContactedYouAddToMembers[];
+extern const u8 sText_OfferDeclined1[];
+extern const u8 sText_OfferDeclined2[];
+extern const u8 sText_AwaitingPlayersResponse[];
+extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
+extern const u8 sText_PlayerSentBackOK[];
+extern const u8 sText_PlayerOKdRegistration[];
 extern const u8 *const sPlayerUnavailableTexts[];
 extern const u32 sLinkGroupToActivityAndCapacity[];
 extern const u8 *const sLinkGroupActivityNameTexts[];
@@ -95,15 +106,16 @@ extern const struct ListMenuTemplate sListMenuTemplate_PossibleGroupMembers;
 // names until converted.
 extern void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
 extern u16 ReadAsU16(const u8 *ptr);
-extern bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 stateIfChanged, u32 stateIfUnchanged);
 extern u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
-extern void Leader_DestroyResources(struct WirelessLink_Leader *data);
 extern void CreateTask_RunScriptAndFadeToActivity(void);
+extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
+static void Leader_DestroyResources(struct WirelessLink_Leader *data);
+bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 joinedState, u32 droppedState);
 
 void Task_Idle(u8 taskId)
 {
@@ -537,4 +549,147 @@ static void Task_TryBecomeLinkLeader(u8 taskId)
         }
         break;
     }
+}
+
+static void Leader_DestroyResources(struct WirelessLink_Leader *data)
+{
+    ClearWindowTilemap(data->nPlayerModeWindowId);
+    ClearStdWindowAndFrame(data->nPlayerModeWindowId, FALSE);
+    DestroyListMenuTask(data->listTaskId, 0, 0);
+    ClearWindowTilemap(data->bButtonCancelWindowId);
+    ClearStdWindowAndFrame(data->listWindowId, FALSE);
+    CopyBgTilemapBufferToVram(0);
+    RemoveWindow(data->nPlayerModeWindowId);
+    RemoveWindow(data->listWindowId);
+    RemoveWindow(data->bButtonCancelWindowId);
+    DestroyTask(data->listenTaskId);
+
+    Free(data->playerListBackup);
+    Free(data->playerList);
+    Free(data->incomingPlayerList);
+}
+
+void Leader_GetAcceptNewMemberPrompt(u8 *dst, u8 activity)
+{
+    switch (activity)
+    {
+    case ACTIVITY_BATTLE_SINGLE:
+    case ACTIVITY_BATTLE_DOUBLE:
+    case ACTIVITY_TRADE:
+    case ACTIVITY_BATTLE_TOWER_OPEN:
+    case ACTIVITY_BATTLE_TOWER:
+        StringExpandPlaceholders(dst, sText_PlayerContactedYouForXAccept);
+        break;
+    case ACTIVITY_WONDER_CARD_DUP:
+    case ACTIVITY_WONDER_NEWS_DUP:
+        StringExpandPlaceholders(dst, sText_PlayerContactedYouShareX);
+        break;
+    case ACTIVITY_BATTLE_MULTI:
+    case ACTIVITY_POKEMON_JUMP:
+    case ACTIVITY_BERRY_CRUSH:
+    case ACTIVITY_BERRY_PICK:
+    case ACTIVITY_RECORD_CORNER:
+    case ACTIVITY_BERRY_BLENDER:
+    case ACTIVITY_CONTEST_COOL:
+    case ACTIVITY_CONTEST_BEAUTY:
+    case ACTIVITY_CONTEST_CUTE:
+    case ACTIVITY_CONTEST_SMART:
+    case ACTIVITY_CONTEST_TOUGH:
+        StringExpandPlaceholders(dst, sText_PlayerContactedYouAddToMembers);
+        break;
+    }
+}
+
+void GetYouDeclinedTheOfferMessage(u8 *dst, u8 activity)
+{
+    switch (activity)
+    {
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_OfferDeclined1);
+        break;
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+    case ACTIVITY_CARD | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_OfferDeclined2);
+        break;
+    }
+}
+
+void GetYouAskedToJoinGroupPleaseWaitMessage(u8 *dst, u8 activity)
+{
+    switch (activity)
+    {
+    case ACTIVITY_BATTLE_SINGLE:
+    case ACTIVITY_BATTLE_DOUBLE:
+    case ACTIVITY_TRADE:
+    case ACTIVITY_BATTLE_TOWER:
+    case ACTIVITY_BATTLE_TOWER_OPEN:
+    case ACTIVITY_WONDER_CARD_DUP:
+    case ACTIVITY_WONDER_NEWS_DUP:
+        StringExpandPlaceholders(dst, sText_AwaitingPlayersResponse);
+        break;
+    case ACTIVITY_BATTLE_MULTI:
+    case ACTIVITY_POKEMON_JUMP:
+    case ACTIVITY_BERRY_CRUSH:
+    case ACTIVITY_BERRY_PICK:
+    case ACTIVITY_RECORD_CORNER:
+    case ACTIVITY_BERRY_BLENDER:
+    case ACTIVITY_CONTEST_COOL:
+    case ACTIVITY_CONTEST_BEAUTY:
+    case ACTIVITY_CONTEST_CUTE:
+    case ACTIVITY_CONTEST_SMART:
+    case ACTIVITY_CONTEST_TOUGH:
+        StringExpandPlaceholders(dst, sText_PlayerHasBeenAskedToRegisterYouPleaseWait);
+        break;
+    }
+}
+
+void GetGroupLeaderSentAnOKMessage(u8 *dst, u8 activity)
+{
+    switch (activity)
+    {
+    case ACTIVITY_BATTLE_SINGLE:
+    case ACTIVITY_BATTLE_DOUBLE:
+    case ACTIVITY_TRADE:
+    case ACTIVITY_BATTLE_TOWER:
+    case ACTIVITY_BATTLE_TOWER_OPEN:
+    case ACTIVITY_WONDER_CARD_DUP:
+    case ACTIVITY_WONDER_NEWS_DUP:
+        StringExpandPlaceholders(dst, sText_PlayerSentBackOK);
+        break;
+    case ACTIVITY_BATTLE_MULTI:
+    case ACTIVITY_POKEMON_JUMP:
+    case ACTIVITY_BERRY_CRUSH:
+    case ACTIVITY_BERRY_PICK:
+    case ACTIVITY_RECORD_CORNER:
+    case ACTIVITY_BERRY_BLENDER:
+    case ACTIVITY_CONTEST_COOL:
+    case ACTIVITY_CONTEST_BEAUTY:
+    case ACTIVITY_CONTEST_CUTE:
+    case ACTIVITY_CONTEST_SMART:
+    case ACTIVITY_CONTEST_TOUGH:
+        StringExpandPlaceholders(dst, sText_PlayerOKdRegistration);
+        break;
+    }
+}
+
+bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 joinedState, u32 droppedState)
+{
+    switch (LeaderUpdateGroupMembership(data->playerList))
+    {
+    case UNION_ROOM_SPAWN_IN:
+        PlaySE(SE_PC_LOGIN);
+        RedrawListMenu(data->listTaskId);
+        StringCopy7(gStringVar2, &data->playerList->players[data->playerCount].rfu.name);
+        Leader_GetAcceptNewMemberPrompt(gStringVar4, gPlayerCurrActivity);
+        data->state = joinedState;
+        break;
+    case UNION_ROOM_SPAWN_OUT:
+        RfuSetStatus(RFU_STATUS_OK, 0);
+        RedrawListMenu(data->listTaskId);
+        data->state = droppedState;
+        return TRUE;
+    }
+
+    return FALSE;
 }
