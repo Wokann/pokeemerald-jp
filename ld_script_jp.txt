@@ -1043,7 +1043,7 @@ SECTIONS {
         src/link.o(.text.DisableSerial);
         src/link.o(.text.EnableSerial);
         src/link.o(.text.ResetSerial);
-        asm/link_mid_9.o(.text);
+        src/link.o(.text.LinkMain1);
         src/link.o(.text.CheckMasterOrSlave);
         src/link.o(.text.InitTimer);
         src/link.o(.text.EnqueueSendCmd);

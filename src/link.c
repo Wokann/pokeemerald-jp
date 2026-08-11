@@ -1677,6 +1677,100 @@ void ResetSerial(void)
     DisableSerial();
 }
 
+u32 LinkMain1(u8 *shouldAdvanceLinkState, u16 *sendCmd, u16 (*recvCmds)[CMD_LENGTH])
+{
+    u32 retVal;
+    u32 retVal2;
+
+    switch (gLink.state)
+    {
+        case LINK_STATE_START0:
+            DisableSerial();
+            gLink.state = 1;
+            break;
+        case LINK_STATE_START1:
+            if (*shouldAdvanceLinkState == 1)
+            {
+                EnableSerial();
+                gLink.state = 2;
+            }
+            break;
+        case LINK_STATE_HANDSHAKE:
+            switch (*shouldAdvanceLinkState)
+            {
+                default:
+                    CheckMasterOrSlave();
+                    break;
+                case 1:
+                    if (gLink.isMaster == LINK_MASTER && gLink.playerCount > 1)
+                        gLink.handshakeAsMaster = TRUE;
+                    break;
+                case 2:
+                    gLink.state = LINK_STATE_START0;
+                    REG_SIOMLT_SEND = 0;
+                    break;
+            }
+            break;
+        case LINK_STATE_INIT_TIMER:
+            InitTimer();
+            gLink.state = LINK_STATE_CONN_ESTABLISHED;
+            // fallthrough
+        case LINK_STATE_CONN_ESTABLISHED:
+            EnqueueSendCmd(sendCmd);
+            DequeueRecvCmds(recvCmds);
+            break;
+    }
+    *shouldAdvanceLinkState = 0;
+    retVal = gLink.localId;
+    retVal |= (gLink.playerCount << LINK_STAT_PLAYER_COUNT_SHIFT);
+    if (gLink.isMaster == LINK_MASTER)
+    {
+        retVal |= LINK_STAT_MASTER;
+    }
+    {
+        u32 receivedNothing = gLink.receivedNothing << LINK_STAT_RECEIVED_NOTHING_SHIFT;
+        u32 link_field_F = gLink.link_field_F << LINK_STAT_UNK_FLAG_9_SHIFT;
+        u32 hardwareError = gLink.hardwareError << LINK_STAT_ERROR_HARDWARE_SHIFT;
+        u32 badChecksum = gLink.badChecksum << LINK_STAT_ERROR_CHECKSUM_SHIFT;
+        u32 queueFull = gLink.queueFull << LINK_STAT_ERROR_QUEUE_FULL_SHIFT;
+        u32 val;
+
+        if (gLink.state == LINK_STATE_CONN_ESTABLISHED)
+        {
+            val = LINK_STAT_CONN_ESTABLISHED;
+            val |= receivedNothing;
+            val |= retVal;
+            val |= link_field_F;
+            val |= hardwareError;
+            val |= badChecksum;
+            val |= queueFull;
+        }
+        else
+        {
+            val = retVal;
+            val |= receivedNothing;
+            val |= link_field_F;
+            val |= hardwareError;
+            val |= badChecksum;
+            val |= queueFull;
+        }
+
+        retVal = val;
+    }
+
+    if (gLink.lag == LAG_MASTER)
+        retVal |= LINK_STAT_ERROR_LAG_MASTER;
+
+    if (gLink.localId >= MAX_LINK_PLAYERS)
+        retVal |= LINK_STAT_ERROR_INVALID_ID;
+
+    retVal2 = retVal;
+    if (gLink.lag == LAG_SLAVE)
+        retVal2 |= LINK_STAT_ERROR_LAG_SLAVE;
+
+    return retVal2;
+}
+
 void CheckMasterOrSlave(void)
 {
     u32 terminals;
