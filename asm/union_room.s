@@ -678,7 +678,7 @@ _080125AC:
 	cmp r0, #0
 	beq _080125E2
 	strb r4, [r5, #0xc]
-	bl sub_0800E9F8
+	bl LinkRfu_StopManagerAndFinalizeSlots
 _080125E2:
 	ldrb r0, [r5, #0xc]
 	cmp r0, #6
@@ -933,7 +933,7 @@ _080127C8:
 	movs r0, #0xd
 	strb r0, [r5, #0xc]
 _080127E4:
-	bl sub_0800E9F8
+	bl LinkRfu_StopManagerAndFinalizeSlots
 	ldrb r0, [r5, #0x11]
 	ldr r1, _08012804
 	ldrb r1, [r1]
@@ -1141,13 +1141,13 @@ _08012966:
 	strb r0, [r5, #0xc]
 	b _08012A54
 _0801297C:
-	bl sub_0800E9DC
+	bl LmanAcceptSlotFlagIsNotZero
 	lsls r0, r0, #0x18
 	lsrs r1, r0, #0x18
 	cmp r1, #0
 	beq _080129B2
 	movs r0, #0
-	bl sub_0800EA18
+	bl WaitRfuState
 	cmp r0, #0
 	beq _08012998
 	movs r0, #0x1a
@@ -4658,7 +4658,7 @@ _080147FA:
 	bl StringExpandPlaceholders
 	movs r0, #9
 	strb r0, [r5, #0xc]
-	bl sub_0800E9F8
+	bl LinkRfu_StopManagerAndFinalizeSlots
 	b _080148AC
 	.align 2, 0
 _08014860: .4byte 0x02021C40
@@ -4742,12 +4742,12 @@ _080148FC:
 	strb r0, [r5, #0xc]
 	b _080149FA
 _08014902:
-	bl sub_0800E9DC
+	bl LmanAcceptSlotFlagIsNotZero
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08014918
 	movs r0, #0
-	bl sub_0800EA18
+	bl WaitRfuState
 	movs r0, #0xf
 	strb r0, [r5, #0xc]
 	b _080149FA
@@ -6841,7 +6841,7 @@ _08015BB0: .4byte 0x030031C4
 _08015BB4:
 	movs r0, #0x49
 	bl PlaySE
-	bl sub_0800EA3C
+	bl StopUnionRoomLinkManager
 	movs r0, #0
 	movs r1, #0xc
 	strb r1, [r6, #0x14]
