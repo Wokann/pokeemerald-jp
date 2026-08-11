@@ -260,6 +260,9 @@ static u32 LoopedTask_OpenMatchCall(s32 state)
     }
 }
 
+#ifndef NONMATCHING
+// JP naked asm: agbcc cannot reproduce the JP register allocation for these
+// match-call list cursor/page tasks; byte-exact asm stays the default.
 __attribute__((naked)) u32 MatchCallListCursorDown(s32 state)
 {
     __asm__(".syntax unified\n\t"
@@ -519,6 +522,153 @@ __attribute__((naked)) u32 MatchCallListPageUp(s32 state)
             ".align 2, 0\n\t"
             ".syntax divided");
 }
+#else
+static u32 MatchCallListCursorDown(s32 state)
+{
+    struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
+    switch (state)
+    {
+    case 0:
+        switch (PokenavList_MoveCursorDown())
+        {
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return LT_SET_STATE(2);
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+        break;
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
+}
+static u32 MatchCallListCursorUp(s32 state)
+{
+    struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
+    switch (state)
+    {
+    case 0:
+        switch (PokenavList_MoveCursorUp())
+        {
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return LT_SET_STATE(2);
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+        break;
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
+}
+static u32 MatchCallListPageDown(s32 state)
+{
+    struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
+    switch (state)
+    {
+    case 0:
+        switch (PokenavList_PageDown())
+        {
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return LT_SET_STATE(2);
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+        break;
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
+}
+static u32 MatchCallListPageUp(s32 state)
+{
+    struct Pokenav_MatchCallGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_OPEN);
+    switch (state)
+    {
+    case 0:
+        switch (PokenavList_PageUp())
+        {
+        case 0:
+            break;
+        case 1:
+            PlaySE(SE_SELECT);
+            return LT_SET_STATE(2);
+        case 2:
+            PlaySE(SE_SELECT);
+            // fall through
+        default:
+            return LT_INC_AND_PAUSE;
+        }
+        break;
+    case 1:
+        if (PokenavList_IsMoveWindowTaskActive())
+            return LT_PAUSE;
+
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        PrintMatchCallLocation(gfx, 0);
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
+}
+#endif
+
 
 static u32 SelectMatchCallEntry(s32 state)
 {
