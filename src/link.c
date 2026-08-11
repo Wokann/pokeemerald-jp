@@ -135,16 +135,9 @@ void DoSend(void);
 void StopTimer(void);
 void SendRecvDone(void);
 
-// The JP build binds these graphics from the ROM (data.s) instead of PNG
-// assets; they are stubbed until their consumers are converted to C.
-static const u16 sWirelessLinkDisplayPal[] = {0};
-static const u32 sWirelessLinkDisplayGfx[] = {0};
-static const u32 sWirelessLinkDisplayTilemap[] = {0};
 // JP const data lives in data.s (bound in ld_script_jp.txt).
 extern const u16 sLinkTestDigitsPal[];
 extern const u16 sLinkTestDigitsGfx[0x110];
-static const u8 sUnusedTransparentWhite[] = {0};
-static const u16 sCommErrorBg_Gfx[] = {0};
 static const struct BlockRequest sBlockRequests[] = {
     [BLOCK_REQ_SIZE_NONE] = {gBlockSendBuffer, 200},
     [BLOCK_REQ_SIZE_200]  = {gBlockSendBuffer, 200},
@@ -152,15 +145,56 @@ static const struct BlockRequest sBlockRequests[] = {
     [BLOCK_REQ_SIZE_220]  = {gBlockSendBuffer, 220},
     [BLOCK_REQ_SIZE_40]   = {gBlockSendBuffer,  40}
 };
-extern const u8 sBGControlRegs[];
-// JP const data lives in data.s (bound in ld_script_jp.txt).
-extern const char sASCIIGameFreakInc[];
-extern const char sASCIITestPrint[];
-extern const struct BgTemplate sLinkErrorBgTemplates[2];
-extern const struct WindowTemplate sLinkErrorWindowTemplates[4];
-
-static const u8 sTextColors[] = { TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY };
-static const u8 sUnusedData[] = {0x00, 0xFF, 0xFE, 0xFF, 0x00};
+static const u8 sBGControlRegs[] = {
+    REG_OFFSET_BG0CNT,
+    REG_OFFSET_BG1CNT,
+    REG_OFFSET_BG2CNT,
+    REG_OFFSET_BG3CNT
+};
+static const char sASCIIGameFreakInc[] = "GameFreak inc.";
+static const char sASCIITestPrint[] = "TEST PRINT\nP0\nP1\nP2\nP3";
+static const struct BgTemplate sLinkErrorBgTemplates[] = {
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 31,
+        .priority = 0
+    }, {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 8,
+        .priority = 1
+    }
+};
+static const struct WindowTemplate sLinkErrorWindowTemplates[] = {
+    [WIN_LINK_ERROR_TOP] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 0,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 5,
+        .paletteNum = 15,
+        .baseBlock = 0x002
+    },
+    [WIN_LINK_ERROR_MID] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 6,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 7,
+        .paletteNum = 15,
+        .baseBlock = 0x098
+    },
+    [WIN_LINK_ERROR_BOTTOM] = {
+        .bg = 0,
+        .tilemapLeft = 0,
+        .tilemapTop = 13,
+        .width = DISPLAY_TILE_WIDTH,
+        .height = 7,
+        .paletteNum = 15,
+        .baseBlock = 0x16A
+    }, DUMMY_WIN_TEMPLATE
+};
 
 bool8 IsWirelessAdapterConnected(void)
 {
@@ -1421,6 +1455,33 @@ void SetSuppressLinkErrorMessage(bool8 flag)
 bool8 HasLinkErrorOccurred(void)
 {
     return gLinkErrorOccurred;
+}
+
+void LocalLinkPlayerToBlock(void)
+{
+    struct LinkPlayerBlock *block;
+
+    InitLocalLinkPlayer();
+    block = &gLocalLinkPlayerBlock;
+    block->linkPlayer = gLocalLinkPlayer;
+    memcpy(block->magic1, sASCIIGameFreakInc, sizeof(block->magic1) - 1);
+    memcpy(block->magic2, sASCIIGameFreakInc, sizeof(block->magic2) - 1);
+    memcpy(gBlockSendBuffer, block, sizeof(*block));
+}
+
+void LinkPlayerFromBlock(u32 who)
+{
+    u8 who_ = who;
+    struct LinkPlayerBlock *block;
+    struct LinkPlayer *player;
+
+    block = (struct LinkPlayerBlock *)gBlockRecvBuffer[who_];
+    player = &gLinkPlayers[who_];
+    *player = block->linkPlayer;
+
+    if (strcmp(block->magic1, sASCIIGameFreakInc) != 0
+     || strcmp(block->magic2, sASCIIGameFreakInc) != 0)
+        SetMainCallback2(CB2_LinkError);
 }
 
 bool8 HandleLinkConnection(void)

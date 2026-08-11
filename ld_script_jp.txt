@@ -206,11 +206,8 @@ sBrailleGotoLine2 = ABSOLUTE(0x082BF478);
 sPlaceholderFuncs = ABSOLUTE(0x082BF480);
 sLinkTestDigitsPal = ABSOLUTE(0x082BFB6C);
 sLinkTestDigitsGfx = ABSOLUTE(0x082BFB8C);
-sBGControlRegs = ABSOLUTE(0x082BFF20);
 gGameLanguage = ABSOLUTE(0x0829BDA5);
 gGameVersion = ABSOLUTE(0x0829BDA4);
-sASCIIGameFreakInc = ABSOLUTE(0x082BFF24);
-sASCIITestPrint = ABSOLUTE(0x082BFF34);
 sRegicePathCoords = ABSOLUTE(0x085CD314);
 sMEScrCmdEnableresetrtcText = ABSOLUTE(0x085FCB59);
 sMEScrCmdGivenationaldexText = ABSOLUTE(0x085CBF86);
@@ -305,8 +302,6 @@ UnlockTrendySaying = sub_0811F4A0;
 gComboStarterLookupTable = ABSOLUTE(0x08566BA4);
 gContestEffects = ABSOLUTE(0x08566AE4);
 IsContestantAllowedToCombo = sub_080DD94C;
-sLinkErrorBgTemplates = ABSOLUTE(0x082BFF4C);
-sLinkErrorWindowTemplates = ABSOLUTE(0x082BFF54);
 sOamDimensions32 = ABSOLUTE(0x082BF35C);
 sOamDimensions = ABSOLUTE(0x082BF3BC);
 sAffineAnimCmdFuncs = ABSOLUTE(0x082BF34C);
@@ -1024,7 +1019,8 @@ SECTIONS {
         src/link.o(.text.IsLinkConnectionEstablished);
         src/link.o(.text.SetSuppressLinkErrorMessage);
         src/link.o(.text.HasLinkErrorOccurred);
-        asm/link_mid_6.o(.text);
+        src/link.o(.text.LocalLinkPlayerToBlock);
+        src/link.o(.text.LinkPlayerFromBlock);
         src/link.o(.text.HandleLinkConnection);
         src/link.o(.text.SetWirelessCommType1);
         src/link.o(.text.SetWirelessCommType0_Internal);
@@ -2300,6 +2296,8 @@ SECTIONS {
     ALIGN(4)
     {
         data/data.o(.rodata);
+        src/link.o(.rodata);
+        data/data_b.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/data_rest.o(.rodata);

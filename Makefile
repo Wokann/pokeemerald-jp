@@ -112,7 +112,7 @@ $(C_BUILDDIR)/battle_interface.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffu
 # functions (ProcessRecvCmds onward) stay in asm/link_mid.s.
 $(C_BUILDDIR)/link.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_rest.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_rest.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 OBJFILE := $(AS_OBJS) $(C_OBJECTS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
 NAME := pokeemerald_jp
@@ -163,6 +163,10 @@ $(OBJ_DIR)/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
 	$(AS) $(ASFLAGS) -o $@ $<
 
 $(OBJ_DIR)/data/data.o: data/data.s charmap.txt baserom_jp.gba
+	@mkdir -p $(dir $@)
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+
+$(OBJ_DIR)/data/data_b.o: data/data_b.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 

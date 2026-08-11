@@ -9796,7 +9796,7 @@ _080103B6:
 	b _080104D4
 _080103C2:
 	bl ResetBlockReceivedFlags
-	bl sub_0800AE24
+	bl LocalLinkPlayerToBlock
 	b _08010448
 _080103CC:
 	ldrb r0, [r5, #0xc]
@@ -9874,7 +9874,7 @@ _08010450:
 	bge _0801046E
 _08010458:
 	adds r0, r4, #0
-	bl sub_0800AE80
+	bl LinkPlayerFromBlock
 	lsls r0, r4, #0x18
 	lsrs r0, r0, #0x18
 	bl Rfu_ResetBlockReceivedFlag
@@ -10375,7 +10375,7 @@ _08010846:
 	ldrb r0, [r6, #0xd]
 	cmp r0, #0
 	beq _08010896
-	bl sub_0800AE24
+	bl LocalLinkPlayerToBlock
 	ldr r1, _0801085C
 	movs r0, #0
 	movs r2, #0x3c
