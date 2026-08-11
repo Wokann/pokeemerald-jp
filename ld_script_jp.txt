@@ -42,6 +42,7 @@ sPokenavMainMenuScanlineEffectParams = ABSOLUTE(0x085F28EC);
 gText_NoRibbonWinners = ABSOLUTE(0x085CB5DC);
 gText_SearchResultRank = ABSOLUTE(0x085CB81B);
 gText_RibbonsF700 = ABSOLUTE(0x085CB821);
+sPlayerNameTextColors = ABSOLUTE(0x085F723C);
 gPokenavRibbonsSummaryBg_Gfx = ABSOLUTE(0x085F64AC);
 gPokenavRibbonsSummaryBg_Tilemap = ABSOLUTE(0x085F65A8);
 gPokenavRibbonsSummaryBg_Pal = ABSOLUTE(0x085F648C);

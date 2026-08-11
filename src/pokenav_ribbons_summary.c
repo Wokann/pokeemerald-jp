@@ -1291,93 +1291,19 @@ static void AddRibbonCountWindow(struct Pokenav_RibbonsSummaryMenu *menu)
     PrintCurrentMonRibbonCount(menu);
 }
 
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "sub sp, #0x10\n\t"
-            "adds r5, r0, #0\n\t"
-            "ldr r1, _081D059C\n\t"
-            "add r0, sp, #0xc\n\t"
-            "movs r2, #3\n\t"
-            "bl memcpy\n\t"
-            "ldr r4, _081D05A0\n\t"
-            "bl GetCurrMonRibbonCount\n\t"
-            "adds r1, r0, #0\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #2\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "bl DynamicPlaceholderTextUtil_Reset\n\t"
-            "movs r0, #0\n\t"
-            "adds r1, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_SetPlaceholderPtr\n\t"
-            "ldr r4, _081D05A4\n\t"
-            "ldr r1, _081D05A8\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl DynamicPlaceholderTextUtil_ExpandPlaceholders\n\t"
-            "ldrb r0, [r5, #0xa]\n\t"
-            "movs r1, #0x44\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldrb r0, [r5, #0xa]\n\t"
-            "add r1, sp, #0xc\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #1\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "str r1, [sp, #4]\n\t"
-            "str r4, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #2\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "ldrb r0, [r5, #0xa]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0x10\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D059C: .4byte 0x085F723C\n\t"
-            "_081D05A0: .4byte gStringVar1\n\t"
-            "_081D05A4: .4byte gStringVar4\n\t"
-            "_081D05A8: .4byte 0x085CB821\n\t"
-            ".syntax divided");
-}
-#else
 void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
 {
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+    u8 color[3];
+    memcpy(color, sPlayerNameTextColors, 3);
 
     ConvertIntToDecimalStringN(gStringVar1, GetCurrMonRibbonCount(), STR_CONV_MODE_LEFT_ALIGN, 2);
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
     DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_RibbonsF700);
     FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
-    AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 1, color, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 2, color, TEXT_SKIP_DRAW, gStringVar4);
     CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
 }
-#endif
-
-#else
-void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
-
-    ConvertIntToDecimalStringN(gStringVar1, GetCurrMonRibbonCount(), STR_CONV_MODE_LEFT_ALIGN, 2);
-    DynamicPlaceholderTextUtil_Reset();
-    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, gStringVar1);
-    DynamicPlaceholderTextUtil_ExpandPlaceholders(gStringVar4, gText_RibbonsF700);
-    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
-    AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, 1, color, TEXT_SKIP_DRAW, gStringVar4);
-    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
-}
-#endif
 
 
 #ifndef NONMATCHING
@@ -1807,47 +1733,6 @@ void sub_081D07B8(s32 state)
     CopyWindowToVram(windowId, COPYWIN_GFX);
 }
 
-#ifndef NONMATCHING
-// JP naked asm: prints only the current index (JP layout), unlike US which
-// also prints "/count" centered; byte-exact asm stays default.
-__attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r5, r0, #0\n\t"
-            "bl GetRibbonsSummaryCurrentIndex\n\t"
-            "adds r1, r0, #0\n\t"
-            "adds r1, #1\n\t"
-            "ldr r4, _081D0860\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "ldrb r0, [r5, #0xc]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0xff\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r4, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "ldrb r0, [r5, #0xc]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D0860: .4byte gStringVar1\n\t"
-            ".syntax divided");
-}
-#else
 void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     u32 id = GetRibbonsSummaryCurrentIndex() + 1;
@@ -1855,7 +1740,6 @@ void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
     AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(menu->listIdxWindowId, COPYWIN_GFX);
 }
-#endif
 
 static void ResetSpritesAndDrawMonFrontPic(struct Pokenav_RibbonsSummaryMenu *menu)
 {
