@@ -33,7 +33,7 @@ UNPORTED_SRCS := \
 	src/berry.c src/cable_club.c src/contest_painting.c src/easy_chat.c \
 	src/event_object_movement.c src/field_specials.c src/field_weather.c \
 	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
-	src/main_menu.c src/menu.c src/mystery_gift_menu.c \
+	src/main_menu.c src/menu.c \
 	src/overworld.c src/party_menu.c src/pokemon.c \
 	src/pokemon_storage_system.c src/record_mixing.c src/recorded_battle.c \
 	src/start_menu.c src/tileset_anims.c src/trainer_hill.c src/tv.c
@@ -116,6 +116,7 @@ $(C_BUILDDIR)/AgbRfu_LinkManager.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -f
 
 $(C_BUILDDIR)/link_rfu_2.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/union_room.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/mystery_gift_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
 # link_rfu_3 is wired function-by-function (see ld_script_jp.txt); the
 # still-asm functions stay in asm/link_rfu.s.

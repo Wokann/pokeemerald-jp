@@ -28,6 +28,7 @@
 #include "palette.h"
 #include "party_menu.h"
 #include "pokemon_jump.h"
+#include "random.h"
 #include "dodrio_berry_picking.h"
 #include "script.h"
 #include "save_location.h"
@@ -292,6 +293,11 @@ extern const u8 *const sChatDeclinedTexts[];
 extern const u8 *const sText_WaitOrShowCardTexts[][4];
 extern const u8 *const sIfYouWantToDoSomethingTexts[];
 extern const u8 *const sCommunicatingWaitTexts[];
+extern const u8 *const sJoinChatTexts[][2];
+extern const u8 *const sBattleReactionTexts[][4];
+extern const u8 *const sTradeReactionTexts[][4];
+extern const u8 *const sChatReactionTexts[][4];
+extern const u8 *const sTrainerCardReactionTexts[][2];
 extern const u8 *const sPlayerContactedYouTexts[];
 extern const u8 *const sCantTransmitToTrainerTexts[];
 extern const u8 *const sPlayerDisconnectedTexts[];
@@ -347,7 +353,7 @@ static void Task_ListenForWonderDistributor(u8 taskId);
 static u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 linkGroup);
 static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 linkGroup);
 static s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
-extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
+static s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
 static void HandleCancelActivity(bool32 setData);
 static void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade);
 static bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trade);
@@ -4212,6 +4218,55 @@ static void GetURoomActivityStartMsg(u8 *dst, u8 acitivty)
 
 static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
 {
+}
+
+static s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender)
+{
+    bool32 metBefore;
+    struct RfuPlayer *player = &list->players[playerIdx];
+
+    if (!player->rfu.data.startedActivity && !overrideGender)
+    {
+        StringCopy(gStringVar1, player->rfu.name);
+        metBefore = PlayerHasMetTrainerBefore(ReadAsU16(player->rfu.data.compatibility.playerTrainerId), gStringVar1);
+        if (player->rfu.data.activity == (ACTIVITY_CHAT | IN_UNION_ROOM))
+        {
+            StringExpandPlaceholders(gStringVar4, sJoinChatTexts[metBefore][playerGender]);
+            return 2;
+        }
+        else
+        {
+            UR_PrintFieldMessage(sCommunicatingWaitTexts[metBefore]);
+            return 1;
+        }
+    }
+    else
+    {
+        StringCopy(gStringVar1, player->rfu.name);
+        if (overrideGender)
+        {
+            playerGender = (player->rfu.data.compatibility.playerTrainerId[overrideGender + 1] >> 3) & 1;
+        }
+        switch (player->rfu.data.activity & 0x3F)
+        {
+        case ACTIVITY_BATTLE_SINGLE:
+            StringExpandPlaceholders(gStringVar4, sBattleReactionTexts[playerGender][Random() % 4]);
+            break;
+        case ACTIVITY_TRADE:
+            StringExpandPlaceholders(gStringVar4, sTradeReactionTexts[playerGender][Random() % 2]);
+            break;
+        case ACTIVITY_CHAT:
+            StringExpandPlaceholders(gStringVar4, sChatReactionTexts[playerGender][Random() % 4]);
+            break;
+        case ACTIVITY_CARD:
+            StringExpandPlaceholders(gStringVar4, sTrainerCardReactionTexts[playerGender][Random() % 2]);
+            break;
+        default:
+            StringExpandPlaceholders(gStringVar4, sText_TrainerAppearsBusy);
+            break;
+        }
+        return 0;
+    }
 }
 
 static bool32 PollPartnerYesNoResponse(struct WirelessLink_URoom *data)
