@@ -12,11 +12,13 @@
 #include "script.h"
 #include "save_location.h"
 #include "sound.h"
+#include "sprite.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "trade.h"
+#include "trainer_card.h"
 #include "union_room.h"
 #include "window.h"
 
@@ -161,6 +163,8 @@ extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
 extern void JoinGroup_EnableScriptContexts(void);
 extern bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
+extern void MysteryGift_DisableStats(void);
+extern bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 static void Leader_DestroyResources(struct WirelessLink_Leader *data);
@@ -1397,4 +1401,66 @@ static void Task_StartUnionRoomTrade(u8 taskId)
         }
         break;
     }
+}
+
+static void Task_ExchangeCards(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        if (GetMultiplayerId() == 0)
+            SendBlockRequest(BLOCK_REQ_SIZE_100);
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        if (GetBlockReceivedStatus() == GetLinkPlayerCountAsBitFlags())
+        {
+            s32 i;
+            u16 *recvBuff;
+
+            for (i = 0; i < GetLinkPlayerCount(); i++)
+            {
+                recvBuff = gBlockRecvBuffer[i];
+                CopyTrainerCardData(&gTrainerCards[i], (struct TrainerCard *)recvBuff, gLinkPlayers[i].version);
+            }
+
+            if (GetLinkPlayerCount() == 2)
+            {
+                // Note: hasAllFrontierSymbols is a re-used field.
+                // Here it is set by CreateTrainerCardInBuffer.
+                // If the player has a saved Wonder Card and it is the same Wonder Card
+                // as their partner then mystery gift stats are enabled.
+                recvBuff = gBlockRecvBuffer[GetMultiplayerId() ^ 1];
+                MysteryGift_TryEnableStatsByFlagId(((struct TrainerCard *)recvBuff)->hasAllFrontierSymbols);
+            }
+            else
+            {
+                MysteryGift_DisableStats();
+            }
+
+            ResetBlockReceivedFlags();
+            DestroyTask(taskId);
+        }
+        break;
+    }
+}
+
+static void CB2_ShowCard(void)
+{
+    switch (gMain.state)
+    {
+    case 0:
+        CreateTask(Task_ExchangeCards, 5);
+        gMain.state++;
+        break;
+    case 1:
+        if (!FuncIsActiveTask(Task_ExchangeCards))
+            ShowTrainerCardInLink(GetMultiplayerId() ^ 1, CB2_ReturnToField);
+        break;
+    }
+
+    RunTasks();
+    RunTextPrinters();
+    AnimateSprites();
+    BuildOamBuffer();
 }
