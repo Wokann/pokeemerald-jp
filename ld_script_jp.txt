@@ -1523,6 +1523,7 @@ SECTIONS {
         src/union_room.o(.text.CreateTask_ListenForWonderDistributor);
         src/union_room.o(.text.UR_PrintFieldMessage);
         src/union_room.o(.text.UR_RunTextPrinters);
+        src/union_room.o(.text.PrintOnTextbox);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);

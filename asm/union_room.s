@@ -22,50 +22,6 @@
 
 
 
-	thumb_func_start PrintOnTextbox
-PrintOnTextbox: @ 0x08016B74
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	adds r5, r1, #0
-	ldrb r0, [r4]
-	cmp r0, #0
-	beq _08016B86
-	cmp r0, #1
-	beq _08016BAC
-	b _08016BBE
-_08016B86:
-	bl LoadMessageBoxAndBorderGfx
-	movs r0, #0
-	movs r1, #1
-	bl DrawDialogueFrame
-	ldr r0, _08016BA8
-	adds r1, r5, #0
-	bl StringExpandPlaceholders
-	movs r0, #1
-	bl AddTextPrinterForMessage_2
-	ldrb r0, [r4]
-	adds r0, #1
-	strb r0, [r4]
-	b _08016BBE
-	.align 2, 0
-_08016BA8: .4byte 0x02021C7C
-_08016BAC:
-	bl RunTextPrintersAndIsPrinter0Active
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	cmp r0, #0
-	bne _08016BBE
-	strb r0, [r4]
-	movs r0, #1
-	b _08016BC0
-_08016BBE:
-	movs r0, #0
-_08016BC0:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end PrintOnTextbox
 
 	thumb_func_start sub_08016BC8
 sub_08016BC8: @ 0x08016BC8

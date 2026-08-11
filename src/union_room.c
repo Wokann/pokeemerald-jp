@@ -308,7 +308,7 @@ void ScheduleFieldMessageAndExit(const u8 *src);
 void CopyPlayerListToBuffer(struct WirelessLink_URoom *uroom);
 void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom);
 extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
-extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
+static bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
 static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
 static bool32 UR_RunTextPrinters(void);
@@ -3740,4 +3740,26 @@ static bool32 UR_RunTextPrinters(void)
         return TRUE;
     else
         return FALSE;
+}
+
+static bool8 PrintOnTextbox(u8 *textState, const u8 *str)
+{
+    switch (*textState)
+    {
+    case 0:
+        LoadMessageBoxAndBorderGfx();
+        DrawDialogueFrame(0, TRUE);
+        StringExpandPlaceholders(gStringVar4, str);
+        AddTextPrinterForMessage_2(TRUE);
+        (*textState)++;
+        break;
+    case 1:
+        if (!RunTextPrintersAndIsPrinter0Active())
+        {
+            *textState = 0;
+            return TRUE;
+        }
+        break;
+    }
+    return FALSE;
 }
