@@ -4,60 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_0801785C
-sub_0801785C: @ 0x0801785C
-	push {lr}
-	adds r3, r0, #0
-	cmp r1, #0x44
-	beq _08017898
-	cmp r1, #0x44
-	bgt _0801786E
-	cmp r1, #0x41
-	beq _08017878
-	b _080178B6
-_0801786E:
-	cmp r1, #0x45
-	beq _08017888
-	cmp r1, #0x48
-	beq _080178A8
-	b _080178B6
-_08017878:
-	ldr r0, _08017884
-	lsls r1, r2, #2
-	adds r1, r1, r0
-	ldr r1, [r1]
-	b _0801789A
-	.align 2, 0
-_08017884: .4byte 0x082C1224
-_08017888:
-	ldr r0, _08017894
-	lsls r1, r2, #2
-	adds r1, r1, r0
-	ldr r1, [r1]
-	b _0801789A
-	.align 2, 0
-_08017894: .4byte 0x082C13C4
-_08017898:
-	ldr r1, _080178A4
-_0801789A:
-	adds r0, r3, #0
-	bl StringExpandPlaceholders
-	b _080178B6
-	.align 2, 0
-_080178A4: .4byte 0x082C1998
-_080178A8:
-	ldr r0, _080178BC
-	lsls r1, r2, #2
-	adds r1, r1, r0
-	ldr r1, [r1]
-	adds r0, r3, #0
-	bl StringExpandPlaceholders
-_080178B6:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080178BC: .4byte 0x082C127C
-	thumb_func_end sub_0801785C
 
 	thumb_func_start sub_080178C0
 sub_080178C0: @ 0x080178C0

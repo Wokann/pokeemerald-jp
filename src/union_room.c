@@ -234,6 +234,9 @@ extern const u8 sText_OfferToTradeEgg[];
 extern const u8 sText_OfferToTradeMon[];
 extern const u8 sText_NameWantedOfferLv[];
 extern const u8 sText_Colon[];
+extern const u8 *const sBattleDeclinedTexts[];
+extern const u8 *const sShowTrainerCardDeclinedTexts[];
+extern const u8 sText_TradeOfferRejected[];
 extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
@@ -347,7 +350,7 @@ static void Task_InitUnionRoom(u8 taskId);
 void UR_ClearBg0(void);
 extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
-extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
+static void GetURoomActivityRejectMsg(u8 *dst, s32 acitivty, u32 playerGender);
 static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
 static u32 GetResponseIdx_InviteToURoomActivity(s32 activity);
 static s32 IsRequestedTradeInPlayerParty(u32 type, u32 species);
@@ -4153,6 +4156,25 @@ static s32 IsRequestedTradeInPlayerParty(u32 type, u32 species)
                 return UR_TRADE_MATCH;
         }
         return UR_TRADE_NOTYPE;
+    }
+}
+
+static void GetURoomActivityRejectMsg(u8 *dst, s32 acitivty, u32 playerGender)
+{
+    switch (acitivty)
+    {
+    case ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sBattleDeclinedTexts[playerGender]);
+        break;
+    case ACTIVITY_CHAT | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sChatDeclinedTexts[playerGender]);
+        break;
+    case ACTIVITY_TRADE | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sText_TradeOfferRejected);
+        break;
+    case ACTIVITY_CARD | IN_UNION_ROOM:
+        StringExpandPlaceholders(dst, sShowTrainerCardDeclinedTexts[playerGender]);
+        break;
     }
 }
 
