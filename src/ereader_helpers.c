@@ -11,10 +11,6 @@
 #include "util.h"
 #include "trainer_hill.h"
 
-// I/O register alias for use inside inline asm strings (REG_ADDR_SIOCNT is a
-// C macro and cannot be expanded in asm text).
-__asm__(".equ REG_ADDR_SIOCNT, 0x04000128");
-
 #include "constants/trainers.h"
 #include "constants/moves.h"
 #include "constants/items.h"
@@ -746,20 +742,10 @@ void EReaderHelper_SerialCallback(void)
     }
 }
 
-// JP 0x081D37BC: kept as asm (JP loads REG_SIOCNT directly).
-__attribute__((naked)) static void EnableSio(void)
+// JP 0x081D37BC: JP enables the SIOCNT SI bit directly.
+static void EnableSio(void)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "ldr r0, _081D37C8\n\t"
-            "ldrh r1, [r0]\n\t"
-            "movs r2, #0x80\n\t"
-            "orrs r1, r2\n\t"
-            "strh r1, [r0]\n\t"
-            "bx lr\n\t"
-            ".align 2, 0\n\t"
-            "_081D37C8: .4byte REG_ADDR_SIOCNT\n\t"
-            ".syntax divided\n");
+    REG_SIOCNT |= 0x80;
 }
 
 static void DisableTm3(void)
