@@ -37,6 +37,11 @@ extern const struct WindowTemplate sMoveRelearnerWindowTemplates[6];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
+extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
+extern const struct SpriteTemplate sConditionMonPicTemplateDescriptor; // JP 0x085FA8A0
+extern const struct SpritePalette sConditionMonPicPalDescriptor;     // JP 0x085FA8B8
+extern const struct SpriteSheet sConditionSparkleSheetDescriptor; // JP 0x085FA910
+extern const struct SpritePalette sConditionSparklePalDescriptor; // JP 0x085FA918
 extern const s16 sConditionSparkleCoords[MAX_CONDITION_SPARKLES][2];
 
 static void MailboxMenu_MoveCursorFunc(s32, bool8, struct ListMenu *);
@@ -1799,46 +1804,15 @@ bool8 ConditionMenu_UpdateMonExit(struct ConditionGraph *graph, s16 *x)
 
 // Just loads the generic data, up to the caller to load the actual sheet/pal for the specific mon
 // JP 0x081D2800: kept as asm (JP data layout differs from US).
-__attribute__((naked)) void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplate *template, struct SpritePalette *pal)
+void LoadConditionMonPicTemplate(struct SpriteSheet *sheet, struct SpriteTemplate *template, struct SpritePalette *pal)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "sub sp, #0x20\n\t"
-            "ldr r3, _081D2840\n\t"
-            "ldr r4, [r3]\n\t"
-            "ldr r5, [r3, #4]\n\t"
-            "str r4, [sp, #0x18]\n\t"
-            "str r5, [sp, #0x1c]\n\t"
-            "mov r4, sp\n\t"
-            "ldr r3, _081D2844\n\t"
-            "ldm r3!, {r5, r6, r7}\n\t"
-            "stm r4!, {r5, r6, r7}\n\t"
-            "ldm r3!, {r5, r6, r7}\n\t"
-            "stm r4!, {r5, r6, r7}\n\t"
-            "ldr r3, _081D2848\n\t"
-            "ldr r4, [r3, #4]\n\t"
-            "ldr r3, [r3]\n\t"
-            "ldr r5, [sp, #0x18]\n\t"
-            "ldr r6, [sp, #0x1c]\n\t"
-            "str r5, [r0]\n\t"
-            "str r6, [r0, #4]\n\t"
-            "mov r0, sp\n\t"
-            "ldm r0!, {r5, r6, r7}\n\t"
-            "stm r1!, {r5, r6, r7}\n\t"
-            "ldm r0!, {r5, r6, r7}\n\t"
-            "stm r1!, {r5, r6, r7}\n\t"
-            "str r3, [r2]\n\t"
-            "str r4, [r2, #4]\n\t"
-            "add sp, #0x20\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D2840: .4byte 0x085FA898\n\t"
-            "_081D2844: .4byte 0x085FA8A0\n\t"
-            "_081D2848: .4byte 0x085FA8B8\n\t"
-            ".syntax divided\n");
+    struct SpriteSheet dataSheet = sConditionMonPicSheetDescriptor;
+    struct SpriteTemplate dataTemplate = sConditionMonPicTemplateDescriptor;
+    struct SpritePalette dataPal = sConditionMonPicPalDescriptor;
+
+    *sheet = dataSheet;
+    *template = dataTemplate;
+    *pal = dataPal;
 }
 
 // JP 0x081D284C: kept as asm (JP data layout differs from US).
@@ -1930,28 +1904,13 @@ __attribute__((naked)) void LoadConditionSelectionIcons(struct SpriteSheet *shee
 #define sNextSparkleSpriteId data[5]
 
 // JP 0x081D28E0: kept as asm (JP data layout differs from US).
-__attribute__((naked)) void LoadConditionSparkle(struct SpriteSheet *sheet, struct SpritePalette *pal)
+void LoadConditionSparkle(struct SpriteSheet *sheet, struct SpritePalette *pal)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "ldr r2, _081D28FC\n\t"
-            "ldr r4, [r2]\n\t"
-            "ldr r5, [r2, #4]\n\t"
-            "ldr r2, _081D2900\n\t"
-            "ldr r3, [r2, #4]\n\t"
-            "ldr r2, [r2]\n\t"
-            "str r4, [r0]\n\t"
-            "str r5, [r0, #4]\n\t"
-            "str r2, [r1]\n\t"
-            "str r3, [r1, #4]\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D28FC: .4byte 0x085FA910\n\t"
-            "_081D2900: .4byte 0x085FA918\n\t"
-            ".syntax divided\n");
+    struct SpriteSheet dataSheet = sConditionSparkleSheetDescriptor;
+    struct SpritePalette dataPal = sConditionSparklePalDescriptor;
+
+    *sheet = dataSheet;
+    *pal = dataPal;
 }
 
 static void SpriteCB_ConditionSparkle_DoNextAfterDelay(struct Sprite *sprite)
