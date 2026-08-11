@@ -262,6 +262,7 @@ static void PrintLinkBattleRecord(struct LinkBattleRecord *record, u8 y)
 // Kept as naked asm: agbcc cannot reproduce the JP register allocation
 // for the record loop (r4 counter, r5 entry offset, r6 y in the high
 // byte, r7 save-block pointer).
+#ifndef NONMATCHING
 __attribute__((naked)) void ShowLinkBattleRecords(void)
 {
     __asm__(".syntax unified\n\t"
@@ -354,6 +355,30 @@ __attribute__((naked)) void ShowLinkBattleRecords(void)
             "_0813C578: .4byte gText_WinLoseDraw\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：与汇编版语义相同（JP 用固定标题 x、2 参数
+// PrintLinkBattleRecord），但不保证逐字节一致。启用方式见 include/config.h。
+void ShowLinkBattleRecords(void)
+{
+    s32 i;
+
+    gRecordsWindowId = AddWindow(&sLinkBattleRecordsWindow);
+    DrawStdWindowFrame(gRecordsWindowId, FALSE);
+    FillWindowPixelBuffer(gRecordsWindowId, PIXEL_FILL(1));
+    StringExpandPlaceholders(gStringVar4, gText_PlayersBattleResults);
+    AddTextPrinterParameterized(gRecordsWindowId, FONT_NORMAL, gStringVar4, 0x30, 1, 0, NULL);
+    PrintLinkBattleWinsLossesDraws(gSaveBlock1Ptr->linkBattleRecords.entries);
+    StringExpandPlaceholders(gStringVar4, gText_WinLoseDraw);
+    AddTextPrinterParameterized(gRecordsWindowId, FONT_NORMAL, gStringVar4, 0x50, 0x2A, 0, NULL);
+
+    for (i = 0; i < LINK_B_RECORDS_COUNT; i++)
+        PrintLinkBattleRecord(&gSaveBlock1Ptr->linkBattleRecords.entries[i], 7 + (i * 2));
+
+    PutWindowTilemap(gRecordsWindowId);
+    CopyWindowToVram(gRecordsWindowId, COPYWIN_FULL);
+}
+#endif
 
 void RemoveRecordsWindow(void)
 {

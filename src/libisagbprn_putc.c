@@ -7,9 +7,8 @@ __asm__(".equ AGB_PRINT_STRUCT_ADDR, 0x09FE20F8");
 
 void AGBPutcInternal(const char cChr);
 
-// JP 0x08295774: kept as asm (same -O0 register allocation mismatch; this
-// file is built with -O2 so agbcc does not emit the naked-asm parameter
-// spill that -O0 produces).
+// JP 0x08295774: kept as asm (the official -O0 build spills the parameter
+// and evaluates m_nPut/m_nGet in an order agbcc -O0/-O2 cannot reproduce).
 __attribute__((naked)) void AGBPutc(const char cChr)
 {
     __asm__(".syntax unified\n\t"
