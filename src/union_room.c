@@ -233,6 +233,7 @@ extern const u8 sText_ChatDropped[];
 extern const u8 sText_OfferToTradeEgg[];
 extern const u8 sText_OfferToTradeMon[];
 extern const u8 sText_NameWantedOfferLv[];
+extern const u8 sText_Colon[];
 extern const struct WindowTemplate sWindowTemplate_TradingBoardHeader;
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
@@ -353,8 +354,8 @@ extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies
 bool32 UR_PrintFieldMessage(const u8 *str);
 extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
-extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
-extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
+static void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
+static void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
 static bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
@@ -4047,6 +4048,42 @@ static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomi
     }
 
     return 0xFF;
+}
+
+static void PrintGroupMemberOnWindow(u8 windowId, u8 x, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id)
+{
+    u8 activity;
+    u8 trainerId[6];
+
+    ConvertIntToDecimalStringN(gStringVar4, id + 1, STR_CONV_MODE_LEADING_ZEROS, 2);
+    StringAppend(gStringVar4, sText_Colon);
+    PrintUnionRoomText(windowId, FONT_NORMAL, gStringVar4, x, y, UR_COLOR_DEFAULT);
+    x += 24;
+    activity = player->rfu.data.activity;
+    if (player->groupScheduledAnim == UNION_ROOM_SPAWN_IN && !(activity & IN_UNION_ROOM))
+    {
+        StringCopyN_Multibyte(gStringVar4, player->rfu.name, 5);
+        PrintUnionRoomText(windowId, FONT_NORMAL + 1, gStringVar4, x, y, colorIdx);
+        ConvertIntToDecimalStringN(trainerId, player->rfu.data.compatibility.playerTrainerId[0] | (player->rfu.data.compatibility.playerTrainerId[1] << 8), STR_CONV_MODE_LEADING_ZEROS, 5);
+        StringCopy(gStringVar4, sText_ID);
+        StringAppend(gStringVar4, trainerId);
+        PrintUnionRoomText(windowId, FONT_NORMAL, gStringVar4, x + 0x38, y, colorIdx);
+    }
+}
+
+static void PrintGroupCandidateOnWindow(u8 windowId, u8 x, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id)
+{
+    u8 trainerId[6];
+
+    if (player->groupScheduledAnim == UNION_ROOM_SPAWN_IN)
+    {
+        StringCopyN_Multibyte(gStringVar4, player->rfu.name, 5);
+        PrintUnionRoomText(windowId, FONT_NORMAL + 1, gStringVar4, x, y, colorIdx);
+        ConvertIntToDecimalStringN(trainerId, player->rfu.data.compatibility.playerTrainerId[0] | (player->rfu.data.compatibility.playerTrainerId[1] << 8), STR_CONV_MODE_LEADING_ZEROS, 5);
+        StringCopy(gStringVar4, sText_ID);
+        StringAppend(gStringVar4, trainerId);
+        PrintUnionRoomText(windowId, FONT_NORMAL, gStringVar4, x + 0x38, y, colorIdx);
+    }
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
