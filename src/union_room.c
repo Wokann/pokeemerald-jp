@@ -311,7 +311,7 @@ extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
 extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
 static u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *parentList, struct RfuIncomingPlayerList *childList, u32 linkGroup);
-extern void UR_RunTextPrinters(void);
+static bool32 UR_RunTextPrinters(void);
 static u8 HandlePlayerListUpdate(void);
 static void Task_SearchForChildOrParent(u8 taskId);
 static void Task_ListenForCompatiblePartners(u8 taskId);
@@ -3732,4 +3732,12 @@ bool32 UR_PrintFieldMessage(const u8 *src)
     StringExpandPlaceholders(gStringVar4, src);
     AddTextPrinterWithCustomSpeedForMessage(FALSE, 1);
     return FALSE;
+}
+
+static bool32 UR_RunTextPrinters(void)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+        return TRUE;
+    else
+        return FALSE;
 }
