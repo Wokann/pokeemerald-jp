@@ -60,7 +60,16 @@ echo "    binutils linked"
 echo "==> 5/5  Building and installing agbcc"
 if [ ! -x tools/agbcc/bin/agbcc ]; then
     if [ ! -d tools/agbcc-src ]; then
-        git clone https://github.com/pret/agbcc tools/agbcc-src
+        if ! git clone https://github.com/pret/agbcc tools/agbcc-src; then
+            echo
+            echo "Failed to clone pret/agbcc (network issue?)."
+            echo "Fix one of:"
+            echo "  - make GitHub reachable and re-run: sh setup.sh"
+            echo "  - manually place an agbcc checkout at tools/agbcc-src"
+            echo "    (e.g. git clone https://github.com/pret/agbcc tools/agbcc-src)"
+            echo "    then re-run: sh setup.sh"
+            exit 1
+        fi
     fi
     cd tools/agbcc-src
     ./build.sh
