@@ -974,3 +974,5 @@ sAffineAnimStates = ABSOLUTE(0x03000B70);
 sSpriteTileRangeTags = ABSOLUTE(0x030009F0);
 sSpriteTileRanges = ABSOLUTE(0x03000A70);
 sSpritePaletteTags = ABSOLUTE(0x03000CF0);
+lman = ABSOLUTE(0x030041E0);
+gRfuLinkStatus = ABSOLUTE(0x03007630);

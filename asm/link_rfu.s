@@ -3,340 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start rfu_LMAN_REQBN_softReset_and_checkID
-rfu_LMAN_REQBN_softReset_and_checkID: @ 0x0800B97C
-	push {r4, lr}
-	bl rfu_REQBN_softReset_and_checkID
-	adds r4, r0, #0
-	ldr r0, _0800B9C0
-	cmp r4, r0
-	bne _0800B990
-	ldr r1, _0800B9C4
-	movs r0, #1
-	strb r0, [r1, #8]
-_0800B990:
-	ldr r0, _0800B9C4
-	ldrb r2, [r0, #4]
-	adds r1, r0, #0
-	cmp r2, #0x17
-	beq _0800B9A4
-	cmp r2, #1
-	beq _0800B9A4
-	movs r0, #0
-	strb r0, [r1, #5]
-	strb r0, [r1, #4]
-_0800B9A4:
-	movs r0, #0
-	strb r0, [r1, #7]
-	strb r0, [r1, #0xd]
-	strb r0, [r1, #1]
-	strb r0, [r1]
-	movs r0, #0xff
-	strb r0, [r1, #6]
-	bl sub_0800D0CC
-	adds r0, r4, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0800B9C0: .4byte 0x00008001
-_0800B9C4: .4byte 0x030041E0
-	thumb_func_end rfu_LMAN_REQBN_softReset_and_checkID
-
-	thumb_func_start rfu_REQ_sendData_wrapper
-rfu_REQ_sendData_wrapper: @ 0x0800B9C8
-	push {lr}
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	ldr r0, _0800B9E8
-	ldr r0, [r0]
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _0800B9F0
-	ldr r0, _0800B9EC
-	ldrb r0, [r0, #2]
-	movs r2, #0
-	cmp r0, #1
-	bne _0800B9F8
-	movs r2, #1
-	b _0800B9F8
-	.align 2, 0
-_0800B9E8: .4byte 0x03007630
-_0800B9EC: .4byte 0x030041E0
-_0800B9F0:
-	ldr r0, _0800BA04
-	ldrb r1, [r0, #3]
-	movs r1, #0
-	strb r1, [r0, #3]
-_0800B9F8:
-	adds r0, r2, #0
-	bl rfu_REQ_sendData
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800BA04: .4byte 0x030041E0
-	thumb_func_end rfu_REQ_sendData_wrapper
-
-	thumb_func_start sub_0800BA08
-sub_0800BA08: @ 0x0800BA08
-	push {r4, r5, r6, lr}
-	sub sp, #4
-	adds r5, r0, #0
-	adds r6, r1, #0
-	cmp r5, #0
-	beq _0800BA50
-	mov r1, sp
-	movs r0, #0
-	strh r0, [r1]
-	ldr r4, _0800BA40
-	ldr r2, _0800BA44
-	mov r0, sp
-	adds r1, r4, #0
-	bl CpuSet
-	movs r0, #0xff
-	strb r0, [r4, #6]
-	str r5, [r4, #0x40]
-	str r6, [r4, #0x44]
-	ldr r0, _0800BA48
-	bl rfu_setMSCCallback
-	ldr r0, _0800BA4C
-	bl rfu_setREQCallback
-	movs r0, #0
-	b _0800BA52
-	.align 2, 0
-_0800BA40: .4byte 0x030041E0
-_0800BA44: .4byte 0x01000024
-_0800BA48: .4byte 0x0800C96D
-_0800BA4C: .4byte 0x0800C271
-_0800BA50:
-	movs r0, #4
-_0800BA52:
-	add sp, #4
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0800BA08
-
-	thumb_func_start sub_0800BA5C
-sub_0800BA5C: @ 0x0800BA5C
-	push {r4, lr}
-	sub sp, #4
-	mov r1, sp
-	movs r0, #0
-	strh r0, [r1]
-	ldr r4, _0800BA80
-	ldr r2, _0800BA84
-	mov r0, sp
-	adds r1, r4, #0
-	bl CpuSet
-	movs r0, #0xff
-	strb r0, [r4, #6]
-	add sp, #4
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800BA80: .4byte 0x030041E0
-_0800BA84: .4byte 0x01000020
-	thumb_func_end sub_0800BA5C
-
-	thumb_func_start sub_0800BA88
-sub_0800BA88: @ 0x0800BA88
-	push {r4, lr}
-	adds r4, r0, #0
-	bl sub_0800BABC
-	ldr r1, _0800BAB8
-	movs r2, #1
-	strb r2, [r1, #4]
-	movs r0, #2
-	strb r0, [r1, #5]
-	str r4, [r1, #0x3c]
-	ldrb r0, [r4, #0x11]
-	strb r0, [r1, #9]
-	ldrh r0, [r4, #0x12]
-	strh r0, [r1, #0x32]
-	ldrh r0, [r4, #0x14]
-	strh r0, [r1, #0x18]
-	ldrb r0, [r4, #0x10]
-	cmp r0, #0
-	beq _0800BAB0
-	strb r2, [r1, #0xb]
-_0800BAB0:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800BAB8: .4byte 0x030041E0
-	thumb_func_end sub_0800BA88
-
-	thumb_func_start sub_0800BABC
-sub_0800BABC: @ 0x0800BABC
-	push {r4, r5, lr}
-	ldr r2, _0800BB00
-	movs r0, #0
-	strb r0, [r2, #5]
-	strb r0, [r2, #4]
-	movs r1, #0xff
-	strb r1, [r2, #6]
-	strb r0, [r2, #7]
-	strb r0, [r2, #0x10]
-	strb r0, [r2, #0xc]
-	adds r1, r2, #0
-	adds r1, #0x24
-	strb r0, [r1]
-	adds r1, #0xc
-	strb r0, [r1]
-	movs r3, #0
-	adds r5, r2, #0
-	adds r5, #0x28
-	movs r4, #0
-	adds r2, #0x34
-_0800BAE4:
-	lsls r1, r3, #1
-	adds r0, r1, r5
-	strh r4, [r0]
-	adds r1, r1, r2
-	strh r4, [r1]
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #3
-	bls _0800BAE4
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800BB00: .4byte 0x030041E0
-	thumb_func_end sub_0800BABC
-
-	thumb_func_start sub_0800BB04
-sub_0800BB04: @ 0x0800BB04
-	ldr r1, _0800BB0C
-	movs r0, #0x15
-	strb r0, [r1, #4]
-	bx lr
-	.align 2, 0
-_0800BB0C: .4byte 0x030041E0
-	thumb_func_end sub_0800BB04
-
-	thumb_func_start sub_0800BB10
-sub_0800BB10: @ 0x0800BB10
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	adds r6, r3, #0
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	lsls r1, r1, #0x10
-	lsrs r7, r1, #0x10
-	lsls r2, r2, #0x10
-	lsrs r2, r2, #0x10
-	mov r8, r2
-	ldr r1, _0800BB48
-	ldrb r0, [r1, #4]
-	cmp r0, #0
-	beq _0800BB4C
-	cmp r0, #8
-	bne _0800BB36
-	cmp r5, #1
-	beq _0800BB4C
-_0800BB36:
-	movs r0, #1
-	strh r0, [r1, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #1
-	b _0800BBDE
-	.align 2, 0
-_0800BB48: .4byte 0x030041E0
-_0800BB4C:
-	bl rfu_getMasterSlave
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0800BB6C
-	ldr r1, _0800BB68
-	movs r0, #2
-	strh r0, [r1, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #2
-	b _0800BBDE
-	.align 2, 0
-_0800BB68: .4byte 0x030041E0
-_0800BB6C:
-	movs r2, #0
-	ldrh r0, [r6]
-	ldr r4, _0800BBA0
-	adds r1, r6, #2
-	ldr r3, _0800BBA4
-	cmp r0, r4
-	beq _0800BB8C
-_0800BB7A:
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #0xf
-	bhi _0800BB8C
-	ldrh r0, [r1]
-	adds r1, #2
-	cmp r0, r4
-	bne _0800BB7A
-_0800BB8C:
-	cmp r2, #0x10
-	bne _0800BBA8
-	movs r0, #4
-	strh r0, [r3, #0x14]
-	movs r0, #0xf3
-	movs r1, #1
-	bl sub_0800CDC8
-	movs r0, #4
-	b _0800BBDE
-	.align 2, 0
-_0800BBA0: .4byte 0x0000FFFF
-_0800BBA4: .4byte 0x030041E0
-_0800BBA8:
-	cmp r5, #1
-	bls _0800BBB6
-	movs r0, #1
-	strb r0, [r3, #7]
-	movs r5, #1
-	movs r7, #0
-	b _0800BBBA
-_0800BBB6:
-	movs r0, #0
-	strb r0, [r3, #7]
-_0800BBBA:
-	cmp r5, #0
-	beq _0800BBC4
-	movs r0, #5
-	strb r0, [r3, #4]
-	b _0800BBD2
-_0800BBC4:
-	movs r0, #9
-	strb r0, [r3, #4]
-	ldrb r0, [r3, #0xb]
-	cmp r0, #0
-	beq _0800BBD2
-	movs r0, #2
-	strb r0, [r3, #0xb]
-_0800BBD2:
-	strb r5, [r3, #6]
-	strh r7, [r3, #0x1a]
-	mov r0, r8
-	strh r0, [r3, #0x26]
-	str r6, [r3, #0x20]
-	movs r0, #0
-_0800BBDE:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0800BB10
-
 	thumb_func_start sub_0800BBE8
 sub_0800BBE8: @ 0x0800BBE8
 	push {r4, r5, r6, r7, lr}
@@ -527,7 +193,7 @@ sub_0800BD38: @ 0x0800BD38
 	adds r5, r1, #0
 	cmp r0, #0
 	beq _0800BD58
-	bl sub_0800BABC
+	bl rfu_LMAN_clearVariables
 	movs r0, #0x17
 	strb r0, [r5, #4]
 	b _0800BE22
@@ -2001,7 +1667,7 @@ _0800C8DC:
 	mov r4, r8
 	cmp r4, #0x3d
 	bne _0800C8FA
-	bl sub_0800BA5C
+	bl rfu_LMAN_endManager
 _0800C8FA:
 	cmp r6, #0
 	beq _0800C94E
@@ -5439,7 +5105,7 @@ _0800E234: @ jump table
 	.4byte _0800E2EC @ case 18
 _0800E280:
 	ldr r0, _0800E29C
-	bl sub_0800BA88
+	bl rfu_LMAN_initializeRFU
 	ldr r0, _0800E2A0
 	movs r2, #1
 	strh r2, [r0, #4]
@@ -5460,7 +5126,7 @@ _0800E2A8:
 	ldr r3, _0800E2D0
 	movs r1, #0
 	movs r2, #0xf0
-	bl sub_0800BB10
+	bl rfu_LMAN_establishConnection
 	movs r0, #3
 	strh r0, [r4, #4]
 	ldr r1, _0800E2D4
@@ -5680,7 +5346,7 @@ _0800E434: @ jump table
 	.4byte _0800E500 @ case 12
 _0800E468:
 	ldr r0, _0800E478
-	bl sub_0800BA88
+	bl rfu_LMAN_initializeRFU
 	ldr r0, _0800E47C
 	movs r2, #1
 	strh r2, [r0, #4]
@@ -5693,7 +5359,7 @@ _0800E480:
 	ldr r3, _0800E4A0
 	movs r1, #0
 	movs r2, #0xf0
-	bl sub_0800BB10
+	bl rfu_LMAN_establishConnection
 	movs r2, #7
 	strh r2, [r7, #4]
 _0800E490:
@@ -5940,7 +5606,7 @@ _0800E660: @ jump table
 	.4byte _0800E7BA @ case 18
 _0800E6AC:
 	ldr r0, _0800E6C8
-	bl sub_0800BA88
+	bl rfu_LMAN_initializeRFU
 	ldr r0, _0800E6CC
 	movs r2, #1
 	strh r2, [r0, #4]
@@ -5960,7 +5626,7 @@ _0800E6D4:
 	movs r0, #2
 	movs r1, #0
 	movs r2, #0xf0
-	bl sub_0800BB10
+	bl rfu_LMAN_establishConnection
 	ldr r0, _0800E6F4
 	bl sub_0800CFE8
 	ldr r1, _0800E6F8
@@ -6073,7 +5739,7 @@ sub_0800E7D0: @ 0x0800E7D0
 	movs r0, #1
 	movs r1, #0
 	movs r2, #0xf0
-	bl sub_0800BB10
+	bl rfu_LMAN_establishConnection
 	pop {r0}
 	bx r0
 	.align 2, 0
@@ -6138,7 +5804,7 @@ _0800E7FE:
 	bl rfu_UNI_clearRecvNewDataFlag
 _0800E858:
 	movs r0, #1
-	bl rfu_REQ_sendData_wrapper
+	bl rfu_LMAN_REQ_sendData
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -6168,7 +5834,7 @@ _0800E890: .4byte 0x00000993
 	thumb_func_start LinkRfu_Shutdown
 LinkRfu_Shutdown: @ 0x0800E894
 	push {r4, r5, r6, lr}
-	bl sub_0800BB04
+	bl rfu_LMAN_powerDownRFU
 	ldr r4, _0800E8A8
 	ldrb r0, [r4, #0xc]
 	cmp r0, #1
@@ -6621,7 +6287,7 @@ sub_0800EBB8: @ 0x0800EBB8
 	bl rfu_REQ_recvData
 	bl rfu_waitREQComplete
 	movs r0, #0
-	bl rfu_REQ_sendData_wrapper
+	bl rfu_LMAN_REQ_sendData
 	b _0800EC92
 	.align 2, 0
 _0800EBD4: .4byte 0x030050A0
@@ -6695,7 +6361,7 @@ _0800EC68:
 	ldrb r0, [r0]
 	bl rfu_UNI_readySendData
 	movs r0, #1
-	bl rfu_REQ_sendData_wrapper
+	bl rfu_LMAN_REQ_sendData
 	b _0800EC8C
 	.align 2, 0
 _0800EC80: .4byte 0x030050A0
@@ -8754,7 +8420,7 @@ _0800FC18: .4byte 0x030050A0
 sub_0800FC1C: @ 0x0800FC1C
 	push {lr}
 	bl rfu_clearAllSlot
-	bl sub_0800BB04
+	bl rfu_LMAN_powerDownRFU
 	ldr r1, _0800FC40
 	movs r0, #0
 	strb r0, [r1]
@@ -10539,7 +10205,7 @@ rfu_REQ_recvData_then_sendData: @ 0x08010990
 	bl rfu_REQ_recvData
 	bl rfu_waitREQComplete
 	movs r0, #0
-	bl rfu_REQ_sendData_wrapper
+	bl rfu_LMAN_REQ_sendData
 _080109A8:
 	pop {r0}
 	bx r0
@@ -12336,7 +12002,7 @@ sub_080116FC: @ 0x080116FC
 	bl sub_08010A38
 	ldr r0, _08011738
 	movs r1, #0
-	bl sub_0800BA08
+	bl rfu_LMAN_initializeManager
 	ldr r2, _0801173C
 	adds r1, r2, #0
 	ldr r0, _08011740
@@ -12370,7 +12036,7 @@ sub_08011748: @ 0x08011748
 	bl sub_08010A38
 	ldr r0, _08011768
 	ldr r1, _0801176C
-	bl sub_0800BA08
+	bl rfu_LMAN_initializeManager
 	bl sub_0800E9C0
 	pop {r0}
 	bx r0
@@ -12390,7 +12056,7 @@ sub_08011770: @ 0x08011770
 	bl sub_08010A38
 	ldr r0, _080117B4
 	movs r1, #0
-	bl sub_0800BA08
+	bl rfu_LMAN_initializeManager
 	ldr r2, _080117B8
 	adds r1, r2, #0
 	ldr r0, _080117BC

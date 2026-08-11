@@ -1059,6 +1059,14 @@ SECTIONS {
         src/link.o(.text.SendRecvDone);
         src/link.o(.text.ResetSendBuffer);
         src/link.o(.text.ResetRecvBuffer);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_REQBN_softReset_and_checkID);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_REQ_sendData);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_initializeManager);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_endManager);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_initializeRFU);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_clearVariables);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_powerDownRFU);
+        src/AgbRfu_LinkManager.o(.text.rfu_LMAN_establishConnection);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
