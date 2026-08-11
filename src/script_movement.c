@@ -23,7 +23,6 @@ static void ScriptMovement_UnfreezeActiveObjects(u8 taskId);
 static void ScriptMovement_MoveObjects(u8 taskId);
 static void ScriptMovement_TakeStep(u8 taskId, u8 moveScrId, u8 objEventId, const u8 *movementScript);
 
-extern u32 gBitTable[];
 extern const u8 *sMovementScripts[];
 
 bool8 ScriptMovement_StartObjectMovementScript(u8 localId, u8 mapNum, u8 mapGroup, const u8 *movementScript)

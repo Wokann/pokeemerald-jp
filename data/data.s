@@ -1,131 +1,131 @@
 	.section .rodata
 	.globl gUnknown_829BDA4
 gUnknown_829BDA4: @ 0x829BDA4
-	.incbin "build/data/data.bin", 0x0, 0x1
+	.incbin "baserom_jp.gba", 0x29bda4, 0x1
 
 	.globl gUnknown_829BDA5
 gUnknown_829BDA5: @ 0x829BDA5
-	.incbin "build/data/data.bin", 0x1, 0x17
+	.incbin "baserom_jp.gba", 0x29bda5, 0x17
 
 	.globl gUnknown_829BDBC
 gUnknown_829BDBC: @ 0x829BDBC
-	.incbin "build/data/data.bin", 0x18, 0x38
+	.incbin "baserom_jp.gba", 0x29bdbc, 0x38
 
 	.globl gUnknown_829BDF4
 gUnknown_829BDF4: @ 0x829BDF4
-	.incbin "build/data/data.bin", 0x50, 0x14
+	.incbin "baserom_jp.gba", 0x29bdf4, 0x14
 
 	.globl gUnknown_829BE08
 gUnknown_829BE08: @ 0x829BE08
-	.incbin "build/data/data.bin", 0x64, 0x4
+	.incbin "baserom_jp.gba", 0x29be08, 0x4
 
 	.globl gUnknown_829BE0C
 gUnknown_829BE0C: @ 0x829BE0C
-	.incbin "build/data/data.bin", 0x68, 0xc
+	.incbin "baserom_jp.gba", 0x29be0c, 0xc
 
 	.globl gUnknown_829BE18
 gUnknown_829BE18: @ 0x829BE18
-	.incbin "build/data/data.bin", 0x74, 0x28
+	.incbin "baserom_jp.gba", 0x29be18, 0x28
 
 	.globl gUnknown_829BE40
 gUnknown_829BE40: @ 0x829BE40
-	.incbin "build/data/data.bin", 0x9c, 0x14
+	.incbin "baserom_jp.gba", 0x29be40, 0x14
 
 	.globl gUnknown_829BE54
 gUnknown_829BE54: @ 0x829BE54
-	.incbin "build/data/data.bin", 0xb0, 0x2c
+	.incbin "baserom_jp.gba", 0x29be54, 0x2c
 
 	.globl gUnknown_829BE80
 gUnknown_829BE80: @ 0x829BE80
-	.incbin "build/data/data.bin", 0xdc, 0x2c
+	.incbin "baserom_jp.gba", 0x29be80, 0x2c
 
 	.globl gUnknown_829BEAC
 gUnknown_829BEAC: @ 0x829BEAC
-	.incbin "build/data/data.bin", 0x108, 0x4
+	.incbin "baserom_jp.gba", 0x29beac, 0x4
 
 	.globl gUnknown_829BEB0
 gUnknown_829BEB0: @ 0x829BEB0
-	.incbin "build/data/data.bin", 0x10c, 0x8
+	.incbin "baserom_jp.gba", 0x29beb0, 0x8
 
 	.globl gUnknown_829BEB8
 gUnknown_829BEB8: @ 0x829BEB8
-	.incbin "build/data/data.bin", 0x114, 0x100
+	.incbin "baserom_jp.gba", 0x29beb8, 0x100
 
 	.globl gUnknown_829BFB8
 gUnknown_829BFB8: @ 0x829BFB8
-	.incbin "build/data/data.bin", 0x214, 0xc0
+	.incbin "baserom_jp.gba", 0x29bfb8, 0xc0
 
 	.globl gUnknown_829C078
 gUnknown_829C078: @ 0x829C078
-	.incbin "build/data/data.bin", 0x2d4, 0x5c0
+	.incbin "baserom_jp.gba", 0x29c078, 0x5c0
 
 	.globl gUnknown_829C638
 gUnknown_829C638: @ 0x829C638
-	.incbin "build/data/data.bin", 0x894, 0x4
+	.incbin "baserom_jp.gba", 0x29c638, 0x4
 
 	.globl gUnknown_829C63C
 gUnknown_829C63C: @ 0x829C63C
-	.incbin "build/data/data.bin", 0x898, 0x4
+	.incbin "baserom_jp.gba", 0x29c63c, 0x4
 
 	.globl gUnknown_829C640
 gUnknown_829C640: @ 0x829C640
-	.incbin "build/data/data.bin", 0x89c, 0x30
+	.incbin "baserom_jp.gba", 0x29c640, 0x30
 
 	.globl gUnknown_829C670
 gUnknown_829C670: @ 0x829C670
-	.incbin "build/data/data.bin", 0x8cc, 0x34
+	.incbin "baserom_jp.gba", 0x29c670, 0x34
 
 	.globl gUnknown_829C6A4
 gUnknown_829C6A4: @ 0x829C6A4
-	.incbin "build/data/data.bin", 0x900, 0x800
+	.incbin "baserom_jp.gba", 0x29c6a4, 0x800
 
 	.globl gUnknown_829CEA4
 gUnknown_829CEA4: @ 0x829CEA4
-	.incbin "build/data/data.bin", 0x1100, 0x60
+	.incbin "baserom_jp.gba", 0x29cea4, 0x60
 
 	.globl gUnknown_829CF04
 gUnknown_829CF04: @ 0x829CF04
-	.incbin "build/data/data.bin", 0x1160, 0x10
+	.incbin "baserom_jp.gba", 0x29cf04, 0x10
 
 	.globl gUnknown_829CF14
 gUnknown_829CF14: @ 0x829CF14
-	.incbin "build/data/data.bin", 0x1170, 0x4000
+	.incbin "baserom_jp.gba", 0x29cf14, 0x4000
 
 	.globl gUnknown_82A0F14
 gUnknown_82A0F14: @ 0x82A0F14
-	.incbin "build/data/data.bin", 0x5170, 0x4000
+	.incbin "baserom_jp.gba", 0x2a0f14, 0x4000
 
 	.globl gUnknown_82A4F14
 gUnknown_82A4F14: @ 0x82A4F14
-	.incbin "build/data/data.bin", 0x9170, 0x8000
+	.incbin "baserom_jp.gba", 0x2a4f14, 0x8000
 
 	.globl gUnknown_82ACF14
 gUnknown_82ACF14: @ 0x82ACF14
-	.incbin "build/data/data.bin", 0x11170, 0x118
+	.incbin "baserom_jp.gba", 0x2acf14, 0x118
 
 	.globl gUnknown_82AD02C
 gUnknown_82AD02C: @ 0x82AD02C
-	.incbin "build/data/data.bin", 0x11288, 0x8000
+	.incbin "baserom_jp.gba", 0x2ad02c, 0x8000
 
 	.globl gUnknown_82B502C
 gUnknown_82B502C: @ 0x82B502C
-	.incbin "build/data/data.bin", 0x19288, 0x118
+	.incbin "baserom_jp.gba", 0x2b502c, 0x118
 
 	.globl gUnknown_82B5144
 gUnknown_82B5144: @ 0x82B5144
-	.incbin "build/data/data.bin", 0x193a0, 0x8000
+	.incbin "baserom_jp.gba", 0x2b5144, 0x8000
 
 	.globl gUnknown_82BD144
 gUnknown_82BD144: @ 0x82BD144
-	.incbin "build/data/data.bin", 0x213a0, 0x118
+	.incbin "baserom_jp.gba", 0x2bd144, 0x118
 
 	.globl gUnknown_82BD25C
 gUnknown_82BD25C: @ 0x82BD25C
-	.incbin "build/data/data.bin", 0x214b8, 0x203d
+	.incbin "baserom_jp.gba", 0x2bd25c, 0x203d
 
 	.globl gUnknown_82BF299
 gUnknown_82BF299: @ 0x82BF299
-	.incbin "build/data/data.bin", 0x234f5, 0x1b
+	.incbin "baserom_jp.gba", 0x2bf299, 0x1b
 
 	.globl gUnknown_82BF2B4
 gUnknown_82BF2B4: @ 0x82BF2B4
@@ -137,59 +137,59 @@ gUnknown_82BF2B4: @ 0x82BF2B4
 
 	.globl gUnknown_82BF2F8
 gUnknown_82BF2F8: @ 0x82BF2F8
-	.incbin "build/data/data.bin", 0x23554, 0xc
+	.incbin "baserom_jp.gba", 0x2bf2f8, 0xc
 
 	.globl gUnknown_82BF304
 gUnknown_82BF304: @ 0x82BF304
-	.incbin "build/data/data.bin", 0x23560, 0xc
+	.incbin "baserom_jp.gba", 0x2bf304, 0xc
 
 	.globl gUnknown_82BF310
 gUnknown_82BF310: @ 0x82BF310
-	.incbin "build/data/data.bin", 0x2356c, 0x4
+	.incbin "baserom_jp.gba", 0x2bf310, 0x4
 
 	.globl gUnknown_82BF314
 gUnknown_82BF314: @ 0x82BF314
-	.incbin "build/data/data.bin", 0x23570, 0x18
+	.incbin "baserom_jp.gba", 0x2bf314, 0x18
 
 	.globl gUnknown_82BF32C
 gUnknown_82BF32C: @ 0x82BF32C
-	.incbin "build/data/data.bin", 0x23588, 0x8
+	.incbin "baserom_jp.gba", 0x2bf32c, 0x8
 
 	.globl gUnknown_82BF334
 gUnknown_82BF334: @ 0x82BF334
-	.incbin "build/data/data.bin", 0x23590, 0x8
+	.incbin "baserom_jp.gba", 0x2bf334, 0x8
 
 	.globl gUnknown_82BF33C
 gUnknown_82BF33C: @ 0x82BF33C
-	.incbin "build/data/data.bin", 0x23598, 0x10
+	.incbin "baserom_jp.gba", 0x2bf33c, 0x10
 
 	.globl gUnknown_82BF34C
 gUnknown_82BF34C: @ 0x82BF34C
-	.incbin "build/data/data.bin", 0x235a8, 0x10
+	.incbin "baserom_jp.gba", 0x2bf34c, 0x10
 
 	.globl gUnknown_82BF35C
 gUnknown_82BF35C: @ 0x82BF35C
-	.incbin "build/data/data.bin", 0x235b8, 0x60
+	.incbin "baserom_jp.gba", 0x2bf35c, 0x60
 
 	.globl gUnknown_82BF3BC
 gUnknown_82BF3BC: @ 0x82BF3BC
-	.incbin "build/data/data.bin", 0x23618, 0x70
+	.incbin "baserom_jp.gba", 0x2bf3bc, 0x70
 
 	.globl gUnknown_82BF42C
 gUnknown_82BF42C: @ 0x82BF42C
-	.incbin "build/data/data.bin", 0x23688, 0x8
+	.incbin "baserom_jp.gba", 0x2bf42c, 0x8
 
 	.globl gUnknown_82BF434
 gUnknown_82BF434: @ 0x82BF434
-	.incbin "build/data/data.bin", 0x23690, 0x8
+	.incbin "baserom_jp.gba", 0x2bf434, 0x8
 
 	.globl gUnknown_82BF43C
 gUnknown_82BF43C: @ 0x82BF43C
-	.incbin "build/data/data.bin", 0x23698, 0x10
+	.incbin "baserom_jp.gba", 0x2bf43c, 0x10
 
 	.globl gUnknown_82BF44C
 gUnknown_82BF44C: @ 0x82BF44C
-	.incbin "build/data/data.bin", 0x236a8, 0x28
+	.incbin "baserom_jp.gba", 0x2bf44c, 0x28
 
 	.globl gUnknown_82BF474
 gUnknown_82BF474: @ 0x82BF474
@@ -197,27 +197,27 @@ gUnknown_82BF474: @ 0x82BF474
 
 	.globl gUnknown_82BF478
 gUnknown_82BF478: @ 0x82BF478
-	.incbin "build/data/data.bin", 0x236d4, 0x8
+	.incbin "baserom_jp.gba", 0x2bf478, 0x8
 
 	.globl gUnknown_82BF480
 gUnknown_82BF480: @ 0x82BF480
-	.incbin "build/data/data.bin", 0x236dc, 0x38
+	.incbin "baserom_jp.gba", 0x2bf480, 0x38
 
 	.globl gUnknown_82BF4B8
 gUnknown_82BF4B8: @ 0x82BF4B8
-	.incbin "build/data/data.bin", 0x23714, 0x20
+	.incbin "baserom_jp.gba", 0x2bf4b8, 0x20
 
 	.globl gUnknown_82BF4D8
 gUnknown_82BF4D8: @ 0x82BF4D8
-	.incbin "build/data/data.bin", 0x23734, 0x4a8
+	.incbin "baserom_jp.gba", 0x2bf4d8, 0x4a8
 
 	.globl gUnknown_82BF980
 gUnknown_82BF980: @ 0x82BF980
-	.incbin "build/data/data.bin", 0x23bdc, 0x1ec
+	.incbin "baserom_jp.gba", 0x2bf980, 0x1ec
 
 	.globl gUnknown_82BFB6C
 gUnknown_82BFB6C: @ 0x82BFB6C
-	.incbin "build/data/data.bin", 0x23dc8, 0x20
+	.incbin "baserom_jp.gba", 0x2bfb6c, 0x20
 
 	.globl gUnknown_82BFB8C
 gUnknown_82BFB8C: @ 0x82BFB8C
@@ -306,107 +306,107 @@ gUnknown_82BFE9F: @ 0x82BFE9F
 
 	.globl gUnknown_82BFEB8
 gUnknown_82BFEB8: @ 0x82BFEB8
-	.incbin "build/data/data.bin", 0x24114, 0x40
+	.incbin "baserom_jp.gba", 0x2bfeb8, 0x40
 
 	.globl gUnknown_82BFEF8
 gUnknown_82BFEF8: @ 0x82BFEF8
-	.incbin "build/data/data.bin", 0x24154, 0x28
+	.incbin "baserom_jp.gba", 0x2bfef8, 0x28
 
 	.globl gUnknown_82BFF20
 gUnknown_82BFF20: @ 0x82BFF20
-	.incbin "build/data/data.bin", 0x2417c, 0x4
+	.incbin "baserom_jp.gba", 0x2bff20, 0x4
 
 	.globl gUnknown_82BFF24
 gUnknown_82BFF24: @ 0x82BFF24
-	.incbin "build/data/data.bin", 0x24180, 0x10
+	.incbin "baserom_jp.gba", 0x2bff24, 0x10
 
 	.globl gUnknown_82BFF34
 gUnknown_82BFF34: @ 0x82BFF34
-	.incbin "build/data/data.bin", 0x24190, 0x18
+	.incbin "baserom_jp.gba", 0x2bff34, 0x18
 
 	.globl gUnknown_82BFF4C
 gUnknown_82BFF4C: @ 0x82BFF4C
-	.incbin "build/data/data.bin", 0x241a8, 0x8
+	.incbin "baserom_jp.gba", 0x2bff4c, 0x8
 
 	.globl gUnknown_82BFF54
 gUnknown_82BFF54: @ 0x82BFF54
-	.incbin "build/data/data.bin", 0x241b0, 0x20
+	.incbin "baserom_jp.gba", 0x2bff54, 0x20
 
 	.globl gUnknown_82BFF74
 gUnknown_82BFF74: @ 0x82BFF74
-	.incbin "build/data/data.bin", 0x241d0, 0x14c
+	.incbin "baserom_jp.gba", 0x2bff74, 0x14c
 
 	.globl gUnknown_82C00C0
 gUnknown_82C00C0: @ 0x82C00C0
-	.incbin "build/data/data.bin", 0x2431c, 0x100
+	.incbin "baserom_jp.gba", 0x2c00c0, 0x100
 
 	.globl gUnknown_82C01C0
 gUnknown_82C01C0: @ 0x82C01C0
-	.incbin "build/data/data.bin", 0x2441c, 0x100
+	.incbin "baserom_jp.gba", 0x2c01c0, 0x100
 
 	.globl gUnknown_82C02C0
 gUnknown_82C02C0: @ 0x82C02C0
-	.incbin "build/data/data.bin", 0x2451c, 0x70
+	.incbin "baserom_jp.gba", 0x2c02c0, 0x70
 
 	.globl gUnknown_82C0330
 gUnknown_82C0330: @ 0x82C0330
-	.incbin "build/data/data.bin", 0x2458c, 0x8
+	.incbin "baserom_jp.gba", 0x2c0330, 0x8
 
 	.globl gUnknown_82C0338
 gUnknown_82C0338: @ 0x82C0338
-	.incbin "build/data/data.bin", 0x24594, 0x8
+	.incbin "baserom_jp.gba", 0x2c0338, 0x8
 
 	.globl gUnknown_82C0340
 gUnknown_82C0340: @ 0x82C0340
-	.incbin "build/data/data.bin", 0x2459c, 0x18
+	.incbin "baserom_jp.gba", 0x2c0340, 0x18
 
 	.globl gUnknown_82C0358
 gUnknown_82C0358: @ 0x82C0358
-	.incbin "build/data/data.bin", 0x245b4, 0x18
+	.incbin "baserom_jp.gba", 0x2c0358, 0x18
 
 	.globl gUnknown_82C0370
 gUnknown_82C0370: @ 0x82C0370
-	.incbin "build/data/data.bin", 0x245cc, 0x8
+	.incbin "baserom_jp.gba", 0x2c0370, 0x8
 
 	.globl gUnknown_82C0378
 gUnknown_82C0378: @ 0x82C0378
-	.incbin "build/data/data.bin", 0x245d4, 0x64
+	.incbin "baserom_jp.gba", 0x2c0378, 0x64
 
 	.globl gUnknown_82C03DC
 gUnknown_82C03DC: @ 0x82C03DC
-	.incbin "build/data/data.bin", 0x24638, 0x9
+	.incbin "baserom_jp.gba", 0x2c03dc, 0x9
 
 	.globl gUnknown_82C03E5
 gUnknown_82C03E5: @ 0x82C03E5
-	.incbin "build/data/data.bin", 0x24641, 0x10
+	.incbin "baserom_jp.gba", 0x2c03e5, 0x10
 
 	.globl gUnknown_82C03F5
 gUnknown_82C03F5: @ 0x82C03F5
-	.incbin "build/data/data.bin", 0x24651, 0x13
+	.incbin "baserom_jp.gba", 0x2c03f5, 0x13
 
 	.globl gUnknown_82C0408
 gUnknown_82C0408: @ 0x82C0408
-	.incbin "build/data/data.bin", 0x24664, 0x28
+	.incbin "baserom_jp.gba", 0x2c0408, 0x28
 
 	.globl gUnknown_82C0430
 gUnknown_82C0430: @ 0x82C0430
-	.incbin "build/data/data.bin", 0x2468c, 0x100
+	.incbin "baserom_jp.gba", 0x2c0430, 0x100
 
 	.globl gUnknown_82C0530
 gUnknown_82C0530: @ 0x82C0530
-	.incbin "build/data/data.bin", 0x2478c, 0xc
+	.incbin "baserom_jp.gba", 0x2c0530, 0xc
 
 	.globl gUnknown_82C053C
 gUnknown_82C053C: @ 0x82C053C
-	.incbin "build/data/data.bin", 0x24798, 0x8
+	.incbin "baserom_jp.gba", 0x2c053c, 0x8
 
 	.globl gUnknown_82C0544
 gUnknown_82C0544: @ 0x82C0544
-	.incbin "build/data/data.bin", 0x247a0, 0x14
+	.incbin "baserom_jp.gba", 0x2c0544, 0x14
 
 	.globl gUnknown_82C0558
 gUnknown_82C0558: @ 0x82C0558
-	.incbin "build/data/data.bin", 0x247b4, 0xc
+	.incbin "baserom_jp.gba", 0x2c0558, 0xc
 
 	.globl gUnknown_82C0564
 gUnknown_82C0564: @ 0x82C0564
@@ -414,47 +414,47 @@ gUnknown_82C0564: @ 0x82C0564
 
 	.globl gUnknown_82C0578
 gUnknown_82C0578: @ 0x82C0578
-	.incbin "build/data/data.bin", 0x247d4, 0x18
+	.incbin "baserom_jp.gba", 0x2c0578, 0x18
 
 	.globl gUnknown_82C0590
 gUnknown_82C0590: @ 0x82C0590
-	.incbin "build/data/data.bin", 0x247ec, 0x18
+	.incbin "baserom_jp.gba", 0x2c0590, 0x18
 
 	.globl gUnknown_82C05A8
 gUnknown_82C05A8: @ 0x82C05A8
-	.incbin "build/data/data.bin", 0x24804, 0x1f
+	.incbin "baserom_jp.gba", 0x2c05a8, 0x1f
 
 	.globl gUnknown_82C05C7
 gUnknown_82C05C7: @ 0x82C05C7
-	.incbin "build/data/data.bin", 0x24823, 0x10
+	.incbin "baserom_jp.gba", 0x2c05c7, 0x10
 
 	.globl gUnknown_82C05D7
 gUnknown_82C05D7: @ 0x82C05D7
-	.incbin "build/data/data.bin", 0x24833, 0xd
+	.incbin "baserom_jp.gba", 0x2c05d7, 0xd
 
 	.globl gUnknown_82C05E4
 gUnknown_82C05E4: @ 0x82C05E4
-	.incbin "build/data/data.bin", 0x24840, 0x60
+	.incbin "baserom_jp.gba", 0x2c05e4, 0x60
 
 	.globl gUnknown_82C0644
 gUnknown_82C0644: @ 0x82C0644
-	.incbin "build/data/data.bin", 0x248a0, 0x4
+	.incbin "baserom_jp.gba", 0x2c0644, 0x4
 
 	.globl gUnknown_82C0648
 gUnknown_82C0648: @ 0x82C0648
-	.incbin "build/data/data.bin", 0x248a4, 0x4
+	.incbin "baserom_jp.gba", 0x2c0648, 0x4
 
 	.globl gUnknown_82C064C
 gUnknown_82C064C: @ 0x82C064C
-	.incbin "build/data/data.bin", 0x248a8, 0x20
+	.incbin "baserom_jp.gba", 0x2c064c, 0x20
 
 	.globl gUnknown_82C066C
 gUnknown_82C066C: @ 0x82C066C
-	.incbin "build/data/data.bin", 0x248c8, 0x30
+	.incbin "baserom_jp.gba", 0x2c066c, 0x30
 
 	.globl gUnknown_82C069C
 gUnknown_82C069C: @ 0x82C069C
-	.incbin "build/data/data.bin", 0x248f8, 0x1c
+	.incbin "baserom_jp.gba", 0x2c069c, 0x1c
 
 	.globl gUnknown_82C06B8
 gUnknown_82C06B8: @ 0x82C06B8
@@ -483,31 +483,31 @@ gUnknown_82C06B8: @ 0x82C06B8
 
 	.globl gUnknown_82C0840
 gUnknown_82C0840: @ 0x82C0840
-	.incbin "build/data/data.bin", 0x24a9c, 0x64
+	.incbin "baserom_jp.gba", 0x2c0840, 0x64
 
 	.globl gUnknown_82C08A4
 gUnknown_82C08A4: @ 0x82C08A4
-	.incbin "build/data/data.bin", 0x24b00, 0x20
+	.incbin "baserom_jp.gba", 0x2c08a4, 0x20
 
 	.globl gUnknown_82C08C4
 gUnknown_82C08C4: @ 0x82C08C4
-	.incbin "build/data/data.bin", 0x24b20, 0x18
+	.incbin "baserom_jp.gba", 0x2c08c4, 0x18
 
 	.globl gUnknown_82C08DC
 gUnknown_82C08DC: @ 0x82C08DC
-	.incbin "build/data/data.bin", 0x24b38, 0x1c
+	.incbin "baserom_jp.gba", 0x2c08dc, 0x1c
 
 	.globl gUnknown_82C08F8
 gUnknown_82C08F8: @ 0x82C08F8
-	.incbin "build/data/data.bin", 0x24b54, 0x1c
+	.incbin "baserom_jp.gba", 0x2c08f8, 0x1c
 
 	.globl gUnknown_82C0914
 gUnknown_82C0914: @ 0x82C0914
-	.incbin "build/data/data.bin", 0x24b70, 0x18
+	.incbin "baserom_jp.gba", 0x2c0914, 0x18
 
 	.globl gUnknown_82C092C
 gUnknown_82C092C: @ 0x82C092C
-	.incbin "build/data/data.bin", 0x24b88, 0x1c
+	.incbin "baserom_jp.gba", 0x2c092c, 0x1c
 
 	.globl gUnknown_82C0948
 gUnknown_82C0948: @ 0x82C0948
@@ -519,39 +519,39 @@ gUnknown_82C0948: @ 0x82C0948
 
 	.globl gUnknown_82C09A0
 gUnknown_82C09A0: @ 0x82C09A0
-	.incbin "build/data/data.bin", 0x24bfc, 0x8
+	.incbin "baserom_jp.gba", 0x2c09a0, 0x8
 
 	.globl gUnknown_82C09A8
 gUnknown_82C09A8: @ 0x82C09A8
-	.incbin "build/data/data.bin", 0x24c04, 0x38
+	.incbin "baserom_jp.gba", 0x2c09a8, 0x38
 
 	.globl gUnknown_82C09E0
 gUnknown_82C09E0: @ 0x82C09E0
-	.incbin "build/data/data.bin", 0x24c3c, 0x18
+	.incbin "baserom_jp.gba", 0x2c09e0, 0x18
 
 	.globl gUnknown_82C09F8
 gUnknown_82C09F8: @ 0x82C09F8
-	.incbin "build/data/data.bin", 0x24c54, 0x18
+	.incbin "baserom_jp.gba", 0x2c09f8, 0x18
 
 	.globl gUnknown_82C0A10
 gUnknown_82C0A10: @ 0x82C0A10
-	.incbin "build/data/data.bin", 0x24c6c, 0x3c
+	.incbin "baserom_jp.gba", 0x2c0a10, 0x3c
 
 	.globl gUnknown_82C0A4C
 gUnknown_82C0A4C: @ 0x82C0A4C
-	.incbin "build/data/data.bin", 0x24ca8, 0x18
+	.incbin "baserom_jp.gba", 0x2c0a4c, 0x18
 
 	.globl gUnknown_82C0A64
 gUnknown_82C0A64: @ 0x82C0A64
-	.incbin "build/data/data.bin", 0x24cc0, 0x20
+	.incbin "baserom_jp.gba", 0x2c0a64, 0x20
 
 	.globl gUnknown_82C0A84
 gUnknown_82C0A84: @ 0x82C0A84
-	.incbin "build/data/data.bin", 0x24ce0, 0x28
+	.incbin "baserom_jp.gba", 0x2c0a84, 0x28
 
 	.globl gUnknown_82C0AAC
 gUnknown_82C0AAC: @ 0x82C0AAC
-	.incbin "build/data/data.bin", 0x24d08, 0x1c
+	.incbin "baserom_jp.gba", 0x2c0aac, 0x1c
 
 	.globl gUnknown_82C0AC8
 gUnknown_82C0AC8: @ 0x82C0AC8
@@ -560,23 +560,23 @@ gUnknown_82C0AC8: @ 0x82C0AC8
 
 	.globl gUnknown_82C0AE4
 gUnknown_82C0AE4: @ 0x82C0AE4
-	.incbin "build/data/data.bin", 0x24d40, 0x38
+	.incbin "baserom_jp.gba", 0x2c0ae4, 0x38
 
 	.globl gUnknown_82C0B1C
 gUnknown_82C0B1C: @ 0x82C0B1C
-	.incbin "build/data/data.bin", 0x24d78, 0x64
+	.incbin "baserom_jp.gba", 0x2c0b1c, 0x64
 
 	.globl gUnknown_82C0B80
 gUnknown_82C0B80: @ 0x82C0B80
-	.incbin "build/data/data.bin", 0x24ddc, 0x158
+	.incbin "baserom_jp.gba", 0x2c0b80, 0x158
 
 	.globl gUnknown_82C0CD8
 gUnknown_82C0CD8: @ 0x82C0CD8
-	.incbin "build/data/data.bin", 0x24f34, 0x64
+	.incbin "baserom_jp.gba", 0x2c0cd8, 0x64
 
 	.globl gUnknown_82C0D3C
 gUnknown_82C0D3C: @ 0x82C0D3C
-	.incbin "build/data/data.bin", 0x24f98, 0x7c
+	.incbin "baserom_jp.gba", 0x2c0d3c, 0x7c
 
 	.globl gUnknown_82C0DB8
 gUnknown_82C0DB8: @ 0x82C0DB8
@@ -586,23 +586,23 @@ gUnknown_82C0DB8: @ 0x82C0DB8
 
 	.globl gUnknown_82C0DE4
 gUnknown_82C0DE4: @ 0x82C0DE4
-	.incbin "build/data/data.bin", 0x25040, 0x8
+	.incbin "baserom_jp.gba", 0x2c0de4, 0x8
 
 	.globl gUnknown_82C0DEC
 gUnknown_82C0DEC: @ 0x82C0DEC
-	.incbin "build/data/data.bin", 0x25048, 0x30
+	.incbin "baserom_jp.gba", 0x2c0dec, 0x30
 
 	.globl gUnknown_82C0E1C
 gUnknown_82C0E1C: @ 0x82C0E1C
-	.incbin "build/data/data.bin", 0x25078, 0x24
+	.incbin "baserom_jp.gba", 0x2c0e1c, 0x24
 
 	.globl gUnknown_82C0E40
 gUnknown_82C0E40: @ 0x82C0E40
-	.incbin "build/data/data.bin", 0x2509c, 0x28
+	.incbin "baserom_jp.gba", 0x2c0e40, 0x28
 
 	.globl gUnknown_82C0E68
 gUnknown_82C0E68: @ 0x82C0E68
-	.incbin "build/data/data.bin", 0x250c4, 0x40
+	.incbin "baserom_jp.gba", 0x2c0e68, 0x40
 
 	.globl gUnknown_82C0EA8
 gUnknown_82C0EA8: @ 0x82C0EA8
@@ -617,7 +617,7 @@ gUnknown_82C0ED4: @ 0x82C0ED4
 
 	.globl gUnknown_82C0EE0
 gUnknown_82C0EE0: @ 0x82C0EE0
-	.incbin "build/data/data.bin", 0x2513c, 0x14
+	.incbin "baserom_jp.gba", 0x2c0ee0, 0x14
 
 	.globl gUnknown_82C0EF4
 gUnknown_82C0EF4: @ 0x82C0EF4
@@ -626,39 +626,39 @@ gUnknown_82C0EF4: @ 0x82C0EF4
 
 	.globl gUnknown_82C0F04
 gUnknown_82C0F04: @ 0x82C0F04
-	.incbin "build/data/data.bin", 0x25160, 0xcc
+	.incbin "baserom_jp.gba", 0x2c0f04, 0xcc
 
 	.globl gUnknown_82C0FD0
 gUnknown_82C0FD0: @ 0x82C0FD0
-	.incbin "build/data/data.bin", 0x2522c, 0x10
+	.incbin "baserom_jp.gba", 0x2c0fd0, 0x10
 
 	.globl gUnknown_82C0FE0
 gUnknown_82C0FE0: @ 0x82C0FE0
-	.incbin "build/data/data.bin", 0x2523c, 0xc4
+	.incbin "baserom_jp.gba", 0x2c0fe0, 0xc4
 
 	.globl gUnknown_82C10A4
 gUnknown_82C10A4: @ 0x82C10A4
-	.incbin "build/data/data.bin", 0x25300, 0xe4
+	.incbin "baserom_jp.gba", 0x2c10a4, 0xe4
 
 	.globl gUnknown_82C1188
 gUnknown_82C1188: @ 0x82C1188
-	.incbin "build/data/data.bin", 0x253e4, 0x9c
+	.incbin "baserom_jp.gba", 0x2c1188, 0x9c
 
 	.globl gUnknown_82C1224
 gUnknown_82C1224: @ 0x82C1224
-	.incbin "build/data/data.bin", 0x25480, 0x58
+	.incbin "baserom_jp.gba", 0x2c1224, 0x58
 
 	.globl gUnknown_82C127C
 gUnknown_82C127C: @ 0x82C127C
-	.incbin "build/data/data.bin", 0x254d8, 0x40
+	.incbin "baserom_jp.gba", 0x2c127c, 0x40
 
 	.globl gUnknown_82C12BC
 gUnknown_82C12BC: @ 0x82C12BC
-	.incbin "build/data/data.bin", 0x25518, 0x8
+	.incbin "baserom_jp.gba", 0x2c12bc, 0x8
 
 	.globl gUnknown_82C12C4
 gUnknown_82C12C4: @ 0x82C12C4
-	.incbin "build/data/data.bin", 0x25520, 0x20
+	.incbin "baserom_jp.gba", 0x2c12c4, 0x20
 
 	.globl gUnknown_82C12E4
 gUnknown_82C12E4: @ 0x82C12E4
@@ -667,31 +667,31 @@ gUnknown_82C12E4: @ 0x82C12E4
 
 	.globl gUnknown_82C1310
 gUnknown_82C1310: @ 0x82C1310
-	.incbin "build/data/data.bin", 0x2556c, 0x54
+	.incbin "baserom_jp.gba", 0x2c1310, 0x54
 
 	.globl gUnknown_82C1364
 gUnknown_82C1364: @ 0x82C1364
-	.incbin "build/data/data.bin", 0x255c0, 0x60
+	.incbin "baserom_jp.gba", 0x2c1364, 0x60
 
 	.globl gUnknown_82C13C4
 gUnknown_82C13C4: @ 0x82C13C4
-	.incbin "build/data/data.bin", 0x25620, 0xd4
+	.incbin "baserom_jp.gba", 0x2c13c4, 0xd4
 
 	.globl gUnknown_82C1498
 gUnknown_82C1498: @ 0x82C1498
-	.incbin "build/data/data.bin", 0x256f4, 0xcc
+	.incbin "baserom_jp.gba", 0x2c1498, 0xcc
 
 	.globl gUnknown_82C1564
 gUnknown_82C1564: @ 0x82C1564
-	.incbin "build/data/data.bin", 0x257c0, 0x84
+	.incbin "baserom_jp.gba", 0x2c1564, 0x84
 
 	.globl gUnknown_82C15E8
 gUnknown_82C15E8: @ 0x82C15E8
-	.incbin "build/data/data.bin", 0x25844, 0x80
+	.incbin "baserom_jp.gba", 0x2c15e8, 0x80
 
 	.globl gUnknown_82C1668
 gUnknown_82C1668: @ 0x82C1668
-	.incbin "build/data/data.bin", 0x258c4, 0x20
+	.incbin "baserom_jp.gba", 0x2c1668, 0x20
 
 	.globl gUnknown_82C1688
 gUnknown_82C1688: @ 0x82C1688
@@ -699,15 +699,15 @@ gUnknown_82C1688: @ 0x82C1688
 
 	.globl gUnknown_82C169C
 gUnknown_82C169C: @ 0x82C169C
-	.incbin "build/data/data.bin", 0x258f8, 0x44
+	.incbin "baserom_jp.gba", 0x2c169c, 0x44
 
 	.globl gUnknown_82C16E0
 gUnknown_82C16E0: @ 0x82C16E0
-	.incbin "build/data/data.bin", 0x2593c, 0xec
+	.incbin "baserom_jp.gba", 0x2c16e0, 0xec
 
 	.globl gUnknown_82C17CC
 gUnknown_82C17CC: @ 0x82C17CC
-	.incbin "build/data/data.bin", 0x25a28, 0x1c
+	.incbin "baserom_jp.gba", 0x2c17cc, 0x1c
 
 	.globl gUnknown_82C17E8
 gUnknown_82C17E8: @ 0x82C17E8
@@ -716,15 +716,15 @@ gUnknown_82C17E8: @ 0x82C17E8
 
 	.globl gUnknown_82C1808
 gUnknown_82C1808: @ 0x82C1808
-	.incbin "build/data/data.bin", 0x25a64, 0x14
+	.incbin "baserom_jp.gba", 0x2c1808, 0x14
 
 	.globl gUnknown_82C181C
 gUnknown_82C181C: @ 0x82C181C
-	.incbin "build/data/data.bin", 0x25a78, 0x14
+	.incbin "baserom_jp.gba", 0x2c181c, 0x14
 
 	.globl gUnknown_82C1830
 gUnknown_82C1830: @ 0x82C1830
-	.incbin "build/data/data.bin", 0x25a8c, 0x14
+	.incbin "baserom_jp.gba", 0x2c1830, 0x14
 
 	.globl gUnknown_82C1844
 gUnknown_82C1844: @ 0x82C1844
@@ -734,11 +734,11 @@ gUnknown_82C1844: @ 0x82C1844
 
 	.globl gUnknown_82C1864
 gUnknown_82C1864: @ 0x82C1864
-	.incbin "build/data/data.bin", 0x25ac0, 0x1c
+	.incbin "baserom_jp.gba", 0x2c1864, 0x1c
 
 	.globl gUnknown_82C1880
 gUnknown_82C1880: @ 0x82C1880
-	.incbin "build/data/data.bin", 0x25adc, 0x4c
+	.incbin "baserom_jp.gba", 0x2c1880, 0x4c
 
 	.globl gUnknown_82C18CC
 gUnknown_82C18CC: @ 0x82C18CC
@@ -755,15 +755,15 @@ gUnknown_82C1918: @ 0x82C1918
 
 	.globl gUnknown_82C1938
 gUnknown_82C1938: @ 0x82C1938
-	.incbin "build/data/data.bin", 0x25b94, 0x60
+	.incbin "baserom_jp.gba", 0x2c1938, 0x60
 
 	.globl gUnknown_82C1998
 gUnknown_82C1998: @ 0x82C1998
-	.incbin "build/data/data.bin", 0x25bf4, 0x14
+	.incbin "baserom_jp.gba", 0x2c1998, 0x14
 
 	.globl gUnknown_82C19AC
 gUnknown_82C19AC: @ 0x82C19AC
-	.incbin "build/data/data.bin", 0x25c08, 0xc
+	.incbin "baserom_jp.gba", 0x2c19ac, 0xc
 
 	.globl gUnknown_82C19B8
 gUnknown_82C19B8: @ 0x82C19B8
@@ -771,23 +771,23 @@ gUnknown_82C19B8: @ 0x82C19B8
 
 	.globl gUnknown_82C19CC
 gUnknown_82C19CC: @ 0x82C19CC
-	.incbin "build/data/data.bin", 0x25c28, 0x218
+	.incbin "baserom_jp.gba", 0x2c19cc, 0x218
 
 	.globl gUnknown_82C1BE4
 gUnknown_82C1BE4: @ 0x82C1BE4
-	.incbin "build/data/data.bin", 0x25e40, 0x58
+	.incbin "baserom_jp.gba", 0x2c1be4, 0x58
 
 	.globl gUnknown_82C1C3C
 gUnknown_82C1C3C: @ 0x82C1C3C
-	.incbin "build/data/data.bin", 0x25e98, 0x44
+	.incbin "baserom_jp.gba", 0x2c1c3c, 0x44
 
 	.globl gUnknown_82C1C80
 gUnknown_82C1C80: @ 0x82C1C80
-	.incbin "build/data/data.bin", 0x25edc, 0x14
+	.incbin "baserom_jp.gba", 0x2c1c80, 0x14
 
 	.globl gUnknown_82C1C94
 gUnknown_82C1C94: @ 0x82C1C94
-	.incbin "build/data/data.bin", 0x25ef0, 0x24
+	.incbin "baserom_jp.gba", 0x2c1c94, 0x24
 
 	.globl gUnknown_82C1CB8
 gUnknown_82C1CB8: @ 0x82C1CB8
@@ -807,27 +807,27 @@ gUnknown_82C1D30: @ 0x82C1D30
 
 	.globl gUnknown_82C1D60
 gUnknown_82C1D60: @ 0x82C1D60
-	.incbin "build/data/data.bin", 0x25fbc, 0xf8
+	.incbin "baserom_jp.gba", 0x2c1d60, 0xf8
 
 	.globl gUnknown_82C1E58
 gUnknown_82C1E58: @ 0x82C1E58
-	.incbin "build/data/data.bin", 0x260b4, 0xb0
+	.incbin "baserom_jp.gba", 0x2c1e58, 0xb0
 
 	.globl gUnknown_82C1F08
 gUnknown_82C1F08: @ 0x82C1F08
-	.incbin "build/data/data.bin", 0x26164, 0x14
+	.incbin "baserom_jp.gba", 0x2c1f08, 0x14
 
 	.globl gUnknown_82C1F1C
 gUnknown_82C1F1C: @ 0x82C1F1C
-	.incbin "build/data/data.bin", 0x26178, 0x38
+	.incbin "baserom_jp.gba", 0x2c1f1c, 0x38
 
 	.globl gUnknown_82C1F54
 gUnknown_82C1F54: @ 0x82C1F54
-	.incbin "build/data/data.bin", 0x261b0, 0x50
+	.incbin "baserom_jp.gba", 0x2c1f54, 0x50
 
 	.globl gUnknown_82C1FA4
 gUnknown_82C1FA4: @ 0x82C1FA4
-	.incbin "build/data/data.bin", 0x26200, 0x8
+	.incbin "baserom_jp.gba", 0x2c1fa4, 0x8
 
 	.globl gUnknown_82C1FAC
 gUnknown_82C1FAC: @ 0x82C1FAC
@@ -835,83 +835,83 @@ gUnknown_82C1FAC: @ 0x82C1FAC
 
 	.globl gUnknown_82C1FC4
 gUnknown_82C1FC4: @ 0x82C1FC4
-	.incbin "build/data/data.bin", 0x26220, 0x8
+	.incbin "baserom_jp.gba", 0x2c1fc4, 0x8
 
 	.globl gUnknown_82C1FCC
 gUnknown_82C1FCC: @ 0x82C1FCC
-	.incbin "build/data/data.bin", 0x26228, 0x58
+	.incbin "baserom_jp.gba", 0x2c1fcc, 0x58
 
 	.globl gUnknown_82C2024
 gUnknown_82C2024: @ 0x82C2024
-	.incbin "build/data/data.bin", 0x26280, 0x8
+	.incbin "baserom_jp.gba", 0x2c2024, 0x8
 
 	.globl gUnknown_82C202C
 gUnknown_82C202C: @ 0x82C202C
-	.incbin "build/data/data.bin", 0x26288, 0x8
+	.incbin "baserom_jp.gba", 0x2c202c, 0x8
 
 	.globl gUnknown_82C2034
 gUnknown_82C2034: @ 0x82C2034
-	.incbin "build/data/data.bin", 0x26290, 0x30
+	.incbin "baserom_jp.gba", 0x2c2034, 0x30
 
 	.globl gUnknown_82C2064
 gUnknown_82C2064: @ 0x82C2064
-	.incbin "build/data/data.bin", 0x262c0, 0x18
+	.incbin "baserom_jp.gba", 0x2c2064, 0x18
 
 	.globl gUnknown_82C207C
 gUnknown_82C207C: @ 0x82C207C
-	.incbin "build/data/data.bin", 0x262d8, 0x8
+	.incbin "baserom_jp.gba", 0x2c207c, 0x8
 
 	.globl gUnknown_82C2084
 gUnknown_82C2084: @ 0x82C2084
-	.incbin "build/data/data.bin", 0x262e0, 0x88
+	.incbin "baserom_jp.gba", 0x2c2084, 0x88
 
 	.globl gUnknown_82C210C
 gUnknown_82C210C: @ 0x82C210C
-	.incbin "build/data/data.bin", 0x26368, 0x18
+	.incbin "baserom_jp.gba", 0x2c210c, 0x18
 
 	.globl gUnknown_82C2124
 gUnknown_82C2124: @ 0x82C2124
-	.incbin "build/data/data.bin", 0x26380, 0x28
+	.incbin "baserom_jp.gba", 0x2c2124, 0x28
 
 	.globl gUnknown_82C214C
 gUnknown_82C214C: @ 0x82C214C
-	.incbin "build/data/data.bin", 0x263a8, 0x18
+	.incbin "baserom_jp.gba", 0x2c214c, 0x18
 
 	.globl gUnknown_82C2164
 gUnknown_82C2164: @ 0x82C2164
-	.incbin "build/data/data.bin", 0x263c0, 0x20
+	.incbin "baserom_jp.gba", 0x2c2164, 0x20
 
 	.globl gUnknown_82C2184
 gUnknown_82C2184: @ 0x82C2184
-	.incbin "build/data/data.bin", 0x263e0, 0x18
+	.incbin "baserom_jp.gba", 0x2c2184, 0x18
 
 	.globl gUnknown_82C219C
 gUnknown_82C219C: @ 0x82C219C
-	.incbin "build/data/data.bin", 0x263f8, 0x98
+	.incbin "baserom_jp.gba", 0x2c219c, 0x98
 
 	.globl gUnknown_82C2234
 gUnknown_82C2234: @ 0x82C2234
-	.incbin "build/data/data.bin", 0x26490, 0x18
+	.incbin "baserom_jp.gba", 0x2c2234, 0x18
 
 	.globl gUnknown_82C224C
 gUnknown_82C224C: @ 0x82C224C
-	.incbin "build/data/data.bin", 0x264a8, 0x8
+	.incbin "baserom_jp.gba", 0x2c224c, 0x8
 
 	.globl gUnknown_82C2254
 gUnknown_82C2254: @ 0x82C2254
-	.incbin "build/data/data.bin", 0x264b0, 0x58
+	.incbin "baserom_jp.gba", 0x2c2254, 0x58
 
 	.globl gUnknown_82C22AC
 gUnknown_82C22AC: @ 0x82C22AC
-	.incbin "build/data/data.bin", 0x26508, 0xb8
+	.incbin "baserom_jp.gba", 0x2c22ac, 0xb8
 
 	.globl gUnknown_82C2364
 gUnknown_82C2364: @ 0x82C2364
-	.incbin "build/data/data.bin", 0x265c0, 0x7c
+	.incbin "baserom_jp.gba", 0x2c2364, 0x7c
 
 	.globl gUnknown_82C23E0
 gUnknown_82C23E0: @ 0x82C23E0
-	.incbin "build/data/data.bin", 0x2663c, 0x58
+	.incbin "baserom_jp.gba", 0x2c23e0, 0x58
 
 	.globl gUnknown_82C2438
 gUnknown_82C2438: @ 0x82C2438
@@ -920,47 +920,47 @@ gUnknown_82C2438: @ 0x82C2438
 
 	.globl gUnknown_82C2454
 gUnknown_82C2454: @ 0x82C2454
-	.incbin "build/data/data.bin", 0x266b0, 0x20
+	.incbin "baserom_jp.gba", 0x2c2454, 0x20
 
 	.globl gUnknown_82C2474
 gUnknown_82C2474: @ 0x82C2474
-	.incbin "build/data/data.bin", 0x266d0, 0x30
+	.incbin "baserom_jp.gba", 0x2c2474, 0x30
 
 	.globl gUnknown_82C24A4
 gUnknown_82C24A4: @ 0x82C24A4
-	.incbin "build/data/data.bin", 0x26700, 0x10
+	.incbin "baserom_jp.gba", 0x2c24a4, 0x10
 
 	.globl gUnknown_82C24B4
 gUnknown_82C24B4: @ 0x82C24B4
-	.incbin "build/data/data.bin", 0x26710, 0x20
+	.incbin "baserom_jp.gba", 0x2c24b4, 0x20
 
 	.globl gUnknown_82C24D4
 gUnknown_82C24D4: @ 0x82C24D4
-	.incbin "build/data/data.bin", 0x26730, 0x8
+	.incbin "baserom_jp.gba", 0x2c24d4, 0x8
 
 	.globl gUnknown_82C24DC
 gUnknown_82C24DC: @ 0x82C24DC
-	.incbin "build/data/data.bin", 0x26738, 0x8
+	.incbin "baserom_jp.gba", 0x2c24dc, 0x8
 
 	.globl gUnknown_82C24E4
 gUnknown_82C24E4: @ 0x82C24E4
-	.incbin "build/data/data.bin", 0x26740, 0x8
+	.incbin "baserom_jp.gba", 0x2c24e4, 0x8
 
 	.globl gUnknown_82C24EC
 gUnknown_82C24EC: @ 0x82C24EC
-	.incbin "build/data/data.bin", 0x26748, 0x8
+	.incbin "baserom_jp.gba", 0x2c24ec, 0x8
 
 	.globl gUnknown_82C24F4
 gUnknown_82C24F4: @ 0x82C24F4
-	.incbin "build/data/data.bin", 0x26750, 0x8
+	.incbin "baserom_jp.gba", 0x2c24f4, 0x8
 
 	.globl gUnknown_82C24FC
 gUnknown_82C24FC: @ 0x82C24FC
-	.incbin "build/data/data.bin", 0x26758, 0x8
+	.incbin "baserom_jp.gba", 0x2c24fc, 0x8
 
 	.globl gUnknown_82C2504
 gUnknown_82C2504: @ 0x82C2504
-	.incbin "build/data/data.bin", 0x26760, 0x8
+	.incbin "baserom_jp.gba", 0x2c2504, 0x8
 
 	.globl gUnknown_82C250C
 gUnknown_82C250C: @ 0x82C250C
@@ -992,19 +992,19 @@ gUnknown_82C256C: @ 0x82C256C
 
 	.globl gUnknown_82C25F4
 gUnknown_82C25F4: @ 0x82C25F4
-	.incbin "build/data/data.bin", 0x26850, 0x18
+	.incbin "baserom_jp.gba", 0x2c25f4, 0x18
 
 	.globl gUnknown_82C260C
 gUnknown_82C260C: @ 0x82C260C
-	.incbin "build/data/data.bin", 0x26868, 0x18
+	.incbin "baserom_jp.gba", 0x2c260c, 0x18
 
 	.globl gUnknown_82C2624
 gUnknown_82C2624: @ 0x82C2624
-	.incbin "build/data/data.bin", 0x26880, 0x18
+	.incbin "baserom_jp.gba", 0x2c2624, 0x18
 
 	.globl gUnknown_82C263C
 gUnknown_82C263C: @ 0x82C263C
-	.incbin "build/data/data.bin", 0x26898, 0x88
+	.incbin "baserom_jp.gba", 0x2c263c, 0x88
 
 	.globl gUnknown_82C26C4
 gUnknown_82C26C4: @ 0x82C26C4
@@ -1013,23 +1013,23 @@ gUnknown_82C26C4: @ 0x82C26C4
 
 	.globl gUnknown_82C26E8
 gUnknown_82C26E8: @ 0x82C26E8
-	.incbin "build/data/data.bin", 0x26944, 0x28
+	.incbin "baserom_jp.gba", 0x2c26e8, 0x28
 
 	.globl gUnknown_82C2710
 gUnknown_82C2710: @ 0x82C2710
-	.incbin "build/data/data.bin", 0x2696c, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2710, 0x1c
 
 	.globl gUnknown_82C272C
 gUnknown_82C272C: @ 0x82C272C
-	.incbin "build/data/data.bin", 0x26988, 0x40
+	.incbin "baserom_jp.gba", 0x2c272c, 0x40
 
 	.globl gUnknown_82C276C
 gUnknown_82C276C: @ 0x82C276C
-	.incbin "build/data/data.bin", 0x269c8, 0x10
+	.incbin "baserom_jp.gba", 0x2c276c, 0x10
 
 	.globl gUnknown_82C277C
 gUnknown_82C277C: @ 0x82C277C
-	.incbin "build/data/data.bin", 0x269d8, 0x14
+	.incbin "baserom_jp.gba", 0x2c277c, 0x14
 
 	.globl gUnknown_82C2790
 gUnknown_82C2790: @ 0x82C2790
@@ -1038,11 +1038,11 @@ gUnknown_82C2790: @ 0x82C2790
 
 	.globl gUnknown_82C27A0
 gUnknown_82C27A0: @ 0x82C27A0
-	.incbin "build/data/data.bin", 0x269fc, 0x14
+	.incbin "baserom_jp.gba", 0x2c27a0, 0x14
 
 	.globl gUnknown_82C27B4
 gUnknown_82C27B4: @ 0x82C27B4
-	.incbin "build/data/data.bin", 0x26a10, 0x28
+	.incbin "baserom_jp.gba", 0x2c27b4, 0x28
 
 	.globl gUnknown_82C27DC
 gUnknown_82C27DC: @ 0x82C27DC
@@ -1051,15 +1051,15 @@ gUnknown_82C27DC: @ 0x82C27DC
 
 	.globl gUnknown_82C2804
 gUnknown_82C2804: @ 0x82C2804
-	.incbin "build/data/data.bin", 0x26a60, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2804, 0x1c
 
 	.globl gUnknown_82C2820
 gUnknown_82C2820: @ 0x82C2820
-	.incbin "build/data/data.bin", 0x26a7c, 0x18
+	.incbin "baserom_jp.gba", 0x2c2820, 0x18
 
 	.globl gUnknown_82C2838
 gUnknown_82C2838: @ 0x82C2838
-	.incbin "build/data/data.bin", 0x26a94, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2838, 0x1c
 
 	.globl gUnknown_82C2854
 gUnknown_82C2854: @ 0x82C2854
@@ -1073,7 +1073,7 @@ gUnknown_82C286C: @ 0x82C286C
 
 	.globl gUnknown_82C2884
 gUnknown_82C2884: @ 0x82C2884
-	.incbin "build/data/data.bin", 0x26ae0, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2884, 0x1c
 
 	.globl gUnknown_82C28A0
 gUnknown_82C28A0: @ 0x82C28A0
@@ -1082,51 +1082,51 @@ gUnknown_82C28A0: @ 0x82C28A0
 
 	.globl gUnknown_82C28B8
 gUnknown_82C28B8: @ 0x82C28B8
-	.incbin "build/data/data.bin", 0x26b14, 0x18
+	.incbin "baserom_jp.gba", 0x2c28b8, 0x18
 
 	.globl gUnknown_82C28D0
 gUnknown_82C28D0: @ 0x82C28D0
-	.incbin "build/data/data.bin", 0x26b2c, 0x18
+	.incbin "baserom_jp.gba", 0x2c28d0, 0x18
 
 	.globl gUnknown_82C28E8
 gUnknown_82C28E8: @ 0x82C28E8
-	.incbin "build/data/data.bin", 0x26b44, 0x1c
+	.incbin "baserom_jp.gba", 0x2c28e8, 0x1c
 
 	.globl gUnknown_82C2904
 gUnknown_82C2904: @ 0x82C2904
-	.incbin "build/data/data.bin", 0x26b60, 0x20
+	.incbin "baserom_jp.gba", 0x2c2904, 0x20
 
 	.globl gUnknown_82C2924
 gUnknown_82C2924: @ 0x82C2924
-	.incbin "build/data/data.bin", 0x26b80, 0x20
+	.incbin "baserom_jp.gba", 0x2c2924, 0x20
 
 	.globl gUnknown_82C2944
 gUnknown_82C2944: @ 0x82C2944
-	.incbin "build/data/data.bin", 0x26ba0, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2944, 0x1c
 
 	.globl gUnknown_82C2960
 gUnknown_82C2960: @ 0x82C2960
-	.incbin "build/data/data.bin", 0x26bbc, 0x14
+	.incbin "baserom_jp.gba", 0x2c2960, 0x14
 
 	.globl gUnknown_82C2974
 gUnknown_82C2974: @ 0x82C2974
-	.incbin "build/data/data.bin", 0x26bd0, 0x10
+	.incbin "baserom_jp.gba", 0x2c2974, 0x10
 
 	.globl gUnknown_82C2984
 gUnknown_82C2984: @ 0x82C2984
-	.incbin "build/data/data.bin", 0x26be0, 0x10
+	.incbin "baserom_jp.gba", 0x2c2984, 0x10
 
 	.globl gUnknown_82C2994
 gUnknown_82C2994: @ 0x82C2994
-	.incbin "build/data/data.bin", 0x26bf0, 0x18
+	.incbin "baserom_jp.gba", 0x2c2994, 0x18
 
 	.globl gUnknown_82C29AC
 gUnknown_82C29AC: @ 0x82C29AC
-	.incbin "build/data/data.bin", 0x26c08, 0x14
+	.incbin "baserom_jp.gba", 0x2c29ac, 0x14
 
 	.globl gUnknown_82C29C0
 gUnknown_82C29C0: @ 0x82C29C0
-	.incbin "build/data/data.bin", 0x26c1c, 0x18
+	.incbin "baserom_jp.gba", 0x2c29c0, 0x18
 
 	.globl gUnknown_82C29D8
 gUnknown_82C29D8: @ 0x82C29D8
@@ -1138,23 +1138,23 @@ gUnknown_82C29EC: @ 0x82C29EC
 
 	.globl gUnknown_82C2A00
 gUnknown_82C2A00: @ 0x82C2A00
-	.incbin "build/data/data.bin", 0x26c5c, 0x14
+	.incbin "baserom_jp.gba", 0x2c2a00, 0x14
 
 	.globl gUnknown_82C2A14
 gUnknown_82C2A14: @ 0x82C2A14
-	.incbin "build/data/data.bin", 0x26c70, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2a14, 0x1c
 
 	.globl gUnknown_82C2A30
 gUnknown_82C2A30: @ 0x82C2A30
-	.incbin "build/data/data.bin", 0x26c8c, 0x18
+	.incbin "baserom_jp.gba", 0x2c2a30, 0x18
 
 	.globl gUnknown_82C2A48
 gUnknown_82C2A48: @ 0x82C2A48
-	.incbin "build/data/data.bin", 0x26ca4, 0x18
+	.incbin "baserom_jp.gba", 0x2c2a48, 0x18
 
 	.globl gUnknown_82C2A60
 gUnknown_82C2A60: @ 0x82C2A60
-	.incbin "build/data/data.bin", 0x26cbc, 0x18
+	.incbin "baserom_jp.gba", 0x2c2a60, 0x18
 
 	.globl gUnknown_82C2A78
 gUnknown_82C2A78: @ 0x82C2A78
@@ -1163,7 +1163,7 @@ gUnknown_82C2A78: @ 0x82C2A78
 
 	.globl gUnknown_82C2A94
 gUnknown_82C2A94: @ 0x82C2A94
-	.incbin "build/data/data.bin", 0x26cf0, 0x20
+	.incbin "baserom_jp.gba", 0x2c2a94, 0x20
 
 	.globl gUnknown_82C2AB4
 gUnknown_82C2AB4: @ 0x82C2AB4
@@ -1172,19 +1172,19 @@ gUnknown_82C2AB4: @ 0x82C2AB4
 
 	.globl gUnknown_82C2ACC
 gUnknown_82C2ACC: @ 0x82C2ACC
-	.incbin "build/data/data.bin", 0x26d28, 0x20
+	.incbin "baserom_jp.gba", 0x2c2acc, 0x20
 
 	.globl gUnknown_82C2AEC
 gUnknown_82C2AEC: @ 0x82C2AEC
-	.incbin "build/data/data.bin", 0x26d48, 0x1c
+	.incbin "baserom_jp.gba", 0x2c2aec, 0x1c
 
 	.globl gUnknown_82C2B08
 gUnknown_82C2B08: @ 0x82C2B08
-	.incbin "build/data/data.bin", 0x26d64, 0x20
+	.incbin "baserom_jp.gba", 0x2c2b08, 0x20
 
 	.globl gUnknown_82C2B28
 gUnknown_82C2B28: @ 0x82C2B28
-	.incbin "build/data/data.bin", 0x26d84, 0x10
+	.incbin "baserom_jp.gba", 0x2c2b28, 0x10
 
 	.globl gUnknown_82C2B38
 gUnknown_82C2B38: @ 0x82C2B38
@@ -1192,15 +1192,15 @@ gUnknown_82C2B38: @ 0x82C2B38
 
 	.globl gUnknown_82C2B44
 gUnknown_82C2B44: @ 0x82C2B44
-	.incbin "build/data/data.bin", 0x26da0, 0xc
+	.incbin "baserom_jp.gba", 0x2c2b44, 0xc
 
 	.globl gUnknown_82C2B50
 gUnknown_82C2B50: @ 0x82C2B50
-	.incbin "build/data/data.bin", 0x26dac, 0x14
+	.incbin "baserom_jp.gba", 0x2c2b50, 0x14
 
 	.globl gUnknown_82C2B64
 gUnknown_82C2B64: @ 0x82C2B64
-	.incbin "build/data/data.bin", 0x26dc0, 0x8
+	.incbin "baserom_jp.gba", 0x2c2b64, 0x8
 
 	.globl gUnknown_82C2B6C
 gUnknown_82C2B6C: @ 0x82C2B6C
@@ -1208,63 +1208,63 @@ gUnknown_82C2B6C: @ 0x82C2B6C
 
 	.globl gUnknown_82C2B7C
 gUnknown_82C2B7C: @ 0x82C2B7C
-	.incbin "build/data/data.bin", 0x26dd8, 0x14
+	.incbin "baserom_jp.gba", 0x2c2b7c, 0x14
 
 	.globl gUnknown_82C2B90
 gUnknown_82C2B90: @ 0x82C2B90
-	.incbin "build/data/data.bin", 0x26dec, 0x20
+	.incbin "baserom_jp.gba", 0x2c2b90, 0x20
 
 	.globl gUnknown_82C2BB0
 gUnknown_82C2BB0: @ 0x82C2BB0
-	.incbin "build/data/data.bin", 0x26e0c, 0xa
+	.incbin "baserom_jp.gba", 0x2c2bb0, 0xa
 
 	.globl gUnknown_82C2BBA
 gUnknown_82C2BBA: @ 0x82C2BBA
-	.incbin "build/data/data.bin", 0x26e16, 0x5
+	.incbin "baserom_jp.gba", 0x2c2bba, 0x5
 
 	.globl gUnknown_82C2BBF
 gUnknown_82C2BBF: @ 0x82C2BBF
-	.incbin "build/data/data.bin", 0x26e1b, 0x5
+	.incbin "baserom_jp.gba", 0x2c2bbf, 0x5
 
 	.globl gUnknown_82C2BC4
 gUnknown_82C2BC4: @ 0x82C2BC4
-	.incbin "build/data/data.bin", 0x26e20, 0x18
+	.incbin "baserom_jp.gba", 0x2c2bc4, 0x18
 
 	.globl gUnknown_82C2BDC
 gUnknown_82C2BDC: @ 0x82C2BDC
-	.incbin "build/data/data.bin", 0x26e38, 0x14
+	.incbin "baserom_jp.gba", 0x2c2bdc, 0x14
 
 	.globl gUnknown_82C2BF0
 gUnknown_82C2BF0: @ 0x82C2BF0
-	.incbin "build/data/data.bin", 0x26e4c, 0x4
+	.incbin "baserom_jp.gba", 0x2c2bf0, 0x4
 
 	.globl gUnknown_82C2BF4
 gUnknown_82C2BF4: @ 0x82C2BF4
-	.incbin "build/data/data.bin", 0x26e50, 0x15
+	.incbin "baserom_jp.gba", 0x2c2bf4, 0x15
 
 	.globl gUnknown_82C2C09
 gUnknown_82C2C09: @ 0x82C2C09
-	.incbin "build/data/data.bin", 0x26e65, 0x2
+	.incbin "baserom_jp.gba", 0x2c2c09, 0x2
 
 	.globl gUnknown_82C2C0B
 gUnknown_82C2C0B: @ 0x82C2C0B
-	.incbin "build/data/data.bin", 0x26e67, 0x5
+	.incbin "baserom_jp.gba", 0x2c2c0b, 0x5
 
 	.globl gUnknown_82C2C10
 gUnknown_82C2C10: @ 0x82C2C10
-	.incbin "build/data/data.bin", 0x26e6c, 0x200
+	.incbin "baserom_jp.gba", 0x2c2c10, 0x200
 
 	.globl gUnknown_82C2E10
 gUnknown_82C2E10: @ 0x82C2E10
-	.incbin "build/data/data.bin", 0x2706c, 0x210
+	.incbin "baserom_jp.gba", 0x2c2e10, 0x210
 
 	.globl gUnknown_82C3020
 gUnknown_82C3020: @ 0x82C3020
-	.incbin "build/data/data.bin", 0x2727c, 0x194
+	.incbin "baserom_jp.gba", 0x2c3020, 0x194
 
 	.globl gUnknown_82C31B4
 gUnknown_82C31B4: @ 0x82C31B4
-	.incbin "build/data/data.bin", 0x27410, 0x8
+	.incbin "baserom_jp.gba", 0x2c31b4, 0x8
 
 	.globl gUnknown_82C31BC
 gUnknown_82C31BC: @ 0x82C31BC
@@ -1279,27 +1279,27 @@ gUnknown_82C31BC: @ 0x82C31BC
 
 	.globl gUnknown_82C3220
 gUnknown_82C3220: @ 0x82C3220
-	.incbin "build/data/data.bin", 0x2747c, 0x18
+	.incbin "baserom_jp.gba", 0x2c3220, 0x18
 
 	.globl gUnknown_82C3238
 gUnknown_82C3238: @ 0x82C3238
-	.incbin "build/data/data.bin", 0x27494, 0x14
+	.incbin "baserom_jp.gba", 0x2c3238, 0x14
 
 	.globl gUnknown_82C324C
 gUnknown_82C324C: @ 0x82C324C
-	.incbin "build/data/data.bin", 0x274a8, 0x60
+	.incbin "baserom_jp.gba", 0x2c324c, 0x60
 
 	.globl gUnknown_82C32AC
 gUnknown_82C32AC: @ 0x82C32AC
-	.incbin "build/data/data.bin", 0x27508, 0x4
+	.incbin "baserom_jp.gba", 0x2c32ac, 0x4
 
 	.globl gUnknown_82C32B0
 gUnknown_82C32B0: @ 0x82C32B0
-	.incbin "build/data/data.bin", 0x2750c, 0x10
+	.incbin "baserom_jp.gba", 0x2c32b0, 0x10
 
 	.globl gUnknown_82C32C0
 gUnknown_82C32C0: @ 0x82C32C0
-	.incbin "build/data/data.bin", 0x2751c, 0x3
+	.incbin "baserom_jp.gba", 0x2c32c0, 0x3
 
 	.globl gUnknown_82C32C3
 gUnknown_82C32C3: @ 0x82C32C3
@@ -1316,451 +1316,451 @@ gUnknown_82C32F3: @ 0x82C32F3
 
 	.globl gUnknown_82C3304
 gUnknown_82C3304: @ 0x82C3304
-	.incbin "build/data/data.bin", 0x27560, 0x28
+	.incbin "baserom_jp.gba", 0x2c3304, 0x28
 
 	.globl gUnknown_82C332C
 gUnknown_82C332C: @ 0x82C332C
-	.incbin "build/data/data.bin", 0x27588, 0xc
+	.incbin "baserom_jp.gba", 0x2c332c, 0xc
 
 	.globl gUnknown_82C3338
 gUnknown_82C3338: @ 0x82C3338
-	.incbin "build/data/data.bin", 0x27594, 0x4
+	.incbin "baserom_jp.gba", 0x2c3338, 0x4
 
 	.globl gUnknown_82C333C
 gUnknown_82C333C: @ 0x82C333C
-	.incbin "build/data/data.bin", 0x27598, 0x8
+	.incbin "baserom_jp.gba", 0x2c333c, 0x8
 
 	.globl gUnknown_82C3344
 gUnknown_82C3344: @ 0x82C3344
-	.incbin "build/data/data.bin", 0x275a0, 0x4
+	.incbin "baserom_jp.gba", 0x2c3344, 0x4
 
 	.globl gUnknown_82C3348
 gUnknown_82C3348: @ 0x82C3348
-	.incbin "build/data/data.bin", 0x275a4, 0xee4
+	.incbin "baserom_jp.gba", 0x2c3348, 0xee4
 
 	.globl gUnknown_82C422C
 gUnknown_82C422C: @ 0x82C422C
-	.incbin "build/data/data.bin", 0x28488, 0x8
+	.incbin "baserom_jp.gba", 0x2c422c, 0x8
 
 	.globl gUnknown_82C4234
 gUnknown_82C4234: @ 0x82C4234
-	.incbin "build/data/data.bin", 0x28490, 0x40
+	.incbin "baserom_jp.gba", 0x2c4234, 0x40
 
 	.globl gUnknown_82C4274
 gUnknown_82C4274: @ 0x82C4274
-	.incbin "build/data/data.bin", 0x284d0, 0x18
+	.incbin "baserom_jp.gba", 0x2c4274, 0x18
 
 	.globl gUnknown_82C428C
 gUnknown_82C428C: @ 0x82C428C
-	.incbin "build/data/data.bin", 0x284e8, 0x80
+	.incbin "baserom_jp.gba", 0x2c428c, 0x80
 
 	.globl gUnknown_82C430C
 gUnknown_82C430C: @ 0x82C430C
-	.incbin "build/data/data.bin", 0x28568, 0x8
+	.incbin "baserom_jp.gba", 0x2c430c, 0x8
 
 	.globl gUnknown_82C4314
 gUnknown_82C4314: @ 0x82C4314
-	.incbin "build/data/data.bin", 0x28570, 0x10
+	.incbin "baserom_jp.gba", 0x2c4314, 0x10
 
 	.globl gUnknown_82C4324
 gUnknown_82C4324: @ 0x82C4324
-	.incbin "build/data/data.bin", 0x28580, 0x6d0
+	.incbin "baserom_jp.gba", 0x2c4324, 0x6d0
 
 	.globl gUnknown_82C49F4
 gUnknown_82C49F4: @ 0x82C49F4
-	.incbin "build/data/data.bin", 0x28c50, 0x80
+	.incbin "baserom_jp.gba", 0x2c49f4, 0x80
 
 	.globl gUnknown_82C4A74
 gUnknown_82C4A74: @ 0x82C4A74
-	.incbin "build/data/data.bin", 0x28cd0, 0x10
+	.incbin "baserom_jp.gba", 0x2c4a74, 0x10
 
 	.globl gUnknown_82C4A84
 gUnknown_82C4A84: @ 0x82C4A84
-	.incbin "build/data/data.bin", 0x28ce0, 0x1c
+	.incbin "baserom_jp.gba", 0x2c4a84, 0x1c
 
 	.globl gUnknown_82C4AA0
 gUnknown_82C4AA0: @ 0x82C4AA0
-	.incbin "build/data/data.bin", 0x28cfc, 0x18
+	.incbin "baserom_jp.gba", 0x2c4aa0, 0x18
 
 	.globl gUnknown_82C4AB8
 gUnknown_82C4AB8: @ 0x82C4AB8
-	.incbin "build/data/data.bin", 0x28d14, 0x14
+	.incbin "baserom_jp.gba", 0x2c4ab8, 0x14
 
 	.globl gUnknown_82C4ACC
 gUnknown_82C4ACC: @ 0x82C4ACC
-	.incbin "build/data/data.bin", 0x28d28, 0x30
+	.incbin "baserom_jp.gba", 0x2c4acc, 0x30
 
 	.globl gUnknown_82C4AFC
 gUnknown_82C4AFC: @ 0x82C4AFC
-	.incbin "build/data/data.bin", 0x28d58, 0x14
+	.incbin "baserom_jp.gba", 0x2c4afc, 0x14
 
 	.globl gUnknown_82C4B10
 gUnknown_82C4B10: @ 0x82C4B10
-	.incbin "build/data/data.bin", 0x28d6c, 0x24
+	.incbin "baserom_jp.gba", 0x2c4b10, 0x24
 
 	.globl gUnknown_82C4B34
 gUnknown_82C4B34: @ 0x82C4B34
-	.incbin "build/data/data.bin", 0x28d90, 0x38
+	.incbin "baserom_jp.gba", 0x2c4b34, 0x38
 
 	.globl gUnknown_82C4B6C
 gUnknown_82C4B6C: @ 0x82C4B6C
-	.incbin "build/data/data.bin", 0x28dc8, 0x3f4
+	.incbin "baserom_jp.gba", 0x2c4b6c, 0x3f4
 
 	.globl gUnknown_82C4F60
 gUnknown_82C4F60: @ 0x82C4F60
-	.incbin "build/data/data.bin", 0x291bc, 0x60
+	.incbin "baserom_jp.gba", 0x2c4f60, 0x60
 
 	.globl gUnknown_82C4FC0
 gUnknown_82C4FC0: @ 0x82C4FC0
-	.incbin "build/data/data.bin", 0x2921c, 0x90
+	.incbin "baserom_jp.gba", 0x2c4fc0, 0x90
 
 	.globl gUnknown_82C5050
 gUnknown_82C5050: @ 0x82C5050
-	.incbin "build/data/data.bin", 0x292ac, 0x10
+	.incbin "baserom_jp.gba", 0x2c5050, 0x10
 
 	.globl gUnknown_82C5060
 gUnknown_82C5060: @ 0x82C5060
-	.incbin "build/data/data.bin", 0x292bc, 0x4
+	.incbin "baserom_jp.gba", 0x2c5060, 0x4
 
 	.globl gUnknown_82C5064
 gUnknown_82C5064: @ 0x82C5064
-	.incbin "build/data/data.bin", 0x292c0, 0x28
+	.incbin "baserom_jp.gba", 0x2c5064, 0x28
 
 	.globl gUnknown_82C508C
 gUnknown_82C508C: @ 0x82C508C
-	.incbin "build/data/data.bin", 0x292e8, 0x5
+	.incbin "baserom_jp.gba", 0x2c508c, 0x5
 
 	.globl gUnknown_82C5091
 gUnknown_82C5091: @ 0x82C5091
-	.incbin "build/data/data.bin", 0x292ed, 0xef
+	.incbin "baserom_jp.gba", 0x2c5091, 0xef
 
 	.globl gUnknown_82C5180
 gUnknown_82C5180: @ 0x82C5180
-	.incbin "build/data/data.bin", 0x293dc, 0xa0
+	.incbin "baserom_jp.gba", 0x2c5180, 0xa0
 
 	.globl gUnknown_82C5220
 gUnknown_82C5220: @ 0x82C5220
-	.incbin "build/data/data.bin", 0x2947c, 0x20
+	.incbin "baserom_jp.gba", 0x2c5220, 0x20
 
 	.globl gUnknown_82C5240
 gUnknown_82C5240: @ 0x82C5240
-	.incbin "build/data/data.bin", 0x2949c, 0x5c
+	.incbin "baserom_jp.gba", 0x2c5240, 0x5c
 
 	.globl gUnknown_82C529C
 gUnknown_82C529C: @ 0x82C529C
-	.incbin "build/data/data.bin", 0x294f8, 0xac
+	.incbin "baserom_jp.gba", 0x2c529c, 0xac
 
 	.globl gUnknown_82C5348
 gUnknown_82C5348: @ 0x82C5348
-	.incbin "build/data/data.bin", 0x295a4, 0x20
+	.incbin "baserom_jp.gba", 0x2c5348, 0x20
 
 	.globl gUnknown_82C5368
 gUnknown_82C5368: @ 0x82C5368
-	.incbin "build/data/data.bin", 0x295c4, 0x20
+	.incbin "baserom_jp.gba", 0x2c5368, 0x20
 
 	.globl gUnknown_82C5388
 gUnknown_82C5388: @ 0x82C5388
-	.incbin "build/data/data.bin", 0x295e4, 0x234
+	.incbin "baserom_jp.gba", 0x2c5388, 0x234
 
 	.globl gUnknown_82C55BC
 gUnknown_82C55BC: @ 0x82C55BC
-	.incbin "build/data/data.bin", 0x29818, 0xf8
+	.incbin "baserom_jp.gba", 0x2c55bc, 0xf8
 
 	.globl gUnknown_82C56B4
 gUnknown_82C56B4: @ 0x82C56B4
-	.incbin "build/data/data.bin", 0x29910, 0x20
+	.incbin "baserom_jp.gba", 0x2c56b4, 0x20
 
 	.globl gUnknown_82C56D4
 gUnknown_82C56D4: @ 0x82C56D4
-	.incbin "build/data/data.bin", 0x29930, 0x20
+	.incbin "baserom_jp.gba", 0x2c56d4, 0x20
 
 	.globl gUnknown_82C56F4
 gUnknown_82C56F4: @ 0x82C56F4
-	.incbin "build/data/data.bin", 0x29950, 0x10
+	.incbin "baserom_jp.gba", 0x2c56f4, 0x10
 
 	.globl gUnknown_82C5704
 gUnknown_82C5704: @ 0x82C5704
-	.incbin "build/data/data.bin", 0x29960, 0x28
+	.incbin "baserom_jp.gba", 0x2c5704, 0x28
 
 	.globl gUnknown_82C572C
 gUnknown_82C572C: @ 0x82C572C
-	.incbin "build/data/data.bin", 0x29988, 0xa8
+	.incbin "baserom_jp.gba", 0x2c572c, 0xa8
 
 	.globl gUnknown_82C57D4
 gUnknown_82C57D4: @ 0x82C57D4
-	.incbin "build/data/data.bin", 0x29a30, 0x84
+	.incbin "baserom_jp.gba", 0x2c57d4, 0x84
 
 	.globl gUnknown_82C5858
 gUnknown_82C5858: @ 0x82C5858
-	.incbin "build/data/data.bin", 0x29ab4, 0x32
+	.incbin "baserom_jp.gba", 0x2c5858, 0x32
 
 	.globl gUnknown_82C588A
 gUnknown_82C588A: @ 0x82C588A
-	.incbin "build/data/data.bin", 0x29ae6, 0x4c2
+	.incbin "baserom_jp.gba", 0x2c588a, 0x4c2
 
 	.globl gUnknown_82C5D4C
 gUnknown_82C5D4C: @ 0x82C5D4C
-	.incbin "build/data/data.bin", 0x29fa8, 0x28
+	.incbin "baserom_jp.gba", 0x2c5d4c, 0x28
 
 	.globl gUnknown_82C5D74
 gUnknown_82C5D74: @ 0x82C5D74
-	.incbin "build/data/data.bin", 0x29fd0, 0x40
+	.incbin "baserom_jp.gba", 0x2c5d74, 0x40
 
 	.globl gUnknown_82C5DB4
 gUnknown_82C5DB4: @ 0x82C5DB4
-	.incbin "build/data/data.bin", 0x2a010, 0x20
+	.incbin "baserom_jp.gba", 0x2c5db4, 0x20
 
 	.globl gUnknown_82C5DD4
 gUnknown_82C5DD4: @ 0x82C5DD4
-	.incbin "build/data/data.bin", 0x2a030, 0x18
+	.incbin "baserom_jp.gba", 0x2c5dd4, 0x18
 
 	.globl gUnknown_82C5DEC
 gUnknown_82C5DEC: @ 0x82C5DEC
-	.incbin "build/data/data.bin", 0x2a048, 0x58
+	.incbin "baserom_jp.gba", 0x2c5dec, 0x58
 
 	.globl gUnknown_82C5E44
 gUnknown_82C5E44: @ 0x82C5E44
-	.incbin "build/data/data.bin", 0x2a0a0, 0x18
+	.incbin "baserom_jp.gba", 0x2c5e44, 0x18
 
 	.globl gUnknown_82C5E5C
 gUnknown_82C5E5C: @ 0x82C5E5C
-	.incbin "build/data/data.bin", 0x2a0b8, 0x18
+	.incbin "baserom_jp.gba", 0x2c5e5c, 0x18
 
 	.globl gUnknown_82C5E74
 gUnknown_82C5E74: @ 0x82C5E74
-	.incbin "build/data/data.bin", 0x2a0d0, 0x8
+	.incbin "baserom_jp.gba", 0x2c5e74, 0x8
 
 	.globl gUnknown_82C5E7C
 gUnknown_82C5E7C: @ 0x82C5E7C
-	.incbin "build/data/data.bin", 0x2a0d8, 0x8
+	.incbin "baserom_jp.gba", 0x2c5e7c, 0x8
 
 	.globl gUnknown_82C5E84
 gUnknown_82C5E84: @ 0x82C5E84
-	.incbin "build/data/data.bin", 0x2a0e0, 0x24
+	.incbin "baserom_jp.gba", 0x2c5e84, 0x24
 
 	.globl gUnknown_82C5EA8
 gUnknown_82C5EA8: @ 0x82C5EA8
-	.incbin "build/data/data.bin", 0x2a104, 0x14
+	.incbin "baserom_jp.gba", 0x2c5ea8, 0x14
 
 	.globl gUnknown_82C5EBC
 gUnknown_82C5EBC: @ 0x82C5EBC
-	.incbin "build/data/data.bin", 0x2a118, 0x24
+	.incbin "baserom_jp.gba", 0x2c5ebc, 0x24
 
 	.globl gUnknown_82C5EE0
 gUnknown_82C5EE0: @ 0x82C5EE0
-	.incbin "build/data/data.bin", 0x2a13c, 0x4
+	.incbin "baserom_jp.gba", 0x2c5ee0, 0x4
 
 	.globl gUnknown_82C5EE4
 gUnknown_82C5EE4: @ 0x82C5EE4
-	.incbin "build/data/data.bin", 0x2a140, 0xc
+	.incbin "baserom_jp.gba", 0x2c5ee4, 0xc
 
 	.globl gUnknown_82C5EF0
 gUnknown_82C5EF0: @ 0x82C5EF0
-	.incbin "build/data/data.bin", 0x2a14c, 0x3
+	.incbin "baserom_jp.gba", 0x2c5ef0, 0x3
 
 	.globl gUnknown_82C5EF3
 gUnknown_82C5EF3: @ 0x82C5EF3
-	.incbin "build/data/data.bin", 0x2a14f, 0x3
+	.incbin "baserom_jp.gba", 0x2c5ef3, 0x3
 
 	.globl gUnknown_82C5EF6
 gUnknown_82C5EF6: @ 0x82C5EF6
-	.incbin "build/data/data.bin", 0x2a152, 0x3
+	.incbin "baserom_jp.gba", 0x2c5ef6, 0x3
 
 	.globl gUnknown_82C5EF9
 gUnknown_82C5EF9: @ 0x82C5EF9
-	.incbin "build/data/data.bin", 0x2a155, 0x6
+	.incbin "baserom_jp.gba", 0x2c5ef9, 0x6
 
 	.globl gUnknown_82C5EFF
 gUnknown_82C5EFF: @ 0x82C5EFF
-	.incbin "build/data/data.bin", 0x2a15b, 0x5
+	.incbin "baserom_jp.gba", 0x2c5eff, 0x5
 
 	.globl gUnknown_82C5F04
 gUnknown_82C5F04: @ 0x82C5F04
-	.incbin "build/data/data.bin", 0x2a160, 0x8
+	.incbin "baserom_jp.gba", 0x2c5f04, 0x8
 
 	.globl gUnknown_82C5F0C
 gUnknown_82C5F0C: @ 0x82C5F0C
-	.incbin "build/data/data.bin", 0x2a168, 0x50
+	.incbin "baserom_jp.gba", 0x2c5f0c, 0x50
 
 	.globl gUnknown_82C5F5C
 gUnknown_82C5F5C: @ 0x82C5F5C
-	.incbin "build/data/data.bin", 0x2a1b8, 0x8
+	.incbin "baserom_jp.gba", 0x2c5f5c, 0x8
 
 	.globl gUnknown_82C5F64
 gUnknown_82C5F64: @ 0x82C5F64
-	.incbin "build/data/data.bin", 0x2a1c0, 0x20
+	.incbin "baserom_jp.gba", 0x2c5f64, 0x20
 
 	.globl gUnknown_82C5F84
 gUnknown_82C5F84: @ 0x82C5F84
-	.incbin "build/data/data.bin", 0x2a1e0, 0x180
+	.incbin "baserom_jp.gba", 0x2c5f84, 0x180
 
 	.globl gUnknown_82C6104
 gUnknown_82C6104: @ 0x82C6104
-	.incbin "build/data/data.bin", 0x2a360, 0x13d0
+	.incbin "baserom_jp.gba", 0x2c6104, 0x13d0
 
 	.globl gUnknown_82C74D4
 gUnknown_82C74D4: @ 0x82C74D4
-	.incbin "build/data/data.bin", 0x2b730, 0x130
+	.incbin "baserom_jp.gba", 0x2c74d4, 0x130
 
 	.globl gUnknown_82C7604
 gUnknown_82C7604: @ 0x82C7604
-	.incbin "build/data/data.bin", 0x2b860, 0x198
+	.incbin "baserom_jp.gba", 0x2c7604, 0x198
 
 	.globl gUnknown_82C779C
 gUnknown_82C779C: @ 0x82C779C
-	.incbin "build/data/data.bin", 0x2b9f8, 0x228
+	.incbin "baserom_jp.gba", 0x2c779c, 0x228
 
 	.globl gUnknown_82C79C4
 gUnknown_82C79C4: @ 0x82C79C4
-	.incbin "build/data/data.bin", 0x2bc20, 0x44
+	.incbin "baserom_jp.gba", 0x2c79c4, 0x44
 
 	.globl gUnknown_82C7A08
 gUnknown_82C7A08: @ 0x82C7A08
-	.incbin "build/data/data.bin", 0x2bc64, 0x14
+	.incbin "baserom_jp.gba", 0x2c7a08, 0x14
 
 	.globl gUnknown_82C7A1C
 gUnknown_82C7A1C: @ 0x82C7A1C
-	.incbin "build/data/data.bin", 0x2bc78, 0x3c
+	.incbin "baserom_jp.gba", 0x2c7a1c, 0x3c
 
 	.globl gUnknown_82C7A58
 gUnknown_82C7A58: @ 0x82C7A58
-	.incbin "build/data/data.bin", 0x2bcb4, 0x1
+	.incbin "baserom_jp.gba", 0x2c7a58, 0x1
 
 	.globl gUnknown_82C7A59
 gUnknown_82C7A59: @ 0x82C7A59
-	.incbin "build/data/data.bin", 0x2bcb5, 0x5
+	.incbin "baserom_jp.gba", 0x2c7a59, 0x5
 
 	.globl gUnknown_82C7A5E
 gUnknown_82C7A5E: @ 0x82C7A5E
-	.incbin "build/data/data.bin", 0x2bcba, 0x1
+	.incbin "baserom_jp.gba", 0x2c7a5e, 0x1
 
 	.globl gUnknown_82C7A5F
 gUnknown_82C7A5F: @ 0x82C7A5F
-	.incbin "build/data/data.bin", 0x2bcbb, 0x15
+	.incbin "baserom_jp.gba", 0x2c7a5f, 0x15
 
 	.globl gUnknown_82C7A74
 gUnknown_82C7A74: @ 0x82C7A74
-	.incbin "build/data/data.bin", 0x2bcd0, 0xc
+	.incbin "baserom_jp.gba", 0x2c7a74, 0xc
 
 	.globl gUnknown_82C7A80
 gUnknown_82C7A80: @ 0x82C7A80
-	.incbin "build/data/data.bin", 0x2bcdc, 0x28
+	.incbin "baserom_jp.gba", 0x2c7a80, 0x28
 
 	.globl gUnknown_82C7AA8
 gUnknown_82C7AA8: @ 0x82C7AA8
-	.incbin "build/data/data.bin", 0x2bd04, 0xf0
+	.incbin "baserom_jp.gba", 0x2c7aa8, 0xf0
 
 	.globl gUnknown_82C7B98
 gUnknown_82C7B98: @ 0x82C7B98
-	.incbin "build/data/data.bin", 0x2bdf4, 0x18
+	.incbin "baserom_jp.gba", 0x2c7b98, 0x18
 
 	.globl gUnknown_82C7BB0
 gUnknown_82C7BB0: @ 0x82C7BB0
-	.incbin "build/data/data.bin", 0x2be0c, 0x18
+	.incbin "baserom_jp.gba", 0x2c7bb0, 0x18
 
 	.globl gUnknown_82C7BC8
 gUnknown_82C7BC8: @ 0x82C7BC8
-	.incbin "build/data/data.bin", 0x2be24, 0x18
+	.incbin "baserom_jp.gba", 0x2c7bc8, 0x18
 
 	.globl gUnknown_82C7BE0
 gUnknown_82C7BE0: @ 0x82C7BE0
-	.incbin "build/data/data.bin", 0x2be3c, 0x18
+	.incbin "baserom_jp.gba", 0x2c7be0, 0x18
 
 	.globl gUnknown_82C7BF8
 gUnknown_82C7BF8: @ 0x82C7BF8
-	.incbin "build/data/data.bin", 0x2be54, 0x18
+	.incbin "baserom_jp.gba", 0x2c7bf8, 0x18
 
 	.globl gUnknown_82C7C10
 gUnknown_82C7C10: @ 0x82C7C10
-	.incbin "build/data/data.bin", 0x2be6c, 0x30
+	.incbin "baserom_jp.gba", 0x2c7c10, 0x30
 
 	.globl gUnknown_82C7C40
 gUnknown_82C7C40: @ 0x82C7C40
-	.incbin "build/data/data.bin", 0x2be9c, 0x18
+	.incbin "baserom_jp.gba", 0x2c7c40, 0x18
 
 	.globl gUnknown_82C7C58
 gUnknown_82C7C58: @ 0x82C7C58
-	.incbin "build/data/data.bin", 0x2beb4, 0x68
+	.incbin "baserom_jp.gba", 0x2c7c58, 0x68
 
 	.globl gUnknown_82C7CC0
 gUnknown_82C7CC0: @ 0x82C7CC0
-	.incbin "build/data/data.bin", 0x2bf1c, 0x10
+	.incbin "baserom_jp.gba", 0x2c7cc0, 0x10
 
 	.globl gUnknown_82C7CD0
 gUnknown_82C7CD0: @ 0x82C7CD0
-	.incbin "build/data/data.bin", 0x2bf2c, 0x4
+	.incbin "baserom_jp.gba", 0x2c7cd0, 0x4
 
 	.globl gUnknown_82C7CD4
 gUnknown_82C7CD4: @ 0x82C7CD4
-	.incbin "build/data/data.bin", 0x2bf30, 0x54
+	.incbin "baserom_jp.gba", 0x2c7cd4, 0x54
 
 	.globl gUnknown_82C7D28
 gUnknown_82C7D28: @ 0x82C7D28
-	.incbin "build/data/data.bin", 0x2bf84, 0x113
+	.incbin "baserom_jp.gba", 0x2c7d28, 0x113
 
 	.globl gUnknown_82C7E3B
 gUnknown_82C7E3B: @ 0x82C7E3B
-	.incbin "build/data/data.bin", 0x2c097, 0x4b
+	.incbin "baserom_jp.gba", 0x2c7e3b, 0x4b
 
 	.globl gUnknown_82C7E86
 gUnknown_82C7E86: @ 0x82C7E86
-	.incbin "build/data/data.bin", 0x2c0e2, 0x4e
+	.incbin "baserom_jp.gba", 0x2c7e86, 0x4e
 
 	.globl gUnknown_82C7ED4
 gUnknown_82C7ED4: @ 0x82C7ED4
-	.incbin "build/data/data.bin", 0x2c130, 0x37
+	.incbin "baserom_jp.gba", 0x2c7ed4, 0x37
 
 	.globl gUnknown_82C7F0B
 gUnknown_82C7F0B: @ 0x82C7F0B
-	.incbin "build/data/data.bin", 0x2c167, 0x3409
+	.incbin "baserom_jp.gba", 0x2c7f0b, 0x3409
 
 	.globl gUnknown_82CB314
 gUnknown_82CB314: @ 0x82CB314
-	.incbin "build/data/data.bin", 0x2f570, 0xc
+	.incbin "baserom_jp.gba", 0x2cb314, 0xc
 
 	.globl gUnknown_82CB320
 gUnknown_82CB320: @ 0x82CB320
-	.incbin "build/data/data.bin", 0x2f57c, 0x8
+	.incbin "baserom_jp.gba", 0x2cb320, 0x8
 
 	.globl gUnknown_82CB328
 gUnknown_82CB328: @ 0x82CB328
-	.incbin "build/data/data.bin", 0x2f584, 0x8
+	.incbin "baserom_jp.gba", 0x2cb328, 0x8
 
 	.globl gUnknown_82CB330
 gUnknown_82CB330: @ 0x82CB330
-	.incbin "build/data/data.bin", 0x2f58c, 0x20
+	.incbin "baserom_jp.gba", 0x2cb330, 0x20
 
 	.globl gUnknown_82CB350
 gUnknown_82CB350: @ 0x82CB350
-	.incbin "build/data/data.bin", 0x2f5ac, 0x30
+	.incbin "baserom_jp.gba", 0x2cb350, 0x30
 
 	.globl gUnknown_82CB380
 gUnknown_82CB380: @ 0x82CB380
-	.incbin "build/data/data.bin", 0x2f5dc, 0x30
+	.incbin "baserom_jp.gba", 0x2cb380, 0x30
 
 	.globl gUnknown_82CB3B0
 gUnknown_82CB3B0: @ 0x82CB3B0
-	.incbin "build/data/data.bin", 0x2f60c, 0x8
+	.incbin "baserom_jp.gba", 0x2cb3b0, 0x8
 
 	.globl gUnknown_82CB3B8
 gUnknown_82CB3B8: @ 0x82CB3B8
-	.incbin "build/data/data.bin", 0x2f614, 0x8
+	.incbin "baserom_jp.gba", 0x2cb3b8, 0x8
 
 	.globl gUnknown_82CB3C0
 gUnknown_82CB3C0: @ 0x82CB3C0
-	.incbin "build/data/data.bin", 0x2f61c, 0xc
+	.incbin "baserom_jp.gba", 0x2cb3c0, 0xc
 
 	.globl gUnknown_82CB3CC
 gUnknown_82CB3CC: @ 0x82CB3CC
-	.incbin "build/data/data.bin", 0x2f628, 0x4
+	.incbin "baserom_jp.gba", 0x2cb3cc, 0x4
 
 	.globl gUnknown_82CB3D0
 gUnknown_82CB3D0: @ 0x82CB3D0
-	.incbin "build/data/data.bin", 0x2f62c, 0x6
+	.incbin "baserom_jp.gba", 0x2cb3d0, 0x6
 
 	.globl gUnknown_82CB3D6
 gUnknown_82CB3D6: @ 0x82CB3D6
-	.incbin "build/data/data.bin", 0x2f632, 0x6
+	.incbin "baserom_jp.gba", 0x2cb3d6, 0x6
 
 	.globl gUnknown_82CB3DC
 gUnknown_82CB3DC: @ 0x82CB3DC
@@ -1773,679 +1773,679 @@ gUnknown_82CB3DC: @ 0x82CB3DC
 
 	.globl gUnknown_82CB41C
 gUnknown_82CB41C: @ 0x82CB41C
-	.incbin "build/data/data.bin", 0x2f678, 0x14
+	.incbin "baserom_jp.gba", 0x2cb41c, 0x14
 
 	.globl gUnknown_82CB430
 gUnknown_82CB430: @ 0x82CB430
-	.incbin "build/data/data.bin", 0x2f68c, 0x18
+	.incbin "baserom_jp.gba", 0x2cb430, 0x18
 
 	.globl gUnknown_82CB448
 gUnknown_82CB448: @ 0x82CB448
-	.incbin "build/data/data.bin", 0x2f6a4, 0x10
+	.incbin "baserom_jp.gba", 0x2cb448, 0x10
 
 	.globl gUnknown_82CB458
 gUnknown_82CB458: @ 0x82CB458
-	.incbin "build/data/data.bin", 0x2f6b4, 0x8
+	.incbin "baserom_jp.gba", 0x2cb458, 0x8
 
 	.globl gUnknown_82CB460
 gUnknown_82CB460: @ 0x82CB460
-	.incbin "build/data/data.bin", 0x2f6bc, 0x10
+	.incbin "baserom_jp.gba", 0x2cb460, 0x10
 
 	.globl gUnknown_82CB470
 gUnknown_82CB470: @ 0x82CB470
-	.incbin "build/data/data.bin", 0x2f6cc, 0x8
+	.incbin "baserom_jp.gba", 0x2cb470, 0x8
 
 	.globl gUnknown_82CB478
 gUnknown_82CB478: @ 0x82CB478
-	.incbin "build/data/data.bin", 0x2f6d4, 0x204
+	.incbin "baserom_jp.gba", 0x2cb478, 0x204
 
 	.globl gUnknown_82CB67C
 gUnknown_82CB67C: @ 0x82CB67C
-	.incbin "build/data/data.bin", 0x2f8d8, 0xc0
+	.incbin "baserom_jp.gba", 0x2cb67c, 0xc0
 
 	.globl gUnknown_82CB73C
 gUnknown_82CB73C: @ 0x82CB73C
-	.incbin "build/data/data.bin", 0x2f998, 0x1d4
+	.incbin "baserom_jp.gba", 0x2cb73c, 0x1d4
 
 	.globl gUnknown_82CB910
 gUnknown_82CB910: @ 0x82CB910
-	.incbin "build/data/data.bin", 0x2fb6c, 0x890
+	.incbin "baserom_jp.gba", 0x2cb910, 0x890
 
 	.globl gUnknown_82CC1A0
 gUnknown_82CC1A0: @ 0x82CC1A0
-	.incbin "build/data/data.bin", 0x303fc, 0xdcc
+	.incbin "baserom_jp.gba", 0x2cc1a0, 0xdcc
 
 	.globl gUnknown_82CCF6C
 gUnknown_82CCF6C: @ 0x82CCF6C
-	.incbin "build/data/data.bin", 0x311c8, 0x94
+	.incbin "baserom_jp.gba", 0x2ccf6c, 0x94
 
 	.globl gUnknown_82CD000
 gUnknown_82CD000: @ 0x82CD000
-	.incbin "build/data/data.bin", 0x3125c, 0x148
+	.incbin "baserom_jp.gba", 0x2cd000, 0x148
 
 	.globl gUnknown_82CD148
 gUnknown_82CD148: @ 0x82CD148
-	.incbin "build/data/data.bin", 0x313a4, 0x121c
+	.incbin "baserom_jp.gba", 0x2cd148, 0x121c
 
 	.globl gUnknown_82CE364
 gUnknown_82CE364: @ 0x82CE364
-	.incbin "build/data/data.bin", 0x325c0, 0x26c
+	.incbin "baserom_jp.gba", 0x2ce364, 0x26c
 
 	.globl gUnknown_82CE5D0
 gUnknown_82CE5D0: @ 0x82CE5D0
-	.incbin "build/data/data.bin", 0x3282c, 0x250
+	.incbin "baserom_jp.gba", 0x2ce5d0, 0x250
 
 	.globl gUnknown_82CE820
 gUnknown_82CE820: @ 0x82CE820
-	.incbin "build/data/data.bin", 0x32a7c, 0x24c
+	.incbin "baserom_jp.gba", 0x2ce820, 0x24c
 
 	.globl gUnknown_82CEA6C
 gUnknown_82CEA6C: @ 0x82CEA6C
-	.incbin "build/data/data.bin", 0x32cc8, 0x48
+	.incbin "baserom_jp.gba", 0x2cea6c, 0x48
 
 	.globl gUnknown_82CEAB4
 gUnknown_82CEAB4: @ 0x82CEAB4
-	.incbin "build/data/data.bin", 0x32d10, 0xb0
+	.incbin "baserom_jp.gba", 0x2ceab4, 0xb0
 
 	.globl gUnknown_82CEB64
 gUnknown_82CEB64: @ 0x82CEB64
-	.incbin "build/data/data.bin", 0x32dc0, 0x8
+	.incbin "baserom_jp.gba", 0x2ceb64, 0x8
 
 	.globl gUnknown_82CEB6C
 gUnknown_82CEB6C: @ 0x82CEB6C
-	.incbin "build/data/data.bin", 0x32dc8, 0x8
+	.incbin "baserom_jp.gba", 0x2ceb6c, 0x8
 
 	.globl gUnknown_82CEB74
 gUnknown_82CEB74: @ 0x82CEB74
-	.incbin "build/data/data.bin", 0x32dd0, 0x8
+	.incbin "baserom_jp.gba", 0x2ceb74, 0x8
 
 	.globl gUnknown_82CEB7C
 gUnknown_82CEB7C: @ 0x82CEB7C
-	.incbin "build/data/data.bin", 0x32dd8, 0x24
+	.incbin "baserom_jp.gba", 0x2ceb7c, 0x24
 
 	.globl gUnknown_82CEBA0
 gUnknown_82CEBA0: @ 0x82CEBA0
-	.incbin "build/data/data.bin", 0x32dfc, 0x8
+	.incbin "baserom_jp.gba", 0x2ceba0, 0x8
 
 	.globl gUnknown_82CEBA8
 gUnknown_82CEBA8: @ 0x82CEBA8
-	.incbin "build/data/data.bin", 0x32e04, 0x8
+	.incbin "baserom_jp.gba", 0x2ceba8, 0x8
 
 	.globl gUnknown_82CEBB0
 gUnknown_82CEBB0: @ 0x82CEBB0
-	.incbin "build/data/data.bin", 0x32e0c, 0x18
+	.incbin "baserom_jp.gba", 0x2cebb0, 0x18
 
 	.globl gUnknown_82CEBC8
 gUnknown_82CEBC8: @ 0x82CEBC8
-	.incbin "build/data/data.bin", 0x32e24, 0x18
+	.incbin "baserom_jp.gba", 0x2cebc8, 0x18
 
 	.globl gUnknown_82CEBE0
 gUnknown_82CEBE0: @ 0x82CEBE0
-	.incbin "build/data/data.bin", 0x32e3c, 0x2
+	.incbin "baserom_jp.gba", 0x2cebe0, 0x2
 
 	.globl gUnknown_82CEBE2
 gUnknown_82CEBE2: @ 0x82CEBE2
-	.incbin "build/data/data.bin", 0x32e3e, 0xa
+	.incbin "baserom_jp.gba", 0x2cebe2, 0xa
 
 	.globl gUnknown_82CEBEC
 gUnknown_82CEBEC: @ 0x82CEBEC
-	.incbin "build/data/data.bin", 0x32e48, 0x8
+	.incbin "baserom_jp.gba", 0x2cebec, 0x8
 
 	.globl gUnknown_82CEBF4
 gUnknown_82CEBF4: @ 0x82CEBF4
-	.incbin "build/data/data.bin", 0x32e50, 0x18
+	.incbin "baserom_jp.gba", 0x2cebf4, 0x18
 
 	.globl gUnknown_82CEC0C
 gUnknown_82CEC0C: @ 0x82CEC0C
-	.incbin "build/data/data.bin", 0x32e68, 0x3
+	.incbin "baserom_jp.gba", 0x2cec0c, 0x3
 
 	.globl gUnknown_82CEC0F
 gUnknown_82CEC0F: @ 0x82CEC0F
-	.incbin "build/data/data.bin", 0x32e6b, 0x45
+	.incbin "baserom_jp.gba", 0x2cec0f, 0x45
 
 	.globl gUnknown_82CEC54
 gUnknown_82CEC54: @ 0x82CEC54
-	.incbin "build/data/data.bin", 0x32eb0, 0x14
+	.incbin "baserom_jp.gba", 0x2cec54, 0x14
 
 	.globl gUnknown_82CEC68
 gUnknown_82CEC68: @ 0x82CEC68
-	.incbin "build/data/data.bin", 0x32ec4, 0x14
+	.incbin "baserom_jp.gba", 0x2cec68, 0x14
 
 	.globl gUnknown_82CEC7C
 gUnknown_82CEC7C: @ 0x82CEC7C
-	.incbin "build/data/data.bin", 0x32ed8, 0x8
+	.incbin "baserom_jp.gba", 0x2cec7c, 0x8
 
 	.globl gUnknown_82CEC84
 gUnknown_82CEC84: @ 0x82CEC84
-	.incbin "build/data/data.bin", 0x32ee0, 0xa
+	.incbin "baserom_jp.gba", 0x2cec84, 0xa
 
 	.globl gUnknown_82CEC8E
 gUnknown_82CEC8E: @ 0x82CEC8E
-	.incbin "build/data/data.bin", 0x32eea, 0xa
+	.incbin "baserom_jp.gba", 0x2cec8e, 0xa
 
 	.globl gUnknown_82CEC98
 gUnknown_82CEC98: @ 0x82CEC98
-	.incbin "build/data/data.bin", 0x32ef4, 0x50
+	.incbin "baserom_jp.gba", 0x2cec98, 0x50
 
 	.globl gUnknown_82CECE8
 gUnknown_82CECE8: @ 0x82CECE8
-	.incbin "build/data/data.bin", 0x32f44, 0x8
+	.incbin "baserom_jp.gba", 0x2cece8, 0x8
 
 	.globl gUnknown_82CECF0
 gUnknown_82CECF0: @ 0x82CECF0
-	.incbin "build/data/data.bin", 0x32f4c, 0x190
+	.incbin "baserom_jp.gba", 0x2cecf0, 0x190
 
 	.globl gUnknown_82CEE80
 gUnknown_82CEE80: @ 0x82CEE80
-	.incbin "build/data/data.bin", 0x330dc, 0x24
+	.incbin "baserom_jp.gba", 0x2cee80, 0x24
 
 	.globl gUnknown_82CEEA4
 gUnknown_82CEEA4: @ 0x82CEEA4
-	.incbin "build/data/data.bin", 0x33100, 0x24
+	.incbin "baserom_jp.gba", 0x2ceea4, 0x24
 
 	.globl gUnknown_82CEEC8
 gUnknown_82CEEC8: @ 0x82CEEC8
-	.incbin "build/data/data.bin", 0x33124, 0x10
+	.incbin "baserom_jp.gba", 0x2ceec8, 0x10
 
 	.globl gUnknown_82CEED8
 gUnknown_82CEED8: @ 0x82CEED8
-	.incbin "build/data/data.bin", 0x33134, 0x8
+	.incbin "baserom_jp.gba", 0x2ceed8, 0x8
 
 	.globl gUnknown_82CEEE0
 gUnknown_82CEEE0: @ 0x82CEEE0
-	.incbin "build/data/data.bin", 0x3313c, 0x8
+	.incbin "baserom_jp.gba", 0x2ceee0, 0x8
 
 	.globl gUnknown_82CEEE8
 gUnknown_82CEEE8: @ 0x82CEEE8
-	.incbin "build/data/data.bin", 0x33144, 0x90
+	.incbin "baserom_jp.gba", 0x2ceee8, 0x90
 
 	.globl gUnknown_82CEF78
 gUnknown_82CEF78: @ 0x82CEF78
-	.incbin "build/data/data.bin", 0x331d4, 0x18
+	.incbin "baserom_jp.gba", 0x2cef78, 0x18
 
 	.globl gUnknown_82CEF90
 gUnknown_82CEF90: @ 0x82CEF90
-	.incbin "build/data/data.bin", 0x331ec, 0x10
+	.incbin "baserom_jp.gba", 0x2cef90, 0x10
 
 	.globl gUnknown_82CEFA0
 gUnknown_82CEFA0: @ 0x82CEFA0
-	.incbin "build/data/data.bin", 0x331fc, 0x6f4
+	.incbin "baserom_jp.gba", 0x2cefa0, 0x6f4
 
 	.globl gUnknown_82CF694
 gUnknown_82CF694: @ 0x82CF694
-	.incbin "build/data/data.bin", 0x338f0, 0x28
+	.incbin "baserom_jp.gba", 0x2cf694, 0x28
 
 	.globl gUnknown_82CF6BC
 gUnknown_82CF6BC: @ 0x82CF6BC
-	.incbin "build/data/data.bin", 0x33918, 0x10
+	.incbin "baserom_jp.gba", 0x2cf6bc, 0x10
 
 	.globl gUnknown_82CF6CC
 gUnknown_82CF6CC: @ 0x82CF6CC
-	.incbin "build/data/data.bin", 0x33928, 0x18
+	.incbin "baserom_jp.gba", 0x2cf6cc, 0x18
 
 	.globl gUnknown_82CF6E4
 gUnknown_82CF6E4: @ 0x82CF6E4
-	.incbin "build/data/data.bin", 0x33940, 0x50
+	.incbin "baserom_jp.gba", 0x2cf6e4, 0x50
 
 	.globl gUnknown_82CF734
 gUnknown_82CF734: @ 0x82CF734
-	.incbin "build/data/data.bin", 0x33990, 0x10
+	.incbin "baserom_jp.gba", 0x2cf734, 0x10
 
 	.globl gUnknown_82CF744
 gUnknown_82CF744: @ 0x82CF744
-	.incbin "build/data/data.bin", 0x339a0, 0x154
+	.incbin "baserom_jp.gba", 0x2cf744, 0x154
 
 	.globl gUnknown_82CF898
 gUnknown_82CF898: @ 0x82CF898
-	.incbin "build/data/data.bin", 0x33af4, 0x18
+	.incbin "baserom_jp.gba", 0x2cf898, 0x18
 
 	.globl gUnknown_82CF8B0
 gUnknown_82CF8B0: @ 0x82CF8B0
-	.incbin "build/data/data.bin", 0x33b0c, 0x20
+	.incbin "baserom_jp.gba", 0x2cf8b0, 0x20
 
 	.globl gUnknown_82CF8D0
 gUnknown_82CF8D0: @ 0x82CF8D0
-	.incbin "build/data/data.bin", 0x33b2c, 0x20
+	.incbin "baserom_jp.gba", 0x2cf8d0, 0x20
 
 	.globl gUnknown_82CF8F0
 gUnknown_82CF8F0: @ 0x82CF8F0
-	.incbin "build/data/data.bin", 0x33b4c, 0x22c
+	.incbin "baserom_jp.gba", 0x2cf8f0, 0x22c
 
 	.globl gUnknown_82CFB1C
 gUnknown_82CFB1C: @ 0x82CFB1C
-	.incbin "build/data/data.bin", 0x33d78, 0x1b0
+	.incbin "baserom_jp.gba", 0x2cfb1c, 0x1b0
 
 	.globl gUnknown_82CFCCC
 gUnknown_82CFCCC: @ 0x82CFCCC
-	.incbin "build/data/data.bin", 0x33f28, 0x20
+	.incbin "baserom_jp.gba", 0x2cfccc, 0x20
 
 	.globl gUnknown_82CFCEC
 gUnknown_82CFCEC: @ 0x82CFCEC
-	.incbin "build/data/data.bin", 0x33f48, 0x950
+	.incbin "baserom_jp.gba", 0x2cfcec, 0x950
 
 	.globl gUnknown_82D063C
 gUnknown_82D063C: @ 0x82D063C
-	.incbin "build/data/data.bin", 0x34898, 0x3b8
+	.incbin "baserom_jp.gba", 0x2d063c, 0x3b8
 
 	.globl gUnknown_82D09F4
 gUnknown_82D09F4: @ 0x82D09F4
-	.incbin "build/data/data.bin", 0x34c50, 0x20
+	.incbin "baserom_jp.gba", 0x2d09f4, 0x20
 
 	.globl gUnknown_82D0A14
 gUnknown_82D0A14: @ 0x82D0A14
-	.incbin "build/data/data.bin", 0x34c70, 0xab0
+	.incbin "baserom_jp.gba", 0x2d0a14, 0xab0
 
 	.globl gUnknown_82D14C4
 gUnknown_82D14C4: @ 0x82D14C4
-	.incbin "build/data/data.bin", 0x35720, 0x52c
+	.incbin "baserom_jp.gba", 0x2d14c4, 0x52c
 
 	.globl gUnknown_82D19F0
 gUnknown_82D19F0: @ 0x82D19F0
-	.incbin "build/data/data.bin", 0x35c4c, 0x10
+	.incbin "baserom_jp.gba", 0x2d19f0, 0x10
 
 	.globl gUnknown_82D1A00
 gUnknown_82D1A00: @ 0x82D1A00
-	.incbin "build/data/data.bin", 0x35c5c, 0x18
+	.incbin "baserom_jp.gba", 0x2d1a00, 0x18
 
 	.globl gUnknown_82D1A18
 gUnknown_82D1A18: @ 0x82D1A18
-	.incbin "build/data/data.bin", 0x35c74, 0x50
+	.incbin "baserom_jp.gba", 0x2d1a18, 0x50
 
 	.globl gUnknown_82D1A68
 gUnknown_82D1A68: @ 0x82D1A68
-	.incbin "build/data/data.bin", 0x35cc4, 0x3
+	.incbin "baserom_jp.gba", 0x2d1a68, 0x3
 
 	.globl gUnknown_82D1A6B
 gUnknown_82D1A6B: @ 0x82D1A6B
-	.incbin "build/data/data.bin", 0x35cc7, 0xd
+	.incbin "baserom_jp.gba", 0x2d1a6b, 0xd
 
 	.globl gUnknown_82D1A78
 gUnknown_82D1A78: @ 0x82D1A78
-	.incbin "build/data/data.bin", 0x35cd4, 0x8
+	.incbin "baserom_jp.gba", 0x2d1a78, 0x8
 
 	.globl gUnknown_82D1A80
 gUnknown_82D1A80: @ 0x82D1A80
-	.incbin "build/data/data.bin", 0x35cdc, 0x40
+	.incbin "baserom_jp.gba", 0x2d1a80, 0x40
 
 	.globl gUnknown_82D1AC0
 gUnknown_82D1AC0: @ 0x82D1AC0
-	.incbin "build/data/data.bin", 0x35d1c, 0x2c
+	.incbin "baserom_jp.gba", 0x2d1ac0, 0x2c
 
 	.globl gUnknown_82D1AEC
 gUnknown_82D1AEC: @ 0x82D1AEC
-	.incbin "build/data/data.bin", 0x35d48, 0x10
+	.incbin "baserom_jp.gba", 0x2d1aec, 0x10
 
 	.globl gUnknown_82D1AFC
 gUnknown_82D1AFC: @ 0x82D1AFC
-	.incbin "build/data/data.bin", 0x35d58, 0x8
+	.incbin "baserom_jp.gba", 0x2d1afc, 0x8
 
 	.globl gUnknown_82D1B04
 gUnknown_82D1B04: @ 0x82D1B04
-	.incbin "build/data/data.bin", 0x35d60, 0x450
+	.incbin "baserom_jp.gba", 0x2d1b04, 0x450
 
 	.globl gUnknown_82D1F54
 gUnknown_82D1F54: @ 0x82D1F54
-	.incbin "build/data/data.bin", 0x361b0, 0x10
+	.incbin "baserom_jp.gba", 0x2d1f54, 0x10
 
 	.globl gUnknown_82D1F64
 gUnknown_82D1F64: @ 0x82D1F64
-	.incbin "build/data/data.bin", 0x361c0, 0x58
+	.incbin "baserom_jp.gba", 0x2d1f64, 0x58
 
 	.globl gUnknown_82D1FBC
 gUnknown_82D1FBC: @ 0x82D1FBC
-	.incbin "build/data/data.bin", 0x36218, 0x18
+	.incbin "baserom_jp.gba", 0x2d1fbc, 0x18
 
 	.globl gUnknown_82D1FD4
 gUnknown_82D1FD4: @ 0x82D1FD4
-	.incbin "build/data/data.bin", 0x36230, 0x484
+	.incbin "baserom_jp.gba", 0x2d1fd4, 0x484
 
 	.globl gUnknown_82D2458
 gUnknown_82D2458: @ 0x82D2458
-	.incbin "build/data/data.bin", 0x366b4, 0x8
+	.incbin "baserom_jp.gba", 0x2d2458, 0x8
 
 	.globl gUnknown_82D2460
 gUnknown_82D2460: @ 0x82D2460
-	.incbin "build/data/data.bin", 0x366bc, 0xbc
+	.incbin "baserom_jp.gba", 0x2d2460, 0xbc
 
 	.globl gUnknown_82D251C
 gUnknown_82D251C: @ 0x82D251C
-	.incbin "build/data/data.bin", 0x36778, 0x18
+	.incbin "baserom_jp.gba", 0x2d251c, 0x18
 
 	.globl gUnknown_82D2534
 gUnknown_82D2534: @ 0x82D2534
-	.incbin "build/data/data.bin", 0x36790, 0x18
+	.incbin "baserom_jp.gba", 0x2d2534, 0x18
 
 	.globl gUnknown_82D254C
 gUnknown_82D254C: @ 0x82D254C
-	.incbin "build/data/data.bin", 0x367a8, 0xc
+	.incbin "baserom_jp.gba", 0x2d254c, 0xc
 
 	.globl gUnknown_82D2558
 gUnknown_82D2558: @ 0x82D2558
-	.incbin "build/data/data.bin", 0x367b4, 0x30
+	.incbin "baserom_jp.gba", 0x2d2558, 0x30
 
 	.globl gUnknown_82D2588
 gUnknown_82D2588: @ 0x82D2588
-	.incbin "build/data/data.bin", 0x367e4, 0x40
+	.incbin "baserom_jp.gba", 0x2d2588, 0x40
 
 	.globl gUnknown_82D25C8
 gUnknown_82D25C8: @ 0x82D25C8
-	.incbin "build/data/data.bin", 0x36824, 0x1b4
+	.incbin "baserom_jp.gba", 0x2d25c8, 0x1b4
 
 	.globl gUnknown_82D277C
 gUnknown_82D277C: @ 0x82D277C
-	.incbin "build/data/data.bin", 0x369d8, 0x12a
+	.incbin "baserom_jp.gba", 0x2d277c, 0x12a
 
 	.globl gUnknown_82D28A6
 gUnknown_82D28A6: @ 0x82D28A6
-	.incbin "build/data/data.bin", 0x36b02, 0x2
+	.incbin "baserom_jp.gba", 0x2d28a6, 0x2
 
 	.globl gUnknown_82D28A8
 gUnknown_82D28A8: @ 0x82D28A8
-	.incbin "build/data/data.bin", 0x36b04, 0xe
+	.incbin "baserom_jp.gba", 0x2d28a8, 0xe
 
 	.globl gUnknown_82D28B6
 gUnknown_82D28B6: @ 0x82D28B6
-	.incbin "build/data/data.bin", 0x36b12, 0x12
+	.incbin "baserom_jp.gba", 0x2d28b6, 0x12
 
 	.globl gUnknown_82D28C8
 gUnknown_82D28C8: @ 0x82D28C8
-	.incbin "build/data/data.bin", 0x36b24, 0x10
+	.incbin "baserom_jp.gba", 0x2d28c8, 0x10
 
 	.globl gUnknown_82D28D8
 gUnknown_82D28D8: @ 0x82D28D8
-	.incbin "build/data/data.bin", 0x36b34, 0x28
+	.incbin "baserom_jp.gba", 0x2d28d8, 0x28
 
 	.globl gUnknown_82D2900
 gUnknown_82D2900: @ 0x82D2900
-	.incbin "build/data/data.bin", 0x36b5c, 0x10
+	.incbin "baserom_jp.gba", 0x2d2900, 0x10
 
 	.globl gUnknown_82D2910
 gUnknown_82D2910: @ 0x82D2910
-	.incbin "build/data/data.bin", 0x36b6c, 0x8
+	.incbin "baserom_jp.gba", 0x2d2910, 0x8
 
 	.globl gUnknown_82D2918
 gUnknown_82D2918: @ 0x82D2918
-	.incbin "build/data/data.bin", 0x36b74, 0x18
+	.incbin "baserom_jp.gba", 0x2d2918, 0x18
 
 	.globl gUnknown_82D2930
 gUnknown_82D2930: @ 0x82D2930
-	.incbin "build/data/data.bin", 0x36b8c, 0x20
+	.incbin "baserom_jp.gba", 0x2d2930, 0x20
 
 	.globl gUnknown_82D2950
 gUnknown_82D2950: @ 0x82D2950
-	.incbin "build/data/data.bin", 0x36bac, 0x20
+	.incbin "baserom_jp.gba", 0x2d2950, 0x20
 
 	.globl gUnknown_82D2970
 gUnknown_82D2970: @ 0x82D2970
-	.incbin "build/data/data.bin", 0x36bcc, 0x3
+	.incbin "baserom_jp.gba", 0x2d2970, 0x3
 
 	.globl gUnknown_82D2973
 gUnknown_82D2973: @ 0x82D2973
-	.incbin "build/data/data.bin", 0x36bcf, 0x5
+	.incbin "baserom_jp.gba", 0x2d2973, 0x5
 
 	.globl gUnknown_82D2978
 gUnknown_82D2978: @ 0x82D2978
-	.incbin "build/data/data.bin", 0x36bd4, 0x8
+	.incbin "baserom_jp.gba", 0x2d2978, 0x8
 
 	.globl gUnknown_82D2980
 gUnknown_82D2980: @ 0x82D2980
-	.incbin "build/data/data.bin", 0x36bdc, 0x4
+	.incbin "baserom_jp.gba", 0x2d2980, 0x4
 
 	.globl gUnknown_82D2984
 gUnknown_82D2984: @ 0x82D2984
-	.incbin "build/data/data.bin", 0x36be0, 0x20
+	.incbin "baserom_jp.gba", 0x2d2984, 0x20
 
 	.globl gUnknown_82D29A4
 gUnknown_82D29A4: @ 0x82D29A4
-	.incbin "build/data/data.bin", 0x36c00, 0x4
+	.incbin "baserom_jp.gba", 0x2d29a4, 0x4
 
 	.globl gUnknown_82D29A8
 gUnknown_82D29A8: @ 0x82D29A8
-	.incbin "build/data/data.bin", 0x36c04, 0x10
+	.incbin "baserom_jp.gba", 0x2d29a8, 0x10
 
 	.globl gUnknown_82D29B8
 gUnknown_82D29B8: @ 0x82D29B8
-	.incbin "build/data/data.bin", 0x36c14, 0x50
+	.incbin "baserom_jp.gba", 0x2d29b8, 0x50
 
 	.globl gUnknown_82D2A08
 gUnknown_82D2A08: @ 0x82D2A08
-	.incbin "build/data/data.bin", 0x36c64, 0x50
+	.incbin "baserom_jp.gba", 0x2d2a08, 0x50
 
 	.globl gUnknown_82D2A58
 gUnknown_82D2A58: @ 0x82D2A58
-	.incbin "build/data/data.bin", 0x36cb4, 0x450
+	.incbin "baserom_jp.gba", 0x2d2a58, 0x450
 
 	.globl gUnknown_82D2EA8
 gUnknown_82D2EA8: @ 0x82D2EA8
-	.incbin "build/data/data.bin", 0x37104, 0x7c
+	.incbin "baserom_jp.gba", 0x2d2ea8, 0x7c
 
 	.globl gUnknown_82D2F24
 gUnknown_82D2F24: @ 0x82D2F24
-	.incbin "build/data/data.bin", 0x37180, 0x2c
+	.incbin "baserom_jp.gba", 0x2d2f24, 0x2c
 
 	.globl gUnknown_82D2F50
 gUnknown_82D2F50: @ 0x82D2F50
-	.incbin "build/data/data.bin", 0x371ac, 0x4c
+	.incbin "baserom_jp.gba", 0x2d2f50, 0x4c
 
 	.globl gUnknown_82D2F9C
 gUnknown_82D2F9C: @ 0x82D2F9C
-	.incbin "build/data/data.bin", 0x371f8, 0x162c
+	.incbin "baserom_jp.gba", 0x2d2f9c, 0x162c
 
 	.globl gUnknown_82D45C8
 gUnknown_82D45C8: @ 0x82D45C8
-	.incbin "build/data/data.bin", 0x38824, 0x6e0
+	.incbin "baserom_jp.gba", 0x2d45c8, 0x6e0
 
 	.globl gUnknown_82D4CA8
 gUnknown_82D4CA8: @ 0x82D4CA8
-	.incbin "build/data/data.bin", 0x38f04, 0xdc0
+	.incbin "baserom_jp.gba", 0x2d4ca8, 0xdc0
 
 	.globl gUnknown_82D5A68
 gUnknown_82D5A68: @ 0x82D5A68
-	.incbin "build/data/data.bin", 0x39cc4, 0x6e0
+	.incbin "baserom_jp.gba", 0x2d5a68, 0x6e0
 
 	.globl gUnknown_82D6148
 gUnknown_82D6148: @ 0x82D6148
-	.incbin "build/data/data.bin", 0x3a3a4, 0xdc0
+	.incbin "baserom_jp.gba", 0x2d6148, 0xdc0
 
 	.globl gUnknown_82D6F08
 gUnknown_82D6F08: @ 0x82D6F08
-	.incbin "build/data/data.bin", 0x3b164, 0xdc0
+	.incbin "baserom_jp.gba", 0x2d6f08, 0xdc0
 
 	.globl gUnknown_82D7CC8
 gUnknown_82D7CC8: @ 0x82D7CC8
-	.incbin "build/data/data.bin", 0x3bf24, 0xf34
+	.incbin "baserom_jp.gba", 0x2d7cc8, 0xf34
 
 	.globl gUnknown_82D8BFC
 gUnknown_82D8BFC: @ 0x82D8BFC
-	.incbin "build/data/data.bin", 0x3ce58, 0x174
+	.incbin "baserom_jp.gba", 0x2d8bfc, 0x174
 
 	.globl gUnknown_82D8D70
 gUnknown_82D8D70: @ 0x82D8D70
-	.incbin "build/data/data.bin", 0x3cfcc, 0x174
+	.incbin "baserom_jp.gba", 0x2d8d70, 0x174
 
 	.globl gUnknown_82D8EE4
 gUnknown_82D8EE4: @ 0x82D8EE4
-	.incbin "build/data/data.bin", 0x3d140, 0x2e8
+	.incbin "baserom_jp.gba", 0x2d8ee4, 0x2e8
 
 	.globl gUnknown_82D91CC
 gUnknown_82D91CC: @ 0x82D91CC
-	.incbin "build/data/data.bin", 0x3d428, 0x3d0
+	.incbin "baserom_jp.gba", 0x2d91cc, 0x3d0
 
 	.globl gUnknown_82D959C
 gUnknown_82D959C: @ 0x82D959C
-	.incbin "build/data/data.bin", 0x3d7f8, 0x20
+	.incbin "baserom_jp.gba", 0x2d959c, 0x20
 
 	.globl gUnknown_82D95BC
 gUnknown_82D95BC: @ 0x82D95BC
-	.incbin "build/data/data.bin", 0x3d818, 0x20
+	.incbin "baserom_jp.gba", 0x2d95bc, 0x20
 
 	.globl gUnknown_82D95DC
 gUnknown_82D95DC: @ 0x82D95DC
-	.incbin "build/data/data.bin", 0x3d838, 0x40
+	.incbin "baserom_jp.gba", 0x2d95dc, 0x40
 
 	.globl gUnknown_82D961C
 gUnknown_82D961C: @ 0x82D961C
-	.incbin "build/data/data.bin", 0x3d878, 0x40
+	.incbin "baserom_jp.gba", 0x2d961c, 0x40
 
 	.globl gUnknown_82D965C
 gUnknown_82D965C: @ 0x82D965C
-	.incbin "build/data/data.bin", 0x3d8b8, 0x3ce0
+	.incbin "baserom_jp.gba", 0x2d965c, 0x3ce0
 
 	.globl gUnknown_82DD33C
 gUnknown_82DD33C: @ 0x82DD33C
-	.incbin "build/data/data.bin", 0x41598, 0x6e0
+	.incbin "baserom_jp.gba", 0x2dd33c, 0x6e0
 
 	.globl gUnknown_82DDA1C
 gUnknown_82DDA1C: @ 0x82DDA1C
-	.incbin "build/data/data.bin", 0x41c78, 0x5b48
+	.incbin "baserom_jp.gba", 0x2dda1c, 0x5b48
 
 	.globl gUnknown_82E3564
 gUnknown_82E3564: @ 0x82E3564
-	.incbin "build/data/data.bin", 0x477c0, 0x2d8
+	.incbin "baserom_jp.gba", 0x2e3564, 0x2d8
 
 	.globl gUnknown_82E383C
 gUnknown_82E383C: @ 0x82E383C
-	.incbin "build/data/data.bin", 0x47a98, 0x4
+	.incbin "baserom_jp.gba", 0x2e383c, 0x4
 
 	.globl gUnknown_82E3840
 gUnknown_82E3840: @ 0x82E3840
-	.incbin "build/data/data.bin", 0x47a9c, 0x6
+	.incbin "baserom_jp.gba", 0x2e3840, 0x6
 
 	.globl gUnknown_82E3846
 gUnknown_82E3846: @ 0x82E3846
-	.incbin "build/data/data.bin", 0x47aa2, 0x647a
+	.incbin "baserom_jp.gba", 0x2e3846, 0x647a
 
 	.globl gUnknown_82E9CC0
 gUnknown_82E9CC0: @ 0x82E9CC0
-	.incbin "build/data/data.bin", 0x4df1c, 0x40
+	.incbin "baserom_jp.gba", 0x2e9cc0, 0x40
 
 	.globl gUnknown_82E9D00
 gUnknown_82E9D00: @ 0x82E9D00
-	.incbin "build/data/data.bin", 0x4df5c, 0x61c
+	.incbin "baserom_jp.gba", 0x2e9d00, 0x61c
 
 	.globl gUnknown_82EA31C
 gUnknown_82EA31C: @ 0x82EA31C
-	.incbin "build/data/data.bin", 0x4e578, 0x9a8
+	.incbin "baserom_jp.gba", 0x2ea31c, 0x9a8
 
 	.globl gUnknown_82EACC4
 gUnknown_82EACC4: @ 0x82EACC4
-	.incbin "build/data/data.bin", 0x4ef20, 0xb64
+	.incbin "baserom_jp.gba", 0x2eacc4, 0xb64
 
 	.globl gUnknown_82EB828
 gUnknown_82EB828: @ 0x82EB828
-	.incbin "build/data/data.bin", 0x4fa84, 0x18
+	.incbin "baserom_jp.gba", 0x2eb828, 0x18
 
 	.globl gUnknown_82EB840
 gUnknown_82EB840: @ 0x82EB840
-	.incbin "build/data/data.bin", 0x4fa9c, 0x18
+	.incbin "baserom_jp.gba", 0x2eb840, 0x18
 
 	.globl gUnknown_82EB858
 gUnknown_82EB858: @ 0x82EB858
-	.incbin "build/data/data.bin", 0x4fab4, 0x8
+	.incbin "baserom_jp.gba", 0x2eb858, 0x8
 
 	.globl gUnknown_82EB860
 gUnknown_82EB860: @ 0x82EB860
-	.incbin "build/data/data.bin", 0x4fabc, 0x198
+	.incbin "baserom_jp.gba", 0x2eb860, 0x198
 
 	.globl gUnknown_82EB9F8
 gUnknown_82EB9F8: @ 0x82EB9F8
-	.incbin "build/data/data.bin", 0x4fc54, 0x8
+	.incbin "baserom_jp.gba", 0x2eb9f8, 0x8
 
 	.globl gUnknown_82EBA00
 gUnknown_82EBA00: @ 0x82EBA00
-	.incbin "build/data/data.bin", 0x4fc5c, 0xc8
+	.incbin "baserom_jp.gba", 0x2eba00, 0xc8
 
 	.globl gUnknown_82EBAC8
 gUnknown_82EBAC8: @ 0x82EBAC8
-	.incbin "build/data/data.bin", 0x4fd24, 0x18
+	.incbin "baserom_jp.gba", 0x2ebac8, 0x18
 
 	.globl gUnknown_82EBAE0
 gUnknown_82EBAE0: @ 0x82EBAE0
-	.incbin "build/data/data.bin", 0x4fd3c, 0x50
+	.incbin "baserom_jp.gba", 0x2ebae0, 0x50
 
 	.globl gUnknown_82EBB30
 gUnknown_82EBB30: @ 0x82EBB30
-	.incbin "build/data/data.bin", 0x4fd8c, 0x8
+	.incbin "baserom_jp.gba", 0x2ebb30, 0x8
 
 	.globl gUnknown_82EBB38
 gUnknown_82EBB38: @ 0x82EBB38
-	.incbin "build/data/data.bin", 0x4fd94, 0x150
+	.incbin "baserom_jp.gba", 0x2ebb38, 0x150
 
 	.globl gUnknown_82EBC88
 gUnknown_82EBC88: @ 0x82EBC88
-	.incbin "build/data/data.bin", 0x4fee4, 0x5c
+	.incbin "baserom_jp.gba", 0x2ebc88, 0x5c
 
 	.globl gUnknown_82EBCE4
 gUnknown_82EBCE4: @ 0x82EBCE4
-	.incbin "build/data/data.bin", 0x4ff40, 0xe0
+	.incbin "baserom_jp.gba", 0x2ebce4, 0xe0
 
 	.globl gUnknown_82EBDC4
 gUnknown_82EBDC4: @ 0x82EBDC4
-	.incbin "build/data/data.bin", 0x50020, 0x270
+	.incbin "baserom_jp.gba", 0x2ebdc4, 0x270
 
 	.globl gUnknown_82EC034
 gUnknown_82EC034: @ 0x82EC034
-	.incbin "build/data/data.bin", 0x50290, 0x5cc
+	.incbin "baserom_jp.gba", 0x2ec034, 0x5cc
 
 	.globl gUnknown_82EC600
 gUnknown_82EC600: @ 0x82EC600
-	.incbin "build/data/data.bin", 0x5085c, 0x38
+	.incbin "baserom_jp.gba", 0x2ec600, 0x38
 
 	.globl gUnknown_82EC638
 gUnknown_82EC638: @ 0x82EC638
-	.incbin "build/data/data.bin", 0x50894, 0x2c
+	.incbin "baserom_jp.gba", 0x2ec638, 0x2c
 
 	.globl gUnknown_82EC664
 gUnknown_82EC664: @ 0x82EC664
-	.incbin "build/data/data.bin", 0x508c0, 0xf
+	.incbin "baserom_jp.gba", 0x2ec664, 0xf
 
 	.globl gUnknown_82EC673
 gUnknown_82EC673: @ 0x82EC673
-	.incbin "build/data/data.bin", 0x508cf, 0x4
+	.incbin "baserom_jp.gba", 0x2ec673, 0x4
 
 	.globl gUnknown_82EC677
 gUnknown_82EC677: @ 0x82EC677
-	.incbin "build/data/data.bin", 0x508d3, 0x5
+	.incbin "baserom_jp.gba", 0x2ec677, 0x5
 
 	.globl gUnknown_82EC67C
 gUnknown_82EC67C: @ 0x82EC67C
-	.incbin "build/data/data.bin", 0x508d8, 0x18
+	.incbin "baserom_jp.gba", 0x2ec67c, 0x18
 
 	.globl gUnknown_82EC694
 gUnknown_82EC694: @ 0x82EC694
-	.incbin "build/data/data.bin", 0x508f0, 0x3e4
+	.incbin "baserom_jp.gba", 0x2ec694, 0x3e4
 
 	.globl gUnknown_82ECA78
 gUnknown_82ECA78: @ 0x82ECA78
-	.incbin "build/data/data.bin", 0x50cd4, 0x34
+	.incbin "baserom_jp.gba", 0x2eca78, 0x34
 
 	.globl gUnknown_82ECAAC
 gUnknown_82ECAAC: @ 0x82ECAAC
-	.incbin "build/data/data.bin", 0x50d08, 0xc
+	.incbin "baserom_jp.gba", 0x2ecaac, 0xc
 
 	.globl gUnknown_82ECAB8
 gUnknown_82ECAB8: @ 0x82ECAB8
-	.incbin "build/data/data.bin", 0x50d14, 0xf0
+	.incbin "baserom_jp.gba", 0x2ecab8, 0xf0
 
 	.globl gUnknown_82ECBA8
 gUnknown_82ECBA8: @ 0x82ECBA8
-	.incbin "build/data/data.bin", 0x50e04, 0xa4
+	.incbin "baserom_jp.gba", 0x2ecba8, 0xa4
 
 	.globl gUnknown_82ECC4C
 gUnknown_82ECC4C: @ 0x82ECC4C
-	.incbin "build/data/data.bin", 0x50ea8, 0x20
+	.incbin "baserom_jp.gba", 0x2ecc4c, 0x20
 
 	.globl gUnknown_82ECC6C
 gUnknown_82ECC6C: @ 0x82ECC6C
-	.incbin "build/data/data.bin", 0x50ec8, 0xd8
+	.incbin "baserom_jp.gba", 0x2ecc6c, 0xd8
 
 	.globl gUnknown_82ECD44
 gUnknown_82ECD44: @ 0x82ECD44
-	.incbin "build/data/data.bin", 0x50fa0, 0x18
+	.incbin "baserom_jp.gba", 0x2ecd44, 0x18
 
 	.globl gUnknown_82ECD5C
 gUnknown_82ECD5C: @ 0x82ECD5C
-	.incbin "build/data/data.bin", 0x50fb8, 0x8
+	.incbin "baserom_jp.gba", 0x2ecd5c, 0x8
 
 	.globl gUnknown_82ECD64
 gUnknown_82ECD64: @ 0x82ECD64
@@ -2457,11 +2457,11 @@ gUnknown_82ECD64: @ 0x82ECD64
 
 	.globl gUnknown_82ECD8C
 gUnknown_82ECD8C: @ 0x82ECD8C
-	.incbin "build/data/data.bin", 0x50fe8, 0xc
+	.incbin "baserom_jp.gba", 0x2ecd8c, 0xc
 
 	.globl gUnknown_82ECD98
 gUnknown_82ECD98: @ 0x82ECD98
-	.incbin "build/data/data.bin", 0x50ff4, 0x14
+	.incbin "baserom_jp.gba", 0x2ecd98, 0x14
 
 	.globl gUnknown_82ECDAC
 gUnknown_82ECDAC: @ 0x82ECDAC
@@ -2471,143 +2471,143 @@ gUnknown_82ECDAC: @ 0x82ECDAC
 
 	.globl gUnknown_82ECDC4
 gUnknown_82ECDC4: @ 0x82ECDC4
-	.incbin "build/data/data.bin", 0x51020, 0x24
+	.incbin "baserom_jp.gba", 0x2ecdc4, 0x24
 
 	.globl gUnknown_82ECDE8
 gUnknown_82ECDE8: @ 0x82ECDE8
-	.incbin "build/data/data.bin", 0x51044, 0x16
+	.incbin "baserom_jp.gba", 0x2ecde8, 0x16
 
 	.globl gUnknown_82ECDFE
 gUnknown_82ECDFE: @ 0x82ECDFE
-	.incbin "build/data/data.bin", 0x5105a, 0x9
+	.incbin "baserom_jp.gba", 0x2ecdfe, 0x9
 
 	.globl gUnknown_82ECE07
 gUnknown_82ECE07: @ 0x82ECE07
-	.incbin "build/data/data.bin", 0x51063, 0xa
+	.incbin "baserom_jp.gba", 0x2ece07, 0xa
 
 	.globl gUnknown_82ECE11
 gUnknown_82ECE11: @ 0x82ECE11
-	.incbin "build/data/data.bin", 0x5106d, 0x7
+	.incbin "baserom_jp.gba", 0x2ece11, 0x7
 
 	.globl gUnknown_82ECE18
 gUnknown_82ECE18: @ 0x82ECE18
-	.incbin "build/data/data.bin", 0x51074, 0x64
+	.incbin "baserom_jp.gba", 0x2ece18, 0x64
 
 	.globl gUnknown_82ECE7C
 gUnknown_82ECE7C: @ 0x82ECE7C
-	.incbin "build/data/data.bin", 0x510d8, 0x20
+	.incbin "baserom_jp.gba", 0x2ece7c, 0x20
 
 	.globl gUnknown_82ECE9C
 gUnknown_82ECE9C: @ 0x82ECE9C
-	.incbin "build/data/data.bin", 0x510f8, 0xe4
+	.incbin "baserom_jp.gba", 0x2ece9c, 0xe4
 
 	.globl gUnknown_82ECF80
 gUnknown_82ECF80: @ 0x82ECF80
-	.incbin "build/data/data.bin", 0x511dc, 0xc
+	.incbin "baserom_jp.gba", 0x2ecf80, 0xc
 
 	.globl gUnknown_82ECF8C
 gUnknown_82ECF8C: @ 0x82ECF8C
-	.incbin "build/data/data.bin", 0x511e8, 0x1c
+	.incbin "baserom_jp.gba", 0x2ecf8c, 0x1c
 
 	.globl gUnknown_82ECFA8
 gUnknown_82ECFA8: @ 0x82ECFA8
-	.incbin "build/data/data.bin", 0x51204, 0x8
+	.incbin "baserom_jp.gba", 0x2ecfa8, 0x8
 
 	.globl gUnknown_82ECFB0
 gUnknown_82ECFB0: @ 0x82ECFB0
-	.incbin "build/data/data.bin", 0x5120c, 0x60
+	.incbin "baserom_jp.gba", 0x2ecfb0, 0x60
 
 	.globl gUnknown_82ED010
 gUnknown_82ED010: @ 0x82ED010
-	.incbin "build/data/data.bin", 0x5126c, 0x18
+	.incbin "baserom_jp.gba", 0x2ed010, 0x18
 
 	.globl gUnknown_82ED028
 gUnknown_82ED028: @ 0x82ED028
-	.incbin "build/data/data.bin", 0x51284, 0x10
+	.incbin "baserom_jp.gba", 0x2ed028, 0x10
 
 	.globl gUnknown_82ED038
 gUnknown_82ED038: @ 0x82ED038
-	.incbin "build/data/data.bin", 0x51294, 0x18
+	.incbin "baserom_jp.gba", 0x2ed038, 0x18
 
 	.globl gUnknown_82ED050
 gUnknown_82ED050: @ 0x82ED050
-	.incbin "build/data/data.bin", 0x512ac, 0xec
+	.incbin "baserom_jp.gba", 0x2ed050, 0xec
 
 	.globl gUnknown_82ED13C
 gUnknown_82ED13C: @ 0x82ED13C
-	.incbin "build/data/data.bin", 0x51398, 0xe4
+	.incbin "baserom_jp.gba", 0x2ed13c, 0xe4
 
 	.globl gUnknown_82ED220
 gUnknown_82ED220: @ 0x82ED220
-	.incbin "build/data/data.bin", 0x5147c, 0x4
+	.incbin "baserom_jp.gba", 0x2ed220, 0x4
 
 	.globl gUnknown_82ED224
 gUnknown_82ED224: @ 0x82ED224
-	.incbin "build/data/data.bin", 0x51480, 0x10b0
+	.incbin "baserom_jp.gba", 0x2ed224, 0x10b0
 
 	.globl gUnknown_82EE2D4
 gUnknown_82EE2D4: @ 0x82EE2D4
-	.incbin "build/data/data.bin", 0x52530, 0x336
+	.incbin "baserom_jp.gba", 0x2ee2d4, 0x336
 
 	.globl gUnknown_82EE60A
 gUnknown_82EE60A: @ 0x82EE60A
-	.incbin "build/data/data.bin", 0x52866, 0x336
+	.incbin "baserom_jp.gba", 0x2ee60a, 0x336
 
 	.globl gUnknown_82EE940
 gUnknown_82EE940: @ 0x82EE940
-	.incbin "build/data/data.bin", 0x52b9c, 0x338
+	.incbin "baserom_jp.gba", 0x2ee940, 0x338
 
 	.globl gUnknown_82EEC78
 gUnknown_82EEC78: @ 0x82EEC78
-	.incbin "build/data/data.bin", 0x52ed4, 0x2
+	.incbin "baserom_jp.gba", 0x2eec78, 0x2
 
 	.globl gUnknown_82EEC7A
 gUnknown_82EEC7A: @ 0x82EEC7A
-	.incbin "build/data/data.bin", 0x52ed6, 0x29a
+	.incbin "baserom_jp.gba", 0x2eec7a, 0x29a
 
 	.globl gUnknown_82EEF14
 gUnknown_82EEF14: @ 0x82EEF14
-	.incbin "build/data/data.bin", 0x53170, 0x28c
+	.incbin "baserom_jp.gba", 0x2eef14, 0x28c
 
 	.globl gUnknown_82EF1A0
 gUnknown_82EF1A0: @ 0x82EF1A0
-	.incbin "build/data/data.bin", 0x533fc, 0x80
+	.incbin "baserom_jp.gba", 0x2ef1a0, 0x80
 
 	.globl gUnknown_82EF220
 gUnknown_82EF220: @ 0x82EF220
-	.incbin "build/data/data.bin", 0x5347c, 0xce0
+	.incbin "baserom_jp.gba", 0x2ef220, 0xce0
 
 	.globl gUnknown_82EFF00
 gUnknown_82EFF00: @ 0x82EFF00
-	.incbin "build/data/data.bin", 0x5415c, 0x52
+	.incbin "baserom_jp.gba", 0x2eff00, 0x52
 
 	.globl gUnknown_82EFF52
 gUnknown_82EFF52: @ 0x82EFF52
-	.incbin "build/data/data.bin", 0x541ae, 0x52
+	.incbin "baserom_jp.gba", 0x2eff52, 0x52
 
 	.globl gUnknown_82EFFA4
 gUnknown_82EFFA4: @ 0x82EFFA4
-	.incbin "build/data/data.bin", 0x54200, 0x110
+	.incbin "baserom_jp.gba", 0x2effa4, 0x110
 
 	.globl gUnknown_82F00B4
 gUnknown_82F00B4: @ 0x82F00B4
-	.incbin "build/data/data.bin", 0x54310, 0xca0
+	.incbin "baserom_jp.gba", 0x2f00b4, 0xca0
 
 	.globl gUnknown_82F0D54
 gUnknown_82F0D54: @ 0x82F0D54
-	.incbin "build/data/data.bin", 0x54fb0, 0xc
+	.incbin "baserom_jp.gba", 0x2f0d54, 0xc
 
 	.globl gUnknown_82F0D60
 gUnknown_82F0D60: @ 0x82F0D60
-	.incbin "build/data/data.bin", 0x54fbc, 0x2
+	.incbin "baserom_jp.gba", 0x2f0d60, 0x2
 
 	.globl gUnknown_82F0D62
 gUnknown_82F0D62: @ 0x82F0D62
-	.incbin "build/data/data.bin", 0x54fbe, 0x3
+	.incbin "baserom_jp.gba", 0x2f0d62, 0x3
 
 	.globl gUnknown_82F0D65
 gUnknown_82F0D65: @ 0x82F0D65
-	.incbin "build/data/data.bin", 0x54fc1, 0x2cff
+	.incbin "baserom_jp.gba", 0x2f0d65, 0x2cff
 gUnknown_82F3A64: @ 0x82F3A64
 	.string "{MUS_RG_SEVII_ROUTE}を{BLUE}べ{DYNAMIC_COLOR5}にとぷほぽほぱりrぇぼぞwぺぴシ$"
 	.string "$"
@@ -2763,9 +2763,9 @@ gUnknown_82F3E66: @ 0x82F3E66
 	.string "jつサめCぇぶゅ2ぴケニコィ$"
 	.string "$"
 gUnknown_82F3E80: @ 0x82F3E80
-	.incbin "build/data/data.bin", 0x580dc, 0x14
+	.incbin "baserom_jp.gba", 0x2f3e80, 0x14
 gUnknown_82F3E94: @ 0x82F3E94
-	.incbin "build/data/data.bin", 0x580f0, 0x16
+	.incbin "baserom_jp.gba", 0x2f3e94, 0x16
 gUnknown_82F3EAA: @ 0x82F3EAA
 	.string "コ{LIGHT_GRAY}{MUS_RG_VICTORY_TRAINER}ら{DYNAMIC_COLOR1}ぇとスみヌんäずボっぎト$"
 	.string "$"
@@ -2797,9 +2797,9 @@ gUnknown_82F3F52: @ 0x82F3F52
 gUnknown_82F3F60: @ 0x82F3F60
 	.string "ト{DARK_GRAY}$$"
 gUnknown_82F3F64: @ 0x82F3F64
-	.incbin "build/data/data.bin", 0x581c0, 0x1a
+	.incbin "baserom_jp.gba", 0x2f3f64, 0x1a
 gUnknown_82F3F7E: @ 0x82F3F7E
-	.incbin "build/data/data.bin", 0x581da, 0x1a
+	.incbin "baserom_jp.gba", 0x2f3f7e, 0x1a
 gUnknown_82F3F98: @ 0x82F3F98
 	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{MUS_RG_PEWTER}はどよGわぬぉuずぢぼzっ,カkツ$"
 	.string "$"
@@ -2891,9 +2891,9 @@ gUnknown_82F4238: @ 0x82F4238
 	.string "{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}とつクはハれテぇOぢなぼsコぶテよメ$"
 	.string "$"
 gUnknown_82F4250: @ 0x82F4250
-	.incbin "build/data/data.bin", 0x584ac, 0x16
+	.incbin "baserom_jp.gba", 0x2f4250, 0x16
 gUnknown_82F4266: @ 0x82F4266
-	.incbin "build/data/data.bin", 0x584c2, 0x1a
+	.incbin "baserom_jp.gba", 0x2f4266, 0x1a
 gUnknown_82F4280: @ 0x82F4280
 	.string "ダ{DARK_GRAY}ろ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}ねハみオぁぬょ{DYNAMIC_COLOR3}で♀イブコ$"
 	.string "$"
@@ -2949,7 +2949,7 @@ gUnknown_82F4402: @ 0x82F4402
 	.string "て{LIGHT_GRAY}ャ{DARK_GRAY}ぽ{BLUE}びとぼはぷよにわとぎぶずぺぼなっだス$"
 	.string "$"
 gUnknown_82F441C: @ 0x82F441C
-	.incbin "build/data/data.bin", 0x58678, 0x16
+	.incbin "baserom_jp.gba", 0x2f441c, 0x16
 gUnknown_82F4432: @ 0x82F4432
 	.string "ダ{DARK_GRAY}フたろほがわ▶げチぶぎカスナ$$"
 gUnknown_82F4444: @ 0x82F4444
@@ -3049,7 +3049,7 @@ gUnknown_82F4704: @ 0x82F4704
 	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOOSE_BLEND}▶{DARK_GRAY}カた▶ほイわなげチぴgセちホNレぜバ$"
 	.string "$"
 gUnknown_82F4720: @ 0x82F4720
-	.incbin "build/data/data.bin", 0x5897c, 0x18
+	.incbin "baserom_jp.gba", 0x2f4720, 0x18
 gUnknown_82F4738: @ 0x82F4738
 	.string "{MUS_RG_OAK_LAB}ゾと{LIGHT_RED}りヨざセっüト$$"
 gUnknown_82F4746: @ 0x82F4746
@@ -3130,9 +3130,9 @@ gUnknown_82F4948: @ 0x82F4948
 	.string "{MUS_RG_SLOW_PALLET}R{DARK_GRAY}ヨ{DYNAMIC_COLOR3}/にのむoれ{DYNAMIC_COLOR1}ゅちぜgぶよイ$"
 	.string "$"
 gUnknown_82F495E: @ 0x82F495E
-	.incbin "build/data/data.bin", 0x58bba, 0x12
+	.incbin "baserom_jp.gba", 0x2f495e, 0x12
 gUnknown_82F4970: @ 0x82F4970
-	.incbin "build/data/data.bin", 0x58bcc, 0x12
+	.incbin "baserom_jp.gba", 0x2f4970, 0x12
 gUnknown_82F4982: @ 0x82F4982
 	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}エつカみ”んムざキぼ$"
 	.string "$"
@@ -3340,11 +3340,11 @@ gUnknown_82F4F10: @ 0x82F4F10
 	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}O{DARK_GRAY}ヌ{DARK_GRAY}Oたヌほプわゆげ,ぴÖセケレぜバ$"
 	.string "$"
 gUnknown_82F4F2A: @ 0x82F4F2A
-	.incbin "build/data/data.bin", 0x59186, 0x16
+	.incbin "baserom_jp.gba", 0x2f4f2a, 0x16
 gUnknown_82F4F40: @ 0x82F4F40
-	.incbin "build/data/data.bin", 0x5919c, 0x16
+	.incbin "baserom_jp.gba", 0x2f4f40, 0x16
 gUnknown_82F4F56: @ 0x82F4F56
-	.incbin "build/data/data.bin", 0x591b2, 0x14
+	.incbin "baserom_jp.gba", 0x2f4f56, 0x14
 gUnknown_82F4F6A: @ 0x82F4F6A
 	.string "{MUS_RG_SEVII_ROUTE}$$"
 gUnknown_82F4F6E: @ 0x82F4F6E
@@ -3457,7 +3457,7 @@ gUnknown_82F5186: @ 0x82F5186
 	.string "ょ{LIGHT_GRAY}を{GREEN}び{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひょれ:ずぶカ$"
 	.string "$"
 gUnknown_82F5196: @ 0x82F5196
-	.incbin "build/data/data.bin", 0x593f2, 0x16
+	.incbin "baserom_jp.gba", 0x2f5196, 0x16
 gUnknown_82F51AC: @ 0x82F51AC
 	.string "ょ{LIGHT_GRAY}{MUS_RG_SLOW_PALLET}{PH_GOAT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
 	.string "$"
@@ -3465,7 +3465,7 @@ gUnknown_82F51B6: @ 0x82F51B6
 	.string "ユ{DARK_GRAY}ハ{GREEN}ぼ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひwれÄずベカ$"
 	.string "$"
 gUnknown_82F51C6: @ 0x82F51C6
-	.incbin "build/data/data.bin", 0x59422, 0x16
+	.incbin "baserom_jp.gba", 0x2f51c6, 0x16
 gUnknown_82F51DC: @ 0x82F51DC
 	.string "{MUS_RG_OAK_LAB}ハ{DARK_GRAY}{PH_THOUGHT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
 	.string "$"
@@ -3538,11 +3538,11 @@ gUnknown_82F53CC: @ 0x82F53CC
 	.string "{PH_FACE_SOLO}ロ{BLUE}ー{DYNAMIC_COLOR5}フふウめめり♀ょゅざぺづュっ·カ{WHITE}ス$"
 	.string "$"
 gUnknown_82F53E6: @ 0x82F53E6
-	.incbin "build/data/data.bin", 0x59642, 0x1c
+	.incbin "baserom_jp.gba", 0x2f53e6, 0x1c
 gUnknown_82F5402: @ 0x82F5402
-	.incbin "build/data/data.bin", 0x5965e, 0x18
+	.incbin "baserom_jp.gba", 0x2f5402, 0x18
 gUnknown_82F541A: @ 0x82F541A
-	.incbin "build/data/data.bin", 0x59676, 0x1e
+	.incbin "baserom_jp.gba", 0x2f541a, 0x1e
 gUnknown_82F5438: @ 0x82F5438
 	.string "{MUS_RG_SEVII_ROUTE}R{BLUE}がねチみやぃaぎ/ぶ·っgタ$"
 	.string "$"
@@ -3575,9 +3575,9 @@ gUnknown_82F5502: @ 0x82F5502
 	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_NET_CENTER}×{DARK_GRAY}ぶ{LIGHT_GRAY}ふつ×めぶぉÖぢmばヌイOハぜェ$"
 	.string "$"
 gUnknown_82F551C: @ 0x82F551C
-	.incbin "build/data/data.bin", 0x59778, 0x1c
+	.incbin "baserom_jp.gba", 0x2f551c, 0x1c
 gUnknown_82F5538: @ 0x82F5538
-	.incbin "build/data/data.bin", 0x59794, 0x20
+	.incbin "baserom_jp.gba", 0x2f5538, 0x20
 gUnknown_82F5558: @ 0x82F5558
 	.string "{MUS_RG_SEVII_ROUTE}カ{BLUE}ろつっのツめWりざぉんぎわぢキぶ{DYNAMIC_COLOR3}ウ$"
 	.string "$"
@@ -3617,7 +3617,7 @@ gUnknown_82F5666: @ 0x82F5666
 	.string "わとJみへよ♀ぇÖぎげ{PH_LOT_BLEND}オごハべロ$"
 	.string "$"
 gUnknown_82F5684: @ 0x82F5684
-	.incbin "build/data/data.bin", 0x598e0, 0x16
+	.incbin "baserom_jp.gba", 0x2f5684, 0x16
 gUnknown_82F569A: @ 0x82F569A
 	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}ス{DYNAMIC_COLOR5}クはウよドぇぢぜプぼぴカベツ$"
 	.string "$"
@@ -3655,9 +3655,9 @@ gUnknown_82F57B2: @ 0x82F57B2
 	.string "バ{DARK_GRAY}R{DARK_GRAY}o{DARK_GRAY}でほÜほgほHほ$"
 	.string "$"
 gUnknown_82F57C2: @ 0x82F57C2
-	.incbin "build/data/data.bin", 0x59a1e, 0x18
+	.incbin "baserom_jp.gba", 0x2f57c2, 0x18
 gUnknown_82F57DA: @ 0x82F57DA
-	.incbin "build/data/data.bin", 0x59a36, 0x1e
+	.incbin "baserom_jp.gba", 0x2f57da, 0x1e
 gUnknown_82F57F8: @ 0x82F57F8
 	.string "{PH_GOAT_BLEND}ぼ{DYNAMIC_COLOR1}りつぺはぶめべれケぉぞごPぢrぼてウシコっツぎヒwメ$"
 	.string "$"
@@ -3699,7 +3699,7 @@ gUnknown_82F5910: @ 0x82F5910
 gUnknown_82F5922: @ 0x82F5922
 	.string "\l{DARK_GRAY}スたチほタをュげセぶnカぎト$$"
 gUnknown_82F5934: @ 0x82F5934
-	.incbin "build/data/data.bin", 0x59b90, 0x18
+	.incbin "baserom_jp.gba", 0x2f5934, 0x18
 gUnknown_82F594C: @ 0x82F594C
 	.string "は{LIGHT_GRAY}ヌたナはーり'ぇ{LIGHT_RED}だ×ぼ{DYNAMIC}クむテみム$"
 	.string "$"
@@ -3748,11 +3748,11 @@ gUnknown_82F5AA4: @ 0x82F5AA4
 	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}わ{LIGHT_GRAY}{PH_CLOTH_SOLO}ハ{DYNAMIC_COLOR5}わひがよtぇ♀ずüぼXシ2ホセゥ$"
 	.string "$"
 gUnknown_82F5AC0: @ 0x82F5AC0
-	.incbin "build/data/data.bin", 0x59d1c, 0x16
+	.incbin "baserom_jp.gba", 0x2f5ac0, 0x16
 gUnknown_82F5AD6: @ 0x82F5AD6
-	.incbin "build/data/data.bin", 0x59d32, 0x1c
+	.incbin "baserom_jp.gba", 0x2f5ad6, 0x1c
 gUnknown_82F5AF2: @ 0x82F5AF2
-	.incbin "build/data/data.bin", 0x59d4e, 0x1c
+	.incbin "baserom_jp.gba", 0x2f5af2, 0x1c
 gUnknown_82F5B0E: @ 0x82F5B0E
 	.string "テ{DARK_GRAY}わ{DYNAMIC_COLOR1}ろつへめヤれゃぇmぢ,ぼÖイアテよハ$"
 	.string "$"
@@ -3793,16 +3793,16 @@ gUnknown_82F5C3C: @ 0x82F5C3C
 	.string "ド{DARK_GRAY}{GREEN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}なgほmり♀ぇまじらびセっノコスナ$"
 	.string "$"
 gUnknown_82F5C54: @ 0x82F5C54
-	.incbin "build/data/data.bin", 0x59eb0, 0x1a
+	.incbin "baserom_jp.gba", 0x2f5c54, 0x1a
 gUnknown_82F5C6E: @ 0x82F5C6E
 	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_SEVII_123}ナ{DYNAMIC_COLOR1}ネとはまpりセぇゥざチばノっツサöト$"
 	.string "$"
 gUnknown_82F5C88: @ 0x82F5C88
-	.incbin "build/data/data.bin", 0x59ee4, 0x1c
+	.incbin "baserom_jp.gba", 0x2f5c88, 0x1c
 
 	.globl gUnknown_82F5CA4
 gUnknown_82F5CA4: @ 0x82F5CA4
-	.incbin "build/data/data.bin", 0x59f00, 0x4060
+	.incbin "baserom_jp.gba", 0x2f5ca4, 0x4060
 
 	.globl gUnknown_82F9D04
 gUnknown_82F9D04: @ 0x82F9D04
@@ -4221,63 +4221,63 @@ gUnknown_82F9D04: @ 0x82F9D04
 
 	.globl gUnknown_82FA374
 gUnknown_82FA374: @ 0x82FA374
-	.incbin "build/data/data.bin", 0x5e5d0, 0x19b
+	.incbin "baserom_jp.gba", 0x2fa374, 0x19b
 
 	.globl gUnknown_82FA50F
 gUnknown_82FA50F: @ 0x82FA50F
-	.incbin "build/data/data.bin", 0x5e76b, 0x19b
+	.incbin "baserom_jp.gba", 0x2fa50f, 0x19b
 
 	.globl gUnknown_82FA6AA
 gUnknown_82FA6AA: @ 0x82FA6AA
-	.incbin "build/data/data.bin", 0x5e906, 0x4
+	.incbin "baserom_jp.gba", 0x2fa6aa, 0x4
 
 	.globl gUnknown_82FA6AE
 gUnknown_82FA6AE: @ 0x82FA6AE
-	.incbin "build/data/data.bin", 0x5e90a, 0x4
+	.incbin "baserom_jp.gba", 0x2fa6ae, 0x4
 
 	.globl gUnknown_82FA6B2
 gUnknown_82FA6B2: @ 0x82FA6B2
-	.incbin "build/data/data.bin", 0x5e90e, 0x4
+	.incbin "baserom_jp.gba", 0x2fa6b2, 0x4
 
 	.globl gUnknown_82FA6B6
 gUnknown_82FA6B6: @ 0x82FA6B6
-	.incbin "build/data/data.bin", 0x5e912, 0x20
+	.incbin "baserom_jp.gba", 0x2fa6b6, 0x20
 
 	.globl gUnknown_82FA6D6
 gUnknown_82FA6D6: @ 0x82FA6D6
-	.incbin "build/data/data.bin", 0x5e932, 0xc
+	.incbin "baserom_jp.gba", 0x2fa6d6, 0xc
 
 	.globl gUnknown_82FA6E2
 gUnknown_82FA6E2: @ 0x82FA6E2
-	.incbin "build/data/data.bin", 0x5e93e, 0x20
+	.incbin "baserom_jp.gba", 0x2fa6e2, 0x20
 
 	.globl gUnknown_82FA702
 gUnknown_82FA702: @ 0x82FA702
-	.incbin "build/data/data.bin", 0x5e95e, 0x22
+	.incbin "baserom_jp.gba", 0x2fa702, 0x22
 
 	.globl gUnknown_82FA724
 gUnknown_82FA724: @ 0x82FA724
-	.incbin "build/data/data.bin", 0x5e980, 0x60
+	.incbin "baserom_jp.gba", 0x2fa724, 0x60
 
 	.globl gUnknown_82FA784
 gUnknown_82FA784: @ 0x82FA784
-	.incbin "build/data/data.bin", 0x5e9e0, 0xc0
+	.incbin "baserom_jp.gba", 0x2fa784, 0xc0
 
 	.globl gUnknown_82FA844
 gUnknown_82FA844: @ 0x82FA844
-	.incbin "build/data/data.bin", 0x5eaa0, 0xa
+	.incbin "baserom_jp.gba", 0x2fa844, 0xa
 
 	.globl gUnknown_82FA84E
 gUnknown_82FA84E: @ 0x82FA84E
-	.incbin "build/data/data.bin", 0x5eaaa, 0x6
+	.incbin "baserom_jp.gba", 0x2fa84e, 0x6
 
 	.globl gUnknown_82FA854
 gUnknown_82FA854: @ 0x82FA854
-	.incbin "build/data/data.bin", 0x5eab0, 0x6
+	.incbin "baserom_jp.gba", 0x2fa854, 0x6
 
 	.globl gUnknown_82FA85A
 gUnknown_82FA85A: @ 0x82FA85A
-	.incbin "build/data/data.bin", 0x5eab6, 0x1c
+	.incbin "baserom_jp.gba", 0x2fa85a, 0x1c
 
 	.globl gUnknown_82FA876
 gUnknown_82FA876: @ 0x82FA876
@@ -4287,55 +4287,55 @@ gUnknown_82FA876: @ 0x82FA876
 
 	.globl gUnknown_82FA888
 gUnknown_82FA888: @ 0x82FA888
-	.incbin "build/data/data.bin", 0x5eae4, 0x2
+	.incbin "baserom_jp.gba", 0x2fa888, 0x2
 
 	.globl gUnknown_82FA88A
 gUnknown_82FA88A: @ 0x82FA88A
-	.incbin "build/data/data.bin", 0x5eae6, 0x2a
+	.incbin "baserom_jp.gba", 0x2fa88a, 0x2a
 
 	.globl gUnknown_82FA8B4
 gUnknown_82FA8B4: @ 0x82FA8B4
-	.incbin "build/data/data.bin", 0x5eb10, 0x18
+	.incbin "baserom_jp.gba", 0x2fa8b4, 0x18
 
 	.globl gUnknown_82FA8CC
 gUnknown_82FA8CC: @ 0x82FA8CC
-	.incbin "build/data/data.bin", 0x5eb28, 0x280
+	.incbin "baserom_jp.gba", 0x2fa8cc, 0x280
 
 	.globl gUnknown_82FAB4C
 gUnknown_82FAB4C: @ 0x82FAB4C
-	.incbin "build/data/data.bin", 0x5eda8, 0x168
+	.incbin "baserom_jp.gba", 0x2fab4c, 0x168
 
 	.globl gUnknown_82FACB4
 gUnknown_82FACB4: @ 0x82FACB4
-	.incbin "build/data/data.bin", 0x5ef10, 0x80
+	.incbin "baserom_jp.gba", 0x2facb4, 0x80
 
 	.globl gUnknown_82FAD34
 gUnknown_82FAD34: @ 0x82FAD34
-	.incbin "build/data/data.bin", 0x5ef90, 0x18
+	.incbin "baserom_jp.gba", 0x2fad34, 0x18
 
 	.globl gUnknown_82FAD4C
 gUnknown_82FAD4C: @ 0x82FAD4C
-	.incbin "build/data/data.bin", 0x5efa8, 0x18
+	.incbin "baserom_jp.gba", 0x2fad4c, 0x18
 
 	.globl gUnknown_82FAD64
 gUnknown_82FAD64: @ 0x82FAD64
-	.incbin "build/data/data.bin", 0x5efc0, 0xa00
+	.incbin "baserom_jp.gba", 0x2fad64, 0xa00
 
 	.globl gUnknown_82FB764
 gUnknown_82FB764: @ 0x82FB764
-	.incbin "build/data/data.bin", 0x5f9c0, 0x8e8
+	.incbin "baserom_jp.gba", 0x2fb764, 0x8e8
 
 	.globl gUnknown_82FC04C
 gUnknown_82FC04C: @ 0x82FC04C
-	.incbin "build/data/data.bin", 0x602a8, 0x20
+	.incbin "baserom_jp.gba", 0x2fc04c, 0x20
 
 	.globl gUnknown_82FC06C
 gUnknown_82FC06C: @ 0x82FC06C
-	.incbin "build/data/data.bin", 0x602c8, 0x7c
+	.incbin "baserom_jp.gba", 0x2fc06c, 0x7c
 
 	.globl gUnknown_82FC0E8
 gUnknown_82FC0E8: @ 0x82FC0E8
-	.incbin "build/data/data.bin", 0x60344, 0x10
+	.incbin "baserom_jp.gba", 0x2fc0e8, 0x10
 
 	.globl gUnknown_82FC0F8
 gUnknown_82FC0F8: @ 0x82FC0F8
@@ -4347,227 +4347,227 @@ gUnknown_82FC0FA: @ 0x82FC0FA
 
 	.globl gUnknown_82FC0FE
 gUnknown_82FC0FE: @ 0x82FC0FE
-	.incbin "build/data/data.bin", 0x6035a, 0x8de
+	.incbin "baserom_jp.gba", 0x2fc0fe, 0x8de
 
 	.globl gUnknown_82FC9DC
 gUnknown_82FC9DC: @ 0x82FC9DC
-	.incbin "build/data/data.bin", 0x60c38, 0x8
+	.incbin "baserom_jp.gba", 0x2fc9dc, 0x8
 
 	.globl gUnknown_82FC9E4
 gUnknown_82FC9E4: @ 0x82FC9E4
-	.incbin "build/data/data.bin", 0x60c40, 0x8
+	.incbin "baserom_jp.gba", 0x2fc9e4, 0x8
 
 	.globl gUnknown_82FC9EC
 gUnknown_82FC9EC: @ 0x82FC9EC
-	.incbin "build/data/data.bin", 0x60c48, 0x8
+	.incbin "baserom_jp.gba", 0x2fc9ec, 0x8
 
 	.globl gUnknown_82FC9F4
 gUnknown_82FC9F4: @ 0x82FC9F4
-	.incbin "build/data/data.bin", 0x60c50, 0x50
+	.incbin "baserom_jp.gba", 0x2fc9f4, 0x50
 
 	.globl gUnknown_82FCA44
 gUnknown_82FCA44: @ 0x82FCA44
-	.incbin "build/data/data.bin", 0x60ca0, 0x18
+	.incbin "baserom_jp.gba", 0x2fca44, 0x18
 
 	.globl gUnknown_82FCA5C
 gUnknown_82FCA5C: @ 0x82FCA5C
-	.incbin "build/data/data.bin", 0x60cb8, 0x8
+	.incbin "baserom_jp.gba", 0x2fca5c, 0x8
 
 	.globl gUnknown_82FCA64
 gUnknown_82FCA64: @ 0x82FCA64
-	.incbin "build/data/data.bin", 0x60cc0, 0x10
+	.incbin "baserom_jp.gba", 0x2fca64, 0x10
 
 	.globl gUnknown_82FCA74
 gUnknown_82FCA74: @ 0x82FCA74
-	.incbin "build/data/data.bin", 0x60cd0, 0x8
+	.incbin "baserom_jp.gba", 0x2fca74, 0x8
 
 	.globl gUnknown_82FCA7C
 gUnknown_82FCA7C: @ 0x82FCA7C
-	.incbin "build/data/data.bin", 0x60cd8, 0x4c
+	.incbin "baserom_jp.gba", 0x2fca7c, 0x4c
 
 	.globl gUnknown_82FCAC8
 gUnknown_82FCAC8: @ 0x82FCAC8
-	.incbin "build/data/data.bin", 0x60d24, 0x8
+	.incbin "baserom_jp.gba", 0x2fcac8, 0x8
 
 	.globl gUnknown_82FCAD0
 gUnknown_82FCAD0: @ 0x82FCAD0
-	.incbin "build/data/data.bin", 0x60d2c, 0x8
+	.incbin "baserom_jp.gba", 0x2fcad0, 0x8
 
 	.globl gUnknown_82FCAD8
 gUnknown_82FCAD8: @ 0x82FCAD8
-	.incbin "build/data/data.bin", 0x60d34, 0x8
+	.incbin "baserom_jp.gba", 0x2fcad8, 0x8
 
 	.globl gUnknown_82FCAE0
 gUnknown_82FCAE0: @ 0x82FCAE0
-	.incbin "build/data/data.bin", 0x60d3c, 0x8
+	.incbin "baserom_jp.gba", 0x2fcae0, 0x8
 
 	.globl gUnknown_82FCAE8
 gUnknown_82FCAE8: @ 0x82FCAE8
-	.incbin "build/data/data.bin", 0x60d44, 0x8
+	.incbin "baserom_jp.gba", 0x2fcae8, 0x8
 
 	.globl gUnknown_82FCAF0
 gUnknown_82FCAF0: @ 0x82FCAF0
-	.incbin "build/data/data.bin", 0x60d4c, 0x8
+	.incbin "baserom_jp.gba", 0x2fcaf0, 0x8
 
 	.globl gUnknown_82FCAF8
 gUnknown_82FCAF8: @ 0x82FCAF8
-	.incbin "build/data/data.bin", 0x60d54, 0x8
+	.incbin "baserom_jp.gba", 0x2fcaf8, 0x8
 
 	.globl gUnknown_82FCB00
 gUnknown_82FCB00: @ 0x82FCB00
-	.incbin "build/data/data.bin", 0x60d5c, 0x20
+	.incbin "baserom_jp.gba", 0x2fcb00, 0x20
 
 	.globl gUnknown_82FCB20
 gUnknown_82FCB20: @ 0x82FCB20
-	.incbin "build/data/data.bin", 0x60d7c, 0x18
+	.incbin "baserom_jp.gba", 0x2fcb20, 0x18
 
 	.globl gUnknown_82FCB38
 gUnknown_82FCB38: @ 0x82FCB38
-	.incbin "build/data/data.bin", 0x60d94, 0x30
+	.incbin "baserom_jp.gba", 0x2fcb38, 0x30
 
 	.globl gUnknown_82FCB68
 gUnknown_82FCB68: @ 0x82FCB68
-	.incbin "build/data/data.bin", 0x60dc4, 0x30
+	.incbin "baserom_jp.gba", 0x2fcb68, 0x30
 
 	.globl gUnknown_82FCB98
 gUnknown_82FCB98: @ 0x82FCB98
-	.incbin "build/data/data.bin", 0x60df4, 0x20
+	.incbin "baserom_jp.gba", 0x2fcb98, 0x20
 
 	.globl gUnknown_82FCBB8
 gUnknown_82FCBB8: @ 0x82FCBB8
-	.incbin "build/data/data.bin", 0x60e14, 0xcc
+	.incbin "baserom_jp.gba", 0x2fcbb8, 0xcc
 
 	.globl gUnknown_82FCC84
 gUnknown_82FCC84: @ 0x82FCC84
-	.incbin "build/data/data.bin", 0x60ee0, 0x38
+	.incbin "baserom_jp.gba", 0x2fcc84, 0x38
 
 	.globl gUnknown_82FCCBC
 gUnknown_82FCCBC: @ 0x82FCCBC
-	.incbin "build/data/data.bin", 0x60f18, 0x8
+	.incbin "baserom_jp.gba", 0x2fccbc, 0x8
 
 	.globl gUnknown_82FCCC4
 gUnknown_82FCCC4: @ 0x82FCCC4
-	.incbin "build/data/data.bin", 0x60f20, 0x68
+	.incbin "baserom_jp.gba", 0x2fccc4, 0x68
 
 	.globl gUnknown_82FCD2C
 gUnknown_82FCD2C: @ 0x82FCD2C
-	.incbin "build/data/data.bin", 0x60f88, 0x8
+	.incbin "baserom_jp.gba", 0x2fcd2c, 0x8
 
 	.globl gUnknown_82FCD34
 gUnknown_82FCD34: @ 0x82FCD34
-	.incbin "build/data/data.bin", 0x60f90, 0x8
+	.incbin "baserom_jp.gba", 0x2fcd34, 0x8
 
 	.globl gUnknown_82FCD3C
 gUnknown_82FCD3C: @ 0x82FCD3C
-	.incbin "build/data/data.bin", 0x60f98, 0x8
+	.incbin "baserom_jp.gba", 0x2fcd3c, 0x8
 
 	.globl gUnknown_82FCD44
 gUnknown_82FCD44: @ 0x82FCD44
-	.incbin "build/data/data.bin", 0x60fa0, 0x18
+	.incbin "baserom_jp.gba", 0x2fcd44, 0x18
 
 	.globl gUnknown_82FCD5C
 gUnknown_82FCD5C: @ 0x82FCD5C
-	.incbin "build/data/data.bin", 0x60fb8, 0x30
+	.incbin "baserom_jp.gba", 0x2fcd5c, 0x30
 
 	.globl gUnknown_82FCD8C
 gUnknown_82FCD8C: @ 0x82FCD8C
-	.incbin "build/data/data.bin", 0x60fe8, 0x30
+	.incbin "baserom_jp.gba", 0x2fcd8c, 0x30
 
 	.globl gUnknown_82FCDBC
 gUnknown_82FCDBC: @ 0x82FCDBC
-	.incbin "build/data/data.bin", 0x61018, 0x1e
+	.incbin "baserom_jp.gba", 0x2fcdbc, 0x1e
 
 	.globl gUnknown_82FCDDA
 gUnknown_82FCDDA: @ 0x82FCDDA
-	.incbin "build/data/data.bin", 0x61036, 0x14
+	.incbin "baserom_jp.gba", 0x2fcdda, 0x14
 
 	.globl gUnknown_82FCDEE
 gUnknown_82FCDEE: @ 0x82FCDEE
-	.incbin "build/data/data.bin", 0x6104a, 0x14
+	.incbin "baserom_jp.gba", 0x2fcdee, 0x14
 
 	.globl gUnknown_82FCE02
 gUnknown_82FCE02: @ 0x82FCE02
-	.incbin "build/data/data.bin", 0x6105e, 0xa
+	.incbin "baserom_jp.gba", 0x2fce02, 0xa
 
 	.globl gUnknown_82FCE0C
 gUnknown_82FCE0C: @ 0x82FCE0C
-	.incbin "build/data/data.bin", 0x61068, 0x60
+	.incbin "baserom_jp.gba", 0x2fce0c, 0x60
 
 	.globl gUnknown_82FCE6C
 gUnknown_82FCE6C: @ 0x82FCE6C
-	.incbin "build/data/data.bin", 0x610c8, 0x128
+	.incbin "baserom_jp.gba", 0x2fce6c, 0x128
 
 	.globl gUnknown_82FCF94
 gUnknown_82FCF94: @ 0x82FCF94
-	.incbin "build/data/data.bin", 0x611f0, 0x138
+	.incbin "baserom_jp.gba", 0x2fcf94, 0x138
 
 	.globl gUnknown_82FD0CC
 gUnknown_82FD0CC: @ 0x82FD0CC
-	.incbin "build/data/data.bin", 0x61328, 0x80
+	.incbin "baserom_jp.gba", 0x2fd0cc, 0x80
 
 	.globl gUnknown_82FD14C
 gUnknown_82FD14C: @ 0x82FD14C
-	.incbin "build/data/data.bin", 0x613a8, 0x1280
+	.incbin "baserom_jp.gba", 0x2fd14c, 0x1280
 
 	.globl gUnknown_82FE3CC
 gUnknown_82FE3CC: @ 0x82FE3CC
-	.incbin "build/data/data.bin", 0x62628, 0x800
+	.incbin "baserom_jp.gba", 0x2fe3cc, 0x800
 
 	.globl gUnknown_82FEBCC
 gUnknown_82FEBCC: @ 0x82FEBCC
-	.incbin "build/data/data.bin", 0x62e28, 0x1fe
+	.incbin "baserom_jp.gba", 0x2febcc, 0x1fe
 
 	.globl gUnknown_82FEDCA
 gUnknown_82FEDCA: @ 0x82FEDCA
-	.incbin "build/data/data.bin", 0x63026, 0x1fe
+	.incbin "baserom_jp.gba", 0x2fedca, 0x1fe
 
 	.globl gUnknown_82FEFC8
 gUnknown_82FEFC8: @ 0x82FEFC8
-	.incbin "build/data/data.bin", 0x63224, 0x800
+	.incbin "baserom_jp.gba", 0x2fefc8, 0x800
 
 	.globl gUnknown_82FF7C8
 gUnknown_82FF7C8: @ 0x82FF7C8
-	.incbin "build/data/data.bin", 0x63a24, 0x800
+	.incbin "baserom_jp.gba", 0x2ff7c8, 0x800
 
 	.globl gUnknown_82FFFC8
 gUnknown_82FFFC8: @ 0x82FFFC8
-	.incbin "build/data/data.bin", 0x64224, 0x86c
+	.incbin "baserom_jp.gba", 0x2fffc8, 0x86c
 
 	.globl gUnknown_8300834
 gUnknown_8300834: @ 0x8300834
-	.incbin "build/data/data.bin", 0x64a90, 0x8
+	.incbin "baserom_jp.gba", 0x300834, 0x8
 
 	.globl gUnknown_830083C
 gUnknown_830083C: @ 0x830083C
-	.incbin "build/data/data.bin", 0x64a98, 0x50
+	.incbin "baserom_jp.gba", 0x30083c, 0x50
 
 	.globl gUnknown_830088C
 gUnknown_830088C: @ 0x830088C
-	.incbin "build/data/data.bin", 0x64ae8, 0x18
+	.incbin "baserom_jp.gba", 0x30088c, 0x18
 
 	.globl gUnknown_83008A4
 gUnknown_83008A4: @ 0x83008A4
-	.incbin "build/data/data.bin", 0x64b00, 0x38
+	.incbin "baserom_jp.gba", 0x3008a4, 0x38
 
 	.globl gUnknown_83008DC
 gUnknown_83008DC: @ 0x83008DC
-	.incbin "build/data/data.bin", 0x64b38, 0x8
+	.incbin "baserom_jp.gba", 0x3008dc, 0x8
 
 	.globl gUnknown_83008E4
 gUnknown_83008E4: @ 0x83008E4
-	.incbin "build/data/data.bin", 0x64b40, 0x138
+	.incbin "baserom_jp.gba", 0x3008e4, 0x138
 
 	.globl gUnknown_8300A1C
 gUnknown_8300A1C: @ 0x8300A1C
-	.incbin "build/data/data.bin", 0x64c78, 0x1a
+	.incbin "baserom_jp.gba", 0x300a1c, 0x1a
 
 	.globl gUnknown_8300A36
 gUnknown_8300A36: @ 0x8300A36
-	.incbin "build/data/data.bin", 0x64c92, 0x18
+	.incbin "baserom_jp.gba", 0x300a36, 0x18
 
 	.globl gUnknown_8300A4E
 gUnknown_8300A4E: @ 0x8300A4E
-	.incbin "build/data/data.bin", 0x64caa, 0x3c
+	.incbin "baserom_jp.gba", 0x300a4e, 0x3c
 
 	.globl gUnknown_8300A8A
 gUnknown_8300A8A: @ 0x8300A8A
@@ -4615,31 +4615,31 @@ gUnknown_8300AAE: @ 0x8300AAE
 
 	.globl gUnknown_8300AB1
 gUnknown_8300AB1: @ 0x8300AB1
-	.incbin "build/data/data.bin", 0x64d0d, 0x4b
+	.incbin "baserom_jp.gba", 0x300ab1, 0x4b
 
 	.globl gUnknown_8300AFC
 gUnknown_8300AFC: @ 0x8300AFC
-	.incbin "build/data/data.bin", 0x64d58, 0x2c
+	.incbin "baserom_jp.gba", 0x300afc, 0x2c
 
 	.globl gUnknown_8300B28
 gUnknown_8300B28: @ 0x8300B28
-	.incbin "build/data/data.bin", 0x64d84, 0xb4
+	.incbin "baserom_jp.gba", 0x300b28, 0xb4
 
 	.globl gUnknown_8300BDC
 gUnknown_8300BDC: @ 0x8300BDC
-	.incbin "build/data/data.bin", 0x64e38, 0x24
+	.incbin "baserom_jp.gba", 0x300bdc, 0x24
 
 	.globl gUnknown_8300C00
 gUnknown_8300C00: @ 0x8300C00
-	.incbin "build/data/data.bin", 0x64e5c, 0x4
+	.incbin "baserom_jp.gba", 0x300c00, 0x4
 
 	.globl gUnknown_8300C04
 gUnknown_8300C04: @ 0x8300C04
-	.incbin "build/data/data.bin", 0x64e60, 0x10
+	.incbin "baserom_jp.gba", 0x300c04, 0x10
 
 	.globl gUnknown_8300C14
 gUnknown_8300C14: @ 0x8300C14
-	.incbin "build/data/data.bin", 0x64e70, 0x98
+	.incbin "baserom_jp.gba", 0x300c14, 0x98
 
 	.globl gUnknown_8300CAC
 gUnknown_8300CAC: @ 0x8300CAC
@@ -4654,139 +4654,139 @@ gUnknown_8300CAC: @ 0x8300CAC
 
 	.globl gUnknown_8300D40
 gUnknown_8300D40: @ 0x8300D40
-	.incbin "build/data/data.bin", 0x64f9c, 0x2024
+	.incbin "baserom_jp.gba", 0x300d40, 0x2024
 
 	.globl gUnknown_8302D64
 gUnknown_8302D64: @ 0x8302D64
-	.incbin "build/data/data.bin", 0x66fc0, 0x1fa0
+	.incbin "baserom_jp.gba", 0x302d64, 0x1fa0
 
 	.globl gUnknown_8304D04
 gUnknown_8304D04: @ 0x8304D04
-	.incbin "build/data/data.bin", 0x68f60, 0x1020
+	.incbin "baserom_jp.gba", 0x304d04, 0x1020
 
 	.globl gUnknown_8305D24
 gUnknown_8305D24: @ 0x8305D24
-	.incbin "build/data/data.bin", 0x69f80, 0x60
+	.incbin "baserom_jp.gba", 0x305d24, 0x60
 
 	.globl gUnknown_8305D84
 gUnknown_8305D84: @ 0x8305D84
-	.incbin "build/data/data.bin", 0x69fe0, 0x1420
+	.incbin "baserom_jp.gba", 0x305d84, 0x1420
 
 	.globl gUnknown_83071A4
 gUnknown_83071A4: @ 0x83071A4
-	.incbin "build/data/data.bin", 0x6b400, 0x2840
+	.incbin "baserom_jp.gba", 0x3071a4, 0x2840
 
 	.globl gUnknown_83099E4
 gUnknown_83099E4: @ 0x83099E4
-	.incbin "build/data/data.bin", 0x6dc40, 0x100
+	.incbin "baserom_jp.gba", 0x3099e4, 0x100
 
 	.globl gUnknown_8309AE4
 gUnknown_8309AE4: @ 0x8309AE4
-	.incbin "build/data/data.bin", 0x6dd40, 0x100
+	.incbin "baserom_jp.gba", 0x309ae4, 0x100
 
 	.globl gUnknown_8309BE4
 gUnknown_8309BE4: @ 0x8309BE4
-	.incbin "build/data/data.bin", 0x6de40, 0x1000
+	.incbin "baserom_jp.gba", 0x309be4, 0x1000
 
 	.globl gUnknown_830ABE4
 gUnknown_830ABE4: @ 0x830ABE4
-	.incbin "build/data/data.bin", 0x6ee40, 0x1000
+	.incbin "baserom_jp.gba", 0x30abe4, 0x1000
 
 	.globl gUnknown_830BBE4
 gUnknown_830BBE4: @ 0x830BBE4
-	.incbin "build/data/data.bin", 0x6fe40, 0x100
+	.incbin "baserom_jp.gba", 0x30bbe4, 0x100
 
 	.globl gUnknown_830BCE4
 gUnknown_830BCE4: @ 0x830BCE4
-	.incbin "build/data/data.bin", 0x6ff40, 0x200
+	.incbin "baserom_jp.gba", 0x30bce4, 0x200
 
 	.globl gUnknown_830BEE4
 gUnknown_830BEE4: @ 0x830BEE4
-	.incbin "build/data/data.bin", 0x70140, 0x200
+	.incbin "baserom_jp.gba", 0x30bee4, 0x200
 
 	.globl gUnknown_830C0E4
 gUnknown_830C0E4: @ 0x830C0E4
-	.incbin "build/data/data.bin", 0x70340, 0x20
+	.incbin "baserom_jp.gba", 0x30c0e4, 0x20
 
 	.globl gUnknown_830C104
 gUnknown_830C104: @ 0x830C104
-	.incbin "build/data/data.bin", 0x70360, 0x690
+	.incbin "baserom_jp.gba", 0x30c104, 0x690
 
 	.globl gUnknown_830C794
 gUnknown_830C794: @ 0x830C794
-	.incbin "build/data/data.bin", 0x709f0, 0x7c8
+	.incbin "baserom_jp.gba", 0x30c794, 0x7c8
 
 	.globl gUnknown_830CF5C
 gUnknown_830CF5C: @ 0x830CF5C
-	.incbin "build/data/data.bin", 0x711b8, 0x8
+	.incbin "baserom_jp.gba", 0x30cf5c, 0x8
 
 	.globl gUnknown_830CF64
 gUnknown_830CF64: @ 0x830CF64
-	.incbin "build/data/data.bin", 0x711c0, 0x8
+	.incbin "baserom_jp.gba", 0x30cf64, 0x8
 
 	.globl gUnknown_830CF6C
 gUnknown_830CF6C: @ 0x830CF6C
-	.incbin "build/data/data.bin", 0x711c8, 0x48
+	.incbin "baserom_jp.gba", 0x30cf6c, 0x48
 
 	.globl gUnknown_830CFB4
 gUnknown_830CFB4: @ 0x830CFB4
-	.incbin "build/data/data.bin", 0x71210, 0x8
+	.incbin "baserom_jp.gba", 0x30cfb4, 0x8
 
 	.globl gUnknown_830CFBC
 gUnknown_830CFBC: @ 0x830CFBC
-	.incbin "build/data/data.bin", 0x71218, 0x8
+	.incbin "baserom_jp.gba", 0x30cfbc, 0x8
 
 	.globl gUnknown_830CFC4
 gUnknown_830CFC4: @ 0x830CFC4
-	.incbin "build/data/data.bin", 0x71220, 0x8
+	.incbin "baserom_jp.gba", 0x30cfc4, 0x8
 
 	.globl gUnknown_830CFCC
 gUnknown_830CFCC: @ 0x830CFCC
-	.incbin "build/data/data.bin", 0x71228, 0x38
+	.incbin "baserom_jp.gba", 0x30cfcc, 0x38
 
 	.globl gUnknown_830D004
 gUnknown_830D004: @ 0x830D004
-	.incbin "build/data/data.bin", 0x71260, 0x8
+	.incbin "baserom_jp.gba", 0x30d004, 0x8
 
 	.globl gUnknown_830D00C
 gUnknown_830D00C: @ 0x830D00C
-	.incbin "build/data/data.bin", 0x71268, 0x2c
+	.incbin "baserom_jp.gba", 0x30d00c, 0x2c
 
 	.globl gUnknown_830D038
 gUnknown_830D038: @ 0x830D038
-	.incbin "build/data/data.bin", 0x71294, 0x8
+	.incbin "baserom_jp.gba", 0x30d038, 0x8
 
 	.globl gUnknown_830D040
 gUnknown_830D040: @ 0x830D040
-	.incbin "build/data/data.bin", 0x7129c, 0x70
+	.incbin "baserom_jp.gba", 0x30d040, 0x70
 
 	.globl gUnknown_830D0B0
 gUnknown_830D0B0: @ 0x830D0B0
-	.incbin "build/data/data.bin", 0x7130c, 0x8
+	.incbin "baserom_jp.gba", 0x30d0b0, 0x8
 
 	.globl gUnknown_830D0B8
 gUnknown_830D0B8: @ 0x830D0B8
-	.incbin "build/data/data.bin", 0x71314, 0x18
+	.incbin "baserom_jp.gba", 0x30d0b8, 0x18
 
 	.globl gUnknown_830D0D0
 gUnknown_830D0D0: @ 0x830D0D0
-	.incbin "build/data/data.bin", 0x7132c, 0x18
+	.incbin "baserom_jp.gba", 0x30d0d0, 0x18
 
 	.globl gUnknown_830D0E8
 gUnknown_830D0E8: @ 0x830D0E8
-	.incbin "build/data/data.bin", 0x71344, 0x28
+	.incbin "baserom_jp.gba", 0x30d0e8, 0x28
 
 	.globl gUnknown_830D110
 gUnknown_830D110: @ 0x830D110
-	.incbin "build/data/data.bin", 0x7136c, 0x4
+	.incbin "baserom_jp.gba", 0x30d110, 0x4
 
 	.globl gUnknown_830D114
 gUnknown_830D114: @ 0x830D114
-	.incbin "build/data/data.bin", 0x71370, 0xf0
+	.incbin "baserom_jp.gba", 0x30d114, 0xf0
 
 	.globl gUnknown_830D204
 gUnknown_830D204: @ 0x830D204
-	.incbin "build/data/data.bin", 0x71460, 0x3c
+	.incbin "baserom_jp.gba", 0x30d204, 0x3c
 
 	.globl gUnknown_830D240
 gUnknown_830D240: @ 0x830D240
@@ -4802,39 +4802,39 @@ gUnknown_830D258: @ 0x830D258
 
 	.globl gUnknown_830D26A
 gUnknown_830D26A: @ 0x830D26A
-	.incbin "build/data/data.bin", 0x714c6, 0x12
+	.incbin "baserom_jp.gba", 0x30d26a, 0x12
 
 	.globl gUnknown_830D27C
 gUnknown_830D27C: @ 0x830D27C
-	.incbin "build/data/data.bin", 0x714d8, 0x10
+	.incbin "baserom_jp.gba", 0x30d27c, 0x10
 
 	.globl gUnknown_830D28C
 gUnknown_830D28C: @ 0x830D28C
-	.incbin "build/data/data.bin", 0x714e8, 0x8
+	.incbin "baserom_jp.gba", 0x30d28c, 0x8
 
 	.globl gUnknown_830D294
 gUnknown_830D294: @ 0x830D294
-	.incbin "build/data/data.bin", 0x714f0, 0x10
+	.incbin "baserom_jp.gba", 0x30d294, 0x10
 
 	.globl gUnknown_830D2A4
 gUnknown_830D2A4: @ 0x830D2A4
-	.incbin "build/data/data.bin", 0x71500, 0x6c
+	.incbin "baserom_jp.gba", 0x30d2a4, 0x6c
 
 	.globl gUnknown_830D310
 gUnknown_830D310: @ 0x830D310
-	.incbin "build/data/data.bin", 0x7156c, 0x44
+	.incbin "baserom_jp.gba", 0x30d310, 0x44
 
 	.globl gUnknown_830D354
 gUnknown_830D354: @ 0x830D354
-	.incbin "build/data/data.bin", 0x715b0, 0x20
+	.incbin "baserom_jp.gba", 0x30d354, 0x20
 
 	.globl gUnknown_830D374
 gUnknown_830D374: @ 0x830D374
-	.incbin "build/data/data.bin", 0x715d0, 0x400
+	.incbin "baserom_jp.gba", 0x30d374, 0x400
 
 	.globl gUnknown_830D774
 gUnknown_830D774: @ 0x830D774
-	.incbin "build/data/data.bin", 0x719d0, 0x1f3a
+	.incbin "baserom_jp.gba", 0x30d774, 0x1f3a
 
 	.globl gUnknown_830F6AE
 gUnknown_830F6AE: @ 0x830F6AE
@@ -4849,7 +4849,7 @@ gUnknown_830F6FB: @ 0x830F6FB
 
 	.globl gUnknown_830F6FD
 gUnknown_830F6FD: @ 0x830F6FD
-	.incbin "build/data/data.bin", 0x73959, 0x51
+	.incbin "baserom_jp.gba", 0x30f6fd, 0x51
 
 	.globl gUnknown_830F74E
 gUnknown_830F74E: @ 0x830F74E
@@ -4858,7 +4858,7 @@ gUnknown_830F74E: @ 0x830F74E
 
 	.globl gUnknown_830F760
 gUnknown_830F760: @ 0x830F760
-	.incbin "build/data/data.bin", 0x739bc, 0x6
+	.incbin "baserom_jp.gba", 0x30f760, 0x6
 
 	.globl gUnknown_830F766
 gUnknown_830F766: @ 0x830F766
@@ -4947,95 +4947,95 @@ gUnknown_830F857: @ 0x830F857
 
 	.globl gUnknown_830F860
 gUnknown_830F860: @ 0x830F860
-	.incbin "build/data/data.bin", 0x73abc, 0x4
+	.incbin "baserom_jp.gba", 0x30f860, 0x4
 
 	.globl gUnknown_830F864
 gUnknown_830F864: @ 0x830F864
-	.incbin "build/data/data.bin", 0x73ac0, 0xc
+	.incbin "baserom_jp.gba", 0x30f864, 0xc
 
 	.globl gUnknown_830F870
 gUnknown_830F870: @ 0x830F870
-	.incbin "build/data/data.bin", 0x73acc, 0x38
+	.incbin "baserom_jp.gba", 0x30f870, 0x38
 
 	.globl gUnknown_830F8A8
 gUnknown_830F8A8: @ 0x830F8A8
-	.incbin "build/data/data.bin", 0x73b04, 0x8
+	.incbin "baserom_jp.gba", 0x30f8a8, 0x8
 
 	.globl gUnknown_830F8B0
 gUnknown_830F8B0: @ 0x830F8B0
-	.incbin "build/data/data.bin", 0x73b0c, 0x8
+	.incbin "baserom_jp.gba", 0x30f8b0, 0x8
 
 	.globl gUnknown_830F8B8
 gUnknown_830F8B8: @ 0x830F8B8
-	.incbin "build/data/data.bin", 0x73b14, 0x8
+	.incbin "baserom_jp.gba", 0x30f8b8, 0x8
 
 	.globl gUnknown_830F8C0
 gUnknown_830F8C0: @ 0x830F8C0
-	.incbin "build/data/data.bin", 0x73b1c, 0xc
+	.incbin "baserom_jp.gba", 0x30f8c0, 0xc
 
 	.globl gUnknown_830F8CC
 gUnknown_830F8CC: @ 0x830F8CC
-	.incbin "build/data/data.bin", 0x73b28, 0x8
+	.incbin "baserom_jp.gba", 0x30f8cc, 0x8
 
 	.globl gUnknown_830F8D4
 gUnknown_830F8D4: @ 0x830F8D4
-	.incbin "build/data/data.bin", 0x73b30, 0x3
+	.incbin "baserom_jp.gba", 0x30f8d4, 0x3
 
 	.globl gUnknown_830F8D7
 gUnknown_830F8D7: @ 0x830F8D7
-	.incbin "build/data/data.bin", 0x73b33, 0x5
+	.incbin "baserom_jp.gba", 0x30f8d7, 0x5
 
 	.globl gUnknown_830F8DC
 gUnknown_830F8DC: @ 0x830F8DC
-	.incbin "build/data/data.bin", 0x73b38, 0xd4
+	.incbin "baserom_jp.gba", 0x30f8dc, 0xd4
 
 	.globl gUnknown_830F9B0
 gUnknown_830F9B0: @ 0x830F9B0
-	.incbin "build/data/data.bin", 0x73c0c, 0x8
+	.incbin "baserom_jp.gba", 0x30f9b0, 0x8
 
 	.globl gUnknown_830F9B8
 gUnknown_830F9B8: @ 0x830F9B8
-	.incbin "build/data/data.bin", 0x73c14, 0x8
+	.incbin "baserom_jp.gba", 0x30f9b8, 0x8
 
 	.globl gUnknown_830F9C0
 gUnknown_830F9C0: @ 0x830F9C0
-	.incbin "build/data/data.bin", 0x73c1c, 0x8
+	.incbin "baserom_jp.gba", 0x30f9c0, 0x8
 
 	.globl gUnknown_830F9C8
 gUnknown_830F9C8: @ 0x830F9C8
-	.incbin "build/data/data.bin", 0x73c24, 0x60
+	.incbin "baserom_jp.gba", 0x30f9c8, 0x60
 
 	.globl gUnknown_830FA28
 gUnknown_830FA28: @ 0x830FA28
-	.incbin "build/data/data.bin", 0x73c84, 0x8
+	.incbin "baserom_jp.gba", 0x30fa28, 0x8
 
 	.globl gUnknown_830FA30
 gUnknown_830FA30: @ 0x830FA30
-	.incbin "build/data/data.bin", 0x73c8c, 0x98
+	.incbin "baserom_jp.gba", 0x30fa30, 0x98
 
 	.globl gUnknown_830FAC8
 gUnknown_830FAC8: @ 0x830FAC8
-	.incbin "build/data/data.bin", 0x73d24, 0x8
+	.incbin "baserom_jp.gba", 0x30fac8, 0x8
 
 	.globl gUnknown_830FAD0
 gUnknown_830FAD0: @ 0x830FAD0
-	.incbin "build/data/data.bin", 0x73d2c, 0x44
+	.incbin "baserom_jp.gba", 0x30fad0, 0x44
 
 	.globl gUnknown_830FB14
 gUnknown_830FB14: @ 0x830FB14
-	.incbin "build/data/data.bin", 0x73d70, 0x8
+	.incbin "baserom_jp.gba", 0x30fb14, 0x8
 
 	.globl gUnknown_830FB1C
 gUnknown_830FB1C: @ 0x830FB1C
-	.incbin "build/data/data.bin", 0x73d78, 0x2c
+	.incbin "baserom_jp.gba", 0x30fb1c, 0x2c
 
 	.globl gUnknown_830FB48
 gUnknown_830FB48: @ 0x830FB48
-	.incbin "build/data/data.bin", 0x73da4, 0x8
+	.incbin "baserom_jp.gba", 0x30fb48, 0x8
 
 	.globl gUnknown_830FB50
 gUnknown_830FB50: @ 0x830FB50
-	.incbin "build/data/data.bin", 0x73dac, 0x18
+	.incbin "baserom_jp.gba", 0x30fb50, 0x18
 
 	.globl gUnknown_830FB68
 gUnknown_830FB68: @ 0x830FB68
@@ -5047,15 +5047,15 @@ gUnknown_830FB68: @ 0x830FB68
 
 	.globl gUnknown_830FB90
 gUnknown_830FB90: @ 0x830FB90
-	.incbin "build/data/data.bin", 0x73dec, 0x1e
+	.incbin "baserom_jp.gba", 0x30fb90, 0x1e
 
 	.globl gUnknown_830FBAE
 gUnknown_830FBAE: @ 0x830FBAE
-	.incbin "build/data/data.bin", 0x73e0a, 0x5
+	.incbin "baserom_jp.gba", 0x30fbae, 0x5
 
 	.globl gUnknown_830FBB3
 gUnknown_830FBB3: @ 0x830FBB3
-	.incbin "build/data/data.bin", 0x73e0f, 0x5
+	.incbin "baserom_jp.gba", 0x30fbb3, 0x5
 
 	.globl gUnknown_830FBB8
 gUnknown_830FBB8: @ 0x830FBB8
@@ -5074,15 +5074,15 @@ gUnknown_830FBC8: @ 0x830FBC8
 
 	.globl gUnknown_830FC29
 gUnknown_830FC29: @ 0x830FC29
-	.incbin "build/data/data.bin", 0x73e85, 0x5
+	.incbin "baserom_jp.gba", 0x30fc29, 0x5
 
 	.globl gUnknown_830FC2E
 gUnknown_830FC2E: @ 0x830FC2E
-	.incbin "build/data/data.bin", 0x73e8a, 0x5
+	.incbin "baserom_jp.gba", 0x30fc2e, 0x5
 
 	.globl gUnknown_830FC33
 gUnknown_830FC33: @ 0x830FC33
-	.incbin "build/data/data.bin", 0x73e8f, 0x5
+	.incbin "baserom_jp.gba", 0x30fc33, 0x5
 
 	.globl gUnknown_830FC38
 gUnknown_830FC38: @ 0x830FC38
@@ -5091,19 +5091,19 @@ gUnknown_830FC38: @ 0x830FC38
 
 	.globl gUnknown_830FC50
 gUnknown_830FC50: @ 0x830FC50
-	.incbin "build/data/data.bin", 0x73eac, 0x10
+	.incbin "baserom_jp.gba", 0x30fc50, 0x10
 
 	.globl gUnknown_830FC60
 gUnknown_830FC60: @ 0x830FC60
-	.incbin "build/data/data.bin", 0x73ebc, 0x8
+	.incbin "baserom_jp.gba", 0x30fc60, 0x8
 
 	.globl gUnknown_830FC68
 gUnknown_830FC68: @ 0x830FC68
-	.incbin "build/data/data.bin", 0x73ec4, 0x20
+	.incbin "baserom_jp.gba", 0x30fc68, 0x20
 
 	.globl gUnknown_830FC88
 gUnknown_830FC88: @ 0x830FC88
-	.incbin "build/data/data.bin", 0x73ee4, 0x28
+	.incbin "baserom_jp.gba", 0x30fc88, 0x28
 
 	.globl gUnknown_830FCB0
 gUnknown_830FCB0: @ 0x830FCB0
@@ -5117,147 +5117,147 @@ gUnknown_830FCB0: @ 0x830FCB0
 
 	.globl gUnknown_830FCF8
 gUnknown_830FCF8: @ 0x830FCF8
-	.incbin "build/data/data.bin", 0x73f54, 0x10
+	.incbin "baserom_jp.gba", 0x30fcf8, 0x10
 
 	.globl gUnknown_830FD08
 gUnknown_830FD08: @ 0x830FD08
-	.incbin "build/data/data.bin", 0x73f64, 0xc
+	.incbin "baserom_jp.gba", 0x30fd08, 0xc
 
 	.globl gUnknown_830FD14
 gUnknown_830FD14: @ 0x830FD14
-	.incbin "build/data/data.bin", 0x73f70, 0xc
+	.incbin "baserom_jp.gba", 0x30fd14, 0xc
 
 	.globl gUnknown_830FD20
 gUnknown_830FD20: @ 0x830FD20
-	.incbin "build/data/data.bin", 0x73f7c, 0x2c
+	.incbin "baserom_jp.gba", 0x30fd20, 0x2c
 
 	.globl gUnknown_830FD4C
 gUnknown_830FD4C: @ 0x830FD4C
-	.incbin "build/data/data.bin", 0x73fa8, 0xa8348
+	.incbin "baserom_jp.gba", 0x30fd4c, 0xa8348
 
 	.globl gUnknown_83B8094
 gUnknown_83B8094: @ 0x83B8094
-	.incbin "build/data/data.bin", 0x11c2f0, 0x4
+	.incbin "baserom_jp.gba", 0x3b8094, 0x4
 
 	.globl gUnknown_83B8098
 gUnknown_83B8098: @ 0x83B8098
-	.incbin "build/data/data.bin", 0x11c2f4, 0xa215c
+	.incbin "baserom_jp.gba", 0x3b8098, 0xa215c
 
 	.globl gUnknown_845A1F4
 gUnknown_845A1F4: @ 0x845A1F4
-	.incbin "build/data/data.bin", 0x1be450, 0x47a4
+	.incbin "baserom_jp.gba", 0x45a1f4, 0x47a4
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
-	.incbin "build/data/data.bin", 0x1c2bf4, 0x980
+	.incbin "baserom_jp.gba", 0x45e998, 0x980
 
 	.globl gUnknown_845F318
 gUnknown_845F318: @ 0x845F318
-	.incbin "build/data/data.bin", 0x1c3574, 0x4
+	.incbin "baserom_jp.gba", 0x45f318, 0x4
 
 	.globl gUnknown_845F31C
 gUnknown_845F31C: @ 0x845F31C
-	.incbin "build/data/data.bin", 0x1c3578, 0x10090
+	.incbin "baserom_jp.gba", 0x45f31c, 0x10090
 
 	.globl gUnknown_846F3AC
 gUnknown_846F3AC: @ 0x846F3AC
-	.incbin "build/data/data.bin", 0x1d3608, 0x14
+	.incbin "baserom_jp.gba", 0x46f3ac, 0x14
 
 	.globl gUnknown_846F3C0
 gUnknown_846F3C0: @ 0x846F3C0
-	.incbin "build/data/data.bin", 0x1d361c, 0x14
+	.incbin "baserom_jp.gba", 0x46f3c0, 0x14
 
 	.globl gUnknown_846F3D4
 gUnknown_846F3D4: @ 0x846F3D4
-	.incbin "build/data/data.bin", 0x1d3630, 0x1c0
+	.incbin "baserom_jp.gba", 0x46f3d4, 0x1c0
 
 	.globl gUnknown_846F594
 gUnknown_846F594: @ 0x846F594
-	.incbin "build/data/data.bin", 0x1d37f0, 0x288
+	.incbin "baserom_jp.gba", 0x46f594, 0x288
 
 	.globl gUnknown_846F81C
 gUnknown_846F81C: @ 0x846F81C
-	.incbin "build/data/data.bin", 0x1d3a78, 0x48
+	.incbin "baserom_jp.gba", 0x46f81c, 0x48
 
 	.globl gUnknown_846F864
 gUnknown_846F864: @ 0x846F864
-	.incbin "build/data/data.bin", 0x1d3ac0, 0x4c
+	.incbin "baserom_jp.gba", 0x46f864, 0x4c
 
 	.globl gUnknown_846F8B0
 gUnknown_846F8B0: @ 0x846F8B0
-	.incbin "build/data/data.bin", 0x1d3b0c, 0xc
+	.incbin "baserom_jp.gba", 0x46f8b0, 0xc
 
 	.globl gUnknown_846F8BC
 gUnknown_846F8BC: @ 0x846F8BC
-	.incbin "build/data/data.bin", 0x1d3b18, 0x14
+	.incbin "baserom_jp.gba", 0x46f8bc, 0x14
 
 	.globl gUnknown_846F8D0
 gUnknown_846F8D0: @ 0x846F8D0
-	.incbin "build/data/data.bin", 0x1d3b2c, 0x8
+	.incbin "baserom_jp.gba", 0x46f8d0, 0x8
 
 	.globl gUnknown_846F8D8
 gUnknown_846F8D8: @ 0x846F8D8
-	.incbin "build/data/data.bin", 0x1d3b34, 0x20
+	.incbin "baserom_jp.gba", 0x46f8d8, 0x20
 
 	.globl gUnknown_846F8F8
 gUnknown_846F8F8: @ 0x846F8F8
-	.incbin "build/data/data.bin", 0x1d3b54, 0x10
+	.incbin "baserom_jp.gba", 0x46f8f8, 0x10
 
 	.globl gUnknown_846F908
 gUnknown_846F908: @ 0x846F908
-	.incbin "build/data/data.bin", 0x1d3b64, 0x10
+	.incbin "baserom_jp.gba", 0x46f908, 0x10
 
 	.globl gUnknown_846F918
 gUnknown_846F918: @ 0x846F918
-	.incbin "build/data/data.bin", 0x1d3b74, 0x10
+	.incbin "baserom_jp.gba", 0x46f918, 0x10
 
 	.globl gUnknown_846F928
 gUnknown_846F928: @ 0x846F928
-	.incbin "build/data/data.bin", 0x1d3b84, 0x2
+	.incbin "baserom_jp.gba", 0x46f928, 0x2
 
 	.globl gUnknown_846F92A
 gUnknown_846F92A: @ 0x846F92A
-	.incbin "build/data/data.bin", 0x1d3b86, 0x2
+	.incbin "baserom_jp.gba", 0x46f92a, 0x2
 
 	.globl gUnknown_846F92C
 gUnknown_846F92C: @ 0x846F92C
-	.incbin "build/data/data.bin", 0x1d3b88, 0x14
+	.incbin "baserom_jp.gba", 0x46f92c, 0x14
 
 	.globl gUnknown_846F940
 gUnknown_846F940: @ 0x846F940
-	.incbin "build/data/data.bin", 0x1d3b9c, 0x10
+	.incbin "baserom_jp.gba", 0x46f940, 0x10
 
 	.globl gUnknown_846F950
 gUnknown_846F950: @ 0x846F950
-	.incbin "build/data/data.bin", 0x1d3bac, 0xc
+	.incbin "baserom_jp.gba", 0x46f950, 0xc
 
 	.globl gUnknown_846F95C
 gUnknown_846F95C: @ 0x846F95C
-	.incbin "build/data/data.bin", 0x1d3bb8, 0x4
+	.incbin "baserom_jp.gba", 0x46f95c, 0x4
 
 	.globl gUnknown_846F960
 gUnknown_846F960: @ 0x846F960
-	.incbin "build/data/data.bin", 0x1d3bbc, 0x10
+	.incbin "baserom_jp.gba", 0x46f960, 0x10
 
 	.globl gUnknown_846F970
 gUnknown_846F970: @ 0x846F970
-	.incbin "build/data/data.bin", 0x1d3bcc, 0x4
+	.incbin "baserom_jp.gba", 0x46f970, 0x4
 
 	.globl gUnknown_846F974
 gUnknown_846F974: @ 0x846F974
-	.incbin "build/data/data.bin", 0x1d3bd0, 0x8
+	.incbin "baserom_jp.gba", 0x46f974, 0x8
 
 	.globl gUnknown_846F97C
 gUnknown_846F97C: @ 0x846F97C
-	.incbin "build/data/data.bin", 0x1d3bd8, 0x40
+	.incbin "baserom_jp.gba", 0x46f97c, 0x40
 
 	.globl gUnknown_846F9BC
 gUnknown_846F9BC: @ 0x846F9BC
-	.incbin "build/data/data.bin", 0x1d3c18, 0x6
+	.incbin "baserom_jp.gba", 0x46f9bc, 0x6
 
 	.globl gUnknown_846F9C2
 gUnknown_846F9C2: @ 0x846F9C2
-	.incbin "build/data/data.bin", 0x1d3c1e, 0x6
+	.incbin "baserom_jp.gba", 0x46f9c2, 0x6
 
 	.globl gUnknown_846F9C8
 gUnknown_846F9C8: @ 0x846F9C8
@@ -5269,11 +5269,11 @@ gUnknown_846F9CA: @ 0x846F9CA
 
 	.globl gUnknown_846F9D6
 gUnknown_846F9D6: @ 0x846F9D6
-	.incbin "build/data/data.bin", 0x1d3c32, 0x6
+	.incbin "baserom_jp.gba", 0x46f9d6, 0x6
 
 	.globl gUnknown_846F9DC
 gUnknown_846F9DC: @ 0x846F9DC
-	.incbin "build/data/data.bin", 0x1d3c38, 0xc
+	.incbin "baserom_jp.gba", 0x46f9dc, 0xc
 
 	.globl gUnknown_846F9E8
 gUnknown_846F9E8: @ 0x846F9E8
@@ -5289,531 +5289,531 @@ gUnknown_846FA03: @ 0x846FA03
 
 	.globl gUnknown_846FA13
 gUnknown_846FA13: @ 0x846FA13
-	.incbin "build/data/data.bin", 0x1d3c6f, 0x5
+	.incbin "baserom_jp.gba", 0x46fa13, 0x5
 
 	.globl gUnknown_846FA18
 gUnknown_846FA18: @ 0x846FA18
-	.incbin "build/data/data.bin", 0x1d3c74, 0x10
+	.incbin "baserom_jp.gba", 0x46fa18, 0x10
 
 	.globl gUnknown_846FA28
 gUnknown_846FA28: @ 0x846FA28
-	.incbin "build/data/data.bin", 0x1d3c84, 0x18
+	.incbin "baserom_jp.gba", 0x46fa28, 0x18
 
 	.globl gUnknown_846FA40
 gUnknown_846FA40: @ 0x846FA40
-	.incbin "build/data/data.bin", 0x1d3c9c, 0x120c
+	.incbin "baserom_jp.gba", 0x46fa40, 0x120c
 
 	.globl gUnknown_8470C4C
 gUnknown_8470C4C: @ 0x8470C4C
-	.incbin "build/data/data.bin", 0x1d4ea8, 0x1220
+	.incbin "baserom_jp.gba", 0x470c4c, 0x1220
 
 	.globl gUnknown_8471E6C
 gUnknown_8471E6C: @ 0x8471E6C
-	.incbin "build/data/data.bin", 0x1d60c8, 0xa860
+	.incbin "baserom_jp.gba", 0x471e6c, 0xa860
 
 	.globl gUnknown_847C6CC
 gUnknown_847C6CC: @ 0x847C6CC
-	.incbin "build/data/data.bin", 0x1e0928, 0x1240
+	.incbin "baserom_jp.gba", 0x47c6cc, 0x1240
 
 	.globl gUnknown_847D90C
 gUnknown_847D90C: @ 0x847D90C
-	.incbin "build/data/data.bin", 0x1e1b68, 0x5ff80
+	.incbin "baserom_jp.gba", 0x47d90c, 0x5ff80
 
 	.globl gUnknown_84DD88C
 gUnknown_84DD88C: @ 0x84DD88C
-	.incbin "build/data/data.bin", 0x241ae8, 0x144
+	.incbin "baserom_jp.gba", 0x4dd88c, 0x144
 
 	.globl gUnknown_84DD9D0
 gUnknown_84DD9D0: @ 0x84DD9D0
-	.incbin "build/data/data.bin", 0x241c2c, 0x51
+	.incbin "baserom_jp.gba", 0x4dd9d0, 0x51
 
 	.globl gUnknown_84DDA21
 gUnknown_84DDA21: @ 0x84DDA21
-	.incbin "build/data/data.bin", 0x241c7d, 0x53
+	.incbin "baserom_jp.gba", 0x4dda21, 0x53
 
 	.globl gUnknown_84DDA74
 gUnknown_84DDA74: @ 0x84DDA74
-	.incbin "build/data/data.bin", 0x241cd0, 0x3bc
+	.incbin "baserom_jp.gba", 0x4dda74, 0x3bc
 
 	.globl gUnknown_84DDE30
 gUnknown_84DDE30: @ 0x84DDE30
-	.incbin "build/data/data.bin", 0x24208c, 0x1c
+	.incbin "baserom_jp.gba", 0x4dde30, 0x1c
 
 	.globl gUnknown_84DDE4C
 gUnknown_84DDE4C: @ 0x84DDE4C
-	.incbin "build/data/data.bin", 0x2420a8, 0x3ab4
+	.incbin "baserom_jp.gba", 0x4dde4c, 0x3ab4
 
 	.globl gUnknown_84E1900
 gUnknown_84E1900: @ 0x84E1900
-	.incbin "build/data/data.bin", 0x245b5c, 0x271c
+	.incbin "baserom_jp.gba", 0x4e1900, 0x271c
 
 	.globl gUnknown_84E401C
 gUnknown_84E401C: @ 0x84E401C
-	.incbin "build/data/data.bin", 0x248278, 0x138
+	.incbin "baserom_jp.gba", 0x4e401c, 0x138
 
 	.globl gUnknown_84E4154
 gUnknown_84E4154: @ 0x84E4154
-	.incbin "build/data/data.bin", 0x2483b0, 0x78
+	.incbin "baserom_jp.gba", 0x4e4154, 0x78
 
 	.globl gUnknown_84E41CC
 gUnknown_84E41CC: @ 0x84E41CC
-	.incbin "build/data/data.bin", 0x248428, 0xc0
+	.incbin "baserom_jp.gba", 0x4e41cc, 0xc0
 
 	.globl gUnknown_84E428C
 gUnknown_84E428C: @ 0x84E428C
-	.incbin "build/data/data.bin", 0x2484e8, 0x978
+	.incbin "baserom_jp.gba", 0x4e428c, 0x978
 
 	.globl gUnknown_84E4C04
 gUnknown_84E4C04: @ 0x84E4C04
-	.incbin "build/data/data.bin", 0x248e60, 0xac
+	.incbin "baserom_jp.gba", 0x4e4c04, 0xac
 
 	.globl gUnknown_84E4CB0
 gUnknown_84E4CB0: @ 0x84E4CB0
-	.incbin "build/data/data.bin", 0x248f0c, 0xac
+	.incbin "baserom_jp.gba", 0x4e4cb0, 0xac
 
 	.globl gUnknown_84E4D5C
 gUnknown_84E4D5C: @ 0x84E4D5C
-	.incbin "build/data/data.bin", 0x248fb8, 0xc0
+	.incbin "baserom_jp.gba", 0x4e4d5c, 0xc0
 
 	.globl gUnknown_84E4E1C
 gUnknown_84E4E1C: @ 0x84E4E1C
-	.incbin "build/data/data.bin", 0x249078, 0xd14
+	.incbin "baserom_jp.gba", 0x4e4e1c, 0xd14
 
 	.globl gUnknown_84E5B30
 gUnknown_84E5B30: @ 0x84E5B30
-	.incbin "build/data/data.bin", 0x249d8c, 0x10
+	.incbin "baserom_jp.gba", 0x4e5b30, 0x10
 
 	.globl gUnknown_84E5B40
 gUnknown_84E5B40: @ 0x84E5B40
-	.incbin "build/data/data.bin", 0x249d9c, 0x8
+	.incbin "baserom_jp.gba", 0x4e5b40, 0x8
 
 	.globl gUnknown_84E5B48
 gUnknown_84E5B48: @ 0x84E5B48
-	.incbin "build/data/data.bin", 0x249da4, 0x1c
+	.incbin "baserom_jp.gba", 0x4e5b48, 0x1c
 
 	.globl gUnknown_84E5B64
 gUnknown_84E5B64: @ 0x84E5B64
-	.incbin "build/data/data.bin", 0x249dc0, 0x4
+	.incbin "baserom_jp.gba", 0x4e5b64, 0x4
 
 	.globl gUnknown_84E5B68
 gUnknown_84E5B68: @ 0x84E5B68
-	.incbin "build/data/data.bin", 0x249dc4, 0x2c
+	.incbin "baserom_jp.gba", 0x4e5b68, 0x2c
 
 	.globl gUnknown_84E5B94
 gUnknown_84E5B94: @ 0x84E5B94
-	.incbin "build/data/data.bin", 0x249df0, 0x14
+	.incbin "baserom_jp.gba", 0x4e5b94, 0x14
 
 	.globl gUnknown_84E5BA8
 gUnknown_84E5BA8: @ 0x84E5BA8
-	.incbin "build/data/data.bin", 0x249e04, 0x1c
+	.incbin "baserom_jp.gba", 0x4e5ba8, 0x1c
 
 	.globl gUnknown_84E5BC4
 gUnknown_84E5BC4: @ 0x84E5BC4
-	.incbin "build/data/data.bin", 0x249e20, 0x4
+	.incbin "baserom_jp.gba", 0x4e5bc4, 0x4
 
 	.globl gUnknown_84E5BC8
 gUnknown_84E5BC8: @ 0x84E5BC8
-	.incbin "build/data/data.bin", 0x249e24, 0x1c
+	.incbin "baserom_jp.gba", 0x4e5bc8, 0x1c
 
 	.globl gUnknown_84E5BE4
 gUnknown_84E5BE4: @ 0x84E5BE4
-	.incbin "build/data/data.bin", 0x249e40, 0x4
+	.incbin "baserom_jp.gba", 0x4e5be4, 0x4
 
 	.globl gUnknown_84E5BE8
 gUnknown_84E5BE8: @ 0x84E5BE8
-	.incbin "build/data/data.bin", 0x249e44, 0xc
+	.incbin "baserom_jp.gba", 0x4e5be8, 0xc
 
 	.globl gUnknown_84E5BF4
 gUnknown_84E5BF4: @ 0x84E5BF4
-	.incbin "build/data/data.bin", 0x249e50, 0x14
+	.incbin "baserom_jp.gba", 0x4e5bf4, 0x14
 
 	.globl gUnknown_84E5C08
 gUnknown_84E5C08: @ 0x84E5C08
-	.incbin "build/data/data.bin", 0x249e64, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c08, 0x14
 
 	.globl gUnknown_84E5C1C
 gUnknown_84E5C1C: @ 0x84E5C1C
-	.incbin "build/data/data.bin", 0x249e78, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c1c, 0x14
 
 	.globl gUnknown_84E5C30
 gUnknown_84E5C30: @ 0x84E5C30
-	.incbin "build/data/data.bin", 0x249e8c, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c30, 0x14
 
 	.globl gUnknown_84E5C44
 gUnknown_84E5C44: @ 0x84E5C44
-	.incbin "build/data/data.bin", 0x249ea0, 0x4
+	.incbin "baserom_jp.gba", 0x4e5c44, 0x4
 
 	.globl gUnknown_84E5C48
 gUnknown_84E5C48: @ 0x84E5C48
-	.incbin "build/data/data.bin", 0x249ea4, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c48, 0x14
 
 	.globl gUnknown_84E5C5C
 gUnknown_84E5C5C: @ 0x84E5C5C
-	.incbin "build/data/data.bin", 0x249eb8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5c5c, 0x4
 
 	.globl gUnknown_84E5C60
 gUnknown_84E5C60: @ 0x84E5C60
-	.incbin "build/data/data.bin", 0x249ebc, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c60, 0x14
 
 	.globl gUnknown_84E5C74
 gUnknown_84E5C74: @ 0x84E5C74
-	.incbin "build/data/data.bin", 0x249ed0, 0x4
+	.incbin "baserom_jp.gba", 0x4e5c74, 0x4
 
 	.globl gUnknown_84E5C78
 gUnknown_84E5C78: @ 0x84E5C78
-	.incbin "build/data/data.bin", 0x249ed4, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c78, 0x14
 
 	.globl gUnknown_84E5C8C
 gUnknown_84E5C8C: @ 0x84E5C8C
-	.incbin "build/data/data.bin", 0x249ee8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5c8c, 0x4
 
 	.globl gUnknown_84E5C90
 gUnknown_84E5C90: @ 0x84E5C90
-	.incbin "build/data/data.bin", 0x249eec, 0x14
+	.incbin "baserom_jp.gba", 0x4e5c90, 0x14
 
 	.globl gUnknown_84E5CA4
 gUnknown_84E5CA4: @ 0x84E5CA4
-	.incbin "build/data/data.bin", 0x249f00, 0x4
+	.incbin "baserom_jp.gba", 0x4e5ca4, 0x4
 
 	.globl gUnknown_84E5CA8
 gUnknown_84E5CA8: @ 0x84E5CA8
-	.incbin "build/data/data.bin", 0x249f04, 0x14
+	.incbin "baserom_jp.gba", 0x4e5ca8, 0x14
 
 	.globl gUnknown_84E5CBC
 gUnknown_84E5CBC: @ 0x84E5CBC
-	.incbin "build/data/data.bin", 0x249f18, 0x4
+	.incbin "baserom_jp.gba", 0x4e5cbc, 0x4
 
 	.globl gUnknown_84E5CC0
 gUnknown_84E5CC0: @ 0x84E5CC0
-	.incbin "build/data/data.bin", 0x249f1c, 0x14
+	.incbin "baserom_jp.gba", 0x4e5cc0, 0x14
 
 	.globl gUnknown_84E5CD4
 gUnknown_84E5CD4: @ 0x84E5CD4
-	.incbin "build/data/data.bin", 0x249f30, 0x4
+	.incbin "baserom_jp.gba", 0x4e5cd4, 0x4
 
 	.globl gUnknown_84E5CD8
 gUnknown_84E5CD8: @ 0x84E5CD8
-	.incbin "build/data/data.bin", 0x249f34, 0x14
+	.incbin "baserom_jp.gba", 0x4e5cd8, 0x14
 
 	.globl gUnknown_84E5CEC
 gUnknown_84E5CEC: @ 0x84E5CEC
-	.incbin "build/data/data.bin", 0x249f48, 0x4
+	.incbin "baserom_jp.gba", 0x4e5cec, 0x4
 
 	.globl gUnknown_84E5CF0
 gUnknown_84E5CF0: @ 0x84E5CF0
-	.incbin "build/data/data.bin", 0x249f4c, 0x10
+	.incbin "baserom_jp.gba", 0x4e5cf0, 0x10
 
 	.globl gUnknown_84E5D00
 gUnknown_84E5D00: @ 0x84E5D00
-	.incbin "build/data/data.bin", 0x249f5c, 0x8
+	.incbin "baserom_jp.gba", 0x4e5d00, 0x8
 
 	.globl gUnknown_84E5D08
 gUnknown_84E5D08: @ 0x84E5D08
-	.incbin "build/data/data.bin", 0x249f64, 0x10
+	.incbin "baserom_jp.gba", 0x4e5d08, 0x10
 
 	.globl gUnknown_84E5D18
 gUnknown_84E5D18: @ 0x84E5D18
-	.incbin "build/data/data.bin", 0x249f74, 0x8
+	.incbin "baserom_jp.gba", 0x4e5d18, 0x8
 
 	.globl gUnknown_84E5D20
 gUnknown_84E5D20: @ 0x84E5D20
-	.incbin "build/data/data.bin", 0x249f7c, 0x10
+	.incbin "baserom_jp.gba", 0x4e5d20, 0x10
 
 	.globl gUnknown_84E5D30
 gUnknown_84E5D30: @ 0x84E5D30
-	.incbin "build/data/data.bin", 0x249f8c, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d30, 0xc
 
 	.globl gUnknown_84E5D3C
 gUnknown_84E5D3C: @ 0x84E5D3C
-	.incbin "build/data/data.bin", 0x249f98, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d3c, 0x4
 
 	.globl gUnknown_84E5D40
 gUnknown_84E5D40: @ 0x84E5D40
-	.incbin "build/data/data.bin", 0x249f9c, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d40, 0xc
 
 	.globl gUnknown_84E5D4C
 gUnknown_84E5D4C: @ 0x84E5D4C
-	.incbin "build/data/data.bin", 0x249fa8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d4c, 0x4
 
 	.globl gUnknown_84E5D50
 gUnknown_84E5D50: @ 0x84E5D50
-	.incbin "build/data/data.bin", 0x249fac, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d50, 0xc
 
 	.globl gUnknown_84E5D5C
 gUnknown_84E5D5C: @ 0x84E5D5C
-	.incbin "build/data/data.bin", 0x249fb8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d5c, 0x4
 
 	.globl gUnknown_84E5D60
 gUnknown_84E5D60: @ 0x84E5D60
-	.incbin "build/data/data.bin", 0x249fbc, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d60, 0xc
 
 	.globl gUnknown_84E5D6C
 gUnknown_84E5D6C: @ 0x84E5D6C
-	.incbin "build/data/data.bin", 0x249fc8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d6c, 0x4
 
 	.globl gUnknown_84E5D70
 gUnknown_84E5D70: @ 0x84E5D70
-	.incbin "build/data/data.bin", 0x249fcc, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d70, 0xc
 
 	.globl gUnknown_84E5D7C
 gUnknown_84E5D7C: @ 0x84E5D7C
-	.incbin "build/data/data.bin", 0x249fd8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d7c, 0x4
 
 	.globl gUnknown_84E5D80
 gUnknown_84E5D80: @ 0x84E5D80
-	.incbin "build/data/data.bin", 0x249fdc, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d80, 0xc
 
 	.globl gUnknown_84E5D8C
 gUnknown_84E5D8C: @ 0x84E5D8C
-	.incbin "build/data/data.bin", 0x249fe8, 0x4
+	.incbin "baserom_jp.gba", 0x4e5d8c, 0x4
 
 	.globl gUnknown_84E5D90
 gUnknown_84E5D90: @ 0x84E5D90
-	.incbin "build/data/data.bin", 0x249fec, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d90, 0xc
 
 	.globl gUnknown_84E5D9C
 gUnknown_84E5D9C: @ 0x84E5D9C
-	.incbin "build/data/data.bin", 0x249ff8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5d9c, 0xc
 
 	.globl gUnknown_84E5DA8
 gUnknown_84E5DA8: @ 0x84E5DA8
-	.incbin "build/data/data.bin", 0x24a004, 0x4
+	.incbin "baserom_jp.gba", 0x4e5da8, 0x4
 
 	.globl gUnknown_84E5DAC
 gUnknown_84E5DAC: @ 0x84E5DAC
-	.incbin "build/data/data.bin", 0x24a008, 0xc
+	.incbin "baserom_jp.gba", 0x4e5dac, 0xc
 
 	.globl gUnknown_84E5DB8
 gUnknown_84E5DB8: @ 0x84E5DB8
-	.incbin "build/data/data.bin", 0x24a014, 0x4
+	.incbin "baserom_jp.gba", 0x4e5db8, 0x4
 
 	.globl gUnknown_84E5DBC
 gUnknown_84E5DBC: @ 0x84E5DBC
-	.incbin "build/data/data.bin", 0x24a018, 0xc
+	.incbin "baserom_jp.gba", 0x4e5dbc, 0xc
 
 	.globl gUnknown_84E5DC8
 gUnknown_84E5DC8: @ 0x84E5DC8
-	.incbin "build/data/data.bin", 0x24a024, 0x4
+	.incbin "baserom_jp.gba", 0x4e5dc8, 0x4
 
 	.globl gUnknown_84E5DCC
 gUnknown_84E5DCC: @ 0x84E5DCC
-	.incbin "build/data/data.bin", 0x24a028, 0xc
+	.incbin "baserom_jp.gba", 0x4e5dcc, 0xc
 
 	.globl gUnknown_84E5DD8
 gUnknown_84E5DD8: @ 0x84E5DD8
-	.incbin "build/data/data.bin", 0x24a034, 0x4
+	.incbin "baserom_jp.gba", 0x4e5dd8, 0x4
 
 	.globl gUnknown_84E5DDC
 gUnknown_84E5DDC: @ 0x84E5DDC
-	.incbin "build/data/data.bin", 0x24a038, 0xc
+	.incbin "baserom_jp.gba", 0x4e5ddc, 0xc
 
 	.globl gUnknown_84E5DE8
 gUnknown_84E5DE8: @ 0x84E5DE8
-	.incbin "build/data/data.bin", 0x24a044, 0x4
+	.incbin "baserom_jp.gba", 0x4e5de8, 0x4
 
 	.globl gUnknown_84E5DEC
 gUnknown_84E5DEC: @ 0x84E5DEC
-	.incbin "build/data/data.bin", 0x24a048, 0xc
+	.incbin "baserom_jp.gba", 0x4e5dec, 0xc
 
 	.globl gUnknown_84E5DF8
 gUnknown_84E5DF8: @ 0x84E5DF8
-	.incbin "build/data/data.bin", 0x24a054, 0x4
+	.incbin "baserom_jp.gba", 0x4e5df8, 0x4
 
 	.globl gUnknown_84E5DFC
 gUnknown_84E5DFC: @ 0x84E5DFC
-	.incbin "build/data/data.bin", 0x24a058, 0xc
+	.incbin "baserom_jp.gba", 0x4e5dfc, 0xc
 
 	.globl gUnknown_84E5E08
 gUnknown_84E5E08: @ 0x84E5E08
-	.incbin "build/data/data.bin", 0x24a064, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e08, 0x4
 
 	.globl gUnknown_84E5E0C
 gUnknown_84E5E0C: @ 0x84E5E0C
-	.incbin "build/data/data.bin", 0x24a068, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e0c, 0xc
 
 	.globl gUnknown_84E5E18
 gUnknown_84E5E18: @ 0x84E5E18
-	.incbin "build/data/data.bin", 0x24a074, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e18, 0x4
 
 	.globl gUnknown_84E5E1C
 gUnknown_84E5E1C: @ 0x84E5E1C
-	.incbin "build/data/data.bin", 0x24a078, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e1c, 0xc
 
 	.globl gUnknown_84E5E28
 gUnknown_84E5E28: @ 0x84E5E28
-	.incbin "build/data/data.bin", 0x24a084, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e28, 0x4
 
 	.globl gUnknown_84E5E2C
 gUnknown_84E5E2C: @ 0x84E5E2C
-	.incbin "build/data/data.bin", 0x24a088, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e2c, 0xc
 
 	.globl gUnknown_84E5E38
 gUnknown_84E5E38: @ 0x84E5E38
-	.incbin "build/data/data.bin", 0x24a094, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e38, 0x4
 
 	.globl gUnknown_84E5E3C
 gUnknown_84E5E3C: @ 0x84E5E3C
-	.incbin "build/data/data.bin", 0x24a098, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e3c, 0xc
 
 	.globl gUnknown_84E5E48
 gUnknown_84E5E48: @ 0x84E5E48
-	.incbin "build/data/data.bin", 0x24a0a4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e48, 0x4
 
 	.globl gUnknown_84E5E4C
 gUnknown_84E5E4C: @ 0x84E5E4C
-	.incbin "build/data/data.bin", 0x24a0a8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e4c, 0xc
 
 	.globl gUnknown_84E5E58
 gUnknown_84E5E58: @ 0x84E5E58
-	.incbin "build/data/data.bin", 0x24a0b4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e58, 0x4
 
 	.globl gUnknown_84E5E5C
 gUnknown_84E5E5C: @ 0x84E5E5C
-	.incbin "build/data/data.bin", 0x24a0b8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e5c, 0xc
 
 	.globl gUnknown_84E5E68
 gUnknown_84E5E68: @ 0x84E5E68
-	.incbin "build/data/data.bin", 0x24a0c4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e68, 0x4
 
 	.globl gUnknown_84E5E6C
 gUnknown_84E5E6C: @ 0x84E5E6C
-	.incbin "build/data/data.bin", 0x24a0c8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e6c, 0xc
 
 	.globl gUnknown_84E5E78
 gUnknown_84E5E78: @ 0x84E5E78
-	.incbin "build/data/data.bin", 0x24a0d4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e78, 0x4
 
 	.globl gUnknown_84E5E7C
 gUnknown_84E5E7C: @ 0x84E5E7C
-	.incbin "build/data/data.bin", 0x24a0d8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e7c, 0xc
 
 	.globl gUnknown_84E5E88
 gUnknown_84E5E88: @ 0x84E5E88
-	.incbin "build/data/data.bin", 0x24a0e4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e88, 0x4
 
 	.globl gUnknown_84E5E8C
 gUnknown_84E5E8C: @ 0x84E5E8C
-	.incbin "build/data/data.bin", 0x24a0e8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e8c, 0xc
 
 	.globl gUnknown_84E5E98
 gUnknown_84E5E98: @ 0x84E5E98
-	.incbin "build/data/data.bin", 0x24a0f4, 0x4
+	.incbin "baserom_jp.gba", 0x4e5e98, 0x4
 
 	.globl gUnknown_84E5E9C
 gUnknown_84E5E9C: @ 0x84E5E9C
-	.incbin "build/data/data.bin", 0x24a0f8, 0xc
+	.incbin "baserom_jp.gba", 0x4e5e9c, 0xc
 
 	.globl gUnknown_84E5EA8
 gUnknown_84E5EA8: @ 0x84E5EA8
-	.incbin "build/data/data.bin", 0x24a104, 0x4
+	.incbin "baserom_jp.gba", 0x4e5ea8, 0x4
 
 	.globl gUnknown_84E5EAC
 gUnknown_84E5EAC: @ 0x84E5EAC
-	.incbin "build/data/data.bin", 0x24a108, 0xc
+	.incbin "baserom_jp.gba", 0x4e5eac, 0xc
 
 	.globl gUnknown_84E5EB8
 gUnknown_84E5EB8: @ 0x84E5EB8
-	.incbin "build/data/data.bin", 0x24a114, 0x2c
+	.incbin "baserom_jp.gba", 0x4e5eb8, 0x2c
 
 	.globl gUnknown_84E5EE4
 gUnknown_84E5EE4: @ 0x84E5EE4
-	.incbin "build/data/data.bin", 0x24a140, 0xc
+	.incbin "baserom_jp.gba", 0x4e5ee4, 0xc
 
 	.globl gUnknown_84E5EF0
 gUnknown_84E5EF0: @ 0x84E5EF0
-	.incbin "build/data/data.bin", 0x24a14c, 0x4
+	.incbin "baserom_jp.gba", 0x4e5ef0, 0x4
 
 	.globl gUnknown_84E5EF4
 gUnknown_84E5EF4: @ 0x84E5EF4
-	.incbin "build/data/data.bin", 0x24a150, 0x8
+	.incbin "baserom_jp.gba", 0x4e5ef4, 0x8
 
 	.globl gUnknown_84E5EFC
 gUnknown_84E5EFC: @ 0x84E5EFC
-	.incbin "build/data/data.bin", 0x24a158, 0x8
+	.incbin "baserom_jp.gba", 0x4e5efc, 0x8
 
 	.globl gUnknown_84E5F04
 gUnknown_84E5F04: @ 0x84E5F04
-	.incbin "build/data/data.bin", 0x24a160, 0x8
+	.incbin "baserom_jp.gba", 0x4e5f04, 0x8
 
 	.globl gUnknown_84E5F0C
 gUnknown_84E5F0C: @ 0x84E5F0C
-	.incbin "build/data/data.bin", 0x24a168, 0x8
+	.incbin "baserom_jp.gba", 0x4e5f0c, 0x8
 
 	.globl gUnknown_84E5F14
 gUnknown_84E5F14: @ 0x84E5F14
-	.incbin "build/data/data.bin", 0x24a170, 0xc
+	.incbin "baserom_jp.gba", 0x4e5f14, 0xc
 
 	.globl gUnknown_84E5F20
 gUnknown_84E5F20: @ 0x84E5F20
-	.incbin "build/data/data.bin", 0x24a17c, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f20, 0x9
 
 	.globl gUnknown_84E5F29
 gUnknown_84E5F29: @ 0x84E5F29
-	.incbin "build/data/data.bin", 0x24a185, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f29, 0x9
 
 	.globl gUnknown_84E5F32
 gUnknown_84E5F32: @ 0x84E5F32
-	.incbin "build/data/data.bin", 0x24a18e, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f32, 0x9
 
 	.globl gUnknown_84E5F3B
 gUnknown_84E5F3B: @ 0x84E5F3B
-	.incbin "build/data/data.bin", 0x24a197, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f3b, 0x9
 
 	.globl gUnknown_84E5F44
 gUnknown_84E5F44: @ 0x84E5F44
-	.incbin "build/data/data.bin", 0x24a1a0, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f44, 0x9
 
 	.globl gUnknown_84E5F4D
 gUnknown_84E5F4D: @ 0x84E5F4D
-	.incbin "build/data/data.bin", 0x24a1a9, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f4d, 0x9
 
 	.globl gUnknown_84E5F56
 gUnknown_84E5F56: @ 0x84E5F56
-	.incbin "build/data/data.bin", 0x24a1b2, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f56, 0x9
 
 	.globl gUnknown_84E5F5F
 gUnknown_84E5F5F: @ 0x84E5F5F
-	.incbin "build/data/data.bin", 0x24a1bb, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f5f, 0x9
 
 	.globl gUnknown_84E5F68
 gUnknown_84E5F68: @ 0x84E5F68
-	.incbin "build/data/data.bin", 0x24a1c4, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f68, 0x9
 
 	.globl gUnknown_84E5F71
 gUnknown_84E5F71: @ 0x84E5F71
-	.incbin "build/data/data.bin", 0x24a1cd, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f71, 0x9
 
 	.globl gUnknown_84E5F7A
 gUnknown_84E5F7A: @ 0x84E5F7A
-	.incbin "build/data/data.bin", 0x24a1d6, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f7a, 0x9
 
 	.globl gUnknown_84E5F83
 gUnknown_84E5F83: @ 0x84E5F83
-	.incbin "build/data/data.bin", 0x24a1df, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f83, 0x9
 
 	.globl gUnknown_84E5F8C
 gUnknown_84E5F8C: @ 0x84E5F8C
-	.incbin "build/data/data.bin", 0x24a1e8, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f8c, 0x9
 
 	.globl gUnknown_84E5F95
 gUnknown_84E5F95: @ 0x84E5F95
-	.incbin "build/data/data.bin", 0x24a1f1, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f95, 0x9
 
 	.globl gUnknown_84E5F9E
 gUnknown_84E5F9E: @ 0x84E5F9E
-	.incbin "build/data/data.bin", 0x24a1fa, 0x9
+	.incbin "baserom_jp.gba", 0x4e5f9e, 0x9
 
 	.globl gUnknown_84E5FA7
 gUnknown_84E5FA7: @ 0x84E5FA7
-	.incbin "build/data/data.bin", 0x24a203, 0x9
+	.incbin "baserom_jp.gba", 0x4e5fa7, 0x9
 
 	.globl gUnknown_84E5FB0
 gUnknown_84E5FB0: @ 0x84E5FB0
-	.incbin "build/data/data.bin", 0x24a20c, 0x10
+	.incbin "baserom_jp.gba", 0x4e5fb0, 0x10
 
 	.globl gUnknown_84E5FC0
 gUnknown_84E5FC0: @ 0x84E5FC0
-	.incbin "build/data/data.bin", 0x24a21c, 0x10
+	.incbin "baserom_jp.gba", 0x4e5fc0, 0x10
 
 	.globl gUnknown_84E5FD0
 gUnknown_84E5FD0: @ 0x84E5FD0
@@ -5824,303 +5824,303 @@ gUnknown_84E5FD0: @ 0x84E5FD0
 
 	.globl gUnknown_84E5FF4
 gUnknown_84E5FF4: @ 0x84E5FF4
-	.incbin "build/data/data.bin", 0x24a250, 0x5
+	.incbin "baserom_jp.gba", 0x4e5ff4, 0x5
 
 	.globl gUnknown_84E5FF9
 gUnknown_84E5FF9: @ 0x84E5FF9
-	.incbin "build/data/data.bin", 0x24a255, 0x5
+	.incbin "baserom_jp.gba", 0x4e5ff9, 0x5
 
 	.globl gUnknown_84E5FFE
 gUnknown_84E5FFE: @ 0x84E5FFE
-	.incbin "build/data/data.bin", 0x24a25a, 0x5
+	.incbin "baserom_jp.gba", 0x4e5ffe, 0x5
 
 	.globl gUnknown_84E6003
 gUnknown_84E6003: @ 0x84E6003
-	.incbin "build/data/data.bin", 0x24a25f, 0x5
+	.incbin "baserom_jp.gba", 0x4e6003, 0x5
 
 	.globl gUnknown_84E6008
 gUnknown_84E6008: @ 0x84E6008
-	.incbin "build/data/data.bin", 0x24a264, 0x5
+	.incbin "baserom_jp.gba", 0x4e6008, 0x5
 
 	.globl gUnknown_84E600D
 gUnknown_84E600D: @ 0x84E600D
-	.incbin "build/data/data.bin", 0x24a269, 0x5
+	.incbin "baserom_jp.gba", 0x4e600d, 0x5
 
 	.globl gUnknown_84E6012
 gUnknown_84E6012: @ 0x84E6012
-	.incbin "build/data/data.bin", 0x24a26e, 0x5
+	.incbin "baserom_jp.gba", 0x4e6012, 0x5
 
 	.globl gUnknown_84E6017
 gUnknown_84E6017: @ 0x84E6017
-	.incbin "build/data/data.bin", 0x24a273, 0x5
+	.incbin "baserom_jp.gba", 0x4e6017, 0x5
 
 	.globl gUnknown_84E601C
 gUnknown_84E601C: @ 0x84E601C
-	.incbin "build/data/data.bin", 0x24a278, 0x5
+	.incbin "baserom_jp.gba", 0x4e601c, 0x5
 
 	.globl gUnknown_84E6021
 gUnknown_84E6021: @ 0x84E6021
-	.incbin "build/data/data.bin", 0x24a27d, 0x5
+	.incbin "baserom_jp.gba", 0x4e6021, 0x5
 
 	.globl gUnknown_84E6026
 gUnknown_84E6026: @ 0x84E6026
-	.incbin "build/data/data.bin", 0x24a282, 0x5
+	.incbin "baserom_jp.gba", 0x4e6026, 0x5
 
 	.globl gUnknown_84E602B
 gUnknown_84E602B: @ 0x84E602B
-	.incbin "build/data/data.bin", 0x24a287, 0x5
+	.incbin "baserom_jp.gba", 0x4e602b, 0x5
 
 	.globl gUnknown_84E6030
 gUnknown_84E6030: @ 0x84E6030
-	.incbin "build/data/data.bin", 0x24a28c, 0x5
+	.incbin "baserom_jp.gba", 0x4e6030, 0x5
 
 	.globl gUnknown_84E6035
 gUnknown_84E6035: @ 0x84E6035
-	.incbin "build/data/data.bin", 0x24a291, 0x5
+	.incbin "baserom_jp.gba", 0x4e6035, 0x5
 
 	.globl gUnknown_84E603A
 gUnknown_84E603A: @ 0x84E603A
-	.incbin "build/data/data.bin", 0x24a296, 0x5
+	.incbin "baserom_jp.gba", 0x4e603a, 0x5
 
 	.globl gUnknown_84E603F
 gUnknown_84E603F: @ 0x84E603F
-	.incbin "build/data/data.bin", 0x24a29b, 0x5
+	.incbin "baserom_jp.gba", 0x4e603f, 0x5
 
 	.globl gUnknown_84E6044
 gUnknown_84E6044: @ 0x84E6044
-	.incbin "build/data/data.bin", 0x24a2a0, 0x5
+	.incbin "baserom_jp.gba", 0x4e6044, 0x5
 
 	.globl gUnknown_84E6049
 gUnknown_84E6049: @ 0x84E6049
-	.incbin "build/data/data.bin", 0x24a2a5, 0x5
+	.incbin "baserom_jp.gba", 0x4e6049, 0x5
 
 	.globl gUnknown_84E604E
 gUnknown_84E604E: @ 0x84E604E
-	.incbin "build/data/data.bin", 0x24a2aa, 0x5
+	.incbin "baserom_jp.gba", 0x4e604e, 0x5
 
 	.globl gUnknown_84E6053
 gUnknown_84E6053: @ 0x84E6053
-	.incbin "build/data/data.bin", 0x24a2af, 0x5
+	.incbin "baserom_jp.gba", 0x4e6053, 0x5
 
 	.globl gUnknown_84E6058
 gUnknown_84E6058: @ 0x84E6058
-	.incbin "build/data/data.bin", 0x24a2b4, 0x5
+	.incbin "baserom_jp.gba", 0x4e6058, 0x5
 
 	.globl gUnknown_84E605D
 gUnknown_84E605D: @ 0x84E605D
-	.incbin "build/data/data.bin", 0x24a2b9, 0x5
+	.incbin "baserom_jp.gba", 0x4e605d, 0x5
 
 	.globl gUnknown_84E6062
 gUnknown_84E6062: @ 0x84E6062
-	.incbin "build/data/data.bin", 0x24a2be, 0x5
+	.incbin "baserom_jp.gba", 0x4e6062, 0x5
 
 	.globl gUnknown_84E6067
 gUnknown_84E6067: @ 0x84E6067
-	.incbin "build/data/data.bin", 0x24a2c3, 0x5
+	.incbin "baserom_jp.gba", 0x4e6067, 0x5
 
 	.globl gUnknown_84E606C
 gUnknown_84E606C: @ 0x84E606C
-	.incbin "build/data/data.bin", 0x24a2c8, 0x5
+	.incbin "baserom_jp.gba", 0x4e606c, 0x5
 
 	.globl gUnknown_84E6071
 gUnknown_84E6071: @ 0x84E6071
-	.incbin "build/data/data.bin", 0x24a2cd, 0x5
+	.incbin "baserom_jp.gba", 0x4e6071, 0x5
 
 	.globl gUnknown_84E6076
 gUnknown_84E6076: @ 0x84E6076
-	.incbin "build/data/data.bin", 0x24a2d2, 0x5
+	.incbin "baserom_jp.gba", 0x4e6076, 0x5
 
 	.globl gUnknown_84E607B
 gUnknown_84E607B: @ 0x84E607B
-	.incbin "build/data/data.bin", 0x24a2d7, 0x8
+	.incbin "baserom_jp.gba", 0x4e607b, 0x8
 
 	.globl gUnknown_84E6083
 gUnknown_84E6083: @ 0x84E6083
-	.incbin "build/data/data.bin", 0x24a2df, 0x10
+	.incbin "baserom_jp.gba", 0x4e6083, 0x10
 
 	.globl gUnknown_84E6093
 gUnknown_84E6093: @ 0x84E6093
-	.incbin "build/data/data.bin", 0x24a2ef, 0x11
+	.incbin "baserom_jp.gba", 0x4e6093, 0x11
 
 	.globl gUnknown_84E60A4
 gUnknown_84E60A4: @ 0x84E60A4
-	.incbin "build/data/data.bin", 0x24a300, 0x298
+	.incbin "baserom_jp.gba", 0x4e60a4, 0x298
 
 	.globl gUnknown_84E633C
 gUnknown_84E633C: @ 0x84E633C
-	.incbin "build/data/data.bin", 0x24a598, 0xd4
+	.incbin "baserom_jp.gba", 0x4e633c, 0xd4
 
 	.globl gUnknown_84E6410
 gUnknown_84E6410: @ 0x84E6410
-	.incbin "build/data/data.bin", 0x24a66c, 0x6
+	.incbin "baserom_jp.gba", 0x4e6410, 0x6
 
 	.globl gUnknown_84E6416
 gUnknown_84E6416: @ 0x84E6416
-	.incbin "build/data/data.bin", 0x24a672, 0x61a
+	.incbin "baserom_jp.gba", 0x4e6416, 0x61a
 
 	.globl gUnknown_84E6A30
 gUnknown_84E6A30: @ 0x84E6A30
-	.incbin "build/data/data.bin", 0x24ac8c, 0x8
+	.incbin "baserom_jp.gba", 0x4e6a30, 0x8
 
 	.globl gUnknown_84E6A38
 gUnknown_84E6A38: @ 0x84E6A38
-	.incbin "build/data/data.bin", 0x24ac94, 0x18
+	.incbin "baserom_jp.gba", 0x4e6a38, 0x18
 
 	.globl gUnknown_84E6A50
 gUnknown_84E6A50: @ 0x84E6A50
-	.incbin "build/data/data.bin", 0x24acac, 0x18
+	.incbin "baserom_jp.gba", 0x4e6a50, 0x18
 
 	.globl gUnknown_84E6A68
 gUnknown_84E6A68: @ 0x84E6A68
-	.incbin "build/data/data.bin", 0x24acc4, 0x10
+	.incbin "baserom_jp.gba", 0x4e6a68, 0x10
 
 	.globl gUnknown_84E6A78
 gUnknown_84E6A78: @ 0x84E6A78
-	.incbin "build/data/data.bin", 0x24acd4, 0x10
+	.incbin "baserom_jp.gba", 0x4e6a78, 0x10
 
 	.globl gUnknown_84E6A88
 gUnknown_84E6A88: @ 0x84E6A88
-	.incbin "build/data/data.bin", 0x24ace4, 0x10
+	.incbin "baserom_jp.gba", 0x4e6a88, 0x10
 
 	.globl gUnknown_84E6A98
 gUnknown_84E6A98: @ 0x84E6A98
-	.incbin "build/data/data.bin", 0x24acf4, 0x10
+	.incbin "baserom_jp.gba", 0x4e6a98, 0x10
 
 	.globl gUnknown_84E6AA8
 gUnknown_84E6AA8: @ 0x84E6AA8
-	.incbin "build/data/data.bin", 0x24ad04, 0xc
+	.incbin "baserom_jp.gba", 0x4e6aa8, 0xc
 
 	.globl gUnknown_84E6AB4
 gUnknown_84E6AB4: @ 0x84E6AB4
-	.incbin "build/data/data.bin", 0x24ad10, 0x4
+	.incbin "baserom_jp.gba", 0x4e6ab4, 0x4
 
 	.globl gUnknown_84E6AB8
 gUnknown_84E6AB8: @ 0x84E6AB8
-	.incbin "build/data/data.bin", 0x24ad14, 0x10
+	.incbin "baserom_jp.gba", 0x4e6ab8, 0x10
 
 	.globl gUnknown_84E6AC8
 gUnknown_84E6AC8: @ 0x84E6AC8
-	.incbin "build/data/data.bin", 0x24ad24, 0xe0
+	.incbin "baserom_jp.gba", 0x4e6ac8, 0xe0
 
 	.globl gUnknown_84E6BA8
 gUnknown_84E6BA8: @ 0x84E6BA8
-	.incbin "build/data/data.bin", 0x24ae04, 0x14
+	.incbin "baserom_jp.gba", 0x4e6ba8, 0x14
 
 	.globl gUnknown_84E6BBC
 gUnknown_84E6BBC: @ 0x84E6BBC
-	.incbin "build/data/data.bin", 0x24ae18, 0xa
+	.incbin "baserom_jp.gba", 0x4e6bbc, 0xa
 
 	.globl gUnknown_84E6BC6
 gUnknown_84E6BC6: @ 0x84E6BC6
-	.incbin "build/data/data.bin", 0x24ae22, 0x48
+	.incbin "baserom_jp.gba", 0x4e6bc6, 0x48
 
 	.globl gUnknown_84E6C0E
 gUnknown_84E6C0E: @ 0x84E6C0E
-	.incbin "build/data/data.bin", 0x24ae6a, 0x7a
+	.incbin "baserom_jp.gba", 0x4e6c0e, 0x7a
 
 	.globl gUnknown_84E6C88
 gUnknown_84E6C88: @ 0x84E6C88
-	.incbin "build/data/data.bin", 0x24aee4, 0xc
+	.incbin "baserom_jp.gba", 0x4e6c88, 0xc
 
 	.globl gUnknown_84E6C94
 gUnknown_84E6C94: @ 0x84E6C94
-	.incbin "build/data/data.bin", 0x24aef0, 0x6
+	.incbin "baserom_jp.gba", 0x4e6c94, 0x6
 
 	.globl gUnknown_84E6C9A
 gUnknown_84E6C9A: @ 0x84E6C9A
-	.incbin "build/data/data.bin", 0x24aef6, 0x4
+	.incbin "baserom_jp.gba", 0x4e6c9a, 0x4
 
 	.globl gUnknown_84E6C9E
 gUnknown_84E6C9E: @ 0x84E6C9E
-	.incbin "build/data/data.bin", 0x24aefa, 0x6
+	.incbin "baserom_jp.gba", 0x4e6c9e, 0x6
 
 	.globl gUnknown_84E6CA4
 gUnknown_84E6CA4: @ 0x84E6CA4
-	.incbin "build/data/data.bin", 0x24af00, 0x4
+	.incbin "baserom_jp.gba", 0x4e6ca4, 0x4
 
 	.globl gUnknown_84E6CA8
 gUnknown_84E6CA8: @ 0x84E6CA8
-	.incbin "build/data/data.bin", 0x24af04, 0xc
+	.incbin "baserom_jp.gba", 0x4e6ca8, 0xc
 
 	.globl gUnknown_84E6CB4
 gUnknown_84E6CB4: @ 0x84E6CB4
-	.incbin "build/data/data.bin", 0x24af10, 0x2c
+	.incbin "baserom_jp.gba", 0x4e6cb4, 0x2c
 
 	.globl gUnknown_84E6CE0
 gUnknown_84E6CE0: @ 0x84E6CE0
-	.incbin "build/data/data.bin", 0x24af3c, 0x1680
+	.incbin "baserom_jp.gba", 0x4e6ce0, 0x1680
 
 	.globl gUnknown_84E8360
 gUnknown_84E8360: @ 0x84E8360
-	.incbin "build/data/data.bin", 0x24c5bc, 0x280
+	.incbin "baserom_jp.gba", 0x4e8360, 0x280
 
 	.globl gUnknown_84E85E0
 gUnknown_84E85E0: @ 0x84E85E0
-	.incbin "build/data/data.bin", 0x24c83c, 0x1c0
+	.incbin "baserom_jp.gba", 0x4e85e0, 0x1c0
 
 	.globl gUnknown_84E87A0
 gUnknown_84E87A0: @ 0x84E87A0
-	.incbin "build/data/data.bin", 0x24c9fc, 0xa0
+	.incbin "baserom_jp.gba", 0x4e87a0, 0xa0
 
 	.globl gUnknown_84E8840
 gUnknown_84E8840: @ 0x84E8840
-	.incbin "build/data/data.bin", 0x24ca9c, 0x20
+	.incbin "baserom_jp.gba", 0x4e8840, 0x20
 
 	.globl gUnknown_84E8860
 gUnknown_84E8860: @ 0x84E8860
-	.incbin "build/data/data.bin", 0x24cabc, 0xa0
+	.incbin "baserom_jp.gba", 0x4e8860, 0xa0
 
 	.globl gUnknown_84E8900
 gUnknown_84E8900: @ 0x84E8900
-	.incbin "build/data/data.bin", 0x24cb5c, 0x4
+	.incbin "baserom_jp.gba", 0x4e8900, 0x4
 
 	.globl gUnknown_84E8904
 gUnknown_84E8904: @ 0x84E8904
-	.incbin "build/data/data.bin", 0x24cb60, 0x14
+	.incbin "baserom_jp.gba", 0x4e8904, 0x14
 
 	.globl gUnknown_84E8918
 gUnknown_84E8918: @ 0x84E8918
-	.incbin "build/data/data.bin", 0x24cb74, 0xc
+	.incbin "baserom_jp.gba", 0x4e8918, 0xc
 
 	.globl gUnknown_84E8924
 gUnknown_84E8924: @ 0x84E8924
-	.incbin "build/data/data.bin", 0x24cb80, 0x68
+	.incbin "baserom_jp.gba", 0x4e8924, 0x68
 
 	.globl gUnknown_84E898C
 gUnknown_84E898C: @ 0x84E898C
-	.incbin "build/data/data.bin", 0x24cbe8, 0x20
+	.incbin "baserom_jp.gba", 0x4e898c, 0x20
 
 	.globl gUnknown_84E89AC
 gUnknown_84E89AC: @ 0x84E89AC
-	.incbin "build/data/data.bin", 0x24cc08, 0x20
+	.incbin "baserom_jp.gba", 0x4e89ac, 0x20
 
 	.globl gUnknown_84E89CC
 gUnknown_84E89CC: @ 0x84E89CC
-	.incbin "build/data/data.bin", 0x24cc28, 0x20
+	.incbin "baserom_jp.gba", 0x4e89cc, 0x20
 
 	.globl gUnknown_84E89EC
 gUnknown_84E89EC: @ 0x84E89EC
-	.incbin "build/data/data.bin", 0x24cc48, 0x20
+	.incbin "baserom_jp.gba", 0x4e89ec, 0x20
 
 	.globl gUnknown_84E8A0C
 gUnknown_84E8A0C: @ 0x84E8A0C
-	.incbin "build/data/data.bin", 0x24cc68, 0x34
+	.incbin "baserom_jp.gba", 0x4e8a0c, 0x34
 
 	.globl gUnknown_84E8A40
 gUnknown_84E8A40: @ 0x84E8A40
-	.incbin "build/data/data.bin", 0x24cc9c, 0x8
+	.incbin "baserom_jp.gba", 0x4e8a40, 0x8
 
 	.globl gResetRtcBgTemplates
 gResetRtcBgTemplates: @ 0x84E8A48
-	.incbin "build/data/data.bin", 0x24cca4, 0x4
+	.incbin "baserom_jp.gba", 0x4e8a48, 0x4
 
 	.globl gResetRtcWindowTemplates
 gResetRtcWindowTemplates: @ 0x84E8A4C
-	.incbin "build/data/data.bin", 0x24cca8, 0x18
+	.incbin "baserom_jp.gba", 0x4e8a4c, 0x18
 
 	.globl gResetRtcInputTimeWindow
 gResetRtcInputTimeWindow: @ 0x84E8A64
-	.incbin "build/data/data.bin", 0x24ccc0, 0x8
+	.incbin "baserom_jp.gba", 0x4e8a64, 0x8
 
 	.globl gUnknown_84E8A6C
 gUnknown_84E8A6C: @ 0x84E8A6C
@@ -6132,23 +6132,23 @@ gUnknown_84E8A6F: @ 0x84E8A6F
 
 	.globl gUnknown_84E8A71
 gUnknown_84E8A71: @ 0x84E8A71
-	.incbin "build/data/data.bin", 0x24cccd, 0xa3
+	.incbin "baserom_jp.gba", 0x4e8a71, 0xa3
 
 	.globl gResetRtcArrowPalette
 gResetRtcArrowPalette: @ 0x84E8B14
-	.incbin "build/data/data.bin", 0x24cd70, 0x2c
+	.incbin "baserom_jp.gba", 0x4e8b14, 0x2c
 
 	.globl gResetRtcArrowSpriteTemplate
 gResetRtcArrowSpriteTemplate: @ 0x84E8B40
-	.incbin "build/data/data.bin", 0x24cd9c, 0x18
+	.incbin "baserom_jp.gba", 0x4e8b40, 0x18
 
 	.globl gUnknown_84E8B58
 gUnknown_84E8B58: @ 0x84E8B58
-	.incbin "build/data/data.bin", 0x24cdb4, 0x4
+	.incbin "baserom_jp.gba", 0x4e8b58, 0x4
 
 	.globl gUnknown_84E8B5C
 gUnknown_84E8B5C: @ 0x84E8B5C
-	.incbin "build/data/data.bin", 0x24cdb8, 0x28
+	.incbin "baserom_jp.gba", 0x4e8b5c, 0x28
 
 	.globl gUnknown_84E8B84
 gUnknown_84E8B84: @ 0x84E8B84
@@ -6156,39 +6156,39 @@ gUnknown_84E8B84: @ 0x84E8B84
 
 	.globl gUnknown_84E8B94
 gUnknown_84E8B94: @ 0x84E8B94
-	.incbin "build/data/data.bin", 0x24cdf0, 0x8
+	.incbin "baserom_jp.gba", 0x4e8b94, 0x8
 
 	.globl gUnknown_84E8B9C
 gUnknown_84E8B9C: @ 0x84E8B9C
-	.incbin "build/data/data.bin", 0x24cdf8, 0x60
+	.incbin "baserom_jp.gba", 0x4e8b9c, 0x60
 
 	.globl gUnknown_84E8BFC
 gUnknown_84E8BFC: @ 0x84E8BFC
-	.incbin "build/data/data.bin", 0x24ce58, 0x20
+	.incbin "baserom_jp.gba", 0x4e8bfc, 0x20
 
 	.globl gUnknown_84E8C1C
 gUnknown_84E8C1C: @ 0x84E8C1C
-	.incbin "build/data/data.bin", 0x24ce78, 0x8
+	.incbin "baserom_jp.gba", 0x4e8c1c, 0x8
 
 	.globl gUnknown_84E8C24
 gUnknown_84E8C24: @ 0x84E8C24
-	.incbin "build/data/data.bin", 0x24ce80, 0x8
+	.incbin "baserom_jp.gba", 0x4e8c24, 0x8
 
 	.globl gUnknown_84E8C2C
 gUnknown_84E8C2C: @ 0x84E8C2C
-	.incbin "build/data/data.bin", 0x24ce88, 0x68
+	.incbin "baserom_jp.gba", 0x4e8c2c, 0x68
 
 	.globl gUnknown_84E8C94
 gUnknown_84E8C94: @ 0x84E8C94
-	.incbin "build/data/data.bin", 0x24cef0, 0x4
+	.incbin "baserom_jp.gba", 0x4e8c94, 0x4
 
 	.globl gUnknown_84E8C98
 gUnknown_84E8C98: @ 0x84E8C98
-	.incbin "build/data/data.bin", 0x24cef4, 0x10
+	.incbin "baserom_jp.gba", 0x4e8c98, 0x10
 
 	.globl gUnknown_84E8CA8
 gUnknown_84E8CA8: @ 0x84E8CA8
-	.incbin "build/data/data.bin", 0x24cf04, 0x8
+	.incbin "baserom_jp.gba", 0x4e8ca8, 0x8
 
 	.globl gUnknown_84E8CB0
 gUnknown_84E8CB0: @ 0x84E8CB0
@@ -6204,771 +6204,771 @@ gUnknown_84E8CC0: @ 0x84E8CC0
 
 	.globl gUnknown_84E8CC8
 gUnknown_84E8CC8: @ 0x84E8CC8
-	.incbin "build/data/data.bin", 0x24cf24, 0x1a8
+	.incbin "baserom_jp.gba", 0x4e8cc8, 0x1a8
 
 	.globl gUnknown_84E8E70
 gUnknown_84E8E70: @ 0x84E8E70
-	.incbin "build/data/data.bin", 0x24d0cc, 0xb60
+	.incbin "baserom_jp.gba", 0x4e8e70, 0xb60
 
 	.globl gUnknown_84E99D0
 gUnknown_84E99D0: @ 0x84E99D0
-	.incbin "build/data/data.bin", 0x24dc2c, 0x908
+	.incbin "baserom_jp.gba", 0x4e99d0, 0x908
 
 	.globl gUnknown_84EA2D8
 gUnknown_84EA2D8: @ 0x84EA2D8
-	.incbin "build/data/data.bin", 0x24e534, 0x9a8
+	.incbin "baserom_jp.gba", 0x4ea2d8, 0x9a8
 
 	.globl gUnknown_84EAC80
 gUnknown_84EAC80: @ 0x84EAC80
-	.incbin "build/data/data.bin", 0x24eedc, 0x8e0
+	.incbin "baserom_jp.gba", 0x4eac80, 0x8e0
 
 	.globl gUnknown_84EB560
 gUnknown_84EB560: @ 0x84EB560
-	.incbin "build/data/data.bin", 0x24f7bc, 0x320
+	.incbin "baserom_jp.gba", 0x4eb560, 0x320
 
 	.globl gUnknown_84EB880
 gUnknown_84EB880: @ 0x84EB880
-	.incbin "build/data/data.bin", 0x24fadc, 0x510
+	.incbin "baserom_jp.gba", 0x4eb880, 0x510
 
 	.globl gUnknown_84EBD90
 gUnknown_84EBD90: @ 0x84EBD90
-	.incbin "build/data/data.bin", 0x24ffec, 0x210
+	.incbin "baserom_jp.gba", 0x4ebd90, 0x210
 
 	.globl gUnknown_84EBFA0
 gUnknown_84EBFA0: @ 0x84EBFA0
-	.incbin "build/data/data.bin", 0x2501fc, 0xb50
+	.incbin "baserom_jp.gba", 0x4ebfa0, 0xb50
 
 	.globl gUnknown_84ECAF0
 gUnknown_84ECAF0: @ 0x84ECAF0
-	.incbin "build/data/data.bin", 0x250d4c, 0x210
+	.incbin "baserom_jp.gba", 0x4ecaf0, 0x210
 
 	.globl gUnknown_84ECD00
 gUnknown_84ECD00: @ 0x84ECD00
-	.incbin "build/data/data.bin", 0x250f5c, 0x810
+	.incbin "baserom_jp.gba", 0x4ecd00, 0x810
 
 	.globl gUnknown_84ED510
 gUnknown_84ED510: @ 0x84ED510
-	.incbin "build/data/data.bin", 0x25176c, 0x540
+	.incbin "baserom_jp.gba", 0x4ed510, 0x540
 
 	.globl gUnknown_84EDA50
 gUnknown_84EDA50: @ 0x84EDA50
-	.incbin "build/data/data.bin", 0x251cac, 0x20
+	.incbin "baserom_jp.gba", 0x4eda50, 0x20
 
 	.globl gUnknown_84EDA70
 gUnknown_84EDA70: @ 0x84EDA70
-	.incbin "build/data/data.bin", 0x251ccc, 0x20
+	.incbin "baserom_jp.gba", 0x4eda70, 0x20
 
 	.globl gUnknown_84EDA90
 gUnknown_84EDA90: @ 0x84EDA90
-	.incbin "build/data/data.bin", 0x251cec, 0x30
+	.incbin "baserom_jp.gba", 0x4eda90, 0x30
 
 	.globl gUnknown_84EDAC0
 gUnknown_84EDAC0: @ 0x84EDAC0
-	.incbin "build/data/data.bin", 0x251d1c, 0x30
+	.incbin "baserom_jp.gba", 0x4edac0, 0x30
 
 	.globl gUnknown_84EDAF0
 gUnknown_84EDAF0: @ 0x84EDAF0
-	.incbin "build/data/data.bin", 0x251d4c, 0x10
+	.incbin "baserom_jp.gba", 0x4edaf0, 0x10
 
 	.globl gUnknown_84EDB00
 gUnknown_84EDB00: @ 0x84EDB00
-	.incbin "build/data/data.bin", 0x251d5c, 0x410
+	.incbin "baserom_jp.gba", 0x4edb00, 0x410
 
 	.globl gUnknown_84EDF10
 gUnknown_84EDF10: @ 0x84EDF10
-	.incbin "build/data/data.bin", 0x25216c, 0x20
+	.incbin "baserom_jp.gba", 0x4edf10, 0x20
 
 	.globl gUnknown_84EDF30
 gUnknown_84EDF30: @ 0x84EDF30
-	.incbin "build/data/data.bin", 0x25218c, 0x140
+	.incbin "baserom_jp.gba", 0x4edf30, 0x140
 
 	.globl gUnknown_84EE070
 gUnknown_84EE070: @ 0x84EE070
-	.incbin "build/data/data.bin", 0x2522cc, 0x428
+	.incbin "baserom_jp.gba", 0x4ee070, 0x428
 
 	.globl gUnknown_84EE498
 gUnknown_84EE498: @ 0x84EE498
-	.incbin "build/data/data.bin", 0x2526f4, 0x430
+	.incbin "baserom_jp.gba", 0x4ee498, 0x430
 
 	.globl gUnknown_84EE8C8
 gUnknown_84EE8C8: @ 0x84EE8C8
-	.incbin "build/data/data.bin", 0x252b24, 0x20
+	.incbin "baserom_jp.gba", 0x4ee8c8, 0x20
 
 	.globl gUnknown_84EE8E8
 gUnknown_84EE8E8: @ 0x84EE8E8
-	.incbin "build/data/data.bin", 0x252b44, 0x320
+	.incbin "baserom_jp.gba", 0x4ee8e8, 0x320
 
 	.globl gUnknown_84EEC08
 gUnknown_84EEC08: @ 0x84EEC08
-	.incbin "build/data/data.bin", 0x252e64, 0x310
+	.incbin "baserom_jp.gba", 0x4eec08, 0x310
 
 	.globl gUnknown_84EEF18
 gUnknown_84EEF18: @ 0x84EEF18
-	.incbin "build/data/data.bin", 0x253174, 0x310
+	.incbin "baserom_jp.gba", 0x4eef18, 0x310
 
 	.globl gUnknown_84EF228
 gUnknown_84EF228: @ 0x84EF228
-	.incbin "build/data/data.bin", 0x253484, 0x210
+	.incbin "baserom_jp.gba", 0x4ef228, 0x210
 
 	.globl gUnknown_84EF438
 gUnknown_84EF438: @ 0x84EF438
-	.incbin "build/data/data.bin", 0x253694, 0x110
+	.incbin "baserom_jp.gba", 0x4ef438, 0x110
 
 	.globl gUnknown_84EF548
 gUnknown_84EF548: @ 0x84EF548
-	.incbin "build/data/data.bin", 0x2537a4, 0xc08
+	.incbin "baserom_jp.gba", 0x4ef548, 0xc08
 
 	.globl gUnknown_84F0150
 gUnknown_84F0150: @ 0x84F0150
-	.incbin "build/data/data.bin", 0x2543ac, 0xc
+	.incbin "baserom_jp.gba", 0x4f0150, 0xc
 
 	.globl gUnknown_84F015C
 gUnknown_84F015C: @ 0x84F015C
-	.incbin "build/data/data.bin", 0x2543b8, 0x1ac
+	.incbin "baserom_jp.gba", 0x4f015c, 0x1ac
 
 	.globl gUnknown_84F0308
 gUnknown_84F0308: @ 0x84F0308
-	.incbin "build/data/data.bin", 0x254564, 0x10
+	.incbin "baserom_jp.gba", 0x4f0308, 0x10
 
 	.globl gUnknown_84F0318
 gUnknown_84F0318: @ 0x84F0318
-	.incbin "build/data/data.bin", 0x254574, 0x428
+	.incbin "baserom_jp.gba", 0x4f0318, 0x428
 
 	.globl gUnknown_84F0740
 gUnknown_84F0740: @ 0x84F0740
-	.incbin "build/data/data.bin", 0x25499c, 0x268
+	.incbin "baserom_jp.gba", 0x4f0740, 0x268
 
 	.globl gUnknown_84F09A8
 gUnknown_84F09A8: @ 0x84F09A8
-	.incbin "build/data/data.bin", 0x254c04, 0x8028
+	.incbin "baserom_jp.gba", 0x4f09a8, 0x8028
 
 	.globl gUnknown_84F89D0
 gUnknown_84F89D0: @ 0x84F89D0
-	.incbin "build/data/data.bin", 0x25cc2c, 0x45a0
+	.incbin "baserom_jp.gba", 0x4f89d0, 0x45a0
 
 	.globl gUnknown_84FCF70
 gUnknown_84FCF70: @ 0x84FCF70
-	.incbin "build/data/data.bin", 0x2611cc, 0xc
+	.incbin "baserom_jp.gba", 0x4fcf70, 0xc
 
 	.globl gUnknown_84FCF7C
 gUnknown_84FCF7C: @ 0x84FCF7C
-	.incbin "build/data/data.bin", 0x2611d8, 0xc
+	.incbin "baserom_jp.gba", 0x4fcf7c, 0xc
 
 	.globl gUnknown_84FCF88
 gUnknown_84FCF88: @ 0x84FCF88
-	.incbin "build/data/data.bin", 0x2611e4, 0x10
+	.incbin "baserom_jp.gba", 0x4fcf88, 0x10
 
 	.globl gUnknown_84FCF98
 gUnknown_84FCF98: @ 0x84FCF98
-	.incbin "build/data/data.bin", 0x2611f4, 0x10
+	.incbin "baserom_jp.gba", 0x4fcf98, 0x10
 
 	.globl gUnknown_84FCFA8
 gUnknown_84FCFA8: @ 0x84FCFA8
-	.incbin "build/data/data.bin", 0x261204, 0x20
+	.incbin "baserom_jp.gba", 0x4fcfa8, 0x20
 
 	.globl sFanfares
 sFanfares: @ 0x84FCFC8
-	.incbin "build/data/data.bin", 0x261224, 0x48
+	.incbin "baserom_jp.gba", 0x4fcfc8, 0x48
 
 	.globl gUnknown_84FD010
 gUnknown_84FD010: @ 0x84FD010
-	.incbin "build/data/data.bin", 0x26126c, 0x240
+	.incbin "baserom_jp.gba", 0x4fd010, 0x240
 
 	.globl gUnknown_84FD250
 gUnknown_84FD250: @ 0x84FD250
-	.incbin "build/data/data.bin", 0x2614ac, 0x1d0
+	.incbin "baserom_jp.gba", 0x4fd250, 0x1d0
 
 	.globl gUnknown_84FD420
 gUnknown_84FD420: @ 0x84FD420
-	.incbin "build/data/data.bin", 0x26167c, 0x270
+	.incbin "baserom_jp.gba", 0x4fd420, 0x270
 
 	.globl gUnknown_84FD690
 gUnknown_84FD690: @ 0x84FD690
-	.incbin "build/data/data.bin", 0x2618ec, 0x308
+	.incbin "baserom_jp.gba", 0x4fd690, 0x308
 
 	.globl gUnknown_84FD998
 gUnknown_84FD998: @ 0x84FD998
-	.incbin "build/data/data.bin", 0x261bf4, 0x120
+	.incbin "baserom_jp.gba", 0x4fd998, 0x120
 
 	.globl gUnknown_84FDAB8
 gUnknown_84FDAB8: @ 0x84FDAB8
-	.incbin "build/data/data.bin", 0x261d14, 0x270
+	.incbin "baserom_jp.gba", 0x4fdab8, 0x270
 
 	.globl gUnknown_84FDD28
 gUnknown_84FDD28: @ 0x84FDD28
-	.incbin "build/data/data.bin", 0x261f84, 0x270
+	.incbin "baserom_jp.gba", 0x4fdd28, 0x270
 
 	.globl gUnknown_84FDF98
 gUnknown_84FDF98: @ 0x84FDF98
-	.incbin "build/data/data.bin", 0x2621f4, 0x308
+	.incbin "baserom_jp.gba", 0x4fdf98, 0x308
 
 	.globl gUnknown_84FE2A0
 gUnknown_84FE2A0: @ 0x84FE2A0
-	.incbin "build/data/data.bin", 0x2624fc, 0x120
+	.incbin "baserom_jp.gba", 0x4fe2a0, 0x120
 
 	.globl gUnknown_84FE3C0
 gUnknown_84FE3C0: @ 0x84FE3C0
-	.incbin "build/data/data.bin", 0x26261c, 0xa0
+	.incbin "baserom_jp.gba", 0x4fe3c0, 0xa0
 
 	.globl gUnknown_84FE460
 gUnknown_84FE460: @ 0x84FE460
-	.incbin "build/data/data.bin", 0x2626bc, 0x144
+	.incbin "baserom_jp.gba", 0x4fe460, 0x144
 
 	.globl gUnknown_84FE5A4
 gUnknown_84FE5A4: @ 0x84FE5A4
-	.incbin "build/data/data.bin", 0x262800, 0xc0
+	.incbin "baserom_jp.gba", 0x4fe5a4, 0xc0
 
 	.globl gUnknown_84FE664
 gUnknown_84FE664: @ 0x84FE664
-	.incbin "build/data/data.bin", 0x2628c0, 0x20
+	.incbin "baserom_jp.gba", 0x4fe664, 0x20
 
 	.globl gUnknown_84FE684
 gUnknown_84FE684: @ 0x84FE684
-	.incbin "build/data/data.bin", 0x2628e0, 0x10
+	.incbin "baserom_jp.gba", 0x4fe684, 0x10
 
 	.globl gUnknown_84FE694
 gUnknown_84FE694: @ 0x84FE694
-	.incbin "build/data/data.bin", 0x2628f0, 0x4
+	.incbin "baserom_jp.gba", 0x4fe694, 0x4
 
 	.globl gUnknown_84FE698
 gUnknown_84FE698: @ 0x84FE698
-	.incbin "build/data/data.bin", 0x2628f4, 0x4
+	.incbin "baserom_jp.gba", 0x4fe698, 0x4
 
 	.globl gUnknown_84FE69C
 gUnknown_84FE69C: @ 0x84FE69C
-	.incbin "build/data/data.bin", 0x2628f8, 0x30
+	.incbin "baserom_jp.gba", 0x4fe69c, 0x30
 
 	.globl gUnknown_84FE6CC
 gUnknown_84FE6CC: @ 0x84FE6CC
-	.incbin "build/data/data.bin", 0x262928, 0x18fd0
+	.incbin "baserom_jp.gba", 0x4fe6cc, 0x18fd0
 
 	.globl gUnknown_851769C
 gUnknown_851769C: @ 0x851769C
-	.incbin "build/data/data.bin", 0x27b8f8, 0x8
+	.incbin "baserom_jp.gba", 0x51769c, 0x8
 
 	.globl gUnknown_85176A4
 gUnknown_85176A4: @ 0x85176A4
-	.incbin "build/data/data.bin", 0x27b900, 0x18
+	.incbin "baserom_jp.gba", 0x5176a4, 0x18
 
 	.globl gUnknown_85176BC
 gUnknown_85176BC: @ 0x85176BC
-	.incbin "build/data/data.bin", 0x27b918, 0x3e4
+	.incbin "baserom_jp.gba", 0x5176bc, 0x3e4
 
 	.globl gUnknown_8517AA0
 gUnknown_8517AA0: @ 0x8517AA0
-	.incbin "build/data/data.bin", 0x27bcfc, 0xb8
+	.incbin "baserom_jp.gba", 0x517aa0, 0xb8
 
 	.globl gUnknown_8517B58
 gUnknown_8517B58: @ 0x8517B58
-	.incbin "build/data/data.bin", 0x27bdb4, 0xc0
+	.incbin "baserom_jp.gba", 0x517b58, 0xc0
 
 	.globl gUnknown_8517C18
 gUnknown_8517C18: @ 0x8517C18
-	.incbin "build/data/data.bin", 0x27be74, 0x1e9c
+	.incbin "baserom_jp.gba", 0x517c18, 0x1e9c
 
 	.globl gUnknown_8519AB4
 gUnknown_8519AB4: @ 0x8519AB4
-	.incbin "build/data/data.bin", 0x27dd10, 0x7e4
+	.incbin "baserom_jp.gba", 0x519ab4, 0x7e4
 
 	.globl gUnknown_851A298
 gUnknown_851A298: @ 0x851A298
-	.incbin "build/data/data.bin", 0x27e4f4, 0x450
+	.incbin "baserom_jp.gba", 0x51a298, 0x450
 
 	.globl gUnknown_851A6E8
 gUnknown_851A6E8: @ 0x851A6E8
-	.incbin "build/data/data.bin", 0x27e944, 0x2e4
+	.incbin "baserom_jp.gba", 0x51a6e8, 0x2e4
 
 	.globl gUnknown_851A9CC
 gUnknown_851A9CC: @ 0x851A9CC
-	.incbin "build/data/data.bin", 0x27ec28, 0x240
+	.incbin "baserom_jp.gba", 0x51a9cc, 0x240
 
 	.globl gUnknown_851AC0C
 gUnknown_851AC0C: @ 0x851AC0C
-	.incbin "build/data/data.bin", 0x27ee68, 0xa8
+	.incbin "baserom_jp.gba", 0x51ac0c, 0xa8
 
 	.globl gUnknown_851ACB4
 gUnknown_851ACB4: @ 0x851ACB4
-	.incbin "build/data/data.bin", 0x27ef10, 0x18
+	.incbin "baserom_jp.gba", 0x51acb4, 0x18
 
 	.globl gUnknown_851ACCC
 gUnknown_851ACCC: @ 0x851ACCC
-	.incbin "build/data/data.bin", 0x27ef28, 0x18
+	.incbin "baserom_jp.gba", 0x51accc, 0x18
 
 	.globl gUnknown_851ACE4
 gUnknown_851ACE4: @ 0x851ACE4
-	.incbin "build/data/data.bin", 0x27ef40, 0x90
+	.incbin "baserom_jp.gba", 0x51ace4, 0x90
 
 	.globl gUnknown_851AD74
 gUnknown_851AD74: @ 0x851AD74
-	.incbin "build/data/data.bin", 0x27efd0, 0x18
+	.incbin "baserom_jp.gba", 0x51ad74, 0x18
 
 	.globl gUnknown_851AD8C
 gUnknown_851AD8C: @ 0x851AD8C
-	.incbin "build/data/data.bin", 0x27efe8, 0x10
+	.incbin "baserom_jp.gba", 0x51ad8c, 0x10
 
 	.globl gUnknown_851AD9C
 gUnknown_851AD9C: @ 0x851AD9C
-	.incbin "build/data/data.bin", 0x27eff8, 0x24
+	.incbin "baserom_jp.gba", 0x51ad9c, 0x24
 
 	.globl gUnknown_851ADC0
 gUnknown_851ADC0: @ 0x851ADC0
-	.incbin "build/data/data.bin", 0x27f01c, 0x18
+	.incbin "baserom_jp.gba", 0x51adc0, 0x18
 
 	.globl gUnknown_851ADD8
 gUnknown_851ADD8: @ 0x851ADD8
-	.incbin "build/data/data.bin", 0x27f034, 0x10
+	.incbin "baserom_jp.gba", 0x51add8, 0x10
 
 	.globl gUnknown_851ADE8
 gUnknown_851ADE8: @ 0x851ADE8
-	.incbin "build/data/data.bin", 0x27f044, 0xc000
+	.incbin "baserom_jp.gba", 0x51ade8, 0xc000
 
 	.globl gUnknown_8526DE8
 gUnknown_8526DE8: @ 0x8526DE8
-	.incbin "build/data/data.bin", 0x28b044, 0x4
+	.incbin "baserom_jp.gba", 0x526de8, 0x4
 
 	.globl gUnknown_8526DEC
 gUnknown_8526DEC: @ 0x8526DEC
-	.incbin "build/data/data.bin", 0x28b048, 0xf0
+	.incbin "baserom_jp.gba", 0x526dec, 0xf0
 
 	.globl gUnknown_8526EDC
 gUnknown_8526EDC: @ 0x8526EDC
-	.incbin "build/data/data.bin", 0x28b138, 0x10
+	.incbin "baserom_jp.gba", 0x526edc, 0x10
 
 	.globl gUnknown_8526EEC
 gUnknown_8526EEC: @ 0x8526EEC
-	.incbin "build/data/data.bin", 0x28b148, 0x20
+	.incbin "baserom_jp.gba", 0x526eec, 0x20
 
 	.globl gUnknown_8526F0C
 gUnknown_8526F0C: @ 0x8526F0C
-	.incbin "build/data/data.bin", 0x28b168, 0x20
+	.incbin "baserom_jp.gba", 0x526f0c, 0x20
 
 	.globl gUnknown_8526F2C
 gUnknown_8526F2C: @ 0x8526F2C
-	.incbin "build/data/data.bin", 0x28b188, 0x20
+	.incbin "baserom_jp.gba", 0x526f2c, 0x20
 
 	.globl gUnknown_8526F4C
 gUnknown_8526F4C: @ 0x8526F4C
-	.incbin "build/data/data.bin", 0x28b1a8, 0x820
+	.incbin "baserom_jp.gba", 0x526f4c, 0x820
 
 	.globl gUnknown_852776C
 gUnknown_852776C: @ 0x852776C
-	.incbin "build/data/data.bin", 0x28b9c8, 0x3080
+	.incbin "baserom_jp.gba", 0x52776c, 0x3080
 
 	.globl gUnknown_852A7EC
 gUnknown_852A7EC: @ 0x852A7EC
-	.incbin "build/data/data.bin", 0x28ea48, 0xc
+	.incbin "baserom_jp.gba", 0x52a7ec, 0xc
 
 	.globl gUnknown_852A7F8
 gUnknown_852A7F8: @ 0x852A7F8
-	.incbin "build/data/data.bin", 0x28ea54, 0x1c
+	.incbin "baserom_jp.gba", 0x52a7f8, 0x1c
 
 	.globl gUnknown_852A814
 gUnknown_852A814: @ 0x852A814
-	.incbin "build/data/data.bin", 0x28ea70, 0x18
+	.incbin "baserom_jp.gba", 0x52a814, 0x18
 
 	.globl gUnknown_852A82C
 gUnknown_852A82C: @ 0x852A82C
-	.incbin "build/data/data.bin", 0x28ea88, 0x9c
+	.incbin "baserom_jp.gba", 0x52a82c, 0x9c
 
 	.globl gUnknown_852A8C8
 gUnknown_852A8C8: @ 0x852A8C8
-	.incbin "build/data/data.bin", 0x28eb24, 0x18
+	.incbin "baserom_jp.gba", 0x52a8c8, 0x18
 
 	.globl gUnknown_852A8E0
 gUnknown_852A8E0: @ 0x852A8E0
-	.incbin "build/data/data.bin", 0x28eb3c, 0x8
+	.incbin "baserom_jp.gba", 0x52a8e0, 0x8
 
 	.globl gUnknown_852A8E8
 gUnknown_852A8E8: @ 0x852A8E8
-	.incbin "build/data/data.bin", 0x28eb44, 0x8
+	.incbin "baserom_jp.gba", 0x52a8e8, 0x8
 
 	.globl gUnknown_852A8F0
 gUnknown_852A8F0: @ 0x852A8F0
-	.incbin "build/data/data.bin", 0x28eb4c, 0x38
+	.incbin "baserom_jp.gba", 0x52a8f0, 0x38
 
 	.globl gUnknown_852A928
 gUnknown_852A928: @ 0x852A928
-	.incbin "build/data/data.bin", 0x28eb84, 0x8c
+	.incbin "baserom_jp.gba", 0x52a928, 0x8c
 
 	.globl gUnknown_852A9B4
 gUnknown_852A9B4: @ 0x852A9B4
-	.incbin "build/data/data.bin", 0x28ec10, 0x18
+	.incbin "baserom_jp.gba", 0x52a9b4, 0x18
 
 	.globl gUnknown_852A9CC
 gUnknown_852A9CC: @ 0x852A9CC
-	.incbin "build/data/data.bin", 0x28ec28, 0x8
+	.incbin "baserom_jp.gba", 0x52a9cc, 0x8
 
 	.globl gUnknown_852A9D4
 gUnknown_852A9D4: @ 0x852A9D4
-	.incbin "build/data/data.bin", 0x28ec30, 0x20
+	.incbin "baserom_jp.gba", 0x52a9d4, 0x20
 
 	.globl gUnknown_852A9F4
 gUnknown_852A9F4: @ 0x852A9F4
-	.incbin "build/data/data.bin", 0x28ec50, 0x18
+	.incbin "baserom_jp.gba", 0x52a9f4, 0x18
 
 	.globl gUnknown_852AA0C
 gUnknown_852AA0C: @ 0x852AA0C
-	.incbin "build/data/data.bin", 0x28ec68, 0x1c
+	.incbin "baserom_jp.gba", 0x52aa0c, 0x1c
 
 	.globl gUnknown_852AA28
 gUnknown_852AA28: @ 0x852AA28
-	.incbin "build/data/data.bin", 0x28ec84, 0x38
+	.incbin "baserom_jp.gba", 0x52aa28, 0x38
 
 	.globl gUnknown_852AA60
 gUnknown_852AA60: @ 0x852AA60
-	.incbin "build/data/data.bin", 0x28ecbc, 0x18
+	.incbin "baserom_jp.gba", 0x52aa60, 0x18
 
 	.globl gUnknown_852AA78
 gUnknown_852AA78: @ 0x852AA78
-	.incbin "build/data/data.bin", 0x28ecd4, 0x8
+	.incbin "baserom_jp.gba", 0x52aa78, 0x8
 
 	.globl gUnknown_852AA80
 gUnknown_852AA80: @ 0x852AA80
-	.incbin "build/data/data.bin", 0x28ecdc, 0xc
+	.incbin "baserom_jp.gba", 0x52aa80, 0xc
 
 	.globl gUnknown_852AA8C
 gUnknown_852AA8C: @ 0x852AA8C
-	.incbin "build/data/data.bin", 0x28ece8, 0x8
+	.incbin "baserom_jp.gba", 0x52aa8c, 0x8
 
 	.globl gUnknown_852AA94
 gUnknown_852AA94: @ 0x852AA94
-	.incbin "build/data/data.bin", 0x28ecf0, 0x8
+	.incbin "baserom_jp.gba", 0x52aa94, 0x8
 
 	.globl gUnknown_852AA9C
 gUnknown_852AA9C: @ 0x852AA9C
-	.incbin "build/data/data.bin", 0x28ecf8, 0x44
+	.incbin "baserom_jp.gba", 0x52aa9c, 0x44
 
 	.globl gUnknown_852AAE0
 gUnknown_852AAE0: @ 0x852AAE0
-	.incbin "build/data/data.bin", 0x28ed3c, 0x18
+	.incbin "baserom_jp.gba", 0x52aae0, 0x18
 
 	.globl gUnknown_852AAF8
 gUnknown_852AAF8: @ 0x852AAF8
-	.incbin "build/data/data.bin", 0x28ed54, 0x4
+	.incbin "baserom_jp.gba", 0x52aaf8, 0x4
 
 	.globl gUnknown_852AAFC
 gUnknown_852AAFC: @ 0x852AAFC
-	.incbin "build/data/data.bin", 0x28ed58, 0x4
+	.incbin "baserom_jp.gba", 0x52aafc, 0x4
 
 	.globl gUnknown_852AB00
 gUnknown_852AB00: @ 0x852AB00
-	.incbin "build/data/data.bin", 0x28ed5c, 0x14
+	.incbin "baserom_jp.gba", 0x52ab00, 0x14
 
 	.globl gUnknown_852AB14
 gUnknown_852AB14: @ 0x852AB14
-	.incbin "build/data/data.bin", 0x28ed70, 0x4
+	.incbin "baserom_jp.gba", 0x52ab14, 0x4
 
 	.globl gUnknown_852AB18
 gUnknown_852AB18: @ 0x852AB18
-	.incbin "build/data/data.bin", 0x28ed74, 0xc
+	.incbin "baserom_jp.gba", 0x52ab18, 0xc
 
 	.globl gUnknown_852AB24
 gUnknown_852AB24: @ 0x852AB24
-	.incbin "build/data/data.bin", 0x28ed80, 0x8
+	.incbin "baserom_jp.gba", 0x52ab24, 0x8
 
 	.globl gUnknown_852AB2C
 gUnknown_852AB2C: @ 0x852AB2C
-	.incbin "build/data/data.bin", 0x28ed88, 0x8
+	.incbin "baserom_jp.gba", 0x52ab2c, 0x8
 
 	.globl gUnknown_852AB34
 gUnknown_852AB34: @ 0x852AB34
-	.incbin "build/data/data.bin", 0x28ed90, 0xc
+	.incbin "baserom_jp.gba", 0x52ab34, 0xc
 
 	.globl gUnknown_852AB40
 gUnknown_852AB40: @ 0x852AB40
-	.incbin "build/data/data.bin", 0x28ed9c, 0x3
+	.incbin "baserom_jp.gba", 0x52ab40, 0x3
 
 	.globl gUnknown_852AB43
 gUnknown_852AB43: @ 0x852AB43
-	.incbin "build/data/data.bin", 0x28ed9f, 0x5
+	.incbin "baserom_jp.gba", 0x52ab43, 0x5
 
 	.globl gUnknown_852AB48
 gUnknown_852AB48: @ 0x852AB48
-	.incbin "build/data/data.bin", 0x28eda4, 0x48
+	.incbin "baserom_jp.gba", 0x52ab48, 0x48
 
 	.globl gUnknown_852AB90
 gUnknown_852AB90: @ 0x852AB90
-	.incbin "build/data/data.bin", 0x28edec, 0x48
+	.incbin "baserom_jp.gba", 0x52ab90, 0x48
 
 	.globl gUnknown_852ABD8
 gUnknown_852ABD8: @ 0x852ABD8
-	.incbin "build/data/data.bin", 0x28ee34, 0x48
+	.incbin "baserom_jp.gba", 0x52abd8, 0x48
 
 	.globl gUnknown_852AC20
 gUnknown_852AC20: @ 0x852AC20
-	.incbin "build/data/data.bin", 0x28ee7c, 0x48
+	.incbin "baserom_jp.gba", 0x52ac20, 0x48
 
 	.globl gUnknown_852AC68
 gUnknown_852AC68: @ 0x852AC68
-	.incbin "build/data/data.bin", 0x28eec4, 0x48
+	.incbin "baserom_jp.gba", 0x52ac68, 0x48
 
 	.globl gUnknown_852ACB0
 gUnknown_852ACB0: @ 0x852ACB0
-	.incbin "build/data/data.bin", 0x28ef0c, 0x48
+	.incbin "baserom_jp.gba", 0x52acb0, 0x48
 
 	.globl gUnknown_852ACF8
 gUnknown_852ACF8: @ 0x852ACF8
-	.incbin "build/data/data.bin", 0x28ef54, 0x48
+	.incbin "baserom_jp.gba", 0x52acf8, 0x48
 
 	.globl gUnknown_852AD40
 gUnknown_852AD40: @ 0x852AD40
-	.incbin "build/data/data.bin", 0x28ef9c, 0x4e0
+	.incbin "baserom_jp.gba", 0x52ad40, 0x4e0
 
 	.globl gUnknown_852B220
 gUnknown_852B220: @ 0x852B220
-	.incbin "build/data/data.bin", 0x28f47c, 0x10
+	.incbin "baserom_jp.gba", 0x52b220, 0x10
 
 	.globl gUnknown_852B230
 gUnknown_852B230: @ 0x852B230
-	.incbin "build/data/data.bin", 0x28f48c, 0xc
+	.incbin "baserom_jp.gba", 0x52b230, 0xc
 
 	.globl gUnknown_852B23C
 gUnknown_852B23C: @ 0x852B23C
-	.incbin "build/data/data.bin", 0x28f498, 0x3
+	.incbin "baserom_jp.gba", 0x52b23c, 0x3
 
 	.globl gUnknown_852B23F
 gUnknown_852B23F: @ 0x852B23F
-	.incbin "build/data/data.bin", 0x28f49b, 0x199
+	.incbin "baserom_jp.gba", 0x52b23f, 0x199
 
 	.globl gUnknown_852B3D8
 gUnknown_852B3D8: @ 0x852B3D8
-	.incbin "build/data/data.bin", 0x28f634, 0x10
+	.incbin "baserom_jp.gba", 0x52b3d8, 0x10
 
 	.globl gUnknown_852B3E8
 gUnknown_852B3E8: @ 0x852B3E8
-	.incbin "build/data/data.bin", 0x28f644, 0x30
+	.incbin "baserom_jp.gba", 0x52b3e8, 0x30
 
 	.globl gUnknown_852B418
 gUnknown_852B418: @ 0x852B418
-	.incbin "build/data/data.bin", 0x28f674, 0x48
+	.incbin "baserom_jp.gba", 0x52b418, 0x48
 
 	.globl gUnknown_852B460
 gUnknown_852B460: @ 0x852B460
-	.incbin "build/data/data.bin", 0x28f6bc, 0x18
+	.incbin "baserom_jp.gba", 0x52b460, 0x18
 
 	.globl gUnknown_852B478
 gUnknown_852B478: @ 0x852B478
-	.incbin "build/data/data.bin", 0x28f6d4, 0x257c
+	.incbin "baserom_jp.gba", 0x52b478, 0x257c
 
 	.globl gUnknown_852D9F4
 gUnknown_852D9F4: @ 0x852D9F4
-	.incbin "build/data/data.bin", 0x291c50, 0xb4c
+	.incbin "baserom_jp.gba", 0x52d9f4, 0xb4c
 
 	.globl gUnknown_852E540
 gUnknown_852E540: @ 0x852E540
-	.incbin "build/data/data.bin", 0x29279c, 0x180
+	.incbin "baserom_jp.gba", 0x52e540, 0x180
 
 	.globl gUnknown_852E6C0
 gUnknown_852E6C0: @ 0x852E6C0
-	.incbin "build/data/data.bin", 0x29291c, 0x64
+	.incbin "baserom_jp.gba", 0x52e6c0, 0x64
 
 	.globl gUnknown_852E724
 gUnknown_852E724: @ 0x852E724
-	.incbin "build/data/data.bin", 0x292980, 0x4
+	.incbin "baserom_jp.gba", 0x52e724, 0x4
 
 	.globl gUnknown_852E728
 gUnknown_852E728: @ 0x852E728
-	.incbin "build/data/data.bin", 0x292984, 0x73d4
+	.incbin "baserom_jp.gba", 0x52e728, 0x73d4
 
 	.globl gUnknown_8535AFC
 gUnknown_8535AFC: @ 0x8535AFC
-	.incbin "build/data/data.bin", 0x299d58, 0x200
+	.incbin "baserom_jp.gba", 0x535afc, 0x200
 
 	.globl gUnknown_8535CFC
 gUnknown_8535CFC: @ 0x8535CFC
-	.incbin "build/data/data.bin", 0x299f58, 0x20
+	.incbin "baserom_jp.gba", 0x535cfc, 0x20
 
 	.globl gUnknown_8535D1C
 gUnknown_8535D1C: @ 0x8535D1C
-	.incbin "build/data/data.bin", 0x299f78, 0x280
+	.incbin "baserom_jp.gba", 0x535d1c, 0x280
 
 	.globl gUnknown_8535F9C
 gUnknown_8535F9C: @ 0x8535F9C
-	.incbin "build/data/data.bin", 0x29a1f8, 0x80
+	.incbin "baserom_jp.gba", 0x535f9c, 0x80
 
 	.globl gUnknown_853601C
 gUnknown_853601C: @ 0x853601C
-	.incbin "build/data/data.bin", 0x29a278, 0x20
+	.incbin "baserom_jp.gba", 0x53601c, 0x20
 
 	.globl gUnknown_853603C
 gUnknown_853603C: @ 0x853603C
-	.incbin "build/data/data.bin", 0x29a298, 0x280
+	.incbin "baserom_jp.gba", 0x53603c, 0x280
 
 	.globl gUnknown_85362BC
 gUnknown_85362BC: @ 0x85362BC
-	.incbin "build/data/data.bin", 0x29a518, 0x20
+	.incbin "baserom_jp.gba", 0x5362bc, 0x20
 
 	.globl gUnknown_85362DC
 gUnknown_85362DC: @ 0x85362DC
-	.incbin "build/data/data.bin", 0x29a538, 0xbc0
+	.incbin "baserom_jp.gba", 0x5362dc, 0xbc0
 
 	.globl gUnknown_8536E9C
 gUnknown_8536E9C: @ 0x8536E9C
-	.incbin "build/data/data.bin", 0x29b0f8, 0x20
+	.incbin "baserom_jp.gba", 0x536e9c, 0x20
 
 	.globl gUnknown_8536EBC
 gUnknown_8536EBC: @ 0x8536EBC
-	.incbin "build/data/data.bin", 0x29b118, 0x20
+	.incbin "baserom_jp.gba", 0x536ebc, 0x20
 
 	.globl gUnknown_8536EDC
 gUnknown_8536EDC: @ 0x8536EDC
-	.incbin "build/data/data.bin", 0x29b138, 0x14
+	.incbin "baserom_jp.gba", 0x536edc, 0x14
 
 	.globl gUnknown_8536EF0
 gUnknown_8536EF0: @ 0x8536EF0
-	.incbin "build/data/data.bin", 0x29b14c, 0x68
+	.incbin "baserom_jp.gba", 0x536ef0, 0x68
 
 	.globl gUnknown_8536F58
 gUnknown_8536F58: @ 0x8536F58
-	.incbin "build/data/data.bin", 0x29b1b4, 0x18
+	.incbin "baserom_jp.gba", 0x536f58, 0x18
 
 	.globl gUnknown_8536F70
 gUnknown_8536F70: @ 0x8536F70
-	.incbin "build/data/data.bin", 0x29b1cc, 0x40
+	.incbin "baserom_jp.gba", 0x536f70, 0x40
 
 	.globl gUnknown_8536FB0
 gUnknown_8536FB0: @ 0x8536FB0
-	.incbin "build/data/data.bin", 0x29b20c, 0x18
+	.incbin "baserom_jp.gba", 0x536fb0, 0x18
 
 	.globl gUnknown_8536FC8
 gUnknown_8536FC8: @ 0x8536FC8
-	.incbin "build/data/data.bin", 0x29b224, 0x18
+	.incbin "baserom_jp.gba", 0x536fc8, 0x18
 
 	.globl gUnknown_8536FE0
 gUnknown_8536FE0: @ 0x8536FE0
-	.incbin "build/data/data.bin", 0x29b23c, 0x18
+	.incbin "baserom_jp.gba", 0x536fe0, 0x18
 
 	.globl gUnknown_8536FF8
 gUnknown_8536FF8: @ 0x8536FF8
-	.incbin "build/data/data.bin", 0x29b254, 0x18
+	.incbin "baserom_jp.gba", 0x536ff8, 0x18
 
 	.globl gUnknown_8537010
 gUnknown_8537010: @ 0x8537010
-	.incbin "build/data/data.bin", 0x29b26c, 0x10
+	.incbin "baserom_jp.gba", 0x537010, 0x10
 
 	.globl gUnknown_8537020
 gUnknown_8537020: @ 0x8537020
-	.incbin "build/data/data.bin", 0x29b27c, 0x10
+	.incbin "baserom_jp.gba", 0x537020, 0x10
 
 	.globl gUnknown_8537030
 gUnknown_8537030: @ 0x8537030
-	.incbin "build/data/data.bin", 0x29b28c, 0x20
+	.incbin "baserom_jp.gba", 0x537030, 0x20
 
 	.globl gUnknown_8537050
 gUnknown_8537050: @ 0x8537050
-	.incbin "build/data/data.bin", 0x29b2ac, 0x18
+	.incbin "baserom_jp.gba", 0x537050, 0x18
 
 	.globl gUnknown_8537068
 gUnknown_8537068: @ 0x8537068
-	.incbin "build/data/data.bin", 0x29b2c4, 0x4
+	.incbin "baserom_jp.gba", 0x537068, 0x4
 
 	.globl gUnknown_853706C
 gUnknown_853706C: @ 0x853706C
-	.incbin "build/data/data.bin", 0x29b2c8, 0x4
+	.incbin "baserom_jp.gba", 0x53706c, 0x4
 
 	.globl gUnknown_8537070
 gUnknown_8537070: @ 0x8537070
-	.incbin "build/data/data.bin", 0x29b2cc, 0x4
+	.incbin "baserom_jp.gba", 0x537070, 0x4
 
 	.globl gUnknown_8537074
 gUnknown_8537074: @ 0x8537074
-	.incbin "build/data/data.bin", 0x29b2d0, 0x1c
+	.incbin "baserom_jp.gba", 0x537074, 0x1c
 
 	.globl gUnknown_8537090
 gUnknown_8537090: @ 0x8537090
-	.incbin "build/data/data.bin", 0x29b2ec, 0x18
+	.incbin "baserom_jp.gba", 0x537090, 0x18
 
 	.globl gUnknown_85370A8
 gUnknown_85370A8: @ 0x85370A8
-	.incbin "build/data/data.bin", 0x29b304, 0x1c
+	.incbin "baserom_jp.gba", 0x5370a8, 0x1c
 
 	.globl gUnknown_85370C4
 gUnknown_85370C4: @ 0x85370C4
-	.incbin "build/data/data.bin", 0x29b320, 0x14
+	.incbin "baserom_jp.gba", 0x5370c4, 0x14
 
 	.globl gUnknown_85370D8
 gUnknown_85370D8: @ 0x85370D8
-	.incbin "build/data/data.bin", 0x29b334, 0xc
+	.incbin "baserom_jp.gba", 0x5370d8, 0xc
 
 	.globl gUnknown_85370E4
 gUnknown_85370E4: @ 0x85370E4
-	.incbin "build/data/data.bin", 0x29b340, 0x18
+	.incbin "baserom_jp.gba", 0x5370e4, 0x18
 
 	.globl gUnknown_85370FC
 gUnknown_85370FC: @ 0x85370FC
-	.incbin "build/data/data.bin", 0x29b358, 0x10
+	.incbin "baserom_jp.gba", 0x5370fc, 0x10
 
 	.globl gUnknown_853710C
 gUnknown_853710C: @ 0x853710C
-	.incbin "build/data/data.bin", 0x29b368, 0x14
+	.incbin "baserom_jp.gba", 0x53710c, 0x14
 
 	.globl gUnknown_8537120
 gUnknown_8537120: @ 0x8537120
-	.incbin "build/data/data.bin", 0x29b37c, 0x8
+	.incbin "baserom_jp.gba", 0x537120, 0x8
 
 	.globl gUnknown_8537128
 gUnknown_8537128: @ 0x8537128
-	.incbin "build/data/data.bin", 0x29b384, 0x8
+	.incbin "baserom_jp.gba", 0x537128, 0x8
 
 	.globl gUnknown_8537130
 gUnknown_8537130: @ 0x8537130
-	.incbin "build/data/data.bin", 0x29b38c, 0x8
+	.incbin "baserom_jp.gba", 0x537130, 0x8
 
 	.globl gUnknown_8537138
 gUnknown_8537138: @ 0x8537138
-	.incbin "build/data/data.bin", 0x29b394, 0x10
+	.incbin "baserom_jp.gba", 0x537138, 0x10
 
 	.globl gUnknown_8537148
 gUnknown_8537148: @ 0x8537148
-	.incbin "build/data/data.bin", 0x29b3a4, 0xc
+	.incbin "baserom_jp.gba", 0x537148, 0xc
 
 	.globl gUnknown_8537154
 gUnknown_8537154: @ 0x8537154
-	.incbin "build/data/data.bin", 0x29b3b0, 0x1c
+	.incbin "baserom_jp.gba", 0x537154, 0x1c
 
 	.globl gUnknown_8537170
 gUnknown_8537170: @ 0x8537170
-	.incbin "build/data/data.bin", 0x29b3cc, 0x1c
+	.incbin "baserom_jp.gba", 0x537170, 0x1c
 
 	.globl gUnknown_853718C
 gUnknown_853718C: @ 0x853718C
-	.incbin "build/data/data.bin", 0x29b3e8, 0x14
+	.incbin "baserom_jp.gba", 0x53718c, 0x14
 
 	.globl gUnknown_85371A0
 gUnknown_85371A0: @ 0x85371A0
-	.incbin "build/data/data.bin", 0x29b3fc, 0x54
+	.incbin "baserom_jp.gba", 0x5371a0, 0x54
 
 	.globl gUnknown_85371F4
 gUnknown_85371F4: @ 0x85371F4
-	.incbin "build/data/data.bin", 0x29b450, 0x8
+	.incbin "baserom_jp.gba", 0x5371f4, 0x8
 
 	.globl gUnknown_85371FC
 gUnknown_85371FC: @ 0x85371FC
-	.incbin "build/data/data.bin", 0x29b458, 0x1c
+	.incbin "baserom_jp.gba", 0x5371fc, 0x1c
 
 	.globl gUnknown_8537218
 gUnknown_8537218: @ 0x8537218
-	.incbin "build/data/data.bin", 0x29b474, 0x24
+	.incbin "baserom_jp.gba", 0x537218, 0x24
 
 	.globl gUnknown_853723C
 gUnknown_853723C: @ 0x853723C
-	.incbin "build/data/data.bin", 0x29b498, 0x5c
+	.incbin "baserom_jp.gba", 0x53723c, 0x5c
 
 	.globl gUnknown_8537298
 gUnknown_8537298: @ 0x8537298
-	.incbin "build/data/data.bin", 0x29b4f4, 0x18
+	.incbin "baserom_jp.gba", 0x537298, 0x18
 
 	.globl gUnknown_85372B0
 gUnknown_85372B0: @ 0x85372B0
-	.incbin "build/data/data.bin", 0x29b50c, 0x60
+	.incbin "baserom_jp.gba", 0x5372b0, 0x60
 
 	.globl gUnknown_8537310
 gUnknown_8537310: @ 0x8537310
-	.incbin "build/data/data.bin", 0x29b56c, 0x40
+	.incbin "baserom_jp.gba", 0x537310, 0x40
 
 	.globl gUnknown_8537350
 gUnknown_8537350: @ 0x8537350
-	.incbin "build/data/data.bin", 0x29b5ac, 0x1c
+	.incbin "baserom_jp.gba", 0x537350, 0x1c
 
 	.globl gUnknown_853736C
 gUnknown_853736C: @ 0x853736C
@@ -7024,147 +7024,147 @@ gUnknown_85373E5: @ 0x85373E5
 
 	.globl gUnknown_85373EE
 gUnknown_85373EE: @ 0x85373EE
-	.incbin "build/data/data.bin", 0x29b64a, 0xe
+	.incbin "baserom_jp.gba", 0x5373ee, 0xe
 
 	.globl gUnknown_85373FC
 gUnknown_85373FC: @ 0x85373FC
-	.incbin "build/data/data.bin", 0x29b658, 0x18
+	.incbin "baserom_jp.gba", 0x5373fc, 0x18
 
 	.globl gUnknown_8537414
 gUnknown_8537414: @ 0x8537414
-	.incbin "build/data/data.bin", 0x29b670, 0x8
+	.incbin "baserom_jp.gba", 0x537414, 0x8
 
 	.globl gUnknown_853741C
 gUnknown_853741C: @ 0x853741C
-	.incbin "build/data/data.bin", 0x29b678, 0x6
+	.incbin "baserom_jp.gba", 0x53741c, 0x6
 
 	.globl gUnknown_8537422
 gUnknown_8537422: @ 0x8537422
-	.incbin "build/data/data.bin", 0x29b67e, 0x60
+	.incbin "baserom_jp.gba", 0x537422, 0x60
 
 	.globl gUnknown_8537482
 gUnknown_8537482: @ 0x8537482
-	.incbin "build/data/data.bin", 0x29b6de, 0x60
+	.incbin "baserom_jp.gba", 0x537482, 0x60
 
 	.globl gUnknown_85374E2
 gUnknown_85374E2: @ 0x85374E2
-	.incbin "build/data/data.bin", 0x29b73e, 0xc0
+	.incbin "baserom_jp.gba", 0x5374e2, 0xc0
 
 	.globl gUnknown_85375A2
 gUnknown_85375A2: @ 0x85375A2
-	.incbin "build/data/data.bin", 0x29b7fe, 0xbe
+	.incbin "baserom_jp.gba", 0x5375a2, 0xbe
 
 	.globl gUnknown_8537660
 gUnknown_8537660: @ 0x8537660
-	.incbin "build/data/data.bin", 0x29b8bc, 0xd0
+	.incbin "baserom_jp.gba", 0x537660, 0xd0
 
 	.globl gUnknown_8537730
 gUnknown_8537730: @ 0x8537730
-	.incbin "build/data/data.bin", 0x29b98c, 0xd4
+	.incbin "baserom_jp.gba", 0x537730, 0xd4
 
 	.globl gUnknown_8537804
 gUnknown_8537804: @ 0x8537804
-	.incbin "build/data/data.bin", 0x29ba60, 0x150
+	.incbin "baserom_jp.gba", 0x537804, 0x150
 
 	.globl gUnknown_8537954
 gUnknown_8537954: @ 0x8537954
-	.incbin "build/data/data.bin", 0x29bbb0, 0xbc
+	.incbin "baserom_jp.gba", 0x537954, 0xbc
 
 	.globl gUnknown_8537A10
 gUnknown_8537A10: @ 0x8537A10
-	.incbin "build/data/data.bin", 0x29bc6c, 0x134
+	.incbin "baserom_jp.gba", 0x537a10, 0x134
 
 	.globl gUnknown_8537B44
 gUnknown_8537B44: @ 0x8537B44
-	.incbin "build/data/data.bin", 0x29bda0, 0xec
+	.incbin "baserom_jp.gba", 0x537b44, 0xec
 
 	.globl gUnknown_8537C30
 gUnknown_8537C30: @ 0x8537C30
-	.incbin "build/data/data.bin", 0x29be8c, 0xf4
+	.incbin "baserom_jp.gba", 0x537c30, 0xf4
 
 	.globl gUnknown_8537D24
 gUnknown_8537D24: @ 0x8537D24
-	.incbin "build/data/data.bin", 0x29bf80, 0x90
+	.incbin "baserom_jp.gba", 0x537d24, 0x90
 
 	.globl gUnknown_8537DB4
 gUnknown_8537DB4: @ 0x8537DB4
-	.incbin "build/data/data.bin", 0x29c010, 0xd8
+	.incbin "baserom_jp.gba", 0x537db4, 0xd8
 
 	.globl gUnknown_8537E8C
 gUnknown_8537E8C: @ 0x8537E8C
-	.incbin "build/data/data.bin", 0x29c0e8, 0x1168
+	.incbin "baserom_jp.gba", 0x537e8c, 0x1168
 
 	.globl gUnknown_8538FF4
 gUnknown_8538FF4: @ 0x8538FF4
-	.incbin "build/data/data.bin", 0x29d250, 0x336
+	.incbin "baserom_jp.gba", 0x538ff4, 0x336
 
 	.globl gUnknown_853932A
 gUnknown_853932A: @ 0x853932A
-	.incbin "build/data/data.bin", 0x29d586, 0x304
+	.incbin "baserom_jp.gba", 0x53932a, 0x304
 
 	.globl gUnknown_853962E
 gUnknown_853962E: @ 0x853962E
-	.incbin "build/data/data.bin", 0x29d88a, 0x4b6
+	.incbin "baserom_jp.gba", 0x53962e, 0x4b6
 
 	.globl gUnknown_8539AE4
 gUnknown_8539AE4: @ 0x8539AE4
-	.incbin "build/data/data.bin", 0x29dd40, 0x18
+	.incbin "baserom_jp.gba", 0x539ae4, 0x18
 
 	.globl gUnknown_8539AFC
 gUnknown_8539AFC: @ 0x8539AFC
-	.incbin "build/data/data.bin", 0x29dd58, 0x18
+	.incbin "baserom_jp.gba", 0x539afc, 0x18
 
 	.globl gUnknown_8539B14
 gUnknown_8539B14: @ 0x8539B14
-	.incbin "build/data/data.bin", 0x29dd70, 0x18
+	.incbin "baserom_jp.gba", 0x539b14, 0x18
 
 	.globl gUnknown_8539B2C
 gUnknown_8539B2C: @ 0x8539B2C
-	.incbin "build/data/data.bin", 0x29dd88, 0x18
+	.incbin "baserom_jp.gba", 0x539b2c, 0x18
 
 	.globl gUnknown_8539B44
 gUnknown_8539B44: @ 0x8539B44
-	.incbin "build/data/data.bin", 0x29dda0, 0x18
+	.incbin "baserom_jp.gba", 0x539b44, 0x18
 
 	.globl gUnknown_8539B5C
 gUnknown_8539B5C: @ 0x8539B5C
-	.incbin "build/data/data.bin", 0x29ddb8, 0x18
+	.incbin "baserom_jp.gba", 0x539b5c, 0x18
 
 	.globl gUnknown_8539B74
 gUnknown_8539B74: @ 0x8539B74
-	.incbin "build/data/data.bin", 0x29ddd0, 0x18
+	.incbin "baserom_jp.gba", 0x539b74, 0x18
 
 	.globl gUnknown_8539B8C
 gUnknown_8539B8C: @ 0x8539B8C
-	.incbin "build/data/data.bin", 0x29dde8, 0x18
+	.incbin "baserom_jp.gba", 0x539b8c, 0x18
 
 	.globl gUnknown_8539BA4
 gUnknown_8539BA4: @ 0x8539BA4
-	.incbin "build/data/data.bin", 0x29de00, 0x18
+	.incbin "baserom_jp.gba", 0x539ba4, 0x18
 
 	.globl gUnknown_8539BBC
 gUnknown_8539BBC: @ 0x8539BBC
-	.incbin "build/data/data.bin", 0x29de18, 0x10
+	.incbin "baserom_jp.gba", 0x539bbc, 0x10
 
 	.globl gUnknown_8539BCC
 gUnknown_8539BCC: @ 0x8539BCC
-	.incbin "build/data/data.bin", 0x29de28, 0x10
+	.incbin "baserom_jp.gba", 0x539bcc, 0x10
 
 	.globl gUnknown_8539BDC
 gUnknown_8539BDC: @ 0x8539BDC
-	.incbin "build/data/data.bin", 0x29de38, 0x5
+	.incbin "baserom_jp.gba", 0x539bdc, 0x5
 
 	.globl gUnknown_8539BE1
 gUnknown_8539BE1: @ 0x8539BE1
-	.incbin "build/data/data.bin", 0x29de3d, 0x7
+	.incbin "baserom_jp.gba", 0x539be1, 0x7
 
 	.globl gUnknown_8539BE8
 gUnknown_8539BE8: @ 0x8539BE8
-	.incbin "build/data/data.bin", 0x29de44, 0x10
+	.incbin "baserom_jp.gba", 0x539be8, 0x10
 
 	.globl gUnknown_8539BF8
 gUnknown_8539BF8: @ 0x8539BF8
-	.incbin "build/data/data.bin", 0x29de54, 0x10
+	.incbin "baserom_jp.gba", 0x539bf8, 0x10
 
 	.globl gUnknown_8539C08
 gUnknown_8539C08: @ 0x8539C08
@@ -7172,67 +7172,67 @@ gUnknown_8539C08: @ 0x8539C08
 
 	.globl gUnknown_8539C0E
 gUnknown_8539C0E: @ 0x8539C0E
-	.incbin "build/data/data.bin", 0x29de6a, 0x42
+	.incbin "baserom_jp.gba", 0x539c0e, 0x42
 
 	.globl gUnknown_8539C50
 gUnknown_8539C50: @ 0x8539C50
-	.incbin "build/data/data.bin", 0x29deac, 0x6a4c
+	.incbin "baserom_jp.gba", 0x539c50, 0x6a4c
 
 	.globl gUnknown_854069C
 gUnknown_854069C: @ 0x854069C
-	.incbin "build/data/data.bin", 0x2a48f8, 0x2a54
+	.incbin "baserom_jp.gba", 0x54069c, 0x2a54
 
 	.globl gUnknown_85430F0
 gUnknown_85430F0: @ 0x85430F0
-	.incbin "build/data/data.bin", 0x2a734c, 0x20
+	.incbin "baserom_jp.gba", 0x5430f0, 0x20
 
 	.globl gUnknown_8543110
 gUnknown_8543110: @ 0x8543110
-	.incbin "build/data/data.bin", 0x2a736c, 0x10
+	.incbin "baserom_jp.gba", 0x543110, 0x10
 
 	.globl gUnknown_8543120
 gUnknown_8543120: @ 0x8543120
-	.incbin "build/data/data.bin", 0x2a737c, 0x28
+	.incbin "baserom_jp.gba", 0x543120, 0x28
 
 	.globl gUnknown_8543148
 gUnknown_8543148: @ 0x8543148
-	.incbin "build/data/data.bin", 0x2a73a4, 0x8
+	.incbin "baserom_jp.gba", 0x543148, 0x8
 
 	.globl gUnknown_8543150
 gUnknown_8543150: @ 0x8543150
-	.incbin "build/data/data.bin", 0x2a73ac, 0x18
+	.incbin "baserom_jp.gba", 0x543150, 0x18
 
 	.globl gUnknown_8543168
 gUnknown_8543168: @ 0x8543168
-	.incbin "build/data/data.bin", 0x2a73c4, 0x676
+	.incbin "baserom_jp.gba", 0x543168, 0x676
 
 	.globl gUnknown_85437DE
 gUnknown_85437DE: @ 0x85437DE
-	.incbin "build/data/data.bin", 0x2a7a3a, 0x7e
+	.incbin "baserom_jp.gba", 0x5437de, 0x7e
 
 	.globl gUnknown_854385C
 gUnknown_854385C: @ 0x854385C
-	.incbin "build/data/data.bin", 0x2a7ab8, 0x58c
+	.incbin "baserom_jp.gba", 0x54385c, 0x58c
 
 	.globl gUnknown_8543DE8
 gUnknown_8543DE8: @ 0x8543DE8
-	.incbin "build/data/data.bin", 0x2a8044, 0x19c
+	.incbin "baserom_jp.gba", 0x543de8, 0x19c
 
 	.globl gUnknown_8543F84
 gUnknown_8543F84: @ 0x8543F84
-	.incbin "build/data/data.bin", 0x2a81e0, 0x188
+	.incbin "baserom_jp.gba", 0x543f84, 0x188
 
 	.globl gUnknown_854410C
 gUnknown_854410C: @ 0x854410C
-	.incbin "build/data/data.bin", 0x2a8368, 0x28
+	.incbin "baserom_jp.gba", 0x54410c, 0x28
 
 	.globl gUnknown_8544134
 gUnknown_8544134: @ 0x8544134
-	.incbin "build/data/data.bin", 0x2a8390, 0x18
+	.incbin "baserom_jp.gba", 0x544134, 0x18
 
 	.globl gUnknown_854414C
 gUnknown_854414C: @ 0x854414C
-	.incbin "build/data/data.bin", 0x2a83a8, 0x54
+	.incbin "baserom_jp.gba", 0x54414c, 0x54
 
 	.globl gUnknown_85441A0
 gUnknown_85441A0: @ 0x85441A0
@@ -7257,211 +7257,211 @@ gUnknown_85441F4: @ 0x85441F4
 
 	.globl gUnknown_8544210
 gUnknown_8544210: @ 0x8544210
-	.incbin "build/data/data.bin", 0x2a846c, 0x18
+	.incbin "baserom_jp.gba", 0x544210, 0x18
 
 	.globl gUnknown_8544228
 gUnknown_8544228: @ 0x8544228
-	.incbin "build/data/data.bin", 0x2a8484, 0x38
+	.incbin "baserom_jp.gba", 0x544228, 0x38
 
 	.globl gUnknown_8544260
 gUnknown_8544260: @ 0x8544260
-	.incbin "build/data/data.bin", 0x2a84bc, 0x58
+	.incbin "baserom_jp.gba", 0x544260, 0x58
 
 	.globl gUnknown_85442B8
 gUnknown_85442B8: @ 0x85442B8
-	.incbin "build/data/data.bin", 0x2a8514, 0x60
+	.incbin "baserom_jp.gba", 0x5442b8, 0x60
 
 	.globl gUnknown_8544318
 gUnknown_8544318: @ 0x8544318
-	.incbin "build/data/data.bin", 0x2a8574, 0x98
+	.incbin "baserom_jp.gba", 0x544318, 0x98
 
 	.globl gUnknown_85443B0
 gUnknown_85443B0: @ 0x85443B0
-	.incbin "build/data/data.bin", 0x2a860c, 0x2
+	.incbin "baserom_jp.gba", 0x5443b0, 0x2
 
 	.globl gUnknown_85443B2
 gUnknown_85443B2: @ 0x85443B2
-	.incbin "build/data/data.bin", 0x2a860e, 0x6
+	.incbin "baserom_jp.gba", 0x5443b2, 0x6
 
 	.globl gUnknown_85443B8
 gUnknown_85443B8: @ 0x85443B8
-	.incbin "build/data/data.bin", 0x2a8614, 0x14
+	.incbin "baserom_jp.gba", 0x5443b8, 0x14
 
 	.globl gUnknown_85443CC
 gUnknown_85443CC: @ 0x85443CC
-	.incbin "build/data/data.bin", 0x2a8628, 0x30
+	.incbin "baserom_jp.gba", 0x5443cc, 0x30
 
 	.globl gUnknown_85443FC
 gUnknown_85443FC: @ 0x85443FC
-	.incbin "build/data/data.bin", 0x2a8658, 0x10
+	.incbin "baserom_jp.gba", 0x5443fc, 0x10
 
 	.globl gUnknown_854440C
 gUnknown_854440C: @ 0x854440C
-	.incbin "build/data/data.bin", 0x2a8668, 0x10
+	.incbin "baserom_jp.gba", 0x54440c, 0x10
 
 	.globl gUnknown_854441C
 gUnknown_854441C: @ 0x854441C
-	.incbin "build/data/data.bin", 0x2a8678, 0x740
+	.incbin "baserom_jp.gba", 0x54441c, 0x740
 
 	.globl gUnknown_8544B5C
 gUnknown_8544B5C: @ 0x8544B5C
-	.incbin "build/data/data.bin", 0x2a8db8, 0x6c0
+	.incbin "baserom_jp.gba", 0x544b5c, 0x6c0
 
 	.globl gUnknown_854521C
 gUnknown_854521C: @ 0x854521C
-	.incbin "build/data/data.bin", 0x2a9478, 0x174
+	.incbin "baserom_jp.gba", 0x54521c, 0x174
 
 	.globl gUnknown_8545390
 gUnknown_8545390: @ 0x8545390
-	.incbin "build/data/data.bin", 0x2a95ec, 0x1a0
+	.incbin "baserom_jp.gba", 0x545390, 0x1a0
 
 	.globl gUnknown_8545530
 gUnknown_8545530: @ 0x8545530
-	.incbin "build/data/data.bin", 0x2a978c, 0x1b8
+	.incbin "baserom_jp.gba", 0x545530, 0x1b8
 
 	.globl gUnknown_85456E8
 gUnknown_85456E8: @ 0x85456E8
-	.incbin "build/data/data.bin", 0x2a9944, 0xdc
+	.incbin "baserom_jp.gba", 0x5456e8, 0xdc
 
 	.globl gUnknown_85457C4
 gUnknown_85457C4: @ 0x85457C4
-	.incbin "build/data/data.bin", 0x2a9a20, 0x12c
+	.incbin "baserom_jp.gba", 0x5457c4, 0x12c
 
 	.globl gUnknown_85458F0
 gUnknown_85458F0: @ 0x85458F0
-	.incbin "build/data/data.bin", 0x2a9b4c, 0x180
+	.incbin "baserom_jp.gba", 0x5458f0, 0x180
 
 	.globl gUnknown_8545A70
 gUnknown_8545A70: @ 0x8545A70
-	.incbin "build/data/data.bin", 0x2a9ccc, 0x18c
+	.incbin "baserom_jp.gba", 0x545a70, 0x18c
 
 	.globl gUnknown_8545BFC
 gUnknown_8545BFC: @ 0x8545BFC
-	.incbin "build/data/data.bin", 0x2a9e58, 0x98
+	.incbin "baserom_jp.gba", 0x545bfc, 0x98
 
 	.globl gUnknown_8545C94
 gUnknown_8545C94: @ 0x8545C94
-	.incbin "build/data/data.bin", 0x2a9ef0, 0x478
+	.incbin "baserom_jp.gba", 0x545c94, 0x478
 
 	.globl gUnknown_854610C
 gUnknown_854610C: @ 0x854610C
-	.incbin "build/data/data.bin", 0x2aa368, 0x20
+	.incbin "baserom_jp.gba", 0x54610c, 0x20
 
 	.globl gUnknown_854612C
 gUnknown_854612C: @ 0x854612C
-	.incbin "build/data/data.bin", 0x2aa388, 0x20
+	.incbin "baserom_jp.gba", 0x54612c, 0x20
 
 	.globl gUnknown_854614C
 gUnknown_854614C: @ 0x854614C
-	.incbin "build/data/data.bin", 0x2aa3a8, 0x20
+	.incbin "baserom_jp.gba", 0x54614c, 0x20
 
 	.globl gUnknown_854616C
 gUnknown_854616C: @ 0x854616C
-	.incbin "build/data/data.bin", 0x2aa3c8, 0x20
+	.incbin "baserom_jp.gba", 0x54616c, 0x20
 
 	.globl gUnknown_854618C
 gUnknown_854618C: @ 0x854618C
-	.incbin "build/data/data.bin", 0x2aa3e8, 0x20
+	.incbin "baserom_jp.gba", 0x54618c, 0x20
 
 	.globl gUnknown_85461AC
 gUnknown_85461AC: @ 0x85461AC
-	.incbin "build/data/data.bin", 0x2aa408, 0x20
+	.incbin "baserom_jp.gba", 0x5461ac, 0x20
 
 	.globl gUnknown_85461CC
 gUnknown_85461CC: @ 0x85461CC
-	.incbin "build/data/data.bin", 0x2aa428, 0x20
+	.incbin "baserom_jp.gba", 0x5461cc, 0x20
 
 	.globl gUnknown_85461EC
 gUnknown_85461EC: @ 0x85461EC
-	.incbin "build/data/data.bin", 0x2aa448, 0x20
+	.incbin "baserom_jp.gba", 0x5461ec, 0x20
 
 	.globl gUnknown_854620C
 gUnknown_854620C: @ 0x854620C
-	.incbin "build/data/data.bin", 0x2aa468, 0x20
+	.incbin "baserom_jp.gba", 0x54620c, 0x20
 
 	.globl gUnknown_854622C
 gUnknown_854622C: @ 0x854622C
-	.incbin "build/data/data.bin", 0x2aa488, 0x248
+	.incbin "baserom_jp.gba", 0x54622c, 0x248
 
 	.globl gUnknown_8546474
 gUnknown_8546474: @ 0x8546474
-	.incbin "build/data/data.bin", 0x2aa6d0, 0x2a0
+	.incbin "baserom_jp.gba", 0x546474, 0x2a0
 
 	.globl gUnknown_8546714
 gUnknown_8546714: @ 0x8546714
-	.incbin "build/data/data.bin", 0x2aa970, 0x10
+	.incbin "baserom_jp.gba", 0x546714, 0x10
 
 	.globl gUnknown_8546724
 gUnknown_8546724: @ 0x8546724
-	.incbin "build/data/data.bin", 0x2aa980, 0x20
+	.incbin "baserom_jp.gba", 0x546724, 0x20
 
 	.globl gUnknown_8546744
 gUnknown_8546744: @ 0x8546744
-	.incbin "build/data/data.bin", 0x2aa9a0, 0x14
+	.incbin "baserom_jp.gba", 0x546744, 0x14
 
 	.globl gUnknown_8546758
 gUnknown_8546758: @ 0x8546758
-	.incbin "build/data/data.bin", 0x2aa9b4, 0x14
+	.incbin "baserom_jp.gba", 0x546758, 0x14
 
 	.globl gUnknown_854676C
 gUnknown_854676C: @ 0x854676C
-	.incbin "build/data/data.bin", 0x2aa9c8, 0x3
+	.incbin "baserom_jp.gba", 0x54676c, 0x3
 
 	.globl gUnknown_854676F
 gUnknown_854676F: @ 0x854676F
-	.incbin "build/data/data.bin", 0x2aa9cb, 0x6
+	.incbin "baserom_jp.gba", 0x54676f, 0x6
 
 	.globl gUnknown_8546775
 gUnknown_8546775: @ 0x8546775
-	.incbin "build/data/data.bin", 0x2aa9d1, 0x3
+	.incbin "baserom_jp.gba", 0x546775, 0x3
 
 	.globl gUnknown_8546778
 gUnknown_8546778: @ 0x8546778
-	.incbin "build/data/data.bin", 0x2aa9d4, 0x8
+	.incbin "baserom_jp.gba", 0x546778, 0x8
 
 	.globl gUnknown_8546780
 gUnknown_8546780: @ 0x8546780
-	.incbin "build/data/data.bin", 0x2aa9dc, 0x8
+	.incbin "baserom_jp.gba", 0x546780, 0x8
 
 	.globl gUnknown_8546788
 gUnknown_8546788: @ 0x8546788
-	.incbin "build/data/data.bin", 0x2aa9e4, 0x18
+	.incbin "baserom_jp.gba", 0x546788, 0x18
 
 	.globl gUnknown_85467A0
 gUnknown_85467A0: @ 0x85467A0
-	.incbin "build/data/data.bin", 0x2aa9fc, 0x2
+	.incbin "baserom_jp.gba", 0x5467a0, 0x2
 
 	.globl gUnknown_85467A2
 gUnknown_85467A2: @ 0x85467A2
-	.incbin "build/data/data.bin", 0x2aa9fe, 0x2
+	.incbin "baserom_jp.gba", 0x5467a2, 0x2
 
 	.globl gUnknown_85467A4
 gUnknown_85467A4: @ 0x85467A4
-	.incbin "build/data/data.bin", 0x2aaa00, 0x8
+	.incbin "baserom_jp.gba", 0x5467a4, 0x8
 
 	.globl gUnknown_85467AC
 gUnknown_85467AC: @ 0x85467AC
-	.incbin "build/data/data.bin", 0x2aaa08, 0x2
+	.incbin "baserom_jp.gba", 0x5467ac, 0x2
 
 	.globl gUnknown_85467AE
 gUnknown_85467AE: @ 0x85467AE
-	.incbin "build/data/data.bin", 0x2aaa0a, 0x2
+	.incbin "baserom_jp.gba", 0x5467ae, 0x2
 
 	.globl gUnknown_85467B0
 gUnknown_85467B0: @ 0x85467B0
-	.incbin "build/data/data.bin", 0x2aaa0c, 0x2
+	.incbin "baserom_jp.gba", 0x5467b0, 0x2
 
 	.globl gUnknown_85467B2
 gUnknown_85467B2: @ 0x85467B2
-	.incbin "build/data/data.bin", 0x2aaa0e, 0x2
+	.incbin "baserom_jp.gba", 0x5467b2, 0x2
 
 	.globl gUnknown_85467B4
 gUnknown_85467B4: @ 0x85467B4
-	.incbin "build/data/data.bin", 0x2aaa10, 0x2
+	.incbin "baserom_jp.gba", 0x5467b4, 0x2
 
 	.globl gUnknown_85467B6
 gUnknown_85467B6: @ 0x85467B6
-	.incbin "build/data/data.bin", 0x2aaa12, 0x2
+	.incbin "baserom_jp.gba", 0x5467b6, 0x2
 
 	.globl gUnknown_85467B8
 gUnknown_85467B8: @ 0x85467B8
@@ -7469,151 +7469,151 @@ gUnknown_85467B8: @ 0x85467B8
 
 	.globl gUnknown_85467C1
 gUnknown_85467C1: @ 0x85467C1
-	.incbin "build/data/data.bin", 0x2aaa1d, 0x3
+	.incbin "baserom_jp.gba", 0x5467c1, 0x3
 
 	.globl gUnknown_85467C4
 gUnknown_85467C4: @ 0x85467C4
-	.incbin "build/data/data.bin", 0x2aaa20, 0xc
+	.incbin "baserom_jp.gba", 0x5467c4, 0xc
 
 	.globl gUnknown_85467D0
 gUnknown_85467D0: @ 0x85467D0
-	.incbin "build/data/data.bin", 0x2aaa2c, 0x6
+	.incbin "baserom_jp.gba", 0x5467d0, 0x6
 
 	.globl gUnknown_85467D6
 gUnknown_85467D6: @ 0x85467D6
-	.incbin "build/data/data.bin", 0x2aaa32, 0x6
+	.incbin "baserom_jp.gba", 0x5467d6, 0x6
 
 	.globl gUnknown_85467DC
 gUnknown_85467DC: @ 0x85467DC
-	.incbin "build/data/data.bin", 0x2aaa38, 0x4
+	.incbin "baserom_jp.gba", 0x5467dc, 0x4
 
 	.globl gUnknown_85467E0
 gUnknown_85467E0: @ 0x85467E0
-	.incbin "build/data/data.bin", 0x2aaa3c, 0x4
+	.incbin "baserom_jp.gba", 0x5467e0, 0x4
 
 	.globl gUnknown_85467E4
 gUnknown_85467E4: @ 0x85467E4
-	.incbin "build/data/data.bin", 0x2aaa40, 0x1c0
+	.incbin "baserom_jp.gba", 0x5467e4, 0x1c0
 
 	.globl gUnknown_85469A4
 gUnknown_85469A4: @ 0x85469A4
-	.incbin "build/data/data.bin", 0x2aac00, 0x17c4
+	.incbin "baserom_jp.gba", 0x5469a4, 0x17c4
 
 	.globl gUnknown_8548168
 gUnknown_8548168: @ 0x8548168
-	.incbin "build/data/data.bin", 0x2ac3c4, 0x14a8
+	.incbin "baserom_jp.gba", 0x548168, 0x14a8
 
 	.globl gUnknown_8549610
 gUnknown_8549610: @ 0x8549610
-	.incbin "build/data/data.bin", 0x2ad86c, 0x2e8
+	.incbin "baserom_jp.gba", 0x549610, 0x2e8
 
 	.globl gUnknown_85498F8
 gUnknown_85498F8: @ 0x85498F8
-	.incbin "build/data/data.bin", 0x2adb54, 0x260
+	.incbin "baserom_jp.gba", 0x5498f8, 0x260
 
 	.globl gUnknown_8549B58
 gUnknown_8549B58: @ 0x8549B58
-	.incbin "build/data/data.bin", 0x2addb4, 0x260
+	.incbin "baserom_jp.gba", 0x549b58, 0x260
 
 	.globl gUnknown_8549DB8
 gUnknown_8549DB8: @ 0x8549DB8
-	.incbin "build/data/data.bin", 0x2ae014, 0x18
+	.incbin "baserom_jp.gba", 0x549db8, 0x18
 
 	.globl gUnknown_8549DD0
 gUnknown_8549DD0: @ 0x8549DD0
-	.incbin "build/data/data.bin", 0x2ae02c, 0x18
+	.incbin "baserom_jp.gba", 0x549dd0, 0x18
 
 	.globl gUnknown_8549DE8
 gUnknown_8549DE8: @ 0x8549DE8
-	.incbin "build/data/data.bin", 0x2ae044, 0x38
+	.incbin "baserom_jp.gba", 0x549de8, 0x38
 
 	.globl gUnknown_8549E20
 gUnknown_8549E20: @ 0x8549E20
-	.incbin "build/data/data.bin", 0x2ae07c, 0xffc
+	.incbin "baserom_jp.gba", 0x549e20, 0xffc
 
 	.globl gUnknown_854AE1C
 gUnknown_854AE1C: @ 0x854AE1C
-	.incbin "build/data/data.bin", 0x2af078, 0xe8
+	.incbin "baserom_jp.gba", 0x54ae1c, 0xe8
 
 	.globl gUnknown_854AF04
 gUnknown_854AF04: @ 0x854AF04
-	.incbin "build/data/data.bin", 0x2af160, 0x8
+	.incbin "baserom_jp.gba", 0x54af04, 0x8
 
 	.globl gUnknown_854AF0C
 gUnknown_854AF0C: @ 0x854AF0C
-	.incbin "build/data/data.bin", 0x2af168, 0xc
+	.incbin "baserom_jp.gba", 0x54af0c, 0xc
 
 	.globl gUnknown_854AF18
 gUnknown_854AF18: @ 0x854AF18
-	.incbin "build/data/data.bin", 0x2af174, 0xc
+	.incbin "baserom_jp.gba", 0x54af18, 0xc
 
 	.globl gUnknown_854AF24
 gUnknown_854AF24: @ 0x854AF24
-	.incbin "build/data/data.bin", 0x2af180, 0x28
+	.incbin "baserom_jp.gba", 0x54af24, 0x28
 
 	.globl gUnknown_854AF4C
 gUnknown_854AF4C: @ 0x854AF4C
-	.incbin "build/data/data.bin", 0x2af1a8, 0x20
+	.incbin "baserom_jp.gba", 0x54af4c, 0x20
 
 	.globl gUnknown_854AF6C
 gUnknown_854AF6C: @ 0x854AF6C
-	.incbin "build/data/data.bin", 0x2af1c8, 0x3
+	.incbin "baserom_jp.gba", 0x54af6c, 0x3
 
 	.globl gUnknown_854AF6F
 gUnknown_854AF6F: @ 0x854AF6F
-	.incbin "build/data/data.bin", 0x2af1cb, 0x3
+	.incbin "baserom_jp.gba", 0x54af6f, 0x3
 
 	.globl gUnknown_854AF72
 gUnknown_854AF72: @ 0x854AF72
-	.incbin "build/data/data.bin", 0x2af1ce, 0x6
+	.incbin "baserom_jp.gba", 0x54af72, 0x6
 
 	.globl gUnknown_854AF78
 gUnknown_854AF78: @ 0x854AF78
-	.incbin "build/data/data.bin", 0x2af1d4, 0x68
+	.incbin "baserom_jp.gba", 0x54af78, 0x68
 
 	.globl gUnknown_854AFE0
 gUnknown_854AFE0: @ 0x854AFE0
-	.incbin "build/data/data.bin", 0x2af23c, 0x18
+	.incbin "baserom_jp.gba", 0x54afe0, 0x18
 
 	.globl gUnknown_854AFF8
 gUnknown_854AFF8: @ 0x854AFF8
-	.incbin "build/data/data.bin", 0x2af254, 0x10
+	.incbin "baserom_jp.gba", 0x54aff8, 0x10
 
 	.globl gUnknown_854B008
 gUnknown_854B008: @ 0x854B008
-	.incbin "build/data/data.bin", 0x2af264, 0xd0
+	.incbin "baserom_jp.gba", 0x54b008, 0xd0
 
 	.globl gUnknown_854B0D8
 gUnknown_854B0D8: @ 0x854B0D8
-	.incbin "build/data/data.bin", 0x2af334, 0x30
+	.incbin "baserom_jp.gba", 0x54b0d8, 0x30
 
 	.globl gUnknown_854B108
 gUnknown_854B108: @ 0x854B108
-	.incbin "build/data/data.bin", 0x2af364, 0x18
+	.incbin "baserom_jp.gba", 0x54b108, 0x18
 
 	.globl gUnknown_854B120
 gUnknown_854B120: @ 0x854B120
-	.incbin "build/data/data.bin", 0x2af37c, 0x18
+	.incbin "baserom_jp.gba", 0x54b120, 0x18
 
 	.globl gUnknown_854B138
 gUnknown_854B138: @ 0x854B138
-	.incbin "build/data/data.bin", 0x2af394, 0x3c
+	.incbin "baserom_jp.gba", 0x54b138, 0x3c
 
 	.globl gUnknown_854B174
 gUnknown_854B174: @ 0x854B174
-	.incbin "build/data/data.bin", 0x2af3d0, 0x70
+	.incbin "baserom_jp.gba", 0x54b174, 0x70
 
 	.globl gUnknown_854B1E4
 gUnknown_854B1E4: @ 0x854B1E4
-	.incbin "build/data/data.bin", 0x2af440, 0x28
+	.incbin "baserom_jp.gba", 0x54b1e4, 0x28
 
 	.globl gUnknown_854B20C
 gUnknown_854B20C: @ 0x854B20C
-	.incbin "build/data/data.bin", 0x2af468, 0x28
+	.incbin "baserom_jp.gba", 0x54b20c, 0x28
 
 	.globl gUnknown_854B234
 gUnknown_854B234: @ 0x854B234
-	.incbin "build/data/data.bin", 0x2af490, 0x24
+	.incbin "baserom_jp.gba", 0x54b234, 0x24
 
 	.globl gUnknown_854B258
 gUnknown_854B258: @ 0x854B258
@@ -7621,251 +7621,251 @@ gUnknown_854B258: @ 0x854B258
 
 	.globl gUnknown_854B25C
 gUnknown_854B25C: @ 0x854B25C
-	.incbin "build/data/data.bin", 0x2af4b8, 0x20
+	.incbin "baserom_jp.gba", 0x54b25c, 0x20
 
 	.globl gUnknown_854B27C
 gUnknown_854B27C: @ 0x854B27C
-	.incbin "build/data/data.bin", 0x2af4d8, 0x800
+	.incbin "baserom_jp.gba", 0x54b27c, 0x800
 
 	.globl gUnknown_854BA7C
 gUnknown_854BA7C: @ 0x854BA7C
-	.incbin "build/data/data.bin", 0x2afcd8, 0x180
+	.incbin "baserom_jp.gba", 0x54ba7c, 0x180
 
 	.globl gUnknown_854BBFC
 gUnknown_854BBFC: @ 0x854BBFC
-	.incbin "build/data/data.bin", 0x2afe58, 0x98
+	.incbin "baserom_jp.gba", 0x54bbfc, 0x98
 
 	.globl gUnknown_854BC94
 gUnknown_854BC94: @ 0x854BC94
-	.incbin "build/data/data.bin", 0x2afef0, 0x12c
+	.incbin "baserom_jp.gba", 0x54bc94, 0x12c
 
 	.globl gUnknown_854BDC0
 gUnknown_854BDC0: @ 0x854BDC0
-	.incbin "build/data/data.bin", 0x2b001c, 0xfc
+	.incbin "baserom_jp.gba", 0x54bdc0, 0xfc
 
 	.globl gUnknown_854BEBC
 gUnknown_854BEBC: @ 0x854BEBC
-	.incbin "build/data/data.bin", 0x2b0118, 0x40
+	.incbin "baserom_jp.gba", 0x54bebc, 0x40
 
 	.globl gUnknown_854BEFC
 gUnknown_854BEFC: @ 0x854BEFC
-	.incbin "build/data/data.bin", 0x2b0158, 0x20
+	.incbin "baserom_jp.gba", 0x54befc, 0x20
 
 	.globl gUnknown_854BF1C
 gUnknown_854BF1C: @ 0x854BF1C
-	.incbin "build/data/data.bin", 0x2b0178, 0x20
+	.incbin "baserom_jp.gba", 0x54bf1c, 0x20
 
 	.globl gUnknown_854BF3C
 gUnknown_854BF3C: @ 0x854BF3C
-	.incbin "build/data/data.bin", 0x2b0198, 0x20
+	.incbin "baserom_jp.gba", 0x54bf3c, 0x20
 
 	.globl gUnknown_854BF5C
 gUnknown_854BF5C: @ 0x854BF5C
-	.incbin "build/data/data.bin", 0x2b01b8, 0x20
+	.incbin "baserom_jp.gba", 0x54bf5c, 0x20
 
 	.globl gUnknown_854BF7C
 gUnknown_854BF7C: @ 0x854BF7C
-	.incbin "build/data/data.bin", 0x2b01d8, 0x20
+	.incbin "baserom_jp.gba", 0x54bf7c, 0x20
 
 	.globl gUnknown_854BF9C
 gUnknown_854BF9C: @ 0x854BF9C
-	.incbin "build/data/data.bin", 0x2b01f8, 0x6c0
+	.incbin "baserom_jp.gba", 0x54bf9c, 0x6c0
 
 	.globl gUnknown_854C65C
 gUnknown_854C65C: @ 0x854C65C
-	.incbin "build/data/data.bin", 0x2b08b8, 0xb0
+	.incbin "baserom_jp.gba", 0x54c65c, 0xb0
 
 	.globl gUnknown_854C70C
 gUnknown_854C70C: @ 0x854C70C
-	.incbin "build/data/data.bin", 0x2b0968, 0x48
+	.incbin "baserom_jp.gba", 0x54c70c, 0x48
 
 	.globl gUnknown_854C754
 gUnknown_854C754: @ 0x854C754
-	.incbin "build/data/data.bin", 0x2b09b0, 0x18
+	.incbin "baserom_jp.gba", 0x54c754, 0x18
 
 	.globl gUnknown_854C76C
 gUnknown_854C76C: @ 0x854C76C
-	.incbin "build/data/data.bin", 0x2b09c8, 0x238
+	.incbin "baserom_jp.gba", 0x54c76c, 0x238
 
 	.globl gUnknown_854C9A4
 gUnknown_854C9A4: @ 0x854C9A4
-	.incbin "build/data/data.bin", 0x2b0c00, 0x20
+	.incbin "baserom_jp.gba", 0x54c9a4, 0x20
 
 	.globl gUnknown_854C9C4
 gUnknown_854C9C4: @ 0x854C9C4
-	.incbin "build/data/data.bin", 0x2b0c20, 0x20
+	.incbin "baserom_jp.gba", 0x54c9c4, 0x20
 
 	.globl gUnknown_854C9E4
 gUnknown_854C9E4: @ 0x854C9E4
-	.incbin "build/data/data.bin", 0x2b0c40, 0x10
+	.incbin "baserom_jp.gba", 0x54c9e4, 0x10
 
 	.globl gUnknown_854C9F4
 gUnknown_854C9F4: @ 0x854C9F4
-	.incbin "build/data/data.bin", 0x2b0c50, 0x8
+	.incbin "baserom_jp.gba", 0x54c9f4, 0x8
 
 	.globl gUnknown_854C9FC
 gUnknown_854C9FC: @ 0x854C9FC
-	.incbin "build/data/data.bin", 0x2b0c58, 0x8
+	.incbin "baserom_jp.gba", 0x54c9fc, 0x8
 
 	.globl gUnknown_854CA04
 gUnknown_854CA04: @ 0x854CA04
-	.incbin "build/data/data.bin", 0x2b0c60, 0x18
+	.incbin "baserom_jp.gba", 0x54ca04, 0x18
 
 	.globl gUnknown_854CA1C
 gUnknown_854CA1C: @ 0x854CA1C
-	.incbin "build/data/data.bin", 0x2b0c78, 0xf8
+	.incbin "baserom_jp.gba", 0x54ca1c, 0xf8
 
 	.globl gUnknown_854CB14
 gUnknown_854CB14: @ 0x854CB14
-	.incbin "build/data/data.bin", 0x2b0d70, 0x58
+	.incbin "baserom_jp.gba", 0x54cb14, 0x58
 
 	.globl gUnknown_854CB6C
 gUnknown_854CB6C: @ 0x854CB6C
-	.incbin "build/data/data.bin", 0x2b0dc8, 0x18
+	.incbin "baserom_jp.gba", 0x54cb6c, 0x18
 
 	.globl gUnknown_854CB84
 gUnknown_854CB84: @ 0x854CB84
-	.incbin "build/data/data.bin", 0x2b0de0, 0x48
+	.incbin "baserom_jp.gba", 0x54cb84, 0x48
 
 	.globl gUnknown_854CBCC
 gUnknown_854CBCC: @ 0x854CBCC
-	.incbin "build/data/data.bin", 0x2b0e28, 0x4c58
+	.incbin "baserom_jp.gba", 0x54cbcc, 0x4c58
 
 	.globl gUnknown_8551824
 gUnknown_8551824: @ 0x8551824
-	.incbin "build/data/data.bin", 0x2b5a80, 0x44
+	.incbin "baserom_jp.gba", 0x551824, 0x44
 
 	.globl gUnknown_8551868
 gUnknown_8551868: @ 0x8551868
-	.incbin "build/data/data.bin", 0x2b5ac4, 0x41d8
+	.incbin "baserom_jp.gba", 0x551868, 0x41d8
 
 	.globl gUnknown_8555A40
 gUnknown_8555A40: @ 0x8555A40
-	.incbin "build/data/data.bin", 0x2b9c9c, 0xc0
+	.incbin "baserom_jp.gba", 0x555a40, 0xc0
 
 	.globl gUnknown_8555B00
 gUnknown_8555B00: @ 0x8555B00
-	.incbin "build/data/data.bin", 0x2b9d5c, 0x7c
+	.incbin "baserom_jp.gba", 0x555b00, 0x7c
 
 	.globl gUnknown_8555B7C
 gUnknown_8555B7C: @ 0x8555B7C
-	.incbin "build/data/data.bin", 0x2b9dd8, 0x28
+	.incbin "baserom_jp.gba", 0x555b7c, 0x28
 
 	.globl gUnknown_8555BA4
 gUnknown_8555BA4: @ 0x8555BA4
-	.incbin "build/data/data.bin", 0x2b9e00, 0x38
+	.incbin "baserom_jp.gba", 0x555ba4, 0x38
 
 	.globl gUnknown_8555BDC
 gUnknown_8555BDC: @ 0x8555BDC
-	.incbin "build/data/data.bin", 0x2b9e38, 0x8b8
+	.incbin "baserom_jp.gba", 0x555bdc, 0x8b8
 
 	.globl gUnknown_8556494
 gUnknown_8556494: @ 0x8556494
-	.incbin "build/data/data.bin", 0x2ba6f0, 0xc
+	.incbin "baserom_jp.gba", 0x556494, 0xc
 
 	.globl gUnknown_85564A0
 gUnknown_85564A0: @ 0x85564A0
-	.incbin "build/data/data.bin", 0x2ba6fc, 0x18
+	.incbin "baserom_jp.gba", 0x5564a0, 0x18
 
 	.globl gUnknown_85564B8
 gUnknown_85564B8: @ 0x85564B8
-	.incbin "build/data/data.bin", 0x2ba714, 0x28
+	.incbin "baserom_jp.gba", 0x5564b8, 0x28
 
 	.globl gUnknown_85564E0
 gUnknown_85564E0: @ 0x85564E0
-	.incbin "build/data/data.bin", 0x2ba73c, 0x18
+	.incbin "baserom_jp.gba", 0x5564e0, 0x18
 
 	.globl gUnknown_85564F8
 gUnknown_85564F8: @ 0x85564F8
-	.incbin "build/data/data.bin", 0x2ba754, 0x54
+	.incbin "baserom_jp.gba", 0x5564f8, 0x54
 
 	.globl gUnknown_855654C
 gUnknown_855654C: @ 0x855654C
-	.incbin "build/data/data.bin", 0x2ba7a8, 0x18
+	.incbin "baserom_jp.gba", 0x55654c, 0x18
 
 	.globl gUnknown_8556564
 gUnknown_8556564: @ 0x8556564
-	.incbin "build/data/data.bin", 0x2ba7c0, 0x18
+	.incbin "baserom_jp.gba", 0x556564, 0x18
 
 	.globl gUnknown_855657C
 gUnknown_855657C: @ 0x855657C
-	.incbin "build/data/data.bin", 0x2ba7d8, 0x9c
+	.incbin "baserom_jp.gba", 0x55657c, 0x9c
 
 	.globl gUnknown_8556618
 gUnknown_8556618: @ 0x8556618
-	.incbin "build/data/data.bin", 0x2ba874, 0x8
+	.incbin "baserom_jp.gba", 0x556618, 0x8
 
 	.globl gUnknown_8556620
 gUnknown_8556620: @ 0x8556620
-	.incbin "build/data/data.bin", 0x2ba87c, 0x14c
+	.incbin "baserom_jp.gba", 0x556620, 0x14c
 
 	.globl gUnknown_855676C
 gUnknown_855676C: @ 0x855676C
-	.incbin "build/data/data.bin", 0x2ba9c8, 0x18
+	.incbin "baserom_jp.gba", 0x55676c, 0x18
 
 	.globl gUnknown_8556784
 gUnknown_8556784: @ 0x8556784
-	.incbin "build/data/data.bin", 0x2ba9e0, 0x20
+	.incbin "baserom_jp.gba", 0x556784, 0x20
 
 	.globl gUnknown_85567A4
 gUnknown_85567A4: @ 0x85567A4
-	.incbin "build/data/data.bin", 0x2baa00, 0x60
+	.incbin "baserom_jp.gba", 0x5567a4, 0x60
 
 	.globl gUnknown_8556804
 gUnknown_8556804: @ 0x8556804
-	.incbin "build/data/data.bin", 0x2baa60, 0x6e0
+	.incbin "baserom_jp.gba", 0x556804, 0x6e0
 
 	.globl gUnknown_8556EE4
 gUnknown_8556EE4: @ 0x8556EE4
-	.incbin "build/data/data.bin", 0x2bb140, 0x1b8
+	.incbin "baserom_jp.gba", 0x556ee4, 0x1b8
 
 	.globl gUnknown_855709C
 gUnknown_855709C: @ 0x855709C
-	.incbin "build/data/data.bin", 0x2bb2f8, 0x30
+	.incbin "baserom_jp.gba", 0x55709c, 0x30
 
 	.globl gUnknown_85570CC
 gUnknown_85570CC: @ 0x85570CC
-	.incbin "build/data/data.bin", 0x2bb328, 0x44
+	.incbin "baserom_jp.gba", 0x5570cc, 0x44
 
 	.globl gUnknown_8557110
 gUnknown_8557110: @ 0x8557110
-	.incbin "build/data/data.bin", 0x2bb36c, 0x34
+	.incbin "baserom_jp.gba", 0x557110, 0x34
 
 	.globl gUnknown_8557144
 gUnknown_8557144: @ 0x8557144
-	.incbin "build/data/data.bin", 0x2bb3a0, 0x8
+	.incbin "baserom_jp.gba", 0x557144, 0x8
 
 	.globl gUnknown_855714C
 gUnknown_855714C: @ 0x855714C
-	.incbin "build/data/data.bin", 0x2bb3a8, 0x18
+	.incbin "baserom_jp.gba", 0x55714c, 0x18
 
 	.globl gUnknown_8557164
 gUnknown_8557164: @ 0x8557164
-	.incbin "build/data/data.bin", 0x2bb3c0, 0x2
+	.incbin "baserom_jp.gba", 0x557164, 0x2
 
 	.globl gUnknown_8557166
 gUnknown_8557166: @ 0x8557166
-	.incbin "build/data/data.bin", 0x2bb3c2, 0x62
+	.incbin "baserom_jp.gba", 0x557166, 0x62
 
 	.globl gUnknown_85571C8
 gUnknown_85571C8: @ 0x85571C8
-	.incbin "build/data/data.bin", 0x2bb424, 0x18
+	.incbin "baserom_jp.gba", 0x5571c8, 0x18
 
 	.globl gUnknown_85571E0
 gUnknown_85571E0: @ 0x85571E0
-	.incbin "build/data/data.bin", 0x2bb43c, 0x1680
+	.incbin "baserom_jp.gba", 0x5571e0, 0x1680
 
 	.globl gUnknown_8558860
 gUnknown_8558860: @ 0x8558860
-	.incbin "build/data/data.bin", 0x2bcabc, 0x1680
+	.incbin "baserom_jp.gba", 0x558860, 0x1680
 
 	.globl gUnknown_8559EE0
 gUnknown_8559EE0: @ 0x8559EE0
-	.incbin "build/data/data.bin", 0x2be13c, 0xc0
+	.incbin "baserom_jp.gba", 0x559ee0, 0xc0
 
 	.globl gUnknown_8559FA0
 gUnknown_8559FA0: @ 0x8559FA0
-	.incbin "build/data/data.bin", 0x2be1fc, 0x20
+	.incbin "baserom_jp.gba", 0x559fa0, 0x20
 
 	.globl gUnknown_8559FC0
 gUnknown_8559FC0: @ 0x8559FC0
@@ -7882,67 +7882,67 @@ gUnknown_8559FC0: @ 0x8559FC0
 
 	.globl gUnknown_855A074
 gUnknown_855A074: @ 0x855A074
-	.incbin "build/data/data.bin", 0x2be2d0, 0x5f0
+	.incbin "baserom_jp.gba", 0x55a074, 0x5f0
 
 	.globl gUnknown_855A664
 gUnknown_855A664: @ 0x855A664
-	.incbin "build/data/data.bin", 0x2be8c0, 0x8
+	.incbin "baserom_jp.gba", 0x55a664, 0x8
 
 	.globl gUnknown_855A66C
 gUnknown_855A66C: @ 0x855A66C
-	.incbin "build/data/data.bin", 0x2be8c8, 0x8
+	.incbin "baserom_jp.gba", 0x55a66c, 0x8
 
 	.globl gUnknown_855A674
 gUnknown_855A674: @ 0x855A674
-	.incbin "build/data/data.bin", 0x2be8d0, 0x8
+	.incbin "baserom_jp.gba", 0x55a674, 0x8
 
 	.globl gUnknown_855A67C
 gUnknown_855A67C: @ 0x855A67C
-	.incbin "build/data/data.bin", 0x2be8d8, 0x4c
+	.incbin "baserom_jp.gba", 0x55a67c, 0x4c
 
 	.globl gUnknown_855A6C8
 gUnknown_855A6C8: @ 0x855A6C8
-	.incbin "build/data/data.bin", 0x2be924, 0x4
+	.incbin "baserom_jp.gba", 0x55a6c8, 0x4
 
 	.globl gUnknown_855A6CC
 gUnknown_855A6CC: @ 0x855A6CC
-	.incbin "build/data/data.bin", 0x2be928, 0x4
+	.incbin "baserom_jp.gba", 0x55a6cc, 0x4
 
 	.globl gUnknown_855A6D0
 gUnknown_855A6D0: @ 0x855A6D0
-	.incbin "build/data/data.bin", 0x2be92c, 0x8
+	.incbin "baserom_jp.gba", 0x55a6d0, 0x8
 
 	.globl gUnknown_855A6D8
 gUnknown_855A6D8: @ 0x855A6D8
-	.incbin "build/data/data.bin", 0x2be934, 0x8
+	.incbin "baserom_jp.gba", 0x55a6d8, 0x8
 
 	.globl gUnknown_855A6E0
 gUnknown_855A6E0: @ 0x855A6E0
-	.incbin "build/data/data.bin", 0x2be93c, 0x3c
+	.incbin "baserom_jp.gba", 0x55a6e0, 0x3c
 
 	.globl gUnknown_855A71C
 gUnknown_855A71C: @ 0x855A71C
-	.incbin "build/data/data.bin", 0x2be978, 0x90
+	.incbin "baserom_jp.gba", 0x55a71c, 0x90
 
 	.globl gUnknown_855A7AC
 gUnknown_855A7AC: @ 0x855A7AC
-	.incbin "build/data/data.bin", 0x2bea08, 0x18
+	.incbin "baserom_jp.gba", 0x55a7ac, 0x18
 
 	.globl gUnknown_855A7C4
 gUnknown_855A7C4: @ 0x855A7C4
-	.incbin "build/data/data.bin", 0x2bea20, 0x158
+	.incbin "baserom_jp.gba", 0x55a7c4, 0x158
 
 	.globl gUnknown_855A91C
 gUnknown_855A91C: @ 0x855A91C
-	.incbin "build/data/data.bin", 0x2beb78, 0x8
+	.incbin "baserom_jp.gba", 0x55a91c, 0x8
 
 	.globl gUnknown_855A924
 gUnknown_855A924: @ 0x855A924
-	.incbin "build/data/data.bin", 0x2beb80, 0x1c
+	.incbin "baserom_jp.gba", 0x55a924, 0x1c
 
 	.globl gUnknown_855A940
 gUnknown_855A940: @ 0x855A940
-	.incbin "build/data/data.bin", 0x2beb9c, 0x25a8
+	.incbin "baserom_jp.gba", 0x55a940, 0x25a8
 
 	.globl gUnknown_855CEE8
 gUnknown_855CEE8: @ 0x855CEE8
@@ -7950,199 +7950,199 @@ gUnknown_855CEE8: @ 0x855CEE8
 
 	.globl gUnknown_85609D0
 gUnknown_85609D0: @ 0x85609D0
-	.incbin "build/data/data.bin", 0x2c4c2c, 0x4
+	.incbin "baserom_jp.gba", 0x5609d0, 0x4
 
 	.globl gUnknown_85609D4
 gUnknown_85609D4: @ 0x85609D4
-	.incbin "build/data/data.bin", 0x2c4c30, 0x4
+	.incbin "baserom_jp.gba", 0x5609d4, 0x4
 
 	.globl gUnknown_85609D8
 gUnknown_85609D8: @ 0x85609D8
-	.incbin "build/data/data.bin", 0x2c4c34, 0x5c
+	.incbin "baserom_jp.gba", 0x5609d8, 0x5c
 
 	.globl gUnknown_8560A34
 gUnknown_8560A34: @ 0x8560A34
-	.incbin "build/data/data.bin", 0x2c4c90, 0x18
+	.incbin "baserom_jp.gba", 0x560a34, 0x18
 
 	.globl gUnknown_8560A4C
 gUnknown_8560A4C: @ 0x8560A4C
-	.incbin "build/data/data.bin", 0x2c4ca8, 0x20
+	.incbin "baserom_jp.gba", 0x560a4c, 0x20
 
 	.globl gUnknown_8560A6C
 gUnknown_8560A6C: @ 0x8560A6C
-	.incbin "build/data/data.bin", 0x2c4cc8, 0x10
+	.incbin "baserom_jp.gba", 0x560a6c, 0x10
 
 	.globl gUnknown_8560A7C
 gUnknown_8560A7C: @ 0x8560A7C
-	.incbin "build/data/data.bin", 0x2c4cd8, 0x68
+	.incbin "baserom_jp.gba", 0x560a7c, 0x68
 
 	.globl gUnknown_8560AE4
 gUnknown_8560AE4: @ 0x8560AE4
-	.incbin "build/data/data.bin", 0x2c4d40, 0x30
+	.incbin "baserom_jp.gba", 0x560ae4, 0x30
 
 	.globl gUnknown_8560B14
 gUnknown_8560B14: @ 0x8560B14
-	.incbin "build/data/data.bin", 0x2c4d70, 0x8
+	.incbin "baserom_jp.gba", 0x560b14, 0x8
 
 	.globl gUnknown_8560B1C
 gUnknown_8560B1C: @ 0x8560B1C
-	.incbin "build/data/data.bin", 0x2c4d78, 0x10
+	.incbin "baserom_jp.gba", 0x560b1c, 0x10
 
 	.globl gUnknown_8560B2C
 gUnknown_8560B2C: @ 0x8560B2C
-	.incbin "build/data/data.bin", 0x2c4d88, 0x20
+	.incbin "baserom_jp.gba", 0x560b2c, 0x20
 
 	.globl gUnknown_8560B4C
 gUnknown_8560B4C: @ 0x8560B4C
-	.incbin "build/data/data.bin", 0x2c4da8, 0x18
+	.incbin "baserom_jp.gba", 0x560b4c, 0x18
 
 	.globl gUnknown_8560B64
 gUnknown_8560B64: @ 0x8560B64
-	.incbin "build/data/data.bin", 0x2c4dc0, 0x8
+	.incbin "baserom_jp.gba", 0x560b64, 0x8
 
 	.globl gUnknown_8560B6C
 gUnknown_8560B6C: @ 0x8560B6C
-	.incbin "build/data/data.bin", 0x2c4dc8, 0x8
+	.incbin "baserom_jp.gba", 0x560b6c, 0x8
 
 	.globl gUnknown_8560B74
 gUnknown_8560B74: @ 0x8560B74
-	.incbin "build/data/data.bin", 0x2c4dd0, 0x8
+	.incbin "baserom_jp.gba", 0x560b74, 0x8
 
 	.globl gUnknown_8560B7C
 gUnknown_8560B7C: @ 0x8560B7C
-	.incbin "build/data/data.bin", 0x2c4dd8, 0x18
+	.incbin "baserom_jp.gba", 0x560b7c, 0x18
 
 	.globl gUnknown_8560B94
 gUnknown_8560B94: @ 0x8560B94
-	.incbin "build/data/data.bin", 0x2c4df0, 0x20
+	.incbin "baserom_jp.gba", 0x560b94, 0x20
 
 	.globl gUnknown_8560BB4
 gUnknown_8560BB4: @ 0x8560BB4
-	.incbin "build/data/data.bin", 0x2c4e10, 0xf8
+	.incbin "baserom_jp.gba", 0x560bb4, 0xf8
 
 	.globl gUnknown_8560CAC
 gUnknown_8560CAC: @ 0x8560CAC
-	.incbin "build/data/data.bin", 0x2c4f08, 0x48
+	.incbin "baserom_jp.gba", 0x560cac, 0x48
 
 	.globl gUnknown_8560CF4
 gUnknown_8560CF4: @ 0x8560CF4
-	.incbin "build/data/data.bin", 0x2c4f50, 0x80
+	.incbin "baserom_jp.gba", 0x560cf4, 0x80
 
 	.globl gUnknown_8560D74
 gUnknown_8560D74: @ 0x8560D74
-	.incbin "build/data/data.bin", 0x2c4fd0, 0xf8
+	.incbin "baserom_jp.gba", 0x560d74, 0xf8
 
 	.globl gUnknown_8560E6C
 gUnknown_8560E6C: @ 0x8560E6C
-	.incbin "build/data/data.bin", 0x2c50c8, 0x14
+	.incbin "baserom_jp.gba", 0x560e6c, 0x14
 
 	.globl gUnknown_8560E80
 gUnknown_8560E80: @ 0x8560E80
-	.incbin "build/data/data.bin", 0x2c50dc, 0x18
+	.incbin "baserom_jp.gba", 0x560e80, 0x18
 
 	.globl gUnknown_8560E98
 gUnknown_8560E98: @ 0x8560E98
-	.incbin "build/data/data.bin", 0x2c50f4, 0x10
+	.incbin "baserom_jp.gba", 0x560e98, 0x10
 
 	.globl gUnknown_8560EA8
 gUnknown_8560EA8: @ 0x8560EA8
-	.incbin "build/data/data.bin", 0x2c5104, 0x80
+	.incbin "baserom_jp.gba", 0x560ea8, 0x80
 
 	.globl gUnknown_8560F28
 gUnknown_8560F28: @ 0x8560F28
-	.incbin "build/data/data.bin", 0x2c5184, 0x100
+	.incbin "baserom_jp.gba", 0x560f28, 0x100
 
 	.globl gUnknown_8561028
 gUnknown_8561028: @ 0x8561028
-	.incbin "build/data/data.bin", 0x2c5284, 0x1800
+	.incbin "baserom_jp.gba", 0x561028, 0x1800
 
 	.globl gUnknown_8562828
 gUnknown_8562828: @ 0x8562828
-	.incbin "build/data/data.bin", 0x2c6a84, 0x60
+	.incbin "baserom_jp.gba", 0x562828, 0x60
 
 	.globl gUnknown_8562888
 gUnknown_8562888: @ 0x8562888
-	.incbin "build/data/data.bin", 0x2c6ae4, 0x20
+	.incbin "baserom_jp.gba", 0x562888, 0x20
 
 	.globl gUnknown_85628A8
 gUnknown_85628A8: @ 0x85628A8
-	.incbin "build/data/data.bin", 0x2c6b04, 0x68
+	.incbin "baserom_jp.gba", 0x5628a8, 0x68
 
 	.globl gUnknown_8562910
 gUnknown_8562910: @ 0x8562910
-	.incbin "build/data/data.bin", 0x2c6b6c, 0x60
+	.incbin "baserom_jp.gba", 0x562910, 0x60
 
 	.globl gUnknown_8562970
 gUnknown_8562970: @ 0x8562970
-	.incbin "build/data/data.bin", 0x2c6bcc, 0x1c
+	.incbin "baserom_jp.gba", 0x562970, 0x1c
 
 	.globl gUnknown_856298C
 gUnknown_856298C: @ 0x856298C
-	.incbin "build/data/data.bin", 0x2c6be8, 0x8
+	.incbin "baserom_jp.gba", 0x56298c, 0x8
 
 	.globl gUnknown_8562994
 gUnknown_8562994: @ 0x8562994
-	.incbin "build/data/data.bin", 0x2c6bf0, 0x18
+	.incbin "baserom_jp.gba", 0x562994, 0x18
 
 	.globl gUnknown_85629AC
 gUnknown_85629AC: @ 0x85629AC
-	.incbin "build/data/data.bin", 0x2c6c08, 0x10
+	.incbin "baserom_jp.gba", 0x5629ac, 0x10
 
 	.globl gUnknown_85629BC
 gUnknown_85629BC: @ 0x85629BC
-	.incbin "build/data/data.bin", 0x2c6c18, 0x8
+	.incbin "baserom_jp.gba", 0x5629bc, 0x8
 
 	.globl gUnknown_85629C4
 gUnknown_85629C4: @ 0x85629C4
-	.incbin "build/data/data.bin", 0x2c6c20, 0x8
+	.incbin "baserom_jp.gba", 0x5629c4, 0x8
 
 	.globl gUnknown_85629CC
 gUnknown_85629CC: @ 0x85629CC
-	.incbin "build/data/data.bin", 0x2c6c28, 0x18
+	.incbin "baserom_jp.gba", 0x5629cc, 0x18
 
 	.globl gUnknown_85629E4
 gUnknown_85629E4: @ 0x85629E4
-	.incbin "build/data/data.bin", 0x2c6c40, 0x10
+	.incbin "baserom_jp.gba", 0x5629e4, 0x10
 
 	.globl gUnknown_85629F4
 gUnknown_85629F4: @ 0x85629F4
-	.incbin "build/data/data.bin", 0x2c6c50, 0x38
+	.incbin "baserom_jp.gba", 0x5629f4, 0x38
 
 	.globl gUnknown_8562A2C
 gUnknown_8562A2C: @ 0x8562A2C
-	.incbin "build/data/data.bin", 0x2c6c88, 0x8
+	.incbin "baserom_jp.gba", 0x562a2c, 0x8
 
 	.globl gUnknown_8562A34
 gUnknown_8562A34: @ 0x8562A34
-	.incbin "build/data/data.bin", 0x2c6c90, 0xa
+	.incbin "baserom_jp.gba", 0x562a34, 0xa
 
 	.globl gUnknown_8562A3E
 gUnknown_8562A3E: @ 0x8562A3E
-	.incbin "build/data/data.bin", 0x2c6c9a, 0x6
+	.incbin "baserom_jp.gba", 0x562a3e, 0x6
 
 	.globl gUnknown_8562A44
 gUnknown_8562A44: @ 0x8562A44
-	.incbin "build/data/data.bin", 0x2c6ca0, 0x6
+	.incbin "baserom_jp.gba", 0x562a44, 0x6
 
 	.globl gUnknown_8562A4A
 gUnknown_8562A4A: @ 0x8562A4A
-	.incbin "build/data/data.bin", 0x2c6ca6, 0x6
+	.incbin "baserom_jp.gba", 0x562a4a, 0x6
 
 	.globl gUnknown_8562A50
 gUnknown_8562A50: @ 0x8562A50
-	.incbin "build/data/data.bin", 0x2c6cac, 0x6
+	.incbin "baserom_jp.gba", 0x562a50, 0x6
 
 	.globl gUnknown_8562A56
 gUnknown_8562A56: @ 0x8562A56
-	.incbin "build/data/data.bin", 0x2c6cb2, 0x6
+	.incbin "baserom_jp.gba", 0x562a56, 0x6
 
 	.globl gUnknown_8562A5C
 gUnknown_8562A5C: @ 0x8562A5C
-	.incbin "build/data/data.bin", 0x2c6cb8, 0x6
+	.incbin "baserom_jp.gba", 0x562a5c, 0x6
 
 	.globl gUnknown_8562A62
 gUnknown_8562A62: @ 0x8562A62
-	.incbin "build/data/data.bin", 0x2c6cbe, 0x6d2
+	.incbin "baserom_jp.gba", 0x562a62, 0x6d2
 
 	.globl gUnknown_8563134
 gUnknown_8563134: @ 0x8563134
@@ -8151,79 +8151,79 @@ gUnknown_8563134: @ 0x8563134
 
 	.globl gUnknown_8563150
 gUnknown_8563150: @ 0x8563150
-	.incbin "build/data/data.bin", 0x2c73ac, 0x4b4
+	.incbin "baserom_jp.gba", 0x563150, 0x4b4
 
 	.globl gUnknown_8563604
 gUnknown_8563604: @ 0x8563604
-	.incbin "build/data/data.bin", 0x2c7860, 0xac
+	.incbin "baserom_jp.gba", 0x563604, 0xac
 
 	.globl gUnknown_85636B0
 gUnknown_85636B0: @ 0x85636B0
-	.incbin "build/data/data.bin", 0x2c790c, 0xb68
+	.incbin "baserom_jp.gba", 0x5636b0, 0xb68
 
 	.globl gUnknown_8564218
 gUnknown_8564218: @ 0x8564218
-	.incbin "build/data/data.bin", 0x2c8474, 0x388
+	.incbin "baserom_jp.gba", 0x564218, 0x388
 
 	.globl gUnknown_85645A0
 gUnknown_85645A0: @ 0x85645A0
-	.incbin "build/data/data.bin", 0x2c87fc, 0x78
+	.incbin "baserom_jp.gba", 0x5645a0, 0x78
 
 	.globl gUnknown_8564618
 gUnknown_8564618: @ 0x8564618
-	.incbin "build/data/data.bin", 0x2c8874, 0x8
+	.incbin "baserom_jp.gba", 0x564618, 0x8
 
 	.globl gUnknown_8564620
 gUnknown_8564620: @ 0x8564620
-	.incbin "build/data/data.bin", 0x2c887c, 0x1c
+	.incbin "baserom_jp.gba", 0x564620, 0x1c
 
 	.globl gUnknown_856463C
 gUnknown_856463C: @ 0x856463C
-	.incbin "build/data/data.bin", 0x2c8898, 0x10
+	.incbin "baserom_jp.gba", 0x56463c, 0x10
 
 	.globl gUnknown_856464C
 gUnknown_856464C: @ 0x856464C
-	.incbin "build/data/data.bin", 0x2c88a8, 0x10
+	.incbin "baserom_jp.gba", 0x56464c, 0x10
 
 	.globl gUnknown_856465C
 gUnknown_856465C: @ 0x856465C
-	.incbin "build/data/data.bin", 0x2c88b8, 0x10
+	.incbin "baserom_jp.gba", 0x56465c, 0x10
 
 	.globl gUnknown_856466C
 gUnknown_856466C: @ 0x856466C
-	.incbin "build/data/data.bin", 0x2c88c8, 0x14
+	.incbin "baserom_jp.gba", 0x56466c, 0x14
 
 	.globl gUnknown_8564680
 gUnknown_8564680: @ 0x8564680
-	.incbin "build/data/data.bin", 0x2c88dc, 0xc
+	.incbin "baserom_jp.gba", 0x564680, 0xc
 
 	.globl gUnknown_856468C
 gUnknown_856468C: @ 0x856468C
-	.incbin "build/data/data.bin", 0x2c88e8, 0xb8c
+	.incbin "baserom_jp.gba", 0x56468c, 0xb8c
 
 	.globl gUnknown_8565218
 gUnknown_8565218: @ 0x8565218
-	.incbin "build/data/data.bin", 0x2c9474, 0x40
+	.incbin "baserom_jp.gba", 0x565218, 0x40
 
 	.globl gUnknown_8565258
 gUnknown_8565258: @ 0x8565258
-	.incbin "build/data/data.bin", 0x2c94b4, 0xc0
+	.incbin "baserom_jp.gba", 0x565258, 0xc0
 
 	.globl gUnknown_8565318
 gUnknown_8565318: @ 0x8565318
-	.incbin "build/data/data.bin", 0x2c9574, 0x20c
+	.incbin "baserom_jp.gba", 0x565318, 0x20c
 
 	.globl gUnknown_8565524
 gUnknown_8565524: @ 0x8565524
-	.incbin "build/data/data.bin", 0x2c9780, 0xdc
+	.incbin "baserom_jp.gba", 0x565524, 0xdc
 
 	.globl gUnknown_8565600
 gUnknown_8565600: @ 0x8565600
-	.incbin "build/data/data.bin", 0x2c985c, 0xc8
+	.incbin "baserom_jp.gba", 0x565600, 0xc8
 
 	.globl gUnknown_85656C8
 gUnknown_85656C8: @ 0x85656C8
-	.incbin "build/data/data.bin", 0x2c9924, 0x190
+	.incbin "baserom_jp.gba", 0x5656c8, 0x190
 
 	.globl gUnknown_8565858
 gUnknown_8565858: @ 0x8565858
@@ -8234,99 +8234,99 @@ gUnknown_8565858: @ 0x8565858
 
 	.globl gUnknown_85658A0
 gUnknown_85658A0: @ 0x85658A0
-	.incbin "build/data/data.bin", 0x2c9afc, 0x21
+	.incbin "baserom_jp.gba", 0x5658a0, 0x21
 
 	.globl gUnknown_85658C1
 gUnknown_85658C1: @ 0x85658C1
-	.incbin "build/data/data.bin", 0x2c9b1d, 0x13b
+	.incbin "baserom_jp.gba", 0x5658c1, 0x13b
 
 	.globl gUnknown_85659FC
 gUnknown_85659FC: @ 0x85659FC
-	.incbin "build/data/data.bin", 0x2c9c58, 0x10
+	.incbin "baserom_jp.gba", 0x5659fc, 0x10
 
 	.globl gUnknown_8565A0C
 gUnknown_8565A0C: @ 0x8565A0C
-	.incbin "build/data/data.bin", 0x2c9c68, 0x30
+	.incbin "baserom_jp.gba", 0x565a0c, 0x30
 
 	.globl gUnknown_8565A3C
 gUnknown_8565A3C: @ 0x8565A3C
-	.incbin "build/data/data.bin", 0x2c9c98, 0x6
+	.incbin "baserom_jp.gba", 0x565a3c, 0x6
 
 	.globl gUnknown_8565A42
 gUnknown_8565A42: @ 0x8565A42
-	.incbin "build/data/data.bin", 0x2c9c9e, 0x6
+	.incbin "baserom_jp.gba", 0x565a42, 0x6
 
 	.globl gUnknown_8565A48
 gUnknown_8565A48: @ 0x8565A48
-	.incbin "build/data/data.bin", 0x2c9ca4, 0x8
+	.incbin "baserom_jp.gba", 0x565a48, 0x8
 
 	.globl gUnknown_8565A50
 gUnknown_8565A50: @ 0x8565A50
-	.incbin "build/data/data.bin", 0x2c9cac, 0x10
+	.incbin "baserom_jp.gba", 0x565a50, 0x10
 
 	.globl gUnknown_8565A60
 gUnknown_8565A60: @ 0x8565A60
-	.incbin "build/data/data.bin", 0x2c9cbc, 0x8
+	.incbin "baserom_jp.gba", 0x565a60, 0x8
 
 	.globl gUnknown_8565A68
 gUnknown_8565A68: @ 0x8565A68
-	.incbin "build/data/data.bin", 0x2c9cc4, 0x8
+	.incbin "baserom_jp.gba", 0x565a68, 0x8
 
 	.globl gUnknown_8565A70
 gUnknown_8565A70: @ 0x8565A70
-	.incbin "build/data/data.bin", 0x2c9ccc, 0x4
+	.incbin "baserom_jp.gba", 0x565a70, 0x4
 
 	.globl gUnknown_8565A74
 gUnknown_8565A74: @ 0x8565A74
-	.incbin "build/data/data.bin", 0x2c9cd0, 0x10
+	.incbin "baserom_jp.gba", 0x565a74, 0x10
 
 	.globl gUnknown_8565A84
 gUnknown_8565A84: @ 0x8565A84
-	.incbin "build/data/data.bin", 0x2c9ce0, 0x6
+	.incbin "baserom_jp.gba", 0x565a84, 0x6
 
 	.globl gUnknown_8565A8A
 gUnknown_8565A8A: @ 0x8565A8A
-	.incbin "build/data/data.bin", 0x2c9ce6, 0x6
+	.incbin "baserom_jp.gba", 0x565a8a, 0x6
 
 	.globl gUnknown_8565A90
 gUnknown_8565A90: @ 0x8565A90
-	.incbin "build/data/data.bin", 0x2c9cec, 0x14
+	.incbin "baserom_jp.gba", 0x565a90, 0x14
 
 	.globl gUnknown_8565AA4
 gUnknown_8565AA4: @ 0x8565AA4
-	.incbin "build/data/data.bin", 0x2c9d00, 0x10
+	.incbin "baserom_jp.gba", 0x565aa4, 0x10
 
 	.globl gUnknown_8565AB4
 gUnknown_8565AB4: @ 0x8565AB4
-	.incbin "build/data/data.bin", 0x2c9d10, 0xc
+	.incbin "baserom_jp.gba", 0x565ab4, 0xc
 
 	.globl gUnknown_8565AC0
 gUnknown_8565AC0: @ 0x8565AC0
-	.incbin "build/data/data.bin", 0x2c9d1c, 0xa
+	.incbin "baserom_jp.gba", 0x565ac0, 0xa
 
 	.globl gUnknown_8565ACA
 gUnknown_8565ACA: @ 0x8565ACA
-	.incbin "build/data/data.bin", 0x2c9d26, 0xa
+	.incbin "baserom_jp.gba", 0x565aca, 0xa
 
 	.globl gUnknown_8565AD4
 gUnknown_8565AD4: @ 0x8565AD4
-	.incbin "build/data/data.bin", 0x2c9d30, 0x8
+	.incbin "baserom_jp.gba", 0x565ad4, 0x8
 
 	.globl gUnknown_8565ADC
 gUnknown_8565ADC: @ 0x8565ADC
-	.incbin "build/data/data.bin", 0x2c9d38, 0x8
+	.incbin "baserom_jp.gba", 0x565adc, 0x8
 
 	.globl gUnknown_8565AE4
 gUnknown_8565AE4: @ 0x8565AE4
-	.incbin "build/data/data.bin", 0x2c9d40, 0x14
+	.incbin "baserom_jp.gba", 0x565ae4, 0x14
 
 	.globl gUnknown_8565AF8
 gUnknown_8565AF8: @ 0x8565AF8
-	.incbin "build/data/data.bin", 0x2c9d54, 0x8
+	.incbin "baserom_jp.gba", 0x565af8, 0x8
 
 	.globl gUnknown_8565B00
 gUnknown_8565B00: @ 0x8565B00
-	.incbin "build/data/data.bin", 0x2c9d5c, 0x6
+	.incbin "baserom_jp.gba", 0x565b00, 0x6
 
 	.globl gUnknown_8565B06
 gUnknown_8565B06: @ 0x8565B06
@@ -8338,123 +8338,123 @@ gUnknown_8565B06: @ 0x8565B06
 
 	.globl gUnknown_8565BC1
 gUnknown_8565BC1: @ 0x8565BC1
-	.incbin "build/data/data.bin", 0x2c9e1d, 0xba
+	.incbin "baserom_jp.gba", 0x565bc1, 0xba
 
 	.globl gUnknown_8565C7B
 gUnknown_8565C7B: @ 0x8565C7B
-	.incbin "build/data/data.bin", 0x2c9ed7, 0x11
+	.incbin "baserom_jp.gba", 0x565c7b, 0x11
 
 	.globl gUnknown_8565C8C
 gUnknown_8565C8C: @ 0x8565C8C
-	.incbin "build/data/data.bin", 0x2c9ee8, 0x4
+	.incbin "baserom_jp.gba", 0x565c8c, 0x4
 
 	.globl gUnknown_8565C90
 gUnknown_8565C90: @ 0x8565C90
-	.incbin "build/data/data.bin", 0x2c9eec, 0xc
+	.incbin "baserom_jp.gba", 0x565c90, 0xc
 
 	.globl gUnknown_8565C9C
 gUnknown_8565C9C: @ 0x8565C9C
-	.incbin "build/data/data.bin", 0x2c9ef8, 0x18
+	.incbin "baserom_jp.gba", 0x565c9c, 0x18
 
 	.globl gUnknown_8565CB4
 gUnknown_8565CB4: @ 0x8565CB4
-	.incbin "build/data/data.bin", 0x2c9f10, 0x34
+	.incbin "baserom_jp.gba", 0x565cb4, 0x34
 
 	.globl gUnknown_8565CE8
 gUnknown_8565CE8: @ 0x8565CE8
-	.incbin "build/data/data.bin", 0x2c9f44, 0x80
+	.incbin "baserom_jp.gba", 0x565ce8, 0x80
 
 	.globl gUnknown_8565D68
 gUnknown_8565D68: @ 0x8565D68
-	.incbin "build/data/data.bin", 0x2c9fc4, 0x8
+	.incbin "baserom_jp.gba", 0x565d68, 0x8
 
 	.globl gUnknown_8565D70
 gUnknown_8565D70: @ 0x8565D70
-	.incbin "build/data/data.bin", 0x2c9fcc, 0x18
+	.incbin "baserom_jp.gba", 0x565d70, 0x18
 
 	.globl gUnknown_8565D88
 gUnknown_8565D88: @ 0x8565D88
-	.incbin "build/data/data.bin", 0x2c9fe4, 0x8
+	.incbin "baserom_jp.gba", 0x565d88, 0x8
 
 	.globl gUnknown_8565D90
 gUnknown_8565D90: @ 0x8565D90
-	.incbin "build/data/data.bin", 0x2c9fec, 0x48
+	.incbin "baserom_jp.gba", 0x565d90, 0x48
 
 	.globl gUnknown_8565DD8
 gUnknown_8565DD8: @ 0x8565DD8
-	.incbin "build/data/data.bin", 0x2ca034, 0x18
+	.incbin "baserom_jp.gba", 0x565dd8, 0x18
 
 	.globl gUnknown_8565DF0
 gUnknown_8565DF0: @ 0x8565DF0
-	.incbin "build/data/data.bin", 0x2ca04c, 0x18
+	.incbin "baserom_jp.gba", 0x565df0, 0x18
 
 	.globl gUnknown_8565E08
 gUnknown_8565E08: @ 0x8565E08
-	.incbin "build/data/data.bin", 0x2ca064, 0x18
+	.incbin "baserom_jp.gba", 0x565e08, 0x18
 
 	.globl gUnknown_8565E20
 gUnknown_8565E20: @ 0x8565E20
-	.incbin "build/data/data.bin", 0x2ca07c, 0x18
+	.incbin "baserom_jp.gba", 0x565e20, 0x18
 
 	.globl gUnknown_8565E38
 gUnknown_8565E38: @ 0x8565E38
-	.incbin "build/data/data.bin", 0x2ca094, 0x18
+	.incbin "baserom_jp.gba", 0x565e38, 0x18
 
 	.globl gUnknown_8565E50
 gUnknown_8565E50: @ 0x8565E50
-	.incbin "build/data/data.bin", 0x2ca0ac, 0x18
+	.incbin "baserom_jp.gba", 0x565e50, 0x18
 
 	.globl gUnknown_8565E68
 gUnknown_8565E68: @ 0x8565E68
-	.incbin "build/data/data.bin", 0x2ca0c4, 0x18
+	.incbin "baserom_jp.gba", 0x565e68, 0x18
 
 	.globl gUnknown_8565E80
 gUnknown_8565E80: @ 0x8565E80
-	.incbin "build/data/data.bin", 0x2ca0dc, 0x18
+	.incbin "baserom_jp.gba", 0x565e80, 0x18
 
 	.globl gUnknown_8565E98
 gUnknown_8565E98: @ 0x8565E98
-	.incbin "build/data/data.bin", 0x2ca0f4, 0x18
+	.incbin "baserom_jp.gba", 0x565e98, 0x18
 
 	.globl gUnknown_8565EB0
 gUnknown_8565EB0: @ 0x8565EB0
-	.incbin "build/data/data.bin", 0x2ca10c, 0x30
+	.incbin "baserom_jp.gba", 0x565eb0, 0x30
 
 	.globl gUnknown_8565EE0
 gUnknown_8565EE0: @ 0x8565EE0
-	.incbin "build/data/data.bin", 0x2ca13c, 0x68
+	.incbin "baserom_jp.gba", 0x565ee0, 0x68
 
 	.globl gUnknown_8565F48
 gUnknown_8565F48: @ 0x8565F48
-	.incbin "build/data/data.bin", 0x2ca1a4, 0x5c
+	.incbin "baserom_jp.gba", 0x565f48, 0x5c
 
 	.globl gUnknown_8565FA4
 gUnknown_8565FA4: @ 0x8565FA4
-	.incbin "build/data/data.bin", 0x2ca200, 0x18
+	.incbin "baserom_jp.gba", 0x565fa4, 0x18
 
 	.globl gUnknown_8565FBC
 gUnknown_8565FBC: @ 0x8565FBC
-	.incbin "build/data/data.bin", 0x2ca218, 0x8
+	.incbin "baserom_jp.gba", 0x565fbc, 0x8
 
 	.globl gUnknown_8565FC4
 gUnknown_8565FC4: @ 0x8565FC4
-	.incbin "build/data/data.bin", 0x2ca220, 0x8
+	.incbin "baserom_jp.gba", 0x565fc4, 0x8
 
 	.globl gUnknown_8565FCC
 gUnknown_8565FCC: @ 0x8565FCC
-	.incbin "build/data/data.bin", 0x2ca228, 0xb18
+	.incbin "baserom_jp.gba", 0x565fcc, 0xb18
 
 	.globl gUnknown_8566AE4
 gUnknown_8566AE4: @ 0x8566AE4
-	.incbin "build/data/data.bin", 0x2cad40, 0xc0
+	.incbin "baserom_jp.gba", 0x566ae4, 0xc0
 
 	.globl gUnknown_8566BA4
 gUnknown_8566BA4: @ 0x8566BA4
-	.incbin "build/data/data.bin", 0x2cae00, 0x40
+	.incbin "baserom_jp.gba", 0x566ba4, 0x40
 
 	.globl gUnknown_8566BE4
 gUnknown_8566BE4: @ 0x8566BE4
-	.incbin "build/data/data.bin", 0x2cae40, 0xc0
+	.incbin "baserom_jp.gba", 0x566be4, 0xc0
 
 	.globl gUnknown_8566CA4
 gUnknown_8566CA4: @ 0x8566CA4
@@ -8467,31 +8467,31 @@ gUnknown_8566CB1: @ 0x8566CB1
 
 	.globl gUnknown_8566CC7
 gUnknown_8566CC7: @ 0x8566CC7
-	.incbin "build/data/data.bin", 0x2caf23, 0x2
+	.incbin "baserom_jp.gba", 0x566cc7, 0x2
 
 	.globl gUnknown_8566CC9
 gUnknown_8566CC9: @ 0x8566CC9
-	.incbin "build/data/data.bin", 0x2caf25, 0x6
+	.incbin "baserom_jp.gba", 0x566cc9, 0x6
 
 	.globl gUnknown_8566CCF
 gUnknown_8566CCF: @ 0x8566CCF
-	.incbin "build/data/data.bin", 0x2caf2b, 0x24
+	.incbin "baserom_jp.gba", 0x566ccf, 0x24
 
 	.globl gUnknown_8566CF3
 gUnknown_8566CF3: @ 0x8566CF3
-	.incbin "build/data/data.bin", 0x2caf4f, 0x6
+	.incbin "baserom_jp.gba", 0x566cf3, 0x6
 
 	.globl gUnknown_8566CF9
 gUnknown_8566CF9: @ 0x8566CF9
-	.incbin "build/data/data.bin", 0x2caf55, 0xf
+	.incbin "baserom_jp.gba", 0x566cf9, 0xf
 
 	.globl gUnknown_8566D08
 gUnknown_8566D08: @ 0x8566D08
-	.incbin "build/data/data.bin", 0x2caf64, 0x4
+	.incbin "baserom_jp.gba", 0x566d08, 0x4
 
 	.globl gUnknown_8566D0C
 gUnknown_8566D0C: @ 0x8566D0C
-	.incbin "build/data/data.bin", 0x2caf68, 0x20
+	.incbin "baserom_jp.gba", 0x566d0c, 0x20
 
 	.globl gUnknown_8566D2C
 gUnknown_8566D2C: @ 0x8566D2C
@@ -8515,7 +8515,7 @@ gUnknown_8566D56: @ 0x8566D56
 
 	.globl gUnknown_8566D64
 gUnknown_8566D64: @ 0x8566D64
-	.incbin "build/data/data.bin", 0x2cafc0, 0x10
+	.incbin "baserom_jp.gba", 0x566d64, 0x10
 
 	.globl gUnknown_8566D74
 gUnknown_8566D74: @ 0x8566D74
@@ -8571,19 +8571,19 @@ gUnknown_8566DEC: @ 0x8566DEC
 
 	.globl gUnknown_8566DF5
 gUnknown_8566DF5: @ 0x8566DF5
-	.incbin "build/data/data.bin", 0x2cb051, 0xb
+	.incbin "baserom_jp.gba", 0x566df5, 0xb
 
 	.globl gUnknown_8566E00
 gUnknown_8566E00: @ 0x8566E00
-	.incbin "build/data/data.bin", 0x2cb05c, 0x40
+	.incbin "baserom_jp.gba", 0x566e00, 0x40
 
 	.globl gUnknown_8566E40
 gUnknown_8566E40: @ 0x8566E40
-	.incbin "build/data/data.bin", 0x2cb09c, 0x18
+	.incbin "baserom_jp.gba", 0x566e40, 0x18
 
 	.globl gUnknown_8566E58
 gUnknown_8566E58: @ 0x8566E58
-	.incbin "build/data/data.bin", 0x2cb0b4, 0x5
+	.incbin "baserom_jp.gba", 0x566e58, 0x5
 
 	.globl gUnknown_8566E5D
 gUnknown_8566E5D: @ 0x8566E5D
@@ -8599,319 +8599,319 @@ gUnknown_8566E64: @ 0x8566E64
 
 	.globl gUnknown_8566E69
 gUnknown_8566E69: @ 0x8566E69
-	.incbin "build/data/data.bin", 0x2cb0c5, 0x148f
+	.incbin "baserom_jp.gba", 0x566e69, 0x148f
 
 	.globl gUnknown_85682F8
 gUnknown_85682F8: @ 0x85682F8
-	.incbin "build/data/data.bin", 0x2cc554, 0x438
+	.incbin "baserom_jp.gba", 0x5682f8, 0x438
 
 	.globl gUnknown_8568730
 gUnknown_8568730: @ 0x8568730
-	.incbin "build/data/data.bin", 0x2cc98c, 0x348
+	.incbin "baserom_jp.gba", 0x568730, 0x348
 
 	.globl gUnknown_8568A78
 gUnknown_8568A78: @ 0x8568A78
-	.incbin "build/data/data.bin", 0x2cccd4, 0x1c
+	.incbin "baserom_jp.gba", 0x568a78, 0x1c
 
 	.globl gUnknown_8568A94
 gUnknown_8568A94: @ 0x8568A94
-	.incbin "build/data/data.bin", 0x2cccf0, 0x60
+	.incbin "baserom_jp.gba", 0x568a94, 0x60
 
 	.globl gUnknown_8568AF4
 gUnknown_8568AF4: @ 0x8568AF4
-	.incbin "build/data/data.bin", 0x2ccd50, 0x10
+	.incbin "baserom_jp.gba", 0x568af4, 0x10
 
 	.globl gUnknown_8568B04
 gUnknown_8568B04: @ 0x8568B04
-	.incbin "build/data/data.bin", 0x2ccd60, 0x8
+	.incbin "baserom_jp.gba", 0x568b04, 0x8
 
 	.globl gUnknown_8568B0C
 gUnknown_8568B0C: @ 0x8568B0C
-	.incbin "build/data/data.bin", 0x2ccd68, 0xc
+	.incbin "baserom_jp.gba", 0x568b0c, 0xc
 
 	.globl gUnknown_8568B18
 gUnknown_8568B18: @ 0x8568B18
-	.incbin "build/data/data.bin", 0x2ccd74, 0x8
+	.incbin "baserom_jp.gba", 0x568b18, 0x8
 
 	.globl gUnknown_8568B20
 gUnknown_8568B20: @ 0x8568B20
-	.incbin "build/data/data.bin", 0x2ccd7c, 0x8
+	.incbin "baserom_jp.gba", 0x568b20, 0x8
 
 	.globl gUnknown_8568B28
 gUnknown_8568B28: @ 0x8568B28
-	.incbin "build/data/data.bin", 0x2ccd84, 0x18
+	.incbin "baserom_jp.gba", 0x568b28, 0x18
 
 	.globl gUnknown_8568B40
 gUnknown_8568B40: @ 0x8568B40
-	.incbin "build/data/data.bin", 0x2ccd9c, 0x3c
+	.incbin "baserom_jp.gba", 0x568b40, 0x3c
 
 	.globl gUnknown_8568B7C
 gUnknown_8568B7C: @ 0x8568B7C
-	.incbin "build/data/data.bin", 0x2ccdd8, 0xe
+	.incbin "baserom_jp.gba", 0x568b7c, 0xe
 
 	.globl gUnknown_8568B8A
 gUnknown_8568B8A: @ 0x8568B8A
-	.incbin "build/data/data.bin", 0x2ccde6, 0xe
+	.incbin "baserom_jp.gba", 0x568b8a, 0xe
 
 	.globl gUnknown_8568B98
 gUnknown_8568B98: @ 0x8568B98
-	.incbin "build/data/data.bin", 0x2ccdf4, 0x1c
+	.incbin "baserom_jp.gba", 0x568b98, 0x1c
 
 	.globl gUnknown_8568BB4
 gUnknown_8568BB4: @ 0x8568BB4
-	.incbin "build/data/data.bin", 0x2cce10, 0x14
+	.incbin "baserom_jp.gba", 0x568bb4, 0x14
 
 	.globl gUnknown_8568BC8
 gUnknown_8568BC8: @ 0x8568BC8
-	.incbin "build/data/data.bin", 0x2cce24, 0x14
+	.incbin "baserom_jp.gba", 0x568bc8, 0x14
 
 	.globl gUnknown_8568BDC
 gUnknown_8568BDC: @ 0x8568BDC
-	.incbin "build/data/data.bin", 0x2cce38, 0x14
+	.incbin "baserom_jp.gba", 0x568bdc, 0x14
 
 	.globl gUnknown_8568BF0
 gUnknown_8568BF0: @ 0x8568BF0
-	.incbin "build/data/data.bin", 0x2cce4c, 0xc
+	.incbin "baserom_jp.gba", 0x568bf0, 0xc
 
 	.globl gUnknown_8568BFC
 gUnknown_8568BFC: @ 0x8568BFC
-	.incbin "build/data/data.bin", 0x2cce58, 0x20
+	.incbin "baserom_jp.gba", 0x568bfc, 0x20
 
 	.globl gUnknown_8568C1C
 gUnknown_8568C1C: @ 0x8568C1C
-	.incbin "build/data/data.bin", 0x2cce78, 0x18
+	.incbin "baserom_jp.gba", 0x568c1c, 0x18
 
 	.globl gUnknown_8568C34
 gUnknown_8568C34: @ 0x8568C34
-	.incbin "build/data/data.bin", 0x2cce90, 0x14
+	.incbin "baserom_jp.gba", 0x568c34, 0x14
 
 	.globl gUnknown_8568C48
 gUnknown_8568C48: @ 0x8568C48
-	.incbin "build/data/data.bin", 0x2ccea4, 0x4
+	.incbin "baserom_jp.gba", 0x568c48, 0x4
 
 	.globl gUnknown_8568C4C
 gUnknown_8568C4C: @ 0x8568C4C
-	.incbin "build/data/data.bin", 0x2ccea8, 0x30
+	.incbin "baserom_jp.gba", 0x568c4c, 0x30
 
 	.globl gUnknown_8568C7C
 gUnknown_8568C7C: @ 0x8568C7C
-	.incbin "build/data/data.bin", 0x2cced8, 0x34
+	.incbin "baserom_jp.gba", 0x568c7c, 0x34
 
 	.globl gUnknown_8568CB0
 gUnknown_8568CB0: @ 0x8568CB0
-	.incbin "build/data/data.bin", 0x2ccf0c, 0x24
+	.incbin "baserom_jp.gba", 0x568cb0, 0x24
 
 	.globl gUnknown_8568CD4
 gUnknown_8568CD4: @ 0x8568CD4
-	.incbin "build/data/data.bin", 0x2ccf30, 0x18
+	.incbin "baserom_jp.gba", 0x568cd4, 0x18
 
 	.globl gUnknown_8568CEC
 gUnknown_8568CEC: @ 0x8568CEC
-	.incbin "build/data/data.bin", 0x2ccf48, 0x3c
+	.incbin "baserom_jp.gba", 0x568cec, 0x3c
 
 	.globl gUnknown_8568D28
 gUnknown_8568D28: @ 0x8568D28
-	.incbin "build/data/data.bin", 0x2ccf84, 0x84
+	.incbin "baserom_jp.gba", 0x568d28, 0x84
 
 	.globl gUnknown_8568DAC
 gUnknown_8568DAC: @ 0x8568DAC
-	.incbin "build/data/data.bin", 0x2cd008, 0x20
+	.incbin "baserom_jp.gba", 0x568dac, 0x20
 
 	.globl gUnknown_8568DCC
 gUnknown_8568DCC: @ 0x8568DCC
-	.incbin "build/data/data.bin", 0x2cd028, 0x18
+	.incbin "baserom_jp.gba", 0x568dcc, 0x18
 
 	.globl gUnknown_8568DE4
 gUnknown_8568DE4: @ 0x8568DE4
-	.incbin "build/data/data.bin", 0x2cd040, 0x4c
+	.incbin "baserom_jp.gba", 0x568de4, 0x4c
 
 	.globl gUnknown_8568E30
 gUnknown_8568E30: @ 0x8568E30
-	.incbin "build/data/data.bin", 0x2cd08c, 0x10
+	.incbin "baserom_jp.gba", 0x568e30, 0x10
 
 	.globl gUnknown_8568E40
 gUnknown_8568E40: @ 0x8568E40
-	.incbin "build/data/data.bin", 0x2cd09c, 0x1c
+	.incbin "baserom_jp.gba", 0x568e40, 0x1c
 
 	.globl gUnknown_8568E5C
 gUnknown_8568E5C: @ 0x8568E5C
-	.incbin "build/data/data.bin", 0x2cd0b8, 0x8
+	.incbin "baserom_jp.gba", 0x568e5c, 0x8
 
 	.globl gUnknown_8568E64
 gUnknown_8568E64: @ 0x8568E64
-	.incbin "build/data/data.bin", 0x2cd0c0, 0xc
+	.incbin "baserom_jp.gba", 0x568e64, 0xc
 
 	.globl gUnknown_8568E70
 gUnknown_8568E70: @ 0x8568E70
-	.incbin "build/data/data.bin", 0x2cd0cc, 0x2c
+	.incbin "baserom_jp.gba", 0x568e70, 0x2c
 
 	.globl gUnknown_8568E9C
 gUnknown_8568E9C: @ 0x8568E9C
-	.incbin "build/data/data.bin", 0x2cd0f8, 0x1c
+	.incbin "baserom_jp.gba", 0x568e9c, 0x1c
 
 	.globl gUnknown_8568EB8
 gUnknown_8568EB8: @ 0x8568EB8
-	.incbin "build/data/data.bin", 0x2cd114, 0xc
+	.incbin "baserom_jp.gba", 0x568eb8, 0xc
 
 	.globl gUnknown_8568EC4
 gUnknown_8568EC4: @ 0x8568EC4
-	.incbin "build/data/data.bin", 0x2cd120, 0x10
+	.incbin "baserom_jp.gba", 0x568ec4, 0x10
 
 	.globl gUnknown_8568ED4
 gUnknown_8568ED4: @ 0x8568ED4
-	.incbin "build/data/data.bin", 0x2cd130, 0x34
+	.incbin "baserom_jp.gba", 0x568ed4, 0x34
 
 	.globl gUnknown_8568F08
 gUnknown_8568F08: @ 0x8568F08
-	.incbin "build/data/data.bin", 0x2cd164, 0x38
+	.incbin "baserom_jp.gba", 0x568f08, 0x38
 
 	.globl gUnknown_8568F40
 gUnknown_8568F40: @ 0x8568F40
-	.incbin "build/data/data.bin", 0x2cd19c, 0x4
+	.incbin "baserom_jp.gba", 0x568f40, 0x4
 
 	.globl gUnknown_8568F44
 gUnknown_8568F44: @ 0x8568F44
-	.incbin "build/data/data.bin", 0x2cd1a0, 0x1c
+	.incbin "baserom_jp.gba", 0x568f44, 0x1c
 
 	.globl gUnknown_8568F60
 gUnknown_8568F60: @ 0x8568F60
-	.incbin "build/data/data.bin", 0x2cd1bc, 0x30
+	.incbin "baserom_jp.gba", 0x568f60, 0x30
 
 	.globl gUnknown_8568F90
 gUnknown_8568F90: @ 0x8568F90
-	.incbin "build/data/data.bin", 0x2cd1ec, 0x40
+	.incbin "baserom_jp.gba", 0x568f90, 0x40
 
 	.globl gUnknown_8568FD0
 gUnknown_8568FD0: @ 0x8568FD0
-	.incbin "build/data/data.bin", 0x2cd22c, 0x4c
+	.incbin "baserom_jp.gba", 0x568fd0, 0x4c
 
 	.globl gUnknown_856901C
 gUnknown_856901C: @ 0x856901C
-	.incbin "build/data/data.bin", 0x2cd278, 0x24
+	.incbin "baserom_jp.gba", 0x56901c, 0x24
 
 	.globl gUnknown_8569040
 gUnknown_8569040: @ 0x8569040
-	.incbin "build/data/data.bin", 0x2cd29c, 0xac
+	.incbin "baserom_jp.gba", 0x569040, 0xac
 
 	.globl gUnknown_85690EC
 gUnknown_85690EC: @ 0x85690EC
-	.incbin "build/data/data.bin", 0x2cd348, 0x2c
+	.incbin "baserom_jp.gba", 0x5690ec, 0x2c
 
 	.globl gUnknown_8569118
 gUnknown_8569118: @ 0x8569118
-	.incbin "build/data/data.bin", 0x2cd374, 0x24
+	.incbin "baserom_jp.gba", 0x569118, 0x24
 
 	.globl gUnknown_856913C
 gUnknown_856913C: @ 0x856913C
-	.incbin "build/data/data.bin", 0x2cd398, 0x20
+	.incbin "baserom_jp.gba", 0x56913c, 0x20
 
 	.globl gUnknown_856915C
 gUnknown_856915C: @ 0x856915C
-	.incbin "build/data/data.bin", 0x2cd3b8, 0x20
+	.incbin "baserom_jp.gba", 0x56915c, 0x20
 
 	.globl gUnknown_856917C
 gUnknown_856917C: @ 0x856917C
-	.incbin "build/data/data.bin", 0x2cd3d8, 0x20
+	.incbin "baserom_jp.gba", 0x56917c, 0x20
 
 	.globl gUnknown_856919C
 gUnknown_856919C: @ 0x856919C
-	.incbin "build/data/data.bin", 0x2cd3f8, 0xa0
+	.incbin "baserom_jp.gba", 0x56919c, 0xa0
 
 	.globl gUnknown_856923C
 gUnknown_856923C: @ 0x856923C
-	.incbin "build/data/data.bin", 0x2cd498, 0x68
+	.incbin "baserom_jp.gba", 0x56923c, 0x68
 
 	.globl gUnknown_85692A4
 gUnknown_85692A4: @ 0x85692A4
-	.incbin "build/data/data.bin", 0x2cd500, 0x18
+	.incbin "baserom_jp.gba", 0x5692a4, 0x18
 
 	.globl gUnknown_85692BC
 gUnknown_85692BC: @ 0x85692BC
-	.incbin "build/data/data.bin", 0x2cd518, 0x40
+	.incbin "baserom_jp.gba", 0x5692bc, 0x40
 
 	.globl gUnknown_85692FC
 gUnknown_85692FC: @ 0x85692FC
-	.incbin "build/data/data.bin", 0x2cd558, 0x10
+	.incbin "baserom_jp.gba", 0x5692fc, 0x10
 
 	.globl gUnknown_856930C
 gUnknown_856930C: @ 0x856930C
-	.incbin "build/data/data.bin", 0x2cd568, 0x18
+	.incbin "baserom_jp.gba", 0x56930c, 0x18
 
 	.globl gUnknown_8569324
 gUnknown_8569324: @ 0x8569324
-	.incbin "build/data/data.bin", 0x2cd580, 0x8
+	.incbin "baserom_jp.gba", 0x569324, 0x8
 
 	.globl gUnknown_856932C
 gUnknown_856932C: @ 0x856932C
-	.incbin "build/data/data.bin", 0x2cd588, 0x8
+	.incbin "baserom_jp.gba", 0x56932c, 0x8
 
 	.globl gUnknown_8569334
 gUnknown_8569334: @ 0x8569334
-	.incbin "build/data/data.bin", 0x2cd590, 0x20
+	.incbin "baserom_jp.gba", 0x569334, 0x20
 
 	.globl gUnknown_8569354
 gUnknown_8569354: @ 0x8569354
-	.incbin "build/data/data.bin", 0x2cd5b0, 0x20
+	.incbin "baserom_jp.gba", 0x569354, 0x20
 
 	.globl gUnknown_8569374
 gUnknown_8569374: @ 0x8569374
-	.incbin "build/data/data.bin", 0x2cd5d0, 0x20
+	.incbin "baserom_jp.gba", 0x569374, 0x20
 
 	.globl gUnknown_8569394
 gUnknown_8569394: @ 0x8569394
-	.incbin "build/data/data.bin", 0x2cd5f0, 0x20
+	.incbin "baserom_jp.gba", 0x569394, 0x20
 
 	.globl gUnknown_85693B4
 gUnknown_85693B4: @ 0x85693B4
-	.incbin "build/data/data.bin", 0x2cd610, 0x20
+	.incbin "baserom_jp.gba", 0x5693b4, 0x20
 
 	.globl gUnknown_85693D4
 gUnknown_85693D4: @ 0x85693D4
-	.incbin "build/data/data.bin", 0x2cd630, 0x14
+	.incbin "baserom_jp.gba", 0x5693d4, 0x14
 
 	.globl gUnknown_85693E8
 gUnknown_85693E8: @ 0x85693E8
-	.incbin "build/data/data.bin", 0x2cd644, 0x14
+	.incbin "baserom_jp.gba", 0x5693e8, 0x14
 
 	.globl gUnknown_85693FC
 gUnknown_85693FC: @ 0x85693FC
-	.incbin "build/data/data.bin", 0x2cd658, 0x14
+	.incbin "baserom_jp.gba", 0x5693fc, 0x14
 
 	.globl gUnknown_8569410
 gUnknown_8569410: @ 0x8569410
-	.incbin "build/data/data.bin", 0x2cd66c, 0x14
+	.incbin "baserom_jp.gba", 0x569410, 0x14
 
 	.globl gUnknown_8569424
 gUnknown_8569424: @ 0x8569424
-	.incbin "build/data/data.bin", 0x2cd680, 0x14
+	.incbin "baserom_jp.gba", 0x569424, 0x14
 
 	.globl gUnknown_8569438
 gUnknown_8569438: @ 0x8569438
-	.incbin "build/data/data.bin", 0x2cd694, 0x14
+	.incbin "baserom_jp.gba", 0x569438, 0x14
 
 	.globl gUnknown_856944C
 gUnknown_856944C: @ 0x856944C
-	.incbin "build/data/data.bin", 0x2cd6a8, 0x10
+	.incbin "baserom_jp.gba", 0x56944c, 0x10
 
 	.globl gUnknown_856945C
 gUnknown_856945C: @ 0x856945C
-	.incbin "build/data/data.bin", 0x2cd6b8, 0x50
+	.incbin "baserom_jp.gba", 0x56945c, 0x50
 
 	.globl gUnknown_85694AC
 gUnknown_85694AC: @ 0x85694AC
-	.incbin "build/data/data.bin", 0x2cd708, 0x18
+	.incbin "baserom_jp.gba", 0x5694ac, 0x18
 
 	.globl gUnknown_85694C4
 gUnknown_85694C4: @ 0x85694C4
-	.incbin "build/data/data.bin", 0x2cd720, 0x8
+	.incbin "baserom_jp.gba", 0x5694c4, 0x8
 
 	.globl gUnknown_85694CC
 gUnknown_85694CC: @ 0x85694CC
-	.incbin "build/data/data.bin", 0x2cd728, 0x4
+	.incbin "baserom_jp.gba", 0x5694cc, 0x4
 
 	.globl gUnknown_85694D0
 gUnknown_85694D0: @ 0x85694D0
-	.incbin "build/data/data.bin", 0x2cd72c, 0x80
+	.incbin "baserom_jp.gba", 0x5694d0, 0x80
 
 	.globl gUnknown_8569550
 gUnknown_8569550: @ 0x8569550
@@ -8919,63 +8919,63 @@ gUnknown_8569550: @ 0x8569550
 
 	.globl gUnknown_8569552
 gUnknown_8569552: @ 0x8569552
-	.incbin "build/data/data.bin", 0x2cd7ae, 0xc92
+	.incbin "baserom_jp.gba", 0x569552, 0xc92
 
 	.globl gUnknown_856A1E4
 gUnknown_856A1E4: @ 0x856A1E4
-	.incbin "build/data/data.bin", 0x2ce440, 0x18
+	.incbin "baserom_jp.gba", 0x56a1e4, 0x18
 
 	.globl gUnknown_856A1FC
 gUnknown_856A1FC: @ 0x856A1FC
-	.incbin "build/data/data.bin", 0x2ce458, 0x18
+	.incbin "baserom_jp.gba", 0x56a1fc, 0x18
 
 	.globl gUnknown_856A214
 gUnknown_856A214: @ 0x856A214
-	.incbin "build/data/data.bin", 0x2ce470, 0x5c
+	.incbin "baserom_jp.gba", 0x56a214, 0x5c
 
 	.globl gUnknown_856A270
 gUnknown_856A270: @ 0x856A270
-	.incbin "build/data/data.bin", 0x2ce4cc, 0x1d8
+	.incbin "baserom_jp.gba", 0x56a270, 0x1d8
 
 	.globl gUnknown_856A448
 gUnknown_856A448: @ 0x856A448
-	.incbin "build/data/data.bin", 0x2ce6a4, 0x1c
+	.incbin "baserom_jp.gba", 0x56a448, 0x1c
 
 	.globl gUnknown_856A464
 gUnknown_856A464: @ 0x856A464
-	.incbin "build/data/data.bin", 0x2ce6c0, 0x18
+	.incbin "baserom_jp.gba", 0x56a464, 0x18
 
 	.globl gUnknown_856A47C
 gUnknown_856A47C: @ 0x856A47C
-	.incbin "build/data/data.bin", 0x2ce6d8, 0x13
+	.incbin "baserom_jp.gba", 0x56a47c, 0x13
 
 	.globl gUnknown_856A48F
 gUnknown_856A48F: @ 0x856A48F
-	.incbin "build/data/data.bin", 0x2ce6eb, 0x2
+	.incbin "baserom_jp.gba", 0x56a48f, 0x2
 
 	.globl gUnknown_856A491
 gUnknown_856A491: @ 0x856A491
-	.incbin "build/data/data.bin", 0x2ce6ed, 0x3
+	.incbin "baserom_jp.gba", 0x56a491, 0x3
 
 	.globl gUnknown_856A494
 gUnknown_856A494: @ 0x856A494
-	.incbin "build/data/data.bin", 0x2ce6f0, 0x40
+	.incbin "baserom_jp.gba", 0x56a494, 0x40
 
 	.globl gUnknown_856A4D4
 gUnknown_856A4D4: @ 0x856A4D4
-	.incbin "build/data/data.bin", 0x2ce730, 0x3468
+	.incbin "baserom_jp.gba", 0x56a4d4, 0x3468
 
 	.globl gUnknown_856D93C
 gUnknown_856D93C: @ 0x856D93C
-	.incbin "build/data/data.bin", 0x2d1b98, 0x270
+	.incbin "baserom_jp.gba", 0x56d93c, 0x270
 
 	.globl gUnknown_856DBAC
 gUnknown_856DBAC: @ 0x856DBAC
-	.incbin "build/data/data.bin", 0x2d1e08, 0x18
+	.incbin "baserom_jp.gba", 0x56dbac, 0x18
 
 	.globl gUnknown_856DBC4
 gUnknown_856DBC4: @ 0x856DBC4
-	.incbin "build/data/data.bin", 0x2d1e20, 0x18
+	.incbin "baserom_jp.gba", 0x56dbc4, 0x18
 
 	.globl gUnknown_856DBDC
 gUnknown_856DBDC: @ 0x856DBDC
@@ -8995,123 +8995,123 @@ gUnknown_856DC0C: @ 0x856DC0C
 
 	.globl gUnknown_856DC1C
 gUnknown_856DC1C: @ 0x856DC1C
-	.incbin "build/data/data.bin", 0x2d1e78, 0x20
+	.incbin "baserom_jp.gba", 0x56dc1c, 0x20
 
 	.globl gUnknown_856DC3C
 gUnknown_856DC3C: @ 0x856DC3C
-	.incbin "build/data/data.bin", 0x2d1e98, 0x20
+	.incbin "baserom_jp.gba", 0x56dc3c, 0x20
 
 	.globl gUnknown_856DC5C
 gUnknown_856DC5C: @ 0x856DC5C
-	.incbin "build/data/data.bin", 0x2d1eb8, 0x60
+	.incbin "baserom_jp.gba", 0x56dc5c, 0x60
 
 	.globl gUnknown_856DCBC
 gUnknown_856DCBC: @ 0x856DCBC
-	.incbin "build/data/data.bin", 0x2d1f18, 0xc
+	.incbin "baserom_jp.gba", 0x56dcbc, 0xc
 
 	.globl gUnknown_856DCC8
 gUnknown_856DCC8: @ 0x856DCC8
-	.incbin "build/data/data.bin", 0x2d1f24, 0x4
+	.incbin "baserom_jp.gba", 0x56dcc8, 0x4
 
 	.globl gUnknown_856DCCC
 gUnknown_856DCCC: @ 0x856DCCC
-	.incbin "build/data/data.bin", 0x2d1f28, 0x128
+	.incbin "baserom_jp.gba", 0x56dccc, 0x128
 
 	.globl gUnknown_856DDF4
 gUnknown_856DDF4: @ 0x856DDF4
-	.incbin "build/data/data.bin", 0x2d2050, 0x4f0
+	.incbin "baserom_jp.gba", 0x56ddf4, 0x4f0
 
 	.globl gUnknown_856E2E4
 gUnknown_856E2E4: @ 0x856E2E4
-	.incbin "build/data/data.bin", 0x2d2540, 0x78
+	.incbin "baserom_jp.gba", 0x56e2e4, 0x78
 
 	.globl gUnknown_856E35C
 gUnknown_856E35C: @ 0x856E35C
-	.incbin "build/data/data.bin", 0x2d25b8, 0x100
+	.incbin "baserom_jp.gba", 0x56e35c, 0x100
 
 	.globl gUnknown_856E45C
 gUnknown_856E45C: @ 0x856E45C
-	.incbin "build/data/data.bin", 0x2d26b8, 0x458
+	.incbin "baserom_jp.gba", 0x56e45c, 0x458
 
 	.globl gUnknown_856E8B4
 gUnknown_856E8B4: @ 0x856E8B4
-	.incbin "build/data/data.bin", 0x2d2b10, 0x1ec
+	.incbin "baserom_jp.gba", 0x56e8b4, 0x1ec
 
 	.globl gUnknown_856EAA0
 gUnknown_856EAA0: @ 0x856EAA0
-	.incbin "build/data/data.bin", 0x2d2cfc, 0x30
+	.incbin "baserom_jp.gba", 0x56eaa0, 0x30
 
 	.globl gUnknown_856EAD0
 gUnknown_856EAD0: @ 0x856EAD0
-	.incbin "build/data/data.bin", 0x2d2d2c, 0x134
+	.incbin "baserom_jp.gba", 0x56ead0, 0x134
 
 	.globl gUnknown_856EC04
 gUnknown_856EC04: @ 0x856EC04
-	.incbin "build/data/data.bin", 0x2d2e60, 0xf4
+	.incbin "baserom_jp.gba", 0x56ec04, 0xf4
 
 	.globl gUnknown_856ECF8
 gUnknown_856ECF8: @ 0x856ECF8
-	.incbin "build/data/data.bin", 0x2d2f54, 0x29c
+	.incbin "baserom_jp.gba", 0x56ecf8, 0x29c
 
 	.globl gUnknown_856EF94
 gUnknown_856EF94: @ 0x856EF94
-	.incbin "build/data/data.bin", 0x2d31f0, 0xf0
+	.incbin "baserom_jp.gba", 0x56ef94, 0xf0
 
 	.globl gUnknown_856F084
 gUnknown_856F084: @ 0x856F084
-	.incbin "build/data/data.bin", 0x2d32e0, 0x148
+	.incbin "baserom_jp.gba", 0x56f084, 0x148
 
 	.globl gUnknown_856F1CC
 gUnknown_856F1CC: @ 0x856F1CC
-	.incbin "build/data/data.bin", 0x2d3428, 0x20
+	.incbin "baserom_jp.gba", 0x56f1cc, 0x20
 
 	.globl gUnknown_856F1EC
 gUnknown_856F1EC: @ 0x856F1EC
-	.incbin "build/data/data.bin", 0x2d3448, 0x9c
+	.incbin "baserom_jp.gba", 0x56f1ec, 0x9c
 
 	.globl gUnknown_856F288
 gUnknown_856F288: @ 0x856F288
-	.incbin "build/data/data.bin", 0x2d34e4, 0x20c
+	.incbin "baserom_jp.gba", 0x56f288, 0x20c
 
 	.globl gUnknown_856F494
 gUnknown_856F494: @ 0x856F494
-	.incbin "build/data/data.bin", 0x2d36f0, 0x2c
+	.incbin "baserom_jp.gba", 0x56f494, 0x2c
 
 	.globl gUnknown_856F4C0
 gUnknown_856F4C0: @ 0x856F4C0
-	.incbin "build/data/data.bin", 0x2d371c, 0x18
+	.incbin "baserom_jp.gba", 0x56f4c0, 0x18
 
 	.globl gUnknown_856F4D8
 gUnknown_856F4D8: @ 0x856F4D8
-	.incbin "build/data/data.bin", 0x2d3734, 0x5c
+	.incbin "baserom_jp.gba", 0x56f4d8, 0x5c
 
 	.globl gUnknown_856F534
 gUnknown_856F534: @ 0x856F534
-	.incbin "build/data/data.bin", 0x2d3790, 0x38
+	.incbin "baserom_jp.gba", 0x56f534, 0x38
 
 	.globl gUnknown_856F56C
 gUnknown_856F56C: @ 0x856F56C
-	.incbin "build/data/data.bin", 0x2d37c8, 0x210
+	.incbin "baserom_jp.gba", 0x56f56c, 0x210
 
 	.globl gUnknown_856F77C
 gUnknown_856F77C: @ 0x856F77C
-	.incbin "build/data/data.bin", 0x2d39d8, 0x1488
+	.incbin "baserom_jp.gba", 0x56f77c, 0x1488
 
 	.globl gUnknown_8570C04
 gUnknown_8570C04: @ 0x8570C04
-	.incbin "build/data/data.bin", 0x2d4e60, 0x248
+	.incbin "baserom_jp.gba", 0x570c04, 0x248
 
 	.globl gUnknown_8570E4C
 gUnknown_8570E4C: @ 0x8570E4C
-	.incbin "build/data/data.bin", 0x2d50a8, 0xa8
+	.incbin "baserom_jp.gba", 0x570e4c, 0xa8
 
 	.globl gUnknown_8570EF4
 gUnknown_8570EF4: @ 0x8570EF4
-	.incbin "build/data/data.bin", 0x2d5150, 0x2a4
+	.incbin "baserom_jp.gba", 0x570ef4, 0x2a4
 
 	.globl gUnknown_8571198
 gUnknown_8571198: @ 0x8571198
-	.incbin "build/data/data.bin", 0x2d53f4, 0x18
+	.incbin "baserom_jp.gba", 0x571198, 0x18
 
 	.globl gUnknown_85711B0
 gUnknown_85711B0: @ 0x85711B0
@@ -9119,283 +9119,283 @@ gUnknown_85711B0: @ 0x85711B0
 
 	.globl gUnknown_85711B2
 gUnknown_85711B2: @ 0x85711B2
-	.incbin "build/data/data.bin", 0x2d540e, 0xb6
+	.incbin "baserom_jp.gba", 0x5711b2, 0xb6
 
 	.globl gUnknown_8571268
 gUnknown_8571268: @ 0x8571268
-	.incbin "build/data/data.bin", 0x2d54c4, 0x10
+	.incbin "baserom_jp.gba", 0x571268, 0x10
 
 	.globl gUnknown_8571278
 gUnknown_8571278: @ 0x8571278
-	.incbin "build/data/data.bin", 0x2d54d4, 0x2c
+	.incbin "baserom_jp.gba", 0x571278, 0x2c
 
 	.globl gUnknown_85712A4
 gUnknown_85712A4: @ 0x85712A4
-	.incbin "build/data/data.bin", 0x2d5500, 0x168
+	.incbin "baserom_jp.gba", 0x5712a4, 0x168
 
 	.globl gUnknown_857140C
 gUnknown_857140C: @ 0x857140C
-	.incbin "build/data/data.bin", 0x2d5668, 0x18
+	.incbin "baserom_jp.gba", 0x57140c, 0x18
 
 	.globl gUnknown_8571424
 gUnknown_8571424: @ 0x8571424
-	.incbin "build/data/data.bin", 0x2d5680, 0x18
+	.incbin "baserom_jp.gba", 0x571424, 0x18
 
 	.globl gUnknown_857143C
 gUnknown_857143C: @ 0x857143C
-	.incbin "build/data/data.bin", 0x2d5698, 0x50
+	.incbin "baserom_jp.gba", 0x57143c, 0x50
 
 	.globl gUnknown_857148C
 gUnknown_857148C: @ 0x857148C
-	.incbin "build/data/data.bin", 0x2d56e8, 0x158
+	.incbin "baserom_jp.gba", 0x57148c, 0x158
 
 	.globl gUnknown_85715E4
 gUnknown_85715E4: @ 0x85715E4
-	.incbin "build/data/data.bin", 0x2d5840, 0x30
+	.incbin "baserom_jp.gba", 0x5715e4, 0x30
 
 	.globl gUnknown_8571614
 gUnknown_8571614: @ 0x8571614
-	.incbin "build/data/data.bin", 0x2d5870, 0x138
+	.incbin "baserom_jp.gba", 0x571614, 0x138
 
 	.globl gUnknown_857174C
 gUnknown_857174C: @ 0x857174C
-	.incbin "build/data/data.bin", 0x2d59a8, 0xf4
+	.incbin "baserom_jp.gba", 0x57174c, 0xf4
 
 	.globl gUnknown_8571840
 gUnknown_8571840: @ 0x8571840
-	.incbin "build/data/data.bin", 0x2d5a9c, 0x2c
+	.incbin "baserom_jp.gba", 0x571840, 0x2c
 
 	.globl gUnknown_857186C
 gUnknown_857186C: @ 0x857186C
-	.incbin "build/data/data.bin", 0x2d5ac8, 0x2c
+	.incbin "baserom_jp.gba", 0x57186c, 0x2c
 
 	.globl gUnknown_8571898
 gUnknown_8571898: @ 0x8571898
-	.incbin "build/data/data.bin", 0x2d5af4, 0x78
+	.incbin "baserom_jp.gba", 0x571898, 0x78
 
 	.globl gUnknown_8571910
 gUnknown_8571910: @ 0x8571910
-	.incbin "build/data/data.bin", 0x2d5b6c, 0xa14
+	.incbin "baserom_jp.gba", 0x571910, 0xa14
 
 	.globl gUnknown_8572324
 gUnknown_8572324: @ 0x8572324
-	.incbin "build/data/data.bin", 0x2d6580, 0x1c
+	.incbin "baserom_jp.gba", 0x572324, 0x1c
 
 	.globl gUnknown_8572340
 gUnknown_8572340: @ 0x8572340
-	.incbin "build/data/data.bin", 0x2d659c, 0x20
+	.incbin "baserom_jp.gba", 0x572340, 0x20
 
 	.globl gUnknown_8572360
 gUnknown_8572360: @ 0x8572360
-	.incbin "build/data/data.bin", 0x2d65bc, 0x18
+	.incbin "baserom_jp.gba", 0x572360, 0x18
 
 	.globl gUnknown_8572378
 gUnknown_8572378: @ 0x8572378
-	.incbin "build/data/data.bin", 0x2d65d4, 0xd0
+	.incbin "baserom_jp.gba", 0x572378, 0xd0
 
 	.globl gUnknown_8572448
 gUnknown_8572448: @ 0x8572448
-	.incbin "build/data/data.bin", 0x2d66a4, 0x35c
+	.incbin "baserom_jp.gba", 0x572448, 0x35c
 
 	.globl gUnknown_85727A4
 gUnknown_85727A4: @ 0x85727A4
-	.incbin "build/data/data.bin", 0x2d6a00, 0x50
+	.incbin "baserom_jp.gba", 0x5727a4, 0x50
 
 	.globl gUnknown_85727F4
 gUnknown_85727F4: @ 0x85727F4
-	.incbin "build/data/data.bin", 0x2d6a50, 0x18
+	.incbin "baserom_jp.gba", 0x5727f4, 0x18
 
 	.globl gUnknown_857280C
 gUnknown_857280C: @ 0x857280C
-	.incbin "build/data/data.bin", 0x2d6a68, 0x18
+	.incbin "baserom_jp.gba", 0x57280c, 0x18
 
 	.globl gUnknown_8572824
 gUnknown_8572824: @ 0x8572824
-	.incbin "build/data/data.bin", 0x2d6a80, 0x178
+	.incbin "baserom_jp.gba", 0x572824, 0x178
 
 	.globl gUnknown_857299C
 gUnknown_857299C: @ 0x857299C
-	.incbin "build/data/data.bin", 0x2d6bf8, 0x78
+	.incbin "baserom_jp.gba", 0x57299c, 0x78
 
 	.globl gUnknown_8572A14
 gUnknown_8572A14: @ 0x8572A14
-	.incbin "build/data/data.bin", 0x2d6c70, 0x528
+	.incbin "baserom_jp.gba", 0x572a14, 0x528
 
 	.globl gUnknown_8572F3C
 gUnknown_8572F3C: @ 0x8572F3C
-	.incbin "build/data/data.bin", 0x2d7198, 0x30
+	.incbin "baserom_jp.gba", 0x572f3c, 0x30
 
 	.globl gUnknown_8572F6C
 gUnknown_8572F6C: @ 0x8572F6C
-	.incbin "build/data/data.bin", 0x2d71c8, 0x60
+	.incbin "baserom_jp.gba", 0x572f6c, 0x60
 
 	.globl gUnknown_8572FCC
 gUnknown_8572FCC: @ 0x8572FCC
-	.incbin "build/data/data.bin", 0x2d7228, 0x30
+	.incbin "baserom_jp.gba", 0x572fcc, 0x30
 
 	.globl gUnknown_8572FFC
 gUnknown_8572FFC: @ 0x8572FFC
-	.incbin "build/data/data.bin", 0x2d7258, 0x2
+	.incbin "baserom_jp.gba", 0x572ffc, 0x2
 
 	.globl gUnknown_8572FFE
 gUnknown_8572FFE: @ 0x8572FFE
-	.incbin "build/data/data.bin", 0x2d725a, 0x4
+	.incbin "baserom_jp.gba", 0x572ffe, 0x4
 
 	.globl gUnknown_8573002
 gUnknown_8573002: @ 0x8573002
-	.incbin "build/data/data.bin", 0x2d725e, 0x6
+	.incbin "baserom_jp.gba", 0x573002, 0x6
 
 	.globl gUnknown_8573008
 gUnknown_8573008: @ 0x8573008
-	.incbin "build/data/data.bin", 0x2d7264, 0x28
+	.incbin "baserom_jp.gba", 0x573008, 0x28
 
 	.globl gUnknown_8573030
 gUnknown_8573030: @ 0x8573030
-	.incbin "build/data/data.bin", 0x2d728c, 0x10
+	.incbin "baserom_jp.gba", 0x573030, 0x10
 
 	.globl gUnknown_8573040
 gUnknown_8573040: @ 0x8573040
-	.incbin "build/data/data.bin", 0x2d729c, 0xc
+	.incbin "baserom_jp.gba", 0x573040, 0xc
 
 	.globl gUnknown_857304C
 gUnknown_857304C: @ 0x857304C
-	.incbin "build/data/data.bin", 0x2d72a8, 0x34
+	.incbin "baserom_jp.gba", 0x57304c, 0x34
 
 	.globl gUnknown_8573080
 gUnknown_8573080: @ 0x8573080
-	.incbin "build/data/data.bin", 0x2d72dc, 0x1c
+	.incbin "baserom_jp.gba", 0x573080, 0x1c
 
 	.globl gUnknown_857309C
 gUnknown_857309C: @ 0x857309C
-	.incbin "build/data/data.bin", 0x2d72f8, 0x8
+	.incbin "baserom_jp.gba", 0x57309c, 0x8
 
 	.globl gUnknown_85730A4
 gUnknown_85730A4: @ 0x85730A4
-	.incbin "build/data/data.bin", 0x2d7300, 0x70
+	.incbin "baserom_jp.gba", 0x5730a4, 0x70
 
 	.globl gUnknown_8573114
 gUnknown_8573114: @ 0x8573114
-	.incbin "build/data/data.bin", 0x2d7370, 0x20
+	.incbin "baserom_jp.gba", 0x573114, 0x20
 
 	.globl gUnknown_8573134
 gUnknown_8573134: @ 0x8573134
-	.incbin "build/data/data.bin", 0x2d7390, 0x1f8
+	.incbin "baserom_jp.gba", 0x573134, 0x1f8
 
 	.globl gUnknown_857332C
 gUnknown_857332C: @ 0x857332C
-	.incbin "build/data/data.bin", 0x2d7588, 0x8
+	.incbin "baserom_jp.gba", 0x57332c, 0x8
 
 	.globl gUnknown_8573334
 gUnknown_8573334: @ 0x8573334
-	.incbin "build/data/data.bin", 0x2d7590, 0x8
+	.incbin "baserom_jp.gba", 0x573334, 0x8
 
 	.globl gUnknown_857333C
 gUnknown_857333C: @ 0x857333C
-	.incbin "build/data/data.bin", 0x2d7598, 0xb28
+	.incbin "baserom_jp.gba", 0x57333c, 0xb28
 
 	.globl gUnknown_8573E64
 gUnknown_8573E64: @ 0x8573E64
-	.incbin "build/data/data.bin", 0x2d80c0, 0x20
+	.incbin "baserom_jp.gba", 0x573e64, 0x20
 
 	.globl gUnknown_8573E84
 gUnknown_8573E84: @ 0x8573E84
-	.incbin "build/data/data.bin", 0x2d80e0, 0x260
+	.incbin "baserom_jp.gba", 0x573e84, 0x260
 
 	.globl gUnknown_85740E4
 gUnknown_85740E4: @ 0x85740E4
-	.incbin "build/data/data.bin", 0x2d8340, 0x158
+	.incbin "baserom_jp.gba", 0x5740e4, 0x158
 
 	.globl gUnknown_857423C
 gUnknown_857423C: @ 0x857423C
-	.incbin "build/data/data.bin", 0x2d8498, 0x20
+	.incbin "baserom_jp.gba", 0x57423c, 0x20
 
 	.globl gUnknown_857425C
 gUnknown_857425C: @ 0x857425C
-	.incbin "build/data/data.bin", 0x2d84b8, 0x20
+	.incbin "baserom_jp.gba", 0x57425c, 0x20
 
 	.globl gUnknown_857427C
 gUnknown_857427C: @ 0x857427C
-	.incbin "build/data/data.bin", 0x2d84d8, 0xc8
+	.incbin "baserom_jp.gba", 0x57427c, 0xc8
 
 	.globl gUnknown_8574344
 gUnknown_8574344: @ 0x8574344
-	.incbin "build/data/data.bin", 0x2d85a0, 0x8
+	.incbin "baserom_jp.gba", 0x574344, 0x8
 
 	.globl gUnknown_857434C
 gUnknown_857434C: @ 0x857434C
-	.incbin "build/data/data.bin", 0x2d85a8, 0xc
+	.incbin "baserom_jp.gba", 0x57434c, 0xc
 
 	.globl gUnknown_8574358
 gUnknown_8574358: @ 0x8574358
-	.incbin "build/data/data.bin", 0x2d85b4, 0x24
+	.incbin "baserom_jp.gba", 0x574358, 0x24
 
 	.globl gUnknown_857437C
 gUnknown_857437C: @ 0x857437C
-	.incbin "build/data/data.bin", 0x2d85d8, 0x10
+	.incbin "baserom_jp.gba", 0x57437c, 0x10
 
 	.globl gUnknown_857438C
 gUnknown_857438C: @ 0x857438C
-	.incbin "build/data/data.bin", 0x2d85e8, 0x20
+	.incbin "baserom_jp.gba", 0x57438c, 0x20
 
 	.globl gUnknown_85743AC
 gUnknown_85743AC: @ 0x85743AC
-	.incbin "build/data/data.bin", 0x2d8608, 0x8
+	.incbin "baserom_jp.gba", 0x5743ac, 0x8
 
 	.globl gUnknown_85743B4
 gUnknown_85743B4: @ 0x85743B4
-	.incbin "build/data/data.bin", 0x2d8610, 0x8
+	.incbin "baserom_jp.gba", 0x5743b4, 0x8
 
 	.globl gUnknown_85743BC
 gUnknown_85743BC: @ 0x85743BC
-	.incbin "build/data/data.bin", 0x2d8618, 0x10
+	.incbin "baserom_jp.gba", 0x5743bc, 0x10
 
 	.globl gUnknown_85743CC
 gUnknown_85743CC: @ 0x85743CC
-	.incbin "build/data/data.bin", 0x2d8628, 0x20
+	.incbin "baserom_jp.gba", 0x5743cc, 0x20
 
 	.globl gUnknown_85743EC
 gUnknown_85743EC: @ 0x85743EC
-	.incbin "build/data/data.bin", 0x2d8648, 0x28
+	.incbin "baserom_jp.gba", 0x5743ec, 0x28
 
 	.globl gUnknown_8574414
 gUnknown_8574414: @ 0x8574414
-	.incbin "build/data/data.bin", 0x2d8670, 0x28
+	.incbin "baserom_jp.gba", 0x574414, 0x28
 
 	.globl gUnknown_857443C
 gUnknown_857443C: @ 0x857443C
-	.incbin "build/data/data.bin", 0x2d8698, 0x50
+	.incbin "baserom_jp.gba", 0x57443c, 0x50
 
 	.globl gUnknown_857448C
 gUnknown_857448C: @ 0x857448C
-	.incbin "build/data/data.bin", 0x2d86e8, 0x68
+	.incbin "baserom_jp.gba", 0x57448c, 0x68
 
 	.globl gUnknown_85744F4
 gUnknown_85744F4: @ 0x85744F4
-	.incbin "build/data/data.bin", 0x2d8750, 0x20
+	.incbin "baserom_jp.gba", 0x5744f4, 0x20
 
 	.globl gUnknown_8574514
 gUnknown_8574514: @ 0x8574514
-	.incbin "build/data/data.bin", 0x2d8770, 0x40
+	.incbin "baserom_jp.gba", 0x574514, 0x40
 
 	.globl gUnknown_8574554
 gUnknown_8574554: @ 0x8574554
-	.incbin "build/data/data.bin", 0x2d87b0, 0x18
+	.incbin "baserom_jp.gba", 0x574554, 0x18
 
 	.globl gUnknown_857456C
 gUnknown_857456C: @ 0x857456C
-	.incbin "build/data/data.bin", 0x2d87c8, 0x47a8
+	.incbin "baserom_jp.gba", 0x57456c, 0x47a8
 
 	.globl gUnknown_8578D14
 gUnknown_8578D14: @ 0x8578D14
-	.incbin "build/data/data.bin", 0x2dcf70, 0xff0
+	.incbin "baserom_jp.gba", 0x578d14, 0xff0
 
 	.globl gUnknown_8579D04
 gUnknown_8579D04: @ 0x8579D04
-	.incbin "build/data/data.bin", 0x2ddf60, 0x1d4
+	.incbin "baserom_jp.gba", 0x579d04, 0x1d4
 
 	.globl gUnknown_8579ED8
 gUnknown_8579ED8: @ 0x8579ED8
-	.incbin "build/data/data.bin", 0x2de134, 0x58
+	.incbin "baserom_jp.gba", 0x579ed8, 0x58
 
 	.globl gUnknown_8579F30
 gUnknown_8579F30: @ 0x8579F30
@@ -9403,255 +9403,255 @@ gUnknown_8579F30: @ 0x8579F30
 
 	.globl gUnknown_8579F34
 gUnknown_8579F34: @ 0x8579F34
-	.incbin "build/data/data.bin", 0x2de190, 0x4
+	.incbin "baserom_jp.gba", 0x579f34, 0x4
 
 	.globl gUnknown_8579F38
 gUnknown_8579F38: @ 0x8579F38
-	.incbin "build/data/data.bin", 0x2de194, 0x20
+	.incbin "baserom_jp.gba", 0x579f38, 0x20
 
 	.globl gUnknown_8579F58
 gUnknown_8579F58: @ 0x8579F58
-	.incbin "build/data/data.bin", 0x2de1b4, 0x320
+	.incbin "baserom_jp.gba", 0x579f58, 0x320
 
 	.globl gUnknown_857A278
 gUnknown_857A278: @ 0x857A278
-	.incbin "build/data/data.bin", 0x2de4d4, 0x20
+	.incbin "baserom_jp.gba", 0x57a278, 0x20
 
 	.globl gUnknown_857A298
 gUnknown_857A298: @ 0x857A298
-	.incbin "build/data/data.bin", 0x2de4f4, 0x808
+	.incbin "baserom_jp.gba", 0x57a298, 0x808
 
 	.globl gUnknown_857AAA0
 gUnknown_857AAA0: @ 0x857AAA0
-	.incbin "build/data/data.bin", 0x2decfc, 0x8
+	.incbin "baserom_jp.gba", 0x57aaa0, 0x8
 
 	.globl gUnknown_857AAA8
 gUnknown_857AAA8: @ 0x857AAA8
-	.incbin "build/data/data.bin", 0x2ded04, 0x58
+	.incbin "baserom_jp.gba", 0x57aaa8, 0x58
 
 	.globl gUnknown_857AB00
 gUnknown_857AB00: @ 0x857AB00
-	.incbin "build/data/data.bin", 0x2ded5c, 0x38
+	.incbin "baserom_jp.gba", 0x57ab00, 0x38
 
 	.globl gUnknown_857AB38
 gUnknown_857AB38: @ 0x857AB38
-	.incbin "build/data/data.bin", 0x2ded94, 0x8
+	.incbin "baserom_jp.gba", 0x57ab38, 0x8
 
 	.globl gUnknown_857AB40
 gUnknown_857AB40: @ 0x857AB40
-	.incbin "build/data/data.bin", 0x2ded9c, 0x88
+	.incbin "baserom_jp.gba", 0x57ab40, 0x88
 
 	.globl gUnknown_857ABC8
 gUnknown_857ABC8: @ 0x857ABC8
-	.incbin "build/data/data.bin", 0x2dee24, 0x40
+	.incbin "baserom_jp.gba", 0x57abc8, 0x40
 
 	.globl gUnknown_857AC08
 gUnknown_857AC08: @ 0x857AC08
-	.incbin "build/data/data.bin", 0x2dee64, 0xc
+	.incbin "baserom_jp.gba", 0x57ac08, 0xc
 
 	.globl gUnknown_857AC14
 gUnknown_857AC14: @ 0x857AC14
-	.incbin "build/data/data.bin", 0x2dee70, 0x20
+	.incbin "baserom_jp.gba", 0x57ac14, 0x20
 
 	.globl gUnknown_857AC34
 gUnknown_857AC34: @ 0x857AC34
-	.incbin "build/data/data.bin", 0x2dee90, 0x20
+	.incbin "baserom_jp.gba", 0x57ac34, 0x20
 
 	.globl gUnknown_857AC54
 gUnknown_857AC54: @ 0x857AC54
-	.incbin "build/data/data.bin", 0x2deeb0, 0x18
+	.incbin "baserom_jp.gba", 0x57ac54, 0x18
 
 	.globl gUnknown_857AC6C
 gUnknown_857AC6C: @ 0x857AC6C
-	.incbin "build/data/data.bin", 0x2deec8, 0x230
+	.incbin "baserom_jp.gba", 0x57ac6c, 0x230
 
 	.globl gUnknown_857AE9C
 gUnknown_857AE9C: @ 0x857AE9C
-	.incbin "build/data/data.bin", 0x2df0f8, 0x10
+	.incbin "baserom_jp.gba", 0x57ae9c, 0x10
 
 	.globl gUnknown_857AEAC
 gUnknown_857AEAC: @ 0x857AEAC
-	.incbin "build/data/data.bin", 0x2df108, 0x8
+	.incbin "baserom_jp.gba", 0x57aeac, 0x8
 
 	.globl gUnknown_857AEB4
 gUnknown_857AEB4: @ 0x857AEB4
-	.incbin "build/data/data.bin", 0x2df110, 0xc
+	.incbin "baserom_jp.gba", 0x57aeb4, 0xc
 
 	.globl gUnknown_857AEC0
 gUnknown_857AEC0: @ 0x857AEC0
-	.incbin "build/data/data.bin", 0x2df11c, 0x18
+	.incbin "baserom_jp.gba", 0x57aec0, 0x18
 
 	.globl gUnknown_857AED8
 gUnknown_857AED8: @ 0x857AED8
-	.incbin "build/data/data.bin", 0x2df134, 0x4
+	.incbin "baserom_jp.gba", 0x57aed8, 0x4
 
 	.globl gUnknown_857AEDC
 gUnknown_857AEDC: @ 0x857AEDC
-	.incbin "build/data/data.bin", 0x2df138, 0x8
+	.incbin "baserom_jp.gba", 0x57aedc, 0x8
 
 	.globl gUnknown_857AEE4
 gUnknown_857AEE4: @ 0x857AEE4
-	.incbin "build/data/data.bin", 0x2df140, 0xfc
+	.incbin "baserom_jp.gba", 0x57aee4, 0xfc
 
 	.globl gUnknown_857AFE0
 gUnknown_857AFE0: @ 0x857AFE0
-	.incbin "build/data/data.bin", 0x2df23c, 0x74
+	.incbin "baserom_jp.gba", 0x57afe0, 0x74
 
 	.globl gUnknown_857B054
 gUnknown_857B054: @ 0x857B054
-	.incbin "build/data/data.bin", 0x2df2b0, 0x60
+	.incbin "baserom_jp.gba", 0x57b054, 0x60
 
 	.globl gUnknown_857B0B4
 gUnknown_857B0B4: @ 0x857B0B4
-	.incbin "build/data/data.bin", 0x2df310, 0x30
+	.incbin "baserom_jp.gba", 0x57b0b4, 0x30
 
 	.globl gUnknown_857B0E4
 gUnknown_857B0E4: @ 0x857B0E4
-	.incbin "build/data/data.bin", 0x2df340, 0x8
+	.incbin "baserom_jp.gba", 0x57b0e4, 0x8
 
 	.globl gUnknown_857B0EC
 gUnknown_857B0EC: @ 0x857B0EC
-	.incbin "build/data/data.bin", 0x2df348, 0x8
+	.incbin "baserom_jp.gba", 0x57b0ec, 0x8
 
 	.globl gUnknown_857B0F4
 gUnknown_857B0F4: @ 0x857B0F4
-	.incbin "build/data/data.bin", 0x2df350, 0x10
+	.incbin "baserom_jp.gba", 0x57b0f4, 0x10
 
 	.globl gUnknown_857B104
 gUnknown_857B104: @ 0x857B104
-	.incbin "build/data/data.bin", 0x2df360, 0x8
+	.incbin "baserom_jp.gba", 0x57b104, 0x8
 
 	.globl gUnknown_857B10C
 gUnknown_857B10C: @ 0x857B10C
-	.incbin "build/data/data.bin", 0x2df368, 0xd0
+	.incbin "baserom_jp.gba", 0x57b10c, 0xd0
 
 	.globl gUnknown_857B1DC
 gUnknown_857B1DC: @ 0x857B1DC
-	.incbin "build/data/data.bin", 0x2df438, 0x44
+	.incbin "baserom_jp.gba", 0x57b1dc, 0x44
 
 	.globl gUnknown_857B220
 gUnknown_857B220: @ 0x857B220
-	.incbin "build/data/data.bin", 0x2df47c, 0xec
+	.incbin "baserom_jp.gba", 0x57b220, 0xec
 
 	.globl gUnknown_857B30C
 gUnknown_857B30C: @ 0x857B30C
-	.incbin "build/data/data.bin", 0x2df568, 0x40
+	.incbin "baserom_jp.gba", 0x57b30c, 0x40
 
 	.globl gUnknown_857B34C
 gUnknown_857B34C: @ 0x857B34C
-	.incbin "build/data/data.bin", 0x2df5a8, 0xd64
+	.incbin "baserom_jp.gba", 0x57b34c, 0xd64
 
 	.globl gUnknown_857C0B0
 gUnknown_857C0B0: @ 0x857C0B0
-	.incbin "build/data/data.bin", 0x2e030c, 0x34c
+	.incbin "baserom_jp.gba", 0x57c0b0, 0x34c
 
 	.globl gUnknown_857C3FC
 gUnknown_857C3FC: @ 0x857C3FC
-	.incbin "build/data/data.bin", 0x2e0658, 0x20
+	.incbin "baserom_jp.gba", 0x57c3fc, 0x20
 
 	.globl gUnknown_857C41C
 gUnknown_857C41C: @ 0x857C41C
-	.incbin "build/data/data.bin", 0x2e0678, 0x80
+	.incbin "baserom_jp.gba", 0x57c41c, 0x80
 
 	.globl gUnknown_857C49C
 gUnknown_857C49C: @ 0x857C49C
-	.incbin "build/data/data.bin", 0x2e06f8, 0x20
+	.incbin "baserom_jp.gba", 0x57c49c, 0x20
 
 	.globl gUnknown_857C4BC
 gUnknown_857C4BC: @ 0x857C4BC
-	.incbin "build/data/data.bin", 0x2e0718, 0x80
+	.incbin "baserom_jp.gba", 0x57c4bc, 0x80
 
 	.globl gUnknown_857C53C
 gUnknown_857C53C: @ 0x857C53C
-	.incbin "build/data/data.bin", 0x2e0798, 0x830
+	.incbin "baserom_jp.gba", 0x57c53c, 0x830
 
 	.globl gUnknown_857CD6C
 gUnknown_857CD6C: @ 0x857CD6C
-	.incbin "build/data/data.bin", 0x2e0fc8, 0x6a8
+	.incbin "baserom_jp.gba", 0x57cd6c, 0x6a8
 
 	.globl gUnknown_857D414
 gUnknown_857D414: @ 0x857D414
-	.incbin "build/data/data.bin", 0x2e1670, 0x60
+	.incbin "baserom_jp.gba", 0x57d414, 0x60
 
 	.globl gUnknown_857D474
 gUnknown_857D474: @ 0x857D474
-	.incbin "build/data/data.bin", 0x2e16d0, 0x6
+	.incbin "baserom_jp.gba", 0x57d474, 0x6
 
 	.globl gUnknown_857D47A
 gUnknown_857D47A: @ 0x857D47A
-	.incbin "build/data/data.bin", 0x2e16d6, 0x22
+	.incbin "baserom_jp.gba", 0x57d47a, 0x22
 
 	.globl gUnknown_857D49C
 gUnknown_857D49C: @ 0x857D49C
-	.incbin "build/data/data.bin", 0x2e16f8, 0x20
+	.incbin "baserom_jp.gba", 0x57d49c, 0x20
 
 	.globl gUnknown_857D4BC
 gUnknown_857D4BC: @ 0x857D4BC
-	.incbin "build/data/data.bin", 0x2e1718, 0x34
+	.incbin "baserom_jp.gba", 0x57d4bc, 0x34
 
 	.globl gUnknown_857D4F0
 gUnknown_857D4F0: @ 0x857D4F0
-	.incbin "build/data/data.bin", 0x2e174c, 0x8
+	.incbin "baserom_jp.gba", 0x57d4f0, 0x8
 
 	.globl gUnknown_857D4F8
 gUnknown_857D4F8: @ 0x857D4F8
-	.incbin "build/data/data.bin", 0x2e1754, 0x18
+	.incbin "baserom_jp.gba", 0x57d4f8, 0x18
 
 	.globl gUnknown_857D510
 gUnknown_857D510: @ 0x857D510
-	.incbin "build/data/data.bin", 0x2e176c, 0x10
+	.incbin "baserom_jp.gba", 0x57d510, 0x10
 
 	.globl gUnknown_857D520
 gUnknown_857D520: @ 0x857D520
-	.incbin "build/data/data.bin", 0x2e177c, 0x4
+	.incbin "baserom_jp.gba", 0x57d520, 0x4
 
 	.globl gUnknown_857D524
 gUnknown_857D524: @ 0x857D524
-	.incbin "build/data/data.bin", 0x2e1780, 0x4
+	.incbin "baserom_jp.gba", 0x57d524, 0x4
 
 	.globl gUnknown_857D528
 gUnknown_857D528: @ 0x857D528
-	.incbin "build/data/data.bin", 0x2e1784, 0x20
+	.incbin "baserom_jp.gba", 0x57d528, 0x20
 
 	.globl gUnknown_857D548
 gUnknown_857D548: @ 0x857D548
-	.incbin "build/data/data.bin", 0x2e17a4, 0x38
+	.incbin "baserom_jp.gba", 0x57d548, 0x38
 
 	.globl gUnknown_857D580
 gUnknown_857D580: @ 0x857D580
-	.incbin "build/data/data.bin", 0x2e17dc, 0xd8
+	.incbin "baserom_jp.gba", 0x57d580, 0xd8
 
 	.globl gUnknown_857D658
 gUnknown_857D658: @ 0x857D658
-	.incbin "build/data/data.bin", 0x2e18b4, 0xd4
+	.incbin "baserom_jp.gba", 0x57d658, 0xd4
 
 	.globl gUnknown_857D72C
 gUnknown_857D72C: @ 0x857D72C
-	.incbin "build/data/data.bin", 0x2e1988, 0xa0
+	.incbin "baserom_jp.gba", 0x57d72c, 0xa0
 
 	.globl gUnknown_857D7CC
 gUnknown_857D7CC: @ 0x857D7CC
-	.incbin "build/data/data.bin", 0x2e1a28, 0x8
+	.incbin "baserom_jp.gba", 0x57d7cc, 0x8
 
 	.globl gUnknown_857D7D4
 gUnknown_857D7D4: @ 0x857D7D4
-	.incbin "build/data/data.bin", 0x2e1a30, 0xc
+	.incbin "baserom_jp.gba", 0x57d7d4, 0xc
 
 	.globl gUnknown_857D7E0
 gUnknown_857D7E0: @ 0x857D7E0
-	.incbin "build/data/data.bin", 0x2e1a3c, 0x20
+	.incbin "baserom_jp.gba", 0x57d7e0, 0x20
 
 	.globl gUnknown_857D800
 gUnknown_857D800: @ 0x857D800
-	.incbin "build/data/data.bin", 0x2e1a5c, 0x8
+	.incbin "baserom_jp.gba", 0x57d800, 0x8
 
 	.globl gUnknown_857D808
 gUnknown_857D808: @ 0x857D808
-	.incbin "build/data/data.bin", 0x2e1a64, 0x64
+	.incbin "baserom_jp.gba", 0x57d808, 0x64
 
 	.globl gUnknown_857D86C
 gUnknown_857D86C: @ 0x857D86C
-	.incbin "build/data/data.bin", 0x2e1ac8, 0x18
+	.incbin "baserom_jp.gba", 0x57d86c, 0x18
 
 	.globl gUnknown_857D884
 gUnknown_857D884: @ 0x857D884
@@ -10193,239 +10193,239 @@ gUnknown_857D884: @ 0x857D884
 
 	.globl gUnknown_8580CD0
 gUnknown_8580CD0: @ 0x8580CD0
-	.incbin "build/data/data.bin", 0x2e4f2c, 0x1
+	.incbin "baserom_jp.gba", 0x580cd0, 0x1
 
 	.globl gUnknown_8580CD1
 gUnknown_8580CD1: @ 0x8580CD1
-	.incbin "build/data/data.bin", 0x2e4f2d, 0x17
+	.incbin "baserom_jp.gba", 0x580cd1, 0x17
 
 	.globl gUnknown_8580CE8
 gUnknown_8580CE8: @ 0x8580CE8
-	.incbin "build/data/data.bin", 0x2e4f44, 0xd24
+	.incbin "baserom_jp.gba", 0x580ce8, 0xd24
 
 	.globl gUnknown_8581A0C
 gUnknown_8581A0C: @ 0x8581A0C
-	.incbin "build/data/data.bin", 0x2e5c68, 0x20
+	.incbin "baserom_jp.gba", 0x581a0c, 0x20
 
 	.globl gUnknown_8581A2C
 gUnknown_8581A2C: @ 0x8581A2C
-	.incbin "build/data/data.bin", 0x2e5c88, 0x20
+	.incbin "baserom_jp.gba", 0x581a2c, 0x20
 
 	.globl gUnknown_8581A4C
 gUnknown_8581A4C: @ 0x8581A4C
-	.incbin "build/data/data.bin", 0x2e5ca8, 0x10
+	.incbin "baserom_jp.gba", 0x581a4c, 0x10
 
 	.globl gUnknown_8581A5C
 gUnknown_8581A5C: @ 0x8581A5C
-	.incbin "build/data/data.bin", 0x2e5cb8, 0x18
+	.incbin "baserom_jp.gba", 0x581a5c, 0x18
 
 	.globl gUnknown_8581A74
 gUnknown_8581A74: @ 0x8581A74
-	.incbin "build/data/data.bin", 0x2e5cd0, 0x20
+	.incbin "baserom_jp.gba", 0x581a74, 0x20
 
 	.globl gUnknown_8581A94
 gUnknown_8581A94: @ 0x8581A94
-	.incbin "build/data/data.bin", 0x2e5cf0, 0x20
+	.incbin "baserom_jp.gba", 0x581a94, 0x20
 
 	.globl gUnknown_8581AB4
 gUnknown_8581AB4: @ 0x8581AB4
-	.incbin "build/data/data.bin", 0x2e5d10, 0x18
+	.incbin "baserom_jp.gba", 0x581ab4, 0x18
 
 	.globl gUnknown_8581ACC
 gUnknown_8581ACC: @ 0x8581ACC
-	.incbin "build/data/data.bin", 0x2e5d28, 0x5c8
+	.incbin "baserom_jp.gba", 0x581acc, 0x5c8
 
 	.globl gUnknown_8582094
 gUnknown_8582094: @ 0x8582094
-	.incbin "build/data/data.bin", 0x2e62f0, 0xa0
+	.incbin "baserom_jp.gba", 0x582094, 0xa0
 
 	.globl gUnknown_8582134
 gUnknown_8582134: @ 0x8582134
-	.incbin "build/data/data.bin", 0x2e6390, 0x3c
+	.incbin "baserom_jp.gba", 0x582134, 0x3c
 
 	.globl gUnknown_8582170
 gUnknown_8582170: @ 0x8582170
-	.incbin "build/data/data.bin", 0x2e63cc, 0x18
+	.incbin "baserom_jp.gba", 0x582170, 0x18
 
 	.globl gUnknown_8582188
 gUnknown_8582188: @ 0x8582188
-	.incbin "build/data/data.bin", 0x2e63e4, 0x18
+	.incbin "baserom_jp.gba", 0x582188, 0x18
 
 	.globl gUnknown_85821A0
 gUnknown_85821A0: @ 0x85821A0
-	.incbin "build/data/data.bin", 0x2e63fc, 0x8
+	.incbin "baserom_jp.gba", 0x5821a0, 0x8
 
 	.globl gUnknown_85821A8
 gUnknown_85821A8: @ 0x85821A8
-	.incbin "build/data/data.bin", 0x2e6404, 0x8
+	.incbin "baserom_jp.gba", 0x5821a8, 0x8
 
 	.globl gUnknown_85821B0
 gUnknown_85821B0: @ 0x85821B0
-	.incbin "build/data/data.bin", 0x2e640c, 0x8
+	.incbin "baserom_jp.gba", 0x5821b0, 0x8
 
 	.globl gUnknown_85821B8
 gUnknown_85821B8: @ 0x85821B8
-	.incbin "build/data/data.bin", 0x2e6414, 0x10
+	.incbin "baserom_jp.gba", 0x5821b8, 0x10
 
 	.globl gUnknown_85821C8
 gUnknown_85821C8: @ 0x85821C8
-	.incbin "build/data/data.bin", 0x2e6424, 0x8
+	.incbin "baserom_jp.gba", 0x5821c8, 0x8
 
 	.globl gUnknown_85821D0
 gUnknown_85821D0: @ 0x85821D0
-	.incbin "build/data/data.bin", 0x2e642c, 0x8
+	.incbin "baserom_jp.gba", 0x5821d0, 0x8
 
 	.globl gUnknown_85821D8
 gUnknown_85821D8: @ 0x85821D8
-	.incbin "build/data/data.bin", 0x2e6434, 0x54
+	.incbin "baserom_jp.gba", 0x5821d8, 0x54
 
 	.globl gUnknown_858222C
 gUnknown_858222C: @ 0x858222C
-	.incbin "build/data/data.bin", 0x2e6488, 0x8
+	.incbin "baserom_jp.gba", 0x58222c, 0x8
 
 	.globl gUnknown_8582234
 gUnknown_8582234: @ 0x8582234
-	.incbin "build/data/data.bin", 0x2e6490, 0x88
+	.incbin "baserom_jp.gba", 0x582234, 0x88
 
 	.globl gUnknown_85822BC
 gUnknown_85822BC: @ 0x85822BC
-	.incbin "build/data/data.bin", 0x2e6518, 0x8
+	.incbin "baserom_jp.gba", 0x5822bc, 0x8
 
 	.globl gUnknown_85822C4
 gUnknown_85822C4: @ 0x85822C4
-	.incbin "build/data/data.bin", 0x2e6520, 0x24
+	.incbin "baserom_jp.gba", 0x5822c4, 0x24
 
 	.globl gUnknown_85822E8
 gUnknown_85822E8: @ 0x85822E8
-	.incbin "build/data/data.bin", 0x2e6544, 0x18
+	.incbin "baserom_jp.gba", 0x5822e8, 0x18
 
 	.globl gUnknown_8582300
 gUnknown_8582300: @ 0x8582300
-	.incbin "build/data/data.bin", 0x2e655c, 0x20a8
+	.incbin "baserom_jp.gba", 0x582300, 0x20a8
 
 	.globl gUnknown_85843A8
 gUnknown_85843A8: @ 0x85843A8
-	.incbin "build/data/data.bin", 0x2e8604, 0x10
+	.incbin "baserom_jp.gba", 0x5843a8, 0x10
 
 	.globl gUnknown_85843B8
 gUnknown_85843B8: @ 0x85843B8
-	.incbin "build/data/data.bin", 0x2e8614, 0x10
+	.incbin "baserom_jp.gba", 0x5843b8, 0x10
 
 	.globl gUnknown_85843C8
 gUnknown_85843C8: @ 0x85843C8
-	.incbin "build/data/data.bin", 0x2e8624, 0x8
+	.incbin "baserom_jp.gba", 0x5843c8, 0x8
 
 	.globl gUnknown_85843D0
 gUnknown_85843D0: @ 0x85843D0
-	.incbin "build/data/data.bin", 0x2e862c, 0x4
+	.incbin "baserom_jp.gba", 0x5843d0, 0x4
 
 	.globl gUnknown_85843D4
 gUnknown_85843D4: @ 0x85843D4
-	.incbin "build/data/data.bin", 0x2e8630, 0x74
+	.incbin "baserom_jp.gba", 0x5843d4, 0x74
 
 	.globl gUnknown_8584448
 gUnknown_8584448: @ 0x8584448
-	.incbin "build/data/data.bin", 0x2e86a4, 0xc
+	.incbin "baserom_jp.gba", 0x584448, 0xc
 
 	.globl gUnknown_8584454
 gUnknown_8584454: @ 0x8584454
-	.incbin "build/data/data.bin", 0x2e86b0, 0x14
+	.incbin "baserom_jp.gba", 0x584454, 0x14
 
 	.globl gUnknown_8584468
 gUnknown_8584468: @ 0x8584468
-	.incbin "build/data/data.bin", 0x2e86c4, 0xc
+	.incbin "baserom_jp.gba", 0x584468, 0xc
 
 	.globl gUnknown_8584474
 gUnknown_8584474: @ 0x8584474
-	.incbin "build/data/data.bin", 0x2e86d0, 0xc
+	.incbin "baserom_jp.gba", 0x584474, 0xc
 
 	.globl gUnknown_8584480
 gUnknown_8584480: @ 0x8584480
-	.incbin "build/data/data.bin", 0x2e86dc, 0xc
+	.incbin "baserom_jp.gba", 0x584480, 0xc
 
 	.globl gUnknown_858448C
 gUnknown_858448C: @ 0x858448C
-	.incbin "build/data/data.bin", 0x2e86e8, 0xc
+	.incbin "baserom_jp.gba", 0x58448c, 0xc
 
 	.globl gUnknown_8584498
 gUnknown_8584498: @ 0x8584498
-	.incbin "build/data/data.bin", 0x2e86f4, 0xc
+	.incbin "baserom_jp.gba", 0x584498, 0xc
 
 	.globl gUnknown_85844A4
 gUnknown_85844A4: @ 0x85844A4
-	.incbin "build/data/data.bin", 0x2e8700, 0xc
+	.incbin "baserom_jp.gba", 0x5844a4, 0xc
 
 	.globl gUnknown_85844B0
 gUnknown_85844B0: @ 0x85844B0
-	.incbin "build/data/data.bin", 0x2e870c, 0xc
+	.incbin "baserom_jp.gba", 0x5844b0, 0xc
 
 	.globl gUnknown_85844BC
 gUnknown_85844BC: @ 0x85844BC
-	.incbin "build/data/data.bin", 0x2e8718, 0xc
+	.incbin "baserom_jp.gba", 0x5844bc, 0xc
 
 	.globl gUnknown_85844C8
 gUnknown_85844C8: @ 0x85844C8
-	.incbin "build/data/data.bin", 0x2e8724, 0xc
+	.incbin "baserom_jp.gba", 0x5844c8, 0xc
 
 	.globl gUnknown_85844D4
 gUnknown_85844D4: @ 0x85844D4
-	.incbin "build/data/data.bin", 0x2e8730, 0x8
+	.incbin "baserom_jp.gba", 0x5844d4, 0x8
 
 	.globl gUnknown_85844DC
 gUnknown_85844DC: @ 0x85844DC
-	.incbin "build/data/data.bin", 0x2e8738, 0x10
+	.incbin "baserom_jp.gba", 0x5844dc, 0x10
 
 	.globl gUnknown_85844EC
 gUnknown_85844EC: @ 0x85844EC
-	.incbin "build/data/data.bin", 0x2e8748, 0x2
+	.incbin "baserom_jp.gba", 0x5844ec, 0x2
 
 	.globl gUnknown_85844EE
 gUnknown_85844EE: @ 0x85844EE
-	.incbin "build/data/data.bin", 0x2e874a, 0xa
+	.incbin "baserom_jp.gba", 0x5844ee, 0xa
 
 	.globl gUnknown_85844F8
 gUnknown_85844F8: @ 0x85844F8
-	.incbin "build/data/data.bin", 0x2e8754, 0x4c
+	.incbin "baserom_jp.gba", 0x5844f8, 0x4c
 
 	.globl gUnknown_8584544
 gUnknown_8584544: @ 0x8584544
-	.incbin "build/data/data.bin", 0x2e87a0, 0x4
+	.incbin "baserom_jp.gba", 0x584544, 0x4
 
 	.globl gUnknown_8584548
 gUnknown_8584548: @ 0x8584548
-	.incbin "build/data/data.bin", 0x2e87a4, 0x8
+	.incbin "baserom_jp.gba", 0x584548, 0x8
 
 	.globl gUnknown_8584550
 gUnknown_8584550: @ 0x8584550
-	.incbin "build/data/data.bin", 0x2e87ac, 0x8
+	.incbin "baserom_jp.gba", 0x584550, 0x8
 
 	.globl gUnknown_8584558
 gUnknown_8584558: @ 0x8584558
-	.incbin "build/data/data.bin", 0x2e87b4, 0x3c
+	.incbin "baserom_jp.gba", 0x584558, 0x3c
 
 	.globl gUnknown_8584594
 gUnknown_8584594: @ 0x8584594
-	.incbin "build/data/data.bin", 0x2e87f0, 0x4
+	.incbin "baserom_jp.gba", 0x584594, 0x4
 
 	.globl gUnknown_8584598
 gUnknown_8584598: @ 0x8584598
-	.incbin "build/data/data.bin", 0x2e87f4, 0x2
+	.incbin "baserom_jp.gba", 0x584598, 0x2
 
 	.globl gUnknown_858459A
 gUnknown_858459A: @ 0x858459A
-	.incbin "build/data/data.bin", 0x2e87f6, 0x8
+	.incbin "baserom_jp.gba", 0x58459a, 0x8
 
 	.globl gUnknown_85845A2
 gUnknown_85845A2: @ 0x85845A2
-	.incbin "build/data/data.bin", 0x2e87fe, 0x8
+	.incbin "baserom_jp.gba", 0x5845a2, 0x8
 
 	.globl gUnknown_85845AA
 gUnknown_85845AA: @ 0x85845AA
-	.incbin "build/data/data.bin", 0x2e8806, 0x8
+	.incbin "baserom_jp.gba", 0x5845aa, 0x8
 
 	.globl gUnknown_85845B2
 gUnknown_85845B2: @ 0x85845B2
-	.incbin "build/data/data.bin", 0x2e880e, 0x10
+	.incbin "baserom_jp.gba", 0x5845b2, 0x10
 
 	.globl gUnknown_85845C2
 gUnknown_85845C2: @ 0x85845C2
@@ -10433,275 +10433,275 @@ gUnknown_85845C2: @ 0x85845C2
 
 	.globl gUnknown_85845D2
 gUnknown_85845D2: @ 0x85845D2
-	.incbin "build/data/data.bin", 0x2e882e, 0x10
+	.incbin "baserom_jp.gba", 0x5845d2, 0x10
 
 	.globl gUnknown_85845E2
 gUnknown_85845E2: @ 0x85845E2
-	.incbin "build/data/data.bin", 0x2e883e, 0x10
+	.incbin "baserom_jp.gba", 0x5845e2, 0x10
 
 	.globl gUnknown_85845F2
 gUnknown_85845F2: @ 0x85845F2
-	.incbin "build/data/data.bin", 0x2e884e, 0x3f
+	.incbin "baserom_jp.gba", 0x5845f2, 0x3f
 
 	.globl gUnknown_8584631
 gUnknown_8584631: @ 0x8584631
-	.incbin "build/data/data.bin", 0x2e888d, 0x7
+	.incbin "baserom_jp.gba", 0x584631, 0x7
 
 	.globl gUnknown_8584638
 gUnknown_8584638: @ 0x8584638
-	.incbin "build/data/data.bin", 0x2e8894, 0xc
+	.incbin "baserom_jp.gba", 0x584638, 0xc
 
 	.globl gUnknown_8584644
 gUnknown_8584644: @ 0x8584644
-	.incbin "build/data/data.bin", 0x2e88a0, 0x12
+	.incbin "baserom_jp.gba", 0x584644, 0x12
 
 	.globl gUnknown_8584656
 gUnknown_8584656: @ 0x8584656
-	.incbin "build/data/data.bin", 0x2e88b2, 0x12
+	.incbin "baserom_jp.gba", 0x584656, 0x12
 
 	.globl gUnknown_8584668
 gUnknown_8584668: @ 0x8584668
-	.incbin "build/data/data.bin", 0x2e88c4, 0x1e
+	.incbin "baserom_jp.gba", 0x584668, 0x1e
 
 	.globl gUnknown_8584686
 gUnknown_8584686: @ 0x8584686
-	.incbin "build/data/data.bin", 0x2e88e2, 0x66
+	.incbin "baserom_jp.gba", 0x584686, 0x66
 
 	.globl gUnknown_85846EC
 gUnknown_85846EC: @ 0x85846EC
-	.incbin "build/data/data.bin", 0x2e8948, 0x66
+	.incbin "baserom_jp.gba", 0x5846ec, 0x66
 
 	.globl gUnknown_8584752
 gUnknown_8584752: @ 0x8584752
-	.incbin "build/data/data.bin", 0x2e89ae, 0xa
+	.incbin "baserom_jp.gba", 0x584752, 0xa
 
 	.globl gUnknown_858475C
 gUnknown_858475C: @ 0x858475C
-	.incbin "build/data/data.bin", 0x2e89b8, 0x14
+	.incbin "baserom_jp.gba", 0x58475c, 0x14
 
 	.globl gUnknown_8584770
 gUnknown_8584770: @ 0x8584770
-	.incbin "build/data/data.bin", 0x2e89cc, 0xa
+	.incbin "baserom_jp.gba", 0x584770, 0xa
 
 	.globl gUnknown_858477A
 gUnknown_858477A: @ 0x858477A
-	.incbin "build/data/data.bin", 0x2e89d6, 0x8
+	.incbin "baserom_jp.gba", 0x58477a, 0x8
 
 	.globl gUnknown_8584782
 gUnknown_8584782: @ 0x8584782
-	.incbin "build/data/data.bin", 0x2e89de, 0x6
+	.incbin "baserom_jp.gba", 0x584782, 0x6
 
 	.globl gUnknown_8584788
 gUnknown_8584788: @ 0x8584788
-	.incbin "build/data/data.bin", 0x2e89e4, 0xa
+	.incbin "baserom_jp.gba", 0x584788, 0xa
 
 	.globl gUnknown_8584792
 gUnknown_8584792: @ 0x8584792
-	.incbin "build/data/data.bin", 0x2e89ee, 0x8
+	.incbin "baserom_jp.gba", 0x584792, 0x8
 
 	.globl gUnknown_858479A
 gUnknown_858479A: @ 0x858479A
-	.incbin "build/data/data.bin", 0x2e89f6, 0x12
+	.incbin "baserom_jp.gba", 0x58479a, 0x12
 
 	.globl gUnknown_85847AC
 gUnknown_85847AC: @ 0x85847AC
-	.incbin "build/data/data.bin", 0x2e8a08, 0x12
+	.incbin "baserom_jp.gba", 0x5847ac, 0x12
 
 	.globl gUnknown_85847BE
 gUnknown_85847BE: @ 0x85847BE
-	.incbin "build/data/data.bin", 0x2e8a1a, 0x8e
+	.incbin "baserom_jp.gba", 0x5847be, 0x8e
 
 	.globl gUnknown_858484C
 gUnknown_858484C: @ 0x858484C
-	.incbin "build/data/data.bin", 0x2e8aa8, 0x13c
+	.incbin "baserom_jp.gba", 0x58484c, 0x13c
 
 	.globl gUnknown_8584988
 gUnknown_8584988: @ 0x8584988
-	.incbin "build/data/data.bin", 0x2e8be4, 0x1c
+	.incbin "baserom_jp.gba", 0x584988, 0x1c
 
 	.globl gUnknown_85849A4
 gUnknown_85849A4: @ 0x85849A4
-	.incbin "build/data/data.bin", 0x2e8c00, 0x2c0
+	.incbin "baserom_jp.gba", 0x5849a4, 0x2c0
 
 	.globl gUnknown_8584C64
 gUnknown_8584C64: @ 0x8584C64
-	.incbin "build/data/data.bin", 0x2e8ec0, 0x18
+	.incbin "baserom_jp.gba", 0x584c64, 0x18
 
 	.globl gUnknown_8584C7C
 gUnknown_8584C7C: @ 0x8584C7C
-	.incbin "build/data/data.bin", 0x2e8ed8, 0x18
+	.incbin "baserom_jp.gba", 0x584c7c, 0x18
 
 	.globl gUnknown_8584C94
 gUnknown_8584C94: @ 0x8584C94
-	.incbin "build/data/data.bin", 0x2e8ef0, 0x18
+	.incbin "baserom_jp.gba", 0x584c94, 0x18
 
 	.globl gUnknown_8584CAC
 gUnknown_8584CAC: @ 0x8584CAC
-	.incbin "build/data/data.bin", 0x2e8f08, 0x18
+	.incbin "baserom_jp.gba", 0x584cac, 0x18
 
 	.globl gUnknown_8584CC4
 gUnknown_8584CC4: @ 0x8584CC4
-	.incbin "build/data/data.bin", 0x2e8f20, 0x18
+	.incbin "baserom_jp.gba", 0x584cc4, 0x18
 
 	.globl gUnknown_8584CDC
 gUnknown_8584CDC: @ 0x8584CDC
-	.incbin "build/data/data.bin", 0x2e8f38, 0x18
+	.incbin "baserom_jp.gba", 0x584cdc, 0x18
 
 	.globl gUnknown_8584CF4
 gUnknown_8584CF4: @ 0x8584CF4
-	.incbin "build/data/data.bin", 0x2e8f50, 0x18
+	.incbin "baserom_jp.gba", 0x584cf4, 0x18
 
 	.globl gUnknown_8584D0C
 gUnknown_8584D0C: @ 0x8584D0C
-	.incbin "build/data/data.bin", 0x2e8f68, 0x18
+	.incbin "baserom_jp.gba", 0x584d0c, 0x18
 
 	.globl gUnknown_8584D24
 gUnknown_8584D24: @ 0x8584D24
-	.incbin "build/data/data.bin", 0x2e8f80, 0x18
+	.incbin "baserom_jp.gba", 0x584d24, 0x18
 
 	.globl gUnknown_8584D3C
 gUnknown_8584D3C: @ 0x8584D3C
-	.incbin "build/data/data.bin", 0x2e8f98, 0x18
+	.incbin "baserom_jp.gba", 0x584d3c, 0x18
 
 	.globl gUnknown_8584D54
 gUnknown_8584D54: @ 0x8584D54
-	.incbin "build/data/data.bin", 0x2e8fb0, 0x18
+	.incbin "baserom_jp.gba", 0x584d54, 0x18
 
 	.globl gUnknown_8584D6C
 gUnknown_8584D6C: @ 0x8584D6C
-	.incbin "build/data/data.bin", 0x2e8fc8, 0x18
+	.incbin "baserom_jp.gba", 0x584d6c, 0x18
 
 	.globl gUnknown_8584D84
 gUnknown_8584D84: @ 0x8584D84
-	.incbin "build/data/data.bin", 0x2e8fe0, 0x18
+	.incbin "baserom_jp.gba", 0x584d84, 0x18
 
 	.globl gUnknown_8584D9C
 gUnknown_8584D9C: @ 0x8584D9C
-	.incbin "build/data/data.bin", 0x2e8ff8, 0x18
+	.incbin "baserom_jp.gba", 0x584d9c, 0x18
 
 	.globl gUnknown_8584DB4
 gUnknown_8584DB4: @ 0x8584DB4
-	.incbin "build/data/data.bin", 0x2e9010, 0x168
+	.incbin "baserom_jp.gba", 0x584db4, 0x168
 
 	.globl gUnknown_8584F1C
 gUnknown_8584F1C: @ 0x8584F1C
-	.incbin "build/data/data.bin", 0x2e9178, 0x28
+	.incbin "baserom_jp.gba", 0x584f1c, 0x28
 
 	.globl gUnknown_8584F44
 gUnknown_8584F44: @ 0x8584F44
-	.incbin "build/data/data.bin", 0x2e91a0, 0x20
+	.incbin "baserom_jp.gba", 0x584f44, 0x20
 
 	.globl gUnknown_8584F64
 gUnknown_8584F64: @ 0x8584F64
-	.incbin "build/data/data.bin", 0x2e91c0, 0x14
+	.incbin "baserom_jp.gba", 0x584f64, 0x14
 
 	.globl gUnknown_8584F78
 gUnknown_8584F78: @ 0x8584F78
-	.incbin "build/data/data.bin", 0x2e91d4, 0x1c
+	.incbin "baserom_jp.gba", 0x584f78, 0x1c
 
 	.globl gUnknown_8584F94
 gUnknown_8584F94: @ 0x8584F94
-	.incbin "build/data/data.bin", 0x2e91f0, 0x18
+	.incbin "baserom_jp.gba", 0x584f94, 0x18
 
 	.globl gUnknown_8584FAC
 gUnknown_8584FAC: @ 0x8584FAC
-	.incbin "build/data/data.bin", 0x2e9208, 0x14
+	.incbin "baserom_jp.gba", 0x584fac, 0x14
 
 	.globl gUnknown_8584FC0
 gUnknown_8584FC0: @ 0x8584FC0
-	.incbin "build/data/data.bin", 0x2e921c, 0x228
+	.incbin "baserom_jp.gba", 0x584fc0, 0x228
 
 	.globl gUnknown_85851E8
 gUnknown_85851E8: @ 0x85851E8
-	.incbin "build/data/data.bin", 0x2e9444, 0x68
+	.incbin "baserom_jp.gba", 0x5851e8, 0x68
 
 	.globl gUnknown_8585250
 gUnknown_8585250: @ 0x8585250
-	.incbin "build/data/data.bin", 0x2e94ac, 0x68
+	.incbin "baserom_jp.gba", 0x585250, 0x68
 
 	.globl gUnknown_85852B8
 gUnknown_85852B8: @ 0x85852B8
-	.incbin "build/data/data.bin", 0x2e9514, 0xb0
+	.incbin "baserom_jp.gba", 0x5852b8, 0xb0
 
 	.globl gUnknown_8585368
 gUnknown_8585368: @ 0x8585368
-	.incbin "build/data/data.bin", 0x2e95c4, 0xe4
+	.incbin "baserom_jp.gba", 0x585368, 0xe4
 
 	.globl gUnknown_858544C
 gUnknown_858544C: @ 0x858544C
-	.incbin "build/data/data.bin", 0x2e96a8, 0xc0
+	.incbin "baserom_jp.gba", 0x58544c, 0xc0
 
 	.globl gUnknown_858550C
 gUnknown_858550C: @ 0x858550C
-	.incbin "build/data/data.bin", 0x2e9768, 0x14
+	.incbin "baserom_jp.gba", 0x58550c, 0x14
 
 	.globl gUnknown_8585520
 gUnknown_8585520: @ 0x8585520
-	.incbin "build/data/data.bin", 0x2e977c, 0x14
+	.incbin "baserom_jp.gba", 0x585520, 0x14
 
 	.globl gUnknown_8585534
 gUnknown_8585534: @ 0x8585534
-	.incbin "build/data/data.bin", 0x2e9790, 0x5
+	.incbin "baserom_jp.gba", 0x585534, 0x5
 
 	.globl gUnknown_8585539
 gUnknown_8585539: @ 0x8585539
-	.incbin "build/data/data.bin", 0x2e9795, 0x6
+	.incbin "baserom_jp.gba", 0x585539, 0x6
 
 	.globl gUnknown_858553F
 gUnknown_858553F: @ 0x858553F
-	.incbin "build/data/data.bin", 0x2e979b, 0x65
+	.incbin "baserom_jp.gba", 0x58553f, 0x65
 
 	.globl gUnknown_85855A4
 gUnknown_85855A4: @ 0x85855A4
-	.incbin "build/data/data.bin", 0x2e9800, 0xc
+	.incbin "baserom_jp.gba", 0x5855a4, 0xc
 
 	.globl gUnknown_85855B0
 gUnknown_85855B0: @ 0x85855B0
-	.incbin "build/data/data.bin", 0x2e980c, 0x64
+	.incbin "baserom_jp.gba", 0x5855b0, 0x64
 
 	.globl gUnknown_8585614
 gUnknown_8585614: @ 0x8585614
-	.incbin "build/data/data.bin", 0x2e9870, 0x10
+	.incbin "baserom_jp.gba", 0x585614, 0x10
 
 	.globl gUnknown_8585624
 gUnknown_8585624: @ 0x8585624
-	.incbin "build/data/data.bin", 0x2e9880, 0x4
+	.incbin "baserom_jp.gba", 0x585624, 0x4
 
 	.globl gUnknown_8585628
 gUnknown_8585628: @ 0x8585628
-	.incbin "build/data/data.bin", 0x2e9884, 0x20
+	.incbin "baserom_jp.gba", 0x585628, 0x20
 
 	.globl gUnknown_8585648
 gUnknown_8585648: @ 0x8585648
-	.incbin "build/data/data.bin", 0x2e98a4, 0x48
+	.incbin "baserom_jp.gba", 0x585648, 0x48
 
 	.globl gUnknown_8585690
 gUnknown_8585690: @ 0x8585690
-	.incbin "build/data/data.bin", 0x2e98ec, 0x768
+	.incbin "baserom_jp.gba", 0x585690, 0x768
 
 	.globl gUnknown_8585DF8
 gUnknown_8585DF8: @ 0x8585DF8
-	.incbin "build/data/data.bin", 0x2ea054, 0x1154
+	.incbin "baserom_jp.gba", 0x585df8, 0x1154
 
 	.globl gUnknown_8586F4C
 gUnknown_8586F4C: @ 0x8586F4C
-	.incbin "build/data/data.bin", 0x2eb1a8, 0xba0
+	.incbin "baserom_jp.gba", 0x586f4c, 0xba0
 
 	.globl gUnknown_8587AEC
 gUnknown_8587AEC: @ 0x8587AEC
-	.incbin "build/data/data.bin", 0x2ebd48, 0x4b0
+	.incbin "baserom_jp.gba", 0x587aec, 0x4b0
 
 	.globl gUnknown_8587F9C
 gUnknown_8587F9C: @ 0x8587F9C
-	.incbin "build/data/data.bin", 0x2ec1f8, 0x1b8
+	.incbin "baserom_jp.gba", 0x587f9c, 0x1b8
 
 	.globl gUnknown_8588154
 gUnknown_8588154: @ 0x8588154
-	.incbin "build/data/data.bin", 0x2ec3b0, 0x4b0
+	.incbin "baserom_jp.gba", 0x588154, 0x4b0
 
 	.globl gUnknown_8588604
 gUnknown_8588604: @ 0x8588604
-	.incbin "build/data/data.bin", 0x2ec860, 0x2
+	.incbin "baserom_jp.gba", 0x588604, 0x2
 
 	.globl gUnknown_8588606
 gUnknown_8588606: @ 0x8588606
@@ -10722,211 +10722,211 @@ gUnknown_8588641: @ 0x8588641
 
 	.globl gUnknown_8588651
 gUnknown_8588651: @ 0x8588651
-	.incbin "build/data/data.bin", 0x2ec8ad, 0x5b
+	.incbin "baserom_jp.gba", 0x588651, 0x5b
 
 	.globl gUnknown_85886AC
 gUnknown_85886AC: @ 0x85886AC
-	.incbin "build/data/data.bin", 0x2ec908, 0x200
+	.incbin "baserom_jp.gba", 0x5886ac, 0x200
 
 	.globl gUnknown_85888AC
 gUnknown_85888AC: @ 0x85888AC
-	.incbin "build/data/data.bin", 0x2ecb08, 0x1084
+	.incbin "baserom_jp.gba", 0x5888ac, 0x1084
 
 	.globl gUnknown_8589930
 gUnknown_8589930: @ 0x8589930
-	.incbin "build/data/data.bin", 0x2edb8c, 0xc30
+	.incbin "baserom_jp.gba", 0x589930, 0xc30
 
 	.globl gUnknown_858A560
 gUnknown_858A560: @ 0x858A560
-	.incbin "build/data/data.bin", 0x2ee7bc, 0xb38
+	.incbin "baserom_jp.gba", 0x58a560, 0xb38
 
 	.globl gUnknown_858B098
 gUnknown_858B098: @ 0x858B098
-	.incbin "build/data/data.bin", 0x2ef2f4, 0xfb8
+	.incbin "baserom_jp.gba", 0x58b098, 0xfb8
 
 	.globl gUnknown_858C050
 gUnknown_858C050: @ 0x858C050
-	.incbin "build/data/data.bin", 0x2f02ac, 0x1130
+	.incbin "baserom_jp.gba", 0x58c050, 0x1130
 
 	.globl gUnknown_858D180
 gUnknown_858D180: @ 0x858D180
-	.incbin "build/data/data.bin", 0x2f13dc, 0x604
+	.incbin "baserom_jp.gba", 0x58d180, 0x604
 
 	.globl gUnknown_858D784
 gUnknown_858D784: @ 0x858D784
-	.incbin "build/data/data.bin", 0x2f19e0, 0x50c
+	.incbin "baserom_jp.gba", 0x58d784, 0x50c
 
 	.globl gUnknown_858DC90
 gUnknown_858DC90: @ 0x858DC90
-	.incbin "build/data/data.bin", 0x2f1eec, 0x50c
+	.incbin "baserom_jp.gba", 0x58dc90, 0x50c
 
 	.globl gUnknown_858E19C
 gUnknown_858E19C: @ 0x858E19C
-	.incbin "build/data/data.bin", 0x2f23f8, 0x50c
+	.incbin "baserom_jp.gba", 0x58e19c, 0x50c
 
 	.globl gUnknown_858E6A8
 gUnknown_858E6A8: @ 0x858E6A8
-	.incbin "build/data/data.bin", 0x2f2904, 0x50c
+	.incbin "baserom_jp.gba", 0x58e6a8, 0x50c
 
 	.globl gUnknown_858EBB4
 gUnknown_858EBB4: @ 0x858EBB4
-	.incbin "build/data/data.bin", 0x2f2e10, 0x50c
+	.incbin "baserom_jp.gba", 0x58ebb4, 0x50c
 
 	.globl gUnknown_858F0C0
 gUnknown_858F0C0: @ 0x858F0C0
-	.incbin "build/data/data.bin", 0x2f331c, 0x510
+	.incbin "baserom_jp.gba", 0x58f0c0, 0x510
 
 	.globl gUnknown_858F5D0
 gUnknown_858F5D0: @ 0x858F5D0
-	.incbin "build/data/data.bin", 0x2f382c, 0x14
+	.incbin "baserom_jp.gba", 0x58f5d0, 0x14
 
 	.globl gUnknown_858F5E4
 gUnknown_858F5E4: @ 0x858F5E4
-	.incbin "build/data/data.bin", 0x2f3840, 0x14
+	.incbin "baserom_jp.gba", 0x58f5e4, 0x14
 
 	.globl gUnknown_858F5F8
 gUnknown_858F5F8: @ 0x858F5F8
-	.incbin "build/data/data.bin", 0x2f3854, 0x4
+	.incbin "baserom_jp.gba", 0x58f5f8, 0x4
 
 	.globl gUnknown_858F5FC
 gUnknown_858F5FC: @ 0x858F5FC
-	.incbin "build/data/data.bin", 0x2f3858, 0x8
+	.incbin "baserom_jp.gba", 0x58f5fc, 0x8
 
 	.globl gUnknown_858F604
 gUnknown_858F604: @ 0x858F604
-	.incbin "build/data/data.bin", 0x2f3860, 0x3c
+	.incbin "baserom_jp.gba", 0x58f604, 0x3c
 
 	.globl gUnknown_858F640
 gUnknown_858F640: @ 0x858F640
-	.incbin "build/data/data.bin", 0x2f389c, 0x8
+	.incbin "baserom_jp.gba", 0x58f640, 0x8
 
 	.globl gUnknown_858F648
 gUnknown_858F648: @ 0x858F648
-	.incbin "build/data/data.bin", 0x2f38a4, 0x4
+	.incbin "baserom_jp.gba", 0x58f648, 0x4
 
 	.globl gUnknown_858F64C
 gUnknown_858F64C: @ 0x858F64C
-	.incbin "build/data/data.bin", 0x2f38a8, 0x18c
+	.incbin "baserom_jp.gba", 0x58f64c, 0x18c
 
 	.globl gUnknown_858F7D8
 gUnknown_858F7D8: @ 0x858F7D8
-	.incbin "build/data/data.bin", 0x2f3a34, 0x1c
+	.incbin "baserom_jp.gba", 0x58f7d8, 0x1c
 
 	.globl gUnknown_858F7F4
 gUnknown_858F7F4: @ 0x858F7F4
-	.incbin "build/data/data.bin", 0x2f3a50, 0x10
+	.incbin "baserom_jp.gba", 0x58f7f4, 0x10
 
 	.globl gUnknown_858F804
 gUnknown_858F804: @ 0x858F804
-	.incbin "build/data/data.bin", 0x2f3a60, 0x4
+	.incbin "baserom_jp.gba", 0x58f804, 0x4
 
 	.globl gUnknown_858F808
 gUnknown_858F808: @ 0x858F808
-	.incbin "build/data/data.bin", 0x2f3a64, 0x8
+	.incbin "baserom_jp.gba", 0x58f808, 0x8
 
 	.globl gUnknown_858F810
 gUnknown_858F810: @ 0x858F810
-	.incbin "build/data/data.bin", 0x2f3a6c, 0x2
+	.incbin "baserom_jp.gba", 0x58f810, 0x2
 
 	.globl gUnknown_858F812
 gUnknown_858F812: @ 0x858F812
-	.incbin "build/data/data.bin", 0x2f3a6e, 0x7e
+	.incbin "baserom_jp.gba", 0x58f812, 0x7e
 
 	.globl gUnknown_858F890
 gUnknown_858F890: @ 0x858F890
-	.incbin "build/data/data.bin", 0x2f3aec, 0x18c
+	.incbin "baserom_jp.gba", 0x58f890, 0x18c
 
 	.globl gUnknown_858FA1C
 gUnknown_858FA1C: @ 0x858FA1C
-	.incbin "build/data/data.bin", 0x2f3c78, 0x1f8
+	.incbin "baserom_jp.gba", 0x58fa1c, 0x1f8
 
 	.globl gUnknown_858FC14
 gUnknown_858FC14: @ 0x858FC14
-	.incbin "build/data/data.bin", 0x2f3e70, 0xfc8
+	.incbin "baserom_jp.gba", 0x58fc14, 0xfc8
 
 	.globl gUnknown_8590BDC
 gUnknown_8590BDC: @ 0x8590BDC
-	.incbin "build/data/data.bin", 0x2f4e38, 0x10
+	.incbin "baserom_jp.gba", 0x590bdc, 0x10
 
 	.globl gUnknown_8590BEC
 gUnknown_8590BEC: @ 0x8590BEC
-	.incbin "build/data/data.bin", 0x2f4e48, 0x8
+	.incbin "baserom_jp.gba", 0x590bec, 0x8
 
 	.globl gUnknown_8590BF4
 gUnknown_8590BF4: @ 0x8590BF4
-	.incbin "build/data/data.bin", 0x2f4e50, 0x8
+	.incbin "baserom_jp.gba", 0x590bf4, 0x8
 
 	.globl gUnknown_8590BFC
 gUnknown_8590BFC: @ 0x8590BFC
-	.incbin "build/data/data.bin", 0x2f4e58, 0x6
+	.incbin "baserom_jp.gba", 0x590bfc, 0x6
 
 	.globl gUnknown_8590C02
 gUnknown_8590C02: @ 0x8590C02
-	.incbin "build/data/data.bin", 0x2f4e5e, 0x6
+	.incbin "baserom_jp.gba", 0x590c02, 0x6
 
 	.globl gUnknown_8590C08
 gUnknown_8590C08: @ 0x8590C08
-	.incbin "build/data/data.bin", 0x2f4e64, 0x8
+	.incbin "baserom_jp.gba", 0x590c08, 0x8
 
 	.globl gUnknown_8590C10
 gUnknown_8590C10: @ 0x8590C10
-	.incbin "build/data/data.bin", 0x2f4e6c, 0xc
+	.incbin "baserom_jp.gba", 0x590c10, 0xc
 
 	.globl gUnknown_8590C1C
 gUnknown_8590C1C: @ 0x8590C1C
-	.incbin "build/data/data.bin", 0x2f4e78, 0x1c
+	.incbin "baserom_jp.gba", 0x590c1c, 0x1c
 
 	.globl gUnknown_8590C38
 gUnknown_8590C38: @ 0x8590C38
-	.incbin "build/data/data.bin", 0x2f4e94, 0xa8
+	.incbin "baserom_jp.gba", 0x590c38, 0xa8
 
 	.globl gUnknown_8590CE0
 gUnknown_8590CE0: @ 0x8590CE0
-	.incbin "build/data/data.bin", 0x2f4f3c, 0x8
+	.incbin "baserom_jp.gba", 0x590ce0, 0x8
 
 	.globl gUnknown_8590CE8
 gUnknown_8590CE8: @ 0x8590CE8
-	.incbin "build/data/data.bin", 0x2f4f44, 0x10
+	.incbin "baserom_jp.gba", 0x590ce8, 0x10
 
 	.globl gUnknown_8590CF8
 gUnknown_8590CF8: @ 0x8590CF8
-	.incbin "build/data/data.bin", 0x2f4f54, 0x10
+	.incbin "baserom_jp.gba", 0x590cf8, 0x10
 
 	.globl gUnknown_8590D08
 gUnknown_8590D08: @ 0x8590D08
-	.incbin "build/data/data.bin", 0x2f4f64, 0x18
+	.incbin "baserom_jp.gba", 0x590d08, 0x18
 
 	.globl gUnknown_8590D20
 gUnknown_8590D20: @ 0x8590D20
-	.incbin "build/data/data.bin", 0x2f4f7c, 0x18
+	.incbin "baserom_jp.gba", 0x590d20, 0x18
 
 	.globl gUnknown_8590D38
 gUnknown_8590D38: @ 0x8590D38
-	.incbin "build/data/data.bin", 0x2f4f94, 0x18
+	.incbin "baserom_jp.gba", 0x590d38, 0x18
 
 	.globl gUnknown_8590D50
 gUnknown_8590D50: @ 0x8590D50
-	.incbin "build/data/data.bin", 0x2f4fac, 0x18
+	.incbin "baserom_jp.gba", 0x590d50, 0x18
 
 	.globl gUnknown_8590D68
 gUnknown_8590D68: @ 0x8590D68
-	.incbin "build/data/data.bin", 0x2f4fc4, 0x20
+	.incbin "baserom_jp.gba", 0x590d68, 0x20
 
 	.globl gUnknown_8590D88
 gUnknown_8590D88: @ 0x8590D88
-	.incbin "build/data/data.bin", 0x2f4fe4, 0x20
+	.incbin "baserom_jp.gba", 0x590d88, 0x20
 
 	.globl gUnknown_8590DA8
 gUnknown_8590DA8: @ 0x8590DA8
-	.incbin "build/data/data.bin", 0x2f5004, 0x2cc
+	.incbin "baserom_jp.gba", 0x590da8, 0x2cc
 
 	.globl gUnknown_8591074
 gUnknown_8591074: @ 0x8591074
-	.incbin "build/data/data.bin", 0x2f52d0, 0x298
+	.incbin "baserom_jp.gba", 0x591074, 0x298
 
 	.globl gUnknown_859130C
 gUnknown_859130C: @ 0x859130C
-	.incbin "build/data/data.bin", 0x2f5568, 0x8f8
+	.incbin "baserom_jp.gba", 0x59130c, 0x8f8
 
 	.globl gUnknown_8591C04
 gUnknown_8591C04: @ 0x8591C04
@@ -10938,219 +10938,219 @@ gUnknown_8591C15: @ 0x8591C15
 
 	.globl gUnknown_8591C1A
 gUnknown_8591C1A: @ 0x8591C1A
-	.incbin "build/data/data.bin", 0x2f5e76, 0x6
+	.incbin "baserom_jp.gba", 0x591c1a, 0x6
 
 	.globl gUnknown_8591C20
 gUnknown_8591C20: @ 0x8591C20
-	.incbin "build/data/data.bin", 0x2f5e7c, 0x8
+	.incbin "baserom_jp.gba", 0x591c20, 0x8
 
 	.globl gUnknown_8591C28
 gUnknown_8591C28: @ 0x8591C28
-	.incbin "build/data/data.bin", 0x2f5e84, 0x18
+	.incbin "baserom_jp.gba", 0x591c28, 0x18
 
 	.globl gUnknown_8591C40
 gUnknown_8591C40: @ 0x8591C40
-	.incbin "build/data/data.bin", 0x2f5e9c, 0x8
+	.incbin "baserom_jp.gba", 0x591c40, 0x8
 
 	.globl gUnknown_8591C48
 gUnknown_8591C48: @ 0x8591C48
-	.incbin "build/data/data.bin", 0x2f5ea4, 0xc
+	.incbin "baserom_jp.gba", 0x591c48, 0xc
 
 	.globl gUnknown_8591C54
 gUnknown_8591C54: @ 0x8591C54
-	.incbin "build/data/data.bin", 0x2f5eb0, 0x10
+	.incbin "baserom_jp.gba", 0x591c54, 0x10
 
 	.globl gUnknown_8591C64
 gUnknown_8591C64: @ 0x8591C64
-	.incbin "build/data/data.bin", 0x2f5ec0, 0x38
+	.incbin "baserom_jp.gba", 0x591c64, 0x38
 
 	.globl gUnknown_8591C9C
 gUnknown_8591C9C: @ 0x8591C9C
-	.incbin "build/data/data.bin", 0x2f5ef8, 0x18
+	.incbin "baserom_jp.gba", 0x591c9c, 0x18
 
 	.globl gUnknown_8591CB4
 gUnknown_8591CB4: @ 0x8591CB4
-	.incbin "build/data/data.bin", 0x2f5f10, 0x38
+	.incbin "baserom_jp.gba", 0x591cb4, 0x38
 
 	.globl gUnknown_8591CEC
 gUnknown_8591CEC: @ 0x8591CEC
-	.incbin "build/data/data.bin", 0x2f5f48, 0x18
+	.incbin "baserom_jp.gba", 0x591cec, 0x18
 
 	.globl gUnknown_8591D04
 gUnknown_8591D04: @ 0x8591D04
-	.incbin "build/data/data.bin", 0x2f5f60, 0x18
+	.incbin "baserom_jp.gba", 0x591d04, 0x18
 
 	.globl gUnknown_8591D1C
 gUnknown_8591D1C: @ 0x8591D1C
-	.incbin "build/data/data.bin", 0x2f5f78, 0x2d0
+	.incbin "baserom_jp.gba", 0x591d1c, 0x2d0
 
 	.globl gUnknown_8591FEC
 gUnknown_8591FEC: @ 0x8591FEC
-	.incbin "build/data/data.bin", 0x2f6248, 0x80
+	.incbin "baserom_jp.gba", 0x591fec, 0x80
 
 	.globl gUnknown_859206C
 gUnknown_859206C: @ 0x859206C
-	.incbin "build/data/data.bin", 0x2f62c8, 0xc
+	.incbin "baserom_jp.gba", 0x59206c, 0xc
 
 	.globl gUnknown_8592078
 gUnknown_8592078: @ 0x8592078
-	.incbin "build/data/data.bin", 0x2f62d4, 0x3c
+	.incbin "baserom_jp.gba", 0x592078, 0x3c
 
 	.globl gUnknown_85920B4
 gUnknown_85920B4: @ 0x85920B4
-	.incbin "build/data/data.bin", 0x2f6310, 0x30
+	.incbin "baserom_jp.gba", 0x5920b4, 0x30
 
 	.globl gUnknown_85920E4
 gUnknown_85920E4: @ 0x85920E4
-	.incbin "build/data/data.bin", 0x2f6340, 0x3
+	.incbin "baserom_jp.gba", 0x5920e4, 0x3
 
 	.globl gUnknown_85920E7
 gUnknown_85920E7: @ 0x85920E7
-	.incbin "build/data/data.bin", 0x2f6343, 0x2
+	.incbin "baserom_jp.gba", 0x5920e7, 0x2
 
 	.globl gUnknown_85920E9
 gUnknown_85920E9: @ 0x85920E9
-	.incbin "build/data/data.bin", 0x2f6345, 0x2
+	.incbin "baserom_jp.gba", 0x5920e9, 0x2
 
 	.globl gUnknown_85920EB
 gUnknown_85920EB: @ 0x85920EB
-	.incbin "build/data/data.bin", 0x2f6347, 0x5
+	.incbin "baserom_jp.gba", 0x5920eb, 0x5
 
 	.globl gUnknown_85920F0
 gUnknown_85920F0: @ 0x85920F0
-	.incbin "build/data/data.bin", 0x2f634c, 0x4c
+	.incbin "baserom_jp.gba", 0x5920f0, 0x4c
 
 	.globl gUnknown_859213C
 gUnknown_859213C: @ 0x859213C
-	.incbin "build/data/data.bin", 0x2f6398, 0x4
+	.incbin "baserom_jp.gba", 0x59213c, 0x4
 
 	.globl gUnknown_8592140
 gUnknown_8592140: @ 0x8592140
-	.incbin "build/data/data.bin", 0x2f639c, 0x8
+	.incbin "baserom_jp.gba", 0x592140, 0x8
 
 	.globl gUnknown_8592148
 gUnknown_8592148: @ 0x8592148
-	.incbin "build/data/data.bin", 0x2f63a4, 0x8
+	.incbin "baserom_jp.gba", 0x592148, 0x8
 
 	.globl gUnknown_8592150
 gUnknown_8592150: @ 0x8592150
-	.incbin "build/data/data.bin", 0x2f63ac, 0x18
+	.incbin "baserom_jp.gba", 0x592150, 0x18
 
 	.globl gUnknown_8592168
 gUnknown_8592168: @ 0x8592168
-	.incbin "build/data/data.bin", 0x2f63c4, 0x4
+	.incbin "baserom_jp.gba", 0x592168, 0x4
 
 	.globl gUnknown_859216C
 gUnknown_859216C: @ 0x859216C
-	.incbin "build/data/data.bin", 0x2f63c8, 0x28
+	.incbin "baserom_jp.gba", 0x59216c, 0x28
 
 	.globl gUnknown_8592194
 gUnknown_8592194: @ 0x8592194
-	.incbin "build/data/data.bin", 0x2f63f0, 0x60
+	.incbin "baserom_jp.gba", 0x592194, 0x60
 
 	.globl gUnknown_85921F4
 gUnknown_85921F4: @ 0x85921F4
-	.incbin "build/data/data.bin", 0x2f6450, 0x8
+	.incbin "baserom_jp.gba", 0x5921f4, 0x8
 
 	.globl gUnknown_85921FC
 gUnknown_85921FC: @ 0x85921FC
-	.incbin "build/data/data.bin", 0x2f6458, 0x18
+	.incbin "baserom_jp.gba", 0x5921fc, 0x18
 
 	.globl gUnknown_8592214
 gUnknown_8592214: @ 0x8592214
-	.incbin "build/data/data.bin", 0x2f6470, 0x88
+	.incbin "baserom_jp.gba", 0x592214, 0x88
 
 	.globl gUnknown_859229C
 gUnknown_859229C: @ 0x859229C
-	.incbin "build/data/data.bin", 0x2f64f8, 0x20
+	.incbin "baserom_jp.gba", 0x59229c, 0x20
 
 	.globl gUnknown_85922BC
 gUnknown_85922BC: @ 0x85922BC
-	.incbin "build/data/data.bin", 0x2f6518, 0x20
+	.incbin "baserom_jp.gba", 0x5922bc, 0x20
 
 	.globl gUnknown_85922DC
 gUnknown_85922DC: @ 0x85922DC
-	.incbin "build/data/data.bin", 0x2f6538, 0x10
+	.incbin "baserom_jp.gba", 0x5922dc, 0x10
 
 	.globl gUnknown_85922EC
 gUnknown_85922EC: @ 0x85922EC
-	.incbin "build/data/data.bin", 0x2f6548, 0x10
+	.incbin "baserom_jp.gba", 0x5922ec, 0x10
 
 	.globl gUnknown_85922FC
 gUnknown_85922FC: @ 0x85922FC
-	.incbin "build/data/data.bin", 0x2f6558, 0x1e0
+	.incbin "baserom_jp.gba", 0x5922fc, 0x1e0
 
 	.globl gUnknown_85924DC
 gUnknown_85924DC: @ 0x85924DC
-	.incbin "build/data/data.bin", 0x2f6738, 0xb4
+	.incbin "baserom_jp.gba", 0x5924dc, 0xb4
 
 	.globl gUnknown_8592590
 gUnknown_8592590: @ 0x8592590
-	.incbin "build/data/data.bin", 0x2f67ec, 0x18
+	.incbin "baserom_jp.gba", 0x592590, 0x18
 
 	.globl gUnknown_85925A8
 gUnknown_85925A8: @ 0x85925A8
-	.incbin "build/data/data.bin", 0x2f6804, 0x4
+	.incbin "baserom_jp.gba", 0x5925a8, 0x4
 
 	.globl gUnknown_85925AC
 gUnknown_85925AC: @ 0x85925AC
-	.incbin "build/data/data.bin", 0x2f6808, 0x8
+	.incbin "baserom_jp.gba", 0x5925ac, 0x8
 
 	.globl gUnknown_85925B4
 gUnknown_85925B4: @ 0x85925B4
-	.incbin "build/data/data.bin", 0x2f6810, 0x10
+	.incbin "baserom_jp.gba", 0x5925b4, 0x10
 
 	.globl gUnknown_85925C4
 gUnknown_85925C4: @ 0x85925C4
-	.incbin "build/data/data.bin", 0x2f6820, 0x6
+	.incbin "baserom_jp.gba", 0x5925c4, 0x6
 
 	.globl gUnknown_85925CA
 gUnknown_85925CA: @ 0x85925CA
-	.incbin "build/data/data.bin", 0x2f6826, 0xa
+	.incbin "baserom_jp.gba", 0x5925ca, 0xa
 
 	.globl gUnknown_85925D4
 gUnknown_85925D4: @ 0x85925D4
-	.incbin "build/data/data.bin", 0x2f6830, 0xc
+	.incbin "baserom_jp.gba", 0x5925d4, 0xc
 
 	.globl gUnknown_85925E0
 gUnknown_85925E0: @ 0x85925E0
-	.incbin "build/data/data.bin", 0x2f683c, 0xc
+	.incbin "baserom_jp.gba", 0x5925e0, 0xc
 
 	.globl gUnknown_85925EC
 gUnknown_85925EC: @ 0x85925EC
-	.incbin "build/data/data.bin", 0x2f6848, 0xc
+	.incbin "baserom_jp.gba", 0x5925ec, 0xc
 
 	.globl gUnknown_85925F8
 gUnknown_85925F8: @ 0x85925F8
-	.incbin "build/data/data.bin", 0x2f6854, 0xc
+	.incbin "baserom_jp.gba", 0x5925f8, 0xc
 
 	.globl gUnknown_8592604
 gUnknown_8592604: @ 0x8592604
-	.incbin "build/data/data.bin", 0x2f6860, 0x4
+	.incbin "baserom_jp.gba", 0x592604, 0x4
 
 	.globl gUnknown_8592608
 gUnknown_8592608: @ 0x8592608
-	.incbin "build/data/data.bin", 0x2f6864, 0x8
+	.incbin "baserom_jp.gba", 0x592608, 0x8
 
 	.globl gUnknown_8592610
 gUnknown_8592610: @ 0x8592610
-	.incbin "build/data/data.bin", 0x2f686c, 0x40
+	.incbin "baserom_jp.gba", 0x592610, 0x40
 
 	.globl gUnknown_8592650
 gUnknown_8592650: @ 0x8592650
-	.incbin "build/data/data.bin", 0x2f68ac, 0x12
+	.incbin "baserom_jp.gba", 0x592650, 0x12
 
 	.globl gUnknown_8592662
 gUnknown_8592662: @ 0x8592662
-	.incbin "build/data/data.bin", 0x2f68be, 0x12
+	.incbin "baserom_jp.gba", 0x592662, 0x12
 
 	.globl gUnknown_8592674
 gUnknown_8592674: @ 0x8592674
-	.incbin "build/data/data.bin", 0x2f68d0, 0x9
+	.incbin "baserom_jp.gba", 0x592674, 0x9
 
 	.globl gUnknown_859267D
 gUnknown_859267D: @ 0x859267D
-	.incbin "build/data/data.bin", 0x2f68d9, 0x9
+	.incbin "baserom_jp.gba", 0x59267d, 0x9
 
 	.globl gUnknown_8592686
 gUnknown_8592686: @ 0x8592686
@@ -11162,47 +11162,47 @@ gUnknown_8592686: @ 0x8592686
 
 	.globl gUnknown_85926AC
 gUnknown_85926AC: @ 0x85926AC
-	.incbin "build/data/data.bin", 0x2f6908, 0x78
+	.incbin "baserom_jp.gba", 0x5926ac, 0x78
 
 	.globl gUnknown_8592724
 gUnknown_8592724: @ 0x8592724
-	.incbin "build/data/data.bin", 0x2f6980, 0x14
+	.incbin "baserom_jp.gba", 0x592724, 0x14
 
 	.globl gUnknown_8592738
 gUnknown_8592738: @ 0x8592738
-	.incbin "build/data/data.bin", 0x2f6994, 0x14
+	.incbin "baserom_jp.gba", 0x592738, 0x14
 
 	.globl gUnknown_859274C
 gUnknown_859274C: @ 0x859274C
-	.incbin "build/data/data.bin", 0x2f69a8, 0x340
+	.incbin "baserom_jp.gba", 0x59274c, 0x340
 
 	.globl gUnknown_8592A8C
 gUnknown_8592A8C: @ 0x8592A8C
-	.incbin "build/data/data.bin", 0x2f6ce8, 0x10
+	.incbin "baserom_jp.gba", 0x592a8c, 0x10
 
 	.globl gUnknown_8592A9C
 gUnknown_8592A9C: @ 0x8592A9C
-	.incbin "build/data/data.bin", 0x2f6cf8, 0x64
+	.incbin "baserom_jp.gba", 0x592a9c, 0x64
 
 	.globl gUnknown_8592B00
 gUnknown_8592B00: @ 0x8592B00
-	.incbin "build/data/data.bin", 0x2f6d5c, 0x30
+	.incbin "baserom_jp.gba", 0x592b00, 0x30
 
 	.globl gUnknown_8592B30
 gUnknown_8592B30: @ 0x8592B30
-	.incbin "build/data/data.bin", 0x2f6d8c, 0x30
+	.incbin "baserom_jp.gba", 0x592b30, 0x30
 
 	.globl gUnknown_8592B60
 gUnknown_8592B60: @ 0x8592B60
-	.incbin "build/data/data.bin", 0x2f6dbc, 0x18
+	.incbin "baserom_jp.gba", 0x592b60, 0x18
 
 	.globl gUnknown_8592B78
 gUnknown_8592B78: @ 0x8592B78
-	.incbin "build/data/data.bin", 0x2f6dd4, 0x8
+	.incbin "baserom_jp.gba", 0x592b78, 0x8
 
 	.globl gUnknown_8592B80
 gUnknown_8592B80: @ 0x8592B80
-	.incbin "build/data/data.bin", 0x2f6ddc, 0x8
+	.incbin "baserom_jp.gba", 0x592b80, 0x8
 
 	.globl gUnknown_8592B88
 gUnknown_8592B88: @ 0x8592B88
@@ -11228,63 +11228,63 @@ gUnknown_8592BB8: @ 0x8592BB8
 
 	.globl gUnknown_8592BCC
 gUnknown_8592BCC: @ 0x8592BCC
-	.incbin "build/data/data.bin", 0x2f6e28, 0x2c
+	.incbin "baserom_jp.gba", 0x592bcc, 0x2c
 
 	.globl gUnknown_8592BF8
 gUnknown_8592BF8: @ 0x8592BF8
-	.incbin "build/data/data.bin", 0x2f6e54, 0x18
+	.incbin "baserom_jp.gba", 0x592bf8, 0x18
 
 	.globl gUnknown_8592C10
 gUnknown_8592C10: @ 0x8592C10
-	.incbin "build/data/data.bin", 0x2f6e6c, 0x1c
+	.incbin "baserom_jp.gba", 0x592c10, 0x1c
 
 	.globl gUnknown_8592C2C
 gUnknown_8592C2C: @ 0x8592C2C
-	.incbin "build/data/data.bin", 0x2f6e88, 0x28
+	.incbin "baserom_jp.gba", 0x592c2c, 0x28
 
 	.globl gUnknown_8592C54
 gUnknown_8592C54: @ 0x8592C54
-	.incbin "build/data/data.bin", 0x2f6eb0, 0x14
+	.incbin "baserom_jp.gba", 0x592c54, 0x14
 
 	.globl gUnknown_8592C68
 gUnknown_8592C68: @ 0x8592C68
-	.incbin "build/data/data.bin", 0x2f6ec4, 0x14
+	.incbin "baserom_jp.gba", 0x592c68, 0x14
 
 	.globl gUnknown_8592C7C
 gUnknown_8592C7C: @ 0x8592C7C
-	.incbin "build/data/data.bin", 0x2f6ed8, 0x8
+	.incbin "baserom_jp.gba", 0x592c7c, 0x8
 
 	.globl gUnknown_8592C84
 gUnknown_8592C84: @ 0x8592C84
-	.incbin "build/data/data.bin", 0x2f6ee0, 0x2c
+	.incbin "baserom_jp.gba", 0x592c84, 0x2c
 
 	.globl gUnknown_8592CB0
 gUnknown_8592CB0: @ 0x8592CB0
-	.incbin "build/data/data.bin", 0x2f6f0c, 0x2c
+	.incbin "baserom_jp.gba", 0x592cb0, 0x2c
 
 	.globl gUnknown_8592CDC
 gUnknown_8592CDC: @ 0x8592CDC
-	.incbin "build/data/data.bin", 0x2f6f38, 0x160
+	.incbin "baserom_jp.gba", 0x592cdc, 0x160
 
 	.globl gUnknown_8592E3C
 gUnknown_8592E3C: @ 0x8592E3C
-	.incbin "build/data/data.bin", 0x2f7098, 0x16
+	.incbin "baserom_jp.gba", 0x592e3c, 0x16
 
 	.globl gUnknown_8592E52
 gUnknown_8592E52: @ 0x8592E52
-	.incbin "build/data/data.bin", 0x2f70ae, 0xa
+	.incbin "baserom_jp.gba", 0x592e52, 0xa
 
 	.globl gUnknown_8592E5C
 gUnknown_8592E5C: @ 0x8592E5C
-	.incbin "build/data/data.bin", 0x2f70b8, 0x10
+	.incbin "baserom_jp.gba", 0x592e5c, 0x10
 
 	.globl gUnknown_8592E6C
 gUnknown_8592E6C: @ 0x8592E6C
-	.incbin "build/data/data.bin", 0x2f70c8, 0x10
+	.incbin "baserom_jp.gba", 0x592e6c, 0x10
 
 	.globl gUnknown_8592E7C
 gUnknown_8592E7C: @ 0x8592E7C
-	.incbin "build/data/data.bin", 0x2f70d8, 0x24
+	.incbin "baserom_jp.gba", 0x592e7c, 0x24
 
 	.globl gUnknown_8592EA0
 gUnknown_8592EA0: @ 0x8592EA0
@@ -11296,39 +11296,39 @@ gUnknown_8592EA0: @ 0x8592EA0
 
 	.globl gUnknown_8592ECC
 gUnknown_8592ECC: @ 0x8592ECC
-	.incbin "build/data/data.bin", 0x2f7128, 0x4
+	.incbin "baserom_jp.gba", 0x592ecc, 0x4
 
 	.globl gUnknown_8592ED0
 gUnknown_8592ED0: @ 0x8592ED0
-	.incbin "build/data/data.bin", 0x2f712c, 0x8
+	.incbin "baserom_jp.gba", 0x592ed0, 0x8
 
 	.globl gUnknown_8592ED8
 gUnknown_8592ED8: @ 0x8592ED8
-	.incbin "build/data/data.bin", 0x2f7134, 0x8
+	.incbin "baserom_jp.gba", 0x592ed8, 0x8
 
 	.globl gUnknown_8592EE0
 gUnknown_8592EE0: @ 0x8592EE0
-	.incbin "build/data/data.bin", 0x2f713c, 0xc0
+	.incbin "baserom_jp.gba", 0x592ee0, 0xc0
 
 	.globl gUnknown_8592FA0
 gUnknown_8592FA0: @ 0x8592FA0
-	.incbin "build/data/data.bin", 0x2f71fc, 0x20
+	.incbin "baserom_jp.gba", 0x592fa0, 0x20
 
 	.globl gUnknown_8592FC0
 gUnknown_8592FC0: @ 0x8592FC0
-	.incbin "build/data/data.bin", 0x2f721c, 0x800
+	.incbin "baserom_jp.gba", 0x592fc0, 0x800
 
 	.globl gUnknown_85937C0
 gUnknown_85937C0: @ 0x85937C0
-	.incbin "build/data/data.bin", 0x2f7a1c, 0x8
+	.incbin "baserom_jp.gba", 0x5937c0, 0x8
 
 	.globl gUnknown_85937C8
 gUnknown_85937C8: @ 0x85937C8
-	.incbin "build/data/data.bin", 0x2f7a24, 0x10
+	.incbin "baserom_jp.gba", 0x5937c8, 0x10
 
 	.globl gUnknown_85937D8
 gUnknown_85937D8: @ 0x85937D8
-	.incbin "build/data/data.bin", 0x2f7a34, 0x8
+	.incbin "baserom_jp.gba", 0x5937d8, 0x8
 
 	.globl gUnknown_85937E0
 gUnknown_85937E0: @ 0x85937E0
@@ -11354,351 +11354,351 @@ gUnknown_8593817: @ 0x8593817
 
 	.globl gUnknown_859381C
 gUnknown_859381C: @ 0x859381C
-	.incbin "build/data/data.bin", 0x2f7a78, 0x20
+	.incbin "baserom_jp.gba", 0x59381c, 0x20
 
 	.globl gUnknown_859383C
 gUnknown_859383C: @ 0x859383C
-	.incbin "build/data/data.bin", 0x2f7a98, 0x134
+	.incbin "baserom_jp.gba", 0x59383c, 0x134
 
 	.globl gUnknown_8593970
 gUnknown_8593970: @ 0x8593970
-	.incbin "build/data/data.bin", 0x2f7bcc, 0x2
+	.incbin "baserom_jp.gba", 0x593970, 0x2
 
 	.globl gUnknown_8593972
 gUnknown_8593972: @ 0x8593972
-	.incbin "build/data/data.bin", 0x2f7bce, 0x6
+	.incbin "baserom_jp.gba", 0x593972, 0x6
 
 	.globl gUnknown_8593978
 gUnknown_8593978: @ 0x8593978
-	.incbin "build/data/data.bin", 0x2f7bd4, 0xc
+	.incbin "baserom_jp.gba", 0x593978, 0xc
 
 	.globl gUnknown_8593984
 gUnknown_8593984: @ 0x8593984
-	.incbin "build/data/data.bin", 0x2f7be0, 0x1c
+	.incbin "baserom_jp.gba", 0x593984, 0x1c
 
 	.globl gUnknown_85939A0
 gUnknown_85939A0: @ 0x85939A0
-	.incbin "build/data/data.bin", 0x2f7bfc, 0x4
+	.incbin "baserom_jp.gba", 0x5939a0, 0x4
 
 	.globl gUnknown_85939A4
 gUnknown_85939A4: @ 0x85939A4
-	.incbin "build/data/data.bin", 0x2f7c00, 0x8
+	.incbin "baserom_jp.gba", 0x5939a4, 0x8
 
 	.globl gUnknown_85939AC
 gUnknown_85939AC: @ 0x85939AC
-	.incbin "build/data/data.bin", 0x2f7c08, 0x10
+	.incbin "baserom_jp.gba", 0x5939ac, 0x10
 
 	.globl gUnknown_85939BC
 gUnknown_85939BC: @ 0x85939BC
-	.incbin "build/data/data.bin", 0x2f7c18, 0xb8
+	.incbin "baserom_jp.gba", 0x5939bc, 0xb8
 
 	.globl gUnknown_8593A74
 gUnknown_8593A74: @ 0x8593A74
-	.incbin "build/data/data.bin", 0x2f7cd0, 0x10
+	.incbin "baserom_jp.gba", 0x593a74, 0x10
 
 	.globl gUnknown_8593A84
 gUnknown_8593A84: @ 0x8593A84
-	.incbin "build/data/data.bin", 0x2f7ce0, 0x38
+	.incbin "baserom_jp.gba", 0x593a84, 0x38
 
 	.globl gUnknown_8593ABC
 gUnknown_8593ABC: @ 0x8593ABC
-	.incbin "build/data/data.bin", 0x2f7d18, 0x1e4
+	.incbin "baserom_jp.gba", 0x593abc, 0x1e4
 
 	.globl gUnknown_8593CA0
 gUnknown_8593CA0: @ 0x8593CA0
-	.incbin "build/data/data.bin", 0x2f7efc, 0x6f8
+	.incbin "baserom_jp.gba", 0x593ca0, 0x6f8
 
 	.globl gUnknown_8594398
 gUnknown_8594398: @ 0x8594398
-	.incbin "build/data/data.bin", 0x2f85f4, 0x4e4
+	.incbin "baserom_jp.gba", 0x594398, 0x4e4
 
 	.globl gUnknown_859487C
 gUnknown_859487C: @ 0x859487C
-	.incbin "build/data/data.bin", 0x2f8ad8, 0x4d4
+	.incbin "baserom_jp.gba", 0x59487c, 0x4d4
 
 	.globl gUnknown_8594D50
 gUnknown_8594D50: @ 0x8594D50
-	.incbin "build/data/data.bin", 0x2f8fac, 0x6a0
+	.incbin "baserom_jp.gba", 0x594d50, 0x6a0
 
 	.globl gUnknown_85953F0
 gUnknown_85953F0: @ 0x85953F0
-	.incbin "build/data/data.bin", 0x2f964c, 0x40
+	.incbin "baserom_jp.gba", 0x5953f0, 0x40
 
 	.globl gUnknown_8595430
 gUnknown_8595430: @ 0x8595430
-	.incbin "build/data/data.bin", 0x2f968c, 0x45
+	.incbin "baserom_jp.gba", 0x595430, 0x45
 
 	.globl gUnknown_8595475
 gUnknown_8595475: @ 0x8595475
-	.incbin "build/data/data.bin", 0x2f96d1, 0x10
+	.incbin "baserom_jp.gba", 0x595475, 0x10
 
 	.globl gUnknown_8595485
 gUnknown_8595485: @ 0x8595485
-	.incbin "build/data/data.bin", 0x2f96e1, 0x323
+	.incbin "baserom_jp.gba", 0x595485, 0x323
 
 	.globl gUnknown_85957A8
 gUnknown_85957A8: @ 0x85957A8
-	.incbin "build/data/data.bin", 0x2f9a04, 0x200
+	.incbin "baserom_jp.gba", 0x5957a8, 0x200
 
 	.globl gUnknown_85959A8
 gUnknown_85959A8: @ 0x85959A8
-	.incbin "build/data/data.bin", 0x2f9c04, 0x1a4
+	.incbin "baserom_jp.gba", 0x5959a8, 0x1a4
 
 	.globl gUnknown_8595B4C
 gUnknown_8595B4C: @ 0x8595B4C
-	.incbin "build/data/data.bin", 0x2f9da8, 0x1a0
+	.incbin "baserom_jp.gba", 0x595b4c, 0x1a0
 
 	.globl gUnknown_8595CEC
 gUnknown_8595CEC: @ 0x8595CEC
-	.incbin "build/data/data.bin", 0x2f9f48, 0xc
+	.incbin "baserom_jp.gba", 0x595cec, 0xc
 
 	.globl gUnknown_8595CF8
 gUnknown_8595CF8: @ 0x8595CF8
-	.incbin "build/data/data.bin", 0x2f9f54, 0x8
+	.incbin "baserom_jp.gba", 0x595cf8, 0x8
 
 	.globl gUnknown_8595D00
 gUnknown_8595D00: @ 0x8595D00
-	.incbin "build/data/data.bin", 0x2f9f5c, 0xc
+	.incbin "baserom_jp.gba", 0x595d00, 0xc
 
 	.globl gUnknown_8595D0C
 gUnknown_8595D0C: @ 0x8595D0C
-	.incbin "build/data/data.bin", 0x2f9f68, 0x184
+	.incbin "baserom_jp.gba", 0x595d0c, 0x184
 
 	.globl gUnknown_8595E90
 gUnknown_8595E90: @ 0x8595E90
-	.incbin "build/data/data.bin", 0x2fa0ec, 0x4
+	.incbin "baserom_jp.gba", 0x595e90, 0x4
 
 	.globl gUnknown_8595E94
 gUnknown_8595E94: @ 0x8595E94
-	.incbin "build/data/data.bin", 0x2fa0f0, 0x5c
+	.incbin "baserom_jp.gba", 0x595e94, 0x5c
 
 	.globl gUnknown_8595EF0
 gUnknown_8595EF0: @ 0x8595EF0
-	.incbin "build/data/data.bin", 0x2fa14c, 0x4
+	.incbin "baserom_jp.gba", 0x595ef0, 0x4
 
 	.globl gUnknown_8595EF4
 gUnknown_8595EF4: @ 0x8595EF4
-	.incbin "build/data/data.bin", 0x2fa150, 0x40
+	.incbin "baserom_jp.gba", 0x595ef4, 0x40
 
 	.globl gUnknown_8595F34
 gUnknown_8595F34: @ 0x8595F34
-	.incbin "build/data/data.bin", 0x2fa190, 0x68
+	.incbin "baserom_jp.gba", 0x595f34, 0x68
 
 	.globl gUnknown_8595F9C
 gUnknown_8595F9C: @ 0x8595F9C
-	.incbin "build/data/data.bin", 0x2fa1f8, 0x20
+	.incbin "baserom_jp.gba", 0x595f9c, 0x20
 
 	.globl gUnknown_8595FBC
 gUnknown_8595FBC: @ 0x8595FBC
-	.incbin "build/data/data.bin", 0x2fa218, 0x8
+	.incbin "baserom_jp.gba", 0x595fbc, 0x8
 
 	.globl gUnknown_8595FC4
 gUnknown_8595FC4: @ 0x8595FC4
-	.incbin "build/data/data.bin", 0x2fa220, 0x8
+	.incbin "baserom_jp.gba", 0x595fc4, 0x8
 
 	.globl gUnknown_8595FCC
 gUnknown_8595FCC: @ 0x8595FCC
-	.incbin "build/data/data.bin", 0x2fa228, 0x6
+	.incbin "baserom_jp.gba", 0x595fcc, 0x6
 
 	.globl gUnknown_8595FD2
 gUnknown_8595FD2: @ 0x8595FD2
-	.incbin "build/data/data.bin", 0x2fa22e, 0x4
+	.incbin "baserom_jp.gba", 0x595fd2, 0x4
 
 	.globl gUnknown_8595FD6
 gUnknown_8595FD6: @ 0x8595FD6
-	.incbin "build/data/data.bin", 0x2fa232, 0xa
+	.incbin "baserom_jp.gba", 0x595fd6, 0xa
 
 	.globl gUnknown_8595FE0
 gUnknown_8595FE0: @ 0x8595FE0
-	.incbin "build/data/data.bin", 0x2fa23c, 0x10
+	.incbin "baserom_jp.gba", 0x595fe0, 0x10
 
 	.globl gUnknown_8595FF0
 gUnknown_8595FF0: @ 0x8595FF0
-	.incbin "build/data/data.bin", 0x2fa24c, 0xc
+	.incbin "baserom_jp.gba", 0x595ff0, 0xc
 
 	.globl gUnknown_8595FFC
 gUnknown_8595FFC: @ 0x8595FFC
-	.incbin "build/data/data.bin", 0x2fa258, 0xf3c
+	.incbin "baserom_jp.gba", 0x595ffc, 0xf3c
 
 	.globl gUnknown_8596F38
 gUnknown_8596F38: @ 0x8596F38
-	.incbin "build/data/data.bin", 0x2fb194, 0x98
+	.incbin "baserom_jp.gba", 0x596f38, 0x98
 
 	.globl gUnknown_8596FD0
 gUnknown_8596FD0: @ 0x8596FD0
-	.incbin "build/data/data.bin", 0x2fb22c, 0x6c
+	.incbin "baserom_jp.gba", 0x596fd0, 0x6c
 
 	.globl gUnknown_859703C
 gUnknown_859703C: @ 0x859703C
-	.incbin "build/data/data.bin", 0x2fb298, 0x8
+	.incbin "baserom_jp.gba", 0x59703c, 0x8
 
 	.globl gUnknown_8597044
 gUnknown_8597044: @ 0x8597044
-	.incbin "build/data/data.bin", 0x2fb2a0, 0x78
+	.incbin "baserom_jp.gba", 0x597044, 0x78
 
 	.globl gUnknown_85970BC
 gUnknown_85970BC: @ 0x85970BC
-	.incbin "build/data/data.bin", 0x2fb318, 0x60
+	.incbin "baserom_jp.gba", 0x5970bc, 0x60
 
 	.globl gUnknown_859711C
 gUnknown_859711C: @ 0x859711C
-	.incbin "build/data/data.bin", 0x2fb378, 0x48
+	.incbin "baserom_jp.gba", 0x59711c, 0x48
 
 	.globl gUnknown_8597164
 gUnknown_8597164: @ 0x8597164
-	.incbin "build/data/data.bin", 0x2fb3c0, 0x60
+	.incbin "baserom_jp.gba", 0x597164, 0x60
 
 	.globl gUnknown_85971C4
 gUnknown_85971C4: @ 0x85971C4
-	.incbin "build/data/data.bin", 0x2fb420, 0x140
+	.incbin "baserom_jp.gba", 0x5971c4, 0x140
 
 	.globl gUnknown_8597304
 gUnknown_8597304: @ 0x8597304
-	.incbin "build/data/data.bin", 0x2fb560, 0x94
+	.incbin "baserom_jp.gba", 0x597304, 0x94
 
 	.globl gUnknown_8597398
 gUnknown_8597398: @ 0x8597398
-	.incbin "build/data/data.bin", 0x2fb5f4, 0x18
+	.incbin "baserom_jp.gba", 0x597398, 0x18
 
 	.globl gUnknown_85973B0
 gUnknown_85973B0: @ 0x85973B0
-	.incbin "build/data/data.bin", 0x2fb60c, 0x18
+	.incbin "baserom_jp.gba", 0x5973b0, 0x18
 
 	.globl gUnknown_85973C8
 gUnknown_85973C8: @ 0x85973C8
-	.incbin "build/data/data.bin", 0x2fb624, 0x18
+	.incbin "baserom_jp.gba", 0x5973c8, 0x18
 
 	.globl gUnknown_85973E0
 gUnknown_85973E0: @ 0x85973E0
-	.incbin "build/data/data.bin", 0x2fb63c, 0x18
+	.incbin "baserom_jp.gba", 0x5973e0, 0x18
 
 	.globl gUnknown_85973F8
 gUnknown_85973F8: @ 0x85973F8
-	.incbin "build/data/data.bin", 0x2fb654, 0x20
+	.incbin "baserom_jp.gba", 0x5973f8, 0x20
 
 	.globl gUnknown_8597418
 gUnknown_8597418: @ 0x8597418
-	.incbin "build/data/data.bin", 0x2fb674, 0xc4
+	.incbin "baserom_jp.gba", 0x597418, 0xc4
 
 	.globl gUnknown_85974DC
 gUnknown_85974DC: @ 0x85974DC
-	.incbin "build/data/data.bin", 0x2fb738, 0x20
+	.incbin "baserom_jp.gba", 0x5974dc, 0x20
 
 	.globl gUnknown_85974FC
 gUnknown_85974FC: @ 0x85974FC
-	.incbin "build/data/data.bin", 0x2fb758, 0x8
+	.incbin "baserom_jp.gba", 0x5974fc, 0x8
 
 	.globl gUnknown_8597504
 gUnknown_8597504: @ 0x8597504
-	.incbin "build/data/data.bin", 0x2fb760, 0x28
+	.incbin "baserom_jp.gba", 0x597504, 0x28
 
 	.globl gUnknown_859752C
 gUnknown_859752C: @ 0x859752C
-	.incbin "build/data/data.bin", 0x2fb788, 0x80
+	.incbin "baserom_jp.gba", 0x59752c, 0x80
 
 	.globl gUnknown_85975AC
 gUnknown_85975AC: @ 0x85975AC
-	.incbin "build/data/data.bin", 0x2fb808, 0x18
+	.incbin "baserom_jp.gba", 0x5975ac, 0x18
 
 	.globl gUnknown_85975C4
 gUnknown_85975C4: @ 0x85975C4
-	.incbin "build/data/data.bin", 0x2fb820, 0x30
+	.incbin "baserom_jp.gba", 0x5975c4, 0x30
 
 	.globl gUnknown_85975F4
 gUnknown_85975F4: @ 0x85975F4
-	.incbin "build/data/data.bin", 0x2fb850, 0x7c
+	.incbin "baserom_jp.gba", 0x5975f4, 0x7c
 
 	.globl gUnknown_8597670
 gUnknown_8597670: @ 0x8597670
-	.incbin "build/data/data.bin", 0x2fb8cc, 0x30
+	.incbin "baserom_jp.gba", 0x597670, 0x30
 
 	.globl gUnknown_85976A0
 gUnknown_85976A0: @ 0x85976A0
-	.incbin "build/data/data.bin", 0x2fb8fc, 0x18
+	.incbin "baserom_jp.gba", 0x5976a0, 0x18
 
 	.globl gUnknown_85976B8
 gUnknown_85976B8: @ 0x85976B8
-	.incbin "build/data/data.bin", 0x2fb914, 0x6
+	.incbin "baserom_jp.gba", 0x5976b8, 0x6
 
 	.globl gUnknown_85976BE
 gUnknown_85976BE: @ 0x85976BE
-	.incbin "build/data/data.bin", 0x2fb91a, 0x8
+	.incbin "baserom_jp.gba", 0x5976be, 0x8
 
 	.globl gUnknown_85976C6
 gUnknown_85976C6: @ 0x85976C6
-	.incbin "build/data/data.bin", 0x2fb922, 0x8
+	.incbin "baserom_jp.gba", 0x5976c6, 0x8
 
 	.globl gUnknown_85976CE
 gUnknown_85976CE: @ 0x85976CE
-	.incbin "build/data/data.bin", 0x2fb92a, 0x14
+	.incbin "baserom_jp.gba", 0x5976ce, 0x14
 
 	.globl gUnknown_85976E2
 gUnknown_85976E2: @ 0x85976E2
-	.incbin "build/data/data.bin", 0x2fb93e, 0x18
+	.incbin "baserom_jp.gba", 0x5976e2, 0x18
 
 	.globl gUnknown_85976FA
 gUnknown_85976FA: @ 0x85976FA
-	.incbin "build/data/data.bin", 0x2fb956, 0x2
+	.incbin "baserom_jp.gba", 0x5976fa, 0x2
 
 	.globl gUnknown_85976FC
 gUnknown_85976FC: @ 0x85976FC
-	.incbin "build/data/data.bin", 0x2fb958, 0x8d0
+	.incbin "baserom_jp.gba", 0x5976fc, 0x8d0
 
 	.globl gUnknown_8597FCC
 gUnknown_8597FCC: @ 0x8597FCC
-	.incbin "build/data/data.bin", 0x2fc228, 0x20
+	.incbin "baserom_jp.gba", 0x597fcc, 0x20
 
 	.globl gUnknown_8597FEC
 gUnknown_8597FEC: @ 0x8597FEC
-	.incbin "build/data/data.bin", 0x2fc248, 0x338
+	.incbin "baserom_jp.gba", 0x597fec, 0x338
 
 	.globl gUnknown_8598324
 gUnknown_8598324: @ 0x8598324
-	.incbin "build/data/data.bin", 0x2fc580, 0x480
+	.incbin "baserom_jp.gba", 0x598324, 0x480
 
 	.globl gUnknown_85987A4
 gUnknown_85987A4: @ 0x85987A4
-	.incbin "build/data/data.bin", 0x2fca00, 0x20
+	.incbin "baserom_jp.gba", 0x5987a4, 0x20
 
 	.globl gUnknown_85987C4
 gUnknown_85987C4: @ 0x85987C4
-	.incbin "build/data/data.bin", 0x2fca20, 0x20
+	.incbin "baserom_jp.gba", 0x5987c4, 0x20
 
 	.globl gUnknown_85987E4
 gUnknown_85987E4: @ 0x85987E4
-	.incbin "build/data/data.bin", 0x2fca40, 0x2
+	.incbin "baserom_jp.gba", 0x5987e4, 0x2
 
 	.globl gUnknown_85987E6
 gUnknown_85987E6: @ 0x85987E6
-	.incbin "build/data/data.bin", 0x2fca42, 0x36
+	.incbin "baserom_jp.gba", 0x5987e6, 0x36
 
 	.globl gUnknown_859881C
 gUnknown_859881C: @ 0x859881C
-	.incbin "build/data/data.bin", 0x2fca78, 0x18
+	.incbin "baserom_jp.gba", 0x59881c, 0x18
 
 	.globl gUnknown_8598834
 gUnknown_8598834: @ 0x8598834
-	.incbin "build/data/data.bin", 0x2fca90, 0x10
+	.incbin "baserom_jp.gba", 0x598834, 0x10
 
 	.globl gUnknown_8598844
 gUnknown_8598844: @ 0x8598844
-	.incbin "build/data/data.bin", 0x2fcaa0, 0x424
+	.incbin "baserom_jp.gba", 0x598844, 0x424
 
 	.globl gUnknown_8598C68
 gUnknown_8598C68: @ 0x8598C68
-	.incbin "build/data/data.bin", 0x2fcec4, 0x178
+	.incbin "baserom_jp.gba", 0x598c68, 0x178
 
 	.globl gUnknown_8598DE0
 gUnknown_8598DE0: @ 0x8598DE0
-	.incbin "build/data/data.bin", 0x2fd03c, 0x580
+	.incbin "baserom_jp.gba", 0x598de0, 0x580
 
 	.globl gUnknown_8599360
 gUnknown_8599360: @ 0x8599360
-	.incbin "build/data/data.bin", 0x2fd5bc, 0x240
+	.incbin "baserom_jp.gba", 0x599360, 0x240
 
 	.globl gUnknown_85995A0
 gUnknown_85995A0: @ 0x85995A0
-	.incbin "build/data/data.bin", 0x2fd7fc, 0x11e0
+	.incbin "baserom_jp.gba", 0x5995a0, 0x11e0
 
 	.globl gUnknown_859A780
 gUnknown_859A780: @ 0x859A780
@@ -11733,235 +11733,235 @@ gUnknown_859A780: @ 0x859A780
 
 	.globl gUnknown_859A960
 gUnknown_859A960: @ 0x859A960
-	.incbin "build/data/data.bin", 0x2febbc, 0x20
+	.incbin "baserom_jp.gba", 0x59a960, 0x20
 
 	.globl gUnknown_859A980
 gUnknown_859A980: @ 0x859A980
-	.incbin "build/data/data.bin", 0x2febdc, 0x378
+	.incbin "baserom_jp.gba", 0x59a980, 0x378
 
 	.globl gUnknown_859ACF8
 gUnknown_859ACF8: @ 0x859ACF8
-	.incbin "build/data/data.bin", 0x2fef54, 0x25c
+	.incbin "baserom_jp.gba", 0x59acf8, 0x25c
 
 	.globl gUnknown_859AF54
 gUnknown_859AF54: @ 0x859AF54
-	.incbin "build/data/data.bin", 0x2ff1b0, 0x48c
+	.incbin "baserom_jp.gba", 0x59af54, 0x48c
 
 	.globl gUnknown_859B3E0
 gUnknown_859B3E0: @ 0x859B3E0
-	.incbin "build/data/data.bin", 0x2ff63c, 0x2e4
+	.incbin "baserom_jp.gba", 0x59b3e0, 0x2e4
 
 	.globl gUnknown_859B6C4
 gUnknown_859B6C4: @ 0x859B6C4
-	.incbin "build/data/data.bin", 0x2ff920, 0x6a0
+	.incbin "baserom_jp.gba", 0x59b6c4, 0x6a0
 
 	.globl gUnknown_859BD64
 gUnknown_859BD64: @ 0x859BD64
-	.incbin "build/data/data.bin", 0x2fffc0, 0x20
+	.incbin "baserom_jp.gba", 0x59bd64, 0x20
 
 	.globl gUnknown_859BD84
 gUnknown_859BD84: @ 0x859BD84
-	.incbin "build/data/data.bin", 0x2fffe0, 0x20
+	.incbin "baserom_jp.gba", 0x59bd84, 0x20
 
 	.globl gUnknown_859BDA4
 gUnknown_859BDA4: @ 0x859BDA4
-	.incbin "build/data/data.bin", 0x300000, 0x20
+	.incbin "baserom_jp.gba", 0x59bda4, 0x20
 
 	.globl gUnknown_859BDC4
 gUnknown_859BDC4: @ 0x859BDC4
-	.incbin "build/data/data.bin", 0x300020, 0x800
+	.incbin "baserom_jp.gba", 0x59bdc4, 0x800
 
 	.globl gUnknown_859C5C4
 gUnknown_859C5C4: @ 0x859C5C4
-	.incbin "build/data/data.bin", 0x300820, 0x800
+	.incbin "baserom_jp.gba", 0x59c5c4, 0x800
 
 	.globl gUnknown_859CDC4
 gUnknown_859CDC4: @ 0x859CDC4
-	.incbin "build/data/data.bin", 0x301020, 0x820
+	.incbin "baserom_jp.gba", 0x59cdc4, 0x820
 
 	.globl gUnknown_859D5E4
 gUnknown_859D5E4: @ 0x859D5E4
-	.incbin "build/data/data.bin", 0x301840, 0x6b4
+	.incbin "baserom_jp.gba", 0x59d5e4, 0x6b4
 
 	.globl gUnknown_859DC98
 gUnknown_859DC98: @ 0x859DC98
-	.incbin "build/data/data.bin", 0x301ef4, 0x334
+	.incbin "baserom_jp.gba", 0x59dc98, 0x334
 
 	.globl gUnknown_859DFCC
 gUnknown_859DFCC: @ 0x859DFCC
-	.incbin "build/data/data.bin", 0x302228, 0x56c
+	.incbin "baserom_jp.gba", 0x59dfcc, 0x56c
 
 	.globl gUnknown_859E538
 gUnknown_859E538: @ 0x859E538
-	.incbin "build/data/data.bin", 0x302794, 0x318
+	.incbin "baserom_jp.gba", 0x59e538, 0x318
 
 	.globl gUnknown_859E850
 gUnknown_859E850: @ 0x859E850
-	.incbin "build/data/data.bin", 0x302aac, 0x140
+	.incbin "baserom_jp.gba", 0x59e850, 0x140
 
 	.globl gUnknown_859E990
 gUnknown_859E990: @ 0x859E990
-	.incbin "build/data/data.bin", 0x302bec, 0x1c0
+	.incbin "baserom_jp.gba", 0x59e990, 0x1c0
 
 	.globl gUnknown_859EB50
 gUnknown_859EB50: @ 0x859EB50
-	.incbin "build/data/data.bin", 0x302dac, 0x200
+	.incbin "baserom_jp.gba", 0x59eb50, 0x200
 
 	.globl gUnknown_859ED50
 gUnknown_859ED50: @ 0x859ED50
-	.incbin "build/data/data.bin", 0x302fac, 0x200
+	.incbin "baserom_jp.gba", 0x59ed50, 0x200
 
 	.globl gUnknown_859EF50
 gUnknown_859EF50: @ 0x859EF50
-	.incbin "build/data/data.bin", 0x3031ac, 0xa0
+	.incbin "baserom_jp.gba", 0x59ef50, 0xa0
 
 	.globl gUnknown_859EFF0
 gUnknown_859EFF0: @ 0x859EFF0
-	.incbin "build/data/data.bin", 0x30324c, 0x160
+	.incbin "baserom_jp.gba", 0x59eff0, 0x160
 
 	.globl gUnknown_859F150
 gUnknown_859F150: @ 0x859F150
-	.incbin "build/data/data.bin", 0x3033ac, 0x7540
+	.incbin "baserom_jp.gba", 0x59f150, 0x7540
 
 	.globl gUnknown_85A6690
 gUnknown_85A6690: @ 0x85A6690
-	.incbin "build/data/data.bin", 0x30a8ec, 0x1000
+	.incbin "baserom_jp.gba", 0x5a6690, 0x1000
 
 	.globl gUnknown_85A7690
 gUnknown_85A7690: @ 0x85A7690
-	.incbin "build/data/data.bin", 0x30b8ec, 0x20
+	.incbin "baserom_jp.gba", 0x5a7690, 0x20
 
 	.globl gUnknown_85A76B0
 gUnknown_85A76B0: @ 0x85A76B0
-	.incbin "build/data/data.bin", 0x30b90c, 0x68c
+	.incbin "baserom_jp.gba", 0x5a76b0, 0x68c
 
 	.globl gUnknown_85A7D3C
 gUnknown_85A7D3C: @ 0x85A7D3C
-	.incbin "build/data/data.bin", 0x30bf98, 0x2ec
+	.incbin "baserom_jp.gba", 0x5a7d3c, 0x2ec
 
 	.globl gUnknown_85A8028
 gUnknown_85A8028: @ 0x85A8028
-	.incbin "build/data/data.bin", 0x30c284, 0x20
+	.incbin "baserom_jp.gba", 0x5a8028, 0x20
 
 	.globl gUnknown_85A8048
 gUnknown_85A8048: @ 0x85A8048
-	.incbin "build/data/data.bin", 0x30c2a4, 0x15c
+	.incbin "baserom_jp.gba", 0x5a8048, 0x15c
 
 	.globl gUnknown_85A81A4
 gUnknown_85A81A4: @ 0x85A81A4
-	.incbin "build/data/data.bin", 0x30c400, 0x100
+	.incbin "baserom_jp.gba", 0x5a81a4, 0x100
 
 	.globl gUnknown_85A82A4
 gUnknown_85A82A4: @ 0x85A82A4
-	.incbin "build/data/data.bin", 0x30c500, 0xb0
+	.incbin "baserom_jp.gba", 0x5a82a4, 0xb0
 
 	.globl gUnknown_85A8354
 gUnknown_85A8354: @ 0x85A8354
-	.incbin "build/data/data.bin", 0x30c5b0, 0x84
+	.incbin "baserom_jp.gba", 0x5a8354, 0x84
 
 	.globl gUnknown_85A83D8
 gUnknown_85A83D8: @ 0x85A83D8
-	.incbin "build/data/data.bin", 0x30c634, 0x20
+	.incbin "baserom_jp.gba", 0x5a83d8, 0x20
 
 	.globl gUnknown_85A83F8
 gUnknown_85A83F8: @ 0x85A83F8
-	.incbin "build/data/data.bin", 0x30c654, 0xa8
+	.incbin "baserom_jp.gba", 0x5a83f8, 0xa8
 
 	.globl gUnknown_85A84A0
 gUnknown_85A84A0: @ 0x85A84A0
-	.incbin "build/data/data.bin", 0x30c6fc, 0xa8
+	.incbin "baserom_jp.gba", 0x5a84a0, 0xa8
 
 	.globl gUnknown_85A8548
 gUnknown_85A8548: @ 0x85A8548
-	.incbin "build/data/data.bin", 0x30c7a4, 0x10
+	.incbin "baserom_jp.gba", 0x5a8548, 0x10
 
 	.globl gUnknown_85A8558
 gUnknown_85A8558: @ 0x85A8558
-	.incbin "build/data/data.bin", 0x30c7b4, 0xc
+	.incbin "baserom_jp.gba", 0x5a8558, 0xc
 
 	.globl gUnknown_85A8564
 gUnknown_85A8564: @ 0x85A8564
-	.incbin "build/data/data.bin", 0x30c7c0, 0x8
+	.incbin "baserom_jp.gba", 0x5a8564, 0x8
 
 	.globl gUnknown_85A856C
 gUnknown_85A856C: @ 0x85A856C
-	.incbin "build/data/data.bin", 0x30c7c8, 0x8
+	.incbin "baserom_jp.gba", 0x5a856c, 0x8
 
 	.globl gUnknown_85A8574
 gUnknown_85A8574: @ 0x85A8574
-	.incbin "build/data/data.bin", 0x30c7d0, 0x1c
+	.incbin "baserom_jp.gba", 0x5a8574, 0x1c
 
 	.globl gUnknown_85A8590
 gUnknown_85A8590: @ 0x85A8590
-	.incbin "build/data/data.bin", 0x30c7ec, 0x1c
+	.incbin "baserom_jp.gba", 0x5a8590, 0x1c
 
 	.globl gUnknown_85A85AC
 gUnknown_85A85AC: @ 0x85A85AC
-	.incbin "build/data/data.bin", 0x30c808, 0x18
+	.incbin "baserom_jp.gba", 0x5a85ac, 0x18
 
 	.globl gUnknown_85A85C4
 gUnknown_85A85C4: @ 0x85A85C4
-	.incbin "build/data/data.bin", 0x30c820, 0x18
+	.incbin "baserom_jp.gba", 0x5a85c4, 0x18
 
 	.globl gUnknown_85A85DC
 gUnknown_85A85DC: @ 0x85A85DC
-	.incbin "build/data/data.bin", 0x30c838, 0x18
+	.incbin "baserom_jp.gba", 0x5a85dc, 0x18
 
 	.globl gUnknown_85A85F4
 gUnknown_85A85F4: @ 0x85A85F4
-	.incbin "build/data/data.bin", 0x30c850, 0x18
+	.incbin "baserom_jp.gba", 0x5a85f4, 0x18
 
 	.globl gUnknown_85A860C
 gUnknown_85A860C: @ 0x85A860C
-	.incbin "build/data/data.bin", 0x30c868, 0x20
+	.incbin "baserom_jp.gba", 0x5a860c, 0x20
 
 	.globl gUnknown_85A862C
 gUnknown_85A862C: @ 0x85A862C
-	.incbin "build/data/data.bin", 0x30c888, 0xc
+	.incbin "baserom_jp.gba", 0x5a862c, 0xc
 
 	.globl gUnknown_85A8638
 gUnknown_85A8638: @ 0x85A8638
-	.incbin "build/data/data.bin", 0x30c894, 0x4
+	.incbin "baserom_jp.gba", 0x5a8638, 0x4
 
 	.globl gUnknown_85A863C
 gUnknown_85A863C: @ 0x85A863C
-	.incbin "build/data/data.bin", 0x30c898, 0xa
+	.incbin "baserom_jp.gba", 0x5a863c, 0xa
 
 	.globl gUnknown_85A8646
 gUnknown_85A8646: @ 0x85A8646
-	.incbin "build/data/data.bin", 0x30c8a2, 0x6
+	.incbin "baserom_jp.gba", 0x5a8646, 0x6
 
 	.globl gUnknown_85A864C
 gUnknown_85A864C: @ 0x85A864C
-	.incbin "build/data/data.bin", 0x30c8a8, 0x1c
+	.incbin "baserom_jp.gba", 0x5a864c, 0x1c
 
 	.globl gUnknown_85A8668
 gUnknown_85A8668: @ 0x85A8668
-	.incbin "build/data/data.bin", 0x30c8c4, 0x8
+	.incbin "baserom_jp.gba", 0x5a8668, 0x8
 
 	.globl gUnknown_85A8670
 gUnknown_85A8670: @ 0x85A8670
-	.incbin "build/data/data.bin", 0x30c8cc, 0xc
+	.incbin "baserom_jp.gba", 0x5a8670, 0xc
 
 	.globl gUnknown_85A867C
 gUnknown_85A867C: @ 0x85A867C
-	.incbin "build/data/data.bin", 0x30c8d8, 0x28
+	.incbin "baserom_jp.gba", 0x5a867c, 0x28
 
 	.globl gUnknown_85A86A4
 gUnknown_85A86A4: @ 0x85A86A4
-	.incbin "build/data/data.bin", 0x30c900, 0x6
+	.incbin "baserom_jp.gba", 0x5a86a4, 0x6
 
 	.globl gUnknown_85A86AA
 gUnknown_85A86AA: @ 0x85A86AA
-	.incbin "build/data/data.bin", 0x30c906, 0x14
+	.incbin "baserom_jp.gba", 0x5a86aa, 0x14
 
 	.globl gUnknown_85A86BE
 gUnknown_85A86BE: @ 0x85A86BE
-	.incbin "build/data/data.bin", 0x30c91a, 0x16
+	.incbin "baserom_jp.gba", 0x5a86be, 0x16
 
 	.globl gUnknown_85A86D4
 gUnknown_85A86D4: @ 0x85A86D4
-	.incbin "build/data/data.bin", 0x30c930, 0x1c
+	.incbin "baserom_jp.gba", 0x5a86d4, 0x1c
 
 	.globl gUnknown_85A86F0
 gUnknown_85A86F0: @ 0x85A86F0
@@ -11969,135 +11969,135 @@ gUnknown_85A86F0: @ 0x85A86F0
 
 	.globl gUnknown_85A86F4
 gUnknown_85A86F4: @ 0x85A86F4
-	.incbin "build/data/data.bin", 0x30c950, 0x4
+	.incbin "baserom_jp.gba", 0x5a86f4, 0x4
 
 	.globl gUnknown_85A86F8
 gUnknown_85A86F8: @ 0x85A86F8
-	.incbin "build/data/data.bin", 0x30c954, 0xc
+	.incbin "baserom_jp.gba", 0x5a86f8, 0xc
 
 	.globl gUnknown_85A8704
 gUnknown_85A8704: @ 0x85A8704
-	.incbin "build/data/data.bin", 0x30c960, 0x10
+	.incbin "baserom_jp.gba", 0x5a8704, 0x10
 
 	.globl gUnknown_85A8714
 gUnknown_85A8714: @ 0x85A8714
-	.incbin "build/data/data.bin", 0x30c970, 0x2
+	.incbin "baserom_jp.gba", 0x5a8714, 0x2
 
 	.globl gUnknown_85A8716
 gUnknown_85A8716: @ 0x85A8716
-	.incbin "build/data/data.bin", 0x30c972, 0x6
+	.incbin "baserom_jp.gba", 0x5a8716, 0x6
 
 	.globl gUnknown_85A871C
 gUnknown_85A871C: @ 0x85A871C
-	.incbin "build/data/data.bin", 0x30c978, 0xc
+	.incbin "baserom_jp.gba", 0x5a871c, 0xc
 
 	.globl gUnknown_85A8728
 gUnknown_85A8728: @ 0x85A8728
-	.incbin "build/data/data.bin", 0x30c984, 0x8
+	.incbin "baserom_jp.gba", 0x5a8728, 0x8
 
 	.globl gUnknown_85A8730
 gUnknown_85A8730: @ 0x85A8730
-	.incbin "build/data/data.bin", 0x30c98c, 0x4
+	.incbin "baserom_jp.gba", 0x5a8730, 0x4
 
 	.globl gUnknown_85A8734
 gUnknown_85A8734: @ 0x85A8734
-	.incbin "build/data/data.bin", 0x30c990, 0xb4
+	.incbin "baserom_jp.gba", 0x5a8734, 0xb4
 
 	.globl gUnknown_85A87E8
 gUnknown_85A87E8: @ 0x85A87E8
-	.incbin "build/data/data.bin", 0x30ca44, 0x8
+	.incbin "baserom_jp.gba", 0x5a87e8, 0x8
 
 	.globl gUnknown_85A87F0
 gUnknown_85A87F0: @ 0x85A87F0
-	.incbin "build/data/data.bin", 0x30ca4c, 0x20
+	.incbin "baserom_jp.gba", 0x5a87f0, 0x20
 
 	.globl gUnknown_85A8810
 gUnknown_85A8810: @ 0x85A8810
-	.incbin "build/data/data.bin", 0x30ca6c, 0x2c
+	.incbin "baserom_jp.gba", 0x5a8810, 0x2c
 
 	.globl gUnknown_85A883C
 gUnknown_85A883C: @ 0x85A883C
-	.incbin "build/data/data.bin", 0x30ca98, 0x14
+	.incbin "baserom_jp.gba", 0x5a883c, 0x14
 
 	.globl gUnknown_85A8850
 gUnknown_85A8850: @ 0x85A8850
-	.incbin "build/data/data.bin", 0x30caac, 0x10
+	.incbin "baserom_jp.gba", 0x5a8850, 0x10
 
 	.globl gUnknown_85A8860
 gUnknown_85A8860: @ 0x85A8860
-	.incbin "build/data/data.bin", 0x30cabc, 0xc
+	.incbin "baserom_jp.gba", 0x5a8860, 0xc
 
 	.globl gUnknown_85A886C
 gUnknown_85A886C: @ 0x85A886C
-	.incbin "build/data/data.bin", 0x30cac8, 0x14
+	.incbin "baserom_jp.gba", 0x5a886c, 0x14
 
 	.globl gUnknown_85A8880
 gUnknown_85A8880: @ 0x85A8880
-	.incbin "build/data/data.bin", 0x30cadc, 0x46
+	.incbin "baserom_jp.gba", 0x5a8880, 0x46
 
 	.globl gUnknown_85A88C6
 gUnknown_85A88C6: @ 0x85A88C6
-	.incbin "build/data/data.bin", 0x30cb22, 0xe
+	.incbin "baserom_jp.gba", 0x5a88c6, 0xe
 
 	.globl gUnknown_85A88D4
 gUnknown_85A88D4: @ 0x85A88D4
-	.incbin "build/data/data.bin", 0x30cb30, 0x44
+	.incbin "baserom_jp.gba", 0x5a88d4, 0x44
 
 	.globl gUnknown_85A8918
 gUnknown_85A8918: @ 0x85A8918
-	.incbin "build/data/data.bin", 0x30cb74, 0x6c
+	.incbin "baserom_jp.gba", 0x5a8918, 0x6c
 
 	.globl gUnknown_85A8984
 gUnknown_85A8984: @ 0x85A8984
-	.incbin "build/data/data.bin", 0x30cbe0, 0x108
+	.incbin "baserom_jp.gba", 0x5a8984, 0x108
 
 	.globl gUnknown_85A8A8C
 gUnknown_85A8A8C: @ 0x85A8A8C
-	.incbin "build/data/data.bin", 0x30cce8, 0x14
+	.incbin "baserom_jp.gba", 0x5a8a8c, 0x14
 
 	.globl gUnknown_85A8AA0
 gUnknown_85A8AA0: @ 0x85A8AA0
-	.incbin "build/data/data.bin", 0x30ccfc, 0x30
+	.incbin "baserom_jp.gba", 0x5a8aa0, 0x30
 
 	.globl gUnknown_85A8AD0
 gUnknown_85A8AD0: @ 0x85A8AD0
-	.incbin "build/data/data.bin", 0x30cd2c, 0x4b0
+	.incbin "baserom_jp.gba", 0x5a8ad0, 0x4b0
 
 	.globl gUnknown_85A8F80
 gUnknown_85A8F80: @ 0x85A8F80
-	.incbin "build/data/data.bin", 0x30d1dc, 0x500
+	.incbin "baserom_jp.gba", 0x5a8f80, 0x500
 
 	.globl gUnknown_85A9480
 gUnknown_85A9480: @ 0x85A9480
-	.incbin "build/data/data.bin", 0x30d6dc, 0x18
+	.incbin "baserom_jp.gba", 0x5a9480, 0x18
 
 	.globl gUnknown_85A9498
 gUnknown_85A9498: @ 0x85A9498
-	.incbin "build/data/data.bin", 0x30d6f4, 0x10
+	.incbin "baserom_jp.gba", 0x5a9498, 0x10
 
 	.globl gUnknown_85A94A8
 gUnknown_85A94A8: @ 0x85A94A8
-	.incbin "build/data/data.bin", 0x30d704, 0x10
+	.incbin "baserom_jp.gba", 0x5a94a8, 0x10
 
 	.globl gUnknown_85A94B8
 gUnknown_85A94B8: @ 0x85A94B8
-	.incbin "build/data/data.bin", 0x30d714, 0x14
+	.incbin "baserom_jp.gba", 0x5a94b8, 0x14
 
 	.globl gUnknown_85A94CC
 gUnknown_85A94CC: @ 0x85A94CC
-	.incbin "build/data/data.bin", 0x30d728, 0x14
+	.incbin "baserom_jp.gba", 0x5a94cc, 0x14
 
 	.globl gUnknown_85A94E0
 gUnknown_85A94E0: @ 0x85A94E0
-	.incbin "build/data/data.bin", 0x30d73c, 0x23
+	.incbin "baserom_jp.gba", 0x5a94e0, 0x23
 
 	.globl gUnknown_85A9503
 gUnknown_85A9503: @ 0x85A9503
-	.incbin "build/data/data.bin", 0x30d75f, 0x41
+	.incbin "baserom_jp.gba", 0x5a9503, 0x41
 
 	.globl gUnknown_85A9544
 gUnknown_85A9544: @ 0x85A9544
-	.incbin "build/data/data.bin", 0x30d7a0, 0x7d1
+	.incbin "baserom_jp.gba", 0x5a9544, 0x7d1
 
 	.globl gUnknown_85A9D15
 gUnknown_85A9D15: @ 0x85A9D15
@@ -12653,7 +12653,7 @@ gUnknown_85AB04E: @ 0x85AB04E
 
 	.globl gUnknown_85AB055
 gUnknown_85AB055: @ 0x85AB055
-	.incbin "build/data/data.bin", 0x30f2b1, 0x37
+	.incbin "baserom_jp.gba", 0x5ab055, 0x37
 
 	.globl gUnknown_85AB08C
 gUnknown_85AB08C: @ 0x85AB08C
@@ -12732,11 +12732,11 @@ gUnknown_85AB3BD: @ 0x85AB3BD
 
 	.globl gUnknown_85AB3DC
 gUnknown_85AB3DC: @ 0x85AB3DC
-	.incbin "build/data/data.bin", 0x30f638, 0x5c4
+	.incbin "baserom_jp.gba", 0x5ab3dc, 0x5c4
 
 	.globl gUnknown_85AB9A0
 gUnknown_85AB9A0: @ 0x85AB9A0
-	.incbin "build/data/data.bin", 0x30fbfc, 0x14e
+	.incbin "baserom_jp.gba", 0x5ab9a0, 0x14e
 
 	.globl gUnknown_85ABAEE
 gUnknown_85ABAEE: @ 0x85ABAEE
@@ -12801,7 +12801,7 @@ gUnknown_85ABBC9: @ 0x85ABBC9
 
 	.globl gUnknown_85ABBD8
 gUnknown_85ABBD8: @ 0x85ABBD8
-	.incbin "build/data/data.bin", 0x30fe34, 0x60
+	.incbin "baserom_jp.gba", 0x5abbd8, 0x60
 
 	.globl gUnknown_85ABC38
 gUnknown_85ABC38: @ 0x85ABC38
@@ -12902,7 +12902,7 @@ gUnknown_85ABC9A: @ 0x85ABC9A
 
 	.globl gUnknown_85ABD18
 gUnknown_85ABD18: @ 0x85ABD18
-	.incbin "build/data/data.bin", 0x30ff74, 0x24
+	.incbin "baserom_jp.gba", 0x5abd18, 0x24
 
 	.globl gUnknown_85ABD3C
 gUnknown_85ABD3C: @ 0x85ABD3C
@@ -12963,7 +12963,7 @@ gUnknown_85ABE13: @ 0x85ABE13
 
 	.globl gUnknown_85ABE2F
 gUnknown_85ABE2F: @ 0x85ABE2F
-	.incbin "build/data/data.bin", 0x31008b, 0x21d
+	.incbin "baserom_jp.gba", 0x5abe2f, 0x21d
 
 	.globl gUnknown_85AC04C
 gUnknown_85AC04C: @ 0x85AC04C
@@ -13006,195 +13006,195 @@ gUnknown_85AC12D: @ 0x85AC12D
 
 	.globl gUnknown_85AC146
 gUnknown_85AC146: @ 0x85AC146
-	.incbin "build/data/data.bin", 0x3103a2, 0x322
+	.incbin "baserom_jp.gba", 0x5ac146, 0x322
 
 	.globl gUnknown_85AC468
 gUnknown_85AC468: @ 0x85AC468
-	.incbin "build/data/data.bin", 0x3106c4, 0x8
+	.incbin "baserom_jp.gba", 0x5ac468, 0x8
 
 	.globl gUnknown_85AC470
 gUnknown_85AC470: @ 0x85AC470
-	.incbin "build/data/data.bin", 0x3106cc, 0x4
+	.incbin "baserom_jp.gba", 0x5ac470, 0x4
 
 	.globl gUnknown_85AC474
 gUnknown_85AC474: @ 0x85AC474
-	.incbin "build/data/data.bin", 0x3106d0, 0x10
+	.incbin "baserom_jp.gba", 0x5ac474, 0x10
 
 	.globl gUnknown_85AC484
 gUnknown_85AC484: @ 0x85AC484
-	.incbin "build/data/data.bin", 0x3106e0, 0x158
+	.incbin "baserom_jp.gba", 0x5ac484, 0x158
 
 	.globl gUnknown_85AC5DC
 gUnknown_85AC5DC: @ 0x85AC5DC
-	.incbin "build/data/data.bin", 0x310838, 0x184
+	.incbin "baserom_jp.gba", 0x5ac5dc, 0x184
 
 	.globl gUnknown_85AC760
 gUnknown_85AC760: @ 0x85AC760
-	.incbin "build/data/data.bin", 0x3109bc, 0x1c4
+	.incbin "baserom_jp.gba", 0x5ac760, 0x1c4
 
 	.globl gUnknown_85AC924
 gUnknown_85AC924: @ 0x85AC924
-	.incbin "build/data/data.bin", 0x310b80, 0x14
+	.incbin "baserom_jp.gba", 0x5ac924, 0x14
 
 	.globl gUnknown_85AC938
 gUnknown_85AC938: @ 0x85AC938
-	.incbin "build/data/data.bin", 0x310b94, 0x24
+	.incbin "baserom_jp.gba", 0x5ac938, 0x24
 
 	.globl gUnknown_85AC95C
 gUnknown_85AC95C: @ 0x85AC95C
-	.incbin "build/data/data.bin", 0x310bb8, 0x20
+	.incbin "baserom_jp.gba", 0x5ac95c, 0x20
 
 	.globl gUnknown_85AC97C
 gUnknown_85AC97C: @ 0x85AC97C
-	.incbin "build/data/data.bin", 0x310bd8, 0x28
+	.incbin "baserom_jp.gba", 0x5ac97c, 0x28
 
 	.globl gUnknown_85AC9A4
 gUnknown_85AC9A4: @ 0x85AC9A4
-	.incbin "build/data/data.bin", 0x310c00, 0x30
+	.incbin "baserom_jp.gba", 0x5ac9a4, 0x30
 
 	.globl gUnknown_85AC9D4
 gUnknown_85AC9D4: @ 0x85AC9D4
-	.incbin "build/data/data.bin", 0x310c30, 0x18
+	.incbin "baserom_jp.gba", 0x5ac9d4, 0x18
 
 	.globl gUnknown_85AC9EC
 gUnknown_85AC9EC: @ 0x85AC9EC
-	.incbin "build/data/data.bin", 0x310c48, 0x2
+	.incbin "baserom_jp.gba", 0x5ac9ec, 0x2
 
 	.globl gUnknown_85AC9EE
 gUnknown_85AC9EE: @ 0x85AC9EE
-	.incbin "build/data/data.bin", 0x310c4a, 0x4
+	.incbin "baserom_jp.gba", 0x5ac9ee, 0x4
 
 	.globl gUnknown_85AC9F2
 gUnknown_85AC9F2: @ 0x85AC9F2
-	.incbin "build/data/data.bin", 0x310c4e, 0x8
+	.incbin "baserom_jp.gba", 0x5ac9f2, 0x8
 
 	.globl gUnknown_85AC9FA
 gUnknown_85AC9FA: @ 0x85AC9FA
-	.incbin "build/data/data.bin", 0x310c56, 0x6
+	.incbin "baserom_jp.gba", 0x5ac9fa, 0x6
 
 	.globl gUnknown_85ACA00
 gUnknown_85ACA00: @ 0x85ACA00
-	.incbin "build/data/data.bin", 0x310c5c, 0x8
+	.incbin "baserom_jp.gba", 0x5aca00, 0x8
 
 	.globl gUnknown_85ACA08
 gUnknown_85ACA08: @ 0x85ACA08
-	.incbin "build/data/data.bin", 0x310c64, 0x38
+	.incbin "baserom_jp.gba", 0x5aca08, 0x38
 
 	.globl gUnknown_85ACA40
 gUnknown_85ACA40: @ 0x85ACA40
-	.incbin "build/data/data.bin", 0x310c9c, 0x6
+	.incbin "baserom_jp.gba", 0x5aca40, 0x6
 
 	.globl gUnknown_85ACA46
 gUnknown_85ACA46: @ 0x85ACA46
-	.incbin "build/data/data.bin", 0x310ca2, 0x4
+	.incbin "baserom_jp.gba", 0x5aca46, 0x4
 
 	.globl gUnknown_85ACA4A
 gUnknown_85ACA4A: @ 0x85ACA4A
-	.incbin "build/data/data.bin", 0x310ca6, 0xa
+	.incbin "baserom_jp.gba", 0x5aca4a, 0xa
 
 	.globl gUnknown_85ACA54
 gUnknown_85ACA54: @ 0x85ACA54
-	.incbin "build/data/data.bin", 0x310cb0, 0x8
+	.incbin "baserom_jp.gba", 0x5aca54, 0x8
 
 	.globl gUnknown_85ACA5C
 gUnknown_85ACA5C: @ 0x85ACA5C
-	.incbin "build/data/data.bin", 0x310cb8, 0xc
+	.incbin "baserom_jp.gba", 0x5aca5c, 0xc
 
 	.globl gUnknown_85ACA68
 gUnknown_85ACA68: @ 0x85ACA68
-	.incbin "build/data/data.bin", 0x310cc4, 0xa
+	.incbin "baserom_jp.gba", 0x5aca68, 0xa
 
 	.globl gUnknown_85ACA72
 gUnknown_85ACA72: @ 0x85ACA72
-	.incbin "build/data/data.bin", 0x310cce, 0x96
+	.incbin "baserom_jp.gba", 0x5aca72, 0x96
 
 	.globl gUnknown_85ACB08
 gUnknown_85ACB08: @ 0x85ACB08
-	.incbin "build/data/data.bin", 0x310d64, 0x220
+	.incbin "baserom_jp.gba", 0x5acb08, 0x220
 
 	.globl gUnknown_85ACD28
 gUnknown_85ACD28: @ 0x85ACD28
-	.incbin "build/data/data.bin", 0x310f84, 0x380
+	.incbin "baserom_jp.gba", 0x5acd28, 0x380
 
 	.globl gUnknown_85AD0A8
 gUnknown_85AD0A8: @ 0x85AD0A8
-	.incbin "build/data/data.bin", 0x311304, 0xb0
+	.incbin "baserom_jp.gba", 0x5ad0a8, 0xb0
 
 	.globl gUnknown_85AD158
 gUnknown_85AD158: @ 0x85AD158
-	.incbin "build/data/data.bin", 0x3113b4, 0x38
+	.incbin "baserom_jp.gba", 0x5ad158, 0x38
 
 	.globl gUnknown_85AD190
 gUnknown_85AD190: @ 0x85AD190
-	.incbin "build/data/data.bin", 0x3113ec, 0x18
+	.incbin "baserom_jp.gba", 0x5ad190, 0x18
 
 	.globl gUnknown_85AD1A8
 gUnknown_85AD1A8: @ 0x85AD1A8
-	.incbin "build/data/data.bin", 0x311404, 0x18
+	.incbin "baserom_jp.gba", 0x5ad1a8, 0x18
 
 	.globl gUnknown_85AD1C0
 gUnknown_85AD1C0: @ 0x85AD1C0
-	.incbin "build/data/data.bin", 0x31141c, 0x28
+	.incbin "baserom_jp.gba", 0x5ad1c0, 0x28
 
 	.globl gUnknown_85AD1E8
 gUnknown_85AD1E8: @ 0x85AD1E8
-	.incbin "build/data/data.bin", 0x311444, 0x50
+	.incbin "baserom_jp.gba", 0x5ad1e8, 0x50
 
 	.globl gUnknown_85AD238
 gUnknown_85AD238: @ 0x85AD238
-	.incbin "build/data/data.bin", 0x311494, 0x30
+	.incbin "baserom_jp.gba", 0x5ad238, 0x30
 
 	.globl gUnknown_85AD268
 gUnknown_85AD268: @ 0x85AD268
-	.incbin "build/data/data.bin", 0x3114c4, 0x2c
+	.incbin "baserom_jp.gba", 0x5ad268, 0x2c
 
 	.globl gUnknown_85AD294
 gUnknown_85AD294: @ 0x85AD294
-	.incbin "build/data/data.bin", 0x3114f0, 0x18
+	.incbin "baserom_jp.gba", 0x5ad294, 0x18
 
 	.globl gUnknown_85AD2AC
 gUnknown_85AD2AC: @ 0x85AD2AC
-	.incbin "build/data/data.bin", 0x311508, 0x4
+	.incbin "baserom_jp.gba", 0x5ad2ac, 0x4
 
 	.globl gUnknown_85AD2B0
 gUnknown_85AD2B0: @ 0x85AD2B0
-	.incbin "build/data/data.bin", 0x31150c, 0x8
+	.incbin "baserom_jp.gba", 0x5ad2b0, 0x8
 
 	.globl gUnknown_85AD2B8
 gUnknown_85AD2B8: @ 0x85AD2B8
-	.incbin "build/data/data.bin", 0x311514, 0x140
+	.incbin "baserom_jp.gba", 0x5ad2b8, 0x140
 
 	.globl gUnknown_85AD3F8
 gUnknown_85AD3F8: @ 0x85AD3F8
-	.incbin "build/data/data.bin", 0x311654, 0x15c
+	.incbin "baserom_jp.gba", 0x5ad3f8, 0x15c
 
 	.globl gUnknown_85AD554
 gUnknown_85AD554: @ 0x85AD554
-	.incbin "build/data/data.bin", 0x3117b0, 0x20
+	.incbin "baserom_jp.gba", 0x5ad554, 0x20
 
 	.globl gUnknown_85AD574
 gUnknown_85AD574: @ 0x85AD574
-	.incbin "build/data/data.bin", 0x3117d0, 0x18
+	.incbin "baserom_jp.gba", 0x5ad574, 0x18
 
 	.globl gUnknown_85AD58C
 gUnknown_85AD58C: @ 0x85AD58C
-	.incbin "build/data/data.bin", 0x3117e8, 0x68
+	.incbin "baserom_jp.gba", 0x5ad58c, 0x68
 
 	.globl gUnknown_85AD5F4
 gUnknown_85AD5F4: @ 0x85AD5F4
-	.incbin "build/data/data.bin", 0x311850, 0x60
+	.incbin "baserom_jp.gba", 0x5ad5f4, 0x60
 
 	.globl gUnknown_85AD654
 gUnknown_85AD654: @ 0x85AD654
-	.incbin "build/data/data.bin", 0x3118b0, 0x30
+	.incbin "baserom_jp.gba", 0x5ad654, 0x30
 
 	.globl gUnknown_85AD684
 gUnknown_85AD684: @ 0x85AD684
-	.incbin "build/data/data.bin", 0x3118e0, 0x14c
+	.incbin "baserom_jp.gba", 0x5ad684, 0x14c
 
 	.globl gUnknown_85AD7D0
 gUnknown_85AD7D0: @ 0x85AD7D0
-	.incbin "build/data/data.bin", 0x311a2c, 0x1d0
+	.incbin "baserom_jp.gba", 0x5ad7d0, 0x1d0
 
 	.globl gUnknown_85AD9A0
 gUnknown_85AD9A0: @ 0x85AD9A0
@@ -13242,83 +13242,83 @@ gUnknown_85ADAAF: @ 0x85ADAAF
 
 	.globl gUnknown_85ADAC9
 gUnknown_85ADAC9: @ 0x85ADAC9
-	.incbin "build/data/data.bin", 0x311d25, 0x2b
+	.incbin "baserom_jp.gba", 0x5adac9, 0x2b
 
 	.globl gUnknown_85ADAF4
 gUnknown_85ADAF4: @ 0x85ADAF4
-	.incbin "build/data/data.bin", 0x311d50, 0x8
+	.incbin "baserom_jp.gba", 0x5adaf4, 0x8
 
 	.globl gUnknown_85ADAFC
 gUnknown_85ADAFC: @ 0x85ADAFC
-	.incbin "build/data/data.bin", 0x311d58, 0x8
+	.incbin "baserom_jp.gba", 0x5adafc, 0x8
 
 	.globl gUnknown_85ADB04
 gUnknown_85ADB04: @ 0x85ADB04
-	.incbin "build/data/data.bin", 0x311d60, 0x10
+	.incbin "baserom_jp.gba", 0x5adb04, 0x10
 
 	.globl gUnknown_85ADB14
 gUnknown_85ADB14: @ 0x85ADB14
-	.incbin "build/data/data.bin", 0x311d70, 0x40
+	.incbin "baserom_jp.gba", 0x5adb14, 0x40
 
 	.globl gUnknown_85ADB54
 gUnknown_85ADB54: @ 0x85ADB54
-	.incbin "build/data/data.bin", 0x311db0, 0x18
+	.incbin "baserom_jp.gba", 0x5adb54, 0x18
 
 	.globl gUnknown_85ADB6C
 gUnknown_85ADB6C: @ 0x85ADB6C
-	.incbin "build/data/data.bin", 0x311dc8, 0x8
+	.incbin "baserom_jp.gba", 0x5adb6c, 0x8
 
 	.globl gUnknown_85ADB74
 gUnknown_85ADB74: @ 0x85ADB74
-	.incbin "build/data/data.bin", 0x311dd0, 0x80
+	.incbin "baserom_jp.gba", 0x5adb74, 0x80
 
 	.globl gUnknown_85ADBF4
 gUnknown_85ADBF4: @ 0x85ADBF4
-	.incbin "build/data/data.bin", 0x311e50, 0x6e1c
+	.incbin "baserom_jp.gba", 0x5adbf4, 0x6e1c
 
 	.globl gUnknown_85B4A10
 gUnknown_85B4A10: @ 0x85B4A10
-	.incbin "build/data/data.bin", 0x318c6c, 0x3cf0
+	.incbin "baserom_jp.gba", 0x5b4a10, 0x3cf0
 
 	.globl gUnknown_85B8700
 gUnknown_85B8700: @ 0x85B8700
-	.incbin "build/data/data.bin", 0x31c95c, 0x3720
+	.incbin "baserom_jp.gba", 0x5b8700, 0x3720
 
 	.globl gUnknown_85BBE20
 gUnknown_85BBE20: @ 0x85BBE20
-	.incbin "build/data/data.bin", 0x32007c, 0x1e
+	.incbin "baserom_jp.gba", 0x5bbe20, 0x1e
 
 	.globl gUnknown_85BBE3E
 gUnknown_85BBE3E: @ 0x85BBE3E
-	.incbin "build/data/data.bin", 0x32009a, 0x14
+	.incbin "baserom_jp.gba", 0x5bbe3e, 0x14
 
 	.globl gUnknown_85BBE52
 gUnknown_85BBE52: @ 0x85BBE52
-	.incbin "build/data/data.bin", 0x3200ae, 0x1e
+	.incbin "baserom_jp.gba", 0x5bbe52, 0x1e
 
 	.globl gUnknown_85BBE70
 gUnknown_85BBE70: @ 0x85BBE70
-	.incbin "build/data/data.bin", 0x3200cc, 0x14
+	.incbin "baserom_jp.gba", 0x5bbe70, 0x14
 
 	.globl gUnknown_85BBE84
 gUnknown_85BBE84: @ 0x85BBE84
-	.incbin "build/data/data.bin", 0x3200e0, 0x5c0
+	.incbin "baserom_jp.gba", 0x5bbe84, 0x5c0
 
 	.globl gUnknown_85BC444
 gUnknown_85BC444: @ 0x85BC444
-	.incbin "build/data/data.bin", 0x3206a0, 0x190
+	.incbin "baserom_jp.gba", 0x5bc444, 0x190
 
 	.globl gUnknown_85BC5D4
 gUnknown_85BC5D4: @ 0x85BC5D4
-	.incbin "build/data/data.bin", 0x320830, 0x40
+	.incbin "baserom_jp.gba", 0x5bc5d4, 0x40
 
 	.globl gUnknown_85BC614
 gUnknown_85BC614: @ 0x85BC614
-	.incbin "build/data/data.bin", 0x320870, 0x5
+	.incbin "baserom_jp.gba", 0x5bc614, 0x5
 
 	.globl gUnknown_85BC619
 gUnknown_85BC619: @ 0x85BC619
-	.incbin "build/data/data.bin", 0x320875, 0x7
+	.incbin "baserom_jp.gba", 0x5bc619, 0x7
 
 	.globl gUnknown_85BC620
 gUnknown_85BC620: @ 0x85BC620
@@ -13390,7 +13390,7 @@ gUnknown_85BC620: @ 0x85BC620
 
 	.globl gUnknown_85BC958
 gUnknown_85BC958: @ 0x85BC958
-	.incbin "build/data/data.bin", 0x320bb4, 0x618
+	.incbin "baserom_jp.gba", 0x5bc958, 0x618
 
 	.globl gUnknown_85BCF70
 gUnknown_85BCF70: @ 0x85BCF70
@@ -13507,27 +13507,27 @@ gUnknown_85BCF70: @ 0x85BCF70
 
 	.globl gUnknown_85BD554
 gUnknown_85BD554: @ 0x85BD554
-	.incbin "build/data/data.bin", 0x3217b0, 0x618
+	.incbin "baserom_jp.gba", 0x5bd554, 0x618
 
 	.globl gUnknown_85BDB6C
 gUnknown_85BDB6C: @ 0x85BDB6C
-	.incbin "build/data/data.bin", 0x321dc8, 0x45c
+	.incbin "baserom_jp.gba", 0x5bdb6c, 0x45c
 
 	.globl gUnknown_85BDFC8
 gUnknown_85BDFC8: @ 0x85BDFC8
-	.incbin "build/data/data.bin", 0x322224, 0x618
+	.incbin "baserom_jp.gba", 0x5bdfc8, 0x618
 
 	.globl gUnknown_85BE5E0
 gUnknown_85BE5E0: @ 0x85BE5E0
-	.incbin "build/data/data.bin", 0x32283c, 0x2d0
+	.incbin "baserom_jp.gba", 0x5be5e0, 0x2d0
 
 	.globl gUnknown_85BE8B0
 gUnknown_85BE8B0: @ 0x85BE8B0
-	.incbin "build/data/data.bin", 0x322b0c, 0x40
+	.incbin "baserom_jp.gba", 0x5be8b0, 0x40
 
 	.globl gUnknown_85BE8F0
 gUnknown_85BE8F0: @ 0x85BE8F0
-	.incbin "build/data/data.bin", 0x322b4c, 0x20
+	.incbin "baserom_jp.gba", 0x5be8f0, 0x20
 
 	.globl gUnknown_85BE910
 gUnknown_85BE910: @ 0x85BE910
@@ -13536,351 +13536,351 @@ gUnknown_85BE910: @ 0x85BE910
 
 	.globl gUnknown_85BE930
 gUnknown_85BE930: @ 0x85BE930
-	.incbin "build/data/data.bin", 0x322b8c, 0xa
+	.incbin "baserom_jp.gba", 0x5be930, 0xa
 
 	.globl gUnknown_85BE93A
 gUnknown_85BE93A: @ 0x85BE93A
-	.incbin "build/data/data.bin", 0x322b96, 0x4
+	.incbin "baserom_jp.gba", 0x5be93a, 0x4
 
 	.globl gUnknown_85BE93E
 gUnknown_85BE93E: @ 0x85BE93E
-	.incbin "build/data/data.bin", 0x322b9a, 0x20
+	.incbin "baserom_jp.gba", 0x5be93e, 0x20
 
 	.globl gUnknown_85BE95E
 gUnknown_85BE95E: @ 0x85BE95E
-	.incbin "build/data/data.bin", 0x322bba, 0x28
+	.incbin "baserom_jp.gba", 0x5be95e, 0x28
 
 	.globl gUnknown_85BE986
 gUnknown_85BE986: @ 0x85BE986
-	.incbin "build/data/data.bin", 0x322be2, 0xc
+	.incbin "baserom_jp.gba", 0x5be986, 0xc
 
 	.globl gUnknown_85BE992
 gUnknown_85BE992: @ 0x85BE992
-	.incbin "build/data/data.bin", 0x322bee, 0x22e
+	.incbin "baserom_jp.gba", 0x5be992, 0x22e
 
 	.globl gUnknown_85BEBC0
 gUnknown_85BEBC0: @ 0x85BEBC0
-	.incbin "build/data/data.bin", 0x322e1c, 0xcc0
+	.incbin "baserom_jp.gba", 0x5bebc0, 0xcc0
 
 	.globl gUnknown_85BF880
 gUnknown_85BF880: @ 0x85BF880
-	.incbin "build/data/data.bin", 0x323adc, 0x40
+	.incbin "baserom_jp.gba", 0x5bf880, 0x40
 
 	.globl gUnknown_85BF8C0
 gUnknown_85BF8C0: @ 0x85BF8C0
-	.incbin "build/data/data.bin", 0x323b1c, 0xe0
+	.incbin "baserom_jp.gba", 0x5bf8c0, 0xe0
 
 	.globl gUnknown_85BF9A0
 gUnknown_85BF9A0: @ 0x85BF9A0
-	.incbin "build/data/data.bin", 0x323bfc, 0xac
+	.incbin "baserom_jp.gba", 0x5bf9a0, 0xac
 
 	.globl gUnknown_85BFA4C
 gUnknown_85BFA4C: @ 0x85BFA4C
-	.incbin "build/data/data.bin", 0x323ca8, 0x60
+	.incbin "baserom_jp.gba", 0x5bfa4c, 0x60
 
 	.globl gUnknown_85BFAAC
 gUnknown_85BFAAC: @ 0x85BFAAC
-	.incbin "build/data/data.bin", 0x323d08, 0x784
+	.incbin "baserom_jp.gba", 0x5bfaac, 0x784
 
 	.globl gUnknown_85C0230
 gUnknown_85C0230: @ 0x85C0230
-	.incbin "build/data/data.bin", 0x32448c, 0x1e0
+	.incbin "baserom_jp.gba", 0x5c0230, 0x1e0
 
 	.globl gUnknown_85C0410
 gUnknown_85C0410: @ 0x85C0410
-	.incbin "build/data/data.bin", 0x32466c, 0x78
+	.incbin "baserom_jp.gba", 0x5c0410, 0x78
 
 	.globl gUnknown_85C0488
 gUnknown_85C0488: @ 0x85C0488
-	.incbin "build/data/data.bin", 0x3246e4, 0x50c
+	.incbin "baserom_jp.gba", 0x5c0488, 0x50c
 
 	.globl gUnknown_85C0994
 gUnknown_85C0994: @ 0x85C0994
-	.incbin "build/data/data.bin", 0x324bf0, 0x14
+	.incbin "baserom_jp.gba", 0x5c0994, 0x14
 
 	.globl gUnknown_85C09A8
 gUnknown_85C09A8: @ 0x85C09A8
-	.incbin "build/data/data.bin", 0x324c04, 0x5
+	.incbin "baserom_jp.gba", 0x5c09a8, 0x5
 
 	.globl gUnknown_85C09AD
 gUnknown_85C09AD: @ 0x85C09AD
-	.incbin "build/data/data.bin", 0x324c09, 0x3
+	.incbin "baserom_jp.gba", 0x5c09ad, 0x3
 
 	.globl gUnknown_85C09B0
 gUnknown_85C09B0: @ 0x85C09B0
-	.incbin "build/data/data.bin", 0x324c0c, 0x10
+	.incbin "baserom_jp.gba", 0x5c09b0, 0x10
 
 	.globl gUnknown_85C09C0
 gUnknown_85C09C0: @ 0x85C09C0
-	.incbin "build/data/data.bin", 0x324c1c, 0x20
+	.incbin "baserom_jp.gba", 0x5c09c0, 0x20
 
 	.globl gUnknown_85C09E0
 gUnknown_85C09E0: @ 0x85C09E0
-	.incbin "build/data/data.bin", 0x324c3c, 0x8
+	.incbin "baserom_jp.gba", 0x5c09e0, 0x8
 
 	.globl gUnknown_85C09E8
 gUnknown_85C09E8: @ 0x85C09E8
-	.incbin "build/data/data.bin", 0x324c44, 0x14
+	.incbin "baserom_jp.gba", 0x5c09e8, 0x14
 
 	.globl gUnknown_85C09FC
 gUnknown_85C09FC: @ 0x85C09FC
-	.incbin "build/data/data.bin", 0x324c58, 0x8
+	.incbin "baserom_jp.gba", 0x5c09fc, 0x8
 
 	.globl gUnknown_85C0A04
 gUnknown_85C0A04: @ 0x85C0A04
-	.incbin "build/data/data.bin", 0x324c60, 0x8
+	.incbin "baserom_jp.gba", 0x5c0a04, 0x8
 
 	.globl gUnknown_85C0A0C
 gUnknown_85C0A0C: @ 0x85C0A0C
-	.incbin "build/data/data.bin", 0x324c68, 0x34
+	.incbin "baserom_jp.gba", 0x5c0a0c, 0x34
 
 	.globl gUnknown_85C0A40
 gUnknown_85C0A40: @ 0x85C0A40
-	.incbin "build/data/data.bin", 0x324c9c, 0x44
+	.incbin "baserom_jp.gba", 0x5c0a40, 0x44
 
 	.globl gUnknown_85C0A84
 gUnknown_85C0A84: @ 0x85C0A84
-	.incbin "build/data/data.bin", 0x324ce0, 0x18
+	.incbin "baserom_jp.gba", 0x5c0a84, 0x18
 
 	.globl gUnknown_85C0A9C
 gUnknown_85C0A9C: @ 0x85C0A9C
-	.incbin "build/data/data.bin", 0x324cf8, 0x8
+	.incbin "baserom_jp.gba", 0x5c0a9c, 0x8
 
 	.globl gUnknown_85C0AA4
 gUnknown_85C0AA4: @ 0x85C0AA4
-	.incbin "build/data/data.bin", 0x324d00, 0xe4
+	.incbin "baserom_jp.gba", 0x5c0aa4, 0xe4
 
 	.globl gUnknown_85C0B88
 gUnknown_85C0B88: @ 0x85C0B88
-	.incbin "build/data/data.bin", 0x324de4, 0x10
+	.incbin "baserom_jp.gba", 0x5c0b88, 0x10
 
 	.globl gUnknown_85C0B98
 gUnknown_85C0B98: @ 0x85C0B98
-	.incbin "build/data/data.bin", 0x324df4, 0x20
+	.incbin "baserom_jp.gba", 0x5c0b98, 0x20
 
 	.globl gUnknown_85C0BB8
 gUnknown_85C0BB8: @ 0x85C0BB8
-	.incbin "build/data/data.bin", 0x324e14, 0x4
+	.incbin "baserom_jp.gba", 0x5c0bb8, 0x4
 
 	.globl gUnknown_85C0BBC
 gUnknown_85C0BBC: @ 0x85C0BBC
-	.incbin "build/data/data.bin", 0x324e18, 0x4
+	.incbin "baserom_jp.gba", 0x5c0bbc, 0x4
 
 	.globl gUnknown_85C0BC0
 gUnknown_85C0BC0: @ 0x85C0BC0
-	.incbin "build/data/data.bin", 0x324e1c, 0x20
+	.incbin "baserom_jp.gba", 0x5c0bc0, 0x20
 
 	.globl gUnknown_85C0BE0
 gUnknown_85C0BE0: @ 0x85C0BE0
-	.incbin "build/data/data.bin", 0x324e3c, 0x8
+	.incbin "baserom_jp.gba", 0x5c0be0, 0x8
 
 	.globl gUnknown_85C0BE8
 gUnknown_85C0BE8: @ 0x85C0BE8
-	.incbin "build/data/data.bin", 0x324e44, 0x20
+	.incbin "baserom_jp.gba", 0x5c0be8, 0x20
 
 	.globl gUnknown_85C0C08
 gUnknown_85C0C08: @ 0x85C0C08
-	.incbin "build/data/data.bin", 0x324e64, 0x8
+	.incbin "baserom_jp.gba", 0x5c0c08, 0x8
 
 	.globl gUnknown_85C0C10
 gUnknown_85C0C10: @ 0x85C0C10
-	.incbin "build/data/data.bin", 0x324e6c, 0x8
+	.incbin "baserom_jp.gba", 0x5c0c10, 0x8
 
 	.globl gUnknown_85C0C18
 gUnknown_85C0C18: @ 0x85C0C18
-	.incbin "build/data/data.bin", 0x324e74, 0x8
+	.incbin "baserom_jp.gba", 0x5c0c18, 0x8
 
 	.globl gUnknown_85C0C20
 gUnknown_85C0C20: @ 0x85C0C20
-	.incbin "build/data/data.bin", 0x324e7c, 0x8
+	.incbin "baserom_jp.gba", 0x5c0c20, 0x8
 
 	.globl gUnknown_85C0C28
 gUnknown_85C0C28: @ 0x85C0C28
-	.incbin "build/data/data.bin", 0x324e84, 0x18
+	.incbin "baserom_jp.gba", 0x5c0c28, 0x18
 
 	.globl gUnknown_85C0C40
 gUnknown_85C0C40: @ 0x85C0C40
-	.incbin "build/data/data.bin", 0x324e9c, 0x28
+	.incbin "baserom_jp.gba", 0x5c0c40, 0x28
 
 	.globl gUnknown_85C0C68
 gUnknown_85C0C68: @ 0x85C0C68
-	.incbin "build/data/data.bin", 0x324ec4, 0x8
+	.incbin "baserom_jp.gba", 0x5c0c68, 0x8
 
 	.globl gUnknown_85C0C70
 gUnknown_85C0C70: @ 0x85C0C70
-	.incbin "build/data/data.bin", 0x324ecc, 0x4
+	.incbin "baserom_jp.gba", 0x5c0c70, 0x4
 
 	.globl gUnknown_85C0C74
 gUnknown_85C0C74: @ 0x85C0C74
-	.incbin "build/data/data.bin", 0x324ed0, 0x20
+	.incbin "baserom_jp.gba", 0x5c0c74, 0x20
 
 	.globl gUnknown_85C0C94
 gUnknown_85C0C94: @ 0x85C0C94
-	.incbin "build/data/data.bin", 0x324ef0, 0x264
+	.incbin "baserom_jp.gba", 0x5c0c94, 0x264
 
 	.globl gUnknown_85C0EF8
 gUnknown_85C0EF8: @ 0x85C0EF8
-	.incbin "build/data/data.bin", 0x325154, 0x780
+	.incbin "baserom_jp.gba", 0x5c0ef8, 0x780
 
 	.globl gUnknown_85C1678
 gUnknown_85C1678: @ 0x85C1678
-	.incbin "build/data/data.bin", 0x3258d4, 0x200
+	.incbin "baserom_jp.gba", 0x5c1678, 0x200
 
 	.globl gUnknown_85C1878
 gUnknown_85C1878: @ 0x85C1878
-	.incbin "build/data/data.bin", 0x325ad4, 0x3b4
+	.incbin "baserom_jp.gba", 0x5c1878, 0x3b4
 
 	.globl gUnknown_85C1C2C
 gUnknown_85C1C2C: @ 0x85C1C2C
-	.incbin "build/data/data.bin", 0x325e88, 0x334
+	.incbin "baserom_jp.gba", 0x5c1c2c, 0x334
 
 	.globl gUnknown_85C1F60
 gUnknown_85C1F60: @ 0x85C1F60
-	.incbin "build/data/data.bin", 0x3261bc, 0x2f0
+	.incbin "baserom_jp.gba", 0x5c1f60, 0x2f0
 
 	.globl gUnknown_85C2250
 gUnknown_85C2250: @ 0x85C2250
-	.incbin "build/data/data.bin", 0x3264ac, 0x218
+	.incbin "baserom_jp.gba", 0x5c2250, 0x218
 
 	.globl gUnknown_85C2468
 gUnknown_85C2468: @ 0x85C2468
-	.incbin "build/data/data.bin", 0x3266c4, 0x2170
+	.incbin "baserom_jp.gba", 0x5c2468, 0x2170
 
 	.globl gUnknown_85C45D8
 gUnknown_85C45D8: @ 0x85C45D8
-	.incbin "build/data/data.bin", 0x328834, 0x200
+	.incbin "baserom_jp.gba", 0x5c45d8, 0x200
 
 	.globl gUnknown_85C47D8
 gUnknown_85C47D8: @ 0x85C47D8
-	.incbin "build/data/data.bin", 0x328a34, 0x130
+	.incbin "baserom_jp.gba", 0x5c47d8, 0x130
 
 	.globl gUnknown_85C4908
 gUnknown_85C4908: @ 0x85C4908
-	.incbin "build/data/data.bin", 0x328b64, 0x1220
+	.incbin "baserom_jp.gba", 0x5c4908, 0x1220
 
 	.globl gUnknown_85C5B28
 gUnknown_85C5B28: @ 0x85C5B28
-	.incbin "build/data/data.bin", 0x329d84, 0x10
+	.incbin "baserom_jp.gba", 0x5c5b28, 0x10
 
 	.globl gUnknown_85C5B38
 gUnknown_85C5B38: @ 0x85C5B38
-	.incbin "build/data/data.bin", 0x329d94, 0x34
+	.incbin "baserom_jp.gba", 0x5c5b38, 0x34
 
 	.globl gUnknown_85C5B6C
 gUnknown_85C5B6C: @ 0x85C5B6C
-	.incbin "build/data/data.bin", 0x329dc8, 0x18
+	.incbin "baserom_jp.gba", 0x5c5b6c, 0x18
 
 	.globl gUnknown_85C5B84
 gUnknown_85C5B84: @ 0x85C5B84
-	.incbin "build/data/data.bin", 0x329de0, 0x18
+	.incbin "baserom_jp.gba", 0x5c5b84, 0x18
 
 	.globl gUnknown_85C5B9C
 gUnknown_85C5B9C: @ 0x85C5B9C
-	.incbin "build/data/data.bin", 0x329df8, 0x20
+	.incbin "baserom_jp.gba", 0x5c5b9c, 0x20
 
 	.globl gUnknown_85C5BBC
 gUnknown_85C5BBC: @ 0x85C5BBC
-	.incbin "build/data/data.bin", 0x329e18, 0x38
+	.incbin "baserom_jp.gba", 0x5c5bbc, 0x38
 
 	.globl gUnknown_85C5BF4
 gUnknown_85C5BF4: @ 0x85C5BF4
-	.incbin "build/data/data.bin", 0x329e50, 0x64
+	.incbin "baserom_jp.gba", 0x5c5bf4, 0x64
 
 	.globl gUnknown_85C5C58
 gUnknown_85C5C58: @ 0x85C5C58
-	.incbin "build/data/data.bin", 0x329eb4, 0x38
+	.incbin "baserom_jp.gba", 0x5c5c58, 0x38
 
 	.globl gUnknown_85C5C90
 gUnknown_85C5C90: @ 0x85C5C90
-	.incbin "build/data/data.bin", 0x329eec, 0x18
+	.incbin "baserom_jp.gba", 0x5c5c90, 0x18
 
 	.globl gUnknown_85C5CA8
 gUnknown_85C5CA8: @ 0x85C5CA8
-	.incbin "build/data/data.bin", 0x329f04, 0x10
+	.incbin "baserom_jp.gba", 0x5c5ca8, 0x10
 
 	.globl gUnknown_85C5CB8
 gUnknown_85C5CB8: @ 0x85C5CB8
-	.incbin "build/data/data.bin", 0x329f14, 0x48
+	.incbin "baserom_jp.gba", 0x5c5cb8, 0x48
 
 	.globl gUnknown_85C5D00
 gUnknown_85C5D00: @ 0x85C5D00
-	.incbin "build/data/data.bin", 0x329f5c, 0x18
+	.incbin "baserom_jp.gba", 0x5c5d00, 0x18
 
 	.globl gUnknown_85C5D18
 gUnknown_85C5D18: @ 0x85C5D18
-	.incbin "build/data/data.bin", 0x329f74, 0x24
+	.incbin "baserom_jp.gba", 0x5c5d18, 0x24
 
 	.globl gUnknown_85C5D3C
 gUnknown_85C5D3C: @ 0x85C5D3C
-	.incbin "build/data/data.bin", 0x329f98, 0x10
+	.incbin "baserom_jp.gba", 0x5c5d3c, 0x10
 
 	.globl gUnknown_85C5D4C
 gUnknown_85C5D4C: @ 0x85C5D4C
-	.incbin "build/data/data.bin", 0x329fa8, 0x10
+	.incbin "baserom_jp.gba", 0x5c5d4c, 0x10
 
 	.globl gUnknown_85C5D5C
 gUnknown_85C5D5C: @ 0x85C5D5C
-	.incbin "build/data/data.bin", 0x329fb8, 0x6c
+	.incbin "baserom_jp.gba", 0x5c5d5c, 0x6c
 
 	.globl gUnknown_85C5DC8
 gUnknown_85C5DC8: @ 0x85C5DC8
-	.incbin "build/data/data.bin", 0x32a024, 0x50
+	.incbin "baserom_jp.gba", 0x5c5dc8, 0x50
 
 	.globl gUnknown_85C5E18
 gUnknown_85C5E18: @ 0x85C5E18
-	.incbin "build/data/data.bin", 0x32a074, 0x60
+	.incbin "baserom_jp.gba", 0x5c5e18, 0x60
 
 	.globl gUnknown_85C5E78
 gUnknown_85C5E78: @ 0x85C5E78
-	.incbin "build/data/data.bin", 0x32a0d4, 0xd0
+	.incbin "baserom_jp.gba", 0x5c5e78, 0xd0
 
 	.globl gUnknown_85C5F48
 gUnknown_85C5F48: @ 0x85C5F48
-	.incbin "build/data/data.bin", 0x32a1a4, 0xb4
+	.incbin "baserom_jp.gba", 0x5c5f48, 0xb4
 
 	.globl gUnknown_85C5FFC
 gUnknown_85C5FFC: @ 0x85C5FFC
-	.incbin "build/data/data.bin", 0x32a258, 0x14
+	.incbin "baserom_jp.gba", 0x5c5ffc, 0x14
 
 	.globl gUnknown_85C6010
 gUnknown_85C6010: @ 0x85C6010
-	.incbin "build/data/data.bin", 0x32a26c, 0x30
+	.incbin "baserom_jp.gba", 0x5c6010, 0x30
 
 	.globl gUnknown_85C6040
 gUnknown_85C6040: @ 0x85C6040
-	.incbin "build/data/data.bin", 0x32a29c, 0x18
+	.incbin "baserom_jp.gba", 0x5c6040, 0x18
 
 	.globl gUnknown_85C6058
 gUnknown_85C6058: @ 0x85C6058
-	.incbin "build/data/data.bin", 0x32a2b4, 0x20
+	.incbin "baserom_jp.gba", 0x5c6058, 0x20
 
 	.globl gUnknown_85C6078
 gUnknown_85C6078: @ 0x85C6078
-	.incbin "build/data/data.bin", 0x32a2d4, 0x18
+	.incbin "baserom_jp.gba", 0x5c6078, 0x18
 
 	.globl gUnknown_85C6090
 gUnknown_85C6090: @ 0x85C6090
-	.incbin "build/data/data.bin", 0x32a2ec, 0x10
+	.incbin "baserom_jp.gba", 0x5c6090, 0x10
 
 	.globl gUnknown_85C60A0
 gUnknown_85C60A0: @ 0x85C60A0
-	.incbin "build/data/data.bin", 0x32a2fc, 0x10
+	.incbin "baserom_jp.gba", 0x5c60a0, 0x10
 
 	.globl gUnknown_85C60B0
 gUnknown_85C60B0: @ 0x85C60B0
-	.incbin "build/data/data.bin", 0x32a30c, 0x34
+	.incbin "baserom_jp.gba", 0x5c60b0, 0x34
 
 	.globl gUnknown_85C60E4
 gUnknown_85C60E4: @ 0x85C60E4
-	.incbin "build/data/data.bin", 0x32a340, 0x18
+	.incbin "baserom_jp.gba", 0x5c60e4, 0x18
 
 	.globl gUnknown_85C60FC
 gUnknown_85C60FC: @ 0x85C60FC
-	.incbin "build/data/data.bin", 0x32a358, 0x10
+	.incbin "baserom_jp.gba", 0x5c60fc, 0x10
 
 	.globl gUnknown_85C610C
 gUnknown_85C610C: @ 0x85C610C
-	.incbin "build/data/data.bin", 0x32a368, 0x10
+	.incbin "baserom_jp.gba", 0x5c610c, 0x10
 
 	.globl gUnknown_85C611C
 gUnknown_85C611C: @ 0x85C611C
@@ -13888,107 +13888,107 @@ gUnknown_85C611C: @ 0x85C611C
 
 	.globl gUnknown_85C6124
 gUnknown_85C6124: @ 0x85C6124
-	.incbin "build/data/data.bin", 0x32a380, 0x8
+	.incbin "baserom_jp.gba", 0x5c6124, 0x8
 
 	.globl gUnknown_85C612C
 gUnknown_85C612C: @ 0x85C612C
-	.incbin "build/data/data.bin", 0x32a388, 0x18
+	.incbin "baserom_jp.gba", 0x5c612c, 0x18
 
 	.globl gUnknown_85C6144
 gUnknown_85C6144: @ 0x85C6144
-	.incbin "build/data/data.bin", 0x32a3a0, 0xc
+	.incbin "baserom_jp.gba", 0x5c6144, 0xc
 
 	.globl gUnknown_85C6150
 gUnknown_85C6150: @ 0x85C6150
-	.incbin "build/data/data.bin", 0x32a3ac, 0x60
+	.incbin "baserom_jp.gba", 0x5c6150, 0x60
 
 	.globl gUnknown_85C61B0
 gUnknown_85C61B0: @ 0x85C61B0
-	.incbin "build/data/data.bin", 0x32a40c, 0xc0
+	.incbin "baserom_jp.gba", 0x5c61b0, 0xc0
 
 	.globl gUnknown_85C6270
 gUnknown_85C6270: @ 0x85C6270
-	.incbin "build/data/data.bin", 0x32a4cc, 0xc
+	.incbin "baserom_jp.gba", 0x5c6270, 0xc
 
 	.globl gUnknown_85C627C
 gUnknown_85C627C: @ 0x85C627C
-	.incbin "build/data/data.bin", 0x32a4d8, 0x30
+	.incbin "baserom_jp.gba", 0x5c627c, 0x30
 
 	.globl gUnknown_85C62AC
 gUnknown_85C62AC: @ 0x85C62AC
-	.incbin "build/data/data.bin", 0x32a508, 0x60
+	.incbin "baserom_jp.gba", 0x5c62ac, 0x60
 
 	.globl gUnknown_85C630C
 gUnknown_85C630C: @ 0x85C630C
-	.incbin "build/data/data.bin", 0x32a568, 0xc0
+	.incbin "baserom_jp.gba", 0x5c630c, 0xc0
 
 	.globl gUnknown_85C63CC
 gUnknown_85C63CC: @ 0x85C63CC
-	.incbin "build/data/data.bin", 0x32a628, 0x64
+	.incbin "baserom_jp.gba", 0x5c63cc, 0x64
 
 	.globl gUnknown_85C6430
 gUnknown_85C6430: @ 0x85C6430
-	.incbin "build/data/data.bin", 0x32a68c, 0xc
+	.incbin "baserom_jp.gba", 0x5c6430, 0xc
 
 	.globl gUnknown_85C643C
 gUnknown_85C643C: @ 0x85C643C
-	.incbin "build/data/data.bin", 0x32a698, 0x8
+	.incbin "baserom_jp.gba", 0x5c643c, 0x8
 
 	.globl gUnknown_85C6444
 gUnknown_85C6444: @ 0x85C6444
-	.incbin "build/data/data.bin", 0x32a6a0, 0x4
+	.incbin "baserom_jp.gba", 0x5c6444, 0x4
 
 	.globl gUnknown_85C6448
 gUnknown_85C6448: @ 0x85C6448
-	.incbin "build/data/data.bin", 0x32a6a4, 0x8
+	.incbin "baserom_jp.gba", 0x5c6448, 0x8
 
 	.globl gUnknown_85C6450
 gUnknown_85C6450: @ 0x85C6450
-	.incbin "build/data/data.bin", 0x32a6ac, 0x10
+	.incbin "baserom_jp.gba", 0x5c6450, 0x10
 
 	.globl gUnknown_85C6460
 gUnknown_85C6460: @ 0x85C6460
-	.incbin "build/data/data.bin", 0x32a6bc, 0x10
+	.incbin "baserom_jp.gba", 0x5c6460, 0x10
 
 	.globl gUnknown_85C6470
 gUnknown_85C6470: @ 0x85C6470
-	.incbin "build/data/data.bin", 0x32a6cc, 0x6
+	.incbin "baserom_jp.gba", 0x5c6470, 0x6
 
 	.globl gUnknown_85C6476
 gUnknown_85C6476: @ 0x85C6476
-	.incbin "build/data/data.bin", 0x32a6d2, 0x2a
+	.incbin "baserom_jp.gba", 0x5c6476, 0x2a
 
 	.globl gUnknown_85C64A0
 gUnknown_85C64A0: @ 0x85C64A0
-	.incbin "build/data/data.bin", 0x32a6fc, 0x18
+	.incbin "baserom_jp.gba", 0x5c64a0, 0x18
 
 	.globl gUnknown_85C64B8
 gUnknown_85C64B8: @ 0x85C64B8
-	.incbin "build/data/data.bin", 0x32a714, 0xd4
+	.incbin "baserom_jp.gba", 0x5c64b8, 0xd4
 
 	.globl gUnknown_85C658C
 gUnknown_85C658C: @ 0x85C658C
-	.incbin "build/data/data.bin", 0x32a7e8, 0x18
+	.incbin "baserom_jp.gba", 0x5c658c, 0x18
 
 	.globl gUnknown_85C65A4
 gUnknown_85C65A4: @ 0x85C65A4
-	.incbin "build/data/data.bin", 0x32a800, 0x20
+	.incbin "baserom_jp.gba", 0x5c65a4, 0x20
 
 	.globl gUnknown_85C65C4
 gUnknown_85C65C4: @ 0x85C65C4
-	.incbin "build/data/data.bin", 0x32a820, 0x1cc
+	.incbin "baserom_jp.gba", 0x5c65c4, 0x1cc
 
 	.globl gUnknown_85C6790
 gUnknown_85C6790: @ 0x85C6790
-	.incbin "build/data/data.bin", 0x32a9ec, 0x1c
+	.incbin "baserom_jp.gba", 0x5c6790, 0x1c
 
 	.globl gUnknown_85C67AC
 gUnknown_85C67AC: @ 0x85C67AC
-	.incbin "build/data/data.bin", 0x32aa08, 0x80
+	.incbin "baserom_jp.gba", 0x5c67ac, 0x80
 
 	.globl gUnknown_85C682C
 gUnknown_85C682C: @ 0x85C682C
-	.incbin "build/data/data.bin", 0x32aa88, 0x43c
+	.incbin "baserom_jp.gba", 0x5c682c, 0x43c
 
 	.globl gUnknown_85C6C68
 gUnknown_85C6C68: @ 0x85C6C68
@@ -13998,71 +13998,71 @@ gUnknown_85C6C68: @ 0x85C6C68
 
 	.globl gUnknown_85C6C77
 gUnknown_85C6C77: @ 0x85C6C77
-	.incbin "build/data/data.bin", 0x32aed3, 0xf
+	.incbin "baserom_jp.gba", 0x5c6c77, 0xf
 
 	.globl gUnknown_85C6C86
 gUnknown_85C6C86: @ 0x85C6C86
-	.incbin "build/data/data.bin", 0x32aee2, 0xf
+	.incbin "baserom_jp.gba", 0x5c6c86, 0xf
 
 	.globl gUnknown_85C6C95
 gUnknown_85C6C95: @ 0x85C6C95
-	.incbin "build/data/data.bin", 0x32aef1, 0xf
+	.incbin "baserom_jp.gba", 0x5c6c95, 0xf
 
 	.globl gUnknown_85C6CA4
 gUnknown_85C6CA4: @ 0x85C6CA4
-	.incbin "build/data/data.bin", 0x32af00, 0x8ec
+	.incbin "baserom_jp.gba", 0x5c6ca4, 0x8ec
 
 	.globl gUnknown_85C7590
 gUnknown_85C7590: @ 0x85C7590
-	.incbin "build/data/data.bin", 0x32b7ec, 0x384
+	.incbin "baserom_jp.gba", 0x5c7590, 0x384
 
 	.globl gUnknown_85C7914
 gUnknown_85C7914: @ 0x85C7914
-	.incbin "build/data/data.bin", 0x32bb70, 0x4
+	.incbin "baserom_jp.gba", 0x5c7914, 0x4
 
 	.globl gUnknown_85C7918
 gUnknown_85C7918: @ 0x85C7918
-	.incbin "build/data/data.bin", 0x32bb74, 0x10
+	.incbin "baserom_jp.gba", 0x5c7918, 0x10
 
 	.globl gUnknown_85C7928
 gUnknown_85C7928: @ 0x85C7928
-	.incbin "build/data/data.bin", 0x32bb84, 0x54
+	.incbin "baserom_jp.gba", 0x5c7928, 0x54
 
 	.globl gUnknown_85C797C
 gUnknown_85C797C: @ 0x85C797C
-	.incbin "build/data/data.bin", 0x32bbd8, 0x40
+	.incbin "baserom_jp.gba", 0x5c797c, 0x40
 
 	.globl gUnknown_85C79BC
 gUnknown_85C79BC: @ 0x85C79BC
-	.incbin "build/data/data.bin", 0x32bc18, 0xc
+	.incbin "baserom_jp.gba", 0x5c79bc, 0xc
 
 	.globl gUnknown_85C79C8
 gUnknown_85C79C8: @ 0x85C79C8
-	.incbin "build/data/data.bin", 0x32bc24, 0x10
+	.incbin "baserom_jp.gba", 0x5c79c8, 0x10
 
 	.globl gUnknown_85C79D8
 gUnknown_85C79D8: @ 0x85C79D8
-	.incbin "build/data/data.bin", 0x32bc34, 0x3c
+	.incbin "baserom_jp.gba", 0x5c79d8, 0x3c
 
 	.globl gUnknown_85C7A14
 gUnknown_85C7A14: @ 0x85C7A14
-	.incbin "build/data/data.bin", 0x32bc70, 0x18
+	.incbin "baserom_jp.gba", 0x5c7a14, 0x18
 
 	.globl gUnknown_85C7A2C
 gUnknown_85C7A2C: @ 0x85C7A2C
-	.incbin "build/data/data.bin", 0x32bc88, 0x8
+	.incbin "baserom_jp.gba", 0x5c7a2c, 0x8
 
 	.globl gUnknown_85C7A34
 gUnknown_85C7A34: @ 0x85C7A34
-	.incbin "build/data/data.bin", 0x32bc90, 0x40
+	.incbin "baserom_jp.gba", 0x5c7a34, 0x40
 
 	.globl gUnknown_85C7A74
 gUnknown_85C7A74: @ 0x85C7A74
-	.incbin "build/data/data.bin", 0x32bcd0, 0x73c
+	.incbin "baserom_jp.gba", 0x5c7a74, 0x73c
 
 	.globl gUnknown_85C81B0
 gUnknown_85C81B0: @ 0x85C81B0
-	.incbin "build/data/data.bin", 0x32c40c, 0x9f8
+	.incbin "baserom_jp.gba", 0x5c81b0, 0x9f8
 
 	.globl gUnknown_85C8BA8
 gUnknown_85C8BA8: @ 0x85C8BA8
@@ -14093,19 +14093,19 @@ gUnknown_85C8BF2: @ 0x85C8BF2
 
 	.globl gUnknown_85C8C00
 gUnknown_85C8C00: @ 0x85C8C00
-	.incbin "build/data/data.bin", 0x32ce5c, 0x8
+	.incbin "baserom_jp.gba", 0x5c8c00, 0x8
 
 	.globl gUnknown_85C8C08
 gUnknown_85C8C08: @ 0x85C8C08
-	.incbin "build/data/data.bin", 0x32ce64, 0x8
+	.incbin "baserom_jp.gba", 0x5c8c08, 0x8
 
 	.globl gUnknown_85C8C10
 gUnknown_85C8C10: @ 0x85C8C10
-	.incbin "build/data/data.bin", 0x32ce6c, 0x10
+	.incbin "baserom_jp.gba", 0x5c8c10, 0x10
 
 	.globl gUnknown_85C8C20
 gUnknown_85C8C20: @ 0x85C8C20
-	.incbin "build/data/data.bin", 0x32ce7c, 0x4
+	.incbin "baserom_jp.gba", 0x5c8c20, 0x4
 
 	.globl gUnknown_85C8C24
 gUnknown_85C8C24: @ 0x85C8C24
@@ -14230,15 +14230,15 @@ gUnknown_85C8D93: @ 0x85C8D93
 
 	.globl gUnknown_85C8DEC
 gUnknown_85C8DEC: @ 0x85C8DEC
-	.incbin "build/data/data.bin", 0x32d048, 0x7c
+	.incbin "baserom_jp.gba", 0x5c8dec, 0x7c
 
 	.globl gUnknown_85C8E68
 gUnknown_85C8E68: @ 0x85C8E68
-	.incbin "build/data/data.bin", 0x32d0c4, 0x14
+	.incbin "baserom_jp.gba", 0x5c8e68, 0x14
 
 	.globl gUnknown_85C8E7C
 gUnknown_85C8E7C: @ 0x85C8E7C
-	.incbin "build/data/data.bin", 0x32d0d8, 0x10
+	.incbin "baserom_jp.gba", 0x5c8e7c, 0x10
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
@@ -14372,7 +14372,7 @@ gUnknown_85C929D: @ 0x85C929D
 
 	.globl gUnknown_85C9311
 gUnknown_85C9311: @ 0x85C9311
-	.incbin "build/data/data.bin", 0x32d56d, 0x17
+	.incbin "baserom_jp.gba", 0x5c9311, 0x17
 
 	.globl gUnknown_85C9328
 gUnknown_85C9328: @ 0x85C9328
@@ -14653,11 +14653,11 @@ gUnknown_85C96CE: @ 0x85C96CE
 
 	.globl gUnknown_85C96F8
 gUnknown_85C96F8: @ 0x85C96F8
-	.incbin "build/data/data.bin", 0x32d954, 0x30
+	.incbin "baserom_jp.gba", 0x5c96f8, 0x30
 
 	.globl gUnknown_85C9728
 gUnknown_85C9728: @ 0x85C9728
-	.incbin "build/data/data.bin", 0x32d984, 0x10
+	.incbin "baserom_jp.gba", 0x5c9728, 0x10
 
 	.globl gUnknown_85C9738
 gUnknown_85C9738: @ 0x85C9738
@@ -15188,7 +15188,7 @@ gUnknown_85CA273: @ 0x85CA273
 
 	.globl gUnknown_85CA276
 gUnknown_85CA276: @ 0x85CA276
-	.incbin "build/data/data.bin", 0x32e4d2, 0x1e
+	.incbin "baserom_jp.gba", 0x5ca276, 0x1e
 
 	.globl gUnknown_85CA294
 gUnknown_85CA294: @ 0x85CA294
@@ -15287,7 +15287,7 @@ gUnknown_85CA3CF: @ 0x85CA3CF
 
 	.globl gUnknown_85CA3D8
 gUnknown_85CA3D8: @ 0x85CA3D8
-	.incbin "build/data/data.bin", 0x32e634, 0x1
+	.incbin "baserom_jp.gba", 0x5ca3d8, 0x1
 
 	.globl gUnknown_85CA3D9
 gUnknown_85CA3D9: @ 0x85CA3D9
@@ -16660,15 +16660,15 @@ gUnknown_85CC874: @ 0x85CC874
 
 	.globl gUnknown_85CC888
 gUnknown_85CC888: @ 0x85CC888
-	.incbin "build/data/data.bin", 0x330ae4, 0x140
+	.incbin "baserom_jp.gba", 0x5cc888, 0x140
 
 	.globl gUnknown_85CC9C8
 gUnknown_85CC9C8: @ 0x85CC9C8
-	.incbin "build/data/data.bin", 0x330c24, 0xc
+	.incbin "baserom_jp.gba", 0x5cc9c8, 0xc
 
 	.globl gUnknown_85CC9D4
 gUnknown_85CC9D4: @ 0x85CC9D4
-	.incbin "build/data/data.bin", 0x330c30, 0x1c
+	.incbin "baserom_jp.gba", 0x5cc9d4, 0x1c
 
 	.globl gUnknown_85CC9F0
 gUnknown_85CC9F0: @ 0x85CC9F0
@@ -16676,7 +16676,7 @@ gUnknown_85CC9F0: @ 0x85CC9F0
 
 	.globl gUnknown_85CC9F4
 gUnknown_85CC9F4: @ 0x85CC9F4
-	.incbin "build/data/data.bin", 0x330c50, 0x8
+	.incbin "baserom_jp.gba", 0x5cc9f4, 0x8
 
 	.globl gUnknown_85CC9FC
 gUnknown_85CC9FC: @ 0x85CC9FC
@@ -16684,15 +16684,15 @@ gUnknown_85CC9FC: @ 0x85CC9FC
 
 	.globl gUnknown_85CCA04
 gUnknown_85CCA04: @ 0x85CCA04
-	.incbin "build/data/data.bin", 0x330c60, 0x4
+	.incbin "baserom_jp.gba", 0x5cca04, 0x4
 
 	.globl gUnknown_85CCA08
 gUnknown_85CCA08: @ 0x85CCA08
-	.incbin "build/data/data.bin", 0x330c64, 0x4
+	.incbin "baserom_jp.gba", 0x5cca08, 0x4
 
 	.globl gUnknown_85CCA0C
 gUnknown_85CCA0C: @ 0x85CCA0C
-	.incbin "build/data/data.bin", 0x330c68, 0x8
+	.incbin "baserom_jp.gba", 0x5cca0c, 0x8
 
 	.globl gUnknown_85CCA14
 gUnknown_85CCA14: @ 0x85CCA14
@@ -16700,11 +16700,11 @@ gUnknown_85CCA14: @ 0x85CCA14
 
 	.globl gUnknown_85CCA18
 gUnknown_85CCA18: @ 0x85CCA18
-	.incbin "build/data/data.bin", 0x330c74, 0x8
+	.incbin "baserom_jp.gba", 0x5cca18, 0x8
 
 	.globl gUnknown_85CCA20
 gUnknown_85CCA20: @ 0x85CCA20
-	.incbin "build/data/data.bin", 0x330c7c, 0x8
+	.incbin "baserom_jp.gba", 0x5cca20, 0x8
 
 	.globl gUnknown_85CCA28
 gUnknown_85CCA28: @ 0x85CCA28
@@ -16712,7 +16712,7 @@ gUnknown_85CCA28: @ 0x85CCA28
 
 	.globl gUnknown_85CCA30
 gUnknown_85CCA30: @ 0x85CCA30
-	.incbin "build/data/data.bin", 0x330c8c, 0x10
+	.incbin "baserom_jp.gba", 0x5cca30, 0x10
 
 	.globl gUnknown_85CCA40
 gUnknown_85CCA40: @ 0x85CCA40
@@ -16723,11 +16723,11 @@ gUnknown_85CCA40: @ 0x85CCA40
 
 	.globl gUnknown_85CCA70
 gUnknown_85CCA70: @ 0x85CCA70
-	.incbin "build/data/data.bin", 0x330ccc, 0xc
+	.incbin "baserom_jp.gba", 0x5cca70, 0xc
 
 	.globl gUnknown_85CCA7C
 gUnknown_85CCA7C: @ 0x85CCA7C
-	.incbin "build/data/data.bin", 0x330cd8, 0x10
+	.incbin "baserom_jp.gba", 0x5cca7c, 0x10
 
 	.globl gUnknown_85CCA8C
 gUnknown_85CCA8C: @ 0x85CCA8C
@@ -16987,26 +16987,26 @@ gJPText_PleaseWaitAMoment: @ 0x85CD036
 	.globl gJPText_WriteErrorUnableToSaveData
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
 	.string "かきこ{SE_FAILURE}エラ{SE_M_PAY_DAY}です\nデータ{SE_SAVE}ほぞ{SE_WARP_OUT}できませんでした$"
-	.incbin "build/data/data.bin", 0x3312bd, 0x7
+	.incbin "baserom_jp.gba", 0x5cd061, 0x7
 	.globl gUnknown_85CD068
 gUnknown_85CD068: @ 0x85CD068
-	.incbin "build/data/data.bin", 0x3312c4, 0x10
+	.incbin "baserom_jp.gba", 0x5cd068, 0x10
 
 	.globl gUnknown_85CD078
 gUnknown_85CD078: @ 0x85CD078
-	.incbin "build/data/data.bin", 0x3312d4, 0x20
+	.incbin "baserom_jp.gba", 0x5cd078, 0x20
 
 	.globl gUnknown_85CD098
 gUnknown_85CD098: @ 0x85CD098
-	.incbin "build/data/data.bin", 0x3312f4, 0x8
+	.incbin "baserom_jp.gba", 0x5cd098, 0x8
 
 	.globl gUnknown_85CD0A0
 gUnknown_85CD0A0: @ 0x85CD0A0
-	.incbin "build/data/data.bin", 0x3312fc, 0x28
+	.incbin "baserom_jp.gba", 0x5cd0a0, 0x28
 
 	.globl gUnknown_85CD0C8
 gUnknown_85CD0C8: @ 0x85CD0C8
-	.incbin "build/data/data.bin", 0x331324, 0x14
+	.incbin "baserom_jp.gba", 0x5cd0c8, 0x14
 
 	.globl gUnknown_85CD0DC
 gUnknown_85CD0DC: @ 0x85CD0DC
@@ -17048,99 +17048,99 @@ gUnknown_85CD19F: @ 0x85CD19F
 
 	.globl gUnknown_85CD204
 gUnknown_85CD204: @ 0x85CD204
-	.incbin "build/data/data.bin", 0x331460, 0x4
+	.incbin "baserom_jp.gba", 0x5cd204, 0x4
 
 	.globl gUnknown_85CD208
 gUnknown_85CD208: @ 0x85CD208
-	.incbin "build/data/data.bin", 0x331464, 0x18
+	.incbin "baserom_jp.gba", 0x5cd208, 0x18
 
 	.globl sClockOamData
 sClockOamData: @ 0x85CD220
-	.incbin "build/data/data.bin", 0x33147c, 0x8
+	.incbin "baserom_jp.gba", 0x5cd220, 0x8
 
 	.globl sSaveFailedBgTemplates
 sSaveFailedBgTemplates: @ 0x85CD228
-	.incbin "build/data/data.bin", 0x331484, 0xc
+	.incbin "baserom_jp.gba", 0x5cd228, 0xc
 
 	.globl sDummyWindowTemplate
 sDummyWindowTemplate: @ 0x85CD234
-	.incbin "build/data/data.bin", 0x331490, 0x8
+	.incbin "baserom_jp.gba", 0x5cd234, 0x8
 
 	.globl sWindowTemplate_Text
 sWindowTemplate_Text: @ 0x85CD23C
-	.incbin "build/data/data.bin", 0x331498, 0x8
+	.incbin "baserom_jp.gba", 0x5cd23c, 0x8
 
 	.globl sWindowTemplate_Clock
 sWindowTemplate_Clock: @ 0x85CD244
-	.incbin "build/data/data.bin", 0x3314a0, 0x8
+	.incbin "baserom_jp.gba", 0x5cd244, 0x8
 
 	.globl sClockFrames
 sClockFrames: @ 0x85CD24C
-	.incbin "build/data/data.bin", 0x3314a8, 0x18
+	.incbin "baserom_jp.gba", 0x5cd24c, 0x18
 
 	.globl sSaveFailedClockPal
 sSaveFailedClockPal: @ 0x85CD264
-	.incbin "build/data/data.bin", 0x3314c0, 0x20
+	.incbin "baserom_jp.gba", 0x5cd264, 0x20
 
 	.globl sSaveFailedClockGfx
 sSaveFailedClockGfx: @ 0x85CD284
-	.incbin "build/data/data.bin", 0x3314e0, 0x90
+	.incbin "baserom_jp.gba", 0x5cd284, 0x90
 
 	.globl gUnknown_85CD314
 gUnknown_85CD314: @ 0x85CD314
-	.incbin "build/data/data.bin", 0x331570, 0x48
+	.incbin "baserom_jp.gba", 0x5cd314, 0x48
 
 	.globl gUnknown_85CD35C
 gUnknown_85CD35C: @ 0x85CD35C
-	.incbin "build/data/data.bin", 0x3315b8, 0x32
+	.incbin "baserom_jp.gba", 0x5cd35c, 0x32
 
 	.globl gUnknown_85CD38E
 gUnknown_85CD38E: @ 0x85CD38E
-	.incbin "build/data/data.bin", 0x3315ea, 0x12
+	.incbin "baserom_jp.gba", 0x5cd38e, 0x12
 
 	.globl gUnknown_85CD3A0
 gUnknown_85CD3A0: @ 0x85CD3A0
-	.incbin "build/data/data.bin", 0x3315fc, 0x5fc
+	.incbin "baserom_jp.gba", 0x5cd3a0, 0x5fc
 
 	.globl gUnknown_85CD99C
 gUnknown_85CD99C: @ 0x85CD99C
-	.incbin "build/data/data.bin", 0x331bf8, 0x54
+	.incbin "baserom_jp.gba", 0x5cd99c, 0x54
 
 	.globl gUnknown_85CD9F0
 gUnknown_85CD9F0: @ 0x85CD9F0
-	.incbin "build/data/data.bin", 0x331c4c, 0x8
+	.incbin "baserom_jp.gba", 0x5cd9f0, 0x8
 
 	.globl gUnknown_85CD9F8
 gUnknown_85CD9F8: @ 0x85CD9F8
-	.incbin "build/data/data.bin", 0x331c54, 0x10
+	.incbin "baserom_jp.gba", 0x5cd9f8, 0x10
 
 	.globl gUnknown_85CDA08
 gUnknown_85CDA08: @ 0x85CDA08
-	.incbin "build/data/data.bin", 0x331c64, 0x48
+	.incbin "baserom_jp.gba", 0x5cda08, 0x48
 
 	.globl gUnknown_85CDA50
 gUnknown_85CDA50: @ 0x85CDA50
-	.incbin "build/data/data.bin", 0x331cac, 0xb4
+	.incbin "baserom_jp.gba", 0x5cda50, 0xb4
 
 	.globl gUnknown_85CDB04
 gUnknown_85CDB04: @ 0x85CDB04
-	.incbin "build/data/data.bin", 0x331d60, 0x4
+	.incbin "baserom_jp.gba", 0x5cdb04, 0x4
 
 	.globl gUnknown_85CDB08
 gUnknown_85CDB08: @ 0x85CDB08
-	.incbin "build/data/data.bin", 0x331d64, 0x4
+	.incbin "baserom_jp.gba", 0x5cdb08, 0x4
 
 	.globl gUnknown_85CDB0C
 gUnknown_85CDB0C: @ 0x85CDB0C
-	.incbin "build/data/data.bin", 0x331d68, 0x34
+	.incbin "baserom_jp.gba", 0x5cdb0c, 0x34
 
 	.globl gUnknown_85CDB40
 gUnknown_85CDB40: @ 0x85CDB40
-	.incbin "build/data/data.bin", 0x331d9c, 0x8
+	.incbin "baserom_jp.gba", 0x5cdb40, 0x8
 
 	.globl gUnknown_85CDB48
 gUnknown_85CDB48: @ 0x85CDB48
-	.incbin "build/data/data.bin", 0x331da4, 0x18
+	.incbin "baserom_jp.gba", 0x5cdb48, 0x18
 
 	.globl gUnknown_85CDB60
 gUnknown_85CDB60: @ 0x85CDB60
@@ -17148,243 +17148,243 @@ gUnknown_85CDB60: @ 0x85CDB60
 
 	.globl gUnknown_85CDB7A
 gUnknown_85CDB7A: @ 0x85CDB7A
-	.incbin "build/data/data.bin", 0x331dd6, 0x16
+	.incbin "baserom_jp.gba", 0x5cdb7a, 0x16
 
 	.globl gUnknown_85CDB90
 gUnknown_85CDB90: @ 0x85CDB90
-	.incbin "build/data/data.bin", 0x331dec, 0x8
+	.incbin "baserom_jp.gba", 0x5cdb90, 0x8
 
 	.globl gUnknown_85CDB98
 gUnknown_85CDB98: @ 0x85CDB98
-	.incbin "build/data/data.bin", 0x331df4, 0x10
+	.incbin "baserom_jp.gba", 0x5cdb98, 0x10
 
 	.globl gUnknown_85CDBA8
 gUnknown_85CDBA8: @ 0x85CDBA8
-	.incbin "build/data/data.bin", 0x331e04, 0x8
+	.incbin "baserom_jp.gba", 0x5cdba8, 0x8
 
 	.globl gUnknown_85CDBB0
 gUnknown_85CDBB0: @ 0x85CDBB0
-	.incbin "build/data/data.bin", 0x331e0c, 0x20
+	.incbin "baserom_jp.gba", 0x5cdbb0, 0x20
 
 	.globl gUnknown_85CDBD0
 gUnknown_85CDBD0: @ 0x85CDBD0
-	.incbin "build/data/data.bin", 0x331e2c, 0x20
+	.incbin "baserom_jp.gba", 0x5cdbd0, 0x20
 
 	.globl gUnknown_85CDBF0
 gUnknown_85CDBF0: @ 0x85CDBF0
-	.incbin "build/data/data.bin", 0x331e4c, 0x20
+	.incbin "baserom_jp.gba", 0x5cdbf0, 0x20
 
 	.globl gUnknown_85CDC10
 gUnknown_85CDC10: @ 0x85CDC10
-	.incbin "build/data/data.bin", 0x331e6c, 0x480
+	.incbin "baserom_jp.gba", 0x5cdc10, 0x480
 
 	.globl gUnknown_85CE090
 gUnknown_85CE090: @ 0x85CE090
-	.incbin "build/data/data.bin", 0x3322ec, 0x13c
+	.incbin "baserom_jp.gba", 0x5ce090, 0x13c
 
 	.globl gUnknown_85CE1CC
 gUnknown_85CE1CC: @ 0x85CE1CC
-	.incbin "build/data/data.bin", 0x332428, 0x60
+	.incbin "baserom_jp.gba", 0x5ce1cc, 0x60
 
 	.globl gUnknown_85CE22C
 gUnknown_85CE22C: @ 0x85CE22C
-	.incbin "build/data/data.bin", 0x332488, 0x60
+	.incbin "baserom_jp.gba", 0x5ce22c, 0x60
 
 	.globl gUnknown_85CE28C
 gUnknown_85CE28C: @ 0x85CE28C
-	.incbin "build/data/data.bin", 0x3324e8, 0x5dc
+	.incbin "baserom_jp.gba", 0x5ce28c, 0x5dc
 
 	.globl gUnknown_85CE868
 gUnknown_85CE868: @ 0x85CE868
-	.incbin "build/data/data.bin", 0x332ac4, 0x2d0
+	.incbin "baserom_jp.gba", 0x5ce868, 0x2d0
 
 	.globl gUnknown_85CEB38
 gUnknown_85CEB38: @ 0x85CEB38
-	.incbin "build/data/data.bin", 0x332d94, 0x20
+	.incbin "baserom_jp.gba", 0x5ceb38, 0x20
 
 	.globl gUnknown_85CEB58
 gUnknown_85CEB58: @ 0x85CEB58
-	.incbin "build/data/data.bin", 0x332db4, 0x20
+	.incbin "baserom_jp.gba", 0x5ceb58, 0x20
 
 	.globl gUnknown_85CEB78
 gUnknown_85CEB78: @ 0x85CEB78
-	.incbin "build/data/data.bin", 0x332dd4, 0x13c
+	.incbin "baserom_jp.gba", 0x5ceb78, 0x13c
 
 	.globl gUnknown_85CECB4
 gUnknown_85CECB4: @ 0x85CECB4
-	.incbin "build/data/data.bin", 0x332f10, 0x20
+	.incbin "baserom_jp.gba", 0x5cecb4, 0x20
 
 	.globl gUnknown_85CECD4
 gUnknown_85CECD4: @ 0x85CECD4
-	.incbin "build/data/data.bin", 0x332f30, 0x20
+	.incbin "baserom_jp.gba", 0x5cecd4, 0x20
 
 	.globl gUnknown_85CECF4
 gUnknown_85CECF4: @ 0x85CECF4
-	.incbin "build/data/data.bin", 0x332f50, 0x688
+	.incbin "baserom_jp.gba", 0x5cecf4, 0x688
 
 	.globl gUnknown_85CF37C
 gUnknown_85CF37C: @ 0x85CF37C
-	.incbin "build/data/data.bin", 0x3335d8, 0x304
+	.incbin "baserom_jp.gba", 0x5cf37c, 0x304
 
 	.globl gUnknown_85CF680
 gUnknown_85CF680: @ 0x85CF680
-	.incbin "build/data/data.bin", 0x3338dc, 0x16c
+	.incbin "baserom_jp.gba", 0x5cf680, 0x16c
 
 	.globl gUnknown_85CF7EC
 gUnknown_85CF7EC: @ 0x85CF7EC
-	.incbin "build/data/data.bin", 0x333a48, 0x40
+	.incbin "baserom_jp.gba", 0x5cf7ec, 0x40
 
 	.globl gUnknown_85CF82C
 gUnknown_85CF82C: @ 0x85CF82C
-	.incbin "build/data/data.bin", 0x333a88, 0x1ec
+	.incbin "baserom_jp.gba", 0x5cf82c, 0x1ec
 
 	.globl gUnknown_85CFA18
 gUnknown_85CFA18: @ 0x85CFA18
-	.incbin "build/data/data.bin", 0x333c74, 0x20
+	.incbin "baserom_jp.gba", 0x5cfa18, 0x20
 
 	.globl gUnknown_85CFA38
 gUnknown_85CFA38: @ 0x85CFA38
-	.incbin "build/data/data.bin", 0x333c94, 0x2ae4
+	.incbin "baserom_jp.gba", 0x5cfa38, 0x2ae4
 
 	.globl gUnknown_85D251C
 gUnknown_85D251C: @ 0x85D251C
-	.incbin "build/data/data.bin", 0x336778, 0x18
+	.incbin "baserom_jp.gba", 0x5d251c, 0x18
 
 	.globl gUnknown_85D2534
 gUnknown_85D2534: @ 0x85D2534
-	.incbin "build/data/data.bin", 0x336790, 0x30
+	.incbin "baserom_jp.gba", 0x5d2534, 0x30
 
 	.globl gUnknown_85D2564
 gUnknown_85D2564: @ 0x85D2564
-	.incbin "build/data/data.bin", 0x3367c0, 0x10
+	.incbin "baserom_jp.gba", 0x5d2564, 0x10
 
 	.globl gUnknown_85D2574
 gUnknown_85D2574: @ 0x85D2574
-	.incbin "build/data/data.bin", 0x3367d0, 0x48
+	.incbin "baserom_jp.gba", 0x5d2574, 0x48
 
 	.globl gUnknown_85D25BC
 gUnknown_85D25BC: @ 0x85D25BC
-	.incbin "build/data/data.bin", 0x336818, 0x28
+	.incbin "baserom_jp.gba", 0x5d25bc, 0x28
 
 	.globl gUnknown_85D25E4
 gUnknown_85D25E4: @ 0x85D25E4
-	.incbin "build/data/data.bin", 0x336840, 0xc
+	.incbin "baserom_jp.gba", 0x5d25e4, 0xc
 
 	.globl gUnknown_85D25F0
 gUnknown_85D25F0: @ 0x85D25F0
-	.incbin "build/data/data.bin", 0x33684c, 0x60
+	.incbin "baserom_jp.gba", 0x5d25f0, 0x60
 
 	.globl gUnknown_85D2650
 gUnknown_85D2650: @ 0x85D2650
-	.incbin "build/data/data.bin", 0x3368ac, 0x18
+	.incbin "baserom_jp.gba", 0x5d2650, 0x18
 
 	.globl gUnknown_85D2668
 gUnknown_85D2668: @ 0x85D2668
-	.incbin "build/data/data.bin", 0x3368c4, 0x4
+	.incbin "baserom_jp.gba", 0x5d2668, 0x4
 
 	.globl gUnknown_85D266C
 gUnknown_85D266C: @ 0x85D266C
-	.incbin "build/data/data.bin", 0x3368c8, 0x50
+	.incbin "baserom_jp.gba", 0x5d266c, 0x50
 
 	.globl gUnknown_85D26BC
 gUnknown_85D26BC: @ 0x85D26BC
-	.incbin "build/data/data.bin", 0x336918, 0x18
+	.incbin "baserom_jp.gba", 0x5d26bc, 0x18
 
 	.globl gUnknown_85D26D4
 gUnknown_85D26D4: @ 0x85D26D4
-	.incbin "build/data/data.bin", 0x336930, 0x38
+	.incbin "baserom_jp.gba", 0x5d26d4, 0x38
 
 	.globl gUnknown_85D270C
 gUnknown_85D270C: @ 0x85D270C
-	.incbin "build/data/data.bin", 0x336968, 0x18
+	.incbin "baserom_jp.gba", 0x5d270c, 0x18
 
 	.globl gUnknown_85D2724
 gUnknown_85D2724: @ 0x85D2724
-	.incbin "build/data/data.bin", 0x336980, 0x38
+	.incbin "baserom_jp.gba", 0x5d2724, 0x38
 
 	.globl gUnknown_85D275C
 gUnknown_85D275C: @ 0x85D275C
-	.incbin "build/data/data.bin", 0x3369b8, 0x18
+	.incbin "baserom_jp.gba", 0x5d275c, 0x18
 
 	.globl gUnknown_85D2774
 gUnknown_85D2774: @ 0x85D2774
-	.incbin "build/data/data.bin", 0x3369d0, 0x18
+	.incbin "baserom_jp.gba", 0x5d2774, 0x18
 
 	.globl gUnknown_85D278C
 gUnknown_85D278C: @ 0x85D278C
-	.incbin "build/data/data.bin", 0x3369e8, 0x10
+	.incbin "baserom_jp.gba", 0x5d278c, 0x10
 
 	.globl gUnknown_85D279C
 gUnknown_85D279C: @ 0x85D279C
-	.incbin "build/data/data.bin", 0x3369f8, 0x10
+	.incbin "baserom_jp.gba", 0x5d279c, 0x10
 
 	.globl gUnknown_85D27AC
 gUnknown_85D27AC: @ 0x85D27AC
-	.incbin "build/data/data.bin", 0x336a08, 0x20
+	.incbin "baserom_jp.gba", 0x5d27ac, 0x20
 
 	.globl gUnknown_85D27CC
 gUnknown_85D27CC: @ 0x85D27CC
-	.incbin "build/data/data.bin", 0x336a28, 0x10
+	.incbin "baserom_jp.gba", 0x5d27cc, 0x10
 
 	.globl gUnknown_85D27DC
 gUnknown_85D27DC: @ 0x85D27DC
-	.incbin "build/data/data.bin", 0x336a38, 0x28
+	.incbin "baserom_jp.gba", 0x5d27dc, 0x28
 
 	.globl gUnknown_85D2804
 gUnknown_85D2804: @ 0x85D2804
-	.incbin "build/data/data.bin", 0x336a60, 0x10
+	.incbin "baserom_jp.gba", 0x5d2804, 0x10
 
 	.globl gUnknown_85D2814
 gUnknown_85D2814: @ 0x85D2814
-	.incbin "build/data/data.bin", 0x336a70, 0x10
+	.incbin "baserom_jp.gba", 0x5d2814, 0x10
 
 	.globl gUnknown_85D2824
 gUnknown_85D2824: @ 0x85D2824
-	.incbin "build/data/data.bin", 0x336a80, 0x30
+	.incbin "baserom_jp.gba", 0x5d2824, 0x30
 
 	.globl gUnknown_85D2854
 gUnknown_85D2854: @ 0x85D2854
-	.incbin "build/data/data.bin", 0x336ab0, 0x28
+	.incbin "baserom_jp.gba", 0x5d2854, 0x28
 
 	.globl gUnknown_85D287C
 gUnknown_85D287C: @ 0x85D287C
-	.incbin "build/data/data.bin", 0x336ad8, 0x10
+	.incbin "baserom_jp.gba", 0x5d287c, 0x10
 
 	.globl gUnknown_85D288C
 gUnknown_85D288C: @ 0x85D288C
-	.incbin "build/data/data.bin", 0x336ae8, 0x50
+	.incbin "baserom_jp.gba", 0x5d288c, 0x50
 
 	.globl gUnknown_85D28DC
 gUnknown_85D28DC: @ 0x85D28DC
-	.incbin "build/data/data.bin", 0x336b38, 0x10
+	.incbin "baserom_jp.gba", 0x5d28dc, 0x10
 
 	.globl gUnknown_85D28EC
 gUnknown_85D28EC: @ 0x85D28EC
-	.incbin "build/data/data.bin", 0x336b48, 0x24
+	.incbin "baserom_jp.gba", 0x5d28ec, 0x24
 
 	.globl gUnknown_85D2910
 gUnknown_85D2910: @ 0x85D2910
-	.incbin "build/data/data.bin", 0x336b6c, 0x18
+	.incbin "baserom_jp.gba", 0x5d2910, 0x18
 
 	.globl gUnknown_85D2928
 gUnknown_85D2928: @ 0x85D2928
-	.incbin "build/data/data.bin", 0x336b84, 0x198
+	.incbin "baserom_jp.gba", 0x5d2928, 0x198
 
 	.globl gUnknown_85D2AC0
 gUnknown_85D2AC0: @ 0x85D2AC0
-	.incbin "build/data/data.bin", 0x336d1c, 0x8c
+	.incbin "baserom_jp.gba", 0x5d2ac0, 0x8c
 
 	.globl gUnknown_85D2B4C
 gUnknown_85D2B4C: @ 0x85D2B4C
-	.incbin "build/data/data.bin", 0x336da8, 0x3c0
+	.incbin "baserom_jp.gba", 0x5d2b4c, 0x3c0
 
 	.globl gUnknown_85D2F0C
 gUnknown_85D2F0C: @ 0x85D2F0C
-	.incbin "build/data/data.bin", 0x337168, 0x388
+	.incbin "baserom_jp.gba", 0x5d2f0c, 0x388
 
 	.globl gUnknown_85D3294
 gUnknown_85D3294: @ 0x85D3294
-	.incbin "build/data/data.bin", 0x3374f0, 0x70
+	.incbin "baserom_jp.gba", 0x5d3294, 0x70
 
 	.globl gUnknown_85D3304
 gUnknown_85D3304: @ 0x85D3304
@@ -17395,7 +17395,7 @@ gUnknown_85D3304: @ 0x85D3304
 
 	.globl gUnknown_85D3328
 gUnknown_85D3328: @ 0x85D3328
-	.incbin "build/data/data.bin", 0x337584, 0x19c
+	.incbin "baserom_jp.gba", 0x5d3328, 0x19c
 
 	.globl gUnknown_85D34C4
 gUnknown_85D34C4: @ 0x85D34C4
@@ -17405,175 +17405,175 @@ gUnknown_85D34C4: @ 0x85D34C4
 
 	.globl gUnknown_85D34E0
 gUnknown_85D34E0: @ 0x85D34E0
-	.incbin "build/data/data.bin", 0x33773c, 0x8
+	.incbin "baserom_jp.gba", 0x5d34e0, 0x8
 
 	.globl gUnknown_85D34E8
 gUnknown_85D34E8: @ 0x85D34E8
-	.incbin "build/data/data.bin", 0x337744, 0x25c
+	.incbin "baserom_jp.gba", 0x5d34e8, 0x25c
 
 	.globl gUnknown_85D3744
 gUnknown_85D3744: @ 0x85D3744
-	.incbin "build/data/data.bin", 0x3379a0, 0x4b
+	.incbin "baserom_jp.gba", 0x5d3744, 0x4b
 
 	.globl gUnknown_85D378F
 gUnknown_85D378F: @ 0x85D378F
-	.incbin "build/data/data.bin", 0x3379eb, 0x39
+	.incbin "baserom_jp.gba", 0x5d378f, 0x39
 
 	.globl gUnknown_85D37C8
 gUnknown_85D37C8: @ 0x85D37C8
-	.incbin "build/data/data.bin", 0x337a24, 0x8
+	.incbin "baserom_jp.gba", 0x5d37c8, 0x8
 
 	.globl gUnknown_85D37D0
 gUnknown_85D37D0: @ 0x85D37D0
-	.incbin "build/data/data.bin", 0x337a2c, 0x1e
+	.incbin "baserom_jp.gba", 0x5d37d0, 0x1e
 
 	.globl gUnknown_85D37EE
 gUnknown_85D37EE: @ 0x85D37EE
-	.incbin "build/data/data.bin", 0x337a4a, 0x30
+	.incbin "baserom_jp.gba", 0x5d37ee, 0x30
 
 	.globl gUnknown_85D381E
 gUnknown_85D381E: @ 0x85D381E
-	.incbin "build/data/data.bin", 0x337a7a, 0xbe
+	.incbin "baserom_jp.gba", 0x5d381e, 0xbe
 
 	.globl gUnknown_85D38DC
 gUnknown_85D38DC: @ 0x85D38DC
-	.incbin "build/data/data.bin", 0x337b38, 0xc
+	.incbin "baserom_jp.gba", 0x5d38dc, 0xc
 
 	.globl gUnknown_85D38E8
 gUnknown_85D38E8: @ 0x85D38E8
-	.incbin "build/data/data.bin", 0x337b44, 0x8
+	.incbin "baserom_jp.gba", 0x5d38e8, 0x8
 
 	.globl gUnknown_85D38F0
 gUnknown_85D38F0: @ 0x85D38F0
-	.incbin "build/data/data.bin", 0x337b4c, 0xe4
+	.incbin "baserom_jp.gba", 0x5d38f0, 0xe4
 
 	.globl gUnknown_85D39D4
 gUnknown_85D39D4: @ 0x85D39D4
-	.incbin "build/data/data.bin", 0x337c30, 0xe4
+	.incbin "baserom_jp.gba", 0x5d39d4, 0xe4
 
 	.globl gUnknown_85D3AB8
 gUnknown_85D3AB8: @ 0x85D3AB8
-	.incbin "build/data/data.bin", 0x337d14, 0xc
+	.incbin "baserom_jp.gba", 0x5d3ab8, 0xc
 
 	.globl gUnknown_85D3AC4
 gUnknown_85D3AC4: @ 0x85D3AC4
-	.incbin "build/data/data.bin", 0x337d20, 0x8
+	.incbin "baserom_jp.gba", 0x5d3ac4, 0x8
 
 	.globl gUnknown_85D3ACC
 gUnknown_85D3ACC: @ 0x85D3ACC
-	.incbin "build/data/data.bin", 0x337d28, 0x8
+	.incbin "baserom_jp.gba", 0x5d3acc, 0x8
 
 	.globl gUnknown_85D3AD4
 gUnknown_85D3AD4: @ 0x85D3AD4
-	.incbin "build/data/data.bin", 0x337d30, 0xa
+	.incbin "baserom_jp.gba", 0x5d3ad4, 0xa
 
 	.globl gUnknown_85D3ADE
 gUnknown_85D3ADE: @ 0x85D3ADE
-	.incbin "build/data/data.bin", 0x337d3a, 0x126
+	.incbin "baserom_jp.gba", 0x5d3ade, 0x126
 
 	.globl gUnknown_85D3C04
 gUnknown_85D3C04: @ 0x85D3C04
-	.incbin "build/data/data.bin", 0x337e60, 0x40
+	.incbin "baserom_jp.gba", 0x5d3c04, 0x40
 
 	.globl gUnknown_85D3C44
 gUnknown_85D3C44: @ 0x85D3C44
-	.incbin "build/data/data.bin", 0x337ea0, 0x20
+	.incbin "baserom_jp.gba", 0x5d3c44, 0x20
 
 	.globl gUnknown_85D3C64
 gUnknown_85D3C64: @ 0x85D3C64
-	.incbin "build/data/data.bin", 0x337ec0, 0x40
+	.incbin "baserom_jp.gba", 0x5d3c64, 0x40
 
 	.globl gUnknown_85D3CA4
 gUnknown_85D3CA4: @ 0x85D3CA4
-	.incbin "build/data/data.bin", 0x337f00, 0xc8
+	.incbin "baserom_jp.gba", 0x5d3ca4, 0xc8
 
 	.globl gUnknown_85D3D6C
 gUnknown_85D3D6C: @ 0x85D3D6C
-	.incbin "build/data/data.bin", 0x337fc8, 0x18
+	.incbin "baserom_jp.gba", 0x5d3d6c, 0x18
 
 	.globl gUnknown_85D3D84
 gUnknown_85D3D84: @ 0x85D3D84
-	.incbin "build/data/data.bin", 0x337fe0, 0xc
+	.incbin "baserom_jp.gba", 0x5d3d84, 0xc
 
 	.globl gUnknown_85D3D90
 gUnknown_85D3D90: @ 0x85D3D90
-	.incbin "build/data/data.bin", 0x337fec, 0x20
+	.incbin "baserom_jp.gba", 0x5d3d90, 0x20
 
 	.globl gUnknown_85D3DB0
 gUnknown_85D3DB0: @ 0x85D3DB0
-	.incbin "build/data/data.bin", 0x33800c, 0x2c
+	.incbin "baserom_jp.gba", 0x5d3db0, 0x2c
 
 	.globl gUnknown_85D3DDC
 gUnknown_85D3DDC: @ 0x85D3DDC
-	.incbin "build/data/data.bin", 0x338038, 0x14
+	.incbin "baserom_jp.gba", 0x5d3ddc, 0x14
 
 	.globl gUnknown_85D3DF0
 gUnknown_85D3DF0: @ 0x85D3DF0
-	.incbin "build/data/data.bin", 0x33804c, 0xc
+	.incbin "baserom_jp.gba", 0x5d3df0, 0xc
 
 	.globl gUnknown_85D3DFC
 gUnknown_85D3DFC: @ 0x85D3DFC
-	.incbin "build/data/data.bin", 0x338058, 0x1630
+	.incbin "baserom_jp.gba", 0x5d3dfc, 0x1630
 
 	.globl gUnknown_85D542C
 gUnknown_85D542C: @ 0x85D542C
-	.incbin "build/data/data.bin", 0x339688, 0x269
+	.incbin "baserom_jp.gba", 0x5d542c, 0x269
 
 	.globl gUnknown_85D5695
 gUnknown_85D5695: @ 0x85D5695
-	.incbin "build/data/data.bin", 0x3398f1, 0x283
+	.incbin "baserom_jp.gba", 0x5d5695, 0x283
 
 	.globl gUnknown_85D5918
 gUnknown_85D5918: @ 0x85D5918
-	.incbin "build/data/data.bin", 0x339b74, 0x10
+	.incbin "baserom_jp.gba", 0x5d5918, 0x10
 
 	.globl gUnknown_85D5928
 gUnknown_85D5928: @ 0x85D5928
-	.incbin "build/data/data.bin", 0x339b84, 0x10
+	.incbin "baserom_jp.gba", 0x5d5928, 0x10
 
 	.globl gUnknown_85D5938
 gUnknown_85D5938: @ 0x85D5938
-	.incbin "build/data/data.bin", 0x339b94, 0x20
+	.incbin "baserom_jp.gba", 0x5d5938, 0x20
 
 	.globl gUnknown_85D5958
 gUnknown_85D5958: @ 0x85D5958
-	.incbin "build/data/data.bin", 0x339bb4, 0x98
+	.incbin "baserom_jp.gba", 0x5d5958, 0x98
 
 	.globl gUnknown_85D59F0
 gUnknown_85D59F0: @ 0x85D59F0
-	.incbin "build/data/data.bin", 0x339c4c, 0xc
+	.incbin "baserom_jp.gba", 0x5d59f0, 0xc
 
 	.globl gUnknown_85D59FC
 gUnknown_85D59FC: @ 0x85D59FC
-	.incbin "build/data/data.bin", 0x339c58, 0x58
+	.incbin "baserom_jp.gba", 0x5d59fc, 0x58
 
 	.globl gUnknown_85D5A54
 gUnknown_85D5A54: @ 0x85D5A54
-	.incbin "build/data/data.bin", 0x339cb0, 0x30
+	.incbin "baserom_jp.gba", 0x5d5a54, 0x30
 
 	.globl gUnknown_85D5A84
 gUnknown_85D5A84: @ 0x85D5A84
-	.incbin "build/data/data.bin", 0x339ce0, 0x48
+	.incbin "baserom_jp.gba", 0x5d5a84, 0x48
 
 	.globl gUnknown_85D5ACC
 gUnknown_85D5ACC: @ 0x85D5ACC
-	.incbin "build/data/data.bin", 0x339d28, 0x18
+	.incbin "baserom_jp.gba", 0x5d5acc, 0x18
 
 	.globl gUnknown_85D5AE4
 gUnknown_85D5AE4: @ 0x85D5AE4
-	.incbin "build/data/data.bin", 0x339d40, 0x18
+	.incbin "baserom_jp.gba", 0x5d5ae4, 0x18
 
 	.globl gUnknown_85D5AFC
 gUnknown_85D5AFC: @ 0x85D5AFC
-	.incbin "build/data/data.bin", 0x339d58, 0x10
+	.incbin "baserom_jp.gba", 0x5d5afc, 0x10
 
 	.globl gUnknown_85D5B0C
 gUnknown_85D5B0C: @ 0x85D5B0C
-	.incbin "build/data/data.bin", 0x339d68, 0x5c
+	.incbin "baserom_jp.gba", 0x5d5b0c, 0x5c
 
 	.globl gUnknown_85D5B68
 gUnknown_85D5B68: @ 0x85D5B68
-	.incbin "build/data/data.bin", 0x339dc4, 0x10
+	.incbin "baserom_jp.gba", 0x5d5b68, 0x10
 
 	.globl gUnknown_85D5B78
 gUnknown_85D5B78: @ 0x85D5B78
@@ -17581,127 +17581,127 @@ gUnknown_85D5B78: @ 0x85D5B78
 
 	.globl gUnknown_85D5B88
 gUnknown_85D5B88: @ 0x85D5B88
-	.incbin "build/data/data.bin", 0x339de4, 0x40
+	.incbin "baserom_jp.gba", 0x5d5b88, 0x40
 
 	.globl gUnknown_85D5BC8
 gUnknown_85D5BC8: @ 0x85D5BC8
-	.incbin "build/data/data.bin", 0x339e24, 0x10
+	.incbin "baserom_jp.gba", 0x5d5bc8, 0x10
 
 	.globl gUnknown_85D5BD8
 gUnknown_85D5BD8: @ 0x85D5BD8
-	.incbin "build/data/data.bin", 0x339e34, 0x40
+	.incbin "baserom_jp.gba", 0x5d5bd8, 0x40
 
 	.globl gUnknown_85D5C18
 gUnknown_85D5C18: @ 0x85D5C18
-	.incbin "build/data/data.bin", 0x339e74, 0x4
+	.incbin "baserom_jp.gba", 0x5d5c18, 0x4
 
 	.globl gUnknown_85D5C1C
 gUnknown_85D5C1C: @ 0x85D5C1C
-	.incbin "build/data/data.bin", 0x339e78, 0x20
+	.incbin "baserom_jp.gba", 0x5d5c1c, 0x20
 
 	.globl gUnknown_85D5C3C
 gUnknown_85D5C3C: @ 0x85D5C3C
-	.incbin "build/data/data.bin", 0x339e98, 0x10
+	.incbin "baserom_jp.gba", 0x5d5c3c, 0x10
 
 	.globl gUnknown_85D5C4C
 gUnknown_85D5C4C: @ 0x85D5C4C
-	.incbin "build/data/data.bin", 0x339ea8, 0x44
+	.incbin "baserom_jp.gba", 0x5d5c4c, 0x44
 
 	.globl gUnknown_85D5C90
 gUnknown_85D5C90: @ 0x85D5C90
-	.incbin "build/data/data.bin", 0x339eec, 0x80
+	.incbin "baserom_jp.gba", 0x5d5c90, 0x80
 
 	.globl gUnknown_85D5D10
 gUnknown_85D5D10: @ 0x85D5D10
-	.incbin "build/data/data.bin", 0x339f6c, 0xac
+	.incbin "baserom_jp.gba", 0x5d5d10, 0xac
 
 	.globl gUnknown_85D5DBC
 gUnknown_85D5DBC: @ 0x85D5DBC
-	.incbin "build/data/data.bin", 0x33a018, 0x3
+	.incbin "baserom_jp.gba", 0x5d5dbc, 0x3
 
 	.globl gUnknown_85D5DBF
 gUnknown_85D5DBF: @ 0x85D5DBF
-	.incbin "build/data/data.bin", 0x33a01b, 0x3
+	.incbin "baserom_jp.gba", 0x5d5dbf, 0x3
 
 	.globl gUnknown_85D5DC2
 gUnknown_85D5DC2: @ 0x85D5DC2
-	.incbin "build/data/data.bin", 0x33a01e, 0x3
+	.incbin "baserom_jp.gba", 0x5d5dc2, 0x3
 
 	.globl gUnknown_85D5DC5
 gUnknown_85D5DC5: @ 0x85D5DC5
-	.incbin "build/data/data.bin", 0x33a021, 0x7
+	.incbin "baserom_jp.gba", 0x5d5dc5, 0x7
 
 	.globl gUnknown_85D5DCC
 gUnknown_85D5DCC: @ 0x85D5DCC
-	.incbin "build/data/data.bin", 0x33a028, 0x3c
+	.incbin "baserom_jp.gba", 0x5d5dcc, 0x3c
 
 	.globl gUnknown_85D5E08
 gUnknown_85D5E08: @ 0x85D5E08
-	.incbin "build/data/data.bin", 0x33a064, 0x1c
+	.incbin "baserom_jp.gba", 0x5d5e08, 0x1c
 
 	.globl gUnknown_85D5E24
 gUnknown_85D5E24: @ 0x85D5E24
-	.incbin "build/data/data.bin", 0x33a080, 0x3
+	.incbin "baserom_jp.gba", 0x5d5e24, 0x3
 
 	.globl gUnknown_85D5E27
 gUnknown_85D5E27: @ 0x85D5E27
-	.incbin "build/data/data.bin", 0x33a083, 0x3
+	.incbin "baserom_jp.gba", 0x5d5e27, 0x3
 
 	.globl gUnknown_85D5E2A
 gUnknown_85D5E2A: @ 0x85D5E2A
-	.incbin "build/data/data.bin", 0x33a086, 0x3
+	.incbin "baserom_jp.gba", 0x5d5e2a, 0x3
 
 	.globl gUnknown_85D5E2D
 gUnknown_85D5E2D: @ 0x85D5E2D
-	.incbin "build/data/data.bin", 0x33a089, 0x3
+	.incbin "baserom_jp.gba", 0x5d5e2d, 0x3
 
 	.globl gUnknown_85D5E30
 gUnknown_85D5E30: @ 0x85D5E30
-	.incbin "build/data/data.bin", 0x33a08c, 0x10
+	.incbin "baserom_jp.gba", 0x5d5e30, 0x10
 
 	.globl gUnknown_85D5E40
 gUnknown_85D5E40: @ 0x85D5E40
-	.incbin "build/data/data.bin", 0x33a09c, 0x2
+	.incbin "baserom_jp.gba", 0x5d5e40, 0x2
 
 	.globl gUnknown_85D5E42
 gUnknown_85D5E42: @ 0x85D5E42
-	.incbin "build/data/data.bin", 0x33a09e, 0x2b
+	.incbin "baserom_jp.gba", 0x5d5e42, 0x2b
 
 	.globl gUnknown_85D5E6D
 gUnknown_85D5E6D: @ 0x85D5E6D
-	.incbin "build/data/data.bin", 0x33a0c9, 0x1
+	.incbin "baserom_jp.gba", 0x5d5e6d, 0x1
 
 	.globl gUnknown_85D5E6E
 gUnknown_85D5E6E: @ 0x85D5E6E
-	.incbin "build/data/data.bin", 0x33a0ca, 0x1f
+	.incbin "baserom_jp.gba", 0x5d5e6e, 0x1f
 
 	.globl gUnknown_85D5E8D
 gUnknown_85D5E8D: @ 0x85D5E8D
-	.incbin "build/data/data.bin", 0x33a0e9, 0x8ff
+	.incbin "baserom_jp.gba", 0x5d5e8d, 0x8ff
 
 	.globl gUnknown_85D678C
 gUnknown_85D678C: @ 0x85D678C
-	.incbin "build/data/data.bin", 0x33a9e8, 0x100
+	.incbin "baserom_jp.gba", 0x5d678c, 0x100
 
 	.globl gUnknown_85D688C
 gUnknown_85D688C: @ 0x85D688C
-	.incbin "build/data/data.bin", 0x33aae8, 0x40
+	.incbin "baserom_jp.gba", 0x5d688c, 0x40
 
 	.globl gUnknown_85D68CC
 gUnknown_85D68CC: @ 0x85D68CC
-	.incbin "build/data/data.bin", 0x33ab28, 0x28
+	.incbin "baserom_jp.gba", 0x5d68cc, 0x28
 
 	.globl gUnknown_85D68F4
 gUnknown_85D68F4: @ 0x85D68F4
-	.incbin "build/data/data.bin", 0x33ab50, 0xc
+	.incbin "baserom_jp.gba", 0x5d68f4, 0xc
 
 	.globl gUnknown_85D6900
 gUnknown_85D6900: @ 0x85D6900
-	.incbin "build/data/data.bin", 0x33ab5c, 0x14
+	.incbin "baserom_jp.gba", 0x5d6900, 0x14
 
 	.globl gUnknown_85D6914
 gUnknown_85D6914: @ 0x85D6914
-	.incbin "build/data/data.bin", 0x33ab70, 0x10
+	.incbin "baserom_jp.gba", 0x5d6914, 0x10
 
 	.globl gUnknown_85D6924
 gUnknown_85D6924: @ 0x85D6924
@@ -17709,35 +17709,35 @@ gUnknown_85D6924: @ 0x85D6924
 
 	.globl gUnknown_85D6934
 gUnknown_85D6934: @ 0x85D6934
-	.incbin "build/data/data.bin", 0x33ab90, 0xb68
+	.incbin "baserom_jp.gba", 0x5d6934, 0xb68
 
 	.globl gUnknown_85D749C
 gUnknown_85D749C: @ 0x85D749C
-	.incbin "build/data/data.bin", 0x33b6f8, 0xc
+	.incbin "baserom_jp.gba", 0x5d749c, 0xc
 
 	.globl gUnknown_85D74A8
 gUnknown_85D74A8: @ 0x85D74A8
-	.incbin "build/data/data.bin", 0x33b704, 0x8
+	.incbin "baserom_jp.gba", 0x5d74a8, 0x8
 
 	.globl gUnknown_85D74B0
 gUnknown_85D74B0: @ 0x85D74B0
-	.incbin "build/data/data.bin", 0x33b70c, 0x18
+	.incbin "baserom_jp.gba", 0x5d74b0, 0x18
 
 	.globl gUnknown_85D74C8
 gUnknown_85D74C8: @ 0x85D74C8
-	.incbin "build/data/data.bin", 0x33b724, 0x20
+	.incbin "baserom_jp.gba", 0x5d74c8, 0x20
 
 	.globl gUnknown_85D74E8
 gUnknown_85D74E8: @ 0x85D74E8
-	.incbin "build/data/data.bin", 0x33b744, 0x100
+	.incbin "baserom_jp.gba", 0x5d74e8, 0x100
 
 	.globl gUnknown_85D75E8
 gUnknown_85D75E8: @ 0x85D75E8
-	.incbin "build/data/data.bin", 0x33b844, 0x20
+	.incbin "baserom_jp.gba", 0x5d75e8, 0x20
 
 	.globl gUnknown_85D7608
 gUnknown_85D7608: @ 0x85D7608
-	.incbin "build/data/data.bin", 0x33b864, 0x3e4
+	.incbin "baserom_jp.gba", 0x5d7608, 0x3e4
 
 	.globl gUnknown_85D79EC
 gUnknown_85D79EC: @ 0x85D79EC
@@ -17745,127 +17745,127 @@ gUnknown_85D79EC: @ 0x85D79EC
 
 	.globl gUnknown_85D79F4
 gUnknown_85D79F4: @ 0x85D79F4
-	.incbin "build/data/data.bin", 0x33bc50, 0x20
+	.incbin "baserom_jp.gba", 0x5d79f4, 0x20
 
 	.globl gUnknown_85D7A14
 gUnknown_85D7A14: @ 0x85D7A14
-	.incbin "build/data/data.bin", 0x33bc70, 0x8
+	.incbin "baserom_jp.gba", 0x5d7a14, 0x8
 
 	.globl gUnknown_85D7A1C
 gUnknown_85D7A1C: @ 0x85D7A1C
-	.incbin "build/data/data.bin", 0x33bc78, 0xc
+	.incbin "baserom_jp.gba", 0x5d7a1c, 0xc
 
 	.globl gUnknown_85D7A28
 gUnknown_85D7A28: @ 0x85D7A28
-	.incbin "build/data/data.bin", 0x33bc84, 0x2c
+	.incbin "baserom_jp.gba", 0x5d7a28, 0x2c
 
 	.globl gUnknown_85D7A54
 gUnknown_85D7A54: @ 0x85D7A54
-	.incbin "build/data/data.bin", 0x33bcb0, 0x30
+	.incbin "baserom_jp.gba", 0x5d7a54, 0x30
 
 	.globl gUnknown_85D7A84
 gUnknown_85D7A84: @ 0x85D7A84
-	.incbin "build/data/data.bin", 0x33bce0, 0x1c
+	.incbin "baserom_jp.gba", 0x5d7a84, 0x1c
 
 	.globl gUnknown_85D7AA0
 gUnknown_85D7AA0: @ 0x85D7AA0
-	.incbin "build/data/data.bin", 0x33bcfc, 0x10
+	.incbin "baserom_jp.gba", 0x5d7aa0, 0x10
 
 	.globl gUnknown_85D7AB0
 gUnknown_85D7AB0: @ 0x85D7AB0
-	.incbin "build/data/data.bin", 0x33bd0c, 0x54
+	.incbin "baserom_jp.gba", 0x5d7ab0, 0x54
 
 	.globl gUnknown_85D7B04
 gUnknown_85D7B04: @ 0x85D7B04
-	.incbin "build/data/data.bin", 0x33bd60, 0x20
+	.incbin "baserom_jp.gba", 0x5d7b04, 0x20
 
 	.globl gUnknown_85D7B24
 gUnknown_85D7B24: @ 0x85D7B24
-	.incbin "build/data/data.bin", 0x33bd80, 0x4
+	.incbin "baserom_jp.gba", 0x5d7b24, 0x4
 
 	.globl gUnknown_85D7B28
 gUnknown_85D7B28: @ 0x85D7B28
-	.incbin "build/data/data.bin", 0x33bd84, 0x10
+	.incbin "baserom_jp.gba", 0x5d7b28, 0x10
 
 	.globl gUnknown_85D7B38
 gUnknown_85D7B38: @ 0x85D7B38
-	.incbin "build/data/data.bin", 0x33bd94, 0x8
+	.incbin "baserom_jp.gba", 0x5d7b38, 0x8
 
 	.globl gUnknown_85D7B40
 gUnknown_85D7B40: @ 0x85D7B40
-	.incbin "build/data/data.bin", 0x33bd9c, 0x8
+	.incbin "baserom_jp.gba", 0x5d7b40, 0x8
 
 	.globl gUnknown_85D7B48
 gUnknown_85D7B48: @ 0x85D7B48
-	.incbin "build/data/data.bin", 0x33bda4, 0x20
+	.incbin "baserom_jp.gba", 0x5d7b48, 0x20
 
 	.globl gUnknown_85D7B68
 gUnknown_85D7B68: @ 0x85D7B68
-	.incbin "build/data/data.bin", 0x33bdc4, 0x4
+	.incbin "baserom_jp.gba", 0x5d7b68, 0x4
 
 	.globl gUnknown_85D7B6C
 gUnknown_85D7B6C: @ 0x85D7B6C
-	.incbin "build/data/data.bin", 0x33bdc8, 0x4
+	.incbin "baserom_jp.gba", 0x5d7b6c, 0x4
 
 	.globl gUnknown_85D7B70
 gUnknown_85D7B70: @ 0x85D7B70
-	.incbin "build/data/data.bin", 0x33bdcc, 0x68
+	.incbin "baserom_jp.gba", 0x5d7b70, 0x68
 
 	.globl gUnknown_85D7BD8
 gUnknown_85D7BD8: @ 0x85D7BD8
-	.incbin "build/data/data.bin", 0x33be34, 0x20
+	.incbin "baserom_jp.gba", 0x5d7bd8, 0x20
 
 	.globl gUnknown_85D7BF8
 gUnknown_85D7BF8: @ 0x85D7BF8
-	.incbin "build/data/data.bin", 0x33be54, 0x20
+	.incbin "baserom_jp.gba", 0x5d7bf8, 0x20
 
 	.globl gUnknown_85D7C18
 gUnknown_85D7C18: @ 0x85D7C18
-	.incbin "build/data/data.bin", 0x33be74, 0x20
+	.incbin "baserom_jp.gba", 0x5d7c18, 0x20
 
 	.globl gUnknown_85D7C38
 gUnknown_85D7C38: @ 0x85D7C38
-	.incbin "build/data/data.bin", 0x33be94, 0x2000
+	.incbin "baserom_jp.gba", 0x5d7c38, 0x2000
 
 	.globl gUnknown_85D9C38
 gUnknown_85D9C38: @ 0x85D9C38
-	.incbin "build/data/data.bin", 0x33de94, 0x1100
+	.incbin "baserom_jp.gba", 0x5d9c38, 0x1100
 
 	.globl gUnknown_85DAD38
 gUnknown_85DAD38: @ 0x85DAD38
-	.incbin "build/data/data.bin", 0x33ef94, 0x440
+	.incbin "baserom_jp.gba", 0x5dad38, 0x440
 
 	.globl gUnknown_85DB178
 gUnknown_85DB178: @ 0x85DB178
-	.incbin "build/data/data.bin", 0x33f3d4, 0x800
+	.incbin "baserom_jp.gba", 0x5db178, 0x800
 
 	.globl gUnknown_85DB978
 gUnknown_85DB978: @ 0x85DB978
-	.incbin "build/data/data.bin", 0x33fbd4, 0x100
+	.incbin "baserom_jp.gba", 0x5db978, 0x100
 
 	.globl gUnknown_85DBA78
 gUnknown_85DBA78: @ 0x85DBA78
-	.incbin "build/data/data.bin", 0x33fcd4, 0x60
+	.incbin "baserom_jp.gba", 0x5dba78, 0x60
 
 	.globl gUnknown_85DBAD8
 gUnknown_85DBAD8: @ 0x85DBAD8
-	.incbin "build/data/data.bin", 0x33fd34, 0x40
+	.incbin "baserom_jp.gba", 0x5dbad8, 0x40
 
 	.globl gUnknown_85DBB18
 gUnknown_85DBB18: @ 0x85DBB18
-	.incbin "build/data/data.bin", 0x33fd74, 0x20
+	.incbin "baserom_jp.gba", 0x5dbb18, 0x20
 
 	.globl gUnknown_85DBB38
 gUnknown_85DBB38: @ 0x85DBB38
-	.incbin "build/data/data.bin", 0x33fd94, 0x28
+	.incbin "baserom_jp.gba", 0x5dbb38, 0x28
 
 	.globl gUnknown_85DBB60
 gUnknown_85DBB60: @ 0x85DBB60
-	.incbin "build/data/data.bin", 0x33fdbc, 0x10
+	.incbin "baserom_jp.gba", 0x5dbb60, 0x10
 
 	.globl gUnknown_85DBB70
 gUnknown_85DBB70: @ 0x85DBB70
-	.incbin "build/data/data.bin", 0x33fdcc, 0x28
+	.incbin "baserom_jp.gba", 0x5dbb70, 0x28
 
 	.globl gUnknown_85DBB98
 gUnknown_85DBB98: @ 0x85DBB98
@@ -17914,83 +17914,83 @@ gUnknown_85DBC0D: @ 0x85DBC0D
 
 	.globl gUnknown_85DBC11
 gUnknown_85DBC11: @ 0x85DBC11
-	.incbin "build/data/data.bin", 0x33fe6d, 0x13
+	.incbin "baserom_jp.gba", 0x5dbc11, 0x13
 
 	.globl gUnknown_85DBC24
 gUnknown_85DBC24: @ 0x85DBC24
-	.incbin "build/data/data.bin", 0x33fe80, 0xc
+	.incbin "baserom_jp.gba", 0x5dbc24, 0xc
 
 	.globl gUnknown_85DBC30
 gUnknown_85DBC30: @ 0x85DBC30
-	.incbin "build/data/data.bin", 0x33fe8c, 0xc
+	.incbin "baserom_jp.gba", 0x5dbc30, 0xc
 
 	.globl gUnknown_85DBC3C
 gUnknown_85DBC3C: @ 0x85DBC3C
-	.incbin "build/data/data.bin", 0x33fe98, 0x38
+	.incbin "baserom_jp.gba", 0x5dbc3c, 0x38
 
 	.globl gUnknown_85DBC74
 gUnknown_85DBC74: @ 0x85DBC74
-	.incbin "build/data/data.bin", 0x33fed0, 0xa
+	.incbin "baserom_jp.gba", 0x5dbc74, 0xa
 
 	.globl gUnknown_85DBC7E
 gUnknown_85DBC7E: @ 0x85DBC7E
-	.incbin "build/data/data.bin", 0x33feda, 0x3
+	.incbin "baserom_jp.gba", 0x5dbc7e, 0x3
 
 	.globl gUnknown_85DBC81
 gUnknown_85DBC81: @ 0x85DBC81
-	.incbin "build/data/data.bin", 0x33fedd, 0x15f
+	.incbin "baserom_jp.gba", 0x5dbc81, 0x15f
 
 	.globl gUnknown_85DBDE0
 gUnknown_85DBDE0: @ 0x85DBDE0
-	.incbin "build/data/data.bin", 0x34003c, 0x18
+	.incbin "baserom_jp.gba", 0x5dbde0, 0x18
 
 	.globl gUnknown_85DBDF8
 gUnknown_85DBDF8: @ 0x85DBDF8
-	.incbin "build/data/data.bin", 0x340054, 0x18
+	.incbin "baserom_jp.gba", 0x5dbdf8, 0x18
 
 	.globl gUnknown_85DBE10
 gUnknown_85DBE10: @ 0x85DBE10
-	.incbin "build/data/data.bin", 0x34006c, 0x18
+	.incbin "baserom_jp.gba", 0x5dbe10, 0x18
 
 	.globl gUnknown_85DBE28
 gUnknown_85DBE28: @ 0x85DBE28
-	.incbin "build/data/data.bin", 0x340084, 0x18
+	.incbin "baserom_jp.gba", 0x5dbe28, 0x18
 
 	.globl gUnknown_85DBE40
 gUnknown_85DBE40: @ 0x85DBE40
-	.incbin "build/data/data.bin", 0x34009c, 0x18
+	.incbin "baserom_jp.gba", 0x5dbe40, 0x18
 
 	.globl gUnknown_85DBE58
 gUnknown_85DBE58: @ 0x85DBE58
-	.incbin "build/data/data.bin", 0x3400b4, 0x50
+	.incbin "baserom_jp.gba", 0x5dbe58, 0x50
 
 	.globl gUnknown_85DBEA8
 gUnknown_85DBEA8: @ 0x85DBEA8
-	.incbin "build/data/data.bin", 0x340104, 0x10
+	.incbin "baserom_jp.gba", 0x5dbea8, 0x10
 
 	.globl gUnknown_85DBEB8
 gUnknown_85DBEB8: @ 0x85DBEB8
-	.incbin "build/data/data.bin", 0x340114, 0x184
+	.incbin "baserom_jp.gba", 0x5dbeb8, 0x184
 
 	.globl gUnknown_85DC03C
 gUnknown_85DC03C: @ 0x85DC03C
-	.incbin "build/data/data.bin", 0x340298, 0x18
+	.incbin "baserom_jp.gba", 0x5dc03c, 0x18
 
 	.globl gUnknown_85DC054
 gUnknown_85DC054: @ 0x85DC054
-	.incbin "build/data/data.bin", 0x3402b0, 0x18
+	.incbin "baserom_jp.gba", 0x5dc054, 0x18
 
 	.globl gUnknown_85DC06C
 gUnknown_85DC06C: @ 0x85DC06C
-	.incbin "build/data/data.bin", 0x3402c8, 0x18
+	.incbin "baserom_jp.gba", 0x5dc06c, 0x18
 
 	.globl gUnknown_85DC084
 gUnknown_85DC084: @ 0x85DC084
-	.incbin "build/data/data.bin", 0x3402e0, 0x18
+	.incbin "baserom_jp.gba", 0x5dc084, 0x18
 
 	.globl gUnknown_85DC09C
 gUnknown_85DC09C: @ 0x85DC09C
-	.incbin "build/data/data.bin", 0x3402f8, 0x18
+	.incbin "baserom_jp.gba", 0x5dc09c, 0x18
 
 	.globl gUnknown_85DC0B4
 gUnknown_85DC0B4: @ 0x85DC0B4
@@ -18055,155 +18055,155 @@ gUnknown_85DC13C: @ 0x85DC13C
 
 	.globl gUnknown_85DC141
 gUnknown_85DC141: @ 0x85DC141
-	.incbin "build/data/data.bin", 0x34039d, 0x17
+	.incbin "baserom_jp.gba", 0x5dc141, 0x17
 
 	.globl gUnknown_85DC158
 gUnknown_85DC158: @ 0x85DC158
-	.incbin "build/data/data.bin", 0x3403b4, 0xc
+	.incbin "baserom_jp.gba", 0x5dc158, 0xc
 
 	.globl gUnknown_85DC164
 gUnknown_85DC164: @ 0x85DC164
-	.incbin "build/data/data.bin", 0x3403c0, 0x10
+	.incbin "baserom_jp.gba", 0x5dc164, 0x10
 
 	.globl gUnknown_85DC174
 gUnknown_85DC174: @ 0x85DC174
-	.incbin "build/data/data.bin", 0x3403d0, 0x50
+	.incbin "baserom_jp.gba", 0x5dc174, 0x50
 
 	.globl gUnknown_85DC1C4
 gUnknown_85DC1C4: @ 0x85DC1C4
-	.incbin "build/data/data.bin", 0x340420, 0xa
+	.incbin "baserom_jp.gba", 0x5dc1c4, 0xa
 
 	.globl gUnknown_85DC1CE
 gUnknown_85DC1CE: @ 0x85DC1CE
-	.incbin "build/data/data.bin", 0x34042a, 0x3
+	.incbin "baserom_jp.gba", 0x5dc1ce, 0x3
 
 	.globl gUnknown_85DC1D1
 gUnknown_85DC1D1: @ 0x85DC1D1
-	.incbin "build/data/data.bin", 0x34042d, 0x3
+	.incbin "baserom_jp.gba", 0x5dc1d1, 0x3
 
 	.globl gUnknown_85DC1D4
 gUnknown_85DC1D4: @ 0x85DC1D4
-	.incbin "build/data/data.bin", 0x340430, 0x20
+	.incbin "baserom_jp.gba", 0x5dc1d4, 0x20
 
 	.globl gUnknown_85DC1F4
 gUnknown_85DC1F4: @ 0x85DC1F4
-	.incbin "build/data/data.bin", 0x340450, 0x28
+	.incbin "baserom_jp.gba", 0x5dc1f4, 0x28
 
 	.globl gUnknown_85DC21C
 gUnknown_85DC21C: @ 0x85DC21C
-	.incbin "build/data/data.bin", 0x340478, 0xc
+	.incbin "baserom_jp.gba", 0x5dc21c, 0xc
 
 	.globl gUnknown_85DC228
 gUnknown_85DC228: @ 0x85DC228
-	.incbin "build/data/data.bin", 0x340484, 0x16
+	.incbin "baserom_jp.gba", 0x5dc228, 0x16
 
 	.globl gUnknown_85DC23E
 gUnknown_85DC23E: @ 0x85DC23E
-	.incbin "build/data/data.bin", 0x34049a, 0x2de
+	.incbin "baserom_jp.gba", 0x5dc23e, 0x2de
 
 	.globl gUnknown_85DC51C
 gUnknown_85DC51C: @ 0x85DC51C
-	.incbin "build/data/data.bin", 0x340778, 0x100
+	.incbin "baserom_jp.gba", 0x5dc51c, 0x100
 
 	.globl gUnknown_85DC61C
 gUnknown_85DC61C: @ 0x85DC61C
-	.incbin "build/data/data.bin", 0x340878, 0x80
+	.incbin "baserom_jp.gba", 0x5dc61c, 0x80
 
 	.globl gUnknown_85DC69C
 gUnknown_85DC69C: @ 0x85DC69C
-	.incbin "build/data/data.bin", 0x3408f8, 0x140
+	.incbin "baserom_jp.gba", 0x5dc69c, 0x140
 
 	.globl gUnknown_85DC7DC
 gUnknown_85DC7DC: @ 0x85DC7DC
-	.incbin "build/data/data.bin", 0x340a38, 0x80
+	.incbin "baserom_jp.gba", 0x5dc7dc, 0x80
 
 	.globl gUnknown_85DC85C
 gUnknown_85DC85C: @ 0x85DC85C
-	.incbin "build/data/data.bin", 0x340ab8, 0x80
+	.incbin "baserom_jp.gba", 0x5dc85c, 0x80
 
 	.globl gUnknown_85DC8DC
 gUnknown_85DC8DC: @ 0x85DC8DC
-	.incbin "build/data/data.bin", 0x340b38, 0x80
+	.incbin "baserom_jp.gba", 0x5dc8dc, 0x80
 
 	.globl gUnknown_85DC95C
 gUnknown_85DC95C: @ 0x85DC95C
-	.incbin "build/data/data.bin", 0x340bb8, 0x40
+	.incbin "baserom_jp.gba", 0x5dc95c, 0x40
 
 	.globl gUnknown_85DC99C
 gUnknown_85DC99C: @ 0x85DC99C
-	.incbin "build/data/data.bin", 0x340bf8, 0x163
+	.incbin "baserom_jp.gba", 0x5dc99c, 0x163
 
 	.globl gUnknown_85DCAFF
 gUnknown_85DCAFF: @ 0x85DCAFF
-	.incbin "build/data/data.bin", 0x340d5b, 0xd
+	.incbin "baserom_jp.gba", 0x5dcaff, 0xd
 
 	.globl gUnknown_85DCB0C
 gUnknown_85DCB0C: @ 0x85DCB0C
-	.incbin "build/data/data.bin", 0x340d68, 0x68
+	.incbin "baserom_jp.gba", 0x5dcb0c, 0x68
 
 	.globl gUnknown_85DCB74
 gUnknown_85DCB74: @ 0x85DCB74
-	.incbin "build/data/data.bin", 0x340dd0, 0x8
+	.incbin "baserom_jp.gba", 0x5dcb74, 0x8
 
 	.globl gUnknown_85DCB7C
 gUnknown_85DCB7C: @ 0x85DCB7C
-	.incbin "build/data/data.bin", 0x340dd8, 0x1c
+	.incbin "baserom_jp.gba", 0x5dcb7c, 0x1c
 
 	.globl gUnknown_85DCB98
 gUnknown_85DCB98: @ 0x85DCB98
-	.incbin "build/data/data.bin", 0x340df4, 0xc
+	.incbin "baserom_jp.gba", 0x5dcb98, 0xc
 
 	.globl gUnknown_85DCBA4
 gUnknown_85DCBA4: @ 0x85DCBA4
-	.incbin "build/data/data.bin", 0x340e00, 0x33c
+	.incbin "baserom_jp.gba", 0x5dcba4, 0x33c
 
 	.globl gUnknown_85DCEE0
 gUnknown_85DCEE0: @ 0x85DCEE0
-	.incbin "build/data/data.bin", 0x34113c, 0x348
+	.incbin "baserom_jp.gba", 0x5dcee0, 0x348
 
 	.globl gUnknown_85DD228
 gUnknown_85DD228: @ 0x85DD228
-	.incbin "build/data/data.bin", 0x341484, 0x1c
+	.incbin "baserom_jp.gba", 0x5dd228, 0x1c
 
 	.globl gUnknown_85DD244
 gUnknown_85DD244: @ 0x85DD244
-	.incbin "build/data/data.bin", 0x3414a0, 0x5c
+	.incbin "baserom_jp.gba", 0x5dd244, 0x5c
 
 	.globl gUnknown_85DD2A0
 gUnknown_85DD2A0: @ 0x85DD2A0
-	.incbin "build/data/data.bin", 0x3414fc, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2a0, 0x8
 
 	.globl gUnknown_85DD2A8
 gUnknown_85DD2A8: @ 0x85DD2A8
-	.incbin "build/data/data.bin", 0x341504, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2a8, 0x8
 
 	.globl gUnknown_85DD2B0
 gUnknown_85DD2B0: @ 0x85DD2B0
-	.incbin "build/data/data.bin", 0x34150c, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2b0, 0x8
 
 	.globl gUnknown_85DD2B8
 gUnknown_85DD2B8: @ 0x85DD2B8
-	.incbin "build/data/data.bin", 0x341514, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2b8, 0x8
 
 	.globl gUnknown_85DD2C0
 gUnknown_85DD2C0: @ 0x85DD2C0
-	.incbin "build/data/data.bin", 0x34151c, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2c0, 0x8
 
 	.globl gUnknown_85DD2C8
 gUnknown_85DD2C8: @ 0x85DD2C8
-	.incbin "build/data/data.bin", 0x341524, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2c8, 0x8
 
 	.globl gUnknown_85DD2D0
 gUnknown_85DD2D0: @ 0x85DD2D0
-	.incbin "build/data/data.bin", 0x34152c, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2d0, 0x8
 
 	.globl gUnknown_85DD2D8
 gUnknown_85DD2D8: @ 0x85DD2D8
-	.incbin "build/data/data.bin", 0x341534, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2d8, 0x8
 
 	.globl gUnknown_85DD2E0
 gUnknown_85DD2E0: @ 0x85DD2E0
-	.incbin "build/data/data.bin", 0x34153c, 0x8
+	.incbin "baserom_jp.gba", 0x5dd2e0, 0x8
 
 	.globl gUnknown_85DD2E8
 gUnknown_85DD2E8: @ 0x85DD2E8
@@ -18336,7 +18336,7 @@ gUnknown_85DD476: @ 0x85DD476
 
 	.globl gUnknown_85DD47F
 gUnknown_85DD47F: @ 0x85DD47F
-	.incbin "build/data/data.bin", 0x3416db, 0xf
+	.incbin "baserom_jp.gba", 0x5dd47f, 0xf
 
 	.globl gUnknown_85DD48E
 gUnknown_85DD48E: @ 0x85DD48E
@@ -18352,11 +18352,11 @@ gUnknown_85DD4A4: @ 0x85DD4A4
 
 	.globl gUnknown_85DD504
 gUnknown_85DD504: @ 0x85DD504
-	.incbin "build/data/data.bin", 0x341760, 0x38
+	.incbin "baserom_jp.gba", 0x5dd504, 0x38
 
 	.globl gUnknown_85DD53C
 gUnknown_85DD53C: @ 0x85DD53C
-	.incbin "build/data/data.bin", 0x341798, 0x28
+	.incbin "baserom_jp.gba", 0x5dd53c, 0x28
 
 	.globl gUnknown_85DD564
 gUnknown_85DD564: @ 0x85DD564
@@ -18364,203 +18364,203 @@ gUnknown_85DD564: @ 0x85DD564
 
 	.globl gUnknown_85DD56A
 gUnknown_85DD56A: @ 0x85DD56A
-	.incbin "build/data/data.bin", 0x3417c6, 0x7e
+	.incbin "baserom_jp.gba", 0x5dd56a, 0x7e
 
 	.globl gUnknown_85DD5E8
 gUnknown_85DD5E8: @ 0x85DD5E8
-	.incbin "build/data/data.bin", 0x341844, 0x8
+	.incbin "baserom_jp.gba", 0x5dd5e8, 0x8
 
 	.globl gUnknown_85DD5F0
 gUnknown_85DD5F0: @ 0x85DD5F0
-	.incbin "build/data/data.bin", 0x34184c, 0x8
+	.incbin "baserom_jp.gba", 0x5dd5f0, 0x8
 
 	.globl gUnknown_85DD5F8
 gUnknown_85DD5F8: @ 0x85DD5F8
-	.incbin "build/data/data.bin", 0x341854, 0x19c
+	.incbin "baserom_jp.gba", 0x5dd5f8, 0x19c
 
 	.globl gUnknown_85DD794
 gUnknown_85DD794: @ 0x85DD794
-	.incbin "build/data/data.bin", 0x3419f0, 0x18
+	.incbin "baserom_jp.gba", 0x5dd794, 0x18
 
 	.globl gUnknown_85DD7AC
 gUnknown_85DD7AC: @ 0x85DD7AC
-	.incbin "build/data/data.bin", 0x341a08, 0x10
+	.incbin "baserom_jp.gba", 0x5dd7ac, 0x10
 
 	.globl gUnknown_85DD7BC
 gUnknown_85DD7BC: @ 0x85DD7BC
-	.incbin "build/data/data.bin", 0x341a18, 0x1c
+	.incbin "baserom_jp.gba", 0x5dd7bc, 0x1c
 
 	.globl gUnknown_85DD7D8
 gUnknown_85DD7D8: @ 0x85DD7D8
-	.incbin "build/data/data.bin", 0x341a34, 0xc
+	.incbin "baserom_jp.gba", 0x5dd7d8, 0xc
 
 	.globl gUnknown_85DD7E4
 gUnknown_85DD7E4: @ 0x85DD7E4
-	.incbin "build/data/data.bin", 0x341a40, 0x14
+	.incbin "baserom_jp.gba", 0x5dd7e4, 0x14
 
 	.globl gUnknown_85DD7F8
 gUnknown_85DD7F8: @ 0x85DD7F8
-	.incbin "build/data/data.bin", 0x341a54, 0x144
+	.incbin "baserom_jp.gba", 0x5dd7f8, 0x144
 
 	.globl gUnknown_85DD93C
 gUnknown_85DD93C: @ 0x85DD93C
-	.incbin "build/data/data.bin", 0x341b98, 0x1c
+	.incbin "baserom_jp.gba", 0x5dd93c, 0x1c
 
 	.globl gUnknown_85DD958
 gUnknown_85DD958: @ 0x85DD958
-	.incbin "build/data/data.bin", 0x341bb4, 0x44
+	.incbin "baserom_jp.gba", 0x5dd958, 0x44
 
 	.globl gUnknown_85DD99C
 gUnknown_85DD99C: @ 0x85DD99C
-	.incbin "build/data/data.bin", 0x341bf8, 0x10
+	.incbin "baserom_jp.gba", 0x5dd99c, 0x10
 
 	.globl gUnknown_85DD9AC
 gUnknown_85DD9AC: @ 0x85DD9AC
-	.incbin "build/data/data.bin", 0x341c08, 0x10
+	.incbin "baserom_jp.gba", 0x5dd9ac, 0x10
 
 	.globl gUnknown_85DD9BC
 gUnknown_85DD9BC: @ 0x85DD9BC
-	.incbin "build/data/data.bin", 0x341c18, 0x10
+	.incbin "baserom_jp.gba", 0x5dd9bc, 0x10
 
 	.globl gUnknown_85DD9CC
 gUnknown_85DD9CC: @ 0x85DD9CC
-	.incbin "build/data/data.bin", 0x341c28, 0x180
+	.incbin "baserom_jp.gba", 0x5dd9cc, 0x180
 
 	.globl gUnknown_85DDB4C
 gUnknown_85DDB4C: @ 0x85DDB4C
-	.incbin "build/data/data.bin", 0x341da8, 0x8
+	.incbin "baserom_jp.gba", 0x5ddb4c, 0x8
 
 	.globl gUnknown_85DDB54
 gUnknown_85DDB54: @ 0x85DDB54
-	.incbin "build/data/data.bin", 0x341db0, 0xc8
+	.incbin "baserom_jp.gba", 0x5ddb54, 0xc8
 
 	.globl gUnknown_85DDC1C
 gUnknown_85DDC1C: @ 0x85DDC1C
-	.incbin "build/data/data.bin", 0x341e78, 0x1f8
+	.incbin "baserom_jp.gba", 0x5ddc1c, 0x1f8
 
 	.globl gUnknown_85DDE14
 gUnknown_85DDE14: @ 0x85DDE14
-	.incbin "build/data/data.bin", 0x342070, 0x1c
+	.incbin "baserom_jp.gba", 0x5dde14, 0x1c
 
 	.globl gUnknown_85DDE30
 gUnknown_85DDE30: @ 0x85DDE30
-	.incbin "build/data/data.bin", 0x34208c, 0x74
+	.incbin "baserom_jp.gba", 0x5dde30, 0x74
 
 	.globl gUnknown_85DDEA4
 gUnknown_85DDEA4: @ 0x85DDEA4
-	.incbin "build/data/data.bin", 0x342100, 0x9
+	.incbin "baserom_jp.gba", 0x5ddea4, 0x9
 
 	.globl gUnknown_85DDEAD
 gUnknown_85DDEAD: @ 0x85DDEAD
-	.incbin "build/data/data.bin", 0x342109, 0x13
+	.incbin "baserom_jp.gba", 0x5ddead, 0x13
 
 	.globl gUnknown_85DDEC0
 gUnknown_85DDEC0: @ 0x85DDEC0
-	.incbin "build/data/data.bin", 0x34211c, 0x8
+	.incbin "baserom_jp.gba", 0x5ddec0, 0x8
 
 	.globl gUnknown_85DDEC8
 gUnknown_85DDEC8: @ 0x85DDEC8
-	.incbin "build/data/data.bin", 0x342124, 0x8
+	.incbin "baserom_jp.gba", 0x5ddec8, 0x8
 
 	.globl gUnknown_85DDED0
 gUnknown_85DDED0: @ 0x85DDED0
-	.incbin "build/data/data.bin", 0x34212c, 0x4
+	.incbin "baserom_jp.gba", 0x5dded0, 0x4
 
 	.globl gUnknown_85DDED4
 gUnknown_85DDED4: @ 0x85DDED4
-	.incbin "build/data/data.bin", 0x342130, 0x4
+	.incbin "baserom_jp.gba", 0x5dded4, 0x4
 
 	.globl gUnknown_85DDED8
 gUnknown_85DDED8: @ 0x85DDED8
-	.incbin "build/data/data.bin", 0x342134, 0x4
+	.incbin "baserom_jp.gba", 0x5dded8, 0x4
 
 	.globl gUnknown_85DDEDC
 gUnknown_85DDEDC: @ 0x85DDEDC
-	.incbin "build/data/data.bin", 0x342138, 0x4
+	.incbin "baserom_jp.gba", 0x5ddedc, 0x4
 
 	.globl gUnknown_85DDEE0
 gUnknown_85DDEE0: @ 0x85DDEE0
-	.incbin "build/data/data.bin", 0x34213c, 0x2
+	.incbin "baserom_jp.gba", 0x5ddee0, 0x2
 
 	.globl gUnknown_85DDEE2
 gUnknown_85DDEE2: @ 0x85DDEE2
-	.incbin "build/data/data.bin", 0x34213e, 0x2
+	.incbin "baserom_jp.gba", 0x5ddee2, 0x2
 
 	.globl gUnknown_85DDEE4
 gUnknown_85DDEE4: @ 0x85DDEE4
-	.incbin "build/data/data.bin", 0x342140, 0x2
+	.incbin "baserom_jp.gba", 0x5ddee4, 0x2
 
 	.globl gUnknown_85DDEE6
 gUnknown_85DDEE6: @ 0x85DDEE6
-	.incbin "build/data/data.bin", 0x342142, 0x782
+	.incbin "baserom_jp.gba", 0x5ddee6, 0x782
 
 	.globl gUnknown_85DE668
 gUnknown_85DE668: @ 0x85DE668
-	.incbin "build/data/data.bin", 0x3428c4, 0x7d0
+	.incbin "baserom_jp.gba", 0x5de668, 0x7d0
 
 	.globl gUnknown_85DEE38
 gUnknown_85DEE38: @ 0x85DEE38
-	.incbin "build/data/data.bin", 0x343094, 0x50
+	.incbin "baserom_jp.gba", 0x5dee38, 0x50
 
 	.globl gUnknown_85DEE88
 gUnknown_85DEE88: @ 0x85DEE88
-	.incbin "build/data/data.bin", 0x3430e4, 0x5
+	.incbin "baserom_jp.gba", 0x5dee88, 0x5
 
 	.globl gUnknown_85DEE8D
 gUnknown_85DEE8D: @ 0x85DEE8D
-	.incbin "build/data/data.bin", 0x3430e9, 0xfb
+	.incbin "baserom_jp.gba", 0x5dee8d, 0xfb
 
 	.globl gUnknown_85DEF88
 gUnknown_85DEF88: @ 0x85DEF88
-	.incbin "build/data/data.bin", 0x3431e4, 0x44
+	.incbin "baserom_jp.gba", 0x5def88, 0x44
 
 	.globl gUnknown_85DEFCC
 gUnknown_85DEFCC: @ 0x85DEFCC
-	.incbin "build/data/data.bin", 0x343228, 0x8
+	.incbin "baserom_jp.gba", 0x5defcc, 0x8
 
 	.globl gUnknown_85DEFD4
 gUnknown_85DEFD4: @ 0x85DEFD4
-	.incbin "build/data/data.bin", 0x343230, 0x190
+	.incbin "baserom_jp.gba", 0x5defd4, 0x190
 
 	.globl gUnknown_85DF164
 gUnknown_85DF164: @ 0x85DF164
-	.incbin "build/data/data.bin", 0x3433c0, 0x190
+	.incbin "baserom_jp.gba", 0x5df164, 0x190
 
 	.globl gUnknown_85DF2F4
 gUnknown_85DF2F4: @ 0x85DF2F4
-	.incbin "build/data/data.bin", 0x343550, 0x7e
+	.incbin "baserom_jp.gba", 0x5df2f4, 0x7e
 
 	.globl gUnknown_85DF372
 gUnknown_85DF372: @ 0x85DF372
-	.incbin "build/data/data.bin", 0x3435ce, 0xa
+	.incbin "baserom_jp.gba", 0x5df372, 0xa
 
 	.globl gUnknown_85DF37C
 gUnknown_85DF37C: @ 0x85DF37C
-	.incbin "build/data/data.bin", 0x3435d8, 0xd8
+	.incbin "baserom_jp.gba", 0x5df37c, 0xd8
 
 	.globl gUnknown_85DF454
 gUnknown_85DF454: @ 0x85DF454
-	.incbin "build/data/data.bin", 0x3436b0, 0x2a4
+	.incbin "baserom_jp.gba", 0x5df454, 0x2a4
 
 	.globl gUnknown_85DF6F8
 gUnknown_85DF6F8: @ 0x85DF6F8
-	.incbin "build/data/data.bin", 0x343954, 0x18
+	.incbin "baserom_jp.gba", 0x5df6f8, 0x18
 
 	.globl gUnknown_85DF710
 gUnknown_85DF710: @ 0x85DF710
-	.incbin "build/data/data.bin", 0x34396c, 0x8
+	.incbin "baserom_jp.gba", 0x5df710, 0x8
 
 	.globl gUnknown_85DF718
 gUnknown_85DF718: @ 0x85DF718
-	.incbin "build/data/data.bin", 0x343974, 0x48
+	.incbin "baserom_jp.gba", 0x5df718, 0x48
 
 	.globl gUnknown_85DF760
 gUnknown_85DF760: @ 0x85DF760
-	.incbin "build/data/data.bin", 0x3439bc, 0xc
+	.incbin "baserom_jp.gba", 0x5df760, 0xc
 
 	.globl gUnknown_85DF76C
 gUnknown_85DF76C: @ 0x85DF76C
-	.incbin "build/data/data.bin", 0x3439c8, 0x12
+	.incbin "baserom_jp.gba", 0x5df76c, 0x12
 
 	.globl gUnknown_85DF77E
 gUnknown_85DF77E: @ 0x85DF77E
@@ -18575,163 +18575,163 @@ gUnknown_85DF77E: @ 0x85DF77E
 
 	.globl gUnknown_85DF7BE
 gUnknown_85DF7BE: @ 0x85DF7BE
-	.incbin "build/data/data.bin", 0x343a1a, 0xa
+	.incbin "baserom_jp.gba", 0x5df7be, 0xa
 
 	.globl gUnknown_85DF7C8
 gUnknown_85DF7C8: @ 0x85DF7C8
-	.incbin "build/data/data.bin", 0x343a24, 0xc
+	.incbin "baserom_jp.gba", 0x5df7c8, 0xc
 
 	.globl gUnknown_85DF7D4
 gUnknown_85DF7D4: @ 0x85DF7D4
-	.incbin "build/data/data.bin", 0x343a30, 0x18
+	.incbin "baserom_jp.gba", 0x5df7d4, 0x18
 
 	.globl gUnknown_85DF7EC
 gUnknown_85DF7EC: @ 0x85DF7EC
-	.incbin "build/data/data.bin", 0x343a48, 0x78
+	.incbin "baserom_jp.gba", 0x5df7ec, 0x78
 
 	.globl gUnknown_85DF864
 gUnknown_85DF864: @ 0x85DF864
-	.incbin "build/data/data.bin", 0x343ac0, 0x4
+	.incbin "baserom_jp.gba", 0x5df864, 0x4
 
 	.globl gUnknown_85DF868
 gUnknown_85DF868: @ 0x85DF868
-	.incbin "build/data/data.bin", 0x343ac4, 0x4
+	.incbin "baserom_jp.gba", 0x5df868, 0x4
 
 	.globl gUnknown_85DF86C
 gUnknown_85DF86C: @ 0x85DF86C
-	.incbin "build/data/data.bin", 0x343ac8, 0x4
+	.incbin "baserom_jp.gba", 0x5df86c, 0x4
 
 	.globl gUnknown_85DF870
 gUnknown_85DF870: @ 0x85DF870
-	.incbin "build/data/data.bin", 0x343acc, 0x4
+	.incbin "baserom_jp.gba", 0x5df870, 0x4
 
 	.globl gUnknown_85DF874
 gUnknown_85DF874: @ 0x85DF874
-	.incbin "build/data/data.bin", 0x343ad0, 0x6
+	.incbin "baserom_jp.gba", 0x5df874, 0x6
 
 	.globl gUnknown_85DF87A
 gUnknown_85DF87A: @ 0x85DF87A
-	.incbin "build/data/data.bin", 0x343ad6, 0x2
+	.incbin "baserom_jp.gba", 0x5df87a, 0x2
 
 	.globl gUnknown_85DF87C
 gUnknown_85DF87C: @ 0x85DF87C
-	.incbin "build/data/data.bin", 0x343ad8, 0x2
+	.incbin "baserom_jp.gba", 0x5df87c, 0x2
 
 	.globl gUnknown_85DF87E
 gUnknown_85DF87E: @ 0x85DF87E
-	.incbin "build/data/data.bin", 0x343ada, 0x1
+	.incbin "baserom_jp.gba", 0x5df87e, 0x1
 
 	.globl gUnknown_85DF87F
 gUnknown_85DF87F: @ 0x85DF87F
-	.incbin "build/data/data.bin", 0x343adb, 0x4
+	.incbin "baserom_jp.gba", 0x5df87f, 0x4
 
 	.globl gUnknown_85DF883
 gUnknown_85DF883: @ 0x85DF883
-	.incbin "build/data/data.bin", 0x343adf, 0x2
+	.incbin "baserom_jp.gba", 0x5df883, 0x2
 
 	.globl gUnknown_85DF885
 gUnknown_85DF885: @ 0x85DF885
-	.incbin "build/data/data.bin", 0x343ae1, 0x2
+	.incbin "baserom_jp.gba", 0x5df885, 0x2
 
 	.globl gUnknown_85DF887
 gUnknown_85DF887: @ 0x85DF887
-	.incbin "build/data/data.bin", 0x343ae3, 0x5
+	.incbin "baserom_jp.gba", 0x5df887, 0x5
 
 	.globl gUnknown_85DF88C
 gUnknown_85DF88C: @ 0x85DF88C
-	.incbin "build/data/data.bin", 0x343ae8, 0x30
+	.incbin "baserom_jp.gba", 0x5df88c, 0x30
 
 	.globl gUnknown_85DF8BC
 gUnknown_85DF8BC: @ 0x85DF8BC
-	.incbin "build/data/data.bin", 0x343b18, 0x8
+	.incbin "baserom_jp.gba", 0x5df8bc, 0x8
 
 	.globl gUnknown_85DF8C4
 gUnknown_85DF8C4: @ 0x85DF8C4
-	.incbin "build/data/data.bin", 0x343b20, 0x8
+	.incbin "baserom_jp.gba", 0x5df8c4, 0x8
 
 	.globl gUnknown_85DF8CC
 gUnknown_85DF8CC: @ 0x85DF8CC
-	.incbin "build/data/data.bin", 0x343b28, 0x10
+	.incbin "baserom_jp.gba", 0x5df8cc, 0x10
 
 	.globl gUnknown_85DF8DC
 gUnknown_85DF8DC: @ 0x85DF8DC
-	.incbin "build/data/data.bin", 0x343b38, 0xc0
+	.incbin "baserom_jp.gba", 0x5df8dc, 0xc0
 
 	.globl gUnknown_85DF99C
 gUnknown_85DF99C: @ 0x85DF99C
-	.incbin "build/data/data.bin", 0x343bf8, 0x80
+	.incbin "baserom_jp.gba", 0x5df99c, 0x80
 
 	.globl gUnknown_85DFA1C
 gUnknown_85DFA1C: @ 0x85DFA1C
-	.incbin "build/data/data.bin", 0x343c78, 0x10
+	.incbin "baserom_jp.gba", 0x5dfa1c, 0x10
 
 	.globl gUnknown_85DFA2C
 gUnknown_85DFA2C: @ 0x85DFA2C
-	.incbin "build/data/data.bin", 0x343c88, 0x38
+	.incbin "baserom_jp.gba", 0x5dfa2c, 0x38
 
 	.globl gUnknown_85DFA64
 gUnknown_85DFA64: @ 0x85DFA64
-	.incbin "build/data/data.bin", 0x343cc0, 0x50
+	.incbin "baserom_jp.gba", 0x5dfa64, 0x50
 
 	.globl gUnknown_85DFAB4
 gUnknown_85DFAB4: @ 0x85DFAB4
-	.incbin "build/data/data.bin", 0x343d10, 0x48
+	.incbin "baserom_jp.gba", 0x5dfab4, 0x48
 
 	.globl gUnknown_85DFAFC
 gUnknown_85DFAFC: @ 0x85DFAFC
-	.incbin "build/data/data.bin", 0x343d58, 0x18
+	.incbin "baserom_jp.gba", 0x5dfafc, 0x18
 
 	.globl gUnknown_85DFB14
 gUnknown_85DFB14: @ 0x85DFB14
-	.incbin "build/data/data.bin", 0x343d70, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb14, 0x4
 
 	.globl gUnknown_85DFB18
 gUnknown_85DFB18: @ 0x85DFB18
-	.incbin "build/data/data.bin", 0x343d74, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb18, 0x4
 
 	.globl gUnknown_85DFB1C
 gUnknown_85DFB1C: @ 0x85DFB1C
-	.incbin "build/data/data.bin", 0x343d78, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb1c, 0x4
 
 	.globl gUnknown_85DFB20
 gUnknown_85DFB20: @ 0x85DFB20
-	.incbin "build/data/data.bin", 0x343d7c, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb20, 0x4
 
 	.globl gUnknown_85DFB24
 gUnknown_85DFB24: @ 0x85DFB24
-	.incbin "build/data/data.bin", 0x343d80, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb24, 0x4
 
 	.globl gUnknown_85DFB28
 gUnknown_85DFB28: @ 0x85DFB28
-	.incbin "build/data/data.bin", 0x343d84, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb28, 0x4
 
 	.globl gUnknown_85DFB2C
 gUnknown_85DFB2C: @ 0x85DFB2C
-	.incbin "build/data/data.bin", 0x343d88, 0x4
+	.incbin "baserom_jp.gba", 0x5dfb2c, 0x4
 
 	.globl gUnknown_85DFB30
 gUnknown_85DFB30: @ 0x85DFB30
-	.incbin "build/data/data.bin", 0x343d8c, 0x18
+	.incbin "baserom_jp.gba", 0x5dfb30, 0x18
 
 	.globl gUnknown_85DFB48
 gUnknown_85DFB48: @ 0x85DFB48
-	.incbin "build/data/data.bin", 0x343da4, 0x18
+	.incbin "baserom_jp.gba", 0x5dfb48, 0x18
 
 	.globl gUnknown_85DFB60
 gUnknown_85DFB60: @ 0x85DFB60
-	.incbin "build/data/data.bin", 0x343dbc, 0x20
+	.incbin "baserom_jp.gba", 0x5dfb60, 0x20
 
 	.globl gUnknown_85DFB80
 gUnknown_85DFB80: @ 0x85DFB80
-	.incbin "build/data/data.bin", 0x343ddc, 0x70
+	.incbin "baserom_jp.gba", 0x5dfb80, 0x70
 
 	.globl gUnknown_85DFBF0
 gUnknown_85DFBF0: @ 0x85DFBF0
-	.incbin "build/data/data.bin", 0x343e4c, 0x40
+	.incbin "baserom_jp.gba", 0x5dfbf0, 0x40
 
 	.globl gUnknown_85DFC30
 gUnknown_85DFC30: @ 0x85DFC30
-	.incbin "build/data/data.bin", 0x343e8c, 0x44
+	.incbin "baserom_jp.gba", 0x5dfc30, 0x44
 
 	.globl gUnknown_85DFC74
 gUnknown_85DFC74: @ 0x85DFC74
@@ -18754,472 +18754,472 @@ gUnknown_85DFCC6: @ 0x85DFCC6
 
 	.globl gUnknown_85DFCC8
 gUnknown_85DFCC8: @ 0x85DFCC8
-	.incbin "build/data/data.bin", 0x343f24, 0xbe4
+	.incbin "baserom_jp.gba", 0x5dfcc8, 0xbe4
 
 	.globl gUnknown_85E08AC
 gUnknown_85E08AC: @ 0x85E08AC
-	.incbin "build/data/data.bin", 0x344b08, 0x18
+	.incbin "baserom_jp.gba", 0x5e08ac, 0x18
 
 	.globl gUnknown_85E08C4
 gUnknown_85E08C4: @ 0x85E08C4
-	.incbin "build/data/data.bin", 0x344b20, 0x3c
+	.incbin "baserom_jp.gba", 0x5e08c4, 0x3c
 
 	.globl gUnknown_85E0900
 gUnknown_85E0900: @ 0x85E0900
-	.incbin "build/data/data.bin", 0x344b5c, 0x670
+	.incbin "baserom_jp.gba", 0x5e0900, 0x670
 
 	.globl gUnknown_85E0F70
 gUnknown_85E0F70: @ 0x85E0F70
-	.incbin "build/data/data.bin", 0x3451cc, 0x2c
+	.incbin "baserom_jp.gba", 0x5e0f70, 0x2c
 
 	.globl gUnknown_85E0F9C
 gUnknown_85E0F9C: @ 0x85E0F9C
-	.incbin "build/data/data.bin", 0x3451f8, 0x20
+	.incbin "baserom_jp.gba", 0x5e0f9c, 0x20
 
 	.globl gUnknown_85E0FBC
 gUnknown_85E0FBC: @ 0x85E0FBC
-	.incbin "build/data/data.bin", 0x345218, 0xc0
+	.incbin "baserom_jp.gba", 0x5e0fbc, 0xc0
 
 	.globl gUnknown_85E107C
 gUnknown_85E107C: @ 0x85E107C
-	.incbin "build/data/data.bin", 0x3452d8, 0x1c
+	.incbin "baserom_jp.gba", 0x5e107c, 0x1c
 
 	.globl gUnknown_85E1098
 gUnknown_85E1098: @ 0x85E1098
-	.incbin "build/data/data.bin", 0x3452f4, 0x1c
+	.incbin "baserom_jp.gba", 0x5e1098, 0x1c
 
 	.globl gUnknown_85E10B4
 gUnknown_85E10B4: @ 0x85E10B4
-	.incbin "build/data/data.bin", 0x345310, 0x14
+	.incbin "baserom_jp.gba", 0x5e10b4, 0x14
 
 	.globl gUnknown_85E10C8
 gUnknown_85E10C8: @ 0x85E10C8
-	.incbin "build/data/data.bin", 0x345324, 0x40
+	.incbin "baserom_jp.gba", 0x5e10c8, 0x40
 
 	.globl gUnknown_85E1108
 gUnknown_85E1108: @ 0x85E1108
-	.incbin "build/data/data.bin", 0x345364, 0x40
+	.incbin "baserom_jp.gba", 0x5e1108, 0x40
 
 	.globl gUnknown_85E1148
 gUnknown_85E1148: @ 0x85E1148
-	.incbin "build/data/data.bin", 0x3453a4, 0x40
+	.incbin "baserom_jp.gba", 0x5e1148, 0x40
 
 	.globl gUnknown_85E1188
 gUnknown_85E1188: @ 0x85E1188
-	.incbin "build/data/data.bin", 0x3453e4, 0x38
+	.incbin "baserom_jp.gba", 0x5e1188, 0x38
 
 	.globl gUnknown_85E11C0
 gUnknown_85E11C0: @ 0x85E11C0
-	.incbin "build/data/data.bin", 0x34541c, 0x8
+	.incbin "baserom_jp.gba", 0x5e11c0, 0x8
 
 	.globl gUnknown_85E11C8
 gUnknown_85E11C8: @ 0x85E11C8
-	.incbin "build/data/data.bin", 0x345424, 0x8
+	.incbin "baserom_jp.gba", 0x5e11c8, 0x8
 
 	.globl gUnknown_85E11D0
 gUnknown_85E11D0: @ 0x85E11D0
-	.incbin "build/data/data.bin", 0x34542c, 0x8
+	.incbin "baserom_jp.gba", 0x5e11d0, 0x8
 
 	.globl gUnknown_85E11D8
 gUnknown_85E11D8: @ 0x85E11D8
-	.incbin "build/data/data.bin", 0x345434, 0x8
+	.incbin "baserom_jp.gba", 0x5e11d8, 0x8
 
 	.globl gUnknown_85E11E0
 gUnknown_85E11E0: @ 0x85E11E0
-	.incbin "build/data/data.bin", 0x34543c, 0x8
+	.incbin "baserom_jp.gba", 0x5e11e0, 0x8
 
 	.globl gUnknown_85E11E8
 gUnknown_85E11E8: @ 0x85E11E8
-	.incbin "build/data/data.bin", 0x345444, 0x8
+	.incbin "baserom_jp.gba", 0x5e11e8, 0x8
 
 	.globl gUnknown_85E11F0
 gUnknown_85E11F0: @ 0x85E11F0
-	.incbin "build/data/data.bin", 0x34544c, 0x8
+	.incbin "baserom_jp.gba", 0x5e11f0, 0x8
 
 	.globl gUnknown_85E11F8
 gUnknown_85E11F8: @ 0x85E11F8
-	.incbin "build/data/data.bin", 0x345454, 0x8
+	.incbin "baserom_jp.gba", 0x5e11f8, 0x8
 
 	.globl gUnknown_85E1200
 gUnknown_85E1200: @ 0x85E1200
-	.incbin "build/data/data.bin", 0x34545c, 0x8
+	.incbin "baserom_jp.gba", 0x5e1200, 0x8
 
 	.globl gUnknown_85E1208
 gUnknown_85E1208: @ 0x85E1208
-	.incbin "build/data/data.bin", 0x345464, 0x8
+	.incbin "baserom_jp.gba", 0x5e1208, 0x8
 
 	.globl gUnknown_85E1210
 gUnknown_85E1210: @ 0x85E1210
-	.incbin "build/data/data.bin", 0x34546c, 0x8
+	.incbin "baserom_jp.gba", 0x5e1210, 0x8
 
 	.globl gUnknown_85E1218
 gUnknown_85E1218: @ 0x85E1218
-	.incbin "build/data/data.bin", 0x345474, 0x8
+	.incbin "baserom_jp.gba", 0x5e1218, 0x8
 
 	.globl gUnknown_85E1220
 gUnknown_85E1220: @ 0x85E1220
-	.incbin "build/data/data.bin", 0x34547c, 0x8
+	.incbin "baserom_jp.gba", 0x5e1220, 0x8
 
 	.globl gUnknown_85E1228
 gUnknown_85E1228: @ 0x85E1228
-	.incbin "build/data/data.bin", 0x345484, 0x18
+	.incbin "baserom_jp.gba", 0x5e1228, 0x18
 
 	.globl gUnknown_85E1240
 gUnknown_85E1240: @ 0x85E1240
-	.incbin "build/data/data.bin", 0x34549c, 0x46
+	.incbin "baserom_jp.gba", 0x5e1240, 0x46
 
 	.globl gUnknown_85E1286
 gUnknown_85E1286: @ 0x85E1286
-	.incbin "build/data/data.bin", 0x3454e2, 0x46
+	.incbin "baserom_jp.gba", 0x5e1286, 0x46
 
 	.globl gUnknown_85E12CC
 gUnknown_85E12CC: @ 0x85E12CC
-	.incbin "build/data/data.bin", 0x345528, 0x36
+	.incbin "baserom_jp.gba", 0x5e12cc, 0x36
 
 	.globl gUnknown_85E1302
 gUnknown_85E1302: @ 0x85E1302
-	.incbin "build/data/data.bin", 0x34555e, 0x36
+	.incbin "baserom_jp.gba", 0x5e1302, 0x36
 
 	.globl gUnknown_85E1338
 gUnknown_85E1338: @ 0x85E1338
-	.incbin "build/data/data.bin", 0x345594, 0x36
+	.incbin "baserom_jp.gba", 0x5e1338, 0x36
 
 	.globl gUnknown_85E136E
 gUnknown_85E136E: @ 0x85E136E
-	.incbin "build/data/data.bin", 0x3455ca, 0x2
+	.incbin "baserom_jp.gba", 0x5e136e, 0x2
 
 	.globl gUnknown_85E1370
 gUnknown_85E1370: @ 0x85E1370
-	.incbin "build/data/data.bin", 0x3455cc, 0x2
+	.incbin "baserom_jp.gba", 0x5e1370, 0x2
 
 	.globl gUnknown_85E1372
 gUnknown_85E1372: @ 0x85E1372
-	.incbin "build/data/data.bin", 0x3455ce, 0x3
+	.incbin "baserom_jp.gba", 0x5e1372, 0x3
 
 	.globl gUnknown_85E1375
 gUnknown_85E1375: @ 0x85E1375
-	.incbin "build/data/data.bin", 0x3455d1, 0x3
+	.incbin "baserom_jp.gba", 0x5e1375, 0x3
 
 	.globl gUnknown_85E1378
 gUnknown_85E1378: @ 0x85E1378
-	.incbin "build/data/data.bin", 0x3455d4, 0x3
+	.incbin "baserom_jp.gba", 0x5e1378, 0x3
 
 	.globl gUnknown_85E137B
 gUnknown_85E137B: @ 0x85E137B
-	.incbin "build/data/data.bin", 0x3455d7, 0x2
+	.incbin "baserom_jp.gba", 0x5e137b, 0x2
 
 	.globl gUnknown_85E137D
 gUnknown_85E137D: @ 0x85E137D
-	.incbin "build/data/data.bin", 0x3455d9, 0x2
+	.incbin "baserom_jp.gba", 0x5e137d, 0x2
 
 	.globl gUnknown_85E137F
 gUnknown_85E137F: @ 0x85E137F
-	.incbin "build/data/data.bin", 0x3455db, 0x2
+	.incbin "baserom_jp.gba", 0x5e137f, 0x2
 
 	.globl gUnknown_85E1381
 gUnknown_85E1381: @ 0x85E1381
-	.incbin "build/data/data.bin", 0x3455dd, 0x2
+	.incbin "baserom_jp.gba", 0x5e1381, 0x2
 
 	.globl gUnknown_85E1383
 gUnknown_85E1383: @ 0x85E1383
-	.incbin "build/data/data.bin", 0x3455df, 0x2
+	.incbin "baserom_jp.gba", 0x5e1383, 0x2
 
 	.globl gUnknown_85E1385
 gUnknown_85E1385: @ 0x85E1385
-	.incbin "build/data/data.bin", 0x3455e1, 0x3
+	.incbin "baserom_jp.gba", 0x5e1385, 0x3
 
 	.globl gUnknown_85E1388
 gUnknown_85E1388: @ 0x85E1388
-	.incbin "build/data/data.bin", 0x3455e4, 0x3
+	.incbin "baserom_jp.gba", 0x5e1388, 0x3
 
 	.globl gUnknown_85E138B
 gUnknown_85E138B: @ 0x85E138B
-	.incbin "build/data/data.bin", 0x3455e7, 0x3
+	.incbin "baserom_jp.gba", 0x5e138b, 0x3
 
 	.globl gUnknown_85E138E
 gUnknown_85E138E: @ 0x85E138E
-	.incbin "build/data/data.bin", 0x3455ea, 0x3
+	.incbin "baserom_jp.gba", 0x5e138e, 0x3
 
 	.globl gUnknown_85E1391
 gUnknown_85E1391: @ 0x85E1391
-	.incbin "build/data/data.bin", 0x3455ed, 0x3
+	.incbin "baserom_jp.gba", 0x5e1391, 0x3
 
 	.globl gUnknown_85E1394
 gUnknown_85E1394: @ 0x85E1394
-	.incbin "build/data/data.bin", 0x3455f0, 0x3
+	.incbin "baserom_jp.gba", 0x5e1394, 0x3
 
 	.globl gUnknown_85E1397
 gUnknown_85E1397: @ 0x85E1397
-	.incbin "build/data/data.bin", 0x3455f3, 0x3
+	.incbin "baserom_jp.gba", 0x5e1397, 0x3
 
 	.globl gUnknown_85E139A
 gUnknown_85E139A: @ 0x85E139A
-	.incbin "build/data/data.bin", 0x3455f6, 0x3
+	.incbin "baserom_jp.gba", 0x5e139a, 0x3
 
 	.globl gUnknown_85E139D
 gUnknown_85E139D: @ 0x85E139D
-	.incbin "build/data/data.bin", 0x3455f9, 0x3
+	.incbin "baserom_jp.gba", 0x5e139d, 0x3
 
 	.globl gUnknown_85E13A0
 gUnknown_85E13A0: @ 0x85E13A0
-	.incbin "build/data/data.bin", 0x3455fc, 0x3
+	.incbin "baserom_jp.gba", 0x5e13a0, 0x3
 
 	.globl gUnknown_85E13A3
 gUnknown_85E13A3: @ 0x85E13A3
-	.incbin "build/data/data.bin", 0x3455ff, 0x3
+	.incbin "baserom_jp.gba", 0x5e13a3, 0x3
 
 	.globl gUnknown_85E13A6
 gUnknown_85E13A6: @ 0x85E13A6
-	.incbin "build/data/data.bin", 0x345602, 0x3
+	.incbin "baserom_jp.gba", 0x5e13a6, 0x3
 
 	.globl gUnknown_85E13A9
 gUnknown_85E13A9: @ 0x85E13A9
-	.incbin "build/data/data.bin", 0x345605, 0x3
+	.incbin "baserom_jp.gba", 0x5e13a9, 0x3
 
 	.globl gUnknown_85E13AC
 gUnknown_85E13AC: @ 0x85E13AC
-	.incbin "build/data/data.bin", 0x345608, 0x6c
+	.incbin "baserom_jp.gba", 0x5e13ac, 0x6c
 
 	.globl gUnknown_85E1418
 gUnknown_85E1418: @ 0x85E1418
-	.incbin "build/data/data.bin", 0x345674, 0xa8
+	.incbin "baserom_jp.gba", 0x5e1418, 0xa8
 
 	.globl gUnknown_85E14C0
 gUnknown_85E14C0: @ 0x85E14C0
-	.incbin "build/data/data.bin", 0x34571c, 0x130
+	.incbin "baserom_jp.gba", 0x5e14c0, 0x130
 
 	.globl gUnknown_85E15F0
 gUnknown_85E15F0: @ 0x85E15F0
-	.incbin "build/data/data.bin", 0x34584c, 0x38
+	.incbin "baserom_jp.gba", 0x5e15f0, 0x38
 
 	.globl gUnknown_85E1628
 gUnknown_85E1628: @ 0x85E1628
-	.incbin "build/data/data.bin", 0x345884, 0xe
+	.incbin "baserom_jp.gba", 0x5e1628, 0xe
 
 	.globl gUnknown_85E1636
 gUnknown_85E1636: @ 0x85E1636
-	.incbin "build/data/data.bin", 0x345892, 0x1e
+	.incbin "baserom_jp.gba", 0x5e1636, 0x1e
 
 	.globl gUnknown_85E1654
 gUnknown_85E1654: @ 0x85E1654
-	.incbin "build/data/data.bin", 0x3458b0, 0x70
+	.incbin "baserom_jp.gba", 0x5e1654, 0x70
 
 	.globl gUnknown_85E16C4
 gUnknown_85E16C4: @ 0x85E16C4
-	.incbin "build/data/data.bin", 0x345920, 0xa4
+	.incbin "baserom_jp.gba", 0x5e16c4, 0xa4
 
 	.globl gUnknown_85E1768
 gUnknown_85E1768: @ 0x85E1768
-	.incbin "build/data/data.bin", 0x3459c4, 0x8
+	.incbin "baserom_jp.gba", 0x5e1768, 0x8
 
 	.globl gUnknown_85E1770
 gUnknown_85E1770: @ 0x85E1770
-	.incbin "build/data/data.bin", 0x3459cc, 0x8
+	.incbin "baserom_jp.gba", 0x5e1770, 0x8
 
 	.globl gUnknown_85E1778
 gUnknown_85E1778: @ 0x85E1778
-	.incbin "build/data/data.bin", 0x3459d4, 0x38
+	.incbin "baserom_jp.gba", 0x5e1778, 0x38
 
 	.globl gUnknown_85E17B0
 gUnknown_85E17B0: @ 0x85E17B0
-	.incbin "build/data/data.bin", 0x345a0c, 0x8
+	.incbin "baserom_jp.gba", 0x5e17b0, 0x8
 
 	.globl gUnknown_85E17B8
 gUnknown_85E17B8: @ 0x85E17B8
-	.incbin "build/data/data.bin", 0x345a14, 0x8
+	.incbin "baserom_jp.gba", 0x5e17b8, 0x8
 
 	.globl gUnknown_85E17C0
 gUnknown_85E17C0: @ 0x85E17C0
-	.incbin "build/data/data.bin", 0x345a1c, 0x68
+	.incbin "baserom_jp.gba", 0x5e17c0, 0x68
 
 	.globl gUnknown_85E1828
 gUnknown_85E1828: @ 0x85E1828
-	.incbin "build/data/data.bin", 0x345a84, 0x8
+	.incbin "baserom_jp.gba", 0x5e1828, 0x8
 
 	.globl gUnknown_85E1830
 gUnknown_85E1830: @ 0x85E1830
-	.incbin "build/data/data.bin", 0x345a8c, 0x80
+	.incbin "baserom_jp.gba", 0x5e1830, 0x80
 
 	.globl gUnknown_85E18B0
 gUnknown_85E18B0: @ 0x85E18B0
-	.incbin "build/data/data.bin", 0x345b0c, 0x8
+	.incbin "baserom_jp.gba", 0x5e18b0, 0x8
 
 	.globl gUnknown_85E18B8
 gUnknown_85E18B8: @ 0x85E18B8
-	.incbin "build/data/data.bin", 0x345b14, 0x8
+	.incbin "baserom_jp.gba", 0x5e18b8, 0x8
 
 	.globl gUnknown_85E18C0
 gUnknown_85E18C0: @ 0x85E18C0
-	.incbin "build/data/data.bin", 0x345b1c, 0x18
+	.incbin "baserom_jp.gba", 0x5e18c0, 0x18
 
 	.globl gUnknown_85E18D8
 gUnknown_85E18D8: @ 0x85E18D8
-	.incbin "build/data/data.bin", 0x345b34, 0x20
+	.incbin "baserom_jp.gba", 0x5e18d8, 0x20
 
 	.globl gUnknown_85E18F8
 gUnknown_85E18F8: @ 0x85E18F8
-	.incbin "build/data/data.bin", 0x345b54, 0x74
+	.incbin "baserom_jp.gba", 0x5e18f8, 0x74
 
 	.globl gUnknown_85E196C
 gUnknown_85E196C: @ 0x85E196C
-	.incbin "build/data/data.bin", 0x345bc8, 0x20
+	.incbin "baserom_jp.gba", 0x5e196c, 0x20
 
 	.globl gUnknown_85E198C
 gUnknown_85E198C: @ 0x85E198C
-	.incbin "build/data/data.bin", 0x345be8, 0x4
+	.incbin "baserom_jp.gba", 0x5e198c, 0x4
 
 	.globl gUnknown_85E1990
 gUnknown_85E1990: @ 0x85E1990
-	.incbin "build/data/data.bin", 0x345bec, 0x1c
+	.incbin "baserom_jp.gba", 0x5e1990, 0x1c
 
 	.globl gUnknown_85E19AC
 gUnknown_85E19AC: @ 0x85E19AC
-	.incbin "build/data/data.bin", 0x345c08, 0x4
+	.incbin "baserom_jp.gba", 0x5e19ac, 0x4
 
 	.globl gUnknown_85E19B0
 gUnknown_85E19B0: @ 0x85E19B0
-	.incbin "build/data/data.bin", 0x345c0c, 0x28
+	.incbin "baserom_jp.gba", 0x5e19b0, 0x28
 
 	.globl gUnknown_85E19D8
 gUnknown_85E19D8: @ 0x85E19D8
-	.incbin "build/data/data.bin", 0x345c34, 0x4
+	.incbin "baserom_jp.gba", 0x5e19d8, 0x4
 
 	.globl gUnknown_85E19DC
 gUnknown_85E19DC: @ 0x85E19DC
-	.incbin "build/data/data.bin", 0x345c38, 0x4
+	.incbin "baserom_jp.gba", 0x5e19dc, 0x4
 
 	.globl gUnknown_85E19E0
 gUnknown_85E19E0: @ 0x85E19E0
-	.incbin "build/data/data.bin", 0x345c3c, 0x5904
+	.incbin "baserom_jp.gba", 0x5e19e0, 0x5904
 
 	.globl gUnknown_85E72E4
 gUnknown_85E72E4: @ 0x85E72E4
-	.incbin "build/data/data.bin", 0x34b540, 0x48
+	.incbin "baserom_jp.gba", 0x5e72e4, 0x48
 
 	.globl gUnknown_85E732C
 gUnknown_85E732C: @ 0x85E732C
-	.incbin "build/data/data.bin", 0x34b588, 0x104
+	.incbin "baserom_jp.gba", 0x5e732c, 0x104
 
 	.globl sMirageTower_Gfx
 sMirageTower_Gfx: @ 0x85E7430
-	.incbin "build/data/data.bin", 0x34b68c, 0x920
+	.incbin "baserom_jp.gba", 0x5e7430, 0x920
 
 	.globl sMirageTowerTilemap
 sMirageTowerTilemap: @ 0x85E7D50
-	.incbin "build/data/data.bin", 0x34bfac, 0xb0
+	.incbin "baserom_jp.gba", 0x5e7d50, 0xb0
 
 	.globl sFossil_Gfx
 sFossil_Gfx: @ 0x85E7E00
-	.incbin "build/data/data.bin", 0x34c05c, 0x80
+	.incbin "baserom_jp.gba", 0x5e7e00, 0x80
 
 	.globl sMirageTowerCrumbles_Gfx
 sMirageTowerCrumbles_Gfx: @ 0x85E7E80
-	.incbin "build/data/data.bin", 0x34c0dc, 0x80
+	.incbin "baserom_jp.gba", 0x5e7e80, 0x80
 
 	.globl gUnknown_85E7F00
 gUnknown_85E7F00: @ 0x85E7F00
-	.incbin "build/data/data.bin", 0x34c15c, 0x20
+	.incbin "baserom_jp.gba", 0x5e7f00, 0x20
 
 
 	.globl sCeilingCrumblePositions
 sCeilingCrumblePositions: @ 0x85E7F20
-	.incbin "build/data/data.bin", 0x34c17c, 0x30
+	.incbin "baserom_jp.gba", 0x5e7f20, 0x30
 
 	.globl sCeilingCrumbleSpriteSheets
 sCeilingCrumbleSpriteSheets: @ 0x85E7F50
-	.incbin "build/data/data.bin", 0x34c1ac, 0x10
+	.incbin "baserom_jp.gba", 0x5e7f50, 0x10
 
 	.globl sInvisibleMirageTowerMetatiles
 sInvisibleMirageTowerMetatiles: @ 0x85E7F60
-	.incbin "build/data/data.bin", 0x34c1bc, 0x5c
+	.incbin "baserom_jp.gba", 0x5e7f60, 0x5c
 
 	.globl sSpriteTemplate_FallingFossil
 sSpriteTemplate_FallingFossil: @ 0x85E7FBC
-	.incbin "build/data/data.bin", 0x34c218, 0x18
+	.incbin "baserom_jp.gba", 0x5e7fbc, 0x18
 
 	.globl gMirageTowerPulseBlendSettings
 gMirageTowerPulseBlendSettings: @ 0x85E7FD4
-	.incbin "build/data/data.bin", 0x34c230, 0x1c
+	.incbin "baserom_jp.gba", 0x5e7fd4, 0x1c
 
 	.globl sSpriteTemplate_CeilingCrumbleSmall
 sSpriteTemplate_CeilingCrumbleSmall: @ 0x85E7FF0
-	.incbin "build/data/data.bin", 0x34c24c, 0xc
+	.incbin "baserom_jp.gba", 0x5e7ff0, 0xc
 
 	.globl gUnknown_85E7FFC
 gUnknown_85E7FFC: @ 0x85E7FFC
-	.incbin "build/data/data.bin", 0x34c258, 0x20
+	.incbin "baserom_jp.gba", 0x5e7ffc, 0x20
 
 	.globl sSpriteTemplate_CeilingCrumbleLarge
 sSpriteTemplate_CeilingCrumbleLarge: @ 0x85E801C
-	.incbin "build/data/data.bin", 0x34c278, 0x18
+	.incbin "baserom_jp.gba", 0x5e801c, 0x18
 
 	.globl gUnknown_85E8034
 gUnknown_85E8034: @ 0x85E8034
-	.incbin "build/data/data.bin", 0x34c290, 0x4df0
+	.incbin "baserom_jp.gba", 0x5e8034, 0x4df0
 
 	.globl gUnknown_85ECE24
 gUnknown_85ECE24: @ 0x85ECE24
-	.incbin "build/data/data.bin", 0x351080, 0x64
+	.incbin "baserom_jp.gba", 0x5ece24, 0x64
 
 	.globl gUnknown_85ECE88
 gUnknown_85ECE88: @ 0x85ECE88
-	.incbin "build/data/data.bin", 0x3510e4, 0x134
+	.incbin "baserom_jp.gba", 0x5ece88, 0x134
 
 	.globl gUnknown_85ECFBC
 gUnknown_85ECFBC: @ 0x85ECFBC
-	.incbin "build/data/data.bin", 0x351218, 0x78
+	.incbin "baserom_jp.gba", 0x5ecfbc, 0x78
 
 	.globl gUnknown_85ED034
 gUnknown_85ED034: @ 0x85ED034
-	.incbin "build/data/data.bin", 0x351290, 0xc
+	.incbin "baserom_jp.gba", 0x5ed034, 0xc
 
 	.globl gUnknown_85ED040
 gUnknown_85ED040: @ 0x85ED040
-	.incbin "build/data/data.bin", 0x35129c, 0xc
+	.incbin "baserom_jp.gba", 0x5ed040, 0xc
 
 	.globl gUnknown_85ED04C
 gUnknown_85ED04C: @ 0x85ED04C
-	.incbin "build/data/data.bin", 0x3512a8, 0xc
+	.incbin "baserom_jp.gba", 0x5ed04c, 0xc
 
 	.globl gUnknown_85ED058
 gUnknown_85ED058: @ 0x85ED058
-	.incbin "build/data/data.bin", 0x3512b4, 0xc
+	.incbin "baserom_jp.gba", 0x5ed058, 0xc
 
 	.globl gUnknown_85ED064
 gUnknown_85ED064: @ 0x85ED064
-	.incbin "build/data/data.bin", 0x3512c0, 0x8
+	.incbin "baserom_jp.gba", 0x5ed064, 0x8
 
 	.globl gUnknown_85ED06C
 gUnknown_85ED06C: @ 0x85ED06C
-	.incbin "build/data/data.bin", 0x3512c8, 0xa8
+	.incbin "baserom_jp.gba", 0x5ed06c, 0xa8
 
 	.globl gUnknown_85ED114
 gUnknown_85ED114: @ 0x85ED114
-	.incbin "build/data/data.bin", 0x351370, 0x20
+	.incbin "baserom_jp.gba", 0x5ed114, 0x20
 
 	.globl gUnknown_85ED134
 gUnknown_85ED134: @ 0x85ED134
-	.incbin "build/data/data.bin", 0x351390, 0x28
+	.incbin "baserom_jp.gba", 0x5ed134, 0x28
 
 	.globl gUnknown_85ED15C
 gUnknown_85ED15C: @ 0x85ED15C
-	.incbin "build/data/data.bin", 0x3513b8, 0x20
+	.incbin "baserom_jp.gba", 0x5ed15c, 0x20
 
 	.globl gUnknown_85ED17C
 gUnknown_85ED17C: @ 0x85ED17C
-	.incbin "build/data/data.bin", 0x3513d8, 0xa7
+	.incbin "baserom_jp.gba", 0x5ed17c, 0xa7
 
 	.globl gUnknown_85ED223
 gUnknown_85ED223: @ 0x85ED223
-	.incbin "build/data/data.bin", 0x35147f, 0x81
+	.incbin "baserom_jp.gba", 0x5ed223, 0x81
 
 	.globl gUnknown_85ED2A4
 gUnknown_85ED2A4: @ 0x85ED2A4
-	.incbin "build/data/data.bin", 0x351500, 0x10
+	.incbin "baserom_jp.gba", 0x5ed2a4, 0x10
 
 	.globl gUnknown_85ED2B4
 gUnknown_85ED2B4: @ 0x85ED2B4
-	.incbin "build/data/data.bin", 0x351510, 0x10
+	.incbin "baserom_jp.gba", 0x5ed2b4, 0x10
 
 	.globl gUnknown_85ED2C4
 gUnknown_85ED2C4: @ 0x85ED2C4
@@ -19239,595 +19239,595 @@ gUnknown_85ED2DE: @ 0x85ED2DE
 
 	.globl gUnknown_85ED2E7
 gUnknown_85ED2E7: @ 0x85ED2E7
-	.incbin "build/data/data.bin", 0x351543, 0x125
+	.incbin "baserom_jp.gba", 0x5ed2e7, 0x125
 
 	.globl gUnknown_85ED40C
 gUnknown_85ED40C: @ 0x85ED40C
-	.incbin "build/data/data.bin", 0x351668, 0x8
+	.incbin "baserom_jp.gba", 0x5ed40c, 0x8
 
 	.globl gUnknown_85ED414
 gUnknown_85ED414: @ 0x85ED414
-	.incbin "build/data/data.bin", 0x351670, 0x18
+	.incbin "baserom_jp.gba", 0x5ed414, 0x18
 
 	.globl gUnknown_85ED42C
 gUnknown_85ED42C: @ 0x85ED42C
-	.incbin "build/data/data.bin", 0x351688, 0x98
+	.incbin "baserom_jp.gba", 0x5ed42c, 0x98
 
 	.globl gUnknown_85ED4C4
 gUnknown_85ED4C4: @ 0x85ED4C4
-	.incbin "build/data/data.bin", 0x351720, 0x8
+	.incbin "baserom_jp.gba", 0x5ed4c4, 0x8
 
 	.globl gUnknown_85ED4CC
 gUnknown_85ED4CC: @ 0x85ED4CC
-	.incbin "build/data/data.bin", 0x351728, 0x8
+	.incbin "baserom_jp.gba", 0x5ed4cc, 0x8
 
 	.globl gUnknown_85ED4D4
 gUnknown_85ED4D4: @ 0x85ED4D4
-	.incbin "build/data/data.bin", 0x351730, 0x74
+	.incbin "baserom_jp.gba", 0x5ed4d4, 0x74
 
 	.globl gUnknown_85ED548
 gUnknown_85ED548: @ 0x85ED548
-	.incbin "build/data/data.bin", 0x3517a4, 0x8
+	.incbin "baserom_jp.gba", 0x5ed548, 0x8
 
 	.globl gUnknown_85ED550
 gUnknown_85ED550: @ 0x85ED550
-	.incbin "build/data/data.bin", 0x3517ac, 0x8
+	.incbin "baserom_jp.gba", 0x5ed550, 0x8
 
 	.globl gUnknown_85ED558
 gUnknown_85ED558: @ 0x85ED558
-	.incbin "build/data/data.bin", 0x3517b4, 0x18
+	.incbin "baserom_jp.gba", 0x5ed558, 0x18
 
 	.globl gUnknown_85ED570
 gUnknown_85ED570: @ 0x85ED570
-	.incbin "build/data/data.bin", 0x3517cc, 0x20
+	.incbin "baserom_jp.gba", 0x5ed570, 0x20
 
 	.globl gUnknown_85ED590
 gUnknown_85ED590: @ 0x85ED590
-	.incbin "build/data/data.bin", 0x3517ec, 0x60
+	.incbin "baserom_jp.gba", 0x5ed590, 0x60
 
 	.globl gUnknown_85ED5F0
 gUnknown_85ED5F0: @ 0x85ED5F0
-	.incbin "build/data/data.bin", 0x35184c, 0xd54
+	.incbin "baserom_jp.gba", 0x5ed5f0, 0xd54
 
 	.globl gUnknown_85EE344
 gUnknown_85EE344: @ 0x85EE344
-	.incbin "build/data/data.bin", 0x3525a0, 0x314
+	.incbin "baserom_jp.gba", 0x5ee344, 0x314
 
 	.globl gUnknown_85EE658
 gUnknown_85EE658: @ 0x85EE658
-	.incbin "build/data/data.bin", 0x3528b4, 0xd5c
+	.incbin "baserom_jp.gba", 0x5ee658, 0xd5c
 
 	.globl gUnknown_85EF3B4
 gUnknown_85EF3B4: @ 0x85EF3B4
-	.incbin "build/data/data.bin", 0x353610, 0x350
+	.incbin "baserom_jp.gba", 0x5ef3b4, 0x350
 
 	.globl gUnknown_85EF704
 gUnknown_85EF704: @ 0x85EF704
-	.incbin "build/data/data.bin", 0x353960, 0xc
+	.incbin "baserom_jp.gba", 0x5ef704, 0xc
 
 	.globl gUnknown_85EF710
 gUnknown_85EF710: @ 0x85EF710
-	.incbin "build/data/data.bin", 0x35396c, 0x18
+	.incbin "baserom_jp.gba", 0x5ef710, 0x18
 
 	.globl gUnknown_85EF728
 gUnknown_85EF728: @ 0x85EF728
-	.incbin "build/data/data.bin", 0x353984, 0x30
+	.incbin "baserom_jp.gba", 0x5ef728, 0x30
 
 	.globl gUnknown_85EF758
 gUnknown_85EF758: @ 0x85EF758
-	.incbin "build/data/data.bin", 0x3539b4, 0x4
+	.incbin "baserom_jp.gba", 0x5ef758, 0x4
 
 	.globl gUnknown_85EF75C
 gUnknown_85EF75C: @ 0x85EF75C
-	.incbin "build/data/data.bin", 0x3539b8, 0x2
+	.incbin "baserom_jp.gba", 0x5ef75c, 0x2
 
 	.globl gUnknown_85EF75E
 gUnknown_85EF75E: @ 0x85EF75E
-	.incbin "build/data/data.bin", 0x3539ba, 0x2
+	.incbin "baserom_jp.gba", 0x5ef75e, 0x2
 
 	.globl gUnknown_85EF760
 gUnknown_85EF760: @ 0x85EF760
-	.incbin "build/data/data.bin", 0x3539bc, 0x4
+	.incbin "baserom_jp.gba", 0x5ef760, 0x4
 
 	.globl gUnknown_85EF764
 gUnknown_85EF764: @ 0x85EF764
-	.incbin "build/data/data.bin", 0x3539c0, 0x8
+	.incbin "baserom_jp.gba", 0x5ef764, 0x8
 
 	.globl gUnknown_85EF76C
 gUnknown_85EF76C: @ 0x85EF76C
-	.incbin "build/data/data.bin", 0x3539c8, 0xc
+	.incbin "baserom_jp.gba", 0x5ef76c, 0xc
 
 	.globl gUnknown_85EF778
 gUnknown_85EF778: @ 0x85EF778
-	.incbin "build/data/data.bin", 0x3539d4, 0x28
+	.incbin "baserom_jp.gba", 0x5ef778, 0x28
 
 	.globl gUnknown_85EF7A0
 gUnknown_85EF7A0: @ 0x85EF7A0
-	.incbin "build/data/data.bin", 0x3539fc, 0x20
+	.incbin "baserom_jp.gba", 0x5ef7a0, 0x20
 
 	.globl gUnknown_85EF7C0
 gUnknown_85EF7C0: @ 0x85EF7C0
-	.incbin "build/data/data.bin", 0x353a1c, 0x5c
+	.incbin "baserom_jp.gba", 0x5ef7c0, 0x5c
 
 	.globl gUnknown_85EF81C
 gUnknown_85EF81C: @ 0x85EF81C
-	.incbin "build/data/data.bin", 0x353a78, 0x8
+	.incbin "baserom_jp.gba", 0x5ef81c, 0x8
 
 	.globl gUnknown_85EF824
 gUnknown_85EF824: @ 0x85EF824
-	.incbin "build/data/data.bin", 0x353a80, 0x18
+	.incbin "baserom_jp.gba", 0x5ef824, 0x18
 
 	.globl gUnknown_85EF83C
 gUnknown_85EF83C: @ 0x85EF83C
-	.incbin "build/data/data.bin", 0x353a98, 0x1a4
+	.incbin "baserom_jp.gba", 0x5ef83c, 0x1a4
 
 	.globl gUnknown_85EF9E0
 gUnknown_85EF9E0: @ 0x85EF9E0
-	.incbin "build/data/data.bin", 0x353c3c, 0x20
+	.incbin "baserom_jp.gba", 0x5ef9e0, 0x20
 
 	.globl gUnknown_85EFA00
 gUnknown_85EFA00: @ 0x85EFA00
-	.incbin "build/data/data.bin", 0x353c5c, 0x22c
+	.incbin "baserom_jp.gba", 0x5efa00, 0x22c
 
 	.globl gUnknown_85EFC2C
 gUnknown_85EFC2C: @ 0x85EFC2C
-	.incbin "build/data/data.bin", 0x353e88, 0x5f0
+	.incbin "baserom_jp.gba", 0x5efc2c, 0x5f0
 
 	.globl gUnknown_85F021C
 gUnknown_85F021C: @ 0x85F021C
-	.incbin "build/data/data.bin", 0x354478, 0x11ac
+	.incbin "baserom_jp.gba", 0x5f021c, 0x11ac
 
 	.globl gUnknown_85F13C8
 gUnknown_85F13C8: @ 0x85F13C8
-	.incbin "build/data/data.bin", 0x355624, 0x4
+	.incbin "baserom_jp.gba", 0x5f13c8, 0x4
 
 	.globl gUnknown_85F13CC
 gUnknown_85F13CC: @ 0x85F13CC
-	.incbin "build/data/data.bin", 0x355628, 0x10
+	.incbin "baserom_jp.gba", 0x5f13cc, 0x10
 
 	.globl gUnknown_85F13DC
 gUnknown_85F13DC: @ 0x85F13DC
-	.incbin "build/data/data.bin", 0x355638, 0x30
+	.incbin "baserom_jp.gba", 0x5f13dc, 0x30
 
 	.globl gUnknown_85F140C
 gUnknown_85F140C: @ 0x85F140C
-	.incbin "build/data/data.bin", 0x355668, 0x4
+	.incbin "baserom_jp.gba", 0x5f140c, 0x4
 
 	.globl gUnknown_85F1410
 gUnknown_85F1410: @ 0x85F1410
-	.incbin "build/data/data.bin", 0x35566c, 0x8
+	.incbin "baserom_jp.gba", 0x5f1410, 0x8
 
 	.globl gUnknown_85F1418
 gUnknown_85F1418: @ 0x85F1418
-	.incbin "build/data/data.bin", 0x355674, 0x10
+	.incbin "baserom_jp.gba", 0x5f1418, 0x10
 
 	.globl gUnknown_85F1428
 gUnknown_85F1428: @ 0x85F1428
-	.incbin "build/data/data.bin", 0x355684, 0x8
+	.incbin "baserom_jp.gba", 0x5f1428, 0x8
 
 	.globl gUnknown_85F1430
 gUnknown_85F1430: @ 0x85F1430
-	.incbin "build/data/data.bin", 0x35568c, 0x30
+	.incbin "baserom_jp.gba", 0x5f1430, 0x30
 
 	.globl gUnknown_85F1460
 gUnknown_85F1460: @ 0x85F1460
-	.incbin "build/data/data.bin", 0x3556bc, 0x68
+	.incbin "baserom_jp.gba", 0x5f1460, 0x68
 
 	.globl gUnknown_85F14C8
 gUnknown_85F14C8: @ 0x85F14C8
-	.incbin "build/data/data.bin", 0x355724, 0x28
+	.incbin "baserom_jp.gba", 0x5f14c8, 0x28
 
 	.globl gUnknown_85F14F0
 gUnknown_85F14F0: @ 0x85F14F0
-	.incbin "build/data/data.bin", 0x35574c, 0x18
+	.incbin "baserom_jp.gba", 0x5f14f0, 0x18
 
 	.globl gUnknown_85F1508
 gUnknown_85F1508: @ 0x85F1508
-	.incbin "build/data/data.bin", 0x355764, 0xa0
+	.incbin "baserom_jp.gba", 0x5f1508, 0xa0
 
 	.globl gUnknown_85F15A8
 gUnknown_85F15A8: @ 0x85F15A8
-	.incbin "build/data/data.bin", 0x355804, 0x4
+	.incbin "baserom_jp.gba", 0x5f15a8, 0x4
 
 	.globl gUnknown_85F15AC
 gUnknown_85F15AC: @ 0x85F15AC
-	.incbin "build/data/data.bin", 0x355808, 0xc
+	.incbin "baserom_jp.gba", 0x5f15ac, 0xc
 
 	.globl gUnknown_85F15B8
 gUnknown_85F15B8: @ 0x85F15B8
-	.incbin "build/data/data.bin", 0x355814, 0x3
+	.incbin "baserom_jp.gba", 0x5f15b8, 0x3
 
 	.globl gUnknown_85F15BB
 gUnknown_85F15BB: @ 0x85F15BB
-	.incbin "build/data/data.bin", 0x355817, 0x5
+	.incbin "baserom_jp.gba", 0x5f15bb, 0x5
 
 	.globl gUnknown_85F15C0
 gUnknown_85F15C0: @ 0x85F15C0
-	.incbin "build/data/data.bin", 0x35581c, 0x8
+	.incbin "baserom_jp.gba", 0x5f15c0, 0x8
 
 	.globl gUnknown_85F15C8
 gUnknown_85F15C8: @ 0x85F15C8
-	.incbin "build/data/data.bin", 0x355824, 0x18
+	.incbin "baserom_jp.gba", 0x5f15c8, 0x18
 
 	.globl gUnknown_85F15E0
 gUnknown_85F15E0: @ 0x85F15E0
-	.incbin "build/data/data.bin", 0x35583c, 0x20
+	.incbin "baserom_jp.gba", 0x5f15e0, 0x20
 
 	.globl gUnknown_85F1600
 gUnknown_85F1600: @ 0x85F1600
-	.incbin "build/data/data.bin", 0x35585c, 0x18
+	.incbin "baserom_jp.gba", 0x5f1600, 0x18
 
 	.globl gUnknown_85F1618
 gUnknown_85F1618: @ 0x85F1618
-	.incbin "build/data/data.bin", 0x355874, 0x5
+	.incbin "baserom_jp.gba", 0x5f1618, 0x5
 
 	.globl gUnknown_85F161D
 gUnknown_85F161D: @ 0x85F161D
-	.incbin "build/data/data.bin", 0x355879, 0x1f
+	.incbin "baserom_jp.gba", 0x5f161d, 0x1f
 
 	.globl gUnknown_85F163C
 gUnknown_85F163C: @ 0x85F163C
-	.incbin "build/data/data.bin", 0x355898, 0x2
+	.incbin "baserom_jp.gba", 0x5f163c, 0x2
 
 	.globl gUnknown_85F163E
 gUnknown_85F163E: @ 0x85F163E
-	.incbin "build/data/data.bin", 0x35589a, 0xc
+	.incbin "baserom_jp.gba", 0x5f163e, 0xc
 
 	.globl gUnknown_85F164A
 gUnknown_85F164A: @ 0x85F164A
-	.incbin "build/data/data.bin", 0x3558a6, 0x12
+	.incbin "baserom_jp.gba", 0x5f164a, 0x12
 
 	.globl gUnknown_85F165C
 gUnknown_85F165C: @ 0x85F165C
-	.incbin "build/data/data.bin", 0x3558b8, 0x14
+	.incbin "baserom_jp.gba", 0x5f165c, 0x14
 
 	.globl gUnknown_85F1670
 gUnknown_85F1670: @ 0x85F1670
-	.incbin "build/data/data.bin", 0x3558cc, 0xa0
+	.incbin "baserom_jp.gba", 0x5f1670, 0xa0
 
 	.globl gUnknown_85F1710
 gUnknown_85F1710: @ 0x85F1710
-	.incbin "build/data/data.bin", 0x35596c, 0x20
+	.incbin "baserom_jp.gba", 0x5f1710, 0x20
 
 	.globl gUnknown_85F1730
 gUnknown_85F1730: @ 0x85F1730
-	.incbin "build/data/data.bin", 0x35598c, 0x50
+	.incbin "baserom_jp.gba", 0x5f1730, 0x50
 
 	.globl gUnknown_85F1780
 gUnknown_85F1780: @ 0x85F1780
-	.incbin "build/data/data.bin", 0x3559dc, 0xb8
+	.incbin "baserom_jp.gba", 0x5f1780, 0xb8
 
 	.globl gUnknown_85F1838
 gUnknown_85F1838: @ 0x85F1838
-	.incbin "build/data/data.bin", 0x355a94, 0x20
+	.incbin "baserom_jp.gba", 0x5f1838, 0x20
 
 	.globl gUnknown_85F1858
 gUnknown_85F1858: @ 0x85F1858
-	.incbin "build/data/data.bin", 0x355ab4, 0x288
+	.incbin "baserom_jp.gba", 0x5f1858, 0x288
 
 	.globl gUnknown_85F1AE0
 gUnknown_85F1AE0: @ 0x85F1AE0
-	.incbin "build/data/data.bin", 0x355d3c, 0xc1c
+	.incbin "baserom_jp.gba", 0x5f1ae0, 0xc1c
 
 	.globl gUnknown_85F26FC
 gUnknown_85F26FC: @ 0x85F26FC
-	.incbin "build/data/data.bin", 0x356958, 0xc
+	.incbin "baserom_jp.gba", 0x5f26fc, 0xc
 
 	.globl gUnknown_85F2708
 gUnknown_85F2708: @ 0x85F2708
-	.incbin "build/data/data.bin", 0x356964, 0x24
+	.incbin "baserom_jp.gba", 0x5f2708, 0x24
 
 	.globl gUnknown_85F272C
 gUnknown_85F272C: @ 0x85F272C
-	.incbin "build/data/data.bin", 0x356988, 0x10
+	.incbin "baserom_jp.gba", 0x5f272c, 0x10
 
 	.globl gUnknown_85F273C
 gUnknown_85F273C: @ 0x85F273C
-	.incbin "build/data/data.bin", 0x356998, 0x6c
+	.incbin "baserom_jp.gba", 0x5f273c, 0x6c
 
 	.globl gUnknown_85F27A8
 gUnknown_85F27A8: @ 0x85F27A8
-	.incbin "build/data/data.bin", 0x356a04, 0x4
+	.incbin "baserom_jp.gba", 0x5f27a8, 0x4
 
 	.globl gUnknown_85F27AC
 gUnknown_85F27AC: @ 0x85F27AC
-	.incbin "build/data/data.bin", 0x356a08, 0x88
+	.incbin "baserom_jp.gba", 0x5f27ac, 0x88
 
 	.globl gUnknown_85F2834
 gUnknown_85F2834: @ 0x85F2834
-	.incbin "build/data/data.bin", 0x356a90, 0x8
+	.incbin "baserom_jp.gba", 0x5f2834, 0x8
 
 	.globl gUnknown_85F283C
 gUnknown_85F283C: @ 0x85F283C
-	.incbin "build/data/data.bin", 0x356a98, 0x38
+	.incbin "baserom_jp.gba", 0x5f283c, 0x38
 
 	.globl gUnknown_85F2874
 gUnknown_85F2874: @ 0x85F2874
-	.incbin "build/data/data.bin", 0x356ad0, 0x3
+	.incbin "baserom_jp.gba", 0x5f2874, 0x3
 
 	.globl gUnknown_85F2877
 gUnknown_85F2877: @ 0x85F2877
-	.incbin "build/data/data.bin", 0x356ad3, 0x3d
+	.incbin "baserom_jp.gba", 0x5f2877, 0x3d
 
 	.globl gUnknown_85F28B4
 gUnknown_85F28B4: @ 0x85F28B4
-	.incbin "build/data/data.bin", 0x356b10, 0x20
+	.incbin "baserom_jp.gba", 0x5f28b4, 0x20
 
 	.globl gUnknown_85F28D4
 gUnknown_85F28D4: @ 0x85F28D4
-	.incbin "build/data/data.bin", 0x356b30, 0x18
+	.incbin "baserom_jp.gba", 0x5f28d4, 0x18
 
 	.globl gUnknown_85F28EC
 gUnknown_85F28EC: @ 0x85F28EC
-	.incbin "build/data/data.bin", 0x356b48, 0x10c8
+	.incbin "baserom_jp.gba", 0x5f28ec, 0x10c8
 
 	.globl gUnknown_85F39B4
 gUnknown_85F39B4: @ 0x85F39B4
-	.incbin "build/data/data.bin", 0x357c10, 0x4e0
+	.incbin "baserom_jp.gba", 0x5f39b4, 0x4e0
 
 	.globl gUnknown_85F3E94
 gUnknown_85F3E94: @ 0x85F3E94
-	.incbin "build/data/data.bin", 0x3580f0, 0x2
+	.incbin "baserom_jp.gba", 0x5f3e94, 0x2
 
 	.globl gUnknown_85F3E96
 gUnknown_85F3E96: @ 0x85F3E96
-	.incbin "build/data/data.bin", 0x3580f2, 0x3
+	.incbin "baserom_jp.gba", 0x5f3e96, 0x3
 
 	.globl gUnknown_85F3E99
 gUnknown_85F3E99: @ 0x85F3E99
-	.incbin "build/data/data.bin", 0x3580f5, 0x17
+	.incbin "baserom_jp.gba", 0x5f3e99, 0x17
 
 	.globl gUnknown_85F3EB0
 gUnknown_85F3EB0: @ 0x85F3EB0
-	.incbin "build/data/data.bin", 0x35810c, 0x20
+	.incbin "baserom_jp.gba", 0x5f3eb0, 0x20
 
 	.globl gUnknown_85F3ED0
 gUnknown_85F3ED0: @ 0x85F3ED0
-	.incbin "build/data/data.bin", 0x35812c, 0xa4
+	.incbin "baserom_jp.gba", 0x5f3ed0, 0xa4
 
 	.globl gUnknown_85F3F74
 gUnknown_85F3F74: @ 0x85F3F74
-	.incbin "build/data/data.bin", 0x3581d0, 0x10c
+	.incbin "baserom_jp.gba", 0x5f3f74, 0x10c
 
 	.globl gUnknown_85F4080
 gUnknown_85F4080: @ 0x85F4080
-	.incbin "build/data/data.bin", 0x3582dc, 0x20
+	.incbin "baserom_jp.gba", 0x5f4080, 0x20
 
 	.globl gUnknown_85F40A0
 gUnknown_85F40A0: @ 0x85F40A0
-	.incbin "build/data/data.bin", 0x3582fc, 0x20
+	.incbin "baserom_jp.gba", 0x5f40a0, 0x20
 
 	.globl gUnknown_85F40C0
 gUnknown_85F40C0: @ 0x85F40C0
-	.incbin "build/data/data.bin", 0x35831c, 0x40
+	.incbin "baserom_jp.gba", 0x5f40c0, 0x40
 
 	.globl gUnknown_85F4100
 gUnknown_85F4100: @ 0x85F4100
-	.incbin "build/data/data.bin", 0x35835c, 0x2c
+	.incbin "baserom_jp.gba", 0x5f4100, 0x2c
 
 	.globl gUnknown_85F412C
 gUnknown_85F412C: @ 0x85F412C
-	.incbin "build/data/data.bin", 0x358388, 0x8
+	.incbin "baserom_jp.gba", 0x5f412c, 0x8
 
 	.globl gUnknown_85F4134
 gUnknown_85F4134: @ 0x85F4134
-	.incbin "build/data/data.bin", 0x358390, 0x4
+	.incbin "baserom_jp.gba", 0x5f4134, 0x4
 
 	.globl gUnknown_85F4138
 gUnknown_85F4138: @ 0x85F4138
-	.incbin "build/data/data.bin", 0x358394, 0x40
+	.incbin "baserom_jp.gba", 0x5f4138, 0x40
 
 	.globl gUnknown_85F4178
 gUnknown_85F4178: @ 0x85F4178
-	.incbin "build/data/data.bin", 0x3583d4, 0x8
+	.incbin "baserom_jp.gba", 0x5f4178, 0x8
 
 	.globl gUnknown_85F4180
 gUnknown_85F4180: @ 0x85F4180
-	.incbin "build/data/data.bin", 0x3583dc, 0x8
+	.incbin "baserom_jp.gba", 0x5f4180, 0x8
 
 	.globl gUnknown_85F4188
 gUnknown_85F4188: @ 0x85F4188
-	.incbin "build/data/data.bin", 0x3583e4, 0xc
+	.incbin "baserom_jp.gba", 0x5f4188, 0xc
 
 	.globl gUnknown_85F4194
 gUnknown_85F4194: @ 0x85F4194
-	.incbin "build/data/data.bin", 0x3583f0, 0x14
+	.incbin "baserom_jp.gba", 0x5f4194, 0x14
 
 	.globl gUnknown_85F41A8
 gUnknown_85F41A8: @ 0x85F41A8
-	.incbin "build/data/data.bin", 0x358404, 0x8
+	.incbin "baserom_jp.gba", 0x5f41a8, 0x8
 
 	.globl gUnknown_85F41B0
 gUnknown_85F41B0: @ 0x85F41B0
-	.incbin "build/data/data.bin", 0x35840c, 0x8
+	.incbin "baserom_jp.gba", 0x5f41b0, 0x8
 
 	.globl gUnknown_85F41B8
 gUnknown_85F41B8: @ 0x85F41B8
-	.incbin "build/data/data.bin", 0x358414, 0x18
+	.incbin "baserom_jp.gba", 0x5f41b8, 0x18
 
 	.globl gUnknown_85F41D0
 gUnknown_85F41D0: @ 0x85F41D0
-	.incbin "build/data/data.bin", 0x35842c, 0x20
+	.incbin "baserom_jp.gba", 0x5f41d0, 0x20
 
 	.globl gUnknown_85F41F0
 gUnknown_85F41F0: @ 0x85F41F0
-	.incbin "build/data/data.bin", 0x35844c, 0x18
+	.incbin "baserom_jp.gba", 0x5f41f0, 0x18
 
 	.globl gUnknown_85F4208
 gUnknown_85F4208: @ 0x85F4208
-	.incbin "build/data/data.bin", 0x358464, 0x20
+	.incbin "baserom_jp.gba", 0x5f4208, 0x20
 
 	.globl gUnknown_85F4228
 gUnknown_85F4228: @ 0x85F4228
-	.incbin "build/data/data.bin", 0x358484, 0x20
+	.incbin "baserom_jp.gba", 0x5f4228, 0x20
 
 	.globl gUnknown_85F4248
 gUnknown_85F4248: @ 0x85F4248
-	.incbin "build/data/data.bin", 0x3584a4, 0xab4
+	.incbin "baserom_jp.gba", 0x5f4248, 0xab4
 
 	.globl gUnknown_85F4CFC
 gUnknown_85F4CFC: @ 0x85F4CFC
-	.incbin "build/data/data.bin", 0x358f58, 0xc
+	.incbin "baserom_jp.gba", 0x5f4cfc, 0xc
 
 	.globl gUnknown_85F4D08
 gUnknown_85F4D08: @ 0x85F4D08
-	.incbin "build/data/data.bin", 0x358f64, 0x14
+	.incbin "baserom_jp.gba", 0x5f4d08, 0x14
 
 	.globl gUnknown_85F4D1C
 gUnknown_85F4D1C: @ 0x85F4D1C
-	.incbin "build/data/data.bin", 0x358f78, 0x8
+	.incbin "baserom_jp.gba", 0x5f4d1c, 0x8
 
 	.globl gUnknown_85F4D24
 gUnknown_85F4D24: @ 0x85F4D24
-	.incbin "build/data/data.bin", 0x358f80, 0x10
+	.incbin "baserom_jp.gba", 0x5f4d24, 0x10
 
 	.globl gUnknown_85F4D34
 gUnknown_85F4D34: @ 0x85F4D34
-	.incbin "build/data/data.bin", 0x358f90, 0x8
+	.incbin "baserom_jp.gba", 0x5f4d34, 0x8
 
 	.globl gUnknown_85F4D3C
 gUnknown_85F4D3C: @ 0x85F4D3C
-	.incbin "build/data/data.bin", 0x358f98, 0xb8
+	.incbin "baserom_jp.gba", 0x5f4d3c, 0xb8
 
 	.globl gUnknown_85F4DF4
 gUnknown_85F4DF4: @ 0x85F4DF4
-	.incbin "build/data/data.bin", 0x359050, 0x18
+	.incbin "baserom_jp.gba", 0x5f4df4, 0x18
 
 	.globl gUnknown_85F4E0C
 gUnknown_85F4E0C: @ 0x85F4E0C
-	.incbin "build/data/data.bin", 0x359068, 0x20
+	.incbin "baserom_jp.gba", 0x5f4e0c, 0x20
 
 	.globl gUnknown_85F4E2C
 gUnknown_85F4E2C: @ 0x85F4E2C
-	.incbin "build/data/data.bin", 0x359088, 0x20
+	.incbin "baserom_jp.gba", 0x5f4e2c, 0x20
 
 	.globl gUnknown_85F4E4C
 gUnknown_85F4E4C: @ 0x85F4E4C
-	.incbin "build/data/data.bin", 0x3590a8, 0x20
+	.incbin "baserom_jp.gba", 0x5f4e4c, 0x20
 
 	.globl gUnknown_85F4E6C
 gUnknown_85F4E6C: @ 0x85F4E6C
-	.incbin "build/data/data.bin", 0x3590c8, 0x794
+	.incbin "baserom_jp.gba", 0x5f4e6c, 0x794
 
 	.globl gUnknown_85F5600
 gUnknown_85F5600: @ 0x85F5600
-	.incbin "build/data/data.bin", 0x35985c, 0x1ec
+	.incbin "baserom_jp.gba", 0x5f5600, 0x1ec
 
 	.globl gUnknown_85F57EC
 gUnknown_85F57EC: @ 0x85F57EC
-	.incbin "build/data/data.bin", 0x359a48, 0x14
+	.incbin "baserom_jp.gba", 0x5f57ec, 0x14
 
 	.globl gUnknown_85F5800
 gUnknown_85F5800: @ 0x85F5800
-	.incbin "build/data/data.bin", 0x359a5c, 0xfc
+	.incbin "baserom_jp.gba", 0x5f5800, 0xfc
 
 	.globl gUnknown_85F58FC
 gUnknown_85F58FC: @ 0x85F58FC
-	.incbin "build/data/data.bin", 0x359b58, 0x48
+	.incbin "baserom_jp.gba", 0x5f58fc, 0x48
 
 	.globl gUnknown_85F5944
 gUnknown_85F5944: @ 0x85F5944
-	.incbin "build/data/data.bin", 0x359ba0, 0x20
+	.incbin "baserom_jp.gba", 0x5f5944, 0x20
 
 	.globl gUnknown_85F5964
 gUnknown_85F5964: @ 0x85F5964
-	.incbin "build/data/data.bin", 0x359bc0, 0xc
+	.incbin "baserom_jp.gba", 0x5f5964, 0xc
 
 	.globl gUnknown_85F5970
 gUnknown_85F5970: @ 0x85F5970
-	.incbin "build/data/data.bin", 0x359bcc, 0x8
+	.incbin "baserom_jp.gba", 0x5f5970, 0x8
 
 	.globl gUnknown_85F5978
 gUnknown_85F5978: @ 0x85F5978
-	.incbin "build/data/data.bin", 0x359bd4, 0x8
+	.incbin "baserom_jp.gba", 0x5f5978, 0x8
 
 	.globl gUnknown_85F5980
 gUnknown_85F5980: @ 0x85F5980
-	.incbin "build/data/data.bin", 0x359bdc, 0x8
+	.incbin "baserom_jp.gba", 0x5f5980, 0x8
 
 	.globl gUnknown_85F5988
 gUnknown_85F5988: @ 0x85F5988
-	.incbin "build/data/data.bin", 0x359be4, 0x8
+	.incbin "baserom_jp.gba", 0x5f5988, 0x8
 
 	.globl gUnknown_85F5990
 gUnknown_85F5990: @ 0x85F5990
-	.incbin "build/data/data.bin", 0x359bec, 0x1c
+	.incbin "baserom_jp.gba", 0x5f5990, 0x1c
 
 	.globl gUnknown_85F59AC
 gUnknown_85F59AC: @ 0x85F59AC
-	.incbin "build/data/data.bin", 0x359c08, 0x14
+	.incbin "baserom_jp.gba", 0x5f59ac, 0x14
 
 	.globl gUnknown_85F59C0
 gUnknown_85F59C0: @ 0x85F59C0
-	.incbin "build/data/data.bin", 0x359c1c, 0x10
+	.incbin "baserom_jp.gba", 0x5f59c0, 0x10
 
 	.globl gUnknown_85F59D0
 gUnknown_85F59D0: @ 0x85F59D0
-	.incbin "build/data/data.bin", 0x359c2c, 0x20
+	.incbin "baserom_jp.gba", 0x5f59d0, 0x20
 
 	.globl gUnknown_85F59F0
 gUnknown_85F59F0: @ 0x85F59F0
-	.incbin "build/data/data.bin", 0x359c4c, 0xc8
+	.incbin "baserom_jp.gba", 0x5f59f0, 0xc8
 
 	.globl gUnknown_85F5AB8
 gUnknown_85F5AB8: @ 0x85F5AB8
-	.incbin "build/data/data.bin", 0x359d14, 0xc4
+	.incbin "baserom_jp.gba", 0x5f5ab8, 0xc4
 
 	.globl gUnknown_85F5B7C
 gUnknown_85F5B7C: @ 0x85F5B7C
-	.incbin "build/data/data.bin", 0x359dd8, 0x20
+	.incbin "baserom_jp.gba", 0x5f5b7c, 0x20
 
 	.globl gUnknown_85F5B9C
 gUnknown_85F5B9C: @ 0x85F5B9C
-	.incbin "build/data/data.bin", 0x359df8, 0x4
+	.incbin "baserom_jp.gba", 0x5f5b9c, 0x4
 
 	.globl gUnknown_85F5BA0
 gUnknown_85F5BA0: @ 0x85F5BA0
-	.incbin "build/data/data.bin", 0x359dfc, 0x4
+	.incbin "baserom_jp.gba", 0x5f5ba0, 0x4
 
 	.globl gUnknown_85F5BA4
 gUnknown_85F5BA4: @ 0x85F5BA4
-	.incbin "build/data/data.bin", 0x359e00, 0x1c
+	.incbin "baserom_jp.gba", 0x5f5ba4, 0x1c
 
 	.globl gUnknown_85F5BC0
 gUnknown_85F5BC0: @ 0x85F5BC0
-	.incbin "build/data/data.bin", 0x359e1c, 0x8
+	.incbin "baserom_jp.gba", 0x5f5bc0, 0x8
 
 	.globl gUnknown_85F5BC8
 gUnknown_85F5BC8: @ 0x85F5BC8
-	.incbin "build/data/data.bin", 0x359e24, 0xc
+	.incbin "baserom_jp.gba", 0x5f5bc8, 0xc
 
 	.globl gUnknown_85F5BD4
 gUnknown_85F5BD4: @ 0x85F5BD4
-	.incbin "build/data/data.bin", 0x359e30, 0x20
+	.incbin "baserom_jp.gba", 0x5f5bd4, 0x20
 
 	.globl gUnknown_85F5BF4
 gUnknown_85F5BF4: @ 0x85F5BF4
-	.incbin "build/data/data.bin", 0x359e50, 0xc8
+	.incbin "baserom_jp.gba", 0x5f5bf4, 0xc8
 
 	.globl gUnknown_85F5CBC
 gUnknown_85F5CBC: @ 0x85F5CBC
-	.incbin "build/data/data.bin", 0x359f18, 0xc4
+	.incbin "baserom_jp.gba", 0x5f5cbc, 0xc4
 
 	.globl gUnknown_85F5D80
 gUnknown_85F5D80: @ 0x85F5D80
-	.incbin "build/data/data.bin", 0x359fdc, 0x20
+	.incbin "baserom_jp.gba", 0x5f5d80, 0x20
 
 	.globl gUnknown_85F5DA0
 gUnknown_85F5DA0: @ 0x85F5DA0
-	.incbin "build/data/data.bin", 0x359ffc, 0x4
+	.incbin "baserom_jp.gba", 0x5f5da0, 0x4
 
 	.globl gUnknown_85F5DA4
 gUnknown_85F5DA4: @ 0x85F5DA4
-	.incbin "build/data/data.bin", 0x35a000, 0x4
+	.incbin "baserom_jp.gba", 0x5f5da4, 0x4
 
 	.globl gUnknown_85F5DA8
 gUnknown_85F5DA8: @ 0x85F5DA8
-	.incbin "build/data/data.bin", 0x35a004, 0x1c
+	.incbin "baserom_jp.gba", 0x5f5da8, 0x1c
 
 	.globl gUnknown_85F5DC4
 gUnknown_85F5DC4: @ 0x85F5DC4
-	.incbin "build/data/data.bin", 0x35a020, 0x8
+	.incbin "baserom_jp.gba", 0x5f5dc4, 0x8
 
 	.globl gUnknown_85F5DCC
 gUnknown_85F5DCC: @ 0x85F5DCC
@@ -19847,11 +19847,11 @@ gUnknown_85F5DEB: @ 0x85F5DEB
 
 	.globl gUnknown_85F5E03
 gUnknown_85F5E03: @ 0x85F5E03
-	.incbin "build/data/data.bin", 0x35a05f, 0x11
+	.incbin "baserom_jp.gba", 0x5f5e03, 0x11
 
 	.globl gUnknown_85F5E14
 gUnknown_85F5E14: @ 0x85F5E14
-	.incbin "build/data/data.bin", 0x35a070, 0x14c
+	.incbin "baserom_jp.gba", 0x5f5e14, 0x14c
 
 	.globl gUnknown_85F5F60
 gUnknown_85F5F60: @ 0x85F5F60
@@ -19898,127 +19898,127 @@ gUnknown_85F5F60: @ 0x85F5F60
 
 	.globl gUnknown_85F628C
 gUnknown_85F628C: @ 0x85F628C
-	.incbin "build/data/data.bin", 0x35a4e8, 0x200
+	.incbin "baserom_jp.gba", 0x5f628c, 0x200
 
 	.globl gUnknown_85F648C
 gUnknown_85F648C: @ 0x85F648C
-	.incbin "build/data/data.bin", 0x35a6e8, 0x20
+	.incbin "baserom_jp.gba", 0x5f648c, 0x20
 
 	.globl gUnknown_85F64AC
 gUnknown_85F64AC: @ 0x85F64AC
-	.incbin "build/data/data.bin", 0x35a708, 0xfc
+	.incbin "baserom_jp.gba", 0x5f64ac, 0xfc
 
 	.globl gUnknown_85F65A8
 gUnknown_85F65A8: @ 0x85F65A8
-	.incbin "build/data/data.bin", 0x35a804, 0xcc
+	.incbin "baserom_jp.gba", 0x5f65a8, 0xcc
 
 	.globl gUnknown_85F6674
 gUnknown_85F6674: @ 0x85F6674
-	.incbin "build/data/data.bin", 0x35a8d0, 0xa0
+	.incbin "baserom_jp.gba", 0x5f6674, 0xa0
 
 	.globl gUnknown_85F6714
 gUnknown_85F6714: @ 0x85F6714
-	.incbin "build/data/data.bin", 0x35a970, 0x20
+	.incbin "baserom_jp.gba", 0x5f6714, 0x20
 
 	.globl gUnknown_85F6734
 gUnknown_85F6734: @ 0x85F6734
-	.incbin "build/data/data.bin", 0x35a990, 0xae0
+	.incbin "baserom_jp.gba", 0x5f6734, 0xae0
 
 	.globl gUnknown_85F7214
 gUnknown_85F7214: @ 0x85F7214
-	.incbin "build/data/data.bin", 0x35b470, 0x8
+	.incbin "baserom_jp.gba", 0x5f7214, 0x8
 
 	.globl gUnknown_85F721C
 gUnknown_85F721C: @ 0x85F721C
-	.incbin "build/data/data.bin", 0x35b478, 0x18
+	.incbin "baserom_jp.gba", 0x5f721c, 0x18
 
 	.globl gUnknown_85F7234
 gUnknown_85F7234: @ 0x85F7234
-	.incbin "build/data/data.bin", 0x35b490, 0x8
+	.incbin "baserom_jp.gba", 0x5f7234, 0x8
 
 	.globl gUnknown_85F723C
 gUnknown_85F723C: @ 0x85F723C
-	.incbin "build/data/data.bin", 0x35b498, 0x4
+	.incbin "baserom_jp.gba", 0x5f723c, 0x4
 
 	.globl gUnknown_85F7240
 gUnknown_85F7240: @ 0x85F7240
-	.incbin "build/data/data.bin", 0x35b49c, 0x8
+	.incbin "baserom_jp.gba", 0x5f7240, 0x8
 
 	.globl gUnknown_85F7248
 gUnknown_85F7248: @ 0x85F7248
-	.incbin "build/data/data.bin", 0x35b4a4, 0x10
+	.incbin "baserom_jp.gba", 0x5f7248, 0x10
 
 	.globl gUnknown_85F7258
 gUnknown_85F7258: @ 0x85F7258
-	.incbin "build/data/data.bin", 0x35b4b4, 0x80
+	.incbin "baserom_jp.gba", 0x5f7258, 0x80
 
 	.globl gUnknown_85F72D8
 gUnknown_85F72D8: @ 0x85F72D8
-	.incbin "build/data/data.bin", 0x35b534, 0x8
+	.incbin "baserom_jp.gba", 0x5f72d8, 0x8
 
 	.globl gUnknown_85F72E0
 gUnknown_85F72E0: @ 0x85F72E0
-	.incbin "build/data/data.bin", 0x35b53c, 0x84
+	.incbin "baserom_jp.gba", 0x5f72e0, 0x84
 
 	.globl gUnknown_85F7364
 gUnknown_85F7364: @ 0x85F7364
-	.incbin "build/data/data.bin", 0x35b5c0, 0x650
+	.incbin "baserom_jp.gba", 0x5f7364, 0x650
 
 	.globl gUnknown_85F79B4
 gUnknown_85F79B4: @ 0x85F79B4
-	.incbin "build/data/data.bin", 0x35bc10, 0x54
+	.incbin "baserom_jp.gba", 0x5f79b4, 0x54
 
 	.globl gUnknown_85F7A08
 gUnknown_85F7A08: @ 0x85F7A08
-	.incbin "build/data/data.bin", 0x35bc64, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a08, 0x14
 
 	.globl gUnknown_85F7A1C
 gUnknown_85F7A1C: @ 0x85F7A1C
-	.incbin "build/data/data.bin", 0x35bc78, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a1c, 0x14
 
 	.globl gUnknown_85F7A30
 gUnknown_85F7A30: @ 0x85F7A30
-	.incbin "build/data/data.bin", 0x35bc8c, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a30, 0x14
 
 	.globl gUnknown_85F7A44
 gUnknown_85F7A44: @ 0x85F7A44
-	.incbin "build/data/data.bin", 0x35bca0, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a44, 0x14
 
 	.globl gUnknown_85F7A58
 gUnknown_85F7A58: @ 0x85F7A58
-	.incbin "build/data/data.bin", 0x35bcb4, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a58, 0x14
 
 	.globl gUnknown_85F7A6C
 gUnknown_85F7A6C: @ 0x85F7A6C
-	.incbin "build/data/data.bin", 0x35bcc8, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a6c, 0x14
 
 	.globl gUnknown_85F7A80
 gUnknown_85F7A80: @ 0x85F7A80
-	.incbin "build/data/data.bin", 0x35bcdc, 0x14
+	.incbin "baserom_jp.gba", 0x5f7a80, 0x14
 
 	.globl gUnknown_85F7A94
 gUnknown_85F7A94: @ 0x85F7A94
-	.incbin "build/data/data.bin", 0x35bcf0, 0x60
+	.incbin "baserom_jp.gba", 0x5f7a94, 0x60
 
 	.globl gUnknown_85F7AF4
 gUnknown_85F7AF4: @ 0x85F7AF4
-	.incbin "build/data/data.bin", 0x35bd50, 0x18
+	.incbin "baserom_jp.gba", 0x5f7af4, 0x18
 
 	.globl gUnknown_85F7B0C
 gUnknown_85F7B0C: @ 0x85F7B0C
-	.incbin "build/data/data.bin", 0x35bd68, 0xc
+	.incbin "baserom_jp.gba", 0x5f7b0c, 0xc
 
 	.globl gUnknown_85F7B18
 gUnknown_85F7B18: @ 0x85F7B18
-	.incbin "build/data/data.bin", 0x35bd74, 0x100
+	.incbin "baserom_jp.gba", 0x5f7b18, 0x100
 
 	.globl gUnknown_85F7C18
 gUnknown_85F7C18: @ 0x85F7C18
-	.incbin "build/data/data.bin", 0x35be74, 0x30
+	.incbin "baserom_jp.gba", 0x5f7c18, 0x30
 
 	.globl gUnknown_85F7C48
 gUnknown_85F7C48: @ 0x85F7C48
-	.incbin "build/data/data.bin", 0x35bea4, 0x8
+	.incbin "baserom_jp.gba", 0x5f7c48, 0x8
 
 	.globl gUnknown_85F7C50
 gUnknown_85F7C50: @ 0x85F7C50
@@ -20050,47 +20050,47 @@ gUnknown_85F7C75: @ 0x85F7C75
 
 	.globl gUnknown_85F7C7A
 gUnknown_85F7C7A: @ 0x85F7C7A
-	.incbin "build/data/data.bin", 0x35bed6, 0x6
+	.incbin "baserom_jp.gba", 0x5f7c7a, 0x6
 
 	.globl gUnknown_85F7C80
 gUnknown_85F7C80: @ 0x85F7C80
-	.incbin "build/data/data.bin", 0x35bedc, 0x2c18
+	.incbin "baserom_jp.gba", 0x5f7c80, 0x2c18
 
 	.globl gUnknown_85FA898
 gUnknown_85FA898: @ 0x85FA898
-	.incbin "build/data/data.bin", 0x35eaf4, 0x8
+	.incbin "baserom_jp.gba", 0x5fa898, 0x8
 
 	.globl gUnknown_85FA8A0
 gUnknown_85FA8A0: @ 0x85FA8A0
-	.incbin "build/data/data.bin", 0x35eafc, 0x18
+	.incbin "baserom_jp.gba", 0x5fa8a0, 0x18
 
 	.globl gUnknown_85FA8B8
 gUnknown_85FA8B8: @ 0x85FA8B8
-	.incbin "build/data/data.bin", 0x35eb14, 0x8
+	.incbin "baserom_jp.gba", 0x5fa8b8, 0x8
 
 	.globl gUnknown_85FA8C0
 gUnknown_85FA8C0: @ 0x85FA8C0
-	.incbin "build/data/data.bin", 0x35eb1c, 0x20
+	.incbin "baserom_jp.gba", 0x5fa8c0, 0x20
 
 	.globl gUnknown_85FA8E0
 gUnknown_85FA8E0: @ 0x85FA8E0
-	.incbin "build/data/data.bin", 0x35eb3c, 0x18
+	.incbin "baserom_jp.gba", 0x5fa8e0, 0x18
 
 	.globl gUnknown_85FA8F8
 gUnknown_85FA8F8: @ 0x85FA8F8
-	.incbin "build/data/data.bin", 0x35eb54, 0x18
+	.incbin "baserom_jp.gba", 0x5fa8f8, 0x18
 
 	.globl gUnknown_85FA910
 gUnknown_85FA910: @ 0x85FA910
-	.incbin "build/data/data.bin", 0x35eb6c, 0x8
+	.incbin "baserom_jp.gba", 0x5fa910, 0x8
 
 	.globl gUnknown_85FA918
 gUnknown_85FA918: @ 0x85FA918
-	.incbin "build/data/data.bin", 0x35eb74, 0x4c
+	.incbin "baserom_jp.gba", 0x5fa918, 0x4c
 
 	.globl gUnknown_85FA964
 gUnknown_85FA964: @ 0x85FA964
-	.incbin "build/data/data.bin", 0x35ebc0, 0x18
+	.incbin "baserom_jp.gba", 0x5fa964, 0x18
 
 	.globl gUnknown_85FA97C
 gUnknown_85FA97C: @ 0x85FA97C
@@ -20106,11 +20106,11 @@ gUnknown_85FA9C4: @ 0x85FA9C4
 
 	.globl gUnknown_85FA9C7
 gUnknown_85FA9C7: @ 0x85FA9C7
-	.incbin "build/data/data.bin", 0x35ec23, 0x5
+	.incbin "baserom_jp.gba", 0x5fa9c7, 0x5
 
 	.globl gUnknown_85FA9CC
 gUnknown_85FA9CC: @ 0x85FA9CC
-	.incbin "build/data/data.bin", 0x35ec28, 0x18
+	.incbin "baserom_jp.gba", 0x5fa9cc, 0x18
 
 	.globl gUnknown_85FA9E4
 gUnknown_85FA9E4: @ 0x85FA9E4
@@ -20195,43 +20195,43 @@ gUnknown_85FA9E4: @ 0x85FA9E4
 
 	.globl gUnknown_85FAEF4
 gUnknown_85FAEF4: @ 0x85FAEF4
-	.incbin "build/data/data.bin", 0x35f150, 0x10
+	.incbin "baserom_jp.gba", 0x5faef4, 0x10
 
 	.globl gUnknown_85FAF04
 gUnknown_85FAF04: @ 0x85FAF04
-	.incbin "build/data/data.bin", 0x35f160, 0x14
+	.incbin "baserom_jp.gba", 0x5faf04, 0x14
 
 	.globl gUnknown_85FAF18
 gUnknown_85FAF18: @ 0x85FAF18
-	.incbin "build/data/data.bin", 0x35f174, 0x10
+	.incbin "baserom_jp.gba", 0x5faf18, 0x10
 
 	.globl gUnknown_85FAF28
 gUnknown_85FAF28: @ 0x85FAF28
-	.incbin "build/data/data.bin", 0x35f184, 0x2
+	.incbin "baserom_jp.gba", 0x5faf28, 0x2
 
 	.globl gUnknown_85FAF2A
 gUnknown_85FAF2A: @ 0x85FAF2A
-	.incbin "build/data/data.bin", 0x35f186, 0xe
+	.incbin "baserom_jp.gba", 0x5faf2a, 0xe
 
 	.globl gUnknown_85FAF38
 gUnknown_85FAF38: @ 0x85FAF38
-	.incbin "build/data/data.bin", 0x35f194, 0x768
+	.incbin "baserom_jp.gba", 0x5faf38, 0x768
 
 	.globl gUnknown_85FB6A0
 gUnknown_85FB6A0: @ 0x85FB6A0
-	.incbin "build/data/data.bin", 0x35f8fc, 0x218
+	.incbin "baserom_jp.gba", 0x5fb6a0, 0x218
 
 	.globl gUnknown_85FB8B8
 gUnknown_85FB8B8: @ 0x85FB8B8
-	.incbin "build/data/data.bin", 0x35fb14, 0x8
+	.incbin "baserom_jp.gba", 0x5fb8b8, 0x8
 
 	.globl gUnknown_85FB8C0
 gUnknown_85FB8C0: @ 0x85FB8C0
-	.incbin "build/data/data.bin", 0x35fb1c, 0x20
+	.incbin "baserom_jp.gba", 0x5fb8c0, 0x20
 
 	.globl gUnknown_85FB8E0
 gUnknown_85FB8E0: @ 0x85FB8E0
-	.incbin "build/data/data.bin", 0x35fb3c, 0x3
+	.incbin "baserom_jp.gba", 0x5fb8e0, 0x3
 
 	.globl gUnknown_85FB8E3
 gUnknown_85FB8E3: @ 0x85FB8E3
@@ -20243,307 +20243,307 @@ gUnknown_85FB8EA: @ 0x85FB8EA
 
 	.globl gUnknown_85FB8F1
 gUnknown_85FB8F1: @ 0x85FB8F1
-	.incbin "build/data/data.bin", 0x35fb4d, 0x1b
+	.incbin "baserom_jp.gba", 0x5fb8f1, 0x1b
 
 	.globl gUnknown_85FB90C
 gUnknown_85FB90C: @ 0x85FB90C
-	.incbin "build/data/data.bin", 0x35fb68, 0x10
+	.incbin "baserom_jp.gba", 0x5fb90c, 0x10
 
 	.globl gUnknown_85FB91C
 gUnknown_85FB91C: @ 0x85FB91C
-	.incbin "build/data/data.bin", 0x35fb78, 0x44
+	.incbin "baserom_jp.gba", 0x5fb91c, 0x44
 
 	.globl gUnknown_85FB960
 gUnknown_85FB960: @ 0x85FB960
-	.incbin "build/data/data.bin", 0x35fbbc, 0xc
+	.incbin "baserom_jp.gba", 0x5fb960, 0xc
 
 	.globl gUnknown_85FB96C
 gUnknown_85FB96C: @ 0x85FB96C
-	.incbin "build/data/data.bin", 0x35fbc8, 0x18
+	.incbin "baserom_jp.gba", 0x5fb96c, 0x18
 
 	.globl gUnknown_85FB984
 gUnknown_85FB984: @ 0x85FB984
-	.incbin "build/data/data.bin", 0x35fbe0, 0x10
+	.incbin "baserom_jp.gba", 0x5fb984, 0x10
 
 	.globl gUnknown_85FB994
 gUnknown_85FB994: @ 0x85FB994
-	.incbin "build/data/data.bin", 0x35fbf0, 0x8
+	.incbin "baserom_jp.gba", 0x5fb994, 0x8
 
 	.globl gUnknown_85FB99C
 gUnknown_85FB99C: @ 0x85FB99C
-	.incbin "build/data/data.bin", 0x35fbf8, 0x8c
+	.incbin "baserom_jp.gba", 0x5fb99c, 0x8c
 
 	.globl gUnknown_85FBA28
 gUnknown_85FBA28: @ 0x85FBA28
-	.incbin "build/data/data.bin", 0x35fc84, 0x24
+	.incbin "baserom_jp.gba", 0x5fba28, 0x24
 
 	.globl gUnknown_85FBA4C
 gUnknown_85FBA4C: @ 0x85FBA4C
-	.incbin "build/data/data.bin", 0x35fca8, 0x24
+	.incbin "baserom_jp.gba", 0x5fba4c, 0x24
 
 	.globl gUnknown_85FBA70
 gUnknown_85FBA70: @ 0x85FBA70
-	.incbin "build/data/data.bin", 0x35fccc, 0xa8
+	.incbin "baserom_jp.gba", 0x5fba70, 0xa8
 
 	.globl gUnknown_85FBB18
 gUnknown_85FBB18: @ 0x85FBB18
-	.incbin "build/data/data.bin", 0x35fd74, 0x30
+	.incbin "baserom_jp.gba", 0x5fbb18, 0x30
 
 	.globl gUnknown_85FBB48
 gUnknown_85FBB48: @ 0x85FBB48
-	.incbin "build/data/data.bin", 0x35fda4, 0x18
+	.incbin "baserom_jp.gba", 0x5fbb48, 0x18
 
 	.globl gUnknown_85FBB60
 gUnknown_85FBB60: @ 0x85FBB60
-	.incbin "build/data/data.bin", 0x35fdbc, 0x18
+	.incbin "baserom_jp.gba", 0x5fbb60, 0x18
 
 	.globl gUnknown_85FBB78
 gUnknown_85FBB78: @ 0x85FBB78
-	.incbin "build/data/data.bin", 0x35fdd4, 0xc
+	.incbin "baserom_jp.gba", 0x5fbb78, 0xc
 
 	.globl gUnknown_85FBB84
 gUnknown_85FBB84: @ 0x85FBB84
-	.incbin "build/data/data.bin", 0x35fde0, 0x3c
+	.incbin "baserom_jp.gba", 0x5fbb84, 0x3c
 
 	.globl gUnknown_85FBBC0
 gUnknown_85FBBC0: @ 0x85FBBC0
-	.incbin "build/data/data.bin", 0x35fe1c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbbc0, 0x8
 
 	.globl gUnknown_85FBBC8
 gUnknown_85FBBC8: @ 0x85FBBC8
-	.incbin "build/data/data.bin", 0x35fe24, 0x8
+	.incbin "baserom_jp.gba", 0x5fbbc8, 0x8
 
 	.globl gUnknown_85FBBD0
 gUnknown_85FBBD0: @ 0x85FBBD0
-	.incbin "build/data/data.bin", 0x35fe2c, 0x24
+	.incbin "baserom_jp.gba", 0x5fbbd0, 0x24
 
 	.globl gUnknown_85FBBF4
 gUnknown_85FBBF4: @ 0x85FBBF4
-	.incbin "build/data/data.bin", 0x35fe50, 0x8
+	.incbin "baserom_jp.gba", 0x5fbbf4, 0x8
 
 	.globl gUnknown_85FBBFC
 gUnknown_85FBBFC: @ 0x85FBBFC
-	.incbin "build/data/data.bin", 0x35fe58, 0x24
+	.incbin "baserom_jp.gba", 0x5fbbfc, 0x24
 
 	.globl gUnknown_85FBC20
 gUnknown_85FBC20: @ 0x85FBC20
-	.incbin "build/data/data.bin", 0x35fe7c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbc20, 0x8
 
 	.globl gUnknown_85FBC28
 gUnknown_85FBC28: @ 0x85FBC28
-	.incbin "build/data/data.bin", 0x35fe84, 0xa8
+	.incbin "baserom_jp.gba", 0x5fbc28, 0xa8
 
 	.globl gUnknown_85FBCD0
 gUnknown_85FBCD0: @ 0x85FBCD0
-	.incbin "build/data/data.bin", 0x35ff2c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbcd0, 0x8
 
 	.globl gUnknown_85FBCD8
 gUnknown_85FBCD8: @ 0x85FBCD8
-	.incbin "build/data/data.bin", 0x35ff34, 0x8
+	.incbin "baserom_jp.gba", 0x5fbcd8, 0x8
 
 	.globl gUnknown_85FBCE0
 gUnknown_85FBCE0: @ 0x85FBCE0
-	.incbin "build/data/data.bin", 0x35ff3c, 0x30
+	.incbin "baserom_jp.gba", 0x5fbce0, 0x30
 
 	.globl gUnknown_85FBD10
 gUnknown_85FBD10: @ 0x85FBD10
-	.incbin "build/data/data.bin", 0x35ff6c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbd10, 0x8
 
 	.globl gUnknown_85FBD18
 gUnknown_85FBD18: @ 0x85FBD18
-	.incbin "build/data/data.bin", 0x35ff74, 0x18
+	.incbin "baserom_jp.gba", 0x5fbd18, 0x18
 
 	.globl gUnknown_85FBD30
 gUnknown_85FBD30: @ 0x85FBD30
-	.incbin "build/data/data.bin", 0x35ff8c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbd30, 0x8
 
 	.globl gUnknown_85FBD38
 gUnknown_85FBD38: @ 0x85FBD38
-	.incbin "build/data/data.bin", 0x35ff94, 0x18
+	.incbin "baserom_jp.gba", 0x5fbd38, 0x18
 
 	.globl gUnknown_85FBD50
 gUnknown_85FBD50: @ 0x85FBD50
-	.incbin "build/data/data.bin", 0x35ffac, 0x3c
+	.incbin "baserom_jp.gba", 0x5fbd50, 0x3c
 
 	.globl gUnknown_85FBD8C
 gUnknown_85FBD8C: @ 0x85FBD8C
-	.incbin "build/data/data.bin", 0x35ffe8, 0x8
+	.incbin "baserom_jp.gba", 0x5fbd8c, 0x8
 
 	.globl gUnknown_85FBD94
 gUnknown_85FBD94: @ 0x85FBD94
-	.incbin "build/data/data.bin", 0x35fff0, 0x8
+	.incbin "baserom_jp.gba", 0x5fbd94, 0x8
 
 	.globl gUnknown_85FBD9C
 gUnknown_85FBD9C: @ 0x85FBD9C
-	.incbin "build/data/data.bin", 0x35fff8, 0x18
+	.incbin "baserom_jp.gba", 0x5fbd9c, 0x18
 
 	.globl gUnknown_85FBDB4
 gUnknown_85FBDB4: @ 0x85FBDB4
-	.incbin "build/data/data.bin", 0x360010, 0x14
+	.incbin "baserom_jp.gba", 0x5fbdb4, 0x14
 
 	.globl gUnknown_85FBDC8
 gUnknown_85FBDC8: @ 0x85FBDC8
-	.incbin "build/data/data.bin", 0x360024, 0x30
+	.incbin "baserom_jp.gba", 0x5fbdc8, 0x30
 
 	.globl gUnknown_85FBDF8
 gUnknown_85FBDF8: @ 0x85FBDF8
-	.incbin "build/data/data.bin", 0x360054, 0x8
+	.incbin "baserom_jp.gba", 0x5fbdf8, 0x8
 
 	.globl gUnknown_85FBE00
 gUnknown_85FBE00: @ 0x85FBE00
-	.incbin "build/data/data.bin", 0x36005c, 0x8
+	.incbin "baserom_jp.gba", 0x5fbe00, 0x8
 
 	.globl gUnknown_85FBE08
 gUnknown_85FBE08: @ 0x85FBE08
-	.incbin "build/data/data.bin", 0x360064, 0x8
+	.incbin "baserom_jp.gba", 0x5fbe08, 0x8
 
 	.globl gUnknown_85FBE10
 gUnknown_85FBE10: @ 0x85FBE10
-	.incbin "build/data/data.bin", 0x36006c, 0x18
+	.incbin "baserom_jp.gba", 0x5fbe10, 0x18
 
 	.globl gUnknown_85FBE28
 gUnknown_85FBE28: @ 0x85FBE28
-	.incbin "build/data/data.bin", 0x360084, 0x18
+	.incbin "baserom_jp.gba", 0x5fbe28, 0x18
 
 	.globl gUnknown_85FBE40
 gUnknown_85FBE40: @ 0x85FBE40
-	.incbin "build/data/data.bin", 0x36009c, 0xe4
+	.incbin "baserom_jp.gba", 0x5fbe40, 0xe4
 
 	.globl gUnknown_85FBF24
 gUnknown_85FBF24: @ 0x85FBF24
-	.incbin "build/data/data.bin", 0x360180, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf24, 0x8
 
 	.globl gUnknown_85FBF2C
 gUnknown_85FBF2C: @ 0x85FBF2C
-	.incbin "build/data/data.bin", 0x360188, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf2c, 0x8
 
 	.globl gUnknown_85FBF34
 gUnknown_85FBF34: @ 0x85FBF34
-	.incbin "build/data/data.bin", 0x360190, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf34, 0x8
 
 	.globl gUnknown_85FBF3C
 gUnknown_85FBF3C: @ 0x85FBF3C
-	.incbin "build/data/data.bin", 0x360198, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf3c, 0x8
 
 	.globl gUnknown_85FBF44
 gUnknown_85FBF44: @ 0x85FBF44
-	.incbin "build/data/data.bin", 0x3601a0, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf44, 0x8
 
 	.globl gUnknown_85FBF4C
 gUnknown_85FBF4C: @ 0x85FBF4C
-	.incbin "build/data/data.bin", 0x3601a8, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf4c, 0x8
 
 	.globl gUnknown_85FBF54
 gUnknown_85FBF54: @ 0x85FBF54
-	.incbin "build/data/data.bin", 0x3601b0, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf54, 0x8
 
 	.globl gUnknown_85FBF5C
 gUnknown_85FBF5C: @ 0x85FBF5C
-	.incbin "build/data/data.bin", 0x3601b8, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf5c, 0x8
 
 	.globl gUnknown_85FBF64
 gUnknown_85FBF64: @ 0x85FBF64
-	.incbin "build/data/data.bin", 0x3601c0, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf64, 0x8
 
 	.globl gUnknown_85FBF6C
 gUnknown_85FBF6C: @ 0x85FBF6C
-	.incbin "build/data/data.bin", 0x3601c8, 0x8
+	.incbin "baserom_jp.gba", 0x5fbf6c, 0x8
 
 	.globl gUnknown_85FBF74
 gUnknown_85FBF74: @ 0x85FBF74
-	.incbin "build/data/data.bin", 0x3601d0, 0x18
+	.incbin "baserom_jp.gba", 0x5fbf74, 0x18
 
 	.globl gUnknown_85FBF8C
 gUnknown_85FBF8C: @ 0x85FBF8C
-	.incbin "build/data/data.bin", 0x3601e8, 0x18
+	.incbin "baserom_jp.gba", 0x5fbf8c, 0x18
 
 	.globl gUnknown_85FBFA4
 gUnknown_85FBFA4: @ 0x85FBFA4
-	.incbin "build/data/data.bin", 0x360200, 0x18
+	.incbin "baserom_jp.gba", 0x5fbfa4, 0x18
 
 	.globl gUnknown_85FBFBC
 gUnknown_85FBFBC: @ 0x85FBFBC
-	.incbin "build/data/data.bin", 0x360218, 0x18
+	.incbin "baserom_jp.gba", 0x5fbfbc, 0x18
 
 	.globl gUnknown_85FBFD4
 gUnknown_85FBFD4: @ 0x85FBFD4
-	.incbin "build/data/data.bin", 0x360230, 0x18
+	.incbin "baserom_jp.gba", 0x5fbfd4, 0x18
 
 	.globl gUnknown_85FBFEC
 gUnknown_85FBFEC: @ 0x85FBFEC
-	.incbin "build/data/data.bin", 0x360248, 0x18
+	.incbin "baserom_jp.gba", 0x5fbfec, 0x18
 
 	.globl gUnknown_85FC004
 gUnknown_85FC004: @ 0x85FC004
-	.incbin "build/data/data.bin", 0x360260, 0xc
+	.incbin "baserom_jp.gba", 0x5fc004, 0xc
 
 	.globl gUnknown_85FC010
 gUnknown_85FC010: @ 0x85FC010
-	.incbin "build/data/data.bin", 0x36026c, 0xc
+	.incbin "baserom_jp.gba", 0x5fc010, 0xc
 
 	.globl gUnknown_85FC01C
 gUnknown_85FC01C: @ 0x85FC01C
-	.incbin "build/data/data.bin", 0x360278, 0x10
+	.incbin "baserom_jp.gba", 0x5fc01c, 0x10
 
 	.globl gUnknown_85FC02C
 gUnknown_85FC02C: @ 0x85FC02C
-	.incbin "build/data/data.bin", 0x360288, 0x10
+	.incbin "baserom_jp.gba", 0x5fc02c, 0x10
 
 	.globl gUnknown_85FC03C
 gUnknown_85FC03C: @ 0x85FC03C
-	.incbin "build/data/data.bin", 0x360298, 0x1dc
+	.incbin "baserom_jp.gba", 0x5fc03c, 0x1dc
 
 	.globl gUnknown_85FC218
 gUnknown_85FC218: @ 0x85FC218
-	.incbin "build/data/data.bin", 0x360474, 0x60c
+	.incbin "baserom_jp.gba", 0x5fc218, 0x60c
 
 	.globl gUnknown_85FC824
 gUnknown_85FC824: @ 0x85FC824
-	.incbin "build/data/data.bin", 0x360a80, 0x1e8
+	.incbin "baserom_jp.gba", 0x5fc824, 0x1e8
 
 	.globl gUnknown_85FCA0C
 gUnknown_85FCA0C: @ 0x85FCA0C
-	.incbin "build/data/data.bin", 0x360c68, 0x8
+	.incbin "baserom_jp.gba", 0x5fca0c, 0x8
 
 	.globl gUnknown_85FCA14
 gUnknown_85FCA14: @ 0x85FCA14
-	.incbin "build/data/data.bin", 0x360c70, 0x2c
+	.incbin "baserom_jp.gba", 0x5fca14, 0x2c
 
 	.globl gUnknown_85FCA40
 gUnknown_85FCA40: @ 0x85FCA40
-	.incbin "build/data/data.bin", 0x360c9c, 0x18
+	.incbin "baserom_jp.gba", 0x5fca40, 0x18
 
 	.globl gUnknown_85FCA58
 gUnknown_85FCA58: @ 0x85FCA58
-	.incbin "build/data/data.bin", 0x360cb4, 0x14
+	.incbin "baserom_jp.gba", 0x5fca58, 0x14
 
 	.globl gUnknown_85FCA6C
 gUnknown_85FCA6C: @ 0x85FCA6C
-	.incbin "build/data/data.bin", 0x360cc8, 0x14
+	.incbin "baserom_jp.gba", 0x5fca6c, 0x14
 
 	.globl gUnknown_85FCA80
 gUnknown_85FCA80: @ 0x85FCA80
-	.incbin "build/data/data.bin", 0x360cdc, 0x14
+	.incbin "baserom_jp.gba", 0x5fca80, 0x14
 
 	.globl gUnknown_85FCA94
 gUnknown_85FCA94: @ 0x85FCA94
-	.incbin "build/data/data.bin", 0x360cf0, 0x14
+	.incbin "baserom_jp.gba", 0x5fca94, 0x14
 
 	.globl gUnknown_85FCAA8
 gUnknown_85FCAA8: @ 0x85FCAA8
-	.incbin "build/data/data.bin", 0x360d04, 0x14
+	.incbin "baserom_jp.gba", 0x5fcaa8, 0x14
 
 	.globl gUnknown_85FCABC
 gUnknown_85FCABC: @ 0x85FCABC
-	.incbin "build/data/data.bin", 0x360d18, 0x14
+	.incbin "baserom_jp.gba", 0x5fcabc, 0x14
 
 	.globl gUnknown_85FCAD0
 gUnknown_85FCAD0: @ 0x85FCAD0
-	.incbin "build/data/data.bin", 0x360d2c, 0x14
+	.incbin "baserom_jp.gba", 0x5fcad0, 0x14
 
 	.globl gUnknown_85FCAE4
 gUnknown_85FCAE4: @ 0x85FCAE4
-	.incbin "build/data/data.bin", 0x360d40, 0x14
+	.incbin "baserom_jp.gba", 0x5fcae4, 0x14
 
 	.globl gUnknown_85FCAF8
 gUnknown_85FCAF8: @ 0x85FCAF8
@@ -20588,187 +20588,187 @@ gUnknown_85FCBAA: @ 0x85FCBAA
 
 	.globl gUnknown_85FCBDE
 gUnknown_85FCBDE: @ 0x85FCBDE
-	.incbin "build/data/data.bin", 0x360e3a, 0x922
+	.incbin "baserom_jp.gba", 0x5fcbde, 0x922
 
 	.globl gUnknown_85FD500
 gUnknown_85FD500: @ 0x85FD500
-	.incbin "build/data/data.bin", 0x36175c, 0x90
+	.incbin "baserom_jp.gba", 0x5fd500, 0x90
 
 	.globl gUnknown_85FD590
 gUnknown_85FD590: @ 0x85FD590
-	.incbin "build/data/data.bin", 0x3617ec, 0x10
+	.incbin "baserom_jp.gba", 0x5fd590, 0x10
 
 	.globl gUnknown_85FD5A0
 gUnknown_85FD5A0: @ 0x85FD5A0
-	.incbin "build/data/data.bin", 0x3617fc, 0xb4
+	.incbin "baserom_jp.gba", 0x5fd5a0, 0xb4
 
 	.globl gUnknown_85FD654
 gUnknown_85FD654: @ 0x85FD654
-	.incbin "build/data/data.bin", 0x3618b0, 0x30
+	.incbin "baserom_jp.gba", 0x5fd654, 0x30
 
 	.globl gUnknown_85FD684
 gUnknown_85FD684: @ 0x85FD684
-	.incbin "build/data/data.bin", 0x3618e0, 0x18
+	.incbin "baserom_jp.gba", 0x5fd684, 0x18
 
 	.globl gUnknown_85FD69C
 gUnknown_85FD69C: @ 0x85FD69C
-	.incbin "build/data/data.bin", 0x3618f8, 0x84
+	.incbin "baserom_jp.gba", 0x5fd69c, 0x84
 
 	.globl gUnknown_85FD720
 gUnknown_85FD720: @ 0x85FD720
-	.incbin "build/data/data.bin", 0x36197c, 0x18
+	.incbin "baserom_jp.gba", 0x5fd720, 0x18
 
 	.globl gUnknown_85FD738
 gUnknown_85FD738: @ 0x85FD738
-	.incbin "build/data/data.bin", 0x361994, 0x3c
+	.incbin "baserom_jp.gba", 0x5fd738, 0x3c
 
 	.globl gUnknown_85FD774
 gUnknown_85FD774: @ 0x85FD774
-	.incbin "build/data/data.bin", 0x3619d0, 0x10
+	.incbin "baserom_jp.gba", 0x5fd774, 0x10
 
 	.globl gUnknown_85FD784
 gUnknown_85FD784: @ 0x85FD784
-	.incbin "build/data/data.bin", 0x3619e0, 0x34
+	.incbin "baserom_jp.gba", 0x5fd784, 0x34
 
 	.globl gUnknown_85FD7B8
 gUnknown_85FD7B8: @ 0x85FD7B8
-	.incbin "build/data/data.bin", 0x361a14, 0x34
+	.incbin "baserom_jp.gba", 0x5fd7b8, 0x34
 
 	.globl gUnknown_85FD7EC
 gUnknown_85FD7EC: @ 0x85FD7EC
-	.incbin "build/data/data.bin", 0x361a48, 0x28028
+	.incbin "baserom_jp.gba", 0x5fd7ec, 0x28028
 
 	.globl gJP_CryTable_Normal_0
 gJP_CryTable_Normal_0: @ 0x8625814
-	.incbin "build/data/data.bin", 0x389a70, 0x600
+	.incbin "baserom_jp.gba", 0x625814, 0x600
 
 	.globl gJP_CryTable_Normal_1
 gJP_CryTable_Normal_1: @ 0x8625E14
-	.incbin "build/data/data.bin", 0x38a070, 0x600
+	.incbin "baserom_jp.gba", 0x625e14, 0x600
 
 	.globl gJP_CryTable_Normal_2
 gJP_CryTable_Normal_2: @ 0x8626414
-	.incbin "build/data/data.bin", 0x38a670, 0x600
+	.incbin "baserom_jp.gba", 0x626414, 0x600
 
 	.globl gJP_CryTable_Normal_3
 gJP_CryTable_Normal_3: @ 0x8626A14
-	.incbin "build/data/data.bin", 0x38ac70, 0x30
+	.incbin "baserom_jp.gba", 0x626a14, 0x30
 
 	.globl gJP_CryTable_Reverse_0
 gJP_CryTable_Reverse_0: @ 0x8626A44
-	.incbin "build/data/data.bin", 0x38aca0, 0x600
+	.incbin "baserom_jp.gba", 0x626a44, 0x600
 
 	.globl gJP_CryTable_Reverse_1
 gJP_CryTable_Reverse_1: @ 0x8627044
-	.incbin "build/data/data.bin", 0x38b2a0, 0x600
+	.incbin "baserom_jp.gba", 0x627044, 0x600
 
 	.globl gJP_CryTable_Reverse_2
 gJP_CryTable_Reverse_2: @ 0x8627644
-	.incbin "build/data/data.bin", 0x38b8a0, 0x600
+	.incbin "baserom_jp.gba", 0x627644, 0x600
 
 	.globl gJP_CryTable_Reverse_3
 gJP_CryTable_Reverse_3: @ 0x8627C44
-	.incbin "build/data/data.bin", 0x38bea0, 0x600
+	.incbin "baserom_jp.gba", 0x627c44, 0x600
 
 	.globl gUnknown_8628244
 gUnknown_8628244: @ 0x8628244
-	.incbin "build/data/data.bin", 0x38c4a0, 0x14038
+	.incbin "baserom_jp.gba", 0x628244, 0x14038
 
 	.globl gUnknown_863C27C
 gUnknown_863C27C: @ 0x863C27C
-	.incbin "build/data/data.bin", 0x3a04d8, 0x30
+	.incbin "baserom_jp.gba", 0x63c27c, 0x30
 
 	.globl gUnknown_863C2AC
 gUnknown_863C2AC: @ 0x863C2AC
-	.incbin "build/data/data.bin", 0x3a0508, 0x27e2bc
+	.incbin "baserom_jp.gba", 0x63c2ac, 0x27e2bc
 
 	.globl gUnknown_88BA568
 gUnknown_88BA568: @ 0x88BA568
-	.incbin "build/data/data.bin", 0x61e7c4, 0x547ec
+	.incbin "baserom_jp.gba", 0x8ba568, 0x547ec
 
 	.globl gUnknown_890ED54
 gUnknown_890ED54: @ 0x890ED54
-	.incbin "build/data/data.bin", 0x672fb0, 0x150
+	.incbin "baserom_jp.gba", 0x90ed54, 0x150
 
 	.globl gUnknown_890EEA4
 gUnknown_890EEA4: @ 0x890EEA4
-	.incbin "build/data/data.bin", 0x673100, 0x2c
+	.incbin "baserom_jp.gba", 0x90eea4, 0x2c
 
 	.globl gUnknown_890EED0
 gUnknown_890EED0: @ 0x890EED0
-	.incbin "build/data/data.bin", 0x67312c, 0xc
+	.incbin "baserom_jp.gba", 0x90eed0, 0xc
 
 	.globl gUnknown_890EEDC
 gUnknown_890EEDC: @ 0x890EEDC
-	.incbin "build/data/data.bin", 0x673138, 0x18
+	.incbin "baserom_jp.gba", 0x90eedc, 0x18
 
 	.globl gUnknown_890EEF4
 gUnknown_890EEF4: @ 0x890EEF4
-	.incbin "build/data/data.bin", 0x673150, 0x34
+	.incbin "baserom_jp.gba", 0x90eef4, 0x34
 
 	.globl gUnknown_890EF28
 gUnknown_890EF28: @ 0x890EF28
-	.incbin "build/data/data.bin", 0x673184, 0x30
+	.incbin "baserom_jp.gba", 0x90ef28, 0x30
 
 	.globl gUnknown_890EF58
 gUnknown_890EF58: @ 0x890EF58
-	.incbin "build/data/data.bin", 0x6731b4, 0x100
+	.incbin "baserom_jp.gba", 0x90ef58, 0x100
 
 	.globl gUnknown_890F058
 gUnknown_890F058: @ 0x890F058
-	.incbin "build/data/data.bin", 0x6732b4, 0x104
+	.incbin "baserom_jp.gba", 0x90f058, 0x104
 
 	.globl gUnknown_890F15C
 gUnknown_890F15C: @ 0x890F15C
-	.incbin "build/data/data.bin", 0x6733b8, 0x10
+	.incbin "baserom_jp.gba", 0x90f15c, 0x10
 
 	.globl gUnknown_890F16C
 gUnknown_890F16C: @ 0x890F16C
-	.incbin "build/data/data.bin", 0x6733c8, 0x10
+	.incbin "baserom_jp.gba", 0x90f16c, 0x10
 
 	.globl gUnknown_890F17C
 gUnknown_890F17C: @ 0x890F17C
-	.incbin "build/data/data.bin", 0x6733d8, 0x4
+	.incbin "baserom_jp.gba", 0x90f17c, 0x4
 
 	.globl gUnknown_890F180
 gUnknown_890F180: @ 0x890F180
-	.incbin "build/data/data.bin", 0x6733dc, 0x4
+	.incbin "baserom_jp.gba", 0x90f180, 0x4
 
 	.globl gUnknown_890F184
 gUnknown_890F184: @ 0x890F184
-	.incbin "build/data/data.bin", 0x6733e0, 0x14
+	.incbin "baserom_jp.gba", 0x90f184, 0x14
 
 	.globl gUnknown_890F198
 gUnknown_890F198: @ 0x890F198
-	.incbin "build/data/data.bin", 0x6733f4, 0x8
+	.incbin "baserom_jp.gba", 0x90f198, 0x8
 
 	.globl gUnknown_890F1A0
 gUnknown_890F1A0: @ 0x890F1A0
-	.incbin "build/data/data.bin", 0x6733fc, 0x14
+	.incbin "baserom_jp.gba", 0x90f1a0, 0x14
 
 	.globl gUnknown_890F1B4
 gUnknown_890F1B4: @ 0x890F1B4
-	.incbin "build/data/data.bin", 0x673410, 0x1c
+	.incbin "baserom_jp.gba", 0x90f1b4, 0x1c
 
 	.globl gUnknown_890F1D0
 gUnknown_890F1D0: @ 0x890F1D0
-	.incbin "build/data/data.bin", 0x67342c, 0x4
+	.incbin "baserom_jp.gba", 0x90f1d0, 0x4
 
 	.globl gUnknown_890F1D4
 gUnknown_890F1D4: @ 0x890F1D4
-	.incbin "build/data/data.bin", 0x673430, 0x4
+	.incbin "baserom_jp.gba", 0x90f1d4, 0x4
 
 	.globl gUnknown_890F1D8
 gUnknown_890F1D8: @ 0x890F1D8
-	.incbin "build/data/data.bin", 0x673434, 0xc
+	.incbin "baserom_jp.gba", 0x90f1d8, 0xc
 
 	.globl gUnknown_890F1E4
 gUnknown_890F1E4: @ 0x890F1E4
-	.incbin "build/data/data.bin", 0x673440, 0x4
+	.incbin "baserom_jp.gba", 0x90f1e4, 0x4
 
 	.globl gUnknown_890F1E8
 gUnknown_890F1E8: @ 0x890F1E8
-	.incbin "build/data/data.bin", 0x673444, 0x4
+	.incbin "baserom_jp.gba", 0x90f1e8, 0x4
 
 	.globl gUnknown_890F1EC
 gUnknown_890F1EC: @ 0x890F1EC
@@ -20777,28 +20777,28 @@ gUnknown_890F1EC: @ 0x890F1EC
 
 	.globl gUnknown_890F21C
 gUnknown_890F21C: @ 0x890F21C
-	.incbin "build/data/data.bin", 0x673478, 0x8
+	.incbin "baserom_jp.gba", 0x90f21c, 0x8
 
 	.globl gUnknown_890F224
 gUnknown_890F224: @ 0x890F224
-	.incbin "build/data/data.bin", 0x673480, 0x4
+	.incbin "baserom_jp.gba", 0x90f224, 0x4
 
 	.globl gUnknown_890F228
 gUnknown_890F228: @ 0x890F228
-	.incbin "build/data/data.bin", 0x673484, 0xc
+	.incbin "baserom_jp.gba", 0x90f228, 0xc
 
 	.globl gUnknown_890F234
 gUnknown_890F234: @ 0x890F234
-	.incbin "build/data/data.bin", 0x673490, 0xc8
+	.incbin "baserom_jp.gba", 0x90f234, 0xc8
 
 	.globl gUnknown_890F2FC
 gUnknown_890F2FC: @ 0x890F2FC
-	.incbin "build/data/data.bin", 0x673558, 0x50
+	.incbin "baserom_jp.gba", 0x90f2fc, 0x50
 
 	.globl gUnknown_890F34C
 gUnknown_890F34C: @ 0x890F34C
-	.incbin "build/data/data.bin", 0x6735a8, 0x4
+	.incbin "baserom_jp.gba", 0x90f34c, 0x4
 
 	.globl gUnknown_890F350
 gUnknown_890F350: @ 0x890F350
-	.incbin "build/data/data.bin", 0x6735ac, 0x24
+	.incbin "baserom_jp.gba", 0x90f350, 0x24

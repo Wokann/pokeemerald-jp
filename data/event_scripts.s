@@ -11,7 +11,7 @@ gUnknown_81DABAC:
 
 	.globl gUnknown_81DAF34
 gUnknown_81DAF34: @ 0x81DAF34
-	.incbin "build/data/event_scripts.bin", 0x388, 0x58
+	.incbin "baserom_jp.gba", 0x1daf34, 0x58
 
 	.set ALLOCATE_SPECIAL_TABLE, 1
 	.align 2
@@ -493,7 +493,7 @@ gUnknown_824B32D: @ 0x824B32D
 
 	.globl gUnknown_824B346
 gUnknown_824B346: @ 0x824B346
-	.incbin "build/data/event_scripts.bin", 0x7079a, 0xe
+	.incbin "baserom_jp.gba", 0x24b346, 0xe
 
 	.globl gUnknown_824B354
 gUnknown_824B354: @ 0x824B354
@@ -557,15 +557,15 @@ gUnknown_824C0D2: @ 0x824C0D2
 
 	.globl gUnknown_824C0D7
 gUnknown_824C0D7: @ 0x824C0D7
-	.incbin "build/data/event_scripts.bin", 0x7152b, 0x5
+	.incbin "baserom_jp.gba", 0x24c0d7, 0x5
 
 	.globl gUnknown_824C0DC
 gUnknown_824C0DC: @ 0x824C0DC
-	.incbin "build/data/event_scripts.bin", 0x71530, 0x5
+	.incbin "baserom_jp.gba", 0x24c0dc, 0x5
 
 	.globl gUnknown_824C0E1
 gUnknown_824C0E1: @ 0x824C0E1
-	.incbin "build/data/event_scripts.bin", 0x71535, 0x5
+	.incbin "baserom_jp.gba", 0x24c0e1, 0x5
 
 	.globl gUnknown_824C0E6
 gUnknown_824C0E6: @ 0x824C0E6
@@ -633,7 +633,7 @@ gUnknown_82585CF: @ 0x82585CF
 
 	.globl gUnknown_825941C
 gUnknown_825941C: @ 0x825941C
-	.incbin "build/data/event_scripts.bin", 0x7e870, 0x3
+	.incbin "baserom_jp.gba", 0x25941c, 0x3
 
 	.globl gUnknown_825941F
 gUnknown_825941F: @ 0x825941F
@@ -681,7 +681,7 @@ gUnknown_8262D3F: @ 0x8262D3F
 
 	.globl gUnknown_8262D66
 gUnknown_8262D66: @ 0x8262D66
-	.incbin "build/data/event_scripts.bin", 0x881ba, 0x6
+	.incbin "baserom_jp.gba", 0x262d66, 0x6
 
 	.globl gUnknown_8262D6C
 gUnknown_8262D6C: @ 0x8262D6C
@@ -701,7 +701,7 @@ gUnknown_8262D96: @ 0x8262D96
 
 	.globl gUnknown_8262DA3
 gUnknown_8262DA3: @ 0x8262DA3
-	.incbin "build/data/event_scripts.bin", 0x881f7, 0xd
+	.incbin "baserom_jp.gba", 0x262da3, 0xd
 
 	.globl gUnknown_8262DB0
 gUnknown_8262DB0: @ 0x8262DB0
@@ -877,7 +877,7 @@ gUnknown_8277213: @ 0x8277213
 
 	.globl gUnknown_8277224
 gUnknown_8277224: @ 0x8277224
-	.incbin "build/data/event_scripts.bin", 0x9c678, 0x9
+	.incbin "baserom_jp.gba", 0x277224, 0x9
 
 	.globl gUnknown_827722D
 gUnknown_827722D: @ 0x827722D
@@ -1290,7 +1290,7 @@ gUnknown_82778AC: @ 0x82778AC
 
 	.globl gUnknown_8277908
 gUnknown_8277908: @ 0x8277908
-	.incbin "build/data/event_scripts.bin", 0x9cd5c, 0x1c
+	.incbin "baserom_jp.gba", 0x277908, 0x1c
 gUnknown_8277924: @ 0x8277924
 	.include "data/scripts/gUnknown_8277924.inc"
 gUnknown_8277955: @ 0x8277955
@@ -1492,7 +1492,7 @@ gUnknown_827B8AC: @ 0x827B8AC
 gUnknown_827B8C1: @ 0x827B8C1
 	.include "data/scripts/gUnknown_827B8C1.inc"
 gUnknown_827B8DA: @ 0x827B8DA
-	.incbin "build/data/event_scripts.bin", 0xa0d2e, 0xc
+	.incbin "baserom_jp.gba", 0x27b8da, 0xc
 gUnknown_827B8E6: @ 0x827B8E6
 	.include "data/scripts/gUnknown_827B8E6.inc"
 gUnknown_827B967: @ 0x827B967
@@ -1700,7 +1700,7 @@ gUnknown_827EBEF: @ 0x827EBEF
 gUnknown_827EC4C: @ 0x827EC4C
 	.include "data/scripts/gUnknown_827EC4C.inc"
 gUnknown_827ED83: @ 0x827ED83
-	.incbin "build/data/event_scripts.bin", 0xa41d7, 0xd
+	.incbin "baserom_jp.gba", 0x27ed83, 0xd
 gUnknown_827ED90: @ 0x827ED90
 	.include "data/scripts/gUnknown_827ED90.inc"
 gUnknown_827EE64: @ 0x827EE64
@@ -2038,9 +2038,9 @@ gUnknown_82867DF: @ 0x82867DF
 gUnknown_828682C: @ 0x828682C
 	.include "data/scripts/gUnknown_828682C.inc"
 gUnknown_8286875: @ 0x8286875
-	.incbin "build/data/event_scripts.bin", 0xabcc9, 0x5
+	.incbin "baserom_jp.gba", 0x286875, 0x5
 gUnknown_828687A: @ 0x828687A
-	.incbin "build/data/event_scripts.bin", 0xabcce, 0x5
+	.incbin "baserom_jp.gba", 0x28687a, 0x5
 gUnknown_828687F: @ 0x828687F
 	.include "data/scripts/gUnknown_828687F.inc"
 gUnknown_8286884: @ 0x8286884
@@ -2064,7 +2064,7 @@ gUnknown_8286AED: @ 0x8286AED
 
 	.globl gUnknown_8286C30
 gUnknown_8286C30: @ 0x8286C30
-	.incbin "build/data/event_scripts.bin", 0xac084, 0x388
+	.incbin "baserom_jp.gba", 0x286c30, 0x388
 
 	.globl gUnknown_8286FB8
 gUnknown_8286FB8: @ 0x8286FB8
@@ -2124,7 +2124,7 @@ gUnknown_8288EB5: @ 0x8288EB5
 
 	.globl gUnknown_8288EF2
 gUnknown_8288EF2: @ 0x8288EF2
-	.incbin "build/data/event_scripts.bin", 0xae346, 0x3
+	.incbin "baserom_jp.gba", 0x288ef2, 0x3
 
 	.globl gUnknown_8288EF5
 gUnknown_8288EF5: @ 0x8288EF5
@@ -2148,23 +2148,23 @@ gUnknown_8289063: @ 0x8289063
 
 	.globl gUnknown_8289071
 gUnknown_8289071: @ 0x8289071
-	.incbin "build/data/event_scripts.bin", 0xae4c5, 0x7
+	.incbin "baserom_jp.gba", 0x289071, 0x7
 
 	.globl gUnknown_8289078
 gUnknown_8289078: @ 0x8289078
-	.incbin "build/data/event_scripts.bin", 0xae4cc, 0x7
+	.incbin "baserom_jp.gba", 0x289078, 0x7
 
 	.globl gUnknown_828907F
 gUnknown_828907F: @ 0x828907F
-	.incbin "build/data/event_scripts.bin", 0xae4d3, 0x7
+	.incbin "baserom_jp.gba", 0x28907f, 0x7
 
 	.globl gUnknown_8289086
 gUnknown_8289086: @ 0x8289086
-	.incbin "build/data/event_scripts.bin", 0xae4da, 0x4
+	.incbin "baserom_jp.gba", 0x289086, 0x4
 
 	.globl gUnknown_828908A
 gUnknown_828908A: @ 0x828908A
-	.incbin "build/data/event_scripts.bin", 0xae4de, 0x9
+	.incbin "baserom_jp.gba", 0x28908a, 0x9
 
 	.globl gUnknown_8289093
 gUnknown_8289093: @ 0x8289093
@@ -2172,7 +2172,7 @@ gUnknown_8289093: @ 0x8289093
 
 	.globl gUnknown_8289099
 gUnknown_8289099: @ 0x8289099
-	.incbin "build/data/event_scripts.bin", 0xae4ed, 0x4
+	.incbin "baserom_jp.gba", 0x289099, 0x4
 
 	.globl gUnknown_828909D
 gUnknown_828909D: @ 0x828909D
@@ -2180,7 +2180,7 @@ gUnknown_828909D: @ 0x828909D
 
 	.globl gUnknown_8289141
 gUnknown_8289141: @ 0x8289141
-	.incbin "build/data/event_scripts.bin", 0xae595, 0x4
+	.incbin "baserom_jp.gba", 0x289141, 0x4
 
 	.globl gUnknown_8289145
 gUnknown_8289145: @ 0x8289145
@@ -2196,7 +2196,7 @@ gUnknown_82891CF: @ 0x82891CF
 
 	.globl gUnknown_8289251
 gUnknown_8289251: @ 0x8289251
-	.incbin "build/data/event_scripts.bin", 0xae6a5, 0x9
+	.incbin "baserom_jp.gba", 0x289251, 0x9
 
 	.globl gUnknown_828925A
 gUnknown_828925A: @ 0x828925A
@@ -2204,7 +2204,7 @@ gUnknown_828925A: @ 0x828925A
 
 	.globl gUnknown_8289268
 gUnknown_8289268: @ 0x8289268
-	.incbin "build/data/event_scripts.bin", 0xae6bc, 0x7
+	.incbin "baserom_jp.gba", 0x289268, 0x7
 
 	.globl gUnknown_828926F
 gUnknown_828926F: @ 0x828926F
@@ -2224,7 +2224,7 @@ gUnknown_828929D: @ 0x828929D
 
 	.globl gUnknown_82892F9
 gUnknown_82892F9: @ 0x82892F9
-	.incbin "build/data/event_scripts.bin", 0xae74d, 0xb
+	.incbin "baserom_jp.gba", 0x2892f9, 0xb
 
 	.globl gUnknown_8289304
 gUnknown_8289304: @ 0x8289304
@@ -2244,19 +2244,19 @@ gUnknown_828938B: @ 0x828938B
 
 	.globl gUnknown_8289395
 gUnknown_8289395: @ 0x8289395
-	.incbin "build/data/event_scripts.bin", 0xae7e9, 0x7
+	.incbin "baserom_jp.gba", 0x289395, 0x7
 
 	.globl gUnknown_828939C
 gUnknown_828939C: @ 0x828939C
-	.incbin "build/data/event_scripts.bin", 0xae7f0, 0xb
+	.incbin "baserom_jp.gba", 0x28939c, 0xb
 
 	.globl gUnknown_82893A7
 gUnknown_82893A7: @ 0x82893A7
-	.incbin "build/data/event_scripts.bin", 0xae7fb, 0x4
+	.incbin "baserom_jp.gba", 0x2893a7, 0x4
 
 	.globl gUnknown_82893AB
 gUnknown_82893AB: @ 0x82893AB
-	.incbin "build/data/event_scripts.bin", 0xae7ff, 0x7
+	.incbin "baserom_jp.gba", 0x2893ab, 0x7
 
 	.globl gUnknown_82893B2
 gUnknown_82893B2: @ 0x82893B2
@@ -2264,7 +2264,7 @@ gUnknown_82893B2: @ 0x82893B2
 
 	.globl gUnknown_82893BF
 gUnknown_82893BF: @ 0x82893BF
-	.incbin "build/data/event_scripts.bin", 0xae813, 0x7
+	.incbin "baserom_jp.gba", 0x2893bf, 0x7
 
 	.globl gUnknown_82893C6
 gUnknown_82893C6: @ 0x82893C6
@@ -2288,7 +2288,7 @@ gUnknown_828948D: @ 0x828948D
 
 	.globl gUnknown_82894A8
 gUnknown_82894A8: @ 0x82894A8
-	.incbin "build/data/event_scripts.bin", 0xae8fc, 0x7
+	.incbin "baserom_jp.gba", 0x2894a8, 0x7
 
 	.globl gUnknown_82894AF
 gUnknown_82894AF: @ 0x82894AF
@@ -2296,7 +2296,7 @@ gUnknown_82894AF: @ 0x82894AF
 
 	.globl gUnknown_828954B
 gUnknown_828954B: @ 0x828954B
-	.incbin "build/data/event_scripts.bin", 0xae99f, 0x2
+	.incbin "baserom_jp.gba", 0x28954b, 0x2
 
 	.globl gUnknown_828954D
 gUnknown_828954D: @ 0x828954D
@@ -2304,11 +2304,11 @@ gUnknown_828954D: @ 0x828954D
 
 	.globl gUnknown_828955E
 gUnknown_828955E: @ 0x828955E
-	.incbin "build/data/event_scripts.bin", 0xae9b2, 0x7
+	.incbin "baserom_jp.gba", 0x28955e, 0x7
 
 	.globl gUnknown_8289565
 gUnknown_8289565: @ 0x8289565
-	.incbin "build/data/event_scripts.bin", 0xae9b9, 0x7
+	.incbin "baserom_jp.gba", 0x289565, 0x7
 
 	.globl gUnknown_828956C
 gUnknown_828956C: @ 0x828956C
@@ -2316,11 +2316,11 @@ gUnknown_828956C: @ 0x828956C
 
 	.globl gUnknown_82895FA
 gUnknown_82895FA: @ 0x82895FA
-	.incbin "build/data/event_scripts.bin", 0xaea4e, 0x4
+	.incbin "baserom_jp.gba", 0x2895fa, 0x4
 
 	.globl gUnknown_82895FE
 gUnknown_82895FE: @ 0x82895FE
-	.incbin "build/data/event_scripts.bin", 0xaea52, 0x4
+	.incbin "baserom_jp.gba", 0x2895fe, 0x4
 
 	.globl gUnknown_8289602
 gUnknown_8289602: @ 0x8289602
@@ -2328,23 +2328,23 @@ gUnknown_8289602: @ 0x8289602
 
 	.globl gUnknown_8289611
 gUnknown_8289611: @ 0x8289611
-	.incbin "build/data/event_scripts.bin", 0xaea65, 0xf
+	.incbin "baserom_jp.gba", 0x289611, 0xf
 
 	.globl gUnknown_8289620
 gUnknown_8289620: @ 0x8289620
-	.incbin "build/data/event_scripts.bin", 0xaea74, 0x8
+	.incbin "baserom_jp.gba", 0x289620, 0x8
 
 	.globl gUnknown_8289628
 gUnknown_8289628: @ 0x8289628
-	.incbin "build/data/event_scripts.bin", 0xaea7c, 0x4
+	.incbin "baserom_jp.gba", 0x289628, 0x4
 
 	.globl gUnknown_828962C
 gUnknown_828962C: @ 0x828962C
-	.incbin "build/data/event_scripts.bin", 0xaea80, 0xb
+	.incbin "baserom_jp.gba", 0x28962c, 0xb
 
 	.globl gUnknown_8289637
 gUnknown_8289637: @ 0x8289637
-	.incbin "build/data/event_scripts.bin", 0xaea8b, 0x8
+	.incbin "baserom_jp.gba", 0x289637, 0x8
 
 	.globl gUnknown_828963F
 gUnknown_828963F: @ 0x828963F
@@ -2364,19 +2364,19 @@ gUnknown_82896F0: @ 0x82896F0
 
 	.globl gUnknown_82896FE
 gUnknown_82896FE: @ 0x82896FE
-	.incbin "build/data/event_scripts.bin", 0xaeb52, 0xb
+	.incbin "baserom_jp.gba", 0x2896fe, 0xb
 
 	.globl gUnknown_8289709
 gUnknown_8289709: @ 0x8289709
-	.incbin "build/data/event_scripts.bin", 0xaeb5d, 0x4
+	.incbin "baserom_jp.gba", 0x289709, 0x4
 
 	.globl gUnknown_828970D
 gUnknown_828970D: @ 0x828970D
-	.incbin "build/data/event_scripts.bin", 0xaeb61, 0x8
+	.incbin "baserom_jp.gba", 0x28970d, 0x8
 
 	.globl gUnknown_8289715
 gUnknown_8289715: @ 0x8289715
-	.incbin "build/data/event_scripts.bin", 0xaeb69, 0x7
+	.incbin "baserom_jp.gba", 0x289715, 0x7
 
 	.globl gUnknown_828971C
 gUnknown_828971C: @ 0x828971C
@@ -2388,11 +2388,11 @@ gUnknown_8289734: @ 0x8289734
 
 	.globl gUnknown_828974F
 gUnknown_828974F: @ 0x828974F
-	.incbin "build/data/event_scripts.bin", 0xaeba3, 0x7
+	.incbin "baserom_jp.gba", 0x28974f, 0x7
 
 	.globl gUnknown_8289756
 gUnknown_8289756: @ 0x8289756
-	.incbin "build/data/event_scripts.bin", 0xaebaa, 0x7
+	.incbin "baserom_jp.gba", 0x289756, 0x7
 
 	.globl gUnknown_828975D
 gUnknown_828975D: @ 0x828975D
@@ -2440,11 +2440,11 @@ gUnknown_8289813: @ 0x8289813
 
 	.globl gUnknown_8289823
 gUnknown_8289823: @ 0x8289823
-	.incbin "build/data/event_scripts.bin", 0xaec77, 0xb
+	.incbin "baserom_jp.gba", 0x289823, 0xb
 
 	.globl gUnknown_828982E
 gUnknown_828982E: @ 0x828982E
-	.incbin "build/data/event_scripts.bin", 0xaec82, 0x9
+	.incbin "baserom_jp.gba", 0x28982e, 0x9
 
 	.globl gUnknown_8289837
 gUnknown_8289837: @ 0x8289837
@@ -2456,11 +2456,11 @@ gUnknown_8289845: @ 0x8289845
 
 	.globl gUnknown_8289888
 gUnknown_8289888: @ 0x8289888
-	.incbin "build/data/event_scripts.bin", 0xaecdc, 0x7
+	.incbin "baserom_jp.gba", 0x289888, 0x7
 
 	.globl gUnknown_828988F
 gUnknown_828988F: @ 0x828988F
-	.incbin "build/data/event_scripts.bin", 0xaece3, 0x7
+	.incbin "baserom_jp.gba", 0x28988f, 0x7
 
 	.globl gUnknown_8289896
 gUnknown_8289896: @ 0x8289896
@@ -2468,7 +2468,7 @@ gUnknown_8289896: @ 0x8289896
 
 	.globl gUnknown_82898A8
 gUnknown_82898A8: @ 0x82898A8
-	.incbin "build/data/event_scripts.bin", 0xaecfc, 0x7
+	.incbin "baserom_jp.gba", 0x2898a8, 0x7
 
 	.globl gUnknown_82898AF
 gUnknown_82898AF: @ 0x82898AF
@@ -2476,7 +2476,7 @@ gUnknown_82898AF: @ 0x82898AF
 
 	.globl gUnknown_82898BC
 gUnknown_82898BC: @ 0x82898BC
-	.incbin "build/data/event_scripts.bin", 0xaed10, 0xb
+	.incbin "baserom_jp.gba", 0x2898bc, 0xb
 
 	.globl gUnknown_82898C7
 gUnknown_82898C7: @ 0x82898C7
@@ -2524,7 +2524,7 @@ gUnknown_8289A0C: @ 0x8289A0C
 
 	.globl gUnknown_8289A31
 gUnknown_8289A31: @ 0x8289A31
-	.incbin "build/data/event_scripts.bin", 0xaee85, 0xf
+	.incbin "baserom_jp.gba", 0x289a31, 0xf
 
 	.globl gUnknown_8289A40
 gUnknown_8289A40: @ 0x8289A40
@@ -2580,15 +2580,15 @@ gUnknown_8289B4F: @ 0x8289B4F
 
 	.globl gUnknown_8289B59
 gUnknown_8289B59: @ 0x8289B59
-	.incbin "build/data/event_scripts.bin", 0xaefad, 0xc
+	.incbin "baserom_jp.gba", 0x289b59, 0xc
 
 	.globl gUnknown_8289B65
 gUnknown_8289B65: @ 0x8289B65
-	.incbin "build/data/event_scripts.bin", 0xaefb9, 0xc
+	.incbin "baserom_jp.gba", 0x289b65, 0xc
 
 	.globl gUnknown_8289B71
 gUnknown_8289B71: @ 0x8289B71
-	.incbin "build/data/event_scripts.bin", 0xaefc5, 0xc
+	.incbin "baserom_jp.gba", 0x289b71, 0xc
 
 	.globl gUnknown_8289B7D
 gUnknown_8289B7D: @ 0x8289B7D
@@ -2612,7 +2612,7 @@ gUnknown_8289BC7: @ 0x8289BC7
 
 	.globl gUnknown_8289BD5
 gUnknown_8289BD5: @ 0x8289BD5
-	.incbin "build/data/event_scripts.bin", 0xaf029, 0x7
+	.incbin "baserom_jp.gba", 0x289bd5, 0x7
 
 	.globl gUnknown_8289BDC
 gUnknown_8289BDC: @ 0x8289BDC
@@ -2624,11 +2624,11 @@ gUnknown_8289BF7: @ 0x8289BF7
 
 	.globl gUnknown_8289C04
 gUnknown_8289C04: @ 0x8289C04
-	.incbin "build/data/event_scripts.bin", 0xaf058, 0x3
+	.incbin "baserom_jp.gba", 0x289c04, 0x3
 
 	.globl gUnknown_8289C07
 gUnknown_8289C07: @ 0x8289C07
-	.incbin "build/data/event_scripts.bin", 0xaf05b, 0x3
+	.incbin "baserom_jp.gba", 0x289c07, 0x3
 
 	.globl gUnknown_8289C0A
 gUnknown_8289C0A: @ 0x8289C0A
@@ -2664,7 +2664,7 @@ gUnknown_8289C83: @ 0x8289C83
 
 	.globl gUnknown_8289C8E
 gUnknown_8289C8E: @ 0x8289C8E
-	.incbin "build/data/event_scripts.bin", 0xaf0e2, 0x6
+	.incbin "baserom_jp.gba", 0x289c8e, 0x6
 
 	.globl gUnknown_8289C94
 gUnknown_8289C94: @ 0x8289C94
@@ -2672,7 +2672,7 @@ gUnknown_8289C94: @ 0x8289C94
 
 	.globl gUnknown_8289CA6
 gUnknown_8289CA6: @ 0x8289CA6
-	.incbin "build/data/event_scripts.bin", 0xaf0fa, 0x6
+	.incbin "baserom_jp.gba", 0x289ca6, 0x6
 
 	.globl gUnknown_8289CAC
 gUnknown_8289CAC: @ 0x8289CAC
@@ -2680,7 +2680,7 @@ gUnknown_8289CAC: @ 0x8289CAC
 
 	.globl gUnknown_8289CBE
 gUnknown_8289CBE: @ 0x8289CBE
-	.incbin "build/data/event_scripts.bin", 0xaf112, 0x6
+	.incbin "baserom_jp.gba", 0x289cbe, 0x6
 
 	.globl gUnknown_8289CC4
 gUnknown_8289CC4: @ 0x8289CC4
@@ -2696,7 +2696,7 @@ gUnknown_8289CDC: @ 0x8289CDC
 
 	.globl gUnknown_8289CEE
 gUnknown_8289CEE: @ 0x8289CEE
-	.incbin "build/data/event_scripts.bin", 0xaf142, 0x6
+	.incbin "baserom_jp.gba", 0x289cee, 0x6
 
 	.globl gUnknown_8289CF4
 gUnknown_8289CF4: @ 0x8289CF4
@@ -2712,7 +2712,7 @@ gUnknown_8289D0C: @ 0x8289D0C
 
 	.globl gUnknown_8289D1C
 gUnknown_8289D1C: @ 0x8289D1C
-	.incbin "build/data/event_scripts.bin", 0xaf170, 0x6
+	.incbin "baserom_jp.gba", 0x289d1c, 0x6
 
 	.globl gUnknown_8289D22
 gUnknown_8289D22: @ 0x8289D22
@@ -2736,7 +2736,7 @@ gUnknown_8289D69: @ 0x8289D69
 
 	.globl gUnknown_8289D79
 gUnknown_8289D79: @ 0x8289D79
-	.incbin "build/data/event_scripts.bin", 0xaf1cd, 0x6
+	.incbin "baserom_jp.gba", 0x289d79, 0x6
 
 	.globl gUnknown_8289D7F
 gUnknown_8289D7F: @ 0x8289D7F
@@ -2744,7 +2744,7 @@ gUnknown_8289D7F: @ 0x8289D7F
 
 	.globl gUnknown_8289D9A
 gUnknown_8289D9A: @ 0x8289D9A
-	.incbin "build/data/event_scripts.bin", 0xaf1ee, 0x4
+	.incbin "baserom_jp.gba", 0x289d9a, 0x4
 
 	.globl gUnknown_8289D9E
 gUnknown_8289D9E: @ 0x8289D9E
@@ -2764,11 +2764,11 @@ gUnknown_8289DF1: @ 0x8289DF1
 
 	.globl gUnknown_8289E01
 gUnknown_8289E01: @ 0x8289E01
-	.incbin "build/data/event_scripts.bin", 0xaf255, 0x4
+	.incbin "baserom_jp.gba", 0x289e01, 0x4
 
 	.globl gUnknown_8289E05
 gUnknown_8289E05: @ 0x8289E05
-	.incbin "build/data/event_scripts.bin", 0xaf259, 0x4
+	.incbin "baserom_jp.gba", 0x289e05, 0x4
 
 	.globl gUnknown_8289E09
 gUnknown_8289E09: @ 0x8289E09
@@ -2784,11 +2784,11 @@ gUnknown_8289E7B: @ 0x8289E7B
 
 	.globl gUnknown_8289F42
 gUnknown_8289F42: @ 0x8289F42
-	.incbin "build/data/event_scripts.bin", 0xaf396, 0x7
+	.incbin "baserom_jp.gba", 0x289f42, 0x7
 
 	.globl gUnknown_8289F49
 gUnknown_8289F49: @ 0x8289F49
-	.incbin "build/data/event_scripts.bin", 0xaf39d, 0x7
+	.incbin "baserom_jp.gba", 0x289f49, 0x7
 
 	.globl gUnknown_8289F50
 gUnknown_8289F50: @ 0x8289F50
@@ -2829,7 +2829,7 @@ gUnknown_828A2DC: @ 0x828A2DC
 
 	.globl gUnknown_828A2E0
 gUnknown_828A2E0: @ 0x828A2E0
-	.incbin "build/data/event_scripts.bin", 0xaf734, 0x10
+	.incbin "baserom_jp.gba", 0x28a2e0, 0x10
 gUnknown_828A2F0: @ 0x828A2F0
 	.include "data/scripts/gUnknown_828A2F0.inc"
 gUnknown_828A306: @ 0x828A306

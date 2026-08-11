@@ -41,12 +41,8 @@ extern const u8 sMatchCallOptionsNoCheckPage[2];
 extern const u8 sMatchCallOptionsHasCheckPage[3];
 extern const u8 *const gMatchCallFlavorTexts[REMATCH_TABLE_ENTRIES][CHECK_PAGE_ENTRY_COUNT];
 extern void MatchCall_GetNameAndDesc(u32 headerId, const u8 **className, const u8 **trainerName);
-extern bool32 MatchCall_HasCheckPage(u16 headerId);
 extern bool32 MatchCall_GetEnabled(u32 rematchIndex);
 extern int MatchCall_GetOverrideFacilityClass(u32 headerId);
-extern const u8 *MatchCall_GetOverrideFlavorText(u16 headerId, u32 checkPageEntry);
-extern u8 MatchCall_GetMapSec(u16 headerId);
-extern bool32 MatchCall_HasRematchId(u16 headerId);
 
 bool32 PokenavCallback_Init_MatchCall(void)
 {

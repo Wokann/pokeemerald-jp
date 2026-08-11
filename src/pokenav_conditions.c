@@ -63,7 +63,7 @@ extern const struct BgTemplate sMenuBgTemplates[3];
 extern const u32 gPokenavCondition_Gfx[];
 extern const u32 sConditionGraphData_Gfx[];
 extern const u32 gPokenavCondition_Tilemap[];
-extern const u32 gPokenavOptions_Tilemap[];
+extern const u16 gPokenavOptions_Tilemap[];
 extern const u16 gPokenavCondition_Pal[];
 extern const u16 gConditionText_Pal[];
 extern const u32 sConditionGraphData_Tilemap[];

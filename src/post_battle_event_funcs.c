@@ -10,7 +10,6 @@
 #include "constants/heal_locations.h"
 
 extern bool8 gHasHallOfFameRecords;
-void TryPutSpotTheCutiesOnAir(struct Pokemon *mon, u32 a2);
 
 int GameClear(void)
 {

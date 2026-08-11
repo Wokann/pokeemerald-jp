@@ -10,7 +10,6 @@
 static void FieldCallback_Teleport(void);
 static void StartTeleportFieldEffect(void);
 
-extern void FieldCallback_PrepareFadeInFromMenu(void);
 // JP name for pokeemerald's CreateFieldMoveTask.
 extern u8 CreateFieldMoveTask(void);
 extern void FldEff_TeleportWarpOut(void);

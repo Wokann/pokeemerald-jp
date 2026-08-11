@@ -1076,7 +1076,7 @@ __attribute__((naked)) void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSum
             ".syntax divided");
 }
 
-__attribute__((naked)) void PrintRibbonNameAndDescription(u8 ribbonId)
+__attribute__((naked)) void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
             ".code 16\n\t"

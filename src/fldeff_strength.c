@@ -13,7 +13,6 @@
 static void FieldCallback_Strength(void);
 static void StartStrengthFieldEffect(void);
 
-extern void FieldCallback_PrepareFadeInFromMenu(void);
 extern u16 gSpecialVar_Result;  // EWRAM @ 0x02037290
 // JP names for the pokeemerald equivalents (CreateFieldMoveTask,
 // ScriptContext_SetupScript, ScriptContext_Enable).

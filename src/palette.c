@@ -70,14 +70,6 @@ extern const u8 gUnknown_84FCFA8[];
 
 #define sDummyPaletteStructTemplate gUnknown_84FCF98
 #define sRoundedDownGrayscaleMap gUnknown_84FCFA8
-     0,  0,  0,  0,  0,
-     5,  5,  5,  5,  5,
-    11, 11, 11, 11, 11,
-    16, 16, 16, 16, 16,
-    21, 21, 21, 21, 21,
-    27, 27, 27, 27, 27,
-    31, 31
-};
 
 void LoadCompressedPalette(const u32 *src, u16 offset, u16 size)
 {

@@ -3,6 +3,9 @@
 *.i
 *.elf
 *.gba
+!data/mb_ereader.gba
+!data/mb_berry_fix.gba
+baserom_jp.gba
 *.sgm
 *.sa1
 *.sg1
@@ -18,6 +21,7 @@
 sound/**/*.bin
 sound/songs/midi/*.s
 tools/agbcc
+tools/agbcc-src
 tools/binutils
 tools/br_ips/br_ips
 tools/br_ips/ips_patch

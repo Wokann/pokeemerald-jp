@@ -9,24 +9,27 @@ It builds the following ROM:
 
 ## Building
 
-Place a Japanese Emerald ROM named `baserom_jp.gba` in the project root, then run:
+Place a Japanese Emerald ROM named `baserom_jp.gba` in the project root, then
+run the one-shot setup script (installs host tools, links the system
+`arm-none-eabi` binutils into `tools/binutils`, and clones/builds/installs
+[pret/agbcc](https://github.com/pret/agbcc) into `tools/agbcc`):
+
+	sh setup.sh
 
 	make
 
-The build extracts the ROM regions that are still represented as raw data
-into `build/data/*.bin` via `tools/extract_baserom_data.py` (generated
-artifacts, not tracked by git), then assembles the disassembly.  The
-extracted binaries are byte-identical copies of the corresponding ROM
-regions and are intentionally kept out of version control; only the
-decompiled/structured sources are committed.
+The ROM regions that are still raw data are `.incbin`'d directly from
+`baserom_jp.gba` (absolute offsets), and the multiboot programs
+(`data/mb_ereader.gba`, `data/mb_berry_fix.gba`) are committed data files,
+following pokeemerald's layout.  No intermediate extraction step is needed.
 
 To verify the output matches the official ROM byte for byte:
 
 	make compare
 
-Build tooling: `sh build_tools.sh` for the host tools, and an
-`arm-none-eabi` binutils plus agbcc's `libgcc.a`/`libc.a` installed under
-`tools/binutils` and `tools/agbcc` respectively.
+Build tooling: `sh setup.sh` handles everything; it requires a system
+`arm-none-eabi` toolchain (e.g. `gcc-arm-none-eabi` on Debian/Ubuntu or
+`arm-none-eabi-gcc` on macOS via Homebrew) plus `gcc`/`g++`/`make`/`git`/`cpp`.
 
 ## Data structure
 
@@ -68,8 +71,6 @@ text.
 
 Generator/analysis tools under `tools/`:
 
-* `extract_baserom_data.py` - regenerate `build/data/*.bin` from
-  `baserom_jp.gba`
 * `generate_script_cmd_table.py`, `generate_specials.py`,
   `generate_mystery_event_cmd_table.py` - regenerate the tables above
 * `analyze_chunks.py` - classify every chunk in `data/event_scripts.s`

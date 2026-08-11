@@ -191,7 +191,7 @@ extern const struct BgTemplate sMenuBgTemplates[3];
 extern const u32 gPokenavCondition_Gfx[];
 extern const u32 sConditionGraphData_Gfx[];
 extern const u32 gPokenavCondition_Tilemap[];
-extern const u32 gPokenavOptions_Tilemap[];
+extern const u16 gPokenavOptions_Tilemap[];
 extern const u16 gPokenavCondition_Pal[];
 extern const u16 gConditionText_Pal[];
 extern const u32 sConditionGraphData_Tilemap[];
@@ -226,8 +226,6 @@ extern const struct SpriteSheet sConditionSelectionSpriteSheets[];
 extern const struct SpriteTemplate sConditionSelectionSpriteTemplate;
 extern const struct SpritePalette sConditionSelectionSpritePalettes[];
 
-static u32 
-static u32 
 static u32 LoopedTask_TransitionMons(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);

@@ -101,7 +101,6 @@ extern const struct SpriteTemplate sSpriteTemplate_UpDownArrow;
 extern const u8 lineOffsets[CHECK_PAGE_ENTRY_COUNT];
 extern const u8 sPokenavCheckPageColors[3];
 extern const u8 sPokenavFieldNameColors[3];
-extern const u8 *GetMatchCallFlavorText(u32 trainerId, u32 checkPageEntry);
 extern void ClearRematchPokeballIcon(u16 windowId, u32 tileOffset);
 
 bool32 CreatePokenavList(const struct BgTemplate *bgTemplate, struct PokenavListTemplate *listTemplate, u32 tileOffset)
