@@ -910,7 +910,7 @@ _08021064: @ jump table
 	.4byte _08021152 @ case 6
 	.4byte _08021162 @ case 7
 _08021084:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _0802116A
 _0802108A:
 	bl IsLinkTaskFinished
@@ -4146,7 +4146,7 @@ _08022A34:
 	movs r0, #3
 	b _08022A6E
 _08022A48:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022A6A
 _08022A4E:
 	bl IsLinkTaskFinished
@@ -4362,7 +4362,7 @@ sub_08022BC0: @ 0x08022BC0
 	beq _08022BD6
 	b _08022C00
 _08022BD0:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022C00
 _08022BD6:
 	bl IsLinkTaskFinished
@@ -4497,7 +4497,7 @@ _08022CB8:
 	bl sub_08022950
 	b _08022DD2
 _08022CD8:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022DCC
 _08022CDE:
 	bl IsLinkTaskFinished
@@ -4656,7 +4656,7 @@ _08022E14:
 	adds r1, r4, r0
 	adds r0, r4, #0
 	bl sub_080211D4
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022F14
 _08022E26:
 	bl IsLinkTaskFinished
@@ -4726,7 +4726,7 @@ _08022E8C:
 	ldrb r0, [r2]
 	adds r0, #1
 	strb r0, [r2]
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022F14
 	.align 2, 0
 _08022EB8: .4byte 0x08021339
@@ -4754,7 +4754,7 @@ _08022EDE:
 	adds r1, r4, r3
 	adds r0, r4, #0
 	bl sub_080213D8
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08022F14
 _08022EF0:
 	bl IsLinkTaskFinished
@@ -4911,7 +4911,7 @@ _08023008:
 	movs r0, #0x1e
 	movs r1, #0
 	bl SetGpuReg
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08023048
 _0802302A:
 	bl IsLinkTaskFinished
@@ -4977,7 +4977,7 @@ _08023096:
 	cmp r0, #0
 	bne _080230FE
 _0802309E:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _080230F8
 _080230A4:
 	bl IsLinkTaskFinished
@@ -5640,7 +5640,7 @@ _0802356E:
 	bls _0802359A
 	cmp r0, #0x46
 	bls _0802358A
-	bl sub_080115B4
+	bl ClearRecvCommands
 	movs r0, #0
 	strh r0, [r5, #0x10]
 	b _0802359A
@@ -5650,7 +5650,7 @@ _0802358A:
 	ands r4, r0
 	cmp r4, #0
 	bne _0802359A
-	bl sub_080115B4
+	bl ClearRecvCommands
 	strh r4, [r5, #0x10]
 _0802359A:
 	ldrh r1, [r5, #0x28]
@@ -6096,7 +6096,7 @@ _0802390E:
 	bl sub_08021604
 	cmp r0, #0
 	beq _0802394C
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	movs r0, #0
 	strh r0, [r4, #0x10]
 	b _08023946
@@ -6189,7 +6189,7 @@ _080239BE:
 	bl sub_08021604
 	cmp r0, #0
 	beq _08023A36
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	movs r0, #0
 	strh r0, [r5, #0x10]
 	movs r0, #0x12
@@ -6902,7 +6902,7 @@ _08023F3E:
 	.align 2, 0
 _08023F64: .4byte 0x00008C9F
 _08023F68:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08023FE0
 _08023F6E:
 	bl IsLinkTaskFinished
@@ -7084,7 +7084,7 @@ _080240BE:
 	beq _080240FE
 	b _08024174
 _080240C8:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08024174
 _080240CE:
 	bl IsLinkTaskFinished
@@ -7374,7 +7374,7 @@ _080242E4:
 	beq _08024300
 	b _08024320
 _080242EA:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08024320
 _080242F0:
 	bl IsLinkTaskFinished

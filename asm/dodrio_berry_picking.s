@@ -381,7 +381,7 @@ _08024A14:
 	bl sub_0802A464
 	cmp r0, #0
 	bne _08024B08
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	b _08024AE8
 _08024A22:
 	bl IsLinkTaskFinished
@@ -666,7 +666,7 @@ _08024C3C:
 	.align 2, 0
 _08024C54: .4byte 0x0202294C
 _08024C58:
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	ldr r0, _08024C64
 	ldr r1, [r0]
 	b _08024CB8
@@ -708,7 +708,7 @@ _08024CA0:
 	lsrs r0, r0, #0x18
 	cmp r0, #5
 	bls _08024CD0
-	bl sub_0800FF34
+	bl Rfu_SetLinkStandbyCallback
 	ldr r1, [r4]
 _08024CB8:
 	ldrb r0, [r1, #0x10]
@@ -2233,7 +2233,7 @@ _0802586C:
 	ldrb r4, [r0]
 	cmp r4, #0
 	beq _080258B8
-	bl sub_080115B4
+	bl ClearRecvCommands
 	ldr r0, [r5]
 	adds r0, r0, r6
 	movs r1, #0
@@ -2251,7 +2251,7 @@ _080258B8:
 	ldrb r0, [r0]
 	cmp r0, #0x46
 	bls _080258CA
-	bl sub_080115B4
+	bl ClearRecvCommands
 	ldr r0, [r5]
 	adds r0, r0, r6
 	strb r4, [r0]
@@ -2488,7 +2488,7 @@ _08025A64:
 	ldrb r4, [r0]
 	cmp r4, #0
 	beq _08025AB0
-	bl sub_080115B4
+	bl ClearRecvCommands
 	ldr r0, [r5]
 	adds r0, r0, r6
 	movs r1, #0
@@ -2506,7 +2506,7 @@ _08025AB0:
 	ldrb r0, [r0]
 	cmp r0, #0x46
 	bls _08025AC2
-	bl sub_080115B4
+	bl ClearRecvCommands
 	ldr r0, [r5]
 	adds r0, r0, r6
 	strb r4, [r0]

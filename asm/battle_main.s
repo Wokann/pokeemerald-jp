@@ -2408,7 +2408,7 @@ _080379EE:
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08037A34
-	bl sub_08010000
+	bl IsLinkRfuTaskFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08037A5A

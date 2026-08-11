@@ -299,7 +299,7 @@ _0801DE04:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801DE4C
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801DE4C
 	ldr r4, _0801DE38
@@ -791,7 +791,7 @@ _0801E1F8:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801E238
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801E238
 	ldr r4, _0801E230
@@ -940,7 +940,7 @@ _0801E330:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801E3E0
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801E3E0
 	ldr r4, _0801E360
@@ -964,7 +964,7 @@ _0801E364:
 	ands r1, r0
 	cmp r1, #0
 	beq _0801E3E0
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801E3E0
 	ldr r0, _0801E380
@@ -977,7 +977,7 @@ _0801E384:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801E3E0
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E3E0
@@ -1069,7 +1069,7 @@ _0801E428:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801E486
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E486
@@ -1186,7 +1186,7 @@ _0801E514:
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _0801E580
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	adds r4, r0, #0
 	cmp r4, #0
 	bne _0801E580
@@ -1284,7 +1284,7 @@ _0801E5E4:
 	lsrs r0, r0, #0x18
 	cmp r0, #1
 	bne _0801E654
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801E654
 	ldr r4, _0801E614
@@ -2320,7 +2320,7 @@ sub_0801ED8C: @ 0x0801ED8C
 	ldr r0, [r0]
 	ldrb r0, [r0, #0x13]
 	strb r0, [r4, #9]
-	bl sub_08011540
+	bl RfuSetNormalDisconnectMode
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -2822,7 +2822,7 @@ _0801F14C:
 	strh r0, [r4, #6]
 	cmp r0, #0
 	bne _0801F164
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	beq _0801F164
 	b _0801F2D4
@@ -3002,7 +3002,7 @@ _0801F2AC:
 	.align 2, 0
 _0801F2B4: .4byte 0x02022938
 _0801F2B8:
-	bl GetRfuRecvQueueLength
+	bl Rfu_IsPlayerExchangeActive
 	cmp r0, #0
 	bne _0801F2D4
 	ldr r0, _0801F2DC

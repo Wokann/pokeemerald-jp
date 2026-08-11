@@ -3,11 +3,11 @@
 .text
 .syntax unified
 
-	thumb_func_start nullsub_14
-nullsub_14: @ 0x08011FD4
+	thumb_func_start Task_Idle
+Task_Idle: @ 0x08011FD4
 	bx lr
 	.align 2, 0
-	thumb_func_end nullsub_14
+	thumb_func_end Task_Idle
 
 	thumb_func_start sub_08011FD8
 sub_08011FD8: @ 0x08011FD8
@@ -410,7 +410,7 @@ _0801234C:
 	ldrb r1, [r4]
 	movs r0, #0xf
 	ands r0, r1
-	bl sub_080116FC
+	bl InitializeRfuLinkManager_LinkLeader
 	movs r0, #3
 	strb r0, [r5, #0xc]
 	b _08012A54
@@ -986,7 +986,7 @@ _0801284E:
 _08012854:
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	b _08012960
 _0801285E:
 	adds r0, r5, #0
@@ -1216,7 +1216,7 @@ _08012A00:
 	.align 2, 0
 _08012A14: .4byte 0x02037290
 _08012A18:
-	bl sub_08011570
+	bl RfuHasErrored
 	cmp r0, #0
 	beq _08012A26
 	movs r0, #0x1d
@@ -1560,7 +1560,7 @@ _08012D5C: .4byte 0x020228E0
 _08012D60:
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	ldrb r0, [r4, #0x12]
 	bl RedrawListMenu
 	strb r5, [r4, #0xc]
@@ -1984,7 +1984,7 @@ _08013094:
 	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011748
+	bl InitializeRfuLinkManager_JoinGroup
 	movs r0, #0x70
 	bl AllocZeroed
 	str r0, [r6, #4]
@@ -2231,7 +2231,7 @@ _080132C8:
 	strb r0, [r4]
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	ldrb r0, [r4]
 	subs r0, #1
 	cmp r0, #0x1b
@@ -2335,7 +2335,7 @@ _080133EA:
 _080133F4:
 	movs r0, #0xc
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	b _080134F0
 	.align 2, 0
 _08013400: .4byte 0x02021C7C
@@ -2343,7 +2343,7 @@ _08013404: .4byte 0x020228E0
 _08013408:
 	movs r0, #7
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	ldr r0, _0801342C
 	ldr r2, _08013430
 	ldrb r1, [r4]
@@ -2373,7 +2373,7 @@ _08013438:
 	beq _080134F0
 	movs r0, #0xc
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	movs r0, #0
 	b _080134EE
 	.align 2, 0
@@ -2783,7 +2783,7 @@ _080137D8:
 	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011748
+	bl InitializeRfuLinkManager_JoinGroup
 	movs r0, #1
 	bl RfuSetIgnoreError
 	movs r0, #0x70
@@ -4369,7 +4369,7 @@ _080145B8:
 	bl sub_0800AF5C
 	bl OpenLink
 	movs r0, #2
-	bl sub_080116FC
+	bl InitializeRfuLinkManager_LinkLeader
 	movs r0, #1
 	strb r0, [r5, #0xc]
 	b _080149FA
@@ -4704,7 +4704,7 @@ _080148B2:
 _080148B8:
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	strb r4, [r5, #0xc]
 	b _080149FA
 _080148C4:
@@ -4935,7 +4935,7 @@ _08014AAC:
 	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011748
+	bl InitializeRfuLinkManager_JoinGroup
 	movs r0, #0x70
 	bl AllocZeroed
 	str r0, [r7, #4]
@@ -5192,7 +5192,7 @@ _08014CF6:
 	bl AddTextPrinterToWindow1
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	b _08014DA8
 	.align 2, 0
 _08014D08: .4byte 0x082C09F8
@@ -5349,7 +5349,7 @@ _08014E60:
 	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011748
+	bl InitializeRfuLinkManager_JoinGroup
 	movs r0, #0x70
 	bl AllocZeroed
 	str r0, [r5, #4]
@@ -5579,7 +5579,7 @@ _08015056:
 	bl AddTextPrinterToWindow1
 	movs r0, #0
 	movs r1, #0
-	bl sub_08011554
+	bl RfuSetStatus
 	b _0801510C
 	.align 2, 0
 _08015068: .4byte 0x082C0AAC
@@ -5929,7 +5929,7 @@ _08015380:
 	bl SetTradeBoardRegisteredMonInfo
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011770
+	bl InitializeRfuLinkManager_EnterUnionRoom
 	ldr r0, [r6, #8]
 	movs r1, #1
 	bl sub_08017044
@@ -6270,7 +6270,7 @@ _08015680:
 	strb r4, [r6, #0x14]
 	b _080156C6
 _080156A2:
-	bl sub_0801167C
+	bl IsUnionRoomListenTaskActive
 	cmp r0, #1
 	bne _080156B8
 	ldr r0, _080156B4
@@ -6766,7 +6766,7 @@ _08015AFC:
 	movs r1, #0
 	movs r2, #1
 	bl UpdateGameData_SetActivity
-	bl sub_0801167C
+	bl IsUnionRoomListenTaskActive
 	cmp r0, #1
 	bne _08015B30
 	ldr r0, _08015B2C
@@ -6796,7 +6796,7 @@ _08015B48:
 	strh r0, [r7, #6]
 	bl _0801638C
 _08015B52:
-	bl sub_08011570
+	bl RfuHasErrored
 	cmp r0, #0
 	beq _08015B9A
 	movs r2, #2
@@ -6808,7 +6808,7 @@ _08015B52:
 	movs r1, #0
 	movs r2, #1
 	bl UpdateGameData_SetActivity
-	bl sub_0801167C
+	bl IsUnionRoomListenTaskActive
 	cmp r0, #1
 	bne _08015B8C
 	ldr r0, _08015B88
@@ -6850,7 +6850,7 @@ _08015BB4:
 	strh r0, [r1]
 	bl _0801638C
 _08015BCE:
-	bl sub_08011570
+	bl RfuHasErrored
 	cmp r0, #0
 	beq _08015BE2
 	movs r0, #0
@@ -7934,7 +7934,7 @@ _080164CE:
 	bl SetHostRfuGameData
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011770
+	bl InitializeRfuLinkManager_EnterUnionRoom
 	movs r0, #1
 	bl RfuSetIgnoreError
 	movs r0, #2

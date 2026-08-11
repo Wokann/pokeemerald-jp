@@ -444,7 +444,7 @@ _08076EBA:
 	beq _08076F30
 	bl sub_0800AF5C
 	bl OpenLink
-	bl sub_08011690
+	bl CreateTask_RfuIdle
 	b _0807752A
 	.align 2, 0
 _08076F14: .4byte 0x02037C74
@@ -560,7 +560,7 @@ _08076FFA:
 	beq _08077008
 	b _0807752A
 _08077008:
-	bl sub_080116BC
+	bl DestroyTask_RfuIdle
 	bl CalculatePlayerPartyCount
 	ldr r1, _08077044
 	movs r7, #0x87

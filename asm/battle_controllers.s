@@ -2034,7 +2034,7 @@ TryReceiveLinkBattleData: @ 0x080334E0
 	ands r0, r1
 	cmp r0, #0
 	beq _080335D0
-	bl sub_080116BC
+	bl DestroyTask_RfuIdle
 	movs r4, #0
 	ldr r0, _08033514
 	mov sl, r0
