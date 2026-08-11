@@ -1,6 +1,7 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
 RomHeaderGameCode = ABSOLUTE(0x080000AC);
 RomHeaderSoftwareVersion = ABSOLUTE(0x080000BC);
+gUnknown_84FD040 = ABSOLUTE(0x084FD040);
 PokenavMenuCallbacks = ABSOLUTE(0x085EF83C);
 gPokenavMainMenuBgTemplates = ABSOLUTE(0x085F13C8);
 sHelpBarWindowTemplate = ABSOLUTE(0x085F13CC);
@@ -1828,6 +1829,10 @@ SECTIONS {
         src/mystery_gift.o(.text.ClearSavedTrainerIds);
         src/mystery_gift.o(.text.RecordTrainerId);
         src/mystery_gift.o(.text.IncrementCardStatForNewTrainer);
+        src/mystery_gift_view.o(.text.InitWonderCardResources);
+        src/mystery_gift_view.o(.text.DestroyWonderCardResources);
+        src/mystery_gift_view.o(.text.FadeToWonderCardMenu);
+        src/mystery_gift_view.o(.text.FadeOutFromWonderCard);
         asm/mevent_801BAAC.o(.text);
         asm/mevent_server.o(.text);
         asm/mevent_client.o(.text);
