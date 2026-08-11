@@ -1662,64 +1662,17 @@ void PrintRibbbonsSummaryMonInfo(struct Pokenav_RibbonsSummaryMenu *menu)
 
 
 
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r5, r0, #0\n\t"
-            "ldr r4, _081D07B4\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl AddWindow\n\t"
-            "strh r0, [r5, #0xc]\n\t"
-            "adds r4, #8\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl AddWindow\n\t"
-            "strh r0, [r5, #0xe]\n\t"
-            "ldrb r0, [r5, #0xc]\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldrb r0, [r5, #0xe]\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldrb r0, [r5, #0xc]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldrb r0, [r5, #0xe]\n\t"
-            "bl PutWindowTilemap\n\t"
-            "ldrh r0, [r5, #0xe]\n\t"
-            "bl sub_081D07B8\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl PrintRibbonsMonListIndex\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D07B4: .4byte 0x085F7248\n\t"
-            ".syntax divided");
-}
-#else
 void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 {
-    menu->listIdxWindowId = AddWindow(sRibbonMonListIndexWindowTemplate);
+    menu->listIdxWindowId = AddWindow(&sRibbonMonListIndexWindowTemplate[0]);
+    menu->unusedWindowId = AddWindow(&sRibbonMonListIndexWindowTemplate[1]);
     FillWindowPixelBuffer(menu->listIdxWindowId, PIXEL_FILL(1));
+    FillWindowPixelBuffer(menu->unusedWindowId, PIXEL_FILL(1));
     PutWindowTilemap(menu->listIdxWindowId);
+    PutWindowTilemap(menu->unusedWindowId);
+    sub_081D07B8(menu->unusedWindowId);
     PrintRibbonsMonListIndex(menu);
 }
-#endif
-
-#else
-void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    menu->listIdxWindowId = AddWindow(sRibbonMonListIndexWindowTemplate);
-    FillWindowPixelBuffer(menu->listIdxWindowId, PIXEL_FILL(1));
-    PutWindowTilemap(menu->listIdxWindowId);
-    PrintRibbonsMonListIndex(menu);
-}
-#endif
 
 
 void sub_081D07B8(s32 state)
