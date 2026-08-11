@@ -303,7 +303,7 @@ extern const struct ListMenuTemplate sTradeBoardListMenuTemplate;
 
 // JP: these helpers are still in asm/union_room.s; referenced by their sub_
 // names until converted.
-extern void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
+void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
 u16 ReadAsU16(const u8 *ptr);
 void ScheduleFieldMessageWithFollowupState(u32 nextState, const u8 *src);
 void ScheduleFieldMessageAndExit(const u8 *src);
@@ -3866,6 +3866,76 @@ void UR_ClearBg0(void)
 static void JoinGroup_EnableScriptContexts(void)
 {
     ScriptContext_Enable();
+}
+
+void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx)
+{
+    struct TextPrinterTemplate printerTemplate;
+
+    printerTemplate.currentChar = str;
+    printerTemplate.windowId = windowId;
+    printerTemplate.fontId = fontId;
+    printerTemplate.x = x;
+    printerTemplate.y = y;
+    printerTemplate.currentX = x;
+    printerTemplate.currentY = y;
+    printerTemplate.unk = 0;
+
+    gTextFlags.useAlternateDownArrow = FALSE;
+    switch (colorIdx)
+    {
+    case UR_COLOR_DEFAULT:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_DARK_GRAY;
+        printerTemplate.bgColor = TEXT_COLOR_WHITE;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_GRAY;
+        break;
+    case UR_COLOR_RED:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_RED;
+        printerTemplate.bgColor = TEXT_COLOR_WHITE;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_RED;
+        break;
+    case UR_COLOR_GREEN:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_GREEN;
+        printerTemplate.bgColor = TEXT_COLOR_WHITE;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_GREEN;
+        break;
+    case UR_COLOR_WHITE:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_WHITE;
+        printerTemplate.bgColor = TEXT_COLOR_WHITE;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_GRAY;
+        break;
+    case UR_COLOR_CANCEL:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_WHITE;
+        printerTemplate.bgColor = TEXT_COLOR_DARK_GRAY;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_GRAY;
+        break;
+    case UR_COLOR_TRADE_BOARD_SELF:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_COLOR_LIGHT_GREEN;
+        printerTemplate.bgColor = TEXT_DYNAMIC_COLOR_6;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_BLUE;
+        break;
+    case UR_COLOR_TRADE_BOARD_OTHER:
+        printerTemplate.letterSpacing = 0;
+        printerTemplate.lineSpacing = 0;
+        printerTemplate.fgColor = TEXT_DYNAMIC_COLOR_5;
+        printerTemplate.bgColor = TEXT_DYNAMIC_COLOR_6;
+        printerTemplate.shadowColor = TEXT_COLOR_LIGHT_BLUE;
+        break;
+    }
+
+    AddTextPrinter(&printerTemplate, TEXT_SKIP_DRAW, NULL);
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,

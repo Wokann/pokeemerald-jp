@@ -30,220 +30,6 @@
 
 
 
-	thumb_func_start sub_08016EA4
-sub_08016EA4: @ 0x08016EA4
-	push {r4, r5, lr}
-	sub sp, #0x10
-	ldr r5, [sp, #0x1c]
-	ldr r4, [sp, #0x20]
-	lsls r3, r3, #0x18
-	lsrs r3, r3, #0x18
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	str r2, [sp]
-	mov r2, sp
-	strb r0, [r2, #4]
-	mov r0, sp
-	strb r1, [r0, #5]
-	strb r3, [r0, #6]
-	strb r5, [r0, #7]
-	strb r3, [r0, #8]
-	strb r5, [r0, #9]
-	ldrb r1, [r2, #0xc]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	strb r0, [r2, #0xc]
-	ldr r2, _08016EF0
-	ldrb r1, [r2]
-	movs r0, #3
-	rsbs r0, r0, #0
-	ands r0, r1
-	strb r0, [r2]
-	cmp r4, #6
-	bls _08016EE6
-	b _08017032
-_08016EE6:
-	lsls r0, r4, #2
-	ldr r1, _08016EF4
-	adds r0, r0, r1
-	ldr r0, [r0]
-	mov pc, r0
-	.align 2, 0
-_08016EF0: .4byte 0x030030B4
-_08016EF4: .4byte 0x08016EF8
-_08016EF8: @ jump table
-	.4byte _08016F14 @ case 0
-	.4byte _08016F40 @ case 1
-	.4byte _08016F6C @ case 2
-	.4byte _08016F98 @ case 3
-	.4byte _08016FC4 @ case 4
-	.4byte _08016FF0 @ case 5
-	.4byte _08017008 @ case 6
-_08016F14:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x20
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	ldrb r1, [r2, #0xd]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-	ands r0, r3
-	movs r1, #0x30
-	b _0801702E
-_08016F40:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x40
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	ldrb r1, [r2, #0xd]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-	ands r0, r3
-	movs r1, #0x50
-	b _0801702E
-_08016F6C:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x60
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	ldrb r1, [r2, #0xd]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-	ands r0, r3
-	movs r1, #0x70
-	b _0801702E
-_08016F98:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x10
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	ldrb r1, [r2, #0xd]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-	ands r0, r3
-	movs r1, #0x30
-	b _0801702E
-_08016FC4:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x10
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	ldrb r1, [r2, #0xd]
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #2
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-	ands r0, r3
-	movs r1, #0x30
-	b _0801702E
-_08016FF0:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r4, #0xf
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0x70
-	b _0801701E
-_08017008:
-	mov r0, sp
-	movs r1, #0
-	strb r1, [r0, #0xa]
-	strb r1, [r0, #0xb]
-	mov r2, sp
-	ldrb r1, [r2, #0xc]
-	movs r4, #0xf
-	movs r3, #0xf
-	adds r0, r3, #0
-	ands r0, r1
-	movs r1, #0xe0
-_0801701E:
-	orrs r0, r1
-	strb r0, [r2, #0xc]
-	mov r1, sp
-	ldrb r0, [r1, #0xd]
-	orrs r0, r4
-	strb r0, [r1, #0xd]
-	ands r0, r3
-	movs r1, #0x90
-_0801702E:
-	orrs r0, r1
-	strb r0, [r2, #0xd]
-_08017032:
-	mov r0, sp
-	movs r1, #0xff
-	movs r2, #0
-	bl AddTextPrinter
-	add sp, #0x10
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08016EA4
 
 	thumb_func_start sub_08017044
 sub_08017044: @ 0x08017044
@@ -606,7 +392,7 @@ sub_0801727C: @ 0x0801727C
 	movs r1, #1
 	adds r2, r6, #0
 	adds r3, r4, #0
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	adds r4, #0x18
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
@@ -634,7 +420,7 @@ sub_0801727C: @ 0x0801727C
 	movs r1, #2
 	adds r2, r6, #0
 	adds r3, r4, #0
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	ldrb r1, [r5, #2]
 	ldrb r0, [r5, #3]
 	lsls r0, r0, #8
@@ -659,7 +445,7 @@ sub_0801727C: @ 0x0801727C
 	mov r0, r8
 	movs r1, #1
 	adds r2, r6, #0
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 _08017344:
 	add sp, #0x10
 	pop {r3, r4}
@@ -711,7 +497,7 @@ sub_08017360: @ 0x08017360
 	movs r1, #2
 	adds r2, r4, #0
 	adds r3, r6, #0
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	ldrb r1, [r5, #2]
 	ldrb r0, [r5, #3]
 	lsls r0, r0, #8
@@ -736,7 +522,7 @@ sub_08017360: @ 0x08017360
 	mov r0, sb
 	movs r1, #1
 	adds r2, r4, #0
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 _080173E6:
 	add sp, #0x10
 	pop {r3, r4}
@@ -1043,7 +829,7 @@ sub_080175F0: @ 0x080175F0
 	movs r1, #1
 	adds r2, r3, #0
 	movs r3, #0xa
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	movs r0, #0xce
 	lsls r0, r0, #1
 	cmp r4, r0
@@ -1054,7 +840,7 @@ sub_080175F0: @ 0x080175F0
 	adds r0, r6, #0
 	movs r1, #1
 	movs r3, #0x46
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	b _0801769E
 	.align 2, 0
 _08017644: .4byte 0x082C19AC
@@ -1075,7 +861,7 @@ _08017648:
 	adds r0, r6, #0
 	movs r1, #1
 	movs r3, #0x78
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 	add r0, sp, #8
 	mov r1, sb
 	movs r2, #0
@@ -1096,7 +882,7 @@ _08017648:
 	adds r0, r6, #0
 	movs r1, #1
 	add r2, sp, #8
-	bl sub_08016EA4
+	bl PrintUnionRoomText
 _0801769E:
 	add sp, #0xc
 	pop {r3, r4}
