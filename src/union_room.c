@@ -5,9 +5,13 @@
 #include "cable_club.h"
 #include "constants/map_groups.h"
 #include "constants/field_weather.h"
+#include "constants/party_menu.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
+#include "data.h"
 #include "decompress.h"
 #include "event_data.h"
+#include "field_screen_effect.h"
 #include "fieldmap.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -25,6 +29,7 @@
 #include "save_location.h"
 #include "sound.h"
 #include "sprite.h"
+#include "start_menu.h"
 #include "pokemon.h"
 #include "string_util.h"
 #include "strings.h"
@@ -101,6 +106,22 @@ enum {
     UR_STATE_REGISTER_SELECT_MON,
     UR_STATE_REGISTER_COMPLETE,
     UR_STATE_CANCEL_REGISTRATION,
+};
+
+// States for sUnionRoomTrade.state
+enum {
+    URTRADE_STATE_NONE,
+    URTRADE_STATE_REGISTERING,
+    URTRADE_STATE_OFFERING,
+};
+
+// Return values for HandlePlayerListUpdate
+enum {
+    PLIST_NONE,
+    PLIST_NEW_PLAYER,
+    PLIST_RECENT_UPDATE,
+    PLIST_UNUSED,
+    PLIST_CONTACTED,
 };
 
 // States for Task_TryBecomeLinkLeader
@@ -201,6 +222,8 @@ extern const u8 sText_AwaitingPlayersResponse[];
 extern const u8 sText_LinkWithFriendDropped[];
 extern const u8 sText_PleaseStartOver[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
+extern const u8 gSpeciesNamesJP[][6];
+extern const u8 gTypeNamesJP[][5];
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_WirelessLinkEstablished[];
 extern const u8 sText_WirelessLinkDropped[];
@@ -217,6 +240,34 @@ extern const u8 *const sChooseTrainerTexts[];
 extern const u8 sText_SearchingForWirelessSystemWait[];
 extern const u8 sText_AwaitingResponseFromWirelessSystem[];
 extern const u8 *const sNoWonderSharedTexts[];
+extern const u8 sText_RegistrationCanceled[];
+extern const u8 sText_ChooseRequestedMonType[];
+extern const u8 sText_TradeCanceled[];
+extern const u8 sText_TrainerAppearsBusy[];
+extern const u8 sText_AwaitingPlayersResponseAboutTrade[];
+extern const u8 sText_TrainerBattleBusy[];
+extern const u8 sText_NeedTwoMonsOfLevel30OrLower1[];
+extern const u8 sText_NeedTwoMonsOfLevel30OrLower2[];
+extern const u8 sText_ChatEnded[];
+extern const u8 sText_CancelRegistrationOfEgg[];
+extern const u8 sText_CancelRegistrationOfMon[];
+extern const u8 sText_RegisterMonAtTradingBoard[];
+extern const u8 sText_WhichMonWillYouOffer[];
+extern const u8 sText_TradingBoardInfo[];
+extern const u8 sText_RegistrationCompleted[];
+extern const u8 sText_RegistrationCanceled2[];
+extern const u8 sText_XCheckedTradingBoard[];
+extern const u8 sText_AskTrainerToMakeTrade[];
+extern const u8 sText_DontHaveTypeTrainerWants[];
+extern const u8 sText_DontHaveEggTrainerWants[];
+extern const u8 *const sHiDoSomethingTexts[][2];
+extern const u8 *const sAwaitingResponseTexts[];
+extern const u8 *const sDeclineChatTexts[];
+extern const u8 *const sChatDeclinedTexts[];
+extern const u8 *const sText_WaitOrShowCardTexts[][4];
+extern const u8 *const sIfYouWantToDoSomethingTexts[];
+extern const u8 *const sCommunicatingWaitTexts[];
+extern const u8 *const sPlayerContactedYouTexts[];
 extern const u8 *const sCantTransmitToTrainerTexts[];
 extern const u8 *const sPlayerDisconnectedTexts[];
 extern const u8 *const sAcceptedActivityIds[23];
@@ -231,6 +282,14 @@ extern const struct WindowTemplate sWindowTemplate_GroupList;
 extern const struct WindowTemplate sWindowTemplate_PlayerNameAndId;
 extern const struct ListMenuTemplate sListMenuTemplate_PossibleGroupMembers;
 extern const struct ListMenuTemplate sListMenuTemplate_UnionRoomGroups;
+extern const struct WindowTemplate sWindowTemplate_InviteToActivity;
+extern const struct ListMenuTemplate sListMenuTemplate_InviteToActivity;
+extern const struct WindowTemplate sWindowTemplate_RegisterForTrade;
+extern const struct ListMenuTemplate sListMenuTemplate_RegisterForTrade;
+extern const struct WindowTemplate sWindowTemplate_TradingBoardRequestType;
+extern const struct MenuTemplate sMenuTemplate_TradingBoardRequestType;
+extern const struct WindowTemplate sWindowTemplate_TradingBoardMain;
+extern const struct ListMenuTemplate sTradeBoardListMenuTemplate;
 
 // JP: these helpers are still in asm/union_room.s; referenced by their sub_
 // names until converted.
@@ -245,6 +304,31 @@ extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
 extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
 extern u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 arg1);
 extern bool32 HasWonderCardOrNewsByLinkGroup(struct RfuGameData *data, s16 linkGroup);
+extern u8 CreateTask_SearchForChildOrParent(struct RfuIncomingPlayerList *incomingParentList, struct RfuIncomingPlayerList *incomingChildList, u8 linkGroup);
+extern void UR_RunTextPrinters(void);
+extern u8 HandlePlayerListUpdate(void);
+extern s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
+extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
+extern void HandleCancelActivity(bool32 setData);
+extern void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade);
+extern bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trade);
+extern bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
+extern void StartScriptInteraction(void);
+extern u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
+extern bool32 IsPlayerFacingTradingBoard(void);
+extern void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
+extern bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
+extern s32 ListMenuHandler_AllItemsAvailable(u8 *textState, u8 *a2, u8 *a3, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate);
+extern s32 TradeBoardMenuHandler(u8 *textState, u8 *a2, u8 *a3, u8 *a4, const struct WindowTemplate *winTemplate, const struct ListMenuTemplate *listTemplate, struct RfuPlayerList *playerList);
+extern void UR_ClearBg0(void);
+extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
+extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
+extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
+extern u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
+extern u32 GetResponseIdx_InviteToURoomActivity(u32 activity);
+extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies);
+extern void UR_PrintFieldMessage(const u8 *str);
+extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
@@ -280,7 +364,7 @@ static void CreateTask_RunScriptAndFadeToActivity(void);
 static void Task_SendMysteryGift(u8 taskId);
 static void Task_CardOrNewsWithFriend(u8 taskId);
 static void Task_CardOrNewsOverWireless(u8 taskId);
-extern void Task_RunUnionRoom(u8 taskId);
+static void Task_RunUnionRoom(u8 taskId);
 void RunUnionRoom(void);
 
 void Task_Idle(u8 taskId)
@@ -2471,4 +2555,771 @@ void CopyPlayerListFromBuffer(struct WirelessLink_URoom *uroom)
     memcpy(uroom->playerList,
            &gDecompressionBuffer[sizeof(gDecompressionBuffer) - (MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer))],
            MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer));
+}
+
+static void Task_RunUnionRoom(u8 taskId)
+{
+    u32 id = 0;
+    s32 input = 0;
+    s32 playerGender = MALE;
+    struct WirelessLink_URoom *uroom = sWirelessLinkMain.uRoom;
+    s16 *taskData = gTasks[taskId].data;
+
+    switch (uroom->state)
+    {
+    case UR_STATE_INIT:
+        uroom->incomingChildList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        uroom->incomingParentList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        uroom->playerList = AllocZeroed(MAX_UNION_ROOM_LEADERS * sizeof(struct RfuPlayer));
+        uroom->spawnPlayer = AllocZeroed(sizeof(struct RfuPlayer));
+        ClearRfuPlayerList(uroom->playerList->players, MAX_UNION_ROOM_LEADERS);
+        gPlayerCurrActivity = IN_UNION_ROOM;
+        uroom->searchTaskId = CreateTask_SearchForChildOrParent(uroom->incomingParentList, uroom->incomingChildList, LINK_GROUP_UNION_ROOM_RESUME);
+        InitUnionRoomPlayerObjects(uroom->objects);
+        SetTilesAroundUnionRoomPlayersPassable();
+        uroom->state = UR_STATE_INIT_OBJECTS;
+        break;
+    case UR_STATE_INIT_OBJECTS:
+        CreateUnionRoomPlayerSprites(uroom->spriteIds, taskData[0]);
+        if (++taskData[0] == MAX_UNION_ROOM_LEADERS)
+            uroom->state = UR_STATE_INIT_LINK;
+        break;
+    case UR_STATE_INIT_LINK:
+        SetHostRfuGameData(IN_UNION_ROOM, 0, FALSE);
+        SetTradeBoardRegisteredMonInfo(sUnionRoomTrade.type, sUnionRoomTrade.playerSpecies, sUnionRoomTrade.playerLevel);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_EnterUnionRoom();
+        ClearRfuPlayerList(&uroom->spawnPlayer->players[0], 1);
+        ClearIncomingPlayerList(uroom->incomingChildList, RFU_CHILD_MAX);
+        ClearIncomingPlayerList(uroom->incomingParentList, RFU_CHILD_MAX);
+        gSpecialVar_Result = 0;
+        uroom->state = UR_STATE_CHECK_SELECTING_MON;
+        break;
+    case UR_STATE_CHECK_SELECTING_MON:
+        if ((GetPartyMenuType() == PARTY_MENU_TYPE_UNION_ROOM_REGISTER
+          || GetPartyMenuType() == PARTY_MENU_TYPE_UNION_ROOM_TRADE)
+           && sUnionRoomTrade.state != URTRADE_STATE_NONE)
+        {
+            id = GetCursorSelectionMonId();
+            switch (sUnionRoomTrade.state)
+            {
+            case URTRADE_STATE_REGISTERING:
+                UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+                if (id >= PARTY_SIZE)
+                {
+                    ResetUnionRoomTrade(&sUnionRoomTrade);
+                    SetTradeBoardRegisteredMonInfo(TYPE_NORMAL, SPECIES_NONE, 0);
+                    ScheduleFieldMessageAndExit(sText_RegistrationCanceled);
+                }
+                else if (!RegisterTradeMonAndGetIsEgg(GetCursorSelectionMonId(), &sUnionRoomTrade))
+                {
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_REGISTER_REQUEST_TYPE, sText_ChooseRequestedMonType);
+                }
+                else
+                {
+                    uroom->state = UR_STATE_REGISTER_COMPLETE;
+                }
+                break;
+            case URTRADE_STATE_OFFERING:
+                CopyPlayerListFromBuffer(uroom);
+                taskData[1] = sUnionRoomTrade.offerPlayerId;
+                if (id >= PARTY_SIZE)
+                {
+                    ScheduleFieldMessageAndExit(sText_TradeCanceled);
+                }
+                else
+                {
+                    UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+                    gPlayerCurrActivity = ACTIVITY_TRADE | IN_UNION_ROOM;
+                    RegisterTradeMon(GetCursorSelectionMonId(), &sUnionRoomTrade);
+                    uroom->state = UR_STATE_TRADE_OFFER_MON;
+                }
+                break;
+            }
+            sUnionRoomTrade.state = URTRADE_STATE_NONE;
+        }
+        else
+        {
+            uroom->state = UR_STATE_MAIN;
+        }
+        break;
+    case UR_STATE_MAIN:
+        if (gSpecialVar_Result != 0)
+        {
+            if (gSpecialVar_Result == UR_INTERACT_ATTENDANT)
+            {
+                UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+                PlaySE(SE_PC_LOGIN);
+                StringCopy(gStringVar1, gSaveBlock2Ptr->playerName);
+                uroom->state = UR_STATE_INTERACT_WITH_ATTENDANT;
+                gSpecialVar_Result = 0;
+            }
+            else if (gSpecialVar_Result == UR_INTERACT_START_MENU)
+            {
+                UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+                uroom->state = UR_STATE_WAIT_FOR_START_MENU;
+                gSpecialVar_Result = 0;
+            }
+            else // UR_INTERACT_PLAYER_# (1-8)
+            {
+                taskData[0] = 0;
+                taskData[1] = gSpecialVar_Result - 1;
+                uroom->state = UR_STATE_INTERACT_WITH_PLAYER;
+                gSpecialVar_Result = 0;
+            }
+        }
+        else if (ArePlayerFieldControlsLocked() != TRUE)
+        {
+            if (JOY_NEW(A_BUTTON))
+            {
+                if (TryInteractWithUnionRoomMember(uroom->playerList, &taskData[0], &taskData[1], uroom->spriteIds))
+                {
+                    PlaySE(SE_SELECT);
+                    StartScriptInteraction();
+                    uroom->state = UR_STATE_INTERACT_WITH_PLAYER;
+                    break;
+                }
+                else if (IsPlayerFacingTradingBoard())
+                {
+                    UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+                    PlaySE(SE_PC_LOGIN);
+                    StartScriptInteraction();
+                    StringCopy(gStringVar1, gSaveBlock2Ptr->playerName);
+                    uroom->state = UR_STATE_CHECK_TRADING_BOARD;
+                    break;
+                }
+            }
+
+            switch (HandlePlayerListUpdate())
+            {
+            case PLIST_NEW_PLAYER:
+                PlaySE(SE_PC_LOGIN);
+            case PLIST_RECENT_UPDATE:
+                ScheduleUnionRoomPlayerRefresh(uroom);
+                break;
+            case PLIST_CONTACTED:
+                uroom->state = UR_STATE_PLAYER_CONTACTED_YOU;
+                StartScriptInteraction();
+                SetTradeBoardRegisteredMonInfo(TYPE_NORMAL, SPECIES_NONE, 0);
+                UpdateGameData_SetActivity(ACTIVITY_NPCTALK | IN_UNION_ROOM, GetActivePartnersInfo(uroom), FALSE);
+                break;
+            }
+            HandleUnionRoomPlayerRefresh(uroom);
+        }
+        break;
+    case UR_STATE_WAIT_FOR_START_MENU:
+        if (!FuncIsActiveTask(Task_ShowStartMenu))
+        {
+            UpdateGameData_SetActivity(ACTIVITY_NONE | IN_UNION_ROOM, 0, FALSE);
+            uroom->state = UR_STATE_MAIN;
+        }
+        break;
+    case UR_STATE_INTERACT_WITH_PLAYER:
+        UR_RunTextPrinters();
+        playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+        UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+        switch (UnionRoomGetPlayerInteractionResponse(uroom->playerList, taskData[0], taskData[1], playerGender))
+        {
+        case 0: // Player is or was just doing an activity
+            uroom->state = UR_STATE_PRINT_AND_EXIT;
+            break;
+        case 1: // Link communicating
+            TryConnectToUnionRoomParent(uroom->playerList->players[taskData[1]].rfu.name, &uroom->playerList->players[taskData[1]].rfu.data, gPlayerCurrActivity);
+            uroom->unreadPlayerId = id; // Should be just 0, but won't match any other way.
+            uroom->state = UR_STATE_TRY_COMMUNICATING;
+            break;
+        case 2: // Ask to join chat
+            ScheduleFieldMessageWithFollowupState(UR_STATE_RECV_JOIN_CHAT_REQUEST, gStringVar4);
+            break;
+        }
+        break;
+    case UR_STATE_TRY_COMMUNICATING:
+        UR_RunTextPrinters();
+        switch (RfuGetStatus())
+        {
+        case RFU_STATUS_NEW_CHILD_DETECTED:
+            HandleCancelActivity(TRUE);
+            uroom->state = UR_STATE_MAIN;
+            break;
+        case RFU_STATUS_FATAL_ERROR:
+        case RFU_STATUS_CONNECTION_ERROR:
+            if (IsUnionRoomListenTaskActive() == TRUE)
+                ScheduleFieldMessageAndExit(sText_TrainerAppearsBusy);
+            else
+                ScheduleFieldMessageWithFollowupState(UR_STATE_CANCEL_ACTIVITY_LINK_ERROR, sText_TrainerAppearsBusy);
+
+            gPlayerCurrActivity = IN_UNION_ROOM;
+            break;
+        }
+
+        if (gReceivedRemoteLinkPlayers)
+        {
+            CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+            CreateTask(Task_ExchangeCards, 5);
+            uroom->state = UR_STATE_COMMUNICATING_WAIT_FOR_DATA;
+        }
+        break;
+    case UR_STATE_COMMUNICATING_WAIT_FOR_DATA:
+        if (!FuncIsActiveTask(Task_ExchangeCards))
+        {
+            if (gPlayerCurrActivity == (ACTIVITY_TRADE | IN_UNION_ROOM))
+                ScheduleFieldMessageWithFollowupState(UR_STATE_SEND_TRADE_REQUST, sText_AwaitingPlayersResponseAboutTrade);
+            else
+                uroom->state = UR_STATE_DO_SOMETHING_PROMPT;
+        }
+        break;
+    case UR_STATE_CANCEL_ACTIVITY_LINK_ERROR:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            HandleCancelActivity(FALSE);
+            UpdateUnionRoomMemberFacing(taskData[0], taskData[1], uroom->playerList);
+            uroom->state = UR_STATE_INIT_LINK;
+        }
+        break;
+    case UR_STATE_DO_SOMETHING_PROMPT:
+        id = ConvPartnerUnameAndGetWhetherMetAlready(&uroom->playerList->players[taskData[1]]);
+        playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+        ScheduleFieldMessageWithFollowupState(UR_STATE_HANDLE_DO_SOMETHING_PROMPT_INPUT, sHiDoSomethingTexts[id][playerGender]);
+        break;
+    case UR_STATE_HANDLE_DO_SOMETHING_PROMPT_INPUT:
+        input = ListMenuHandler_AllItemsAvailable(&uroom->textState,
+                                                  &uroom->topListMenuWindowId,
+                                                  &uroom->topListMenuId,
+                                                  &sWindowTemplate_InviteToActivity,
+                                                  &sListMenuTemplate_InviteToActivity);
+        if (input != LIST_NOTHING_CHOSEN)
+        {
+            if (!gReceivedRemoteLinkPlayers)
+            {
+                uroom->state = UR_STATE_TRAINER_APPEARS_BUSY;
+            }
+            else
+            {
+                uroom->partnerYesNoResponse = 0;
+                playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+                if (input == LIST_CANCEL || input == IN_UNION_ROOM)
+                {
+                    uroom->playerSendBuffer[0] = IN_UNION_ROOM;
+                    Rfu_SendPacket(uroom->playerSendBuffer);
+                    StringCopy(gStringVar4, sIfYouWantToDoSomethingTexts[gLinkPlayers[0].gender]);
+                    uroom->state = UR_STATE_REQUEST_DECLINED;
+                }
+                else
+                {
+                    gPlayerCurrActivity = input;
+                    sPlayerActivityGroupSize = (u32)input >> 8; // Extract capacity from sInviteToActivityMenuItems
+                    if (gPlayerCurrActivity == (ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM) && !HasAtLeastTwoMonsOfLevel30OrLower())
+                    {
+                        ScheduleFieldMessageWithFollowupState(UR_STATE_DO_SOMETHING_PROMPT, sText_NeedTwoMonsOfLevel30OrLower1);
+                    }
+                    else
+                    {
+                        uroom->playerSendBuffer[0] = gPlayerCurrActivity | IN_UNION_ROOM;
+                        Rfu_SendPacket(uroom->playerSendBuffer);
+                        uroom->state = UR_STATE_SEND_ACTIVITY_REQUEST;
+                    }
+                }
+            }
+        }
+        break;
+    case UR_STATE_TRAINER_APPEARS_BUSY:
+        StringCopy(gStringVar4, sText_TrainerBattleBusy);
+        uroom->state = UR_STATE_CANCEL_REQUEST_PRINT_MSG;
+        break;
+    case UR_STATE_SEND_ACTIVITY_REQUEST:
+        PollPartnerYesNoResponse(uroom);
+        playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+        id = GetResponseIdx_InviteToURoomActivity(uroom->playerSendBuffer[0] & 0x3F);
+        if (PrintOnTextbox(&uroom->textState, sText_WaitOrShowCardTexts[playerGender][id]))
+        {
+            taskData[3] = 0;
+            uroom->state = UR_STATE_WAIT_FOR_RESPONSE_TO_REQUEST;
+        }
+        break;
+    case UR_STATE_REQUEST_DECLINED:
+        SetCloseLinkCallback();
+        uroom->state = UR_STATE_CANCEL_REQUEST_PRINT_MSG;
+        break;
+    case UR_STATE_SEND_TRADE_REQUST:
+        uroom->playerSendBuffer[0] = ACTIVITY_TRADE | IN_UNION_ROOM;
+        uroom->playerSendBuffer[1] = sUnionRoomTrade.species;
+        uroom->playerSendBuffer[2] = sUnionRoomTrade.level;
+        Rfu_SendPacket(uroom->playerSendBuffer);
+        uroom->state = UR_STATE_WAIT_FOR_RESPONSE_TO_REQUEST;
+        break;
+    case UR_STATE_WAIT_FOR_RESPONSE_TO_REQUEST:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            StringCopy(gStringVar4, sText_TrainerBattleBusy); // Redundant, will be copied again in next state
+            uroom->state = UR_STATE_TRAINER_APPEARS_BUSY;
+        }
+        else
+        {
+            PollPartnerYesNoResponse(uroom);
+            if (uroom->partnerYesNoResponse == (ACTIVITY_ACCEPT | IN_UNION_ROOM))
+            {
+                if (gPlayerCurrActivity == ACTIVITY_CARD)
+                {
+                    ViewURoomPartnerTrainerCard(gStringVar4, uroom, FALSE);
+                    uroom->state = UR_STATE_PRINT_CARD_INFO;
+                }
+                else
+                {
+                    uroom->state = UR_STATE_PRINT_START_ACTIVITY_MSG;
+                }
+            }
+            else if (uroom->partnerYesNoResponse == (ACTIVITY_DECLINE | IN_UNION_ROOM))
+            {
+                uroom->state = UR_STATE_REQUEST_DECLINED;
+                GetURoomActivityRejectMsg(gStringVar4, gPlayerCurrActivity | IN_UNION_ROOM, gLinkPlayers[0].gender);
+                gPlayerCurrActivity = ACTIVITY_NONE;
+            }
+        }
+        break;
+
+    case UR_STATE_DO_SOMETHING_PROMPT_2: // Identical to UR_STATE_DO_SOMETHING_PROMPT
+        id = ConvPartnerUnameAndGetWhetherMetAlready(&uroom->playerList->players[taskData[1]]);
+        playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+        ScheduleFieldMessageWithFollowupState(UR_STATE_HANDLE_DO_SOMETHING_PROMPT_INPUT, sHiDoSomethingTexts[id][playerGender]);
+        break;
+    case UR_STATE_PRINT_CARD_INFO:
+        if (PrintOnTextbox(&uroom->textState, gStringVar4))
+        {
+            uroom->state = UR_STATE_WAIT_FINISH_READING_CARD;
+            SetLinkStandbyCallback();
+            uroom->partnerYesNoResponse = 0;
+            uroom->recvActivityRequest[0] = 0;
+        }
+        break;
+    case UR_STATE_WAIT_FINISH_READING_CARD:
+        if (IsLinkTaskFinished())
+        {
+            if (GetMultiplayerId() == 0)
+            {
+                StringCopy(gStringVar1, gLinkPlayers[GetMultiplayerId() ^ 1].name);
+                id = PlayerHasMetTrainerBefore(gLinkPlayers[1].trainerId, gLinkPlayers[1].name);
+                StringExpandPlaceholders(gStringVar4, sAwaitingResponseTexts[id]);
+                uroom->state = UR_STATE_PRINT_CONTACT_MSG;
+            }
+            else
+            {
+                uroom->state = UR_STATE_DO_SOMETHING_PROMPT_2;
+            }
+        }
+        break;
+    case UR_STATE_RECV_JOIN_CHAT_REQUEST:
+        switch (UnionRoomHandleYesNo(&uroom->textState, FALSE))
+        {
+        case 0: // YES
+            CopyBgTilemapBufferToVram(0);
+            gPlayerCurrActivity = ACTIVITY_CHAT | IN_UNION_ROOM;
+            UpdateGameData_SetActivity(ACTIVITY_CHAT | IN_UNION_ROOM, 0, TRUE);
+            TryConnectToUnionRoomParent(uroom->playerList->players[taskData[1]].rfu.name, &uroom->playerList->players[taskData[1]].rfu.data, gPlayerCurrActivity);
+            uroom->unreadPlayerId = taskData[1];
+            uroom->state = UR_STATE_TRY_ACCEPT_CHAT_REQUEST_DELAY;
+            taskData[3] = 0;
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+            ScheduleFieldMessageAndExit(sDeclineChatTexts[playerGender]);
+            break;
+        }
+        break;
+    case UR_STATE_TRY_ACCEPT_CHAT_REQUEST_DELAY:
+        if (++taskData[2] > 60)
+        {
+            uroom->state = UR_STATE_TRY_ACCEPT_CHAT_REQUEST;
+            taskData[2] = 0;
+        }
+        break;
+    case UR_STATE_TRY_ACCEPT_CHAT_REQUEST:
+        switch (RfuGetStatus())
+        {
+        case RFU_STATUS_NEW_CHILD_DETECTED:
+            HandleCancelActivity(TRUE);
+            uroom->state = UR_STATE_MAIN;
+            break;
+        case RFU_STATUS_FATAL_ERROR:
+        case RFU_STATUS_CONNECTION_ERROR:
+            playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+            UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+            if (IsUnionRoomListenTaskActive() == TRUE)
+                ScheduleFieldMessageAndExit(sChatDeclinedTexts[playerGender]);
+            else
+                ScheduleFieldMessageWithFollowupState(UR_STATE_CANCEL_ACTIVITY_LINK_ERROR, sChatDeclinedTexts[playerGender]);
+            break;
+        case RFU_STATUS_CHILD_SEND_COMPLETE:
+            uroom->state = UR_STATE_ACCEPT_CHAT_REQUEST;
+            break;
+        }
+        taskData[3]++;
+        break;
+    case UR_STATE_ACCEPT_CHAT_REQUEST:
+        if (RfuHasErrored())
+        {
+            playerGender = GetUnionRoomPlayerGender(taskData[1], uroom->playerList);
+            UpdateGameData_SetActivity(ACTIVITY_PLYRTALK | IN_UNION_ROOM, 0, TRUE);
+            if (IsUnionRoomListenTaskActive() == TRUE)
+                ScheduleFieldMessageAndExit(sChatDeclinedTexts[playerGender]);
+            else
+                ScheduleFieldMessageWithFollowupState(UR_STATE_CANCEL_ACTIVITY_LINK_ERROR, sChatDeclinedTexts[playerGender]);
+        }
+        if (gReceivedRemoteLinkPlayers)
+            uroom->state = UR_STATE_START_ACTIVITY_FREE_UROOM;
+        break;
+    case UR_STATE_PLAYER_CONTACTED_YOU:
+        PlaySE(SE_DING_DONG);
+        StopUnionRoomLinkManager();
+        uroom->state = UR_STATE_RECV_CONTACT_DATA;
+        uroom->recvActivityRequest[0] = 0;
+        break;
+    case UR_STATE_RECV_CONTACT_DATA:
+        if (RfuHasErrored())
+        {
+            HandleCancelActivity(FALSE);
+            uroom->state = UR_STATE_INIT_LINK;
+        }
+        else if (gReceivedRemoteLinkPlayers)
+        {
+            CreateTrainerCardInBuffer(gBlockSendBuffer, TRUE);
+            CreateTask(Task_ExchangeCards, 5);
+            uroom->state = UR_STATE_WAIT_FOR_CONTACT_DATA;
+        }
+        break;
+    case UR_STATE_WAIT_FOR_CONTACT_DATA:
+        ReceiveUnionRoomActivityPacket(uroom);
+        if (!FuncIsActiveTask(Task_ExchangeCards))
+        {
+            uroom->state = UR_STATE_PRINT_CONTACT_MSG;
+            StringCopy(gStringVar1, gLinkPlayers[1].name);
+            id = PlayerHasMetTrainerBefore(gLinkPlayers[1].trainerId, gLinkPlayers[1].name);
+            StringExpandPlaceholders(gStringVar4, sPlayerContactedYouTexts[id]);
+        }
+        break;
+    case UR_STATE_PRINT_CONTACT_MSG:
+        ReceiveUnionRoomActivityPacket(uroom);
+        if (PrintOnTextbox(&uroom->textState, gStringVar4))
+            uroom->state = UR_STATE_HANDLE_CONTACT_DATA;
+        break;
+    case UR_STATE_HANDLE_CONTACT_DATA:
+        ReceiveUnionRoomActivityPacket(uroom);
+        if (HandleContactFromOtherPlayer(uroom) && JOY_NEW(B_BUTTON))
+        {
+            Rfu_DisconnectPlayerById(1);
+            StringCopy(gStringVar4, sText_ChatEnded);
+            uroom->state = UR_STATE_CANCEL_REQUEST_PRINT_MSG;
+        }
+        break;
+    case UR_STATE_RECV_ACTIVITY_REQUEST:
+        ScheduleFieldMessageWithFollowupState(UR_STATE_HANDLE_ACTIVITY_REQUEST, gStringVar4);
+        break;
+    case UR_STATE_HANDLE_ACTIVITY_REQUEST:
+        switch (UnionRoomHandleYesNo(&uroom->textState, FALSE))
+        {
+        case 0: // ACCEPT
+            uroom->playerSendBuffer[0] = ACTIVITY_ACCEPT | IN_UNION_ROOM;
+            if (gPlayerCurrActivity == (ACTIVITY_CHAT | IN_UNION_ROOM))
+                UpdateGameData_SetActivity(gPlayerCurrActivity | IN_UNION_ROOM, GetLinkPlayerInfoFlags(1), FALSE);
+            else
+                UpdateGameData_SetActivity(gPlayerCurrActivity | IN_UNION_ROOM, GetLinkPlayerInfoFlags(1), TRUE);
+
+            uroom->spawnPlayer->players[0].newPlayerCountdown = 0;
+            taskData[3] = 0;
+            if (gPlayerCurrActivity == (ACTIVITY_BATTLE_SINGLE | IN_UNION_ROOM))
+            {
+                if (!HasAtLeastTwoMonsOfLevel30OrLower())
+                {
+                    uroom->playerSendBuffer[0] = ACTIVITY_DECLINE | IN_UNION_ROOM;
+                    Rfu_SendPacket(uroom->playerSendBuffer);
+                    uroom->state = UR_STATE_DECLINE_ACTIVITY_REQUEST;
+                    StringCopy(gStringVar4, sText_NeedTwoMonsOfLevel30OrLower2);
+                }
+                else
+                {
+                    Rfu_SendPacket(uroom->playerSendBuffer);
+                    uroom->state = UR_STATE_PRINT_START_ACTIVITY_MSG;
+                }
+            }
+            else if (gPlayerCurrActivity == (ACTIVITY_CARD | IN_UNION_ROOM))
+            {
+                Rfu_SendPacket(uroom->playerSendBuffer);
+                ViewURoomPartnerTrainerCard(gStringVar4, uroom, TRUE);
+                uroom->state = UR_STATE_PRINT_CARD_INFO;
+            }
+            else
+            {
+                Rfu_SendPacket(uroom->playerSendBuffer);
+                uroom->state = UR_STATE_PRINT_START_ACTIVITY_MSG;
+            }
+            break;
+        case 1: // DECLINE
+        case MENU_B_PRESSED:
+            uroom->playerSendBuffer[0] = ACTIVITY_DECLINE | IN_UNION_ROOM;
+            Rfu_SendPacket(uroom->playerSendBuffer);
+            uroom->state = UR_STATE_DECLINE_ACTIVITY_REQUEST;
+            GetYouDeclinedTheOfferMessage(gStringVar4, gPlayerCurrActivity);
+            break;
+        }
+        break;
+    case UR_STATE_DECLINE_ACTIVITY_REQUEST:
+        SetCloseLinkCallback();
+        uroom->state = UR_STATE_CANCEL_REQUEST_PRINT_MSG;
+        break;
+    case UR_STATE_CANCEL_REQUEST_PRINT_MSG:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            gPlayerCurrActivity = IN_UNION_ROOM;
+            ScheduleFieldMessageWithFollowupState(UR_STATE_CANCEL_REQUEST_RESTART_LINK, gStringVar4);
+            memset(uroom->playerSendBuffer, 0, sizeof(uroom->playerSendBuffer));
+            uroom->recvActivityRequest[0] = 0;
+            uroom->partnerYesNoResponse = 0;
+        }
+        break;
+    case UR_STATE_CANCEL_REQUEST_RESTART_LINK:
+        uroom->state = UR_STATE_INIT_LINK;
+        HandleCancelActivity(FALSE);
+        break;
+    case UR_STATE_PRINT_START_ACTIVITY_MSG:
+        GetURoomActivityStartMsg(gStringVar4, gPlayerCurrActivity | IN_UNION_ROOM);
+        ScheduleFieldMessageWithFollowupState(UR_STATE_START_ACTIVITY_LINK, gStringVar4);
+        break;
+    case UR_STATE_START_ACTIVITY_LINK:
+        SetLinkStandbyCallback();
+        uroom->state = UR_STATE_START_ACTIVITY_WAIT_FOR_LINK;
+        break;
+    case UR_STATE_START_ACTIVITY_WAIT_FOR_LINK:
+        if (IsLinkTaskFinished())
+            uroom->state = UR_STATE_START_ACTIVITY_FREE_UROOM;
+        break;
+    case UR_STATE_START_ACTIVITY_FREE_UROOM:
+        Free(uroom->spawnPlayer);
+        Free(uroom->playerList);
+        Free(uroom->incomingParentList);
+        Free(uroom->incomingChildList);
+        DestroyTask(uroom->searchTaskId);
+        DestroyUnionRoomPlayerSprites(uroom->spriteIds);
+        uroom->state = UR_STATE_START_ACTIVITY_FADE;
+        break;
+    case UR_STATE_START_ACTIVITY_FADE:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        uroom->state = UR_STATE_START_ACTIVITY;
+        break;
+    case UR_STATE_START_ACTIVITY:
+        if (!UpdatePaletteFade())
+        {
+            DestroyUnionRoomPlayerObjects();
+            DestroyTask(taskId);
+            Free(sWirelessLinkMain.uRoom);
+            CreateTask_StartActivity();
+        }
+        break;
+    case UR_STATE_INTERACT_WITH_ATTENDANT:
+        if (GetHostRfuGameData()->tradeSpecies == SPECIES_NONE)
+        {
+            uroom->state = UR_STATE_REGISTER_PROMPT;
+        }
+        else
+        {
+            if (GetHostRfuGameData()->tradeSpecies == SPECIES_EGG)
+            {
+                StringCopy(gStringVar4, sText_CancelRegistrationOfEgg);
+            }
+            else
+            {
+                StringCopy(gStringVar1, gSpeciesNamesJP[GetHostRfuGameData()->tradeSpecies]);
+                ConvertIntToDecimalStringN(gStringVar2, GetHostRfuGameData()->tradeLevel, STR_CONV_MODE_LEFT_ALIGN, 3);
+                StringExpandPlaceholders(gStringVar4, sText_CancelRegistrationOfMon);
+            }
+            ScheduleFieldMessageWithFollowupState(UR_STATE_CANCEL_REGISTRATION_PROMPT, gStringVar4);
+        }
+        break;
+    case UR_STATE_REGISTER_PROMPT:
+        if (PrintOnTextbox(&uroom->textState, sText_RegisterMonAtTradingBoard))
+            uroom->state = UR_STATE_REGISTER_PROMPT_HANDLE_INPUT;
+        break;
+    case UR_STATE_REGISTER_PROMPT_HANDLE_INPUT:
+        input = ListMenuHandler_AllItemsAvailable(&uroom->textState,
+                                                  &uroom->tradeBoardMainWindowId,
+                                                  &uroom->tradeBoardHeaderWindowId,
+                                                  &sWindowTemplate_RegisterForTrade,
+                                                  &sListMenuTemplate_RegisterForTrade);
+        if (input != LIST_NOTHING_CHOSEN)
+        {
+            if (input == LIST_CANCEL || input == 3) // Exit
+            {
+                uroom->state = UR_STATE_MAIN;
+                HandleCancelActivity(TRUE);
+            }
+            else
+            {
+                switch (input)
+                {
+                case 1: // REGISTER
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_REGISTER_SELECT_MON_FADE, sText_WhichMonWillYouOffer);
+                    break;
+                case 2: // INFO
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_REGISTER_PROMPT_HANDLE_INPUT, sText_TradingBoardInfo);
+                    break;
+                }
+            }
+        }
+        break;
+    case UR_STATE_REGISTER_SELECT_MON_FADE:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        uroom->state = UR_STATE_REGISTER_SELECT_MON;
+        break;
+    case UR_STATE_REGISTER_SELECT_MON:
+        if (!gPaletteFade.active)
+        {
+            sUnionRoomTrade.state = URTRADE_STATE_REGISTERING;
+            gFieldCallback = FieldCB_ContinueScriptUnionRoom;
+            ChooseMonForTradingBoard(PARTY_MENU_TYPE_UNION_ROOM_REGISTER, CB2_ReturnToField);
+        }
+        break;
+    case UR_STATE_REGISTER_REQUEST_TYPE:
+        input = ListMenuHandler_AllItemsAvailable(&uroom->textState,
+                                                  &uroom->tradeBoardMainWindowId,
+                                                  &uroom->tradeBoardHeaderWindowId,
+                                                  &sWindowTemplate_TradingBoardRequestType,
+                                                  &sMenuTemplate_TradingBoardRequestType);
+        if (input != LIST_NOTHING_CHOSEN)
+        {
+            switch (input)
+            {
+            case LIST_CANCEL:
+            case NUMBER_OF_MON_TYPES: // Exit
+                ResetUnionRoomTrade(&sUnionRoomTrade);
+                SetTradeBoardRegisteredMonInfo(TYPE_NORMAL, SPECIES_NONE, 0);
+                ScheduleFieldMessageAndExit(sText_RegistrationCanceled);
+                break;
+            default:
+                sUnionRoomTrade.type = input;
+                uroom->state = UR_STATE_REGISTER_COMPLETE;
+                break;
+            }
+        }
+        break;
+    case UR_STATE_REGISTER_COMPLETE:
+        SetTradeBoardRegisteredMonInfo(sUnionRoomTrade.type, sUnionRoomTrade.playerSpecies, sUnionRoomTrade.playerLevel);
+        ScheduleFieldMessageAndExit(sText_RegistrationCompleted);
+        break;
+    case UR_STATE_CANCEL_REGISTRATION_PROMPT:
+        switch (UnionRoomHandleYesNo(&uroom->textState, FALSE))
+        {
+        case 0: // YES
+            uroom->state = UR_STATE_CANCEL_REGISTRATION;
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            HandleCancelActivity(TRUE);
+            uroom->state = UR_STATE_MAIN;
+            break;
+        }
+        break;
+    case UR_STATE_CANCEL_REGISTRATION:
+        if (PrintOnTextbox(&uroom->textState, sText_RegistrationCanceled2))
+        {
+            SetTradeBoardRegisteredMonInfo(TYPE_NORMAL, SPECIES_NONE, 0);
+            ResetUnionRoomTrade(&sUnionRoomTrade);
+            HandleCancelActivity(TRUE);
+            uroom->state = UR_STATE_MAIN;
+        }
+        break;
+    case UR_STATE_CHECK_TRADING_BOARD:
+        if (PrintOnTextbox(&uroom->textState, sText_XCheckedTradingBoard))
+            uroom->state = UR_STATE_TRADING_BOARD_LOAD;
+        break;
+    case UR_STATE_TRADING_BOARD_LOAD:
+        UR_ClearBg0();
+        uroom->state = UR_STATE_TRADING_BOARD_HANDLE_INPUT;
+        break;
+    case UR_STATE_TRADING_BOARD_HANDLE_INPUT:
+        input = TradeBoardMenuHandler(&uroom->textState,
+                                      &uroom->tradeBoardMainWindowId,
+                                      &uroom->tradeBoardListMenuId,
+                                      &uroom->tradeBoardHeaderWindowId,
+                                      &sWindowTemplate_TradingBoardMain,
+                                      &sTradeBoardListMenuTemplate,
+                                      uroom->playerList);
+        if (input != LIST_NOTHING_CHOSEN)
+        {
+            switch (input)
+            {
+            case LIST_CANCEL:
+            case 8: // EXIT
+                HandleCancelActivity(TRUE);
+                uroom->state = UR_STATE_MAIN;
+                break;
+            default:
+                UR_ClearBg0();
+                switch (IsRequestedTradeInPlayerParty(uroom->playerList->players[input].rfu.data.tradeType, uroom->playerList->players[input].rfu.data.tradeSpecies))
+                {
+                case UR_TRADE_MATCH:
+                    StringCopy(gStringVar1, &uroom->playerList->players[input].rfu.name);
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_TRADE_PROMPT, sText_AskTrainerToMakeTrade);
+                    taskData[1] = input;
+                    break;
+                case UR_TRADE_NOTYPE:
+                    StringCopy(gStringVar1, &uroom->playerList->players[input].rfu.name);
+                    StringCopy(gStringVar2, gTypeNamesJP[uroom->playerList->players[input].rfu.data.tradeType]);
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveTypeTrainerWants);
+                    break;
+                case UR_TRADE_NOEGG:
+                    StringCopy(gStringVar1, &uroom->playerList->players[input].rfu.name);
+                    StringCopy(gStringVar2, gTypeNamesJP[uroom->playerList->players[input].rfu.data.tradeType]);
+                    ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveEggTrainerWants);
+                    break;
+                }
+                break;
+            }
+        }
+        break;
+    case UR_STATE_TRADE_PROMPT:
+        switch (UnionRoomHandleYesNo(&uroom->textState, FALSE))
+        {
+        case 0: // YES
+            uroom->state = UR_STATE_TRADE_SELECT_MON;
+            break;
+        case MENU_B_PRESSED:
+        case 1: // NO
+            HandleCancelActivity(TRUE);
+            uroom->state = UR_STATE_MAIN;
+            break;
+        }
+        break;
+    case UR_STATE_TRADE_SELECT_MON:
+        if (PrintOnTextbox(&uroom->textState, sText_WhichMonWillYouOffer))
+        {
+            sUnionRoomTrade.state = URTRADE_STATE_OFFERING;
+            memcpy(&gRfuPartnerCompatibilityData, &uroom->playerList->players[taskData[1]].rfu.data.compatibility, sizeof(gRfuPartnerCompatibilityData));
+            gUnionRoomRequestedMonType = uroom->playerList->players[taskData[1]].rfu.data.tradeType;
+            gUnionRoomOfferedSpecies = uroom->playerList->players[taskData[1]].rfu.data.tradeSpecies;
+            gFieldCallback = FieldCB_ContinueScriptUnionRoom;
+            ChooseMonForTradingBoard(PARTY_MENU_TYPE_UNION_ROOM_TRADE, CB2_ReturnToField);
+            CopyPlayerListToBuffer(uroom);
+            sUnionRoomTrade.offerPlayerId = taskData[1];
+        }
+        break;
+    case UR_STATE_TRADE_OFFER_MON:
+        gPlayerCurrActivity = ACTIVITY_TRADE | IN_UNION_ROOM;
+        TryConnectToUnionRoomParent(uroom->playerList->players[taskData[1]].rfu.name, &uroom->playerList->players[taskData[1]].rfu.data, gPlayerCurrActivity);
+        StringCopy(gStringVar1, &uroom->playerList->players[taskData[1]].rfu.name);
+        UR_PrintFieldMessage(sCommunicatingWaitTexts[2]);
+        uroom->state = UR_STATE_TRY_COMMUNICATING;
+        break;
+    case UR_STATE_PRINT_AND_EXIT:
+        if (PrintOnTextbox(&uroom->textState, gStringVar4))
+        {
+            HandleCancelActivity(TRUE);
+            UpdateUnionRoomMemberFacing(taskData[0], taskData[1], uroom->playerList);
+            uroom->state = UR_STATE_MAIN;
+        }
+        break;
+    case UR_STATE_PRINT_MSG:
+        if (PrintOnTextbox(&uroom->textState, gStringVar4))
+            uroom->state = uroom->stateAfterPrint;
+        break;
+    }
 }

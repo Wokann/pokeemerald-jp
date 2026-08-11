@@ -104,8 +104,7 @@ struct UnionRoomObject
 struct WirelessLink_URoom
 {
     // JP: the US WirelessLink_URoom (0x26C bytes) is more compact in the JP
-    // ROM (0x224 bytes). Offsets 0x00-0x16 match US; the tail differs and is
-    // filled in as sub_080151E8 (Task_RunUnionRoom) is decompiled.
+    // ROM (0x224 bytes). Offsets verified against the JP ROM.
     struct RfuPlayerList *playerList;                    // 0x00
     struct RfuIncomingPlayerList *incomingChildList;     // 0x04
     struct RfuPlayerList *spawnPlayer;                   // 0x08
@@ -115,9 +114,24 @@ struct WirelessLink_URoom
     u8 state;                                            // 0x14
     u8 stateAfterPrint;                                  // 0x15
     u8 textState;                                        // 0x16
-    u8 filler_0x17[9];                                   // 0x17-0x1F
+    u8 filler_0x17;                                      // 0x17
+    u8 filler_0x18[3];                                   // 0x18-0x1A
+    u8 topListMenuWindowId;                              // 0x1B
+    u8 topListMenuId;                                    // 0x1C
+    u8 tradeBoardMainWindowId;                           // 0x1D
+    u8 tradeBoardHeaderWindowId;                         // 0x1E
+    u8 filler_0x1F;                                      // 0x1F
     u8 searchTaskId;                                     // 0x20
-    u8 filler_0x21[0x224 - 0x21];                        // 0x21-0x223
+    u8 spriteIds[NUM_UNION_ROOM_SPRITES];                // 0x21-0x48
+    u8 filler_0x49;                                      // 0x49
+    u8 tradeBoardListMenuId;                             // 0x4A
+    u8 filler_0x4B;                                      // 0x4B
+    u16 playerSendBuffer[6];                             // 0x4C-0x57
+    u8 filler_0x58[0x80 - 0x58];                         // 0x58-0x7F
+    u16 partnerYesNoResponse;                            // 0x80
+    u16 recvActivityRequest[3];                          // 0x82-0x87
+    struct UnionRoomObject objects[MAX_UNION_ROOM_LEADERS]; // 0x88-0xA7
+    u8 filler_0xA8[0x224 - 0xA8];                        // 0xA8-0x223
 };
 
 struct UnionRoomTrade
