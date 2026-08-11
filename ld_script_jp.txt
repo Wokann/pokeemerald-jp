@@ -1065,7 +1065,6 @@ GetIndexOfNthTradeBoardOffer = sub_08017770;
 ViewURoomPartnerTrainerCard = sub_08017CDC;
 GetURoomActivityRejectMsg = sub_0801785C;
 ConvPartnerUnameAndGetWhetherMetAlready = sub_08017468;
-GetResponseIdx_InviteToURoomActivity = sub_08017440;
 IsRequestedTradeInPlayerParty = sub_080177C4;
 PollPartnerYesNoResponse = sub_08017A94;
 InitUnionRoomPlayerObjects = sub_080195B4;
@@ -1531,6 +1530,7 @@ SECTIONS {
         src/union_room.o(.text.PrintGroupMemberOnWindow);
         src/union_room.o(.text.PrintGroupCandidateOnWindow);
         src/union_room.o(.text.IsPlayerFacingTradingBoard);
+        src/union_room.o(.text.GetResponseIdx_InviteToURoomActivity);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);

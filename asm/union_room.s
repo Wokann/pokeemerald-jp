@@ -40,34 +40,6 @@
 
 
 
-	thumb_func_start sub_08017440
-sub_08017440: @ 0x08017440
-	push {lr}
-	cmp r0, #4
-	beq _08017458
-	cmp r0, #4
-	ble _08017460
-	cmp r0, #5
-	beq _08017454
-	cmp r0, #8
-	beq _0801745C
-	b _08017460
-_08017454:
-	movs r0, #1
-	b _08017462
-_08017458:
-	movs r0, #2
-	b _08017462
-_0801745C:
-	movs r0, #3
-	b _08017462
-_08017460:
-	movs r0, #0
-_08017462:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08017440
 
 	thumb_func_start sub_08017468
 sub_08017468: @ 0x08017468

@@ -349,7 +349,7 @@ extern void GetURoomActivityStartMsg(u8 *dest, u32 activity);
 extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uroom, bool8 cardDataInSendBuffer);
 extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
 extern u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
-extern u32 GetResponseIdx_InviteToURoomActivity(u32 activity);
+static u32 GetResponseIdx_InviteToURoomActivity(s32 activity);
 extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies);
 bool32 UR_PrintFieldMessage(const u8 *str);
 extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
@@ -4101,6 +4101,22 @@ static bool32 IsPlayerFacingTradingBoard(void)
         return TRUE;
 
     return FALSE;
+}
+
+static u32 GetResponseIdx_InviteToURoomActivity(s32 activity)
+{
+    switch (activity)
+    {
+    case ACTIVITY_CHAT:
+        return 1;
+    case ACTIVITY_TRADE:
+        return 2;
+    case ACTIVITY_CARD:
+        return 3;
+    case ACTIVITY_BATTLE_MULTI:
+    default:
+        return 0;
+    }
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
