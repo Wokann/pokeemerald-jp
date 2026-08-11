@@ -1796,62 +1796,7 @@ void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 #endif
 
 
-#ifndef NONMATCHING
-// JP 0x081D07B8: prints the list index row above the ribbons list.
-// JP-only function (no US counterpart) kept as asm.
-__attribute__((naked)) u32 sub_081D07B8(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "mov r6, r8\n\t"
-            "push {r6}\n\t"
-            "sub sp, #0xc\n\t"
-            "adds r4, r0, #0\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #0x11\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "ldr r6, _081D0818\n\t"
-            "movs r0, #0\n\t"
-            "mov r8, r0\n\t"
-            "movs r0, #0xba\n\t"
-            "strb r0, [r6]\n\t"
-            "adds r5, r6, #1\n\t"
-            "bl GetRibbonsSummaryMonListCount\n\t"
-            "adds r1, r0, #0\n\t"
-            "adds r0, r5, #0\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #3\n\t"
-            "bl ConvertIntToDecimalStringN\n\t"
-            "movs r0, #2\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #0xff\n\t"
-            "str r0, [sp, #4]\n\t"
-            "mov r0, r8\n\t"
-            "str r0, [sp, #8]\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #1\n\t"
-            "adds r2, r6, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl AddTextPrinterParameterized\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "add sp, #0xc\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D0818: .4byte gStringVar1\n\t"
-            ".syntax divided");
-}
-
-#else
-u32 sub_081D07B8(s32 state)
+void sub_081D07B8(s32 state)
 {
     u8 windowId = state;
 
@@ -1860,9 +1805,7 @@ u32 sub_081D07B8(s32 state)
     ConvertIntToDecimalStringN(&gStringVar1[1], GetRibbonsSummaryMonListCount(), STR_CONV_MODE_RIGHT_ALIGN, 3);
     AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 0, 2, 0xFF, NULL);
     CopyWindowToVram(windowId, COPYWIN_GFX);
-    return 0;
 }
-#endif
 
 #ifndef NONMATCHING
 // JP naked asm: prints only the current index (JP layout), unlike US which
