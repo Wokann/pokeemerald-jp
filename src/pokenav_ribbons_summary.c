@@ -1884,9 +1884,8 @@ u32 sub_081D07B8(s32 state)
 #endif
 
 #ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
+// JP naked asm: prints only the current index (JP layout), unlike US which
+// also prints "/count" centered; byte-exact asm stays default.
 __attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     __asm__(".syntax unified\n\t"
@@ -1927,37 +1926,12 @@ __attribute__((naked)) void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSumma
 #else
 void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
 {
-    s32 x;
-    u8 *txtPtr;
     u32 id = GetRibbonsSummaryCurrentIndex() + 1;
-    u32 count = GetRibbonsSummaryMonListCount();
-
-    txtPtr = ConvertIntToDecimalStringN(gStringVar1, id, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    *(txtPtr++) = CHAR_SLASH;
-    ConvertIntToDecimalStringN(txtPtr, count, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    x = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 56);
-    AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, x, 1, TEXT_SKIP_DRAW, NULL);
+    ConvertIntToDecimalStringN(gStringVar1, id, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(menu->listIdxWindowId, COPYWIN_GFX);
 }
 #endif
-
-#else
-void PrintRibbonsMonListIndex(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    s32 x;
-    u8 *txtPtr;
-    u32 id = GetRibbonsSummaryCurrentIndex() + 1;
-    u32 count = GetRibbonsSummaryMonListCount();
-
-    txtPtr = ConvertIntToDecimalStringN(gStringVar1, id, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    *(txtPtr++) = CHAR_SLASH;
-    ConvertIntToDecimalStringN(txtPtr, count, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    x = GetStringCenterAlignXOffset(FONT_NORMAL, gStringVar1, 56);
-    AddTextPrinterParameterized(menu->listIdxWindowId, FONT_NORMAL, gStringVar1, x, 1, TEXT_SKIP_DRAW, NULL);
-    CopyWindowToVram(menu->listIdxWindowId, COPYWIN_GFX);
-}
-#endif
-
 
 static void ResetSpritesAndDrawMonFrontPic(struct Pokenav_RibbonsSummaryMenu *menu)
 {

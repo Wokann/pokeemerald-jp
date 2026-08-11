@@ -87,6 +87,30 @@ struct Pokenav_RibbonsMonMenu
     u8 buff[BG_SCREEN_SIZE];
 };
 
+// Indices into sSearchResultLoopTaskFuncs, matching US pokeemerald.
+enum
+{
+    CONDITION_SEARCH_FUNC_NONE,
+    CONDITION_SEARCH_FUNC_MOVE_UP,
+    CONDITION_SEARCH_FUNC_MOVE_DOWN,
+    CONDITION_SEARCH_FUNC_PAGE_UP,
+    CONDITION_SEARCH_FUNC_PAGE_DOWN,
+    CONDITION_SEARCH_FUNC_EXIT,
+    CONDITION_SEARCH_FUNC_SELECT_MON
+};
+
+// Indices into sRibbonsMonMenuLoopTaskFuncs, matching US pokeemerald.
+enum
+{
+    RIBBONS_MON_LIST_FUNC_NONE,
+    RIBBONS_MON_LIST_FUNC_MOVE_UP,
+    RIBBONS_MON_LIST_FUNC_MOVE_DOWN,
+    RIBBONS_MON_LIST_FUNC_PAGE_UP,
+    RIBBONS_MON_LIST_FUNC_PAGE_DOWN,
+    RIBBONS_MON_LIST_FUNC_EXIT,
+    RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY
+};
+
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
 extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
 extern const struct BgTemplate sSearchResultsBgTemplates[]; // JP 0x085F5BA0
@@ -94,6 +118,9 @@ extern const struct BgTemplate sRibbonsMonListBgTemplates[]; // JP 0x085F5DA4
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
+
+// libgcc trampoline agbcc emits for indirect calls.
+void _call_via_r0(void);
 
 
 // Naked-function prototypes so C callers use the right argument types.
@@ -947,81 +974,43 @@ static bool32 HandleConditionSearchInput_WaitSetup(struct Pokenav_SearchResults 
     return FALSE;
 }
 
-__attribute__((naked)) u32 HandleConditionSearchInput(struct Pokenav_SearchResults *menu)
+static u32 HandleConditionSearchInput(struct Pokenav_SearchResults *menu)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "ldr r2, _081CE778\n\t"
-            "ldrh r1, [r2, #0x30]\n\t"
-            "movs r0, #0x40\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CE77C\n\t"
-            "movs r0, #1\n\t"
-            "b _081CE7DA\n\t"
-            ".align 2, 0\n\t"
-            "_081CE778: .4byte gMain\n\t"
-            "_081CE77C:\n\t"
-            "movs r0, #0x80\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CE788\n\t"
-            "movs r0, #2\n\t"
-            "b _081CE7DA\n\t"
-            "_081CE788:\n\t"
-            "ldrh r1, [r2, #0x2e]\n\t"
-            "movs r0, #0x20\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CE796\n\t"
-            "movs r0, #3\n\t"
-            "b _081CE7DA\n\t"
-            "_081CE796:\n\t"
-            "movs r0, #0x10\n\t"
-            "ands r0, r1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0\n\t"
-            "beq _081CE7A6\n\t"
-            "movs r0, #4\n\t"
-            "b _081CE7DA\n\t"
-            "_081CE7A6:\n\t"
-            "movs r0, #2\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CE7BC\n\t"
-            "str r2, [r4, #0x1c]\n\t"
-            "ldr r0, _081CE7B8\n\t"
-            "str r0, [r4]\n\t"
-            "movs r0, #5\n\t"
-            "b _081CE7DA\n\t"
-            ".align 2, 0\n\t"
-            "_081CE7B8: .4byte ReturnToConditionSearchList + 1\n\t"
-            "_081CE7BC:\n\t"
-            "movs r5, #1\n\t"
-            "adds r0, r5, #0\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CE7CA\n\t"
-            "movs r0, #0\n\t"
-            "b _081CE7DA\n\t"
-            "_081CE7CA:\n\t"
-            "bl PokenavList_GetSelectedIndex\n\t"
-            "ldr r1, [r4, #0x20]\n\t"
-            "strh r0, [r1, #2]\n\t"
-            "str r5, [r4, #0x1c]\n\t"
-            "ldr r0, _081CE7E0\n\t"
-            "str r0, [r4]\n\t"
-            "movs r0, #6\n\t"
-            "_081CE7DA:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081CE7E0: .4byte OpenConditionGraphFromSearchList + 1\n\t"
-            ".syntax divided");
+    if (JOY_REPEAT(DPAD_UP))
+    {
+        return CONDITION_SEARCH_FUNC_MOVE_UP;
+    }
+    else if (JOY_REPEAT(DPAD_DOWN))
+    {
+        return CONDITION_SEARCH_FUNC_MOVE_DOWN;
+    }
+    else if (JOY_NEW(DPAD_LEFT))
+    {
+        return CONDITION_SEARCH_FUNC_PAGE_UP;
+    }
+    else if (JOY_NEW(DPAD_RIGHT))
+    {
+        return CONDITION_SEARCH_FUNC_PAGE_DOWN;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        // Exiting back to main search menu
+        menu->saveResultsList = FALSE;
+        menu->callback = ReturnToConditionSearchList;
+        return CONDITION_SEARCH_FUNC_EXIT;
+    }
+    else if (JOY_NEW(A_BUTTON))
+    {
+        // Entering graph menu
+        menu->monList->currIndex = PokenavList_GetSelectedIndex();
+        menu->saveResultsList = TRUE;
+        menu->callback = OpenConditionGraphFromSearchList;
+        return CONDITION_SEARCH_FUNC_SELECT_MON;
+    }
+    else
+    {
+        return CONDITION_SEARCH_FUNC_NONE;
+    }
 }
 
 static u32 ReturnToConditionSearchList(struct Pokenav_SearchResults *menu)
@@ -1211,37 +1200,10 @@ void CreateSearchResultsLoopedTask(s32 idx)
     gfx->callback = GetSearchResultCurrentLoopedTaskActive;
 }
 
-#ifndef NONMATCHING
-// Verified: agbcc -O2 loads the substruct pointer differently, so the
-// byte-exact naked asm stays the default.
-__attribute__((naked)) bool32 IsRibbonsMonListLoopedTaskActive(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r1}\n\t"
-            ".syntax divided");
-}
-#else
 bool32 IsRibbonsMonListLoopedTaskActive(void)
 {
     struct Pokenav_SearchResultsGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
     return gfx->callback();
-}
-#endif
-
-
-__attribute__((naked)) u32 sub_081CEB14(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
 }
 
 bool32 GetSearchResultCurrentLoopedTaskActive(void)
@@ -1779,81 +1741,43 @@ static u32 HandleRibbonsMonListInput_WaitListInit(struct Pokenav_RibbonsMonList 
     return 0;
 }
 
-__attribute__((naked)) u32 HandleRibbonsMonListInput(struct Pokenav_RibbonsMonList *list)
+static u32 HandleRibbonsMonListInput(struct Pokenav_RibbonsMonList *list)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "ldr r2, _081CF170\n\t"
-            "ldrh r1, [r2, #0x30]\n\t"
-            "movs r0, #0x40\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF174\n\t"
-            "movs r0, #1\n\t"
-            "b _081CF1D2\n\t"
-            ".align 2, 0\n\t"
-            "_081CF170: .4byte gMain\n\t"
-            "_081CF174:\n\t"
-            "movs r0, #0x80\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF180\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF1D2\n\t"
-            "_081CF180:\n\t"
-            "ldrh r1, [r2, #0x2e]\n\t"
-            "movs r0, #0x20\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF18E\n\t"
-            "movs r0, #3\n\t"
-            "b _081CF1D2\n\t"
-            "_081CF18E:\n\t"
-            "movs r0, #0x10\n\t"
-            "ands r0, r1\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r2, r0, #0x10\n\t"
-            "cmp r2, #0\n\t"
-            "beq _081CF19E\n\t"
-            "movs r0, #4\n\t"
-            "b _081CF1D2\n\t"
-            "_081CF19E:\n\t"
-            "movs r0, #2\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF1B4\n\t"
-            "str r2, [r4, #0x18]\n\t"
-            "ldr r0, _081CF1B0\n\t"
-            "str r0, [r4]\n\t"
-            "movs r0, #5\n\t"
-            "b _081CF1D2\n\t"
-            ".align 2, 0\n\t"
-            "_081CF1B0: .4byte RibbonsMonMenu_ReturnToMainMenu + 1\n\t"
-            "_081CF1B4:\n\t"
-            "movs r5, #1\n\t"
-            "adds r0, r5, #0\n\t"
-            "ands r0, r1\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF1C2\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF1D2\n\t"
-            "_081CF1C2:\n\t"
-            "bl PokenavList_GetSelectedIndex\n\t"
-            "ldr r1, [r4, #0x1c]\n\t"
-            "strh r0, [r1, #2]\n\t"
-            "str r5, [r4, #0x18]\n\t"
-            "ldr r0, _081CF1D8\n\t"
-            "str r0, [r4]\n\t"
-            "movs r0, #6\n\t"
-            "_081CF1D2:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081CF1D8: .4byte RibbonsMonMenu_ToSummaryScreen + 1\n\t"
-            ".syntax divided");
+    if (JOY_REPEAT(DPAD_UP))
+    {
+        return RIBBONS_MON_LIST_FUNC_MOVE_UP;
+    }
+    else if (JOY_REPEAT(DPAD_DOWN))
+    {
+        return RIBBONS_MON_LIST_FUNC_MOVE_DOWN;
+    }
+    else if (JOY_NEW(DPAD_LEFT))
+    {
+        return RIBBONS_MON_LIST_FUNC_PAGE_UP;
+    }
+    else if (JOY_NEW(DPAD_RIGHT))
+    {
+        return RIBBONS_MON_LIST_FUNC_PAGE_DOWN;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        // Exiting back to main ribbons-mon list
+        list->saveMonList = FALSE;
+        list->callback = RibbonsMonMenu_ReturnToMainMenu;
+        return RIBBONS_MON_LIST_FUNC_EXIT;
+    }
+    else if (JOY_NEW(A_BUTTON))
+    {
+        // Opening the ribbons summary screen
+        list->monList->currIndex = PokenavList_GetSelectedIndex();
+        list->saveMonList = TRUE;
+        list->callback = RibbonsMonMenu_ToSummaryScreen;
+        return RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY;
+    }
+    else
+    {
+        return RIBBONS_MON_LIST_FUNC_NONE;
+    }
 }
 
 static u32 RibbonsMonMenu_ReturnToMainMenu(struct Pokenav_RibbonsMonList *list)
@@ -2104,37 +2028,10 @@ void CreateRibbonsMonListLoopedTask(s32 idx)
     menu->callback = GetRibbonsMonCurrentLoopedTaskActive;
 }
 
-#ifndef NONMATCHING
-// Verified: agbcc -O2 loads the menu pointer differently, so the byte-exact
-// naked asm stays the default.
-__attribute__((naked)) bool32 IsRibbonsSummaryLoopedTaskActive(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r1}\n\t"
-            ".syntax divided");
-}
-#else
 bool32 IsRibbonsSummaryLoopedTaskActive(void)
 {
     struct Pokenav_RibbonsMonMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
     return menu->callback();
-}
-#endif
-
-
-__attribute__((naked)) u32 sub_081CF554(s32 state)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
 }
 
 bool32 GetRibbonsMonCurrentLoopedTaskActive(void)
