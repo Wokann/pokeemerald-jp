@@ -101,6 +101,7 @@ extern const struct SpriteTemplate sSpriteTemplate_UpDownArrow;
 extern const u8 lineOffsets[CHECK_PAGE_ENTRY_COUNT];
 extern const u8 sPokenavCheckPageColors[3];
 extern const u8 sPokenavFieldNameColors[3];
+extern const u8 *const sPokenavMatchCallFieldNames[3];
 extern void ClearRematchPokeballIcon(u16 windowId, u32 tileOffset);
 
 bool32 CreatePokenavList(const struct BgTemplate *bgTemplate, struct PokenavListTemplate *listTemplate, u32 tileOffset)
@@ -735,103 +736,19 @@ static void PrintMatchCallListTrainerName(struct PokenavListWindowState *state, 
 // 0x085F15AC / 0x085F15B8 into the stack frame; agbcc reproduces the
 // ldm/stm + memcpy sequence only via a local-array initializer, which
 // would emit a .rodata copy that this build's ld script cannot place.
-#ifndef NONMATCHING
-__attribute__((naked)) void PrintMatchCallFieldNames(struct PokenavList *list, u32 fieldId)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, lr}\n\t"
-            "mov r6, sb\n\t"
-            "mov r5, r8\n\t"
-            "push {r5, r6}\n\t"
-            "sub sp, #0x1c\n\t"
-            "adds r6, r0, #0\n\t"
-            "mov r8, r1\n\t"
-            "add r1, sp, #0xc\n\t"
-            "ldr r0, _pkmf_15AC\n\t"
-            "ldm r0!, {r2, r3, r4}\n\t"
-            "stm r1!, {r2, r3, r4}\n\t"
-            "add r0, sp, #0x18\n\t"
-            "mov sb, r0\n\t"
-            "ldr r1, _pkmf_15B8\n\t"
-            "movs r2, #3\n\t"
-            "bl memcpy\n\t"
-            "ldrh r4, [r6, #0xa]\n\t"
-            "mov r1, r8\n\t"
-            "lsls r0, r1, #1\n\t"
-            "adds r0, #1\n\t"
-            "adds r4, r4, r0\n\t"
-            "movs r0, #0xf\n\t"
-            "ands r4, r0\n\t"
-            "ldrb r0, [r6, #8]\n\t"
-            "lsls r5, r4, #4\n\t"
-            "adds r3, r5, #0\n\t"
-            "ldrb r1, [r6, #4]\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #0x10\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r1, #0x11\n\t"
-            "movs r2, #0\n\t"
-            "bl FillWindowPixelRect\n\t"
-            "ldrb r0, [r6, #8]\n\t"
-            "movs r1, #2\n\t"
-            "orrs r5, r1\n\t"
-            "mov r2, sb\n\t"
-            "str r2, [sp]\n\t"
-            "subs r1, #3\n\t"
-            "str r1, [sp, #4]\n\t"
-            "mov r3, r8\n\t"
-            "lsls r3, r3, #2\n\t"
-            "mov r8, r3\n\t"
-            "mov r1, sp\n\t"
-            "add r1, r8\n\t"
-            "adds r1, #0xc\n\t"
-            "ldr r1, [r1]\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "adds r3, r5, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "ldrh r0, [r6, #8]\n\t"
-            "lsls r4, r4, #1\n\t"
-            "ldrb r1, [r6, #4]\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #2\n\t"
-            "str r1, [sp, #4]\n\t"
-            "movs r2, #0\n\t"
-            "adds r3, r4, #0\n\t"
-            "bl CopyWindowRectToVram\n\t"
-            "add sp, #0x1c\n\t"
-            "pop {r3, r4}\n\t"
-            "mov r8, r3\n\t"
-            "mov sb, r4\n\t"
-            "pop {r4, r5, r6}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_pkmf_15AC: .4byte sPokenavMatchCallFieldNames\n\t"
-            "_pkmf_15B8: .4byte sPokenavFieldNameColors\n\t"
-            ".syntax divided");
-}
-
-#else
-// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
-// 启用方式见 include/config.h。
 void PrintMatchCallFieldNames(struct PokenavList *list, u32 fieldId)
 {
-    const u8 *fieldNames[] = {
-        gText_PokenavMatchCall_Strategy,
-        gText_PokenavMatchCall_TrainerPokemon,
-        gText_PokenavMatchCall_SelfIntroduction
-    };
-    u8 colors[3] = {TEXT_COLOR_WHITE, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED};
-    u32 top = (list->listWindow.unkA + 1 + (fieldId * 2)) & 0xF;
+    const u8 *fieldNames[3];
+    u8 colors[3];
+    u32 top;
 
+    memcpy(fieldNames, sPokenavMatchCallFieldNames, sizeof(fieldNames));
+    memcpy(colors, sPokenavFieldNameColors, sizeof(colors));
+    top = (list->listWindow.unkA + 1 + (fieldId * 2)) & 0xF;
     FillWindowPixelRect(list->listWindow.windowId, PIXEL_FILL(1), 0, top << 4, list->listWindow.width, 16);
-    AddTextPrinterParameterized3(list->listWindow.windowId, FONT_NARROW, 2, (top << 4) + 1, colors, TEXT_SKIP_DRAW, fieldNames[fieldId]);
+    AddTextPrinterParameterized3(list->listWindow.windowId, FONT_NORMAL, 0, (top << 4) + 2, colors, TEXT_SKIP_DRAW, fieldNames[fieldId]);
     CopyWindowRectToVram(list->listWindow.windowId, COPYWIN_GFX, 0, top << 1, list->listWindow.width, 2);
 }
-#endif
 
 static void PrintMatchCallFlavorText(struct PokenavListWindowState *windowState, struct PokenavList *list, u32 checkPageEntry)
 {
