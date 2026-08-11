@@ -303,13 +303,19 @@ void GenerateFontHalfRowLookupTable(u8 fgColor, u8 bgColor, u8 shadowColor)
     sLastTextShadowColor = shadowColor;
 
     for (i = 0; i <= 2; i++)
+    {
         for (j = 0; j <= 2; j++)
+        {
             for (k = 0; k <= 2; k++)
             {
                 ptr = colors;
                 for (count = 2; count >= 0; count--, ptr++)
+                {
                     lookup[ip++] = (*ptr << 12) | (colors[k] << 8) | (colors[j] << 4) | colors[i];
+                }
             }
+        }
+    }
 }
 #endif
 
