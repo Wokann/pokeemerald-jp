@@ -36,6 +36,7 @@ extern const u8 sConditionToLineLength[MAX_CONDITION + 1];
 extern const u8 *const sLvlUpStatStrings[];
 extern const struct WindowTemplate sMoveRelearnerWindowTemplates[6];
 extern const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate;
+extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898
@@ -1395,22 +1396,9 @@ bool16 MoveRelearnerRunTextPrinters(void)
 
 // JP 0x081D2264: the JP build calls the JP-only 4-arg helper
 // sub_08198D44 with (template, 1, 1, 0xE) instead of the US
-// CreateYesNoMenu(template, 1, 0xE, 0).
-__attribute__((naked)) void MoveRelearnerCreateYesNoMenu(void)
+void MoveRelearnerCreateYesNoMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "ldr r0, _081D2278\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #1\n\t"
-            "movs r3, #0xe\n\t"
-            "bl sub_08198D44\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D2278: .4byte sMoveRelearnerYesNoMenuTemplate\n\t"
-            ".syntax divided\n");
+    sub_08198D44(&sMoveRelearnerYesNoMenuTemplate, 1, 1, 0xE);
 }
 
 //----------------
