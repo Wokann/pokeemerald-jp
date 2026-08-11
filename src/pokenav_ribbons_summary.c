@@ -714,33 +714,14 @@ void CreateRibbonsSummaryLoopedTask(s32 id)
     menu->callback = GetCurrentLoopedTaskActive;
 }
 
-#ifndef NONMATCHING
-// JP 0x081D0090: fetch the menu struct and call its callback through r0.
-// The trailing `bx r1` is also the JP-only trampoline sub_081D00A0
-// (0x081D00A0), which has no US counterpart.
-__attribute__((naked)) void sub_081D0090(void)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "movs r0, #0xe\n\t"
-            "bl GetSubstructPtr\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r1}\n\t"
-            "sub_081D00A0:\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided\n");
-}
-
-#else
-void sub_081D0090(void)
+u32 sub_081D0090(void)
 {
     struct Pokenav_RibbonsSummaryMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_SUMMARY_MENU);
-    menu->callback();
+    return menu->callback();
 }
-#endif
+
+// JP-only alias: the trailing bx r1 is also labeled sub_081D00A0 (0x081D00A0).
+__asm__(".set sub_081D00A0, sub_081D0090 + 0x10");
 
 // IsRibbonsSummaryLoopedTaskActive is defined in pokenav_conditions_tail.c
 // (JP 0x081CF544) as a naked function.
