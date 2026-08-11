@@ -12,6 +12,7 @@
 // JP: ROM/RAM data bound via ld_script_jp.txt / sym_ewram_jp.txt.
 extern const u8 sUnionRoomLocalIds[];
 extern const u8 sMovement_UnionPlayerExit[];
+extern const u8 sMovement_UnionPlayerEnter[];
 extern u32 sUnionObjRefreshTimer;
 extern struct UnionRoomObject *sUnionObjWork;
 // JP: still in asm/union_room_battle.s.
@@ -75,6 +76,41 @@ bool32 AnimateUnionRoomPlayerDespawn(s8 *state, u32 leaderId, struct UnionRoomOb
         {
             RemoveUnionRoomPlayerObjectEvent(leaderId);
             HideUnionRoomPlayer(leaderId);
+            *state = 0;
+            return TRUE;
+        }
+        break;
+    }
+    return FALSE;
+}
+
+bool32 AnimateUnionRoomPlayerSpawn(s8 *state, u32 leaderId, struct UnionRoomObject *object)
+{
+    s16 x, y;
+
+    switch (*state)
+    {
+    case 0:
+        if (!is_walking_or_running())
+            break;
+        PlayerGetDestCoords(&x, &y);
+        if (IsUnionRoomPlayerAt(leaderId, 0, x, y) == TRUE)
+            break;
+        player_get_pos_including_state_based_drift(&x, &y);
+        if (IsUnionRoomPlayerAt(leaderId, 0, x, y) == TRUE)
+            break;
+        SetUnionRoomPlayerGfx(leaderId, object->gfxId);
+        CreateUnionRoomPlayerObjectEvent(leaderId);
+        ShowUnionRoomPlayer(leaderId);
+        (*state)++;
+        // fallthrough
+    case 3:
+        if (SetUnionRoomPlayerEnterExitMovement(leaderId, sMovement_UnionPlayerEnter) == TRUE)
+            (*state)++;
+        break;
+    case 2:
+        if (TryReleaseUnionRoomPlayerObjectEvent(leaderId))
+        {
             *state = 0;
             return TRUE;
         }
