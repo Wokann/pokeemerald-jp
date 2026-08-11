@@ -495,6 +495,122 @@ void HandleReceiveRemoteLinkPlayer(u8 who)
     }
 }
 
+void ProcessRecvCmds(u8 unused)
+{
+    u16 i;
+
+    for (i = 0; i < MAX_LINK_PLAYERS; i++)
+    {
+        gLinkPartnersHeldKeys[i] = 0;
+        if (gRecvCmds[i][0] == 0)
+        {
+            continue;
+        }
+        switch (gRecvCmds[i][0])
+        {
+            case LINKCMD_SEND_LINK_TYPE:
+                InitLocalLinkPlayer();
+                gLocalLinkPlayerBlock.linkPlayer = gLocalLinkPlayer;
+                memcpy(gLocalLinkPlayerBlock.magic1, sASCIIGameFreakInc, sizeof(gLocalLinkPlayerBlock.magic1) - 1);
+                memcpy(gLocalLinkPlayerBlock.magic2, sASCIIGameFreakInc, sizeof(gLocalLinkPlayerBlock.magic2) - 1);
+                InitBlockSend(&gLocalLinkPlayerBlock, sizeof(gLocalLinkPlayerBlock));
+                break;
+            case LINKCMD_BLENDER_SEND_KEYS:
+                gLinkPartnersHeldKeys[i] = gRecvCmds[i][1];
+                break;
+            case LINKCMD_DUMMY_1:
+                gLinkDummy2 = TRUE;
+                break;
+            case LINKCMD_DUMMY_2:
+                gLinkDummy2 = TRUE;
+                break;
+            case LINKCMD_INIT_BLOCK:
+            {
+                struct BlockTransfer *blockRecv;
+
+                blockRecv = &sBlockRecv[i];
+                blockRecv->pos = 0;
+                blockRecv->size = gRecvCmds[i][1];
+                blockRecv->multiplayerId = gRecvCmds[i][2];
+                break;
+            }
+            case LINKCMD_CONT_BLOCK:
+            {
+                if (sBlockRecv[i].size > BLOCK_BUFFER_SIZE)
+                {
+                    u16 *buffer;
+                    u16 j;
+
+                    buffer = (u16 *)gDecompressionBuffer;
+                    for (j = 0; j < CMD_LENGTH - 1; j++)
+                    {
+                        buffer[(sBlockRecv[i].pos / 2) + j] = gRecvCmds[i][j + 1];
+                    }
+                }
+                else
+                {
+                    u16 j;
+
+                    for (j = 0; j < CMD_LENGTH - 1; j++)
+                    {
+                        gBlockRecvBuffer[i][(sBlockRecv[i].pos / 2) + j] = gRecvCmds[i][j + 1];
+                    }
+                }
+
+                sBlockRecv[i].pos += (CMD_LENGTH - 1) * 2;
+
+                if (sBlockRecv[i].pos >= sBlockRecv[i].size)
+                {
+                    if (gRemoteLinkPlayersNotReceived[i] == TRUE)
+                    {
+                        struct LinkPlayerBlock *block;
+                        struct LinkPlayer *linkPlayer;
+
+                        block = (struct LinkPlayerBlock *)&gBlockRecvBuffer[i];
+                        linkPlayer = &gLinkPlayers[i];
+                        *linkPlayer = block->linkPlayer;
+                        if ((linkPlayer->version & 0xFF) == VERSION_RUBY || (linkPlayer->version & 0xFF) == VERSION_SAPPHIRE)
+                        {
+                            linkPlayer->progressFlagsCopy = 0;
+                            linkPlayer->neverRead = 0;
+                            linkPlayer->progressFlags = 0;
+                        }
+                        if (strcmp(block->magic1, sASCIIGameFreakInc) != 0
+                            || strcmp(block->magic2, sASCIIGameFreakInc) != 0)
+                        {
+                            SetMainCallback2(CB2_LinkError);
+                        }
+                        else
+                        {
+                            HandleReceiveRemoteLinkPlayer(i);
+                        }
+                    }
+                    else
+                    {
+                        SetBlockReceivedFlag(i);
+                    }
+                }
+            }
+                break;
+            case LINKCMD_READY_CLOSE_LINK:
+                gReadyToCloseLink[i] = TRUE;
+                break;
+            case LINKCMD_READY_EXIT_STANDBY:
+                gReadyToExitStandby[i] = TRUE;
+                break;
+            case LINKCMD_BLENDER_NO_PBLOCK_SPACE:
+                SetBerryBlenderLinkCallback();
+                break;
+            case LINKCMD_SEND_BLOCK_REQ:
+                SendBlock(0, sBlockRequests[gRecvCmds[i][1]].address, sBlockRequests[gRecvCmds[i][1]].size);
+                break;
+            case LINKCMD_SEND_HELD_KEYS:
+                gLinkPartnersHeldKeys[i] = gRecvCmds[i][1];
+                break;
+        }
+    }
+}
+
 
 void BuildSendCmd(u16 command)
 {

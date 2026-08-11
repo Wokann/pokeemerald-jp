@@ -955,7 +955,7 @@ SECTIONS {
         src/link.o(.text.CB2_LinkTest);
         src/link.o(.text.LinkMain2);
         src/link.o(.text.HandleReceiveRemoteLinkPlayer);
-        asm/link_mid_0.o(.text);
+        src/link.o(.text.ProcessRecvCmds);
         src/link.o(.text.BuildSendCmd);
         src/link.o(.text.StartSendingKeysToLink);
         src/link.o(.text.IsSendingKeysToLink);
