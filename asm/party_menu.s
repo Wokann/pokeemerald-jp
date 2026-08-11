@@ -10188,7 +10188,7 @@ CursorCb_Register: @ 0x081B4D68
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldr r0, [r0]
 	adds r1, r6, #0
 	adds r2, r5, #0
@@ -10303,7 +10303,7 @@ CursorCb_Trade1: @ 0x081B4E74
 	adds r4, r0, #0
 	lsls r4, r4, #0x18
 	lsrs r4, r4, #0x18
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldr r0, [r0]
 	ldr r1, _081B4F44
 	ldr r1, [r1]

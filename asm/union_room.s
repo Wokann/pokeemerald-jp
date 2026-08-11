@@ -7196,7 +7196,7 @@ _08015EBA:
 	.align 2, 0
 _08015ED4: .4byte 0x020228E4
 _08015ED8:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrh r1, [r0, #8]
 	ldr r4, _08015EEC
 	adds r0, r4, #0
@@ -7208,7 +7208,7 @@ _08015ED8:
 	.align 2, 0
 _08015EEC: .4byte 0x000003FF
 _08015EF0:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrh r1, [r0, #8]
 	adds r0, r4, #0
 	ands r0, r1
@@ -7225,7 +7225,7 @@ _08015F0C: .4byte 0x02021C7C
 _08015F10: .4byte 0x082C1864
 _08015F14:
 	ldr r4, _08015F58
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrh r0, [r0, #8]
 	lsls r0, r0, #0x16
 	lsrs r0, r0, #0x16
@@ -7237,7 +7237,7 @@ _08015F14:
 	adds r0, r4, #0
 	bl StringCopy
 	ldr r4, _08015F60
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xb]
 	lsrs r1, r1, #1
 	adds r0, r4, #0
@@ -10320,7 +10320,7 @@ sub_080176B0: @ 0x080176B0
 	bne _0801772C
 	cmp r2, #1
 	bne _0801772C
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	adds r2, r0, #0
 	ldrh r1, [r2, #8]
 	ldr r0, _08017704

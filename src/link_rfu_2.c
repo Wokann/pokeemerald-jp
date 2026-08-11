@@ -2,9 +2,12 @@
 #include "malloc.h"
 #include "decompress.h"
 #include "gpu_regs.h"
+#include "main.h"
+#include "berry_blender.h"
 #include "librfu.h"
 #include "link.h"
 #include "link_rfu.h"
+#include "overworld.h"
 #include "random.h"
 #include "palette.h"
 #include "union_room.h"
@@ -59,7 +62,6 @@ extern s32 sub_080102A0(void);
 extern void sub_08011D68(void);
 extern void sub_0801034C(u8);
 extern void sub_080107FC(u8);
-extern struct RfuGameData *sub_0800F29C(void);
 extern void sub_08011554(u8 status, u16 errorInfo);
 extern void sub_08010B58(bool8 startedActivity);
 extern void sub_08010CA0(bool32 enable);
@@ -68,10 +70,16 @@ extern void sub_08011858(u32 slots);
 extern void sub_0800F350(u8 unused);
 extern void sub_08010028(void);
 extern void sub_080105A4(u8 taskId);
+extern void sub_0800F7F8(u16 command);
 
 // JP: IWRAM buffers bound via sym_iwram_jp.txt (US file-statics).
 extern IWRAM_DATA u8 sResendBlock8[];
 extern IWRAM_DATA u16 sResendBlock16[];
+extern IWRAM_DATA u8 sHeldKeyCount;
+
+// JP: assert strings bound via ld_script_jp.txt.
+extern const char sAssertFile_rfu[];
+extern const char sAssertExpr_RfuFuncNull[];
 
 // Struct is mostly empty, presumably because usage of
 // its fields was largely removed before release
@@ -333,7 +341,7 @@ static void InitParentSendData(void)
 
 static void Task_UnionRoomListen(u8 taskId)
 {
-    if (sub_0800F29C()->activity == (ACTIVITY_PLYRTALK | IN_UNION_ROOM) && RfuGetStatus() == RFU_STATUS_NEW_CHILD_DETECTED)
+    if (GetHostRfuGameData()->activity == (ACTIVITY_PLYRTALK | IN_UNION_ROOM) && RfuGetStatus() == RFU_STATUS_NEW_CHILD_DETECTED)
     {
         rfu_REQ_disconnect(lman.acceptSlot_flag);
         rfu_waitREQComplete();
@@ -845,4 +853,67 @@ void Rfu_ResetBlockReceivedFlag(u8 linkPlayerId)
 {
     gRfu.blockReceived[linkPlayerId] = FALSE;
     gRfu.recvBlock[linkPlayerId].receiving = FALSE;
+}
+
+// JP: still called from asm, so it stays externally visible.
+u8 LoadLinkPlayerIds(const u8 *ids)
+{
+    u8 i;
+    if (gRfu.parentChild == MODE_PARENT)
+        return FALSE;
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+        gRfu.linkPlayerIdx[i] = ids[i];
+
+    return ids[gRfu.childSlot];
+}
+
+static void SendKeysToRfu(void)
+{
+    if (gReceivedRemoteLinkPlayers
+        && gHeldKeyCodeToSend != LINK_KEY_CODE_NULL
+        && gLinkTransferringData != TRUE)
+    {
+        sHeldKeyCount++;
+        gHeldKeyCodeToSend |= (sHeldKeyCount << 8);
+        sub_0800F7F8(RFUCMD_SEND_HELD_KEYS);
+    }
+}
+
+struct RfuGameData *GetHostRfuGameData(void)
+{
+    return &gHostRfuGameData;
+}
+
+bool32 IsSendingKeysToRfu(void)
+{
+    return gRfu.callback == SendKeysToRfu;
+}
+
+// JP: has an assert (US does not).
+void StartSendingKeysToRfu(void)
+{
+    if (gRfu.callback != NULL)
+    {
+        AGBAssert(sAssertFile_rfu, 0x5E6, sAssertExpr_RfuFuncNull, 1);
+    }
+    gRfu.callback = SendKeysToRfu;
+}
+
+void ClearLinkRfuCallback(void)
+{
+    gRfu.callback = NULL;
+}
+
+static void Rfu_BerryBlenderSendHeldKeys(void)
+{
+    sub_0800F7F8(RFUCMD_BLENDER_SEND_KEYS);
+    if (GetMultiplayerId() == 0)
+        gSendCmd[BLENDER_COMM_ARROW_POS] = GetBlenderArrowPosition();
+    gBerryBlenderKeySendAttempts++;
+}
+
+void Rfu_SetBerryBlenderLinkCallback(void)
+{
+    if (gRfu.callback == NULL)
+        gRfu.callback = Rfu_BerryBlenderSendHeldKeys;
 }

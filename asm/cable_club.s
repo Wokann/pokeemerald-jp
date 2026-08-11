@@ -2487,7 +2487,7 @@ _080B3022:
 	movs r0, #1
 	movs r1, #0
 	bl FadeScreen
-	bl Rfu_set_zero
+	bl ClearLinkRfuCallback
 	b _080B3058
 _080B3034:
 	ldr r0, _080B3044

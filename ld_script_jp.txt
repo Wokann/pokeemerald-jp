@@ -919,6 +919,8 @@ sRfuReqConfigTemplate = ABSOLUTE(0x082C0358);
 sPlayerBitsToNewChildIdx = ABSOLUTE(0x082C03F5);
 sAcceptedSerialNos = ABSOLUTE(0x082C0430);
 sShutdownTasks = ABSOLUTE(0x082C0530);
+sAssertFile_rfu = ABSOLUTE(0x082C053C);
+sAssertExpr_RfuFuncNull = ABSOLUTE(0x082C0544);
 
 SECTIONS {
     . = 0x2000000;
@@ -1170,6 +1172,14 @@ SECTIONS {
         src/link_rfu_2.o(.text.HandleSendFailure);
         src/link_rfu_2.o(.text.Rfu_SetBlockReceivedFlag);
         src/link_rfu_2.o(.text.Rfu_ResetBlockReceivedFlag);
+        src/link_rfu_2.o(.text.LoadLinkPlayerIds);
+        src/link_rfu_2.o(.text.SendKeysToRfu);
+        src/link_rfu_2.o(.text.GetHostRfuGameData);
+        src/link_rfu_2.o(.text.IsSendingKeysToRfu);
+        src/link_rfu_2.o(.text.StartSendingKeysToRfu);
+        src/link_rfu_2.o(.text.ClearLinkRfuCallback);
+        src/link_rfu_2.o(.text.Rfu_BerryBlenderSendHeldKeys);
+        src/link_rfu_2.o(.text.Rfu_SetBerryBlenderLinkCallback);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

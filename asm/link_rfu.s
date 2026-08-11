@@ -3,188 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0800F20C
-sub_0800F20C: @ 0x0800F20C
-	push {r4, r5, lr}
-	adds r3, r0, #0
-	ldr r0, _0800F220
-	ldrb r1, [r0, #0xc]
-	adds r5, r0, #0
-	cmp r1, #1
-	bne _0800F224
-	movs r0, #0
-	b _0800F246
-	.align 2, 0
-_0800F220: .4byte 0x030050A0
-_0800F224:
-	movs r2, #0
-	ldr r0, _0800F24C
-	adds r4, r5, r0
-_0800F22A:
-	adds r1, r2, r4
-	adds r0, r3, r2
-	ldrb r0, [r0]
-	strb r0, [r1]
-	adds r0, r2, #1
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #3
-	bls _0800F22A
-	ldr r1, _0800F250
-	adds r0, r5, r1
-	ldrb r0, [r0]
-	adds r0, r0, r3
-	ldrb r0, [r0]
-_0800F246:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0800F24C: .4byte 0x00000996
-_0800F250: .4byte 0x000008F6
-	thumb_func_end sub_0800F20C
-
-	thumb_func_start rfu_func_080F97B8
-rfu_func_080F97B8: @ 0x0800F254
-	push {lr}
-	ldr r0, _0800F28C
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0800F286
-	ldr r3, _0800F290
-	ldrh r2, [r3]
-	cmp r2, #0
-	beq _0800F286
-	ldr r0, _0800F294
-	ldrb r0, [r0]
-	cmp r0, #1
-	beq _0800F286
-	ldr r1, _0800F298
-	ldrb r0, [r1]
-	adds r0, #1
-	strb r0, [r1]
-	ldrb r0, [r1]
-	lsls r0, r0, #8
-	orrs r0, r2
-	strh r0, [r3]
-	movs r0, #0xbe
-	lsls r0, r0, #8
-	bl sub_0800F7F8
-_0800F286:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800F28C: .4byte 0x030031C4
-_0800F290: .4byte 0x03005B08
-_0800F294: .4byte 0x03002354
-_0800F298: .4byte 0x03000D78
-	thumb_func_end rfu_func_080F97B8
-
-	thumb_func_start sub_0800F29C
-sub_0800F29C: @ 0x0800F29C
-	ldr r0, _0800F2A0
-	bx lr
-	.align 2, 0
-_0800F2A0: .4byte 0x020227CC
-	thumb_func_end sub_0800F29C
-
-	thumb_func_start IsSendingKeysToRfu
-IsSendingKeysToRfu: @ 0x0800F2A4
-	push {lr}
-	movs r2, #0
-	ldr r0, _0800F2BC
-	ldr r1, [r0]
-	ldr r0, _0800F2C0
-	cmp r1, r0
-	bne _0800F2B4
-	movs r2, #1
-_0800F2B4:
-	adds r0, r2, #0
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0800F2BC: .4byte 0x030050A0
-_0800F2C0: .4byte 0x0800F255
-	thumb_func_end IsSendingKeysToRfu
-
-	thumb_func_start StartSendingKeysToRfu
-StartSendingKeysToRfu: @ 0x0800F2C4
-	push {r4, lr}
-	ldr r4, _0800F2E4
-	ldr r0, [r4]
-	cmp r0, #0
-	beq _0800F2DA
-	ldr r0, _0800F2E8
-	ldr r1, _0800F2EC
-	ldr r2, _0800F2F0
-	movs r3, #1
-	bl AGBAssert
-_0800F2DA:
-	ldr r0, _0800F2F4
-	str r0, [r4]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800F2E4: .4byte 0x030050A0
-_0800F2E8: .4byte 0x082C053C
-_0800F2EC: .4byte 0x000005E6
-_0800F2F0: .4byte 0x082C0544
-_0800F2F4: .4byte 0x0800F255
-	thumb_func_end StartSendingKeysToRfu
-
-	thumb_func_start ClearLinkRfuCallback
-ClearLinkRfuCallback: @ 0x0800F2F8
-	ldr r1, _0800F300
-	movs r0, #0
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_0800F300: .4byte 0x030050A0
-	thumb_func_end ClearLinkRfuCallback
-
-	thumb_func_start sub_0800F304
-sub_0800F304: @ 0x0800F304
-	push {lr}
-	movs r0, #0x88
-	lsls r0, r0, #7
-	bl sub_0800F7F8
-	bl GetMultiplayerId
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0800F320
-	bl GetBlenderArrowPosition
-	ldr r1, _0800F32C
-	strh r0, [r1, #0xc]
-_0800F320:
-	ldr r1, _0800F330
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800F32C: .4byte 0x030031B0
-_0800F330: .4byte 0x02022078
-	thumb_func_end sub_0800F304
-
-	thumb_func_start Rfu_SetBerryBlenderLinkCallback
-Rfu_SetBerryBlenderLinkCallback: @ 0x0800F334
-	push {lr}
-	ldr r1, _0800F348
-	ldr r0, [r1]
-	cmp r0, #0
-	bne _0800F342
-	ldr r0, _0800F34C
-	str r0, [r1]
-_0800F342:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0800F348: .4byte 0x030050A0
-_0800F34C: .4byte 0x0800F305
-	thumb_func_end Rfu_SetBerryBlenderLinkCallback
-
 	thumb_func_start sub_0800F350
 sub_0800F350: @ 0x0800F350
 	push {r4, r5, r6, r7, lr}
@@ -305,7 +123,7 @@ _0800F414:
 	strb r0, [r2, #0xd]
 	ldr r3, _0800F43C
 	adds r0, r5, r3
-	bl sub_0800F20C
+	bl LoadLinkPlayerIds
 	ldr r4, _0800F440
 	strb r0, [r4]
 	b _0800F6EC
@@ -453,7 +271,7 @@ _0800F540:
 	lsls r0, r1, #0x18
 	lsrs r0, r0, #0x18
 	bl Rfu_SetBlockReceivedFlag
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
 	ands r0, r1
@@ -3430,7 +3248,7 @@ sub_08010BA8: @ 0x08010BA8
 	mov r5, r8
 	push {r5, r6, r7}
 	mov sb, r0
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
 	ands r0, r1
@@ -3718,7 +3536,7 @@ _08010D96:
 	ldrb r0, [r0, #0x10]
 	adds r4, r7, #0
 	ands r4, r0
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	adds r0, r7, #0
 	ands r0, r1
@@ -4303,7 +4121,7 @@ _08011208:
 	bl sub_08011554
 	b _08011532
 _08011212:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
 	ands r0, r1
@@ -4388,7 +4206,7 @@ _080112C0: .4byte 0x030041E0
 _080112C4: .4byte 0x0000099B
 _080112C8: .4byte 0x0000099C
 _080112CC:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
 	ands r0, r1
@@ -4406,7 +4224,7 @@ _080112E6:
 	.align 2, 0
 _080112F0: .4byte 0x030041E0
 _080112F4:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r0, #0x7f
 	ands r0, r1
@@ -5343,14 +5161,14 @@ _08011A3C: .4byte 0x03007630
 _08011A40: .4byte 0x030050A0
 _08011A44: .4byte 0x000008F5
 _08011A48:
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r5, #0x7f
 	adds r0, r5, #0
 	ands r0, r1
 	cmp r0, #6
 	beq _08011A90
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	adds r0, r5, #0
 	ands r0, r1
@@ -5436,7 +5254,7 @@ sub_08011AF8: @ 0x08011AF8
 	adds r4, r1, #0
 	lsls r0, r0, #0x10
 	lsrs r5, r0, #0x10
-	bl sub_0800F29C
+	bl GetHostRfuGameData
 	ldrb r1, [r0, #0xa]
 	movs r2, #0x7f
 	adds r0, r2, #0
@@ -6052,8 +5870,6 @@ _08011FCC: .4byte 0x030050A0
 _08011FD0: .4byte 0x0000069E
 	thumb_func_end sub_08011FC0
 
-	.globl Rfu_set_zero
-	.set Rfu_set_zero, ClearLinkRfuCallback
 	.globl sub_0800FF34
 	.set sub_0800FF34, Rfu_SetLinkStandbyCallback
 	.globl task_add_05_task_del_08FA224_when_no_RfuFunc
