@@ -975,7 +975,7 @@ SECTIONS {
         src/link.o(.text.LinkCB_BlockSendEnd);
         src/link.o(.text.LinkCB_BerryBlenderSendHeldKeys);
         src/link.o(.text.SetBerryBlenderLinkCallback);
-        asm/link_mid_2.o(.text);
+        src/link.o(.text.GetBerryBlenderKeySendAttempts);
         src/link.o(.text.SendBerryBlenderNoSpaceForPokeblocks);
         src/link.o(.text.GetMultiplayerId);
         src/link.o(.text.BitmaskAllOtherLinkPlayers);
@@ -1000,14 +1000,14 @@ SECTIONS {
         src/link.o(.text.GetLinkPlayerCountAsBitFlags);
         src/link.o(.text.SaveLinkPlayers);
         src/link.o(.text.GetSavedPlayerCount);
-        asm/link_mid_3.o(.text);
+        src/link.o(.text.GetSavedMultiplayerId);
         src/link.o(.text.DoesLinkPlayerCountMatchSaved);
         src/link.o(.text.ClearSavedLinkPlayers);
         src/link.o(.text.CheckLinkPlayersMatchSaved);
         src/link.o(.text.ResetLinkPlayerCount);
         src/link.o(.text.GetLinkPlayerCount_2);
         src/link.o(.text.IsLinkMaster);
-        asm/link_mid_4.o(.text);
+        src/link.o(.text.GetDummy2);
         src/link.o(.text.SetCloseLinkCallbackAndType);
         src/link.o(.text.SetCloseLinkCallback);
         src/link.o(.text.LinkCB_ReadyCloseLink);

@@ -23,7 +23,8 @@ JP_SRC = ROOT / "src"
 
 FUNC_DEF_RE = re.compile(
     r"^(?:static\s+)?(?:const\s+)?"
-    r"(?:u8|u16|u32|s8|s16|s32|bool8|bool16|void|int|\w+)\s+\*?\s*"
+    r"(?:u8|u16|u32|s8|s16|s32|bool8|bool16|void|int|\w+)\s+"
+    r"(?:UNUSED\s+)?\*?\s*"
     r"([A-Za-z_]\w*)\s*\(",
     re.MULTILINE,
 )

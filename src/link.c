@@ -811,6 +811,11 @@ void SetBerryBlenderLinkCallback(void)
         gLinkCallback = LinkCB_BerryBlenderSendHeldKeys;
 }
 
+static u32 UNUSED GetBerryBlenderKeySendAttempts(void)
+{
+    return gBerryBlenderKeySendAttempts;
+}
+
 void UNUSED SendBerryBlenderNoSpaceForPokeblocks(void)
 {
     BuildSendCmd(LINKCMD_BLENDER_NO_PBLOCK_SPACE);
@@ -1087,6 +1092,11 @@ u8 GetSavedPlayerCount(void)
     return gSavedLinkPlayerCount;
 }
 
+static u8 UNUSED GetSavedMultiplayerId(void)
+{
+    return gSavedMultiplayerId;
+}
+
 bool8 DoesLinkPlayerCountMatchSaved(void)
 {
     int i;
@@ -1164,6 +1174,11 @@ bool8 IsLinkMaster(void)
         return Rfu_IsMaster();
 
     return EXTRACT_MASTER(gLinkStatus);
+}
+
+static u8 UNUSED GetDummy2(void)
+{
+    return sDummy2;
 }
 
 void SetCloseLinkCallbackAndType(u16 type)
