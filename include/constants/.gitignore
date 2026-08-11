@@ -5,3 +5,13 @@ region_map_sections.h
 map_event_ids.h
 heal_locations.h
 wild_encounter.h
+
+# JP has not yet split map/layout JSON sources, so these generated
+# constants are committed as static headers for now (identical to
+# pokeemerald's mapjson output).
+!map_groups.h
+!layouts.h
+!region_map_sections.h
+!map_event_ids.h
+!heal_locations.h
+!wild_encounter.h
