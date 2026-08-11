@@ -340,7 +340,7 @@ extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
 extern u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
 extern u32 GetResponseIdx_InviteToURoomActivity(u32 activity);
 extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies);
-extern void UR_PrintFieldMessage(const u8 *str);
+bool32 UR_PrintFieldMessage(const u8 *str);
 extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
@@ -3723,4 +3723,13 @@ static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *li
     oldList[0] = list;
     gTasks[taskId].data[2] = linkGroup;
     return taskId;
+}
+
+bool32 UR_PrintFieldMessage(const u8 *src)
+{
+    LoadMessageBoxAndBorderGfx();
+    DrawDialogueFrame(0, TRUE);
+    StringExpandPlaceholders(gStringVar4, src);
+    AddTextPrinterWithCustomSpeedForMessage(FALSE, 1);
+    return FALSE;
 }

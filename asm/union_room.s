@@ -20,27 +20,6 @@
 
 
 
-	thumb_func_start sub_08016B30
-sub_08016B30: @ 0x08016B30
-	push {r4, lr}
-	adds r4, r0, #0
-	bl LoadMessageBoxAndBorderGfx
-	movs r0, #0
-	movs r1, #1
-	bl DrawDialogueFrame
-	ldr r0, _08016B58
-	adds r1, r4, #0
-	bl StringExpandPlaceholders
-	movs r0, #0
-	movs r1, #1
-	bl AddTextPrinterWithCustomSpeedForMessage
-	movs r0, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_08016B58: .4byte 0x02021C7C
-	thumb_func_end sub_08016B30
 
 	thumb_func_start sub_08016B5C
 sub_08016B5C: @ 0x08016B5C
@@ -1331,7 +1310,7 @@ _080174EC:
 	lsls r1, r2, #2
 	adds r1, r1, r0
 	ldr r0, [r1]
-	bl sub_08016B30
+	bl UR_PrintFieldMessage
 	movs r0, #1
 	b _080175DE
 	.align 2, 0

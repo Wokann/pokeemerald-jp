@@ -1071,7 +1071,6 @@ GetURoomActivityRejectMsg = sub_0801785C;
 ConvPartnerUnameAndGetWhetherMetAlready = sub_08017468;
 GetResponseIdx_InviteToURoomActivity = sub_08017440;
 IsRequestedTradeInPlayerParty = sub_080177C4;
-UR_PrintFieldMessage = sub_08016B30;
 PollPartnerYesNoResponse = sub_08017A94;
 InitUnionRoomPlayerObjects = sub_080195B4;
 SetTilesAroundUnionRoomPlayersPassable = sub_080199C8;
@@ -1523,6 +1522,7 @@ SECTIONS {
         src/union_room.o(.text.Task_ListenForWonderDistributor);
         src/union_room.o(.text.CreateTask_ListenForCompatiblePartners);
         src/union_room.o(.text.CreateTask_ListenForWonderDistributor);
+        src/union_room.o(.text.UR_PrintFieldMessage);
         asm/union_room.o(.text);
         src/union_room.o(.text.GetChatLeaderActionRequestMessage);
         asm/union_room_2.o(.text);
