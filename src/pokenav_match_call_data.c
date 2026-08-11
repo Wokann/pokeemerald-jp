@@ -191,51 +191,6 @@ extern void sub_08196C74(u8 *dest);
 
 // JP builds this as a jump table with a trailing 2-byte .align that the
 // Makefile pipeline does not emit between functions; kept as naked asm.
-#ifndef NONMATCHING
-__attribute__((naked)) static u32 MatchCallGetFunctionIndex(match_call_t matchCall)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "ldrb r0, [r0]\n\t"
-            "cmp r0, #5\n\t"
-            "bhi _mcfi_C0\n\t"
-            "lsls r0, r0, #2\n\t"
-            "ldr r1, _mcfi_A4\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "mov pc, r0\n\t"
-            ".align 2, 0\n\t"
-            "_mcfi_A4: .4byte _mcfi_A8\n\t"
-            "_mcfi_A8: .4byte _mcfi_C0\n\t"
-            ".4byte _mcfi_C4\n\t"
-            ".4byte _mcfi_C8\n\t"
-            ".4byte _mcfi_D0\n\t"
-            ".4byte _mcfi_CC\n\t"
-            ".4byte _mcfi_C4\n\t"
-            "_mcfi_C0:\n\t"
-            "movs r0, #0\n\t"
-            "b _mcfi_D2\n\t"
-            "_mcfi_C4:\n\t"
-            "movs r0, #1\n\t"
-            "b _mcfi_D2\n\t"
-            "_mcfi_C8:\n\t"
-            "movs r0, #2\n\t"
-            "b _mcfi_D2\n\t"
-            "_mcfi_CC:\n\t"
-            "movs r0, #3\n\t"
-            "b _mcfi_D2\n\t"
-            "_mcfi_D0:\n\t"
-            "movs r0, #4\n\t"
-            "_mcfi_D2:\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided");
-}
-
-#else
-// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
 static u32 MatchCallGetFunctionIndex(match_call_t matchCall)
 {
     switch (matchCall.common->type)
@@ -254,7 +209,6 @@ static u32 MatchCallGetFunctionIndex(match_call_t matchCall)
             return 4;
     }
 }
-#endif
 
 u32 GetTrainerIdxByRematchIdx(u32 rematchIdx)
 {
@@ -486,66 +440,6 @@ static void MatchCall_GetMessage_Birch(match_call_t matchCall, u8 *dest)
 {
     sub_08196C74(dest);
 }
-#ifndef NONMATCHING
-__attribute__((naked)) static void sub_081D103C(const match_call_text_data_t *textData, u8 *dest)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "adds r6, r0, #0\n\t"
-            "mov r8, r1\n\t"
-            "movs r5, #0\n\t"
-            "ldr r7, _t_1050\n\t"
-            "adds r4, r6, #0\n\t"
-            "b _t_1058\n\t"
-            ".align 2, 0\n\t"
-            "_t_1050: .4byte 0x0000FFFF\n\t"
-            "_t_1054:\n\t"
-            "adds r4, #8\n\t"
-            "adds r5, #1\n\t"
-            "_t_1058:\n\t"
-            "ldr r0, [r4]\n\t"
-            "cmp r0, #0\n\t"
-            "beq _t_106E\n\t"
-            "ldrh r0, [r4, #4]\n\t"
-            "cmp r0, r7\n\t"
-            "beq _t_1054\n\t"
-            "bl FlagGet\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _t_1054\n\t"
-            "_t_106E:\n\t"
-            "cmp r5, #0\n\t"
-            "beq _t_1074\n\t"
-            "subs r5, #1\n\t"
-            "_t_1074:\n\t"
-            "lsls r0, r5, #3\n\t"
-            "adds r4, r0, r6\n\t"
-            "ldrh r1, [r4, #6]\n\t"
-            "ldr r0, _t_1098\n\t"
-            "cmp r1, r0\n\t"
-            "beq _t_1086\n\t"
-            "adds r0, r1, #0\n\t"
-            "bl FlagSet\n\t"
-            "_t_1086:\n\t"
-            "ldr r1, [r4]\n\t"
-            "mov r0, r8\n\t"
-            "bl StringExpandPlaceholders\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_t_1098: .4byte 0x0000FFFF\n\t"
-            ".syntax divided");
-}
-
-#else
-// 可读的 C 版本（NONMATCHING）：JP 特有实现（无 REMATCH_CALL_START 特判），
-// 语义与汇编版相同，但不保证逐字节一致。
 static void sub_081D103C(const match_call_text_data_t *textData, u8 *dest)
 {
     u32 i;
@@ -561,7 +455,6 @@ static void sub_081D103C(const match_call_text_data_t *textData, u8 *dest)
         FlagSet(textData[i].flagToSetOnCompletion);
     StringExpandPlaceholders(dest, textData[i].text);
 }
-#endif
 
 static void MatchCall_BufferCallMessageTextByRematchTeam(const match_call_text_data_t *textData, u16 idx, u8 *dest)
 {
