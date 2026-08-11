@@ -735,6 +735,7 @@ static void PrintMatchCallListTrainerName(struct PokenavListWindowState *state, 
 // 0x085F15AC / 0x085F15B8 into the stack frame; agbcc reproduces the
 // ldm/stm + memcpy sequence only via a local-array initializer, which
 // would emit a .rodata copy that this build's ld script cannot place.
+#ifndef NONMATCHING
 __attribute__((naked)) void PrintMatchCallFieldNames(struct PokenavList *list, u32 fieldId)
 {
     __asm__(".syntax unified\n\t"
@@ -812,6 +813,25 @@ __attribute__((naked)) void PrintMatchCallFieldNames(struct PokenavList *list, u
             "_pkmf_15B8: .4byte sPokenavFieldNameColors\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：与汇编版语义相同，但不保证逐字节一致。
+// 启用方式见 include/config.h。
+void PrintMatchCallFieldNames(struct PokenavList *list, u32 fieldId)
+{
+    const u8 *fieldNames[] = {
+        gText_PokenavMatchCall_Strategy,
+        gText_PokenavMatchCall_TrainerPokemon,
+        gText_PokenavMatchCall_SelfIntroduction
+    };
+    u8 colors[3] = {TEXT_COLOR_WHITE, TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED};
+    u32 top = (list->listWindow.unkA + 1 + (fieldId * 2)) & 0xF;
+
+    FillWindowPixelRect(list->listWindow.windowId, PIXEL_FILL(1), 0, top << 4, list->listWindow.width, 16);
+    AddTextPrinterParameterized3(list->listWindow.windowId, FONT_NARROW, 2, (top << 4) + 1, colors, TEXT_SKIP_DRAW, fieldNames[fieldId]);
+    CopyWindowRectToVram(list->listWindow.windowId, COPYWIN_GFX, 0, top << 1, list->listWindow.width, 2);
+}
+#endif
 
 static void PrintMatchCallFlavorText(struct PokenavListWindowState *windowState, struct PokenavList *list, u32 checkPageEntry)
 {
