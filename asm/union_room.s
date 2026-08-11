@@ -29,14 +29,6 @@
 
 
 
-	thumb_func_start sub_08016E98
-sub_08016E98: @ 0x08016E98
-	push {lr}
-	bl ScriptContext_Enable
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08016E98
 
 	thumb_func_start sub_08016EA4
 sub_08016EA4: @ 0x08016EA4

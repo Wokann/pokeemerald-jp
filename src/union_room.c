@@ -359,7 +359,7 @@ extern bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct Rfu
 extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
 extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
-extern void JoinGroup_EnableScriptContexts(void);
+static void JoinGroup_EnableScriptContexts(void);
 extern bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
 extern void MysteryGift_DisableStats(void);
 extern bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
@@ -3861,6 +3861,11 @@ void UR_ClearBg0(void)
 {
     FillBgTilemapBufferRect(0, 0, 0, 0, 32, 32, 0);
     CopyBgTilemapBufferToVram(0);
+}
+
+static void JoinGroup_EnableScriptContexts(void)
+{
+    ScriptContext_Enable();
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
