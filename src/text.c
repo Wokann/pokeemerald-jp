@@ -367,20 +367,20 @@ static u8 UNUSED GetLastTextColor(u8 colorType)
 
 #define GLYPH_COPY(windowTiles, widthOffset, j, i, glyphPixels, width, height) \
 { \
-    u32 xAdd, yAdd, pixelData, bits, toOrr, dummyX; \
+    u32 xAdd, yAdd, x, y, pixelData, bits, toOrr; \
+    u32 *pixels = (glyphPixels); \
     u8 *dst; \
     xAdd = (j) + (width); \
     yAdd = (i) + (height); \
-    dummyX = (j); \
-    for (; (i) < yAdd; (i)++) \
+    for (y = (i); y < yAdd; y++) \
     { \
-        pixelData = *(glyphPixels)++; \
-        for ((j) = dummyX; (j) < xAdd; (j)++) \
+        pixelData = *pixels++; \
+        for (x = (j); x < xAdd; x++) \
         { \
             if ((toOrr = pixelData & 0xF)) \
             { \
-                dst = (windowTiles) + (((j) / 8) * 32) + (((j) % 8) / 2) + (((i) / 8) * (widthOffset)) + (((i) % 8) * 4); \
-                bits = (((j) & 1) * 4); \
+                dst = (windowTiles) + ((x / 8) * 32) + ((x % 8) / 2) + ((y / 8) * (widthOffset)) + ((y % 8) * 4); \
+                bits = ((x & 1) * 4); \
                 *dst = (toOrr << bits) | (*dst & (0xF0 >> bits)); \
             } \
             pixelData >>= 4; \
@@ -388,6 +388,8 @@ static u8 UNUSED GetLastTextColor(u8 colorType)
     } \
 }
 
+#ifndef NONMATCHING
+// 逐字节匹配版本：与 baserom_jp.gba 的原始编译结果完全一致。
 __attribute__((naked)) void CopyGlyphToWindow(struct TextPrinter *textPrinter)
 {
     __asm__(".syntax unified\n\t"
@@ -1897,6 +1899,117 @@ __attribute__((naked)) void ClearTextSpan(struct Window *window, u16 x, u16 y, u
             "_08005354: .4byte gCurGlyph + 0x60\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：语义与汇编版相同，但不保证逐字节一致。
+// JP 字形为 16x16 4bpp：gfxBufferTop/Bottom 每行 2 个 u32（左半/右半），
+// 因此四个象限的数据指针分别为 gCurGlyph、+0x20、+0x40、+0x60，
+// 与 US 工程 GLYPH_COPY 的四分支一一对应。
+void CopyGlyphToWindow(struct TextPrinter *textPrinter)
+{
+    struct Window *window;
+    struct WindowTemplate *template;
+    u32 *glyphPixels;
+    u32 currX, currY, widthOffset;
+    s32 glyphWidth, glyphHeight;
+    u8 *windowTiles;
+
+    window = &gWindows[textPrinter->printerTemplate.windowId];
+    template = &window->window;
+
+    glyphWidth = (template->width * 8) - textPrinter->printerTemplate.currentX;
+    if (glyphWidth > gCurGlyph.width)
+        glyphWidth = gCurGlyph.width;
+
+    glyphHeight = (template->height * 8) - textPrinter->printerTemplate.currentY;
+    if (glyphHeight > gCurGlyph.height)
+        glyphHeight = gCurGlyph.height;
+
+    currX = textPrinter->printerTemplate.currentX;
+    currY = textPrinter->printerTemplate.currentY;
+    glyphPixels = gCurGlyph.gfxBufferTop;
+    windowTiles = window->tileData;
+    widthOffset = template->width * 32;
+
+    if (glyphWidth < 9)
+    {
+        if (glyphHeight < 9)
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, glyphWidth, glyphHeight);
+        }
+        else
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, glyphWidth, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY + 8, glyphPixels + 16, glyphWidth, glyphHeight - 8);
+        }
+    }
+    else
+    {
+        if (glyphHeight < 9)
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, 8, glyphHeight);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY, glyphPixels + 8, glyphWidth - 8, glyphHeight);
+        }
+        else
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, 8, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY, glyphPixels + 8, glyphWidth - 8, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY + 8, glyphPixels + 16, 8, glyphHeight - 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY + 8, glyphPixels + 24, glyphWidth - 8, glyphHeight - 8);
+        }
+    }
+}
+
+void ClearTextSpan(struct Window *window, u16 x, u16 y, u16 width, u16 height)
+{
+    u32 *glyphPixels;
+    u32 currX, currY, widthOffset;
+    s32 glyphWidth, glyphHeight;
+    u8 *windowTiles;
+
+    currX = x;
+    currY = y;
+    glyphWidth = width - x;
+    if (glyphWidth > gCurGlyph.width)
+        glyphWidth = gCurGlyph.width;
+
+    glyphHeight = height - y;
+    if (glyphHeight > gCurGlyph.height)
+        glyphHeight = gCurGlyph.height;
+
+    glyphPixels = gCurGlyph.gfxBufferTop;
+    windowTiles = window->tileData;
+    widthOffset = ((width + (width & 7)) >> 3) * 32;
+
+    if (glyphWidth < 9)
+    {
+        if (glyphHeight < 9)
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, glyphWidth, glyphHeight);
+        }
+        else
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, glyphWidth, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY + 8, glyphPixels + 16, glyphWidth, glyphHeight - 8);
+        }
+    }
+    else
+    {
+        if (glyphHeight < 9)
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, 8, glyphHeight);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY, glyphPixels + 8, glyphWidth - 8, glyphHeight);
+        }
+        else
+        {
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY, glyphPixels, 8, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY, glyphPixels + 8, glyphWidth - 8, 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX, currY + 8, glyphPixels + 16, 8, glyphHeight - 8);
+            GLYPH_COPY(windowTiles, widthOffset, currX + 8, currY + 8, glyphPixels + 24, glyphWidth - 8, glyphHeight - 8);
+        }
+    }
+}
+#endif
 
 static u16 FontFunc_Small(struct TextPrinter *textPrinter)
 {
