@@ -31,6 +31,8 @@ extern const u8 gJPText_MysteryGift[];
 extern const u8 gJPText_DecideStop[];
 extern const u8 sMG_Ereader_TextColor_2[];
 extern u8 sDownArrowCounterAndYCoordIdx[2];
+extern const u8 gText_WhatToDoWithCards[];
+extern const u8 gText_WhatToDoWithNews[];
 extern const struct ListMenuTemplate sListMenuTemplate_ThreeOptions;
 extern const struct ListMenuItem sListMenuItems_CardsOrNews[];
 extern const struct ListMenuItem sListMenuItems_WirelessOrFriend[];
@@ -38,7 +40,30 @@ extern const struct WindowTemplate sWindowTemplate_ThreeOptions;
 extern const struct WindowTemplate sWindowTemplate_YesNoMsg_Wide;
 extern const struct WindowTemplate sWindowTemplate_YesNoMsg;
 extern const struct WindowTemplate sWindowTemplate_YesNoBox;
+extern const struct WindowTemplate sWindowTemplate_GiftSelect;
+extern const struct WindowTemplate sWindowTemplate_GiftSelect_2Options;
+extern const struct WindowTemplate sWindowTemplate_GiftSelect_1Option;
+extern const struct WindowTemplate sWindowTemplate_GiftSelect_3Options;
+extern const struct ListMenuTemplate sListMenu_ReceiveToss;
+extern const struct ListMenuTemplate sListMenu_Receive;
+extern const struct ListMenuTemplate sListMenu_ReceiveSendToss;
+extern const struct ListMenuTemplate sListMenu_ReceiveSend;
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
+extern bool32 ValidateReceivedWonderCard(void);
+extern bool32 ValidateReceivedWonderNews(void);
+extern struct WonderCard *GetSavedWonderCard(void);
+extern struct WonderNews *GetSavedWonderNews(void);
+extern void InitWonderCardResources(struct WonderCard *card, u8 *meventBuffer);
+extern void InitWonderNewsResources(struct WonderNews *news);
+extern u8 *sav1_get_mevent_buffer_2(void);
+extern bool32 FadeToWonderCardMenu(void);
+extern bool32 FadeToWonderNewsMenu(void);
+extern void DestroyWonderCard(void);
+extern void DestroyWonderNews(void);
+extern bool32 FadeOutFromWonderCard(void);
+extern bool32 FadeOutFromWonderNews(void);
+extern void DestroyWonderCardResources(void);
+extern void DestroyWonderNewsResources(void);
 // JP: still in asm/mystery_gift.s; revert to C names as they are converted.
 extern void bgid_upload_textbox_1(u8 bgId);
 extern void task_add_00_mystery_gift(void);
@@ -380,4 +405,95 @@ s8 DoMysteryGiftYesNo(u8 *textState, u16 *windowId, bool8 yesNoBoxPlacement, con
         return MENU_B_PRESSED;
     }
     return MENU_NOTHING_CHOSEN;
+}
+
+s32 HandleGiftSelectMenu(u8 *textState, u16 *windowId, bool32 cannotToss, bool32 cannotSend)
+{
+    s32 input;
+
+    switch (*textState)
+    {
+    case 0:
+        if (!cannotToss)
+            StringExpandPlaceholders(gStringVar4, gText_WhatToDoWithCards);
+        else
+            StringExpandPlaceholders(gStringVar4, gText_WhatToDoWithNews);
+        *windowId = AddWindow(&sWindowTemplate_GiftSelect);
+        FillWindowPixelBuffer(*windowId, 0x11);
+        AddTextPrinterParameterized4(*windowId, FONT_NORMAL, 2, 2, 0, 1, sMG_Ereader_TextColor_2, 0, gStringVar4);
+        DrawTextBorderOuter(*windowId, 0x001, 0x0F);
+        CopyWindowToVram(*windowId, COPYWIN_GFX);
+        PutWindowTilemap(*windowId);
+        (*textState)++;
+        break;
+    case 1:
+        if (cannotSend)
+        {
+            if (!cannotToss)
+                input = DoMysteryGiftListMenu(&sWindowTemplate_GiftSelect_2Options, &sListMenu_ReceiveToss, 1, 0xA, 0xE0);
+            else
+                input = DoMysteryGiftListMenu(&sWindowTemplate_GiftSelect_1Option, &sListMenu_Receive, 1, 0xA, 0xE0);
+        }
+        else
+        {
+            if (!cannotToss)
+                input = DoMysteryGiftListMenu(&sWindowTemplate_GiftSelect_3Options, &sListMenu_ReceiveSendToss, 1, 0xA, 0xE0);
+            else
+                input = DoMysteryGiftListMenu(&sWindowTemplate_GiftSelect_2Options, &sListMenu_ReceiveSend, 1, 0xA, 0xE0);
+        }
+        if (input != LIST_NOTHING_CHOSEN)
+        {
+            *textState = 0;
+            rbox_fill_rectangle(*windowId);
+            ClearWindowTilemap(*windowId);
+            CopyWindowToVram(*windowId, COPYWIN_MAP);
+            RemoveWindow(*windowId);
+            return input;
+        }
+        break;
+    case 0xFF:
+        *textState = 0;
+        rbox_fill_rectangle(*windowId);
+        ClearWindowTilemap(*windowId);
+        CopyWindowToVram(*windowId, COPYWIN_MAP);
+        RemoveWindow(*windowId);
+        return LIST_CANCEL;
+    }
+    return LIST_NOTHING_CHOSEN;
+}
+
+bool32 ValidateCardOrNews(bool32 isWonderNews)
+{
+    if (!isWonderNews)
+        return ValidateReceivedWonderCard();
+    else
+        return ValidateReceivedWonderNews();
+}
+
+bool32 DestroyNewsOrCard(bool32 isWonderNews)
+{
+    if (!isWonderNews)
+        DestroyWonderCard();
+    else
+        DestroyWonderNews();
+    return TRUE;
+}
+
+bool32 TearDownCardOrNews_ReturnToTopMenu(bool32 isWonderNews)
+{
+    if (!isWonderNews)
+    {
+        if (FadeOutFromWonderCard())
+            DestroyWonderCardResources();
+        else
+            return FALSE;
+    }
+    else
+    {
+        if (FadeOutFromWonderNews())
+            DestroyWonderNewsResources();
+        else
+            return FALSE;
+    }
+    return TRUE;
 }
