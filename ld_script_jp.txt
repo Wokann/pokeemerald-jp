@@ -1124,6 +1124,11 @@ SECTIONS {
         src/link_rfu_3.o(.text.GetParentSignalStrength);
         src/link_rfu_3.o(.text.SetWirelessStatusIndicatorAnim);
         src/link_rfu_3.o(.text.UpdateWirelessStatusIndicatorSprite);
+        src/link_rfu_3.o(.text.CopyTrainerRecord);
+        src/link_rfu_3.o(.text.NameIsNotEmpty);
+        src/link_rfu_3.o(.text.SaveLinkTrainerNames);
+        src/link_rfu_3.o(.text.PlayerHasMetTrainerBefore);
+        src/link_rfu_3.o(.text.WipeTrainerNameRecords);
         asm/link_rfu.o(.text);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);

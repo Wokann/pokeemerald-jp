@@ -3724,7 +3724,7 @@ _08013F3C: @ jump table
 	.4byte _08013F7C @ case 13
 	.4byte _08013F78 @ case 14
 _08013F78:
-	bl RecordMixTrainerNames
+	bl SaveLinkTrainerNames
 _08013F7C:
 	ldr r0, _08013F94
 	ldrb r0, [r0]
@@ -4115,7 +4115,7 @@ _0801435C:
 	str r1, [r0, #8]
 	movs r0, #4
 	strh r0, [r7]
-	bl RecordMixTrainerNames
+	bl SaveLinkTrainerNames
 	bl ResetBlockReceivedFlags
 	b _080144BA
 	.align 2, 0
@@ -4125,7 +4125,7 @@ _080143B4: .4byte 0x0203CBC4
 _080143B8: .4byte 0x0202412C
 _080143BC: .4byte 0x03002360
 _080143C0:
-	bl RecordMixTrainerNames
+	bl SaveLinkTrainerNames
 	adds r0, r4, #0
 	bl DestroyTask
 _080143CA:
@@ -6646,7 +6646,7 @@ _080159DA:
 	ldrh r0, [r4, #0x18]
 	adds r4, #0x1c
 	adds r1, r4, #0
-	bl sub_0800E004
+	bl PlayerHasMetTrainerBefore
 	adds r5, r0, #0
 	ldr r0, _08015A2C
 	ldr r2, _08015A30
@@ -6896,7 +6896,7 @@ _08015C24:
 	subs r0, #0x24
 	ldrh r0, [r0, #0x20]
 	adds r1, r4, #0
-	bl sub_0800E004
+	bl PlayerHasMetTrainerBefore
 	adds r5, r0, #0
 	ldr r0, _08015C5C
 	ldr r2, _08015C60
@@ -8001,7 +8001,7 @@ _0801655A:
 	ldr r1, [r4]
 	adds r1, r1, r5
 	adds r1, #0x10
-	bl sub_0800E004
+	bl PlayerHasMetTrainerBefore
 	cmp r0, #0
 	bne _08016590
 _08016582:
@@ -10015,7 +10015,7 @@ sub_08017468: @ 0x08017468
 	lsrs r0, r0, #0x10
 	adds r4, #0x10
 	adds r1, r4, #0
-	bl sub_0800E004
+	bl PlayerHasMetTrainerBefore
 	pop {r4}
 	pop {r1}
 	bx r1
@@ -10047,7 +10047,7 @@ sub_08017484: @ 0x08017484
 	lsls r0, r0, #0x10
 	lsrs r0, r0, #0x10
 	adds r1, r4, #0
-	bl sub_0800E004
+	bl PlayerHasMetTrainerBefore
 	adds r2, r0, #0
 	ldrb r1, [r5, #0xa]
 	movs r0, #0x7f
