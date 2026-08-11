@@ -350,7 +350,7 @@ extern void ViewURoomPartnerTrainerCard(u8 *dest, struct WirelessLink_URoom *uro
 extern void GetURoomActivityRejectMsg(u8 *dest, u32 activity, u32 gender);
 static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player);
 static u32 GetResponseIdx_InviteToURoomActivity(s32 activity);
-extern s32 IsRequestedTradeInPlayerParty(u32 requestedType, u32 requestedSpecies);
+static s32 IsRequestedTradeInPlayerParty(u32 type, u32 species);
 bool32 UR_PrintFieldMessage(const u8 *str);
 extern void PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
@@ -4128,6 +4128,32 @@ static u32 ConvPartnerUnameAndGetWhetherMetAlready(struct RfuPlayer *player)
 static s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *list)
 {
     return list->players[playerIdx].rfu.data.playerGender;
+}
+
+static s32 IsRequestedTradeInPlayerParty(u32 type, u32 species)
+{
+    s32 i;
+
+    if (species == SPECIES_EGG)
+    {
+        for (i = 0; i < gPlayerPartyCount; i++)
+        {
+            species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+            if (species == SPECIES_EGG)
+                return UR_TRADE_MATCH;
+        }
+        return UR_TRADE_NOEGG;
+    }
+    else
+    {
+        for (i = 0; i < gPlayerPartyCount; i++)
+        {
+            species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+            if (gSpeciesInfo[species].types[0] == type || gSpeciesInfo[species].types[1] == type)
+                return UR_TRADE_MATCH;
+        }
+        return UR_TRADE_NOTYPE;
+    }
 }
 
 static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
