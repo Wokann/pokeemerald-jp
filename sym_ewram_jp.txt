@@ -161,6 +161,7 @@ gUnionRoomOfferedSpecies = ABSOLUTE(0x020228F0);
 gUnionRoomRequestedMonType = ABSOLUTE(0x020228F2);
 sUnionRoomTrade = ABSOLUTE(0x020228F4);
 gGiftIsFromEReader = ABSOLUTE(0x02022914);
+sDownArrowCounterAndYCoordIdx = ABSOLUTE(0x0202290C);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
 gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);
