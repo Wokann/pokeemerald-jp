@@ -11,7 +11,10 @@
 #include "data.h"
 #include "decompress.h"
 #include "dynamic_placeholder_text_util.h"
+#include "easy_chat.h"
 #include "event_data.h"
+#include "event_object_lock.h"
+#include "field_control_avatar.h"
 #include "field_screen_effect.h"
 #include "fieldmap.h"
 #include "link.h"
@@ -338,12 +341,12 @@ static u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *l
 static u8 CreateTask_ListenForWonderDistributor(struct RfuIncomingPlayerList *list, u32 linkGroup);
 static s32 GetUnionRoomPlayerGender(s32 playerIdx, struct RfuPlayerList *playerList);
 extern s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, u8 overrideGender, u8 playerIdx, u32 playerGender);
-extern void HandleCancelActivity(bool32 setData);
-extern void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade);
-extern bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trade);
-extern bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
-extern void StartScriptInteraction(void);
-extern u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
+static void HandleCancelActivity(bool32 setData);
+static void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade);
+static bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trade);
+static bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
+static void StartScriptInteraction(void);
+static u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
 static bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
@@ -364,8 +367,8 @@ static void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPla
 static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
 static bool8 ArePlayersDifferent(struct RfuPlayerData *player1, const struct RfuPlayerData *player2);
-extern u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
-extern void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
+static u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 partyPos);
+static void ResetUnionRoomTrade(struct UnionRoomTrade *trade);
 extern void SendLeaveGroupNotice(void);
 static void JoinGroup_EnableScriptContexts(void);
 static bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
@@ -4218,6 +4221,139 @@ static bool32 PollPartnerYesNoResponse(struct WirelessLink_URoom *data)
         }
     }
     return FALSE;
+}
+
+bool32 InUnionRoom(void)
+{
+    return gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_UNION_ROOM)
+        && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_UNION_ROOM)
+        ? TRUE : FALSE;
+}
+
+static bool32 HasAtLeastTwoMonsOfLevel30OrLower(void)
+{
+    s32 i;
+    s32 count = 0;
+
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_LEVEL) <= UNION_ROOM_MAX_LEVEL
+         && GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG)
+            count++;
+    }
+
+    if (count > 1)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+static void ResetUnionRoomTrade(struct UnionRoomTrade *trade)
+{
+    trade->state = URTRADE_STATE_NONE;
+    trade->type = 0;
+    trade->playerPersonality = 0;
+    trade->playerSpecies = SPECIES_NONE;
+    trade->playerLevel = 0;
+    trade->species = SPECIES_NONE;
+    trade->level = 0;
+    trade->personality = 0;
+}
+
+void Script_ResetUnionRoomTrade(void)
+{
+    ResetUnionRoomTrade(&sUnionRoomTrade);
+}
+
+static bool32 RegisterTradeMonAndGetIsEgg(u32 monId, struct UnionRoomTrade *trade)
+{
+    trade->playerSpecies = GetMonData(&gPlayerParty[monId], MON_DATA_SPECIES_OR_EGG);
+    trade->playerLevel = GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL);
+    trade->playerPersonality = GetMonData(&gPlayerParty[monId], MON_DATA_PERSONALITY);
+    if (trade->playerSpecies == SPECIES_EGG)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+static void RegisterTradeMon(u32 monId, struct UnionRoomTrade *trade)
+{
+    trade->species = GetMonData(&gPlayerParty[monId], MON_DATA_SPECIES_OR_EGG);
+    trade->level = GetMonData(&gPlayerParty[monId], MON_DATA_LEVEL);
+    trade->personality = GetMonData(&gPlayerParty[monId], MON_DATA_PERSONALITY);
+}
+
+static u32 GetPartyPositionOfRegisteredMon(struct UnionRoomTrade *trade, u8 multiplayerId)
+{
+    u16 response = 0;
+    u16 species;
+    u32 personality;
+    u32 cur_personality;
+    u16 cur_species;
+    s32 i;
+
+    if (multiplayerId == 0)
+    {
+        species = trade->playerSpecies;
+        personality = trade->playerPersonality;
+    }
+    else
+    {
+        species = trade->species;
+        personality = trade->personality;
+    }
+
+    // Find party position by comparing to personality and species
+    for (i = 0; i < gPlayerPartyCount; i++)
+    {
+        cur_personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
+        if (cur_personality != personality)
+            continue;
+        cur_species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (cur_species != species)
+            continue;
+        response = i;
+        break;
+    }
+
+    return response;
+}
+
+static void HandleCancelActivity(bool32 setData)
+{
+    UR_ClearBg0();
+    UnlockPlayerFieldControls();
+    UnionRoom_UnlockPlayerAndChatPartner();
+    gPlayerCurrActivity = ACTIVITY_NONE;
+    if (setData)
+    {
+        SetTradeBoardRegisteredMonInfo(sUnionRoomTrade.type, sUnionRoomTrade.playerSpecies, sUnionRoomTrade.playerLevel);
+        UpdateGameData_SetActivity(ACTIVITY_NONE | IN_UNION_ROOM, 0, FALSE);
+    }
+}
+
+static void StartScriptInteraction(void)
+{
+    LockPlayerFieldControls();
+    FreezeObjects_WaitForPlayer();
+}
+
+static u8 GetActivePartnersInfo(struct WirelessLink_URoom *data)
+{
+    u8 retVal = PINFO_ACTIVE_FLAG;
+    u8 i;
+
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (data->incomingParentList->players[i].active)
+        {
+            retVal |= data->incomingParentList->players[i].rfu.data.playerGender << PINFO_GENDER_SHIFT;
+            retVal |= data->incomingParentList->players[i].rfu.data.compatibility.playerTrainerId[0] & PINFO_TID_MASK;
+            break;
+        }
+    }
+
+    return retVal;
 }
 
 static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8 *headerWindowId,
