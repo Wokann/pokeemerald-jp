@@ -1342,7 +1342,7 @@ sub_08019EF4: @ 0x08019EF4
 	ldr r1, [r5]
 	adds r1, #0x60
 	strb r0, [r1]
-	bl sub_08013748
+	bl CreateTask_ListenToWireless
 	ldr r1, [r5]
 	adds r1, #0x61
 	strb r0, [r1]

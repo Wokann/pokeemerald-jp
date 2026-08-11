@@ -9,6 +9,7 @@
 #include "malloc.h"
 #include "menu.h"
 #include "script.h"
+#include "save_location.h"
 #include "sound.h"
 #include "string_util.h"
 #include "strings.h"
@@ -150,8 +151,6 @@ extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
-extern u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *group, s32 playerId);
-extern void AskToJoinRfuGroup(struct WirelessLink_Group *group, s32 playerId);
 extern u8 GetNewLeaderCandidate(void);
 extern void SendLeaveGroupNotice(void);
 extern void JoinGroup_EnableScriptContexts(void);
@@ -162,6 +161,9 @@ bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 j
 u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
 void TryJoinLinkGroup(void);
 static void Task_TryJoinLinkGroup(u8 taskId);
+static u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *group, s32 playerId);
+static void AskToJoinRfuGroup(struct WirelessLink_Group *data, s32 id);
+static void Task_ListenToWireless(u8 taskId);
 
 void Task_Idle(u8 taskId)
 {
@@ -1140,4 +1142,50 @@ static void Task_TryJoinLinkGroup(u8 taskId)
         DestroyTask(taskId);
         break;
     }
+}
+
+static u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *data, s32 id)
+{
+    struct RfuPlayer *partner = &data->playerList->players[id];
+
+    if (gPlayerCurrActivity == ACTIVITY_TRADE && partner->rfu.data.compatibility.version != VERSION_EMERALD)
+    {
+        if (!(gSaveBlock2Ptr->specialSaveWarpFlags & CHAMPION_SAVEWARP))
+            return UR_TRADE_PLAYER_NOT_READY;
+        else if (partner->rfu.data.compatibility.canLinkNationally)
+            return UR_TRADE_READY;
+    }
+    else
+    {
+        return UR_TRADE_READY;
+    }
+
+    return UR_TRADE_PARTNER_NOT_READY;
+}
+
+static void AskToJoinRfuGroup(struct WirelessLink_Group *data, s32 id)
+{
+    data->leaderId = id;
+    LoadWirelessStatusIndicatorSpriteGfx();
+    CreateWirelessStatusIndicatorSprite(0, 0);
+    RedrawListMenu(data->listTaskId);
+    StringCopy7(gStringVar1, &data->playerList->players[data->leaderId].rfu.name);
+    UpdateGameData_SetActivity(sLinkGroupToURoomActivity[gSpecialVar_0x8004], 0, TRUE);
+    CreateTask_RfuReconnectWithParent(data->playerList->players[data->leaderId].rfu.name, ReadAsU16(data->playerList->players[data->leaderId].rfu.data.compatibility.playerTrainerId));
+}
+
+u8 CreateTask_ListenToWireless(void)
+{
+    u8 taskId;
+    struct WirelessLink_Group *data;
+
+    taskId = CreateTask(Task_ListenToWireless, 0);
+    sWirelessLinkMain.group = data = (void *)(gTasks[taskId].data);
+
+    data->state = 0;
+    data->textState = 0;
+
+    sGroup = data;
+
+    return taskId;
 }
