@@ -14,8 +14,14 @@ SHELL := /bin/bash
 ASFLAGS := -mcpu=arm7tdmi
 CFLAGS := -mthumb-interwork -O2 -fhex-asm
 
+# Build flavor.  Keep the current decompilation build under
+# build/pokeemerald-jp/; alternate builds (e.g. BUILD_NAME=pokeemerald-jp-rev10)
+# get their own subdirectory under build/, like pokefirered's BUILD_NAME.
+BUILD_NAME ?= pokeemerald-jp
+OBJ_DIR := build/$(BUILD_NAME)
+
 ASFILE := $(wildcard asm/*.s)
-AS_OBJS := $(patsubst asm/%.s,build/asm/%.o,$(ASFILE))
+AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # Modules fully converted and wired into the build.  Add a module here
 # once every function in its asm file has been converted to C (or the
 # asm file has been split so the C functions fill a contiguous ROM
@@ -32,7 +38,7 @@ UNPORTED_SRCS := \
 	src/pokemon_storage_system.c src/record_mixing.c src/recorded_battle.c \
 	src/start_menu.c src/tileset_anims.c src/trainer_hill.c src/tv.c
 C_SRCS := $(filter-out $(UNPORTED_SRCS),$(wildcard src/*.c src/*/*.c))
-C_BUILDDIR := build/src
+C_BUILDDIR := $(OBJ_DIR)/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 
 # Match the official flash library builds: agb_flash uses -O (not -O2).
@@ -106,9 +112,9 @@ $(C_BUILDDIR)/battle_interface.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffu
 # functions (ProcessRecvCmds onward) stay in asm/link_mid.s.
 $(C_BUILDDIR)/link.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
-DATA_OBJS := build/data/event_scripts.o build/data/data.o build/data/data_rest.o build/data/multiboot_ereader.o build/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_rest.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 OBJFILE := $(AS_OBJS) $(C_OBJECTS) $(DATA_OBJS)
-OBJFILE_REL := $(patsubst build/%,%,$(OBJFILE))
+OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
 NAME := pokeemerald_jp
 ROM := $(NAME).gba
 ELF := $(NAME).elf
@@ -129,10 +135,10 @@ $(ROM): $(ELF)
 	$(OBJCOPY) -O binary $< $@
 
 $(ELF): %.elf: $(OBJFILE) ld_script_jp.txt sym_ewram_jp.txt sym_iwram_jp.txt
-	cd build && ../$(LD) -T ../ld_script_jp.txt -Map ../$*.map -o ../$@ $(OBJFILE_REL) -L ../tools/agbcc/lib -lgcc
+	cd $(OBJ_DIR) && ../../$(LD) -T ../../ld_script_jp.txt -Map ../../$*.map -o ../../$@ $(OBJFILE_REL) -L ../../tools/agbcc/lib -lgcc
 	$(GBAFIX) -t"$(TITLE)" -c$(GAMECODE) -m01 --silent $@
 
-$(AS_OBJS): build/asm/%.o: asm/%.s
+$(AS_OBJS): $(OBJ_DIR)/asm/%.o: asm/%.s
 	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
@@ -152,24 +158,24 @@ $(C_BUILDDIR)/link.o: src/link.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
-build/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
-	@mkdir -p build/data
+$(OBJ_DIR)/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
+	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-build/data/data.o: data/data.s charmap.txt baserom_jp.gba
-	@mkdir -p build/data
+$(OBJ_DIR)/data/data.o: data/data.s charmap.txt baserom_jp.gba
+	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-build/data/data_rest.o: data/data_rest.s baserom_jp.gba
-	@mkdir -p build/data
+$(OBJ_DIR)/data/data_rest.o: data/data_rest.s baserom_jp.gba
+	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-build/data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
-	@mkdir -p build/data
+$(OBJ_DIR)/data/multiboot_ereader.o: data/multiboot_ereader.s data/mb_ereader.gba
+	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
-build/data/multiboot_berry_glitch_fix.o: data/multiboot_berry_glitch_fix.s data/mb_berry_fix.gba
-	@mkdir -p build/data
+$(OBJ_DIR)/data/multiboot_berry_glitch_fix.o: data/multiboot_berry_glitch_fix.s data/mb_berry_fix.gba
+	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(C_BUILDDIR)/libc/mprec.o: src/libc/mprec.c
