@@ -154,6 +154,7 @@ gStringVar1 = ABSOLUTE(0x02021C40);
 gStringVar4 = ABSOLUTE(0x02021C7C);
 gPlayerCurrActivity = ABSOLUTE(0x020228E0);
 sWirelessLinkMain = ABSOLUTE(0x020228E4);
+sPlayerActivityGroupSize = ABSOLUTE(0x020228E1);
 gStringVar2 = ABSOLUTE(0x02021C54);
 gStringVar3 = ABSOLUTE(0x02021C68);
 gText_ExpandedPlaceholder_Aqua = ABSOLUTE(0x085C8C3C);

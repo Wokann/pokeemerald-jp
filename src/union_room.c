@@ -1,8 +1,13 @@
 #include "global.h"
+#include "bg.h"
 #include "cable_club.h"
 #include "event_data.h"
 #include "link.h"
 #include "link_rfu.h"
+#include "list_menu.h"
+#include "malloc.h"
+#include "menu.h"
+#include "script.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -11,6 +16,9 @@
 #include "window.h"
 
 #define LINK_GROUP_CAPACITY(min, max) (((min) << 12) | ((max) << 8))
+#define GROUP_MAX(capacity) (capacity & 0x0F)
+#define GROUP_MIN(capacity) (capacity >> 4)
+#define GROUP_MIN2(capacity) (capacity & 0xF0) // Unnecessary to have both, but needed to match
 
 // States for Task_TryBecomeLinkLeader
 enum {
@@ -55,6 +63,7 @@ enum {
 // JP: RAM data bound via sym_*_jp.txt (JP uses fixed IWRAM/EWRAM addresses
 // instead of US COMMON_DATA / EWRAM_DATA definitions).
 extern EWRAM_DATA u8 gPlayerCurrActivity;
+extern EWRAM_DATA u8 sPlayerActivityGroupSize;
 extern EWRAM_DATA union
 {
     struct WirelessLink_Leader *leader;
@@ -67,11 +76,32 @@ extern IWRAM_DATA struct WirelessLink_Leader *sLeader;
 extern const u8 *const sPlayersNeededOrModeTexts[][5];
 extern const u8 sText_ID[];
 extern const u8 sText_AwaitingCommunication[];
+extern const u8 sText_AwaitingLinkPressStart[];
+extern const u8 sText_BButtonCancel[];
+extern const u8 sText_AreTheseMembersOK[];
+extern const u8 sText_CancelModeWithTheseMembers[];
+extern const u8 sText_ModeWithTheseMembersWillBeCanceled[];
+extern const u8 sText_AnOKWasSentToPlayer[];
+extern const u8 *const sPlayerUnavailableTexts[];
+extern const u32 sLinkGroupToActivityAndCapacity[];
+extern const u8 *const sLinkGroupActivityNameTexts[];
+extern const struct WindowTemplate sWindowTemplate_BButtonCancel;
+extern const struct WindowTemplate sWindowTemplate_PlayerList;
+extern const struct WindowTemplate sWindowTemplate_5PlayerList;
+extern const struct WindowTemplate sWindowTemplate_NumPlayerMode;
+extern const struct ListMenuTemplate sListMenuTemplate_PossibleGroupMembers;
 
 // JP: these helpers are still in asm/union_room.s; referenced by their sub_
 // names until converted.
 extern void PrintUnionRoomText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 colorIdx);
 extern u16 ReadAsU16(const u8 *ptr);
+extern bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 stateIfChanged, u32 stateIfUnchanged);
+extern u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
+extern s8 UnionRoomHandleYesNo(u8 *textState, bool32 noActionButton);
+extern bool8 PrintOnTextbox(u8 *textState, const u8 *str);
+extern u8 CreateTask_ListenForCompatiblePartners(struct RfuIncomingPlayerList *list, u32 arg1);
+extern void Leader_DestroyResources(struct WirelessLink_Leader *data);
+extern void CreateTask_RunScriptAndFadeToActivity(void);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 
@@ -179,4 +209,332 @@ void TryBecomeLinkLeader(void)
     data->state = LL_STATE_INIT;
     data->textState = 0;
     gSpecialVar_Result = LINKUP_ONGOING;
+}
+
+static void Task_TryBecomeLinkLeader(u8 taskId)
+{
+    u32 id, val;
+    struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
+
+    switch (data->state)
+    {
+    case LL_STATE_INIT:
+        if (gSpecialVar_0x8004 == LINK_GROUP_BATTLE_TOWER && gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_OPEN)
+            gSpecialVar_0x8004++;
+        gPlayerCurrActivity = sLinkGroupToActivityAndCapacity[gSpecialVar_0x8004];
+        sPlayerActivityGroupSize = sLinkGroupToActivityAndCapacity[gSpecialVar_0x8004] >> 8;
+        SetHostRfuGameData(gPlayerCurrActivity, 0, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_LinkLeader(GROUP_MAX(sPlayerActivityGroupSize));
+        data->state = LL_STATE_INIT2;
+        break;
+    case LL_STATE_INIT2:
+        data->incomingPlayerList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        data->playerList = AllocZeroed(MAX_RFU_PLAYERS * sizeof(struct RfuPlayer));
+        data->playerListBackup = AllocZeroed(MAX_RFU_PLAYERS * sizeof(struct RfuPlayer));
+        ClearIncomingPlayerList(data->incomingPlayerList, RFU_CHILD_MAX);
+        ClearRfuPlayerList(data->playerList->players, MAX_RFU_PLAYERS);
+        CopyHostRfuGameDataAndUsername(&data->playerList->players[0].rfu.data, data->playerList->players[0].rfu.name);
+        data->playerList->players[0].timeoutCounter = 0;
+        data->playerList->players[0].groupScheduledAnim = UNION_ROOM_SPAWN_IN;
+        data->playerList->players[0].useRedText = FALSE;
+        data->playerList->players[0].newPlayerCountdown = 0;
+        data->listenTaskId = CreateTask_ListenForCompatiblePartners(data->incomingPlayerList, 0xFF);
+        data->bButtonCancelWindowId = AddWindow(&sWindowTemplate_BButtonCancel);
+        switch (GROUP_MAX(sPlayerActivityGroupSize))
+        {
+        case 2:
+        case 3:
+        case 4:
+            data->listWindowId = AddWindow(&sWindowTemplate_PlayerList);
+            break;
+        case 5:
+            data->listWindowId = AddWindow(&sWindowTemplate_5PlayerList);
+            break;
+        }
+        data->nPlayerModeWindowId = AddWindow(&sWindowTemplate_NumPlayerMode);
+
+        FillWindowPixelBuffer(data->bButtonCancelWindowId, PIXEL_FILL(2));
+        PrintUnionRoomText(data->bButtonCancelWindowId, FONT_NORMAL, sText_BButtonCancel, 8, 2, UR_COLOR_CANCEL);
+        PutWindowTilemap(data->bButtonCancelWindowId);
+        CopyWindowToVram(data->bButtonCancelWindowId, COPYWIN_GFX);
+
+        DrawStdWindowFrame(data->listWindowId, FALSE);
+        gMultiuseListMenuTemplate = sListMenuTemplate_PossibleGroupMembers;
+        gMultiuseListMenuTemplate.windowId = data->listWindowId;
+        data->listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+
+        DrawStdWindowFrame(data->nPlayerModeWindowId, FALSE);
+        PutWindowTilemap(data->nPlayerModeWindowId);
+        CopyWindowToVram(data->nPlayerModeWindowId, COPYWIN_GFX);
+
+        CopyBgTilemapBufferToVram(0);
+        data->playerCount = 1;
+        data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+        break;
+    case LL_STATE_GET_AWAITING_PLAYERS_TEXT:
+        StringCopy(gStringVar1, sLinkGroupActivityNameTexts[gPlayerCurrActivity]);
+        if (GROUP_MIN(sPlayerActivityGroupSize) != 0)
+        {
+            if (data->playerCount > GROUP_MIN(sPlayerActivityGroupSize) - 1 && GROUP_MAX(sPlayerActivityGroupSize) != 0)
+                StringExpandPlaceholders(gStringVar4, sText_AwaitingLinkPressStart);
+            else
+                StringExpandPlaceholders(gStringVar4, sText_AwaitingCommunication);
+        }
+        else
+        {
+            GetAwaitingCommunicationText(gStringVar4, gPlayerCurrActivity);
+        }
+
+        PrintNumPlayersWaitingForMsg(data->nPlayerModeWindowId, sPlayerActivityGroupSize, data->playerCount);
+        data->state = LL_STATE_PRINT_AWAITING_PLAYERS;
+        break;
+    case LL_STATE_PRINT_AWAITING_PLAYERS:
+        if (PrintOnTextbox(&data->textState, gStringVar4))
+            data->state = LL_STATE_AWAIT_PLAYERS;
+        break;
+    case LL_STATE_AWAIT_PLAYERS:
+        Leader_SetStateIfMemberListChanged(data, LL_STATE_ACCEPT_NEW_MEMBER_PROMPT, LL_STATE_MEMBER_LEFT);
+        if (JOY_NEW(B_BUTTON))
+        {
+            if (data->playerCount == 1)
+                data->state = LL_STATE_SHUTDOWN_AND_FAIL;
+            else if (GROUP_MIN2(sPlayerActivityGroupSize) != 0)
+                data->state = LL_STATE_CANCEL_WITH_MSG;
+            else
+                data->state = LL_STATE_CANCEL_PROMPT;
+        }
+        if (GROUP_MIN(sPlayerActivityGroupSize) != 0
+            && data->playerCount > GROUP_MIN(sPlayerActivityGroupSize) - 1
+            && GROUP_MAX(sPlayerActivityGroupSize) != 0
+            && IsRfuCommunicatingWithAllChildren()
+            && JOY_NEW(START_BUTTON))
+        {
+            data->state = LL_STATE_MEMBERS_OK_PROMPT;
+            LinkRfu_StopManagerAndFinalizeSlots();
+        }
+        if (data->state == LL_STATE_AWAIT_PLAYERS && RfuTryDisconnectLeavingChildren())
+        {
+            // At least 1 group member has left or is trying to leave
+            data->state = LL_STATE_WAIT_DISCONNECT_CHILD;
+        }
+        break;
+    case LL_STATE_WAIT_DISCONNECT_CHILD:
+        // Resume after ensuring all members trying to leave have left
+        if (!RfuTryDisconnectLeavingChildren())
+        {
+            data->state = LL_STATE_AWAIT_PLAYERS;
+            data->playerCount = LeaderPrunePlayerList(data->playerList);
+        }
+        break;
+    case LL_STATE_MEMBER_LEFT:
+        // BUG: sPlayerActivityGroupSize was meant below, not gPlayerCurrActivity
+        //      This will be false for all but ACTIVITY_BATTLE_DOUBLE and ACTIVITY_DECLINE
+        //      All this changes is which of two texts gets printed
+        id = (GROUP_MAX(gPlayerCurrActivity) == 2) ? 1 : 0;
+        if (PrintOnTextbox(&data->textState, sPlayerUnavailableTexts[id]))
+        {
+            data->playerCount = LeaderPrunePlayerList(data->playerList);
+            RedrawListMenu(data->listTaskId);
+            data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+        }
+        break;
+    case LL_STATE_MEMBER_DISCONNECTED:
+        id = (GROUP_MAX(sPlayerActivityGroupSize) == 2) ? 0 : 1;
+        if (PrintOnTextbox(&data->textState, sPlayerUnavailableTexts[id]))
+        {
+            data->state = LL_STATE_SHUTDOWN_AND_RETRY;
+        }
+        break;
+    case LL_STATE_ACCEPT_NEW_MEMBER_PROMPT:
+        if (PrintOnTextbox(&data->textState, gStringVar4))
+        {
+            data->state = LL_STATE_ACCEPT_NEW_MEMBER_PROMPT_HANDLE_INPUT;
+        }
+        break;
+    case LL_STATE_ACCEPT_NEW_MEMBER_PROMPT_HANDLE_INPUT:
+        switch (UnionRoomHandleYesNo(&data->textState, HasTrainerLeftPartnersList(ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name)))
+        {
+        case 0: // YES
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(0, 0);
+            data->joinRequestAnswer = RFU_STATUS_JOIN_GROUP_OK;
+            SendRfuStatusToPartner(data->joinRequestAnswer, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+            data->state = LL_STATE_UPDATE_AFTER_JOIN_REQUEST;
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            data->joinRequestAnswer = RFU_STATUS_JOIN_GROUP_NO;
+            SendRfuStatusToPartner(data->joinRequestAnswer, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+            data->state = LL_STATE_UPDATE_AFTER_JOIN_REQUEST;
+            break;
+        case -3:
+            data->state = LL_STATE_WAIT_DISCONNECT_CHILD;
+            break;
+        }
+        break;
+    case LL_STATE_UPDATE_AFTER_JOIN_REQUEST:
+        val = WaitSendRfuStatusToPartner(ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId), data->playerList->players[data->playerCount].rfu.name);
+        if (val == 1) // Send complete
+        {
+            if (data->joinRequestAnswer == RFU_STATUS_JOIN_GROUP_OK)
+            {
+                // Sent "OK"
+                data->playerList->players[data->playerCount].newPlayerCountdown = 0;
+                RedrawListMenu(data->listTaskId);
+                data->playerCount++;
+                if (data->playerCount == GROUP_MAX(sPlayerActivityGroupSize))
+                {
+                    if (GROUP_MIN2(sPlayerActivityGroupSize) != 0 || data->playerCount == RFU_CHILD_MAX)
+                    {
+                        data->state = LL_STATE_MEMBERS_OK_PROMPT;
+                    }
+                    else
+                    {
+                        StringCopy7(gStringVar1, data->playerList->players[data->playerCount - 1].rfu.name);
+                        StringExpandPlaceholders(gStringVar4, sText_AnOKWasSentToPlayer);
+                        data->state = LL_STATE_ACCEPTED_FINAL_MEMBER;
+                    }
+
+                    LinkRfu_StopManagerAndFinalizeSlots();
+                    PrintNumPlayersWaitingForMsg(data->nPlayerModeWindowId, sPlayerActivityGroupSize, data->playerCount);
+                }
+                else
+                {
+                    data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+                }
+            }
+            else // Member disconnected
+            {
+                RequestDisconnectSlotByTrainerNameAndId(data->playerList->players[data->playerCount].rfu.name, ReadAsU16(data->playerList->players[data->playerCount].rfu.data.compatibility.playerTrainerId));
+                data->playerList->players[data->playerCount].groupScheduledAnim = UNION_ROOM_SPAWN_NONE;
+                LeaderPrunePlayerList(data->playerList);
+                RedrawListMenu(data->listTaskId);
+                data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+            }
+
+            data->joinRequestAnswer = 0;
+        }
+        else if (val == 2)
+        {
+            // Disconnect
+            RfuSetStatus(RFU_STATUS_OK, 0);
+            data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+        }
+        break;
+    case LL_STATE_ACCEPTED_FINAL_MEMBER:
+        if (PrintOnTextbox(&data->textState, gStringVar4))
+            data->state = LL_STATE_WAIT_AND_CONFIRM_MEMBERS;
+        break;
+    case LL_STATE_WAIT_AND_CONFIRM_MEMBERS:
+        if (++data->delayTimerAfterOk > 120)
+            data->state = LL_STATE_CONFIRMED_MEMBERS;
+        break;
+    case LL_STATE_MEMBERS_OK_PROMPT:
+        if (PrintOnTextbox(&data->textState, sText_AreTheseMembersOK))
+            data->state = LL_STATE_MEMBERS_OK_PROMPT_HANDLE_INPUT;
+        break;
+    case LL_STATE_MEMBERS_OK_PROMPT_HANDLE_INPUT:
+        switch (UnionRoomHandleYesNo(&data->textState, FALSE))
+        {
+        case 0: // YES
+            data->state = LL_STATE_CONFIRMED_MEMBERS;
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            if (GROUP_MIN2(sPlayerActivityGroupSize) != 0)
+                data->state = LL_STATE_CANCEL_WITH_MSG;
+            else
+                data->state = LL_STATE_CANCEL_PROMPT;
+            break;
+        }
+        break;
+    case LL_STATE_CANCEL_PROMPT:
+        if (PrintOnTextbox(&data->textState, sText_CancelModeWithTheseMembers))
+            data->state = LL_STATE_CANCEL_PROMPT_HANDLE_INPUT;
+        break;
+    case LL_STATE_CANCEL_PROMPT_HANDLE_INPUT:
+        switch (UnionRoomHandleYesNo(&data->textState, FALSE))
+        {
+        case 0: // YES
+            data->state = LL_STATE_SHUTDOWN_AND_FAIL;
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            if (GROUP_MIN2(sPlayerActivityGroupSize) != 0)
+                data->state = LL_STATE_MEMBERS_OK_PROMPT;
+            else if (data->playerCount == GROUP_MAX(sPlayerActivityGroupSize))
+                data->state = LL_STATE_MEMBERS_OK_PROMPT;
+            else
+                data->state = LL_STATE_GET_AWAITING_PLAYERS_TEXT;
+            break;
+        }
+        break;
+    case LL_STATE_CONFIRMED_MEMBERS:
+        if (!Leader_SetStateIfMemberListChanged(data, LL_STATE_ACCEPT_NEW_MEMBER_PROMPT, LL_STATE_MEMBER_DISCONNECTED))
+            data->state = LL_STATE_FINAL_MEMBER_CHECK;
+        break;
+    case LL_STATE_FINAL_MEMBER_CHECK:
+        if (LmanAcceptSlotFlagIsNotZero())
+        {
+            if (WaitRfuState(FALSE))
+            {
+                data->state = LL_STATE_TRY_START_ACTIVITY;
+            }
+            else
+            {
+                if (++data->memberConfirmTimeout > 300)
+                {
+                    data->state = LL_STATE_MEMBER_DISCONNECTED;
+                    data->textState = 0;
+                }
+            }
+        }
+        else
+        {
+            data->state = LL_STATE_MEMBER_DISCONNECTED;
+            data->textState = 0;
+        }
+        break;
+    case LL_STATE_CANCEL_WITH_MSG:
+        if (PrintOnTextbox(&data->textState, sText_ModeWithTheseMembersWillBeCanceled))
+            data->state = LL_STATE_SHUTDOWN_AND_FAIL;
+        break;
+    case LL_STATE_SHUTDOWN_AND_RETRY:
+    case LL_STATE_SHUTDOWN_AND_FAIL:
+        DestroyWirelessStatusIndicatorSprite();
+        LinkRfu_Shutdown();
+        Leader_DestroyResources(data);
+        data->state++; // LL_STATE_RETRY or LL_STATE_FAILED
+        break;
+    case LL_STATE_FAILED:
+        ScriptContext_Enable();
+        DestroyTask(taskId);
+        gSpecialVar_Result = LINKUP_FAILED;
+        break;
+    case LL_STATE_RETRY:
+        ScriptContext_Enable();
+        DestroyTask(taskId);
+        gSpecialVar_Result = LINKUP_RETRY_ROLE_ASSIGN;
+        break;
+    case LL_STATE_TRY_START_ACTIVITY:
+        if (RfuHasErrored())
+        {
+            data->state = LL_STATE_MEMBER_DISCONNECTED;
+        }
+        else
+        {
+            if (gReceivedRemoteLinkPlayers)
+            {
+                if (IsActivityWithVariableGroupSize(gPlayerCurrActivity))
+                    GetOtherPlayersInfoFlags();
+                UpdateGameData_GroupLockedIn(TRUE);
+                CreateTask_RunScriptAndFadeToActivity();
+                Leader_DestroyResources(data);
+                DestroyTask(taskId);
+            }
+        }
+        break;
+    }
 }
