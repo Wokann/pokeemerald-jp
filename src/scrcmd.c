@@ -82,8 +82,8 @@ void DoWhiteFadeWarp(void);
 void ResetInitialPlayerAvatarState(void);
 void TryOverrideEventObjectTemplateCoords(u8 localId, u8 x, u8 y);
 void npc_by_local_id_and_map_set_field_1_bit_x20(u8 localId, u8 mapGroup, u8 mapNum, u8 flag);
-void sub_0808E0FC(u8 a, u8 b);
-void sub_0808E154(u8 a, u8 b);
+void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup, u8 priority);
+void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup);
 void sub_0812FDE0(u8 a);
 void ShowContestWinner(void);
 u16 MossdeepGym_MoveEvents(u8 a);
@@ -1160,62 +1160,29 @@ bool8 ScrCmd_hideobject_at(struct ScriptContext *ctx)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ScrCmd_setobjectpriority(struct ScriptContext *ctx)
+bool8 ScrCmd_setobjectsubpriority(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r5, r0, #0\n\t"
-            "bl ScriptReadHalfword\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "bl VarGet\n\t"
-            "ldr r3, [r5, #8]\n\t"
-            "ldrb r2, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "str r3, [r5, #8]\n\t"
-            "ldrb r1, [r3]\n\t"
-            "adds r4, r3, #1\n\t"
-            "str r4, [r5, #8]\n\t"
-            "ldrb r3, [r3, #1]\n\t"
-            "adds r4, #1\n\t"
-            "str r4, [r5, #8]\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "adds r3, #0x53\n\t"
-            "lsls r3, r3, #0x18\n\t"
-            "lsrs r3, r3, #0x18\n\t"
-            "bl sub_0808E0FC\n\t"
-            "movs r0, #0\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t.syntax divided\n");
+    u16 localId = VarGet(ScriptReadHalfword(ctx));
+    u8 mapGroup = ScriptReadByte(ctx);
+    u8 mapNum = ScriptReadByte(ctx);
+    u8 priority = ScriptReadByte(ctx);
+
+    SetObjectSubpriority(localId, mapNum, mapGroup, priority + 0x53);
+    return FALSE;
 }
 
 
-__attribute__((naked)) bool8 ScrCmd_resetobjectpriority(struct ScriptContext *ctx)
+
+bool8 ScrCmd_resetobjectsubpriority(struct ScriptContext *ctx)
 {
-    __asm__(".syntax unified\n\t.code 16\n\t"
-            "push {r4, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "bl ScriptReadHalfword\n\t"
-            "lsls r0, r0, #0x10\n\t"
-            "lsrs r0, r0, #0x10\n\t"
-            "bl VarGet\n\t"
-            "ldr r3, [r4, #8]\n\t"
-            "ldrb r2, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "str r3, [r4, #8]\n\t"
-            "ldrb r1, [r3]\n\t"
-            "adds r3, #1\n\t"
-            "str r3, [r4, #8]\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "lsrs r0, r0, #0x18\n\t"
-            "bl sub_0808E154\n\t"
-            "movs r0, #0\n\t"
-            "pop {r4}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t.syntax divided\n");
+    u16 localId = VarGet(ScriptReadHalfword(ctx));
+    u8 mapGroup = ScriptReadByte(ctx);
+    u8 mapNum = ScriptReadByte(ctx);
+
+    ResetObjectSubpriority(localId, mapNum, mapGroup);
+    return FALSE;
 }
+
 
 
 bool8 ScrCmd_faceplayer(struct ScriptContext *ctx)

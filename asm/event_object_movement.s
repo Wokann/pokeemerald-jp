@@ -2631,8 +2631,8 @@ _0808E0F4:
 _0808E0F8: .4byte 0x02036FF0
 	thumb_func_end AllowObjectAtPosTriggerGroundEffects
 
-	thumb_func_start sub_0808E0FC
-sub_0808E0FC: @ 0x0808E0FC
+	thumb_func_start SetObjectSubpriority
+SetObjectSubpriority: @ 0x0808E0FC
 	push {r4, lr}
 	sub sp, #4
 	lsls r0, r0, #0x18
@@ -2675,10 +2675,10 @@ _0808E142:
 	.align 2, 0
 _0808E14C: .4byte 0x02036FF0
 _0808E150: .4byte 0x020205AC
-	thumb_func_end sub_0808E0FC
+	thumb_func_end SetObjectSubpriority
 
-	thumb_func_start sub_0808E154
-sub_0808E154: @ 0x0808E154
+	thumb_func_start ResetObjectSubpriority
+ResetObjectSubpriority: @ 0x0808E154
 	push {lr}
 	sub sp, #4
 	lsls r0, r0, #0x18
@@ -2714,7 +2714,7 @@ _0808E190:
 	bx r0
 	.align 2, 0
 _0808E198: .4byte 0x02036FF0
-	thumb_func_end sub_0808E154
+	thumb_func_end ResetObjectSubpriority
 
 	thumb_func_start sub_0808E19C
 sub_0808E19C: @ 0x0808E19C

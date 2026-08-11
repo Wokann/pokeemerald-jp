@@ -184,8 +184,8 @@ gScriptCmdTable:
 	script_cmd_table_entry SCR_OP_RESETWEATHER ScrCmd_resetweather @ 0xA5
 	script_cmd_table_entry SCR_OP_SETSTEPCALLBACK ScrCmd_setstepcallback @ 0xA6
 	script_cmd_table_entry SCR_OP_SETMAPLAYOUTINDEX ScrCmd_setmaplayoutindex @ 0xA7
-	script_cmd_table_entry SCR_OP_A8 ScrCmd_setobjectpriority @ 0xA8
-	script_cmd_table_entry SCR_OP_A9 ScrCmd_resetobjectpriority @ 0xA9
+	script_cmd_table_entry SCR_OP_SETOBJECTSUBPRIORITY ScrCmd_setobjectsubpriority @ 0xA8
+	script_cmd_table_entry SCR_OP_RESETOBJECTSUBPRIORITY ScrCmd_resetobjectsubpriority @ 0xA9
 	script_cmd_table_entry SCR_OP_CREATEVOBJECT ScrCmd_createvobject @ 0xAA
 	script_cmd_table_entry SCR_OP_TURNVOBJECT ScrCmd_turnvobject @ 0xAB
 	script_cmd_table_entry SCR_OP_OPENDOOR ScrCmd_opendoor @ 0xAC
