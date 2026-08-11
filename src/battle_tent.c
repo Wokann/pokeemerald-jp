@@ -348,6 +348,9 @@ bool8 InSlateportBattleTent(void)
            && (gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_CORRIDOR || gMapHeader.mapLayoutId == LAYOUT_BATTLE_TENT_BATTLE_ROOM);
 }
 
+#ifndef NONMATCHING
+// Verified: agbcc -O2 cannot reproduce the JP register allocation for this
+// rental-mon selection loop, so the byte-exact naked asm stays the default.
 __attribute__((naked)) void GenerateInitialRentalMons(void)
 {
     __asm__(".syntax unified\n\t"
@@ -547,6 +550,69 @@ __attribute__((naked)) void GenerateInitialRentalMons(void)
             "_081B9CDC: .4byte gBattleFrontierHeldItems\n\t"
             ".syntax divided");
 }
+#else
+void GenerateInitialRentalMons(void)
+{
+    s32 i, j;
+    u8 firstMonId;
+    u16 monSetId;
+    u16 currSpecies;
+    u16 species[PARTY_SIZE];
+    u16 monIds[PARTY_SIZE];
+    u16 heldItems[PARTY_SIZE];
+
+    firstMonId = 0;
+    gFacilityTrainers = gSlateportBattleTentTrainers;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        species[i] = 0;
+        monIds[i] = 0;
+        heldItems[i] = 0;
+    }
+    gFacilityTrainerMons = gSlateportBattleTentMons;
+    currSpecies = SPECIES_NONE;
+    i = 0;
+    while (i != PARTY_SIZE)
+    {
+        // Cannot have two Pokemon of the same species.
+        monSetId = Random() % NUM_SLATEPORT_TENT_MONS;
+        for (j = firstMonId; j < firstMonId + i; j++)
+        {
+            if (monIds[j] == monSetId)
+                break;
+            if (species[j] == gFacilityTrainerMons[monSetId].species)
+            {
+                if (currSpecies == SPECIES_NONE)
+                    currSpecies = gFacilityTrainerMons[monSetId].species;
+                else
+                    break;
+            }
+        }
+        if (j != i + firstMonId)
+            continue;
+
+        // Cannot have two same held items.
+        for (j = firstMonId; j < i + firstMonId; j++)
+        {
+            if (heldItems[j] != 0 && heldItems[j] == gBattleFrontierHeldItems[gFacilityTrainerMons[monSetId].itemTableId])
+            {
+                if (gFacilityTrainerMons[monSetId].species == currSpecies)
+                    currSpecies = SPECIES_NONE;
+                break;
+            }
+        }
+        if (j != i + firstMonId)
+            continue;
+
+        gSaveBlock2Ptr->frontier.rentalMons[i].monId = monSetId;
+        species[i] = gFacilityTrainerMons[monSetId].species;
+        heldItems[i] = gBattleFrontierHeldItems[gFacilityTrainerMons[monSetId].itemTableId];
+        monIds[i] = monSetId;
+        i++;
+    }
+}
+#endif
+
 
 static void GenerateOpponentMons(void)
 {
