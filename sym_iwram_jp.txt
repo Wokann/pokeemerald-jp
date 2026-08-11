@@ -35,6 +35,7 @@ sLastTextFgColor = ABSOLUTE(0x030009EC);
 sLastTextShadowColor = ABSOLUTE(0x030009EE);
 gSaveBlock2Ptr = ABSOLUTE(0x03005AF0);
 sLeader = ABSOLUTE(0x03000DA0);
+sGroup = ABSOLUTE(0x03000DA4);
 gSaveBlock1Ptr = ABSOLUTE(0x03005AEC);
 gMultiuseListMenuTemplate = ABSOLUTE(0x03006050);
 sSendRecvMgr = ABSOLUTE(0x030012C0);

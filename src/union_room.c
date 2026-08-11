@@ -62,6 +62,30 @@ enum {
     UR_COLOR_TRADE_BOARD_OTHER,
 };
 
+// States for Task_TryJoinLinkGroup
+enum {
+    LG_STATE_INIT,
+    LG_STATE_CHOOSE_LEADER_MSG,
+    LG_STATE_INIT_WINDOWS,
+    LG_STATE_CHOOSE_LEADER_HANDLE_INPUT,
+    LG_STATE_ASK_JOIN_GROUP = 5,
+    LG_STATE_MAIN,
+    LG_STATE_ASK_LEAVE_GROUP,
+    LG_STATE_ASK_LEAVE_GROUP_HANDLE_INPUT,
+    LG_STATE_WAIT_LEAVE_GROUP,
+    LG_STATE_CANCEL_CHOOSE_LEADER,
+    LG_STATE_CANCELED,
+    LG_STATE_RFU_ERROR,
+    LG_STATE_RFU_ERROR_SHUTDOWN,
+    LG_STATE_DISCONNECTED,
+    LG_STATE_RETRY_CONNECTION,
+    LG_STATE_TRADE_NOT_READY = 18,
+    LG_STATE_TRADE_NOT_READY_RETRY,
+    LG_STATE_READY_START_ACTIVITY,
+    LG_STATE_START_ACTIVITY,
+    LG_STATE_SHUTDOWN = 23,
+};
+
 // JP: RAM data bound via sym_*_jp.txt (JP uses fixed IWRAM/EWRAM addresses
 // instead of US COMMON_DATA / EWRAM_DATA definitions).
 extern EWRAM_DATA u8 gPlayerCurrActivity;
@@ -73,6 +97,7 @@ extern EWRAM_DATA union
     struct WirelessLink_URoom *uRoom;
 } sWirelessLinkMain;
 extern IWRAM_DATA struct WirelessLink_Leader *sLeader;
+extern IWRAM_DATA struct WirelessLink_Group *sGroup;
 
 // JP: ROM data bound via ld_script_jp.txt.
 extern const u8 *const sPlayersNeededOrModeTexts[][5];
@@ -93,15 +118,25 @@ extern const u8 sText_AwaitingPlayersResponse[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 sText_PlayerSentBackOK[];
 extern const u8 sText_PlayerOKdRegistration[];
+extern const u8 sText_ChooseJoinCancel[];
+extern const u8 sText_AwaitingOtherMembers[];
+extern const u8 sText_QuitBeingMember[];
 extern const u8 *const sPlayerUnavailableTexts[];
 extern const struct RfuPlayerData sUnionRoomPlayer_DummyRfu;
+extern const u8 *const sChooseTrainerTexts[];
+extern const u8 *const sCantTransmitToTrainerTexts[];
+extern const u8 *const sPlayerDisconnectedTexts[];
 extern const u32 sLinkGroupToActivityAndCapacity[];
+extern const u8 sLinkGroupToURoomActivity[];
 extern const u8 *const sLinkGroupActivityNameTexts[];
 extern const struct WindowTemplate sWindowTemplate_BButtonCancel;
 extern const struct WindowTemplate sWindowTemplate_PlayerList;
 extern const struct WindowTemplate sWindowTemplate_5PlayerList;
 extern const struct WindowTemplate sWindowTemplate_NumPlayerMode;
+extern const struct WindowTemplate sWindowTemplate_GroupList;
+extern const struct WindowTemplate sWindowTemplate_PlayerNameAndId;
 extern const struct ListMenuTemplate sListMenuTemplate_PossibleGroupMembers;
+extern const struct ListMenuTemplate sListMenuTemplate_UnionRoomGroups;
 
 // JP: these helpers are still in asm/union_room.s; referenced by their sub_
 // names until converted.
@@ -115,11 +150,18 @@ extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 extern void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 extern u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 extern u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
+extern u32 IsTryingToTradeAcrossVersionTooSoon(struct WirelessLink_Group *group, s32 playerId);
+extern void AskToJoinRfuGroup(struct WirelessLink_Group *group, s32 playerId);
+extern u8 GetNewLeaderCandidate(void);
+extern void SendLeaveGroupNotice(void);
+extern void JoinGroup_EnableScriptContexts(void);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 static void Leader_DestroyResources(struct WirelessLink_Leader *data);
 bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 joinedState, u32 droppedState);
 u8 LeaderPrunePlayerList(struct RfuPlayerList *playerList);
+void TryJoinLinkGroup(void);
+static void Task_TryJoinLinkGroup(u8 taskId);
 
 void Task_Idle(u8 taskId)
 {
@@ -802,4 +844,300 @@ u8 LeaderPrunePlayerList(struct RfuPlayerList *list)
     }
 
     return playerCount;
+}
+
+void TryJoinLinkGroup(void)
+{
+    u8 taskId;
+    struct WirelessLink_Group *data;
+
+    taskId = CreateTask(Task_TryJoinLinkGroup, 0);
+    sWirelessLinkMain.group = data = (void *)(gTasks[taskId].data);
+    sGroup = data;
+
+    data->state = LG_STATE_INIT;
+    data->textState = 0;
+    gSpecialVar_Result = LINKUP_ONGOING;
+}
+
+static void Task_TryJoinLinkGroup(u8 taskId)
+{
+    s32 id;
+    struct WirelessLink_Group *data = sWirelessLinkMain.group;
+
+    switch (data->state)
+    {
+    case LG_STATE_INIT:
+        if (gSpecialVar_0x8004 == LINK_GROUP_BATTLE_TOWER && gSaveBlock2Ptr->frontier.lvlMode == FRONTIER_LVL_OPEN)
+            gSpecialVar_0x8004++;
+        gPlayerCurrActivity = sLinkGroupToURoomActivity[gSpecialVar_0x8004];
+        SetHostRfuGameData(gPlayerCurrActivity, 0, FALSE);
+        SetWirelessCommType1();
+        OpenLink();
+        InitializeRfuLinkManager_JoinGroup();
+        data->incomingPlayerList = AllocZeroed(RFU_CHILD_MAX * sizeof(struct RfuIncomingPlayer));
+        data->playerList = AllocZeroed(MAX_RFU_PLAYER_LIST_SIZE * sizeof(struct RfuPlayer));
+        data->state = LG_STATE_CHOOSE_LEADER_MSG;
+        break;
+    case LG_STATE_CHOOSE_LEADER_MSG:
+        if (PrintOnTextbox(&data->textState, sChooseTrainerTexts[gSpecialVar_0x8004]))
+            data->state = LG_STATE_INIT_WINDOWS;
+        break;
+    case LG_STATE_INIT_WINDOWS:
+        ClearIncomingPlayerList(data->incomingPlayerList, RFU_CHILD_MAX);
+        ClearRfuPlayerList(data->playerList->players, MAX_RFU_PLAYER_LIST_SIZE);
+        data->listenTaskId = CreateTask_ListenForCompatiblePartners(data->incomingPlayerList, gSpecialVar_0x8004);
+        data->bButtonCancelWindowId = AddWindow(&sWindowTemplate_BButtonCancel);
+        data->listWindowId = AddWindow(&sWindowTemplate_GroupList);
+        data->playerNameAndIdWindowId = AddWindow(&sWindowTemplate_PlayerNameAndId);
+
+        FillWindowPixelBuffer(data->bButtonCancelWindowId, PIXEL_FILL(2));
+        PrintUnionRoomText(data->bButtonCancelWindowId, FONT_NORMAL, sText_ChooseJoinCancel, 8, 2, UR_COLOR_CANCEL);
+        PutWindowTilemap(data->bButtonCancelWindowId);
+        CopyWindowToVram(data->bButtonCancelWindowId, COPYWIN_GFX);
+
+        DrawStdWindowFrame(data->listWindowId, FALSE);
+        gMultiuseListMenuTemplate = sListMenuTemplate_UnionRoomGroups;
+        gMultiuseListMenuTemplate.windowId = data->listWindowId;
+        data->listTaskId = ListMenuInit(&gMultiuseListMenuTemplate, 0, 0);
+
+        DrawStdWindowFrame(data->playerNameAndIdWindowId, FALSE);
+        PutWindowTilemap(data->playerNameAndIdWindowId);
+        PrintPlayerNameAndIdOnWindow(data->playerNameAndIdWindowId);
+        CopyWindowToVram(data->playerNameAndIdWindowId, COPYWIN_GFX);
+
+        CopyBgTilemapBufferToVram(0);
+        data->leaderId = 0;
+        data->state = LG_STATE_CHOOSE_LEADER_HANDLE_INPUT;
+        break;
+    case LG_STATE_CHOOSE_LEADER_HANDLE_INPUT:
+        id = GetNewLeaderCandidate();
+        switch (id)
+        {
+        case 1:
+            PlaySE(SE_PC_LOGIN);
+            RedrawListMenu(data->listTaskId);
+            break;
+        case 0:
+            id = ListMenu_ProcessInput(data->listTaskId);
+            if (JOY_NEW(A_BUTTON) && id != LIST_NOTHING_CHOSEN)
+            {
+                // Needed to match
+                u32 UNUSED activity = data->playerList->players[id].rfu.data.activity;
+
+                if (data->playerList->players[id].groupScheduledAnim == UNION_ROOM_SPAWN_IN && !data->playerList->players[id].rfu.data.startedActivity)
+                {
+                    u32 readyStatus = IsTryingToTradeAcrossVersionTooSoon(data, id);
+                    if (readyStatus == UR_TRADE_READY)
+                    {
+                        // Trading is allowed, or not trading at all
+                        AskToJoinRfuGroup(data, id);
+                        data->state = LG_STATE_ASK_JOIN_GROUP;
+                        PlaySE(SE_POKENAV_ON);
+                    }
+                    else
+                    {
+                        StringCopy(gStringVar4, sCantTransmitToTrainerTexts[readyStatus - 1]);
+                        data->state = LG_STATE_TRADE_NOT_READY;
+                        PlaySE(SE_POKENAV_ON);
+                    }
+                }
+                else
+                {
+                    PlaySE(SE_WALL_HIT);
+                }
+            }
+            else if (JOY_NEW(B_BUTTON))
+            {
+                data->state = LG_STATE_CANCEL_CHOOSE_LEADER;
+            }
+            break;
+        default:
+            RedrawListMenu(data->listTaskId);
+            break;
+        }
+        break;
+    case LG_STATE_ASK_JOIN_GROUP:
+        GetYouAskedToJoinGroupPleaseWaitMessage(gStringVar4, gPlayerCurrActivity);
+        if (PrintOnTextbox(&data->textState, gStringVar4))
+        {
+            StringCopy7(gStringVar1, &data->playerList->players[data->leaderId].rfu.name);
+            data->state = LG_STATE_MAIN;
+        }
+        break;
+    case LG_STATE_MAIN:
+        if (gReceivedRemoteLinkPlayers)
+        {
+            gPlayerCurrActivity = data->playerList->players[data->leaderId].rfu.data.activity;
+            RfuSetStatus(RFU_STATUS_OK, 0);
+            switch (gPlayerCurrActivity)
+            {
+            case ACTIVITY_BATTLE_SINGLE:
+            case ACTIVITY_BATTLE_DOUBLE:
+            case ACTIVITY_BATTLE_MULTI:
+            case ACTIVITY_TRADE:
+            case ACTIVITY_CHAT:
+            case ACTIVITY_POKEMON_JUMP:
+            case ACTIVITY_BERRY_CRUSH:
+            case ACTIVITY_BERRY_PICK:
+            case ACTIVITY_SPIN_TRADE:
+            case ACTIVITY_BATTLE_TOWER:
+            case ACTIVITY_BATTLE_TOWER_OPEN:
+            case ACTIVITY_RECORD_CORNER:
+            case ACTIVITY_BERRY_BLENDER:
+            case ACTIVITY_WONDER_CARD_DUP:
+            case ACTIVITY_WONDER_NEWS_DUP:
+            case ACTIVITY_CONTEST_COOL:
+            case ACTIVITY_CONTEST_BEAUTY:
+            case ACTIVITY_CONTEST_CUTE:
+            case ACTIVITY_CONTEST_SMART:
+            case ACTIVITY_CONTEST_TOUGH:
+                data->state = LG_STATE_READY_START_ACTIVITY;
+                return;
+            }
+        }
+
+        switch (RfuGetStatus())
+        {
+        case RFU_STATUS_FATAL_ERROR:
+            data->state = LG_STATE_RFU_ERROR;
+            break;
+        case RFU_STATUS_CONNECTION_ERROR:
+        case RFU_STATUS_JOIN_GROUP_NO:
+        case RFU_STATUS_LEAVE_GROUP:
+            data->state = LG_STATE_DISCONNECTED;
+            break;
+        case RFU_STATUS_JOIN_GROUP_OK:
+            GetGroupLeaderSentAnOKMessage(gStringVar4, gPlayerCurrActivity);
+            if (PrintOnTextbox(&data->textState, gStringVar4))
+            {
+                if (gPlayerCurrActivity == ACTIVITY_BATTLE_TOWER || gPlayerCurrActivity == ACTIVITY_BATTLE_TOWER_OPEN)
+                {
+                    RfuSetStatus(RFU_STATUS_ACK_JOIN_GROUP, 0);
+                }
+                else
+                {
+                    RfuSetStatus(RFU_STATUS_WAIT_ACK_JOIN_GROUP, 0);
+                    StringCopy(gStringVar1, sLinkGroupActivityNameTexts[gPlayerCurrActivity]);
+                    StringExpandPlaceholders(gStringVar4, sText_AwaitingOtherMembers);
+                }
+            }
+            break;
+        case RFU_STATUS_WAIT_ACK_JOIN_GROUP:
+            if (data->delayBeforePrint > 240)
+            {
+                if (PrintOnTextbox(&data->textState, gStringVar4))
+                {
+                    RfuSetStatus(RFU_STATUS_ACK_JOIN_GROUP, 0);
+                    data->delayBeforePrint = 0;
+                }
+            }
+            else
+            {
+                switch (gPlayerCurrActivity)
+                {
+                case ACTIVITY_BATTLE_SINGLE:
+                case ACTIVITY_BATTLE_DOUBLE:
+                case ACTIVITY_TRADE:
+                case ACTIVITY_BATTLE_TOWER:
+                case ACTIVITY_BATTLE_TOWER_OPEN:
+                    break;
+                default:
+                    data->delayBeforePrint++;
+                    break;
+                }
+            }
+            break;
+        }
+
+        if (RfuGetStatus() == RFU_STATUS_OK && JOY_NEW(B_BUTTON))
+            data->state = LG_STATE_ASK_LEAVE_GROUP;
+        break;
+    case LG_STATE_ASK_LEAVE_GROUP:
+        if (PrintOnTextbox(&data->textState, sText_QuitBeingMember))
+            data->state = LG_STATE_ASK_LEAVE_GROUP_HANDLE_INPUT;
+        break;
+    case LG_STATE_ASK_LEAVE_GROUP_HANDLE_INPUT:
+        switch (UnionRoomHandleYesNo(&data->textState, RfuGetStatus()))
+        {
+        case 0: // YES
+            SendLeaveGroupNotice();
+            data->state = LG_STATE_WAIT_LEAVE_GROUP;
+            RedrawListMenu(data->listTaskId);
+            break;
+        case 1: // NO
+        case MENU_B_PRESSED:
+            data->state = LG_STATE_ASK_JOIN_GROUP;
+            RedrawListMenu(data->listTaskId);
+            break;
+        case -3:
+            data->state = LG_STATE_MAIN;
+            RedrawListMenu(data->listTaskId);
+            break;
+        }
+        break;
+    case LG_STATE_WAIT_LEAVE_GROUP:
+        if (RfuGetStatus())
+            data->state = LG_STATE_MAIN;
+        break;
+    case LG_STATE_CANCEL_CHOOSE_LEADER: // next: LG_STATE_CANCELED
+    case LG_STATE_RFU_ERROR:            // next: LG_STATE_RFU_ERROR_SHUTDOWN
+    case LG_STATE_DISCONNECTED:         // next: LG_STATE_RETRY_CONNECTION
+    case LG_STATE_TRADE_NOT_READY:      // next: LG_STATE_TRADE_NOT_READY_RETRY
+    case LG_STATE_READY_START_ACTIVITY: // next: LG_STATE_START_ACTIVITY
+        ClearWindowTilemap(data->playerNameAndIdWindowId);
+        ClearStdWindowAndFrame(data->playerNameAndIdWindowId, FALSE);
+        DestroyListMenuTask(data->listTaskId, 0, 0);
+        ClearWindowTilemap(data->bButtonCancelWindowId);
+        ClearStdWindowAndFrame(data->listWindowId, FALSE);
+        CopyBgTilemapBufferToVram(0);
+        RemoveWindow(data->playerNameAndIdWindowId);
+        RemoveWindow(data->listWindowId);
+        RemoveWindow(data->bButtonCancelWindowId);
+        DestroyTask(data->listenTaskId);
+        Free(data->playerList);
+        Free(data->incomingPlayerList);
+        data->state++;
+        break;
+    case LG_STATE_RFU_ERROR_SHUTDOWN:
+        DestroyWirelessStatusIndicatorSprite();
+        if (PrintOnTextbox(&data->textState, sPlayerDisconnectedTexts[RfuGetStatus()]))
+        {
+            gSpecialVar_Result = LINKUP_CONNECTION_ERROR;
+            data->state = LG_STATE_SHUTDOWN;
+        }
+        break;
+    case LG_STATE_CANCELED:
+        DestroyWirelessStatusIndicatorSprite();
+        gSpecialVar_Result = LINKUP_FAILED;
+        data->state = LG_STATE_SHUTDOWN;
+        break;
+    case LG_STATE_RETRY_CONNECTION:
+        // Failure from disconnection
+        // Happens if player or required member(s) leave group
+        // or if player is rejected from joining group
+        DestroyWirelessStatusIndicatorSprite();
+        if (PrintOnTextbox(&data->textState, sPlayerDisconnectedTexts[RfuGetStatus()]))
+        {
+            gSpecialVar_Result = LINKUP_RETRY_ROLE_ASSIGN;
+            data->state = LG_STATE_SHUTDOWN;
+        }
+        break;
+    case LG_STATE_TRADE_NOT_READY_RETRY:
+        if (PrintOnTextbox(&data->textState, gStringVar4))
+        {
+            gSpecialVar_Result = LINKUP_RETRY_ROLE_ASSIGN;
+            data->state = LG_STATE_SHUTDOWN;
+        }
+        break;
+    case LG_STATE_SHUTDOWN:
+        DestroyTask(taskId);
+        JoinGroup_EnableScriptContexts();
+        LinkRfu_Shutdown();
+        break;
+    case LG_STATE_START_ACTIVITY:
+        CreateTask_RunScriptAndFadeToActivity();
+        DestroyTask(taskId);
+        break;
+    }
 }
