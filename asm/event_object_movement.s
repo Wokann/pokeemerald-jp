@@ -24880,6 +24880,15 @@ MovementAction_Finish: @ 0x08097AAC
 	.globl SetVirtualObjectInvisibility
 	.set SetVirtualObjectInvisibility, sub_080975B4
 
+	.globl SetVirtualObjectGraphics
+	.set SetVirtualObjectGraphics, sub_08097524
+
+	.globl IsVirtualObjectInvisible
+	.set IsVirtualObjectInvisible, sub_080975FC
+
+	.globl SetVirtualObjectSpriteAnim
+	.set SetVirtualObjectSpriteAnim, sub_08097634
+
 	.globl ObjectEventFaceOppositeDirection
 	.set ObjectEventFaceOppositeDirection, EventObjectFaceOppositeDirection
 

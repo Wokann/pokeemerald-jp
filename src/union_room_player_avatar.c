@@ -4,6 +4,7 @@
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "gba/isagbprint.h"
+#include "link_rfu.h"
 #include "script.h"
 #include "sprite.h"
 #include "task.h"
@@ -18,11 +19,13 @@
 extern const u8 sUnionRoomObjGfxIds[][NUM_UNION_ROOM_CLASSES + 2];
 extern const s16 sUnionRoomPlayerCoords[][2];
 extern const s8 sUnionRoomGroupOffsets[][2];
+extern const u8 sMemberFacingDirections[];
 extern const u8 sUnionRoomLocalIds[];
 extern const char gAssertFile_rfu_union_tool[];
 extern const char gAssertCond_UnionObjWork[];
 extern struct UnionRoomObject *sUnionObjWork;
 extern void DestroyTask_AnimateUnionRoomPlayers(void);
+extern void SetUnionRoomObjectFacingDirection(s32 memberId, s32 leaderId, u8 facingDirection);
 
 bool32 is_walking_or_running(void)
 {
@@ -137,4 +140,55 @@ void DestroyUnionRoomPlayerSprites(u8 *spriteIds)
     s32 i;
     for (i = 0; i < NUM_UNION_ROOM_SPRITES; i++)
         DestroySprite(&gSprites[spriteIds[i]]);
+}
+
+void SetTilesAroundUnionRoomPlayersPassable(void)
+{
+    s32 i, memberId, x, y;
+    for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+    {
+        for (memberId = 0; memberId < MAX_RFU_PLAYERS; memberId++)
+        {
+            GetUnionRoomPlayerCoords(i, memberId, &x, &y);
+            MapGridSetMetatileImpassabilityAt(x, y, FALSE);
+        }
+    }
+}
+
+u8 GetNewFacingDirectionForUnionRoomPlayer(u32 memberId, u32 leaderId, struct RfuGameData *gameData)
+{
+    if (memberId) // If not leader
+        return sMemberFacingDirections[memberId];
+    else if (gameData->activity == (ACTIVITY_CHAT | IN_UNION_ROOM))
+        return DIR_SOUTH;
+    else
+        return DIR_EAST;
+}
+
+bool32 IsUnionRoomPlayerInvisible(u32 leaderId, u32 memberId)
+{
+    return IsVirtualObjectInvisible(UR_PLAYER_SPRITE_ID(leaderId, memberId) - UR_SPRITE_START_ID);
+}
+
+void SpawnGroupMember(u32 leaderId, u32 memberId, u8 graphicsId, struct RfuGameData *gameData)
+{
+    s32 x, y;
+    s32 id = UR_PLAYER_SPRITE_ID(leaderId, memberId);
+    if (IsUnionRoomPlayerInvisible(leaderId, memberId) == TRUE)
+    {
+        SetVirtualObjectInvisibility(id - UR_SPRITE_START_ID, FALSE);
+        SetVirtualObjectSpriteAnim(id - UR_SPRITE_START_ID, UNION_ROOM_SPAWN_IN);
+    }
+    SetVirtualObjectGraphics(id - UR_SPRITE_START_ID, graphicsId);
+    SetUnionRoomObjectFacingDirection(memberId, leaderId, GetNewFacingDirectionForUnionRoomPlayer(memberId, leaderId, gameData));
+    GetUnionRoomPlayerCoords(leaderId, memberId, &x, &y);
+    MapGridSetMetatileImpassabilityAt(x, y, TRUE);
+}
+
+void DespawnGroupMember(u32 leaderId, u32 memberId)
+{
+    s32 x, y;
+    SetVirtualObjectSpriteAnim(UR_PLAYER_SPRITE_ID(leaderId, memberId) - UR_SPRITE_START_ID, UNION_ROOM_SPAWN_OUT);
+    GetUnionRoomPlayerCoords(leaderId, memberId, &x, &y);
+    MapGridSetMetatileImpassabilityAt(x, y, FALSE);
 }
