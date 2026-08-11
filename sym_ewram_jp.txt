@@ -164,6 +164,7 @@ gGiftIsFromEReader = ABSOLUTE(0x02022914);
 sDownArrowCounterAndYCoordIdx = ABSOLUTE(0x0202290C);
 sUnionObjWork = ABSOLUTE(0x02022918);
 sUnionObjRefreshTimer = ABSOLUTE(0x0202291C);
+sURoomBattleData = ABSOLUTE(0x02022920);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
 gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);
