@@ -60,112 +60,55 @@ static u8 GetTrainerHillUnkVal(void)
     return (gSaveBlock1Ptr->trainerHill.unused + 1) % 256;
 }
 
-// JP 0x081D2F28: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static bool32 ValidateTrainerChecksum(struct EReaderTrainerHillTrainer *hillTrainer)
+// JP 0x081D2F28: JP checksum is at offset 0x26C of the trainer record.
+static bool32 ValidateTrainerChecksum(struct EReaderTrainerHillTrainer *hillTrainer)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r5, #0x9b\n\t"
-            "lsls r5, r5, #2\n\t"
-            "adds r1, r5, #0\n\t"
-            "bl CalcByteArraySum\n\t"
-            "adds r4, r4, r5\n\t"
-            "ldr r1, [r4]\n\t"
-            "cmp r0, r1\n\t"
-            "bne _081D2F42\n\t"
-            "movs r0, #1\n\t"
-            "b _081D2F44\n\t"
-            "_081D2F42:\n\t"
-            "movs r0, #0\n\t"
-            "_081D2F44:\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided\n");
+    int checksum = CalcByteArraySum((u8 *)hillTrainer, offsetof(typeof(*hillTrainer), checksum));
+    if (checksum != hillTrainer->checksum)
+        return FALSE;
+
+    return TRUE;
 }
 
-// JP 0x081D2F4C: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) bool8 ValidateTrainerHillData(struct EReaderTrainerHillSet *hillSet)
+// JP 0x081D2F4C
+bool8 ValidateTrainerHillData(struct EReaderTrainerHillSet *hillSet)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "adds r7, r0, #0\n\t"
-            "ldrb r5, [r7]\n\t"
-            "subs r0, r5, #1\n\t"
-            "cmp r0, #7\n\t"
-            "bhi _081D2F94\n\t"
-            "movs r6, #0\n\t"
-            "cmp r6, r5\n\t"
-            "bhs _081D2F78\n\t"
-            "adds r4, r7, #0\n\t"
-            "adds r4, #8\n\t"
-            "_081D2F62:\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl ValidateTrainerChecksum\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081D2F94\n\t"
-            "movs r0, #0x9c\n\t"
-            "lsls r0, r0, #2\n\t"
-            "adds r4, r4, r0\n\t"
-            "adds r6, #1\n\t"
-            "cmp r6, r5\n\t"
-            "blo _081D2F62\n\t"
-            "_081D2F78:\n\t"
-            "adds r0, r7, #0\n\t"
-            "adds r0, #8\n\t"
-            "lsls r1, r5, #2\n\t"
-            "adds r1, r1, r5\n\t"
-            "lsls r1, r1, #3\n\t"
-            "subs r1, r1, r5\n\t"
-            "lsls r1, r1, #4\n\t"
-            "bl CalcByteArraySum\n\t"
-            "ldr r1, [r7, #4]\n\t"
-            "cmp r0, r1\n\t"
-            "bne _081D2F94\n\t"
-            "movs r0, #1\n\t"
-            "b _081D2F96\n\t"
-            "_081D2F94:\n\t"
-            "movs r0, #0\n\t"
-            "_081D2F96:\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided\n");
+    u32 i;
+    u32 checksum;
+    int numTrainers = hillSet->numTrainers;
+
+    // Validate number of trainers
+    if (numTrainers < 1 || numTrainers > NUM_TRAINER_HILL_TRAINERS)
+        return FALSE;
+
+    // Validate trainers
+    for (i = 0; i < numTrainers; i++)
+    {
+        if (!ValidateTrainerChecksum(&hillSet->trainers[i]))
+            return FALSE;
+    }
+
+    // Validate checksum
+    checksum = CalcByteArraySum((u8 *)hillSet->trainers, numTrainers * sizeof(struct EReaderTrainerHillTrainer));
+    if (checksum != hillSet->checksum)
+        return FALSE;
+
+    return TRUE;
 }
 
-// JP 0x081D2F9C: kept as asm (compiler register allocation differs from US).
-__attribute__((naked)) static bool32 ValidateTrainerHillChecksum(struct EReaderTrainerHillSet *hillSet)
+// JP 0x081D2F9C
+static bool32 ValidateTrainerHillChecksum(struct EReaderTrainerHillSet *hillSet)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, lr}\n\t"
-            "adds r4, r0, #0\n\t"
-            "ldrb r0, [r4]\n\t"
-            "subs r0, #1\n\t"
-            "cmp r0, #7\n\t"
-            "bhi _081D2FBE\n\t"
-            "adds r0, r4, #0\n\t"
-            "adds r0, #8\n\t"
-            "movs r1, #0xec\n\t"
-            "lsls r1, r1, #4\n\t"
-            "bl CalcByteArraySum\n\t"
-            "ldr r1, [r4, #4]\n\t"
-            "cmp r0, r1\n\t"
-            "bne _081D2FBE\n\t"
-            "movs r0, #1\n\t"
-            "b _081D2FC0\n\t"
-            "_081D2FBE:\n\t"
-            "movs r0, #0\n\t"
-            "_081D2FC0:\n\t"
-            "pop {r4}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            ".syntax divided\n");
+    u32 checksum;
+    int numTrainers = hillSet->numTrainers;
+    if (numTrainers < 1 || numTrainers > NUM_TRAINER_HILL_TRAINERS)
+        return FALSE;
+
+    checksum = CalcByteArraySum((u8 *)hillSet->trainers, sizeof(struct EReaderTrainerHillSet) - offsetof(struct EReaderTrainerHillSet, trainers));
+    if (checksum != hillSet->checksum)
+        return FALSE;
+
+    return TRUE;
 }
 
 // JP 0x081D2FC8: kept as asm (compiler register allocation differs from US).

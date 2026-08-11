@@ -34,10 +34,12 @@ enum {
 struct EReaderTrainerHillTrainer
 {
     u8 trainerNum;
+    u8 pad[3];
     struct TrainerHillTrainer trainer;
-    struct TrainerHillFloorMap map;
+    u8 mapMetatileData[HILL_FLOOR_WIDTH * HILL_FLOOR_HEIGHT_MAIN];
+    u16 mapCollisionData[HILL_FLOOR_WIDTH];
     u32 checksum;
-}; // size=0x274
+}; // size = 0x270 (JP e-reader layout: checksum at 0x26C, no trainerCoords)
 
 struct EReaderTrainerHillSet
 {
@@ -46,8 +48,8 @@ struct EReaderTrainerHillSet
     u16 dummy; // Only read in an assert.
     u32 checksum;
     struct EReaderTrainerHillTrainer trainers[6];
-    u8 unk_ec0[40];
-}; // size = 0xf00
+    u8 unk[0x20];
+}; // size = 0xEC8 (JP layout: 6 trainers * 0x270 + 0x20 trailer)
 
 bool8 ValidateTrainerHillData(struct EReaderTrainerHillSet *hillSet);
 bool32 TryWriteTrainerHill(struct EReaderTrainerHillSet *hillSet);
