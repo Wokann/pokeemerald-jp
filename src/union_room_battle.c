@@ -23,6 +23,7 @@ extern void RemoveUnionRoomPlayerObjectEvent(u32 leaderId);
 extern bool32 IsUnionRoomPlayerInvisible(u32 leaderId, u32 memberId);
 extern u8 GetUnionRoomPlayerGraphicsId(u32 gender, u32 id);
 extern const char gAssertFile_rfu_union_tool[];
+extern const char gAssertCond_UnionObjWork[];
 extern const char gAssertCond_UnionObjWork2[];
 
 bool32 TryReleaseUnionRoomPlayerObjectEvent(u32 leaderId)
@@ -193,4 +194,35 @@ void AnimateUnionRoomPlayer(u32 leaderId, struct UnionRoomObject *object)
         break;
     }
     object->schedAnim = 0;
+}
+
+static void Task_AnimateUnionRoomPlayers(u8 taskId)
+{
+    s32 i;
+
+    if (sUnionObjWork == NULL)
+        AGBAssert(gAssertFile_rfu_union_tool, 0x282, gAssertCond_UnionObjWork2, TRUE);
+    for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+        AnimateUnionRoomPlayer(i, &sUnionObjWork[i]);
+}
+
+u8 CreateTask_AnimateUnionRoomPlayers(void)
+{
+    u8 taskId;
+
+    if (FuncIsActiveTask(Task_AnimateUnionRoomPlayers) == TRUE)
+    {
+        AGBAssert(gAssertFile_rfu_union_tool, 0x28E, gAssertCond_UnionObjWork, TRUE);
+        return 16;
+    }
+    taskId = CreateTask(Task_AnimateUnionRoomPlayers, 5);
+    return taskId;
+}
+
+void DestroyTask_AnimateUnionRoomPlayers(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_AnimateUnionRoomPlayers);
+
+    if (taskId <= 0xF)
+        DestroyTask(taskId);
 }

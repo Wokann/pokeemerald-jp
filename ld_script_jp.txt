@@ -1141,7 +1141,7 @@ sub_08019720 = SpawnGroupLeader;
 sub_0801976C = DespawnGroupLeader;
 sub_080197AC = AnimateUnionRoomPlayer;
 IsUnionRoomPlayerInvisible = sub_08019A28;
-CreateTask_AnimateUnionRoomPlayers = sub_08019878;
+sub_080198BC = DestroyTask_AnimateUnionRoomPlayers;
 SetTilesAroundUnionRoomPlayersPassable = sub_080199C8;
 CreateUnionRoomPlayerSprites = sub_0801990C;
 DestroyUnionRoomPlayerSprites = sub_080199A0;
@@ -1669,6 +1669,9 @@ SECTIONS {
         src/union_room_battle.o(.text.SpawnGroupLeader);
         src/union_room_battle.o(.text.DespawnGroupLeader);
         src/union_room_battle.o(.text.AnimateUnionRoomPlayer);
+        src/union_room_battle.o(.text.Task_AnimateUnionRoomPlayers);
+        src/union_room_battle.o(.text.CreateTask_AnimateUnionRoomPlayers);
+        src/union_room_battle.o(.text.DestroyTask_AnimateUnionRoomPlayers);
         asm/union_room_battle.o(.text);
         asm/mevent2.o(.text);
         asm/mevent_801BAAC.o(.text);
