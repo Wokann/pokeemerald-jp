@@ -20,6 +20,8 @@ extern u8 CreateTask_AnimateUnionRoomPlayers(void);
 extern bool32 SetUnionRoomPlayerEnterExitMovement(u32 leaderId, const u8 *movement);
 extern void HideUnionRoomPlayer(u32 player_idx);
 extern void RemoveUnionRoomPlayerObjectEvent(u32 leaderId);
+extern bool32 IsUnionRoomPlayerInvisible(u32 leaderId, u32 memberId);
+extern u8 GetUnionRoomPlayerGraphicsId(u32 gender, u32 id);
 extern const char gAssertFile_rfu_union_tool[];
 extern const char gAssertCond_UnionObjWork2[];
 
@@ -117,4 +119,78 @@ bool32 AnimateUnionRoomPlayerSpawn(s8 *state, u32 leaderId, struct UnionRoomObje
         break;
     }
     return FALSE;
+}
+
+bool32 SpawnGroupLeader(u32 leaderId, u32 gender, u32 id)
+{
+    struct UnionRoomObject *object = &sUnionObjWork[leaderId];
+
+    if (sUnionObjWork == NULL)
+        AGBAssert(gAssertFile_rfu_union_tool, 0x230, gAssertCond_UnionObjWork2, TRUE);
+    object->schedAnim = 1;
+    object->gfxId = GetUnionRoomPlayerGraphicsId(gender, id);
+    if (object->state == 0)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+bool32 DespawnGroupLeader(u32 leaderId)
+{
+    struct UnionRoomObject *object = &sUnionObjWork[leaderId];
+
+    if (sUnionObjWork == NULL)
+        AGBAssert(gAssertFile_rfu_union_tool, 0x240, gAssertCond_UnionObjWork2, TRUE);
+    object->schedAnim = 2;
+    if (object->state == 1)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+void AnimateUnionRoomPlayer(u32 leaderId, struct UnionRoomObject *object)
+{
+    switch (object->state)
+    {
+    case 0:
+        if (object->schedAnim == 1)
+        {
+            object->state = 2;
+            object->animState = 0;
+        }
+        else
+        {
+            break;
+        }
+        // fallthrough
+    case 2:
+        if (!IsUnionRoomPlayerInvisible(leaderId, 0) && object->schedAnim == 2)
+        {
+            object->state = 0;
+            object->animState = 0;
+            RemoveUnionRoomPlayerObjectEvent(leaderId);
+            HideUnionRoomPlayer(leaderId);
+        }
+        else if (AnimateUnionRoomPlayerSpawn(&object->animState, leaderId, object) == TRUE)
+        {
+            object->state = 1;
+        }
+        break;
+    case 1:
+        if (object->schedAnim == 2)
+        {
+            object->state = 3;
+            object->animState = 0;
+        }
+        else
+        {
+            break;
+        }
+        // fallthrough
+    case 3:
+        if (AnimateUnionRoomPlayerDespawn(&object->animState, leaderId, object) == TRUE)
+            object->state = 0;
+        break;
+    }
+    object->schedAnim = 0;
 }
