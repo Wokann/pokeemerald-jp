@@ -2115,7 +2115,7 @@ _0801A59A:
 sub_0801A5A8: @ 0x0801A5A8
 	push {r4, r5, r6, r7, lr}
 	movs r0, #0xa
-	bl sub_08013D18
+	bl StartUnionRoomBattle
 	movs r4, #0
 	movs r7, #0x64
 	ldr r6, _0801A628

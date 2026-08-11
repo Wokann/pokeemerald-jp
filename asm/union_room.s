@@ -5,63 +5,6 @@
 
 
 
-
-	thumb_func_start sub_08013D18
-sub_08013D18: @ 0x08013D18
-	push {r4, r5, r6, lr}
-	adds r6, r0, #0
-	lsls r6, r6, #0x10
-	lsrs r6, r6, #0x10
-	bl HealPlayerParty
-	bl SavePlayerParty
-	bl LoadPlayerBag
-	ldr r5, _08013D84
-	ldr r0, _08013D88
-	str r0, [r5, #0x14]
-	bl GetMultiplayerId
-	adds r4, r0, #0
-	bl GetMultiplayerId
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r1, r4, #3
-	subs r1, r1, r4
-	lsls r1, r1, #2
-	adds r1, r1, r5
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	strh r0, [r1, #0x18]
-	bl GetMultiplayerId
-	adds r4, r0, #0
-	bl GetMultiplayerId
-	movs r2, #1
-	eors r4, r2
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r1, r4, #3
-	subs r1, r1, r4
-	lsls r1, r1, #2
-	adds r1, r1, r5
-	eors r0, r2
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	strh r0, [r1, #0x18]
-	ldr r1, _08013D8C
-	ldr r0, _08013D90
-	str r0, [r1, #8]
-	ldr r0, _08013D94
-	str r6, [r0]
-	bl GetFlavorRelationByPersonality
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08013D84: .4byte 0x020226A0
-_08013D88: .4byte 0x00002211
-_08013D8C: .4byte 0x03002360
-_08013D90: .4byte 0x080B2D69
-_08013D94: .4byte 0x02022C90
-	thumb_func_end sub_08013D18
-
 	thumb_func_start sub_08013D98
 sub_08013D98: @ 0x08013D98
 	push {r4, r5, r6, lr}

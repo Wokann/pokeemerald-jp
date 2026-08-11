@@ -1,4 +1,5 @@
 #include "global.h"
+#include "battle.h"
 #include "bg.h"
 #include "cable_club.h"
 #include "constants/songs.h"
@@ -13,6 +14,7 @@
 #include "save_location.h"
 #include "sound.h"
 #include "sprite.h"
+#include "pokemon.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -165,6 +167,10 @@ extern void JoinGroup_EnableScriptContexts(void);
 extern bool32 ArePlayerDataDifferent(struct RfuPlayerData *player1, struct RfuPlayerData *player2);
 extern void MysteryGift_DisableStats(void);
 extern bool32 MysteryGift_TryEnableStatsByFlagId(u16 flagId);
+// JP: the asm label PlayBattleBGM currently points to 0x0806C820, but the
+// real PlayBattleBGM is at 0x0806E0D8 (bound via ld_script_jp.txt). Will
+// revert to PlayBattleBGM() when asm/pokemon.s labels are fixed.
+extern void JPPlayBattleBGM(void);
 
 static void Task_TryBecomeLinkLeader(u8 taskId);
 static void Leader_DestroyResources(struct WirelessLink_Leader *data);
@@ -1463,4 +1469,17 @@ static void CB2_ShowCard(void)
     RunTextPrinters();
     AnimateSprites();
     BuildOamBuffer();
+}
+
+void StartUnionRoomBattle(u16 battleFlags)
+{
+    HealPlayerParty();
+    SavePlayerParty();
+    LoadPlayerBag();
+    gLinkPlayers[0].linkType = LINKTYPE_BATTLE;
+    gLinkPlayers[GetMultiplayerId()].id = GetMultiplayerId();
+    gLinkPlayers[GetMultiplayerId() ^ 1].id = GetMultiplayerId() ^ 1;
+    gMain.savedCallback = CB2_ReturnFromCableClubBattle;
+    gBattleTypeFlags = battleFlags;
+    JPPlayBattleBGM();
 }
