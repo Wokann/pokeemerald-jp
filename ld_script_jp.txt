@@ -1635,6 +1635,7 @@ SECTIONS {
         asm/mystery_gift_3.o(.text);
         src/mystery_gift_menu.o(.text.mevent_save_game);
         src/mystery_gift_menu.o(.text.mevent_message);
+        src/mystery_gift_menu.o(.text.PrintMGSuccessMessage);
         asm/mystery_gift.o(.text);
         src/mystery_gift_menu.o(.text.GetMysteryGiftBaseBlock);
         src/mystery_gift_menu.o(.text.bgid_upload_textbox_1);

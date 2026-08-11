@@ -3,66 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start PrintMGSuccessMessage
-PrintMGSuccessMessage: @ 0x08018AA4
-	push {r4, r5, r6, lr}
-	adds r6, r0, #0
-	adds r0, r1, #0
-	adds r5, r2, #0
-	ldrb r4, [r6]
-	cmp r4, #1
-	beq _08018AD6
-	cmp r4, #1
-	bgt _08018ABC
-	cmp r4, #0
-	beq _08018AC2
-	b _08018B02
-_08018ABC:
-	cmp r4, #2
-	beq _08018AEC
-	b _08018B02
-_08018AC2:
-	cmp r0, #0
-	beq _08018ACA
-	bl AddTextPrinterToWindow1
-_08018ACA:
-	movs r0, #0xb9
-	lsls r0, r0, #1
-	bl PlayFanfare
-	strh r4, [r5]
-	b _08018AE4
-_08018AD6:
-	ldrh r0, [r5]
-	adds r0, #1
-	strh r0, [r5]
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	cmp r0, #0xf0
-	bls _08018B02
-_08018AE4:
-	ldrb r0, [r6]
-	adds r0, #1
-	strb r0, [r6]
-	b _08018B02
-_08018AEC:
-	bl IsFanfareTaskInactive
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _08018B02
-	movs r0, #0
-	strb r0, [r6]
-	bl ClearTextWindow
-	movs r0, #1
-	b _08018B04
-_08018B02:
-	movs r0, #0
-_08018B04:
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end PrintMGSuccessMessage
-
 	thumb_func_start mevent_message_stamp_card_etc_send_status
 mevent_message_stamp_card_etc_send_status: @ 0x08018B0C
 	push {r4, lr}

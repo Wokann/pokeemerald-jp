@@ -592,3 +592,31 @@ const u8 *mevent_message(u32 *out, u8 param1, u8 param2, u32 msgId)
     }
     return ret;
 }
+
+bool32 PrintMGSuccessMessage(u8 *state, const u8 *str, u16 *counter)
+{
+    switch (*state)
+    {
+    case 0:
+        if (str != NULL)
+            MG_AddMessageTextPrinter(str);
+        PlayFanfare(0x172);
+        *counter = 0;
+        (*state)++;
+        break;
+    case 1:
+        (*counter)++;
+        if (*counter > 240)
+            (*state)++;
+        break;
+    case 2:
+        if (IsFanfareTaskInactive())
+        {
+            *state = 0;
+            ClearMessage();
+            return TRUE;
+        }
+        break;
+    }
+    return FALSE;
+}
