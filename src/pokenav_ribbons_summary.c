@@ -714,6 +714,7 @@ void CreateRibbonsSummaryLoopedTask(s32 id)
     menu->callback = GetCurrentLoopedTaskActive;
 }
 
+#ifndef NONMATCHING
 // JP 0x081D0090: fetch the menu struct and call its callback through r0.
 // The trailing `bx r1` is also the JP-only trampoline sub_081D00A0
 // (0x081D00A0), which has no US counterpart.
@@ -732,6 +733,14 @@ __attribute__((naked)) void sub_081D0090(void)
             ".align 2, 0\n\t"
             ".syntax divided\n");
 }
+
+#else
+void sub_081D0090(void)
+{
+    struct Pokenav_RibbonsSummaryMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_SUMMARY_MENU);
+    menu->callback();
+}
+#endif
 
 // IsRibbonsSummaryLoopedTaskActive is defined in pokenav_conditions_tail.c
 // (JP 0x081CF544) as a naked function.
@@ -1806,6 +1815,7 @@ void AddRibbonListIndexWindow(struct Pokenav_RibbonsSummaryMenu *menu)
 #endif
 
 
+#ifndef NONMATCHING
 // JP 0x081D07B8: prints the list index row above the ribbons list.
 // JP-only function (no US counterpart) kept as asm.
 __attribute__((naked)) u32 sub_081D07B8(s32 state)
@@ -1858,6 +1868,20 @@ __attribute__((naked)) u32 sub_081D07B8(s32 state)
             "_081D0818: .4byte gStringVar1\n\t"
             ".syntax divided");
 }
+
+#else
+u32 sub_081D07B8(s32 state)
+{
+    u8 windowId = state;
+
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    gStringVar1[0] = 0xBA;
+    ConvertIntToDecimalStringN(&gStringVar1[1], GetRibbonsSummaryMonListCount(), STR_CONV_MODE_RIGHT_ALIGN, 3);
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, 0, 2, 0xFF, NULL);
+    CopyWindowToVram(windowId, COPYWIN_GFX);
+    return 0;
+}
+#endif
 
 #ifndef NONMATCHING
 // JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
