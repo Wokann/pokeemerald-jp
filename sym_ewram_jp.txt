@@ -158,6 +158,7 @@ sPlayerActivityGroupSize = ABSOLUTE(0x020228E1);
 sUnionRoomTrade = ABSOLUTE(0x020228F4);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
+gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);
 gStringVar2 = ABSOLUTE(0x02021C54);
 gStringVar3 = ABSOLUTE(0x02021C68);
 gText_ExpandedPlaceholder_Aqua = ABSOLUTE(0x085C8C3C);

@@ -4,6 +4,7 @@
 #include "bg.h"
 #include "cable_club.h"
 #include "constants/map_groups.h"
+#include "constants/field_weather.h"
 #include "constants/songs.h"
 #include "event_data.h"
 #include "fieldmap.h"
@@ -13,6 +14,7 @@
 #include "malloc.h"
 #include "menu.h"
 #include "overworld.h"
+#include "palette.h"
 #include "party_menu.h"
 #include "pokemon_jump.h"
 #include "dodrio_berry_picking.h"
@@ -1652,4 +1654,108 @@ static void Task_StartActivity(u8 taskId)
     gSpecialVar_Result = LINKUP_SUCCESS;
     if (gPlayerCurrActivity != (ACTIVITY_TRADE | IN_UNION_ROOM))
         UnlockPlayerFieldControls();
+}
+
+static void Task_RunScriptAndFadeToActivity(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u16 *sendBuff = (u16 *)(gBlockSendBuffer);
+
+    switch (data[0])
+    {
+    case 0:
+        gSpecialVar_Result = LINKUP_SUCCESS;
+        switch (gPlayerCurrActivity)
+        {
+        case ACTIVITY_BATTLE_TOWER:
+        case ACTIVITY_BATTLE_TOWER_OPEN:
+            gLinkPlayers[0].linkType = LINKTYPE_BATTLE;
+            gLinkPlayers[0].id = 0;
+            gLinkPlayers[1].id = 2;
+            sendBuff[0] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[0] - 1], MON_DATA_SPECIES);
+            sendBuff[1] = GetMonData(&gPlayerParty[gSelectedOrderFromParty[1] - 1], MON_DATA_SPECIES, NULL);
+            gMain.savedCallback = NULL;
+            data[0] = 4;
+            SaveLinkTrainerNames();
+            ResetBlockReceivedFlags();
+            break;
+        case ACTIVITY_BERRY_BLENDER:
+        case ACTIVITY_CONTEST_COOL:
+        case ACTIVITY_CONTEST_BEAUTY:
+        case ACTIVITY_CONTEST_CUTE:
+        case ACTIVITY_CONTEST_SMART:
+        case ACTIVITY_CONTEST_TOUGH:
+            SaveLinkTrainerNames();
+            DestroyTask(taskId);
+        default:
+            ScriptContext_Enable();
+            data[0] = 1;
+            break;
+        }
+        break;
+    case 1:
+        if (!ScriptContext_IsEnabled())
+        {
+            FadeScreen(FADE_TO_BLACK, 0);
+            data[0] = 2;
+        }
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+        {
+            if (gPlayerCurrActivity == ACTIVITY_29)
+            {
+                DestroyTask(taskId);
+                SetMainCallback2(CB2_StartCreateTradeMenu);
+            }
+            else
+            {
+                SetLinkStandbyCallback();
+                data[0] = 3;
+            }
+        }
+        break;
+    case 3:
+        if (IsLinkTaskFinished())
+        {
+            DestroyTask(taskId);
+            CreateTask_StartActivity();
+        }
+        break;
+    case 4:
+        if (SendBlock(0, gBlockSendBuffer, 0xE))
+            data[0] = 5;
+        break;
+    case 5:
+        if (GetBlockReceivedStatus() == 3)
+        {
+            ResetBlockReceivedFlags();
+            if (AreBattleTowerLinkSpeciesSame(gBlockRecvBuffer[0], gBlockRecvBuffer[1]))
+            {
+                gSpecialVar_Result = LINKUP_FAILED_BATTLE_TOWER;
+                data[0] = 7;
+            }
+            else
+            {
+                data[0] = 6;
+            }
+        }
+        break;
+    case 6:
+        ScriptContext_Enable();
+        DestroyTask(taskId);
+        break;
+    case 7:
+        SetCloseLinkCallback();
+        data[0] = 8;
+        break;
+    case 8:
+        if (gReceivedRemoteLinkPlayers == 0)
+        {
+            DestroyWirelessStatusIndicatorSprite();
+            ScriptContext_Enable();
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
