@@ -105,7 +105,7 @@ static u32 LoopedTask_OpenConditionSearchResults(s32 state);
 static void CreateSearchResultsList(void);
 static u32 GetMonRibbonListLoopTaskFunc(s32 state);
 static u32 LoopedTask_OpenRibbonsMonList(s32 state);
-static void DrawListIndexNumber(u16 windowId, u16 index);
+static void DrawListIndexNumber(struct Pokenav_RibbonsMonMenu *menu);
 static void AddRibbonsMonListWindow(struct Pokenav_RibbonsMonMenu *menu);
 static void CreateRibbonMonsList(void);
 static void BufferRibbonMonInfoText(u8 windowId, u16 index);
@@ -1258,160 +1258,63 @@ void FreeSearchResultSubstruct2(void)
     FreePokenavSubstruct(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
 }
 
-__attribute__((naked)) u32 LoopedTask_OpenConditionSearchResults(s32 state)
+static u32 LoopedTask_OpenConditionSearchResults(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "sub sp, #4\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #8\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #5\n\t"
-            "bls _081CEB60\n\t"
-            "b _081CECA2\n\t"
-            "_081CEB60:\n\t"
-            "lsls r0, r4, #2\n\t"
-            "ldr r1, _081CEB6C\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "mov pc, r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CEB6C: .4byte _081CEB70\n\t"
-            "_081CEB70: @ jump table\n\t"
-            ".4byte _081CEB88 @ case 0\n\t"
-            ".4byte _081CEBE0 @ case 1\n\t"
-            ".4byte _081CEBF4 @ case 2\n\t"
-            ".4byte _081CEC14 @ case 3\n\t"
-            ".4byte _081CEC2A @ case 4\n\t"
-            ".4byte _081CEC8E @ case 5\n\t"
-            "_081CEB88:\n\t"
-            "ldr r0, _081CEBD0\n\t"
-            "movs r1, #2\n\t"
-            "bl InitBgTemplates\n\t"
-            "ldr r1, _081CEBD4\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #1\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl DecompressAndCopyTileDataToVram\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x10\n\t"
-            "movs r0, #1\n\t"
-            "bl SetBgTilemapBuffer\n\t"
-            "ldr r1, _081CEBD8\n\t"
-            "movs r0, #1\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl CopyToBgTilemapBuffer\n\t"
-            "movs r0, #1\n\t"
-            "bl CopyBgTilemapBufferToVram\n\t"
-            "ldr r0, _081CEBDC\n\t"
-            "movs r1, #0x10\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "movs r0, #1\n\t"
-            "bl CopyBgTilemapBufferToVram\n\t"
-            "_081CEBCC:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CECA4\n\t"
-            ".align 2, 0\n\t"
-            "_081CEBD0: .4byte sConditionSearchResultBgTemplates\n\t"
-            "_081CEBD4: .4byte sConditionSearchResultTiles\n\t"
-            "_081CEBD8: .4byte sConditionSearchResultTilemap\n\t"
-            "_081CEBDC: .4byte sConditionSearchResultFramePal\n\t"
-            "_081CEBE0:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC9E\n\t"
-            "bl GetReturningFromGraph\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CEC9E\n\t"
-            "b _081CEBCC\n\t"
-            "_081CEBF4:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC9E\n\t"
-            "ldr r0, _081CEC10\n\t"
-            "movs r1, #0x20\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "bl CreateSearchResultsList\n\t"
-            "b _081CEBCC\n\t"
-            ".align 2, 0\n\t"
-            "_081CEC10: .4byte sListBg_Pal\n\t"
-            "_081CEC14:\n\t"
-            "bl IsCreatePokenavListTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC9E\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl AddSearchResultListMenuWindow\n\t"
-            "movs r0, #3\n\t"
-            "bl PrintHelpBarText\n\t"
-            "b _081CEBCC\n\t"
-            "_081CEC2A:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC9E\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgX\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgY\n\t"
-            "movs r0, #1\n\t"
-            "bl ShowBg\n\t"
-            "movs r0, #2\n\t"
-            "bl ShowBg\n\t"
-            "movs r0, #3\n\t"
-            "bl HideBg\n\t"
-            "ldr r0, [r5, #0xc]\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC86\n\t"
-            "bl GetSelectedConditionSearch\n\t"
-            "adds r4, r0, #0\n\t"
-            "adds r4, #8\n\t"
-            "lsls r4, r4, #0x18\n\t"
-            "lsrs r4, r4, #0x18\n\t"
-            "adds r0, r4, #0\n\t"
-            "bl LoadLeftHeaderGfxForIndex\n\t"
-            "adds r0, r4, #0\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl ShowLeftHeaderGfx\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl ShowLeftHeaderGfx\n\t"
-            "_081CEC86:\n\t"
-            "movs r0, #1\n\t"
-            "bl PokenavFadeScreen\n\t"
-            "b _081CEBCC\n\t"
-            "_081CEC8E:\n\t"
-            "bl IsPaletteFadeActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CEC9E\n\t"
-            "bl AreLeftHeaderSpritesMoving\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CECA2\n\t"
-            "_081CEC9E:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CECA4\n\t"
-            "_081CECA2:\n\t"
-            "movs r0, #4\n\t"
-            "_081CECA4:\n\t"
-            "add sp, #4\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_SearchResultsGfx *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_SEARCH_RESULTS_GFX);
+    switch (state)
+    {
+    case 0:
+        InitBgTemplates(sConditionSearchResultBgTemplates, 2);
+        DecompressAndCopyTileDataToVram(1, sConditionSearchResultTiles, 0, 0, 0);
+        SetBgTilemapBuffer(1, gfx->buff);
+        CopyToBgTilemapBuffer(1, sConditionSearchResultTilemap, 0, 0);
+        CopyBgTilemapBufferToVram(1);
+        CopyPaletteIntoBufferUnfaded(sConditionSearchResultFramePal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyBgTilemapBufferToVram(1);
+        return LT_INC_AND_PAUSE;
+    case 1:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        if (!GetReturningFromGraph())
+            return LT_PAUSE;
+        return LT_INC_AND_PAUSE;
+    case 2:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        CopyPaletteIntoBufferUnfaded(sListBg_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        CreateSearchResultsList();
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsCreatePokenavListTaskActive())
+            return LT_PAUSE;
+        AddSearchResultListMenuWindow(gfx);
+        PrintHelpBarText(HELPBAR_CONDITION_MON_LIST);
+        return LT_INC_AND_PAUSE;
+    case 4:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ShowBg(1);
+        ShowBg(2);
+        HideBg(3);
+        if (!gfx->fromGraph)
+        {
+            u8 searchGfxId = GetSelectedConditionSearch() + POKENAV_MENUITEM_CONDITION_SEARCH_COOL;
+            LoadLeftHeaderGfxForIndex(searchGfxId);
+            ShowLeftHeaderGfx(searchGfxId, TRUE, FALSE);
+            ShowLeftHeaderGfx(POKENAV_GFX_CONDITION_MENU, TRUE, FALSE);
+        }
+        PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+        return LT_INC_AND_PAUSE;
+    case 5:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+        if (AreLeftHeaderSpritesMoving())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
 static u32 LoopedTask_MoveSearchListCursorUp(s32 state)
@@ -2248,148 +2151,60 @@ void FreeRibbonsMonMenu(void)
     FreePokenavSubstruct(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
 }
 
-__attribute__((naked)) u32 LoopedTask_OpenRibbonsMonList(s32 state)
+static u32 LoopedTask_OpenRibbonsMonList(s32 state)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, lr}\n\t"
-            "sub sp, #4\n\t"
-            "adds r4, r0, #0\n\t"
-            "movs r0, #0xa\n\t"
-            "bl GetSubstructPtr\n\t"
-            "adds r5, r0, #0\n\t"
-            "cmp r4, #5\n\t"
-            "bls _081CF5A0\n\t"
-            "b _081CF6C6\n\t"
-            "_081CF5A0:\n\t"
-            "lsls r0, r4, #2\n\t"
-            "ldr r1, _081CF5AC\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "mov pc, r0\n\t"
-            ".align 2, 0\n\t"
-            "_081CF5AC: .4byte _081CF5B0\n\t"
-            "_081CF5B0: @ jump table\n\t"
-            ".4byte _081CF5C8 @ case 0\n\t"
-            ".4byte _081CF61C @ case 1\n\t"
-            ".4byte _081CF64A @ case 2\n\t"
-            ".4byte _081CF668 @ case 3\n\t"
-            ".4byte _081CF678 @ case 4\n\t"
-            ".4byte _081CF6B2 @ case 5\n\t"
-            "_081CF5C8:\n\t"
-            "ldr r0, _081CF60C\n\t"
-            "movs r1, #2\n\t"
-            "bl InitBgTemplates\n\t"
-            "ldr r1, _081CF610\n\t"
-            "movs r0, #0\n\t"
-            "str r0, [sp]\n\t"
-            "movs r0, #1\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl DecompressAndCopyTileDataToVram\n\t"
-            "adds r1, r5, #0\n\t"
-            "adds r1, #0x10\n\t"
-            "movs r0, #1\n\t"
-            "bl SetBgTilemapBuffer\n\t"
-            "ldr r1, _081CF614\n\t"
-            "movs r0, #1\n\t"
-            "movs r2, #0\n\t"
-            "movs r3, #0\n\t"
-            "bl CopyToBgTilemapBuffer\n\t"
-            "ldr r0, _081CF618\n\t"
-            "movs r1, #0x10\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "movs r0, #1\n\t"
-            "bl CopyBgTilemapBufferToVram\n\t"
-            "_081CF606:\n\t"
-            "movs r0, #0\n\t"
-            "b _081CF6C8\n\t"
-            ".align 2, 0\n\t"
-            "_081CF60C: .4byte sMonRibbonListBgTemplates\n\t"
-            "_081CF610: .4byte sMonRibbonListFrameTiles\n\t"
-            "_081CF614: .4byte sMonRibbonListFrameTilemap\n\t"
-            "_081CF618: .4byte sMonRibbonListFramePal\n\t"
-            "_081CF61C:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF6C2\n\t"
-            "bl UpdateMonListBgs\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF6C2\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgX\n\t"
-            "movs r0, #1\n\t"
-            "movs r1, #0\n\t"
-            "movs r2, #0\n\t"
-            "bl ChangeBgY\n\t"
-            "movs r0, #1\n\t"
-            "bl ShowBg\n\t"
-            "b _081CF606\n\t"
-            "_081CF64A:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF6C2\n\t"
-            "ldr r0, _081CF664\n\t"
-            "movs r1, #0x20\n\t"
-            "movs r2, #0x20\n\t"
-            "bl CopyPaletteIntoBufferUnfaded\n\t"
-            "bl CreateRibbonMonsList\n\t"
-            "b _081CF606\n\t"
-            ".align 2, 0\n\t"
-            "_081CF664: .4byte sMonRibbonListUi_Pal\n\t"
-            "_081CF668:\n\t"
-            "bl IsCreatePokenavListTaskActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF6C2\n\t"
-            "adds r0, r5, #0\n\t"
-            "bl DrawListIndexNumber\n\t"
-            "b _081CF606\n\t"
-            "_081CF678:\n\t"
-            "bl FreeTempTileDataBuffersIfPossible\n\t"
-            "lsls r0, r0, #0x18\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF6C2\n\t"
-            "movs r0, #2\n\t"
-            "bl ShowBg\n\t"
-            "movs r0, #3\n\t"
-            "bl HideBg\n\t"
-            "movs r0, #9\n\t"
-            "bl PrintHelpBarText\n\t"
-            "movs r0, #1\n\t"
-            "bl PokenavFadeScreen\n\t"
-            "ldr r0, [r5, #0xc]\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF606\n\t"
-            "movs r0, #2\n\t"
-            "bl LoadLeftHeaderGfxForIndex\n\t"
-            "movs r0, #2\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl ShowLeftHeaderGfx\n\t"
-            "b _081CF606\n\t"
-            "_081CF6B2:\n\t"
-            "bl IsPaletteFadeActive\n\t"
-            "cmp r0, #0\n\t"
-            "bne _081CF6C2\n\t"
-            "bl AreLeftHeaderSpritesMoving\n\t"
-            "cmp r0, #0\n\t"
-            "beq _081CF6C6\n\t"
-            "_081CF6C2:\n\t"
-            "movs r0, #2\n\t"
-            "b _081CF6C8\n\t"
-            "_081CF6C6:\n\t"
-            "movs r0, #4\n\t"
-            "_081CF6C8:\n\t"
-            "add sp, #4\n\t"
-            "pop {r4, r5}\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".syntax divided");
+    struct Pokenav_RibbonsMonMenu *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
+    switch (state)
+    {
+    case 0:
+        InitBgTemplates(sMonRibbonListBgTemplates, 2);
+        DecompressAndCopyTileDataToVram(1, sMonRibbonListFrameTiles, 0, 0, 0);
+        SetBgTilemapBuffer(1, menu->buff);
+        CopyToBgTilemapBuffer(1, sMonRibbonListFrameTilemap, 0, 0);
+        CopyPaletteIntoBufferUnfaded(sMonRibbonListFramePal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        CopyBgTilemapBufferToVram(1);
+        return LT_INC_AND_PAUSE;
+    case 1:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        if (!UpdateMonListBgs())
+            return LT_PAUSE;
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ShowBg(1);
+        return LT_INC_AND_PAUSE;
+    case 2:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        CopyPaletteIntoBufferUnfaded(sMonRibbonListUi_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        CreateRibbonMonsList();
+        return LT_INC_AND_PAUSE;
+    case 3:
+        if (IsCreatePokenavListTaskActive())
+            return LT_PAUSE;
+        DrawListIndexNumber(menu);
+        return LT_INC_AND_PAUSE;
+    case 4:
+        if (FreeTempTileDataBuffersIfPossible())
+            return LT_PAUSE;
+        ShowBg(2);
+        HideBg(3);
+        PrintHelpBarText(HELPBAR_RIBBONS_MON_LIST);
+        PokenavFadeScreen(POKENAV_FADE_FROM_BLACK);
+        if (!menu->fromSummary)
+        {
+            LoadLeftHeaderGfxForIndex(POKENAV_GFX_RIBBONS_MENU);
+            ShowLeftHeaderGfx(POKENAV_GFX_RIBBONS_MENU, TRUE, FALSE);
+        }
+        return LT_INC_AND_PAUSE;
+    case 5:
+        if (IsPaletteFadeActive())
+            return LT_PAUSE;
+        if (AreLeftHeaderSpritesMoving())
+            return LT_PAUSE;
+        break;
+    }
+    return LT_FINISH;
 }
 
 static u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
@@ -2556,7 +2371,7 @@ static u32 LoopedTask_RibbonsListOpenSummary(s32 state)
     return LT_FINISH;
 }
 
-__attribute__((naked)) void DrawListIndexNumber(u16 windowId, u16 index)
+__attribute__((naked)) void DrawListIndexNumber(struct Pokenav_RibbonsMonMenu *menu)
 {
     __asm__(".syntax unified\n\t"
             ".code 16\n\t"
