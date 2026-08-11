@@ -1098,23 +1098,13 @@ void CreateConditionGraphMenuLoopedTask(s32 id)
     menu->callback = GetConditionGraphMenuLoopedTaskActive;
 }
 
-__attribute__((naked)) bool32 IsSearchResultLoopedTaskActive(void)
+bool32 IsSearchResultLoopedTaskActive(void)
 {
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {lr}\n\t"
-            "movs r0, #0xc\n\t"
-            "bl GetSubstructPtr\n\t"
-            "ldr r1, _081CD5DC\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldr r0, [r0]\n\t"
-            "bl _call_via_r0\n\t"
-            "pop {r1}\n\t"
-            "bx r1\n\t"
-            ".align 2, 0\n\t"
-            "_081CD5DC: .4byte 0x00001810\n\t"
-            ".syntax divided");
+    // JP: POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX, callback at +0x1810
+    u8 *gfx = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
+    return ((bool32 (*)(void))*(u32 *)(gfx + 0x1810))();
 }
+
 
 // JP-only alias: the `bx r1` at the end of IsSearchResultLoopedTaskActive is
 // also labeled sub_081CD5D8 (0x081CD5D8) in the JP ROM.  No separate code.
