@@ -685,7 +685,7 @@ _080125E2:
 	beq _080125EA
 	b _08012A54
 _080125EA:
-	bl sub_080100EC
+	bl RfuTryDisconnectLeavingChildren
 	cmp r0, #0
 	bne _080125F4
 	b _08012A54
@@ -695,7 +695,7 @@ _080125F4:
 _080125F8: .4byte 0x020228E1
 _080125FC: .4byte 0x03002360
 _08012600:
-	bl sub_080100EC
+	bl RfuTryDisconnectLeavingChildren
 	cmp r0, #0
 	beq _0801260A
 	b _08012A54
@@ -796,7 +796,7 @@ _080126AC:
 	ldr r1, [r5]
 	adds r1, r1, r2
 	adds r1, #0x10
-	bl sub_0801014C
+	bl HasTrainerLeftPartnersList
 	adds r1, r0, #0
 	adds r0, r4, #0
 	bl sub_08016BC8
@@ -860,7 +860,7 @@ _0801272C:
 	adds r2, #0x10
 	movs r0, #6
 _08012750:
-	bl sub_08010188
+	bl SendRfuStatusToPartner
 	movs r0, #0xc
 	strb r0, [r5, #0xc]
 	b _08012A54
@@ -882,7 +882,7 @@ _08012760:
 	ldr r1, [r5]
 	adds r1, r1, r2
 	adds r1, #0x10
-	bl sub_08010214
+	bl WaitSendRfuStatusToPartner
 	cmp r0, #1
 	bne _0801284E
 	ldrb r0, [r5, #0x19]
@@ -2488,7 +2488,7 @@ _0801355C:
 	beq _0801356E
 	b _08013686
 _08013566:
-	bl sub_080101D4
+	bl SendLeaveGroupNotice
 	movs r0, #9
 	b _08013574
 _0801356E:
@@ -4610,7 +4610,7 @@ _080147CC:
 	adds r2, #0x10
 	movs r0, #6
 _080147F0:
-	bl sub_08010188
+	bl SendRfuStatusToPartner
 	movs r0, #8
 	strb r0, [r5, #0xc]
 	b _080149FA
@@ -4628,7 +4628,7 @@ _080147FA:
 	ldr r1, [r5]
 	adds r1, r1, r2
 	adds r1, #0x10
-	bl sub_08010214
+	bl WaitSendRfuStatusToPartner
 	adds r4, r0, #0
 	cmp r4, #1
 	bne _080148B2

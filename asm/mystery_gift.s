@@ -2036,7 +2036,7 @@ _08018EBC: @ jump table
 	.4byte _08018EDC @ case 3
 	.4byte _08018ED0 @ case 4
 _08018ED0:
-	bl task_add_05_task_del_08FA224_when_no_RfuFunc
+	bl Rfu_SetCloseLinkCallback
 	ldrh r0, [r5]
 	strb r0, [r5, #0xe]
 	movs r0, #0xd
@@ -2531,7 +2531,7 @@ _0801927C:
 	movs r0, #0x21
 	b _08018D22
 _0801928E:
-	bl task_add_05_task_del_08FA224_when_no_RfuFunc
+	bl Rfu_SetCloseLinkCallback
 	ldr r0, _080192A0
 	ldr r1, _080192A4
 	bl StringCopy

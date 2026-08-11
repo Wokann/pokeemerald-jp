@@ -769,7 +769,7 @@ _0801E1BA:
 	.align 2, 0
 _0801E1CC: .4byte 0x02022938
 _0801E1D0:
-	bl sub_0800FFB0
+	bl Rfu_StopPartnerSearch
 	ldr r4, _0801E1F4
 	ldr r0, [r4]
 	movs r1, #0xc8
@@ -2966,7 +2966,7 @@ _0801F258:
 	lsrs r0, r0, #0x18
 	cmp r0, #2
 	bne _0801F284
-	bl sub_0800FFB0
+	bl Rfu_StopPartnerSearch
 	ldr r1, [r6]
 	movs r0, #1
 	b _0801F2AA

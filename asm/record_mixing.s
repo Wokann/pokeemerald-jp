@@ -2554,7 +2554,7 @@ _080E7878:
 _080E7888: .4byte 0x030031C4
 _080E788C:
 	movs r0, #0
-	bl sub_0800FF8C
+	bl Rfu_SetLinkRecovery
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _080E78F2
@@ -2575,7 +2575,7 @@ _080E78A8:
 	cmp r0, #0
 	beq _080E78D0
 	movs r0, #1
-	bl sub_0800FF8C
+	bl Rfu_SetLinkRecovery
 	movs r0, #8
 	strh r0, [r4, #8]
 	b _080E78F2

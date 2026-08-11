@@ -1,5 +1,6 @@
 #include "global.h"
 #include "malloc.h"
+#include "battle.h"
 #include "decompress.h"
 #include "gpu_regs.h"
 #include "main.h"
@@ -58,7 +59,6 @@ extern const TaskFunc sShutdownTasks[3];
 // JP: these helpers are still in asm/link_rfu.s; referenced by their sub_
 // names until converted.
 extern void sub_08010250(void);
-extern s32 sub_080102A0(void);
 extern void sub_08011D68(void);
 extern void sub_0801034C(u8);
 extern void sub_080107FC(u8);
@@ -66,11 +66,11 @@ extern void sub_08011554(u8 status, u16 errorInfo);
 extern void sub_08010B58(bool8 startedActivity);
 extern void sub_08010CA0(bool32 enable);
 extern void sub_08011858(u32 slots);
-extern void sub_08010028(void);
 extern void sub_080105A4(u8 taskId);
 extern bool32 sub_08011570(void);
 extern void sub_080104E8(u16 selected);
 extern void sub_08010568(void *recvBuffer);
+extern u8 sub_080117D0(const u8 *name, u16 trainerId);
 
 // JP: IWRAM buffers bound via sym_iwram_jp.txt (US file-statics).
 extern IWRAM_DATA u8 sResendBlock8[];
@@ -136,6 +136,16 @@ static void SendLastBlock(void);
 static void RfuShutdownAfterDisconnect(void);
 static void DisconnectRfu(void);
 void TryDisconnectRfu(void);
+static void WaitAllReadyToCloseLink(void);
+static void SendReadyCloseLink(void);
+static void Task_TryReadyCloseLink(u8 taskId);
+static void SendReadyExitStandbyUntilAllReady(void);
+static void LinkLeaderReadyToExitStandby(void);
+static void Rfu_LinkStandby(void);
+static void CallRfuFunc(void);
+static bool8 CheckForLeavingGroupMembers(void);
+static void UpdateChildStatuses(void);
+static s32 GetJoinGroupStatus(void);
 void CreateTask_ParentSearchForChildren(void);
 void CreateTask_ChildSearchForParent(void);
 bool8 CanTryReconnectParent(void);
@@ -195,7 +205,7 @@ void InitRFUAPI(void)
 
 static void Task_ParentSearchForChildren(u8 taskId)
 {
-    sub_08010250();
+    UpdateChildStatuses();
     switch (gRfu.state)
     {
     case RFUSTATE_INIT:
@@ -304,7 +314,7 @@ static void Task_ChildSearchForParent(u8 taskId)
         gTasks[taskId].data[1] = 10;
         break;
     case RFUSTATE_CHILD_TRY_JOIN:
-        switch (sub_080102A0())
+        switch (GetJoinGroupStatus())
         {
         case RFU_STATUS_JOIN_GROUP_OK:
             gRfu.state = RFUSTATE_CHILD_JOINED;
@@ -737,7 +747,7 @@ bool32 RfuMain2_Parent(void)
             }
             MoveSendCmdToRecv();
             RfuHandleReceiveCommand(0);
-            sub_08010028();
+            CallRfuFunc();
             if (gRfu.nextChildBits && !gRfu.stopNewConnections)
             {
                 sRfuDebug.unkFlag = FALSE;
@@ -825,7 +835,7 @@ bool32 RfuMain1_Child(void)
     if (gRfu.childSendCount)
     {
         gRfu.childSendCount--;
-        sub_08010028();
+        CallRfuFunc();
         ChildBuildSendCmd(gSendCmd, send);
         RfuSendQueue_Enqueue(&gRfu.sendQueue, send);
         for (i = 0; i < CMD_LENGTH - 1; i++)
@@ -1296,4 +1306,328 @@ void LinkRfu_FatalError(void)
     rfu_LMAN_requestChangeAgbClockMaster();
     gRfu.disconnectMode = RFU_DISCONNECT_ERROR;
     gRfu.disconnectSlots = gRfuLinkStatus->connSlotFlag | gRfuLinkStatus->linkLossSlotFlag;
+}
+
+static void WaitAllReadyToCloseLink(void)
+{
+    s32 i;
+    u8 playerCount = gRfu.playerCount;
+    s32 count = 0;
+
+    // Wait for all players to be ready
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (gRfu.readyCloseLink[i])
+            count++;
+    }
+    if (count == playerCount)
+    {
+        // All ready, close link
+        gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
+        if (gRfu.parentChild == MODE_CHILD)
+        {
+            gRfu.errorState = RFU_ERROR_STATE_DISCONNECTING;
+            TryDisconnectRfu();
+        }
+        else
+        {
+            gRfu.callback = TryDisconnectRfu;
+        }
+    }
+}
+
+static void SendReadyCloseLink(void)
+{
+    if (gSendCmd[0] == 0 && !gRfu.playerExchangeActive)
+    {
+        RfuPrepareSendBuffer(RFUCMD_READY_CLOSE_LINK);
+        gRfu.callback = WaitAllReadyToCloseLink;
+    }
+}
+
+static void Task_TryReadyCloseLink(u8 taskId)
+{
+    if (gRfu.callback == NULL)
+    {
+        gRfu.stopNewConnections = TRUE;
+        gRfu.callback = SendReadyCloseLink;
+        DestroyTask(taskId);
+    }
+}
+
+void Rfu_SetCloseLinkCallback(void)
+{
+    if (!FuncIsActiveTask(Task_TryReadyCloseLink))
+        CreateTask(Task_TryReadyCloseLink, 5);
+}
+
+static void SendReadyExitStandbyUntilAllReady(void)
+{
+    u8 playerCount;
+    u8 i;
+
+    if (GetMultiplayerId() != 0)
+    {
+        if (gRfu.recvQueue.count == 0 && gRfu.resendExitStandbyTimer > 60)
+        {
+            RfuPrepareSendBuffer(RFUCMD_READY_EXIT_STANDBY);
+            gRfu.resendExitStandbyTimer = 0;
+        }
+    }
+    playerCount = GetLinkPlayerCount();
+    for (i = 0; i < playerCount; i++)
+    {
+        if (!gRfu.readyExitStandby[i])
+            break;
+    }
+    if (i == playerCount)
+    {
+        for (i = 0; i < MAX_RFU_PLAYERS; i++)
+            gRfu.readyExitStandby[i] = FALSE;
+        gRfu.allReadyNum++;
+        gRfu.callback = NULL;
+    }
+    gRfu.resendExitStandbyTimer++;
+}
+
+static void LinkLeaderReadyToExitStandby(void)
+{
+    if (gRfu.recvQueue.count == 0 && gSendCmd[0] == 0)
+    {
+        RfuPrepareSendBuffer(RFUCMD_READY_EXIT_STANDBY);
+        gRfu.callback = SendReadyExitStandbyUntilAllReady;
+    }
+}
+
+// RFU equivalent of LinkCB_Standby and LinkCB_StandbyForAll
+static void Rfu_LinkStandby(void)
+{
+    u8 i;
+    u8 playerCount;
+
+    if (GetMultiplayerId() != 0)
+    {
+        // Not link leader, send exit standby when ready
+        if (gRfu.recvQueue.count == 0 && gSendCmd[0] == 0)
+        {
+            RfuPrepareSendBuffer(RFUCMD_READY_EXIT_STANDBY);
+            gRfu.callback = SendReadyExitStandbyUntilAllReady;
+        }
+    }
+    else
+    {
+        // Link leader, wait for all members to send exit ready
+        playerCount = GetLinkPlayerCount();
+        for (i = 1; i < playerCount; i++)
+        {
+            if (!gRfu.readyExitStandby[i])
+                break;
+        }
+        if (i == playerCount)
+        {
+            if (gRfu.recvQueue.count == 0 && gSendCmd[0] == 0)
+            {
+                RfuPrepareSendBuffer(RFUCMD_READY_EXIT_STANDBY);
+                gRfu.callback = LinkLeaderReadyToExitStandby;
+            }
+        }
+    }
+}
+
+void Rfu_SetLinkStandbyCallback(void)
+{
+    if (gRfu.callback == NULL)
+    {
+        gRfu.callback = Rfu_LinkStandby;
+        gRfu.resendExitStandbyTimer = 0;
+    }
+}
+
+bool32 IsRfuSerialNumberValid(u32 serialNo)
+{
+    s32 i;
+    for (i = 0; sAcceptedSerialNos[i] != serialNo; i++)
+    {
+        if (sAcceptedSerialNos[i] == RFU_SERIAL_END)
+            return FALSE;
+    }
+    return TRUE;
+}
+
+u8 Rfu_SetLinkRecovery(bool32 enable)
+{
+    if (enable == FALSE)
+        return rfu_LMAN_setLinkRecovery(0, 0);
+    rfu_LMAN_setLinkRecovery(1, 600);
+    return 0;
+}
+
+void Rfu_StopPartnerSearch(void)
+{
+    gRfu.stopNewConnections = TRUE;
+    rfu_LMAN_stopManager(FALSE);
+}
+
+u8 Rfu_GetMultiplayerId(void)
+{
+    if (gRfu.parentChild == MODE_PARENT)
+        return 0;
+    return gRfu.multiplayerId;
+}
+
+u8 Rfu_GetLinkPlayerCount(void)
+{
+    return gRfu.playerCount;
+}
+
+bool8 IsLinkRfuTaskFinished(void)
+{
+    if (gRfu.status == RFU_STATUS_CONNECTION_ERROR)
+        return FALSE;
+    return gRfu.callback ? FALSE : TRUE;
+}
+
+static void CallRfuFunc(void)
+{
+    if (gRfu.callback)
+        gRfu.callback();
+}
+
+static bool8 CheckForLeavingGroupMembers(void)
+{
+    s32 i;
+    bool8 memberLeft = FALSE;
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (gRfu.partnerSendStatuses[i] < RFU_STATUS_JOIN_GROUP_OK
+         || gRfu.partnerSendStatuses[i] > RFU_STATUS_JOIN_GROUP_NO)
+        {
+            if (gRfuSlotStatusNI[i]->recv.state == SLOT_STATE_RECV_SUCCESS
+             || gRfuSlotStatusNI[i]->recv.state == SLOT_STATE_RECV_SUCCESS_AND_SENDSIDE_UNKNOWN)
+            {
+                if (gRfu.partnerRecvStatuses[i] == RFU_STATUS_LEAVE_GROUP_NOTICE)
+                {
+                    gRfu.partnerSendStatuses[i] = RFU_STATUS_LEAVE_GROUP;
+                    gRfu.partnerRecvStatuses[i] = RFU_STATUS_CHILD_LEAVE_READY;
+                    rfu_clearSlot(TYPE_NI_RECV, i);
+                    rfu_NI_setSendData(1 << i, 8, &gRfu.partnerSendStatuses[i], 1);
+                    memberLeft = TRUE;
+                }
+
+            }
+            else if (gRfuSlotStatusNI[gRfu.childSlot]->recv.state == SLOT_STATE_RECV_FAILED)
+            {
+                rfu_clearSlot(TYPE_NI_RECV, i);
+            }
+        }
+    }
+    return memberLeft;
+}
+
+bool32 RfuTryDisconnectLeavingChildren(void)
+{
+    u8 childrenLeaving = 0;
+    s32 i;
+
+    // Check all children, get those waiting to be disconnected
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (gRfu.partnerRecvStatuses[i] == RFU_STATUS_CHILD_LEAVE)
+        {
+            childrenLeaving |= (1 << i);
+            gRfu.partnerRecvStatuses[i] = RFU_STATUS_OK;
+        }
+    }
+
+    // Disconnect any leaving children
+    if (childrenLeaving)
+    {
+        rfu_REQ_disconnect(childrenLeaving);
+        rfu_waitREQComplete();
+    }
+
+    // Return true if any children have left or are still waiting to leave
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (gRfu.partnerRecvStatuses[i] == RFU_STATUS_CHILD_LEAVE_READY
+         || gRfu.partnerRecvStatuses[i] == RFU_STATUS_CHILD_LEAVE)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+bool32 HasTrainerLeftPartnersList(u16 trainerId, const u8 *name)
+{
+    u8 idx = sub_080117D0(name, trainerId);
+    if (idx == 0xFF)
+        return TRUE;
+    if (gRfu.partnerSendStatuses[idx] == RFU_STATUS_LEAVE_GROUP)
+        return TRUE;
+    return FALSE;
+}
+
+void SendRfuStatusToPartner(u8 status, u16 trainerId, const u8 *name)
+{
+    u8 idx = sub_080117D0(name, trainerId);
+    gRfu.partnerSendStatuses[idx] = status;
+    rfu_clearSlot(TYPE_NI_SEND, idx);
+    rfu_NI_setSendData(1 << idx, 8, &gRfu.partnerSendStatuses[idx], 1);
+}
+
+void SendLeaveGroupNotice(void)
+{
+    gRfu.leaveGroupStatus = RFU_STATUS_LEAVE_GROUP_NOTICE;
+    rfu_clearSlot(TYPE_NI_SEND, gRfu.childSlot);
+    rfu_NI_setSendData(1 << gRfu.childSlot, 8, &gRfu.leaveGroupStatus, 1);
+}
+
+u32 WaitSendRfuStatusToPartner(u16 trainerId, const u8 *name)
+{
+    u8 idx = sub_080117D0(name, trainerId);
+    if (idx == 0xFF)
+        return 2;
+    if (gRfuSlotStatusNI[idx]->send.state == 0)
+        return 1;
+    return 0;
+}
+
+static void UpdateChildStatuses(void)
+{
+    s32 i;
+
+    CheckForLeavingGroupMembers();
+    for (i = 0; i < RFU_CHILD_MAX; i++)
+    {
+        if (gRfuSlotStatusNI[i]->send.state == SLOT_STATE_SEND_SUCCESS
+         || gRfuSlotStatusNI[i]->send.state == SLOT_STATE_SEND_FAILED)
+        {
+            if (gRfu.partnerRecvStatuses[i] == RFU_STATUS_CHILD_LEAVE_READY)
+                gRfu.partnerRecvStatuses[i] = RFU_STATUS_CHILD_LEAVE;
+            rfu_clearSlot(TYPE_NI_SEND, i);
+        }
+    }
+}
+
+static s32 GetJoinGroupStatus(void)
+{
+    s32 status = RFU_STATUS_OK;
+    if (gRfu.leaveGroupStatus == RFU_STATUS_LEAVE_GROUP_NOTICE)
+    {
+        if (gRfuSlotStatusNI[gRfu.childSlot]->send.state == SLOT_STATE_SEND_SUCCESS
+         || gRfuSlotStatusNI[gRfu.childSlot]->send.state == SLOT_STATE_SEND_FAILED)
+            rfu_clearSlot(TYPE_NI_SEND, gRfu.childSlot);
+    }
+    if (gRfuSlotStatusNI[gRfu.childSlot]->recv.state == SLOT_STATE_RECV_SUCCESS
+     || gRfuSlotStatusNI[gRfu.childSlot]->recv.state == SLOT_STATE_RECV_SUCCESS_AND_SENDSIDE_UNKNOWN)
+    {
+        rfu_clearSlot(TYPE_NI_RECV, gRfu.childSlot);
+        sub_08011554(gRfu.childRecvStatus, 0);
+        status = gRfu.childRecvStatus;
+    }
+    else if (gRfuSlotStatusNI[gRfu.childSlot]->recv.state == SLOT_STATE_RECV_FAILED)
+    {
+        rfu_clearSlot(TYPE_NI_RECV, gRfu.childSlot);
+        status = RFU_STATUS_JOIN_GROUP_NO;
+    }
+    return status;
 }

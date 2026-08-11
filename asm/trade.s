@@ -581,7 +581,7 @@ _08077008:
 	b _0807752A
 _08077032:
 	movs r0, #1
-	bl sub_0800FF8C
+	bl Rfu_SetLinkRecovery
 	bl SetLinkStandbyCallback
 	b _0807752A
 	.align 2, 0
@@ -594,7 +594,7 @@ _08077050:
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08077088
-	bl sub_08010000
+	bl IsLinkRfuTaskFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08077064
@@ -1926,7 +1926,7 @@ sub_08077B90: @ 0x08077B90
 	ldrb r0, [r0]
 	cmp r0, #0
 	beq _08077BE8
-	bl sub_08010000
+	bl IsLinkRfuTaskFinished
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	beq _08077C0C
@@ -4396,7 +4396,7 @@ _08078F60: .4byte 0x08085AA9
 sub_08078F64: @ 0x08078F64
 	push {lr}
 	movs r0, #0
-	bl sub_0800FF8C
+	bl Rfu_SetLinkRecovery
 	lsls r0, r0, #0x18
 	cmp r0, #0
 	bne _08078F88
