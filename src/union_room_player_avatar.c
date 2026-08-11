@@ -5,6 +5,7 @@
 #include "fieldmap.h"
 #include "gba/isagbprint.h"
 #include "script.h"
+#include "sprite.h"
 #include "task.h"
 #include "union_room.h"
 #include "constants/event_objects.h"
@@ -20,6 +21,8 @@ extern const s8 sUnionRoomGroupOffsets[][2];
 extern const u8 sUnionRoomLocalIds[];
 extern const char gAssertFile_rfu_union_tool[];
 extern const char gAssertCond_UnionObjWork[];
+extern struct UnionRoomObject *sUnionObjWork;
+extern void DestroyTask_AnimateUnionRoomPlayers(void);
 
 bool32 is_walking_or_running(void)
 {
@@ -97,4 +100,41 @@ bool32 SetUnionRoomPlayerEnterExitMovement(u32 leaderId, const u8 *movement)
         return TRUE;
     }
     return FALSE;
+}
+
+void DestroyUnionRoomPlayerObjects(void)
+{
+    s32 i;
+    for (i = 0; i < MAX_UNION_ROOM_LEADERS; i++)
+    {
+        if (!IsUnionRoomPlayerHidden(i))
+        {
+            RemoveUnionRoomPlayerObjectEvent(i);
+            HideUnionRoomPlayer(i);
+        }
+    }
+    sUnionObjWork = NULL;
+    DestroyTask_AnimateUnionRoomPlayers();
+}
+
+void CreateUnionRoomPlayerSprites(u8 *spriteIds, s32 leaderId)
+{
+    s32 memberId;
+    for (memberId = 0; memberId < MAX_RFU_PLAYERS; memberId++)
+    {
+        s32 id = UR_PLAYER_SPRITE_ID(leaderId, memberId);
+        spriteIds[id] = CreateVirtualObject(OBJ_EVENT_GFX_MAN_4,
+                                           id - UR_SPRITE_START_ID,
+                                           sUnionRoomPlayerCoords[leaderId][0] + sUnionRoomGroupOffsets[memberId][0],
+                                           sUnionRoomPlayerCoords[leaderId][1] + sUnionRoomGroupOffsets[memberId][1],
+                                           3, 1);
+        SetVirtualObjectInvisibility(id - UR_SPRITE_START_ID, TRUE);
+    }
+}
+
+void DestroyUnionRoomPlayerSprites(u8 *spriteIds)
+{
+    s32 i;
+    for (i = 0; i < NUM_UNION_ROOM_SPRITES; i++)
+        DestroySprite(&gSprites[spriteIds[i]]);
 }
