@@ -796,3 +796,110 @@ void sub_0808B1C8(void) // JP: US PlayerFreeze
             PlayerForceSetHeldMovement(sub_08092CA0(gObjectEvents[gPlayerAvatar.objectEventId].facingDirection));
     }
 }
+
+// JP: acro bike wheelie helpers + coord getters (batch 6)
+u8 sub_08092FB8(u32 direction); // JP: GetAcroWheelieFaceDirectionMovementAction
+u8 sub_08092FE4(u32 direction); // JP: GetAcroPopWheelieFaceDirectionMovementAction
+u8 sub_0809303C(u32 direction); // JP: GetAcroWheelieHopFaceDirectionMovementAction
+u8 sub_08093094(u32 direction); // JP: GetAcroWheelieJumpDirectionMovementAction
+u8 sub_08092E58(u32 direction); // JP: GetJumpInPlaceTurnAroundMovementAction
+u8 sub_080930C0(u32 direction); // JP: GetAcroWheelieInPlaceDirectionMovementAction
+u8 sub_080930EC(u32 direction); // JP: GetAcroPopWheelieMoveDirectionMovementAction
+u8 sub_08093118(u32 direction); // JP: GetAcroWheelieMoveDirectionMovementAction
+u8 sub_08093144(u32 direction); // JP: GetAcroEndWheelieMoveDirectionMovementAction
+u8 EventObjectExecSingleMovementAction(u32 direction);
+u8 GetAcroEndWheelieFaceDirectionMovementAction(u32 direction);
+
+// JP ROM table: sArrowWarpMetatileBehaviorChecks @ 0x0846F8F8
+extern bool8 (*const sArrowWarpMetatileBehaviorChecks[4])(u16 metatileBehavior);
+
+void PlayerIdleWheelie(u8 direction)
+{
+    PlayerSetAnimId(sub_08092FB8(direction), COPY_MOVE_FACE);
+}
+
+void PlayerStartWheelie(u8 direction)
+{
+    PlayerSetAnimId(sub_08092FE4(direction), COPY_MOVE_FACE);
+}
+
+void PlayerEndWheelie(u8 direction)
+{
+    PlayerSetAnimId(EventObjectExecSingleMovementAction(direction), COPY_MOVE_FACE); // JP: uses this instead of GetAcroEndWheelieFaceDirectionMovementAction
+}
+
+void PlayerStandingHoppingWheelie(u8 direction)
+{
+    PlaySE(SE_BIKE_HOP);
+    PlayerSetAnimId(sub_0809303C(direction), COPY_MOVE_FACE);
+}
+
+void PlayerMovingHoppingWheelie(u8 direction)
+{
+    PlaySE(SE_BIKE_HOP);
+    PlayerSetAnimId(GetAcroEndWheelieFaceDirectionMovementAction(direction), COPY_MOVE_WALK);
+}
+
+void PlayerLedgeHoppingWheelie(u8 direction)
+{
+    PlaySE(SE_BIKE_HOP);
+    PlayerSetAnimId(sub_08093094(direction), COPY_MOVE_JUMP2);
+}
+
+void PlayerAcroTurnJump(u8 direction)
+{
+    PlaySE(SE_BIKE_HOP);
+    PlayerSetAnimId(sub_08092E58(direction), COPY_MOVE_FACE);
+}
+
+void sub_0808B2E4(u8 direction) // JP: US PlayerWheelieInPlace
+{
+    PlaySE(SE_WALL_HIT);
+    PlayerSetAnimId(sub_080930C0(direction), COPY_MOVE_WALK);
+}
+
+void sub_0808B308(u8 direction) // JP: US PlayerPopWheelieWhileMoving
+{
+    PlayerSetAnimId(sub_080930EC(direction), COPY_MOVE_WALK);
+}
+
+void sub_0808B320(u8 direction) // JP: US PlayerWheelieMove
+{
+    PlayerSetAnimId(sub_08093118(direction), COPY_MOVE_WALK);
+}
+
+void sub_0808B338(u8 direction) // JP: US PlayerEndWheelieWhileMoving
+{
+    PlayerSetAnimId(sub_08093144(direction), COPY_MOVE_WALK);
+}
+
+void PlayCollisionSoundIfNotFacingWarp(u8 direction)
+{
+    s16 x, y;
+    u8 metatileBehavior = gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior;
+
+    if (!sArrowWarpMetatileBehaviorChecks[direction - 1](metatileBehavior))
+    {
+        if (direction == DIR_NORTH)
+        {
+            PlayerGetDestCoords(&x, &y);
+            MoveCoords(DIR_NORTH, &x, &y);
+            if ((u8)MetatileBehavior_IsWarpDoor((u8)MapGridGetMetatileBehaviorAt(x, y)))
+                return; // JP: skips the shared collision sound
+        }
+        PlaySE(SE_WALL_HIT);
+    }
+}
+
+void GetXYCoordsOneStepInFrontOfPlayer(s16 *x, s16 *y)
+{
+    *x = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.x;
+    *y = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.y;
+    MoveCoords(GetPlayerFacingDirection(), x, y);
+}
+
+void PlayerGetDestCoords(s16 *x, s16 *y)
+{
+    *x = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.x;
+    *y = gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.y;
+}
