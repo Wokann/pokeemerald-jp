@@ -131,7 +131,8 @@ struct WirelessLink_URoom
     u16 partnerYesNoResponse;                            // 0x80
     u16 recvActivityRequest[3];                          // 0x82-0x87
     struct UnionRoomObject objects[MAX_UNION_ROOM_LEADERS]; // 0x88-0xA7
-    u8 filler_0xA8[0x224 - 0xA8];                        // 0xA8-0x223
+    u8 trainerCardStrBuffer[12][15];                     // 0xA8-0x15B
+    u8 trainerCardMsgStrBuffer[200];                     // 0x15C-0x223
 };
 
 struct UnionRoomTrade
