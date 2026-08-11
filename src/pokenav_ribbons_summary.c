@@ -1306,127 +1306,19 @@ void PrintCurrentMonRibbonCount(struct Pokenav_RibbonsSummaryMenu *menu)
 }
 
 
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-#ifndef NONMATCHING
-// JP naked asm: compiler register allocation differs from US; byte-exact asm stays default.
-__attribute__((naked)) void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    __asm__(".syntax unified\n\t"
-            ".code 16\n\t"
-            "push {r4, r5, r6, r7, lr}\n\t"
-            "mov r7, r8\n\t"
-            "push {r7}\n\t"
-            "sub sp, #0x10\n\t"
-            "adds r7, r0, #0\n\t"
-            "bl GetRibbonId\n\t"
-            "adds r5, r0, #0\n\t"
-            "ldr r1, _081D0608\n\t"
-            "add r0, sp, #0xc\n\t"
-            "movs r2, #3\n\t"
-            "bl memcpy\n\t"
-            "ldrb r0, [r7, #0xa]\n\t"
-            "movs r1, #0x44\n\t"
-            "bl FillWindowPixelBuffer\n\t"
-            "cmp r5, #0x18\n\t"
-            "bhi _081D0610\n\t"
-            "lsls r1, r5, #3\n\t"
-            "ldr r0, _081D060C\n\t"
-            "adds r6, r1, r0\n\t"
-            "movs r5, #0x80\n\t"
-            "lsls r5, r5, #0x12\n\t"
-            "movs r4, #1\n\t"
-            "_081D05DE:\n\t"
-            "ldrb r0, [r7, #0xa]\n\t"
-            "lsrs r3, r5, #0x18\n\t"
-            "add r1, sp, #0xc\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #1\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "str r1, [sp, #4]\n\t"
-            "ldm r6!, {r1}\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #0x15\n\t"
-            "adds r5, r5, r0\n\t"
-            "subs r4, #1\n\t"
-            "cmp r4, #0\n\t"
-            "bge _081D05DE\n\t"
-            "b _081D065A\n\t"
-            ".align 2, 0\n\t"
-            "_081D0608: .4byte 0x085F723C\n\t"
-            "_081D060C: .4byte 0x085F5F60\n\t"
-            "_081D0610:\n\t"
-            "ldr r0, _081D0670\n\t"
-            "ldr r0, [r0]\n\t"
-            "adds r0, r0, r5\n\t"
-            "ldr r1, _081D0674\n\t"
-            "adds r0, r0, r1\n\t"
-            "ldrb r5, [r0]\n\t"
-            "cmp r5, #0\n\t"
-            "beq _081D0662\n\t"
-            "subs r5, #1\n\t"
-            "movs r4, #0\n\t"
-            "ldr r0, _081D0678\n\t"
-            "mov r8, r0\n\t"
-            "movs r6, #0x80\n\t"
-            "lsls r6, r6, #0x12\n\t"
-            "_081D062C:\n\t"
-            "ldrb r0, [r7, #0xa]\n\t"
-            "lsrs r3, r6, #0x18\n\t"
-            "add r1, sp, #0xc\n\t"
-            "str r1, [sp]\n\t"
-            "movs r1, #1\n\t"
-            "rsbs r1, r1, #0\n\t"
-            "str r1, [sp, #4]\n\t"
-            "lsls r1, r4, #2\n\t"
-            "lsls r2, r5, #3\n\t"
-            "adds r1, r1, r2\n\t"
-            "add r1, r8\n\t"
-            "ldr r1, [r1]\n\t"
-            "str r1, [sp, #8]\n\t"
-            "movs r1, #1\n\t"
-            "movs r2, #0\n\t"
-            "bl AddTextPrinterParameterized3\n\t"
-            "movs r0, #0x80\n\t"
-            "lsls r0, r0, #0x15\n\t"
-            "adds r6, r6, r0\n\t"
-            "adds r4, #1\n\t"
-            "cmp r4, #1\n\t"
-            "ble _081D062C\n\t"
-            "_081D065A:\n\t"
-            "ldrb r0, [r7, #0xa]\n\t"
-            "movs r1, #2\n\t"
-            "bl CopyWindowToVram\n\t"
-            "_081D0662:\n\t"
-            "add sp, #0x10\n\t"
-            "pop {r3}\n\t"
-            "mov r8, r3\n\t"
-            "pop {r4, r5, r6, r7}\n\t"
-            "pop {r0}\n\t"
-            "bx r0\n\t"
-            ".align 2, 0\n\t"
-            "_081D0670: .4byte gSaveBlock1Ptr\n\t"
-            "_081D0674: .4byte 0x0000318F\n\t"
-            "_081D0678: .4byte 0x085F628C\n\t"
-            ".syntax divided");
-}
-#else
 void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
 {
     s32 i;
     u32 ribbonId = GetRibbonId();
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
+    u8 color[3];
+    memcpy(color, sPlayerNameTextColors, 3);
 
     FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
     if (ribbonId < FIRST_GIFT_RIBBON)
     {
         // Print normal ribbon name/description
         for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gRibbonDescriptionPointers[ribbonId][i]);
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 2, color, TEXT_SKIP_DRAW, gRibbonDescriptionPointers[ribbonId][i]);
     }
     else
     {
@@ -1442,47 +1334,11 @@ void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
         // Print gift ribbon name/description
         ribbonId--;
         for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gGiftRibbonDescriptionPointers[ribbonId][i]);
+            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 2, color, TEXT_SKIP_DRAW, gGiftRibbonDescriptionPointers[ribbonId][i]);
     }
 
     CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
 }
-#endif
-
-#else
-void PrintRibbonNameAndDescription(struct Pokenav_RibbonsSummaryMenu *menu)
-{
-    s32 i;
-    u32 ribbonId = GetRibbonId();
-    u8 color[] = {TEXT_COLOR_RED, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
-
-    FillWindowPixelBuffer(menu->ribbonCountWindowId, PIXEL_FILL(4));
-    if (ribbonId < FIRST_GIFT_RIBBON)
-    {
-        // Print normal ribbon name/description
-        for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gRibbonDescriptionPointers[ribbonId][i]);
-    }
-    else
-    {
-        // ribbonId here is one of the 'gift' ribbon slots, used to read
-        // its actual value from giftRibbons to determine which specific
-        // gift ribbon it is
-        ribbonId = gSaveBlock1Ptr->giftRibbons[ribbonId - FIRST_GIFT_RIBBON];
-
-        // If 0, this gift ribbon slot is unoccupied
-        if (ribbonId == 0)
-            return;
-
-        // Print gift ribbon name/description
-        ribbonId--;
-        for (i = 0; i < 2; i++)
-            AddTextPrinterParameterized3(menu->ribbonCountWindowId, FONT_NORMAL, 0, (i * 16) + 1, color, TEXT_SKIP_DRAW, gGiftRibbonDescriptionPointers[ribbonId][i]);
-    }
-
-    CopyWindowToVram(menu->ribbonCountWindowId, COPYWIN_GFX);
-}
-#endif
 
 
 
