@@ -12,6 +12,7 @@
 #include "constants/field_effects.h"
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
+#include "constants/songs.h"
 
 #define NUM_FORCED_MOVEMENTS 18
 #define NUM_ACRO_BIKE_COLLISIONS 5
@@ -681,4 +682,117 @@ bool8 PlayerCheckIfAnimFinishedOrInactive(void)
 bool8 PlayerIsAnimActive(void)
 {
     return ObjectEventCheckHeldMovementStatus(&gObjectEvents[gPlayerAvatar.objectEventId]); // JP: swapped
+}
+
+// JP: movement animation helpers (batch 5). JP names for the speed helpers;
+// US names aliased in ld_script_jp.txt.
+u8 sub_08092CF8(u32 direction); // JP: GetWalkNormalMovementAction
+u8 sub_08092D24(u32 direction); // JP: GetWalkFastMovementAction
+u8 sub_08092D50(u32 direction); // JP: GetRideWaterCurrentMovementAction
+u8 sub_08092D7C(u32 direction); // JP: GetWalkFasterMovementAction
+u8 sub_08092DD4(u32 direction); // JP: GetPlayerRunMovementAction
+u8 sub_08092F08(u32 direction); // JP: GetWalkInPlaceNormalMovementAction
+u8 sub_08092EDC(u32 direction); // JP: GetWalkInPlaceSlowMovementAction
+u8 sub_08092CA0(u32 direction); // JP: GetFaceDirectionMovementAction
+u8 sub_08092F34(u32 direction); // JP: GetWalkInPlaceFastMovementAction
+u8 sub_08092E00(u32 direction); // JP: GetJump2MovementAction
+bool8 player_should_look_direction_be_enforced_upon_movement(void);
+void ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 movementActionId);
+void PlayCollisionSoundIfNotFacingWarp(u8 direction);
+void PlayerSetCopyableMovement(u8 movement);
+
+void PlayerSetCopyableMovement(u8 movement)
+{
+    gObjectEvents[gPlayerAvatar.objectEventId].playerCopyableMovement = movement;
+}
+
+u8 PlayerGetCopyableMovement(void)
+{
+    return gObjectEvents[gPlayerAvatar.objectEventId].playerCopyableMovement;
+}
+
+void PlayerForceSetHeldMovement(u8 movementActionId) // JP: sub_0808B020
+{
+    ObjectEventForceSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], movementActionId);
+}
+
+void PlayerSetAnimId(u8 movementActionId, u8 copyableMovement)
+{
+    if (!PlayerCheckIfAnimFinishedOrInactive())
+    {
+        PlayerSetCopyableMovement(copyableMovement);
+        ObjectEventSetHeldMovement(&gObjectEvents[gPlayerAvatar.objectEventId], movementActionId);
+    }
+}
+
+void PlayerGoSpeed1(u8 direction) // JP: US PlayerWalkNormal
+{
+    PlayerSetAnimId(sub_08092CF8(direction), COPY_MOVE_WALK);
+}
+
+void PlayerGoSpeed2(u8 direction) // JP: US PlayerWalkFast
+{
+    PlayerSetAnimId(sub_08092D24(direction), COPY_MOVE_WALK);
+}
+
+void PlayerRideWaterCurrent(u8 direction)
+{
+    PlayerSetAnimId(sub_08092D50(direction), COPY_MOVE_WALK);
+}
+
+void PlayerGoSpeed4(u8 direction) // JP: US PlayerWalkFaster
+{
+    PlayerSetAnimId(sub_08092D7C(direction), COPY_MOVE_WALK);
+}
+
+void PlayerRun(u8 direction)
+{
+    PlayerSetAnimId(sub_08092DD4(direction), COPY_MOVE_WALK);
+}
+
+void PlayerOnBikeCollide(u8 direction)
+{
+    PlayCollisionSoundIfNotFacingWarp(direction);
+    PlayerSetAnimId(sub_08092F08(direction), COPY_MOVE_WALK);
+}
+
+void PlayerOnBikeCollideWithFarawayIslandMew(u8 direction)
+{
+    PlayerSetAnimId(sub_08092F08(direction), COPY_MOVE_WALK);
+}
+
+void PlayerNotOnBikeCollide(u8 direction)
+{
+    PlayCollisionSoundIfNotFacingWarp(direction);
+    PlayerSetAnimId(sub_08092EDC(direction), COPY_MOVE_WALK);
+}
+
+void PlayerNotOnBikeCollideWithFarawayIslandMew(u8 direction)
+{
+    PlayerSetAnimId(sub_08092EDC(direction), COPY_MOVE_WALK);
+}
+
+void PlayerFaceDirection(u8 direction)
+{
+    PlayerSetAnimId(sub_08092CA0(direction), COPY_MOVE_FACE);
+}
+
+void PlayerTurnInPlace(u8 direction)
+{
+    PlayerSetAnimId(sub_08092F34(direction), COPY_MOVE_FACE);
+}
+
+void PlayerJumpLedge(u8 direction)
+{
+    PlaySE(SE_LEDGE);
+    PlayerSetAnimId(sub_08092E00(direction), COPY_MOVE_JUMP2);
+}
+
+void sub_0808B1C8(void) // JP: US PlayerFreeze
+{
+    if (gPlayerAvatar.tileTransitionState == T_TILE_CENTER || gPlayerAvatar.tileTransitionState == T_NOT_MOVING)
+    {
+        if (player_should_look_direction_be_enforced_upon_movement())
+            PlayerForceSetHeldMovement(sub_08092CA0(gObjectEvents[gPlayerAvatar.objectEventId].facingDirection));
+    }
 }
