@@ -1391,6 +1391,8 @@ SECTIONS {
         src/union_room.o(.text.Task_ExchangeCards);
         src/union_room.o(.text.CB2_ShowCard);
         src/union_room.o(.text.StartUnionRoomBattle);
+        src/union_room.o(.text.WarpForWirelessMinigame);
+        src/union_room.o(.text.WarpForCableClubActivity);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
         src/union_room_player_avatar.o(.text);

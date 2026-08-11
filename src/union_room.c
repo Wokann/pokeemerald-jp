@@ -4,6 +4,7 @@
 #include "cable_club.h"
 #include "constants/songs.h"
 #include "event_data.h"
+#include "fieldmap.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "list_menu.h"
@@ -1482,4 +1483,23 @@ void StartUnionRoomBattle(u16 battleFlags)
     gMain.savedCallback = CB2_ReturnFromCableClubBattle;
     gBattleTypeFlags = battleFlags;
     JPPlayBattleBGM();
+}
+
+void WarpForWirelessMinigame(u16 linkService, u16 x, u16 y)
+{
+    VarSet(VAR_CABLE_CLUB_STATE, linkService);
+    SetWarpDestination(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE, x, y);
+    SetDynamicWarpWithCoords(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE, x, y);
+    WarpIntoMap();
+}
+
+void WarpForCableClubActivity(s8 mapGroup, s8 mapNum, s32 x, s32 y, u16 linkService)
+{
+    gSpecialVar_0x8004 = linkService;
+    VarSet(VAR_CABLE_CLUB_STATE, linkService);
+    gFieldLinkPlayerCount = GetLinkPlayerCount();
+    gLocalLinkPlayerId = GetMultiplayerId();
+    SetCableClubWarp();
+    SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, x, y);
+    WarpIntoMap();
 }

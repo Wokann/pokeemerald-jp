@@ -5,127 +5,11 @@
 
 
 
-	thumb_func_start sub_08013D98
-sub_08013D98: @ 0x08013D98
-	push {r4, r5, r6, lr}
-	mov r6, r8
-	push {r6}
-	sub sp, #8
-	adds r3, r0, #0
-	adds r4, r1, #0
-	adds r5, r2, #0
-	lsls r3, r3, #0x10
-	lsrs r3, r3, #0x10
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	lsls r5, r5, #0x10
-	lsrs r5, r5, #0x10
-	ldr r0, _08013E04
-	adds r1, r3, #0
-	bl VarSet
-	ldr r6, _08013E08
-	ldr r1, [r6]
-	movs r0, #4
-	ldrsb r0, [r1, r0]
-	ldrb r1, [r1, #5]
-	lsls r1, r1, #0x18
-	asrs r1, r1, #0x18
-	movs r2, #1
-	rsbs r2, r2, #0
-	mov r8, r2
-	lsls r4, r4, #0x18
-	asrs r4, r4, #0x18
-	lsls r5, r5, #0x18
-	asrs r5, r5, #0x18
-	str r5, [sp]
-	adds r3, r4, #0
-	bl SetWarpDestination
-	ldr r0, [r6]
-	movs r1, #4
-	ldrsb r1, [r0, r1]
-	movs r2, #5
-	ldrsb r2, [r0, r2]
-	str r4, [sp]
-	str r5, [sp, #4]
-	movs r0, #0
-	mov r3, r8
-	bl SetDynamicWarpWithCoords
-	bl WarpIntoMap
-	add sp, #8
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08013E04: .4byte 0x00004087
-_08013E08: .4byte 0x03005AEC
-	thumb_func_end sub_08013D98
-
-	thumb_func_start sub_08013E0C
-sub_08013E0C: @ 0x08013E0C
-	push {r4, r5, r6, lr}
-	mov r6, r8
-	push {r6}
-	sub sp, #4
-	adds r4, r0, #0
-	adds r5, r1, #0
-	mov r8, r2
-	adds r6, r3, #0
-	ldr r1, [sp, #0x18]
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	lsls r1, r1, #0x10
-	lsrs r1, r1, #0x10
-	ldr r0, _08013E7C
-	strh r1, [r0]
-	ldr r0, _08013E80
-	bl VarSet
-	bl GetLinkPlayerCount
-	ldr r1, _08013E84
-	strb r0, [r1]
-	bl GetMultiplayerId
-	ldr r1, _08013E88
-	strb r0, [r1]
-	bl SetCableClubWarp
-	lsls r4, r4, #0x18
-	asrs r4, r4, #0x18
-	lsls r5, r5, #0x18
-	asrs r5, r5, #0x18
-	movs r2, #1
-	rsbs r2, r2, #0
-	mov r0, r8
-	lsls r0, r0, #0x18
-	asrs r0, r0, #0x18
-	mov r8, r0
-	lsls r6, r6, #0x18
-	asrs r6, r6, #0x18
-	str r6, [sp]
-	adds r0, r4, #0
-	adds r1, r5, #0
-	mov r3, r8
-	bl SetWarpDestination
-	bl WarpIntoMap
-	add sp, #4
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08013E7C: .4byte 0x02037280
-_08013E80: .4byte 0x00004087
-_08013E84: .4byte 0x03005B18
-_08013E88: .4byte 0x03005B14
-	thumb_func_end sub_08013E0C
-
 	thumb_func_start sub_08013E8C
 sub_08013E8C: @ 0x08013E8C
 	push {r4, lr}
 	ldr r0, _08013EA4
-	movs r1, #0x87
+	movs r1, #135	@ 0x87
 	lsls r1, r1, #3
 	adds r4, r0, r1
 	ldrb r0, [r4]
@@ -415,7 +299,7 @@ _080141A0:
 	movs r2, #8
 	movs r3, #9
 _080141B8:
-	bl sub_08013E0C
+	bl WarpForCableClubActivity
 	ldr r0, _080141C8
 	bl SetMainCallback2
 	b _0801426C
@@ -460,7 +344,7 @@ _0801421C:
 	movs r0, #8
 	movs r1, #5
 	movs r2, #1
-	bl sub_08013D98
+	bl WarpForWirelessMinigame
 	bl GetCursorSelectionMonId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
@@ -473,7 +357,7 @@ _0801423C:
 	movs r0, #7
 	movs r1, #9
 	movs r2, #1
-	bl sub_08013D98
+	bl WarpForWirelessMinigame
 	ldr r0, _08014250
 	bl sub_08020988
 	b _0801426C
@@ -483,7 +367,7 @@ _08014254:
 	movs r0, #8
 	movs r1, #5
 	movs r2, #1
-	bl sub_08013D98
+	bl WarpForWirelessMinigame
 	bl GetCursorSelectionMonId
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
