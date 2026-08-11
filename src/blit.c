@@ -73,6 +73,7 @@ void BlitBitmapRect4Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, 
 // Kept as naked asm: agbcc cannot reproduce the JP compiler's register
 // allocation for this fill loop (x/sl, y/r5, fillValue/r7), which the
 // other blit functions match.
+#ifndef NONMATCHING
 __attribute__((naked)) void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue)
 {
     __asm__(".syntax unified\n\t"
@@ -181,6 +182,43 @@ __attribute__((naked)) void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u1
             "bx r0\n\t"
             ".syntax divided");
 }
+
+#else
+// 可读的 C 版本（NONMATCHING）：与汇编版语义相同（4bpp 矩形填充），
+// 但不保证逐字节一致。启用方式见 include/config.h。
+void FillBitmapRect4Bit(struct Bitmap *surface, u16 x, u16 y, u16 width, u16 height, u8 fillValue)
+{
+    s32 xEnd;
+    s32 yEnd;
+    s32 multiplierY;
+    s32 loopX, loopY;
+    u8 toOrr1, toOrr2;
+
+    xEnd = x + width;
+    if (xEnd > surface->width)
+        xEnd = surface->width;
+
+    yEnd = y + height;
+    if (yEnd > surface->height)
+        yEnd = surface->height;
+
+    multiplierY = (surface->width + (surface->width & 7)) >> 3;
+    toOrr1 = fillValue << 4;
+    toOrr2 = fillValue & 0xF;
+
+    for (loopY = y; loopY < yEnd; loopY++)
+    {
+        for (loopX = x; loopX < xEnd; loopX++)
+        {
+            u8 *pixels = surface->pixels + ((loopX >> 1) & 3) + ((loopX >> 3) << 5) + (((loopY >> 3) * multiplierY) << 5) + ((u32)(loopY << 0x1d) >> 0x1B);
+            if ((loopX << 0x1F) != 0)
+                *pixels = toOrr1 | (*pixels & 0xF);
+            else
+                *pixels = toOrr2 | (*pixels & 0xF0);
+        }
+    }
+}
+#endif
 
 void BlitBitmapRect4BitTo8Bit(const struct Bitmap *src, struct Bitmap *dst, u16 srcX, u16 srcY, u16 dstX, u16 dstY, u16 width, u16 height, u8 colorKey, u8 paletteOffset)
 {
