@@ -2975,7 +2975,7 @@ _0801F280: .4byte 0x02022938
 _0801F284:
 	movs r5, #4
 	ldrsh r0, [r4, r5]
-	bl sub_080118CC
+	bl Rfu_DisconnectPlayerById
 _0801F28C:
 	movs r0, #3
 	b _0801F2D2
@@ -5957,4 +5957,3 @@ _0802090E:
 	.align 2, 0
 _08020914: .4byte 0x02022940
 	thumb_func_end sub_08020898
-

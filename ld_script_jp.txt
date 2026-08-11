@@ -930,7 +930,12 @@ sASCII_PokemonSioInfo = ABSOLUTE(0x082C0564);
 sAvailSlots = ABSOLUTE(0x082C0370);
 sASCII_LinkLossDisconnect = ABSOLUTE(0x082C0578);
 sASCII_LinkLossRecoveryNow = ABSOLUTE(0x082C0590);
+sASCII_30Spaces = ABSOLUTE(0x082C05A8);
+sASCII_15Spaces = ABSOLUTE(0x082C05C7);
+sASCII_8Spaces = ABSOLUTE(0x082C05D7);
+sASCII_NowSlot = ABSOLUTE(0x082C05E4);
 Debug_PrintString = nullsub_13;
+Debug_PrintNum = nullsub_5;
 
 SECTIONS {
     . = 0x2000000;
@@ -1276,7 +1281,24 @@ SECTIONS {
         src/link_rfu_2.o(.text.InitializeRfuLinkManager_LinkLeader);
         src/link_rfu_2.o(.text.InitializeRfuLinkManager_JoinGroup);
         src/link_rfu_2.o(.text.InitializeRfuLinkManager_EnterUnionRoom);
-        asm/link_rfu.o(.text);
+        src/link_rfu_2.o(.text.ReadU16);
+        src/link_rfu_2.o(.text.GetPartnerIndexByNameAndTrainerID);
+        src/link_rfu_2.o(.text.RfuReqDisconnectSlot);
+        src/link_rfu_2.o(.text.RequestDisconnectSlotByTrainerNameAndId);
+        src/link_rfu_2.o(.text.Rfu_DisconnectPlayerById);
+        src/link_rfu_2.o(.text.Task_SendDisconnectCommand);
+        src/link_rfu_2.o(.text.SendDisconnectCommand);
+        src/link_rfu_2.o(.text.Task_RfuReconnectWithParent);
+        src/link_rfu_2.o(.text.CreateTask_RfuReconnectWithParent);
+        src/link_rfu_2.o(.text.IsPartnerActivityIncompatible);
+        src/link_rfu_2.o(.text.Task_TryConnectToUnionRoomParent);
+        src/link_rfu_2.o(.text.TryConnectToUnionRoomParent);
+        src/link_rfu_2.o(.text.IsRfuRecoveringFromLinkLoss);
+        src/link_rfu_2.o(.text.IsRfuCommunicatingWithAllChildren);
+        src/link_rfu_2.o(.text.Debug_PrintEmpty);
+        src/link_rfu_2.o(.text.Debug_PrintStatus);
+        src/link_rfu_2.o(.text.GetRfuSendQueueLength);
+        src/link_rfu_2.o(.text.GetRfuRecvQueueLength);
         asm/union_room.o(.text);
         asm/mystery_gift.o(.text);
         src/union_room_player_avatar.o(.text);

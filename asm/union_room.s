@@ -668,7 +668,7 @@ _080125AC:
 	ands r0, r2
 	cmp r0, #0
 	beq _080125E2
-	bl sub_08011D2C
+	bl IsRfuCommunicatingWithAllChildren
 	cmp r0, #0
 	beq _080125E2
 	ldr r0, _080125FC
@@ -958,7 +958,7 @@ _08012808:
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_080118AC
+	bl RequestDisconnectSlotByTrainerNameAndId
 	ldr r1, [r5]
 	ldrb r0, [r5, #0x13]
 	lsls r0, r0, #5
@@ -2706,7 +2706,7 @@ sub_080136DC: @ 0x080136DC
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08011AB4
+	bl CreateTask_RfuReconnectWithParent
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -4677,7 +4677,7 @@ _0801486C:
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_080118AC
+	bl RequestDisconnectSlotByTrainerNameAndId
 	ldr r1, [r5]
 	ldrb r0, [r5, #0x13]
 	lsls r0, r0, #5
@@ -5105,7 +5105,7 @@ _08014BDE:
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08011AB4
+	bl CreateTask_RfuReconnectWithParent
 	movs r0, #0x6e
 	bl PlaySE
 	movs r0, #4
@@ -5489,7 +5489,7 @@ _08014F5A:
 	lsls r1, r1, #0x10
 	lsrs r1, r1, #0x10
 	adds r0, r4, #0
-	bl sub_08011AB4
+	bl CreateTask_RfuReconnectWithParent
 	movs r0, #0x6e
 	bl PlaySE
 	movs r0, #4
@@ -6241,7 +6241,7 @@ _0801564C:
 	adds r0, #0x10
 	ldr r2, _0801566C
 	ldrb r2, [r2]
-	bl sub_08011C74
+	bl TryConnectToUnionRoomParent
 	strh r5, [r6, #0x12]
 	movs r0, #0x19
 	bl _0801638A
@@ -6702,7 +6702,7 @@ _08015A64:
 	adds r0, r1, #0
 	adds r0, #0x10
 	ldrb r2, [r4]
-	bl sub_08011C74
+	bl TryConnectToUnionRoomParent
 	ldrh r0, [r7, #2]
 	strh r0, [r6, #0x12]
 	movs r0, #0x14
@@ -6945,7 +6945,7 @@ _08015C96:
 	b _0801638C
 _08015CA4:
 	movs r0, #1
-	bl sub_080118CC
+	bl Rfu_DisconnectPlayerById
 	ldr r0, _08015CBC
 	ldr r1, _08015CC0
 	bl StringCopy
@@ -7706,7 +7706,7 @@ _08016308:
 	adds r0, r1, #0
 	adds r0, #0x10
 	movs r2, #0x44
-	bl sub_08011C74
+	bl TryConnectToUnionRoomParent
 	ldr r0, _08016344
 	movs r3, #2
 	ldrsh r2, [r7, r3]
@@ -11358,4 +11358,3 @@ _08017EA8:
 	.align 2, 0
 _08017EB8: .4byte 0x082C1FA4
 	thumb_func_end sub_08017CDC
-

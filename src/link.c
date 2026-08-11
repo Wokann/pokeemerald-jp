@@ -92,7 +92,7 @@ extern struct {
 } sLinkErrorBuffer;
 extern u16 sReadyCloseLinkAttempts; // never read
 extern void *sLinkErrorBgTilemapBuffer;
-u32 sub_08011FC0(void);
+u32 GetRfuRecvQueueLength(void);
 
 void InitLocalLinkPlayer(void);
 void VBlankCB_LinkError(void);
@@ -1739,7 +1739,7 @@ void SetWirelessCommType0(void)
 u32 GetLinkRecvQueueLength(void)
 {
     if (gWirelessCommType != 0)
-        return sub_08011FC0();
+        return GetRfuRecvQueueLength();
 
     return gLink.recvQueue.count;
 }
