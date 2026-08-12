@@ -41,7 +41,6 @@ extern const u16 sMainMenuTextPal[];
 extern const struct BgTemplate sMainMenuBgTemplates[];
 extern const struct WindowTemplate sWindowTemplates_MainMenu[];
 
-extern void LoadMainMenuWindowFrameTiles(u8 windowId, u16 tileNum);
 extern void Task_MainMenuCheckSaveFile(u8 taskId);
 extern const u8 gUnknown_85C8D93[];
 extern const u8 gUnknown_85C8C70[];
@@ -79,13 +78,12 @@ extern const u8 *const sMalePresetNames[];
 extern const u8 *const sFemalePresetNames[];
 extern void PrintTextArray(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, const struct MenuAction *texts);
 extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, u8 initialCursorPos);
-extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern void Task_DisplayMainMenu(u8 taskId);
 extern u16 sCurrItemAndOptionMenuCheck;
 extern const struct TextColor sTextColor_Headers;
 extern const struct ScrollArrowsTemplate sScrollArrowsTemplate_MainMenu;
 extern void MainMenu_FormatSavegameText(void);
-extern void DrawMainMenuWindowBorder(const struct WindowTemplate *windowTemplate, u16 tileNum);
 extern u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *template, u16 *ignore);
 extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
@@ -95,7 +93,6 @@ extern void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId);
 extern void Task_NewGameBirchSpeech_AndYouAre(u8 taskId);
 extern void AddBirchSpeechObjects(u8 taskId);
 extern void NewGameBirchSpeech_ShowDialogueWindow(u8 taskId, u8 windowId);
-extern void NewGameBirchSpeech_ClearWindow(u8 taskId);
 extern void NewGameBirchSpeech_ShowPokeBallPrinterCallback(struct TextPrinter *textPrinter);
 extern void Task_NewGameBirchSpeech_SlidePlatformAway(u8 taskId);
 extern void NewGameBirchSpeech_ShowGenderMenu(void);
@@ -163,6 +160,12 @@ static void MainMenu_FormatSavegamePlayer(void);
 static void MainMenu_FormatSavegameTime(void);
 static void MainMenu_FormatSavegamePokedex(void);
 static void MainMenu_FormatSavegameBadges(void);
+static void LoadMainMenuWindowFrameTiles(u8 bgId, u16 tileOffset);
+static void DrawMainMenuWindowBorder(const struct WindowTemplate *template, u16 baseTileNum);
+static void ClearMainMenuWindowTilemap(const struct WindowTemplate *template);
+void NewGameBirchSpeech_ClearGenderWindowTilemap(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 unused);
+static void NewGameBirchSpeech_ClearWindow(u8 windowId);
+void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8 yesNoPalNum, u8 winPalNum);
 
 #define NUM_PRESET_NAMES 20
 
@@ -1767,6 +1770,62 @@ static void MainMenu_FormatSavegameBadges(void)
     ConvertIntToDecimalStringN(gStringVar1, badgeCount, 2, 1);
     StringExpandPlaceholders(gStringVar4, gUnknown_85CCCE1);
     AddTextPrinterParameterized3(2, FONT_NORMAL, 0x6F, 0x21, sTextColor_Savegame, -1, gStringVar4);
+}
+
+static void LoadMainMenuWindowFrameTiles(u8 bgId, u16 tileOffset)
+{
+    LoadBgTiles(bgId, GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->tiles, 0x120, tileOffset);
+    LoadPalette(GetWindowFrameTilesPal(gSaveBlock2Ptr->optionsWindowFrameType)->pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+}
+
+static void DrawMainMenuWindowBorder(const struct WindowTemplate *template, u16 baseTileNum)
+{
+    u16 r9 = 1 + baseTileNum;
+    u16 r10 = 2 + baseTileNum;
+    u16 sp18 = 3 + baseTileNum;
+    u16 spC = 5 + baseTileNum;
+    u16 sp10 = 6 + baseTileNum;
+    u16 sp14 = 7 + baseTileNum;
+    u16 r6 = 8 + baseTileNum;
+
+    FillBgTilemapBufferRect(template->bg, baseTileNum, template->tilemapLeft - 1, template->tilemapTop - 1, 1, 1, 2);
+    FillBgTilemapBufferRect(template->bg, r9, template->tilemapLeft, template->tilemapTop - 1, template->width, 1, 2);
+    FillBgTilemapBufferRect(template->bg, r10, template->tilemapLeft + template->width, template->tilemapTop - 1, 1, 1, 2);
+    FillBgTilemapBufferRect(template->bg, sp18, template->tilemapLeft - 1, template->tilemapTop, 1, template->height, 2);
+    FillBgTilemapBufferRect(template->bg, spC, template->tilemapLeft + template->width, template->tilemapTop, 1, template->height, 2);
+    FillBgTilemapBufferRect(template->bg, sp10, template->tilemapLeft - 1, template->tilemapTop + template->height, 1, 1, 2);
+    FillBgTilemapBufferRect(template->bg, sp14, template->tilemapLeft, template->tilemapTop + template->height, template->width, 1, 2);
+    FillBgTilemapBufferRect(template->bg, r6, template->tilemapLeft + template->width, template->tilemapTop + template->height, 1, 1, 2);
+    CopyBgTilemapBufferToVram(template->bg);
+}
+
+static void ClearMainMenuWindowTilemap(const struct WindowTemplate *template)
+{
+    FillBgTilemapBufferRect(template->bg, 0, template->tilemapLeft - 1, template->tilemapTop - 1, template->tilemapLeft + template->width + 1, template->tilemapTop + template->height + 1, 2);
+    CopyBgTilemapBufferToVram(template->bg);
+}
+
+void NewGameBirchSpeech_ClearGenderWindowTilemap(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 unused)
+{
+    FillBgTilemapBufferRect(bg, 0, x + 255, y + 255, width + 2, height + 2, 2);
+}
+
+static void NewGameBirchSpeech_ClearWindow(u8 windowId)
+{
+    u8 bgColor = GetFontAttribute(FONT_NORMAL, FONTATTR_COLOR_BACKGROUND);
+    u8 maxCharWidth = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_WIDTH);
+    u8 maxCharHeight = GetFontAttribute(FONT_NORMAL, FONTATTR_MAX_LETTER_HEIGHT);
+    u8 winWidth = GetWindowAttribute(windowId, WINDOW_WIDTH);
+    u8 winHeight = GetWindowAttribute(windowId, WINDOW_HEIGHT);
+
+    FillWindowPixelRect(windowId, bgColor, 0, 0, maxCharWidth * winWidth, maxCharHeight * winHeight);
+    CopyWindowToVram(windowId, COPYWIN_GFX);
+}
+
+void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8 yesNoPalNum, u8 winPalNum)
+{
+    struct WindowTemplate template = CreateWindowTemplate(0, x + 1, y + 1, 5, 4, winPalNum, baseBlock);
+    CreateYesNoMenuAtPos(&template, 1, 0, 2, baseTileNum, yesNoPalNum, 0);
 }
 
 #undef tMainTask

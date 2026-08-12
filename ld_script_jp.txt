@@ -3072,7 +3072,15 @@ SECTIONS {
         src/main_menu.o(.text.MainMenu_FormatSavegameTime);
         src/main_menu.o(.text.MainMenu_FormatSavegamePokedex);
         src/main_menu.o(.text.MainMenu_FormatSavegameBadges);
+        src/main_menu.o(.text.LoadMainMenuWindowFrameTiles);
+        src/main_menu.o(.text.DrawMainMenuWindowBorder);
+        src/main_menu.o(.text.ClearMainMenuWindowTilemap);
+        src/main_menu.o(.text.NewGameBirchSpeech_ClearGenderWindowTilemap);
         asm/main_menu.o(.text);
+        src/main_menu.o(.text.NewGameBirchSpeech_ClearWindow);
+        asm/main_menu_3a.o(.text);
+        src/main_menu.o(.text.CreateYesNoMenuParameterized);
+        asm/main_menu_3b.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
