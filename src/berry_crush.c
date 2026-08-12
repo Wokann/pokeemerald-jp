@@ -2156,6 +2156,36 @@ u32 Cmd_CommunicatePlayAgainResponses(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_PlayAgain(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 1, 0, 16, RGB_BLACK);
+        UpdatePaletteFade();
+        break;
+    case 1:
+        if (UpdatePaletteFade())
+            return 0;
+        break;
+    case 2:
+        ClearDialogWindowAndFrame(0, TRUE);
+        ResetCrusherPos(game);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        UpdatePaletteFade();
+        break;
+    case 3:
+        if (UpdatePaletteFade())
+            return 0;
+        RunOrScheduleCommand(CMD_ASK_PICK_BERRY, SCHEDULE_CMD, NULL);
+        game->gameState = STATE_PICK_BERRY;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
