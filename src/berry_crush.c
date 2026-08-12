@@ -2315,6 +2315,13 @@ void SetPrintMessageArgs(u8 *args, u8 msgId, u8 flags, u16 waitKeys, u8 followup
     args[4] = followupState;
 }
 
+void CloseResultsWindow(struct BerryCrushGame *game)
+{
+    ClearStdWindowAndFrameToTransparent(game->gfx.resultsWindowId, TRUE);
+    RemoveWindow(game->gfx.resultsWindowId);
+    DrawPlayerNameWindows(game);
+}
+
 #define tState             data[0]
 #define tWindowId          data[1]
 #define tPressingSpeeds(i) data[2 + (i)] // data[2]-[5], for different group sizes

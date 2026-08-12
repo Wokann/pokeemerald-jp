@@ -1268,7 +1268,7 @@ sub_08024184 = Cmd_PlayAgain;
 sub_0802420C = Cmd_StopGame;
 sub_080242D0 = Cmd_CloseLink;
 OpenResultsWindow = sub_08021DDC;
-CloseResultsWindow = sub_08021F9C;
+sub_08021F9C = CloseResultsWindow;
 StartMinigameCountdown = sub_0802E788;
 IsMinigameCountdownRunning = sub_0802E7E8;
 IsMinigameCountdownRunning = sub_0802E7E8;
@@ -2194,6 +2194,8 @@ SECTIONS {
         src/berry_crush.o(.text.FramesToMinSec);
         src/berry_crush.o(.text.PrintTextCentered);
         asm/berry_crush.o(.text);
+        src/berry_crush.o(.text.CloseResultsWindow);
+        asm/berry_crush6.o(.text);
         src/berry_crush.o(.text.ShowBerryCrushRankings);
         src/berry_crush.o(.text.PrintTimer);
         src/berry_crush.o(.text.HideTimer);
