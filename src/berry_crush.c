@@ -23,6 +23,27 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
+#define CRUSHER_START_Y (-104)
+
+// Main states for the game. Many are assigned but never checked
+enum {
+    STATE_INIT = 1,
+    STATE_RESET,
+    STATE_PICK_BERRY,
+    STATE_DROP_BERRIES,
+    STATE_DROP_LID,
+    STATE_COUNTDOWN,
+    STATE_PLAYING,
+    STATE_FINISHED,
+    STATE_TIMES_UP,
+    STATE_10, // Unused
+    STATE_RESULTS_PRESSES,
+    STATE_RESULTS_RANDOM,
+    STATE_RESULTS_CRUSHING,
+    STATE_14, // Unused
+    STATE_PLAY_AGAIN,
+};
+
 struct BerryCrushGame_Player
 {
     u8 name[PLAYER_NAME_LENGTH + 1]; // +0
@@ -97,7 +118,7 @@ extern EWRAM_DATA struct BerryCrushGame *sGame;
 extern void RunOrScheduleCommand(u16, u8, u8 *);
 extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
-extern s32 UpdateGame(struct BerryCrushGame *);
+extern void PrintTimer(struct BerryCrushGame_Gfx *, u16);
 extern const struct BgTemplate sBgTemplates[4];
 extern const u8 sCrusherTop_Tilemap[];
 extern const u8 sContainerCap_Tilemap[];
@@ -115,6 +136,8 @@ static void MainTask(u8 taskId);
 static void SetNamesAndTextSpeed(struct BerryCrushGame *);
 s32 ShowGameDisplay(void);
 s32 HideGameDisplay(void);
+s32 UpdateGame(struct BerryCrushGame *);
+void ResetCrusherPos(struct BerryCrushGame *);
 
 struct BerryCrushGame *GetBerryCrushGame(void)
 {
@@ -488,4 +511,23 @@ s32 HideGameDisplay(void)
 
     game->cmdState++;
     return 0;
+}
+
+s32 UpdateGame(struct BerryCrushGame *game)
+{
+    gSpriteCoordOffsetY = game->depth + game->vibration;
+    SetGpuReg(REG_OFFSET_BG1VOFS, -gSpriteCoordOffsetY);
+
+    if (game->gameState == STATE_PLAYING)
+        PrintTimer(&game->gfx, game->timer);
+
+    return 0;
+}
+
+void ResetCrusherPos(struct BerryCrushGame *game)
+{
+    game->depth = CRUSHER_START_Y;
+    game->vibration = 0;
+    gSpriteCoordOffsetX = 0;
+    gSpriteCoordOffsetY = CRUSHER_START_Y;
 }

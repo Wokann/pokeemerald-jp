@@ -7,53 +7,7 @@
 
 
 
-	thumb_func_start sub_0802117C
-sub_0802117C: @ 0x0802117C
-	push {r4, lr}
-	adds r4, r0, #0
-	ldr r0, _080211B0
-	ldrh r1, [r4, #0x2c]
-	ldrh r2, [r4, #0x2a]
-	adds r1, r1, r2
-	strh r1, [r0]
-	rsbs r1, r1, #0
-	lsls r1, r1, #0x10
-	lsrs r1, r1, #0x10
-	movs r0, #0x16
-	bl SetGpuReg
-	ldrh r0, [r4, #0x12]
-	cmp r0, #7
-	bne _080211A8
-	movs r1, #0x92
-	lsls r1, r1, #1
-	adds r0, r4, r1
-	ldrh r1, [r4, #0x28]
-	bl sub_08022284
-_080211A8:
-	movs r0, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_080211B0: .4byte 0x02021B3A
-	thumb_func_end sub_0802117C
 
-	thumb_func_start sub_080211B4
-sub_080211B4: @ 0x080211B4
-	movs r1, #0
-	ldr r2, _080211C8
-	strh r2, [r0, #0x2a]
-	strh r1, [r0, #0x2c]
-	ldr r0, _080211CC
-	strh r1, [r0]
-	ldr r0, _080211D0
-	strh r2, [r0]
-	bx lr
-	.align 2, 0
-_080211C8: .4byte 0x0000FF98
-_080211CC: .4byte 0x02021B38
-_080211D0: .4byte 0x02021B3A
-	thumb_func_end sub_080211B4
 
 	thumb_func_start sub_080211D4
 sub_080211D4: @ 0x080211D4
