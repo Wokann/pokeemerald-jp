@@ -3,58 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C3A4
-sub_0802C3A4: @ 0x0802C3A4
-	push {r4, r5, r6, r7, lr}
-	movs r5, #0
-	ldr r1, _0802C3DC
-	ldr r0, [r1]
-	ldrb r4, [r0, #5]
-	movs r2, #0
-	cmp r5, r4
-	bge _0802C3F6
-	mov ip, r1
-	movs r3, #0
-	ldr r7, _0802C3E0
-	movs r6, #0x1e
-	rsbs r6, r6, #0
-_0802C3BE:
-	mov r0, ip
-	ldr r1, [r0]
-	adds r0, r1, r7
-	adds r0, r0, r3
-	ldr r0, [r0]
-	cmp r0, r6
-	bne _0802C3E4
-	adds r0, r1, #0
-	adds r0, #0x7c
-	adds r0, r0, r2
-	movs r1, #1
-	strb r1, [r0]
-	adds r5, #1
-	b _0802C3EE
-	.align 2, 0
-_0802C3DC: .4byte 0x020229B0
-_0802C3E0: .4byte 0x000082E4
-_0802C3E4:
-	adds r0, r1, #0
-	adds r0, #0x7c
-	adds r0, r0, r2
-	movs r1, #0
-	strb r1, [r0]
-_0802C3EE:
-	adds r3, #0x24
-	adds r2, #1
-	cmp r2, r4
-	blt _0802C3BE
-_0802C3F6:
-	adds r0, r5, #0
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0802C3A4
-
 	thumb_func_start sub_0802C400
 sub_0802C400: @ 0x0802C400
 	push {lr}

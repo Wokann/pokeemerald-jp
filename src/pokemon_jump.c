@@ -393,7 +393,6 @@ extern void sub_0802C474(void); // ClearUnreadField
 extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
 extern int sub_0802C430(u8 *atJumpPeak); // GetNumPlayersForBonus
 extern int sub_0802C484(void); // GetScoreBonus
-extern int sub_0802C3A4(void); // GetPlayersAtJumpPeak
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1743,7 +1742,7 @@ void TryUpdateScore(void)
 
     if (sPokemonJump->initScoreUpdate)
     {
-        int numAtPeak = sub_0802C3A4(); // GetPlayersAtJumpPeak
+        int numAtPeak = GetPlayersAtJumpPeak();
         if (numAtPeak > sPokemonJump->numPlayersAtPeak)
         {
             sPokemonJump->numPlayersAtPeak = numAtPeak;
@@ -1838,6 +1837,28 @@ void AddJumpScore(int score)
     sPokemonJump->updateScore = TRUE;
     if (sPokemonJump->comm.jumpScore >= 99990) // MAX_JUMP_SCORE
         sPokemonJump->comm.jumpScore = 99990;
+}
+
+int GetPlayersAtJumpPeak(void)
+{
+    int i;
+    int numAtPeak = 0;
+    int numPlayers = sPokemonJump->numPlayers;
+
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (sPokemonJump->players[i].jumpOffset == JUMP_PEAK)
+        {
+            sPokemonJump->atJumpPeak[i] = TRUE;
+            numAtPeak++;
+        }
+        else
+        {
+            sPokemonJump->atJumpPeak[i] = FALSE;
+        }
+    }
+
+    return numAtPeak;
 }
 
 void InitGame(struct PokemonJump *jump)
