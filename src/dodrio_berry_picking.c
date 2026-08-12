@@ -95,6 +95,12 @@ struct ReadyToStartPacket
     u8 ready;
 };
 
+struct PickStatePacket
+{
+    u8 id;
+    u8 ALIGNED(4) pickState;
+};
+
 struct GameStatePacket
 {
     u8 id;
@@ -1406,6 +1412,14 @@ u32 RecvPacket_ReadyToStart(u32 playerId)
     if (packet->id == PACKET_READY_START)
         return packet->ready;
     return FALSE;
+}
+
+void SendPacket_PickState(u8 pickState)
+{
+    struct PickStatePacket packet;
+    packet.id = PACKET_PICK_STATE;
+    packet.pickState = pickState;
+    Rfu_SendPacket(&packet);
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,
