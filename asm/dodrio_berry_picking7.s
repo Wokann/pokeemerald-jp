@@ -4,31 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_080283B8
-sub_080283B8: @ 0x080283B8
-	push {r4, r5, r6, lr}
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	lsls r1, r1, #0x18
-	lsrs r5, r1, #0x18
-	movs r4, #0
-	cmp r4, r5
-	bhs _080283DA
-_080283C8:
-	adds r0, r6, #0
-	adds r1, r4, #0
-	bl sub_08028380
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, r5
-	blo _080283C8
-_080283DA:
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_080283B8
-
 	thumb_func_start sub_080283E0
 sub_080283E0: @ 0x080283E0
 	push {lr}

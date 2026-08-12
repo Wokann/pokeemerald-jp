@@ -337,7 +337,6 @@ extern void CreateTask_(TaskFunc func, u8 priority);
 extern void InitGameGfx(struct DodrioGame_Gfx *);
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
-extern void SetAllDodrioInvisibility(bool8, u8);
 extern void LoadBerryGfx_Dodrio(void);
 #define LoadBerryGfx LoadBerryGfx_Dodrio
 extern void CreateBerrySprites_Dodrio(void);
@@ -1558,6 +1557,13 @@ void FreeDodrioSprites(u8 numPlayers)
 void SetDodrioInvisibility(bool8 invisible, u8 id)
 {
     gSprites[*sDodrioSpriteIds[id]].invisible = invisible;
+}
+
+void SetAllDodrioInvisibility(bool8 invisible, u8 count)
+{
+    u8 i;
+    for (i = 0; i < count; i++)
+        SetDodrioInvisibility(invisible, i);
 }
 
 u32 DoDodrioMissedAnim(struct Sprite *sprite)
