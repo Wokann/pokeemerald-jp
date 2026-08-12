@@ -1884,6 +1884,11 @@ void SetBerryYPos(u8 id, u8 y)
     gSprites[*sBerrySpriteIds[id]].y = y * 8;
 }
 
+void SetBerryAnim(u16 id, u8 animNum)
+{
+    StartSpriteAnim(&gSprites[*sBerrySpriteIds[id]], animNum);
+}
+
 void nullsub_15(void)
 {
 }

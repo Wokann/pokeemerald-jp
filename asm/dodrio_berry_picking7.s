@@ -4,31 +4,6 @@
 .syntax unified
 
 
-
-	thumb_func_start sub_080289D0
-sub_080289D0: @ 0x080289D0
-	push {lr}
-	lsls r0, r0, #0x10
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	ldr r2, _080289F4
-	lsrs r0, r0, #0xe
-	adds r0, r0, r2
-	ldr r0, [r0]
-	ldrh r2, [r0]
-	lsls r0, r2, #4
-	adds r0, r0, r2
-	lsls r0, r0, #2
-	ldr r2, _080289F8
-	adds r0, r0, r2
-	bl StartSpriteAnim
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080289F4: .4byte 0x0202296C
-_080289F8: .4byte 0x020205AC
-	thumb_func_end sub_080289D0
-
 	thumb_func_start sub_080289FC
 sub_080289FC: @ 0x080289FC
 	lsls r0, r0, #0x18
