@@ -311,6 +311,7 @@ extern bool32 sub_0802DEB4(struct PokemonJump_Player *players, struct PokemonJum
 extern bool32 sub_0802DFC8(struct PokemonJump_Player *player, int multiplayerId); // RecvPacket_MemberStateToMember
 extern void sub_0802AEF0(void); // SendLinkData_Member
 extern void sub_0802DF2C(struct PokemonJump_Player *player, u8 funcId, u16 playAgainComm); // SendPacket_MemberState
+extern bool32 sub_0802B4D4(void); // DoGameIntro
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -552,6 +553,64 @@ void SendLinkData_Member(void)
         sPokemonJump->linkTimer++;
         sPokemonJump->linkTimer &= sPokemonJump->linkTimerLimit;
     }
+}
+
+bool32 GameIntro_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        sPokemonJump->mainState++;
+        // fall through
+    case 1:
+        if (!sub_0802B4D4()) // DoGameIntro
+        {
+            sPokemonJump->comm.data = sPokemonJump->vineTimer;
+            sPokemonJump->nextFuncId = FUNC_WAIT_ROUND;
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
+}
+
+bool32 GameIntro_Member(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetLinkTimeInterval(LINK_INTERVAL_NONE);
+        sPokemonJump->rngSeed = sPokemonJump->comm.data;
+        sPokemonJump->mainState++;
+        // fall through
+    case 1:
+        return sub_0802B4D4(); // DoGameIntro
+    }
+
+    return TRUE;
+}
+
+bool32 WaitRound_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        ResetPlayersJumpStates();
+        SetLinkTimeInterval(LINK_INTERVAL_LONG);
+        sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (sPokemonJump->allPlayersReady)
+        {
+            sPokemonJump->nextFuncId = FUNC_GAME_ROUND;
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
 }
 
 void InitGame(struct PokemonJump *jump)
