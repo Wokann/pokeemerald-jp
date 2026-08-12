@@ -1862,6 +1862,14 @@ SECTIONS {
         src/mystery_event_server.o(.text.common_mainseq_4);
         src/mystery_event_server.o(.text.mevent_srv_exec_common);
         asm/mevent_client.o(.text);
+        src/mystery_event_server.o(.text.mevent_srv_sub_recv);
+        src/mystery_event_server.o(.text.mevent_srv_sub_send);
+        src/mystery_event_server.o(.text.mevent_srv_sub_init);
+        src/mystery_event_server.o(.text.mevent_srv_sub_init_send);
+        src/mystery_event_server.o(.text.mevent_srv_sub_init_recv);
+        src/mystery_event_server.o(.text.mevent_recv_block);
+        src/mystery_event_server.o(.text.mevent_has_received);
+        src/mystery_event_server.o(.text.mevent_reset_recv);
         asm/mevent_server_helpers.o(.text);
         asm/mevent_news.o(.text);
         asm/union_room_chat.o(.text);

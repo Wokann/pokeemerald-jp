@@ -1,7 +1,10 @@
 #include "global.h"
+#include "link.h"
+#include "link_rfu.h"
 #include "malloc.h"
 #include "mystery_gift.h"
 #include "script.h"
+#include "util.h"
 
 // JP-only mevent server. The original source was mevent_server.c; the
 // assert strings embedded in the ROM preserve its variable names
@@ -17,14 +20,29 @@ extern const char gUnknown_82C4B10[]; // "svr->mainseqno < NELEMS(func_tbl)"
 extern const u8 gUnknown_82C4F60[];
 extern const u8 gUnknown_82C4FC0[];
 extern u32 (*const gUnknown_82C4AFC[])(void *);
-
-extern void mevent_srv_sub_init(void *sub, s32 a, s32 b);
-extern void mevent_srv_sub_init_send(void *sub, u32 size, void *buffer, u32 size2);
-extern void mevent_srv_sub_init_recv(void *sub, u32 a, void *buffer);
-extern u32 mevent_srv_sub_recv(void *sub);
-extern u32 mevent_srv_sub_send(void *sub);
+extern u8 gUnknown_202207C[];
 
 #define ME_SEND_BUF_SIZE 0x400
+
+struct MeventServerSub
+{
+    s32 unk0;                       // 0x00
+    u8 unk4;                        // 0x04
+    u8 unk5;                        // 0x05
+    u16 unk6;                       // 0x06
+    u16 unk8;                       // 0x08
+    u16 unkA;                       // 0x0A
+    u16 unkC;                       // 0x0C
+    u16 unkE;                       // 0x0E
+    u16 unk10;                      // 0x10
+    u16 unk12;                      // 0x12
+    u16 unk14;                      // 0x14
+    u16 unk16;                      // 0x16
+    void *unk18;                    // 0x18
+    void *unk1C;                    // 0x1C
+    u32 (*recvFunc)(void *sub);     // 0x20
+    u32 (*sendFunc)(void *sub);     // 0x24
+};
 
 struct MeventServerData
 {
@@ -42,7 +60,7 @@ struct MeventServerData
     u32 unk2C;        // 0x2C
     u32 unk30;        // 0x30
     u32 unk34;        // 0x34
-    u8 sub[0x28];     // 0x38
+    struct MeventServerSub sub; // 0x38
 };
 
 struct MeventCmd
@@ -57,6 +75,13 @@ extern EWRAM_DATA struct MeventServerData *gUnknown_2022930;
 void mevent_srv_init_common(void *data, const u8 *script, s32 a, s32 b);
 u32 mevent_srv_exec_common(void *data);
 u32 common_mainseq_4(void *data);
+u32 mevent_receive_func(struct MeventServerSub *sub);
+u32 mevent_send_func(struct MeventServerSub *sub);
+u32 mevent_srv_sub_recv(struct MeventServerSub *sub);
+u32 mevent_srv_sub_send(struct MeventServerSub *sub);
+void mevent_srv_sub_init(struct MeventServerSub *sub, s32 a, s32 b);
+void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2);
+void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer);
 
 void mevent_srv_init_wnews(void)
 {
@@ -99,7 +124,7 @@ void mevent_srv_init_common(void *data, const u8 *script, s32 a, s32 b)
     svr->unk20 = AllocZeroed(0x64);
     svr->script = script;
     svr->cmdIndex = 0;
-    mevent_srv_sub_init(svr->sub, a, b);
+    mevent_srv_sub_init(&svr->sub, a, b);
 }
 
 void mevent_srv_free_resources(void *data)
@@ -116,7 +141,7 @@ void mevent_srv_common_init_send(void *data, u32 size, void *buffer, u32 size2)
 {
     if (size2 > ME_SEND_BUF_SIZE)
         AGBAssert(gUnknown_82C4A74, 0x101, gUnknown_82C4A84, TRUE);
-    mevent_srv_sub_init_send(((struct MeventServerData *)data)->sub, size, buffer, size2);
+    mevent_srv_sub_init_send(&((struct MeventServerData *)data)->sub, size, buffer, size2);
 }
 
 void *mevent_first_if_not_null_else_second(void *a, void *b)
@@ -150,7 +175,7 @@ u32 common_mainseq_2(void *data)
 {
     struct MeventServerData *svr = data;
 
-    if (mevent_srv_sub_recv(svr->sub))
+    if (mevent_srv_sub_recv(&svr->sub))
         svr->mainseqno = 4;
     return 1;
 }
@@ -159,7 +184,7 @@ u32 common_mainseq_3(void *data)
 {
     struct MeventServerData *svr = data;
 
-    if (mevent_srv_sub_send(svr->sub))
+    if (mevent_srv_sub_send(&svr->sub))
         svr->mainseqno = 4;
     return 1;
 }
@@ -358,4 +383,71 @@ u32 common_mainseq_4(void *data)
         break;
     }
     return 1;
+}
+
+u32 mevent_srv_sub_recv(struct MeventServerSub *sub)
+{
+    return sub->recvFunc(sub);
+}
+
+u32 mevent_srv_sub_send(struct MeventServerSub *sub)
+{
+    return sub->sendFunc(sub);
+}
+
+void mevent_srv_sub_init(struct MeventServerSub *sub, s32 a, s32 b)
+{
+    sub->unk4 = a;
+    sub->unk5 = b;
+    sub->unk0 = 0;
+    sub->unk12 = 0;
+    sub->unk14 = 0;
+    sub->unk10 = 0;
+    sub->unkA = 0;
+    sub->unkC = 0;
+    sub->unk8 = 0;
+    sub->unk1C = 0;
+    sub->unk18 = 0;
+    sub->sendFunc = mevent_send_func;
+    sub->recvFunc = mevent_receive_func;
+}
+
+void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2)
+{
+    sub->unk0 = 0;
+    sub->unkE = size;
+    sub->unk10 = 0;
+    sub->unk12 = 0;
+    if (size2 != 0)
+        sub->unk14 = size2;
+    else
+        sub->unk14 = 0x400;
+    sub->unk1C = buffer;
+}
+
+void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer)
+{
+    sub->unk0 = 0;
+    sub->unk6 = a;
+    sub->unk8 = 0;
+    sub->unkA = 0;
+    sub->unkC = 0;
+    sub->unk18 = buffer;
+}
+
+void mevent_recv_block(u32 block, void *dst, u32 size)
+{
+    memcpy(dst, &gUnknown_202207C[block << 8], size);
+}
+
+bool32 mevent_has_received(u32 block)
+{
+    if ((GetBlockReceivedStatus() >> block) & 1)
+        return TRUE;
+    return FALSE;
+}
+
+void mevent_reset_recv(u8 block)
+{
+    ResetBlockReceivedFlag(block);
 }
