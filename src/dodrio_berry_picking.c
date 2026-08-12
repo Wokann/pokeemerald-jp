@@ -382,6 +382,7 @@ extern const u16 sRankingYCoords[];
 extern const u8 sRankingOrder[];
 extern const struct WindowTemplate sWindowTemplates_PlayAgain[];
 extern const struct WindowTemplate sWindowTemplate_CommStandby;
+extern const struct WindowTemplate sWindowTemplate_DroppedOut;
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2466,6 +2467,46 @@ void EraseMessage(void)
     FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
     CopyBgTilemapBufferToVram(0);
     sGfx->finished = TRUE;
+}
+
+void Msg_SomeoneDroppedOut(void)
+{
+    switch (sGfx->state)
+    {
+    case 0:
+        sGfx->windowIds[0] = AddWindow(&sWindowTemplate_DroppedOut);
+        ClearWindowTilemap(sGfx->windowIds[0]);
+        DrawMessageWindow(&sWindowTemplate_DroppedOut);
+        sGfx->state++;
+        sGfx->timer = 0;
+        sGfx->cursorSelection = 0;
+        sGfx->playAgainState = PLAY_AGAIN_NONE;
+        break;
+    case 1:
+        FillWindowPixelBuffer(sGfx->windowIds[0], PIXEL_FILL(1));
+        AddTextPrinterParameterized(sGfx->windowIds[0], FONT_NORMAL, gText_SomeoneDroppedOut, 2, 6, TEXT_SKIP_DRAW, NULL); // JP x=2 y=6
+        CopyWindowToVram(sGfx->windowIds[0], COPYWIN_GFX);
+        sGfx->state++;
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            PutWindowTilemap(sGfx->windowIds[0]);
+        CopyBgTilemapBufferToVram(0);
+        sGfx->state++;
+        break;
+    case 3:
+        if (++sGfx->timer >= 120)
+            sGfx->state++;
+        break;
+    default:
+        sGfx->playAgainState = PLAY_AGAIN_DROPPED;
+        ClearWindowTilemap(sGfx->windowIds[0]);
+        RemoveWindow(sGfx->windowIds[0]);
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+        CopyBgTilemapBufferToVram(0);
+        sGfx->finished = TRUE;
+        break;
+    }
 }
 
 void nullsub_15(void)

@@ -1404,6 +1404,7 @@ sub_08029D28 = Msg_WantToPlayAgain;
 sub_0802A074 = Msg_SavingDontTurnOff;
 sub_0802A148 = Msg_CommunicationStandby;
 sub_0802A228 = EraseMessage;
+sub_0802A27C = Msg_SomeoneDroppedOut;
 SetGfxFunc = sub_0802A420;
 GetGfxFunc = sub_0802A450;
 InitBgs = sub_0802A49C;
@@ -2504,6 +2505,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.Msg_SavingDontTurnOff);
         src/dodrio_berry_picking.o(.text.Msg_CommunicationStandby);
         src/dodrio_berry_picking.o(.text.EraseMessage);
+        src/dodrio_berry_picking.o(.text.Msg_SomeoneDroppedOut);
         asm/dodrio_berry_picking9.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

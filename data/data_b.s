@@ -1438,8 +1438,8 @@ sWindowTemplate_Prize: @ 0x82CB458
 sWindowTemplates_PlayAgain: @ 0x82CB460
 	.incbin "baserom_jp.gba", 0x2cb460, 0x10
 
-	.globl gUnknown_82CB470
-gUnknown_82CB470: @ 0x82CB470
+	.globl sWindowTemplate_DroppedOut
+sWindowTemplate_DroppedOut: @ 0x82CB470
 	.incbin "baserom_jp.gba", 0x2cb470, 0x8
 
 	.globl sWindowTemplate_CommStandby
@@ -16511,8 +16511,8 @@ gText_FilledStorageSpace: @ 0x85CCDAB
 gText_WantToPlayAgain: @ 0x85CCDBD
 	.string "も{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}{WHITE}{DYNAMIC_COLOR6}びま{DYNAMIC_COLOR4}{GREEN}？$"
 
-	.globl gUnknown_85CCDCB
-gUnknown_85CCDCB: @ 0x85CCDCB
+	.globl gText_SomeoneDroppedOut
+gText_SomeoneDroppedOut: @ 0x85CCDCB
 	.string "だれ{GREEN}{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}"
 	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
