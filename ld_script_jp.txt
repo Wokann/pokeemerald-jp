@@ -1481,6 +1481,7 @@ sub_0802C30C = DidAllPlayersClearVine;
 sub_0802C344 = ShouldPlayAgain;
 sub_0802C37C = AddJumpScore;
 sub_0802C3A4 = GetPlayersAtJumpPeak;
+sub_0802C400 = AreLinkQueuesEmpty;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sSoundEffects = gUnknown_82CEEE0;
@@ -2692,6 +2693,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.ShouldPlayAgain);
         src/pokemon_jump.o(.text.AddJumpScore);
         src/pokemon_jump.o(.text.GetPlayersAtJumpPeak);
+        src/pokemon_jump.o(.text.AreLinkQueuesEmpty);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);

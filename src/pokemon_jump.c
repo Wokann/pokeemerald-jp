@@ -4,6 +4,7 @@
 #include "digit_obj_util.h"
 #include "item.h"
 #include "link.h"
+#include "link_rfu.h"
 #include "main.h"
 #include "menu.h"
 #include "palette.h"
@@ -333,7 +334,6 @@ extern bool32 sub_0802DFC8(struct PokemonJump_Player *player, int multiplayerId)
 extern void sub_0802AEF0(void); // SendLinkData_Member
 extern void sub_0802DF2C(struct PokemonJump_Player *player, u8 funcId, u16 playAgainComm); // SendPacket_MemberState
 extern bool32 sub_0802B4D4(void); // DoGameIntro
-extern bool32 sub_0802C400(void); // AreLinkQueuesEmpty
 extern bool32 sub_0802B5C0(void); // HandleSwingRound
 extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
@@ -705,7 +705,7 @@ bool32 WaitRound_Member(void)
         sPokemonJump->mainState++;
         // fall through
     case 1:
-        if (sub_0802C400()) // AreLinkQueuesEmpty
+        if (AreLinkQueuesEmpty())
             return FALSE;
         break;
     }
@@ -976,7 +976,7 @@ bool32 SavePokeJump(void)
         }
         break;
     case 2:
-        if (sub_0802C400()) // AreLinkQueuesEmpty
+        if (AreLinkQueuesEmpty())
         {
             CreateTask(Task_LinkFullSave, 6);
             sPokemonJump->mainState++;
@@ -1859,6 +1859,11 @@ int GetPlayersAtJumpPeak(void)
     }
 
     return numAtPeak;
+}
+
+bool32 AreLinkQueuesEmpty(void)
+{
+    return !gRfu.recvQueue.count && !gRfu.sendQueue.count;
 }
 
 void InitGame(struct PokemonJump *jump)
