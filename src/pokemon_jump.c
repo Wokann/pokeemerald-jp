@@ -8,6 +8,7 @@
 #include "pokemon.h"
 #include "pokemon_jump.h"
 #include "random.h"
+#include "save.h"
 #include "sound.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -47,6 +48,19 @@ enum {
     FUNC_GIVE_PRIZE,
     FUNC_SAVE,
     FUNC_NONE
+};
+
+enum {
+    GFXFUNC_LOAD,
+    GFXFUNC_SHOW_NAMES,
+    GFXFUNC_SHOW_NAMES_HIGHLIGHT,
+    GFXFUNC_ERASE_NAMES,
+    GFXFUNC_MSG_PLAY_AGAIN,
+    GFXFUNC_MSG_SAVING,
+    GFXFUNC_ERASE_MSG,
+    GFXFUNC_MSG_PLAYER_DROPPED,
+    GFXFUNC_MSG_COMM_STANDBY,
+    GFXFUNC_COUNTDOWN,
 };
 
 enum {
@@ -326,6 +340,9 @@ extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateR
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
 extern bool32 sub_0802B954(void); // ClosePokeJumpLink
 extern bool32 sub_0802B74C(void); // TryGivePrize
+extern void sub_0802CDBC(int funcId); // SetUpPokeJumpGfxFuncById
+extern void sub_0802D704(void); // ClearMessageWindow
+extern bool32 sub_0802D734(void); // RemoveMessageWindow
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -890,6 +907,48 @@ bool32 GivePrize_Member(void)
         return FALSE;
     else
         return TRUE;
+}
+
+bool32 SavePokeJump(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+        sub_0802CDBC(GFXFUNC_MSG_SAVING); // SetUpPokeJumpGfxFuncById
+        sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            SetLinkTimeInterval(LINK_INTERVAL_NONE);
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 2:
+        if (sub_0802C400()) // AreLinkQueuesEmpty
+        {
+            CreateTask(Task_LinkFullSave, 6);
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 3:
+        if (!FuncIsActiveTask(Task_LinkFullSave))
+        {
+            sub_0802D704(); // ClearMessageWindow
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 4:
+        if (!sub_0802D734()) // RemoveMessageWindow
+        {
+            sPokemonJump->nextFuncId = FUNC_ASK_PLAY_AGAIN;
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
 }
 
 void InitGame(struct PokemonJump *jump)
