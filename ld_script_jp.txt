@@ -1460,6 +1460,7 @@ sub_0802BB94 = ResetVineState;
 sub_0802BBD8 = UpdateVineState;
 sub_0802BC3C = GetVineSpeed;
 sub_0802BC70 = UpdateVineSpeed;
+sub_0802BD8C = PokeJumpRandom;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
@@ -2647,6 +2648,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.UpdateVineState);
         src/pokemon_jump.o(.text.GetVineSpeed);
         src/pokemon_jump.o(.text.UpdateVineSpeed);
+        src/pokemon_jump.o(.text.PokeJumpRandom);
         asm/pokemon_jump_1a.o(.text);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         asm/pokemon_jump_1b.o(.text);

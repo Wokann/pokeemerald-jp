@@ -1495,6 +1495,12 @@ void UpdateVineSpeed(void)
     }
 }
 
+int PokeJumpRandom(void)
+{
+    sPokemonJump->rngSeed = ISO_RANDOMIZE1(sPokemonJump->rngSeed);
+    return sPokemonJump->rngSeed >> 16;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
