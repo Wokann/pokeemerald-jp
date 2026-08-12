@@ -231,6 +231,7 @@ STATIC_ASSERT(sizeof(struct PokemonJump_Player) == 0x24, Player_size_0x24);
 STATIC_ASSERT(offsetof(struct PokemonJump, monInfo) == 0x82A8, monInfo_off_82A8);
 STATIC_ASSERT(offsetof(struct PokemonJump, players) == 0x82E4, players_off_82E4);
 STATIC_ASSERT(offsetof(struct PokemonJump, comm) == 0x70, comm_off_70);
+STATIC_ASSERT(offsetof(struct Sprite, data) == 0x2E, sprite_data_off_2E);
 STATIC_ASSERT(offsetof(struct PokemonJump_MonInfo, species) == 0, mon_species_off_0);
 
 // JP: the species->jump type table is ROM data at 0x082CECF0 (data/data_b.s,
@@ -2029,6 +2030,13 @@ void LoadSpriteSheetsAndPalettes(struct PokemonJumpGfx *jumpGfx)
 
     jumpGfx->vinePalNumDownswing = IndexOfSpritePaletteTag(PALTAG_1);
     jumpGfx->vinePalNumUpswing = IndexOfSpritePaletteTag(PALTAG_2);
+}
+
+void ResetPokeJumpSpriteData(struct Sprite *sprite)
+{
+    int i;
+    for (i = 0; i < (int)ARRAY_COUNT(sprite->data); i++)
+        sprite->data[i] = 0;
 }
 
 void InitGame(struct PokemonJump *jump)

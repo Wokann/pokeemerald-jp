@@ -3,23 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C6B0
-sub_0802C6B0: @ 0x0802C6B0
-	push {lr}
-	movs r2, #0
-	movs r1, #7
-	adds r0, #0x3c
-_0802C6B8:
-	strh r2, [r0]
-	subs r0, #2
-	subs r1, #1
-	cmp r1, #0
-	bge _0802C6B8
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_0802C6B0
-
 	thumb_func_start sub_0802C6C8
 sub_0802C6C8: @ 0x0802C6C8
 	push {r4, r5, r6, r7, lr}
