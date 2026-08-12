@@ -298,7 +298,6 @@ extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern u32 IncrementWithLimit(u32 num, u32 max);
-extern void ResetPickState(void);
 extern void FreeBerrySprites(void);
 extern void FreeStatusBar(void);
 extern void FreeDodrioSprites(u8);
@@ -1116,6 +1115,11 @@ void HandleWaitPlayAgainInput(void)
     {
         sGame->inputDelay[sGame->multiplayerId]--;
     }
+}
+
+void ResetPickState(void)
+{
+    sGame->players[sGame->multiplayerId].comm.pickState = PICK_NONE;
 }
 
 void InitResults_Leader(void)

@@ -11,26 +11,6 @@
 
 
 
-	thumb_func_start sub_080273C8
-sub_080273C8: @ 0x080273C8
-	ldr r0, _080273E4
-	ldr r1, [r0]
-	adds r0, r1, #0
-	adds r0, #0x28
-	ldrb r2, [r0]
-	lsls r0, r2, #4
-	subs r0, r0, r2
-	lsls r0, r0, #2
-	adds r1, r1, r0
-	ldr r0, _080273E8
-	adds r1, r1, r0
-	movs r0, #0
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_080273E4: .4byte 0x0202294C
-_080273E8: .4byte 0x000031CC
-	thumb_func_end sub_080273C8
 
 	thumb_func_start sub_080273EC
 sub_080273EC: @ 0x080273EC
