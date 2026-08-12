@@ -375,7 +375,6 @@ extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
 extern bool32 DoStatusBarIntro(void);
-extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
@@ -1420,6 +1419,23 @@ void SendPacket_PickState(u8 pickState)
     packet.id = PACKET_PICK_STATE;
     packet.pickState = pickState;
     Rfu_SendPacket(&packet);
+}
+
+bool32 RecvPacket_PickState(u32 playerId, u8 *pickState)
+{
+    struct PickStatePacket *packet;
+
+    if ((gRecvCmds[0][0] & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+        return FALSE;
+
+    packet = (void *)&gRecvCmds[playerId][1];
+    if (packet->id == PACKET_PICK_STATE)
+    {
+        *pickState = packet->pickState;
+        return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,
