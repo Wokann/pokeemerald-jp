@@ -649,3 +649,13 @@ void SpriteCB_DropBerryIntoCrusher(struct Sprite *sprite)
         DestroySprite(sprite);
     }
 }
+
+void BerryCrushFreeBerrySpriteGfx(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 i;
+    for (i = 0; i < game->playerCount; i++)
+    {
+        FreeSpritePaletteByTag(sPlayerBerrySpriteTags[i]);
+        FreeSpriteTilesByTag(sPlayerBerrySpriteTags[i]);
+    }
+}

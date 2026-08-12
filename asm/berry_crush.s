@@ -11,36 +11,6 @@
 
 
 
-	thumb_func_start sub_080213D8
-sub_080213D8: @ 0x080213D8
-	push {r4, r5, r6, r7, lr}
-	adds r6, r0, #0
-	movs r5, #0
-	ldrb r0, [r6, #9]
-	cmp r5, r0
-	bhs _08021404
-	ldr r7, _0802140C
-_080213E6:
-	lsls r0, r5, #1
-	adds r0, r0, r7
-	ldrh r4, [r0]
-	adds r0, r4, #0
-	bl FreeSpritePaletteByTag
-	adds r0, r4, #0
-	bl FreeSpriteTilesByTag
-	adds r0, r5, #1
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	ldrb r0, [r6, #9]
-	cmp r5, r0
-	blo _080213E6
-_08021404:
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802140C: .4byte 0x082C7A74
-	thumb_func_end sub_080213D8
 
 	thumb_func_start sub_08021410
 sub_08021410: @ 0x08021410
