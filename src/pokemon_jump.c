@@ -351,6 +351,9 @@ extern void sub_0802D458(void); // SetUpResetVineGfx
 extern bool32 sub_0802D47C(void); // ResetVineGfx
 extern void sub_0802BF64(void); // AllowVineUpdates
 extern void sub_0802BB94(void); // ResetVineState
+extern bool32 sub_0802BE24(u16 monState); // IsPlayersMonState
+extern void sub_0802BE58(void); // SetMonStateJump
+extern void sub_0802BBD8(void); // UpdateVineState
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1010,6 +1013,44 @@ bool32 DoGameIntro(void)
         break;
     case 7:
         return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 HandleSwingRound(void)
+{
+    sub_0802BBD8(); // UpdateVineState
+    if (sPokemonJump->ignoreJumpInput)
+    {
+        sPokemonJump->ignoreJumpInput = FALSE;
+        return FALSE;
+    }
+
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        if (sub_0802BE24(MONSTATE_NORMAL)) // IsPlayersMonState
+            sPokemonJump->helperState++;
+        else
+            break;
+        // fall through
+    case 1:
+        if (JOY_NEW(A_BUTTON))
+        {
+            sub_0802BE58(); // SetMonStateJump
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 2:
+        if (sub_0802BE24(MONSTATE_JUMP) == TRUE) // IsPlayersMonState
+            sPokemonJump->helperState++;
+        break;
+    case 3:
+        if (sub_0802BE24(MONSTATE_NORMAL) == TRUE) // IsPlayersMonState
+            sPokemonJump->helperState = 0;
+        break;
     }
 
     return TRUE;
