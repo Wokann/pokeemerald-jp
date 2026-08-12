@@ -369,7 +369,6 @@ extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern void FreeBerrySprites(void);
-extern void FreeStatusBar(void);
 extern void FreeCloudSprites(void);
 extern void StartCloudMovement(void);
 extern void ResetGfxState(void);
@@ -1697,6 +1696,19 @@ void CreateStatusBarSprites(void)
             sStatusBar->spriteIds[i] = CreateSprite(&template, (i * 16) + 48, -8 - (i * 8), 0);
     }
     Free(ptr);
+}
+
+void FreeStatusBar(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_STATUS_SQUARES; i++)
+    {
+        struct Sprite *sprite = &gSprites[sStatusBar->spriteIds[i]];
+        if (sprite)
+            DestroySpriteAndFreeResources(sprite);
+    }
+    Free(sStatusBar);
+    sStatusBar = NULL;
 }
 
 void nullsub_15(void)

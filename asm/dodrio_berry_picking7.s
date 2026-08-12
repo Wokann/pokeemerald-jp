@@ -4,44 +4,6 @@
 .syntax unified
 
 
-
-	thumb_func_start sub_08028510
-sub_08028510: @ 0x08028510
-	push {r4, r5, lr}
-	movs r4, #0
-_08028514:
-	ldr r5, _0802854C
-	ldr r0, [r5]
-	lsls r1, r4, #1
-	adds r0, #0x2a
-	adds r0, r0, r1
-	ldrh r1, [r0]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	ldr r1, _08028550
-	adds r0, r0, r1
-	cmp r0, #0
-	beq _08028532
-	bl DestroySpriteAndFreeResources
-_08028532:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #9
-	bls _08028514
-	ldr r0, [r5]
-	bl Free
-	movs r0, #0
-	str r0, [r5]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802854C: .4byte 0x020229A8
-_08028550: .4byte 0x020205AC
-	thumb_func_end sub_08028510
-
 	thumb_func_start sub_08028554
 sub_08028554: @ 0x08028554
 	push {r4, r5, r6, r7, lr}
