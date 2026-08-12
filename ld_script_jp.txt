@@ -1266,6 +1266,7 @@ sub_080211D4 = CreateBerrySprites;
 sub_08021338 = SpriteCB_DropBerryIntoCrusher;
 sub_080213D8 = BerryCrushFreeBerrySpriteGfx;
 sub_08021410 = UpdateInputEffects;
+sub_08021604 = AreEffectsFinished;
 SpriteCB_Sparkle_Init = sub_0802288C;
 sub_0801FA08 = Display_PrintLeaderLeft;
 sub_0801FA5C = Display_AskSave;
@@ -2142,6 +2143,7 @@ SECTIONS {
         src/berry_crush.o(.text.SpriteCB_DropBerryIntoCrusher);
         src/berry_crush.o(.text.BerryCrushFreeBerrySpriteGfx);
         src/berry_crush.o(.text.UpdateInputEffects);
+        src/berry_crush.o(.text.AreEffectsFinished);
         asm/berry_crush.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

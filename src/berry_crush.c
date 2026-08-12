@@ -766,3 +766,27 @@ void UpdateInputEffects(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *
         }
     }
 }
+
+bool32 AreEffectsFinished(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 i;
+
+    // Are any impact sprites active
+    for (i = 0; i < game->playerCount; i++)
+    {
+        if (!gfx->impactSprites[i]->invisible)
+            return FALSE;
+    }
+
+    // Are any sparkle sprites active
+    for (i = 0; i < ARRAY_COUNT(gfx->sparkleSprites); i++)
+    {
+        if (!gfx->sparkleSprites[i]->invisible)
+            return FALSE;
+    }
+
+    if (game->vibration != 0)
+        game->vibration = 0;
+
+    return TRUE;
+}
