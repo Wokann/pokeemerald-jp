@@ -8,6 +8,9 @@
 #include "pokemon.h"
 #include "pokemon_jump.h"
 #include "random.h"
+#include "sound.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
 #include "sprite.h"
 #include "string_util.h"
 #include "strings.h"
@@ -259,6 +262,97 @@ void InitJumpMonInfo(struct PokemonJump_MonInfo *monInfo, struct Pokemon *mon)
     monInfo->species = GetMonData2(mon, MON_DATA_SPECIES);
     monInfo->otId = GetMonData2(mon, MON_DATA_OT_ID);
     monInfo->personality = GetMonData2(mon, MON_DATA_PERSONALITY);
+}
+
+void VBlankCB_PokemonJump(void)
+{
+    TransferPlttBuffer();
+    LoadOam();
+    ProcessSpriteCopyRequests();
+}
+
+void CB2_PokemonJump(void)
+{
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
+void SetPokeJumpTask(TaskFunc func)
+{
+    sPokemonJump->taskId = CreateTask(func, 1);
+    sPokemonJump->mainState = 0;
+}
+
+// JP: these helpers are still in asm (sub_ names); rename to US names when
+// each one is converted to C.
+extern void sub_0802BB54(TaskFunc func, u8 taskPriority); // SetTaskWithPokeJumpStruct
+extern void sub_0802BA78(u8 taskId); // Task_CommunicateMonInfo (JP pokemon_jump; dodrio has its own)
+extern void sub_0802CD68(struct PokemonJumpGfx *gfx); // StartPokeJumpGfx
+extern bool32 sub_0802CDE4(void); // IsPokeJumpGfxFuncFinished
+extern void sub_0802AC74(u8 taskId); // Task_PokemonJump_Leader
+extern void sub_0802AE88(u8 taskId); // Task_PokemonJump_Member
+extern void sub_0802BB74(void); // InitVineState
+
+void Task_StartPokemonJump(u8 taskId)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetVBlankCallback(NULL);
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        sub_0802BB54(sub_0802BA78, 5); // SetTaskWithPokeJumpStruct(Task_CommunicateMonInfo, 5)
+        FadeOutMapMusic(4);
+        sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (!FuncIsActiveTask(sub_0802BA78))
+        {
+            sub_0802CD68(&sPokemonJump->jumpGfx); // StartPokeJumpGfx
+            LoadWirelessStatusIndicatorSpriteGfx();
+            CreateWirelessStatusIndicatorSprite(0, 0);
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 2:
+        if (!sub_0802CDE4() && IsNotWaitingForBGMStop() == TRUE) // IsPokeJumpGfxFuncFinished
+        {
+            FadeOutAndPlayNewMapMusic(MUS_RG_POKE_JUMP, 8);
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 3:
+        if (IsLinkTaskFinished())
+        {
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            BeginNormalPaletteFade(PALETTES_ALL, -1, 16, 0, RGB_BLACK);
+            SetVBlankCallback(VBlankCB_PokemonJump);
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 4:
+        UpdatePaletteFade();
+        if (!gPaletteFade.active)
+        {
+            sPokemonJump->startDelayTimer = 0;
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 5:
+        sPokemonJump->startDelayTimer++;
+        if (sPokemonJump->startDelayTimer >= 20)
+        {
+            if (sPokemonJump->isLeader)
+                SetPokeJumpTask(sub_0802AC74); // Task_PokemonJump_Leader
+            else
+                SetPokeJumpTask(sub_0802AE88); // Task_PokemonJump_Member
+            sub_0802BB74(); // InitVineState
+            DestroyTask(taskId);
+        }
+        break;
+    }
 }
 
 void InitGame(struct PokemonJump *jump)
