@@ -1240,6 +1240,51 @@ bool32 DoPlayAgainPrompt(void)
     return TRUE;
 }
 
+bool32 ClosePokeJumpLink(void)
+{
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        sub_0802D704(); // ClearMessageWindow
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+        if (!sub_0802D734()) // RemoveMessageWindow
+        {
+            sub_0802CDBC(GFXFUNC_MSG_PLAYER_DROPPED); // SetUpPokeJumpGfxFuncById
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 2:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            sPokemonJump->timer = 0;
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 3:
+        if (++sPokemonJump->timer > 120)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 4:
+        if (!gPaletteFade.active)
+        {
+            SetCloseLinkCallback();
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 5:
+        if (!gReceivedRemoteLinkPlayers)
+            return FALSE;
+        break;
+    }
+
+    return TRUE;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
