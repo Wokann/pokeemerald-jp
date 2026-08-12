@@ -267,6 +267,7 @@ extern void SendLinkData_Member(void);
 extern void StartDodrioIntroAnim(u8);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
+extern void InitFirstWaveOfBerries(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -429,6 +430,21 @@ void DoGameIntro(void)
     case 1:
         if (!IsGfxFuncActive())
             SetGameFunc(FUNC_INIT_COUNTDOWN);
+        break;
+    }
+}
+
+void InitCountdown(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        InitFirstWaveOfBerries();
+        sGame->state++;
+        break;
+    default:
+        sGame->startCountdown = TRUE;
+        SetGameFunc(FUNC_COUNTDOWN);
         break;
     }
 }
