@@ -1680,6 +1680,8 @@ sub_0802EC60 = CreateStartSprite;
 NewGameBirchSpeech_ClearGenderWindow = sub_08031FD8;
 NewGameBirchSpeech_CreateDialogueWindowBorder = sub_08032174;
 Task_WaitForLinkPlayerConnection = task00_08081A90;
+BattleControllerDummy = nullsub_21;
+BeginBattleIntroDummy = nullsub_20;
 sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
 sub_08022230 = ShowBerryCrushRankings;
@@ -3085,6 +3087,7 @@ SECTIONS {
         asm/main_menu_3b.o(.text);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox);
         src/battle_controllers.o(.text.HandleLinkBattleSetup);
+        src/battle_controllers.o(.text.SetUpBattleVarsAndBirchZigzagoon);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
