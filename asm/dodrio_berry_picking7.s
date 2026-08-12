@@ -3,50 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_080280D4
-sub_080280D4: @ 0x080280D4
-	push {r4, r5, lr}
-	sub sp, #0x18
-	movs r5, #0xc0
-	lsls r5, r5, #6
-	adds r0, r5, #0
-	bl AllocZeroed
-	adds r4, r0, #0
-	ldr r0, _08028128
-	ldr r1, [r0, #4]
-	ldr r0, [r0]
-	str r0, [sp, #8]
-	str r1, [sp, #0xc]
-	ldr r0, _0802812C
-	ldr r1, [r0, #4]
-	ldr r0, [r0]
-	str r0, [sp, #0x10]
-	str r1, [sp, #0x14]
-	ldr r0, _08028130
-	adds r1, r4, #0
-	bl LZ77UnCompWram
-	cmp r4, #0
-	beq _08028114
-	str r4, [sp]
-	str r5, [sp, #4]
-	mov r0, sp
-	bl LoadSpriteSheet
-	adds r0, r4, #0
-	bl Free
-_08028114:
-	add r0, sp, #8
-	bl LoadSpritePalette
-	add r0, sp, #0x10
-	bl LoadSpritePalette
-	add sp, #0x18
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028128: .4byte 0x082CEB64
-_0802812C: .4byte 0x082CEB6C
-_08028130: .4byte 0x082CD148
-	thumb_func_end sub_080280D4
 
 	thumb_func_start sub_08028134
 sub_08028134: @ 0x08028134

@@ -336,7 +336,6 @@ extern void VBlankCB_DodrioGame(void);
 extern void CreateTask_(TaskFunc func, u8 priority);
 extern void InitGameGfx(struct DodrioGame_Gfx *);
 extern bool32 IsGfxFuncActive(void);
-extern void LoadDodrioGfx(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void SetAllDodrioInvisibility(bool8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -388,6 +387,9 @@ extern const s16 sBerryScoreMultipliers[NUM_BERRY_IDS];
 extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
 extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
+extern const u32 sDodrio_Gfx[];
+extern const struct SpritePalette sDodrioNormalSpritePalette;
+extern const struct SpritePalette sDodrioShinySpritePalette;
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
 void Task_ShowDodrioRecords(u8 taskId);
@@ -1463,6 +1465,23 @@ bool32 RecvPacket_ReadyToEnd(u32 playerId)
         return packet->ready;
     else
         return FALSE;
+}
+
+void LoadDodrioGfx(void)
+{
+    void *ptr = AllocZeroed(0x3000);
+    struct SpritePalette normal = sDodrioNormalSpritePalette;
+    struct SpritePalette shiny = sDodrioShinySpritePalette;
+
+    LZ77UnCompWram(sDodrio_Gfx, ptr);
+    if (ptr)
+    {
+        struct SpriteSheet sheet = {ptr, 0x3000, GFXTAG_DODRIO};
+        LoadSpriteSheet(&sheet);
+        Free(ptr);
+    }
+    LoadSpritePalette(&normal);
+    LoadSpritePalette(&shiny);
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,

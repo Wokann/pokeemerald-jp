@@ -1448,7 +1448,19 @@ gUnknown_82CB478: @ 0x82CB478
 
 	.globl gUnknown_82CB67C
 gUnknown_82CB67C: @ 0x82CB67C
-	.incbin "baserom_jp.gba", 0x2cb67c, 0xc0
+	.incbin "baserom_jp.gba", 0x2cb67c, 0x40
+
+	.globl sDodrioNormalPal
+sDodrioNormalPal: @ 0x82CB6BC
+	.incbin "baserom_jp.gba", 0x2cb6bc, 0x20
+
+	.globl sDodrioShinyPal
+sDodrioShinyPal: @ 0x82CB6DC
+	.incbin "baserom_jp.gba", 0x2cb6dc, 0x20
+
+	.globl gUnknown_82CB6FC
+gUnknown_82CB6FC: @ 0x82CB6FC
+	.incbin "baserom_jp.gba", 0x2cb6fc, 0x40
 
 	.globl gUnknown_82CB73C
 gUnknown_82CB73C: @ 0x82CB73C
@@ -1470,8 +1482,8 @@ gUnknown_82CCF6C: @ 0x82CCF6C
 gUnknown_82CD000: @ 0x82CD000
 	.incbin "baserom_jp.gba", 0x2cd000, 0x148
 
-	.globl gUnknown_82CD148
-gUnknown_82CD148: @ 0x82CD148
+	.globl sDodrio_Gfx
+sDodrio_Gfx: @ 0x82CD148
 	.incbin "baserom_jp.gba", 0x2cd148, 0x121c
 
 	.globl gUnknown_82CE364
@@ -1494,12 +1506,12 @@ gUnknown_82CEA6C: @ 0x82CEA6C
 gUnknown_82CEAB4: @ 0x82CEAB4
 	.incbin "baserom_jp.gba", 0x2ceab4, 0xb0
 
-	.globl gUnknown_82CEB64
-gUnknown_82CEB64: @ 0x82CEB64
+	.globl sDodrioNormalSpritePalette
+sDodrioNormalSpritePalette: @ 0x82CEB64
 	.incbin "baserom_jp.gba", 0x2ceb64, 0x8
 
-	.globl gUnknown_82CEB6C
-gUnknown_82CEB6C: @ 0x82CEB6C
+	.globl sDodrioShinySpritePalette
+sDodrioShinySpritePalette: @ 0x82CEB6C
 	.incbin "baserom_jp.gba", 0x2ceb6c, 0x8
 
 	.globl gUnknown_82CEB74
