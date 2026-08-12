@@ -1126,6 +1126,38 @@ void RunOrScheduleCommand(u16 cmdId, u8 mode, u8 *args)
     }
 }
 
+u32 Cmd_WaitPaletteFade(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        if (UpdatePaletteFade())
+            return 0;
+        if(args[0] != 0)
+            game->cmdState++;
+        else
+            game->cmdState = 3;
+        return 0;
+    case 1:
+        Rfu_SetLinkStandbyCallback();
+        game->cmdState++;
+        return 0;
+    case 2:
+        if (IsLinkTaskFinished())
+        {
+            game->cmdState++;
+            return 0;
+        }
+        return 0;
+    case 3:
+        RunOrScheduleCommand(game->afterPalFadeCmd, SCHEDULE_CMD, NULL);
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
