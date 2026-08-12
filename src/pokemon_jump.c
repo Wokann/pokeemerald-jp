@@ -2674,6 +2674,55 @@ void Msg_CommunicationStandby_PokeJump(void)
     }
 }
 
+void DoPokeJumpCountdown(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        StartPokeJumpCountdown(sPokemonJumpGfx);
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsPokeJumpCountdownRunning())
+            sPokemonJumpGfx->funcFinished = TRUE;
+        break;
+    }
+}
+
+void SetUpResetVineGfx(void)
+{
+    sPokemonJumpGfx->resetVineState = 0;
+    sPokemonJumpGfx->resetVineTimer = 0;
+    sPokemonJumpGfx->vineState = VINE_UPSWING_LOWER;
+    sub_0802D994(sPokemonJumpGfx->vineState); // UpdateVineSwing
+}
+
+bool32 ResetVineGfx(void)
+{
+    switch (sPokemonJumpGfx->resetVineState)
+    {
+    case 0:
+        sPokemonJumpGfx->resetVineTimer++;
+        if (sPokemonJumpGfx->resetVineTimer > 10)
+        {
+            sPokemonJumpGfx->resetVineTimer = 0;
+            sPokemonJumpGfx->vineState++;
+            if (sPokemonJumpGfx->vineState >= NUM_VINESTATES)
+            {
+                sPokemonJumpGfx->vineState = VINE_HIGHEST;
+                sPokemonJumpGfx->resetVineState++;
+            }
+        }
+        sub_0802D994(sPokemonJumpGfx->vineState); // UpdateVineSwing
+        if (sPokemonJumpGfx->vineState != VINE_UPSWING_LOW)
+            break;
+    case 1:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {
     int i;
