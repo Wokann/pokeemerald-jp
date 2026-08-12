@@ -388,6 +388,7 @@ extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
 extern void sub_0802BF34(void); // TryUpdateVineSwing
+extern void sub_0802D994(int vineState); // UpdateVineSwing
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1571,6 +1572,12 @@ void UpdateGame(void)
     sub_0802DA6C(sPokemonJump->comm.jumpsInRow); // PrintJumpsInRow
     sub_0802BF74(); // HandleMonState
     sub_0802BF34(); // TryUpdateVineSwing
+}
+
+void TryUpdateVineSwing(void)
+{
+    if (sPokemonJump->allowVineUpdates)
+        sub_0802D994(sPokemonJump->vineState); // UpdateVineSwing
 }
 
 void InitGame(struct PokemonJump *jump)
