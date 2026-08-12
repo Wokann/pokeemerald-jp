@@ -27,65 +27,6 @@
 
 
 
-	thumb_func_start sub_08025CA0
-sub_08025CA0: @ 0x08025CA0
-	push {r4, lr}
-	ldr r4, _08025CB8
-	ldr r1, [r4]
-	ldrb r0, [r1, #0x18]
-	cmp r0, #4
-	beq _08025CD6
-	cmp r0, #4
-	bgt _08025CBC
-	cmp r0, #3
-	beq _08025CC2
-	b _08025D08
-	.align 2, 0
-_08025CB8: .4byte 0x0202294C
-_08025CBC:
-	cmp r0, #0xb
-	beq _08025CEC
-	b _08025D08
-_08025CC2:
-	movs r0, #1
-	bl sub_08027AFC
-	ldr r0, [r4]
-	movs r1, #0x8e
-	lsls r1, r1, #1
-	adds r0, r0, r1
-	movs r1, #1
-	str r1, [r0]
-	b _08025D08
-_08025CD6:
-	ldr r2, _08025CE8
-	adds r1, r1, r2
-	ldrb r0, [r1]
-	cmp r0, #0
-	beq _08025D08
-	bl sub_08028018
-	b _08025D08
-	.align 2, 0
-_08025CE8: .4byte 0x000032F8
-_08025CEC:
-	movs r2, #0x90
-	lsls r2, r2, #1
-	adds r0, r1, r2
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _08025D08
-	adds r2, #0xc
-	adds r0, r1, r2
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _08025D08
-	movs r0, #1
-	bl sub_0802807C
-_08025D08:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08025CA0
 
 	thumb_func_start sub_08025D10
 sub_08025D10: @ 0x08025D10

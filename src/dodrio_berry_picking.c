@@ -3437,6 +3437,25 @@ void RecvLinkData_Member(void)
     }
 }
 
+void SendLinkData_Member(void)
+{
+    switch (sGame->funcId)
+    {
+    case FUNC_WAIT_START:
+        SendRfuPacket(1); // JP sends the ready-to-start packet directly
+        sGame->startGame = TRUE;
+        break;
+    case FUNC_PLAY_GAME:
+        if (sGame->player.comm.pickState != PICK_NONE)
+            SendPacket_PickState(sGame->player.comm.pickState);
+        break;
+    case FUNC_WAIT_END_GAME:
+        if (!sGame->berriesFalling && !sGame->allReadyToEnd)
+            SendPacket_ReadyToEnd(TRUE);
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
