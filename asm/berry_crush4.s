@@ -8,48 +8,6 @@
 
 
 
-	thumb_func_start sub_08022BC0
-sub_08022BC0: @ 0x08022BC0
-	push {r4, lr}
-	adds r4, r0, #0
-	ldrb r0, [r4, #0xc]
-	cmp r0, #0
-	beq _08022BD0
-	cmp r0, #1
-	beq _08022BD6
-	b _08022C00
-_08022BD0:
-	bl Rfu_SetLinkStandbyCallback
-	b _08022C00
-_08022BD6:
-	bl IsLinkTaskFinished
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _08022C06
-	ldr r0, _08022BFC
-	bl PlayNewMapMusic
-	movs r0, #7
-	movs r1, #1
-	movs r2, #0
-	bl sub_08022950
-	movs r1, #0
-	movs r0, #3
-	strh r0, [r4, #0x12]
-	strb r1, [r4, #0xc]
-	b _08022C06
-	.align 2, 0
-_08022BFC: .4byte 0x000001E5
-_08022C00:
-	ldrb r0, [r4, #0xc]
-	adds r0, #1
-	strb r0, [r4, #0xc]
-_08022C06:
-	movs r0, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08022BC0
 
 	thumb_func_start sub_08022C10
 sub_08022C10: @ 0x08022C10

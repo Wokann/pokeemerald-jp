@@ -1223,6 +1223,27 @@ u32 Cmd_HideGameDisplay(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_SignalReadyToBegin(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 1:
+        if (IsLinkTaskFinished())
+        {
+            PlayNewMapMusic(MUS_RG_GAME_CORNER);
+            RunOrScheduleCommand(CMD_ASK_PICK_BERRY, SCHEDULE_CMD, NULL);
+            game->gameState = STATE_PICK_BERRY;
+            game->cmdState = 0;
+        }
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
