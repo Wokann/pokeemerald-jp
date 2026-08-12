@@ -2,38 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-	thumb_func_start sub_0802BC3C
-sub_0802BC3C: @ 0x0802BC3C
-	push {lr}
-	ldr r0, _0802BC4C
-	ldr r2, [r0]
-	ldr r0, [r2, #0x10]
-	cmp r0, #0
-	beq _0802BC50
-	movs r0, #0
-	b _0802BC66
-	.align 2, 0
-_0802BC4C: .4byte 0x020229B0
-_0802BC50:
-	ldr r3, [r2, #0x1c]
-	ldrh r1, [r2, #0x34]
-	ldr r0, _0802BC6C
-	cmp r1, r0
-	bhi _0802BC64
-	ldr r0, [r2, #0x20]
-	adds r0, #0x50
-	str r0, [r2, #0x20]
-	lsrs r0, r0, #8
-	adds r3, r3, r0
-_0802BC64:
-	adds r0, r3, #0
-_0802BC66:
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0802BC6C: .4byte 0x000005FF
-	thumb_func_end sub_0802BC3C
-
 	thumb_func_start sub_0802BC70
 sub_0802BC70: @ 0x0802BC70
 	push {r4, lr}

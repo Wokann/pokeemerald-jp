@@ -1414,6 +1414,25 @@ void UpdateVineState(void)
     }
 }
 
+int GetVineSpeed(void)
+{
+    int speed;
+
+    if (sPokemonJump->gameOver)
+        return 0;
+
+    speed = sPokemonJump->vineSpeed;
+    if (sPokemonJump->vineStateTimer <= VINE_STATE_TIMER(VINE_LOWEST))
+    {
+        // If at or below lowest, then vine is in downswing
+        // Increase speed in downswing
+        sPokemonJump->vineSpeedAccel += 80;
+        speed += sPokemonJump->vineSpeedAccel / 256;
+    }
+
+    return speed;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
