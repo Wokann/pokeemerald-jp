@@ -760,6 +760,40 @@ void TryIncrementDifficulty(u8 playerId)
         sGame->difficulty[playerId]++;
 }
 
+u8 GetNewBerryIdByDifficulty(u8 difficulty, u8 column)
+{
+    u8 prevBerryId = sGame->prevBerryIds[column];
+    switch (difficulty % NUM_DIFFICULTIES)
+    {
+    default: return BERRY_BLUE;
+    case 0:  return BERRY_BLUE;
+    case 1:  return BERRY_GREEN;
+    case 2:  return BERRY_GOLD;
+    case 3:
+        if (prevBerryId == BERRY_BLUE)
+            return BERRY_GREEN;
+        else
+            return BERRY_BLUE;
+    case 4:
+        if (prevBerryId == BERRY_BLUE)
+            return BERRY_GOLD;
+        else
+            return BERRY_BLUE;
+    case 5:
+        if (prevBerryId == BERRY_GOLD)
+            return BERRY_GREEN;
+        else
+            return BERRY_GOLD;
+    case 6:
+        if (prevBerryId == BERRY_BLUE)
+            return BERRY_GREEN;
+        else if (prevBerryId == BERRY_GREEN)
+            return BERRY_GOLD;
+        else
+            return BERRY_BLUE;
+    }
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
