@@ -17,6 +17,7 @@
 #include "overworld.h"
 #include "palette.h"
 #include "scanline_effect.h"
+#include "sound.h"
 #include "sprite.h"
 #include "task.h"
 #include "text.h"
@@ -27,6 +28,10 @@
 #include "constants/songs.h"
 
 #define CRUSHER_START_Y (-104)
+
+#define F_INPUT_HIT_SYNC (1 << 2) // Input at same time as another player
+#define INPUT_FLAGS_PER_PLAYER 3
+#define INPUT_FLAG_MASK ((1 << INPUT_FLAGS_PER_PLAYER) - 1)
 
 // Main states for the game. Many are assigned but never checked
 enum {
@@ -63,6 +68,21 @@ struct BerryCrushGame_Results
     u16 totalAPresses;              // +0x72
     u16 stats[2][MAX_RFU_PLAYERS];  // +0x74
     u8 playerIdsRanked[2][MAX_RFU_PLAYERS + 3]; // +0x88
+};
+
+struct BerryCrushGame_LinkState
+{
+    u16 rfuCmd;
+    u16 sendFlag;
+    bool8 endGame:1;
+    bool8 bigSparkle:1;
+    bool8 pushedAButton:1;
+    u8 playerPressedAFlags:5;
+    s8 vibration;
+    u16 depth;
+    u16 timer;
+    u16 inputFlags;
+    u16 sparkleAmount;
 };
 
 struct BerryCrushPlayerCoords
@@ -155,11 +175,14 @@ extern const u8 sContainerCap_Tilemap[];
 extern const u8 sBg_Tilemap[];
 extern const u16 sPlayerBerrySpriteTags[MAX_RFU_PLAYERS];
 extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
+extern const s8 sImpactCoords[3][2];
+extern const s8 sSparkleCoords[][2];
 extern void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 extern void CreateGameSprites(struct BerryCrushGame *);
 extern void DestroyGameSprites(struct BerryCrushGame *);
+extern void SpriteCB_Sparkle_Init(struct Sprite *);
 
 void SaveResults(void);
 static void VBlankCB(void);
@@ -171,6 +194,7 @@ s32 HideGameDisplay(void);
 s32 UpdateGame(struct BerryCrushGame *);
 void ResetCrusherPos(struct BerryCrushGame *);
 void CreateBerrySprites(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
+void UpdateInputEffects(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
 
 struct BerryCrushGame *GetBerryCrushGame(void)
 {
@@ -657,5 +681,88 @@ void BerryCrushFreeBerrySpriteGfx(struct BerryCrushGame *game, struct BerryCrush
     {
         FreeSpritePaletteByTag(sPlayerBerrySpriteTags[i]);
         FreeSpriteTilesByTag(sPlayerBerrySpriteTags[i]);
+    }
+}
+
+void UpdateInputEffects(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 numPlayersPressed;
+    struct BerryCrushGame_LinkState *linkState;
+    u8 i;
+    u16 temp1, xModifier;
+
+    numPlayersPressed = 0;
+    linkState = (struct BerryCrushGame_LinkState *)game->recvCmd;
+
+    // Read inputs and update impact effects
+    for (i = 0; i < game->playerCount; i++)
+    {
+        #define flags temp1
+
+        flags = linkState->inputFlags >> (i * INPUT_FLAGS_PER_PLAYER);
+        flags &= INPUT_FLAG_MASK;
+        if (flags)
+        {
+            numPlayersPressed++;
+            if (flags & F_INPUT_HIT_SYNC)
+                StartSpriteAnim(gfx->impactSprites[i], 1); // Big impact sprite
+            else
+                StartSpriteAnim(gfx->impactSprites[i], 0); // Small impact sprite
+
+            gfx->impactSprites[i]->invisible = FALSE;
+            gfx->impactSprites[i]->animPaused = FALSE;
+            gfx->impactSprites[i]->x2 = sImpactCoords[(flags % (ARRAY_COUNT(sImpactCoords) + 1)) - 1][0];
+            gfx->impactSprites[i]->y2 = sImpactCoords[(flags % (ARRAY_COUNT(sImpactCoords) + 1)) - 1][1];
+        }
+
+        #undef flags
+    }
+
+    if (numPlayersPressed == 0)
+    {
+        game->playedSound = FALSE;
+    }
+    else
+    {
+        // Update sparkle effect
+        #define yModifier temp1
+
+        yModifier = (u8)(game->timer % 3);
+        xModifier = yModifier;
+        for (i = 0; i < linkState->sparkleAmount * 2 + 3; i++)
+        {
+            if (gfx->sparkleSprites[i]->invisible)
+            {
+                gfx->sparkleSprites[i]->callback = SpriteCB_Sparkle_Init;
+                gfx->sparkleSprites[i]->x = sSparkleCoords[i][0] + 120;
+                gfx->sparkleSprites[i]->y = sSparkleCoords[i][1] + 136 - (yModifier * 4);
+                gfx->sparkleSprites[i]->x2 = sSparkleCoords[i][0] + (sSparkleCoords[i][0] / (xModifier * 4));
+                gfx->sparkleSprites[i]->y2 = sSparkleCoords[i][1];
+                if (linkState->bigSparkle)
+                    StartSpriteAnim(gfx->sparkleSprites[i], 1);
+                else
+                    StartSpriteAnim(gfx->sparkleSprites[i], 0);
+
+                yModifier++;
+                if (yModifier > 3)
+                    yModifier = 0;
+            }
+        }
+
+        #undef yModifier
+
+        if (game->playedSound)
+        {
+            game->playedSound = FALSE;
+        }
+        else
+        {
+            if (numPlayersPressed == 1)
+                PlaySE(SE_MUD_BALL);
+            else
+                PlaySE(SE_BREAKABLE_DOOR);
+
+            game->playedSound = TRUE;
+        }
     }
 }

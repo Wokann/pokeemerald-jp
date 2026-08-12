@@ -1286,21 +1286,13 @@ gUnknown_82C7A08: @ 0x82C7A08
 gUnknown_82C7A1C: @ 0x82C7A1C
 	.incbin "baserom_jp.gba", 0x2c7a1c, 0x3c
 
-	.globl gUnknown_82C7A58
-gUnknown_82C7A58: @ 0x82C7A58
-	.incbin "baserom_jp.gba", 0x2c7a58, 0x1
+	.globl sImpactCoords
+sImpactCoords: @ 0x82C7A58
+	.incbin "baserom_jp.gba", 0x2c7a58, 0x6
 
-	.globl gUnknown_82C7A59
-gUnknown_82C7A59: @ 0x82C7A59
-	.incbin "baserom_jp.gba", 0x2c7a59, 0x5
-
-	.globl gUnknown_82C7A5E
-gUnknown_82C7A5E: @ 0x82C7A5E
-	.incbin "baserom_jp.gba", 0x2c7a5e, 0x1
-
-	.globl gUnknown_82C7A5F
-gUnknown_82C7A5F: @ 0x82C7A5F
-	.incbin "baserom_jp.gba", 0x2c7a5f, 0x15
+	.globl sSparkleCoords
+sSparkleCoords: @ 0x82C7A5E
+	.incbin "baserom_jp.gba", 0x2c7a5e, 0x16
 
 	.globl sPlayerBerrySpriteTags
 sPlayerBerrySpriteTags: @ 0x82C7A74
