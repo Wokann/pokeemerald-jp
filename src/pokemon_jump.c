@@ -391,7 +391,6 @@ extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
 extern void sub_0802C474(void); // ClearUnreadField
 extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
-extern void sub_0802C37C(int amount); // AddJumpScore
 extern int sub_0802C430(u8 *atJumpPeak); // GetNumPlayersForBonus
 extern int sub_0802C484(void); // GetScoreBonus
 extern int sub_0802C3A4(void); // GetPlayersAtJumpPeak
@@ -1729,7 +1728,7 @@ void TryUpdateScore(void)
             if (sPokemonJump->comm.jumpsInRow <= 9998) // MAX_JUMPS
                 sPokemonJump->comm.jumpsInRow++;
 
-            sub_0802C37C(10); // AddJumpScore
+            AddJumpScore(10);
             SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         }
     }
@@ -1737,7 +1736,7 @@ void TryUpdateScore(void)
     if (sPokemonJump->giveBonus && (DidAllPlayersClearVine() == TRUE || sPokemonJump->vineState == VINE_HIGHEST))
     {
         int numPlayers = sub_0802C430(sPokemonJump->atJumpPeak3); // GetNumPlayersForBonus
-        sub_0802C37C(sub_0802C484()); // AddJumpScore, GetScoreBonus
+        AddJumpScore(sub_0802C484()); // GetScoreBonus
         SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         sPokemonJump->giveBonus = FALSE;
     }
@@ -1831,6 +1830,14 @@ bool32 ShouldPlayAgain(void)
     }
 
     return TRUE;
+}
+
+void AddJumpScore(int score)
+{
+    sPokemonJump->comm.jumpScore += score;
+    sPokemonJump->updateScore = TRUE;
+    if (sPokemonJump->comm.jumpScore >= 99990) // MAX_JUMP_SCORE
+        sPokemonJump->comm.jumpScore = 99990;
 }
 
 void InitGame(struct PokemonJump *jump)
