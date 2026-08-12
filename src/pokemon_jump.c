@@ -339,7 +339,8 @@ extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
 extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
-extern u16 sub_0802C4D4(void); // GetPrizeData
+extern u16 sub_0802C50C(void); // GetPrizeItemId
+extern u16 sub_0802C52C(void); // GetPrizeQuantity
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
@@ -757,7 +758,7 @@ bool32 GameOver_Leader(void)
         {
             if (HasEnoughScoreForPrize())
             {
-                sPokemonJump->comm.data = sub_0802C4D4(); // GetPrizeData
+                sPokemonJump->comm.data = GetPrizeData();
                 sPokemonJump->nextFuncId = FUNC_GIVE_PRIZE;
             }
             else if (sPokemonJump->comm.jumpsInRow >= 200)
@@ -1907,6 +1908,13 @@ bool32 HasEnoughScoreForPrize(void)
         return TRUE;
     else
         return FALSE;
+}
+
+u16 GetPrizeData(void)
+{
+    u16 itemId = sub_0802C50C(); // GetPrizeItemId
+    u16 quantity = sub_0802C52C(); // GetPrizeQuantity
+    return (quantity << 12) | (itemId & 0xFFF);
 }
 
 void InitGame(struct PokemonJump *jump)

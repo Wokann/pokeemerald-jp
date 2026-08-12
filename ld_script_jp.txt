@@ -1487,6 +1487,7 @@ sub_0802C474 = ClearUnreadField;
 sub_0802C484 = GetScoreBonus;
 sub_0802C494 = TryUpdateExcellentsRecord;
 sub_0802C4B0 = HasEnoughScoreForPrize;
+sub_0802C4D4 = GetPrizeData;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sSoundEffects = gUnknown_82CEEE0;
@@ -2706,6 +2707,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.GetScoreBonus);
         src/pokemon_jump.o(.text.TryUpdateExcellentsRecord);
         src/pokemon_jump.o(.text.HasEnoughScoreForPrize);
+        src/pokemon_jump.o(.text.GetPrizeData);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);
