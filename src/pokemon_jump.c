@@ -29,6 +29,13 @@
 #define GFXTAG_COUNTDOWN 9
 #define PALTAG_COUNTDOWN 7
 
+enum {
+    BG_INTERFACE,
+    BG_BONUSES,
+    BG_VENUSAUR,
+    BG_SCENERY,
+};
+
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
@@ -395,6 +402,25 @@ extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
 extern void sub_0802DAC4(void); // StopMonHitFlash
 extern void LoadPokeJumpGfx(void); // sub_0802CE44, still asm
 extern const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
+extern void sub_0802DB14(void); // AddPlayerNameWindows
+extern void sub_0802DC68(bool32 highlightSelf); // PrintPokeJumpPlayerNames
+extern void sub_0802DCCC(void); // DrawPlayerNameWindows
+extern const struct BgTemplate sPokeJumpBgTemplates[];
+extern const struct WindowTemplate sPokeJumpWindowTemplates[];
+extern const u16 sPokeJumpBg_Pal[];
+extern const u32 sPokeJumpBg_Gfx[];
+extern const u32 sPokeJumpBg_Tilemap[];
+extern const u16 sPokeJumpVenusaur_Pal[];
+extern const u32 sPokeJumpVenusaur_Gfx[];
+extern const u32 sPokeJumpVenusaur_Tilemap[];
+extern const u16 sPokeJumpBonuses_Pal[];
+extern const u32 sPokeJumpBonuses_Gfx[];
+extern const u32 sPokeJumpBonuses_Tilemap[];
+extern const u16 sPokeJumpInterface_Pal[];
+extern void sub_0802DA00(void); // InitDigitPrinters
+extern void sub_0802D884(void); // PrintScoreSuffixes
+extern void sub_0802DA5C(int score); // PrintScore
+extern void sub_0802D8F0(void); // CreateJumpMonSprites
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
@@ -2379,6 +2405,86 @@ void Task_RunPokeJumpGfxFunc(u8 taskId)
         void (*func)(void) = (void *)(GetWordTaskArg(taskId, 0));
 
         func();
+    }
+}
+
+void LoadPokeJumpGfx(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sPokeJumpBgTemplates, 4); // ARRAY_COUNT(sPokeJumpBgTemplates)
+        InitWindows(sPokeJumpWindowTemplates);
+        ResetTempTileDataBuffers();
+        LoadSpriteSheetsAndPalettes(sPokemonJumpGfx);
+        sub_0802DA00(); // InitDigitPrinters
+        LoadPalette(sPokeJumpBg_Pal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_SCENERY, sPokeJumpBg_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_SCENERY, sPokeJumpBg_Tilemap, 0, 0, 1);
+        LoadPalette(sPokeJumpVenusaur_Pal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sPokeJumpVenusaur_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_VENUSAUR, sPokeJumpVenusaur_Tilemap, 0, 0, 1);
+        LoadPalette(sPokeJumpBonuses_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        DecompressAndCopyTileDataToVram(BG_BONUSES, sPokeJumpBonuses_Gfx, 0, 0, 0);
+        DecompressAndCopyTileDataToVram(BG_BONUSES, sPokeJumpBonuses_Tilemap, 0, 0, 1);
+        LoadPalette(sPokeJumpInterface_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
+        SetBgTilemapBuffer(BG_INTERFACE, sPokemonJumpGfx->tilemapBuffer);
+        FillBgTilemapBufferRect_Palette0(BG_INTERFACE, 0, 0, 0, 0x20, 0x20);
+        sub_0802D884(); // PrintScoreSuffixes
+        sub_0802DA5C(0); // PrintScore(0)
+        LoadUserWindowBorderGfxOnBg(0, 1, BG_PLTT_ID(14));
+        CopyBgTilemapBufferToVram(BG_INTERFACE);
+        CopyBgTilemapBufferToVram(BG_VENUSAUR);
+        CopyBgTilemapBufferToVram(BG_BONUSES);
+        ResetBgPositions();
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!FreeTempTileDataBuffersIfPossible())
+        {
+            sub_0802D8F0(); // CreateJumpMonSprites
+            CreateVineSprites(sPokemonJumpGfx);
+            UpdateVineAnim(sPokemonJumpGfx, VINE_UPSWING_LOWER);
+            ShowBg(BG_SCENERY);
+            ShowBg(BG_INTERFACE);
+            ShowBg(BG_VENUSAUR);
+            HideBg(BG_BONUSES);
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 2:
+        sPokemonJumpGfx->funcFinished = TRUE;
+        break;
+    }
+}
+
+void PrintPlayerNamesNoHighlight(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        sub_0802DB14(); // AddPlayerNameWindows
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            sub_0802DC68(0); // PrintPokeJumpPlayerNames(FALSE)
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            sub_0802DCCC(); // DrawPlayerNameWindows
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sPokemonJumpGfx->funcFinished = TRUE;
+        break;
     }
 }
 
