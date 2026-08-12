@@ -1448,6 +1448,7 @@ sub_0802B3F8 = GivePrize_Member;
 sub_0802B414 = SavePokeJump;
 sub_0802B4D4 = DoGameIntro;
 sub_0802B5C0 = HandleSwingRound;
+sub_0802B658 = DoVineHitEffect;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
 sPokeJumpMemberFuncs = gUnknown_82CEEA4;
 sub_0802A788 = ResetForNewGame;
@@ -2621,6 +2622,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.SavePokeJump);
         src/pokemon_jump.o(.text.DoGameIntro);
         src/pokemon_jump.o(.text.HandleSwingRound);
+        src/pokemon_jump.o(.text.DoVineHitEffect);
         asm/pokemon_jump_1a.o(.text);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         asm/pokemon_jump_1b.o(.text);

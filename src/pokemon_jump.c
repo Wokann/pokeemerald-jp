@@ -354,6 +354,10 @@ extern void sub_0802BB94(void); // ResetVineState
 extern bool32 sub_0802BE24(u16 monState); // IsPlayersMonState
 extern void sub_0802BE58(void); // SetMonStateJump
 extern void sub_0802BBD8(void); // UpdateVineState
+extern bool32 sub_0802DAB0(int multiplayerId); // IsMonHitShakeActive
+extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
+extern void sub_0802DAC4(void); // StopMonHitFlash
+extern void sub_0802BE08(void); // ResetPlayersMonState
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1051,6 +1055,57 @@ bool32 HandleSwingRound(void)
         if (sub_0802BE24(MONSTATE_NORMAL) == TRUE) // IsPlayersMonState
             sPokemonJump->helperState = 0;
         break;
+    }
+
+    return TRUE;
+}
+
+bool32 DoVineHitEffect(void)
+{
+    int i;
+
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        for (i = 0; i < sPokemonJump->numPlayers; i++)
+        {
+            if (sub_0802DAB0(i) == TRUE) // IsMonHitShakeActive
+                return TRUE;
+        }
+
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+        for (i = 0; i < sPokemonJump->numPlayers; i++)
+        {
+            if (sPokemonJump->players[i].monState == MONSTATE_HIT)
+                sub_0802DA98(i); // StartMonHitFlash
+        }
+
+        sub_0802CDBC(GFXFUNC_SHOW_NAMES); // SetUpPokeJumpGfxFuncById
+        sPokemonJump->timer = 0;
+        sPokemonJump->helperState++;
+        break;
+    case 2:
+        if (++sPokemonJump->timer > 100)
+        {
+            sub_0802CDBC(GFXFUNC_ERASE_NAMES); // SetUpPokeJumpGfxFuncById
+            sPokemonJump->timer = 0;
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 3:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            sub_0802DAC4(); // StopMonHitFlash
+            sPokemonJump->comm.receivedBonusFlags = 0;
+            sub_0802BE08(); // ResetPlayersMonState
+            sPokemonJump->helperState++;
+            return FALSE;
+        }
+        break;
+    case 4:
+        return FALSE;
     }
 
     return TRUE;
