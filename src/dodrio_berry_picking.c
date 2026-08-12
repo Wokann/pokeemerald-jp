@@ -320,6 +320,7 @@ extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
                                    bool32 *berriesFalling,
                                    bool32 *allReadyToEnd);
 extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
+extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -1172,6 +1173,46 @@ void RecvLinkData_Gameplay(void)
                 sGame->players[i].comm.missedBerry = FALSE;
             }
             break;
+        }
+    }
+}
+
+void RecvLinkData_ReadyToEnd(void)
+{
+    u8 i;
+    u8 numPlayers = sGame->numPlayers;
+
+    sGame->players[0].receivedGameStatePacket = RecvPacket_GameState(0,
+                                                  &sGame->players[0],
+                                                  &sGame->players[0].comm,
+                                                  &sGame->players[1].comm,
+                                                  &sGame->players[2].comm,
+                                                  &sGame->players[3].comm,
+                                                  &sGame->players[4].comm,
+                                                  &sGame->numGraySquares,
+                                                  &sGame->berriesFalling,
+                                                  &sGame->allReadyToEnd);
+    sGame->clearRecvCmds = TRUE;
+
+    for (i = 1; i < numPlayers; i++)
+    {
+        if (RecvPacket_ReadyToEnd(i))
+        {
+            sGame->readyToEnd[i] = TRUE;
+            sGame->clearRecvCmds = FALSE;
+        }
+    }
+    if (++sGame->clearRecvCmdTimer >= 60)
+    {
+        if (sGame->clearRecvCmds)
+        {
+            ClearRecvCommands();
+            sGame->clearRecvCmdTimer = 0;
+        }
+        else if (sGame->clearRecvCmdTimer > 70)
+        {
+            ClearRecvCommands();
+            sGame->clearRecvCmdTimer = 0;
         }
     }
 }
