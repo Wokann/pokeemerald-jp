@@ -304,6 +304,9 @@ extern void FreeDodrioSprites(u8);
 extern void FreeCloudSprites(void);
 extern void StartCloudMovement(void);
 extern void ResetGfxState(void);
+extern bool32 SlideTreeBordersOut(void);
+extern void InitStatusBarPos(void);
+extern bool32 DoStatusBarIntro(void);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -1015,6 +1018,33 @@ void ResetGame_Dodrio(void)
 
         SetRandomPrize();
         SetCloudInvisibility(FALSE);
+        break;
+    }
+}
+
+void Task_NewGameIntro(u8 taskId)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        if (SlideTreeBordersOut() == TRUE)
+            sGame->state++;
+        break;
+    case 1:
+        InitStatusBarPos();
+        sGame->state++;
+        break;
+    case 2:
+        if (DoStatusBarIntro() == TRUE)
+            sGame->state++;
+        break;
+    default:
+        if (sGame->isLeader)
+            CreateDodrioGameTask(Task_DodrioGame_Leader);
+        else
+            CreateDodrioGameTask(Task_DodrioGame_Member);
+
+        DestroyTask(taskId);
         break;
     }
 }

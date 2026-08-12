@@ -20,69 +20,6 @@
 
 
 
-	thumb_func_start sub_08025664
-sub_08025664: @ 0x08025664
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	ldr r1, _08025680
-	ldr r0, [r1]
-	ldrb r0, [r0, #0x10]
-	adds r4, r1, #0
-	cmp r0, #1
-	beq _08025690
-	cmp r0, #1
-	bgt _08025684
-	cmp r0, #0
-	beq _0802568A
-	b _080256A8
-	.align 2, 0
-_08025680: .4byte 0x0202294C
-_08025684:
-	cmp r0, #2
-	beq _08025696
-	b _080256A8
-_0802568A:
-	bl sub_0802602C
-	b _0802569A
-_08025690:
-	bl sub_08028410
-	b _0802569E
-_08025696:
-	bl sub_08028554
-_0802569A:
-	cmp r0, #1
-	bne _080256CC
-_0802569E:
-	ldr r1, [r4]
-	ldrb r0, [r1, #0x10]
-	adds r0, #1
-	strb r0, [r1, #0x10]
-	b _080256CC
-_080256A8:
-	ldr r0, [r4]
-	adds r0, #0x20
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _080256C0
-	ldr r0, _080256BC
-	bl sub_08025FE4
-	b _080256C6
-	.align 2, 0
-_080256BC: .4byte 0x08024B15
-_080256C0:
-	ldr r0, _080256D4
-	bl sub_08025FE4
-_080256C6:
-	adds r0, r5, #0
-	bl DestroyTask
-_080256CC:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080256D4: .4byte 0x08024B4D
-	thumb_func_end sub_08025664
 
 	thumb_func_start sub_080256D8
 sub_080256D8: @ 0x080256D8
