@@ -3519,10 +3519,230 @@ bool32 TryUpdateRecords_PokeJump(u32 jumpScore, u16 jumpsInRow, u16 excellentsIn
     return newRecord;
 }
 
+void Task_ShowPokemonJumpRecords(u8 taskId);
+void PrintRecordsText(u16 windowId);
+void TruncateToFirstWordOnly(u8 *str);
+extern const struct WindowTemplate sWindowTemplate_Records;
+extern const u8 *const sRecordsTexts[3];
+
 void IncrementGamesWithMaxPlayers(void)
 {
     struct PokemonJumpRecords *records = GetPokeJumpRecords();
 
     if (records->gamesWithMaxPlayers < MAX_JUMPS)
         records->gamesWithMaxPlayers++;
+}
+
+void ShowPokemonJumpRecords(void)
+{
+    u8 taskId = CreateTask(Task_ShowPokemonJumpRecords, 0);
+    Task_ShowPokemonJumpRecords(taskId);
+}
+
+void Task_ShowPokemonJumpRecords(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    switch (data[0])
+    {
+    case 0:
+        data[1] = AddWindow(&sWindowTemplate_Records);
+        PrintRecordsText(data[1]);
+        CopyWindowToVram(data[1], COPYWIN_FULL);
+        data[0]++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            data[0]++;
+        break;
+    case 2:
+        if (JOY_NEW(A_BUTTON | B_BUTTON))
+        {
+            rbox_fill_rectangle((u8)data[1]);
+            CopyWindowToVram(data[1], COPYWIN_MAP);
+            data[0]++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            RemoveWindow(data[1]);
+            DestroyTask(taskId);
+            ScriptContext_Enable();
+        }
+        break;
+    }
+}
+
+#ifndef NONMATCHING
+// 逐字节匹配版本。JP 把 u16 windowId 在函数开头压栈（sp[0x18]），调用
+// GetPokeJumpRecords 后再取回为 u8；纯 C 写法无法让 agbcc 复现这个
+// 寄存器分配（试过多种结构，GCC 总是把 windowId 留在 r4/r6），因此保留
+// 内联汇编。
+__attribute__((naked)) void PrintRecordsText(u16 windowId)
+{
+    __asm__(".syntax unified\n\t"
+            ".code 16\n\t"
+            "push {r4, r5, r6, r7, lr}\n\t"
+            "mov r7, sl\n\t"
+            "mov r6, sb\n\t"
+            "mov r5, r8\n\t"
+            "push {r5, r6, r7}\n\t"
+            "sub sp, #0x20\n\t"
+            "lsls r0, r0, #16\n\t"
+            "lsrs r0, r0, #16\n\t"
+            "str r0, [sp, #0x18]\n\t"
+            "bl GetPokeJumpRecords\n\t"
+            "ldrh r1, [r0]\n\t"
+            "str r1, [sp, #0xc]\n\t"
+            "ldr r1, [r0, #0xc]\n\t"
+            "str r1, [sp, #0x10]\n\t"
+            "ldrh r0, [r0, #4]\n\t"
+            "str r0, [sp, #0x14]\n\t"
+            "ldr r0, [sp, #0x18]\n\t"
+            "lsls r4, r0, #24\n\t"
+            "lsrs r4, r4, #24\n\t"
+            "ldr r5, _0802E274\n\t"
+            "adds r0, r4, #0\n\t"
+            "adds r1, r5, #0\n\t"
+            "movs r2, #0xd0\n\t"
+            "bl LoadUserWindowBorderGfx_\n\t"
+            "adds r0, r4, #0\n\t"
+            "adds r1, r5, #0\n\t"
+            "movs r2, #0xd\n\t"
+            "bl DrawTextBorderOuter\n\t"
+            "adds r0, r4, #0\n\t"
+            "movs r1, #0x11\n\t"
+            "bl FillWindowPixelBuffer\n\t"
+            "ldr r2, _0802E278\n\t"
+            "movs r0, #2\n\t"
+            "str r0, [sp]\n\t"
+            "movs r0, #0xff\n\t"
+            "str r0, [sp, #4]\n\t"
+            "movs r0, #0\n\t"
+            "str r0, [sp, #8]\n\t"
+            "adds r0, r4, #0\n\t"
+            "movs r1, #1\n\t"
+            "movs r3, #0\n\t"
+            "bl AddTextPrinterParameterized\n\t"
+            "movs r6, #0\n\t"
+            "adds r7, r4, #0\n\t"
+            "movs r1, #0xff\n\t"
+            "mov sl, r1\n\t"
+            "mov sb, r6\n\t"
+            "mov r0, sp\n\t"
+            "adds r0, #0xc\n\t"
+            "str r0, [sp, #0x1c]\n\t"
+            "movs r1, #0xd0\n\t"
+            "lsls r1, r1, #0x15\n\t"
+            "mov r8, r1\n\t"
+            "ldr r5, _0802E27C\n\t"
+            "_0802E1F2:\n\t"
+            "ldr r1, _0802E280\n\t"
+            "lsls r0, r6, #2\n\t"
+            "adds r0, r0, r1\n\t"
+            "ldr r2, [r0]\n\t"
+            "mov r0, r8\n\t"
+            "lsrs r4, r0, #24\n\t"
+            "str r4, [sp]\n\t"
+            "mov r1, sl\n\t"
+            "str r1, [sp, #4]\n\t"
+            "mov r0, sb\n\t"
+            "str r0, [sp, #8]\n\t"
+            "adds r0, r7, #0\n\t"
+            "movs r1, #1\n\t"
+            "movs r3, #0\n\t"
+            "bl AddTextPrinterParameterized\n\t"
+            "ldr r0, [sp, #0x1c]\n\t"
+            "ldmia r0!, {r1}\n\t"
+            "str r0, [sp, #0x1c]\n\t"
+            "adds r0, r5, #0\n\t"
+            "movs r2, #0\n\t"
+            "movs r3, #5\n\t"
+            "bl ConvertIntToDecimalStringN\n\t"
+            "adds r0, r5, #0\n\t"
+            "bl TruncateToFirstWordOnly\n\t"
+            "movs r0, #1\n\t"
+            "adds r1, r5, #0\n\t"
+            "movs r2, #0\n\t"
+            "bl GetStringWidth\n\t"
+            "movs r3, #0xa0\n\t"
+            "subs r3, r3, r0\n\t"
+            "lsls r3, r3, #24\n\t"
+            "lsrs r3, r3, #24\n\t"
+            "str r4, [sp]\n\t"
+            "mov r1, sl\n\t"
+            "str r1, [sp, #4]\n\t"
+            "mov r0, sb\n\t"
+            "str r0, [sp, #8]\n\t"
+            "adds r0, r7, #0\n\t"
+            "movs r1, #1\n\t"
+            "adds r2, r5, #0\n\t"
+            "bl AddTextPrinterParameterized\n\t"
+            "movs r1, #0x80\n\t"
+            "lsls r1, r1, #0x15\n\t"
+            "add r8, r1\n\t"
+            "adds r6, #1\n\t"
+            "ldr r1, [sp, #0x18]\n\t"
+            "lsls r0, r1, #24\n\t"
+            "cmp r6, #2\n\t"
+            "bls _0802E1F2\n\t"
+            "lsrs r0, r0, #24\n\t"
+            "bl PutWindowTilemap\n\t"
+            "add sp, #0x20\n\t"
+            "pop {r3, r4, r5}\n\t"
+            "mov r8, r3\n\t"
+            "mov sb, r4\n\t"
+            "mov sl, r5\n\t"
+            "pop {r4, r5, r6, r7}\n\t"
+            "pop {r0}\n\t"
+            "bx r0\n\t"
+            ".align 2, 0\n\t"
+            "_0802E274: .4byte 0x21D\n\t"
+            "_0802E278: .4byte gText_PkmnJumpRecords\n\t"
+            "_0802E27C: .4byte gStringVar1\n\t"
+            "_0802E280: .4byte sRecordsTexts\n\t"
+            ".syntax divided");
+}
+#else
+// 可读 C 版本（NONMATCHING）：JP 硬编码 20 格宽窗口和居中布局；US 自动算宽度。
+void PrintRecordsText(u16 windowId)
+{
+    int i, x;
+    int recordNums[3];
+    struct PokemonJumpRecords *records = GetPokeJumpRecords();
+    u8 speed = TEXT_SKIP_DRAW;
+    recordNums[0] = records->jumpsInRow;
+    recordNums[1] = records->bestJumpScore;
+    recordNums[2] = records->excellentsInRow;
+
+    LoadUserWindowBorderGfx_(windowId, 0x21D, BG_PLTT_ID(13));
+    DrawTextBorderOuter(windowId, 0x21D, 13);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(windowId, FONT_NORMAL, gText_PkmnJumpRecords, 0, 2, speed, NULL);
+    for (i = 0; i < ARRAY_COUNT(sRecordsTexts); i++)
+    {
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, sRecordsTexts[i], 0, 26 + (i * 16), speed, NULL);
+        ConvertIntToDecimalStringN(gStringVar1, recordNums[i], STR_CONV_MODE_LEFT_ALIGN, 5);
+        TruncateToFirstWordOnly(gStringVar1);
+        x = 160 - GetStringWidth(FONT_NORMAL, gStringVar1, 0);
+        AddTextPrinterParameterized(windowId, FONT_NORMAL, gStringVar1, x, 26 + (i * 16), speed, NULL);
+    }
+    PutWindowTilemap(windowId);
+}
+#endif
+
+// JP truncates at the NUL byte (decimal strings are NUL-padded), while US
+// truncates at CHAR_SPACE.
+void TruncateToFirstWordOnly(u8 *str)
+{
+    while (*str != EOS)
+    {
+        if (*str == 0)
+        {
+            *str = EOS;
+            break;
+        }
+        str++;
+    }
 }
