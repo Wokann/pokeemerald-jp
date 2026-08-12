@@ -226,6 +226,23 @@ extern void CB2_DodrioGame(void);
 extern void SetRandomPrize(void);
 extern void GetActiveBerryColumns(u8, u8 *, u8 *);
 extern void InitMonInfo(struct DodrioGame_MonInfo *, struct Pokemon *);
+extern void Task_CommunicateMonInfo(u8 taskId);
+extern void Task_NewGameIntro(u8 taskId);
+extern void VBlankCB_DodrioGame(void);
+extern void CreateTask_(TaskFunc func, u8 priority);
+extern void InitGameGfx(struct DodrioGame_Gfx *);
+extern bool32 IsGfxFuncActive(void);
+extern void LoadDodrioGfx(void);
+extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
+extern void SetAllDodrioInvisibility(bool8, u8);
+extern void LoadBerryGfx_Dodrio(void);
+#define LoadBerryGfx LoadBerryGfx_Dodrio
+extern void CreateBerrySprites_Dodrio(void);
+#define CreateBerrySprites CreateBerrySprites_Dodrio
+extern void CreateCloudSprites_Dodrio(void);
+#define CreateCloudSprites CreateCloudSprites_Dodrio
+extern void CreateStatusBarSprites(void);
+extern void CreateDodrioGameTask(TaskFunc func);
 
 static void ResetTasksAndSprites(void)
 {
@@ -283,6 +300,76 @@ void InitDodrioGame(struct DodrioGame *game)
         game->posToPlayerId[i] = game->posToPlayerId[i - 1] + 1;
         if (game->posToPlayerId[i] > game->numPlayers - 1)
             game->posToPlayerId[i] %= game->numPlayers;
+    }
+}
+
+void Task_StartDodrioGame(u8 taskId)
+{
+    u8 i, numPlayers;
+
+    switch (sGame->startState)
+    {
+    case 0:
+        SetVBlankCallback(NULL);
+        CreateTask_(Task_CommunicateMonInfo, 4);
+        sGame->startState++;
+        break;
+    case 1:
+        if (!FuncIsActiveTask(Task_CommunicateMonInfo))
+        {
+            InitGameGfx(&sGame->gfx);
+            sGame->startState++;
+        }
+        break;
+    case 2:
+        if (!IsGfxFuncActive())
+        {
+            Rfu_SetLinkStandbyCallback();
+            sGame->startState++;
+        }
+        break;
+    case 3:
+        if (IsLinkTaskFinished())
+        {
+            if (gReceivedRemoteLinkPlayers)
+            {
+                LoadWirelessStatusIndicatorSpriteGfx();
+                CreateWirelessStatusIndicatorSprite(0, 0);
+            }
+            sGame->startState++;
+        }
+        break;
+    case 4:
+        numPlayers = sGame->numPlayers;
+        LoadDodrioGfx();
+        for (i = 0; i < numPlayers; i++)
+            CreateDodrioSprite(&sGame->monInfo[sGame->posToPlayerId[i]], i, sGame->posToPlayerId[i], sGame->numPlayers);
+
+        SetAllDodrioInvisibility(FALSE, sGame->numPlayers);
+        sGame->startState++;
+        break;
+    case 5:
+        LoadBerryGfx();
+        CreateBerrySprites();
+        CreateCloudSprites();
+        CreateStatusBarSprites();
+        sGame->startState++;
+        break;
+    case 6:
+        BlendPalettes(PALETTES_ALL, 0x10, 0x00);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, 0);
+        SetVBlankCallback(VBlankCB_DodrioGame);
+        sGame->startState++;
+        break;
+    case 7:
+        UpdatePaletteFade();
+        if (!gPaletteFade.active)
+            sGame->startState++;
+        break;
+    default:
+        DestroyTask(taskId);
+        CreateDodrioGameTask(Task_NewGameIntro);
+        break;
     }
 }
 
