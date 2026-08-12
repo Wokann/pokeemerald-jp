@@ -5,6 +5,7 @@
 #include "item.h"
 #include "link.h"
 #include "main.h"
+#include "menu.h"
 #include "palette.h"
 #include "pokemon.h"
 #include "pokemon_jump.h"
@@ -75,6 +76,9 @@ enum {
     JUMPSTATE_SUCCESS, // Cleared vine
     JUMPSTATE_FAILURE, // Hit vine
 };
+
+#define PLAY_AGAIN_NO  1
+#define PLAY_AGAIN_YES 2
 
 enum {
     VINE_HIGHEST,
@@ -365,6 +369,7 @@ extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
 extern u16 sub_0802C574(u16 prizeItemId, u16 prizeItemQuantity); // GetQuantityLimitedByBag
 extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
 extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
+extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1177,6 +1182,59 @@ bool32 TryGivePrize_PokeJump(void)
         if (!sub_0802D734()) // RemoveMessageWindow
             return FALSE;
         break;
+    }
+
+    return TRUE;
+}
+
+bool32 DoPlayAgainPrompt(void)
+{
+    s8 input;
+
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        sub_0802CDBC(GFXFUNC_MSG_PLAY_AGAIN); // SetUpPokeJumpGfxFuncById
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+            sPokemonJump->helperState++;
+        break;
+    case 2:
+        input = sub_0802D77C(); // HandlePlayAgainInput
+        switch (input)
+        {
+        case MENU_B_PRESSED:
+        case 1: // No
+            sPokemonJump->playAgainState = PLAY_AGAIN_NO;
+            sub_0802CDBC(GFXFUNC_ERASE_MSG); // SetUpPokeJumpGfxFuncById
+            sPokemonJump->helperState++;
+            break;
+        case 0: // Yes
+            sPokemonJump->playAgainState = PLAY_AGAIN_YES;
+            sub_0802CDBC(GFXFUNC_ERASE_MSG); // SetUpPokeJumpGfxFuncById
+            sPokemonJump->helperState++;
+            break;
+        }
+        break;
+    case 3:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+            sPokemonJump->helperState++;
+        break;
+    case 4:
+        sub_0802CDBC(GFXFUNC_MSG_COMM_STANDBY); // SetUpPokeJumpGfxFuncById
+        sPokemonJump->helperState++;
+        break;
+    case 5:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            sPokemonJump->helperState++;
+            return FALSE;
+        }
+        break;
+    case 6:
+        return FALSE;
     }
 
     return TRUE;
