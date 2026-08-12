@@ -1345,6 +1345,7 @@ sub_08027314 = HandleWaitPlayAgainInput;
 sub_080273C8 = ResetPickState;
 sub_080273EC = GetPrizeItemId;
 sub_08027410 = GetNumPlayers;
+sub_08027420 = GetPlayerName;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2378,6 +2379,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.ResetPickState);
         src/dodrio_berry_picking.o(.text.GetPrizeItemId);
         src/dodrio_berry_picking.o(.text.GetNumPlayers);
+        src/dodrio_berry_picking.o(.text.GetPlayerName);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

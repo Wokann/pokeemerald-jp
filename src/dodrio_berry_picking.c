@@ -1132,6 +1132,13 @@ u8 GetNumPlayers(void)
     return sGame->numPlayers;
 }
 
+u8 *GetPlayerName(u8 playerId)
+{
+    if (gReceivedRemoteLinkPlayers)
+        return gLinkPlayers[playerId].name;
+    return sGame->players[playerId].name;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
