@@ -1189,6 +1189,33 @@ u16 GetHighestBerryResult(u8 berryId)
     return highest;
 }
 
+u32 GetScoreByRanking(u8 ranking)
+{
+    u32 scores[MAX_RFU_PLAYERS], temp;
+    s16 unsorted = TRUE;
+    u8 i;
+    u8 numPlayers = sGame->numPlayers;
+
+    for (i = 0; i < numPlayers; i++)
+        scores[i] = temp = GetScore(i);
+
+    // Sort the scores in the array highest to lowest
+    while (unsorted)
+    {
+        unsorted = FALSE;
+        for (i = 0; i < numPlayers - 1; i++)
+        {
+            if (scores[i] < scores[i + 1])
+            {
+                SWAP(scores[i], scores[i + 1], temp);
+                unsorted = TRUE;
+            }
+        }
+    }
+
+    return scores[ranking];
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)

@@ -1349,6 +1349,7 @@ sub_08027460 = GetBerryResult;
 sub_08027480 = GetScore;
 sub_08027508 = GetHighestScore;
 sub_0802754C = GetHighestBerryResult;
+sub_08027590 = GetScoreByRanking;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2387,6 +2388,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.GetScore);
         src/dodrio_berry_picking.o(.text.GetHighestScore);
         src/dodrio_berry_picking.o(.text.GetHighestBerryResult);
+        src/dodrio_berry_picking.o(.text.GetScoreByRanking);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
