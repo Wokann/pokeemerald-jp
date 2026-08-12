@@ -15,55 +15,6 @@
 
 
 
-	thumb_func_start sub_080216F8
-sub_080216F8: @ 0x080216F8
-	push {r4, r5, r6, lr}
-	mov r6, r8
-	push {r6}
-	sub sp, #0xc
-	adds r6, r0, #0
-	adds r4, r1, #0
-	adds r5, r2, #0
-	mov r8, r3
-	lsls r6, r6, #0x18
-	lsrs r6, r6, #0x18
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	movs r2, #1
-	rsbs r2, r2, #0
-	movs r0, #1
-	mov r1, r8
-	bl GetStringWidth
-	lsls r4, r4, #2
-	lsrs r0, r0, #1
-	subs r4, r4, r0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	lsls r0, r5, #1
-	adds r0, r0, r5
-	ldr r1, _08021754
-	adds r0, r0, r1
-	str r0, [sp]
-	movs r0, #0
-	str r0, [sp, #4]
-	mov r0, r8
-	str r0, [sp, #8]
-	adds r0, r6, #0
-	movs r1, #1
-	adds r2, r4, #0
-	movs r3, #0
-	bl AddTextPrinterParameterized3
-	add sp, #0xc
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08021754: .4byte 0x082C5EF0
-	thumb_func_end sub_080216F8
 
 	thumb_func_start sub_08021758
 sub_08021758: @ 0x08021758

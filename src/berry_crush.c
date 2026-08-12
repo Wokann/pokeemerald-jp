@@ -178,6 +178,7 @@ extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
 extern const s8 sImpactCoords[3][2];
 extern const s8 sSparkleCoords[][2];
 extern const u32 sPressingSpeedConversionTable[];
+extern const u8 sTextColorTable[][3];
 extern void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -809,4 +810,10 @@ void FramesToMinSec(struct BerryCrushGame_Gfx *gfx, u16 frames)
     }
 
     gfx->secondsFrac = fractionalFrames / 1000000;
+}
+
+void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
+{
+    left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
+    AddTextPrinterParameterized3(windowId, FONT_NORMAL, left, 0, sTextColorTable[colorId], 0, string);
 }

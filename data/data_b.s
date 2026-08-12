@@ -1218,25 +1218,9 @@ gUnknown_82C5EBC: @ 0x82C5EBC
 sBgTemplates: @ 0x82C5EE0
 	.incbin "baserom_jp.gba", 0x2c5ee0, 0x10
 
-	.globl gUnknown_82C5EF0
-gUnknown_82C5EF0: @ 0x82C5EF0
-	.incbin "baserom_jp.gba", 0x2c5ef0, 0x3
-
-	.globl gUnknown_82C5EF3
-gUnknown_82C5EF3: @ 0x82C5EF3
-	.incbin "baserom_jp.gba", 0x2c5ef3, 0x3
-
-	.globl gUnknown_82C5EF6
-gUnknown_82C5EF6: @ 0x82C5EF6
-	.incbin "baserom_jp.gba", 0x2c5ef6, 0x3
-
-	.globl gUnknown_82C5EF9
-gUnknown_82C5EF9: @ 0x82C5EF9
-	.incbin "baserom_jp.gba", 0x2c5ef9, 0x6
-
-	.globl gUnknown_82C5EFF
-gUnknown_82C5EFF: @ 0x82C5EFF
-	.incbin "baserom_jp.gba", 0x2c5eff, 0x5
+	.globl sTextColorTable
+sTextColorTable: @ 0x82C5EF0
+	.incbin "baserom_jp.gba", 0x2c5ef0, 0x14
 
 	.globl gUnknown_82C5F04
 gUnknown_82C5F04: @ 0x82C5F04
