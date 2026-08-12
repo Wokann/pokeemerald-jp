@@ -15,7 +15,9 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "strings.h"
 #include "task.h"
+#include "text_window.h"
 #include "union_room_chat.h"
 #include "window.h"
 #include "constants/characters.h"
@@ -182,7 +184,6 @@ enum {
 extern EWRAM_DATA struct UnionRoomChat *sChat;
 
 extern void SetChatFunction(u16 funcId);
-extern s8 ProcessMenuInput(void);
 
 // JP chat message templates (0x085CC663 / 0x085CC672).
 extern const u8 gUnknown_85CC663[];
@@ -199,6 +200,10 @@ extern const u8 gUnknown_85CC787[];
 extern const u8 gUnknown_85CC78C[];
 extern const u8 gUnknown_85CC792[];
 extern const u8 gUnknown_85CC798[];
+
+// JP "YES"/"NO" menu texts (0x085CAAD8 / 0x085CAADB).
+extern const u8 gUnknown_85CAAD8[];
+extern const u8 gUnknown_85CAADB[];
 
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
@@ -289,6 +294,14 @@ bool32 Display_AskOverwriteSave(u8 *state);
 bool32 Display_PrintSavingDontTurnOff(u8 *state);
 bool32 Display_PrintSavedTheGame(u8 *state);
 bool32 Display_AskConfirmLeaderLeave(u8 *state);
+void AddYesNoMenuAt(u8 left, u8 top, u8 initialCursorPos);
+void HideYesNoMenuWindow(void);
+void DestroyYesNoMenuWindow(void);
+s8 ProcessMenuInput(void);
+void HideStdMessageWindow(void);
+void DestroyStdMessageWindow(void);
+void FillTextEntryWindow(u16 x, u16 width, u8 fillValue);
+u8 sub_081984B0(u8 windowId, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -2159,4 +2172,74 @@ bool32 Display_AskConfirmLeaderLeave(u8 *state)
 bool32 Display_Dummy(u8 *state)
 {
     return FALSE;
+}
+
+void AddYesNoMenuAt(u8 left, u8 top, u8 initialCursorPos)
+{
+    struct WindowTemplate template;
+    template.bg = 0;
+    template.tilemapLeft = left;
+    template.tilemapTop = top;
+    template.width = 6;
+    template.height = 4;
+    template.paletteNum = 14;
+    template.baseBlock = 0x59; // JP Yes/No window base block (US uses 0x52)
+    sDisplay->yesNoMenuWindowId = AddWindow(&template);
+    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    {
+        FillWindowPixelBuffer(sDisplay->yesNoMenuWindowId, PIXEL_FILL(1));
+        PutWindowTilemap(sDisplay->yesNoMenuWindowId);
+        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gUnknown_85CAAD8, 10, 2, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gUnknown_85CAADB, 10, 16, TEXT_SKIP_DRAW, NULL);
+        DrawTextBorderOuter(sDisplay->yesNoMenuWindowId, 1, 13);
+        sub_081984B0(sDisplay->yesNoMenuWindowId, 1, 0, 2, 14, 2, initialCursorPos);
+    }
+}
+
+void HideYesNoMenuWindow(void)
+{
+    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrameToTransparent(sDisplay->yesNoMenuWindowId, FALSE);
+        ClearWindowTilemap(sDisplay->yesNoMenuWindowId);
+    }
+}
+
+void DestroyYesNoMenuWindow(void)
+{
+    if (sDisplay->yesNoMenuWindowId != WINDOW_NONE)
+    {
+        RemoveWindow(sDisplay->yesNoMenuWindowId);
+        sDisplay->yesNoMenuWindowId = WINDOW_NONE;
+    }
+}
+
+s8 ProcessMenuInput(void)
+{
+    return Menu_ProcessInput();
+}
+
+void HideStdMessageWindow(void)
+{
+    if (sDisplay->messageWindowId != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrameToTransparent(sDisplay->messageWindowId, FALSE);
+        ClearWindowTilemap(sDisplay->messageWindowId);
+    }
+
+    ChangeBgY(0, 0, BG_COORD_SET);
+}
+
+void DestroyStdMessageWindow(void)
+{
+    if (sDisplay->messageWindowId != WINDOW_NONE)
+    {
+        RemoveWindow(sDisplay->messageWindowId);
+        sDisplay->messageWindowId = WINDOW_NONE;
+    }
+}
+
+void FillTextEntryWindow(u16 x, u16 width, u8 fillValue)
+{
+    FillWindowPixelRect(WIN_TEXT_ENTRY, fillValue, x * 8, 1, width * 8, 14);
 }
