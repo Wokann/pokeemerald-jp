@@ -188,6 +188,15 @@ struct BerryCrushGame_Results
     u8 playerIdsRanked[2][MAX_RFU_PLAYERS + 3]; // +0x88
 };
 
+enum {
+    RESULTS_PAGE_PRESSES,
+    RESULTS_PAGE_RANDOM,
+    RESULTS_PAGE_CRUSHING,
+    NUM_RESULTS_PAGES
+};
+
+#define randomPageId playerIdsRanked[0][7]
+
 struct BerryCrushGame_LinkState
 {
     u16 rfuCmd;
@@ -318,8 +327,12 @@ extern const u8 sSparkleThresholds[MAX_RFU_PLAYERS - 1][4];
 extern const u8 sBigSparkleThresholds[MAX_RFU_PLAYERS - 1];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
-extern bool32 OpenResultsWindow(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
-extern void CloseResultsWindow(struct BerryCrushGame *);
+extern void PrintResultsText(struct BerryCrushGame *, u8, u8, u8);
+extern void PrintCrushingResults(struct BerryCrushGame *);
+extern const struct WindowTemplate sWindowTemplates_Results[];
+extern const u8 sResultsWindowHeights[2][MAX_RFU_PLAYERS - 1];
+extern const u8 *const sResultsTexts[];
+void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -2320,6 +2333,63 @@ void CloseResultsWindow(struct BerryCrushGame *game)
     ClearStdWindowAndFrameToTransparent(game->gfx.resultsWindowId, TRUE);
     RemoveWindow(game->gfx.resultsWindowId);
     DrawPlayerNameWindows(game);
+}
+
+bool32 OpenResultsWindow(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 playerCountIdx;
+    struct WindowTemplate template;
+
+    switch (gfx->resultsState)
+    {
+    case 0:
+        playerCountIdx = game->playerCount - 2;
+        HideTimer(gfx);
+        memcpy(&template, &sWindowTemplates_Results[game->gameState], sizeof(struct WindowTemplate));
+        if (game->gameState == STATE_RESULTS_CRUSHING)
+            template.height = sResultsWindowHeights[1][playerCountIdx];
+        else
+            template.height = sResultsWindowHeights[0][playerCountIdx];
+        gfx->resultsWindowId = AddWindow(&template);
+        break;
+    case 1:
+        PutWindowTilemap(gfx->resultsWindowId);
+        FillWindowPixelBuffer(gfx->resultsWindowId, PIXEL_FILL(0));
+        break;
+    case 2:
+        LoadUserWindowBorderGfx_(gfx->resultsWindowId, 541, BG_PLTT_ID(13));
+        DrawStdFrameWithCustomTileAndPalette(gfx->resultsWindowId, FALSE, 541, 13);
+        break;
+    case 3:
+        playerCountIdx = game->playerCount - 2;
+        switch (game->gameState)
+        {
+        case STATE_RESULTS_PRESSES:
+            PrintTextCentered(gfx->resultsWindowId, 20, COLORID_BLUE, gText_PressesRankings);
+            PrintResultsText(game, RESULTS_PAGE_PRESSES, 0xA0, 8 * sResultsWindowHeights[0][playerCountIdx] - game->playerCount * 13);
+            gfx->resultsState = 5; // Skip past Crushing Results text
+            return FALSE;
+        case STATE_RESULTS_RANDOM:
+            PrintTextCentered(gfx->resultsWindowId, 20, COLORID_GREEN, sResultsTexts[game->results.randomPageId + NUM_RESULTS_PAGES]);
+            PrintResultsText(game, RESULTS_PAGE_RANDOM, 0xA0, 8 * sResultsWindowHeights[0][playerCountIdx] - game->playerCount * 13);
+            gfx->resultsState = 5; // Skip past Crushing Results text
+            return FALSE;
+        case STATE_RESULTS_CRUSHING:
+            PrintTextCentered(gfx->resultsWindowId, 22, COLORID_BLUE, gText_CrushingResults);
+            PrintResultsText(game, RESULTS_PAGE_CRUSHING, 0xB0, 18);
+            break;
+        }
+        break;
+    case 4:
+        PrintCrushingResults(game);
+        break;
+    case 5:
+        CopyWindowToVram(gfx->resultsWindowId, COPYWIN_FULL);
+        gfx->resultsState = 0;
+        return TRUE;
+    }
+    gfx->resultsState++;
+    return FALSE;
 }
 
 #define tState             data[0]

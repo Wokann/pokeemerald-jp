@@ -1230,8 +1230,8 @@ gUnknown_82C5F04: @ 0x82C5F04
 sWindowTemplates_PlayerNames: @ 0x82C5F0C
 	.incbin "baserom_jp.gba", 0x2c5f0c, 0x50
 
-	.globl gUnknown_82C5F5C
-gUnknown_82C5F5C: @ 0x82C5F5C
+	.globl sResultsWindowHeights
+sResultsWindowHeights: @ 0x82C5F5C
 	.incbin "baserom_jp.gba", 0x2c5f5c, 0x8
 
 	.globl sPressingSpeedConversionTable
@@ -1314,8 +1314,8 @@ sSpriteTemplate_PlayerBerry: @ 0x82C7BF8
 sDigitObjTemplates: @ 0x82C7C10
 	.incbin "baserom_jp.gba", 0x2c7c10, 0x30
 
-	.globl gUnknown_82C7C40
-gUnknown_82C7C40: @ 0x82C7C40
+	.globl sResultsTexts
+sResultsTexts: @ 0x82C7C40
 	.incbin "baserom_jp.gba", 0x2c7c40, 0x18
 
 	.globl sBerryCrushCommands
@@ -16350,12 +16350,12 @@ gUnknown_85CCA20: @ 0x85CCA20
 gUnknown_85CCA28: @ 0x85CCA28
 	.string "{B_COPY_VAR_1}パーセント$"
 
-	.globl gUnknown_85CCA30
-gUnknown_85CCA30: @ 0x85CCA30
+	.globl gText_PressesRankings
+gText_PressesRankings: @ 0x85CCA30
 	.incbin "baserom_jp.gba", 0x5cca30, 0x10
 
-	.globl gUnknown_85CCA40
-gUnknown_85CCA40: @ 0x85CCA40
+	.globl gText_CrushingResults
+gText_CrushingResults: @ 0x85CCA40
 	.string "つぶ{DYNAMIC_COLOR3}{SE_FAINT}{LIGHT_BLUE}っ{GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_RG_CAUGHT_INTRO}"
 	.string "{MUS_RG_NEW_GAME_INTRO}{SE_BIKE_BELL}ランキング$"
 	.string "た{DYNAMIC_COLOR4}{SE_ARENA_TIMEUP1}{SE_PC_LOGIN}ランキング$"
