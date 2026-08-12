@@ -110,6 +110,19 @@ enum {
     INPUTSTATE_BAD_MISS,
 };
 
+#define GFXTAG_DODRIO    0
+#define GFXTAG_STATUS    1
+#define GFXTAG_BERRIES   2
+#define GFXTAG_CLOUD     5
+#define GFXTAG_COUNTDOWN 7
+
+#define PALTAG_DODRIO_NORMAL 0
+#define PALTAG_DODRIO_SHINY  1
+#define PALTAG_STATUS        2
+#define PALTAG_BERRIES       3
+#define PALTAG_CLOUD         6
+#define PALTAG_COUNTDOWN     8
+
 #define PLAYER_NONE 0xFF
 
 struct DodrioGame_Gfx
@@ -445,6 +458,43 @@ void InitCountdown(void)
     default:
         sGame->startCountdown = TRUE;
         SetGameFunc(FUNC_COUNTDOWN);
+        break;
+    }
+}
+
+void DoCountdown(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        StartMinigameCountdown(GFXTAG_COUNTDOWN, PALTAG_COUNTDOWN, 120, 80, 0);
+        sGame->state++;
+        break;
+    case 1:
+        Rfu_SetLinkStandbyCallback();
+        sGame->state++;
+        break;
+    case 2:
+        if (IsLinkTaskFinished())
+        {
+            sGame->state++;
+            sGame->countdownEndDelay = 0;
+        }
+        break;
+    case 3:
+        if (!IsMinigameCountdownRunning())
+            sGame->state++;
+        break;
+    case 4:
+        if (++sGame->countdownEndDelay > 5)
+        {
+            Rfu_SetLinkStandbyCallback();
+            sGame->state++;
+        }
+        break;
+    case 5:
+        if (IsLinkTaskFinished())
+            SetGameFunc(FUNC_WAIT_START);
         break;
     }
 }
