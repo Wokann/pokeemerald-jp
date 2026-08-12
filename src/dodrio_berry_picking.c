@@ -399,6 +399,7 @@ extern const s16 sCloudPositions[NUM_CLOUDS][2];
 extern EWRAM_DATA u16 *sBerrySpriteIds[NUM_BERRY_COLUMNS];
 extern EWRAM_DATA u16 *sBerryIconSpriteIds[NUM_BERRY_TYPES];
 extern EWRAM_DATA u16 *sCloudSpriteIds[NUM_CLOUDS];
+extern EWRAM_DATA struct DodrioGame_Gfx *sGfx;
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
@@ -2025,6 +2026,15 @@ void LoadWindowFrameGfx(u8 windowId)
 void nullsub_16(void)
 {
     LoadUserWindowBorderGfx_(0, 10, 0xB0);
+}
+
+void ResetGfxState(void)
+{
+    sGfx->finished = FALSE;
+    sGfx->state = 0;
+    sGfx->loadState = 0;
+    sGfx->cursorSelection = 0;
+    sGfx->playAgainState = PLAY_AGAIN_NONE;
 }
 
 void nullsub_15(void)
