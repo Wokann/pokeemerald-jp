@@ -19,6 +19,7 @@
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
+#include "title_screen.h"
 #include "window.h"
 
 // JP keeps these tables in ROM; US builds them in C.
@@ -36,6 +37,9 @@ extern const u8 gUnknown_85C8C87[];
 extern const u8 gUnknown_85C8C91[];
 extern const u8 gUnknown_85C8C9C[];
 extern const u8 gUnknown_85C8CA7[];
+extern const u8 gUnknown_85C8CB1[];
+extern const u8 gUnknown_85C8CC7[];
+extern const u8 gUnknown_85C8CEB[];
 extern void CreateMainMenuErrorWindow(const u8 *text);
 extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
 extern void Task_DisplayMainMenu(u8 taskId);
@@ -48,16 +52,14 @@ extern u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *templat
 extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
 extern void HighlightSelectedMainMenuItem(u8 menuType, u8 currItem, s16 isScrolled);
-extern void Task_HandleMainMenuInput(u8 taskId);
-extern void Task_HandleMainMenuAPressed(u8 taskId);
-extern void Task_HandleMainMenuBPressed(u8 taskId);
 extern void Task_NewGameBirchSpeech_Init(u8 taskId);
-extern void Task_DisplayMainMenuInvalidActionError(u8 taskId);
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
 static bool8 HandleMainMenuInput(u8 taskId);
 static void Task_HandleMainMenuInput(u8 taskId);
 static void Task_HandleMainMenuAPressed(u8 taskId);
+static void Task_HandleMainMenuBPressed(u8 taskId);
+static void Task_DisplayMainMenuInvalidActionError(u8 taskId);
 
 #define OPTION_MENU_FLAG (1 << 15)
 
@@ -620,6 +622,58 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
             sCurrItemAndOptionMenuCheck = 0;
         else
             sCurrItemAndOptionMenuCheck |= OPTION_MENU_FLAG;  // entering the options menu
+    }
+}
+
+static void Task_HandleMainMenuBPressed(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        if (gTasks[taskId].tMenuType == HAS_MYSTERY_EVENTS)
+            RemoveScrollIndicatorArrowPair(gTasks[taskId].tScrollArrowTaskId);
+        sCurrItemAndOptionMenuCheck = 0;
+        FreeAllWindowBuffers();
+        SetMainCallback2(CB2_InitTitleScreen);
+        DestroyTask(taskId);
+    }
+}
+
+static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
+{
+    switch (gTasks[taskId].tCurrItem)
+    {
+        case 0:
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, DISPLAY_TILE_WIDTH, DISPLAY_TILE_HEIGHT);
+            switch (gTasks[taskId].tMenuType)
+            {
+                case 0:
+                    CreateMainMenuErrorWindow(gUnknown_85C8CB1);
+                    break;
+                case 1:
+                    CreateMainMenuErrorWindow(gUnknown_85C8CC7);
+                    break;
+                case 2:
+                    CreateMainMenuErrorWindow(gUnknown_85C8CEB);
+                    break;
+            }
+            gTasks[taskId].tCurrItem++;
+            break;
+        case 1:
+            if (!gPaletteFade.active)
+                gTasks[taskId].tCurrItem++;
+            break;
+        case 2:
+            RunTextPrinters();
+            if (!IsTextPrinterActive(7))
+                gTasks[taskId].tCurrItem++;
+            break;
+        case 3:
+            if (JOY_NEW(A_BUTTON | B_BUTTON))
+            {
+                PlaySE(SE_SELECT);
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                gTasks[taskId].func = Task_HandleMainMenuBPressed;
+            }
     }
 }
 

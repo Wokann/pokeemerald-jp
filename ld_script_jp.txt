@@ -3002,6 +3002,8 @@ SECTIONS {
         src/main_menu.o(.text.HandleMainMenuInput);
         src/main_menu.o(.text.Task_HandleMainMenuInput);
         src/main_menu.o(.text.Task_HandleMainMenuAPressed);
+        src/main_menu.o(.text.Task_HandleMainMenuBPressed);
+        src/main_menu.o(.text.Task_DisplayMainMenuInvalidActionError);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
