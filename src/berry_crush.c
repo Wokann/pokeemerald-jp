@@ -2109,6 +2109,53 @@ u32 Cmd_AskPlayAgain(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_CommunicatePlayAgainResponses(struct BerryCrushGame *game, u8 *args)
+{
+    u8 i = 0;
+
+    switch (game->cmdState)
+    {
+    case 0:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 1:
+        if (!IsLinkTaskFinished())
+            return 0;
+
+        // Send player's Yes/No response to partners
+        game->sendCmd[0] = game->playAgainState;
+        game->recvCmd[0] = 0;
+        SendBlock(0, game->sendCmd, sizeof(u16));
+        break;
+    case 2:
+        if (!IsLinkTaskFinished())
+            return 0;
+        game->cmdTimer = 0;
+        break;
+    case 3:
+        // Wait for partners responses
+        if (GetBlockReceivedStatus() != sReceivedPlayerBitmasks[game->playerCount - 2])
+            return 0;
+
+        // Read partners responses
+        for (i = 0; i < game->playerCount; i++)
+            game->recvCmd[0] += gBlockRecvBuffer[i][0];
+
+        if (game->recvCmd[0] != PLAY_AGAIN_YES)
+            RunOrScheduleCommand(CMD_PLAY_AGAIN_NO, SCHEDULE_CMD, NULL);
+        else
+            RunOrScheduleCommand(CMD_PLAY_AGAIN_YES, SCHEDULE_CMD, NULL);
+        ResetBlockReceivedFlags();
+        game->sendCmd[0] = 0;
+        game->recvCmd[0] = 0;
+        game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
