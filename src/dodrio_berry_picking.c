@@ -369,16 +369,6 @@ extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
 extern bool32 DoStatusBarIntro(void);
-extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
-                                   struct DodrioGame_Player *player,
-                                   struct DodrioGame_PlayerCommData *comm0,
-                                   struct DodrioGame_PlayerCommData *comm1,
-                                   struct DodrioGame_PlayerCommData *comm2,
-                                   struct DodrioGame_PlayerCommData *comm3,
-                                   struct DodrioGame_PlayerCommData *comm4,
-                                   u8 *numGraySquares,
-                                   bool32 *berriesFalling,
-                                   bool32 *allReadyToEnd);
 extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
@@ -1476,6 +1466,79 @@ void SendPacket_GameState(struct DodrioGame_Player *player,
     packet.berriesFalling = berriesFalling;
     packet.allReadyToEnd = allReadyToEnd;
     Rfu_SendPacket(&packet);
+}
+
+bool32 RecvPacket_GameState(u32 playerId,
+                            struct DodrioGame_Player *player,
+                            struct DodrioGame_PlayerCommData *player1,
+                            struct DodrioGame_PlayerCommData *player2,
+                            struct DodrioGame_PlayerCommData *player3,
+                            struct DodrioGame_PlayerCommData *player4,
+                            struct DodrioGame_PlayerCommData *player5,
+                            u8 *numGraySquares,
+                            bool32 *berriesFalling,
+                            bool32 *allReadyToEnd)
+{
+    struct GameStatePacket *packet;
+    struct DodrioGame_Berries *berries = &player->berries;
+
+    if ((gRecvCmds[0][0] & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+        return FALSE;
+
+    packet = (void *)&gRecvCmds[0][1];
+    if (packet->id == PACKET_GAME_STATE)
+    {
+        berries->fallDist[0] = packet->fallDist_Col0;
+        berries->fallDist[1] = packet->fallDist_Col1;
+        berries->fallDist[2] = packet->fallDist_Col2;
+        berries->fallDist[3] = packet->fallDist_Col3;
+        berries->fallDist[4] = packet->fallDist_Col4;
+        berries->fallDist[5] = packet->fallDist_Col5;
+        berries->fallDist[6] = packet->fallDist_Col6;
+        berries->fallDist[7] = packet->fallDist_Col7;
+        berries->fallDist[8] = packet->fallDist_Col8;
+        berries->fallDist[9] = packet->fallDist_Col9;
+        berries->fallDist[10] = packet->fallDist_Col0;
+
+        berries->ids[0] = packet->berryId_Col0;
+        berries->ids[1] = packet->berryId_Col1;
+        berries->ids[2] = packet->berryId_Col2;
+        berries->ids[3] = packet->berryId_Col3;
+        berries->ids[4] = packet->berryId_Col4;
+        berries->ids[5] = packet->berryId_Col5;
+        berries->ids[6] = packet->berryId_Col6;
+        berries->ids[7] = packet->berryId_Col7;
+        berries->ids[8] = packet->berryId_Col8;
+        berries->ids[9] = packet->berryId_Col9;
+        berries->ids[10] = packet->berryId_Col0;
+
+        player1->pickState = packet->pickState_Player1;
+        player1->ateBerry = packet->ateBerry_Player1;
+        player1->missedBerry = packet->missedBerry_Player1;
+
+        player2->pickState = packet->pickState_Player2;
+        player2->ateBerry = packet->ateBerry_Player2;
+        player2->missedBerry = packet->missedBerry_Player2;
+
+        player3->pickState = packet->pickState_Player3;
+        player3->ateBerry = packet->ateBerry_Player3;
+        player3->missedBerry = packet->missedBerry_Player3;
+
+        player4->pickState = packet->pickState_Player4;
+        player4->ateBerry = packet->ateBerry_Player4;
+        player4->missedBerry = packet->missedBerry_Player4;
+
+        player5->pickState = packet->pickState_Player5;
+        player5->ateBerry = packet->ateBerry_Player5;
+        player5->missedBerry = packet->missedBerry_Player5;
+
+        *numGraySquares = packet->numGraySquares;
+        *berriesFalling = packet->berriesFalling;
+        *allReadyToEnd = packet->allReadyToEnd;
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 void CheckDodrioInParty(void)
