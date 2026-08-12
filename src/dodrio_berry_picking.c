@@ -1127,6 +1127,11 @@ u16 GetPrizeItemId(void)
     return sGame->berryResults[sGame->multiplayerId][BERRY_PRIZE] + FIRST_BERRY_INDEX;
 }
 
+u8 GetNumPlayers(void)
+{
+    return sGame->numPlayers;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)

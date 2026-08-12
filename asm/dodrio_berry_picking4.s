@@ -13,16 +13,6 @@
 
 
 
-	thumb_func_start sub_08027410
-sub_08027410: @ 0x08027410
-	ldr r0, _0802741C
-	ldr r0, [r0]
-	adds r0, #0x24
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_0802741C: .4byte 0x0202294C
-	thumb_func_end sub_08027410
 
 	thumb_func_start sub_08027420
 sub_08027420: @ 0x08027420
