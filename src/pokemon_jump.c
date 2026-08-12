@@ -262,6 +262,7 @@ s16 GetPokemonJumpSpeciesIdx(u16 species);
 struct PokemonJumpRecords *GetPokeJumpRecords(void);
 void IncrementGamesWithMaxPlayers(void);
 void SpriteCB_Star(struct Sprite *sprite);
+void SpriteCB_MonHitShake(struct Sprite *sprite);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -2141,6 +2142,43 @@ void SpriteCB_Star(struct Sprite *sprite)
 #undef sState
 #undef sTimer
 #undef sOffset
+
+void Gfx_StartMonHitShake(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
+{
+    jumpGfx->monSprites[multiplayerId]->callback = SpriteCB_MonHitShake;
+    jumpGfx->monSprites[multiplayerId]->y2 = 0;
+    ResetPokeJumpSpriteData(jumpGfx->monSprites[multiplayerId]);
+}
+
+bool32 Gfx_IsMonHitShakeActive(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
+{
+    return jumpGfx->monSprites[multiplayerId]->callback == SpriteCB_MonHitShake;
+}
+
+#define sTimer     data[1]
+#define sNumShakes data[2]
+
+void SpriteCB_MonHitShake(struct Sprite *sprite)
+{
+    if (++sprite->sTimer > 1)
+    {
+        if (++sprite->sNumShakes & 1)
+            sprite->y2 = 2;
+        else
+            sprite->y2 = -2;
+
+        sprite->sTimer = 0;
+    }
+
+    if (sprite->sNumShakes > 12)
+    {
+        sprite->y2 = 0;
+        sprite->callback = SpriteCallbackDummy;
+    }
+}
+
+#undef sTimer
+#undef sNumShakes
 
 void InitGame(struct PokemonJump *jump)
 {
