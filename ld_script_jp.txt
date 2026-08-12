@@ -1527,6 +1527,7 @@ sub_0802CE20 = Task_RunPokeJumpGfxFunc;
 sub_0802CE44 = LoadPokeJumpGfx;
 sub_0802CFD8 = PrintPlayerNamesNoHighlight;
 sub_0802D044 = PrintPlayerNamesWithHighlight;
+sub_0802D0B0 = ErasePlayerNames;
 sPokeJumpGfxFuncs = gUnknown_82D1A18;
 sPokeJumpBgTemplates = gUnknown_82D19F0;
 sPokeJumpWindowTemplates = gUnknown_82D1A00;
@@ -2810,6 +2811,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.LoadPokeJumpGfx);
         src/pokemon_jump.o(.text.PrintPlayerNamesNoHighlight);
         src/pokemon_jump.o(.text.PrintPlayerNamesWithHighlight);
+        src/pokemon_jump.o(.text.ErasePlayerNames);
         asm/pokemon_jump_2a.o(.text);
         src/pokemon_jump.o(.text.GetPokeJumpRecords);
         asm/pokemon_jump_2b.o(.text);

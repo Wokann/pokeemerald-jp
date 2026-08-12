@@ -2517,6 +2517,32 @@ void PrintPlayerNamesWithHighlight(void)
     }
 }
 
+void ErasePlayerNames(void)
+{
+    int i, numPlayers;
+
+    numPlayers = GetNumPokeJumpPlayers();
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        for (i = 0; i < numPlayers; i++)
+            ClearWindowTilemap(sPokemonJumpGfx->nameWindowIds[i]);
+
+        CopyBgTilemapBufferToVram(BG_INTERFACE);
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            for (i = 0; i < numPlayers; i++)
+                RemoveWindow(sPokemonJumpGfx->nameWindowIds[i]);
+
+            sPokemonJumpGfx->funcFinished = TRUE;
+        }
+        break;
+    }
+}
+
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {
     int i;
