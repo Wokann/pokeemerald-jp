@@ -3612,6 +3612,20 @@ bool32 SlideTreeBordersOut(void)
         return FALSE;
 }
 
+void InitFirstWaveOfBerries(void)
+{
+    u8 i;
+    u8 berryStart = sGame->berryColStart;
+    u8 berryEnd = sGame->berryColEnd;
+
+    for (i = berryStart; i < berryEnd; i++)
+    {
+        struct DodrioGame_Berries *berries = &sGame->player.berries;
+        berries->fallDist[i] = (i % 2 == 0) ? 1 : 0;
+        berries->ids[i] = BERRY_BLUE;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
