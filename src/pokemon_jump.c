@@ -307,6 +307,14 @@ extern bool32 sub_0802DF5C(struct PokemonJump_Player *player, int multiplayerId,
 extern void sub_0802BED0(void); // UpdateGame
 extern void sub_0802C130(void); // TryUpdateScore
 extern void sub_0802DE30(struct PokemonJump_Player *players, struct PokemonJump_CommData *comm); // SendPacket_LeaderState
+extern bool32 sub_0802DEB4(struct PokemonJump_Player *players, struct PokemonJump_CommData *leaderData); // RecvPacket_LeaderState
+extern bool32 sub_0802DFC8(struct PokemonJump_Player *player, int multiplayerId); // RecvPacket_MemberStateToMember
+extern void sub_0802AEF0(void); // SendLinkData_Member
+extern void sub_0802DF2C(struct PokemonJump_Player *player, u8 funcId, u16 playAgainComm); // SendPacket_MemberState
+
+// JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
+// gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
+extern bool32 (*const sPokeJumpMemberFuncs[])(void);
 
 // JP: leader function table is ROM data at 0x082CEE80 (data/data_b.s,
 // gUnknown_82CEE80); same 9-entry layout as US sPokeJumpLeaderFuncs.
@@ -458,6 +466,86 @@ void SendLinkData_Leader(void)
 {
     if (!sPokemonJump->linkTimer)
         sub_0802DE30(sPokemonJump->players, &sPokemonJump->comm); // SendPacket_LeaderState
+
+    if (sPokemonJump->linkTimerLimit != LINK_TIMER_STOPPED)
+    {
+        sPokemonJump->linkTimer++;
+        sPokemonJump->linkTimer &= sPokemonJump->linkTimerLimit;
+    }
+}
+
+void SetFunc_Member(u8 funcId)
+{
+    sPokemonJump->comm.funcId = funcId;
+    sPokemonJump->mainState = 0;
+    sPokemonJump->helperState = 0;
+    sPokemonJump->funcActive = TRUE;
+    sPokemonJump->players[sPokemonJump->multiplayerId].funcFinished = FALSE;
+}
+
+void RecvLinkData_Member(void)
+{
+    int i;
+    u16 monState;
+    struct PokemonJump_CommData leaderData;
+
+    monState = sPokemonJump->players[0].monState;
+    if (sub_0802DEB4(sPokemonJump->players, &leaderData)) // RecvPacket_LeaderState
+    {
+        if (sPokemonJump->players[sPokemonJump->multiplayerId].funcFinished == TRUE
+         && leaderData.funcId != sPokemonJump->comm.funcId)
+        {
+            SetFunc_Member(leaderData.funcId);
+        }
+
+        if (sPokemonJump->comm.jumpScore != leaderData.jumpScore)
+        {
+            sPokemonJump->comm.jumpScore = leaderData.jumpScore;
+            sPokemonJump->updateScore = TRUE;
+            sPokemonJump->comm.receivedBonusFlags = leaderData.receivedBonusFlags;
+            if (sPokemonJump->comm.receivedBonusFlags)
+                sPokemonJump->showBonus = TRUE;
+            else
+                sPokemonJump->showBonus = FALSE;
+        }
+
+        sPokemonJump->comm.data = leaderData.data;
+        sPokemonJump->comm.jumpsInRow = leaderData.jumpsInRow;
+        sPokemonJump->players[0].prevMonState = monState;
+    }
+
+    for (i = 1; i < sPokemonJump->numPlayers; i++)
+    {
+        if (i != sPokemonJump->multiplayerId)
+        {
+            monState = sPokemonJump->players[i].monState;
+            if (sub_0802DFC8(&sPokemonJump->players[i], i)) // RecvPacket_MemberStateToMember
+                sPokemonJump->players[i].prevMonState = monState;
+        }
+    }
+}
+
+void Task_PokemonJump_Member(u8 taskId)
+{
+    RecvLinkData_Member();
+    if (sPokemonJump->funcActive)
+    {
+        if (!sPokeJumpMemberFuncs[sPokemonJump->comm.funcId]())
+        {
+            sPokemonJump->funcActive = FALSE;
+            sPokemonJump->players[sPokemonJump->multiplayerId].funcFinished = TRUE;
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        }
+    }
+
+    sub_0802BED0(); // UpdateGame
+    SendLinkData_Member();
+}
+
+void SendLinkData_Member(void)
+{
+    if (!sPokemonJump->linkTimer)
+        sub_0802DF2C(&sPokemonJump->players[sPokemonJump->multiplayerId], sPokemonJump->comm.funcId, sPokemonJump->playAgainComm); // SendPacket_MemberState
 
     if (sPokemonJump->linkTimerLimit != LINK_TIMER_STOPPED)
     {

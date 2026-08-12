@@ -401,11 +401,11 @@ extern void CreateDodrioGameTask(TaskFunc func);
 extern void (*const sLeaderFuncs[])(void);
 extern void (*const sMemberFuncs[])(void);
 static void RecvLinkData_Leader(void);
-extern void RecvLinkData_Member(void);
+static void RecvLinkData_Member(void);
 extern void UpdateGame_Leader(void);
 extern void UpdateGame_Member(void);
 static void SendLinkData_Leader(void);
-extern void SendLinkData_Member(void);
+static void SendLinkData_Member(void);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
 extern void InitFirstWaveOfBerries(void);
@@ -3409,7 +3409,7 @@ static void SendLinkData_Leader(void)
     }
 }
 
-void RecvLinkData_Member(void)
+static void RecvLinkData_Member(void)
 {
     switch (sGame->funcId)
     {
@@ -3440,7 +3440,7 @@ void RecvLinkData_Member(void)
     }
 }
 
-void SendLinkData_Member(void)
+static void SendLinkData_Member(void)
 {
     switch (sGame->funcId)
     {
