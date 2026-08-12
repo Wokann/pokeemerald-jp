@@ -1439,6 +1439,8 @@ sub_0802B05C = GameRound_Leader;
 sub_0802B0A8 = GameRound_Member;
 sub_0802B0C8 = GameOver_Leader;
 sub_0802B164 = GameOver_Member;
+sub_0802B1C0 = AskPlayAgain_Leader;
+sub_0802B25C = AskPlayAgain_Member;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
 sPokeJumpMemberFuncs = gUnknown_82CEEA4;
 sub_0802A788 = ResetForNewGame;
@@ -2602,6 +2604,8 @@ SECTIONS {
         src/pokemon_jump.o(.text.GameRound_Member);
         src/pokemon_jump.o(.text.GameOver_Leader);
         src/pokemon_jump.o(.text.GameOver_Member);
+        src/pokemon_jump.o(.text.AskPlayAgain_Leader);
+        src/pokemon_jump.o(.text.AskPlayAgain_Member);
         asm/pokemon_jump_1a.o(.text);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         asm/pokemon_jump_1b.o(.text);

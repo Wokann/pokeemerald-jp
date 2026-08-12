@@ -320,6 +320,9 @@ extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
 extern bool32 sub_0802C4B0(void); // HasEnoughScoreForPrize
 extern u16 sub_0802C4D4(void); // GetPrizeData
+extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
+extern bool32 sub_0802C344(void); // ShouldPlayAgain
+extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -731,6 +734,61 @@ bool32 GameOver_Member(void)
         break;
     case 2:
         return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 AskPlayAgain_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
+        sPokemonJump->mainState++;
+        // fall through
+    case 1:
+        if (!sub_0802B878()) // DoPlayAgainPrompt
+        {
+            sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+            sPokemonJump->mainState++;
+        }
+        break;
+    case 2:
+        if (sPokemonJump->allPlayersReady)
+        {
+            if (sub_0802C344()) // ShouldPlayAgain
+                sPokemonJump->nextFuncId = FUNC_RESET_GAME;
+            else
+                sPokemonJump->nextFuncId = FUNC_EXIT;
+
+            sPokemonJump->mainState++;
+            return FALSE;
+        }
+        break;
+    case 3:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 AskPlayAgain_Member(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetLinkTimeInterval(LINK_INTERVAL_NONE);
+        sPokemonJump->mainState++;
+        // fall through
+    case 1:
+        if (!sub_0802B878()) // DoPlayAgainPrompt
+        {
+            sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+            sPokemonJump->playAgainComm = sPokemonJump->playAgainState;
+            return FALSE;
+        }
+        break;
     }
 
     return TRUE;
