@@ -288,6 +288,11 @@ extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
 extern void SetMaxBerriesPickedInRow(void);
+extern void TryUpdateRecords(void);
+extern void SetStatusBarInvisibility(bool8);
+extern void ResetCloudPos(void);
+extern void SetCloudInvisibility(bool8);
+extern u8 GetPlayAgainState(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -727,6 +732,65 @@ void InitResults_Member(void)
             SetGameFunc(FUNC_RESULTS);
             FadeOutAndPlayNewMapMusic(MUS_RG_VICTORY_WILD, 4);
         }
+        break;
+    }
+}
+
+void DoResults(void)
+{
+    u8 playAgainState = PLAY_AGAIN_YES;
+    u8 i;
+
+    switch (sGame->state)
+    {
+    case 0:
+        TryUpdateRecords();
+        SetStatusBarInvisibility(TRUE);
+        ResetCloudPos();
+        SetCloudInvisibility(TRUE);
+        SetGfxFuncById(GFXFUNC_SHOW_RESULTS);
+        sGame->state++;
+        break;
+    case 1:
+        if (!IsGfxFuncActive())
+        {
+            SetGfxFuncById(GFXFUNC_MSG_COMM_STANDBY);
+            sGame->state++;
+        }
+        break;
+    case 2:
+        playAgainState = GetPlayAgainState();
+        if (SendBlock(0, &playAgainState, sizeof(playAgainState)))
+            sGame->state++;
+        break;
+    case 3:
+        if (IsLinkTaskFinished())
+        {
+            sGame->state++;
+            sGame->playersReceived = 0;
+        }
+        break;
+    case 4:
+        if (AllPlayersReadyToStart())
+        {
+            for (i = 0; i < sGame->numPlayers; i++)
+            {
+                *(&sGame->playAgainStates[i]) = *(u8 *)gBlockRecvBuffer[i];
+                sGame->playersReceived = sGame->numPlayers;
+            }
+        }
+        if (sGame->playersReceived >= sGame->numPlayers)
+        {
+            if (++sGame->timer >= 120)
+            {
+                SetGfxFuncById(GFXFUNC_ERASE_MSG);
+                sGame->state++;
+            }
+        }
+        break;
+    default:
+        if (!IsGfxFuncActive())
+            SetGameFunc(FUNC_ASK_PLAY_AGAIN);
         break;
     }
 }
