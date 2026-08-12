@@ -545,7 +545,7 @@ void InitResults_Member(void);
 void DoResults(void);
 void AskPlayAgain(void);
 void EndLink(void);
-void ExitGame(void);
+static void ExitGame(void);
 void ResetGame_Dodrio(void);
 void Task_NewGameIntro(u8 taskId);
 void Task_CommunicateMonInfo(u8 taskId);
@@ -3085,7 +3085,7 @@ void EndLink(void)
     }
 }
 
-void ExitGame(void)
+static void ExitGame(void)
 {
     switch (sGame->state)
     {

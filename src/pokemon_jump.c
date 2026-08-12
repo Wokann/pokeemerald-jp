@@ -324,6 +324,7 @@ extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern bool32 sub_0802C344(void); // ShouldPlayAgain
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
+extern bool32 sub_0802B954(void); // ClosePokeJumpLink
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -832,6 +833,29 @@ bool32 ResetGame_Member(void)
         break;
     case 1:
         return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 ExitGame(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        sPokemonJump->mainState = 1;
+        break;
+    case 1:
+        SetLinkTimeInterval(LINK_INTERVAL_NONE);
+        sPokemonJump->mainState++;
+        break;
+    case 2:
+        if (!sub_0802B954()) // ClosePokeJumpLink
+        {
+            SetMainCallback2(sPokemonJump->exitCallback);
+            FreePokemonJump();
+        }
+        break;
     }
 
     return TRUE;
