@@ -1139,6 +1139,11 @@ u8 *GetPlayerName(u8 playerId)
     return sGame->players[playerId].name;
 }
 
+u16 GetBerryResult(u8 playerId, u8 berryId)
+{
+    return sGame->berryResults[playerId][berryId];
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
