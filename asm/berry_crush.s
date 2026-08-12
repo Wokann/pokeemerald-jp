@@ -1318,44 +1318,4 @@ _08022220:
 	bx r0
 	thumb_func_end sub_08021FC0
 
-	thumb_func_start sub_08022230
-sub_08022230: @ 0x08022230
-	push {lr}
-	bl LockPlayerFieldControls
-	ldr r0, _08022278
-	movs r1, #0
-	bl CreateTask
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _0802227C
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	adds r1, r1, r2
-	ldr r0, _08022280
-	ldr r2, [r0]
-	movs r3, #0xf6
-	lsls r3, r3, #1
-	adds r0, r2, r3
-	ldrh r0, [r0]
-	strh r0, [r1, #0xc]
-	adds r3, #2
-	adds r0, r2, r3
-	ldrh r0, [r0]
-	strh r0, [r1, #0xe]
-	adds r3, #2
-	adds r0, r2, r3
-	ldrh r0, [r0]
-	strh r0, [r1, #0x10]
-	adds r3, #2
-	adds r0, r2, r3
-	ldrh r0, [r0]
-	strh r0, [r1, #0x12]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08022278: .4byte 0x08021FC1
-_0802227C: .4byte 0x03005B60
-_08022280: .4byte 0x03005AF0
-	thumb_func_end sub_08022230
 

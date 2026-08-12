@@ -1276,6 +1276,8 @@ sub_08024330 = Cmd_Quit;
 sub_08024340 = ResetGame;
 sub_080243D0 = SetPaletteFadeArgs;
 sub_08024410 = SetPrintMessageArgs;
+Task_ShowRankings = sub_08021FC0;
+sub_08022230 = ShowBerryCrushRankings;
 ChooseBerryForMachine = sub_081AA968;
 CopyPlayerNameWindowGfxToBg = sub_08022434;
 DigitObjUtil_CreatePrinter = sub_08034B6C;
@@ -2192,6 +2194,7 @@ SECTIONS {
         src/berry_crush.o(.text.FramesToMinSec);
         src/berry_crush.o(.text.PrintTextCentered);
         asm/berry_crush.o(.text);
+        src/berry_crush.o(.text.ShowBerryCrushRankings);
         src/berry_crush.o(.text.PrintTimer);
         src/berry_crush.o(.text.HideTimer);
         src/berry_crush.o(.text.CreatePlayerNameWindows);

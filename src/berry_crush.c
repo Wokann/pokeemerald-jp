@@ -20,6 +20,7 @@
 #include "palette.h"
 #include "save.h"
 #include "scanline_effect.h"
+#include "script.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -2312,6 +2313,24 @@ void SetPrintMessageArgs(u8 *args, u8 msgId, u8 flags, u16 waitKeys, u8 followup
     args[2] = ((u8 *)&waitKeys)[0];
     args[3] = ((u8 *)&waitKeys)[1];
     args[4] = followupState;
+}
+
+#define tState             data[0]
+#define tWindowId          data[1]
+#define tPressingSpeeds(i) data[2 + (i)] // data[2]-[5], for different group sizes
+
+extern void Task_ShowRankings(u8 taskId);
+
+void ShowBerryCrushRankings(void)
+{
+    u8 taskId;
+
+    LockPlayerFieldControls();
+    taskId = CreateTask(Task_ShowRankings, 0);
+    gTasks[taskId].tPressingSpeeds(0) = gSaveBlock2Ptr->berryCrush.pressingSpeeds[0];
+    gTasks[taskId].tPressingSpeeds(1) = gSaveBlock2Ptr->berryCrush.pressingSpeeds[1];
+    gTasks[taskId].tPressingSpeeds(2) = gSaveBlock2Ptr->berryCrush.pressingSpeeds[2];
+    gTasks[taskId].tPressingSpeeds(3) = gSaveBlock2Ptr->berryCrush.pressingSpeeds[3];
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
