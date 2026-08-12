@@ -1498,6 +1498,9 @@ sub_0802C5BC = GetMonInfoByMultiplayerId;
 sub_0802C5DC = GetPokeJumpPlayerName;
 sub_0802C5FC = IsSpeciesAllowedInPokemonJump;
 sub_0802C614 = IsPokemonJumpSpeciesInParty;
+sub_0802C668 = LoadSpriteSheetsAndPalettes;
+sCompressedSpriteSheets = gUnknown_82CF694;
+sSpritePalettes = gUnknown_82CF6BC;
 sPrizeItems = gUnknown_82CEF90;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
@@ -2729,6 +2732,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.GetPokeJumpPlayerName);
         src/pokemon_jump.o(.text.IsSpeciesAllowedInPokemonJump);
         src/pokemon_jump.o(.text.IsPokemonJumpSpeciesInParty);
+        src/pokemon_jump.o(.text.LoadSpriteSheetsAndPalettes);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);

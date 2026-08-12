@@ -21,6 +21,9 @@
 #include "strings.h"
 #include "task.h"
 
+#define PALTAG_1 5
+#define PALTAG_2 6
+
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
@@ -397,6 +400,8 @@ extern const u16 sSoundEffects[];
 extern const int sScoreBonuses[];
 extern const u16 sPrizeItems[];
 extern const struct PrizeQuantityData sPrizeQuantityData[];
+extern const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
+extern const struct SpritePalette sSpritePalettes[2];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -2010,6 +2015,20 @@ void IsPokemonJumpSpeciesInParty(void)
     }
 
     gSpecialVar_Result = FALSE;
+}
+
+void LoadSpriteSheetsAndPalettes(struct PokemonJumpGfx *jumpGfx)
+{
+    int i;
+
+    for (i = 0; i < ARRAY_COUNT(sCompressedSpriteSheets); i++)
+        LoadCompressedSpriteSheet(&sCompressedSpriteSheets[i]);
+
+    for (i = 0; i < ARRAY_COUNT(sSpritePalettes); i++)
+        LoadSpritePalette(&sSpritePalettes[i]);
+
+    jumpGfx->vinePalNumDownswing = IndexOfSpritePaletteTag(PALTAG_1);
+    jumpGfx->vinePalNumUpswing = IndexOfSpritePaletteTag(PALTAG_2);
 }
 
 void InitGame(struct PokemonJump *jump)

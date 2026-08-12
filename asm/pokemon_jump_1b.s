@@ -3,42 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C668
-sub_0802C668: @ 0x0802C668
-	push {r4, r5, r6, lr}
-	adds r6, r0, #0
-	movs r4, #0
-	ldr r5, _0802C6A8
-_0802C670:
-	adds r0, r5, #0
-	bl LoadCompressedSpriteSheet
-	adds r5, #8
-	adds r4, #1
-	cmp r4, #4
-	bls _0802C670
-	movs r4, #0
-	ldr r5, _0802C6AC
-_0802C682:
-	adds r0, r5, #0
-	bl LoadSpritePalette
-	adds r5, #8
-	adds r4, #1
-	cmp r4, #1
-	bls _0802C682
-	movs r0, #5
-	bl IndexOfSpritePaletteTag
-	strb r0, [r6, #0xe]
-	movs r0, #6
-	bl IndexOfSpritePaletteTag
-	strb r0, [r6, #0xf]
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802C6A8: .4byte 0x082CF694
-_0802C6AC: .4byte 0x082CF6BC
-	thumb_func_end sub_0802C668
-
 	thumb_func_start sub_0802C6B0
 sub_0802C6B0: @ 0x0802C6B0
 	push {lr}
