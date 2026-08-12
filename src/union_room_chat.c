@@ -102,32 +102,46 @@ struct UnionRoomChat
 // Chat main function table (0x082C5064, in data/data_b.s).
 extern void (*const gUnknown_82C5064[])(void);
 
+// JP keyboard max row per page (0x082C508C, in data/data_b.s): {9, 9, 7, 9, 9}
+extern const u8 gUnknown_82C508C[];
+#define sKeyboardPageMaxRow gUnknown_82C508C
+
+// JP kana case-toggle table (0x082C5091, in data/data_b.s, 0xEF bytes).
+extern const u8 gUnknown_82C5091[];
+#define sCaseToggleTable gUnknown_82C5091
+
+// JP keyboard text pointer table (0x082C5180, in data/data_b.s),
+// [page][row] with 4 pages x 10 rows of u8 pointers.
+extern const u8 *const gUnknown_82C5180[][UNION_ROOM_KB_ROW_COUNT];
+#define sUnionRoomKeyboardText gUnknown_82C5180
+
+enum {
+    CHAT_MESSAGE_NONE,
+    CHAT_MESSAGE_CHAT,
+    CHAT_MESSAGE_JOIN,
+    CHAT_MESSAGE_LEAVE,
+    CHAT_MESSAGE_DROP,
+    CHAT_MESSAGE_DISBAND,
+};
+
 // Chat state, EWRAM 0x02022938 (see sym_ewram_jp.txt).
 extern EWRAM_DATA struct UnionRoomChat *sChat;
 
-extern void PrepareSendBuffer_Join(u8 *buffer);
-extern void PrepareSendBuffer_Null(u8 *buffer);
 extern void SetChatFunction(u16 funcId);
 extern bool8 TryAllocDisplay(void);
 extern void RunDisplaySubtasks(void);
 extern bool32 IsDisplaySubtask0Active(void);
 extern void Task_ReceiveChatMessage(u8 taskId);
-extern void DeleteLastMessageCharacter(void);
-extern void AppendTextToMessage(void);
-extern void SwitchCaseOfLastMessageCharacter(void);
-extern bool32 HandleDPadInput(void);
 extern void StartDisplaySubtask(u16 subtaskId, u8 assignId);
 extern bool8 IsDisplaySubtaskActive(u8 id);
 extern s8 ProcessMenuInput(void);
-extern void PrepareSendBuffer_Disband(u8 *buffer);
-extern void PrepareSendBuffer_Leave(u8 *buffer);
-extern void PrepareSendBuffer_Drop(u8 *buffer);
-extern void PrepareSendBuffer_Chat(u8 *buffer);
-extern void ResetMessageEntryBuffer(void);
-extern bool32 ChatMessageIsNotEmpty(void);
-extern void RegisterTextAtRow(void);
-extern void SaveRegisteredTexts(void);
 extern void FreeDisplay(void);
+extern u8 *GetLimitedMessageStartPtr(void);
+
+u8 *GetRegisteredTextByRow(int row);
+u8 *GetLastCharOfMessagePtr(void);
+u16 GetNumOverflowCharsInMessage(void);
+static u8 *GetEndOfMessagePtr(void);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -145,6 +159,7 @@ static void Chat_SendMessage(void);
 static void Chat_Register(void);
 static void Chat_SaveAndExit(void);
 void SetChatFunction(u16 funcId);
+static bool32 HandleDPadInput(void);
 
 void EnterUnionRoomChat(void)
 {
@@ -861,4 +876,258 @@ void SetChatFunction(u16 funcId)
 {
     sChat->funcId = funcId;
     sChat->funcState = 0;
+}
+
+static bool32 HandleDPadInput(void)
+{
+    do
+    {
+        if (JOY_REPEAT(DPAD_UP))
+        {
+            if (sChat->currentRow > 0)
+                sChat->currentRow--;
+            else
+                sChat->currentRow = sKeyboardPageMaxRow[sChat->currentPage];
+            break;
+        }
+        if (JOY_REPEAT(DPAD_DOWN))
+        {
+            if (sChat->currentRow < sKeyboardPageMaxRow[sChat->currentPage])
+                sChat->currentRow++;
+            else
+                sChat->currentRow = 0;
+            break;
+        }
+        if (sChat->currentPage != UNION_ROOM_KB_PAGE_REGISTER)
+        {
+            if (JOY_REPEAT(DPAD_LEFT))
+            {
+                if (sChat->currentCol > 0)
+                    sChat->currentCol--;
+                else
+                    sChat->currentCol = 4;
+                break;
+            }
+            else if (JOY_REPEAT(DPAD_RIGHT))
+            {
+                if (sChat->currentCol < 4)
+                    sChat->currentCol++;
+                else
+                    sChat->currentCol = 0;
+                break;
+            }
+        }
+        return FALSE;
+    } while (0);
+
+    return TRUE;
+}
+
+static void AppendTextToMessage(void)
+{
+    int i;
+    const u8 *charsStr;
+    int strLength;
+    u8 *str;
+
+    if (sChat->currentPage != UNION_ROOM_KB_PAGE_REGISTER)
+    {
+        // Going to append a single character
+        charsStr = sUnionRoomKeyboardText[sChat->currentPage][sChat->currentRow];
+        for (i = 0; i < sChat->currentCol; i++)
+        {
+            if (*charsStr == CHAR_EXTRA_SYMBOL)
+                charsStr++;
+            charsStr++;
+        }
+
+        strLength = 1;
+    }
+    else
+    {
+        // Going to append the registered text string (JP appends it as-is)
+        charsStr = sChat->registeredTexts[sChat->currentRow];
+        strLength = StringLength_Multibyte(charsStr);
+    }
+
+    sChat->lastBufferCursorPos = sChat->bufferCursorPos;
+    if (!charsStr)
+        return;
+
+    str = GetEndOfMessagePtr();
+    while (--strLength != -1 && sChat->bufferCursorPos < MAX_MESSAGE_LENGTH)
+    {
+        if (*charsStr == CHAR_EXTRA_SYMBOL)
+        {
+            *str = *charsStr;
+            charsStr++;
+            str++;
+        }
+
+        *str = *charsStr;
+        charsStr++;
+        str++;
+
+        sChat->bufferCursorPos++;
+    }
+
+    *str = EOS;
+}
+
+static void DeleteLastMessageCharacter(void)
+{
+    sChat->lastBufferCursorPos = sChat->bufferCursorPos;
+    if (sChat->bufferCursorPos)
+    {
+        u8 *str = GetLastCharOfMessagePtr();
+        *str = EOS;
+        sChat->bufferCursorPos--;
+    }
+}
+
+static void SwitchCaseOfLastMessageCharacter(void)
+{
+    u8 *str;
+    u8 character;
+
+    sChat->lastBufferCursorPos = sChat->bufferCursorPos - 1;
+    str = GetLastCharOfMessagePtr();
+    if (*str != CHAR_EXTRA_SYMBOL)
+    {
+        if (*str <= 0xEE)
+        {
+            character = sCaseToggleTable[*str];
+            if (character)
+                *str = character;
+        }
+    }
+}
+
+static bool32 ChatMessageIsNotEmpty(void)
+{
+    if (sChat->bufferCursorPos)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+static void RegisterTextAtRow(void)
+{
+    u8 *src = GetLimitedMessageStartPtr();
+    StringCopy(sChat->registeredTexts[sChat->currentRow], src);
+    sChat->changedRegisteredTexts = TRUE;
+}
+
+static void ResetMessageEntryBuffer(void)
+{
+    sChat->messageEntryBuffer[0] = EOS;
+    sChat->lastBufferCursorPos = MAX_MESSAGE_LENGTH;
+    sChat->bufferCursorPos = 0;
+}
+
+static void SaveRegisteredTexts(void)
+{
+    int i;
+    for (i = 0; i < UNION_ROOM_KB_ROW_COUNT; i++)
+        StringCopy(gSaveBlock1Ptr->registeredTexts[i], sChat->registeredTexts[i]);
+}
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801EC7C = GetRegisteredTextByRow` ld alias.
+u8 *GetRegisteredTextByRow(int row)
+{
+    return sChat->registeredTexts[row];
+}
+
+static u8 *GetEndOfMessagePtr(void)
+{
+    u8 *str = sChat->messageEntryBuffer;
+    while (*str != EOS)
+        str++;
+
+    return str;
+}
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801ECB8 = GetLastCharOfMessagePtr` ld alias.
+u8 *GetLastCharOfMessagePtr(void)
+{
+    u8 *currChar = sChat->messageEntryBuffer;
+    u8 *lastChar = currChar;
+    while (*currChar != EOS)
+    {
+        lastChar = currChar;
+        if (*currChar == CHAR_EXTRA_SYMBOL)
+            currChar++;
+        currChar++;
+    }
+
+    return lastChar;
+}
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801ECE8 = GetNumOverflowCharsInMessage` ld alias.
+u16 GetNumOverflowCharsInMessage(void)
+{
+    u8 *str;
+    u32 i, numChars, strLength;
+
+    strLength = StringLength_Multibyte(sChat->messageEntryBuffer);
+    str = sChat->messageEntryBuffer;
+    numChars = 0;
+    if (strLength > 10)
+    {
+        strLength -= 10;
+        for (i = 0; i < strLength; i++)
+        {
+            if (*str == CHAR_EXTRA_SYMBOL)
+                str++;
+
+            str++;
+            numChars++;
+        }
+    }
+
+    return numChars;
+}
+
+static void PrepareSendBuffer_Null(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_NONE;
+}
+
+static void PrepareSendBuffer_Join(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_JOIN;
+    StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
+    buffer[1 + (PLAYER_NAME_LENGTH + 1)] = sChat->multiplayerId;
+}
+
+static void PrepareSendBuffer_Chat(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_CHAT;
+    StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
+    StringCopy(&buffer[1 + (PLAYER_NAME_LENGTH + 1)], sChat->messageEntryBuffer);
+}
+
+static void PrepareSendBuffer_Leave(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_LEAVE;
+    StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
+    buffer[1 + (PLAYER_NAME_LENGTH + 1)] = sChat->multiplayerId;
+    RfuSetNormalDisconnectMode();
+}
+
+static void PrepareSendBuffer_Drop(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_DROP;
+    StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
+    buffer[1 + (PLAYER_NAME_LENGTH + 1)] = sChat->multiplayerId;
+}
+
+static void PrepareSendBuffer_Disband(u8 *buffer)
+{
+    buffer[0] = CHAT_MESSAGE_DISBAND;
+    StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
+    buffer[1 + (PLAYER_NAME_LENGTH + 1)] = sChat->multiplayerId;
 }
