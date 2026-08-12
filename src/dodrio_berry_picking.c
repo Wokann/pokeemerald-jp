@@ -1526,6 +1526,16 @@ void SpriteCB_Dodrio(struct Sprite *sprite)
     }
 }
 
+void StartDodrioMissedAnim(u8 unused)
+{
+    struct Sprite *sprite = &gSprites[*sDodrioSpriteIds[GetMultiplayerId()]];
+    sprite->data[0] = 1;
+    sprite->data[1] = 0;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+}
+
 void SendPacket_GameState(struct DodrioGame_Player *player,
                           struct DodrioGame_PlayerCommData *player1,
                           struct DodrioGame_PlayerCommData *player2,
