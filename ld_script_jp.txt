@@ -1501,6 +1501,8 @@ sub_0802C614 = IsPokemonJumpSpeciesInParty;
 sub_0802C668 = LoadSpriteSheetsAndPalettes;
 sub_0802C6B0 = ResetPokeJumpSpriteData;
 sub_0802C6C8 = CreateJumpMonSprite;
+sub_0802C808 = DoStarAnim;
+sub_0802C870 = SpriteCB_Star;
 sCompressedSpriteSheets = gUnknown_82CF694;
 sSpritePalettes = gUnknown_82CF6BC;
 sSpriteTemplate_JumpMon = gUnknown_82CF6CC;
@@ -2739,6 +2741,8 @@ SECTIONS {
         src/pokemon_jump.o(.text.LoadSpriteSheetsAndPalettes);
         src/pokemon_jump.o(.text.ResetPokeJumpSpriteData);
         src/pokemon_jump.o(.text.CreateJumpMonSprite);
+        src/pokemon_jump.o(.text.DoStarAnim);
+        src/pokemon_jump.o(.text.SpriteCB_Star);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);

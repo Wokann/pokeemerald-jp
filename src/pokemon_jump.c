@@ -261,6 +261,7 @@ void ResetPlayersJumpStates(void);
 s16 GetPokemonJumpSpeciesIdx(u16 species);
 struct PokemonJumpRecords *GetPokeJumpRecords(void);
 void IncrementGamesWithMaxPlayers(void);
+void SpriteCB_Star(struct Sprite *sprite);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -2092,6 +2093,54 @@ void CreateJumpMonSprite(struct PokemonJumpGfx *jumpGfx, struct PokemonJump_MonI
 
     jumpGfx->monSprites[multiplayerId] = NULL;
 }
+
+#define sState data[0]
+#define sTimer data[1]
+#define sOffset data[7] // Never read
+
+void DoStarAnim(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
+{
+    ResetPokeJumpSpriteData(jumpGfx->starSprites[multiplayerId]);
+    jumpGfx->starSprites[multiplayerId]->sOffset = jumpGfx->monSprites[multiplayerId] - gSprites;
+    jumpGfx->starSprites[multiplayerId]->invisible = FALSE;
+    jumpGfx->starSprites[multiplayerId]->y = 96;
+    jumpGfx->starSprites[multiplayerId]->callback = SpriteCB_Star;
+    StartSpriteAnim(jumpGfx->starSprites[multiplayerId], 1);
+}
+
+void SpriteCB_Star(struct Sprite *sprite)
+{
+    switch (sprite->sState)
+    {
+    case 0:
+        if (sprite->animEnded)
+        {
+            sprite->invisible = TRUE;
+            sprite->callback = SpriteCallbackDummy;
+        }
+        break;
+    case 1:
+        sprite->y--;
+        sprite->sTimer++;
+        if (sprite->y <= 72)
+        {
+            sprite->y = 72;
+            sprite->sState++;
+        }
+        break;
+    case 2:
+        if (++sprite->sTimer >= 48)
+        {
+            sprite->invisible = TRUE;
+            sprite->callback = SpriteCallbackDummy;
+        }
+        break;
+    }
+}
+
+#undef sState
+#undef sTimer
+#undef sOffset
 
 void InitGame(struct PokemonJump *jump)
 {
