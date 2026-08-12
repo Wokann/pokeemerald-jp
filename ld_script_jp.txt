@@ -1833,6 +1833,7 @@ SECTIONS {
         src/mystery_gift_view.o(.text.DestroyWonderCardResources);
         src/mystery_gift_view.o(.text.FadeToWonderCardMenu);
         src/mystery_gift_view.o(.text.FadeOutFromWonderCard);
+        src/mystery_gift_view.o(.text.BufferCardText);
         asm/mevent_801BAAC.o(.text);
         src/mystery_gift_view.o(.text.WonderNews_RemoveScrollIndicatorArrowPair);
         src/mystery_gift_view.o(.text.WonderNews_AddScrollIndicatorArrowPair);

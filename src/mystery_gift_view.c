@@ -109,7 +109,6 @@ extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
 #define DrawCardWindow sub_0801BCA4
 #define CreateCardSprites sub_0801C04C
 #define DestroyCardSprites sub_0801C17C
-#define BufferCardText sub_0801B9F0
 
 
 
@@ -139,6 +138,85 @@ void DestroyWonderCardResources(void)
         memset(gWonderCardData, 0, sizeof(*gWonderCardData));
         Free(gWonderCardData);
         gWonderCardData = NULL;
+    }
+}
+
+static void BufferCardText(void)
+{
+    u16 i = 0;
+    u16 charsUntilStat;
+    u16 stats[3] = {0, 0, 0};
+
+    memcpy(gWonderCardData->titleText, gWonderCardData->card.titleText, WONDER_CARD_TITLE_LENGTH);
+    gWonderCardData->titleText[WONDER_CARD_TITLE_LENGTH] = EOS;
+    memcpy(gWonderCardData->subtitleText, gWonderCardData->card.subtitleText, WONDER_CARD_SUBTITLE_LENGTH);
+    gWonderCardData->subtitleText[WONDER_CARD_SUBTITLE_LENGTH] = EOS;
+
+    if (gWonderCardData->card.idNumber > 999999)
+        gWonderCardData->card.idNumber = 999999;
+    ConvertIntToDecimalStringN(gWonderCardData->idNumberText, gWonderCardData->card.idNumber, STR_CONV_MODE_LEFT_ALIGN, 6);
+
+    for (i = 0; i < WONDER_CARD_BODY_TEXT_LINES; i++)
+    {
+        memcpy(gWonderCardData->bodyText[i], gWonderCardData->card.bodyText[i], WONDER_CARD_BODY_LENGTH);
+        gWonderCardData->bodyText[i][WONDER_CARD_BODY_LENGTH] = EOS;
+    }
+
+    memcpy(gWonderCardData->footerLine1Text, gWonderCardData->card.footerLine1Text, WONDER_CARD_FOOTER_LENGTH);
+    gWonderCardData->footerLine1Text[WONDER_CARD_FOOTER_LENGTH] = EOS;
+
+    switch (gWonderCardData->card.type)
+    {
+    case CARD_TYPE_GIFT:
+        memcpy(gWonderCardData->footerLine2Text, gWonderCardData->card.footerLine2Text, WONDER_CARD_FOOTER_LENGTH);
+        gWonderCardData->footerLine2Text[WONDER_CARD_FOOTER_LENGTH] |= EOS;
+        break;
+    case CARD_TYPE_STAMP:
+        gWonderCardData->footerLine2Text[0] |= EOS;
+        break;
+    case CARD_TYPE_LINK_STAT:
+        gWonderCardData->footerLine2Text[0] |= EOS;
+        stats[0] = gWonderCardData->cardMetadata.battlesWon < MAX_WONDER_CARD_STAT ? gWonderCardData->cardMetadata.battlesWon : MAX_WONDER_CARD_STAT;
+        stats[1] = gWonderCardData->cardMetadata.battlesLost < MAX_WONDER_CARD_STAT ? gWonderCardData->cardMetadata.battlesLost : MAX_WONDER_CARD_STAT;
+        stats[2] = gWonderCardData->cardMetadata.numTrades < MAX_WONDER_CARD_STAT ? gWonderCardData->cardMetadata.numTrades : MAX_WONDER_CARD_STAT;
+
+        for (i = 0; i < ARRAY_COUNT(gWonderCardData->statTextData); i++)
+        {
+            memset(gWonderCardData->statTextData[i].statText, EOS, sizeof(gWonderCardData->statTextData[i].statText));
+            memset(gWonderCardData->statTextData[i].nameText, EOS, sizeof(gWonderCardData->statTextData[i].nameText));
+        }
+
+        for (i = 0, charsUntilStat = 0; i < WONDER_CARD_FOOTER_LENGTH; i++)
+        {
+            if (gWonderCardData->card.footerLine2Text[i] != CHAR_DYNAMIC)
+            {
+                gWonderCardData->statTextData[gWonderCardData->statDisplayIndex].nameText[charsUntilStat] = gWonderCardData->card.footerLine2Text[i];
+                charsUntilStat++;
+            }
+            else
+            {
+                u8 id = gWonderCardData->card.footerLine2Text[i + 1];
+                if (id >= ARRAY_COUNT(stats))
+                {
+                    i += 2;
+                }
+                else
+                {
+                    ConvertIntToDecimalStringN(gWonderCardData->statTextData[gWonderCardData->statDisplayIndex].statText, stats[id], STR_CONV_MODE_LEADING_ZEROS, 3);
+                    gWonderCardData->statTextData[gWonderCardData->statDisplayIndex].width = gWonderCardData->card.footerLine2Text[i + 2];
+                    if (gWonderCardData->statTextData[gWonderCardData->statDisplayIndex].width
+                        > GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH))
+                        gWonderCardData->statTextData[gWonderCardData->statDisplayIndex].width
+                            = GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH);
+                    gWonderCardData->statDisplayIndex++;
+                    if (gWonderCardData->statDisplayIndex > ARRAY_COUNT(gWonderCardData->statTextData) - 1)
+                        break;
+                    charsUntilStat = 0;
+                    i += 2;
+                }
+            }
+        }
+        break;
     }
 }
 
