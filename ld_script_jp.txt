@@ -1305,7 +1305,7 @@ sub_08026088 = InitFirstWaveOfBerries;
 sub_080260EC = HandlePickBerries;
 sub_080263FC = TryPickBerry;
 sub_080272D8 = UpdatePickStateQueue;
-UpdateFallingBerries = sub_080264E4;
+sub_080264E4 = UpdateFallingBerries;
 sub_08026A10 = ReadyToEndGame_Leader;
 sub_08026A50 = ReadyToEndGame_Member;
 sub_08026ADC = TryIncrementDifficulty;
@@ -2424,6 +2424,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.InitFirstWaveOfBerries);
         src/dodrio_berry_picking.o(.text.HandlePickBerries);
         src/dodrio_berry_picking.o(.text.TryPickBerry);
+        src/dodrio_berry_picking.o(.text.UpdateFallingBerries);
         asm/dodrio_berry_picking10.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);

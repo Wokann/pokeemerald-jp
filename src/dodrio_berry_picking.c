@@ -3773,6 +3773,87 @@ void HandlePickBerries(void)
     }
 }
 
+void UpdateFallingBerries(void)
+{
+    u8 berryStart = sGame->berryColStart;
+    u8 berryEnd = sGame->berryColEnd;
+    u8 delayStage = 0;
+    u8 otherBerryMissed = 0;
+    u8 i;
+
+    sGame->berriesFalling = FALSE;
+
+    for (i = berryStart; i < berryEnd - 1; i++)
+    {
+        struct DodrioGame *game = sGame;
+
+        if (sGame->berryState[i] == BERRYSTATE_NONE || sGame->berryState[i] == BERRYSTATE_PICKED)
+        {
+            sGame->berriesFalling = TRUE;
+            if (game->player.berries.fallDist[i] >= MAX_FALL_DIST)
+            {
+                game->player.berries.fallDist[i] = MAX_FALL_DIST;
+                sGame->berryState[i] = BERRYSTATE_SQUISHED;
+                if (!sGame->playingSquishSound[i])
+                {
+                    sGame->playingSquishSound[i] = TRUE;
+                    PlaySE(SE_BALLOON_RED + game->player.berries.ids[i]);
+                }
+                if (sGame->numGraySquares < NUM_STATUS_SQUARES || otherBerryMissed == TRUE)
+                {
+                    otherBerryMissed = TRUE;
+                    sGame->playingSquishSound[i] = FALSE;
+                    if (sGame->numGraySquares < NUM_STATUS_SQUARES)
+                        sGame->numGraySquares++;
+                    IncrementBerryResult(BERRY_MISSED, i, 0);
+                    UpdateBerriesPickedInRow(FALSE);
+                }
+            }
+            else
+            {
+                u8 delay;
+                delayStage = sGame->difficulty[GetPlayerIdAtColumn(i)] / NUM_DIFFICULTIES;
+                if (delayStage > 1)
+                    delayStage = 2;
+                delay = sBerryFallDelays[delayStage][game->player.berries.ids[i]];
+                if (++sGame->fallTimer[i] >= delay)
+                {
+                    game->player.berries.fallDist[i]++;
+                    sGame->fallTimer[i] = 0;
+                }
+                HandlePickBerries();
+            }
+        }
+        else if (sGame->berryState[i] == BERRYSTATE_EATEN)
+        {
+            if (++sGame->newBerryTimer[i] >= 20)
+            {
+                sGame->players[sGame->berryEatenBy[i]].comm.ateBerry = FALSE;
+                sGame->newBerryTimer[i] = 0;
+                sGame->fallTimer[i] = 0;
+                sGame->berryState[i] = BERRYSTATE_NONE;
+                game->player.berries.fallDist[i] = 1;
+                game->player.berries.ids[i] = GetNewBerryId(GetPlayerIdAtColumn(i), i);
+            }
+        }
+        else if (sGame->berryState[i] == BERRYSTATE_SQUISHED)
+        {
+            if (++sGame->newBerryTimer[i] >= 20)
+            {
+                if (sGame->numGraySquares < NUM_STATUS_SQUARES)
+                {
+                    sGame->newBerryTimer[i] = 0;
+                    sGame->fallTimer[i] = 0;
+                    sGame->berryState[i] = BERRYSTATE_NONE;
+                    game->player.berries.fallDist[i] = 1;
+                    sGame->prevBerryIds[i] = game->player.berries.ids[i];
+                    game->player.berries.ids[i] = GetNewBerryId(GetPlayerIdAtColumn(i), i);
+                }
+            }
+        }
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
