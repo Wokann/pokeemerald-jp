@@ -342,7 +342,6 @@ extern bool32 sub_0802B658(void); // DoVineHitEffect
 extern bool32 sub_0802C4B0(void); // HasEnoughScoreForPrize
 extern u16 sub_0802C4D4(void); // GetPrizeData
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
-extern bool32 sub_0802C344(void); // ShouldPlayAgain
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
 extern bool32 sub_0802B954(void); // ClosePokeJumpLink
@@ -830,7 +829,7 @@ bool32 AskPlayAgain_Leader(void)
     case 2:
         if (sPokemonJump->allPlayersReady)
         {
-            if (sub_0802C344()) // ShouldPlayAgain
+            if (ShouldPlayAgain())
                 sPokemonJump->nextFuncId = FUNC_RESET_GAME;
             else
                 sPokemonJump->nextFuncId = FUNC_EXIT;
@@ -1812,6 +1811,22 @@ bool32 DidAllPlayersClearVine(void)
     for (i = 0; i < sPokemonJump->numPlayers; i++)
     {
         if (sPokemonJump->players[i].jumpState != JUMPSTATE_SUCCESS)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 ShouldPlayAgain(void)
+{
+    int i;
+
+    if (sPokemonJump->playAgainState == PLAY_AGAIN_NO)
+        return FALSE;
+
+    for (i = 1; i < sPokemonJump->numPlayers; i++)
+    {
+        if (sPokemonJump->playAgainStates[i] == PLAY_AGAIN_NO)
             return FALSE;
     }
 
