@@ -372,7 +372,6 @@ extern u8 GetPlayAgainState(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
-extern void FreeCloudSprites(void);
 extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
@@ -1940,6 +1939,18 @@ void StartCloudMovement(void)
     {
         u16 spriteId = *sCloudSpriteIds[i];
         gSprites[spriteId].data[10] = 0;
+    }
+}
+
+void FreeCloudSprites(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_CLOUDS; i++)
+    {
+        struct Sprite *sprite = &gSprites[*sCloudSpriteIds[i]];
+        if (sprite)
+            DestroySprite(sprite);
+        FREE_AND_SET_NULL(sCloudSpriteIds[i]);
     }
 }
 
