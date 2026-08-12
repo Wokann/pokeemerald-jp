@@ -1640,6 +1640,49 @@ void HandleMonState(void)
         PlaySE(SE_LEDGE);
 }
 
+void UpdateJump(int multiplayerId)
+{
+    int jumpOffsetIdx;
+    int jumpOffset;
+    struct PokemonJump_Player *player;
+
+    if (sPokemonJump->skipJumpUpdate) // Always false
+        return;
+
+    player = &sPokemonJump->players[multiplayerId];
+    if (player->jumpOffsetIdx != INT_MAX)
+    {
+        player->jumpOffsetIdx++;
+        jumpOffsetIdx = player->jumpOffsetIdx;
+    }
+    else
+    {
+        jumpOffsetIdx = sPokemonJump->vineTimer - player->jumpTimeStart;
+        if (jumpOffsetIdx >= 65000)
+        {
+            jumpOffsetIdx -= 65000;
+            jumpOffsetIdx += sPokemonJump->vineTimer;
+        }
+
+        player->jumpOffsetIdx = jumpOffsetIdx;
+    }
+
+    if (jumpOffsetIdx < 4)
+        return;
+
+    jumpOffsetIdx -= 4;
+    if (jumpOffsetIdx < 48) // ARRAY_COUNT(sJumpOffsets[0])
+        jumpOffset = sJumpOffsets[player->monJumpType][jumpOffsetIdx];
+    else
+        jumpOffset = 0;
+
+    sub_0802D978(multiplayerId, jumpOffset); // SetMonSpriteY
+    if (jumpOffset == 0 && multiplayerId == sPokemonJump->multiplayerId)
+        SetMonStateNormal();
+
+    player->jumpOffset = jumpOffset;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
