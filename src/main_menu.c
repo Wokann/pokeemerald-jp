@@ -4,6 +4,7 @@
 #include "gpu_regs.h"
 #include "main.h"
 #include "palette.h"
+#include "rtc.h"
 #include "scanline_effect.h"
 #include "sprite.h"
 #include "task.h"
@@ -19,6 +20,14 @@ extern const struct WindowTemplate sWindowTemplates_MainMenu[];
 
 extern void LoadMainMenuWindowFrameTiles(u8 windowId, u16 tileNum);
 extern void Task_MainMenuCheckSaveFile(u8 taskId);
+extern const u8 gUnknown_85C8D93[];
+extern void CreateMainMenuErrorWindow(const u8 *text);
+extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
+extern void Task_DisplayMainMenu(u8 taskId);
+
+static void Task_WaitForBatteryDryErrorWindow(u8 taskId);
+static void Task_MainMenuCheckBattery(u8 taskId);
+static void Task_WaitForSaveFileErrorWindow(u8 taskId);
 
 #define MAIN_MENU_BORDER_TILE 0x1D5
 
@@ -104,4 +113,50 @@ static u32 InitMainMenu(bool8 returningFromOptionsMenu)
     CreateTask(Task_MainMenuCheckSaveFile, 0);
 
     return 0;
+}
+
+static void Task_WaitForBatteryDryErrorWindow(u8 taskId)
+{
+    RunTextPrinters();
+    if (!IsTextPrinterActive(7) && (JOY_NEW(A_BUTTON)))
+    {
+        ClearWindowTilemap(7);
+        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[7]);
+        gTasks[taskId].func = Task_MainMenuCheckBattery;
+    }
+}
+
+static void Task_MainMenuCheckBattery(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN0_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_DARKEN | BLDCNT_TGT1_BG0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 7);
+
+        if (!(RtcGetErrorStatus() & RTC_ERR_FLAG_MASK))
+        {
+            gTasks[taskId].func = Task_DisplayMainMenu;
+        }
+        else
+        {
+            CreateMainMenuErrorWindow(gUnknown_85C8D93);
+            gTasks[taskId].func = Task_WaitForSaveFileErrorWindow;
+        }
+    }
+}
+
+static void Task_WaitForSaveFileErrorWindow(u8 taskId)
+{
+    RunTextPrinters();
+    if (!IsTextPrinterActive(7) && (JOY_NEW(A_BUTTON)))
+    {
+        ClearWindowTilemap(7);
+        ClearMainMenuWindowTilemap(&sWindowTemplates_MainMenu[7]);
+        gTasks[taskId].func = Task_DisplayMainMenu;
+    }
 }

@@ -2991,6 +2991,10 @@ SECTIONS {
         src/main_menu.o(.text.CB2_InitMainMenu);
         src/main_menu.o(.text.CB2_ReinitMainMenu);
         src/main_menu.o(.text.InitMainMenu);
+        asm/main_menu_1.o(.text);
+        src/main_menu.o(.text.Task_WaitForBatteryDryErrorWindow);
+        src/main_menu.o(.text.Task_MainMenuCheckBattery);
+        src/main_menu.o(.text.Task_WaitForSaveFileErrorWindow);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
