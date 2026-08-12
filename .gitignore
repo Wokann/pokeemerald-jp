@@ -41,3 +41,5 @@ porymap.project.cfg
 .ccls-cache/
 __pycache__/
 .git_commit_template
+AGENTS.md
+.codegraph/

@@ -3,30 +3,6 @@
 .text
 .syntax unified
 
-
-	thumb_func_start sub_0802A920
-sub_0802A920: @ 0x0802A920
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	adds r4, r1, #0
-	adds r0, r4, #0
-	movs r1, #0xb
-	bl GetMonData3
-	strh r0, [r5]
-	adds r0, r4, #0
-	movs r1, #1
-	bl GetMonData3
-	str r0, [r5, #4]
-	adds r0, r4, #0
-	movs r1, #0
-	bl GetMonData3
-	str r0, [r5, #8]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_0802A920
-
 	thumb_func_start sub_0802A94C
 sub_0802A94C: @ 0x0802A94C
 	push {lr}
@@ -2759,4 +2735,3 @@ sub_0802BDD0: @ 0x0802BDD0
 	.align 2, 0
 _0802BDD8: .4byte 0x020229B0
 	thumb_func_end sub_0802BDD0
-

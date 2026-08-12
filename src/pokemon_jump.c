@@ -205,6 +205,7 @@ void Task_StartPokemonJump(u8 taskId);
 
 void FreeWindowsAndDigitObj(void);
 void FreePokemonJump(void);
+void InitJumpMonInfo(struct PokemonJump_MonInfo *monInfo, struct Pokemon *mon);
 void InitPlayerAndJumpTypes(void);
 void ResetForNewGame(struct PokemonJump *jump);
 void ResetPlayersForNewGame(void);
@@ -249,6 +250,15 @@ void StartPokemonJump(u16 partyId, MainCallback exitCallback)
     }
 
     SetMainCallback2(exitCallback);
+}
+
+void InitJumpMonInfo(struct PokemonJump_MonInfo *monInfo, struct Pokemon *mon)
+{
+    // JP: the ROM calls GetMonData2 (2-arg alias of GetMonData3); passing a
+    // third argument would emit an extra r2 setup instruction.
+    monInfo->species = GetMonData2(mon, MON_DATA_SPECIES);
+    monInfo->otId = GetMonData2(mon, MON_DATA_OT_ID);
+    monInfo->personality = GetMonData2(mon, MON_DATA_PERSONALITY);
 }
 
 void InitGame(struct PokemonJump *jump)
