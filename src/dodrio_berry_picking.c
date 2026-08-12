@@ -394,7 +394,6 @@ extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
-extern void sub_080283E0(u8 playerId, u8 pickState); // SetDodrioAnim
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
 void SpriteCB_Dodrio(struct Sprite *sprite);
@@ -1566,6 +1565,11 @@ void SetAllDodrioInvisibility(bool8 invisible, u8 count)
         SetDodrioInvisibility(invisible, i);
 }
 
+void SetDodrioAnim(u8 playerId, u8 animNum)
+{
+    StartSpriteAnim(&gSprites[*sDodrioSpriteIds[playerId]], animNum);
+}
+
 u32 DoDodrioMissedAnim(struct Sprite *sprite)
 {
     s8 x;
@@ -1612,7 +1616,7 @@ u32 DoDodrioIntroAnim(struct Sprite *sprite)
         sprite->data[0] = 0;
         pickState = PICK_NONE;
     }
-    sub_080283E0(GetMultiplayerId(), pickState); // SetDodrioAnim
+    SetDodrioAnim(GetMultiplayerId(), pickState);
     return 0;
 }
 
