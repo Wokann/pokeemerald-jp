@@ -168,7 +168,6 @@ extern EWRAM_DATA struct BerryCrushGame *sGame;
 extern void RunOrScheduleCommand(u16, u8, u8 *);
 extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
-extern void PrintTimer(struct BerryCrushGame_Gfx *, u16);
 extern const struct BgTemplate sBgTemplates[4];
 extern const u8 sCrusherTop_Tilemap[];
 extern const u8 sContainerCap_Tilemap[];
@@ -194,6 +193,8 @@ static void SetNamesAndTextSpeed(struct BerryCrushGame *);
 s32 ShowGameDisplay(void);
 s32 HideGameDisplay(void);
 s32 UpdateGame(struct BerryCrushGame *);
+void PrintTimer(struct BerryCrushGame_Gfx *, u16);
+void HideTimer(struct BerryCrushGame_Gfx *);
 void ResetCrusherPos(struct BerryCrushGame *);
 void CreateBerrySprites(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
 void UpdateInputEffects(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
@@ -810,6 +811,23 @@ void FramesToMinSec(struct BerryCrushGame_Gfx *gfx, u16 frames)
     }
 
     gfx->secondsFrac = fractionalFrames / 1000000;
+}
+
+void PrintTimer(struct BerryCrushGame_Gfx *gfx, u16 timer)
+{
+    FramesToMinSec(gfx, timer);
+    DigitObjUtil_PrintNumOn(0, gfx->minutes);
+    DigitObjUtil_PrintNumOn(1, gfx->secondsInt);
+    DigitObjUtil_PrintNumOn(2, gfx->secondsFrac);
+}
+
+void HideTimer(struct BerryCrushGame_Gfx *gfx)
+{
+    gfx->timerSprites[0]->invisible = TRUE;
+    gfx->timerSprites[1]->invisible = TRUE;
+    DigitObjUtil_HideOrShow(2, TRUE);
+    DigitObjUtil_HideOrShow(1, TRUE);
+    DigitObjUtil_HideOrShow(0, TRUE);
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
