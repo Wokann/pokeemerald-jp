@@ -30,17 +30,6 @@
 
 
 
-	thumb_func_start sub_08025F94
-sub_08025F94: @ 0x08025F94
-	push {lr}
-	bl RunTasks
-	bl AnimateSprites
-	bl BuildOamBuffer
-	bl UpdatePaletteFade
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08025F94
 
 	thumb_func_start sub_08025FAC
 sub_08025FAC: @ 0x08025FAC

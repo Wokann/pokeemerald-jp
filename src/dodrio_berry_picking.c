@@ -3551,6 +3551,14 @@ void HandleSound_Member(void)
     }
 }
 
+void CB2_DodrioGame(void)
+{
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;

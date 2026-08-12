@@ -1390,7 +1390,7 @@ sub_08025BD4 = RecvLinkData_Member;
 sub_08025CA0 = SendLinkData_Member;
 sub_08025D10 = HandleSound_Leader;
 sub_08025E0C = HandleSound_Member;
-CB2_DodrioGame = sub_08025F94;
+sub_08025F94 = CB2_DodrioGame;
 VBlankCB_DodrioGame = sub_08025FAC;
 CreateTask_ = sub_08025FD4;
 CreateDodrioGameTask = sub_08025FE4;
@@ -2412,6 +2412,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SendLinkData_Member);
         src/dodrio_berry_picking.o(.text.HandleSound_Leader);
         src/dodrio_berry_picking.o(.text.HandleSound_Member);
+        src/dodrio_berry_picking.o(.text.CB2_DodrioGame);
         asm/dodrio_berry_picking2.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);
