@@ -410,6 +410,7 @@ extern const struct PrizeQuantityData sPrizeQuantityData[];
 extern const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
 extern const struct SpritePalette sSpritePalettes[2];
 extern const struct SpriteTemplate sSpriteTemplate_JumpMon;
+extern const struct SpriteTemplate sSpriteTemplate_Star;
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -2224,6 +2225,16 @@ void SpriteCB_MonIntroBounce(struct Sprite *sprite)
 #undef sState
 #undef sHopPos
 #undef sNumHops
+
+void CreateStarSprite(struct PokemonJumpGfx *jumpGfx, s16 x, s16 y, u8 multiplayerId)
+{
+    u8 spriteId = CreateSprite(&sSpriteTemplate_Star, x, y, 1);
+    if (spriteId != MAX_SPRITES)
+    {
+        gSprites[spriteId].invisible = TRUE;
+        jumpGfx->starSprites[multiplayerId] = &gSprites[spriteId];
+    }
+}
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {

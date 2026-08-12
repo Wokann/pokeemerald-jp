@@ -3,49 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802CB3C
-sub_0802CB3C: @ 0x0802CB3C
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	lsls r3, r3, #0x18
-	lsrs r4, r3, #0x18
-	ldr r0, _0802CB84
-	lsls r1, r1, #0x10
-	asrs r1, r1, #0x10
-	lsls r2, r2, #0x10
-	asrs r2, r2, #0x10
-	movs r3, #1
-	bl CreateSprite
-	lsls r0, r0, #0x18
-	lsrs r2, r0, #0x18
-	cmp r2, #0x40
-	beq _0802CB7C
-	ldr r0, _0802CB88
-	lsls r1, r2, #4
-	adds r1, r1, r2
-	lsls r1, r1, #2
-	adds r1, r1, r0
-	adds r3, r1, #0
-	adds r3, #0x3e
-	ldrb r0, [r3]
-	movs r2, #4
-	orrs r0, r2
-	strb r0, [r3]
-	lsls r2, r4, #2
-	ldr r3, _0802CB8C
-	adds r0, r5, r3
-	adds r0, r0, r2
-	str r1, [r0]
-_0802CB7C:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802CB84: .4byte 0x082CF898
-_0802CB88: .4byte 0x020205AC
-_0802CB8C: .4byte 0x000081BC
-	thumb_func_end sub_0802CB3C
-
 	thumb_func_start sub_0802CB90
 sub_0802CB90: @ 0x0802CB90
 	push {r4, r5, r6, r7, lr}
