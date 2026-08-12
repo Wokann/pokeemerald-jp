@@ -5,51 +5,6 @@
 
 
 
-	thumb_func_start sub_08028FA0
-sub_08028FA0: @ 0x08028FA0
-	push {r4, lr}
-	ldr r4, _08028FE8
-	str r0, [r4]
-	movs r2, #0xc0
-	lsls r2, r2, #6
-	adds r1, r0, r2
-	movs r2, #0
-	str r2, [r1]
-	ldr r3, _08028FEC
-	adds r1, r0, r3
-	strb r2, [r1]
-	ldr r1, _08028FF0
-	adds r0, r0, r1
-	strb r2, [r0]
-	ldr r0, [r4]
-	adds r3, #0xc
-	adds r0, r0, r3
-	strb r2, [r0]
-	ldr r0, [r4]
-	adds r1, #0xc
-	adds r0, r0, r1
-	strb r2, [r0]
-	ldr r0, _08028FF4
-	movs r1, #3
-	bl CreateTask
-	ldr r1, [r4]
-	ldr r2, _08028FF8
-	adds r1, r1, r2
-	strb r0, [r1]
-	ldr r0, _08028FFC
-	bl sub_0802A420
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028FE8: .4byte 0x020229AC
-_08028FEC: .4byte 0x00003014
-_08028FF0: .4byte 0x00003018
-_08028FF4: .4byte 0x08029041
-_08028FF8: .4byte 0x00003004
-_08028FFC: .4byte 0x08029065
-	thumb_func_end sub_08028FA0
-
 	thumb_func_start sub_08029000
 sub_08029000: @ 0x08029000
 	push {lr}

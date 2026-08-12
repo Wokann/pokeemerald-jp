@@ -341,6 +341,9 @@ extern void Task_NewGameIntro(u8 taskId);
 extern void VBlankCB_DodrioGame(void);
 extern void CreateTask_(TaskFunc func, u8 priority);
 extern void InitGameGfx(struct DodrioGame_Gfx *);
+extern void Task_TryRunGfxFunc(u8 taskId);
+extern void LoadGfx(void);
+extern void SetGfxFunc(void (*func)(void));
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2064,6 +2067,18 @@ void DrawMessageWindow(const struct WindowTemplate *template)
     FillBgTilemapBufferRect(0, 16, template->tilemapLeft - 1,                template->tilemapTop + template->height,    1, 1, pal);
     FillBgTilemapBufferRect(0, 17, template->tilemapLeft,                    template->tilemapTop + template->height,    template->width, 1, pal);
     FillBgTilemapBufferRect(0, 18, template->tilemapLeft + template->width,  template->tilemapTop + template->height,    1, 1, pal);
+}
+
+void InitGameGfx(struct DodrioGame_Gfx *ptr)
+{
+    sGfx = ptr;
+    sGfx->finished = FALSE;
+    sGfx->state = 0;
+    sGfx->loadState = 0;
+    sGfx->cursorSelection = 0;
+    sGfx->playAgainState = PLAY_AGAIN_NONE;
+    sGfx->taskId = CreateTask(Task_TryRunGfxFunc, 3);
+    SetGfxFunc(LoadGfx);
 }
 
 void nullsub_15(void)
