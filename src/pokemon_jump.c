@@ -421,7 +421,8 @@ extern void sub_0802DA00(void); // InitDigitPrinters
 extern void sub_0802D884(void); // PrintScoreSuffixes
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802D8F0(void); // CreateJumpMonSprites
-extern void sub_0802D808(u16 a, u16 b, u8 c); // CreatePokeJumpYesNoMenu
+void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos);
+extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const u8 gText_WantToPlayAgain2[];
 extern const u8 gText_SavingDontTurnOffPower[];
 extern const u8 gText_SomeoneDroppedOut2[];
@@ -2559,7 +2560,7 @@ void Msg_WantToPlayAgain_PokeJump(void)
         {
             PutWindowTilemap(sPokemonJumpGfx->msgWindowId);
             DrawTextBorderOuter((u8)sPokemonJumpGfx->msgWindowId, 1, 14);
-            sub_0802D808(23, 7, 0); // CreatePokeJumpYesNoMenu
+            CreatePokeJumpYesNoMenu(23, 7, 0);
             CopyBgTilemapBufferToVram(BG_INTERFACE);
             sPokemonJumpGfx->mainState++;
         }
@@ -2853,6 +2854,30 @@ u32 AddMessageWindow(u32 left, u32 top, u32 width, u32 height)
     windowId = AddWindow((struct WindowTemplate *)&window);
     FillWindowPixelBuffer(windowId, 0x11);
     return windowId;
+}
+
+void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos)
+{
+    struct PokeJumpWindowTemplate
+    {
+        u8 bg;
+        u8 tilemapLeft;
+        u8 tilemapTop;
+        u8 width;
+        u8 height;
+        u8 paletteNum : 8;
+        u16 baseBlock : 16;
+    } window;
+
+    window.bg = BG_INTERFACE;
+    window.tilemapLeft = left;
+    window.tilemapTop = top;
+    window.width = 6;
+    window.height = 4;
+    window.paletteNum = 2;
+    window.baseBlock = 0x1B;
+
+    CreateYesNoMenuAtPos((struct WindowTemplate *)&window, 1, 2, 2, 1, 0xD, cursorPos);
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
