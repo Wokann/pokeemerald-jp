@@ -1986,6 +1986,11 @@ u8 *GetPokeJumpPlayerName(u8 multiplayerId)
     return sPokemonJump->players[multiplayerId].name;
 }
 
+bool32 IsSpeciesAllowedInPokemonJump(u16 species)
+{
+    return GetPokemonJumpSpeciesIdx(species) > -1;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
