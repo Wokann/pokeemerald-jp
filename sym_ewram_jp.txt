@@ -35,6 +35,7 @@ gBattleTypeFlags = ABSOLUTE(0x02022C90);
 gBattleAnimBgTileBuffer = ABSOLUTE(0x02022D00);
 gBattleAnimBgTilemapBuffer = ABSOLUTE(0x02022D04);
 sCurrItemAndOptionMenuCheck = ABSOLUTE(0x020229BA);
+sStartedPokeBallTask = ABSOLUTE(0x020229B8);
 gBattlePartyCurrentOrder = ABSOLUTE(0x0203CBCC);
 gBattleMons = ABSOLUTE(0x02023D28);
 gBattlerPartyIndexes = ABSOLUTE(0x02023D12);

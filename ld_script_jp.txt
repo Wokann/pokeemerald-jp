@@ -3017,6 +3017,10 @@ SECTIONS {
         src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_ThisIsAPokemon);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_MainSpeech);
+        src/main_menu.o(.text.Task_NewGameBirchSpeechSub_InitPokeBall);
+        src/main_menu.o(.text.Task_NewGameBirchSpeechSub_WaitForLotad);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_AndYouAre);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_StartBirchLotadPlatformFade);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
