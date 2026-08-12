@@ -381,7 +381,6 @@ extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
 extern bool32 DoStatusBarIntro(void);
-extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
 extern const u8 sPrizeBerryIds[3][10];
@@ -1450,6 +1449,20 @@ void SendPacket_ReadyToEnd(bool32 ready)
     packet.id = PACKET_READY_END;
     packet.ready = ready;
     Rfu_SendPacket(&packet);
+}
+
+bool32 RecvPacket_ReadyToEnd(u32 playerId)
+{
+    struct ReadyToEndPacket *packet;
+
+    if ((gRecvCmds[0][0] & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+        return FALSE;
+
+    packet = (void *)&gRecvCmds[playerId][1];
+    if (packet->id == PACKET_READY_END)
+        return packet->ready;
+    else
+        return FALSE;
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,
