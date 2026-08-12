@@ -3494,6 +3494,63 @@ void HandleSound_Leader(void)
     }
 }
 
+void HandleSound_Member(void)
+{
+    u8 berryStart = sGame->berryColStart;
+    u8 berryEnd = sGame->berryColEnd;
+    u8 i;
+    if (sGame->players[sGame->multiplayerId].comm.pickState == PICK_NONE)
+    {
+        if (sGame->players[sGame->multiplayerId].comm.ateBerry != TRUE
+         && sGame->players[sGame->multiplayerId].comm.missedBerry != TRUE)
+            sGame->playingPickSound = 0;
+    }
+    else if (sGame->players[sGame->multiplayerId].comm.ateBerry == TRUE)
+    {
+        if (!sGame->playingPickSound)
+        {
+            m4aSongNumStop(SE_SUCCESS);
+            PlaySE(SE_SUCCESS);
+            sGame->playingPickSound = TRUE;
+        }
+    }
+    else if (sGame->players[sGame->multiplayerId].comm.missedBerry == TRUE)
+    {
+        if (!sGame->playingPickSound && !IsSEPlaying())
+        {
+            PlaySE(SE_BOO);
+            StartDodrioMissedAnim(1);
+            sGame->playingPickSound = TRUE;
+        }
+    }
+    for (i = berryStart; i < berryEnd; i++)
+    {
+        struct DodrioGame_Berries *berries = &sGame->players[sGame->multiplayerId].berries;
+        if (berries->fallDist[i] >= MAX_FALL_DIST)
+        {
+            if (!sGame->playingSquishSound[i])
+            {
+                PlaySE(SE_BALLOON_RED + berries->ids[i]);
+                sGame->playingSquishSound[i] = TRUE;
+            }
+        }
+        else
+        {
+            sGame->playingSquishSound[i] = FALSE;
+        }
+    }
+    if (sGame->endSoundState == 0 && sGame->numGraySquares >= NUM_STATUS_SQUARES)
+    {
+        StopMapMusic();
+        sGame->endSoundState = 1;
+    }
+    else if (sGame->endSoundState == 1)
+    {
+        PlayFanfareByFanfareNum(FANFARE_TOO_BAD);
+        sGame->endSoundState = 2;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
