@@ -1611,6 +1611,7 @@ sSpriteAffineAnimTable_PlayerShrink = gUnknown_82D29A4;
 sMenuActions_Gender = gUnknown_82D29A8;
 sMalePresetNames = gUnknown_82D29B8;
 sFemalePresetNames = gUnknown_82D2A08;
+sTextColor_Savegame = gUnknown_82D2973;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
 sPokeJumpGfxFuncs = gUnknown_82D1A18;
 sPokeJumpBgTemplates = gUnknown_82D19F0;
@@ -3067,6 +3068,10 @@ SECTIONS {
         src/main_menu.o(.text.NewGameBirchSpeech_SetDefaultPlayerName);
         src/main_menu.o(.text.CreateMainMenuErrorWindow);
         src/main_menu.o(.text.MainMenu_FormatSavegameText);
+        src/main_menu.o(.text.MainMenu_FormatSavegamePlayer);
+        src/main_menu.o(.text.MainMenu_FormatSavegameTime);
+        src/main_menu.o(.text.MainMenu_FormatSavegamePokedex);
+        src/main_menu.o(.text.MainMenu_FormatSavegameBadges);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);

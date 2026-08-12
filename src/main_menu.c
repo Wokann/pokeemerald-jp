@@ -20,6 +20,7 @@
 #include "option_menu.h"
 #include "overworld.h"
 #include "palette.h"
+#include "pokedex.h"
 #include "pokeball.h"
 #include "random.h"
 #include "rtc.h"
@@ -67,6 +68,11 @@ extern const u8 gUnknown_8277213[];
 extern const u8 gUnknown_8277224[];
 extern const u8 gUnknown_827722D[];
 extern const u8 gUnknown_8277265[];
+extern const u8 gUnknown_85CCCBD[];
+extern const u8 gUnknown_85CCCC7[];
+extern const u8 gUnknown_85CCCD4[];
+extern const u8 gUnknown_85CCCE1[];
+extern const u8 sTextColor_Savegame[];
 extern const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[];
 extern const struct MenuAction sMenuActions_Gender[];
 extern const u8 *const sMalePresetNames[];
@@ -100,10 +106,6 @@ extern void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void);
 extern void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId);
 extern void Task_NewGameBirchSpeech_AreYouReady(u8 taskId);
 extern void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId);
-extern void MainMenu_FormatSavegamePlayer(void);
-extern void MainMenu_FormatSavegameTime(void);
-extern void MainMenu_FormatSavegamePokedex(void);
-extern void MainMenu_FormatSavegameBadges(void);
 extern u8 sBirchSpeechMainTaskId;
 extern u8 sStartedPokeBallTask;
 
@@ -157,6 +159,10 @@ static void NewGameBirchSpeech_ShowGenderMenu(void);
 static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
 static void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId);
 static void MainMenu_FormatSavegameText(void);
+static void MainMenu_FormatSavegamePlayer(void);
+static void MainMenu_FormatSavegameTime(void);
+static void MainMenu_FormatSavegamePokedex(void);
+static void MainMenu_FormatSavegameBadges(void);
 
 #define NUM_PRESET_NAMES 20
 
@@ -1715,6 +1721,52 @@ static void MainMenu_FormatSavegameText(void)
     MainMenu_FormatSavegamePokedex();
     MainMenu_FormatSavegameTime();
     MainMenu_FormatSavegameBadges();
+}
+
+static void MainMenu_FormatSavegamePlayer(void)
+{
+    StringCopy(gStringVar1, gSaveBlock2Ptr->playerName);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCBD);
+    AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 0x11, sTextColor_Savegame, -1, gStringVar4);
+}
+
+static void MainMenu_FormatSavegameTime(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, gSaveBlock2Ptr->playTimeHours, 0, 3);
+    ConvertIntToDecimalStringN(gStringVar2, gSaveBlock2Ptr->playTimeMinutes, 2, 2);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCC7);
+    AddTextPrinterParameterized3(2, FONT_NORMAL, 0x67, 0x11, sTextColor_Savegame, -1, gStringVar4);
+}
+
+static void MainMenu_FormatSavegamePokedex(void)
+{
+    u16 count;
+
+    if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
+    {
+        if (IsNationalPokedexEnabled())
+            count = GetNationalPokedexCount(1);
+        else
+            count = GetHoennPokedexCount(1);
+        ConvertIntToDecimalStringN(gStringVar1, count, 0, 3);
+        StringExpandPlaceholders(gStringVar4, gUnknown_85CCCD4);
+        AddTextPrinterParameterized3(2, FONT_NORMAL, 0, 0x21, sTextColor_Savegame, -1, gStringVar4);
+    }
+}
+
+static void MainMenu_FormatSavegameBadges(void)
+{
+    u8 badgeCount = 0;
+    u32 badge;
+
+    for (badge = FLAG_BADGE01_GET; badge <= FLAG_BADGE08_GET; badge++)
+    {
+        if (FlagGet(badge))
+            badgeCount++;
+    }
+    ConvertIntToDecimalStringN(gStringVar1, badgeCount, 2, 1);
+    StringExpandPlaceholders(gStringVar4, gUnknown_85CCCE1);
+    AddTextPrinterParameterized3(2, FONT_NORMAL, 0x6F, 0x21, sTextColor_Savegame, -1, gStringVar4);
 }
 
 #undef tMainTask
