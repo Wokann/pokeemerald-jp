@@ -24,47 +24,6 @@
 
 
 
-	thumb_func_start sub_08025ACC
-sub_08025ACC: @ 0x08025ACC
-	push {r4, r5, lr}
-	ldr r5, _08025AE4
-	ldr r0, [r5]
-	ldrb r0, [r0, #0x18]
-	cmp r0, #4
-	beq _08025B08
-	cmp r0, #4
-	bgt _08025AE8
-	cmp r0, #3
-	beq _08025AEE
-	b _08025B12
-	.align 2, 0
-_08025AE4: .4byte 0x0202294C
-_08025AE8:
-	cmp r0, #0xb
-	beq _08025B0E
-	b _08025B12
-_08025AEE:
-	bl sub_08026978
-	adds r4, r0, #0
-	cmp r4, #1
-	bne _08025B12
-	bl sub_080269E8
-	ldr r0, [r5]
-	movs r1, #0x8e
-	lsls r1, r1, #1
-	adds r0, r0, r1
-	str r4, [r0]
-	b _08025B12
-_08025B08:
-	bl sub_080257C4
-	b _08025B12
-_08025B0E:
-	bl sub_080259D4
-_08025B12:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08025ACC
 
 	thumb_func_start sub_08025B18
 sub_08025B18: @ 0x08025B18
