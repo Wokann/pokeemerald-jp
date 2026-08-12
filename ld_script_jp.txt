@@ -1483,6 +1483,7 @@ sub_0802C37C = AddJumpScore;
 sub_0802C3A4 = GetPlayersAtJumpPeak;
 sub_0802C400 = AreLinkQueuesEmpty;
 sub_0802C430 = GetNumPlayersForBonus;
+sub_0802C474 = ClearUnreadField;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sSoundEffects = gUnknown_82CEEE0;
@@ -2696,6 +2697,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.GetPlayersAtJumpPeak);
         src/pokemon_jump.o(.text.AreLinkQueuesEmpty);
         src/pokemon_jump.o(.text.GetNumPlayersForBonus);
+        src/pokemon_jump.o(.text.ClearUnreadField);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);

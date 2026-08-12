@@ -3,18 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C474
-sub_0802C474: @ 0x0802C474
-	ldr r0, _0802C480
-	ldr r0, [r0]
-	adds r0, #0x44
-	movs r1, #0
-	strb r1, [r0]
-	bx lr
-	.align 2, 0
-_0802C480: .4byte 0x020229B0
-	thumb_func_end sub_0802C474
-
 	thumb_func_start sub_0802C484
 sub_0802C484: @ 0x0802C484
 	ldr r1, _0802C490

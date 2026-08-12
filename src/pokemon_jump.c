@@ -389,7 +389,6 @@ extern void sub_0802D994(int vineState); // UpdateVineSwing
 extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
 extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
-extern void sub_0802C474(void); // ClearUnreadField
 extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
 extern int sub_0802C484(void); // GetScoreBonus
 
@@ -1694,7 +1693,7 @@ void TryUpdateScore(void)
 
         if (!sPokemonJump->initScoreUpdate)
         {
-            sub_0802C474(); // ClearUnreadField
+            ClearUnreadField();
             sPokemonJump->numPlayersAtPeak = 0;
             sPokemonJump->initScoreUpdate = TRUE;
             sPokemonJump->comm.receivedBonusFlags = 0;
@@ -1719,7 +1718,7 @@ void TryUpdateScore(void)
                 memcpy(sPokemonJump->atJumpPeak3, sPokemonJump->atJumpPeak2, sizeof(u8) * MAX_RFU_PLAYERS);
             }
 
-            sub_0802C474(); // ClearUnreadField
+            ClearUnreadField();
             sPokemonJump->numPlayersAtPeak = 0;
             sPokemonJump->initScoreUpdate = TRUE;
             sPokemonJump->comm.receivedBonusFlags = 0;
@@ -1885,6 +1884,11 @@ int GetNumPlayersForBonus(u8 *atJumpPeak)
         sPokemonJump->showBonus = TRUE;
 
     return count;
+}
+
+void ClearUnreadField(void)
+{
+    sPokemonJump->unused3 = 0;
 }
 
 void InitGame(struct PokemonJump *jump)
