@@ -395,7 +395,6 @@ extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
-extern void sub_08028380(bool8 invisible, u8 id); // SetDodrioInvisibility
 extern void sub_080283E0(u8 playerId, u8 pickState); // SetDodrioAnim
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
@@ -1507,7 +1506,7 @@ void CreateDodrioSprite(struct DodrioGame_MonInfo *monInfo, u8 playerId, u8 id, 
 
     sDodrioSpriteIds[id] = AllocZeroed(4);
     *sDodrioSpriteIds[id] = CreateSprite(&template, sub_08028C40(playerId, numPlayers), 136, 3);
-    sub_08028380(TRUE, id); // SetDodrioInvisibility
+    SetDodrioInvisibility(TRUE, id);
 }
 
 void SpriteCB_Dodrio(struct Sprite *sprite)
@@ -1554,6 +1553,11 @@ void FreeDodrioSprites(u8 numPlayers)
         if (sprite)
             DestroySpriteAndFreeResources(sprite);
     }
+}
+
+void SetDodrioInvisibility(bool8 invisible, u8 id)
+{
+    gSprites[*sDodrioSpriteIds[id]].invisible = invisible;
 }
 
 u32 DoDodrioMissedAnim(struct Sprite *sprite)

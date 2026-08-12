@@ -1369,6 +1369,7 @@ sub_08028230 = StartDodrioIntroAnim;
 sub_08028268 = DoDodrioMissedAnim;
 sub_080282D8 = DoDodrioIntroAnim;
 sub_08028340 = FreeDodrioSprites;
+sub_08028380 = SetDodrioInvisibility;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2436,6 +2437,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.DoDodrioMissedAnim);
         src/dodrio_berry_picking.o(.text.DoDodrioIntroAnim);
         src/dodrio_berry_picking.o(.text.FreeDodrioSprites);
+        src/dodrio_berry_picking.o(.text.SetDodrioInvisibility);
         asm/dodrio_berry_picking7.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

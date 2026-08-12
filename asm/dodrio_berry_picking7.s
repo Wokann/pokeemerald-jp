@@ -3,36 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_08028380
-sub_08028380: @ 0x08028380
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	lsls r1, r1, #0x18
-	ldr r3, _080283B0
-	ldr r2, _080283B4
-	lsrs r1, r1, #0x16
-	adds r1, r1, r2
-	ldr r1, [r1]
-	ldrh r1, [r1]
-	lsls r2, r1, #4
-	adds r2, r2, r1
-	lsls r2, r2, #2
-	adds r2, r2, r3
-	adds r2, #0x3e
-	movs r1, #1
-	ands r0, r1
-	lsls r0, r0, #2
-	ldrb r3, [r2]
-	movs r1, #5
-	rsbs r1, r1, #0
-	ands r1, r3
-	orrs r1, r0
-	strb r1, [r2]
-	bx lr
-	.align 2, 0
-_080283B0: .4byte 0x020205AC
-_080283B4: .4byte 0x02022950
-	thumb_func_end sub_08028380
 
 	thumb_func_start sub_080283B8
 sub_080283B8: @ 0x080283B8
