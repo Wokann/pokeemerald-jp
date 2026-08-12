@@ -411,6 +411,9 @@ extern const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
 extern const struct SpritePalette sSpritePalettes[2];
 extern const struct SpriteTemplate sSpriteTemplate_JumpMon;
 extern const struct SpriteTemplate sSpriteTemplate_Star;
+extern const struct SpriteTemplate *const sSpriteTemplates_Vine[4];
+extern const s16 sVineXCoords[8];
+extern const s16 sVineYCoords[4][10];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -2233,6 +2236,29 @@ void CreateStarSprite(struct PokemonJumpGfx *jumpGfx, s16 x, s16 y, u8 multiplay
     {
         gSprites[spriteId].invisible = TRUE;
         jumpGfx->starSprites[multiplayerId] = &gSprites[spriteId];
+    }
+}
+
+void CreateVineSprites(struct PokemonJumpGfx *jumpGfx)
+{
+    int i;
+    int count;
+    u8 spriteId;
+
+    count = 0;
+    for (i = 0; i < VINE_SPRITES_PER_SIDE; i++)
+    {
+        spriteId = CreateSprite(sSpriteTemplates_Vine[i], sVineXCoords[count], sVineYCoords[i][0], 2);
+        jumpGfx->vineSprites[count] = &gSprites[spriteId];
+        count++;
+    }
+
+    for (i = VINE_SPRITES_PER_SIDE - 1; i >= 0; i--)
+    {
+        spriteId = CreateSprite(sSpriteTemplates_Vine[i], sVineXCoords[count], sVineYCoords[i][0], 2);
+        jumpGfx->vineSprites[count] = &gSprites[spriteId];
+        jumpGfx->vineSprites[count]->hFlip = TRUE;
+        count++;
     }
 }
 
