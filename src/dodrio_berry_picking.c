@@ -354,7 +354,6 @@ extern void UpdateGame_Leader(void);
 extern void UpdateGame_Member(void);
 extern void SendLinkData_Leader(void);
 extern void SendLinkData_Member(void);
-extern void StartDodrioIntroAnim(u8);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
 extern void InitFirstWaveOfBerries(void);
@@ -1530,6 +1529,16 @@ void StartDodrioMissedAnim(u8 unused)
 {
     struct Sprite *sprite = &gSprites[*sDodrioSpriteIds[GetMultiplayerId()]];
     sprite->data[0] = 1;
+    sprite->data[1] = 0;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+}
+
+void StartDodrioIntroAnim(u8 unused)
+{
+    struct Sprite *sprite = &gSprites[*sDodrioSpriteIds[GetMultiplayerId()]];
+    sprite->data[0] = 2;
     sprite->data[1] = 0;
     sprite->data[2] = 0;
     sprite->data[3] = 0;

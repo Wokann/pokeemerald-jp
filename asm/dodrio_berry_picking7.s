@@ -4,35 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08028230
-sub_08028230: @ 0x08028230
-	push {lr}
-	bl GetMultiplayerId
-	ldr r1, _08028260
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x16
-	adds r0, r0, r1
-	ldr r0, [r0]
-	ldrh r1, [r0]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	ldr r1, _08028264
-	adds r0, r0, r1
-	movs r2, #0
-	movs r1, #2
-	strh r1, [r0, #0x2e]
-	strh r2, [r0, #0x30]
-	strh r2, [r0, #0x32]
-	strh r2, [r0, #0x34]
-	strh r2, [r0, #0x36]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028260: .4byte 0x02022950
-_08028264: .4byte 0x020205AC
-	thumb_func_end sub_08028230
-
 	thumb_func_start sub_08028268
 sub_08028268: @ 0x08028268
 	push {r4, lr}
@@ -4541,4 +4512,3 @@ _0802A68E:
 _0802A694: .4byte 0x020229AC
 _0802A698: .4byte 0x00003018
 	thumb_func_end sub_0802A5DC
-
