@@ -347,7 +347,7 @@ static void MainTask(u8 taskId);
 static void SetNamesAndTextSpeed(struct BerryCrushGame *);
 s32 ShowGameDisplay(void);
 s32 HideGameDisplay(void);
-s32 UpdateGame(struct BerryCrushGame *);
+static s32 UpdateGame(struct BerryCrushGame *);
 void PrintTimer(struct BerryCrushGame_Gfx *, u16);
 void HideTimer(struct BerryCrushGame_Gfx *);
 void ResetCrusherPos(struct BerryCrushGame *);
@@ -728,7 +728,7 @@ s32 HideGameDisplay(void)
     return 0;
 }
 
-s32 UpdateGame(struct BerryCrushGame *game)
+static s32 UpdateGame(struct BerryCrushGame *game)
 {
     gSpriteCoordOffsetY = game->depth + game->vibration;
     SetGpuReg(REG_OFFSET_BG1VOFS, -gSpriteCoordOffsetY);

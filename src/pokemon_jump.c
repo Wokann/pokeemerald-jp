@@ -19,6 +19,15 @@
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
+// Used by SetLinkTimeInterval to get a bit mask for capping
+// a timer that controls how frequently link data is sent.
+#define LINK_INTERVAL_NONE   0
+#define LINK_INTERVAL_SHORT  3 // 3 frame interval
+#define LINK_INTERVAL_MEDIUM 4 // 7 frame interval
+#define LINK_INTERVAL_LONG   5 // 15 frame interval
+
+#define LINK_TIMER_STOPPED 0x1111
+
 // JP: enum order matches the JP ROM data (sPokeJumpMons jumpType bytes).
 // US order is NORMAL, FAST, SLOW; JP data stores NORMAL=0, FAST=1, SLOW=2.
 enum {
@@ -294,6 +303,14 @@ extern bool32 sub_0802CDE4(void); // IsPokeJumpGfxFuncFinished
 extern void sub_0802AC74(u8 taskId); // Task_PokemonJump_Leader
 extern void sub_0802AE88(u8 taskId); // Task_PokemonJump_Member
 extern void sub_0802BB74(void); // InitVineState
+extern bool32 sub_0802DF5C(struct PokemonJump_Player *player, int multiplayerId, u8 *funcId, u16 *playAgainState);
+extern void sub_0802BED0(void); // UpdateGame
+extern void sub_0802C130(void); // TryUpdateScore
+extern void sub_0802DE30(struct PokemonJump_Player *players, struct PokemonJump_CommData *comm); // SendPacket_LeaderState
+
+// JP: leader function table is ROM data at 0x082CEE80 (data/data_b.s,
+// gUnknown_82CEE80); same 9-entry layout as US sPokeJumpLeaderFuncs.
+extern bool32 (*const sPokeJumpLeaderFuncs[])(void);
 
 void Task_StartPokemonJump(u8 taskId)
 {
@@ -352,6 +369,100 @@ void Task_StartPokemonJump(u8 taskId)
             DestroyTask(taskId);
         }
         break;
+    }
+}
+
+void SetLinkTimeInterval(int intervalId)
+{
+    if (intervalId == LINK_INTERVAL_NONE)
+    {
+        // Link data is sent when timer reaches 0.
+        // Set timer to 1 and set limit to special
+        // 'stopped' value so timer won't change
+        sPokemonJump->linkTimerLimit = LINK_TIMER_STOPPED;
+        sPokemonJump->linkTimer = 1;
+    }
+    else
+    {
+        sPokemonJump->linkTimerLimit = (1 << (intervalId - 1)) - 1;
+        sPokemonJump->linkTimer = 0;
+    }
+}
+
+void SetFunc_Leader(u8 funcId)
+{
+    int i;
+
+    sPokemonJump->comm.funcId = funcId;
+    sPokemonJump->mainState = 0;
+    sPokemonJump->helperState = 0;
+    sPokemonJump->funcActive = TRUE;
+    sPokemonJump->allPlayersReady = FALSE;
+    for (i = 1; i < sPokemonJump->numPlayers; i++)
+        sPokemonJump->players[i].funcFinished = FALSE;
+}
+
+// JP: this is the member-state receive loop that US keeps inside
+// RecvLinkData_Leader; JP has it as a standalone function.
+void RecvLinkData_Leader(void)
+{
+    int i;
+    int numReady;
+    u16 monState;
+    u8 funcId;
+    u16 playAgainState;
+
+    for (i = 1, numReady = 0; i < sPokemonJump->numPlayers; i++)
+    {
+        monState = sPokemonJump->players[i].monState;
+        if (sub_0802DF5C(&sPokemonJump->players[i], i, &funcId, &playAgainState))
+        {
+            sPokemonJump->playAgainStates[i] = playAgainState;
+            sPokemonJump->memberFuncIds[i] = funcId;
+            sPokemonJump->players[i].prevMonState = monState;
+        }
+
+        // Group member has finished currently assigned function
+        if (sPokemonJump->players[i].funcFinished && sPokemonJump->memberFuncIds[i] == sPokemonJump->comm.funcId)
+            numReady++;
+    }
+
+    if (numReady == sPokemonJump->numPlayers - 1)
+        sPokemonJump->allPlayersReady = TRUE;
+}
+
+void Task_PokemonJump_Leader(u8 taskId)
+{
+    RecvLinkData_Leader();
+    sub_0802C130(); // TryUpdateScore
+    if (!sPokemonJump->funcActive && sPokemonJump->allPlayersReady)
+    {
+        SetFunc_Leader(sPokemonJump->nextFuncId);
+        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+    }
+
+    if (sPokemonJump->funcActive == TRUE)
+    {
+        if (!sPokeJumpLeaderFuncs[sPokemonJump->comm.funcId]())
+        {
+            sPokemonJump->funcActive = FALSE;
+            sPokemonJump->players[sPokemonJump->multiplayerId].funcFinished = TRUE;
+        }
+    }
+
+    sub_0802BED0(); // UpdateGame
+    SendLinkData_Leader();
+}
+
+void SendLinkData_Leader(void)
+{
+    if (!sPokemonJump->linkTimer)
+        sub_0802DE30(sPokemonJump->players, &sPokemonJump->comm); // SendPacket_LeaderState
+
+    if (sPokemonJump->linkTimerLimit != LINK_TIMER_STOPPED)
+    {
+        sPokemonJump->linkTimer++;
+        sPokemonJump->linkTimer &= sPokemonJump->linkTimerLimit;
     }
 }
 

@@ -400,11 +400,11 @@ extern void CreateCloudSprites_Dodrio(void);
 extern void CreateDodrioGameTask(TaskFunc func);
 extern void (*const sLeaderFuncs[])(void);
 extern void (*const sMemberFuncs[])(void);
-extern void RecvLinkData_Leader(void);
+static void RecvLinkData_Leader(void);
 extern void RecvLinkData_Member(void);
 extern void UpdateGame_Leader(void);
 extern void UpdateGame_Member(void);
-extern void SendLinkData_Leader(void);
+static void SendLinkData_Leader(void);
 extern void SendLinkData_Member(void);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
@@ -3360,7 +3360,7 @@ void RecvLinkData_ReadyToEnd(void)
     }
 }
 
-void RecvLinkData_Leader(void)
+static void RecvLinkData_Leader(void)
 {
     switch (sGame->funcId)
     {
@@ -3380,7 +3380,7 @@ void RecvLinkData_Leader(void)
     }
 }
 
-void SendLinkData_Leader(void)
+static void SendLinkData_Leader(void)
 {
     switch (sGame->funcId)
     {
