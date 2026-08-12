@@ -5,64 +5,6 @@
 
 
 
-	thumb_func_start sub_0802D044
-sub_0802D044: @ 0x0802D044
-	push {r4, lr}
-	ldr r4, _0802D05C
-	ldr r0, [r4]
-	ldrh r0, [r0, #4]
-	cmp r0, #1
-	beq _0802D070
-	cmp r0, #1
-	bgt _0802D060
-	cmp r0, #0
-	beq _0802D06A
-	b _0802D0AA
-	.align 2, 0
-_0802D05C: .4byte 0x020229B4
-_0802D060:
-	cmp r0, #2
-	beq _0802D082
-	cmp r0, #3
-	beq _0802D09A
-	b _0802D0AA
-_0802D06A:
-	bl sub_0802DB14
-	b _0802D090
-_0802D070:
-	bl IsDma3ManagerBusyWithBgCopy
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0802D0AA
-	movs r0, #1
-	bl sub_0802DC68
-	b _0802D090
-_0802D082:
-	bl IsDma3ManagerBusyWithBgCopy
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0802D0AA
-	bl sub_0802DCCC
-_0802D090:
-	ldr r1, [r4]
-	ldrh r0, [r1, #4]
-	adds r0, #1
-	strh r0, [r1, #4]
-	b _0802D0AA
-_0802D09A:
-	bl IsDma3ManagerBusyWithBgCopy
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0802D0AA
-	ldr r1, [r4]
-	movs r0, #1
-	str r0, [r1]
-_0802D0AA:
-	pop {r4}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0802D044
-
 	thumb_func_start sub_0802D0B0
 sub_0802D0B0: @ 0x0802D0B0
 	push {r4, r5, lr}

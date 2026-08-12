@@ -2488,6 +2488,35 @@ void PrintPlayerNamesNoHighlight(void)
     }
 }
 
+void PrintPlayerNamesWithHighlight(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        sub_0802DB14(); // AddPlayerNameWindows
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            sub_0802DC68(TRUE); // PrintPokeJumpPlayerNames(TRUE)
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            sub_0802DCCC(); // DrawPlayerNameWindows
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sPokemonJumpGfx->funcFinished = TRUE;
+        break;
+    }
+}
+
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {
     int i;
