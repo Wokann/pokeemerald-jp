@@ -1386,20 +1386,20 @@ sBerryScoreMultipliers: @ 0x82CB3B0
 sRecordsWindowTemplate: @ 0x82CB3B8
 	.incbin "baserom_jp.gba", 0x2cb3b8, 0x8
 
-	.globl gUnknown_82CB3C0
-gUnknown_82CB3C0: @ 0x82CB3C0
+	.globl sRecordsLabels
+sRecordsLabels: @ 0x82CB3C0
 	.incbin "baserom_jp.gba", 0x2cb3c0, 0xc
 
-	.globl gUnknown_82CB3CC
-gUnknown_82CB3CC: @ 0x82CB3CC
+	.globl sRecordDigitCounts
+sRecordDigitCounts: @ 0x82CB3CC
 	.incbin "baserom_jp.gba", 0x2cb3cc, 0x4
 
-	.globl gUnknown_82CB3D0
-gUnknown_82CB3D0: @ 0x82CB3D0
+	.globl sRecordLabelYs
+sRecordLabelYs: @ 0x82CB3D0
 	.incbin "baserom_jp.gba", 0x2cb3d0, 0x6
 
-	.globl gUnknown_82CB3D6
-gUnknown_82CB3D6: @ 0x82CB3D6
+	.globl sRecordValueYs
+sRecordValueYs: @ 0x82CB3D6
 	.incbin "baserom_jp.gba", 0x2cb3d6, 0x6
 
 	.globl gUnknown_82CB3DC
