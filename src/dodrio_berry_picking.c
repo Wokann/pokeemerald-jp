@@ -125,6 +125,8 @@ enum {
 
 #define PLAYER_NONE 0xFF
 
+#define tState data[0]
+
 struct DodrioGame_Gfx
 {
     u16 ALIGNED(4) tilemapBuffers[3][BG_SCREEN_SIZE];
@@ -1045,6 +1047,43 @@ void Task_NewGameIntro(u8 taskId)
             CreateDodrioGameTask(Task_DodrioGame_Member);
 
         DestroyTask(taskId);
+        break;
+    }
+}
+
+void Task_CommunicateMonInfo(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u8 i;
+
+    switch (tState)
+    {
+    case 0:
+        if (SendBlock(0, &sGame->monInfo[sGame->multiplayerId].isShiny, sizeof(sGame->monInfo[sGame->multiplayerId].isShiny)))
+        {
+            sGame->playersReceived = 0;
+            tState++;
+        }
+        break;
+    case 1:
+        if (IsLinkTaskFinished())
+            tState++;
+        break;
+    case 2:
+        if (AllPlayersReadyToStart())
+        {
+            for (i = 0; i < sGame->numPlayers; i++)
+            {
+                *(u8 *)&sGame->monInfo[i] = *(u8 *)gBlockRecvBuffer[i];
+                sGame->playersReceived = sGame->numPlayers;
+            }
+        }
+        if (sGame->playersReceived >= sGame->numPlayers)
+        {
+            DestroyTask(taskId);
+            SetGfxFuncById(GFXFUNC_ERASE_MSG);
+            sGame->state++;
+        }
         break;
     }
 }
