@@ -1342,16 +1342,16 @@ sActiveColumnMap: @ 0x82C7D28
 gUnknown_82C7E3B: @ 0x82C7E3B
 	.incbin "baserom_jp.gba", 0x2c7e3b, 0x4b
 
-	.globl gUnknown_82C7E86
-gUnknown_82C7E86: @ 0x82C7E86
+	.globl sDodrioNeighborMap
+sDodrioNeighborMap: @ 0x82C7E86
 	.incbin "baserom_jp.gba", 0x2c7e86, 0x4e
 
 	.globl sPlayerIdAtColumn
 sPlayerIdAtColumn: @ 0x82C7ED4
 	.incbin "baserom_jp.gba", 0x2c7ed4, 0x37
 
-	.globl gUnknown_82C7F0B
-gUnknown_82C7F0B: @ 0x82C7F0B
+	.globl sUnsharedColumns
+sUnsharedColumns: @ 0x82C7F0B
 	.incbin "baserom_jp.gba", 0x2c7f0b, 0x3409
 
 	.globl gUnknown_82CB314

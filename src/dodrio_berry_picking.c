@@ -325,6 +325,8 @@ extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
 extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
+extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
+extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -798,6 +800,33 @@ u8 GetNewBerryIdByDifficulty(u8 difficulty, u8 column)
 u8 GetPlayerIdAtColumn(u8 column)
 {
     return sPlayerIdAtColumn[sGame->numPlayers - 1][column];
+}
+
+u8 GetNewBerryId(u8 playerId, u8 column)
+{
+    u8 i, highestDifficulty;
+    u8 numPlayersIdx = sGame->numPlayers - 1;
+    u8 leftPlayer = sDodrioNeighborMap[numPlayersIdx][playerId][0];
+    u8 middlePlayer = sDodrioNeighborMap[numPlayersIdx][playerId][1];
+    u8 rightPlayer = sDodrioNeighborMap[numPlayersIdx][playerId][2];
+
+    for (i = 0; sUnsharedColumns[numPlayersIdx][i] != 0; i++)
+    {
+        // If only one player can use this column, just use their difficulty
+        if (column == sUnsharedColumns[numPlayersIdx][i])
+            return GetNewBerryIdByDifficulty(sGame->difficulty[middlePlayer], column);
+    }
+
+    // This column is shared, get the highest difficulty of adjacent players
+    if (sGame->difficulty[leftPlayer] > sGame->difficulty[middlePlayer])
+        highestDifficulty = sGame->difficulty[leftPlayer];
+    else
+        highestDifficulty = sGame->difficulty[middlePlayer];
+
+    if (sGame->difficulty[rightPlayer] > highestDifficulty)
+        highestDifficulty = sGame->difficulty[rightPlayer];
+
+    return GetNewBerryIdByDifficulty(highestDifficulty, column);
 }
 
 void InitResults_Leader(void)
