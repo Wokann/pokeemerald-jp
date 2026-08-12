@@ -3,41 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start HandleLinkBattleSetup
-HandleLinkBattleSetup: @ 0x080324EC
-	push {lr}
-	ldr r0, _08032524
-	ldr r0, [r0]
-	movs r1, #2
-	ands r0, r1
-	cmp r0, #0
-	beq _0803251E
-	ldr r0, _08032528
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08032506
-	bl sub_0800AF5C
-_08032506:
-	ldr r0, _0803252C
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _08032512
-	bl OpenLink
-_08032512:
-	ldr r0, _08032530
-	movs r1, #0
-	bl CreateTask
-	bl CreateTasksForSendRecvLinkBuffers
-_0803251E:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08032524: .4byte 0x02022C90
-_08032528: .4byte 0x0300319C
-_0803252C: .4byte 0x030031C4
-_08032530: .4byte 0x080B3189
-	thumb_func_end HandleLinkBattleSetup
-
 	thumb_func_start SetUpBattleVarsAndBirchZigzagoon
 SetUpBattleVarsAndBirchZigzagoon: @ 0x08032534
 	push {r4, r5, r6, r7, lr}
