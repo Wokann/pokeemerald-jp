@@ -2,9 +2,12 @@
 #include "malloc.h"
 #include "link.h"
 #include "link_rfu.h"
+#include "load_save.h"
 #include "main.h"
 #include "menu.h"
+#include "overworld.h"
 #include "palette.h"
+#include "save.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
@@ -118,6 +121,13 @@ extern bool8 IsDisplaySubtaskActive(u8 id);
 extern s8 ProcessMenuInput(void);
 extern void PrepareSendBuffer_Disband(u8 *buffer);
 extern void PrepareSendBuffer_Leave(u8 *buffer);
+extern void PrepareSendBuffer_Drop(u8 *buffer);
+extern void PrepareSendBuffer_Chat(u8 *buffer);
+extern void ResetMessageEntryBuffer(void);
+extern bool32 ChatMessageIsNotEmpty(void);
+extern void RegisterTextAtRow(void);
+extern void SaveRegisteredTexts(void);
+extern void FreeDisplay(void);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -128,6 +138,13 @@ static void Chat_Join(void);
 static void Chat_HandleInput(void);
 static void Chat_Switch(void);
 static void Chat_AskQuitChatting(void);
+static void Chat_Exit(void);
+static void Chat_Drop(void);
+static void Chat_Disbanded(void);
+static void Chat_SendMessage(void);
+static void Chat_Register(void);
+static void Chat_SaveAndExit(void);
+void SetChatFunction(u16 funcId);
 
 void EnterUnionRoomChat(void)
 {
@@ -486,4 +503,362 @@ static void Chat_AskQuitChatting(void)
         }
         break;
     }
+}
+
+static void Chat_Exit(void)
+{
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (!FuncIsActiveTask(Task_ReceiveChatMessage))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState++;
+        }
+        break;
+    case 1:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_PRINT_EXITING_CHAT, 0);
+            sChat->funcState++;
+        }
+        break;
+    case 2:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            PrepareSendBuffer_Drop(sChat->sendMessageBuffer);
+            sChat->funcState++;
+        }
+        break;
+    case 3:
+        if (IsLinkTaskFinished() && !Rfu_IsPlayerExchangeActive() && SendBlock(0, sChat->sendMessageBuffer, sizeof(sChat->sendMessageBuffer)))
+            sChat->funcState++;
+        break;
+    case 4:
+        if ((GetBlockReceivedStatus() & 1) && !Rfu_IsPlayerExchangeActive())
+            sChat->funcState++;
+        break;
+    case 5:
+        if (IsLinkTaskFinished() && !Rfu_IsPlayerExchangeActive())
+        {
+            SetCloseLinkCallback();
+            sChat->exitDelayTimer = 0;
+            sChat->funcState++;
+        }
+        break;
+    case 6:
+        if (sChat->exitDelayTimer <= 0x95)
+            sChat->exitDelayTimer++;
+
+        if (!gReceivedRemoteLinkPlayers)
+            sChat->funcState++;
+        break;
+    case 7:
+        if (sChat->exitDelayTimer > 0x95)
+            SetChatFunction(CHAT_FUNC_SAVE_AND_EXIT);
+        else
+            sChat->exitDelayTimer++;
+        break;
+    }
+}
+
+static void Chat_Drop(void)
+{
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (!FuncIsActiveTask(Task_ReceiveChatMessage))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState++;
+        }
+        break;
+    case 1:
+        if (!IsDisplaySubtaskActive(0) && IsLinkTaskFinished() && !Rfu_IsPlayerExchangeActive())
+        {
+            SetCloseLinkCallback();
+            sChat->exitDelayTimer = 0;
+            sChat->funcState++;
+        }
+        break;
+    case 2:
+        if (sChat->exitDelayTimer <= 0x95)
+            sChat->exitDelayTimer++;
+
+        if (!gReceivedRemoteLinkPlayers)
+            sChat->funcState++;
+        break;
+    case 3:
+        if (sChat->exitDelayTimer > 0x95)
+            SetChatFunction(CHAT_FUNC_SAVE_AND_EXIT);
+        else
+            sChat->exitDelayTimer++;
+        break;
+    }
+}
+
+static void Chat_Disbanded(void)
+{
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (!FuncIsActiveTask(Task_ReceiveChatMessage))
+        {
+            if (sChat->multiplayerId)
+                StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+
+            sChat->funcState++;
+        }
+        break;
+    case 1:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            if (sChat->multiplayerId)
+                StartDisplaySubtask(CHATDISPLAY_FUNC_PRINT_LEADER_LEFT, 0);
+
+            sChat->funcState++;
+        }
+        break;
+    case 2:
+        if (IsDisplaySubtaskActive(0) != TRUE && IsLinkTaskFinished() && !Rfu_IsPlayerExchangeActive())
+        {
+            SetCloseLinkCallback();
+            sChat->exitDelayTimer = 0;
+            sChat->funcState++;
+        }
+        break;
+    case 3:
+        if (sChat->exitDelayTimer <= 0x95)
+            sChat->exitDelayTimer++;
+
+        if (!gReceivedRemoteLinkPlayers)
+            sChat->funcState++;
+        break;
+    case 4:
+        if (sChat->exitDelayTimer > 0x95)
+            SetChatFunction(CHAT_FUNC_SAVE_AND_EXIT);
+        else
+            sChat->exitDelayTimer++;
+        break;
+    }
+}
+
+static void Chat_SendMessage(void)
+{
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            SetChatFunction(CHAT_FUNC_HANDLE_INPUT);
+            break;
+        }
+
+        PrepareSendBuffer_Chat(sChat->sendMessageBuffer);
+        sChat->funcState++;
+        // fall through
+    case 1:
+        if (IsLinkTaskFinished() == TRUE && !Rfu_IsPlayerExchangeActive() && SendBlock(0, sChat->sendMessageBuffer, sizeof(sChat->sendMessageBuffer)))
+            sChat->funcState++;
+        break;
+    case 2:
+        ResetMessageEntryBuffer();
+        StartDisplaySubtask(CHATDISPLAY_FUNC_UPDATE_MSG, 0);
+        sChat->funcState++;
+        break;
+    case 3:
+        if (!IsDisplaySubtaskActive(0))
+            sChat->funcState++;
+        break;
+    case 4:
+        if (IsLinkTaskFinished())
+            SetChatFunction(CHAT_FUNC_HANDLE_INPUT);
+        break;
+    }
+}
+
+static void Chat_Register(void)
+{
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (ChatMessageIsNotEmpty())
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_ASK_REGISTER_TEXT, 0);
+            sChat->funcState = 2;
+        }
+        else
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_PRINT_INPUT_TEXT, 0);
+            sChat->funcState = 5;
+        }
+        break;
+    case 1:
+        if (JOY_NEW(A_BUTTON))
+        {
+            RegisterTextAtRow();
+            StartDisplaySubtask(CHATDISPLAY_FUNC_RETURN_TO_KB, 0);
+            sChat->funcState = 3;
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_CANCEL_REGISTER, 0);
+            sChat->funcState = 4;
+        }
+        else if (HandleDPadInput())
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_MOVE_KB_CURSOR, 0);
+            sChat->funcState = 2;
+        }
+        break;
+    case 2:
+        if (!IsDisplaySubtaskActive(0))
+            sChat->funcState = 1;
+        break;
+    case 3:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_CANCEL_REGISTER, 0);
+            sChat->funcState = 4;
+        }
+        break;
+    case 4:
+        if (!IsDisplaySubtaskActive(0))
+            SetChatFunction(CHAT_FUNC_HANDLE_INPUT);
+        break;
+    case 5:
+        if (!IsDisplaySubtaskActive(0))
+            sChat->funcState = 6;
+        break;
+    case 6:
+        if (JOY_NEW(A_BUTTON | B_BUTTON))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState = 4;
+        }
+        break;
+    }
+}
+
+static void Chat_SaveAndExit(void)
+{
+    s8 input;
+
+    switch (sChat->funcState)
+    {
+    case 0:
+        if (!sChat->changedRegisteredTexts)
+        {
+            sChat->funcState = 12;
+        }
+        else
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState = 1;
+        }
+        break;
+    case 1:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_ASK_SAVE, 0);
+            sChat->funcState = 2;
+        }
+        break;
+    case 2:
+        input = ProcessMenuInput();
+        switch (input)
+        {
+        case MENU_B_PRESSED:
+        case 1:
+            sChat->funcState = 12;
+            break;
+        case 0:
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState = 3;
+            break;
+        }
+        break;
+    case 3:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_ASK_OVERWRITE_SAVE, 0);
+            sChat->funcState = 4;
+        }
+        break;
+    case 4:
+        if (!IsDisplaySubtaskActive(0))
+            sChat->funcState = 5;
+        break;
+    case 5:
+        input = ProcessMenuInput();
+        switch (input)
+        {
+        case MENU_B_PRESSED:
+        case 1:
+            sChat->funcState = 12;
+            break;
+        case 0:
+            StartDisplaySubtask(CHATDISPLAY_FUNC_DESTROY_YESNO, 0);
+            sChat->funcState = 6;
+            break;
+        }
+        break;
+    case 6:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            StartDisplaySubtask(CHATDISPLAY_FUNC_PRINT_SAVING, 0);
+            SaveRegisteredTexts();
+            sChat->funcState = 7;
+        }
+        break;
+    case 7:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            SetContinueGameWarpStatusToDynamicWarp();
+            TrySavingData(SAVE_NORMAL);
+            sChat->funcState = 8;
+        }
+        break;
+    case 8:
+        StartDisplaySubtask(CHATDISPLAY_FUNC_PRINT_SAVED_GAME, 0);
+        sChat->funcState = 9;
+        break;
+    case 9:
+        if (!IsDisplaySubtaskActive(0))
+        {
+            PlaySE(SE_SAVE);
+            ClearContinueGameWarpStatus();
+            sChat->funcState = 10;
+        }
+        break;
+    case 10:
+        sChat->afterSaveTimer = 0;
+        sChat->funcState = 11;
+        break;
+    case 11:
+        sChat->afterSaveTimer++;
+        if (sChat->afterSaveTimer > 120)
+            sChat->funcState = 12;
+        break;
+    case 12:
+        BeginNormalPaletteFade(PALETTES_ALL, -1, 0, 16, RGB_BLACK);
+        sChat->funcState = 13;
+        break;
+    case 13:
+        if (!gPaletteFade.active)
+        {
+            FreeDisplay();
+            FreeUnionRoomChat();
+            SetMainCallback2(CB2_ReturnToField);
+        }
+        break;
+    }
+}
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801E9F8 = SetChatFunction` ld alias.
+void SetChatFunction(u16 funcId)
+{
+    sChat->funcId = funcId;
+    sChat->funcState = 0;
 }
