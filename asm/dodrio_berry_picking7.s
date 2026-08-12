@@ -4,68 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08028268
-sub_08028268: @ 0x08028268
-	push {r4, lr}
-	adds r4, r0, #0
-	ldrh r0, [r4, #0x30]
-	adds r0, #1
-	strh r0, [r4, #0x30]
-	lsls r0, r0, #0x10
-	asrs r2, r0, #0x10
-	lsrs r0, r0, #0x1f
-	adds r0, r2, r0
-	asrs r1, r0, #1
-	adds r0, r1, #0
-	cmp r1, #0
-	bge _08028284
-	adds r0, r1, #3
-_08028284:
-	asrs r0, r0, #2
-	lsls r0, r0, #2
-	subs r0, r1, r0
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r2, #2
-	ble _080282CE
-	cmp r0, #2
-	bgt _0802829A
-	cmp r0, #1
-	bge _0802829E
-_0802829A:
-	movs r0, #1
-	b _080282A0
-_0802829E:
-	movs r0, #0xff
-_080282A0:
-	lsls r0, r0, #0x18
-	asrs r0, r0, #0x18
-	ldrh r1, [r4, #0x20]
-	adds r0, r0, r1
-	strh r0, [r4, #0x20]
-	ldrh r0, [r4, #0x30]
-	adds r0, #1
-	strh r0, [r4, #0x30]
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	cmp r0, #0x27
-	ble _080282CE
-	movs r0, #0
-	strh r0, [r4, #0x2e]
-	bl sub_08027410
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	movs r0, #0
-	bl sub_08028C40
-	strh r0, [r4, #0x20]
-_080282CE:
-	movs r0, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08028268
 
 	thumb_func_start sub_080282D8
 sub_080282D8: @ 0x080282D8

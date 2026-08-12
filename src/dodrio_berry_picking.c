@@ -1545,6 +1545,35 @@ void StartDodrioIntroAnim(u8 unused)
     sprite->data[4] = 0;
 }
 
+u32 DoDodrioMissedAnim(struct Sprite *sprite)
+{
+    s8 x;
+    u8 state = (++sprite->data[1] / 2) % 4;
+
+    if (sprite->data[1] >= 3)
+    {
+        switch (state)
+        {
+        default:
+            x = 1;
+            break;
+        case 1:
+        case 2:
+            x = -1;
+            break;
+        }
+
+        sprite->x += x;
+        if (++sprite->data[1] >= 40)
+        {
+            sprite->data[0] = 0;
+            sprite->x = sub_08028C40(0, GetNumPlayers());
+        }
+    }
+
+    return 0;
+}
+
 void SendPacket_GameState(struct DodrioGame_Player *player,
                           struct DodrioGame_PlayerCommData *player1,
                           struct DodrioGame_PlayerCommData *player2,
