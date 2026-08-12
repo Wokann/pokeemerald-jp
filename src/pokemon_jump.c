@@ -8,6 +8,7 @@
 #include "link_rfu.h"
 #include "main.h"
 #include "menu.h"
+#include "minigame_countdown.h"
 #include "event_data.h"
 #include "palette.h"
 #include "pokemon.h"
@@ -25,6 +26,8 @@
 
 #define PALTAG_1 5
 #define PALTAG_2 6
+#define GFXTAG_COUNTDOWN 9
+#define PALTAG_COUNTDOWN 7
 
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
@@ -2299,6 +2302,17 @@ void UpdateVineAnim(struct PokemonJumpGfx *jumpGfx, int vineState)
         StartSpriteAnim(jumpGfx->vineSprites[count], vineState);
         count++;
     }
+}
+
+void StartPokeJumpCountdown(struct PokemonJumpGfx *jumpGfx)
+{
+    StartMinigameCountdown(GFXTAG_COUNTDOWN, PALTAG_COUNTDOWN, 120, 80, 0);
+    Gfx_ResetMonSpriteSubpriorities(jumpGfx);
+}
+
+bool32 IsPokeJumpCountdownRunning(void)
+{
+    return IsMinigameCountdownRunning();
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
