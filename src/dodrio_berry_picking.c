@@ -982,6 +982,28 @@ void IncrementBerryResult(u8 berryIdArg, u8 column, u8 playerId)
     }
 }
 
+void UpdateBerriesPickedInRow(bool32 picked)
+{
+    // The 'berries picked in row' stat is only
+    // counted for games with all 5 players
+    if (sGame->numPlayers != MAX_RFU_PLAYERS)
+        return;
+
+    if (picked == TRUE)
+    {
+        if (++sGame->berriesPickedInRow > sGame->maxBerriesPickedInRow)
+            sGame->maxBerriesPickedInRow = sGame->berriesPickedInRow;
+        if (sGame->berriesPickedInRow > MAX_BERRIES)
+            sGame->berriesPickedInRow = MAX_BERRIES;
+    }
+    else // missed
+    {
+        if (sGame->berriesPickedInRow > sGame->maxBerriesPickedInRow)
+            sGame->maxBerriesPickedInRow = sGame->berriesPickedInRow;
+        sGame->berriesPickedInRow = 0;
+    }
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)

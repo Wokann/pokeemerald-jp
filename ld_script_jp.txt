@@ -1339,6 +1339,7 @@ sub_08026B4C = GetPlayerIdAtColumn;
 sub_08026B70 = GetNewBerryId;
 sub_08026CAC = IsTotalBerriesMissedOver10;
 sub_08026CDC = IncrementBerryResult;
+sub_08026FF4 = UpdateBerriesPickedInRow;
 SetMaxBerriesPickedInRow = sub_08027064;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
@@ -2363,6 +2364,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.GetNewBerryIdByDifficulty);
         src/dodrio_berry_picking.o(.text.IsTotalBerriesMissedOver10);
         src/dodrio_berry_picking.o(.text.IncrementBerryResult);
+        src/dodrio_berry_picking.o(.text.UpdateBerriesPickedInRow);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
