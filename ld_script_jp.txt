@@ -1359,6 +1359,7 @@ sub_0802781C = CheckDodrioInParty;
 sub_0802786C = ShowDodrioRecords;
 sub_0802788C = Task_ShowDodrioRecords;
 sub_08027A4C = SetNumPlayers;
+sub_08027AFC = SendRfuPacket;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2411,6 +2412,8 @@ SECTIONS {
         asm/dodrio_berry_picking4.o(.text);
         src/dodrio_berry_picking.o(.text.SetNumPlayers);
         asm/dodrio_berry_picking5.o(.text);
+        src/dodrio_berry_picking.o(.text.SendRfuPacket);
+        asm/dodrio_berry_picking6.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
         asm/main_menu.o(.text);

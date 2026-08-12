@@ -1339,6 +1339,16 @@ void SetNumPlayers(void)
     sGame->numPlayers = GetLinkPlayerCount();
 }
 
+void SendRfuPacket(u32 cmd)
+{
+    struct { u32 a, b; } pkt;
+    u8 c;
+    pkt.a = (pkt.a & 0xFFFFFF00) | 1;
+    c = cmd;
+    pkt.b = (pkt.b & 0xFFFFFF00) | c;
+    Rfu_SendPacket(&pkt);
+}
+
 void CheckDodrioInParty(void)
 {
     int i;
