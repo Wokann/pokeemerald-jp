@@ -391,7 +391,6 @@ extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
 extern void sub_0802C474(void); // ClearUnreadField
 extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
-extern int sub_0802C430(u8 *atJumpPeak); // GetNumPlayersForBonus
 extern int sub_0802C484(void); // GetScoreBonus
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
@@ -1734,7 +1733,7 @@ void TryUpdateScore(void)
 
     if (sPokemonJump->giveBonus && (DidAllPlayersClearVine() == TRUE || sPokemonJump->vineState == VINE_HIGHEST))
     {
-        int numPlayers = sub_0802C430(sPokemonJump->atJumpPeak3); // GetNumPlayersForBonus
+        int numPlayers = GetNumPlayersForBonus(sPokemonJump->atJumpPeak3);
         AddJumpScore(sub_0802C484()); // GetScoreBonus
         SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         sPokemonJump->giveBonus = FALSE;
@@ -1864,6 +1863,28 @@ int GetPlayersAtJumpPeak(void)
 bool32 AreLinkQueuesEmpty(void)
 {
     return !gRfu.recvQueue.count && !gRfu.sendQueue.count;
+}
+
+int GetNumPlayersForBonus(u8 *atJumpPeak)
+{
+    int i = 0;
+    int flags = 0;
+    int count = 0;
+
+    for (; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (atJumpPeak[i])
+        {
+            flags |= 1 << i;
+            count++;
+        }
+    }
+
+    sPokemonJump->comm.receivedBonusFlags = flags;
+    if (flags)
+        sPokemonJump->showBonus = TRUE;
+
+    return count;
 }
 
 void InitGame(struct PokemonJump *jump)
