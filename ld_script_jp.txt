@@ -1199,7 +1199,7 @@ sub_0801EFE0 = GetChatHostName;
 TryAllocDisplay = sub_0801F2E0;
 RunDisplaySubtasks = sub_0801F3C8;
 IsDisplaySubtask0Active = sub_0801F344;
-Task_ReceiveChatMessage = sub_0801F0C4;
+sub_0801F0C4 = Task_ReceiveChatMessage;
 StartDisplaySubtask = sub_0801F3FC;
 IsDisplaySubtaskActive = sub_0801F454;
 ProcessMenuInput = sub_0801FD30;
@@ -1968,6 +1968,7 @@ SECTIONS {
         src/union_room_chat.o(.text.sub_0801EFA4);
         src/union_room_chat.o(.text.GetChatHostName);
         src/union_room_chat.o(.text.InitUnionRoomChatRegisteredTexts);
+        src/union_room_chat.o(.text.Task_ReceiveChatMessage);
         asm/union_room_chat.o(.text);
         asm/berry_crush.o(.text);
         src/berry_powder.o(.text);

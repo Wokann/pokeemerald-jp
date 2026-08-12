@@ -132,7 +132,6 @@ extern void SetChatFunction(u16 funcId);
 extern bool8 TryAllocDisplay(void);
 extern void RunDisplaySubtasks(void);
 extern bool32 IsDisplaySubtask0Active(void);
-extern void Task_ReceiveChatMessage(u8 taskId);
 extern void StartDisplaySubtask(u16 subtaskId, u8 assignId);
 extern bool8 IsDisplaySubtaskActive(u8 id);
 extern s8 ProcessMenuInput(void);
@@ -170,6 +169,7 @@ u8 *GetLastReceivedMessage(void);
 u8 GetReceivedPlayerIndex(void);
 u8 GetTextEntryCursorPosition(void);
 u8 *GetChatHostName(void);
+void Task_ReceiveChatMessage(u8 taskId);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1319,3 +1319,128 @@ void InitUnionRoomChatRegisteredTexts(void)
     StringCopy(&gSaveBlock1Ptr->registeredTexts[8], gUnknown_85CC792);
     StringCopy(&gSaveBlock1Ptr->registeredTexts[9], gUnknown_85CC798);
 }
+
+#define tState               data[0]
+#define tI                   data[1]
+#define tCurrLinkPlayer      data[2]
+#define tBlockReceivedStatus data[3]
+#define tLinkPlayerCount     data[4]
+#define tNextState           data[5]
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801F0C4 = Task_ReceiveChatMessage` ld alias.
+void Task_ReceiveChatMessage(u8 taskId)
+{
+    u8 *buffer;
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 0:
+        if (!gReceivedRemoteLinkPlayers)
+        {
+            DestroyTask(taskId);
+            return;
+        }
+
+        tState = 1;
+        // fall through
+    case 1:
+        tLinkPlayerCount = GetLinkPlayerCount();
+        if (sChat->linkPlayerCount != tLinkPlayerCount)
+        {
+            tState = 2;
+            sChat->linkPlayerCount = tLinkPlayerCount;
+            return;
+        }
+
+        tBlockReceivedStatus = GetBlockReceivedStatus();
+        if (!tBlockReceivedStatus && Rfu_IsPlayerExchangeActive())
+            return;
+
+        tI = 0;
+        tState = 3;
+        // fall through
+    case 3:
+        for (; tI < MAX_RFU_PLAYERS && ((tBlockReceivedStatus >> tI) & 1) == 0; tI++)
+            ;
+
+        if (tI == MAX_RFU_PLAYERS)
+        {
+            tState = 1;
+            return;
+        }
+
+        tCurrLinkPlayer = tI;
+        ResetBlockReceivedFlag(tCurrLinkPlayer);
+        buffer = (u8 *)gBlockRecvBuffer[tI];
+        switch (buffer[0])
+        {
+            default:
+            case CHAT_MESSAGE_CHAT:    tNextState = 3; break;
+            case CHAT_MESSAGE_JOIN:    tNextState = 3; break;
+            case CHAT_MESSAGE_LEAVE:   tNextState = 4; break;
+            case CHAT_MESSAGE_DROP:    tNextState = 5; break;
+            case CHAT_MESSAGE_DISBAND: tNextState = 6; break;
+        }
+
+        if (ProcessReceivedChatMessage(sChat->receivedMessage, (u8 *)gBlockRecvBuffer[tI]))
+        {
+            sChat->receivedPlayerIndex = tI;
+            StartDisplaySubtask(CHATDISPLAY_FUNC_SCROLL_CHAT, 2);
+            tState = 7;
+        }
+        else
+        {
+            tState = tNextState;
+        }
+
+        tI++;
+        break;
+    case 7:
+        if (!IsDisplaySubtaskActive(2))
+            tState = tNextState;
+        break;
+    case 4:
+        if (!sChat->multiplayerId && tCurrLinkPlayer)
+        {
+            if (GetLinkPlayerCount() == 2)
+            {
+                Rfu_StopPartnerSearch();
+                sChat->exitType = CHAT_EXIT_ONLY_LEADER;
+                DestroyTask(taskId);
+                return;
+            }
+            Rfu_DisconnectPlayerById(tCurrLinkPlayer);
+        }
+
+        tState = 3;
+        break;
+    case 5:
+        if (sChat->multiplayerId)
+            sChat->exitType = CHAT_EXIT_DROPPED;
+
+        DestroyTask(taskId);
+        break;
+    case 6:
+        sChat->exitType = CHAT_EXIT_DISBANDED;
+        DestroyTask(taskId);
+        break;
+    case 2:
+        if (!Rfu_IsPlayerExchangeActive())
+        {
+            if (!sChat->multiplayerId)
+                SetUnionRoomChatPlayerData(sChat->linkPlayerCount);
+
+            tState = 1;
+        }
+        break;
+    }
+}
+
+#undef tNextState
+#undef tLinkPlayerCount
+#undef tBlockReceivedStatus
+#undef tCurrLinkPlayer
+#undef tI
+#undef tState
