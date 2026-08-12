@@ -370,6 +370,7 @@ extern u16 sub_0802C574(u16 prizeItemId, u16 prizeItemQuantity); // GetQuantityL
 extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
 extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
+extern void sub_0802DA5C(int score); // PrintScore
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1280,6 +1281,29 @@ bool32 ClosePokeJumpLink(void)
         if (!gReceivedRemoteLinkPlayers)
             return FALSE;
         break;
+    }
+
+    return TRUE;
+}
+
+bool32 CloseMessageAndResetScore(void)
+{
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        sub_0802D704(); // ClearMessageWindow
+        sub_0802DA5C(0); // PrintScore
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+        if (!sub_0802D734()) // RemoveMessageWindow
+        {
+            sPokemonJump->helperState++;
+            return FALSE;
+        }
+        break;
+    case 2:
+        return FALSE;
     }
 
     return TRUE;
