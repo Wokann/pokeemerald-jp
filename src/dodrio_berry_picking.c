@@ -2509,6 +2509,41 @@ void Msg_SomeoneDroppedOut(void)
     }
 }
 
+void StopGfxFuncs(void)
+{
+    DestroyTask(sGfx->taskId);
+    sGfx->finished = TRUE;
+}
+
+void GfxIdle(void)
+{
+}
+
+void SetGfxFunc(void (*func)(void))
+{
+    sGfx->state = 0;
+    sGfx->finished = FALSE;
+    sGfx->func = func;
+}
+
+void (*GetGfxFunc(void))(void)
+{
+    return sGfx->func;
+}
+
+bool32 IsGfxFuncActive(void)
+{
+    if (sGfx->finished == TRUE)
+        return FALSE;
+    else
+        return TRUE;
+}
+
+u8 GetPlayAgainState(void)
+{
+    return sGfx->playAgainState;
+}
+
 void nullsub_15(void)
 {
 }
