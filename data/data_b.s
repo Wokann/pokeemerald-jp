@@ -1282,36 +1282,36 @@ sSparkleCoords: @ 0x82C7A5E
 sPlayerBerrySpriteTags: @ 0x82C7A74
 	.incbin "baserom_jp.gba", 0x2c7a74, 0xc
 
-	.globl gUnknown_82C7A80
-gUnknown_82C7A80: @ 0x82C7A80
+	.globl sSpriteSheets
+sSpriteSheets: @ 0x82C7A80
 	.incbin "baserom_jp.gba", 0x2c7a80, 0x28
 
-	.globl gUnknown_82C7AA8
-gUnknown_82C7AA8: @ 0x82C7AA8
+	.globl sSpritePals
+sSpritePals: @ 0x82C7AA8
 	.incbin "baserom_jp.gba", 0x2c7aa8, 0xf0
 
-	.globl gUnknown_82C7B98
-gUnknown_82C7B98: @ 0x82C7B98
+	.globl sSpriteTemplate_CrusherBase
+sSpriteTemplate_CrusherBase: @ 0x82C7B98
 	.incbin "baserom_jp.gba", 0x2c7b98, 0x18
 
-	.globl gUnknown_82C7BB0
-gUnknown_82C7BB0: @ 0x82C7BB0
+	.globl sSpriteTemplate_Impact
+sSpriteTemplate_Impact: @ 0x82C7BB0
 	.incbin "baserom_jp.gba", 0x2c7bb0, 0x18
 
-	.globl gUnknown_82C7BC8
-gUnknown_82C7BC8: @ 0x82C7BC8
+	.globl sSpriteTemplate_Sparkle
+sSpriteTemplate_Sparkle: @ 0x82C7BC8
 	.incbin "baserom_jp.gba", 0x2c7bc8, 0x18
 
-	.globl gUnknown_82C7BE0
-gUnknown_82C7BE0: @ 0x82C7BE0
+	.globl sSpriteTemplate_Timer
+sSpriteTemplate_Timer: @ 0x82C7BE0
 	.incbin "baserom_jp.gba", 0x2c7be0, 0x18
 
 	.globl sSpriteTemplate_PlayerBerry
 sSpriteTemplate_PlayerBerry: @ 0x82C7BF8
 	.incbin "baserom_jp.gba", 0x2c7bf8, 0x18
 
-	.globl gUnknown_82C7C10
-gUnknown_82C7C10: @ 0x82C7C10
+	.globl sDigitObjTemplates
+sDigitObjTemplates: @ 0x82C7C10
 	.incbin "baserom_jp.gba", 0x2c7c10, 0x30
 
 	.globl gUnknown_82C7C40

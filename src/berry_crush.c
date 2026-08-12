@@ -191,10 +191,17 @@ extern const struct BerryCrushPlayerCoords sPlayerCoords[];
 extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
 extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
 extern const u32 sPlayerNameWindowGfx[];
+extern const struct CompressedSpriteSheet sSpriteSheets[];
+extern const struct SpritePalette sSpritePals[];
+extern const struct SpriteTemplate sSpriteTemplate_CrusherBase;
+extern const struct SpriteTemplate sSpriteTemplate_Impact;
+extern const struct SpriteTemplate sSpriteTemplate_Sparkle;
+extern const struct SpriteTemplate sSpriteTemplate_Timer;
+extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
-extern void CreateGameSprites(struct BerryCrushGame *);
+void CreateGameSprites(struct BerryCrushGame *);
 extern void DestroyGameSprites(struct BerryCrushGame *);
 extern void SpriteCB_Sparkle_Init(struct Sprite *);
 
@@ -892,6 +899,75 @@ void DrawPlayerNameWindows(struct BerryCrushGame *game)
         CopyWindowToVram(game->gfx.nameWindowIds[i], COPYWIN_FULL);
     }
     CopyBgTilemapBufferToVram(0);
+}
+
+void CreateGameSprites(struct BerryCrushGame *game)
+{
+    u8 i = 0;
+    u8 spriteId;
+
+    game->depth = CRUSHER_START_Y;
+    game->vibration = 0;
+    gSpriteCoordOffsetX = 0;
+    gSpriteCoordOffsetY = CRUSHER_START_Y;
+    for (i = 0; i <= 3; i++)
+        LoadCompressedSpriteSheet(&sSpriteSheets[i]);
+    LoadSpritePalettes(sSpritePals);
+
+    // Create sprite for crusher base
+    spriteId = CreateSprite(&sSpriteTemplate_CrusherBase, 120, 88, 5);
+    game->gfx.coreSprite = &gSprites[spriteId];
+    game->gfx.coreSprite->oam.priority = 3;
+    game->gfx.coreSprite->coordOffsetEnabled = TRUE;
+    game->gfx.coreSprite->animPaused = TRUE;
+
+    // Create sprites for the impact effect
+    for (i = 0; i < game->playerCount; i++)
+    {
+        spriteId = CreateSprite(
+            &sSpriteTemplate_Impact,
+            game->gfx.playerCoords[i]->impactXOffset + 120,
+            game->gfx.playerCoords[i]->impactYOffset + 32,
+            0
+        );
+        game->gfx.impactSprites[i] = &gSprites[spriteId];
+        game->gfx.impactSprites[i]->oam.priority = 1;
+        game->gfx.impactSprites[i]->invisible = TRUE;
+        game->gfx.impactSprites[i]->coordOffsetEnabled = TRUE;
+        game->gfx.impactSprites[i]->animPaused = TRUE;
+    }
+
+    // Create sprites for sparkle effect
+    for (i = 0; i <= 10; i++)
+    {
+        spriteId = CreateSprite(
+            &sSpriteTemplate_Sparkle,
+            sSparkleCoords[i][0] + 120,
+            sSparkleCoords[i][1] + 136,
+            6
+        );
+        game->gfx.sparkleSprites[i] = &gSprites[spriteId];
+        game->gfx.sparkleSprites[i]->oam.priority = 3;
+        game->gfx.sparkleSprites[i]->invisible = TRUE;
+        game->gfx.sparkleSprites[i]->animPaused = TRUE;
+        game->gfx.sparkleSprites[i]->data[0] = i;
+    }
+
+    // Create sprites for timer
+    for (i = 0; i <= 1; i++)
+    {
+        spriteId = CreateSprite(&sSpriteTemplate_Timer, 24 * i + 176, 8, 0);
+        game->gfx.timerSprites[i] = &gSprites[spriteId];
+        game->gfx.timerSprites[i]->oam.priority = 0;
+        game->gfx.timerSprites[i]->invisible = FALSE;
+        game->gfx.timerSprites[i]->animPaused = FALSE;
+    }
+    DigitObjUtil_CreatePrinter(0, 0, &sDigitObjTemplates[0]);
+    DigitObjUtil_CreatePrinter(1, 0, &sDigitObjTemplates[1]);
+    DigitObjUtil_CreatePrinter(2, 0, &sDigitObjTemplates[2]);
+
+    if (game->gameState == STATE_INIT)
+        HideTimer(&game->gfx);
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
