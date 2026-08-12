@@ -293,6 +293,11 @@ extern void SetStatusBarInvisibility(bool8);
 extern void ResetCloudPos(void);
 extern void SetCloudInvisibility(bool8);
 extern u8 GetPlayAgainState(void);
+extern u32 GetHighestScore(void);
+extern void ResetBerryAndStatusBarSprites(void);
+extern void ResetForPlayAgainPrompt(void);
+extern void ResetPickState(void);
+extern void HandleWaitPlayAgainInput(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -791,6 +796,97 @@ void DoResults(void)
     default:
         if (!IsGfxFuncActive())
             SetGameFunc(FUNC_ASK_PLAY_AGAIN);
+        break;
+    }
+}
+
+void AskPlayAgain(void)
+{
+    u8 playAgainState;
+    u8 i;
+
+    switch (sGame->state)
+    {
+    case 0:
+        if (GetHighestScore() >= PRIZE_SCORE)
+        {
+            SetGfxFuncById(GFXFUNC_MSG_SAVING);
+        }
+        sGame->state++;
+        break;
+    case 1:
+        if (!IsGfxFuncActive())
+        {
+            SetGfxFuncById(GFXFUNC_MSG_PLAY_AGAIN);
+            sGame->state++;
+        }
+        break;
+    case 2:
+        ResetBerryAndStatusBarSprites();
+        ResetForPlayAgainPrompt();
+        sGame->state++;
+        break;
+    case 3:
+        if ((playAgainState = GetPlayAgainState()) != PLAY_AGAIN_NONE)
+        {
+            sGame->state++;
+        }
+        break;
+    case 4:
+        if (!IsGfxFuncActive())
+        {
+            SetGfxFuncById(GFXFUNC_MSG_COMM_STANDBY);
+            sGame->state++;
+        }
+        break;
+    case 5:
+        playAgainState = GetPlayAgainState();
+        if (SendBlock(0, &playAgainState, sizeof(playAgainState)))
+        {
+            sGame->playersReceived = 0;
+            sGame->state++;
+        }
+        break;
+    case 6:
+        if (IsLinkTaskFinished())
+            sGame->state++;
+        break;
+    case 7:
+        if (AllPlayersReadyToStart())
+        {
+            for (i = 0; i < sGame->numPlayers; i++)
+            {
+                *(&sGame->playAgainStates[i]) = *(u8 *)gBlockRecvBuffer[i];
+                sGame->playersReceived = sGame->numPlayers;
+            }
+        }
+        if (sGame->playersReceived >= sGame->numPlayers)
+        {
+            if (++sGame->timer >= 120)
+            {
+                ResetPickState();
+                SetGfxFuncById(GFXFUNC_ERASE_MSG);
+                sGame->state++;
+            }
+        }
+        else
+        {
+            HandleWaitPlayAgainInput();
+        }
+        break;
+    default:
+        if (!IsGfxFuncActive())
+        {
+            for (i = 0; i < sGame->numPlayers; i++)
+            {
+                if (sGame->playAgainStates[i] == PLAY_AGAIN_NO)
+                {
+                    SetGameFunc(FUNC_END_LINK);
+                    return;
+                }
+            }
+            SetGameFunc(FUNC_RESET_GAME);
+        }
         break;
     }
 }
