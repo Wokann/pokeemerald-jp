@@ -1265,6 +1265,7 @@ sub_08023EFC = Cmd_SaveGame;
 sub_08023FF0 = Cmd_AskPlayAgain;
 sub_080240A8 = Cmd_CommunicatePlayAgainResponses;
 sub_08024184 = Cmd_PlayAgain;
+sub_0802420C = Cmd_StopGame;
 OpenResultsWindow = sub_08021DDC;
 CloseResultsWindow = sub_08021F9C;
 StartMinigameCountdown = sub_0802E788;
@@ -2227,6 +2228,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_AskPlayAgain);
         src/berry_crush.o(.text.Cmd_CommunicatePlayAgainResponses);
         src/berry_crush.o(.text.Cmd_PlayAgain);
+        src/berry_crush.o(.text.Cmd_StopGame);
         asm/berry_crush5.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

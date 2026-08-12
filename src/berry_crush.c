@@ -2186,6 +2186,39 @@ u32 Cmd_PlayAgain(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_StopGame(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        DrawDialogueFrame(0, FALSE);
+        if (game->playAgainState == PLAY_AGAIN_NO_BERRIES)
+            AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_NO_BERRIES], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        else
+            AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[MSG_DROPPED], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        CopyWindowToVram(0, COPYWIN_FULL);
+        break;
+    case 1:
+        if (IsTextPrinterActive(0))
+            return 0;
+        game->gfx.counter = 120;
+        break;
+    case 2:
+        if (game->gfx.counter != 0)
+        {
+            game->gfx.counter--;
+        }
+        else
+        {
+            RunOrScheduleCommand(CMD_CLOSE_LINK, SCHEDULE_CMD, NULL);
+            game->cmdState = 0;
+        }
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
