@@ -1870,6 +1870,104 @@ u32 Cmd_PlayGame_Member(struct BerryCrushGame *game, u8 *args)
     }
 }
 
+// Game was 'won', crusher was pushed down fully before time was up
+u32 Cmd_FinishGame(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        game->gameState = STATE_FINISHED;
+        PlaySE(SE_M_STRENGTH);
+        BlendPalettes(PALETTES_ALL, 8, RGB_YELLOW);
+        game->gfx.counter = 2;
+        break;
+    case 1:
+        if (--game->gfx.counter != (u8)-1)
+            return 0;
+        BlendPalettes(PALETTES_ALL, 0, RGB_YELLOW);
+        game->gfx.vibrationIdx = 4;
+        game->gfx.counter = 0;
+        game->gfx.numVibrations = sIntroOutroVibrationData[game->gfx.vibrationIdx][0];
+        break;
+    case 2:
+        game->vibration = sIntroOutroVibrationData[game->gfx.vibrationIdx][game->gfx.counter];
+        SetGpuReg(REG_OFFSET_BG0VOFS, -game->vibration);
+        SetGpuReg(REG_OFFSET_BG2VOFS, -game->vibration);
+        SetGpuReg(REG_OFFSET_BG3VOFS, -game->vibration);
+        if (++game->gfx.counter < game->gfx.numVibrations)
+            return 0;
+        if (game->gfx.vibrationIdx != 0)
+        {
+            game->gfx.vibrationIdx--;
+            game->gfx.numVibrations = sIntroOutroVibrationData[game->gfx.vibrationIdx][0];
+            game->gfx.counter = 0;
+            return 0;
+        }
+        break;
+    case 3:
+        game->vibration = 0;
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+        break;
+    case 4:
+        if (!AreEffectsFinished(game, &game->gfx))
+            return 0;
+        Rfu_SetLinkStandbyCallback();
+        game->cmdTimer = 0;
+        break;
+    case 5:
+        if (!IsLinkTaskFinished())
+            return 0;
+        RunOrScheduleCommand(CMD_CALC_RESULTS, SCHEDULE_CMD, NULL);
+        game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_HandleTimeUp(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        game->gameState = STATE_TIMES_UP;
+        PlaySE(SE_FAILURE);
+        BlendPalettes(PALETTES_ALL, 8, RGB_RED);
+        game->gfx.counter = 4;
+        break;
+    case 1:
+        if (--game->gfx.counter != (u8)-1)
+            return 0;
+        BlendPalettes(PALETTES_ALL, 0, RGB_RED);
+        game->gfx.counter = 0;
+        break;
+    case 2:
+        if (!AreEffectsFinished(game, &game->gfx))
+            return 0;
+        Rfu_SetLinkStandbyCallback();
+        game->cmdTimer = 0;
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+        break;
+    case 3:
+        if (!IsLinkTaskFinished())
+            return 0;
+        ConvertIntToDecimalStringN(gStringVar1, game->powder, STR_CONV_MODE_LEFT_ALIGN, 6);
+        SetPrintMessageArgs(args, MSG_TIMES_UP, F_MSG_CLEAR, 0, 0);
+        game->nextCmd = CMD_SAVE;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);

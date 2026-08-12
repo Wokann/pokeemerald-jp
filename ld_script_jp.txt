@@ -1257,6 +1257,8 @@ sub_08023444 = HandlePlayerInput;
 sub_080235EC = RecvLinkData;
 sub_08023684 = Cmd_PlayGame_Leader;
 sub_0802372C = Cmd_PlayGame_Member;
+sub_080237C4 = Cmd_FinishGame;
+sub_08023954 = Cmd_HandleTimeUp;
 StartMinigameCountdown = sub_0802E788;
 IsMinigameCountdownRunning = sub_0802E7E8;
 IsMinigameCountdownRunning = sub_0802E7E8;
@@ -2209,6 +2211,8 @@ SECTIONS {
         src/berry_crush.o(.text.RecvLinkData);
         src/berry_crush.o(.text.Cmd_PlayGame_Leader);
         src/berry_crush.o(.text.Cmd_PlayGame_Member);
+        src/berry_crush.o(.text.Cmd_FinishGame);
+        src/berry_crush.o(.text.Cmd_HandleTimeUp);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);
