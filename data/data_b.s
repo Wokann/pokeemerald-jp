@@ -1586,8 +1586,8 @@ sNameWindowCoords_5Players: @ 0x82CEC40
 sNameWindowCoords: @ 0x82CEC54
 	.incbin "baserom_jp.gba", 0x2cec54, 0x14
 
-	.globl gUnknown_82CEC68
-gUnknown_82CEC68: @ 0x82CEC68
+	.globl sRankingTexts
+sRankingTexts: @ 0x82CEC68
 	.incbin "baserom_jp.gba", 0x2cec68, 0x14
 
 	.globl gUnknown_82CEC7C
@@ -1598,16 +1598,16 @@ gUnknown_82CEC7C: @ 0x82CEC7C
 gUnknown_82CEC84: @ 0x82CEC84
 	.incbin "baserom_jp.gba", 0x2cec84, 0xa
 
-	.globl gUnknown_82CEC8E
-gUnknown_82CEC8E: @ 0x82CEC8E
+	.globl sRankingYCoords
+sRankingYCoords: @ 0x82CEC8E
 	.incbin "baserom_jp.gba", 0x2cec8e, 0xa
 
 	.globl sGfxFuncs
 sGfxFuncs: @ 0x82CEC98
 	.incbin "baserom_jp.gba", 0x2cec98, 0x50
 
-	.globl gUnknown_82CECE8
-gUnknown_82CECE8: @ 0x82CECE8
+	.globl sRankingOrder
+sRankingOrder: @ 0x82CECE8
 	.incbin "baserom_jp.gba", 0x2cece8, 0x8
 
 	.globl gUnknown_82CECF0
@@ -16516,8 +16516,8 @@ gUnknown_85CCDCB: @ 0x85CCDCB
 	.string "だれ{GREEN}{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}"
 	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
 
-	.globl gUnknown_85CCDE7
-gUnknown_85CCDE7: @ 0x85CCDE7
+	.globl gText_SpacePoints
+gText_SpacePoints: @ 0x85CCDE7
 	.string "てん$"
 
 	.globl gUnknown_85CCDEA

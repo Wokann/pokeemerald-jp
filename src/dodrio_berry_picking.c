@@ -377,6 +377,9 @@ extern const u16 sTreeBorderLeft_Tilemap[];
 extern const u16 sTreeBorderRight_Tilemap[];
 extern const u8 sDodrioTextColorTable[][3];
 extern const struct WinCoords *const sNameWindowCoords[];
+extern const u8 *const sRankingTexts[];
+extern const u16 sRankingYCoords[];
+extern const u8 sRankingOrder[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2236,6 +2239,71 @@ void ShowNames(void)
             sGfx->finished = TRUE;
         }
         break;
+    }
+}
+
+void PrintRankedScores(u8 numPlayers_)
+{
+    u8 i, ranking = 0, rankedPlayers = 0;
+    u8 numPlayers = numPlayers_; // Needed to match
+    u8 *name;
+    u32 numWidth;
+    u8 numString[32];
+    u8 playersByRanking[MAX_RFU_PLAYERS];
+    struct DodrioGame_ScoreResults temp, scoreResults[MAX_RFU_PLAYERS];
+
+    memcpy(playersByRanking, sRankingOrder, MAX_RFU_PLAYERS); // JP copies the initial order from ROM
+
+    // Get all players scores and rankings
+    for (i = 0; i < numPlayers; i++)
+    {
+        playersByRanking[i] = i;
+        GetScoreResults(&temp, i);
+        scoreResults[i] = temp;
+    }
+
+    // Sort player ids by ranking
+    if (GetHighestScore() != 0)
+    {
+        do
+        {
+            for (i = 0; i < numPlayers; i++)
+            {
+                if (scoreResults[i].ranking == ranking)
+                {
+                    playersByRanking[rankedPlayers] = i;
+                    rankedPlayers++;
+                }
+            }
+            ranking = rankedPlayers;
+        } while (rankedPlayers < numPlayers);
+    }
+
+    // Put any player with a score of 0 at lowest ranking
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (scoreResults[i].score == 0)
+            scoreResults[i].ranking = numPlayers - 1;
+    }
+
+    // Print text
+    for (i = 0; i < numPlayers; i++)
+    {
+        u8 colorsId = COLORID_GRAY;
+        u8 playerId = playersByRanking[i];
+        u32 points = scoreResults[playerId].score;
+        u8 y;
+        const u16 *yp;
+
+        AddTextPrinterParameterized(sGfx->windowIds[1], 0, sRankingTexts[scoreResults[playerId].ranking], 8, (y = *(const u8 *)(yp = &sRankingYCoords[0], yp + i)), TEXT_SKIP_DRAW, NULL); // JP reads the low byte of the u16 table
+        if (playerId == GetMultiplayerId())
+            colorsId = COLORID_BLUE;
+        name = GetPlayerName(playerId);
+        AddTextPrinterParameterized3(sGfx->windowIds[1], 0, 28, y, sDodrioTextColorTable[colorsId], -1, name); // JP uses font id 0
+        ConvertIntToDecimalStringN(numString, points, STR_CONV_MODE_LEFT_ALIGN, 7);
+        numWidth = GetStringWidth(0, numString, -1); // JP uses font id 0
+        AddTextPrinterParameterized(sGfx->windowIds[1], 0, numString, (u8)(145 - numWidth), y, TEXT_SKIP_DRAW, NULL); // JP fixed x
+        AddTextPrinterParameterized(sGfx->windowIds[1], 0, gText_SpacePoints, 155, y, TEXT_SKIP_DRAW, NULL); // JP fixed x
     }
 }
 
