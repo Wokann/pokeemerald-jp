@@ -1457,6 +1457,7 @@ sub_0802BA78 = Task_CommunicateMonInfo_PokeJump;
 sub_0802BB54 = SetTaskWithPokeJumpStruct;
 sub_0802BB74 = InitVineState;
 sub_0802BB94 = ResetVineState;
+sub_0802BBD8 = UpdateVineState;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
 sPokeJumpMemberFuncs = gUnknown_82CEEA4;
 sub_0802A788 = ResetForNewGame;
@@ -2639,6 +2640,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.SetTaskWithPokeJumpStruct);
         src/pokemon_jump.o(.text.InitVineState);
         src/pokemon_jump.o(.text.ResetVineState);
+        src/pokemon_jump.o(.text.UpdateVineState);
         asm/pokemon_jump_1a.o(.text);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         asm/pokemon_jump_1b.o(.text);

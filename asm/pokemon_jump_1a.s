@@ -2,57 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-	thumb_func_start sub_0802BBD8
-sub_0802BBD8: @ 0x0802BBD8
-	push {r4, lr}
-	ldr r4, _0802BC30
-	ldr r1, [r4]
-	adds r0, r1, #0
-	adds r0, #0x46
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0802BC28
-	adds r1, #0x4a
-	ldrh r0, [r1]
-	adds r0, #1
-	strh r0, [r1]
-	bl sub_0802BC3C
-	ldr r3, [r4]
-	ldrh r1, [r3, #0x34]
-	adds r2, r1, r0
-	strh r2, [r3, #0x34]
-	lsls r1, r2, #0x10
-	ldr r0, _0802BC34
-	cmp r1, r0
-	bls _0802BC0A
-	ldr r1, _0802BC38
-	adds r0, r2, r1
-	strh r0, [r3, #0x34]
-_0802BC0A:
-	ldr r1, [r4]
-	ldr r2, [r1, #0x14]
-	str r2, [r1, #0x18]
-	ldrh r0, [r1, #0x34]
-	lsrs r0, r0, #8
-	str r0, [r1, #0x14]
-	cmp r0, #6
-	bls _0802BC28
-	cmp r2, #6
-	bhi _0802BC28
-	ldrh r0, [r1, #0x36]
-	adds r0, #1
-	strh r0, [r1, #0x36]
-	bl sub_0802BC70
-_0802BC28:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802BC30: .4byte 0x020229B0
-_0802BC34: .4byte 0x09FE0000
-_0802BC38: .4byte 0xFFFFF601
-	thumb_func_end sub_0802BBD8
-
 	thumb_func_start sub_0802BC3C
 sub_0802BC3C: @ 0x0802BC3C
 	push {lr}
