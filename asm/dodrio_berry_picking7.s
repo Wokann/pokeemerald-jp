@@ -4,26 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_080289FC
-sub_080289FC: @ 0x080289FC
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r1, _08028A1C
-	lsls r2, r0, #4
-	adds r2, r2, r0
-	lsls r2, r2, #2
-	adds r2, r2, r1
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #2
-	adds r1, #0x32
-	strh r1, [r2, #0x20]
-	movs r0, #0x32
-	strh r0, [r2, #0x22]
-	bx lr
-	.align 2, 0
-_08028A1C: .4byte 0x020205AC
-	thumb_func_end sub_080289FC
 
 	thumb_func_start sub_08028A20
 sub_08028A20: @ 0x08028A20
