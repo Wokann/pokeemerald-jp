@@ -155,6 +155,18 @@ struct SubtaskInfo
     bool32 (*callback)(u8 *);
 };
 
+struct MessageWindowInfo
+{
+    const u8 *text;
+    u8 boxType;
+    u8 x;
+    u8 y;
+    u8 letterSpacing;
+    u8 lineSpacing;
+    bool8 hasPlaceholders;
+    bool8 useWiderBox;
+};
+
 // Chat main function table (0x082C5064, in data/data_b.s).
 extern void (*const gUnknown_82C5064[])(void);
 
@@ -205,10 +217,20 @@ extern const u8 gUnknown_85CC798[];
 extern const u8 gUnknown_85CAAD8[];
 extern const u8 gUnknown_85CAADB[];
 
+// JP standard chat message templates (0x082C57D4, in data/data_b.s).
+extern const struct MessageWindowInfo gUnknown_82C57D4[];
+
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
 u16 GetNumOverflowCharsInMessage(void);
 static u8 *GetEndOfMessagePtr(void);
+static void AppendTextToMessage(void);
+static void DeleteLastMessageCharacter(void);
+static void SwitchCaseOfLastMessageCharacter(void);
+static bool32 ChatMessageIsNotEmpty(void);
+static void RegisterTextAtRow(void);
+static void ResetMessageEntryBuffer(void);
+static void SaveRegisteredTexts(void);
 bool32 ProcessReceivedChatMessage(u8 *dest, u8 *recvMessage);
 u8 GetCurrentKeyboardPage(void);
 void GetCurrentKeyboardColAndRow(u8 *col, u8 *row);
@@ -252,7 +274,7 @@ extern bool32 SlideKeyboardPageIn(void);
 extern void PrintCurrentKeyboardPage(void);
 extern void MoveKeyboardCursor(void);
 extern void UpdateRButtonLabel(void);
-extern void AddStdMessageWindow(u16 msgId, u8 windowId);
+extern void AddStdMessageWindow(int msgId, u16 bg0vofs);
 extern void AddYesNoMenuAt(u8 x, u8 y, u8 windowId);
 extern void HideStdMessageWindow(void);
 extern void HideYesNoMenuWindow(void);
@@ -302,6 +324,14 @@ void HideStdMessageWindow(void);
 void DestroyStdMessageWindow(void);
 void FillTextEntryWindow(u16 x, u16 width, u8 fillValue);
 u8 sub_081984B0(u8 windowId, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
+void AddStdMessageWindow(int msgId, u16 bg0vofs);
+void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor);
+static void PrepareSendBuffer_Null(u8 *buffer);
+static void PrepareSendBuffer_Join(u8 *buffer);
+static void PrepareSendBuffer_Chat(u8 *buffer);
+static void PrepareSendBuffer_Leave(u8 *buffer);
+static void PrepareSendBuffer_Drop(u8 *buffer);
+static void PrepareSendBuffer_Disband(u8 *buffer);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -2242,4 +2272,84 @@ void DestroyStdMessageWindow(void)
 void FillTextEntryWindow(u16 x, u16 width, u8 fillValue)
 {
     FillWindowPixelRect(WIN_TEXT_ENTRY, fillValue, x * 8, 1, width * 8, 14);
+}
+
+void AddStdMessageWindow(int msgId, u16 bg0vofs)
+{
+    const u8 *str;
+    int windowId;
+    struct WindowTemplate template;
+    template.bg = 0;
+    template.tilemapLeft = 8;
+    template.tilemapTop = 16;
+    template.width = 21;
+    template.height = 4;
+    template.paletteNum = 14;
+    template.baseBlock = 0x71; // JP standard message window base block (US uses 0x6A)
+    if (gUnknown_82C57D4[msgId].useWiderBox)
+    {
+        template.tilemapLeft -= 7;
+        template.width += 7;
+    }
+
+    sDisplay->messageWindowId = AddWindow(&template);
+    windowId = sDisplay->messageWindowId;
+    if (sDisplay->messageWindowId == WINDOW_NONE)
+        return;
+
+    if (gUnknown_82C57D4[msgId].hasPlaceholders)
+    {
+        DynamicPlaceholderTextUtil_ExpandPlaceholders(sDisplay->expandedPlaceholdersBuffer, gUnknown_82C57D4[msgId].text);
+        str = sDisplay->expandedPlaceholdersBuffer;
+    }
+    else
+    {
+        str = gUnknown_82C57D4[msgId].text;
+    }
+
+    ChangeBgY(0, bg0vofs * 256, BG_COORD_SET);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    PutWindowTilemap(windowId);
+    if (gUnknown_82C57D4[msgId].boxType == 1)
+    {
+        DrawTextBorderInner(windowId, 0xA, 2);
+        AddTextPrinterParameterized5(
+            windowId,
+            FONT_NORMAL,
+            str,
+            gUnknown_82C57D4[msgId].x + 8,
+            gUnknown_82C57D4[msgId].y + 8,
+            TEXT_SKIP_DRAW,
+            NULL,
+            gUnknown_82C57D4[msgId].letterSpacing,
+            gUnknown_82C57D4[msgId].lineSpacing);
+    }
+    else
+    {
+        DrawTextBorderOuter(windowId, 0xA, 2);
+        AddTextPrinterParameterized5(
+            windowId,
+            FONT_NORMAL,
+            str,
+            gUnknown_82C57D4[msgId].x,
+            gUnknown_82C57D4[msgId].y,
+            TEXT_SKIP_DRAW,
+            NULL,
+            gUnknown_82C57D4[msgId].letterSpacing,
+            gUnknown_82C57D4[msgId].lineSpacing);
+    }
+
+    sDisplay->messageWindowId = windowId;
+}
+
+// JP draws the message text directly with FONT_SMALL (no EXT_CTRL_CODE
+// letter-spacing prefix and no FillTextEntryWindow pre-fill, unlike US).
+void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor)
+{
+    u8 color[3];
+    color[0] = bgColor;
+    color[1] = fgColor;
+    color[2] = shadowColor;
+    StringLength_Multibyte(str); // JP computes the length but does not use it
+    AddTextPrinterParameterized3(WIN_TEXT_ENTRY, FONT_SMALL, x * 8, 1, color, -1, str);
 }
