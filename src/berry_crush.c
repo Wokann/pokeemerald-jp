@@ -1,4 +1,5 @@
 #include "global.h"
+#include "berry.h"
 #include "bg.h"
 #include "berry_powder.h"
 #include "decompress.h"
@@ -200,8 +201,8 @@ struct BerryCrushGame
     u16 gameState;                                // +12
     u16 playAgainState;                           // +14
     u16 pressingSpeed;                            // +16
-    u16 targetAPresses;                           // +18
-    u16 totalAPresses;                            // +1A
+    s16 targetAPresses;                           // +18
+    s16 totalAPresses;                            // +1A
     s32 powder;                                   // +1C
     s32 targetDepth;                              // +20
     u8 newDepth;                                  // +24
@@ -257,6 +258,7 @@ extern const struct SpriteTemplate sSpriteTemplate_Timer;
 extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 extern const u8 *const sMessages[];
+extern const u8 sReceivedPlayerBitmasks[];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
@@ -1284,6 +1286,63 @@ u32 Cmd_GoToBerryPouch(struct BerryCrushGame *game, u8 *args)
 {
     game->cmdCallback = NULL;
     SetMainCallback2(ChooseBerry);
+    return 0;
+}
+
+u32 Cmd_WaitForOthersToPickBerries(struct BerryCrushGame *game, u8 *args)
+{
+    u8 i;
+
+    switch (game->cmdState)
+    {
+    case 0:
+        SetPrintMessageArgs(args, MSG_WAIT_PICK, 0, 0, 1);
+        game->nextCmd = CMD_WAIT_BERRIES;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        return 0;
+    case 1:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 2:
+        if (!IsLinkTaskFinished())
+            return 0;
+
+        // Send player's chosen berry to partners
+        memset(game->sendCmd, 0, sizeof(game->sendCmd));
+        game->sendCmd[0] = game->players[game->localId].berryId;
+        SendBlock(0, game->sendCmd, 2);
+        break;
+    case 3:
+        if (!IsLinkTaskFinished())
+            return 0;
+        game->cmdTimer = 0;
+        break;
+    case 4:
+        // Wait for partners responses
+        if (GetBlockReceivedStatus() != sReceivedPlayerBitmasks[game->playerCount - 2])
+            return 0;
+
+        // Read partners chosen berries
+        for (i = 0; i < game->playerCount; i++)
+        {
+            game->players[i].berryId = gBlockRecvBuffer[i][0];
+            if (game->players[i].berryId > LAST_BERRY_INDEX + 1)
+                game->players[i].berryId = 0;
+            game->targetAPresses += gBerryCrush_BerryData[game->players[i].berryId].difficulty;
+            game->powder += gBerryCrush_BerryData[game->players[i].berryId].powder;
+        }
+        game->cmdTimer = 0;
+        ResetBlockReceivedFlags();
+        game->targetDepth = MathUtil_Div32(Q_24_8(game->targetAPresses), Q_24_8(32));
+        break;
+    case 5:
+        ClearDialogWindowAndFrame(0, TRUE);
+        RunOrScheduleCommand(CMD_DROP_BERRIES, SCHEDULE_CMD, NULL);
+        game->gameState = STATE_DROP_BERRIES;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
     return 0;
 }
 

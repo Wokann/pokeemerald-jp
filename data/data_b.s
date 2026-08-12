@@ -1330,8 +1330,8 @@ gUnknown_82C7CC0: @ 0x82C7CC0
 gUnknown_82C7CD0: @ 0x82C7CD0
 	.incbin "baserom_jp.gba", 0x2c7cd0, 0x4
 
-	.globl gUnknown_82C7CD4
-gUnknown_82C7CD4: @ 0x82C7CD4
+	.globl sReceivedPlayerBitmasks
+sReceivedPlayerBitmasks: @ 0x82C7CD4
 	.incbin "baserom_jp.gba", 0x2c7cd4, 0x54
 
 	.globl gUnknown_82C7D28
@@ -7793,8 +7793,8 @@ gUnknown_8563134: @ 0x8563134
 gUnknown_8563150: @ 0x8563150
 	.incbin "baserom_jp.gba", 0x563150, 0x4b4
 
-	.globl gUnknown_8563604
-gUnknown_8563604: @ 0x8563604
+	.globl gBerryCrush_BerryData
+gBerryCrush_BerryData: @ 0x8563604
 	.incbin "baserom_jp.gba", 0x563604, 0xac
 
 	.globl gUnknown_85636B0
