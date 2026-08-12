@@ -45,6 +45,13 @@ enum {
 };
 
 enum {
+    WIN_CHAT_HISTORY,
+    WIN_TEXT_ENTRY,
+    WIN_KEYBOARD,
+    WIN_SWAP_MENU,
+};
+
+enum {
     CHATDISPLAY_FUNC_LOAD_GFX,
     CHATDISPLAY_FUNC_MOVE_KB_CURSOR,
     CHATDISPLAY_FUNC_CURSOR_BLINK,
@@ -205,6 +212,21 @@ extern bool32 Display_Dummy(u8 *state);
 extern bool32 TryAllocSprites(void);
 extern void FreeSprites(void);
 extern void InitScanlineEffect(void);
+extern void ResetGpuBgState(void);
+extern void SetBgTilemapBuffers(void);
+extern void ClearBg0(void);
+extern void LoadKeyboardWindowGfx(void);
+extern void LoadChatWindowGfx(void);
+extern void LoadChatUnkPalette(void);
+extern void LoadChatMessagesWindow(void);
+extern void DrawKeyboardWindow(void);
+extern void LoadKeyboardSwapWindow(void);
+extern void LoadTextEntryWindow(void);
+extern void CreateKeyboardCursorSprite(void);
+extern void CreateTextEntrySprites(void);
+extern void CreateRButtonSprites(void);
+extern void ShowKeyboardSwapMenu(void);
+extern void HideKeyboardSwapMenu(void);
 
 bool8 TryAllocDisplay(void);
 bool32 IsDisplaySubtask0Active(void);
@@ -214,6 +236,9 @@ void ResetDisplaySubtasks(void);
 void RunDisplaySubtasks(void);
 void StartDisplaySubtask(u16 subtaskId, u8 assignId);
 bool8 IsDisplaySubtaskActive(u8 id);
+bool32 Display_LoadGfx(u8 *state);
+bool32 Display_ShowKeyboardSwapMenu(u8 *state);
+bool32 Display_HideKeyboardSwapMenu(u8 *state);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1586,4 +1611,81 @@ void StartDisplaySubtask(u16 subtaskId, u8 assignId)
 bool8 IsDisplaySubtaskActive(u8 id)
 {
     return sDisplay->subtasks[id].active;
+}
+
+bool32 Display_LoadGfx(u8 *state)
+{
+    if (FreeTempTileDataBuffersIfPossible() == TRUE)
+        return TRUE;
+
+    switch (*state)
+    {
+    case 0:
+        ResetGpuBgState();
+        SetBgTilemapBuffers();
+        break;
+    case 1:
+        ClearBg0();
+        break;
+    case 2:
+        LoadKeyboardWindowGfx();
+        break;
+    case 3:
+        LoadChatWindowGfx();
+        break;
+    case 4:
+        LoadChatUnkPalette();
+        break;
+    case 5:
+        LoadChatMessagesWindow();
+        DrawKeyboardWindow();
+        LoadKeyboardSwapWindow();
+        LoadTextEntryWindow();
+        break;
+    case 6:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CreateKeyboardCursorSprite();
+            CreateTextEntrySprites();
+            CreateRButtonSprites();
+        }
+        break;
+    default:
+        return FALSE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_ShowKeyboardSwapMenu(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        ShowKeyboardSwapMenu();
+        CopyWindowToVram(WIN_SWAP_MENU, COPYWIN_FULL);
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_HideKeyboardSwapMenu(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        HideKeyboardSwapMenu();
+        CopyWindowToVram(WIN_SWAP_MENU, COPYWIN_FULL);
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    (*state)++;
+    return TRUE;
 }
