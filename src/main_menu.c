@@ -2,6 +2,7 @@
 #include "bg.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "decompress.h"
 #include "event_data.h"
 #include "gpu_regs.h"
 #include "link.h"
@@ -15,6 +16,7 @@
 #include "palette.h"
 #include "rtc.h"
 #include "scanline_effect.h"
+#include "sound.h"
 #include "sprite.h"
 #include "task.h"
 #include "text.h"
@@ -40,6 +42,11 @@ extern const u8 gUnknown_85C8CA7[];
 extern const u8 gUnknown_85C8CB1[];
 extern const u8 gUnknown_85C8CC7[];
 extern const u8 gUnknown_85C8CEB[];
+extern const struct BgTemplate sBirchBgTemplate;
+extern const u32 sBirchSpeechShadowGfx[];
+extern const u32 sBirchSpeechBgMap[];
+extern const u16 sBirchSpeechBgPals[][16];
+extern const u16 sBirchSpeechBgGradientPal[];
 extern void CreateMainMenuErrorWindow(const u8 *text);
 extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
 extern void Task_DisplayMainMenu(u8 taskId);
@@ -52,6 +59,8 @@ extern u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *templat
 extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
 extern void Task_NewGameBirchSpeech_Init(u8 taskId);
+extern void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId);
+extern void AddBirchSpeechObjects(u8 taskId);
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
 static bool8 HandleMainMenuInput(u8 taskId);
@@ -60,6 +69,10 @@ static void Task_HandleMainMenuAPressed(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8 taskId);
 static void Task_DisplayMainMenuInvalidActionError(u8 taskId);
 static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 isScrolled);
+
+#define tPlayerSpriteId data[2]
+#define tBG1HOFS data[4]
+#define tTimer data[7]
 
 #define OPTION_MENU_FLAG (1 << 15)
 
@@ -760,6 +773,39 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
             }
             break;
     }
+}
+
+static void Task_NewGameBirchSpeech_Init(u8 taskId)
+{
+    SetGpuReg(REG_OFFSET_DISPCNT, 0);
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    InitBgFromTemplate(&sBirchBgTemplate);
+    SetGpuReg(REG_OFFSET_WIN0H, 0);
+    SetGpuReg(REG_OFFSET_WIN0V, 0);
+    SetGpuReg(REG_OFFSET_WININ, 0);
+    SetGpuReg(REG_OFFSET_WINOUT, 0);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+    SetGpuReg(REG_OFFSET_BLDY, 0);
+
+    LZ77UnCompVram(sBirchSpeechShadowGfx, (void *)VRAM);
+    LZ77UnCompVram(sBirchSpeechBgMap, (void *)(BG_SCREEN_ADDR(7)));
+    LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+    LoadPalette(&sBirchSpeechBgGradientPal[8], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+    ScanlineEffect_Stop();
+    ResetSpriteData();
+    FreeAllSpritePalettes();
+    ResetAllPicSprites();
+    AddBirchSpeechObjects(taskId);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    gTasks[taskId].tBG1HOFS = 0;
+    gTasks[taskId].func = Task_NewGameBirchSpeech_WaitToShowBirch;
+    gTasks[taskId].tPlayerSpriteId = SPRITE_NONE;
+    gTasks[taskId].data[3] = 0xFF;
+    gTasks[taskId].tTimer = 0xD8;
+    PlayBGM(MUS_ROUTE122);
+    ShowBg(0);
+    ShowBg(1);
 }
 
 #undef tMenuType
