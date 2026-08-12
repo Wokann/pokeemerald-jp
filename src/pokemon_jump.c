@@ -2262,6 +2262,45 @@ void CreateVineSprites(struct PokemonJumpGfx *jumpGfx)
     }
 }
 
+void UpdateVineAnim(struct PokemonJumpGfx *jumpGfx, int vineState)
+{
+    int i, count, palNum;
+    int priority;
+
+    if (vineState > VINE_LOWEST)
+    {
+        // animNums for vine on upswing are same as
+        // on downswing but in reverse
+        vineState = NUM_VINESTATES - vineState;
+        priority = 3; // Set vine behind Pokemon
+        palNum = jumpGfx->vinePalNumUpswing;
+    }
+    else
+    {
+        priority = 2; // Set vine in front of Pokemon
+        palNum = jumpGfx->vinePalNumDownswing;
+    }
+
+    count = 0;
+    for (i = 0; i < VINE_SPRITES_PER_SIDE; i++)
+    {
+        jumpGfx->vineSprites[count]->y = sVineYCoords[i][vineState];
+        jumpGfx->vineSprites[count]->oam.priority = priority;
+        jumpGfx->vineSprites[count]->oam.paletteNum = palNum;
+        StartSpriteAnim(jumpGfx->vineSprites[count], vineState);
+        count++;
+    }
+
+    for (i = VINE_SPRITES_PER_SIDE - 1; i >= 0; i--)
+    {
+        jumpGfx->vineSprites[count]->y = sVineYCoords[i][vineState];
+        jumpGfx->vineSprites[count]->oam.priority = priority;
+        jumpGfx->vineSprites[count]->oam.paletteNum = palNum;
+        StartSpriteAnim(jumpGfx->vineSprites[count], vineState);
+        count++;
+    }
+}
+
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {
     int i;
