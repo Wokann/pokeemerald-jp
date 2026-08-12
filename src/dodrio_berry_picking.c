@@ -1325,6 +1325,11 @@ u32 Min(u32 a, u32 b)
         return b;
 }
 
+u8 GetPlayerIdByPos(u8 pos)
+{
+    return sGame->posToPlayerId[pos];
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
