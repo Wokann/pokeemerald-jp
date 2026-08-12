@@ -26,47 +26,6 @@
 
 
 
-	thumb_func_start sub_0802781C
-sub_0802781C: @ 0x0802781C
-	push {r4, r5, r6, lr}
-	movs r5, #0
-	ldr r6, _0802784C
-_08027822:
-	movs r0, #0x64
-	adds r1, r5, #0
-	muls r1, r0, r1
-	ldr r0, _08027850
-	adds r4, r1, r0
-	adds r0, r4, #0
-	movs r1, #5
-	bl GetMonData3
-	cmp r0, #0
-	beq _08027854
-	adds r0, r4, #0
-	movs r1, #0x41
-	bl GetMonData3
-	cmp r0, #0x55
-	bne _08027854
-	movs r0, #1
-	strh r0, [r6]
-	b _08027860
-	.align 2, 0
-_0802784C: .4byte 0x02037290
-_08027850: .4byte 0x02024190
-_08027854:
-	adds r5, #1
-	cmp r5, #5
-	ble _08027822
-	ldr r1, _08027868
-	movs r0, #0
-	strh r0, [r1]
-_08027860:
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08027868: .4byte 0x02037290
-	thumb_func_end sub_0802781C
 
 	thumb_func_start sub_0802786C
 sub_0802786C: @ 0x0802786C

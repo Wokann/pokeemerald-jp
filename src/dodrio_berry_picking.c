@@ -9,6 +9,7 @@
 #include "link_rfu.h"
 #include "m4a.h"
 #include "palette.h"
+#include "pokemon.h"
 #include "random.h"
 #include "save.h"
 #include "script.h"
@@ -1328,6 +1329,21 @@ u32 Min(u32 a, u32 b)
 u8 GetPlayerIdByPos(u8 pos)
 {
     return sGame->posToPlayerId[pos];
+}
+
+void CheckDodrioInParty(void)
+{
+    int i;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData2(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES) != 0
+            && GetMonData2(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG) == SPECIES_DODRIO)
+        {
+            gSpecialVar_Result = 1;
+            return;
+        }
+    }
+    gSpecialVar_Result = 0;
 }
 
 void InitResults_Leader(void)
