@@ -1297,7 +1297,7 @@ sub_08025474 = ExitGame;
 sub_08025520 = ResetGame;
 sub_0802602C = SlideTreeBordersOut;
 sub_080268B4 = UpdateGame_Leader;
-UpdateGame_Member = sub_080268E8;
+sub_080268E8 = UpdateGame_Member;
 sub_08029000 = FreeAllWindowBuffers_;
 sub_0802900C = SetGfxFuncById;
 sub_08026008 = SetGameFunc;
@@ -2432,6 +2432,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.UpdateAllDodrioAnims);
         src/dodrio_berry_picking.o(.text.SetAllDodrioDisabled);
         src/dodrio_berry_picking.o(.text.UpdateGame_Leader);
+        src/dodrio_berry_picking.o(.text.UpdateGame_Member);
         asm/dodrio_berry_picking10.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);

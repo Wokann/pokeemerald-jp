@@ -10,33 +10,6 @@
 
 
 
-	thumb_func_start sub_080268E8
-sub_080268E8: @ 0x080268E8
-	push {lr}
-	bl sub_08026748
-	ldr r0, _08026900
-	ldr r0, [r0]
-	adds r0, #0x40
-	ldrb r0, [r0]
-	cmp r0, #9
-	bls _08026904
-	bl sub_08026888
-	b _08026908
-	.align 2, 0
-_08026900: .4byte 0x0202294C
-_08026904:
-	bl sub_08026848
-_08026908:
-	ldr r0, _08026918
-	ldr r0, [r0]
-	adds r0, #0x40
-	ldrb r0, [r0]
-	bl sub_08028600
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08026918: .4byte 0x0202294C
-	thumb_func_end sub_080268E8
 
 	thumb_func_start sub_0802691C
 sub_0802691C: @ 0x0802691C
