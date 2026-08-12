@@ -5,7 +5,13 @@
 #include "event_data.h"
 #include "gpu_regs.h"
 #include "link.h"
+#include "list_menu.h"
 #include "main.h"
+#include "menu.h"
+#include "mystery_event_menu.h"
+#include "mystery_gift_menu.h"
+#include "option_menu.h"
+#include "overworld.h"
 #include "palette.h"
 #include "rtc.h"
 #include "scanline_effect.h"
@@ -45,10 +51,26 @@ extern void HighlightSelectedMainMenuItem(u8 menuType, u8 currItem, s16 isScroll
 extern void Task_HandleMainMenuInput(u8 taskId);
 extern void Task_HandleMainMenuAPressed(u8 taskId);
 extern void Task_HandleMainMenuBPressed(u8 taskId);
+extern void Task_NewGameBirchSpeech_Init(u8 taskId);
+extern void Task_DisplayMainMenuInvalidActionError(u8 taskId);
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
 static bool8 HandleMainMenuInput(u8 taskId);
 static void Task_HandleMainMenuInput(u8 taskId);
+static void Task_HandleMainMenuAPressed(u8 taskId);
+
+#define OPTION_MENU_FLAG (1 << 15)
+
+enum
+{
+    ACTION_NEW_GAME,
+    ACTION_CONTINUE,
+    ACTION_OPTION,
+    ACTION_MYSTERY_GIFT,
+    ACTION_MYSTERY_EVENTS,
+    ACTION_EREADER,
+    ACTION_INVALID
+};
 
 enum
 {
@@ -402,6 +424,203 @@ static void Task_HandleMainMenuInput(u8 taskId)
 {
     if (HandleMainMenuInput(taskId))
         gTasks[taskId].func = Task_HighlightSelectedMainMenuItem;
+}
+
+static void Task_HandleMainMenuAPressed(u8 taskId)
+{
+    bool8 wirelessAdapterConnected;
+    u8 action;
+
+    if (!gPaletteFade.active)
+    {
+        if (gTasks[taskId].tMenuType == HAS_MYSTERY_EVENTS)
+            RemoveScrollIndicatorArrowPair(gTasks[taskId].tScrollArrowTaskId);
+        ClearStdWindowAndFrame(0, TRUE);
+        ClearStdWindowAndFrame(1, TRUE);
+        ClearStdWindowAndFrame(2, TRUE);
+        ClearStdWindowAndFrame(3, TRUE);
+        ClearStdWindowAndFrame(4, TRUE);
+        ClearStdWindowAndFrame(5, TRUE);
+        ClearStdWindowAndFrame(6, TRUE);
+        ClearStdWindowAndFrame(7, TRUE);
+        wirelessAdapterConnected = IsWirelessAdapterConnected();
+        switch (gTasks[taskId].tMenuType)
+        {
+            case HAS_NO_SAVED_GAME:
+            default:
+                switch (gTasks[taskId].tCurrItem)
+                {
+                    case 0:
+                    default:
+                        action = ACTION_NEW_GAME;
+                        break;
+                    case 1:
+                        action = ACTION_OPTION;
+                        break;
+                }
+                break;
+            case HAS_SAVED_GAME:
+                switch (gTasks[taskId].tCurrItem)
+                {
+                    case 0:
+                    default:
+                        action = ACTION_CONTINUE;
+                        break;
+                    case 1:
+                        action = ACTION_NEW_GAME;
+                        break;
+                    case 2:
+                        action = ACTION_OPTION;
+                        break;
+                }
+                break;
+            case HAS_MYSTERY_GIFT:
+                switch (gTasks[taskId].tCurrItem)
+                {
+                    case 0:
+                    default:
+                        action = ACTION_CONTINUE;
+                        break;
+                    case 1:
+                        action = ACTION_NEW_GAME;
+                        break;
+                    case 2:
+                        if (IsMysteryGiftEnabled())
+                        {
+                            if (gTasks[taskId].data[15])
+                            {
+                                action = ACTION_MYSTERY_GIFT;
+                                if (!wirelessAdapterConnected)
+                                {
+                                    action = ACTION_INVALID;
+                                    gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
+                                }
+                            }
+                            else if (wirelessAdapterConnected)
+                            {
+                                action = ACTION_INVALID;
+                                gTasks[taskId].tMenuType = HAS_SAVED_GAME;
+                            }
+                            else
+                            {
+                                action = ACTION_EREADER;
+                            }
+                        }
+                        else if (wirelessAdapterConnected)
+                        {
+                            action = ACTION_INVALID;
+                            gTasks[taskId].tMenuType = HAS_MYSTERY_GIFT;
+                        }
+                        else
+                        {
+                            action = ACTION_MYSTERY_EVENTS;
+                        }
+                        break;
+                    case 3:
+                        action = ACTION_OPTION;
+                        break;
+                }
+                break;
+            case HAS_MYSTERY_EVENTS:
+                switch (gTasks[taskId].tCurrItem)
+                {
+                    case 0:
+                    default:
+                        action = ACTION_CONTINUE;
+                        break;
+                    case 1:
+                        action = ACTION_NEW_GAME;
+                        break;
+                    case 2:
+                        if (gTasks[taskId].data[15])
+                        {
+                            action = ACTION_MYSTERY_GIFT;
+                            if (!wirelessAdapterConnected)
+                            {
+                                action = ACTION_INVALID;
+                                gTasks[taskId].tMenuType = HAS_NO_SAVED_GAME;
+                            }
+                        }
+                        else if (wirelessAdapterConnected)
+                        {
+                            action = ACTION_INVALID;
+                            gTasks[taskId].tMenuType = HAS_SAVED_GAME;
+                        }
+                        else
+                        {
+                            action = ACTION_EREADER;
+                        }
+                        break;
+                    case 3:
+                        if (wirelessAdapterConnected)
+                        {
+                            action = ACTION_INVALID;
+                            gTasks[taskId].tMenuType = HAS_MYSTERY_GIFT;
+                        }
+                        else
+                        {
+                            action = ACTION_MYSTERY_EVENTS;
+                        }
+                        break;
+                    case 4:
+                        action = ACTION_OPTION;
+                        break;
+                }
+                break;
+        }
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        switch (action)
+        {
+            case ACTION_NEW_GAME:
+            default:
+                gPlttBufferUnfaded[0] = RGB_BLACK;
+                gPlttBufferFaded[0] = RGB_BLACK;
+                gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+                break;
+            case ACTION_CONTINUE:
+                gPlttBufferUnfaded[0] = RGB_BLACK;
+                gPlttBufferFaded[0] = RGB_BLACK;
+                SetMainCallback2(CB2_ContinueSavedGame);
+                DestroyTask(taskId);
+                break;
+            case ACTION_OPTION:
+                gMain.savedCallback = CB2_ReinitMainMenu;
+                SetMainCallback2(CB2_InitOptionMenu);
+                DestroyTask(taskId);
+                break;
+            case ACTION_MYSTERY_GIFT:
+                SetMainCallback2(CB2_InitMysteryGift);
+                DestroyTask(taskId);
+                break;
+            case ACTION_MYSTERY_EVENTS:
+                SetMainCallback2(CB2_InitMysteryEventMenu);
+                DestroyTask(taskId);
+                break;
+            case ACTION_EREADER:
+                SetMainCallback2(CB2_InitEReader);
+                DestroyTask(taskId);
+                break;
+            case ACTION_INVALID:
+                gTasks[taskId].tCurrItem = 0;
+                gTasks[taskId].func = Task_DisplayMainMenuInvalidActionError;
+                gPlttBufferUnfaded[BG_PLTT_ID(15) + 1] = RGB_WHITE;
+                gPlttBufferFaded[BG_PLTT_ID(15) + 1] = RGB_WHITE;
+                SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+                SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+                SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+                SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+                SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+                SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+                return;
+        }
+        FreeAllWindowBuffers();
+        if (action != ACTION_OPTION)
+            sCurrItemAndOptionMenuCheck = 0;
+        else
+            sCurrItemAndOptionMenuCheck |= OPTION_MENU_FLAG;  // entering the options menu
+    }
 }
 
 #undef tMenuType

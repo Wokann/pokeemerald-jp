@@ -3001,6 +3001,7 @@ SECTIONS {
         src/main_menu.o(.text.Task_HighlightSelectedMainMenuItem);
         src/main_menu.o(.text.HandleMainMenuInput);
         src/main_menu.o(.text.Task_HandleMainMenuInput);
+        src/main_menu.o(.text.Task_HandleMainMenuAPressed);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
