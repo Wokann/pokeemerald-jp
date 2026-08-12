@@ -302,6 +302,10 @@ extern void FreeBerrySprites(void);
 extern void FreeStatusBar(void);
 extern void FreeDodrioSprites(u8);
 extern void FreeCloudSprites(void);
+extern void StartCloudMovement(void);
+extern void ResetGfxState(void);
+void ResetGame_Dodrio(void);
+#define ResetGame ResetGame_Dodrio
 
 static void ResetTasksAndSprites(void)
 {
@@ -951,6 +955,66 @@ void ExitGame(void)
             Free(sGame);
             FreeAllWindowBuffers();
         }
+        break;
+    }
+}
+
+void ResetGame_Dodrio(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        SetGfxFuncById(GFXFUNC_IDLE);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, 0);
+        sGame->state++;
+        break;
+    case 1:
+        UpdatePaletteFade();
+        if (!gPaletteFade.active)
+        {
+            sGame->state++;
+        }
+        break;
+    case 2:
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+        sGame->state++;
+        break;
+    case 3:
+        StopMapMusic();
+        sGame->state++;
+        break;
+    case 4:
+        PlayNewMapMusic(MUS_RG_BERRY_PICK);
+        StartCloudMovement();
+        sGame->state++;
+        break;
+    case 5:
+        BlendPalettes(PALETTES_ALL, 16, 0);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, 0);
+        sGame->state++;
+        break;
+    case 6:
+        UpdatePaletteFade();
+        if (!gPaletteFade.active)
+            sGame->state++;
+        break;
+    default:
+        DestroyTask(sGame->taskId);
+        CreateDodrioGameTask(Task_NewGameIntro);
+        ResetGfxState();
+        InitDodrioGame(sGame);
+        if (gReceivedRemoteLinkPlayers == 0)
+            sGame->numPlayers = 1;
+
+        SetRandomPrize();
+        SetCloudInvisibility(FALSE);
         break;
     }
 }
