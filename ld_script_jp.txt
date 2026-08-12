@@ -1239,7 +1239,7 @@ sub_0801FEBC = HideStdMessageWindow;
 sub_0801FEF0 = DestroyStdMessageWindow;
 sub_0801FF14 = FillTextEntryWindow;
 sub_0801FF40 = DrawTextEntryMessage;
-RunOrScheduleCommand = sub_08022950;
+sub_08022950 = RunOrScheduleCommand;
 SetPaletteFadeArgs = sub_080243D0;
 ChooseBerryForMachine = sub_081AA968;
 CopyPlayerNameWindowGfxToBg = sub_08022434;
@@ -2168,6 +2168,7 @@ SECTIONS {
         src/berry_crush.o(.text.SpriteCB_Sparkle_End);
         src/berry_crush.o(.text.SpriteCB_Sparkle);
         src/berry_crush.o(.text.SpriteCB_Sparkle_Init);
+        src/berry_crush.o(.text.RunOrScheduleCommand);
         asm/berry_crush3.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

@@ -39,6 +39,41 @@
 #define INPUT_FLAGS_PER_PLAYER 3
 #define INPUT_FLAG_MASK ((1 << INPUT_FLAGS_PER_PLAYER) - 1)
 
+enum {
+    RUN_CMD,
+    SCHEDULE_CMD,
+};
+
+// IDs for the main berry crush game functions
+enum {
+    CMD_NONE,
+    CMD_FADE,
+    CMD_WAIT_FADE,
+    CMD_PRINT_MSG,
+    CMD_SHOW_GAME,
+    CMD_HIDE_GAME,
+    CMD_READY_BEGIN,
+    CMD_ASK_PICK_BERRY,
+    CMD_PICK_BERRY,
+    CMD_WAIT_BERRIES,
+    CMD_DROP_BERRIES,
+    CMD_DROP_LID,
+    CMD_COUNTDOWN,
+    CMD_PLAY_GAME_LEADER,
+    CMD_PLAY_GAME_MEMBER,
+    CMD_FINISH_GAME,
+    CMD_TIMES_UP,
+    CMD_CALC_RESULTS,
+    CMD_SHOW_RESULTS,
+    CMD_SAVE,
+    CMD_ASK_PLAY_AGAIN,
+    CMD_COMM_PLAY_AGAIN,
+    CMD_PLAY_AGAIN_YES,
+    CMD_PLAY_AGAIN_NO,
+    CMD_CLOSE_LINK,
+    CMD_QUIT,
+};
+
 // Main states for the game. Many are assigned but never checked
 enum {
     STATE_INIT = 1,
@@ -180,7 +215,7 @@ struct BerryCrushGame
 // Berry Crush game state, EWRAM 0x02022944 (see sym_ewram_jp.txt).
 extern EWRAM_DATA struct BerryCrushGame *sGame;
 
-extern void RunOrScheduleCommand(u16, u8, u8 *);
+void RunOrScheduleCommand(u16, u8, u8 *);
 extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
 extern const struct BgTemplate sBgTemplates[4];
@@ -204,6 +239,7 @@ extern const struct SpriteTemplate sSpriteTemplate_Impact;
 extern const struct SpriteTemplate sSpriteTemplate_Sparkle;
 extern const struct SpriteTemplate sSpriteTemplate_Timer;
 extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
+extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -1067,6 +1103,27 @@ void SpriteCB_Sparkle_Init(struct Sprite *sprite)
     sprite->callback = SpriteCB_Sparkle;
     sprite->animPaused = FALSE;
     sprite->invisible = FALSE;
+}
+
+void RunOrScheduleCommand(u16 cmdId, u8 mode, u8 *args)
+{
+    struct BerryCrushGame *game = GetBerryCrushGame();
+
+    if (cmdId >= ARRAY_COUNT(sBerryCrushCommands))
+        cmdId = CMD_NONE;
+    switch (mode)
+    {
+    case RUN_CMD:
+        if (cmdId != CMD_NONE)
+            sBerryCrushCommands[cmdId](game, args);
+        if (game->nextCmd >= ARRAY_COUNT(sBerryCrushCommands))
+            game->nextCmd = CMD_NONE;
+        game->cmdCallback = sBerryCrushCommands[game->nextCmd];
+        break;
+    case SCHEDULE_CMD:
+        game->cmdCallback = sBerryCrushCommands[cmdId];
+        break;
+    }
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)

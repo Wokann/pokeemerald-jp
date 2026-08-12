@@ -1318,8 +1318,8 @@ sDigitObjTemplates: @ 0x82C7C10
 gUnknown_82C7C40: @ 0x82C7C40
 	.incbin "baserom_jp.gba", 0x2c7c40, 0x18
 
-	.globl gUnknown_82C7C58
-gUnknown_82C7C58: @ 0x82C7C58
+	.globl sBerryCrushCommands
+sBerryCrushCommands: @ 0x82C7C58
 	.incbin "baserom_jp.gba", 0x2c7c58, 0x68
 
 	.globl gUnknown_82C7CC0

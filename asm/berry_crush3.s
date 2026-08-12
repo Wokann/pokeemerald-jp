@@ -4,67 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08022950
-sub_08022950: @ 0x08022950
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	adds r7, r2, #0
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-	lsls r1, r1, #0x18
-	lsrs r4, r1, #0x18
-	mov r8, r4
-	bl sub_08020918
-	adds r6, r0, #0
-	cmp r5, #0x19
-	bls _0802296E
-	movs r5, #0
-_0802296E:
-	cmp r4, #0
-	beq _08022978
-	cmp r4, #1
-	beq _080229A4
-	b _080229AE
-_08022978:
-	cmp r5, #0
-	beq _0802298C
-	ldr r0, _080229A0
-	lsls r1, r5, #2
-	adds r1, r1, r0
-	ldr r2, [r1]
-	adds r0, r6, #0
-	adds r1, r7, #0
-	bl _call_via_r2
-_0802298C:
-	ldrb r0, [r6, #0xe]
-	cmp r0, #0x19
-	bls _08022996
-	mov r0, r8
-	strb r0, [r6, #0xe]
-_08022996:
-	ldr r0, _080229A0
-	ldrb r1, [r6, #0xe]
-	lsls r1, r1, #2
-	b _080229A8
-	.align 2, 0
-_080229A0: .4byte 0x082C7C58
-_080229A4:
-	ldr r0, _080229B8
-	lsls r1, r5, #2
-_080229A8:
-	adds r1, r1, r0
-	ldr r0, [r1]
-	str r0, [r6, #4]
-_080229AE:
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080229B8: .4byte 0x082C7C58
-	thumb_func_end sub_08022950
 
 	thumb_func_start sub_080229BC
 sub_080229BC: @ 0x080229BC
