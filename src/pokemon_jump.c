@@ -339,7 +339,6 @@ extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
 extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
-extern bool32 sub_0802C4B0(void); // HasEnoughScoreForPrize
 extern u16 sub_0802C4D4(void); // GetPrizeData
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
@@ -382,6 +381,7 @@ extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
 extern const u16 sSoundEffects[];
 extern const int sScoreBonuses[];
+extern const u32 sPrizeQuantityData[];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -755,7 +755,7 @@ bool32 GameOver_Leader(void)
     case 1:
         if (!sub_0802B658()) // DoVineHitEffect
         {
-            if (sub_0802C4B0()) // HasEnoughScoreForPrize
+            if (HasEnoughScoreForPrize())
             {
                 sPokemonJump->comm.data = sub_0802C4D4(); // GetPrizeData
                 sPokemonJump->nextFuncId = FUNC_GIVE_PRIZE;
@@ -1899,6 +1899,14 @@ void TryUpdateExcellentsRecord(u16 excellentsInRow)
 {
     if (excellentsInRow > sPokemonJump->excellentsInRowRecord)
         sPokemonJump->excellentsInRowRecord = excellentsInRow;
+}
+
+bool32 HasEnoughScoreForPrize(void)
+{
+    if (sPokemonJump->comm.jumpScore >= sPrizeQuantityData[0])
+        return TRUE;
+    else
+        return FALSE;
 }
 
 void InitGame(struct PokemonJump *jump)
