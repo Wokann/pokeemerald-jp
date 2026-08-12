@@ -2,67 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-	thumb_func_start sub_0802B3AC
-sub_0802B3AC: @ 0x0802B3AC
-	push {r4, lr}
-	ldr r4, _0802B3C0
-	ldr r0, [r4]
-	ldrh r0, [r0, #8]
-	cmp r0, #0
-	beq _0802B3C4
-	cmp r0, #1
-	beq _0802B3D4
-	b _0802B3F0
-	.align 2, 0
-_0802B3C0: .4byte 0x020229B0
-_0802B3C4:
-	movs r0, #4
-	bl sub_0802AB08
-	ldr r1, [r4]
-	ldrh r0, [r1, #8]
-	adds r0, #1
-	strh r0, [r1, #8]
-	b _0802B3F0
-_0802B3D4:
-	bl sub_0802B74C
-	cmp r0, #0
-	bne _0802B3F0
-	ldr r0, [r4]
-	ldrh r1, [r0, #0xe]
-	adds r2, r0, #0
-	adds r2, #0x72
-	strh r1, [r2]
-	adds r0, #0x4c
-	movs r1, #8
-	strb r1, [r0]
-	movs r0, #0
-	b _0802B3F2
-_0802B3F0:
-	movs r0, #1
-_0802B3F2:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0802B3AC
-
-	thumb_func_start sub_0802B3F8
-sub_0802B3F8: @ 0x0802B3F8
-	push {lr}
-	movs r0, #0
-	bl sub_0802AB08
-	bl sub_0802B74C
-	cmp r0, #0
-	beq _0802B40C
-	movs r0, #1
-	b _0802B40E
-_0802B40C:
-	movs r0, #0
-_0802B40E:
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0802B3F8
-
 	thumb_func_start sub_0802B414
 sub_0802B414: @ 0x0802B414
 	push {r4, lr}

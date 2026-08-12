@@ -325,6 +325,7 @@ extern bool32 sub_0802C344(void); // ShouldPlayAgain
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
 extern bool32 sub_0802B954(void); // ClosePokeJumpLink
+extern bool32 sub_0802B74C(void); // TryGivePrize
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -859,6 +860,36 @@ bool32 ExitGame(void)
     }
 
     return TRUE;
+}
+
+bool32 GivePrize_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        SetLinkTimeInterval(LINK_INTERVAL_MEDIUM);
+        sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (!sub_0802B74C()) // TryGivePrize
+        {
+            sPokemonJump->comm.data = sPokemonJump->excellentsInRowRecord;
+            sPokemonJump->nextFuncId = FUNC_SAVE;
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
+}
+
+bool32 GivePrize_Member(void)
+{
+    SetLinkTimeInterval(LINK_INTERVAL_NONE);
+    if (!sub_0802B74C()) // TryGivePrize
+        return FALSE;
+    else
+        return TRUE;
 }
 
 void InitGame(struct PokemonJump *jump)
