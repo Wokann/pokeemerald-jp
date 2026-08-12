@@ -5,35 +5,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_0803213C
-sub_0803213C: @ 0x0803213C
-	push {r4, r5, lr}
-	adds r4, r1, #0
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	ldr r1, _08032170
-	adds r0, r5, #0
-	bl CallWindowFunction
-	adds r0, r5, #0
-	movs r1, #0x11
-	bl FillWindowPixelBuffer
-	adds r0, r5, #0
-	bl PutWindowTilemap
-	cmp r4, #1
-	bne _0803216A
-	adds r0, r5, #0
-	movs r1, #3
-	bl CopyWindowToVram
-_0803216A:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08032170: .4byte 0x08032175
-	thumb_func_end sub_0803213C
-
 	thumb_func_start sub_08032174
 sub_08032174: @ 0x08032174
 	push {r4, r5, r6, r7, lr}
@@ -409,32 +380,3 @@ _080324AC: .4byte 0x000008E9
 _080324B0: .4byte 0x000008EA
 	thumb_func_end sub_08032174
 
-	thumb_func_start Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox
-Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox: @ 0x080324B4
-	push {r4, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _080324E4
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	adds r4, r1, r2
-	ldrh r0, [r4, #0x16]
-	subs r1, r0, #1
-	strh r1, [r4, #0x16]
-	lsls r0, r0, #0x10
-	cmp r0, #0
-	bgt _080324DC
-	movs r0, #0
-	movs r1, #1
-	bl sub_0803213C
-	ldr r0, _080324E8
-	str r0, [r4]
-_080324DC:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080324E4: .4byte 0x03005B60
-_080324E8: .4byte 0x08030E45
-	thumb_func_end Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox

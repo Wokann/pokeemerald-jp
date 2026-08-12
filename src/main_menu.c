@@ -79,6 +79,7 @@ extern const u8 *const sFemalePresetNames[];
 extern void PrintTextArray(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, const struct MenuAction *texts);
 extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, u8 initialCursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
+extern void NewGameBirchSpeech_CreateDialogueWindowBorder(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 palNum);
 extern void Task_DisplayMainMenu(u8 taskId);
 extern u16 sCurrItemAndOptionMenuCheck;
 extern const struct TextColor sTextColor_Headers;
@@ -166,8 +167,11 @@ static void ClearMainMenuWindowTilemap(const struct WindowTemplate *template);
 void NewGameBirchSpeech_ClearGenderWindowTilemap(u8 bg, u8 x, u8 y, u8 width, u8 height, u8 unused);
 static void NewGameBirchSpeech_ClearWindow(u8 windowId);
 void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8 yesNoPalNum, u8 winPalNum);
+static void NewGameBirchSpeech_ShowDialogueWindow(u8 windowId, u8 copyToVram);
+static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId);
 
 #define NUM_PRESET_NAMES 20
+#define BIRCH_DLG_BASE_TILE_NUM 0xE4
 
 #define tPlayerSpriteId data[2]
 #define tPlayerGender data[6]
@@ -1826,6 +1830,24 @@ void CreateYesNoMenuParameterized(u8 x, u8 y, u16 baseTileNum, u16 baseBlock, u8
 {
     struct WindowTemplate template = CreateWindowTemplate(0, x + 1, y + 1, 5, 4, winPalNum, baseBlock);
     CreateYesNoMenuAtPos(&template, 1, 0, 2, baseTileNum, yesNoPalNum, 0);
+}
+
+static void NewGameBirchSpeech_ShowDialogueWindow(u8 windowId, u8 copyToVram)
+{
+    CallWindowFunction(windowId, NewGameBirchSpeech_CreateDialogueWindowBorder);
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+    PutWindowTilemap(windowId);
+    if (copyToVram == TRUE)
+        CopyWindowToVram(windowId, COPYWIN_FULL);
+}
+
+static void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
+{
+    if (gTasks[taskId].tTimer-- <= 0)
+    {
+        NewGameBirchSpeech_ShowDialogueWindow(0, 1);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_SoItsPlayerName;
+    }
 }
 
 #undef tMainTask
