@@ -298,6 +298,10 @@ extern void ResetBerryAndStatusBarSprites(void);
 extern void ResetForPlayAgainPrompt(void);
 extern void ResetPickState(void);
 extern void HandleWaitPlayAgainInput(void);
+extern void FreeBerrySprites(void);
+extern void FreeStatusBar(void);
+extern void FreeDodrioSprites(u8);
+extern void FreeCloudSprites(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -912,6 +916,40 @@ void EndLink(void)
         if (gReceivedRemoteLinkPlayers == 0)
         {
             SetGameFunc(FUNC_EXIT);
+        }
+        break;
+    }
+}
+
+void ExitGame(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, 0);
+        sGame->state++;
+        break;
+    case 1:
+        UpdatePaletteFade();
+        if (!gPaletteFade.active)
+            sGame->state++;
+        break;
+    case 2:
+        FreeBerrySprites();
+        FreeStatusBar();
+        FreeDodrioSprites(sGame->numPlayers);
+        FreeCloudSprites();
+        sExitingGame = TRUE;
+        SetGfxFuncById(GFXFUNC_STOP);
+        sGame->state++;
+        break;
+    default:
+        if (!IsGfxFuncActive())
+        {
+            SetMainCallback2(sGame->exitCallback);
+            DestroyTask(sGame->taskId);
+            Free(sGame);
+            FreeAllWindowBuffers();
         }
         break;
     }
