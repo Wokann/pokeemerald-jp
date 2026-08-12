@@ -713,6 +713,18 @@ void ResetReadyToStart(void)
         sGame->readyToStart[i] = FALSE;
 }
 
+bool32 ReadyToEndGame_Leader(void)
+{
+    if (sGame->numGraySquares >= NUM_STATUS_SQUARES && !sGame->berriesFalling)
+    {
+        sGame->numGraySquares = NUM_STATUS_SQUARES;
+        if (sGame->allReadyToEnd)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
