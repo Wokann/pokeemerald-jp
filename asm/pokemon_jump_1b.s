@@ -3,27 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C5A0
-sub_0802C5A0: @ 0x0802C5A0
-	push {lr}
-	bl GetLinkPlayerCount
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_0802C5A0
-
-	thumb_func_start sub_0802C5B0
-sub_0802C5B0: @ 0x0802C5B0
-	ldr r0, _0802C5B8
-	ldr r0, [r0]
-	ldrb r0, [r0, #6]
-	bx lr
-	.align 2, 0
-_0802C5B8: .4byte 0x020229B0
-	thumb_func_end sub_0802C5B0
-
 	thumb_func_start sub_0802C5BC
 sub_0802C5BC: @ 0x0802C5BC
 	lsls r0, r0, #0x18

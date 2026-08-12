@@ -1958,6 +1958,16 @@ u16 GetQuantityLimitedByBag(u16 item, u16 quantity)
     return quantity;
 }
 
+u16 GetNumPokeJumpPlayers(void)
+{
+    return GetLinkPlayerCount();
+}
+
+u16 GetPokeJumpMultiplayerId(void)
+{
+    return sPokemonJump->multiplayerId;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();

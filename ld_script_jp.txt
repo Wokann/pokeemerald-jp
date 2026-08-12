@@ -1492,6 +1492,8 @@ sub_0802C4FC = UnpackPrizeData;
 sub_0802C50C = GetPrizeItemId_PokeJump;
 sub_0802C52C = GetPrizeQuantity;
 sub_0802C574 = GetQuantityLimitedByBag;
+sub_0802C5A0 = GetNumPokeJumpPlayers;
+sub_0802C5B0 = GetPokeJumpMultiplayerId;
 sPrizeItems = gUnknown_82CEF90;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
@@ -2717,6 +2719,8 @@ SECTIONS {
         src/pokemon_jump.o(.text.GetPrizeItemId_PokeJump);
         src/pokemon_jump.o(.text.GetPrizeQuantity);
         src/pokemon_jump.o(.text.GetQuantityLimitedByBag);
+        src/pokemon_jump.o(.text.GetNumPokeJumpPlayers);
+        src/pokemon_jump.o(.text.GetPokeJumpMultiplayerId);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);
