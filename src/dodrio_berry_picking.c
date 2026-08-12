@@ -82,6 +82,20 @@ enum {
 };
 
 enum {
+    PACKET_READY_START = 1,
+    PACKET_GAME_STATE,
+    PACKET_PICK_STATE,
+    PACKET_READY_END,
+};
+
+struct ReadyToStartPacket
+{
+    u8 id;
+    u8 filler[3];
+    u8 ready;
+};
+
+enum {
     PLAY_AGAIN_NONE,
     PLAY_AGAIN_YES,
     PLAY_AGAIN_NO,
@@ -324,7 +338,6 @@ extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
                                    bool32 *allReadyToEnd);
 extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
-extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
 extern const u8 sPrizeBerryIds[3][10];
@@ -1347,6 +1360,19 @@ void SendRfuPacket(u32 cmd)
     c = cmd;
     pkt.b = (pkt.b & 0xFFFFFF00) | c;
     Rfu_SendPacket(&pkt);
+}
+
+u32 RecvPacket_ReadyToStart(u32 playerId)
+{
+    struct ReadyToStartPacket *packet;
+
+    if ((gRecvCmds[0][0] & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+        return FALSE;
+
+    packet = (void *)&gRecvCmds[playerId][1];
+    if (packet->id == PACKET_READY_START)
+        return packet->ready;
+    return FALSE;
 }
 
 void CheckDodrioInParty(void)
