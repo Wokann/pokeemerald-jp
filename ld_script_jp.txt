@@ -2441,6 +2441,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetDodrioInvisibility);
         src/dodrio_berry_picking.o(.text.SetAllDodrioInvisibility);
         src/dodrio_berry_picking.o(.text.SetDodrioAnim);
+        src/dodrio_berry_picking.o(.text.nullsub_15);
         asm/dodrio_berry_picking7.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

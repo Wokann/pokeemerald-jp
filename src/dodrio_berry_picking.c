@@ -1570,6 +1570,10 @@ void SetDodrioAnim(u8 playerId, u8 animNum)
     StartSpriteAnim(&gSprites[*sDodrioSpriteIds[playerId]], animNum);
 }
 
+void nullsub_15(void)
+{
+}
+
 u32 DoDodrioMissedAnim(struct Sprite *sprite)
 {
     s8 x;

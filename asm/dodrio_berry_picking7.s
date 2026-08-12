@@ -4,11 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start nullsub_15
-nullsub_15: @ 0x0802840C
-	bx lr
-	.align 2, 0
-	thumb_func_end nullsub_15
 
 	thumb_func_start sub_08028410
 sub_08028410: @ 0x08028410
