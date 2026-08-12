@@ -427,8 +427,6 @@ extern const u8 gText_WantToPlayAgain2[];
 extern const u8 gText_SavingDontTurnOffPower[];
 extern const u8 gText_SomeoneDroppedOut2[];
 extern const u8 gText_CommunicationStandby4[];
-extern void sub_0802D704(void); // ClearMessageWindow
-extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
@@ -1345,7 +1343,7 @@ bool32 ClosePokeJumpLink(void)
     switch (sPokemonJump->helperState)
     {
     case 0:
-        sub_0802D704(); // ClearMessageWindow
+        ClearMessageWindow();
         sPokemonJump->helperState++;
         break;
     case 1:
@@ -2612,7 +2610,7 @@ void EraseMessage_PokeJump(void)
         sPokemonJumpGfx->mainState++;
         break;
     case 1:
-        if (!sub_0802D734() && !IsDma3ManagerBusyWithBgCopy()) // RemoveMessageWindow
+        if (!RemoveMessageWindow_PokeJump() && !IsDma3ManagerBusyWithBgCopy())
             sPokemonJumpGfx->funcFinished = TRUE;
         break;
     }
@@ -2788,6 +2786,39 @@ bool32 DoPrizeMessageAndFanfare(void)
             break;
         sPokemonJumpGfx->msgWindowState++;
     case 3:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+void ClearMessageWindow(void)
+{
+    if (sPokemonJumpGfx->msgWindowId != WINDOW_NONE)
+    {
+        rbox_fill_rectangle((u8)sPokemonJumpGfx->msgWindowId);
+        CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_MAP);
+        sPokemonJumpGfx->msgWindowState = 0;
+    }
+}
+
+bool32 RemoveMessageWindow_PokeJump(void)
+{
+    if (sPokemonJumpGfx->msgWindowId == WINDOW_NONE)
+        return FALSE;
+
+    switch (sPokemonJumpGfx->msgWindowState)
+    {
+    case 0:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            RemoveWindow(sPokemonJumpGfx->msgWindowId);
+            sPokemonJumpGfx->msgWindowId = WINDOW_NONE;
+            sPokemonJumpGfx->msgWindowState++;
+        }
+        else
+            break;
+    case 1:
         return FALSE;
     }
 
