@@ -51,7 +51,6 @@ extern void DrawMainMenuWindowBorder(const struct WindowTemplate *windowTemplate
 extern u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *template, u16 *ignore);
 extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
-extern void HighlightSelectedMainMenuItem(u8 menuType, u8 currItem, s16 isScrolled);
 extern void Task_NewGameBirchSpeech_Init(u8 taskId);
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
@@ -60,6 +59,7 @@ static void Task_HandleMainMenuInput(u8 taskId);
 static void Task_HandleMainMenuAPressed(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8 taskId);
 static void Task_DisplayMainMenuInvalidActionError(u8 taskId);
+static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 isScrolled);
 
 #define OPTION_MENU_FLAG (1 << 15)
 
@@ -674,6 +674,91 @@ static void Task_DisplayMainMenuInvalidActionError(u8 taskId)
                 BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
                 gTasks[taskId].func = Task_HandleMainMenuBPressed;
             }
+    }
+}
+
+static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 isScrolled)
+{
+    SetGpuReg(REG_OFFSET_WIN0H, 0x9E7);
+
+    switch (menuType)
+    {
+        case HAS_NO_SAVED_GAME:
+        default:
+            switch (selectedMenuItem)
+            {
+                case 0:
+                default:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x11F);
+                    break;
+                case 1:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x213F);
+                    break;
+            }
+            break;
+        case HAS_SAVED_GAME:
+            switch (selectedMenuItem)
+            {
+                case 0:
+                default:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x13F);
+                    break;
+                case 1:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x415F);
+                    break;
+                case 2:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x617F);
+                    break;
+            }
+            break;
+        case HAS_MYSTERY_GIFT:
+            switch (selectedMenuItem)
+            {
+                case 0:
+                default:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x13F);
+                    break;
+                case 1:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x415F);
+                    break;
+                case 2:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x617F);
+                    break;
+                case 3:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x819F);
+                    break;
+            }
+            break;
+        case HAS_MYSTERY_EVENTS:
+            switch (selectedMenuItem)
+            {
+                case 0:
+                default:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x13F);
+                    break;
+                case 1:
+                    if (isScrolled)
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x213F);
+                    else
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x415F);
+                    break;
+                case 2:
+                    if (isScrolled)
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x415F);
+                    else
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x617F);
+                    break;
+                case 3:
+                    if (isScrolled)
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x617F);
+                    else
+                        SetGpuReg(REG_OFFSET_WIN0V, 0x819F);
+                    break;
+                case 4:
+                    SetGpuReg(REG_OFFSET_WIN0V, 0x819F);
+                    break;
+            }
+            break;
     }
 }
 
