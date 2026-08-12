@@ -1241,6 +1241,7 @@ sub_0801FF14 = FillTextEntryWindow;
 sub_0801FF40 = DrawTextEntryMessage;
 sub_08022950 = RunOrScheduleCommand;
 sub_08022A14 = Cmd_WaitPaletteFade;
+sub_08022A78 = Cmd_PrintMessage;
 SetPaletteFadeArgs = sub_080243D0;
 ChooseBerryForMachine = sub_081AA968;
 CopyPlayerNameWindowGfxToBg = sub_08022434;
@@ -2172,6 +2173,7 @@ SECTIONS {
         src/berry_crush.o(.text.RunOrScheduleCommand);
         asm/berry_crush3.o(.text);
         src/berry_crush.o(.text.Cmd_WaitPaletteFade);
+        src/berry_crush.o(.text.Cmd_PrintMessage);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

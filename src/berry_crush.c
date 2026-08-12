@@ -19,6 +19,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "string_util.h"
 #include "task.h"
 #include "text.h"
 #include "trig.h"
@@ -34,6 +35,9 @@
 #define GFXTAG_IMPACT     2
 #define GFXTAG_SPARKLE    3
 #define TAG_TIMER_DIGITS  4
+
+#define F_MSG_CLEAR  (1 << 0)
+#define F_MSG_EXPAND (1 << 1)
 
 #define F_INPUT_HIT_SYNC (1 << 2) // Input at same time as another player
 #define INPUT_FLAGS_PER_PLAYER 3
@@ -240,6 +244,7 @@ extern const struct SpriteTemplate sSpriteTemplate_Sparkle;
 extern const struct SpriteTemplate sSpriteTemplate_Timer;
 extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
+extern const u8 *const sMessages[];
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -1152,6 +1157,52 @@ u32 Cmd_WaitPaletteFade(struct BerryCrushGame *game, u8 *args)
     case 3:
         RunOrScheduleCommand(game->afterPalFadeCmd, SCHEDULE_CMD, NULL);
         game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_PrintMessage(struct BerryCrushGame *game, u8 *args)
+{
+    u16 keys = args[3];
+    keys <<= 8;
+    keys |= args[2];
+
+    switch (game->cmdState)
+    {
+    case 0:
+        DrawDialogueFrame(0, FALSE);
+        if (args[1] & F_MSG_EXPAND)
+        {
+            StringExpandPlaceholders(gStringVar4, sMessages[args[0]]);
+            AddTextPrinterParameterized2(0, FONT_NORMAL, gStringVar4, game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        }
+        else
+        {
+            AddTextPrinterParameterized2(0, FONT_NORMAL, sMessages[args[0]], game->textSpeed, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        }
+        CopyWindowToVram(0, COPYWIN_FULL);
+        break;
+    case 1:
+        if (!IsTextPrinterActive(0))
+        {
+            // If no wait keys are given, skip
+            // waiting state below
+            if (keys == 0)
+                game->cmdState++;
+            break;
+        }
+        return 0;
+    case 2:
+        if (!JOY_NEW(keys))
+            return 0;
+        break;
+    case 3:
+        if (args[1] & F_MSG_CLEAR)
+            ClearDialogWindowAndFrame(0, TRUE);
+        RunOrScheduleCommand(game->nextCmd, SCHEDULE_CMD, NULL);
+        game->cmdState = args[4];
         return 0;
     }
     game->cmdState++;

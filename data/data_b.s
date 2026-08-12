@@ -1210,8 +1210,8 @@ gUnknown_82C5E84: @ 0x82C5E84
 gUnknown_82C5EA8: @ 0x82C5EA8
 	.incbin "baserom_jp.gba", 0x2c5ea8, 0x14
 
-	.globl gUnknown_82C5EBC
-gUnknown_82C5EBC: @ 0x82C5EBC
+	.globl sMessages
+sMessages: @ 0x82C5EBC
 	.incbin "baserom_jp.gba", 0x2c5ebc, 0x24
 
 	.globl sBgTemplates
