@@ -1366,8 +1366,8 @@ gUnknown_82CB320: @ 0x82CB320
 sDifficultyThresholds: @ 0x82CB328
 	.incbin "baserom_jp.gba", 0x2cb328, 0x8
 
-	.globl gUnknown_82CB330
-gUnknown_82CB330: @ 0x82CB330
+	.globl sPrizeBerryIds
+sPrizeBerryIds: @ 0x82CB330
 	.incbin "baserom_jp.gba", 0x2cb330, 0x20
 
 	.globl sLeaderFuncs

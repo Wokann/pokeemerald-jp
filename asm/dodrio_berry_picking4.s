@@ -6,63 +6,6 @@
 
 
 
-	thumb_func_start sub_080271B0
-sub_080271B0: @ 0x080271B0
-	push {r4, r5, lr}
-	movs r4, #0
-	ldr r0, _080271C8
-	ldr r0, [r0]
-	adds r0, #0x24
-	ldrb r0, [r0]
-	cmp r0, #4
-	beq _080271CC
-	cmp r0, #5
-	beq _080271D0
-	b _080271D2
-	.align 2, 0
-_080271C8: .4byte 0x0202294C
-_080271CC:
-	movs r4, #1
-	b _080271D2
-_080271D0:
-	movs r4, #2
-_080271D2:
-	bl Random
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	movs r1, #0xa
-	bl __umodsi3
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	movs r3, #0
-	lsls r1, r4, #2
-	ldr r5, _08027214
-	ldr r2, _08027218
-	adds r1, r1, r4
-	lsls r1, r1, #1
-	adds r0, r0, r1
-	adds r0, r0, r2
-	ldrb r2, [r0]
-_080271F6:
-	ldr r1, [r5]
-	lsls r0, r3, #1
-	adds r0, r0, r3
-	lsls r0, r0, #2
-	adds r1, #0x52
-	adds r1, r1, r0
-	strh r2, [r1]
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #4
-	bls _080271F6
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08027214: .4byte 0x0202294C
-_08027218: .4byte 0x082CB330
-	thumb_func_end sub_080271B0
 
 	thumb_func_start sub_0802721C
 sub_0802721C: @ 0x0802721C

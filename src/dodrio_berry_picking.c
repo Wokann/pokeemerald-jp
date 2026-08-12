@@ -251,7 +251,6 @@ extern bool32 sDodrioExitingGame;
 extern void InitDodrioGame(struct DodrioGame *);
 extern void Task_StartDodrioGame(u8 taskId);
 extern void CB2_DodrioGame(void);
-extern void SetRandomPrize(void);
 extern void GetActiveBerryColumns(u8, u8 *, u8 *);
 extern void InitMonInfo(struct DodrioGame_MonInfo *, struct Pokemon *);
 extern void Task_CommunicateMonInfo(u8 taskId);
@@ -325,6 +324,7 @@ extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
+extern const u8 sPrizeBerryIds[3][10];
 extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
 extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
@@ -1037,6 +1037,21 @@ void ResetForPlayAgainPrompt(void)
     sGame->numGraySquares = 0;
     sub_08026848(); // UpdateAllDodrioAnims
     sub_08026748(); // UpdateBerrySprites
+}
+
+void SetRandomPrize(void)
+{
+    u8 i, prizeSet = 0, prizeIdx = 0;
+
+    switch (sGame->numPlayers)
+    {
+    case 4:  prizeSet = 1; break;
+    case 5:  prizeSet = 2; break;
+    }
+
+    prizeIdx = Random() % ARRAY_COUNT(sPrizeBerryIds[0]);
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        sGame->berryResults[i][BERRY_PRIZE] = sPrizeBerryIds[prizeSet][prizeIdx];
 }
 
 void InitResults_Leader(void)
