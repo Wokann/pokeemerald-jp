@@ -22,65 +22,6 @@
 
 
 
-	thumb_func_start sub_0802771C
-sub_0802771C: @ 0x0802771C
-	push {r4, r5, r6, r7, lr}
-	sub sp, #0x14
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	movs r7, #0
-	ldr r0, _08027784
-	ldr r0, [r0]
-	adds r0, #0x24
-	ldrb r5, [r0]
-	mov r0, sp
-	movs r1, #0
-	movs r2, #0x14
-	bl memset
-	movs r4, #0
-	cmp r7, r5
-	bhs _08027754
-_0802773E:
-	adds r0, r4, #0
-	bl sub_08027480
-	lsls r1, r4, #2
-	add r1, sp
-	str r0, [r1]
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, r5
-	blo _0802773E
-_08027754:
-	lsls r0, r6, #2
-	add r0, sp
-	ldr r1, [r0]
-	movs r4, #0
-_0802775C:
-	cmp r4, r6
-	beq _08027770
-	lsls r0, r4, #2
-	add r0, sp
-	ldr r0, [r0]
-	cmp r1, r0
-	bhs _08027770
-	adds r0, r7, #1
-	lsls r0, r0, #0x18
-	lsrs r7, r0, #0x18
-_08027770:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #4
-	bls _0802775C
-	adds r0, r7, #0
-	add sp, #0x14
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_08027784: .4byte 0x0202294C
-	thumb_func_end sub_0802771C
 
 	thumb_func_start sub_08027788
 sub_08027788: @ 0x08027788

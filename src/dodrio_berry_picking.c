@@ -1268,6 +1268,26 @@ void GetScoreResults(struct DodrioGame_ScoreResults *dst, u8 playerId)
     *dst = sGame->scoreResults[playerId];
 }
 
+u8 GetScoreRanking(u8 playerId)
+{
+    u8 i, ranking = 0;
+    u8 numPlayers = sGame->numPlayers;
+    u32 playersScore;
+    u32 scores[MAX_RFU_PLAYERS] = {0};
+
+    for (i = 0; i < numPlayers; i++)
+        scores[i] = GetScore(i);
+
+    playersScore = scores[playerId];
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (i != playerId && playersScore < scores[i])
+            ranking++;
+    }
+
+    return ranking;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
