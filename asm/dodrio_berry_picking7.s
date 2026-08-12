@@ -5,45 +5,6 @@
 
 
 
-	thumb_func_start sub_08028760
-sub_08028760: @ 0x08028760
-	push {r4, r5, lr}
-	sub sp, #0x10
-	movs r5, #0x90
-	lsls r5, r5, #3
-	adds r0, r5, #0
-	bl AllocZeroed
-	adds r4, r0, #0
-	ldr r0, _080287AC
-	ldr r1, [r0, #4]
-	ldr r0, [r0]
-	str r0, [sp, #8]
-	str r1, [sp, #0xc]
-	ldr r0, _080287B0
-	adds r1, r4, #0
-	bl LZ77UnCompWram
-	cmp r4, #0
-	beq _08028796
-	str r4, [sp]
-	movs r0, #0x80
-	lsls r0, r0, #0xa
-	orrs r0, r5
-	str r0, [sp, #4]
-	mov r0, sp
-	bl LoadSpriteSheet
-_08028796:
-	add r0, sp, #8
-	bl LoadSpritePalette
-	adds r0, r4, #0
-	bl Free
-	add sp, #0x10
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080287AC: .4byte 0x082CEBA0
-_080287B0: .4byte 0x082CB73C
-	thumb_func_end sub_08028760
 
 	thumb_func_start sub_080287B4
 sub_080287B4: @ 0x080287B4

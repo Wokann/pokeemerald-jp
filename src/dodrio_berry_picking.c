@@ -393,6 +393,8 @@ extern const struct SpritePalette sDodrioShinySpritePalette;
 extern const u32 sStatus_Gfx[];
 extern const struct SpritePalette sStatusPalette;
 extern const struct SpriteTemplate sStatusSpriteTemplate;
+extern const u32 sBerry_Gfx[];
+extern const struct SpritePalette sBerryPalette;
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
@@ -1793,6 +1795,21 @@ void SetStatusBarInvisibility(bool8 invisible)
     u8 i;
     for (i = 0; i < NUM_STATUS_SQUARES; i++)
         gSprites[sStatusBar->spriteIds[i]].invisible = invisible;
+}
+
+void LoadBerryGfx_Dodrio(void)
+{
+    void *ptr = AllocZeroed(0x480);
+    struct SpritePalette pal = sBerryPalette;
+
+    LZ77UnCompWram(sBerry_Gfx, ptr);
+    if (ptr)
+    {
+        struct SpriteSheet sheet = {ptr, 0x480, GFXTAG_BERRIES};
+        LoadSpriteSheet(&sheet);
+    }
+    LoadSpritePalette(&pal);
+    Free(ptr);
 }
 
 void nullsub_15(void)

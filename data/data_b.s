@@ -1462,8 +1462,8 @@ sDodrioShinyPal: @ 0x82CB6DC
 gUnknown_82CB6FC: @ 0x82CB6FC
 	.incbin "baserom_jp.gba", 0x2cb6fc, 0x40
 
-	.globl gUnknown_82CB73C
-gUnknown_82CB73C: @ 0x82CB73C
+	.globl sBerry_Gfx
+sBerry_Gfx: @ 0x82CB73C
 	.incbin "baserom_jp.gba", 0x2cb73c, 0x1d4
 
 	.globl gUnknown_82CB910
@@ -1522,8 +1522,8 @@ sStatusPalette: @ 0x82CEB74
 sStatusSpriteTemplate: @ 0x82CEB7C
 	.incbin "baserom_jp.gba", 0x2ceb7c, 0x24
 
-	.globl gUnknown_82CEBA0
-gUnknown_82CEBA0: @ 0x82CEBA0
+	.globl sBerryPalette
+sBerryPalette: @ 0x82CEBA0
 	.incbin "baserom_jp.gba", 0x2ceba0, 0x8
 
 	.globl gUnknown_82CEBA8
