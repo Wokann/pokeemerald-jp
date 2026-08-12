@@ -170,6 +170,7 @@ sDisplay = ABSOLUTE(0x0202293C);
 sSprites = ABSOLUTE(0x02022940);
 sGame = ABSOLUTE(0x02022944);
 sDodrioSpriteIds = ABSOLUTE(0x02022950);
+sStatusBar = ABSOLUTE(0x020229A8);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
 gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);

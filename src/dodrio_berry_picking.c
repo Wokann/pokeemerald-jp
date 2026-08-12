@@ -95,6 +95,15 @@ struct ReadyToStartPacket
     u8 ready;
 };
 
+struct StatusBar
+{
+    u8 unused[12];
+    bool8 entered[NUM_STATUS_SQUARES];
+    s16 yChange[NUM_STATUS_SQUARES];
+    u16 spriteIds[NUM_STATUS_SQUARES];
+    u16 flashTimer;
+}; // size = 0x40
+
 struct PickStatePacket
 {
     u8 id;
@@ -217,15 +226,6 @@ struct DodrioGame_Gfx
     u8 ALIGNED(4) playAgainState;
     void (*func)(void);
 }; // size = 0x302C
-
-struct StatusBar
-{
-    u8 unused[12];
-    bool8 entered[NUM_STATUS_SQUARES];
-    s16 yChange[NUM_STATUS_SQUARES];
-    u16 spriteIds[NUM_STATUS_SQUARES];
-    u16 flashTimer;
-}; // size = 0x40
 
 struct DodrioGame_Berries
 {
@@ -391,13 +391,107 @@ extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
+extern EWRAM_DATA struct StatusBar *sStatusBar;
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
+void LoadDodrioGfx(void);
+void SetDodrioInvisibility(bool8 invisible, u8 id);
+void SetAllDodrioInvisibility(bool8 invisible, u8 count);
+void StartDodrioIntroAnim(u8 unused);
+u32 IncrementWithLimit(u32 num, u32 max);
+u32 Min(u32 a, u32 b);
+u32 RecvPacket_ReadyToStart(u32 playerId);
 void SpriteCB_Dodrio(struct Sprite *sprite);
 void Task_ShowDodrioRecords(u8 taskId);
+
+// Prototypes for functions converted from asm (definitions later in this file)
+void InitDodrioGame(struct DodrioGame *game);
+void Task_StartDodrioGame(u8 taskId);
+void Task_DodrioGame_Leader(u8 taskId);
+void Task_DodrioGame_Member(u8 taskId);
+void DoGameIntro(void);
+void InitCountdown(void);
+void DoCountdown(void);
+void WaitGameStart(void);
+void PlayGame_Leader(void);
+void PlayGame_Member(void);
+void WaitEndGame_Leader(void);
+void WaitEndGame_Member(void);
+bool32 AllLinkBlocksReceived(void);
+bool32 AllPlayersReadyToStart(void);
+void ResetReadyToStart(void);
+bool32 ReadyToEndGame_Leader(void);
+bool32 ReadyToEndGame_Member(void);
+void TryIncrementDifficulty(u8 playerId);
+u8 GetNewBerryIdByDifficulty(u8 difficulty, u8 column);
+u8 GetPlayerIdAtColumn(u8 column);
+u8 GetNewBerryId(u8 playerId, u8 column);
+bool32 IsTotalBerriesMissedOver10(u16 berryResults[MAX_RFU_PLAYERS][NUM_BERRY_IDS]);
+void IncrementBerryResult(u8 berryIdArg, u8 column, u8 playerId);
+void UpdateBerriesPickedInRow(bool32 picked);
+void SetMaxBerriesPickedInRow(void);
+void ResetForPlayAgainPrompt(void);
+void SetRandomPrize(void);
+u32 GetBerriesPicked(u8 playerId);
+void TryUpdateRecords(void);
+u8 UpdatePickStateQueue(u8 pickState);
+void HandleWaitPlayAgainInput(void);
+void ResetPickState(void);
+u16 GetPrizeItemId(void);
+u8 GetNumPlayers(void);
+u16 GetBerryResult(u8 playerId, u8 berryId);
+u32 GetScore(u8 playerId);
+u32 GetHighestScore(void);
+u16 GetHighestBerryResult(u8 berryId);
+u32 GetScoreByRanking(u8 ranking);
+u32 SetScoreResults(void);
+void GetScoreResults(struct DodrioGame_ScoreResults *dst, u8 playerId);
+u8 GetScoreRanking(u8 playerId);
+u8 TryGivePrize(void);
+u32 IncrementWithLimit(u32 num, u32 max);
+u32 Min(u32 a, u32 b);
+u8 GetPlayerIdByPos(u8 pos);
+void SetNumPlayers(void);
+void SendRfuPacket(u32 cmd);
+u32 RecvPacket_ReadyToStart(u32 playerId);
+void SendPacket_PickState(u8 pickState);
+bool32 RecvPacket_PickState(u32 playerId, u8 *pickState);
+void SendPacket_ReadyToEnd(bool32 ready);
+bool32 RecvPacket_ReadyToEnd(u32 playerId);
+void LoadDodrioGfx(void);
+void CreateDodrioSprite(struct DodrioGame_MonInfo *monInfo, u8 playerId, u8 id, u8 numPlayers);
+void SpriteCB_Dodrio(struct Sprite *sprite);
+void StartDodrioMissedAnim(u8 unused);
+void StartDodrioIntroAnim(u8 unused);
+void FreeDodrioSprites(u8 numPlayers);
+void SetDodrioInvisibility(bool8 invisible, u8 id);
+void SetAllDodrioInvisibility(bool8 invisible, u8 count);
+void SetDodrioAnim(u8 playerId, u8 animNum);
+void InitStatusBarPos(void);
+void nullsub_15(void);
+u32 DoDodrioMissedAnim(struct Sprite *sprite);
+u32 DoDodrioIntroAnim(struct Sprite *sprite);
+void SendPacket_GameState(struct DodrioGame_Player *player, struct DodrioGame_PlayerCommData *player1, struct DodrioGame_PlayerCommData *player2, struct DodrioGame_PlayerCommData *player3, struct DodrioGame_PlayerCommData *player4, struct DodrioGame_PlayerCommData *player5, u8 numGraySquares, bool32 berriesFalling, bool32 allReadyToEnd);
+bool32 RecvPacket_GameState(u32 playerId, struct DodrioGame_Player *player, struct DodrioGame_PlayerCommData *player1, struct DodrioGame_PlayerCommData *player2, struct DodrioGame_PlayerCommData *player3, struct DodrioGame_PlayerCommData *player4, struct DodrioGame_PlayerCommData *player5, u8 *numGraySquares, bool32 *berriesFalling, bool32 *allReadyToEnd);
+void CheckDodrioInParty(void);
+void ShowDodrioRecords(void);
+void Task_ShowDodrioRecords(u8 taskId);
+void InitResults_Leader(void);
+void InitResults_Member(void);
+void DoResults(void);
+void AskPlayAgain(void);
+void EndLink(void);
+void ExitGame(void);
+void ResetGame_Dodrio(void);
+void Task_NewGameIntro(u8 taskId);
+void Task_CommunicateMonInfo(u8 taskId);
+void RecvLinkData_Gameplay(void);
+void RecvLinkData_ReadyToEnd(void);
+void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback);
+
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -1568,6 +1662,18 @@ void SetAllDodrioInvisibility(bool8 invisible, u8 count)
 void SetDodrioAnim(u8 playerId, u8 animNum)
 {
     StartSpriteAnim(&gSprites[*sDodrioSpriteIds[playerId]], animNum);
+}
+
+void InitStatusBarPos(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_STATUS_SQUARES; i++)
+    {
+        struct Sprite *sprite = &gSprites[sStatusBar->spriteIds[i]];
+        sprite->x = (i * 16) + 48;
+        sprite->y = -8 - (i * 8);
+        sStatusBar->entered[i] = FALSE;
+    }
 }
 
 void nullsub_15(void)

@@ -4,51 +4,6 @@
 .syntax unified
 
 
-
-	thumb_func_start sub_08028410
-sub_08028410: @ 0x08028410
-	push {r4, r5, r6, r7, lr}
-	movs r4, #0
-	ldr r0, _08028458
-	mov ip, r0
-	movs r6, #0
-	ldr r5, _0802845C
-_0802841C:
-	ldr r3, [r5]
-	lsls r1, r4, #1
-	adds r0, r3, #0
-	adds r0, #0x2a
-	adds r0, r0, r1
-	ldrh r0, [r0]
-	lsls r1, r0, #4
-	adds r1, r1, r0
-	lsls r1, r1, #2
-	add r1, ip
-	lsls r0, r4, #4
-	adds r0, #0x30
-	strh r0, [r1, #0x20]
-	lsls r2, r4, #3
-	movs r7, #8
-	rsbs r7, r7, #0
-	adds r0, r7, #0
-	subs r0, r0, r2
-	strh r0, [r1, #0x22]
-	adds r3, #0xc
-	adds r3, r3, r4
-	strb r6, [r3]
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #9
-	bls _0802841C
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028458: .4byte 0x020205AC
-_0802845C: .4byte 0x020229A8
-	thumb_func_end sub_08028410
-
 	thumb_func_start sub_08028460
 sub_08028460: @ 0x08028460
 	push {r4, r5, r6, lr}
