@@ -1514,6 +1514,12 @@ bool32 IsGameOver(void)
     return sPokemonJump->gameOver;
 }
 
+void ResetPlayersMonState(void)
+{
+    sPokemonJump->player->monState = MONSTATE_NORMAL;
+    sPokemonJump->player->prevMonState = MONSTATE_NORMAL;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
