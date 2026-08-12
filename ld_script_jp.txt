@@ -1844,7 +1844,9 @@ SECTIONS {
         src/mystery_gift_view.o(.text.WonderNews_RemoveScrollIndicatorArrowPair);
         src/mystery_gift_view.o(.text.WonderNews_AddScrollIndicatorArrowPair);
         src/mystery_gift_view.o(.text.WonderNews_GetInput);
-        asm/mevent_801C8B4.o(.text);
+        src/mystery_gift_view.o(.text.BufferNewsText);
+        src/mystery_gift_view.o(.text.DrawNewsWindows);
+        src/mystery_gift_view.o(.text.UpdateNewsScroll);
         asm/mevent_server.o(.text);
         asm/mevent_client.o(.text);
         asm/mevent_server_helpers.o(.text);

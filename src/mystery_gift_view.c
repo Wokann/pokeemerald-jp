@@ -4,6 +4,7 @@
 #include "gpu_regs.h"
 #include "malloc.h"
 #include "menu.h"
+#include "list_menu.h"
 #include "palette.h"
 #include "pokemon_icon.h"
 #include "string_util.h"
@@ -101,9 +102,6 @@ extern const u8 gUnknown_82C430C[]; // news text color table (3-byte entries)
 extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
 extern const struct OamData gUnknown_84FD040;
 
-extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
-extern void sub_0801C8B4(void); // BufferNewsText (still in asm)
-extern void sub_0801C95C(void); // DrawNewsWindows (still in asm)
 
 
 
@@ -359,6 +357,76 @@ void DestroyWonderNewsResources(void)
     }
 }
 
+static void BufferNewsText(void)
+{
+    u8 i = 0;
+
+    memcpy(gWonderNewsData->titleText, gWonderNewsData->news.titleText, WONDER_NEWS_TEXT_LENGTH);
+    gWonderNewsData->titleText[WONDER_NEWS_TEXT_LENGTH] = EOS;
+
+    for (; i < WONDER_NEWS_BODY_TEXT_LINES; i++)
+    {
+        memcpy(gWonderNewsData->bodyText[i], gWonderNewsData->news.bodyText[i], WONDER_NEWS_TEXT_LENGTH);
+        gWonderNewsData->bodyText[i][WONDER_NEWS_TEXT_LENGTH] = EOS;
+        if (i > 7 && gWonderNewsData->bodyText[i][0] != EOS)
+            gWonderNewsData->scrollEnd++;
+    }
+
+    *(struct ScrollArrowsTemplate *)&gWonderNewsData->unk_1DC = *(const struct ScrollArrowsTemplate *)gUnknown_82C4324;
+    gWonderNewsData->unk_1E4 = gWonderNewsData->scrollEnd;
+}
+
+static void DrawNewsWindows(void)
+{
+    u8 i = 0;
+    u8 x;
+
+    PutWindowTilemap(gWonderNewsData->windowIds[0]);
+    PutWindowTilemap(gWonderNewsData->windowIds[1]);
+    FillWindowPixelBuffer(gWonderNewsData->windowIds[0], 0);
+    FillWindowPixelBuffer(gWonderNewsData->windowIds[1], 0);
+
+    x = (u8)(0x71 - (StringLength(gWonderNewsData->titleText) * ((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH)) >> 1));
+    AddTextPrinterParameterized3(gWonderNewsData->windowIds[0], FONT_SHORT_COPY_1, x, 6, &gUnknown_82C430C[gWonderNewsData->gfx->titleTextPal * 3], i, gWonderNewsData->titleText);
+
+    for (; i < WONDER_NEWS_BODY_TEXT_LINES; i++)
+        AddTextPrinterParameterized3(gWonderNewsData->windowIds[1], FONT_SHORT_COPY_1, 3, (u8)(i * 16 + 4), &gUnknown_82C430C[gWonderNewsData->gfx->bodyTextPal * 3], 0, gWonderNewsData->bodyText[i]);
+
+    CopyWindowToVram(gWonderNewsData->windowIds[0], COPYWIN_FULL);
+    CopyWindowToVram(gWonderNewsData->windowIds[1], COPYWIN_FULL);
+}
+
+static void UpdateNewsScroll(void)
+{
+    u16 y;
+
+    y = gWonderNewsData->scrollIncrement;
+    y <<= 8;
+
+    if (gWonderNewsData->scrollingDown)
+    {
+        ChangeBgY(2, y, 1);
+        ChangeBgY(3, y, 1);
+    }
+    else
+    {
+        ChangeBgY(2, y, 2);
+        ChangeBgY(3, y, 2);
+    }
+
+    gWonderNewsData->scrollTotal += gWonderNewsData->scrollIncrement;
+
+    if (gWonderNewsData->scrollTotal > 0xF)
+    {
+        if (gWonderNewsData->scrollingDown)
+            gWonderNewsData->scrollOffset++;
+        else
+            gWonderNewsData->scrollOffset--;
+        gWonderNewsData->scrolling = FALSE;
+        gWonderNewsData->scrollTotal = 0;
+    }
+}
+
 s32 FadeToWonderNewsMenu(void)
 {
     if (gWonderNewsData == NULL)
@@ -408,10 +476,10 @@ s32 FadeToWonderNewsMenu(void)
         CopyBgTilemapBufferToVram(3);
         break;
     case 4:
-        sub_0801C8B4();
+        BufferNewsText();
         break;
     case 5:
-        sub_0801C95C();
+        DrawNewsWindows();
         CopyBgTilemapBufferToVram(0);
         CopyBgTilemapBufferToVram(2);
         break;
@@ -525,7 +593,7 @@ u32 WonderNews_GetInput(u16 input)
 {
     if (gWonderNewsData->scrolling)
     {
-        sub_0801CA6C();
+        UpdateNewsScroll();
         return 0xFF;
     }
 
