@@ -373,7 +373,6 @@ extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern void FreeCloudSprites(void);
-extern void StartCloudMovement(void);
 extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
@@ -1931,6 +1930,16 @@ void ResetCloudPos(void)
         sprite->data[10] = 1;
         sprite->x = sCloudPositions[i][0];
         sprite->y = sCloudPositions[i][1];
+    }
+}
+
+void StartCloudMovement(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_CLOUDS; i++)
+    {
+        u16 spriteId = *sCloudSpriteIds[i];
+        gSprites[spriteId].data[10] = 0;
     }
 }
 
