@@ -1711,6 +1711,38 @@ void FreeStatusBar(void)
     sStatusBar = NULL;
 }
 
+bool32 DoStatusBarIntro(void)
+{
+    u8 i;
+    bool32 animActive = FALSE;
+    for (i = 0; i < NUM_STATUS_SQUARES; i++)
+    {
+        struct Sprite *sprite = &gSprites[sStatusBar->spriteIds[i]];
+        sStatusBar->yChange[i] = 2;
+        if (sStatusBar->entered[i] && sprite->y == 8)
+            continue;
+
+        animActive = TRUE;
+        if (sprite->y == 8)
+        {
+            if (sStatusBar->entered[i])
+                continue;
+
+            // Square has entered screen, play click
+            // sound and reverse direction
+            sStatusBar->entered[i] = TRUE;
+            sStatusBar->yChange[i] = -16;
+            PlaySE(SE_CLICK);
+        }
+        sprite->y += sStatusBar->yChange[i];
+    }
+
+    if (animActive)
+        return FALSE;
+    else
+        return TRUE;
+}
+
 void nullsub_15(void)
 {
 }
