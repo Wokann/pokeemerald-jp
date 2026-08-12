@@ -1259,6 +1259,9 @@ sub_08023684 = Cmd_PlayGame_Leader;
 sub_0802372C = Cmd_PlayGame_Member;
 sub_080237C4 = Cmd_FinishGame;
 sub_08023954 = Cmd_HandleTimeUp;
+sub_08023E10 = Cmd_ShowResults;
+OpenResultsWindow = sub_08021DDC;
+CloseResultsWindow = sub_08021F9C;
 StartMinigameCountdown = sub_0802E788;
 IsMinigameCountdownRunning = sub_0802E7E8;
 IsMinigameCountdownRunning = sub_0802E7E8;
@@ -2214,6 +2217,8 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_FinishGame);
         src/berry_crush.o(.text.Cmd_HandleTimeUp);
         asm/berry_crush4.o(.text);
+        src/berry_crush.o(.text.Cmd_ShowResults);
+        asm/berry_crush5.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);
         asm/pokemon_jump.o(.text);

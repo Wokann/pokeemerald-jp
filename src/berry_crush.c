@@ -127,6 +127,9 @@ enum {
     STATE_PLAY_AGAIN,
 };
 
+#define RESULTS_STATE_START STATE_RESULTS_PRESSES
+#define RESULTS_STATE_END   STATE_RESULTS_CRUSHING
+
 enum {
     COLORID_GRAY,
     COLORID_BLACK,
@@ -307,6 +310,8 @@ extern const u8 sSparkleThresholds[MAX_RFU_PLAYERS - 1][4];
 extern const u8 sBigSparkleThresholds[MAX_RFU_PLAYERS - 1];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
+extern bool32 OpenResultsWindow(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
+extern void CloseResultsWindow(struct BerryCrushGame *);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -1961,6 +1966,52 @@ u32 Cmd_HandleTimeUp(struct BerryCrushGame *game, u8 *args)
         game->nextCmd = CMD_SAVE;
         RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
         game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_ShowResults(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        if (!OpenResultsWindow(game, &game->gfx))
+            return 0;
+        break;
+    case 1:
+        CopyBgTilemapBufferToVram(0);
+        game->gfx.counter = 30;
+        break;
+    case 2:
+        if (game->gfx.counter != 0)
+        {
+            game->gfx.counter--;
+            return 0;
+        }
+        if (!(JOY_NEW(A_BUTTON)))
+            return 0;
+        PlaySE(SE_SELECT);
+        CloseResultsWindow(game);
+        break;
+    case 3:
+        // Progress through each page of the results
+        if (game->gameState < RESULTS_STATE_END)
+        {
+            game->gameState++;
+            game->cmdState = 0;
+            return 0;
+        }
+        break;
+    case 4:
+        // Print message showing how much powder was created
+        ConvertIntToDecimalStringN(gStringVar1, game->powder, STR_CONV_MODE_LEFT_ALIGN, 6);
+        ConvertIntToDecimalStringN(gStringVar2, GetBerryPowder(), STR_CONV_MODE_LEFT_ALIGN, 6);
+        SetPrintMessageArgs(args, MSG_POWDER, F_MSG_CLEAR | F_MSG_EXPAND, 0, 0);
+        game->nextCmd = CMD_SAVE;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
         game->cmdState = 0;
         return 0;
     }
