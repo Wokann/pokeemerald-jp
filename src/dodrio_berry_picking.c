@@ -68,6 +68,19 @@ enum {
 };
 
 enum {
+    GFXFUNC_LOAD,
+    GFXFUNC_SHOW_NAMES,
+    GFXFUNC_SHOW_RESULTS,
+    GFXFUNC_MSG_PLAY_AGAIN,
+    GFXFUNC_MSG_SAVING,
+    GFXFUNC_MSG_COMM_STANDBY,
+    GFXFUNC_ERASE_MSG,
+    GFXFUNC_MSG_PLAYER_DROPPED,
+    GFXFUNC_STOP,
+    GFXFUNC_IDLE,
+};
+
+enum {
     PLAY_AGAIN_NONE,
     PLAY_AGAIN_YES,
     PLAY_AGAIN_NO,
@@ -251,6 +264,9 @@ extern void UpdateGame_Leader(void);
 extern void UpdateGame_Member(void);
 extern void SendLinkData_Leader(void);
 extern void SendLinkData_Member(void);
+extern void StartDodrioIntroAnim(u8);
+extern void SetGfxFuncById(u8);
+extern void SetGameFunc(u8);
 
 static void ResetTasksAndSprites(void)
 {
@@ -399,6 +415,22 @@ void Task_DodrioGame_Member(u8 taskId)
         UpdateGame_Member();
 
     SendLinkData_Member();
+}
+
+void DoGameIntro(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        StartDodrioIntroAnim(1);
+        SetGfxFuncById(GFXFUNC_SHOW_NAMES);
+        sGame->state++;
+        break;
+    case 1:
+        if (!IsGfxFuncActive())
+            SetGameFunc(FUNC_INIT_COUNTDOWN);
+        break;
+    }
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)

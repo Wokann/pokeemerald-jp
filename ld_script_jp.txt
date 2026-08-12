@@ -1290,6 +1290,9 @@ UpdateGame_Leader = sub_080268B4;
 UpdateGame_Member = sub_080268E8;
 SendLinkData_Leader = sub_08025B18;
 SendLinkData_Member = sub_08025CA0;
+StartDodrioIntroAnim = sub_08028230;
+SetGfxFuncById = sub_0802900C;
+SetGameFunc = sub_08026008;
 Task_CommunicateMonInfo = sub_080256D8;
 Task_NewGameIntro = sub_08025664;
 CB2_DodrioGame = sub_08025F94;
@@ -2280,6 +2283,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.Task_StartDodrioGame);
         src/dodrio_berry_picking.o(.text.Task_DodrioGame_Leader);
         src/dodrio_berry_picking.o(.text.Task_DodrioGame_Member);
+        src/dodrio_berry_picking.o(.text.DoGameIntro);
         asm/dodrio_berry_picking2.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
