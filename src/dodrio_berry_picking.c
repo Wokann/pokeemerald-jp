@@ -3910,6 +3910,16 @@ void SetAllDodrioDisabled(void)
         SetDodrioAnim(i, PICK_DISABLED);
 }
 
+void UpdateGame_Leader(void)
+{
+    UpdateBerrySprites();
+    if (sGame->numGraySquares >= NUM_STATUS_SQUARES)
+        SetAllDodrioDisabled();
+    else
+        UpdateAllDodrioAnims();
+    UpdateStatusBarAnim(sGame->numGraySquares);
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
