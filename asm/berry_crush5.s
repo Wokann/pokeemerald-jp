@@ -8,58 +8,6 @@
 
 
 
-	thumb_func_start sub_080242D0
-sub_080242D0: @ 0x080242D0
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	ldrb r4, [r5, #0xc]
-	cmp r4, #1
-	beq _080242F0
-	cmp r4, #1
-	bgt _080242E4
-	cmp r4, #0
-	beq _080242EA
-	b _08024320
-_080242E4:
-	cmp r4, #2
-	beq _08024300
-	b _08024320
-_080242EA:
-	bl Rfu_SetLinkStandbyCallback
-	b _08024320
-_080242F0:
-	bl IsLinkTaskFinished
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _08024326
-	bl SetCloseLinkCallback
-	b _08024320
-_08024300:
-	ldr r0, _0802431C
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _08024326
-	movs r0, #0x19
-	strb r0, [r5, #0xe]
-	movs r0, #5
-	movs r1, #1
-	movs r2, #0
-	bl sub_08022950
-	strb r4, [r5, #0xc]
-	b _08024326
-	.align 2, 0
-_0802431C: .4byte 0x030031C4
-_08024320:
-	ldrb r0, [r5, #0xc]
-	adds r0, #1
-	strb r0, [r5, #0xc]
-_08024326:
-	movs r0, #0
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_080242D0
 
 	thumb_func_start sub_08024330
 sub_08024330: @ 0x08024330

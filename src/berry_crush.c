@@ -2219,6 +2219,30 @@ u32 Cmd_StopGame(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_CloseLink(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 1:
+        if (!IsLinkTaskFinished())
+            return 0;
+        SetCloseLinkCallback();
+        break;
+    case 2:
+        if (gReceivedRemoteLinkPlayers)
+            return 0;
+        game->nextCmd = CMD_QUIT;
+        RunOrScheduleCommand(CMD_HIDE_GAME, SCHEDULE_CMD, NULL);
+        game->cmdState = 2; // ???
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);
