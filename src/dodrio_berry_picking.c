@@ -88,6 +88,12 @@ enum {
     PACKET_READY_END,
 };
 
+enum {
+    STATUS_YELLOW,
+    STATUS_GRAY,
+    STATUS_RED,
+};
+
 struct ReadyToStartPacket
 {
     u8 id;
@@ -1741,6 +1747,46 @@ bool32 DoStatusBarIntro(void)
         return FALSE;
     else
         return TRUE;
+}
+
+void UpdateStatusBarAnim(u8 numEmpty)
+{
+    u8 i;
+
+    if (numEmpty > NUM_STATUS_SQUARES)
+    {
+        // All squares gray
+        for (i = 0; i < NUM_STATUS_SQUARES; i++)
+            StartSpriteAnim(&gSprites[sStatusBar->spriteIds[i]], STATUS_GRAY);
+    }
+    else
+    {
+        // At least 1 square is yellow
+        for (i = 0; i < NUM_STATUS_SQUARES - numEmpty; i++)
+        {
+            if (numEmpty > 6)
+            {
+                // Flash the yellow squares red
+                // The flash cycles faster the fewer yellow squares remain
+                sStatusBar->flashTimer += numEmpty - 6;
+                if (sStatusBar->flashTimer > 30)
+                    sStatusBar->flashTimer = 0;
+                else if (sStatusBar->flashTimer > 10)
+                    StartSpriteAnim(&gSprites[sStatusBar->spriteIds[i]], STATUS_RED);
+                else
+                    StartSpriteAnim(&gSprites[sStatusBar->spriteIds[i]], STATUS_YELLOW);
+            }
+            else
+            {
+                // Set yellow squares, no flash
+                StartSpriteAnim(&gSprites[sStatusBar->spriteIds[i]], STATUS_YELLOW);
+            }
+        }
+
+        // Set remaining squares gray
+        for (; i < NUM_STATUS_SQUARES; i++)
+            StartSpriteAnim(&gSprites[sStatusBar->spriteIds[i]], STATUS_GRAY);
+    }
 }
 
 void nullsub_15(void)
