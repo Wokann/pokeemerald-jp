@@ -407,7 +407,6 @@ extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
 extern EWRAM_DATA struct StatusBar *sStatusBar;
 extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
-extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
 void LoadDodrioGfx(void);
@@ -1610,7 +1609,7 @@ void CreateDodrioSprite(struct DodrioGame_MonInfo *monInfo, u8 playerId, u8 id, 
     };
 
     sDodrioSpriteIds[id] = AllocZeroed(4);
-    *sDodrioSpriteIds[id] = CreateSprite(&template, sub_08028C40(playerId, numPlayers), 136, 3);
+    *sDodrioSpriteIds[id] = CreateSprite(&template, GetDodrioXPos(playerId, numPlayers), 136, 3);
     SetDodrioInvisibility(TRUE, id);
 }
 
@@ -1960,6 +1959,53 @@ void SetCloudInvisibility(bool8 invisible)
         gSprites[*sCloudSpriteIds[i]].invisible = invisible;
 }
 
+s16 GetDodrioXPos(u8 playerId, u8 numPlayers)
+{
+    s16 x = 0;
+    switch (numPlayers)
+    {
+    case 1:
+        x = 15;
+        break;
+    case 2:
+        switch (playerId)
+        {
+            case 0: x = 12; break;
+            case 1: x = 18; break;
+        }
+        break;
+    case 3:
+        switch (playerId)
+        {
+            case 0: x = 15; break;
+            case 1: x = 21; break;
+            case 2: x =  9; break;
+        }
+        break;
+    case 4:
+        switch (playerId)
+        {
+            case 0: x = 12; break;
+            case 1: x = 18; break;
+            case 2: x = 24; break;
+            case 3: x =  6; break;
+        }
+        break;
+    case 5:
+        switch (playerId)
+        {
+            case 0: x = 15; break;
+            case 1: x = 21; break;
+            case 2: x = 27; break;
+            case 3: x =  3; break;
+            case 4: x =  9; break;
+        }
+        break;
+    }
+
+    return x * 8;
+}
+
 void nullsub_15(void)
 {
 }
@@ -1986,7 +2032,7 @@ u32 DoDodrioMissedAnim(struct Sprite *sprite)
         if (++sprite->data[1] >= 40)
         {
             sprite->data[0] = 0;
-            sprite->x = sub_08028C40(0, GetNumPlayers());
+            sprite->x = GetDodrioXPos(0, GetNumPlayers());
         }
     }
 
