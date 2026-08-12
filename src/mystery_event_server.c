@@ -1,5 +1,7 @@
 #include "global.h"
 #include "malloc.h"
+#include "mystery_gift.h"
+#include "script.h"
 
 // JP-only mevent server. The original source was mevent_server.c; the
 // assert strings embedded in the ROM preserve its variable names
@@ -8,6 +10,9 @@
 
 extern const char gUnknown_82C4A74[]; // "mevent_server.c"
 extern const char gUnknown_82C4A84[]; // "size <= ME_SEND_BUF_SIZE"
+extern const char gUnknown_82C4AA0[]; // "cmd->parameter == NULL"
+extern const char gUnknown_82C4AB8[]; // "cmd->flag == FALSE"
+extern const char gUnknown_82C4ACC[]; // "cmd->flag == FALSE && cmd->parameter == NULL"
 extern const char gUnknown_82C4B10[]; // "svr->mainseqno < NELEMS(func_tbl)"
 extern const u8 gUnknown_82C4F60[];
 extern const u8 gUnknown_82C4FC0[];
@@ -15,6 +20,7 @@ extern u32 (*const gUnknown_82C4AFC[])(void *);
 
 extern void mevent_srv_sub_init(void *sub, s32 a, s32 b);
 extern void mevent_srv_sub_init_send(void *sub, u32 size, void *buffer, u32 size2);
+extern void mevent_srv_sub_init_recv(void *sub, u32 a, void *buffer);
 extern u32 mevent_srv_sub_recv(void *sub);
 extern u32 mevent_srv_sub_send(void *sub);
 
@@ -31,14 +37,26 @@ struct MeventServerData
     void *unk18;      // 0x18
     void *unk1C;      // 0x1C
     void *unk20;      // 0x20
-    u8 unk24[0x14];   // 0x24
+    u32 unk24;        // 0x24
+    u32 unk28;        // 0x28
+    u32 unk2C;        // 0x2C
+    u32 unk30;        // 0x30
+    u32 unk34;        // 0x34
     u8 sub[0x28];     // 0x38
+};
+
+struct MeventCmd
+{
+    u32 id;
+    u32 flag;
+    u32 parameter;
 };
 
 extern EWRAM_DATA struct MeventServerData *gUnknown_2022930;
 
 void mevent_srv_init_common(void *data, const u8 *script, s32 a, s32 b);
 u32 mevent_srv_exec_common(void *data);
+u32 common_mainseq_4(void *data);
 
 void mevent_srv_init_wnews(void)
 {
@@ -157,4 +175,187 @@ u32 mevent_srv_exec_common(void *data)
     if (svr->mainseqno > 4)
         AGBAssert(gUnknown_82C4A74, 0x22A, gUnknown_82C4B10, TRUE);
     return status;
+}
+
+u32 common_mainseq_4(void *data)
+{
+    struct MeventServerData *svr = data;
+    struct MeventCmd *cmd = (struct MeventCmd *)&svr->script[svr->cmdIndex * 12];
+    void *buf;
+
+    svr->cmdIndex++;
+    switch (cmd->id)
+    {
+    case 0:
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x162, gUnknown_82C4AA0, TRUE);
+        svr->mainseqno = 1;
+        svr->result = cmd->flag;
+        break;
+    case 1:
+        svr->mainseqno = 3;
+        break;
+    case 2:
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x16C, gUnknown_82C4AA0, TRUE);
+        mevent_srv_sub_init_recv(&svr->sub, cmd->flag, svr->unk14);
+        svr->mainseqno = 2;
+        break;
+    case 3:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x172, gUnknown_82C4AB8, TRUE);
+        svr->cmdIndex = 0;
+        svr->script = cmd->parameter;
+        break;
+    case 5:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x178, gUnknown_82C4AB8, TRUE);
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x179, gUnknown_82C4AA0, TRUE);
+        memcpy(svr->unk20, svr->unk14, 0x64);
+        break;
+    case 6:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x17E, gUnknown_82C4AB8, TRUE);
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x17F, gUnknown_82C4AA0, TRUE);
+        svr->result = MysteryGift_ValidateLinkGameData(svr->unk20, FALSE);
+        break;
+    case 30:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x184, gUnknown_82C4AB8, TRUE);
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x185, gUnknown_82C4AA0, TRUE);
+        svr->result = MysteryGift_ValidateLinkGameData(svr->unk20, TRUE);
+        break;
+    case 4:
+        if (svr->result == cmd->flag)
+        {
+            svr->cmdIndex = 0;
+            svr->script = cmd->parameter;
+        }
+        break;
+    case 7:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x192, gUnknown_82C4AB8, TRUE);
+        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
+        svr->result = MysteryGift_CompareCardFlags(buf, svr->unk20, buf);
+        break;
+    case 8:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x198, gUnknown_82C4AB8, TRUE);
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x199, gUnknown_82C4AA0, TRUE);
+        svr->result = *(u32 *)svr->unk14;
+        break;
+    case 9:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x19E, gUnknown_82C4AB8, TRUE);
+        buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
+        svr->result = MysteryGift_CheckStamps(buf, svr->unk20, buf);
+        break;
+    case 10:
+        if (cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x1A5, gUnknown_82C4AA0, TRUE);
+        svr->result = MysteryGift_GetCardStatFromLinkData(svr->unk20, cmd->flag);
+        break;
+    case 11:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1AA, gUnknown_82C4AB8, TRUE);
+        svr->result = MysteryGift_DoesQuestionnaireMatch(svr->unk20, cmd->parameter);
+        break;
+    case 12:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1B0, gUnknown_82C4AB8, TRUE);
+        svr->result = mevent_compare_pointers(cmd->parameter, *(u32 *)svr->unk14);
+        break;
+    case 14:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1B6, gUnknown_82C4AB8, TRUE);
+        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk1C);
+        mevent_srv_common_init_send(svr, 0x17, buf, 0xE0);
+        break;
+    case 13:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1BC, gUnknown_82C4AB8, TRUE);
+        buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
+        mevent_srv_common_init_send(svr, 0x16, buf, 0xA4);
+        break;
+    case 16:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1C2, gUnknown_82C4AB8, TRUE);
+        buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
+        mevent_srv_common_init_send(svr, 0x18, buf, 4);
+        break;
+    case 15:
+        buf = cmd->parameter;
+        if (buf == NULL)
+            mevent_srv_common_init_send(svr, 0x19, svr->unk24, svr->unk28);
+        else
+            mevent_srv_common_init_send(svr, 0x19, cmd->parameter, cmd->flag);
+        break;
+    case 18:
+        buf = cmd->parameter;
+        if (buf == NULL)
+            mevent_srv_common_init_send(svr, 0x10, svr->unk2C, svr->unk30);
+        else
+            mevent_srv_common_init_send(svr, 0x10, cmd->parameter, cmd->flag);
+        break;
+    case 19:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1D8, gUnknown_82C4AB8, TRUE);
+        mevent_srv_common_init_send(svr, 0x1A, cmd->parameter, 0xBC);
+        break;
+    case 20:
+        mevent_srv_common_init_send(svr, 0x15, cmd->parameter, cmd->flag);
+        break;
+    case 17:
+        mevent_srv_common_init_send(svr, 0x1C, cmd->parameter, cmd->flag);
+        break;
+    case 22:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1E7, gUnknown_82C4AB8, TRUE);
+        memcpy(svr->unk18, cmd->parameter, 0xA4);
+        break;
+    case 23:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1EC, gUnknown_82C4AB8, TRUE);
+        memcpy(svr->unk1C, cmd->parameter, 0xE0);
+        break;
+    case 21:
+        if (cmd->flag != FALSE)
+            AGBAssert(gUnknown_82C4A74, 0x1F1, gUnknown_82C4AB8, TRUE);
+        svr->unk34 = *(u32 *)cmd->parameter;
+        break;
+    case 24:
+        svr->unk24 = cmd->parameter;
+        svr->unk28 = cmd->flag;
+        break;
+    case 25:
+        svr->unk2C = cmd->parameter;
+        svr->unk30 = cmd->flag;
+        break;
+    case 26:
+        if (cmd->flag != FALSE || cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x200, gUnknown_82C4ACC, TRUE);
+        memcpy(svr->unk18, GetSavedWonderCard(), 0xA4);
+        DisableWonderCardSending(svr->unk18);
+        break;
+    case 27:
+        if (cmd->flag != FALSE || cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x206, gUnknown_82C4ACC, TRUE);
+        memcpy(svr->unk1C, GetSavedWonderNews(), 0xE0);
+        break;
+    case 28:
+        if (cmd->flag != FALSE || cmd->parameter != NULL)
+            AGBAssert(gUnknown_82C4A74, 0x20B, gUnknown_82C4ACC, TRUE);
+        svr->unk24 = (u32)GetSavedRamScriptIfValid();
+        break;
+    case 29:
+        mevent_srv_common_init_send(svr, 0x1B, cmd->parameter, cmd->flag);
+        break;
+    default:
+        break;
+    }
+    return 1;
 }

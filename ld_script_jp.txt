@@ -1859,7 +1859,7 @@ SECTIONS {
         src/mystery_event_server.o(.text.common_mainseq_1);
         src/mystery_event_server.o(.text.common_mainseq_2);
         src/mystery_event_server.o(.text.common_mainseq_3);
-        asm/mevent_server.o(.text);
+        src/mystery_event_server.o(.text.common_mainseq_4);
         src/mystery_event_server.o(.text.mevent_srv_exec_common);
         asm/mevent_client.o(.text);
         asm/mevent_server_helpers.o(.text);
