@@ -296,7 +296,8 @@ extern void SetCloudInvisibility(bool8);
 extern u8 GetPlayAgainState(void);
 extern u32 GetHighestScore(void);
 extern void ResetBerryAndStatusBarSprites(void);
-extern void ResetForPlayAgainPrompt(void);
+extern void sub_08026748(void); // UpdateBerrySprites
+extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern u32 IncrementWithLimit(u32 num, u32 max);
 extern void ResetPickState(void);
 extern void HandleWaitPlayAgainInput(void);
@@ -1008,6 +1009,34 @@ void SetMaxBerriesPickedInRow(void)
     u8 i;
     for (i = 0; i < sGame->numPlayers; i++)
         sGame->berryResults[i][BERRY_IN_ROW] = sGame->maxBerriesPickedInRow;
+}
+
+void ResetForPlayAgainPrompt(void)
+{
+    u8 i, j;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        for (j = 0; j < NUM_BERRY_COLUMNS; j++)
+            sGame->players[i].berries.fallDist[j] = 0;
+        sGame->players[i].comm.pickState = PICK_NONE;
+        sGame->players[i].comm.ateBerry = FALSE;
+        sGame->difficulty[i] = 0;
+        sGame->berriesEaten[i] = 0;
+        sGame->scoreResults[i].ranking = 0;
+        sGame->scoreResults[i].score = 0;
+        sGame->berryResults[i][BERRY_BLUE] = 0;
+        sGame->berryResults[i][BERRY_GREEN] = 0;
+        sGame->berryResults[i][BERRY_GOLD] = 0;
+        sGame->berryResults[i][BERRY_MISSED] = 0;
+        sGame->berryResults[i][BERRY_PRIZE] = 0;
+        sGame->berryResults[i][BERRY_IN_ROW] = 0;
+    }
+    sGame->endSoundState = 0;
+    sGame->berriesPickedInRow = 0;
+    sGame->numGraySquares = 0;
+    sub_08026848(); // UpdateAllDodrioAnims
+    sub_08026748(); // UpdateBerrySprites
 }
 
 void InitResults_Leader(void)
