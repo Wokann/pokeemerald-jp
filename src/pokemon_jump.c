@@ -170,6 +170,12 @@ struct PokemonJump_CommData
     u32 jumpScore;
 };
 
+struct PokeJumpGfxFunc
+{
+    int id;
+    void (*func)(void);
+};
+
 struct PokemonJump
 {
     MainCallback exitCallback;
@@ -249,6 +255,7 @@ extern const struct PokemonJumpMons sPokeJumpMons[];
 extern const s8 sJumpOffsets[][48];
 
 EWRAM_DATA struct PokemonJump *sPokemonJump = NULL;
+extern EWRAM_DATA struct PokemonJumpGfx *sPokemonJumpGfx;
 
 void InitJumpMonInfo(struct PokemonJump_MonInfo *monInfo, struct Pokemon *mon);
 void InitGame(struct PokemonJump *jump);
@@ -269,6 +276,11 @@ void SpriteCB_Star(struct Sprite *sprite);
 void SpriteCB_MonHitShake(struct Sprite *sprite);
 void SpriteCB_MonHitFlash(struct Sprite *sprite);
 void SpriteCB_MonIntroBounce(struct Sprite *sprite);
+void InitPokeJumpGfx(struct PokemonJumpGfx *jumpGfx);
+void SetUpPokeJumpGfxFuncById(int id);
+bool32 IsPokeJumpGfxFuncFinished(void);
+void SetUpPokeJumpGfxFunc(void (*func)(void));
+void Task_RunPokeJumpGfxFunc(u8 taskId);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -381,6 +393,8 @@ extern void sub_0802BBD8(void); // UpdateVineState
 extern bool32 sub_0802DAB0(int multiplayerId); // IsMonHitShakeActive
 extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
 extern void sub_0802DAC4(void); // StopMonHitFlash
+extern void LoadPokeJumpGfx(void); // sub_0802CE44, still asm
+extern const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
@@ -2313,6 +2327,59 @@ void StartPokeJumpCountdown(struct PokemonJumpGfx *jumpGfx)
 bool32 IsPokeJumpCountdownRunning(void)
 {
     return IsMinigameCountdownRunning();
+}
+
+void StartPokeJumpGfx(struct PokemonJumpGfx *jumpGfx)
+{
+    u8 taskId;
+
+    sPokemonJumpGfx = jumpGfx;
+    InitPokeJumpGfx(sPokemonJumpGfx);
+    taskId = CreateTask(Task_RunPokeJumpGfxFunc, 3);
+    sPokemonJumpGfx->taskId = taskId;
+    SetWordTaskArg(sPokemonJumpGfx->taskId, 2, (u32)sPokemonJumpGfx);
+    SetUpPokeJumpGfxFunc(LoadPokeJumpGfx);
+}
+
+void InitPokeJumpGfx(struct PokemonJumpGfx *jumpGfx)
+{
+    jumpGfx->mainState = 0;
+    jumpGfx->funcFinished = FALSE;
+    jumpGfx->msgWindowId = WINDOW_NONE;
+}
+
+void SetUpPokeJumpGfxFuncById(int id)
+{
+    int i;
+
+    for (i = 0; i < ARRAY_COUNT(sPokeJumpGfxFuncs); i++)
+    {
+        if (sPokeJumpGfxFuncs[i].id == id)
+            SetUpPokeJumpGfxFunc(sPokeJumpGfxFuncs[i].func);
+    }
+}
+
+bool32 IsPokeJumpGfxFuncFinished(void)
+{
+    return (sPokemonJumpGfx->funcFinished != TRUE);
+}
+
+void SetUpPokeJumpGfxFunc(void (*func)(void))
+{
+    SetWordTaskArg(sPokemonJumpGfx->taskId, 0, (u32)func);
+    sPokemonJumpGfx->mainState = 0;
+    sPokemonJumpGfx->funcFinished = FALSE;
+}
+
+void Task_RunPokeJumpGfxFunc(u8 taskId)
+{
+    if (!sPokemonJumpGfx->funcFinished)
+    {
+        // Read the function set in the data by SetUpPokeJumpGfxFunc
+        void (*func)(void) = (void *)(GetWordTaskArg(taskId, 0));
+
+        func();
+    }
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
