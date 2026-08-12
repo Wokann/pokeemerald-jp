@@ -253,6 +253,12 @@ extern void HideStdMessageWindow(void);
 extern void HideYesNoMenuWindow(void);
 extern void DestroyStdMessageWindow(void);
 extern void DestroyYesNoMenuWindow(void);
+extern void FillTextEntryWindow(u16 x, u16 width, u8 fillValue);
+extern void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor);
+extern void SetRegisteredTextPalette(bool32 enabled);
+extern void PrintChatMessage(u16 x, u8 *str, u8 colorIdx);
+extern void StartKeyboardCursorAnim(void);
+extern bool32 TryKeyboardCursorReopen(void);
 
 bool8 TryAllocDisplay(void);
 bool32 IsDisplaySubtask0Active(void);
@@ -269,6 +275,14 @@ bool32 Display_SwitchPages(u8 *state);
 bool32 Display_MoveKeyboardCursor(u8 *state);
 bool32 Display_AskQuitChatting(u8 *state);
 bool32 Display_DestroyYesNoDialog(u8 *state);
+bool32 Display_UpdateMessageBuffer(u8 *state);
+bool32 Display_AskRegisterText(u8 *state);
+bool32 Display_CancelRegister(u8 *state);
+bool32 Display_ReturnToKeyboard(u8 *state);
+bool32 Display_ScrollChat(u8 *state);
+bool32 Display_AnimateKeyboardCursor(u8 *state);
+bool32 Display_PrintInputText(u8 *state);
+bool32 Display_PrintExitingChat(u8 *state);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1792,5 +1806,243 @@ bool32 Display_DestroyYesNoDialog(u8 *state)
     }
 
     (*state)++;
+    return TRUE;
+}
+
+bool32 Display_UpdateMessageBuffer(u8 *state)
+{
+    u32 x, width;
+    u8 *str;
+
+    switch (*state)
+    {
+    case 0:
+        GetBufferSelectionRegion(&x, &width);
+        FillTextEntryWindow(x, width, 0);
+        str = GetMessageEntryBuffer();
+        DrawTextEntryMessage(0, str, 3, 1, 2);
+        CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            UpdateRButtonLabel();
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_AskRegisterText(u8 *state)
+{
+    u16 x;
+    u8 *str;
+    u16 length;
+
+    switch (*state)
+    {
+    case 0:
+        x = GetLimitedMessageStartPos();
+        str = GetLimitedMessageStartPtr();
+        length = StringLength_Multibyte(str);
+        FillTextEntryWindow(x, length, PIXEL_FILL(6));
+        DrawTextEntryMessage(x, str, 0, 4, 5);
+        CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            AddStdMessageWindow(STDMESSAGE_REGISTER_WHERE, 16);
+            CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        }
+        else
+        {
+            return TRUE;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            SetRegisteredTextPalette(TRUE);
+        else
+            return TRUE;
+        break;
+    case 3:
+        return FALSE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_CancelRegister(u8 *state)
+{
+    u16 x;
+    u8 *str;
+    u16 length;
+
+    switch (*state)
+    {
+    case 0:
+        x = GetLimitedMessageStartPos();
+        str = GetLimitedMessageStartPtr();
+        length = StringLength_Multibyte(str);
+        FillTextEntryWindow(x, length, PIXEL_FILL(0));
+        DrawTextEntryMessage(x, str, 3, 1, 2);
+        CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_GFX);
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            HideStdMessageWindow();
+            CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        }
+        else
+        {
+            return TRUE;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            SetRegisteredTextPalette(FALSE);
+            DestroyStdMessageWindow();
+        }
+        else
+        {
+            return TRUE;
+        }
+        break;
+    case 3:
+        return FALSE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_ReturnToKeyboard(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        PrintCurrentKeyboardPage();
+        CopyWindowToVram(WIN_KEYBOARD, COPYWIN_GFX);
+        (*state)++;
+        return TRUE;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            return FALSE;
+        return TRUE;
+    default:
+        return TRUE;
+    }
+}
+
+bool32 Display_ScrollChat(u8 *state)
+{
+    u16 row;
+    u8 *str;
+    u8 colorIdx;
+
+    switch (*state)
+    {
+    case 0:
+        row = sDisplay->currLine;
+        str = GetLastReceivedMessage();
+        colorIdx = GetReceivedPlayerIndex();
+        PrintChatMessage(row, str, colorIdx);
+        CopyWindowToVram(WIN_CHAT_HISTORY, COPYWIN_GFX);
+        break;
+    case 1:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return TRUE;
+
+        // JP allows up to 11 lines (US stops at 9).
+        if (sDisplay->currLine <= 10)
+        {
+            sDisplay->currLine++;
+            *state = 4;
+            return FALSE;
+        }
+        else
+        {
+            sDisplay->scrollCount = 0;
+            (*state)++;
+        }
+        // fall through
+    case 2:
+        // JP scrolls by 4 pixels (US uses 5).
+        ScrollWindow(WIN_CHAT_HISTORY, 0, 4, PIXEL_FILL(1));
+        CopyWindowToVram(WIN_CHAT_HISTORY, COPYWIN_GFX);
+        sDisplay->scrollCount++;
+        (*state)++;
+        // fall through
+    case 3:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return TRUE;
+
+        if (sDisplay->scrollCount < 3)
+        {
+            (*state)--;
+            return TRUE;
+        }
+        break;
+    case 4:
+        return FALSE;
+    default:
+        return TRUE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_AnimateKeyboardCursor(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        StartKeyboardCursorAnim();
+        (*state)++;
+        break;
+    case 1:
+        return TryKeyboardCursorReopen();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_PrintInputText(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_INPUT_TEXT, 16);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_PrintExitingChat(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_EXITING_CHAT, 0);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
     return TRUE;
 }
