@@ -3576,6 +3576,14 @@ void CreateTask_(TaskFunc func, u8 priority)
     CreateTask(func, priority);
 }
 
+void CreateDodrioGameTask(TaskFunc func)
+{
+    sGame->taskId = CreateTask(func, 1);
+    sGame->state = 0;
+    sGame->startState = 0;
+    sGame->timer = 0;
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;

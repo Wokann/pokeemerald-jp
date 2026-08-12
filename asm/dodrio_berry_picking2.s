@@ -33,26 +33,6 @@
 
 
 
-	thumb_func_start sub_08025FE4
-sub_08025FE4: @ 0x08025FE4
-	push {lr}
-	movs r1, #1
-	bl CreateTask
-	ldr r1, _08026004
-	ldr r3, [r1]
-	movs r2, #0
-	strb r0, [r3, #4]
-	ldr r0, [r1]
-	strb r2, [r0, #0x10]
-	ldr r0, [r1]
-	strb r2, [r0, #0xc]
-	ldr r0, [r1]
-	strb r2, [r0, #0x14]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08026004: .4byte 0x0202294C
-	thumb_func_end sub_08025FE4
 
 	thumb_func_start sub_08026008
 sub_08026008: @ 0x08026008

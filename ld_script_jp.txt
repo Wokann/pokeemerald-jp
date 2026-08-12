@@ -1393,7 +1393,7 @@ sub_08025E0C = HandleSound_Member;
 sub_08025F94 = CB2_DodrioGame;
 sub_08025FAC = VBlankCB_DodrioGame;
 sub_08025FD4 = CreateTask_;
-CreateDodrioGameTask = sub_08025FE4;
+sub_08025FE4 = CreateDodrioGameTask;
 sub_08025FC0 = InitMonInfo;
 sub_08028FA0 = InitGameGfx;
 sub_08029040 = Task_TryRunGfxFunc;
@@ -2416,6 +2416,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.VBlankCB_DodrioGame);
         src/dodrio_berry_picking.o(.text.InitMonInfo);
         src/dodrio_berry_picking.o(.text.CreateTask_);
+        src/dodrio_berry_picking.o(.text.CreateDodrioGameTask);
         asm/dodrio_berry_picking2.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);
