@@ -178,7 +178,10 @@ extern const s8 sImpactCoords[3][2];
 extern const s8 sSparkleCoords[][2];
 extern const u32 sPressingSpeedConversionTable[];
 extern const u8 sTextColorTable[][3];
-extern void CreatePlayerNameWindows(struct BerryCrushGame *);
+extern const struct BerryCrushPlayerCoords sPlayerCoords[];
+extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
+extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
+void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 extern void CreateGameSprites(struct BerryCrushGame *);
@@ -828,6 +831,18 @@ void HideTimer(struct BerryCrushGame_Gfx *gfx)
     DigitObjUtil_HideOrShow(2, TRUE);
     DigitObjUtil_HideOrShow(1, TRUE);
     DigitObjUtil_HideOrShow(0, TRUE);
+}
+
+void CreatePlayerNameWindows(struct BerryCrushGame *game)
+{
+    u8 i;
+    for (i = 0; i < game->playerCount; i++)
+    {
+        game->gfx.playerCoords[i] = &sPlayerCoords[sPlayerIdToPosId[game->playerCount - 2][i]];
+        game->gfx.nameWindowIds[i] = AddWindow(&sWindowTemplates_PlayerNames[game->gfx.playerCoords[i]->playerId]);
+        PutWindowTilemap(game->gfx.nameWindowIds[i]);
+        FillWindowPixelBuffer(game->gfx.nameWindowIds[i], 0);
+    }
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)

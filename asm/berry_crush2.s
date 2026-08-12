@@ -6,62 +6,6 @@
 
 	thumb_func_start sub_080222E8
 sub_080222E8: @ 0x080222E8
-	push {r4, r5, r6, r7, lr}
-	adds r5, r0, #0
-	movs r6, #0
-	ldrb r0, [r5, #9]
-	cmp r6, r0
-	bhs _08022348
-	ldr r7, _08022350
-_080222F6:
-	lsls r0, r6, #2
-	movs r1, #0x98
-	lsls r1, r1, #1
-	adds r2, r5, r1
-	adds r2, r2, r0
-	ldrb r1, [r5, #9]
-	subs r1, #2
-	lsls r0, r1, #2
-	adds r0, r0, r1
-	adds r0, r6, r0
-	adds r0, r0, r7
-	ldrb r1, [r0]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	ldr r1, _08022354
-	adds r0, r0, r1
-	str r0, [r2]
-	ldrb r0, [r0]
-	lsls r0, r0, #3
-	ldr r1, _08022358
-	adds r0, r0, r1
-	bl AddWindow
-	ldr r1, _0802235C
-	adds r4, r5, r1
-	adds r4, r4, r6
-	strb r0, [r4]
-	ldrb r0, [r4]
-	bl PutWindowTilemap
-	ldrb r0, [r4]
-	movs r1, #0
-	bl FillWindowPixelBuffer
-	adds r0, r6, #1
-	lsls r0, r0, #0x18
-	lsrs r6, r0, #0x18
-	ldrb r0, [r5, #9]
-	cmp r6, r0
-	blo _080222F6
-_08022348:
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08022350: .4byte 0x082C7A08
-_08022354: .4byte 0x082C7A1C
-_08022358: .4byte 0x082C5F0C
-_0802235C: .4byte 0x000001A7
-	thumb_func_end sub_080222E8
 
 	thumb_func_start sub_08022360
 sub_08022360: @ 0x08022360

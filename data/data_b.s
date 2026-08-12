@@ -1226,8 +1226,8 @@ sTextColorTable: @ 0x82C5EF0
 gUnknown_82C5F04: @ 0x82C5F04
 	.incbin "baserom_jp.gba", 0x2c5f04, 0x8
 
-	.globl gUnknown_82C5F0C
-gUnknown_82C5F0C: @ 0x82C5F0C
+	.globl sWindowTemplates_PlayerNames
+sWindowTemplates_PlayerNames: @ 0x82C5F0C
 	.incbin "baserom_jp.gba", 0x2c5f0c, 0x50
 
 	.globl gUnknown_82C5F5C
@@ -1262,12 +1262,12 @@ sBg_Tilemap: @ 0x82C779C
 gUnknown_82C79C4: @ 0x82C79C4
 	.incbin "baserom_jp.gba", 0x2c79c4, 0x44
 
-	.globl gUnknown_82C7A08
-gUnknown_82C7A08: @ 0x82C7A08
+	.globl sPlayerIdToPosId
+sPlayerIdToPosId: @ 0x82C7A08
 	.incbin "baserom_jp.gba", 0x2c7a08, 0x14
 
-	.globl gUnknown_82C7A1C
-gUnknown_82C7A1C: @ 0x82C7A1C
+	.globl sPlayerCoords
+sPlayerCoords: @ 0x82C7A1C
 	.incbin "baserom_jp.gba", 0x2c7a1c, 0x3c
 
 	.globl sImpactCoords
