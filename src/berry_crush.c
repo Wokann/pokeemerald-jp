@@ -19,6 +19,7 @@
 #include "sprite.h"
 #include "task.h"
 #include "text.h"
+#include "window.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -105,6 +106,7 @@ extern void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 extern void CreateGameSprites(struct BerryCrushGame *);
+extern void DestroyGameSprites(struct BerryCrushGame *);
 
 void SaveResults(void);
 static void VBlankCB(void);
@@ -112,6 +114,7 @@ static void MainCB(void);
 static void MainTask(u8 taskId);
 static void SetNamesAndTextSpeed(struct BerryCrushGame *);
 s32 ShowGameDisplay(void);
+s32 HideGameDisplay(void);
 
 struct BerryCrushGame *GetBerryCrushGame(void)
 {
@@ -420,6 +423,65 @@ s32 ShowGameDisplay(void)
         ShowBg(3);
         SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
         BerryCrush_SetVBlankCB();
+        game->cmdState = 0;
+        return 1;
+    }
+
+    game->cmdState++;
+    return 0;
+}
+
+s32 HideGameDisplay(void)
+{
+    struct BerryCrushGame *game = GetBerryCrushGame();
+
+    if (!game)
+        return -1;
+
+    switch (game->cmdState)
+    {
+    case 0:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 1:
+        if (!IsLinkTaskFinished())
+            return 0;
+    case 2:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        UpdatePaletteFade();
+        break;
+    case 3:
+        if (UpdatePaletteFade())
+            return 0;
+        break;
+    case 4:
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
+        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 32, 32);
+        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 32, 32);
+        FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 32, 32);
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        break;
+    case 5:
+        FreeAllWindowBuffers();
+        HideBg(0);
+        UnsetBgTilemapBuffer(0);
+        HideBg(1);
+        UnsetBgTilemapBuffer(1);
+        HideBg(2);
+        UnsetBgTilemapBuffer(2);
+        HideBg(3);
+        UnsetBgTilemapBuffer(3);
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        break;
+    case 6:
+        DestroyWirelessStatusIndicatorSprite();
+        DestroyGameSprites(game);
+        DigitObjUtil_Free();
+        break;
+    case 7:
         game->cmdState = 0;
         return 1;
     }
