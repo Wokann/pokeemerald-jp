@@ -21,6 +21,7 @@
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
+#include "trig.h"
 
 #define PALTAG_1 5
 #define PALTAG_2 6
@@ -264,6 +265,7 @@ void IncrementGamesWithMaxPlayers(void);
 void SpriteCB_Star(struct Sprite *sprite);
 void SpriteCB_MonHitShake(struct Sprite *sprite);
 void SpriteCB_MonHitFlash(struct Sprite *sprite);
+void SpriteCB_MonIntroBounce(struct Sprite *sprite);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -2161,6 +2163,67 @@ void Gfx_StartMonHitFlash(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
     ResetPokeJumpSpriteData(jumpGfx->monSprites[multiplayerId]);
     jumpGfx->monSprites[multiplayerId]->callback = SpriteCB_MonHitFlash;
 }
+
+void Gfx_ResetMonSpriteSubpriorities(struct PokemonJumpGfx *jumpGfx)
+{
+    int i;
+    u16 numPlayers = GetNumPokeJumpPlayers();
+    for (i = 0; i < numPlayers; i++)
+        jumpGfx->monSprites[i]->subpriority = jumpGfx->monSpriteSubpriorities[i];
+}
+
+void Gfx_StartMonIntroBounce(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
+{
+    ResetPokeJumpSpriteData(jumpGfx->monSprites[multiplayerId]);
+    jumpGfx->monSprites[multiplayerId]->callback = SpriteCB_MonIntroBounce;
+}
+
+bool32 Gfx_IsMonIntroBounceActive(struct PokemonJumpGfx *jumpGfx)
+{
+    int i;
+    u16 numPlayers = GetNumPokeJumpPlayers();
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (jumpGfx->monSprites[i]->callback == SpriteCB_MonIntroBounce)
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+#define sState   data[0]
+#define sHopPos  data[1]
+#define sNumHops data[2]
+
+void SpriteCB_MonIntroBounce(struct Sprite *sprite)
+{
+    switch (sprite->sState)
+    {
+    case 0:
+        PlaySE(SE_BIKE_HOP);
+        sprite->sHopPos = 0;
+        sprite->sState++;
+        // fall through
+    case 1:
+        sprite->sHopPos += 4;
+        if (sprite->sHopPos > 127)
+            sprite->sHopPos = 0;
+
+        sprite->y2 = -(gSineTable[sprite->sHopPos] >> 3);
+        if (sprite->sHopPos == 0)
+        {
+            if (++sprite->sNumHops < 2)
+                sprite->sState = 0;
+            else
+                sprite->callback = SpriteCallbackDummy;
+        }
+        break;
+    }
+}
+
+#undef sState
+#undef sHopPos
+#undef sNumHops
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
 {
