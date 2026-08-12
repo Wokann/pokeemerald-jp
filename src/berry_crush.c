@@ -30,6 +30,8 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
+#define MAX_TIME (10 * 60 * 60) // Timer can go up to 9:59:59
+
 #define CRUSHER_START_Y (-104)
 
 #define TAG_CRUSHER_BASE  1
@@ -301,6 +303,8 @@ extern const u8 sBitTable[8];
 extern const u8 sSyncPressBonus[8];
 extern const u8 sVibrationData[MAX_RFU_PLAYERS][4];
 extern const s8 sIntroOutroVibrationData[][7];
+extern const u8 sSparkleThresholds[MAX_RFU_PLAYERS - 1][4];
+extern const u8 sBigSparkleThresholds[MAX_RFU_PLAYERS - 1];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
@@ -1685,6 +1689,185 @@ void UpdateLeaderGameState(struct BerryCrushGame *game)
         game->localState.vibration = 0;
     }
     game->localState.timer = game->leaderTimer;
+}
+
+// Checks for input and sends data to group members
+void HandlePlayerInput(struct BerryCrushGame *game)
+{
+    if (JOY_NEW(A_BUTTON))
+        game->localState.pushedAButton = TRUE;
+
+    if (JOY_HELD(A_BUTTON))
+    {
+        if (game->players[game->localId].timePressingA < game->timer)
+            game->players[game->localId].timePressingA++;
+    }
+
+    // Only send data to other players if you are the leader or you pressed A
+    if (game->localId != 0 && !game->localState.pushedAButton)
+        return;
+    game->localState.sendFlag = SEND_GAME_STATE;
+
+    // Every 30 frames, check whether the sparkles produced should be big,
+    // depending on how many A presses there were in that time
+    if (game->timer % 30 == 0)
+    {
+        if (game->bigSparkleCounter > sBigSparkleThresholds[game->playerCount - 2])
+        {
+            game->numBigSparkles++;
+            game->bigSparkle = TRUE;
+        }
+        else
+        {
+            game->bigSparkle = FALSE;
+        }
+        game->bigSparkleCounter = 0;
+        game->numBigSparkleChecks++;
+    }
+
+    // Every 15 frames, update the amount of sparkles that should be produced,
+    // depending on how many A presses there were in that time (including the bonus)
+    if (game->timer % 15 == 0)
+    {
+        // BUG: The wrong field is used twice below
+        // As a result, only a sparkleAmount of 0, 1, or 4 is attainable
+        #ifdef BUGFIX
+        #define field sparkleAmount
+        #else
+        #define field sparkleCounter
+        #endif
+
+        if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][0])
+            game->sparkleAmount = 0;
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][1])
+            game->sparkleAmount = 1;
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][2])
+            game->field = 2;
+        else if (game->sparkleCounter < sSparkleThresholds[game->playerCount - 2][3])
+            game->field = 3;
+        else
+            game->sparkleAmount = 4;
+        game->sparkleCounter = 0;
+
+        #undef field
+    }
+    else
+    {
+        game->cmdTimer++;
+        if (game->cmdTimer > 60)
+        {
+            if (game->cmdTimer > 70)
+            {
+                ClearRecvCommands();
+                game->cmdTimer = 0;
+            }
+            else if (game->localState.playerPressedAFlags == 0)
+            {
+                ClearRecvCommands();
+                game->cmdTimer = 0;
+            }
+        }
+
+    }
+    if (game->timer >= MAX_TIME)
+        game->localState.endGame = TRUE;
+    game->localState.bigSparkle = game->bigSparkle;
+    game->localState.sparkleAmount = game->sparkleAmount;
+    memcpy(game->sendCmd, &game->localState, sizeof(game->sendCmd));
+    Rfu_SendPacket(game->sendCmd);
+}
+
+void RecvLinkData(struct BerryCrushGame *game)
+{
+    u8 i = 0;
+    struct BerryCrushGame_LinkState *linkState = NULL;
+
+    for (i = 0; i < game->playerCount; i++)
+        game->players[i].inputState = INPUT_STATE_NONE;
+
+    if ((gRecvCmds[0][0] & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+    {
+        game->playedSound = FALSE;
+        return;
+    }
+    if (gRecvCmds[0][1] != 2)
+    {
+        game->playedSound = FALSE;
+        return;
+    }
+
+    memcpy(game->recvCmd, gRecvCmds[0], sizeof(game->recvCmd));
+    linkState = (struct BerryCrushGame_LinkState *)&game->recvCmd;
+    game->depth = linkState->depth;
+    game->vibration = (s16)linkState->vibration;
+    game->timer = linkState->timer;
+    UpdateInputEffects(game, &(game->gfx));
+
+    if (linkState->endGame)
+        game->endGame = TRUE;
+}
+
+u32 Cmd_PlayGame_Leader(struct BerryCrushGame *game, u8 *args)
+{
+    memset(&game->localState, 0, sizeof(game->localState));
+    memset(&game->recvCmd, 0, sizeof(game->recvCmd));
+    RecvLinkData(game);
+    SetGpuReg(REG_OFFSET_BG0VOFS, -game->vibration);
+    SetGpuReg(REG_OFFSET_BG2VOFS, -game->vibration);
+    SetGpuReg(REG_OFFSET_BG3VOFS, -game->vibration);
+    if (game->endGame)
+    {
+        if (game->timer >= MAX_TIME)
+        {
+            game->timer = MAX_TIME;
+            RunOrScheduleCommand(CMD_TIMES_UP, SCHEDULE_CMD, NULL);
+        }
+        else
+        {
+            RunOrScheduleCommand(CMD_FINISH_GAME, SCHEDULE_CMD, NULL);
+        }
+        game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    else
+    {
+        game->leaderTimer++;
+        HandlePartnerInput(game);
+        UpdateLeaderGameState(game);
+        HandlePlayerInput(game);
+        return 0;
+    }
+}
+
+u32 Cmd_PlayGame_Member(struct BerryCrushGame *game, u8 *args)
+{
+    memset(&game->localState, 0, sizeof(game->localState));
+    memset(&game->recvCmd, 0, sizeof(game->recvCmd));
+    RecvLinkData(game);
+    SetGpuReg(REG_OFFSET_BG0VOFS, -game->vibration);
+    SetGpuReg(REG_OFFSET_BG2VOFS, -game->vibration);
+    SetGpuReg(REG_OFFSET_BG3VOFS, -game->vibration);
+    if (game->endGame)
+    {
+        if (game->timer >= MAX_TIME)
+        {
+            game->timer = MAX_TIME;
+            RunOrScheduleCommand(CMD_TIMES_UP, SCHEDULE_CMD, NULL);
+        }
+        else
+        {
+            RunOrScheduleCommand(CMD_FINISH_GAME, SCHEDULE_CMD, NULL);
+        }
+        game->cmdTimer = 0;
+        game->cmdState = 0;
+        return 0;
+    }
+    else
+    {
+        HandlePlayerInput(game);
+        return 0;
+    }
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)

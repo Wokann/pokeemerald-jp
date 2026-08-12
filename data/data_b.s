@@ -1322,12 +1322,12 @@ gUnknown_82C7C40: @ 0x82C7C40
 sBerryCrushCommands: @ 0x82C7C58
 	.incbin "baserom_jp.gba", 0x2c7c58, 0x68
 
-	.globl gUnknown_82C7CC0
-gUnknown_82C7CC0: @ 0x82C7CC0
+	.globl sSparkleThresholds
+sSparkleThresholds: @ 0x82C7CC0
 	.incbin "baserom_jp.gba", 0x2c7cc0, 0x10
 
-	.globl gUnknown_82C7CD0
-gUnknown_82C7CD0: @ 0x82C7CD0
+	.globl sBigSparkleThresholds
+sBigSparkleThresholds: @ 0x82C7CD0
 	.incbin "baserom_jp.gba", 0x2c7cd0, 0x4
 
 	.globl sReceivedPlayerBitmasks
