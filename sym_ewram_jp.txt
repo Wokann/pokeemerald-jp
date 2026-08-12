@@ -175,6 +175,7 @@ sBerrySpriteIds = ABSOLUTE(0x0202296C);
 sBerryIconSpriteIds = ABSOLUTE(0x02022998);
 sStatusBar = ABSOLUTE(0x020229A8);
 sGfx = ABSOLUTE(0x020229AC);
+sPokemonJump = ABSOLUTE(0x020229B0);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
 gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);
