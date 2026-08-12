@@ -380,6 +380,7 @@ extern const struct WinCoords *const sNameWindowCoords[];
 extern const u8 *const sRankingTexts[];
 extern const u16 sRankingYCoords[];
 extern const u8 sRankingOrder[];
+extern const struct WindowTemplate sWindowTemplates_PlayAgain[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2304,6 +2305,96 @@ void PrintRankedScores(u8 numPlayers_)
         numWidth = GetStringWidth(0, numString, -1); // JP uses font id 0
         AddTextPrinterParameterized(sGfx->windowIds[1], 0, numString, (u8)(145 - numWidth), y, TEXT_SKIP_DRAW, NULL); // JP fixed x
         AddTextPrinterParameterized(sGfx->windowIds[1], 0, gText_SpacePoints, 155, y, TEXT_SKIP_DRAW, NULL); // JP fixed x
+    }
+}
+
+void Msg_WantToPlayAgain(void)
+{
+    u8 y;
+
+    switch (sGfx->state)
+    {
+    case 0:
+        sGfx->windowIds[0] = AddWindow(&sWindowTemplates_PlayAgain[0]);
+        sGfx->windowIds[1] = AddWindow(&sWindowTemplates_PlayAgain[1]);
+        ClearWindowTilemap(sGfx->windowIds[0]);
+        ClearWindowTilemap(sGfx->windowIds[1]);
+        DrawMessageWindow(&sWindowTemplates_PlayAgain[0]);
+        DrawYesNoMessageWindow(&sWindowTemplates_PlayAgain[1]);
+        sGfx->state++;
+        sGfx->cursorSelection = PLAY_AGAIN_NONE;
+        sGfx->playAgainState = PLAY_AGAIN_NONE;
+        break;
+    case 1:
+        FillWindowPixelBuffer(sGfx->windowIds[0], PIXEL_FILL(1));
+        FillWindowPixelBuffer(sGfx->windowIds[1], PIXEL_FILL(1));
+        AddTextPrinterParameterized(sGfx->windowIds[0], FONT_NORMAL, gText_WantToPlayAgain, 8, 6, TEXT_SKIP_DRAW, NULL); // JP x=8 y=6
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_Yes, 12, 2, TEXT_SKIP_DRAW, NULL); // JP x=12 y=2
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_No, 12, 18, TEXT_SKIP_DRAW, NULL); // JP x=12 y=18
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_SelectorArrow2, 2, 2, TEXT_SKIP_DRAW, NULL); // JP x=2 y=2
+        CopyWindowToVram(sGfx->windowIds[0], COPYWIN_GFX);
+        CopyWindowToVram(sGfx->windowIds[1], COPYWIN_GFX);
+        sGfx->state++;
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            PutWindowTilemap(sGfx->windowIds[0]);
+            PutWindowTilemap(sGfx->windowIds[1]);
+        }
+        CopyBgTilemapBufferToVram(0);
+        sGfx->state++;
+        break;
+    case 3:
+        y = sGfx->cursorSelection;
+        if (y == PLAY_AGAIN_NONE)
+            y = PLAY_AGAIN_YES;
+        FillWindowPixelBuffer(sGfx->windowIds[1], PIXEL_FILL(1));
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_Yes, 12, 2, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_No, 12, 18, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(sGfx->windowIds[1], FONT_NORMAL, gText_SelectorArrow2, 2, ((y - 1) * 16) + 2, TEXT_SKIP_DRAW, NULL);
+        CopyWindowToVram(sGfx->windowIds[1], COPYWIN_FULL);
+
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (sGfx->cursorSelection == PLAY_AGAIN_NONE)
+                sGfx->cursorSelection = PLAY_AGAIN_YES;
+            sGfx->state++;
+        }
+        else if (JOY_NEW(DPAD_UP | DPAD_DOWN))
+        {
+            PlaySE(SE_SELECT);
+            switch (sGfx->cursorSelection)
+            {
+            case PLAY_AGAIN_NONE:
+                sGfx->cursorSelection = PLAY_AGAIN_NO;
+                break;
+            case PLAY_AGAIN_YES:
+                sGfx->cursorSelection = PLAY_AGAIN_NO;
+                break;
+            case PLAY_AGAIN_NO:
+                sGfx->cursorSelection = PLAY_AGAIN_YES;
+                break;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            sGfx->cursorSelection = PLAY_AGAIN_NO;
+            sGfx->state++;
+        }
+        break;
+    default:
+        sGfx->playAgainState = sGfx->cursorSelection;
+        ClearWindowTilemap(sGfx->windowIds[0]);
+        ClearWindowTilemap(sGfx->windowIds[1]);
+        RemoveWindow(sGfx->windowIds[0]);
+        RemoveWindow(sGfx->windowIds[1]);
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+        CopyBgTilemapBufferToVram(0);
+        sGfx->finished = TRUE;
+        break;
     }
 }
 

@@ -1434,8 +1434,8 @@ sDodrioWindowTemplates_Results: @ 0x82CB448
 sWindowTemplate_Prize: @ 0x82CB458
 	.incbin "baserom_jp.gba", 0x2cb458, 0x8
 
-	.globl gUnknown_82CB460
-gUnknown_82CB460: @ 0x82CB460
+	.globl sWindowTemplates_PlayAgain
+sWindowTemplates_PlayAgain: @ 0x82CB460
 	.incbin "baserom_jp.gba", 0x2cb460, 0x10
 
 	.globl gUnknown_82CB470
@@ -14167,8 +14167,8 @@ gUnknown_85C941A: @ 0x85C941A
 gUnknown_85C941F: @ 0x85C941F
 	.string "{TRANSPARENT}$"
 
-	.globl gUnknown_85C9421
-gUnknown_85C9421: @ 0x85C9421
+	.globl gText_SelectorArrow2
+gText_SelectorArrow2: @ 0x85C9421
 	.string "▶$"
 
 	.globl gUnknown_85C9423
@@ -15313,12 +15313,12 @@ gUnknown_85CA9F7: @ 0x85CA9F7
 	.string "ど{BLUE}ど{BLUE}$ふつ{LIGHT_GRAY}$よむの{SE_WARP_IN}やめる$"
 	.string "みま{DYNAMIC_COLOR3}た${DYNAMIC_COLOR1}れ{GREEN}ら$"
 
-	.globl gUnknown_85CAAD8
-gUnknown_85CAAD8: @ 0x85CAAD8
+	.globl gText_Yes
+gText_Yes: @ 0x85CAAD8
 	.string "{MUS_RG_POKE_JUMP}$"
 
-	.globl gUnknown_85CAADB
-gUnknown_85CAADB: @ 0x85CAADB
+	.globl gText_No
+gText_No: @ 0x85CAADB
 	.string "{MUS_RG_OAK}{RED}${DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$"
 	.string "シングルバトル$ダブルバトル$マルチバトル$ハギ$ちょ{LIGHT_GRAY}{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR4}る$"
 	.string "{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}を{LIGHT_GREEN}{BLUE}$"
@@ -16507,8 +16507,8 @@ gText_CantHoldAnyMore: @ 0x85CCD9F
 gText_FilledStorageSpace: @ 0x85CCDAB
 	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}になって{DYNAMIC_COLOR3}まった！$"
 
-	.globl gUnknown_85CCDBD
-gUnknown_85CCDBD: @ 0x85CCDBD
+	.globl gText_WantToPlayAgain
+gText_WantToPlayAgain: @ 0x85CCDBD
 	.string "も{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}{WHITE}{DYNAMIC_COLOR6}びま{DYNAMIC_COLOR4}{GREEN}？$"
 
 	.globl gUnknown_85CCDCB

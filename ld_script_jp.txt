@@ -1400,6 +1400,7 @@ sub_08029040 = Task_TryRunGfxFunc;
 sub_08029064 = LoadGfx;
 sub_0802916C = ShowNames;
 sub_080293D4 = PrintRankedScores;
+sub_08029D28 = Msg_WantToPlayAgain;
 SetGfxFunc = sub_0802A420;
 GetGfxFunc = sub_0802A450;
 InitBgs = sub_0802A49C;
@@ -2496,6 +2497,8 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.ShowNames);
         src/dodrio_berry_picking.o(.text.PrintRankedScores);
         asm/dodrio_berry_picking8.o(.text);
+        src/dodrio_berry_picking.o(.text.Msg_WantToPlayAgain);
+        asm/dodrio_berry_picking9.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
         asm/main_menu.o(.text);
