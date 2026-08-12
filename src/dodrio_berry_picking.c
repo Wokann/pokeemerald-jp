@@ -309,6 +309,17 @@ extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
 extern void InitStatusBarPos(void);
 extern bool32 DoStatusBarIntro(void);
+extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
+                                   struct DodrioGame_Player *player,
+                                   struct DodrioGame_PlayerCommData *comm0,
+                                   struct DodrioGame_PlayerCommData *comm1,
+                                   struct DodrioGame_PlayerCommData *comm2,
+                                   struct DodrioGame_PlayerCommData *comm3,
+                                   struct DodrioGame_PlayerCommData *comm4,
+                                   u8 *numGraySquares,
+                                   bool32 *berriesFalling,
+                                   bool32 *allReadyToEnd);
+extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -1085,6 +1096,83 @@ void Task_CommunicateMonInfo(u8 taskId)
             sGame->state++;
         }
         break;
+    }
+}
+
+void RecvLinkData_Gameplay(void)
+{
+    u8 i;
+    u8 numPlayers = sGame->numPlayers;
+
+    sGame->players[0].receivedGameStatePacket = RecvPacket_GameState(0,
+                                                  &sGame->players[0],
+                                                  &sGame->players[0].comm,
+                                                  &sGame->players[1].comm,
+                                                  &sGame->players[2].comm,
+                                                  &sGame->players[3].comm,
+                                                  &sGame->players[4].comm,
+                                                  &sGame->numGraySquares,
+                                                  &sGame->berriesFalling,
+                                                  &sGame->allReadyToEnd);
+    sGame->clearRecvCmds = TRUE;
+
+    for (i = 1; i < numPlayers; i++)
+    {
+        if (sGame->inputState[i] == INPUTSTATE_NONE && !RecvPacket_PickState(i, &sGame->players[i].comm.pickState))
+        {
+            sGame->players[i].comm.pickState = PICK_NONE;
+            sGame->clearRecvCmds = FALSE;
+        }
+    }
+    if (++sGame->clearRecvCmdTimer >= 60)
+    {
+        if (sGame->clearRecvCmds)
+        {
+            ClearRecvCommands();
+            sGame->clearRecvCmdTimer = 0;
+        }
+        else if (sGame->clearRecvCmdTimer > 70)
+        {
+            ClearRecvCommands();
+            sGame->clearRecvCmdTimer = 0;
+        }
+    }
+
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (sGame->players[i].comm.pickState != PICK_NONE && sGame->inputState[i] == INPUTSTATE_NONE)
+        {
+            sGame->inputState[i] = INPUTSTATE_TRY_PICK;
+        }
+        switch (sGame->inputState[i])
+        {
+        case INPUTSTATE_NONE:
+        default:
+            break;
+        case INPUTSTATE_TRY_PICK:
+        case INPUTSTATE_PICKED:
+        case INPUTSTATE_ATE_BERRY:
+            if (++sGame->inputDelay[i] >= 6)
+            {
+                sGame->inputDelay[i] = 0;
+                sGame->inputState[i] = INPUTSTATE_NONE;
+                sGame->players[i].comm.pickState = PICK_NONE;
+                sGame->players[i].comm.ateBerry = FALSE;
+                sGame->players[i].comm.missedBerry = FALSE;
+            }
+            break;
+        case INPUTSTATE_BAD_MISS:
+            // Tried to pick with no berry in range, long delay until next input
+            if (++sGame->inputDelay[i] >= 40)
+            {
+                sGame->inputDelay[i] = 0;
+                sGame->inputState[i] = INPUTSTATE_NONE;
+                sGame->players[i].comm.pickState = PICK_NONE;
+                sGame->players[i].comm.ateBerry = FALSE;
+                sGame->players[i].comm.missedBerry = FALSE;
+            }
+            break;
+        }
     }
 }
 
