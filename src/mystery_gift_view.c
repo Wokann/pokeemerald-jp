@@ -50,8 +50,7 @@ struct WonderCardData
     u8 statDisplayIndex; // 0x0CD
     u16 windowIds[CARD_WIN_COUNT]; // 0x0CE
     u8 monIconSpriteId; // 0x0D4
-    u8 stampShadowSpriteIds[MAX_STAMP_CARD_STAMPS]; // 0x0D5
-    u8 stampMonSpriteIds[MAX_STAMP_CARD_STAMPS]; // 0x0DC
+    u8 stampSpriteIds[MAX_STAMP_CARD_STAMPS][2]; // 0x0D5: [i][0] shadow, [i][1] mon
     u8 titleText[WONDER_CARD_TITLE_LENGTH + 1]; // 0x0E3
     u8 subtitleText[WONDER_CARD_SUBTITLE_LENGTH + 1]; // 0x0F6
     u8 idNumberText[7]; // 0x104
@@ -102,11 +101,7 @@ extern const u8 gUnknown_82C430C[]; // news text color table (3-byte entries)
 extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
 extern const struct OamData gUnknown_84FD040;
 
-extern void sub_0801C04C(void); // CreateCardSprites (still in asm)
-extern void sub_0801C17C(void); // DestroyCardSprites (still in asm)
 extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
-#define CreateCardSprites sub_0801C04C
-#define DestroyCardSprites sub_0801C17C
 
 
 
@@ -275,6 +270,66 @@ static void DrawCardWindow(u8 whichWindow)
     }
 
     CopyWindowToVram(windowId, COPYWIN_FULL);
+}
+
+static void CreateCardSprites(void)
+{
+    u8 i = 0;
+
+    gWonderCardData->monIconSpriteId = SPRITE_NONE;
+
+    if (gWonderCardData->cardMetadata.iconSpecies != SPECIES_NONE)
+    {
+        gWonderCardData->monIconSpriteId = CreateMonIconNoPersonality(GetIconSpeciesNoPersonality(gWonderCardData->cardMetadata.iconSpecies), SpriteCallbackDummy, 0xDC, 0x14, 0, 0);
+        {
+            struct Sprite *sprite;
+            s32 byteVal;
+            s32 oamAttr;
+            u32 spriteBase = (u32)gSprites;
+            sprite = (struct Sprite *)(spriteBase + gWonderCardData->monIconSpriteId * 0x44);
+            byteVal = ((u8 *)&sprite->oam)[5];
+            oamAttr = ~0xC;
+            oamAttr &= byteVal;
+            ((u8 *)&sprite->oam)[5] = oamAttr | 8;
+        }
+    }
+
+    if (gWonderCardData->card.maxStamps != 0 && gWonderCardData->card.type == CARD_TYPE_STAMP)
+    {
+        LoadCompressedSpriteSheetUsingHeap(&gUnknown_82C422C);
+        LoadSpritePalette(&gUnknown_82C4234[gWonderCardData->gfx->stampShadowPal]);
+        for (; i < gWonderCardData->card.maxStamps; i++)
+        {
+            gWonderCardData->stampSpriteIds[i][0] |= SPRITE_NONE;
+            gWonderCardData->stampSpriteIds[i][1] |= SPRITE_NONE;
+            gWonderCardData->stampSpriteIds[i][0] = CreateSprite(&gUnknown_82C4274, 0xD8 - 0x20 * i, 0x90, 8);
+            if (gWonderCardData->cardMetadata.stampData[STAMP_SPECIES][i] != SPECIES_NONE)
+                gWonderCardData->stampSpriteIds[i][1] = CreateMonIconNoPersonality(GetIconSpeciesNoPersonality(gWonderCardData->cardMetadata.stampData[STAMP_SPECIES][i]), SpriteCallbackDummy, 0xD8 - 0x20 * i, 0x88, 0, 0);
+        }
+    }
+}
+
+static void DestroyCardSprites(void)
+{
+    u8 i = 0;
+
+    if (gWonderCardData->monIconSpriteId != SPRITE_NONE)
+        FreeAndDestroyMonIconSprite(&gSprites[gWonderCardData->monIconSpriteId]);
+
+    if (gWonderCardData->card.maxStamps != 0 && gWonderCardData->card.type == CARD_TYPE_STAMP)
+    {
+        for (; i < gWonderCardData->card.maxStamps; i++)
+        {
+            if (gWonderCardData->stampSpriteIds[i][0] != SPRITE_NONE)
+            {
+                DestroySprite(&gSprites[gWonderCardData->stampSpriteIds[i][0]]);
+                if (gWonderCardData->stampSpriteIds[i][0] != SPRITE_NONE)
+                    FreeAndDestroyMonIconSprite(&gSprites[gWonderCardData->stampSpriteIds[i][1]]);
+            }
+        }
+        FreeSpriteTilesByTag(TAG_STAMP_SHADOW);
+        FreeSpritePaletteByTag(TAG_STAMP_SHADOW);
+    }
 }
 
 void WonderNews_RemoveScrollIndicatorArrowPair(void)
