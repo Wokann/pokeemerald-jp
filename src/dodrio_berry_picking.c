@@ -2037,6 +2037,20 @@ void ResetGfxState(void)
     sGfx->playAgainState = PLAY_AGAIN_NONE;
 }
 
+void DrawYesNoMessageWindow(const struct WindowTemplate *template)
+{
+    u8 pal = 10;
+
+    FillBgTilemapBufferRect(0, 1, template->tilemapLeft - 1,                template->tilemapTop - 1,                   1, 1, pal);
+    FillBgTilemapBufferRect(0, 2, template->tilemapLeft,                    template->tilemapTop - 1,                   template->width, 1, pal);
+    FillBgTilemapBufferRect(0, 3, template->tilemapLeft + template->width,  template->tilemapTop - 1,                   1, 1, pal);
+    FillBgTilemapBufferRect(0, 4, template->tilemapLeft - 1,                template->tilemapTop, 1,                    template->height, pal);
+    FillBgTilemapBufferRect(0, 6, template->tilemapLeft + template->width,  template->tilemapTop, 1,                    template->height, pal);
+    FillBgTilemapBufferRect(0, 7, template->tilemapLeft - 1,                template->tilemapTop + template->height,    1, 1, pal);
+    FillBgTilemapBufferRect(0, 8, template->tilemapLeft,                    template->tilemapTop + template->height,    template->width, 1, pal);
+    FillBgTilemapBufferRect(0, 9, template->tilemapLeft + template->width,  template->tilemapTop + template->height,    1, 1, pal);
+}
+
 void nullsub_15(void)
 {
 }
