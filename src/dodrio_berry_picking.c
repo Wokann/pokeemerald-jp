@@ -648,6 +648,44 @@ bool32 AllPlayersReadyToStart(void)
     return FALSE;
 }
 
+void InitResults_Leader(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        if (SendBlock(0, sGame->berryResults, sizeof(sGame->berryResults)))
+        {
+            sGame->playersReceived = 0;
+            sGame->state++;
+        }
+        break;
+    case 1:
+        if (IsLinkTaskFinished())
+        {
+            sGame->state++;
+        }
+        break;
+    case 2:
+        if (AllPlayersReadyToStart())
+        {
+            sGame->playersReceived = sGame->numPlayers;
+        }
+        if (sGame->playersReceived >= sGame->numPlayers)
+        {
+            sGame->timer++;
+            sGame->state++;
+        }
+        break;
+    default:
+        if (WaitFanfare(TRUE))
+        {
+            SetGameFunc(FUNC_RESULTS);
+            FadeOutAndPlayNewMapMusic(MUS_RG_VICTORY_WILD, 4);
+        }
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
