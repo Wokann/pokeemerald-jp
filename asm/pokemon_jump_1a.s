@@ -2,43 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-	thumb_func_start sub_0802BB54
-sub_0802BB54: @ 0x0802BB54
-	push {lr}
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	bl CreateTask
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r1, _0802BB70
-	ldr r2, [r1]
-	movs r1, #0xe
-	bl SetWordTaskArg
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802BB70: .4byte 0x020229B0
-	thumb_func_end sub_0802BB54
-
-	thumb_func_start sub_0802BB74
-sub_0802BB74: @ 0x0802BB74
-	ldr r0, _0802BB90
-	ldr r2, [r0]
-	adds r0, r2, #0
-	adds r0, #0x4a
-	movs r1, #0
-	strh r1, [r0]
-	movs r0, #6
-	str r0, [r2, #0x14]
-	strh r1, [r2, #0x34]
-	str r1, [r2, #0x1c]
-	strh r1, [r2, #0x36]
-	str r1, [r2, #0x10]
-	bx lr
-	.align 2, 0
-_0802BB90: .4byte 0x020229B0
-	thumb_func_end sub_0802BB74
-
 	thumb_func_start sub_0802BB94
 sub_0802BB94: @ 0x0802BB94
 	push {r4, lr}

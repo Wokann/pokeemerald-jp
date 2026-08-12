@@ -1355,7 +1355,24 @@ void Task_CommunicateMonInfo_PokeJump(u8 taskId)
 #undef tState
 #undef tNumReceived
 #undef tReceivedPacket
+
+void SetTaskWithPokeJumpStruct(TaskFunc func, u8 taskPriority)
+{
+    u8 taskId = CreateTask(func, taskPriority);
+    SetWordTaskArg(taskId, DATAIDX_GAME_STRUCT, (u32)sPokemonJump);
+}
+
 #undef DATAIDX_GAME_STRUCT
+
+void InitVineState(void)
+{
+    sPokemonJump->vineTimer = 0;
+    sPokemonJump->vineState = VINE_UPSWING_LOWER;
+    sPokemonJump->vineStateTimer = 0;
+    sPokemonJump->vineSpeed = 0;
+    sPokemonJump->ignoreJumpInput = FALSE;
+    sPokemonJump->gameOver = FALSE;
+}
 
 void InitGame(struct PokemonJump *jump)
 {
