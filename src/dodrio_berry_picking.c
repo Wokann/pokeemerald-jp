@@ -705,6 +705,14 @@ bool32 AllPlayersReadyToStart(void)
     return TRUE;
 }
 
+void ResetReadyToStart(void)
+{
+    u8 i;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        sGame->readyToStart[i] = FALSE;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
