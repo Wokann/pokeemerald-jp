@@ -1536,6 +1536,8 @@ sub_0802D37C = Msg_CommunicationStandby_PokeJump;
 sub_0802D420 = DoPokeJumpCountdown;
 sub_0802D458 = SetUpResetVineGfx;
 sub_0802D47C = ResetVineGfx;
+sub_0802D4DC = PrintPrizeMessage;
+gText_AwesomeWonF701F700 = gUnknown_85CCE36;
 gText_WantToPlayAgain2 = gUnknown_85CCE71;
 gText_SomeoneDroppedOut2 = gUnknown_85CCE7F;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
@@ -2831,6 +2833,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.DoPokeJumpCountdown);
         src/pokemon_jump.o(.text.SetUpResetVineGfx);
         src/pokemon_jump.o(.text.ResetVineGfx);
+        src/pokemon_jump.o(.text.PrintPrizeMessage);
         asm/pokemon_jump_2a.o(.text);
         src/pokemon_jump.o(.text.GetPokeJumpRecords);
         asm/pokemon_jump_2b.o(.text);

@@ -431,7 +431,6 @@ extern void sub_0802D704(void); // ClearMessageWindow
 extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
-extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
 extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
 extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
@@ -1235,7 +1234,7 @@ bool32 TryGivePrize_PokeJump(void)
     {
     case 0:
         UnpackPrizeData(sPokemonJump->comm.data, &sPokemonJump->prizeItemId, &sPokemonJump->prizeItemQuantity);
-        sub_0802D4DC(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity); // PrintPrizeMessage
+        PrintPrizeMessage(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity);
         sPokemonJump->helperState++;
         break;
     case 1:
@@ -2721,6 +2720,21 @@ bool32 ResetVineGfx(void)
     }
 
     return TRUE;
+}
+
+void PrintPrizeMessage(u16 itemId, u16 quantity)
+{
+    CopyItemName(itemId, sPokemonJumpGfx->itemName);
+    ConvertIntToDecimalStringN(sPokemonJumpGfx->itemQuantityStr, quantity, STR_CONV_MODE_LEFT_ALIGN, 1);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, sPokemonJumpGfx->itemQuantityStr);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_AwesomeWonF701F700);
+    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 8, 22, 4); // AddMessageWindow
+    AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
+    sPokemonJumpGfx->fanfare = MUS_LEVEL_UP;
+    sPokemonJumpGfx->msgWindowState = 0;
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
