@@ -31,16 +31,6 @@
 
 
 
-	thumb_func_start sub_08025FAC
-sub_08025FAC: @ 0x08025FAC
-	push {lr}
-	bl TransferPlttBuffer
-	bl LoadOam
-	bl ProcessSpriteCopyRequests
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08025FAC
 
 	thumb_func_start sub_08025FC0
 sub_08025FC0: @ 0x08025FC0

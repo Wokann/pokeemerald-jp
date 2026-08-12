@@ -3559,6 +3559,13 @@ void CB2_DodrioGame(void)
     UpdatePaletteFade();
 }
 
+void VBlankCB_DodrioGame(void)
+{
+    TransferPlttBuffer();
+    LoadOam();
+    ProcessSpriteCopyRequests();
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
