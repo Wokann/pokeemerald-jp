@@ -395,6 +395,13 @@ extern const struct SpritePalette sStatusPalette;
 extern const struct SpriteTemplate sStatusSpriteTemplate;
 extern const u32 sBerry_Gfx[];
 extern const struct SpritePalette sBerryPalette;
+extern const s16 sBerryIconXCoords[NUM_BERRY_TYPES];
+extern const struct SpriteTemplate sBerrySpriteTemplate;
+extern const struct SpriteTemplate sBerryIconSpriteTemplate;
+extern EWRAM_DATA u16 *sBerrySpriteIds[NUM_BERRY_COLUMNS];
+extern EWRAM_DATA u16 *sBerryIconSpriteIds[NUM_BERRY_TYPES];
+extern void sub_08028924(u8 spriteId, bool8 invisible); // SetBerryInvisibility
+extern void sub_0802895C(bool8 invisible); // SetBerryIconsInvisibility
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
@@ -1810,6 +1817,36 @@ void LoadBerryGfx_Dodrio(void)
     }
     LoadSpritePalette(&pal);
     Free(ptr);
+}
+
+void CreateBerrySprites_Dodrio(void)
+{
+    u8 i;
+    s16 x;
+
+    struct SpriteTemplate berry = sBerrySpriteTemplate;
+    struct SpriteTemplate berryIcon = sBerryIconSpriteTemplate;
+
+    // Create berry sprites that fall during gameplay
+    for (i = 0; i < NUM_BERRY_COLUMNS; i++)
+    {
+        sBerrySpriteIds[i] = AllocZeroed(4);
+        x = i * 16;
+        *sBerrySpriteIds[i] = CreateSprite(&berry, x + (i * 8), 8, 1);
+        sub_08028924(i, TRUE); // SetBerryInvisibility
+    }
+
+    // Create berry icon sprites for results screen
+    for (i = 0; i < NUM_BERRY_TYPES; i++)
+    {
+        sBerryIconSpriteIds[i] = AllocZeroed(4);
+        if (i == BERRY_MISSED)
+            *sBerryIconSpriteIds[i] = CreateSprite(&berryIcon, sBerryIconXCoords[i], 57, 0);
+        else
+            *sBerryIconSpriteIds[i] = CreateSprite(&berryIcon, sBerryIconXCoords[i], 60, 0);
+        StartSpriteAnim(&gSprites[*sBerryIconSpriteIds[i]], i);
+    }
+    sub_0802895C(TRUE); // SetBerryIconsInvisibility
 }
 
 void nullsub_15(void)

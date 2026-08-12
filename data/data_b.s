@@ -1526,16 +1526,16 @@ sStatusSpriteTemplate: @ 0x82CEB7C
 sBerryPalette: @ 0x82CEBA0
 	.incbin "baserom_jp.gba", 0x2ceba0, 0x8
 
-	.globl gUnknown_82CEBA8
-gUnknown_82CEBA8: @ 0x82CEBA8
+	.globl sBerryIconXCoords
+sBerryIconXCoords: @ 0x82CEBA8
 	.incbin "baserom_jp.gba", 0x2ceba8, 0x8
 
-	.globl gUnknown_82CEBB0
-gUnknown_82CEBB0: @ 0x82CEBB0
+	.globl sBerrySpriteTemplate
+sBerrySpriteTemplate: @ 0x82CEBB0
 	.incbin "baserom_jp.gba", 0x2cebb0, 0x18
 
-	.globl gUnknown_82CEBC8
-gUnknown_82CEBC8: @ 0x82CEBC8
+	.globl sBerryIconSpriteTemplate
+sBerryIconSpriteTemplate: @ 0x82CEBC8
 	.incbin "baserom_jp.gba", 0x2cebc8, 0x18
 
 	.globl gUnknown_82CEBE0
