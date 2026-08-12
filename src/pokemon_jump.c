@@ -2,6 +2,7 @@
 #include "malloc.h"
 #include "bg.h"
 #include "digit_obj_util.h"
+#include "item.h"
 #include "link.h"
 #include "main.h"
 #include "palette.h"
@@ -358,6 +359,12 @@ extern bool32 sub_0802DAB0(int multiplayerId); // IsMonHitShakeActive
 extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
 extern void sub_0802DAC4(void); // StopMonHitFlash
 extern void sub_0802BE08(void); // ResetPlayersMonState
+extern void sub_0802C4FC(u16 prizeData, u16 *prizeItemId, u16 *prizeItemQuantity); // UnpackPrizeData
+extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
+extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
+extern u16 sub_0802C574(u16 prizeItemId, u16 prizeItemQuantity); // GetQuantityLimitedByBag
+extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
+extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1106,6 +1113,70 @@ bool32 DoVineHitEffect(void)
         break;
     case 4:
         return FALSE;
+    }
+
+    return TRUE;
+}
+
+// JP: dodrio_berry_picking.c already has a global TryGivePrize (0x08027788,
+// referenced from its asm), so the pokemon_jump one gets a JP-specific name.
+bool32 TryGivePrize_PokeJump(void)
+{
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        sub_0802C4FC(sPokemonJump->comm.data, &sPokemonJump->prizeItemId, &sPokemonJump->prizeItemQuantity); // UnpackPrizeData
+        sub_0802D4DC(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity); // PrintPrizeMessage
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+    case 4:
+        if (!sub_0802D664()) // DoPrizeMessageAndFanfare
+        {
+            sPokemonJump->timer = 0;
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 2:
+    case 5:
+        // Wait to continue after message
+        sPokemonJump->timer++;
+        if (JOY_NEW(A_BUTTON | B_BUTTON) || sPokemonJump->timer > 180)
+        {
+            sub_0802D704(); // ClearMessageWindow
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 3:
+        if (!sub_0802D734()) // RemoveMessageWindow
+        {
+            sPokemonJump->prizeItemQuantity = sub_0802C574(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity); // GetQuantityLimitedByBag
+            if (sPokemonJump->prizeItemQuantity && AddBagItem(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity))
+            {
+                if (!CheckBagHasSpace(sPokemonJump->prizeItemId, 1))
+                {
+                    // An item was given successfully, but no room for any more.
+                    // It's possible the full prize quantity had to be limited
+                    sub_0802D574(sPokemonJump->prizeItemId); // PrintPrizeFilledBagMessage
+                    sPokemonJump->helperState = 4; // Do message
+                }
+                else
+                {
+                    sPokemonJump->helperState = 6; // Exit
+                    break;
+                }
+            }
+            else
+            {
+                sub_0802D5EC(sPokemonJump->prizeItemId); // PrintNoRoomForPrizeMessage
+                sPokemonJump->helperState = 4; // Do message
+            }
+        }
+        break;
+    case 6:
+        if (!sub_0802D734()) // RemoveMessageWindow
+            return FALSE;
+        break;
     }
 
     return TRUE;
