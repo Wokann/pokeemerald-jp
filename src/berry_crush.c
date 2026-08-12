@@ -29,6 +29,7 @@
 #include "trig.h"
 #include "window.h"
 #include "constants/items.h"
+#include "constants/game_stat.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -2241,6 +2242,76 @@ u32 Cmd_CloseLink(struct BerryCrushGame *game, u8 *args)
     }
     game->cmdState++;
     return 0;
+}
+
+u32 Cmd_Quit(struct BerryCrushGame *game, u8 *args)
+{
+    QuitBerryCrush(NULL);
+    return 0;
+}
+
+void ResetGame(struct BerryCrushGame *game)
+{
+    u8 i = 0;
+
+    IncrementGameStat(GAME_STAT_PLAYED_BERRY_CRUSH);
+    game->unused = 0;
+    game->cmdTimer = 0;
+    game->gameState = STATE_RESET;
+    game->playAgainState = 0;
+    game->powder = 0;
+    game->targetAPresses = 0;
+    game->totalAPresses = 0;
+    game->targetDepth = 0;
+    game->newDepth = 0;
+    game->noRoomForPowder = FALSE;
+    game->newRecord = FALSE;
+    game->playedSound = FALSE;
+    game->endGame = FALSE;
+    game->bigSparkle = FALSE;
+    game->sparkleAmount = 0;
+    game->leaderTimer = 0;
+    game->timer = 0;
+    game->bigSparkleCounter = 0;
+    game->numBigSparkleChecks = -1;
+    game->numBigSparkles = 0;
+    game->sparkleCounter = 0;
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        game->players[i].berryId = -1;
+        game->players[i].inputTime = 0;
+        game->players[i].neatInputStreak = 0;
+        game->players[i].timeSincePrevInput = 1;
+        game->players[i].maxNeatInputStreak = 0;
+        game->players[i].numAPresses = 0;
+        game->players[i].numSyncedAPresses = 0;
+        game->players[i].timePressingA = 0;
+        game->players[i].inputFlags = 0;
+        game->players[i].inputState = INPUT_STATE_NONE;
+    }
+}
+
+void SetPaletteFadeArgs(u8 *args, bool8 communicateAfter, u32 selectedPals, s8 delay, u8 startY, u8 targetY, u16 palette)
+{
+    args[0] = ((u8 *)&selectedPals)[0];
+    args[1] = ((u8 *)&selectedPals)[1];
+    args[2] = ((u8 *)&selectedPals)[2];
+    args[3] = ((u8 *)&selectedPals)[3];
+    args[4] = delay;
+    args[5] = startY;
+    args[6] = targetY;
+    args[7] = ((u8 *)&palette)[0];
+    args[8] = ((u8 *)&palette)[1];
+    args[9] = communicateAfter;
+}
+
+void SetPrintMessageArgs(u8 *args, u8 msgId, u8 flags, u16 waitKeys, u8 followupState)
+{
+    args[0] = msgId;
+    args[1] = flags;
+    args[2] = ((u8 *)&waitKeys)[0];
+    args[3] = ((u8 *)&waitKeys)[1];
+    args[4] = followupState;
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
