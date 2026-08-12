@@ -1338,8 +1338,8 @@ sReceivedPlayerBitmasks: @ 0x82C7CD4
 sActiveColumnMap: @ 0x82C7D28
 	.incbin "baserom_jp.gba", 0x2c7d28, 0x113
 
-	.globl gUnknown_82C7E3B
-gUnknown_82C7E3B: @ 0x82C7E3B
+	.globl sDodrioHeadToColumnMap
+sDodrioHeadToColumnMap: @ 0x82C7E3B
 	.incbin "baserom_jp.gba", 0x2c7e3b, 0x4b
 
 	.globl sDodrioNeighborMap

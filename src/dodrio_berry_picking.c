@@ -387,6 +387,7 @@ extern const u8 sBg_Pal[];
 extern const u8 sBg_Gfx[];
 extern const u8 sTreeBorder_Gfx[];
 extern const u8 sTreeBorderXPos[];
+extern const u8 sDodrioHeadToColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -3624,6 +3625,50 @@ void InitFirstWaveOfBerries(void)
         berries->fallDist[i] = (i % 2 == 0) ? 1 : 0;
         berries->ids[i] = BERRY_BLUE;
     }
+}
+
+bool32 TryPickBerry(u8 playerId, u8 pickState, u8 column)
+{
+    s32 pick = 0;
+    u8 numPlayersIdx = sGame->numPlayers - 1;
+    struct DodrioGame_Berries *berries = &sGame->player.berries;
+
+    switch (pickState)
+    {
+    case PICK_LEFT:
+    default:
+        pick = 0;
+        break;
+    case PICK_MIDDLE:
+        pick = 1;
+        break;
+    case PICK_RIGHT:
+        pick = 2;
+        break;
+    }
+
+    if (berries->fallDist[column] == EAT_FALL_DIST - 1 || berries->fallDist[column] == EAT_FALL_DIST)
+    {
+        if (column == sDodrioHeadToColumnMap[numPlayersIdx][playerId][pick])
+        {
+            if (sGame->berryState[column] == BERRYSTATE_PICKED || sGame->berryState[column] == BERRYSTATE_EATEN)
+            {
+                sGame->players[playerId].comm.missedBerry = TRUE;
+                return FALSE;
+            }
+            else
+                return TRUE;
+        }
+    }
+    else
+    {
+        if (column == sDodrioHeadToColumnMap[numPlayersIdx][playerId][pick])
+        {
+            sGame->inputState[playerId] = INPUTSTATE_BAD_MISS;
+            sGame->players[playerId].comm.missedBerry = TRUE;
+        }
+    }
+    return FALSE;
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
