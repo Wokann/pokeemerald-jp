@@ -43,6 +43,16 @@ enum {
     NUM_WINDOWS
 };
 
+// JP: the front-pic coordinate table uses 4-byte entries (size, y_offset,
+// 2 padding bytes).  US pokeemerald uses the 2-byte struct MonCoords, so the
+// JP layout is kept under the raw data symbol gUnknown_82D45C8.
+struct JP_MonFrontPicCoords
+{
+    u8 size;
+    u8 y_offset;
+    u16 unused;
+};
+
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
@@ -428,7 +438,9 @@ extern void sub_0802DA00(void); // InitDigitPrinters
 void PrintScoreSuffixes(void);
 extern const u8 gUnknown_82D1A68[];
 extern void sub_0802DA5C(int score); // PrintScore
-extern void sub_0802D8F0(void); // CreateJumpMonSprites
+void CreateJumpMonSprites(void);
+extern const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1];
+extern const struct JP_MonFrontPicCoords gUnknown_82D45C8[];
 void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos);
 extern void CreateYesNoMenuAtPos(const struct WindowTemplate *window, u8 fontId, u8 left, u8 top, u16 baseTileNum, u8 paletteNum, u8 initialCursorPos);
 extern const u8 gText_WantToPlayAgain2[];
@@ -2453,7 +2465,7 @@ void LoadPokeJumpGfx(void)
     case 1:
         if (!FreeTempTileDataBuffersIfPossible())
         {
-            sub_0802D8F0(); // CreateJumpMonSprites
+            CreateJumpMonSprites();
             CreateVineSprites(sPokemonJumpGfx);
             UpdateVineAnim(sPokemonJumpGfx, VINE_UPSWING_LOWER);
             ShowBg(BG_SCENERY);
@@ -2899,6 +2911,22 @@ void PrintScoreSuffixes(void)
     FillWindowPixelBuffer(WIN_TIMES, 0);
     AddTextPrinterParameterized3(WIN_POINTS, FONT_SMALL, 0, 2, color, 0, gText_SpacePoints2);
     AddTextPrinterParameterized3(WIN_TIMES, FONT_SMALL, 0, 2, color, 0, gText_SpaceTimes3);
+}
+
+void CreateJumpMonSprites(void)
+{
+    int i, y, playersCount = GetNumPokeJumpPlayers();
+    const s16 *xCoords = sMonXCoords[playersCount - 2];
+
+    for (i = 0; i < playersCount; i++)
+    {
+        struct PokemonJump_MonInfo *monInfo = GetMonInfoByMultiplayerId(i);
+
+        y = gUnknown_82D45C8[monInfo->species].y_offset;
+        CreateJumpMonSprite(sPokemonJumpGfx, monInfo, *xCoords, y + 112, i);
+        CreateStarSprite(sPokemonJumpGfx, *xCoords, 112, i);
+        xCoords++;
+    }
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
