@@ -3571,6 +3571,11 @@ void InitMonInfo(struct DodrioGame_MonInfo *monInfo, struct Pokemon *mon)
     monInfo->isShiny = IsMonShiny(mon);
 }
 
+void CreateTask_(TaskFunc func, u8 priority)
+{
+    CreateTask(func, priority);
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;

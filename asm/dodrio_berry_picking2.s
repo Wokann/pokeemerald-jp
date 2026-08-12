@@ -33,17 +33,6 @@
 
 
 
-	thumb_func_start sub_08025FD4
-sub_08025FD4: @ 0x08025FD4
-	push {lr}
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	bl CreateTask
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08025FD4
-
 	thumb_func_start sub_08025FE4
 sub_08025FE4: @ 0x08025FE4
 	push {lr}
