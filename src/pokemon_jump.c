@@ -426,7 +426,8 @@ void StartMonHitFlash(u8 multiplayerId);
 void StopMonHitFlash(void);
 extern void LoadPokeJumpGfx(void); // sub_0802CE44, still asm
 extern const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
-extern void sub_0802DB14(void); // AddPlayerNameWindows
+void AddPlayerNameWindows(void);
+extern const u16 *const sPlayerNameWindowCoords[MAX_RFU_PLAYERS - 1];
 extern void sub_0802DC68(bool32 highlightSelf); // PrintPokeJumpPlayerNames
 extern void sub_0802DCCC(void); // DrawPlayerNameWindows
 extern const struct BgTemplate sPokeJumpBgTemplates[];
@@ -2496,7 +2497,7 @@ void PrintPlayerNamesNoHighlight(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sub_0802DB14(); // AddPlayerNameWindows
+        AddPlayerNameWindows();
         sPokemonJumpGfx->mainState++;
         break;
     case 1:
@@ -2525,7 +2526,7 @@ void PrintPlayerNamesWithHighlight(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sub_0802DB14(); // AddPlayerNameWindows
+        AddPlayerNameWindows();
         sPokemonJumpGfx->mainState++;
         break;
     case 1:
@@ -3041,6 +3042,40 @@ void StartMonIntroBounce(int multiplayerId)
 bool32 IsMonIntroBounceActive(void)
 {
     return Gfx_IsMonIntroBounceActive(sPokemonJumpGfx);
+}
+
+void AddPlayerNameWindows(void)
+{
+    struct PokeJumpWindowTemplate
+    {
+        u8 bg;
+        u8 tilemapLeft;
+        u8 tilemapTop;
+        u8 width;
+        u8 height;
+        u8 paletteNum : 8;
+        u16 baseBlock : 16;
+    } window;
+    int i, playersCount = GetNumPokeJumpPlayers();
+    const u16 *winCoords = sPlayerNameWindowCoords[playersCount - 2];
+
+    window.bg = BG_INTERFACE;
+    window.width = 8;
+    window.height = 2;
+    window.paletteNum = 2;
+    window.baseBlock = 0x1B;
+
+    for (i = 0; i < playersCount; i++)
+    {
+        window.tilemapLeft = winCoords[0];
+        window.tilemapTop = winCoords[1];
+        sPokemonJumpGfx->nameWindowIds[i] = AddWindow((struct WindowTemplate *)&window);
+        ClearWindowTilemap(sPokemonJumpGfx->nameWindowIds[i]);
+        window.baseBlock += 0x10;
+        winCoords += 2;
+    }
+
+    CopyBgTilemapBufferToVram(BG_INTERFACE);
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
