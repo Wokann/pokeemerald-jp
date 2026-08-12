@@ -784,9 +784,9 @@ extern void GenerateRandomNews(u32 newsId);
 extern bool32 IsSavedWonderCardGiftNotReceived(void);
 extern bool32 IsSendingSavedWonderCardAllowed(void);
 extern bool32 IsSendingSavedWonderNewsAllowed(void);
-extern u32 MENews_GetInput(u16 newKeys);
-extern void MENews_RemoveScrollIndicatorArrowPair(void);
-extern void MENews_AddScrollIndicatorArrowPair(void);
+extern u32 WonderNews_GetInput(u16 newKeys);
+extern void WonderNews_RemoveScrollIndicatorArrowPair(void);
+extern void WonderNews_AddScrollIndicatorArrowPair(void);
 
 // JP: text bound via ld_script_jp.txt.
 extern const u8 sJPText_MgDontHaveCard[];
@@ -1089,10 +1089,10 @@ void task00_mystery_gift(u8 taskId)
         }
         else
         {
-            switch (MENews_GetInput(gMain.newKeys))
+            switch (WonderNews_GetInput(gMain.newKeys))
             {
             case NEWS_INPUT_A:
-                MENews_RemoveScrollIndicatorArrowPair();
+                WonderNews_RemoveScrollIndicatorArrowPair();
                 data->state = MG_STATE_HANDLE_GIFT_SELECT;
                 break;
             case NEWS_INPUT_B:
@@ -1133,7 +1133,7 @@ void task00_mystery_gift(u8 taskId)
             break;
         case LIST_CANCEL:
             if (data->isWonderNews == TRUE)
-                MENews_AddScrollIndicatorArrowPair();
+                WonderNews_AddScrollIndicatorArrowPair();
             data->state = MG_STATE_HANDLE_GIFT_INPUT;
             break;
         }

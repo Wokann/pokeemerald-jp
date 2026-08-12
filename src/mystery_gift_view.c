@@ -67,11 +67,14 @@ struct WonderNewsData
 {
     struct WonderNews news; // 0x000
     const struct WonderGfx *gfx; // 0x0E0
-    u8 enterExitState; // 0x0E4
-    u8 scrollArrowPairId; // 0x0E5
-    u8 unk_E6; // 0x0E6
-    u8 unk_E7; // 0x0E7
-    u16 unk_E8; // 0x0E8
+    u8 arrowsRemoved:1; // 0x0E4 bit 0
+    u8 enterExitState:7; // 0x0E4 bits 1-7
+    u8 arrowTaskId; // 0x0E5
+    bool8 scrolling:1; // 0x0E6 bit 0
+    u8 scrollIncrement:7; // 0x0E6 bits 1-7
+    bool8 scrollingDown:1; // 0x0E7 bit 0
+    u8 scrollTotal:7; // 0x0E7 bits 1-7
+    u16 scrollEnd; // 0x0E8
     u16 scrollOffset; // 0x0EA
     u16 windowIds[2]; // 0x0EC
     u16 unk_F0; // 0x0F0
@@ -102,6 +105,7 @@ extern const struct OamData gUnknown_84FD040;
 extern void sub_0801BCA4(u8 whichWindow); // DrawCardWindow (still in asm)
 extern void sub_0801C04C(void); // CreateCardSprites (still in asm)
 extern void sub_0801C17C(void); // DestroyCardSprites (still in asm)
+extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
 #define DrawCardWindow sub_0801BCA4
 #define CreateCardSprites sub_0801C04C
 #define DestroyCardSprites sub_0801C17C
@@ -136,6 +140,61 @@ void DestroyWonderCardResources(void)
         Free(gWonderCardData);
         gWonderCardData = NULL;
     }
+}
+
+void WonderNews_RemoveScrollIndicatorArrowPair(void)
+{
+    if (!gWonderNewsData->arrowsRemoved && gWonderNewsData->arrowTaskId != 0xFF)
+    {
+        RemoveScrollIndicatorArrowPair(gWonderNewsData->arrowTaskId);
+        gWonderNewsData->arrowTaskId = 0xFF;
+        gWonderNewsData->arrowsRemoved = TRUE;
+    }
+}
+
+void WonderNews_AddScrollIndicatorArrowPair(void)
+{
+    if (gWonderNewsData->arrowsRemoved)
+    {
+        gWonderNewsData->arrowTaskId = AddScrollIndicatorArrowPair((const struct ScrollArrowsTemplate *)&gWonderNewsData->unk_1DC, &gWonderNewsData->scrollOffset);
+        gWonderNewsData->arrowsRemoved = FALSE;
+    }
+}
+
+u32 WonderNews_GetInput(u16 input)
+{
+    if (gWonderNewsData->scrolling)
+    {
+        sub_0801CA6C();
+        return 0xFF;
+    }
+
+    switch (input)
+    {
+    case 1:
+        return 0;
+    case 2:
+        return 1;
+    case 0x40:
+        if (gWonderNewsData->scrollOffset == 0 || gWonderNewsData->arrowsRemoved)
+            return 0xFF;
+        gWonderNewsData->scrollingDown = FALSE;
+        break;
+    case 0x80:
+        if (gWonderNewsData->scrollOffset == gWonderNewsData->scrollEnd || gWonderNewsData->arrowsRemoved)
+            return 0xFF;
+        gWonderNewsData->scrollingDown = TRUE;
+        break;
+    default:
+        return 0xFF;
+    }
+
+    gWonderNewsData->scrolling = TRUE;
+    gWonderNewsData->scrollIncrement = 2;
+    gWonderNewsData->scrollTotal = 0;
+    if (!gWonderNewsData->scrollingDown)
+        return 2;
+    return 3;
 }
 
 s32 FadeToWonderCardMenu(void)
