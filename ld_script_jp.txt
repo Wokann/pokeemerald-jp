@@ -1377,6 +1377,7 @@ sub_08028760 = LoadBerryGfx_Dodrio;
 sub_080287B4 = CreateBerrySprites_Dodrio;
 sub_080288AC = FreeBerrySprites;
 sub_08028924 = SetBerryInvisibility;
+sub_0802895C = SetBerryIconsInvisibility;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2454,6 +2455,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.CreateBerrySprites_Dodrio);
         src/dodrio_berry_picking.o(.text.FreeBerrySprites);
         src/dodrio_berry_picking.o(.text.SetBerryInvisibility);
+        src/dodrio_berry_picking.o(.text.SetBerryIconsInvisibility);
         asm/dodrio_berry_picking7.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
