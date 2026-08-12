@@ -390,7 +390,6 @@ extern void sub_0802D994(int vineState); // UpdateVineSwing
 extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
 extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
-extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1704,7 +1703,7 @@ void TryUpdateScore(void)
             {
                 // An 'excellent' is the max 5 players all jumping synchronously
                 sPokemonJump->excellentsInRow++;
-                sub_0802C494(sPokemonJump->excellentsInRow); // TryUpdateExcellentsRecord
+                TryUpdateExcellentsRecord(sPokemonJump->excellentsInRow);
             }
             else
             {
@@ -1894,6 +1893,12 @@ void ClearUnreadField(void)
 int GetScoreBonus(int numPlayers)
 {
     return sScoreBonuses[numPlayers];
+}
+
+void TryUpdateExcellentsRecord(u16 excellentsInRow)
+{
+    if (excellentsInRow > sPokemonJump->excellentsInRowRecord)
+        sPokemonJump->excellentsInRowRecord = excellentsInRow;
 }
 
 void InitGame(struct PokemonJump *jump)

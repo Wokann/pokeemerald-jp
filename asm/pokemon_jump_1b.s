@@ -3,24 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C494
-sub_0802C494: @ 0x0802C494
-	push {lr}
-	lsls r0, r0, #0x10
-	lsrs r1, r0, #0x10
-	ldr r0, _0802C4AC
-	ldr r0, [r0]
-	ldrh r2, [r0, #0xe]
-	cmp r1, r2
-	bls _0802C4A6
-	strh r1, [r0, #0xe]
-_0802C4A6:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802C4AC: .4byte 0x020229B0
-	thumb_func_end sub_0802C494
-
 	thumb_func_start sub_0802C4B0
 sub_0802C4B0: @ 0x0802C4B0
 	push {lr}
