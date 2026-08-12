@@ -387,6 +387,9 @@ extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
 extern void sub_0802BF34(void); // TryUpdateVineSwing
 extern void sub_0802D994(int vineState); // UpdateVineSwing
+extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
+extern void sub_0802C08C(int playerId); // UpdateJump
+extern void sub_0802DA80(u8 playerId); // StartMonHitShake
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1586,6 +1589,55 @@ void DisallowVineUpdates(void)
 void AllowVineUpdates(void)
 {
     sPokemonJump->allowVineUpdates = TRUE;
+}
+
+#define F_SE_JUMP (1 << 0)
+#define F_SE_FAIL (1 << 1)
+
+void HandleMonState(void)
+{
+    int i;
+    int soundFlags = 0;
+    int numPlayers = sPokemonJump->numPlayers;
+
+    for (i = 0; i < numPlayers; i++)
+    {
+        switch (sPokemonJump->players[i].monState)
+        {
+        case MONSTATE_NORMAL:
+            sub_0802D978(i, 0); // SetMonSpriteY
+            break;
+        case MONSTATE_JUMP:
+            if (sPokemonJump->players[i].prevMonState != MONSTATE_JUMP || sPokemonJump->players[i].jumpTimeStart != sPokemonJump->jumpTimeStarts[i])
+            {
+                // This is a new jump, play SE and init fields for jump handling
+                if (i == sPokemonJump->multiplayerId)
+                    sPokemonJump->players[i].prevMonState = MONSTATE_JUMP;
+
+                soundFlags |= F_SE_JUMP;
+                sPokemonJump->players[i].jumpOffsetIdx = INT_MAX;
+                sPokemonJump->jumpTimeStarts[i] = sPokemonJump->players[i].jumpTimeStart;
+            }
+
+            sub_0802C08C(i); // UpdateJump
+            break;
+        case MONSTATE_HIT:
+            if (sPokemonJump->players[i].prevMonState != MONSTATE_HIT)
+            {
+                if (i == sPokemonJump->multiplayerId)
+                    sPokemonJump->players[i].prevMonState = MONSTATE_HIT;
+
+                soundFlags |= F_SE_FAIL;
+                sub_0802DA80(i); // StartMonHitShake
+            }
+            break;
+        }
+    }
+
+    if (soundFlags & F_SE_FAIL)
+        PlaySE(SE_RG_POKE_JUMP_FAILURE);
+    else if (soundFlags & F_SE_JUMP)
+        PlaySE(SE_LEDGE);
 }
 
 void InitGame(struct PokemonJump *jump)
