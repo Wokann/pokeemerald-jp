@@ -1,14 +1,21 @@
 #include "global.h"
+#include "bg.h"
 #include "berry_powder.h"
+#include "decompress.h"
+#include "digit_obj_util.h"
 #include "event_data.h"
+#include "gpu_regs.h"
+#include "graphics.h"
 #include "item_menu.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "malloc.h"
 #include "main.h"
 #include "math_util.h"
+#include "menu.h"
 #include "overworld.h"
 #include "palette.h"
+#include "scanline_effect.h"
 #include "sprite.h"
 #include "task.h"
 #include "text.h"
@@ -31,6 +38,12 @@ struct BerryCrushGame_Results
     u16 totalAPresses;              // +0x72
     u16 stats[2][MAX_RFU_PLAYERS];  // +0x74
     u8 playerIdsRanked[2][MAX_RFU_PLAYERS + 3]; // +0x88
+};
+
+struct BerryCrushGame_Gfx
+{
+    u8 filler[0x88];                          // +0x124..+0x1AB
+    u16 bgBuffers[4][0x800];                  // +0x1AC
 };
 
 struct BerryCrushGame
@@ -74,7 +87,7 @@ struct BerryCrushGame
     u8 localState[12];                            // +5C
     struct BerryCrushGame_Results results;        // +68
     struct BerryCrushGame_Player players[MAX_RFU_PLAYERS]; // +98
-    u8 gfx[0x41AC - 0x124];                       // +124
+    struct BerryCrushGame_Gfx gfx;                // +124
 };
 
 // Berry Crush game state, EWRAM 0x02022944 (see sym_ewram_jp.txt).
@@ -84,12 +97,21 @@ extern void RunOrScheduleCommand(u16, u8, u8 *);
 extern void SetPaletteFadeArgs(u8 *, bool8, u32, s8, u8, u8, u16);
 extern void GetBerryFromBag(void);
 extern s32 UpdateGame(struct BerryCrushGame *);
+extern const struct BgTemplate sBgTemplates[4];
+extern const u8 sCrusherTop_Tilemap[];
+extern const u8 sContainerCap_Tilemap[];
+extern const u8 sBg_Tilemap[];
+extern void CreatePlayerNameWindows(struct BerryCrushGame *);
+extern void DrawPlayerNameWindows(struct BerryCrushGame *);
+extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
+extern void CreateGameSprites(struct BerryCrushGame *);
 
 void SaveResults(void);
 static void VBlankCB(void);
 static void MainCB(void);
 static void MainTask(u8 taskId);
 static void SetNamesAndTextSpeed(struct BerryCrushGame *);
+s32 ShowGameDisplay(void);
 
 struct BerryCrushGame *GetBerryCrushGame(void)
 {
@@ -305,4 +327,103 @@ static void SetNamesAndTextSpeed(struct BerryCrushGame *game)
         game->textSpeed = 1;
         break;
     }
+}
+
+s32 ShowGameDisplay(void)
+{
+    struct BerryCrushGame *game = GetBerryCrushGame();
+
+    if (!game)
+        return -1;
+
+    switch (game->cmdState)
+    {
+    case 0:
+        SetVBlankCallback(NULL);
+        SetHBlankCallback(NULL);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        ScanlineEffect_Stop();
+        ResetTempTileDataBuffers();
+        break;
+    case 1:
+        CpuFill16(0, (void *)OAM, OAM_SIZE);
+        gReservedSpritePaletteCount = 0;
+        DigitObjUtil_Init(3);
+        break;
+    case 2:
+        ResetPaletteFade();
+        ResetSpriteData();
+        FreeAllSpritePalettes();
+        break;
+    case 3:
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+        SetBgTilemapBuffer(1, game->gfx.bgBuffers[0]);
+        SetBgTilemapBuffer(2, game->gfx.bgBuffers[2]);
+        SetBgTilemapBuffer(3, game->gfx.bgBuffers[3]);
+        ChangeBgX(0, 0, BG_COORD_SET);
+        ChangeBgY(0, 0, BG_COORD_SET);
+        ChangeBgX(2, 0, BG_COORD_SET);
+        ChangeBgY(2, 0, BG_COORD_SET);
+        ChangeBgX(3, 0, BG_COORD_SET);
+        ChangeBgY(3, 0, BG_COORD_SET);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        break;
+    case 4:
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
+        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 32, 64);
+        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 32, 32);
+        FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 32, 32);
+        break;
+    case 5:
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        DecompressAndCopyTileDataToVram(1, gBerryCrush_Crusher_Gfx, 0, 0, 0);
+        break;
+    case 6:
+        if (FreeTempTileDataBuffersIfPossible())
+            return 0;
+
+        InitStandardTextBoxWindows();
+        InitTextBoxGfxAndPrinters();
+        CreatePlayerNameWindows(game);
+        DrawPlayerNameWindows(game);
+        gPaletteFade.bufferTransferDisabled = TRUE;
+        break;
+    case 7:
+        LoadPalette(gBerryCrush_Crusher_Pal, BG_PLTT_ID(0), 12 * PLTT_SIZE_4BPP);
+        CopyToBgTilemapBuffer(1, sCrusherTop_Tilemap, 0, 0);
+        CopyToBgTilemapBuffer(2, sContainerCap_Tilemap, 0, 0);
+        CopyToBgTilemapBuffer(3, sBg_Tilemap, 0, 0);
+        CopyPlayerNameWindowGfxToBg(game);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        break;
+    case 8:
+        LoadWirelessStatusIndicatorSpriteGfx();
+        CreateWirelessStatusIndicatorSprite(0, 0);
+        CreateGameSprites(game);
+        SetGpuReg(REG_OFFSET_BG1VOFS, -gSpriteCoordOffsetY);
+        ChangeBgX(1, 0, BG_COORD_SET);
+        ChangeBgY(1, 0, BG_COORD_SET);
+        break;
+    case 9:
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        BerryCrush_SetVBlankCB();
+        game->cmdState = 0;
+        return 1;
+    }
+
+    game->cmdState++;
+    return 0;
 }

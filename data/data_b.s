@@ -1214,13 +1214,9 @@ gUnknown_82C5EA8: @ 0x82C5EA8
 gUnknown_82C5EBC: @ 0x82C5EBC
 	.incbin "baserom_jp.gba", 0x2c5ebc, 0x24
 
-	.globl gUnknown_82C5EE0
-gUnknown_82C5EE0: @ 0x82C5EE0
-	.incbin "baserom_jp.gba", 0x2c5ee0, 0x4
-
-	.globl gUnknown_82C5EE4
-gUnknown_82C5EE4: @ 0x82C5EE4
-	.incbin "baserom_jp.gba", 0x2c5ee4, 0xc
+	.globl sBgTemplates
+sBgTemplates: @ 0x82C5EE0
+	.incbin "baserom_jp.gba", 0x2c5ee0, 0x10
 
 	.globl gUnknown_82C5EF0
 gUnknown_82C5EF0: @ 0x82C5EF0
@@ -1258,24 +1254,24 @@ gUnknown_82C5F5C: @ 0x82C5F5C
 gUnknown_82C5F64: @ 0x82C5F64
 	.incbin "baserom_jp.gba", 0x2c5f64, 0x20
 
-	.globl gUnknown_82C5F84
-gUnknown_82C5F84: @ 0x82C5F84
+	.globl gBerryCrush_Crusher_Pal
+gBerryCrush_Crusher_Pal: @ 0x82C5F84
 	.incbin "baserom_jp.gba", 0x2c5f84, 0x180
 
-	.globl gUnknown_82C6104
-gUnknown_82C6104: @ 0x82C6104
+	.globl gBerryCrush_Crusher_Gfx
+gBerryCrush_Crusher_Gfx: @ 0x82C6104
 	.incbin "baserom_jp.gba", 0x2c6104, 0x13d0
 
-	.globl gUnknown_82C74D4
-gUnknown_82C74D4: @ 0x82C74D4
+	.globl sCrusherTop_Tilemap
+sCrusherTop_Tilemap: @ 0x82C74D4
 	.incbin "baserom_jp.gba", 0x2c74d4, 0x130
 
-	.globl gUnknown_82C7604
-gUnknown_82C7604: @ 0x82C7604
+	.globl sContainerCap_Tilemap
+sContainerCap_Tilemap: @ 0x82C7604
 	.incbin "baserom_jp.gba", 0x2c7604, 0x198
 
-	.globl gUnknown_82C779C
-gUnknown_82C779C: @ 0x82C779C
+	.globl sBg_Tilemap
+sBg_Tilemap: @ 0x82C779C
 	.incbin "baserom_jp.gba", 0x2c779c, 0x228
 
 	.globl gUnknown_82C79C4

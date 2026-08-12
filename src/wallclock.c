@@ -79,7 +79,7 @@ enum {
 extern const u16 sTextPrompt_Pal[];
 extern const struct WindowTemplate sWindowTemplates[];
 extern const struct WindowTemplate sWindowTemplate_ConfirmYesNo;
-extern const struct BgTemplate sBgTemplates[3];
+extern const struct BgTemplate sWallclockBgTemplates[3];
 extern const struct CompressedSpriteSheet sSpriteSheet_ClockHand;
 extern const struct SpritePalette sSpritePalettes_Clock[];
 extern const struct SpriteTemplate sSpriteTemplate_MinuteHand;
@@ -126,7 +126,7 @@ static void LoadWallClockGraphics(void)
     LoadPalette(GetOverworldTextboxPalettePtr(), BG_PLTT_ID(14), PLTT_SIZE_4BPP);
     LoadPalette(sTextPrompt_Pal, BG_PLTT_ID(12), PLTT_SIZEOF(4));
     ResetBgsAndClearDma3BusyFlags(0);
-    InitBgsFromTemplates(0, sBgTemplates, ARRAY_COUNT(sBgTemplates));
+    InitBgsFromTemplates(0, sWallclockBgTemplates, ARRAY_COUNT(sWallclockBgTemplates));
     InitWindows(sWindowTemplates);
     DeactivateAllTextPrinters();
     LoadUserWindowBorderGfx(0, 0x24C, BG_PLTT_ID(13));

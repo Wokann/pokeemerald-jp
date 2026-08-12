@@ -30,7 +30,7 @@ extern const u16 sRibbonIcons5_Pal[];
 extern const u16 sMonInfo_Pal[16]; // ROM 0x085F6714, 16 colors
 extern const u32 sRibbonIconsSmall_Gfx[];
 extern const u32 sRibbonIconsBig_Gfx[];
-extern const struct BgTemplate sBgTemplates[2]; // ROM 0x085F7210
+extern const struct BgTemplate sPokenavRibbonsBgTemplates[2]; // ROM 0x085F7210
 extern const struct BgTemplate sRibbonsSummaryBgTemplates[2]; // ROM 0x085F7214
 extern const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[];
 extern const struct WindowTemplate sRibbonCountWindowTemplate;
