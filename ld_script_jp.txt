@@ -1453,6 +1453,7 @@ sub_0802B74C = TryGivePrize_PokeJump;
 sub_0802B878 = DoPlayAgainPrompt;
 sub_0802B954 = ClosePokeJumpLink;
 sub_0802BA24 = CloseMessageAndResetScore;
+sub_0802BA78 = Task_CommunicateMonInfo_PokeJump;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
 sPokeJumpMemberFuncs = gUnknown_82CEEA4;
 sub_0802A788 = ResetForNewGame;
@@ -2631,6 +2632,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.DoPlayAgainPrompt);
         src/pokemon_jump.o(.text.ClosePokeJumpLink);
         src/pokemon_jump.o(.text.CloseMessageAndResetScore);
+        src/pokemon_jump.o(.text.Task_CommunicateMonInfo_PokeJump);
         asm/pokemon_jump_1a.o(.text);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         asm/pokemon_jump_1b.o(.text);

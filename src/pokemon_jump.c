@@ -371,6 +371,8 @@ extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
 extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 extern void sub_0802DA5C(int score); // PrintScore
+extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
+extern bool32 sub_0802DDC8(int multiplayerId, struct PokemonJump_MonInfo *monInfo); // RecvPacket_MonInfo
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1308,6 +1310,52 @@ bool32 CloseMessageAndResetScore(void)
 
     return TRUE;
 }
+
+// JP: same task-data layout as US here.
+#define tState data[0]
+#define tNumReceived data[1]
+#define tReceivedPacket(playerId) data[(playerId) + 2]
+#define DATAIDX_GAME_STRUCT 14
+
+void Task_CommunicateMonInfo_PokeJump(u8 taskId)
+{
+    int i;
+    s16 *data = gTasks[taskId].data;
+    struct PokemonJump *jump = (struct PokemonJump *)GetWordTaskArg(taskId, DATAIDX_GAME_STRUCT);
+
+    switch (tState)
+    {
+    case 0:
+        for (i = 0; i < MAX_RFU_PLAYERS; i++)
+            tReceivedPacket(i) = FALSE;
+
+        tState++;
+        // fall through
+    case 1:
+        sub_0802DDA4(&jump->monInfo[jump->multiplayerId]); // SendPacket_MonInfo
+        for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        {
+            if (!tReceivedPacket(i) && sub_0802DDC8(i, &jump->monInfo[i])) // RecvPacket_MonInfo
+            {
+                StringCopy(jump->players[i].name, gLinkPlayers[i].name);
+                tReceivedPacket(i) = TRUE;
+                tNumReceived++;
+                if (tNumReceived == jump->numPlayers)
+                {
+                    InitPlayerAndJumpTypes();
+                    DestroyTask(taskId);
+                    break;
+                }
+            }
+        }
+        break;
+    }
+}
+
+#undef tState
+#undef tNumReceived
+#undef tReceivedPacket
+#undef DATAIDX_GAME_STRUCT
 
 void InitGame(struct PokemonJump *jump)
 {
