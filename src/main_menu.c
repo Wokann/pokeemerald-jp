@@ -60,7 +60,10 @@ extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
 extern void Task_NewGameBirchSpeech_Init(u8 taskId);
 extern void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId);
+extern void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId);
 extern void AddBirchSpeechObjects(u8 taskId);
+extern void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 a1);
+extern void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 a1);
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
 static bool8 HandleMainMenuInput(u8 taskId);
@@ -73,6 +76,7 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 #define tPlayerSpriteId data[2]
 #define tBG1HOFS data[4]
 #define tTimer data[7]
+#define tBirchSpriteId data[8]
 
 #define OPTION_MENU_FLAG (1 << 15)
 
@@ -806,6 +810,28 @@ static void Task_NewGameBirchSpeech_Init(u8 taskId)
     PlayBGM(MUS_ROUTE122);
     ShowBg(0);
     ShowBg(1);
+}
+
+static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
+{
+    u8 spriteId;
+
+    if (gTasks[taskId].tTimer)
+    {
+        gTasks[taskId].tTimer--;
+    }
+    else
+    {
+        spriteId = gTasks[taskId].tBirchSpriteId;
+        gSprites[spriteId].x = 136;
+        gSprites[spriteId].y = 60;
+        gSprites[spriteId].invisible = FALSE;
+        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        NewGameBirchSpeech_StartFadeInTarget1OutTarget2(taskId, 10);
+        NewGameBirchSpeech_StartFadePlatformOut(taskId, 20);
+        gTasks[taskId].tTimer = 80;
+        gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
+    }
 }
 
 #undef tMenuType

@@ -3011,6 +3011,7 @@ SECTIONS {
         src/main_menu.o(.text.Task_DisplayMainMenuInvalidActionError);
         src/main_menu.o(.text.HighlightSelectedMainMenuItem);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_Init);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitToShowBirch);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
