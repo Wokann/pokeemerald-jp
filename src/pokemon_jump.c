@@ -421,7 +421,6 @@ extern void sub_0802DA00(void); // InitDigitPrinters
 extern void sub_0802D884(void); // PrintScoreSuffixes
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802D8F0(void); // CreateJumpMonSprites
-extern u32 sub_0802D78C(u32 a, u32 b, u32 c, u32 d); // AddMessageWindow
 extern void sub_0802D808(u16 a, u16 b, u8 c); // CreatePokeJumpYesNoMenu
 extern const u8 gText_WantToPlayAgain2[];
 extern const u8 gText_SavingDontTurnOffPower[];
@@ -429,7 +428,6 @@ extern const u8 gText_SomeoneDroppedOut2[];
 extern const u8 gText_CommunicationStandby4[];
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
-extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
 extern bool32 sub_0802DDC8(int multiplayerId, struct PokemonJump_MonInfo *monInfo); // RecvPacket_MonInfo
@@ -1300,7 +1298,7 @@ bool32 DoPlayAgainPrompt(void)
             sPokemonJump->helperState++;
         break;
     case 2:
-        input = sub_0802D77C(); // HandlePlayAgainInput
+        input = HandlePlayAgainInput();
         switch (input)
         {
         case MENU_B_PRESSED:
@@ -2551,7 +2549,7 @@ void Msg_WantToPlayAgain_PokeJump(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sPokemonJumpGfx->msgWindowId = sub_0802D78C(1, 8, 20, 2); // AddMessageWindow
+        sPokemonJumpGfx->msgWindowId = AddMessageWindow(1, 8, 20, 2);
         AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_WantToPlayAgain2, 0, 2, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
         sPokemonJumpGfx->mainState++;
@@ -2578,7 +2576,7 @@ void Msg_SavingDontTurnOff_PokeJump(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sPokemonJumpGfx->msgWindowId = sub_0802D78C(2, 7, 26, 4); // AddMessageWindow
+        sPokemonJumpGfx->msgWindowId = AddMessageWindow(2, 7, 26, 4);
         AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_SavingDontTurnOffPower, 0, 2, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
         sPokemonJumpGfx->mainState++;
@@ -2621,7 +2619,7 @@ void Msg_SomeoneDroppedOut_PokeJump(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sPokemonJumpGfx->msgWindowId = sub_0802D78C(2, 8, 22, 4); // AddMessageWindow
+        sPokemonJumpGfx->msgWindowId = AddMessageWindow(2, 8, 22, 4);
         AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_SomeoneDroppedOut2, 0, 2, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
         sPokemonJumpGfx->mainState++;
@@ -2647,7 +2645,7 @@ void Msg_CommunicationStandby_PokeJump(void)
     switch (sPokemonJumpGfx->mainState)
     {
     case 0:
-        sPokemonJumpGfx->msgWindowId = sub_0802D78C(7, 10, 16, 2); // AddMessageWindow
+        sPokemonJumpGfx->msgWindowId = AddMessageWindow(7, 10, 16, 2);
         AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_CommunicationStandby4, 0, 2, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
         sPokemonJumpGfx->mainState++;
@@ -2725,7 +2723,7 @@ void PrintPrizeMessage(u16 itemId, u16 quantity)
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, sPokemonJumpGfx->itemQuantityStr);
     DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_AwesomeWonF701F700);
-    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 8, 22, 4); // AddMessageWindow
+    sPokemonJumpGfx->msgWindowId = AddMessageWindow(4, 8, 22, 4);
     AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
     sPokemonJumpGfx->fanfare = MUS_LEVEL_UP;
@@ -2738,7 +2736,7 @@ void PrintPrizeFilledBagMessage(u16 itemId)
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
     DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_FilledStorageSpace2);
-    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 8, 22, 4); // AddMessageWindow
+    sPokemonJumpGfx->msgWindowId = AddMessageWindow(4, 8, 22, 4);
     AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
     sPokemonJumpGfx->fanfare = MUS_DUMMY;
@@ -2751,7 +2749,7 @@ void PrintNoRoomForPrizeMessage(u16 itemId)
     DynamicPlaceholderTextUtil_Reset();
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
     DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_CantHoldMore);
-    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 9, 22, 2); // AddMessageWindow
+    sPokemonJumpGfx->msgWindowId = AddMessageWindow(4, 9, 22, 2);
     AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
     sPokemonJumpGfx->fanfare = MUS_DUMMY;
@@ -2823,6 +2821,38 @@ bool32 RemoveMessageWindow_PokeJump(void)
     }
 
     return TRUE;
+}
+
+s8 HandlePlayAgainInput(void)
+{
+    return Menu_ProcessInputNoWrapClearOnChoose();
+}
+
+u32 AddMessageWindow(u32 left, u32 top, u32 width, u32 height)
+{
+    u32 windowId;
+    struct PokeJumpWindowTemplate
+    {
+        u8 bg;
+        u8 tilemapLeft;
+        u8 tilemapTop;
+        u8 width;
+        u8 height;
+        u8 paletteNum : 8;
+        u16 baseBlock : 16;
+    } window;
+
+    window.bg = BG_INTERFACE;
+    window.tilemapLeft = left;
+    window.tilemapTop = top;
+    window.width = width;
+    window.height = height;
+    window.paletteNum = 15;
+    window.baseBlock = 0x33;
+
+    windowId = AddWindow((struct WindowTemplate *)&window);
+    FillWindowPixelBuffer(windowId, 0x11);
+    return windowId;
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
