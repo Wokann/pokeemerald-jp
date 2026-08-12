@@ -394,11 +394,13 @@ extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
 extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
-extern void sub_080281D4(struct Sprite *sprite); // SpriteCB_Dodrio
+extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
+extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
 extern void sub_08028380(bool8 invisible, u8 id); // SetDodrioInvisibility
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
+void SpriteCB_Dodrio(struct Sprite *sprite);
 void Task_ShowDodrioRecords(u8 taskId);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
@@ -1501,12 +1503,27 @@ void CreateDodrioSprite(struct DodrioGame_MonInfo *monInfo, u8 playerId, u8 id, 
         .anims = sAnims_Dodrio,
         .images = NULL,
         .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = sub_080281D4, // SpriteCB_Dodrio
+        .callback = SpriteCB_Dodrio,
     };
 
     sDodrioSpriteIds[id] = AllocZeroed(4);
     *sDodrioSpriteIds[id] = CreateSprite(&template, sub_08028C40(playerId, numPlayers), 136, 3);
     sub_08028380(TRUE, id); // SetDodrioInvisibility
+}
+
+void SpriteCB_Dodrio(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        break;
+    case 1:
+        sub_08028268(sprite); // DoDodrioMissedAnim
+        break;
+    case 2:
+        sub_080282D8(sprite); // DoDodrioIntroAnim
+        break;
+    }
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,

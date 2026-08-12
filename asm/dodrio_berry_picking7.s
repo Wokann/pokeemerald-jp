@@ -5,28 +5,6 @@
 
 
 
-	thumb_func_start sub_080281D4
-sub_080281D4: @ 0x080281D4
-	push {lr}
-	movs r2, #0x2e
-	ldrsh r1, [r0, r2]
-	cmp r1, #1
-	beq _080281E8
-	cmp r1, #1
-	ble _080281F2
-	cmp r1, #2
-	beq _080281EE
-	b _080281F2
-_080281E8:
-	bl sub_08028268
-	b _080281F2
-_080281EE:
-	bl sub_080282D8
-_080281F2:
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_080281D4
 
 	thumb_func_start sub_080281F8
 sub_080281F8: @ 0x080281F8
