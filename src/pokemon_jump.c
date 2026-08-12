@@ -1067,7 +1067,7 @@ bool32 HandleSwingRound(void)
     case 1:
         if (JOY_NEW(A_BUTTON))
         {
-            sub_0802BE58(); // SetMonStateJump
+            SetMonStateJump();
             SetLinkTimeInterval(LINK_INTERVAL_SHORT);
             sPokemonJump->helperState++;
         }
@@ -1526,6 +1526,13 @@ bool32 IsPlayersMonState(u16 monState)
         return TRUE;
     else
         return FALSE;
+}
+
+void SetMonStateJump(void)
+{
+    sPokemonJump->player->jumpTimeStart = sPokemonJump->vineTimer;
+    sPokemonJump->player->prevMonState = sPokemonJump->player->monState;
+    sPokemonJump->player->monState = MONSTATE_JUMP;
 }
 
 void InitGame(struct PokemonJump *jump)
