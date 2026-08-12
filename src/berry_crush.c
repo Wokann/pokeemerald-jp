@@ -43,9 +43,21 @@
 #define F_MSG_CLEAR  (1 << 0)
 #define F_MSG_EXPAND (1 << 1)
 
+#define F_INPUT_HIT_A (1 << 0)
+#define F_INPUT_HIT_B (1 << 1)
 #define F_INPUT_HIT_SYNC (1 << 2) // Input at same time as another player
 #define INPUT_FLAGS_PER_PLAYER 3
 #define INPUT_FLAG_MASK ((1 << INPUT_FLAGS_PER_PLAYER) - 1)
+
+// Values for the inputState field
+enum {
+    INPUT_STATE_NONE,
+    INPUT_STATE_HIT,      // Hit the crusher
+    INPUT_STATE_HIT_SYNC, // Hit the crusher at same time as another player
+};
+
+// Flag for whether a given player has sent their data this round
+#define SEND_GAME_STATE 2
 
 enum {
     RUN_CMD,
@@ -126,7 +138,30 @@ struct BerryCrushGame_Player
 {
     u8 name[PLAYER_NAME_LENGTH + 1]; // +0
     u16 berryId;
-    u8 filler[18];
+    u16 inputTime;
+    u16 neatInputStreak;
+    u16 timeSincePrevInput;
+    u16 maxNeatInputStreak;
+    u16 numAPresses;
+    u16 numSyncedAPresses;
+    u16 timePressingA;
+    u8 inputFlags;
+    u8 inputState;
+    u8 filler[2];
+};
+
+struct BerryCrushGame_LocalState
+{
+    u16 sendFlag;              // +0x5C
+    bool8 endGame:1;
+    bool8 bigSparkle:1;
+    bool8 pushedAButton:1;
+    u8 playerPressedAFlags:5;
+    s8 vibration;              // +0x5F
+    u16 depth;                 // +0x60
+    u16 timer;                 // +0x62
+    u16 inputFlags;            // +0x64
+    u16 sparkleAmount;         // +0x66
 };
 
 struct BerryCrushGame_Results
@@ -226,7 +261,7 @@ struct BerryCrushGame
     u8 commandArgs[12];                           // +36
     u16 sendCmd[6];                               // +42
     u16 recvCmd[7];                               // +4E
-    u8 localState[12];                            // +5C
+    struct BerryCrushGame_LocalState localState;  // +5C
     struct BerryCrushGame_Results results;        // +68
     struct BerryCrushGame_Player players[MAX_RFU_PLAYERS]; // +98
     struct BerryCrushGame_Gfx gfx;                // +124
@@ -262,6 +297,8 @@ extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 extern const u8 *const sMessages[];
 extern const u8 sReceivedPlayerBitmasks[];
+extern const u8 sBitTable[8];
+extern const u8 sSyncPressBonus[8];
 extern const s8 sIntroOutroVibrationData[][7];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
@@ -1486,6 +1523,96 @@ u32 Cmd_Countdown(struct BerryCrushGame *game, u8 *args)
     }
     game->cmdState++;
     return 0;
+}
+
+// Receive and process data from all players
+// Only used by the link leader
+void HandlePartnerInput(struct BerryCrushGame *game)
+{
+    u8 numPlayersPressed = 0;
+    u8 i = 0;
+    u16 timeDiff;
+    s32 temp = 0;
+    struct BerryCrushGame_LinkState *linkState;
+
+    for (i = 0; i < game->playerCount; i++)
+    {
+        linkState = (struct BerryCrushGame_LinkState *)gRecvCmds[i];
+
+        // Skip player if we have not received a packet from them
+        if ((linkState->rfuCmd & RFUCMD_MASK) != RFUCMD_SEND_PACKET)
+            continue;
+        if (linkState->sendFlag != SEND_GAME_STATE)
+            continue;
+
+        if (linkState->pushedAButton)
+        {
+            game->localState.playerPressedAFlags |= sBitTable[i];
+            game->players[i].inputState = INPUT_STATE_HIT;
+            game->players[i].numAPresses++;
+            numPlayersPressed++;
+            timeDiff = game->timer - game->players[i].inputTime;
+
+            // If the interval between inputs is regular, the input is considered "neat"
+            // This counts toward the player's neatness score
+            if (timeDiff >= game->players[i].timeSincePrevInput - 1
+             && timeDiff <= game->players[i].timeSincePrevInput + 1)
+            {
+                // On neat input streak
+                game->players[i].neatInputStreak++;
+                game->players[i].timeSincePrevInput = timeDiff;
+                if (game->players[i].neatInputStreak > game->players[i].maxNeatInputStreak)
+                    game->players[i].maxNeatInputStreak = game->players[i].neatInputStreak;
+            }
+            else
+            {
+                // End neat input streak
+                game->players[i].neatInputStreak = 0;
+                game->players[i].timeSincePrevInput = timeDiff;
+            }
+
+            game->players[i].inputTime = game->timer;
+            game->players[i].inputFlags++;
+            if (game->players[i].inputFlags > F_INPUT_HIT_B)
+                game->players[i].inputFlags = 0;
+        }
+        else
+        {
+            game->players[i].inputState = INPUT_STATE_NONE;
+        }
+    }
+    if (numPlayersPressed > 1)
+    {
+        // For each player that pressed A, flag their input as synchronous
+        // This is used to change their impact sprite to a big impact
+        for (i = 0; i < game->playerCount; i++)
+        {
+            if (game->players[i].inputState == INPUT_STATE_NONE)
+                continue;
+            game->players[i].inputState |= INPUT_STATE_HIT_SYNC;
+            game->players[i].numSyncedAPresses++;
+        }
+    }
+    if (numPlayersPressed == 0)
+        return;
+
+    game->bigSparkleCounter += numPlayersPressed;
+    numPlayersPressed += sSyncPressBonus[numPlayersPressed - 1];
+    game->sparkleCounter += numPlayersPressed;
+    game->totalAPresses += numPlayersPressed;
+    if (game->targetAPresses - game->totalAPresses > 0)
+    {
+        temp = (s32)game->totalAPresses;
+        temp = Q_24_8(temp);
+        temp = MathUtil_Div32(temp, game->targetDepth);
+        temp = Q_24_8_TO_INT(temp);
+        game->newDepth = (u8)temp;
+        return;
+    }
+
+    // Target number of A presses has been reached, game is complete
+    game->newDepth = 32;
+    game->localState.endGame = TRUE;
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)

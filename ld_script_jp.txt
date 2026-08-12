@@ -1251,6 +1251,7 @@ sub_08022C80 = Cmd_WaitForOthersToPickBerries;
 sub_08022DDC = Cmd_DropBerriesIntoCrusher;
 sub_08022F24 = Cmd_DropLid;
 sub_08023058 = Cmd_Countdown;
+sub_08023108 = HandlePartnerInput;
 StartMinigameCountdown = sub_0802E788;
 IsMinigameCountdownRunning = sub_0802E7E8;
 IsMinigameCountdownRunning = sub_0802E7E8;
@@ -2197,6 +2198,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_DropBerriesIntoCrusher);
         src/berry_crush.o(.text.Cmd_DropLid);
         src/berry_crush.o(.text.Cmd_Countdown);
+        src/berry_crush.o(.text.HandlePartnerInput);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

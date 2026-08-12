@@ -1194,12 +1194,12 @@ gUnknown_82C5E44: @ 0x82C5E44
 gUnknown_82C5E5C: @ 0x82C5E5C
 	.incbin "baserom_jp.gba", 0x2c5e5c, 0x18
 
-	.globl gUnknown_82C5E74
-gUnknown_82C5E74: @ 0x82C5E74
+	.globl sBitTable
+sBitTable: @ 0x82C5E74
 	.incbin "baserom_jp.gba", 0x2c5e74, 0x8
 
-	.globl gUnknown_82C5E7C
-gUnknown_82C5E7C: @ 0x82C5E7C
+	.globl sSyncPressBonus
+sSyncPressBonus: @ 0x82C5E7C
 	.incbin "baserom_jp.gba", 0x2c5e7c, 0x8
 
 	.globl sIntroOutroVibrationData
