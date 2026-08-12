@@ -1059,7 +1059,7 @@ bool32 HandleSwingRound(void)
     switch (sPokemonJump->helperState)
     {
     case 0:
-        if (sub_0802BE24(MONSTATE_NORMAL)) // IsPlayersMonState
+        if (IsPlayersMonState(MONSTATE_NORMAL))
             sPokemonJump->helperState++;
         else
             break;
@@ -1073,11 +1073,11 @@ bool32 HandleSwingRound(void)
         }
         break;
     case 2:
-        if (sub_0802BE24(MONSTATE_JUMP) == TRUE) // IsPlayersMonState
+        if (IsPlayersMonState(MONSTATE_JUMP) == TRUE)
             sPokemonJump->helperState++;
         break;
     case 3:
-        if (sub_0802BE24(MONSTATE_NORMAL) == TRUE) // IsPlayersMonState
+        if (IsPlayersMonState(MONSTATE_NORMAL) == TRUE)
             sPokemonJump->helperState = 0;
         break;
     }
@@ -1518,6 +1518,14 @@ void ResetPlayersMonState(void)
 {
     sPokemonJump->player->monState = MONSTATE_NORMAL;
     sPokemonJump->player->prevMonState = MONSTATE_NORMAL;
+}
+
+bool32 IsPlayersMonState(u16 monState)
+{
+    if (sPokemonJump->players[sPokemonJump->multiplayerId].monState == monState)
+        return TRUE;
+    else
+        return FALSE;
 }
 
 void InitGame(struct PokemonJump *jump)

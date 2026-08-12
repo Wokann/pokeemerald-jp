@@ -1464,6 +1464,7 @@ sub_0802BD8C = PokeJumpRandom;
 sub_0802BDAC = ResetVineAfterHit;
 sub_0802BDD0 = IsGameOver;
 sub_0802BE08 = ResetPlayersMonState;
+sub_0802BE24 = IsPlayersMonState;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
@@ -2656,6 +2657,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.IsGameOver);
         src/pokemon_jump.o(.text.ResetPlayersJumpStates);
         src/pokemon_jump.o(.text.ResetPlayersMonState);
+        src/pokemon_jump.o(.text.IsPlayersMonState);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);
