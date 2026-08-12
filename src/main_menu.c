@@ -84,10 +84,6 @@ extern void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId);
 extern void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId);
 extern void Task_NewGameBirchSpeech_AndYouAre(u8 taskId);
 extern void AddBirchSpeechObjects(u8 taskId);
-extern void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 a1);
-extern void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 a1);
-extern void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 a1);
-extern void NewGameBirchSpeech_StartFadePlatformIn(u8 taskId, u8 a1);
 extern void NewGameBirchSpeech_ShowDialogueWindow(u8 taskId, u8 windowId);
 extern void NewGameBirchSpeech_ClearWindow(u8 taskId);
 extern void NewGameBirchSpeech_ShowPokeBallPrinterCallback(struct TextPrinter *textPrinter);
@@ -145,6 +141,10 @@ static void SpriteCB_Null(struct Sprite *sprite);
 static void SpriteCB_MovePlayerDownWhileShrinking(struct Sprite *sprite);
 static u8 NewGameBirchSpeech_CreateLotadSprite(u8 x, u8 y);
 static void AddBirchSpeechObjects(u8 taskId);
+static void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 delay);
+static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay);
+static void NewGameBirchSpeech_StartFadePlatformIn(u8 taskId, u8 delay);
+static void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 delay);
 
 #define NUM_PRESET_NAMES 20
 
@@ -1498,6 +1498,170 @@ static void AddBirchSpeechObjects(u8 taskId)
     gSprites[maySpriteId].oam.priority = 0;
     gTasks[taskId].tMaySpriteId = maySpriteId;
 }
+
+#define tMainTask data[0]
+#define tAlphaCoeff1 data[1]
+#define tAlphaCoeff2 data[2]
+#define tDelay data[3]
+#define tDelayTimer data[4]
+
+static void Task_NewGameBirchSpeech_FadeOutTarget1InTarget2(u8 taskId)
+{
+    int alphaCoeff2;
+
+    if (gTasks[taskId].tAlphaCoeff1 == 0)
+    {
+        gTasks[gTasks[taskId].tMainTask].tIsDoneFadingSprites = TRUE;
+        DestroyTask(taskId);
+    }
+    else if (gTasks[taskId].tDelayTimer)
+    {
+        gTasks[taskId].tDelayTimer--;
+    }
+    else
+    {
+        gTasks[taskId].tDelayTimer = gTasks[taskId].tDelay;
+        gTasks[taskId].tAlphaCoeff1--;
+        gTasks[taskId].tAlphaCoeff2++;
+        alphaCoeff2 = gTasks[taskId].tAlphaCoeff2 << 8;
+        SetGpuReg(REG_OFFSET_BLDALPHA, gTasks[taskId].tAlphaCoeff1 + alphaCoeff2);
+    }
+}
+
+static void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 delay)
+{
+    u8 taskId2;
+
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0));
+    SetGpuReg(REG_OFFSET_BLDY, 0);
+    gTasks[taskId].tIsDoneFadingSprites = 0;
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeOutTarget1InTarget2, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tAlphaCoeff1 = 16;
+    gTasks[taskId2].tAlphaCoeff2 = 0;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+}
+
+static void Task_NewGameBirchSpeech_FadeInTarget1OutTarget2(u8 taskId)
+{
+    int alphaCoeff2;
+
+    if (gTasks[taskId].tAlphaCoeff1 == 16)
+    {
+        gTasks[gTasks[taskId].tMainTask].tIsDoneFadingSprites = TRUE;
+        DestroyTask(taskId);
+    }
+    else if (gTasks[taskId].tDelayTimer)
+    {
+        gTasks[taskId].tDelayTimer--;
+    }
+    else
+    {
+        gTasks[taskId].tDelayTimer = gTasks[taskId].tDelay;
+        gTasks[taskId].tAlphaCoeff1++;
+        gTasks[taskId].tAlphaCoeff2--;
+        alphaCoeff2 = gTasks[taskId].tAlphaCoeff2 << 8;
+        SetGpuReg(REG_OFFSET_BLDALPHA, gTasks[taskId].tAlphaCoeff1 + alphaCoeff2);
+    }
+}
+
+static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay)
+{
+    u8 taskId2;
+
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_OBJ);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
+    SetGpuReg(REG_OFFSET_BLDY, 0);
+    gTasks[taskId].tIsDoneFadingSprites = 0;
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadeInTarget1OutTarget2, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tAlphaCoeff1 = 0;
+    gTasks[taskId2].tAlphaCoeff2 = 16;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+}
+
+#undef tAlphaCoeff1
+#undef tAlphaCoeff2
+
+#define tPalIndex data[1]
+#define tDelayBefore data[2]
+
+static void Task_NewGameBirchSpeech_FadePlatformIn(u8 taskId)
+{
+    if (gTasks[taskId].tDelayBefore)
+    {
+        gTasks[taskId].tDelayBefore--;
+    }
+    else if (gTasks[taskId].tPalIndex == 8)
+    {
+        DestroyTask(taskId);
+    }
+    else if (gTasks[taskId].tDelayTimer)
+    {
+        gTasks[taskId].tDelayTimer--;
+    }
+    else
+    {
+        gTasks[taskId].tDelayTimer = gTasks[taskId].tDelay;
+        gTasks[taskId].tPalIndex++;
+        LoadPalette(&sBirchSpeechBgGradientPal[gTasks[taskId].tPalIndex], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+    }
+}
+
+static void NewGameBirchSpeech_StartFadePlatformIn(u8 taskId, u8 delay)
+{
+    u8 taskId2;
+
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadePlatformIn, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tPalIndex = 0;
+    gTasks[taskId2].tDelayBefore = 8;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+}
+
+static void Task_NewGameBirchSpeech_FadePlatformOut(u8 taskId)
+{
+    if (gTasks[taskId].tDelayBefore)
+    {
+        gTasks[taskId].tDelayBefore--;
+    }
+    else if (gTasks[taskId].tPalIndex == 0)
+    {
+        DestroyTask(taskId);
+    }
+    else if (gTasks[taskId].tDelayTimer)
+    {
+        gTasks[taskId].tDelayTimer--;
+    }
+    else
+    {
+        gTasks[taskId].tDelayTimer = gTasks[taskId].tDelay;
+        gTasks[taskId].tPalIndex--;
+        LoadPalette(&sBirchSpeechBgGradientPal[gTasks[taskId].tPalIndex], BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
+    }
+}
+
+static void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 delay)
+{
+    u8 taskId2;
+
+    taskId2 = CreateTask(Task_NewGameBirchSpeech_FadePlatformOut, 0);
+    gTasks[taskId2].tMainTask = taskId;
+    gTasks[taskId2].tPalIndex = 8;
+    gTasks[taskId2].tDelayBefore = 8;
+    gTasks[taskId2].tDelay = delay;
+    gTasks[taskId2].tDelayTimer = delay;
+}
+
+#undef tMainTask
+#undef tPalIndex
+#undef tDelayBefore
+#undef tDelay
+#undef tDelayTimer
 
 #undef tMenuType
 #undef tCurrItem

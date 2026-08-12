@@ -3051,6 +3051,14 @@ SECTIONS {
         src/main_menu.o(.text.SpriteCB_MovePlayerDownWhileShrinking);
         src/main_menu.o(.text.NewGameBirchSpeech_CreateLotadSprite);
         src/main_menu.o(.text.AddBirchSpeechObjects);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_FadeOutTarget1InTarget2);
+        src/main_menu.o(.text.NewGameBirchSpeech_StartFadeOutTarget1InTarget2);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_FadeInTarget1OutTarget2);
+        src/main_menu.o(.text.NewGameBirchSpeech_StartFadeInTarget1OutTarget2);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_FadePlatformIn);
+        src/main_menu.o(.text.NewGameBirchSpeech_StartFadePlatformIn);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_FadePlatformOut);
+        src/main_menu.o(.text.NewGameBirchSpeech_StartFadePlatformOut);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
