@@ -1286,6 +1286,7 @@ sub_08024B14 = Task_DodrioGame_Leader;
 sub_08024B4C = Task_DodrioGame_Member;
 sub_08024F38 = AllPlayersReadyToStart;
 sub_08024F60 = InitResults_Leader;
+sub_08024FF8 = InitResults_Member;
 RecvLinkData_Leader = sub_08025ACC;
 RecvLinkData_Member = sub_08025BD4;
 UpdateGame_Leader = sub_080268B4;
@@ -2303,6 +2304,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.WaitEndGame_Member);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.InitResults_Leader);
+        src/dodrio_berry_picking.o(.text.InitResults_Member);
         asm/dodrio_berry_picking2.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
