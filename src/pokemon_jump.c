@@ -1,6 +1,7 @@
 #include "global.h"
 #include "malloc.h"
 #include "bg.h"
+#include "digit_obj_util.h"
 #include "link.h"
 #include "main.h"
 #include "palette.h"
@@ -138,6 +139,21 @@ void InitJumpMonInfo(struct PokemonJump_MonInfo *monInfo, struct Pokemon *mon);
 void InitGame(struct PokemonJump *jump);
 void CB2_PokemonJump(void);
 void Task_StartPokemonJump(u8 taskId);
+
+void FreeWindowsAndDigitObj(void);
+void FreePokemonJump(void);
+
+void FreeWindowsAndDigitObj(void)
+{
+    FreeAllWindowBuffers();
+    DigitObjUtil_Free();
+}
+
+void FreePokemonJump(void)
+{
+    FreeWindowsAndDigitObj();
+    Free(sPokemonJump);
+}
 
 void StartPokemonJump(u16 partyId, MainCallback exitCallback)
 {
