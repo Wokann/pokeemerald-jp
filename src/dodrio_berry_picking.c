@@ -321,6 +321,7 @@ extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
                                    bool32 *allReadyToEnd);
 extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
+extern u32 RecvPacket_ReadyToStart(u32 playerId);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -670,7 +671,7 @@ void WaitEndGame_Member(void)
         SetGameFunc(FUNC_INIT_RESULTS);
 }
 
-bool32 AllPlayersReadyToStart(void)
+bool32 AllLinkBlocksReceived(void)
 {
     u8 status = GetBlockReceivedStatus();
     u8 mask = GetLinkPlayerCountAsBitFlags();
@@ -681,6 +682,27 @@ bool32 AllPlayersReadyToStart(void)
         return TRUE;
     }
     return FALSE;
+}
+
+bool32 AllPlayersReadyToStart(void)
+{
+    u8 i, numPlayers;
+
+    numPlayers = sGame->numPlayers;
+    for (i = 1; i < numPlayers; i++)
+    {
+        if (sGame->readyToStart[i] == FALSE)
+            sGame->readyToStart[i] = RecvPacket_ReadyToStart(i);
+    }
+
+    numPlayers = numPlayers; // Needed to force compiler to keep loop below
+
+    for (; i < numPlayers; i++)
+    {
+        if (sGame->readyToStart[i] == FALSE)
+            return FALSE;
+    }
+    return TRUE;
 }
 
 void InitResults_Leader(void)
@@ -701,7 +723,7 @@ void InitResults_Leader(void)
         }
         break;
     case 2:
-        if (AllPlayersReadyToStart())
+        if (AllLinkBlocksReceived())
         {
             sGame->playersReceived = sGame->numPlayers;
         }
@@ -741,7 +763,7 @@ void InitResults_Member(void)
         }
         break;
     case 2:
-        if (AllPlayersReadyToStart())
+        if (AllLinkBlocksReceived())
         {
             for (i = 0; i < sGame->numPlayers; i++)
             {
@@ -801,7 +823,7 @@ void DoResults(void)
         }
         break;
     case 4:
-        if (AllPlayersReadyToStart())
+        if (AllLinkBlocksReceived())
         {
             for (i = 0; i < sGame->numPlayers; i++)
             {
@@ -877,7 +899,7 @@ void AskPlayAgain(void)
             sGame->state++;
         break;
     case 7:
-        if (AllPlayersReadyToStart())
+        if (AllLinkBlocksReceived())
         {
             for (i = 0; i < sGame->numPlayers; i++)
             {
@@ -1082,7 +1104,7 @@ void Task_CommunicateMonInfo(u8 taskId)
             tState++;
         break;
     case 2:
-        if (AllPlayersReadyToStart())
+        if (AllLinkBlocksReceived())
         {
             for (i = 0; i < sGame->numPlayers; i++)
             {

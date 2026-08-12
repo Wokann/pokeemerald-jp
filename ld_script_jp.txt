@@ -1284,7 +1284,9 @@ sub_080247F8 = InitDodrioGame;
 sub_08024990 = Task_StartDodrioGame;
 sub_08024B14 = Task_DodrioGame_Leader;
 sub_08024B4C = Task_DodrioGame_Member;
-sub_08024F38 = AllPlayersReadyToStart;
+sub_08024F38 = AllLinkBlocksReceived;
+sub_08026978 = AllPlayersReadyToStart;
+RecvPacket_ReadyToStart = sub_08027B28;
 sub_08024F60 = InitResults_Leader;
 sub_08024FF8 = InitResults_Member;
 sub_080250EC = DoResults;
@@ -2331,7 +2333,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.PlayGame_Member);
         src/dodrio_berry_picking.o(.text.WaitEndGame_Leader);
         src/dodrio_berry_picking.o(.text.WaitEndGame_Member);
-        src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
+        src/dodrio_berry_picking.o(.text.AllLinkBlocksReceived);
         src/dodrio_berry_picking.o(.text.InitResults_Leader);
         src/dodrio_berry_picking.o(.text.InitResults_Member);
         src/dodrio_berry_picking.o(.text.DoResults);
@@ -2344,6 +2346,8 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.RecvLinkData_Gameplay);
         src/dodrio_berry_picking.o(.text.RecvLinkData_ReadyToEnd);
         asm/dodrio_berry_picking2.o(.text);
+        src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
+        asm/dodrio_berry_picking3.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
         asm/main_menu.o(.text);
