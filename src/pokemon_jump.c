@@ -381,6 +381,7 @@ extern int sub_0802BD8C(void); // PokeJumpRandom
 extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
 extern const u16 sSoundEffects[];
+extern const int sScoreBonuses[];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -390,7 +391,6 @@ extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
 extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
 extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
-extern int sub_0802C484(void); // GetScoreBonus
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1733,7 +1733,7 @@ void TryUpdateScore(void)
     if (sPokemonJump->giveBonus && (DidAllPlayersClearVine() == TRUE || sPokemonJump->vineState == VINE_HIGHEST))
     {
         int numPlayers = GetNumPlayersForBonus(sPokemonJump->atJumpPeak3);
-        AddJumpScore(sub_0802C484()); // GetScoreBonus
+        AddJumpScore(GetScoreBonus(numPlayers));
         SetLinkTimeInterval(LINK_INTERVAL_SHORT);
         sPokemonJump->giveBonus = FALSE;
     }
@@ -1889,6 +1889,11 @@ int GetNumPlayersForBonus(u8 *atJumpPeak)
 void ClearUnreadField(void)
 {
     sPokemonJump->unused3 = 0;
+}
+
+int GetScoreBonus(int numPlayers)
+{
+    return sScoreBonuses[numPlayers];
 }
 
 void InitGame(struct PokemonJump *jump)
