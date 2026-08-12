@@ -377,6 +377,12 @@ extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_Mon
 extern bool32 sub_0802DDC8(int multiplayerId, struct PokemonJump_MonInfo *monInfo); // RecvPacket_MonInfo
 extern void sub_0802BC70(void); // UpdateVineSpeed
 extern int sub_0802BC3C(void); // GetVineSpeed
+extern int sub_0802BD8C(void); // PokeJumpRandom
+
+// JP: vine speed tables are ROM data (data/data_b.s gUnknown_82CEEC8 /
+// gUnknown_82CEED8); same layouts as US sVineBaseSpeeds / sVineSpeedDelays.
+extern const u16 sVineBaseSpeeds[];
+extern const u16 sVineSpeedDelays[];
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1431,6 +1437,62 @@ int GetVineSpeed(void)
     }
 
     return speed;
+}
+
+void UpdateVineSpeed(void)
+{
+    int baseSpeed;
+
+    sPokemonJump->vineSpeedAccel = 0;
+    if (sPokemonJump->vineSpeedDelay)
+    {
+        sPokemonJump->vineSpeedDelay--;
+        if (sPokemonJump->atMaxSpeedStage)
+        {
+            if (sub_0802BD8C() & 3) // PokeJumpRandom % 4
+            {
+                sPokemonJump->vineSpeed = sPokemonJump->nextVineSpeed;
+            }
+            else
+            {
+                if (sPokemonJump->nextVineSpeed > 54)
+                    sPokemonJump->vineSpeed = 30;
+                else
+                    sPokemonJump->vineSpeed = 82;
+            }
+        }
+    }
+    else
+    {
+        if (!(sPokemonJump->vineBaseSpeedIdx & 8)) // ARRAY_COUNT(sVineBaseSpeeds)
+        {
+            sPokemonJump->nextVineSpeed = sVineBaseSpeeds[sPokemonJump->vineBaseSpeedIdx] + (sPokemonJump->vineSpeedStage * 7);
+            sPokemonJump->vineSpeedDelay = sVineSpeedDelays[sub_0802BD8C() & 3] + 2; // PokeJumpRandom, ARRAY_COUNT(sVineSpeedDelays)
+            sPokemonJump->vineBaseSpeedIdx++;
+        }
+        else
+        {
+            if (sPokemonJump->vineBaseSpeedIdx == 8) // ARRAY_COUNT(sVineBaseSpeeds)
+            {
+                if (sPokemonJump->vineSpeedStage < 3)
+                    sPokemonJump->vineSpeedStage++;
+                else
+                    sPokemonJump->atMaxSpeedStage = TRUE;
+            }
+
+            baseSpeed = sVineBaseSpeeds[15 - sPokemonJump->vineBaseSpeedIdx];
+            sPokemonJump->nextVineSpeed = baseSpeed + (sPokemonJump->vineSpeedStage * 7);
+            if (++sPokemonJump->vineBaseSpeedIdx > 15)
+            {
+                if ((sub_0802BD8C() & 3) == 0) // PokeJumpRandom % 4
+                    sPokemonJump->nextVineSpeed -= 5;
+
+                sPokemonJump->vineBaseSpeedIdx = 0;
+            }
+        }
+
+        sPokemonJump->vineSpeed = sPokemonJump->nextVineSpeed;
+    }
 }
 
 void InitGame(struct PokemonJump *jump)
