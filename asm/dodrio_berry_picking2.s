@@ -17,61 +17,6 @@
 
 
 
-	thumb_func_start sub_0802540C
-sub_0802540C: @ 0x0802540C
-	push {r4, lr}
-	ldr r4, _08025424
-	ldr r0, [r4]
-	ldrb r0, [r0, #0x10]
-	cmp r0, #1
-	beq _0802543A
-	cmp r0, #1
-	bgt _08025428
-	cmp r0, #0
-	beq _0802542E
-	b _0802545A
-	.align 2, 0
-_08025424: .4byte 0x0202294C
-_08025428:
-	cmp r0, #2
-	beq _08025444
-	b _0802545A
-_0802542E:
-	bl SetCloseLinkCallback
-	movs r0, #7
-	bl sub_0802900C
-	b _08025450
-_0802543A:
-	bl sub_0802A464
-	cmp r0, #0
-	bne _08025468
-	b _08025450
-_08025444:
-	bl sub_0802A488
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #5
-	bne _08025468
-_08025450:
-	ldr r1, [r4]
-	ldrb r0, [r1, #0x10]
-	adds r0, #1
-	strb r0, [r1, #0x10]
-	b _08025468
-_0802545A:
-	ldr r0, _08025470
-	ldrb r0, [r0]
-	cmp r0, #0
-	bne _08025468
-	movs r0, #9
-	bl sub_08026008
-_08025468:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08025470: .4byte 0x030031C4
-	thumb_func_end sub_0802540C
 
 	thumb_func_start sub_08025474
 sub_08025474: @ 0x08025474

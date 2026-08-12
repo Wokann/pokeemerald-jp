@@ -1289,6 +1289,7 @@ sub_08024F60 = InitResults_Leader;
 sub_08024FF8 = InitResults_Member;
 sub_080250EC = DoResults;
 sub_08025238 = AskPlayAgain;
+sub_0802540C = EndLink;
 TryUpdateRecords = sub_0802725C;
 SetStatusBarInvisibility = sub_08028714;
 ResetCloudPos = sub_08028B28;
@@ -2319,6 +2320,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.InitResults_Member);
         src/dodrio_berry_picking.o(.text.DoResults);
         src/dodrio_berry_picking.o(.text.AskPlayAgain);
+        src/dodrio_berry_picking.o(.text.EndLink);
         asm/dodrio_berry_picking2.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

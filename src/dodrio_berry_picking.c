@@ -891,6 +891,32 @@ void AskPlayAgain(void)
     }
 }
 
+void EndLink(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        SetCloseLinkCallback();
+        SetGfxFuncById(GFXFUNC_MSG_PLAYER_DROPPED);
+        sGame->state++;
+        break;
+    case 1:
+        if (!IsGfxFuncActive())
+            sGame->state++;
+        break;
+    case 2:
+        if (GetPlayAgainState() == PLAY_AGAIN_DROPPED)
+            sGame->state++;
+        break;
+    default:
+        if (gReceivedRemoteLinkPlayers == 0)
+        {
+            SetGameFunc(FUNC_EXIT);
+        }
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
