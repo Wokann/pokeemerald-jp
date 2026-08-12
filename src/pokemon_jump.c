@@ -323,6 +323,7 @@ extern u16 sub_0802C4D4(void); // GetPrizeData
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern bool32 sub_0802C344(void); // ShouldPlayAgain
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
+extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -789,6 +790,48 @@ bool32 AskPlayAgain_Member(void)
             return FALSE;
         }
         break;
+    }
+
+    return TRUE;
+}
+
+bool32 ResetGame_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        if (!sub_0802BA24()) // CloseMessageAndResetScore
+            sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (sPokemonJump->allPlayersReady)
+        {
+            ResetForNewGame(sPokemonJump);
+            sPokemonJump->rngSeed = Random();
+            sPokemonJump->comm.data = sPokemonJump->rngSeed;
+            sPokemonJump->nextFuncId = FUNC_GAME_INTRO;
+            return FALSE;
+        }
+        break;
+    }
+
+    return TRUE;
+}
+
+bool32 ResetGame_Member(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        if (!sub_0802BA24()) // CloseMessageAndResetScore
+        {
+            ResetForNewGame(sPokemonJump);
+            sPokemonJump->mainState++;
+            return FALSE;
+        }
+        break;
+    case 1:
+        return FALSE;
     }
 
     return TRUE;
