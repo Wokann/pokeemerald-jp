@@ -1354,8 +1354,8 @@ sPlayerIdAtColumn: @ 0x82C7ED4
 sUnsharedColumns: @ 0x82C7F0B
 	.incbin "baserom_jp.gba", 0x2c7f0b, 0x3409
 
-	.globl gUnknown_82CB314
-gUnknown_82CB314: @ 0x82CB314
+	.globl sBerryFallDelays
+sBerryFallDelays: @ 0x82CB314
 	.incbin "baserom_jp.gba", 0x2cb314, 0xc
 
 	.globl sTreeBorderXPos

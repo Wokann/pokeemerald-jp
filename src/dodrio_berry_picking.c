@@ -388,6 +388,7 @@ extern const u8 sBg_Gfx[];
 extern const u8 sTreeBorder_Gfx[];
 extern const u8 sTreeBorderXPos[];
 extern const u8 sDodrioHeadToColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
+extern const u8 sBerryFallDelays[][3];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -3669,6 +3670,107 @@ bool32 TryPickBerry(u8 playerId, u8 pickState, u8 column)
         }
     }
     return FALSE;
+}
+
+void HandlePickBerries(void)
+{
+    u8 berryStart = sGame->berryColStart;
+    u8 berryEnd = sGame->berryColEnd;
+    u8 numPlayers = sGame->numPlayers;
+    u8 i, j, k, column;
+
+    if (sGame->numGraySquares >= NUM_STATUS_SQUARES)
+        return;
+
+    for (i = 0; i < numPlayers; i++)
+    {
+        u8 *pickState = &sGame->players[i].comm.pickState;
+        if (*pickState != PICK_NONE && sGame->inputState[i] == INPUTSTATE_TRY_PICK)
+        {
+            for (j = berryStart; j < berryEnd; j++)
+            {
+                column = sActiveColumnMap[0][0][j];
+                if (sGame->playersAttemptingPick[column][0] == i
+                 || sGame->playersAttemptingPick[column][1] == i)
+                    break;
+                if (TryPickBerry(i, *pickState, column) == TRUE)
+                {
+                    for (k = 0; k < ARRAY_COUNT(sGame->playersAttemptingPick[0]); k++)
+                    {
+                        if (sGame->playersAttemptingPick[column][k] == PLAYER_NONE)
+                        {
+                            sGame->playersAttemptingPick[column][k] = i;
+                            sGame->inputState[i] = INPUTSTATE_PICKED;
+                            sGame->berryState[column] = BERRYSTATE_PICKED;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                if (sGame->players[i].comm.missedBerry == TRUE)
+                    break;
+            }
+        }
+    }
+
+    for (j = berryStart; j < berryEnd; j++)
+    {
+        u8 playerIdMissed = PLAYER_NONE;
+        column = sActiveColumnMap[0][0][j];
+        if (sGame->berryState[column] == BERRYSTATE_PICKED)
+        {
+            s32 delayRemaining;
+            u8 playerIdPicked, delayStage = sGame->difficulty[GetPlayerIdAtColumn(column)] / NUM_DIFFICULTIES;
+            if (delayStage > 1)
+                delayStage = 2;
+            delayRemaining = sBerryFallDelays[delayStage][sGame->players[0].berries.ids[column]] - sGame->fallTimer[column];
+            if (delayRemaining < 6)
+                sGame->eatTimer[column] += delayRemaining;
+            if (++sGame->eatTimer[column] >= 6)
+            {
+                sGame->eatTimer[column] = 0;
+                if (sGame->playersAttemptingPick[column][0] == PLAYER_NONE
+                 && sGame->playersAttemptingPick[column][1] == PLAYER_NONE)
+                {
+                    continue;
+                }
+                else if (sGame->playersAttemptingPick[column][0] != PLAYER_NONE
+                      && sGame->playersAttemptingPick[column][1] == PLAYER_NONE)
+                {
+                    playerIdPicked = sGame->playersAttemptingPick[column][0];
+                }
+                else
+                {
+                    u8 playerId1 = sGame->playersAttemptingPick[column][0];
+                    i = sGame->playersAttemptingPick[column][1];
+                    if (!(Random() & 1))
+                    {
+                        playerIdPicked = playerId1;
+                        playerIdMissed = i;
+                    }
+                    else
+                    {
+                        playerIdPicked = i;
+                        playerIdMissed = playerId1;
+                    }
+                }
+                sGame->player.berries.fallDist[column] = EAT_FALL_DIST;
+                sGame->berryState[column] = BERRYSTATE_EATEN;
+                sGame->inputState[playerIdPicked] = INPUTSTATE_ATE_BERRY;
+                sGame->berryEatenBy[column] = playerIdPicked;
+                sGame->players[playerIdPicked].comm.ateBerry = TRUE;
+                sGame->players[playerIdMissed].comm.missedBerry = TRUE;
+                sGame->berriesEaten[playerIdPicked]++;
+                IncrementBerryResult(0, column, playerIdPicked);
+                UpdateBerriesPickedInRow(TRUE);
+                TryIncrementDifficulty(playerIdPicked);
+                sGame->prevBerryIds[column] = sGame->player.berries.ids[column];
+                sGame->player.berries.ids[column] = BERRY_MISSED;
+                sGame->playersAttemptingPick[column][0] = PLAYER_NONE;
+                sGame->playersAttemptingPick[column][1] = PLAYER_NONE;
+            }
+        }
+    }
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)

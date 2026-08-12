@@ -1302,6 +1302,7 @@ sub_08029000 = FreeAllWindowBuffers_;
 sub_0802900C = SetGfxFuncById;
 sub_08026008 = SetGameFunc;
 sub_08026088 = InitFirstWaveOfBerries;
+sub_080260EC = HandlePickBerries;
 sub_080263FC = TryPickBerry;
 sub_080272D8 = UpdatePickStateQueue;
 UpdateFallingBerries = sub_080264E4;
@@ -2421,7 +2422,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetGameFunc);
         src/dodrio_berry_picking.o(.text.SlideTreeBordersOut);
         src/dodrio_berry_picking.o(.text.InitFirstWaveOfBerries);
-        asm/dodrio_berry_picking2.o(.text);
+        src/dodrio_berry_picking.o(.text.HandlePickBerries);
         src/dodrio_berry_picking.o(.text.TryPickBerry);
         asm/dodrio_berry_picking10.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
