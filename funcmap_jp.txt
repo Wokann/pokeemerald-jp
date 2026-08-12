@@ -1464,7 +1464,7 @@ pokemon_jump.s
 0802c5a0 sub_0802C5A0_jp GetNumPokeJumpPlayers
 0802c5b0 pokemon_jump.s sub_0802C5B0_jp
 0802c5bc GetMonInfoByMultiplayerId GetMonInfoByMultiplayerId
-0802c5dc pokemon_jump.s sub_0802C5DC_jp
+0802c5dc pokemon_jump.s sub_0802C5DC_jp GetPokeJumpPlayerName
 0802c5fc sub_0802C5FC_jp IsSpeciesAllowedInPokemonJump
 0802c614 IsPokemonJumpSpeciesInParty IsPokemonJumpSpeciesInParty
 0802c668 LoadSpriteSheetsAndPalettes LoadSpriteSheetsAndPalettes
@@ -1533,7 +1533,7 @@ pokemon_jump.s
 0802db14 sub_0802DB14_jp AddPlayerNameWindows
 0802dbd0 sub_0802DBD0_jp PrintPokeJumpPlayerName
 0802dc68 sub_0802DC68_jp PrintPokeJumpPlayerNames
-0802dccc DrawPlayerNameWindows DrawPlayerNameWindows
+0802dccc DrawPlayerNameWindows DrawPlayerNameWindows_PokeJump
 0802dd04 ShowBonus ShowBonus
 0802dd50 UpdateBonus UpdateBonus
 0802dd88 sub_0802DD88_jp Task_UpdateBonus
@@ -1541,10 +1541,10 @@ pokemon_jump.s
 0802ddc8 RecvPacket_MonInfo RecvPacket_MonInfo
 0802de18 SendPacket_Unused SendPacket_Unused
 0802de30 SendPacket_LeaderState SendPacket_LeaderState
-0802deb4 pokemon_jump.s sub_0802DEB4_jp
+0802deb4 pokemon_jump.s sub_0802DEB4_jp RecvPacket_LeaderState
 0802df2c sub_0802DF2C_jp SendPacket_MemberState
-0802df5c pokemon_jump.s sub_0802DF5C_jp
-0802dfc8 pokemon_jump.s sub_0802DFC8_jp
+0802df5c pokemon_jump.s sub_0802DF5C_jp RecvPacket_MemberStateToLeader
+0802dfc8 pokemon_jump.s sub_0802DFC8_jp RecvPacket_MemberStateToMember
 0802e024 GetPokeJumpRecords GetPokeJumpRecords
 0802e034 ResetPokemonJumpRecords ResetPokemonJumpRecords
 0802e04c TryUpdateRecords TryUpdateRecords
