@@ -3357,6 +3357,26 @@ void RecvLinkData_ReadyToEnd(void)
     }
 }
 
+void RecvLinkData_Leader(void)
+{
+    switch (sGame->funcId)
+    {
+    case FUNC_WAIT_START:
+        if (AllPlayersReadyToStart() == TRUE)
+        {
+            ResetReadyToStart();
+            sGame->startGame = TRUE;
+        }
+        break;
+    case FUNC_PLAY_GAME:
+        RecvLinkData_Gameplay();
+        break;
+    case FUNC_WAIT_END_GAME:
+        RecvLinkData_ReadyToEnd();
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
