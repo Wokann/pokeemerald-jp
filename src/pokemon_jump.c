@@ -7,6 +7,7 @@
 #include "link_rfu.h"
 #include "main.h"
 #include "menu.h"
+#include "event_data.h"
 #include "palette.h"
 #include "pokemon.h"
 #include "pokemon_jump.h"
@@ -1989,6 +1990,26 @@ u8 *GetPokeJumpPlayerName(u8 multiplayerId)
 bool32 IsSpeciesAllowedInPokemonJump(u16 species)
 {
     return GetPokemonJumpSpeciesIdx(species) > -1;
+}
+
+void IsPokemonJumpSpeciesInParty(void)
+{
+    int i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData2(&gPlayerParty[i], MON_DATA_SANITY_HAS_SPECIES))
+        {
+            u16 species = GetMonData2(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+            if (IsSpeciesAllowedInPokemonJump(species))
+            {
+                gSpecialVar_Result = TRUE;
+                return;
+            }
+        }
+    }
+
+    gSpecialVar_Result = FALSE;
 }
 
 void InitGame(struct PokemonJump *jump)
