@@ -221,6 +221,14 @@ struct PokemonJump
 struct PokemonJump_Player *player;
 };
 
+// Layout checks against baserom_jp.gba addresses used by the remaining asm.
+STATIC_ASSERT(sizeof(struct PokemonJump_MonInfo) == 0xC, MonInfo_size_0xC);
+STATIC_ASSERT(sizeof(struct PokemonJump_Player) == 0x24, Player_size_0x24);
+STATIC_ASSERT(offsetof(struct PokemonJump, monInfo) == 0x82A8, monInfo_off_82A8);
+STATIC_ASSERT(offsetof(struct PokemonJump, players) == 0x82E4, players_off_82E4);
+STATIC_ASSERT(offsetof(struct PokemonJump, comm) == 0x70, comm_off_70);
+STATIC_ASSERT(offsetof(struct PokemonJump_MonInfo, species) == 0, mon_species_off_0);
+
 // JP: the species->jump type table is ROM data at 0x082CECF0 (data/data_b.s,
 // gUnknown_82CECF0).  US defines it as sPokeJumpMons in C; JP data has the
 // same layout ({u16 species, u16 jumpType}) but jumpType byte values differ
@@ -1966,6 +1974,16 @@ u16 GetNumPokeJumpPlayers(void)
 u16 GetPokeJumpMultiplayerId(void)
 {
     return sPokemonJump->multiplayerId;
+}
+
+struct PokemonJump_MonInfo *GetMonInfoByMultiplayerId(u8 multiplayerId)
+{
+    return &sPokemonJump->monInfo[multiplayerId];
+}
+
+u8 *GetPokeJumpPlayerName(u8 multiplayerId)
+{
+    return sPokemonJump->players[multiplayerId].name;
 }
 
 void InitGame(struct PokemonJump *jump)
