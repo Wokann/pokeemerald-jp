@@ -416,7 +416,7 @@ extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
 extern u32 sub_08027480(u8 playerId); // GetScore
 extern u8 GetPlayAgainState(void);
-extern void sub_08026748(void); // UpdateBerrySprites
+extern void UpdateBerrySprites(void);
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern void ResetGfxState(void);
 extern bool32 SlideTreeBordersOut(void);
@@ -1261,7 +1261,7 @@ void ResetForPlayAgainPrompt(void)
     sGame->berriesPickedInRow = 0;
     sGame->numGraySquares = 0;
     sub_08026848(); // UpdateAllDodrioAnims
-    sub_08026748(); // UpdateBerrySprites
+    UpdateBerrySprites();
 }
 
 void SetRandomPrize(void)
@@ -3850,6 +3850,41 @@ void UpdateFallingBerries(void)
                     game->player.berries.ids[i] = GetNewBerryId(GetPlayerIdAtColumn(i), i);
                 }
             }
+        }
+    }
+}
+
+void UpdateBerrySprites(void)
+{
+    u8 i;
+    u8 berryStart = sGame->berryColStart;
+    u8 berryEnd = sGame->berryColEnd;
+
+    for (i = berryStart; i < berryEnd; i++)
+    {
+        struct DodrioGame_Player *player = &sGame->players[sGame->multiplayerId];
+        u8 column = sActiveColumnMap[sGame->numPlayers - 1][sGame->multiplayerId][i];
+
+        if (player->berries.fallDist[column] != 0)
+            SetBerryInvisibility(i, FALSE);
+        else
+            SetBerryInvisibility(i, TRUE);
+
+        if (player->berries.fallDist[column] >= MAX_FALL_DIST)
+        {
+            SetBerryAnim(i, player->berries.ids[column] + BERRY_MISSED);
+            SetBerryYPos(i, player->berries.fallDist[column] * 2 - 1);
+        }
+        else if (player->berries.ids[column] == 3)
+        {
+            player->berries.fallDist[column] = EAT_FALL_DIST;
+            SetBerryAnim(i, 6); // JP eaten anim
+            SetBerryYPos(i, player->berries.fallDist[column] * 2 - 1);
+        }
+        else
+        {
+            SetBerryAnim(i, player->berries.ids[column]);
+            SetBerryYPos(i, player->berries.fallDist[column] * 2);
         }
     }
 }
