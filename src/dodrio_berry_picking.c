@@ -110,6 +110,13 @@ enum {
     INPUTSTATE_BAD_MISS,
 };
 
+enum {
+    PRIZE_RECEIVED,
+    PRIZE_FILLED_BAG,
+    PRIZE_NO_ROOM,
+    NO_PRIZE,
+};
+
 #define GFXTAG_DODRIO    0
 #define GFXTAG_STATUS    1
 #define GFXTAG_BERRIES   2
@@ -1286,6 +1293,22 @@ u8 GetScoreRanking(u8 playerId)
     }
 
     return ranking;
+}
+
+u8 TryGivePrize(void)
+{
+    u8 multiplayerId = sGame->multiplayerId;
+    u16 itemId = GetPrizeItemId();
+
+    if (GetScore(multiplayerId) != GetHighestScore())
+        return NO_PRIZE;
+    if (!CheckBagHasSpace(itemId, 1))
+        return PRIZE_NO_ROOM;
+
+    AddBagItem(itemId, 1);
+    if (!CheckBagHasSpace(itemId, 1))
+        return PRIZE_FILLED_BAG;
+    return PRIZE_RECEIVED;
 }
 
 void InitResults_Leader(void)

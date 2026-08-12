@@ -1353,6 +1353,7 @@ sub_08027590 = GetScoreByRanking;
 sub_0802760C = SetScoreResults;
 sub_080276FC = GetScoreResults;
 sub_0802771C = GetScoreRanking;
+sub_08027788 = TryGivePrize;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2395,6 +2396,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetScoreResults);
         src/dodrio_berry_picking.o(.text.GetScoreResults);
         src/dodrio_berry_picking.o(.text.GetScoreRanking);
+        src/dodrio_berry_picking.o(.text.TryGivePrize);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

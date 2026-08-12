@@ -23,55 +23,6 @@
 
 
 
-	thumb_func_start sub_08027788
-sub_08027788: @ 0x08027788
-	push {r4, r5, r6, lr}
-	ldr r0, _080277B0
-	ldr r0, [r0]
-	adds r0, #0x28
-	ldrb r4, [r0]
-	bl sub_080273EC
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-	adds r6, r5, #0
-	adds r0, r4, #0
-	bl sub_08027480
-	adds r4, r0, #0
-	bl sub_08027508
-	cmp r4, r0
-	beq _080277B4
-	movs r0, #3
-	b _080277E2
-	.align 2, 0
-_080277B0: .4byte 0x0202294C
-_080277B4:
-	adds r0, r5, #0
-	movs r1, #1
-	bl CheckBagHasSpace
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _080277C6
-	movs r0, #2
-	b _080277E2
-_080277C6:
-	adds r0, r6, #0
-	movs r1, #1
-	bl AddBagItem
-	adds r0, r6, #0
-	movs r1, #1
-	bl CheckBagHasSpace
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _080277E0
-	movs r0, #0
-	b _080277E2
-_080277E0:
-	movs r0, #1
-_080277E2:
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08027788
 
 	thumb_func_start IncrementWithLimit
 IncrementWithLimit: @ 0x080277E8
