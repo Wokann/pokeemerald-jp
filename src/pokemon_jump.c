@@ -353,10 +353,8 @@ extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_0802DAD8(void); // ResetMonSpriteSubpriorities
 extern void sub_0802DAEC(int multiplayerId); // StartMonIntroBounce
 extern bool32 sub_0802DB00(void); // IsMonIntroBounceActive
-extern void sub_0802BF54(void); // DisallowVineUpdates
 extern void sub_0802D458(void); // SetUpResetVineGfx
 extern bool32 sub_0802D47C(void); // ResetVineGfx
-extern void sub_0802BF64(void); // AllowVineUpdates
 extern void sub_0802BB94(void); // ResetVineState
 extern bool32 sub_0802BE24(u16 monState); // IsPlayersMonState
 extern void sub_0802BE58(void); // SetMonStateJump
@@ -1032,7 +1030,7 @@ bool32 DoGameIntro(void)
     case 5:
         if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
         {
-            sub_0802BF54(); // DisallowVineUpdates
+            DisallowVineUpdates();
             sub_0802D458(); // SetUpResetVineGfx
             sPokemonJump->helperState++;
         }
@@ -1040,7 +1038,7 @@ bool32 DoGameIntro(void)
     case 6:
         if (!sub_0802D47C()) // ResetVineGfx
         {
-            sub_0802BF64(); // AllowVineUpdates
+            AllowVineUpdates();
             sub_0802BB94(); // ResetVineState
             sPokemonJump->helperState++;
             return FALSE;
@@ -1512,7 +1510,7 @@ void ResetVineAfterHit(void)
     sPokemonJump->gameOver = TRUE;
     sPokemonJump->vineState = VINE_UPSWING_LOWER;
     sPokemonJump->vineStateTimer = VINE_STATE_TIMER(VINE_LOWEST);
-    sub_0802BF64(); // AllowVineUpdates
+    AllowVineUpdates();
 }
 
 bool32 IsGameOver(void)
@@ -1578,6 +1576,16 @@ void TryUpdateVineSwing(void)
 {
     if (sPokemonJump->allowVineUpdates)
         sub_0802D994(sPokemonJump->vineState); // UpdateVineSwing
+}
+
+void DisallowVineUpdates(void)
+{
+    sPokemonJump->allowVineUpdates = FALSE;
+}
+
+void AllowVineUpdates(void)
+{
+    sPokemonJump->allowVineUpdates = TRUE;
 }
 
 void InitGame(struct PokemonJump *jump)
