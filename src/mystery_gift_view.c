@@ -102,11 +102,9 @@ extern const u8 gUnknown_82C430C[]; // news text color table (3-byte entries)
 extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
 extern const struct OamData gUnknown_84FD040;
 
-extern void sub_0801BCA4(u8 whichWindow); // DrawCardWindow (still in asm)
 extern void sub_0801C04C(void); // CreateCardSprites (still in asm)
 extern void sub_0801C17C(void); // DestroyCardSprites (still in asm)
 extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
-#define DrawCardWindow sub_0801BCA4
 #define CreateCardSprites sub_0801C04C
 #define DestroyCardSprites sub_0801C17C
 
@@ -218,6 +216,65 @@ static void BufferCardText(void)
         }
         break;
     }
+}
+
+static void DrawCardWindow(u8 whichWindow)
+{
+    s8 i = 0;
+    s32 windowId = gWonderCardData->windowIds[whichWindow];
+
+    PutWindowTilemap(windowId);
+    FillWindowPixelBuffer(windowId, 0);
+
+    switch (whichWindow)
+    {
+    case CARD_WIN_HEADER:
+    {
+        u8 x;
+
+        AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, 0, 1, &gUnknown_82C333C[gWonderCardData->gfx->titleTextPal * 3], i, gWonderCardData->titleText);
+        x = (u8)(WONDER_CARD_SUBTITLE_LENGTH * ((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH))
+               - StringLength(gWonderCardData->subtitleText) * ((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH)));
+        AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, x, 0x11, &gUnknown_82C333C[gWonderCardData->gfx->titleTextPal * 3], i, gWonderCardData->subtitleText);
+
+        if (gWonderCardData->card.idNumber != 0)
+        {
+            x = (u8)(((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH)) * WONDER_CARD_SUBTITLE_LENGTH + 6);
+            AddTextPrinterParameterized3(windowId, FONT_SMALL, x, 0x11, &gUnknown_82C333C[gWonderCardData->gfx->titleTextPal * 3], i, gWonderCardData->idNumberText);
+        }
+        break;
+    }
+    case CARD_WIN_BODY:
+        for (; i < WONDER_CARD_BODY_TEXT_LINES; i++)
+            AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, 2, (u8)(i * 16 + 2), &gUnknown_82C333C[gWonderCardData->gfx->bodyTextPal * 3], 0, gWonderCardData->bodyText[i]);
+        break;
+    case CARD_WIN_FOOTER:
+        AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, 2, gUnknown_82C3344[gWonderCardData->card.type], &gUnknown_82C333C[gWonderCardData->gfx->footerTextPal * 3], i, gWonderCardData->footerLine1Text);
+        if (gWonderCardData->card.type != CARD_TYPE_LINK_STAT)
+        {
+            AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, 2, gUnknown_82C3344[gWonderCardData->card.type] + 0x10, &gUnknown_82C333C[gWonderCardData->gfx->footerTextPal * 3], i, gWonderCardData->footerLine2Text);
+        }
+        else
+        {
+            u16 x = 0xDE;
+            s32 xMinusGap;
+
+            for (i = gWonderCardData->statDisplayIndex; i >= 0; i--)
+            {
+                if (gWonderCardData->statTextData[i].statText[0] != EOS)
+                {
+                    xMinusGap = x - 0x18;
+                    x = xMinusGap - gWonderCardData->statTextData[i].width;
+                    AddTextPrinterParameterized3(windowId, FONT_SMALL, (u8)x, gUnknown_82C3344[gWonderCardData->card.type] + 0x10, &gUnknown_82C333C[gWonderCardData->gfx->footerTextPal * 3], 0, gWonderCardData->statTextData[i].statText);
+                }
+                x = x - (StringLength(gWonderCardData->statTextData[i].nameText) * ((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH)));
+                AddTextPrinterParameterized3(windowId, FONT_SHORT_COPY_1, (u8)x, gUnknown_82C3344[gWonderCardData->card.type] + 0x10, &gUnknown_82C333C[gWonderCardData->gfx->footerTextPal * 3], 0, gWonderCardData->statTextData[i].nameText);
+            }
+        }
+        break;
+    }
+
+    CopyWindowToVram(windowId, COPYWIN_FULL);
 }
 
 void WonderNews_RemoveScrollIndicatorArrowPair(void)
