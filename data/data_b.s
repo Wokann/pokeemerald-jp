@@ -1426,12 +1426,12 @@ sPlayerNames: @ 0x82CB41C
 gUnknown_82CB430: @ 0x82CB430
 	.incbin "baserom_jp.gba", 0x2cb430, 0x18
 
-	.globl gUnknown_82CB448
-gUnknown_82CB448: @ 0x82CB448
+	.globl sDodrioWindowTemplates_Results
+sDodrioWindowTemplates_Results: @ 0x82CB448
 	.incbin "baserom_jp.gba", 0x2cb448, 0x10
 
-	.globl gUnknown_82CB458
-gUnknown_82CB458: @ 0x82CB458
+	.globl sWindowTemplate_Prize
+sWindowTemplate_Prize: @ 0x82CB458
 	.incbin "baserom_jp.gba", 0x2cb458, 0x8
 
 	.globl gUnknown_82CB460
@@ -1590,12 +1590,12 @@ sNameWindowCoords: @ 0x82CEC54
 sRankingTexts: @ 0x82CEC68
 	.incbin "baserom_jp.gba", 0x2cec68, 0x14
 
-	.globl gUnknown_82CEC7C
-gUnknown_82CEC7C: @ 0x82CEC7C
+	.globl sResultsXCoords
+sResultsXCoords: @ 0x82CEC7C
 	.incbin "baserom_jp.gba", 0x2cec7c, 0x8
 
-	.globl gUnknown_82CEC84
-gUnknown_82CEC84: @ 0x82CEC84
+	.globl sResultsYCoords
+sResultsYCoords: @ 0x82CEC84
 	.incbin "baserom_jp.gba", 0x2cec84, 0xa
 
 	.globl sRankingYCoords
@@ -16477,34 +16477,34 @@ gUnknown_85CCCF5: @ 0x85CCCF5
 	.string "5にん{SE_NOTE_B}{LIGHT_GREEN}のみを\nつづ{LIGHT_BLUE}てとっ{SE_FAINT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}"
 	.string "{LIGHT_GRAY}$"
 
-	.globl gUnknown_85CCD34
-gUnknown_85CCD34: @ 0x85CCD34
+	.globl gText_BerryPickingResults
+gText_BerryPickingResults: @ 0x85CCD34
 	.string "{LIGHT_GREEN}のみ{SE_A}{LIGHT_BLUE}っ{SE_WIN_OPEN}はっぴょ{LIGHT_GRAY}！！$"
 
-	.globl gUnknown_85CCD45
-gUnknown_85CCD45: @ 0x85CCD45
+	.globl gText_10P30P50P50P
+gText_10P30P50P50P: @ 0x85CCD45
 	.string "10{SE_M_PETAL_DANCE}{TRANSPARENT}30{SE_M_PETAL_DANCE}{TRANSPARENT}50{SE_M_PETAL_DANCE}{TRANSPARENT}"
 	.string "{EMOJI_MINUS}50P$"
 
-	.globl gUnknown_85CCD5A
-gUnknown_85CCD5A: @ 0x85CCD5A
+	.globl gText_AnnouncingRankings
+gText_AnnouncingRankings: @ 0x85CCD5A
 	.string "じゅ{MUS_RG_TEACHY_TV_MENU}{SE_A}はっぴょ{LIGHT_GRAY}！！$"
 
-	.globl gUnknown_85CCD68
-gUnknown_85CCD68: @ 0x85CCD68
+	.globl gText_AnnouncingPrizes
+gText_AnnouncingPrizes: @ 0x85CCD68
 	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ひん{SE_A}はっぴょ{LIGHT_GRAY}！！$"
 	.string "1:$2:$3:$4:$5:$"
 
-	.globl gUnknown_85CCD86
-gUnknown_85CCD86: @ 0x85CCD86
+	.globl gText_FirstPlacePrize
+gText_FirstPlacePrize: @ 0x85CCD86
 	.string "1ばん{SE_BOO}なっ{SE_FAINT}ひとに\n{SE_M_HYPER_BEAM2}{SE_WARP_IN}プレゼント！！$"
 
-	.globl gUnknown_85CCD9F
-gUnknown_85CCD9F: @ 0x85CCD9F
+	.globl gText_CantHoldAnyMore
+gText_CantHoldAnyMore: @ 0x85CCD9F
 	.string "{SE_M_HYPER_BEAM2}{SE_I}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
 
-	.globl gUnknown_85CCDAB
-gUnknown_85CCDAB: @ 0x85CCDAB
+	.globl gText_FilledStorageSpace
+gText_FilledStorageSpace: @ 0x85CCDAB
 	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}になって{DYNAMIC_COLOR3}まった！$"
 
 	.globl gUnknown_85CCDBD
