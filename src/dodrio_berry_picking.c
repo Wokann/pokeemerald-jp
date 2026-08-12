@@ -289,7 +289,6 @@ extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
-extern void SetMaxBerriesPickedInRow(void);
 extern void TryUpdateRecords(void);
 extern void SetStatusBarInvisibility(bool8);
 extern void ResetCloudPos(void);
@@ -1002,6 +1001,13 @@ void UpdateBerriesPickedInRow(bool32 picked)
             sGame->maxBerriesPickedInRow = sGame->berriesPickedInRow;
         sGame->berriesPickedInRow = 0;
     }
+}
+
+void SetMaxBerriesPickedInRow(void)
+{
+    u8 i;
+    for (i = 0; i < sGame->numPlayers; i++)
+        sGame->berryResults[i][BERRY_IN_ROW] = sGame->maxBerriesPickedInRow;
 }
 
 void InitResults_Leader(void)
