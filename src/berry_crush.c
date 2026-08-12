@@ -1346,6 +1346,61 @@ u32 Cmd_WaitForOthersToPickBerries(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_DropBerriesIntoCrusher(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        CreateBerrySprites(game, &game->gfx);
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 1:
+        if (!IsLinkTaskFinished())
+            return 0;
+        game->gfx.counter = 0;
+        game->gfx.vibrationIdx = 0;
+        game->gfx.numVibrations = 0;
+        game->gfx.vibrating = FALSE;
+        break;
+    case 2:
+        game->gfx.berrySprites[game->gfx.counter]->callback = SpriteCB_DropBerryIntoCrusher;
+        game->gfx.berrySprites[game->gfx.counter]->affineAnimPaused = FALSE;
+        PlaySE(SE_BALL_THROW);
+        break;
+    case 3:
+        if (game->gfx.berrySprites[game->gfx.counter]->callback == SpriteCB_DropBerryIntoCrusher)
+            return 0;
+        game->gfx.berrySprites[game->gfx.counter] = NULL;
+        game->gfx.counter++;
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 4:
+        if (!IsLinkTaskFinished())
+            return 0;
+        if (game->gfx.counter < game->playerCount)
+        {
+            game->cmdState = 2;
+            return 0;
+        }
+        game->gfx.counter = 0;
+        break;
+    case 5:
+        BerryCrushFreeBerrySpriteGfx(game, &game->gfx);
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 6:
+        if (!IsLinkTaskFinished())
+            return 0;
+        PlaySE(SE_FALL);
+        RunOrScheduleCommand(CMD_DROP_LID, SCHEDULE_CMD, NULL);
+        game->gameState = STATE_DROP_LID;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);

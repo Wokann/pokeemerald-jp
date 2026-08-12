@@ -1248,6 +1248,7 @@ sub_08022BC0 = Cmd_SignalReadyToBegin;
 sub_08022C10 = Cmd_AskPickBerry;
 sub_08022C68 = Cmd_GoToBerryPouch;
 sub_08022C80 = Cmd_WaitForOthersToPickBerries;
+sub_08022DDC = Cmd_DropBerriesIntoCrusher;
 ResetGame = sub_08024340;
 SetPrintMessageArgs = sub_08024410;
 SetPaletteFadeArgs = sub_080243D0;
@@ -2188,6 +2189,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_AskPickBerry);
         src/berry_crush.o(.text.Cmd_GoToBerryPouch);
         src/berry_crush.o(.text.Cmd_WaitForOthersToPickBerries);
+        src/berry_crush.o(.text.Cmd_DropBerriesIntoCrusher);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);
