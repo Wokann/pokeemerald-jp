@@ -110,6 +110,10 @@ enum {
     CMD_QUIT,
 };
 
+#define PLAY_AGAIN_YES        0
+#define PLAY_AGAIN_NO         1
+#define PLAY_AGAIN_NO_BERRIES 3
+
 // Main states for the game. Many are assigned but never checked
 enum {
     STATE_INIT = 1,
@@ -2052,6 +2056,53 @@ u32 Cmd_SaveGame(struct BerryCrushGame *game, u8 *args)
         RunOrScheduleCommand(CMD_ASK_PLAY_AGAIN, SCHEDULE_CMD, NULL);
         game->gameState = STATE_PLAY_AGAIN;
         game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_AskPlayAgain(struct BerryCrushGame *game, u8 *args)
+{
+    s8 input = 0;
+
+    switch (game->cmdState)
+    {
+    case 0:
+        SetPrintMessageArgs(args, MSG_PLAY_AGAIN, 0, 0, 1);
+        game->nextCmd = CMD_ASK_PLAY_AGAIN;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        game->cmdState = 0; // State is progressed by CMD_PRINT_MSG
+        return 0;
+    case 1:
+        DisplayYesNoMenuDefaultYes();
+        break;
+    case 2:
+        input = Menu_ProcessInputNoWrapClearOnChoose();
+        if (input != -2)
+        {
+            memset(game->sendCmd, 0, sizeof(game->sendCmd));
+            if (input == 0)
+            {
+                // Selected Yes
+                if (HasAtLeastOneBerry())
+                    game->playAgainState = PLAY_AGAIN_YES;
+                else
+                    game->playAgainState = PLAY_AGAIN_NO_BERRIES;
+            }
+            else
+            {
+                // Selected No
+                game->playAgainState = PLAY_AGAIN_NO;
+            }
+
+            // Close Yes/No and start communication
+            ClearDialogWindowAndFrame(0, TRUE);
+            SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 0);
+            game->nextCmd = CMD_COMM_PLAY_AGAIN;
+            RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+            game->cmdState = 0;
+        }
         return 0;
     }
     game->cmdState++;
