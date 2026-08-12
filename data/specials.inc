@@ -436,7 +436,7 @@ gSpecials:
 	def_special sub_08019EE4
 	def_special InitUnionRoom
 	def_special BufferUnionRoomPlayerName
-	def_special sub_0801DA30
+	def_special WonderNews_GetRewardInfo
 	def_special sub_081B85F8
 	def_special sub_08017B4C
 	def_special sub_08139980

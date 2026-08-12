@@ -17,7 +17,7 @@
 
 extern EWRAM_DATA bool32 sStatsEnabled; // 0x02022924
 extern const u16 sReceivedGiftFlags[]; // 0x082C3304
-extern void sub_0801D9D0(void);
+extern void WonderNews_Reset(void);
 extern bool32 ValidateSavedRamScript(void);
 extern void ClearRamScript(void);
 extern void ClearMysteryGiftFlags(void);
@@ -126,7 +126,7 @@ void ClearSavedWonderNewsMetadata(void)
 {
     u32 fill = 0;
     CpuSet(&fill, GetSavedWonderNewsMetadata(), 0x05000001);
-    sub_0801D9D0();
+    WonderNews_Reset();
 }
 
 bool32 IsWonderNewsSameAsSaved(const u8 *news)

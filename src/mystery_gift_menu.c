@@ -780,7 +780,7 @@ extern void mevent_client_inc_flag(void);
 extern void mevent_srv_new_wcard(void);
 extern void mevent_srv_init_wnews(void);
 extern u32 mevent_srv_common_do_exec(u16 *var);
-extern void GenerateRandomNews(u32 newsId);
+extern void WonderNews_SetReward(u32 newsType);
 extern bool32 IsSavedWonderCardGiftNotReceived(void);
 extern bool32 IsSendingSavedWonderCardAllowed(void);
 extern bool32 IsSendingSavedWonderNewsAllowed(void);
@@ -1058,9 +1058,9 @@ void task00_mystery_gift(u8 taskId)
             if (data->msgId == CLI_MSG_NEWS_RECEIVED)
             {
                 if (data->sourceIsFriend == TRUE)
-                    GenerateRandomNews(1);
+                    WonderNews_SetReward(1);
                 else
-                    GenerateRandomNews(2);
+                    WonderNews_SetReward(2);
             }
             if (!successMsg)
                 data->state = MG_STATE_TO_MAIN_MENU;
@@ -1262,7 +1262,7 @@ void task00_mystery_gift(u8 taskId)
         {
             if (data->sourceIsFriend == TRUE && data->msgId == SVR_MSG_NEWS_SENT)
             {
-                GenerateRandomNews(3);
+                WonderNews_SetReward(3);
                 data->state = MG_STATE_SAVE_LOAD_GIFT;
             }
             else

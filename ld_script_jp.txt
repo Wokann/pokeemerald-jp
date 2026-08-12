@@ -1885,7 +1885,15 @@ SECTIONS {
         src/mystery_event_server.o(.text.mevent_has_received);
         src/mystery_event_server.o(.text.mevent_reset_recv);
         asm/mevent_server_helpers.o(.text);
-        asm/mevent_news.o(.text);
+        src/wonder_news.o(.text.WonderNews_SetReward);
+        src/wonder_news.o(.text.WonderNews_Reset);
+        src/wonder_news.o(.text.WonderNews_IncrementStepCounter);
+        src/wonder_news.o(.text.WonderNews_GetRewardInfo);
+        src/wonder_news.o(.text.GetRewardItem);
+        src/wonder_news.o(.text.ResetSentRewardCounter);
+        src/wonder_news.o(.text.IncrementSentRewardCounter);
+        src/wonder_news.o(.text.IncrementRewardCounter);
+        src/wonder_news.o(.text.GetRewardType);
         asm/union_room_chat.o(.text);
         asm/berry_crush.o(.text);
         src/berry_powder.o(.text);
