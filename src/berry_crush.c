@@ -190,6 +190,7 @@ extern const u8 sTextColorTable[][3];
 extern const struct BerryCrushPlayerCoords sPlayerCoords[];
 extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
 extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
+extern const u32 sPlayerNameWindowGfx[];
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);

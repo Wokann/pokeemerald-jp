@@ -1258,8 +1258,8 @@ sContainerCap_Tilemap: @ 0x82C7604
 sBg_Tilemap: @ 0x82C779C
 	.incbin "baserom_jp.gba", 0x2c779c, 0x228
 
-	.globl gUnknown_82C79C4
-gUnknown_82C79C4: @ 0x82C79C4
+	.globl sPlayerNameWindowGfx
+sPlayerNameWindowGfx: @ 0x82C79C4
 	.incbin "baserom_jp.gba", 0x2c79c4, 0x44
 
 	.globl sPlayerIdToPosId

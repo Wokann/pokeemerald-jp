@@ -4,10 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_080222E8
-sub_080222E8: @ 0x080222E8
-
-
 	thumb_func_start sub_08022434
 sub_08022434: @ 0x08022434
 	push {r4, r5, r6, lr}
@@ -57,6 +53,7 @@ _0802247E:
 	bx r0
 	.align 2, 0
 	thumb_func_end sub_08022434
+
 
 	thumb_func_start sub_08022494
 sub_08022494: @ 0x08022494
@@ -4204,4 +4201,3 @@ sub_08024410: @ 0x08024410
 	pop {r0}
 	bx r0
 	thumb_func_end sub_08024410
-
