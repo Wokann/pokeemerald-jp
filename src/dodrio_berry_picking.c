@@ -293,7 +293,6 @@ extern void SetStatusBarInvisibility(bool8);
 extern void ResetCloudPos(void);
 extern void SetCloudInvisibility(bool8);
 extern u8 GetPlayAgainState(void);
-extern u32 GetHighestScore(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
@@ -1161,6 +1160,20 @@ u32 GetScore(u8 playerId)
         return 0;
     else
         return score - scoreLost;
+}
+
+u32 GetHighestScore(void)
+{
+    u8 i, numPlayers = sGame->numPlayers;
+    u32 maxScore = GetScore(0);
+
+    for (i = 1; i < numPlayers; i++)
+    {
+        u32 score = GetScore(i);
+        if (score > maxScore)
+            maxScore = score;
+    }
+    return Min(maxScore, MAX_SCORE);
 }
 
 void InitResults_Leader(void)
