@@ -7,45 +7,6 @@
 
 
 
-	thumb_func_start sub_0802A228
-sub_0802A228: @ 0x0802A228
-	push {r4, r5, lr}
-	sub sp, #8
-	ldr r5, _0802A274
-	ldr r0, [r5]
-	ldr r4, _0802A278
-	adds r0, r0, r4
-	ldrb r0, [r0]
-	bl ClearWindowTilemap
-	ldr r0, [r5]
-	adds r0, r0, r4
-	ldrb r0, [r0]
-	bl RemoveWindow
-	movs r0, #0x1e
-	str r0, [sp]
-	movs r0, #0x14
-	str r0, [sp, #4]
-	movs r0, #0
-	movs r1, #0
-	movs r2, #0
-	movs r3, #0
-	bl FillBgTilemapBufferRect_Palette0
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	ldr r0, [r5]
-	movs r1, #0xc0
-	lsls r1, r1, #6
-	adds r0, r0, r1
-	movs r1, #1
-	str r1, [r0]
-	add sp, #8
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802A274: .4byte 0x020229AC
-_0802A278: .4byte 0x00003008
-	thumb_func_end sub_0802A228
 
 	thumb_func_start sub_0802A27C
 sub_0802A27C: @ 0x0802A27C

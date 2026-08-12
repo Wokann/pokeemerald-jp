@@ -2459,6 +2459,15 @@ void Msg_CommunicationStandby(void)
     }
 }
 
+void EraseMessage(void)
+{
+    ClearWindowTilemap(sGfx->windowIds[0]);
+    RemoveWindow(sGfx->windowIds[0]);
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+    CopyBgTilemapBufferToVram(0);
+    sGfx->finished = TRUE;
+}
+
 void nullsub_15(void)
 {
 }
