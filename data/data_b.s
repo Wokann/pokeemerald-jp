@@ -1206,8 +1206,8 @@ sSyncPressBonus: @ 0x82C5E7C
 sIntroOutroVibrationData: @ 0x82C5E84
 	.incbin "baserom_jp.gba", 0x2c5e84, 0x24
 
-	.globl gUnknown_82C5EA8
-gUnknown_82C5EA8: @ 0x82C5EA8
+	.globl sVibrationData
+sVibrationData: @ 0x82C5EA8
 	.incbin "baserom_jp.gba", 0x2c5ea8, 0x14
 
 	.globl sMessages

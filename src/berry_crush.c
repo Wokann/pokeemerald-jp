@@ -299,6 +299,7 @@ extern const u8 *const sMessages[];
 extern const u8 sReceivedPlayerBitmasks[];
 extern const u8 sBitTable[8];
 extern const u8 sSyncPressBonus[8];
+extern const u8 sVibrationData[MAX_RFU_PLAYERS][4];
 extern const s8 sIntroOutroVibrationData[][7];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
@@ -1613,6 +1614,77 @@ void HandlePartnerInput(struct BerryCrushGame *game)
     // Target number of A presses has been reached, game is complete
     game->newDepth = 32;
     game->localState.endGame = TRUE;
+}
+
+// Updates the crusher, input flags, and timer to send to group members
+// Only used by the link leader
+void UpdateLeaderGameState(struct BerryCrushGame *game)
+{
+    u8 numPlayersPressed = 0;
+    u16 flags = 0;
+    u16 temp = 0;
+    u8 i = 0;
+
+    for (i = 0; i < game->playerCount; i++)
+    {
+        if (game->players[i].inputState != INPUT_STATE_NONE)
+        {
+            numPlayersPressed++;
+            flags = game->players[i].inputFlags + F_INPUT_HIT_A;
+            if (game->players[i].inputState & INPUT_STATE_HIT_SYNC)
+                flags |= F_INPUT_HIT_SYNC;
+            flags <<= INPUT_FLAGS_PER_PLAYER * i;
+            game->localState.inputFlags |= flags;
+        }
+    }
+    temp = (u16)game->newDepth;
+    game->localState.depth = temp;
+    if (numPlayersPressed == 0)
+    {
+        if (game->gfx.vibrating)
+            game->gfx.counter++;
+    }
+    else if (game->gfx.vibrating)
+    {
+        if (numPlayersPressed != game->gfx.vibrationIdx)
+        {
+            game->gfx.vibrationIdx = numPlayersPressed - 1;
+            game->gfx.numVibrations = sVibrationData[numPlayersPressed - 1][0];
+        }
+        else
+        {
+            game->gfx.counter++;
+        }
+    }
+    else
+    {
+        game->gfx.counter = 0;
+        game->gfx.vibrationIdx = numPlayersPressed - 1;
+        game->gfx.numVibrations = sVibrationData[numPlayersPressed - 1][0];
+        game->gfx.vibrating = TRUE;
+    }
+
+    if (game->gfx.vibrating)
+    {
+        if (game->gfx.counter >= game->gfx.numVibrations)
+        {
+            game->gfx.counter = 0;
+            game->gfx.vibrationIdx = 0;
+            game->gfx.numVibrations = 0;
+            game->gfx.vibrating = FALSE;
+            temp = 0;
+        }
+        else
+        {
+            temp = sVibrationData[game->gfx.vibrationIdx][game->gfx.counter + 1];
+        }
+        game->localState.vibration = (u8)temp;
+    }
+    else
+    {
+        game->localState.vibration = 0;
+    }
+    game->localState.timer = game->leaderTimer;
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
