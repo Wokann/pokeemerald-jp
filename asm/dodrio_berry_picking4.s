@@ -4,36 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08026CAC
-sub_08026CAC: @ 0x08026CAC
-	push {r4, r5, r6, lr}
-	movs r6, #0
-	movs r5, #0
-	adds r4, r0, #0
-	b _08026CBE
-_08026CB6:
-	ldrh r0, [r4, #6]
-	adds r6, r6, r0
-	adds r4, #0xc
-	adds r5, #1
-_08026CBE:
-	bl GetLinkPlayerCount
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r5, r0
-	blt _08026CB6
-	cmp r6, #0xa
-	bgt _08026CD2
-	movs r0, #0
-	b _08026CD4
-_08026CD2:
-	movs r0, #1
-_08026CD4:
-	pop {r4, r5, r6}
-	pop {r1}
-	bx r1
-	.align 2, 0
-	thumb_func_end sub_08026CAC
 
 	thumb_func_start sub_08026CDC
 sub_08026CDC: @ 0x08026CDC

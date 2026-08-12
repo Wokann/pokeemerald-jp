@@ -829,6 +829,18 @@ u8 GetNewBerryId(u8 playerId, u8 column)
     return GetNewBerryIdByDifficulty(highestDifficulty, column);
 }
 
+bool32 IsTotalBerriesMissedOver10(u16 berryResults[MAX_RFU_PLAYERS][NUM_BERRY_IDS])
+{
+    int missed = 0, i = 0;
+    for (; i < GetLinkPlayerCount(); missed += berryResults[i][BERRY_MISSED], i++)
+        ;
+
+    if (missed > 10)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
