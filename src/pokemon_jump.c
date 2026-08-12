@@ -1,6 +1,7 @@
 #include "global.h"
 #include "malloc.h"
 #include "bg.h"
+#include "data.h"
 #include "digit_obj_util.h"
 #include "item.h"
 #include "link.h"
@@ -403,6 +404,7 @@ extern const u16 sPrizeItems[];
 extern const struct PrizeQuantityData sPrizeQuantityData[];
 extern const struct CompressedSpriteSheet sCompressedSpriteSheets[5];
 extern const struct SpritePalette sSpritePalettes[2];
+extern const struct SpriteTemplate sSpriteTemplate_JumpMon;
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -2037,6 +2039,58 @@ void ResetPokeJumpSpriteData(struct Sprite *sprite)
     int i;
     for (i = 0; i < (int)ARRAY_COUNT(sprite->data); i++)
         sprite->data[i] = 0;
+}
+
+void CreateJumpMonSprite(struct PokemonJumpGfx *jumpGfx, struct PokemonJump_MonInfo *monInfo, s16 x, s16 y, u8 multiplayerId)
+{
+    struct SpriteTemplate spriteTemplate;
+    struct SpriteSheet spriteSheet;
+    struct CompressedSpritePalette spritePalette;
+    u8 *buffer;
+    u8 *unusedBuffer;
+    u8 subpriority;
+    u8 spriteId;
+
+    spriteTemplate = sSpriteTemplate_JumpMon;
+    buffer = Alloc(MON_PIC_SIZE * MAX_MON_PIC_FRAMES);
+    unusedBuffer = Alloc(MON_PIC_SIZE);
+    if (multiplayerId == GetPokeJumpMultiplayerId())
+        subpriority = 3;
+    else
+        subpriority = multiplayerId + 4;
+
+    if (buffer && unusedBuffer)
+    {
+        HandleLoadSpecialPokePic(
+            &gMonStillFrontPicTable[monInfo->species],
+            buffer,
+            monInfo->species,
+            monInfo->personality);
+
+        spriteSheet.data = buffer;
+        spriteSheet.tag = multiplayerId;
+        spriteSheet.size = MON_PIC_SIZE;
+        LoadSpriteSheet(&spriteSheet);
+
+        spritePalette.data = GetMonSpritePalFromSpeciesAndPersonality(monInfo->species, monInfo->otId, monInfo->personality);
+        spritePalette.tag = multiplayerId;
+        LoadCompressedSpritePalette(&spritePalette);
+
+        Free(buffer);
+        Free(unusedBuffer);
+
+        spriteTemplate.tileTag += multiplayerId;
+        spriteTemplate.paletteTag += multiplayerId;
+        spriteId = CreateSprite(&spriteTemplate, x, y, subpriority);
+        if (spriteId != MAX_SPRITES)
+        {
+            jumpGfx->monSprites[multiplayerId] = &gSprites[spriteId];
+            jumpGfx->monSpriteSubpriorities[multiplayerId] = subpriority;
+            return;
+        }
+    }
+
+    jumpGfx->monSprites[multiplayerId] = NULL;
 }
 
 void InitGame(struct PokemonJump *jump)
