@@ -397,6 +397,7 @@ extern void sub_08028268(struct Sprite *sprite); // DoDodrioMissedAnim
 extern void sub_080282D8(struct Sprite *sprite); // DoDodrioIntroAnim
 extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
 extern void sub_08028380(bool8 invisible, u8 id); // SetDodrioInvisibility
+extern void sub_080283E0(u8 playerId, u8 pickState); // SetDodrioAnim
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
 void SpriteCB_Dodrio(struct Sprite *sprite);
@@ -1573,6 +1574,30 @@ u32 DoDodrioMissedAnim(struct Sprite *sprite)
 
     return 0;
 }
+
+#define FRAMES_PER_STATE 13
+#define NUM_INTRO_PICK_STATES PICK_DISABLED // Cycle through 'Normal' and each head, but exclude the Disabled state
+
+u32 DoDodrioIntroAnim(struct Sprite *sprite)
+{
+    u8 pickState = (++sprite->data[1] / FRAMES_PER_STATE) % NUM_INTRO_PICK_STATES;
+
+    // Play a sound effect at the start of each head extension
+    if (sprite->data[1] % FRAMES_PER_STATE == 0 && pickState != PICK_NONE)
+        PlaySE(SE_M_CHARM);
+
+    if (sprite->data[1] >= FRAMES_PER_STATE * NUM_INTRO_PICK_STATES * 2)
+    {
+        // End animation
+        sprite->data[0] = 0;
+        pickState = PICK_NONE;
+    }
+    sub_080283E0(GetMultiplayerId(), pickState); // SetDodrioAnim
+    return 0;
+}
+
+#undef FRAMES_PER_STATE
+#undef NUM_INTRO_PICK_STATES
 
 void SendPacket_GameState(struct DodrioGame_Player *player,
                           struct DodrioGame_PlayerCommData *player1,

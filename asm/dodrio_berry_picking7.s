@@ -3,62 +3,6 @@
 .text
 .syntax unified
 
-
-
-	thumb_func_start sub_080282D8
-sub_080282D8: @ 0x080282D8
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	ldrh r0, [r5, #0x30]
-	adds r0, #1
-	strh r0, [r5, #0x30]
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	movs r1, #0xd
-	bl __divsi3
-	lsls r0, r0, #0x10
-	asrs r1, r0, #0x10
-	adds r0, r1, #0
-	cmp r1, #0
-	bge _080282F8
-	adds r0, r1, #3
-_080282F8:
-	asrs r0, r0, #2
-	lsls r0, r0, #2
-	subs r0, r1, r0
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	movs r1, #0x30
-	ldrsh r0, [r5, r1]
-	movs r1, #0xd
-	bl __modsi3
-	lsls r0, r0, #0x10
-	cmp r0, #0
-	bne _0802831C
-	cmp r4, #0
-	beq _0802831C
-	movs r0, #0xd4
-	bl PlaySE
-_0802831C:
-	movs r1, #0x30
-	ldrsh r0, [r5, r1]
-	cmp r0, #0x67
-	ble _0802832A
-	movs r0, #0
-	strh r0, [r5, #0x2e]
-	movs r4, #0
-_0802832A:
-	bl GetMultiplayerId
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	adds r1, r4, #0
-	bl sub_080283E0
-	movs r0, #0
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_080282D8
-
 	thumb_func_start sub_08028340
 sub_08028340: @ 0x08028340
 	push {r4, r5, r6, lr}
