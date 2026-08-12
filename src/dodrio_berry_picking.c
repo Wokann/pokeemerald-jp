@@ -367,7 +367,6 @@ extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
 extern u32 sub_08027480(u8 playerId); // GetScore
-extern void ResetCloudPos(void);
 extern void SetCloudInvisibility(bool8);
 extern u8 GetPlayAgainState(void);
 extern void ResetBerryAndStatusBarSprites(void);
@@ -1921,6 +1920,18 @@ void CreateCloudSprites_Dodrio(void)
         }
     }
     Free(ptr);
+}
+
+void ResetCloudPos(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_CLOUDS; i++)
+    {
+        struct Sprite *sprite = &gSprites[*sCloudSpriteIds[i]];
+        sprite->data[10] = 1;
+        sprite->x = sCloudPositions[i][0];
+        sprite->y = sCloudPositions[i][1];
+    }
 }
 
 void nullsub_15(void)

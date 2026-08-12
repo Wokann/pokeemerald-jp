@@ -4,48 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08028B28
-sub_08028B28: @ 0x08028B28
-	push {r4, r5, r6, r7, lr}
-	movs r3, #0
-	ldr r0, _08028B6C
-	mov ip, r0
-	ldr r4, _08028B70
-	adds r7, r4, #2
-	ldr r6, _08028B74
-	movs r5, #1
-_08028B38:
-	lsls r2, r3, #2
-	mov r1, ip
-	adds r0, r2, r1
-	ldr r0, [r0]
-	ldrh r0, [r0]
-	lsls r1, r0, #4
-	adds r1, r1, r0
-	lsls r1, r1, #2
-	adds r1, r1, r6
-	adds r0, r1, #0
-	adds r0, #0x42
-	strh r5, [r0]
-	adds r0, r2, r4
-	ldrh r0, [r0]
-	strh r0, [r1, #0x20]
-	adds r2, r2, r7
-	ldrh r0, [r2]
-	strh r0, [r1, #0x22]
-	adds r0, r3, #1
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	cmp r3, #1
-	bls _08028B38
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028B6C: .4byte 0x02022964
-_08028B70: .4byte 0x082CEBE2
-_08028B74: .4byte 0x020205AC
-	thumb_func_end sub_08028B28
 
 	thumb_func_start sub_08028B78
 sub_08028B78: @ 0x08028B78
