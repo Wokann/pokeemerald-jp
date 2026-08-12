@@ -3889,6 +3889,18 @@ void UpdateBerrySprites(void)
     }
 }
 
+void UpdateAllDodrioAnims(void)
+{
+    u8 i, numPlayers;
+
+    numPlayers = sGame->numPlayers;
+    for (i = 0; i < numPlayers; i++)
+    {
+        struct DodrioGame_Player *player = &sGame->players[i];
+        SetDodrioAnim(i, player->comm.pickState);
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
