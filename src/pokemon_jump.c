@@ -14,6 +14,54 @@
 #include "task.h"
 
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
+#define JUMP_PEAK (-30)
+
+// JP: enum order matches the JP ROM data (sPokeJumpMons jumpType bytes).
+// US order is NORMAL, FAST, SLOW; JP data stores NORMAL=0, FAST=1, SLOW=2.
+enum {
+    JUMP_TYPE_NORMAL,
+    JUMP_TYPE_FAST,
+    JUMP_TYPE_SLOW,
+};
+
+enum {
+    FUNC_GAME_INTRO,
+    FUNC_WAIT_ROUND,
+    FUNC_GAME_ROUND,
+    FUNC_GAME_OVER,
+    FUNC_ASK_PLAY_AGAIN,
+    FUNC_RESET_GAME,
+    FUNC_EXIT,
+    FUNC_GIVE_PRIZE,
+    FUNC_SAVE,
+    FUNC_NONE
+};
+
+enum {
+    MONSTATE_NORMAL, // Pokémon is either on the ground or in the middle of a jump
+    MONSTATE_JUMP,   // Pokémon has begun a jump
+    MONSTATE_HIT,    // Pokémon got hit by the vine
+};
+
+enum {
+    JUMPSTATE_NONE,
+    JUMPSTATE_SUCCESS, // Cleared vine
+    JUMPSTATE_FAILURE, // Hit vine
+};
+
+enum {
+    VINE_HIGHEST,
+    VINE_DOWNSWING_HIGHER,
+    VINE_DOWNSWING_HIGH,
+    VINE_DOWNSWING_LOW,
+    VINE_DOWNSWING_LOWER,
+    VINE_LOWEST,
+    VINE_UPSWING_LOWER,
+    VINE_UPSWING_LOW,
+    VINE_UPSWING_HIGH,
+    VINE_UPSWING_HIGHER,
+    NUM_VINESTATES
+};
 
 struct PokemonJump_MonInfo
 {
@@ -34,6 +82,12 @@ struct PokemonJump_Player
     int jumpState;
     bool32 funcFinished;
     u8 name[8]; // JP: player names are 8 bytes (JP charmap, US is name[11])
+};
+
+struct PokemonJumpMons
+{
+    u16 species;
+    u16 jumpType;
 };
 
 struct PokemonJumpGfx
@@ -130,8 +184,17 @@ struct PokemonJump
     struct PokemonJumpGfx jumpGfx;
     struct PokemonJump_MonInfo monInfo[MAX_RFU_PLAYERS];
     struct PokemonJump_Player players[MAX_RFU_PLAYERS];
-    struct PokemonJump_Player *player;
+struct PokemonJump_Player *player;
 };
+
+// JP: the species->jump type table is ROM data at 0x082CECF0 (data/data_b.s,
+// gUnknown_82CECF0).  US defines it as sPokeJumpMons in C; JP data has the
+// same layout ({u16 species, u16 jumpType}) but jumpType byte values differ
+// from US (JP enum order NORMAL=0, FAST=1, SLOW=2).
+extern const struct PokemonJumpMons sPokeJumpMons[];
+// JP: jump Y-offset table is ROM data at 0x082CEEE8 (data/data_b.s,
+// gUnknown_82CEEE8).  3 rows of 48 s8 (row order NORMAL, FAST, SLOW).
+extern const s8 sJumpOffsets[][48];
 
 EWRAM_DATA struct PokemonJump *sPokemonJump = NULL;
 
@@ -142,6 +205,13 @@ void Task_StartPokemonJump(u8 taskId);
 
 void FreeWindowsAndDigitObj(void);
 void FreePokemonJump(void);
+void InitPlayerAndJumpTypes(void);
+void ResetForNewGame(struct PokemonJump *jump);
+void ResetPlayersForNewGame(void);
+void ResetPlayersJumpStates(void);
+s16 GetPokemonJumpSpeciesIdx(u16 species);
+struct PokemonJumpRecords *GetPokeJumpRecords(void);
+void IncrementGamesWithMaxPlayers(void);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -179,4 +249,119 @@ void StartPokemonJump(u16 partyId, MainCallback exitCallback)
     }
 
     SetMainCallback2(exitCallback);
+}
+
+void InitGame(struct PokemonJump *jump)
+{
+    jump->numPlayers = GetLinkPlayerCount();
+    jump->comm.funcId = FUNC_RESET_GAME;
+    jump->comm.data = 0;
+    InitPlayerAndJumpTypes();
+    ResetForNewGame(jump);
+    if (jump->numPlayers == MAX_RFU_PLAYERS)
+        IncrementGamesWithMaxPlayers();
+}
+
+void ResetForNewGame(struct PokemonJump *jump)
+{
+    int i;
+
+    jump->vineState = VINE_UPSWING_LOWER;
+    jump->prevVineState = VINE_UPSWING_LOWER;
+    jump->vineTimer = 0;
+    jump->vineSpeed = 0;
+    jump->updateScore = FALSE;
+    jump->isLeader = GetMultiplayerId() == 0;
+    jump->mainState = 0;
+    jump->helperState = 0;
+    jump->excellentsInRow = 0;
+    jump->excellentsInRowRecord = 0;
+    jump->initScoreUpdate = FALSE;
+    jump->unused2 = 0;
+    jump->unused3 = 0;
+    jump->numPlayersAtPeak = 0;
+    jump->allowVineUpdates = FALSE;
+    jump->allPlayersReady = FALSE;
+    jump->funcActive = TRUE;
+    jump->comm.jumpScore = 0;
+    jump->comm.receivedBonusFlags = 0;
+    jump->comm.jumpsInRow = 0;
+    jump->unused4 = TRUE;
+    jump->showBonus = FALSE;
+    jump->skipJumpUpdate = FALSE;
+    jump->giveBonus = FALSE;
+    jump->linkTimer = 0;
+    jump->linkTimerLimit = 0;
+    ResetPlayersForNewGame();
+    ResetPlayersJumpStates();
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        jump->atJumpPeak[i] = FALSE;
+        jump->jumpTimeStarts[i] = 0;
+    }
+}
+
+void InitPlayerAndJumpTypes(void)
+{
+    int i, index;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        index = GetPokemonJumpSpeciesIdx(sPokemonJump->monInfo[i].species);
+        sPokemonJump->players[i].monJumpType = sPokeJumpMons[index].jumpType;
+    }
+
+    sPokemonJump->player = &sPokemonJump->players[sPokemonJump->multiplayerId];
+}
+
+void ResetPlayersForNewGame(void)
+{
+    int i;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        sPokemonJump->players[i].jumpTimeStart = 0;
+        sPokemonJump->players[i].monState = MONSTATE_NORMAL;
+        sPokemonJump->players[i].prevMonState = MONSTATE_NORMAL;
+        sPokemonJump->players[i].jumpOffset = 0;
+        sPokemonJump->players[i].jumpOffsetIdx = INT_MAX;
+        sPokemonJump->players[i].jumpState = JUMPSTATE_NONE;
+        sPokemonJump->memberFuncIds[i] = FUNC_NONE;
+    }
+}
+
+__attribute__((noinline)) void ResetPlayersJumpStates(void)
+{
+    int i;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+        sPokemonJump->players[i].jumpState = JUMPSTATE_NONE;
+}
+
+s16 GetPokemonJumpSpeciesIdx(u16 species)
+{
+    u32 i;
+
+    // JP: sPokeJumpMons is ROM data (data/data_b.s), fixed 100 entries.
+    for (i = 0; i < 100; i++)
+    {
+        if (sPokeJumpMons[i].species == species)
+            return i;
+    }
+
+    return -1; // species isnt allowed
+}
+
+struct PokemonJumpRecords *GetPokeJumpRecords(void)
+{
+    return &gSaveBlock2Ptr->pokeJump;
+}
+
+void IncrementGamesWithMaxPlayers(void)
+{
+    struct PokemonJumpRecords *records = GetPokeJumpRecords();
+
+    if (records->gamesWithMaxPlayers < 9999)
+        records->gamesWithMaxPlayers++;
 }
