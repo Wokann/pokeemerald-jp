@@ -426,6 +426,7 @@ extern void sub_0802D808(u16 a, u16 b, u8 c); // CreatePokeJumpYesNoMenu
 extern const u8 gText_WantToPlayAgain2[];
 extern const u8 gText_SavingDontTurnOffPower[];
 extern const u8 gText_SomeoneDroppedOut2[];
+extern const u8 gText_CommunicationStandby4[];
 extern void sub_0802D704(void); // ClearMessageWindow
 extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_08198D88(void); // EraseYesNoWindow
@@ -2628,6 +2629,32 @@ void Msg_SomeoneDroppedOut_PokeJump(void)
     case 0:
         sPokemonJumpGfx->msgWindowId = sub_0802D78C(2, 8, 22, 4); // AddMessageWindow
         AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_SomeoneDroppedOut2, 0, 2, TEXT_SKIP_DRAW, NULL);
+        CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            PutWindowTilemap(sPokemonJumpGfx->msgWindowId);
+            DrawTextBorderOuter((u8)sPokemonJumpGfx->msgWindowId, 1, 14);
+            CopyBgTilemapBufferToVram(BG_INTERFACE);
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sPokemonJumpGfx->funcFinished = TRUE;
+        break;
+    }
+}
+
+void Msg_CommunicationStandby_PokeJump(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        sPokemonJumpGfx->msgWindowId = sub_0802D78C(7, 10, 16, 2); // AddMessageWindow
+        AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_CommunicationStandby4, 0, 2, TEXT_SKIP_DRAW, NULL);
         CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
         sPokemonJumpGfx->mainState++;
         break;
