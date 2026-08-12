@@ -52,6 +52,15 @@ enum {
     STATE_PLAY_AGAIN,
 };
 
+enum {
+    COLORID_GRAY,
+    COLORID_BLACK,
+    COLORID_LIGHT_GRAY,
+    COLORID_BLUE,
+    COLORID_GREEN,
+    COLORID_RED,
+};
+
 struct BerryCrushGame_Player
 {
     u8 name[PLAYER_NAME_LENGTH + 1]; // +0
@@ -182,7 +191,7 @@ extern const struct BerryCrushPlayerCoords sPlayerCoords[];
 extern const u8 sPlayerIdToPosId[][MAX_RFU_PLAYERS];
 extern const struct WindowTemplate sWindowTemplates_PlayerNames[];
 void CreatePlayerNameWindows(struct BerryCrushGame *);
-extern void DrawPlayerNameWindows(struct BerryCrushGame *);
+void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 extern void CreateGameSprites(struct BerryCrushGame *);
 extern void DestroyGameSprites(struct BerryCrushGame *);
@@ -843,6 +852,45 @@ void CreatePlayerNameWindows(struct BerryCrushGame *game)
         PutWindowTilemap(game->gfx.nameWindowIds[i]);
         FillWindowPixelBuffer(game->gfx.nameWindowIds[i], 0);
     }
+}
+
+void DrawPlayerNameWindows(struct BerryCrushGame *game)
+{
+    u8 i;
+    for (i = 0; i < game->playerCount; i++)
+    {
+        PutWindowTilemap(game->gfx.nameWindowIds[i]);
+        if (i == game->localId)
+        {
+            AddTextPrinterParameterized4(
+                game->gfx.nameWindowIds[i],
+                FONT_NORMAL,
+                36 - GetStringWidth(FONT_NORMAL, game->players[i].name, 0) / 2u,
+                1,
+                0,
+                0,
+                sTextColorTable[COLORID_BLACK],
+                0,
+                game->players[i].name
+            );
+        }
+        else
+        {
+            AddTextPrinterParameterized4(
+                game->gfx.nameWindowIds[i],
+                FONT_NORMAL,
+                36 - GetStringWidth(FONT_NORMAL, game->players[i].name, 0) / 2u,
+                1,
+                0,
+                0,
+                sTextColorTable[COLORID_LIGHT_GRAY],
+                0,
+                game->players[i].name
+            );
+        }
+        CopyWindowToVram(game->gfx.nameWindowIds[i], COPYWIN_FULL);
+    }
+    CopyBgTilemapBufferToVram(0);
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
