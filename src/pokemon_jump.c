@@ -1501,6 +1501,19 @@ int PokeJumpRandom(void)
     return sPokemonJump->rngSeed >> 16;
 }
 
+void ResetVineAfterHit(void)
+{
+    sPokemonJump->gameOver = TRUE;
+    sPokemonJump->vineState = VINE_UPSWING_LOWER;
+    sPokemonJump->vineStateTimer = VINE_STATE_TIMER(VINE_LOWEST);
+    sub_0802BF64(); // AllowVineUpdates
+}
+
+bool32 IsGameOver(void)
+{
+    return sPokemonJump->gameOver;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
