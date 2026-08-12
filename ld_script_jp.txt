@@ -1599,6 +1599,8 @@ sMainMenuBgPal = gUnknown_82D2930;
 sMainMenuTextPal = gUnknown_82D2950;
 sMainMenuBgTemplates = gUnknown_82D2978;
 sWindowTemplates_MainMenu = gUnknown_82D28C8;
+sTextColor_Headers = gUnknown_82D2970;
+sScrollArrowsTemplate_MainMenu = gUnknown_82D2984;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
 sPokeJumpGfxFuncs = gUnknown_82D1A18;
 sPokeJumpBgTemplates = gUnknown_82D19F0;
@@ -2995,6 +2997,7 @@ SECTIONS {
         src/main_menu.o(.text.Task_WaitForBatteryDryErrorWindow);
         src/main_menu.o(.text.Task_MainMenuCheckBattery);
         src/main_menu.o(.text.Task_WaitForSaveFileErrorWindow);
+        src/main_menu.o(.text.Task_DisplayMainMenu);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
