@@ -285,6 +285,8 @@ extern u8 UpdatePickStateQueue(u8);
 extern void UpdateFallingBerries(void);
 extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
+extern bool32 ReadyToEndGame_Leader(void);
+extern void SetMaxBerriesPickedInRow(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -598,6 +600,31 @@ void PlayGame_Member(void)
         SetGameFunc(FUNC_WAIT_END_GAME);
     }
     HandleSound_Member();
+}
+
+void WaitEndGame_Leader(void)
+{
+    u8 i;
+
+    UpdateFallingBerries();
+    HandleSound_Leader();
+    if (ReadyToEndGame_Leader() == TRUE)
+    {
+        SetMaxBerriesPickedInRow();
+        SetGameFunc(FUNC_INIT_RESULTS);
+    }
+    else
+    {
+        sGame->allReadyToEnd = TRUE;
+        for (i = 1; i < sGame->numPlayers; i++)
+        {
+            if (sGame->readyToEnd[i] != TRUE)
+            {
+                sGame->allReadyToEnd = FALSE;
+                break;
+            }
+        }
+    }
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
