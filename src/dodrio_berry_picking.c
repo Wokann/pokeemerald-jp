@@ -2398,6 +2398,38 @@ void Msg_WantToPlayAgain(void)
     }
 }
 
+void Msg_SavingDontTurnOff(void)
+{
+    switch (sGfx->state)
+    {
+    case 0:
+        DrawDialogueFrame(0, FALSE);
+        AddTextPrinterParameterized2(0, FONT_NORMAL, gText_SavingDontTurnOffPower, 0, NULL, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        sGfx->state++;
+        break;
+    case 1:
+        CopyWindowToVram(0, COPYWIN_FULL);
+        sGfx->state++;
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            CreateTask(Task_LinkFullSave, 0);
+            sGfx->state++;
+        }
+        break;
+    case 3:
+        if (!FuncIsActiveTask(Task_LinkFullSave))
+            sGfx->state++;
+        break;
+    default:
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 30, 20);
+        CopyBgTilemapBufferToVram(0);
+        sGfx->finished = TRUE;
+        break;
+    }
+}
+
 void nullsub_15(void)
 {
 }
