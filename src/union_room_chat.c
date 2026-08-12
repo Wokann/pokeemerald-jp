@@ -52,6 +52,20 @@ enum {
 };
 
 enum {
+    STDMESSAGE_QUIT_CHATTING,
+    STDMESSAGE_REGISTER_WHERE,
+    STDMESSAGE_REGISTER_HERE,
+    STDMESSAGE_INPUT_TEXT,
+    STDMESSAGE_EXITING_CHAT,
+    STDMESSAGE_LEADER_LEFT,
+    STDMESSAGE_ASK_SAVE,
+    STDMESSAGE_ASK_OVERWRITE,
+    STDMESSAGE_SAVING_NO_OFF,
+    STDMESSAGE_SAVED_THE_GAME,
+    STDMESSAGE_WARN_LEADER_LEAVE,
+};
+
+enum {
     CHATDISPLAY_FUNC_LOAD_GFX,
     CHATDISPLAY_FUNC_MOVE_KB_CURSOR,
     CHATDISPLAY_FUNC_CURSOR_BLINK,
@@ -227,6 +241,18 @@ extern void CreateTextEntrySprites(void);
 extern void CreateRButtonSprites(void);
 extern void ShowKeyboardSwapMenu(void);
 extern void HideKeyboardSwapMenu(void);
+extern void SetKeyboardCursorInvisibility(u8 invisible);
+extern bool32 SlideKeyboardPageOut(void);
+extern bool32 SlideKeyboardPageIn(void);
+extern void PrintCurrentKeyboardPage(void);
+extern void MoveKeyboardCursor(void);
+extern void UpdateRButtonLabel(void);
+extern void AddStdMessageWindow(u16 msgId, u8 windowId);
+extern void AddYesNoMenuAt(u8 x, u8 y, u8 windowId);
+extern void HideStdMessageWindow(void);
+extern void HideYesNoMenuWindow(void);
+extern void DestroyStdMessageWindow(void);
+extern void DestroyYesNoMenuWindow(void);
 
 bool8 TryAllocDisplay(void);
 bool32 IsDisplaySubtask0Active(void);
@@ -239,6 +265,10 @@ bool8 IsDisplaySubtaskActive(u8 id);
 bool32 Display_LoadGfx(u8 *state);
 bool32 Display_ShowKeyboardSwapMenu(u8 *state);
 bool32 Display_HideKeyboardSwapMenu(u8 *state);
+bool32 Display_SwitchPages(u8 *state);
+bool32 Display_MoveKeyboardCursor(u8 *state);
+bool32 Display_AskQuitChatting(u8 *state);
+bool32 Display_DestroyYesNoDialog(u8 *state);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1684,6 +1714,81 @@ bool32 Display_HideKeyboardSwapMenu(u8 *state)
         break;
     case 1:
         return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_SwitchPages(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        SetKeyboardCursorInvisibility(TRUE);
+        if (SlideKeyboardPageOut())
+            return TRUE;
+
+        PrintCurrentKeyboardPage();
+        CopyWindowToVram(WIN_KEYBOARD, COPYWIN_GFX);
+        break;
+    case 1:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return TRUE;
+        break;
+    case 2:
+        if (SlideKeyboardPageIn())
+            return TRUE;
+
+        MoveKeyboardCursor();
+        SetKeyboardCursorInvisibility(FALSE);
+        UpdateRButtonLabel();
+        return FALSE;
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_MoveKeyboardCursor(u8 *state)
+{
+    MoveKeyboardCursor();
+    return FALSE;
+}
+
+bool32 Display_AskQuitChatting(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_QUIT_CHATTING, 0);
+        AddYesNoMenuAt(23, 11, 1);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    (*state)++;
+    return TRUE;
+}
+
+bool32 Display_DestroyYesNoDialog(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        HideStdMessageWindow();
+        HideYesNoMenuWindow();
+        CopyBgTilemapBufferToVram(0);
+        break;
+    case 1:
+        if (IsDma3ManagerBusyWithBgCopy())
+            return TRUE;
+
+        DestroyStdMessageWindow();
+        DestroyYesNoMenuWindow();
+        return FALSE;
     }
 
     (*state)++;
