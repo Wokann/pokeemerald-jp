@@ -1475,11 +1475,11 @@ pokemon_jump.s
 0802c8e4 Gfx_StartMonHitShake Gfx_StartMonHitShake
 0802c90c Gfx_IsMonHitShakeActive Gfx_IsMonHitShakeActive
 0802c934 SpriteCB_MonHitShake SpriteCB_MonHitShake
-0802c97c pokemon_jump.s sub_0802C97C_jp
+0802c97c pokemon_jump.s sub_0802C97C_jp Gfx_StartMonHitFlash
 0802c9a4 Gfx_StopMonHitFlash Gfx_StopMonHitFlash
 0802c9fc pokemon_jump.s sub_0802C9FC_jp
 0802ca30 Gfx_ResetMonSpriteSubpriorities Gfx_ResetMonSpriteSubpriorities
-0802ca64 pokemon_jump.s sub_0802CA64_jp
+0802ca64 pokemon_jump.s sub_0802CA64_jp Gfx_StartMonIntroBounce
 0802ca8c Gfx_IsMonIntroBounceActive Gfx_IsMonIntroBounceActive
 0802cac8 SpriteCB_MonIntroBounce SpriteCB_MonIntroBounce
 0802cb3c CreateStarSprite CreateStarSprite
@@ -1524,11 +1524,11 @@ pokemon_jump.s
 0802da5c sub_0802DA5C_jp PrintScore
 0802da6c sub_0802DA6C_jp PrintJumpsInRow
 0802da80 sub_0802DA80_jp StartMonHitShake
-0802da98 pokemon_jump.s sub_0802DA98_jp
+0802da98 pokemon_jump.s sub_0802DA98_jp StartMonHitFlash
 0802dab0 sub_0802DAB0_jp IsMonHitShakeActive
 0802dac4 sub_0802DAC4_jp StopMonHitFlash
 0802dad8 sub_0802DAD8_jp ResetMonSpriteSubpriorities
-0802daec pokemon_jump.s sub_0802DAEC_jp
+0802daec pokemon_jump.s sub_0802DAEC_jp StartMonIntroBounce
 0802db00 sub_0802DB00_jp IsMonIntroBounceActive
 0802db14 sub_0802DB14_jp AddPlayerNameWindows
 0802dbd0 sub_0802DBD0_jp PrintPokeJumpPlayerName

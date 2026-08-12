@@ -130,6 +130,13 @@ enum {
     NUM_VINESTATES
 };
 
+// Which of the three Venusaur pairs is shown for each vine state.
+enum {
+    VENUSAUR_NEUTRAL,
+    VENUSAUR_DOWN,
+    VENUSAUR_UP,
+};
+
 struct PokemonJump_MonInfo
 {
     u16 species;
@@ -405,18 +412,18 @@ extern bool32 sub_0802B74C(void); // TryGivePrize
 extern void sub_0802CDBC(int funcId); // SetUpPokeJumpGfxFuncById
 extern void sub_0802D704(void); // ClearMessageWindow
 extern bool32 sub_0802D734(void); // RemoveMessageWindow
-extern void sub_0802DAD8(void); // ResetMonSpriteSubpriorities
-extern void sub_0802DAEC(int multiplayerId); // StartMonIntroBounce
-extern bool32 sub_0802DB00(void); // IsMonIntroBounceActive
+void ResetMonSpriteSubpriorities(void);
+void StartMonIntroBounce(int multiplayerId);
+bool32 IsMonIntroBounceActive(void);
 extern void sub_0802D458(void); // SetUpResetVineGfx
 extern bool32 sub_0802D47C(void); // ResetVineGfx
 extern void sub_0802BB94(void); // ResetVineState
 extern bool32 sub_0802BE24(u16 monState); // IsPlayersMonState
 extern void sub_0802BE58(void); // SetMonStateJump
 extern void sub_0802BBD8(void); // UpdateVineState
-extern bool32 sub_0802DAB0(int multiplayerId); // IsMonHitShakeActive
-extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
-extern void sub_0802DAC4(void); // StopMonHitFlash
+bool32 IsMonHitShakeActive(int multiplayerId);
+void StartMonHitFlash(u8 multiplayerId);
+void StopMonHitFlash(void);
 extern void LoadPokeJumpGfx(void); // sub_0802CE44, still asm
 extern const struct PokeJumpGfxFunc sPokeJumpGfxFuncs[10];
 extern void sub_0802DB14(void); // AddPlayerNameWindows
@@ -434,10 +441,12 @@ extern const u16 sPokeJumpBonuses_Pal[];
 extern const u32 sPokeJumpBonuses_Gfx[];
 extern const u32 sPokeJumpBonuses_Tilemap[];
 extern const u16 sPokeJumpInterface_Pal[];
-extern void sub_0802DA00(void); // InitDigitPrinters
+void InitDigitPrinters(void);
+extern const struct SpriteSheet sSpriteSheet_Digits;
+extern const struct SpritePalette sSpritePalette_Digits;
 void PrintScoreSuffixes(void);
 extern const u8 gUnknown_82D1A68[];
-extern void sub_0802DA5C(int score); // PrintScore
+void PrintScore(int num);
 void CreateJumpMonSprites(void);
 extern const s16 *const sMonXCoords[MAX_RFU_PLAYERS - 1];
 extern const struct JP_MonFrontPicCoords gUnknown_82D45C8[];
@@ -449,7 +458,6 @@ extern const u8 gText_SomeoneDroppedOut2[];
 extern const u8 gText_CommunicationStandby4[];
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
-extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
 extern bool32 sub_0802DDC8(int multiplayerId, struct PokemonJump_MonInfo *monInfo); // RecvPacket_MonInfo
 extern void sub_0802BC70(void); // UpdateVineSpeed
@@ -479,14 +487,16 @@ extern const struct SpriteTemplate sSpriteTemplate_Star;
 extern const struct SpriteTemplate *const sSpriteTemplates_Vine[4];
 extern const s16 sVineXCoords[8];
 extern const s16 sVineYCoords[4][10];
-extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
-extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
+int DoSameJumpTimeBonus(u8 flags);
+void PrintJumpsInRow(u16 num);
 extern void sub_0802BF74(void); // HandleMonState
 extern void sub_0802BF34(void); // TryUpdateVineSwing
-extern void sub_0802D994(int vineState); // UpdateVineSwing
-extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
+void UpdateVineSwing(int vineState);
+void SetMonSpriteY(u32 id, s16 y);
 extern void sub_0802C08C(int playerId); // UpdateJump
-extern void sub_0802DA80(u8 playerId); // StartMonHitShake
+void StartMonHitShake(u8 multiplayerId);
+extern const u8 sVenusaurStates[];
+extern void sub_0802DD04(u8 numPlayers); // ShowBonus
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1101,13 +1111,13 @@ bool32 DoGameIntro(void)
     {
     case 0:
         sub_0802CDBC(GFXFUNC_SHOW_NAMES_HIGHLIGHT); // SetUpPokeJumpGfxFuncById
-        sub_0802DAD8(); // ResetMonSpriteSubpriorities
+        ResetMonSpriteSubpriorities();
         sPokemonJump->helperState++;
         break;
     case 1:
         if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
         {
-            sub_0802DAEC(sPokemonJump->multiplayerId); // StartMonIntroBounce
+            StartMonIntroBounce(sPokemonJump->multiplayerId);
             sPokemonJump->timer = 0;
             sPokemonJump->helperState++;
         }
@@ -1120,7 +1130,7 @@ bool32 DoGameIntro(void)
         }
         break;
     case 3:
-        if (sub_0802CDE4() != TRUE && sub_0802DB00() != TRUE) // IsPokeJumpGfxFuncFinished, IsMonIntroBounceActive
+        if (sub_0802CDE4() != TRUE && IsMonIntroBounceActive() != TRUE) // IsPokeJumpGfxFuncFinished, IsMonIntroBounceActive
             sPokemonJump->helperState++;
         break;
     case 4:
@@ -1198,7 +1208,7 @@ bool32 DoVineHitEffect(void)
     case 0:
         for (i = 0; i < sPokemonJump->numPlayers; i++)
         {
-            if (sub_0802DAB0(i) == TRUE) // IsMonHitShakeActive
+            if (IsMonHitShakeActive(i) == TRUE)
                 return TRUE;
         }
 
@@ -1208,7 +1218,7 @@ bool32 DoVineHitEffect(void)
         for (i = 0; i < sPokemonJump->numPlayers; i++)
         {
             if (sPokemonJump->players[i].monState == MONSTATE_HIT)
-                sub_0802DA98(i); // StartMonHitFlash
+                StartMonHitFlash(i);
         }
 
         sub_0802CDBC(GFXFUNC_SHOW_NAMES); // SetUpPokeJumpGfxFuncById
@@ -1226,7 +1236,7 @@ bool32 DoVineHitEffect(void)
     case 3:
         if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
         {
-            sub_0802DAC4(); // StopMonHitFlash
+            StopMonHitFlash();
             sPokemonJump->comm.receivedBonusFlags = 0;
             sub_0802BE08(); // ResetPlayersMonState
             sPokemonJump->helperState++;
@@ -1408,7 +1418,7 @@ bool32 CloseMessageAndResetScore(void)
     {
     case 0:
         sub_0802D704(); // ClearMessageWindow
-        sub_0802DA5C(0); // PrintScore
+        PrintScore(0);
         sPokemonJump->helperState++;
         break;
     case 1:
@@ -1657,17 +1667,17 @@ void UpdateGame(void)
 {
     if (sPokemonJump->updateScore)
     {
-        sub_0802DA5C(sPokemonJump->comm.jumpScore); // PrintScore
+        PrintScore(sPokemonJump->comm.jumpScore);
         sPokemonJump->updateScore = FALSE;
         if (sPokemonJump->showBonus)
         {
-            int numPlayers = sub_0802D9C4(sPokemonJump->comm.receivedBonusFlags); // DoSameJumpTimeBonus
+            int numPlayers = DoSameJumpTimeBonus(sPokemonJump->comm.receivedBonusFlags);
             PlaySE(sSoundEffects[numPlayers - 2]);
             sPokemonJump->showBonus = FALSE;
         }
     }
 
-    sub_0802DA6C(sPokemonJump->comm.jumpsInRow); // PrintJumpsInRow
+    PrintJumpsInRow(sPokemonJump->comm.jumpsInRow);
     sub_0802BF74(); // HandleMonState
     sub_0802BF34(); // TryUpdateVineSwing
 }
@@ -1675,7 +1685,7 @@ void UpdateGame(void)
 void TryUpdateVineSwing(void)
 {
     if (sPokemonJump->allowVineUpdates)
-        sub_0802D994(sPokemonJump->vineState); // UpdateVineSwing
+        UpdateVineSwing(sPokemonJump->vineState);
 }
 
 void DisallowVineUpdates(void)
@@ -1702,7 +1712,7 @@ void HandleMonState(void)
         switch (sPokemonJump->players[i].monState)
         {
         case MONSTATE_NORMAL:
-            sub_0802D978(i, 0); // SetMonSpriteY
+            SetMonSpriteY(i, 0);
             break;
         case MONSTATE_JUMP:
             if (sPokemonJump->players[i].prevMonState != MONSTATE_JUMP || sPokemonJump->players[i].jumpTimeStart != sPokemonJump->jumpTimeStarts[i])
@@ -1725,7 +1735,7 @@ void HandleMonState(void)
                     sPokemonJump->players[i].prevMonState = MONSTATE_HIT;
 
                 soundFlags |= F_SE_FAIL;
-                sub_0802DA80(i); // StartMonHitShake
+                StartMonHitShake(i);
             }
             break;
         }
@@ -1773,7 +1783,7 @@ void UpdateJump(int multiplayerId)
     else
         jumpOffset = 0;
 
-    sub_0802D978(multiplayerId, jumpOffset); // SetMonSpriteY
+    SetMonSpriteY(multiplayerId, jumpOffset);
     if (jumpOffset == 0 && multiplayerId == sPokemonJump->multiplayerId)
         SetMonStateNormal();
 
@@ -2454,7 +2464,7 @@ void LoadPokeJumpGfx(void)
         SetBgTilemapBuffer(BG_INTERFACE, sPokemonJumpGfx->tilemapBuffer);
         FillBgTilemapBufferRect_Palette0(BG_INTERFACE, 0, 0, 0, 0x20, 0x20);
         PrintScoreSuffixes();
-        sub_0802DA5C(0); // PrintScore(0)
+        PrintScore(0);
         LoadUserWindowBorderGfxOnBg(0, 1, BG_PLTT_ID(14));
         CopyBgTilemapBufferToVram(BG_INTERFACE);
         CopyBgTilemapBufferToVram(BG_VENUSAUR);
@@ -2707,7 +2717,7 @@ void SetUpResetVineGfx(void)
     sPokemonJumpGfx->resetVineState = 0;
     sPokemonJumpGfx->resetVineTimer = 0;
     sPokemonJumpGfx->vineState = VINE_UPSWING_LOWER;
-    sub_0802D994(sPokemonJumpGfx->vineState); // UpdateVineSwing
+    UpdateVineSwing(sPokemonJumpGfx->vineState);
 }
 
 bool32 ResetVineGfx(void)
@@ -2726,7 +2736,7 @@ bool32 ResetVineGfx(void)
                 sPokemonJumpGfx->resetVineState++;
             }
         }
-        sub_0802D994(sPokemonJumpGfx->vineState); // UpdateVineSwing
+        UpdateVineSwing(sPokemonJumpGfx->vineState);
         if (sPokemonJumpGfx->vineState != VINE_UPSWING_LOW)
             break;
     case 1:
@@ -2927,6 +2937,110 @@ void CreateJumpMonSprites(void)
         CreateStarSprite(sPokemonJumpGfx, *xCoords, 112, i);
         xCoords++;
     }
+}
+
+void SetMonSpriteY(u32 id, s16 y)
+{
+    sPokemonJumpGfx->monSprites[id]->y2 = y;
+}
+
+void UpdateVineSwing(int vineState)
+{
+    UpdateVineAnim(sPokemonJumpGfx, vineState);
+    ChangeBgY(BG_VENUSAUR, (sVenusaurStates[vineState] * 5) << 13, BG_COORD_SET);
+}
+
+int DoSameJumpTimeBonus(u8 flags)
+{
+    int i, numPlayers;
+
+    for (i = 0, numPlayers = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        if (flags & 1)
+        {
+            // Player was part of a synchronous jump
+            // Give a bonus to them
+            DoStarAnim(sPokemonJumpGfx, i);
+            numPlayers++;
+        }
+        flags >>= 1;
+    }
+
+    sub_0802DD04(numPlayers - 2); // ShowBonus
+    return numPlayers;
+}
+
+void InitDigitPrinters(void)
+{
+    struct DigitObjUtilTemplate template;
+    // The first printer keeps the template base in a register (r1) across all
+    // its field stores; the second printer re-derives sp for y.  Keeping the
+    // pointer for the first block and direct access for the second reproduces
+    // the JP compiler's exact allocation.
+    struct DigitObjUtilTemplate *t = &template;
+
+    // JP compiles the bitfield byte (strConvMode=0, shape=0, size=0,
+    // priority=1) as a single 0x40 store; assign it wholesale to match.
+    *(u8 *)t = 0x40;
+    t->oamCount = 5;
+    t->xDelta = 8;
+    t->x = 108;
+    t->y = 6;
+    t->spriteSheet = &sSpriteSheet_Digits;
+    t->spritePal = &sSpritePalette_Digits;
+
+    DigitObjUtil_Init(NUM_WINDOWS);
+    DigitObjUtil_CreatePrinter(WIN_POINTS, 0, t);
+
+    template.oamCount = 4;
+    template.x = 30;
+    template.y = 6;
+    DigitObjUtil_CreatePrinter(WIN_TIMES, 0, &template);
+}
+
+void PrintScore(int num)
+{
+    DigitObjUtil_PrintNumOn(WIN_POINTS, num);
+}
+
+void PrintJumpsInRow(u16 num)
+{
+    DigitObjUtil_PrintNumOn(WIN_TIMES, num);
+}
+
+void StartMonHitShake(u8 multiplayerId)
+{
+    Gfx_StartMonHitShake(sPokemonJumpGfx, multiplayerId);
+}
+
+void StartMonHitFlash(u8 multiplayerId)
+{
+    Gfx_StartMonHitFlash(sPokemonJumpGfx, multiplayerId);
+}
+
+bool32 IsMonHitShakeActive(int multiplayerId)
+{
+    return Gfx_IsMonHitShakeActive(sPokemonJumpGfx, multiplayerId);
+}
+
+void StopMonHitFlash(void)
+{
+    Gfx_StopMonHitFlash(sPokemonJumpGfx);
+}
+
+void ResetMonSpriteSubpriorities(void)
+{
+    Gfx_ResetMonSpriteSubpriorities(sPokemonJumpGfx);
+}
+
+void StartMonIntroBounce(int multiplayerId)
+{
+    Gfx_StartMonIntroBounce(sPokemonJumpGfx, multiplayerId);
+}
+
+bool32 IsMonIntroBounceActive(void)
+{
+    return Gfx_IsMonIntroBounceActive(sPokemonJumpGfx);
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
