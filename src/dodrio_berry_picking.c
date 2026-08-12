@@ -1054,6 +1054,14 @@ void SetRandomPrize(void)
         sGame->berryResults[i][BERRY_PRIZE] = sPrizeBerryIds[prizeSet][prizeIdx];
 }
 
+u32 GetBerriesPicked(u8 playerId)
+{
+    u32 sum = sGame->berryResults[playerId][BERRY_BLUE]
+            + sGame->berryResults[playerId][BERRY_GREEN]
+            + sGame->berryResults[playerId][BERRY_GOLD];
+    return min(sum, MAX_BERRIES);
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)

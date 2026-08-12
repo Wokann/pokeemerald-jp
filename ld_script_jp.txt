@@ -1342,6 +1342,7 @@ sub_08026FF4 = UpdateBerriesPickedInRow;
 sub_08027064 = SetMaxBerriesPickedInRow;
 sub_080270A8 = ResetForPlayAgainPrompt;
 sub_080271B0 = SetRandomPrize;
+sub_0802721C = GetBerriesPicked;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2368,6 +2369,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetMaxBerriesPickedInRow);
         src/dodrio_berry_picking.o(.text.ResetForPlayAgainPrompt);
         src/dodrio_berry_picking.o(.text.SetRandomPrize);
+        src/dodrio_berry_picking.o(.text.GetBerriesPicked);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
