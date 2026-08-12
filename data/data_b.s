@@ -1378,8 +1378,8 @@ sLeaderFuncs: @ 0x82CB350
 sMemberFuncs: @ 0x82CB380
 	.incbin "baserom_jp.gba", 0x2cb380, 0x30
 
-	.globl gUnknown_82CB3B0
-gUnknown_82CB3B0: @ 0x82CB3B0
+	.globl sBerryScoreMultipliers
+sBerryScoreMultipliers: @ 0x82CB3B0
 	.incbin "baserom_jp.gba", 0x2cb3b0, 0x8
 
 	.globl gUnknown_82CB3B8

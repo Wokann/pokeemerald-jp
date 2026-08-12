@@ -323,6 +323,7 @@ extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
 extern const u8 sPrizeBerryIds[3][10];
+extern const s16 sBerryScoreMultipliers[NUM_BERRY_IDS];
 extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
 extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
@@ -1142,6 +1143,24 @@ u8 *GetPlayerName(u8 playerId)
 u16 GetBerryResult(u8 playerId, u8 berryId)
 {
     return sGame->berryResults[playerId][berryId];
+}
+
+u32 GetScore(u8 playerId)
+{
+    u8 i;
+    u32 scoreLost, score = 0;
+
+    // Sum up points for berries picked
+    for (i = 0; i < BERRY_MISSED; i++)
+        score += sGame->berryResults[playerId][i] * sBerryScoreMultipliers[i];
+
+    // Get points lost for berries missed
+    scoreLost = sGame->berryResults[playerId][BERRY_MISSED] * sBerryScoreMultipliers[BERRY_MISSED];
+
+    if (score <= scoreLost)
+        return 0;
+    else
+        return score - scoreLost;
 }
 
 void InitResults_Leader(void)
