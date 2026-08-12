@@ -32,18 +32,6 @@
 
 
 
-	thumb_func_start sub_08025FC0
-sub_08025FC0: @ 0x08025FC0
-	push {r4, lr}
-	adds r4, r0, #0
-	adds r0, r1, #0
-	bl IsMonShiny
-	strb r0, [r4]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08025FC0
 
 	thumb_func_start sub_08025FD4
 sub_08025FD4: @ 0x08025FD4

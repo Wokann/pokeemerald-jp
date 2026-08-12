@@ -3566,6 +3566,11 @@ void VBlankCB_DodrioGame(void)
     ProcessSpriteCopyRequests();
 }
 
+void InitMonInfo(struct DodrioGame_MonInfo *monInfo, struct Pokemon *mon)
+{
+    monInfo->isShiny = IsMonShiny(mon);
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
