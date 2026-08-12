@@ -1,5 +1,7 @@
 #include "global.h"
+#include "bg.h"
 #include "dynamic_placeholder_text_util.h"
+#include "graphics.h"
 #include "malloc.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -15,6 +17,7 @@
 #include "string_util.h"
 #include "task.h"
 #include "union_room_chat.h"
+#include "window.h"
 #include "constants/characters.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -100,6 +103,35 @@ struct UnionRoomChat
     u16 filler5;
 };
 
+struct UnionRoomChatDisplay_Subtask
+{
+    bool32 (*callback)(u8 *);
+    bool8 active;
+    u8 state;
+};
+
+struct UnionRoomChatDisplay
+{
+    struct UnionRoomChatDisplay_Subtask subtasks[3];
+    u16 yesNoMenuWindowId;
+    u16 currLine;
+    u16 scrollCount;
+    u16 messageWindowId;
+    s16 bg1hofs;
+    u8 expandedPlaceholdersBuffer[0x106];
+    u8 bg0Buffer[BG_SCREEN_SIZE];
+    u8 bg1Buffer[BG_SCREEN_SIZE];
+    u8 bg3Buffer[BG_SCREEN_SIZE];
+    u8 bg2Buffer[BG_SCREEN_SIZE];
+    u8 textEntryTiles[TILE_SIZE_4BPP * 2];
+};
+
+struct SubtaskInfo
+{
+    u16 idx;
+    bool32 (*callback)(u8 *);
+};
+
 // Chat main function table (0x082C5064, in data/data_b.s).
 extern void (*const gUnknown_82C5064[])(void);
 
@@ -129,13 +161,7 @@ enum {
 extern EWRAM_DATA struct UnionRoomChat *sChat;
 
 extern void SetChatFunction(u16 funcId);
-extern bool8 TryAllocDisplay(void);
-extern void RunDisplaySubtasks(void);
-extern bool32 IsDisplaySubtask0Active(void);
-extern void StartDisplaySubtask(u16 subtaskId, u8 assignId);
-extern bool8 IsDisplaySubtaskActive(u8 id);
 extern s8 ProcessMenuInput(void);
-extern void FreeDisplay(void);
 
 // JP chat message templates (0x085CC663 / 0x085CC672).
 extern const u8 gUnknown_85CC663[];
@@ -170,6 +196,24 @@ u8 GetReceivedPlayerIndex(void);
 u8 GetTextEntryCursorPosition(void);
 u8 *GetChatHostName(void);
 void Task_ReceiveChatMessage(u8 taskId);
+
+extern EWRAM_DATA struct UnionRoomChatDisplay *sDisplay;
+extern const struct BgTemplate gUnknown_82C56F4[];
+extern const struct WindowTemplate gUnknown_82C5704[];
+extern const struct SubtaskInfo gUnknown_82C572C[];
+extern bool32 Display_Dummy(u8 *state);
+extern bool32 TryAllocSprites(void);
+extern void FreeSprites(void);
+extern void InitScanlineEffect(void);
+
+bool8 TryAllocDisplay(void);
+bool32 IsDisplaySubtask0Active(void);
+void FreeDisplay(void);
+void InitDisplay(struct UnionRoomChatDisplay *display);
+void ResetDisplaySubtasks(void);
+void RunDisplaySubtasks(void);
+void StartDisplaySubtask(u16 subtaskId, u8 assignId);
+bool8 IsDisplaySubtaskActive(u8 id);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1444,3 +1488,102 @@ void Task_ReceiveChatMessage(u8 taskId)
 #undef tCurrLinkPlayer
 #undef tI
 #undef tState
+
+// The display subsystem helpers are non-static so the still-asm functions
+// can reach them via the sub_0801F2E0..sub_0801F454 ld aliases.
+bool8 TryAllocDisplay(void)
+{
+    sDisplay = Alloc(sizeof(*sDisplay));
+    if (sDisplay && TryAllocSprites())
+    {
+        ResetBgsAndClearDma3BusyFlags(0);
+        InitBgsFromTemplates(0, gUnknown_82C56F4, 4);
+        InitWindows(gUnknown_82C5704);
+        ResetTempTileDataBuffers();
+        InitScanlineEffect();
+        InitDisplay(sDisplay);
+        ResetDisplaySubtasks();
+        StartDisplaySubtask(CHATDISPLAY_FUNC_LOAD_GFX, 0);
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+bool32 IsDisplaySubtask0Active(void)
+{
+    return IsDisplaySubtaskActive(0);
+}
+
+void FreeDisplay(void)
+{
+    FreeSprites();
+    if (sDisplay)
+    {
+        Free(sDisplay);
+        sDisplay = NULL;
+    }
+
+    FreeAllWindowBuffers();
+    gScanlineEffect.state = 3;
+}
+
+void InitDisplay(struct UnionRoomChatDisplay *display)
+{
+    display->yesNoMenuWindowId = WINDOW_NONE;
+    display->messageWindowId = WINDOW_NONE;
+    display->currLine = 0;
+}
+
+void ResetDisplaySubtasks(void)
+{
+    int i;
+
+    if (!sDisplay)
+        return;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sDisplay->subtasks); i++)
+    {
+        sDisplay->subtasks[i].callback = Display_Dummy;
+        sDisplay->subtasks[i].active = FALSE;
+        sDisplay->subtasks[i].state = 0;
+    }
+}
+
+void RunDisplaySubtasks(void)
+{
+    int i;
+
+    if (!sDisplay)
+        return;
+
+    for (i = 0; i < (int)ARRAY_COUNT(sDisplay->subtasks); i++)
+    {
+        sDisplay->subtasks[i].active =
+            sDisplay->subtasks[i].callback(&sDisplay->subtasks[i].state);
+    }
+}
+
+void StartDisplaySubtask(u16 subtaskId, u8 assignId)
+{
+    u32 i;
+
+    sDisplay->subtasks[assignId].callback = Display_Dummy;
+    for (i = 0; i < 21; i++)
+    {
+        if (gUnknown_82C572C[i].idx == subtaskId)
+        {
+            sDisplay->subtasks[assignId].callback = gUnknown_82C572C[i].callback;
+            sDisplay->subtasks[assignId].active = TRUE;
+            sDisplay->subtasks[assignId].state = 0;
+            break;
+        }
+    }
+}
+
+bool8 IsDisplaySubtaskActive(u8 id)
+{
+    return sDisplay->subtasks[id].active;
+}
