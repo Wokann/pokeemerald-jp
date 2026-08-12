@@ -312,6 +312,10 @@ extern bool32 sub_0802DFC8(struct PokemonJump_Player *player, int multiplayerId)
 extern void sub_0802AEF0(void); // SendLinkData_Member
 extern void sub_0802DF2C(struct PokemonJump_Player *player, u8 funcId, u16 playAgainComm); // SendPacket_MemberState
 extern bool32 sub_0802B4D4(void); // DoGameIntro
+extern bool32 sub_0802C400(void); // AreLinkQueuesEmpty
+extern bool32 sub_0802B5C0(void); // HandleSwingRound
+extern bool32 sub_0802C22C(void); // UpdateVineHitStates
+extern void sub_0802BDAC(void); // ResetVineAfterHit
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -611,6 +615,58 @@ bool32 WaitRound_Leader(void)
     }
 
     return TRUE;
+}
+
+bool32 WaitRound_Member(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        ResetPlayersJumpStates();
+        SetLinkTimeInterval(LINK_INTERVAL_NONE);
+        sPokemonJump->vineTimer = sPokemonJump->comm.data;
+        sPokemonJump->mainState++;
+        // fall through
+    case 1:
+        if (sub_0802C400()) // AreLinkQueuesEmpty
+            return FALSE;
+        break;
+    }
+
+    return TRUE;
+}
+
+bool32 GameRound_Leader(void)
+{
+    if (!sub_0802B5C0()) // HandleSwingRound
+    {
+        sPokemonJump->comm.data = sPokemonJump->vineTimer;
+        sPokemonJump->nextFuncId = FUNC_WAIT_ROUND;
+    }
+    else if (sub_0802C22C()) // UpdateVineHitStates
+    {
+        return TRUE;
+    }
+    else
+    {
+        // Someone hit the vine
+        sub_0802BDAC(); // ResetVineAfterHit
+        sPokemonJump->nextFuncId = FUNC_GAME_OVER;
+    }
+
+    return FALSE;
+}
+
+bool32 GameRound_Member(void)
+{
+    if (!sub_0802B5C0()) // HandleSwingRound
+        ;
+    else if (sub_0802C22C()) // UpdateVineHitStates
+        return TRUE;
+    else // Someone hit the vine
+        sub_0802BDAC(); // ResetVineAfterHit
+
+    return FALSE;
 }
 
 void InitGame(struct PokemonJump *jump)
