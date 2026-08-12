@@ -36,6 +36,13 @@ enum {
     BG_SCENERY,
 };
 
+// IDs for persistent windows
+enum {
+    WIN_POINTS,
+    WIN_TIMES,
+    NUM_WINDOWS
+};
+
 #define VINE_SPRITES_PER_SIDE 4 // Vine rope is divided into 8 sprites, 4 per side copied and flipped horizontally
 #define JUMP_PEAK (-30)
 
@@ -418,7 +425,8 @@ extern const u32 sPokeJumpBonuses_Gfx[];
 extern const u32 sPokeJumpBonuses_Tilemap[];
 extern const u16 sPokeJumpInterface_Pal[];
 extern void sub_0802DA00(void); // InitDigitPrinters
-extern void sub_0802D884(void); // PrintScoreSuffixes
+void PrintScoreSuffixes(void);
+extern const u8 gUnknown_82D1A68[];
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802D8F0(void); // CreateJumpMonSprites
 void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos);
@@ -2433,7 +2441,7 @@ void LoadPokeJumpGfx(void)
         LoadPalette(sPokeJumpInterface_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
         SetBgTilemapBuffer(BG_INTERFACE, sPokemonJumpGfx->tilemapBuffer);
         FillBgTilemapBufferRect_Palette0(BG_INTERFACE, 0, 0, 0, 0x20, 0x20);
-        sub_0802D884(); // PrintScoreSuffixes
+        PrintScoreSuffixes();
         sub_0802DA5C(0); // PrintScore(0)
         LoadUserWindowBorderGfxOnBg(0, 1, BG_PLTT_ID(14));
         CopyBgTilemapBufferToVram(BG_INTERFACE);
@@ -2878,6 +2886,19 @@ void CreatePokeJumpYesNoMenu(u16 left, u16 top, u8 cursorPos)
     window.baseBlock = 0x1B;
 
     CreateYesNoMenuAtPos((struct WindowTemplate *)&window, 1, 2, 2, 1, 0xD, cursorPos);
+}
+
+void PrintScoreSuffixes(void)
+{
+    u8 color[3];
+
+    memcpy(color, gUnknown_82D1A68, 3);
+    PutWindowTilemap(WIN_POINTS);
+    PutWindowTilemap(WIN_TIMES);
+    FillWindowPixelBuffer(WIN_POINTS, 0);
+    FillWindowPixelBuffer(WIN_TIMES, 0);
+    AddTextPrinterParameterized3(WIN_POINTS, FONT_SMALL, 0, 2, color, 0, gText_SpacePoints2);
+    AddTextPrinterParameterized3(WIN_TIMES, FONT_SMALL, 0, 2, color, 0, gText_SpaceTimes3);
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)

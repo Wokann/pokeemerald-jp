@@ -2,55 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-	thumb_func_start sub_0802D884
-sub_0802D884: @ 0x0802D884
-	push {r4, lr}
-	sub sp, #0x10
-	ldr r1, _0802D8E4
-	add r0, sp, #0xc
-	movs r2, #3
-	bl memcpy
-	movs r0, #0
-	bl PutWindowTilemap
-	movs r0, #1
-	bl PutWindowTilemap
-	movs r0, #0
-	movs r1, #0
-	bl FillWindowPixelBuffer
-	movs r0, #1
-	movs r1, #0
-	bl FillWindowPixelBuffer
-	add r0, sp, #0xc
-	str r0, [sp]
-	movs r4, #0
-	str r4, [sp, #4]
-	ldr r0, _0802D8E8
-	str r0, [sp, #8]
-	movs r0, #0
-	movs r1, #0
-	movs r2, #0
-	movs r3, #2
-	bl AddTextPrinterParameterized3
-	add r0, sp, #0xc
-	str r0, [sp]
-	str r4, [sp, #4]
-	ldr r0, _0802D8EC
-	str r0, [sp, #8]
-	movs r0, #1
-	movs r1, #0
-	movs r2, #0
-	movs r3, #2
-	bl AddTextPrinterParameterized3
-	add sp, #0x10
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802D8E4: .4byte 0x082D1A68
-_0802D8E8: .4byte 0x085CCDF8
-_0802D8EC: .4byte 0x085CCDFB
-	thumb_func_end sub_0802D884
-
 	thumb_func_start sub_0802D8F0
 sub_0802D8F0: @ 0x0802D8F0
 	push {r4, r5, r6, r7, lr}
