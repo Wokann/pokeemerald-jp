@@ -1280,6 +1280,13 @@ u32 Cmd_AskPickBerry(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_GoToBerryPouch(struct BerryCrushGame *game, u8 *args)
+{
+    game->cmdCallback = NULL;
+    SetMainCallback2(ChooseBerry);
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);

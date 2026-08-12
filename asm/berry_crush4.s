@@ -10,19 +10,6 @@
 
 
 
-	thumb_func_start sub_08022C68
-sub_08022C68: @ 0x08022C68
-	push {lr}
-	movs r1, #0
-	str r1, [r0, #4]
-	ldr r0, _08022C7C
-	bl SetMainCallback2
-	movs r0, #0
-	pop {r1}
-	bx r1
-	.align 2, 0
-_08022C7C: .4byte 0x08020B39
-	thumb_func_end sub_08022C68
 
 	thumb_func_start sub_08022C80
 sub_08022C80: @ 0x08022C80
