@@ -1263,6 +1263,11 @@ u32 SetScoreResults(void)
     return 0;
 }
 
+void GetScoreResults(struct DodrioGame_ScoreResults *dst, u8 playerId)
+{
+    *dst = sGame->scoreResults[playerId];
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
