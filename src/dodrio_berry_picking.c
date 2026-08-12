@@ -322,6 +322,7 @@ extern bool32 RecvPacket_GameState(u32 recvCmdIdx,
 extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern u32 RecvPacket_ReadyToStart(u32 playerId);
+extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -720,6 +721,32 @@ bool32 ReadyToEndGame_Leader(void)
         sGame->numGraySquares = NUM_STATUS_SQUARES;
         if (sGame->allReadyToEnd)
             return TRUE;
+    }
+
+    return FALSE;
+}
+
+bool32 ReadyToEndGame_Member(void)
+{
+    u8 i, berryStart, berryEnd;
+
+    if (sGame->numGraySquares >= NUM_STATUS_SQUARES)
+    {
+        berryStart = sGame->berryColStart;
+        berryEnd = sGame->berryColEnd;
+        sGame->numGraySquares = NUM_STATUS_SQUARES;
+        if (sGame->allReadyToEnd)
+        {
+            for (i = berryStart; i < berryEnd; i++)
+            {
+                struct DodrioGame_Player *player = &sGame->players[sGame->multiplayerId];
+                u8 column = sActiveColumnMap[sGame->numPlayers - 1][sGame->multiplayerId][i];
+
+                if (player->berries.fallDist[column] != MAX_FALL_DIST)
+                    return FALSE;
+            }
+            return TRUE;
+        }
     }
 
     return FALSE;

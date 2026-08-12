@@ -1332,7 +1332,7 @@ UpdateFallingBerries = sub_080264E4;
 HandleSound_Leader = sub_08025D10;
 HandleSound_Member = sub_08025E0C;
 sub_08026A10 = ReadyToEndGame_Leader;
-ReadyToEndGame_Member = sub_08026A50;
+sub_08026A50 = ReadyToEndGame_Member;
 SetMaxBerriesPickedInRow = sub_08027064;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
@@ -2350,6 +2350,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);
         src/dodrio_berry_picking.o(.text.ReadyToEndGame_Leader);
+        src/dodrio_berry_picking.o(.text.ReadyToEndGame_Member);
         asm/dodrio_berry_picking3.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

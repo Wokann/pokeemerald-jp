@@ -1334,8 +1334,8 @@ sBigSparkleThresholds: @ 0x82C7CD0
 sReceivedPlayerBitmasks: @ 0x82C7CD4
 	.incbin "baserom_jp.gba", 0x2c7cd4, 0x54
 
-	.globl gUnknown_82C7D28
-gUnknown_82C7D28: @ 0x82C7D28
+	.globl sActiveColumnMap
+sActiveColumnMap: @ 0x82C7D28
 	.incbin "baserom_jp.gba", 0x2c7d28, 0x113
 
 	.globl gUnknown_82C7E3B
