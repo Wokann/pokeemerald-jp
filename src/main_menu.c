@@ -18,6 +18,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "string_util.h"
 #include "task.h"
 #include "text.h"
 #include "text_window.h"
@@ -47,6 +48,10 @@ extern const u32 sBirchSpeechShadowGfx[];
 extern const u32 sBirchSpeechBgMap[];
 extern const u16 sBirchSpeechBgPals[][16];
 extern const u16 sBirchSpeechBgGradientPal[];
+extern const struct WindowTemplate sNewGameBirchSpeechTextWindows[];
+extern const u8 gUnknown_8277095[];
+extern const u8 gUnknown_85C8F88[];
+extern const u8 gUnknown_8277102[];
 extern void CreateMainMenuErrorWindow(const u8 *text);
 extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
 extern void Task_DisplayMainMenu(u8 taskId);
@@ -61,9 +66,14 @@ extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
 extern void Task_NewGameBirchSpeech_Init(u8 taskId);
 extern void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId);
 extern void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId);
+extern void Task_NewGameBirchSpeech_AndYouAre(u8 taskId);
 extern void AddBirchSpeechObjects(u8 taskId);
 extern void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 a1);
 extern void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 a1);
+extern void NewGameBirchSpeech_ShowDialogueWindow(u8 taskId, u8 windowId);
+extern void NewGameBirchSpeech_ClearWindow(u8 taskId);
+extern void NewGameBirchSpeech_ShowPokeBallPrinterCallback(struct TextPrinter *textPrinter);
+extern u8 sBirchSpeechMainTaskId;
 
 static void Task_HighlightSelectedMainMenuItem(u8 taskId);
 static bool8 HandleMainMenuInput(u8 taskId);
@@ -72,11 +82,15 @@ static void Task_HandleMainMenuAPressed(u8 taskId);
 static void Task_HandleMainMenuBPressed(u8 taskId);
 static void Task_DisplayMainMenuInvalidActionError(u8 taskId);
 static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 isScrolled);
+static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId);
+static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId);
+static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId);
 
 #define tPlayerSpriteId data[2]
 #define tBG1HOFS data[4]
 #define tTimer data[7]
 #define tBirchSpriteId data[8]
+#define tIsDoneFadingSprites data[5]
 
 #define OPTION_MENU_FLAG (1 << 15)
 
@@ -831,6 +845,52 @@ static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)
         NewGameBirchSpeech_StartFadePlatformOut(taskId, 20);
         gTasks[taskId].tTimer = 80;
         gTasks[taskId].func = Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome;
+    }
+}
+
+static void Task_NewGameBirchSpeech_WaitForSpriteFadeInWelcome(u8 taskId)
+{
+    if (gTasks[taskId].tIsDoneFadingSprites)
+    {
+        gSprites[gTasks[taskId].tBirchSpriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+        if (gTasks[taskId].tTimer)
+        {
+            gTasks[taskId].tTimer--;
+        }
+        else
+        {
+            InitWindows(sNewGameBirchSpeechTextWindows);
+            LoadMainMenuWindowFrameTiles(0, 0xDB);
+            LoadMessageBoxGfx(0, 0xE4, BG_PLTT_ID(15));
+            NewGameBirchSpeech_ShowDialogueWindow(0, 1);
+            PutWindowTilemap(0);
+            CopyWindowToVram(0, COPYWIN_GFX);
+            NewGameBirchSpeech_ClearWindow(0);
+            StringExpandPlaceholders(gStringVar4, gUnknown_8277095);
+            AddTextPrinterForMessage(TRUE);
+            gTasks[taskId].func = Task_NewGameBirchSpeech_ThisIsAPokemon;
+        }
+    }
+}
+
+static void Task_NewGameBirchSpeech_ThisIsAPokemon(u8 taskId)
+{
+    if (!gPaletteFade.active && !RunTextPrintersAndIsPrinter0Active())
+    {
+        gTasks[taskId].func = Task_NewGameBirchSpeech_MainSpeech;
+        StringExpandPlaceholders(gStringVar4, gUnknown_85C8F88);
+        AddTextPrinterWithCallbackForMessage(TRUE, NewGameBirchSpeech_ShowPokeBallPrinterCallback);
+        sBirchSpeechMainTaskId = taskId;
+    }
+}
+
+static void Task_NewGameBirchSpeech_MainSpeech(u8 taskId)
+{
+    if (!RunTextPrintersAndIsPrinter0Active())
+    {
+        StringExpandPlaceholders(gStringVar4, gUnknown_8277102);
+        AddTextPrinterForMessage(TRUE);
+        gTasks[taskId].func = Task_NewGameBirchSpeech_AndYouAre;
     }
 }
 

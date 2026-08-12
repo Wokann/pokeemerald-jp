@@ -3,6 +3,7 @@ gCurrentMapMusic = ABSOLUTE(0x03000F48);
 gMain = ABSOLUTE(0x03002360);
 gBattleResults = ABSOLUTE(0x03005A70);
 sRandMonId = ABSOLUTE(0x03001294);
+sBirchSpeechMainTaskId = ABSOLUTE(0x03000DD0);
 gFrontierTempParty = ABSOLUTE(0x03005FD8);
 sCutSquareSide = ABSOLUTE(0x03001100);
 sTileCountFromPlayer_X = ABSOLUTE(0x03001101);
