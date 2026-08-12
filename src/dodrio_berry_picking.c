@@ -368,7 +368,6 @@ extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
 extern u32 sub_08027480(u8 playerId); // GetScore
 extern u8 GetPlayAgainState(void);
-extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern void ResetGfxState(void);
@@ -2004,6 +2003,17 @@ s16 GetDodrioXPos(u8 playerId, u8 numPlayers)
     }
 
     return x * 8;
+}
+
+void ResetBerryAndStatusBarSprites(void)
+{
+    u8 i;
+    for (i = 0; i < NUM_BERRY_COLUMNS; i++)
+    {
+        SetBerryInvisibility(i, TRUE);
+        SetBerryYPos(i, 1);
+    }
+    SetStatusBarInvisibility(FALSE);
 }
 
 void nullsub_15(void)
