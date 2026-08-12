@@ -425,6 +425,9 @@ extern u32 sub_0802D78C(u32 a, u32 b, u32 c, u32 d); // AddMessageWindow
 extern void sub_0802D808(u16 a, u16 b, u8 c); // CreatePokeJumpYesNoMenu
 extern const u8 gText_WantToPlayAgain2[];
 extern const u8 gText_SavingDontTurnOffPower[];
+extern void sub_0802D704(void); // ClearMessageWindow
+extern bool32 sub_0802D734(void); // RemoveMessageWindow
+extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
@@ -2595,6 +2598,23 @@ void Msg_SavingDontTurnOff_PokeJump(void)
         break;
     case 2:
         if (!IsDma3ManagerBusyWithBgCopy())
+            sPokemonJumpGfx->funcFinished = TRUE;
+        break;
+    }
+}
+
+void EraseMessage_PokeJump(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        sub_0802D704(); // ClearMessageWindow
+        sub_08198D88(); // EraseYesNoWindow
+        CopyBgTilemapBufferToVram(BG_INTERFACE);
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!sub_0802D734() && !IsDma3ManagerBusyWithBgCopy()) // RemoveMessageWindow
             sPokemonJumpGfx->funcFinished = TRUE;
         break;
     }

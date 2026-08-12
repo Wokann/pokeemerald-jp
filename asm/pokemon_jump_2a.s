@@ -5,45 +5,6 @@
 
 
 
-	thumb_func_start sub_0802D28C
-sub_0802D28C: @ 0x0802D28C
-	push {r4, r5, lr}
-	ldr r5, _0802D2A0
-	ldr r0, [r5]
-	ldrh r4, [r0, #4]
-	cmp r4, #0
-	beq _0802D2A4
-	cmp r4, #1
-	beq _0802D2BC
-	b _0802D2D2
-	.align 2, 0
-_0802D2A0: .4byte 0x020229B4
-_0802D2A4:
-	bl sub_0802D704
-	bl sub_08198D88
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	ldr r1, [r5]
-	ldrh r0, [r1, #4]
-	adds r0, #1
-	strh r0, [r1, #4]
-	b _0802D2D2
-_0802D2BC:
-	bl sub_0802D734
-	cmp r0, #0
-	bne _0802D2D2
-	bl IsDma3ManagerBusyWithBgCopy
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0802D2D2
-	ldr r0, [r5]
-	str r4, [r0]
-_0802D2D2:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0802D28C
-
 	thumb_func_start sub_0802D2D8
 sub_0802D2D8: @ 0x0802D2D8
 	push {r4, r5, lr}

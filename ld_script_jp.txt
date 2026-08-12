@@ -1530,6 +1530,7 @@ sub_0802D044 = PrintPlayerNamesWithHighlight;
 sub_0802D0B0 = ErasePlayerNames;
 sub_0802D13C = Msg_WantToPlayAgain_PokeJump;
 sub_0802D1E8 = Msg_SavingDontTurnOff_PokeJump;
+sub_0802D28C = EraseMessage_PokeJump;
 gText_WantToPlayAgain2 = gUnknown_85CCE71;
 sPokeJumpGfxFuncs = gUnknown_82D1A18;
 sPokeJumpBgTemplates = gUnknown_82D19F0;
@@ -2817,6 +2818,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.ErasePlayerNames);
         src/pokemon_jump.o(.text.Msg_WantToPlayAgain_PokeJump);
         src/pokemon_jump.o(.text.Msg_SavingDontTurnOff_PokeJump);
+        src/pokemon_jump.o(.text.EraseMessage_PokeJump);
         asm/pokemon_jump_2a.o(.text);
         src/pokemon_jump.o(.text.GetPokeJumpRecords);
         asm/pokemon_jump_2b.o(.text);
