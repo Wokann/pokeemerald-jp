@@ -1478,8 +1478,8 @@ gUnknown_82CC1A0: @ 0x82CC1A0
 sStatus_Gfx: @ 0x82CCF6C
 	.incbin "baserom_jp.gba", 0x2ccf6c, 0x94
 
-	.globl gUnknown_82CD000
-gUnknown_82CD000: @ 0x82CD000
+	.globl sCloud_Gfx
+sCloud_Gfx: @ 0x82CD000
 	.incbin "baserom_jp.gba", 0x2cd000, 0x148
 
 	.globl sDodrio_Gfx
@@ -1538,20 +1538,24 @@ sBerrySpriteTemplate: @ 0x82CEBB0
 sBerryIconSpriteTemplate: @ 0x82CEBC8
 	.incbin "baserom_jp.gba", 0x2cebc8, 0x18
 
-	.globl gUnknown_82CEBE0
-gUnknown_82CEBE0: @ 0x82CEBE0
+	.globl sCloudDurations
+sCloudDurations: @ 0x82CEBE0
 	.incbin "baserom_jp.gba", 0x2cebe0, 0x2
 
-	.globl gUnknown_82CEBE2
-gUnknown_82CEBE2: @ 0x82CEBE2
-	.incbin "baserom_jp.gba", 0x2cebe2, 0xa
+	.globl sCloudPositions
+sCloudPositions: @ 0x82CEBE2
+	.incbin "baserom_jp.gba", 0x2cebe2, 0x8
 
-	.globl gUnknown_82CEBEC
-gUnknown_82CEBEC: @ 0x82CEBEC
+	.globl gUnknown_82CEBEA
+gUnknown_82CEBEA: @ 0x82CEBEA
+	.incbin "baserom_jp.gba", 0x2cebea, 0x2
+
+	.globl sCloudPalette
+sCloudPalette: @ 0x82CEBEC
 	.incbin "baserom_jp.gba", 0x2cebec, 0x8
 
-	.globl gUnknown_82CEBF4
-gUnknown_82CEBF4: @ 0x82CEBF4
+	.globl sCloudSpriteTemplate
+sCloudSpriteTemplate: @ 0x82CEBF4
 	.incbin "baserom_jp.gba", 0x2cebf4, 0x18
 
 	.globl gUnknown_82CEC0C

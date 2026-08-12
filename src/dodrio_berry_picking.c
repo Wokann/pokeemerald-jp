@@ -397,8 +397,13 @@ extern const struct SpritePalette sBerryPalette;
 extern const s16 sBerryIconXCoords[NUM_BERRY_TYPES];
 extern const struct SpriteTemplate sBerrySpriteTemplate;
 extern const struct SpriteTemplate sBerryIconSpriteTemplate;
+extern const u32 sCloud_Gfx[];
+extern const struct SpritePalette sCloudPalette;
+extern const struct SpriteTemplate sCloudSpriteTemplate;
+extern const s16 sCloudPositions[NUM_CLOUDS][2];
 extern EWRAM_DATA u16 *sBerrySpriteIds[NUM_BERRY_COLUMNS];
 extern EWRAM_DATA u16 *sBerryIconSpriteIds[NUM_BERRY_TYPES];
+extern EWRAM_DATA u16 *sCloudSpriteIds[NUM_CLOUDS];
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
@@ -1893,6 +1898,29 @@ void SetSpritePos(u8 spriteId)
 {
     gSprites[spriteId].x = spriteId * 20 + 50;
     gSprites[spriteId].y = 50;
+}
+
+void CreateCloudSprites_Dodrio(void)
+{
+    u8 i;
+    void *ptr = AllocZeroed(0x400);
+    struct SpritePalette pal = sCloudPalette;
+
+    LZ77UnCompWram(sCloud_Gfx, ptr);
+    if (ptr)
+    {
+        struct SpriteSheet sheet = {ptr, 0x400, GFXTAG_CLOUD};
+        struct SpriteTemplate template = sCloudSpriteTemplate;
+
+        LoadSpriteSheet(&sheet);
+        LoadSpritePalette(&pal);
+        for (i = 0; i < NUM_CLOUDS; i++)
+        {
+            sCloudSpriteIds[i] = AllocZeroed(4);
+            *sCloudSpriteIds[i] = CreateSprite(&template, sCloudPositions[i][0], sCloudPositions[i][1], 4);
+        }
+    }
+    Free(ptr);
 }
 
 void nullsub_15(void)
