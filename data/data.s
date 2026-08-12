@@ -143,8 +143,8 @@ gUnknown_82BF2F8: @ 0x82BF2F8
 gUnknown_82BF304: @ 0x82BF304
 	.incbin "baserom_jp.gba", 0x2bf304, 0xc
 
-	.globl gUnknown_82BF310
-gUnknown_82BF310: @ 0x82BF310
+	.globl gDummySpriteAffineAnimTable
+gDummySpriteAffineAnimTable: @ 0x82BF310
 	.incbin "baserom_jp.gba", 0x2bf310, 0x4
 
 	.globl gUnknown_82BF314
@@ -307,4 +307,3 @@ gUnknown_82BFE9F: @ 0x82BFE9F
 	.globl gUnknown_82BFEB8
 gUnknown_82BFEB8: @ 0x82BFEB8
 	.incbin "baserom_jp.gba", 0x2bfeb8, 0x40
-

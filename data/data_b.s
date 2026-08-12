@@ -1498,12 +1498,12 @@ gUnknown_82CE5D0: @ 0x82CE5D0
 gUnknown_82CE820: @ 0x82CE820
 	.incbin "baserom_jp.gba", 0x2ce820, 0x24c
 
-	.globl gUnknown_82CEA6C
-gUnknown_82CEA6C: @ 0x82CEA6C
+	.globl sOamData_Dodrio
+sOamData_Dodrio: @ 0x82CEA6C
 	.incbin "baserom_jp.gba", 0x2cea6c, 0x48
 
-	.globl gUnknown_82CEAB4
-gUnknown_82CEAB4: @ 0x82CEAB4
+	.globl sAnims_Dodrio
+sAnims_Dodrio: @ 0x82CEAB4
 	.incbin "baserom_jp.gba", 0x2ceab4, 0xb0
 
 	.globl sDodrioNormalSpritePalette

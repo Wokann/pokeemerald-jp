@@ -390,6 +390,13 @@ extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
 extern const u32 sDodrio_Gfx[];
 extern const struct SpritePalette sDodrioNormalSpritePalette;
 extern const struct SpritePalette sDodrioShinySpritePalette;
+extern const struct OamData sOamData_Dodrio;
+extern const union AnimCmd *const sAnims_Dodrio[];
+extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
+extern EWRAM_DATA u16 *sDodrioSpriteIds[MAX_RFU_PLAYERS];
+extern void sub_080281D4(struct Sprite *sprite); // SpriteCB_Dodrio
+extern s16 sub_08028C40(u8 playerId, u8 numPlayers); // GetDodrioXPos
+extern void sub_08028380(bool8 invisible, u8 id); // SetDodrioInvisibility
 extern const struct WindowTemplate sRecordsWindowTemplate;
 extern void sub_0802792C(u8 windowId); // JP records window drawing
 void Task_ShowDodrioRecords(u8 taskId);
@@ -1482,6 +1489,24 @@ void LoadDodrioGfx(void)
     }
     LoadSpritePalette(&normal);
     LoadSpritePalette(&shiny);
+}
+
+void CreateDodrioSprite(struct DodrioGame_MonInfo *monInfo, u8 playerId, u8 id, u8 numPlayers)
+{
+    struct SpriteTemplate template =
+    {
+        .tileTag = GFXTAG_DODRIO,
+        .paletteTag = monInfo->isShiny, // PALTAG_DODRIO_NORMAL / PALTAG_DODRIO_SHINY
+        .oam = &sOamData_Dodrio,
+        .anims = sAnims_Dodrio,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
+        .callback = sub_080281D4, // SpriteCB_Dodrio
+    };
+
+    sDodrioSpriteIds[id] = AllocZeroed(4);
+    *sDodrioSpriteIds[id] = CreateSprite(&template, sub_08028C40(playerId, numPlayers), 136, 3);
+    sub_08028380(TRUE, id); // SetDodrioInvisibility
 }
 
 void SendPacket_GameState(struct DodrioGame_Player *player,
