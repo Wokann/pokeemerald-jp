@@ -219,6 +219,8 @@ extern const u8 gUnknown_85CAADB[];
 
 // JP standard chat message templates (0x082C57D4, in data/data_b.s).
 extern const struct MessageWindowInfo gUnknown_82C57D4[];
+// JP keyboard swap menu title text (0x082C5858).
+extern const u8 gUnknown_82C5858[];
 
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
@@ -280,6 +282,9 @@ extern void HideStdMessageWindow(void);
 extern void HideYesNoMenuWindow(void);
 extern void DestroyStdMessageWindow(void);
 extern void DestroyYesNoMenuWindow(void);
+extern void UpdateSlidingKeyboard(s16 hofs);
+extern void FinishSlidingKeyboard(s16 hofs);
+extern void sub_08198964(u8 a1, u8 a2, u8 a3, u8 a4, const u8 *text);
 extern void FillTextEntryWindow(u16 x, u16 width, u8 fillValue);
 extern void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor);
 extern void SetRegisteredTextPalette(bool32 enabled);
@@ -326,6 +331,11 @@ void FillTextEntryWindow(u16 x, u16 width, u8 fillValue);
 u8 sub_081984B0(u8 windowId, u8 a2, u8 a3, u8 a4, u8 a5, u8 a6, u8 a7);
 void AddStdMessageWindow(int msgId, u16 bg0vofs);
 void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor);
+void PrintCurrentKeyboardPage(void);
+bool32 SlideKeyboardPageOut(void);
+bool32 SlideKeyboardPageIn(void);
+void ShowKeyboardSwapMenu(void);
+void HideKeyboardSwapMenu(void);
 static void PrepareSendBuffer_Null(u8 *buffer);
 static void PrepareSendBuffer_Join(u8 *buffer);
 static void PrepareSendBuffer_Chat(u8 *buffer);
@@ -2352,4 +2362,89 @@ void DrawTextEntryMessage(u16 x, u8 *str, u8 bgColor, u8 fgColor, u8 shadowColor
     color[2] = shadowColor;
     StringLength_Multibyte(str); // JP computes the length but does not use it
     AddTextPrinterParameterized3(WIN_TEXT_ENTRY, FONT_SMALL, x * 8, 1, color, -1, str);
+}
+
+// JP prints the keyboard rows at x=6 with 11px row spacing and renders
+// the register page from sDisplay->expandedPlaceholdersBuffer.
+void PrintCurrentKeyboardPage(void)
+{
+    u8 page;
+    int i;
+    u16 top;
+    u8 color[3];
+
+    FillWindowPixelBuffer(WIN_KEYBOARD, PIXEL_FILL(15));
+    page = GetCurrentKeyboardPage();
+    color[0] = TEXT_COLOR_TRANSPARENT;
+    color[1] = TEXT_DYNAMIC_COLOR_5;
+    color[2] = TEXT_DYNAMIC_COLOR_4;
+    if (page != UNION_ROOM_KB_PAGE_REGISTER)
+    {
+        for (i = 0, top = 0; i < UNION_ROOM_KB_ROW_COUNT; i++, top += 11)
+        {
+            if (!sUnionRoomKeyboardText[page][i])
+                return;
+
+            AddTextPrinterParameterized3(WIN_KEYBOARD, FONT_SMALL, 6, top, color, -1, sUnionRoomKeyboardText[page][i]);
+        }
+    }
+    else
+    {
+        for (i = 0, top = 0; i < UNION_ROOM_KB_ROW_COUNT; i++, top += 11)
+        {
+            StringCopyN_Multibyte(sDisplay->expandedPlaceholdersBuffer, GetRegisteredTextByRow(i), 5);
+            AddTextPrinterParameterized3(WIN_KEYBOARD, FONT_SMALL, 6, top, color, -1, sDisplay->expandedPlaceholdersBuffer);
+        }
+    }
+}
+
+bool32 SlideKeyboardPageOut(void)
+{
+    if (sDisplay->bg1hofs <= 0x37)
+    {
+        sDisplay->bg1hofs += 12;
+        if (sDisplay->bg1hofs > 0x37)
+            sDisplay->bg1hofs = 0x38;
+        if (sDisplay->bg1hofs <= 0x37)
+        {
+            UpdateSlidingKeyboard(sDisplay->bg1hofs);
+            return TRUE;
+        }
+    }
+
+    FinishSlidingKeyboard(sDisplay->bg1hofs);
+    return FALSE;
+}
+
+bool32 SlideKeyboardPageIn(void)
+{
+    if (sDisplay->bg1hofs > 0)
+    {
+        sDisplay->bg1hofs -= 12;
+        if (sDisplay->bg1hofs <= 0)
+            sDisplay->bg1hofs = 0;
+        if (sDisplay->bg1hofs > 0)
+        {
+            UpdateSlidingKeyboard(sDisplay->bg1hofs);
+            return TRUE;
+        }
+    }
+
+    FinishSlidingKeyboard(sDisplay->bg1hofs);
+    return FALSE;
+}
+
+void ShowKeyboardSwapMenu(void)
+{
+    FillWindowPixelBuffer(WIN_SWAP_MENU, PIXEL_FILL(1));
+    DrawTextBorderOuter(WIN_SWAP_MENU, 1, 13);
+    sub_08198964(WIN_SWAP_MENU, 1, 13, 6, gUnknown_82C5858);
+    sub_081984B0(WIN_SWAP_MENU, 1, 0, 0, 13, 6, GetCurrentKeyboardPage());
+    PutWindowTilemap(WIN_SWAP_MENU);
+}
+
+void HideKeyboardSwapMenu(void)
+{
+    ClearStdWindowAndFrameToTransparent(WIN_SWAP_MENU, FALSE);
+    ClearWindowTilemap(WIN_SWAP_MENU);
 }
