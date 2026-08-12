@@ -1474,8 +1474,8 @@ gUnknown_82CB910: @ 0x82CB910
 gUnknown_82CC1A0: @ 0x82CC1A0
 	.incbin "baserom_jp.gba", 0x2cc1a0, 0xdcc
 
-	.globl gUnknown_82CCF6C
-gUnknown_82CCF6C: @ 0x82CCF6C
+	.globl sStatus_Gfx
+sStatus_Gfx: @ 0x82CCF6C
 	.incbin "baserom_jp.gba", 0x2ccf6c, 0x94
 
 	.globl gUnknown_82CD000
@@ -1514,12 +1514,12 @@ sDodrioNormalSpritePalette: @ 0x82CEB64
 sDodrioShinySpritePalette: @ 0x82CEB6C
 	.incbin "baserom_jp.gba", 0x2ceb6c, 0x8
 
-	.globl gUnknown_82CEB74
-gUnknown_82CEB74: @ 0x82CEB74
+	.globl sStatusPalette
+sStatusPalette: @ 0x82CEB74
 	.incbin "baserom_jp.gba", 0x2ceb74, 0x8
 
-	.globl gUnknown_82CEB7C
-gUnknown_82CEB7C: @ 0x82CEB7C
+	.globl sStatusSpriteTemplate
+sStatusSpriteTemplate: @ 0x82CEB7C
 	.incbin "baserom_jp.gba", 0x2ceb7c, 0x24
 
 	.globl gUnknown_82CEBA0

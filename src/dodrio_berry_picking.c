@@ -343,7 +343,6 @@ extern void CreateBerrySprites_Dodrio(void);
 #define CreateBerrySprites CreateBerrySprites_Dodrio
 extern void CreateCloudSprites_Dodrio(void);
 #define CreateCloudSprites CreateCloudSprites_Dodrio
-extern void CreateStatusBarSprites(void);
 extern void CreateDodrioGameTask(TaskFunc func);
 extern void (*const sLeaderFuncs[])(void);
 extern void (*const sMemberFuncs[])(void);
@@ -387,6 +386,9 @@ extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
 extern const u32 sDodrio_Gfx[];
 extern const struct SpritePalette sDodrioNormalSpritePalette;
 extern const struct SpritePalette sDodrioShinySpritePalette;
+extern const u32 sStatus_Gfx[];
+extern const struct SpritePalette sStatusPalette;
+extern const struct SpriteTemplate sStatusSpriteTemplate;
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
 extern const union AffineAnimCmd *const gDummySpriteAffineAnimTable[];
@@ -1674,6 +1676,27 @@ void InitStatusBarPos(void)
         sprite->y = -8 - (i * 8);
         sStatusBar->entered[i] = FALSE;
     }
+}
+
+void CreateStatusBarSprites(void)
+{
+    u8 i;
+    void *ptr = AllocZeroed(0x180);
+    struct SpritePalette pal = sStatusPalette;
+
+    LZ77UnCompWram(sStatus_Gfx, ptr);
+    if (ptr)
+    {
+        struct SpriteSheet sheet = {ptr, 0x180, GFXTAG_STATUS};
+        struct SpriteTemplate template = sStatusSpriteTemplate;
+
+        sStatusBar = AllocZeroed(sizeof(*sStatusBar));
+        LoadSpriteSheet(&sheet);
+        LoadSpritePalette(&pal);
+        for (i = 0; i < NUM_STATUS_SQUARES; i++)
+            sStatusBar->spriteIds[i] = CreateSprite(&template, (i * 16) + 48, -8 - (i * 8), 0);
+    }
+    Free(ptr);
 }
 
 void nullsub_15(void)
