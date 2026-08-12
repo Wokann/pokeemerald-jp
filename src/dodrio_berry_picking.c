@@ -1122,6 +1122,11 @@ void ResetPickState(void)
     sGame->players[sGame->multiplayerId].comm.pickState = PICK_NONE;
 }
 
+u16 GetPrizeItemId(void)
+{
+    return sGame->berryResults[sGame->multiplayerId][BERRY_PRIZE] + FIRST_BERRY_INDEX;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
