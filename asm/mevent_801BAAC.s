@@ -8,77 +8,7 @@
 
 
 
-	thumb_func_start InitWonderNewsResources
-InitWonderNewsResources: @ 0x0801C224
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	cmp r4, #0
-	beq _0801C23A
-	ldr r5, _0801C240
-	ldr r0, _0801C244
-	bl AllocZeroed
-	str r0, [r5]
-	cmp r0, #0
-	bne _0801C248
-_0801C23A:
-	movs r0, #0
-	b _0801C274
-	.align 2, 0
-_0801C240: .4byte 0x0202292C
-_0801C244: .4byte 0x000011EC
-_0801C248:
-	adds r1, r4, #0
-	movs r2, #0xe0
-	bl memcpy
-	ldr r1, [r5]
-	ldrb r0, [r1, #3]
-	cmp r0, #7
-	bls _0801C25C
-	movs r0, #0
-	strb r0, [r1, #3]
-_0801C25C:
-	ldr r2, [r5]
-	adds r3, r2, #0
-	adds r3, #0xe0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #4
-	ldr r1, _0801C27C
-	adds r0, r0, r1
-	str r0, [r3]
-	adds r2, #0xe5
-	movs r0, #0xff
-	strb r0, [r2]
-	movs r0, #1
-_0801C274:
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0801C27C: .4byte 0x082C49F4
-	thumb_func_end InitWonderNewsResources
 
-	thumb_func_start DestroyWonderNewsResources
-DestroyWonderNewsResources: @ 0x0801C280
-	push {r4, lr}
-	ldr r4, _0801C2A4
-	ldr r0, [r4]
-	cmp r0, #0
-	beq _0801C29C
-	ldr r2, _0801C2A8
-	movs r1, #0
-	bl memset
-	ldr r0, [r4]
-	bl Free
-	movs r0, #0
-	str r0, [r4]
-_0801C29C:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0801C2A4: .4byte 0x0202292C
-_0801C2A8: .4byte 0x000011EC
-	thumb_func_end DestroyWonderNewsResources
 
 	thumb_func_start FadeToWonderNewsMenu
 FadeToWonderNewsMenu: @ 0x0801C2AC

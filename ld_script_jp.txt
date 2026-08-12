@@ -1837,6 +1837,8 @@ SECTIONS {
         src/mystery_gift_view.o(.text.DrawCardWindow);
         src/mystery_gift_view.o(.text.CreateCardSprites);
         src/mystery_gift_view.o(.text.DestroyCardSprites);
+        src/mystery_gift_view.o(.text.InitWonderNewsResources);
+        src/mystery_gift_view.o(.text.DestroyWonderNewsResources);
         asm/mevent_801BAAC.o(.text);
         src/mystery_gift_view.o(.text.WonderNews_RemoveScrollIndicatorArrowPair);
         src/mystery_gift_view.o(.text.WonderNews_AddScrollIndicatorArrowPair);

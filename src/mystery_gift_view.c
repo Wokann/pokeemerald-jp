@@ -332,6 +332,31 @@ static void DestroyCardSprites(void)
     }
 }
 
+bool32 InitWonderNewsResources(struct WonderNews *news)
+{
+    if (news == NULL)
+        return FALSE;
+    gWonderNewsData = AllocZeroed(sizeof(*gWonderNewsData));
+    if (gWonderNewsData == NULL)
+        return FALSE;
+    memcpy(gWonderNewsData, news, sizeof(struct WonderNews));
+    if (gWonderNewsData->news.bgType >= NUM_WONDER_BGS)
+        gWonderNewsData->news.bgType = 0;
+    gWonderNewsData->gfx = &gUnknown_82C49F4[gWonderNewsData->news.bgType];
+    gWonderNewsData->arrowTaskId = TASK_NONE;
+    return TRUE;
+}
+
+void DestroyWonderNewsResources(void)
+{
+    if (gWonderNewsData != NULL)
+    {
+        memset(gWonderNewsData, 0, sizeof(*gWonderNewsData));
+        Free(gWonderNewsData);
+        gWonderNewsData = NULL;
+    }
+}
+
 void WonderNews_RemoveScrollIndicatorArrowPair(void)
 {
     if (!gWonderNewsData->arrowsRemoved && gWonderNewsData->arrowTaskId != 0xFF)
