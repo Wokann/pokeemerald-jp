@@ -367,7 +367,6 @@ extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
 extern u32 sub_08027480(u8 playerId); // GetScore
-extern void SetCloudInvisibility(bool8);
 extern u8 GetPlayAgainState(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
@@ -1952,6 +1951,13 @@ void FreeCloudSprites(void)
             DestroySprite(sprite);
         FREE_AND_SET_NULL(sCloudSpriteIds[i]);
     }
+}
+
+void SetCloudInvisibility(bool8 invisible)
+{
+    u8 i;
+    for (i = 0; i < NUM_CLOUDS; i++)
+        gSprites[*sCloudSpriteIds[i]].invisible = invisible;
 }
 
 void nullsub_15(void)
