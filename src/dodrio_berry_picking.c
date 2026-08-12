@@ -1216,6 +1216,53 @@ u32 GetScoreByRanking(u8 ranking)
     return scores[ranking];
 }
 
+u32 SetScoreResults(void)
+{
+    u8 i, ranking = 0, nextRanking = 0, playersRanked = 0;
+    u8 numPlayers = sGame->numPlayers;
+
+    GetHighestScore(); // Useless call
+
+    if (GetHighestScore() == 0)
+    {
+        // No one scored any points, put everyone in last place with a score of 0.
+        // Presumably this was supposed to then return, as the assignments in this
+        // loop are then overwritten by the rest of the function
+        for (i = 0; i < numPlayers; i++)
+        {
+            sGame->scoreResults[i].ranking = MAX_RFU_PLAYERS - 1;
+            sGame->scoreResults[i].score = 0;
+        }
+    }
+
+    // Set scores
+    for (i = 0; i < numPlayers; i++)
+        sGame->scoreResults[i].score = Min(GetScore(i), MAX_SCORE);
+
+    // Set rankings
+    do
+    {
+        u32 score = GetScoreByRanking(ranking);
+        u8 curRanking = nextRanking;
+
+        // Find all players with the score for this ranking.
+        // Increment nextRanking but not curRanking to allow
+        // for ties
+        for (i = 0; i < numPlayers; i++)
+        {
+            if (score == sGame->scoreResults[i].score)
+            {
+                sGame->scoreResults[i].ranking = curRanking;
+                nextRanking++;
+                playersRanked++;
+            }
+        }
+        ranking = nextRanking;
+    } while (playersRanked < numPlayers);
+
+    return 0;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
