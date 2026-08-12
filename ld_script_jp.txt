@@ -1295,7 +1295,7 @@ sub_08025238 = AskPlayAgain;
 sub_0802540C = EndLink;
 sub_08025474 = ExitGame;
 sub_08025520 = ResetGame;
-SlideTreeBordersOut = sub_0802602C;
+sub_0802602C = SlideTreeBordersOut;
 UpdateGame_Leader = sub_080268B4;
 UpdateGame_Member = sub_080268E8;
 sub_08029000 = FreeAllWindowBuffers_;
@@ -2418,6 +2418,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.CreateTask_);
         src/dodrio_berry_picking.o(.text.CreateDodrioGameTask);
         src/dodrio_berry_picking.o(.text.SetGameFunc);
+        src/dodrio_berry_picking.o(.text.SlideTreeBordersOut);
         asm/dodrio_berry_picking2.o(.text);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);

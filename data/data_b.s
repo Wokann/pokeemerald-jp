@@ -1358,8 +1358,8 @@ sUnsharedColumns: @ 0x82C7F0B
 gUnknown_82CB314: @ 0x82CB314
 	.incbin "baserom_jp.gba", 0x2cb314, 0xc
 
-	.globl gUnknown_82CB320
-gUnknown_82CB320: @ 0x82CB320
+	.globl sTreeBorderXPos
+sTreeBorderXPos: @ 0x82CB320
 	.incbin "baserom_jp.gba", 0x2cb320, 0x8
 
 	.globl sDifficultyThresholds

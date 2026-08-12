@@ -35,55 +35,6 @@
 
 
 
-	thumb_func_start sub_0802602C
-sub_0802602C: @ 0x0802602C
-	push {r4, lr}
-	ldr r3, _08026060
-	ldr r1, [r3]
-	ldrb r0, [r1, #0x14]
-	lsrs r2, r0, #2
-	adds r0, #1
-	strb r0, [r1, #0x14]
-	cmp r2, #0
-	beq _08026080
-	ldr r3, [r3]
-	ldrb r0, [r3, #0x14]
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _08026080
-	ldr r1, _08026064
-	adds r0, r3, #0
-	adds r0, #0x24
-	ldrb r0, [r0]
-	subs r0, #1
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	cmp r2, r0
-	blo _08026068
-	movs r0, #1
-	b _08026082
-	.align 2, 0
-_08026060: .4byte 0x0202294C
-_08026064: .4byte 0x082CB320
-_08026068:
-	lsls r4, r2, #3
-	adds r1, r4, #0
-	movs r0, #0x14
-	bl SetGpuReg
-	rsbs r4, r4, #0
-	lsls r4, r4, #0x10
-	lsrs r4, r4, #0x10
-	movs r0, #0x18
-	adds r1, r4, #0
-	bl SetGpuReg
-_08026080:
-	movs r0, #0
-_08026082:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0802602C
 
 	thumb_func_start sub_08026088
 sub_08026088: @ 0x08026088

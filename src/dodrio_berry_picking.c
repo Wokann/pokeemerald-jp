@@ -386,6 +386,7 @@ extern const struct WindowTemplate sWindowTemplate_DroppedOut;
 extern const u8 sBg_Pal[];
 extern const u8 sBg_Gfx[];
 extern const u8 sTreeBorder_Gfx[];
+extern const u8 sTreeBorderXPos[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -3590,6 +3591,25 @@ void SetGameFunc(u8 funcId)
     sGame->funcId = funcId;
     sGame->state = 0;
     sGame->timer = 0;
+}
+
+bool32 SlideTreeBordersOut(void)
+{
+    u8 x = sGame->timer / 4;
+    sGame->timer++;
+    if (x != 0 && sGame->timer % 4 == 0)
+    {
+        if (x < sTreeBorderXPos[sGame->numPlayers - 1])
+        {
+            SetGpuReg(REG_OFFSET_BG1HOFS, x * 8);
+            SetGpuReg(REG_OFFSET_BG2HOFS, (u16)-(x * 8));
+            return FALSE;
+        }
+        else
+            return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
