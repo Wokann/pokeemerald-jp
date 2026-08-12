@@ -339,7 +339,6 @@ extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
 extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
-extern u16 sub_0802C52C(void); // GetPrizeQuantity
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
@@ -376,12 +375,20 @@ extern int sub_0802BD8C(void); // PokeJumpRandom
 
 // JP: vine speed tables are ROM data (data/data_b.s gUnknown_82CEEC8 /
 // gUnknown_82CEED8); same layouts as US sVineBaseSpeeds / sVineSpeedDelays.
+// US keeps an anonymous struct for sPrizeQuantityData; JP names it so the
+// ROM table (gUnknown_82CEFA0) can be aliased as an extern array.
+struct PrizeQuantityData
+{
+    u32 score;
+    u32 quantity;
+};
+
 extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
 extern const u16 sSoundEffects[];
 extern const int sScoreBonuses[];
 extern const u16 sPrizeItems[];
-extern const u32 sPrizeQuantityData[];
+extern const struct PrizeQuantityData sPrizeQuantityData[];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
 extern void sub_0802BF74(void); // HandleMonState
@@ -1903,7 +1910,7 @@ void TryUpdateExcellentsRecord(u16 excellentsInRow)
 
 bool32 HasEnoughScoreForPrize(void)
 {
-    if (sPokemonJump->comm.jumpScore >= sPrizeQuantityData[0])
+    if (sPokemonJump->comm.jumpScore >= sPrizeQuantityData[0].score)
         return TRUE;
     else
         return FALSE;
@@ -1912,7 +1919,7 @@ bool32 HasEnoughScoreForPrize(void)
 u16 GetPrizeData(void)
 {
     u16 itemId = GetPrizeItemId_PokeJump();
-    u16 quantity = sub_0802C52C(); // GetPrizeQuantity
+    u16 quantity = GetPrizeQuantity();
     return (quantity << 12) | (itemId & 0xFFF);
 }
 
@@ -1926,6 +1933,22 @@ u16 GetPrizeItemId_PokeJump(void)
 {
     u16 index = Random() % 8; // ARRAY_COUNT(sPrizeItems)
     return sPrizeItems[index];
+}
+
+u16 GetPrizeQuantity(void)
+{
+    u32 quantity, i;
+
+    quantity = 0;
+    for (i = 0; i < 5; i++) // ARRAY_COUNT(sPrizeQuantityData)
+    {
+        if (sPokemonJump->comm.jumpScore >= sPrizeQuantityData[i].score)
+            quantity = sPrizeQuantityData[i].quantity;
+        else
+            break;
+    }
+
+    return quantity;
 }
 
 void InitGame(struct PokemonJump *jump)
