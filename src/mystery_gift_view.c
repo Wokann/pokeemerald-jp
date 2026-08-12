@@ -102,6 +102,8 @@ extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
 extern const struct OamData gUnknown_84FD040;
 
 extern void sub_0801CA6C(void); // UpdateNewsScroll (still in asm)
+extern void sub_0801C8B4(void); // BufferNewsText (still in asm)
+extern void sub_0801C95C(void); // DrawNewsWindows (still in asm)
 
 
 
@@ -355,6 +357,149 @@ void DestroyWonderNewsResources(void)
         Free(gWonderNewsData);
         gWonderNewsData = NULL;
     }
+}
+
+s32 FadeToWonderNewsMenu(void)
+{
+    if (gWonderNewsData == NULL)
+        return -1;
+
+    switch (gWonderNewsData->enterExitState)
+    {
+    case 0:
+        BeginNormalPaletteFade(-1, 0, 0, 0x10, 0);
+        break;
+    case 1:
+        if (UpdatePaletteFade() != 0)
+            return 0;
+        ChangeBgY(0, 0, 0);
+        ChangeBgY(1, 0, 0);
+        ChangeBgY(2, 0, 0);
+        ChangeBgY(3, 0, 0);
+        SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(0, DISPLAY_WIDTH));
+        SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(28, 152));
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG3 | WINOUT_WIN01_OBJ);
+        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        break;
+    case 2:
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x1E, 0x14);
+        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x1E, 0x14);
+        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x1E, 0x14);
+        FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 0x1E, 0x14);
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        DecompressAndCopyTileDataToVram(3, gWonderNewsData->gfx->tiles, 0, 8, 0);
+        gWonderNewsData->windowIds[0] = AddWindow(&gUnknown_82C4314[0]);
+        gWonderNewsData->windowIds[1] = AddWindow(&gUnknown_82C4314[1]);
+        break;
+    case 3:
+        if (FreeTempTileDataBuffersIfPossible() != 0)
+            return 0;
+        LoadPalette(GetTextWindowPalette(1), 0x20, 0x20);
+        gPaletteFade.bufferTransferDisabled = TRUE;
+        LoadPalette(gWonderNewsData->gfx->pal, 0x10, 0x20);
+        LZ77UnCompWram(gWonderNewsData->gfx->map, gWonderNewsData->bgTilemapBuffer);
+        CopyRectToBgTilemapBufferRect(1, gWonderNewsData->bgTilemapBuffer, 0, 0, 0x1E, 3, 0, 0, 0x1E, 3, 1, 8, 0);
+        CopyRectToBgTilemapBufferRect(3, gWonderNewsData->bgTilemapBuffer, 0, 3, 0x1E, 0x17, 0, 3, 0x1E, 0x17, 1, 8, 0);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(3);
+        break;
+    case 4:
+        sub_0801C8B4();
+        break;
+    case 5:
+        sub_0801C95C();
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(2);
+        break;
+    case 6:
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
+        gPaletteFade.bufferTransferDisabled = FALSE;
+        gWonderNewsData->arrowTaskId = AddScrollIndicatorArrowPair((const struct ScrollArrowsTemplate *)&gWonderNewsData->unk_1DC, &gWonderNewsData->scrollOffset);
+        BeginNormalPaletteFade(-1, 0, 0x10, 0, 0);
+        UpdatePaletteFade();
+        break;
+    default:
+        if (UpdatePaletteFade() == 0)
+        {
+            gWonderNewsData->enterExitState = 0;
+            return 1;
+        }
+        return 0;
+    }
+
+    gWonderNewsData->enterExitState++;
+    return 0;
+}
+
+s32 FadeOutFromWonderNews(void)
+{
+    if (gWonderNewsData == NULL)
+        return -1;
+
+    switch (gWonderNewsData->enterExitState)
+    {
+    case 0:
+        BeginNormalPaletteFade(-1, 0, 0, 0x10, 0);
+        break;
+    case 1:
+        if (UpdatePaletteFade() != 0)
+            return 0;
+        ChangeBgY(2, 0, 0);
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+        break;
+    case 2:
+        FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x1E, 0x14);
+        FillBgTilemapBufferRect_Palette0(1, 0, 0, 0, 0x1E, 0x14);
+        FillBgTilemapBufferRect_Palette0(2, 0, 0, 0, 0x1E, 0x18);
+        FillBgTilemapBufferRect_Palette0(3, 0, 0, 0, 0x1E, 0x18);
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        CopyBgTilemapBufferToVram(3);
+        break;
+    case 3:
+        HideBg(1);
+        HideBg(2);
+        RemoveWindow(gWonderNewsData->windowIds[1]);
+        RemoveWindow(gWonderNewsData->windowIds[0]);
+        break;
+    case 4:
+        ChangeBgY(2, 0, 0);
+        ChangeBgY(3, 0, 0);
+        if (gWonderNewsData->arrowTaskId != SPRITE_NONE)
+        {
+            RemoveScrollIndicatorArrowPair(gWonderNewsData->arrowTaskId);
+            gWonderNewsData->arrowTaskId = SPRITE_NONE;
+        }
+        break;
+    case 5:
+        PrintMysteryGiftOrEReaderTopMenu(gGiftIsFromEReader);
+        MG_DrawCheckerboardPattern(3);
+        CopyBgTilemapBufferToVram(0);
+        CopyBgTilemapBufferToVram(3);
+        BeginNormalPaletteFade(-1, 0, 0x10, 0, 0);
+        break;
+    default:
+        if (UpdatePaletteFade() == 0)
+        {
+            gWonderNewsData->enterExitState = 0;
+            return 1;
+        }
+        return 0;
+    }
+
+    gWonderNewsData->enterExitState++;
+    return 0;
 }
 
 void WonderNews_RemoveScrollIndicatorArrowPair(void)
