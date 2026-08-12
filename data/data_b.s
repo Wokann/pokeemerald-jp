@@ -1202,8 +1202,8 @@ gUnknown_82C5E74: @ 0x82C5E74
 gUnknown_82C5E7C: @ 0x82C5E7C
 	.incbin "baserom_jp.gba", 0x2c5e7c, 0x8
 
-	.globl gUnknown_82C5E84
-gUnknown_82C5E84: @ 0x82C5E84
+	.globl sIntroOutroVibrationData
+sIntroOutroVibrationData: @ 0x82C5E84
 	.incbin "baserom_jp.gba", 0x2c5e84, 0x24
 
 	.globl gUnknown_82C5EA8

@@ -259,6 +259,7 @@ extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 extern const u8 *const sMessages[];
 extern const u8 sReceivedPlayerBitmasks[];
+extern const s8 sIntroOutroVibrationData[][7];
 extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
@@ -1394,6 +1395,53 @@ u32 Cmd_DropBerriesIntoCrusher(struct BerryCrushGame *game, u8 *args)
         PlaySE(SE_FALL);
         RunOrScheduleCommand(CMD_DROP_LID, SCHEDULE_CMD, NULL);
         game->gameState = STATE_DROP_LID;
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_DropLid(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        game->depth += 4;
+        if (game->depth < 0)
+            return 0;
+        game->depth = 0;
+        game->gfx.vibrationIdx = 4;
+        game->gfx.counter = 0;
+        game->gfx.numVibrations = sIntroOutroVibrationData[game->gfx.vibrationIdx][0];
+        PlaySE(SE_M_STRENGTH);
+        break;
+    case 1:
+        game->vibration = sIntroOutroVibrationData[game->gfx.vibrationIdx][game->gfx.counter];
+        SetGpuReg(REG_OFFSET_BG0VOFS, -game->vibration);
+        SetGpuReg(REG_OFFSET_BG2VOFS, -game->vibration);
+        SetGpuReg(REG_OFFSET_BG3VOFS, -game->vibration);
+        game->gfx.counter++;
+        if (game->gfx.counter < game->gfx.numVibrations)
+            return 0;
+        if (game->gfx.vibrationIdx == 0)
+            break;
+        game->gfx.vibrationIdx--;
+        game->gfx.numVibrations = sIntroOutroVibrationData[game->gfx.vibrationIdx][0];
+        game->gfx.counter = 0;
+        return 0;
+    case 2:
+        game->vibration = 0;
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 3:
+        if (!IsLinkTaskFinished())
+            return 0;
+        RunOrScheduleCommand(CMD_COUNTDOWN, SCHEDULE_CMD, NULL);
+        game->gameState = STATE_COUNTDOWN;
         game->cmdState = 0;
         return 0;
     }
