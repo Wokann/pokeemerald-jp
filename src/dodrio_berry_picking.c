@@ -282,7 +282,6 @@ extern void StartDodrioIntroAnim(u8);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
 extern void InitFirstWaveOfBerries(void);
-extern u8 UpdatePickStateQueue(u8);
 extern void UpdateFallingBerries(void);
 extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
@@ -1074,6 +1073,17 @@ void TryUpdateRecords(void)
         gSaveBlock2Ptr->berryPick.berriesPicked = berriesPicked;
     if (gSaveBlock2Ptr->berryPick.berriesPickedInRow < sGame->maxBerriesPickedInRow)
         gSaveBlock2Ptr->berryPick.berriesPickedInRow = sGame->maxBerriesPickedInRow;
+}
+
+u8 UpdatePickStateQueue(u8 pickState)
+{
+    u8 i, nextState;
+
+    nextState = sGame->pickStateQueue[ARRAY_COUNT(sGame->pickStateQueue) - 1];
+    for (i = ARRAY_COUNT(sGame->pickStateQueue) - 1; i != 0; i--)
+        sGame->pickStateQueue[i] = sGame->pickStateQueue[i - 1];
+    sGame->pickStateQueue[0] = pickState;
+    return nextState;
 }
 
 void InitResults_Leader(void)

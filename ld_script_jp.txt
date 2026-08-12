@@ -1325,7 +1325,7 @@ StartDodrioIntroAnim = sub_08028230;
 SetGfxFuncById = sub_0802900C;
 SetGameFunc = sub_08026008;
 InitFirstWaveOfBerries = sub_08026088;
-UpdatePickStateQueue = sub_080272D8;
+sub_080272D8 = UpdatePickStateQueue;
 UpdateFallingBerries = sub_080264E4;
 HandleSound_Leader = sub_08025D10;
 HandleSound_Member = sub_08025E0C;
@@ -2371,6 +2371,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetRandomPrize);
         src/dodrio_berry_picking.o(.text.GetBerriesPicked);
         src/dodrio_berry_picking.o(.text.TryUpdateRecords);
+        src/dodrio_berry_picking.o(.text.UpdatePickStateQueue);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
