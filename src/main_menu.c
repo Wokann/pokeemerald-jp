@@ -68,7 +68,11 @@ extern const u8 gUnknown_8277224[];
 extern const u8 gUnknown_827722D[];
 extern const u8 gUnknown_8277265[];
 extern const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[];
-extern void CreateMainMenuErrorWindow(const u8 *text);
+extern const struct MenuAction sMenuActions_Gender[];
+extern const u8 *const sMalePresetNames[];
+extern const u8 *const sFemalePresetNames[];
+extern void PrintTextArray(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, const struct MenuAction *texts);
+extern u8 sub_081984B0(u8 windowId, u8 fontId, u8 x, u8 y, u8 lineHeight, u8 itemCount, u8 initialCursorPos);
 extern void ClearMainMenuWindowTilemap(const struct WindowTemplate *);
 extern void Task_DisplayMainMenu(u8 taskId);
 extern u16 sCurrItemAndOptionMenuCheck;
@@ -96,6 +100,10 @@ extern void CB2_NewGameBirchSpeech_ReturnFromNamingScreen(void);
 extern void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId);
 extern void Task_NewGameBirchSpeech_AreYouReady(u8 taskId);
 extern void Task_NewGameBirchSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId);
+extern void MainMenu_FormatSavegamePlayer(void);
+extern void MainMenu_FormatSavegameTime(void);
+extern void MainMenu_FormatSavegamePokedex(void);
+extern void MainMenu_FormatSavegameBadges(void);
 extern u8 sBirchSpeechMainTaskId;
 extern u8 sStartedPokeBallTask;
 
@@ -145,6 +153,10 @@ static void NewGameBirchSpeech_StartFadeOutTarget1InTarget2(u8 taskId, u8 delay)
 static void NewGameBirchSpeech_StartFadeInTarget1OutTarget2(u8 taskId, u8 delay);
 static void NewGameBirchSpeech_StartFadePlatformIn(u8 taskId, u8 delay);
 static void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 delay);
+static void NewGameBirchSpeech_ShowGenderMenu(void);
+static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void);
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId);
+static void MainMenu_FormatSavegameText(void);
 
 #define NUM_PRESET_NAMES 20
 
@@ -1655,6 +1667,54 @@ static void NewGameBirchSpeech_StartFadePlatformOut(u8 taskId, u8 delay)
     gTasks[taskId2].tDelayBefore = 8;
     gTasks[taskId2].tDelay = delay;
     gTasks[taskId2].tDelayTimer = delay;
+}
+
+static void NewGameBirchSpeech_ShowGenderMenu(void)
+{
+    DrawMainMenuWindowBorder(&sNewGameBirchSpeechTextWindows[1], 0xDB);
+    FillWindowPixelBuffer(1, PIXEL_FILL(1));
+    PrintTextArray(1, 1, GetMenuCursorDimensionByFont(1, 0), 2, 0x10, 2, sMenuActions_Gender);
+    sub_081984B0(1, 1, 0, 2, 0x10, 2, 0);
+    PutWindowTilemap(1);
+    CopyWindowToVram(1, COPYWIN_GFX);
+}
+
+static s8 NewGameBirchSpeech_ProcessGenderMenuInput(void)
+{
+    return Menu_ProcessInputNoWrap();
+}
+
+static void NewGameBirchSpeech_SetDefaultPlayerName(u8 nameId)
+{
+    const u8 *name;
+    u8 i;
+
+    if (gSaveBlock2Ptr->playerGender == MALE)
+        name = sMalePresetNames[nameId];
+    else
+        name = sFemalePresetNames[nameId];
+    for (i = 0; i <= 4; i++)
+        gSaveBlock2Ptr->playerName[i] = name[i];
+    gSaveBlock2Ptr->playerName[5] = EOS;
+}
+
+void CreateMainMenuErrorWindow(const u8 *str)
+{
+    FillWindowPixelBuffer(7, PIXEL_FILL(1));
+    AddTextPrinterParameterized(7, FONT_NORMAL, str, 0, 2, 2, 0);
+    PutWindowTilemap(7);
+    CopyWindowToVram(7, COPYWIN_GFX);
+    DrawMainMenuWindowBorder(&sWindowTemplates_MainMenu[7], MAIN_MENU_BORDER_TILE);
+    SetGpuReg(REG_OFFSET_WIN0H, 0x9E7);
+    SetGpuReg(REG_OFFSET_WIN0V, 0x719F);
+}
+
+static void MainMenu_FormatSavegameText(void)
+{
+    MainMenu_FormatSavegamePlayer();
+    MainMenu_FormatSavegamePokedex();
+    MainMenu_FormatSavegameTime();
+    MainMenu_FormatSavegameBadges();
 }
 
 #undef tMainTask
