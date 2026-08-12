@@ -2022,6 +2022,11 @@ void LoadWindowFrameGfx(u8 windowId)
     LoadPalette(GetWindowFrameTilesPal(windowId)->pal, 0xa0, 0x20);
 }
 
+void nullsub_16(void)
+{
+    LoadUserWindowBorderGfx_(0, 10, 0xB0);
+}
+
 void nullsub_15(void)
 {
 }

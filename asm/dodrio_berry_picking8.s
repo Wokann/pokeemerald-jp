@@ -5,16 +5,6 @@
 
 
 
-	thumb_func_start nullsub_16
-nullsub_16: @ 0x08028D58
-	push {lr}
-	movs r0, #0
-	movs r1, #0xa
-	movs r2, #0xb0
-	bl LoadUserWindowBorderGfx_
-	pop {r0}
-	bx r0
-	thumb_func_end nullsub_16
 
 	thumb_func_start sub_08028D68
 sub_08028D68: @ 0x08028D68
