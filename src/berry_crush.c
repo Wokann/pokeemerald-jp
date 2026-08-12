@@ -29,6 +29,12 @@
 
 #define CRUSHER_START_Y (-104)
 
+#define TAG_CRUSHER_BASE  1
+#define PALTAG_EFFECT     2
+#define GFXTAG_IMPACT     2
+#define GFXTAG_SPARKLE    3
+#define TAG_TIMER_DIGITS  4
+
 #define F_INPUT_HIT_SYNC (1 << 2) // Input at same time as another player
 #define INPUT_FLAGS_PER_PLAYER 3
 #define INPUT_FLAG_MASK ((1 << INPUT_FLAGS_PER_PLAYER) - 1)
@@ -202,7 +208,7 @@ void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 void CreateGameSprites(struct BerryCrushGame *);
-extern void DestroyGameSprites(struct BerryCrushGame *);
+void DestroyGameSprites(struct BerryCrushGame *);
 extern void SpriteCB_Sparkle_Init(struct Sprite *);
 
 void SaveResults(void);
@@ -968,6 +974,29 @@ void CreateGameSprites(struct BerryCrushGame *game)
 
     if (game->gameState == STATE_INIT)
         HideTimer(&game->gfx);
+}
+
+void DestroyGameSprites(struct BerryCrushGame *game)
+{
+    u8 i = 0;
+    FreeSpriteTilesByTag(TAG_TIMER_DIGITS);
+    FreeSpriteTilesByTag(GFXTAG_SPARKLE);
+    FreeSpriteTilesByTag(GFXTAG_IMPACT);
+    FreeSpriteTilesByTag(TAG_CRUSHER_BASE);
+    FreeSpritePaletteByTag(TAG_TIMER_DIGITS);
+    FreeSpritePaletteByTag(PALTAG_EFFECT);
+    FreeSpritePaletteByTag(TAG_CRUSHER_BASE);
+    for (i = 0; i < ARRAY_COUNT(game->gfx.timerSprites); i++)
+        DestroySprite(game->gfx.timerSprites[i]);
+    DigitObjUtil_DeletePrinter(2);
+    DigitObjUtil_DeletePrinter(1);
+    DigitObjUtil_DeletePrinter(0);
+    for (i = 0; i < ARRAY_COUNT(game->gfx.sparkleSprites); i++)
+        DestroySprite(game->gfx.sparkleSprites[i]);
+    for (i = 0; i < game->playerCount; i++)
+        DestroySprite(game->gfx.impactSprites[i]);
+    if (game->gfx.coreSprite->inUse)
+        DestroySprite(game->gfx.coreSprite);
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
