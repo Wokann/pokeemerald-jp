@@ -222,6 +222,18 @@ extern const struct MessageWindowInfo gUnknown_82C57D4[];
 // JP keyboard swap menu title text (0x082C5858).
 extern const u8 gUnknown_82C5858[];
 
+// JP union room chat graphics data.
+extern const u8 gUnknown_82C5220[];
+extern const u8 gUnknown_82C5240[];
+extern const u8 gUnknown_82C529C[];
+extern const u8 gUnknown_82C5348[];
+extern const u8 gUnknown_82C5368[];
+extern const u8 gUnknown_82C5388[];
+extern const u8 gUnknown_82C55BC[];
+extern const u8 gUnknown_82C56B4[];
+extern const u8 gUnknown_82C56D4[];
+extern const u8 gUnknown_85D7B04[];
+
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
 u16 GetNumOverflowCharsInMessage(void);
@@ -336,6 +348,17 @@ bool32 SlideKeyboardPageOut(void);
 bool32 SlideKeyboardPageIn(void);
 void ShowKeyboardSwapMenu(void);
 void HideKeyboardSwapMenu(void);
+void PrintChatMessage(u16 row, u8 *str, u8 colorIdx);
+void ResetGpuBgState(void);
+void SetBgTilemapBuffers(void);
+void ClearBg0(void);
+void LoadKeyboardWindowGfx(void);
+void LoadChatWindowGfx(void);
+void LoadChatUnkPalette(void);
+void LoadChatMessagesWindow(void);
+void DrawKeyboardWindow(void);
+void LoadTextEntryWindow(void);
+void LoadKeyboardSwapWindow(void);
 static void PrepareSendBuffer_Null(u8 *buffer);
 static void PrepareSendBuffer_Join(u8 *buffer);
 static void PrepareSendBuffer_Chat(u8 *buffer);
@@ -2447,4 +2470,124 @@ void HideKeyboardSwapMenu(void)
 {
     ClearStdWindowAndFrameToTransparent(WIN_SWAP_MENU, FALSE);
     ClearWindowTilemap(WIN_SWAP_MENU);
+}
+
+// JP chat history rows are 12px apart (US uses 15) and print with FONT_SMALL.
+void PrintChatMessage(u16 row, u8 *str, u8 colorIdx)
+{
+    u8 color[3];
+    color[0] = TEXT_COLOR_WHITE;
+    color[1] = colorIdx * 2 + 2;
+    color[2] = colorIdx * 2 + 3;
+    FillWindowPixelRect(WIN_CHAT_HISTORY, PIXEL_FILL(1), 0, row * 12, 168, 12);
+    AddTextPrinterParameterized3(WIN_CHAT_HISTORY, FONT_SMALL, 0, row * 12, color, -1, str);
+}
+
+void ResetGpuBgState(void)
+{
+    ChangeBgX(0, 0, BG_COORD_SET);
+    ChangeBgY(0, 0, BG_COORD_SET);
+    ChangeBgX(1, 0, BG_COORD_SET);
+    ChangeBgY(1, 0, BG_COORD_SET);
+    ChangeBgX(2, 0, BG_COORD_SET);
+    ChangeBgY(2, 0, BG_COORD_SET);
+    ChangeBgX(3, 0, BG_COORD_SET);
+    ChangeBgY(3, 0, BG_COORD_SET);
+    ShowBg(0);
+    ShowBg(1);
+    ShowBg(2);
+    ShowBg(3);
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON | DISPCNT_WIN1_ON | DISPCNT_OBJWIN_ON);
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN0_ON);
+    SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(64, DISPLAY_WIDTH));
+    SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(0, DISPLAY_HEIGHT - 16));
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG0 | WININ_WIN0_BG2 | WININ_WIN0_BG3
+                              | WININ_WIN0_OBJ | WININ_WIN0_CLR);
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+}
+
+void SetBgTilemapBuffers(void)
+{
+    SetBgTilemapBuffer(0, sDisplay->bg0Buffer);
+    SetBgTilemapBuffer(1, sDisplay->bg1Buffer);
+    SetBgTilemapBuffer(3, sDisplay->bg3Buffer);
+    SetBgTilemapBuffer(2, sDisplay->bg2Buffer);
+}
+
+void ClearBg0(void)
+{
+    RequestDma3Fill(0, (void *)BG_CHAR_ADDR(0), 0x20, 1);
+    FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 32, 32);
+    CopyBgTilemapBufferToVram(0);
+}
+
+void LoadKeyboardWindowGfx(void)
+{
+    LoadPalette(gUnknown_82C5220, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
+    LoadPalette(gUnknown_82C5348, BG_PLTT_ID(12), PLTT_SIZE_4BPP);
+    DecompressAndCopyTileDataToVram(1, gUnknown_82C5240, 0, 0, 0);
+    CopyToBgTilemapBuffer(1, gUnknown_82C529C, 0, 0);
+    CopyBgTilemapBufferToVram(1);
+}
+
+void LoadChatWindowGfx(void)
+{
+    u8 *ptr;
+
+    LoadPalette(gUnknown_82C5368, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    ptr = DecompressAndCopyTileDataToVram(2, gUnknown_82C5388, 0, 0, 0);
+    if (ptr)
+    {
+        CpuFastCopy(&ptr[0x11 * TILE_SIZE_4BPP], &sDisplay->textEntryTiles[TILE_SIZE_4BPP * 0], TILE_SIZE_4BPP);
+        CpuFastCopy(&ptr[0x21 * TILE_SIZE_4BPP], &sDisplay->textEntryTiles[TILE_SIZE_4BPP * 1], TILE_SIZE_4BPP);
+    }
+
+    CopyToBgTilemapBuffer(2, gUnknown_82C55BC, 0, 0);
+    CopyBgTilemapBufferToVram(2);
+}
+
+void LoadChatUnkPalette(void)
+{
+    LoadPalette(gUnknown_82C56B4, BG_PLTT_ID(8), 0x20);
+    RequestDma3Fill(0, (void *)BG_CHAR_ADDR(1) + TILE_SIZE_4BPP, TILE_SIZE_4BPP, 1);
+}
+
+void LoadChatMessagesWindow(void)
+{
+    LoadPalette(gUnknown_82C56D4, BG_PLTT_ID(15), 0x20);
+    PutWindowTilemap(WIN_CHAT_HISTORY);
+    FillWindowPixelBuffer(WIN_CHAT_HISTORY, PIXEL_FILL(1));
+    CopyWindowToVram(WIN_CHAT_HISTORY, COPYWIN_FULL);
+}
+
+void DrawKeyboardWindow(void)
+{
+    PutWindowTilemap(WIN_KEYBOARD);
+    PrintCurrentKeyboardPage();
+    CopyWindowToVram(WIN_KEYBOARD, COPYWIN_FULL);
+}
+
+void LoadTextEntryWindow(void)
+{
+    int i;
+    u8 unused[2];
+    unused[0] = 0;
+    unused[1] = 0xFF;
+
+    for (i = 0; i < MAX_MESSAGE_LENGTH; i++)
+        BlitBitmapToWindow(WIN_TEXT_ENTRY, sDisplay->textEntryTiles, i * 8, 0, 8, 16);
+
+    FillWindowPixelBuffer(WIN_TEXT_ENTRY, PIXEL_FILL(0));
+    PutWindowTilemap(WIN_TEXT_ENTRY);
+    CopyWindowToVram(WIN_TEXT_ENTRY, COPYWIN_FULL);
+}
+
+void LoadKeyboardSwapWindow(void)
+{
+    FillWindowPixelBuffer(WIN_SWAP_MENU, PIXEL_FILL(1));
+    LoadUserWindowBorderGfx(WIN_SWAP_MENU, 1, BG_PLTT_ID(13));
+    LoadUserWindowBorderGfx_(WIN_SWAP_MENU, 0xA, BG_PLTT_ID(2));
+    LoadPalette(gUnknown_85D7B04, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
 }
