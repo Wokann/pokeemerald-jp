@@ -1,6 +1,7 @@
 #include "global.h"
 #include "bg.h"
 #include "constants/rgb.h"
+#include "constants/songs.h"
 #include "event_data.h"
 #include "gpu_regs.h"
 #include "link.h"
@@ -40,6 +41,14 @@ extern void DrawMainMenuWindowBorder(const struct WindowTemplate *windowTemplate
 extern u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsTemplate *template, u16 *ignore);
 extern void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId);
 extern void Task_HighlightSelectedMainMenuItem(u8 taskId);
+extern void HighlightSelectedMainMenuItem(u8 menuType, u8 currItem, s16 isScrolled);
+extern void Task_HandleMainMenuInput(u8 taskId);
+extern void Task_HandleMainMenuAPressed(u8 taskId);
+extern void Task_HandleMainMenuBPressed(u8 taskId);
+
+static void Task_HighlightSelectedMainMenuItem(u8 taskId);
+static bool8 HandleMainMenuInput(u8 taskId);
+static void Task_HandleMainMenuInput(u8 taskId);
 
 enum
 {
@@ -50,6 +59,8 @@ enum
 };
 
 #define tMenuType data[0]
+#define tCurrItem data[1]
+#define tItemCount data[12]
 #define tScrollArrowTaskId data[13]
 #define tIsScrolled data[14]
 #define tWirelessAdapterConnected data[15]
@@ -335,7 +346,67 @@ static void Task_DisplayMainMenu(u8 taskId)
     }
 }
 
+static void Task_HighlightSelectedMainMenuItem(u8 taskId)
+{
+    HighlightSelectedMainMenuItem(gTasks[taskId].tMenuType, gTasks[taskId].tCurrItem, gTasks[taskId].tIsScrolled);
+    gTasks[taskId].func = Task_HandleMainMenuInput;
+}
+
+static bool8 HandleMainMenuInput(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        IsWirelessAdapterConnected();   // why bother calling this here? debug? Task_HandleMainMenuAPressed will check too
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+        gTasks[taskId].func = Task_HandleMainMenuAPressed;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_WHITEALPHA);
+        SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(0, DISPLAY_WIDTH));
+        SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(0, DISPLAY_HEIGHT));
+        gTasks[taskId].func = Task_HandleMainMenuBPressed;
+    }
+    else if ((JOY_NEW(DPAD_UP)) && tCurrItem > 0)
+    {
+        if (tMenuType == HAS_MYSTERY_EVENTS && tIsScrolled == TRUE && tCurrItem == 1)
+        {
+            ChangeBgY(0, 0x2000, BG_COORD_SUB);
+            ChangeBgY(1, 0x2000, BG_COORD_SUB);
+            gTasks[tScrollArrowTaskId].tArrowTaskIsScrolled = tIsScrolled = FALSE;
+        }
+        tCurrItem--;
+        sCurrItemAndOptionMenuCheck = tCurrItem;
+        return TRUE;
+    }
+    else if ((JOY_NEW(DPAD_DOWN)) && tCurrItem < tItemCount - 1)
+    {
+        if (tMenuType == HAS_MYSTERY_EVENTS && tCurrItem == 3 && tIsScrolled == FALSE)
+        {
+            ChangeBgY(0, 0x2000, BG_COORD_ADD);
+            ChangeBgY(1, 0x2000, BG_COORD_ADD);
+            gTasks[tScrollArrowTaskId].tArrowTaskIsScrolled = tIsScrolled = TRUE;
+        }
+        tCurrItem++;
+        sCurrItemAndOptionMenuCheck = tCurrItem;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void Task_HandleMainMenuInput(u8 taskId)
+{
+    if (HandleMainMenuInput(taskId))
+        gTasks[taskId].func = Task_HighlightSelectedMainMenuItem;
+}
+
 #undef tMenuType
+#undef tCurrItem
+#undef tItemCount
 #undef tScrollArrowTaskId
 #undef tIsScrolled
 #undef tWirelessAdapterConnected

@@ -2998,6 +2998,9 @@ SECTIONS {
         src/main_menu.o(.text.Task_MainMenuCheckBattery);
         src/main_menu.o(.text.Task_WaitForSaveFileErrorWindow);
         src/main_menu.o(.text.Task_DisplayMainMenu);
+        src/main_menu.o(.text.Task_HighlightSelectedMainMenuItem);
+        src/main_menu.o(.text.HandleMainMenuInput);
+        src/main_menu.o(.text.Task_HandleMainMenuInput);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
