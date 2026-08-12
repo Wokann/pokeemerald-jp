@@ -1243,6 +1243,7 @@ sub_08022950 = RunOrScheduleCommand;
 sub_08022A14 = Cmd_WaitPaletteFade;
 sub_08022A78 = Cmd_PrintMessage;
 sub_08022B80 = Cmd_ShowGameDisplay;
+sub_08022BA0 = Cmd_HideGameDisplay;
 SetPaletteFadeArgs = sub_080243D0;
 ChooseBerryForMachine = sub_081AA968;
 CopyPlayerNameWindowGfxToBg = sub_08022434;
@@ -2176,6 +2177,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_WaitPaletteFade);
         src/berry_crush.o(.text.Cmd_PrintMessage);
         src/berry_crush.o(.text.Cmd_ShowGameDisplay);
+        src/berry_crush.o(.text.Cmd_HideGameDisplay);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

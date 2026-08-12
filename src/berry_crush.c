@@ -1216,6 +1216,13 @@ u32 Cmd_ShowGameDisplay(struct BerryCrushGame *game, u8 *args)
     return 0;
 }
 
+u32 Cmd_HideGameDisplay(struct BerryCrushGame *game, u8 *args)
+{
+    if (HideGameDisplay())
+        RunOrScheduleCommand(game->nextCmd, RUN_CMD, game->commandArgs);
+    return 0;
+}
+
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
 {
     left = (left * 4) - (GetStringWidth(FONT_NORMAL, string, -1) / 2u);

@@ -7,24 +7,6 @@
 
 
 
-	thumb_func_start sub_08022BA0
-sub_08022BA0: @ 0x08022BA0
-	push {r4, lr}
-	adds r4, r0, #0
-	bl sub_08021038
-	cmp r0, #0
-	beq _08022BB8
-	ldrb r0, [r4, #0xe]
-	adds r2, r4, #0
-	adds r2, #0x36
-	movs r1, #0
-	bl sub_08022950
-_08022BB8:
-	movs r0, #0
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08022BA0
 
 	thumb_func_start sub_08022BC0
 sub_08022BC0: @ 0x08022BC0
