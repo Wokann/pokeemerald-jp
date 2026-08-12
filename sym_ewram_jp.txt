@@ -168,6 +168,7 @@ sURoomBattleData = ABSOLUTE(0x02022920);
 sChat = ABSOLUTE(0x02022938);
 sDisplay = ABSOLUTE(0x0202293C);
 sSprites = ABSOLUTE(0x02022940);
+sGame = ABSOLUTE(0x02022944);
 gTradeMail = ABSOLUTE(0x02031E60);
 gSelectedTradeMonPositions = ABSOLUTE(0x02031F38);
 gSelectedOrderFromParty = ABSOLUTE(0x0203CBC4);
