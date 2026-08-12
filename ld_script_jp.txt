@@ -1475,6 +1475,7 @@ sub_0802BF64 = AllowVineUpdates;
 sub_0802BF74 = HandleMonState;
 sub_0802C08C = UpdateJump;
 sub_0802C130 = TryUpdateScore;
+sub_0802C22C = UpdateVineHitStates;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
 sSoundEffects = gUnknown_82CEEE0;
@@ -2680,6 +2681,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.HandleMonState);
         src/pokemon_jump.o(.text.UpdateJump);
         src/pokemon_jump.o(.text.TryUpdateScore);
+        src/pokemon_jump.o(.text.UpdateVineHitStates);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);

@@ -1755,6 +1755,44 @@ void TryUpdateScore(void)
     }
 }
 
+bool32 UpdateVineHitStates(void)
+{
+    int i;
+
+    if (sPokemonJump->vineState == VINE_UPSWING_LOWER && sPokemonJump->player->jumpOffset == 0)
+    {
+        // Vine is in position to hit the player and jump offset is 0.
+        // Unless the player had just jumped and has been forced to the ground
+        // by someone else getting hit, the player has been hit
+        if (sPokemonJump->player->prevMonState == MONSTATE_JUMP && IsGameOver() == TRUE)
+        {
+            sPokemonJump->player->jumpState = JUMPSTATE_SUCCESS;
+        }
+        else
+        {
+            // Hit vine
+            SetMonStateHit();
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        }
+    }
+
+    if (sPokemonJump->vineState == VINE_UPSWING_LOW
+     && sPokemonJump->prevVineState == VINE_UPSWING_LOWER
+     && sPokemonJump->player->monState != MONSTATE_HIT)
+    {
+        sPokemonJump->player->jumpState = JUMPSTATE_SUCCESS;
+        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+    }
+
+    for (i = 0; i < sPokemonJump->numPlayers; i++)
+    {
+        if (sPokemonJump->players[i].monState == MONSTATE_HIT)
+            return FALSE;
+    }
+
+    return TRUE;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
