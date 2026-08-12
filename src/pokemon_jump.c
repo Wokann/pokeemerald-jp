@@ -1535,6 +1535,14 @@ void SetMonStateJump(void)
     sPokemonJump->player->monState = MONSTATE_JUMP;
 }
 
+void SetMonStateHit(void)
+{
+    sPokemonJump->player->prevMonState = sPokemonJump->player->monState;
+    sPokemonJump->player->monState = MONSTATE_HIT;
+    sPokemonJump->player->jumpTimeStart = sPokemonJump->vineTimer;
+    sPokemonJump->player->jumpState = JUMPSTATE_FAILURE;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
