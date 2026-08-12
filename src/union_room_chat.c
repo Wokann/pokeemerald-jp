@@ -283,6 +283,12 @@ bool32 Display_ScrollChat(u8 *state);
 bool32 Display_AnimateKeyboardCursor(u8 *state);
 bool32 Display_PrintInputText(u8 *state);
 bool32 Display_PrintExitingChat(u8 *state);
+bool32 Display_PrintLeaderLeft(u8 *state);
+bool32 Display_AskSave(u8 *state);
+bool32 Display_AskOverwriteSave(u8 *state);
+bool32 Display_PrintSavingDontTurnOff(u8 *state);
+bool32 Display_PrintSavedTheGame(u8 *state);
+bool32 Display_AskConfirmLeaderLeave(u8 *state);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -2045,4 +2051,112 @@ bool32 Display_PrintExitingChat(u8 *state)
     }
 
     return TRUE;
+}
+
+bool32 Display_PrintLeaderLeft(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        DynamicPlaceholderTextUtil_Reset();
+        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, GetChatHostName());
+        AddStdMessageWindow(STDMESSAGE_LEADER_LEFT, 0);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_AskSave(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_ASK_SAVE, 0);
+        AddYesNoMenuAt(23, 10, 1);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_AskOverwriteSave(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_ASK_OVERWRITE, 0);
+        AddYesNoMenuAt(23, 10, 1);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_PrintSavingDontTurnOff(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_SAVING_NO_OFF, 0);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_PrintSavedTheGame(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        DynamicPlaceholderTextUtil_Reset();
+        DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, (const u8 *)gSaveBlock2Ptr);
+        AddStdMessageWindow(STDMESSAGE_SAVED_THE_GAME, 0);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_AskConfirmLeaderLeave(u8 *state)
+{
+    switch (*state)
+    {
+    case 0:
+        AddStdMessageWindow(STDMESSAGE_WARN_LEADER_LEAVE, 0);
+        AddYesNoMenuAt(23, 10, 1);
+        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
+        (*state)++;
+        break;
+    case 1:
+        return IsDma3ManagerBusyWithBgCopy();
+    }
+
+    return TRUE;
+}
+
+bool32 Display_Dummy(u8 *state)
+{
+    return FALSE;
 }
