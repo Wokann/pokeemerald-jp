@@ -281,6 +281,9 @@ extern void StartDodrioIntroAnim(u8);
 extern void SetGfxFuncById(u8);
 extern void SetGameFunc(u8);
 extern void InitFirstWaveOfBerries(void);
+extern u8 UpdatePickStateQueue(u8);
+extern void UpdateFallingBerries(void);
+extern void HandleSound_Leader(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -506,6 +509,55 @@ void WaitGameStart(void)
     case 0:
         if (sGame->startGame)
             SetGameFunc(FUNC_PLAY_GAME);
+        break;
+    }
+}
+
+void PlayGame_Leader(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        if (sGame->numGraySquares < NUM_STATUS_SQUARES)
+        {
+            if (sGame->inputState[0] == INPUTSTATE_NONE)
+            {
+                if (JOY_NEW(DPAD_UP))
+                {
+                    if (sGame->players[0].comm.pickState == PICK_NONE)
+                    {
+                        sGame->players[0].comm.ateBerry = FALSE;
+                        sGame->players[0].comm.pickState = UpdatePickStateQueue(PICK_MIDDLE);
+                    }
+                }
+                else if (JOY_NEW(DPAD_RIGHT))
+                {
+                    if (sGame->players[0].comm.pickState == PICK_NONE)
+                    {
+                        sGame->players[0].comm.ateBerry = FALSE;
+                        sGame->players[0].comm.pickState = UpdatePickStateQueue(PICK_RIGHT);
+                    }
+                }
+                else if (JOY_NEW(DPAD_LEFT))
+                {
+                    if (sGame->players[0].comm.pickState == PICK_NONE)
+                    {
+                        sGame->players[0].comm.ateBerry = FALSE;
+                        sGame->players[0].comm.pickState = UpdatePickStateQueue(PICK_LEFT);
+                    }
+                }
+                else
+                {
+                    sGame->players[0].comm.pickState = UpdatePickStateQueue(PICK_NONE);
+                }
+            }
+        }
+        else
+        {
+            SetGameFunc(FUNC_WAIT_END_GAME);
+        }
+        UpdateFallingBerries();
+        HandleSound_Leader();
         break;
     }
 }
