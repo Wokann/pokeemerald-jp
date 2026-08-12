@@ -383,6 +383,9 @@ extern const u8 sRankingOrder[];
 extern const struct WindowTemplate sWindowTemplates_PlayAgain[];
 extern const struct WindowTemplate sWindowTemplate_CommStandby;
 extern const struct WindowTemplate sWindowTemplate_DroppedOut;
+extern const u8 sBg_Pal[];
+extern const u8 sBg_Gfx[];
+extern const u8 sTreeBorder_Gfx[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2542,6 +2545,37 @@ bool32 IsGfxFuncActive(void)
 u8 GetPlayAgainState(void)
 {
     return sGfx->playAgainState;
+}
+
+bool32 LoadBgGfx(void)
+{
+    switch (sGfx->loadState)
+    {
+    case 0:
+        LoadPalette(sBg_Pal, 0, 0x40);
+        break;
+    case 1:
+        ResetTempTileDataBuffers();
+        break;
+    case 2:
+        DecompressAndCopyTileDataToVram(3, sBg_Gfx, 0, 0, 0);
+        break;
+    case 3:
+        DecompressAndCopyTileDataToVram(1, sTreeBorder_Gfx, 0, 0, 0);
+        break;
+    case 4:
+        if ((u8)FreeTempTileDataBuffersIfPossible() == TRUE)
+            return FALSE;
+        break;
+    case 5:
+        LoadPalette(GetTextWindowPalette(3), 0xD0, 0x20);
+        break;
+    default:
+        sGfx->loadState = 0;
+        return TRUE;
+    }
+    sGfx->loadState++;
+    return FALSE;
 }
 
 void nullsub_15(void)

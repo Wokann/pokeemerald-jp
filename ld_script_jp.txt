@@ -1411,7 +1411,7 @@ sub_0802A450 = GetGfxFunc;
 sub_0802A464 = IsGfxFuncActive;
 sub_0802A488 = GetPlayAgainState;
 InitBgs = sub_0802A49C;
-LoadBgGfx = sub_0802A5DC;
+sub_0802A5DC = LoadBgGfx;
 GetActiveBerryColumns = sub_0802691C;
 InitMonInfo = sub_08025FC0;
 Task_ShowRankings = sub_08021FC0;
@@ -2515,6 +2515,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.IsGfxFuncActive);
         src/dodrio_berry_picking.o(.text.GetPlayAgainState);
         asm/dodrio_berry_picking9.o(.text);
+        src/dodrio_berry_picking.o(.text.LoadBgGfx);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
         asm/main_menu.o(.text);
