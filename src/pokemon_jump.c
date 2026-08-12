@@ -421,6 +421,9 @@ extern void sub_0802DA00(void); // InitDigitPrinters
 extern void sub_0802D884(void); // PrintScoreSuffixes
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802D8F0(void); // CreateJumpMonSprites
+extern u32 sub_0802D78C(u32 a, u32 b, u32 c, u32 d); // AddMessageWindow
+extern void sub_0802D808(u16 a, u16 b, u8 c); // CreatePokeJumpYesNoMenu
+extern const u8 gText_WantToPlayAgain2[];
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
@@ -2539,6 +2542,33 @@ void ErasePlayerNames(void)
 
             sPokemonJumpGfx->funcFinished = TRUE;
         }
+        break;
+    }
+}
+
+void Msg_WantToPlayAgain_PokeJump(void)
+{
+    switch (sPokemonJumpGfx->mainState)
+    {
+    case 0:
+        sPokemonJumpGfx->msgWindowId = sub_0802D78C(1, 8, 20, 2); // AddMessageWindow
+        AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, gText_WantToPlayAgain2, 0, 2, TEXT_SKIP_DRAW, NULL);
+        CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
+        sPokemonJumpGfx->mainState++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            PutWindowTilemap(sPokemonJumpGfx->msgWindowId);
+            DrawTextBorderOuter((u8)sPokemonJumpGfx->msgWindowId, 1, 14);
+            sub_0802D808(23, 7, 0); // CreatePokeJumpYesNoMenu
+            CopyBgTilemapBufferToVram(BG_INTERFACE);
+            sPokemonJumpGfx->mainState++;
+        }
+        break;
+    case 2:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            sPokemonJumpGfx->funcFinished = TRUE;
         break;
     }
 }
