@@ -3030,6 +3030,16 @@ SECTIONS {
         src/main_menu.o(.text.Task_NewGameBirchSpeech_ChooseGender);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_SlideOutOldGenderSprite);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_SlideInNewGenderSprite);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_WhatsYourName);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitForWhatsYourNameToPrint);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitPressBeforeNameChoice);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_StartNamingScreen);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_SoItsPlayerName);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_CreateNameYesNo);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_ProcessNameYesNoMenu);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_SlidePlatformAway2);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_ReshowBirchLotad);
+        src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitForSpriteFadeInAndTextPrinter);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
