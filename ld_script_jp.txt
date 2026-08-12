@@ -1418,7 +1418,7 @@ sub_0802A464 = IsGfxFuncActive;
 sub_0802A488 = GetPlayAgainState;
 InitBgs = sub_0802A49C;
 sub_0802A5DC = LoadBgGfx;
-GetActiveBerryColumns = sub_0802691C;
+sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
 sub_08022230 = ShowBerryCrushRankings;
 ChooseBerryForMachine = sub_081AA968;
@@ -2433,7 +2433,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetAllDodrioDisabled);
         src/dodrio_berry_picking.o(.text.UpdateGame_Leader);
         src/dodrio_berry_picking.o(.text.UpdateGame_Member);
-        asm/dodrio_berry_picking10.o(.text);
+        src/dodrio_berry_picking.o(.text.GetActiveBerryColumns);
         src/dodrio_berry_picking.o(.text.AllPlayersReadyToStart);
         src/dodrio_berry_picking.o(.text.ResetReadyToStart);
         src/dodrio_berry_picking.o(.text.ReadyToEndGame_Leader);

@@ -3930,6 +3930,33 @@ void UpdateGame_Member(void)
     UpdateStatusBarAnim(sGame->numGraySquares);
 }
 
+void GetActiveBerryColumns(u8 numPlayers, u8 *berryStart, u8 *berryEnd)
+{
+    switch (numPlayers - 1)
+    {
+    case 0:
+        *berryStart = 4;
+        *berryEnd = 7;
+        break;
+    case 1:
+        *berryStart = 3;
+        *berryEnd = 8;
+        break;
+    case 2:
+        *berryStart = 2;
+        *berryEnd = 9;
+        break;
+    case 3:
+        *berryStart = 1;
+        *berryEnd = 10;
+        break;
+    case 4:
+        *berryStart = 0;
+        *berryEnd = 11;
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
