@@ -635,6 +635,19 @@ void WaitEndGame_Member(void)
         SetGameFunc(FUNC_INIT_RESULTS);
 }
 
+bool32 AllPlayersReadyToStart(void)
+{
+    u8 status = GetBlockReceivedStatus();
+    u8 mask = GetLinkPlayerCountAsBitFlags();
+
+    if (status == mask)
+    {
+        ResetBlockReceivedFlags();
+        return TRUE;
+    }
+    return FALSE;
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;

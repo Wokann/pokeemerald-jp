@@ -12,28 +12,6 @@
 
 
 
-	thumb_func_start sub_08024F38
-sub_08024F38: @ 0x08024F38
-	push {r4, lr}
-	bl GetBlockReceivedStatus
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	bl sub_0800A59C
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r4, r0
-	beq _08024F54
-	movs r0, #0
-	b _08024F5A
-_08024F54:
-	bl ResetBlockReceivedFlags
-	movs r0, #1
-_08024F5A:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08024F38
 
 	thumb_func_start sub_08024F60
 sub_08024F60: @ 0x08024F60
