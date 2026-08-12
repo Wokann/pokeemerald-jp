@@ -80,6 +80,8 @@ enum {
 #define PLAY_AGAIN_NO  1
 #define PLAY_AGAIN_YES 2
 
+#define VINE_STATE_TIMER(vineState) (((vineState) << 8) | 0xFF)
+
 enum {
     VINE_HIGHEST,
     VINE_DOWNSWING_HIGHER,
@@ -373,6 +375,7 @@ extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
 extern bool32 sub_0802DDC8(int multiplayerId, struct PokemonJump_MonInfo *monInfo); // RecvPacket_MonInfo
+extern void sub_0802BC70(void); // UpdateVineSpeed
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1372,6 +1375,21 @@ void InitVineState(void)
     sPokemonJump->vineSpeed = 0;
     sPokemonJump->ignoreJumpInput = FALSE;
     sPokemonJump->gameOver = FALSE;
+}
+
+void ResetVineState(void)
+{
+    sPokemonJump->vineTimer = 0;
+    sPokemonJump->vineStateTimer = VINE_STATE_TIMER(VINE_UPSWING_LOWER);
+    sPokemonJump->vineState = VINE_UPSWING_LOW;
+    sPokemonJump->ignoreJumpInput = FALSE;
+    sPokemonJump->gameOver = FALSE;
+    sPokemonJump->vineSpeedStage = 0;
+    sPokemonJump->vineBaseSpeedIdx = 0;
+    sPokemonJump->vineSpeedAccel = 0;
+    sPokemonJump->vineSpeedDelay = 0;
+    sPokemonJump->atMaxSpeedStage = FALSE;
+    sub_0802BC70(); // UpdateVineSpeed
 }
 
 void InitGame(struct PokemonJump *jump)
