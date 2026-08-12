@@ -323,6 +323,7 @@ extern bool32 RecvPacket_PickState(u32 recvCmdIdx, u8 *pickState);
 extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
+extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -750,6 +751,13 @@ bool32 ReadyToEndGame_Member(void)
     }
 
     return FALSE;
+}
+
+void TryIncrementDifficulty(u8 playerId)
+{
+    u8 threshold = sDifficultyThresholds[sGame->difficulty[playerId] % NUM_DIFFICULTIES] + (sGame->difficulty[playerId] / NUM_DIFFICULTIES) * 100;
+    if (sGame->berriesEaten[playerId] >= threshold)
+        sGame->difficulty[playerId]++;
 }
 
 void InitResults_Leader(void)

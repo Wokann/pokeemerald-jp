@@ -1362,8 +1362,8 @@ gUnknown_82CB314: @ 0x82CB314
 gUnknown_82CB320: @ 0x82CB320
 	.incbin "baserom_jp.gba", 0x2cb320, 0x8
 
-	.globl gUnknown_82CB328
-gUnknown_82CB328: @ 0x82CB328
+	.globl sDifficultyThresholds
+sDifficultyThresholds: @ 0x82CB328
 	.incbin "baserom_jp.gba", 0x2cb328, 0x8
 
 	.globl gUnknown_82CB330

@@ -7,62 +7,6 @@
 
 
 
-	thumb_func_start sub_08026ADC
-sub_08026ADC: @ 0x08026ADC
-	push {r4, r5, r6, r7, lr}
-	mov r7, sb
-	mov r6, r8
-	push {r6, r7}
-	adds r5, r0, #0
-	lsls r5, r5, #0x18
-	lsrs r5, r5, #0x18
-	ldr r0, _08026B44
-	mov r8, r0
-	ldr r0, _08026B48
-	ldr r6, [r0]
-	adds r0, r6, #0
-	adds r0, #0x90
-	adds r0, r0, r5
-	mov sb, r0
-	ldrb r7, [r0]
-	adds r0, r7, #0
-	movs r1, #7
-	bl __umodsi3
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	add r4, r8
-	adds r0, r7, #0
-	movs r1, #7
-	bl __udivsi3
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	movs r1, #0x64
-	muls r0, r1, r0
-	ldrb r4, [r4]
-	adds r0, r0, r4
-	lsls r0, r0, #0x18
-	lsls r5, r5, #1
-	adds r6, #0x86
-	adds r6, r6, r5
-	ldrh r1, [r6]
-	lsrs r0, r0, #0x18
-	cmp r1, r0
-	blo _08026B36
-	adds r0, r7, #1
-	mov r1, sb
-	strb r0, [r1]
-_08026B36:
-	pop {r3, r4}
-	mov r8, r3
-	mov sb, r4
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08026B44: .4byte 0x082CB328
-_08026B48: .4byte 0x0202294C
-	thumb_func_end sub_08026ADC
 
 	thumb_func_start sub_08026B4C
 sub_08026B4C: @ 0x08026B4C
