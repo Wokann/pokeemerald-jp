@@ -3406,6 +3406,37 @@ void SendLinkData_Leader(void)
     }
 }
 
+void RecvLinkData_Member(void)
+{
+    switch (sGame->funcId)
+    {
+    case FUNC_PLAY_GAME:
+        RecvPacket_GameState(sGame->multiplayerId,
+                             &sGame->players[sGame->multiplayerId],
+                             &sGame->players[0].comm,
+                             &sGame->players[1].comm,
+                             &sGame->players[2].comm,
+                             &sGame->players[3].comm,
+                             &sGame->players[4].comm,
+                             &sGame->numGraySquares,
+                             &sGame->berriesFalling,
+                             &sGame->allReadyToEnd);
+        break;
+    case FUNC_WAIT_END_GAME:
+        RecvPacket_GameState(sGame->multiplayerId,
+                             &sGame->players[sGame->multiplayerId],
+                             &sGame->players[0].comm,
+                             &sGame->players[1].comm,
+                             &sGame->players[2].comm,
+                             &sGame->players[3].comm,
+                             &sGame->players[4].comm,
+                             &sGame->numGraySquares,
+                             &sGame->berriesFalling,
+                             &sGame->allReadyToEnd);
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
