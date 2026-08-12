@@ -3901,6 +3901,15 @@ void UpdateAllDodrioAnims(void)
     }
 }
 
+void SetAllDodrioDisabled(void)
+{
+    u8 i, numPlayers;
+
+    numPlayers = sGame->numPlayers;
+    for (i = 0; i < numPlayers; i++)
+        SetDodrioAnim(i, PICK_DISABLED);
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
