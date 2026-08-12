@@ -383,6 +383,11 @@ extern int sub_0802BD8C(void); // PokeJumpRandom
 // gUnknown_82CEED8); same layouts as US sVineBaseSpeeds / sVineSpeedDelays.
 extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
+extern const u16 sSoundEffects[];
+extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
+extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
+extern void sub_0802BF74(void); // HandleMonState
+extern void sub_0802BF34(void); // TryUpdateVineSwing
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1547,6 +1552,25 @@ void SetMonStateNormal(void)
 {
     sPokemonJump->player->prevMonState = sPokemonJump->player->monState;
     sPokemonJump->player->monState = MONSTATE_NORMAL;
+}
+
+void UpdateGame(void)
+{
+    if (sPokemonJump->updateScore)
+    {
+        sub_0802DA5C(sPokemonJump->comm.jumpScore); // PrintScore
+        sPokemonJump->updateScore = FALSE;
+        if (sPokemonJump->showBonus)
+        {
+            int numPlayers = sub_0802D9C4(sPokemonJump->comm.receivedBonusFlags); // DoSameJumpTimeBonus
+            PlaySE(sSoundEffects[numPlayers - 2]);
+            sPokemonJump->showBonus = FALSE;
+        }
+    }
+
+    sub_0802DA6C(sPokemonJump->comm.jumpsInRow); // PrintJumpsInRow
+    sub_0802BF74(); // HandleMonState
+    sub_0802BF34(); // TryUpdateVineSwing
 }
 
 void InitGame(struct PokemonJump *jump)

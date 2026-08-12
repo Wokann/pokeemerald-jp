@@ -3,53 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802BED0
-sub_0802BED0: @ 0x0802BED0
-	push {r4, r5, lr}
-	ldr r4, _0802BF2C
-	ldr r1, [r4]
-	ldr r0, [r1, #0x5c]
-	cmp r0, #0
-	beq _0802BF10
-	ldr r0, [r1, #0x78]
-	bl sub_0802DA5C
-	ldr r1, [r4]
-	movs r5, #0
-	str r5, [r1, #0x5c]
-	adds r0, r1, #0
-	adds r0, #0x4d
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0802BF10
-	adds r0, r1, #0
-	adds r0, #0x71
-	ldrb r0, [r0]
-	bl sub_0802D9C4
-	ldr r1, _0802BF30
-	subs r0, #2
-	lsls r0, r0, #1
-	adds r0, r0, r1
-	ldrh r0, [r0]
-	bl PlaySE
-	ldr r0, [r4]
-	adds r0, #0x4d
-	strb r5, [r0]
-_0802BF10:
-	ldr r0, _0802BF2C
-	ldr r0, [r0]
-	adds r0, #0x74
-	ldrh r0, [r0]
-	bl sub_0802DA6C
-	bl sub_0802BF74
-	bl sub_0802BF34
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802BF2C: .4byte 0x020229B0
-_0802BF30: .4byte 0x082CEEE0
-	thumb_func_end sub_0802BED0
-
 	thumb_func_start sub_0802BF34
 sub_0802BF34: @ 0x0802BF34
 	push {lr}

@@ -1468,8 +1468,10 @@ sub_0802BE24 = IsPlayersMonState;
 sub_0802BE58 = SetMonStateJump;
 sub_0802BE80 = SetMonStateHit;
 sub_0802BEB0 = SetMonStateNormal;
+sub_0802BED0 = UpdateGame;
 sVineBaseSpeeds = gUnknown_82CEEC8;
 sVineSpeedDelays = gUnknown_82CEED8;
+sSoundEffects = gUnknown_82CEEE0;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;
 sPokeJumpMemberFuncs = gUnknown_82CEEA4;
 sub_0802A788 = ResetForNewGame;
@@ -2664,6 +2666,7 @@ SECTIONS {
         src/pokemon_jump.o(.text.SetMonStateJump);
         src/pokemon_jump.o(.text.SetMonStateHit);
         src/pokemon_jump.o(.text.SetMonStateNormal);
+        src/pokemon_jump.o(.text.UpdateGame);
         asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         asm/pokemon_jump_2a.o(.text);
