@@ -1335,6 +1335,7 @@ sub_08026A10 = ReadyToEndGame_Leader;
 sub_08026A50 = ReadyToEndGame_Member;
 sub_08026ADC = TryIncrementDifficulty;
 sub_08026C30 = GetNewBerryIdByDifficulty;
+sub_08026B4C = GetPlayerIdAtColumn;
 SetMaxBerriesPickedInRow = sub_08027064;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
@@ -2354,6 +2355,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.ReadyToEndGame_Leader);
         src/dodrio_berry_picking.o(.text.ReadyToEndGame_Member);
         src/dodrio_berry_picking.o(.text.TryIncrementDifficulty);
+        src/dodrio_berry_picking.o(.text.GetPlayerIdAtColumn);
         asm/dodrio_berry_picking3.o(.text);
         src/dodrio_berry_picking.o(.text.GetNewBerryIdByDifficulty);
         asm/dodrio_berry_picking4.o(.text);

@@ -8,26 +8,6 @@
 
 
 
-	thumb_func_start sub_08026B4C
-sub_08026B4C: @ 0x08026B4C
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r3, _08026B68
-	ldr r1, _08026B6C
-	ldr r1, [r1]
-	adds r1, #0x24
-	ldrb r1, [r1]
-	subs r1, #1
-	movs r2, #0xb
-	muls r1, r2, r1
-	adds r0, r0, r1
-	adds r0, r0, r3
-	ldrb r0, [r0]
-	bx lr
-	.align 2, 0
-_08026B68: .4byte 0x082C7ED4
-_08026B6C: .4byte 0x0202294C
-	thumb_func_end sub_08026B4C
 
 	thumb_func_start sub_08026B70
 sub_08026B70: @ 0x08026B70

@@ -324,6 +324,7 @@ extern bool32 RecvPacket_ReadyToEnd(u32 recvCmdIdx);
 extern u32 RecvPacket_ReadyToStart(u32 playerId);
 extern const u8 sActiveColumnMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDifficultyThresholds[NUM_DIFFICULTIES];
+extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -792,6 +793,11 @@ u8 GetNewBerryIdByDifficulty(u8 difficulty, u8 column)
         else
             return BERRY_BLUE;
     }
+}
+
+u8 GetPlayerIdAtColumn(u8 column)
+{
+    return sPlayerIdAtColumn[sGame->numPlayers - 1][column];
 }
 
 void InitResults_Leader(void)

@@ -1346,8 +1346,8 @@ gUnknown_82C7E3B: @ 0x82C7E3B
 gUnknown_82C7E86: @ 0x82C7E86
 	.incbin "baserom_jp.gba", 0x2c7e86, 0x4e
 
-	.globl gUnknown_82C7ED4
-gUnknown_82C7ED4: @ 0x82C7ED4
+	.globl sPlayerIdAtColumn
+sPlayerIdAtColumn: @ 0x82C7ED4
 	.incbin "baserom_jp.gba", 0x2c7ed4, 0x37
 
 	.globl gUnknown_82C7F0B
