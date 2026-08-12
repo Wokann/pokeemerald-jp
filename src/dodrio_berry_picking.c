@@ -298,6 +298,7 @@ extern u8 GetPlayAgainState(void);
 extern u32 GetHighestScore(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void ResetForPlayAgainPrompt(void);
+extern u32 IncrementWithLimit(u32 num, u32 max);
 extern void ResetPickState(void);
 extern void HandleWaitPlayAgainInput(void);
 extern void FreeBerrySprites(void);
@@ -839,6 +840,146 @@ bool32 IsTotalBerriesMissedOver10(u16 berryResults[MAX_RFU_PLAYERS][NUM_BERRY_ID
         return TRUE;
     else
         return FALSE;
+}
+
+void IncrementBerryResult(u8 berryIdArg, u8 column, u8 playerId)
+{
+    u8 berryId;
+    u8 numPlayers = sGame->numPlayers;
+    switch (berryIdArg)
+    {
+    case BERRY_BLUE:
+    case BERRY_GREEN:
+    case BERRY_GOLD:
+        berryId = sGame->players[0].berries.ids[column];
+        sGame->berryResults[playerId][berryId] = IncrementWithLimit(sGame->berryResults[playerId][berryId], 20000);
+        break;
+    case BERRY_MISSED:
+        if (IsTotalBerriesMissedOver10(sGame->berryResults))
+            break;
+        switch (numPlayers)
+        {
+        case 5:
+            switch (column)
+            {
+            case 0:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                sGame->berryResults[3][BERRY_MISSED]++;
+                break;
+            case 1:
+                sGame->berryResults[3][BERRY_MISSED]++;
+                break;
+            case 2:
+                sGame->berryResults[3][BERRY_MISSED]++;
+                sGame->berryResults[4][BERRY_MISSED]++;
+                break;
+            case 3:
+                sGame->berryResults[4][BERRY_MISSED]++;
+                break;
+            case 4:
+                sGame->berryResults[4][BERRY_MISSED]++;
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 5:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 6:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 7:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 8:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            case 9:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            }
+            break;
+        case 4:
+            switch (column)
+            {
+            case 1:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                sGame->berryResults[3][BERRY_MISSED]++;
+                break;
+            case 2:
+                sGame->berryResults[3][BERRY_MISSED]++;
+                break;
+            case 3:
+                sGame->berryResults[3][BERRY_MISSED]++;
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 4:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 5:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 6:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 7:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            case 8:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            }
+            break;
+        case 3:
+            switch (column)
+            {
+            case 2:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            case 3:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                break;
+            case 4:
+                sGame->berryResults[2][BERRY_MISSED]++;
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 5:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 6:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 7:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            }
+            break;
+        case 2:
+            switch (column)
+            {
+            case 3:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 4:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                break;
+            case 5:
+                sGame->berryResults[0][BERRY_MISSED]++;
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            case 6:
+                sGame->berryResults[1][BERRY_MISSED]++;
+                break;
+            }
+            break;
+        }
+        break;
+    }
 }
 
 void InitResults_Leader(void)
