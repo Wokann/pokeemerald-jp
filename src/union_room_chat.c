@@ -167,6 +167,18 @@ struct MessageWindowInfo
     bool8 useWiderBox;
 };
 
+struct UnionRoomChatSprites
+{
+    struct Sprite *keyboardCursor;
+    struct Sprite *textEntryArrow;
+    struct Sprite *textEntryCursor;
+    struct Sprite *rButtonIcon;
+    struct Sprite *rButtonLabel;
+    u16 cursorBlinkTimer;
+};
+
+#define PALTAG_INTERFACE 0
+
 // Chat main function table (0x082C5064, in data/data_b.s).
 extern void (*const gUnknown_82C5064[])(void);
 
@@ -234,6 +246,16 @@ extern const u8 gUnknown_82C56B4[];
 extern const u8 gUnknown_82C56D4[];
 extern const u8 gUnknown_85D7B04[];
 
+// JP union room chat sprite resources.
+extern const struct CompressedSpriteSheet gUnknown_82C5D4C[];
+extern const struct SpritePalette gUnknown_82C5D74;
+extern const struct SpriteTemplate gUnknown_82C5DB4;
+extern const struct SpriteTemplate gUnknown_82C5DD4;
+extern const struct SpriteTemplate gUnknown_82C5DEC;
+extern const struct SpriteTemplate gUnknown_82C5E44;
+extern const struct SpriteTemplate gUnknown_82C5E5C;
+extern const u16 gUnknown_82C588A[];
+
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
 u16 GetNumOverflowCharsInMessage(void);
@@ -255,11 +277,12 @@ u8 *GetLimitedMessageStartPtr(void);
 u32 GetLimitedMessageStartPos(void);
 u8 *GetLastReceivedMessage(void);
 u8 GetReceivedPlayerIndex(void);
-u8 GetTextEntryCursorPosition(void);
+int GetTextEntryCursorPosition(void);
 u8 *GetChatHostName(void);
 void Task_ReceiveChatMessage(u8 taskId);
 
 extern EWRAM_DATA struct UnionRoomChatDisplay *sDisplay;
+extern EWRAM_DATA struct UnionRoomChatSprites *sSprites;
 extern const struct BgTemplate gUnknown_82C56F4[];
 extern const struct WindowTemplate gUnknown_82C5704[];
 extern const struct SubtaskInfo gUnknown_82C572C[];
@@ -282,7 +305,7 @@ extern void CreateTextEntrySprites(void);
 extern void CreateRButtonSprites(void);
 extern void ShowKeyboardSwapMenu(void);
 extern void HideKeyboardSwapMenu(void);
-extern void SetKeyboardCursorInvisibility(u8 invisible);
+extern void SetKeyboardCursorInvisibility(bool32 invisible);
 extern bool32 SlideKeyboardPageOut(void);
 extern bool32 SlideKeyboardPageIn(void);
 extern void PrintCurrentKeyboardPage(void);
@@ -359,6 +382,22 @@ void LoadChatMessagesWindow(void);
 void DrawKeyboardWindow(void);
 void LoadTextEntryWindow(void);
 void LoadKeyboardSwapWindow(void);
+void InitScanlineEffect(void);
+void UpdateSlidingKeyboard(s16 hofs);
+void FinishSlidingKeyboard(s16 hofs);
+bool32 TryAllocSprites(void);
+void FreeSprites(void);
+void CreateKeyboardCursorSprite(void);
+void SetKeyboardCursorInvisibility(bool32 invisible);
+void MoveKeyboardCursor(void);
+void SetRegisteredTextPalette(bool32 registering);
+void StartKeyboardCursorAnim(void);
+bool32 TryKeyboardCursorReopen(void);
+void CreateTextEntrySprites(void);
+void CreateRButtonSprites(void);
+void UpdateRButtonLabel(void);
+static void SpriteCB_TextEntryCursor(struct Sprite *sprite);
+static void SpriteCB_TextEntryArrow(struct Sprite *sprite);
 static void PrepareSendBuffer_Null(u8 *buffer);
 static void PrepareSendBuffer_Join(u8 *buffer);
 static void PrepareSendBuffer_Chat(u8 *buffer);
@@ -1477,14 +1516,14 @@ u8 GetReceivedPlayerIndex(void)
     return sChat->receivedPlayerIndex;
 }
 
-u8 GetTextEntryCursorPosition(void)
+int GetTextEntryCursorPosition(void)
 {
     return sChat->bufferCursorPos;
 }
 
 // JP-only: classify the last typed character for the kana input mode
 // (0 = kana range, 1 = katakana range, 2/3 = other ranges).
-u8 sub_0801EFA4(void)
+int sub_0801EFA4(void)
 {
     s32 ch = *GetLastCharOfMessagePtr();
     if ((u8)(ch - 1) <= 0x4F)
@@ -2590,4 +2629,186 @@ void LoadKeyboardSwapWindow(void)
     LoadUserWindowBorderGfx(WIN_SWAP_MENU, 1, BG_PLTT_ID(13));
     LoadUserWindowBorderGfx_(WIN_SWAP_MENU, 0xA, BG_PLTT_ID(2));
     LoadPalette(gUnknown_85D7B04, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+}
+
+void InitScanlineEffect(void)
+{
+    struct ScanlineEffectParams params;
+    params.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
+    params.dmaDest = &REG_BG1HOFS;
+    params.initState = 1;
+    params.unused9 = 0;
+    sDisplay->bg1hofs = 0;
+    CpuFastFill(0, gScanlineEffectRegBuffers, sizeof(gScanlineEffectRegBuffers));
+    ScanlineEffect_SetParams(params);
+}
+
+void UpdateSlidingKeyboard(s16 hofs)
+{
+    CpuFill16(hofs, gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer], 0x120);
+    CpuFill16(0,       gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer] + 0x90, 0x20);
+}
+
+void FinishSlidingKeyboard(s16 hofs)
+{
+    CpuFill16(hofs, gScanlineEffectRegBuffers[0],         0x120);
+    CpuFill16(0,       gScanlineEffectRegBuffers[0] +  0x90, 0x20);
+    CpuFill16(hofs, gScanlineEffectRegBuffers[0] + 0x3C0, 0x120);
+    CpuFill16(0,       gScanlineEffectRegBuffers[0] + 0x450, 0x20);
+}
+
+bool32 TryAllocSprites(void)
+{
+    u32 i;
+    for (i = 0; i < 5; i++)
+        LoadCompressedSpriteSheet(&gUnknown_82C5D4C[i]);
+
+    LoadSpritePalette(&gUnknown_82C5D74);
+    sSprites = Alloc(sizeof(*sSprites));
+    if (!sSprites)
+        return FALSE;
+
+    return TRUE;
+}
+
+void FreeSprites(void)
+{
+    if (sSprites)
+        Free(sSprites);
+}
+
+void CreateKeyboardCursorSprite(void)
+{
+    u8 spriteId = CreateSprite(&gUnknown_82C5DB4, 10, 24, 0);
+    sSprites->keyboardCursor = &gSprites[spriteId];
+}
+
+void SetKeyboardCursorInvisibility(bool32 invisible)
+{
+    sSprites->keyboardCursor->invisible = invisible;
+}
+
+// JP keyboard cursor rows are 11px apart (US uses 12).
+void MoveKeyboardCursor(void)
+{
+    u8 x, y;
+    u8 page = GetCurrentKeyboardPage();
+    GetCurrentKeyboardColAndRow(&x, &y);
+    if (page != UNION_ROOM_KB_PAGE_REGISTER)
+    {
+        StartSpriteAnim(sSprites->keyboardCursor, 0);
+        sSprites->keyboardCursor->x = x * 8 + 10;
+        sSprites->keyboardCursor->y = y * 11 + 24;
+    }
+    else
+    {
+        StartSpriteAnim(sSprites->keyboardCursor, 2);
+        sSprites->keyboardCursor->x = 24;
+        sSprites->keyboardCursor->y = y * 11 + 24;
+    }
+}
+
+void SetRegisteredTextPalette(bool32 registering)
+{
+    const u16 *palette = &gUnknown_82C588A[registering * 2];
+    u8 index = IndexOfSpritePaletteTag(PALTAG_INTERFACE);
+    LoadPalette(palette, OBJ_PLTT_ID(index) + 1, PLTT_SIZEOF(2));
+}
+
+void StartKeyboardCursorAnim(void)
+{
+    if (GetCurrentKeyboardPage() != UNION_ROOM_KB_PAGE_REGISTER)
+        StartSpriteAnim(sSprites->keyboardCursor, 1);
+    else
+        StartSpriteAnim(sSprites->keyboardCursor, 3);
+
+    sSprites->cursorBlinkTimer = 0;
+}
+
+bool32 TryKeyboardCursorReopen(void)
+{
+    if (sSprites->cursorBlinkTimer > 3)
+        return FALSE;
+
+    if (++sSprites->cursorBlinkTimer > 3)
+    {
+        if (GetCurrentKeyboardPage() != UNION_ROOM_KB_PAGE_REGISTER)
+            StartSpriteAnim(sSprites->keyboardCursor, 0);
+        else
+            StartSpriteAnim(sSprites->keyboardCursor, 2);
+
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+void CreateTextEntrySprites(void)
+{
+    u8 spriteId = CreateSprite(&gUnknown_82C5DD4, 76, 152, 2);
+    sSprites->textEntryCursor = &gSprites[spriteId];
+    spriteId = CreateSprite(&gUnknown_82C5DEC, 64, 152, 1);
+    sSprites->textEntryArrow = &gSprites[spriteId];
+}
+
+static void SpriteCB_TextEntryCursor(struct Sprite *sprite)
+{
+    int pos = GetTextEntryCursorPosition();
+    if (pos == MAX_MESSAGE_LENGTH)
+    {
+        sprite->invisible = TRUE;
+    }
+    else
+    {
+        sprite->invisible = FALSE;
+        sprite->x = pos * 8 + 76;
+    }
+}
+
+static void SpriteCB_TextEntryArrow(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > 4)
+    {
+        sprite->data[0] = 0;
+        if (++sprite->x2 > 4)
+            sprite->x2 = 0;
+    }
+}
+
+void CreateRButtonSprites(void)
+{
+    u8 spriteId = CreateSprite(&gUnknown_82C5E44, 8, 152, 3);
+    sSprites->rButtonIcon = &gSprites[spriteId];
+    spriteId = CreateSprite(&gUnknown_82C5E5C, 32, 152, 4);
+    sSprites->rButtonLabel = &gSprites[spriteId];
+    sSprites->rButtonLabel->invisible = TRUE;
+}
+
+void UpdateRButtonLabel(void)
+{
+    if (GetCurrentKeyboardPage() == UNION_ROOM_KB_PAGE_REGISTER)
+    {
+        if (GetLengthOfMessageEntry() != 0)
+        {
+            sSprites->rButtonLabel->invisible = FALSE;
+            StartSpriteAnim(sSprites->rButtonLabel, 3);
+        }
+        else
+        {
+            sSprites->rButtonLabel->invisible = TRUE;
+        }
+    }
+    else
+    {
+        int anim = sub_0801EFA4();
+        if (anim == 3)
+        {
+            sSprites->rButtonLabel->invisible = TRUE;
+        }
+        else
+        {
+            sSprites->rButtonLabel->invisible = FALSE;
+            StartSpriteAnim(sSprites->rButtonLabel, anim);
+        }
+    }
 }
