@@ -343,6 +343,14 @@ extern bool32 sub_0802B74C(void); // TryGivePrize
 extern void sub_0802CDBC(int funcId); // SetUpPokeJumpGfxFuncById
 extern void sub_0802D704(void); // ClearMessageWindow
 extern bool32 sub_0802D734(void); // RemoveMessageWindow
+extern void sub_0802DAD8(void); // ResetMonSpriteSubpriorities
+extern void sub_0802DAEC(int multiplayerId); // StartMonIntroBounce
+extern bool32 sub_0802DB00(void); // IsMonIntroBounceActive
+extern void sub_0802BF54(void); // DisallowVineUpdates
+extern void sub_0802D458(void); // SetUpResetVineGfx
+extern bool32 sub_0802D47C(void); // ResetVineGfx
+extern void sub_0802BF64(void); // AllowVineUpdates
+extern void sub_0802BB94(void); // ResetVineState
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -946,6 +954,62 @@ bool32 SavePokeJump(void)
             return FALSE;
         }
         break;
+    }
+
+    return TRUE;
+}
+
+bool32 DoGameIntro(void)
+{
+    switch (sPokemonJump->helperState)
+    {
+    case 0:
+        sub_0802CDBC(GFXFUNC_SHOW_NAMES_HIGHLIGHT); // SetUpPokeJumpGfxFuncById
+        sub_0802DAD8(); // ResetMonSpriteSubpriorities
+        sPokemonJump->helperState++;
+        break;
+    case 1:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            sub_0802DAEC(sPokemonJump->multiplayerId); // StartMonIntroBounce
+            sPokemonJump->timer = 0;
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 2:
+        if (++sPokemonJump->timer > 120)
+        {
+            sub_0802CDBC(GFXFUNC_ERASE_NAMES); // SetUpPokeJumpGfxFuncById
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 3:
+        if (sub_0802CDE4() != TRUE && sub_0802DB00() != TRUE) // IsPokeJumpGfxFuncFinished, IsMonIntroBounceActive
+            sPokemonJump->helperState++;
+        break;
+    case 4:
+        sub_0802CDBC(GFXFUNC_COUNTDOWN); // SetUpPokeJumpGfxFuncById
+        sPokemonJump->helperState++;
+        break;
+    case 5:
+        if (!sub_0802CDE4()) // IsPokeJumpGfxFuncFinished
+        {
+            sub_0802BF54(); // DisallowVineUpdates
+            sub_0802D458(); // SetUpResetVineGfx
+            sPokemonJump->helperState++;
+        }
+        break;
+    case 6:
+        if (!sub_0802D47C()) // ResetVineGfx
+        {
+            sub_0802BF64(); // AllowVineUpdates
+            sub_0802BB94(); // ResetVineState
+            sPokemonJump->helperState++;
+            return FALSE;
+        }
+        break;
+    case 7:
+        return FALSE;
     }
 
     return TRUE;

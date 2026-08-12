@@ -472,7 +472,7 @@ void InitDodrioGame(struct DodrioGame *game);
 void Task_StartDodrioGame(u8 taskId);
 void Task_DodrioGame_Leader(u8 taskId);
 void Task_DodrioGame_Member(u8 taskId);
-void DoGameIntro(void);
+static void DoGameIntro(void);
 void InitCountdown(void);
 void DoCountdown(void);
 void WaitGameStart(void);
@@ -705,7 +705,7 @@ void Task_DodrioGame_Member(u8 taskId)
     SendLinkData_Member();
 }
 
-void DoGameIntro(void)
+static void DoGameIntro(void)
 {
     switch (sGame->state)
     {
