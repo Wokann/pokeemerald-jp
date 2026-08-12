@@ -339,7 +339,6 @@ extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
 extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
-extern u16 sub_0802C50C(void); // GetPrizeItemId
 extern u16 sub_0802C52C(void); // GetPrizeQuantity
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
 extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
@@ -362,7 +361,6 @@ extern bool32 sub_0802DAB0(int multiplayerId); // IsMonHitShakeActive
 extern void sub_0802DA98(u8 multiplayerId); // StartMonHitFlash
 extern void sub_0802DAC4(void); // StopMonHitFlash
 extern void sub_0802BE08(void); // ResetPlayersMonState
-extern void sub_0802C4FC(u16 prizeData, u16 *prizeItemId, u16 *prizeItemQuantity); // UnpackPrizeData
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
 extern u16 sub_0802C574(u16 prizeItemId, u16 prizeItemQuantity); // GetQuantityLimitedByBag
@@ -382,6 +380,7 @@ extern const u16 sVineBaseSpeeds[];
 extern const u16 sVineSpeedDelays[];
 extern const u16 sSoundEffects[];
 extern const int sScoreBonuses[];
+extern const u16 sPrizeItems[];
 extern const u32 sPrizeQuantityData[];
 extern int sub_0802D9C4(u8 bonusFlags); // DoSameJumpTimeBonus
 extern void sub_0802DA6C(u16 jumpsInRow); // PrintJumpsInRow
@@ -1151,7 +1150,7 @@ bool32 TryGivePrize_PokeJump(void)
     switch (sPokemonJump->helperState)
     {
     case 0:
-        sub_0802C4FC(sPokemonJump->comm.data, &sPokemonJump->prizeItemId, &sPokemonJump->prizeItemQuantity); // UnpackPrizeData
+        UnpackPrizeData(sPokemonJump->comm.data, &sPokemonJump->prizeItemId, &sPokemonJump->prizeItemQuantity);
         sub_0802D4DC(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity); // PrintPrizeMessage
         sPokemonJump->helperState++;
         break;
@@ -1912,9 +1911,21 @@ bool32 HasEnoughScoreForPrize(void)
 
 u16 GetPrizeData(void)
 {
-    u16 itemId = sub_0802C50C(); // GetPrizeItemId
+    u16 itemId = GetPrizeItemId_PokeJump();
     u16 quantity = sub_0802C52C(); // GetPrizeQuantity
     return (quantity << 12) | (itemId & 0xFFF);
+}
+
+void UnpackPrizeData(u16 data, u16 *itemId, u16 *quantity)
+{
+    *quantity = data >> 12;
+    *itemId = data & 0xFFF;
+}
+
+u16 GetPrizeItemId_PokeJump(void)
+{
+    u16 index = Random() % 8; // ARRAY_COUNT(sPrizeItems)
+    return sPrizeItems[index];
 }
 
 void InitGame(struct PokemonJump *jump)

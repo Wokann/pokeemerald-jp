@@ -3,36 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C4FC
-sub_0802C4FC: @ 0x0802C4FC
-	lsls r0, r0, #0x10
-	lsrs r3, r0, #0x1c
-	strh r3, [r2]
-	lsls r0, r0, #4
-	lsrs r0, r0, #0x14
-	strh r0, [r1]
-	bx lr
-	.align 2, 0
-	thumb_func_end sub_0802C4FC
-
-	thumb_func_start sub_0802C50C
-sub_0802C50C: @ 0x0802C50C
-	push {lr}
-	bl Random
-	lsls r0, r0, #0x10
-	movs r1, #0xe0
-	lsls r1, r1, #0xb
-	ands r1, r0
-	ldr r0, _0802C528
-	lsrs r1, r1, #0xf
-	adds r1, r1, r0
-	ldrh r0, [r1]
-	pop {r1}
-	bx r1
-	.align 2, 0
-_0802C528: .4byte 0x082CEF90
-	thumb_func_end sub_0802C50C
-
 	thumb_func_start sub_0802C52C
 sub_0802C52C: @ 0x0802C52C
 	push {r4, r5, r6, lr}
