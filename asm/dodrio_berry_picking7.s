@@ -5,26 +5,6 @@
 
 
 
-	thumb_func_start sub_0802807C
-sub_0802807C: @ 0x0802807C
-	push {lr}
-	sub sp, #8
-	ldr r2, _0802809C
-	ldr r1, [sp]
-	ands r1, r2
-	movs r2, #4
-	orrs r1, r2
-	str r1, [sp]
-	str r0, [sp, #4]
-	mov r0, sp
-	bl Rfu_SendPacket
-	add sp, #8
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0802809C: .4byte 0xFFFFFF00
-	thumb_func_end sub_0802807C
-
 	thumb_func_start sub_080280A0
 sub_080280A0: @ 0x080280A0
 	push {lr}
