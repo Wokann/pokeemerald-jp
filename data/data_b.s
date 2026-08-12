@@ -1402,17 +1402,24 @@ sRecordLabelYs: @ 0x82CB3D0
 sRecordValueYs: @ 0x82CB3D6
 	.incbin "baserom_jp.gba", 0x2cb3d6, 0x6
 
-	.globl gUnknown_82CB3DC
-gUnknown_82CB3DC: @ 0x82CB3DC
-	.string "{DYNAMIC_COLOR6}{SE_LAVARIDGE_FALL_WARP}{TRANSPARENT}{SE_LOW_HEALTH}{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR6}"
-	.string "ら{DYNAMIC_COLOR6}ら{SE_PUDDLE}{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR6}{SE_LAVARIDGE_FALL_WARP}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR6}{SE_LAVARIDGE_FALL_WARP}{TRANSPARENT}{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR6}"
-	.string "ら{SE_BALL_TRADE}{MUS_DUMMY}{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR6}ら{DYNAMIC_COLOR6}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{SE_RG_SS_ANNE_HORN}{DARK_GRAY}{LIGHT_GRAY}{RED}{LIGHT_RED}{GREEN}{LIGHT_GREEN}$"
-	.string "ABCDEFG$0123456$"
+	.globl sBerryResultsInit
+sBerryResultsInit: @ 0x82CB3DC
+	.incbin "baserom_jp.gba", 0x2cb3dc, 0x28
 
-	.globl gUnknown_82CB41C
-gUnknown_82CB41C: @ 0x82CB41C
+	.globl sDefaultPlayerName1
+sDefaultPlayerName1: @ 0x82CB404 (JP kana name bytes, referenced by sPlayerNames)
+	.incbin "baserom_jp.gba", 0x2cb404, 0x8
+
+	.globl sDefaultPlayerName2
+sDefaultPlayerName2: @ 0x82CB40C
+	.incbin "baserom_jp.gba", 0x2cb40c, 0x8
+
+	.globl sDefaultPlayerName3
+sDefaultPlayerName3: @ 0x82CB414
+	.incbin "baserom_jp.gba", 0x2cb414, 0x8
+
+	.globl sPlayerNames
+sPlayerNames: @ 0x82CB41C
 	.incbin "baserom_jp.gba", 0x2cb41c, 0x14
 
 	.globl gUnknown_82CB430
