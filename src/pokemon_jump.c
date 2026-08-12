@@ -263,6 +263,7 @@ struct PokemonJumpRecords *GetPokeJumpRecords(void);
 void IncrementGamesWithMaxPlayers(void);
 void SpriteCB_Star(struct Sprite *sprite);
 void SpriteCB_MonHitShake(struct Sprite *sprite);
+void SpriteCB_MonHitFlash(struct Sprite *sprite);
 
 void FreeWindowsAndDigitObj(void)
 {
@@ -2155,6 +2156,27 @@ bool32 Gfx_IsMonHitShakeActive(struct PokemonJumpGfx *jumpGfx, int multiplayerId
     return jumpGfx->monSprites[multiplayerId]->callback == SpriteCB_MonHitShake;
 }
 
+void Gfx_StartMonHitFlash(struct PokemonJumpGfx *jumpGfx, int multiplayerId)
+{
+    ResetPokeJumpSpriteData(jumpGfx->monSprites[multiplayerId]);
+    jumpGfx->monSprites[multiplayerId]->callback = SpriteCB_MonHitFlash;
+}
+
+void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
+{
+    int i;
+    u16 numPlayers = GetNumPokeJumpPlayers();
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (jumpGfx->monSprites[i]->callback == SpriteCB_MonHitFlash)
+        {
+            jumpGfx->monSprites[i]->invisible = FALSE;
+            jumpGfx->monSprites[i]->callback = SpriteCallbackDummy;
+            jumpGfx->monSprites[i]->subpriority = 10;
+        }
+    }
+}
+
 #define sTimer     data[1]
 #define sNumShakes data[2]
 
@@ -2179,6 +2201,19 @@ void SpriteCB_MonHitShake(struct Sprite *sprite)
 
 #undef sTimer
 #undef sNumShakes
+
+#define sTimer data[0]
+
+void SpriteCB_MonHitFlash(struct Sprite *sprite)
+{
+    if (++sprite->sTimer > 3)
+    {
+        sprite->sTimer = 0;
+        sprite->invisible ^= 1;
+    }
+}
+
+#undef sTimer
 
 void InitGame(struct PokemonJump *jump)
 {
