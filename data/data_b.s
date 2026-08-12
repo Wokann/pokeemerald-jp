@@ -1250,8 +1250,8 @@ gUnknown_82C5F0C: @ 0x82C5F0C
 gUnknown_82C5F5C: @ 0x82C5F5C
 	.incbin "baserom_jp.gba", 0x2c5f5c, 0x8
 
-	.globl gUnknown_82C5F64
-gUnknown_82C5F64: @ 0x82C5F64
+	.globl sPressingSpeedConversionTable
+sPressingSpeedConversionTable: @ 0x82C5F64
 	.incbin "baserom_jp.gba", 0x2c5f64, 0x20
 
 	.globl gBerryCrush_Crusher_Pal

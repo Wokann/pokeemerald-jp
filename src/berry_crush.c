@@ -177,6 +177,7 @@ extern const u16 sPlayerBerrySpriteTags[MAX_RFU_PLAYERS];
 extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
 extern const s8 sImpactCoords[3][2];
 extern const s8 sSparkleCoords[][2];
+extern const u32 sPressingSpeedConversionTable[];
 extern void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -789,4 +790,23 @@ bool32 AreEffectsFinished(struct BerryCrushGame *game, struct BerryCrushGame_Gfx
         game->vibration = 0;
 
     return TRUE;
+}
+
+void FramesToMinSec(struct BerryCrushGame_Gfx *gfx, u16 frames)
+{
+    u8 i = 0;
+    u32 fractionalFrames = 0;
+    s16 r3 = 0;
+
+    gfx->minutes = frames / (60 * 60);
+    gfx->secondsInt = (frames % (60 * 60)) / 60;
+    r3 = MathUtil_Mul16(Q_8_8(frames % 60), 4);
+
+    for (i = 0; i < 8; i++)
+    {
+        if ((r3 >> (7 - i)) & 1)
+            fractionalFrames += sPressingSpeedConversionTable[i];
+    }
+
+    gfx->secondsFrac = fractionalFrames / 1000000;
 }
