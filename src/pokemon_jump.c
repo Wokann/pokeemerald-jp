@@ -1793,6 +1793,20 @@ bool32 UpdateVineHitStates(void)
     return TRUE;
 }
 
+bool32 AllPlayersJumpedOrHit(void)
+{
+    int i;
+    int numPlayers = sPokemonJump->numPlayers;
+    int numJumpedOrHit = 0;
+    for (i = 0; i < numPlayers; i++)
+    {
+        if (sPokemonJump->players[i].jumpState != JUMPSTATE_NONE)
+            numJumpedOrHit++;
+    }
+
+    return numJumpedOrHit == numPlayers;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
