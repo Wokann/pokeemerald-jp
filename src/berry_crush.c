@@ -622,3 +622,30 @@ void CreateBerrySprites(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *
             StartSpriteAffineAnim(gfx->berrySprites[i], 1);
     }
 }
+
+void SpriteCB_DropBerryIntoCrusher(struct Sprite *sprite)
+{
+    s16 *data = sprite->data;
+
+    sYSpeed += sYAccel;
+    sprite->y2 += sYSpeed >> 8;
+    if (sBitfield & F_MOVE_HORIZ)
+    {
+        sprite->sX += sXSpeed;
+        sSinIdx += sSinSpeed;
+        sprite->x2 = Sin(sSinIdx >> 7, sAmplitude);
+        if ((sBitfield & F_MOVE_HORIZ) && (sSinIdx >> 7) > 126)
+        {
+            sprite->x2 = 0;
+            sBitfield &= MASK_TARGET_Y;
+        }
+    }
+
+    sprite->x = sX >> 7;
+    if (sprite->y + sprite->y2 >= (sBitfield & MASK_TARGET_Y))
+    {
+        sprite->callback = SpriteCallbackDummy;
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
+    }
+}
