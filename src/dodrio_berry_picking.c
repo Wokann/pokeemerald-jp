@@ -1879,6 +1879,11 @@ void SetBerryIconsInvisibility(bool8 invisible)
         gSprites[*sBerryIconSpriteIds[i]].invisible = invisible;
 }
 
+void SetBerryYPos(u8 id, u8 y)
+{
+    gSprites[*sBerrySpriteIds[id]].y = y * 8;
+}
+
 void nullsub_15(void)
 {
 }
