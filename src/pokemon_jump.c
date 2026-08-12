@@ -390,6 +390,13 @@ extern void sub_0802D994(int vineState); // UpdateVineSwing
 extern void sub_0802D978(u32 playerId, s16 y); // SetMonSpriteY
 extern void sub_0802C08C(int playerId); // UpdateJump
 extern void sub_0802DA80(u8 playerId); // StartMonHitShake
+extern void sub_0802C474(void); // ClearUnreadField
+extern void sub_0802C494(u16 excellentsInRow); // TryUpdateExcellentsRecord
+extern void sub_0802C37C(int amount); // AddJumpScore
+extern bool32 sub_0802C30C(void); // DidAllPlayersClearVine
+extern int sub_0802C430(u8 *atJumpPeak); // GetNumPlayersForBonus
+extern int sub_0802C484(void); // GetScoreBonus
+extern int sub_0802C3A4(void); // GetPlayersAtJumpPeak
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -1681,6 +1688,71 @@ void UpdateJump(int multiplayerId)
         SetMonStateNormal();
 
     player->jumpOffset = jumpOffset;
+}
+
+void TryUpdateScore(void)
+{
+    if (sPokemonJump->vineState == VINE_UPSWING_HIGH && sPokemonJump->prevVineState == VINE_UPSWING_LOW)
+    {
+        // Vine has passed through the point where it
+        // would hit the players, allow score to update
+
+        if (!sPokemonJump->initScoreUpdate)
+        {
+            sub_0802C474(); // ClearUnreadField
+            sPokemonJump->numPlayersAtPeak = 0;
+            sPokemonJump->initScoreUpdate = TRUE;
+            sPokemonJump->comm.receivedBonusFlags = 0;
+        }
+        else
+        {
+            if (sPokemonJump->numPlayersAtPeak == MAX_RFU_PLAYERS)
+            {
+                // An 'excellent' is the max 5 players all jumping synchronously
+                sPokemonJump->excellentsInRow++;
+                sub_0802C494(sPokemonJump->excellentsInRow); // TryUpdateExcellentsRecord
+            }
+            else
+            {
+                sPokemonJump->excellentsInRow = 0;
+            }
+
+            if (sPokemonJump->numPlayersAtPeak > 1)
+            {
+                sPokemonJump->giveBonus = TRUE;
+                // Unclear why atJumpPeak needed to be copied over twice
+                memcpy(sPokemonJump->atJumpPeak3, sPokemonJump->atJumpPeak2, sizeof(u8) * MAX_RFU_PLAYERS);
+            }
+
+            sub_0802C474(); // ClearUnreadField
+            sPokemonJump->numPlayersAtPeak = 0;
+            sPokemonJump->initScoreUpdate = TRUE;
+            sPokemonJump->comm.receivedBonusFlags = 0;
+            if (sPokemonJump->comm.jumpsInRow <= 9998) // MAX_JUMPS
+                sPokemonJump->comm.jumpsInRow++;
+
+            sub_0802C37C(10); // AddJumpScore
+            SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        }
+    }
+
+    if (sPokemonJump->giveBonus && (sub_0802C30C() == TRUE || sPokemonJump->vineState == VINE_HIGHEST)) // DidAllPlayersClearVine
+    {
+        int numPlayers = sub_0802C430(sPokemonJump->atJumpPeak3); // GetNumPlayersForBonus
+        sub_0802C37C(sub_0802C484()); // AddJumpScore, GetScoreBonus
+        SetLinkTimeInterval(LINK_INTERVAL_SHORT);
+        sPokemonJump->giveBonus = FALSE;
+    }
+
+    if (sPokemonJump->initScoreUpdate)
+    {
+        int numAtPeak = sub_0802C3A4(); // GetPlayersAtJumpPeak
+        if (numAtPeak > sPokemonJump->numPlayersAtPeak)
+        {
+            sPokemonJump->numPlayersAtPeak = numAtPeak;
+            memcpy(sPokemonJump->atJumpPeak2, sPokemonJump->atJumpPeak, sizeof(u8) * MAX_RFU_PLAYERS);
+        }
+    }
 }
 
 void InitGame(struct PokemonJump *jump)
