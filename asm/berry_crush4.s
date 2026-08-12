@@ -9,53 +9,6 @@
 
 
 
-	thumb_func_start sub_08022C10
-sub_08022C10: @ 0x08022C10
-	push {r4, r5, lr}
-	sub sp, #4
-	adds r4, r0, #0
-	adds r5, r1, #0
-	ldrb r0, [r4, #0xc]
-	cmp r0, #0
-	beq _08022C26
-	cmp r0, #1
-	beq _08022C4C
-	adds r0, #1
-	b _08022C5C
-_08022C26:
-	adds r0, r4, #0
-	bl sub_08024340
-	movs r0, #1
-	str r0, [sp]
-	adds r0, r5, #0
-	movs r1, #0
-	movs r2, #1
-	movs r3, #0
-	bl sub_08024410
-	movs r0, #7
-	strb r0, [r4, #0xe]
-	movs r0, #3
-	movs r1, #1
-	movs r2, #0
-	bl sub_08022950
-	b _08022C5E
-_08022C4C:
-	movs r0, #8
-	strb r0, [r4, #0xe]
-	movs r0, #5
-	movs r1, #1
-	movs r2, #0
-	bl sub_08022950
-	movs r0, #2
-_08022C5C:
-	strb r0, [r4, #0xc]
-_08022C5E:
-	movs r0, #0
-	add sp, #4
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08022C10
 
 	thumb_func_start sub_08022C68
 sub_08022C68: @ 0x08022C68

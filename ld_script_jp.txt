@@ -1245,6 +1245,9 @@ sub_08022A78 = Cmd_PrintMessage;
 sub_08022B80 = Cmd_ShowGameDisplay;
 sub_08022BA0 = Cmd_HideGameDisplay;
 sub_08022BC0 = Cmd_SignalReadyToBegin;
+sub_08022C10 = Cmd_AskPickBerry;
+ResetGame = sub_08024340;
+SetPrintMessageArgs = sub_08024410;
 SetPaletteFadeArgs = sub_080243D0;
 ChooseBerryForMachine = sub_081AA968;
 CopyPlayerNameWindowGfxToBg = sub_08022434;
@@ -2180,6 +2183,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_ShowGameDisplay);
         src/berry_crush.o(.text.Cmd_HideGameDisplay);
         src/berry_crush.o(.text.Cmd_SignalReadyToBegin);
+        src/berry_crush.o(.text.Cmd_AskPickBerry);
         asm/berry_crush4.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

@@ -48,6 +48,18 @@ enum {
     SCHEDULE_CMD,
 };
 
+enum {
+    MSG_PICK_BERRY,
+    MSG_WAIT_PICK,
+    MSG_POWDER,
+    MSG_SAVING,
+    MSG_PLAY_AGAIN,
+    MSG_NO_BERRIES,
+    MSG_DROPPED,
+    MSG_TIMES_UP,
+    MSG_COMM_STANDBY,
+};
+
 // IDs for the main berry crush game functions
 enum {
     CMD_NONE,
@@ -245,6 +257,8 @@ extern const struct SpriteTemplate sSpriteTemplate_Timer;
 extern const struct DigitObjUtilTemplate sDigitObjTemplates[];
 extern u32 (*const sBerryCrushCommands[26])(struct BerryCrushGame *, u8 *);
 extern const u8 *const sMessages[];
+extern void ResetGame(struct BerryCrushGame *);
+extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
 void CreatePlayerNameWindows(struct BerryCrushGame *);
 void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -1241,6 +1255,28 @@ u32 Cmd_SignalReadyToBegin(struct BerryCrushGame *game, u8 *args)
         return 0;
     }
     game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_AskPickBerry(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    default:
+        game->cmdState++;
+        break;
+    case 0:
+        ResetGame(game);
+        SetPrintMessageArgs(args, MSG_PICK_BERRY, F_MSG_CLEAR, 0, 1);
+        game->nextCmd = CMD_ASK_PICK_BERRY;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        break;
+    case 1:
+        game->nextCmd = CMD_PICK_BERRY;
+        RunOrScheduleCommand(CMD_HIDE_GAME, SCHEDULE_CMD, NULL);
+        game->cmdState = 2;
+        break;
+    }
     return 0;
 }
 
