@@ -299,7 +299,6 @@ extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern u32 IncrementWithLimit(u32 num, u32 max);
 extern void ResetPickState(void);
-extern void HandleWaitPlayAgainInput(void);
 extern void FreeBerrySprites(void);
 extern void FreeStatusBar(void);
 extern void FreeDodrioSprites(u8);
@@ -1084,6 +1083,39 @@ u8 UpdatePickStateQueue(u8 pickState)
         sGame->pickStateQueue[i] = sGame->pickStateQueue[i - 1];
     sGame->pickStateQueue[0] = pickState;
     return nextState;
+}
+
+void HandleWaitPlayAgainInput(void)
+{
+    if (sGame->inputDelay[sGame->multiplayerId] == 0)
+    {
+        if (JOY_NEW(DPAD_UP))
+        {
+            sGame->players[sGame->multiplayerId].comm.pickState = PICK_MIDDLE;
+            sGame->inputDelay[sGame->multiplayerId] = 6;
+            PlaySE(SE_M_CHARM);
+        }
+        else if (JOY_NEW(DPAD_LEFT))
+        {
+            sGame->players[sGame->multiplayerId].comm.pickState = PICK_LEFT;
+            sGame->inputDelay[sGame->multiplayerId] = 6;
+            PlaySE(SE_M_CHARM);
+        }
+        else if (JOY_NEW(DPAD_RIGHT))
+        {
+            sGame->players[sGame->multiplayerId].comm.pickState = PICK_RIGHT;
+            sGame->inputDelay[sGame->multiplayerId] = 6;
+            PlaySE(SE_M_CHARM);
+        }
+        else
+        {
+            sGame->players[sGame->multiplayerId].comm.pickState = PICK_NONE;
+        }
+    }
+    else
+    {
+        sGame->inputDelay[sGame->multiplayerId]--;
+    }
 }
 
 void InitResults_Leader(void)
