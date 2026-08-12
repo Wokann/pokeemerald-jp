@@ -288,7 +288,8 @@ extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
-extern void TryUpdateRecords(void);
+extern u32 Min(u32 num, u32 max);
+extern u32 sub_08027480(u8 playerId); // GetScore
 extern void SetStatusBarInvisibility(bool8);
 extern void ResetCloudPos(void);
 extern void SetCloudInvisibility(bool8);
@@ -1060,6 +1061,19 @@ u32 GetBerriesPicked(u8 playerId)
             + sGame->berryResults[playerId][BERRY_GREEN]
             + sGame->berryResults[playerId][BERRY_GOLD];
     return min(sum, MAX_BERRIES);
+}
+
+void TryUpdateRecords(void)
+{
+    u32 berriesPicked = Min(GetBerriesPicked(sGame->multiplayerId), MAX_BERRIES); // Min here is redundant
+    u32 score = Min(sub_08027480(sGame->multiplayerId), MAX_SCORE);
+
+    if (gSaveBlock2Ptr->berryPick.bestScore < score)
+        gSaveBlock2Ptr->berryPick.bestScore = score;
+    if (gSaveBlock2Ptr->berryPick.berriesPicked < berriesPicked)
+        gSaveBlock2Ptr->berryPick.berriesPicked = berriesPicked;
+    if (gSaveBlock2Ptr->berryPick.berriesPickedInRow < sGame->maxBerriesPickedInRow)
+        gSaveBlock2Ptr->berryPick.berriesPickedInRow = sGame->maxBerriesPickedInRow;
 }
 
 void InitResults_Leader(void)
