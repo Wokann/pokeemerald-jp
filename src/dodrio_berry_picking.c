@@ -1176,6 +1176,19 @@ u32 GetHighestScore(void)
     return Min(maxScore, MAX_SCORE);
 }
 
+u16 GetHighestBerryResult(u8 berryId)
+{
+    u8 i, numPlayers = sGame->numPlayers;
+    u16 highest = sGame->berryResults[0][berryId];
+    for (i = 0; i < numPlayers; i++)
+    {
+        u16 result = sGame->berryResults[i][berryId];
+        if (result > highest)
+            highest = result;
+    }
+    return highest;
+}
+
 void InitResults_Leader(void)
 {
     switch (sGame->state)
