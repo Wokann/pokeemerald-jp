@@ -399,7 +399,6 @@ extern const struct SpriteTemplate sBerrySpriteTemplate;
 extern const struct SpriteTemplate sBerryIconSpriteTemplate;
 extern EWRAM_DATA u16 *sBerrySpriteIds[NUM_BERRY_COLUMNS];
 extern EWRAM_DATA u16 *sBerryIconSpriteIds[NUM_BERRY_TYPES];
-extern void sub_08028924(u8 spriteId, bool8 invisible); // SetBerryInvisibility
 extern void sub_0802895C(bool8 invisible); // SetBerryIconsInvisibility
 extern const struct OamData sOamData_Dodrio;
 extern const union AnimCmd *const sAnims_Dodrio[];
@@ -1832,7 +1831,7 @@ void CreateBerrySprites_Dodrio(void)
         sBerrySpriteIds[i] = AllocZeroed(4);
         x = i * 16;
         *sBerrySpriteIds[i] = CreateSprite(&berry, x + (i * 8), 8, 1);
-        sub_08028924(i, TRUE); // SetBerryInvisibility
+        SetBerryInvisibility(i, TRUE);
     }
 
     // Create berry icon sprites for results screen
@@ -1867,6 +1866,11 @@ void FreeBerrySprites(void)
             DestroySprite(sprite);
         FREE_AND_SET_NULL(sBerryIconSpriteIds[i]);
     }
+}
+
+void SetBerryInvisibility(u8 id, bool8 invisible)
+{
+    gSprites[*sBerrySpriteIds[id]].invisible = invisible;
 }
 
 void nullsub_15(void)
