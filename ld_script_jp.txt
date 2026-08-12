@@ -1385,6 +1385,7 @@ sub_08028CF8 = ResetBerryAndStatusBarSprites;
 sub_08028D24 = LoadWindowFrameGfx;
 sub_08028D68 = ResetGfxState;
 sub_08028DA0 = DrawYesNoMessageWindow;
+sub_08028EA0 = DrawMessageWindow;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2477,6 +2478,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.nullsub_16);
         src/dodrio_berry_picking.o(.text.ResetGfxState);
         src/dodrio_berry_picking.o(.text.DrawYesNoMessageWindow);
+        src/dodrio_berry_picking.o(.text.DrawMessageWindow);
         asm/dodrio_berry_picking8.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

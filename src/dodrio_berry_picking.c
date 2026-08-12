@@ -484,6 +484,7 @@ void SetAllDodrioInvisibility(bool8 invisible, u8 count);
 void SetDodrioAnim(u8 playerId, u8 animNum);
 void InitStatusBarPos(void);
 void nullsub_15(void);
+void DrawMessageWindow(const struct WindowTemplate *template);
 u32 DoDodrioMissedAnim(struct Sprite *sprite);
 u32 DoDodrioIntroAnim(struct Sprite *sprite);
 void SendPacket_GameState(struct DodrioGame_Player *player, struct DodrioGame_PlayerCommData *player1, struct DodrioGame_PlayerCommData *player2, struct DodrioGame_PlayerCommData *player3, struct DodrioGame_PlayerCommData *player4, struct DodrioGame_PlayerCommData *player5, u8 numGraySquares, bool32 berriesFalling, bool32 allReadyToEnd);
@@ -2049,6 +2050,20 @@ void DrawYesNoMessageWindow(const struct WindowTemplate *template)
     FillBgTilemapBufferRect(0, 7, template->tilemapLeft - 1,                template->tilemapTop + template->height,    1, 1, pal);
     FillBgTilemapBufferRect(0, 8, template->tilemapLeft,                    template->tilemapTop + template->height,    template->width, 1, pal);
     FillBgTilemapBufferRect(0, 9, template->tilemapLeft + template->width,  template->tilemapTop + template->height,    1, 1, pal);
+}
+
+void DrawMessageWindow(const struct WindowTemplate *template)
+{
+    u8 pal = 11;
+
+    FillBgTilemapBufferRect(0, 10, template->tilemapLeft - 1,                template->tilemapTop - 1,                   1, 1, pal);
+    FillBgTilemapBufferRect(0, 11, template->tilemapLeft,                    template->tilemapTop - 1,                   template->width, 1, pal);
+    FillBgTilemapBufferRect(0, 12, template->tilemapLeft + template->width,  template->tilemapTop - 1,                   1, 1, pal);
+    FillBgTilemapBufferRect(0, 13, template->tilemapLeft - 1,                template->tilemapTop, 1,                    template->height, pal);
+    FillBgTilemapBufferRect(0, 15, template->tilemapLeft + template->width,  template->tilemapTop, 1,                    template->height, pal);
+    FillBgTilemapBufferRect(0, 16, template->tilemapLeft - 1,                template->tilemapTop + template->height,    1, 1, pal);
+    FillBgTilemapBufferRect(0, 17, template->tilemapLeft,                    template->tilemapTop + template->height,    template->width, 1, pal);
+    FillBgTilemapBufferRect(0, 18, template->tilemapLeft + template->width,  template->tilemapTop + template->height,    1, 1, pal);
 }
 
 void nullsub_15(void)
