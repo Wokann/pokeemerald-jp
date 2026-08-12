@@ -52,6 +52,51 @@ enum {
     NUM_BERRY_IDS
 };
 
+enum {
+    FUNC_INTRO,
+    FUNC_INIT_COUNTDOWN,
+    FUNC_COUNTDOWN,
+    FUNC_WAIT_START,
+    FUNC_PLAY_GAME,
+    FUNC_INIT_RESULTS,
+    FUNC_RESULTS,
+    FUNC_ASK_PLAY_AGAIN,
+    FUNC_END_LINK,
+    FUNC_EXIT,
+    FUNC_RESET_GAME,
+    FUNC_WAIT_END_GAME,
+};
+
+enum {
+    PLAY_AGAIN_NONE,
+    PLAY_AGAIN_YES,
+    PLAY_AGAIN_NO,
+    PLAY_AGAIN_DROPPED = 5,
+};
+
+enum {
+    PICK_NONE,     // Dodrio standing still
+    PICK_RIGHT,    // Dodrio reaching right
+    PICK_MIDDLE,   // Dodrio reaching up
+    PICK_LEFT,     // Dodrio reaching left
+    PICK_DISABLED, // Dodrio down after game over
+};
+
+enum {
+    BERRYSTATE_NONE,
+    BERRYSTATE_PICKED,   // Berry has been picked by a Dodrio, replaced with blue hit sprite (still falling)
+    BERRYSTATE_EATEN,    // Berry has been eaten (after being picked), berry is gone now
+    BERRYSTATE_SQUISHED, // Berry has hit the ground
+};
+
+enum {
+    INPUTSTATE_NONE,
+    INPUTSTATE_TRY_PICK,
+    INPUTSTATE_PICKED,
+    INPUTSTATE_ATE_BERRY,
+    INPUTSTATE_BAD_MISS,
+};
+
 #define PLAYER_NONE 0xFF
 
 struct DodrioGame_Gfx
@@ -187,6 +232,58 @@ static void ResetTasksAndSprites(void)
     ResetTasks();
     ResetSpriteData();
     FreeAllSpritePalettes();
+}
+
+void InitDodrioGame(struct DodrioGame *game)
+{
+    u8 i;
+
+    game->startState = 0;
+    game->state = 0;
+    game->timer = 0;
+    game->funcId = FUNC_INTRO;
+    game->prevFuncId = FUNC_INTRO;
+    game->startGame = FALSE;
+    game->berriesFalling = FALSE;
+    game->countdownEndDelay = 0;
+    game->numGraySquares = 0;
+    game->unused2 = 0;
+    game->allReadyToEnd = FALSE;
+
+    for (i = 0; i < ARRAY_COUNT(game->pickStateQueue); i++)
+        game->pickStateQueue[i] = PICK_NONE;
+
+    for (i = 0; i < MAX_RFU_PLAYERS; i++)
+    {
+        game->inputState[i] = INPUTSTATE_NONE;
+        game->inputDelay[i] = 0;
+        game->berryResults[i][BERRY_BLUE] = 0;
+        game->berryResults[i][BERRY_GREEN] = 0;
+        game->berryResults[i][BERRY_GOLD] = 0;
+        game->berryResults[i][BERRY_MISSED] = 0;
+        game->berryResults[i][BERRY_IN_ROW] = 0;
+        game->playAgainStates[i] = PLAY_AGAIN_NONE;
+        game->readyToEnd[i] = FALSE;
+    }
+
+    for (i = 0; i < NUM_BERRY_COLUMNS; i++)
+    {
+        game->fallTimer[i] = 0;
+        game->newBerryTimer[i] = 0;
+        game->berryState[i] = BERRYSTATE_NONE;
+        game->playersAttemptingPick[i][0] = PLAYER_NONE;
+        game->playersAttemptingPick[i][1] = PLAYER_NONE;
+    }
+
+    game->isLeader = GetMultiplayerId() == 0 ? TRUE : FALSE;
+    game->numPlayers = GetLinkPlayerCount();
+    game->posToPlayerId[0] = GetMultiplayerId();
+    for (i = 1; i < game->numPlayers; i++)
+    {
+        game->posToPlayerId[i] = game->posToPlayerId[i - 1] + 1;
+        if (game->posToPlayerId[i] > game->numPlayers - 1)
+            game->posToPlayerId[i] %= game->numPlayers;
+    }
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)

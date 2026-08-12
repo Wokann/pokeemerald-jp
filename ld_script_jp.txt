@@ -1280,7 +1280,7 @@ sub_08024340 = ResetGame;
 sub_080243D0 = SetPaletteFadeArgs;
 sub_08024410 = SetPrintMessageArgs;
 sub_08024704 = StartDodrioBerryPicking;
-InitDodrioGame = sub_080247F8;
+sub_080247F8 = InitDodrioGame;
 Task_StartDodrioGame = sub_08024990;
 CB2_DodrioGame = sub_08025F94;
 SetRandomPrize = sub_080271B0;
@@ -2254,6 +2254,7 @@ SECTIONS {
         src/berry_powder.o(.text);
         src/dodrio_berry_picking.o(.text.StartDodrioBerryPicking);
         src/dodrio_berry_picking.o(.text.ResetTasksAndSprites);
+        src/dodrio_berry_picking.o(.text.InitDodrioGame);
         asm/dodrio_berry_picking.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
