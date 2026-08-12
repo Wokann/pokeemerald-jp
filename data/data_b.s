@@ -1370,12 +1370,12 @@ gUnknown_82CB328: @ 0x82CB328
 gUnknown_82CB330: @ 0x82CB330
 	.incbin "baserom_jp.gba", 0x2cb330, 0x20
 
-	.globl gUnknown_82CB350
-gUnknown_82CB350: @ 0x82CB350
+	.globl sLeaderFuncs
+sLeaderFuncs: @ 0x82CB350
 	.incbin "baserom_jp.gba", 0x2cb350, 0x30
 
-	.globl gUnknown_82CB380
-gUnknown_82CB380: @ 0x82CB380
+	.globl sMemberFuncs
+sMemberFuncs: @ 0x82CB380
 	.incbin "baserom_jp.gba", 0x2cb380, 0x30
 
 	.globl gUnknown_82CB3B0

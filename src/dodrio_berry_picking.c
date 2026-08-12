@@ -243,6 +243,14 @@ extern void CreateCloudSprites_Dodrio(void);
 #define CreateCloudSprites CreateCloudSprites_Dodrio
 extern void CreateStatusBarSprites(void);
 extern void CreateDodrioGameTask(TaskFunc func);
+extern void (*const sLeaderFuncs[])(void);
+extern void (*const sMemberFuncs[])(void);
+extern void RecvLinkData_Leader(void);
+extern void RecvLinkData_Member(void);
+extern void UpdateGame_Leader(void);
+extern void UpdateGame_Member(void);
+extern void SendLinkData_Leader(void);
+extern void SendLinkData_Member(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -371,6 +379,26 @@ void Task_StartDodrioGame(u8 taskId)
         CreateDodrioGameTask(Task_NewGameIntro);
         break;
     }
+}
+
+void Task_DodrioGame_Leader(u8 taskId)
+{
+    RecvLinkData_Leader();
+    sLeaderFuncs[sGame->funcId]();
+    if (!sExitingGame)
+        UpdateGame_Leader();
+
+    SendLinkData_Leader();
+}
+
+void Task_DodrioGame_Member(u8 taskId)
+{
+    RecvLinkData_Member();
+    sMemberFuncs[sGame->funcId]();
+    if (!sExitingGame)
+        UpdateGame_Member();
+
+    SendLinkData_Member();
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
