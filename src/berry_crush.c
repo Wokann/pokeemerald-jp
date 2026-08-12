@@ -18,10 +18,12 @@
 #include "minigame_countdown.h"
 #include "overworld.h"
 #include "palette.h"
+#include "save.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "trig.h"
@@ -2012,6 +2014,43 @@ u32 Cmd_ShowResults(struct BerryCrushGame *game, u8 *args)
         SetPrintMessageArgs(args, MSG_POWDER, F_MSG_CLEAR | F_MSG_EXPAND, 0, 0);
         game->nextCmd = CMD_SAVE;
         RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        game->cmdState = 0;
+        return 0;
+    }
+    game->cmdState++;
+    return 0;
+}
+
+u32 Cmd_SaveGame(struct BerryCrushGame *game, u8 *args)
+{
+    switch (game->cmdState)
+    {
+    case 0:
+        if (game->timer >= MAX_TIME)
+            HideTimer(&game->gfx);
+        SetPrintMessageArgs(args, MSG_COMM_STANDBY, 0, 0, 1);
+        game->nextCmd = CMD_SAVE;
+        RunOrScheduleCommand(CMD_PRINT_MSG, SCHEDULE_CMD, NULL);
+        game->cmdState = 0; // State is progressed by CMD_PRINT_MSG
+        return 0;
+    case 1:
+        Rfu_SetLinkStandbyCallback();
+        break;
+    case 2:
+        if (!IsLinkTaskFinished())
+            return 0;
+        DrawDialogueFrame(0, FALSE);
+        AddTextPrinterParameterized2(0, FONT_NORMAL, gText_SavingDontTurnOffPower, 0, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
+        CopyWindowToVram(0, COPYWIN_FULL);
+        CreateTask(Task_LinkFullSave, 0);
+        break;
+    case 3:
+        if (FuncIsActiveTask(Task_LinkFullSave))
+            return 0;
+        break;
+    case 4:
+        RunOrScheduleCommand(CMD_ASK_PLAY_AGAIN, SCHEDULE_CMD, NULL);
+        game->gameState = STATE_PLAY_AGAIN;
         game->cmdState = 0;
         return 0;
     }
