@@ -1422,8 +1422,8 @@ sDefaultPlayerName3: @ 0x82CB414
 sPlayerNames: @ 0x82CB41C
 	.incbin "baserom_jp.gba", 0x2cb41c, 0x14
 
-	.globl gUnknown_82CB430
-gUnknown_82CB430: @ 0x82CB430
+	.globl sDodrioBgTemplates
+sDodrioBgTemplates: @ 0x82CB430
 	.incbin "baserom_jp.gba", 0x2cb430, 0x18
 
 	.globl sDodrioWindowTemplates_Results
