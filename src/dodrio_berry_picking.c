@@ -17,6 +17,7 @@
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
+#include "text.h"
 #include "text_window.h"
 #include "window.h"
 #include "constants/items.h"
@@ -227,6 +228,20 @@ struct GfxFunc
 
 #define NUM_GFX_FUNCS 10
 
+struct WinCoords
+{
+    u8 left;
+    u8 top;
+};
+
+enum
+{
+    COLORID_GRAY,
+    COLORID_RED,
+    COLORID_BLUE,
+    COLORID_GREEN,
+};
+
 struct DodrioGame_Gfx
 {
     u16 ALIGNED(4) tilemapBuffers[3][BG_SCREEN_SIZE];
@@ -360,6 +375,8 @@ extern const struct GfxFunc sGfxFuncs[];
 extern const u16 sDodrioBg_Tilemap[];
 extern const u16 sTreeBorderLeft_Tilemap[];
 extern const u16 sTreeBorderRight_Tilemap[];
+extern const u8 sDodrioTextColorTable[][3];
+extern const struct WinCoords *const sNameWindowCoords[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2154,6 +2171,70 @@ void LoadGfx(void)
         break;
     default:
         sGfx->finished = TRUE;
+        break;
+    }
+}
+
+void ShowNames(void)
+{
+    u8 i, numPlayers, playerId, colorsId, *name;
+    u32 left;
+    struct WindowTemplate window;
+    const struct WinCoords *coords;
+
+    switch (sGfx->state)
+    {
+    case 0:
+        numPlayers = GetNumPlayers();
+        coords = sNameWindowCoords[numPlayers - 1];
+        window.bg = 0;
+        window.width = 7;
+        window.height = 2;
+        window.paletteNum = 13;
+        window.baseBlock = 0x13;
+        for (i = 0; i < numPlayers; coords++, i++)
+        {
+            colorsId = COLORID_GRAY;
+            playerId = GetPlayerIdByPos(i);
+            left = (56 - GetStringWidth(0, GetPlayerName(playerId), -1)) / 2u; // JP uses font id 0 here
+            window.tilemapLeft = coords->left;
+            window.tilemapTop = coords->top;
+            sGfx->windowIds[i] = AddWindow(&window);
+            ClearWindowTilemap(sGfx->windowIds[i]);
+            FillWindowPixelBuffer(sGfx->windowIds[i], PIXEL_FILL(1));
+            if (playerId == GetMultiplayerId())
+                colorsId = COLORID_BLUE;
+            name = GetPlayerName(playerId);
+            AddTextPrinterParameterized3(sGfx->windowIds[i], 0, (u8)left, 1, sDodrioTextColorTable[colorsId], -1, name); // JP uses font id 0 here
+            CopyWindowToVram(sGfx->windowIds[i], COPYWIN_GFX);
+            window.baseBlock += 0xE;
+            DrawMessageWindow(&window);
+        }
+        sGfx->state++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            numPlayers = GetNumPlayers();
+            for (i = 0; i < numPlayers; i++)
+                PutWindowTilemap(sGfx->windowIds[i]);
+            CopyBgTilemapBufferToVram(0);
+            sGfx->state++;
+        }
+        break;
+    default:
+        if (++sGfx->state > 180)
+        {
+            numPlayers = GetNumPlayers();
+            for (i = 0; i < numPlayers; i++)
+            {
+                ClearWindowTilemap(sGfx->windowIds[i]);
+                RemoveWindow(sGfx->windowIds[i]);
+            }
+            FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x1E, 0x14);
+            CopyBgTilemapBufferToVram(0);
+            sGfx->finished = TRUE;
+        }
         break;
     }
 }

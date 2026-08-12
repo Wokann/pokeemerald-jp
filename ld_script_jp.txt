@@ -1398,6 +1398,7 @@ CreateDodrioGameTask = sub_08025FE4;
 sub_08028FA0 = InitGameGfx;
 sub_08029040 = Task_TryRunGfxFunc;
 sub_08029064 = LoadGfx;
+sub_0802916C = ShowNames;
 SetGfxFunc = sub_0802A420;
 GetGfxFunc = sub_0802A450;
 InitBgs = sub_0802A49C;
@@ -2491,6 +2492,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetGfxFuncById);
         src/dodrio_berry_picking.o(.text.Task_TryRunGfxFunc);
         src/dodrio_berry_picking.o(.text.LoadGfx);
+        src/dodrio_berry_picking.o(.text.ShowNames);
         asm/dodrio_berry_picking8.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

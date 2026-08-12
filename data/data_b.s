@@ -1558,16 +1558,32 @@ sCloudPalette: @ 0x82CEBEC
 sCloudSpriteTemplate: @ 0x82CEBF4
 	.incbin "baserom_jp.gba", 0x2cebf4, 0x18
 
-	.globl gUnknown_82CEC0C
-gUnknown_82CEC0C: @ 0x82CEC0C
-	.incbin "baserom_jp.gba", 0x2cec0c, 0x3
+	.globl sDodrioTextColorTable
+sDodrioTextColorTable: @ 0x82CEC0C
+	.incbin "baserom_jp.gba", 0x2cec0c, 0xc
 
-	.globl gUnknown_82CEC0F
-gUnknown_82CEC0F: @ 0x82CEC0F
-	.incbin "baserom_jp.gba", 0x2cec0f, 0x45
+	.globl sNameWindowCoords_1Player
+sNameWindowCoords_1Player: @ 0x82CEC18
+	.incbin "baserom_jp.gba", 0x2cec18, 0x4
 
-	.globl gUnknown_82CEC54
-gUnknown_82CEC54: @ 0x82CEC54
+	.globl sNameWindowCoords_2Players
+sNameWindowCoords_2Players: @ 0x82CEC1C
+	.incbin "baserom_jp.gba", 0x2cec1c, 0x8
+
+	.globl sNameWindowCoords_3Players
+sNameWindowCoords_3Players: @ 0x82CEC24
+	.incbin "baserom_jp.gba", 0x2cec24, 0xc
+
+	.globl sNameWindowCoords_4Players
+sNameWindowCoords_4Players: @ 0x82CEC30
+	.incbin "baserom_jp.gba", 0x2cec30, 0x10
+
+	.globl sNameWindowCoords_5Players
+sNameWindowCoords_5Players: @ 0x82CEC40
+	.incbin "baserom_jp.gba", 0x2cec40, 0x14
+
+	.globl sNameWindowCoords
+sNameWindowCoords: @ 0x82CEC54
 	.incbin "baserom_jp.gba", 0x2cec54, 0x14
 
 	.globl gUnknown_82CEC68
