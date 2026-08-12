@@ -294,7 +294,6 @@ extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
 extern bool32 ReadyToEndGame_Member(void);
-extern u32 Min(u32 num, u32 max);
 extern u32 sub_08027480(u8 playerId); // GetScore
 extern void SetStatusBarInvisibility(bool8);
 extern void ResetCloudPos(void);
@@ -303,7 +302,6 @@ extern u8 GetPlayAgainState(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
-extern u32 IncrementWithLimit(u32 num, u32 max);
 extern void FreeBerrySprites(void);
 extern void FreeStatusBar(void);
 extern void FreeDodrioSprites(u8);
@@ -1309,6 +1307,22 @@ u8 TryGivePrize(void)
     if (!CheckBagHasSpace(itemId, 1))
         return PRIZE_FILLED_BAG;
     return PRIZE_RECEIVED;
+}
+
+u32 IncrementWithLimit(u32 num, u32 max)
+{
+    if (num < max)
+        return num + 1;
+    else
+        return max;
+}
+
+u32 Min(u32 a, u32 b)
+{
+    if (a < b)
+        return a;
+    else
+        return b;
 }
 
 void InitResults_Leader(void)

@@ -2397,6 +2397,8 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.GetScoreResults);
         src/dodrio_berry_picking.o(.text.GetScoreRanking);
         src/dodrio_berry_picking.o(.text.TryGivePrize);
+        src/dodrio_berry_picking.o(.text.IncrementWithLimit);
+        src/dodrio_berry_picking.o(.text.Min);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

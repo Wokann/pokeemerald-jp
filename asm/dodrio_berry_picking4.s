@@ -24,31 +24,6 @@
 
 
 
-	thumb_func_start IncrementWithLimit
-IncrementWithLimit: @ 0x080277E8
-	push {lr}
-	adds r2, r0, #0
-	adds r0, r1, #0
-	cmp r2, r0
-	bhs _080277F4
-	adds r0, r2, #1
-_080277F4:
-	pop {r1}
-	bx r1
-	thumb_func_end IncrementWithLimit
-
-	thumb_func_start Min
-Min: @ 0x080277F8
-	push {lr}
-	adds r2, r0, #0
-	adds r0, r1, #0
-	cmp r2, r0
-	bhs _08027804
-	adds r0, r2, #0
-_08027804:
-	pop {r1}
-	bx r1
-	thumb_func_end Min
 
 	thumb_func_start sub_08027808
 sub_08027808: @ 0x08027808
