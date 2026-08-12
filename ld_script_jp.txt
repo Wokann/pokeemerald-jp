@@ -3046,6 +3046,11 @@ SECTIONS {
         src/main_menu.o(.text.Task_NewGameBirchSpeech_WaitForPlayerShrink);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_FadePlayerToWhite);
         src/main_menu.o(.text.Task_NewGameBirchSpeech_Cleanup);
+        src/main_menu.o(.text.CB2_NewGameBirchSpeech_ReturnFromNamingScreen);
+        src/main_menu.o(.text.SpriteCB_Null);
+        src/main_menu.o(.text.SpriteCB_MovePlayerDownWhileShrinking);
+        src/main_menu.o(.text.NewGameBirchSpeech_CreateLotadSprite);
+        src/main_menu.o(.text.AddBirchSpeechObjects);
         asm/main_menu.o(.text);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
