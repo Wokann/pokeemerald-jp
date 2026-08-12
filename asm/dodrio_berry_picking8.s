@@ -4,31 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08028D24
-sub_08028D24: @ 0x08028D24
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	adds r0, r4, #0
-	bl GetWindowFrameTilesPal
-	ldr r1, [r0]
-	movs r2, #0x90
-	lsls r2, r2, #1
-	movs r0, #0
-	movs r3, #1
-	bl LoadBgTiles
-	adds r0, r4, #0
-	bl GetWindowFrameTilesPal
-	ldr r0, [r0, #4]
-	movs r1, #0xa0
-	movs r2, #0x20
-	bl LoadPalette
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_08028D24
 
 	thumb_func_start nullsub_16
 nullsub_16: @ 0x08028D58

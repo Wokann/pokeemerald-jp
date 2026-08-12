@@ -2016,6 +2016,12 @@ void ResetBerryAndStatusBarSprites(void)
     SetStatusBarInvisibility(FALSE);
 }
 
+void LoadWindowFrameGfx(u8 windowId)
+{
+    LoadBgTiles(0, GetWindowFrameTilesPal(windowId)->tiles, 0x120, 1);
+    LoadPalette(GetWindowFrameTilesPal(windowId)->pal, 0xa0, 0x20);
+}
+
 void nullsub_15(void)
 {
 }

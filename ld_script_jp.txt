@@ -1383,6 +1383,7 @@ sub_08028BB0 = FreeCloudSprites;
 sub_08028BF4 = SetCloudInvisibility;
 sub_08028C40 = GetDodrioXPos;
 sub_08028CF8 = ResetBerryAndStatusBarSprites;
+sub_08028D24 = LoadWindowFrameGfx;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2471,6 +2472,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.SetCloudInvisibility);
         src/dodrio_berry_picking.o(.text.GetDodrioXPos);
         src/dodrio_berry_picking.o(.text.ResetBerryAndStatusBarSprites);
+        src/dodrio_berry_picking.o(.text.LoadWindowFrameGfx);
         asm/dodrio_berry_picking8.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);
