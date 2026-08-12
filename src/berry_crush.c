@@ -209,7 +209,7 @@ void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
 void CreateGameSprites(struct BerryCrushGame *);
 void DestroyGameSprites(struct BerryCrushGame *);
-extern void SpriteCB_Sparkle_Init(struct Sprite *);
+void SpriteCB_Sparkle_Init(struct Sprite *);
 
 void SaveResults(void);
 static void VBlankCB(void);
@@ -1040,6 +1040,33 @@ void SpriteCB_Sparkle(struct Sprite *sprite)
     sprite->x = sX >> 7;
     if (sprite->y + sprite->y2 > (sBitfield & MASK_TARGET_Y))
         sprite->callback = SpriteCB_Sparkle_End;
+}
+
+void SpriteCB_Sparkle_Init(struct Sprite *sprite)
+{
+    s16 *data = sprite->data;
+    s16 xMult, xDiv;
+    s32 var;
+    u32 zero = 0;
+
+    var = 640;
+    sYSpeed = var;
+    sYAccel = 32;
+    sBitfield = 168; // Setting bits in MASK_TARGET_Y
+    xMult = sprite->x2 * 128;
+    xDiv = MathUtil_Div16Shift(7, (168 - sprite->y) << 7, (var + 32) >> 1);
+    sprite->sX = sprite->x << 7;
+    sXSpeed = MathUtil_Div16Shift(7, xMult, xDiv);
+    var = MathUtil_Mul16Shift(7, xDiv, 85);
+    sSinIdx = zero;
+    sSinSpeed = MathUtil_Div16Shift(7, Q_8_8(63.5), var);
+    sAmplitude = sprite->x2 / 4;
+    sBitfield |= F_MOVE_HORIZ;
+    sprite->y2 = zero;
+    sprite->x2 = zero;
+    sprite->callback = SpriteCB_Sparkle;
+    sprite->animPaused = FALSE;
+    sprite->invisible = FALSE;
 }
 
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string)
