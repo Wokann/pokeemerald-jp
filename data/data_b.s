@@ -1446,8 +1446,8 @@ gUnknown_82CB470: @ 0x82CB470
 gUnknown_82CB478: @ 0x82CB478
 	.incbin "baserom_jp.gba", 0x2cb478, 0x204
 
-	.globl gUnknown_82CB67C
-gUnknown_82CB67C: @ 0x82CB67C
+	.globl sBg_Pal
+sBg_Pal: @ 0x82CB67C
 	.incbin "baserom_jp.gba", 0x2cb67c, 0x40
 
 	.globl sDodrioNormalPal
@@ -1466,12 +1466,12 @@ gUnknown_82CB6FC: @ 0x82CB6FC
 sBerry_Gfx: @ 0x82CB73C
 	.incbin "baserom_jp.gba", 0x2cb73c, 0x1d4
 
-	.globl gUnknown_82CB910
-gUnknown_82CB910: @ 0x82CB910
+	.globl sBg_Gfx
+sBg_Gfx: @ 0x82CB910
 	.incbin "baserom_jp.gba", 0x2cb910, 0x890
 
-	.globl gUnknown_82CC1A0
-gUnknown_82CC1A0: @ 0x82CC1A0
+	.globl sTreeBorder_Gfx
+sTreeBorder_Gfx: @ 0x82CC1A0
 	.incbin "baserom_jp.gba", 0x2cc1a0, 0xdcc
 
 	.globl sStatus_Gfx
@@ -1486,16 +1486,16 @@ sCloud_Gfx: @ 0x82CD000
 sDodrio_Gfx: @ 0x82CD148
 	.incbin "baserom_jp.gba", 0x2cd148, 0x121c
 
-	.globl gUnknown_82CE364
-gUnknown_82CE364: @ 0x82CE364
+	.globl sDodrioBg_Tilemap
+sDodrioBg_Tilemap: @ 0x82CE364
 	.incbin "baserom_jp.gba", 0x2ce364, 0x26c
 
-	.globl gUnknown_82CE5D0
-gUnknown_82CE5D0: @ 0x82CE5D0
+	.globl sTreeBorderRight_Tilemap
+sTreeBorderRight_Tilemap: @ 0x82CE5D0
 	.incbin "baserom_jp.gba", 0x2ce5d0, 0x250
 
-	.globl gUnknown_82CE820
-gUnknown_82CE820: @ 0x82CE820
+	.globl sTreeBorderLeft_Tilemap
+sTreeBorderLeft_Tilemap: @ 0x82CE820
 	.incbin "baserom_jp.gba", 0x2ce820, 0x24c
 
 	.globl sOamData_Dodrio
@@ -1586,8 +1586,8 @@ gUnknown_82CEC84: @ 0x82CEC84
 gUnknown_82CEC8E: @ 0x82CEC8E
 	.incbin "baserom_jp.gba", 0x2cec8e, 0xa
 
-	.globl gUnknown_82CEC98
-gUnknown_82CEC98: @ 0x82CEC98
+	.globl sGfxFuncs
+sGfxFuncs: @ 0x82CEC98
 	.incbin "baserom_jp.gba", 0x2cec98, 0x50
 
 	.globl gUnknown_82CECE8

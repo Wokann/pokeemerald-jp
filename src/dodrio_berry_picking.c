@@ -219,6 +219,14 @@ enum {
 
 #define tState data[0]
 
+struct GfxFunc
+{
+    u8 id;
+    void (*func)(void);
+};
+
+#define NUM_GFX_FUNCS 10
+
 struct DodrioGame_Gfx
 {
     u16 ALIGNED(4) tilemapBuffers[3][BG_SCREEN_SIZE];
@@ -344,6 +352,14 @@ extern void InitGameGfx(struct DodrioGame_Gfx *);
 extern void Task_TryRunGfxFunc(u8 taskId);
 extern void LoadGfx(void);
 extern void SetGfxFunc(void (*func)(void));
+extern void (*GetGfxFunc(void))(void);
+extern void InitBgs(void);
+extern bool32 LoadBgGfx(void);
+extern void FreeAllWindowBuffers_(void);
+extern const struct GfxFunc sGfxFuncs[];
+extern const u16 sDodrioBg_Tilemap[];
+extern const u16 sTreeBorderLeft_Tilemap[];
+extern const u16 sTreeBorderRight_Tilemap[];
 extern bool32 IsGfxFuncActive(void);
 extern void CreateDodrioSprite(struct DodrioGame_MonInfo *, u8, u8, u8);
 extern void LoadBerryGfx_Dodrio(void);
@@ -2079,6 +2095,67 @@ void InitGameGfx(struct DodrioGame_Gfx *ptr)
     sGfx->playAgainState = PLAY_AGAIN_NONE;
     sGfx->taskId = CreateTask(Task_TryRunGfxFunc, 3);
     SetGfxFunc(LoadGfx);
+}
+
+void FreeAllWindowBuffers_(void)
+{
+    FreeAllWindowBuffers();
+}
+
+void SetGfxFuncById(u8 funcId)
+{
+    u8 i;
+
+    for (i = 0; i < NUM_GFX_FUNCS; i++)
+    {
+        if (sGfxFuncs[i].id == funcId)
+            SetGfxFunc(sGfxFuncs[i].func);
+    }
+}
+
+void Task_TryRunGfxFunc(u8 taskId)
+{
+    if (!sGfx->finished)
+        GetGfxFunc()();
+}
+
+void LoadGfx(void)
+{
+    switch (sGfx->state)
+    {
+    case 0:
+        InitBgs();
+        sGfx->state++;
+        break;
+    case 1:
+        if (LoadBgGfx() == TRUE)
+            sGfx->state++;
+        break;
+    case 2:
+        CopyToBgTilemapBuffer(3, sDodrioBg_Tilemap, 0, 0);
+        CopyToBgTilemapBuffer(1, sTreeBorderLeft_Tilemap, 0, 0);
+        CopyToBgTilemapBuffer(2, sTreeBorderRight_Tilemap, 0, 0);
+        CopyBgTilemapBufferToVram(3);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        sGfx->state++;
+        break;
+    case 3:
+        ShowBg(0);
+        ShowBg(3);
+        ShowBg(1);
+        ShowBg(2);
+        sGfx->state++;
+        break;
+    case 4:
+        LoadWindowFrameGfx(gSaveBlock2Ptr->optionsWindowFrameType);
+        nullsub_16();
+        sGfx->state++;
+        break;
+    default:
+        sGfx->finished = TRUE;
+        break;
+    }
 }
 
 void nullsub_15(void)
