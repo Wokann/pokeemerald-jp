@@ -1626,6 +1626,8 @@ sub_0802BDDC = ResetPlayersJumpStates;
 sPokeJumpMons = gUnknown_82CECF0;
 sub_0802E0A0 = IncrementGamesWithMaxPlayers;
 sub_0802E024 = GetPokeJumpRecords;
+sub_0802E034 = ResetPokemonJumpRecords;
+sub_0802E04C = TryUpdateRecords_PokeJump;
 sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
 sub_08022230 = ShowBerryCrushRankings;
@@ -2920,7 +2922,8 @@ SECTIONS {
         src/pokemon_jump.o(.text.RecvPacket_MemberStateToLeader);
         src/pokemon_jump.o(.text.RecvPacket_MemberStateToMember);
         src/pokemon_jump.o(.text.GetPokeJumpRecords);
-        asm/pokemon_jump_2b.o(.text);
+        src/pokemon_jump.o(.text.ResetPokemonJumpRecords);
+        src/pokemon_jump.o(.text.TryUpdateRecords_PokeJump);
         src/pokemon_jump.o(.text.IncrementGamesWithMaxPlayers);
         asm/pokemon_jump_2c.o(.text);
         src/rtc.o(.text);

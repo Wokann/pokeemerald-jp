@@ -28,6 +28,8 @@
 #define PALTAG_2 6
 #define GFXTAG_COUNTDOWN 9
 #define PALTAG_COUNTDOWN 7
+#define MAX_JUMP_SCORE 99990
+#define MAX_JUMPS 9999
 
 enum {
     BG_INTERFACE,
@@ -415,7 +417,7 @@ extern void sub_0802BDAC(void); // ResetVineAfterHit
 extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
 extern bool32 sub_0802B658(void); // DoVineHitEffect
 extern bool32 sub_0802B878(void); // DoPlayAgainPrompt
-extern void sub_0802E04C(u32 jumpScore, u16 jumpsInRow, u16 data); // TryUpdateRecords
+bool32 TryUpdateRecords_PokeJump(u32 jumpScore, u16 jumpsInRow, u16 excellentsInRow);
 extern bool32 sub_0802BA24(void); // CloseMessageAndResetScore
 extern bool32 sub_0802B954(void); // ClosePokeJumpLink
 extern bool32 sub_0802B74C(void); // TryGivePrize
@@ -935,7 +937,7 @@ bool32 AskPlayAgain_Leader(void)
     case 1:
         if (!sub_0802B878()) // DoPlayAgainPrompt
         {
-            sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+            TryUpdateRecords_PokeJump(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data);
             sPokemonJump->mainState++;
         }
         break;
@@ -969,7 +971,7 @@ bool32 AskPlayAgain_Member(void)
     case 1:
         if (!sub_0802B878()) // DoPlayAgainPrompt
         {
-            sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+            TryUpdateRecords_PokeJump(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data);
             sPokemonJump->playAgainComm = sPokemonJump->playAgainState;
             return FALSE;
         }
@@ -1079,7 +1081,7 @@ bool32 SavePokeJump(void)
     switch (sPokemonJump->mainState)
     {
     case 0:
-        sub_0802E04C(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data); // TryUpdateRecords
+        TryUpdateRecords_PokeJump(sPokemonJump->comm.jumpScore, sPokemonJump->comm.jumpsInRow, sPokemonJump->comm.data);
         sub_0802CDBC(GFXFUNC_MSG_SAVING); // SetUpPokeJumpGfxFuncById
         sPokemonJump->mainState++;
         break;
@@ -3490,10 +3492,37 @@ struct PokemonJumpRecords *GetPokeJumpRecords(void)
     return &gSaveBlock2Ptr->pokeJump;
 }
 
+void ResetPokemonJumpRecords(void)
+{
+    struct PokemonJumpRecords *records = GetPokeJumpRecords();
+    records->jumpsInRow = 0;
+    records->bestJumpScore = 0;
+    records->excellentsInRow = 0;
+    records->gamesWithMaxPlayers = 0;
+    records->unused2 = 0;
+    records->unused1 = 0;
+}
+
+// _PokeJump suffix: dodrio_berry_picking owns the plain TryUpdateRecords name.
+bool32 TryUpdateRecords_PokeJump(u32 jumpScore, u16 jumpsInRow, u16 excellentsInRow)
+{
+    struct PokemonJumpRecords *records = GetPokeJumpRecords();
+    bool32 newRecord = FALSE;
+
+    if (records->bestJumpScore < jumpScore && jumpScore <= MAX_JUMP_SCORE)
+        records->bestJumpScore = jumpScore, newRecord = TRUE;
+    if (records->jumpsInRow < jumpsInRow && jumpsInRow <= MAX_JUMPS)
+        records->jumpsInRow = jumpsInRow, newRecord = TRUE;
+    if (records->excellentsInRow < excellentsInRow && excellentsInRow <= MAX_JUMPS)
+        records->excellentsInRow = excellentsInRow, newRecord = TRUE;
+
+    return newRecord;
+}
+
 void IncrementGamesWithMaxPlayers(void)
 {
     struct PokemonJumpRecords *records = GetPokeJumpRecords();
 
-    if (records->gamesWithMaxPlayers < 9999)
+    if (records->gamesWithMaxPlayers < MAX_JUMPS)
         records->gamesWithMaxPlayers++;
 }

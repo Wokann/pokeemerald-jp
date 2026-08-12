@@ -1547,7 +1547,7 @@ pokemon_jump.s
 0802dfc8 pokemon_jump.s sub_0802DFC8_jp RecvPacket_MemberStateToMember
 0802e024 GetPokeJumpRecords GetPokeJumpRecords
 0802e034 ResetPokemonJumpRecords ResetPokemonJumpRecords
-0802e04c TryUpdateRecords TryUpdateRecords
+0802e04c TryUpdateRecords TryUpdateRecords_PokeJump
 0802e0a0 IncrementGamesWithMaxPlayers IncrementGamesWithMaxPlayers
 0802e0bc sub_0802E0BC_jp ShowPokemonJumpRecords
 0802e0dc pokemon_jump.s sub_0802E0DC_jp
