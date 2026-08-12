@@ -1334,6 +1334,11 @@ u8 GetPlayerIdByPos(u8 pos)
     return sGame->posToPlayerId[pos];
 }
 
+void SetNumPlayers(void)
+{
+    sGame->numPlayers = GetLinkPlayerCount();
+}
+
 void CheckDodrioInParty(void)
 {
     int i;
