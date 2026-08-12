@@ -1356,6 +1356,8 @@ sub_0802771C = GetScoreRanking;
 sub_08027788 = TryGivePrize;
 sub_08027808 = GetPlayerIdByPos;
 sub_0802781C = CheckDodrioInParty;
+sub_0802786C = ShowDodrioRecords;
+sub_0802788C = Task_ShowDodrioRecords;
 sub_080256D8 = Task_CommunicateMonInfo;
 sub_08025664 = Task_NewGameIntro;
 sub_080257C4 = RecvLinkData_Gameplay;
@@ -2403,6 +2405,8 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.Min);
         src/dodrio_berry_picking.o(.text.GetPlayerIdByPos);
         src/dodrio_berry_picking.o(.text.CheckDodrioInParty);
+        src/dodrio_berry_picking.o(.text.ShowDodrioRecords);
+        src/dodrio_berry_picking.o(.text.Task_ShowDodrioRecords);
         asm/dodrio_berry_picking4.o(.text);
         asm/pokemon_jump.o(.text);
         src/rtc.o(.text);

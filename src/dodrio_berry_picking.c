@@ -332,6 +332,9 @@ extern const s16 sBerryScoreMultipliers[NUM_BERRY_IDS];
 extern const u8 sPlayerIdAtColumn[MAX_RFU_PLAYERS][NUM_BERRY_COLUMNS];
 extern const u8 sDodrioNeighborMap[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS][3];
 extern const u8 sUnsharedColumns[MAX_RFU_PLAYERS][MAX_RFU_PLAYERS];
+extern const struct WindowTemplate sRecordsWindowTemplate;
+extern void sub_0802792C(u8 windowId); // JP records window drawing
+void Task_ShowDodrioRecords(u8 taskId);
 void ResetGame_Dodrio(void);
 #define ResetGame ResetGame_Dodrio
 
@@ -1344,6 +1347,46 @@ void CheckDodrioInParty(void)
         }
     }
     gSpecialVar_Result = 0;
+}
+
+void ShowDodrioRecords(void)
+{
+    u8 taskId = CreateTask(Task_ShowDodrioRecords, 0);
+    Task_ShowDodrioRecords(taskId);
+}
+
+void Task_ShowDodrioRecords(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    switch (data[0])
+    {
+    case 0:
+        data[1] = AddWindow(&sRecordsWindowTemplate);
+        sub_0802792C(data[1]);
+        CopyWindowToVram(data[1], 3);
+        data[0]++;
+        break;
+    case 1:
+        if (!IsDma3ManagerBusyWithBgCopy())
+            data[0]++;
+        break;
+    case 2:
+        if (gMain.newKeys & (A_BUTTON | B_BUTTON))
+        {
+            rbox_fill_rectangle(data[1]);
+            CopyWindowToVram(data[1], 1);
+            data[0]++;
+        }
+        break;
+    case 3:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            RemoveWindow(data[1]);
+            DestroyTask(taskId);
+            ScriptContext_Enable();
+        }
+        break;
+    }
 }
 
 void InitResults_Leader(void)

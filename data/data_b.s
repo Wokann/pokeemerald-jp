@@ -1382,8 +1382,8 @@ sMemberFuncs: @ 0x82CB380
 sBerryScoreMultipliers: @ 0x82CB3B0
 	.incbin "baserom_jp.gba", 0x2cb3b0, 0x8
 
-	.globl gUnknown_82CB3B8
-gUnknown_82CB3B8: @ 0x82CB3B8
+	.globl sRecordsWindowTemplate
+sRecordsWindowTemplate: @ 0x82CB3B8
 	.incbin "baserom_jp.gba", 0x2cb3b8, 0x8
 
 	.globl gUnknown_82CB3C0
