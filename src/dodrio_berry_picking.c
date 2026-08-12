@@ -372,7 +372,6 @@ extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
 extern void FreeBerrySprites(void);
 extern void FreeStatusBar(void);
-extern void FreeDodrioSprites(u8);
 extern void FreeCloudSprites(void);
 extern void StartCloudMovement(void);
 extern void ResetGfxState(void);
@@ -1544,6 +1543,17 @@ void StartDodrioIntroAnim(u8 unused)
     sprite->data[2] = 0;
     sprite->data[3] = 0;
     sprite->data[4] = 0;
+}
+
+void FreeDodrioSprites(u8 numPlayers)
+{
+    u8 i;
+    for (i = 0; i < numPlayers; i++)
+    {
+        struct Sprite *sprite = &gSprites[*sDodrioSpriteIds[i]];
+        if (sprite)
+            DestroySpriteAndFreeResources(sprite);
+    }
 }
 
 u32 DoDodrioMissedAnim(struct Sprite *sprite)

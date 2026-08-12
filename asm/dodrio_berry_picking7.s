@@ -3,43 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_08028340
-sub_08028340: @ 0x08028340
-	push {r4, r5, r6, lr}
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	movs r4, #0
-	cmp r4, r5
-	bhs _08028372
-	ldr r6, _08028378
-_0802834E:
-	lsls r0, r4, #2
-	adds r0, r0, r6
-	ldr r0, [r0]
-	ldrh r1, [r0]
-	lsls r0, r1, #4
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	ldr r1, _0802837C
-	adds r0, r0, r1
-	cmp r0, #0
-	beq _08028368
-	bl DestroySpriteAndFreeResources
-_08028368:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, r5
-	blo _0802834E
-_08028372:
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08028378: .4byte 0x02022950
-_0802837C: .4byte 0x020205AC
-	thumb_func_end sub_08028340
-
 	thumb_func_start sub_08028380
 sub_08028380: @ 0x08028380
 	lsls r0, r0, #0x18
