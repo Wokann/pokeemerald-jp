@@ -3584,6 +3584,14 @@ void CreateDodrioGameTask(TaskFunc func)
     sGame->timer = 0;
 }
 
+void SetGameFunc(u8 funcId)
+{
+    sGame->prevFuncId = sGame->funcId;
+    sGame->funcId = funcId;
+    sGame->state = 0;
+    sGame->timer = 0;
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
