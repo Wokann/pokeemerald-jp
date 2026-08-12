@@ -499,6 +499,17 @@ void DoCountdown(void)
     }
 }
 
+void WaitGameStart(void)
+{
+    switch (sGame->state)
+    {
+    case 0:
+        if (sGame->startGame)
+            SetGameFunc(FUNC_PLAY_GAME);
+        break;
+    }
+}
+
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
 {
     sExitingGame = FALSE;
