@@ -226,8 +226,8 @@ extern const u8 gUnknown_85CC792[];
 extern const u8 gUnknown_85CC798[];
 
 // JP "YES"/"NO" menu texts (0x085CAAD8 / 0x085CAADB).
-extern const u8 gUnknown_85CAAD8[];
-extern const u8 gUnknown_85CAADB[];
+extern const u8 gText_Yes[];
+extern const u8 gText_No[];
 
 // JP standard chat message templates (0x082C57D4, in data/data_b.s).
 extern const struct MessageWindowInfo gUnknown_82C57D4[];
@@ -2291,8 +2291,8 @@ void AddYesNoMenuAt(u8 left, u8 top, u8 initialCursorPos)
     {
         FillWindowPixelBuffer(sDisplay->yesNoMenuWindowId, PIXEL_FILL(1));
         PutWindowTilemap(sDisplay->yesNoMenuWindowId);
-        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gUnknown_85CAAD8, 10, 2, TEXT_SKIP_DRAW, NULL);
-        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gUnknown_85CAADB, 10, 16, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gText_Yes, 10, 2, TEXT_SKIP_DRAW, NULL);
+        AddTextPrinterParameterized(sDisplay->yesNoMenuWindowId, FONT_NORMAL, gText_No, 10, 16, TEXT_SKIP_DRAW, NULL);
         DrawTextBorderOuter(sDisplay->yesNoMenuWindowId, 1, 13);
         sub_081984B0(sDisplay->yesNoMenuWindowId, 1, 0, 2, 14, 2, initialCursorPos);
     }
