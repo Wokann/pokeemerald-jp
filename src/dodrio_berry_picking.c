@@ -284,6 +284,7 @@ extern void InitFirstWaveOfBerries(void);
 extern u8 UpdatePickStateQueue(u8);
 extern void UpdateFallingBerries(void);
 extern void HandleSound_Leader(void);
+extern void HandleSound_Member(void);
 
 static void ResetTasksAndSprites(void)
 {
@@ -560,6 +561,43 @@ void PlayGame_Leader(void)
         HandleSound_Leader();
         break;
     }
+}
+
+void PlayGame_Member(void)
+{
+    if (sGame->numGraySquares < NUM_STATUS_SQUARES)
+    {
+        if (JOY_NEW(DPAD_UP))
+        {
+            if (sGame->players[sGame->multiplayerId].comm.pickState == PICK_NONE)
+            {
+                sGame->player.comm.pickState = PICK_MIDDLE;
+            }
+        }
+        else if (JOY_NEW(DPAD_RIGHT))
+        {
+            if (sGame->players[sGame->multiplayerId].comm.pickState == PICK_NONE)
+            {
+                sGame->player.comm.pickState = PICK_RIGHT;
+            }
+        }
+        else if (JOY_NEW(DPAD_LEFT))
+        {
+            if (sGame->players[sGame->multiplayerId].comm.pickState == PICK_NONE)
+            {
+                sGame->player.comm.pickState = PICK_LEFT;
+            }
+        }
+        else
+        {
+            sGame->player.comm.pickState = PICK_NONE;
+        }
+    }
+    else
+    {
+        SetGameFunc(FUNC_WAIT_END_GAME);
+    }
+    HandleSound_Member();
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
