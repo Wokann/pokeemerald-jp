@@ -1302,8 +1302,8 @@ gUnknown_82C7A5E: @ 0x82C7A5E
 gUnknown_82C7A5F: @ 0x82C7A5F
 	.incbin "baserom_jp.gba", 0x2c7a5f, 0x15
 
-	.globl gUnknown_82C7A74
-gUnknown_82C7A74: @ 0x82C7A74
+	.globl sPlayerBerrySpriteTags
+sPlayerBerrySpriteTags: @ 0x82C7A74
 	.incbin "baserom_jp.gba", 0x2c7a74, 0xc
 
 	.globl gUnknown_82C7A80
@@ -1330,8 +1330,8 @@ gUnknown_82C7BC8: @ 0x82C7BC8
 gUnknown_82C7BE0: @ 0x82C7BE0
 	.incbin "baserom_jp.gba", 0x2c7be0, 0x18
 
-	.globl gUnknown_82C7BF8
-gUnknown_82C7BF8: @ 0x82C7BF8
+	.globl sSpriteTemplate_PlayerBerry
+sSpriteTemplate_PlayerBerry: @ 0x82C7BF8
 	.incbin "baserom_jp.gba", 0x2c7bf8, 0x18
 
 	.globl gUnknown_82C7C10

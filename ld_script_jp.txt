@@ -1262,6 +1262,7 @@ sub_08020B74 = SaveResults;
 sub_08020D74 = ShowGameDisplay;
 sub_08021038 = HideGameDisplay;
 sub_080211B4 = ResetCrusherPos;
+sub_080211D4 = CreateBerrySprites;
 sub_0801FA08 = Display_PrintLeaderLeft;
 sub_0801FA5C = Display_AskSave;
 sub_0801FAAC = Display_AskOverwriteSave;
@@ -2133,6 +2134,7 @@ SECTIONS {
         src/berry_crush.o(.text.HideGameDisplay);
         src/berry_crush.o(.text.UpdateGame);
         src/berry_crush.o(.text.ResetCrusherPos);
+        src/berry_crush.o(.text.CreateBerrySprites);
         asm/berry_crush.o(.text);
         src/berry_powder.o(.text);
         asm/dodrio_berry_picking.o(.text);

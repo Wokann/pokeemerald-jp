@@ -7,6 +7,7 @@
 #include "gpu_regs.h"
 #include "graphics.h"
 #include "item_menu.h"
+#include "item_icon.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "malloc.h"
@@ -19,7 +20,9 @@
 #include "sprite.h"
 #include "task.h"
 #include "text.h"
+#include "trig.h"
 #include "window.h"
+#include "constants/items.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -62,10 +65,37 @@ struct BerryCrushGame_Results
     u8 playerIdsRanked[2][MAX_RFU_PLAYERS + 3]; // +0x88
 };
 
+struct BerryCrushPlayerCoords
+{
+    u8 playerId;
+    u8 windowGfxX;
+    u8 windowGfxY;
+    s16 impactXOffset;
+    s16 impactYOffset;
+    s16 berryXOffset;
+    s16 berryXDest;
+};
+
 struct BerryCrushGame_Gfx
 {
-    u8 filler[0x88];                          // +0x124..+0x1AB
-    u16 bgBuffers[4][0x800];                  // +0x1AC
+    u8 counter;                               // +0
+    u8 vibrationIdx;
+    u8 numVibrations;
+    bool8 vibrating;
+    s16 minutes;
+    s16 secondsInt;
+    s16 secondsFrac;
+    const struct BerryCrushPlayerCoords *playerCoords[MAX_RFU_PLAYERS]; // +0xC
+    struct Sprite *coreSprite;                // +0x20
+    struct Sprite *impactSprites[MAX_RFU_PLAYERS]; // +0x24
+    struct Sprite *berrySprites[MAX_RFU_PLAYERS]; // +0x38
+    struct Sprite *sparkleSprites[11];        // +0x4C
+    struct Sprite *timerSprites[2];           // +0x78
+    u8 resultsState;                          // +0x80
+    u8 unused;
+    u8 resultsWindowId;
+    u8 nameWindowIds[MAX_RFU_PLAYERS];        // +0x83
+    u16 bgBuffers[4][0x800];                  // +0x88
 };
 
 struct BerryCrushGame
@@ -123,6 +153,8 @@ extern const struct BgTemplate sBgTemplates[4];
 extern const u8 sCrusherTop_Tilemap[];
 extern const u8 sContainerCap_Tilemap[];
 extern const u8 sBg_Tilemap[];
+extern const u16 sPlayerBerrySpriteTags[MAX_RFU_PLAYERS];
+extern const struct SpriteTemplate sSpriteTemplate_PlayerBerry;
 extern void CreatePlayerNameWindows(struct BerryCrushGame *);
 extern void DrawPlayerNameWindows(struct BerryCrushGame *);
 extern void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame *);
@@ -138,6 +170,7 @@ s32 ShowGameDisplay(void);
 s32 HideGameDisplay(void);
 s32 UpdateGame(struct BerryCrushGame *);
 void ResetCrusherPos(struct BerryCrushGame *);
+void CreateBerrySprites(struct BerryCrushGame *, struct BerryCrushGame_Gfx *);
 
 struct BerryCrushGame *GetBerryCrushGame(void)
 {
@@ -530,4 +563,62 @@ void ResetCrusherPos(struct BerryCrushGame *game)
     game->vibration = 0;
     gSpriteCoordOffsetX = 0;
     gSpriteCoordOffsetY = CRUSHER_START_Y;
+}
+
+// Sprite data for berry sprites. Identical to fields for sparkle sprites
+#define sX         data[0]
+#define sYSpeed    data[1]
+#define sYAccel    data[2]
+#define sXSpeed    data[3]
+#define sSinIdx    data[4]
+#define sSinSpeed  data[5]
+#define sAmplitude data[6]
+// The last element (data[7]) is a bitfield.
+// The first 15 bits are the y coord to stop at.
+// The last bit is a flag for whether or not to move horizontally too
+#define sBitfield  data[7]
+#define MASK_TARGET_Y 0x7FFF
+#define F_MOVE_HORIZ  0x8000
+
+void CreateBerrySprites(struct BerryCrushGame *game, struct BerryCrushGame_Gfx *gfx)
+{
+    u8 i;
+    u8 spriteId;
+    s16 distance, var1;
+    s16 *data;
+    s16 speed;
+    u32 var2;
+
+    for (i = 0; i < game->playerCount; i++)
+    {
+        spriteId = AddCustomItemIconSprite(
+            &sSpriteTemplate_PlayerBerry,
+            sPlayerBerrySpriteTags[i],
+            sPlayerBerrySpriteTags[i],
+            game->players[i].berryId + FIRST_BERRY_INDEX);
+        gfx->berrySprites[i] = &gSprites[spriteId];
+        gfx->berrySprites[i]->oam.priority = 3;
+        gfx->berrySprites[i]->affineAnimPaused = TRUE;
+        gfx->berrySprites[i]->x = gfx->playerCoords[i]->berryXOffset + 120;
+        gfx->berrySprites[i]->y = -16;
+        data = gfx->berrySprites[i]->data;
+        speed = 512;
+        sYSpeed = speed;
+        sYAccel = 32;
+        sBitfield = 112;
+        distance = gfx->playerCoords[i]->berryXDest - gfx->playerCoords[i]->berryXOffset;
+        sAmplitude = distance / 4;
+        distance *= 128;
+        var2 = speed + 32;
+        var2 = var2 / 2;
+        var1 = MathUtil_Div16Shift(7, Q_8_8(63.5), var2);
+        sX = (u16)gfx->berrySprites[i]->x * 128;
+        sXSpeed = MathUtil_Div16Shift(7, distance, var1);
+        var1 = MathUtil_Mul16Shift(7, var1, 85);
+        sSinIdx = 0;
+        sSinSpeed = MathUtil_Div16Shift(7, Q_8_8(63.5), var1);
+        sBitfield |= F_MOVE_HORIZ;
+        if (gfx->playerCoords[i]->berryXOffset < 0)
+            StartSpriteAffineAnim(gfx->berrySprites[i], 1);
+    }
 }
