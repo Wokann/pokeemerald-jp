@@ -1,4 +1,5 @@
 #include "global.h"
+#include "dynamic_placeholder_text_util.h"
 #include "malloc.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -136,12 +137,39 @@ extern void StartDisplaySubtask(u16 subtaskId, u8 assignId);
 extern bool8 IsDisplaySubtaskActive(u8 id);
 extern s8 ProcessMenuInput(void);
 extern void FreeDisplay(void);
-extern u8 *GetLimitedMessageStartPtr(void);
+
+// JP chat message templates (0x085CC663 / 0x085CC672).
+extern const u8 gUnknown_85CC663[];
+extern const u8 gUnknown_85CC672[];
+
+// JP default registered chat texts (0x085CC769+).
+extern const u8 gUnknown_85CC769[];
+extern const u8 gUnknown_85CC76F[];
+extern const u8 gUnknown_85CC774[];
+extern const u8 gUnknown_85CC779[];
+extern const u8 gUnknown_85CC77E[];
+extern const u8 gUnknown_85CC783[];
+extern const u8 gUnknown_85CC787[];
+extern const u8 gUnknown_85CC78C[];
+extern const u8 gUnknown_85CC792[];
+extern const u8 gUnknown_85CC798[];
 
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
 u16 GetNumOverflowCharsInMessage(void);
 static u8 *GetEndOfMessagePtr(void);
+bool32 ProcessReceivedChatMessage(u8 *dest, u8 *recvMessage);
+u8 GetCurrentKeyboardPage(void);
+void GetCurrentKeyboardColAndRow(u8 *col, u8 *row);
+u8 *GetMessageEntryBuffer(void);
+int GetLengthOfMessageEntry(void);
+void GetBufferSelectionRegion(u32 *x, u32 *width);
+u8 *GetLimitedMessageStartPtr(void);
+u32 GetLimitedMessageStartPos(void);
+u8 *GetLastReceivedMessage(void);
+u8 GetReceivedPlayerIndex(void);
+u8 GetTextEntryCursorPosition(void);
+u8 *GetChatHostName(void);
 
 static void InitUnionRoomChat(struct UnionRoomChat *);
 static void CB2_LoadInterface(void);
@@ -1130,4 +1158,164 @@ static void PrepareSendBuffer_Disband(u8 *buffer)
     buffer[0] = CHAT_MESSAGE_DISBAND;
     StringCopy(&buffer[1], gSaveBlock2Ptr->playerName);
     buffer[1 + (PLAYER_NAME_LENGTH + 1)] = sChat->multiplayerId;
+}
+
+// Non-static so the still-asm functions can reach it via the
+// `sub_0801EE08 = ProcessReceivedChatMessage` ld alias.
+bool32 ProcessReceivedChatMessage(u8 *dest, u8 *recvMessage)
+{
+    u8 *tempStr;
+    u8 cmd = *recvMessage;
+    u8 *name = recvMessage + 1;
+    recvMessage = name;
+    recvMessage += PLAYER_NAME_LENGTH + 1;
+
+    switch (cmd)
+    {
+    case CHAT_MESSAGE_JOIN:
+        if (sChat->multiplayerId != name[PLAYER_NAME_LENGTH + 1])
+        {
+            DynamicPlaceholderTextUtil_Reset();
+            DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, name);
+            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gUnknown_85CC663);
+            return TRUE;
+        }
+        break;
+    case CHAT_MESSAGE_CHAT:
+        tempStr = StringCopyPadded(dest, name, 0, 5);
+        *(tempStr++) = CHAR_COLON;
+        StringCopy(tempStr, recvMessage);
+        return TRUE;
+    case CHAT_MESSAGE_DISBAND:
+        StringCopy(sChat->hostName, name);
+        // fall through
+    case CHAT_MESSAGE_LEAVE:
+        if (sChat->multiplayerId != *recvMessage)
+        {
+            DynamicPlaceholderTextUtil_Reset();
+            DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, name);
+            DynamicPlaceholderTextUtil_ExpandPlaceholders(dest, gUnknown_85CC672);
+            return TRUE;
+        }
+        break;
+    }
+
+    return FALSE;
+}
+
+// The remaining accessors are non-static so the still-asm functions can
+// reach them via the sub_0801EEB0..sub_0801EFE0 ld aliases.
+u8 GetCurrentKeyboardPage(void)
+{
+    return sChat->currentPage;
+}
+
+void GetCurrentKeyboardColAndRow(u8 *col, u8 *row)
+{
+    *col = sChat->currentCol;
+    *row = sChat->currentRow;
+}
+
+u8 *GetMessageEntryBuffer(void)
+{
+    return sChat->messageEntryBuffer;
+}
+
+int GetLengthOfMessageEntry(void)
+{
+    u8 *str = GetMessageEntryBuffer();
+    return StringLength_Multibyte(str);
+}
+
+void GetBufferSelectionRegion(u32 *x, u32 *width)
+{
+    int diff = sChat->bufferCursorPos - sChat->lastBufferCursorPos;
+    if (diff < 0)
+    {
+        diff = -diff;
+        *x = sChat->bufferCursorPos;
+    }
+    else
+    {
+        *x = sChat->lastBufferCursorPos;
+    }
+    *width = diff;
+}
+
+u8 *GetLimitedMessageStartPtr(void)
+{
+    u32 numChars = (u16)GetNumOverflowCharsInMessage();
+    u8 *str = sChat->messageEntryBuffer;
+    while (numChars != 0)
+    {
+        if (*str == CHAR_EXTRA_SYMBOL)
+            str++;
+        str++;
+        numChars--;
+    }
+    return str;
+}
+
+u32 GetLimitedMessageStartPos(void)
+{
+    u16 numChars = GetNumOverflowCharsInMessage();
+    u8 *str = sChat->messageEntryBuffer;
+    u16 pos = 0;
+    u32 i = 0;
+    for (; i < numChars; i++)
+    {
+        if (*str == CHAR_EXTRA_SYMBOL)
+            str++;
+        str++;
+        pos++;
+    }
+    return pos;
+}
+
+u8 *GetLastReceivedMessage(void)
+{
+    return sChat->receivedMessage;
+}
+
+u8 GetReceivedPlayerIndex(void)
+{
+    return sChat->receivedPlayerIndex;
+}
+
+u8 GetTextEntryCursorPosition(void)
+{
+    return sChat->bufferCursorPos;
+}
+
+// JP-only: classify the last typed character for the kana input mode
+// (0 = kana range, 1 = katakana range, 2/3 = other ranges).
+u8 sub_0801EFA4(void)
+{
+    s32 ch = *GetLastCharOfMessagePtr();
+    if ((u8)(ch - 1) <= 0x4F)
+        return 0;
+    if ((u8)(ch - 0x51) <= 0x4F)
+        return 1;
+    if ((u8)(ch + 0x45) <= 0x33)
+        return 2;
+    return 3;
+}
+
+u8 *GetChatHostName(void)
+{
+    return sChat->hostName;
+}
+
+void InitUnionRoomChatRegisteredTexts(void)
+{
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[0], gUnknown_85CC769);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[1], gUnknown_85CC76F);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[2], gUnknown_85CC774);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[3], gUnknown_85CC779);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[4], gUnknown_85CC77E);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[5], gUnknown_85CC783);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[6], gUnknown_85CC787);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[7], gUnknown_85CC78C);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[8], gUnknown_85CC792);
+    StringCopy(&gSaveBlock1Ptr->registeredTexts[9], gUnknown_85CC798);
 }
