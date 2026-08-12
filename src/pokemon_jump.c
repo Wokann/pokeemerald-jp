@@ -1543,6 +1543,12 @@ void SetMonStateHit(void)
     sPokemonJump->player->jumpState = JUMPSTATE_FAILURE;
 }
 
+void SetMonStateNormal(void)
+{
+    sPokemonJump->player->prevMonState = sPokemonJump->player->monState;
+    sPokemonJump->player->monState = MONSTATE_NORMAL;
+}
+
 void InitGame(struct PokemonJump *jump)
 {
     jump->numPlayers = GetLinkPlayerCount();
