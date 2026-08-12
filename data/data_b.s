@@ -1442,8 +1442,8 @@ sWindowTemplates_PlayAgain: @ 0x82CB460
 gUnknown_82CB470: @ 0x82CB470
 	.incbin "baserom_jp.gba", 0x2cb470, 0x8
 
-	.globl gUnknown_82CB478
-gUnknown_82CB478: @ 0x82CB478
+	.globl sWindowTemplate_CommStandby
+sWindowTemplate_CommStandby: @ 0x82CB478
 	.incbin "baserom_jp.gba", 0x2cb478, 0x204
 
 	.globl sBg_Pal
@@ -16520,8 +16520,8 @@ gUnknown_85CCDCB: @ 0x85CCDCB
 gText_SpacePoints: @ 0x85CCDE7
 	.string "てん$"
 
-	.globl gUnknown_85CCDEA
-gUnknown_85CCDEA: @ 0x85CCDEA
+	.globl gText_CommunicationStandby3
+gText_CommunicationStandby3: @ 0x85CCDEA
 	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}"
 	.string "で{DYNAMIC_COLOR4}$"
 
