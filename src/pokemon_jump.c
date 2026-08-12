@@ -362,7 +362,6 @@ extern void sub_0802DAC4(void); // StopMonHitFlash
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern void sub_0802D4DC(u16 prizeItemId, u16 prizeItemQuantity); // PrintPrizeMessage
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
-extern u16 sub_0802C574(u16 prizeItemId, u16 prizeItemQuantity); // GetQuantityLimitedByBag
 extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
 extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
@@ -1182,7 +1181,7 @@ bool32 TryGivePrize_PokeJump(void)
     case 3:
         if (!sub_0802D734()) // RemoveMessageWindow
         {
-            sPokemonJump->prizeItemQuantity = sub_0802C574(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity); // GetQuantityLimitedByBag
+            sPokemonJump->prizeItemQuantity = GetQuantityLimitedByBag(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity);
             if (sPokemonJump->prizeItemQuantity && AddBagItem(sPokemonJump->prizeItemId, sPokemonJump->prizeItemQuantity))
             {
                 if (!CheckBagHasSpace(sPokemonJump->prizeItemId, 1))
@@ -1947,6 +1946,14 @@ u16 GetPrizeQuantity(void)
         else
             break;
     }
+
+    return quantity;
+}
+
+u16 GetQuantityLimitedByBag(u16 item, u16 quantity)
+{
+    while (quantity && !CheckBagHasSpace(item, quantity))
+        quantity--;
 
     return quantity;
 }

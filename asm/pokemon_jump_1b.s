@@ -3,34 +3,6 @@
 .text
 .syntax unified
 
-	thumb_func_start sub_0802C574
-sub_0802C574: @ 0x0802C574
-	push {r4, r5, lr}
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-	lsls r1, r1, #0x10
-	lsrs r4, r1, #0x10
-	b _0802C586
-_0802C580:
-	subs r0, r4, #1
-	lsls r0, r0, #0x10
-	lsrs r4, r0, #0x10
-_0802C586:
-	cmp r4, #0
-	beq _0802C598
-	adds r0, r5, #0
-	adds r1, r4, #0
-	bl CheckBagHasSpace
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _0802C580
-_0802C598:
-	adds r0, r4, #0
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_0802C574
-
 	thumb_func_start sub_0802C5A0
 sub_0802C5A0: @ 0x0802C5A0
 	push {lr}
