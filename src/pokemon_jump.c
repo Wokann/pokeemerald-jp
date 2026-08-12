@@ -431,7 +431,6 @@ extern void sub_0802D704(void); // ClearMessageWindow
 extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
-extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
@@ -1237,7 +1236,7 @@ bool32 TryGivePrize_PokeJump(void)
         break;
     case 1:
     case 4:
-        if (!sub_0802D664()) // DoPrizeMessageAndFanfare
+        if (!DoPrizeMessageAndFanfare())
         {
             sPokemonJump->timer = 0;
             sPokemonJump->helperState++;
@@ -2759,6 +2758,40 @@ void PrintNoRoomForPrizeMessage(u16 itemId)
     CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
     sPokemonJumpGfx->fanfare = MUS_DUMMY;
     sPokemonJumpGfx->msgWindowState = 0;
+}
+
+bool32 DoPrizeMessageAndFanfare(void)
+{
+    switch (sPokemonJumpGfx->msgWindowState)
+    {
+    case 0:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            PutWindowTilemap(sPokemonJumpGfx->msgWindowId);
+            DrawTextBorderOuter((u8)sPokemonJumpGfx->msgWindowId, 1, 14);
+            CopyBgTilemapBufferToVram(BG_INTERFACE);
+            sPokemonJumpGfx->msgWindowState++;
+        }
+        break;
+    case 1:
+        if (IsDma3ManagerBusyWithBgCopy())
+            break;
+        if (sPokemonJumpGfx->fanfare == MUS_DUMMY)
+        {
+            sPokemonJumpGfx->msgWindowState += 2;
+            return FALSE;
+        }
+        PlayFanfare(sPokemonJumpGfx->fanfare);
+        sPokemonJumpGfx->msgWindowState++;
+    case 2:
+        if (!IsFanfareTaskInactive())
+            break;
+        sPokemonJumpGfx->msgWindowState++;
+    case 3:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 void Gfx_StopMonHitFlash(struct PokemonJumpGfx *jumpGfx)
