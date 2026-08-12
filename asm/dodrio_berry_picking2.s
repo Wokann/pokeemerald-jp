@@ -11,19 +11,6 @@
 
 
 
-	thumb_func_start sub_08024F20
-sub_08024F20: @ 0x08024F20
-	push {lr}
-	bl sub_08025E0C
-	bl sub_08026A50
-	cmp r0, #1
-	bne _08024F34
-	movs r0, #5
-	bl sub_08026008
-_08024F34:
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08024F20
 
 	thumb_func_start sub_08024F38
 sub_08024F38: @ 0x08024F38

@@ -286,6 +286,7 @@ extern void UpdateFallingBerries(void);
 extern void HandleSound_Leader(void);
 extern void HandleSound_Member(void);
 extern bool32 ReadyToEndGame_Leader(void);
+extern bool32 ReadyToEndGame_Member(void);
 extern void SetMaxBerriesPickedInRow(void);
 
 static void ResetTasksAndSprites(void)
@@ -625,6 +626,13 @@ void WaitEndGame_Leader(void)
             }
         }
     }
+}
+
+void WaitEndGame_Member(void)
+{
+    HandleSound_Member();
+    if (ReadyToEndGame_Member() == TRUE)
+        SetGameFunc(FUNC_INIT_RESULTS);
 }
 
 void StartDodrioBerryPicking(u16 partyId, MainCallback exitCallback)
