@@ -432,8 +432,6 @@ extern bool32 sub_0802D734(void); // RemoveMessageWindow
 extern void sub_08198D88(void); // EraseYesNoWindow
 extern void sub_0802BE08(void); // ResetPlayersMonState
 extern bool32 sub_0802D664(void); // DoPrizeMessageAndFanfare
-extern void sub_0802D574(u16 prizeItemId); // PrintPrizeFilledBagMessage
-extern void sub_0802D5EC(u16 prizeItemId); // PrintNoRoomForPrizeMessage
 extern s8 sub_0802D77C(void); // HandlePlayAgainInput
 extern void sub_0802DA5C(int score); // PrintScore
 extern void sub_0802DDA4(struct PokemonJump_MonInfo *monInfo); // SendPacket_MonInfo
@@ -1265,7 +1263,7 @@ bool32 TryGivePrize_PokeJump(void)
                 {
                     // An item was given successfully, but no room for any more.
                     // It's possible the full prize quantity had to be limited
-                    sub_0802D574(sPokemonJump->prizeItemId); // PrintPrizeFilledBagMessage
+            PrintPrizeFilledBagMessage(sPokemonJump->prizeItemId);
                     sPokemonJump->helperState = 4; // Do message
                 }
                 else
@@ -1276,7 +1274,7 @@ bool32 TryGivePrize_PokeJump(void)
             }
             else
             {
-                sub_0802D5EC(sPokemonJump->prizeItemId); // PrintNoRoomForPrizeMessage
+                PrintNoRoomForPrizeMessage(sPokemonJump->prizeItemId);
                 sPokemonJump->helperState = 4; // Do message
             }
         }
@@ -2734,6 +2732,32 @@ void PrintPrizeMessage(u16 itemId, u16 quantity)
     AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
     sPokemonJumpGfx->fanfare = MUS_LEVEL_UP;
+    sPokemonJumpGfx->msgWindowState = 0;
+}
+
+void PrintPrizeFilledBagMessage(u16 itemId)
+{
+    CopyItemName(itemId, sPokemonJumpGfx->itemName);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_FilledStorageSpace2);
+    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 8, 22, 4); // AddMessageWindow
+    AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
+    sPokemonJumpGfx->fanfare = MUS_DUMMY;
+    sPokemonJumpGfx->msgWindowState = 0;
+}
+
+void PrintNoRoomForPrizeMessage(u16 itemId)
+{
+    CopyItemName(itemId, sPokemonJumpGfx->itemName);
+    DynamicPlaceholderTextUtil_Reset();
+    DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, sPokemonJumpGfx->itemName);
+    DynamicPlaceholderTextUtil_ExpandPlaceholders(sPokemonJumpGfx->prizeMsg, gText_CantHoldMore);
+    sPokemonJumpGfx->msgWindowId = sub_0802D78C(4, 9, 22, 2); // AddMessageWindow
+    AddTextPrinterParameterized(sPokemonJumpGfx->msgWindowId, FONT_NORMAL, sPokemonJumpGfx->prizeMsg, 0, 2, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sPokemonJumpGfx->msgWindowId, COPYWIN_GFX);
+    sPokemonJumpGfx->fanfare = MUS_DUMMY;
     sPokemonJumpGfx->msgWindowState = 0;
 }
 
