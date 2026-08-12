@@ -316,6 +316,10 @@ extern bool32 sub_0802C400(void); // AreLinkQueuesEmpty
 extern bool32 sub_0802B5C0(void); // HandleSwingRound
 extern bool32 sub_0802C22C(void); // UpdateVineHitStates
 extern void sub_0802BDAC(void); // ResetVineAfterHit
+extern bool32 sub_0802C2D0(void); // AllPlayersJumpedOrHit
+extern bool32 sub_0802B658(void); // DoVineHitEffect
+extern bool32 sub_0802C4B0(void); // HasEnoughScoreForPrize
+extern u16 sub_0802C4D4(void); // GetPrizeData
 
 // JP: member function table is ROM data at 0x082CEEA4 (data/data_b.s,
 // gUnknown_82CEEA4); same 9-entry layout as US sPokeJumpMemberFuncs.
@@ -667,6 +671,69 @@ bool32 GameRound_Member(void)
         sub_0802BDAC(); // ResetVineAfterHit
 
     return FALSE;
+}
+
+bool32 GameOver_Leader(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        sub_0802C22C(); // UpdateVineHitStates
+        if (sub_0802C2D0()) // AllPlayersJumpedOrHit
+            sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (!sub_0802B658()) // DoVineHitEffect
+        {
+            if (sub_0802C4B0()) // HasEnoughScoreForPrize
+            {
+                sPokemonJump->comm.data = sub_0802C4D4(); // GetPrizeData
+                sPokemonJump->nextFuncId = FUNC_GIVE_PRIZE;
+            }
+            else if (sPokemonJump->comm.jumpsInRow >= 200)
+            {
+                sPokemonJump->comm.data = sPokemonJump->excellentsInRowRecord;
+                sPokemonJump->nextFuncId = FUNC_SAVE;
+            }
+            else
+            {
+                sPokemonJump->comm.data = sPokemonJump->excellentsInRowRecord;
+                sPokemonJump->nextFuncId = FUNC_ASK_PLAY_AGAIN;
+            }
+
+            sPokemonJump->mainState++;
+            return FALSE;
+        }
+        break;
+    case 2:
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+bool32 GameOver_Member(void)
+{
+    switch (sPokemonJump->mainState)
+    {
+    case 0:
+        if (!sub_0802C22C()) // UpdateVineHitStates
+            sub_0802BDAC(); // ResetVineAfterHit
+        if (sub_0802C2D0()) // AllPlayersJumpedOrHit
+            sPokemonJump->mainState++;
+        break;
+    case 1:
+        if (!sub_0802B658()) // DoVineHitEffect
+        {
+            sPokemonJump->mainState++;
+            return FALSE;
+        }
+        break;
+    case 2:
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 void InitGame(struct PokemonJump *jump)
