@@ -21,6 +21,8 @@ extern const u8 gUnknown_82C4F60[];
 extern const u8 gUnknown_82C4FC0[];
 extern u32 (*const gUnknown_82C4AFC[])(void *);
 extern u8 gUnknown_202207C[];
+extern u32 (*const gUnknown_82C4B34[])(void *);
+extern const u8 gUnknown_82C4B6C[];
 
 #define ME_SEND_BUF_SIZE 0x400
 
@@ -42,6 +44,21 @@ struct MeventServerSub
     void *unk1C;                    // 0x1C
     u32 (*recvFunc)(void *sub);     // 0x20
     u32 (*sendFunc)(void *sub);     // 0x24
+};
+
+struct MeventClientData
+{
+    u32 unk0;                       // 0x00
+    u32 result;                     // 0x04
+    u32 unk8;                       // 0x08
+    u32 unkC;                       // 0x0C
+    u32 unk10;                      // 0x10
+    void *unk14;                    // 0x14
+    void *unk18;                    // 0x18
+    void *unk1C;                    // 0x1C
+    void *unk20;                    // 0x20
+    struct MeventServerSub sub;     // 0x24
+    u32 unk4C;                      // 0x4C
 };
 
 struct MeventServerData
@@ -71,6 +88,7 @@ struct MeventCmd
 };
 
 extern EWRAM_DATA struct MeventServerData *gUnknown_2022930;
+extern EWRAM_DATA struct MeventClientData *gUnknown_2022934;
 
 void mevent_srv_init_common(void *data, const u8 *script, s32 a, s32 b);
 u32 mevent_srv_exec_common(void *data);
@@ -82,6 +100,9 @@ u32 mevent_srv_sub_send(struct MeventServerSub *sub);
 void mevent_srv_sub_init(struct MeventServerSub *sub, s32 a, s32 b);
 void mevent_srv_sub_init_send(struct MeventServerSub *sub, u32 size, void *buffer, u32 size2);
 void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer);
+void mevent_client_init(void *data, s32 a, s32 b);
+u32 mevent_client_exec(void *data);
+void mevent_client_free_resources(void *data);
 
 void mevent_srv_init_wnews(void)
 {
@@ -450,4 +471,134 @@ bool32 mevent_has_received(u32 block)
 void mevent_reset_recv(u8 block)
 {
     ResetBlockReceivedFlag(block);
+}
+
+void mevent_client_do_init(void *arg)
+{
+    gUnknown_2022934 = AllocZeroed(0x50);
+    mevent_client_init(gUnknown_2022934, 1, 0);
+    gUnknown_2022934->unk4C = arg;
+}
+
+u32 mevent_client_do_exec(u16 *result)
+{
+    u32 status;
+
+    if (gUnknown_2022934 == NULL)
+        return 6;
+    status = mevent_client_exec(gUnknown_2022934);
+    if (status == 6)
+    {
+        *result = gUnknown_2022934->result;
+        mevent_client_free_resources(gUnknown_2022934);
+        Free(gUnknown_2022934);
+        gUnknown_2022934 = NULL;
+    }
+    return status;
+}
+
+void mevent_client_inc_flag(void)
+{
+    gUnknown_2022934->unkC++;
+}
+
+void *mevent_client_get_buffer(void)
+{
+    return gUnknown_2022934->unk20;
+}
+
+void mevent_client_set_param(u32 param)
+{
+    gUnknown_2022934->result = param;
+}
+
+void mevent_client_init(void *data, s32 a, s32 b)
+{
+    struct MeventClientData *cli = data;
+
+    cli->unk0 = 0;
+    cli->unk8 = 0;
+    cli->unkC = 0;
+    cli->unk14 = AllocZeroed(0x400);
+    cli->unk18 = AllocZeroed(0x400);
+    cli->unk1C = AllocZeroed(0x400);
+    cli->unk20 = AllocZeroed(0x40);
+    mevent_srv_sub_init(&cli->sub, a, b);
+}
+
+void mevent_client_free_resources(void *data)
+{
+    struct MeventClientData *cli = data;
+
+    Free(cli->unk14);
+    Free(cli->unk18);
+    Free(cli->unk1C);
+    Free(cli->unk20);
+}
+
+void mevent_client_jmp_buffer(void *data)
+{
+    struct MeventClientData *cli = data;
+
+    memcpy(cli->unk1C, cli->unk18, 0x400);
+    cli->unk10 = 0;
+}
+
+void mevent_client_send_word(void *data, u32 a, u32 word)
+{
+    struct MeventClientData *cli = data;
+    u32 zero = 0;
+
+    CpuSet(&zero, cli->unk14, 0x05000100);
+    *(u32 *)cli->unk14 = word;
+    mevent_srv_sub_init_send(&cli->sub, a, cli->unk14, 4);
+}
+
+u32 mainseq_0(void *data)
+{
+    struct MeventClientData *cli = data;
+
+    memcpy(cli->unk1C, gUnknown_82C4B6C, 0x400);
+    cli->unk10 = 0;
+    cli->unk8 = 4;
+    cli->unkC = 0;
+    return 0;
+}
+
+u32 mainseq_1(void *data)
+{
+    return 6;
+}
+
+u32 mainseq_2(void *data)
+{
+    struct MeventClientData *cli = data;
+
+    if (mevent_srv_sub_recv(&cli->sub))
+    {
+        cli->unk8 = 4;
+        cli->unkC = 0;
+    }
+    return 1;
+}
+
+u32 mainseq_3(void *data)
+{
+    struct MeventClientData *cli = data;
+
+    if (mevent_srv_sub_send(&cli->sub))
+    {
+        cli->unk8 = 4;
+        cli->unkC = 0;
+    }
+    return 1;
+}
+
+u32 mevent_client_exec(void *data)
+{
+    struct MeventClientData *cli = data;
+    u32 (*funcs[8])(void *);
+
+    memcpy(funcs, gUnknown_82C4B34, sizeof(funcs));
+    return funcs[cli->unk8](data);
 }
