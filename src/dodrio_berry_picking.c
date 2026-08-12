@@ -373,7 +373,6 @@ extern u8 GetPlayAgainState(void);
 extern void ResetBerryAndStatusBarSprites(void);
 extern void sub_08026748(void); // UpdateBerrySprites
 extern void sub_08026848(void); // UpdateAllDodrioAnims
-extern void FreeBerrySprites(void);
 extern void FreeCloudSprites(void);
 extern void StartCloudMovement(void);
 extern void ResetGfxState(void);
@@ -1847,6 +1846,27 @@ void CreateBerrySprites_Dodrio(void)
         StartSpriteAnim(&gSprites[*sBerryIconSpriteIds[i]], i);
     }
     sub_0802895C(TRUE); // SetBerryIconsInvisibility
+}
+
+void FreeBerrySprites(void)
+{
+    struct Sprite *sprite;
+    u8 i;
+
+    for (i = 0; i < NUM_BERRY_COLUMNS; i++)
+    {
+        sprite = &gSprites[*sBerrySpriteIds[i]];
+        if (sprite)
+            DestroySprite(sprite);
+        FREE_AND_SET_NULL(sBerrySpriteIds[i]);
+    }
+    for (i = 0; i < NUM_BERRY_TYPES; i++)
+    {
+        sprite = &gSprites[*sBerryIconSpriteIds[i]];
+        if (sprite)
+            DestroySprite(sprite);
+        FREE_AND_SET_NULL(sBerryIconSpriteIds[i]);
+    }
 }
 
 void nullsub_15(void)
