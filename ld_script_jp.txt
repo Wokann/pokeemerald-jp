@@ -4741,6 +4741,10 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimTask_ThrashMoveMonHorizontal_Step);
         src/battle_anim_effects_2.o(.text.AnimTask_ThrashMoveMonVertical);
         src/battle_anim_effects_2.o(.text.AnimTask_ThrashMoveMonVertical_Step);
+        src/battle_anim_effects_2.o(.text.AnimTask_SketchDrawMon);
+        src/battle_anim_effects_2.o(.text.AnimTask_SketchDrawMon_Step);
+        src/battle_anim_effects_2.o(.text.AnimPencil);
+        src/battle_anim_effects_2.o(.text.AnimPencil_Step);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);
