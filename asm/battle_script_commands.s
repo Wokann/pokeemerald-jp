@@ -224,45 +224,6 @@ _0804FED4: .4byte 0x02023EB8
 
 	.syntax unified
 
-	thumb_func_start IsMoveUncopyableByMimic
-IsMoveUncopyableByMimic: @ 0x08051EC8
-	push {r4, r5, lr}
-	lsls r0, r0, #0x10
-	lsrs r2, r0, #0x10
-	movs r3, #0
-	ldr r0, _08051F08
-	ldrh r1, [r0]
-	ldr r4, _08051F0C
-	adds r5, r0, #0
-	cmp r1, r4
-	beq _08051EF0
-	cmp r1, r2
-	beq _08051EF0
-	adds r1, r5, #0
-_08051EE2:
-	adds r1, #2
-	adds r3, #1
-	ldrh r0, [r1]
-	cmp r0, r4
-	beq _08051EF0
-	cmp r0, r2
-	bne _08051EE2
-_08051EF0:
-	lsls r0, r3, #1
-	adds r0, r0, r5
-	ldrh r1, [r0]
-	ldr r0, _08051F0C
-	eors r1, r0
-	rsbs r0, r1, #0
-	orrs r0, r1
-	lsrs r0, r0, #0x1f
-	pop {r4, r5}
-	pop {r1}
-	bx r1
-	.align 2, 0
-_08051F08: .4byte 0x082ECD64
-_08051F0C: .4byte 0x0000FFFE
-	thumb_func_end IsMoveUncopyableByMimic
 	.section .text.atk9E_battle_rest,"ax",%progbits
 
 	.syntax unified

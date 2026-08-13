@@ -3765,7 +3765,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setfocusenergy);
         src/battle_script_commands.o(.text.Cmd_transformdataexecution);
         src/battle_script_commands.o(.text.Cmd_setsubstitute);
-        asm/battle_script_commands.o(.text.IsMoveUncopyableByMimic);
+        src/battle_script_commands.o(.text.IsMoveUncopyableByMimic);
         src/battle_script_commands.o(.text.Cmd_mimicattackcopy);
         src/battle_script_commands.o(.text.Cmd_metronome);
         src/battle_script_commands.o(.text.Cmd_dmgtolevel);

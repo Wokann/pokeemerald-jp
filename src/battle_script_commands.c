@@ -1485,9 +1485,11 @@ static void Cmd_setmist(void);
 static void Cmd_setfocusenergy(void);
 static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
+static bool8 IsMoveUncopyableByMimic(u16 move);
 static void Cmd_mimicattackcopy(void);
 #define METRONOME_FORBIDDEN_END         0xFFFF
 #define ASSIST_FORBIDDEN_END              0xFFFF
+#define MIMIC_FORBIDDEN_END               0xFFFE
 extern const u16 sMovesForbiddenToCopy[];
 static void Cmd_metronome(void);
 static void Cmd_dmgtolevel(void);
@@ -7129,6 +7131,15 @@ static void Cmd_setsubstitute(void)
     }
 
     gBattlescriptCurrInstr++;
+}
+
+static bool8 IsMoveUncopyableByMimic(u16 move)
+{
+    s32 i;
+    for (i = 0; sMovesForbiddenToCopy[i] != MIMIC_FORBIDDEN_END
+                && sMovesForbiddenToCopy[i] != move; i++);
+
+    return (sMovesForbiddenToCopy[i] != MIMIC_FORBIDDEN_END);
 }
 
 static void Cmd_mimicattackcopy(void)
