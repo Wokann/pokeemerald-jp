@@ -39,6 +39,7 @@
 #include "constants/battle.h"
 #include "constants/battle_anim.h"
 #include "constants/abilities.h"
+#include "constants/battle_pyramid.h"
 #include "constants/battle_string_ids.h"
 #include "constants/berry.h"
 #include "constants/battle_move_effects.h"
@@ -2472,6 +2473,7 @@ void HandleAction_Switch(void)
     if (gBattleResults.playerSwitchesCounter < 255)
         gBattleResults.playerSwitchesCounter++;
 }
+
 
 
 

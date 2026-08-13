@@ -3302,6 +3302,8 @@ SECTIONS {
         src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
         asm/battle_main_usemove.o(.text);
         src/battle_main.o(.text.HandleAction_Switch);
+        asm/battle_main_useitem.o(.text);
+        asm/battle_main_tryrun.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
