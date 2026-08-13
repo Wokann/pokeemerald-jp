@@ -1570,6 +1570,7 @@ static void Cmd_setweatherballtype(void);
 static void Cmd_tryrecycleitem(void);
 static void Cmd_settypetoenvironment(void);
 static void Cmd_pursuitdoubles(void);
+static void Cmd_snatchsetbattlers(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9064,4 +9065,17 @@ static void Cmd_pursuitdoubles(void)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_snatchsetbattlers(void)
+{
+    gEffectBattler = gBattlerAttacker;
+
+    if (gBattlerAttacker == gBattlerTarget)
+        gBattlerAttacker = gBattlerTarget = gBattleScripting.battler;
+    else
+        gBattlerTarget = gBattleScripting.battler;
+
+    gBattleScripting.battler = gEffectBattler;
+    gBattlescriptCurrInstr++;
 }

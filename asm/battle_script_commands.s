@@ -531,48 +531,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkEF_snatchsetbattlers
-atkEF_snatchsetbattlers: @ 0x08055E40
-	push {r4, lr}
-	ldr r1, _08055E64
-	ldr r3, _08055E68
-	ldrb r0, [r3]
-	strb r0, [r1]
-	ldr r2, _08055E6C
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	adds r4, r1, #0
-	ldrb r1, [r2]
-	cmp r0, r1
-	bne _08055E74
-	ldr r1, _08055E70
-	ldrb r0, [r1, #0x17]
-	strb r0, [r2]
-	strb r0, [r3]
-	b _08055E7A
-	.align 2, 0
-_08055E64: .4byte 0x02023EB2
-_08055E68: .4byte 0x02023EAF
-_08055E6C: .4byte 0x02023EB0
-_08055E70: .4byte 0x02024118
-_08055E74:
-	ldr r1, _08055E8C
-	ldrb r0, [r1, #0x17]
-	strb r0, [r2]
-_08055E7A:
-	ldrb r0, [r4]
-	strb r0, [r1, #0x17]
-	ldr r1, _08055E90
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055E8C: .4byte 0x02024118
-_08055E90: .4byte 0x02023EB8
-	thumb_func_end atkEF_snatchsetbattlers
 
 	thumb_func_start atkEE_removelightscreenreflect
 atkEE_removelightscreenreflect: @ 0x08055E94
