@@ -786,6 +786,9 @@ sCableCarHikerGraphicsIds = gUnknown_85AC9EE;
 sCableCarHikerCoords = gUnknown_85AC9F2;
 sCableCarHikerMovementDelayTable = gUnknown_85AC9FA;
 sCableCarHikerCallbacks = gUnknown_85ACA00;
+sGroundX_Up = gUnknown_203A87C;
+sGroundY_Up = gUnknown_203A87D;
+sGroundSegmentY_Up = gUnknown_203A87E;
 sCableCar = gUnknown_203A878;
 sCableCarBgTemplates = gUnknown_85AC474;
 sCableCarGround_Tilemap = gUnknown_85AC484;
@@ -4786,9 +4789,9 @@ SECTIONS {
         src/cable_car.o(.text.SetBgRegs);
         src/cable_car.o(.text.LoadCableCarSprites);
         src/cable_car.o(.text.BufferNextGroundSegment);
-        asm/cable_car.o(.text.cable_car_mid);
         src/cable_car.o(.text.AnimateGroundGoingUp);
         src/cable_car.o(.text.AnimateGroundGoingDown);
+        src/cable_car.o(.text.DrawNextGroundSegmentGoingUp);
         asm/cable_car.o(.text.cable_car_mid2);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
@@ -5180,4 +5183,3 @@ SECTIONS {
         *(*);
     }
 }
-DrawNextGroundSegmentGoingUp = sub_081511F0;

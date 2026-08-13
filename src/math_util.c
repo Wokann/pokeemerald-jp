@@ -13,7 +13,7 @@ struct GroundTilemapData
 
 extern struct GroundTilemapData *gGroundTilemapData;
 void BufferNextGroundSegment(void);
-void sub_081511F0(void);
+void DrawNextGroundSegmentGoingUp(void);
 void DrawNextGroundSegmentGoingDown(void);
 
 void InitGroundTilemapData(u8 mode)
@@ -28,7 +28,7 @@ mode0:
     gGroundTilemapData->field_1A = 0x14;
     gGroundTilemapData->field_18 = 0xC;
     BufferNextGroundSegment();
-    sub_081511F0();
+    DrawNextGroundSegmentGoingUp();
     goto done;
 mode1:
     gGroundTilemapData->field_1B = 2;

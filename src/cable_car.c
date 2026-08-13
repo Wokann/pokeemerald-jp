@@ -88,6 +88,9 @@ extern void (*sCableCarHikerCallbacks[2])(struct Sprite *);
 extern const struct SpriteTemplate sSpriteTemplates_CableCar[2];
 extern const struct SpriteTemplate sSpriteTemplate_Cable;
 extern u8 AddPseudoEventObject(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority);
+extern u8 sGroundX_Up;
+extern u8 sGroundY_Up;
+extern u8 sGroundSegmentY_Up;
 
 void CB2_CableCar(void);
 void Task_CableCar(u8 taskId);
@@ -834,4 +837,38 @@ void BufferNextGroundSegment(void)
     }
 
     sCableCar->groundTilemapOffset = (sCableCar->groundTilemapOffset + 1) % 3;
+}
+
+void DrawNextGroundSegmentGoingUp(void)
+{
+    u8 i = 0;
+
+    sCableCar->groundXOffset = sCableCar->groundYOffset = 0;
+    sCableCar->groundXBase = sCableCar->bg0HorizontalOffset;
+    sCableCar->groundYBase = sCableCar->bg0VerticalOffset;
+    sCableCar->groundSegmentXStart = (sCableCar->groundSegmentXStart + 30) % 32;
+    sCableCar->groundTileIdx -= 2;
+    sGroundSegmentY_Up = (sCableCar->groundSegmentYStart + 23) % 32;
+
+    // Draw next segment
+    for (i = 0; i < ARRAY_COUNT(sCableCar->groundTileBuffer); i++)
+    {
+        sGroundX_Up = sCableCar->groundSegmentXStart;
+        sGroundY_Up = (sGroundSegmentY_Up + i) % 32;
+        FillBgTilemapBufferRect(0, sCableCar->groundTileBuffer[i][sCableCar->groundTileIdx], sGroundX_Up, sGroundY_Up, 1, 1, 17);
+        sGroundX_Up = (sGroundX_Up + 1) % 32;
+        FillBgTilemapBufferRect(0, sCableCar->groundTileBuffer[i][sCableCar->groundTileIdx + 1], sGroundX_Up, sGroundY_Up, 1, 1, 17);
+    }
+
+    // Erase old segment
+    sGroundX_Up = (sCableCar->groundSegmentXStart + 30) % 32;
+    FillBgTilemapBufferRect(0, 0, sGroundX_Up, 0, 2, 32, 17);
+    if (sCableCar->groundTileIdx == 0)
+    {
+        sCableCar->groundSegmentYStart = (sCableCar->groundSegmentYStart + 29) % 32;
+        sCableCar->groundTileIdx = 12;
+        BufferNextGroundSegment();
+        sGroundX_Up = (sCableCar->groundSegmentYStart + 1) % 32;
+        FillBgTilemapBufferRect(0, 0, 0, sGroundX_Up, 32, 9, 17);
+    }
 }
