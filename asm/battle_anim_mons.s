@@ -2041,6 +2041,8 @@ _080A63F4: .4byte 0x02022C90
 
 	thumb_func_start sub_080A63F8
 sub_080A63F8: @ 0x080A63F8
+	.globl GetBattleAnimBg1Data
+GetBattleAnimBg1Data = sub_080A63F8
 	push {r4, lr}
 	adds r4, r0, #0
 	bl IsContest
@@ -2206,6 +2208,8 @@ _080A6528:
 
 	thumb_func_start sub_080A6530
 sub_080A6530: @ 0x080A6530
+	.globl ClearBattleAnimBg
+ClearBattleAnimBg = sub_080A6530
 	push {lr}
 	sub sp, #0x20
 	adds r1, r0, #0
@@ -2333,6 +2337,8 @@ AnimLoadCompressedBgTilemap: @ 0x080A6610
 
 	thumb_func_start sub_080A6628
 sub_080A6628: @ 0x080A6628
+	.globl AnimLoadCompressedBgTilemapHandleContest
+AnimLoadCompressedBgTilemapHandleContest = sub_080A6628
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	adds r5, r2, #0

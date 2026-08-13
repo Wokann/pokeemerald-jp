@@ -149,18 +149,18 @@ gUnknown_8C24A9C: @ 0x8C24A9C
 	.incbin "baserom_jp.gba", 0xc24a9c, 0x5c3c
 
 
-	.globl gUnknown_8C2A6D8
-gUnknown_8C2A6D8: @ 0x8C2A6D8
+	.globl gBattleAnimMaskImage_LightBeam
+gBattleAnimMaskImage_LightBeam: @ 0x8C2A6D8
 	.incbin "baserom_jp.gba", 0xc2a6d8, 0xa0
 
 
-	.globl gUnknown_8C2A778
-gUnknown_8C2A778: @ 0x8C2A778
+	.globl gBattleAnimMaskPalette_LightBeam
+gBattleAnimMaskPalette_LightBeam: @ 0x8C2A778
 	.incbin "baserom_jp.gba", 0xc2a778, 0x18
 
 
-	.globl gUnknown_8C2A790
-gUnknown_8C2A790: @ 0x8C2A790
+	.globl gBattleAnimMaskTilemap_LightBeam
+gBattleAnimMaskTilemap_LightBeam: @ 0x8C2A790
 	.incbin "baserom_jp.gba", 0xc2a790, 0x27d0
 
 

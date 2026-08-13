@@ -11495,21 +11495,41 @@ gSpitUpDeformMonAffineAnimCmds: @ 0x85AD1E8
 gSwallowDeformMonAffineAnimCmds: @ 0x85AD238
 	.incbin "baserom_jp.gba", 0x5ad238, 0x30
 
-	.globl gUnknown_85AD268
-gUnknown_85AD268: @ 0x85AD268
-	.incbin "baserom_jp.gba", 0x5ad268, 0x2c
+	.globl gMorningSunLightBeamCoordsTable
+gMorningSunLightBeamCoordsTable: @ 0x85AD268
+	.incbin "baserom_jp.gba", 0x5ad268, 0x4
 
-	.globl gUnknown_85AD294
-gUnknown_85AD294: @ 0x85AD294
+	.globl gGreenStarAnimCmds1
+gGreenStarAnimCmds1: @ 0x85AD26C
+	.incbin "baserom_jp.gba", 0x5ad26c, 0xc
+
+	.globl gGreenStarAnimCmds2
+gGreenStarAnimCmds2: @ 0x85AD278
+	.incbin "baserom_jp.gba", 0x5ad278, 0x8
+
+	.globl gGreenStarAnimCmds3
+gGreenStarAnimCmds3: @ 0x85AD280
+	.incbin "baserom_jp.gba", 0x5ad280, 0x8
+
+	.globl gGreenStarAnimTable
+gGreenStarAnimTable: @ 0x85AD288
+	.incbin "baserom_jp.gba", 0x5ad288, 0xc
+
+	.globl gGreenStarSpriteTemplate
+gGreenStarSpriteTemplate: @ 0x85AD294
 	.incbin "baserom_jp.gba", 0x5ad294, 0x18
 
-	.globl gUnknown_85AD2AC
-gUnknown_85AD2AC: @ 0x85AD2AC
+	.globl gDoomDesireLightBeamCoordTable
+gDoomDesireLightBeamCoordTable: @ 0x85AD2AC
 	.incbin "baserom_jp.gba", 0x5ad2ac, 0x4
 
-	.globl gUnknown_85AD2B0
-gUnknown_85AD2B0: @ 0x85AD2B0
-	.incbin "baserom_jp.gba", 0x5ad2b0, 0x8
+	.globl gDoomDesireLightBeamDelayTable
+gDoomDesireLightBeamDelayTable: @ 0x85AD2B0
+	.incbin "baserom_jp.gba", 0x5ad2b0, 0x5
+
+	.globl gUnknown_85AD2B5
+gUnknown_85AD2B5: @ 0x85AD2B5
+	.incbin "baserom_jp.gba", 0x5ad2b5, 0x3
 
 	.globl gStrongFrustrationAffineAnimCmds
 gStrongFrustrationAffineAnimCmds: @ 0x85AD2B8
