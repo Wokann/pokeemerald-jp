@@ -500,52 +500,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkCE_settorment
-atkCE_settorment: @ 0x080548F4
-	push {lr}
-	ldr r1, _0805492C
-	ldr r0, _08054930
-	ldrb r2, [r0]
-	movs r0, #0x58
-	muls r0, r2, r0
-	adds r1, #0x50
-	adds r0, r0, r1
-	ldr r1, [r0]
-	movs r2, #0x80
-	lsls r2, r2, #0x18
-	cmp r1, #0
-	bge _08054938
-	ldr r3, _08054934
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _08054944
-	.align 2, 0
-_0805492C: .4byte 0x02023D28
-_08054930: .4byte 0x02023EB0
-_08054934: .4byte 0x02023EB8
-_08054938:
-	orrs r1, r2
-	str r1, [r0]
-	ldr r1, _08054948
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_08054944:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054948: .4byte 0x02023EB8
-	thumb_func_end atkCE_settorment
 
 	thumb_func_start atkCF_jumpifnodamage
 atkCF_jumpifnodamage: @ 0x0805494C
