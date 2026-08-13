@@ -9543,8 +9543,8 @@ _08103956:
 	bx r0
 	thumb_func_end sub_08103900
 
-	thumb_func_start sub_0810395C
-sub_0810395C: @ 0x0810395C
+	thumb_func_start SetSpriteNextToMonHead
+SetSpriteNextToMonHead: @ 0x0810395C
 	push {r4, r5, r6, lr}
 	adds r6, r1, #0
 	lsls r0, r0, #0x18
@@ -9587,7 +9587,7 @@ _081039A8:
 	pop {r4, r5, r6}
 	pop {r0}
 	bx r0
-	thumb_func_end sub_0810395C
+	thumb_func_end SetSpriteNextToMonHead
 
 	thumb_func_start sub_081039B4
 sub_081039B4: @ 0x081039B4
@@ -9609,7 +9609,7 @@ _081039D2:
 	ldrb r4, [r0]
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_0810395C
+	bl SetSpriteNextToMonHead
 	adds r0, r4, #0
 	bl GetBattlerSide
 	lsls r0, r0, #0x18
@@ -9687,7 +9687,7 @@ _08103A74:
 _08103A76:
 	ldrb r0, [r0]
 	adds r1, r4, #0
-	bl sub_0810395C
+	bl SetSpriteNextToMonHead
 	movs r0, #0
 	strh r0, [r4, #0x2e]
 	ldr r1, _08103A98
@@ -9898,7 +9898,7 @@ _08103BFE:
 	ldrb r4, [r0]
 	adds r0, r4, #0
 	adds r1, r5, #0
-	bl sub_0810395C
+	bl SetSpriteNextToMonHead
 	adds r0, r4, #0
 	bl GetBattlerSide
 	lsls r0, r0, #0x18
