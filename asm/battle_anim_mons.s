@@ -2149,6 +2149,8 @@ _080A64C0: .4byte 0x02022D04
 
 	thumb_func_start sub_080A64C4
 sub_080A64C4: @ 0x080A64C4
+	.globl GetBgDataForTransform
+GetBgDataForTransform = sub_080A64C4
 	push {r4, r5, lr}
 	adds r4, r0, #0
 	ldr r0, _080A64F0

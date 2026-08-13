@@ -4922,7 +4922,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_SpitUpDeformMon);
         src/battle_anim_effects_3.o(.text.AnimSwallowBlueOrb);
         src/battle_anim_effects_3.o(.text.AnimTask_SwallowDeformMon);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5);
+        src/battle_anim_effects_3.o(.text.AnimTask_TransformMon);
         src/battle_anim_effects_3.o(.text.AnimTask_IsMonInvisible);
         src/battle_anim_effects_3.o(.text.AnimTask_CastformGfxDataChange);
         src/battle_anim_effects_3.o(.text.AnimTask_MorningSunLightBeam);
