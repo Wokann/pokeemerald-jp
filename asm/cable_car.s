@@ -2,23 +2,6 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-
-
-
-	.section .text.cable_car_rest,"ax",%progbits
-
-
-
-
-
-	thumb_func_start sub_08150924
-sub_08150924: @ 0x08150924
-	thumb_func_start sub_08150A44
-sub_08150A44: @ 0x08150A44
-	thumb_func_start sub_08150AD0
-sub_08150AD0: @ 0x08150AD0
-	thumb_func_start sub_08150B48
-sub_08150B48: @ 0x08150B48
 	.section .text.cable_car_mid,"ax",%progbits
 
 	thumb_func_start LoadCableCarSprites

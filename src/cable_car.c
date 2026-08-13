@@ -602,7 +602,7 @@ static void SpriteCB_HikerGoingDown(struct Sprite *sprite)
 #undef sSameDir
 #undef sDelay
 
-static void SetBgRegs(bool8 active)
+void SetBgRegs(bool8 active)
 {
     switch (active)
     {
