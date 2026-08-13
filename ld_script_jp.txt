@@ -4983,7 +4983,9 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchOpposingMonMove);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchPartnerMove);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest7);
+        src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement);
+        src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement_Step);
+        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest8);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
         src/decoration_inventory.o(.text);

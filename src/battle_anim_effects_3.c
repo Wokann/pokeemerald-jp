@@ -3528,6 +3528,58 @@ void AnimTask_SnatchPartnerMove(u8 taskId)
     }
 }
 
+static void AnimTask_TeeterDanceMovement_Step(u8 taskId);
+
+// Moves the mon's sprite back and forth in an unpredictable swaying motion.
+// No args.
+void AnimTask_TeeterDanceMovement(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[3] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->data[4] = GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER ? 1 : -1;
+    task->data[6] = gSprites[task->data[3]].y;
+    task->data[5] = gSprites[task->data[3]].x;
+    task->data[9] = 0;
+    task->data[11] = 0;
+    task->data[10] = 1;
+    task->data[12] = 0;
+    task->func = AnimTask_TeeterDanceMovement_Step;
+}
+
+static void AnimTask_TeeterDanceMovement_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[0])
+    {
+    case 0:
+        task->data[11] += 8;
+        task->data[11] &= 0xFF;
+        gSprites[task->data[3]].x2 = gSineTable[task->data[11]] >> 5;
+        task->data[9] += 2;
+        task->data[9] &= 0xFF;
+        gSprites[task->data[3]].x = (gSineTable[task->data[9]] >> 3) * task->data[4] + task->data[5];
+        if (task->data[9] == 0)
+        {
+            gSprites[task->data[3]].x = task->data[5];
+            task->data[0]++;
+        }
+        break;
+    case 1:
+        task->data[11] += 8;
+        task->data[11] &= 0xFF;
+        gSprites[task->data[3]].x2 = gSineTable[task->data[11]] >> 5;
+        if (task->data[11] == 0)
+        {
+            gSprites[task->data[3]].x2 = 0;
+            task->data[0]++;
+        }
+        break;
+    case 2:
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
 #undef IDX_ACTIVE_SPRITES
 #undef tState
 #undef tTimer
