@@ -773,52 +773,5 @@ _080567F8: .4byte 0x00001016
 
 
 
-	thumb_func_start atkF6_finishaction
-atkF6_finishaction: @ 0x08056AE0
-	ldr r1, _08056AE8
-	movs r0, #0xc
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_08056AE8: .4byte 0x02023D27
-	thumb_func_end atkF6_finishaction
 
-	thumb_func_start atkF7_finishturn
-atkF7_finishturn: @ 0x08056AEC
-	ldr r1, _08056AFC
-	movs r0, #0xc
-	strb r0, [r1]
-	ldr r1, _08056B00
-	ldr r0, _08056B04
-	ldrb r0, [r0]
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_08056AFC: .4byte 0x02023D27
-_08056B00: .4byte 0x02023D26
-_08056B04: .4byte 0x02023D10
-	thumb_func_end atkF7_finishturn
 
-	thumb_func_start atkF8_trainerslideout
-atkF8_trainerslideout: @ 0x08056B08
-	push {r4, r5, lr}
-	ldr r5, _08056B30
-	ldr r0, [r5]
-	ldrb r0, [r0, #1]
-	bl GetBattlerAtPosition
-	ldr r4, _08056B34
-	strb r0, [r4]
-	movs r0, #0
-	bl BtlController_EmitTrainerSlideBack
-	ldrb r0, [r4]
-	bl MarkBattlerForControllerExec
-	ldr r0, [r5]
-	adds r0, #2
-	str r0, [r5]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08056B30: .4byte 0x02023EB8
-_08056B34: .4byte 0x02023D08
-	thumb_func_end atkF8_trainerslideout

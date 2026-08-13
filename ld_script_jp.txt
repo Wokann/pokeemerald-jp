@@ -3858,6 +3858,9 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_trygivecaughtmonnick);
         src/battle_script_commands.o(.text.Cmd_subattackerhpbydmg);
         src/battle_script_commands.o(.text.Cmd_removeattackerstatus1);
+        src/battle_script_commands.o(.text.Cmd_finishaction);
+        src/battle_script_commands.o(.text.Cmd_finishturn);
+        src/battle_script_commands.o(.text.Cmd_trainerslideout);
         asm/battle_script_commands.o(.text.atkF4_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
