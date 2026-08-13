@@ -84,7 +84,9 @@ struct Trainer
     /*0x02*/ u8 encounterMusic_gender; // last bit is gender
     /*0x03*/ u8 trainerPic;
     /*0x04*/ u8 trainerName[12];
-    /*0x10*/ u16 items[2];
+    /*0x10*/ u8 items[2];
+    /*0x12*/ u8 doubleBattle;
+    /*0x13*/ u8 unk13;
     /*0x14*/ u32 aiFlags;
     /*0x18*/ u8 partySize;
     /*0x19*/ u8 unk19;

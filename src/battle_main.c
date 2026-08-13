@@ -6,9 +6,12 @@
 #include "battle_setup.h"
 #include "bg.h"
 #include "data.h"
+#include "decompress.h"
 #include "event_data.h"
 #include "gpu_regs.h"
+#include "gba/m4a_internal.h"
 #include "link.h"
+#include "m4a.h"
 #include "main.h"
 #include "malloc.h"
 #include "menu.h"
@@ -31,6 +34,7 @@
 #include "constants/items.h"
 #include "constants/pokemon.h"
 #include "constants/rgb.h"
+#include "constants/songs.h"
 #include "constants/trainers.h"
 
 // JP: battle globals live at fixed EWRAM/IWRAM addresses (sym files).
@@ -43,10 +47,13 @@ extern u16 gBattle_BG1_X, gBattle_BG1_Y;
 extern u16 gBattle_BG2_X, gBattle_BG2_Y;
 extern u16 gBattle_BG3_X, gBattle_BG3_Y;
 extern u8 gBattleTerrain;
+extern struct MusicPlayerInfo gMPlayInfo_SE1;
+extern struct MusicPlayerInfo gMPlayInfo_SE2;
 extern struct MultiPartnerMenuPokemon *sMultiPartnerPartyBuffer;
 extern struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern void sub_08185CDC(void); // JP recorded-battle helper (US: RecordedBattle_ClearFrontierPassFlag)
 extern void sub_08184D04(void); // JP recorded-battle helper (US: RecordedBattle_SetTrainerInfo)
+static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
 
 static void CB2_InitBattleInternal(void);
 extern void CB2_PreInitMultiBattle(void);
@@ -1053,3 +1060,84 @@ void BattleMainCB2(void)
         SetMainCallback2(CB2_QuitRecordedBattle);
     }
 }
+
+static void FreeRestoreBattleData(void)
+{
+    gMain.callback1 = gPreBattleCallback1;
+    gScanlineEffect.state = 3;
+    gMain.inBattle = FALSE;
+    ZeroEnemyPartyMons();
+    m4aSongNumStop(SE_LOW_HEALTH);
+    FreeMonSpritesGfx();
+    FreeBattleSpritesData();
+    FreeBattleResources();
+}
+
+void CB2_QuitRecordedBattle(void)
+{
+    UpdatePaletteFade();
+    if (!gPaletteFade.active)
+    {
+        m4aMPlayStop(&gMPlayInfo_SE1);
+        m4aMPlayStop(&gMPlayInfo_SE2);
+        FreeRestoreBattleData();
+        FreeAllWindowBuffers();
+        SetMainCallback2(gMain.savedCallback);
+    }
+}
+
+#define sState data[0]
+#define sDelay data[4]
+
+static void SpriteCB_UnusedBattleInit(struct Sprite *sprite)
+{
+    sprite->sState = 0;
+    sprite->callback = SpriteCB_UnusedBattleInit_Main;
+}
+
+static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite)
+{
+    u16 *arr = (u16 *)gDecompressionBuffer;
+
+    switch (sprite->sState)
+    {
+    case 0:
+        sprite->sState++;
+        sprite->data[1] = 0;
+        sprite->data[2] = 0x281;
+        sprite->data[3] = 0;
+        sprite->sDelay = 1;
+        // fall through
+    case 1:
+        sprite->sDelay--;
+        if (sprite->sDelay == 0)
+        {
+            s32 i;
+            s32 r2;
+            s32 r0;
+
+            sprite->sDelay = 2;
+            r2 = sprite->data[1] + sprite->data[3] * 32;
+            r0 = sprite->data[2] - sprite->data[3] * 32;
+            for (i = 0; i < 29; i += 2)
+            {
+                arr[r2 + i] = 0x3D;
+                arr[r0 + i] = 0x3D;
+            }
+            sprite->data[3]++;
+            if (sprite->data[3] == 21)
+            {
+                sprite->sState++;
+                sprite->data[1] = 32;
+            }
+        }
+        break;
+    case 2:
+        sprite->data[1]--;
+        if (sprite->data[1] == 20)
+            SetMainCallback2(CB2_InitBattle);
+        break;
+    }
+}
+
+extern u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer);

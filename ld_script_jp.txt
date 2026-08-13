@@ -3175,6 +3175,10 @@ SECTIONS {
         src/battle_main.o(.text.CB2_PreInitIngamePlayerPartnerBattle);
         src/battle_main.o(.text.CB2_HandleStartMultiBattle);
         src/battle_main.o(.text.BattleMainCB2);
+        src/battle_main.o(.text.FreeRestoreBattleData);
+        src/battle_main.o(.text.CB2_QuitRecordedBattle);
+        src/battle_main.o(.text.SpriteCB_UnusedBattleInit);
+        src/battle_main.o(.text.SpriteCB_UnusedBattleInit_Main);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
