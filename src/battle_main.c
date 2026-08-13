@@ -63,8 +63,9 @@ extern const struct BgTemplate gBattleBgTemplates[];
 extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const s8 sCenterToCornerVecXs[];
 extern u32 sFlickerArray[];
-extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (US: same name)
+extern u8 sUnusedBattlersArray[];
 extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
+extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
