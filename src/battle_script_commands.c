@@ -1557,6 +1557,7 @@ static void Cmd_trysetsnatch(void);
 static void Cmd_trygetintimidatetarget(void);
 static void Cmd_switchoutabilities(void);
 static void Cmd_jumpifhasnohp(void);
+static void Cmd_getsecretpowereffect(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8803,4 +8804,39 @@ static void Cmd_jumpifhasnohp(void)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
     else
         gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_getsecretpowereffect(void)
+{
+    switch (gBattleEnvironment)
+    {
+    case BATTLE_ENVIRONMENT_GRASS:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_POISON;
+        break;
+    case BATTLE_ENVIRONMENT_LONG_GRASS:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_SLEEP;
+        break;
+    case BATTLE_ENVIRONMENT_SAND:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_ACC_MINUS_1;
+        break;
+    case BATTLE_ENVIRONMENT_UNDERWATER:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_DEF_MINUS_1;
+        break;
+    case BATTLE_ENVIRONMENT_WATER:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_ATK_MINUS_1;
+        break;
+    case BATTLE_ENVIRONMENT_POND:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_SPD_MINUS_1;
+        break;
+    case BATTLE_ENVIRONMENT_MOUNTAIN:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_CONFUSION;
+        break;
+    case BATTLE_ENVIRONMENT_CAVE:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_FLINCH;
+        break;
+    default:
+        gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_PARALYSIS;
+        break;
+    }
+    gBattlescriptCurrInstr++;
 }
