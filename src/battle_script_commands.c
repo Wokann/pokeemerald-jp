@@ -114,6 +114,10 @@ static void Cmd_tryexplosion(void);
 static void Cmd_setatkhptozero(void);
 static void Cmd_jumpifnexttargetvalid(void);
 static void Cmd_tryhealhalfhealth(void);
+static void Cmd_setrain(void);
+static void Cmd_setreflect(void);
+static void Cmd_setseeded(void);
+static void Cmd_manipulatedamage(void);
 
 static void Cmd_attackcanceler(void)
 {
@@ -5835,4 +5839,85 @@ static void Cmd_tryhealhalfhealth(void)
         gBattlescriptCurrInstr = failPtr;
     else
         gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_setrain(void)
+{
+    if (gBattleWeather & B_WEATHER_RAIN)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_FAILED;
+    }
+    else
+    {
+        gBattleWeather = B_WEATHER_RAIN_TEMPORARY;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_RAIN;
+        gWishFutureKnock.weatherDuration = 5;
+    }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setreflect(void)
+{
+    if (gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] & SIDE_STATUS_REFLECT)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SIDE_STATUS_FAILED;
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_REFLECT;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].reflectTimer = 5;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].reflectBattlerId = gBattlerAttacker;
+
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(BATTLE_ALIVE_ATK_SIDE) == 2)
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_REFLECT_DOUBLE;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_REFLECT_SINGLE;
+    }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setseeded(void)
+{
+    if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT || gStatuses3[gBattlerTarget] & STATUS3_LEECHSEED)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LEECH_SEED_MISS;
+    }
+    else if (IS_BATTLER_OF_TYPE(gBattlerTarget, TYPE_GRASS))
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LEECH_SEED_FAIL;
+    }
+    else
+    {
+        gStatuses3[gBattlerTarget] |= gBattlerAttacker;
+        gStatuses3[gBattlerTarget] |= STATUS3_LEECHSEED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LEECH_SEED_SET;
+    }
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_manipulatedamage(void)
+{
+    switch (gBattlescriptCurrInstr[1])
+    {
+    case DMG_CHANGE_SIGN:
+        gBattleMoveDamage *= -1;
+        break;
+    case DMG_RECOIL_FROM_MISS:
+        gBattleMoveDamage /= 2;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+        if ((gBattleMons[gBattlerTarget].maxHP / 2) < gBattleMoveDamage)
+            gBattleMoveDamage = gBattleMons[gBattlerTarget].maxHP / 2;
+        break;
+    case DMG_DOUBLED:
+        gBattleMoveDamage *= 2;
+        break;
+    }
+
+    gBattlescriptCurrInstr += 2;
 }
