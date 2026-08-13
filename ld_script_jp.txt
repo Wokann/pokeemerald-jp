@@ -749,6 +749,7 @@ gText_EmptyString3 = gUnknown_85AB3BD;
 BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
 BattleScript_PalacePrintFlavorText = gUnknown_8289E09;
 BattleScript_FocusPunchSetUp = gUnknown_8289787;
+gBattleScriptingCommandsTable = gUnknown_82EC600;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;

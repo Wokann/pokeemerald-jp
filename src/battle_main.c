@@ -91,6 +91,7 @@ extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-se
 extern u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves); // JP asm 0x0803CB54 (register-sensitive, kept in asm)
 void TurnValuesCleanUp(bool8 var0);
 extern void RunTurnActionsFunctions(void); // JP asm 0x0803D488 (US: same name)
+extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2356,6 +2357,7 @@ static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
     gBattleScripting.multihitMoveEffect = 0;
     gBattleResources->battleScriptsStack->size = 0;
 }
+
 
 
 
