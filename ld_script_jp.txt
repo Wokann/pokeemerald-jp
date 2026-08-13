@@ -3239,6 +3239,7 @@ SECTIONS {
         asm/battle_main_introprinttr.o(.text);
         src/battle_main.o(.text.BattleIntroPrintWildMonAttacked);
         src/battle_main.o(.text.BattleIntroPrintOpponentSendsOut);
+        asm/battle_main_introopp2.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
