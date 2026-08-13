@@ -897,6 +897,7 @@ BattleScript_FaintAttacker = gUnknown_8288D32;
 BattleScript_FaintTarget = gUnknown_8288D3F;
 BattleScript_DestinyBondTakesLife = gUnknown_82893C6;
 BattleScript_GrudgeTakesPP = gUnknown_8289715;
+BattleScript_LevelUp = gUnknown_8289145;
 gMissStringIds = gUnknown_85AB9A0;
 gBattleScriptingCommandsTable = gUnknown_82EC600;
 sTurnActionsFuncsTable = gUnknown_82EC694;
@@ -3583,6 +3584,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_jumpifstat);
         src/battle_script_commands.o(.text.Cmd_jumpifstatus3condition);
         src/battle_script_commands.o(.text.Cmd_jumpiftype);
+        src/battle_script_commands.o(.text.Cmd_getexp);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

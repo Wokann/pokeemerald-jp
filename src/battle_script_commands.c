@@ -2425,3 +2425,282 @@ static void Cmd_jumpiftype(void)
     else
         gBattlescriptCurrInstr += 7;
 }
+
+static void Cmd_getexp(void)
+{
+    u16 item;
+    s32 i; // also used as stringId
+    u8 holdEffect;
+    s32 sentIn;
+    s32 viaExpShare = 0;
+    u16 *exp = &gBattleStruct->expValue;
+
+    gBattlerFainted = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    sentIn = gSentPokesToOpponent[(gBattlerFainted & 2) >> 1];
+
+    switch (gBattleScripting.getexpState)
+    {
+    case 0: // check if should receive exp at all
+        if (GetBattlerSide(gBattlerFainted) != B_SIDE_OPPONENT || (gBattleTypeFlags &
+             (BATTLE_TYPE_LINK
+              | BATTLE_TYPE_RECORDED_LINK
+              | BATTLE_TYPE_TRAINER_HILL
+              | BATTLE_TYPE_FRONTIER
+              | BATTLE_TYPE_SAFARI
+              | BATTLE_TYPE_BATTLE_TOWER
+              | BATTLE_TYPE_EREADER_TRAINER)))
+        {
+            gBattleScripting.getexpState = 6; // goto last case
+        }
+        else
+        {
+            gBattleScripting.getexpState++;
+            gBattleStruct->givenExpMons |= gBitTable[gBattlerPartyIndexes[gBattlerFainted]];
+        }
+        break;
+    case 1: // calculate experience points to redistribute
+        {
+            u16 calculatedExp;
+            s32 viaSentIn;
+
+            for (viaSentIn = 0, i = 0; i < PARTY_SIZE; i++)
+            {
+                if (GetMonData2(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE || GetMonData2(&gPlayerParty[i], MON_DATA_HP) == 0)
+                    continue;
+                if (gBitTable[i] & sentIn)
+                    viaSentIn++;
+
+                item = GetMonData2(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+
+                if (item == ITEM_ENIGMA_BERRY)
+                    holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
+                else
+                    holdEffect = GetItemHoldEffect(item);
+
+                if (holdEffect == HOLD_EFFECT_EXP_SHARE)
+                    viaExpShare++;
+            }
+
+            calculatedExp = gSpeciesInfo[gBattleMons[gBattlerFainted].species].expYield * gBattleMons[gBattlerFainted].level / 7;
+
+            if (viaExpShare) // at least one mon is getting exp via exp share
+            {
+                *exp = SAFE_DIV(calculatedExp / 2, viaSentIn);
+                if (*exp == 0)
+                    *exp = 1;
+
+                gExpShareExp = calculatedExp / 2 / viaExpShare;
+                if (gExpShareExp == 0)
+                    gExpShareExp = 1;
+            }
+            else
+            {
+                *exp = SAFE_DIV(calculatedExp, viaSentIn);
+                if (*exp == 0)
+                    *exp = 1;
+                gExpShareExp = 0;
+            }
+
+            gBattleScripting.getexpState++;
+            gBattleStruct->expGetterMonId = 0;
+            gBattleStruct->sentInPokes = sentIn;
+        }
+        // fall through
+    case 2: // set exp value to the poke in expgetter_id and print message
+        if (gBattleControllerExecFlags == 0)
+        {
+            item = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HELD_ITEM);
+
+            if (item == ITEM_ENIGMA_BERRY)
+                holdEffect = gSaveBlock1Ptr->enigmaBerry.holdEffect;
+            else
+                holdEffect = GetItemHoldEffect(item);
+
+            if (holdEffect != HOLD_EFFECT_EXP_SHARE && !(gBattleStruct->sentInPokes & 1))
+            {
+                *(&gBattleStruct->sentInPokes) >>= 1;
+                gBattleScripting.getexpState = 5;
+                gBattleMoveDamage = 0; // used for exp
+            }
+            else if (GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) == MAX_LEVEL)
+            {
+                *(&gBattleStruct->sentInPokes) >>= 1;
+                gBattleScripting.getexpState = 5;
+                gBattleMoveDamage = 0; // used for exp
+            }
+            else
+            {
+                // music change in wild battle after fainting a poke
+                if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER) && gBattleMons[0].hp != 0 && !gBattleStruct->wildVictorySong)
+                {
+                    BattleStopLowHpSound();
+                    PlayBGM(MUS_VICTORY_WILD);
+                    gBattleStruct->wildVictorySong++;
+                }
+
+                if (GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP))
+                {
+                    if (gBattleStruct->sentInPokes & 1)
+                        gBattleMoveDamage = *exp;
+                    else
+                        gBattleMoveDamage = 0;
+
+                    if (holdEffect == HOLD_EFFECT_EXP_SHARE)
+                        gBattleMoveDamage += gExpShareExp;
+                    if (holdEffect == HOLD_EFFECT_LUCKY_EGG)
+                        gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+                    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+                        gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+
+                    if (IsTradedMon(&gPlayerParty[gBattleStruct->expGetterMonId]))
+                    {
+                        // check if the Pokemon doesn't belong to the player
+                        if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && gBattleStruct->expGetterMonId >= 3)
+                        {
+                            i = STRINGID_EMPTYSTRING4;
+                        }
+                        else
+                        {
+                            gBattleMoveDamage = (gBattleMoveDamage * 150) / 100;
+                            i = STRINGID_ABOOSTED;
+                        }
+                    }
+                    else
+                    {
+                        i = STRINGID_EMPTYSTRING4;
+                    }
+
+                    // get exp getter battler
+                    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+                    {
+                        if (gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId && !(gAbsentBattlerFlags & gBitTable[2]))
+                            gBattleStruct->expGetterBattlerId = 2;
+                        else if (!(gAbsentBattlerFlags & gBitTable[0]))
+                            gBattleStruct->expGetterBattlerId = 0;
+                        else
+                            gBattleStruct->expGetterBattlerId = 2;
+                    }
+                    else
+                    {
+                        gBattleStruct->expGetterBattlerId = 0;
+                    }
+
+                    // JP combines the nickname-with-prefix placeholder and the
+                    // 'gained a boosted' string into a single text buffer.
+                    gBattleTextBuff1[0] = B_BUFF_PLACEHOLDER_BEGIN;
+                    gBattleTextBuff1[1] = B_BUFF_MON_NICK_WITH_PREFIX;
+                    gBattleTextBuff1[2] = gBattleStruct->expGetterBattlerId;
+                    gBattleTextBuff1[3] = gBattleStruct->expGetterMonId;
+                    gBattleTextBuff1[4] = 0;
+                    gBattleTextBuff1[5] = i;
+                    gBattleTextBuff1[6] = (i & 0xFF00) >> 8;
+                    gBattleTextBuff1[7] = B_BUFF_EOS;
+                    PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff2, 5, gBattleMoveDamage);
+
+                    PrepareStringBattle(STRINGID_PKMNGAINEDEXP, gBattleStruct->expGetterBattlerId);
+                    MonGainEVs(&gPlayerParty[gBattleStruct->expGetterMonId], gBattleMons[gBattlerFainted].species);
+                }
+                gBattleStruct->sentInPokes >>= 1;
+                gBattleScripting.getexpState++;
+            }
+        }
+        break;
+    case 3: // Set stats and give exp
+        if (gBattleControllerExecFlags == 0)
+        {
+            gBattleBufferB[gBattleStruct->expGetterBattlerId][0] = 0;
+            if (GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP) && GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL) != MAX_LEVEL)
+            {
+                gBattleResources->beforeLvlUp->stats[STAT_HP]    = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
+                gBattleResources->beforeLvlUp->stats[STAT_ATK]   = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
+                gBattleResources->beforeLvlUp->stats[STAT_DEF]   = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
+                gBattleResources->beforeLvlUp->stats[STAT_SPEED] = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                gBattleResources->beforeLvlUp->stats[STAT_SPATK] = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
+                gBattleResources->beforeLvlUp->stats[STAT_SPDEF] = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
+
+                gActiveBattler = gBattleStruct->expGetterBattlerId;
+                BtlController_EmitExpUpdate(B_COMM_TO_CONTROLLER, gBattleStruct->expGetterMonId, gBattleMoveDamage);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+            gBattleScripting.getexpState++;
+        }
+        break;
+    case 4: // lvl up if necessary
+        if (gBattleControllerExecFlags == 0)
+        {
+            gActiveBattler = gBattleStruct->expGetterBattlerId;
+            if (gBattleBufferB[gActiveBattler][0] == CONTROLLER_TWORETURNVALUES && gBattleBufferB[gActiveBattler][1] == RET_VALUE_LEVELED_UP)
+            {
+                if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && gBattlerPartyIndexes[gActiveBattler] == gBattleStruct->expGetterMonId)
+                    HandleLowHpMusicChange(&gPlayerParty[gBattlerPartyIndexes[gActiveBattler]], gActiveBattler);
+
+                PREPARE_MON_NICK_WITH_PREFIX_BUFFER(gBattleTextBuff1, gActiveBattler, gBattleStruct->expGetterMonId);
+                PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff2, 3, GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL));
+
+                BattleScriptPushCursor();
+                gLeveledUpInBattle |= gBitTable[gBattleStruct->expGetterMonId];
+                gBattlescriptCurrInstr = BattleScript_LevelUp;
+                gBattleMoveDamage = (gBattleBufferB[gActiveBattler][2] | (gBattleBufferB[gActiveBattler][3] << 8));
+                AdjustFriendship(&gPlayerParty[gBattleStruct->expGetterMonId], FRIENDSHIP_EVENT_GROW_LEVEL);
+
+                // update battle mon structure after level up
+                if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId && gBattleMons[0].hp)
+                {
+                    gBattleMons[0].level = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
+                    gBattleMons[0].hp = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP);
+                    gBattleMons[0].maxHP = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
+                    gBattleMons[0].attack = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
+                    gBattleMons[0].defense = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
+                    // Speed is duplicated, likely due to a copy-paste error.
+                    gBattleMons[0].speed = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                    gBattleMons[0].speed = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                    gBattleMons[0].spAttack = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
+                    gBattleMons[0].spDefense = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPDEF);
+                }
+
+                if (gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId && gBattleMons[2].hp && (gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+                {
+                    gBattleMons[2].level = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
+                    gBattleMons[2].hp = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_HP);
+                    gBattleMons[2].maxHP = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MAX_HP);
+                    gBattleMons[2].attack = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_ATK);
+                    gBattleMons[2].defense = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_DEF);
+                    gBattleMons[2].speed = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                    // Speed is duplicated again, but Special Defense is missing.
+                    gBattleMons[2].speed = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPEED);
+                    gBattleMons[2].spAttack = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPATK);
+                }
+                gBattleScripting.getexpState = 5;
+            }
+            else
+            {
+                gBattleMoveDamage = 0;
+                gBattleScripting.getexpState = 5;
+            }
+        }
+        break;
+    case 5: // looper increment
+        if (gBattleMoveDamage) // there is exp to give, goto case 3 that gives exp
+        {
+            gBattleScripting.getexpState = 3;
+        }
+        else
+        {
+            gBattleStruct->expGetterMonId++;
+            if (gBattleStruct->expGetterMonId < PARTY_SIZE)
+                gBattleScripting.getexpState = 2; // loop again
+            else
+                gBattleScripting.getexpState = 6; // we're done
+        }
+        break;
+    case 6: // increment instruction
+        if (gBattleControllerExecFlags == 0)
+        {
+            // not sure why gf clears the item and ability here
+            gBattleMons[gBattlerFainted].item = ITEM_NONE;
+            gBattleMons[gBattlerFainted].ability = ABILITY_NONE;
+            gBattlescriptCurrInstr += 2;
+        }
+        break;
+    }
+}
