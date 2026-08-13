@@ -1577,6 +1577,7 @@ static void Cmd_handleballthrow(void);
 static void Cmd_givecaughtmon(void);
 static void Cmd_trysetcaughtmondexflags(void);
 static void Cmd_displaydexinfo(void);
+static void Cmd_trygivecaughtmonnick(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9351,6 +9352,82 @@ static void Cmd_displaydexinfo(void)
     case 5:
         if (!gPaletteFade.active)
             gBattlescriptCurrInstr++;
+        break;
+    }
+}
+
+static void Cmd_trygivecaughtmonnick(void)
+{
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case 0:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        sub_0814FA04(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 1:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                gBattleCommunication[MULTIUSE_STATE]++;
+                BeginFastPaletteFade(3);
+            }
+            else
+            {
+                gBattleCommunication[MULTIUSE_STATE] = 4;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleCommunication[MULTIUSE_STATE] = 4;
+        }
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+        {
+            GetMonData(&gEnemyParty[gBattlerPartyIndexes[BATTLE_OPPOSITE(gBattlerAttacker)]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
+            FreeAllWindowBuffers();
+
+            DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gBattleStruct->caughtMonNick,
+                           GetMonData(&gEnemyParty[gBattlerPartyIndexes[BATTLE_OPPOSITE(gBattlerAttacker)]], MON_DATA_SPECIES),
+                           GetMonGender(&gEnemyParty[gBattlerPartyIndexes[BATTLE_OPPOSITE(gBattlerAttacker)]]),
+                           GetMonData(&gEnemyParty[gBattlerPartyIndexes[BATTLE_OPPOSITE(gBattlerAttacker)]], MON_DATA_PERSONALITY, NULL),
+                           BattleMainCB2);
+
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case 3:
+        if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
+        {
+            SetMonData(&gEnemyParty[gBattlerPartyIndexes[BATTLE_OPPOSITE(gBattlerAttacker)]], MON_DATA_NICKNAME, gBattleStruct->caughtMonNick);
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+        break;
+    case 4:
+        if (CalculatePlayerPartyCount() == PARTY_SIZE)
+            gBattlescriptCurrInstr += 5;
+        else
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
         break;
     }
 }
