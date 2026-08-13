@@ -3656,6 +3656,18 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_getmoneyreward);
         src/battle_script_commands.o(.text.Cmd_updatebattlermoves);
         src/battle_script_commands.o(.text.Cmd_swapattackerwithtarget);
+        src/battle_script_commands.o(.text.Cmd_incrementgamestat);
+        src/battle_script_commands.o(.text.Cmd_drawpartystatussummary);
+        src/battle_script_commands.o(.text.Cmd_hidepartystatussummary);
+        src/battle_script_commands.o(.text.Cmd_jumptocalledmove);
+        src/battle_script_commands.o(.text.Cmd_statusanimation);
+        src/battle_script_commands.o(.text.Cmd_status2animation);
+        src/battle_script_commands.o(.text.Cmd_chosenstatusanimation);
+        src/battle_script_commands.o(.text.Cmd_yesnobox);
+        src/battle_script_commands.o(.text.Cmd_cancelallactions);
+        src/battle_script_commands.o(.text.Cmd_adjustsetdamage);
+        src/battle_script_commands.o(.text.Cmd_removeitem);
+        src/battle_script_commands.o(.text.Cmd_atknameinbuff1);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
