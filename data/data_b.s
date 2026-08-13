@@ -11483,8 +11483,8 @@ gUnknown_85AD190: @ 0x85AD190
 gMiniTwinklingStarSpriteTemplate: @ 0x85AD1A8
 	.incbin "baserom_jp.gba", 0x5ad1a8, 0x18
 
-	.globl gUnknown_85AD1C0
-gUnknown_85AD1C0: @ 0x85AD1C0
+	.globl gStockpileDeformMonAffineAnimCmds
+gStockpileDeformMonAffineAnimCmds: @ 0x85AD1C0
 	.incbin "baserom_jp.gba", 0x5ad1c0, 0x28
 
 	.globl gUnknown_85AD1E8
