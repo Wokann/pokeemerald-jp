@@ -3626,6 +3626,86 @@ static void AnimKnockOffStrike(struct Sprite *sprite)
     sprite->callback = AnimKnockOffStrike_Step;
 }
 
+static void AnimRecycle_Step(struct Sprite *sprite);
+
+// Gradually fades a rotating recyle arrow sprite in and back out.
+// No args.
+static void AnimRecycle(struct Sprite *sprite)
+{
+    u16 blend;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP);
+    if (sprite->y < 16)
+        sprite->y = 16;
+
+    sprite->data[6] = 0;
+    sprite->data[7] = 16;
+    sprite->callback = AnimRecycle_Step;
+    blend = BLDALPHA_BLEND(sprite->data[6], sprite->data[7]);
+    SetGpuReg(REG_OFFSET_BLDALPHA, blend);
+}
+
+static void AnimRecycle_Step(struct Sprite *sprite)
+{
+    u16 blend;
+    switch (sprite->data[2])
+    {
+    case 0:
+        if (++sprite->data[0] > 1)
+        {
+            sprite->data[0] = 0;
+            if (!(sprite->data[1] & 1))
+            {
+                if (sprite->data[6] < 16)
+                    sprite->data[6]++;
+            }
+            else
+            {
+                if (sprite->data[7] != 0)
+                    sprite->data[7]--;
+            }
+
+            sprite->data[1]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[6], sprite->data[7]));
+            if (sprite->data[7] == 0)
+                sprite->data[2]++;
+        }
+        break;
+    case 1:
+        if (++sprite->data[0] == 10)
+        {
+            sprite->data[0] = 0;
+            sprite->data[1] = 0;
+            sprite->data[2]++;
+        }
+        break;
+    case 2:
+        if (++sprite->data[0] > 1)
+        {
+            sprite->data[0] = 0;
+            if (!(sprite->data[1] & 1))
+            {
+                if (sprite->data[6] != 0)
+                    sprite->data[6]--;
+            }
+            else
+            {
+                if (sprite->data[7] < 16)
+                    sprite->data[7]++;
+            }
+
+            sprite->data[1]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[6], sprite->data[7]));
+            if (sprite->data[7] == 16)
+                sprite->data[2]++;
+        }
+        break;
+    case 3:
+        DestroySpriteAndMatrix(sprite);
+        break;
+    }
+}
+
 #undef IDX_ACTIVE_SPRITES
 #undef tState
 #undef tTimer
