@@ -19,6 +19,7 @@ extern const union AffineAnimCmd gStockpileDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gSpitUpDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[];
+extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
@@ -46,6 +47,7 @@ static void AnimReversalOrb_Step(struct Sprite *sprite);
 static void AnimTask_RolePlaySilhouette_Step1(u8 taskId);
 static void AnimTask_RolePlaySilhouette_Step2(u8 taskId);
 static void AnimTask_AcidArmor_Step(u8 taskId);
+static void AnimTask_DeepInhale_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1742,4 +1744,42 @@ static void AnimTask_AcidArmor_Step(u8 taskId)
         DestroyAnimVisualTask(taskId);
         break;
     }
+}
+
+void AnimTask_DeepInhale(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = 0;
+    task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+    PrepareAffineAnimInTaskData(&gTasks[taskId], task->data[15], gDeepInhaleAffineAnimCmds);
+    task->func = AnimTask_DeepInhale_Step;
+}
+
+static void AnimTask_DeepInhale_Step(u8 taskId)
+{
+    u16 var0;
+
+    struct Task *task = &gTasks[taskId];
+    var0 = task->data[0];
+    task->data[0]++;
+    var0 -= 20;
+    if (var0 < 23)
+    {
+        if (++task->data[1] > 1)
+        {
+            task->data[1] = 0;
+            task->data[2]++;
+            if (task->data[2] & 1)
+                gSprites[task->data[15]].x2 = 1;
+            else
+                gSprites[task->data[15]].x2 = -1;
+        }
+    }
+    else
+    {
+        gSprites[task->data[15]].x2 = 0;
+    }
+
+    if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+        DestroyAnimVisualTask(taskId);
 }

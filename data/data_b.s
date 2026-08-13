@@ -11519,9 +11519,13 @@ gStrongFrustrationAffineAnimCmds: @ 0x85AD2B8
 gUnknown_85AD2D8: @ 0x85AD2D8
 	.incbin "baserom_jp.gba", 0x5ad2d8, 0x120
 
-	.globl gUnknown_85AD3F8
-gUnknown_85AD3F8: @ 0x85AD3F8
-	.incbin "baserom_jp.gba", 0x5ad3f8, 0x15c
+	.globl gDeepInhaleAffineAnimCmds
+gDeepInhaleAffineAnimCmds: @ 0x85AD3F8
+	.incbin "baserom_jp.gba", 0x5ad3f8, 0x30
+
+	.globl gUnknown_85AD428
+gUnknown_85AD428: @ 0x85AD428
+	.incbin "baserom_jp.gba", 0x5ad428, 0x12c
 
 	.globl gUnknown_85AD554
 gUnknown_85AD554: @ 0x85AD554
