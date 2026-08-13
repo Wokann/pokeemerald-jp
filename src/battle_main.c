@@ -2092,6 +2092,7 @@ static void HandleEndTurn_ContinueBattle(void)
 
 
 
+
 #define sSinIndex           data[0]
 #define sDelta              data[1]
 #define sAmplitude          data[2]

@@ -747,6 +747,7 @@ gCastformFrontSpriteCoords = gUnknown_84FE684;
 StartHealthboxSlideIn = sub_08076320;
 gText_EmptyString3 = gUnknown_85AB3BD;
 BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
+BattleScript_PalacePrintFlavorText = gUnknown_8289E09;
 sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
 FillAroundBattleWindows = sub_0805EB30;
@@ -3251,6 +3252,7 @@ SECTIONS {
         asm/battle_main_introswitchin.o(.text);
         asm/battle_main_trydo.o(.text);
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
+        asm/battle_main_turnpassed.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
