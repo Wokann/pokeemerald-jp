@@ -26,6 +26,7 @@
 
 extern const u16 sSoundMovesTable[];
 void sub_0803DCCC(void);
+extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
 
 u8 GetBattlerForBattleScript(u8 caseId)
 {
@@ -3127,4 +3128,234 @@ u8 ItemBattleEffects(u8 caseID, u8 battler, bool8 moveTurn)
     }
 
     return effect;
+}
+
+void ClearFuryCutterDestinyBondGrudge(u8 battler)
+{
+    gDisableStructs[battler].furyCutterCounter = 0;
+    gBattleMons[battler].status2 &= ~STATUS2_DESTINY_BOND;
+    gStatuses3[battler] &= ~STATUS3_GRUDGE;
+}
+
+void sub_080454F4(void)
+{
+    if (gBattleControllerExecFlags == 0)
+        sTurnActionsFuncsTable[*gBattlescriptCurrInstr]();
+}
+
+u8 GetMoveTarget(u16 move, u8 setTarget)
+{
+    u8 targetBattler = 0;
+    u8 moveTarget;
+    u8 side;
+
+    if (setTarget != NO_TARGET_OVERRIDE)
+        moveTarget = setTarget - 1;
+    else
+        moveTarget = gBattleMoves[move].target;
+
+    switch (moveTarget)
+    {
+    case MOVE_TARGET_SELECTED:
+        side = BATTLE_OPPOSITE(GetBattlerSide(gBattlerAttacker));
+        if (gSideTimers[side].followmeTimer && gBattleMons[gSideTimers[side].followmeTarget].hp)
+        {
+            targetBattler = gSideTimers[side].followmeTarget;
+        }
+        else
+        {
+            side = GetBattlerSide(gBattlerAttacker);
+            do
+            {
+                targetBattler = Random() % gBattlersCount;
+            } while (targetBattler == gBattlerAttacker || side == GetBattlerSide(targetBattler) || gAbsentBattlerFlags & gBitTable[targetBattler]);
+            if (gBattleMoves[move].type == TYPE_ELECTRIC
+                && AbilityBattleEffects(ABILITYEFFECT_COUNT_OTHER_SIDE, gBattlerAttacker, ABILITY_LIGHTNING_ROD, 0, 0)
+                && gBattleMons[targetBattler].ability != ABILITY_LIGHTNING_ROD)
+            {
+                targetBattler ^= BIT_FLANK;
+                RecordAbilityBattle(targetBattler, gBattleMons[targetBattler].ability);
+                gSpecialStatuses[targetBattler].lightningRodRedirected = 1;
+            }
+        }
+        break;
+    case MOVE_TARGET_DEPENDS:
+    case MOVE_TARGET_BOTH:
+    case MOVE_TARGET_FOES_AND_ALLY:
+    case MOVE_TARGET_OPPONENTS_FIELD:
+        targetBattler = GetBattlerAtPosition(BATTLE_OPPOSITE(GET_BATTLER_SIDE(gBattlerAttacker)));
+        if (gAbsentBattlerFlags & gBitTable[targetBattler])
+            targetBattler ^= BIT_FLANK;
+        break;
+    case MOVE_TARGET_RANDOM:
+        side = BATTLE_OPPOSITE(GetBattlerSide(gBattlerAttacker));
+        if (gSideTimers[side].followmeTimer && gBattleMons[gSideTimers[side].followmeTarget].hp)
+        {
+            targetBattler = gSideTimers[side].followmeTarget;
+        }
+        else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && moveTarget & MOVE_TARGET_RANDOM)
+        {
+            if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+            {
+                if (Random() & 1)
+                    targetBattler = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+                else
+                    targetBattler = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+            }
+            else
+            {
+                if (Random() & 1)
+                    targetBattler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+                else
+                    targetBattler = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+            }
+            if (gAbsentBattlerFlags & gBitTable[targetBattler])
+                targetBattler ^= BIT_FLANK;
+        }
+        else
+        {
+            targetBattler = GetBattlerAtPosition(BATTLE_OPPOSITE(GET_BATTLER_SIDE(gBattlerAttacker)));
+        }
+        break;
+    case MOVE_TARGET_USER_OR_SELECTED:
+    case MOVE_TARGET_USER:
+        targetBattler = gBattlerAttacker;
+        break;
+    }
+
+    *(gBattleStruct->moveTarget + gBattlerAttacker) = targetBattler;
+
+    return targetBattler;
+}
+
+bool32 IsBattlerModernFatefulEncounter(u8 battler)
+{
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
+        return TRUE;
+    if (GetMonData3(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES, NULL) != SPECIES_DEOXYS
+        && GetMonData3(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES, NULL) != SPECIES_MEW)
+            return TRUE;
+    return GetMonData3(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_MODERN_FATEFUL_ENCOUNTER, NULL);
+}
+
+u8 IsMonDisobedient(void)
+{
+    s32 rnd;
+    s32 calc;
+    u8 obedienceLevel = 0;
+
+    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+        return DISOBEDIENCE_OBEDIENT;
+    if (GetBattlerSide(gBattlerAttacker) == B_SIDE_OPPONENT)
+        return DISOBEDIENCE_OBEDIENT;
+
+    if (IsBattlerModernFatefulEncounter(gBattlerAttacker)) // only false if illegal Mew or Deoxys
+    {
+        u8 badgeFlag;
+        if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gBattlerAttacker) == 2)
+            return DISOBEDIENCE_OBEDIENT;
+        if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
+            return DISOBEDIENCE_OBEDIENT;
+        if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
+            return DISOBEDIENCE_OBEDIENT;
+        if (!IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
+            return DISOBEDIENCE_OBEDIENT;
+        badgeFlag = FlagGet(FLAG_BADGE08_GET);
+        if (badgeFlag)
+            return DISOBEDIENCE_OBEDIENT;
+
+        obedienceLevel = 10;
+
+        badgeFlag = FlagGet(FLAG_BADGE02_GET);
+        if (badgeFlag)
+            obedienceLevel = 30;
+        badgeFlag = FlagGet(FLAG_BADGE04_GET);
+        if (badgeFlag)
+            obedienceLevel = 50;
+        badgeFlag = FlagGet(FLAG_BADGE06_GET);
+        if (badgeFlag)
+            obedienceLevel = 70;
+    }
+
+    if (gBattleMons[gBattlerAttacker].level <= obedienceLevel)
+        return DISOBEDIENCE_OBEDIENT;
+    rnd = (Random() & 255);
+    calc = (gBattleMons[gBattlerAttacker].level + obedienceLevel) * rnd >> 8;
+    if (calc < obedienceLevel)
+        return DISOBEDIENCE_OBEDIENT;
+
+    // is not obedient
+    if (gCurrentMove == MOVE_RAGE)
+        gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_RAGE;
+    if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP && (gCurrentMove == MOVE_SNORE || gCurrentMove == MOVE_SLEEP_TALK))
+    {
+        gBattlescriptCurrInstr = BattleScript_IgnoresWhileAsleep;
+        return DISOBEDIENCE_IGNORED;
+    }
+
+    rnd = (Random() & 255);
+    calc = (gBattleMons[gBattlerAttacker].level + obedienceLevel) * rnd >> 8;
+    if (calc < obedienceLevel)
+    {
+        calc = CheckMoveLimitations(gBattlerAttacker, gBitTable[gCurrMovePos], MOVE_LIMITATIONS_ALL);
+        if (calc == ALL_MOVES_MASK) // all moves cannot be used
+        {
+            // Randomly select, then print a disobedient string
+            // B_MSG_LOAFING, B_MSG_WONT_OBEY, B_MSG_TURNED_AWAY, or B_MSG_PRETEND_NOT_NOTICE
+            gBattleCommunication[MULTISTRING_CHOOSER] = MOD(Random(), NUM_LOAF_STRINGS);
+            gBattlescriptCurrInstr = BattleScript_MoveUsedLoafingAround;
+            return DISOBEDIENCE_IGNORED;
+        }
+        else // use a random move
+        {
+            do
+            {
+                gCurrMovePos = gChosenMovePos = MOD(Random(), MAX_MON_MOVES);
+            } while (gBitTable[gCurrMovePos] & calc);
+
+            gCalledMove = gBattleMons[gBattlerAttacker].moves[gCurrMovePos];
+            gBattlescriptCurrInstr = BattleScript_IgnoresAndUsesRandomMove;
+            gBattlerTarget = GetMoveTarget(gCalledMove, NO_TARGET_OVERRIDE);
+            gHitMarker |= HITMARKER_DISOBEDIENT_MOVE;
+            return DISOBEDIENCE_OTHER;
+        }
+    }
+    else
+    {
+        obedienceLevel = gBattleMons[gBattlerAttacker].level - obedienceLevel;
+
+        calc = (Random() & 255);
+        if (calc < obedienceLevel && !(gBattleMons[gBattlerAttacker].status1 & STATUS1_ANY) && gBattleMons[gBattlerAttacker].ability != ABILITY_VITAL_SPIRIT && gBattleMons[gBattlerAttacker].ability != ABILITY_INSOMNIA)
+        {
+            // try putting asleep
+            int i;
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                if (gBattleMons[i].status2 & STATUS2_UPROAR)
+                    break;
+            }
+            if (i == gBattlersCount)
+            {
+                gBattlescriptCurrInstr = BattleScript_IgnoresAndFallsAsleep;
+                return DISOBEDIENCE_IGNORED;
+            }
+        }
+        calc -= obedienceLevel;
+        if (calc < obedienceLevel)
+        {
+            gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
+            gBattlerTarget = gBattlerAttacker;
+            gBattlescriptCurrInstr = BattleScript_IgnoresAndHitsItself;
+            gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+            return DISOBEDIENCE_OTHER;
+        }
+        else
+        {
+            // Randomly select, then print a disobedient string
+            // B_MSG_LOAFING, B_MSG_WONT_OBEY, B_MSG_TURNED_AWAY, or B_MSG_PRETEND_NOT_NOTICE
+            gBattleCommunication[MULTISTRING_CHOOSER] = MOD(Random(), NUM_LOAF_STRINGS);
+            gBattlescriptCurrInstr = BattleScript_MoveUsedLoafingAround;
+            return DISOBEDIENCE_IGNORED;
+        }
+    }
 }
