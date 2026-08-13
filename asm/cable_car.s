@@ -14,11 +14,6 @@
 
 
 
-	thumb_func_start nullsub_58
-nullsub_58: @ 0x08150840
-	bx lr
-	.align 2, 0
-	thumb_func_end nullsub_58
 
 	thumb_func_start sub_08150844
 sub_08150844: @ 0x08150844

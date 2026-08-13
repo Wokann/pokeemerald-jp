@@ -461,3 +461,7 @@ void AnimateGroundGoingDown(void)
     if (sCableCar->groundXOffset > 16)
         DrawNextGroundSegmentGoingDown();
 }
+
+void nullsub_58(void)
+{
+}
