@@ -8210,8 +8210,8 @@ gUnknown_856EAD0: @ 0x856EAD0
 gUnknown_856EC04: @ 0x856EC04
 	.incbin "baserom_jp.gba", 0x56ec04, 0xf4
 
-	.globl gUnknown_856ECF8
-gUnknown_856ECF8: @ 0x856ECF8
+	.globl gThoughtBubbleSpriteTemplate
+gThoughtBubbleSpriteTemplate: @ 0x856ECF8
 	.incbin "baserom_jp.gba", 0x56ecf8, 0x29c
 
 	.globl gUnknown_856EF94
@@ -11463,8 +11463,8 @@ gUnknown_85ACB08: @ 0x85ACB08
 gUnknown_85ACD28: @ 0x85ACD28
 	.incbin "baserom_jp.gba", 0x5acd28, 0x380
 
-	.globl gUnknown_85AD0A8
-gUnknown_85AD0A8: @ 0x85AD0A8
+	.globl sAffineAnims_Torment
+sAffineAnims_Torment: @ 0x85AD0A8
 	.incbin "baserom_jp.gba", 0x5ad0a8, 0xb0
 
 	.globl gUnknown_85AD158
