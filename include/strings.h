@@ -2052,6 +2052,9 @@ extern const u8 gText_JustOnePkmn[];
 
 // battle main
 extern const u8 gText_LinkStandby3[];
+extern const u8 gText_RecordBattleToPass[];
+extern const u8 gText_BattleYesNoChoice[];
+extern const u8 gText_BattleRecordedOnPass[];
 extern const u8 BattleFrontier_BattleTowerBattleRoom_Text_RecordCouldntBeSaved[];
 extern const u8 gText_Poison[];
 extern const u8 gText_Sleep[];

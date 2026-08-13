@@ -4426,7 +4426,7 @@ sub_0814023C: @ 0x0814023C
 	strh r1, [r0]
 	movs r0, #1
 	movs r1, #5
-	bl sub_08038E94
+	bl GetBattleBgTemplateData
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18
@@ -4435,7 +4435,7 @@ sub_0814023C: @ 0x0814023C
 	bl SetBgAttribute
 	movs r0, #2
 	movs r1, #5
-	bl sub_08038E94
+	bl GetBattleBgTemplateData
 	adds r2, r0, #0
 	lsls r2, r2, #0x18
 	lsrs r2, r2, #0x18

@@ -58,7 +58,8 @@ extern struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern void sub_08185CDC(void); // JP recorded-battle helper (US: RecordedBattle_ClearFrontierPassFlag)
 extern void sub_08184D04(void); // JP recorded-battle helper (US: RecordedBattle_SetTrainerInfo)
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
-extern void CB2_InitAskRecordBattle(void); // JP asm 0x08038F5C (US: same name)
+extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
+extern const struct BgTemplate gBattleBgTemplates[];
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
 
 static void CB2_InitBattleInternal(void);
@@ -69,6 +70,9 @@ static void CB2_HandleStartMultiBattle(void);
 static void CB2_HandleStartBattle(void);
 static void CB2_EndLinkBattle(void);
 static void EndLinkBattleInSteps(void);
+static void CB2_InitAskRecordBattle(void);
+static void CB2_AskRecordBattle(void);
+static void AskRecordBattle(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -1451,6 +1455,265 @@ static void EndLinkBattleInSteps(void)
             FreeBattleResources();
             FreeBattleSpritesData();
             FreeMonSpritesGfx();
+        }
+        break;
+    }
+}
+
+u32 GetBattleBgTemplateData(u8 arrayId, u8 caseId)
+{
+    u32 ret = 0;
+
+    switch (caseId)
+    {
+    case 0:
+        ret = gBattleBgTemplates[arrayId].bg;
+        break;
+    case 1:
+        ret = gBattleBgTemplates[arrayId].charBaseIndex;
+        break;
+    case 2:
+        ret = gBattleBgTemplates[arrayId].mapBaseIndex;
+        break;
+    case 3:
+        ret = gBattleBgTemplates[arrayId].screenSize;
+        break;
+    case 4:
+        ret = gBattleBgTemplates[arrayId].paletteMode;
+        break;
+    case 5: // Only this case is used
+        ret = gBattleBgTemplates[arrayId].priority;
+        break;
+    case 6:
+        ret = gBattleBgTemplates[arrayId].baseTile;
+        break;
+    }
+
+    return ret;
+}
+
+static void CB2_InitAskRecordBattle(void)
+{
+    s32 i;
+
+    SetHBlankCallback(NULL);
+    SetVBlankCallback(NULL);
+    CpuFill32(0, (void *)(VRAM), VRAM_SIZE);
+    ResetPaletteFade();
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+    gBattle_BG1_X = 0;
+    gBattle_BG1_Y = 0;
+    gBattle_BG2_X = 0;
+    gBattle_BG2_Y = 0;
+    gBattle_BG3_X = 0;
+    gBattle_BG3_Y = 0;
+    InitBattleBgsVideo();
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+    LoadBattleMenuWindowGfx();
+
+    for (i = 0; i < 2; i++)
+        LoadChosenBattleElement(i);
+
+    ResetSpriteData();
+    ResetTasks();
+    FreeAllSpritePalettes();
+    gReservedSpritePaletteCount = MAX_BATTLERS_COUNT;
+    SetVBlankCallback(VBlankCB_Battle);
+    SetMainCallback2(CB2_AskRecordBattle);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
+    gBattleCommunication[MULTIUSE_STATE] = 0;
+}
+
+static void CB2_AskRecordBattle(void)
+{
+    AskRecordBattle();
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
+    RunTasks();
+}
+
+// States for AskRecordBattle
+#define STATE_INIT             0
+#define STATE_LINK             1
+#define STATE_WAIT_LINK        2
+#define STATE_ASK_RECORD       3
+#define STATE_PRINT_YES_NO     4
+#define STATE_HANDLE_YES_NO    5
+#define STATE_RECORD_NO        6
+#define STATE_END_RECORD_NO    7
+#define STATE_WAIT_END         8
+#define STATE_END              9
+#define STATE_RECORD_YES      10
+#define STATE_RECORD_WAIT     11
+#define STATE_END_RECORD_YES  12
+
+static void AskRecordBattle(void)
+{
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case STATE_INIT:
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case STATE_LINK:
+        if (gMain.anyLinkBattlerHasFrontierPass && gReceivedRemoteLinkPlayers == 0)
+            CreateTask(Task_ReconnectWithLinkPlayers, 5);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case STATE_WAIT_LINK:
+        if (!FuncIsActiveTask(Task_ReconnectWithLinkPlayers))
+            gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case STATE_ASK_RECORD:
+        if (!gPaletteFade.active)
+        {
+            // "Would you like to record your battle on your FRONTIER PASS?"
+            sub_0814FA04(gText_RecordBattleToPass, B_WIN_MSG);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_PRINT_YES_NO:
+        if (!IsTextPrinterActive(B_WIN_MSG))
+        {
+            HandleBattleWindow(YESNOBOX_X_Y, 0);
+            sub_0814FA04(gText_BattleYesNoChoice, B_WIN_YESNO);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_HANDLE_YES_NO:
+        if (JOY_NEW(DPAD_UP))
+        {
+            if (gBattleCommunication[CURSOR_POSITION] != 0)
+            {
+                // Moved cursor onto Yes
+                PlaySE(SE_SELECT);
+                BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+                gBattleCommunication[CURSOR_POSITION] = 0;
+                BattleCreateYesNoCursorAt(0);
+            }
+        }
+        else if (JOY_NEW(DPAD_DOWN))
+        {
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                // Moved cursor onto No
+                PlaySE(SE_SELECT);
+                BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+                gBattleCommunication[CURSOR_POSITION] = 1;
+                BattleCreateYesNoCursorAt(1);
+            }
+        }
+        else if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[CURSOR_POSITION] == 0)
+            {
+                // Selected Yes
+                HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+                gBattleCommunication[1] = MoveRecordedBattleToSaveData();
+                gBattleCommunication[MULTIUSE_STATE] = STATE_RECORD_YES;
+            }
+            else
+            {
+                // Selected No
+                gBattleCommunication[MULTIUSE_STATE]++;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_RECORD_NO:
+        if (IsLinkTaskFinished() == TRUE)
+        {
+            HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+            if (gMain.anyLinkBattlerHasFrontierPass)
+            {
+                // Other battlers may be recording, wait for them
+                SetLinkStandbyCallback();
+                sub_0814FA04(gText_LinkStandby3, B_WIN_MSG);
+            }
+            gBattleCommunication[MULTIUSE_STATE]++; // STATE_END_RECORD_NO
+        }
+        break;
+    case STATE_WAIT_END:
+        if (--gBattleCommunication[1] == 0)
+        {
+            if (gMain.anyLinkBattlerHasFrontierPass && !gWirelessCommType)
+                SetCloseLinkCallback();
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_END:
+        if (!gMain.anyLinkBattlerHasFrontierPass || gWirelessCommType || gReceivedRemoteLinkPlayers != 1)
+        {
+            gMain.anyLinkBattlerHasFrontierPass = FALSE;
+            if (!gPaletteFade.active)
+            {
+                SetMainCallback2(gMain.savedCallback);
+                FreeBattleResources();
+                FreeBattleSpritesData();
+                FreeMonSpritesGfx();
+            }
+        }
+        break;
+    case STATE_RECORD_YES:
+        if (gBattleCommunication[1] == 1)
+        {
+            PlaySE(SE_SAVE);
+            TryGetStatusString(gText_BattleRecordedOnPass);
+            sub_0814FA04(gDisplayedStringBattle, B_WIN_MSG);
+            gBattleCommunication[1] = 128; // Delay
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        else
+        {
+            TryGetStatusString(BattleFrontier_BattleTowerBattleRoom_Text_RecordCouldntBeSaved);
+            sub_0814FA04(gDisplayedStringBattle, B_WIN_MSG);
+            gBattleCommunication[1] = 128; // Delay
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_RECORD_WAIT:
+        if (IsLinkTaskFinished() == TRUE && !IsTextPrinterActive(B_WIN_MSG) && --gBattleCommunication[1] == 0)
+        {
+            if (gMain.anyLinkBattlerHasFrontierPass)
+            {
+                SetLinkStandbyCallback();
+                sub_0814FA04(gText_LinkStandby3, B_WIN_MSG);
+            }
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case STATE_END_RECORD_YES:
+    case STATE_END_RECORD_NO:
+        if (!IsTextPrinterActive(B_WIN_MSG))
+        {
+            if (gMain.anyLinkBattlerHasFrontierPass)
+            {
+                if (IsLinkTaskFinished() == TRUE)
+                {
+                    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                    gBattleCommunication[1] = 32; // Delay
+                    gBattleCommunication[MULTIUSE_STATE] = STATE_WAIT_END;
+                }
+
+            }
+            else
+            {
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                gBattleCommunication[1] = 32; // Delay
+                gBattleCommunication[MULTIUSE_STATE] = STATE_WAIT_END;
+            }
         }
         break;
     }
