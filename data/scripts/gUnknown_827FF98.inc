@@ -6,4 +6,5 @@
 	bufferstdstring 0x0, 0x23F
 	removeobject_at 0x571E, 0x802
 	end 
-	.incbin "baserom_jp.gba", 0x27ffb0, 0x39
+	.string "{MUS_DUMMY}:$"
+	.incbin "baserom_jp.gba", 0x27ffb4, 0x35

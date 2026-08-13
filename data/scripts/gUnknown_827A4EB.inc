@@ -21,4 +21,7 @@
 	goto_if 0x2, 0x85726E8
 	bufferdecorationname 0x4, 0xFFE9
 	end 
-	.incbin "baserom_jp.gba", 0x27a531, 0x46
+	.string "{TRANSPARENT}ü$"
+	.string "{MUS_DUMMY}の{SE_M_ROCK_THROW}ぜ{LIGHT_GRAY}ぅぼ{DYNAMIC_COLOR4}{MUS_RG_FUCHSIA}{SE_RG_POKE_JUMP_SUCCESS}{MUS_DUMMY}{TRANSPARENT}{SE_SELECT}{SE_BANG}{SE_USE_ITEM}{RED}{MUS_RG_POKE_TOWER}tよキ{BLUE}ェ{RED}Ä$"
+	.string "{SE_USE_ITEM}ü$"
+	.incbin "baserom_jp.gba", 0x27a55a, 0x1d

@@ -14,4 +14,5 @@
 	compare_local_to_addr 0xD1, 0x31EC000
 	copybyte 0x20815CE, 0x20B0500
 	return 
-	.incbin "baserom_jp.gba", 0x28356e, 0x24
+	.string "ムホち{BLUE}{DYNAMIC_COLOR1}{LIGHT_RED}{SE_PC_ON}{SE_PC_LOGIN}{SE_FAINT}{MUS_DUMMY}$"
+	.incbin "baserom_jp.gba", 0x28357d, 0x15

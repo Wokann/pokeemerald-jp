@@ -3,4 +3,5 @@
 	loadbytefromaddr 0x9F001009
 	hideobject_at 0x7E73, 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x262e4c, 0x13
+	.string "\n"
+	.string "つ{GREEN}ま{RED}{SE_FAINT}ポケモ{SE_M_BUBBLE3}{B_COPY_VAR_2}{TRANSPARENT}{GREEN}⋯⋯$"

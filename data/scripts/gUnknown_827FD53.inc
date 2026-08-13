@@ -15,4 +15,5 @@
 	setworldmapflag 0x100
 	nop 
 	return 
-	.incbin "baserom_jp.gba", 0x27fd81, 0x26
+	.incbin "baserom_jp.gba", 0x27fd81, 0x21
+	.incbin "baserom_jp.gba", 0x27fda2, 0x5

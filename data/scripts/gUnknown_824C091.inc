@@ -5,4 +5,4 @@
 	getpartysize 
 	callstd 0x13
 	end 
-	.incbin "baserom_jp.gba", 0x24c0a2, 0xf
+	.string "る！{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}$"

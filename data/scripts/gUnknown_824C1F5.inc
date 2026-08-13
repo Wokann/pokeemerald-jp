@@ -1,3 +1,4 @@
 	.byte 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x24c1f7, 0x9
+	.string "\n"
+	.string "{B_COPY_VAR_2}{TRANSPARENT}{SE_A}{B_COPY_VAR_3}$"

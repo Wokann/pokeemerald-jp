@@ -4,4 +4,5 @@
 	gotostd 0x2
 	call 0x3FFFC0
 	end 
-	.incbin "baserom_jp.gba", 0x27a431, 0x3f
+	.incbin "baserom_jp.gba", 0x27a431, 0x36
+	.incbin "baserom_jp.gba", 0x27a467, 0x9

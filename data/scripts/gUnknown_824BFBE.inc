@@ -1,3 +1,4 @@
 	.byte 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x24bfc0, 0x26
+	.string "{SE_I}{LIGHT_RED}なじアピールを\n"
+	.string "つづ{LIGHT_BLUE}{SE_SHIP}がっ{GREEN}{SE_ICE_STAIRS}{DYNAMIC_COLOR2}れた！{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}$"

@@ -7,4 +7,4 @@
 	goto_if 0x0, 0x19290E0B
 	setorcopyvar 0x4500, 0x4103
 	end 
-	.incbin "baserom_jp.gba", 0x262f5f, 0x2
+	.string "？$"

@@ -3,4 +3,6 @@
 	gotostd 0x28
 	nop 
 	end 
-	.incbin "baserom_jp.gba", 0x27a47b, 0x2b
+	.string "ピtカ{BLUE}り{SE_RG_HELP_OPEN}{MUS_RG_PALLET}ピtカ{BLUE}り{MUS_RG_OAK_LAB}{MUS_RG_PALLET}ピtカ{BLUE}り{WHITE}{SE_PC_OFF}{DARK_GRAY}ピtカ{BLUE}り{WHITE}{SE_PC_ON}{RED}リた{LIGHT_GREEN}$"
+	.incbin "baserom_jp.gba", 0x27a4a3, 0x1
+	.incbin "baserom_jp.gba", 0x27a4a4, 0x2

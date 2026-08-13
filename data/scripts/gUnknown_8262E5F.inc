@@ -7,4 +7,4 @@
 	callstd_if 0x37, 0xC
 	setptrbyte 0x20, 0x2001429
 	end 
-	.incbin "baserom_jp.gba", 0x262e7e, 0x3
+	.string "な！$"

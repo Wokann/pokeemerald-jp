@@ -4,4 +4,4 @@
 	giveegg 0xAE9F
 	moveobjectoffscreen 0x16
 	returnram 
-	.incbin "baserom_jp.gba", 0x276fc7, 0xc
+	.string "っ{GREEN}{SE_ICE_STAIRS}{GREEN}{LIGHT_GREEN}の{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}た！$"

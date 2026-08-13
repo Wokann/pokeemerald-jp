@@ -4,4 +4,4 @@
 	setdoorclosed 0xFEB0, 0x2007
 	copyvar 0xB00, 0x1902
 	return 
-	.incbin "baserom_jp.gba", 0x262fa0, 0xd
+	.string "{SE_I}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR3}{SE_FAINT}ものだよ！$"

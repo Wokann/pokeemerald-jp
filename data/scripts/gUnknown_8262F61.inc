@@ -1,2 +1,3 @@
 	killscript 
-	.incbin "baserom_jp.gba", 0x262f62, 0x28
+	.string "ばら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}ポケモンず{GREEN}ん{SE_BOO}なり{DYNAMIC_COLOR6}{LIGHT_GRAY}だ\n"
+	.string "{DYNAMIC_COLOR6}ん{SE_PIN}よ{GREEN}ん{SE_SAVE}{DYNAMIC_COLOR3}{SE_SHIP}たまら{MUS_RG_GAME_FREAK}ね！$"

@@ -20,4 +20,9 @@
 	nop 
 	nop 
 	returnram 
-	.incbin "baserom_jp.gba", 0x27ec8a, 0xf9
+	.string "{TRANSPARENT}{SE_BANG}{DARK_GRAY}たぬキ{MUS_RG_FUCHSIA}{LIGHT_RED}{SE_BANG}ä$"
+	.string "{MUS_DUMMY}ä$"
+	.string "{SE_BANG}{SE_RG_DEOXYS_MOVE}{DYNAMIC_COLOR5}ぷyら{BLUE}{DYNAMIC_COLOR5}ぷyら{BLUE}{DYNAMIC_COLOR5}ぷyら{MUS_RG_FUCHSIA}クんキ{MUS_RG_FUCHSIA}{LIGHT_RED}{SE_PC_ON}m$"
+	.incbin "baserom_jp.gba", 0x27ecba, 0xaf
+	.string "{MUS_DUMMY}ä$"
+	.incbin "baserom_jp.gba", 0x27ed6d, 0x16

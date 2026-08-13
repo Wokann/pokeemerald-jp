@@ -3,4 +3,6 @@
 	fadescreen 0x27
 	gotostd_if 0x3, 0xC
 	returnram 
-	.incbin "baserom_jp.gba", 0x27fe13, 0x41
+	.string "{BLUE}の{SE_M_BONEMERANG}{PH_KIT_HELD}ヤをキ{MUS_RG_FUCHSIA}{LIGHT_RED}b$"
+	.string "s$"
+	.incbin "baserom_jp.gba", 0x27fe23, 0x31

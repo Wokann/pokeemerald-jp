@@ -7,4 +7,6 @@
 	addvar 0x828, 0x5503
 	cleartrainerflag 0x811
 	end 
-	.incbin "baserom_jp.gba", 0x281756, 0x43
+	.incbin "baserom_jp.gba", 0x281756, 0x38
+	.incbin "baserom_jp.gba", 0x28178e, 0x4
+	.incbin "baserom_jp.gba", 0x281792, 0x7

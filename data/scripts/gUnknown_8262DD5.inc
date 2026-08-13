@@ -7,4 +7,4 @@
 	gettime 
 	nop 
 	returnram 
-	.incbin "baserom_jp.gba", 0x262dee, 0x7
+	.string "{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}$"

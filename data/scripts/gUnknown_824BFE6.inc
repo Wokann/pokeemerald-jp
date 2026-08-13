@@ -1,3 +1,4 @@
 	.byte 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x24bfe8, 0x20
+	.string "{SE_A}{B_COPY_VAR_3}が\n"
+	.string "まわり{SE_BOO}とて{SE_SWITCH}{LIGHT_GRAY}{LIGHT_BLUE}た！{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}$"

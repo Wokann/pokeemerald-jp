@@ -17,4 +17,8 @@
 	nop 
 	goto 0x3F00B119
 	end 
-	.incbin "baserom_jp.gba", 0x28112d, 0x43
+	.incbin "baserom_jp.gba", 0x28112d, 0x19
+	.incbin "baserom_jp.gba", 0x281146, 0x2
+	.incbin "baserom_jp.gba", 0x281148, 0x11
+	.incbin "baserom_jp.gba", 0x281159, 0xf
+	.incbin "baserom_jp.gba", 0x281168, 0x8

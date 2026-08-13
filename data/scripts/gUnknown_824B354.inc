@@ -1,3 +1,4 @@
 	.byte 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x24b356, 0x19
+	.string "は\n"
+	.string "みんな{SE_WARP_IN}み{MUS_RG_CAUGHT_INTRO}た！{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}$"

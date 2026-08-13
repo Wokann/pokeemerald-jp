@@ -5,4 +5,4 @@
 	nop 
 	.byte 0x41
 	killscript 
-	.incbin "baserom_jp.gba", 0x24b32b, 0x2
+	.string "？$"

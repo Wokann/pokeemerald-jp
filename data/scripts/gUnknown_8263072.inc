@@ -9,4 +9,4 @@
 	bufferleadmonspeciesname 0x37
 	nop 
 	end 
-	.incbin "baserom_jp.gba", 0x26308f, 0x6
+	.string "たの{GREEN}⋯⋯$"

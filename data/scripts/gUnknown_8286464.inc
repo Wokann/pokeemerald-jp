@@ -10,4 +10,5 @@
 	bufferpartymonnick 0x5, 0x104
 	callstd_if 0x0, 0x4
 	end 
-	.incbin "baserom_jp.gba", 0x286485, 0x1c
+	.string "{DYNAMIC_COLOR4}{LIGHT_GRAY}ムホち{BLUE}{DYNAMIC_COLOR1}{MUS_RG_SURF}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
+	.incbin "baserom_jp.gba", 0x286496, 0xb

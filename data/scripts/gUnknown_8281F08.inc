@@ -60,4 +60,6 @@
 	compare_addr_to_local 0x7020857, 0xE
 	nop 
 	returnram 
-	.incbin "baserom_jp.gba", 0x281fb2, 0x3c
+	.string "{TRANSPARENT}:$"
+	.string "Ö$"
+	.incbin "baserom_jp.gba", 0x281fb7, 0x37

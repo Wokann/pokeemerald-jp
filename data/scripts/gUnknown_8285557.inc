@@ -1,2 +1,3 @@
 	return 
-	.incbin "baserom_jp.gba", 0x285558, 0x53
+	.string "ユャち{BLUE}{SE_SELECT}{SE_EXP}{MUS_DUMMY}ATら{BLUE}{SE_EXP}{SE_USE_ITEM}{DYNAMIC_COLOR1}キり{BLUE}{SE_EXP}{SE_PC_LOGIN}デごり{BLUE}{SE_EXP}{SE_PC_OFF}。ドら{BLUE}{SE_EXP}{SE_PC_ON}ア{LIGHT_GRAY}り{BLUE}{SE_EXP}{SE_SELECT}$"
+	.incbin "baserom_jp.gba", 0x28558b, 0x20

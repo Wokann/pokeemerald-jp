@@ -5,4 +5,4 @@
 	callnative 0xC0325FE
 	fadedefaultbgm 
 	return 
-	.incbin "baserom_jp.gba", 0x263106, 0x6
+	.string "{TRANSPARENT}なんだな$"

@@ -1,3 +1,4 @@
 	call_if 0x1F, 0x46001050
 	returnram 
-	.incbin "baserom_jp.gba", 0x262ead, 0x22
+	.string "ょで{DYNAMIC_COLOR3}{SE_WIN_OPEN}みつ{GREEN}ら{MUS_RG_GAME_FREAK}\n"
+	.string "ポケモン{SE_I}{DYNAMIC_COLOR3}つ{DYNAMIC_COLOR1}{SE_DOOR}{DYNAMIC_COLOR2}が{DYNAMIC_COLOR4}{DYNAMIC_COLOR3}{SE_WIN_OPEN}{MUS_RG_GAME_FREAK}ぞ！$"

@@ -17,4 +17,5 @@
 	setworldmapflag 0x400
 	call_if 0x2, 0x85721D8
 	end 
-	.incbin "baserom_jp.gba", 0x27e65f, 0x1f
+	.string "{RED}{SE_SHIP}ä$"
+	.incbin "baserom_jp.gba", 0x27e664, 0x1a

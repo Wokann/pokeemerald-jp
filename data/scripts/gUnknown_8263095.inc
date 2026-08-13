@@ -1,4 +1,6 @@
 	copylocal 0x7, 0x45
 	call_if 0x0, 0x36280210
 	return 
-	.incbin "baserom_jp.gba", 0x26309f, 0x28
+	.string "はっ{MUS_RG_PEWTER}{TRANSPARENT}{DYNAMIC_COLOR4}る\n"
+	.string "ポケモン{SE_SAVE}{DARK_GRAY}るら{MUS_RG_VICTORY_GYM_LEADER}\l"
+	.string "{DYNAMIC_COLOR6}{SE_A}チャンス{SE_WARP_IN}のが{DYNAMIC_COLOR2}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}にな！$"

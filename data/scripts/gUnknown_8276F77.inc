@@ -3,4 +3,4 @@
 	giveegg 0xAE9F
 	moveobjectoffscreen 0xFE16
 	return 
-	.incbin "baserom_jp.gba", 0x276f87, 0x10
+	.string "{RED}{GREEN}{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"

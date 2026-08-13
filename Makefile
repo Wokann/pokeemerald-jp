@@ -217,7 +217,7 @@ $(C_BUILDDIR)/link.o: src/link.c
 
 $(OBJ_DIR)/data/event_scripts.o: data/event_scripts.s baserom_jp.gba
 	@mkdir -p $(dir $@)
-	$(AS) $(ASFLAGS) -o $@ $<
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/data.o: data/data.s charmap.txt baserom_jp.gba
 	@mkdir -p $(dir $@)

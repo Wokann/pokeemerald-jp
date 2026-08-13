@@ -12,4 +12,9 @@
 	nop 
 	showcoinsbox 0x5, 0x3
 	end 
-	.incbin "baserom_jp.gba", 0x278fa7, 0x89
+	.incbin "baserom_jp.gba", 0x278fa7, 0x17
+	.incbin "baserom_jp.gba", 0x278fbe, 0x2
+	.incbin "baserom_jp.gba", 0x278fc0, 0x2
+	.incbin "baserom_jp.gba", 0x278fc2, 0x2e
+	.incbin "baserom_jp.gba", 0x278ff0, 0x2
+	.incbin "baserom_jp.gba", 0x278ff2, 0x3e

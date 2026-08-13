@@ -1,2 +1,3 @@
 	returnram 
-	.incbin "baserom_jp.gba", 0x247c7a, 0x1d
+	.string "ょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{LIGHT_RED}ま{SE_FLEE}{BLUE}だ{MUS_RG_VICTORY_WILD}\n"
+	.string "⋯⋯Bボタン{SE_NOTE_B}キャンセル$"

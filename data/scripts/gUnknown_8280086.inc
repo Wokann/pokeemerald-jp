@@ -7,4 +7,5 @@
 	setworldmapflag 0x200
 	nop 
 	end 
-	.incbin "baserom_jp.gba", 0x28009d, 0x10
+	.string "Rぁキ{BLUE}ォ{RED}ä$"
+	.incbin "baserom_jp.gba", 0x2800a5, 0x8

@@ -1,3 +1,4 @@
 	.byte 0xFD
 	end 
-	.incbin "baserom_jp.gba", 0x247cb7, 0x23
+	.string "にん{SE_NOTE_B}つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}はじめま{DYNAMIC_COLOR4}\n"
+	.string "Aボタン⋯{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}Bボタン⋯もどる$"

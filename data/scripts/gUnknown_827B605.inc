@@ -7,4 +7,5 @@
 	gotostd 0x14
 	nop 
 	end 
-	.incbin "baserom_jp.gba", 0x27b61c, 0x3a
+	.incbin "baserom_jp.gba", 0x27b61c, 0xa
+	.incbin "baserom_jp.gba", 0x27b626, 0x30

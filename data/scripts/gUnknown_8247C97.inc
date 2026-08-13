@@ -1,4 +1,5 @@
 	loadword 0x2B, 0x271050
 	vgoto_if 0x9A, 0x447E60
 	killscript 
-	.incbin "baserom_jp.gba", 0x247ca4, 0x11
+	.string "{DYNAMIC_COLOR4}む\n"
+	.string "⋯⋯Bボタン{SE_NOTE_B}キャンセル$"

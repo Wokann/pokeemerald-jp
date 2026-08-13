@@ -2,4 +2,5 @@
 	delay 0x6FD6
 	delay 0x8
 	end 
-	.incbin "baserom_jp.gba", 0x286ff7, 0x265
+	.string "{LIGHT_GRAY}{SE_O}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}3ャり{BLUE}{SE_E}{SE_WALL_HIT}{MUS_DUMMY}ぎミり{BLUE}ャキミり{BLUE}{SE_E}$"
+	.incbin "baserom_jp.gba", 0x287014, 0x248

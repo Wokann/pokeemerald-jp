@@ -10,4 +10,21 @@
 	nop 
 	nop 
 	returnram 
-	.incbin "baserom_jp.gba", 0x283196, 0x77
+	.string "{TRANSPARENT}$"
+	.string "ァ{RED}{DYNAMIC_COLOR5}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{DYNAMIC_COLOR5}$"
+	.string "ぅり{BLUE}{LIGHT_GRAY}ムホち{BLUE}{DYNAMIC_COLOR1}{LIGHT_RED}ゥ{LIGHT_GREEN}{SE_PC_OFF}{SE_NOT_EFFECTIVE}{MUS_DUMMY}$"
+	.incbin "baserom_jp.gba", 0x2831f6, 0x17

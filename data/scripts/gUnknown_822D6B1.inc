@@ -19,4 +19,5 @@
 	warp 0x1A1A, 0xFF, 0x1, 0x1
 	waitstate 
 	end 
-	.incbin "baserom_jp.gba", 0x22d70e, 0xa
+	.string "ぐはひ$"
+	.incbin "baserom_jp.gba", 0x22d712, 0x6

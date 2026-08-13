@@ -1,4 +1,4 @@
 	loadword 0x0, 0x826239C
 	callstd 0x3
 	end 
-	.incbin "baserom_jp.gba", 0x26239c, 0xe
+	.string "スプレーの{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}{LIGHT_GREEN}れた$"
