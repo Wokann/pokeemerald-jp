@@ -89,8 +89,8 @@ extern void BattleTurnPassed(void); // JP asm 0x0803B600 (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-sensitive, kept in asm)
 extern u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves); // JP asm 0x0803CB54 (register-sensitive, kept in asm)
-extern void CheckFocusPunch_ClearVarsBeforeTurnStarts(void); // JP asm 0x0803D334 (US: same name)
 void TurnValuesCleanUp(bool8 var0);
+extern void RunTurnActionsFunctions(void); // JP asm 0x0803D488 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -122,6 +122,7 @@ static void BattleIntroPrintPlayerSendsOut(void);
 static void BattleIntroPrintTrainerWantsToBattle(void);
 static void BattleIntroPrintWildMonAttacked(void);
 static void BattleIntroPrintOpponentSendsOut(void);
+static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -2323,6 +2324,37 @@ void SpecialStatusesClear(void)
         for (i = 0; i < sizeof(struct SpecialStatus); i++)
             dataPtr[i] = 0;
     }
+}
+
+static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
+{
+    if (!(gHitMarker & HITMARKER_RUN))
+    {
+        while (gBattleStruct->focusPunchBattlerId < gBattlersCount)
+        {
+            gActiveBattler = gBattlerAttacker = gBattleStruct->focusPunchBattlerId;
+            gBattleStruct->focusPunchBattlerId++;
+            if (gChosenMoveByBattler[gActiveBattler] == MOVE_FOCUS_PUNCH
+                && !(gBattleMons[gActiveBattler].status1 & STATUS1_SLEEP)
+                && !(gDisableStructs[gBattlerAttacker].truantCounter)
+                && !(gProtectStructs[gActiveBattler].noValidMoves))
+            {
+                BattleScriptExecute(BattleScript_FocusPunchSetUp);
+                return;
+            }
+        }
+    }
+
+    TryClearRageStatuses();
+    gCurrentTurnActionNumber = 0;
+    gCurrentActionFuncId = gActionsByTurnOrder[gCurrentTurnActionNumber];
+    gDynamicBasePower = 0;
+    gBattleStruct->dynamicMoveType = 0;
+    gBattleMainFunc = RunBattleScriptCommands; // JP: uses RunBattleScriptCommands @ 0x0803D45C (US: RunTurnActionsFunctions)
+    gBattleCommunication[3] = 0;
+    gBattleCommunication[4] = 0;
+    gBattleScripting.multihitMoveEffect = 0;
+    gBattleResources->battleScriptsStack->size = 0;
 }
 
 
