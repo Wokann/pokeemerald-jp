@@ -45,6 +45,7 @@ sStartedPokeBallTask = ABSOLUTE(0x020229B8);
 gBattlePartyCurrentOrder = ABSOLUTE(0x0203CBCC);
 gBattleMons = ABSOLUTE(0x02023D28);
 gBattlerPartyIndexes = ABSOLUTE(0x02023D12);
+gRecordedBattleMultiplayerId = ABSOLUTE(0x0203C480);
 gBattlerPositions = ABSOLUTE(0x02023D1A);
 gBattleCommunication = ABSOLUTE(0x02023FD6);
 gActiveBattler = ABSOLUTE(0x02023D08);
