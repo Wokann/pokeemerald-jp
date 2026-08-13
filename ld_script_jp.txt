@@ -3726,6 +3726,8 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setmultihitcounter);
         src/battle_script_commands.o(.text.Cmd_initmultihitstring);
         src/battle_script_commands.o(.text.TryDoForceSwitchOut);
+        src/battle_script_commands.o(.text.Cmd_forcerandomswitch);
+        src/battle_script_commands.o(.text.Cmd_tryconversiontypechange);
         asm/battle_script_commands.o(.text.atk7D_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

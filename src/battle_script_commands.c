@@ -1464,6 +1464,9 @@ static void Cmd_confuseifrepeatingattackends(void);
 static void Cmd_setmultihitcounter(void);
 static void Cmd_initmultihitstring(void);
 bool8 TryDoForceSwitchOut(void);
+void sub_081B8B20(u8 battler, u8 slot, u8 slot2); // JP SwitchPartyOrderLinkMulti
+static void Cmd_forcerandomswitch(void);
+static void Cmd_tryconversiontypechange(void);
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 void sub_0814FA04(const u8 *text, u8 windowId);
@@ -6356,4 +6359,269 @@ bool8 TryDoForceSwitchOut(void)
 
     gBattlescriptCurrInstr = BattleScript_SuccessForceOut;
     return TRUE;
+}
+
+static void Cmd_forcerandomswitch(void)
+{
+    s32 i;
+    s32 battler1PartyId = 0;
+    s32 battler2PartyId = 0;
+
+    s32 firstMonId;
+    s32 lastMonId = 0;
+    s32 monsCount;
+    struct Pokemon *party = NULL;
+    s32 validMons = 0;
+    s32 minNeeded;
+
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER))
+    {
+        if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
+            party = gPlayerParty;
+        else
+            party = gEnemyParty;
+
+        if ((gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER && gBattleTypeFlags & BATTLE_TYPE_LINK)
+            || (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER && gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK)
+            || (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER))
+        {
+            if ((gBattlerTarget & BIT_FLANK) != B_FLANK_LEFT)
+            {
+                firstMonId = PARTY_SIZE / 2;
+                #ifdef BUGFIX
+                lastMonId = PARTY_SIZE - 1;
+                #else
+                lastMonId = PARTY_SIZE;
+                #endif
+            }
+            else
+            {
+                firstMonId = 0;
+                #ifdef BUGFIX
+                lastMonId = PARTY_SIZE / 2 - 1;
+                #else
+                lastMonId = PARTY_SIZE / 2;
+                #endif
+            }
+            monsCount = PARTY_SIZE / 2;
+            minNeeded = 1;
+            battler2PartyId = gBattlerPartyIndexes[gBattlerTarget];
+            battler1PartyId = gBattlerPartyIndexes[BATTLE_PARTNER(gBattlerTarget)];
+        }
+        else if ((gBattleTypeFlags & BATTLE_TYPE_MULTI && gBattleTypeFlags & BATTLE_TYPE_LINK)
+                 || (gBattleTypeFlags & BATTLE_TYPE_MULTI && gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK))
+        {
+            if (GetLinkTrainerFlankId(GetBattlerMultiplayerId(gBattlerTarget)) == B_FLANK_RIGHT)
+            {
+                firstMonId = PARTY_SIZE / 2;
+                #ifdef BUGFIX
+                lastMonId = PARTY_SIZE - 1;
+                #else
+                lastMonId = PARTY_SIZE;
+                #endif
+            }
+            else
+            {
+                firstMonId = 0;
+                #ifdef BUGFIX
+                lastMonId = PARTY_SIZE / 2 - 1;
+                #else
+                lastMonId = PARTY_SIZE / 2;
+                #endif
+            }
+            monsCount = PARTY_SIZE / 2;
+            minNeeded = 1;
+            battler2PartyId = gBattlerPartyIndexes[gBattlerTarget];
+            battler1PartyId = gBattlerPartyIndexes[BATTLE_PARTNER(gBattlerTarget)];
+        }
+        else if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+        {
+            if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
+            {
+                firstMonId = 0;
+                #ifdef BUGFIX
+                lastMonId = PARTY_SIZE - 1;
+                #else
+                lastMonId = PARTY_SIZE;
+                #endif
+                monsCount = PARTY_SIZE;
+                minNeeded = 2; // since there are two opponents, it has to be a double battle
+            }
+            else
+            {
+                if ((gBattlerTarget & BIT_FLANK) != B_FLANK_LEFT)
+                {
+                    firstMonId = PARTY_SIZE / 2;
+                    #ifdef BUGFIX
+                    lastMonId = PARTY_SIZE - 1;
+                    #else
+                    lastMonId = PARTY_SIZE;
+                    #endif
+                }
+                else
+                {
+                    firstMonId = 0;
+                    #ifdef BUGFIX
+                    lastMonId = PARTY_SIZE / 2 - 1;
+                    #else
+                    lastMonId = PARTY_SIZE / 2;
+                    #endif
+                }
+                monsCount = PARTY_SIZE / 2;
+                minNeeded = 1;
+            }
+            battler2PartyId = gBattlerPartyIndexes[gBattlerTarget];
+            battler1PartyId = gBattlerPartyIndexes[BATTLE_PARTNER(gBattlerTarget)];
+        }
+        else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        {
+            firstMonId = 0;
+            #ifdef BUGFIX
+            lastMonId = PARTY_SIZE - 1;
+            #else
+            lastMonId = PARTY_SIZE;
+            #endif
+            monsCount = PARTY_SIZE;
+            minNeeded = 2;
+            battler2PartyId = gBattlerPartyIndexes[gBattlerTarget];
+            battler1PartyId = gBattlerPartyIndexes[BATTLE_PARTNER(gBattlerTarget)];
+        }
+        else
+        {
+            firstMonId = 0;
+            #ifdef BUGFIX
+            lastMonId = PARTY_SIZE - 1;
+            #else
+            lastMonId = PARTY_SIZE;
+            #endif
+            monsCount = PARTY_SIZE;
+            minNeeded = 1;
+            battler2PartyId = gBattlerPartyIndexes[gBattlerTarget]; // there is only one Pokémon out in single battles
+            battler1PartyId = gBattlerPartyIndexes[gBattlerTarget];
+        }
+
+        for (i = firstMonId; i < lastMonId; i++)
+        {
+            if (GetMonData(&party[i], MON_DATA_SPECIES) != SPECIES_NONE
+             && !GetMonData(&party[i], MON_DATA_IS_EGG)
+             && GetMonData(&party[i], MON_DATA_HP) != 0)
+             {
+                 validMons++;
+             }
+        }
+
+        if (validMons <= minNeeded)
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+        else
+        {
+            if (TryDoForceSwitchOut())
+            {
+                do
+                {
+                    do
+                    {
+                        i = Random() % monsCount;
+                        i += firstMonId;
+                    }
+                    while (i == battler2PartyId || i == battler1PartyId);
+                } while (GetMonData(&party[i], MON_DATA_SPECIES) == SPECIES_NONE
+                       || GetMonData(&party[i], MON_DATA_IS_EGG) == TRUE
+                       || GetMonData(&party[i], MON_DATA_HP) == 0); //should be one while loop, but that doesn't match.
+        // Bug: If the opponent uses forced switchout moves in a Multi Battle, the player side party
+        //      might get the order messed up where the mons appear in the wrong slots of the party screen.
+        //      This causes a hardlock when all mons on the player side are knocked out and the player
+        //      can't select their mon that's on the partner side of the party screen.
+        //      To fix this, the below code is moved inside the 'if (TryDoForceSwitchOut())' block by moving the brace further down.
+        #ifndef BUGFIX
+            }
+        #endif
+            *(gBattleStruct->monToSwitchIntoId + gBattlerTarget) = i;
+
+            if (!IsMultiBattle())
+                SwitchPartyOrder(gBattlerTarget);
+
+            if ((gBattleTypeFlags & BATTLE_TYPE_LINK && gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
+                || (gBattleTypeFlags & BATTLE_TYPE_LINK && gBattleTypeFlags & BATTLE_TYPE_MULTI)
+                || (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK && gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
+                || (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK && gBattleTypeFlags & BATTLE_TYPE_MULTI))
+            {
+                sub_081B8B20(gBattlerTarget, i, 0);
+                sub_081B8B20(BATTLE_PARTNER(gBattlerTarget), i, 1);
+            }
+
+            if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
+                SwitchPartyOrderInGameMulti(gBattlerTarget, i);
+        #ifdef BUGFIX
+            }
+        #endif
+        }
+    }
+
+    else
+    {
+        TryDoForceSwitchOut();
+    }
+}
+
+static void Cmd_tryconversiontypechange(void)
+{
+    u8 validMoves = 0;
+    u8 moveChecked;
+    u8 moveType;
+
+    while (validMoves < MAX_MON_MOVES)
+    {
+        if (gBattleMons[gBattlerAttacker].moves[validMoves] == MOVE_NONE)
+            break;
+
+        validMoves++;
+    }
+
+    for (moveChecked = 0; moveChecked < validMoves; moveChecked++)
+    {
+        moveType = gBattleMoves[gBattleMons[gBattlerAttacker].moves[moveChecked]].type;
+
+        if (moveType == TYPE_MYSTERY)
+        {
+            if (IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_GHOST))
+                moveType = TYPE_GHOST;
+            else
+                moveType = TYPE_NORMAL;
+        }
+        if (moveType != gBattleMons[gBattlerAttacker].types[0]
+            && moveType != gBattleMons[gBattlerAttacker].types[1])
+        {
+            break;
+        }
+    }
+
+    if (moveChecked == validMoves)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        do
+        {
+            while ((moveChecked = MOD(Random(), MAX_MON_MOVES)) >= validMoves);
+
+            moveType = gBattleMoves[gBattleMons[gBattlerAttacker].moves[moveChecked]].type;
+
+            if (moveType == TYPE_MYSTERY)
+            {
+                if (IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_GHOST))
+                    moveType = TYPE_GHOST;
+                else
+                    moveType = TYPE_NORMAL;
+            }
+        }
+        while (moveType == gBattleMons[gBattlerAttacker].types[0] || moveType == gBattleMons[gBattlerAttacker].types[1]);
+
+        SET_BATTLER_TYPE(gBattlerAttacker, moveType);
+        PREPARE_TYPE_BUFFER(gBattleTextBuff1, moveType);
+
+        gBattlescriptCurrInstr += 5;
+    }
 }
