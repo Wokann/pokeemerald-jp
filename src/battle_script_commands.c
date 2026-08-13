@@ -1480,6 +1480,9 @@ static void Cmd_setfocusenergy(void);
 static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
 static void Cmd_mimicattackcopy(void);
+#define METRONOME_FORBIDDEN_END         0xFFFF
+extern const u16 sMovesForbiddenToCopy[];
+static void Cmd_metronome(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7062,6 +7065,47 @@ static void Cmd_mimicattackcopy(void)
         else
         {
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+    }
+}
+
+static void Cmd_metronome(void)
+{
+    while (TRUE)
+    {
+        s32 i;
+
+    #if MOVES_COUNT < 512
+        // Original GF method of move selection is to pick a random
+        // number between 1-511. 355-511 are not valid moves, so if it
+        // picks in this range it retries. If MOVES_COUNT exceeds 511 we
+        // instead use a simpler solution.
+        gCurrentMove = (Random() & 0x1FF) + 1;
+        if (gCurrentMove >= MOVES_COUNT)
+            continue;
+    #else
+        // Just pick a valid move value (between 1 and MOVES_COUNT-1)
+        gCurrentMove = (Random() % (MOVES_COUNT - 1)) + 1;
+    #endif
+
+        for (i = 0; i < MAX_MON_MOVES; i++); // ?
+
+        i = -1;
+        while (TRUE)
+        {
+            i++;
+            if (sMovesForbiddenToCopy[i] == gCurrentMove)
+                break;
+            if (sMovesForbiddenToCopy[i] == METRONOME_FORBIDDEN_END)
+                break;
+        }
+
+        if (sMovesForbiddenToCopy[i] == METRONOME_FORBIDDEN_END)
+        {
+            gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
+            gBattlescriptCurrInstr = gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect];
+            gBattlerTarget = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
+            return;
         }
     }
 }
