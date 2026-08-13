@@ -1151,3 +1151,236 @@ static void Cmd_datahpupdate(void)
     }
     gBattlescriptCurrInstr += 2;
 }
+
+static void Cmd_critmessage(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        if (gCritMultiplier == 2 && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+        {
+            PrepareStringBattle(STRINGID_CRITICALHIT, gBattlerAttacker);
+            gBattleCommunication[MSG_DISPLAY] = 1;
+        }
+        gBattlescriptCurrInstr++;
+    }
+}
+
+static void Cmd_effectivenesssound(void)
+{
+    if (gBattleControllerExecFlags)
+        return;
+
+    gActiveBattler = gBattlerTarget;
+    if (!(gMoveResultFlags & MOVE_RESULT_MISSED))
+    {
+        switch (gMoveResultFlags & (u8)(~MOVE_RESULT_MISSED))
+        {
+        case MOVE_RESULT_SUPER_EFFECTIVE:
+            BtlController_EmitPlaySE(B_COMM_TO_CONTROLLER, SE_SUPER_EFFECTIVE);
+            MarkBattlerForControllerExec(gActiveBattler);
+            break;
+        case MOVE_RESULT_NOT_VERY_EFFECTIVE:
+            BtlController_EmitPlaySE(B_COMM_TO_CONTROLLER, SE_NOT_EFFECTIVE);
+            MarkBattlerForControllerExec(gActiveBattler);
+            break;
+        case MOVE_RESULT_DOESNT_AFFECT_FOE:
+        case MOVE_RESULT_FAILED:
+            // no sound
+            break;
+        case MOVE_RESULT_FOE_ENDURED:
+        case MOVE_RESULT_ONE_HIT_KO:
+        case MOVE_RESULT_FOE_HUNG_ON:
+        default:
+            if (gMoveResultFlags & MOVE_RESULT_SUPER_EFFECTIVE)
+            {
+                BtlController_EmitPlaySE(B_COMM_TO_CONTROLLER, SE_SUPER_EFFECTIVE);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+            else if (gMoveResultFlags & MOVE_RESULT_NOT_VERY_EFFECTIVE)
+            {
+                BtlController_EmitPlaySE(B_COMM_TO_CONTROLLER, SE_NOT_EFFECTIVE);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+            else if (!(gMoveResultFlags & (MOVE_RESULT_DOESNT_AFFECT_FOE | MOVE_RESULT_FAILED)))
+            {
+                BtlController_EmitPlaySE(B_COMM_TO_CONTROLLER, SE_EFFECTIVE);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+            break;
+        }
+    }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_resultmessage(void)
+{
+    u32 stringId = 0;
+
+    if (gBattleControllerExecFlags)
+        return;
+
+    if (gMoveResultFlags & MOVE_RESULT_MISSED && (!(gMoveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE) || gBattleCommunication[MISS_TYPE] > B_MSG_AVOIDED_ATK))
+    {
+        stringId = gMissStringIds[gBattleCommunication[MISS_TYPE]];
+        gBattleCommunication[MSG_DISPLAY] = 1;
+    }
+    else
+    {
+        gBattleCommunication[MSG_DISPLAY] = 1;
+        switch (gMoveResultFlags & (u8)(~MOVE_RESULT_MISSED))
+        {
+        case MOVE_RESULT_SUPER_EFFECTIVE:
+            stringId = STRINGID_SUPEREFFECTIVE;
+            break;
+        case MOVE_RESULT_NOT_VERY_EFFECTIVE:
+            stringId = STRINGID_NOTVERYEFFECTIVE;
+            break;
+        case MOVE_RESULT_ONE_HIT_KO:
+            stringId = STRINGID_ONEHITKO;
+            break;
+        case MOVE_RESULT_FOE_ENDURED:
+            stringId = STRINGID_PKMNENDUREDHIT;
+            break;
+        case MOVE_RESULT_FAILED:
+            stringId = STRINGID_BUTITFAILED;
+            break;
+        case MOVE_RESULT_DOESNT_AFFECT_FOE:
+            stringId = STRINGID_ITDOESNTAFFECT;
+            break;
+        case MOVE_RESULT_FOE_HUNG_ON:
+            gLastUsedItem = gBattleMons[gBattlerTarget].item;
+            gPotentialItemEffectBattler = gBattlerTarget;
+            gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
+            BattleScriptPushCursor();
+            gBattlescriptCurrInstr = BattleScript_FocusBandActivates;
+            return;
+        default:
+            if (gMoveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE)
+            {
+                stringId = STRINGID_ITDOESNTAFFECT;
+            }
+            else if (gMoveResultFlags & MOVE_RESULT_ONE_HIT_KO)
+            {
+                gMoveResultFlags &= ~MOVE_RESULT_ONE_HIT_KO;
+                gMoveResultFlags &= ~MOVE_RESULT_SUPER_EFFECTIVE;
+                gMoveResultFlags &= ~MOVE_RESULT_NOT_VERY_EFFECTIVE;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_OneHitKOMsg;
+                return;
+            }
+            else if (gMoveResultFlags & MOVE_RESULT_FOE_ENDURED)
+            {
+                gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_EnduredMsg;
+                return;
+            }
+            else if (gMoveResultFlags & MOVE_RESULT_FOE_HUNG_ON)
+            {
+                gLastUsedItem = gBattleMons[gBattlerTarget].item;
+                gPotentialItemEffectBattler = gBattlerTarget;
+                gMoveResultFlags &= ~(MOVE_RESULT_FOE_ENDURED | MOVE_RESULT_FOE_HUNG_ON);
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_FocusBandActivates;
+                return;
+            }
+            else if (gMoveResultFlags & MOVE_RESULT_FAILED)
+            {
+                stringId = STRINGID_BUTITFAILED;
+            }
+            else
+            {
+                gBattleCommunication[MSG_DISPLAY] = 0;
+            }
+        }
+    }
+
+    if (stringId)
+        PrepareStringBattle(stringId, gBattlerAttacker);
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_printstring(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        u16 var = T2_READ_16(gBattlescriptCurrInstr + 1);
+        PrepareStringBattle(var, gBattlerAttacker);
+        gBattlescriptCurrInstr += 3;
+        gBattleCommunication[MSG_DISPLAY] = 1;
+    }
+}
+
+static void Cmd_printselectionstring(void)
+{
+    gActiveBattler = gBattlerAttacker;
+
+    BtlController_EmitPrintSelectionString(B_COMM_TO_CONTROLLER, T2_READ_16(gBattlescriptCurrInstr + 1));
+    MarkBattlerForControllerExec(gActiveBattler);
+
+    gBattlescriptCurrInstr += 3;
+    gBattleCommunication[MSG_DISPLAY] = 1;
+}
+
+static void Cmd_waitmessage(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        if (!gBattleCommunication[MSG_DISPLAY])
+        {
+            gBattlescriptCurrInstr += 3;
+        }
+        else
+        {
+            u16 toWait = T2_READ_16(gBattlescriptCurrInstr + 1);
+            if (++gPauseCounterBattle >= toWait)
+            {
+                gPauseCounterBattle = 0;
+                gBattlescriptCurrInstr += 3;
+                gBattleCommunication[MSG_DISPLAY] = 0;
+            }
+        }
+    }
+}
+
+static void Cmd_printfromtable(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        const u16 *ptr = (const u16 *) T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        ptr += gBattleCommunication[MULTISTRING_CHOOSER];
+
+        PrepareStringBattle(*ptr, gBattlerAttacker);
+
+        gBattlescriptCurrInstr += 5;
+        gBattleCommunication[MSG_DISPLAY] = 1;
+    }
+}
+
+static void Cmd_printselectionstringfromtable(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        const u16 *ptr = (const u16 *) T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        ptr += gBattleCommunication[MULTISTRING_CHOOSER];
+
+        gActiveBattler = gBattlerAttacker;
+        BtlController_EmitPrintSelectionString(B_COMM_TO_CONTROLLER, *ptr);
+        MarkBattlerForControllerExec(gActiveBattler);
+
+        gBattlescriptCurrInstr += 5;
+        gBattleCommunication[MSG_DISPLAY] = 1;
+    }
+}
+
+u8 GetBattlerTurnOrderNum(u8 battler)
+{
+    s32 i;
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (gBattlerByTurnOrder[i] == battler)
+            break;
+    }
+    return i;
+}
