@@ -1564,6 +1564,7 @@ static void Cmd_getsecretpowereffect(void);
 static void Cmd_pickup(void);
 static void Cmd_docastformchangeanimation(void);
 static void Cmd_trycastformdatachange(void);
+static void Cmd_settypebasedhalvers(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8948,4 +8949,33 @@ static void Cmd_trycastformdatachange(void)
         BattleScriptPushCursorAndCallback(BattleScript_CastformChange);
         *(&gBattleStruct->formToChangeInto) = form - 1;
     }
+}
+
+static void Cmd_settypebasedhalvers(void)
+{
+    bool8 worked = FALSE;
+
+    if (gBattleMoves[gCurrentMove].effect == EFFECT_MUD_SPORT)
+    {
+        if (!(gStatuses3[gBattlerAttacker] & STATUS3_MUDSPORT))
+        {
+            gStatuses3[gBattlerAttacker] |= STATUS3_MUDSPORT;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEAKEN_ELECTRIC;
+            worked = TRUE;
+        }
+    }
+    else // Water Sport
+    {
+        if (!(gStatuses3[gBattlerAttacker] & STATUS3_WATERSPORT))
+        {
+            gStatuses3[gBattlerAttacker] |= STATUS3_WATERSPORT;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEAKEN_FIRE;
+            worked = TRUE;
+        }
+    }
+
+    if (worked)
+        gBattlescriptCurrInstr += 5;
+    else
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
 }
