@@ -4785,6 +4785,7 @@ SECTIONS {
         src/cable_car.o(.text.SpriteCB_HikerGoingDown);
         src/cable_car.o(.text.SetBgRegs);
         src/cable_car.o(.text.LoadCableCarSprites);
+        src/cable_car.o(.text.BufferNextGroundSegment);
         asm/cable_car.o(.text.cable_car_mid);
         src/cable_car.o(.text.AnimateGroundGoingUp);
         src/cable_car.o(.text.AnimateGroundGoingDown);

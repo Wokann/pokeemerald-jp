@@ -816,3 +816,22 @@ void LoadCableCarSprites(void)
         }
     }
 }
+
+void BufferNextGroundSegment(void)
+{
+    u8 i, j, k;
+    u8 offset;
+
+    for (i = 0, k = 0, offset = 0x24 * (sCableCar->groundTilemapOffset + 2); i < 3; i++)
+    {
+        for (j = 0; j < ARRAY_COUNT(sCableCar->groundTileBuffer[0]); j++)
+        {
+            sCableCar->groundTileBuffer[i][j] = sCableCar->groundTilemap[offset++];
+            sCableCar->groundTileBuffer[i + 3][j] = sCableCar->groundTilemap[k];
+            sCableCar->groundTileBuffer[i + 6][j] = (sCableCar->groundTilemap + 0x24)[k];
+            k++;
+        }
+    }
+
+    sCableCar->groundTilemapOffset = (sCableCar->groundTilemapOffset + 1) % 3;
+}
