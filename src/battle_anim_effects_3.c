@@ -48,6 +48,11 @@ static void AnimTask_RolePlaySilhouette_Step1(u8 taskId);
 static void AnimTask_RolePlaySilhouette_Step2(u8 taskId);
 static void AnimTask_AcidArmor_Step(u8 taskId);
 static void AnimTask_DeepInhale_Step(u8 taskId);
+static void InitYawnCloudPosition(struct Sprite *sprite, s16 startX, s16 startY, s16 destX, s16 destY, u16 duration);
+static void UpdateYawnCloudPosition(struct Sprite *sprite);
+static void AnimYawnCloud(struct Sprite *sprite);
+static void AnimYawnCloud_Step(struct Sprite *sprite);
+static void AnimSmokeBallEscapeCloud(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1782,4 +1787,67 @@ static void AnimTask_DeepInhale_Step(u8 taskId)
 
     if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
         DestroyAnimVisualTask(taskId);
+}
+
+static void InitYawnCloudPosition(struct Sprite *sprite, s16 startX, s16 startY, s16 destX, s16 destY, u16 duration)
+{
+    sprite->x = startX;
+    sprite->y = startY;
+    sprite->data[4] = startX << 4;
+    sprite->data[5] = startY << 4;
+    sprite->data[6] = ((destX - startX) << 4) / duration;
+    sprite->data[7] = ((destY - startY) << 4) / duration;
+}
+
+static void UpdateYawnCloudPosition(struct Sprite *sprite)
+{
+    sprite->data[4] += sprite->data[6];
+    sprite->data[5] += sprite->data[7];
+    sprite->x = sprite->data[4] >> 4;
+    sprite->y = sprite->data[5] >> 4;
+}
+
+static void AnimYawnCloud(struct Sprite *sprite)
+{
+    s16 destX = sprite->x;
+    s16 destY = sprite->y;
+
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    StartSpriteAffineAnim(sprite, gBattleAnimArgs[0]);
+    InitYawnCloudPosition(sprite, sprite->x, sprite->y, destX, destY, 64);
+    sprite->data[0] = 0;
+    sprite->callback = AnimYawnCloud_Step;
+}
+
+static void AnimYawnCloud_Step(struct Sprite *sprite)
+{
+    int index;
+
+    sprite->data[0]++;
+    index = (sprite->data[0] * 8) & 0xFF;
+    UpdateYawnCloudPosition(sprite);
+    sprite->y2 = Sin(index, 8);
+    if (sprite->data[0] > 58)
+    {
+        if (++sprite->data[1] > 1)
+        {
+            sprite->data[1] = 0;
+            sprite->data[2]++;
+            sprite->invisible = sprite->data[2] & 1;
+            if (sprite->data[2] > 3)
+                DestroySpriteAndMatrix(sprite);
+        }
+    }
+}
+
+static void AnimSmokeBallEscapeCloud(struct Sprite *sprite)
+{
+    sprite->data[0] = gBattleAnimArgs[3];
+    StartSpriteAffineAnim(sprite, gBattleAnimArgs[0]);
+    if (GetBattlerSide(gBattleAnimTarget) != B_SIDE_PLAYER)
+        gBattleAnimArgs[1] = -gBattleAnimArgs[1];
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
+    sprite->callback = DestroyAnimSpriteAfterTimer;
 }

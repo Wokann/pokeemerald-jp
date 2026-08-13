@@ -559,8 +559,8 @@ _0810EB0C:
 _0810EB14: .4byte 0x020205AC
 	thumb_func_end sub_0810EA9C
 
-	thumb_func_start sub_0810EB18
-sub_0810EB18: @ 0x0810EB18
+	thumb_func_start DestroyAnimSpriteAfterTimer
+DestroyAnimSpriteAfterTimer: @ 0x0810EB18
 	push {r4, lr}
 	adds r4, r0, #0
 	ldrh r0, [r4, #0x2e]
@@ -598,7 +598,7 @@ _0810EB58:
 	bx r0
 	.align 2, 0
 _0810EB60: .4byte 0x0203809E
-	thumb_func_end sub_0810EB18
+	thumb_func_end DestroyAnimSpriteAfterTimer
 
 	thumb_func_start sub_0810EB64
 sub_0810EB64: @ 0x0810EB64

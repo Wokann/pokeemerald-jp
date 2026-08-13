@@ -4934,6 +4934,11 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_AcidArmor_Step);
         src/battle_anim_effects_3.o(.text.AnimTask_DeepInhale);
         src/battle_anim_effects_3.o(.text.AnimTask_DeepInhale_Step);
+        src/battle_anim_effects_3.o(.text.InitYawnCloudPosition);
+        src/battle_anim_effects_3.o(.text.UpdateYawnCloudPosition);
+        src/battle_anim_effects_3.o(.text.AnimYawnCloud);
+        src/battle_anim_effects_3.o(.text.AnimYawnCloud_Step);
+        src/battle_anim_effects_3.o(.text.AnimSmokeBallEscapeCloud);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
