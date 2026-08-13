@@ -3409,6 +3409,8 @@ SECTIONS {
         src/battle_util.o(.text.HandleFaintedMonActions);
         src/battle_util.o(.text.TryClearRageStatuses);
         src/battle_util.o(.text.AtkCanceller_UnableToUseMove);
+        src/battle_util.o(.text.HasNoMonsToSwitch);
+        src/battle_util.o(.text.CastformDataTypeChange);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
