@@ -2636,6 +2636,34 @@ void HandleAction_NothingIsFainted(void)
                     | HITMARKER_CHARGING | HITMARKER_NEVER_SET);
 }
 
+void HandleAction_ActionFinished(void)
+{
+    *(gBattleStruct->monToSwitchIntoId + gBattlerByTurnOrder[gCurrentTurnActionNumber]) = PARTY_SIZE;
+    gCurrentTurnActionNumber++;
+    gCurrentActionFuncId = gActionsByTurnOrder[gCurrentTurnActionNumber];
+    SpecialStatusesClear();
+    gHitMarker &= ~(HITMARKER_DESTINYBOND | HITMARKER_IGNORE_SUBSTITUTE | HITMARKER_ATTACKSTRING_PRINTED
+                    | HITMARKER_NO_PPDEDUCT | HITMARKER_STATUS_ABILITY_EFFECT | HITMARKER_IGNORE_ON_AIR
+                    | HITMARKER_IGNORE_UNDERGROUND | HITMARKER_IGNORE_UNDERWATER | HITMARKER_PASSIVE_HP_UPDATE
+                    | HITMARKER_OBEYS | HITMARKER_WAKE_UP_CLEAR | HITMARKER_SYNCHRONIZE_EFFECT
+                    | HITMARKER_CHARGING | HITMARKER_NEVER_SET);
+
+    gCurrentMove = 0;
+    gBattleMoveDamage = 0;
+    gMoveResultFlags = 0;
+    gBattleScripting.animTurn = 0;
+    gBattleScripting.animTargetsHit = 0;
+    gLastLandedMoves[gBattlerAttacker] = 0;
+    gLastResultingMoves[gBattlerAttacker] = 0; // JP: uses gLastResultingMoves (US: gLastHitByType)
+    gBattleStruct->dynamicMoveType = 0;
+    gDynamicBasePower = 0;
+    gBattleScripting.moveendState = 0;
+    gBattleCommunication[3] = 0;
+    gBattleCommunication[4] = 0;
+    gBattleScripting.multihitMoveEffect = 0;
+    gBattleResources->battleScriptsStack->size = 0;
+}
+
 
 
 
