@@ -1316,7 +1316,7 @@ enum
     CANCELER_END,
 };
 
-u8 AtkCanceller_UnableToUseMove(void)
+u8 AtkCanceler_UnableToUseMove(void)
 {
     u8 effect = 0;
     s32 *bideDmg = &gBattleScripting.bideDmg;
