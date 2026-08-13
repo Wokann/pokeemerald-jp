@@ -729,7 +729,6 @@ sub_081BA8CC = MultiBootCheckComplete;
 MultiBootInit = GetGlyphWidthFont6;
 gTrainerBackPicCoords = gUnknown_82D95BC;
 gMonFrontAnimsPtrTable = gUnknown_82DD33C;
-SpriteCB_VsLetterInit = sub_08038828;
 gGameVersion = gUnknown_829BDA4;
 RecordedBattle_CanStopPlayback = sub_081861A8;
 RecordedBattle_SetFrontierPassFlagFromHword = sub_08185CE8;
@@ -3182,6 +3181,9 @@ SECTIONS {
         asm/battle_main_createnpc.o(.text);
         src/battle_main.o(.text.HBlankCB_Battle);
         src/battle_main.o(.text.VBlankCB_Battle);
+        src/battle_main.o(.text.SpriteCallbackDummy_3);
+        src/battle_main.o(.text.SpriteCB_VsLetter);
+        src/battle_main.o(.text.SpriteCB_VsLetterInit);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

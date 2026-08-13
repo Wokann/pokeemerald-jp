@@ -27,6 +27,7 @@
 #include "text.h"
 #include "window.h"
 #include "constants/battle.h"
+#include "constants/battle_anim.h"
 #include "constants/berry.h"
 #include "constants/flags.h"
 #include "constants/global.h"
@@ -1170,4 +1171,33 @@ void VBlankCB_Battle(void)
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
     ScanlineEffect_InitHBlankDmaTransfer();
+}
+
+void SpriteCallbackDummy_3(struct Sprite *sprite)
+{
+}
+
+static void SpriteCB_VsLetter(struct Sprite *sprite)
+{
+    if (sprite->data[0] != 0)
+        sprite->x = sprite->data[1] + ((sprite->data[2] & 0xFF00) >> 8);
+    else
+        sprite->x = sprite->data[1] - ((sprite->data[2] & 0xFF00) >> 8);
+
+    sprite->data[2] += 0x180;
+
+    if (sprite->affineAnimEnded)
+    {
+        FreeSpriteTilesByTag(ANIM_SPRITES_START);
+        FreeSpritePaletteByTag(ANIM_SPRITES_START);
+        FreeSpriteOamMatrix(sprite);
+        DestroySprite(sprite);
+    }
+}
+
+void SpriteCB_VsLetterInit(struct Sprite *sprite)
+{
+    StartSpriteAffineAnim(sprite, 1);
+    sprite->callback = SpriteCB_VsLetter;
+    PlaySE(SE_MUGSHOT);
 }

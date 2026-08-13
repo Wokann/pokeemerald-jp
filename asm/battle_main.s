@@ -4,88 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_080387B4
-sub_080387B4: @ 0x080387B4
-	bx lr
-	.align 2, 0
-	thumb_func_end sub_080387B4
-
-	thumb_func_start sub_080387B8
-sub_080387B8: @ 0x080387B8
-	push {r4, r5, lr}
-	adds r5, r0, #0
-	movs r1, #0x2e
-	ldrsh r0, [r5, r1]
-	cmp r0, #0
-	beq _080387D8
-	movs r1, #0x32
-	ldrsh r0, [r5, r1]
-	movs r1, #0xff
-	lsls r1, r1, #8
-	ands r0, r1
-	lsrs r0, r0, #8
-	ldrh r1, [r5, #0x30]
-	adds r0, r0, r1
-	strh r0, [r5, #0x20]
-	b _080387EA
-_080387D8:
-	movs r1, #0x32
-	ldrsh r0, [r5, r1]
-	movs r1, #0xff
-	lsls r1, r1, #8
-	ands r0, r1
-	asrs r0, r0, #8
-	ldrh r1, [r5, #0x30]
-	subs r1, r1, r0
-	strh r1, [r5, #0x20]
-_080387EA:
-	movs r1, #0xc0
-	lsls r1, r1, #1
-	adds r0, r1, #0
-	ldrh r1, [r5, #0x32]
-	adds r0, r0, r1
-	strh r0, [r5, #0x32]
-	adds r0, r5, #0
-	adds r0, #0x3f
-	ldrb r1, [r0]
-	movs r0, #0x20
-	ands r0, r1
-	cmp r0, #0
-	beq _0803881E
-	ldr r4, _08038824
-	adds r0, r4, #0
-	bl FreeSpriteTilesByTag
-	adds r0, r4, #0
-	bl FreeSpritePaletteByTag
-	adds r0, r5, #0
-	bl FreeSpriteOamMatrix
-	adds r0, r5, #0
-	bl DestroySprite
-_0803881E:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08038824: .4byte 0x00002710
-	thumb_func_end sub_080387B8
-
-	thumb_func_start sub_08038828
-sub_08038828: @ 0x08038828
-	push {r4, lr}
-	adds r4, r0, #0
-	movs r1, #1
-	bl StartSpriteAffineAnim
-	ldr r0, _08038844
-	str r0, [r4, #0x1c]
-	movs r0, #0x68
-	bl PlaySE
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08038844: .4byte 0x080387B9
-	thumb_func_end sub_08038828
-
 	thumb_func_start sub_08038848
 sub_08038848: @ 0x08038848
 	push {r4, r5, r6, r7, lr}
@@ -2039,11 +1957,11 @@ sub_08039834: @ 0x08039834
 _0803983C: .4byte 0x08039841
 	thumb_func_end sub_08039834
 
-	thumb_func_start SpriteCallbackDummy_3
-SpriteCallbackDummy_3: @ 0x08039840
+	thumb_func_start sub_08039840
+sub_08039840: @ 0x08039840
 	bx lr
 	.align 2, 0
-	thumb_func_end SpriteCallbackDummy_3
+	thumb_func_end sub_08039840
 
 	thumb_func_start sub_08039844
 sub_08039844: @ 0x08039844
