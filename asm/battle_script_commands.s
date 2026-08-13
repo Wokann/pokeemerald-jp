@@ -502,67 +502,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD0_settaunt
-atkD0_settaunt: @ 0x080549A8
-	push {r4, lr}
-	ldr r4, _080549EC
-	ldr r3, _080549F0
-	ldrb r0, [r3]
-	lsls r1, r0, #3
-	subs r1, r1, r0
-	lsls r1, r1, #2
-	adds r2, r1, r4
-	ldrb r1, [r2, #0x13]
-	lsls r0, r1, #0x1c
-	cmp r0, #0
-	bne _080549F8
-	movs r0, #0x10
-	rsbs r0, r0, #0
-	ands r0, r1
-	movs r1, #2
-	orrs r0, r1
-	strb r0, [r2, #0x13]
-	ldrb r1, [r3]
-	lsls r0, r1, #3
-	subs r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r4
-	ldrb r2, [r0, #0x13]
-	movs r1, #0xf
-	ands r1, r2
-	movs r2, #0x20
-	orrs r1, r2
-	strb r1, [r0, #0x13]
-	ldr r1, _080549F4
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-	b _08054A12
-	.align 2, 0
-_080549EC: .4byte 0x02023F60
-_080549F0: .4byte 0x02023EB0
-_080549F4: .4byte 0x02023EB8
-_080549F8:
-	ldr r3, _08054A18
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-_08054A12:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054A18: .4byte 0x02023EB8
-	thumb_func_end atkD0_settaunt
 
 	thumb_func_start atkD1_trysethelpinghand
 atkD1_trysethelpinghand: @ 0x08054A1C
