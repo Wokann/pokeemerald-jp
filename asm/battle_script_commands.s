@@ -535,66 +535,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkF1_trysetcaughtmondexflags
-atkF1_trysetcaughtmondexflags: @ 0x08056460
-	push {r4, r5, lr}
-	ldr r4, _080564B0
-	adds r0, r4, #0
-	movs r1, #0xb
-	movs r2, #0
-	bl GetMonData3
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-	adds r0, r4, #0
-	movs r1, #0
-	movs r2, #0
-	bl GetMonData3
-	adds r4, r0, #0
-	adds r0, r5, #0
-	bl HoennToNationalOrder
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	movs r1, #1
-	bl GetSetPokedexFlag
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	beq _080564B8
-	ldr r3, _080564B4
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _080564D2
-	.align 2, 0
-_080564B0: .4byte 0x020243E8
-_080564B4: .4byte 0x02023EB8
-_080564B8:
-	adds r0, r5, #0
-	bl HoennToNationalOrder
-	lsls r0, r0, #0x10
-	lsrs r0, r0, #0x10
-	movs r1, #3
-	adds r2, r4, #0
-	bl HandleSetPokedexFlag
-	ldr r1, _080564D8
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_080564D2:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080564D8: .4byte 0x02023EB8
-	thumb_func_end atkF1_trysetcaughtmondexflags
 
 	thumb_func_start atkF2_displaydexinfo
 atkF2_displaydexinfo: @ 0x080564DC
