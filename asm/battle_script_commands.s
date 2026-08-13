@@ -408,30 +408,6 @@ _08052C22:
 
 
 
-	thumb_func_start atkAA_setdestinybond
-atkAA_setdestinybond: @ 0x08052D60
-	ldr r1, _08052D84
-	ldr r0, _08052D88
-	ldrb r2, [r0]
-	movs r0, #0x58
-	muls r2, r0, r2
-	adds r1, #0x50
-	adds r2, r2, r1
-	ldr r0, [r2]
-	movs r1, #0x80
-	lsls r1, r1, #0x12
-	orrs r0, r1
-	str r0, [r2]
-	ldr r1, _08052D8C
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_08052D84: .4byte 0x02023D28
-_08052D88: .4byte 0x02023EAF
-_08052D8C: .4byte 0x02023EB8
-	thumb_func_end atkAA_setdestinybond
 
 	thumb_func_start TrySetDestinyBondToHappen
 TrySetDestinyBondToHappen: @ 0x08052D90

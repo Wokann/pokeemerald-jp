@@ -1494,6 +1494,7 @@ static void Cmd_settypetorandomresistance(void);
 static void Cmd_setalwayshitflag(void);
 static void Cmd_copymovepermanently(void);
 static void Cmd_trychoosesleeptalkmove(void);
+static void Cmd_setdestinybond(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7424,4 +7425,10 @@ static void Cmd_trychoosesleeptalkmove(void)
         gBattlerTarget = GetMoveTarget(gCalledMove, NO_TARGET_OVERRIDE);
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_setdestinybond(void)
+{
+    gBattleMons[gBattlerAttacker].status2 |= STATUS2_DESTINY_BOND;
+    gBattlescriptCurrInstr++;
 }
