@@ -1,4 +1,2 @@
 	return 
-	takeitem 0x15F1, 0x208
-	nop 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2864a2, 0x7

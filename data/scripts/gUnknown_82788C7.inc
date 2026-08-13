@@ -1,37 +1,4 @@
 	nop 
 	setptrbyte 0x27, 0xA279700
 	return 
-	delay 0xC01
-	returnram 
-	gotostd 0xE
-	.byte 0xFE
-	pokemartdecoration2 0xFE0E0827
-	pokemartdecoration2 0xFE0E0827
-	pokemartdecoration2 0x31030827
-	checkpcitem 0x80D, 0x502
-	setworldmapflag 0x300
-	nop 
-	nop 
-	nop 
-	gotostd_if 0x0, 0x1
-	nop 
-	setmysteryeventstatus 0x16
-	playslotmachine 0x827
-	goto 0x80D030B
-	copyvar 0xA0, 0x2C0
-	checkpartymove 0x56EF
-	gotostd 0x82
-	goto 0x10
-	nop 
-	nop 
-	nop 
-	nop 
-	loadword 0x0, 0x20F0404
-	warphole 0x2F57
-	gotostd 0x83
-	call 0x0
-	setworldmapflag 0x200
-	nop 
-	.byte 0x04
-	.byte 0x04
-	.byte 0x0F
+	.incbin "baserom_jp.gba", 0x2788cf, 0x59

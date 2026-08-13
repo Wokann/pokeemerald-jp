@@ -1,11 +1,3 @@
 	call_if 0x1F, 0x46001050
 	returnram 
-	fadenewbgm 0xC44
-	goto_if 0x0, 0x27061220
-	copybyte 0x599FFE02, 0x1A7E73
-	returnram 
-	loadbytefromaddr 0xB00080A
-	fadeoutbgm 0xD
-	returnram 
-	goto_if 0x0, 0xAB400215
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262ead, 0x22

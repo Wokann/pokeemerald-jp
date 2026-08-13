@@ -1,9 +1,2 @@
 	end 
-	warp 0x2000, 0x10, 0x14E, 0x4012
-	nop 
-	fadedefaultbgm 
-	gotonative 0x2023F
-	.byte 0x04
-	nop 
-	nop 
-	.byte 0x3C
+	.incbin "baserom_jp.gba", 0x289ac7, 0x13

@@ -1,16 +1,2 @@
 	returnram 
-	gettime 
-	callstd_if 0x2, 0x2E
-	fadeoutbgm 0x0
-	call_if 0x10, 0xFE130C02
-	.byte 0xFD
-	end 
-	dotimebasedevents 
-	nop 
-	compare_addr_to_addr 0xAB102212, 0xFC0F08FC
-	gotostd 0xF
-	.byte 0xFC
-	gotostd 0xF
-	.byte 0xFC
-	gotostd 0xF
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x24bcd0, 0x22

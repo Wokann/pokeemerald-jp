@@ -1,6 +1,2 @@
 	return 
-	addobject 0xA9A
-	gotostd 0x5
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28645c, 0x8

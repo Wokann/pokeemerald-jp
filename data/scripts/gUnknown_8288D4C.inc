@@ -1,7 +1,4 @@
 	gettime 
 	savebgm 0x241
 	end 
-	nop 
-	.byte 0x23
-	nop 
-	.byte 0x3E
+	.incbin "baserom_jp.gba", 0x288d51, 0x4

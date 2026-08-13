@@ -2,9 +2,4 @@
 	playse 0x327
 	buffermovename 0x4, 0x816
 	end 
-	setworldmapflag 0x0
-	copyvar 0xED, 0x5C0
-	setmysteryeventstatus 0x66
-	gotopostbattlescript 
-	delay 0x508
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27d074, 0xf

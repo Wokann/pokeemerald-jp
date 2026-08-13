@@ -4,34 +4,4 @@
 	drawbox 
 	waitstate 
 	end 
-	vcall_if 0xE8, 0x1020856
-	nop 
-	nop 
-	copyvar 0xA2, 0x5C0
-	call 0xE8BC0202
-	addobject_at 0x208, 0x101
-	nop 
-	call 0xA61C02
-	setdynamicwarp 0x408, 0x3, 0xF3D9, 0x810
-	goto 0x4B550300
-	killscript 
-	gotostd 0x2
-	goto 0x40001
-	nop 
-	nop 
-	loadbytefromaddr 0x5000100
-	end 
-	vcall_if 0xE8, 0x1020856
-	end 
-	nop 
-	goto 0x55A98802
-	gotostd 0x2
-	return 
-	nop 
-	nop 
-	nop 
-	nop 
-	.byte 0x06
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27955b, 0x52

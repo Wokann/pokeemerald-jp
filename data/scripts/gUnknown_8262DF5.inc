@@ -8,16 +8,4 @@
 	.byte 0xFE
 	compare_addr_to_addr 0x800130E, 0x619292A
 	end 
-	opendoor 0x3FF, 0xAC2E
-	nop 
-	compare_addr_to_addr 0x451E290E, 0x73599FFE
-	bufferleadmonspeciesname 0x2D
-	nop 
-	loadbytefromaddr 0x13041F06
-	nop 
-	end 
-	.byte 0x15
-	end 
-	.byte 0x19
-	.byte 0x06
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262e1b, 0x1e

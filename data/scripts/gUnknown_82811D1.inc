@@ -1,23 +1,3 @@
 	goto 0xF619
 	return 
-	.byte 0xF1
-	.byte 0xC8
-	loadbyte 0x8, 0x5
-	nop 
-	call 0x6E71031E
-	writebytetoaddr 0x8, 0x780050A
-	end 
-	nop 
-	nop 
-	nop 
-	loadbyte 0x0, 0x0
-	nop 
-	call 0x6E71035A
-	writebytetoaddr 0x8, 0x780050A
-	setworldmapflag 0x1000
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2811d7, 0x2d

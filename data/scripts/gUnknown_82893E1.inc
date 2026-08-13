@@ -14,12 +14,4 @@
 	gettime 
 	savebgm 0x241
 	end 
-	nop 
-	callnative 0x412C2E01
-	end 
-	end 
-	nop 
-	givepcitem 0x0, 0x5528
-	choosecontestmon 
-	.byte 0x28
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x289407, 0x11

@@ -7,40 +7,4 @@
 	nop 
 	showcoinsbox 0x4, 0x8
 	return 
-	buffermovename 0x75, 0x80A
-	goto 0x280905
-	takedecoration 0xE
-	nop 
-	nop 
-	return 
-	nop 
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0x0
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0x2B
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0x55
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0x80
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0xAA
-	end 
-	checkpartymove 0x572B
-	gotostd 0x2
-	setworldmapflag 0xD5
-	call 0xCB191E
-	showcoinsbox 0x4, 0x1E
-	copyvar 0xCB, 0x5C0
-	callstd_if 0x0, 0x4
-	.byte 0x01
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27d956, 0x58

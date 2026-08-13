@@ -7,12 +7,4 @@
 	nop 
 	nop 
 	return 
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x10001
-	nop 
-	nop 
-	loadbyte 0x0, 0x1
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x281c44, 0x12

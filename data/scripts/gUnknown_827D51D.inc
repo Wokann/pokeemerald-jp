@@ -3,38 +3,4 @@
 	nop 
 	setrespawn 0x1427
 	end 
-	addvar 0x20A, 0x90C
-	gotostd 0x3
-	choosecontestmon 
-	bufferstdstring 0xA, 0x208
-	end 
-	nop 
-	nop 
-	killscript 
-	nop 
-	copyvar 0x8F, 0x4C0
-	goto_if 0x2, 0x8572F3C
-	buffernumberstring 0x4, 0x0
-	nop 
-	nop 
-	setworldmapflag 0x100
-	nop 
-	end 
-	checkpartymove 0x571A
-	gotostd 0x84
-	goto 0x0
-	gotostd 0x0
-	setworldmapflag 0x0
-	nop 
-	copyvar 0x8B, 0x33F
-	playfanfare 0xD4A
-	gotostd 0x2
-	goto 0x30001
-	nop 
-	nop 
-	goto_if 0x0, 0xB050001
-	end 
-	killscript 
-	.byte 0x15
-	.byte 0x17
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27d525, 0x53

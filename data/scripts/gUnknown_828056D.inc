@@ -6,30 +6,4 @@
 	gotonative 0x208571F
 	call 0x0
 	killscript 
-	nop 
-	applymovement_at 0x1301, 0x828057C, 0xA03
-	returnram 
-	returnram 
-	gotostd 0x19
-	pokemartdecoration 0x3C02C000
-	compare_addr_to_value 0x1020857, 0x14
-	nop 
-	call 0x2F3C0214
-	setobjectxy 0x208, 0x4, 0x0
-	nop 
-	setworldmapflag 0x0
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x5
-	goto 0x60001
-	nop 
-	nop 
-	gotostd 0x0
-	setworldmapflag 0x1900
-	pokemartdecoration2 0xB053F00
-	return 
-	killscript 
-	.byte 0x13
-	checkpartymove 0x2805
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28058e, 0x49

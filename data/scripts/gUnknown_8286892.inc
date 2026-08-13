@@ -2,18 +2,4 @@
 	fadescreen 0x27
 	gotostd_if 0x1, 0xC
 	returnram 
-	gotostd 0x19
-	pokemart 0x3C023F00
-	playse 0x857
-	end 
-	call 0x0
-	setworldmapflag 0x200
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x2
-	goto 0x30001
-	nop 
-	nop 
-	goto_if 0x0, 0xB050001
-	setworldmapflag 0x80D
+	.incbin "baserom_jp.gba", 0x286899, 0x2a

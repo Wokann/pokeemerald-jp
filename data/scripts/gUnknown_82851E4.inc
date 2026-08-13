@@ -4,8 +4,4 @@
 	setweather 0x5721
 	gotostd 0x3
 	return 
-	delay 0x0
-	nop 
-	vcall 0x1040527
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2851f6, 0xb

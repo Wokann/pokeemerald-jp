@@ -2,45 +2,4 @@
 	.byte 0xEE
 	waitstate 
 	end 
-	showobject_at 0x55A9, 0x802
-	end 
-	goto 0x4000500
-	call 0x3F009B19
-	end 
-	compare_local_to_value 0xF7, 0x56
-	gotostd 0x82
-	return 
-	loadbyte 0x0, 0x0
-	nop 
-	setworldmapflag 0x300
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x30001
-	nop 
-	nop 
-	goto 0x4000100
-	gotostd_if 0x2, 0x58
-	.byte 0xA9
-	addobject 0x8208
-	end 
-	goto 0x4000500
-	call 0x3F009B19
-	end 
-	compare_local_to_value 0xF7, 0x56
-	gotostd 0x82
-	return 
-	.byte 0xF0
-	.byte 0xFF
-	nop 
-	nop 
-	nop 
-	nop 
-	return 
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x40001
-	nop 
-	nop 
-	.byte 0x07
-	nop 
-	setworldmapflag 0x800
+	.incbin "baserom_jp.gba", 0x282607, 0x60

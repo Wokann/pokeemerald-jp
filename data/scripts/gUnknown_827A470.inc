@@ -3,22 +3,4 @@
 	gotostd 0x28
 	nop 
 	end 
-	dofieldeffect 0x56E8
-	gotostd 0x28
-	setworldmapflag 0x1
-	end 
-	dofieldeffect 0x56E8
-	gotostd 0x28
-	setworldmapflag 0x2
-	end 
-	dofieldeffect 0x56E8
-	gotostd 0x28
-	setworldmapflag 0x3
-	end 
-	dofieldeffect 0x56E8
-	gotostd 0x28
-	setworldmapflag 0x4
-	call 0xFF071078
-	.byte 0xFF
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27a47b, 0x2b

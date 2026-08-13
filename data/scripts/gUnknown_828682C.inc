@@ -11,25 +11,4 @@
 	goto 0x1079D903
 	gotostd 0x2
 	return 
-	nop 
-	nop 
-	return 
-	nop 
-	warphole 0x3
-	cmdD9 
-	.byte 0x79
-	loadbyte 0x8, 0x2
-	return 
-	nop 
-	nop 
-	return 
-	nop 
-	warphole 0x4
-	waitfanfare 
-	goto 0x116E7103
-	gotostd 0xA
-	goto 0x20781
-	call 0x0
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28684c, 0x29

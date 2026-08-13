@@ -1,3 +1,3 @@
 	.byte 0x13
 	end 
-	updatecoinsbox 0x27, 0x8
+	.incbin "baserom_jp.gba", 0x286881, 0x3

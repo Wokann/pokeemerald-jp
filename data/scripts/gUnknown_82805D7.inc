@@ -8,29 +8,4 @@
 	compare_addr_to_addr 0x2020857, 0x0
 	setptrbyte 0xE6, 0xA082805
 	return 
-	returnram 
-	returnram 
-	gotostd 0x19
-	hidecoinsbox 0x0, 0x3F
-	end 
-	waitse 
-	compare_addr_to_addr 0x830857, 0x8D190704
-	nop 
-	setdynamicwarp 0x23C, 0x2F, 0x857, 0x482
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x0
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x5
-	goto 0x1
-	goto 0x1000B00
-	nop 
-	goto 0x130D030B
-	.byte 0xE6
-	.byte 0x05
-	.byte 0x28
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2805fd, 0x3d

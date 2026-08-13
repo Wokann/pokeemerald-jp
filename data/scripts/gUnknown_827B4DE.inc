@@ -1,11 +1,2 @@
 	returnram 
-	gotostd_if 0x8, 0x3
-	waitdooranim 
-	checkdecorspace 0x810
-	end 
-	nop 
-	compare_local_to_value 0xCC, 0x0
-	showcoinsbox 0x22, 0x3
-	.byte 0x05
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27b4df, 0x12

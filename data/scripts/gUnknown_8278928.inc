@@ -20,26 +20,4 @@
 	call 0x0
 	nop 
 	killscript 
-	nop 
-	nop 
-	nop 
-	goto 0x116E7103
-	gotostd 0xA
-	goto 0x4
-	killscript 
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	goto 0x710E1404
-	settrainerflag 0x828
-	goto 0x71031404
-	yesnobox 0x11, 0x8
-	gotostd_if 0x5, 0x1
-	nop 
-	nop 
-	nop 
-	goto_if 0x0, 0x0
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x278963, 0x33

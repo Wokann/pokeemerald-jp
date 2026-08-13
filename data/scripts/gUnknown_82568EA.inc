@@ -14,9 +14,4 @@
 	dofieldeffect 0x2C
 	goto 0x8256933
 	end 
-	loadword 0x0, 0x8256985
-	callstd 0x4
-	releaseall 
-	end 
-	releaseall 
-	end 
+	.incbin "baserom_jp.gba", 0x256929, 0xc

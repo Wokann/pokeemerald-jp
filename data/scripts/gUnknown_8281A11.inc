@@ -5,38 +5,4 @@
 	compare_local_to_value 0x78, 0x0
 	showcoinsbox 0x1C, 0x2
 	return 
-	givepcitem 0x114D, 0x508
-	return 
-	setworldmapflag 0x100
-	nop 
-	cmdD8 
-	.byte 0x5C
-	goto 0xC0C010A
-	gotostd 0x2
-	showobject_at 0x55A9, 0x802
-	end 
-	call 0x4000400
-	goto_if 0x2, 0x8572F3C
-	bufferdecorationname 0x4, 0x0
-	nop 
-	nop 
-	setworldmapflag 0x200
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x2
-	goto 0x30001
-	nop 
-	nop 
-	goto_if 0x0, 0x7B190001
-	nop 
-	setdynamicwarp 0x503, 0xED, 0x1150, 0x508
-	end 
-	nop 
-	nop 
-	setworldmapflag 0xB00
-	setworldmapflag 0xE0D
-	.byte 0xF8
-	gotopostbattlescript 
-	delay 0x508
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x281a1e, 0x59

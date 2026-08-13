@@ -14,12 +14,4 @@
 	callstd_if 0x0, 0xFF
 	bufferpartymonnick 0x3, 0x4B55
 	killscript 
-	gotostd 0x2
-	goto 0x10000
-	nop 
-	nop 
-	compare_addr_to_addr 0xE000100, 0x827BC53
-	call 0xBC530E08
-	waitstate 
-	gotostd 0x5
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x281c7b, 0x1b

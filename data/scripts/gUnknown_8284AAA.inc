@@ -6,7 +6,4 @@
 	gotostd_if 0x0, 0xA
 	nop 
 	returnram 
-	nop 
-	.byte 0x06
-	nop 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x284ac0, 0x4

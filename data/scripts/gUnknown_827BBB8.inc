@@ -8,27 +8,4 @@
 	copyvar 0xC4, 0x4C0
 	waitse 
 	return 
-	callstd 0x4D
-	killscript 
-	gotostd 0x2
-	goto 0x20000
-	nop 
-	nop 
-	subvar 0x100, 0x300
-	takecoins 0x116E
-	gotostd 0x2
-	goto 0x10006
-	nop 
-	nop 
-	returnram 
-	nop 
-	vmessage 0x3180477
-	takecoins 0x116E
-	gotostd 0x2
-	goto 0x10006
-	returnram 
-	nop 
-	nop 
-	nop 
-	vmessage 0x791977
-	setdynamicwarp 0x515, 0x17, 0xB0D, 0x805
+	.incbin "baserom_jp.gba", 0x27bbd4, 0x3f

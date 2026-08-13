@@ -5,35 +5,4 @@
 	.byte 0xED
 	waitstate 
 	end 
-	.byte 0xD4
-	.byte 0xF6
-	addobject_at 0x8208, 0x200
-	nop 
-	.byte 0xE8
-	.byte 0xFF
-	copyvar 0xC8, 0x53F
-	copyvar 0xE2, 0x23F
-	setweather 0x56F6
-	gotostd 0x83
-	end 
-	nop 
-	.byte 0xFF
-	buffercontesttype 
-	.byte 0xFF
-	end 
-	setweather 0x56F6
-	gotostd 0x83
-	end 
-	bufferitemname 0x0, 0xFFF2
-	end 
-	setweather 0x56F6
-	gotostd 0x83
-	end 
-	checkplayergender 
-	setworldmapflag 0xFFDA
-	end 
-	setweather 0x56F6
-	gotostd 0x83
-	end 
-	bufferitemname 0xFF, 0xFFEA
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2825c3, 0x40

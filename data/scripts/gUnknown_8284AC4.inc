@@ -7,47 +7,4 @@
 	showcoinsbox 0x2, 0x74
 	compare_addr_to_addr 0x4020857, 0x0
 	killscript 
-	nop 
-	applymovement_at 0x501, 0xC000E919, 0x2B0
-	compare_addr_to_addr 0x1030857, 0x110E0000
-	givedecoration 0x828
-	setmysteryeventstatus 0x11
-	givedecoration 0x828
-	setmysteryeventstatus 0x11
-	givedecoration 0x828
-	setmysteryeventstatus 0x11
-	givedecoration 0x828
-	setmysteryeventstatus 0x11
-	givedecoration 0x828
-	gotostd 0x2
-	.byte 0xC8
-	compare_addr_to_addr 0x2050857, 0x0
-	end 
-	.byte 0xC8
-	compare_addr_to_addr 0x2050857, 0x1
-	loadword 0x0, 0xAB0027A4
-	waitstate 
-	gotostd_if 0x3, 0xC
-	returnram 
-	gotostd 0x19
-	drawbox 
-	nop 
-	setdynamicwarp 0x2B0, 0x20, 0x857, 0x183
-	setworldmapflag 0xE00
-	message 0xE08284B
-	message 0xE08284B
-	message 0xE08284B
-	message 0xE08284B
-	message 0x408284B
-	returnram 
-	setmysteryeventstatus 0x8E
-	getpricereduction 0x827
-	goto 0x30B002C
-	killscript 
-	gotostd 0x2
-	.byte 0xC8
-	compare_addr_to_addr 0x2850857, 0x10000
-	end 
-	.byte 0xC8
-	compare_addr_to_addr 0x2850857, 0x10001
-	.byte 0x0F
+	.incbin "baserom_jp.gba", 0x284ae6, 0x98

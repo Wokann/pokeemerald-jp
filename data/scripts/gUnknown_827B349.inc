@@ -1,12 +1,4 @@
 	setmysteryeventstatus 0x58
 	cleartrainerflag 0x828
 	return 
-	.byte 0x25
-	nop 
-	writebytetoaddr 0x8, 0xA2190002
-	nop 
-	showcoinsbox 0x4, 0x10
-	copyvar 0x98, 0x5C0
-	setmysteryeventstatus 0x64
-	cleartrainerflag 0x828
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27b34f, 0x17

@@ -7,4 +7,4 @@
 	nop 
 	vgoto 0x1040527
 	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27e69a, 0x1

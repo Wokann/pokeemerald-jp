@@ -1,8 +1,2 @@
 	return 
-	takecoins 0xD50
-	gotostd 0x2
-	goto 0x60000
-	call 0x4000200
-	nop 
-	.byte 0x13
-	setobjectmovementtype 0x2816, 0x8
+	.incbin "baserom_jp.gba", 0x28168a, 0x15

@@ -4,42 +4,4 @@
 	showcoinsbox 0x3, 0xB1
 	faceplayer 
 	killscript 
-	gotostd 0x2
-	call 0x800010
-	nop 
-	nop 
-	end 
-	nop 
-	goto 0xC0009819
-	return 
-	addelevmenuitem 0x5A, 0x80D, 0x402, 0x10
-	bufferitemname 0x0, 0x0
-	end 
-	nop 
-	goto 0xC0009819
-	return 
-	addelevmenuitem 0x5A, 0x80D, 0x402, 0x10
-	bufferitemname 0x0, 0x0
-	end 
-	nop 
-	goto 0xC000E419
-	setmysteryeventstatus 0x3B
-	gotopostbattlescript 
-	delay 0x508
-	copyvar 0x66, 0x2C0
-	showobject_at 0x572E, 0x802
-	goto 0x30002
-	call_if 0x0, 0x67F10000
-	end 
-	nop 
-	.byte 0xF4
-	addobject_at 0x308, 0x400
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28669f, 0x64

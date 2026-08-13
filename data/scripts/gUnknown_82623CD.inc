@@ -5,4 +5,4 @@
 	goto_if 0x1, 0x82623E3
 	releaseall 
 	end 
-	goto 0x82623BB
+	.incbin "baserom_jp.gba", 0x2623e3, 0x5

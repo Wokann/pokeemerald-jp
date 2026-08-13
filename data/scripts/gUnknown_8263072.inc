@@ -9,7 +9,4 @@
 	bufferleadmonspeciesname 0x37
 	nop 
 	end 
-	loadbyte 0x19, 0x6
-	.byte 0xB0
-	.byte 0xB0
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x26308f, 0x6

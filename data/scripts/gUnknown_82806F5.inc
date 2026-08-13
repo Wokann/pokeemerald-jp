@@ -3,39 +3,4 @@
 	fadescreen 0x27
 	gotostd_if 0x3, 0xC
 	returnram 
-	gotostd 0x2
-	showobject_at 0x55A9, 0x802
-	end 
-	call 0x4000400
-	return 
-	end 
-	moveobjectoffscreen 0x571A
-	gotostd 0x2
-	gotostd 0xF0
-	.byte 0xFF
-	gotostd 0x0
-	nop 
-	nop 
-	nop 
-	nop 
-	gotostd_if 0x0, 0x1
-	nop 
-	setworldmapflag 0x100
-	nop 
-	copyvar 0x8F, 0x53F
-	end 
-	warphole 0x2F57
-	gotostd 0x1
-	call 0x0
-	setworldmapflag 0x100
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x5
-	goto 0x50001
-	nop 
-	nop 
-	call_if 0x0, 0x8B190001
-	nop 
-	.byte 0x3F
-	goto 0x80D030B
+	.incbin "baserom_jp.gba", 0x2806ff, 0x53

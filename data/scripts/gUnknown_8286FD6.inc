@@ -4,5 +4,4 @@
 	.byte 0x20
 	.byte 0x3F
 	end 
-	end 
-	setworldmapflag 0x302
+	.incbin "baserom_jp.gba", 0x286fe4, 0x4

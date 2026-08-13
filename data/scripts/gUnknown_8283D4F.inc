@@ -11,20 +11,4 @@
 	nop 
 	call 0x4A31030A
 	killscript 
-	gotostd 0x3
-	goto 0x30001
-	nop 
-	nop 
-	gotostd_if 0x0, 0x1
-	nop 
-	goto 0x11625503
-	gotostd 0x2
-	goto_if 0x4, 0x4000000
-	nop 
-	nop 
-	nop 
-	returnram 
-	nop 
-	setorcopyvar 0xE68, 0x5FF8
-	delay 0x508
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x283d66, 0x28

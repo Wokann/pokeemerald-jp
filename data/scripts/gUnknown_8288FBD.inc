@@ -18,15 +18,4 @@
 	.byte 0xF8
 	setworldmapflag 0x533A
 	return 
-	warpsilent 0x106C, 0x1, 0x42B, 0x2C90
-	end 
-	end 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x900B
-	delay 0x5708
-	.byte 0x12
-	.byte 0x40
-	nop 
-	.byte 0x3E
+	.incbin "baserom_jp.gba", 0x288ff8, 0x17

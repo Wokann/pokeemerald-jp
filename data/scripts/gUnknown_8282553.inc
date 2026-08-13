@@ -5,48 +5,4 @@
 	.byte 0xEC
 	waitstate 
 	end 
-	startcontest 
-	.byte 0xF6
-	addobject_at 0x8208, 0x210
-	nop 
-	.byte 0xD0
-	.byte 0xFF
-	copyvar 0xC3, 0x43F
-	addvar 0xC319, 0x3F00
-	call 0xC31917
-	setdynamicwarp 0x502, 0x9C, 0x56F5, 0x8308
-	end 
-	checkplayergender 
-	nop 
-	.byte 0xE2
-	.byte 0xFF
-	copyvar 0xE2, 0x23F
-	dofieldeffect 0x56F5
-	gotostd 0x83
-	end 
-	nop 
-	.byte 0xFF
-	buffercontesttype 
-	.byte 0xFF
-	end 
-	dofieldeffect 0x56F5
-	gotostd 0x83
-	end 
-	bufferitemname 0x0, 0xFFF2
-	end 
-	dofieldeffect 0x56F5
-	gotostd 0x83
-	end 
-	checkplayergender 
-	setworldmapflag 0xFFDA
-	end 
-	dofieldeffect 0x56F5
-	gotostd 0x83
-	end 
-	bufferitemname 0xFF, 0xFFEA
-	end 
-	dofieldeffect 0x56F5
-	gotostd 0x83
-	end 
-	bufferitemname 0xFE, 0xFFE1
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28255a, 0x62

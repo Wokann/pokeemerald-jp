@@ -21,7 +21,4 @@
 	nop 
 	nop 
 	returnram 
-	nop 
-	compare_addr_to_local 0x5FF80E7C, 0x28
-	gotostd 0x5
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27fb29, 0xa

@@ -1,12 +1,3 @@
 	.byte 0xFD
 	end 
-	setorcopyvar 0x20FE, 0x152E
-	dotimebasedevents 
-	nop 
-	compare_addr_to_addr 0xAB100213, 0xFC0F08FC
-	gotostd 0xF
-	.byte 0xFC
-	gotostd 0xF
-	.byte 0xFC
-	gotostd 0xF
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x24b356, 0x19

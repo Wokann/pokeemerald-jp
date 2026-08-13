@@ -2,8 +2,4 @@
 	showcoinsbox 0x3F, 0x2
 	nop 
 	return 
-	resetweather 
-	bufferspeciesname 0x10, 0x208
-	setworldmapflag 0x1
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28388b, 0xa

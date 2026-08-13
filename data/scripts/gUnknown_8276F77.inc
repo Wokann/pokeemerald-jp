@@ -3,10 +3,4 @@
 	giveegg 0xAE9F
 	moveobjectoffscreen 0xFE16
 	return 
-	call 0x6002706
-	end 
-	setptrbyte 0x23, 0x44020200
-	killscript 
-	.byte 0x06
-	.byte 0xAC
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x276f87, 0x10

@@ -2,22 +2,4 @@
 	playse 0x1928
 	random 0xC000
 	end 
-	showobject_at 0x55A9, 0x802
-	end 
-	call 0x4000600
-	goto_if 0x19, 0x23F009B
-	.byte 0xCC
-	.byte 0xE4
-	addobject_at 0x8208, 0x200
-	nop 
-	nop 
-	nop 
-	call 0x4B550306
-	killscript 
-	gotostd 0x2
-	goto 0x20001
-	nop 
-	nop 
-	.byte 0x06
-	nop 
-	setworldmapflag 0x800
+	.incbin "baserom_jp.gba", 0x279525, 0x2f

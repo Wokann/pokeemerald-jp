@@ -4,4 +4,4 @@
 	nop 
 	.byte 0x44
 	killscript 
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x22d761, 0x1

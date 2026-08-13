@@ -5,9 +5,4 @@
 	callnative 0xC0325FE
 	fadedefaultbgm 
 	return 
-	nop 
-	.byte 0x15
-	gettime 
-	.byte 0x41
-	.byte 0x15
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x263106, 0x6

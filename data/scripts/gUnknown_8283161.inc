@@ -5,6 +5,4 @@
 	nop 
 	showcoinsbox 0x30, 0x3
 	killscript 
-	dowildbattle 
-	copybyte 0x10208, 0xB0500
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28316e, 0xb

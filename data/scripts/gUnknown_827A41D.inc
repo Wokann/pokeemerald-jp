@@ -4,32 +4,4 @@
 	gotostd 0x2
 	call 0x3FFFC0
 	end 
-	nop 
-	nop 
-	nop 
-	return 
-	.byte 0xD1
-	moveobjectoffscreen 0x811
-	end 
-	goto_if 0x1D, 0x6000027
-	nop 
-	nop 
-	nop 
-	setmysteryeventstatus 0x0
-	gotopostbattlescript 
-	setworldmapflag 0xF802
-	delay 0x857
-	bufferdecorationname 0x3, 0x1C
-	nop 
-	nop 
-	compare_addr_to_addr 0x80C0501, 0x821908
-	setdynamicwarp 0x210, 0x29, 0x857, 0x282
-	nop 
-	nop 
-	.byte 0xF0
-	.byte 0xFF
-	goto 0xB0D0004
-	return 
-	.byte 0x15
-	.byte 0x17
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27a431, 0x3f

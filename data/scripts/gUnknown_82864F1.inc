@@ -2,6 +2,4 @@
 	.byte 0xF0
 	waitstate 
 	end 
-	returnram 
-	.byte 0xE2
-	addobject_at 0x8208, 0x8
+	.incbin "baserom_jp.gba", 0x2864f5, 0x7

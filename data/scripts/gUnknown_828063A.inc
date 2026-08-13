@@ -17,23 +17,4 @@
 	gotostd_if 0x0, 0x1
 	nop 
 	return 
-	nop 
-	nop 
-	nop 
-	goto 0x3F008B19
-	end 
-	warphole 0x2F57
-	gotostd 0x3
-	call 0x0
-	setworldmapflag 0x200
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x5
-	goto 0x40001
-	nop 
-	nop 
-	goto_if 0x0, 0xB050001
-	return 
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28065f, 0x2d

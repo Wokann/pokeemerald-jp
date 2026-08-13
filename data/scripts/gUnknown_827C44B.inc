@@ -3,47 +3,4 @@
 	gotostd 0x5
 	nop 
 	end 
-	givecoins 0x5AD6
-	gotostd 0x28
-	setworldmapflag 0x0
-	end 
-	givecoins 0x5AD6
-	gotostd 0x28
-	setworldmapflag 0x1
-	call 0xDE1913
-	nop 
-	return 
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x20002
-	nop 
-	nop 
-	goto 0x4000100
-	setmysteryeventstatus 0x19
-	buffertrainername 0x0, 0x300
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x20002
-	nop 
-	nop 
-	goto 0x4000100
-	copylocal 0x19, 0xDE
-	nop 
-	nop 
-	return 
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x30002
-	nop 
-	nop 
-	gotostd_if 0x0, 0x1
-	nop 
-	return 
-	settrainerflag 0xA74
-	gotostd 0x2
-	goto 0x3FF0002
-	returnram 
-	nop 
-	setworldmapflag 0x100
-	nop 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27c456, 0x68

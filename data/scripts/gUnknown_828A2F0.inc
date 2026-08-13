@@ -3,8 +3,4 @@
 	nop 
 	nop 
 	end 
-	doweather 
-	delay 0x1008
-	setworldmapflag 0xEF01
-	loadbyte 0x2, 0x1
-	.byte 0xEF
+	.incbin "baserom_jp.gba", 0x28a2fb, 0xb

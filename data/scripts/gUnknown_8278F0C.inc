@@ -4,43 +4,4 @@
 	setworldmapflag 0x417
 	nop 
 	returnram 
-	returnram 
-	gotostd 0x11
-	checkflag 0x278F
-	gotostd 0x54
-	random 0x827
-	goto 0x40D010B
-	nop 
-	copybyte 0x8B190817, 0x3C023F00
-	playse 0x857
-	return 
-	call 0x0
-	setworldmapflag 0x200
-	nop 
-	return 
-	killscript 
-	.byte 0x5C
-	killscript 
-	gotostd 0x5
-	goto 0x10000
-	goto_if 0x0, 0x1
-	setptrbyte 0x22, 0x1908278F
-	showcontestresults 
-	nop 
-	setdynamicwarp 0x23C, 0x2F, 0x857, 0x403
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x100
-	nop 
-	return 
-	killscript 
-	.byte 0x5C
-	killscript 
-	gotostd 0x5
-	goto 0x10000
-	goto_if 0x0, 0x1
-	.byte 0x13
-	.byte 0x22
-	random 0x827
+	.incbin "baserom_jp.gba", 0x278f17, 0x66

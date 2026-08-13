@@ -7,12 +7,4 @@
 	setworldmapflag 0x200
 	nop 
 	end 
-	.byte 0xCC
-	playse 0x857
-	buffernumberstring 0x4, 0xFFF4
-	nop 
-	nop 
-	setworldmapflag 0x300
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28009d, 0x10

@@ -1,25 +1,2 @@
 	return 
-	goto 0x2081032
-	nop 
-	returnram 
-	returnram 
-	gotostd 0xA
-	end 
-	copyvar 0x87, 0x4C0
-	compare_addr_to_addr 0xC0008719, 0x87191804
-	nop 
-	showcoinsbox 0x4, 0x10
-	copyvar 0x87, 0x4C0
-	gotostd 0x19
-	pokemartdecoration 0x804C000
-	copyvar 0x87, 0x4C0
-	gotostd 0x19
-	pokemartdecoration 0x804C000
-	copyvar 0x87, 0x4C0
-	gotostd 0x19
-	pokemartdecoration 0xB05C000
-	end 
-	killscript 
-	.byte 0x04
-	.byte 0x01
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27b498, 0x46

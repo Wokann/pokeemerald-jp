@@ -2,6 +2,4 @@
 	.byte 0xE5
 	checkpartymove 0x811
 	end 
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27b8a9, 0x3

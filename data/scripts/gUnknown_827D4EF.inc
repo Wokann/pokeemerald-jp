@@ -2,18 +2,4 @@
 	compare_local_to_value 0x28, 0x0
 	setweather 0xA27
 	return 
-	returnram 
-	returnram 
-	gotostd 0x3
-	fadedefaultbgm 
-	playslotmachine 0x810
-	goto 0xA21900
-	showcoinsbox 0x4, 0x2C
-	copyvar 0xE9, 0x5C0
-	call 0x8E190310
-	loadbyte 0x8, 0x5
-	nop 
-	copyvar 0xA3, 0xB3F
-	return 
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27d4f7, 0x26

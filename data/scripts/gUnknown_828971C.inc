@@ -1,10 +1,2 @@
 	end 
-	return 
-	warp 0x2000, 0x10, 0xBE, 0x4012
-	nop 
-	fadedefaultbgm 
-	gotonative 0x2023F
-	returnram 
-	bufferitemname 0x0, 0x176
-	.byte 0x01
-	.byte 0x3C
+	.incbin "baserom_jp.gba", 0x28971d, 0x17

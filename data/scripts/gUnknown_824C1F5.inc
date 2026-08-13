@@ -1,7 +1,3 @@
 	.byte 0xFD
 	end 
-	.byte 0xFE
-	.byte 0xFD
-	return 
-	nop 
-	copyvar 0xFD00, 0xFF04
+	.incbin "baserom_jp.gba", 0x24c1f7, 0x9

@@ -11,22 +11,4 @@
 	goto 0x1079D903
 	gotostd 0x2
 	return 
-	nop 
-	nop 
-	return 
-	nop 
-	braillemessage 0x79D90300
-	loadbyte 0x8, 0x2
-	return 
-	nop 
-	nop 
-	return 
-	nop 
-	braillemessage 0x4780400
-	compare_addr_to_local 0x6E710305, 0x11
-	gotostd 0xA
-	goto 0x20781
-	call 0x0
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27eab6, 0x2b

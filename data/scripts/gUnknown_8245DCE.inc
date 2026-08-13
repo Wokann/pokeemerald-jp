@@ -1,5 +1,4 @@
 	setvar 0x8005, 0x0
 	goto 0x8245DD9
 	end 
-	special sub_08127DEC
-	end 
+	.incbin "baserom_jp.gba", 0x245dd9, 0x4

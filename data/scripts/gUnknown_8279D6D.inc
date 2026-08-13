@@ -4,29 +4,4 @@
 	fadescreen 0x27
 	gotostd_if 0x3, 0xC
 	returnram 
-	gotostd 0x19
-	dofieldeffect 0x3F00
-	end 
-	mossdeepgym2 
-	.byte 0xF1
-	addobject_at 0x208, 0x100
-	nop 
-	end 
-	mossdeepgym2 
-	.byte 0xF1
-	addobject_at 0x208, 0x101
-	nop 
-	call 0x2F3C0209
-	setobjectxy 0x108, 0x4, 0x0
-	nop 
-	setworldmapflag 0x200
-	nop 
-	return 
-	addobject 0xD4B
-	gotostd 0x5
-	goto 0x20001
-	nop 
-	nop 
-	goto 0x5000100
-	callstd_if 0x3, 0xD
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x279d77, 0x3e

@@ -4,5 +4,4 @@
 	giveegg 0xAE9F
 	moveobjectoffscreen 0x16
 	returnram 
-	applymovement_at 0x2806, 0x19070600, 0xA0C
-	loadbyte 0xAB, 0xFF
+	.incbin "baserom_jp.gba", 0x276fc7, 0xc

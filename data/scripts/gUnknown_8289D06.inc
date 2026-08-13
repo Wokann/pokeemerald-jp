@@ -1,3 +1,3 @@
 	.byte 0x41
 	returnram 
-	setfieldeffectarg 0x28, 0x3E08
+	.incbin "baserom_jp.gba", 0x289d08, 0x4

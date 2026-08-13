@@ -17,8 +17,4 @@
 	callstd 0x0
 	setworldmapflag 0x500
 	return 
-	takecoins 0x158F
-	gotostd 0x5
-	nop 
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27e4e1, 0x8

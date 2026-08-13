@@ -17,15 +17,4 @@
 	setworldmapflag 0x400
 	call_if 0x2, 0x85721D8
 	end 
-	call 0xFFF40013
-	nop 
-	nop 
-	setworldmapflag 0x400
-	call_if 0x2, 0x85721D8
-	end 
-	call 0x14000A
-	nop 
-	nop 
-	setworldmapflag 0x500
-	.byte 0x04
-	setworldmapflag 0x80D
+	.incbin "baserom_jp.gba", 0x27e65f, 0x1f
