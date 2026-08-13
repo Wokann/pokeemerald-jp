@@ -485,3 +485,45 @@ static void SpriteCB_CableCar(struct Sprite *sprite)
         }
     }
 }
+
+#define sState data[2]
+#define sTimer data[3]
+
+static void SpriteCB_Player(struct Sprite *sprite)
+{
+    if (sCableCar->state != STATE_END)
+    {
+        // Move along with cable car
+        if (!GOING_DOWN)
+        {
+            sprite->x = sprite->sXPos - (u8)(0.14f * S16TOPOSFLOAT(sCableCar->timer));
+            sprite->y = sprite->sYPos - (u8)(0.067f * S16TOPOSFLOAT(sCableCar->timer));
+        }
+        else
+        {
+            sprite->x = sprite->sXPos + (u8)(0.14f * S16TOPOSFLOAT(sCableCar->timer));
+            sprite->y = sprite->sYPos + (u8)(0.067f * S16TOPOSFLOAT(sCableCar->timer));
+        }
+
+        // Bounce up and down
+        switch (sprite->sState)
+        {
+        case 0:
+            sprite->y2 = 17;
+            if (sprite->sTimer++ > 9)
+            {
+                sprite->sTimer = 0;
+                sprite->sState++;
+            }
+            break;
+        default:
+            sprite->y2 = 16;
+            if (sprite->sTimer++ > 9)
+            {
+                sprite->sTimer = 0;
+                sprite->sState = 0;
+            }
+            break;
+        }
+    }
+}
