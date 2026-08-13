@@ -1166,7 +1166,7 @@ _0803C4C2:
 	adds r1, r3, r2
 	movs r0, #2
 	strb r0, [r1]
-	bl sub_0803CA3C
+	bl UpdateBattlerPartyOrdersOnSwitch
 	b _0803C9B4
 _0803C4CE:
 	movs r0, #2
@@ -1342,7 +1342,7 @@ _0803C63C: .4byte 0x02023508
 _0803C640: .4byte 0x02023D08
 _0803C644: .4byte 0x02023FD6
 _0803C648:
-	bl sub_0803CA3C
+	bl UpdateBattlerPartyOrdersOnSwitch
 	b _0803C7B2
 _0803C64E:
 	ldr r2, _0803C664
