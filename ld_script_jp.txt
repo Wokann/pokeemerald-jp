@@ -4698,6 +4698,9 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimSwordsDanceBlade);
         src/battle_anim_effects_2.o(.text.AnimSwordsDanceBlade_Step);
         src/battle_anim_effects_2.o(.text.AnimSonicBoomProjectile);
+        src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile_Step2);
+        src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile_Step1);
+        src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);

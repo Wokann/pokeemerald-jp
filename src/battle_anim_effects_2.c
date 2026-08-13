@@ -32,6 +32,9 @@ static void AnimVibrateBattlerBack(struct Sprite *sprite);
 static void AnimMovingClamp(struct Sprite *sprite);
 static void AnimMovingClamp_Step(struct Sprite *sprite);
 static void AnimMovingClamp_End(struct Sprite *sprite);
+static void AnimAirWaveProjectile(struct Sprite *sprite);
+static void AnimAirWaveProjectile_Step1(struct Sprite *sprite);
+static void AnimAirWaveProjectile_Step2(struct Sprite *sprite);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -315,4 +318,100 @@ static void AnimMovingClamp_End(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
     else
         sprite->data[5]--;
+}
+
+// Animates a projectile that curves through the air.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: target x pixel offset
+// arg 3: target y pixel offset
+// arg 4: duration
+static void AnimAirWaveProjectile(struct Sprite *sprite)
+{
+    s16 a;
+    s16 b;
+    s16 c;
+
+    struct Task *task = &gTasks[sprite->data[7]];
+    sprite->data[1] += (-2 & task->data[7]);
+    sprite->data[2] += (-2 & task->data[8]);
+    if (task->data[7] & 1)
+        sprite->x2 = ((u16)sprite->data[1] >> 8) * -1;
+    else
+        sprite->x2 = (u16)sprite->data[1] >> 8;
+
+    if (task->data[8] & 1)
+        sprite->y2 = ((u16)sprite->data[2] >> 8) * -1;
+    else
+        sprite->y2 = (u16)sprite->data[2] >> 8;
+
+    if (sprite->data[0]-- <= 0)
+    {
+        sprite->data[0] = 8;
+        task->data[5] = 4;
+        a = MathUtil_Inv16(Q_8_8(16));
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->y2 = 0;
+        sprite->x2 = 0;
+        if (task->data[11] >= sprite->x)
+            b = (task->data[11] - sprite->x) << 8;
+        else
+            b = (sprite->x - task->data[11]) << 8;
+
+        if (task->data[12] >= sprite->y)
+            c = (task->data[12] - sprite->y) << 8;
+        else
+            c = (sprite->y - task->data[12]) << 8;
+
+        sprite->data[2] = 0;
+        sprite->data[1] = 0;
+        sprite->data[6] = 0;
+        sprite->data[5] = 0;
+        sprite->data[3] = MathUtil_Mul16(MathUtil_Mul16(b, a), MathUtil_Inv16(Q_8_8(1.75)));
+        sprite->data[4] = MathUtil_Mul16(MathUtil_Mul16(c, a), MathUtil_Inv16(Q_8_8(1.75)));
+        sprite->callback = AnimAirWaveProjectile_Step1;
+    }
+}
+
+static void AnimAirWaveProjectile_Step1(struct Sprite *sprite)
+{
+    struct Task *task = &gTasks[sprite->data[7]];
+    if (sprite->data[0] > task->data[5])
+    {
+        sprite->data[5] += sprite->data[3];
+        sprite->data[6] += sprite->data[4];
+    }
+    else
+    {
+        sprite->data[5] -= sprite->data[3];
+        sprite->data[6] -= sprite->data[4];
+    }
+
+    sprite->data[1] += sprite->data[5];
+    sprite->data[2] += sprite->data[6];
+    if (1 & task->data[7])
+        sprite->x2 = ((u16)sprite->data[1] >> 8) * -1;
+    else
+        sprite->x2 = (u16)sprite->data[1] >> 8;
+
+    if (1 & task->data[8])
+        sprite->y2 = ((u16)sprite->data[2] >> 8) * -1;
+    else
+        sprite->y2 = (u16)sprite->data[2] >> 8;
+
+    if (sprite->data[0]-- <= 0)
+    {
+        sprite->data[0] = 30;
+        sprite->callback = AnimAirWaveProjectile_Step2;
+    }
+}
+
+static void AnimAirWaveProjectile_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[0]-- <= 0)
+    {
+        gTasks[sprite->data[7]].data[1]--;
+        DestroySprite(sprite);
+    }
 }
