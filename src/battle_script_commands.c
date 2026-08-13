@@ -1482,6 +1482,7 @@ static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
 static void Cmd_mimicattackcopy(void);
 #define METRONOME_FORBIDDEN_END         0xFFFF
+#define ASSIST_FORBIDDEN_END              0xFFFF
 extern const u16 sMovesForbiddenToCopy[];
 static void Cmd_metronome(void);
 static void Cmd_dmgtolevel(void);
@@ -1550,6 +1551,7 @@ static void Cmd_tryswapabilities(void);
 static void Cmd_tryimprison(void);
 static void Cmd_trysetgrudge(void);
 static void Cmd_weightdamagecalculation(void);
+static void Cmd_assistattackselect(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8662,4 +8664,57 @@ static void Cmd_weightdamagecalculation(void)
         gDynamicBasePower = 120;
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_assistattackselect(void)
+{
+    s32 chooseableMovesNo = 0;
+    struct Pokemon *party;
+    s32 monId, moveIndex;
+    u16 *validMoves = gBattleStruct->assistPossibleMoves;
+
+    if (GET_BATTLER_SIDE(gBattlerAttacker) != B_SIDE_PLAYER)
+        party = gEnemyParty;
+    else
+        party = gPlayerParty;
+
+    for (monId = 0; monId < PARTY_SIZE; monId++)
+    {
+        if (monId == gBattlerPartyIndexes[gBattlerAttacker])
+            continue;
+        if (GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_NONE)
+            continue;
+        if (GetMonData(&party[monId], MON_DATA_SPECIES_OR_EGG) == SPECIES_EGG)
+            continue;
+
+        for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+        {
+            s32 i = 0;
+            u16 move = GetMonData(&party[monId], MON_DATA_MOVE1 + moveIndex);
+
+            if ((u8)IsInvalidForSleepTalkOrAssist(move))
+                continue;
+
+            for (; sMovesForbiddenToCopy[i] != ASSIST_FORBIDDEN_END && move != sMovesForbiddenToCopy[i]; i++);
+
+            if (sMovesForbiddenToCopy[i] != ASSIST_FORBIDDEN_END)
+                continue;
+            if (move == MOVE_NONE)
+                continue;
+
+            validMoves[chooseableMovesNo] = move;
+            chooseableMovesNo++;
+        }
+    }
+    if (chooseableMovesNo)
+    {
+        gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
+        gCalledMove = validMoves[((Random() & 0xFF) * chooseableMovesNo) >> 8];
+        gBattlerTarget = GetMoveTarget(gCalledMove, NO_TARGET_OVERRIDE);
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
