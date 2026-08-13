@@ -505,67 +505,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD3_trycopyability
-atkD3_trycopyability: @ 0x08054D58
-	push {r4, lr}
-	ldr r3, _08054D98
-	ldr r4, _08054D9C
-	ldrb r0, [r4]
-	movs r2, #0x58
-	muls r0, r2, r0
-	adds r0, r0, r3
-	adds r0, #0x20
-	ldrb r1, [r0]
-	adds r0, r1, #0
-	cmp r0, #0
-	beq _08054DAC
-	cmp r0, #0x19
-	beq _08054DAC
-	ldr r0, _08054DA0
-	ldrb r0, [r0]
-	muls r0, r2, r0
-	adds r0, r0, r3
-	adds r0, #0x20
-	strb r1, [r0]
-	ldr r1, _08054DA4
-	ldrb r0, [r4]
-	muls r0, r2, r0
-	adds r0, r0, r3
-	adds r0, #0x20
-	ldrb r0, [r0]
-	strb r0, [r1]
-	ldr r1, _08054DA8
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-	b _08054DC6
-	.align 2, 0
-_08054D98: .4byte 0x02023D28
-_08054D9C: .4byte 0x02023EB0
-_08054DA0: .4byte 0x02023EAF
-_08054DA4: .4byte 0x02023EAE
-_08054DA8: .4byte 0x02023EB8
-_08054DAC:
-	ldr r3, _08054DCC
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-_08054DC6:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054DCC: .4byte 0x02023EB8
-	thumb_func_end atkD3_trycopyability
 
 	thumb_func_start atkD4_trywish
 atkD4_trywish: @ 0x08054DD0

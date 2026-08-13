@@ -1538,6 +1538,7 @@ static void Cmd_jumpifnodamage(void);
 static void Cmd_settaunt(void);
 static void Cmd_trysethelpinghand(void);
 static void Cmd_tryswapitems(void);
+static void Cmd_trycopyability(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8444,5 +8445,20 @@ static void Cmd_tryswapitems(void)
             else
                 gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_ITEM_SWAP_GIVEN; // attacker's item -> <- nothing
         }
+    }
+}
+
+static void Cmd_trycopyability(void)
+{
+    if (gBattleMons[gBattlerTarget].ability != ABILITY_NONE
+        && gBattleMons[gBattlerTarget].ability != ABILITY_WONDER_GUARD)
+    {
+        gBattleMons[gBattlerAttacker].ability = gBattleMons[gBattlerTarget].ability;
+        gLastUsedAbility = gBattleMons[gBattlerTarget].ability;
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
