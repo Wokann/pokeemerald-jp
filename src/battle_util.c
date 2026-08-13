@@ -2,12 +2,17 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_scripts.h"
+#include "battle_util.h"
+#include "item.h"
 #include "link.h"
 #include "util.h"
 #include "constants/battle_script_commands.h"
 #include "constants/battle.h"
 #include "constants/global.h"
 #include "constants/abilities.h"
+#include "constants/hold_effects.h"
+#include "constants/items.h"
 #include "constants/moves.h"
 
 u8 GetBattlerForBattleScript(u8 caseId)
@@ -275,4 +280,194 @@ void BattleScriptPushCursor(void)
 void HandleAction_RunBattleScript(void)
 {
     gBattlescriptCurrInstr = gBattleResources->battleScriptsStack->ptr[--gBattleResources->battleScriptsStack->size];
+}
+
+u8 TrySetCantSelectMoveBattleScript(void)
+{
+    u8 limitations = 0;
+    u16 move = gBattleMons[gActiveBattler].moves[gBattleBufferB[gActiveBattler][2]];
+    u8 holdEffect;
+    u16 *choicedMove = &gBattleStruct->choicedMove[gActiveBattler];
+
+    if (gDisableStructs[gActiveBattler].disabledMove == move && move != MOVE_NONE)
+    {
+        gBattleScripting.battler = gActiveBattler;
+        gCurrentMove = move;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gPalaceSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingDisabledMoveInPalace;
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingDisabledMove;
+            limitations = 1;
+        }
+    }
+
+    if (move == gLastMoves[gActiveBattler] && move != MOVE_STRUGGLE && (gBattleMons[gActiveBattler].status2 & STATUS2_TORMENT))
+    {
+        CancelMultiTurnMoves(gActiveBattler);
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gPalaceSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingTormentedMoveInPalace;
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingTormentedMove;
+            limitations++;
+        }
+    }
+
+    if (gDisableStructs[gActiveBattler].tauntTimer != 0 && gBattleMoves[move].power == 0)
+    {
+        gCurrentMove = move;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gPalaceSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTauntInPalace;
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveTaunt;
+            limitations++;
+        }
+    }
+
+    if (GetImprisonedMovesCount(gActiveBattler, move))
+    {
+        gCurrentMove = move;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gPalaceSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingImprisonedMoveInPalace;
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingImprisonedMove;
+            limitations++;
+        }
+    }
+
+    if (gBattleMons[gActiveBattler].item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[gActiveBattler].holdEffect;
+    else
+        holdEffect = GetItemHoldEffectParam(gBattleMons[gActiveBattler].item);
+
+    gPotentialItemEffectBattler = gActiveBattler;
+
+    if (holdEffect == HOLD_EFFECT_CHOICE_BAND && *choicedMove != MOVE_NONE && *choicedMove != MOVE_UNAVAILABLE && *choicedMove != move)
+    {
+        gCurrentMove = *choicedMove;
+        gLastUsedItem = gBattleMons[gActiveBattler].item;
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingNotAllowedMoveChoiceItem;
+            limitations++;
+        }
+    }
+
+    if (gBattleMons[gActiveBattler].pp[gBattleBufferB[gActiveBattler][2]] == 0)
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_PALACE)
+        {
+            gProtectStructs[gActiveBattler].palaceUnableToUseMove = TRUE;
+        }
+        else
+        {
+            gSelectionBattleScripts[gActiveBattler] = BattleScript_SelectingMoveWithNoPP;
+            limitations++;
+        }
+    }
+
+    return limitations;
+}
+
+u8 CheckMoveLimitations(u8 battler, u8 unusableMoves, u8 check)
+{
+    u8 holdEffect;
+    u16 *choicedMove = &gBattleStruct->choicedMove[battler];
+    s32 i;
+
+    if (gBattleMons[battler].item == ITEM_ENIGMA_BERRY)
+        holdEffect = gEnigmaBerries[battler].holdEffect;
+    else
+        holdEffect = GetItemHoldEffectParam(gBattleMons[battler].item);
+
+    gPotentialItemEffectBattler = battler;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        // No move
+        if (gBattleMons[battler].moves[i] == MOVE_NONE && check & MOVE_LIMITATION_ZEROMOVE)
+            unusableMoves |= gBitTable[i];
+        // No PP
+        if (gBattleMons[battler].pp[i] == 0 && check & MOVE_LIMITATION_PP)
+            unusableMoves |= gBitTable[i];
+        // Disable
+        if (gBattleMons[battler].moves[i] == gDisableStructs[battler].disabledMove && check & MOVE_LIMITATION_DISABLED)
+            unusableMoves |= gBitTable[i];
+        // Torment
+        if (gBattleMons[battler].moves[i] == gLastMoves[battler] && check & MOVE_LIMITATION_TORMENTED && gBattleMons[battler].status2 & STATUS2_TORMENT)
+            unusableMoves |= gBitTable[i];
+        // Taunt
+        if (gDisableStructs[battler].tauntTimer && check & MOVE_LIMITATION_TAUNT && gBattleMoves[gBattleMons[battler].moves[i]].power == 0)
+            unusableMoves |= gBitTable[i];
+        // Imprison
+        if (GetImprisonedMovesCount(battler, gBattleMons[battler].moves[i]) && check & MOVE_LIMITATION_IMPRISON)
+            unusableMoves |= gBitTable[i];
+        // Encore
+        if (gDisableStructs[battler].encoreTimer && gDisableStructs[battler].encoredMove != gBattleMons[battler].moves[i])
+            unusableMoves |= gBitTable[i];
+        // Choice Band
+        if (holdEffect == HOLD_EFFECT_CHOICE_BAND && *choicedMove != MOVE_NONE && *choicedMove != MOVE_UNAVAILABLE && *choicedMove != gBattleMons[battler].moves[i])
+            unusableMoves |= gBitTable[i];
+    }
+    return unusableMoves;
+}
+
+bool8 AreAllMovesUnusable(void)
+{
+    u8 unusable = CheckMoveLimitations(gActiveBattler, 0, MOVE_LIMITATIONS_ALL);
+
+    if (unusable == ALL_MOVES_MASK) // All moves are unusable.
+    {
+        gProtectStructs[gActiveBattler].noValidMoves = TRUE;
+        gSelectionBattleScripts[gActiveBattler] = BattleScript_NoMovesLeft;
+    }
+    else
+    {
+        gProtectStructs[gActiveBattler].noValidMoves = FALSE;
+    }
+
+    return (unusable == ALL_MOVES_MASK);
+}
+
+u8 GetImprisonedMovesCount(u8 battler, u16 move)
+{
+    s32 i;
+    u8 imprisonedMoves = 0;
+    u8 battlerSide = GetBattlerSide(battler);
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (battlerSide != GetBattlerSide(i) && gStatuses3[i] & STATUS3_IMPRISONED_OTHERS)
+        {
+            s32 j;
+            for (j = 0; j < MAX_MON_MOVES; j++)
+            {
+                if (move == gBattleMons[i].moves[j])
+                    break;
+            }
+            if (j < MAX_MON_MOVES)
+                imprisonedMoves++;
+        }
+    }
+
+    return imprisonedMoves;
 }
