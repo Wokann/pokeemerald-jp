@@ -1493,6 +1493,7 @@ static void Cmd_painsplitdmgcalc(void);
 static void Cmd_settypetorandomresistance(void);
 static void Cmd_setalwayshitflag(void);
 static void Cmd_copymovepermanently(void);
+static void Cmd_trychoosesleeptalkmove(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7383,6 +7384,44 @@ static void Cmd_copymovepermanently(void)
     }
     else
     {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_trychoosesleeptalkmove(void)
+{
+    s32 i;
+    u8 unusableMovesBits = 0;
+
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if ((u8)IsInvalidForSleepTalkOrAssist(gBattleMons[gBattlerAttacker].moves[i])
+            || gBattleMons[gBattlerAttacker].moves[i] == MOVE_FOCUS_PUNCH
+            || gBattleMons[gBattlerAttacker].moves[i] == MOVE_UPROAR
+            || (u8)IsTwoTurnsMove(gBattleMons[gBattlerAttacker].moves[i]))
+        {
+            unusableMovesBits |= gBitTable[i];
+        }
+    }
+
+    unusableMovesBits = CheckMoveLimitations(gBattlerAttacker, unusableMovesBits, ~MOVE_LIMITATION_PP);
+    if (unusableMovesBits == ALL_MOVES_MASK) // all 4 moves cannot be chosen
+    {
+        gBattlescriptCurrInstr += 5;
+    }
+    else // at least one move can be chosen
+    {
+        u32 movePosition;
+
+        do
+        {
+            movePosition = MOD(Random(), MAX_MON_MOVES);
+        } while ((gBitTable[movePosition] & unusableMovesBits));
+
+        gCalledMove = gBattleMons[gBattlerAttacker].moves[movePosition];
+        gCurrMovePos = movePosition;
+        gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
+        gBattlerTarget = GetMoveTarget(gCalledMove, NO_TARGET_OVERRIDE);
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
