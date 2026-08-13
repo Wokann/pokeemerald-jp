@@ -1506,6 +1506,7 @@ static void Cmd_trysetspikes(void);
 static void Cmd_setforesight(void);
 static void Cmd_trysetperishsong(void);
 static void Cmd_rolloutdamagecalculation(void);
+static void Cmd_jumpifconfusedandstatmaxed(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7716,4 +7717,13 @@ static void Cmd_rolloutdamagecalculation(void)
 
         gBattlescriptCurrInstr++;
     }
+}
+
+static void Cmd_jumpifconfusedandstatmaxed(void)
+{
+    if (gBattleMons[gBattlerTarget].status2 & STATUS2_CONFUSION
+        && gBattleMons[gBattlerTarget].statStages[gBattlescriptCurrInstr[1]] == MAX_STAT_STAGE)
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+    else
+        gBattlescriptCurrInstr += 6;
 }
