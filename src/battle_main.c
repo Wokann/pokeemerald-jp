@@ -36,6 +36,7 @@
 #include "window.h"
 #include "constants/battle.h"
 #include "constants/battle_anim.h"
+#include "constants/abilities.h"
 #include "constants/battle_string_ids.h"
 #include "constants/berry.h"
 #include "constants/battle_move_effects.h"
@@ -84,6 +85,8 @@ extern void BattleIntroPlayer1SendsOutMonAnimation(void); // JP asm 0x0803B10C (
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern void TryDoEventsBeforeFirstTurn(void); // JP asm 0x0803B26C (register-sensitive, kept in asm)
 extern void BattleTurnPassed(void); // JP asm 0x0803B600 (US: same name)
+extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
+extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2083,6 +2086,7 @@ static void HandleEndTurn_ContinueBattle(void)
         gMoveResultFlags = 0;
     }
 }
+
 
 
 
