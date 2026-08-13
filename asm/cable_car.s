@@ -8,18 +8,6 @@
 	.section .text.cable_car_rest,"ax",%progbits
 
 
-	thumb_func_start CableCarMainCallback_Run
-CableCarMainCallback_Run: @ 0x08150218
-	push {lr}
-	bl RunTasks
-	bl AnimateSprites
-	bl BuildOamBuffer
-	bl UpdatePaletteFade
-	bl MapMusicMain
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end CableCarMainCallback_Run
 
 	thumb_func_start CleanupCableCar
 CleanupCableCar: @ 0x08150234

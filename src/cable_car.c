@@ -76,7 +76,8 @@ extern const struct CompressedSpriteSheet sCableCarSpriteSheets[];
 extern const struct SpritePalette sCableCarSpritePalettes[];
 extern const u32 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
-extern void CB2_CableCar(void);
+
+void CB2_CableCar(void);
 extern void Task_CableCar(u8 taskId);
 extern void Task_AnimateBgGoingUp(u8 taskId);
 extern void Task_AnimateBgGoingDown(u8 taskId);
@@ -216,4 +217,13 @@ void CableCar(void)
     LockPlayerFieldControls();
     CreateTask(Task_LoadCableCar, 1);
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+}
+
+void CB2_CableCar(void)
+{
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    UpdatePaletteFade();
+    MapMusicMain();
 }
