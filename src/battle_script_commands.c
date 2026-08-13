@@ -2076,3 +2076,178 @@ void SetMoveEffect(bool8 primary, u8 certain)
 
     gBattleCommunication[MOVE_EFFECT_BYTE] = 0;
 }
+
+static void Cmd_seteffectwithchance(void)
+{
+    u32 percentChance;
+
+    if (gBattleMons[gBattlerAttacker].ability == ABILITY_SERENE_GRACE)
+        percentChance = gBattleMoves[gCurrentMove].secondaryEffectChance * 2;
+    else
+        percentChance = gBattleMoves[gCurrentMove].secondaryEffectChance;
+
+    if (gBattleCommunication[MOVE_EFFECT_BYTE] & MOVE_EFFECT_CERTAIN
+        && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+    {
+        gBattleCommunication[MOVE_EFFECT_BYTE] &= ~MOVE_EFFECT_CERTAIN;
+        SetMoveEffect(FALSE, MOVE_EFFECT_CERTAIN);
+    }
+    else if (Random() % 100 < percentChance
+             && gBattleCommunication[MOVE_EFFECT_BYTE]
+             && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+    {
+        if (percentChance >= 100)
+            SetMoveEffect(FALSE, MOVE_EFFECT_CERTAIN);
+        else
+            SetMoveEffect(FALSE, 0);
+    }
+    else
+    {
+        gBattlescriptCurrInstr++;
+    }
+
+    gBattleCommunication[MOVE_EFFECT_BYTE] = 0;
+    gBattleScripting.multihitMoveEffect = 0;
+}
+
+static void Cmd_seteffectprimary(void)
+{
+    SetMoveEffect(TRUE, 0);
+}
+
+static void Cmd_seteffectsecondary(void)
+{
+    SetMoveEffect(FALSE, 0);
+}
+
+static void Cmd_clearstatusfromeffect(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    if (gBattleCommunication[MOVE_EFFECT_BYTE] <= PRIMARY_STATUS_MOVE_EFFECT)
+        gBattleMons[gActiveBattler].status1 &= (~sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]]);
+    else
+        gBattleMons[gActiveBattler].status2 &= (~sStatusFlagsForMoveEffects[gBattleCommunication[MOVE_EFFECT_BYTE]]);
+
+    gBattleCommunication[MOVE_EFFECT_BYTE] = 0;
+    gBattlescriptCurrInstr += 2;
+    gBattleScripting.multihitMoveEffect = 0;
+}
+
+extern void AdjustFriendshipOnBattleFaint(u8 battler);
+
+static void Cmd_tryfaintmon(void)
+{
+    const u8 *BS_ptr;
+
+    if (gBattlescriptCurrInstr[2] != 0)
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        if (gHitMarker & HITMARKER_FAINTED(gActiveBattler))
+        {
+            BS_ptr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
+
+            HandleAction_RunBattleScript();
+            gBattlescriptCurrInstr = BS_ptr;
+            gSideStatuses[GetBattlerSide(gActiveBattler)] &= ~SIDE_STATUS_SPIKES_DAMAGED;
+        }
+        else
+        {
+            gBattlescriptCurrInstr += 7;
+        }
+    }
+    else
+    {
+        u8 battler;
+
+        if (gBattlescriptCurrInstr[1] == BS_ATTACKER)
+        {
+            gActiveBattler = gBattlerAttacker;
+            battler = gBattlerTarget;
+            BS_ptr = BattleScript_FaintAttacker;
+        }
+        else
+        {
+            gActiveBattler = gBattlerTarget;
+            battler = gBattlerAttacker;
+            BS_ptr = BattleScript_FaintTarget;
+        }
+        if (!(gAbsentBattlerFlags & gBitTable[gActiveBattler])
+         && gBattleMons[gActiveBattler].hp == 0)
+        {
+            gHitMarker |= HITMARKER_FAINTED(gActiveBattler);
+            BattleScriptPush(gBattlescriptCurrInstr + 7);
+            gBattlescriptCurrInstr = BS_ptr;
+            if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+            {
+                gHitMarker |= HITMARKER_PLAYER_FAINTED;
+                if (gBattleResults.playerFaintCounter <= 0xFE)
+                    gBattleResults.playerFaintCounter++;
+                AdjustFriendshipOnBattleFaint(gActiveBattler);
+            }
+            else
+            {
+                if (gBattleResults.opponentFaintCounter <= 0xFE)
+                    gBattleResults.opponentFaintCounter++;
+                gBattleResults.lastOpponentSpecies = GetMonData3(&gEnemyParty[gBattlerPartyIndexes[gActiveBattler]], MON_DATA_SPECIES, NULL);
+            }
+            if ((gHitMarker & HITMARKER_DESTINYBOND) && gBattleMons[gBattlerAttacker].hp != 0)
+            {
+                gHitMarker &= ~HITMARKER_DESTINYBOND;
+                BattleScriptPush(gBattlescriptCurrInstr);
+                gBattleMoveDamage = gBattleMons[battler].hp;
+                gBattlescriptCurrInstr = BattleScript_DestinyBondTakesLife;
+            }
+            if ((gStatuses3[gBattlerTarget] & STATUS3_GRUDGE)
+             && !(gHitMarker & HITMARKER_GRUDGE)
+             && GetBattlerSide(gBattlerAttacker) != GetBattlerSide(gBattlerTarget)
+             && gBattleMons[gBattlerAttacker].hp != 0
+             && gCurrentMove != MOVE_STRUGGLE)
+            {
+                u8 moveIndex = *(gBattleStruct->chosenMovePositions + gBattlerAttacker);
+
+                gBattleMons[gBattlerAttacker].pp[moveIndex] = 0;
+                BattleScriptPush(gBattlescriptCurrInstr);
+                gBattlescriptCurrInstr = BattleScript_GrudgeTakesPP;
+                gActiveBattler = gBattlerAttacker;
+                BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, moveIndex + REQUEST_PPMOVE1_BATTLE, 0, sizeof(gBattleMons[gActiveBattler].pp[moveIndex]), &gBattleMons[gActiveBattler].pp[moveIndex]);
+                MarkBattlerForControllerExec(gActiveBattler);
+
+                PREPARE_MOVE_BUFFER(gBattleTextBuff1, gBattleMons[gBattlerAttacker].moves[moveIndex])
+            }
+        }
+        else
+        {
+            gBattlescriptCurrInstr += 7;
+        }
+    }
+}
+
+static void Cmd_dofaintanimation(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        BtlController_EmitFaintAnimation(B_COMM_TO_CONTROLLER);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 2;
+    }
+}
+
+static void Cmd_cleareffectsonfaint(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+        if (!(gBattleTypeFlags & BATTLE_TYPE_ARENA) || gBattleMons[gActiveBattler].hp == 0)
+        {
+            gBattleMons[gActiveBattler].status1 = 0;
+            BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[gActiveBattler].status1), &gBattleMons[gActiveBattler].status1);
+            MarkBattlerForControllerExec(gActiveBattler);
+        }
+
+        FaintClearSetData(); // Effects like attractions, trapping, etc.
+        gBattlescriptCurrInstr += 2;
+    }
+}
