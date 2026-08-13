@@ -828,49 +828,13 @@ _0815B6AC:
 	.align 2, 0
 	thumb_func_end sub_0815B648
 
-	thumb_func_start AnimTask_StrongFrustrationGrowAndShrink
-AnimTask_StrongFrustrationGrowAndShrink: @ 0x0815B6B4
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	adds r5, r0, #0
-	ldr r1, _0815B6EC
-	lsls r0, r5, #2
-	adds r0, r0, r5
-	lsls r0, r0, #3
-	adds r4, r0, r1
-	movs r1, #8
-	ldrsh r0, [r4, r1]
-	cmp r0, #0
-	bne _0815B6F4
-	movs r0, #0
-	bl GetAnimBattlerSpriteId
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	ldr r2, _0815B6F0
-	adds r0, r4, #0
-	bl PrepareAffineAnimInTaskData
-	ldrh r0, [r4, #8]
-	adds r0, #1
-	strh r0, [r4, #8]
-	b _0815B706
-	.align 2, 0
-_0815B6EC: .4byte 0x03005B60
-_0815B6F0: .4byte 0x085AD238
-_0815B6F4:
-	adds r0, r4, #0
-	bl RunAffineAnimFromTaskData
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0815B706
-	adds r0, r5, #0
-	bl DestroyAnimVisualTask
-_0815B706:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end AnimTask_StrongFrustrationGrowAndShrink
+	.section .text.battle_anim_effects_3_rest5,"ax",%progbits
+
+
+
+
+
+
 
 	thumb_func_start sub_0815B70C
 sub_0815B70C: @ 0x0815B70C

@@ -4909,6 +4909,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_StockpileDeformMon);
         src/battle_anim_effects_3.o(.text.AnimTask_SpitUpDeformMon);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest4);
+        src/battle_anim_effects_3.o(.text.AnimTask_SwallowDeformMon);
+        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
         src/decoration_inventory.o(.text);

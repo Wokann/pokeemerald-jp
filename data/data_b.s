@@ -11491,8 +11491,8 @@ gStockpileDeformMonAffineAnimCmds: @ 0x85AD1C0
 gSpitUpDeformMonAffineAnimCmds: @ 0x85AD1E8
 	.incbin "baserom_jp.gba", 0x5ad1e8, 0x50
 
-	.globl gUnknown_85AD238
-gUnknown_85AD238: @ 0x85AD238
+	.globl gSwallowDeformMonAffineAnimCmds
+gSwallowDeformMonAffineAnimCmds: @ 0x85AD238
 	.incbin "baserom_jp.gba", 0x5ad238, 0x30
 
 	.globl gUnknown_85AD268
