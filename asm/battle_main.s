@@ -18,54 +18,6 @@
 
 
 
-	thumb_func_start BattleIntroPrintOpponentSendsOut
-BattleIntroPrintOpponentSendsOut: @ 0x0803ADC4
-	push {lr}
-	ldr r0, _0803ADF4
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _0803AE14
-	ldr r0, _0803ADF8
-	ldr r2, [r0]
-	movs r0, #0x80
-	lsls r0, r0, #0x11
-	ands r0, r2
-	cmp r0, #0
-	beq _0803ADFC
-	movs r0, #0x80
-	lsls r0, r0, #0x12
-	ands r0, r2
-	cmp r0, #0
-	beq _0803ADFC
-	movs r1, #0x80
-	lsls r1, r1, #0x18
-	ands r1, r2
-	rsbs r0, r1, #0
-	orrs r0, r1
-	lsrs r0, r0, #0x1f
-	b _0803ADFE
-	.align 2, 0
-_0803ADF4: .4byte 0x02023D0C
-_0803ADF8: .4byte 0x02022C90
-_0803ADFC:
-	movs r0, #1
-_0803ADFE:
-	bl GetBattlerAtPosition
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	movs r0, #1
-	bl PrepareStringBattle
-	ldr r1, _0803AE18
-	ldr r0, _0803AE1C
-	str r0, [r1]
-_0803AE14:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803AE18: .4byte 0x03005A64
-_0803AE1C: .4byte 0x0803AEA1
-	thumb_func_end BattleIntroPrintOpponentSendsOut
 
 	thumb_func_start BattleIntroOpponent2SendsOutMonAnimation
 BattleIntroOpponent2SendsOutMonAnimation: @ 0x0803AE20

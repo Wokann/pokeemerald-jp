@@ -81,6 +81,7 @@ extern void BattleIntroPrintTrainerWantsToBattle(void); // JP asm 0x0803AD64 (US
 extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: same name)
 extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
 extern void BattleIntroPrintPlayerSendsOut(void); // JP asm 0x0803B010 (US: same name)
+extern void BattleIntroOpponent1SendsOutMonAnimation(void); // JP asm 0x0803AEA0 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1987,6 +1988,33 @@ static void BattleIntroPrintWildMonAttacked(void)
         gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
         PrepareStringBattle(STRINGID_INTROMSG, 0);
     }
+}
+
+static void BattleIntroPrintOpponentSendsOut(void)
+{
+    u32 position;
+
+    if (gBattleControllerExecFlags)
+        return;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
+    {
+        position = B_POSITION_OPPONENT_LEFT;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK)
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_RECORDED_IS_MASTER)
+            position = B_POSITION_OPPONENT_LEFT;
+        else
+            position = B_POSITION_PLAYER_LEFT;
+    }
+    else
+    {
+        position = B_POSITION_OPPONENT_LEFT;
+    }
+
+    PrepareStringBattle(STRINGID_INTROSENDOUT, GetBattlerAtPosition(position));
+    gBattleMainFunc = BattleIntroOpponent1SendsOutMonAnimation;
 }
 
 
