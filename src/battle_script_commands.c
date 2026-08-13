@@ -1457,6 +1457,13 @@ extern const u8 *const sMoveEffectBS_Ptrs[];
 extern const u16 gTrappingMoves[];
 extern const u8 *const gBattleScriptsForMoveEffects[];
 u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr);
+static void Cmd_statbuffchange(void);
+static void Cmd_normalisebuffs(void);
+static void Cmd_setbide(void);
+static void Cmd_confuseifrepeatingattackends(void);
+static void Cmd_setmultihitcounter(void);
+static void Cmd_initmultihitstring(void);
+bool8 TryDoForceSwitchOut(void);
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 void sub_0814FA04(const u8 *text, u8 windowId);
@@ -6265,4 +6272,88 @@ u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr)
         return STAT_CHANGE_DIDNT_WORK;
 
     return STAT_CHANGE_WORKED;
+}
+
+static void Cmd_statbuffchange(void)
+{
+    const u8 *jumpPtr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+    if (ChangeStatBuffs(gBattleScripting.statChanger & 0xF0, GET_STAT_BUFF_ID(gBattleScripting.statChanger), gBattlescriptCurrInstr[1], jumpPtr) == STAT_CHANGE_WORKED)
+        gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_normalisebuffs(void)
+{
+    s32 i, j;
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        for (j = 0; j < NUM_BATTLE_STATS; j++)
+            gBattleMons[i].statStages[j] = DEFAULT_STAT_STAGE;
+    }
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setbide(void)
+{
+    gBattleMons[gBattlerAttacker].status2 |= STATUS2_MULTIPLETURNS;
+    gLastPrintedMoves[gBattlerAttacker] = gCurrentMove;
+    gBideDmg[gBattlerAttacker] = 0;
+    gBattleMons[gBattlerAttacker].status2 |= STATUS2_BIDE_TURN(2);
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_confuseifrepeatingattackends(void)
+{
+    if (!(gBattleMons[gBattlerAttacker].status2 & STATUS2_LOCK_CONFUSE))
+        gBattleCommunication[MOVE_EFFECT_BYTE] = (MOVE_EFFECT_THRASH | MOVE_EFFECT_AFFECTS_USER);
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setmultihitcounter(void)
+{
+    if (gBattlescriptCurrInstr[1])
+    {
+        gMultiHitCounter = gBattlescriptCurrInstr[1];
+    }
+    else
+    {
+        gMultiHitCounter = Random() & 3;
+        if (gMultiHitCounter > 1)
+            gMultiHitCounter = (Random() & 3) + 2;
+        else
+            gMultiHitCounter += 2;
+    }
+
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_initmultihitstring(void)
+{
+    PREPARE_BYTE_NUMBER_BUFFER(gBattleScripting.multihitString, 1, 0)
+
+    gBattlescriptCurrInstr++;
+}
+
+bool8 TryDoForceSwitchOut(void)
+{
+    if (gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+    {
+        *(gBattleStruct->battlerPartyIndexes + gBattlerTarget) = gBattlerPartyIndexes[gBattlerTarget];
+    }
+    else
+    {
+        u16 random = Random() & 0xFF;
+        if ((u32)((random * (gBattleMons[gBattlerAttacker].level + gBattleMons[gBattlerTarget].level) >> 8) + 1) <= (gBattleMons[gBattlerTarget].level / 4))
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            return FALSE;
+        }
+        *(gBattleStruct->battlerPartyIndexes + gBattlerTarget) = gBattlerPartyIndexes[gBattlerTarget];
+    }
+
+    gBattlescriptCurrInstr = BattleScript_SuccessForceOut;
+    return TRUE;
 }
