@@ -2329,6 +2329,40 @@ void SpecialStatusesClear(void)
     }
 }
 
+static void HandleEndTurn_RanFromBattle(void)
+{
+    gCurrentActionFuncId = 0;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER && gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        gBattlescriptCurrInstr = BattleScript_PrintPlayerForfeited;
+        gBattleOutcome = B_OUTCOME_FORFEITED;
+        gSaveBlock2Ptr->frontier.disableRecordBattle = TRUE;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)
+    {
+        gBattlescriptCurrInstr = BattleScript_PrintPlayerForfeited;
+        gBattleOutcome = B_OUTCOME_FORFEITED;
+    }
+    else
+    {
+        switch (gProtectStructs[gBattlerAttacker].fleeType)
+        {
+        default:
+            gBattlescriptCurrInstr = BattleScript_GotAwaySafely;
+            break;
+        case FLEE_ITEM:
+            gBattlescriptCurrInstr = BattleScript_SmokeBallEscape;
+            break;
+        case FLEE_ABILITY:
+            gBattlescriptCurrInstr = BattleScript_RanAwayUsingMonAbility;
+            break;
+        }
+    }
+
+    gBattleMainFunc = HandleEndTurn_FinishBattle;
+}
+
 
 
 static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
