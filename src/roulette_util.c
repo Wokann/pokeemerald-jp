@@ -106,3 +106,24 @@ u8 RouletteFlash_FadePalette(struct RouletteFlashPalette *pal)
     }
     return returnval;
 }
+
+u8 RouletteFlash_FlashPalette(struct RouletteFlashPalette *pal)
+{
+    u8 i = 0;
+    switch (pal->state)
+    {
+    case 1:
+        // Flash to color
+        for (; i < pal->settings.numColors; i++)
+            gPlttBufferFaded[pal->settings.paletteOffset + i] = pal->settings.color;
+        pal->state++;
+        break;
+    case 2:
+        // Restore to original color
+        for (; i < pal->settings.numColors; i++)
+            gPlttBufferFaded[pal->settings.paletteOffset + i] = gPlttBufferUnfaded[pal->settings.paletteOffset + i];
+        pal->state--;
+        break;
+    }
+    return 1;
+}
