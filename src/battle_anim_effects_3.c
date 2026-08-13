@@ -28,6 +28,7 @@ extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
 extern const union AffineAnimCmd gSmellingSaltsSquishAffineAnimCmds[];
 extern const union AffineAnimCmd gSlackOffSquishAffineAnimCmds[];
+extern const s8 gMorningSunLightBeamCoordsTable[];
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
@@ -377,6 +378,98 @@ void AnimTask_CastformGfxDataChange(u8 taskId)
 {
     HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, TRUE);
     DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_MorningSunLightBeam(u8 taskId)
+{
+    struct BattleAnimBgData animBg;
+
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 16));
+        SetAnimBgAttribute(1, BG_ANIM_SCREEN_SIZE, 0);
+        SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+        if (!IsContest())
+            SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 1);
+
+        GetBattleAnimBg1Data(&animBg);
+        AnimLoadCompressedBgTilemapHandleContest(&animBg, &gBattleAnimMaskTilemap_LightBeam, FALSE);
+        if (IsContest())
+        {
+            gBattle_BG1_X = -56;
+            gBattle_BG1_Y = 0;
+        }
+        else
+        {
+            if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+                gBattle_BG1_X = -135;
+            else
+                gBattle_BG1_X = -10;
+
+            gBattle_BG1_Y = 0;
+        }
+
+        AnimLoadCompressedBgGfx(animBg.bgId, gBattleAnimMaskImage_LightBeam, animBg.tilesOffset);
+        LoadCompressedPalette(gBattleAnimMaskPalette_LightBeam, BG_PLTT_ID(animBg.paletteId), PLTT_SIZE_4BPP);
+
+        gTasks[taskId].data[10] = gBattle_BG1_X;
+        gTasks[taskId].data[11] = gBattle_BG1_Y;
+
+        gTasks[taskId].data[0]++;
+        PlaySE12WithPanning(SE_M_MORNING_SUN, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+        break;
+    case 1:
+        if (gTasks[taskId].data[4]++ > 0)
+        {
+            gTasks[taskId].data[4] = 0;
+            if (++gTasks[taskId].data[1] > 12)
+                gTasks[taskId].data[1] = 12;
+
+            SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(gTasks[taskId].data[1], 16 - gTasks[taskId].data[1]));
+
+            if (gTasks[taskId].data[1] == 12)
+                gTasks[taskId].data[0]++;
+        }
+        break;
+    case 2:
+        if (--gTasks[taskId].data[1] < 0)
+            gTasks[taskId].data[1] = 0;
+
+        SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(gTasks[taskId].data[1], 16 - gTasks[taskId].data[1]));
+
+        if (!gTasks[taskId].data[1])
+        {
+            gBattle_BG1_X = gMorningSunLightBeamCoordsTable[gTasks[taskId].data[2]] + gTasks[taskId].data[10];
+            if (++gTasks[taskId].data[2] == 4)
+                gTasks[taskId].data[0] = 4;
+            else
+                gTasks[taskId].data[0] = 3;
+        }
+        break;
+    case 3:
+        if (++gTasks[taskId].data[3] == 4)
+        {
+            gTasks[taskId].data[3] = 0;
+            gTasks[taskId].data[0] = 1;
+            PlaySE12WithPanning(SE_M_MORNING_SUN, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+        }
+        break;
+    case 4:
+        GetBattleAnimBg1Data(&animBg);
+        ClearBattleAnimBg(animBg.bgId);
+        if (!IsContest())
+            SetAnimBgAttribute(1, BG_ANIM_CHAR_BASE_BLOCK, 0);
+
+        SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+        gBattle_BG1_X = 0;
+        gBattle_BG1_Y = 0;
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
 
 static void FadeScreenToWhite_Step(u8 taskId)

@@ -4925,7 +4925,8 @@ SECTIONS {
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5);
         src/battle_anim_effects_3.o(.text.AnimTask_IsMonInvisible);
         src/battle_anim_effects_3.o(.text.AnimTask_CastformGfxDataChange);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5b);
+        src/battle_anim_effects_3.o(.text.AnimTask_MorningSunLightBeam);
+        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5c);
         src/battle_anim_effects_3.o(.text.AnimTask_StrongFrustrationGrowAndShrink);
         src/battle_anim_effects_3.o(.text.AnimWeakFrustrationAngerMark);
         src/battle_anim_effects_3.o(.text.AnimTask_RockMonBackAndForth);
