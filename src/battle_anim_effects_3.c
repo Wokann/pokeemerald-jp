@@ -1,12 +1,14 @@
 #include "global.h"
 #include "battle_anim.h"
 #include "bg.h"
+#include "contest.h"
 #include "palette.h"
 #include "random.h"
 #include "scanline_effect.h"
 #include "task.h"
 #include "trig.h"
 #include "constants/battle_anim.h"
+#include "constants/rgb.h"
 #include "constants/songs.h"
 
 extern u8 gAnimVisualTaskCount;
@@ -41,6 +43,8 @@ static void AnimFlatterSpotlight(struct Sprite *sprite);
 static void AnimFlatterSpotlight_Step(struct Sprite *sprite);
 static void AnimReversalOrb(struct Sprite *sprite);
 static void AnimReversalOrb_Step(struct Sprite *sprite);
+static void AnimTask_RolePlaySilhouette_Step1(u8 taskId);
+static void AnimTask_RolePlaySilhouette_Step2(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1397,5 +1401,136 @@ static void AnimReversalOrb_Step(struct Sprite *sprite)
         sprite->data[4]++;
         if (sprite->data[4] == sprite->data[0])
             DestroyAnimSprite(sprite);
+    }
+}
+
+void AnimTask_RolePlaySilhouette(u8 taskId)
+{
+    bool8 isBackPic;
+    u32 personality;
+    u32 otId;
+    u16 species;
+    s16 xOffset;
+    u32 priority;
+    u8 spriteId;
+    s16 coord1, coord2;
+    u16 bldAlpha;
+
+    GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    if (IsContest())
+    {
+        isBackPic = TRUE;
+        personality = gContestResources->moveAnim->targetPersonality;
+        otId = gContestResources->moveAnim->otId;
+        species = gContestResources->moveAnim->targetSpecies;
+        xOffset = 20;
+        priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
+    }
+    else
+    {
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        {
+            isBackPic = FALSE;
+            personality = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_PERSONALITY);
+            otId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_OT_ID);
+            if (gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].transformSpecies == SPECIES_NONE)
+            {
+                if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+                    species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_SPECIES);
+                else
+                    species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_SPECIES);
+            }
+            else
+            {
+                species = gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].transformSpecies;
+            }
+
+            xOffset = 20;
+            priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
+        }
+        else
+        {
+            isBackPic = TRUE;
+            personality = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_PERSONALITY);
+            otId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_OT_ID);
+            if (gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].transformSpecies == SPECIES_NONE)
+            {
+                if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+                    species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_SPECIES);
+                else
+                    species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimTarget]], MON_DATA_SPECIES);
+            }
+            else
+            {
+                species = gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].transformSpecies;
+            }
+
+            xOffset = -20;
+            priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
+        }
+    }
+
+    coord1 = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    coord2 = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    spriteId = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, coord1 + xOffset, coord2, 5, personality, otId, gBattleAnimTarget, TRUE);
+
+    gSprites[spriteId].oam.priority = priority;
+    gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+    FillPalette(RGB_WHITE, OBJ_PLTT_ID(gSprites[spriteId].oam.paletteNum), PLTT_SIZE_4BPP);
+    gSprites[spriteId].oam.priority = priority;
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
+    bldAlpha = BLDALPHA_BLEND((u16)gTasks[taskId].data[1], 16 - (u16)gTasks[taskId].data[1]);
+    SetGpuReg(REG_OFFSET_BLDALPHA, bldAlpha);
+
+    gTasks[taskId].data[0] = spriteId;
+    gTasks[taskId].func = AnimTask_RolePlaySilhouette_Step1;
+}
+
+static void AnimTask_RolePlaySilhouette_Step1(u8 taskId)
+{
+    if (gTasks[taskId].data[10]++ > 1)
+    {
+        register struct Task *task asm("r4");
+        task = &gTasks[taskId];
+        task->data[10] = 0;
+#ifdef NON_MATCHING
+        task->data[1]++;
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(task->data[1], 16 - task->data[1]));
+#else
+        __asm__ volatile(
+            ".byte 0x61, 0x89\n\t"  /* ldrh r1, [r4, #10] */
+            ".byte 0x01, 0x31\n\t"  /* adds r1, #1 */
+            ".byte 0x61, 0x81\n\t"  /* strh r1, [r4, #10] */
+            ".byte 0x10, 0x20\n\t"  /* movs r0, #16 */
+            ".byte 0x40, 0x1a\n\t"  /* subs r0, r0, r1 */
+            ".byte 0x00, 0x02\n\t"  /* lsls r0, r0, #8 */
+            ".byte 0x01, 0x43\n\t"  /* orrs r1, r0 */
+            ".byte 0x09, 0x04\n\t"  /* lsls r1, r1, #16 */
+            ".byte 0x09, 0x0c\n\t"  /* lsrs r1, r1, #16 */
+            "movs r0, #0x52\n\t"
+            "bl SetGpuReg\n\t"
+            : : : "r0", "r1", "lr");
+#endif
+        if (task->data[1] == 10)
+        {
+            task->data[10] = 256;
+            task->data[11] = 256;
+            task->func = AnimTask_RolePlaySilhouette_Step2;
+        }
+    }
+}
+
+static void AnimTask_RolePlaySilhouette_Step2(u8 taskId)
+{
+    u8 spriteId = gTasks[taskId].data[0];
+    gTasks[taskId].data[10] -= 16;
+    gTasks[taskId].data[11] += 128;
+    gSprites[spriteId].oam.affineMode |= ST_OAM_AFFINE_DOUBLE_MASK;
+    TrySetSpriteRotScale(&gSprites[spriteId], TRUE, gTasks[taskId].data[10], gTasks[taskId].data[11], 0);
+    if (++gTasks[taskId].data[12] == 9)
+    {
+        ResetSpriteRotScale_PreserveAffine(&gSprites[spriteId]);
+        DestroySpriteAndFreeResources_(&gSprites[spriteId]);
+        gTasks[taskId].func = DestroyAnimVisualTaskAndDisableBlend;
     }
 }

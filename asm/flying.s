@@ -2182,7 +2182,7 @@ _0810F71C:
 	cmp r0, #0x18
 	bne _0810F73C
 	adds r0, r5, #0
-	bl sub_080A6D64
+	bl ResetSpriteRotScale_PreserveAffine
 	adds r0, r5, #0
 	bl DestroyAnimSprite
 _0810F73C:
@@ -2593,4 +2593,3 @@ _0810FA2A:
 	.align 2, 0
 _0810FA38: .4byte 0x020205AC
 	thumb_func_end unref_sub_810F184
-

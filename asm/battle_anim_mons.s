@@ -3333,8 +3333,8 @@ _080A6D5C: .4byte 0xFFFF0000
 _080A6D60: .4byte 0x02021B3C
 	thumb_func_end TrySetSpriteRotScale
 
-	thumb_func_start sub_080A6D64
-sub_080A6D64: @ 0x080A6D64
+	thumb_func_start ResetSpriteRotScale_PreserveAffine
+ResetSpriteRotScale_PreserveAffine: @ 0x080A6D64
 	push {r4, lr}
 	sub sp, #4
 	adds r4, r0, #0
@@ -3365,7 +3365,7 @@ sub_080A6D64: @ 0x080A6D64
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end sub_080A6D64
+	thumb_func_end ResetSpriteRotScale_PreserveAffine
 
 	thumb_func_start ArcTan2_
 ArcTan2_: @ 0x080A6DA4
@@ -5347,8 +5347,8 @@ _080A7C54:
 	.align 2, 0
 	thumb_func_end GetBattlerSpriteBGPriorityRank
 
-	thumb_func_start sub_080A7C5C
-sub_080A7C5C: @ 0x080A7C5C
+	thumb_func_start CreateAdditionalMonSpriteForMoveAnim
+CreateAdditionalMonSpriteForMoveAnim: @ 0x080A7C5C
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -5645,7 +5645,7 @@ _080A7EC8: .4byte 0x084FE69C
 _080A7ECC: .4byte 0x082D5A68
 _080A7ED0: .4byte 0x020205AC
 _080A7ED4: .4byte 0x082D2F50
-	thumb_func_end sub_080A7C5C
+	thumb_func_end CreateAdditionalMonSpriteForMoveAnim
 
 	thumb_func_start DestroySpriteAndFreeResources_
 DestroySpriteAndFreeResources_: @ 0x080A7ED8
