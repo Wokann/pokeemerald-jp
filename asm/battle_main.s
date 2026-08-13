@@ -5,38 +5,6 @@
 
 
 
-	thumb_func_start HandleAction_WatchesCarefully
-HandleAction_WatchesCarefully: @ 0x0803EBE8
-	ldr r2, _0803EC10
-	ldr r1, _0803EC14
-	ldr r0, _0803EC18
-	ldrb r0, [r0]
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	strb r0, [r2]
-	ldr r0, _0803EC1C
-	movs r1, #0
-	strh r1, [r0]
-	ldr r0, _0803EC20
-	strh r1, [r0]
-	ldr r1, _0803EC24
-	ldr r0, _0803EC28
-	ldr r0, [r0]
-	str r0, [r1]
-	ldr r1, _0803EC2C
-	movs r0, #0xa
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_0803EC10: .4byte 0x02023EAF
-_0803EC14: .4byte 0x02023D22
-_0803EC18: .4byte 0x02023D26
-_0803EC1C: .4byte 0x02022AC8
-_0803EC20: .4byte 0x02022ACA
-_0803EC24: .4byte 0x02023EB8
-_0803EC28: .4byte 0x0828A2E0
-_0803EC2C: .4byte 0x02023D27
-	thumb_func_end HandleAction_WatchesCarefully
 
 	thumb_func_start HandleAction_SafariZoneBallThrow
 HandleAction_SafariZoneBallThrow: @ 0x0803EC30

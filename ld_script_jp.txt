@@ -770,6 +770,7 @@ BattleScript_PrintFailedToRunString = gUnknown_828908A;
 gBattlescriptsForBallThrow = gUnknown_828A290;
 gBattlescriptsForUsingItem = gUnknown_828A2C4;
 gBattlescriptsForRunningByItem = gUnknown_828A2DC;
+gBattlescriptsForSafariActions = gUnknown_828A2E0;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
@@ -3306,6 +3307,7 @@ SECTIONS {
         asm/battle_main_useitem.o(.text);
         asm/battle_main_tryrun.o(.text);
         src/battle_main.o(.text.HandleAction_Run);
+        src/battle_main.o(.text.HandleAction_WatchesCarefully);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
