@@ -810,7 +810,7 @@ static void CB2_GiveStarter(void)
     starterMon = GetStarterPokemon(gSpecialVar_Result);
     ScriptGiveMon(starterMon, 5, ITEM_NONE, 0, 0, 0);
     ResetTasks();
-    ((void (*)(void))GetFlavorRelationByPersonality)(); // JP: bare call, no args
+    PlayBattleBGM();
     SetMainCallback2(CB2_StartFirstBattle);
     BattleTransition_Start(B_TRANSITION_BLUR);
 }

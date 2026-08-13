@@ -8620,10 +8620,10 @@ GetTrainerNameFromId: @ 0x0806B9A4
 	ldr r3, [sp, #0x10]
 	bl BeginEvolutionScene
 	movs r0, #0
-	bl PlayBattleBGM
+	bl sub_0806C820
 _0806B9B4:
 	movs r0, #1
-	bl PlayBattleBGM
+	bl sub_0806C820
 _0806B9BA:
 	str r0, [sp, #0x24]
 _0806B9BC:
@@ -10410,8 +10410,8 @@ _0806C81E:
 	ldr r0, [sp, #0x20]
 	thumb_func_end PokemonUseItemEffects
 
-	thumb_func_start PlayBattleBGM
-PlayBattleBGM: @ 0x0806C820
+	thumb_func_start sub_0806C820
+sub_0806C820: @ 0x0806C820
 	add sp, #0x44
 	pop {r3, r4, r5}
 	mov r8, r3
@@ -10420,7 +10420,7 @@ PlayBattleBGM: @ 0x0806C820
 	pop {r4, r5, r6, r7}
 	pop {r1}
 	bx r1
-	thumb_func_end PlayBattleBGM
+	thumb_func_end sub_0806C820
 
 	thumb_func_start HealStatusConditions
 HealStatusConditions: @ 0x0806C830
@@ -13714,8 +13714,8 @@ _0806E0D2:
 	.align 2, 0
 	thumb_func_end GetBattleBGM
 
-	thumb_func_start GetFlavorRelationByPersonality
-GetFlavorRelationByPersonality: @ 0x0806E0D8
+	thumb_func_start PlayBattleBGM
+PlayBattleBGM: @ 0x0806E0D8
 	push {lr}
 	bl ResetMapMusic
 	bl m4aMPlayAllStop
@@ -13726,7 +13726,7 @@ GetFlavorRelationByPersonality: @ 0x0806E0D8
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end GetFlavorRelationByPersonality
+	thumb_func_end PlayBattleBGM
 
 	thumb_func_start PlayMapChosenOrBattleBGM
 PlayMapChosenOrBattleBGM: @ 0x0806E0F4
