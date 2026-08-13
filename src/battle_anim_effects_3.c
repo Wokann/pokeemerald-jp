@@ -82,6 +82,8 @@ static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
 static void AnimHelpingHandClap(struct Sprite *sprite);
 static void AnimHelpingHandClap_Step(struct Sprite *sprite);
 static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
+static void AnimForesightMagnifyingGlass(struct Sprite *sprite);
+static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2852,6 +2854,129 @@ static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId)
     case 8:
         gSprites[task->data[15]].x2 = 0;
         DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void AnimForesightMagnifyingGlass(struct Sprite *sprite)
+{
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+    {
+        InitSpritePosToAnimAttacker(sprite, TRUE);
+        sprite->data[7] = gBattleAnimAttacker;
+    }
+    else
+    {
+        sprite->data[7] = gBattleAnimTarget;
+    }
+
+    if (GetBattlerSide(sprite->data[7]) == B_SIDE_OPPONENT)
+        sprite->oam.matrixNum = ST_OAM_HFLIP;
+
+    sprite->oam.priority = GetBattlerSpriteBGPriority(sprite->data[7]);
+    sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+    sprite->callback = AnimForesightMagnifyingGlass_Step;
+}
+
+static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite)
+{
+    u16 x, y;
+    u16 bldAlpha;
+
+    switch (sprite->data[5])
+    {
+    case 0:
+        switch (sprite->data[6])
+        {
+        default:
+            sprite->data[6] = 0;
+        case 0:
+        case 4:
+            x = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_RIGHT) - 4;
+            y = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_BOTTOM) - 4;
+            break;
+        case 1:
+            x = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_RIGHT) - 4;
+            y = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_TOP) + 4;
+            break;
+        case 2:
+            x = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_LEFT) + 4;
+            y = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_BOTTOM) - 4;
+            break;
+        case 3:
+            x = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_LEFT) + 4;
+            y = GetBattlerSpriteCoordAttr(sprite->data[7], BATTLER_COORD_ATTR_TOP) - 4;
+            break;
+        case 5:
+            x = GetBattlerSpriteCoord(sprite->data[7], BATTLER_COORD_X_2);
+            y = GetBattlerSpriteCoord(sprite->data[7], BATTLER_COORD_Y_PIC_OFFSET);
+            break;
+        }
+        if (sprite->data[6] == 4)  // JP checks == 4 (case 4), US source says == 0
+            sprite->data[0] = 24;
+        else if (sprite->data[6] == 5)
+            sprite->data[0] = 6;
+        else
+            sprite->data[0] = 12;
+
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = x;
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = y;
+        InitAnimLinearTranslation(sprite);
+        sprite->data[5]++;
+        break;
+    case 1:
+        if (AnimTranslateLinear(sprite))
+        {
+            switch (sprite->data[6])
+            {
+            default:
+                sprite->x += sprite->x2;
+                sprite->y += sprite->y2;
+                sprite->y2 = 0;
+                sprite->x2 = 0;
+                sprite->data[0] = 0;
+                sprite->data[5]++;
+                sprite->data[6]++;
+                break;
+            case 4:
+                sprite->x += sprite->x2;
+                sprite->y += sprite->y2;
+                sprite->y2 = 0;
+                sprite->x2 = 0;
+                sprite->data[5] = 0;
+                sprite->data[6]++;
+                break;
+            case 5:
+                sprite->data[0] = 0;
+                sprite->data[1] = 16;
+                sprite->data[2] = 0;
+                sprite->data[5] = 3;
+                break;
+            }
+        }
+        break;
+    case 2:
+        if (++sprite->data[0] == 4)
+            sprite->data[5] = 0;
+        break;
+    case 3:
+        if (!(sprite->data[0] & 1))
+            sprite->data[1]--;
+        else
+            sprite->data[2]++;
+
+        bldAlpha = BLDALPHA_BLEND(sprite->data[1], sprite->data[2]);
+        SetGpuReg(REG_OFFSET_BLDALPHA, bldAlpha);
+        if (++sprite->data[0] == 32)
+        {
+            sprite->invisible = TRUE;
+            sprite->data[5]++;
+        }
+        break;
+    case 4:
+        DestroyAnimSprite(sprite);
         break;
     }
 }
