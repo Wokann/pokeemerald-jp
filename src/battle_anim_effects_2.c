@@ -16,6 +16,8 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
+#define NUM_MUSIC_NOTE_PAL_TAGS  3
+
 void TranslateSpriteInEllipseOverDuration(struct Sprite *sprite);
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 extern const struct SpriteTemplate gAirWaveProjectileSpriteTemplate;
@@ -23,6 +25,7 @@ extern const struct SpriteTemplate sVoidLinesSpriteTemplate;
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
 void TranslateSpriteInCircleOverDuration(struct Sprite *sprite);
 void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
+u32 sub_080A6E74(bool8, bool8, bool8, bool8, bool8, bool8, bool8);
 
 static void AnimTask_Withdraw_Step(u8 taskId);
 static void AnimKinesisZapEnergy(struct Sprite *sprite);
@@ -96,6 +99,24 @@ static void AnimSoftBoiledEgg_Step4_Callback(struct Sprite *sprite);
 extern const union AffineAnimCmd gStretchAttackerAffineAnimCmds[];
 void AnimTask_AttackerStretchAndDisappear(u8 taskId);
 static void AnimTask_AttackerStretchAndDisappear_Step(u8 taskId);
+static void AnimSpeedDust(struct Sprite *sprite);
+void AnimTask_LoadMusicNotesPals(u8 taskId);
+void AnimTask_FreeMusicNotesPals(u8 taskId);
+static void SetMusicNotePalette(struct Sprite *sprite, u8 a, u8 b);
+static void AnimHealBellMusicNote(struct Sprite *sprite);
+static void AnimMagentaHeart(struct Sprite *sprite);
+void AnimTask_FakeOut(u8 taskId);
+static void AnimTask_FakeOut_Step1(u8 taskId);
+static void AnimTask_FakeOut_Step2(u8 taskId);
+void AnimTask_StretchTargetUp(u8 taskId);
+void AnimTask_StretchAttackerUp(u8 taskId);
+static void AnimRedHeartProjectile(struct Sprite *sprite);
+static void AnimRedHeartProjectile_Step(struct Sprite *sprite);
+void AnimParticleBurst(struct Sprite *sprite);
+static void AnimRedHeartRising(struct Sprite *sprite);
+static void AnimRedHeartRising_Step(struct Sprite *sprite);
+extern const u16 sMusicNotePaletteTagsTable[];
+extern const union AffineAnimCmd sAffineAnims_StretchBattlerUp[];
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -1708,4 +1729,244 @@ void AnimTask_AttackerStretchAndDisappear(u8 taskId)
     task->data[0] = spriteId;
     PrepareAffineAnimInTaskData(task, spriteId, gStretchAttackerAffineAnimCmds);
     task->func = AnimTask_AttackerStretchAndDisappear_Step;
+}
+
+static void AnimSpeedDust(struct Sprite *sprite)
+{
+    sprite->invisible = gTasks[sprite->data[0]].data[5];
+    if (sprite->animEnded)
+    {
+        gTasks[sprite->data[0]].data[sprite->data[1]]--;
+        DestroySprite(sprite);
+    }
+}
+
+void AnimTask_LoadMusicNotesPals(u8 taskId)
+{
+    int i;
+    u8 paletteNums[NUM_MUSIC_NOTE_PAL_TAGS];
+
+    paletteNums[0] = IndexOfSpritePaletteTag(ANIM_TAG_MUSIC_NOTES_2);
+    for (i = 1; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
+        paletteNums[i] = AllocSpritePalette(ANIM_SPRITES_START - i);
+
+    gMonSpritesGfxPtr->buffer = AllocZeroed(MON_PIC_SIZE * MAX_MON_PIC_FRAMES);
+    // JP calls LZDecompressVram here.
+    LZDecompressVram(gBattleAnimSpritePal_MusicNotes2, gMonSpritesGfxPtr->buffer);
+    for (i = 0; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
+        LoadPalette(&gMonSpritesGfxPtr->buffer[i * 32], (u16)(OBJ_PLTT_ID(paletteNums[i])), PLTT_SIZE_4BPP);
+
+    FREE_AND_SET_NULL(gMonSpritesGfxPtr->buffer);
+    DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_FreeMusicNotesPals(u8 taskId)
+{
+    int i;
+    for (i = 0; i < NUM_MUSIC_NOTE_PAL_TAGS; i++)
+        FreeSpritePaletteByTag(sMusicNotePaletteTagsTable[i]);
+
+    DestroyAnimVisualTask(taskId);
+}
+
+static void SetMusicNotePalette(struct Sprite *sprite, u8 a, u8 b)
+{
+    u8 tile = (b & 1) ? 32 : 0;
+    sprite->oam.tileNum += tile + a * 4;
+    sprite->oam.paletteNum = IndexOfSpritePaletteTag(sMusicNotePaletteTagsTable[b >> 1]);
+}
+
+static void AnimHealBellMusicNote(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+
+    sprite->data[0] = gBattleAnimArgs[4];
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[2];
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[3];
+    // JP calls InitAndRunAnimFastLinearTranslation (0x080A67B5) here.
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    SetMusicNotePalette(sprite, gBattleAnimArgs[5], gBattleAnimArgs[6]);
+}
+
+static void AnimMagentaHeart(struct Sprite *sprite)
+{
+    if (++sprite->data[0] == 1)
+        InitSpritePosToAnimAttacker(sprite, FALSE);
+
+    sprite->x2 = Sin(sprite->data[1], 8);
+    sprite->y2 = sprite->data[2] >> 8;
+    sprite->data[1] = (sprite->data[1] + 7) & 0xFF;
+    sprite->data[2] -= 0x80;
+    if (sprite->data[0] == 60)
+        DestroyAnimSprite(sprite);
+}
+
+void AnimTask_FakeOut(u8 taskId)
+{
+    u16 win0h = IsContest() ? 152 : DISPLAY_WIDTH;
+    u16 win0v = 0;
+
+    gBattle_WIN0H = win0h;
+    gBattle_WIN0V = DISPLAY_HEIGHT;
+    SetGpuReg(REG_OFFSET_WIN0H, gBattle_WIN0H);
+    SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN1_ALL);
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_ALL | WINOUT_WINOBJ_ALL);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_DARKEN);
+    SetGpuReg(REG_OFFSET_BLDY, 16);
+    gTasks[taskId].data[0] = win0v;
+    gTasks[taskId].data[1] = win0h;
+    gTasks[taskId].func = AnimTask_FakeOut_Step1;
+}
+
+static void AnimTask_FakeOut_Step1(u8 taskId)
+{
+    gTasks[taskId].data[0] += 13;
+    gTasks[taskId].data[1] -= 13;
+    if (gTasks[taskId].data[0] >= gTasks[taskId].data[1])
+    {
+        gBattle_WIN0H = 0;
+        gTasks[taskId].func = AnimTask_FakeOut_Step2;
+    }
+    else
+    {
+        gBattle_WIN0H = WIN_RANGE(gTasks[taskId].data[0], gTasks[taskId].data[1]);
+    }
+}
+
+static void AnimTask_FakeOut_Step2(u8 taskId)
+{
+    if (++gTasks[taskId].data[10] == 5)
+    {
+        gTasks[taskId].data[11] = 0x88;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG3 | BLDCNT_EFFECT_LIGHTEN);
+        BlendPalettes(sub_080A6E74(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE), 16, RGB_WHITE);
+    }
+    else if (gTasks[taskId].data[10] > 4)
+    {
+        gBattle_WIN0H = 0;
+        gBattle_WIN0V = 0;
+        SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+        DestroyAnimVisualTask(taskId);
+    }
+}
+
+void AnimTask_StretchTargetUp(u8 taskId)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+    if (++gTasks[taskId].data[0] == 1)
+    {
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_TARGET), sAffineAnims_StretchBattlerUp);
+        gSprites[spriteId].x2 = 4;
+    }
+    else
+    {
+        gSprites[spriteId].x2 = -gSprites[spriteId].x2;
+        if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+        {
+            gSprites[spriteId].x2 = 0;
+            gSprites[spriteId].y2 = 0;
+            DestroyAnimVisualTask(taskId);
+        }
+    }
+}
+
+void AnimTask_StretchAttackerUp(u8 taskId)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    if (++gTasks[taskId].data[0] == 1)
+    {
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_ATTACKER), sAffineAnims_StretchBattlerUp);
+        gSprites[spriteId].x2 = 4;
+    }
+    else
+    {
+        gSprites[spriteId].x2 = -gSprites[spriteId].x2;
+        if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+        {
+            gSprites[spriteId].x2 = 0;
+            gSprites[spriteId].y2 = 0;
+            DestroyAnimVisualTask(taskId);
+        }
+    }
+}
+
+static void AnimRedHeartProjectile(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    sprite->data[0] = 95;
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    InitAnimLinearTranslation(sprite);
+    sprite->callback = AnimRedHeartProjectile_Step;
+}
+
+static void AnimRedHeartProjectile_Step(struct Sprite *sprite)
+{
+    if (!AnimTranslateLinear(sprite))
+    {
+        sprite->y2 += Sin(sprite->data[5], 14);
+        sprite->data[5] = (sprite->data[5] + 4) & 0xFF;
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+void AnimParticleBurst(struct Sprite *sprite)
+{
+    if (sprite->data[0] == 0)
+    {
+        sprite->data[1] = gBattleAnimArgs[0];
+        sprite->data[2] = gBattleAnimArgs[1];
+        sprite->data[0]++;
+    }
+    else
+    {
+        sprite->data[4] += sprite->data[1];
+        sprite->x2 = sprite->data[4] >> 8;
+        sprite->y2 = Sin(sprite->data[3], sprite->data[2]);
+        sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
+        if (sprite->data[3] > 100)
+            sprite->invisible = sprite->data[3] % 2;
+
+        if (sprite->data[3] > 120)
+            DestroyAnimSprite(sprite);
+    }
+}
+
+static void AnimRedHeartRising(struct Sprite *sprite)
+{
+    sprite->x = gBattleAnimArgs[0];
+    sprite->y = DISPLAY_HEIGHT;
+    sprite->data[0] = gBattleAnimArgs[2];
+    sprite->data[1] = gBattleAnimArgs[1];
+    sprite->callback = WaitAnimForDuration;
+    StoreSpriteCallbackInData6(sprite, AnimRedHeartRising_Step);
+}
+
+static void AnimRedHeartRising_Step(struct Sprite *sprite)
+{
+    s16 y;
+    sprite->data[2] += sprite->data[1];
+    sprite->y2 = -((u16)sprite->data[2] >> 8);
+    sprite->x2 = Sin(sprite->data[3], 4);
+    sprite->data[3] = (sprite->data[3] + 3) & 0xFF;
+    y = sprite->y + sprite->y2;
+    if (y <= 72)
+    {
+        sprite->invisible = sprite->data[3] % 2;
+        // JP destroys the sprite at y <= 64 (US uses y <= 0).
+        if (y <= 64)
+            DestroyAnimSprite(sprite);
+    }
 }
