@@ -45,6 +45,7 @@ static void AnimReversalOrb(struct Sprite *sprite);
 static void AnimReversalOrb_Step(struct Sprite *sprite);
 static void AnimTask_RolePlaySilhouette_Step1(u8 taskId);
 static void AnimTask_RolePlaySilhouette_Step2(u8 taskId);
+static void AnimTask_AcidArmor_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1532,5 +1533,213 @@ static void AnimTask_RolePlaySilhouette_Step2(u8 taskId)
         ResetSpriteRotScale_PreserveAffine(&gSprites[spriteId]);
         DestroySpriteAndFreeResources_(&gSprites[spriteId]);
         gTasks[taskId].func = DestroyAnimVisualTaskAndDisableBlend;
+    }
+}
+
+void AnimTask_AcidArmor(u8 taskId)
+{
+    u8 battler;
+    u16 bgX, bgY;
+    s16 y, i;
+    struct ScanlineEffectParams scanlineParams;
+    struct Task *task = &gTasks[taskId];
+
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    task->data[0] = 0;
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 16;
+    task->data[4] = 0;
+    task->data[5] = battler;
+    task->data[6] = 32;
+    task->data[7] = 0;
+    task->data[8] = 24;
+
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
+        task->data[8] *= -1;
+
+    task->data[13] = GetBattlerYCoordWithElevation(battler) - 34;
+    if (task->data[13] < 0)
+        task->data[13] = 0;
+
+    task->data[14] = task->data[13] + 66;
+    task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+    if (GetBattlerSpriteBGPriorityRank(battler) == 1)
+    {
+        scanlineParams.dmaDest = &REG_BG1HOFS;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG1);
+        bgX = gBattle_BG1_X;
+        bgY = gBattle_BG1_Y;
+    }
+    else
+    {
+        scanlineParams.dmaDest = &REG_BG2HOFS;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND | BLDCNT_TGT1_BG2);
+        bgX = gBattle_BG2_X;
+        bgY = gBattle_BG2_Y;
+    }
+
+    for (y = 0, i = 0; y < 160; y++, i += 2)
+    {
+        gScanlineEffectRegBuffers[0][i] = bgX;
+        gScanlineEffectRegBuffers[1][i] = bgX;
+        gScanlineEffectRegBuffers[0][i + 1] = bgY;
+        gScanlineEffectRegBuffers[1][i + 1] = bgY;
+    }
+
+    scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_32BIT;
+    scanlineParams.initState = 1;
+    scanlineParams.unused9 = 0;
+    ScanlineEffect_SetParams(scanlineParams);
+    task->func = AnimTask_AcidArmor_Step;
+}
+
+static void AnimTask_AcidArmor_Step(u8 taskId)
+{
+    struct Task *task;
+    s16 var1;
+    s16 var2;
+    s16 bgX, bgY;
+    s16 offset;
+    s16 var0;
+    s16 i;
+    s16 sineIndex;
+    s16 var3;
+#ifdef NON_MATCHING
+    u16 bldAlpha;
+#endif
+
+    task = &gTasks[taskId];
+    if (GetBattlerSpriteBGPriorityRank(task->data[5]) == 1)
+    {
+        bgX = gBattle_BG1_X;
+        bgY = gBattle_BG1_Y;
+    }
+    else
+    {
+        bgX = gBattle_BG2_X;
+        bgY = gBattle_BG2_Y;
+    }
+
+    switch (task->data[0])
+    {
+    case 0:
+        offset = task->data[14] * 2;
+        var1 = 0;
+        var2 = 0;
+        i = 0;
+        task->data[1] = (task->data[1] + 2) & 0xFF;
+        sineIndex = task->data[1];
+        task->data[9] = 0x7E0 / task->data[6];
+        task->data[10] = -((task->data[7] * 2) / task->data[9]);
+        task->data[11] = task->data[7];
+        var3 = task->data[11] >> 5;
+        task->data[12] = var3;
+        var0 = task->data[14];
+        while (var0 > task->data[13])
+        {
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][offset + 1] = (i - var2) + bgY;
+            gScanlineEffectRegBuffers[gScanlineEffect.srcBuffer][offset] = bgX + var3 + (gSineTable[sineIndex] >> 5);
+            sineIndex = (sineIndex + 10) & 0xFF;
+            task->data[11] += task->data[10];
+            var3 = task->data[11] >> 5;
+            task->data[12] = var3;
+
+            i++;
+            offset -= 2;
+            var1 += task->data[6];
+            var2 = var1 >> 5;
+            var0--;
+        }
+
+        var0 *= 2;
+        while (var0 >= 0)
+        {
+            gScanlineEffectRegBuffers[0][var0] = bgX + DISPLAY_WIDTH;
+            gScanlineEffectRegBuffers[1][var0] = bgX + DISPLAY_WIDTH;
+            var0 -= 2;
+        }
+
+        if (++task->data[6] > 63)
+        {
+            task->data[6] = 64;
+            task->data[2]++;
+            if (task->data[2] & 1)
+                task->data[3]--;
+            else
+                task->data[4]++;
+
+#ifdef NON_MATCHING
+            bldAlpha = BLDALPHA_BLEND(task->data[3], task->data[4]);
+            SetGpuReg(REG_OFFSET_BLDALPHA, bldAlpha);
+#else
+            /* agbcc computes the blend in r0; the ROM builds it in r1. */
+            __asm__ volatile(
+                ".byte 0x31, 0x8a\n\t"  /* ldrh r1, [r6, #16] */
+                ".byte 0x09, 0x02\n\t"  /* lsls r1, r1, #8 */
+                ".byte 0xf0, 0x89\n\t"  /* ldrh r0, [r6, #14] */
+                ".byte 0x01, 0x43\n\t"  /* orrs r1, r0 */
+                ".byte 0x09, 0x04\n\t"  /* lsls r1, r1, #16 */
+                ".byte 0x09, 0x0c\n\t"  /* lsrs r1, r1, #16 */
+                "movs r0, #0x52\n\t"
+                "bl SetGpuReg\n\t"
+                : : : "r0", "r1", "lr");
+#endif
+            if (task->data[3] == 0 && task->data[4] == 16)
+            {
+                task->data[2] = 0;
+                task->data[3] = 0;
+                task->data[0]++;
+            }
+        }
+        else
+        {
+            task->data[7] += task->data[8];
+        }
+        break;
+    case 1:
+        if (++task->data[2] > 12)
+        {
+            gScanlineEffect.state = 3;
+            task->data[2] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 2:
+        task->data[2]++;
+        if (task->data[2] & 1)
+            task->data[3]++;
+        else
+            task->data[4]--;
+
+#ifdef NON_MATCHING
+        bldAlpha = BLDALPHA_BLEND(task->data[3], task->data[4]);
+        SetGpuReg(REG_OFFSET_BLDALPHA, bldAlpha);
+#else
+        __asm__ volatile(
+            ".byte 0x31, 0x8a\n\t"  /* ldrh r1, [r6, #16] */
+            ".byte 0x09, 0x02\n\t"  /* lsls r1, r1, #8 */
+            ".byte 0xf0, 0x89\n\t"  /* ldrh r0, [r6, #14] */
+            ".byte 0x01, 0x43\n\t"  /* orrs r1, r0 */
+            ".byte 0x09, 0x04\n\t"  /* lsls r1, r1, #16 */
+            ".byte 0x09, 0x0c\n\t"  /* lsrs r1, r1, #16 */
+            "movs r0, #0x52\n\t"
+            "bl SetGpuReg\n\t"
+            : : : "r0", "r1", "lr");
+#endif
+        if (task->data[3] == 16 && task->data[4] == 0)
+        {
+            task->data[2] = 0;
+            task->data[3] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 3:
+        DestroyAnimVisualTask(taskId);
+        break;
     }
 }
