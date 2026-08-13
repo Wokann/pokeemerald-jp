@@ -1,1 +1,1 @@
-	.incbin "baserom_jp.gba", 0x24b317, 0x16
+	.string "かいめの　アピール！\nどの　わざを　だす？$"

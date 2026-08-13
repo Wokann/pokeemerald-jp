@@ -1,1 +1,1 @@
-	.incbin "baserom_jp.gba", 0x276f77, 0x20
+	.string "まえに　かかれた　レポートに\nうえから　かいても　いいですか？$"

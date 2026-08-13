@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 EVENT_S = ROOT / "data" / "event_scripts.s"
-BIN = ROOT / "build" / "data" / "event_scripts.bin"
+BASEROM = ROOT / "baserom_jp.gba"
 CMD_TABLE = ROOT / "data" / "script_cmd_table.inc"
 EVENT_INC = ROOT / "asm" / "macros" / "event.inc"
 SCRIPTS_DIR = ROOT / "data" / "scripts"
@@ -382,7 +382,15 @@ def parse_chunks():
     return chunks
 
 
-REGION_BASE = 0x081DABAC  # first byte of build/data/event_scripts.bin
+REGION_BASE = 0x081DABAC  # first byte of the script_data section
+ROM_BASE = 0x08000000
+
+
+def rom_bytes(addr, size):
+    """Read bytes at a GBA ROM address directly from baserom_jp.gba."""
+    data = BASEROM.read_bytes()
+    off = addr - ROM_BASE
+    return data[off : off + size]
 
 
 def parse_all_chunks():
@@ -390,7 +398,7 @@ def parse_all_chunks():
     script region, deriving rel/size from consecutive label addresses.
     Already-converted (.include) chunks are included this way; chunks
     whose data lies beyond the bin are skipped."""
-    bin_size = BIN.stat().st_size if BIN.is_file() else 0
+    rom_size = BASEROM.stat().st_size if BASEROM.is_file() else 0
     items = []
     for line in EVENT_S.read_text(encoding="utf-8").splitlines():
         lm = LABEL_RE.match(line)
@@ -408,7 +416,7 @@ def parse_all_chunks():
     for i, (label, addr) in enumerate(items):
         size = items[i + 1][1] - addr if i + 1 < len(items) else 0
         rel = addr - REGION_BASE
-        if rel < 0 or rel + size > bin_size:
+        if rel < 0 or addr - ROM_BASE + size > rom_size:
             continue
         chunks.append((label, addr, rel, size))
     return chunks
@@ -425,10 +433,9 @@ def readability(text):
 def main():
     if len(sys.argv) < 3:
         sys.exit(__doc__)
-    if not BIN.is_file():
-        sys.exit(f"missing {BIN}; run make first")
+    if not BASEROM.is_file():
+        sys.exit(f"missing {BASEROM}; run make first")
     cmd, target = sys.argv[1], sys.argv[2]
-    data = BIN.read_bytes()
     opcode_table = build_opcode_table()
     by_name = {const: op for const, op in opcode_table.items()}
     formats, formats_by_name = build_macro_formats(by_name)
@@ -439,7 +446,7 @@ def main():
     for label, addr, rel, size in parse_all_chunks():
         if label != target:
             continue
-        raw = data[rel : rel + size]
+        raw = rom_bytes(addr, size)
         text = decode_chunk(raw, formats, specials)
         if cmd == "dump":
             print(text)
@@ -461,7 +468,7 @@ def main():
         for label, addr, rel, size in parse_all_chunks():
             if size < min_size:
                 continue
-            raw = data[rel : rel + size]
+            raw = rom_bytes(addr, size)
             text = decode_chunk(raw, formats, specials)
             rows.append((readability(text), label, size))
         rows.sort(reverse=True)
@@ -481,7 +488,7 @@ def main():
                 cur = out_path.read_text(encoding="utf-8")
                 if "gJPText_" in cur or ".string" in cur:
                     continue
-            raw = data[rel : rel + size]
+            raw = rom_bytes(addr, size)
             # Skip pointer tables: most 4-byte words pointing into ROM/RAM
             # means this is data, not script.
             if size % 4 == 0 and size >= 8:

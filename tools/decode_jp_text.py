@@ -116,7 +116,7 @@ FONT_NAMES = {
 }
 
 
-def ctrl_param_text(code, args, sounds):
+def ctrl_param_text(code, args, sounds, single=None):
     """Render control-code arguments using their concrete rules."""
     if not args:
         return ""
@@ -131,6 +131,10 @@ def ctrl_param_text(code, args, sounds):
     if code == 0x06:
         return ":%s" % FONT_NAMES.get(args[0], "0x%02X" % args[0])
     if code == 0x08:
+        if single is not None and args[0] in single:
+            # PAUSE = FC 08; the wait byte is printed as its charmap
+            # single-byte glyph right after {PAUSE}, e.g. "{PAUSE}は".
+            return single[args[0]]
         return ":%d" % args[0]
     if code in (0x0B, 0x10):  # PLAY_BGM / PLAY_SE: u16 id
         sid = args[0] | (args[1] << 8)
@@ -177,10 +181,17 @@ def decode(data, single, multi, sounds):
         if b == 0xFC:
             if i + 1 < len(data):
                 code = data[i + 1]
+                if code == 0x08 and single is not None:
+                    # PAUSE (FC 08) with wait byte: emit "{PAUSE}<glyph>"
+                    # so the preproc encodes FC 08 <byte>.
+                    if i + 2 < len(data) and data[i + 2] in single:
+                        out.append("{PAUSE}%s" % single[data[i + 2]])
+                        i += 3
+                        continue
                 name = CTRL_NAMES.get(code, "CTRL_%02X" % code)
                 nargs = CTRL_ARGS.get(code, 0)
                 args = data[i + 2 : i + 2 + nargs]
-                out.append("{%s%s}" % (name, ctrl_param_text(code, args, sounds)))
+                out.append("{%s%s}" % (name, ctrl_param_text(code, args, sounds, single)))
                 i += 2 + nargs
             else:
                 out.append("[FC]")

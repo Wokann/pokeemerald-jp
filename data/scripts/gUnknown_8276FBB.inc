@@ -1,1 +1,1 @@
-	.incbin "baserom_jp.gba", 0x276fbb, 0x18
+	.string "{MUS_RG_VS_TRAINER}　は\nレポートに　しっかり　かきのこした！$"

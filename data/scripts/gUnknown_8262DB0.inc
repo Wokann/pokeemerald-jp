@@ -1,1 +1,2 @@
-	.incbin "baserom_jp.gba", 0x262db0, 0x25
+	.string "だいの　うえの　たまを\nクリア　します$"
+	.string "コインケースを　もっていません！$"
