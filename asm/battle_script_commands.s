@@ -471,30 +471,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkB1_setforesight
-atkB1_setforesight: @ 0x0805343C
-	ldr r1, _08053460
-	ldr r0, _08053464
-	ldrb r2, [r0]
-	movs r0, #0x58
-	muls r2, r0, r2
-	adds r1, #0x50
-	adds r2, r2, r1
-	ldr r0, [r2]
-	movs r1, #0x80
-	lsls r1, r1, #0x16
-	orrs r0, r1
-	str r0, [r2]
-	ldr r1, _08053468
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_08053460: .4byte 0x02023D28
-_08053464: .4byte 0x02023EB0
-_08053468: .4byte 0x02023EB8
-	thumb_func_end atkB1_setforesight
 
 	thumb_func_start atkB2_trysetperishsong
 atkB2_trysetperishsong: @ 0x0805346C
