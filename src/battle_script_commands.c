@@ -1504,6 +1504,7 @@ static void Cmd_healpartystatus(void);
 static void Cmd_cursetarget(void);
 static void Cmd_trysetspikes(void);
 static void Cmd_setforesight(void);
+static void Cmd_trysetperishsong(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7651,4 +7652,32 @@ static void Cmd_setforesight(void)
 {
     gBattleMons[gBattlerTarget].status2 |= STATUS2_FORESIGHT;
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_trysetperishsong(void)
+{
+    s32 i;
+    s32 notAffectedCount = 0;
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (gStatuses3[i] & STATUS3_PERISH_SONG
+            || gBattleMons[i].ability == ABILITY_SOUNDPROOF)
+        {
+            notAffectedCount++;
+        }
+        else
+        {
+            gStatuses3[i] |= STATUS3_PERISH_SONG;
+            gDisableStructs[i].perishSongTimer = 3;
+            gDisableStructs[i].perishSongTimerStartValue = 3;
+        }
+    }
+
+    PressurePPLoseOnUsingPerishSong(gBattlerAttacker);
+
+    if (notAffectedCount == gBattlersCount)
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    else
+        gBattlescriptCurrInstr += 5;
 }
