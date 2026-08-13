@@ -750,6 +750,9 @@ BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
 BattleScript_PalacePrintFlavorText = gUnknown_8289E09;
 BattleScript_FocusPunchSetUp = gUnknown_8289787;
 gBattleScriptingCommandsTable = gUnknown_82EC600;
+sTurnActionsFuncsTable = gUnknown_82EC694;
+RecordedBattle_SetPlaybackFinished = sub_0818619C;
+TryPutBreakingNewsOnAir = sub_080EECA4;
 BattleScript_LinkBattleWonOrLost = gUnknown_8288FBD;
 BattleScript_FrontierTrainerBattleWon = gUnknown_828900F;
 BattleScript_LocalTrainerBattleWon = gUnknown_8288EB5;
@@ -3287,6 +3290,7 @@ SECTIONS {
         asm/battle_main_battlelost.o(.text);
         src/battle_main.o(.text.HandleEndTurn_RanFromBattle);
         src/battle_main.o(.text.HandleEndTurn_MonFled);
+        asm/battle_main_finish.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

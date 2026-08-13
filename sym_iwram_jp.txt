@@ -998,3 +998,4 @@ sResendBlock16 = ABSOLUTE(0x03000D90);
 sHeldKeyCount = ABSOLUTE(0x03000D78);
 sWirelessStatusScreen = ABSOLUTE(0x03000DAC);
 gLeveledUpInBattle = ABSOLUTE(0x03005AB4);
+gCB2_AfterEvolution = ABSOLUTE(0x03005F28);
