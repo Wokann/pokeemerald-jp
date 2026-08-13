@@ -32,6 +32,7 @@ static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 static void AnimSweetScentPetal(struct Sprite *sprite);
 static void AnimSweetScentPetal_Step(struct Sprite *sprite);
+static void AnimTask_FlailMovement_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1049,5 +1050,93 @@ static void AnimSweetScentPetal_Step(struct Sprite *sprite)
             DestroyAnimSprite(sprite);
 
         sprite->y2 = Cos(sprite->data[0] & 0xFF, 16);
+    }
+}
+
+void AnimTask_FlailMovement(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    task->data[0] = 0;
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 0;
+    task->data[12] = 0x20;
+    task->data[13] = 0x40;
+    task->data[14] = 0x800;
+    task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+
+    PrepareBattlerSpriteForRotScale(task->data[15], ST_OAM_OBJ_NORMAL);
+    task->func = AnimTask_FlailMovement_Step;
+}
+
+static void AnimTask_FlailMovement_Step(u8 taskId)
+{
+    int temp;
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        task->data[2] += 0x200;
+        if (task->data[2] >= task->data[14])
+        {
+            s16 diff = task->data[14] - task->data[2];
+            s16 div = diff / (task->data[14] * 2);
+            s16 mod = diff % (task->data[14] * 2);
+
+            if ((div & 1) == 0)
+            {
+                task->data[2] = task->data[14] - mod;
+                task->data[0] = 1;
+            }
+            else
+            {
+                task->data[2] = mod - task->data[14];
+            }
+        }
+        break;
+    case 1:
+        task->data[2] -= 0x200;
+        if (task->data[2] <= -task->data[14])
+        {
+            s16 diff = task->data[14] - task->data[2];
+            s16 div = diff / (task->data[14] * 2);
+            s16 mod = diff % (task->data[14] * 2);
+
+            if ((1 & div) == 0)
+            {
+                task->data[2] = mod - task->data[14];
+                task->data[0] = 0;
+            }
+            else
+            {
+                task->data[2] = task->data[14] - mod;
+            }
+        }
+        break;
+    case 2:
+        ResetSpriteRotScale(task->data[15]);
+        DestroyAnimVisualTask(taskId);
+        return;
+    }
+
+    SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+    SetBattlerSpriteYOffsetFromRotation(task->data[15]);
+    gSprites[task->data[15]].x2 = -(((temp = task->data[2]) >= 0 ? task->data[2] : temp + 63) >> 6);
+
+    if (++task->data[1] > 8)
+    {
+        if (task->data[12])
+        {
+            task->data[12]--;
+            task->data[14] -= task->data[13];
+            if (task->data[14] < 16)
+                task->data[14] = 16;
+        }
+        else
+        {
+            task->data[0] = 2;
+        }
     }
 }
