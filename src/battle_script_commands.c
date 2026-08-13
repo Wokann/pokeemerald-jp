@@ -1583,6 +1583,7 @@ static void Cmd_removeattackerstatus1(void);
 static void Cmd_finishaction(void);
 static void Cmd_finishturn(void);
 static void Cmd_trainerslideout(void);
+void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9467,4 +9468,52 @@ static void Cmd_trainerslideout(void)
     MarkBattlerForControllerExec(gActiveBattler);
 
     gBattlescriptCurrInstr += 2;
+}
+
+void HandleBattleWindow(u8 xStart, u8 yStart, u8 xEnd, u8 yEnd, u8 flags)
+{
+    s32 destY, destX;
+    u16 var = 0;
+
+    for (destY = yStart; destY <= yEnd; destY++)
+    {
+        for (destX = xStart; destX <= xEnd; destX++)
+        {
+            if (destY == yStart)
+            {
+                if (destX == xStart)
+                    var = 0x1022;
+                else if (destX == xEnd)
+                    var = 0x1024;
+                else
+                    var = 0x1023;
+            }
+            else if (destY == yEnd)
+            {
+                if (destX == xStart)
+                    var = 0x1028;
+                else if (destX == xEnd)
+                    var = 0x102A;
+                else
+                    var = 0x1029;
+            }
+            else
+            {
+                if (destX == xStart)
+                    var = 0x1025;
+                else if (destX == xEnd)
+                    var = 0x1027;
+                else
+                    var = 0x1026;
+            }
+
+            if (flags & WINDOW_CLEAR)
+                var = 0;
+
+            if (flags & WINDOW_BG1)
+                CopyToBgTilemapBufferRect_ChangePalette(1, &var, destX, destY, 1, 1, 0x11);
+            else
+                CopyToBgTilemapBufferRect_ChangePalette(0, &var, destX, destY, 1, 1, 0x11);
+        }
+    }
 }
