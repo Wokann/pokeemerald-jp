@@ -1467,6 +1467,8 @@ bool8 TryDoForceSwitchOut(void);
 void sub_081B8B20(u8 battler, u8 slot, u8 slot2); // JP SwitchPartyOrderLinkMulti
 static void Cmd_forcerandomswitch(void);
 static void Cmd_tryconversiontypechange(void);
+static void Cmd_givepaydaymoney(void);
+static void Cmd_setlightscreen(void);
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 void sub_0814FA04(const u8 *text, u8 windowId);
@@ -6624,4 +6626,44 @@ static void Cmd_tryconversiontypechange(void)
 
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_givepaydaymoney(void)
+{
+    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)) && gPaydayMoney != 0)
+    {
+        u32 bonusMoney = gPaydayMoney * gBattleStruct->moneyMultiplier;
+        AddMoney(&gSaveBlock1Ptr->money, bonusMoney);
+
+        PREPARE_HWORD_NUMBER_BUFFER(gBattleTextBuff1, 5, bonusMoney)
+
+        BattleScriptPush(gBattlescriptCurrInstr + 1);
+        gBattlescriptCurrInstr = BattleScript_PrintPayDayMoneyString;
+    }
+    else
+    {
+        gBattlescriptCurrInstr++;
+    }
+}
+
+static void Cmd_setlightscreen(void)
+{
+    if (gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] & SIDE_STATUS_LIGHTSCREEN)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SIDE_STATUS_FAILED;
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_LIGHTSCREEN;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].lightscreenTimer = 5;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].lightscreenBattlerId = gBattlerAttacker;
+
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && CountAliveMonsInBattle(BATTLE_ALIVE_ATK_SIDE) == 2)
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_LIGHTSCREEN_DOUBLE;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_LIGHTSCREEN_SINGLE;
+    }
+
+    gBattlescriptCurrInstr++;
 }
