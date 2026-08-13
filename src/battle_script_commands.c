@@ -1532,6 +1532,7 @@ static void Cmd_setforcedtarget(void);
 static void Cmd_setcharge(void);
 extern const u16 sNaturePowerMoves[];
 static void Cmd_callenvironmentattack(void);
+static void Cmd_cureifburnedparalyzedorpoisoned(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8283,4 +8284,20 @@ static void Cmd_callenvironmentattack(void)
     gBattlerTarget = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
     BattleScriptPush(gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect]);
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_cureifburnedparalyzedorpoisoned(void)
+{
+    if (gBattleMons[gBattlerAttacker].status1 & (STATUS1_POISON | STATUS1_BURN | STATUS1_PARALYSIS | STATUS1_TOXIC_POISON))
+    {
+        gBattleMons[gBattlerAttacker].status1 = 0;
+        gBattlescriptCurrInstr += 5;
+        gActiveBattler = gBattlerAttacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[gActiveBattler].status1), &gBattleMons[gActiveBattler].status1);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
