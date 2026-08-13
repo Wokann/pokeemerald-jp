@@ -4091,8 +4091,8 @@ _080A731E:
 	bx r1
 	thumb_func_end CloneBattlerSpriteWithBlend
 
-	thumb_func_start obj_delete_but_dont_free_vram
-obj_delete_but_dont_free_vram: @ 0x080A7324
+	thumb_func_start DestroySpriteWithActiveSheet
+DestroySpriteWithActiveSheet: @ 0x080A7324
 	push {lr}
 	adds r3, r0, #0
 	adds r3, #0x3f
@@ -4104,7 +4104,7 @@ obj_delete_but_dont_free_vram: @ 0x080A7324
 	pop {r0}
 	bx r0
 	.align 2, 0
-	thumb_func_end obj_delete_but_dont_free_vram
+	thumb_func_end DestroySpriteWithActiveSheet
 
 	thumb_func_start sub_080A733C
 sub_080A733C: @ 0x080A733C
@@ -6689,7 +6689,7 @@ sub_080A86C4: @ 0x080A86C4
 	subs r1, #1
 	strh r1, [r0, #0x12]
 	adds r0, r3, #0
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 _080A86EE:
 	pop {r0}
 	bx r0

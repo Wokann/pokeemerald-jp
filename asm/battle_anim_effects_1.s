@@ -8813,7 +8813,7 @@ _081033A8:
 	subs r1, #1
 	strh r1, [r0, #0xe]
 	adds r0, r5, #0
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 	b _08103412
 	.align 2, 0
 _081033CC: .4byte 0x03005B60

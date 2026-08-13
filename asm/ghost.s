@@ -1050,7 +1050,7 @@ _0811262A:
 	lsls r0, r0, #2
 	ldr r1, _08112668
 	adds r0, r0, r1
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 	movs r0, #1
 	strh r0, [r4, #0x10]
 	b _08112698
@@ -1566,7 +1566,7 @@ _08112A40:
 	adds r0, r0, r1
 	lsls r0, r0, #2
 	adds r0, r0, r3
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 	ldr r0, _08112A94
 	bl FreeSpritePaletteByTag
 	movs r0, #0x50

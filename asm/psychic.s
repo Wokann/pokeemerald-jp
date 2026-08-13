@@ -2094,7 +2094,7 @@ _08110A58:
 	lsls r0, r0, #2
 	ldr r1, _08110A74
 	adds r0, r0, r1
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 _08110A6A:
 	ldrh r0, [r4, #8]
 	adds r0, #1

@@ -2569,7 +2569,7 @@ CreateMinimizeSprite: @ 0x08105050
 	lsls r0, r0, #2
 	ldr r1, _08105090
 	adds r0, r0, r1
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 	b _0810512A
 	.align 2, 0
 _08105090: .4byte 0x020205AC
@@ -2689,7 +2689,7 @@ ClonedMinizeSprite_Step: @ 0x08105140
 	lsrs r0, r0, #0x1b
 	bl FreeOamMatrix
 	adds r0, r4, #0
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 _0810517E:
 	pop {r4}
 	pop {r0}

@@ -644,7 +644,7 @@ _08117334:
 	subs r0, #1
 	strh r0, [r1]
 	adds r0, r4, #0
-	bl obj_delete_but_dont_free_vram
+	bl DestroySpriteWithActiveSheet
 _08117358:
 	pop {r4}
 	pop {r0}

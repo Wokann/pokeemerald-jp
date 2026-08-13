@@ -92,6 +92,8 @@ static void AnimMeteorMashStar_Step(struct Sprite *sprite);
 static void AnimTask_MonToSubstituteDoll(u8 taskId);
 static void AnimBlockX(struct Sprite *sprite);
 static void AnimBlockX_Step(struct Sprite *sprite);
+static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
+static void MoveOdorSleuthClone(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -3195,6 +3197,111 @@ static void AnimBlockX_Step(struct Sprite *sprite)
             sprite->invisible = sprite->data[2] & 1;
             if (sprite->data[2] == 7)  // JP checks == 7 (US source says > 7)
                 DestroyAnimSprite(sprite);
+        }
+        break;
+    }
+}
+
+void AnimTask_OdorSleuthMovement(u8 taskId)
+{
+    s16 spriteId1, spriteId2;
+
+    if (IsContest())
+    {
+        DestroyAnimVisualTask(taskId);
+        return;
+    }
+
+    spriteId1 = CloneBattlerSpriteWithBlend(ANIM_TARGET);
+    if (spriteId1 < 0)
+    {
+        DestroyAnimVisualTask(taskId);
+        return;
+    }
+
+    spriteId2 = CloneBattlerSpriteWithBlend(ANIM_TARGET);
+    if (spriteId2 < 0)
+    {
+        DestroySpriteWithActiveSheet(&gSprites[spriteId1]);
+        DestroyAnimVisualTask(taskId);
+        return;
+    }
+
+    gSprites[spriteId2].x2 += 24;
+    gSprites[spriteId1].x2 -= 24;
+    gSprites[spriteId2].data[0] = 0;
+    gSprites[spriteId1].data[0] = 0;
+    gSprites[spriteId2].data[1] = 0;
+    gSprites[spriteId1].data[1] = 0;
+    gSprites[spriteId2].data[2] = 0;
+    gSprites[spriteId1].data[2] = 0;
+    gSprites[spriteId2].data[3] = 16;
+    gSprites[spriteId1].data[3] = -16;
+    gSprites[spriteId2].data[4] = 0;
+    gSprites[spriteId1].data[4] = 128;
+    gSprites[spriteId2].data[5] = 24;
+    gSprites[spriteId1].data[5] = 24;
+    gSprites[spriteId2].data[6] = taskId;
+    gSprites[spriteId1].data[6] = taskId;
+    gSprites[spriteId2].data[7] = 0;
+    gSprites[spriteId1].data[7] = 0;
+    gTasks[taskId].data[0] = 2;
+
+    if (!gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].invisible)
+    {
+        gSprites[spriteId2].invisible = FALSE;
+        gSprites[spriteId1].invisible = TRUE;
+    }
+    else
+    {
+        gSprites[spriteId2].invisible = TRUE;
+        gSprites[spriteId1].invisible = TRUE;
+    }
+
+    gSprites[spriteId2].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[spriteId1].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[spriteId2].callback = MoveOdorSleuthClone;
+    gSprites[spriteId1].callback = MoveOdorSleuthClone;
+    gTasks[taskId].func = AnimTask_OdorSleuthMovementWaitFinish;
+}
+
+static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId)
+{
+    if (gTasks[taskId].data[0] == 0)
+        DestroyAnimVisualTask(taskId);
+}
+
+static void MoveOdorSleuthClone(struct Sprite *sprite)
+{
+    if (++sprite->data[1] > 1)
+    {
+        sprite->data[1] = 0;
+        if (!gBattleSpritesDataPtr->battlerData[gBattleAnimTarget].invisible)
+            sprite->invisible ^= 1;
+    }
+
+    sprite->data[4] = sprite->data[4] + sprite->data[3];
+    sprite->data[4] &= 0xFF;
+    sprite->x2 = Cos(sprite->data[4], sprite->data[5]);
+    switch (sprite->data[0])
+    {
+    case 0:
+        if (++sprite->data[2] == 60)
+        {
+            sprite->data[2] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 1:
+        if (++sprite->data[2] > 0)
+        {
+            sprite->data[2] = 0;
+            sprite->data[5] -= 2;
+            if (sprite->data[5] < 0)
+            {
+                gTasks[sprite->data[6]].data[sprite->data[7]]--;
+                DestroySpriteWithActiveSheet(sprite);
+            }
         }
         break;
     }
