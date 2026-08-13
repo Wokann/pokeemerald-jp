@@ -37,6 +37,8 @@ static void AnimTask_FlailMovement_Step(u8 taskId);
 static void AnimPainSplitProjectile(struct Sprite *sprite);
 static void AnimFlatterConfetti(struct Sprite *sprite);
 static void AnimFlatterConfetti_Step(struct Sprite *sprite);
+static void AnimFlatterSpotlight(struct Sprite *sprite);
+static void AnimFlatterSpotlight_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1287,4 +1289,69 @@ static void AnimFlatterConfetti_Step(struct Sprite *sprite)
 
     if (++sprite->data[3] == 31)
         DestroyAnimSprite(sprite);
+}
+
+static void AnimFlatterSpotlight(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ);
+    SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJWIN_ON);
+    gBattle_WIN0H = 0;
+    gBattle_WIN0V = 0;
+    SetGpuReg(REG_OFFSET_WIN0H, gBattle_WIN0H);
+    SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+
+    sprite->data[0] = gBattleAnimArgs[2];
+    InitSpritePosToAnimTarget(sprite, FALSE);
+    sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
+    sprite->invisible = TRUE;
+    sprite->callback = AnimFlatterSpotlight_Step;
+}
+
+static void AnimFlatterSpotlight_Step(struct Sprite *sprite)
+{
+    switch (sprite->data[1])
+    {
+    case 0:
+        sprite->invisible = FALSE;
+        if (sprite->affineAnimEnded)
+            sprite->data[1]++;
+        break;
+    case 1:
+        if (--sprite->data[0] == 0)
+        {
+            ChangeSpriteAffineAnim(sprite, 1);
+            sprite->data[1]++;
+        }
+        break;
+    case 2:
+        if (sprite->affineAnimEnded)
+        {
+            sprite->invisible = TRUE;
+            sprite->data[1]++;
+        }
+        break;
+    case 3:
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+#ifdef NON_MATCHING
+        SetGpuReg(REG_OFFSET_DISPCNT, GetGpuReg(REG_OFFSET_DISPCNT) ^ DISPCNT_OBJWIN_ON);
+#else
+        /* agbcc materializes 0x8000 via a literal pool load here; the ROM
+           computes it with movs/lsls, so emit the exact bytes. */
+        __asm__ volatile(
+            "movs r0, #0\n\t"
+            "bl GetGpuReg\n\t"
+            ".byte 0x01, 0x1c\n\t"  /* adds r1, r0, #0 */
+            ".byte 0x80, 0x22\n\t"  /* movs r2, #0x80 */
+            ".byte 0x12, 0x02\n\t"  /* lsls r2, r2, #8 */
+            ".byte 0x10, 0x1c\n\t"  /* adds r0, r2, #0 */
+            ".byte 0x41, 0x40\n\t"  /* eors r1, r0 */
+            ".byte 0x09, 0x04\n\t"  /* lsls r1, r1, #16 */
+            ".byte 0x09, 0x0c\n\t"  /* lsrs r1, r1, #16 */
+            "movs r0, #0\n\t"
+            "bl SetGpuReg\n\t"
+            : : : "r0", "r1", "r2", "lr");
+#endif
+        DestroyAnimSprite(sprite);
+        break;
+    }
 }
