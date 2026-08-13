@@ -761,38 +761,6 @@ _0815A9DC: .4byte 0x00003F3F
 	.section .text.battle_anim_effects_3_rest4,"ax",%progbits
 
 
-	thumb_func_start sub_0815ABC8
-sub_0815ABC8: @ 0x0815ABC8
-	push {r4, lr}
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	ldr r1, _0815AC00
-	movs r0, #0x48
-	bl SetGpuReg
-	ldr r0, _0815AC04
-	movs r1, #0
-	strh r1, [r0]
-	ldr r0, _0815AC08
-	strh r1, [r0]
-	bl IsContest
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0815ABF4
-	movs r1, #0x80
-	lsls r1, r1, #7
-	movs r0, #0
-	bl ClearGpuRegBits
-_0815ABF4:
-	adds r0, r4, #0
-	bl DestroyAnimVisualTask
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815AC00: .4byte 0x00003F3F
-_0815AC04: .4byte 0x02022ADC
-_0815AC08: .4byte 0x02022ADE
-	thumb_func_end sub_0815ABC8
 
 	thumb_func_start sub_0815AC0C
 sub_0815AC0C: @ 0x0815AC0C

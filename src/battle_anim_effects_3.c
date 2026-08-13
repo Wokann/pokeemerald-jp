@@ -290,3 +290,14 @@ void AnimTask_CreateSpotlight(u8 taskId)
 
     DestroyAnimVisualTask(taskId);
 }
+
+void AnimTask_RemoveSpotlight(u8 taskId)
+{
+    SetGpuReg(REG_OFFSET_WININ, WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR | WININ_WIN1_BG_ALL | WININ_WIN1_OBJ | WININ_WIN1_CLR);
+    gBattle_WIN1H = 0;
+    gBattle_WIN1V = 0;
+    if (!IsContest())
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN1_ON);
+
+    DestroyAnimVisualTask(taskId);
+}
