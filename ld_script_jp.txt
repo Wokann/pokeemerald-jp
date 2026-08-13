@@ -4982,6 +4982,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_GetReturnPowerLevel);
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchOpposingMonMove);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
+        src/battle_anim_effects_3.o(.text.AnimTask_SnatchPartnerMove);
+        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest7);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
         src/decoration_inventory.o(.text);

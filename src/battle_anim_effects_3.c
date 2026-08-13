@@ -3469,6 +3469,65 @@ void AnimTask_SnatchOpposingMonMove(u8 taskId)
     }
 }
 
+void AnimTask_SnatchPartnerMove(u8 taskId)
+{
+    s16 attackerX, targetX;
+    u8 spriteId;
+
+    switch (gTasks[taskId].data[15])
+    {
+    case 0:
+        attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        gTasks[taskId].data[0] = 6;
+        if (attackerX > targetX)
+            gTasks[taskId].data[0] *= -1;
+
+        gTasks[taskId].data[1] = attackerX;
+        gTasks[taskId].data[2] = targetX;
+        gTasks[taskId].data[15]++;
+        break;
+    case 1:
+        spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+        gSprites[spriteId].x2 += gTasks[taskId].data[0];
+        if (gTasks[taskId].data[0] > 0)
+        {
+            if (gSprites[spriteId].x + gSprites[spriteId].x2 >= gTasks[taskId].data[2])
+                gTasks[taskId].data[15]++;
+        }
+        else
+        {
+            if (gSprites[spriteId].x + gSprites[spriteId].x2 <= gTasks[taskId].data[2])
+                gTasks[taskId].data[15]++;
+        }
+        break;
+    case 2:
+        gTasks[taskId].data[0] *= -1;
+        gTasks[taskId].data[15]++;
+        break;
+    case 3:
+        spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+        gSprites[spriteId].x2 += gTasks[taskId].data[0];
+        if (gTasks[taskId].data[0] < 0)
+        {
+            if (gSprites[spriteId].x + gSprites[spriteId].x2 <= gTasks[taskId].data[1])
+                gTasks[taskId].data[15]++;
+        }
+        else
+        {
+            if (gSprites[spriteId].x + gSprites[spriteId].x2 >= gTasks[taskId].data[1])
+                gTasks[taskId].data[15]++;
+        }
+        break;
+    case 4:
+    default:
+        spriteId = gBattlerSpriteIds[gBattleAnimAttacker];
+        gSprites[spriteId].x2 = 0;
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
 #undef IDX_ACTIVE_SPRITES
 #undef tState
 #undef tTimer
