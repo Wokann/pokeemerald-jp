@@ -754,6 +754,9 @@ BattleScript_LinkBattleWonOrLost = gUnknown_8288FBD;
 BattleScript_FrontierTrainerBattleWon = gUnknown_828900F;
 BattleScript_LocalTrainerBattleWon = gUnknown_8288EB5;
 BattleScript_PayDayMoneyAndPickUpItems = gUnknown_8288EF2;
+BattleScript_PrintPlayerForfeitedLinkBattle = gUnknown_8289F50;
+BattleScript_FrontierLinkBattleLost = gUnknown_8288F93;
+BattleScript_LocalBattleLost = gUnknown_8288EF5;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
@@ -3276,6 +3279,7 @@ SECTIONS {
         src/battle_main.o(.text.CheckFocusPunch_ClearVarsBeforeTurnStarts);
         asm/battle_main_turnfuncs.o(.text);
         asm/battle_main_battlewon.o(.text);
+        asm/battle_main_battlelost.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

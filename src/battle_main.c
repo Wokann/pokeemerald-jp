@@ -93,6 +93,7 @@ void TurnValuesCleanUp(bool8 var0);
 extern void RunTurnActionsFunctions(void); // JP asm 0x0803D488 (US: same name)
 extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensitive, kept in asm)
 extern void HandleEndTurn_FinishBattle(void); // JP asm 0x0803DDF0 (US: same name)
+extern void HandleEndTurn_BattleLost(void); // JP asm 0x0803D700 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2327,6 +2328,7 @@ void SpecialStatusesClear(void)
             dataPtr[i] = 0;
     }
 }
+
 
 
 static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)
