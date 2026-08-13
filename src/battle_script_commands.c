@@ -1515,6 +1515,7 @@ static void Cmd_magnitudedamagecalculation(void);
 static void Cmd_jumpifnopursuitswitchdmg(void);
 static void Cmd_setsunny(void);
 static void Cmd_maxattackhalvehp(void);
+static void Cmd_copyfoestats(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7961,4 +7962,16 @@ static void Cmd_maxattackhalvehp(void)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_copyfoestats(void)
+{
+    s32 i;
+
+    for (i = 0; i < NUM_BATTLE_STATS; i++)
+    {
+        gBattleMons[gBattlerAttacker].statStages[i] = gBattleMons[gBattlerTarget].statStages[i];
+    }
+
+    gBattlescriptCurrInstr += 5; // Has an unused jump ptr(possibly for a failed attempt) parameter.
 }

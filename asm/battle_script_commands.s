@@ -483,42 +483,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkBD_copyfoestats
-atkBD_copyfoestats: @ 0x08053D44
-	push {r4, r5, r6, r7, lr}
-	movs r2, #0
-	ldr r7, _08053D7C
-	ldr r6, _08053D80
-	movs r4, #0x58
-	ldr r3, _08053D84
-	ldr r5, _08053D88
-_08053D52:
-	ldrb r0, [r6]
-	adds r1, r0, #0
-	muls r1, r4, r1
-	adds r1, r2, r1
-	adds r1, r1, r3
-	ldrb r0, [r5]
-	muls r0, r4, r0
-	adds r0, r2, r0
-	adds r0, r0, r3
-	ldrb r0, [r0]
-	strb r0, [r1]
-	adds r2, #1
-	cmp r2, #7
-	ble _08053D52
-	ldr r0, [r7]
-	adds r0, #5
-	str r0, [r7]
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08053D7C: .4byte 0x02023EB8
-_08053D80: .4byte 0x02023EAF
-_08053D84: .4byte 0x02023D40
-_08053D88: .4byte 0x02023EB0
-	thumb_func_end atkBD_copyfoestats
 
 	thumb_func_start atkBE_rapidspinfree
 atkBE_rapidspinfree: @ 0x08053D8C
