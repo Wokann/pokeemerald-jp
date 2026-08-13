@@ -260,3 +260,10 @@ void AnimClappingHand_Step(struct Sprite *sprite)
     if (sprite->data[0] == 0)
         DestroyAnimSprite(sprite);
 }
+
+void AnimClappingHand2(struct Sprite *sprite)
+{
+    sprite->oam.objMode = ST_OAM_OBJ_WINDOW;
+    sprite->data[3] = 255;
+    AnimClappingHand(sprite);
+}

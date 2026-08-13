@@ -759,22 +759,6 @@ _0815A9DC: .4byte 0x00003F3F
 
 
 	.section .text.battle_anim_effects_3_rest4,"ax",%progbits
-	thumb_func_start sub_0815AB0C
-sub_0815AB0C: @ 0x0815AB0C
-	push {lr}
-	ldrb r2, [r0, #1]
-	movs r1, #0xd
-	rsbs r1, r1, #0
-	ands r1, r2
-	movs r2, #8
-	orrs r1, r2
-	strb r1, [r0, #1]
-	movs r1, #0xff
-	strh r1, [r0, #0x34]
-	bl sub_0815A9E0
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0815AB0C
 
 	thumb_func_start sub_0815AB28
 sub_0815AB28: @ 0x0815AB28
