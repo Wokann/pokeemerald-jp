@@ -78,8 +78,7 @@ gUnknown_82C0558: @ 0x82C0558
 
 	.globl gUnknown_82C0564
 gUnknown_82C0564: @ 0x82C0564
-	.string "っマヒナヘマホウノマべホニ{SE_POKENAV_OFF}{SE_RG_SS_ANNE_HORN}{LIGHT_GREEN}と$"
-
+	.string "っマヒナヘマホウノマべホニマ　　あきと$"
 	.globl gUnknown_82C0578
 gUnknown_82C0578: @ 0x82C0578
 	.incbin "baserom_jp.gba", 0x2c0578, 0x18
@@ -126,29 +125,16 @@ gUnknown_82C069C: @ 0x82C069C
 
 	.globl gUnknown_82C06B8
 gUnknown_82C06B8: @ 0x82C06B8
-	.string "{B_COPY_VAR_1}{SE_M_DRAGON_RAGE}れんら{BLUE}まち！\nにんず{LIGHT_GRAY}{SE_SAVE}{DYNAMIC_COLOR6}"
-	.string "ろった{SE_LAVARIDGE_FALL_WARP}STARTボタン{SE_RG_SHOP}{MUS_DUMMY}シングルバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る$"
-	.string "ダブルバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
-	.string "マルチバトル{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
-	.string "ポケモン{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}"
-	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}チャット{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}"
-	.string "{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎなカードを{BLUE}ばる$"
-	.string "ふ{DYNAMIC_COLOR3}ぎなニュースを{BLUE}ばる{SE_RG_SHOP}{MUS_DUMMY}ふ{DYNAMIC_COLOR3}ぎなで{LIGHT_GREEN}"
-	.string "ごと{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
-	.string "なわとび{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}"
-	.string "{LIGHT_GREEN}のみマッシャー{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}"
-	.string "{MUS_DUMMY}{LIGHT_GREEN}のみどり{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}"
-	.string "る{SE_RG_SHOP}{TRANSPARENT}ぐるぐる{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}ぐるぐるショップ{SE_WARP_IN}{MUS_RG_POKE_TOWER}"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR4}る{SE_RG_SHOP}{MUS_DUMMY}h{GREEN}わ{BLUE}x{GREEN}わ{BLUE}{FONT}"
-	.string "わ{BLUE}{DYNAMIC_COLOR3}{LIGHT_GREEN}わ{BLUE}み{LIGHT_GREEN}わ{BLUE}ぃ{LIGHT_GREEN}わ{BLUE}ざ{LIGHT_GREEN}"
-	.string "わ{BLUE}ぃ{LIGHT_GREEN}わ{BLUE}タ{LIGHT_GREEN}わ{BLUE}ミ{LIGHT_GREEN}わ{BLUE}ャ{LIGHT_GREEN}わ{BLUE}"
-	.string "ャ{LIGHT_GREEN}わ{BLUE}デ{LIGHT_GREEN}わ{BLUE}7{LIGHT_GREEN}わ{SE_POKENAV_HANG_UP}と1にん\nひつよ{LIGHT_GRAY}"
-	.string "{MUS_RG_VS_CHAMPION}と2にん\nひつよ{LIGHT_GRAY}{MUS_RG_VS_CHAMPION}と3にん\nひつよ{LIGHT_GRAY}"
-	.string "{MUS_RG_VS_CHAMPION}と4にん\nひつよ{LIGHT_GRAY}$"
-	.string "2にん\nプレイ$3にん\nプレイ$4にん\nプレイ$5にん\nプレイ$"
-
+	.string "{B_COPY_VAR_1}！　れんらくまち！\n"
+	.string "にんずうが　そろったら　STARTボタン$　　　シングルバトルを　かいさいする$ダブルバトルを　かいさいする$　マルチバトルを　かいさいする$　ポケモンこうかんを　かいさいする$　　　チャットを　かいさいする$　　　ふしぎなカードをくばる$ふしぎなニュースをくばる$　　　ふしぎなできごとを　かいさいする$　　　なわとびを　かいさいする$　　　きのみマッシャーを　かいさいする$　　　きのみどりを　かいさいする$　　ぐるぐるこうかんを　かいさいする$　　　ぐるぐるショップを　かいさいする$　　　hかわくxかわく{FONT 44}くしきわくみきわくぃきわくざきわくぃきわくタきわくミきわくャきわくャきわくデきわく7きわくあと1にん\n"
+	.string "ひつよう$あと2にん\n"
+	.string "ひつよう$あと3にん\n"
+	.string "ひつよう$あと4にん\n"
+	.string "ひつよう$2にん\n"
+	.string "プレイ$3にん\n"
+	.string "プレイ$4にん\n"
+	.string "プレイ$5にん\n"
+	.string "プレイ$"
 	.globl gUnknown_82C0840
 gUnknown_82C0840: @ 0x82C0840
 	.incbin "baserom_jp.gba", 0x2c0840, 0x64
@@ -179,12 +165,13 @@ gUnknown_82C092C: @ 0x82C092C
 
 	.globl gUnknown_82C0948
 gUnknown_82C0948: @ 0x82C0948
-	.string "{B_COPY_VAR_1}{SE_BOO}OKの\nへんじ{SE_WARP_IN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た{SE_RG_SHOP}"
-	.string "{MUS_RG_OAK_LAB}ての\nつご{LIGHT_GRAY}{SE_SAVE}わ{MUS_RG_VS_LEGEND}み{MUS_RG_RIVAL_EXIT}⋯\p{SE_RG_SHOP}"
-	.string "ま{SE_NOTE_F}と{LIGHT_RED}{BLUE}{SE_A}{GREEN}たとは\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_I}で{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR5}ん\p{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{DARK_GRAY}て{SE_A}じゅんびが\nで{LIGHT_GREEN}"
-	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん\p$"
-
+	.string "{B_COPY_VAR_1}に　OKの\n"
+	.string "へんじを　だしました$　あいての\n"
+	.string "つごうが　わるいみたい⋯\p"
+	.string "$　まだ　とおくの　かたとは\n"
+	.string "つうしんは　できません\p"
+	.string "$　　あいての　じゅんびが\n"
+	.string "できていません\p$"
 	.globl gUnknown_82C09A0
 gUnknown_82C09A0: @ 0x82C09A0
 	.incbin "baserom_jp.gba", 0x2c09a0, 0x8
@@ -223,9 +210,8 @@ gUnknown_82C0AAC: @ 0x82C0AAC
 
 	.globl gUnknown_82C0AC8
 gUnknown_82C0AC8: @ 0x82C0AC8
-	.string "ジョイスポット{GREEN}{SE_LAVARIDGE_FALL_WARP}{DYNAMIC_COLOR5}つぞ{BLUE}を\n{DYNAMIC_COLOR5}つだ{SE_WARP_OUT}"
-	.string "{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR3}た⋯$"
-
+	.string "ジョイスポットから　せつぞくを\n"
+	.string "せつだん　されました⋯$"
 	.globl gUnknown_82C0AE4
 gUnknown_82C0AE4: @ 0x82C0AE4
 	.incbin "baserom_jp.gba", 0x2c0ae4, 0x38
@@ -248,10 +234,9 @@ gUnknown_82C0D3C: @ 0x82C0D3C
 
 	.globl gUnknown_82C0DB8
 gUnknown_82C0DB8: @ 0x82C0DB8
-	.string "ゾ{DYNAMIC_COLOR4}わ{BLUE}3{DYNAMIC_COLOR4}わ{SE_POKENAV_HANG_UP}{DARK_GRAY}て{SE_A}"
-	.string "へんじを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{SE_RG_SHOP}{MUS_DUMMY}{B_COPY_VAR_1}{SE_A}"
-	.string "へんじを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
-
+	.string "ゾすわく3すわくあいての　へんじを\n"
+	.string "まっています$　　　{B_COPY_VAR_1}の　へんじを\n"
+	.string "まっています$"
 	.globl gUnknown_82C0DE4
 gUnknown_82C0DE4: @ 0x82C0DE4
 	.incbin "baserom_jp.gba", 0x2c0de4, 0x8
@@ -274,24 +259,20 @@ gUnknown_82C0E68: @ 0x82C0E68
 
 	.globl gUnknown_82C0EA8
 gUnknown_82C0EA8: @ 0x82C0EA8
-	.string "と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{SE_FAINT}タマゴの\n{DYNAMIC_COLOR1}"
-	.string "{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}も{LIGHT_GRAY}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}み{SE_SAVE}{LIGHT_GREEN}"
-	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}\l{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "とうろく　していた　タマゴの\n"
+	.string "こうかん　もうしこみが　きています\l"
+	.string "こうかん　しますか？$"
 	.globl gUnknown_82C0ED4
 gUnknown_82C0ED4: @ 0x82C0ED4
-	.string "{MUS_RG_POKE_TOWER}わ{SE_SAVE}{LIGHT_GREEN}れま{DYNAMIC_COLOR3}た\p$"
-
+	.string "かいわが　きれました\p$"
 	.globl gUnknown_82C0EE0
 gUnknown_82C0EE0: @ 0x82C0EE0
 	.incbin "baserom_jp.gba", 0x2c0ee0, 0x14
 
 	.globl gUnknown_82C0EF4
 gUnknown_82C0EF4: @ 0x82C0EF4
-	.string "{LIGHT_RED}{DYNAMIC_COLOR2}{MUS_RG_ENCOUNTER_RIVAL}を\n{DYNAMIC_COLOR1}とわ{SE_ICE_STAIRS}"
-	.string "ま{DYNAMIC_COLOR3}た\p$"
-
+	.string "おさそいを\n"
+	.string "ことわり　ました\p$"
 	.globl gUnknown_82C0F04
 gUnknown_82C0F04: @ 0x82C0F04
 	.incbin "baserom_jp.gba", 0x2c0f04, 0xcc
@@ -330,9 +311,9 @@ gUnknown_82C12C4: @ 0x82C12C4
 
 	.globl gUnknown_82C12E4
 gUnknown_82C12E4: @ 0x82C12E4
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}{DYNAMIC_COLOR4}るためには\nレベル30よ{SE_ICE_STAIRS}"
-	.string "ひ{MUS_RG_FUCHSIA}{TRANSPARENT}ポケモンが\l2ひ{SE_WALL_HIT}ひつよ{SE_PC_OFF}だよ\p$"
-
+	.string "たいせんを　するためには\n"
+	.string "レベル30より　ひくい　ポケモンが\l"
+	.string "2ひき　ひつよう　だよ\p$"
 	.globl gUnknown_82C1310
 gUnknown_82C1310: @ 0x82C1310
 	.incbin "baserom_jp.gba", 0x2c1310, 0x54
@@ -363,8 +344,8 @@ gUnknown_82C1668: @ 0x82C1668
 
 	.globl gUnknown_82C1688
 gUnknown_82C1688: @ 0x82C1688
-	.string "{B_COPY_VAR_1}は\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{MUS_RG_CELADON}じばん{SE_WARP_IN}みた！\p$"
-
+	.string "{B_COPY_VAR_1}は\n"
+	.string "こうかんけいじばんを　みた！\p$"
 	.globl gUnknown_82C169C
 gUnknown_82C169C: @ 0x82C169C
 	.incbin "baserom_jp.gba", 0x2c169c, 0x44
@@ -379,9 +360,8 @@ gUnknown_82C17CC: @ 0x82C17CC
 
 	.globl gUnknown_82C17E8
 gUnknown_82C17E8: @ 0x82C17E8
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}だ{SE_EFFECTIVE}ポケモンを\nてもち{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{RED}らん{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}\p$"
-
+	.string "こうかんに　だす　ポケモンを\n"
+	.string "てもちから　えらんで　ください\p$"
 	.globl gUnknown_82C1808
 gUnknown_82C1808: @ 0x82C1808
 	.incbin "baserom_jp.gba", 0x2c1808, 0x14
@@ -396,10 +376,8 @@ gUnknown_82C1830: @ 0x82C1830
 
 	.globl gUnknown_82C1844
 gUnknown_82C1844: @ 0x82C1844
-	.string "と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}{B_COPY_VAR_1}"
-	.string "\nレベル{B_COPY_VAR_2}{SE_WARP_IN}{MUS_RG_POKE_TOWER}じ{SE_CARD}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}"
-	.string "？$"
-
+	.string "とうろく　されている　{B_COPY_VAR_1}\n"
+	.string "レベル{B_COPY_VAR_2}を　かいじょ　しますか？$"
 	.globl gUnknown_82C1864
 gUnknown_82C1864: @ 0x82C1864
 	.incbin "baserom_jp.gba", 0x2c1864, 0x1c
@@ -410,17 +388,15 @@ gUnknown_82C1880: @ 0x82C1880
 
 	.globl gUnknown_82C18CC
 gUnknown_82C18CC: @ 0x82C18CC
-	.string "{B_COPY_VAR_1}{SE_BOO}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}んを\nも{LIGHT_GRAY}{DYNAMIC_COLOR3}"
-	.string "{DYNAMIC_COLOR1}{SE_FAILURE}ま{DYNAMIC_COLOR4}{GREEN}？{SE_RG_SHOP}{MUS_DUMMY}⋯⋯{MUS_RG_VS_WILD}"
-	.string "{DARK_GRAY}て{SE_A}へんじ{SE_WARP_IN}まっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{MUS_RG_VS_CHAMPION}"
-	.string "なた{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}んにだ{DYNAMIC_COLOR4}\nポケモン{SE_SAVE}と{LIGHT_GRAY}ろ{BLUE}"
-	.string "{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん\p$"
-
+	.string "{B_COPY_VAR_1}に　こうかんを\n"
+	.string "もうしこみ　ますか？$　　　⋯⋯\n"
+	.string "あいての　へんじを　まっています$あなたが　こうかんにだす\n"
+	.string "ポケモンが　とうろくされていません\p$"
 	.globl gUnknown_82C1918
 gUnknown_82C1918: @ 0x82C1918
-	.string "てもちに\n{B_COPY_VAR_1}{SE_A}ほ{DYNAMIC_COLOR3}がっ{MUS_RG_CAUGHT_INTRO}る\l{B_COPY_VAR_2}ポケモン{SE_SAVE}"
-	.string "{WHITE}りま{DYNAMIC_COLOR5}ん\p$"
-
+	.string "てもちに\n"
+	.string "{B_COPY_VAR_1}の　ほしがっている\l"
+	.string "{B_COPY_VAR_2}ポケモンが　ありません\p$"
 	.globl gUnknown_82C1938
 gUnknown_82C1938: @ 0x82C1938
 	.incbin "baserom_jp.gba", 0x2c1938, 0x60
@@ -435,8 +411,7 @@ gUnknown_82C19AC: @ 0x82C19AC
 
 	.globl gUnknown_82C19B8
 gUnknown_82C19B8: @ 0x82C19B8
-	.string "{DPAD_UPDOWN}{RED}らぶ:{A_BUTTON}{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR4}る:{B_BUTTON}やめる$"
-
+	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR4}る:{B_BUTTON}やめる$"
 	.globl gUnknown_82C19CC
 gUnknown_82C19CC: @ 0x82C19CC
 	.incbin "baserom_jp.gba", 0x2c19cc, 0x218
@@ -459,20 +434,14 @@ gUnknown_82C1C94: @ 0x82C1C94
 
 	.globl gUnknown_82C1CB8
 gUnknown_82C1CB8: @ 0x82C1CB8
-	.string "ジョイスポット{GREEN}らの\nへんじ{SE_WARP_IN}まっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{SE_RG_SHOP}ほ{GREEN}{SE_A}"
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}ゃ{SE_SAVE}{DYNAMIC_COLOR6}ろ{LIGHT_GRAY}まで\n{DYNAMIC_COLOR3}"
-	.string "ょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-	.string "た{PH_PRICE_BLEND}{SE_SUCCESS}カード{SE_A}{MUS_RG_POKE_JUMP}ふは\n{LIGHT_RED}{DYNAMIC_COLOR1}なわれ{SE_SHIP}"
-	.string "{DARK_GRAY}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}⋯{SE_RG_SHOP}た{PH_PRICE_BLEND}"
-	.string "{SE_SUCCESS}ニュース{SE_A}{MUS_RG_POKE_JUMP}ふは\n{LIGHT_RED}{DYNAMIC_COLOR1}なわれ{SE_SHIP}{DARK_GRAY}"
-	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}⋯$"
-
+	.string "ジョイスポットからの\n"
+	.string "へんじを　まっています$　ほかの　さんかしゃが　そろうまで\n"
+	.string "しょうしょう　おまちください$ただいま　カードの　はいふは\n"
+	.string "おこなわれて　いないようです⋯$　ただいま　ニュースの　はいふは\n"
+	.string "おこなわれて　いないようです⋯$"
 	.globl gUnknown_82C1D30
 gUnknown_82C1D30: @ 0x82C1D30
-	.string ":ふわ{BLUE}たへわ{BLUE}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{MUS_DUMMY}チャット{SE_RG_SHOP}"
-	.string "{MUS_DUMMY}{MUS_RG_OAK_LAB}{DYNAMIC_COLOR2}つ{SE_RG_SHOP}{MUS_DUMMY}やめる$"
-	.string "とじる${DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}を{LIGHT_GREEN}{BLUE}$"
-
+	.string ":ふわくたへわくたいせん$　　　チャット$　　　あいさつ$　　　やめる$とじる$せつめいをきく$"
 	.globl gUnknown_82C1D60
 gUnknown_82C1D60: @ 0x82C1D60
 	.incbin "baserom_jp.gba", 0x2c1d60, 0xf8
@@ -499,8 +468,8 @@ gUnknown_82C1FA4: @ 0x82C1FA4
 
 	.globl gUnknown_82C1FAC
 gUnknown_82C1FAC: @ 0x82C1FAC
-	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\nみ{LIGHT_RED}わった！{PAUSE}ざ$"
-
+	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\n"
+	.string "みおわった！{PAUSE 60}$"
 	.globl gUnknown_82C1FC4
 gUnknown_82C1FC4: @ 0x82C1FC4
 	.incbin "baserom_jp.gba", 0x2c1fc4, 0x8
@@ -583,9 +552,7 @@ gUnknown_82C23E0: @ 0x82C23E0
 
 	.globl gUnknown_82C2438
 gUnknown_82C2438: @ 0x82C2438
-	.string "{MUS_RG_OAK_LAB}{LIGHT_GRAY}{RED}{LIGHT_BLUE}{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}{GREEN}{SE_WALL_HIT}"
-	.string "{MUS_DUMMY}{DYNAMIC_COLOR6}{SE_FAINT}ぬねのはひふ{DYNAMIC_COLOR5}{SE_M_HYPER_BEAM2}·{MUS_RG_ROUTE1}$"
-
+	.string "{MUS_RG_OAK_LAB}うえけ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}か{SE_WALL_HIT}{MUS_DUMMY}{DYNAMIC_COLOR6}{SE_FAINT}ぬねのはひふ{DYNAMIC_COLOR5}{SE_M_HYPER_BEAM2}·{MUS_RG_ROUTE1}$"
 	.globl gUnknown_82C2454
 gUnknown_82C2454: @ 0x82C2454
 	.incbin "baserom_jp.gba", 0x2c2454, 0x20
@@ -632,32 +599,22 @@ gUnknown_82C2504: @ 0x82C2504
 
 	.globl gUnknown_82C250C
 gUnknown_82C250C: @ 0x82C250C
-	.string "{TRANSPARENT}に{DYNAMIC_COLOR6}{GREEN}{RED}{DYNAMIC_COLOR3}オ{WHITE}ふ{DYNAMIC_COLOR3}ぎなカード$"
-	.string "ふ{DYNAMIC_COLOR3}ぎなニュース{SE_RG_SHOP}{MUS_DUMMY}ジョイスポット$"
-	.string "ともだち{SE_RG_SHOP}{MUS_DUMMY}やめる$"
-
+	.string "　にそかえしオあふしぎなカード$ふしぎなニュース$　　　ジョイスポット$ともだち$　　　やめる$"
 	.globl gUnknown_82C253C
 gUnknown_82C253C: @ 0x82C253C
-	.string "とゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ふゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$"
-
+	.string "とゆわく　　　　ふゆわくあ　　　ぎゆわく\n"
+	.string "$$$"
 	.globl gUnknown_82C2554
 gUnknown_82C2554: @ 0x82C2554
-	.string "りゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ぃゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$"
-
+	.string "りゆわく　　　　ぃゆわくあ　　　ぎゆわく\n"
+	.string "$$$"
 	.globl gUnknown_82C256C
 gUnknown_82C256C: @ 0x82C256C
-	.string "{MUS_DUMMY}{MUS_DUMMY}アyは{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}{SE_PC_OFF}{SE_PC_OFF}{MUS_DUMMY}"
-	.string "{SE_PIKE_CURTAIN_CLOSE}め{SE_TRUCK_MOVE}{WHITE}よみ{DYNAMIC_COLOR1}む{SE_RG_SHOP}{MUS_DUMMY}{LIGHT_RED}"
-	.string "{BLUE}る$"
-	.string "{DYNAMIC_COLOR4}てる$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ザゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}"
-	.string "{TRANSPARENT}ゾゆわ{MUS_RG_FUCHSIA}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ゾゆわ{MUS_RG_FUCHSIA}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ザゆわ{SE_POKENAV_HANG_UP}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$ャゆわ{SE_DOOR}{MUS_DUMMY}{TRANSPARENT}ぎゆわ{BLUE}\n$"
-	.string "$$"
-
+	.string "　　　　アyはく　　　　う　う　　　さあめぅ　あよみこむ$　　　おくる$すてる$ャゆわく　　　　ザゆわくあ　　　ゾゆわくい　　　ぎゆわく\n"
+	.string "$$$ャゆわく　　　　ゾゆわくい　　　ぎゆわく\n"
+	.string "$$$ャゆわく　　　　ザゆわくあ　　　ぎゆわく\n"
+	.string "$$$ャゆわく　　　　ぎゆわく\n"
+	.string "$$$"
 	.globl gUnknown_82C25F4
 gUnknown_82C25F4: @ 0x82C25F4
 	.incbin "baserom_jp.gba", 0x2c25f4, 0x18
@@ -676,9 +633,8 @@ gUnknown_82C263C: @ 0x82C263C
 
 	.globl gUnknown_82C26C4
 gUnknown_82C26C4: @ 0x82C26C4
-	.string "ふ{DYNAMIC_COLOR3}ぎなカード{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}{MUS_RG_GAME_FREAK}ので{MUS_RG_VS_WILD}"
-	.string "たら{DYNAMIC_COLOR3}{SE_DOOR}カード{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}$"
-
+	.string "ふしぎなカードを　もっていないので\n"
+	.string "あたらしく　カードを　よみこみます$"
 	.globl gUnknown_82C26E8
 gUnknown_82C26E8: @ 0x82C26E8
 	.incbin "baserom_jp.gba", 0x2c26e8, 0x28
@@ -701,9 +657,7 @@ gUnknown_82C277C: @ 0x82C277C
 
 	.globl gUnknown_82C2790
 gUnknown_82C2790: @ 0x82C2790
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_BOO}{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}{TRANSPARENT}{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR3}た$"
-
+	.string "つうしんに　しっぱい　しました$"
 	.globl gUnknown_82C27A0
 gUnknown_82C27A0: @ 0x82C27A0
 	.incbin "baserom_jp.gba", 0x2c27a0, 0x14
@@ -714,9 +668,8 @@ gUnknown_82C27B4: @ 0x82C27B4
 
 	.globl gUnknown_82C27DC
 gUnknown_82C27DC: @ 0x82C27DC
-	.string "ま{SE_NOTE_F}カード{SE_A}{LIGHT_RED}{BLUE}りもの{SE_WARP_IN}もらって\nま{DYNAMIC_COLOR5}ん{SE_SAVE}ほんと{LIGHT_GRAY}"
-	.string "{SE_BOO}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "まだ　カードの　おくりものを　もらって\n"
+	.string "ませんが　ほんとうに　よみこみますか？$"
 	.globl gUnknown_82C2804
 gUnknown_82C2804: @ 0x82C2804
 	.incbin "baserom_jp.gba", 0x2c2804, 0x1c
@@ -731,23 +684,20 @@ gUnknown_82C2838: @ 0x82C2838
 
 	.globl gUnknown_82C2854
 gUnknown_82C2854: @ 0x82C2854
-	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}ニュースが\n{LIGHT_RED}{BLUE}られ{SE_SHIP}{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR3}た！$"
-
+	.string "あたらしい　ニュースが\n"
+	.string "おくられて　きました！$"
 	.globl gUnknown_82C286C
 gUnknown_82C286C: @ 0x82C286C
-	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}スタンプが\n{LIGHT_RED}{BLUE}られ{SE_SHIP}{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR3}た！$"
-
+	.string "あたらしい　スタンプが\n"
+	.string "おくられて　きました！$"
 	.globl gUnknown_82C2884
 gUnknown_82C2884: @ 0x82C2884
 	.incbin "baserom_jp.gba", 0x2c2884, 0x1c
 
 	.globl gUnknown_82C28A0
 gUnknown_82C28A0: @ 0x82C28A0
-	.string "{LIGHT_RED}な{SE_BALL_THROW}ふ{DYNAMIC_COLOR3}ぎなカードを\n{DYNAMIC_COLOR4}で{SE_BOO}もっ{MUS_RG_CAUGHT_INTRO}"
-	.string "ま{DYNAMIC_COLOR4}$"
-
+	.string "おなじ　ふしぎなカードを\n"
+	.string "すでに　もっています$"
 	.globl gUnknown_82C28B8
 gUnknown_82C28B8: @ 0x82C28B8
 	.incbin "baserom_jp.gba", 0x2c28b8, 0x18
@@ -798,12 +748,12 @@ gUnknown_82C29C0: @ 0x82C29C0
 
 	.globl gUnknown_82C29D8
 gUnknown_82C29D8: @ 0x82C29D8
-	.string "{B_COPY_VAR_1}{SE_BOO}ニュー{SE_ROULETTE_BALL2}を\n{LIGHT_RED}{BLUE}{SE_ICE_STAIRS}ま{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_COPY_VAR_1}に　ニュース　を\n"
+	.string "おくり　ました！$"
 	.globl gUnknown_82C29EC
 gUnknown_82C29EC: @ 0x82C29EC
-	.string "{B_COPY_VAR_1}{SE_BOO}スタン{SE_M_WING_ATTACK}を\n{LIGHT_RED}{BLUE}{SE_ICE_STAIRS}ま{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_COPY_VAR_1}に　スタンプ　を\n"
+	.string "おくり　ました！$"
 	.globl gUnknown_82C2A00
 gUnknown_82C2A00: @ 0x82C2A00
 	.incbin "baserom_jp.gba", 0x2c2a00, 0x14
@@ -826,18 +776,16 @@ gUnknown_82C2A60: @ 0x82C2A60
 
 	.globl gUnknown_82C2A78
 gUnknown_82C2A78: @ 0x82C2A78
-	.string "{DYNAMIC_COLOR1}{SE_A}{MUS_RG_OAK_LAB}{SE_SHIP}には\nふ{DYNAMIC_COLOR3}ぎな{LIGHT_RED}{BLUE}"
-	.string "りもの{SE_WARP_IN}わた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}ん$"
-
+	.string "この　あいて　には\n"
+	.string "ふしぎなおくりものを　わたせません$"
 	.globl gUnknown_82C2A94
 gUnknown_82C2A94: @ 0x82C2A94
 	.incbin "baserom_jp.gba", 0x2c2a94, 0x20
 
 	.globl gUnknown_82C2AB4
 gUnknown_82C2AB4: @ 0x82C2AB4
-	.string "ほんと{LIGHT_GRAY}{SE_BOO}ニュースを\n{DYNAMIC_COLOR4}てて{SE_SWITCH}{MUS_RG_POKE_FLUTE}で{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-
+	.string "ほんとうに　ニュースを\n"
+	.string "すてても　よいですか？$"
 	.globl gUnknown_82C2ACC
 gUnknown_82C2ACC: @ 0x82C2ACC
 	.incbin "baserom_jp.gba", 0x2c2acc, 0x20
@@ -856,8 +804,7 @@ gUnknown_82C2B28: @ 0x82C2B28
 
 	.globl gUnknown_82C2B38
 gUnknown_82C2B38: @ 0x82C2B38
-	.string "ニュース{SE_WARP_IN}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た$"
-
+	.string "ニュースを　すてました$"
 	.globl gUnknown_82C2B44
 gUnknown_82C2B44: @ 0x82C2B44
 	.incbin "baserom_jp.gba", 0x2c2b44, 0xc
@@ -872,8 +819,7 @@ gUnknown_82C2B64: @ 0x82C2B64
 
 	.globl gUnknown_82C2B6C
 gUnknown_82C2B6C: @ 0x82C2B6C
-	.string "{MUS_RG_OAK_LAB}{LIGHT_GRAY}テスト$むげんのチケット$"
-
+	.string "あいうテスト$むげんのチケット$"
 	.globl gUnknown_82C2B7C
 gUnknown_82C2B7C: @ 0x82C2B7C
 	.incbin "baserom_jp.gba", 0x2c2b7c, 0x14
@@ -936,15 +882,7 @@ gUnknown_82C31B4: @ 0x82C31B4
 
 	.globl gUnknown_82C31BC
 gUnknown_82C31BC: @ 0x82C31BC
-	.string "{TRANSPARENT}{SE_WIN_OPEN}ね{LIGHT_GRAY}{DYNAMIC_COLOR6}{SE_USE_ITEM}{TRANSPARENT}{LIGHT_RED}{RED}"
-	.string "つ{DYNAMIC_COLOR6}{DYNAMIC_COLOR6}{SE_DING_DONG}{TRANSPARENT}な{RED}{GREEN}{DYNAMIC_COLOR6}"
-	.string "{DYNAMIC_COLOR6}キ{WHITE}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}ワイヤレ{SE_ROULETTE_BALL2}"
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}じょ{LIGHT_GRAY}{LIGHT_GREEN}ょ{LIGHT_GRAY}$"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}るひと$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}るひと$"
-	.string "ユニオンルーム{SE_BOO}{DARK_GRAY}るひと$つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{DYNAMIC_COLOR3}"
-	.string "{MUS_RG_CAUGHT_INTRO}るひと$"
-
+	.string "　か　ねうそあ　　おえつそそべ　　なえかそそキあ$　　　　　　　ワイヤレス　つうしん　じょうきょう$こうかん　しているひと$たいせん　しているひと$ユニオンルームに　いるひと$つうしん　しているひと$"
 	.globl gUnknown_82C3220
 gUnknown_82C3220: @ 0x82C3220
 	.incbin "baserom_jp.gba", 0x2c3220, 0x18
@@ -971,17 +909,14 @@ gUnknown_82C32C0: @ 0x82C32C0
 
 	.globl gUnknown_82C32C3
 gUnknown_82C32C3: @ 0x82C32C3
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}{MUS_RG_VS_WILD}"
-	.string "{DARK_GRAY}て{SE_A}{DYNAMIC_COLOR5}んた{BLUE}{SE_WARP_IN}まっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}⋯$"
-
+	.string "つうしんたいきちゅう\n"
+	.string "あいての　せんたくを　まっています⋯$"
 	.globl gUnknown_82C32E1
 gUnknown_82C32E1: @ 0x82C32E1
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}{DYNAMIC_COLOR1}とわられま{DYNAMIC_COLOR3}た{PAUSE}ざ$"
-
+	.string "たいせんを　ことわられました{PAUSE 60}$"
 	.globl gUnknown_82C32F3
 gUnknown_82C32F3: @ 0x82C32F3
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}{DYNAMIC_COLOR1}とわりま{DYNAMIC_COLOR3}た{PAUSE}ざ$"
-
+	.string "たいせんを　ことわりました{PAUSE 60}$"
 	.globl sReceivedGiftFlags
 sReceivedGiftFlags: @ 0x82C3304
 	.incbin "baserom_jp.gba", 0x2c3304, 0x28
@@ -2144,12 +2079,8 @@ gUnknown_82ECD5C: @ 0x82ECD5C
 
 	.globl gUnknown_82ECD64
 gUnknown_82ECD64: @ 0x82ECD64
-	.string "{SE_M_THUNDERBOLT}{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_SHINY}\n$"
-	.string "{SE_NOTE_B}{SE_M_COSMIC_POWER}{SE_M_BUBBLE_BEAM}{SE_M_SNORE}{SE_M_TELEPORT}{SE_M_SWAGGER2}"
-	.string "{SE_M_STRENGTH}{SE_M_MIST}{SE_ARENA_TIMEUP2}む{WHITE}{DYNAMIC_COLOR5}{WHITE}キ{WHITE}{DYNAMIC_COLOR6}"
-	.string "{WHITE}{SE_POKENAV_HANG_UP}$"
-	.string "$"
-
+	.string "ヨ　4　5　ニ　\n"
+	.string "$で　Ü　♀　K　Q　H　b　7　こあむあせあキあそあくあ$$"
 	.globl gUnknown_82ECD8C
 gUnknown_82ECD8C: @ 0x82ECD8C
 	.incbin "baserom_jp.gba", 0x2ecd8c, 0xc
@@ -2160,10 +2091,8 @@ gUnknown_82ECD98: @ 0x82ECD98
 
 	.globl gUnknown_82ECDAC
 gUnknown_82ECDAC: @ 0x82ECDAC
-	.string "{SE_CONTEST_ICON_CLEAR}{SE_BANG}{SE_RG_CARD_FLIPPING}{SE_ICE_STAIRS}{MUS_RG_MT_MOON}{SE_BALL_TRADE}"
-	.string "t{LIGHT_GRAY}{SE_ESCALATOR}V{LIGHT_GREEN}{SE_CONTEST_ICON_CLEAR}$"
-	.string "$$$"
-
+	.string "ト　と　\l"
+	.string "　り　äあざ　tうっ　Vきト　$$$$"
 	.globl gUnknown_82ECDC4
 gUnknown_82ECDC4: @ 0x82ECDC4
 	.incbin "baserom_jp.gba", 0x2ecdc4, 0x24
@@ -2304,736 +2233,504 @@ gUnknown_82F0D62: @ 0x82F0D62
 gUnknown_82F0D65: @ 0x82F0D65
 	.incbin "baserom_jp.gba", 0x2f0d65, 0x2cff
 gUnknown_82F3A64: @ 0x82F3A64
-	.string "{MUS_RG_SEVII_ROUTE}を{BLUE}べ{DYNAMIC_COLOR5}にとぷほぽほぱりrぇぼぞwぺぴシ$"
-	.string "$"
+	.string "むいをくべせにとぷほぽほぱりrぇぼぞwぺぴシ$$"
 gUnknown_82F3A7C: @ 0x82F3A7C
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_GOAT_SOLO}を{BLUE}べ{DYNAMIC_COLOR5}にとぷほぽほぱわrげぼぴwセぴミ$"
-	.string "$"
+	.string "むいをいべいをくべせにとぷほぽほぱわrげぼぴwセぴミ$$"
 gUnknown_82F3A98: @ 0x82F3A98
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_GOAT_SOLO}{MUS_RG_CAUGHT}を{BLUE}べ{DYNAMIC_COLOR5}"
-	.string "にとぷほぽほぱわrげぼイwハぴェ$"
-	.string "$"
+	.string "むいをいべいにいをくべせにとぷほぽほぱわrげぼイwハぴェ$$"
 gUnknown_82F3AB6: @ 0x82F3AB6
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ゃ{DYNAMIC_COLOR5}フはテよ,ぇゅず2ぼイカウツ$"
-	.string "$"
+	.string "こいをいゃせフはテよ,ぇゅず2ぼイカウツ$$"
 gUnknown_82F3ACC: @ 0x82F3ACC
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}{PH_FACE_SOLO}ゃ{DYNAMIC_COLOR5}フはテり,ょゅで2イイタウホ$"
-	.string "$"
+	.string "こいをいゃいゃせフはテり,ょゅで2イイタウホ$$"
 gUnknown_82F3AE4: @ 0x82F3AE4
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}{PH_FACE_SOLO}フ{DARK_GRAY}ゃ{DYNAMIC_COLOR5}"
-	.string "フはテり,ょゅでちぶ2クイフウィ$"
-	.string "$"
+	.string "こいをいゃいフいゃせフはテり,ょゅでちぶ2クイフウィ$$"
 gUnknown_82F3B00: @ 0x82F3B00
-	.string "{MUS_RG_SEVII_ROUTE}ら{BLUE}ダ{DYNAMIC_COLOR5}ホとがはわやqん♀ぎ:ぢェっぎセ$"
-	.string "$"
+	.string "むいらくダせホとがはわやqん♀ぎ:ぢェっぎセ$$"
 gUnknown_82F3B18: @ 0x82F3B18
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ダ{DARK_GRAY}ら{BLUE}ダ{DYNAMIC_COLOR5}ホとがはわよqぇ♀ず:ぼェコぎハ$"
-	.string "$"
+	.string "むいらいダいらくダせホとがはわよqぇ♀ず:ぼェコぎハ$$"
 gUnknown_82F3B34: @ 0x82F3B34
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ダ{DARK_GRAY}ホ{DARK_GRAY}ら{BLUE}ダ{DYNAMIC_COLOR5}"
-	.string "ホとがはわよqぇ♀ず:エェホぎギ$"
-	.string "$"
+	.string "むいらいダいホいらくダせホとがはわよqぇ♀ず:エェホぎギ$$"
 gUnknown_82F3B52: @ 0x82F3B52
-	.string "{MUS_RG_SEVII_ROUTE}{PH_MOUTH_HELD}$$"
+	.string "むいアい$$"
 gUnknown_82F3B58: @ 0x82F3B58
-	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+	.string "ハいハせ$$"
 gUnknown_82F3B5E: @ 0x82F3B5E
-	.string "{PH_CURE_HELD}スとぷはぺふぽほぃやつんたぎざでgっずソ$$"
+	.string "スいスとぷはぺふぽほぃやつんたぎざでgっずソ$$"
 gUnknown_82F3B76: @ 0x82F3B76
-	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD}$$"
+	.string "りいアい$$"
 gUnknown_82F3B7C: @ 0x82F3B7C
-	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+	.string "ハいハせ$$"
 gUnknown_82F3B82: @ 0x82F3B82
-	.string "{MUS_RG_SEVII_CAVE}まとヤほるりテぇpざればチっひサ$$"
+	.string "まいまとヤほるりテぇpざればチっひサ$$"
 gUnknown_82F3B96: @ 0x82F3B96
-	.string "{MUS_RG_SEVII_ROUTE}ふ{DYNAMIC_COLOR1}たつツはつよちぇるぜチぺラセ$"
-	.string "$"
+	.string "むいふこたつツはつよちぇるぜチぺラセ$$"
 gUnknown_82F3BAA: @ 0x82F3BAA
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_NET_CENTER}{MUS_RG_RIVAL_EXIT}ふ{DYNAMIC_COLOR1}たつツはつりちょるどチカラネ$"
-	.string "$"
+	.string "むいふいたいふこたつツはつりちょるどチカラネ$$"
 gUnknown_82F3BC2: @ 0x82F3BC2
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_NET_CENTER}{MUS_RG_RIVAL_EXIT}ツ{DARK_GRAY}ふ{DYNAMIC_COLOR1}"
-	.string "たつツはつりちょるどチタラワ$"
-	.string "$"
+	.string "むいふいたいツいふこたつツはつりちょるどチタラワ$$"
 gUnknown_82F3BDC: @ 0x82F3BDC
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ツ{DYNAMIC_COLOR5}ペはヤりpょ1でひウ$"
-	.string "$"
+	.string "むいらいツせペはヤりpょ1でひウ$$"
 gUnknown_82F3BEE: @ 0x82F3BEE
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}ツ{DARK_GRAY}ツ{DYNAMIC_COLOR5}ペは,りpざ1っひナ$"
-	.string "$"
+	.string "むいらいツいツせペは,りpざ1っひナ$$"
 gUnknown_82F3C02: @ 0x82F3C02
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ろ{DYNAMIC_COLOR5}まはpよぴぉラずだぼチカ$"
-	.string "$"
+	.string "ぞいをいろせまはpよぴぉラずだぼチカ$$"
 gUnknown_82F3C16: @ 0x82F3C16
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_SEVII_CAVE}ろ{DYNAMIC_COLOR5}"
-	.string "まはpゃラぞだっチセ$"
-	.string "$"
+	.string "ぞいをいろいまいろせまはpゃラぞだっチセ$$"
 gUnknown_82F3C2C: @ 0x82F3C2C
-	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}りたわはグりヌぇぉぞ\n{SE_BALLOON_RED}ぱ$"
-	.string "ぼメク$$"
+	.string "もいろいりたわはグりヌぇぉぞ\n"
+	.string "ぼ　ぱ$ぼメク$$"
 gUnknown_82F3C44: @ 0x82F3C44
-	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_VS_MEWTWO}{MUS_RG_TRAINER_TOWER}"
-	.string "りたわはグりヌぎぉぴ\n{SE_ROULETTE_BALL}ス$"
-	.string "シメミ$$"
+	.string "もいろいりいわいりたわはグりヌぎぉぴ\n"
+	.string "シ　ス$シメミ$$"
 gUnknown_82F3C60: @ 0x82F3C60
-	.string "{PH_FOOT_HELD}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR3}カたツにネほなりオゃチぢキイムト$"
-	.string "$"
+	.string "エいをいらしカたツにネほなりオゃチぢキイムト$$"
 gUnknown_82F3C78: @ 0x82F3C78
-	.string "{PH_FOOT_HELD}{MUS_RG_VS_DEOXYS}ツ{DARK_GRAY}{PH_FOOT_SOLO}$"
-	.string "$"
+	.string "エいらいツいオい$$"
 gUnknown_82F3C82: @ 0x82F3C82
-	.string "{MUS_RG_VICTORY_TRAINER}マ{DYNAMIC_COLOR3}ふにりめ2んゥざボぼぶサOハ$"
-	.string "$"
+	.string "こいマしふにりめ2んゥざボぼぶサOハ$$"
 gUnknown_82F3C96: @ 0x82F3C96
-	.string "{MUS_RG_VICTORY_TRAINER}マ{DARK_GRAY}{MUS_RG_NET_CENTER}マ{DYNAMIC_COLOR3}ふにりめ2ぃゥぢボエぶノOワ$"
-	.string "$"
+	.string "こいマいふいマしふにりめ2ぃゥぢボエぶノOワ$$"
 gUnknown_82F3CAE: @ 0x82F3CAE
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VICTORY_TRAINER}らたねねりめわり{DYNAMIC_COLOR5}ぁボざ{RED}ぷÖセ$"
-	.string "$"
+	.string "をいこいらたねねりめわりせぁボざえぷÖセ$$"
 gUnknown_82F3CC4: @ 0x82F3CC4
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VICTORY_TRAINER}らたねねりやわわ{DYNAMIC_COLOR5}ゅボで{RED}キÖハ$"
-	.string "$"
+	.string "をいこいらたねねりやわわせゅボでえキÖハ$$"
 gUnknown_82F3CDA: @ 0x82F3CDA
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}{MUS_RG_NEW_GAME_INTRO}{MUS_RG_VS_MEWTWO}めん$"
-	.string "$"
+	.string "こいらいねいりいめん$$"
 gUnknown_82F3CE6: @ 0x82F3CE6
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ヤたねねりめほり{DYNAMIC_COLOR5}ぁまざ{RED}ぷみセ$"
-	.string "$"
+	.string "ろいぞいヤたねねりめほりせぁまざえぷみセ$$"
 gUnknown_82F3CFC: @ 0x82F3CFC
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ヤたねねりやほわ{DYNAMIC_COLOR5}ゅまで{RED}キみハ$"
-	.string "$"
+	.string "ろいぞいヤたねねりやほわせゅまでえキみハ$$"
 gUnknown_82F3D12: @ 0x82F3D12
-	.string "{PH_KIT_SOLO}ヤ{DARK_GRAY}{MUS_RG_NEW_GAME_INTRO}{MUS_RG_VS_MEWTWO}ゆん$"
-	.string "$"
+	.string "ぞいヤいねいりいゆん$$"
 gUnknown_82F3D1E: @ 0x82F3D1E
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}o{DYNAMIC_COLOR1}ぁつ{LIGHT_GRAY}は{DYNAMIC_COLOR1}もヒれマぇヨげぢづxぼムイゅサ$"
-	.string "$"
+	.string "あいをいoこぁつうはこもヒれマぇヨげぢづxぼムイゅサ$$"
 gUnknown_82F3D3A: @ 0x82F3D3A
-	.string "{PH_TRAP_BLEND}{MUS_RG_POKE_CENTER}ヒ{DARK_GRAY}ヨ{DARK_GRAY}$"
-	.string "$"
+	.string "ぁいういヒいヨい$$"
 gUnknown_82F3D44: @ 0x82F3D44
-	.string "{PH_FACE_SOLO}ら{DYNAMIC_COLOR1}んつツは{LIGHT_RED}もヘれほぉゅげgぢみぱウイ$"
-	.string "$"
+	.string "ゃいらこんつツはおもヘれほぉゅげgぢみぱウイ$$"
 gUnknown_82F3D5C: @ 0x82F3D5C
-	.string "{PH_FACE_SOLO}ツ{DARK_GRAY}ヘ{DARK_GRAY}g{DARK_GRAY}ウコ$"
-	.string "$"
+	.string "ゃいツいヘいgいウコ$$"
 gUnknown_82F3D68: @ 0x82F3D68
-	.string "{PH_TRAP_BLEND}マ{SE_POKENAV_HANG_UP}つぇふSよ{LIGHT_GRAY}ぃピげめでニぺぃケよツ$"
-	.string "$"
+	.string "ぁいマくあつぇふSようぃピげめでニぺぃケよツ$$"
 gUnknown_82F3D80: @ 0x82F3D80
-	.string "{PH_TRAP_BLEND}{PH_FACE_BLEND}マ{DARK_GRAY}{MUS_RG_POKE_CENTER}$"
-	.string "$"
+	.string "ぁいぇいマいうい$$"
 gUnknown_82F3D8A: @ 0x82F3D8A
-	.string "ジ{DARK_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘゃげぜZぶぅウメシ$"
-	.string "$"
+	.string "ジいぃしょぬわみちれヘゃげぜZぶぅウメシ$$"
 gUnknown_82F3DA0: @ 0x82F3DA0
-	.string "ヌ{DARK_GRAY}ジ{DARK_GRAY}{PH_TRAP_HELD}ょ{LIGHT_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘぎげびZエぅテメミ$"
-	.string "$"
+	.string "ヌいジいぃいょうぃしょぬわみちれヘぎげびZエぅテメミ$$"
 gUnknown_82F3DBC: @ 0x82F3DBC
-	.string "{PH_GOAT_BLEND}r{DYNAMIC_COLOR5}ぷふぺみぽやぉんxぞっぺ$"
-	.string "$"
+	.string "びいrせぷふぺみぽやぉんxぞっぺ$$"
 gUnknown_82F3DCE: @ 0x82F3DCE
-	.string "{PH_GOAT_BLEND}r{DARK_GRAY}{PH_CHOICE_BLEND}r{DYNAMIC_COLOR5}ぷふぺみぽやぉぃxばっク$"
-	.string "$"
+	.string "びいrいぷいrせぷふぺみぽやぉぃxばっク$$"
 gUnknown_82F3DE4: @ 0x82F3DE4
-	.string "{PH_GOAT_BLEND}ぎ{LIGHT_GRAY}{PH_CHOICE_HELD}{PH_GOAT_HELD}っク$"
-	.string "$"
+	.string "びいぎうぺいぶいっク$$"
 gUnknown_82F3DF0: @ 0x82F3DF0
-	.string "{MUS_RG_VICTORY_TRAINER}ぺ{DYNAMIC_COLOR5}ぷはジよヅぇ2ずぼぼPカぎテ$"
-	.string "$"
+	.string "こいぺせぷはジよヅぇ2ずぼぼPカぎテ$$"
 gUnknown_82F3E04: @ 0x82F3E04
-	.string "{MUS_RG_VICTORY_TRAINER}{PH_CHOICE_HELD}{PH_CHOICE_BLEND}ぺ{DYNAMIC_COLOR5}ぷはジよヅょ2ばぼカPニぎラ$"
-	.string "$"
+	.string "こいぺいぷいぺせぷはジよヅょ2ばぼカPニぎラ$$"
 gUnknown_82F3E1C: @ 0x82F3E1C
-	.string "{MUS_RG_SEVII_ROUTE}{PH_FACE_BLEND}G{DARK_GRAY}ぃつスめぷりジぇぺぎざぢぽぶセイ$"
-	.string "$"
+	.string "むいぇいGいぃつスめぷりジぇぺぎざぢぽぶセイ$$"
 gUnknown_82F3E34: @ 0x82F3E34
-	.string "ず{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{PH_FACE_BLEND}G{DARK_GRAY}{PH_TRAP_HELD}ぃつスめぷりジぇぺぎたずざぶぽエセネ$"
-	.string "$"
+	.string "ずうむいぇいGいぃいぃつスめぷりジぇぺぎたずざぶぽエセネ$$"
 gUnknown_82F3E52: @ 0x82F3E52
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_NET_CENTER}を{DYNAMIC_COLOR1}jつサめCぇ2ぢケイコツ$"
-	.string "$"
+	.string "こいふいをこjつサめCぇ2ぢケイコツ$$"
 gUnknown_82F3E66: @ 0x82F3E66
-	.string "0{DARK_GRAY}{MUS_RG_VICTORY_TRAINER}{MUS_RG_NET_CENTER}{MUS_RG_SLOW_PALLET}を{DYNAMIC_COLOR1}"
-	.string "jつサめCぇぶゅ2ぴケニコィ$"
-	.string "$"
+	.string "0いこいふいをいをこjつサめCぇぶゅ2ぴケニコィ$$"
 gUnknown_82F3E80: @ 0x82F3E80
 	.incbin "baserom_jp.gba", 0x2f3e80, 0x14
 gUnknown_82F3E94: @ 0x82F3E94
 	.incbin "baserom_jp.gba", 0x2f3e94, 0x16
 gUnknown_82F3EAA: @ 0x82F3EAA
-	.string "コ{LIGHT_GRAY}{MUS_RG_VICTORY_TRAINER}ら{DYNAMIC_COLOR1}ぇとスみヌんäずボっぎト$"
-	.string "$"
+	.string "コうこいらこぇとスみヌんäずボっぎト$$"
 gUnknown_82F3EBE: @ 0x82F3EBE
-	.string "コ{LIGHT_GRAY}{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}{PH_FACE_BLEND}ら{DYNAMIC_COLOR1}ぇとスみヌんäずボクぎヤ$"
-	.string "$"
+	.string "コうこいらいぇいらこぇとスみヌんäずボクぎヤ$$"
 gUnknown_82F3ED6: @ 0x82F3ED6
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}づ{MUS_RG_OBTAIN_KEY_ITEM}ほボれヤょどぢzぺヌコゆニ$"
-	.string "$"
+	.string "こいろいづついほボれヤょどぢzぺヌコゆニ$$"
 gUnknown_82F3EEC: @ 0x82F3EEC
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}{PH_PRICE_SOLO}テ{DARK_GRAY}づ{MUS_RG_OBTAIN_KEY_ITEM}"
-	.string "ほボれヤょテぎどぶzコヌフゆン$"
-	.string "$"
+	.string "こいろいづいテいづついほボれヤょテぎどぶzコヌフゆン$$"
 gUnknown_82F3F08: @ 0x82F3F08
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_TEACHY_TV_MENU}ゃ{DYNAMIC_COLOR5}ろはざらやぇ？ず{DYNAMIC_COLOR5}ぱチカゅツ$"
-	.string "$"
+	.string "わいんいゃせろはざらやぇ？ずせぱチカゅツ$$"
 gUnknown_82F3F1E: @ 0x82F3F1E
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_TEACHY_TV_MENU}{PH_FACE_SOLO}ざ{LIGHT_GRAY}öツ$"
-	.string "$"
+	.string "わいんいゃいざうöツ$$"
 gUnknown_82F3F2A: @ 0x82F3F2A
-	.string "ダ{DARK_GRAY}ソ{DYNAMIC_COLOR5}がは{LIGHT_GRAY}よ:ぇめずAぼぎカ$"
-	.string "$"
+	.string "ダいソせがはうよ:ぇめずAぼぎカ$$"
 gUnknown_82F3F3C: @ 0x82F3F3C
-	.string "ダ{DARK_GRAY}{PH_NURSE_BLEND}{PH_CLOTH_SOLO}ソ{DYNAMIC_COLOR5}がは{LIGHT_GRAY}よ:ょめばAカぎニ$"
-	.string "$"
+	.string "ダいソいがいソせがはうよ:ょめばAカぎニ$$"
 gUnknown_82F3F52: @ 0x82F3F52
-	.string "{PH_CLOTH_SOLO}{PH_NURSE_BLEND}{MUS_RG_POKE_CENTER}{PH_PRICE_HELD}ぢば9ニ$"
-	.string "$"
+	.string "がいソいういぢいぢば9ニ$$"
 gUnknown_82F3F60: @ 0x82F3F60
-	.string "ト{DARK_GRAY}$$"
+	.string "トい$$"
 gUnknown_82F3F64: @ 0x82F3F64
 	.incbin "baserom_jp.gba", 0x2f3f64, 0x1a
 gUnknown_82F3F7E: @ 0x82F3F7E
 	.incbin "baserom_jp.gba", 0x2f3f7e, 0x1a
 gUnknown_82F3F98: @ 0x82F3F98
-	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{MUS_RG_PEWTER}はどよGわぬぉuずぢぼzっ,カkツ$"
-	.string "$"
+	.string "づいろいヤせいはどよGわぬぉuずぢぼzっ,カkツ$$"
 gUnknown_82F3FB2: @ 0x82F3FB2
-	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DARK_GRAY}ヤ{MUS_RG_PEWTER}はどよGわぬぉuぢぢイzシ,ニkヨ$"
-	.string "$"
+	.string "づいろいヤいヤせいはどよGわぬぉuぢぢイzシ,ニkヨ$$"
 gUnknown_82F3FCE: @ 0x82F3FCE
-	.string "{PH_PRICE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DARK_GRAY}ヤ{MUS_RG_PEWTER}はどよGわぬぉuぢぢイzシ,ニkヨ$"
-	.string "$"
+	.string "づいろいヤいヤせいはどよGわぬぉuぢぢイzシ,ニkヨ$$"
 gUnknown_82F3FEA: @ 0x82F3FEA
-	.string "{MUS_RG_CAUGHT}ぼ{DYNAMIC_COLOR3}もにぽほぷめぺよぉんrざぱぼなコ$"
-	.string "$"
+	.string "にいぼしもにぽほぷめぺよぉんrざぱぼなコ$$"
 gUnknown_82F4000: @ 0x82F4000
-	.string "{MUS_RG_CAUGHT}{PH_THOUGHT_BLEND}{MUS_RG_SEVII_123}ぼ{DYNAMIC_COLOR3}もにぽほぷめぺよぉぃrぢぱエなフ$"
-	.string "$"
+	.string "にいぼいもいぼしもにぽほぷめぺよぉぃrぢぱエなフ$$"
 gUnknown_82F401A: @ 0x82F401A
-	.string "{MUS_RG_CAUGHT}{PH_CHOICE_SOLO}r{DARK_GRAY}{PH_THOUGHT_HELD}$"
-	.string "$"
+	.string "にいぽいrいぱい$$"
 gUnknown_82F4024: @ 0x82F4024
-	.string "{MUS_RG_VS_MEWTWO}ぃ{DYNAMIC_COLOR3}ャねぉよじぇもざミぶヌカぎツ$"
-	.string "$"
+	.string "りいぃしャねぉよじぇもざミぶヌカぎツ$$"
 gUnknown_82F4038: @ 0x82F4038
-	.string "{MUS_RG_VS_MEWTWO}{PH_TRAP_HELD}ャ{DARK_GRAY}ぃ{DYNAMIC_COLOR3}ャねぉよじぇもざミぴヌセぎホ$"
-	.string "$"
+	.string "りいぃいャいぃしャねぉよじぇもざミぴヌセぎホ$$"
 gUnknown_82F4050: @ 0x82F4050
-	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{DYNAMIC_COLOR4}クにjみリれSゃセぜケぶベイよシ$"
-	.string "$"
+	.string "むいマいわすクにjみリれSゃセぜケぶベイよシ$$"
 gUnknown_82F4068: @ 0x82F4068
-	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{LIGHT_GRAY}{PH_GOOSE_SOLO}わ{DYNAMIC_COLOR4}クにjみリれSげセぱケコベハよワ$"
-	.string "$"
+	.string "むいマいわうクいわすクにjみリれSげセぱケコベハよワ$$"
 gUnknown_82F4084: @ 0x82F4084
-	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}わ{LIGHT_GRAY}{PH_GOOSE_SOLO}わ{DYNAMIC_COLOR4}クにjみリれSげセぱケコベハよワ$"
-	.string "$"
+	.string "むいマいわうクいわすクにjみリれSげセぱケコベハよワ$$"
 gUnknown_82F40A0: @ 0x82F40A0
-	.string "{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR1}らつゃふぬよウぇやずチぴエサンハ$"
-	.string "$"
+	.string "むいをこらつゃふぬよウぇやずチぴエサンハ$$"
 gUnknown_82F40B6: @ 0x82F40B6
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}{PH_FACE_SOLO}を{DYNAMIC_COLOR1}"
-	.string "らつゃふぬよウぇやずチぴまっエナンン$"
-	.string "$"
+	.string "むいをいらいゃいをこらつゃふぬよウぇやずチぴまっエナンン$$"
 gUnknown_82F40D4: @ 0x82F40D4
-	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR3}がほスりぇげへでュカセタ$"
-	.string "$"
+	.string "ーいのうむいをしがほスりぇげへでュカセタ$$"
 gUnknown_82F40EA: @ 0x82F40EA
-	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}を{DYNAMIC_COLOR3}がほスりぇげへでホぼュシセフ$"
-	.string "$"
+	.string "ーいのうむいをいをしがほスりぇげへでホぼュシセフ$$"
 gUnknown_82F4104: @ 0x82F4104
-	.string "ぜ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}エ{DYNAMIC_COLOR3}ぃにぅみカれWゃMぞゥぴヌクFト$"
-	.string "$"
+	.string "ぜうむいエしぃにぅみカれWゃMぞゥぴヌクFト$$"
 gUnknown_82F411C: @ 0x82F411C
-	.string "ぜ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{PH_FOOT_HELD}{PH_TRAP_HELD}エ{DYNAMIC_COLOR3}ぃにぅみカれWゃMば0クヌハFワ$"
-	.string "$"
+	.string "ぜうむいエいぃいエしぃにぅみカれWゃMば0クヌハFワ$$"
 gUnknown_82F4138: @ 0x82F4138
-	.string "{PH_KIT_SOLO}ふ{DYNAMIC_COLOR3}ろにまみはろXゃ{DYNAMIC_COLOR5}ずチぶ2イTシ$"
-	.string "$"
+	.string "ぞいふしろにまみはろXゃせずチぶ2イTシ$$"
 gUnknown_82F414E: @ 0x82F414E
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}pつまは0れテぇ{STRING}ぢだぼチコ$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f414e, 0x14
 gUnknown_82F4162: @ 0x82F4162
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}p{DARK_GRAY}{MUS_RG_SEVII_CAVE}pつまは0れテぇ{STRING}ぴだセチリ$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f4162, 0x18
 gUnknown_82F417A: @ 0x82F417A
-	.string "{MUS_RG_MYSTERY_GIFT}をつJめずれピげやぼげイgツ$$"
+	.string "へいをつJめずれピげやぼげイgツ$$"
 gUnknown_82F418C: @ 0x82F418C
-	.string "{MUS_RG_MYSTERY_GIFT}{MUS_RG_SLOW_PALLET}J{DARK_GRAY}{PH_KIT_BLEND}をつJめずれピげべどやエげニgィ$"
-	.string "$"
+	.string "へいをいJいずいをつJめずれピげべどやエげニgィ$$"
 gUnknown_82F41A6: @ 0x82F41A6
-	.string "ゴ{SE_RG_HELP_CLOSE}{DARK_GRAY}ハ{BLUE}ぇたワはヒよヌゃビでBカ{GREEN}ヒ$"
-	.string "$"
+	.string "ゴいあいハくぇたワはヒよヌゃビでBカかヒ$$"
 gUnknown_82F41BC: @ 0x82F41BC
-	.string "ゴ{SE_RG_HELP_CLOSE}{DARK_GRAY}ハ{DARK_GRAY}ハ{BLUE}ぇたワはヒよヌゃビでBセ{GREEN}ロ$"
-	.string "$"
+	.string "ゴいあいハいハくぇたワはヒよヌゃビでBセかロ$$"
 gUnknown_82F41D4: @ 0x82F41D4
-	.string "{MUS_RG_SEVII_ROUTE}ホ{DARK_GRAY}ぃつずめ♀ぇろぢィイげツ$"
-	.string "$"
+	.string "むいホいぃつずめ♀ぇろぢィイげツ$$"
 gUnknown_82F41E6: @ 0x82F41E6
-	.string "ホ{DARK_GRAY}{PH_TRAP_HELD}{PH_KIT_BLEND}♀{DARK_GRAY}Eぢォイ$"
-	.string "$"
+	.string "ホいぃいずい♀いEぢォイ$$"
 gUnknown_82F41F4: @ 0x82F41F4
-	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'たZはーみナれヘぎゲぢHぶ$"
-	.string "$"
+	.string "ソいレい'たZはーみナれヘぎゲぢHぶ$$"
 gUnknown_82F4208: @ 0x82F4208
-	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'{DARK_GRAY}'たZはーみナれどぉヘずゲぺHタ$"
-	.string "$"
+	.string "ソいレい'い'たZはーみナれどぉヘずゲぺHタ$$"
 gUnknown_82F4220: @ 0x82F4220
-	.string "{PH_NURSE_BLEND}レ{DARK_GRAY}'{DARK_GRAY}'たZはーみナれどぉヘずゲぺHタ$"
-	.string "$"
+	.string "ソいレい'い'たZはーみナれどぉヘずゲぺHタ$$"
 gUnknown_82F4238: @ 0x82F4238
-	.string "{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}とつクはハれテぇOぢなぼsコぶテよメ$"
-	.string "$"
+	.string "むいヌいとつクはハれテぇOぢなぼsコぶテよメ$$"
 gUnknown_82F4250: @ 0x82F4250
 	.incbin "baserom_jp.gba", 0x2f4250, 0x16
 gUnknown_82F4266: @ 0x82F4266
 	.incbin "baserom_jp.gba", 0x2f4266, 0x1a
 gUnknown_82F4280: @ 0x82F4280
-	.string "ダ{DARK_GRAY}ろ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}ねハみオぁぬょ{DYNAMIC_COLOR3}で♀イブコ$"
-	.string "$"
+	.string "ダいろこさねハみオぁぬょしで♀イブコ$$"
 gUnknown_82F4294: @ 0x82F4294
-	.string "ダ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_VICTORY_WILD}ろ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}"
-	.string "ねハみオぁぬょ{DYNAMIC_COLOR3}ぴ♀ツブメ$"
-	.string "$"
+	.string "ダいろいさいろこさねハみオぁぬょしぴ♀ツブメ$$"
 gUnknown_82F42AC: @ 0x82F42AC
-	.string "{DYNAMIC_COLOR3}{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}ヌたぅほWれリょSぞムぼゥエベシÜツ$"
-	.string "$"
+	.string "しうむいヌたぅほWれリょSぞムぼゥエベシÜツ$$"
 gUnknown_82F42C4: @ 0x82F42C4
-	.string "{DYNAMIC_COLOR3}{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}{PH_TRAP_SOLO}ヌたぅほWれリょSでムイゥタベフÜヨ$"
-	.string "$"
+	.string "しうむいヌいぅいヌたぅほWれリょSでムイゥタベフÜヨ$$"
 gUnknown_82F42E0: @ 0x82F42E0
-	.string "ザ{DARK_GRAY}{B_COPY_VAR_1}{PH_NURSE_BLEND}モ{DYNAMIC_COLOR5}べはスよぺぇぷずぽぼぴカ$"
-	.string "$"
+	.string "ザい{B_COPY_VAR_1}ソいモせべはスよぺぇぷずぽぼぴカ$$"
 gUnknown_82F42F6: @ 0x82F42F6
-	.string "ザ{DARK_GRAY}{PH_NURSE_BLEND}{PH_CURE_HELD}ぬよルず$"
-	.string "$"
+	.string "ザいソいスいぬよルず$$"
 gUnknown_82F4302: @ 0x82F4302
-	.string "{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}ヲつへはろめヤれパぇテげTぢゆぼLイよコ$"
-	.string "$"
+	.string "をいらこヲつへはろめヤれパぇテげTぢゆぼLイよコ$$"
 gUnknown_82F431C: @ 0x82F431C
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}ヲ{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ら{DYNAMIC_COLOR1}"
-	.string "ヲつへはろめヤれパぇテぞTぺゆシLハよレ$"
-	.string "$"
+	.string "をいらいヲいへいらこヲつへはろめヤれパぇテぞTぺゆシLハよレ$$"
 gUnknown_82F433C: @ 0x82F433C
-	.string "ぬ{LIGHT_GRAY}{MUS_RG_NEW_GAME_INTRO}タ{DYNAMIC_COLOR3}ひにはみねるヤれギゃ9ずGぶQイのシ‘ニ$"
-	.string "$"
+	.string "ぬうねいタしひにはみねるヤれギゃ9ずGぶQイのシ‘ニ$$"
 gUnknown_82F4358: @ 0x82F4358
-	.string "ぬ{LIGHT_GRAY}{MUS_RG_SS_ANNE}チ{DYNAMIC_COLOR5}pは¥り{LIGHT_BLUE}ゃ{BLUE}ゃ{LIGHT_GREEN}ゃびだ{LIGHT_RED}"
-	.string "ぴKクでト$"
-	.string "$"
+	.string "ぬうえいチせpは¥りけゃくゃきゃびだおぴKクでト$$"
 gUnknown_82F4372: @ 0x82F4372
-	.string "レ{DARK_GRAY}ぃ{DYNAMIC_COLOR5}マねはゆぬんもげぇでなっヌコまヌ$"
-	.string "$"
+	.string "レいぃせマねはゆぬんもげぇでなっヌコまヌ$$"
 gUnknown_82F4388: @ 0x82F4388
-	.string "ゴ{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ロつリめワれフぇメぢベイHコ{GREEN}テ$"
-	.string "$"
+	.string "ゴいむいロつリめワれフぇメぢベイHコかテ$$"
 gUnknown_82F439E: @ 0x82F439E
-	.string "ゴ{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ロ{DARK_GRAY}リ{DARK_GRAY}ロつリめワれフぇメぢベクHニ{GREEN}ユ$"
-	.string "$"
+	.string "ゴいむいロいリいロつリめワれフぇメぢベクHニかユ$$"
 gUnknown_82F43B8: @ 0x82F43B8
-	.string "{MUS_RG_BERRY_PICK}{MUS_RG_VS_DEOXYS}ぬとまほ,ぃセごみぴやカケネlメ$"
-	.string "$"
+	.string "ほいらいぬとまほ,ぃセごみぴやカケネlメ$$"
 gUnknown_82F43CE: @ 0x82F43CE
-	.string "{MUS_RG_BERRY_PICK}{MUS_RG_VS_DEOXYS}{MUS_RG_NEW_GAME_INSTRUCT}{MUS_RG_SEVII_CAVE}ぬとまほ,ぃセごみぴやシケヤlャ$"
-	.string "$"
+	.string "ほいらいぬいまいぬとまほ,ぃセごみぴやシケヤlャ$$"
 gUnknown_82F43E8: @ 0x82F43E8
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}まてガは{LIGHT_GRAY}めヒんぁげルばマイムツよメ$"
-	.string "$"
+	.string "あいをいらこまてガはうめヒんぁげルばマイムツよメ$$"
 gUnknown_82F4402: @ 0x82F4402
-	.string "て{LIGHT_GRAY}ャ{DARK_GRAY}ぽ{BLUE}びとぼはぷよにわとぎぶずぺぼなっだス$"
-	.string "$"
+	.string "てうャいぽくびとぼはぷよにわとぎぶずぺぼなっだス$$"
 gUnknown_82F441C: @ 0x82F441C
 	.incbin "baserom_jp.gba", 0x2f441c, 0x16
 gUnknown_82F4432: @ 0x82F4432
-	.string "ダ{DARK_GRAY}フたろほがわ▶げチぶぎカスナ$$"
+	.string "ダいフたろほがわ▶げチぶぎカスナ$$"
 gUnknown_82F4444: @ 0x82F4444
-	.string "ダ{DARK_GRAY}フ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{PH_CLOTH_SOLO}フたろほがわ▶げチっぎニスヲ$"
-	.string "$"
+	.string "ダいフいろいがいフたろほがわ▶げチっぎニスヲ$$"
 gUnknown_82F445C: @ 0x82F445C
-	.string "{PH_KIT_SOLO}{MUS_RG_VS_DEOXYS}コ{LIGHT_GRAY}ぃとほほ·ぃまげァぴみカチネ$"
-	.string "$"
+	.string "ぞいらいコうぃとほほ·ぃまげァぴみカチネ$$"
 gUnknown_82F4472: @ 0x82F4472
-	.string "{PH_KIT_SOLO}{MUS_RG_VS_DEOXYS}コ{LIGHT_GRAY}{PH_TRAP_HELD}ぃとほほ·ぃまげァイみツチレ$"
-	.string "$"
+	.string "ぞいらいコうぃいぃとほほ·ぃまげァイみツチレ$$"
 gUnknown_82F448A: @ 0x82F448A
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}が{DYNAMIC_COLOR3}qとノほゆらゥぃじぎヒぢムぼぢオぎシ$"
-	.string "$"
+	.string "むいハいがしqとノほゆらゥぃじぎヒぢムぼぢオぎシ$$"
 gUnknown_82F44A4: @ 0x82F44A4
-	.string "{PH_CLOTH_SOLO}q{DARK_GRAY}ノ{DARK_GRAY}ゥ{DARK_GRAY}ヘぢ$"
-	.string "$"
+	.string "がいqいノいゥいヘぢ$$"
 gUnknown_82F44B0: @ 0x82F44B0
-	.string "ミ{DARK_GRAY}ス{DYNAMIC_COLOR1}3つタは{LIGHT_GRAY}めムれモれoぇざげにづ{DYNAMIC_COLOR6}ぱたウセコnツgハ$"
-	.string "$"
+	.string "ミいスこ3つタはうめムれモれoぇざげにづそぱたウセコnツgハ$$"
 gUnknown_82F44D0: @ 0x82F44D0
-	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DYNAMIC_COLOR3}pにTみチれちゃ2ず{DYNAMIC_COLOR5}ぶネイXシ$"
-	.string "$"
+	.string "ツいろいヤしpにTみチれちゃ2ずせぶネイXシ$$"
 gUnknown_82F44E8: @ 0x82F44E8
-	.string "{MUS_RG_OAK_LAB}レ{DARK_GRAY}ズ{DARK_GRAY}♂{DARK_GRAY}ズつ♂は{LIGHT_GRAY}れ{BLUE}ぇZばぐウめニIメごョ$"
-	.string "$"
+	.string "あいレいズい♂いズつ♂はうれくぇZばぐウめニIメごョ$$"
 gUnknown_82F4504: @ 0x82F4504
-	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_CELADON}{LIGHT_BLUE}つムめゥぇヌぶオセキヤ$"
-	.string "$"
+	.string "ツいろいけいけつムめゥぇヌぶオセキヤ$$"
 gUnknown_82F4518: @ 0x82F4518
-	.string "{PH_FACE_SOLO}{MUS_RG_ENCOUNTER_DEOXYS}ロ{DARK_GRAY}{MUS_RG_SILPH}ろ{DYNAMIC_COLOR5}ロは{LIGHT_GREEN}"
-	.string "よフぇÄぢゅイヘツンメ$"
-	.string "$"
+	.string "ゃいろいロいきいろせロはきよフぇÄぢゅイヘツンメ$$"
 gUnknown_82F4532: @ 0x82F4532
-	.string "{MUS_RG_VICTORY_WILD}ヤ{DARK_GRAY}と{DYNAMIC_COLOR5}どはハよぬぉねぜ{DYNAMIC_COLOR3}ぼぢカ{DYNAMIC_COLOR5}ツ$"
-	.string "$"
+	.string "さいヤいとせどはハよぬぉねぜしぼぢカせツ$$"
 gUnknown_82F4548: @ 0x82F4548
-	.string "{MUS_RG_SEVII_ROUTE}ら{BLUE}テたほは,よpゃピでゆカやハ$"
-	.string "$"
+	.string "むいらくテたほは,よpゃピでゆカやハ$$"
 gUnknown_82F455C: @ 0x82F455C
-	.string "バ{DARK_GRAY}むほ·ざ$$"
+	.string "バいむほ·ざ$$"
 gUnknown_82F4564: @ 0x82F4564
-	.string "{MUS_RG_SEVII_67}わりイぇろざ▶ばぎっ:コスナぜホ$$"
+	.string "ゆいわりイぇろざ▶ばぎっ:コスナぜホ$$"
 gUnknown_82F4578: @ 0x82F4578
-	.string "{PH_CLOTH_SOLO}{MUS_RG_SLOW_PALLET}{PH_TRAP_BLEND}ょ{DYNAMIC_COLOR5}めはヘよIぇげず:ぼgカぎツべマ$"
-	.string "$"
+	.string "がいをいぁいょせめはヘよIぇげず:ぼgカぎツべマ$$"
 gUnknown_82F4592: @ 0x82F4592
-	.string "ゾ{DARK_GRAY}$$"
+	.string "ゾい$$"
 gUnknown_82F4596: @ 0x82F4596
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたをみツんわざnぶやエ$"
-	.string "$"
+	.string "むいらいせうふたをみツんわざnぶやエ$$"
 gUnknown_82F45AA: @ 0x82F45AA
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたがみツんわざずぶメエビセぎネ$"
-	.string "$"
+	.string "むいらいせうふたがみツんわざずぶメエビセぎネ$$"
 gUnknown_82F45C2: @ 0x82F45C2
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたエみツんねざれぶカエチセキネ$"
-	.string "$"
+	.string "むいらいせうふたエみツんねざれぶカエチセキネ$$"
 gUnknown_82F45DA: @ 0x82F45DA
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたゃみツんわざウぶロエろセゅネ$"
-	.string "$"
+	.string "むいらいせうふたゃみツんわざウぶロエろセゅネ$$"
 gUnknown_82F45F2: @ 0x82F45F2
-	.string "⋯{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ッ{DARK_GRAY}チつざねノりポぃMぞ0ぶにケFタ$"
-	.string "$"
+	.string "⋯いむいッいチつざねノりポぃMぞ0ぶにケFタ$$"
 gUnknown_82F460A: @ 0x82F460A
-	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}わはがよオぉろず♀ぼだキüツぎホ$"
-	.string "$"
+	.string "ャいホいわはがよオぉろず♀ぼだキüツぎホ$$"
 gUnknown_82F4620: @ 0x82F4620
-	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}わはがよオぉろず♀ぼォっだスüホぎェ$"
-	.string "$"
+	.string "ャいホいわいわはがよオぉろず♀ぼォっだスüホぎェ$$"
 gUnknown_82F463A: @ 0x82F463A
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}びはろよオぉふずQぼぜキぶツüホ$"
-	.string "$"
+	.string "こいハいびはろよオぉふずQぼぜキぶツüホ$$"
 gUnknown_82F4650: @ 0x82F4650
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}{PH_GOAT_BLEND}びはろよオぉふずQぼ2っぜスぶホüェ$"
-	.string "$"
+	.string "こいハいびいびはろよオぉふずQぼ2っぜスぶホüェ$$"
 gUnknown_82F466A: @ 0x82F466A
-	.string "{MUS_RG_DEX_RATING}チたわほぃわüげ,ぶやカぜト$$"
+	.string "ちいチたわほぃわüげ,ぶやカぜト$$"
 gUnknown_82F467C: @ 0x82F467C
-	.string "{MUS_RG_SEVII_ROUTE}ュ{DYNAMIC_COLOR3}マとAほへよのぅピぎ。ぎめぢぽぱキオSシぜニ$"
-	.string "$"
+	.string "むいュしマとAほへよのぅピぎ。ぎめぢぽぱキオSシぜニ$$"
 gUnknown_82F4698: @ 0x82F4698
-	.string "{MUS_RG_RIVAL_EXIT}♂{DARK_GRAY}ょはチぇ9ぼげツモレごヂべ！$"
-	.string "$"
+	.string "たい♂いょはチぇ9ぼげツモレごヂべ！$$"
 gUnknown_82F46AC: @ 0x82F46AC
-	.string "{PH_KIT_SOLO}{PH_FOOT_HELD}カはチぇKぼだツ{DYNAMIC_COLOR3}ロムヂキ9$"
-	.string "$"
+	.string "ぞいエいカはチぇKぼだツしロムヂキ9$$"
 gUnknown_82F46C0: @ 0x82F46C0
-	.string "{MUS_RG_DEX_RATING}{PH_FACE_SOLO}ウはチぇQぼゅツg{MUS_MOVE_DELETED}ヅゼ9$"
-	.string "$"
+	.string "ちいゃいウはチぇQぼゅツgレあヅゼ9$$"
 gUnknown_82F46D4: @ 0x82F46D4
-	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}カた▶ほイわなげチぶgカNトぜメ$"
-	.string "$"
+	.string "もいろいカた▶ほイわなげチぶgカNトぜメ$$"
 gUnknown_82F46EA: @ 0x82F46EA
-	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOOSE_BLEND}▶{DARK_GRAY}カた▶ほイわなげチぴgセNミぜェ$"
-	.string "$"
+	.string "もいろいカい▶いカた▶ほイわなげチぴgセNミぜェ$$"
 gUnknown_82F4704: @ 0x82F4704
-	.string "{MUS_RG_SEVII_123}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOOSE_BLEND}▶{DARK_GRAY}カた▶ほイわなげチぴgセちホNレぜバ$"
-	.string "$"
+	.string "もいろいカい▶いカた▶ほイわなげチぴgセちホNレぜバ$$"
 gUnknown_82F4720: @ 0x82F4720
 	.incbin "baserom_jp.gba", 0x2f4720, 0x18
 gUnknown_82F4738: @ 0x82F4738
-	.string "{MUS_RG_OAK_LAB}ゾと{LIGHT_RED}りヨざセっüト$$"
+	.string "あいゾとおりヨざセっüト$$"
 gUnknown_82F4746: @ 0x82F4746
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ぱたモねぷほwわめげムぶgカぴト$"
-	.string "$"
+	.string "むいをいぱたモねぷほwわめげムぶgカぴト$$"
 gUnknown_82F475C: @ 0x82F475C
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_THOUGHT_HELD}モ{DARK_GRAY}ぱたモねぷほwんめずムぺgセぴホ$"
-	.string "$"
+	.string "むいをいぱいモいぱたモねぷほwんめずムぺgセぴホ$$"
 gUnknown_82F4776: @ 0x82F4776
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_THOUGHT_HELD}モ{DARK_GRAY}ぱたモねぷほwんめずムイgニぴレ$"
-	.string "$"
+	.string "むいをいぱいモいぱたモねぷほwんめずムイgニぴレ$$"
 gUnknown_82F4790: @ 0x82F4790
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DYNAMIC_COLOR3}ゃねツよ？ょゥぶゅシ$"
-	.string "$"
+	.string "むいろいフしゃねツよ？ょゥぶゅシ$$"
 gUnknown_82F47A2: @ 0x82F47A2
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DARK_GRAY}フ{DYNAMIC_COLOR3}ゃねツれ？ずゥエゅフ$"
-	.string "$"
+	.string "むいろいフいフしゃねツれ？ずゥエゅフ$$"
 gUnknown_82F47B6: @ 0x82F47B6
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}フ{DARK_GRAY}{PH_FACE_SOLO}フ{DYNAMIC_COLOR3}ゃねツれ？ずゥコゅリ$"
-	.string "$"
+	.string "むいろいフいゃいフしゃねツれ？ずゥコゅリ$$"
 gUnknown_82F47CC: @ 0x82F47CC
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DYNAMIC_COLOR5}がはわり,ょ2ばヌカぎネ$"
-	.string "$"
+	.string "こいろいテせがはわり,ょ2ばヌカぎネ$$"
 gUnknown_82F47E0: @ 0x82F47E0
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DARK_GRAY}テ{DYNAMIC_COLOR5}がはわれ,ぎ2ぼヌコぎホ$"
-	.string "$"
+	.string "こいろいテいテせがはわれ,ぎ2ぼヌコぎホ$$"
 gUnknown_82F47F6: @ 0x82F47F6
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}テ{DARK_GRAY}{PH_CLOTH_SOLO}テ{DYNAMIC_COLOR5}"
-	.string "がはわれ,ぎ2ぴヌセぎヤ$"
-	.string "$"
+	.string "こいろいテいがいテせがはわれ,ぎ2ぴヌセぎヤ$$"
 gUnknown_82F480E: @ 0x82F480E
-	.string "{MUS_RG_VICTORY_TRAINER}マ{BLUE}ツ{DYNAMIC_COLOR5}ボね{DYNAMIC_COLOR5}もなぃ{DYNAMIC_COLOR1}ぜピっュツ$"
-	.string "$"
+	.string "こいマくツせボねせもなぃこぜピっュツ$$"
 gUnknown_82F4822: @ 0x82F4822
-	.string "{MUS_RG_VICTORY_TRAINER}マ{DARK_GRAY}ツ{DARK_GRAY}マ{BLUE}ツ{DYNAMIC_COLOR5}ボね{DYNAMIC_COLOR5}"
-	.string "らなぎ{DYNAMIC_COLOR1}ぱピタュヨ$"
-	.string "$"
+	.string "こいマいツいマくツせボねせらなぎこぱピタュヨ$$"
 gUnknown_82F483A: @ 0x82F483A
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}G{DYNAMIC_COLOR3}ぞにソみモわやぎスでゲタ$"
-	.string "$"
+	.string "むいをいGしぞにソみモわやぎスでゲタ$$"
 gUnknown_82F484E: @ 0x82F484E
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}G{DARK_GRAY}{PH_KIT_SOLO}G{DYNAMIC_COLOR3}ぞにソみモぇやぢスイゲメ$"
-	.string "$"
+	.string "むいをいGいぞいGしぞにソみモぇやぢスイゲメ$$"
 gUnknown_82F4866: @ 0x82F4866
-	.string "{MUS_RG_SEVII_ROUTE}ぃた{RED}ほムわモわgわnげゥぶチカよト$"
-	.string "$"
+	.string "むいぃたえほムわモわgわnげゥぶチカよト$$"
 gUnknown_82F487C: @ 0x82F487C
-	.string "{MUS_RG_SEVII_ROUTE}{PH_TRAP_HELD}ぃた{RED}ほムぃモぃgぃnぢゥエチニよリ$"
-	.string "$"
+	.string "むいぃいぃたえほムぃモぃgぃnぢゥエチニよリ$$"
 gUnknown_82F4894: @ 0x82F4894
-	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD},{DYNAMIC_COLOR3}ャにナめジんボざ8ぼチコセハ$"
-	.string "$"
+	.string "りいアい,しャにナめジんボざ8ぼチコセハ$$"
 gUnknown_82F48AA: @ 0x82F48AA
-	.string "{MUS_RG_VS_MEWTWO}{PH_MOUTH_HELD},{DARK_GRAY}ャ{DARK_GRAY},{DYNAMIC_COLOR3}ャにナめジぇボで8カチハセン$"
-	.string "$"
+	.string "りいアい,いャい,しャにナめジぇボで8カチハセン$$"
 gUnknown_82F48C4: @ 0x82F48C4
-	.string "ヌ{DARK_GRAY}ジ{DARK_GRAY}{PH_TRAP_HELD}ょ{LIGHT_GRAY}ぃ{DYNAMIC_COLOR3}ょぬわみちれヘぎげびZエぅテメミ$"
-	.string "$"
+	.string "ヌいジいぃいょうぃしょぬわみちれヘぎげびZエぅテメミ$$"
 gUnknown_82F48E0: @ 0x82F48E0
-	.string "ダ{DARK_GRAY}{PH_GOOSE_BLEND}ぃ{DYNAMIC_COLOR1}·はがめWぇヘげやぼぎイ{DYNAMIC_COLOR3}テ$"
-	.string "$"
+	.string "ダいカいぃこ·はがめWぇヘげやぼぎイしテ$$"
 gUnknown_82F48F6: @ 0x82F48F6
-	.string "ダ{DARK_GRAY}{PH_GOOSE_BLEND}{PH_TRAP_HELD}ぃ{DYNAMIC_COLOR1}·はがめWぇヘぞやカぎト{DYNAMIC_COLOR3}ロ$"
-	.string "$"
+	.string "ダいカいぃいぃこ·はがめWぇヘぞやカぎトしロ$$"
 gUnknown_82F490E: @ 0x82F490E
-	.string "{PH_FOOT_HELD}R{DARK_GRAY}ら{DYNAMIC_COLOR3}カた/に$"
-	.string "$"
+	.string "エいRいらしカた/に$$"
 gUnknown_82F491A: @ 0x82F491A
-	.string "{MUS_RG_OAK_LAB}R{DARK_GRAY}o{BLUE}ぁた/は$"
-	.string "$"
+	.string "あいRいoくぁた/は$$"
 gUnknown_82F4926: @ 0x82F4926
-	.string "{PH_TRAP_BLEND}R{DARK_GRAY}マ{SE_POKENAV_HANG_UP}つ/ふ$"
-	.string "$"
+	.string "ぁいRいマくあつ/ふ$$"
 gUnknown_82F4932: @ 0x82F4932
-	.string "{MUS_RG_SLOW_PALLET}R{DARK_GRAY}ヨ{DYNAMIC_COLOR3}/にのむoれ{DYNAMIC_COLOR1}ゅちぜgぶよイ$"
-	.string "$"
+	.string "をいRいヨし/にのむoれこゅちぜgぶよイ$$"
 gUnknown_82F4948: @ 0x82F4948
-	.string "{MUS_RG_SLOW_PALLET}R{DARK_GRAY}ヨ{DYNAMIC_COLOR3}/にのむoれ{DYNAMIC_COLOR1}ゅちぜgぶよイ$"
-	.string "$"
+	.string "をいRいヨし/にのむoれこゅちぜgぶよイ$$"
 gUnknown_82F495E: @ 0x82F495E
 	.incbin "baserom_jp.gba", 0x2f495e, 0x12
 gUnknown_82F4970: @ 0x82F4970
 	.incbin "baserom_jp.gba", 0x2f4970, 0x12
 gUnknown_82F4982: @ 0x82F4982
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}エつカみ”んムざキぼ$"
-	.string "$"
+	.string "むいをいエつカみ”んムざキぼ$$"
 gUnknown_82F4992: @ 0x82F4992
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_FOOT_HELD}エつカや”ょムぶキコ$"
-	.string "$"
+	.string "むいをいエいエつカや”ょムぶキコ$$"
 gUnknown_82F49A4: @ 0x82F49A4
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{PH_FOOT_HELD}{PH_GOOSE_BLEND}エつカや”ょ{LIGHT_BLUE}ざムエキメ$"
-	.string "$"
+	.string "むいをいエいカいエつカや”ょけざムエキメ$$"
 gUnknown_82F49BA: @ 0x82F49BA
-	.string "{PH_GOAT_BLEND}r{DARK_GRAY}{PH_CHOICE_HELD}ケ{LIGHT_GRAY}っクぴホ$"
-	.string "$"
+	.string "びいrいぺいケうっクぴホ$$"
 gUnknown_82F49C8: @ 0x82F49C8
-	.string "{MUS_RG_SEVII_ROUTE}マ{GREEN}ら{DYNAMIC_COLOR3}がとSほじれよぎ:ぶぎコ$"
-	.string "$"
+	.string "むいマからしがとSほじれよぎ:ぶぎコ$$"
 gUnknown_82F49DC: @ 0x82F49DC
-	.string "{MUS_RG_SEVII_ROUTE}マ{DARK_GRAY}{MUS_RG_VS_DEOXYS}{PH_CLOTH_SOLO}マ{GREEN}ら{DYNAMIC_COLOR3}"
-	.string "がとSほじぃよで:コぎメ$"
-	.string "$"
+	.string "むいマいらいがいマからしがとSほじぃよで:コぎメ$$"
 gUnknown_82F49F6: @ 0x82F49F6
-	.string "{PH_GOOSE_SOLO}ニ{DARK_GRAY}·つづめプぇぽづ×イなツよメ$"
-	.string "$"
+	.string "クいニい·つづめプぇぽづ×イなツよメ$$"
 gUnknown_82F4A0A: @ 0x82F4A0A
-	.string "{PH_CLOTH_SOLO}{PH_NURSE_BLEND}{MUS_RG_POKE_CENTER}I{DARK_GRAY}IばUニ$"
-	.string "$"
+	.string "がいソいういIいIばUニ$$"
 gUnknown_82F4A18: @ 0x82F4A18
-	.string "バ{DARK_GRAY}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}むとぷはぺほぽめべり”ぇぶざ$"
-	.string "$"
+	.string "バいwこらこむとぷはぺほぽめべり”ぇぶざ$$"
 gUnknown_82F4A2E: @ 0x82F4A2E
-	.string "バ{DARK_GRAY}w{DARK_GRAY}{MUS_RG_VS_DEOXYS}{MUS_RG_SEVII_ROUTE}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}"
-	.string "むとぷはぺほぽめべわ”げぶぶ$"
-	.string "$"
+	.string "バいwいらいむいwこらこむとぷはぺほぽめべわ”げぶぶ$$"
 gUnknown_82F4A4A: @ 0x82F4A4A
-	.string "バ{DARK_GRAY}w{DARK_GRAY}{MUS_RG_VS_DEOXYS}{MUS_RG_SEVII_ROUTE}w{DYNAMIC_COLOR1}ら{DYNAMIC_COLOR1}"
-	.string "むとぷはぺほぽめべわ”ぢぶク$"
-	.string "$"
+	.string "バいwいらいむいwこらこむとぷはぺほぽめべわ”ぢぶク$$"
 gUnknown_82F4A66: @ 0x82F4A66
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_VS_DEOXYS}ふ{DYNAMIC_COLOR3}ょひnやだぉボずゥぴヌカチト$"
-	.string "$"
+	.string "こいらいふしょひnやだぉボずゥぴヌカチト$$"
 gUnknown_82F4A7C: @ 0x82F4A7C
-	.string "{PH_GOAT_BLEND}ぼ{DYNAMIC_COLOR3}ぶはてゆひぉÄざwぼPエ$"
-	.string "$"
+	.string "びいぼしぶはてゆひぉÄざwぼPエ$$"
 gUnknown_82F4A8E: @ 0x82F4A8E
-	.string "{PH_GOAT_BLEND}{MUS_RG_OAK_LAB}ぼ{DYNAMIC_COLOR3}ぱはてゆぱぉÄざっぼぴエ$"
-	.string "$"
+	.string "びいあいぼしぱはてゆぱぉÄざっぼぴエ$$"
 gUnknown_82F4AA2: @ 0x82F4AA2
-	.string "{MUS_RG_SEVII_ROUTE}G{DARK_GRAY}ツ{DYNAMIC_COLOR5}ネはぅよKぇぃず{STRING}ぼちカヌツ$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f4aa2, 0x16
 gUnknown_82F4AB8: @ 0x82F4AB8
-	.string "{PH_CLOTH_SOLO}{MUS_RG_VS_DEOXYS}なにオむュれのぜケぶ:イょニメニ$"
-	.string "$"
+	.string "がいらいなにオむュれのぜケぶ:イょニメニ$$"
 gUnknown_82F4ACE: @ 0x82F4ACE
-	.string "{PH_CLOTH_SOLO}{MUS_RG_VS_DEOXYS}なにオむュんのびケエ:ツょレメレ$"
-	.string "$"
+	.string "がいらいなにオむュんのびケエ:ツょレメレ$$"
 gUnknown_82F4AE4: @ 0x82F4AE4
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたスみツんゥざざぶäエセセvネ$"
-	.string "$"
+	.string "むいらいせうふたスみツんゥざざぶäエセセvネ$$"
 gUnknown_82F4AFC: @ 0x82F4AFC
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_DEOXYS}{DYNAMIC_COLOR5}{LIGHT_GRAY}ふたpみツんヘざ×ぶZエヌセxネ$"
-	.string "$"
+	.string "むいらいせうふたpみツんヘざ×ぶZエヌセxネ$$"
 gUnknown_82F4B14: @ 0x82F4B14
-	.string "{PH_KIT_SOLO}ょてpふメわナょ×ば{DYNAMIC_COLOR4}アZタ$"
-	.string "$"
+	.string "ぞいょてpふメわナょ×ばすアZタ$$"
 gUnknown_82F4B26: @ 0x82F4B26
-	.string "ー{DARK_GRAY}の{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}を{DYNAMIC_COLOR3}がほスりぇげへでUカセタ$"
-	.string "$"
+	.string "ーいのうむいをしがほスりぇげへでUカセタ$$"
 gUnknown_82F4B3C: @ 0x82F4B3C
-	.string "{MUS_RG_SLOW_PALLET}ド{DARK_GRAY}'{DYNAMIC_COLOR3}ょぬヘめZんざざhぼIコみヒ$"
-	.string "$"
+	.string "をいドい'しょぬヘめZんざざhぼIコみヒ$$"
 gUnknown_82F4B52: @ 0x82F4B52
-	.string "y{DARK_GRAY}$$"
+	.string "yい$$"
 gUnknown_82F4B56: @ 0x82F4B56
-	.string "{PH_LOT_BLEND}Ü{DARK_GRAY}g{DARK_GRAY}H{DARK_GRAY}$"
-	.string "$"
+	.string "でいÜいgいHい$$"
 gUnknown_82F4B60: @ 0x82F4B60
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ょ{DYNAMIC_COLOR6}スはぬよざぉチずnぼざカÖツ$"
-	.string "$"
+	.string "むいをいょそスはぬよざぉチずnぼざカÖツ$$"
 gUnknown_82F4B76: @ 0x82F4B76
-	.string "{MUS_RG_SEVII_ROUTE}♀{DARK_GRAY}リたやほqわユげベぶEカよト$"
-	.string "$"
+	.string "むい♀いリたやほqわユげベぶEカよト$$"
 gUnknown_82F4B8A: @ 0x82F4B8A
-	.string "{MUS_RG_SEVII_ROUTE}♀{DARK_GRAY}リ{DARK_GRAY}リたやほqわユげベぺEツよヨ$"
-	.string "$"
+	.string "むい♀いリいリたやほqわユげベぺEツよヨ$$"
 gUnknown_82F4BA0: @ 0x82F4BA0
-	.string "テ{DARK_GRAY}マ{BLUE}のぬグふ'れpぃヌずやでひウ$$"
+	.string "テいマくのぬグふ'れpぃヌずやでひウ$$"
 gUnknown_82F4BB4: @ 0x82F4BB4
-	.string "{MUS_RG_VS_MEWTWO}ふ{DYNAMIC_COLOR3}ハはツり×ぎ2ぶヌク{DYNAMIC_COLOR3}ネ$"
-	.string "$"
+	.string "りいふしハはツり×ぎ2ぶヌクしネ$$"
 gUnknown_82F4BC6: @ 0x82F4BC6
-	.string "{MUS_RG_SEVII_ROUTE}ヌ{DARK_GRAY}とつクはハれテぇOぢなぼsコÖツよメ$"
-	.string "$"
+	.string "むいヌいとつクはハれテぇOぢなぼsコÖツよメ$$"
 gUnknown_82F4BDE: @ 0x82F4BDE
-	.string "{MUS_RG_SEVII_ROUTE},{DARK_GRAY}ら{BLUE}RたわはレよんゃテでやカÖハ$"
-	.string "$"
+	.string "むい,いらくRたわはレよんゃテでやカÖハ$$"
 gUnknown_82F4BF4: @ 0x82F4BF4
-	.string "{MUS_RG_SEVII_ROUTE},{DARK_GRAY}ら{BLUE}RたわはレよんぎテぴやツÖレ$"
-	.string "$"
+	.string "むい,いらくRたわはレよんぎテぴやツÖレ$$"
 gUnknown_82F4C0A: @ 0x82F4C0A
-	.string "E{DARK_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_VS_MEWTWO}ハとヒとがよれぎやぼぎシ$"
-	.string "$"
+	.string "Eいむいりいハとヒとがよれぎやぼぎシ$$"
 gUnknown_82F4C1E: @ 0x82F4C1E
-	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ヤ{DYNAMIC_COLOR3}pにTみチれtゃ2ず{DYNAMIC_COLOR5}ぶネイXシ$"
-	.string "$"
+	.string "ツいろいヤしpにTみチれtゃ2ずせぶネイXシ$$"
 gUnknown_82F4C36: @ 0x82F4C36
-	.string "ャ{DARK_GRAY}ホ{DARK_GRAY}もつoふgんユぎピぼ$$"
+	.string "ャいホいもつoふgんユぎピぼ$$"
 gUnknown_82F4C46: @ 0x82F4C46
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_ENCOUNTER_DEOXYS}ほ{DYNAMIC_COLOR3}Qにまめねぁでざやぼ‘コlハ$"
-	.string "$"
+	.string "むいろいほしQにまめねぁでざやぼ‘コlハ$$"
 gUnknown_82F4C5C: @ 0x82F4C5C
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}{DYNAMIC_COLOR4}{LIGHT_GRAY}ツたヌほ×わボげチぶJカ2ト\pメtィ$"
-	.string "$"
+	.string "こいろいすうツたヌほ×わボげチぶJカ2ト\p"
+	.string "メtィ$$"
 gUnknown_82F4C76: @ 0x82F4C76
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}レ{DYNAMIC_COLOR5}ボはぐら×ぇピず2ぼ。カゆツ$"
-	.string "$"
+	.string "こいろいレせボはぐら×ぇピず2ぼ。カゆツ$$"
 gUnknown_82F4C8C: @ 0x82F4C8C
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_ENCOUNTER_DEOXYS}レ{DARK_GRAY}ボ{DARK_GRAY}レ{DYNAMIC_COLOR5}"
-	.string "ボはぐら×ぇピず2ぼ。カゆツ$"
-	.string "$"
+	.string "こいろいレいボいレせボはぐら×ぇピず2ぼ。カゆツ$$"
 gUnknown_82F4CA6: @ 0x82F4CA6
-	.string "の{LIGHT_GRAY}ロ{DARK_GRAY}ゃたクほハわュげゅぶプカめト$"
-	.string "$"
+	.string "のうロいゃたクほハわュげゅぶプカめト$$"
 gUnknown_82F4CBA: @ 0x82F4CBA
-	.string "の{LIGHT_GRAY}ロ{DARK_GRAY}{PH_FACE_SOLO}{PH_GOOSE_SOLO}ゃたクほハわュげゅぶプタめリ$"
-	.string "$"
+	.string "のうロいゃいクいゃたクほハわュげゅぶプタめリ$$"
 gUnknown_82F4CD2: @ 0x82F4CD2
-	.string "{MUS_RG_SEVII_ROUTE}ざ{LIGHT_GRAY}♂とQよやぎょぼごシュホ$"
-	.string "$"
+	.string "むいざう♂とQよやぎょぼごシュホ$$"
 gUnknown_82F4CE4: @ 0x82F4CE4
-	.string "{MUS_RG_BERRY_PICK}ざ{LIGHT_GRAY}♂{DARK_GRAY}Q{DARK_GRAY}♂とQよやぎまぢょエごミュザ$"
-	.string "$"
+	.string "ほいざう♂いQい♂とQよやぎまぢょエごミュザ$$"
 gUnknown_82F4CFC: @ 0x82F4CFC
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DYNAMIC_COLOR3}ダねノめまもじんォぎセどÜぺüコ$"
-	.string "$"
+	.string "むいハしダねノめまもじんォぎセどÜぺüコ$$"
 gUnknown_82F4D12: @ 0x82F4D12
-	.string "{PH_CLOTH_SOLO}Mにざわずわじわヤぢげクぜホ$$"
+	.string "がいMにざわずわじわヤぢげクぜホ$$"
 gUnknown_82F4D24: @ 0x82F4D24
-	.string "{PH_CLOTH_SOLO}ャにざわずわじわDぇヤぴげフぜザ$$"
+	.string "がいャにざわずわじわDぇヤぴげフぜザ$$"
 gUnknown_82F4D38: @ 0x82F4D38
-	.string "e{DARK_GRAY}$$"
+	.string "eい$$"
 gUnknown_82F4D3C: @ 0x82F4D3C
-	.string "{MUS_RG_SEVII_ROUTE}ダ{DARK_GRAY}ぃたじほやわチげちぶタキヘト$"
-	.string "$"
+	.string "むいダいぃたじほやわチげちぶタキヘト$$"
 gUnknown_82F4D50: @ 0x82F4D50
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_KIT_SOLO}ふとゥはチみまゃげごYぞEエぜサ$"
-	.string "$"
+	.string "ろいぞいふとゥはチみまゃげごYぞEエぜサ$$"
 gUnknown_82F4D66: @ 0x82F4D66
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_FACE_SOLO}っ{DYNAMIC_COLOR6}ロはんよわぇざぜ×ぼゅカÖツ$"
-	.string "$"
+	.string "ろいゃいっそロはんよわぇざぜ×ぼゅカÖツ$$"
 gUnknown_82F4D7C: @ 0x82F4D7C
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{PH_FACE_SOLO}っ{LIGHT_GRAY}っ{DYNAMIC_COLOR6}ロはんよわょざび×カゅニÖヨ$"
-	.string "$"
+	.string "ろいゃいっうっそロはんよわょざび×カゅニÖヨ$$"
 gUnknown_82F4D94: @ 0x82F4D94
-	.string "ダ{DARK_GRAY}フ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{PH_CLOTH_SOLO}フたろほがわ▶げチっぎニスヲ$"
-	.string "$"
+	.string "ダいフいろいがいフたろほがわ▶げチっぎニスヲ$$"
 gUnknown_82F4DAC: @ 0x82F4DAC
-	.string "ざ{LIGHT_GRAY}{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}マつ·めやぇSぢQイよツ$"
-	.string "$"
+	.string "ざうむいをいマつ·めやぇSぢQイよツ$$"
 gUnknown_82F4DC0: @ 0x82F4DC0
-	.string "ざ{LIGHT_GRAY}{MUS_RG_BERRY_PICK}{MUS_RG_SLOW_PALLET}マつ·めまぇSぢqイケツ$"
-	.string "$"
+	.string "ざうほいをいマつ·めまぇSぢqイケツ$$"
 gUnknown_82F4DD4: @ 0x82F4DD4
-	.string "⋯{DARK_GRAY}{MUS_RG_SEVII_ROUTE}ッ{DARK_GRAY}チつざねノりマぃMぞ0ぶにケFタ$"
-	.string "$"
+	.string "⋯いむいッいチつざねノりマぃMぞ0ぶにケFタ$$"
 gUnknown_82F4DEC: @ 0x82F4DEC
-	.string "{MUS_RG_SEVII_ROUTE}ろ{DYNAMIC_COLOR5}ょひソよぬぇふずやぼヘカサテ$"
-	.string "$"
+	.string "むいろせょひソよぬぇふずやぼヘカサテ$$"
 gUnknown_82F4E00: @ 0x82F4E00
-	.string "5{DARK_GRAY}5に5れ5ず5イ5ニ5レ5ズ515♀$$"
+	.string "5い5に5れ5ず5イ5ニ5レ5ズ515♀$$"
 gUnknown_82F4E16: @ 0x82F4E16
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4E1A: @ 0x82F4E1A
-	.string "ぬ{LIGHT_GRAY}{MUS_RG_UNION_ROOM}ヤ{DYNAMIC_COLOR5}pはツよ6りqぇでずチぼKカひテ$"
-	.string "$"
+	.string "ぬうひいヤせpはツよ6りqぇでずチぼKカひテ$$"
 gUnknown_82F4E32: @ 0x82F4E32
-	.string "{MUS_RG_OAK_LAB}レ{DARK_GRAY}/つ♂はスれぁぇZぢぐぱセコIツごメ$"
-	.string "$"
+	.string "あいレい/つ♂はスれぁぇZぢぐぱセコIツごメ$$"
 gUnknown_82F4E4A: @ 0x82F4E4A
-	.string "ツ{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_BLUE}つムめゥぇヌぢオイキツ$"
-	.string "$"
+	.string "ツいろいけつムめゥぇヌぢオイキツ$$"
 gUnknown_82F4E5C: @ 0x82F4E5C
-	.string "{PH_FACE_SOLO}ろ{DYNAMIC_COLOR5}ロは{LIGHT_GREEN}よフぇÄずゅぼヘカンツ$"
-	.string "$"
+	.string "ゃいろせロはきよフぇÄずゅぼヘカンツ$$"
 gUnknown_82F4E70: @ 0x82F4E70
-	.string "{MUS_RG_SEVII_ROUTE}を{BLUE}マたぬはVよユゃSでめカcハ$"
-	.string "$"
+	.string "むいをくマたぬはVよユゃSでめカcハ$$"
 gUnknown_82F4E84: @ 0x82F4E84
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_SLOW_PALLET}ら{BLUE}ま{DYNAMIC_COLOR6}ガと{LIGHT_GRAY}はヒやぁんルぎマぢムっよセ$"
-	.string "$"
+	.string "あいをいらくまそガとうはヒやぁんルぎマぢムっよセ$$"
 gUnknown_82F4E9E: @ 0x82F4E9E
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}エにんれツずWイモニÖレキズサ2$"
-	.string "$"
+	.string "わいろいエにんれツずWイモニÖレキズサ2$$"
 gUnknown_82F4EB4: @ 0x82F4EB4
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}ゃにんれウずぬイゅニUレンズサ2$"
-	.string "$"
+	.string "わいろいゃにんれウずぬイゅニUレンズサ2$$"
 gUnknown_82F4ECA: @ 0x82F4ECA
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}じに:れたずずイょニÜレぎズサ2$"
-	.string "$"
+	.string "わいろいじに:れたずずイょニÜレぎズサ2$$"
 gUnknown_82F4EE0: @ 0x82F4EE0
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}Oたヌほプわゆげ,ぶÖカケトぜメ$"
-	.string "$"
+	.string "わいろいOたヌほプわゆげ,ぶÖカケトぜメ$$"
 gUnknown_82F4EF6: @ 0x82F4EF6
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}O{DARK_GRAY}ヌ{DARK_GRAY}Oたヌほプわゆげ,ぴÖセケミぜェ$"
-	.string "$"
+	.string "わいろいOいヌいOたヌほプわゆげ,ぴÖセケミぜェ$$"
 gUnknown_82F4F10: @ 0x82F4F10
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}O{DARK_GRAY}ヌ{DARK_GRAY}Oたヌほプわゆげ,ぴÖセケレぜバ$"
-	.string "$"
+	.string "わいろいOいヌいOたヌほプわゆげ,ぴÖセケレぜバ$$"
 gUnknown_82F4F2A: @ 0x82F4F2A
 	.incbin "baserom_jp.gba", 0x2f4f2a, 0x16
 gUnknown_82F4F40: @ 0x82F4F40
@@ -3041,197 +2738,149 @@ gUnknown_82F4F40: @ 0x82F4F40
 gUnknown_82F4F56: @ 0x82F4F56
 	.incbin "baserom_jp.gba", 0x2f4f56, 0x14
 gUnknown_82F4F6A: @ 0x82F4F6A
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F6E: @ 0x82F4F6E
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F72: @ 0x82F4F72
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F76: @ 0x82F4F76
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F7A: @ 0x82F4F7A
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F7E: @ 0x82F4F7E
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F82: @ 0x82F4F82
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F86: @ 0x82F4F86
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F8A: @ 0x82F4F8A
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F8E: @ 0x82F4F8E
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F92: @ 0x82F4F92
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F96: @ 0x82F4F96
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F9A: @ 0x82F4F9A
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4F9E: @ 0x82F4F9E
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FA2: @ 0x82F4FA2
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FA6: @ 0x82F4FA6
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FAA: @ 0x82F4FAA
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FAE: @ 0x82F4FAE
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FB2: @ 0x82F4FB2
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FB6: @ 0x82F4FB6
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FBA: @ 0x82F4FBA
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FBE: @ 0x82F4FBE
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FC2: @ 0x82F4FC2
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FC6: @ 0x82F4FC6
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FCA: @ 0x82F4FCA
-	.string "{MUS_RG_SEVII_ROUTE}$$"
+	.string "むい$$"
 gUnknown_82F4FCE: @ 0x82F4FCE
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}び{DYNAMIC_COLOR3}ツにpみヌれぶゃチずなぶKイPシ$"
-	.string "$"
+	.string "あいろいびしツにpみヌれぶゃチずなぶKイPシ$$"
 gUnknown_82F4FE6: @ 0x82F4FE6
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}ツ{DARK_GRAY}び{DYNAMIC_COLOR3}"
-	.string "ツにXみpめヌんシごチばなイKセTハ$"
-	.string "$"
+	.string "あいろいびいツいびしツにXみpめヌんシごチばなイKセTハ$$"
 gUnknown_82F5004: @ 0x82F5004
-	.string "{MUS_RG_OAK_LAB}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}ツ{DARK_GRAY}び{DYNAMIC_COLOR3}"
-	.string "ツにXみpめヌんシごチばなカKニTヨ$"
-	.string "$"
+	.string "あいろいびいツいびしツにXみpめヌんシごチばなカKニTヨ$$"
 gUnknown_82F5022: @ 0x82F5022
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DYNAMIC_COLOR5}ゃとぞみふよウぇツぎ2でラぼゅカ$"
-	.string "$"
+	.string "こいをいヤせゃとぞみふよウぇツぎ2でラぼゅカ$$"
 gUnknown_82F503A: @ 0x82F503A
-	.string "{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}{PH_FACE_SOLO}ヤ{DYNAMIC_COLOR5}"
-	.string "ゃはねみぞめふれウぐツぞ2ぺラカびナ$"
-	.string "$"
+	.string "こいをいヤいゃいヤせゃはねみぞめふれウぐツぞ2ぺラカびナ$$"
 gUnknown_82F5058: @ 0x82F5058
-	.string "{MUS_RG_SILPH}{MUS_RG_VICTORY_TRAINER}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}{PH_FACE_SOLO}ヤ{DYNAMIC_COLOR5}"
-	.string "ゃはねみぞめふれウぐツぞろべ2エラツびラ$"
-	.string "$"
+	.string "きいこいをいヤいゃいヤせゃはねみぞめふれウぐツぞろべ2エラツびラ$$"
 gUnknown_82F507A: @ 0x82F507A
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DYNAMIC_COLOR3}がとユほGよわぅやぎ\lぢ♀ぼぎエひス$"
-	.string "$"
+	.string "むいをいCしがとユほGよわぅやぎ\l"
+	.string "ぢ♀ぼぎエひス$$"
 gUnknown_82F5094: @ 0x82F5094
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DARK_GRAY}{PH_CLOTH_SOLO}C{DYNAMIC_COLOR3}"
-	.string "がとユほオむGりわぉやずぼぱ♀エケシひヒ$"
-	.string "$"
+	.string "むいをいCいがいCしがとユほオむGりわぉやずぼぱ♀エケシひヒ$$"
 gUnknown_82F50B4: @ 0x82F50B4
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}C{DARK_GRAY}{PH_CLOTH_SOLO}C{DYNAMIC_COLOR3}"
-	.string "がとユほオむGりわぉやずぼぽ♀シケネひロ$"
-	.string "$"
+	.string "むいをいCいがいCしがとユほオむGりわぉやずぼぽ♀シケネひロ$$"
 gUnknown_82F50D4: @ 0x82F50D4
-	.string "{MUS_RG_SEVII_ROUTE}っ{DYNAMIC_COLOR2}ふつわはざもんれUぇ,げやぢ{DYNAMIC_COLOR4}ぱÖイ7コ$"
-	.string "$"
+	.string "むいっさふつわはざもんれUぇ,げやぢすぱÖイ7コ$$"
 gUnknown_82F50EE: @ 0x82F50EE
-	.string "{MUS_RG_SEVII_ROUTE}っ{LIGHT_GRAY}{MUS_RG_NET_CENTER}{MUS_RG_TRAINER_TOWER}っ{DYNAMIC_COLOR2}"
-	.string "ふつわはざもんわUょ,ぞやぼ{DYNAMIC_COLOR4}オÖセ7ネ$"
-	.string "$"
+	.string "むいっうふいわいっさふつわはざもんわUょ,ぞやぼすオÖセ7ネ$$"
 gUnknown_82F510E: @ 0x82F510E
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}ら{DYNAMIC_COLOR1}へつふはざもわろれぇキご·ぢピぼAイ$"
-	.string "$"
+	.string "むいをいらこへつふはざもわろれぇキご·ぢピぼAイ$$"
 gUnknown_82F5128: @ 0x82F5128
-	.string "{MUS_RG_SEVII_ROUTE}{MUS_RG_SLOW_PALLET}{MUS_RG_VS_DEOXYS}{MUS_RG_MYSTERY_GIFT}ら{DYNAMIC_COLOR1}"
-	.string "へつふはざもわぁボげキび2イピセAハ$"
-	.string "$"
+	.string "むいをいらいへいらこへつふはざもわぁボげキび2イピセAハ$$"
 gUnknown_82F5146: @ 0x82F5146
-	.string "{MUS_RG_SEVII_ROUTE}{PH_MOUTH_HELD}り{DYNAMIC_COLOR1}$"
-	.string "$"
+	.string "むいアいりこ$$"
 gUnknown_82F514E: @ 0x82F514E
-	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+	.string "ハいハせ$$"
 gUnknown_82F5154: @ 0x82F5154
-	.string "{PH_GOAT_BLEND}びとたはぺめvりぶぃつょaずずどPぴ$$"
+	.string "びいびとたはぺめvりぶぃつょaずずどPぴ$$"
 gUnknown_82F516A: @ 0x82F516A
-	.string "ハ{DARK_GRAY}ハ{DYNAMIC_COLOR5}$$"
+	.string "ハいハせ$$"
 gUnknown_82F5170: @ 0x82F5170
-	.string "{PH_CURE_HELD}スとたは♀めxりざぃつょムずずどシぴ$$"
+	.string "スいスとたは♀めxりざぃつょムずずどシぴ$$"
 gUnknown_82F5186: @ 0x82F5186
-	.string "ょ{LIGHT_GRAY}を{GREEN}び{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひょれ:ずぶカ$"
-	.string "$"
+	.string "ょうをかびせさひょれ:ずぶカ$$"
 gUnknown_82F5196: @ 0x82F5196
 	.incbin "baserom_jp.gba", 0x2f5196, 0x16
 gUnknown_82F51AC: @ 0x82F51AC
-	.string "ょ{LIGHT_GRAY}{MUS_RG_SLOW_PALLET}{PH_GOAT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
-	.string "$"
+	.string "ょうをいびいさう$$"
 gUnknown_82F51B6: @ 0x82F51B6
-	.string "ユ{DARK_GRAY}ハ{GREEN}ぼ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}ひwれÄずベカ$"
-	.string "$"
+	.string "ユいハかぼせさひwれÄずベカ$$"
 gUnknown_82F51C6: @ 0x82F51C6
 	.incbin "baserom_jp.gba", 0x2f51c6, 0x16
 gUnknown_82F51DC: @ 0x82F51DC
-	.string "{MUS_RG_OAK_LAB}ハ{DARK_GRAY}{PH_THOUGHT_BLEND}{DYNAMIC_COLOR2}{LIGHT_GRAY}$"
-	.string "$"
+	.string "あいハいぼいさう$$"
 gUnknown_82F51E6: @ 0x82F51E6
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DYNAMIC_COLOR1}ふつボふ9よTぇCずtぴサコ$"
-	.string "$"
+	.string "こいハいジこふつボふ9よTぇCずtぴサコ$$"
 gUnknown_82F51FC: @ 0x82F51FC
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DARK_GRAY}{MUS_RG_NET_CENTER}ジ{DYNAMIC_COLOR1}"
-	.string "ふつボふ9よネりXりヌり{DYNAMIC_COLOR5}ぇ2ずチぴnコ$"
-	.string "$"
+	.string "こいハいジいふいジこふつボふ9よネりXりヌりせぇ2ずチぴnコ$$"
 gUnknown_82F521C: @ 0x82F521C
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}ジ{DYNAMIC_COLOR1}ふつボふ9よ'ぇヘず{DYNAMIC}ぴみサ$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f521c, 0x16
 gUnknown_82F5232: @ 0x82F5232
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ヤ{BLUE}ツたちはネよひゅぴどチカ$"
-	.string "$"
+	.string "ぞいをいヤくツたちはネよひゅぴどチカ$$"
 gUnknown_82F5246: @ 0x82F5246
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ヤ{DARK_GRAY}ツ{DARK_GRAY}ヤ{BLUE}ツたちはネよひぐぴぷチツ$"
-	.string "$"
+	.string "ぞいをいヤいツいヤくツたちはネよひぐぴぷチツ$$"
 gUnknown_82F525E: @ 0x82F525E
-	.string "{PH_GOAT_BLEND}む{BLUE}ぺ{DYNAMIC_COLOR5}べとぶみへわぷぎぼぶPコヅフ$"
-	.string "$"
+	.string "びいむくぺせべとぶみへわぷぎぼぶPコヅフ$$"
 gUnknown_82F5274: @ 0x82F5274
-	.string "{PH_GOAT_BLEND}{MUS_RG_SEVII_ROUTE}{PH_CHOICE_HELD}{PH_GOAT_SOLO}む{BLUE}ぺ{DYNAMIC_COLOR5}"
-	.string "べとぶみへわ¥んでぎびべ9コkフ$"
-	.string "$"
+	.string "びいむいぺいべいむくぺせべとぶみへわ¥んでぎびべ9コkフ$$"
 gUnknown_82F5292: @ 0x82F5292
-	.string "{MUS_RG_SEVII_ROUTE}{B_LINK_OPPONENT_MON1_NAME}×ねざみソんヂょれどäぴよコ·ツゆミ$"
-	.string "$"
+	.string "むい{B_LINK_OPPONENT_MON1_NAME}×ねざみソんヂょれどäぴよコ·ツゆミ$$"
 gUnknown_82F52AA: @ 0x82F52AA
-	.string "{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}ぃ{DYNAMIC_COLOR5}ちはょれツずpカチホ$"
-	.string "$"
+	.string "をいがいぃせちはょれツずpカチホ$$"
 gUnknown_82F52BC: @ 0x82F52BC
-	.string "{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}コ{LIGHT_GRAY}{MUS_RG_DEX_RATING}が{GREEN}ぃ{DYNAMIC_COLOR5}"
-	.string "ちはょれ♀ぇ\n{SE_NOTE_G}づ$"
-	.string "セぎレ$$"
+	.string "をいがいコうちいがかぃせちはょれ♀ぇ\n"
+	.string "ぢ　づ$セぎレ$$"
 gUnknown_82F52D8: @ 0x82F52D8
-	.string "ダ{DARK_GRAY}ツ{DYNAMIC_COLOR5}rはコらじぇチずょぼメぼ$"
-	.string "$"
+	.string "ダいツせrはコらじぇチずょぼメぼ$$"
 gUnknown_82F52EA: @ 0x82F52EA
-	.string "ダ{DARK_GRAY}ツ{DARK_GRAY}r{DARK_GRAY}コ{LIGHT_GRAY}ツ{DYNAMIC_COLOR5}rはコらたゃ,ぢぺっずソつハ$"
-	.string "$"
+	.string "ダいツいrいコうツせrはコらたゃ,ぢぺっずソつハ$$"
 gUnknown_82F5304: @ 0x82F5304
-	.string "バ{DARK_GRAY}を{DYNAMIC_COLOR1}がとSふ\lよょぁタぐょぞピぼづウュシぎト$"
-	.string "$"
+	.string "バいをこがとSふ\l"
+	.string "よょぁタぐょぞピぼづウュシぎト$$"
 gUnknown_82F531E: @ 0x82F531E
-	.string "バ{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}S{DARK_GRAY}を{DYNAMIC_COLOR1}がとSふ\lよょぁタぐょぞピぼづケュネぎヨ$"
-	.string "$"
+	.string "バいをいがいSいをこがとSふ\l"
+	.string "よょぁタぐょぞピぼづケュネぎヨ$$"
 gUnknown_82F533E: @ 0x82F533E
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}ら{GREEN}a{DYNAMIC_COLOR5}ぁは{LIGHT_GRAY}ほつらRぇ×ょキぜcぼよぺ$"
-	.string "$"
+	.string "をいむいらかaせぁはうほつらRぇ×ょキぜcぼよぺ$$"
 gUnknown_82F5358: @ 0x82F5358
-	.string "{MUS_RG_SLOW_PALLET}a{DARK_GRAY}{PH_TRAP_BLEND}{MUS_RG_POKE_CENTER}$"
-	.string "$"
+	.string "をいaいぁいうい$$"
 gUnknown_82F5362: @ 0x82F5362
-	.string "7{DARK_GRAY}{MUS_RG_VS_DEOXYS}ょ{LIGHT_GRAY}レ{DARK_GRAY}{MUS_RG_VICTORY_TRAINER}と{BLUE}"
-	.string "×{DYNAMIC_COLOR5}ボねざめヌぃ2ず3っüツ$"
-	.string "$"
+	.string "7いらいょうレいこいとく×せボねざめヌぃ2ず3っüツ$$"
 gUnknown_82F537E: @ 0x82F537E
-	.string "{PH_CURE_HELD}ハ{GREEN}q{DYNAMIC_COLOR1}C{DYNAMIC_COLOR5}ざにじまリよüぇOずぢぱベコ$"
-	.string "$"
+	.string "スいハかqこCせざにじまリよüぇOずぢぱベコ$$"
 gUnknown_82F5396: @ 0x82F5396
-	.string "ト{DARK_GRAY}{PH_CURE_HELD}ハ{DARK_GRAY}q{DARK_GRAY}ハ{GREEN}q{DYNAMIC_COLOR1}C{DYNAMIC_COLOR5}"
-	.string "ざにじまリよüぇOずぜぶぢオベホ$"
-	.string "$"
+	.string "トいスいハいqいハかqこCせざにじまリよüぇOずぜぶぢオベホ$$"
 gUnknown_82F53B6: @ 0x82F53B6
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DYNAMIC_COLOR5}クはぽむカわプぎOずピぼFカMシ$"
-	.string "$"
+	.string "むいハせクはぽむカわプぎOずピぼFカMシ$$"
 gUnknown_82F53CC: @ 0x82F53CC
-	.string "{PH_FACE_SOLO}ロ{BLUE}ー{DYNAMIC_COLOR5}フふウめめり♀ょゅざぺづュっ·カ{WHITE}ス$"
-	.string "$"
+	.string "ゃいロくーせフふウめめり♀ょゅざぺづュっ·カあス$$"
 gUnknown_82F53E6: @ 0x82F53E6
 	.incbin "baserom_jp.gba", 0x2f53e6, 0x1c
 gUnknown_82F5402: @ 0x82F5402
@@ -3239,209 +2888,147 @@ gUnknown_82F5402: @ 0x82F5402
 gUnknown_82F541A: @ 0x82F541A
 	.incbin "baserom_jp.gba", 0x2f541a, 0x1e
 gUnknown_82F5438: @ 0x82F5438
-	.string "{MUS_RG_SEVII_ROUTE}R{BLUE}がねチみやぃaぎ/ぶ·っgタ$"
-	.string "$"
+	.string "むいRくがねチみやぃaぎ/ぶ·っgタ$$"
 gUnknown_82F544C: @ 0x82F544C
-	.string "ダ{DARK_GRAY}ハ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}とろはじり♀んはゅ{DYNAMIC_COLOR4}だブば{DYNAMIC_COLOR5}"
-	.string "ぴ{DYNAMIC_COLOR3}ク$"
-	.string "$"
+	.string "ダいハせさとろはじり♀んはゅすだブばせぴしク$$"
 gUnknown_82F5464: @ 0x82F5464
-	.string "ダ{DARK_GRAY}ハ{DARK_GRAY}{MUS_RG_VICTORY_WILD}{MUS_RG_ENCOUNTER_DEOXYS}ハ{DYNAMIC_COLOR5}"
-	.string "{DYNAMIC_COLOR2}とろはじり♀んはゅ{DYNAMIC_COLOR4}どブぺ{DYNAMIC_COLOR5}ク{DYNAMIC_COLOR3}ネ$"
-	.string "$"
+	.string "ダいハいさいろいハせさとろはじり♀んはゅすどブぺせクしネ$$"
 gUnknown_82F5482: @ 0x82F5482
-	.string "バ{DARK_GRAY}むほ·ざ$$"
+	.string "バいむほ·ざ$$"
 gUnknown_82F548A: @ 0x82F548A
-	.string "{PH_CLOTH_SOLO}も{DYNAMIC_COLOR1}コなままタる▶ぇノざ:ばぎっaコgト$"
-	.string "$"
+	.string "がいもこコなままタる▶ぇノざ:ばぎっaコgト$$"
 gUnknown_82F54A2: @ 0x82F54A2
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_TRAINER_TOWER}テ{DYNAMIC_COLOR5}ヤは,みÖわヌぎやずUぼチカ$"
-	.string "$"
+	.string "ろいわいテせヤは,みÖわヌぎやずUぼチカ$$"
 gUnknown_82F54B8: @ 0x82F54B8
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_TRAINER_TOWER}テ{DARK_GRAY}ヤ{DARK_GRAY}テ{DYNAMIC_COLOR5}"
-	.string "ヤは,みÖわヌぎ2ぢ{DYNAMIC_COLOR4}ぷUカェタチハ$"
-	.string "$"
+	.string "ろいわいテいヤいテせヤは,みÖわヌぎ2ぢすぷUカェタチハ$$"
 gUnknown_82F54D6: @ 0x82F54D6
-	.string "{MUS_RG_TRAINER_TOWER}ふつ×めぶぉÖぢサイOツぜメ$$"
+	.string "わいふつ×めぶぉÖぢサイOツぜメ$$"
 gUnknown_82F54E8: @ 0x82F54E8
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_NET_CENTER}×{DARK_GRAY}ぶ{LIGHT_GRAY}ふつ×めぶぉÖぢmばヌイOツぜメ$"
-	.string "$"
+	.string "わいふい×いぶうふつ×めぶぉÖぢmばヌイOツぜメ$$"
 gUnknown_82F5502: @ 0x82F5502
-	.string "{MUS_RG_TRAINER_TOWER}{MUS_RG_NET_CENTER}×{DARK_GRAY}ぶ{LIGHT_GRAY}ふつ×めぶぉÖぢmばヌイOハぜェ$"
-	.string "$"
+	.string "わいふい×いぶうふつ×めぶぉÖぢmばヌイOハぜェ$$"
 gUnknown_82F551C: @ 0x82F551C
 	.incbin "baserom_jp.gba", 0x2f551c, 0x1c
 gUnknown_82F5538: @ 0x82F5538
 	.incbin "baserom_jp.gba", 0x2f5538, 0x20
 gUnknown_82F5558: @ 0x82F5558
-	.string "{MUS_RG_SEVII_ROUTE}カ{BLUE}ろつっのツめWりざぉんぎわぢキぶ{DYNAMIC_COLOR3}ウ$"
-	.string "$"
+	.string "むいカくろつっのツめWりざぉんぎわぢキぶしウ$$"
 gUnknown_82F5570: @ 0x82F5570
-	.string "{MUS_RG_SEVII_ROUTE}{PH_GOOSE_BLEND}{MUS_RG_ENCOUNTER_DEOXYS}っ{LIGHT_GRAY}カ{BLUE}"
-	.string "ろつっのツめWりざぉんずわぺキコ{DYNAMIC_COLOR3}ヒ$"
-	.string "$"
+	.string "むいカいろいっうカくろつっのツめWりざぉんずわぺキコしヒ$$"
 gUnknown_82F558E: @ 0x82F558E
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}ゃにjよヤぇやげュずケばゅイよツ$"
-	.string "$"
+	.string "をいむいゃにjよヤぇやげュずケばゅイよツ$$"
 gUnknown_82F55A4: @ 0x82F55A4
-	.string "{MUS_RG_SLOW_PALLET}{MUS_RG_SEVII_ROUTE}{PH_FACE_SOLO}j{DARK_GRAY}ゃにjよヤぇやげュずプぢケぼふサコホ$"
-	.string "$"
+	.string "をいむいゃいjいゃにjよヤぇやげュずプぢケぼふサコホ$$"
 gUnknown_82F55C0: @ 0x82F55C0
-	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}ぜピぼ。ぼごカべテ$"
-	.string "$"
+	.string "♂いをいがいoせをひめよずぇいぜピぼ。ぼごカべテ$$"
 gUnknown_82F55DA: @ 0x82F55DA
-	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DARK_GRAY}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}"
-	.string "ぜピぺ。ぺごセべマ$"
-	.string "$"
+	.string "♂いをいがいoいoせをひめよずぇいぜピぺ。ぺごセべマ$$"
 gUnknown_82F55F6: @ 0x82F55F6
-	.string "♂{DARK_GRAY}{MUS_RG_SLOW_PALLET}{PH_CLOTH_SOLO}o{DARK_GRAY}o{DYNAMIC_COLOR5}をひめよず{PH_FACE_BLEND}"
-	.string "ぜピぺ。ぺごトべロ$"
-	.string "$"
+	.string "♂いをいがいoいoせをひめよずぇいぜピぺ。ぺごトべロ$$"
 gUnknown_82F5612: @ 0x82F5612
-	.string "{MUS_RG_VS_MEWTWO}{MUS_RG_ENCOUNTER_DEOXYS}び{DYNAMIC_COLOR1}ぼつべはふめれれてぉ×げEぢんぱ”イOコ$"
-	.string "$"
+	.string "りいろいびこぼつべはふめれれてぉ×げEぢんぱ”イOコ$$"
 gUnknown_82F562E: @ 0x82F562E
-	.string "{MUS_RG_VS_MEWTWO}{MUS_RG_ENCOUNTER_DEOXYS}{PH_GOAT_BLEND}{PH_THOUGHT_BLEND}び{DYNAMIC_COLOR1}"
-	.string "ぼつべはふめれれてぉ×げEばんウ”セOハ$"
-	.string "$"
+	.string "りいろいびいぼいびこぼつべはふめれれてぉ×げEばんウ”セOハ$$"
 gUnknown_82F564E: @ 0x82F564E
-	.string "♂{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ネ{DYNAMIC_COLOR5}わとJみへよ♀ぇÖぎげ{PH_LOT_BLEND}ぱごカ$"
-	.string "$"
+	.string "♂いろいネせわとJみへよ♀ぇÖぎげでいぱごカ$$"
 gUnknown_82F5666: @ 0x82F5666
-	.string "♂{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ネ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}ネ{DYNAMIC_COLOR5}"
-	.string "わとJみへよ♀ぇÖぎげ{PH_LOT_BLEND}オごハべロ$"
-	.string "$"
+	.string "♂いろいネいわいネせわとJみへよ♀ぇÖぎげでいオごハべロ$$"
 gUnknown_82F5684: @ 0x82F5684
 	.incbin "baserom_jp.gba", 0x2f5684, 0x16
 gUnknown_82F569A: @ 0x82F569A
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}ス{DYNAMIC_COLOR5}クはウよドぇぢぜプぼぴカベツ$"
-	.string "$"
+	.string "むいハいスせクはウよドぇぢぜプぼぴカベツ$$"
 gUnknown_82F56B0: @ 0x82F56B0
-	.string "バ{DARK_GRAY}R{GREEN}ら{DYNAMIC_COLOR3}ダとなほがれ$"
-	.string "$"
+	.string "バいRからしダとなほがれ$$"
 gUnknown_82F56BE: @ 0x82F56BE
-	.string "バ{DARK_GRAY}ド{DYNAMIC_COLOR5}ざなざみäよヘぇなぐセでピぼ。ぼエキ$"
-	.string "$"
+	.string "バいドせざなざみäよヘぇなぐセでピぼ。ぼエキ$$"
 gUnknown_82F56D6: @ 0x82F56D6
-	.string "バ{DARK_GRAY}ド{DARK_GRAY}ざ{LIGHT_GRAY}{PH_FLEECE_HELD}ド{DYNAMIC_COLOR5}ざなざみäよヘぇなぐセぼピカ。カエマ$"
-	.string "$"
+	.string "バいドいざうざいドせざなざみäよヘぇなぐセぼピカ。カエマ$$"
 gUnknown_82F56F4: @ 0x82F56F4
-	.string "{MUS_RG_SLOW_PALLET}カ{BLUE}ツと{DYNAMIC_COLOR5}ひWよoわぐぐ{DYNAMIC_COLOR3}ぜキぼnっチセ$"
-	.string "$"
+	.string "をいカくツとせひWよoわぐぐしぜキぼnっチセ$$"
 gUnknown_82F570C: @ 0x82F570C
-	.string "{MUS_RG_SLOW_PALLET}カ{BLUE}ツと{DYNAMIC_COLOR5}ひWよoわRぎ{DYNAMIC_COLOR3}ぜキぼnっチセ$"
-	.string "$"
+	.string "をいカくツとせひWよoわRぎしぜキぼnっチセ$$"
 gUnknown_82F5724: @ 0x82F5724
-	.string "ょ{LIGHT_GRAY}ぐ{DYNAMIC_COLOR4}わにrみ{DYNAMIC_COLOR2}れ×ゃnずÖぶぺウ\n{SE_ROULETTE_BALL}ス$"
-	.string "シ$$"
+	.string "ょうぐすわにrみされ×ゃnずÖぶぺウ\n"
+	.string "シ　ス$シ$$"
 gUnknown_82F573E: @ 0x82F573E
-	.string "ユ{DARK_GRAY}タ{BLUE}スつKねyや9わサぐギぞäぴ‘エノタ$$"
+	.string "ユいタくスつKねyや9わサぐギぞäぴ‘エノタ$$"
 gUnknown_82F5756: @ 0x82F5756
-	.string "{MUS_RG_SILPH}{MUS_RG_CELADON}{MUS_RG_FUCHSIA}ユ{DARK_GRAY}{PH_NURSE_HELD}{PH_CURE_HELD}K{DARK_GRAY}"
-	.string "タ{BLUE}スつKねyや9わサぐギぞäっ‘シノフ$"
-	.string "$"
+	.string "きいけいくいユいタいスいKいタくスつKねyや9わサぐギぞäっ‘シノフ$$"
 gUnknown_82F577A: @ 0x82F577A
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ょちぁにまやgれょぎやずラぴまウIタ$"
-	.string "$"
+	.string "ぞいをいょちぁにまやgれょぎやずラぴまウIタ$$"
 gUnknown_82F5792: @ 0x82F5792
-	.string "{PH_KIT_SOLO}{MUS_RG_SLOW_PALLET}ょ{LIGHT_GRAY}{PH_TRAP_BLEND}ょちぁにまやgれょぎやずmばスアまサIフゼヨ$"
-	.string "$"
+	.string "ぞいをいょうぁいょちぁにまやgれょぎやずmばスアまサIフゼヨ$$"
 gUnknown_82F57B2: @ 0x82F57B2
-	.string "バ{DARK_GRAY}R{DARK_GRAY}o{DARK_GRAY}でほÜほgほHほ$"
-	.string "$"
+	.string "バいRいoいでほÜほgほHほ$$"
 gUnknown_82F57C2: @ 0x82F57C2
 	.incbin "baserom_jp.gba", 0x2f57c2, 0x18
 gUnknown_82F57DA: @ 0x82F57DA
 	.incbin "baserom_jp.gba", 0x2f57da, 0x1e
 gUnknown_82F57F8: @ 0x82F57F8
-	.string "{PH_GOAT_BLEND}ぼ{DYNAMIC_COLOR1}りつぺはぶめべれケぉぞごPぢrぼてウシコっツぎヒwメ$"
-	.string "$"
+	.string "びいぼこりつぺはぶめべれケぉぞごPぢrぼてウシコっツぎヒwメ$$"
 gUnknown_82F5818: @ 0x82F5818
-	.string "{MUS_RG_VICTORY_TRAINER}の{LIGHT_GRAY}o{DYNAMIC_COLOR5}ぁひ×よュぇキぜでぼ·カ$"
-	.string "$"
+	.string "こいのうoせぁひ×よュぇキぜでぼ·カ$$"
 gUnknown_82F582C: @ 0x82F582C
-	.string "{MUS_RG_VICTORY_TRAINER}ヤ{DARK_GRAY}o{DARK_GRAY}{B_COPY_VAR_1}o{DYNAMIC_COLOR5}{B_SCR_ACTIVE_ABILITY}"
-	.string "ボよQぇ2ずでぼ{BLUE}キ‘ツ$"
-	.string "$"
+	.string "こいヤいoい{B_COPY_VAR_1}oせ{B_SCR_ACTIVE_ABILITY}ボよQぇ2ずでぼくキ‘ツ$$"
 gUnknown_82F5846: @ 0x82F5846
-	.string "{MUS_RG_VICTORY_TRAINER}の{LIGHT_GRAY}o{DARK_GRAY}ぁ{LIGHT_GRAY}o{DYNAMIC_COLOR5}ぁひ×よュぇキぜUぶでぼ·カ$"
-	.string "$"
+	.string "こいのうoいぁうoせぁひ×よュぇキぜUぶでぼ·カ$$"
 gUnknown_82F5860: @ 0x82F5860
-	.string "{MUS_RG_OAK_LAB}の{DYNAMIC_COLOR4}ゴつワふュめoんシぎ\nで$"
-	.string "{SE_NOTE_B}どBぺ$$"
+	.string "あいのすゴつワふュめoんシぎ\n"
+	.string "で$で　どBぺ$$"
 gUnknown_82F5878: @ 0x82F5878
-	.string "{MUS_RG_OAK_LAB}の{LIGHT_GRAY}ゴ{DARK_GRAY}ワ{DARK_GRAY}の{DYNAMIC_COLOR4}ゴつワふュめoんめゃシず\nっ$"
-	.string "{SE_ESCALATOR}アBタ$$"
+	.string "あいのうゴいワいのすゴつワふュめoんめゃシず\n"
+	.string "っ$っ　アBタ$$"
 gUnknown_82F5898: @ 0x82F5898
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_RIVAL_EXIT}ぼ{DYNAMIC_COLOR5}ぱにぬめrれつょケぜめぼぴイwセ$"
-	.string "$"
+	.string "ろいたいぼせぱにぬめrれつょケぜめぼぴイwセ$$"
 gUnknown_82F58B0: @ 0x82F58B0
-	.string "{MUS_RG_OAK_LAB}{B_LINK_OPPONENT_MON1_NAME}ょぬっまぃれぬぇヌずんばピイbイぃサ$"
-	.string "$"
+	.string "あい{B_LINK_OPPONENT_MON1_NAME}ょぬっまぃれぬぇヌずんばピイbイぃサ$$"
 gUnknown_82F58C8: @ 0x82F58C8
-	.string "{MUS_RG_OAK_LAB}{B_COPY_VAR_1}ょ{LIGHT_GRAY}っ{LIGHT_GRAY}{B_LINK_OPPONENT_MON1_NAME}"
-	.string "ょぬっまぃんぬげヌぼんカピニbニぃモ$"
-	.string "$"
+	.string "あい{B_COPY_VAR_1}ょうっう{B_LINK_OPPONENT_MON1_NAME}ょぬっまぃんぬげヌぼんカピニbニぃモ$$"
 gUnknown_82F58E6: @ 0x82F58E6
-	.string "{MUS_RG_OAK_LAB}{B_COPY_VAR_1}ょ{LIGHT_GRAY}っ{LIGHT_GRAY}{B_LINK_OPPONENT_MON1_NAME}"
-	.string "ょぬっまぃんぬげヌぼぜっんコピホbホぃァ$"
-	.string "$"
+	.string "あい{B_COPY_VAR_1}ょうっう{B_LINK_OPPONENT_MON1_NAME}ょぬっまぃんぬげヌぼぜっんコピホbホぃァ$$"
 gUnknown_82F5906: @ 0x82F5906
-	.string "ィ{DARK_GRAY}{PH_CLOTH_SOLO}\l{DARK_GRAY}ぺ{LIGHT_GRAY}$"
-	.string "$"
+	.string "ィいがい\l"
+	.string "いぺう$$"
 gUnknown_82F5910: @ 0x82F5910
-	.string "\l{DARK_GRAY}わたヌほタを,げÖぶnカぎト$$"
+	.string "\l"
+	.string "いわたヌほタを,げÖぶnカぎト$$"
 gUnknown_82F5922: @ 0x82F5922
-	.string "\l{DARK_GRAY}スたチほタをュげセぶnカぎト$$"
+	.string "\l"
+	.string "いスたチほタをュげセぶnカぎト$$"
 gUnknown_82F5934: @ 0x82F5934
 	.incbin "baserom_jp.gba", 0x2f5934, 0x18
 gUnknown_82F594C: @ 0x82F594C
-	.string "は{LIGHT_GRAY}ヌたナはーり'ぇ{LIGHT_RED}だ×ぼ{DYNAMIC}クむテみム$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f594c, 0x16
 gUnknown_82F5962: @ 0x82F5962
-	.string "は{LIGHT_GRAY}ヌ{DARK_GRAY}ナ{DARK_GRAY}ー{DARK_GRAY}ヌたナはーり'ぇ{LIGHT_RED}だ×ぺ{DYNAMIC}タむマみゥ$"
-	.string "$"
+	.incbin "baserom_jp.gba", 0x2f5962, 0x1c
 gUnknown_82F597E: @ 0x82F597E
-	.string "{MUS_RG_SEVII_123}レ{DYNAMIC_COLOR5}わとカむヌよグぇÖぎぅどUぼメカ$"
-	.string "$"
+	.string "もいレせわとカむヌよグぇÖぎぅどUぼメカ$$"
 gUnknown_82F5994: @ 0x82F5994
-	.string "{MUS_RG_VICTORY_TRAINER}ろ{BLUE}ツ{DYNAMIC_COLOR5}{DYNAMIC_COLOR5}とXは2よpぇぇぜ{DYNAMIC_COLOR4}ぱKシTホ$"
-	.string "$"
+	.string "こいろくツせせとXは2よpぇぇぜすぱKシTホ$$"
 gUnknown_82F59AC: @ 0x82F59AC
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}がたじまのをやげわべüカピトよメぎィ$"
-	.string "$"
+	.string "むいハいがたじまのをやげわべüカピトよメぎィ$$"
 gUnknown_82F59C4: @ 0x82F59C4
-	.string "{MUS_RG_SEVII_ROUTE}ハ{BLUE}C{DYNAMIC_COLOR5}へとtはぺもんれやぇsげ♀でぜぽよク$"
-	.string "$"
+	.string "むいハくCせへとtはぺもんれやぇsげ♀でぜぽよク$$"
 gUnknown_82F59DE: @ 0x82F59DE
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}C{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ハ{BLUE}C{DYNAMIC_COLOR5}"
-	.string "へとtはぺもんれやぇsげ♀ぼぜサよハ$"
-	.string "$"
+	.string "むいハいCいへいハくCせへとtはぺもんれやぇsげ♀ぼぜサよハ$$"
 gUnknown_82F59FE: @ 0x82F59FE
-	.string "{MUS_RG_SEVII_ROUTE}ハ{DARK_GRAY}C{DARK_GRAY}{MUS_RG_MYSTERY_GIFT}ハ{BLUE}C{DYNAMIC_COLOR5}"
-	.string "へとtはぺもんれやぇsげ♀ぼぜナよン$"
-	.string "$"
+	.string "むいハいCいへいハくCせへとtはぺもんれやぇsげ♀ぼぜナよン$$"
 gUnknown_82F5A1E: @ 0x82F5A1E
-	.string "{MUS_RG_SEVII_ROUTE}がとゃと♂と:りÄ{MUS_RG_VS_MEWTWO}るがじ$"
-	.string "$"
+	.string "むいがとゃと♂と:りÄりいるがじ$$"
 gUnknown_82F5A30: @ 0x82F5A30
-	.string "{MUS_RG_SEVII_ROUTE}ヘ{DYNAMIC_COLOR1}ネつxはツめよろでぉ♀げ{DYNAMIC_COLOR5}づよぼ$"
-	.string "$"
+	.string "むいヘこネつxはツめよろでぉ♀げせづよぼ$$"
 gUnknown_82F5A46: @ 0x82F5A46
-	.string "{MUS_RG_SEVII_ROUTE}r{DYNAMIC_COLOR1}Rつxはツめちろoぇ{RED}ご{DYNAMIC_COLOR5}づキぱ$"
-	.string "$"
+	.string "むいrこRつxはツめちろoぇえごせづキぱ$$"
 gUnknown_82F5A5C: @ 0x82F5A5C
-	.string "ょ{LIGHT_GRAY}ャたぉほてをヘげュぶüカ\nト${SE_CONTEST_ICON_CLEAR}ナ$"
-	.string "$"
+	.string "ょうャたぉほてをヘげュぶüカ\n"
+	.string "ト$ト　ナ$$"
 gUnknown_82F5A72: @ 0x82F5A72
-	.string "ょ{LIGHT_GRAY}ャ{DARK_GRAY}{PH_FACE_HELD}て{LIGHT_GRAY}ャたぉほてをヘげュぶüタ\nリ$"
-	.string "{SE_M_HARDEN}ル$$"
+	.string "ょうャいぉいてうャたぉほてをヘげュぶüタ\n"
+	.string "リ$リ　ル$$"
 gUnknown_82F5A8E: @ 0x82F5A8E
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DYNAMIC_COLOR5}わひがよtぇ♀ずüぼXカ2ツセマ$"
-	.string "$"
+	.string "こいハせわひがよtぇ♀ずüぼXカ2ツセマ$$"
 gUnknown_82F5AA4: @ 0x82F5AA4
-	.string "{MUS_RG_VICTORY_TRAINER}ハ{DARK_GRAY}わ{LIGHT_GRAY}{PH_CLOTH_SOLO}ハ{DYNAMIC_COLOR5}わひがよtぇ♀ずüぼXシ2ホセゥ$"
-	.string "$"
+	.string "こいハいわうがいハせわひがよtぇ♀ずüぼXシ2ホセゥ$$"
 gUnknown_82F5AC0: @ 0x82F5AC0
 	.incbin "baserom_jp.gba", 0x2f5ac0, 0x16
 gUnknown_82F5AD6: @ 0x82F5AD6
@@ -3449,49 +3036,37 @@ gUnknown_82F5AD6: @ 0x82F5AD6
 gUnknown_82F5AF2: @ 0x82F5AF2
 	.incbin "baserom_jp.gba", 0x2f5af2, 0x1c
 gUnknown_82F5B0E: @ 0x82F5B0E
-	.string "テ{DARK_GRAY}わ{DYNAMIC_COLOR1}ろつへめヤれゃぇmぢ,ぼÖイアテよハ$"
-	.string "$"
+	.string "テいわころつへめヤれゃぇmぢ,ぼÖイアテよハ$$"
 gUnknown_82F5B26: @ 0x82F5B26
-	.string "テ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_MYSTERY_GIFT}わ{DYNAMIC_COLOR1}"
-	.string "ろつへめヤれゃぇ♀ざmぴ,セÖミアゴよピ$"
-	.string "$"
+	.string "テいわいろいへいわころつへめヤれゃぇ♀ざmぴ,セÖミアゴよピ$$"
 gUnknown_82F5B46: @ 0x82F5B46
-	.string "テ{DARK_GRAY}{MUS_RG_TRAINER_TOWER}{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_MYSTERY_GIFT}わ{DYNAMIC_COLOR1}"
-	.string "ろつへめヤれゃぇ♀ざmぴ,セてトÖレアポよ/$"
-	.string "$"
+	.string "テいわいろいへいわころつへめヤれゃぇ♀ざmぴ,セてトÖレアポよ/$$"
 gUnknown_82F5B68: @ 0x82F5B68
-	.string "{MUS_RG_SEVII_45}$$"
+	.string "やい$$"
 gUnknown_82F5B6C: @ 0x82F5B6C
-	.string "{MUS_RG_SEVII_45}スりtり,ゃpぞセぴぺケゅナチミぜワ$$"
+	.string "やいスりtり,ゃpぞセぴぺケゅナチミぜワ$$"
 gUnknown_82F5B82: @ 0x82F5B82
-	.string "{MUS_RG_SEVII_45}{PH_CURE_HELD}t{DARK_GRAY},{DARK_GRAY}スりtり,ゃpぞセぴぺケゅマチャぜボ$"
-	.string "$"
+	.string "やいスいtい,いスりtり,ゃpぞセぴぺケゅマチャぜボ$$"
 gUnknown_82F5B9E: @ 0x82F5B9E
-	.string "ベ{DARK_GRAY}クつーめとぉüぢぺウFツMメぜェ$$"
+	.string "ベいクつーめとぉüぢぺウFツMメぜェ$$"
 gUnknown_82F5BB2: @ 0x82F5BB2
-	.string "ベ{DARK_GRAY}JつーめとぉüぢュイFツMメぜェ$$"
+	.string "ベいJつーめとぉüぢュイFツMメぜェ$$"
 gUnknown_82F5BC6: @ 0x82F5BC6
-	.string "ベ{DARK_GRAY}tつーめとぉüぢぺウュイFツMメぜェ$$"
+	.string "ベいtつーめとぉüぢぺウュイFツMメぜェ$$"
 gUnknown_82F5BDC: @ 0x82F5BDC
-	.string "タ{LIGHT_GRAY},{DYNAMIC_COLOR1}üほめりサじげばぎコピトべルよェづビ$"
-	.string "$"
+	.string "タう,こüほめりサじげばぎコピトべルよェづビ$$"
 gUnknown_82F5BF4: @ 0x82F5BF4
-	.string "オ{LIGHT_GRAY},{DYNAMIC_COLOR1}üほ2りウじケばンコピトコリぴェふビ$"
-	.string "$"
+	.string "オう,こüほ2りウじケばンコピトコリぴェふビ$$"
 gUnknown_82F5C0C: @ 0x82F5C0C
-	.string "▶{DARK_GRAY},{DYNAMIC_COLOR1}üほアるスじÖばてコピトöリNェぜバ$"
-	.string "$"
+	.string "▶い,こüほアるスじÖばてコピトöリNェぜバ$$"
 gUnknown_82F5C24: @ 0x82F5C24
-	.string "ド{DARK_GRAY}ち{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}なgほmりコぉまじりびセっノコRト$"
-	.string "$"
+	.string "ドいちさせなgほmりコぉまじりびセっノコRト$$"
 gUnknown_82F5C3C: @ 0x82F5C3C
-	.string "ド{DARK_GRAY}{GREEN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}なgほmり♀ぇまじらびセっノコスナ$"
-	.string "$"
+	.string "ドいかさせなgほmり♀ぇまじらびセっノコスナ$$"
 gUnknown_82F5C54: @ 0x82F5C54
 	.incbin "baserom_jp.gba", 0x2f5c54, 0x1a
 gUnknown_82F5C6E: @ 0x82F5C6E
-	.string "{MUS_RG_ENCOUNTER_DEOXYS}{MUS_RG_SEVII_123}ナ{DYNAMIC_COLOR1}ネとはまpりセぇゥざチばノっツサöト$"
-	.string "$"
+	.string "ろいもいナこネとはまpりセぇゥざチばノっツサöト$$"
 gUnknown_82F5C88: @ 0x82F5C88
 	.incbin "baserom_jp.gba", 0x2f5c88, 0x1c
 
@@ -3976,10 +3551,7 @@ gUnknown_82FA85A: @ 0x82FA85A
 
 	.globl gUnknown_82FA876
 gUnknown_82FA876: @ 0x82FA876
-	.string "{SE_BALL_OPEN}{SE_SHIP}{SE_BALL_BOUNCE_2}{SE_PUDDLE}{SE_M_TOXIC}{UP_ARROW_2}{SE_M_RAIN_DANCE}も{WHITE}"
-	.string "$"
-	.string "$"
-
+	.string "{SE_BALL_OPEN}{SE_SHIP}{SE_BALL_BOUNCE_2}{SE_PUDDLE}{SE_M_TOXIC}{UP_ARROW_2}{SE_M_RAIN_DANCE}もあ$$"
 	.globl gUnknown_82FA888
 gUnknown_82FA888: @ 0x82FA888
 	.incbin "baserom_jp.gba", 0x2fa888, 0x2
@@ -4266,8 +3838,7 @@ gUnknown_8300A4E: @ 0x8300A4E
 
 	.globl gUnknown_8300A8A
 gUnknown_8300A8A: @ 0x8300A8A
-	.string "${MUS_RG_VS_GYM_LEADER}{WHITE}{HIGHLIGHT}{TRANSPARENT}{SHADOW}{DARK_GRAY}$"
-
+	.string "${COLOR 1}{HIGHLIGHT 0}{SHADOW 2}$"
 	.globl gUnknown_8300A95
 gUnknown_8300A95: @ 0x8300A95
 	.string "♂$"
@@ -4306,8 +3877,7 @@ gUnknown_8300AA9: @ 0x8300AA9
 
 	.globl gUnknown_8300AAE
 gUnknown_8300AAE: @ 0x8300AAE
-	.string "{SE_BANG}$"
-
+	.string "と　$"
 	.globl gUnknown_8300AB1
 gUnknown_8300AB1: @ 0x8300AB1
 	.incbin "baserom_jp.gba", 0x300ab1, 0x4b
@@ -4338,15 +3908,7 @@ gUnknown_8300C14: @ 0x8300C14
 
 	.globl gUnknown_8300CAC
 gUnknown_8300CAC: @ 0x8300CAC
-	.string "{TRANSPARENT}ぬ{DYNAMIC_COLOR4}{LIGHT_RED}{RED}{DYNAMIC_COLOR6}{MUS_RG_CREDITS}{SE_M_SNORE}START$"
-	.string "{MUS_RG_POKE_TOWER}め{SE_A}{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_RG_SHOP}{MUS_DUMMY}"
-	.string "{MUS_RG_POKE_TOWER}め{SE_A}じゅ{DYNAMIC_COLOR3}ん{SE_RG_SHOP}{MUS_DUMMY}ポケモンアイコンセット{SE_RG_SHOP}"
-	.string "OBJテキストセット{SE_RG_SHOP}{TRANSPARENT}セルセット{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "OBJテキストADD{SE_RG_SHOP}{TRANSPARENT}システムメッセージADD$"
-	.string "{MUS_RG_POKE_JUMP}{MUS_RG_CELADON}セット{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "{GREEN}ん{MUS_RG_PEWTER}り{SE_SLIDING_DOOR}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "だめだたら{MUS_RG_VICTORY_GYM_LEADER}{SE_CONTEST_CONDITION_LOSE}{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "　ぬすおえそüあK　START$かいめの　そうしん$　　　かいめの　じゅしん$　　　ポケモンアイコンセット$　OBJテキストセット$　　セルセット$　　　　　　　OBJテキストADD$　　システムメッセージADD$はいけいセット$　　　　　こうかんせいりつ　　　　　$だめだたらしいよ　　　　　$"
 	.globl gUnknown_8300D40
 gUnknown_8300D40: @ 0x8300D40
 	.incbin "baserom_jp.gba", 0x300d40, 0x2024
@@ -4485,16 +4047,15 @@ gUnknown_830D204: @ 0x830D204
 
 	.globl gUnknown_830D240
 gUnknown_830D240: @ 0x830D240
-	.string "{B_COPY_VAR_1}に\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}{BLUE}りま{DYNAMIC_COLOR4}！$"
-
+	.string "{B_COPY_VAR_1}に\n"
+	.string "{B_COPY_VAR_2}を　おくります！$"
 	.globl gUnknown_830D24F
 gUnknown_830D24F: @ 0x830D24F
-	.string "{PH_LOT_SOLO}{PH_LOT_SOLO}{TRANSPARENT}{B_COPY_VAR_2}！$"
-
+	.string "ばいばい　{B_COPY_VAR_2}！$"
 	.globl gUnknown_830D258
 gUnknown_830D258: @ 0x830D258
-	.string "{B_COPY_VAR_1}{GREEN}ら\n{B_COPY_VAR_3}{SE_SAVE}{LIGHT_RED}{BLUE}られて{LIGHT_GREEN}た！$"
-
+	.string "{B_COPY_VAR_1}から\n"
+	.string "{B_COPY_VAR_3}が　おくられてきた！$"
 	.globl gUnknown_830D26A
 gUnknown_830D26A: @ 0x830D26A
 	.incbin "baserom_jp.gba", 0x30d26a, 0x12
@@ -4533,11 +4094,10 @@ gUnknown_830D774: @ 0x830D774
 
 	.globl gUnknown_830F6AE
 gUnknown_830F6AE: @ 0x830F6AE
-	.string "{LIGHT_GREEN}のみブレンダー{SE_WARP_IN}{LIGHT_GREEN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "\pバッグ{GREEN}{SE_LAVARIDGE_FALL_WARP}{LIGHT_GREEN}のみブレンダー{SE_BOO}{DARK_GRAY}れる\n{LIGHT_GREEN}"
-	.string "のみ{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}\p$"
-	.string "カッコイ$カワイイ$ウツクシ$カシコイ$タクマシ$"
-
+	.string "きのみブレンダーを　きどうします\p"
+	.string "バッグから　きのみブレンダーに　いれる\n"
+	.string "きのみを　えらんでください\p"
+	.string "$カッコイ$カワイイ$ウツクシ$カシコイ$タクマシ$"
 	.globl gUnknown_830F6FB
 gUnknown_830F6FB: @ 0x830F6FB
 	.string "\p$"
@@ -4548,74 +4108,59 @@ gUnknown_830F6FD: @ 0x830F6FD
 
 	.globl gUnknown_830F74E
 gUnknown_830F74E: @ 0x830F74E
-	.string "{LIGHT_RED}じ{DYNAMIC_COLOR2}ん{SE_RG_SHOP}{LIGHT_RED}と{DYNAMIC_COLOR1}の{DYNAMIC_COLOR1}$"
-	.string "{LIGHT_RED}んなの{DYNAMIC_COLOR1}$"
-
+	.string "おじさん$　おとこのこ$おんなのこ$"
 	.globl gUnknown_830F760
 gUnknown_830F760: @ 0x830F760
 	.incbin "baserom_jp.gba", 0x30f760, 0x6
 
 	.globl gUnknown_830F766
 gUnknown_830F766: @ 0x830F766
-	.string "{LIGHT_RED}{MUS_RG_CAUGHT}{DYNAMIC_COLOR2}ん$"
-
+	.string "おにいさん$"
 	.globl gUnknown_830F76C
 gUnknown_830F76C: @ 0x830F76C
-	.string "{LIGHT_RED}ば{DYNAMIC_COLOR2}ん{SE_RG_SHOP}Aボタン{SE_NOTE_B}スタート{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "おばさん$　Aボタンで　スタートします$しょうしょうおまちください$"
 	.globl gUnknown_830F78E
 gUnknown_830F78E: @ 0x830F78E
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}で{DYNAMIC_COLOR4}$"
-
+	.string "つうしんたいきちゅうです$"
 	.globl gUnknown_830F79B
 gUnknown_830F79B: @ 0x830F79B
-	.string "も{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}{LIGHT_GREEN}のみ{SE_WARP_IN}まぜま{DYNAMIC_COLOR4}{GREEN}"
-	.string "？{SE_RG_BALL_CLICK}{MUS_DUMMY}{TRANSPARENT}$"
-
+	.string "もういちど　きのみを　まぜますか？\n"
+	.string "　　　　$"
 	.globl gUnknown_830F7B2
 gUnknown_830F7B2: @ 0x830F7B2
-	.string "{LIGHT_GREEN}のみブレンダー{SE_BOO}{DARK_GRAY}れ{SE_ICE_BREAK}{LIGHT_GREEN}のみが\n{MUS_RG_GAME_FREAK}"
-	.string "の{SE_NOTE_B}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
-	.string "ん\p$"
-
+	.string "きのみブレンダーに　いれる　きのみが\n"
+	.string "ないので　これいじょう　できません\p$"
 	.globl gUnknown_830F7D8
 gUnknown_830F7D8: @ 0x830F7D8
-	.string "ポロックケース{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\p$"
-
+	.string "ポロックケースが　いっぱいの　ようです\p$"
 	.globl gUnknown_830F7ED
 gUnknown_830F7ED: @ 0x830F7ED
-	.string "{SE_I}{LIGHT_GREEN}のみブレンダーに\n{DARK_GRAY}れ{SE_ICE_BREAK}{LIGHT_GREEN}のみが{MUS_RG_GAME_FREAK}"
-	.string "よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}$"
-
+	.string "は　きのみブレンダーに\n"
+	.string "いれる　きのみがないようです$"
 	.globl gUnknown_830F808
 gUnknown_830F808: @ 0x830F808
-	.string "{SE_I}ポロックケースが\n{DARK_GRAY}っ{PH_THOUGHT_HELD}{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\p$"
-
+	.string "は　ポロックケースが\n"
+	.string "いっぱいの　ようです\p$"
 	.globl gUnknown_830F81F
 gUnknown_830F81F: @ 0x830F81F
-	.string "まぜた{LIGHT_BLUE}っ{GREEN}${DARK_GRAY}れ{SE_FAINT}たね$"
-
+	.string "まぜたけっか$いれた　たね$"
 	.globl gUnknown_830F82D
 gUnknown_830F82D: @ 0x830F82D
 	.string "のみ$"
 
 	.globl gUnknown_830F830
 gUnknown_830F830: @ 0x830F830
-	.string "じ{GREEN}ん$"
-
+	.string "じかん$"
 	.globl gUnknown_830F834
 gUnknown_830F834: @ 0x830F834
 	.string "ふん$"
 
 	.globl gUnknown_830F837
 gUnknown_830F837: @ 0x830F837
-	.string "びょ{LIGHT_GRAY}$"
-
+	.string "びょう$"
 	.globl gUnknown_830F83B
 gUnknown_830F83B: @ 0x830F83B
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR6}{BLUE}ど$"
-
+	.string "さいこうそくど$"
 	.globl gUnknown_830F843
 gUnknown_830F843: @ 0x830F843
 	.string "rpm$"
@@ -4626,8 +4171,8 @@ gUnknown_830F847: @ 0x830F847
 
 	.globl gUnknown_830F849
 gUnknown_830F849: @ 0x830F849
-	.string "\n{SE_RG_SHOP}$"
-
+	.string "\n"
+	.string "$　$"
 	.globl gUnknown_830F84D
 gUnknown_830F84D: @ 0x830F84D
 	.string "ランキング$"
@@ -4638,8 +4183,7 @@ gUnknown_830F853: @ 0x830F853
 
 	.globl gUnknown_830F857
 gUnknown_830F857: @ 0x830F857
-	.string "{SE_NOTE_B}なめら{GREEN}{DYNAMIC_COLOR2}は$"
-
+	.string "で　なめらかさは$"
 	.globl gUnknown_830F860
 gUnknown_830F860: @ 0x830F860
 	.incbin "baserom_jp.gba", 0x30f860, 0x4
@@ -4734,12 +4278,11 @@ gUnknown_830FB50: @ 0x830FB50
 
 	.globl gUnknown_830FB68
 gUnknown_830FB68: @ 0x830FB68
-	.string "ü${SE_BANG}{SE_LEDGE}{SE_PC_LOGIN}{SE_USE_ITEM}{SE_RG_CARD_FLIPPING}{SE_BANG}{SE_LEDGE}"
-	.string "\n{MUS_RG_VS_CHAMPION}{TRANSPARENT}ü$"
-	.string "{SE_M_MEGA_KICK}{SE_LEDGE}{SE_PC_LOGIN}$"
-	.string "${SE_RG_CARD_FLIPPING}{SE_M_MEGA_KICK}{SE_LEDGE}\n$"
-	.string "$$"
-
+	.string "ü$と　こ　い　あ　\l"
+	.string "　と　こ　\n"
+	.string "$あ　ü$ザ　こ　い　$$\l"
+	.string "　ザ　こ　\n"
+	.string "$$$"
 	.globl gUnknown_830FB90
 gUnknown_830FB90: @ 0x830FB90
 	.incbin "baserom_jp.gba", 0x30fb90, 0x1e
@@ -4754,19 +4297,13 @@ gUnknown_830FBB3: @ 0x830FBB3
 
 	.globl gUnknown_830FBB8
 gUnknown_830FBB8: @ 0x830FBB8
-	.string "ふにてはの{DYNAMIC_COLOR5}{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}{LIGHT_GREEN}な{DYNAMIC_COLOR2}{DYNAMIC_COLOR1}"
-	.string "{LIGHT_GRAY}{DYNAMIC_COLOR6}{BLUE}$"
-
+	.string "ふにてはのせすさきなさこうそく$"
 	.globl gUnknown_830FBC8
 gUnknown_830FBC8: @ 0x830FBC8
-	.string "ポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{SE_EFFECTIVE}{MUS_DUMMY}"
-	.string "{TRANSPARENT}\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
-	.string "だ{MUS_RG_VICTORY_WILD}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "\n{MUS_RG_OAK}TVがで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{SE_FAINT}$"
-	.string "\nダメTVがで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{SE_FAINT}$"
-	.string "{GREEN}{MUS_RG_VS_DEOXYS}{SE_RG_SHOP}{DYNAMIC_COLOR3}{PH_GOAT_HELD}{SE_RG_SHOP}{WHITE}"
-	.string "{MUS_RG_SEVII_CAVE}{SE_RG_SHOP}に{PH_CLOTH_SOLO}{SE_RG_SHOP}{DYNAMIC_COLOR4}っ{PH_THOUGHT_HELD}$"
-
+	.string "ポケモンレポートに　かきこんでいます　　　　\n"
+	.string "でんげんを　きらないで　ください　　　　　　$\n"
+	.string "いいTVができました　$\n"
+	.string "ダメTVができました　$からい$　しぶい$　あまい$　にがい$　すっぱい$"
 	.globl gUnknown_830FC29
 gUnknown_830FC29: @ 0x830FC29
 	.incbin "baserom_jp.gba", 0x30fc29, 0x5
@@ -4781,9 +4318,8 @@ gUnknown_830FC33: @ 0x830FC33
 
 	.globl gUnknown_830FC38
 gUnknown_830FC38: @ 0x830FC38
-	.string "{LIGHT_GREEN}のみブレンダー\n{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR6}{BLUE}"
-	.string "{SE_NOTE_C_HIGH}ランキング！$"
-
+	.string "きのみブレンダー\n"
+	.string "さいこうそくど　ランキング！$"
 	.globl gUnknown_830FC50
 gUnknown_830FC50: @ 0x830FC50
 	.incbin "baserom_jp.gba", 0x30fc50, 0x10
@@ -4802,14 +4338,7 @@ gUnknown_830FC88: @ 0x830FC88
 
 	.globl gUnknown_830FCB0
 gUnknown_830FCB0: @ 0x830FCB0
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_USE_ITEM}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}$"
-	.string "$$$$$${SE_RG_SHOP}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$${MUS_RG_VS_CHAMPION}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{MUS_DUMMY}"
-	.string "{TRANSPARENT}$"
-	.string "$$$$$${MUS_RG_VS_CHAMPION}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$"
-
+	.string "　　　　　　　　　　　　あ　　　　　　　$$$$$$$$　　　　あ　　　　　　　$$$$あ　　　あ　　　あ　　　$$$$$$$$あ　　　$$$$"
 	.globl gUnknown_830FCF8
 gUnknown_830FCF8: @ 0x830FCF8
 	.incbin "baserom_jp.gba", 0x30fcf8, 0x10
@@ -4960,8 +4489,7 @@ gUnknown_846F9C8: @ 0x846F9C8
 
 	.globl gUnknown_846F9CA
 gUnknown_846F9CA: @ 0x846F9CA
-	.string "{MUS_RG_UNION_ROOM}て{SE_ICE_BREAK}{MUS_RG_UNION_ROOM}てる！！$"
-
+	.string "ひいてる　ひいてる！！$"
 	.globl gUnknown_846F9D6
 gUnknown_846F9D6: @ 0x846F9D6
 	.incbin "baserom_jp.gba", 0x46f9d6, 0x6
@@ -4972,16 +4500,13 @@ gUnknown_846F9DC: @ 0x846F9DC
 
 	.globl gUnknown_846F9E8
 gUnknown_846F9E8: @ 0x846F9E8
-	.string "ポケモン{SE_WARP_IN}つり{WHITE}げた！{PAUSE_UNTIL_PRESS}$"
-
+	.string "ポケモンを　つりあげた！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_846F9F7
 gUnknown_846F9F7: @ 0x846F9F7
-	.string "つれ{MUS_RG_GAME_FREAK}な{WHITE}···{PAUSE_UNTIL_PRESS}$"
-
+	.string "つれないなあ···{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_846FA03
 gUnknown_846FA03: @ 0x846FA03
-	.string "にげられ{SE_SHIP}{DYNAMIC_COLOR3}まった···{PAUSE_UNTIL_PRESS}$"
-
+	.string "にげられて　しまった···{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_846FA13
 gUnknown_846FA13: @ 0x846FA13
 	.incbin "baserom_jp.gba", 0x46fa13, 0x5
@@ -5512,11 +5037,7 @@ gUnknown_84E5FC0: @ 0x84E5FC0
 
 	.globl gUnknown_84E5FD0
 gUnknown_84E5FD0: @ 0x84E5FD0
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{SE_USE_ITEM}{MUS_DUMMY}$"
-	.string "$${SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "{MUS_RG_VS_CHAMPION}{SE_RG_SS_ANNE_HORN}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}$"
-	.string "$${MUS_RG_VS_CHAMPION}{TRANSPARENT}$$"
-
+	.string "　　　　　　あ　　　$$$$　　あ　　　$$あ　あ　あ　$$$$あ　$$"
 	.globl gUnknown_84E5FF4
 gUnknown_84E5FF4: @ 0x84E5FF4
 	.incbin "baserom_jp.gba", 0x4e5ff4, 0x5
@@ -5847,8 +5368,8 @@ gUnknown_84E8B5C: @ 0x84E8B5C
 
 	.globl gUnknown_84E8B84
 gUnknown_84E8B84: @ 0x84E8B84
-	.string "サファリボール\nの{DYNAMIC_COLOR1}{SE_ICE_STAIRS}{B_COPY_VAR_1}コ$"
-
+	.string "サファリボール\n"
+	.string "のこり　{B_COPY_VAR_1}コ$"
 	.globl gUnknown_84E8B94
 gUnknown_84E8B94: @ 0x84E8B94
 	.incbin "baserom_jp.gba", 0x4e8b94, 0x8
@@ -5887,16 +5408,13 @@ gUnknown_84E8CA8: @ 0x84E8CA8
 
 	.globl gUnknown_84E8CB0
 gUnknown_84E8CB0: @ 0x84E8CB0
-	.string "{DYNAMIC_COLOR3}ゅじん{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-
+	.string "しゅじんこう$"
 	.globl gUnknown_84E8CB7
 gUnknown_84E8CB7: @ 0x84E8CB7
-	.string "もっ{MUS_RG_CAUGHT_INTRO}るバッジ$"
-
+	.string "もっているバッジ$"
 	.globl gUnknown_84E8CC0
 gUnknown_84E8CC0: @ 0x84E8CC0
-	.string "ポケモンず{GREEN}ん$"
-
+	.string "ポケモンずかん$"
 	.globl gUnknown_84E8CC8
 gUnknown_84E8CC8: @ 0x84E8CC8
 	.incbin "baserom_jp.gba", 0x4e8cc8, 0x1a8
@@ -6667,56 +6185,43 @@ gUnknown_8537350: @ 0x8537350
 
 	.globl gUnknown_853736C
 gUnknown_853736C: @ 0x853736C
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}{LIGHT_RED}{MUS_RG_ENCOUNTER_RIVAL}$"
-
+	.string "{COLOR 6}{SHADOW 7}おそい$"
 	.globl gUnknown_8537376
 gUnknown_8537376: @ 0x8537376
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ふつ{LIGHT_GRAY}$"
-
+	.string "{COLOR 6}{SHADOW 7}ふつう$"
 	.globl gUnknown_8537380
 gUnknown_8537380: @ 0x8537380
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}は{MUS_RG_SEVII_45}$"
-
+	.string "{COLOR 6}{SHADOW 7}はやい$"
 	.globl gUnknown_853738A
 gUnknown_853738A: @ 0x853738A
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}みる$"
-
+	.string "{COLOR 6}{SHADOW 7}みる$"
 	.globl gUnknown_8537393
 gUnknown_8537393: @ 0x8537393
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}み{MUS_RG_GAME_FREAK}$"
-
+	.string "{COLOR 6}{SHADOW 7}みない$"
 	.globl gUnknown_853739D
 gUnknown_853739D: @ 0x853739D
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{MUS_RG_SILPH}れ{GREEN}{RED}$"
-
+	.string "{COLOR 6}{SHADOW 7}いれかえ$"
 	.globl gUnknown_85373A8
 gUnknown_85373A8: @ 0x85373A8
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}{GREEN}ちぬ{LIGHT_GREEN}$"
-
+	.string "{COLOR 6}{SHADOW 7}かちぬき$"
 	.globl gUnknown_85373B3
 gUnknown_85373B3: @ 0x85373B3
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}モノラル$"
-
+	.string "{COLOR 6}{SHADOW 7}モノラル$"
 	.globl gUnknown_85373BE
 gUnknown_85373BE: @ 0x85373BE
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ステレオ$"
-
+	.string "{COLOR 6}{SHADOW 7}ステレオ$"
 	.globl gUnknown_85373C9
 gUnknown_85373C9: @ 0x85373C9
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}タイプ$"
-
+	.string "{COLOR 6}{SHADOW 7}タイプ$"
 	.globl gUnknown_85373D3
 gUnknown_85373D3: @ 0x85373D3
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}$"
-
+	.string "{COLOR 6}{SHADOW 7}$"
 	.globl gUnknown_85373DA
 gUnknown_85373DA: @ 0x85373DA
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}ノーマル$"
-
+	.string "{COLOR 6}{SHADOW 7}ノーマル$"
 	.globl gUnknown_85373E5
 gUnknown_85373E5: @ 0x85373E5
-	.string "{MUS_RG_VS_GYM_LEADER}{GREEN}{SHADOW}{LIGHT_GREEN}LR$"
-
+	.string "{COLOR 6}{SHADOW 7}LR$"
 	.globl gUnknown_85373EE
 gUnknown_85373EE: @ 0x85373EE
 	.incbin "baserom_jp.gba", 0x5373ee, 0xe
@@ -6931,25 +6436,16 @@ gUnknown_854414C: @ 0x854414C
 
 	.globl gUnknown_85441A0
 gUnknown_85441A0: @ 0x85441A0
-	.string "$${MUS_RG_VS_CHAMPION}${SE_RG_SHOP}{DARK_GRAY}$"
-	.string "{SE_RG_HELP_ERROR}{MUS_RG_SS_ANNE}{MUS_RG_VS_CHAMPION}{RED}$"
-	.string "${DARK_GRAY}{LIGHT_RED}$${RED}{GREEN}$${LIGHT_RED}$"
-
+	.string "$$$あ$$　い$うあえい$あえ$$いお$$えか$$お$"
 	.globl gUnknown_85441BC
 gUnknown_85441BC: @ 0x85441BC
-	.string "$$$$$$$$$$$$$$$$$$${LIGHT_RED}$${RED}{GREEN}$"
-	.string "${LIGHT_RED}$"
-
+	.string "$$$$$$$$$$$$$$$$$$$お$$えか$$お$"
 	.globl gUnknown_85441D8
 gUnknown_85441D8: @ 0x85441D8
-	.string "$${MUS_RG_VS_CHAMPION}${SE_RG_SHOP}{DARK_GRAY}$"
-	.string "{SE_RG_HELP_ERROR}{MUS_RG_SS_ANNE}{MUS_RG_VS_CHAMPION}{RED}$"
-	.string "${DARK_GRAY}{GREEN}$$$$$${RED}$"
-
+	.string "$$$あ$$　い$うあえい$あえ$$いか$$$$$$え$"
 	.globl gUnknown_85441F4
 gUnknown_85441F4: @ 0x85441F4
-	.string "$$$$$$$$$$$$$$$$$$${GREEN}$$$$$${RED}$"
-
+	.string "$$$$$$$$$$$$$$$$$$$か$$$$$$え$"
 	.globl gUnknown_8544210
 gUnknown_8544210: @ 0x8544210
 	.incbin "baserom_jp.gba", 0x544210, 0x18
@@ -7564,17 +7060,7 @@ gUnknown_8559FA0: @ 0x8559FA0
 
 	.globl gUnknown_8559FC0
 gUnknown_8559FC0: @ 0x8559FC0
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{SE_RG_HELP_ERROR}{SE_RG_HELP_OPEN}{SE_RG_HELP_ERROR}"
-	.string "{SE_RG_HELP_ERROR}{SE_PC_OFF}{MUS_DUMMY}{TRANSPARENT}{RED}{RED}{RED}{RED}{SE_PC_ON}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{SE_PC_ON}{RED}{RED}{RED}{RED}{RED}{RED}"
-	.string "{RED}{RED}{RED}{RED}{RED}{LIGHT_RED}{LIGHT_RED}{LIGHT_RED}{LIGHT_RED}{MUS_RG_SURF}{SE_PC_LOGIN}"
-	.string "{SE_USE_ITEM}{SE_PC_LOGIN}{MUS_RG_OAK_LAB}{MUS_RG_OAK}{MUS_RG_OAK}{DARK_GRAY}{MUS_RG_SURF}"
-	.string "{MUS_RG_PALLET}{MUS_RG_PALLET}{SE_PC_LOGIN}{MUS_RG_PALLET}{MUS_RG_SURF}{MUS_RG_OAK}{SE_PC_LOGIN}"
-	.string "{MUS_RG_OAK}{MUS_RG_OAK_LAB}{MUS_RG_OAK}{MUS_DUMMY}{MUS_RG_OAK}{MUS_RG_SURF}{LIGHT_RED}{LIGHT_RED}"
-	.string "{MUS_RG_SURF}{MUS_RG_OAK}{WHITE}ピラミッド1だんめ$"
-	.string "ピラミッド2だんめ$ピラミッド3だんめ$ピラミッド4だんめ$ピラミッド5だんめ$"
-	.string "ピラミッド6だんめ$ピラミッド7だんめ$ピラミッド$"
-
+	.string "　　　　　　　うあああうあうあう　　　　えええええ　　　　　　　　　　　　え　えええええええええええおおおおおいい　あ　い　あいいいいいいおい　い　いい　　いおいいいい　いいあいいい　　いいおいおおおいいいあピラミッド1だんめ$ピラミッド2だんめ$ピラミッド3だんめ$ピラミッド4だんめ$ピラミッド5だんめ$ピラミッド6だんめ$ピラミッド7だんめ$ピラミッド$"
 	.globl gUnknown_855A074
 gUnknown_855A074: @ 0x855A074
 	.incbin "baserom_jp.gba", 0x55a074, 0x5f0
@@ -7841,9 +7327,7 @@ gUnknown_8562A62: @ 0x8562A62
 
 	.globl gUnknown_8563134
 gUnknown_8563134: @ 0x8563134
-	.string "{DARK_GRAY}{SE_A}{LIGHT_GREEN}のみ。$ほ{DYNAMIC_COLOR3}{SE_A}ち{GREEN}ら{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}"
-	.string "{SE_ICE_BREAK}ら{MUS_RG_VICTORY_GYM_LEADER}。$"
-
+	.string "いの　きのみ。$ほしの　ちからを　もっている　らしい。$"
 	.globl gUnknown_8563150
 gUnknown_8563150: @ 0x8563150
 	.incbin "baserom_jp.gba", 0x563150, 0x4b4
@@ -7922,11 +7406,7 @@ gUnknown_85656C8: @ 0x85656C8
 
 	.globl gUnknown_8565858
 gUnknown_8565858: @ 0x8565858
-	.string "{BLUE}ずや{BLUE}れずや{BLUE}ぴずや{BLUE}ィずや{SE_POKENAV_HANG_UP}な{SE_FAINT}{SE_A}なま{RED}は？$"
-	.string "ボック{SE_ROULETTE_BALL2}{SE_A}なま{RED}は？${B_COPY_VAR_1}{TRANSPARENT}{SE_A}ニックネームは？$"
-	.string "{LIGHT_RED}じ{DYNAMIC_COLOR2}ん{SE_BOO}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}{RED}"
-	.string "よ{LIGHT_GRAY}$"
-
+	.string "くずやくれずやくぴずやくィずやくあなた　の　なまえは？$ボックス　の　なまえは？${B_COPY_VAR_1}　の　ニックネームは？$おじさんに　ことばを　おしえよう$"
 	.globl gUnknown_85658A0
 gUnknown_85658A0: @ 0x85658A0
 	.incbin "baserom_jp.gba", 0x5658a0, 0x21
@@ -8025,12 +7505,7 @@ gUnknown_8565B00: @ 0x8565B00
 
 	.globl gUnknown_8565B06
 gUnknown_8565B06: @ 0x8565B06
-	.string "{MUS_RG_OAK_LAB}{LIGHT_GRAY}{RED}{LIGHT_RED}{GREEN}{LIGHT_GREEN}{BLUE}{LIGHT_BLUE}{DYNAMIC_COLOR1}"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}"
-	.string "たちつてとはひふへほやゆよゃゅょぁぃぅぇぉがぎぐげござじずぜぞだぢづでどっばびぶべぼぱぴぷぺぽアイ{PKMN}"
-	.string "オカキクケコサシスセソタチツテトハヒフヘホヤユヨャュョァィゥェォガギグゲゴザジズゼゾダヂヅデドッバビブベボパピプペポABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop"
-	.string "qrstuvwxyz0123456789$"
-
+	.string "あいうえおかきくけこさしすせそたちつてとはひふへほやゆよゃゅょぁぃぅぇぉがぎぐげござじずぜぞだぢづでどっばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトハヒフヘホヤユヨャュョァィゥェォガギグゲゴザジズゼゾダヂヅデドッバビブベボパピプペポABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$"
 	.globl gUnknown_8565BC1
 gUnknown_8565BC1: @ 0x8565BC1
 	.incbin "baserom_jp.gba", 0x565bc1, 0xba
@@ -8153,13 +7628,11 @@ gUnknown_8566BE4: @ 0x8566BE4
 
 	.globl gUnknown_8566CA4
 gUnknown_8566CA4: @ 0x8566CA4
-	.string "レコード{SE_WARP_IN}まぜ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
-
+	.string "レコードを　まぜています$"
 	.globl gUnknown_8566CB1
 gUnknown_8566CB1: @ 0x8566CB1
-	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{LIGHT_RED}つ{GREEN}"
-	.string "れ{DYNAMIC_COLOR2}まで{DYNAMIC_COLOR3}た$"
-
+	.string "しゅうりょう　しました\n"
+	.string "おつかれさまでした$"
 	.globl gUnknown_8566CC7
 gUnknown_8566CC7: @ 0x8566CC7
 	.incbin "baserom_jp.gba", 0x566cc7, 0x2
@@ -8190,20 +7663,17 @@ gUnknown_8566D0C: @ 0x8566D0C
 
 	.globl gUnknown_8566D2C
 gUnknown_8566D2C: @ 0x8566D2C
-	.string "サウンドチェッ{SE_THUNDER2}A⋯{MUS_RG_VICTORY_WILD}{MUS_RG_PEWTER}{TRANSPARENT}B⋯{LIGHT_RED}わり$"
-
+	.string "サウンドチェック　A⋯さいせい　B⋯おわり$"
 	.globl gUnknown_8566D42
 gUnknown_8566D42: @ 0x8566D42
 	.string "BGM$"
 
 	.globl gUnknown_8566D46
 gUnknown_8566D46: @ 0x8566D46
-	.string "S{SE_M_SWORDS_DANCE}$"
-
+	.string "SE　$"
 	.globl gUnknown_8566D4A
 gUnknown_8566D4A: @ 0x8566D4A
-	.string "L⋯U{SE_M_PETAL_DANCE}R⋯DOWN$"
-
+	.string "L⋯UP　R⋯DOWN$"
 	.globl gUnknown_8566D56
 gUnknown_8566D56: @ 0x8566D56
 	.string "R⋯DRIVERーTEST$"
@@ -8214,12 +7684,10 @@ gUnknown_8566D64: @ 0x8566D64
 
 	.globl gUnknown_8566D74
 gUnknown_8566D74: @ 0x8566D74
-	.string "Bボタン{SE_NOTE_B}もどる$"
-
+	.string "Bボタンで　もどる$"
 	.globl gUnknown_8566D7E
 gUnknown_8566D7E: @ 0x8566D7E
-	.string "Aボタン{SE_NOTE_B}{MUS_RG_VICTORY_WILD}{MUS_RG_PEWTER}$"
-
+	.string "Aボタンで　さいせい$"
 	.globl gUnknown_8566D89
 gUnknown_8566D89: @ 0x8566D89
 	.string "VOICE⋯⋯⋯⋯$"
@@ -8258,8 +7726,7 @@ gUnknown_8566DD9: @ 0x8566DD9
 
 	.globl gUnknown_8566DE3
 gUnknown_8566DE3: @ 0x8566DE3
-	.string "{MUS_RG_VICTORY_WILD}{MUS_RG_PEWTER}ちゆ{LIGHT_GRAY}⋯$"
-
+	.string "さいせいちゆう⋯$"
 	.globl gUnknown_8566DEC
 gUnknown_8566DEC: @ 0x8566DEC
 	.string "はんてん⋯⋯⋯⋯$"
@@ -8290,8 +7757,7 @@ gUnknown_8566E60: @ 0x8566E60
 
 	.globl gUnknown_8566E64
 gUnknown_8566E64: @ 0x8566E64
-	.string "{MUS_DUMMY}LR$"
-
+	.string "　　LR$"
 	.globl gUnknown_8566E69
 gUnknown_8566E69: @ 0x8566E69
 	.incbin "baserom_jp.gba", 0x566e69, 0x148f
@@ -9350,542 +8816,7 @@ gUnknown_857D86C: @ 0x857D86C
 
 	.globl gUnknown_857D884
 gUnknown_857D884: @ 0x857D884
-	.string "{TRANSPARENT}へふ{DYNAMIC_COLOR5}ほ{SE_U}{WHITE}ぇんほが{DYNAMIC_COLOR1}めま{LIGHT_RED}よんつぬほは{LIGHT_GRAY}"
-	.string "ち{LIGHT_RED}ちね{LIGHT_RED}らぁはぜつめぜにろぁん{MUS_RG_DEX_RATING}をも{DYNAMIC_COLOR4}りぬ{DYNAMIC_COLOR3}"
-	.string "のぁ{DYNAMIC_COLOR5}てぃねみをりめ{WHITE}{LIGHT_GRAY}の{DYNAMIC_COLOR5}れろめなゆめ{DYNAMIC_COLOR1}よぐ{GREEN}"
-	.string "もに{LIGHT_GREEN}ぁめげひごょゅ{DYNAMIC_COLOR1}ろやょ{LIGHT_BLUE}つふぁもんぎわ{LIGHT_RED}れみ{LIGHT_GREEN}とぇぅ{BLUE}"
-	.string "ぬはやをめ{DYNAMIC_COLOR1}にひよろるにちゅ{BLUE}とほ{BLUE}と{LIGHT_RED}ぅとぎぅぬゃぉつち{LIGHT_BLUE}まりじぇゅ{LIGHT_GRAY}"
-	.string "ほざろんた{WHITE}ぬ{LIGHT_GRAY}ずめぬねゃ{BLUE}るの{LIGHT_GRAY}やりじぉぁぅやのひねよ{LIGHT_GREEN}{DYNAMIC_COLOR4}"
-	.string "ゆをぜつぁなゆる{DYNAMIC_COLOR6}つ{LIGHT_GREEN}わつわ{DYNAMIC_COLOR2}よつは{SE_BOO}{DYNAMIC_COLOR2}"
-	.string "ぁにゅやまふめるぉらごぃぬち{GREEN}ゅずぅぁちげゆ{MUS_RG_ENCOUNTER_GYM_LEADER}のぉねゅれみむんぇひごまもぐるれんぅるれ{DYNAMIC_COLOR5}"
-	.string "を{SE_WARP_IN}まぎりひとごろん{RED}よょぃちごむをろぜひみてぅぉ{DYNAMIC_COLOR3}ぃめろろ{MUS_RG_CAUGHT}ほふつふ{DYNAMIC_COLOR6}"
-	.string "ざょぎたをねぁをゅごちがぅててじぁほわぉんがつざまぉぇれら{DYNAMIC_COLOR4}ごふゅれら{LIGHT_BLUE}じらつ{DYNAMIC_COLOR2}ね{DYNAMIC_COLOR3}"
-	.string "なへみ{WHITE}ふ{BLUE}ごふつがぉな{LIGHT_GRAY}われごぅ{DYNAMIC_COLOR6}{RED}ゅ{BLUE}ぬぉぎじれぁゅにたゅにもてわぁ{GREEN}"
-	.string "みらげ{SE_CLICK}ふれ{LIGHT_GRAY}ぐへり{LIGHT_GREEN}はみ{DYNAMIC_COLOR1}が{LIGHT_GREEN}"
-	.string "ゅをなぁわたわもぜるとれむょゃはわふじぉぎろめゅりまじ{DYNAMIC_COLOR6}ふほずひ{DYNAMIC_COLOR3}ずまろぅわぇぐち{LIGHT_RED}{LIGHT_BLUE}ち{RED}"
-	.string "ぎれ{SE_TRUCK_STOP}にて{DYNAMIC_COLOR2}ぅゃれてわめむぐぁながりほ{LIGHT_GREEN}ごをち{LIGHT_GRAY}りをぃほぅちちも{WHITE}"
-	.string "ほじぅゃ{MUS_RG_NET_CENTER}ゃむ{DYNAMIC_COLOR5}ゆじ{LIGHT_GREEN}ぬぉなたるぇぇねまぃをごぃらずにぅなつぃゆぬぉ{GREEN}{SE_TRUCK_DOOR}"
-	.string "るねざ{LIGHT_GRAY}つわ{DYNAMIC_COLOR3}ち{LIGHT_BLUE}ぃぃた{DYNAMIC_COLOR5}ちらにひ{DYNAMIC_COLOR3}"
-	.string "ごんろぉほてををちやるゃずろやほむらはを{RED}ぐにずぉよひんゆ{DYNAMIC_COLOR3}{GREEN}のゆのねへぉぉへりをふたれまゅほ{PH_FACE_SOLO}"
-	.string "たろげと{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}な{DYNAMIC_COLOR3}わたがげの{GREEN}てぬやたゆや{RED}{SE_N}"
-	.string "ゅゃ{SE_BALL_BOUNCE_3}がざ{LIGHT_GREEN}はろりょゃぐぁり{LIGHT_BLUE}まぎぅぃにゆぅねりぅね{DYNAMIC_COLOR3}め{GREEN}"
-	.string "ぐをじみやんらむずねねなざや{GREEN}ひよな{DYNAMIC_COLOR5}め{DYNAMIC_COLOR1}{DYNAMIC_COLOR4}"
-	.string "まねにゃたりむみちちょぇなごんやまをつょんみ{DYNAMIC_COLOR2}ぬぉよ{LIGHT_GRAY}ま{BLUE}のぅれねゆゅををぃぎねふゆとふめり{BLUE}"
-	.string "もむよほぃの{DYNAMIC_COLOR6}なたぁめ{MUS_RG_OBTAIN_KEY_ITEM}ゆざ{WHITE}へ{DYNAMIC_COLOR5}とね{DYNAMIC_COLOR4}"
-	.string "ねぬめ{DYNAMIC_COLOR2}ぅてゃむ{DYNAMIC_COLOR6}をょぐまゆねたまをみみの{DYNAMIC_COLOR2}ぅぉてとんちむを{DYNAMIC_COLOR1}"
-	.string "が{LIGHT_GREEN}なひぇ{RED}ぇ{GREEN}ねひてやつょめにへるふゅぬむょぬろゅぇのれ{DYNAMIC_COLOR6}ん{SE_FAINT}{PH_FACE_SOLO}"
-	.string "{DYNAMIC_COLOR5}りぅぇぇご{LIGHT_RED}みょよつゃ{GREEN}ゃほぅぇゅ{LIGHT_RED}ゃほてななとわるふねややつめるねゃょぃほ{WHITE}"
-	.string "も{DYNAMIC_COLOR3}ざや{DYNAMIC_COLOR1}じにらほも{MUS_RG_GAME_FREAK}つちのれへぅな{LIGHT_GRAY}ごれむのわ{DYNAMIC_COLOR1}"
-	.string "もちゆちはは{DYNAMIC_COLOR1}ゃご{DYNAMIC_COLOR2}ぉむ{DYNAMIC_COLOR2}が{WHITE}ぅりゅへらわぃぅんぐをぃ{LIGHT_RED}"
-	.string "わつれろぐめみなゃふふ{WHITE}なみにめて{RED}ねほてたゆぉなぐ{LIGHT_GRAY}ぅぜょねともたぁほままぬ{MUS_RG_TRAINER_TOWER}"
-	.string "にぅみねぃんねがご{DYNAMIC_COLOR5}ぃたぐやよぐほぃよんつ{WHITE}とがれんむ{GREEN}へれにぇ{LIGHT_BLUE}ぎふ{LIGHT_GREEN}"
-	.string "めぬごをな{LIGHT_GREEN}ほんひんへ{RED}{LIGHT_BLUE}ぃぃをがをゃやねやゆ{DYNAMIC_COLOR5}をよも{DYNAMIC_COLOR1}"
-	.string "につをちむりん{DYNAMIC_COLOR6}{WHITE}む{WHITE}ぅつぜひほむゆろよねてなをゃもむょ{DYNAMIC_COLOR5}んふとめふわ{DYNAMIC_COLOR2}"
-	.string "りはねむむ{LIGHT_GREEN}はやよるろ{DYNAMIC_COLOR1}ゃずらぉつゃひま{WHITE}れん{GREEN}もぁまとね{GREEN}よぅまろめよんほなにみめりながつゆ{RED}"
-	.string "わま{RED}ん{DYNAMIC_COLOR3}てね{LIGHT_GREEN}{DYNAMIC_COLOR2}ょへふれぃめふんつぁろむほにぎぃ{MUS_RG_SS_ANNE}に{LIGHT_RED}"
-	.string "とみぎざぉむひぁとれらぎとひろまろるろゆらょむちめひる{LIGHT_GRAY}ひねやりむをょざわやぉぬまれげむ{DYNAMIC_COLOR1}も{SE_SAVE}{DYNAMIC_COLOR2}"
-	.string "むちぎの{DYNAMIC_COLOR6}{DYNAMIC_COLOR5}ふま{DYNAMIC_COLOR6}がざたがぎぅゅ{LIGHT_GREEN}なりほんのよたぉじゅぁげ{RED}"
-	.string "ゃ{DYNAMIC_COLOR4}ねは{WHITE}をなじはぬぬぜぇ{DYNAMIC_COLOR2}むちほよろ{DYNAMIC_COLOR4}のやん{RED}ひひぉみなむへま{RED}"
-	.string "む{DYNAMIC_COLOR6}つまをれぇ{LIGHT_GRAY}がまゅ{LIGHT_GREEN}らやまぅぁぃな{SE_WIN_OPEN}や{DYNAMIC_COLOR2}"
-	.string "めは{DYNAMIC_COLOR3}ごるとはぬがみゆぜよがげずため{RED}ちりつふ{LIGHT_GRAY}んん{DYNAMIC_COLOR5}ぎり{WHITE}るめほぉの{GREEN}"
-	.string "むらぉの{MUS_RG_POKE_JUMP}{LIGHT_RED}ぬちちわまよほぐまりんぁつめゃてごよぁ{SE_TRUCK_DOOR}とたぅちへをれ{BLUE}{BLUE}がなねゃ{RED}"
-	.string "ろやぁほらめれや{LIGHT_GREEN}とゆ{WHITE}らのる{DYNAMIC_COLOR1}るじふぁ{DYNAMIC_COLOR4}まふやじぇょへやとむには{DYNAMIC_COLOR4}"
-	.string "るぜろれはずゅちりねぇ{LIGHT_RED}なむんゃをとれざ{BLUE}がぜゃほらやふににぉるごのょぁふ{LIGHT_GRAY}ゆわ{DYNAMIC_COLOR2}"
-	.string "にょふへひわらひ{DYNAMIC_COLOR2}まろ{BLUE}たらぜゆぁぉてま{RED}ぅが{DYNAMIC_COLOR5}ぁつ{BLUE}もみげはほぁ{DYNAMIC_COLOR2}"
-	.string "まほみのもごと{SE_FU_ZAKU}らと{RED}ゆょはろらむなりてわ{DYNAMIC_COLOR5}ざゅ{DYNAMIC_COLOR3}をろがになるなへぬゃょ{LIGHT_BLUE}"
-	.string "{DYNAMIC_COLOR1}ぅがめりぬろゅとろつ{BLUE}てまぅてり{GREEN}{LIGHT_GREEN}ゅもげる{DYNAMIC_COLOR6}やん{LIGHT_GREEN}"
-	.string "ゅよ{DYNAMIC_COLOR5}つなもぉわ{DYNAMIC_COLOR5}むよふつゆもへぁ{RED}ゅぉに{WHITE}やじわんゅ{DYNAMIC_COLOR1}"
-	.string "ゆちてゆひひななぐた{DYNAMIC_COLOR2}ゅやげらぃんぁなたまゅひりゅよぃがゃがろ{DYNAMIC_COLOR6}ぃるんぜろぎゃろろぁゆ{DYNAMIC_COLOR4}"
-	.string "りれぉねたむつちまめゃちゆもむぜちよらゆりょつなよぇちねやぇゆがらげぉゅ{LIGHT_GREEN}ふは{DYNAMIC_COLOR5}れほぁ{SE_SUCCESS}"
-	.string "んむひざとぁげぁずぎなはてぁる{DYNAMIC_COLOR4}ぁがぬねぃふゅなゃとりちわわゆれみぜり{DYNAMIC_COLOR3}ゃひぃんゆがふやまゆよ{DYNAMIC_COLOR3}"
-	.string "のゃねたゅ{DYNAMIC_COLOR1}てちゆてみてのちみりへずぃひもやむ{DYNAMIC_COLOR4}ももへりんをつま{DYNAMIC_COLOR5}んろ{DYNAMIC_COLOR2}"
-	.string "ぅぇやざわてざつりにれ{LIGHT_RED}{DYNAMIC_COLOR3}ぇぐ{DYNAMIC_COLOR2}ぇむ{RED}とたぅぇつまもぐんんめじら{DYNAMIC_COLOR3}"
-	.string "ほね{SE_FU_ZAKU}ぬ{GREEN}ぅとてむはとみゅ{DYNAMIC_COLOR1}ごゆぉ{BLUE}り{PH_FLEECE_SOLO}ぉ{SE_SWITCH}"
-	.string "てめむりぃとんとぇょぐもほふちぃがにぃなぅまゃりわゅ{LIGHT_RED}るがぉれふぬんた{GREEN}にぇま{SE_REPEL}るほ{SE_RG_DEOXYS_MOVE}"
-	.string "にごもほひゃれぃちろ{SE_PC_OFF}まへがはげねゆふにわ{RED}ぜぉよもをなわ{MUS_RG_VS_DEOXYS}ゅら{LIGHT_GREEN}ゅぉは{DYNAMIC_COLOR3}"
-	.string "たりよわぁょにが{DYNAMIC_COLOR2}らひじねらまみろれぉ{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}"
-	.string "みゅざぁぉむなをよゃまはむぁわれはぇはごぜむてぜて{DYNAMIC_COLOR6}やめとひたむ{GREEN}りゆゃたん{DYNAMIC_COLOR5}とざずゆに{GREEN}"
-	.string "ぃ{DYNAMIC_COLOR2}{RED}ま{PH_KIT_BLEND}や{DYNAMIC_COLOR3}ぬゆろざをなょぉねもれへたれゅぬ{SE_ICE_STAIRS}"
-	.string "がや{DYNAMIC_COLOR1}ごなへ{DYNAMIC_COLOR2}まざぅゆへ{DYNAMIC_COLOR6}へみてゃちろんも{DYNAMIC_COLOR3}ん{MUS_RG_SEVII_45}"
-	.string "とぅにの{DYNAMIC_COLOR5}もゅはたにと{RED}のをらが{PH_FACE_HELD}{PH_TRAP_SOLO}{RED}に{DYNAMIC_COLOR4}めゆ{SE_FU_ZAKU}"
-	.string "にれぜよみ{DYNAMIC_COLOR3}つぁんゅひ{DYNAMIC_COLOR4}めほ{WHITE}ゃ{LIGHT_RED}めむゃれぇ{DYNAMIC_COLOR2}{LIGHT_BLUE}"
-	.string "へぜぇぁじねを{DYNAMIC_COLOR2}ぎょぐぬりゃ{RED}やょ{DYNAMIC_COLOR5}れぎ{WHITE}とざやめむ{LIGHT_GRAY}ねぇぁつるやぅ{DYNAMIC_COLOR1}"
-	.string "ごつはふみぃぅひはむた{LIGHT_RED}るたよをてに{DYNAMIC_COLOR3}へろ{GREEN}ひ{GREEN}つとぎ{DYNAMIC_COLOR6}ゅもげ{SE_UNLOCK}"
-	.string "のぉるとをれむるとぅとは{GREEN}ほねひりごにるなほつゃ{DYNAMIC_COLOR1}とひ{LIGHT_RED}ら{SE_PIKE_CURTAIN_CLOSE}"
-	.string "よれめゅむみねみがぬとまちへちゆやろぁ{LIGHT_GREEN}ぜまわゆゆれるねちやりぅわれぐ{DYNAMIC_COLOR2}よりたよめ{GREEN}に{LIGHT_BLUE}"
-	.string "わてゃのなげつむへぎもつゆやむぃつがはつやごゆぇなも{DYNAMIC_COLOR4}はたにんよへとにずんま{DYNAMIC_COLOR1}にたへぃろ{RED}げの{BLUE}"
-	.string "をんりほぉ{DYNAMIC_COLOR1}つん{DYNAMIC_COLOR4}{LIGHT_GRAY}ぁよげほゅごれ{LIGHT_GRAY}はねぜ{DYNAMIC_COLOR2}ら{RED}"
-	.string "{LIGHT_RED}ゃょ{DYNAMIC_COLOR2}らごぬち{DYNAMIC_COLOR4}らよわまみよたみゆもをが{LIGHT_BLUE}"
-	.string "てとぬをんじもへはまむぉんりぬてよざょとはぉぇみろのずみ{MUS_RG_VICTORY_GYM_LEADER}をざざれぃぃりゆぜほ{LIGHT_GRAY}"
-	.string "ぬほゅちふひとれりげも{DYNAMIC_COLOR5}まつょむみ{LIGHT_GREEN}ごたものゃ{DYNAMIC_COLOR4}んねぜみゆずごな{DYNAMIC_COLOR2}"
-	.string "んつが{DYNAMIC_COLOR2}もじぇまに{LIGHT_GRAY}らと{DYNAMIC_COLOR3}むね{LIGHT_GRAY}ぃずむて{SE_BALL_OPEN}"
-	.string "ぇぜもに{DYNAMIC_COLOR5}ぅへねふへぃ{DYNAMIC_COLOR5}ほむみもぜ{DYNAMIC_COLOR3}ほとぉめめむなょ{LIGHT_RED}"
-	.string "ほへぅとみちが{DYNAMIC_COLOR4}ぉのゆ{LIGHT_RED}ょほぅみゅげぁぇぁぃともをゅほる{LIGHT_RED}{LIGHT_RED}ひ{LIGHT_BLUE}"
-	.string "まよぁ{DYNAMIC_COLOR2}ななちてるひねふてゅゃぅもらぜぁ{LIGHT_BLUE}ぃのもつ{PH_FACE_SOLO}れむ{LIGHT_BLUE}"
-	.string "ざへ{MUS_RG_VICTORY_GYM_LEADER}ため{LIGHT_RED}ぬめ{BLUE}ひ{DYNAMIC_COLOR1}{DYNAMIC_COLOR6}"
-	.string "{MUS_RG_GAME_FREAK}ちて{WHITE}むめにぐぉやぎゃ{DYNAMIC_COLOR6}ほろろななみめんげぜぅはらろるゃとにぐぁてずにょむ{SE_ROTATING_GATE}"
-	.string "やろやむぃなぅてたがや{BLUE}{LIGHT_GREEN}もむ{LIGHT_BLUE}ゆ{LIGHT_RED}ざぇの{LIGHT_GRAY}ゆ{DYNAMIC_COLOR6}"
-	.string "るろに{LIGHT_GREEN}てずじゆょ{DYNAMIC_COLOR2}りんろに{DYNAMIC_COLOR3}ぅちぃてをよずがるぁんなじぬふんむぉぁた{DYNAMIC_COLOR4}"
-	.string "{LIGHT_RED}へふはつ{DYNAMIC_COLOR5}ねがひちと{GREEN}とむぅ{DYNAMIC_COLOR5}らは{LIGHT_GRAY}{SE_FAINT}"
-	.string "ゃぅぜ{DYNAMIC_COLOR2}へ{DYNAMIC_COLOR6}つまはなた{SE_BALL_OPEN}やず{DYNAMIC_COLOR1}れぃろやよぅたをぁぁぜ{DYNAMIC_COLOR3}"
-	.string "てつ{DYNAMIC_COLOR2}にな{LIGHT_GREEN}まりたぇ{DYNAMIC_COLOR6}ぬな{DYNAMIC_COLOR2}らぉゃへたふげつわらが{DYNAMIC_COLOR1}"
-	.string "はぇ{LIGHT_RED}まむや{DYNAMIC_COLOR4}まふぬやぁごぇごゆた{LIGHT_GRAY}ぁむ{DYNAMIC_COLOR3}たも{DYNAMIC_COLOR5}"
-	.string "げわぉ{LIGHT_GRAY}わつ{GREEN}ふれがぃぜ{WHITE}ほゅにがわぇゅ{LIGHT_RED}ちめる{LIGHT_BLUE}みろ{DYNAMIC_COLOR4}"
-	.string "まね{DYNAMIC_COLOR4}みもぐに{DYNAMIC_COLOR6}げねむゅろょよろも{LIGHT_RED}ぁひ{BLUE}ぬず{LIGHT_BLUE}"
-	.string "にをげがなゅゅる{DYNAMIC_COLOR1}{MUS_RG_OBTAIN_KEY_ITEM}ぐまとゃぉぬへねにへは{WHITE}ぐめほらょぇとよ{DYNAMIC_COLOR1}"
-	.string "ぐょま{DYNAMIC_COLOR4}ほ{DYNAMIC_COLOR2}{DYNAMIC_COLOR1}のゅへゃ{LIGHT_GRAY}つに{DYNAMIC_COLOR3}"
-	.string "てん{DYNAMIC_COLOR3}ゃほたとほもぇ{MUS_RG_VS_DEOXYS}たるゅねぉぉへはざなもずぜめ{MUS_RG_ENCOUNTER_GYM_LEADER}"
-	.string "わり{DYNAMIC_COLOR1}ぁは{GREEN}ゅざぬろ{LIGHT_GRAY}つぬぁ{DYNAMIC_COLOR1}よつぎちょひも{WHITE}ぐゅののぬ{LIGHT_BLUE}"
-	.string "りめほらわゅぉわらゆぅ{GREEN}ぅをはぐりを{RED}ほやずふざぃひぜずがめょ{SE_FLEE}{WHITE}ふつはたつほわまつれぁ{GREEN}のゅはねご{LIGHT_BLUE}"
-	.string "ょゃへ{MUS_RG_CAUGHT_INTRO}{LIGHT_GREEN}たみぁへ{DYNAMIC_COLOR2}{LIGHT_GRAY}ぉふにぅ{LIGHT_RED}てひる{GREEN}"
-	.string "てぃをょれをわのゃふ{DYNAMIC_COLOR6}なつょなわげ{GREEN}ふつへよ{LIGHT_GRAY}ぎへ{SE_RG_HELP_OPEN}をぬんたとぬふゃ{DYNAMIC_COLOR6}"
-	.string "り{LIGHT_BLUE}がひりへよるをょほぬりな{DYNAMIC_COLOR6}ふみをたらにんと{LIGHT_BLUE}つごじむゆは{SE_UNLOCK}めょ{DYNAMIC_COLOR4}"
-	.string "ぃたぬの{SE_U}ごむれりゃを{DYNAMIC_COLOR6}に{DYNAMIC_COLOR1}ぃり{SE_WIN_OPEN}ゆぅんれとぉりょたん{LIGHT_RED}"
-	.string "んののはなわとぬが{DYNAMIC_COLOR6}てぇぬひぐねぇんぇほやへぅつへろと{DYNAMIC_COLOR3}らょんぇ{GREEN}{DYNAMIC_COLOR1}はりりみげげぬ{BLUE}"
-	.string "らょねはたほよひまぉまむぬぁ{WHITE}{BLUE}みゅ{LIGHT_GRAY}の{PH_FLEECE_BLEND}{MUS_RG_TEACHY_TV_SHOW}をも{DYNAMIC_COLOR5}"
-	.string "ぬぇぅるちめぬめげわもゃみ{SE_CONTEST_PLACE}げめゆぉむぉ{RED}ら{RED}ねぇわ{DYNAMIC_COLOR3}ぁりとわぜぃろぃむへ{WHITE}ゆぇ{LIGHT_RED}"
-	.string "もゃやたぃじとひぜぎぁめひぇゆ{LIGHT_GREEN}が{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}へ{LIGHT_GRAY}ほは{DYNAMIC_COLOR6}"
-	.string "ざつちね{SE_O}ゅぁぇねともぃひちじつはにゅり{LIGHT_RED}やぬじがん{LIGHT_BLUE}んねへぬみまねもわぁみぜにぜるんもごるねぐてほぇゅとへれゅ{WHITE}"
-	.string "へずごほめほにねめつずるぉぁとのご{LIGHT_GREEN}な{GREEN}じるゅがもゃへをねつひ{DYNAMIC_COLOR2}てやてぎふま{DYNAMIC_COLOR2}ひてむふ{GREEN}"
-	.string "ぐぇがじよるよなざぉ{SE_LAVARIDGE_FALL_WARP}{WHITE}んなねぅ{DYNAMIC_COLOR4}わてらごみを{WHITE}よもなぃ{SE_CLICK}"
-	.string "ぬがぜぉゆやぅ{GREEN}ごが{LIGHT_GRAY}ねはわゃとへょねげ{RED}もつよなろのはるわょ{WHITE}のへぁ{GREEN}ろ{DYNAMIC_COLOR3}"
-	.string "つよょぇへ{DYNAMIC_COLOR4}つり{LIGHT_GRAY}りてる{GREEN}ぬ{LIGHT_GRAY}ぎむぃわた{SE_BIKE_HOP}"
-	.string "りやごふみず{MUS_RG_CAUGHT_INTRO}{DYNAMIC_COLOR3}のるわはぐぃめれまめとゃわとゆひ{GREEN}ごな{GREEN}ふてな{LIGHT_GRAY}"
-	.string "ねほれひぬゆぁふる{MUS_RG_TEACHY_TV_MENU}ぇほへりゅょ{LIGHT_GRAY}ゃにじれつ{DYNAMIC_COLOR4}てへをむぇぬんはなよめぁなざ{DYNAMIC_COLOR5}"
-	.string "みぁらて{RED}{LIGHT_BLUE}ぇほ{WHITE}ゃ{GREEN}にほんひふりてれぃゃつつぇねへへゅ{LIGHT_GREEN}ふにをじゅふひやむをほた{LIGHT_BLUE}"
-	.string "とじちつ{MUS_RG_SEVII_67}よ{MUS_RG_SEVII_123}のの{LIGHT_RED}と{DYNAMIC_COLOR2}むは{MUS_RG_CELADON}"
-	.string "わねりをほたつんねん{MUS_RG_SEVII_CAVE}わとぬやぐ{BLUE}ぇにとめにりむちたわもょろぐむよ{DYNAMIC_COLOR5}{GREEN}をざずよれひ{SE_SUCCESS}"
-	.string "ざぉゅぜ{SE_BANG}{DYNAMIC_COLOR2}たゃざぬを{LIGHT_GREEN}まやぐら{SE_BOO}へぉろほ{DYNAMIC_COLOR6}{BLUE}ぅげ{LIGHT_BLUE}"
-	.string "て{DYNAMIC_COLOR3}むふれぬゃるらたがひねな{BLUE}ぁまにつまりゃふみめつ{WHITE}つむぅためよほ{WHITE}"
-	.string "じちほらゆじぃやへちめょぃにまずれざらひまるたほ{LIGHT_RED}れ{DYNAMIC_COLOR1}たと{SE_SUCCESS}ん{DYNAMIC_COLOR2}ごね{DYNAMIC_COLOR1}"
-	.string "ぐぃが{DYNAMIC_COLOR2}まへ{DYNAMIC_COLOR1}るずふぉてんりらひほ{MUS_RG_MYSTERY_GIFT}ふ{WHITE}ゆとげたふつ{LIGHT_RED}"
-	.string "れぃみよぁんん{LIGHT_GRAY}{LIGHT_GREEN}やょ{RED}ろちゆをり{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR6}"
-	.string "へなふりぃまもよょつがげぅたわわぁは{DYNAMIC_COLOR4}なぜざぇゅふにぉにりへぜむわずろやもぁぇなれひたゅねがたごほちろにやへによざをちなりりらららごげには{DYNAMIC_COLOR3}"
-	.string "はな{BLUE}ゆ{DYNAMIC_COLOR2}ためはずぬりまほ{WHITE}ほほふぁたゆ{DYNAMIC_COLOR2}ゃず{DYNAMIC_COLOR3}はひたれ{DYNAMIC_COLOR6}"
-	.string "とぬ{DYNAMIC_COLOR6}ぜぬ{LIGHT_GRAY}な{MUS_RG_SEVII_CAVE}ょぬなへね{BLUE}ょたと{DYNAMIC_COLOR4}ろ{DYNAMIC_COLOR1}"
-	.string "{LIGHT_RED}へよつほずねのょねがぬぐん{DYNAMIC_COLOR4}{RED}のにめなずよ{SE_SUCCESS}{GREEN}ぬぉめへろぐろずぅふめぜてぃふぅ{LIGHT_GREEN}"
-	.string "ろとぇゅ{MUS_RG_BERRY_PICK}{LIGHT_GREEN}み{DYNAMIC_COLOR6}ごちみ{LIGHT_GREEN}つれぃへりぎょみ{WHITE}"
-	.string "ぬなみむげひほぎつや{LIGHT_GRAY}ずまるへてみらのつゆみぇぉろぜ{LIGHT_RED}ぅゅざを{MUS_RG_SLOW_PALLET}んたれにぬ{BLUE}ぅぬんろぃほなぅなよ{BLUE}"
-	.string "たぉな{WHITE}らつ{LIGHT_GREEN}ぁるらゃぜ{BLUE}ぅふみはぉ{DYNAMIC_COLOR3}てねぅやがをんむねやげらぅゅずぃげとぉ{DYNAMIC_COLOR6}"
-	.string "はをぃんちはぅへぬざねぉぅもへぐをたへぁやなふゆ{WHITE}ろめにんひゆゅがたよぐ{WHITE}ょぬろと{LIGHT_BLUE}にぬみりもよげよられや{PH_CLOTH_HELD}"
-	.string "わるぃゅょ{WHITE}まりごへもほをちほわぁぇのぜよぅぎほぬ{LIGHT_RED}ね{SE_WARP_OUT}んつゃぜゃにたるみじょぁにゆつぬたむがゅゆがを{WHITE}{BLUE}"
-	.string "ら{LIGHT_GRAY}まる{DYNAMIC_COLOR4}れにげぜぉろのへれまるりわたりぃたぐと{SE_U}ねむり{DYNAMIC_COLOR3}がちたちざぉぇぉょは{SE_CARD}"
-	.string "ふぅひへぎへたざぐらげぜとのつと{DYNAMIC_COLOR4}ま{SE_CONTEST_PLACE}ゆねりふぇら{LIGHT_GRAY}はよをれるりら{DYNAMIC_COLOR1}"
-	.string "れね{DYNAMIC_COLOR1}はぃみはん{GREEN}{DYNAMIC_COLOR2}へ{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
-	.string "ふゅりふじにもむふぅとふんめぇゅ{LIGHT_BLUE}るぃみはたぅぜわ{DYNAMIC_COLOR1}じが{DYNAMIC_COLOR2}んをまめぅ{GREEN}{LIGHT_GREEN}"
-	.string "るめぬをぃちね{DYNAMIC_COLOR3}のな{LIGHT_GREEN}{DYNAMIC_COLOR1}ゃねるらぉ{DYNAMIC_COLOR3}ぃ{LIGHT_GRAY}"
-	.string "はが{SE_RG_POKE_JUMP_FAILURE}を{DYNAMIC_COLOR6}ごろちまがろむょぜもぬぬ{LIGHT_GREEN}ろろ{DYNAMIC_COLOR5}"
-	.string "ぃちぐへる{LIGHT_GRAY}ぉぃ{LIGHT_GRAY}ぁざみよ{LIGHT_GRAY}めとげりゅ{WHITE}りろずなねぃ{LIGHT_GREEN}ぬごわぃな{LIGHT_GREEN}"
-	.string "わぬらへぜほぉ{DYNAMIC_COLOR4}ぬたな{DYNAMIC_COLOR5}ぃ{LIGHT_BLUE}{LIGHT_RED}ぃをみなざじぃ{DYNAMIC_COLOR3}"
-	.string "ぬふは{DYNAMIC_COLOR4}ゆろろ{MUS_RG_ENCOUNTER_GYM_LEADER}にをぬぅ{SE_BALL}{BLUE}"
-	.string "てがゅむほふまろぇふたれにげぉぅぬろれ{DYNAMIC_COLOR3}じちり{DYNAMIC_COLOR1}ぃも{DYNAMIC_COLOR1}よ{DYNAMIC_COLOR1}"
-	.string "とや{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}ぃひほ{MUS_RG_VS_LEGEND}ゅり{PH_FLEECE_BLEND}{SE_BANG}{DYNAMIC_COLOR6}"
-	.string "ゅふざんりぎのひちつ{LIGHT_BLUE}にたん{DYNAMIC_COLOR4}みじ{RED}ぇにわ{MUS_RG_SEVII_67}じね{DYNAMIC_COLOR2}"
-	.string "てふめれふみらめ{LIGHT_RED}よめつへわ{BLUE}{LIGHT_RED}んぜふぬや{DYNAMIC_COLOR4}ぉょ{BLUE}やためるふ{DYNAMIC_COLOR1}"
-	.string "ちゆ{DYNAMIC_COLOR6}たやぎぁゆぇほ{GREEN}れるずげりゃぬぉねぉぬ{LIGHT_GREEN}とまちぬみて{DYNAMIC_COLOR5}"
-	.string "とごふつれてがれゅぇ{PH_TRAP_HELD}{SE_FU_ZAKU}{LIGHT_GREEN}ま{DYNAMIC_COLOR3}{RED}わががぃゆつゆつめむめゅぉ{LIGHT_GREEN}"
-	.string "みをら{DYNAMIC_COLOR5}ぃゃのは{DYNAMIC_COLOR1}ざゆ{LIGHT_GREEN}へろぅげつはじがになにぐてなを{LIGHT_GRAY}ん{GREEN}ぐわ{SE_BOO}"
-	.string "てゅれゅや{WHITE}ねやがりゆひゃゆのぬらぁひら{DYNAMIC_COLOR4}たょざぃざぉもずらほゆをるまつむがぇまちむゅぃ{DYNAMIC_COLOR3}"
-	.string "のゆじよ{MUS_RG_NEW_GAME_INSTRUCT}へとんちぎてぃ{DYNAMIC_COLOR1}ろみほたながぃんほ{RED}わとゃの{BLUE}とね{DYNAMIC_COLOR5}"
-	.string "ふぃはんひまぐぅ{DYNAMIC_COLOR3}ふりずぉも{DYNAMIC_COLOR6}てにゆぐぁとひはりずむをのち{DYNAMIC_COLOR3}ゃぇぐぅのは{BLUE}ゃ{LIGHT_BLUE}"
-	.string "ぁちぃ{RED}{MUS_RG_NET_CENTER}ごひぉむぉ{PH_DRESS_BLEND}はぅぎぇまへにぬたひぇみ{SE_BALL}ぉつむ{DYNAMIC_COLOR6}"
-	.string "らとのらやわがゆ{LIGHT_RED}ぁじゆちつぃはに{LIGHT_GRAY}はと{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}もめ{WHITE}ざたぜをもぅぜも{SE_BALL}"
-	.string "ぉぜ{DYNAMIC_COLOR6}ぁよ{LIGHT_GREEN}なむろれぎぐほ{LIGHT_BLUE}ゆろごぃゆつをてぇのりやふをゅぇよ{DYNAMIC_COLOR4}もほへ{LIGHT_GREEN}"
-	.string "む{DYNAMIC_COLOR2}ゃぬをぇぇげざゅはたぉは{LIGHT_GREEN}めごひれぉまよ{DYNAMIC_COLOR5}ゅはご{DYNAMIC_COLOR1}ふち{LIGHT_GREEN}"
-	.string "ち{DYNAMIC_COLOR4}ざをほがるち{LIGHT_RED}つなぁふやぅにろむひもた{PH_TRAP_SOLO}とるよみにたぬた{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}"
-	.string "ぉ{WHITE}んとむ{DYNAMIC_COLOR5}がはへぁほぃや{RED}とを{SE_FLEE}ぃ{BLUE}れへへめむやわがやちつ{RED}んりへねもざににたぬぅみむつぉずゃ{GREEN}"
-	.string "ててぬぎろと{DYNAMIC_COLOR4}なやごろゃごほね{LIGHT_GREEN}ゃがへま{DYNAMIC_COLOR2}るみつほへはややじりや{DYNAMIC_COLOR2}"
-	.string "つぉひげめとてれぅぎながろんのほわぜひれぉまぉぜなる{WHITE}ほねまめのぉざゃほつめ{DYNAMIC_COLOR4}がわ{DYNAMIC_COLOR6}{BLUE}ぅん{LIGHT_BLUE}"
-	.string "ょ{WHITE}{LIGHT_RED}ほふ{RED}ほ{SE_PIKE_CURTAIN_OPEN}ふるりぁぐをと{LIGHT_BLUE}めょ{RED}ががをぁゅやもひ{BLUE}"
-	.string "みぇみま{PH_FACE_SOLO}ぅのねてょ{GREEN}ろほ{DYNAMIC_COLOR5}ひたぁ{DYNAMIC_COLOR5}ふちぎて{WHITE}"
-	.string "がのとちよぅじぉへひゃゆぅぁち{DYNAMIC_COLOR1}ぁぐぬひ{LIGHT_RED}{DYNAMIC_COLOR5}てるゆめな{DYNAMIC_COLOR4}"
-	.string "みろらむずやられろにやじななぃぅ{DYNAMIC_COLOR6}ぉや{GREEN}にて{GREEN}ぅたんぜた{LIGHT_RED}{DYNAMIC_COLOR4}"
-	.string "ぁざまのつてや{DYNAMIC_COLOR6}ぉょなごぉ{LIGHT_GRAY}{DYNAMIC_COLOR6}れござわょ{LIGHT_BLUE}るちごらりろぅは{DYNAMIC_COLOR5}"
-	.string "ぁぐわぅ{DYNAMIC_COLOR5}ざゅわやぉじちろ{LIGHT_GREEN}ざがとねてへぜんぃつゆよへち{LIGHT_GREEN}ちほゃ{WHITE}ち{DYNAMIC_COLOR2}"
-	.string "ぐむ{MUS_RG_VS_LEGEND}るなたはぃまゅざろれぃごょみはもぇやろなみふゆじょをとぅねもぬね{LIGHT_RED}てゃぃが{DYNAMIC_COLOR5}ぐもへまぬ{WHITE}"
-	.string "なぁ{DYNAMIC_COLOR2}ずひ{DYNAMIC_COLOR4}のんぅぎふなゃなてのるのとらなねもる{DYNAMIC_COLOR3}らを{DYNAMIC_COLOR5}"
-	.string "ぬゃねたごほるゃわめぅ{BLUE}てへねはふ{DYNAMIC_COLOR2}れのほはもらぬご{DYNAMIC_COLOR5}がのろにぁ{BLUE}む{PH_CLOTH_SOLO}"
-	.string "み{DYNAMIC_COLOR2}ぇぃに{LIGHT_RED}ぃて{LIGHT_RED}は{LIGHT_GREEN}ぐの{DYNAMIC_COLOR3}ごれな{LIGHT_RED}"
-	.string "ぃぃ{LIGHT_RED}の{SE_SHIP}つらにれ{DYNAMIC_COLOR6}りら{DYNAMIC_COLOR3}もぁぐりれやゆまねるとに{LIGHT_RED}"
-	.string "はゅぁよ{DYNAMIC_COLOR1}げるゃわょんげなは{DYNAMIC_COLOR1}をにとんゅりれゅ{DYNAMIC_COLOR6}ちちぇのみはりぬはりにぉゆてわる{LIGHT_BLUE}"
-	.string "にぉへらよな{DYNAMIC_COLOR3}ぁめふのるぉたをちひにのん{DYNAMIC_COLOR4}{DYNAMIC_COLOR3}りがげゃれへがぃ{DYNAMIC_COLOR1}"
-	.string "ょやぐひぐ{DYNAMIC_COLOR1}ぇち{LIGHT_GRAY}をぇへぃぎほらんぬねにぬれょごぅぬ{RED}のげゆ{SE_WARP_IN}ょらゆつぉ{GREEN}{DYNAMIC_COLOR1}"
-	.string "とち{LIGHT_RED}ぁ{LIGHT_GRAY}ゅぁ{DYNAMIC_COLOR2}ゃ{SE_ICE_BREAK}ぅてら{DYNAMIC_COLOR6}ふへ{GREEN}"
-	.string "をふぃらぁれらにみぅぉろろ{LIGHT_RED}ぃょるもゅたにぁをみるがてやを{DYNAMIC_COLOR5}ゆ{BLUE}{DYNAMIC_COLOR1}ね{DYNAMIC_COLOR6}"
-	.string "{LIGHT_GRAY}ひぅ{DYNAMIC_COLOR3}がほゃぅひ{DYNAMIC_COLOR5}ゆは{LIGHT_GREEN}ゃ{DYNAMIC_COLOR4}ざ{SE_TRUCK_UNLOAD}"
-	.string "げょ{RED}らつもねや{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}ねぅぇ{SE_SAVE}{DYNAMIC_COLOR4}むぇたつよ{DYNAMIC_COLOR4}"
-	.string "のるやろじむまほひり{DYNAMIC_COLOR4}つりゅほも{DYNAMIC_COLOR1}んめららゅ{WHITE}{DYNAMIC_COLOR5}みぅぐるごやょとたぉねわよ{RED}"
-	.string "をなはちが{DYNAMIC_COLOR6}{DYNAMIC_COLOR2}と{DYNAMIC_COLOR5}わわむぬわにむゅずたた{DYNAMIC_COLOR1}{LIGHT_RED}"
-	.string "ほご{LIGHT_BLUE}てよねほも{DYNAMIC_COLOR3}はぉがま{LIGHT_BLUE}つゅじ{DYNAMIC_COLOR4}なょ{GREEN}やぉぃるご{DYNAMIC_COLOR6}"
-	.string "りゃれ{MUS_RG_TRAINER_TOWER}つゅ{LIGHT_BLUE}めぅごぅふぉめらじゃなとめりりたほむぅたをにむほ{LIGHT_RED}ぉ{DYNAMIC_COLOR6}"
-	.string "ぃぅ{DYNAMIC_COLOR5}はゅぎんりよがほろてぉまほが{DYNAMIC_COLOR1}りやぇふはまぜのぐぐるわひとなれぬぇ{DYNAMIC_COLOR6}"
-	.string "むぃむねもれらじ{LIGHT_GREEN}た{DYNAMIC_COLOR2}ぜぁ{PH_TRAP_SOLO}ん{BLUE}ぐぁぜみねをゃちんゃたよつもゆ{DYNAMIC_COLOR1}"
-	.string "がゃ{LIGHT_BLUE}ゆ{DYNAMIC_COLOR1}ずにはぬちぎふみちむよ{LIGHT_RED}{DYNAMIC_COLOR6}ねよろぇ{DYNAMIC_COLOR1}"
-	.string "{DYNAMIC_COLOR3}に{LIGHT_GRAY}るへるごもにひる{LIGHT_GREEN}{LIGHT_BLUE}ぬぬわふゅぉぃぬつほじはろむへた{DYNAMIC_COLOR1}{BLUE}"
-	.string "ぬとざょりょょごみひてめへてげ{MUS_RG_GAME_FREAK}もわずのとぐざはた{BLUE}ほ{DYNAMIC_COLOR1}てるぜぎわ{LIGHT_GREEN}"
-	.string "もまのれやとざま{DYNAMIC_COLOR4}{RED}がはぁりれへほちがるりらつ{SE_EFFECTIVE}よ{DYNAMIC_COLOR1}ざよまふぉ{RED}"
-	.string "げわやじろよぅぁてふむずつもょ{DYNAMIC_COLOR1}はをほの{LIGHT_RED}まひほ{DYNAMIC_COLOR1}まみ{BLUE}やわ{DYNAMIC_COLOR3}"
-	.string "ぉへまち{DYNAMIC_COLOR5}つたらつのれてぅふ{RED}ぃはぎまわゅゆ{LIGHT_GREEN}{DYNAMIC_COLOR2}ぉ{MUS_RG_SLOW_PALLET}"
-	.string "はれゅゅにぁとちぅぉわぅほざげらざろつらへつょわろゆごゅつじらてものぉわよ{LIGHT_BLUE}ざつなはもむ{LIGHT_GREEN}はめゆみのひわげのゅ{LIGHT_RED}"
-	.string "よへもめゆ{DYNAMIC_COLOR5}ほちてぃつわめゆ{DYNAMIC_COLOR1}へねもず{MUS_RG_MYSTERY_GIFT}りゆむ{DYNAMIC_COLOR5}"
-	.string "みむめがねぉらももぅやははずゆやや{WHITE}ねゃため{SE_WALL_HIT}が{GREEN}みみ{PH_DRESS_SOLO}ろ{LIGHT_GREEN}わわ{LIGHT_BLUE}"
-	.string "ぁれ{WHITE}ぇ{SE_UNLOCK}ゅてろざまょがほみゅへ{DYNAMIC_COLOR3}{LIGHT_GREEN}ぉに{BLUE}つぜょち{DYNAMIC_COLOR2}"
-	.string "まをむみぉぬはんに{WHITE}ぁぁふゃるぅんごぎぅ{DYNAMIC_COLOR4}につ{LIGHT_GREEN}るやぉざゃずほね{PH_TRAP_HELD}ゃれゃひんもね{SE_TRUCK_DOOR}"
-	.string "まみ{DYNAMIC_COLOR5}りなぉがらゅもがずちぇんょ{PH_DRESS_SOLO}{SE_FALL}ょへてるに{BLUE}ろが{MUS_RG_FUCHSIA}"
-	.string "らぇをゃぃょるんたつざんれ{RED}ぉぃぜ{WHITE}めがとへ{SE_LAVARIDGE_FALL_WARP}ぁ{DYNAMIC_COLOR3}ぐよら{RED}むの{BLUE}へ{WHITE}"
-	.string "{RED}ほらひろぅぬま{SE_POKENAV_CALL}をんごまゃやぅぇろや{DYNAMIC_COLOR5}{LIGHT_GREEN}ほ{DYNAMIC_COLOR6}"
-	.string "ぉたにむぇ{PH_DRESS_HELD}はぉじめ{DYNAMIC_COLOR3}ゆはるるりげぇよ{DYNAMIC_COLOR2}てめま{DYNAMIC_COLOR6}ふ{RED}"
-	.string "わみぐはひはれまやてはぅごぉぐもりぅ{LIGHT_GREEN}ぅまたみるぬぇよご{MUS_RG_SLOW_PALLET}ざふ{SE_SUPER_EFFECTIVE}みとずが{WHITE}"
-	.string "{DYNAMIC_COLOR6}を{GREEN}つらぃて{SE_A}ぉれ{DYNAMIC_COLOR3}{LIGHT_GREEN}らちげふな{DYNAMIC_COLOR1}"
-	.string "てま{DYNAMIC_COLOR4}れが{LIGHT_GREEN}れゃゅゃりにら{MUS_RG_POKE_TOWER}ょ{LIGHT_BLUE}もぃ{MUS_RG_PHOTO}"
-	.string "りぐぇゃやゅつつめよ{LIGHT_BLUE}{LIGHT_GREEN}ぉ{DYNAMIC_COLOR6}ず{SE_N}ざぉたがとげ{LIGHT_GRAY}"
-	.string "ゆをほやょょよまざはがぉゆもてまぉ{DYNAMIC_COLOR4}てゆぃほぬ{LIGHT_GRAY}ねねねとぃ{LIGHT_GREEN}めずぉむとがに{SE_BOO}"
-	.string "つわつぁゆぜほやのにに{DYNAMIC_COLOR6}ゅをたちやれりのゆん{DYNAMIC_COLOR3}にまぎむょじはぁごぇつょてる{DYNAMIC_COLOR5}ぃぅの{LIGHT_GREEN}"
-	.string "ぁゆもりみ{BLUE}る{SE_ICE_CRACK}ぃぃぎもほ{DYNAMIC_COLOR6}まごひぃげがぁぐがゅぐをぁまんほはろほとぬみぁ{LIGHT_GRAY}ち{SE_O}"
-	.string "ぃぬろへゅりゆご{DYNAMIC_COLOR6}ち{LIGHT_BLUE}{RED}んもちほてがほががほ{SE_POKENAV_CALL}ぇと{GREEN}ぇち{DYNAMIC_COLOR3}"
-	.string "んょんやなれふめなゃわほゅめらぉのぜをむぉなよはちにずつろやなざ{DYNAMIC_COLOR6}をぅなょぜやへゆ{WHITE}がぉにはま{DYNAMIC_COLOR5}"
-	.string "たぁ{DYNAMIC_COLOR2}つれはゆぬ{DYNAMIC_COLOR1}ゅ{LIGHT_BLUE}り{PH_CLOTH_BLEND}てょゃぁぬ{LIGHT_GRAY}{RED}"
-	.string "ぅずよちゅぉぅめぬもへ{LIGHT_RED}ろんらみ{LIGHT_GRAY}ろへ{WHITE}のほ{DYNAMIC_COLOR5}{LIGHT_RED}"
-	.string "ねにゆ{MUS_RG_NEW_GAME_INSTRUCT}りねの{DYNAMIC_COLOR2}やずゅにんるゆずぎほげぁつとぬをちつぃなぅね{BLUE}{DYNAMIC_COLOR2}"
-	.string "る{SE_WARP_IN}ぉわ{GREEN}はとふん{RED}{BLUE}つひろをれがぉたらわへ{DYNAMIC_COLOR5}ゃ{MUS_RG_TEACHY_TV_SHOW}"
-	.string "つほはん{LIGHT_GREEN}{DYNAMIC_COLOR2}たょほぉろりひぅゆまぎげぁぐぃぁつ{LIGHT_BLUE}と{DYNAMIC_COLOR5}{BLUE}{SE_A}"
-	.string "{DYNAMIC_COLOR4}わひ{DYNAMIC_COLOR5}ゃちゆな{DYNAMIC_COLOR3}をよょわにぅぅわ{LIGHT_GRAY}はにふぇと{DYNAMIC_COLOR1}"
-	.string "ずょぉひらまぇねぉよぉはては{DYNAMIC_COLOR6}ゃふゅわぁぎ{LIGHT_GRAY}ねな{DYNAMIC_COLOR6}らぅるみり{DYNAMIC_COLOR5}"
-	.string "りぅわんなのひた{LIGHT_GRAY}ぁんれぇれらひょ{RED}ほご{RED}む{LIGHT_GREEN}ぁのらへへざじんゆ{BLUE}ぇごゃれ{DYNAMIC_COLOR3}"
-	.string "たてゆゅはぁのり{SE_BALL}ろ{DYNAMIC_COLOR1}ふぬ{DYNAMIC_COLOR1}ちひゅてがるふり{DYNAMIC_COLOR3}"
-	.string "ぅゅざたはひげをげふねめたをふざつぬねれ{DYNAMIC_COLOR2}ろぁを{RED}んざても{WHITE}ふんとにめ{DYNAMIC_COLOR3}やてゅがゃひぃほげふみ{GREEN}{GREEN}"
-	.string "ょ{LIGHT_BLUE}なはひはら{DYNAMIC_COLOR6}ぉゅが{GREEN}もげつ{SE_O}にる{DYNAMIC_COLOR5}"
-	.string "へゅぜぎにれざゃてぇたぬわがるれほゅぁをざれちりてむのほゃ{DYNAMIC_COLOR3}{GREEN}を{LIGHT_BLUE}{RED}ふへぁよぐ{LIGHT_GREEN}にと{RED}"
-	.string "をげぁんるなゅ{MUS_RG_SEVII_45}ょ{PH_KIT_HELD}は{DYNAMIC_COLOR6}ねやにへのとにたるひてな{DYNAMIC_COLOR5}のげんろ{BLUE}"
-	.string "ぃなゅにぃんねゅご{DYNAMIC_COLOR2}ふげねてるてほみてら{RED}へ{SE_TRUCK_DOOR}ぎの{BLUE}ぐぇみたよ{MUS_RG_FUCHSIA}"
-	.string "りぜ{DYNAMIC_COLOR6}にぃまのみをたぎぬふねぅらぉぎぃにぉ{SE_SWITCH}{WHITE}ょ{MUS_RG_VERMILLION}もぐ{RED}ま{DYNAMIC_COLOR5}"
-	.string "ぃや{SE_RG_POKE_JUMP_FAILURE}わゃぉゅにゃんぇにやよぐゃまざへりへがぬなろらぐぃ{DYNAMIC_COLOR2}ひねゅみを{DYNAMIC_COLOR2}"
-	.string "ゅふ{LIGHT_GRAY}{DYNAMIC_COLOR5}む{GREEN}{DYNAMIC_COLOR3}{MUS_RG_TEACHY_TV_SHOW}ねゃほょをに{DYNAMIC_COLOR3}"
-	.string "のゆ{LIGHT_BLUE}わが{LIGHT_RED}んんろわやはとら{RED}たぇぎぉがなゅちぜへももまるぜへはざろひわわぎごょ{RED}てぉわとつは{LIGHT_BLUE}"
-	.string "ひょちやげぜち{WHITE}{DYNAMIC_COLOR5}ろご{LIGHT_GRAY}れ{BLUE}{DYNAMIC_COLOR4}ろろてらげざふげなれ{SE_CLICK}"
-	.string "ぬず{DYNAMIC_COLOR1}な{DYNAMIC_COLOR3}るをまなぃゅねのじががつぎひ{PH_FLEECE_BLEND}み{BLUE}むのんょへなじやめ{DYNAMIC_COLOR3}"
-	.string "らょぜぉぉつちはのまろやつちれねゆぇれわはつよ{GREEN}たちるぉわ{LIGHT_BLUE}とろつろへ{LIGHT_GRAY}{SE_CLICK}つなめじよながは{DYNAMIC_COLOR6}"
-	.string "つがや{WHITE}ねれぬてとごるれのぇをぬぬ{DYNAMIC_COLOR2}わぉ{LIGHT_GREEN}をゃ{LIGHT_GREEN}ぎへまょめち{DYNAMIC_COLOR1}"
-	.string "ぬとちてれぬゆ{WHITE}げふよらぃをごゅげぃゃ{GREEN}げふを{LIGHT_RED}てむぇつずほわげぜをみれゃよ{LIGHT_GRAY}はのらんぅ{RED}よれぜぃゆもれ{BLUE}{BLUE}"
-	.string "ゅわぃほ{BLUE}{LIGHT_RED}ね{GREEN}{LIGHT_BLUE}を{SE_A}ら{DYNAMIC_COLOR4}たの{SE_E}てじ{DYNAMIC_COLOR2}"
-	.string "やんまにじねゃつほななぐゆぉ{DYNAMIC_COLOR6}ぬはふひがるひごぎつへめゃよ{DYNAMIC_COLOR1}ぅにをて{DYNAMIC_COLOR4}"
-	.string "みらやへにんろねにれひやぬ{PH_CLOTH_HELD}{LIGHT_RED}ろがはぬちじわほぁめわるはぁ{RED}ゆょ{DYNAMIC_COLOR3}"
-	.string "ゅぃずつちぃがつむんむぃぬわじやちもとはぇぬぐらね{DYNAMIC_COLOR6}や{SE_A}じがわざふ{DYNAMIC_COLOR2}ぐも{DYNAMIC_COLOR5}{RED}"
-	.string "まふぅ{SE_BANG}{RED}なよれれみゆれ{DYNAMIC_COLOR2}ざぉち{DYNAMIC_COLOR2}んがめん{DYNAMIC_COLOR5}めよねをら{GREEN}"
-	.string "{DYNAMIC_COLOR3}ふよねぁげ{WHITE}れぁぅゃまゃはぅ{LIGHT_RED}たんぬゃねめももむぇ{LIGHT_GREEN}{BLUE}めよふめぅつぁ{BLUE}"
-	.string "またらなれま{DYNAMIC_COLOR2}よぁとゅやまよごもぉみずをぬ{DYNAMIC_COLOR3}なてぐはぃとゆ{LIGHT_BLUE}{LIGHT_GREEN}"
-	.string "ぬぎぎまるやらぬらりひつれろじをのゃふ{WHITE}へた{BLUE}ぐち{DYNAMIC_COLOR5}ょひよてたにりほざりぬずぐゃ{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "んがはてろぉよてわむゆとたに{DYNAMIC_COLOR2}ゅへゅぉむ{BLUE}ぉりむはつ{DYNAMIC_COLOR3}ひょれのわろも{WHITE}{DYNAMIC_COLOR6}"
-	.string "よぬ{DYNAMIC_COLOR3}ね{LIGHT_BLUE}{DYNAMIC_COLOR6}ちろやふ{LIGHT_BLUE}{LIGHT_BLUE}なょ{BLUE}てみぐ{SE_EXP}"
-	.string "げまろょ{PH_TRAP_SOLO}がて{RED}ゃゅがじはぬじてろょぁてほてずちぉらげをほぅは{LIGHT_GRAY}{LIGHT_GRAY}をゆがまち{WHITE}"
-	.string "めふつぬぃげぃぬへる{DYNAMIC_COLOR5}てらはんや{SE_WARP_IN}ふぬりへ{LIGHT_BLUE}まんはをよ{DYNAMIC_COLOR1}てぇ{SE_NOTE_C}"
-	.string "ら{DYNAMIC_COLOR2}ごぃ{BLUE}げをめつほゃへろよめゅぬわぬるてををたたみぅもほぉねぉ{GREEN}をよとらめへれを{GREEN}ね{LIGHT_GREEN}{LIGHT_BLUE}"
-	.string "んむなんむぎもゅ{DYNAMIC_COLOR2}ゃや{DYNAMIC_COLOR2}めほ{WHITE}ぬ{DYNAMIC_COLOR2}やちぬ{LIGHT_GREEN}"
-	.string "みとゆぇは{DYNAMIC_COLOR5}ぁゅぬま{DYNAMIC_COLOR3}{BLUE}むぃゅま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}み{RED}"
-	.string "たちゅちほぉじにほろへはのた{RED}{GREEN}め{LIGHT_GRAY}じやれ{DYNAMIC_COLOR5}ゅ{LIGHT_GRAY}ずぬ{DYNAMIC_COLOR2}"
-	.string "ねょじ{DYNAMIC_COLOR4}よゅつみま{DYNAMIC_COLOR4}にもぇ{SE_I}じよぃのょつ{DYNAMIC_COLOR5}も{WHITE}もりごぅちをふょれ{LIGHT_RED}"
-	.string "にと{DYNAMIC_COLOR5}ぃげがのまぃゆたよぁめちまんろほににむぇねゅもぇはじ{DYNAMIC_COLOR4}のぐ{LIGHT_BLUE}もぃんやほ{DYNAMIC_COLOR6}"
-	.string "や{LIGHT_BLUE}むぅ{LIGHT_RED}{LIGHT_GRAY}ち{LIGHT_RED}めれ{LIGHT_GRAY}{LIGHT_GREEN}が{RED}{BLUE}て{LIGHT_RED}"
-	.string "たゃがとる{DYNAMIC_COLOR1}やぇゃほひつぬん{MUS_RG_OAK_LAB}て{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}{MUS_RG_DEX_RATING}"
-	.string "とて{DYNAMIC_COLOR4}ゆ{SE_SWITCH}{LIGHT_GREEN}はふりゅ{BLUE}{DYNAMIC_COLOR5}わひざなふのへぇては{SE_E}がめひゅぐずとぇ{GREEN}"
-	.string "ぅぬ{LIGHT_RED}ろ{WHITE}{DYNAMIC_COLOR6}みほ{DYNAMIC_COLOR6}ゃね{LIGHT_GRAY}ま{SE_FALL}となげぃゆぃむ{SE_BIKE_BELL}"
-	.string "がやがへるむにや{DYNAMIC_COLOR6}わずなょざをもじざぬはふて{DYNAMIC_COLOR1}るめゆぜよごぐぁへ{BLUE}に{DYNAMIC_COLOR2}のとつ{WHITE}"
-	.string "わゅち{MUS_RG_ENCOUNTER_GYM_LEADER}{TRANSPARENT}てぐれゅ{LIGHT_GREEN}はちや{DYNAMIC_COLOR5}ほ{DYNAMIC_COLOR5}"
-	.string "わな{BLUE}ぅひむへよへふれへやて{SE_USE_ITEM}ねりれがな{DYNAMIC_COLOR6}てたぇょめてぅて{LIGHT_RED}ほぬゅゅご{DYNAMIC_COLOR5}"
-	.string "やゅげへひょひ{LIGHT_GRAY}へや{DYNAMIC_COLOR6}にぃを{LIGHT_BLUE}ゆ{LIGHT_RED}むて{DYNAMIC_COLOR1}らょ{RED}"
-	.string "{DYNAMIC_COLOR4}ふ{GREEN}ずむれらぉり{DYNAMIC_COLOR5}な{DYNAMIC_COLOR2}ぬへへぇを{BLUE}じるむぇぬぉぅめ{DYNAMIC_COLOR5}"
-	.string "{LIGHT_GRAY}む{DYNAMIC_COLOR4}{DYNAMIC_COLOR2}にずれんのょれ{SE_EFFECTIVE}とめ{LIGHT_GREEN}ょ{DYNAMIC_COLOR1}"
-	.string "{LIGHT_BLUE}なとため{LIGHT_GREEN}にわょてな{LIGHT_BLUE}ぁひみごんげげに{DYNAMIC_COLOR4}なれぐてろ{SE_PIKE_CURTAIN_CLOSE}"
-	.string "れてぬほ{BLUE}ぬほ{DYNAMIC_COLOR3}{DYNAMIC_COLOR6}ゃまぅつ{LIGHT_GREEN}げへゅほつやわな{DYNAMIC_COLOR5}"
-	.string "むのゃごぉの{DYNAMIC_COLOR6}りたぁんもらぅぐんねざぜや{LIGHT_GREEN}もぃりてゅて{DYNAMIC_COLOR1}"
-	.string "たゅのぉもりるてぁはげのとがょよみごながぐたざむゃふぎぃな{LIGHT_GREEN}よらむのねちもぃりがぇをまわぜぃへぁよ{WHITE}ちふご{DYNAMIC_COLOR6}"
-	.string "つれぬら{SE_SELECT}ひゆふぇ{RED}めをた{DYNAMIC_COLOR6}ゆ{DYNAMIC_COLOR4}ぐぃ{DYNAMIC_COLOR2}んらをゃなずぃょによれ{LIGHT_RED}"
-	.string "ぜろみごんごふぁ{WHITE}ねににじた{DYNAMIC_COLOR1}まねぬ{DYNAMIC_COLOR6}め{GREEN}てちぎむぬぬ{DYNAMIC_COLOR1}"
-	.string "がふのぃにぎぅぃたょぅぁよざひもぉぁのにゅゆげねまが{WHITE}ほ{DYNAMIC_COLOR4}ねつまふひ{LIGHT_GREEN}ゃを{DYNAMIC_COLOR2}"
-	.string "ぜぉほゃへわてわみみてみ{DYNAMIC_COLOR6}ぅ{BLUE}{DYNAMIC_COLOR6}やねじふょゃらぉれゆをぃよじがよゆちち{LIGHT_GRAY}{LIGHT_RED}ねた{RED}"
-	.string "る{LIGHT_GREEN}んょれるなげ{DYNAMIC_COLOR5}ぉれ{GREEN}るじ{WHITE}るら{DYNAMIC_COLOR5}にへりひたぉろ{DYNAMIC_COLOR3}"
-	.string "とへなぜゆがもほ{RED}わふなゃれ{LIGHT_BLUE}ぁ{MUS_RG_GAME_FREAK}ぜとのわぉぐぇみれねぇぬもむ{DYNAMIC_COLOR2}"
-	.string "をゆやげをぅぜゃねのやほなはぬぉろも{LIGHT_BLUE}よひ{DYNAMIC_COLOR4}なょよりげふと{DYNAMIC_COLOR3}ずたね{GREEN}"
-	.string "ゅがよょむよぬじふわにゆへほ{DYNAMIC_COLOR2}ほへ{DYNAMIC_COLOR4}ぇ{BLUE}まひつふつみれり{GREEN}ごゅぐ{DYNAMIC_COLOR5}"
-	.string "ほぅぃ{MUS_RG_VS_MEWTWO}むと{GREEN}ほるに{LIGHT_BLUE}ふらぇをぐ{LIGHT_GRAY}らる{LIGHT_BLUE}ほひちふりげわ{LIGHT_GRAY}"
-	.string "{LIGHT_GRAY}ねも{LIGHT_BLUE}ぁぃぬも{DYNAMIC_COLOR6}ゆぉ{GREEN}やがめ{LIGHT_BLUE}ぉわ{LIGHT_BLUE}れ{DYNAMIC_COLOR3}"
-	.string "つれりみたなるぉ{DYNAMIC_COLOR6}はててねょんにてざはなげち{PH_FACE_BLEND}{DYNAMIC_COLOR1}わのぐちぅずへぇとぇつんゃずょもがずななゅゃ{WHITE}"
-	.string "げわよゆめ{WHITE}ろがふじぉずたふよぉの{LIGHT_RED}のぬつぎふなざぇぜ{DYNAMIC_COLOR6}{PH_CLOTH_SOLO}ぐぇ{SE_SHIP}"
-	.string "へへわたぐてぅ{DYNAMIC_COLOR6}がの{LIGHT_BLUE}{DYNAMIC_COLOR4}れみぁぇごゃめよとたやじめ{DYNAMIC_COLOR2}ぅもぁをれぃ{RED}"
-	.string "ゅのみれにょがとりがち{DYNAMIC_COLOR2}らへ{GREEN}るゅにんやんるょとれむ{DYNAMIC_COLOR3}まぜぐのらたれほつゃたやゃへてへぬにがらひら{LIGHT_GREEN}"
-	.string "やむがむちがりや{MUS_RG_NEW_GAME_EXIT}ふとつへひやんんげながゃむぉをるぁほゃるざつ{LIGHT_RED}なみ{LIGHT_RED}ずのね{DYNAMIC_COLOR2}"
-	.string "ぃ{PH_TRAP_BLEND}らとふゃつみぃろめひ{GREEN}ぅりなをつ{WHITE}{DYNAMIC_COLOR5}てて{DYNAMIC_COLOR3}り{LIGHT_GREEN}"
-	.string "れとへょとなろよ{LIGHT_GRAY}ゆなずごみゅ{DYNAMIC_COLOR3}ゆろにゅほぅわ{GREEN}{LIGHT_GRAY}るや{LIGHT_GREEN}まぇぁのゆむぅめよ{SE_O}"
-	.string "ひねれやぅみ{GREEN}ぁほぇよぇぐつみ{WHITE}の{DYNAMIC_COLOR6}なならたん{LIGHT_BLUE}ゆのるがぃてふへるを{MUS_RG_POKE_FLUTE}"
-	.string "はにへろふね{RED}ゃりれむなひんに{WHITE}た{LIGHT_RED}{LIGHT_BLUE}とめ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}"
-	.string "ひゃるれもよょてもじはへたやゆろがのやよりてにぬとの{DYNAMIC_COLOR2}ぁゆがゃがぐむひ{DYNAMIC_COLOR6}じを{DYNAMIC_COLOR4}たみ{LIGHT_RED}"
-	.string "{DYNAMIC_COLOR2}を{WHITE}つやねじぇ{LIGHT_BLUE}むよは{DYNAMIC_COLOR5}まぃ{GREEN}ま{DYNAMIC_COLOR2}ざる{LIGHT_GREEN}"
-	.string "ずらてほはて{LIGHT_GREEN}もたゃほぇぬもゅにぅぇんひり{DYNAMIC_COLOR5}めとげもめ{LIGHT_GRAY}るれたみずざらにみつぜやぅ{DYNAMIC_COLOR4}"
-	.string "んぇぁぬをょごぬやもねがへてぬげは{DYNAMIC_COLOR1}じほ{LIGHT_RED}つにぉぇゆへまるゃわよみるゅ{DYNAMIC_COLOR5}ぇぬ{WHITE}"
-	.string "ぐをらやもりぜねぐぎゆもちちのわるぃ{BLUE}りゆらへぬゆむ{LIGHT_BLUE}じにひ{DYNAMIC_COLOR6}わひつめりずよゃた{MUS_RG_UNION_ROOM}"
-	.string "ゃなはるのるちぅつらぬららぁゃらや{LIGHT_GRAY}のょぬへぉのゆはろぐてごぉへらぅゃりぉが{LIGHT_BLUE}ぃひ{LIGHT_GRAY}げらのちま{DYNAMIC_COLOR2}"
-	.string "はゃじれな{RED}やょぃもぃ{DYNAMIC_COLOR6}めひじじやるへつにのん{LIGHT_GRAY}"
-	.string "つぬねゆぉぁもははゅらむよのひぃねろめをわはゃずつのりらなひちつぬなたゃがゆつぜなぅ{DYNAMIC_COLOR4}がずれを{DYNAMIC_COLOR6}"
-	.string "ややざぜまへゃぬはもまが{DYNAMIC_COLOR6}たぇゃゅの{LIGHT_RED}めぉにゃほとほ{BLUE}"
-	.string "てるげがぃへょなるんへぇんもゅぬふょへてもゃゃやはがぁよんほぬはまなまろまの{DYNAMIC_COLOR1}ぉはゅぅやをぬわ{DYNAMIC_COLOR3}むょわゅゅひ{LIGHT_GRAY}"
-	.string "ら{WHITE}{DYNAMIC_COLOR4}へふ{DYNAMIC_COLOR5}ちちろたゆごみまぬのみ{BLUE}ょてぎのひろや{DYNAMIC_COLOR2}"
-	.string "まるらなわがぐたげなんぁちょや{RED}みごれゅらゅゃ{DYNAMIC_COLOR4}ひみためがまぎらぅ{DYNAMIC_COLOR6}りりゆ{SE_PIN}へゆぅりり{DYNAMIC_COLOR2}"
-	.string "げへをてひ{LIGHT_GRAY}がんへりの{BLUE}をめらぐぇぜぁへぉゃりね{BLUE}ぅもまて{DYNAMIC_COLOR4}わもげを{MUS_RG_POKE_JUMP}"
-	.string "ゆてみょゃつろをゅゅゃもみむげのひまろのゅ{DYNAMIC_COLOR5}のよやがね{BLUE}た{DYNAMIC_COLOR3}にをまゃむ{LIGHT_RED}ぎのとむやちぅとずぎるぜ{BLUE}"
-	.string "ゆれまゆゆ{GREEN}り{DYNAMIC_COLOR2}ほとはぎめやねるはちみごげほふよは{LIGHT_RED}ぇのぐれぅ{LIGHT_BLUE}{LIGHT_GREEN}ゆ{LIGHT_RED}"
-	.string "ずにゃよとひぇよ{LIGHT_RED}{BLUE}が{DYNAMIC_COLOR6}{LIGHT_GRAY}みれぐぅ{SE_POKENAV_HANG_UP}"
-	.string "ほへもぅりひりほがとて{DYNAMIC_COLOR5}りれごがぁふりぃぃはょまにず{DYNAMIC_COLOR4}なんにねながみれぉぃろ{DYNAMIC_COLOR5}"
-	.string "ゆねみ{MUS_RG_CAUGHT}のゆ{DYNAMIC_COLOR1}んぃに{LIGHT_GRAY}ち{RED}らゆひふむる{RED}らじみほりぉぅほぐたぅるほ{GREEN}"
-	.string "ゆりのごつ{DYNAMIC_COLOR2}ひふずがみ{DYNAMIC_COLOR1}が{PH_FACE_HELD}わゆなねとごみふめごふやゃゅ{DYNAMIC_COLOR6}"
-	.string "ぁぅごぬゅぃぐが{DYNAMIC_COLOR4}なちた{LIGHT_GRAY}ほはぐぉぁんりふりょりねまな{WHITE}ぃずぇりゃぁも{LIGHT_GREEN}{DYNAMIC_COLOR3}"
-	.string "ょりわゃれ{DYNAMIC_COLOR3}まぜみてろぬらりるれざてょよをれ{DYNAMIC_COLOR1}{GREEN}ほみ{RED}{MUS_RG_POKE_JUMP}{LIGHT_GREEN}"
-	.string "ゅ{DYNAMIC_COLOR5}ね{SE_ROTATING_GATE}ゃゃぁとがむぃまながひげ{DYNAMIC_COLOR2}ぇめめむひゅも{DYNAMIC_COLOR4}{LIGHT_GRAY}"
-	.string "ふもごて{DYNAMIC_COLOR5}へまへぜんぐらん{DYNAMIC_COLOR6}ぎみぅざゅ{DYNAMIC_COLOR2}{DYNAMIC_COLOR6}ん{GREEN}{GREEN}"
-	.string "りゆぐも{DYNAMIC_COLOR1}ぇな{DYNAMIC_COLOR6}へゆ{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}ゃつんむょねままゃひ{LIGHT_RED}"
-	.string "げょろ{WHITE}ぬ{DYNAMIC_COLOR5}にろ{DYNAMIC_COLOR5}{DYNAMIC_COLOR2}よ{DYNAMIC_COLOR4}"
-	.string "をたむちらじてぇなゆれひをゅわろよよまみめろつぜじらぃ{DYNAMIC_COLOR1}ょゅまぬむ{BLUE}るへみぉゃちに{LIGHT_RED}ぎを{SE_M_DOUBLE_TEAM}"
-	.string "{SE_M_JUMP_KICK}{SE_M_FLAME_WHEEL}{SE_M_FLAME_WHEEL2}{SE_M_FLAMETHROWER}{SE_M_TAKE_DOWN}"
-	.string "{SE_M_BLIZZARD}{SE_M_BLIZZARD2}{SE_M_FIRE_PUNCH}{SE_M_TOXIC}{SE_M_SACRED_FIRE}{SE_M_SCRATCH}"
-	.string "{SE_M_VICEGRIP}{SE_M_WING_ATTACK}{SE_M_SACRED_FIRE2}{SE_M_EMBER}{SE_M_SURF}{SE_M_FLY}"
-	.string "{SE_M_SAND_ATTACK}{SE_M_DRAGON_RAGE}{SE_M_PSYBEAM}{SE_M_FAINT_ATTACK}{SE_M_SWORDS_DANCE}{SE_M_SNORE}"
-	.string "{SE_M_BRICK_BREAK}{SE_M_GIGA_DRAIN}{SE_M_SKETCH}{SE_M_SWIFT}{SE_M_REFLECT}{SE_M_RAZOR_WIND2}"
-	.string "{SE_M_BITE}{SE_M_HEADBUTT}{SE_M_MIST}{SE_M_POISON_POWDER}{SE_M_BIND}{SE_M_DIZZY_PUNCH}"
-	.string "{SE_M_SELF_DESTRUCT}{SE_M_EXPLOSION}{SE_M_HYDRO_PUMP}{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_M_SING}"
-	.string "{SE_M_PERISH_SONG}{SE_M_PAY_DAY}{SE_M_ABSORB}{SE_M_SCREECH}{SE_M_BUBBLE_BEAM}{SE_M_TAIL_WHIP}"
-	.string "{SE_M_BONEMERANG}{SE_M_LICK}{SE_M_DIG}{SE_M_HEAL_BELL}{SE_M_CONFUSE_RAY}{SE_M_BUBBLE_BEAM2}"
-	.string "{SE_M_TELEPORT}{SE_M_MINIMIZE}{SE_M_SUPERSONIC}{SE_M_BELLY_DRUM}{SE_M_METRONOME}{SE_M_LEER}"
-	.string "{SE_M_SWAGGER}{SE_M_SWAGGER2}{SE_M_PSYBEAM2}{SE_M_SOLAR_BEAM}{SE_M_PETAL_DANCE}{SE_M_BARRIER}"
-	.string "{SE_M_WATERFALL}{SE_M_LOCK_ON}{SE_M_ACID_ARMOR}{SE_M_CHARM}{SE_M_TRI_ATTACK}{SE_M_BATON_PASS}"
-	.string "{SE_M_ATTRACT}{SE_M_SPIT_UP}{SE_M_DIVE}{SE_M_MORNING_SUN}{SE_M_SAND_TOMB}{SE_M_SWEET_SCENT}"
-	.string "{SE_M_YAWN}{SE_M_HEAT_WAVE}{SE_M_HAIL}{A_BUTTON}{UP_ARROW_2}{SE_FU_ZAKU}{SE_WARP_IN}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{SE_WARP_OUT}{SE_LAVARIDGE_FALL_WARP}{SE_REPEL}ぎ{WHITE}ざ{WHITE}ぞ{WHITE}"
-	.string "{SE_ROTATING_GATE}{SE_TRUCK_MOVE}{SE_TRUCK_STOP}{SE_BALL_BOUNCE_1}{SE_BALL_BOUNCE_2}"
-	.string "{SE_BALL_BOUNCE_3}{SE_NOTE_E}{SE_NOTE_F}{SE_BALL_BOUNCE_4}{SE_ITEMFINDER}{SE_DING_DONG}{SE_MUGSHOT}"
-	.string "{SE_ESCALATOR}{SE_THUNDERSTORM}{SE_DEX_SEARCH}{SE_THUNDER2}{SE_ELEVATOR}{SE_APPLAUSE}{SE_TRUCK_DOOR}"
-	.string "{SE_BALL_TRADE}{SE_BERRY_BLENDER}{SE_CARD}{SE_BALL_THROW}{SE_NOTE_C}{SE_CONTEST_ICON_CHANGE}"
-	.string "{SE_CONTEST_ICON_CLEAR}{SE_POKENAV_OFF}{SE_M_THUNDERBOLT2}{SE_TRUCK_UNLOAD}{SE_UNLOCK}{SE_M_CUT}"
-	.string "{SE_M_STRING_SHOT}{SE_M_RAZOR_WIND}{SE_M_ICY_WIND}{SE_VEND}{SE_ORB}{SE_DEX_SCROLL}{SE_DEX_PAGE}"
-	.string "{SE_BALL_TRAY_ENTER}{SE_BALL_TRAY_BALL}{SE_BALL_TRAY_EXIT}{SE_GLASS_FLUTE}{SE_ICE_STAIRS}{SE_SAVE}"
-	.string "{SE_NOTE_D}{SE_M_GUST2}{SE_M_MEGA_KICK2}{SE_M_STRENGTH}{SE_M_ENCORE}ん{WHITE}ょ{WHITE}"
-	.string "{SE_M_STRING_SHOT2}{SE_M_THUNDER_WAVE}{SE_M_TEETER_DANCE}{SE_M_STAT_DECREASE}{SE_M_HAZE}"
-	.string "{SE_CONTEST_HEART}{SE_CONTEST_CURTAIN_RISE}{SE_CONTEST_CURTAIN_FALL}{SE_M_HARDEN}{SE_M_NIGHTMARE}"
-	.string "{SE_M_VITAL_THROW}{SE_M_VITAL_THROW2}{SE_M_BUBBLE}{SE_M_BUBBLE2}{SE_M_BUBBLE3}{SE_M_ABSORB_2}"
-	.string "{SE_NOTE_G}{SE_NOTE_A}{SE_NOTE_B}{SE_BALLOON_RED}{SE_BALLOON_BLUE}{SE_BALLOON_YELLOW}"
-	.string "{SE_THUNDERSTORM_STOP}{SE_DOWNPOUR}{SE_DOWNPOUR_STOP}{SE_NOTE_C_HIGH}{SE_PUDDLE}{SE_BRIDGE_WALK}"
-	.string "{SE_BREAKABLE_DOOR}{SE_MUD_BALL}{SE_FIELD_POISON}{SE_RAIN}{SE_RAIN_STOP}{SE_THUNDER}{SE_LOW_HEALTH}"
-	.string "{SE_EXP_MAX}{SE_ROULETTE_BALL}{SE_ROULETTE_BALL2}{SE_TAILLOW_WING_FLAP}{SE_SHOP}"
-	.string "{SE_CONTEST_MONS_TURN}{SE_SHINY}{SE_INTRO_BLAST}{SE_RG_SS_ANNE_HORN}{SE_RG_HELP_OPEN}"
-	.string "{SE_RG_HELP_CLOSE}{SE_POKENAV_HANG_UP}{SE_ARENA_TIMEUP1}{SE_ARENA_TIMEUP2}た{WHITE}ち{WHITE}つ{WHITE}"
-	.string "{SE_RG_HELP_ERROR}{SE_RG_DEOXYS_MOVE}{SE_RG_POKE_JUMP_SUCCESS}{SE_PIKE_CURTAIN_CLOSE}"
-	.string "{SE_PIKE_CURTAIN_OPEN}{SE_SUDOWOODO_SHAKE}て{WHITE}と{WHITE}な{WHITE}{SE_RG_POKE_JUMP_FAILURE}"
-	.string "{SE_POKENAV_CALL}ね{WHITE}{DYNAMIC_COLOR5}{WHITE}{DYNAMIC_COLOR6}{WHITE}み{WHITE}に{WHITE}ぬ{WHITE}"
-	.string "り{WHITE}の{WHITE}は{WHITE}ひ{WHITE}む{WHITE}め{WHITE}も{WHITE}る{WHITE}れ{WHITE}ろ{WHITE}ぃ{WHITE}ぅ{WHITE}"
-	.string "ぇ{WHITE}ぉ{WHITE}ゃ{WHITE}ふ{WHITE}へ{WHITE}ほ{WHITE}ま{WHITE}や{WHITE}ゆ{WHITE}よ{WHITE}ら{WHITE}わ{WHITE}"
-	.string "を{WHITE}{SE_M_CRABHAMMER}{SE_M_JUMP_KICK}{SE_M_FLAME_WHEEL}{SE_M_FLAME_WHEEL2}{SE_M_FLAMETHROWER}"
-	.string "{SE_M_FIRE_PUNCH}{SE_M_TOXIC}{SE_M_SACRED_FIRE}{SE_M_SACRED_FIRE2}{SE_M_EMBER}{SE_M_TAKE_DOWN}"
-	.string "{SE_M_BLIZZARD}{SE_M_BLIZZARD2}{SE_M_SCRATCH}{SE_M_VICEGRIP}{SE_M_WING_ATTACK}{SE_M_FLY}"
-	.string "{SE_M_SAND_ATTACK}{SE_M_RAZOR_WIND2}{SE_M_BITE}{SE_M_HEADBUTT}{SE_M_SURF}{SE_M_HYDRO_PUMP}"
-	.string "{SE_M_WHIRLPOOL}{SE_M_HORN_ATTACK}{SE_M_TAIL_WHIP}{SE_M_MIST}{SE_M_POISON_POWDER}{SE_M_BIND}"
-	.string "{SE_M_DRAGON_RAGE}{SE_M_SING}{SE_M_PERISH_SONG}{SE_M_PAY_DAY}{SE_M_DIG}{SE_M_DIZZY_PUNCH}"
-	.string "{SE_M_SELF_DESTRUCT}{SE_M_EXPLOSION}{SE_M_ABSORB_2}{SE_M_ABSORB}{SE_M_SCREECH}{SE_M_BUBBLE_BEAM}"
-	.string "{SE_M_BUBBLE_BEAM2}{SE_M_SUPERSONIC}{SE_M_BELLY_DRUM}{SE_M_METRONOME}ひと{SE_ICE_STAIRS}"
-	.string "サイズの\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}つ{BLUE}{RED}$"
-	.string "モンスターボールの\n{GREEN}たちを{DYNAMIC_COLOR3}た\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}つ{BLUE}{RED}$"
-	.string "てつ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}\n{LIGHT_GRAY}{RED}"
-	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "{LIGHT_GREEN}{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}"
-	.string "\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "はっぱ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}つ{BLUE}{RED}\n{LIGHT_GRAY}{RED}"
-	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "ガラス{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
-	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "レンガ{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
-	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "まるた{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}\nた{BLUE}{DYNAMIC_COLOR2}"
-	.string "{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{BLUE}られた\n{LIGHT_GREEN}ょ{PH_PRICE_BLEND}{SE_PIN}つ{BLUE}{RED}"
-	.string "\nた{BLUE}{DYNAMIC_COLOR2}{SE_WARP_OUT}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "ひとり{SE_NOTE_B}{DYNAMIC_COLOR4}わる\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "モンスターボールの\n{GREEN}たちを{DYNAMIC_COLOR3}た\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "てつ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "ガラス{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "はっぱ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "{LIGHT_GREEN}{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "レンガ{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "まるた{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{BLUE}られた\n{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}{SE_PIN}イス$"
-	.string "まっ{GREEN}{SE_PIN}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
-	.string "なんご{BLUE}{SE_A}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{SE_PC_LOGIN}はなが\n{LIGHT_GRAY}{RED}られ{SE_FAINT}{LIGHT_GRAY}{RED}"
-	.string "{LIGHT_GREEN}$"
-	.string "{DARK_GRAY}{MUS_RG_ENCOUNTER_DEOXYS}ろ{SE_PIN}はなが\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}{SE_PIN}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
-	.string "カサのよ{LIGHT_GRAY}{SE_PIN}{LIGHT_GREEN}が\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}"
-	.string "{SE_PIN}{LIGHT_GRAY}{RED}{LIGHT_GREEN}$"
-	.string "りっぱ{SE_PIN}{LIGHT_GREEN}が\n{LIGHT_GRAY}{RED}られた\n{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}"
-	.string "{LIGHT_GRAY}{RED}{LIGHT_GREEN}{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}"
-	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "{MUS_RG_SILPH}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}"
-	.string "る{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}ろ{SE_A}レンガ\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
-	.string "{LIGHT_BLUE}る$"
-	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った{MUS_RG_VS_WILD}{MUS_RG_POKE_TOWER}{TRANSPARENT}ふ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR5}ん\nふむ{SE_BANG}われる$"
-	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った{MUS_RG_VS_WILD}{MUS_RG_SURF}{TRANSPARENT}ふ{LIGHT_GRAY}{DYNAMIC_COLOR5}"
-	.string "ん\nふむ{SE_BANG}われる$"
-	.string "みず{SE_A}{MUS_RG_POKE_JUMP}った\n{MUS_RG_SILPH}{MUS_RG_ENCOUNTER_DEOXYS}{TRANSPARENT}ふ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR5}ん\nふむ{SE_BANG}われる$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{WHITE}{MUS_RG_POKE_TOWER}{TRANSPARENT}テント\nな{GREEN}"
-	.string "{SE_BOO}{MUS_RG_POKE_JUMP}れる$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{WHITE}{MUS_RG_SURF}{TRANSPARENT}テント\nな{GREEN}{SE_BOO}"
-	.string "{MUS_RG_POKE_JUMP}れる{MUS_RG_VS_CHAMPION}な{SE_A}{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}"
-	.string "ば\nむ{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_O}わたれる$"
-	.string "{PH_PRICE_BLEND}{SE_A}{LIGHT_GRAY}{RED}{GREEN}ら\n{DYNAMIC_COLOR4}べっ{SE_SHIP}{DYNAMIC_COLOR3}"
-	.string "たへ\n{DARK_GRAY}{BLUE}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}る$"
-	.string "{MUS_RG_DEX_RATING}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{DYNAMIC_COLOR2}{BLUE}\nと{LIGHT_RED}"
-	.string "る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}$"
-	.string "{MUS_RG_DEX_RATING}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{DYNAMIC_COLOR2}{BLUE}\nと{LIGHT_RED}"
-	.string "る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}$"
-	.string "ふ{MUS_RG_VS_LEGEND}{TRANSPARENT}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}タイヤ\n{LIGHT_GRAY}{RED}"
-	.string "{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "{MUS_RG_POKE_TOWER}だん{SE_WARP_IN}のぼって\n{PH_PRICE_BLEND}{SE_BOO}{WHITE}がれる$"
-	.string "ま{MUS_RG_VS_LEGEND}{TRANSPARENT}どろだんご\nふむ{SE_BANG}{DYNAMIC_COLOR1}われる$"
-	.string "と{LIGHT_RED}りぬ{SE_EXIT}で{LIGHT_GREEN}る\n{LIGHT_RED}{GREEN}{DYNAMIC_COLOR3}{SE_PIN}ドア$"
-	.string "{DYNAMIC_COLOR2}わる{SE_BANG}{BLUE}ずれる\n{DYNAMIC_COLOR4}な{SE_A}{LIGHT_RED}{LIGHT_GREEN}もの$"
-	.string "バトルタワーで\n50に{SE_WARP_OUT}{GREEN}ち{MUS_RG_NEW_GAME_INSTRUCT}た\n{LIGHT_GREEN}ねん{SE_A}たて$"
-	.string "バトルタワーで\n100に{SE_WARP_OUT}{GREEN}ち{MUS_RG_NEW_GAME_INSTRUCT}た\n{LIGHT_GREEN}ねん{SE_A}たて$"
-	.string "びじゅつ{GREEN}ん{SE_BOO}{WHITE}る\nゆ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}{SE_PIN}ちょ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR1}{BLUE}を\nガラス{SE_NOTE_B}{GREEN}たどったもの$"
-	.string "{MUS_RG_POKE_JUMP}{DARK_GRAY}ろ{SE_A}{MUS_RG_DEX_RATING}{DYNAMIC_COLOR2}な\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
-	.string "タネボー{SE_A}イメージで\nつ{BLUE}られた\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
-	.string "エネコ{SE_A}イメージで\nつ{BLUE}られた\n{LIGHT_RED}もちゃ{SE_A}テレビ$"
-	.string "ふむ{SE_BANG}{LIGHT_GREEN}ら{LIGHT_GREEN}ら{DYNAMIC_COLOR4}る\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}マット$"
-	.string "ふむ{SE_BANG}ジャンプ{DYNAMIC_COLOR4}る\n{DARK_GRAY}たず{SE_LAVARIDGE_FALL_WARP}マット$"
-	.string "ふむ{SE_BANG}{BLUE}る{BLUE}{SE_ICE_BREAK}まわる\n{DARK_GRAY}たず{SE_LAVARIDGE_FALL_WARP}マット$"
-	.string "ふむ{SE_BANG}ドの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}レの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}ミの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}ファの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}ソの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}ラの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}シの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "ふむ{SE_BANG}た{MUS_RG_POKE_TOWER}{TRANSPARENT}ドの\n{LIGHT_RED}とがな{SE_ICE_BREAK}マット$"
-	.string "なみのり{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
-	.string "{LIGHT_BLUE}る$"
-	.string "{GREEN}みなり{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
-	.string "{LIGHT_BLUE}る$"
-	.string "{PH_PRICE_BLEND}もんじ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}"
-	.string "{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "{DYNAMIC_COLOR1}なゆ{LIGHT_GREEN}{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "メロメロ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
-	.string "{LIGHT_BLUE}る$"
-	.string "じわれ{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}もの{SE_WARP_IN}{LIGHT_RED}"
-	.string "{LIGHT_BLUE}る$"
-	.string "ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}{SE_A}イメージで\nつ{BLUE}られ{SE_FAINT}マット\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "もの{SE_WARP_IN}{LIGHT_RED}{LIGHT_BLUE}る$"
-	.string "モンスターボールが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
-	.string "{MUS_RG_VICTORY_WILD}ポスター$"
-	.string "キモリが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
-	.string "{MUS_RG_VICTORY_WILD}ポスター$"
-	.string "アチャモが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
-	.string "{MUS_RG_VICTORY_WILD}ポスター$"
-	.string "ミズゴロウが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
-	.string "{MUS_RG_VICTORY_WILD}ポスター$"
-	.string "ルリリが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{MUS_RG_DEX_RATING}"
-	.string "{MUS_RG_VICTORY_WILD}ポスター$"
-	.string "ピカチュウ{SE_BANG}ピチューが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}"
-	.string "{LIGHT_RED}{LIGHT_GREEN}なポスター$"
-	.string "ハブネークが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}なポスター$"
-	.string "ジーランスが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}なポスター$"
-	.string "キャモメが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}なポスター$"
-	.string "ムチュールが\nプリン{SE_CONTEST_ICON_CLEAR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}る\n{LIGHT_RED}{LIGHT_RED}"
-	.string "{LIGHT_GREEN}なポスター$"
-	.string "ピチュー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ピカチュウ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "マリル{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "トゲピー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ヒノアラシ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "チコリータ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ワニノコ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "プリン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ニャース{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ピッピ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "メタモン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ムチュール{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "キモリ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "アチャモ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ミズゴロウ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ヨマワル{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ソーナノ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ヤジロン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "カクレオン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ルリリ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "エネコ{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "チルット{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ゴクリン{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ハスボー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "タネボー{SE_A}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ピカチュウ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "マリルリ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "ムチュール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "ジグザグマ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "パッチール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "ヤミラミ{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "ボール{SE_A}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{BLUE}{DYNAMIC_COLOR2}マー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}"
-	.string "{LIGHT_RED}{BLUE}もの$"
-	.string "ほの{LIGHT_RED}マー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}"
-	.string "{BLUE}もの$"
-	.string "みずマー{SE_THUNDER2}クッション\nマット{SE_CLICK}つ{BLUE}{RED}の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{SE_PIN}{MUS_RG_NEW_GAME_INSTRUCT}ぐるみ\nマット{SE_CLICK}つ{BLUE}{RED}"
-	.string "の\n{LIGHT_GRAY}{RED}{SE_BOO}{LIGHT_RED}{BLUE}もの$"
-
+	.incbin "baserom_jp.gba", 0x57d884, 0x344c
 	.globl gUnknown_8580CD0
 gUnknown_8580CD0: @ 0x8580CD0
 	.incbin "baserom_jp.gba", 0x580cd0, 0x1
@@ -10124,8 +9055,7 @@ gUnknown_85845B2: @ 0x85845B2
 
 	.globl gUnknown_85845C2
 gUnknown_85845C2: @ 0x85845C2
-	.string "l{SE_RG_SHOP}{TRANSPARENT}l$V{SE_RG_SHOP}{TRANSPARENT}V{SE_RG_SHOP}{TRANSPARENT}V$"
-
+	.string "l$　　l$V$　　V$　　V$"
 	.globl gUnknown_85845D2
 gUnknown_85845D2: @ 0x85845D2
 	.incbin "baserom_jp.gba", 0x5845d2, 0x10
@@ -10400,21 +9330,18 @@ gUnknown_8588604: @ 0x8588604
 
 	.globl gUnknown_8588606
 gUnknown_8588606: @ 0x8588606
-	.string "ゲーム{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "ゲームを　やめますか？$"
 	.globl gUnknown_8588612
 gUnknown_8588612: @ 0x8588612
-	.string "コイン{SE_SAVE}9999{MUS_RG_SEVII_CAVE}\nたまっ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR4}$"
-
+	.string "コインが　9999まい\n"
+	.string "たまって　います$"
 	.globl gUnknown_8588627
 gUnknown_8588627: @ 0x8588627
-	.string "コイン{SE_SAVE}{WHITE}りま{DYNAMIC_COLOR5}ん\nゲーム{SE_WARP_IN}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "コインが　ありません\n"
+	.string "ゲームを　しゅうりょうします$"
 	.globl gUnknown_8588641
 gUnknown_8588641: @ 0x8588641
-	.string "コイン{SE_SAVE}3{MUS_RG_SEVII_CAVE}{SE_RG_SS_ANNE_HORN}りま{DYNAMIC_COLOR5}ん！$"
-
+	.string "コインが　3まい　ありません！$"
 	.globl gUnknown_8588651
 gUnknown_8588651: @ 0x8588651
 	.incbin "baserom_jp.gba", 0x588651, 0x5b
@@ -10625,12 +9552,10 @@ gUnknown_859130C: @ 0x859130C
 
 	.globl gUnknown_8591C04
 gUnknown_8591C04: @ 0x8591C04
-	.string "{DYNAMIC_COLOR1}{SE_A}じ{GREEN}ん{SE_NOTE_B}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "この　じかんで　よろしいですか？$"
 	.globl gUnknown_8591C15
 gUnknown_8591C15: @ 0x8591C15
-	.string "{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}$"
-
+	.string "けってい$"
 	.globl gUnknown_8591C1A
 gUnknown_8591C1A: @ 0x8591C1A
 	.incbin "baserom_jp.gba", 0x591c1a, 0x6
@@ -10849,12 +9774,7 @@ gUnknown_859267D: @ 0x859267D
 
 	.globl gUnknown_8592686
 gUnknown_8592686: @ 0x8592686
-	.string "{MUS_RG_OAK}{WHITE}{LIGHT_GRAY}{LIGHT_RED}{RED}{RED}{LIGHT_RED}{RED}{SE_WIN_OPEN}{LIGHT_GREEN}{RED}"
-	.string "{BLUE}{DYNAMIC_COLOR2}{LIGHT_BLUE}{LIGHT_RED}{DYNAMIC_COLOR1}{LIGHT_RED}{MUS_RG_VICTORY_WILD}"
-	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR4}{LIGHT_GRAY}{MUS_RG_PEWTER}{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
-	.string "た{DYNAMIC_COLOR1}たゅはざの$"
-	.string "$"
-
+	.string "いいあうおええおえか　きえくさけおこおさいしかすうせいそしたこたゅはざの$$"
 	.globl gUnknown_85926AC
 gUnknown_85926AC: @ 0x85926AC
 	.incbin "baserom_jp.gba", 0x5926ac, 0x78
@@ -10901,26 +9821,16 @@ gUnknown_8592B80: @ 0x8592B80
 
 	.globl gUnknown_8592B88
 gUnknown_8592B88: @ 0x8592B88
-	.string "{SE_BALLOON_BLUE}{SE_INTRO_BLAST}{SE_THUNDER}{SE_FIELD_POISON}{SE_DOWNPOUR_STOP}{SE_RAIN}"
-	.string "{SE_RAIN_STOP}{SE_ESCALATOR}{SE_THUNDERSTORM}{SE_THUNDERSTORM_STOP}$"
-	.string "$"
-
+	.string "ぱ　ヌ　キ　ぽ　エ　オ　カ　っ　ア　イ　$$"
 	.globl gUnknown_8592B9E
 gUnknown_8592B9E: @ 0x8592B9E
-	.string "{SE_EGG_HATCH}{SE_POKENAV_OFF}{SE_BALL_TRAY_ENTER}{SE_BALL_TRAY_BALL}{SE_BALL_TRAY_EXIT}$"
-	.string "$"
-
+	.string "ム　マ　メ　モ　ヤ　$$"
 	.globl gUnknown_8592BAA
 gUnknown_8592BAA: @ 0x8592BAA
-	.string "{SE_NOTE_E}{SE_NOTE_A}{SE_NOTE_F}{SE_PUDDLE}{SE_NOTE_G}{SE_NOTE_D}$"
-	.string "$"
-
+	.string "ぞ　づ　だ　ば　ぢ　ぜ　$$"
 	.globl gUnknown_8592BB8
 gUnknown_8592BB8: @ 0x8592BB8
-	.string "{SE_M_PSYBEAM2}{SE_M_ABSORB}{SE_M_BUBBLE_BEAM2}{SE_M_BELLY_DRUM}{SE_M_ABSORB_2}{SE_M_METRONOME}"
-	.string "{SE_M_BONEMERANG}{SE_M_CONFUSE_RAY}{SE_M_BRICK_BREAK}$"
-	.string "$"
-
+	.string "N　'　¥　×　‘　/　A　J　L　$$"
 	.globl gUnknown_8592BCC
 gUnknown_8592BCC: @ 0x8592BCC
 	.incbin "baserom_jp.gba", 0x592bcc, 0x2c
@@ -10983,12 +9893,7 @@ gUnknown_8592E7C: @ 0x8592E7C
 
 	.globl gUnknown_8592EA0
 gUnknown_8592EA0: @ 0x8592EA0
-	.string "{MUS_RG_OAK}{WHITE}{LIGHT_GRAY}{LIGHT_RED}{RED}{RED}{LIGHT_RED}{RED}{SE_WIN_OPEN}{LIGHT_GREEN}{RED}"
-	.string "{BLUE}{DYNAMIC_COLOR2}{LIGHT_BLUE}{LIGHT_RED}{DYNAMIC_COLOR1}{LIGHT_RED}{MUS_RG_VICTORY_WILD}"
-	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR4}{LIGHT_GRAY}{MUS_RG_PEWTER}{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
-	.string "た{DYNAMIC_COLOR1}たゅはねのののはのひの$"
-	.string "$"
-
+	.string "いいあうおええおえか　きえくさけおこおさいしかすうせいそしたこたゅはねのののはのひの$$"
 	.globl gUnknown_8592ECC
 gUnknown_8592ECC: @ 0x8592ECC
 	.incbin "baserom_jp.gba", 0x592ecc, 0x4
@@ -11027,18 +9932,13 @@ gUnknown_85937D8: @ 0x85937D8
 
 	.globl gUnknown_85937E0
 gUnknown_85937E0: @ 0x85937E0
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　たいせん　せいせき$"
 	.globl gUnknown_85937EF
 gUnknown_85937EF: @ 0x85937EF
-	.string "{B_COPY_VAR_1}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{B_COPY_VAR_2}{MUS_RG_POKE_JUMP}{TRANSPARENT}{B_COPY_VAR_3}"
-	.string "ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
-
+	.string "{B_COPY_VAR_1}しょう　{B_COPY_VAR_2}はい　{B_COPY_VAR_3}ひきわけ$"
 	.globl gUnknown_8593801
 gUnknown_8593801: @ 0x8593801
-	.string "{GREEN}{SE_FLEE}{MUS_DUMMY}{TRANSPARENT}ま{SE_EXIT}{MUS_DUMMY}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
-
+	.string "かち　　　　まけ　　　ひきわけ$"
 	.globl gUnknown_8593811
 gUnknown_8593811: @ 0x8593811
 	.string "ーーーーー$"
@@ -11397,35 +10297,7 @@ gUnknown_85995A0: @ 0x85995A0
 
 	.globl gUnknown_859A780
 gUnknown_859A780: @ 0x859A780
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$${SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}"
-	.string "{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}:$"
-	.string "$${SE_RG_SHOP}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}"
-	.string "{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}{SE_M_HEAT_WAVE}{MUS_DUMMY}:$"
-	.string "$$$$$$${SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}"
-	.string ":{SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}:$"
-	.string "$$$$$$$$$$${SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}"
-	.string ":{SE_BALL_OPEN}{TRANSPARENT}:{SE_BALL_OPEN}{TRANSPARENT}:$"
-	.string "$$$$$$$$$$${SE_BALL_OPEN}{TRANSPARENT}${SE_BALL_OPEN}{TRANSPARENT}$"
-	.string "{SE_BALL_OPEN}{TRANSPARENT}${SE_BALL_OPEN}{TRANSPARENT}$"
-	.string "{SE_BALL_OPEN}{TRANSPARENT}$$$$$$$$$$$$$"
-	.string "{SE_BALL_OPEN}{TRANSPARENT}${SE_BALL_OPEN}{TRANSPARENT}$"
-	.string "{SE_BALL_OPEN}{TRANSPARENT}${SE_BALL_OPEN}{TRANSPARENT}$"
-	.string "$$$$$$$$$$$$$$$${SE_RG_SHOP}{TRANSPARENT}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}${SE_RG_SHOP}{TRANSPARENT}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}$$$$$$$$$$$$$$$"
-	.string "$$$$$${SE_RG_SHOP}{TRANSPARENT}${SE_RG_SHOP}{TRANSPARENT}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}$$$$$$$$$$$$$$$"
-	.string "$$$$$${SE_RG_SHOP}:${SE_RG_SHOP}:${SE_RG_SHOP}:$"
-	.string "$$$$$$$$$$$$$$$$$$$${SE_RG_SHOP}:${SE_RG_SHOP}:$"
-	.string "$$$$$$$$$$$$$$$$$$$$$$$$${DYNAMIC_COLOR6}:$"
-	.string "${DYNAMIC_COLOR6}:$$$$$$$$$$$$$$$$$$$$$$"
-	.string "$$$$$$$${DYNAMIC_COLOR6}:$$$$$$$$$$$$$$$"
-	.string "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-
+	.string "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$$$$　　　　　　　　　　　　　　　　　　　　　　　　　　　　$$$$　　　:　　　:　　　:　　　:　　　:　　　:　　　:$$$$　　　:　　　:　　　:　　　:　　　:　　　:$$$$$$$$そ　　:そ　　:そ　　:そ　　:そ　　:そ　　:$$$$$$$$$$$$そ　　:そ　　:そ　　:そ　　:そ　　:$$$$$$$$$$$$そ　　$そ　　$そ　　$そ　　$そ　　$$$$$$$$$$$$$そ　　$そ　　$そ　　$そ　　$$$$$$$$$$$$$$$$$$　　$$　　$$　　$$　　$$$$$$$$$$$$$$$$$$$$$$　　$$　　$$　　$$$$$$$$$$$$$$$$$$$$$$　:$$　:$$　:$$$$$$$$$$$$$$$$$$$$$$　:$$　:$$$$$$$$$$$$$$$$$$$$$$$$$$そ:$$そ:$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$そ:$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
 	.globl gUnknown_859A960
 gUnknown_859A960: @ 0x859A960
 	.incbin "baserom_jp.gba", 0x59a960, 0x20
@@ -11660,8 +10532,7 @@ gUnknown_85A86D4: @ 0x85A86D4
 
 	.globl gUnknown_85A86F0
 gUnknown_85A86F0: @ 0x85A86F0
-	.string "{SE_NOT_EFFECTIVE}ä$"
-
+	.string "し　ä$"
 	.globl gUnknown_85A86F4
 gUnknown_85A86F4: @ 0x85A86F4
 	.incbin "baserom_jp.gba", 0x5a86f4, 0x4
@@ -11796,635 +10667,457 @@ gUnknown_85A9544: @ 0x85A9544
 
 	.globl gUnknown_85A9D15
 gUnknown_85A9D15: @ 0x85A9D15
-	.string "{B_ATK_PREFIX2}\n{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_GREEN}り{SE_BOO}つつまれた！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}{LIGHT_GREEN}"
-	.string "りに\nまもられ{MUS_RG_CAUGHT_INTRO}る$"
-
+	.string "{B_ATK_PREFIX2}\n"
+	.string "しろいきりに　つつまれた！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　しろいきりに\n"
+	.string "まもられている$"
 	.globl gUnknown_85A9D39
 gUnknown_85A9D39: @ 0x85A9D39
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nはり{LIGHT_GREEN}っ{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}の\nはんど{LIGHT_GRAY}"
-	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nまもり{SE_A}{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}{MUS_RG_POKE_JUMP}った！$"
-	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}を\n{LIGHT_RED}"
-	.string "{DYNAMIC_COLOR6}{LIGHT_GRAY}！{MUS_RG_VS_CHAMPION}られ{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}を\n{LIGHT_RED}"
-	.string "{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
-	.string "{B_ATK_PREFIX1}{TRANSPARENT}{SE_RG_BAG_POCKET}の\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}"
-	.string "{LIGHT_GREEN}れた！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}に\nたね{SE_WARP_IN}{LIGHT_GRAY}{RED}つ{LIGHT_BLUE}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_WARP_IN}{GREEN}"
-	.string "わ{DYNAMIC_COLOR3}た！$"
-	.string "やどりぎ{SE_SAVE}{B_ATK_NAME_WITH_PREFIX}の\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}{LIGHT_GRAY}"
-	.string "ば{LIGHT_GRAY}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nぐ{LIGHT_GRAY}ぐ{SE_PC_OFF}ねむっ{MUS_RG_CAUGHT_INTRO}る$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}め{SE_WARP_IN}{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR3}た！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_SCR_ACTIVE_NAME_WITH_PREFIX}が\n{DYNAMIC_COLOR2}"
-	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむれな{GREEN}った！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}わが{DYNAMIC_COLOR3}{BLUE}て\nめ{SE_SAVE}{DYNAMIC_COLOR2}"
-	.string "めた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}わぎだ{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR2}{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}る！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{LIGHT_RED}とな{DYNAMIC_COLOR3}{BLUE}なった$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR3}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
-	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}つた{BLUE}わ{RED}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}も{SE_PC_OFF}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{LIGHT_GRAY}"
-	.string "\nた{BLUE}わ{RED}られ{MUS_RG_GAME_FREAK}！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
-	.string "{MUS_RG_TRAINER_TOWER}{PH_LOT_BLEND}{SE_SHIP}ねむら{MUS_RG_GAME_FREAK}！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_DEF_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR2}"
-	.string "わが{DYNAMIC_COLOR3}{BLUE}{SE_SHIP}ねむれ{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は\n{B_DEF_ABILITY}{SE_NOTE_B}ねむら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}がまん{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\nがまん{SE_SAVE}と{GREEN}れた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nつ{GREEN}れはて{SE_SHIP}{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}た！$"
-	.string "{B_PLAYER_NAME}{SE_I}{SE_RG_BAG_POCKET}¥\nひろった！\p$"
-	.string "{B_DEF_NAME_WITH_PREFIX}には\nぜんぜん{MUS_RG_SILPH}て{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_BOO}へん{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\nぶん{DYNAMIC_COLOR3}ん{SE_SAVE}{WHITE}らわれた$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_ATK_NAME_WITH_PREFIX}の\nみがわり{SE_I}{DYNAMIC_COLOR4}"
-	.string "で{SE_BOO}で{MUS_RG_CAUGHT_INTRO}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_BOO}{GREEN}わって\nぶん{DYNAMIC_COLOR3}ん{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "げ{LIGHT_GREEN}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！\p$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}ぶん{DYNAMIC_COLOR3}んは\n{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}まった⋯⋯\p$"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}{SE_A}はんど{LIGHT_GRAY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}"
-	.string "{LIGHT_GRAY}ご{LIGHT_BLUE}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{DARK_GRAY}{GREEN}りの\nボルテージ{SE_SAVE}{WHITE}がっ{MUS_RG_CAUGHT_INTRO}"
-	.string "{BLUE}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ふ{LIGHT_GRAY}じ{DYNAMIC_COLOR1}めた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\n{GREEN}な{DYNAMIC_COLOR3}ばり{SE_SAVE}と{LIGHT_BLUE}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は\nアンコール{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\nアンコールじょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{SE_SAVE}と{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}に\nね{MUS_RG_VS_DEOXYS}{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR2}だめた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}スケッチ{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}てを\nみちづれ{SE_BOO}{DYNAMIC_COLOR3}よ{LIGHT_GRAY}"
-	.string "と{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_ATK_NAME_WITH_PREFIX}を\nみちづれ{SE_BOO}{DYNAMIC_COLOR3}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{MUS_RG_VS_TRAINER}{LIGHT_BLUE}ずった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}{GREEN}ら\n{B_LAST_ITEM}{SE_WARP_IN}{LIGHT_GRAY}"
-	.string "{PH_LOT_SOLO}とった！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は\nも{SE_PC_OFF}にげられ{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{BLUE}む{SE_WARP_IN}みはじめた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{BLUE}む{SE_BOO}{LIGHT_GRAY}な{DYNAMIC_COLOR2}"
-	.string "れ{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}じぶん{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\n{LIGHT_BLUE}ずっ{SE_SHIP}"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_BOO}の{MUS_RG_ENCOUNTER_DEOXYS}{SE_WARP_IN}{GREEN}{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nのろわれ{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_DEF_PREFIX1}{SE_RG_SS_ANNE_HORN}{DYNAMIC_COLOR3}もとに\nま{LIGHT_GREEN}び{DYNAMIC_COLOR3}{SE_SAVE}"
-	.string "ちらばった！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}の\nダメージ{SE_WARP_IN}{LIGHT_GRAY}"
-	.string "{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
-	.string "{MUS_RG_RIVAL_EXIT}{SE_WARP_IN}みやぶった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}ほろびの\nカウント{SE_SAVE}{SE_RG_BAG_POCKET}になった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}ら{RED}る\n{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}"
-	.string "{MUS_RG_POKE_JUMP}った！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}を\n{DYNAMIC_COLOR1}ら{RED}た！$"
-	.string "マグニチュード{SE_RG_BAG_POCKET}！！${B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}"
-	.string "{LIGHT_BLUE}ずって\nパワーぜん{MUS_RG_POKE_TOWER}{SE_BOO}なった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\nほじょ{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
-	.string "{SE_WARP_IN}コピー{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{GREEN}"
-	.string "{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}ほ{LIGHT_GRAY}{DYNAMIC_COLOR2}れた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nやどりぎのタネ{SE_WARP_IN}ふ{LIGHT_GREEN}とば{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ま{LIGHT_GREEN}び{DYNAMIC_COLOR3}を\nふ{LIGHT_GREEN}とば{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{GREEN}ら\nりだつ{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}み{MUS_RG_VS_DEOXYS}に\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
-	.string "{SE_WARP_IN}よち{DYNAMIC_COLOR3}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}の\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
-	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_CURRENT_MOVE}を\nみ{MUS_RG_VS_DEOXYS}{SE_BOO}た{BLUE}{DYNAMIC_COLOR3}"
-	.string "た！$"
-	.string "{SE_RG_BAG_POCKET}{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nちゅ{LIGHT_GRAY}も{BLUE}{SE_A}まと{SE_BOO}なった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nじゅ{LIGHT_GRAY}でん{SE_WARP_IN}はじめた！$"
-	.string "{DYNAMIC_COLOR3}ぜんのち{GREEN}らは\n{B_CURRENT_MOVE}{SE_BOO}なった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{DARK_GRAY}じょ{LIGHT_GRAY}"
-	.string "が\nな{LIGHT_RED}った！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}は\n{DARK_GRAY}ちゃもん{SE_WARP_IN}つ{LIGHT_BLUE}られた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{LIGHT_GRAY}りょ{BLUE}{SE_WARP_IN}た{GREEN}"
-	.string "め{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}\nちょ{LIGHT_GRAY}はつ{SE_BOO}のって{DYNAMIC_COLOR3}まった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}を\nてだ{DYNAMIC_COLOR4}{SE_EXIT}{DYNAMIC_COLOR4}"
-	.string "{SE_ICE_BREAK}{MUS_RG_RIVAL_EXIT}{MUS_RG_PEWTER}{SE_BOO}{MUS_RG_POKE_JUMP}った！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_RED}た{PH_CLOTH_SOLO}の\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}{DARK_GRAY}"
-	.string "れ{GREEN}{RED}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}を\nて{SE_BOO}{DARK_GRAY}れた！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{MUS_RG_VS_TRAINER}を\nて{SE_BOO}{DARK_GRAY}れた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}を\nて{SE_BOO}{DARK_GRAY}れた！\p{B_DEF_NAME_WITH_PREFIX}"
-	.string "{SE_I}{MUS_RG_VS_TRAINER}を\nて{SE_BOO}{DARK_GRAY}れた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{B_DEF_ABILITY}{SE_WARP_IN}"
-	.string "コピー{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\nね{PH_CLOTH_SOLO}ごと{SE_WARP_IN}{DYNAMIC_COLOR3}た！$"
-	.string "{SE_RG_BAG_POCKET}の\nね{PH_CLOTH_SOLO}ごと{SE_SAVE}{GREEN}なった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ね{SE_WARP_IN}はった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ね{GREEN}ら\nよ{LIGHT_GRAY}ぶん{SE_WARP_IN}{MUS_RG_VERMILLION}とった！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}ね{SE_WARP_IN}はって\n{LIGHT_GRAY}ご{GREEN}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\nねむ{LIGHT_BLUE}{SE_WARP_IN}{DYNAMIC_COLOR2}"
-	.string "{DYNAMIC_COLOR6}った！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_DEF_NAME_WITH_PREFIX}の\n{B_LAST_ITEM}{SE_WARP_IN}はた{LIGHT_GREEN}"
-	.string "{LIGHT_RED}と{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_RED}た{PH_CLOTH_SOLO}の\nと{BLUE}{MUS_RG_PEWTER}{SE_WARP_IN}"
-	.string "{DARK_GRAY}れ{GREEN}{RED}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}ての\nわざ{SE_WARP_IN}ふ{MUS_RG_POKE_CENTER}"
-	.string "ん{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_OAK_LAB}てに\n{LIGHT_RED}んねん{SE_WARP_IN}{GREEN}{LIGHT_BLUE}"
-	.string "よ{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{SE_RG_BAG_POCKET}は\n{LIGHT_RED}んねん{SE_NOTE_B}わざポイント{SE_SAVE}0{SE_BOO}"
-	.string "なった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{B_CURRENT_MOVE}{SE_BOO}つつまれた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{B_CURRENT_MOVE}は\nマジックコート{SE_BOO}はね{GREEN}{RED}{DYNAMIC_COLOR2}れた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_A}で{GREEN}た{SE_WARP_IN}{LIGHT_GRAY}{GREEN}"
-	.string "がっ{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_NAME_WITH_PREFIX}の\nわざ{SE_WARP_IN}よ{DYNAMIC_COLOR1}"
-	.string "どり{DYNAMIC_COLOR3}た！$"
-	.string "でん{LIGHT_GREEN}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}よわまった！$"
-	.string "ほの{LIGHT_RED}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}よわまった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}を\nひろって{LIGHT_GREEN}た！$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ち{MUS_RG_POKE_FLUTE}{TRANSPARENT}{GREEN}{LIGHT_RED}り{SE_SAVE}ひろがった！$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}つ{GREEN}{LIGHT_GRAY}{DYNAMIC_COLOR1}"
-	.string "とは\nで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！{PAUSE}ぞ$"
-	.string "{B_LAST_ITEM}{SE_I}{B_SCR_ACTIVE_NAME_WITH_PREFIX}には\n{SE_RG_BAG_POCKET}$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}って\nはり{LIGHT_GREEN}"
-	.string "{SE_ICE_STAIRS}だ{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{LIGHT_GRAY}りょ{BLUE}が\nとぎれ{SE_SHIP}"
-	.string "わざ{SE_SAVE}だ{DYNAMIC_COLOR5}な{GREEN}った！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR5}んと{LIGHT_GRAY}に\nひ{LIGHT_GREEN}ずりだ{DYNAMIC_COLOR2}"
-	.string "れた！\p$"
-	.string "{GREEN}べ{SE_SAVE}{DYNAMIC_COLOR1}われた！${DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR1}"
-	.string "{LIGHT_GRAY}{GREEN}{SE_SAVE}な{GREEN}った！$"
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_A}で{LIGHT_GREEN}る\nわざ{SE_SAVE}"
-	.string "{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}{GREEN}な{DYNAMIC_COLOR3}ばりで\n{B_CURRENT_MOVE}{SE_SAVE}"
-	.string "だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}{DARK_GRAY}ちゃもん{SE_WARP_IN}つ{LIGHT_BLUE}られたので\nつづ{LIGHT_BLUE}"
-	.string "{SE_SHIP}{LIGHT_RED}な{SE_BALL_THROW}わざ{SE_SAVE}だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}ちょ{LIGHT_GRAY}は{SE_SLIDING_DOOR}{DYNAMIC_COLOR2}れて\n{B_CURRENT_MOVE}"
-	.string "{SE_SAVE}だ{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}ふ{MUS_RG_POKE_CENTER}んで\n{B_CURRENT_MOVE}{SE_SAVE}だ{DYNAMIC_COLOR5}"
-	.string "{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で{MUS_RG_VS_WILD}め{SE_SAVE}ふりはじめた！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}"
-	.string "{SE_SAVE}{WHITE}がった！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_CURRENT_MOVE}"
-	.string "{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "{GREEN}{SE_SAVE}な{GREEN}った！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{SE_RG_BAG_POCKET}タイプ{SE_BOO}なった！$"
-	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nまひ{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nメロメロ{SE_BOO}なら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nど{BLUE}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}"
-	.string "{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{DYNAMIC_COLOR1}んらん{DYNAMIC_COLOR3}"
-	.string "{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nほの{LIGHT_RED}{SE_A}{DARK_GRAY}りょ{BLUE}{SE_SAVE}"
-	.string "{WHITE}がった！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\nはり{MUS_RG_OBTAIN_KEY_ITEM}{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{B_DEF_NAME_WITH_PREFIX}{SE_A}"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}りょ{BLUE}{SE_SAVE}{DYNAMIC_COLOR2}がった！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\nの{LIGHT_GRAY}りょ{BLUE}{SE_SAVE}"
-	.string "{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}{LIGHT_GREEN}"
-	.string "ず{MUS_RG_OBTAIN_KEY_ITEM}た！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{SE_RG_BAG_POCKET}の\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}"
-	.string "トレース{DYNAMIC_COLOR3}た！$"
-	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_EFF_ABILITY}で\nや{LIGHT_BLUE}ど{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}"
-	.string "{MUS_RG_GAME_FREAK}！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{B_CURRENT_MOVE}{SE_WARP_IN}"
-	.string "{LIGHT_GRAY}{LIGHT_BLUE}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{B_ATK_ABILITY}で\n{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}"
-	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{DYNAMIC_COLOR4}な{WHITE}"
-	.string "ら{DYNAMIC_COLOR3}{SE_BOO}なった！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\nひざ{DYNAMIC_COLOR3}{SE_SAVE}つよ{BLUE}"
-	.string "なった！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}{SE_SAVE}"
-	.string "{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_ATK_NAME_WITH_PREFIX}{SE_I}メロメロ{SE_BOO}なった！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{B_CURRENT_MOVE}{SE_SAVE}{LIGHT_GREEN}{GREEN}"
-	.string "{MUS_RG_GAME_FREAK}！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}じょ{LIGHT_GRAY}"
-	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "ヘドロ{RED}{LIGHT_GREEN}{SE_WARP_IN}{MUS_RG_VERMILLION}とった！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{DYNAMIC_COLOR4}がたが\nへん{GREEN}{DYNAMIC_COLOR3}た！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_DEF_ABILITY}で\n{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
-	.string "{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}た！$"
-
+	.string "{B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "はりきっている！${B_ATK_NAME_WITH_PREFIX}は　こうげきの\n"
+	.string "はんどうを　うけた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "まもりの　たいせいに　はいった！$すなあらしが　{B_ATK_NAME_WITH_PREFIX}を\n"
+	.string "おそう！$あられが　{B_ATK_NAME_WITH_PREFIX}を\n"
+	.string "おそう！${B_ATK_PREFIX1}　{SE_RG_BAG_POCKET}の\n"
+	.string "こうかが　きれた！${B_DEF_NAME_WITH_PREFIX}に\n"
+	.string "たねを　うえつけた！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "こうげきを　かわした！$やどりぎが　{B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "たいりょくを　うばう！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "ぐうぐう　ねむっている${B_ATK_NAME_WITH_PREFIX}は　めを　さました！$しかし　{B_SCR_ACTIVE_NAME_WITH_PREFIX}が\n"
+	.string "さわいでいて　ねむれなかった！${B_ATK_NAME_WITH_PREFIX}は　さわがしくて\n"
+	.string "めが　さめた！${B_ATK_NAME_WITH_PREFIX}は　さわぎだした！${B_ATK_NAME_WITH_PREFIX}は　さわいでいる！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "おとなしくなった$しかし{B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "さわいでいて　ねむらない！${B_ATK_NAME_WITH_PREFIX}は　{SE_RG_BAG_POCKET}つたくわえた！${B_ATK_NAME_WITH_PREFIX}は　もう　これいじょう\n"
+	.string "たくわえられない！$しかし　{B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "さわいでいて　ねむらない！$しかし　{B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "さわがしくて　ねむれない！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "{B_DEF_ABILITY}で　ねむらない！${B_ATK_NAME_WITH_PREFIX}は　がまんしている${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "がまんが　とかれた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "つかれはてて　こんらんした！${B_PLAYER_NAME}は　{SE_RG_BAG_POCKET}¥\n"
+	.string "ひろった！\p"
+	.string "${B_DEF_NAME_WITH_PREFIX}には\n"
+	.string "ぜんぜんきいてない！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "{SE_RG_BAG_POCKET}に　へんしんした！${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "ぶんしんが　あらわれた$しかし　{B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "みがわりは　すでに　でていた！${B_DEF_NAME_WITH_PREFIX}に　かわって\n"
+	.string "ぶんしんが　こうげきを　うけた！\p"
+	.string "${B_DEF_NAME_WITH_PREFIX}の　ぶんしんは\n"
+	.string "きえてしまった⋯⋯\p"
+	.string "$こうげきの　はんどうで\n"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　うごけない！${B_DEF_NAME_WITH_PREFIX}の　いかりの\n"
+	.string "ボルテージが　あがっていく！${B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}を　ふうじこめた！${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "かなしばりが　とけた！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "アンコールを　うけた！${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "アンコールじょうたいが　とけた！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}に\n"
+	.string "ねらいを　さだめた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "{SE_RG_BAG_POCKET}を　スケッチした！${B_ATK_NAME_WITH_PREFIX}は　あいてを\n"
+	.string "みちづれに　しようとしている${B_DEF_NAME_WITH_PREFIX}は　{B_ATK_NAME_WITH_PREFIX}を\n"
+	.string "みちづれに　した！${B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}を　{MUS_RG_VS_TRAINER}けずった！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}から\n"
+	.string "{B_LAST_ITEM}を　うばいとった！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "もう　にげられない！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "あくむを　みはじめた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "あくむに　うなされている！${B_ATK_NAME_WITH_PREFIX}は　じぶんの　たいりょくを\n"
+	.string "けずって　{B_DEF_NAME_WITH_PREFIX}に　のろいを　かけた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "のろわれている！${B_DEF_PREFIX1}　あしもとに\n"
+	.string "まきびしが　ちらばった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　まきびしの\n"
+	.string "ダメージを　うけた！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "しょうたいを　みやぶった！${B_ATK_NAME_WITH_PREFIX}の　ほろびの\n"
+	.string "カウントが　{SE_RG_BAG_POCKET}になった！${B_ATK_NAME_WITH_PREFIX}は　こらえる\n"
+	.string "たいせいに　はいった！${B_DEF_NAME_WITH_PREFIX}は　こうげきを\n"
+	.string "こらえた！$マグニチュード{SE_RG_BAG_POCKET}！！${B_ATK_NAME_WITH_PREFIX}は　たいりょくを　けずって\n"
+	.string "パワーぜんかいに　なった！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "ほじょこうかを　コピーした！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}から　かいほうされた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "やどりぎのタネを　ふきとばした！${B_ATK_NAME_WITH_PREFIX}は　まきびしを\n"
+	.string "ふきとばした！${B_ATK_NAME_WITH_PREFIX}は　せんとうから\n"
+	.string "りだつした！${B_ATK_NAME_WITH_PREFIX}は　みらいに\n"
+	.string "こうげきを　よちした！${B_DEF_NAME_WITH_PREFIX}は　{SE_RG_BAG_POCKET}の\n"
+	.string "こうげきを　うけた！${B_ATK_NAME_WITH_PREFIX}は　{B_CURRENT_MOVE}を\n"
+	.string "みらいに　たくした！${SE_RG_BAG_POCKET}の　こうげき！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "ちゅうもくの　まとに　なった！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "じゅうでんを　はじめた！$しぜんのちからは\n"
+	.string "{B_CURRENT_MOVE}に　なった！${B_ATK_NAME_WITH_PREFIX}の　じょうたいいじょうが\n"
+	.string "なおった！${B_DEF_NAME_WITH_PREFIX}は\n"
+	.string "いちゃもんを　つけられた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "しゅうちゅうりょくを　たかめている！${B_DEF_NAME_WITH_PREFIX}は　\n"
+	.string "ちょうはつに　のってしまった！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}を\n"
+	.string "てだすけ　する　たいせいに　はいった！${B_ATK_NAME_WITH_PREFIX}は　おたがいの\n"
+	.string "どうぐを　いれかえた！${B_ATK_NAME_WITH_PREFIX}は　{SE_RG_BAG_POCKET}を\n"
+	.string "てに　いれた！${B_DEF_NAME_WITH_PREFIX}は　{MUS_RG_VS_TRAINER}を\n"
+	.string "てに　いれた！${B_ATK_NAME_WITH_PREFIX}は　{SE_RG_BAG_POCKET}を\n"
+	.string "てに　いれた！\p"
+	.string "{B_DEF_NAME_WITH_PREFIX}は　{MUS_RG_VS_TRAINER}を\n"
+	.string "てに　いれた！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{B_DEF_ABILITY}を　コピーした！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "ねがいごとを　した！${SE_RG_BAG_POCKET}の\n"
+	.string "ねがいごとが　かなった！${B_ATK_NAME_WITH_PREFIX}は　ねを　はった！${B_ATK_NAME_WITH_PREFIX}は　ねから\n"
+	.string "ようぶんを　すいとった！${B_DEF_NAME_WITH_PREFIX}は　ねを　はって\n"
+	.string "うごかない！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "ねむけを　さそった！${B_ATK_NAME_WITH_PREFIX}は　{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{B_LAST_ITEM}を　はたきおとした！${B_ATK_NAME_WITH_PREFIX}は　おたがいの\n"
+	.string "とくせいを　いれかえた！${B_ATK_NAME_WITH_PREFIX}は　あいての\n"
+	.string "わざを　ふういんした！${B_ATK_NAME_WITH_PREFIX}は　あいてに\n"
+	.string "おんねんを　かけようと　している！${B_ATK_NAME_WITH_PREFIX}の　{SE_RG_BAG_POCKET}は\n"
+	.string "おんねんで　わざポイントが　0に　なった！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "{B_CURRENT_MOVE}に　つつまれた！${B_ATK_NAME_WITH_PREFIX}の　{B_CURRENT_MOVE}は\n"
+	.string "マジックコートに　はねかえされた！${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "あいての　でかたを　うかがっている！${B_DEF_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_NAME_WITH_PREFIX}の\n"
+	.string "わざを　よこどりした！$でんきの　いりょくが　よわまった！$ほのおの　いりょくが　よわまった！${B_ATK_NAME_WITH_PREFIX}は　{B_LAST_ITEM}を\n"
+	.string "ひろってきた！$ここちよい　かおりが　ひろがった！$ここでは　どうぐを　つかうことは\n"
+	.string "できません！{PAUSE 64}${B_LAST_ITEM}は　{B_SCR_ACTIVE_NAME_WITH_PREFIX}には\n"
+	.string "{SE_RG_BAG_POCKET}${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}を　つかって\n"
+	.string "はりきり　だした！${B_ATK_NAME_WITH_PREFIX}は　しゅうちゅうりょくが\n"
+	.string "とぎれて　わざが　だせなかった！${B_DEF_NAME_WITH_PREFIX}は　せんとうに\n"
+	.string "ひきずりだされた！\p"
+	.string "$かべが　こわれた！$しかし　こうかが　なかった！${B_ACTIVE_NAME_WITH_PREFIX}は　だすことの　できる\n"
+	.string "わざが　ない！\p"
+	.string "${B_ACTIVE_NAME_WITH_PREFIX}は　かなしばりで\n"
+	.string "{B_CURRENT_MOVE}が　だせない！\p"
+	.string "${B_ACTIVE_NAME_WITH_PREFIX}は　いちゃもんを　つけられたので\n"
+	.string "つづけて　おなじ　わざが　だせない！\p"
+	.string "${B_ACTIVE_NAME_WITH_PREFIX}は　ちょうはつ　されて\n"
+	.string "{B_CURRENT_MOVE}が　だせない！\p"
+	.string "${B_ACTIVE_NAME_WITH_PREFIX}は　ふういんで\n"
+	.string "{B_CURRENT_MOVE}が　だせない！\p"
+	.string "${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "あめが　ふりはじめた！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "すばやさが　あがった！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "きかなかった！${B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　{B_CURRENT_MOVE}が　できない！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "かいふくした！${B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+	.string "{B_CURRENT_MOVE}は　こうかが　なかった！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "{SE_RG_BAG_POCKET}タイプに　なった！${B_EFF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "まひしない！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "メロメロに　ならない！${B_EFF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "どくを　うけない！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "こんらんしない！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "ほのおの　いりょくが　あがった！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "はりついている！${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "{B_DEF_NAME_WITH_PREFIX}の　こうげきりょくが　さがった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "のうりょくが　さがらない！${B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　きずついた！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{SE_RG_BAG_POCKET}の\n"
+	.string "{MUS_RG_VS_TRAINER}を　トレースした！${B_EFF_NAME_WITH_PREFIX}は　{B_EFF_ABILITY}で\n"
+	.string "やけどしない！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "{B_CURRENT_MOVE}を　うけない！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "{B_CURRENT_MOVE}を　うけない！${B_ATK_NAME_WITH_PREFIX}は　{B_ATK_ABILITY}で\n"
+	.string "すこし　かいふく${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "すなあらしに　なった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "ひざしが　つよくなった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "{SE_RG_BAG_POCKET}が　さがらない！${B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+	.string "{B_ATK_NAME_WITH_PREFIX}は　メロメロに　なった！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "{B_CURRENT_MOVE}が　きかない！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "{SE_RG_BAG_POCKET}じょうたいが　なおった！$ヘドロえきを　すいとった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　すがたが\n"
+	.string "へんかした！${B_DEF_NAME_WITH_PREFIX}は　{B_DEF_ABILITY}で\n"
+	.string "こうげきを　うけた！$"
 	.globl gUnknown_85AA7DF
 gUnknown_85AA7DF: @ 0x85AA7DF
-	.string "{SE_RG_BAG_POCKET}{SE_A}{B_LAST_ABILITY}で\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}もど{DYNAMIC_COLOR4}"
-	.string "{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}で\n{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}"
-	.string "{SE_RG_BAG_POCKET}{SE_I}{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}で\n{LIGHT_GRAY}ま{SE_DOOR}{LIGHT_GREEN}"
-	.string "まらな{GREEN}った！$"
-	.string "{B_EFF_NAME_WITH_PREFIX}{SE_I}{B_EFF_ABILITY}で\nひるま{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}{B_ATK_ABILITY}で\n{B_DEF_NAME_WITH_PREFIX}{SE_A}{B_DEF_ABILITY}{SE_I}"
-	.string "{LIGHT_GREEN}{GREEN}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_SCR_ACTIVE_ABILITY}で\n{SE_RG_BAG_POCKET}{SE_SAVE}な{LIGHT_RED}"
-	.string "った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_A}{B_SCR_ACTIVE_ABILITY}は\n{B_EFF_NAME_WITH_PREFIX}{SE_BOO}"
-	.string "{LIGHT_GREEN}{GREEN}な{GREEN}った！$"
-	.string "ぐーん{SE_BANG}$"
-
+	.string "{SE_RG_BAG_POCKET}の　{B_LAST_ABILITY}で\n"
+	.string "{MUS_RG_VS_TRAINER}を　もどすことが　できない！\p"
+	.string "${B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}で\n"
+	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{SE_RG_BAG_POCKET}は　きかなかった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "うまく　きまらなかった！${B_EFF_NAME_WITH_PREFIX}は　{B_EFF_ABILITY}で\n"
+	.string "ひるまない！${B_ATK_NAME_WITH_PREFIX}の　{B_ATK_ABILITY}で\n"
+	.string "{B_DEF_NAME_WITH_PREFIX}の　{B_DEF_ABILITY}は　きかない！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_SCR_ACTIVE_ABILITY}で\n"
+	.string "{SE_RG_BAG_POCKET}が　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}の　{B_SCR_ACTIVE_ABILITY}は\n"
+	.string "{B_EFF_NAME_WITH_PREFIX}に　きかなかった！$ぐーんと　$"
 	.globl gUnknown_85AA877
 gUnknown_85AA877: @ 0x85AA877
-	.string "{WHITE}がった！$が{BLUE}っ{SE_BANG}${DYNAMIC_COLOR2}がった！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
-
+	.string "あがった！$がくっと　$さがった！${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}が　{MUS_RG_VS_TRAINER}$"
 	.globl gUnknown_85AA894
 gUnknown_85AA894: @ 0x85AA894
-	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
-	.string "{B_ATK_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
-	.string "{B_DEF_NAME_WITH_PREFIX}の\n{SE_RG_BAG_POCKET}{SE_SAVE}{MUS_RG_VS_TRAINER}$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_A}の{LIGHT_GRAY}りょ{BLUE}は\nも{SE_PC_OFF}{WHITE}がら{MUS_RG_GAME_FREAK}！$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_A}の{LIGHT_GRAY}りょ{BLUE}は\nも{SE_PC_OFF}{DYNAMIC_COLOR2}"
-	.string "がら{MUS_RG_GAME_FREAK}！$"
-	.string "{LIGHT_GREEN}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_BOO}{WHITE}たった！$"
-	.string "{DARK_GRAY}ちげ{SE_WALL_HIT}ひっ{DYNAMIC_COLOR2}つ！$"
-	.string "{PAUSE}み{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}"
-	.string "⋯{PAUSE}{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}ポカン！\p$"
-	.string "{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}て⋯⋯！\p${DYNAMIC_COLOR6}れ{SE_I}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}"
-	.string "つ{SE_PIN}わざで{DYNAMIC_COLOR4}\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}"
-	.string "と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！\p$"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_I}{DARK_GRAY}まひとつ{SE_A}よ{LIGHT_GRAY}だ$"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_I}ばつぐんだ！$"
-
+	.string "{B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}が　{MUS_RG_VS_TRAINER}${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "{SE_RG_BAG_POCKET}が　{MUS_RG_VS_TRAINER}${B_ATK_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}が　{MUS_RG_VS_TRAINER}${B_DEF_NAME_WITH_PREFIX}の\n"
+	.string "{SE_RG_BAG_POCKET}が　{MUS_RG_VS_TRAINER}${B_ATK_NAME_WITH_PREFIX}の　のうりょくは\n"
+	.string "もう　あがらない！${B_DEF_NAME_WITH_PREFIX}の　のうりょくは\n"
+	.string "もう　さがらない！$きゅうしょに　あたった！$いちげき　ひっさつ！${PAUSE 32}1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p"
+	.string "$そして⋯⋯！\p"
+	.string "$それは　たいせつな　わざです\n"
+	.string "わすれさせることは　できません！\p"
+	.string "$こうかは　いまひとつの　ようだ$こうかは　ばつぐんだ！$"
 	.globl gUnknown_85AA970
 gUnknown_85AA970: @ 0x85AA970
-	.string "{PLAY_SE}{SE_FLEE}{LIGHT_GRAY}ま{SE_DOOR}にげ{LIGHT_GREEN}れた！\p$"
-	.string "{PLAY_SE}{SE_FLEE}{B_ATK_NAME_WITH_PREFIX}{SE_I}もっ{MUS_RG_CAUGHT_INTRO}た\n{B_LAST_ITEM}{SE_WARP_IN}"
-	.string "つ{GREEN}っ{SE_SHIP}にげた\p$"
-	.string "{PLAY_SE}{SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は\n{B_ATK_ABILITY}{SE_WARP_IN}つ{GREEN}っ{SE_SHIP}にげた\p$"
-	.string "{PLAY_SE}{SE_FLEE}や{MUS_RG_PEWTER}{SE_A}{SE_RG_BAG_POCKET}{SE_I}にげだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{PLAY_SE SE_FLEE}うまく　にげきれた！\p"
+	.string "${PLAY_SE SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は　もっていた\n"
+	.string "{B_LAST_ITEM}を　つかって　にげた\p"
+	.string "${PLAY_SE SE_FLEE}{B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "{B_ATK_ABILITY}を　つかって　にげた\p"
+	.string "${PLAY_SE SE_FLEE}やせいの　{SE_RG_BAG_POCKET}は　にげだした！$"
 	.globl gUnknown_85AA9C6
 gUnknown_85AA9C6: @ 0x85AA9C6
-	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}{GREEN}った！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}との\n"
+	.string "しょうぶに　かった！$"
 	.globl gUnknown_85AA9D6
 gUnknown_85AA9D6: @ 0x85AA9D6
-	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
-	.string "{GREEN}った！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+	.string "しょうぶに　かった！$"
 	.globl gUnknown_85AA9EA
 gUnknown_85AA9EA: @ 0x85AA9EA
-	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ま{LIGHT_BLUE}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}との\n"
+	.string "しょうぶに　まけた！$"
 	.globl gUnknown_85AA9FA
 gUnknown_85AA9FA: @ 0x85AA9FA
-	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
-	.string "ま{LIGHT_BLUE}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+	.string "しょうぶに　まけた！$"
 	.globl gUnknown_85AAA0E
 gUnknown_85AAA0E: @ 0x85AAA0E
-	.string "{B_LINK_OPPONENT1_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}との\n"
+	.string "しょうぶに　ひきわけた！$"
 	.globl gUnknown_85AAA20
 gUnknown_85AAA20: @ 0x85AAA20
-	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}との\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
-	.string "ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}との\n"
+	.string "しょうぶに　ひきわけた！$"
 	.globl gUnknown_85AAA36
 gUnknown_85AAA36: @ 0x85AAA36
-	.string "{PLAY_SE}{SE_FLEE}{B_LINK_OPPONENT1_NAME}{SE_I}にげだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{PLAY_SE SE_FLEE}{B_LINK_OPPONENT1_NAME}は　にげだした！$"
 	.globl gUnknown_85AAA45
 gUnknown_85AAA45: @ 0x85AAA45
-	.string "{PLAY_SE}{SE_FLEE}{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}は\nにげだ{DYNAMIC_COLOR3}た！$"
-	.string "ダメだ{SE_M_DRAGON_RAGE}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_A}{MUS_RG_VICTORY_WILD}ちゅ{LIGHT_GRAY}"
-	.string "に{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_BOO}{DYNAMIC_COLOR5}な{GREEN}{SE_I}み{DYNAMIC_COLOR5}"
-	.string "られ{MUS_RG_GAME_FREAK}！\p$"
-	.string "にげる{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
-	.string "オダマキ“{SE_FAILURE}み{DYNAMIC_COLOR4}て{MUS_RG_GAME_FREAK}で{BLUE}れー！”\p$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なにも{LIGHT_RED}{DYNAMIC_COLOR1}ら{MUS_RG_GAME_FREAK}$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{LIGHT_GRAY}ま{SE_DOOR}{LIGHT_GREEN}まらな{GREEN}った！$"
-	.string "わ{LIGHT_BLUE}{SE_SWITCH}わ{GREEN}らず\nじぶん{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR3}た！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}オウムが{RED}{DYNAMIC_COLOR3}は\n{DYNAMIC_COLOR3}"
-	.string "っ{PH_THOUGHT_HELD}に{LIGHT_RED}わった！{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりはじめた！$"
-	.string "{LIGHT_RED}{SE_RG_POKE_JUMP_SUCCESS}め{SE_BOO}なった！{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりつ{PH_PRICE_SOLO}"
-	.string "{MUS_RG_CAUGHT_INTRO}る$"
-	.string "{LIGHT_RED}{SE_RG_POKE_JUMP_SUCCESS}め{SE_SAVE}ふりつ{PH_PRICE_SOLO}{MUS_RG_CAUGHT_INTRO}"
-	.string "る{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふりやんだ！$"
-	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{LIGHT_GREEN}はじめた！$"
-	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{SE_POKENAV_CALL}れる$"
-	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}{LIGHT_RED}{DYNAMIC_COLOR2}まった！$"
-	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}つよ{BLUE}なった！$"
-	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}つ{MUS_RG_POKE_FLUTE}$"
-	.string "ひざ{DYNAMIC_COLOR3}{SE_SAVE}よわ{BLUE}なった！{MUS_RG_VS_CHAMPION}られ{SE_SAVE}ふりはじめた！{MUS_RG_VS_CHAMPION}"
-	.string "られ{SE_SAVE}ふりつ{PH_PRICE_SOLO}{MUS_RG_CAUGHT_INTRO}る{MUS_RG_VS_CHAMPION}られ{SE_SAVE}ふりやんだ！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なに{SE_SWITCH}は{LIGHT_GREEN}だ{DYNAMIC_COLOR5}な{GREEN}った！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}なに{SE_SWITCH}のみ{DYNAMIC_COLOR1}めな{GREEN}った！$"
-	.string "{GREEN}ぜ{SE_I}ねっぷ{LIGHT_GRAY}{SE_BOO}なった！$"
-	.string "{DYNAMIC_COLOR4}べて{SE_A}ステータスが\nもと{SE_BOO}もどった！$"
-	.string "{DYNAMIC_COLOR1}ばん{SE_SAVE}{WHITE}たり{SE_BOO}ちらばった！$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}ぶん{DYNAMIC_COLOR3}ん{SE_WARP_IN}だ{DYNAMIC_COLOR4}"
-	.string "には\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}たりな{GREEN}った！$"
-	.string "{LIGHT_RED}た{PH_CLOTH_SOLO}{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}を\nわ{GREEN}ち{WHITE}った！$"
-	.string "{DYNAMIC_COLOR4}ずのね{SE_SAVE}ひび{LIGHT_GREEN}わたった！$"
-	.string "{LIGHT_RED}た{PH_CLOTH_SOLO}のポケモンは\n3ターンご{SE_BOO}ほろびて{DYNAMIC_COLOR3}ま{LIGHT_GRAY}！$"
-	.string "わざ{SE_A}の{DYNAMIC_COLOR1}りポイント{SE_SAVE}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR3}\nわざ{SE_A}の{DYNAMIC_COLOR1}りポイント{SE_SAVE}な{GREEN}った！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ねむったまま\n{MUS_RG_SEVII_DUNGEON}{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_WARP_IN}"
-	.string "む{DYNAMIC_COLOR3}{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{MUS_RG_SEVII_DUNGEON}{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_WARP_IN}"
-	.string "む{DYNAMIC_COLOR3}{DYNAMIC_COLOR3}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}ひるね{SE_WARP_IN}はじめた！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}なま{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DARK_GRAY}{LIGHT_GRAY}{DYNAMIC_COLOR1}と{SE_WARP_IN}{LIGHT_GREEN}"
-	.string "{GREEN}{MUS_RG_GAME_FREAK}！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR6}っぽ{SE_WARP_IN}{MUS_RG_SEVII_ROUTE}た！$"
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_I}{DYNAMIC_COLOR3}らんぷり{DYNAMIC_COLOR3}た！$"
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{MUS_RG_VS_TRAINER}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR6}"
-	.string "{LIGHT_GRAY}{SE_BANG}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}る\p{B_PLAYER_NAME}{SE_SWITCH}"
-	.string "ポケモンを\n{DARK_GRAY}れ{GREEN}{RED}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{B_ATK_NAME_WITH_PREFIX}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
-
+	.string "{PLAY_SE SE_FLEE}{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}は\n"
+	.string "にげだした！$ダメだ！　しょうぶの　さいちゅうに\n"
+	.string "あいてに　せなかは　みせられない！\p"
+	.string "$にげることが　できない！\p"
+	.string "$オダマキ“み　みすてないでくれー！”\p"
+	.string "$しかし　なにもおこらない$しかし　うまく　きまらなかった！$わけも　わからず\n"
+	.string "じぶんを　こうげきした！$しかし　オウムがえしは\n"
+	.string "しっぱいにおわった！$あめが　ふりはじめた！$おおあめに　なった！$あめが　ふりつづいている$おおあめが　ふりつづいている$あめが　ふりやんだ！$すなあらしが　ふきはじめた！$すなあらしが　ふきあれる$すなあらしが　おさまった！$ひざしが　つよくなった！$ひざしが　つよい$ひざしが　よわくなった！$あられが　ふりはじめた！$あられが　ふりつづいている$あられが　ふりやんだ！$しかし　なにも　はきだせなかった！$しかし　なにも　のみこめなかった！$かぜは　ねっぷうに　なった！$すべての　ステータスが\n"
+	.string "もとに　もどった！$こばんが　あたりに　ちらばった！$しかし　ぶんしんを　だすには\n"
+	.string "たいりょくが　たりなかった！$おたがいの　たいりょくを\n"
+	.string "わかちあった！$すずのねが　ひびきわたった！$おたがいのポケモンは\n"
+	.string "3ターンごに　ほろびてしまう！$わざの　のこりポイントが　ない！\p"
+	.string "$しかし\n"
+	.string "わざの　のこりポイントが　なかった！${B_ATK_NAME_WITH_PREFIX}は　ねむったまま\n"
+	.string "めいれいを　むしした！${B_ATK_NAME_WITH_PREFIX}は　めいれいを　むしした！${B_ATK_NAME_WITH_PREFIX}は　ひるねを　はじめた！${B_ATK_NAME_WITH_PREFIX}は　なまけている！${B_ATK_NAME_WITH_PREFIX}は　いうことを　きかない！${B_ATK_NAME_WITH_PREFIX}は　そっぽを　むいた！${B_ATK_NAME_WITH_PREFIX}は　しらんぷりした！${B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{MUS_RG_VS_TRAINER}を　くりだそうと　している\p"
+	.string "{B_PLAYER_NAME}も　ポケモンを\n"
+	.string "いれかえますか？${B_ATK_NAME_WITH_PREFIX}は\n"
+	.string "{SE_RG_BAG_POCKET}を　おぼえた！$"
 	.globl gUnknown_85AAD22
 gUnknown_85AAD22: @ 0x85AAD22
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}{GREEN}"
-	.string "った！\p$"
-	.string "{B_PLAYER_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BOO}ち{GREEN}{PH_PRICE_SOLO}た！$"
-	.string "{B_PLAYER_NAME}は\n{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}ち{GREEN}づ{LIGHT_BLUE}"
-	.string "{MUS_RG_GAME_FREAK}！$"
-	.string "{B_OPPONENT_MON1_NAME}は\n{DYNAMIC_COLOR1}ちら{SE_A}よ{LIGHT_GRAY}{DYNAMIC_COLOR4}{SE_WARP_IN}"
-	.string "{LIGHT_GRAY}{GREEN}がっ{MUS_RG_CAUGHT_INTRO}る！$"
-	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\n{LIGHT_GREEN}ょ{LIGHT_GRAY}み{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR3}め{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}よ{LIGHT_GRAY}だ！$"
-	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\nむちゅ{LIGHT_GRAY}{SE_BOO}なっ{MUS_RG_CAUGHT_INTRO}"
-	.string "{SE_ICE_BREAK}よ{LIGHT_GRAY}だ！$"
-	.string "{B_OPPONENT_MON1_NAME}{SE_I}{SE_RG_BAG_POCKET}に\nみむ{LIGHT_GREEN}{SE_SWITCH}{DYNAMIC_COLOR3}"
-	.string "{MUS_RG_GAME_FREAK}{TRANSPARENT}よ{LIGHT_GRAY}だ！$"
-	.string "{B_PLAYER_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BOO}ポロック{SE_WARP_IN}なげた！$"
-	.string "{PLAY_SE}{SE_DING_DONG}アナウンス“ピンポーン{SE_M_DRAGON_RAGE}サファリボールが\nな{BLUE}なったの{SE_NOTE_B}{DYNAMIC_COLOR3}"
-	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}でー{DYNAMIC_COLOR4}！\p{MUS_RG_VS_CHAMPION}{SE_M_DRAGON_RAGE}"
-	.string "{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}て{LIGHT_GREEN}た！\p$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+	.string "との　しょうぶに　かった！\p"
+	.string "${B_PLAYER_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}に　ちかづいた！${B_PLAYER_NAME}は\n"
+	.string "これいじょう　ちかづけない！${B_OPPONENT_MON1_NAME}は\n"
+	.string "こちらの　ようすを　うかがっている！${B_OPPONENT_MON1_NAME}は　{SE_RG_BAG_POCKET}に\n"
+	.string "きょうみを　しめしている　ようだ！${B_OPPONENT_MON1_NAME}は　{SE_RG_BAG_POCKET}に\n"
+	.string "むちゅうに　なっている　ようだ！${B_OPPONENT_MON1_NAME}は　{SE_RG_BAG_POCKET}に\n"
+	.string "みむきも　しない　ようだ！${B_PLAYER_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}に　ポロックを　なげた！${PLAY_SE SE_DING_DONG}アナウンス“ピンポーン！　サファリボールが\n"
+	.string "なくなったので　しゅうりょうでーす！\p"
+	.string "$あ！　{B_OPPONENT_MON1_NAME}が　とびだしてきた！\p$"
 	.globl gUnknown_85AAE0C
 gUnknown_85AAE0C: @ 0x85AAE0C
-	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}"
-	.string "て{LIGHT_GREEN}た！\p$"
-
+	.string "あ！　やせいの\n"
+	.string "{B_OPPONENT_MON1_NAME}が　とびだしてきた！\p$"
 	.globl gUnknown_85AAE22
 gUnknown_85AAE22: @ 0x85AAE22
-	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}{WHITE}らわれた！\p$"
-
+	.string "あ！　やせいの\n"
+	.string "{B_OPPONENT_MON1_NAME}が　あらわれた！\p$"
 	.globl gUnknown_85AAE36
 gUnknown_85AAE36: @ 0x85AAE36
-	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_SAVE}とびだ{DYNAMIC_COLOR3}"
-	.string "て{LIGHT_GREEN}た！{PAUSE}ァ$"
-
+	.string "あ！　やせいの\n"
+	.string "{B_OPPONENT_MON1_NAME}が　とびだしてきた！{PAUSE 127}$"
 	.globl gUnknown_85AAE4E
 gUnknown_85AAE4E: @ 0x85AAE4E
-	.string "{WHITE}{SE_M_DRAGON_RAGE}や{MUS_RG_PEWTER}の\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}"
-	.string "{SE_SAVE}とびだ{DYNAMIC_COLOR3}て{LIGHT_GREEN}た！\p$"
-
+	.string "あ！　やせいの\n"
+	.string "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}が　とびだしてきた！\p$"
 	.globl gUnknown_85AAE68
 gUnknown_85AAE68: @ 0x85AAE68
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！\p$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}が\n"
+	.string "しょうぶを　しかけてきた！\p$"
 	.globl gUnknown_85AAE7F
 gUnknown_85AAE7F: @ 0x85AAE7F
-	.string "{B_LINK_OPPONENT1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}"
-	.string "{LIGHT_BLUE}て{LIGHT_GREEN}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}が\n"
+	.string "しょうぶを　しかけてきた！$"
 	.globl gUnknown_85AAE91
 gUnknown_85AAE91: @ 0x85AAE91
-	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}が\n"
+	.string "しょうぶを　しかけてきた！$"
 	.globl gUnknown_85AAEA7
 gUnknown_85AAEA7: @ 0x85AAEA7
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}"
-	.string "りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}を　くりだした！$"
 	.globl gUnknown_85AAEBA
 gUnknown_85AAEBA: @ 0x85AAEBA
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}"
-	.string "{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}を　くりだした！$"
 	.globl gUnknown_85AAED1
 gUnknown_85AAED1: @ 0x85AAED1
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
-	.string "た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　くりだした！$"
 	.globl gUnknown_85AAEE4
 gUnknown_85AAEE4: @ 0x85AAEE4
-	.string "{B_LINK_OPPONENT1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}を　くりだした！$"
 	.globl gUnknown_85AAEF3
 gUnknown_85AAEF3: @ 0x85AAEF3
-	.string "{B_LINK_OPPONENT1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_BANG}{B_OPPONENT_MON2_NAME}{SE_WARP_IN}{BLUE}"
-	.string "りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}と　{B_OPPONENT_MON2_NAME}を　くりだした！$"
 	.globl gUnknown_85AAF06
 gUnknown_85AAF06: @ 0x85AAF06
-	.string "{B_LINK_OPPONENT1_NAME}{SE_I}{B_LINK_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
-	.string "た！\n{B_LINK_OPPONENT2_NAME}{SE_I}{B_LINK_OPPONENT_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}は　{B_LINK_OPPONENT_MON1_NAME}を　くりだした！\n"
+	.string "{B_LINK_OPPONENT2_NAME}は　{B_LINK_OPPONENT_MON2_NAME}を　くりだした！$"
 	.globl gUnknown_85AAF24
 gUnknown_85AAF24: @ 0x85AAF24
-	.string "{B_LINK_OPPONENT1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　くりだした！$"
 	.globl gUnknown_85AAF33
 gUnknown_85AAF33: @ 0x85AAF33
-	.string "{B_LINK_SCR_TRAINER_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_LINK_SCR_TRAINER_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　くりだした！$"
 	.globl gUnknown_85AAF42
 gUnknown_85AAF42: @ 0x85AAF42
-	.string "ゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_PLAYER_MON1_NAME}！$"
-
+	.string "ゆけっ！　{B_PLAYER_MON1_NAME}！$"
 	.globl gUnknown_85AAF4B
 gUnknown_85AAF4B: @ 0x85AAF4B
-	.string "ゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_PLAYER_MON1_NAME}{SE_BANG}{B_PLAYER_MON2_NAME}！$"
-
+	.string "ゆけっ！　{B_PLAYER_MON1_NAME}と　{B_PLAYER_MON2_NAME}！$"
 	.globl gUnknown_85AAF58
 gUnknown_85AAF58: @ 0x85AAF58
-	.string "ゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{SE_RG_BAG_POCKET}！$"
-
+	.string "ゆけっ！　{SE_RG_BAG_POCKET}！$"
 	.globl gUnknown_85AAF61
 gUnknown_85AAF61: @ 0x85AAF61
-	.string "{DARK_GRAY}って{MUS_RG_VICTORY_TRAINER}{SE_M_DRAGON_RAGE}{SE_RG_BAG_POCKET}！$"
-
+	.string "いってこい！　{SE_RG_BAG_POCKET}！$"
 	.globl gUnknown_85AAF6C
 gUnknown_85AAF6C: @ 0x85AAF6C
-	.string "がんばれ{SE_M_DRAGON_RAGE}{SE_RG_BAG_POCKET}！$"
-
+	.string "がんばれ！　{SE_RG_BAG_POCKET}！$"
 	.globl gUnknown_85AAF76
 gUnknown_85AAF76: @ 0x85AAF76
-	.string "{MUS_RG_OAK_LAB}て{SE_SAVE}よわっ{MUS_RG_CAUGHT_INTRO}る！\nチャンスだ{SE_M_DRAGON_RAGE}{SE_RG_BAG_POCKET}！$"
-
+	.string "あいてが　よわっている！\n"
+	.string "チャンスだ！　{SE_RG_BAG_POCKET}！$"
 	.globl gUnknown_85AAF8E
 gUnknown_85AAF8E: @ 0x85AAF8E
-	.string "{B_LINK_PARTNER_NAME}{SE_I}{B_LINK_PLAYER_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
-	.string "た！\nゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_LINK_PLAYER_MON1_NAME}！$"
-
+	.string "{B_LINK_PARTNER_NAME}は　{B_LINK_PLAYER_MON2_NAME}を　くりだした！\n"
+	.string "ゆけっ！　{B_LINK_PLAYER_MON1_NAME}！$"
 	.globl gUnknown_85AAFA6
 gUnknown_85AAFA6: @ 0x85AAFA6
-	.string "{SE_RG_BAG_POCKET}{TRANSPARENT}も{MUS_RG_POKE_CENTER}{DARK_GRAY}！\nもどれ！$"
-
+	.string "{SE_RG_BAG_POCKET}　もういい！\n"
+	.string "もどれ！$"
 	.globl gUnknown_85AAFB4
 gUnknown_85AAFB4: @ 0x85AAFB4
-	.string "{SE_RG_BAG_POCKET}\nもどれ！$"
-
+	.string "{SE_RG_BAG_POCKET}\n"
+	.string "もどれ！$"
 	.globl gUnknown_85AAFBC
 gUnknown_85AAFBC: @ 0x85AAFBC
-	.string "{SE_RG_BAG_POCKET}{MUS_RG_PALLET}{DARK_GRAY}ぞ！\nもどれ！$"
-
+	.string "{SE_RG_BAG_POCKET}　いいぞ！\n"
+	.string "もどれ！$"
 	.globl gUnknown_85AAFC9
 gUnknown_85AAFC9: @ 0x85AAFC9
-	.string "{SE_RG_BAG_POCKET}{TRANSPARENT}よ{BLUE}やった！\nもどれ！$"
-
+	.string "{SE_RG_BAG_POCKET}　よくやった！\n"
+	.string "もどれ！$"
 	.globl gUnknown_85AAFD8
 gUnknown_85AAFD8: @ 0x85AAFD8
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　ひっこめた！$"
 	.globl gUnknown_85AAFEB
 gUnknown_85AAFEB: @ 0x85AAFEB
-	.string "{B_LINK_OPPONENT1_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
-
+	.string "{B_LINK_OPPONENT1_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　ひっこめた！$"
 	.globl gUnknown_85AAFFA
 gUnknown_85AAFFA: @ 0x85AAFFA
-	.string "{B_LINK_SCR_TRAINER_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}ひっ{DYNAMIC_COLOR1}めた！$"
-
+	.string "{B_LINK_SCR_TRAINER_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　ひっこめた！$"
 	.globl gUnknown_85AB009
 gUnknown_85AB009: @ 0x85AB009
-	.string "や{MUS_RG_PEWTER}{SE_A}$"
-
+	.string "やせいの　$"
 	.globl gUnknown_85AB00F
 gUnknown_85AB00F: @ 0x85AB00F
-	.string "{MUS_RG_OAK_LAB}て{SE_A}$$"
-
+	.string "あいての　$$"
 	.globl gUnknown_85AB016
 gUnknown_85AB016: @ 0x85AB016
-	.string "{MUS_RG_OAK_LAB}ての$"
-
+	.string "あいての$"
 	.globl gUnknown_85AB01B
 gUnknown_85AB01B: @ 0x85AB01B
-	.string "み{GREEN}たの$"
-
+	.string "みかたの$"
 	.globl gUnknown_85AB020
 gUnknown_85AB020: @ 0x85AB020
-	.string "{MUS_RG_OAK_LAB}ては$"
-
+	.string "あいては$"
 	.globl gUnknown_85AB025
 gUnknown_85AB025: @ 0x85AB025
-	.string "み{GREEN}たは$"
-
+	.string "みかたは$"
 	.globl gUnknown_85AB02A
 gUnknown_85AB02A: @ 0x85AB02A
-	.string "{MUS_RG_OAK_LAB}てを$"
-
+	.string "あいてを$"
 	.globl gUnknown_85AB02F
 gUnknown_85AB02F: @ 0x85AB02F
-	.string "み{GREEN}たを$"
-
+	.string "みかたを$"
 	.globl gUnknown_85AB034
 gUnknown_85AB034: @ 0x85AB034
-	.string "{B_ATK_NAME_WITH_PREFIX}{SE_RG_BAG_POCKET}\n{MUS_RG_VS_TRAINER}$"
-
+	.string "{B_ATK_NAME_WITH_PREFIX}{SE_RG_BAG_POCKET}\n"
+	.string "{MUS_RG_VS_TRAINER}$"
 	.globl gUnknown_85AB03C
 gUnknown_85AB03C: @ 0x85AB03C
-	.string "{SE_WARP_IN}つ{GREEN}った！$"
-
+	.string "を　つかった！$"
 	.globl gUnknown_85AB044
 gUnknown_85AB044: @ 0x85AB044
-	.string "{DYNAMIC_COLOR3}た！$"
-
+	.string "した！$"
 	.globl gUnknown_85AB048
 gUnknown_85AB048: @ 0x85AB048
-	.string "{SE_WARP_IN}{DYNAMIC_COLOR3}た！$"
-
+	.string "を　した！$"
 	.globl gUnknown_85AB04E
 gUnknown_85AB04E: @ 0x85AB04E
-	.string "{TRANSPARENT}{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}！$"
-
+	.string "　こうげき！$"
 	.globl gUnknown_85AB055
 gUnknown_85AB055: @ 0x85AB055
 	.incbin "baserom_jp.gba", 0x5ab055, 0x37
 
 	.globl gUnknown_85AB08C
 gUnknown_85AB08C: @ 0x85AB08C
-	.string "キ⋯コ{BLUE}ス⋯コ{BLUE}ナ⋯コ{BLUE}ヘ⋯コ{BLUE}メ⋯コ{BLUE}ラ⋯コ{BLUE}ワ⋯コ{BLUE}ャ⋯コ{BLUE}{GREEN}ら{DYNAMIC_COLOR4}ぎた！$"
-	.string "{DYNAMIC_COLOR3}ぶ{DYNAMIC_COLOR4}ぎた！{MUS_RG_VS_CHAMPION}ま{DYNAMIC_COLOR4}ぎた！$"
-	.string "にが{DYNAMIC_COLOR4}ぎた！${DYNAMIC_COLOR4}っぱ{DYNAMIC_COLOR4}ぎた！$"
-
+	.string "キ⋯コくス⋯コくナ⋯コくヘ⋯コくメ⋯コくラ⋯コくワ⋯コくャ⋯コくからすぎた！$しぶすぎた！$あますぎた！$にがすぎた！$すっぱすぎた！$"
 	.globl gUnknown_85AB0D0
 gUnknown_85AB0D0: @ 0x85AB0D0
-	.string "？⋯コ{BLUE}‘⋯コ{BLUE}/⋯コ{BLUE}G⋯コ{BLUE}N⋯コ{BLUE}{B_PLAYER_NAME}{SE_I}\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}"
-	.string "った！$"
-	.string "ミツル{SE_I}\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}った！$"
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_LAST_ITEM}{SE_WARP_IN}つ{GREEN}った！$"
-	.string "トレーナー{SE_BOO}ボール{SE_WARP_IN}はじ{GREEN}れた！$"
-	.string "ひと{SE_A}もの{SE_WARP_IN}とった{SE_LAVARIDGE_FALL_WARP}どろぼ{LIGHT_GRAY}！$"
-	.string "よ{LIGHT_BLUE}られた！\n{MUS_RG_VICTORY_TRAINER}つ{SE_I}つ{GREEN}まり{DYNAMIC_COLOR6}{LIGHT_GRAY}"
-	.string "に{MUS_RG_GAME_FREAK}ぞ！$"
-	.string "ポケモンに\n{LIGHT_GRAY}ま{SE_DOOR}{WHITE}たらな{GREEN}った！$"
-	.string "だめだ{SE_M_DRAGON_RAGE}ポケモンが\nボール{GREEN}{SE_LAVARIDGE_FALL_WARP}でて{DYNAMIC_COLOR3}"
-	.string "まった！{MUS_RG_VS_CHAMPION}{WHITE}！\nつ{GREEN}ま{RED}た{SE_BANG}{LIGHT_RED}もったのに！$"
-	.string "ざんねん！\nも{LIGHT_GRAY}{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}{SE_NOTE_B}つ{GREEN}ま{RED}られたのに！$"
-	.string "{LIGHT_RED}{MUS_RG_VICTORY_GYM_LEADER}！{MUS_RG_VS_WILD}{SE_BANG}ちょっと{SE_A}と{DYNAMIC_COLOR1}ろだったのに！$"
-	.string "やったー！\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}つ{GREEN}ま{RED}たぞ！{WAIT_SE}{PLAY_BGM}{MUS_CAUGHT}\p$"
-	.string "やったー！\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}つ{GREEN}ま{RED}たぞ！{WAIT_SE}{PLAY_BGM}{MUS_CAUGHT}{PAUSE}ァ$"
-	.string "つ{GREEN}ま{RED}{SE_FAINT}{B_OPPONENT_MON1_NAME}に\nニックネーム{SE_WARP_IN}つ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-	.string "{B_OPPONENT_MON1_NAME}{SE_I}{B_PC_CREATOR_NAME}{TRANSPARENT}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR2}れた！$"
-
+	.string "？⋯コく‘⋯コく/⋯コくG⋯コくN⋯コく{B_PLAYER_NAME}は　\n"
+	.string "{B_LAST_ITEM}を　つかった！$ミツルは　\n"
+	.string "{B_LAST_ITEM}を　つかった！${B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{B_LAST_ITEM}を　つかった！$トレーナーに　ボールを　はじかれた！$ひとの　ものを　とったら　どろぼう！$よけられた！\n"
+	.string "こいつは　つかまりそうにないぞ！$ポケモンに\n"
+	.string "うまく　あたらなかった！$だめだ！　ポケモンが\n"
+	.string "ボールから　でてしまった！$ああ！\n"
+	.string "つかまえたと　おもったのに！$ざんねん！\n"
+	.string "もうすこしで　つかまえられたのに！$おしい！\n"
+	.string "あと　ちょっとの　ところだったのに！$やったー！\n"
+	.string "{B_OPPONENT_MON1_NAME}を　つかまえたぞ！{WAIT_SE}{PLAY_BGM MUS_CAUGHT}\p"
+	.string "$やったー！\n"
+	.string "{B_OPPONENT_MON1_NAME}を　つかまえたぞ！{WAIT_SE}{PLAY_BGM MUS_CAUGHT}{PAUSE 127}$つかまえた　{B_OPPONENT_MON1_NAME}に\n"
+	.string "ニックネームを　つけますか？${B_OPPONENT_MON1_NAME}は　{B_PC_CREATOR_NAME}　パソコンに\n"
+	.string "てんそうされた！$"
 	.globl gUnknown_85AB225
 gUnknown_85AB225: @ 0x85AB225
-	.string "だれ{GREEN}の$"
-
+	.string "だれかの$"
 	.globl gUnknown_85AB22A
 gUnknown_85AB22A: @ 0x85AB22A
-	.string "マユミの${B_OPPONENT_MON1_NAME}{SE_A}データ{SE_SAVE}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\nポケモンず{GREEN}ん{SE_BOO}"
-	.string "セーブ{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR4}！\p{MUS_RG_VS_CHAMPION}め{SE_SAVE}ふっ{MUS_RG_CAUGHT_INTRO}る$"
-	.string "{DYNAMIC_COLOR4}な{WHITE}ら{DYNAMIC_COLOR3}{SE_SAVE}ふ{SE_POKENAV_CALL}れ{MUS_RG_CAUGHT_INTRO}る$"
-	.string "ボックス{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で\n{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}"
-	.string "じょ{SE_PC_OFF}つ{GREEN}ま{RED}られ{MUS_RG_GAME_FREAK}！\p$"
-
+	.string "マユミの${B_OPPONENT_MON1_NAME}の　データが　あたらしく\n"
+	.string "ポケモンずかんに　セーブされます！\p"
+	.string "$あめが　ふっている$すなあらしが　ふきあれている$ボックスが　いっぱいで\n"
+	.string "これいじょう　つかまえられない！\p$"
 	.globl gUnknown_85AB288
 gUnknown_85AB288: @ 0x85AB288
 	.string "ナゾのみ$"
 
 	.globl gUnknown_85AB28D
 gUnknown_85AB28D: @ 0x85AB28D
-	.string "のみ${B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nまひ{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nど{BLUE}{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nや{LIGHT_BLUE}ど{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR1}{LIGHT_RED}りじょ{LIGHT_GRAY}"
-	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nねむり{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{DYNAMIC_COLOR2}めた！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR1}んらん{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}じょ{LIGHT_GRAY}"
-	.string "{MUS_RG_RIVAL_EXIT}{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nじょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}{DARK_GRAY}"
-	.string "じょ{LIGHT_GRAY}{SE_SAVE}な{LIGHT_RED}った！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_WARP_IN}"
-	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{SE_RG_BAG_POCKET}{SE_A}わざポイント{SE_WARP_IN}"
-	.string "{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nステータス{SE_WARP_IN}もと{SE_BOO}もど{DYNAMIC_COLOR3}"
-	.string "た！$"
-	.string "{B_SCR_ACTIVE_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\n{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}"
-	.string "{SE_NOT_EFFECTIVE}{MUS_RG_POKE_TOWER}ふ{BLUE}$"
-	.string "{B_LAST_ITEM}{SE_A}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}で\n{B_CURRENT_MOVE}{DYNAMIC_COLOR3}"
-	.string "{SE_WIN_OPEN}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}とがで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}！\p$"
-	.string "{B_DEF_NAME_WITH_PREFIX}{SE_I}{B_LAST_ITEM}で\nもち{DYNAMIC_COLOR1}た{RED}た！$"
-
+	.string "のみ${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "まひが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "どくが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "やけどが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "こおりじょうたいが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "ねむりから　さめた！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "こんらんが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "{SE_RG_BAG_POCKET}じょうたいが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "じょうたいいじょうが　なおった！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "たいりょくを　かいふくした！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "{SE_RG_BAG_POCKET}の　わざポイントを　かいふくした！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "ステータスを　もとに　もどした！${B_SCR_ACTIVE_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "すこし　かいふく${B_LAST_ITEM}の　こうかで\n"
+	.string "{B_CURRENT_MOVE}しか　だすことができない！\p"
+	.string "${B_DEF_NAME_WITH_PREFIX}は　{B_LAST_ITEM}で\n"
+	.string "もちこたえた！$"
 	.globl gUnknown_85AB3BD
 gUnknown_85AB3BD: @ 0x85AB3BD
-	.string "{TRANSPARENT}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_NOTE_B}ボール{SE_WARP_IN}なげるんだね\nぼ{BLUE}"
-	.string "⋯{SE_M_DIZZY_PUNCH}やってみるよ！$"
-
+	.string "　$ここで　ボールを　なげるんだね\n"
+	.string "ぼく⋯⋯　やってみるよ！$"
 	.globl gUnknown_85AB3DC
 gUnknown_85AB3DC: @ 0x85AB3DC
 	.incbin "baserom_jp.gba", 0x5ab3dc, 0x5c4
@@ -12435,113 +11128,95 @@ gUnknown_85AB9A0: @ 0x85AB9A0
 
 	.globl gUnknown_85ABAEE
 gUnknown_85ABAEE: @ 0x85ABAEE
-	.string "{SE_BANG}{SE_SWITCH}{SE_DOWNPOUR}{SE_M_CUT}{SE_RG_CARD_FLIPPING}ぶ{WHITE}$"
-	.string "$"
-
+	.string "と　も　ウ　ィ　\l"
+	.string "　ぶあ$$"
 	.globl gUnknown_85ABAFC
 gUnknown_85ABAFC: @ 0x85ABAFC
-	.string "⋯⋯{LIGHT_RED}や！？\n{B_COPY_VAR_1}{SE_A}よ{LIGHT_GRAY}{DYNAMIC_COLOR4}が⋯⋯！$"
-
+	.string "⋯⋯おや！？\n"
+	.string "{B_COPY_VAR_1}の　ようすが⋯⋯！$"
 	.globl gUnknown_85ABB0F
 gUnknown_85ABB0F: @ 0x85ABB0F
-	.string "{LIGHT_RED}めでと{LIGHT_GRAY}{SE_M_DRAGON_RAGE}{B_COPY_VAR_1}は\n{B_COPY_VAR_2}{SE_BOO}{DYNAMIC_COLOR3}"
-	.string "ん{GREEN}{DYNAMIC_COLOR3}た！{WAIT_SE}\p$"
-
+	.string "おめでとう！　{B_COPY_VAR_1}は\n"
+	.string "{B_COPY_VAR_2}に　しんかした！{WAIT_SE}\p$"
 	.globl gUnknown_85ABB28
 gUnknown_85ABB28: @ 0x85ABB28
-	.string "{WHITE}れ⋯⋯？\n{B_COPY_VAR_1}{SE_A}へん{GREEN}{SE_SAVE}とまった！\p$"
-
+	.string "あれ⋯⋯？\n"
+	.string "{B_COPY_VAR_1}の　へんかが　とまった！\p$"
 	.globl gUnknown_85ABB3E
 gUnknown_85ABB3E: @ 0x85ABB3E
 	.string "⋯⋯？\p$"
 
 	.globl gUnknown_85ABB43
 gUnknown_85ABB43: @ 0x85ABB43
-	.string "{B_ACTIVE_NAME_WITH_PREFIX}{SE_I}ど{LIGHT_GRAY}{DYNAMIC_COLOR4}る？$"
-
+	.string "{B_ACTIVE_NAME_WITH_PREFIX}は　どうする？$"
 	.globl gUnknown_85ABB4D
 gUnknown_85ABB4D: @ 0x85ABB4D
-	.string "{B_PLAYER_NAME}{SE_I}ど{LIGHT_GRAY}{DYNAMIC_COLOR4}る？$"
-
+	.string "{B_PLAYER_NAME}は　どうする？$"
 	.globl gUnknown_85ABB57
 gUnknown_85ABB57: @ 0x85ABB57
-	.string "ミツル{SE_I}ど{LIGHT_GRAY}{DYNAMIC_COLOR4}る？$"
-
+	.string "ミツルは　どうする？$"
 	.globl gUnknown_85ABB62
 gUnknown_85ABB62: @ 0x85ABB62
-	.string "{PAUSE}たつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}⋯⋯$"
-
+	.string "{PAUSE 16}つうしんたいきちゅう⋯⋯$"
 	.globl gUnknown_85ABB72
 gUnknown_85ABB72: @ 0x85ABB72
-	.string "たた{GREEN}{SE_PC_OFF}{TRANSPARENT}バッグ\nポケモ{SE_M_BUBBLE3}{TRANSPARENT}にげる$"
-
+	.string "たたかう　　バッグ\n"
+	.string "ポケモン　　にげる$"
 	.globl gUnknown_85ABB86
 gUnknown_85ABB86: @ 0x85ABB86
-	.string "ボー{SE_M_NIGHTMARE}{MUS_DUMMY}ポロック\nち{GREEN}づ{SE_DOOR}{TRANSPARENT}にげる$"
-
+	.string "ボール　　　ポロック\n"
+	.string "ちかづく　　にげる$"
 	.globl gUnknown_85ABB9B
 gUnknown_85ABB9B: @ 0x85ABB9B
-	.string "P{SE_M_PETAL_DANCE}{MUS_DUMMY}$"
-
+	.string "PP　　　$"
 	.globl gUnknown_85ABBA1
 gUnknown_85ABBA1: @ 0x85ABBA1
-	.string "わざタイプ/${PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$"
-	.string "{PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}ど{SE_A}"
-	.string "わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}？$"
-
+	.string "わざタイプ/${PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}${PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}どの　わざを\n"
+	.string "わすれさせたい？$"
 	.globl gUnknown_85ABBC9
 gUnknown_85ABBC9: @ 0x85ABBC9
-	.string "{PALETTE}{LIGHT_RED}{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}"
-	.string "{MUS_RG_POKE_JUMP}\n{MUS_RG_OAK}{RED}$"
-
+	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}はい\n"
+	.string "いいえ$"
 	.globl gUnknown_85ABBD8
 gUnknown_85ABBD8: @ 0x85ABBD8
 	.incbin "baserom_jp.gba", 0x5abbd8, 0x60
 
 	.globl gUnknown_85ABC38
 gUnknown_85ABC38: @ 0x85ABC38
-	.string "{HIGHLIGHT}{DARK_GRAY}サファリボール$"
-
+	.string "{HIGHLIGHT 2}サファリボール$"
 	.globl gUnknown_85ABC43
 gUnknown_85ABC43: @ 0x85ABC43
-	.string "{HIGHLIGHT}{DARK_GRAY}の{DYNAMIC_COLOR1}{SE_ICE_STAIRS}$"
-
+	.string "{HIGHLIGHT 2}のこり　$"
 	.globl gUnknown_85ABC4B
 gUnknown_85ABC4B: @ 0x85ABC4B
-	.string "{HIGHLIGHT}{DARK_GRAY}{DYNAMIC_COLOR1}$"
-
+	.string "{HIGHLIGHT 2}こ$"
 	.globl gUnknown_85ABC50
 gUnknown_85ABC50: @ 0x85ABC50
 	.string "ねむり$"
 
 	.globl gUnknown_85ABC54
 gUnknown_85ABC54: @ 0x85ABC54
-	.string "ど{BLUE}$"
-
+	.string "どく$"
 	.globl gUnknown_85ABC57
 gUnknown_85ABC57: @ 0x85ABC57
-	.string "や{LIGHT_BLUE}ど$"
-
+	.string "やけど$"
 	.globl gUnknown_85ABC5B
 gUnknown_85ABC5B: @ 0x85ABC5B
 	.string "まひ$"
 
 	.globl gUnknown_85ABC5E
 gUnknown_85ABC5E: @ 0x85ABC5E
-	.string "{DYNAMIC_COLOR1}{LIGHT_RED}り$"
-
+	.string "こおり$"
 	.globl gUnknown_85ABC62
 gUnknown_85ABC62: @ 0x85ABC62
-	.string "{DYNAMIC_COLOR1}んらん$"
-
+	.string "こんらん$"
 	.globl gUnknown_85ABC67
 gUnknown_85ABC67: @ 0x85ABC67
 	.string "メロメロ$"
 
 	.globl gUnknown_85ABC6C
 gUnknown_85ABC6C: @ 0x85ABC6C
-	.string "{TRANSPARENT}$"
-
+	.string "　$"
 	.globl gUnknown_85ABC6E
 gUnknown_85ABC6E: @ 0x85ABC6E
 	.string "\l$"
@@ -12568,16 +11243,13 @@ gUnknown_85ABC7E: @ 0x85ABC7E
 
 	.globl gText_Win
 gText_Win: @ 0x85ABC82
-	.string "{HIGHLIGHT}{TRANSPARENT}{GREEN}ち$"
-
+	.string "{HIGHLIGHT 0}かち$"
 	.globl gText_Loss
 gText_Loss: @ 0x85ABC88
-	.string "{HIGHLIGHT}{TRANSPARENT}ま{LIGHT_BLUE}$"
-
+	.string "{HIGHLIGHT 0}まけ$"
 	.globl gText_Draw
 gText_Draw: @ 0x85ABC8E
-	.string "{HIGHLIGHT}{TRANSPARENT}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
-
+	.string "{HIGHLIGHT 0}ひきわけ$"
 	.globl gUnknown_85ABC96
 gUnknown_85ABC96: @ 0x85ABC96
 	.string "は$"
@@ -12588,25 +11260,18 @@ gUnknown_85ABC98: @ 0x85ABC98
 
 	.globl gUnknown_85ABC9A
 gUnknown_85ABC9A: @ 0x85ABC9A
-	.string "ノーマルわざ${GREEN}{BLUE}と{LIGHT_GRAY}わざ$ひ{DYNAMIC_COLOR1}{LIGHT_GRAY}わざ$"
-	.string "$ど{BLUE}わざ$$$じめんわざ$${DARK_GRAY}わわざ$$$む{DYNAMIC_COLOR3}わざ$"
-	.string "$$ゴーストわざ$はがねわざ$$はてなわざ$$ほの{LIGHT_RED}わざ$$"
-	.string "みずわざ$$${BLUE}{DYNAMIC_COLOR2}わざ$$$でん{LIGHT_GREEN}わざ$"
-	.string "$エスパーわざ${DYNAMIC_COLOR1}{LIGHT_RED}りわざ$$"
-	.string "ドラゴンわざ{MUS_RG_VS_CHAMPION}{BLUE}わざ$$$"
-
+	.string "ノーマルわざ$かくとうわざ$ひこうわざ$$どくわざ$$$じめんわざ$$いわわざ$$$むしわざ$$$ゴーストわざ$はがねわざ$$はてなわざ$$ほのおわざ$$みずわざ$$$くさわざ$$$でんきわざ$$エスパーわざ$こおりわざ$$ドラゴンわざ$あくわざ$$$"
 	.globl gUnknown_85ABD18
 gUnknown_85ABD18: @ 0x85ABD18
 	.incbin "baserom_jp.gba", 0x5abd18, 0x24
 
 	.globl gUnknown_85ABD3C
 gUnknown_85ABD3C: @ 0x85ABD3C
-	.string "めCコ{BLUE}よCコ{BLUE}れCコ{BLUE}ぉCコ{BLUE}{LIGHT_GREEN}{MUS_RG_RIVAL_EXIT}{SE_A}{LIGHT_RED}{LIGHT_RED}"
-	.string "が{SE_FAINT}{DYNAMIC_COLOR3}んじん！\p$"
-	.string "ひがん{SE_A}は{SE_SLIDING_DOOR}ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}なる{GREEN}！？\p$"
-	.string "も{SE_BANG}チャンピオン！\p$ぜん{MUS_RG_POKE_TOWER}{TRANSPARENT}チャンピオン！\p$"
-	.string "むて{LIGHT_GREEN}{SE_A}チャンピオン！\p$"
-
+	.string "めCコくよCコくれCコくぉCコくきたいの　おおがた　しんじん！\p"
+	.string "$ひがんの　はつ　ゆうしょう　なるか！？\p"
+	.string "$もと　チャンピオン！\p"
+	.string "$ぜんかい　チャンピオン！\p"
+	.string "$むてきの　チャンピオン！\p$"
 	.globl gUnknown_85ABD9A
 gUnknown_85ABD9A: @ 0x85ABD9A
 	.string "{B_PLAYER_MON1_NAME}$"
@@ -12621,84 +11286,71 @@ gUnknown_85ABDA0: @ 0x85ABDA0
 
 	.globl gUnknown_85ABDA3
 gUnknown_85ABDA3: @ 0x85ABDA3
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ろ$"
-
+	.string "こころ$"
 	.globl gUnknown_85ABDA7
 gUnknown_85ABDA7: @ 0x85ABDA7
 	.string "わざ$"
 
 	.globl gUnknown_85ABDAA
 gUnknown_85ABDAA: @ 0x85ABDAA
-	.string "{GREEN}らだ$"
-
+	.string "からだ$"
 	.globl gUnknown_85ABDAE
 gUnknown_85ABDAE: @ 0x85ABDAE
-	.string "{SE_RG_BAG_POCKET}{MUS_DUMMY}はん{MUS_RG_CAUGHT_INTRO}{MUS_DUMMY}{MUS_RG_VS_TRAINER}$"
-
+	.string "{SE_RG_BAG_POCKET}　　はんてい　　{MUS_RG_VS_TRAINER}$"
 	.globl gUnknown_85ABDBB
 gUnknown_85ABDBB: @ 0x85ABDBB
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\n{B_OPPONENT_MON1_NAME}{SE_WARP_IN}{BLUE}"
-	.string "りだ{DYNAMIC_COLOR3}た！\p{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}は\n{B_OPPONENT_MON2_NAME}{SE_WARP_IN}"
-	.string "{BLUE}りだ{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "{B_OPPONENT_MON1_NAME}を　くりだした！\p"
+	.string "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}は\n"
+	.string "{B_OPPONENT_MON2_NAME}を　くりだした！$"
 	.globl gUnknown_85ABDE1
 gUnknown_85ABDE1: @ 0x85ABDE1
-	.string "{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}は\n{SE_RG_BAG_POCKET}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
-	.string "た！$"
-
+	.string "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}は\n"
+	.string "{SE_RG_BAG_POCKET}を　くりだした！$"
 	.globl gUnknown_85ABDF4
 gUnknown_85ABDF4: @ 0x85ABDF4
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}と\n{B_TRAINER2_CLASS}{SE_A}{B_TRAINER2_NAME}"
-	.string "が\l{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！\p$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}と\n"
+	.string "{B_TRAINER2_CLASS}の　{B_TRAINER2_NAME}が\l"
+	.string "しょうぶを　しかけてきた！\p$"
 	.globl gUnknown_85ABE13
 gUnknown_85ABE13: @ 0x85ABE13
-	.string "{B_PARTNER_CLASS}{SE_A}{B_PARTNER_NAME}は\n{B_PLAYER_MON2_NAME}{SE_WARP_IN}{BLUE}りだ{DYNAMIC_COLOR3}"
-	.string "た！\lゆ{LIGHT_BLUE}っ{SE_M_DRAGON_RAGE}{B_PLAYER_MON1_NAME}！$"
-
+	.string "{B_PARTNER_CLASS}の　{B_PARTNER_NAME}は\n"
+	.string "{B_PLAYER_MON2_NAME}を　くりだした！\l"
+	.string "ゆけっ！　{B_PLAYER_MON1_NAME}！$"
 	.globl gUnknown_85ABE2F
 gUnknown_85ABE2F: @ 0x85ABE2F
 	.incbin "baserom_jp.gba", 0x5abe2f, 0x21d
 
 	.globl gUnknown_85AC04C
 gUnknown_85AC04C: @ 0x85AC04C
-	.string "BDコ{BLUE}oDコ{BLUE}{GREEN}Eコ{BLUE}をEコ{BLUE}カEコ{BLUE}ゥEコ{BLUE}3Eコ{BLUE}MEコ{BLUE}わFコ{BLUE}"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{WHITE}{LIGHT_GREEN}らめて\n{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR2}{SE_WARP_OUT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{B_PLAYER_NAME}は\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{WHITE}{LIGHT_GREEN}らめた！$"
-	.string "{B_TRAINER1_WIN_TEXT}${B_TRAINER2_WIN_TEXT}$"
-	.string "{PLAY_SE}{SE_FLEE}{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}は\nにげだ{DYNAMIC_COLOR3}た！$"
-
+	.string "BDコくoDコくかEコくをEコくカEコくゥEコく3EコくMEコくわFコくしょうぶを　あきらめて\n"
+	.string "こうさん　しますか？${B_PLAYER_NAME}は\n"
+	.string "しょうぶを　あきらめた！${B_TRAINER1_WIN_TEXT}${B_TRAINER2_WIN_TEXT}${PLAY_SE SE_FLEE}{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}は\n"
+	.string "にげだした！$"
 	.globl gUnknown_85AC0B1
 gUnknown_85AC0B1: @ 0x85AC0B1
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}ま{LIGHT_BLUE}"
-	.string "た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+	.string "との　しょうぶに　まけた！$"
 	.globl gUnknown_85AC0C6
 gUnknown_85AC0C6: @ 0x85AC0C6
-	.string "{B_TRAINER1_CLASS}{SE_A}{B_TRAINER1_NAME}\nと{SE_A}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_BOO}"
-	.string "ひ{LIGHT_GREEN}わ{LIGHT_BLUE}た！$"
-
+	.string "{B_TRAINER1_CLASS}の　{B_TRAINER1_NAME}\n"
+	.string "との　しょうぶに　ひきわけた！$"
 	.globl gUnknown_85AC0DD
 gUnknown_85AC0DD: @ 0x85AC0DD
-	.string "{DARK_GRAY}ま{SE_A}たた{MUS_RG_POKE_TOWER}{SE_WARP_IN}フロンティアパスに\n{LIGHT_GREEN}ろ{SE_DOOR}{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "いまの　たたかいを　フロンティアパスに\n"
+	.string "きろく　しますか？$"
 	.globl gUnknown_85AC0FB
 gUnknown_85AC0FB: @ 0x85AC0FB
-	.string "{B_PLAYER_NAME}{SE_A}たた{MUS_RG_POKE_TOWER}が\nフロンティアパス{SE_BOO}{LIGHT_GREEN}ろ{SE_DOOR}{DYNAMIC_COLOR2}"
-	.string "れた！$"
-
+	.string "{B_PLAYER_NAME}の　たたかいが\n"
+	.string "フロンティアパスに　きろく　された！$"
 	.globl gUnknown_85AC118
 gUnknown_85AC118: @ 0x85AC118
-	.string "{B_LINK_OPPONENT1_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}{DYNAMIC_COLOR3}{GREEN}"
-	.string "{LIGHT_BLUE}て{LIGHT_GREEN}た！{PAUSE}ぅ$"
-
+	.string "{B_LINK_OPPONENT1_NAME}が\n"
+	.string "しょうぶを　しかけてきた！{PAUSE 49}$"
 	.globl gUnknown_85AC12D
 gUnknown_85AC12D: @ 0x85AC12D
-	.string "{B_LINK_OPPONENT1_NAME}{SE_BANG}{B_LINK_OPPONENT2_NAME}が\n{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR3}{GREEN}{LIGHT_BLUE}て{LIGHT_GREEN}た！{PAUSE}ぅ$"
-
+	.string "{B_LINK_OPPONENT1_NAME}と　{B_LINK_OPPONENT2_NAME}が\n"
+	.string "しょうぶを　しかけてきた！{PAUSE 49}$"
 	.globl gUnknown_85AC146
 gUnknown_85AC146: @ 0x85AC146
 	.incbin "baserom_jp.gba", 0x5ac146, 0x322
@@ -12893,48 +11545,40 @@ gUnknown_85AD7D0: @ 0x85AD7D0
 
 	.globl gUnknown_85AD9A0
 gUnknown_85AD9A0: @ 0x85AD9A0
-	.string "{B_COPY_VAR_1}{SE_BOO}どのわざ{SE_WARP_IN}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る？$"
-
+	.string "{B_COPY_VAR_1}に　どのわざを　おぼえさせる？$"
 	.globl gUnknown_85AD9B2
 gUnknown_85AD9B2: @ 0x85AD9B2
-	.string "{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}"
-	.string "？$"
-
+	.string "{B_COPY_VAR_2}を　おぼえさせますか？$"
 	.globl gUnknown_85AD9C0
 gUnknown_85AD9C0: @ 0x85AD9C0
-	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
-
+	.string "{B_COPY_VAR_1}は　あたらしく\n"
+	.string "{B_COPY_VAR_2}を　おぼえた！$"
 	.globl gUnknown_85AD9D4
 gUnknown_85AD9D4: @ 0x85AD9D4
-	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{SE_DOOR}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
-	.string "{MUS_RG_RIVAL_EXIT}⋯！\p{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_COPY_VAR_1}{SE_I}わざ{SE_WARP_IN}"
-	.string "4つ\n{LIGHT_RED}ぼ{RED}{MUS_RG_CAUGHT_INTRO}るの{SE_NOTE_B}{MUS_RG_PEWTER}{DARK_GRAY}っ{PH_THOUGHT_HELD}"
-	.string "だ！\p{B_COPY_VAR_2}{SE_A}{GREEN}わり{SE_BOO}ほ{GREEN}{SE_A}わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}"
-	.string "{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}は　あたらしく　\n"
+	.string "{B_COPY_VAR_2}を　おぼえたい⋯！\p"
+	.string "しかし　{B_COPY_VAR_1}は　わざを　4つ\n"
+	.string "おぼえているので　せいいっぱいだ！\p"
+	.string "{B_COPY_VAR_2}の　かわりに　ほかの　わざを\n"
+	.string "わすれさせますか？$"
 	.globl gUnknown_85ADA27
 gUnknown_85ADA27: @ 0x85ADA27
-	.string "{DYNAMIC_COLOR6}れでは⋯{SE_M_DIZZY_PUNCH}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}るの{SE_WARP_IN}{WHITE}"
-	.string "{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "それでは⋯⋯　{B_COPY_VAR_2}を\n"
+	.string "おぼえるのを　あきらめますか？$"
 	.globl gUnknown_85ADA42
 gUnknown_85ADA42: @ 0x85ADA42
-	.string "{PAUSE}み{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}"
-	.string "⋯{PAUSE}{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}ポカン！\p$"
-
+	.string "{PAUSE 32}1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p$"
 	.globl gUnknown_85ADA67
 gUnknown_85ADA67: @ 0x85ADA67
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_3}{SE_A}つ{MUS_RG_POKE_TOWER}{GREEN}たを\n{LIGHT_GREEN}"
-	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_BOO}わ{DYNAMIC_COLOR4}れた！\p{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
-	.string "て⋯！\p{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
-	.string "た！$"
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}ず{SE_BOO}{LIGHT_RED}わった！$"
-
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_3}の　つかいかたを\n"
+	.string "きれいに　わすれた！\p"
+	.string "そして⋯！\p"
+	.string "{B_COPY_VAR_1}は　あたらしく\n"
+	.string "{B_COPY_VAR_2}を　おぼえた！${B_COPY_VAR_1}は　{B_COPY_VAR_2}を　おぼえずに　おわった！$"
 	.globl gUnknown_85ADAAF
 gUnknown_85ADAAF: @ 0x85ADAAF
-	.string "{B_COPY_VAR_1}{SE_BOO}わざ{SE_WARP_IN}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
-	.string "るのを{MUS_RG_VS_WILD}{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}に　わざを　おぼえさせるのを\n"
+	.string "あきらめますか？$"
 	.globl gUnknown_85ADAC9
 gUnknown_85ADAC9: @ 0x85ADAC9
 	.incbin "baserom_jp.gba", 0x5adac9, 0x2b
@@ -13017,189 +11661,14 @@ gUnknown_85BC619: @ 0x85BC619
 
 	.globl gUnknown_85BC620
 gUnknown_85BC620: @ 0x85BC620
-	.string "{SE_EGG_HATCH}{SE_TAILLOW_WING_FLAP}{SE_BALL_TRAY_BALL}{SE_M_SPIT_UP}{SE_M_ATTRACT2}まろ{BLUE}"
-	.string "{SE_RG_BAG_CURSOR}{MUS_DUMMY}{GREEN}{SE_RG_BAG_CURSOR}{SE_ROULETTE_BALL}ぴ{WHITE}{SE_M_BUBBLE_BEAM}"
-	.string "{SE_M_MOONLIGHT}{MUS_B_TOWER_RS}まわ{SE_PC_OFF}{SE_RG_BAG_CURSOR}{TRANSPARENT}{FONT_SMALL}{SE_THUNDER}"
-	.string "{SE_M_BUBBLE_BEAM}{SE_BALLOON_YELLOW}ア{WHITE}{SE_EXIT}{SE_LEDGE}{SE_EFFECTIVE}{SE_U}{SE_SWITCH}"
-	.string "{SE_FU_ZAKU}{SE_ICE_CRACK}{SE_UNLOCK}{SE_WARP_IN}{SE_WARP_OUT}{SE_NOTE_D}$"
-	.string "${SE_EXIT}{SE_FAINT}{SE_FLEE}{SE_U}{SE_CLICK}{SE_LAVARIDGE_FALL_WARP}{SE_ICE_CRACK}{SE_WARP_IN}"
-	.string "{SE_ROTATING_GATE}{SE_TRUCK_MOVE}{SE_BERRY_BLENDER}$"
-	.string "${SE_PC_ON}{SE_SELECT}{SE_WIN_OPEN}{SE_BIKE_BELL}{SE_E}{SE_BIKE_HOP}{SE_SWITCH}{SE_FU_ZAKU}{SE_FALL}"
-	.string "{SE_TRUCK_UNLOAD}{SE_BERRY_BLENDER}$"
-	.string "${SE_PC_ON}{SE_SELECT}{SE_WIN_OPEN}{SE_NOT_EFFECTIVE}{SE_I}{SE_CLICK}{SE_FU_ZAKU}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{SE_ICE_STAIRS}{SE_UNLOCK}{SE_WARP_OUT}{SE_TRUCK_STOP}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_FLEE}{SE_SLIDING_DOOR}{SE_SHIP}{SE_BOO}{SE_BALL}"
-	.string "{SE_EXP}{SE_ICE_CRACK}{SE_BALL_THROW}{SE_NOTE_E}{SE_NOTE_F}{SE_NOTE_G}$"
-	.string "${SE_SLIDING_DOOR}{SE_SHIP}{SE_PIN}{SE_CONTEST_CONDITION_LOSE}{SE_LAVARIDGE_FALL_WARP}{SE_ICE_BREAK}"
-	.string "{SE_ICE_CRACK}{SE_TRUCK_DOOR}{SE_CARD}{SE_BALL_BOUNCE_3}{SE_NOTE_D}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_PC_ON}{SE_SELECT}{SE_WALL_HIT}{SE_DOOR}"
-	.string "{SE_SLIDING_DOOR}{SE_BANG}{SE_PIN}{SE_FU_ZAKU}{SE_CONTEST_CONDITION_LOSE}{SE_ICE_STAIRS}{SE_NOTE_C}$"
-	.string "${SE_FLEE}{SE_BALL}{SE_CONTEST_PLACE}{SE_A}{SE_SUCCESS}{SE_FAILURE}{SE_EXP}{SE_BIKE_HOP}"
-	.string "{SE_LAVARIDGE_FALL_WARP}{SE_FALL}{SE_UNLOCK}{SE_TRUCK_MOVE}{SE_BALL_BOUNCE_2}{SE_NOTE_C_HIGH}$"
-	.string "${SE_PC_ON}{SE_WALL_HIT}{SE_DOOR}{SE_EXIT}{SE_BIKE_BELL}{SE_NOT_EFFECTIVE}{SE_EFFECTIVE}{SE_U}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{SE_ICE_STAIRS}{SE_WARP_IN}{SE_WARP_OUT}{SE_REPEL}{SE_NOTE_D}$"
-	.string "{SE_RG_SHOP}{MUS_RG_PALLET}{TRANSPARENT}{SE_NOT_EFFECTIVE}{SE_BOO}{SE_E}{SE_N}{SE_SWITCH}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{SE_FALL}{SE_UNLOCK}{SE_BALL_BOUNCE_1}{SE_BALL_BOUNCE_2}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{MUS_RG_PALLET}{TRANSPARENT}{SE_PC_OFF}{SE_SUPER_EFFECTIVE}"
-	.string "{SE_BALL_OPEN}{SE_CONTEST_PLACE}{SE_A}{SE_FAILURE}{SE_BIKE_HOP}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{SE_BALL_BOUNCE_4}{SE_BALL_TRADE}$"
-	.string "${SE_FLEE}{SE_SLIDING_DOOR}{SE_SHIP}{SE_BOO}{SE_O}{SE_CLICK}{SE_ICE_CRACK}{SE_ROTATING_GATE}"
-	.string "{SE_BALL_THROW}{SE_NOTE_C}{SE_NOTE_G}{SE_NOTE_B}{SE_NOTE_C_HIGH}$"
-	.string "${SE_BOO}{SE_BALL}{SE_E}{SE_O}{SE_SUCCESS}{SE_FAILURE}{SE_BIKE_HOP}{SE_LAVARIDGE_FALL_WARP}{SE_SAVE}"
-	.string "{SE_NOTE_E}{SE_NOTE_F}{SE_NOTE_A}$"
-	.string "${SE_LEDGE}{SE_EFFECTIVE}{SE_FLEE}{SE_U}{SE_WARP_IN}{SE_WARP_OUT}{SE_BERRY_BLENDER}{SE_BALL_BOUNCE_1}"
-	.string "{SE_BALL_THROW}{SE_NOTE_C}{SE_NOTE_D}$"
-	.string "${SE_DOOR}{SE_LEDGE}{SE_FAINT}{SE_BALL}{SE_O}{SE_FALL}{SE_UNLOCK}{SE_BALL_TRADE}{SE_NOTE_C}"
-	.string "{SE_NOTE_D}{SE_NOTE_B}$"
-	.string "${SE_DOOR}{SE_EFFECTIVE}{SE_PIN}{SE_O}{SE_EXP}{SE_ICE_BREAK}{SE_ROTATING_GATE}{SE_CARD}"
-	.string "{SE_BALL_BOUNCE_4}{SE_BALL_THROW}{SE_NOTE_B}$"
-	.string "${SE_WIN_OPEN}{SE_WALL_HIT}{SE_FLEE}{SE_BALL}{SE_CONTEST_PLACE}{SE_I}{SE_FAILURE}{SE_CLICK}"
-	.string "{SE_TRUCK_DOOR}{SE_BERRY_BLENDER}{SE_BALL_BOUNCE_2}{SE_NOTE_F}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_U}{SE_E}{SE_FAILURE}{SE_BIKE_HOP}{SE_CLICK}"
-	.string "{SE_FU_ZAKU}{SE_TRUCK_DOOR}{SE_BERRY_BLENDER}{SE_BALL_BOUNCE_2}{SE_NOTE_F}$"
-	.string "${SE_LEDGE}{SE_SUPER_EFFECTIVE}{SE_BALL_OPEN}{SE_FAINT}{SE_BANG}{SE_PIN}{SE_A}{SE_N}{SE_SWITCH}"
-	.string "{SE_REPEL}{SE_ROTATING_GATE}{SE_TRUCK_STOP}{SE_NOTE_C_HIGH}$"
-	.string "${SE_LEDGE}{SE_FAINT}{SE_SLIDING_DOOR}{SE_SHIP}{SE_BANG}{SE_PIN}{SE_A}{SE_N}{SE_SWITCH}"
-	.string "{SE_LAVARIDGE_FALL_WARP}{SE_ICE_BREAK}{SE_ROTATING_GATE}{SE_NOTE_C_HIGH}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_CLICK}{SE_FU_ZAKU}{SE_ICE_STAIRS}{SE_WARP_OUT}"
-	.string "{SE_TRUCK_MOVE}{SE_TRUCK_UNLOAD}{SE_NOTE_E}{SE_NOTE_A}{SE_NOTE_B}$"
-	.string "${SE_PC_ON}{SE_SELECT}{SE_PIN}{SE_EXP}{SE_FU_ZAKU}{SE_CONTEST_CONDITION_LOSE}{SE_ICE_STAIRS}"
-	.string "{SE_TRUCK_UNLOAD}{SE_TRUCK_DOOR}{SE_NOTE_E}{SE_NOTE_F}$"
-	.string "${SE_PC_LOGIN}{SE_PC_OFF}{SE_WALL_HIT}{SE_DOOR}{SE_BOO}{SE_BALL}{SE_E}{SE_O}{SE_N}{SE_TRUCK_UNLOAD}"
-	.string "{SE_NOTE_A}$"
-	.string "${SE_SUPER_EFFECTIVE}{SE_BALL_OPEN}{SE_N}{SE_FALL}{SE_UNLOCK}{SE_WARP_IN}{SE_WARP_OUT}{SE_SAVE}"
-	.string "{SE_BALL_BOUNCE_3}{SE_BALL_BOUNCE_4}{SE_NOTE_D}$"
-	.string "${SE_U}{SE_O}{SE_N}{SE_FAILURE}{SE_CLICK}{SE_ROTATING_GATE}{SE_TRUCK_UNLOAD}{SE_TRUCK_DOOR}"
-	.string "{SE_BERRY_BLENDER}{SE_BALL_BOUNCE_2}{SE_NOTE_A}$"
-	.string "${SE_SELECT}{SE_WIN_OPEN}{SE_WALL_HIT}{SE_DOOR}{SE_LEDGE}{SE_FAINT}{SE_FLEE}{SE_BANG}{SE_PIN}"
-	.string "{SE_FU_ZAKU}{SE_FALL}{SE_UNLOCK}$"
-	.string "{MUS_RG_VS_CHAMPION}{TRANSPARENT}{SE_PC_OFF}{SE_PC_ON}{SE_SELECT}{SE_EXIT}{SE_BIKE_BELL}"
-	.string "{SE_NOT_EFFECTIVE}{SE_BANG}{SE_PIN}{SE_BOO}{SE_TRUCK_UNLOAD}$"
-	.string "${SE_A}{SE_SUCCESS}{SE_SWITCH}{SE_FU_ZAKU}{SE_CONTEST_CONDITION_LOSE}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{SE_TRUCK_STOP}{SE_TRUCK_UNLOAD}{SE_TRUCK_DOOR}{SE_BALL_BOUNCE_3}{SE_NOTE_B}{SE_NOTE_C_HIGH}$"
-	.string "${SE_LEDGE}{SE_FAINT}{SE_FLEE}{SE_CONTEST_PLACE}{SE_A}{SE_FALL}{SE_UNLOCK}{SE_REPEL}{SE_TRUCK_MOVE}"
-	.string "{SE_BERRY_BLENDER}{SE_BALL_BOUNCE_4}{SE_BALL_TRADE}{SE_NOTE_E}{SE_NOTE_F}$"
-	.string "${SE_PC_LOGIN}{SE_WIN_OPEN}{SE_EXIT}{SE_EFFECTIVE}{SE_FLEE}{SE_SHIP}{SE_BANG}{SE_CONTEST_PLACE}{SE_U}"
-	.string "{SE_O}{SE_N}$"
-	.string "$"
-
+	.string "ム　セ　モ　t　o　まろく{NAME_END}　　か{NAME_END}シ　ぴあ♀　Y　ィあまわう　{NAME_END}　{FONT 0}キ　♀　ぴ　アあけ　こ　す　ひ　も　ゆ　れ　わ　を　ん　ぜ　$$け　た　ち　ひ　や　ら　れ　を　ぃ　ぅ　ゅ　$$え　お　か　さ　ふ　め　も　ゆ　ろ　ぉ　ゅ　$$え　お　か　し　は　や　ゆ　よ　り　わ　ん　ぇ　$$　　あ　ち　つ　て　に　ぬ　む　れ　じ　ぞ　だ　ぢ　$$つ　て　な　よ　ら　る　れ　ゃ　ょ　げ　ぜ　$$　　あ　え　お　き　く　つ　と　な　ゆ　よ　り　ず　$$ち　ぬ　ね　の　ま　み　む　め　ら　ろ　わ　ぅ　ぐ　ど　$$え　き　く　け　さ　し　す　ひ　よ　り　を　ん　ぁ　ぜ　$$　　い　し　に　ふ　ほ　も　よ　ろ　わ　ぎ　ぐ　$$　　あ　い　う　せ　そ　ね　の　み　め　ら　ご　ざ　$$ち　つ　て　に　へ　や　れ　ぃ　じ　ず　ぢ　で　ど　$$に　ぬ　ふ　へ　ま　み　め　ら　が　ぞ　だ　づ　$$こ　す　ち　ひ　を　ん　ゅ　ぎ　じ　ず　ぜ　$$く　こ　た　ぬ　へ　ろ　わ　ざ　ず　ぜ　で　$$く　す　な　へ　む　る　ぃ　ょ　ご　じ　で　$$か　き　ち　ぬ　ね　は　み　や　ゃ　ゅ　ぐ　だ　$$　　あ　ひ　ふ　み　め　や　ゆ　ゃ　ゅ　ぐ　だ　$$こ　せ　そ　た　と　な　の　ほ　も　ぁ　ぃ　ぇ　ど　$$こ　た　つ　て　と　な　の　ほ　も　ら　る　ぃ　ど　$$　　あ　や　ゆ　り　ん　ぅ　ぉ　ぞ　づ　で　$$え　お　な　む　ゆ　よ　り　ぉ　ゃ　ぞ　だ　$$い　う　き　く　に　ぬ　ふ　へ　ほ　ぉ　づ　$$せ　そ　ほ　ろ　わ　を　ん　が　げ　ご　ぜ　$$ひ　へ　ほ　み　や　ぃ　ぉ　ゃ　ゅ　ぐ　づ　$$お　か　き　く　こ　た　ち　と　な　ゆ　ろ　わ　$$あ　う　え　お　け　さ　し　と　な　に　ぉ　$$の　ま　も　ゆ　よ　ら　ぇ　ぉ　ゃ　げ　で　ど　$$こ　た　ち　ね　の　ろ　わ　ぁ　ぅ　ゅ　ご　ざ　ぞ　だ　$$い　か　け　す　ち　て　と　ね　ひ　へ　ほ　$$"
 	.globl gUnknown_85BC958
 gUnknown_85BC958: @ 0x85BC958
 	.incbin "baserom_jp.gba", 0x5bc958, 0x618
 
 	.globl gUnknown_85BCF70
 gUnknown_85BCF70: @ 0x85BCF70
-	.string "み{WHITE}{SE_EXP}{SE_M_MINIMIZE}ざ{WHITE}{SE_ICE_CRACK}た{DYNAMIC_COLOR1}{SE_EFFECTIVE}{MUS_DUMMY}"
-	.string "み{WHITE}{SE_EXP_MAX}わ{WHITE}{SE_LAVARIDGE_FALL_WARP}{SE_M_VICEGRIP}る{DYNAMIC_COLOR1}{SE_EFFECTIVE}"
-	.string "{MUS_DUMMY}や{WHITE}{SE_MUD_BALL}{SE_ITEMFINDER}{SE_FAINT}{SE_VEND}{TRANSPARENT}ね{SE_BALL_OPEN}"
-	.string "{MUS_DUMMY}よ{WHITE}{SE_ICE_STAIRS}{SE_M_SWEET_SCENT}{SE_M_BUBBLE_BEAM}{SE_FAINT}{LIGHT_GRAY}"
-	.string "ゅ{SE_BALL_OPEN}{MUS_DUMMY}ぐ{WHITE}{SE_M_SKETCH}{SE_M_PAY_DAY}{SE_WARP_IN}{SE_RG_CARD_FLIPPING}"
-	.string "は{LIGHT_GREEN}{SE_PC_OFF}{MUS_DUMMY}ぐ{WHITE}{SE_M_SKETCH}{SE_WARP_IN}{SE_RG_CARD_FLIPPING}"
-	.string "{MUS_CAUGHT}{DARK_GRAY}な{SE_BALL_OPEN}{MUS_DUMMY}{SE_M_BUBBLE_BEAM2}{SE_M_SKETCH}{SE_POKENAV_OFF}"
-	.string "{SE_LAVARIDGE_FALL_WARP}{SE_BALL_THROW}てむ{SE_DOOR}{MUS_DUMMY}ゅ{WHITE}{SE_ROTATING_GATE}{SE_WARP_IN}"
-	.string "{SE_FLEE}{SE_M_MOONLIGHT}やは{SE_SUPER_EFFECTIVE}{MUS_DUMMY}ょ{WHITE}{SE_M_STAT_INCREASE}コ{WHITE}"
-	.string "{SE_WARP_IN}{SE_FLEE}ろゃ{SE_BALL_OPEN}{MUS_DUMMY}ク{WHITE}{SE_M_SOLAR_BEAM}{SE_FALL}{SE_DING_DONG}"
-	.string "{SE_ICE_CRACK}ょ{BLUE}{SE_EFFECTIVE}{MUS_DUMMY}り{WHITE}ょ{WHITE}{SE_SAVE}{SE_RG_BAG_CURSOR}"
-	.string "{SE_BRIDGE_WALK}{BLUE}ち{SE_BALL_OPEN}{MUS_DUMMY}ら{WHITE}{SE_M_TWISTER}{SE_PIKE_CURTAIN_CLOSE}"
-	.string "{SE_M_HEAT_WAVE}{SE_ITEMFINDER}にな{SE_WIN_OPEN}{MUS_DUMMY}れ{WHITE}{SE_M_UPROAR}{SE_M_TWISTER}"
-	.string "{SE_DING_DONG}{SE_GLASS_FLUTE}ぃゆ{SE_LEDGE}{MUS_DUMMY}ろ{WHITE}{SE_RG_BAG_CURSOR}"
-	.string "{SE_PIKE_CURTAIN_CLOSE}{SE_VEND}{SE_M_CHARGE}{TRANSPARENT}{SE_RG_HELP_ERROR}{MUS_DUMMY}{TRANSPARENT}"
-	.string "ん{WHITE}{SE_M_LOCK_ON}{SE_INTRO_BLAST}{SE_SUPER_EFFECTIVE}{SE_MUGSHOT}{TRANSPARENT}"
-	.string "じ{SE_CONTEST_PLACE}{MUS_DUMMY}ん{WHITE}{SE_M_LOCK_ON}{SE_MUGSHOT}{SE_INTRO_BLAST}{SE_E}"
-	.string "{DYNAMIC_COLOR2}{GREEN}{SE_PC_ON}{MUS_DUMMY}{SE_BALLOON_BLUE}わ{WHITE}ぽ{WHITE}じ{WHITE}{SE_M_ENCORE}"
-	.string "{TRANSPARENT}{MUS_RG_SEVII_123}{MUS_DUMMY}{TRANSPARENT}ず{WHITE}{SE_M_HARDEN}{SE_M_HAZE}"
-	.string "{SE_BALL_TRADE}{SE_BALL_TRAY_BALL}{TRANSPARENT}つ{SE_SUPER_EFFECTIVE}{MUS_DUMMY}ま{WHITE}{SE_UNLOCK}"
-	.string "{SE_WARP_OUT}{SE_M_REFLECT}{SE_EXP}{DYNAMIC_COLOR4}の{SE_BANG}{MUS_DUMMY}ま{WHITE}ざ{WHITE}っ{WHITE}"
-	.string "{SE_E}ぅ{WHITE}ぁ{SE_RG_HELP_ERROR}{MUS_DUMMY}{TRANSPARENT}む{WHITE}{SE_O}だ{WHITE}"
-	.string "{SE_LAVARIDGE_FALL_WARP}{SE_M_VICEGRIP}ゆも{SE_EFFECTIVE}{MUS_DUMMY}{SE_M_THUNDERBOLT}コ{WHITE}{SE_N}"
-	.string "{SE_M_RAIN_DANCE}{SE_ROTATING_GATE}めゃ{SE_BANG}{MUS_DUMMY}ア{WHITE}{SE_UNLOCK}{SE_M_DETECT}"
-	.string "{SE_WARP_OUT}{SE_M_TOXIC}ち{DYNAMIC_COLOR5}{SE_BALL_OPEN}{MUS_DUMMY}{SE_CONTEST_ICON_CLEAR}"
-	.string "{SE_M_DETECT}{SE_M_SKETCH}{SE_PIKE_CURTAIN_OPEN}{SE_INTRO_BLAST}{TRANSPARENT}ぃ{SE_FAINT}{MUS_DUMMY}"
-	.string "{MUS_FORTREE}{SE_EXP_MAX}{SE_M_SPIT_UP}ぺ{WHITE}ひ{SE_USE_ITEM}{LIGHT_GREEN}{SE_PC_ON}{MUS_DUMMY}"
-	.string "{MUS_FORTREE}{SE_M_PSYBEAM}{SE_M_GRASSWHISTLE}{SE_VEND}{SE_WARP_OUT}むぅ{SE_BALL_OPEN}{MUS_DUMMY}"
-	.string "ぴ{WHITE}{SE_BIKE_HOP}{SE_BALL_TRAY_EXIT}ぶ{WHITE}{SE_E}{TRANSPARENT}{MUS_RG_POKE_CENTER}{MUS_DUMMY}"
-	.string "{TRANSPARENT}ク{WHITE}て{WHITE}{SE_M_SOLAR_BEAM}{SE_ICE_STAIRS}{SE_M_SWAGGER2}み{LIGHT_BLUE}{SE_LEDGE}"
-	.string "{MUS_DUMMY}ぃ{WHITE}{SE_WARP_IN}ぴ{WHITE}{SE_CONTEST_CURTAIN_RISE}ひ{WHITE}ぬ{DYNAMIC_COLOR1}{SE_PC_OFF}"
-	.string "{MUS_DUMMY}ぅ{WHITE}{SE_ROTATING_GATE}{SE_WARP_IN}{SE_BALL_TRAY_EXIT}{SE_NOTE_E}{TRANSPARENT}"
-	.string "{LIGHT_GREEN}{SE_DOOR}{MUS_DUMMY}{SE_ICE_CRACK}ょ{WHITE}{SE_FAINT}{SE_M_CHARM}{SE_DEX_PAGE}"
-	.string "まわ{SE_LEDGE}{MUS_DUMMY}{MUS_EVOLVED}ょ{WHITE}{SE_INTRO_BLAST}{SE_RG_BAG_POCKET}{SE_ROTATING_GATE}"
-	.string "{TRANSPARENT}{LIGHT_GREEN}{SE_PC_OFF}{MUS_DUMMY}ゃ{WHITE}{SE_M_FLAMETHROWER}{SE_M_BELLY_DRUM}{SE_SHOP}"
-	.string "{SE_M_VICEGRIP}{RED}よ{SE_PC_OFF}{MUS_DUMMY}{SE_THUNDERSTORM}ぜ{WHITE}{SE_ROTATING_GATE}{SE_RAIN_STOP}"
-	.string "{SE_M_DETECT}ねね{SE_NOT_EFFECTIVE}{MUS_DUMMY}{MUS_OBTAIN_ITEM}{SE_M_VICEGRIP}{SE_M_STRENGTH}っ{WHITE}"
-	.string "{SE_BIKE_HOP}つら{SE_PC_OFF}{MUS_DUMMY}ぽ{WHITE}{SE_E}は{WHITE}や{WHITE}{SE_M_BONEMERANG}{GREEN}"
-	.string "{LIGHT_GRAY}{SE_PC_OFF}{MUS_DUMMY}ウ{WHITE}{SE_TRUCK_DOOR}{SE_CLICK}{SE_WARP_IN}{SE_BALL_TRAY_EXIT}"
-	.string "{TRANSPARENT}つ{SE_BALL_OPEN}{MUS_DUMMY}づ{WHITE}{SE_M_ENCORE}わ{WHITE}コ{WHITE}{SE_SAVE}ん{LIGHT_GRAY}"
-	.string "{SE_EFFECTIVE}{MUS_DUMMY}{SE_ITEMFINDER}{SE_INTRO_BLAST}{SE_BALL_THROW}{SE_TRUCK_UNLOAD}"
-	.string "{SE_DEX_SEARCH}ふ{LIGHT_GRAY}{SE_PC_OFF}{MUS_DUMMY}{MUS_SURF}{SE_BALL_TRAY_EXIT}{SE_M_BLIZZARD2}"
-	.string "{SE_M_TELEPORT}の{WHITE}が{LIGHT_GRAY}{SE_PC_OFF}{MUS_DUMMY}{SE_M_STRING_SHOT}{SE_EXP}{SE_M_DIG}"
-	.string "{SE_M_SACRED_FIRE2}{MUS_DUMMY}れ{LIGHT_GRAY}{SE_PC_OFF}{MUS_DUMMY}{MUS_ENCOUNTER_GIRL}"
-	.string "{SE_M_VITAL_THROW}ぅ{WHITE}{SE_M_ICY_WIND}{SE_SWITCH}{TRANSPARENT}て{SE_PC_OFF}{MUS_DUMMY}ス{WHITE}"
-	.string "{SE_THUNDER2}{SE_VEND}{SE_M_SACRED_FIRE}{SE_EXP}{LIGHT_RED}よ{SE_PC_OFF}{MUS_DUMMY}じ{WHITE}"
-	.string "{SE_BALL_TRADE}{SE_M_HYDRO_PUMP}{SE_M_MIST}{SE_LAVARIDGE_FALL_WARP}{TRANSPARENT}の{SE_BALL_OPEN}"
-	.string "{MUS_DUMMY}じ{WHITE}{SE_M_BELLY_DRUM}ょ{WHITE}{SE_M_VITAL_THROW}{SE_INTRO_BLAST}わむ{SE_BANG}{MUS_DUMMY}"
-	.string "ぇ{WHITE}{SE_MUD_BALL}{SE_EXP}{SE_DING_DONG}{SE_ITEMFINDER}{LIGHT_GREEN}ね{SE_BALL_OPEN}{MUS_DUMMY}"
-	.string "ぇ{WHITE}{SE_BRIDGE_WALK}{SE_MUD_BALL}{SE_M_FIRE_PUNCH}{SE_DING_DONG}{PH_DRESS_BLEND}{SE_PC_LOGIN}"
-	.string "{MUS_DUMMY}り{WHITE}{SE_PIKE_CURTAIN_CLOSE}ょ{WHITE}{SE_WARP_IN}{SE_BRIDGE_WALK}{TRANSPARENT}"
-	.string "{SE_ARENA_TIMEUP2}{MUS_DUMMY}{TRANSPARENT}ウ{WHITE}{SE_TRUCK_DOOR}{SE_WARP_IN}{SE_ELEVATOR}"
-	.string "{SE_M_UPROAR}よゃ{SE_BALL_OPEN}{MUS_DUMMY}ぴ{WHITE}{SE_M_BELLY_DRUM}{SE_EXP_MAX}{SE_UNLOCK}"
-	.string "{SE_CONTEST_CURTAIN_FALL}ほ{MUS_RG_SILPH}{MUS_DUMMY}{TRANSPARENT}ょ{WHITE}{SE_FLEE}{SE_ROTATING_GATE}"
-	.string "{SE_CARD}{SE_CONTEST_CURTAIN_RISE}をを{SE_PC_OFF}{MUS_DUMMY}ゅ{WHITE}{SE_SAVE}{SE_ROTATING_GATE}"
-	.string "{SE_WARP_IN}{SE_M_CONFUSE_RAY}へ{DYNAMIC_COLOR1}{SE_PC_OFF}{MUS_DUMMY}{SE_M_BUBBLE_BEAM2}"
-	.string "{SE_CONTEST_CONDITION_LOSE}{SE_M_HEAT_WAVE}{SE_LAVARIDGE_FALL_WARP}{SE_SAVE}ずち{SE_BALL_OPEN}"
-	.string "{MUS_DUMMY}ご{WHITE}つ{WHITE}{SE_M_CHARGE}{SE_REPEL}{SE_M_MINIMIZE}ざ{LIGHT_GREEN}{SE_BALL}{MUS_DUMMY}"
-	.string "{MUS_ENCOUNTER_GIRL}{SE_M_REFLECT}{SE_SWITCH}カ{WHITE}{SE_BALL_TRAY_ENTER}{TRANSPARENT}{PH_FACE_SOLO}"
-	.string "{MUS_DUMMY}{TRANSPARENT}{SE_ICE_CRACK}{SE_UNLOCK}{SE_RG_HELP_ERROR}{SE_INTRO_BLAST}ぅ{WHITE}の{SE_EXIT}"
-	.string "{MUS_DUMMY}{TRANSPARENT}{MUS_ROULETTE}{SE_SHOP}ほ{WHITE}{SE_TAILLOW_WING_FLAP}{SE_M_THUNDER_WAVE}"
-	.string "げね{SE_LEDGE}{MUS_DUMMY}{SE_U}{SE_M_SURF}{SE_E}ぶ{WHITE}{SE_POKENAV_OFF}{SE_ICE_STAIRS}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_HEAL}の{WHITE}{SE_M_BUBBLE}{SE_M_ATTRACT2}{SE_USE_ITEM}{TRANSPARENT}よ{SE_DOOR}"
-	.string "{MUS_DUMMY}{MUS_CAVE_OF_ORIGIN}{SE_EXP}{SE_DEX_PAGE}{SE_CONTEST_CURTAIN_FALL}{SE_MUGSHOT}"
-	.string "{TRANSPARENT}{SE_BIKE_HOP}{MUS_DUMMY}{TRANSPARENT}{MUS_OBTAIN_BERRY}{SE_M_MINIMIZE}{SE_EXP}"
-	.string "{SE_M_ATTRACT2}{SE_M_SWEET_SCENT}{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}{SE_PC_OFF}{MUS_DUMMY}{SE_NOTE_E}"
-	.string "{SE_TRUCK_STOP}{SE_ROULETTE_BALL2}{SE_BALL_TRAY_BALL}{SE_APPLAUSE}{TRANSPARENT}ね{SE_CONTEST_PLACE}"
-	.string "{MUS_DUMMY}{MUS_LINK_CONTEST_P1}サ{WHITE}{SE_ROULETTE_BALL2}{SE_MUGSHOT}{SE_WARP_IN}もら{SE_BALL}"
-	.string "{MUS_DUMMY}ぉ{WHITE}{SE_BRIDGE_WALK}{SE_EXP}{SE_MUD_BALL}{SE_ITEMFINDER}{TRANSPARENT}{LIGHT_GREEN}"
-	.string "{SE_SUPER_EFFECTIVE}{MUS_DUMMY}{MUS_VICTORY_WILD}{SE_M_DETECT}{SE_M_ATTRACT2}{SE_RAIN_STOP}"
-	.string "{SE_WARP_IN}ゃ{SE_ARENA_TIMEUP2}{MUS_DUMMY}{TRANSPARENT}{MUS_VICTORY_WILD}{SE_M_DETECT}ぐ{WHITE}"
-	.string "{SE_M_HYDRO_PUMP}{SE_CONTEST_CURTAIN_FALL}らち{SE_FAINT}{MUS_DUMMY}ア{WHITE}{SE_M_DETECT}"
-	.string "{SE_PIKE_CURTAIN_OPEN}{SE_WARP_OUT}{SE_RAIN_STOP}ぇ{BLUE}{SE_LEDGE}{MUS_DUMMY}{MUS_C_VS_LEGEND_BEAST}"
-	.string "{SE_REPEL}{SE_NOTE_E}{SE_M_MOONLIGHT}{SE_M_SANDSTORM}{TRANSPARENT}{DYNAMIC_COLOR1}{SE_EFFECTIVE}"
-	.string "{MUS_DUMMY}{SE_NOTE_G}{SE_BALL_TRAY_EXIT}{SE_M_DIVE}{SE_NOTE_C_HIGH}{SE_M_SWAGGER}{DYNAMIC_COLOR5}"
-	.string "{DYNAMIC_COLOR1}{SE_PC_OFF}{MUS_DUMMY}{SE_NOTE_A}{SE_BALL_TRAY_EXIT}{SE_FALL}{SE_PC_LOGIN}"
-	.string "{SE_M_SWAGGER}{TRANSPARENT}ゆ{SE_BALL_OPEN}{MUS_DUMMY}{SE_PC_ON}{SE_BIKE_BELL}{SE_EFFECTIVE}"
-	.string "{SE_SLIDING_DOOR}{SE_I}$"
-	.string "${SE_N}{SE_FU_ZAKU}{SE_EFFECTIVE}{SE_O}{SE_ICE_CRACK}$"
-	.string "${SE_WIN_OPEN}{SE_WALL_HIT}{SE_FLEE}{SE_SLIDING_DOOR}{SE_ICE_STAIRS}$"
-	.string "${SE_WIN_OPEN}{SE_WALL_HIT}{SE_SLIDING_DOOR}{SE_CONTEST_PLACE}{SE_CONTEST_CONDITION_LOSE}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}{SE_NOT_EFFECTIVE}{SE_A}{SE_E}{SE_BOO}{SE_UNLOCK}$"
-	.string "${SE_DOOR}{SE_NOT_EFFECTIVE}{SE_PIN}{SE_BOO}{SE_SUCCESS}$"
-	.string "{MUS_RG_VS_CHAMPION}{TRANSPARENT}{SE_BANG}{SE_BALL}{SE_A}{SE_FAILURE}$"
-	.string "${SE_EXIT}{SE_NOT_EFFECTIVE}{SE_U}{SE_FU_ZAKU}{SE_FALL}$"
-	.string "${SE_CLICK}{SE_WALL_HIT}{SE_BIKE_HOP}{SE_WIN_OPEN}{SE_ICE_STAIRS}$"
-	.string "${SE_I}{SE_PC_OFF}{MUS_DUMMY}{SE_PC_LOGIN}{SE_FLEE}$"
-	.string "${SE_SUPER_EFFECTIVE}{SE_FU_ZAKU}{SE_PC_LOGIN}{SE_CONTEST_CONDITION_LOSE}{SE_U}$"
-	.string "${SE_SUCCESS}{SE_E}{SE_BOO}{SE_A}{SE_UNLOCK}{SE_FALL}{SE_ICE_BREAK}$"
-	.string "${SE_EXP}{SE_FAILURE}{SE_A}{SE_SWITCH}{SE_BIKE_HOP}$"
-	.string "{MUS_RG_VS_CHAMPION}{TRANSPARENT}{SE_PC_ON}{SE_DOOR}{SE_BIKE_BELL}{SE_FLEE}{SE_ICE_STAIRS}"
-	.string "{SE_BIKE_HOP}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}{SE_O}{SE_SWITCH}{SE_FU_ZAKU}{SE_LAVARIDGE_FALL_WARP}{SE_FALL}$"
-	.string "${SE_O}{SE_CLICK}{SE_FAILURE}{SE_N}{SE_FLEE}{SE_WIN_OPEN}{SE_UNLOCK}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_FAINT}{SE_SUCCESS}{SE_WIN_OPEN}$"
-	.string "{SE_RG_SHOP}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{SE_FAINT}{SE_CLICK}{SE_SLIDING_DOOR}$"
-	.string "${SE_SELECT}{SE_BALL_OPEN}{SE_BOO}{SE_N}{SE_FAINT}{SE_LAVARIDGE_FALL_WARP}{SE_FALL}$"
-	.string "${SE_SELECT}{SE_BALL_OPEN}{SE_SHIP}{SE_CONTEST_PLACE}{SE_ICE_BREAK}{SE_FALL}$"
-	.string "{SE_RG_SHOP}{TRANSPARENT}{SE_EXIT}{SE_LEDGE}{SE_BIKE_BELL}{SE_BALL}$"
-	.string "${SE_WIN_OPEN}{SE_WALL_HIT}{SE_CONTEST_PLACE}{SE_CONTEST_CONDITION_LOSE}{SE_ICE_STAIRS}$"
-	.string "${SE_DOOR}{SE_FAINT}{SE_BALL}{SE_BIKE_HOP}{SE_PC_OFF}$"
-	.string "${SE_SUPER_EFFECTIVE}{SE_PC_LOGIN}{SE_BIKE_BELL}{SE_LAVARIDGE_FALL_WARP}{SE_PIN}"
-	.string "{SE_CONTEST_CONDITION_LOSE}$"
-	.string "${SE_SLIDING_DOOR}{SE_LEDGE}{SE_FAINT}{SE_I}{SE_A}{SE_U}$"
-	.string "${SE_CONTEST_PLACE}{SE_BIKE_HOP}{SE_CLICK}{SE_CONTEST_CONDITION_LOSE}{SE_SELECT}$"
-	.string "${SE_I}{MUS_DUMMY}{SE_SLIDING_DOOR}{SE_EFFECTIVE}{SE_A}$"
-	.string "${SE_CONTEST_PLACE}{SE_BIKE_HOP}{SE_SELECT}{SE_BALL_OPEN}{SE_WALL_HIT}{SE_ICE_CRACK}$"
-	.string "${SE_SLIDING_DOOR}{SE_PIN}{SE_I}{SE_O}{SE_ICE_BREAK}$"
-	.string "${SE_BALL}{SE_I}{SE_U}{SE_E}{SE_SUCCESS}$"
-	.string "$"
-
+	.incbin "baserom_jp.gba", 0x5bcf70, 0x5e4
 	.globl gUnknown_85BD554
 gUnknown_85BD554: @ 0x85BD554
 	.incbin "baserom_jp.gba", 0x5bd554, 0x618
@@ -13226,9 +11695,7 @@ gUnknown_85BE8F0: @ 0x85BE8F0
 
 	.globl gUnknown_85BE910
 gUnknown_85BE910: @ 0x85BE910
-	.string "\n$$${STRING}$$$$E$$$ァ$$$$\n$$${STRING}$"
-	.string "$$\p$$${DYNAMIC}$"
-
+	.incbin "baserom_jp.gba", 0x5be910, 0x20
 	.globl gUnknown_85BE930
 gUnknown_85BE930: @ 0x85BE930
 	.incbin "baserom_jp.gba", 0x5be930, 0xa
@@ -13579,8 +12046,7 @@ gUnknown_85C610C: @ 0x85C610C
 
 	.globl gUnknown_85C611C
 gUnknown_85C611C: @ 0x85C611C
-	.string "ホ{PKMN}ンちほ{LIGHT_GRAY}$"
-
+	.string "ホウエンちほう$"
 	.globl gUnknown_85C6124
 gUnknown_85C6124: @ 0x85C6124
 	.incbin "baserom_jp.gba", 0x5c6124, 0x8
@@ -13687,10 +12153,7 @@ gUnknown_85C682C: @ 0x85C682C
 
 	.globl gUnknown_85C6C68
 gUnknown_85C6C68: @ 0x85C6C68
-	.string "{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{MUS_RG_VS_CHAMPION}$"
-	.string "{MUS_RG_VS_CHAMPION}${MUS_RG_VS_CHAMPION}$"
-	.string "{MUS_RG_VS_CHAMPION}$"
-
+	.string "　あ　$あ$$あ$$あ$$あ$"
 	.globl gUnknown_85C6C77
 gUnknown_85C6C77: @ 0x85C6C77
 	.incbin "baserom_jp.gba", 0x5c6c77, 0xf
@@ -13765,27 +12228,22 @@ gUnknown_85C8BA8: @ 0x85C8BA8
 
 	.globl gUnknown_85C8BAE
 gUnknown_85C8BAE: @ 0x85C8BAE
-	.string "{DYNAMIC_COLOR2}ま$"
-
+	.string "さま$"
 	.globl gUnknown_85C8BB1
 gUnknown_85C8BB1: @ 0x85C8BB1
-	.string "ホ{PKMN}ン$"
-
+	.string "ホウエン$"
 	.globl gUnknown_85C8BB6
 gUnknown_85C8BB6: @ 0x85C8BB6
-	.string "ぜん{DYNAMIC_COLOR1}{BLUE}$"
-
+	.string "ぜんこく$"
 	.globl gUnknown_85C8BBB
 gUnknown_85C8BBB: @ 0x85C8BBB
-	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ポケモンず{GREEN}んを\nみご{SE_BANG}{GREEN}ん{MUS_RG_PEWTER}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}た\n{DARK_GRAY}{PH_PRICE_BLEND}な{DYNAMIC_COLOR1}{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}{SE_WARP_IN}たた{RED}\n{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "　　　　　ポケモンずかんを\n"
+	.string "みごと　かんせい　させた\n"
+	.string "いだいなこうせきを　たたえ\n"
+	.string "ここに　しょうめい　します$"
 	.globl gUnknown_85C8BF2
 gUnknown_85C8BF2: @ 0x85C8BF2
-	.string "{MUS_RG_VS_GYM_LEADER}{RED}{SHADOW}{LIGHT_RED}ゲームフリーク$"
-
+	.string "{COLOR 4}{SHADOW 5}ゲームフリーク$"
 	.globl gUnknown_85C8C00
 gUnknown_85C8C00: @ 0x85C8C00
 	.incbin "baserom_jp.gba", 0x5c8c00, 0x8
@@ -13808,8 +12266,7 @@ gUnknown_85C8C24: @ 0x85C8C24
 
 	.globl gUnknown_85C8C25
 gUnknown_85C8C25: @ 0x85C8C25
-	.string "{BLUE}ん$"
-
+	.string "くん$"
 	.globl gUnknown_85C8C28
 gUnknown_85C8C28: @ 0x85C8C28
 	.string "ちゃん$サファイア$ルビー$"
@@ -13860,69 +12317,51 @@ gUnknown_85C8C66: @ 0x85C8C66
 
 	.globl gUnknown_85C8C70
 gUnknown_85C8C70: @ 0x85C8C70
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR3}ょ{GREEN}{SE_LAVARIDGE_FALL_WARP}はじめる$"
-
+	.string "さいしょから　はじめる$"
 	.globl gUnknown_85C8C7C
 gUnknown_85C8C7C: @ 0x85C8C7C
-	.string "つづ{LIGHT_GREEN}{GREEN}{SE_LAVARIDGE_FALL_WARP}はじめる$"
-
+	.string "つづきから　はじめる$"
 	.globl gUnknown_85C8C87
 gUnknown_85C8C87: @ 0x85C8C87
-	.string "{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{SE_WARP_IN}{GREEN}{RED}る$"
-
+	.string "せっていを　かえる$"
 	.globl gUnknown_85C8C91
 gUnknown_85C8C91: @ 0x85C8C91
-	.string "ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}{LIGHT_RED}{BLUE}りもの$"
-
+	.string "ふしぎな　おくりもの$"
 	.globl gUnknown_85C8C9C
 gUnknown_85C8C9C: @ 0x85C8C9C
-	.string "ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}も{MUS_RG_VS_DEOXYS}もの$"
-
+	.string "ふしぎな　もらいもの$"
 	.globl gUnknown_85C8CA7
 gUnknown_85C8CA7: @ 0x85C8CA7
-	.string "ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}で{LIGHT_GREEN}ごと$"
-
+	.string "ふしぎな　できごと$"
 	.globl gUnknown_85C8CB1
 gUnknown_85C8CB1: @ 0x85C8CB1
-	.string "ワイヤレスアダプ{SE_CONTEST_HEART}が\nつながっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん$"
-
+	.string "ワイヤレスアダプタ　が\n"
+	.string "つながっていません$"
 	.globl gUnknown_85C8CC7
 gUnknown_85C8CC7: @ 0x85C8CC7
-	.string "ワイヤレスアダプ{SE_CONTEST_HEART}{SE_WARP_IN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}たまま\nふ{DYNAMIC_COLOR3}"
-	.string "ぎなも{MUS_RG_VS_DEOXYS}も{SE_A}{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
-
+	.string "ワイヤレスアダプタ　を　さしたまま\n"
+	.string "ふしぎなもらいもの　は　できません$"
 	.globl gUnknown_85C8CEB
 gUnknown_85C8CEB: @ 0x85C8CEB
-	.string "ワイヤレスアダプ{SE_CONTEST_HEART}{SE_WARP_IN}{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}たまま\nふ{DYNAMIC_COLOR3}"
-	.string "ぎなで{LIGHT_GREEN}ご{SE_BANG}{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
-	.string "{PH_CLOTH_SOLO}ぶデータによ{SE_ICE_STAIRS}レポート{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR3}"
-	.string "ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}\n{DYNAMIC_COLOR3}ばら{SE_DOOR}{LIGHT_RED}まち{BLUE}"
-	.string "だ{MUS_RG_VICTORY_WILD}$"
-	.string "レポート{SE_SAVE}{DYNAMIC_COLOR1}{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR3}た！$"
-
+	.string "ワイヤレスアダプタ　を　さしたまま\n"
+	.string "ふしぎなできごと　は　できません$がいぶデータにより　レポートを　こうしんします\n"
+	.string "しばらく　おまちください$レポートが　こうしんされました！$"
 	.globl gUnknown_85C8D44
 gUnknown_85C8D44: @ 0x85C8D44
-	.string "レポート{SE_SAVE}{MUS_RG_PEWTER}{GREEN}{BLUE}{SE_BOO}{GREEN}{GREEN}れ{MUS_RG_CAUGHT_INTRO}"
-	.string "{MUS_RG_GAME_FREAK}ので\n{DYNAMIC_COLOR6}のま{RED}のレポート{SE_WARP_IN}よみま{DYNAMIC_COLOR4}！$"
-
+	.string "レポートが　せいかくに　かかれていないので\n"
+	.string "そのまえのレポートを　よみます！$"
 	.globl gUnknown_85C8D6B
 gUnknown_85C8D6B: @ 0x85C8D6B
-	.string "レポート{SE_A}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_SAVE}{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}まった！$"
-
+	.string "レポートの　ないようが　きえてしまった！$"
 	.globl gUnknown_85C8D80
 gUnknown_85C8D80: @ 0x85C8D80
-	.string "1Mサブ{LIGHT_GREEN}ばん{SE_SAVE}{DYNAMIC_COLOR2}{DYNAMIC_COLOR2}っ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}"
-	.string "ん！$"
-
+	.string "1Mサブきばんが　ささっていません！$"
 	.globl gUnknown_85C8D93
 gUnknown_85C8D93: @ 0x85C8D93
-	.string "でんちぎれ{SE_A}ために\nと{MUS_RG_CELADON}{SE_SAVE}{LIGHT_GRAY}ご{GREEN}な{BLUE}なりま{DYNAMIC_COLOR3}"
-	.string "た\pと{MUS_RG_CELADON}{SE_BOO}{GREEN}ん{MUS_RG_CELADON}{DYNAMIC_COLOR4}{SE_ICE_BREAK}で{LIGHT_GREEN}"
-	.string "ごと{SE_I}{LIGHT_RED}{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んが\nゲーム{SE_WARP_IN}つづ{LIGHT_BLUE}{SE_SHIP}{WHITE}"
-	.string "{DYNAMIC_COLOR6}ぶ{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR3}ゅじん{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-	.string "ポケモンず{GREEN}ん$"
-
+	.string "でんちぎれの　ために\n"
+	.string "とけいが　うごかなくなりました\p"
+	.string "とけいに　かんけいする　できごとは　おきませんが\n"
+	.string "ゲームを　つづけて　あそぶことは　できます$しゅじんこう$ポケモンずかん$"
 	.globl gUnknown_85C8DEC
 gUnknown_85C8DEC: @ 0x85C8DEC
 	.incbin "baserom_jp.gba", 0x5c8dec, 0x7c
@@ -13937,19 +12376,11 @@ gUnknown_85C8E7C: @ 0x85C8E7C
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
-	.string "{A_BUTTON}{LIGHT_RED}わる${LIGHT_RED}と{DYNAMIC_COLOR1}$"
-	.string "{LIGHT_RED}んな$イツオ$$$ギョク$$$ケイ$$$$シュウサク$セイゴ$"
-	.string "$$ダイサク$$タカヒト$$タツヤ$$$ダニエル$$テルキ$$$トム$$$$トモヤ$"
-	.string "$$ヒトシ$$$ヒロアキ$$ユキヒコ$$ラルド$$$リクヤ$$$リチャード$リュウ$"
-	.string "$$リョウタ$$アイコ$$$アヤナ$$$アン$$$$エミィ$カオリ$$$カレン$"
-	.string "$$キョウコ$$サエ$$$$スイ$$$$ジュリ$$$チエミ$$$チヨコ$$$テルコ$"
-	.string "$$ナナエ$$$ヒナ$$$$マキコ$$$ミサコ$$$ムツミ$$$モニカ$$$ユウメ$"
-	.string "$$"
-
+	.string "{A_BUTTON}おわる$おと{DYNAMIC_COLOR1}$おんな$イツオ$$$ギョク$$$ケイ$$$$シュウサク$セイゴ$$$ダイサク$$タカヒト$$タツヤ$$$ダニエル$$テルキ$$$トム$$$$トモヤ$$$ヒトシ$$$ヒロアキ$$ユキヒコ$$ラルド$$$リクヤ$$$リチャード$リュウ$$$リョウタ$$アイコ$$$アヤナ$$$アン$$$$エミィ$カオリ$$$カレン$$$キョウコ$$サエ$$$$スイ$$$$ジュリ$$$チエミ$$$チヨコ$$$テルコ$$$ナナエ$$$ヒナ$$$$マキコ$$$ミサコ$$$ムツミ$$$モニカ$$$ユウメ$$$"
 	.globl gUnknown_85C8F88
 gUnknown_85C8F88: @ 0x85C8F88
-	.string "ポケットモンスター\n⋯⋯{DYNAMIC_COLOR4}なわ{SE_FLEE}ポケモン{PAUSE}タ\p$"
-
+	.string "ポケットモンスター\n"
+	.string "⋯⋯すなわち　ポケモン{PAUSE 96}\p$"
 	.globl gUnknown_85C8FA2
 gUnknown_85C8FA2: @ 0x85C8FA2
 	.string "？？？？？ポケモン$"
@@ -13964,120 +12395,71 @@ gUnknown_85C8FB3: @ 0x85C8FB3
 
 	.globl gUnknown_85C8FBB
 gUnknown_85C8FBB: @ 0x85C8FBB
-	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}ポケモン$"
-
+	.string "　　　　　ポケモン$"
 	.globl gUnknown_85C8FC5
 gUnknown_85C8FC5: @ 0x85C8FC5
-	.string "{MUS_DUMMY}{TRANSPARENT}{SE_M_SUPERSONIC}m$"
-
+	.string "　　　,　m$"
 	.globl gUnknown_85C8FCC
 gUnknown_85C8FCC: @ 0x85C8FCC
-	.string "{MUS_DUMMY}{TRANSPARENT}{SE_M_SUPERSONIC}kg$"
-
+	.string "　　　,　kg$"
 	.globl gUnknown_85C8FD4
 gUnknown_85C8FD4: @ 0x85C8FD4
 	.string "の$"
 
 	.globl gUnknown_85C8FD6
 gUnknown_85C8FD6: @ 0x85C8FD6
-	.string "な{LIGHT_GREEN}ご{RED}$"
-
+	.string "なきごえ$"
 	.globl gUnknown_85C8FDB
 gUnknown_85C8FDB: @ 0x85C8FDB
 	.string "と$"
 
 	.globl gUnknown_85C8FDD
 gUnknown_85C8FDD: @ 0x85C8FDD
-	.string "{SE_A}{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{DYNAMIC_COLOR2}{BLUE}らべ$"
-
+	.string "の　おおきさくらべ$"
 	.globl gUnknown_85C8FE7
 gUnknown_85C8FE7: @ 0x85C8FE7
-	.string "ポケモンず{GREEN}ん{SE_A}と{LIGHT_GRAY}ろ{SE_DOOR}{GREEN}んりょ{LIGHT_GRAY}！$"
-
+	.string "ポケモンずかんの　とうろく　かんりょう！$"
 	.globl gUnknown_85C8FFC
 gUnknown_85C8FFC: @ 0x85C8FFC
-	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}"
-	.string "⋯⋯$"
-
+	.string "けんさくを　しています⋯⋯$"
 	.globl gUnknown_85C900A
 gUnknown_85C900A: @ 0x85C900A
-	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}{SE_SAVE}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！$"
-
+	.string "けんさくが　しゅうりょう　しました！$"
 	.globl gUnknown_85C901D
 gUnknown_85C901D: @ 0x85C901D
-	.string "{PH_CLOTH_SOLO}と{SE_PC_OFF}{DYNAMIC_COLOR4}{SE_ICE_BREAK}ポケモン{SE_I}{DARK_GRAY}ま{DYNAMIC_COLOR5}"
-	.string "んで{DYNAMIC_COLOR3}た⋯⋯$"
-	.string "じょ{LIGHT_GRAY}{LIGHT_BLUE}ん{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{DYNAMIC_COLOR3}"
-	.string "て\nポケモン{SE_A}{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "ず{GREEN}んリスト{SE_A}ならび{SE_WARP_IN}{LIGHT_GREEN}り{GREEN}{RED}ま{DYNAMIC_COLOR4}$"
-	.string "ず{GREEN}ん{SE_BOO}もどりま{DYNAMIC_COLOR4}$ず{GREEN}んモード{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}"
-	.string "{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "ず{GREEN}ん{SE_A}ならび{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR4}$"
-	.string "なま{RED}{SE_A}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR3}ょ{SE_A}もじ{SE_WARP_IN}{DYNAMIC_COLOR3}"
-	.string "{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}/みつ{LIGHT_BLUE}"
-	.string "たポケモンのみ$"
-	.string "{GREEN}らだ{SE_A}{DARK_GRAY}ろ{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}/みつ{LIGHT_BLUE}たポケモンのみ$"
-	.string "タイプ{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{SE_RG_BALL_CLICK}/つ{GREEN}ま{RED}たポケモンのみ$"
-	.string "{LIGHT_BLUE}ん{DYNAMIC_COLOR2}{BLUE}/{LIGHT_GREEN}り{GREEN}{RED}{SE_WARP_IN}じっ{DYNAMIC_COLOR1}"
-	.string "{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "ホ{PKMN}{SE_M_BUBBLE3}ず{GREEN}ん$ぜん{DYNAMIC_COLOR1}{SE_DOOR}ず{GREEN}ん$"
-	.string "ばんご{SE_PC_OFF}じゅん$ごじゅ{LIGHT_GRAY}{LIGHT_RED}{SE_WARP_OUT}じゅん$"
-	.string "{LIGHT_RED}{MUS_RG_SEVII_123}{TRANSPARENT}じゅん$"
-	.string "{GREEN}{MUS_RG_VS_LEGEND}{TRANSPARENT}じゅん$"
-	.string "た{MUS_RG_POKE_TOWER}{TRANSPARENT}じゅん$ひ{MUS_RG_FUCHSIA}{TRANSPARENT}じゅん{MUS_RG_VS_CHAMPION}{DARK_GRAY}"
-	.string "{LIGHT_GRAY}{RED}{LIGHT_RED}$"
-	.string "{GREEN}{LIGHT_GREEN}{BLUE}{LIGHT_BLUE}{DYNAMIC_COLOR1}$"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$"
-	.string "たちつてと$なにぬねの$はひふへほ$まみむめも$らりるれろ$やゆよわをん{MUS_RG_VS_CHAMPION}{GREEN}{MUS_RG_VS_CHAMPION}{LIGHT_RED}$"
-	.string "{MUS_RG_SILPH}ろ$みどり${BLUE}ろ$ち{PH_FACE_SOLO}ろ$"
-	.string "むら{DYNAMIC_COLOR2}{LIGHT_GREEN}${MUS_RG_POKE_JUMP}{DARK_GRAY}ろ$"
-	.string "{DYNAMIC_COLOR3}ろ$ピンク$ホ{PKMN}ンちほ{SE_PC_OFF}ば{SE_WARP_OUT}ポケモンず{GREEN}ん$"
-	.string "ぜん{DYNAMIC_COLOR1}{SE_DOOR}ば{SE_WARP_OUT}ポケモンず{GREEN}ん$"
-	.string "ポケモンを\nばんご{LIGHT_GRAY}じゅん{SE_NOTE_B}ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "みつ{LIGHT_BLUE}たポケモン{SE_A}なま{RED}を\nごじゅ{LIGHT_GRAY}{LIGHT_RED}んじゅん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
-	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "つ{GREEN}ま{RED}たポケモンを\n{LIGHT_RED}{MUS_RG_SEVII_123}{TRANSPARENT}じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
-	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "つ{GREEN}ま{RED}たポケモンを\n{GREEN}{MUS_RG_VS_LEGEND}{TRANSPARENT}じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}"
-	.string "{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "つ{GREEN}ま{RED}たポケモンを\n{DYNAMIC_COLOR3}んちょ{LIGHT_GRAY}のた{MUS_RG_POKE_TOWER}{TRANSPARENT}"
-	.string "じゅんばん{SE_NOTE_B}ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "つ{GREEN}ま{RED}たポケモンを\n{DYNAMIC_COLOR3}んちょ{LIGHT_GRAY}のひ{MUS_RG_FUCHSIA}{TRANSPARENT}じゅんばん{SE_NOTE_B}"
-	.string "ひょ{LIGHT_GRAY}{SE_BALL_THROW}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "${DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}$"
-	.string "な{DYNAMIC_COLOR3}$"
-
+	.string "がいとう　する　ポケモンは　いませんでした⋯⋯$じょうけんを　していして\n"
+	.string "ポケモンの　けんさくを　します$ずかんリストの　ならびを　きりかえます$ずかんに　もどります$ずかんモードを　してい　します$ずかんの　ならびを　してい　します$なまえの　さいしょの　もじを　してい　します\n"
+	.string "　/みつけたポケモンのみ$からだの　いろを　してい　します\n"
+	.string "　/みつけたポケモンのみ$タイプを　してい　します\n"
+	.string "　/つかまえたポケモンのみ$けんさく/きりかえを　じっこうします$ホウエン　ずかん$ぜんこく　ずかん$ばんごう　じゅん$ごじゅうおん　じゅん$おもい　じゅん$かるい　じゅん$たかい　じゅん$ひくい　じゅん$あいうえお$かきくけこ$さしすせそ$たちつてと$なにぬねの$はひふへほ$まみむめも$らりるれろ$やゆよわをん$あか$あお$きいろ$みどり$くろ$ちゃいろ$むらさき$はいいろ$しろ$ピンク$ホウエンちほう　ばん　ポケモンずかん$ぜんこく　ばん　ポケモンずかん$ポケモンを\n"
+	.string "ばんごうじゅんで　ひょうじ　します$みつけたポケモンの　なまえを\n"
+	.string "ごじゅうおんじゅんで　ひょうじ　します$つかまえたポケモンを\n"
+	.string "おもい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
+	.string "かるい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
+	.string "しんちょうのたかい　じゅんばんで　ひょうじ　します$つかまえたポケモンを\n"
+	.string "しんちょうのひくい　じゅんばんで　ひょうじ　します$$してい　しない$なし$"
 	.globl gUnknown_85C9299
 gUnknown_85C9299: @ 0x85C9299
-	.string "▶{SE_RG_SHOP}$"
-
+	.string "▶$　$"
 	.globl gUnknown_85C929D
 gUnknown_85C929D: @ 0x85C929D
-	.string "でんど{MUS_RG_POKE_CENTER}{SE_ICE_STAIRS}{LIGHT_RED}めでと{LIGHT_GRAY}！$"
-	.string "みつ{LIGHT_BLUE}{SE_FAINT}ポケモ{SE_M_BUBBLE3}{B_COPY_VAR_1}！\nつ{GREEN}ま{RED}{SE_FAINT}ポケモ{SE_M_BUBBLE3}"
-	.string "{B_COPY_VAR_2}！\pオダマキは{GREEN}{DYNAMIC_COLOR5}の\nポケモンず{GREEN}{SE_WARP_OUT}ひょ{LIGHT_GRAY}{GREEN}"
-	.string "！\pオダマキ“どれどれ\p$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}まで{SE_A}レポート{SE_WARP_IN}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR3}"
-	.string "る{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！\nでんげん{SE_WARP_IN}{LIGHT_GREEN}"
-	.string "ら{MUS_RG_GAME_FREAK}で{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "でんどういり　おめでとう！$みつけた　ポケモン　{B_COPY_VAR_1}！\n"
+	.string "つかまえた　ポケモン　{B_COPY_VAR_2}！\p"
+	.string "オダマキはかせの\n"
+	.string "ポケモンずかん　ひょうか！\p"
+	.string "オダマキ“どれどれ\p"
+	.string "$ここまでの　レポートを　かきしるしています！\n"
+	.string "でんげんを　きらないでください$"
 	.globl gUnknown_85C9311
 gUnknown_85C9311: @ 0x85C9311
 	.incbin "baserom_jp.gba", 0x5c9311, 0x17
 
 	.globl gUnknown_85C9328
 gUnknown_85C9328: @ 0x85C9328
-	.string "{PH_PRICE_BLEND}{B_COPY_VAR_1}{MUS_RG_POKE_TOWER}{TRANSPARENT}でんど{MUS_RG_POKE_CENTER}り！$"
-
+	.string "だい{B_COPY_VAR_1}かい　でんどういり！$"
 	.globl gUnknown_85C9337
 gUnknown_85C9337: @ 0x85C9337
-	.string "リー{SE_M_ICY_WIND}チャンピオン{SE_M_DRAGON_RAGE}{LIGHT_RED}めでと{LIGHT_GRAY}！$"
-	.string "$"
-
+	.string "リーグ　チャンピオン！　おめでとう！$$"
 	.globl gUnknown_85C934B
 gUnknown_85C934B: @ 0x85C934B
 	.string "No,$"
@@ -14088,53 +12470,41 @@ gUnknown_85C934F: @ 0x85C934F
 
 	.globl gUnknown_85C9359
 gUnknown_85C9359: @ 0x85C9359
-	.string "なま{RED}$"
-
+	.string "なまえ$"
 	.globl gUnknown_85C935D
 gUnknown_85C935D: @ 0x85C935D
 	.string "IDNo,$"
 
 	.globl gUnknown_85C9363
 gUnknown_85C9363: @ 0x85C9363
-	.string "オダマキは{GREEN}{DYNAMIC_COLOR5}{SE_SAVE}ピンチだ！\nポケモン{SE_WARP_IN}だ{DYNAMIC_COLOR3}{SE_SHIP}"
-	.string "た{DYNAMIC_COLOR4}{LIGHT_BLUE}て{WHITE}げよ{LIGHT_GRAY}！$"
-
+	.string "オダマキはかせが　ピンチだ！\n"
+	.string "ポケモンを　だして　たすけてあげよう！$"
 	.globl gUnknown_85C9386
 gUnknown_85C9386: @ 0x85C9386
-	.string "{DYNAMIC_COLOR1}のポケモンに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "このポケモンにしますか？$"
 	.globl gUnknown_85C9393
 gUnknown_85C9393: @ 0x85C9393
 	.string "ポケモン$"
 
 	.globl gUnknown_85C9398
 gUnknown_85C9398: @ 0x85C9398
-	.string "ど{DYNAMIC_COLOR1}{SE_O}とびま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "つ{GREEN}{LIGHT_GRAY}${DYNAMIC_COLOR4}てる$"
-	.string "と{LIGHT_GRAY}ろ{BLUE}$もた{DYNAMIC_COLOR5}る$"
-	.string "タグをみる$"
-
+	.string "どこへ　とびますか？$つかう$すてる$とうろく$もたせる$タグをみる$"
 	.globl gUnknown_85C93BB
 gUnknown_85C93BB: @ 0x85C93BB
-	.string "{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}${LIGHT_RED}りる$"
-
+	.string "けってい$おりる$"
 	.globl gUnknown_85C93C4
 gUnknown_85C93C4: @ 0x85C93C4
 	.string "もどる$"
 
 	.globl gUnknown_85C93C8
 gUnknown_85C93C8: @ 0x85C93C8
-	.string "やめる$み{DYNAMIC_COLOR5}る$"
-
+	.string "やめる$みせる$"
 	.globl gUnknown_85C93D0
 gUnknown_85C93D0: @ 0x85C93D0
-	.string "$キャンセル$もちもの$メール{MUS_RG_VS_CHAMPION}ず{GREEN}る{MUS_RG_VS_CHAMPION}ず{LIGHT_BLUE}る$"
-	.string "みる$"
-
+	.string "$キャンセル$もちもの$メール$あずかる$あずける$みる$"
 	.globl gUnknown_85C93ED
 gUnknown_85C93ED: @ 0x85C93ED
-	.string "な{DYNAMIC_COLOR3}${MUS_RG_POKE_TOWER}じょ$"
-
+	.string "なし$かいじょ$"
 	.globl gUnknown_85C93F5
 gUnknown_85C93F5: @ 0x85C93F5
 	.string "？？？$"
@@ -14181,20 +12551,17 @@ gUnknown_85C941A: @ 0x85C941A
 
 	.globl gUnknown_85C941F
 gUnknown_85C941F: @ 0x85C941F
-	.string "{TRANSPARENT}$"
-
+	.string "　$"
 	.globl gText_SelectorArrow2
 gText_SelectorArrow2: @ 0x85C9421
 	.string "▶$"
 
 	.globl gUnknown_85C9423
 gUnknown_85C9423: @ 0x85C9423
-	.string "ま{RED}{SE_BOO}もどりま{DYNAMIC_COLOR4}！$"
-
+	.string "まえに　もどります！$"
 	.globl gUnknown_85C942E
 gUnknown_85C942E: @ 0x85C942E
-	.string "なに{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？{MUS_RG_VS_CHAMPION}げる$"
-
+	.string "なにを　しますか？$あげる$"
 	.globl gUnknown_85C943C
 gUnknown_85C943C: @ 0x85C943C
 	.string "×{B_COPY_VAR_1}$"
@@ -14205,147 +12572,132 @@ gUnknown_85C9440: @ 0x85C9440
 
 	.globl gUnknown_85C9443
 gUnknown_85C9443: @ 0x85C9443
-	.string "{B_COPY_VAR_1}{MUS_RG_SEVII_CAVE}$"
-
+	.string "{B_COPY_VAR_1}まい$"
 	.globl gUnknown_85C9448
 gUnknown_85C9448: @ 0x85C9448
 	.string "バッグをとじる$"
 
 	.globl gUnknown_85C9450
 gUnknown_85C9450: @ 0x85C9450
-	.string "{B_COPY_VAR_1}を\nど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "どうしますか？$"
 	.globl gUnknown_85C945C
 gUnknown_85C945C: @ 0x85C945C
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_NOTE_B}メールを\n{GREEN}{BLUE}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "ここで　メールを\n"
+	.string "かくことは　できません！$"
 	.globl gUnknown_85C9472
 gUnknown_85C9472: @ 0x85C9472
-	.string "ポケモン{SE_SAVE}{DARK_GRAY}ま{DYNAMIC_COLOR5}んよ！$"
-
+	.string "ポケモンが　いませんよ！$"
 	.globl gUnknown_85C947F
 gUnknown_85C947F: @ 0x85C947F
-	.string "{B_COPY_VAR_1}を\nど{DYNAMIC_COLOR1}{SE_BOO}{DARK_GRAY}れま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "どこに　いれますか？$"
 	.globl gUnknown_85C948E
 gUnknown_85C948E: @ 0x85C948E
-	.string "{B_COPY_VAR_1}を\nもた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "もたせることは　できません！$"
 	.globl gUnknown_85C94A1
 gUnknown_85C94A1: @ 0x85C94A1
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{B_COPY_VAR_1}を\nもた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "ここでは　{B_COPY_VAR_1}を\n"
+	.string "もたせることは　できません！$"
 	.globl gUnknown_85C94B9
 gUnknown_85C94B9: @ 0x85C94B9
-	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　を\n"
+	.string "いくつ　あずけますか？$"
 	.globl gUnknown_85C94CA
 gUnknown_85C94CA: @ 0x85C94CA
-	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
-
+	.string "{B_COPY_VAR_1}　を\n"
+	.string "{B_COPY_VAR_2}コ　あずけました$"
 	.globl gUnknown_85C94DA
 gUnknown_85C94DA: @ 0x85C94DA
-	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{LIGHT_GRAY}{MUS_RG_VS_WILD}ず{LIGHT_BLUE}"
-	.string "られま{DYNAMIC_COLOR5}ん！$"
-
+	.string "これいじょう\n"
+	.string "あずけられません！$"
 	.globl gUnknown_85C94EB
 gUnknown_85C94EB: @ 0x85C94EB
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つ{SE_PIN}ど{LIGHT_GRAY}ぐは\nパソコン{SE_BOO}\n{DARK_GRAY}"
-	.string "れられま{DYNAMIC_COLOR5}ん！$"
-
+	.string "たいせつな　どうぐは\n"
+	.string "パソコンに　\n"
+	.string "いれられません！$"
 	.globl gUnknown_85C9506
 gUnknown_85C9506: @ 0x85C9506
-	.string "{DYNAMIC_COLOR1}れ{SE_I}とても\n{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなモ{SE_APPLAUSE}なので\n{DYNAMIC_COLOR4}"
-	.string "てられま{DYNAMIC_COLOR5}ん！$"
-
+	.string "これは　とても\n"
+	.string "たいせつなモノ　なので\n"
+	.string "すてられません！$"
 	.globl gUnknown_85C9523
 gUnknown_85C9523: @ 0x85C9523
-	.string "{B_COPY_VAR_1}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "いくつ　すてますか？$"
 	.globl gUnknown_85C9532
 gUnknown_85C9532: @ 0x85C9532
-	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "{B_COPY_VAR_2}コ　すてました$"
 	.globl gUnknown_85C9540
 gUnknown_85C9540: @ 0x85C9540
-	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}{DYNAMIC_COLOR4}てても\nよろ{MUS_RG_VICTORY_GYM_LEADER}"
-	.string "で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "{B_COPY_VAR_2}コ　すてても\n"
+	.string "よろしいですか？$"
 	.globl gUnknown_85C9556
 gUnknown_85C9556: @ 0x85C9556
-	.string "{LIGHT_RED}と{LIGHT_GRAY}{DYNAMIC_COLOR2}ん{SE_A}{DYNAMIC_COLOR1}とば⋯⋯\n{MUS_RG_VS_TRAINER}"
-	.string "{SE_M_DRAGON_RAGE}{DYNAMIC_COLOR1}{MUS_RG_POKE_CENTER}{LIGHT_GRAY}ものには\lつ{MUS_RG_POKE_TOWER}"
-	.string "ど{LIGHT_GREEN}{SE_SAVE}{WHITE}るんだ！{PAUSE_UNTIL_PRESS}$"
-
+	.string "おとうさんの　ことば⋯⋯\n"
+	.string "{MUS_RG_VS_TRAINER}！　こういうものには\l"
+	.string "つかいどきが　あるんだ！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C957F
 gUnknown_85C957F: @ 0x85C957F
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{LIGHT_RED}りられ{MUS_RG_GAME_FREAK}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "ここでは　おりられない！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C958E
 gUnknown_85C958E: @ 0x85C958E
-	.string "{LIGHT_RED}っ！\nマシン{SE_SAVE}はんの{SE_PC_OFF}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}るぞ！\pち{GREEN}{BLUE}"
-	.string "{SE_BOO}ど{LIGHT_GRAY}ぐ{SE_SAVE}{LIGHT_GRAY}まってる！{PAUSE_UNTIL_PRESS}$"
-
+	.string "おっ！\n"
+	.string "マシンが　はんのう　しているぞ！\p"
+	.string "ちかくに　どうぐが　うまってる！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C95B6
 gUnknown_85C95B6: @ 0x85C95B6
-	.string "マシン{SE_SAVE}{WHITE}{DYNAMIC_COLOR3}もとで\n{DYNAMIC_COLOR4}ご{SE_DOOR}はんの{SE_PC_OFF}{DYNAMIC_COLOR3}"
-	.string "{MUS_RG_CAUGHT_INTRO}るぞ！{PAUSE_UNTIL_PRESS}$"
-
+	.string "マシンが　あしもとで\n"
+	.string "すごく　はんのう　しているぞ！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C95D3
 gUnknown_85C95D3: @ 0x85C95D3
-	.string "⋯{SE_M_DIZZY_PUNCH}⋯{SE_M_DIZZY_PUNCH}ふ{LIGHT_GRAY}！\n⋯{SE_M_DIZZY_PUNCH}なんに{SE_SWITCH}はんの{SE_PC_OFF}"
-	.string "{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}{PAUSE_UNTIL_PRESS}$"
-
+	.string "⋯⋯　⋯⋯　ふう！\n"
+	.string "⋯⋯　なんにも　はんのう　しない{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C95F0
 gUnknown_85C95F0: @ 0x85C95F0
-	.string "{WHITE}なた{SE_A}コイン\n{B_COPY_VAR_1}{MUS_RG_SEVII_CAVE}{PAUSE_UNTIL_PRESS}$"
-
+	.string "あなたの　コイン\n"
+	.string "{B_COPY_VAR_1}まい{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9600
 gUnknown_85C9600: @ 0x85C9600
-	.string "わざマシン{SE_WARP_IN}{LIGHT_GREEN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}た！$"
-
+	.string "わざマシンを　きどうした！$"
 	.globl gUnknown_85C960E
 gUnknown_85C960E: @ 0x85C960E
-	.string "ひでんマシン{SE_WARP_IN}{LIGHT_GREEN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}た！$"
-
+	.string "ひでんマシンを　きどうした！$"
 	.globl gUnknown_85C961D
 gUnknown_85C961D: @ 0x85C961D
-	.string "な{GREEN}に{SE_I}{B_COPY_VAR_1}が\n{LIGHT_GREEN}ろ{BLUE}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}"
-	.string "た！\p{B_COPY_VAR_1}を\nポケモン{SE_BOO}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-
+	.string "なかには　{B_COPY_VAR_1}が\n"
+	.string "きろくされていた！\p"
+	.string "{B_COPY_VAR_1}を\n"
+	.string "ポケモンに　おぼえさせますか？$"
 	.globl gUnknown_85C9644
 gUnknown_85C9644: @ 0x85C9644
-	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "{B_COPY_VAR_2}を　つかった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9654
 gUnknown_85C9654: @ 0x85C9654
-	.string "ま{SE_NOTE_F}ま{RED}{SE_BOO}つ{GREEN}っ{SE_FAINT}スプレーの\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}"
-	.string "の{DYNAMIC_COLOR1}ってま{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "まだ　まえに　つかった　スプレーの\n"
+	.string "こうかが　のこってます！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9675
 gUnknown_85C9675: @ 0x85C9675
-	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！\pポケモンと\n{DYNAMIC_COLOR6}{LIGHT_GRAY}"
-	.string "ぐ{SE_PC_OFF}{DYNAMIC_COLOR3}や{DYNAMIC_COLOR4}{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "{B_COPY_VAR_2}を　つかった！\p"
+	.string "ポケモンと\n"
+	.string "そうぐう　しやすくなった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9699
 gUnknown_85C9699: @ 0x85C9699
-	.string "{MUS_RG_VS_TRAINER}は\n{B_COPY_VAR_2}{SE_WARP_IN}つ{GREEN}った！\pポケモンと\n{DYNAMIC_COLOR6}{LIGHT_GRAY}"
-	.string "ぐ{SE_PC_OFF}{DYNAMIC_COLOR3}に{BLUE}{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{MUS_RG_VS_TRAINER}は\n"
+	.string "{B_COPY_VAR_2}を　つかった！\p"
+	.string "ポケモンと\n"
+	.string "そうぐう　しにくくなった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C96BD
 gUnknown_85C96BD: @ 0x85C96BD
-	.string "ボックス{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}{TRANSPARENT}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "ボックスが　いっぱい　です！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C96CE
 gUnknown_85C96CE: @ 0x85C96CE
-	.string "{DYNAMIC_COLOR1}な{SE_A}りょ{SE_PC_OFF}{B_COPY_VAR_1}{PAUSE_UNTIL_PRESS}$"
-	.string "フィールド${DYNAMIC_COLOR5}んと{LIGHT_GRAY}$ポケモンリスト$"
-	.string "ショップ$パソコン$"
-
+	.string "こなの　りょう　{B_COPY_VAR_1}{PAUSE_UNTIL_PRESS}$フィールド$せんとう$ポケモンリスト$ショップ$パソコン$"
 	.globl gUnknown_85C96F8
 gUnknown_85C96F8: @ 0x85C96F8
 	.incbin "baserom_jp.gba", 0x5c96f8, 0x30
@@ -14356,527 +12708,397 @@ gUnknown_85C9728: @ 0x85C9728
 
 	.globl gUnknown_85C9738
 gUnknown_85C9738: @ 0x85C9738
-	.string "{B_COPY_VAR_1}へ\nもどりま{DYNAMIC_COLOR4}$"
-
+	.string "{B_COPY_VAR_1}へ\n"
+	.string "もどります$"
 	.globl gUnknown_85C9742
 gUnknown_85C9742: @ 0x85C9742
-	.string "{TRANSPARENT}{SE_NOTE_C_HIGH}{SE_PC_OFF}{SE_BALL_BOUNCE_2}{TRANSPARENT}$"
-	.string "モンスターボール{SE_RG_SHOP}わざマシ{SE_M_BUBBLE3}{TRANSPARENT}{SE_RG_SHOP}{SE_WALL_HIT}{SE_A}{SE_FAILURE}"
-	.string "{TRANSPARENT}$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなも{SE_A}$"
-
+	.string "　ど　う　ぐ　　$モンスターボール$　わざマシン　　$　き　の　み　　$たいせつなもの　$"
 	.globl gUnknown_85C976F
 gUnknown_85C976F: @ 0x85C976F
 	.string "{NO}{B_COPY_VAR_1}{B_COPY_VAR_2}$"
 
 	.globl gUnknown_85C9776
 gUnknown_85C9776: @ 0x85C9776
-	.string "{MUS_DUMMY}{B_COPY_VAR_1}{B_COPY_VAR_2}$"
-
+	.string "　　{B_COPY_VAR_1}{B_COPY_VAR_2}$"
 	.globl gUnknown_85C977D
 gUnknown_85C977D: @ 0x85C977D
-	.string "{LIGHT_RED}{LIGHT_RED}{LIGHT_GREEN}{DYNAMIC_COLOR2}$"
-
+	.string "おおきさ$"
 	.globl gUnknown_85C9782
 gUnknown_85C9782: @ 0x85C9782
-	.string "{GREEN}た{DYNAMIC_COLOR2}$"
-
+	.string "かたさ$"
 	.globl gUnknown_85C9786
 gUnknown_85C9786: @ 0x85C9786
-	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}cm$とて{SE_SWITCH}やわら{MUS_RG_POKE_TOWER}$"
-	.string "やわら{MUS_RG_POKE_TOWER}${GREEN}{MUS_RG_RIVAL_EXIT}$"
-	.string "とて{SE_SWITCH}{GREEN}{MUS_RG_RIVAL_EXIT}$"
-	.string "とてつもな{SE_DOOR}{GREEN}{MUS_RG_RIVAL_EXIT}$"
-
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}cm$とても　やわらかい$やわらかい$かたい$とても　かたい$とてつもなく　かたい$"
 	.globl gUnknown_85C97B5
 gUnknown_85C97B5: @ 0x85C97B5
 	.string "{NO}{B_COPY_VAR_1}{TRANSPARENT}{B_COPY_VAR_2}$"
 
 	.globl gUnknown_85C97BD
 gUnknown_85C97BD: @ 0x85C97BD
-	.string "{LIGHT_GREEN}のみのタグ{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}ポロック{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}ポロック$"
-	.string "も{MUS_RG_SEVII_123}ろポロック$みどりのポロック${MUS_RG_SILPH}ろのポロック$"
-	.string "むら{DYNAMIC_COLOR2}{LIGHT_GREEN}ポロック${DYNAMIC_COLOR1}{MUS_RG_TEACHY_TV_MENU}ろポロック$"
-	.string "ち{PH_FACE_SOLO}ろポロック${DYNAMIC_COLOR6}{MUS_RG_VS_DEOXYS}ろポロック$"
-	.string "{LIGHT_GREEN}みどりポロック${MUS_RG_POKE_JUMP}{DARK_GRAY}ろポロック$"
-	.string "{BLUE}{MUS_RG_ENCOUNTER_DEOXYS}ポロック${DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}ポロック$"
-	.string "{LIGHT_GREEN}{MUS_RG_TEACHY_TV_MENU}ろポロック$"
-
+	.string "きのみのタグ$あかいポロック$あおいポロック$ももいろポロック$みどりのポロック$きいろのポロック$むらさきポロック$こんいろポロック$ちゃいろポロック$そらいろポロック$きみどりポロック$はいいろポロック$くろいポロック$しろいポロック$きんいろポロック$"
 	.globl gUnknown_85C983E
 gUnknown_85C983E: @ 0x85C983E
-	.string "{GREEN}{MUS_RG_VS_DEOXYS}$"
-
+	.string "からい$"
 	.globl gUnknown_85C9842
 gUnknown_85C9842: @ 0x85C9842
-	.string "{DYNAMIC_COLOR3}{PH_GOAT_HELD}$"
-
+	.string "しぶい$"
 	.globl gUnknown_85C9846
 gUnknown_85C9846: @ 0x85C9846
-	.string "{WHITE}{MUS_RG_SEVII_CAVE}$"
-
+	.string "あまい$"
 	.globl gUnknown_85C984A
 gUnknown_85C984A: @ 0x85C984A
-	.string "に{PH_CLOTH_SOLO}$"
-
+	.string "にがい$"
 	.globl gUnknown_85C984E
 gUnknown_85C984E: @ 0x85C984E
-	.string "{DYNAMIC_COLOR4}っ{PH_THOUGHT_HELD}${LIGHT_GRAY}{MUS_RG_SEVII_CAVE}$"
-	.string "{DYNAMIC_COLOR1}ま{GREEN}{DYNAMIC_COLOR2}$"
-
+	.string "すっぱい$うまい$こまかさ$"
 	.globl gUnknown_85C985C
 gUnknown_85C985C: @ 0x85C985C
-	.string "ケースを{DYNAMIC_COLOR3}ま{LIGHT_GRAY}$"
-
+	.string "ケースをしまう$"
 	.globl gUnknown_85C9864
 gUnknown_85C9864: @ 0x85C9864
 	.string "{LV_2}{B_COPY_VAR_1}$"
 
 	.globl gUnknown_85C9869
 gUnknown_85C9869: @ 0x85C9869
-	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てて{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}"
-	.string "？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "すてても　よろしいですか？$"
 	.globl gUnknown_85C987B
 gUnknown_85C987B: @ 0x85C987B
-	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "すてました$"
 	.globl gUnknown_85C9885
 gUnknown_85C9885: @ 0x85C9885
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\nたべた！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_2}を\n"
+	.string "たべた！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9894
 gUnknown_85C9894: @ 0x85C9894
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\nよろ{DYNAMIC_COLOR1}ん{SE_NOTE_B}たべた！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_2}を\n"
+	.string "よろこんで　たべた！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C98A9
 gUnknown_85C98A9: @ 0x85C98A9
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\n{DARK_GRAY}や{DYNAMIC_COLOR6}{LIGHT_GRAY}{SE_BOO}"
-	.string "たべた！{PAUSE_UNTIL_PRESS}$"
-	.string "{MUS_RG_POKE_TOWER}{SE_BOO}{LIGHT_GREEN}た$"
-	.string "{LIGHT_GRAY}り{SE_BOO}{LIGHT_GREEN}た$なんでも{MUS_RG_GAME_FREAK}で{DYNAMIC_COLOR4}$"
-
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_2}を\n"
+	.string "いやそうに　たべた！{PAUSE_UNTIL_PRESS}$かいに　きた$うりに　きた$なんでもないです$"
 	.globl gUnknown_85C98D5
 gUnknown_85C98D5: @ 0x85C98D5
-	.string "もってる{GREEN}{SE_NOTE_C}{B_COPY_VAR_1}コ$"
-
+	.string "もってるかず　{B_COPY_VAR_1}コ$"
 	.globl gUnknown_85C98E0
 gUnknown_85C98E0: @ 0x85C98E0
-	.string "{MUS_RG_POKE_TOWER}も{SE_A}{SE_WARP_IN}やめま{DYNAMIC_COLOR4}$"
-
+	.string "かいもの　を　やめます$"
 	.globl gUnknown_85C98EC
 gUnknown_85C98EC: @ 0x85C98EC
-	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{LIGHT_RED}{MUS_RG_POKE_TOWER}{WHITE}"
-	.string "げ{SE_BOO}なりま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　を\n"
+	.string "いくつ　おかいあげに　なりますか？$"
 	.globl gUnknown_85C9903
 gUnknown_85C9903: @ 0x85C9903
-	.string "{B_COPY_VAR_1}{TRANSPARENT}‘{B_COPY_VAR_2}{SE_M_ABSORB}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}"
-	.string "{LIGHT_RED}{MUS_RG_POKE_TOWER}{WHITE}げ{SE_BOO}なりま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　‘{B_COPY_VAR_2}'　を\n"
+	.string "いくつ　おかいあげに　なりますか？$"
 	.globl gUnknown_85C991F
 gUnknown_85C991F: @ 0x85C991F
-	.string "{B_COPY_VAR_1}{SE_WARP_IN}{B_COPY_VAR_2}コで\n{B_COPY_VAR_3}{SE_M_BUBBLE_BEAM2}{LIGHT_RED}"
-	.string "{MUS_RG_POKE_TOWER}{WHITE}げで{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を　{B_COPY_VAR_2}コで\n"
+	.string "{B_COPY_VAR_3}¥　おかいあげですか？$"
 	.globl gUnknown_85C9936
 gUnknown_85C9936: @ 0x85C9936
-	.string "{B_COPY_VAR_1}{TRANSPARENT}だね！\n{B_COPY_VAR_2}{SE_M_BUBBLE_BEAM2}だ{LIGHT_BLUE}{SE_NOTE_C_HIGH}{GREEN}"
-	.string "{LIGHT_GRAY}{MUS_RG_POKE_TOWER}？$"
-
+	.string "{B_COPY_VAR_1}　だね！\n"
+	.string "{B_COPY_VAR_2}¥　だけど　かうかい？$"
 	.globl gUnknown_85C994B
 gUnknown_85C994B: @ 0x85C994B
-	.string "{B_COPY_VAR_1}{TRANSPARENT}で{DYNAMIC_COLOR4}ね！\n{B_COPY_VAR_2}{SE_M_BUBBLE_BEAM2}だ{LIGHT_BLUE}"
-	.string "{SE_NOTE_C_HIGH}{MUS_RG_POKE_TOWER}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　ですね！\n"
+	.string "{B_COPY_VAR_2}¥　だけど　かいますか？$"
 	.globl gUnknown_85C9962
 gUnknown_85C9962: @ 0x85C9962
-	.string "{MUS_RG_POKE_JUMP}{TRANSPARENT}{MUS_RG_SEVII_CAVE}ど！{MUS_RG_VS_WILD}りがと{SE_PC_OFF}ご{PH_FLEECE_HELD}"
-	.string "ま{DYNAMIC_COLOR4}$"
-
+	.string "はい　まいど！\n"
+	.string "ありがとう　ございます$"
 	.globl gUnknown_85C9976
 gUnknown_85C9976: @ 0x85C9976
-	.string "ど{LIGHT_GRAY}{SE_SWITCH}{WHITE}りがと{LIGHT_GRAY}！\nじた{BLUE}{SE_A}パソコン{SE_BOO}{LIGHT_RED}{BLUE}"
-	.string "っ{SE_SHIP}{LIGHT_RED}{LIGHT_GREEN}ま{DYNAMIC_COLOR4}ね！$"
-
+	.string "どうも　ありがとう！\n"
+	.string "じたくの　パソコンに　おくって　おきますね！$"
 	.globl gUnknown_85C9998
 gUnknown_85C9998: @ 0x85C9998
-	.string "ど{LIGHT_GRAY}{SE_SWITCH}{WHITE}りがと{LIGHT_GRAY}！\nじた{BLUE}{SE_A}パソコン{SE_BOO}{LIGHT_RED}{BLUE}"
-	.string "っ{SE_SHIP}{LIGHT_RED}{BLUE}ね！$"
-
+	.string "どうも　ありがとう！\n"
+	.string "じたくの　パソコンに　おくって　おくね！$"
 	.globl gUnknown_85C99B8
 gUnknown_85C99B8: @ 0x85C99B8
-	.string "{LIGHT_RED}{GREEN}ね{SE_SAVE}たり{MUS_RG_GAME_FREAK}で{DYNAMIC_COLOR4}よ！{PAUSE_UNTIL_PRESS}$"
-
+	.string "おかねが　たりないですよ！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C99C8
 gUnknown_85C99C8: @ 0x85C99C8
-	.string "{DYNAMIC_COLOR6}{SE_ICE_CRACK}{DARK_GRAY}じょ{LIGHT_GRAY}\nもち{LIGHT_GREEN}れ{MUS_RG_GAME_FREAK}"
-	.string "{TRANSPARENT}で{DYNAMIC_COLOR4}よ！{PAUSE_UNTIL_PRESS}$"
-
+	.string "それ　いじょう\n"
+	.string "もちきれない　ですよ！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C99DE
 gUnknown_85C99DE: @ 0x85C99DE
-	.string "{B_COPY_VAR_1}{TRANSPARENT}を\n{DARK_GRAY}れ{SE_ICE_BREAK}ば{DYNAMIC_COLOR3}ょ{SE_SAVE}{DARK_GRAY}"
-	.string "っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}　を\n"
+	.string "いれる　ばしょが　いっぱいです{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C99F5
 gUnknown_85C99F5: @ 0x85C99F5
-	.string "{DYNAMIC_COLOR6}{SE_A}ほ{GREEN}{SE_BOO}わた{DYNAMIC_COLOR3}どもで\nなに{SE_WIN_OPEN}{LIGHT_RED}ち{GREEN}"
-	.string "ら{SE_BOO}なれる{DYNAMIC_COLOR1}とは？$"
-
+	.string "その　ほかに　わたしどもで\n"
+	.string "なにか　おちからに　なれることは？$"
 	.globl gUnknown_85C9A15
 gUnknown_85C9A15: @ 0x85C9A15
-	.string "{DYNAMIC_COLOR6}{SE_A}ほ{GREEN}に\nなに{SE_WIN_OPEN}ち{GREEN}ら{SE_BOO}なれる{DYNAMIC_COLOR1}とは？$"
-
+	.string "その　ほかに\n"
+	.string "なにか　ちからに　なれることは？$"
 	.globl gUnknown_85C9A2D
 gUnknown_85C9A2D: @ 0x85C9A2D
-	.string "プレミアボー{SE_M_NIGHTMARE}1コ\n{LIGHT_RED}ま{SE_EXIT}{DYNAMIC_COLOR3}て{LIGHT_RED}{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR4}ね！{PAUSE_UNTIL_PRESS}$"
-
+	.string "プレミアボール　1コ\n"
+	.string "おまけ　しておきますね！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9A47
 gUnknown_85C9A47: @ 0x85C9A47
-	.string "{B_COPY_VAR_2}を\n{MUS_RG_POKE_TOWER}とるわ{LIGHT_BLUE}に{SE_I}{DARK_GRAY}{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
-	.string "ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_2}を\n"
+	.string "かいとるわけには　いきません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9A5D
 gUnknown_85C9A5D: @ 0x85C9A5D
-	.string "{B_COPY_VAR_2}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}{LIGHT_GRAY}りま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_2}を\n"
+	.string "いくつ　うりますか？$"
 	.globl gUnknown_85C9A6C
 gUnknown_85C9A6C: @ 0x85C9A6C
-	.string "{B_COPY_VAR_1}¥{SE_NOTE_B}ひ{LIGHT_GREEN}とら{DYNAMIC_COLOR5}{SE_SHIP}{DARK_GRAY}ただ{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR4}\nよろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}¥で　ひきとらせて　いただきます\n"
+	.string "よろしいですか？$"
 	.globl gUnknown_85C9A88
 gUnknown_85C9A88: @ 0x85C9A88
-	.string "{B_COPY_VAR_2}{TRANSPARENT}{SE_WARP_IN}わた{DYNAMIC_COLOR3}て\n{B_COPY_VAR_1}{SE_M_BUBBLE_BEAM2}"
-	.string "{LIGHT_GRAY}{LIGHT_BLUE}とった！$"
-
+	.string "{B_COPY_VAR_2}　を　わたして\n"
+	.string "{B_COPY_VAR_1}¥　うけとった！$"
 	.globl gUnknown_85C9A9D
 gUnknown_85C9A9D: @ 0x85C9A9D
-	.string "{B_COPY_VAR_1}¥${DARK_GRAY}れ{GREEN}{RED}る$"
-	.string "{DYNAMIC_COLOR5}んと{LIGHT_GRAY}にだ{DYNAMIC_COLOR4}$"
-	.string "ならび{GREEN}{RED}$つよ{DYNAMIC_COLOR2}をみる$つ{GREEN}{RED}るわざ$"
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR4}る$"
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}$"
-	.string "メール{SE_WARP_IN}とる$メール{SE_WARP_IN}よむ${DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{DYNAMIC_COLOR4}る$"
-
+	.string "{B_COPY_VAR_1}¥$いれかえる$せんとうにだす$ならびかえ$つよさをみる$つかえるわざ$さんかする$さんかしない$メールを　とる$メールを　よむ$こうかんする$"
 	.globl gUnknown_85C9AE7
 gUnknown_85C9AE7: @ 0x85C9AE7
-	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}$"
-
+	.string "たいりょく$"
 	.globl gUnknown_85C9AED
 gUnknown_85C9AED: @ 0x85C9AED
-	.string "と{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-
+	.string "とくこう$"
 	.globl gUnknown_85C9AF2
 gUnknown_85C9AF2: @ 0x85C9AF2
-	.string "と{BLUE}ぼ{LIGHT_GRAY}$"
-
+	.string "とくぼう$"
 	.globl gUnknown_85C9AF7
 gUnknown_85C9AF7: @ 0x85C9AF7
-	.string "つ{GREEN}って{SE_SWITCH}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}が{MUS_RG_GAME_FREAK}よ{PAUSE_UNTIL_PRESS}$"
-
+	.string "つかっても　こうかがないよ{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B07
 gUnknown_85C9B07: @ 0x85C9B07
-	.string "{DYNAMIC_COLOR6}のポケモンには\nつ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "そのポケモンには\n"
+	.string "つかえません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B1A
 gUnknown_85C9B1A: @ 0x85C9B1A
-	.string "{B_COPY_VAR_1}{SE_WARP_IN}もど{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}とが\nで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}"
-	.string "！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}を　もどすことが\n"
+	.string "できない！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B2D
 gUnknown_85C9B2D: @ 0x85C9B2D
-	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{SE_BOO}で{MUS_RG_CAUGHT_INTRO}"
-	.string "ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　すでに\n"
+	.string "せんとうに　でています{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B43
 gUnknown_85C9B43: @ 0x85C9B43
-	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR2}"
-	.string "れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　すでに\n"
+	.string "せんたく　されています{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B59
 gUnknown_85C9B59: @ 0x85C9B59
-	.string "{B_COPY_VAR_1}{SE_I}たた{GREEN}{LIGHT_GRAY}ための\nげん{LIGHT_GREEN}{SE_SAVE}の{DYNAMIC_COLOR1}"
-	.string "っ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　たたかうための\n"
+	.string "げんきが　のこっていません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B76
 gUnknown_85C9B76: @ 0x85C9B76
-	.string "{B_COPY_VAR_1}{SE_A}ポケモン{SE_I}じぶんの\nポケモン{SE_BANG}{DARK_GRAY}れ{GREEN}{RED}る{DYNAMIC_COLOR1}と{SE_I}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　ポケモンは　じぶんの\n"
+	.string "ポケモンと　いれかえることは　できません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B9D
 gUnknown_85C9B9D: @ 0x85C9B9D
-	.string "タマゴを\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}{SE_BOO}だ{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "タマゴを\n"
+	.string "せんとうに　だすことは　できません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9BB7
 gUnknown_85C9BB7: @ 0x85C9BB7
-	.string "{WHITE}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}バッジ{SE_WARP_IN}てに{DYNAMIC_COLOR4}るまで\nま{SE_NOTE_F}"
-	.string "つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
-
+	.string "あたらしい　バッジを　てにするまで\n"
+	.string "まだ　つかえません{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9BD5
 gUnknown_85C9BD5: @ 0x85C9BD5
-	.string "{DYNAMIC_COLOR2}ん{SE_WIN_OPEN}で{LIGHT_GREEN}{SE_ICE_BREAK}ポケモンは\n{B_COPY_VAR_1}ひ{SE_WALL_HIT}"
-	.string "ま{SE_NOTE_B}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "さんか　できる　ポケモンは\n"
+	.string "{B_COPY_VAR_1}ひき　まで　です！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9BF1
 gUnknown_85C9BF1: @ 0x85C9BF1
-	.string "とっ{SE_FAINT}メール{SE_WARP_IN}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-
+	.string "とった　メールを　パソコンに\n"
+	.string "てんそうしますか？$"
 	.globl gUnknown_85C9C0A
 gUnknown_85C9C0A: @ 0x85C9C0A
-	.string "メール{SE_WARP_IN}パソコンに\nてん{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}"
-	.string "た{PAUSE_UNTIL_PRESS}$"
-
+	.string "メールを　パソコンに\n"
+	.string "てんそうしました{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9C20
 gUnknown_85C9C20: @ 0x85C9C20
-	.string "パソコン{SE_A}メールボックスが\n{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "パソコンの　メールボックスが\n"
+	.string "いっぱいです！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9C39
 gUnknown_85C9C39: @ 0x85C9C39
-	.string "メール{SE_WARP_IN}とる{SE_BANG}メッセージが\n{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}"
-	.string "ま{DYNAMIC_COLOR4}{SE_SAVE}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "メールを　とると　メッセージが\n"
+	.string "きえてしまいますが　よろしいですか？$"
 	.globl gUnknown_85C9C5C
 gUnknown_85C9C5C: @ 0x85C9C5C
-	.string "メール{SE_WARP_IN}はず{DYNAMIC_COLOR2}{MUS_RG_GAME_FREAK}と\nど{LIGHT_GRAY}ぐ{SE_I}もてま{DYNAMIC_COLOR5}"
-	.string "ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "メールを　はずさないと\n"
+	.string "どうぐは　もてません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9C76
 gUnknown_85C9C76: @ 0x85C9C76
-	.string "{B_COPY_VAR_1}に\n{B_COPY_VAR_2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}に\n"
+	.string "{B_COPY_VAR_2}を　もたせた！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9C86
 gUnknown_85C9C86: @ 0x85C9C86
-	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{B_COPY_VAR_2}{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}"
-	.string "ま{DYNAMIC_COLOR4}\pもっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}ぐを\nとり{GREEN}{RED}"
-	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}は　すでに\n"
+	.string "{B_COPY_VAR_2}を　もっています\p"
+	.string "もっている　どうぐを\n"
+	.string "とりかえますか？$"
 	.globl gUnknown_85C9CAD
 gUnknown_85C9CAD: @ 0x85C9CAD
-	.string "{B_COPY_VAR_1}{SE_I}なにも\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}もっ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR5}"
-	.string "ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　なにも\n"
+	.string "どうぐを　もって　いません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9CC6
 gUnknown_85C9CC6: @ 0x85C9CC6
-	.string "{B_COPY_VAR_1}{GREEN}ら\n{B_COPY_VAR_2}{SE_WARP_IN}{WHITE}ず{GREEN}りま{DYNAMIC_COLOR3}"
-	.string "た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}から\n"
+	.string "{B_COPY_VAR_2}を　あずかりました！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9CDA
 gUnknown_85C9CDA: @ 0x85C9CDA
-	.string "ポケモン{GREEN}{SE_LAVARIDGE_FALL_WARP}メールを\nとりま{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "ポケモンから　メールを\n"
+	.string "とりました！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9CEF
 gUnknown_85C9CEF: @ 0x85C9CEF
-	.string "{B_COPY_VAR_2}{SE_WARP_IN}{WHITE}ず{GREEN}って{MUS_RG_VS_WILD}らた{SE_BOO}{B_COPY_VAR_1}{SE_WARP_IN}"
-	.string "もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_2}を　あずかって\n"
+	.string "あらたに　{B_COPY_VAR_1}を　もたせました！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9D0C
 gUnknown_85C9D0C: @ 0x85C9D0C
-	.string "{DYNAMIC_COLOR4}で{SE_BOO}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}るので\nメール{SE_WARP_IN}"
-	.string "もた{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
-
+	.string "すでに　どうぐを　もっているので\n"
+	.string "メールを　もたせることが　できません{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9D32
 gUnknown_85C9D32: @ 0x85C9D32
-	.string "ボックス{GREEN}{SE_LAVARIDGE_FALL_WARP}メール{SE_WARP_IN}{LIGHT_GRAY}つ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}"
-	.string "た{PAUSE_UNTIL_PRESS}$"
-
+	.string "ボックスから　メールを　うつしました{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9D47
 gUnknown_85C9D47: @ 0x85C9D47
-	.string "バッグ{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で\nポケモン{SE_A}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}{LIGHT_GRAY}"
-	.string "{LIGHT_BLUE}とれま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "バッグが　いっぱいで\n"
+	.string "ポケモンの　どうぐを　うけとれません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9D68
 gUnknown_85C9D68: @ 0x85C9D68
-	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}た！$"
-
+	.string "{B_COPY_VAR_1}は　あたらしく\n"
+	.string "{B_COPY_VAR_2}を　おぼえた！$"
 	.globl gUnknown_85C9D7C
 gUnknown_85C9D7C: @ 0x85C9D7C
-	.string "{B_COPY_VAR_1}{SE_BANG}{B_COPY_VAR_2}は{MUS_RG_VS_WILD}{DARK_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
-	.string "{SE_SAVE}わる{GREEN}った！\p{B_COPY_VAR_2}{SE_I}{LIGHT_RED}ぼ{RED}られ{MUS_RG_GAME_FREAK}！{PAUSE_UNTIL_PRESS}"
-	.string "$"
-
+	.string "{B_COPY_VAR_1}と　{B_COPY_VAR_2}は\n"
+	.string "あいしょうが　わるかった！\p"
+	.string "{B_COPY_VAR_2}は　おぼえられない！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9DA1
 gUnknown_85C9DA1: @ 0x85C9DA1
-	.string "{B_COPY_VAR_1}{SE_I}{WHITE}たら{DYNAMIC_COLOR3}{BLUE}\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
-	.string "{MUS_RG_RIVAL_EXIT}⋯⋯！\p{DYNAMIC_COLOR3}{GREEN}{SE_NOT_EFFECTIVE}{B_COPY_VAR_1}{SE_I}わざ{SE_WARP_IN}"
-	.string "4つ\n{LIGHT_RED}ぼ{RED}るの{SE_NOTE_B}{MUS_RG_PEWTER}{DARK_GRAY}っ{PH_THOUGHT_HELD}だ！\p{B_COPY_VAR_2}"
-	.string "{SE_A}{GREEN}わりに\nほ{GREEN}{SE_A}わざ{SE_WARP_IN}わ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}"
-	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}は　あたらしく\n"
+	.string "{B_COPY_VAR_2}を　おぼえたい⋯⋯！\p"
+	.string "しかし　{B_COPY_VAR_1}は　わざを　4つ\n"
+	.string "おぼえるので　せいいっぱいだ！\p"
+	.string "{B_COPY_VAR_2}の　かわりに\n"
+	.string "ほかの　わざを　わすれさせますか？$"
 	.globl gUnknown_85C9DF2
 gUnknown_85C9DF2: @ 0x85C9DF2
-	.string "{DYNAMIC_COLOR6}れでは⋯{SE_M_DIZZY_PUNCH}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}るの{SE_WARP_IN}{WHITE}"
-	.string "{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "それでは⋯⋯　{B_COPY_VAR_2}を\n"
+	.string "おぼえるのを　あきらめますか？$"
 	.globl gUnknown_85C9E0D
 gUnknown_85C9E0D: @ 0x85C9E0D
-	.string "{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}を\n{LIGHT_RED}ぼ{RED}ず{SE_BOO}{LIGHT_RED}わった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_2}を\n"
+	.string "おぼえずに　おわった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9E23
 gUnknown_85C9E23: @ 0x85C9E23
-	.string "ど{SE_A}わざを\nわ{DYNAMIC_COLOR4}れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}？{PAUSE_UNTIL_PRESS}"
-	.string "$"
-
+	.string "どの　わざを\n"
+	.string "わすれさせたい？{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9E35
 gUnknown_85C9E35: @ 0x85C9E35
-	.string "{SE_M_HEADBUTT}{PAUSE}{DYNAMIC_COLOR6}2{SE_A}{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}{DYNAMIC_COLOR6}⋯{PAUSE}"
-	.string "{DYNAMIC_COLOR6}{SE_M_DIZZY_PUNCH}{PAUSE}{DYNAMIC_COLOR6}{PLAY_SE}{SE_BALL_BOUNCE_1}"
-	.string "ポカン！\p{B_COPY_VAR_1}{SE_I}{B_COPY_VAR_2}の\nつ{MUS_RG_POKE_TOWER}{GREEN}た{SE_WARP_IN}{LIGHT_GREEN}"
-	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}{SE_BOO}わ{DYNAMIC_COLOR4}れた！\p{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}"
-	.string "て⋯⋯！{PAUSE_UNTIL_PRESS}$"
-
+	.string "1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p"
+	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_2}の\n"
+	.string "つかいかたを　きれいに　わすれた！\p"
+	.string "そして⋯⋯！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9E79
 gUnknown_85C9E79: @ 0x85C9E79
-	.string "{B_COPY_VAR_1}{SE_I}{DYNAMIC_COLOR4}でに\n{B_COPY_VAR_2}{SE_WARP_IN}{LIGHT_RED}ぼ{RED}"
-	.string "{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　すでに\n"
+	.string "{B_COPY_VAR_2}を　おぼえています{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9E8F
 gUnknown_85C9E8F: @ 0x85C9E8F
-	.string "{B_COPY_VAR_1}{SE_A}{MUS_RG_RIVAL_EXIT}りょ{BLUE}が\n{B_COPY_VAR_2}{TRANSPARENT}{MUS_RG_POKE_TOWER}"
-	.string "ふ{BLUE}{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　たいりょくが\n"
+	.string "{B_COPY_VAR_2}　かいふくした{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9EA6
 gUnknown_85C9EA6: @ 0x85C9EA6
-	.string "{B_COPY_VAR_1}{SE_A}ど{BLUE}は\n{LIGHT_GREEN}{MUS_RG_ENCOUNTER_GYM_LEADER}{TRANSPARENT}{DYNAMIC_COLOR2}"
-	.string "っぱ{SE_ICE_STAIRS}な{BLUE}なった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　どくは\n"
+	.string "きれい　さっぱり　なくなった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9EC0
 gUnknown_85C9EC0: @ 0x85C9EC0
-	.string "{B_COPY_VAR_1}{SE_A}{GREEN}らだの\n{DYNAMIC_COLOR3}びれ{SE_SAVE}とれた{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　からだの\n"
+	.string "しびれが　とれた{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9ED4
 gUnknown_85C9ED4: @ 0x85C9ED4
-	.string "{B_COPY_VAR_1}は\nめ{SE_WARP_IN}{DYNAMIC_COLOR2}ま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は\n"
+	.string "めを　さました{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9EE2
 gUnknown_85C9EE2: @ 0x85C9EE2
-	.string "{B_COPY_VAR_1}の\nや{LIGHT_BLUE}ど{SE_SAVE}な{LIGHT_RED}った{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の\n"
+	.string "やけどが　なおった{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9EF2
 gUnknown_85C9EF2: @ 0x85C9EF2
-	.string "{B_COPY_VAR_1}{SE_A}{GREEN}らだの\n{DYNAMIC_COLOR1}{LIGHT_RED}り{SE_SAVE}と{LIGHT_BLUE}"
-	.string "た{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　からだの\n"
+	.string "こおりが　とけた{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F06
 gUnknown_85C9F06: @ 0x85C9F06
-	.string "わざポイントが\n{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
-	.string "{B_COPY_VAR_1}は\nげん{LIGHT_GREEN}{SE_WARP_IN}とりもど{DYNAMIC_COLOR3}た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "わざポイントが\n"
+	.string "かいふくした！{PAUSE_UNTIL_PRESS}${B_COPY_VAR_1}は\n"
+	.string "げんきを　とりもどした！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F2B
 gUnknown_85C9F2B: @ 0x85C9F2B
-	.string "{B_COPY_VAR_1}は\n{LIGHT_BLUE}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}になった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は\n"
+	.string "けんこうになった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F3B
 gUnknown_85C9F3B: @ 0x85C9F3B
-	.string "{B_COPY_VAR_1}の\nわざポイント{SE_SAVE}ふ{RED}た！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の\n"
+	.string "わざポイントが　ふえた！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F4E
 gUnknown_85C9F4E: @ 0x85C9F4E
-	.string "{B_COPY_VAR_1}の\nレベル{SE_SAVE}{B_COPY_VAR_2}になった！$"
-
+	.string "{B_COPY_VAR_1}の\n"
+	.string "レベルが　{B_COPY_VAR_2}になった！$"
 	.globl gUnknown_85C9F5F
 gUnknown_85C9F5F: @ 0x85C9F5F
-	.string "{B_COPY_VAR_1}{SE_A}{B_COPY_VAR_2}の\n{LIGHT_GREEN}{SE_BALL_OPEN}ポイント{SE_SAVE}{WHITE}"
-	.string "がった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の　{B_COPY_VAR_2}の\n"
+	.string "きそ　ポイントが　あがった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F78
 gUnknown_85C9F78: @ 0x85C9F78
-	.string "{B_COPY_VAR_1}{SE_SAVE}ちょっ{SE_BANG}な{MUS_RG_OBTAIN_KEY_ITEM}た！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR6}ポイント{SE_SAVE}{DYNAMIC_COLOR2}がった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}が　ちょっと　なついた！\n"
+	.string "{B_COPY_VAR_2}の　きそポイントが　さがった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9F9B
 gUnknown_85C9F9B: @ 0x85C9F9B
-	.string "{B_COPY_VAR_1}{SE_I}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}{SE_BOO}"
-	.string "な{MUS_RG_OBTAIN_KEY_ITEM}{MUS_RG_CAUGHT_INTRO}る！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}{DYNAMIC_COLOR6}"
-	.string "ポイント{SE_SAVE}{DYNAMIC_COLOR2}がった！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　さいこうに　なついている！\n"
+	.string "{B_COPY_VAR_2}の　きそポイントが　さがった！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9FC1
 gUnknown_85C9FC1: @ 0x85C9FC1
-	.string "{B_COPY_VAR_1}{SE_I}ちょっ{SE_BANG}な{MUS_RG_OBTAIN_KEY_ITEM}た！\n{B_COPY_VAR_2}{SE_A}{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR6}ポイント{SE_I}も{LIGHT_GRAY}{DYNAMIC_COLOR2}がら{MUS_RG_GAME_FREAK}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}は　ちょっと　なついた！\n"
+	.string "{B_COPY_VAR_2}の　きそポイントは　もうさがらない！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9FE7
 gUnknown_85C9FE7: @ 0x85C9FE7
-	.string "{B_COPY_VAR_1}の\n{DYNAMIC_COLOR1}んらん{SE_SAVE}と{LIGHT_BLUE}た{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の\n"
+	.string "こんらんが　とけた{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9FF7
 gUnknown_85C9FF7: @ 0x85C9FF7
-	.string "{B_COPY_VAR_1}の\nメロメロ{SE_SAVE}と{LIGHT_BLUE}た{PAUSE_UNTIL_PRESS}$"
-
+	.string "{B_COPY_VAR_1}の\n"
+	.string "メロメロが　とけた{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA007
 gUnknown_85CA007: @ 0x85CA007
-	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てて{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "すてても　よろしいですか$"
 	.globl gUnknown_85CA018
 gUnknown_85CA018: @ 0x85CA018
-	.string "{B_COPY_VAR_1}を\n{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
-	.string "どのポケモン{SE_BOO}{LIGHT_RED}ぼ{RED}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ポケモン{SE_WARP_IN}{RED}らん{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-	.string "ど{DYNAMIC_COLOR1}{SE_BOO}{DARK_GRAY}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "どのポケモン{SE_BOO}{LIGHT_RED}{DYNAMIC_COLOR3}{RED}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "どのポケモン{SE_BOO}つ{MUS_RG_POKE_TOWER}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "どのポケモン{SE_BOO}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{B_COPY_VAR_1}{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR4}る？$"
-	.string "{LIGHT_GREEN}れるもの{SE_SAVE}{WHITE}りま{DYNAMIC_COLOR5}ん！$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}のれま{DYNAMIC_COLOR5}ん$"
-	.string "{DYNAMIC_COLOR4}で{SE_BOO}なみの{SE_ICE_STAIRS}{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん$"
-	.string "どれ{SE_WARP_IN}{MUS_RG_POKE_TOWER}ふ{BLUE}{DYNAMIC_COLOR4}る？$"
-	.string "どれ{SE_WARP_IN}ふや{DYNAMIC_COLOR4}？$もちもの{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-	.string "{DYNAMIC_COLOR1}れで{SE_I}たた{GREEN}{RED}ま{DYNAMIC_COLOR5}ん！$"
-	.string "どのポケモン{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{MUS_RG_RIVAL_EXIT}りょ{BLUE}{SE_SAVE}たりま{DYNAMIC_COLOR5}ん⋯⋯$"
-	.string "{B_COPY_VAR_1}ひ{SE_WALL_HIT}{DYNAMIC_COLOR6}ろっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん$"
-	.string "{LIGHT_RED}な{SE_BALL_THROW}ポケモン{SE_SAVE}{DARK_GRAY}ま{DYNAMIC_COLOR4}！$"
-	.string "{LIGHT_RED}な{SE_BALL_THROW}ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もってま{DYNAMIC_COLOR4}$"
-	.string "ながれ{SE_SAVE}はや{BLUE}{SE_SHIP}ダメだ！$メール{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-	.string "ポケモン{SE_WIN_OPEN}もどる{SE_WARP_IN}{DYNAMIC_COLOR5}んた{BLUE}$"
-	.string "ポケモン{SE_WARP_IN}{RED}らん{SE_NOTE_B}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}$"
-	.string "サイクリング{SE_WARP_IN}たの{DYNAMIC_COLOR3}も{LIGHT_GRAY}！$"
-	.string "{DYNAMIC_COLOR4}で{SE_BOO}つ{GREEN}っ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！$"
-	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
-	.string "つ{GREEN}{RED}ま{DYNAMIC_COLOR5}ん${DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}{MUS_RG_GAME_FREAK}$"
-	.string "{DARK_GRAY}ちばんめ$にばんめ${DYNAMIC_COLOR2}んばんめ$"
-	.string "でられま{DYNAMIC_COLOR4}$でられま{DYNAMIC_COLOR5}ん$"
-	.string "{LIGHT_RED}ぼ{RED}られる！${LIGHT_RED}ぼ{RED}られ{MUS_RG_GAME_FREAK}$"
-	.string "も{LIGHT_GRAY}{LIGHT_RED}ぼ{RED}てる$もっ{MUS_RG_CAUGHT_INTRO}る$"
-	.string "もっ{MUS_RG_CAUGHT_INTRO}{MUS_RG_GAME_FREAK}$"
-	.string "よんばんめ$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "すてました{PAUSE_UNTIL_PRESS}$どのポケモンに　おぼえさせますか？$ポケモンを　えらんで　ください$どこに　いどうしますか？$どのポケモンに　おしえますか？$どのポケモンに　つかいますか？$どのポケモンに　もたせますか？${B_COPY_VAR_1}を　どうする？$きれるものが　ありません！$ここでは　のれません$すでに　なみのり　しています$ここでは　つかえません$どれを　かいふくする？$どれを　ふやす？$もちものを　どうしますか？$これでは　たたかえません！$どのポケモンを　あずけますか？$たいりょくが　たりません⋯⋯${B_COPY_VAR_1}ひき　そろっていません$おなじ　ポケモンが　います！$おなじ　どうぐを　もってます$ながれが　はやくて　ダメだ！$メールを　どうしますか？$ポケモンか　もどるを　せんたく$ポケモンを　えらんで　けってい$サイクリングを　たのしもう！$すでに　つかっています！${B_COPY_VAR_1}は\n"
+	.string "{B_COPY_VAR_2}を　もっています$つかえません$さんかしない$いちばんめ$にばんめ$さんばんめ$でられます$でられません$おぼえられる！$おぼえられない$もうおぼえてる$もっている$もっていない$よんばんめ$"
 	.globl gUnknown_85CA1FB
 gUnknown_85CA1FB: @ 0x85CA1FB
-	.string "{DYNAMIC_COLOR6}{SE_A}ポケモン{SE_I}{DYNAMIC_COLOR2}ん{SE_WIN_OPEN}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}"
-	.string "ん{PAUSE_UNTIL_PRESS}$"
-
+	.string "その　ポケモンは　さんか　できません{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA210
 gUnknown_85CA210: @ 0x85CA210
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "さんかを　やめますか？$"
 	.globl gUnknown_85CA21C
 gUnknown_85CA21C: @ 0x85CA21C
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "たいせんを　やめますか？$"
 	.globl gUnknown_85CA229
 gUnknown_85CA229: @ 0x85CA229
-	.string "ひ{GREEN}{RED}{DYNAMIC_COLOR3}つ{SE_BOO}もどりま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "ひかえしつに　もどりますか？$"
 	.globl gUnknown_85CA238
 gUnknown_85CA238: @ 0x85CA238
-	.string "ちょ{LIGHT_GRAY}{DYNAMIC_COLOR5}ん{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "ちょうせんを　やめますか？$"
 	.globl gUnknown_85CA246
 gUnknown_85CA246: @ 0x85CA246
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_WARP_IN}だっ{DYNAMIC_COLOR3}ゅ{SE_SLIDING_DOOR}{DYNAMIC_COLOR3}"
-	.string "て\n{B_COPY_VAR_1}{SE_BOO}もどる？$"
-
+	.string "ここを　だっしゅつ　して\n"
+	.string "{B_COPY_VAR_1}に　もどる？$"
 	.globl gUnknown_85CA25C
 gUnknown_85CA25C: @ 0x85CA25C
-	.string "{MUS_RG_VICTORY_WILD}ご{SE_BOO}や{DYNAMIC_COLOR4}んだ\n{B_COPY_VAR_1}{SE_BOO}テレポート{DYNAMIC_COLOR4}る？$"
-
+	.string "さいごに　やすんだ\n"
+	.string "{B_COPY_VAR_1}に　テレポートする？$"
 	.globl gUnknown_85CA273
 gUnknown_85CA273: @ 0x85CA273
 	.string "{PAUSE_UNTIL_PRESS}$"
@@ -14887,59 +13109,45 @@ gUnknown_85CA276: @ 0x85CA276
 
 	.globl gUnknown_85CA294
 gUnknown_85CA294: @ 0x85CA294
-	.string "{DYNAMIC_COLOR6}のポケモン{SE_WARP_IN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{DYNAMIC_COLOR4}"
-	.string "ると\n{DYNAMIC_COLOR5}んと{LIGHT_GRAY}で{LIGHT_GREEN}な{BLUE}なっちゃ{LIGHT_GRAY}よ！$"
-
+	.string "そのポケモンを　こうかんすると\n"
+	.string "せんとうできなくなっちゃうよ！$"
 	.globl gUnknown_85CA2B4
 gUnknown_85CA2B4: @ 0x85CA2B4
-	.string "{DYNAMIC_COLOR6}{SE_A}ポケモン{SE_I}{DARK_GRAY}ま\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}"
-	.string "だ{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}ん$"
-
+	.string "その　ポケモンは　いま\n"
+	.string "こうかんに　だせません$"
 	.globl gUnknown_85CA2CC
 gUnknown_85CA2CC: @ 0x85CA2CC
-	.string "タマゴ{SE_I}{DARK_GRAY}ま\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}だ{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR5}"
-	.string "ん{MUS_RG_VS_CHAMPION}{DARK_GRAY}て{SE_A}ポケモンとは\n{DARK_GRAY}ま{SE_I}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
-	.string "{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{DARK_GRAY}ま{SE_I}{DYNAMIC_COLOR6}"
-	.string "のポケモン{SE_WARP_IN}{MUS_RG_VS_WILD}{DARK_GRAY}て{SE_I}{LIGHT_GRAY}{LIGHT_BLUE}とる{DYNAMIC_COLOR1}"
-	.string "と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん$"
-	.string "{DYNAMIC_COLOR6}{SE_A}{MUS_RG_OAK_LAB}てと{SE_I}{DARK_GRAY}ま{SE_I}\n{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}"
-	.string "{SE_WARP_OUT}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん{SE_RG_SHOP}{MUS_DUMMY}{MUS_RG_OAK_LAB}て{SE_A}"
-	.string "ほ{DYNAMIC_COLOR3}がっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}タイプの\nポケモンで{SE_I}{WHITE}りま{DYNAMIC_COLOR5}"
-	.string "ん{SE_RG_SHOP}{DYNAMIC_COLOR6}れ{SE_I}タマゴで{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん$"
-	.string "と{LIGHT_GRAY}ろ{BLUE}{DYNAMIC_COLOR4}る$"
-
+	.string "タマゴは　いま\n"
+	.string "こうかんに　だせません$あいての　ポケモンとは\n"
+	.string "いまは　こうかん　できません$　いまは　そのポケモンを　\n"
+	.string "あいては　うけとることが　できません$その　あいてとは　いまは　\n"
+	.string "こうかん　できません$　　　あいての　ほしがっている　タイプの\n"
+	.string "ポケモンでは　ありません$　それは　タマゴでは　ありません$とうろくする$"
 	.globl gUnknown_85CA36F
 gUnknown_85CA36F: @ 0x85CA36F
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}$"
-
+	.string "こうげき$"
 	.globl gUnknown_85CA374
 gUnknown_85CA374: @ 0x85CA374
-	.string "ぼ{LIGHT_GRAY}ぎょ$"
-
+	.string "ぼうぎょ$"
 	.globl gUnknown_85CA379
 gUnknown_85CA379: @ 0x85CA379
-	.string "と{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-
+	.string "とくこう$"
 	.globl gUnknown_85CA37E
 gUnknown_85CA37E: @ 0x85CA37E
-	.string "と{BLUE}ぼ{LIGHT_GRAY}$"
-
+	.string "とくぼう$"
 	.globl gUnknown_85CA383
 gUnknown_85CA383: @ 0x85CA383
-	.string "{DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}$"
-
+	.string "すばやさ$"
 	.globl gUnknown_85CA388
 gUnknown_85CA388: @ 0x85CA388
 	.string "HP$"
 
 	.globl gUnknown_85CA38B
 gUnknown_85CA38B: @ 0x85CA38B
-	.string "{WHITE}と$"
-
+	.string "あと$"
 	.globl gUnknown_85CA38E
 gUnknown_85CA38E: @ 0x85CA38E
-	.string "{LIGHT_RED}や/$"
-
+	.string "おや/$"
 	.globl gUnknown_85CA392
 gUnknown_85CA392: @ 0x85CA392
 	.string "レンタルポケモン$"
@@ -14950,36 +13158,30 @@ gUnknown_85CA39B: @ 0x85CA39B
 
 	.globl gUnknown_85CA3A0
 gUnknown_85CA3A0: @ 0x85CA3A0
-	.string "{DARK_GRAY}りょ{BLUE}$"
-
+	.string "いりょく$"
 	.globl gUnknown_85CA3A5
 gUnknown_85CA3A5: @ 0x85CA3A5
-	.string "{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}$"
-
+	.string "めいちゅう$"
 	.globl gUnknown_85CA3AB
 gUnknown_85CA3AB: @ 0x85CA3AB
 	.string "アピール$"
 
 	.globl gUnknown_85CA3B0
 gUnknown_85CA3B0: @ 0x85CA3B0
-	.string "ぼ{LIGHT_GRAY}{PH_CLOTH_SOLO}$"
-
+	.string "ぼうがい$"
 	.globl gUnknown_85CA3B5
 gUnknown_85CA3B5: @ 0x85CA3B5
-	.string "じょ{LIGHT_GRAY}{MUS_RG_RIVAL_EXIT}$"
-
+	.string "じょうたい$"
 	.globl gUnknown_85CA3BB
 gUnknown_85CA3BB: @ 0x85CA3BB
-	.string "げん{PH_FLEECE_HELD}の{MUS_RG_CELADON}{LIGHT_BLUE}んち$"
-
+	.string "げんざいのけいけんち$"
 	.globl gUnknown_85CA3C6
 gUnknown_85CA3C6: @ 0x85CA3C6
 	.string "レベルアップまで$"
 
 	.globl gUnknown_85CA3CF
 gUnknown_85CA3CF: @ 0x85CA3CF
-	.string "げん{PH_FLEECE_HELD}{TRANSPARENT}{B_COPY_VAR_1}{DYNAMIC_COLOR1}$"
-
+	.string "げんざい　{B_COPY_VAR_1}こ$"
 	.globl gUnknown_85CA3D8
 gUnknown_85CA3D8: @ 0x85CA3D8
 	.incbin "baserom_jp.gba", 0x5ca3d8, 0x1
@@ -14990,299 +13192,212 @@ gUnknown_85CA3D9: @ 0x85CA3D9
 
 	.globl gUnknown_85CA3DF
 gUnknown_85CA3DF: @ 0x85CA3DF
-	.string "{DARK_GRAY}れ{GREEN}{RED}$"
-
+	.string "いれかえ$"
 	.globl gUnknown_85CA3E4
 gUnknown_85CA3E4: @ 0x85CA3E4
-	.string "ポケモンじょ{LIGHT_GRAY}ほ{LIGHT_GRAY}$"
-
+	.string "ポケモンじょうほう$"
 	.globl gUnknown_85CA3EE
 gUnknown_85CA3EE: @ 0x85CA3EE
-	.string "ポケモンの{LIGHT_GRAY}りょ{BLUE}$"
-
+	.string "ポケモンのうりょく$"
 	.globl gUnknown_85CA3F8
 gUnknown_85CA3F8: @ 0x85CA3F8
-	.string "たた{GREEN}{LIGHT_GRAY}わざ$"
-
+	.string "たたかうわざ$"
 	.globl gUnknown_85CA3FF
 gUnknown_85CA3FF: @ 0x85CA3FF
 	.string "コンテストわざ$"
 
 	.globl gUnknown_85CA407
 gUnknown_85CA407: @ 0x85CA407
-	.string "{LIGHT_GREEN}り{GREEN}{RED}$"
-
+	.string "きりかえ$"
 	.globl gUnknown_85CA40C
 gUnknown_85CA40C: @ 0x85CA40C
-	.string "{DYNAMIC_COLOR1}{SE_A}タマゴは\n{LIGHT_GRAY}まれるま{SE_NOTE_B}{GREEN}な{SE_ICE_STAIRS}{GREEN}{GREEN}"
-	.string "り{DYNAMIC_COLOR6}{LIGHT_GRAY}$"
-
+	.string "この　タマゴは\n"
+	.string "うまれるまで　かなり　かかりそう$"
 	.globl gUnknown_85CA425
 gUnknown_85CA425: @ 0x85CA425
-	.string "なに{SE_SAVE}{LIGHT_GRAY}まれ{SE_SHIP}{BLUE}るの{GREEN}な？\n{LIGHT_GRAY}まれ{SE_ICE_BREAK}ま{SE_NOTE_B}"
-	.string "まだま{SE_NOTE_F}{GREEN}{GREEN}り{DYNAMIC_COLOR6}{LIGHT_GRAY}$"
-
+	.string "なにが　うまれて　くるのかな？\n"
+	.string "うまれる　まで　まだまだ　かかりそう$"
 	.globl gUnknown_85CA448
 gUnknown_85CA448: @ 0x85CA448
-	.string "と{LIGHT_GREEN}ど{SE_WALL_HIT}{LIGHT_GRAY}{PH_FLEECE_BLEND}{SE_SHIP}{DARK_GRAY}るよ{LIGHT_GRAY}"
-	.string "だ\n{LIGHT_GRAY}まれ{SE_ICE_BREAK}ま{SE_NOTE_B}も{LIGHT_GRAY}ちょっ{SE_BANG}{GREEN}な？$"
-
+	.string "ときどき　うごいて　いるようだ\n"
+	.string "うまれる　まで　もうちょっと　かな？$"
 	.globl gUnknown_85CA46B
 gUnknown_85CA46B: @ 0x85CA46B
-	.string "な{GREEN}{GREEN}{SE_LAVARIDGE_FALL_WARP}{LIGHT_RED}と{SE_SAVE}{LIGHT_GREEN}{DYNAMIC_COLOR1}{RED}て{BLUE}"
-	.string "る\nも{LIGHT_GRAY}{DYNAMIC_COLOR4}{SE_BALL_BOUNCE_2}{LIGHT_GRAY}まれ{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
-
+	.string "なかから　おとが　きこえてくる\n"
+	.string "もうすぐ　うまれそう！$"
 	.globl gUnknown_85CA487
 gUnknown_85CA487: @ 0x85CA487
-	.string "{DYNAMIC_COLOR6}れ{SE_I}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなわざで{DYNAMIC_COLOR4}\nわ{DYNAMIC_COLOR4}"
-	.string "れ{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "それは　たいせつなわざです\n"
+	.string "わすれさせることは　できません！$"
 	.globl gUnknown_85CA4A6
 gUnknown_85CA4A6: @ 0x85CA4A6
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
-	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}で{WHITE}った$"
-
+	.incbin "baserom_jp.gba", 0x5ca4a6, 0x26
 	.globl gUnknown_85CA4CC
 gUnknown_85CA4CC: @ 0x85CA4CC
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
-	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}{GREEN}{RED}った$"
-
+	.incbin "baserom_jp.gba", 0x5ca4cc, 0x26
 	.globl gUnknown_85CA4F2
 gUnknown_85CA4F2: @ 0x85CA4F2
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}{BLUE}"
-	.string "\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_BOO}よっ{SE_SHIP}で{WHITE}った$"
-
+	.incbin "baserom_jp.gba", 0x5ca4f2, 0x20
 	.globl gUnknown_85CA512
 gUnknown_85CA512: @ 0x85CA512
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}\n{LIGHT_GRAY}"
-	.string "ん{MUS_RG_SEVII_DUNGEON}て{LIGHT_GREEN}{SE_PIN}で{MUS_RG_OAK_LAB}{SE_WARP_IN}{DYNAMIC_COLOR3}た$"
-
+	.incbin "baserom_jp.gba", 0x5ca512, 0x29
 	.globl gUnknown_85CA53B
 gUnknown_85CA53B: @ 0x85CA53B
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
-	.string "\n{SE_M_HYPER_BEAM2}{DYNAMIC}{RED}{MUS_RG_ROUTE1}{SE_NOTE_B}{WHITE}ったよ{LIGHT_GRAY}だ$"
-
+	.incbin "baserom_jp.gba", 0x5ca53b, 0x28
 	.globl gUnknown_85CA563
 gUnknown_85CA563: @ 0x85CA563
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}{BLUE}"
-	.string "$"
-
+	.incbin "baserom_jp.gba", 0x5ca563, 0xd
 	.globl gUnknown_85CA570
 gUnknown_85CA570: @ 0x85CA570
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
-	.string "\nど{DYNAMIC_COLOR1}{GREEN}{SE_NOTE_B}で{WHITE}った$"
-
+	.incbin "baserom_jp.gba", 0x5ca570, 0x23
 	.globl gUnknown_85CA593
 gUnknown_85CA593: @ 0x85CA593
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC}{DARK_GRAY}{MUS_RG_ROUTE1}{DYNAMIC}{LIGHT_RED}{MUS_RG_PEWTER}{GREEN}"
-	.string "{SE_DOOR}{LV_2}{SE_M_HYPER_BEAM2}{DYNAMIC}{LIGHT_GRAY}{MUS_RG_ROUTE1}のと{LIGHT_GREEN}"
-	.string "\nど{DYNAMIC_COLOR1}{GREEN}{SE_NOTE_B}{GREEN}{RED}った$"
-
+	.incbin "baserom_jp.gba", 0x5ca593, 0x23
 	.globl gUnknown_85CA5B6
 gUnknown_85CA5B6: @ 0x85CA5B6
-	.string "{DYNAMIC_COLOR6}だて{SE_CLICK}ふ{LIGHT_GRAY}{SE_E}{GREEN}{SE_LAVARIDGE_FALL_WARP}もらった\nふ{DYNAMIC_COLOR3}"
-	.string "ぎ{SE_PIN}ポケモンのタマゴ$"
-
+	.string "そだてや　ふうふ　から　もらった\n"
+	.string "ふしぎな　ポケモンのタマゴ$"
 	.globl gUnknown_85CA5D5
 gUnknown_85CA5D5: @ 0x85CA5D5
-	.string "ステキ{SE_PIN}ば{DYNAMIC_COLOR3}ょ{SE_NOTE_B}て{MUS_RG_CAUGHT}れた\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}"
-	.string "ふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
-
+	.string "ステキな　ばしょで　てにいれた\n"
+	.string "ふしぎな　ふしぎな　ポケモンのタマゴ$"
 	.globl gUnknown_85CA5F8
 gUnknown_85CA5F8: @ 0x85CA5F8
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_NOTE_B}て{MUS_RG_CAUGHT}"
-	.string "れた\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
-
+	.string "つうしんこうかんで　てにいれた\n"
+	.string "ふしぎな　ポケモンのタマゴ$"
 	.globl gUnknown_85CA616
 gUnknown_85CA616: @ 0x85CA616
-	.string "{LIGHT_RED}ん{DYNAMIC_COLOR5}んば{WHITE}{DYNAMIC_COLOR2}{SE_WARP_OUT}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "もらった\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
-
+	.string "おんせんばあさん　から　もらった\n"
+	.string "ふしぎな　ポケモンのタマゴ$"
 	.globl gUnknown_85CA635
 gUnknown_85CA635: @ 0x85CA635
-	.string "たび{SE_A}{LIGHT_RED}じ{DYNAMIC_COLOR2}{SE_WARP_OUT}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "もらった\nふ{DYNAMIC_COLOR3}ぎ{SE_PIN}ポケモンのタマゴ$"
-
+	.string "たびの　おじさん　から　もらった\n"
+	.string "ふしぎな　ポケモンのタマゴ$"
 	.globl gUnknown_85CA654
 gUnknown_85CA654: @ 0x85CA654
-	.string "{TRANSPARENT}{LIGHT_GREEN}ち$"
-
+	.string "　きち$"
 	.globl gUnknown_85CA658
 gUnknown_85CA658: @ 0x85CA658
-	.string "{B_COPY_VAR_1}{TRANSPARENT}{SE_A}と{LIGHT_GRAY}ろ{BLUE}を\n{MUS_RG_POKE_TOWER}じ{SE_CARD}{DYNAMIC_COLOR3}"
-	.string "て{SE_SWITCH}よろ{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　の　とうろくを\n"
+	.string "かいじょ　しても　よろしい　ですか？$"
 	.globl gUnknown_85CA676
 gUnknown_85CA676: @ 0x85CA676
-	.string "と{LIGHT_GRAY}ろ{BLUE}{SE_WARP_IN}{MUS_RG_POKE_TOWER}じ{SE_CARD}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}"
-	.string "た{PAUSE_UNTIL_PRESS}$"
-
+	.string "とうろくを　かいじょ　しました{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA688
 gUnknown_85CA688: @ 0x85CA688
-	.string "と{LIGHT_GRAY}ろ{SE_DOOR}リスト{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
-	.string "と{LIGHT_GRAY}ろ{SE_DOOR}{MUS_RG_POKE_TOWER}じょ$"
-
+	.string "とうろく　リストは　ありません{PAUSE_UNTIL_PRESS}$とうろく　かいじょ$"
 	.globl gUnknown_85CA6A4
 gUnknown_85CA6A4: @ 0x85CA6A4
-	.string "{B_COPY_VAR_3}{B_COPY_VAR_1}/{B_COPY_VAR_2}$"
-	.string "グッズ{SE_WARP_IN}{LIGHT_RED}{BLUE}$グッズ{SE_WARP_IN}もど{DYNAMIC_COLOR4}$"
-	.string "グッズ{SE_WARP_IN}{DYNAMIC_COLOR4}てる$"
-
+	.string "{B_COPY_VAR_3}{B_COPY_VAR_1}/{B_COPY_VAR_2}$グッズを　おく$グッズを　もどす$グッズを　すてる$"
 	.globl gUnknown_85CA6C6
 gUnknown_85CA6C6: @ 0x85CA6C6
-	.string "{MUS_RG_VS_GYM_LEADER}0{SHADOW}0${RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}へや{SE_BOO}{LIGHT_RED}{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR4}！$"
-	.string "{RED}らん{SE_NOTE_F}グッズ{SE_WARP_IN}パソコン{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
-	.string "{DARK_GRAY}らな{BLUE}なっ{SE_FAINT}グッズ{SE_WARP_IN}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}！$"
-
+	.string "{COLOR 161}{SHADOW 161}$えらんだ　グッズを　へやに　おきます！$えらんだ　グッズを　パソコンに　もどします！$いらなくなった　グッズを　すてます！$"
 	.globl gUnknown_85CA70B
 gUnknown_85CA70B: @ 0x85CA70B
-	.string "グッズ{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-	.string "つ{BLUE}{RED}${DARK_GRAY}{DYNAMIC_COLOR4}$"
-	.string "はち{LIGHT_GRAY}{RED}${LIGHT_RED}{LIGHT_GREEN}もの$"
-	.string "マット$ポスター${MUS_RG_NEW_GAME_INSTRUCT}ぐるみ$クッション$"
-
+	.string "グッズは　ありません！{PAUSE_UNTIL_PRESS}$つくえ$いす$はちうえ$おきもの$マット$ポスター$ぬいぐるみ$クッション$"
 	.globl gUnknown_85CA73F
 gUnknown_85CA73F: @ 0x85CA73F
-	.string "{LIGHT_GREEN}ん$"
-
+	.string "きん$"
 	.globl gUnknown_85CA742
 gUnknown_85CA742: @ 0x85CA742
 	.string "ぎん$"
 
 	.globl gUnknown_85CA745
 gUnknown_85CA745: @ 0x85CA745
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}{LIGHT_RED}{LIGHT_GREEN}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "ここに　おきますか？$"
 	.globl gUnknown_85CA750
 gUnknown_85CA750: @ 0x85CA750
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}に{SE_I}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "ここには　おけません！$"
 	.globl gUnknown_85CA75C
 gUnknown_85CA75C: @ 0x85CA75C
-	.string "{LIGHT_RED}{BLUE}の{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "おくのを　やめますか？$"
 	.globl gUnknown_85CA768
 gUnknown_85CA768: @ 0x85CA768
-	.string "{DYNAMIC_COLOR4}で{SE_BOO}{LIGHT_RED}{GREEN}れ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR4}！$"
-
+	.string "すでに　おかれて　います！$"
 	.globl gUnknown_85CA776
 gUnknown_85CA776: @ 0x85CA776
-	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}"
-	.string "ん\nひみつ{LIGHT_GREEN}ち{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}るの{SE_I}{B_COPY_VAR_1}{SE_LEDGE}"
-	.string "までで{DYNAMIC_COLOR4}$"
-
+	.string "これいじょう　おけません\n"
+	.string "ひみつきちに　おけるのは　{B_COPY_VAR_1}こ　までです$"
 	.globl gUnknown_85CA799
 gUnknown_85CA799: @ 0x85CA799
-	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}"
-	.string "ん\nへや{SE_BOO}{LIGHT_RED}{LIGHT_BLUE}るの{SE_I}{B_COPY_VAR_1}{SE_LEDGE}までで{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}に{SE_I}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}ん！\nつ{BLUE}{RED}{SE_A}"
-	.string "{LIGHT_GRAY}{RED}など{SE_BOO}{MUS_RG_SURF}て{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-
+	.string "これいじょう　おけません\n"
+	.string "へやに　おけるのは　{B_COPY_VAR_1}こ　までです$ここには　おけません！\n"
+	.string "つくえの　うえなどに　おいてください！$"
 	.globl gUnknown_85CA7D9
 gUnknown_85CA7D9: @ 0x85CA7D9
-	.string "{DYNAMIC_COLOR1}{SE_A}グッズは\nじぶん{SE_A}へやに{SE_I}{LIGHT_RED}{LIGHT_BLUE}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "この　グッズは\n"
+	.string "じぶんの　へやには　おけません！$"
 	.globl gUnknown_85CA7F2
 gUnknown_85CA7F2: @ 0x85CA7F2
-	.string "{DYNAMIC_COLOR1}のグッズ{SE_I}{LIGHT_RED}{GREEN}れ{SE_SHIP}{DARK_GRAY}るので\n{DYNAMIC_COLOR4}て{SE_ICE_BREAK}"
-	.string "{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "このグッズは　おかれて　いるので\n"
+	.string "すてる　ことが　できません！$"
 	.globl gUnknown_85CA812
 gUnknown_85CA812: @ 0x85CA812
-	.string "{B_COPY_VAR_1}{TRANSPARENT}{SE_I}な{BLUE}なりま{DYNAMIC_COLOR4}が\nよろ{MUS_RG_VICTORY_GYM_LEADER}"
-	.string "{TRANSPARENT}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　は　なくなりますが\n"
+	.string "よろしい　ですか？$"
 	.globl gUnknown_85CA829
 gUnknown_85CA829: @ 0x85CA829
-	.string "グッズ{SE_WARP_IN}{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR3}た！$"
-
+	.string "グッズを　すてました！$"
 	.globl gUnknown_85CA835
 gUnknown_85CA835: @ 0x85CA835
-	.string "もど{DYNAMIC_COLOR4}の{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "もどすのを　やめますか？$"
 	.globl gUnknown_85CA842
 gUnknown_85CA842: @ 0x85CA842
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}グッズ{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん！$"
-
+	.string "ここに　グッズは　ありません！$"
 	.globl gUnknown_85CA852
 gUnknown_85CA852: @ 0x85CA852
-	.string "{DYNAMIC_COLOR1}のグッズ{SE_WARP_IN}パソコン{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "このグッズを　パソコンに　もどしますか？$"
 	.globl gUnknown_85CA867
 gUnknown_85CA867: @ 0x85CA867
-	.string "グッズ{SE_WARP_IN}パソコン{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！$"
-
+	.string "グッズを　パソコンに　もどしました！$"
 	.globl gUnknown_85CA87A
 gUnknown_85CA87A: @ 0x85CA87A
-	.string "グッズ{SE_I}{LIGHT_RED}{GREEN}れ{SE_SHIP}{DARK_GRAY}ま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-	.string "ヒロミ$ユウリ$ヨシオ$サダハル${DYNAMIC_COLOR5}つぞ{BLUE}{SE_WARP_IN}{LIGHT_GREEN}る$"
-	.string "もよ{LIGHT_GRAY}が{RED}$ど{LIGHT_GRAY}{SE_BALL_BOUNCE_2}{WHITE}ず{GREEN}り$"
-
+	.string "グッズは　おかれて　いません！{PAUSE_UNTIL_PRESS}$ヒロミ$ユウリ$ヨシオ$サダハル$せつぞくを　きる$もようがえ$どうぐ　あずかり$"
 	.globl gUnknown_85CA8B5
 gUnknown_85CA8B5: @ 0x85CA8B5
-	.string "メールボックス$ど{LIGHT_GRAY}ぐ{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}る$"
-
+	.string "メールボックス$どうぐを　あずける$"
 	.globl gUnknown_85CA8C7
 gUnknown_85CA8C7: @ 0x85CA8C7
-	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR4}$"
-
+	.string "どうぐを　ひきだす$"
 	.globl gUnknown_85CA8D1
 gUnknown_85CA8D1: @ 0x85CA8D1
-	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}{DYNAMIC_COLOR4}てる$"
-	.string "パソコ{SE_M_BUBBLE3}に\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}$"
-	.string "パソコ{SE_M_BUBBLE3}{GREEN}ら\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "$"
-	.string "パソコ{SE_M_BUBBLE3}{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}る\nど{LIGHT_GRAY}ぐ{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR4}てま{DYNAMIC_COLOR4}$"
-
+	.string "どうぐを　すてる$パソコン　に\n"
+	.string "どうぐを　あずけます$パソコン　から\n"
+	.string "どうぐを　ひきだします$パソコン　に　あずけている\n"
+	.string "どうぐを　すてます$"
 	.globl gUnknown_85CA918
 gUnknown_85CA918: @ 0x85CA918
-	.string "なに{SE_SWITCH}{WHITE}りま{DYNAMIC_COLOR5}ん！{PAUSE_UNTIL_PRESS}$"
-
+	.string "なにも　ありません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA925
 gUnknown_85CA925: @ 0x85CA925
-	.string "{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{LIGHT_GRAY}\nバッグ{SE_BOO}{MUS_RG_POKE_JUMP}"
-	.string "りま{DYNAMIC_COLOR5}ん$"
-
+	.string "これいじょう\n"
+	.string "バッグに　はいりません$"
 	.globl gUnknown_85CA938
 gUnknown_85CA938: @ 0x85CA938
-	.string "{B_COPY_VAR_1}を\n{DARK_GRAY}{BLUE}{SE_SLIDING_DOOR}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "いくつ　ひきだしますか？$"
 	.globl gUnknown_85CA949
 gUnknown_85CA949: @ 0x85CA949
-	.string "{B_COPY_VAR_1}を\n{B_COPY_VAR_2}{SE_LOW_HEALTH}ひ{LIGHT_GREEN}だ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
-	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_WARP_IN}よむ$"
-	.string "バッグ{SE_BOO}もど{DYNAMIC_COLOR4}$ポケモン{SE_BOO}もた{DYNAMIC_COLOR5}る$"
-
+	.string "{B_COPY_VAR_1}を\n"
+	.string "{B_COPY_VAR_2}コ　ひきだしました$ないようを　よむ$バッグに　もどす$ポケモンに　もたせる$"
 	.globl gUnknown_85CA976
 gUnknown_85CA976: @ 0x85CA976
-	.string "メール{SE_I}1つ{LIGHT_GRAY}{SE_SWITCH}{WHITE}りま{DYNAMIC_COLOR5}ん{PAUSE_UNTIL_PRESS}$"
-
+	.string "メールは　1つうも　ありません{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA988
 gUnknown_85CA988: @ 0x85CA988
-	.string "{B_COPY_VAR_1}{TRANSPARENT}の\nメール{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{B_COPY_VAR_1}　の\n"
+	.string "メールを　どうしますか？$"
 	.globl gUnknown_85CA99A
 gUnknown_85CA99A: @ 0x85CA99A
-	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_I}{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}"
-	.string "ま{DYNAMIC_COLOR4}が\nよろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "ないようは　きえてしまいますが\n"
+	.string "よろしいですか？$"
 	.globl gUnknown_85CA9B3
 gUnknown_85CA9B3: @ 0x85CA9B3
-	.string "バッグ{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！{PAUSE_UNTIL_PRESS}$"
-
+	.string "バッグが　いっぱいです！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA9C2
 gUnknown_85CA9C2: @ 0x85CA9C2
-	.string "{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}{SE_WARP_IN}{LIGHT_BLUE}{DYNAMIC_COLOR3}{SE_FAINT}メールを\nバッグ{SE_BOO}"
-	.string "{DARK_GRAY}れま{DYNAMIC_COLOR3}た{PAUSE_UNTIL_PRESS}$"
-
+	.string "ないようを　けした　メールを\n"
+	.string "バッグに　いれました{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85CA9DE
 gUnknown_85CA9DE: @ 0x85CA9DE
 	.string "パパ$"
@@ -15313,91 +13428,38 @@ gUnknown_85CA9F3: @ 0x85CA9F3
 
 	.globl gUnknown_85CA9F7
 gUnknown_85CA9F7: @ 0x85CA9F7
-	.string "プリム$トウカ$カイナ$ミシロ$ミナモ$ムロ${DYNAMIC_COLOR2}ん{SE_WIN_OPEN}{DYNAMIC_COLOR4}る$"
-	.string "{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}を{LIGHT_GREEN}{BLUE}$"
-	.string "ポケモンコンテストって？$コンテスト{SE_A}{DYNAMIC_COLOR3}ゅ{MUS_RG_VS_LEGEND}$"
-	.string "ランク{SE_BOO}{MUS_RG_OBTAIN_KEY_ITEM}て${DYNAMIC_COLOR3}ん{MUS_RG_VICTORY_WILD}ん{SE_BOO}"
-	.string "{MUS_RG_OBTAIN_KEY_ITEM}て$"
-	.string "{GREEN}っ{DYNAMIC_COLOR1}よ{DYNAMIC_COLOR2}コンテスト$"
-	.string "{LIGHT_GRAY}つ{BLUE}{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}コンテスト$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{DYNAMIC_COLOR2}コンテスト$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}コンテスト$"
-	.string "た{BLUE}ま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}コンテスト$"
-	.string "もよ{LIGHT_GRAY}が{RED}$ひっ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}$"
-	.string "カウント$と{LIGHT_GRAY}ろ{SE_DOOR}リスト$と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$"
-	.string "マッハ$ダート$ど{BLUE}$まひ$ねむり$や{LIGHT_BLUE}ど${DYNAMIC_COLOR1}{LIGHT_RED}り$"
-	.string "ど{BLUE}ど{BLUE}$ふつ{LIGHT_GRAY}$よむの{SE_WARP_IN}やめる$"
-	.string "みま{DYNAMIC_COLOR3}た${DYNAMIC_COLOR1}れ{GREEN}ら$"
-
+	.string "プリム$トウカ$カイナ$ミシロ$ミナモ$ムロ$さんか　する$せつめいをきく$ポケモンコンテストって？$コンテストの　しゅるい$ランクに　ついて$しんさいんに　ついて$かっこよさコンテスト$うつくしさコンテスト$かわいさコンテスト$かしこさコンテスト$たくましさコンテスト$もようがえ$ひっこし$カウント$とうろく　リスト$とうろく　せつめい$マッハ$ダート$どく$まひ$ねむり$やけど$こおり$どくどく$ふつう$よむのを　やめる$みました$これから$"
 	.globl gText_Yes
 gText_Yes: @ 0x85CAAD8
-	.string "{MUS_RG_POKE_JUMP}$"
-
+	.string "はい$"
 	.globl gText_No
 gText_No: @ 0x85CAADB
-	.string "{MUS_RG_OAK}{RED}${DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$"
-	.string "シングルバトル$ダブルバトル$マルチバトル$ハギ$ちょ{LIGHT_GRAY}{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR4}る$"
-	.string "{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}を{LIGHT_GREEN}{BLUE}$"
-
+	.string "いいえ$せつめい$シングルバトル$ダブルバトル$マルチバトル$ハギ$ちょうせんする$せつめいをきく$"
 	.globl gUnknown_85CAB0D
 gUnknown_85CAB0D: @ 0x85CAB0D
 	.string "レベル50$"
 
 	.globl gUnknown_85CAB13
 gUnknown_85CAB13: @ 0x85CAB13
-	.string "オープンレベル${MUS_RG_SURF}{MUS_RG_VICTORY_GYM_LEADER}み{SE_NOTE_C}200¥$"
-	.string "サイコソー{SE_M_FLAME_WHEEL2}300¥$ミックスオ{SE_M_VITAL_THROW}350¥$"
-	.string "は{DYNAMIC_COLOR3}り{GREEN}た$まがるコツ${DYNAMIC_COLOR4}なの{DYNAMIC_COLOR2}{GREEN}$"
-	.string "ウイリー$ダニエル$ジャンプ$まんぞ{BLUE}$ふまん${DYNAMIC_COLOR3}ん{MUS_RG_POKE_TOWER}のキバ$"
-	.string "{DYNAMIC_COLOR3}ん{MUS_RG_POKE_TOWER}のウロコ{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}ビードロ$"
-	.string "{MUS_RG_SILPH}ろビードロ{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}ビードロ$"
-	.string "{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}ビードロ$"
-	.string "{BLUE}{MUS_RG_ENCOUNTER_DEOXYS}ビードロ$ガラス{MUS_RG_NEW_GAME_EXIT}{DYNAMIC_COLOR4}$"
-	.string "ガラスのつ{BLUE}{RED}$キモリドー{SE_M_NIGHTMARE}{MUS_DUMMY}1000{MUS_RG_SEVII_CAVE}$"
-	.string "アチャモドー{SE_M_NIGHTMARE}{TRANSPARENT}1000{MUS_RG_SEVII_CAVE}$"
-	.string "ミズゴロウドー{SE_M_NIGHTMARE}1000{MUS_RG_SEVII_CAVE}{SE_RG_SHOP}50{MUS_RG_SEVII_CAVE}{MUS_DUMMY}1000¥$"
-	.string "500{MUS_RG_SEVII_CAVE}{TRANSPARENT}10000¥$"
-	.string "ばつぐん{MUS_RG_VS_CHAMPION}んまり{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}{GREEN}{LIGHT_BLUE}ら$"
-	.string "{MUS_RG_SILPH}{MUS_RG_ENCOUNTER_DEOXYS}{GREEN}{LIGHT_BLUE}ら{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}{GREEN}"
-	.string "{LIGHT_BLUE}ら$"
-	.string "みどりの{GREEN}{LIGHT_BLUE}ら$バトルフロンティア$みぎ$ひだり$"
-	.string "わざマシン3{SE_M_SURF}{TRANSPARENT}1500{MUS_RG_SEVII_CAVE}$"
-	.string "わざマシン2{SE_M_BIND}{TRANSPARENT}3500{MUS_RG_SEVII_CAVE}$"
-	.string "わざマシン3{SE_M_HORN_ATTACK}{TRANSPARENT}4000{MUS_RG_SEVII_CAVE}$"
-	.string "わざマシン2{SE_M_WHIRLPOOL}{TRANSPARENT}4000{MUS_RG_SEVII_CAVE}$"
-	.string "わざマシン1{SE_M_HYDRO_PUMP}{TRANSPARENT}4000{MUS_RG_SEVII_CAVE}$"
-
+	.string "オープンレベル$おいしいみず　200¥$サイコソーダ　300¥$ミックスオレ　350¥$はしりかた$まがるコツ$すなのさか$ウイリー$ダニエル$ジャンプ$まんぞく$ふまん$しんかいのキバ$しんかいのウロコ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$ガラスのいす$ガラスのつくえ$キモリドール　　　1000まい$アチャモドール　　1000まい$ミズゴロウドール　1000まい$　50まい　　1000¥$500まい　10000¥$ばつぐん$あんまり$あかいかけら$きいろいかけら$あおいかけら$みどりのかけら$バトルフロンティア$みぎ$ひだり$わざマシン32　　1500まい$わざマシン29　　3500まい$わざマシン35　　4000まい$わざマシン24　　4000まい$わざマシン13　　4000まい$"
 	.globl gUnknown_85CAC84
 gUnknown_85CAC84: @ 0x85CAC84
-	.string "{GREEN}っ{DYNAMIC_COLOR1}よ{DYNAMIC_COLOR2}$"
-
+	.string "かっこよさ$"
 	.globl gUnknown_85CAC8A
 gUnknown_85CAC8A: @ 0x85CAC8A
-	.string "{LIGHT_GRAY}つ{BLUE}{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-
+	.string "うつくしさ$"
 	.globl gUnknown_85CAC90
 gUnknown_85CAC90: @ 0x85CAC90
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{DYNAMIC_COLOR2}$"
-
+	.string "かわいさ$"
 	.globl gUnknown_85CAC95
 gUnknown_85CAC95: @ 0x85CAC95
-	.string "{GREEN}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}$"
-
+	.string "かしこさ$"
 	.globl gUnknown_85CAC9A
 gUnknown_85CAC9A: @ 0x85CAC9A
-	.string "た{BLUE}ま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-	.string "ノーマル$スーパー$ハイパー$マスター${GREEN}っ{MUS_RG_VICTORY_TRAINER}{DARK_GRAY}$"
-	.string "{LIGHT_GRAY}つ{BLUE}{MUS_RG_VICTORY_GYM_LEADER}$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{DARK_GRAY}$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}{DYNAMIC_COLOR6}{LIGHT_GRAY}な$"
-	.string "た{BLUE}ま{MUS_RG_VICTORY_GYM_LEADER}$ど{LIGHT_GRAY}ぐ$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}つなもの$"
-	.string "ボール$わざマシン${LIGHT_GREEN}のみ$"
-
+	.string "たくましさ$ノーマル$スーパー$ハイパー$マスター$かっこいい$うつくしい$かわいい$かしこそうな$たくましい$どうぐ$たいせつなもの$ボール$わざマシン$きのみ$"
 	.globl gUnknown_85CACEC
 gUnknown_85CACEC: @ 0x85CACEC
-	.string "だれ{GREEN}のパソコン$"
-
+	.string "だれかのパソコン$"
 	.globl gUnknown_85CACF5
 gUnknown_85CACF5: @ 0x85CACF5
 	.string "マユミのパソコン$"
@@ -15408,23 +13470,13 @@ gUnknown_85CACFE: @ 0x85CACFE
 
 	.globl gUnknown_85CAD06
 gUnknown_85CAD06: @ 0x85CAD06
-	.string "でんど{MUS_RG_POKE_CENTER}り$"
-
+	.string "でんどういり$"
 	.globl gUnknown_85CAD0D
 gUnknown_85CAD0D: @ 0x85CAD0D
-	.string "スイッチを{LIGHT_GREEN}る${MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_OAK_LAB}て$"
-	.string "トーナメントひょ{LIGHT_GRAY}$じゅん{SE_BRIDGE_WALK}{GREEN}んりょ{LIGHT_GRAY}$"
-	.string "ノーマルランク$スーパーランク$ハイパーランク$マスターランク$シングル$ダブル$"
-	.string "マルチ$つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}マルチ$"
-	.string "バトルバッグ$もた{DYNAMIC_COLOR5}たど{LIGHT_GRAY}ぐ$"
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}んコンテスト$エメラルドモードに{MUS_RG_OBTAIN_KEY_ITEM}て$"
-	.string "グローバルモードに{MUS_RG_OBTAIN_KEY_ITEM}て$エメラルドモード$"
-	.string "グローバルモード$"
-
+	.string "スイッチをきる$たいせん　あいて$トーナメントひょう$じゅんび　かんりょう$ノーマルランク$スーパーランク$ハイパーランク$マスターランク$シングル$ダブル$マルチ$つうしん　マルチ$バトルバッグ$もたせたどうぐ$つうしんコンテスト$エメラルドモードについて$グローバルモードについて$エメラルドモード$グローバルモード$"
 	.globl gUnknown_85CADAE
 gUnknown_85CADAE: @ 0x85CADAE
-	.string "ず{GREEN}ん$"
-
+	.string "ずかん$"
 	.globl gUnknown_85CADB2
 gUnknown_85CADB2: @ 0x85CADB2
 	.string "ポケモン$"
@@ -15435,249 +13487,83 @@ gUnknown_85CADB7: @ 0x85CADB7
 
 	.globl gUnknown_85CADBB
 gUnknown_85CADBB: @ 0x85CADBB
-	.string "ポケナビ{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "ポケナビ$　　　　　$"
 	.globl gUnknown_85CADC6
 gUnknown_85CADC6: @ 0x85CADC6
 	.string "レポート$"
 
 	.globl gUnknown_85CADCB
 gUnknown_85CADCB: @ 0x85CADCB
-	.string "{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}$"
-
+	.string "せってい$"
 	.globl gUnknown_85CADD0
 gUnknown_85CADD0: @ 0x85CADD0
-	.string "とじる{SE_RG_SHOP}5BP$10BP$15BP{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}テント{MUS_RG_VS_CHAMPION}"
-	.string "{MUS_RG_SURF}テント$"
-	.string "みなみの{DYNAMIC_COLOR1}と{LIGHT_GRAY}$たんじょ{LIGHT_GRAY}の{DYNAMIC_COLOR3}ま$"
-	.string "{MUS_RG_VICTORY_WILD}はての{DYNAMIC_COLOR1}と{LIGHT_GRAY}$"
-	.string "へ{DYNAMIC_COLOR6}{MUS_RG_NEW_GAME_EXIT}わ$"
-	.string "ツメの{GREEN}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-	.string "ねっ{DYNAMIC_COLOR1}の{GREEN}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-	.string "{MUS_RG_OAK}{SE_PC_ON}${DYNAMIC_COLOR1}れ{GREEN}ら{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶだ！$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶに{GREEN}った！$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶにま{LIGHT_BLUE}た！$"
-	.string "{LIGHT_RED}{DYNAMIC_COLOR3}{RED}{MUS_RG_GAME_FREAK}$"
-	.string "トレードセンター$コロシアム$レコードコーナー${LIGHT_GREEN}のみクラッシュ$"
-	.string "ぐるぐる{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん$"
-	.string "ミニポケモンでジャンプ$ドードリオの{LIGHT_GREEN}のみどり$リーダーになる$"
-	.string "グループに{MUS_RG_POKE_JUMP}る$2つのコース$レベル50$オープンレベル$"
-	.string "ポケモンの{DYNAMIC_COLOR3}ゅ{MUS_RG_VS_LEGEND}と{GREEN}ず$"
-	.string "もた{DYNAMIC_COLOR5}るど{LIGHT_GRAY}ぐ$シンボル${MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}んの{LIGHT_GREEN}ろ{BLUE}$"
-	.string "バトルポイント$タワーに{MUS_RG_OBTAIN_KEY_ITEM}て$つれ{MUS_RG_CAUGHT_INTRO}{BLUE}ポケモン$"
-	.string "バトルサロン$つ{LIGHT_GRAY}{DYNAMIC_COLOR3}んマルチ$"
-	.string "バトルで{SE_A}ちゅ{MUS_RG_POKE_CENTER}$はん{MUS_RG_CAUGHT_INTRO}‘{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ろ’$"
-	.string "はん{MUS_RG_CAUGHT_INTRO}‘わざ’$はん{MUS_RG_CAUGHT_INTRO}‘{GREEN}らだ’$"
-	.string "{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}$トーナメントひょ{LIGHT_GRAY}$"
-	.string "ダブルノックアウト${LIGHT_GREEN}ほんルール$トレー{SE_M_SACRED_FIRE}{MUS_RG_OAK_LAB}て$"
-	.string "トレー{SE_M_SACRED_FIRE}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
-	.string "トレー{SE_M_SACRED_FIRE}ちゅ{MUS_RG_POKE_CENTER}$"
-	.string "オープンレベル$たた{MUS_RG_POKE_TOWER}の{LIGHT_GREEN}ほん$"
-	.string "ポケモンの{MUS_RG_PEWTER}{GREEN}{BLUE}$ポケモンのわざ$"
-	.string "ち{GREEN}らをはっ{LIGHT_GREEN}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}$"
-	.string "ピンチになったら$ピラミッド{SE_A}ポケモン$ピラミッド{SE_A}トレーナー$"
-	.string "ピラミッド{SE_A}{MUS_RG_SEVII_DUNGEON}ろ$バトルバッグ$"
-	.string "ポケナビ{SE_BANG}バッグ$もた{DYNAMIC_COLOR5}{SE_FAINT}ど{LIGHT_GRAY}ぐ$"
-	.string "ポケモン{SE_A}じゅんばん$でて{BLUE}るポケモン$たた{GREEN}{SE_PC_OFF}トレーナー$"
-	.string "つづ{LIGHT_BLUE}る${LIGHT_GREEN}ろ{BLUE}{DYNAMIC_COLOR4}る$"
-	.string "や{DYNAMIC_COLOR4}む$リタイア$"
-
+	.string "とじる$　5BP$10BP$15BP$あかいテント$あおいテント$みなみのことう$たんじょうのしま$さいはてのことう$へそのいわ$ツメのかせき$ねっこのかせき$いいえ　$これからしょうぶだ！$しょうぶにかった！$しょうぶにまけた！$おしえない$トレードセンター$コロシアム$レコードコーナー$きのみクラッシュ$ぐるぐるこうかん$ミニポケモンでジャンプ$ドードリオのきのみどり$リーダーになる$グループにはいる$2つのコース$レベル50$オープンレベル$ポケモンのしゅるいとかず$もたせるどうぐ$シンボル$たいせんのきろく$バトルポイント$タワーについて$つれていくポケモン$バトルサロン$つうしんマルチ$バトルでの　ちゅうい$はんてい‘こころ'$はんてい‘わざ'$はんてい‘からだ'$くみあわせ$トーナメントひょう$ダブルノックアウト$きほんルール$トレード　あいて$トレード　かいすう$トレード　ちゅうい$オープンレベル$たたかいのきほん$ポケモンのせいかく$ポケモンのわざ$ちからをはっきできない$ピンチになったら$ピラミッドの　ポケモン$ピラミッドの　トレーナー$ピラミッドの　めいろ$バトルバッグ$ポケナビと　バッグ$もたせた　どうぐ$ポケモンの　じゅんばん$でてくるポケモン$たたかう　トレーナー$つづける$きろくする$やすむ$リタイア$"
 	.globl gUnknown_85CB00E
 gUnknown_85CB00E: @ 0x85CB00E
-	.string "99{MUS_RG_POKE_TOWER}{MUS_RG_PALLET}じょ{LIGHT_GRAY}$"
-
+	.string "99かい　いじょう$"
 	.globl gUnknown_85CB018
 gUnknown_85CB018: @ 0x85CB018
-	.string "1ぷ{SE_WARP_OUT}{DARK_GRAY}じょ{LIGHT_GRAY}$"
-
+	.string "1ぷん　いじょう$"
 	.globl gUnknown_85CB021
 gUnknown_85CB021: @ 0x85CB021
-	.string "びょ{LIGHT_GRAY}$"
-
+	.string "びょう$"
 	.globl gUnknown_85CB025
 gUnknown_85CB025: @ 0x85CB025
-	.string "{MUS_RG_POKE_TOWER}$,$"
-
+	.string "かい$,$"
 	.globl gUnknown_85CB02A
 gUnknown_85CB02A: @ 0x85CB02A
-	.string "{LIGHT_RED}{MUS_RG_CAUGHT}ちゃん$"
-
+	.string "おにいちゃん$"
 	.globl gUnknown_85CB031
 gUnknown_85CB031: @ 0x85CB031
-	.string "{LIGHT_RED}ね{RED}ちゃん$"
-
+	.string "おねえちゃん$"
 	.globl gUnknown_85CB038
 gUnknown_85CB038: @ 0x85CB038
-	.string "む{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}$"
-
+	.string "むすこ$"
 	.globl gUnknown_85CB03C
 gUnknown_85CB03C: @ 0x85CB03C
-	.string "む{DYNAMIC_COLOR4}め{MUS_RG_VS_CHAMPION}{MUS_RG_SURF}ビードロ$"
-	.string "{MUS_RG_SILPH}ろビードロ{MUS_RG_VS_CHAMPION}{MUS_RG_POKE_TOWER}ビードロ$"
-	.string "{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}ビードロ$"
-	.string "{BLUE}{MUS_RG_ENCOUNTER_DEOXYS}ビードロ${LIGHT_GREEN}{MUS_RG_ENCOUNTER_GYM_LEADER}なイス$"
-	.string "{LIGHT_GREEN}{MUS_RG_ENCOUNTER_GYM_LEADER}なつ{BLUE}{RED}$"
-	.string "1{MUS_RG_POKE_TOWER}$2{MUS_RG_POKE_TOWER}$"
-	.string "3{MUS_RG_POKE_TOWER}$4{MUS_RG_POKE_TOWER}$"
-	.string "5{MUS_RG_POKE_TOWER}$6{MUS_RG_POKE_TOWER}$"
-	.string "7{MUS_RG_POKE_TOWER}$8{MUS_RG_POKE_TOWER}$"
-	.string "9{MUS_RG_POKE_TOWER}$10{MUS_RG_POKE_TOWER}$"
-	.string "11{MUS_RG_POKE_TOWER}$ビ1{MUS_RG_POKE_TOWER}$"
-	.string "ビ2{MUS_RG_POKE_TOWER}$ビ3{MUS_RG_POKE_TOWER}$"
-	.string "ビ4{MUS_RG_POKE_TOWER}${LIGHT_RED}{BLUE}じょ{LIGHT_GRAY}$"
-
+	.string "むすめ$あおいビードロ$きいろビードロ$あかいビードロ$しろいビードロ$くろいビードロ$きれいなイス$きれいなつくえ$1かい$2かい$3かい$4かい$5かい$6かい$7かい$8かい$9かい$10かい$11かい$ビ1かい$ビ2かい$ビ3かい$ビ4かい$おくじょう$"
 	.globl gUnknown_85CB0BF
 gUnknown_85CB0BF: @ 0x85CB0BF
-	.string "げん{PH_FLEECE_HELD}のフロア$"
-
+	.string "げんざいのフロア$"
 	.globl gUnknown_85CB0C8
 gUnknown_85CB0C8: @ 0x85CB0C8
-	.string "BP$ち{GREEN}らの{DYNAMIC_COLOR1}{SE_PIN}{TRANSPARENT}{FONT_SMALL}{MUS_DUMMY}50$"
-	.string "ち{GREEN}らのねっ{SE_LEDGE}{FONT_SMALL}{MUS_DUMMY}80$"
-	.string "ばんの{LIGHT_GRAY}ご{SE_PIN}{TRANSPARENT}{FONT_SMALL}{MUS_DUMMY}50$"
-	.string "ふっ{GREEN}つ{DYNAMIC_COLOR6}{SE_PC_OFF}{TRANSPARENT}{FONT_SMALL}{TRANSPARENT}300$"
-	.string "タウリ{SE_M_BUBBLE3}{MUS_DUMMY}{TRANSPARENT}{FONT_SMALL}1000$"
-	.string "ブロムヘキシ{SE_M_BUBBLE3}{FONT_SMALL}1000$インドメタシ{SE_M_BUBBLE3}{FONT_SMALL}1000$"
-	.string "リゾチウ{SE_EGG_HATCH}{MUS_DUMMY}{FONT_SMALL}1000$"
-	.string "キトサ{SE_M_BUBBLE3}{MUS_DUMMY}{TRANSPARENT}{FONT_SMALL}1000$"
-	.string "マックスアッ{SE_M_WING_ATTACK}{FONT_SMALL}1000$"
-	.string "ポイントアッ{SE_M_WING_ATTACK}{FONT_SMALL}3000$"
-	.string "ランキングホール$ひ{LIGHT_GREEN}{GREEN}{RED}サービス$"
-	.string "ミナモシティ$カイナシティ$めざめのほ{DYNAMIC_COLOR1}ら${LIGHT_RED}{BLUE}りびやま$"
-	.string "{DYNAMIC_COLOR6}らのは{DYNAMIC_COLOR3}ら${LIGHT_RED}ぼ{RED}{MUS_RG_CAUGHT_INTRO}{MUS_RG_GAME_FREAK}$"
-
+	.string "BP$ちからのこな　　{FONT 0}　　50$ちからのねっこ　{FONT 0}　　80$ばんのうごな　　{FONT 0}　　50$ふっかつそう　　{FONT 0}　300$タウリン　　　　{FONT 0}1000$ブロムヘキシン　{FONT 0}1000$インドメタシン　{FONT 0}1000$リゾチウム　　　{FONT 0}1000$キトサン　　　　{FONT 0}1000$マックスアップ　{FONT 0}1000$ポイントアップ　{FONT 0}3000$ランキングホール$ひきかえサービス$ミナモシティ$カイナシティ$めざめのほこら$おくりびやま$そらのはしら$おぼえていない$"
 	.globl gUnknown_85CB1B9
 gUnknown_85CB1B9: @ 0x85CB1B9
-	.string "やめる$ボックス{SE_WARP_IN}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}"
-	.string "{GREEN}{SE_M_SING}$"
-	.string "{DYNAMIC_COLOR1}のボックス{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ど{SE_A}テーマに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ど{SE_A}{GREEN}べがみに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}ど{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ど{SE_A}ボックス{SE_BOO}ジャンプ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ど{SE_A}ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
-	.string "{DYNAMIC_COLOR1}のボックス{SE_I}{DARK_GRAY}っ{PH_THOUGHT_HELD}だ！$"
-	.string "ほんと{LIGHT_GRAY}{SE_BOO}にが{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{DYNAMIC_COLOR6}と{SE_BOO}にが{DYNAMIC_COLOR3}て{WHITE}げた$"
-	.string "{PH_LOT_SOLO}{PH_LOT_SOLO}{TRANSPARENT}{SE_M_HYPER_BEAM2}！$"
-	.string "マーキング{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-	.string "たた{GREEN}{LIGHT_GRAY}ポケモン{SE_SAVE}{DARK_GRAY}な{BLUE}なりま{DYNAMIC_COLOR4}！$"
-	.string "てもち{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$"
-	.string "ポケモン{SE_WARP_IN}つ{GREEN}んだままで{DYNAMIC_COLOR4}よ！$"
-	.string "つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}ポケモン{SE_WARP_IN}{RED}らんで！$"
-	.string "タマゴ{SE_WARP_IN}にが{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-	.string "ボックス{DYNAMIC_COLOR6}{LIGHT_GRAY}{DYNAMIC_COLOR2}{SE_WARP_IN}つづ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_I}{GREEN}{RED}って{LIGHT_GREEN}た！$"
-	.string "{DYNAMIC_COLOR3}ん{PH_THOUGHT_HELD}{TRANSPARENT}だったの{GREEN}な⋯⋯$"
-	.string "⋯⋯⋯⋯⋯！$メール{SE_WARP_IN}はず{DYNAMIC_COLOR3}{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}バッグ{MUS_RG_MYSTERY_GIFT}れた！$"
-	.string "バッグ{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$"
-	.string "ど{LIGHT_GRAY}ぐ{SE_WARP_IN}バッグ{SE_BOO}{DARK_GRAY}れま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！$"
-	.string "{SE_M_HYPER_BEAM2}{SE_BANG}とり{GREEN}{RED}た！$"
-	.string "メール{SE_WARP_IN}{WHITE}ず{GREEN}る{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-	.string "やめ{SE_ICE_BREAK}{MUS_DUMMY}{MUS_RG_VS_CHAMPION}ず{LIGHT_BLUE}{SE_ICE_BREAK}{TRANSPARENT}$"
-	.string "つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}${DARK_GRAY}れ{GREEN}{RED}{SE_ICE_BREAK}$"
-	.string "つ{GREEN}{SE_EXP}{MUS_DUMMY}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}に{LIGHT_RED}{SE_DOOR}$"
-	.string "よ{LIGHT_GRAY}{DYNAMIC_COLOR4}をみる$にが{SE_EFFECTIVE}{MUS_DUMMY}$"
-	.string "マーキン{SE_M_ICY_WIND}$なま{SE_PC_ON}{MUS_DUMMY}$"
-	.string "ジャンプ${GREEN}べが{SE_FAILURE}{TRANSPARENT}{MUS_RG_VS_CHAMPION}ず{GREEN}る$"
-	.string "もた{DYNAMIC_COLOR5}る$とり{GREEN}{RED}る$バッグへ$"
-	.string "{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$"
-	.string "ふ{LIGHT_GRAY}{MUS_RG_CELADON}1$ふ{LIGHT_GRAY}{MUS_RG_CELADON}2$"
-	.string "ふ{LIGHT_GRAY}{MUS_RG_CELADON}3$エトセトラ${PH_PRICE_BLEND}{DYNAMIC_COLOR4}{LIGHT_GREEN}$"
-	.string "もり$シティ${DYNAMIC_COLOR2}ば{BLUE}$サバンナ${DARK_GRAY}わやま$"
-	.string "{GREEN}ざん$ゆ{LIGHT_GREEN}やま$ど{LIGHT_GRAY}{BLUE}つ$"
-	.string "{LIGHT_GRAY}みべ${MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}$"
-	.string "{GREEN}わ${DYNAMIC_COLOR6}ら$みずたま$ポケセン${LIGHT_GREEN}{MUS_RG_POKE_TOWER}$"
-	.string "シンプル$なに{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ポケモン{SE_WARP_IN}つれ{MUS_RG_CAUGHT_INTRO}{BLUE}$"
-	.string "ポケモン{SE_WARP_IN}{WHITE}ず{LIGHT_BLUE}{SE_ICE_BREAK}$"
-	.string "ボックス{SE_WARP_IN}{MUS_RG_PEWTER}り{DYNAMIC_COLOR4}る$"
-	.string "ど{LIGHT_GRAY}ぐ{MUS_RG_PEWTER}り${DYNAMIC_COLOR2}よ{LIGHT_GRAY}なら$"
-	.string "ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_WARP_IN}\nてもち{SE_BOO}"
-	.string "{BLUE}わ{RED}{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{SE_EFFECTIVE}$"
-	.string "てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}\nボックス{SE_BOO}{WHITE}"
-	.string "ず{LIGHT_BLUE}{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
-	.string "ボックス{SE_BOO}{WHITE}ず{LIGHT_BLUE}{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_CLICK}\nてもち{SE_A}"
-	.string "ポケモン{SE_WARP_IN}{MUS_RG_PEWTER}{SE_ICE_STAIRS}で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
-	.string "ポケモン{SE_SAVE}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ど{LIGHT_GRAY}ぐを\n{MUS_RG_PEWTER}{SE_ICE_STAIRS}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR4}$"
-	.string "ひと{SE_SLIDING_DOOR}ま{RED}{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}{SE_RG_BALL_CLICK}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "やめる$ボックス{SE_WARP_IN}{DYNAMIC_COLOR3}ゅうりょう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か{SE_M_SING}${DYNAMIC_COLOR1}のボックス{SE_WARP_IN}どう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}テーマに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}かべがみに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}どう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}ボックス{SE_BOO}ジャンプ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}ボックス{SE_BOO}あずけま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}あずけま{DYNAMIC_COLOR3}た${DYNAMIC_COLOR1}のボックス{SE_I}いっ{PH_THOUGHT_HELD}だ！$ほんとう{SE_BOO}にが{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}{DYNAMIC_COLOR6}と{SE_BOO}にが{DYNAMIC_COLOR3}てあげた${PH_LOT_SOLO}{PH_LOT_SOLO}{TRANSPARENT}{SE_M_HYPER_BEAM2}！$マーキング{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$たたかうポケモン{SE_SAVE}いなくなりま{DYNAMIC_COLOR4}！$てもち{SE_SAVE}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$ポケモン{SE_WARP_IN}つかんだままで{DYNAMIC_COLOR4}よ！$つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}ポケモン{SE_WARP_IN}えらんで！$タマゴ{SE_WARP_IN}にが{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}できま{DYNAMIC_COLOR5}ん！$ボックス{DYNAMIC_COLOR6}う{DYNAMIC_COLOR2}{SE_WARP_IN}つづけま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_I}かえってきた！${DYNAMIC_COLOR3}ん{PH_THOUGHT_HELD}{TRANSPARENT}だったのかな⋯⋯$⋯⋯⋯⋯⋯！$メール{SE_WARP_IN}はず{DYNAMIC_COLOR3}{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}！$どうぐ{SE_WARP_IN}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}バッグ{MUS_RG_MYSTERY_GIFT}れた！$バッグ{SE_SAVE}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$どうぐ{SE_WARP_IN}バッグ{SE_BOO}いれま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！${SE_M_HYPER_BEAM2}{SE_BANG}とりかえた！$メール{SE_WARP_IN}あずかる{DYNAMIC_COLOR1}と{SE_I}できま{DYNAMIC_COLOR5}ん！$やめ{SE_ICE_BREAK}{MUS_DUMMY}$あずけ{SE_ICE_BREAK}{TRANSPARENT}$つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}$いれかえ{SE_ICE_BREAK}$つか{SE_EXP}{MUS_DUMMY}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}にお{SE_DOOR}$よう{DYNAMIC_COLOR4}をみる$にが{SE_EFFECTIVE}{MUS_DUMMY}$マーキン{SE_M_ICY_WIND}$なま{SE_PC_ON}{MUS_DUMMY}$ジャンプ$かべが{SE_FAILURE}{TRANSPARENT}$あずかる$もた{DYNAMIC_COLOR5}る$とりかえる$バッグへ${DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$ふう{MUS_RG_CELADON}1$ふう{MUS_RG_CELADON}2$ふう{MUS_RG_CELADON}3$エトセトラ${PH_PRICE_BLEND}{DYNAMIC_COLOR4}き$もり$シティ${DYNAMIC_COLOR2}ばく$サバンナ$いわやま$かざん$ゆきやま$どうくつ$うみべ${MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}$かわ${DYNAMIC_COLOR6}ら$みずたま$ポケセン$き{MUS_RG_POKE_TOWER}$シンプル$なに{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ポケモン{SE_WARP_IN}つれ{MUS_RG_CAUGHT_INTRO}く$ポケモン{SE_WARP_IN}あずけ{SE_ICE_BREAK}$ボックス{SE_WARP_IN}{MUS_RG_PEWTER}り{DYNAMIC_COLOR4}る$どうぐ{MUS_RG_PEWTER}り${DYNAMIC_COLOR2}ようなら$ボックス{SE_BOO}あずけ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_WARP_IN}\n"
+	.string "てもち{SE_BOO}くわえ{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}できま{SE_EFFECTIVE}$てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}\n"
+	.string "ボックス{SE_BOO}あずけ{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}できま{DYNAMIC_COLOR4}$ボックス{SE_BOO}あずけ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_CLICK}\n"
+	.string "てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_RG_PEWTER}{SE_ICE_STAIRS}できま{DYNAMIC_COLOR4}$ポケモン{SE_SAVE}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}どうぐを\n"
+	.string "{MUS_RG_PEWTER}{SE_ICE_STAIRS}できま{DYNAMIC_COLOR4}$ひと{SE_SLIDING_DOOR}まえ{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}\n"
+	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
 	.globl gUnknown_85CB534
 gUnknown_85CB534: @ 0x85CB534
-	.string "てもちポケモン{SE_SAVE}1ひ{LIGHT_GREEN}{DYNAMIC_COLOR3}{MUS_RG_POKE_TOWER}ま{DYNAMIC_COLOR5}"
-	.string "ん！{SE_RG_BALL_CLICK}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "てもちポケモンが　1ひきしかいません！\n"
+	.string "　　　　　　　　　　　　　　　　　　　$"
 	.globl gUnknown_85CB55C
 gUnknown_85CB55C: @ 0x85CB55C
-	.string "てもちポケモン{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}{SE_M_DRAGON_RAGE}{MUS_DUMMY}"
-	.string "{SE_RG_BALL_CLICK}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "てもちポケモンが　いっぱいです！　　　\n"
+	.string "　　　　　　　　　　　　　　　　　　　$"
 	.globl gUnknown_85CB584
 gUnknown_85CB584: @ 0x85CB584
-	.string "ボックス$ホ{PKMN}ンちほ{LIGHT_GRAY}{SE_A}マップ{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
-	.string "ポケモン{SE_WARP_IN}{BLUE}わ{DYNAMIC_COLOR3}{SE_DOOR}{DYNAMIC_COLOR3}らべま{DYNAMIC_COLOR4}$"
-	.string "と{LIGHT_GRAY}ろ{BLUE}{DYNAMIC_COLOR3}{SE_FAINT}ひと{SE_WARP_IN}よびだ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "て{MUS_RG_CAUGHT}れ{SE_FAINT}{LIGHT_GREEN}ねんリボン{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
-	.string "ポケナビ{SE_WARP_IN}{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}ま{DYNAMIC_COLOR4}$"
-
+	.string "ボックス$ホウエンちほうの　マップを　みます$ポケモンを　くわしく　しらべます$とうろくした　ひとを　よびだします$てにいれた　きねんリボンを　みます$ポケナビを　しまいます$"
 	.globl gUnknown_85CB5DC
 gUnknown_85CB5DC: @ 0x85CB5DC
-	.string "リボン{SE_WARP_IN}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_SAVE}{DARK_GRAY}ま{DYNAMIC_COLOR5}ん$"
-	.string "トレーナー{SE_SAVE}と{LIGHT_GRAY}ろ{SE_DOOR}{DYNAMIC_COLOR2}れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR5}ん$"
-	.string "てもちポケモン{SE_WARP_IN}{BLUE}わ{DYNAMIC_COLOR3}{SE_DOOR}{DYNAMIC_COLOR3}らべま{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR4}べてのポケモン{SE_WARP_IN}{BLUE}わ{DYNAMIC_COLOR3}{SE_DOOR}{DYNAMIC_COLOR3}"
-	.string "らべま{DYNAMIC_COLOR4}$"
-	.string "ポケナビ{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}$"
-	.string "{GREEN}っ{MUS_RG_VICTORY_TRAINER}{SE_PC_LOGIN}ポケモン{SE_WARP_IN}みつ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}$"
-	.string "{LIGHT_GRAY}つ{BLUE}{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}ポケモン{SE_WARP_IN}みつ{LIGHT_BLUE}"
-	.string "ま{DYNAMIC_COLOR4}$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{SE_PC_LOGIN}ポケモン{SE_WARP_IN}みつ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{MUS_RG_VICTORY_TRAINER}{TRANSPARENT}ポケモン{SE_WARP_IN}みつ{LIGHT_BLUE}"
-	.string "ま{DYNAMIC_COLOR4}$"
-	.string "た{BLUE}ま{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}ポケモン{SE_WARP_IN}みつ{LIGHT_BLUE}ま{DYNAMIC_COLOR4}$"
-	.string "コンディション{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}$"
-
+	.string "リボンを　もっている　ポケモンが　いません$トレーナーが　とうろく　されていません$てもちポケモンを　くわしく　しらべます$すべてのポケモンを　くわしく　しらべます$ポケナビの　メニューに　もどります$かっこいい　ポケモンを　みつけます$うつくしい　ポケモンを　みつけます$かわいい　ポケモンを　みつけます$かしこい　ポケモンを　みつけます$たくましい　ポケモンを　みつけます$コンディションの　メニューに　もどります$"
 	.globl gUnknown_85CB6AE
 gUnknown_85CB6AE: @ 0x85CB6AE
-	.string "と{LIGHT_GRAY}ろ{SE_DOOR}にんず{LIGHT_GRAY}$"
-
+	.string "とうろく　にんずう$"
 	.globl gUnknown_85CB6B8
 gUnknown_85CB6B8: @ 0x85CB6B8
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_VICTORY_WILD}$"
-	.string "よびだ{DYNAMIC_COLOR4}$やめる${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{MUS_RG_OAK_LAB}て{SE_WARP_IN}"
-	.string "よびだ{SE_EFFECTIVE}{DYNAMIC_COLOR1}とが\nで{LIGHT_GREEN}{MUS_RG_GAME_FREAK}よ{LIGHT_GRAY}だ$"
-	.string "{DYNAMIC_COLOR2}{BLUE}{DYNAMIC_COLOR5}ん$"
-	.string "もって{SE_ICE_BREAK}ポケモン$じ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_POKE_TOWER}{SE_RG_SHOP}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "{A_BUTTON}{GREEN}{BLUE}{PH_PRICE_BLEND}{TRANSPARENT}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}ぜん{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}コンディションをみ{SE_ICE_BREAK}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}マーキン{SE_M_ICY_WIND}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}マークを{RED}ら{SE_ITEMFINDER}{B_BUTTON}やめる$"
-	.string "{A_BUTTON}メニュ{SE_M_PAY_DAY}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}もどる$"
-	.string "{B_BUTTON}もどる${A_BUTTON}リボンをみ{SE_ICE_BREAK}{B_BUTTON}もどる$"
-	.string "{A_BUTTON}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_VICTORY_WILD}{TRANSPARENT}{B_BUTTON}もどる$"
-	.string "{B_BUTTON}もどる$"
-
+	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}う${DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}$よびだ{DYNAMIC_COLOR4}$やめる${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{MUS_RG_OAK_LAB}て{SE_WARP_IN}よびだ{SE_EFFECTIVE}{DYNAMIC_COLOR1}とが\n"
+	.string "でき{MUS_RG_GAME_FREAK}ようだ${DYNAMIC_COLOR2}く{DYNAMIC_COLOR5}ん$もって{SE_ICE_BREAK}ポケモン$じ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょう{MUS_RG_POKE_TOWER}${MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}${A_BUTTON}かく{PH_PRICE_BLEND}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}ぜん{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}コンディションをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}マーキン{SE_M_ICY_WIND}{B_BUTTON}もどる${A_BUTTON}マークをえら{SE_ITEMFINDER}{B_BUTTON}やめる${A_BUTTON}メニュ{SE_M_PAY_DAY}{B_BUTTON}もどる${A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる${A_BUTTON}リボンをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}{DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる$"
 	.globl gUnknown_85CB7A2
 gUnknown_85CB7A2: @ 0x85CB7A2
-	.string "{MUS_RG_PEWTER}{GREEN}{BLUE}/$"
-
+	.string "せいかく/$"
 	.globl gUnknown_85CB7A8
 gUnknown_85CB7A8: @ 0x85CB7A8
-	.string "ち{GREEN}{BLUE}{SE_BOO}{DARK_GRAY}るみ{MUS_RG_RIVAL_EXIT}だ{GREEN}ら\nちょ{BLUE}{DYNAMIC_COLOR5}"
-	.string "{SE_SLIDING_DOOR}{WHITE}っ{SE_SHIP}はな{DYNAMIC_COLOR6}{LIGHT_GRAY}！$"
-
+	.string "ちかくに　いるみたいだから\n"
+	.string "ちょくせつ　あって　はなそう！$"
 	.globl gUnknown_85CB7C6
 gUnknown_85CB7C6: @ 0x85CB7C6
 	.string "てもちポケモン$"
@@ -15688,197 +13574,90 @@ gUnknown_85CB7CE: @ 0x85CB7CE
 
 	.globl gUnknown_85CB7D6
 gUnknown_85CB7D6: @ 0x85CB7D6
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_RG_POKE_JUMP_SUCCESS}{GREEN}"
-	.string "♂{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}$"
-
+	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
 	.globl gUnknown_85CB7EA
 gUnknown_85CB7EA: @ 0x85CB7EA
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_POKENAV_CALL}{BLUE}"
-	.string "♀{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}$"
-
+	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
 	.globl gUnknown_85CB7FE
 gUnknown_85CB7FE: @ 0x85CB7FE
 	.string "{SE_M_HYPER_BEAM2}{MUS_DUMMY}/{LV_2}{MUS_RG_ROUTE1}$"
 
 	.globl gUnknown_85CB808
 gUnknown_85CB808: @ 0x85CB808
-	.string "ふ{MUS_RG_SEVII_DUNGEON}$よびだ{DYNAMIC_COLOR3}$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_VICTORY_WILD}$"
-	.string "もどる$"
-
+	.string "ふめい$よびだし$しょうさい$もどる$"
 	.globl gUnknown_85CB81B
 gUnknown_85CB81B: @ 0x85CB81B
 	.string "{SE_M_HYPER_BEAM2}ばんめ$"
 
 	.globl gUnknown_85CB821
 gUnknown_85CB821: @ 0x85CB821
-	.string "リボ{SE_M_BUBBLE3}{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR1}$"
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_RG_POKE_JUMP_SUCCESS}{GREEN}"
-	.string "♂{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}{TRANSPARENT}{DYNAMIC}"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR1}$"
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_POKENAV_CALL}{BLUE}"
-	.string "♀{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}{TRANSPARENT}{DYNAMIC}"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR1}$"
-	.string "{SE_M_HYPER_BEAM2}{MUS_DUMMY}/{LV_2}{MUS_RG_ROUTE1}{TRANSPARENT}{DYNAMIC}{DARK_GRAY}{DYNAMIC_COLOR1}"
-	.string "$"
-	.string "4つ{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}て$"
-	.string "プロフィール{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}！$"
-	.string "6つ{SE_A}{DYNAMIC_COLOR1}とば{SE_NOTE_B}メッセージ{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}！$"
-	.string "7もじ{SE_A}{DYNAMIC_COLOR1}とば{SE_I}1ぎょ{LIGHT_GRAY}{SE_BOO}2つまで！$"
-	.string "{DARK_GRAY}ま{SE_A}{LIGHT_GREEN}もち{SE_BOO}ぴったり{WHITE}{LIGHT_GRAY}$"
-	.string "{DYNAMIC_COLOR1}とば{SE_WARP_IN}みつ{LIGHT_BLUE}よ{LIGHT_GRAY}！$"
-	.string "4つ{SE_A}{DYNAMIC_COLOR1}とばで$9つ{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}て$"
-	.string "メッセージ{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}！${DYNAMIC_COLOR1}とば{SE_WARP_IN}1つだ{SE_EXIT}{DARK_GRAY}れ{GREEN}"
-	.string "{RED}て$"
-	.string "オヤジの{LIGHT_GRAY}た{SE_WARP_IN}よ{BLUE}{DYNAMIC_COLOR3}{SE_SHIP}{WHITE}げよ{LIGHT_GRAY}！$"
-	.string "プロフィールは${MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_SAVE}はじまると{LIGHT_GREEN}{SE_A}{LIGHT_GREEN}もちは$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_BOO}{GREEN}ったと{LIGHT_GREEN}{SE_A}{MUS_RG_OAK_LAB}"
-	.string "{DYNAMIC_COLOR2}つは$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_BOO}ま{LIGHT_BLUE}たと{LIGHT_GREEN}{SE_A}{MUS_RG_OAK_LAB}"
-	.string "{DYNAMIC_COLOR2}つは$"
-	.string "{DYNAMIC_COLOR1}た{RED}は$メール{SE_BOO}の{DYNAMIC_COLOR5}{SE_ICE_BREAK}メッセージは$"
-	.string "はが{LIGHT_GREEN}{SE_BOO}の{DYNAMIC_COLOR5}{SE_ICE_BREAK}{MUS_RG_OAK_LAB}{DYNAMIC_COLOR2}"
-	.string "つは{MUS_RG_VS_CHAMPION}たら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}{LIGHT_GRAY}たは$"
-	.string "2つ{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}て$"
-	.string "はやら{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{DYNAMIC_COLOR1}とば{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}"
-	.string "！$"
-	.string "はやら{DYNAMIC_COLOR5}{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{DYNAMIC_COLOR1}とばは$"
-	.string "{DYNAMIC_COLOR1}れ{SE_NOTE_B}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "2つ{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}て$"
-	.string "{MUS_RG_OAK}{TRANSPARENT}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}{RED}て{WHITE}"
-	.string "げよ{LIGHT_GRAY}！$"
-	.string "トレーナー{SE_A}イメージに$ぴったり{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}みつ{LIGHT_BLUE}よ{LIGHT_GRAY}！$"
-	.string "イメージは${DYNAMIC_COLOR1}とば{SE_A}な{GREEN}{GREEN}ら$"
-	.string "クイズ{SE_A}{DYNAMIC_COLOR1}た{RED}{SE_WARP_IN}{RED}らぼ{LIGHT_GRAY}！$"
-	.string "クイズ{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}！${DYNAMIC_COLOR1}とば{SE_A}な{GREEN}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "ひとつ{SE_WARP_IN}{RED}らんで$"
-	.string "クイズ{SE_A}{DYNAMIC_COLOR1}た{RED}{SE_WARP_IN}つ{BLUE}ろ{LIGHT_GRAY}！$"
-	.string "{DYNAMIC_COLOR1}た{RED}は$クイズは$で{DYNAMIC_COLOR3}{SE_A}{LIGHT_GREEN}めゼリフは$"
-
+	.incbin "baserom_jp.gba", 0x5cb821, 0x242
 	.globl gUnknown_85CBA63
 gUnknown_85CBA63: @ 0x85CBA63
-	.string "へん{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "へんしゅうを　やめますか？$"
 	.globl gUnknown_85CBA71
 gUnknown_85CBA71: @ 0x85CBA71
-	.string "メール{SE_WARP_IN}もた{DYNAMIC_COLOR5}るの{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ショップ{SE_A}アンケート{SE_BOO}{DYNAMIC_COLOR1}た{RED}よ{LIGHT_GRAY}！$"
-	.string "インタビュー{SE_BOO}{DYNAMIC_COLOR1}た{RED}よ{LIGHT_GRAY}！$"
-
+	.string "メールを　もたせるのを　やめますか？$ショップの　アンケートに　こたえよう！$インタビューに　こたえよう！$"
 	.globl gUnknown_85CBAA7
 gUnknown_85CBAA7: @ 0x85CBAA7
-	.string "へん{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}ちゅ{LIGHT_GRAY}{SE_A}{DYNAMIC_COLOR1}とばを$"
-
+	.string "へんしゅうちゅうの　ことばを$"
 	.globl gUnknown_85CBAB6
 gUnknown_85CBAB6: @ 0x85CBAB6
-	.string "ぜん{SE_ITEMFINDER}{LIGHT_BLUE}{DYNAMIC_COLOR3}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "へん{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "へん{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_FAINT}{DYNAMIC_COLOR1}とば{SE_I}ほぞん$"
-	.string "{DYNAMIC_COLOR2}れま{DYNAMIC_COLOR5}ん{SE_SAVE}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "なに{SE_WIN_OPEN}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{DARK_GRAY}れて{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-	.string "{DYNAMIC_COLOR1}とば{SE_WARP_IN}ぜん{SE_ITEMFINDER}{LIGHT_BLUE}{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "ぜんぶ　けしても　いいですか？$へんしゅうを　やめますか？$へんしゅうした　ことばは　ほぞん$されませんが　いいですか？$なにか　ことばを　いれてください！$ことばを　ぜんぶ　けすことは　できません！$"
 	.globl gUnknown_85CBB1B
 gUnknown_85CBB1B: @ 0x85CBB1B
-	.string "{GREEN}{RED}られ{SE_ICE_BREAK}{DYNAMIC_COLOR1}とば{SE_I}1{SE_SLIDING_DOOR}までで{DYNAMIC_COLOR4}！$"
-
+	.string "かえられる　ことばは　1つ　までです！$"
 	.globl gUnknown_85CBB2F
 gUnknown_85CBB2F: @ 0x85CBB2F
-	.string "{LIGHT_GRAY}た{SE_WARP_IN}もと{SE_BOO}もど{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
-	.string "{DYNAMIC_COLOR6}れ{SE_I}も{SE_PC_OFF}はやっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！$"
-
+	.string "うたを　もとに　もどします！$それは　もう　はやっています！$"
 	.globl gUnknown_85CBB4E
 gUnknown_85CBB4E: @ 0x85CBB4E
-	.string "2つ{SE_A}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{BLUE}み{WHITE}わ{DYNAMIC_COLOR5}て{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-	.string "{DYNAMIC_COLOR1}とば{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}{RED}るの{SE_WARP_IN}やめま{DYNAMIC_COLOR4}"
-	.string "{GREEN}？$"
-	.string "メール{SE_WARP_IN}もた{DYNAMIC_COLOR5}るの{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "もん{PH_PRICE_BLEND}{SE_WARP_IN}つ{BLUE}って{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-	.string "{DYNAMIC_COLOR1}た{RED}{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-	.string "もとにもど{DYNAMIC_COLOR3}{SE_SHIP}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "プロフィール${MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_SAVE}はじまると{LIGHT_GREEN}$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_BOO}{GREEN}ったと{LIGHT_GREEN}$"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_BOO}ま{LIGHT_BLUE}たと{LIGHT_GREEN}$"
-	.string "オヤジの{LIGHT_GRAY}た$はやっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ものは？$"
-	.string "インタビュー${MUS_RG_OAK}{TRANSPARENT}{DYNAMIC_COLOR1}とば$"
-	.string "ファンの{DYNAMIC_COLOR3}つもん$クイズ{SE_A}{DYNAMIC_COLOR1}た{RED}は？$"
-	.string "で{DYNAMIC_COLOR3}{SE_A}{LIGHT_GREEN}めゼリフ$"
-	.string "アンケート{MUS_RG_VS_CHAMPION}{DARK_GRAY}{LIGHT_GRAY}{RED}{SE_SELECT}なにぬね{SE_A}"
-	.string "やゆ{SE_CONTEST_CONDITION_LOSE}わ$"
-	.string "{GREEN}{LIGHT_GREEN}{BLUE}{LIGHT_BLUE}{SE_LEDGE}はひふへ{SE_N}{DYNAMIC_COLOR6}のた$"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{SE_BALL_OPEN}まみむめも$"
-	.string "たちつて{SE_BANG}らりるれろ$"
-
+	.string "2つの　ことばを　くみあわせてください！$ことばを　おしえるのを　やめますか？$メールを　もたせるのを　やめますか？$もんだいを　つくってください！$こたえを　えらんでください！$もとにもどして　いいですか？$プロフィール$たいせんが　はじまるとき$たいせんに　かったとき$たいせんに　まけたとき$オヤジのうた$はやっている　ものは？$インタビュー$いい　ことば$ファンのしつもん$クイズの　こたえは？$でしの　きめゼリフ$アンケート$あいうえお　なにぬねの　やゆよ　わ$かきくけこ　はひふへほ　そのた$さしすせそ　まみむめも$たちつてと　らりるれろ$"
 	.globl gUnknown_85CBC62
 gUnknown_85CBC62: @ 0x85CBC62
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}とちゅ{LIGHT_GRAY}で$"
-
+	.string "ここでは　とちゅうで$"
 	.globl gUnknown_85CBC6D
 gUnknown_85CBC6D: @ 0x85CBC6D
-	.string "やめる{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "やめることは　できません！$"
 	.globl gUnknown_85CBC7B
 gUnknown_85CBC7B: @ 0x85CBC7B
 	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_A}クイズ$"
 
 	.globl gUnknown_85CBC85
 gUnknown_85CBC85: @ 0x85CBC85
-	.string "{LIGHT_RED}ね{RED}$もん{PH_PRICE_BLEND}{SE_WARP_IN}よんだら$"
-	.string "Aボタン{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}てね！$"
-	.string "クイズ{SE_A}{DYNAMIC_COLOR1}た{RED}は？$"
-
+	.string "おねえ$もんだいを　よんだら$Aボタンを　おしてね！$クイズの　こたえは？$"
 	.globl gUnknown_85CBCAB
 gUnknown_85CBCAB: @ 0x85CBCAB
-	.string "クイズ{SE_A}チャレンジを$"
-
+	.string "クイズの　チャレンジを$"
 	.globl gUnknown_85CBCB7
 gUnknown_85CBCB7: @ 0x85CBCB7
-	.string "{WHITE}{LIGHT_GREEN}らめま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "クイズ{SE_I}{DYNAMIC_COLOR1}れ{SE_NOTE_B}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "あきらめますか？$クイズは　これで　いいですか？$"
 	.globl gUnknown_85CBCD0
 gUnknown_85CBCD0: @ 0x85CBCD0
-	.string "もん{PH_PRICE_BLEND}{SE_WARP_IN}つ{BLUE}って{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-
+	.string "もんだいを　つくってください！$"
 	.globl gUnknown_85CBCE0
 gUnknown_85CBCE0: @ 0x85CBCE0
-	.string "{DYNAMIC_COLOR1}た{RED}{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-
+	.string "こたえを　えらんでください！$"
 	.globl gUnknown_85CBCEF
 gUnknown_85CBCEF: @ 0x85CBCEF
-	.string "{GREEN}{DYNAMIC_COLOR3}{SE_WARP_IN}{LIGHT_BLUE}{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}で{LIGHT_GREEN}"
-	.string "ま{DYNAMIC_COLOR5}ん！$"
-	.string "ポケモ{SE_M_BUBBLE3}リーグ$ポケモンセンター$"
-
+	.string "かしを　けすことは　できません！$ポケモン　リーグ$ポケモンセンター$"
 	.globl gUnknown_85CBD12
 gUnknown_85CBD12: @ 0x85CBD12
-	.string "{SE_BOO}ポロック{SE_WARP_IN}{WHITE}げま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{GREEN}っ{DYNAMIC_COLOR1}よ{DYNAMIC_COLOR2}$"
-	.string "{LIGHT_GRAY}つ{BLUE}{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{DYNAMIC_COLOR2}$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}$"
-	.string "た{BLUE}ま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-
+	.string "に　ポロックを　あげますか？$かっこよさ$うつくしさ$かわいさ$かしこさ$たくましさ$"
 	.globl gUnknown_85CBD3D
 gUnknown_85CBD3D: @ 0x85CBD3D
-	.string "{SE_BOO}みが{LIGHT_GREEN}{SE_SAVE}{GREEN}{GREEN}った！$"
-
+	.string "に　みがきが　かかった！$"
 	.globl gUnknown_85CBD4A
 gUnknown_85CBD4A: @ 0x85CBD4A
-	.string "なに{SE_SWITCH}{GREEN}わらな{GREEN}った！$"
-
+	.string "なにも　かわらなかった！$"
 	.globl gUnknown_85CBD57
 gUnknown_85CBD57: @ 0x85CBD57
-	.string "も{SE_PC_OFF}{DYNAMIC_COLOR1}{MUS_RG_ENCOUNTER_GYM_LEADER}じょ{SE_PC_OFF}たべ{MUS_RG_GAME_FREAK}"
-	.string "{TRANSPARENT}み{MUS_RG_RIVAL_EXIT}⋯$"
-
+	.string "もう　これいじょう　たべない　みたい⋯$"
 	.globl gText_SaveFailedCheckingBackup
 gText_SaveFailedCheckingBackup: @ 0x85CBD6B
 	.string "レポートの　かきこみに　しっぱいしました\n"
 	.string "バックアップカートリッジの　けんさをします\n"
-	.string "しばらくおまちください{COLOR}{RED}“1ふんほど　かかります”$"
-
+	.string "しばらくおまちください{COLOR 4}“1ふんほど　かかります”$"
 	.globl gText_BackupMemoryDamaged
 gText_BackupMemoryDamaged: @ 0x85CBDB2
 	.string "バックアップきのうの　こしょう　または　じゅみょうが\n"
@@ -15887,9 +13666,8 @@ gText_BackupMemoryDamaged: @ 0x85CBDB2
 
 	.globl gText_GamePlayCannotBeContinued
 gText_GamePlayCannotBeContinued: @ 0x85CBDF7
-	.string "{COLOR}{RED}“このまま　ぼうけんをつづけることは　できません\n"
+	.string "{COLOR 4}“このまま　ぼうけんをつづけることは　できません\n"
 	.string "タイトルに　もどります”$"
-
 	.globl gText_CheckCompleted
 gText_CheckCompleted: @ 0x85CBE20
 	.string "けんさが　しゅうりょうしました！\n"
@@ -15899,69 +13677,54 @@ gText_CheckCompleted: @ 0x85CBE20
 	.globl gText_SaveCompleteGameCannotContinue
 gText_SaveCompleteGameCannotContinue: @ 0x85CBE50
 	.string "レポートの　かきこみは　しゅうりょうしました\n"
-	.string "{COLOR}{RED}“このまま　ぼうけんをつづけることは　できません\n"
+	.string "{COLOR 4}“このまま　ぼうけんをつづけることは　できません\n"
 	.string "タイトルに　もどります”$"
-
 	.globl gText_SaveCompletePressA
 gText_SaveCompletePressA: @ 0x85CBE90
 	.string "レポートの　かきこみは　しゅうりょうしました\n"
-	.string "{COLOR}{RED}“Aボタンを　おしてください”$"
-
+	.string "{COLOR 4}“Aボタンを　おしてください”$"
 	.globl gUnknown_85CBEBA
 gUnknown_85CBEBA: @ 0x85CBEBA
-	.string "れんら{BLUE}{DYNAMIC_COLOR5}ん$"
-
+	.string "れんらくせん$"
 	.globl gUnknown_85CBEC1
 gUnknown_85CBEC1: @ 0x85CBEC1
-	.string "ひみつ{LIGHT_GREEN}ち$"
-
+	.string "ひみつきち$"
 	.globl gUnknown_85CBEC7
 gUnknown_85CBEC7: @ 0x85CBEC7
 	.string "アジト$"
 
 	.globl gUnknown_85CBECB
 gUnknown_85CBECB: @ 0x85CBECB
-	.string "RTC{SE_WARP_IN}リセット{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}\nA{SE_NOTE_B}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}"
-	.string "{TRANSPARENT}B{SE_NOTE_B}キャンセル$"
-
+	.string "RTCを　リセットします\n"
+	.string "Aで　けってい　Bで　キャンセル$"
 	.globl gUnknown_85CBEE9
 gUnknown_85CBEE9: @ 0x85CBEE9
-	.string "げん{PH_FLEECE_HELD}{SE_A}ゲーム{MUS_RG_GAME_FREAK}{TRANSPARENT}じ{GREEN}ん$"
-
+	.string "げんざいの　ゲームない　じかん$"
 	.globl gUnknown_85CBEF9
 gUnknown_85CBEF9: @ 0x85CBEF9
-	.string "ぜん{MUS_RG_POKE_TOWER}{SE_A}ゲーム{MUS_RG_GAME_FREAK}{TRANSPARENT}じ{GREEN}ん$"
-
+	.string "ぜんかいの　ゲームない　じかん$"
 	.globl gUnknown_85CBF09
 gUnknown_85CBF09: @ 0x85CBF09
-	.string "じ{GREEN}ん{SE_WARP_IN}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "じかんを　さいせってい　してください$"
 	.globl gUnknown_85CBF1C
 gUnknown_85CBF1C: @ 0x85CBF1C
-	.string "じ{GREEN}ん{SE_WARP_IN}{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！\nレポート{SE_WARP_IN}{MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}"
-	.string "ま{SE_EFFECTIVE}{LIGHT_RED}まち{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "じかんを　さいせってい　しました！\n"
+	.string "レポートを　かいています　おまちください$"
 	.globl gUnknown_85CBF43
 gUnknown_85CBF43: @ 0x85CBF43
-	.string "レポート{SE_WARP_IN}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR3}た！$"
-
+	.string "レポートを　かきこみました！$"
 	.globl gUnknown_85CBF52
 gUnknown_85CBF52: @ 0x85CBF52
-	.string "レポート{SE_A}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}みに\n{DYNAMIC_COLOR3}っ{PH_THOUGHT_HELD}{TRANSPARENT}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た⋯$"
-
+	.string "レポートの　かきこみに\n"
+	.string "しっぱい　しました⋯$"
 	.globl gUnknown_85CBF69
 gUnknown_85CBF69: @ 0x85CBF69
-	.string "レポート{SE_SAVE}{MUS_RG_GAME_FREAK}ので\nじ{GREEN}ん{SE_A}{DYNAMIC_COLOR5}っ{MUS_RG_CAUGHT_INTRO}{SE_I}"
-	.string "で{LIGHT_GREEN}ま{DYNAMIC_COLOR5}ん！$"
-
+	.string "レポートが　ないので\n"
+	.string "じかんの　せっていは　できません！$"
 	.globl gUnknown_85CBF86
 gUnknown_85CBF86: @ 0x85CBF86
-	.string "ゲーム{MUS_RG_GAME_FREAK}{TRANSPARENT}じ{GREEN}ん{SE_A}{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}{MUS_RG_PEWTER}"
-	.string "{TRANSPARENT}システムが\nつ{GREEN}{RED}{SE_ICE_BREAK}よ{LIGHT_GRAY}{SE_BOO}なりま{DYNAMIC_COLOR3}た！$"
-
+	.string "ゲームない　じかんの　しゅうせい　システムが\n"
+	.string "つかえる　ように　なりました！$"
 	.globl gUnknown_85CBFAD
 gUnknown_85CBFAD: @ 0x85CBFAD
 	.string "スロット$"
@@ -15972,48 +13735,38 @@ gUnknown_85CBFB2: @ 0x85CBFB2
 
 	.globl gUnknown_85CBFB8
 gUnknown_85CBFB8: @ 0x85CBFB8
-	.string "{MUS_RG_OAK}$"
-
+	.string "いい$"
 	.globl gUnknown_85CBFBB
 gUnknown_85CBFBB: @ 0x85CBFBB
-	.string "{MUS_RG_SURF}{MUS_RG_VICTORY_GYM_LEADER}$"
-
+	.string "おいしい$"
 	.globl gUnknown_85CBFC0
 gUnknown_85CBFC0: @ 0x85CBFC0
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-
+	.string "さいこう$"
 	.globl gUnknown_85CBFC5
 gUnknown_85CBFC5: @ 0x85CBFC5
-	.string "{DARK_GRAY}{MUS_RG_SEVII_CAVE}ち$"
-
+	.string "いまいち$"
 	.globl gUnknown_85CBFCA
 gUnknown_85CBFCA: @ 0x85CBFCA
-	.string "ま{PH_KIT_BLEND}$"
-
+	.string "まずい$"
 	.globl gUnknown_85CBFCE
 gUnknown_85CBFCE: @ 0x85CBFCE
-	.string "{MUS_RG_VICTORY_WILD}{WHITE}{BLUE}$"
-
+	.string "さいあく$"
 	.globl gUnknown_85CBFD3
 gUnknown_85CBFD3: @ 0x85CBFD3
-	.string "{GREEN}ら$"
-
+	.string "から$"
 	.globl gUnknown_85CBFD6
 gUnknown_85CBFD6: @ 0x85CBFD6
-	.string "{DYNAMIC_COLOR3}ぶ$"
-
+	.string "しぶ$"
 	.globl gUnknown_85CBFD9
 gUnknown_85CBFD9: @ 0x85CBFD9
-	.string "{WHITE}ま$"
-
+	.string "あま$"
 	.globl gUnknown_85CBFDC
 gUnknown_85CBFDC: @ 0x85CBFDC
 	.string "にが$"
 
 	.globl gUnknown_85CBFDF
 gUnknown_85CBFDF: @ 0x85CBFDF
-	.string "{DYNAMIC_COLOR4}っぱ$"
-
+	.string "すっぱ$"
 	.globl gUnknown_85CBFE3
 gUnknown_85CBFE3: @ 0x85CBFE3
 	.string "シングル$"
@@ -16024,175 +13777,101 @@ gUnknown_85CBFE8: @ 0x85CBFE8
 
 	.globl gUnknown_85CBFEC
 gUnknown_85CBFEC: @ 0x85CBFEC
-	.string "と{BLUE}{SE_RG_SHOP}{TRANSPARENT}0てん{SE_RG_SHOP}10てん{SE_RG_SHOP}20てん{SE_RG_SHOP}30てん{SE_RG_SHOP}"
-	.string "40てん{SE_RG_SHOP}50てん{SE_RG_SHOP}60てん{SE_RG_SHOP}70てん{SE_RG_SHOP}80てん{SE_RG_SHOP}90てん$"
-	.string "100てん{SE_RG_SHOP}{TRANSPARENT}？$キッスポスタ{SE_M_PAY_DAY}{MUS_DUMMY}16BP$"
-	.string "キッスクッショ{SE_M_BUBBLE3}{TRANSPARENT}32BP$ムチュールドー{SE_M_NIGHTMARE}{TRANSPARENT}32BP$"
-	.string "トゲピードー{SE_M_NIGHTMARE}{MUS_DUMMY}48BP$ニャースドー{SE_M_NIGHTMARE}{MUS_DUMMY}48BP$"
-	.string "ピッピドー{SE_M_NIGHTMARE}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "メタモンドー{SE_M_NIGHTMARE}{MUS_DUMMY}48BP$ヒノアラシドー{SE_M_NIGHTMARE}{TRANSPARENT}80BP$"
-	.string "チコリータドー{SE_M_NIGHTMARE}{TRANSPARENT}80BP$"
-	.string "ワニノコドー{SE_M_NIGHTMARE}{MUS_DUMMY}80BP$ラプラスドー{SE_M_NIGHTMARE}{TRANSPARENT}128BP$"
-	.string "カビゴンドー{SE_M_NIGHTMARE}{TRANSPARENT}128BP$"
-	.string "フシギバナドー{SE_M_NIGHTMARE}256BP$リザードンドー{SE_M_NIGHTMARE}256BP$"
-	.string "カメックスドー{SE_M_NIGHTMARE}256BP$タウリ{SE_M_BUBBLE3}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}1BP$"
-	.string "リゾチウ{SE_EGG_HATCH}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}1BP$"
-	.string "ブロムヘキシ{SE_M_BUBBLE3}{MUS_DUMMY}{TRANSPARENT}1BP$"
-	.string "キトサ{SE_M_BUBBLE3}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}1BP$"
-	.string "インドメタシ{SE_M_BUBBLE3}{MUS_DUMMY}{TRANSPARENT}1BP$"
-	.string "マックスアッ{SE_M_WING_ATTACK}{MUS_DUMMY}{TRANSPARENT}1BP$"
-	.string "たべの{DYNAMIC_COLOR1}{SE_NOT_EFFECTIVE}{MUS_DUMMY}{MUS_DUMMY}48BP$"
-	.string "{DYNAMIC_COLOR3}{MUS_RG_ENCOUNTER_DEOXYS}ハー{SE_M_TAKE_DOWN}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "{DYNAMIC_COLOR5}ん{MUS_RG_PEWTER}のツ{SE_BALL_TRAY_ENTER}{MUS_DUMMY}48BP$"
-	.string "メンタルハー{SE_M_TAKE_DOWN}{MUS_DUMMY}48BP$ひ{GREEN}りの{DYNAMIC_COLOR1}{SE_PIN}{MUS_DUMMY}{TRANSPARENT}"
-	.string "64BP$"
-	.string "{DYNAMIC_COLOR1}だわりハチマ{SE_THUNDER}{TRANSPARENT}64BP$"
-	.string "{LIGHT_RED}{LIGHT_GRAY}じゃの{DYNAMIC_COLOR3}る{SE_NOT_EFFECTIVE}{TRANSPARENT}64BP$"
-	.string "{SE_POKENAV_CALL}{DARK_GRAY}のハチマ{SE_THUNDER}{TRANSPARENT}64BP$"
-	.string "ピントレン{SE_M_CRABHAMMER}{MUS_DUMMY}{TRANSPARENT}64BP$"
-	.string "タマゴ{LIGHT_GRAY}{SE_FAILURE}{MUS_DUMMY}{TRANSPARENT}16BP$"
-	.string "ち{LIGHT_GREEN}ゅ{LIGHT_GRAY}な{SE_BALL_BOUNCE_3}{MUS_DUMMY}24BP$"
-	.string "ゆめ{MUS_RG_FUCHSIA}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}24BP$"
-	.string "メガトンパン{SE_CONTEST_CURTAIN_RISE}{TRANSPARENT}24BP$"
-	.string "メガトンキッ{SE_THUNDER2}{TRANSPARENT}48BP$の{DYNAMIC_COLOR3}{GREEN}{GREEN}{SE_ICE_STAIRS}{MUS_DUMMY}"
-	.string "{TRANSPARENT}48BP$"
-	.string "{DARK_GRAY}わなだ{SE_ICE_CRACK}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "カウンタ{SE_M_PAY_DAY}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "でんじ{SE_I}{MUS_DUMMY}{MUS_DUMMY}48BP$つるぎの{MUS_RG_SEVII_CAVE}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "まる{BLUE}な{SE_ICE_BREAK}{MUS_DUMMY}{TRANSPARENT}16BP$"
-	.string "{DARK_GRAY}び{SE_WALL_HIT}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}24BP$"
-	.string "どろ{GREEN}{SE_EXIT}{MUS_DUMMY}{MUS_DUMMY}24BP$"
-	.string "スピードスタ{SE_M_PAY_DAY}{TRANSPARENT}24BP${DYNAMIC_COLOR1}ご{RED}る{GREEN}{SE_NOTE_D}{MUS_DUMMY}24BP$"
-	.string "{DYNAMIC_COLOR1}ら{RED}{SE_ICE_BREAK}{MUS_DUMMY}{MUS_DUMMY}48BP$"
-	.string "じ{SE_ARENA_TIMEUP2}ん{SE_BALL_THROW}{MUS_DUMMY}{TRANSPARENT}48BP$"
-	.string "{MUS_RG_ENCOUNTER_GYM_LEADER}と{LIGHT_GRAY}パン{SE_CONTEST_CURTAIN_RISE}{TRANSPARENT}48BP$"
-	.string "{GREEN}みなりパン{SE_CONTEST_CURTAIN_RISE}{TRANSPARENT}48BP$"
-	.string "ほの{LIGHT_RED}のパン{SE_CONTEST_CURTAIN_RISE}{TRANSPARENT}48BP$"
-
+	.string "とく$　　0てん$　10てん$　20てん$　30てん$　40てん$　50てん$　60てん$　70てん$　80てん$　90てん$100てん$　　？$キッスポスター　　　16BP$キッスクッション　　32BP$ムチュールドール　　32BP$トゲピードール　　　48BP$ニャースドール　　　48BP$ピッピドール　　　　48BP$メタモンドール　　　48BP$ヒノアラシドール　　80BP$チコリータドール　　80BP$ワニノコドール　　　80BP$ラプラスドール　　128BP$カビゴンドール　　128BP$フシギバナドール　256BP$リザードンドール　256BP$カメックスドール　256BP$タウリン　　　　　　　1BP$リゾチウム　　　　　　1BP$ブロムヘキシン　　　　1BP$キトサン　　　　　　　1BP$インドメタシン　　　　1BP$マックスアップ　　　　1BP$たべのこし　　　　　48BP$しろいハーブ　　　　48BP$せんせいのツメ　　　48BP$メンタルハーブ　　　48BP$ひかりのこな　　　　64BP$こだわりハチマキ　　64BP$おうじゃのしるし　　64BP$きあいのハチマキ　　64BP$ピントレンズ　　　　64BP$タマゴうみ　　　　16BP$ちきゅうなげ　　　24BP$ゆめくい　　　　　24BP$メガトンパンチ　　24BP$メガトンキック　　48BP$のしかかり　　　　48BP$いわなだれ　　　　48BP$カウンター　　　　48BP$でんじは　　　　　48BP$つるぎのまい　　　48BP$まるくなる　　　　16BP$いびき　　　　　　24BP$どろかけ　　　　　24BP$スピードスター　　24BP$こごえるかぜ　　　24BP$こらえる　　　　　48BP$じこあんじ　　　　48BP$れいとうパンチ　　48BP$かみなりパンチ　　48BP$ほのおのパンチ　　48BP$"
 	.globl gUnknown_85CC30F
 gUnknown_85CC30F: @ 0x85CC30F
-	.string "{B_COPY_VAR_1}は\nち{GREEN}らつ{LIGHT_GREEN}た\p$"
-
+	.string "{B_COPY_VAR_1}は\n"
+	.string "ちからつきた\p$"
 	.globl gUnknown_85CC31B
 gUnknown_85CC31B: @ 0x85CC31B
 	.string "コウジ$"
 
 	.globl gUnknown_85CC31F
 gUnknown_85CC31F: @ 0x85CC31F
-	.string "なま{RED}$"
-
+	.string "なまえ$"
 	.globl gUnknown_85CC323
 gUnknown_85CC323: @ 0x85CC323
 	.string "IDNo,$"
 
 	.globl gUnknown_85CC329
 gUnknown_85CC329: @ 0x85CC329
-	.string "{LIGHT_RED}{DYNAMIC_COLOR1}づ{MUS_RG_POKE_TOWER}$"
-
+	.string "おこづかい$"
 	.globl gUnknown_85CC32F
 gUnknown_85CC32F: @ 0x85CC32F
 	.string "¥$"
 
 	.globl gUnknown_85CC331
 gUnknown_85CC331: @ 0x85CC331
-	.string "ポケモンず{GREEN}ん$"
-
+	.string "ポケモンずかん$"
 	.globl gUnknown_85CC339
 gUnknown_85CC339: @ 0x85CC339
-	.string "ひ{LIGHT_GREEN}$"
-
+	.string "ひき$"
 	.globl gUnknown_85CC33C
 gUnknown_85CC33C: @ 0x85CC33C
 	.string ":$てん$"
 
 	.globl gUnknown_85CC341
 gUnknown_85CC341: @ 0x85CC341
-	.string "プレイじ{GREEN}ん$ゲームポイント$"
-
+	.string "プレイじかん$ゲームポイント$"
 	.globl gUnknown_85CC350
 gUnknown_85CC350: @ 0x85CC350
 	.string "のトレーナーカード$"
 
 	.globl gUnknown_85CC35A
 gUnknown_85CC35A: @ 0x85CC35A
-	.string "はじめてのでんど{MUS_RG_POKE_CENTER}{SE_ICE_STAIRS}$"
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん$"
-	.string "ケーブル{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん$"
-
+	.string "はじめてのでんどういり　$つうしんたいせん$ケーブルたいせん$"
 	.globl gUnknown_85CC379
 gUnknown_85CC379: @ 0x85CC379
-	.string "{GREEN}{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}ま{LIGHT_BLUE}$"
-
+	.string "かち　　　　　まけ$"
 	.globl gUnknown_85CC383
 gUnknown_85CC383: @ 0x85CC383
-	.string "ポケモンつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん$"
-
+	.string "ポケモンつうしんこうかん$"
 	.globl gUnknown_85CC390
 gUnknown_85CC390: @ 0x85CC390
-	.string "ユニオン{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}んと{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん$"
-
+	.string "ユニオンたいせんとこうかん$"
 	.globl gUnknown_85CC39E
 gUnknown_85CC39E: @ 0x85CC39E
-	.string "{LIGHT_GREEN}のみクラッシュ$"
-
+	.string "きのみクラッシュ$"
 	.globl gUnknown_85CC3A7
 gUnknown_85CC3A7: @ 0x85CC3A7
-	.string "{MUS_RG_OAK_LAB}て{SE_SAVE}カード{SE_WARP_IN}み{LIGHT_RED}わるのを\nまっ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}$"
-
+	.string "あいてが　カードを　みおわるのを\n"
+	.string "まっています$"
 	.globl gUnknown_85CC3BF
 gUnknown_85CC3BF: @ 0x85CC3BF
-	.string "ともだち{SE_BANG}つ{BLUE}っ{SE_FAINT}ポロック$"
-
+	.string "ともだちと　つくった　ポロック$"
 	.globl gUnknown_85CC3CF
 gUnknown_85CC3CF: @ 0x85CC3CF
-	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{SHADOW}{LIGHT_GRAY}{DYNAMIC_COLOR1}$"
-
+	.string "{B_COPY_VAR_1}{COLOR 2}{SHADOW 3}こ$"
 	.globl gUnknown_85CC3D9
 gUnknown_85CC3D9: @ 0x85CC3D9
-	.string "ともだちとコンテス{SE_CONTEST_ICON_CLEAR}ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}$"
-
+	.string "ともだちとコンテスト　ゆうしょう$"
 	.globl gUnknown_85CC3EA
 gUnknown_85CC3EA: @ 0x85CC3EA
-	.string "{GREEN}ちとっ{SE_FAINT}バトルポイント$"
-
+	.string "かちとった　バトルポイント$"
 	.globl gUnknown_85CC3F8
 gUnknown_85CC3F8: @ 0x85CC3F8
-	.string "{B_COPY_VAR_1}{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}{SHADOW}{LIGHT_GRAY}BP$"
-
+	.string "{B_COPY_VAR_1}{COLOR 2}{SHADOW 3}BP$"
 	.globl gUnknown_85CC403
 gUnknown_85CC403: @ 0x85CC403
-	.string "バトルタワ{SE_M_PAY_DAY}{TRANSPARENT}{GREEN}{SE_FLEE}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}{GREEN}"
-	.string "ちぬ{LIGHT_GREEN}$"
-
+	.string "バトルタワー　　かち　　　　　　かちぬき$"
 	.globl gUnknown_85CC418
 gUnknown_85CC418: @ 0x85CC418
-	.string "{B_COPY_VAR_1}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{B_COPY_VAR_2}$"
-	.string "バトルタワー$バトルドーム$バトルパレス$バトルファクトリー$バトルアリーナ$バトルチューブ$"
-	.string "バトルピラミッド{SE_RG_SHOP}{B_COPY_VAR_1}{TRANSPARENT}シングル$"
-	.string "{B_COPY_VAR_1}{TRANSPARENT}ダブル{SE_RG_SHOP}{B_COPY_VAR_1}{TRANSPARENT}マルチ{SE_RG_SHOP}{B_COPY_VAR_1}"
-	.string "{TRANSPARENT}つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん$"
-	.string "{B_COPY_VAR_1}$"
-
+	.string "{B_COPY_VAR_1}　　　　　　{B_COPY_VAR_2}$バトルタワー$バトルドーム$バトルパレス$バトルファクトリー$バトルアリーナ$バトルチューブ$バトルピラミッド$　{B_COPY_VAR_1}　シングル${B_COPY_VAR_1}　ダブル$　{B_COPY_VAR_1}　マルチ$　{B_COPY_VAR_1}　つうしん${B_COPY_VAR_1}$"
 	.globl gUnknown_85CC47F
 gUnknown_85CC47F: @ 0x85CC47F
-	.string "もた{DYNAMIC_COLOR5}るべ{LIGHT_GREEN}$"
-
+	.string "もたせるべき$"
 	.globl gUnknown_85CC486
 gUnknown_85CC486: @ 0x85CC486
-	.string "もた{DYNAMIC_COLOR5}{MUS_RG_GAME_FREAK}$"
-
+	.string "もたせない$"
 	.globl gUnknown_85CC48C
 gUnknown_85CC48C: @ 0x85CC48C
-	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_GRAY}{SHADOW}{DARK_GRAY}$"
-
+	.string "{COLOR 3}{SHADOW 2}$"
 	.globl gUnknown_85CC493
 gUnknown_85CC493: @ 0x85CC493
-	.string "{MUS_RG_VS_GYM_LEADER}{BLUE}$"
-
+	.string "{COLOR 8}$"
 	.globl gUnknown_85CC497
 gUnknown_85CC497: @ 0x85CC497
-	.string "{HIGHLIGHT}{TRANSPARENT}{MUS_RG_VS_GYM_LEADER}$"
-
+	.string "{HIGHLIGHT 0}{COLOR 255}"
 	.globl gUnknown_85CC49D
 gUnknown_85CC49D: @ 0x85CC49D
 	.string "C,$"
@@ -16203,119 +13882,69 @@ gUnknown_85CC4A0: @ 0x85CC4A0
 
 	.globl gUnknown_85CC4A3
 gUnknown_85CC4A3: @ 0x85CC4A3
-	.string "{LIGHT_BLUE}っ{SE_WIN_OPEN}はっぴょ{LIGHT_GRAY}！$"
-
+	.string "けっか　はっぴょう！$"
 	.globl gUnknown_85CC4AE
 gUnknown_85CC4AE: @ 0x85CC4AE
-	.string "1じ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR2}{SE_A}{LIGHT_BLUE}っ{GREEN}！$"
-
+	.string "1じしんさの　けっか！$"
 	.globl gUnknown_85CC4BA
 gUnknown_85CC4BA: @ 0x85CC4BA
-	.string "2じ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR2}{SE_A}{LIGHT_BLUE}っ{GREEN}！$"
-
+	.string "2じしんさの　けっか！$"
 	.globl gUnknown_85CC4C6
 gUnknown_85CC4C6: @ 0x85CC4C6
-	.string "ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{SE_M_DRAGON_RAGE}{B_COPY_VAR_1}{SE_A}{B_COPY_VAR_2}！$"
-
+	.string "ゆうしょう！　{B_COPY_VAR_1}の　{B_COPY_VAR_2}！$"
 	.globl gUnknown_85CC4D5
 gUnknown_85CC4D5: @ 0x85CC4D5
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}$"
-
+	.string "つうしんたいきちゅう$"
 	.globl gUnknown_85CC4E0
 gUnknown_85CC4E0: @ 0x85CC4E0
-	.string "{MUS_RG_VS_GYM_LEADER}{DARK_GRAY}$"
-
+	.string "{COLOR 2}$"
 	.globl gUnknown_85CC4E4
 gUnknown_85CC4E4: @ 0x85CC4E4
-	.string "{COLOR_HIGHLIGHT_SHADOW}{DYNAMIC_COLOR6}{WHITE}{DYNAMIC_COLOR5}$"
-
+	.string "{COLOR_HIGHLIGHT_SHADOW 15 1 14}$"
 	.globl gUnknown_85CC4EA
 gUnknown_85CC4EA: @ 0x85CC4EA
-	.string "{HIGHLIGHT}{DARK_GRAY}$"
-
+	.string "{HIGHLIGHT 2}$"
 	.globl gUnknown_85CC4EE
 gUnknown_85CC4EE: @ 0x85CC4EE
-	.string "{TRANSPARENT}$"
-
+	.string "　$"
 	.globl gUnknown_85CC4F0
 gUnknown_85CC4F0: @ 0x85CC4F0
-	.string "{MUS_RG_VS_GYM_LEADER}{DYNAMIC_COLOR2}♂$"
-
+	.string "{COLOR 11}♂$"
 	.globl gUnknown_85CC4F5
 gUnknown_85CC4F5: @ 0x85CC4F5
-	.string "{MUS_RG_VS_GYM_LEADER}{DYNAMIC_COLOR1}♀$"
-
+	.string "{COLOR 10}♀$"
 	.globl gUnknown_85CC4FA
 gUnknown_85CC4FA: @ 0x85CC4FA
-	.string "{MUS_RG_VS_GYM_LEADER}{DYNAMIC_COLOR2}{MUS_RG_VS_CHAMPION}{DARK_GRAY}{LIGHT_GRAY}{RED}{LIGHT_RED}$"
-	.string "{GREEN}{LIGHT_GREEN}{BLUE}{LIGHT_BLUE}{DYNAMIC_COLOR1}$"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$"
-	.string "たちつてと$なにぬねの$はひふへほ$まみむめも$やゆよ！？$らりるれろ$わをん{SE_M_PAY_DAY}$"
-	.string "アイ{PKMN}オ$カキクケコ$サシスセソ$タチツテト$ナニヌネノ$ハヒフヘホ$"
-	.string "マミムメモ$ヤユヨ！？$ラリルレロ$ワヲン{SE_M_PAY_DAY}$ABCDE$"
-	.string "FGHIJ$KLMNO$PQRST$UVWXY$Z·{SE_M_DIZZY_PUNCH}{TRANSPARENT}$"
-	.string "01234$56789${EMOJI_MISCHIEVOUS}{EMOJI_HAPPY}{EMOJI_ANGRY}{EMOJI_SURPRISED}{EMOJI_BIGANGER}$"
-	.string "{EMOJI_BIGSMILE}{EMOJI_EVIL}{EMOJI_NEUTRAL}{EMOJI_TIRED}{EMOJI_SHOCKED}$"
-	.string "{EMOJI_LEAF}{EMOJI_FIRE}{EMOJI_WATER}{EMOJI_BOLT}{EMOJI_BALL}$"
-	.string "♂♀{EMOJI_LEFT_PAREN}{EMOJI_RIGHT_PAREN}{EMOJI_TILDE}$"
-	.string "{EMOJI_LEFT_EYE}{EMOJI_RIGHT_EYE}{EMOJI_SMALLWHEEL}{EMOJI_SPHERE}{EMOJI_IRRITATED}$"
-	.string "{EMOJI_SPIRAL}{EMOJI_BIGWHEEL}{EMOJI_TONGUE}{EMOJI_ACUTE}{EMOJI_GRAVE}$"
-	.string "{EMOJI_RIGHT_FIST}{EMOJI_LEFT_FIST}{EMOJI_TRIANGLE_OUTLINE}{EMOJI_UNION}{EMOJI_GREATER_THAN}$"
-	.string "{EMOJI_CIRCLE}{EMOJI_TRIANGLE}{EMOJI_SQUARE}{EMOJI_HEART}{EMOJI_MOON}$"
-	.string "{EMOJI_NOTE}{EMOJI_PLUS}{EMOJI_MINUS}{EMOJI_EQUALS}{EMOJI_PIPE}$"
-	.string "{EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}{SE_M_HEAT_WAVE}$"
-	.string "ひらがな$カタカナ$ABC${LIGHT_GREEN}ご{LIGHT_GRAY}$"
-	.string "と{LIGHT_GRAY}ろ{BLUE}$とじる$チャット{SE_WARP_IN}やめま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ど{DYNAMIC_COLOR1}{SE_BOO}と{LIGHT_GRAY}ろ{BLUE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}と{LIGHT_GRAY}ろ{BLUE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}"
-	.string "？$"
-	.string "{DYNAMIC_COLOR1}とば{SE_WARP_IN}{DARK_GRAY}れ{SE_SHIP}{BLUE}だ{MUS_RG_VICTORY_WILD}！$"
-
+	.string "{COLOR 11}${MUS_RG_OAK_LAB}うえお$かきくけ{DYNAMIC_COLOR1}${DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$たちつてと$なにぬねの$はひふへほ$まみむめも$やゆよ！？$らりるれろ$わをん{SE_M_PAY_DAY}$アイ{PKMN}オ$カキクケコ$サシスセソ$タチツテト$ナニヌネノ$ハヒフヘホ$マミムメモ$ヤユヨ！？$ラリルレロ$ワヲン{SE_M_PAY_DAY}$ABCDE$FGHIJ$KLMNO$PQRST$UVWXY$Z·{SE_M_DIZZY_PUNCH}{TRANSPARENT}$01234$56789${EMOJI_MISCHIEVOUS}{EMOJI_HAPPY}{EMOJI_ANGRY}{EMOJI_SURPRISED}{EMOJI_BIGANGER}${EMOJI_BIGSMILE}{EMOJI_EVIL}{EMOJI_NEUTRAL}{EMOJI_TIRED}{EMOJI_SHOCKED}${EMOJI_LEAF}{EMOJI_FIRE}{EMOJI_WATER}{EMOJI_BOLT}{EMOJI_BALL}$♂♀{EMOJI_LEFT_PAREN}{EMOJI_RIGHT_PAREN}{EMOJI_TILDE}${EMOJI_LEFT_EYE}{EMOJI_RIGHT_EYE}{EMOJI_SMALLWHEEL}{EMOJI_SPHERE}{EMOJI_IRRITATED}${EMOJI_SPIRAL}{EMOJI_BIGWHEEL}{EMOJI_TONGUE}{EMOJI_ACUTE}{EMOJI_GRAVE}${EMOJI_RIGHT_FIST}{EMOJI_LEFT_FIST}{EMOJI_TRIANGLE_OUTLINE}{EMOJI_UNION}{EMOJI_GREATER_THAN}${EMOJI_CIRCLE}{EMOJI_TRIANGLE}{EMOJI_SQUARE}{EMOJI_HEART}{EMOJI_MOON}${EMOJI_NOTE}{EMOJI_PLUS}{EMOJI_MINUS}{EMOJI_EQUALS}{EMOJI_PIPE}${EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}{SE_M_HEAT_WAVE}$ひらがな$カタカナ$ABC$きごう$とうろく$とじる$チャット{SE_WARP_IN}やめま{DYNAMIC_COLOR4}か？$ど{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}とば{SE_WARP_IN}いれ{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}！$"
 	.globl gUnknown_85CC663
 gUnknown_85CC663: @ 0x85CC663
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}"
-	.string "た！$"
-
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！$"
 	.globl gUnknown_85CC672
 gUnknown_85CC672: @ 0x85CC672
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た$"
-	.string "{SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひ{LIGHT_GREEN}め:$"
-	.string "{SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひ{LIGHT_GREEN}め{SE_I}{DARK_GRAY}ま{DYNAMIC_COLOR5}ん$"
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}ゃ{SE_SAVE}{DARK_GRAY}な{BLUE}なったので\n{DYNAMIC_COLOR3}"
-	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
-	.string "リーダー{SE_A}{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}んが\nぬ{LIGHT_BLUE}たの{SE_NOTE_B}{MUS_RG_POKE_TOWER}"
-	.string "{DYNAMIC_COLOR2}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$"
-	.string "と{LIGHT_GRAY}ろ{BLUE}{SE_SAVE}{GREEN}わりま{DYNAMIC_COLOR3}た\nポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ま{RED}{SE_BOO}{GREEN}{GREEN}れ{SE_FAINT}レポートに\n{LIGHT_GRAY}{RED}{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
-	.string "ポケモンレポート{SE_BOO}{GREEN}{LIGHT_GREEN}{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{DYNAMIC_COLOR4}"
-	.string "\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}は\nレポート{SE_BOO}{DYNAMIC_COLOR3}っ{GREEN}{SE_ICE_STAIRS}{GREEN}"
-	.string "{LIGHT_GREEN}の{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}た！$"
-	.string "リーダー{SE_SAVE}やめる{SE_BANG}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん\nになりま{DYNAMIC_COLOR4}{SE_SAVE}"
-	.string "よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}ぬけま{DYNAMIC_COLOR3}た${SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひきめ:${SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひきめ{SE_I}いま{DYNAMIC_COLOR5}ん${DYNAMIC_COLOR2}んか{DYNAMIC_COLOR3}ゃ{SE_SAVE}いなくなったので\n"
+	.string "{DYNAMIC_COLOR3}ゅうりょう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$リーダー{SE_A}{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}んが\n"
+	.string "ぬけたの{SE_NOTE_B}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$とうろく{SE_SAVE}かわりま{DYNAMIC_COLOR3}た\n"
+	.string "ポケモンレポート{SE_BOO}かき{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}か？$まえ{SE_BOO}かかれ{SE_FAINT}レポートに\n"
+	.string "うえか{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}か？$ポケモンレポート{SE_BOO}かき{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{DYNAMIC_COLOR4}\n"
+	.string "でんげん{SE_WARP_IN}きら{MUS_RG_GAME_FREAK}{SE_NOTE_B}くだ{MUS_RG_VICTORY_WILD}${SE_M_HYPER_BEAM2}{TRANSPARENT}は\n"
+	.string "レポート{SE_BOO}{DYNAMIC_COLOR3}っか{SE_ICE_STAIRS}かきの{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}た！$リーダー{SE_SAVE}やめる{SE_BANG}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん\n"
+	.string "になりま{DYNAMIC_COLOR4}{SE_SAVE}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}か？$"
 	.globl gUnknown_85CC769
 gUnknown_85CC769: @ 0x85CC769
-	.string "{DYNAMIC_COLOR1}んにちは$"
-
+	.string "こんにちは$"
 	.globl gUnknown_85CC76F
 gUnknown_85CC76F: @ 0x85CC76F
 	.string "ポケモン$"
 
 	.globl gUnknown_85CC774
 gUnknown_85CC774: @ 0x85CC774
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん$"
-
+	.string "こうかん$"
 	.globl gUnknown_85CC779
 gUnknown_85CC779: @ 0x85CC779
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん$"
-
+	.string "たいせん$"
 	.globl gUnknown_85CC77E
 gUnknown_85CC77E: @ 0x85CC77E
-	.string "{DYNAMIC_COLOR3}よ{LIGHT_GRAY}！$"
-
+	.string "しよう！$"
 	.globl gUnknown_85CC783
 gUnknown_85CC783: @ 0x85CC783
 	.string "OK！$"
@@ -16326,33 +13955,18 @@ gUnknown_85CC787: @ 0x85CC787
 
 	.globl gUnknown_85CC78C
 gUnknown_85CC78C: @ 0x85CC78C
-	.string "わー{DARK_GRAY}{EMOJI_BIGSMILE}$"
-
+	.string "わーい{EMOJI_BIGSMILE}$"
 	.globl gUnknown_85CC792
 gUnknown_85CC792: @ 0x85CC792
 	.string "サンキュー$"
 
 	.globl gUnknown_85CC798
 gUnknown_85CC798: @ 0x85CC798
-	.string "バイバイ！{MUS_RG_VS_CHAMPION}{DARK_GRAY}て{SE_A}じゃ{BLUE}てん{SE_WARP_IN}つ{BLUE}！$"
-	.string "{MUS_RG_VICTORY_WILD}{LIGHT_GREEN}ょ{LIGHT_GRAY}{SE_A}はがねポケモン$"
-	.string "めずら{MUS_RG_VICTORY_GYM_LEADER}{MUS_RG_PALLET}{DYNAMIC_COLOR3}{SE_A}ためなら$"
-	.string "た{LIGHT_GREEN}だっ{SE_SHIP}のぼっ{SE_SHIP}{DARK_GRAY}{BLUE}よ$"
-	.string "{LIGHT_BLUE}っ{LIGHT_GREEN}ょ{SE_DOOR}ボク{SE_SAVE}{DARK_GRAY}ちばん$"
-	.string "つよ{BLUE}{SE_SHIP}{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}んだよね$"
-	.string "ポケモン{SE_A}ち{DYNAMIC_COLOR3}{LIGHT_GREEN}{SE_NOTE_B}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ$"
-	.string "{DARK_GRAY}ろん{SE_PIN}ポケモン{SE_WARP_IN}つ{GREEN}{LIGHT_GRAY}ぜ$"
-	.string "と{LIGHT_GRAY}{DYNAMIC_COLOR2}んよ{SE_ICE_STAIRS}{DYNAMIC_COLOR4}{PH_FLEECE_BLEND}{TRANSPARENT}ポケモン$"
-	.string "は{GREEN}{DYNAMIC_COLOR5}{SE_BOO}なっ{SE_SHIP}み{DYNAMIC_COLOR5}る{DYNAMIC_COLOR2}！$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_I}と{MUS_RG_FUCHSIA}じゃ{MUS_RG_GAME_FREAK}{GREEN}も$"
-	.string "どん{SE_PIN}ポケモンで{SE_SWITCH}つ{GREEN}{LIGHT_GRAY}わ$"
-	.string "ポケモ{SE_M_BUBBLE3}つれ{SE_SHIP}{LIGHT_RED}と{LIGHT_GRAY}{DYNAMIC_COLOR2}んの$"
-	.string "{LIGHT_BLUE}ん{LIGHT_GREEN}ゅ{LIGHT_GRAY}{SE_WARP_IN}{LIGHT_RED}てつ{PH_PRICE_BLEND}！$"
-
+	.string "バイバイ！$あいての　じゃくてんを　つく！$さいきょうの　はがねポケモン$めずらしい　いしの　ためなら$たきだって　のぼって　いくよ$けっきょく　ボクが　いちばん$つよくて　すごいんだよね$ポケモンの　ちしきで　しょうぶ$いろんな　ポケモンを　つかうぜ$とうさんより　すごい　ポケモン$はかせに　なって　みせるさ！$しょうぶは　とくいじゃないかも$どんな　ポケモンでも　つかうわ$ポケモン　つれて　おとうさんの$けんきゅうを　おてつだい！$"
 	.globl gUnknown_85CC874
 gUnknown_85CC874: @ 0x85CC874
-	.string "タマゴ{SE_SAVE}{GREEN}{RED}って\n{B_COPY_VAR_1}{SE_SAVE}{LIGHT_GRAY}まれた！$"
-
+	.string "タマゴが　かえって\n"
+	.string "{B_COPY_VAR_1}が　うまれた！$"
 	.globl gUnknown_85CC888
 gUnknown_85CC888: @ 0x85CC888
 	.incbin "baserom_jp.gba", 0x5cc888, 0x140
@@ -16367,16 +13981,14 @@ gUnknown_85CC9D4: @ 0x85CC9D4
 
 	.globl gUnknown_85CC9F0
 gUnknown_85CC9F0: @ 0x85CC9F0
-	.string "じ{GREEN}ん$"
-
+	.string "じかん$"
 	.globl gUnknown_85CC9F4
 gUnknown_85CC9F4: @ 0x85CC9F4
 	.incbin "baserom_jp.gba", 0x5cc9f4, 0x8
 
 	.globl gUnknown_85CC9FC
 gUnknown_85CC9FC: @ 0x85CC9FC
-	.string "サラサラぐ{MUS_RG_OAK_LAB}$"
-
+	.string "サラサラぐあい$"
 	.globl gUnknown_85CCA04
 gUnknown_85CCA04: @ 0x85CCA04
 	.incbin "baserom_jp.gba", 0x5cca04, 0x4
@@ -16391,8 +14003,7 @@ gUnknown_85CCA0C: @ 0x85CCA0C
 
 	.globl gUnknown_85CCA14
 gUnknown_85CCA14: @ 0x85CCA14
-	.string "びょ{LIGHT_GRAY}$"
-
+	.string "びょう$"
 	.globl gUnknown_85CCA18
 gUnknown_85CCA18: @ 0x85CCA18
 	.incbin "baserom_jp.gba", 0x5cca18, 0x8
@@ -16411,11 +14022,7 @@ gText_PressesRankings: @ 0x85CCA30
 
 	.globl gText_CrushingResults
 gText_CrushingResults: @ 0x85CCA40
-	.string "つぶ{DYNAMIC_COLOR3}{SE_FAINT}{LIGHT_BLUE}っ{GREEN}{SE_RG_SHOP}{MUS_DUMMY}{MUS_RG_CAUGHT_INTRO}"
-	.string "{MUS_RG_NEW_GAME_INTRO}{SE_BIKE_BELL}ランキング$"
-	.string "た{DYNAMIC_COLOR4}{SE_ARENA_TIMEUP1}{SE_PC_LOGIN}ランキング$"
-	.string "{LIGHT_RED}{DYNAMIC_COLOR4}つよ{SE_BIKE_BELL}ランキング$"
-
+	.string "つぶした　けっか$　　　ていねいさ　ランキング$たすけあい　ランキング$おすつよさ　ランキング$"
 	.globl gUnknown_85CCA70
 gUnknown_85CCA70: @ 0x85CCA70
 	.incbin "baserom_jp.gba", 0x5cca70, 0xc
@@ -16426,183 +14033,124 @@ gUnknown_85CCA7C: @ 0x85CCA7C
 
 	.globl gUnknown_85CCA8C
 gUnknown_85CCA8C: @ 0x85CCA8C
-	.string "{B_COPY_VAR_1}にんよ{LIGHT_GRAY}$"
-
+	.string "{B_COPY_VAR_1}にんよう$"
 	.globl gUnknown_85CCA93
 gUnknown_85CCA93: @ 0x85CCA93
-	.string "て{MUS_RG_CAUGHT}れ{SE_FAINT}シンボル$"
-
+	.string "てにいれた　シンボル$"
 	.globl gUnknown_85CCA9E
 gUnknown_85CCA9E: @ 0x85CCA9E
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_A}{LIGHT_GREEN}ろ{BLUE}$"
-
+	.string "たいせんの　きろく$"
 	.globl gUnknown_85CCAA8
 gUnknown_85CCAA8: @ 0x85CCAA8
-	.string "バトルポイント$とじる$$バトルフロンティア{SE_A}マップ{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
-	.string "トレーナーカード{SE_WARP_IN}みま{DYNAMIC_COLOR4}${LIGHT_GREEN}ろ{BLUE}{DYNAMIC_COLOR3}{SE_FAINT}"
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{SE_WARP_IN}みま{DYNAMIC_COLOR4}$"
-	.string "フロンティアパス{SE_WARP_IN}とじま{DYNAMIC_COLOR4}$"
-	.string "{DARK_GRAY}{SE_SUCCESS}たまっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}バトルポイントで{DYNAMIC_COLOR4}$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}シンボル{SE_WARP_IN}{WHITE}つめま{DYNAMIC_COLOR4}$"
-	.string "バトルタワ{SE_M_PAY_DAY}アビリティシンボル$バトルドー{SE_EGG_HATCH}タクティクスシンボル$"
-	.string "バトルパレ{SE_ROULETTE_BALL2}スピリットシンボル$バトルアリー{SE_CONTEST_MONS_TURN}ガッツシンボル$"
-	.string "バトルファクトリ{SE_M_PAY_DAY}ノウレッジシンボル$バトルチュー{SE_M_TAKE_DOWN}ラックシンボル$"
-	.string "バトルピラミッ{SE_M_SACRED_FIRE}ブレイブシンボル$げん{PH_FLEECE_HELD}{TRANSPARENT}{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}"
-	.string "ん{LIGHT_GREEN}ろ{BLUE}{SE_I}{WHITE}りま{DYNAMIC_COLOR5}ん$"
-	.string "バトルタワー$バトルドーム$バトルパレス$バトルアリーナ$バトルファクトリー$バトルチューブ$"
-	.string "バトルピラミッド${GREEN}ちぬ{SE_WALL_HIT}ひた{DYNAMIC_COLOR4}{SE_LAVARIDGE_FALL_WARP}{LIGHT_GRAY}{RED}"
-	.string "{SE_WARP_IN}めざ{DYNAMIC_COLOR4}。\n{MUS_RG_VICTORY_WILD}の{LIGHT_GRAY}{SE_WARP_IN}ため{DYNAMIC_COLOR2}"
-	.string "れる。$"
-	.string "トーナメント{SE_WARP_IN}{GREEN}ちぬ{BLUE}。\n{DYNAMIC_COLOR5}んじゅつ{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ぶ{SE_WARP_IN}みまもる。\nポケモンと{SE_A}{LIGHT_GREEN}ずな{SE_WARP_IN}"
-	.string "ため{DYNAMIC_COLOR2}れる。$"
-	.string "つ{MUS_RG_POKE_FLUTE}{TRANSPARENT}ポケモン{SE_A}チーム{SE_NOTE_B}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}"
-	.string "り{DYNAMIC_COLOR4}る。\nと{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
-	.string "レンタルポケモン{SE_NOTE_B}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}り{DYNAMIC_COLOR4}る。\nち{DYNAMIC_COLOR3}{LIGHT_GREEN}"
-	.string "{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
-	.string "3つ{SE_A}みち{GREEN}{SE_LAVARIDGE_FALL_WARP}1つ{RED}ら{SE_BRIDGE_WALK}{GREEN}ち{DYNAMIC_COLOR4}"
-	.string "{DYNAMIC_COLOR4}む。\n{LIGHT_GRAY}ん{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
-	.string "ちょ{LIGHT_GRAY}じょ{LIGHT_GRAY}{SE_WARP_IN}めざ{SE_NOT_EFFECTIVE}ぼ{LIGHT_GRAY}{LIGHT_BLUE}"
-	.string "ん{DYNAMIC_COLOR4}る。\nゆ{LIGHT_GRAY}{LIGHT_GREEN}{SE_WARP_IN}ため{DYNAMIC_COLOR2}れる。$"
-
+	.string "バトルポイント$とじる$$バトルフロンティアの　マップを　みます$トレーナーカードを　みます$きろくした　たいせんを　みます$フロンティアパスを　とじます$いま　たまっている　バトルポイントです$ここに　シンボルを　あつめます$バトルタワー　アビリティシンボル$バトルドーム　タクティクスシンボル$バトルパレス　スピリットシンボル$バトルアリーナ　ガッツシンボル$バトルファクトリー　ノウレッジシンボル$バトルチューブ　ラックシンボル$バトルピラミッド　ブレイブシンボル$げんざい　たいせんきろくは　ありません$バトルタワー$バトルドーム$バトルパレス$バトルアリーナ$バトルファクトリー$バトルチューブ$バトルピラミッド$かちぬき　ひたすら　うえを　めざす。\n"
+	.string "さいのうを　ためされる。$トーナメントを　かちぬく。\n"
+	.string "せんじゅつを　ためされる。$しょうぶを　みまもる。\n"
+	.string "ポケモンとの　きずなを　ためされる。$つよい　ポケモンの　チームで　しょうりする。\n"
+	.string "とうしを　ためされる。$レンタルポケモンで　しょうりする。\n"
+	.string "ちしきを　ためされる。$3つの　みちから　1つえらび　かちすすむ。\n"
+	.string "うんを　ためされる。$ちょうじょうを　めざし　ぼうけんする。\n"
+	.string "ゆうきを　ためされる。$"
 	.globl gUnknown_85CCCBD
 gUnknown_85CCCBD: @ 0x85CCCBD
-	.string "{DYNAMIC_COLOR3}ゅじん{DYNAMIC_COLOR1}{SE_PC_OFF}{B_COPY_VAR_1}$"
-
+	.string "しゅじんこう　{B_COPY_VAR_1}$"
 	.globl gUnknown_85CCCC7
 gUnknown_85CCCC7: @ 0x85CCCC7
-	.string "プレイじ{GREEN}{SE_WARP_OUT}{B_COPY_VAR_1}:{B_COPY_VAR_2}$"
-
+	.string "プレイじかん　{B_COPY_VAR_1}:{B_COPY_VAR_2}$"
 	.globl gUnknown_85CCCD4
 gUnknown_85CCCD4: @ 0x85CCCD4
-	.string "ポケモンず{GREEN}{SE_WARP_OUT}{B_COPY_VAR_1}ひ{LIGHT_GREEN}$"
-
+	.string "ポケモンずかん　{B_COPY_VAR_1}ひき$"
 	.globl gUnknown_85CCCE1
 gUnknown_85CCCE1: @ 0x85CCCE1
-	.string "もっ{MUS_RG_CAUGHT_INTRO}るバッ{SE_M_MEGA_KICK2}{B_COPY_VAR_1}{DYNAMIC_COLOR1}$"
-
+	.string "もっているバッジ　{B_COPY_VAR_1}こ$"
 	.globl gUnknown_85CCCEE
 gUnknown_85CCCEE: @ 0x85CCCEE
-	.string "{LIGHT_GREEN}のみの{DYNAMIC_COLOR1}な$"
-
+	.string "きのみのこな$"
 	.globl gUnknown_85CCCF5
 gUnknown_85CCCF5: @ 0x85CCCF5
-	.string "ドードリオの{LIGHT_GREEN}のみどり{SE_A}{LIGHT_GREEN}ろ{BLUE}$"
-	.string "{LIGHT_GREEN}のみをとっ{SE_FAINT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{SE_PC_OFF}と{BLUE}てん$"
-	.string "5にん{SE_NOTE_B}{LIGHT_GREEN}のみを\nつづ{LIGHT_BLUE}てとっ{SE_FAINT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}"
-	.string "{LIGHT_GRAY}$"
-
+	.string "ドードリオのきのみどりの　きろく$きのみをとった　かいすう$さいこう　とくてん$5にんで　きのみを\n"
+	.string "つづけてとった　かいすう$"
 	.globl gText_BerryPickingResults
 gText_BerryPickingResults: @ 0x85CCD34
-	.string "{LIGHT_GREEN}のみ{SE_A}{LIGHT_BLUE}っ{SE_WIN_OPEN}はっぴょ{LIGHT_GRAY}！！$"
-
+	.string "きのみの　けっか　はっぴょう！！$"
 	.globl gText_10P30P50P50P
 gText_10P30P50P50P: @ 0x85CCD45
-	.string "10{SE_M_PETAL_DANCE}{TRANSPARENT}30{SE_M_PETAL_DANCE}{TRANSPARENT}50{SE_M_PETAL_DANCE}{TRANSPARENT}"
-	.string "{EMOJI_MINUS}50P$"
-
+	.string "10{SE_M_PETAL_DANCE}{TRANSPARENT}30{SE_M_PETAL_DANCE}{TRANSPARENT}50{SE_M_PETAL_DANCE}{TRANSPARENT}{EMOJI_MINUS}50P$"
 	.globl gText_AnnouncingRankings
 gText_AnnouncingRankings: @ 0x85CCD5A
-	.string "じゅ{MUS_RG_TEACHY_TV_MENU}{SE_A}はっぴょ{LIGHT_GRAY}！！$"
-
+	.string "じゅんいの　はっぴょう！！$"
 	.globl gText_AnnouncingPrizes
 gText_AnnouncingPrizes: @ 0x85CCD68
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}ひん{SE_A}はっぴょ{LIGHT_GRAY}！！$"
-	.string "1:$2:$3:$4:$5:$"
-
+	.string "しょうひんの　はっぴょう！！$1:$2:$3:$4:$5:$"
 	.globl gText_FirstPlacePrize
 gText_FirstPlacePrize: @ 0x85CCD86
-	.string "1ばん{SE_BOO}なっ{SE_FAINT}ひとに\n{SE_M_HYPER_BEAM2}{SE_WARP_IN}プレゼント！！$"
-
+	.string "1ばん{SE_BOO}なっ{SE_FAINT}ひとに\n"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}プレゼント！！$"
 	.globl gText_CantHoldAnyMore
 gText_CantHoldAnyMore: @ 0x85CCD9F
-	.string "{SE_M_HYPER_BEAM2}{SE_I}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
-
+	.string "{SE_M_HYPER_BEAM2}{SE_I}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
 	.globl gText_FilledStorageSpace
 gText_FilledStorageSpace: @ 0x85CCDAB
-	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}になって{DYNAMIC_COLOR3}まった！$"
-
+	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}いっ{PH_THOUGHT_HELD}になって{DYNAMIC_COLOR3}まった！$"
 	.globl gText_WantToPlayAgain
 gText_WantToPlayAgain: @ 0x85CCDBD
-	.string "も{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}{WHITE}{DYNAMIC_COLOR6}びま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "もういちど　あそびますか？$"
 	.globl gText_SomeoneDroppedOut
 gText_SomeoneDroppedOut: @ 0x85CCDCB
-	.string "だれ{GREEN}{SE_SAVE}ぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}"
-	.string "{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "だれかが　ぬけました\n"
+	.string "つうしんを　しゅうりょう　します$"
 	.globl gText_SpacePoints
 gText_SpacePoints: @ 0x85CCDE7
 	.string "てん$"
 
 	.globl gText_CommunicationStandby3
 gText_CommunicationStandby3: @ 0x85CCDEA
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}"
-	.string "で{DYNAMIC_COLOR4}$"
-
+	.string "つうしん　たいきちゅうです$"
 	.globl gUnknown_85CCDF8
 gUnknown_85CCDF8: @ 0x85CCDF8
 	.string "てん$"
 
 	.globl gUnknown_85CCDFB
 gUnknown_85CCDFB: @ 0x85CCDFB
-	.string "{MUS_RG_POKE_TOWER}$"
-
+	.string "かい$"
 	.globl gUnknown_85CCDFE
 gUnknown_85CCDFE: @ 0x85CCDFE
-	.string "ミニポケモンでジャンプ{SE_A}{LIGHT_GREEN}ろ{BLUE}${MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{SE_PC_OFF}"
-	.string "ジャンプ{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}{LIGHT_GRAY}$"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{SE_PC_OFF}と{BLUE}てん$"
-	.string "れんぞ{SE_DOOR}EXCELLENT$"
-
+	.string "ミニポケモンでジャンプの　きろく$さいこう　ジャンプかいすう$さいこう　とくてん$れんぞく　EXCELLENT$"
 	.globl gUnknown_85CCE36
 gUnknown_85CCE36: @ 0x85CCE36
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}{SE_SAVE}よ{GREEN}ったので\n{SE_M_HYPER_BEAM2}{SE_WARP_IN}"
-	.string "{MUS_RG_ROUTE1}{SE_LEDGE}プレゼント！$"
-
+	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}き{SE_SAVE}よかったので\n"
+	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{MUS_RG_ROUTE1}{SE_LEDGE}プレゼント！$"
 	.globl gUnknown_85CCE52
 gUnknown_85CCE52: @ 0x85CCE52
-	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}に\nなって{DYNAMIC_COLOR3}まった！$"
-
+	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}いっ{PH_THOUGHT_HELD}に\n"
+	.string "なって{DYNAMIC_COLOR3}まった！$"
 	.globl gUnknown_85CCE65
 gUnknown_85CCE65: @ 0x85CCE65
-	.string "{SE_M_HYPER_BEAM2}{SE_I}{DARK_GRAY}っ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
-
+	.string "{SE_M_HYPER_BEAM2}{SE_I}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
 	.globl gUnknown_85CCE71
 gUnknown_85CCE71: @ 0x85CCE71
-	.string "も{MUS_RG_POKE_CENTER}ち{SE_NOTE_C_HIGH}{WHITE}{DYNAMIC_COLOR6}びま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "もういちど　あそびますか？$"
 	.globl gUnknown_85CCE7F
 gUnknown_85CCE7F: @ 0x85CCE7F
-	.string "だれ{GREEN}がぬ{LIGHT_BLUE}ま{DYNAMIC_COLOR3}た\nつ{LIGHT_GRAY}{DYNAMIC_COLOR3}ん{SE_WARP_IN}{DYNAMIC_COLOR3}"
-	.string "ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "だれかがぬけました\n"
+	.string "つうしんを　しゅうりょうします$"
 	.globl gUnknown_85CCE99
 gUnknown_85CCE99: @ 0x85CCE99
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}{LIGHT_GREEN}ちゅ{LIGHT_GRAY}$"
-
+	.string "つうしん　たいきちゅう$"
 	.globl gUnknown_85CCEA5
 gUnknown_85CCEA5: @ 0x85CCEA5
-	.string "{MUS_RG_VS_TRAINER}{SE_A}つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}コンテス{SE_CONTEST_ICON_CLEAR}"
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}の　つうしん　コンテスト　せいせき$"
 	.globl gUnknown_85CCEB9
 gUnknown_85CCEB9: @ 0x85CCEB9
-	.string "1{DARK_GRAY}$"
-
+	.string "1い$"
 	.globl gUnknown_85CCEBC
 gUnknown_85CCEBC: @ 0x85CCEBC
-	.string "2{DARK_GRAY}$"
-
+	.string "2い$"
 	.globl gUnknown_85CCEBF
 gUnknown_85CCEBF: @ 0x85CCEBF
-	.string "3{DARK_GRAY}$"
-
+	.string "3い$"
 	.globl gUnknown_85CCEC2
 gUnknown_85CCEC2: @ 0x85CCEC2
-	.string "4{DARK_GRAY}$"
-
+	.string "4い$"
 	.globl gUnknown_85CCEC5
 gUnknown_85CCEC5: @ 0x85CCEC5
 	.string "someone$"
@@ -16613,40 +14161,32 @@ gUnknown_85CCECD: @ 0x85CCECD
 
 	.globl gUnknown_85CCED5
 gUnknown_85CCED5: @ 0x85CCED5
-	.string "ふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの$"
-
+	.string "ふしぎなもらいもの$"
 	.globl gUnknown_85CCEDF
 gUnknown_85CCEDF: @ 0x85CCEDF
-	.string "{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}やめる$"
-
+	.string "{A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}やめる$"
 	.globl gJPText_ReceiveMysteryGiftWithEReader
 gJPText_ReceiveMysteryGiftWithEReader: @ 0x85CCEEC
-	.string "カードeリーダー{PLUS}　で\n"
-	.string "ふしぎなもらいものを　よみこみます$"
-
+	.string "カードeリーダー{PLUS}{TRANSPARENT}で\n"
+	.string "ふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}$"
 	.globl gJPText_SelectConnectFromEReaderMenu
 gJPText_SelectConnectFromEReaderMenu: @ 0x85CCF0B
-	.string "カードeリーダー{PLUS}の　メニューから\n"
-	.string "‘つうしん’を　えらび$"
-
+	.string "カードeリーダー{PLUS}{SE_A}メニューから\n"
+	.string "‘つう{DYNAMIC_COLOR3}ん'{SE_WARP_IN}えらび$"
 	.globl gJPText_SelectConnectWithGBA
 gJPText_SelectConnectWithGBA: @ 0x85CCF2A
-	.string "‘ゲームボーイアドバンスとつうしん’\n"
-	.string "を　せんたく　してください$"
-	.string "カードeリーダー{PLUS}の　‘つうしん’を\n"
-	.string "えらんで　Aボタンを　おしてください$"
-
+	.string "‘ゲームボーイアドバンスとつう{DYNAMIC_COLOR3}ん'\n"
+	.string "{SE_WARP_IN}{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$カードeリーダー{PLUS}{SE_A}‘つう{DYNAMIC_COLOR3}ん'を\n"
+	.string "えらん{SE_NOTE_B}Aボタン{SE_WARP_IN}お{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$"
 	.globl gJPText_LinkIsIncorrect
 gJPText_LinkIsIncorrect: @ 0x85CCF72
 	.string "せつぞくが　まちがっています$"
 
 	.globl gJPText_CardReadingHasBeenHalted
 gJPText_CardReadingHasBeenHalted: @ 0x85CCF81
-	.string "カードの　よみこみを\n"
-	.string "ちゅうし　しました$"
-	.string "カードeリーダー{PLUS}と\n"
-	.string "つうしん　できません$"
-
+	.string "カード{SE_A}よみ{DYNAMIC_COLOR1}みを\n"
+	.string "ちゅう{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$カードeリーダー{PLUS}と\n"
+	.string "つう{DYNAMIC_COLOR3}{SE_WARP_OUT}できま{DYNAMIC_COLOR5}ん$"
 	.globl gJPText_Connecting
 gJPText_Connecting: @ 0x85CCFAD
 	.string "つうしん　ちゅう　です$"
@@ -16663,9 +14203,8 @@ gJPText_ConnectionErrorTryAgain: @ 0x85CCFD5
 
 	.globl gJPText_AllowEReaderToLoadCard
 gJPText_AllowEReaderToLoadCard: @ 0x85CCFF2
-	.string "カードeリーダー{PLUS}　に\n"
-	.string "カードを　よみこませて　ください$"
-
+	.string "カードeリーダー{PLUS}{TRANSPARENT}に\n"
+	.string "カード{SE_WARP_IN}よみ{DYNAMIC_COLOR1}ま{DYNAMIC_COLOR5}{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}$"
 	.globl gJPText_ConnectionComplete
 gJPText_ConnectionComplete: @ 0x85CD010
 	.string "つうしん　しゅうりょう！$"
@@ -16681,8 +14220,8 @@ gJPText_PleaseWaitAMoment: @ 0x85CD036
 
 	.globl gJPText_WriteErrorUnableToSaveData
 gJPText_WriteErrorUnableToSaveData: @ 0x85CD043
-	.string "かきこ{SE_FAILURE}エラ{SE_M_PAY_DAY}です\nデータ{SE_SAVE}ほぞ{SE_WARP_OUT}できませんでした$"
-	.incbin "baserom_jp.gba", 0x5cd061, 0x7
+	.string "かきこみ　エラー　です\n"
+	.string "データが　ほぞん　できませんでした$あか$あお$　"
 	.globl gUnknown_85CD068
 gUnknown_85CD068: @ 0x85CD068
 	.incbin "baserom_jp.gba", 0x5cd068, 0x10
@@ -16705,42 +14244,28 @@ gUnknown_85CD0C8: @ 0x85CD0C8
 
 	.globl gUnknown_85CD0DC
 gUnknown_85CD0DC: @ 0x85CD0DC
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}{SE_WARP_OUT}{MUS_RG_RIVAL_EXIT}{SE_WALL_HIT}ちゅ{SE_PC_OFF}"
-	.string "で{DYNAMIC_COLOR4}\n⋯⋯Bボタン{SE_NOTE_B}キャンセ{SE_M_NIGHTMARE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "つうしん　たいき　ちゅう　です\n"
+	.string "⋯⋯Bボタンで　キャンセル　します$"
 	.globl gUnknown_85CD0FE
 gUnknown_85CD0FE: @ 0x85CD0FE
-	.string "Aボタン{SE_NOTE_B}で{LIGHT_GREEN}ごと{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}\n⋯⋯Bボタン{SE_NOTE_B}"
-	.string "キャンセ{SE_M_NIGHTMARE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-
+	.string "Aボタンで　できごとを　よみこみます\n"
+	.string "⋯⋯Bボタンで　キャンセル　します$"
 	.globl gUnknown_85CD123
 gUnknown_85CD123: @ 0x85CD123
-	.string "で{LIGHT_GREEN}ごと{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みちゅ{LIGHT_GRAY}！！$"
-
+	.string "できごとを　よみこみちゅう！！$"
 	.globl gUnknown_85CD133
 gUnknown_85CD133: @ 0x85CD133
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR3}んケーブル{SE_WARP_IN}ぬ{GREEN}{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
-	.string "だ{MUS_RG_VICTORY_WILD}\nでんげん{SE_WARP_IN}{LIGHT_GREEN}ら{MUS_RG_GAME_FREAK}{SE_NOTE_B}{BLUE}"
-	.string "だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "つうしんケーブルを　ぬかないで　ください\n"
+	.string "でんげんを　きらないで　ください$"
 	.globl gUnknown_85CD159
 gUnknown_85CD159: @ 0x85CD159
-	.string "で{LIGHT_GREEN}ごと{SE_A}よみ{DYNAMIC_COLOR1}みが\n{MUS_RG_PEWTER}じょ{LIGHT_GRAY}{SE_BOO}{DYNAMIC_COLOR3}"
-	.string "ゅ{LIGHT_GRAY}りょ{SE_PC_OFF}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
-	.string "{DYNAMIC_COLOR5}つぞ{SE_DOOR}で{LIGHT_GREEN}{MUS_RG_GAME_FREAK}{TRANSPARENT}{LIGHT_GREEN}{LIGHT_GREEN}"
-	.string "{SE_A}よ{LIGHT_GRAY}で{DYNAMIC_COLOR4}\nただ{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}{LIGHT_GREEN}"
-	.string "{LIGHT_GREEN}{SE_BANG}やりな{LIGHT_RED}{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "できごとの　よみこみが\n"
+	.string "せいじょうに　しゅうりょう　しました$せつぞく　できない　ききの　ようです\n"
+	.string "ただしい　ききと　やりなおしてください$"
 	.globl gUnknown_85CD19F
 gUnknown_85CD19F: @ 0x85CD19F
-	.string "エラーがはっ{MUS_RG_PEWTER}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た\n{DYNAMIC_COLOR3}ゅ{LIGHT_GRAY}りょ{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
-	.string "Aボタン{SE_WARP_IN}{LIGHT_RED}{DYNAMIC_COLOR3}て{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-	.string "つながりま{DYNAMIC_COLOR3}た$データ{SE_WARP_IN}じゅ{DYNAMIC_COLOR3}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
-	.string "セーブで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んで{DYNAMIC_COLOR3}た$"
-	.string "セーブで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た$ロードで{LIGHT_GREEN}ま{DYNAMIC_COLOR5}んで{DYNAMIC_COLOR3}た$"
-	.string "ロードで{LIGHT_GREEN}ま{DYNAMIC_COLOR3}た$"
-
+	.string "エラーがはっせいしました\n"
+	.string "しゅうりょうします$Aボタンを　おしてください$つながりました$データを　じゅしんしました$セーブできませんでした$セーブできました$ロードできませんでした$ロードできました$"
 	.globl gUnknown_85CD204
 gUnknown_85CD204: @ 0x85CD204
 	.incbin "baserom_jp.gba", 0x5cd204, 0x4
@@ -16839,8 +14364,8 @@ gUnknown_85CDB48: @ 0x85CDB48
 
 	.globl gUnknown_85CDB60
 gUnknown_85CDB60: @ 0x85CDB60
-	.string "{DYNAMIC_COLOR4}べて{SE_A}セーブデータエリアを\nクリ{SE_THUNDERSTORM}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "すべての　セーブデータエリアを\n"
+	.string "クリア　しますか？$"
 	.globl gUnknown_85CDB7A
 gUnknown_85CDB7A: @ 0x85CDB7A
 	.incbin "baserom_jp.gba", 0x5cdb7a, 0x16
@@ -17083,21 +14608,14 @@ gUnknown_85D3294: @ 0x85D3294
 
 	.globl gUnknown_85D3304
 gUnknown_85D3304: @ 0x85D3304
-	.string "{SE_M_EMBER}{SE_M_EXPLOSION}{SE_M_LICK}{SE_M_MEGA_KICK}{SE_M_ABSORB}{SE_M_SCREECH}{SE_M_FIRE_PUNCH}"
-	.string "{SE_VEND}{SE_M_FLAME_WHEEL2}{SE_TAILLOW_WING_FLAP}{SE_ROTATING_GATE}{SE_ICE_CRACK}{SE_M_SACRED_FIRE}"
-	.string "{SE_E}{SE_O}{SE_CONTEST_ICON_CLEAR}{SE_CONTEST_HEART}$"
-	.string "$"
-
+	.string "ビ　”　B　ザ　'　♂　ヅ　ハ　ダ　セ　ぃ　れ　ド　ふ　へ　ト　タ　$$"
 	.globl gUnknown_85D3328
 gUnknown_85D3328: @ 0x85D3328
 	.incbin "baserom_jp.gba", 0x5d3328, 0x19c
 
 	.globl gUnknown_85D34C4
 gUnknown_85D34C4: @ 0x85D34C4
-	.string "{TRANSPARENT}{SE_RG_POKE_JUMP_SUCCESS}{SE_USE_ITEM}{DYNAMIC_COLOR6}{WHITE}{SE_PC_ON}"
-	.string "{SE_RG_HELP_CLOSE}{SE_PC_LOGIN}{SE_RG_HELP_CLOSE}{SE_PC_LOGIN}{SE_RG_HELP_CLOSE}{SE_PC_LOGIN}"
-	.string "{SE_RG_HELP_CLOSE}{SE_PC_LOGIN}{SE_PC_LOGIN}$"
-
+	.string "　おああ　そあえ　いあい　いあい　いあい　いあい　い　$"
 	.globl gUnknown_85D34E0
 gUnknown_85D34E0: @ 0x85D34E0
 	.incbin "baserom_jp.gba", 0x5d34e0, 0x8
@@ -17272,8 +14790,7 @@ gUnknown_85D5B68: @ 0x85D5B68
 
 	.globl gUnknown_85D5B78
 gUnknown_85D5B78: @ 0x85D5B78
-	.string "\p$$${DYNAMIC}$$$$$▶$$$k$"
-
+	.incbin "baserom_jp.gba", 0x5d5b78, 0x10
 	.globl gUnknown_85D5B88
 gUnknown_85D5B88: @ 0x85D5B88
 	.incbin "baserom_jp.gba", 0x5d5b88, 0x40
@@ -17568,45 +15085,34 @@ gUnknown_85DBB98: @ 0x85DBB98
 
 	.globl gUnknown_85DBBA1
 gUnknown_85DBBA1: @ 0x85DBBA1
-	.string "1ばんめのポケモン{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "1ばんめのポケモンを　えらんでください$"
 	.globl gUnknown_85DBBB5
 gUnknown_85DBBB5: @ 0x85DBBB5
-	.string "2ばんめのポケモン{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "2ばんめのポケモンを　えらんでください$"
 	.globl gUnknown_85DBBC9
 gUnknown_85DBBC9: @ 0x85DBBC9
-	.string "3ばんめのポケモン{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "3ばんめのポケモンを　えらんでください$"
 	.globl gUnknown_85DBBDD
 gUnknown_85DBBDD: @ 0x85DBBDD
-	.string "レンタル{DYNAMIC_COLOR4}る$"
-
+	.string "レンタルする$"
 	.globl gUnknown_85DBBE4
 gUnknown_85DBBE4: @ 0x85DBBE4
-	.string "つよ{DYNAMIC_COLOR2}をみる$"
-
+	.string "つよさをみる$"
 	.globl gUnknown_85DBBEB
 gUnknown_85DBBEB: @ 0x85DBBEB
-	.string "べつのに{DYNAMIC_COLOR4}る$"
-
+	.string "べつのにする$"
 	.globl gUnknown_85DBBF2
 gUnknown_85DBBF2: @ 0x85DBBF2
-	.string "はず{DYNAMIC_COLOR4}$"
-
+	.string "はずす$"
 	.globl gUnknown_85DBBF6
 gUnknown_85DBBF6: @ 0x85DBBF6
-	.string "{DARK_GRAY}じょ{LIGHT_GRAY}{SE_A}3ひ{LIGHT_GREEN}{SE_NOTE_B}よろ{MUS_RG_VICTORY_GYM_LEADER}"
-	.string "で{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "いじょうの　3ひきで　よろしいですか？$"
 	.globl gUnknown_85DBC0A
 gUnknown_85DBC0A: @ 0x85DBC0A
-	.string "{MUS_RG_POKE_JUMP}$"
-
+	.string "はい$"
 	.globl gUnknown_85DBC0D
 gUnknown_85DBC0D: @ 0x85DBC0D
-	.string "{MUS_RG_OAK}{RED}$"
-
+	.string "いいえ$"
 	.globl gUnknown_85DBC11
 gUnknown_85DBC11: @ 0x85DBC11
 	.incbin "baserom_jp.gba", 0x5dbc11, 0x13
@@ -17689,65 +15195,49 @@ gUnknown_85DC09C: @ 0x85DC09C
 
 	.globl gUnknown_85DC0B4
 gUnknown_85DC0B4: @ 0x85DC0B4
-	.string "ポケモン{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_WARP_OUT}{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "ポケモンこうかん　　　　　$"
 	.globl gUnknown_85DC0C2
 gUnknown_85DC0C2: @ 0x85DC0C2
-	.string "てばな{DYNAMIC_COLOR4}ポケモン{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "てばなすポケモンを　えらんでください$"
 	.globl gUnknown_85DC0D5
 gUnknown_85DC0D5: @ 0x85DC0D5
-	.string "{LIGHT_GRAY}{LIGHT_BLUE}とるポケモン{SE_WARP_IN}{RED}らんで{BLUE}だ{MUS_RG_VICTORY_WILD}$"
-
+	.string "うけとるポケモンを　えらんでください$"
 	.globl gUnknown_85DC0E8
 gUnknown_85DC0E8: @ 0x85DC0E8
-	.string "てばな{DYNAMIC_COLOR4}$"
-
+	.string "てばなす$"
 	.globl gUnknown_85DC0ED
 gUnknown_85DC0ED: @ 0x85DC0ED
-	.string "つよ{DYNAMIC_COLOR2}をみる$"
-
+	.string "つよさをみる$"
 	.globl gUnknown_85DC0F4
 gUnknown_85DC0F4: @ 0x85DC0F4
-	.string "べつのに{DYNAMIC_COLOR4}る$"
-
+	.string "べつのにする$"
 	.globl gUnknown_85DC0FB
 gUnknown_85DC0FB: @ 0x85DC0FB
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん{SE_WARP_IN}ちゅ{LIGHT_GRAY}{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR3}"
-	.string "ま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "こうかんを　ちゅうし　しますか？$"
 	.globl gUnknown_85DC10C
 gUnknown_85DC10C: @ 0x85DC10C
-	.string "{MUS_RG_POKE_JUMP}$"
-
+	.string "はい$"
 	.globl gUnknown_85DC10F
 gUnknown_85DC10F: @ 0x85DC10F
-	.string "{MUS_RG_OAK}{RED}$"
-
+	.string "いいえ$"
 	.globl gUnknown_85DC113
 gUnknown_85DC113: @ 0x85DC113
-	.string "てばな{DYNAMIC_COLOR4}ポケモン$"
-
+	.string "てばなすポケモン$"
 	.globl gUnknown_85DC11C
 gUnknown_85DC11C: @ 0x85DC11C
-	.string "ちゅ{LIGHT_GRAY}{DYNAMIC_COLOR3}$"
-
+	.string "ちゅうし$"
 	.globl gUnknown_85DC121
 gUnknown_85DC121: @ 0x85DC121
-	.string "てばな{DYNAMIC_COLOR4}$"
-
+	.string "てばなす$"
 	.globl gUnknown_85DC126
 gUnknown_85DC126: @ 0x85DC126
-	.string "{LIGHT_GRAY}{LIGHT_BLUE}とる$"
-
+	.string "うけとる$"
 	.globl gUnknown_85DC12B
 gUnknown_85DC12B: @ 0x85DC12B
-	.string "{DYNAMIC_COLOR1}のポケモン{SE_WARP_IN}{LIGHT_GRAY}{LIGHT_BLUE}とりま{DYNAMIC_COLOR4}{GREEN}？$"
-
+	.string "このポケモンを　うけとりますか？$"
 	.globl gUnknown_85DC13C
 gUnknown_85DC13C: @ 0x85DC13C
-	.string "{MUS_DUMMY}{MUS_DUMMY}$"
-
+	.string "　　　　$"
 	.globl gUnknown_85DC141
 gUnknown_85DC141: @ 0x85DC141
 	.incbin "baserom_jp.gba", 0x5dc141, 0x17
@@ -17906,145 +15396,102 @@ gUnknown_85DD2E8: @ 0x85DD2E8
 
 	.globl gUnknown_85DD2EC
 gUnknown_85DD2EC: @ 0x85DD2EC
-	.string "{TRANSPARENT}{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}シング{SE_M_NIGHTMARE}バトルルー{SE_EGG_HATCH}"
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "　{MUS_RG_VS_TRAINER}　の　シングル　バトルルーム　せいせき$"
 	.globl gUnknown_85DD303
 gUnknown_85DD303: @ 0x85DD303
-	.string "{MUS_DUMMY}{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}ダブ{SE_M_NIGHTMARE}バトルルー{SE_EGG_HATCH}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "　　{MUS_RG_VS_TRAINER}　の　ダブル　バトルルーム　せいせき$"
 	.globl gUnknown_85DD31A
 gUnknown_85DD31A: @ 0x85DD31A
-	.string "{MUS_DUMMY}{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}マル{SE_CONTEST_CURTAIN_RISE}バトルルー{SE_EGG_HATCH}"
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "　　{MUS_RG_VS_TRAINER}　の　マルチ　バトルルーム　せいせき$"
 	.globl gUnknown_85DD331
 gUnknown_85DD331: @ 0x85DD331
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}つ{LIGHT_GRAY}{DYNAMIC_COLOR3}んマル{SE_CONTEST_CURTAIN_RISE}"
-	.string "バトルルー{SE_EGG_HATCH}{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　つうしんマルチ　バトルルーム　せいせき$"
 	.globl gUnknown_85DD34A
 gUnknown_85DD34A: @ 0x85DD34A
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}シング{SE_M_NIGHTMARE}バトルトーナメン{SE_CONTEST_ICON_CLEAR}"
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　シングル　バトルトーナメント　せいせき$"
 	.globl gUnknown_85DD363
 gUnknown_85DD363: @ 0x85DD363
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}ダブ{SE_M_NIGHTMARE}バトルトーナメン{SE_CONTEST_ICON_CLEAR}"
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　ダブル　バトルトーナメント　せいせき$"
 	.globl gUnknown_85DD37B
 gUnknown_85DD37B: @ 0x85DD37B
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}シング{SE_M_NIGHTMARE}バトルホー{SE_M_NIGHTMARE}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　シングル　バトルホール　せいせき$"
 	.globl gUnknown_85DD391
 gUnknown_85DD391: @ 0x85DD391
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}ダブ{SE_M_NIGHTMARE}バトルホー{SE_M_NIGHTMARE}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　ダブル　バトルホール　せいせき$"
 	.globl gUnknown_85DD3A6
 gUnknown_85DD3A6: @ 0x85DD3A6
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}バトルゲー{SE_EGG_HATCH}{MUS_RG_PEWTER}{DYNAMIC_COLOR5}{LIGHT_GREEN}"
-	.string "$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　バトルゲーム　せいせき$"
 	.globl gUnknown_85DD3B7
 gUnknown_85DD3B7: @ 0x85DD3B7
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}{GREEN}ちぬ{LIGHT_GREEN}チームバト{SE_M_NIGHTMARE}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　かちぬきチームバトル　せいせき$"
 	.globl gUnknown_85DD3CC
 gUnknown_85DD3CC: @ 0x85DD3CC
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}バトルトレー{SE_M_SACRED_FIRE}シング{SE_M_NIGHTMARE}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　バトルトレード　シングル　せいせき$"
 	.globl gUnknown_85DD3E3
 gUnknown_85DD3E3: @ 0x85DD3E3
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}バトルトレー{SE_M_SACRED_FIRE}ダブ{SE_M_NIGHTMARE}{MUS_RG_PEWTER}"
-	.string "{DYNAMIC_COLOR5}{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　バトルトレード　ダブル　せいせき$"
 	.globl gUnknown_85DD3F9
 gUnknown_85DD3F9: @ 0x85DD3F9
-	.string "{MUS_RG_VS_TRAINER}{TRANSPARENT}{SE_A}バトルアドベンチャ{SE_M_PAY_DAY}{MUS_RG_PEWTER}{DYNAMIC_COLOR5}"
-	.string "{LIGHT_GREEN}$"
-
+	.string "{MUS_RG_VS_TRAINER}　の　バトルアドベンチャー　せいせき$"
 	.globl gUnknown_85DD40E
 gUnknown_85DD40E: @ 0x85DD40E
-	.string "レベ{SE_M_NIGHTMARE}50$"
-
+	.string "レベル　50$"
 	.globl gUnknown_85DD415
 gUnknown_85DD415: @ 0x85DD415
 	.string "オープンレベル$"
 
 	.globl gUnknown_85DD41D
 gUnknown_85DD41D: @ 0x85DD41D
-	.string "{B_COPY_VAR_1}れん{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}$"
-
+	.string "{B_COPY_VAR_1}れんしょう$"
 	.globl gUnknown_85DD425
 gUnknown_85DD425: @ 0x85DD425
-	.string "げん{PH_FLEECE_HELD}$"
-
+	.string "げんざい$"
 	.globl gUnknown_85DD42A
 gUnknown_85DD42A: @ 0x85DD42A
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR1}{LIGHT_GRAY}$"
-
+	.string "さいこう$"
 	.globl gUnknown_85DD42F
 gUnknown_85DD42F: @ 0x85DD42F
-	.string "ぜん{MUS_RG_POKE_TOWER}$バトル$"
-
+	.string "ぜんかい$バトル$"
 	.globl gUnknown_85DD438
 gUnknown_85DD438: @ 0x85DD438
-	.string "レンタル/{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}ん$"
-
+	.string "レンタル/こうかん$"
 	.globl gUnknown_85DD442
 gUnknown_85DD442: @ 0x85DD442
-	.string "つ{LIGHT_GRAY}{DYNAMIC_COLOR2}ん$"
-
+	.string "つうさん$"
 	.globl gUnknown_85DD447
 gUnknown_85DD447: @ 0x85DD447
 	.string "{B_COPY_VAR_1}れんぱ$"
 
 	.globl gUnknown_85DD44D
 gUnknown_85DD44D: @ 0x85DD44D
-	.string "{B_COPY_VAR_1}{MUS_RG_POKE_TOWER}{TRANSPARENT}ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}$"
-
+	.string "{B_COPY_VAR_1}かい　ゆうしょう$"
 	.globl gUnknown_85DD458
 gUnknown_85DD458: @ 0x85DD458
-	.string "{B_COPY_VAR_1}へ{SE_CLICK}とっぱ$"
-
+	.string "{B_COPY_VAR_1}へや　とっぱ$"
 	.globl gUnknown_85DD461
 gUnknown_85DD461: @ 0x85DD461
-	.string "{B_COPY_VAR_1}{MUS_RG_POKE_TOWER}{TRANSPARENT}クリア$"
-
+	.string "{B_COPY_VAR_1}かい　クリア$"
 	.globl gUnknown_85DD46A
 gUnknown_85DD46A: @ 0x85DD46A
-	.string "{B_COPY_VAR_1}にんぬ{LIGHT_GREEN}$"
-
+	.string "{B_COPY_VAR_1}にんぬき$"
 	.globl gUnknown_85DD471
 gUnknown_85DD471: @ 0x85DD471
-	.string "{B_COPY_VAR_1}{MUS_RG_POKE_TOWER}$"
-
+	.string "{B_COPY_VAR_1}かい$"
 	.globl gUnknown_85DD476
 gUnknown_85DD476: @ 0x85DD476
-	.string "{B_COPY_VAR_1}だ{SE_WARP_OUT}{MUS_RG_PEWTER}は$"
-
+	.string "{B_COPY_VAR_1}だん　せいは$"
 	.globl gUnknown_85DD47F
 gUnknown_85DD47F: @ 0x85DD47F
 	.incbin "baserom_jp.gba", 0x5dd47f, 0xf
 
 	.globl gUnknown_85DD48E
 gUnknown_85DD48E: @ 0x85DD48E
-	.string "{SE_M_EMBER}{SE_M_SACRED_FIRE2}{SE_RG_CARD_FLIPPING}{UP_ARROW_2}{SE_RG_CARD_OPEN}{MUS_POKE_MART}"
-	.string "{MUS_LITTLEROOT}{MUS_MT_CHIMNEY}{MUS_DESERT}{MUS_HELP}$"
-	.string "$"
-
+	.string "{SE_M_EMBER}{SE_M_SACRED_FIRE2}\l"
+	.string "{TRANSPARENT}{UP_ARROW_2}\p"
+	.string "{TRANSPARENT}{MUS_POKE_MART}{MUS_LITTLEROOT}{MUS_MT_CHIMNEY}{MUS_DESERT}{MUS_HELP}$$"
 	.globl gUnknown_85DD4A4
 gUnknown_85DD4A4: @ 0x85DD4A4
-	.string "もJシ{BLUE}シJシ{BLUE}もJシ{BLUE}トJシ{BLUE}もJシ{BLUE}フJシ{BLUE}れJシ{BLUE}シJシ{BLUE}ぅJシ{BLUE}シJシ{BLUE}ぢJシ{BLUE}"
-	.string "ワJシ{BLUE}ぎJシ{BLUE}シJシ{BLUE}ぼJシ{BLUE}ワJシ{BLUE}イJシ{BLUE}ワJシ{BLUE}もJシ{BLUE}ヤJシ{SE_DOOR}レベル50{SE_RG_SHOP}"
-	.string "オープンレベル$"
-
+	.string "もJシくシJシくもJシくトJシくもJシくフJシくれJシくシJシくぅJシくシJシくぢJシくワJシくぎJシくシJシくぼJシくワJシくイJシくワJシくもJシくヤJシく　レベル50$　オープンレベル$"
 	.globl gUnknown_85DD504
 gUnknown_85DD504: @ 0x85DD504
 	.incbin "baserom_jp.gba", 0x5dd504, 0x38
@@ -18259,15 +15706,7 @@ gUnknown_85DF76C: @ 0x85DF76C
 
 	.globl gUnknown_85DF77E
 gUnknown_85DF77E: @ 0x85DF77E
-	.string "{WHITE}{RED}${SE_RG_SHOP}{DARK_GRAY}{LIGHT_RED}{MUS_RG_VS_CHAMPION}{LIGHT_GRAY}{GREEN}$"
-	.string "{DARK_GRAY}{LIGHT_GREEN}${SE_RG_SHOP}{LIGHT_RED}{BLUE}{MUS_RG_VS_CHAMPION}{RED}{GREEN}"
-	.string "{MUS_RG_CELADON}{LIGHT_RED}{LIGHT_GREEN}{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{DYNAMIC_COLOR2}$"
-	.string "{RED}{LIGHT_BLUE}{DYNAMIC_COLOR3}${LIGHT_RED}{BLUE}{DYNAMIC_COLOR1}{DYNAMIC_COLOR4}{GREEN}"
-	.string "{LIGHT_BLUE}{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}{LIGHT_GREEN}{DYNAMIC_COLOR1}{DYNAMIC_COLOR6}$"
-	.string "{BLUE}{DYNAMIC_COLOR4}$${LIGHT_BLUE}{DYNAMIC_COLOR3}{DYNAMIC_COLOR5}$"
-	.string "{DYNAMIC_COLOR1}{DYNAMIC_COLOR4}{DYNAMIC_COLOR6}$"
-	.string "{DYNAMIC_COLOR2}{DYNAMIC_COLOR5}$$"
-
+	.string "あえ$$　いお$あうか$いき$$　おく$あえかけいおきこうかさ$えけし$おくこすかけさせきこそ$くす$$けしせ$こすそ$させ$$"
 	.globl gUnknown_85DF7BE
 gUnknown_85DF7BE: @ 0x85DF7BE
 	.incbin "baserom_jp.gba", 0x5df7be, 0xa
@@ -18430,19 +15869,10 @@ gUnknown_85DFC30: @ 0x85DFC30
 
 	.globl gUnknown_85DFC74
 gUnknown_85DFC74: @ 0x85DFC74
-	.string "{MUS_RG_OAK}{MUS_RG_POKE_CENTER}{WHITE}{MUS_RG_POKE_CENTER}{LIGHT_GRAY}{LIGHT_RED}{RED}{GREEN}{RED}"
-	.string "{RED}{LIGHT_RED}{LIGHT_RED}{LIGHT_RED}{RED}{GREEN}{LIGHT_RED}{SE_WIN_OPEN}{SE_POKENAV_CALL}"
-	.string "{LIGHT_GREEN}{RED}{BLUE}{LIGHT_RED}{BLUE}{DYNAMIC_COLOR2}{LIGHT_BLUE}{DYNAMIC_COLOR3}{LIGHT_BLUE}"
-	.string "{LIGHT_RED}{DYNAMIC_COLOR1}{GREEN}{DYNAMIC_COLOR1}{LIGHT_RED}{DYNAMIC_COLOR2}{GREEN}"
-	.string "{MUS_RG_VICTORY_WILD}{DYNAMIC_COLOR3}{LIGHT_GRAY}{DYNAMIC_COLOR3}{GREEN}{DYNAMIC_COLOR4}{LIGHT_GREEN}"
-	.string "{DYNAMIC_COLOR4}{LIGHT_GRAY}{DYNAMIC_COLOR5}{RED}{MUS_RG_PEWTER}{DYNAMIC_COLOR6}{LIGHT_GRAY}"
-	.string "{DYNAMIC_COLOR6}{DYNAMIC_COLOR3}た{DYNAMIC_COLOR4}た{DYNAMIC_COLOR1}た{DYNAMIC_COLOR5}たゅはょはねのののはのひの$"
-	.string "$"
-
+	.string "いいういあういうおえかええおおおえかおか　きあきえくおくさけしけおこかこおさかさいしうしかすきすうせえせいそうそしたすたこたせたゅはょはねのののはのひの$$"
 	.globl gUnknown_85DFCC2
 gUnknown_85DFCC2: @ 0x85DFCC2
-	.string "{LIGHT_RED}は$$"
-
+	.string "おは$$"
 	.globl gUnknown_85DFCC6
 gUnknown_85DFCC6: @ 0x85DFCC6
 	.string "$$"
@@ -18918,20 +16348,16 @@ gUnknown_85ED2B4: @ 0x85ED2B4
 
 	.globl gUnknown_85ED2C4
 gUnknown_85ED2C4: @ 0x85ED2C4
-	.string "{MUS_RG_VS_GYM_LEADER}{LIGHT_RED}{SHADOW}{GREEN}$"
-
+	.string "{COLOR 5}{SHADOW 6}$"
 	.globl gUnknown_85ED2CB
 gUnknown_85ED2CB: @ 0x85ED2CB
-	.string "{MUS_RG_VS_GYM_LEADER}{WHITE}{SHADOW}{DARK_GRAY}$"
-
+	.string "{COLOR 1}{SHADOW 2}$"
 	.globl gUnknown_85ED2D2
 gUnknown_85ED2D2: @ 0x85ED2D2
-	.string "{SE_M_HYPER_BEAM2}/{MUS_RG_ROUTE1}\n{DYNAMIC}{DARK_GRAY}\n{DYNAMIC}{LIGHT_GRAY}$"
-
+	.incbin "baserom_jp.gba", 0x5ed2d2, 0xc
 	.globl gUnknown_85ED2DE
 gUnknown_85ED2DE: @ 0x85ED2DE
-	.string "{SE_M_HYPER_BEAM2}\n{MUS_RG_ROUTE1}\n{DYNAMIC}{DARK_GRAY}$"
-
+	.incbin "baserom_jp.gba", 0x5ed2de, 0x9
 	.globl gUnknown_85ED2E7
 gUnknown_85ED2E7: @ 0x85ED2E7
 	.incbin "baserom_jp.gba", 0x5ed2e7, 0x125
@@ -19530,16 +16956,10 @@ gUnknown_85F5DCC: @ 0x85F5DCC
 
 	.globl gUnknown_85F5DD3
 gUnknown_85F5DD3: @ 0x85F5DD3
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_RG_POKE_JUMP_SUCCESS}{GREEN}"
-	.string "♂{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}{TRANSPARENT}{DYNAMIC}"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR1}$"
-
+	.incbin "baserom_jp.gba", 0x5f5dd3, 0x18
 	.globl gUnknown_85F5DEB
 gUnknown_85F5DEB: @ 0x85F5DEB
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW}{SE_POKENAV_CALL}{BLUE}"
-	.string "♀{COLOR_HIGHLIGHT_SHADOW}{SE_RG_HELP_CLOSE}{LIGHT_GRAY}/{LV_2}{MUS_RG_ROUTE1}{TRANSPARENT}{DYNAMIC}"
-	.string "{DARK_GRAY}{DYNAMIC_COLOR1}$"
-
+	.incbin "baserom_jp.gba", 0x5f5deb, 0x18
 	.globl gUnknown_85F5E03
 gUnknown_85F5E03: @ 0x85F5E03
 	.incbin "baserom_jp.gba", 0x5f5e03, 0x11
@@ -19550,47 +16970,7 @@ gUnknown_85F5E14: @ 0x85F5E14
 
 	.globl gUnknown_85F5F60
 gUnknown_85F5F60: @ 0x85F5F60
-	.string "クセソ{BLUE}ナセソ{BLUE}ヨセソ{BLUE}！セソ{BLUE}ヨセソ{BLUE}/セソ{BLUE}ヨセソ{BLUE}Oセソ{BLUE}ヨセソ{BLUE}dセソ{BLUE}ゥセソ{BLUE}"
-	.string "！セソ{BLUE}ゥセソ{BLUE}/セソ{BLUE}ゥセソ{BLUE}Oセソ{BLUE}ゥセソ{BLUE}dセソ{BLUE}ザセソ{BLUE}！セソ{BLUE}ザセソ{BLUE}/セソ{BLUE}"
-	.string "ザセソ{BLUE}Oセソ{BLUE}ザセソ{BLUE}dセソ{BLUE}バセソ{BLUE}！セソ{BLUE}バセソ{BLUE}/セソ{BLUE}バセソ{BLUE}Oセソ{BLUE}バセソ{BLUE}"
-	.string "dセソ{BLUE}ッセソ{BLUE}！セソ{BLUE}ッセソ{BLUE}/セソ{BLUE}ッセソ{BLUE}Oセソ{BLUE}ッセソ{BLUE}dセソ{BLUE}sセソ{BLUE}öセソ{BLUE}"
-	.string "{LIGHT_GRAY}ソソ{BLUE}てソソ{BLUE}むソソ{BLUE}ぅソソ{BLUE}ずソソ{BLUE}ぷソソ{BLUE}2003ね{SE_WARP_OUT}ちほ{SE_PC_OFF}"
-	.string "{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}$"
-	.string "ゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{LIGHT_GREEN}ねんリボン$"
-	.string "2003ね{SE_WARP_OUT}ぜん{DYNAMIC_COLOR1}{SE_DOOR}{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}$"
-	.string "2003ね{SE_WARP_OUT}ワールドカップ$じゅんゆ{LIGHT_GRAY}{DYNAMIC_COLOR3}ょ{SE_PC_OFF}{LIGHT_GREEN}ねんリボン$"
-	.string "ベスト{SE_M_WHIRLPOOL}{LIGHT_GREEN}ねんリボン$2004ね{SE_WARP_OUT}ちほ{SE_PC_OFF}{MUS_RG_RIVAL_EXIT}"
-	.string "{MUS_RG_POKE_TOWER}$"
-	.string "2004ね{SE_WARP_OUT}ぜん{DYNAMIC_COLOR1}{SE_DOOR}{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}$"
-	.string "2004ね{SE_WARP_OUT}ワールドカップ$2005ね{SE_WARP_OUT}ちほ{SE_PC_OFF}{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}$"
-	.string "2005ね{SE_WARP_OUT}ぜん{DYNAMIC_COLOR1}{SE_DOOR}{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}$"
-	.string "2005ね{SE_WARP_OUT}ワールドカップ$ポケモ{SE_M_BUBBLE3}バト{SE_M_NIGHTMARE}カップ$"
-	.string "{DYNAMIC_COLOR2}ん{SE_WIN_OPEN}{LIGHT_GREEN}ねんリボン$"
-	.string "ポケモ{SE_M_BUBBLE3}リーグ$アドバン{SE_ROULETTE_BALL2}カップ$"
-	.string "ポケモン{SE_A}{MUS_RG_RIVAL_EXIT}{MUS_RG_POKE_TOWER}に$"
-	.string "{DYNAMIC_COLOR2}ん{GREEN}{DYNAMIC_COLOR3}{SE_FAINT}{LIGHT_GREEN}ねんリボン$"
-	.string "ポケモン{SE_A}イベントに$ポケモン{SE_A}{LIGHT_RED}まつりに$"
-	.string "{DYNAMIC_COLOR1}んなん{SE_BOO}{LIGHT_GRAY}ち{GREEN}った$"
-	.string "{LIGHT_GREEN}ねんリボン${DYNAMIC_COLOR4}べて{SE_A}{DYNAMIC_COLOR1}んなんを$"
-	.string "のり{DYNAMIC_COLOR1}{RED}{SE_FAINT}{LIGHT_GREEN}ねんリボン$"
-	.string "100にんぬ{SE_WALL_HIT}たっ{MUS_RG_PEWTER}${BLUE}らやみのと{SE_PC_OFF}クリア$"
-	.string "{BLUE}れ{MUS_RG_GAME_FREAK}のと{SE_PC_OFF}クリア$"
-	.string "{BLUE}ろがねのと{SE_PC_OFF}クリア${MUS_RG_VICTORY_WILD}ごのと{SE_PC_OFF}クリア$"
-	.string "でん{DYNAMIC_COLOR5}つ{SE_WARP_IN}つ{BLUE}った$"
-	.string "ポケモンセンタートウキョー$ポケモンセンターオーサカ$ポケモンセンターナゴヤ$ポケモンセンターニューヨーク$"
-	.string "なつや{DYNAMIC_COLOR4}{SE_FAILURE}{LIGHT_GREEN}ねんリボン$"
-	.string "$ふゆや{DYNAMIC_COLOR4}{SE_FAILURE}{LIGHT_GREEN}ねんリボン$"
-	.string "はるや{DYNAMIC_COLOR4}{SE_FAILURE}{LIGHT_GREEN}ねんリボン$"
-	.string "クリスマ{SE_ROULETTE_BALL2}{LIGHT_GREEN}ねんリボン$"
-	.string "{LIGHT_GREEN}ねん{SE_BRIDGE_WALK}{LIGHT_GREEN}ねんリボン$"
-	.string "がんばっ{SE_FAINT}{LIGHT_GREEN}ねん{SE_A}リボン$ともだ{SE_FLEE}{DARK_GRAY}っ{PH_THOUGHT_HELD}{TRANSPARENT}"
-	.string "{LIGHT_GREEN}ねんリボン$"
-	.string "げん{SE_WALL_HIT}{DARK_GRAY}っ{PH_THOUGHT_HELD}{TRANSPARENT}{LIGHT_GREEN}ねんリボン$"
-	.string "{PH_PRICE_BLEND}{DYNAMIC_COLOR4}{LIGHT_GREEN}{SE_PIN}ポケモンに$"
-	.string "つ{LIGHT_BLUE}て{WHITE}げ{SE_ICE_BREAK}{LIGHT_GREEN}ねんリボン$"
-	.string "ポケモン{SE_SAVE}{PH_PRICE_BLEND}{DYNAMIC_COLOR4}{LIGHT_GREEN}{SE_PIN}{DYNAMIC_COLOR1}とを$"
-	.string "{DYNAMIC_COLOR3}ょ{LIGHT_GRAY}{MUS_RG_SEVII_DUNGEON}{DYNAMIC_COLOR4}{SE_ICE_BREAK}リボン$"
-
+	.string "クセソくナセソくヨセソく！セソくヨセソく/セソくヨセソくOセソくヨセソくdセソくゥセソく！セソくゥセソく/セソくゥセソくOセソくゥセソくdセソくザセソく！セソくザセソく/セソくザセソくOセソくザセソくdセソくバセソく！セソくバセソく/セソくバセソくOセソくバセソくdセソくッセソく！セソくッセソく/セソくッセソくOセソくッセソくdセソくsセソくöセソくうソソくてソソくむソソくぅソソくずソソくぷソソく2003ねん　ちほう　たいかい$ゆうしょう　きねんリボン$2003ねん　ぜんこく　たいかい$2003ねん　ワールドカップ$じゅんゆうしょう　きねんリボン$ベスト4　きねんリボン$2004ねん　ちほう　たいかい$2004ねん　ぜんこく　たいかい$2004ねん　ワールドカップ$2005ねん　ちほう　たいかい$2005ねん　ぜんこく　たいかい$2005ねん　ワールドカップ$ポケモン　バトル　カップ$さんか　きねんリボン$ポケモン　リーグ$アドバンス　カップ$ポケモンの　たいかいに$さんかした　きねんリボン$ポケモンの　イベントに$ポケモンの　おまつりに$こんなんに　うちかった$きねんリボン$すべての　こんなんを$のりこえた　きねんリボン$100にんぬき　たっせい$くらやみのとう　クリア$くれないのとう　クリア$くろがねのとう　クリア$さいごのとう　クリア$でんせつを　つくった$ポケモンセンタートウキョー$ポケモンセンターオーサカ$ポケモンセンターナゴヤ$ポケモンセンターニューヨーク$なつやすみ　きねんリボン$$ふゆやすみ　きねんリボン$はるやすみ　きねんリボン$クリスマス　きねんリボン$きねんび　きねんリボン$がんばった　きねんの　リボン$ともだち　いっぱい　きねんリボン$げんき　いっぱい　きねんリボン$だいすきな　ポケモンに$つけてあげる　きねんリボン$ポケモンが　だいすきな　ことを$しょうめいする　リボン$"
 	.globl gUnknown_85F628C
 gUnknown_85F628C: @ 0x85F628C
 	.incbin "baserom_jp.gba", 0x5f628c, 0x200
@@ -19717,8 +17097,7 @@ gUnknown_85F7C48: @ 0x85F7C48
 
 	.globl gText_MoveRelearnerBattleMoves
 gText_MoveRelearnerBattleMoves: @ 0x85F7C50
-	.string "たた{GREEN}{LIGHT_GRAY}わざ$"
-
+	.string "たたかうわざ$"
 	.globl gText_MoveRelearnerContestMovesTitle
 gText_MoveRelearnerContestMovesTitle: @ 0x85F7C57
 	.string "コンテストわざ$"
@@ -19733,12 +17112,10 @@ gText_MoveRelearnerPP: @ 0x85F7C64
 
 	.globl gText_MoveRelearnerPower
 gText_MoveRelearnerPower: @ 0x85F7C68
-	.string "{DARK_GRAY}りょ{BLUE}/$"
-
+	.string "いりょく/$"
 	.globl gText_MoveRelearnerAccuracy
 gText_MoveRelearnerAccuracy: @ 0x85F7C6E
-	.string "{MUS_RG_SEVII_DUNGEON}ちゅ{LIGHT_GRAY}/$"
-
+	.string "めいちゅう/$"
 	.globl gText_MoveRelearnerAppeal
 gText_MoveRelearnerAppeal: @ 0x85F7C75
 	.string "アピール$"
@@ -19789,12 +17166,7 @@ gUnknown_85FA964: @ 0x85FA964
 
 	.globl gUnknown_85FA97C
 gUnknown_85FA97C: @ 0x85FA97C
-	.string "{MUS_DUMMY}i${SE_BANG}p${SE_EXP}ü${SE_EXP}{SE_LEDGE}{SE_BANG}{SE_E}{MUS_DUMMY}{SE_SWITCH}x$"
-	.string "{SE_E}k${SE_LEDGE}k$ü$x$p${MUS_RG_VICTORY_WILD}{PH_PRICE_BLEND}HP$"
-	.string "{DYNAMIC_COLOR1}{LIGHT_GRAY}げ{LIGHT_GREEN}$"
-	.string "ぼ{LIGHT_GRAY}ぎょ${DYNAMIC_COLOR4}ばや{DYNAMIC_COLOR2}$"
-	.string "と{BLUE}{DYNAMIC_COLOR1}{LIGHT_GRAY}$と{BLUE}ぼ{LIGHT_GRAY}$"
-
+	.string "　　i$と　p$む　ü$む　こ　と　ふ　　　も　x$ふ　k$こ　k$ü$x$p$さいだいHP$こうげき$ぼうぎょ$すばやさ$とくこう$とくぼう$"
 	.globl gUnknown_85FA9C4
 gUnknown_85FA9C4: @ 0x85FA9C4
 	.string "{PLUS}$"
@@ -19809,85 +17181,7 @@ gUnknown_85FA9CC: @ 0x85FA9CC
 
 	.globl gUnknown_85FA9E4
 gUnknown_85FA9E4: @ 0x85FA9E4
-	.string "マキエ$$$$${SE_PIKE_CURTAIN_OPEN}{MUS_DUMMY}んと{DYNAMIC_COLOR3}{DYNAMIC_COLOR5}もたび{DYNAMIC_COLOR1}"
-	.string "ま{GREEN}や{DYNAMIC_COLOR5}ぶ{DYNAMIC_COLOR1}{DYNAMIC_COLOR6}{GREEN}めらわに{LIGHT_GREEN}"
-	.string "{SE_RG_POKE_JUMP_FAILURE}{DYNAMIC_COLOR3}び{DYNAMIC_COLOR1}{GREEN}{GREEN}や{SE_SUPER_EFFECTIVE}"
-	.string "ほのつ{LIGHT_RED}{DYNAMIC_COLOR3}ゆにゆた{DYNAMIC_COLOR4}ふれふ{GREEN}{DYNAMIC_COLOR1}{GREEN}{SE_NOT_EFFECTIVE}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_HEAL}{SE_M_SANDSTORM}{SE_M_LICK}{SE_M_HYPER_BEAM2}{SE_M_TRI_ATTACK}"
-	.string "の{SE_USE_ITEM}{TRANSPARENT}が$"
-	.string "{SE_CONTEST_ICON_CLEAR}{TRANSPARENT}{SE_CONTEST_ICON_CLEAR}{MUS_DUMMY}た4デイゲ{SE_M_CUT}{MUS_DUMMY}"
-	.string "マルノーム$"
-	.string "$$$$$$よ{WHITE}{SE_M_ABSORB_2}ず{WHITE}{SE_M_LICK}{SE_M_HYPER_BEAM2}{SE_M_PETAL_DANCE}{MUS_DUMMY}"
-	.string "{TRANSPARENT}{SE_RG_SHOP}{TRANSPARENT}{SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}た4デイ{DYNAMIC_COLOR1}"
-	.string "{SE_WIN_OPEN}{MUS_DUMMY}ドクケイル$"
-	.string "$$$$$${MUS_ABANDONED_SHIP}{SE_M_BUBBLE_BEAM2}{SE_M_HAZE}{SE_BALL_BOUNCE_2}{SE_ELEVATOR}{SE_M_GUST2}"
-	.string "{MUS_DUMMY}{SE_CONTEST_ICON_CLEAR}{MUS_DUMMY}パ{SE_RG_SHOP}{MUS_DUMMY}た4デイ{DYNAMIC_COLOR1}{SE_REPEL}"
-	.string "{MUS_DUMMY}ジーランス$"
-	.string "$$$$$$ハルヒト$$$$ひ{SE_USE_ITEM}{TRANSPARENT}エらろ{DYNAMIC_COLOR5}$"
-	.string "$ご{DYNAMIC_COLOR1}み{SE_WIN_OPEN}{DYNAMIC_COLOR3}てやろ{DYNAMIC_COLOR5}$"
-	.string "$ご{DYNAMIC_COLOR1}{LIGHT_RED}{SE_SLIDING_DOOR}{DYNAMIC_COLOR3}ヒよろ{DYNAMIC_COLOR5}$"
-	.string "$ご{DYNAMIC_COLOR1}{DYNAMIC_COLOR5}{SE_SLIDING_DOOR}{DYNAMIC_COLOR3}わやろ{DYNAMIC_COLOR5}$"
-	.string "$ご{DYNAMIC_COLOR1}ぬ{SE_SLIDING_DOOR}{SE_NOT_EFFECTIVE}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}ケ{WHITE}{SE_M_BUBBLE_BEAM2}{SE_M_PETAL_DANCE}{SE_M_BELLY_DRUM}{SE_EXIT}"
-	.string "{SE_BALLOON_RED}{MUS_DUMMY}{SE_SAVE}{SE_CONTEST_ICON_CLEAR}$"
-	.string "{SE_CONTEST_ICON_CLEAR}{MUS_DUMMY}た4デイ{DYNAMIC_COLOR1}{SE_M_MEGA_KICK}{MUS_DUMMY}ノクタス$"
-	.string "$$$$$$$ぅ{WHITE}{SE_M_ABSORB_2}{SE_POKENAV_CALL}ぴ{WHITE}{SE_CONTEST_CURTAIN_FALL}{SE_MUGSHOT}"
-	.string "{MUS_DUMMY}$"
-	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}た4デイ{DYNAMIC_COLOR1}{SE_M_CUT}{MUS_DUMMY}オオスバメ$"
-	.string "$$$$$$で{WHITE}{SE_M_DOUBLE_SLAP}{SE_BALL_BOUNCE_2}{SE_ELEVATOR}{SE_M_GUST2}{SE_M_VICEGRIP}{MUS_DUMMY}"
-	.string "{TRANSPARENT}{SE_RG_SHOP}{TRANSPARENT}{SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}た4デイ{SE_LEDGE}{MUS_DUMMY}"
-	.string "{TRANSPARENT}ナマズン$"
-	.string "$$$$$$$メイコ$$$$$ら{SE_USE_ITEM}{TRANSPARENT}ぼ{RED}{MUS_RG_PEWTER}ゅにたたfよずたぼ{RED}{MUS_RG_PEWTER}"
-	.string "び{DYNAMIC_COLOR1}eよむにずたとほ{LIGHT_GREEN}ほぃ{GREEN}もにや{DYNAMIC_COLOR5}{GREEN}{DYNAMIC_COLOR3}ねとぁとは{BLUE}"
-	.string "ら{SE_E}{DYNAMIC_COLOR3}$"
-	.string "{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}ざ{WHITE}{SE_M_MEGA_KICK2}{SE_REPEL}{SE_BIKE_HOP}{SE_M_HYPER_BEAM2}"
-	.string "{SE_M_GRASSWHISTLE}{MUS_DUMMY}{TRANSPARENT}{SE_RG_SHOP}{SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "た4デイ{DYNAMIC_COLOR1}{SE_PC_OFF}{MUS_DUMMY}エネコロロ$"
-	.string "$$$$$${MUS_OLDALE}{SE_M_PSYBEAM2}{SE_M_PETAL_DANCE}ぞ{WHITE}{SE_ROULETTE_BALL}{SE_DING_DONG}"
-	.string "{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}た4デイゲ{SE_WIN_OPEN}{MUS_DUMMY}"
-	.string "ロゼリア$"
-	.string "$$$$$$$や{WHITE}{SE_M_ABSORB_2}ず{WHITE}ぴ{WHITE}{SE_M_CHARGE}{SE_TAILLOW_WING_FLAP}{MUS_DUMMY}"
-	.string "ト{SE_M_PSYBEAM2}{TRANSPARENT}{SE_M_PSYBEAM2}{MUS_DUMMY}{TRANSPARENT}た4デイ{DYNAMIC_COLOR1}{SE_WIN_OPEN}"
-	.string "{MUS_DUMMY}アゲハント$"
-	.string "$$$$$$ピエール$$$$み{SE_USE_ITEM}{TRANSPARENT}ば{MUS_RG_VICTORY_TRAINER}{GREEN}み{GREEN}{DYNAMIC_COLOR1}"
-	.string "{DYNAMIC_COLOR1}も{SE_FAINT}{DYNAMIC_COLOR3}り{DYNAMIC_COLOR3}とねぇ{MUS_RG_PHOTO}に{LIGHT_RED}た$"
-	.string "${DYNAMIC_COLOR3}ほ{DYNAMIC_COLOR1}{DYNAMIC_COLOR1}ゃつちほは{BLUE}{LIGHT_RED}{DYNAMIC_COLOR3}"
-	.string "ほ{MUS_RG_VICTORY_TRAINER}{GREEN}み{GREEN}め{DYNAMIC_COLOR1}なた{WHITE}{SE_NOT_EFFECTIVE}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}$"
-	.string "$$$$$$$$${SE_RG_SHOP}{MUS_VICTORY_LEAGUE}{SE_M_ABSORB_2}{SE_M_HAIL}{SE_BERRY_BLENDER}{SE_EXIT}"
-	.string "{SE_PC_ON}{MUS_DUMMY}{MUS_DUMMY}{SE_CONTEST_ICON_CLEAR}$"
-	.string "{SE_M_SCRATCH}{MUS_DUMMY}た4デイ{SE_M_THUNDER_WAVE}{MUS_DUMMY}{TRANSPARENT}クチート$"
-	.string "$$$$$$$ぱ{WHITE}{SE_M_BRICK_BREAK}{SE_BALL_BOUNCE_2}{SE_M_HAIL}{SE_CONTEST_CONDITION_LOSE}"
-	.string "{SE_ELEVATOR}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}"
-	.string "た4デイ{DYNAMIC_COLOR1}{SE_M_SACRED_FIRE2}{MUS_DUMMY}サメハダー$"
-	.string "$$$$$${MUS_MOVE_DELETED}{SE_M_MEGA_KICK2}{SE_TAILLOW_WING_FLAP}{SE_M_HYPER_BEAM2}{SE_RAIN}"
-	.string "{SE_RG_POKE_JUMP_SUCCESS}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{SE_RG_SHOP}{MUS_DUMMY}{TRANSPARENT}"
-	.string "た4デイ{DYNAMIC_COLOR1}{SE_M_SACRED_FIRE2}{MUS_DUMMY}ジュペッタ$"
-	.string "$$$$$$"
-
+	.incbin "baserom_jp.gba", 0x5fa9e4, 0x510
 	.globl gUnknown_85FAEF4
 gUnknown_85FAEF4: @ 0x85FAEF4
 	.incbin "baserom_jp.gba", 0x5faef4, 0x10
@@ -20242,45 +17536,39 @@ gUnknown_85FCAE4: @ 0x85FCAE4
 
 	.globl gUnknown_85FCAF8
 gUnknown_85FCAF8: @ 0x85FCAF8
-	.string "{B_COPY_VAR_2}のみ{SE_WARP_IN}て{SE_BOO}{DARK_GRAY}れた！\nトウカジム{SE_A}パパ{GREEN}{SE_LAVARIDGE_FALL_WARP}"
-	.string "{LIGHT_GRAY}{LIGHT_BLUE}とろ{LIGHT_GRAY}！$"
-
+	.string "{B_COPY_VAR_2}のみを　てに　いれた！\n"
+	.string "トウカジムの　パパから　うけとろう！$"
 	.globl gUnknown_85FCB19
 gUnknown_85FCB19: @ 0x85FCB19
-	.string "{B_COPY_VAR_1}のみは\n{B_COPY_VAR_2}のみ{SE_BOO}へん{GREEN}{DYNAMIC_COLOR3}た！$"
-
+	.string "{B_COPY_VAR_1}のみは\n"
+	.string "{B_COPY_VAR_2}のみに　へんかした！$"
 	.globl gUnknown_85FCB2C
 gUnknown_85FCB2C: @ 0x85FCB2C
-	.string "{B_COPY_VAR_1}のみ{SE_I}{DYNAMIC_COLOR4}でに\n{MUS_RG_POKE_JUMP}っ{MUS_RG_CAUGHT_INTRO}た$"
-
+	.string "{B_COPY_VAR_1}のみは　すでに\n"
+	.string "はいっていた$"
 	.globl gUnknown_85FCB3D
 gUnknown_85FCB3D: @ 0x85FCB3D
-	.string "てもちのポケモンに\nと{BLUE}べつなリボン{SE_SAVE}{WHITE}た{RED}られた！$"
-
+	.string "てもちのポケモンに\n"
+	.string "とくべつなリボンが　あたえられた！$"
 	.globl gUnknown_85FCB59
 gUnknown_85FCB59: @ 0x85FCB59
-	.string "ず{GREEN}ん{SE_BOO}ぜん{DYNAMIC_COLOR1}{BLUE}モードが\n{MUS_RG_OBTAIN_KEY_ITEM}{SE_WIN_OPEN}{DYNAMIC_COLOR2}"
-	.string "れた！$"
-
+	.string "ずかんに　ぜんこくモードが\n"
+	.string "ついか　された！$"
 	.globl gUnknown_85FCB70
 gUnknown_85FCB70: @ 0x85FCB70
-	.string "めずら{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}{DYNAMIC_COLOR1}とば{SE_WARP_IN}{MUS_RG_OBTAIN_KEY_ITEM}"
-	.string "{GREEN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$"
-
+	.string "めずらしい　ことばを　ついかしました$"
 	.globl gUnknown_85FCB83
 gUnknown_85FCB83: @ 0x85FCB83
-	.string "{B_COPY_VAR_1}{SE_SAVE}{LIGHT_RED}{BLUE}られて{LIGHT_GREEN}た！$"
-
+	.string "{B_COPY_VAR_1}が　おくられてきた！$"
 	.globl gUnknown_85FCB90
 gUnknown_85FCB90: @ 0x85FCB90
-	.string "てもち{SE_SAVE}{DARK_GRAY}っ{PH_THOUGHT_HELD}なので\n{B_COPY_VAR_1}{SE_I}もら{RED}な{GREEN}った⋯$"
-
+	.string "てもちが　いっぱいなので\n"
+	.string "{B_COPY_VAR_1}は　もらえなかった⋯$"
 	.globl gUnknown_85FCBAA
 gUnknown_85FCBAA: @ 0x85FCBAA
-	.string "{WHITE}らた{SE_PIN}トレーナーが\nホ{PKMN}ン{SE_BOO}やって{LIGHT_GREEN}た$"
-	.string "バトルタワー{SE_BOO}{WHITE}らたな\n{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}ん{DYNAMIC_COLOR3}ゃ{SE_SAVE}{WHITE}"
-	.string "らわれた！$"
-
+	.string "あらたな　トレーナーが\n"
+	.string "ホウエンに　やってきた$バトルタワーに　あらたな\n"
+	.string "たいせんしゃが　あらわれた！$"
 	.globl gUnknown_85FCBDE
 gUnknown_85FCBDE: @ 0x85FCBDE
 	.incbin "baserom_jp.gba", 0x5fcbde, 0x922
@@ -20467,9 +17755,7 @@ gUnknown_890F1E8: @ 0x890F1E8
 
 	.globl gUnknown_890F1EC
 gUnknown_890F1EC: @ 0x890F1EC
-	.string "みÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}ふÖゾ{BLUE}$"
-	.string "$$$$$$$"
-
+	.string "みÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾく$$$$$$$$"
 	.globl gUnknown_890F21C
 gUnknown_890F21C: @ 0x890F21C
 	.incbin "baserom_jp.gba", 0x90f21c, 0x8
