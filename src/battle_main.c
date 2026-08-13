@@ -1992,6 +1992,12 @@ static void BattleIntroPrintWildMonAttacked(void)
     }
 }
 
+static void UNUSED BattleIntroSkipRecordMonsToDex(void)
+{
+    if (gBattleControllerExecFlags == 0)
+        gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
+}
+
 static void BattleIntroPrintOpponentSendsOut(void)
 {
     u32 position;

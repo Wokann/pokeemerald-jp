@@ -20,24 +20,6 @@
 
 
 
-	thumb_func_start sub_0803AFF0
-sub_0803AFF0: @ 0x0803AFF0
-	push {lr}
-	ldr r0, _0803B004
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _0803B000
-	ldr r1, _0803B008
-	ldr r0, _0803B00C
-	str r0, [r1]
-_0803B000:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803B004: .4byte 0x02023D0C
-_0803B008: .4byte 0x03005A64
-_0803B00C: .4byte 0x0803B011
-	thumb_func_end sub_0803AFF0
 
 	thumb_func_start BattleIntroPrintPlayerSendsOut
 BattleIntroPrintPlayerSendsOut: @ 0x0803B010
