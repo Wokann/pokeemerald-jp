@@ -2865,3 +2865,289 @@ static void Cmd_jumpifbyte(void)
         break;
     }
 }
+
+static void Cmd_jumpifhalfword(void)
+{
+    u8 caseID = gBattlescriptCurrInstr[1];
+    const u16 *memHword = T2_READ_PTR(gBattlescriptCurrInstr + 2);
+    u16 value = T2_READ_16(gBattlescriptCurrInstr + 6);
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 8);
+
+    gBattlescriptCurrInstr += 12;
+
+    switch (caseID)
+    {
+    case CMP_EQUAL:
+        if (*memHword == value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NOT_EQUAL:
+        if (*memHword != value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_GREATER_THAN:
+        if (*memHword > value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_LESS_THAN:
+        if (*memHword < value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_COMMON_BITS:
+        if (*memHword & value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NO_COMMON_BITS:
+        if (!(*memHword & value))
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    }
+}
+
+static void Cmd_jumpifword(void)
+{
+    u8 caseID = gBattlescriptCurrInstr[1];
+    const u32 *memWord = T2_READ_PTR(gBattlescriptCurrInstr + 2);
+    u32 value = T1_READ_32(gBattlescriptCurrInstr + 6);
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 10);
+
+    gBattlescriptCurrInstr += 14;
+
+    switch (caseID)
+    {
+    case CMP_EQUAL:
+        if (*memWord == value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NOT_EQUAL:
+        if (*memWord != value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_GREATER_THAN:
+        if (*memWord > value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_LESS_THAN:
+        if (*memWord < value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_COMMON_BITS:
+        if (*memWord & value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NO_COMMON_BITS:
+        if (!(*memWord & value))
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    }
+}
+
+static void Cmd_jumpifarrayequal(void)
+{
+    const u8 *mem1 = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *mem2 = T2_READ_PTR(gBattlescriptCurrInstr + 5);
+    u32 size = gBattlescriptCurrInstr[9];
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 10);
+
+    u8 i;
+    for (i = 0; i < size; i++)
+    {
+        if (*mem1 != *mem2)
+        {
+            gBattlescriptCurrInstr += 14;
+            break;
+        }
+        mem1++, mem2++;
+    }
+
+    if (i == size)
+        gBattlescriptCurrInstr = jumpPtr;
+}
+
+static void Cmd_jumpifarraynotequal(void)
+{
+    u8 equalBytes = 0;
+    const u8 *mem1 = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *mem2 = T2_READ_PTR(gBattlescriptCurrInstr + 5);
+    u32 size = gBattlescriptCurrInstr[9];
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 10);
+
+    u8 i;
+    for (i = 0; i < size; i++)
+    {
+        if (*mem1 == *mem2)
+            equalBytes++;
+        mem1++, mem2++;
+    }
+
+    if (equalBytes != size)
+        gBattlescriptCurrInstr = jumpPtr;
+    else
+        gBattlescriptCurrInstr += 14;
+}
+
+static void Cmd_setbyte(void)
+{
+    u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    *memByte = gBattlescriptCurrInstr[5];
+
+    gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_addbyte(void)
+{
+    u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    *memByte += gBattlescriptCurrInstr[5];
+    gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_subbyte(void)
+{
+    u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    *memByte -= gBattlescriptCurrInstr[5];
+    gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_copyarray(void)
+{
+    u8 *dest = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *src = T2_READ_PTR(gBattlescriptCurrInstr + 5);
+    s32 size = gBattlescriptCurrInstr[9];
+
+    s32 i;
+    for (i = 0; i < size; i++)
+        dest[i] = src[i];
+
+    gBattlescriptCurrInstr += 10;
+}
+
+static void Cmd_copyarraywithindex(void)
+{
+    u8 *dest = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *src = T2_READ_PTR(gBattlescriptCurrInstr + 5);
+    const u8 *index = T2_READ_PTR(gBattlescriptCurrInstr + 9);
+    s32 size = gBattlescriptCurrInstr[13];
+
+    s32 i;
+    for (i = 0; i < size; i++)
+        dest[i] = src[i + *index];
+
+    gBattlescriptCurrInstr += 14;
+}
+
+static void Cmd_orbyte(void)
+{
+    u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    *memByte |= gBattlescriptCurrInstr[5];
+    gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_orhalfword(void)
+{
+    u16 *memHword = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    u16 val = T2_READ_16(gBattlescriptCurrInstr + 5);
+
+    *memHword |= val;
+    gBattlescriptCurrInstr += 7;
+}
+
+static void Cmd_orword(void)
+{
+    u32 *memWord = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    u32 val = T2_READ_32(gBattlescriptCurrInstr + 5);
+
+    *memWord |= val;
+    gBattlescriptCurrInstr += 9;
+}
+
+static void Cmd_bicbyte(void)
+{
+    u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    *memByte &= ~(gBattlescriptCurrInstr[5]);
+    gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_bichalfword(void)
+{
+    u16 *memHword = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    u16 val = T2_READ_16(gBattlescriptCurrInstr + 5);
+
+    *memHword &= ~val;
+    gBattlescriptCurrInstr += 7;
+}
+
+static void Cmd_bicword(void)
+{
+    u32 *memWord = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+    u32 val = T2_READ_32(gBattlescriptCurrInstr + 5);
+
+    *memWord &= ~val;
+    gBattlescriptCurrInstr += 9;
+}
+
+static void Cmd_pause(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        u16 value = T2_READ_16(gBattlescriptCurrInstr + 1);
+        if (++gPauseCounterBattle >= value)
+        {
+            gPauseCounterBattle = 0;
+            gBattlescriptCurrInstr += 3;
+        }
+    }
+}
+
+static void Cmd_waitstate(void)
+{
+    if (gBattleControllerExecFlags == 0)
+        gBattlescriptCurrInstr++;
+}
+
+static void Cmd_healthbar_update(void)
+{
+    if (gBattlescriptCurrInstr[1] == BS_TARGET)
+        gActiveBattler = gBattlerTarget;
+    else
+        gActiveBattler = gBattlerAttacker;
+
+    BtlController_EmitHealthBarUpdate(B_COMM_TO_CONTROLLER, gBattleMoveDamage);
+    MarkBattlerForControllerExec(gActiveBattler);
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_return(void)
+{
+    HandleAction_RunBattleScript();
+}
+
+static void Cmd_end(void)
+{
+    if (gBattleTypeFlags & BATTLE_TYPE_ARENA)
+        BattleArena_AddSkillPoints(gBattlerAttacker);
+
+    gMoveResultFlags = 0;
+    gActiveBattler = 0;
+    gCurrentActionFuncId = B_ACTION_TRY_FINISH;
+}
+
+static void Cmd_end2(void)
+{
+    gActiveBattler = 0;
+    gCurrentActionFuncId = B_ACTION_TRY_FINISH;
+}
+
+// Pops the main function stack
+static void Cmd_end3(void)
+{
+    HandleAction_RunBattleScript();
+    if (gBattleResources->battleCallbackStack->size != 0)
+        gBattleResources->battleCallbackStack->size--;
+    gBattleMainFunc = gBattleResources->battleCallbackStack->function[gBattleResources->battleCallbackStack->size];
+}
+
+static void Cmd_call(void)
+{
+    BattleScriptPush(gBattlescriptCurrInstr + 5);
+    gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+}
