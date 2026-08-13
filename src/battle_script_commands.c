@@ -1499,6 +1499,7 @@ void TrySetDestinyBondToHappen(void);
 extern const u8 sFlailHpScaleToPowerTable[];
 static void Cmd_trysetdestinybondtohappen(void);
 static void Cmd_remaininghptopower(void);
+static void Cmd_tryspiteppreduce(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7456,4 +7457,56 @@ static void Cmd_remaininghptopower(void)
 
     gDynamicBasePower = sFlailHpScaleToPowerTable[i + 1];
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_tryspiteppreduce(void)
+{
+    if (gLastMoves[gBattlerTarget] != MOVE_NONE
+     && gLastMoves[gBattlerTarget] != MOVE_UNAVAILABLE)
+    {
+        s32 i;
+
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (gLastMoves[gBattlerTarget] == gBattleMons[gBattlerTarget].moves[i])
+                break;
+        }
+
+        if (i != MAX_MON_MOVES && gBattleMons[gBattlerTarget].pp[i] > 1)
+        {
+            s32 ppToDeduct = (Random() & 3) + 2;
+            if (gBattleMons[gBattlerTarget].pp[i] < ppToDeduct)
+                ppToDeduct = gBattleMons[gBattlerTarget].pp[i];
+
+            PREPARE_MOVE_BUFFER(gBattleTextBuff1, gLastMoves[gBattlerTarget])
+
+            ConvertIntToDecimalStringN(gBattleTextBuff2, ppToDeduct, STR_CONV_MODE_LEFT_ALIGN, 1);
+
+            PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff2, 1, ppToDeduct)
+
+            gBattleMons[gBattlerTarget].pp[i] -= ppToDeduct;
+            gActiveBattler = gBattlerTarget;
+
+            // if (MOVE_IS_PERMANENT(gActiveBattler, i)), but backwards
+            if (!(gDisableStructs[gActiveBattler].mimickedMoves & gBitTable[i])
+                && !(gBattleMons[gActiveBattler].status2 & STATUS2_TRANSFORMED))
+            {
+                BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_PPMOVE1_BATTLE + i, 0, sizeof(gBattleMons[gActiveBattler].pp[i]), &gBattleMons[gActiveBattler].pp[i]);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+
+            gBattlescriptCurrInstr += 5;
+
+            if (gBattleMons[gBattlerTarget].pp[i] == 0)
+                CancelMultiTurnMoves(gBattlerTarget);
+        }
+        else
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
