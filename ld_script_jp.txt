@@ -793,6 +793,8 @@ sub_081537C0 = RunMysteryEventScriptContextCommand;
 gAnimVisualTaskCount = gUnknown_203809E;
 GetBattleBgPaletteNum = sub_080A665C;
 gBattleAnimArgs = gUnknown_20380BE;
+gBattleAnimAttacker = gUnknown_20380D6;
+gBattleAnimTarget = gUnknown_20380D7;
 CreateCableCarSprites = LoadCableCarSprites;
 sSpriteTemplates_CableCar = gUnknown_85AC9A4;
 sSpriteTemplate_Cable = gUnknown_85AC9D4;
@@ -4872,6 +4874,9 @@ SECTIONS {
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest);
         src/battle_anim_effects_3.o(.text.AnimTask_SetPsychicBackground);
         src/battle_anim_effects_3.o(.text.FadeScreenToWhite_Step);
+        src/battle_anim_effects_3.o(.text.AnimSpikes);
+        src/battle_anim_effects_3.o(.text.AnimSpikes_Step1);
+        src/battle_anim_effects_3.o(.text.AnimSpikes_Step2);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest2);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

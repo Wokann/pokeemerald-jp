@@ -40,3 +40,45 @@ static void FadeScreenToWhite_Step(u8 taskId)
     if ((u16)gBattleAnimArgs[7] == 0xFFFF)
         DestroyTask(taskId);
 }
+
+static void AnimSpikes_Step1(struct Sprite *sprite);
+static void AnimSpikes_Step2(struct Sprite *sprite);
+
+static void AnimSpikes(struct Sprite *sprite)
+{
+    s16 x, y;
+
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &x, &y);
+
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+
+    sprite->data[0] = gBattleAnimArgs[4];
+    sprite->data[2] = x + gBattleAnimArgs[2];
+    sprite->data[4] = y + gBattleAnimArgs[3];
+    sprite->data[5] = -50;
+
+    InitAnimArcTranslation(sprite);
+    sprite->callback = AnimSpikes_Step1;
+}
+
+static void AnimSpikes_Step1(struct Sprite *sprite)
+{
+    if (TranslateAnimHorizontalArc(sprite))
+    {
+        sprite->data[0] = 30;
+        sprite->data[1] = 0;
+        sprite->callback = WaitAnimForDuration;
+        StoreSpriteCallbackInData6(sprite, AnimSpikes_Step2);
+    }
+}
+
+static void AnimSpikes_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[1] & 1)
+        sprite->invisible ^= 1;
+
+    if (++sprite->data[1] == 16)
+        DestroyAnimSprite(sprite);
+}
