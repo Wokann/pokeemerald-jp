@@ -90,6 +90,7 @@ extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same
 extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-sensitive, kept in asm)
 extern u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves); // JP asm 0x0803CB54 (register-sensitive, kept in asm)
 extern void CheckFocusPunch_ClearVarsBeforeTurnStarts(void); // JP asm 0x0803D334 (US: same name)
+void TurnValuesCleanUp(bool8 var0);
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2273,6 +2274,43 @@ static void SetActionsAndBattlersTurnOrder(void)
     }
     gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
     gBattleStruct->focusPunchBattlerId = 0;
+}
+
+void TurnValuesCleanUp(bool8 var0)
+{
+    s32 i;
+    u8 *dataPtr;
+
+    for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+    {
+        if (var0)
+        {
+            gProtectStructs[gActiveBattler].protected = 0;
+            gProtectStructs[gActiveBattler].endured = 0;
+        }
+        else
+        {
+            dataPtr = (u8 *)(&gProtectStructs[gActiveBattler]);
+            for (i = 0; i < sizeof(struct ProtectStruct); i++)
+                dataPtr[i] = 0;
+
+            if (gDisableStructs[gActiveBattler].isFirstTurn)
+                gDisableStructs[gActiveBattler].isFirstTurn--;
+
+            if (gDisableStructs[gActiveBattler].rechargeTimer)
+            {
+                gDisableStructs[gActiveBattler].rechargeTimer--;
+                if (gDisableStructs[gActiveBattler].rechargeTimer == 0)
+                    gBattleMons[gActiveBattler].status2 &= ~STATUS2_RECHARGE;
+            }
+        }
+
+        if (gDisableStructs[gActiveBattler].substituteHP == 0)
+            gBattleMons[gActiveBattler].status2 &= ~STATUS2_SUBSTITUTE;
+    }
+
+    gSideTimers[0].followmeTimer = 0;
+    gSideTimers[1].followmeTimer = 0;
 }
 
 
