@@ -1489,6 +1489,7 @@ static void Cmd_counterdamagecalculator(void);
 static void Cmd_mirrorcoatdamagecalculator(void);
 static void Cmd_disablelastusedattack(void);
 static void Cmd_trysetencore(void);
+static void Cmd_painsplitdmgcalc(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7230,6 +7231,30 @@ static void Cmd_trysetencore(void)
         gDisableStructs[gBattlerTarget].encoredMovePos = i;
         gDisableStructs[gBattlerTarget].encoreTimer = (Random() & 3) + 3;
         gDisableStructs[gBattlerTarget].encoreTimerStartValue = gDisableStructs[gBattlerTarget].encoreTimer;
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_painsplitdmgcalc(void)
+{
+    if (!(gBattleMons[gBattlerTarget].status2 & STATUS2_SUBSTITUTE))
+    {
+        s32 hpDiff = (gBattleMons[gBattlerAttacker].hp + gBattleMons[gBattlerTarget].hp) / 2;
+        s32 painSplitHp = gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - hpDiff;
+        u8 *storeLoc = (void *)(&gBattleScripting.painSplitHp);
+
+        storeLoc[0] = (painSplitHp);
+        storeLoc[1] = (painSplitHp & 0x0000FF00) >> 8;
+        storeLoc[2] = (painSplitHp & 0x00FF0000) >> 16;
+        storeLoc[3] = (painSplitHp & 0xFF000000) >> 24;
+
+        gBattleMoveDamage = gBattleMons[gBattlerAttacker].hp - hpDiff;
+        gSpecialStatuses[gBattlerTarget].shellBellDmg = IGNORE_SHELL_BELL;
+
         gBattlescriptCurrInstr += 5;
     }
     else
