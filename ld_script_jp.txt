@@ -3261,6 +3261,7 @@ SECTIONS {
         asm/battle_main_selstate.o(.text);
         src/battle_main.o(.text.AllAtActionConfirmed);
         src/battle_main.o(.text.UpdateBattlerPartyOrdersOnSwitch);
+        src/battle_main.o(.text.SwapTurnOrder);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

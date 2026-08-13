@@ -81,6 +81,7 @@ gLastPrintedMoves = ABSOLUTE(0x02023F0C);
 gMoveResultFlags = ABSOLUTE(0x02023F20);
 gProtectStructs = ABSOLUTE(0x02023FE0);
 gBattlerByTurnOrder = ABSOLUTE(0x02023D22);
+gActionsByTurnOrder = ABSOLUTE(0x02023D1E);
 gChosenActionByBattler = ABSOLUTE(0x02023EC0);
 gChosenMoveByBattler = ABSOLUTE(0x02023F18);
 gCurrentActionFuncId = ABSOLUTE(0x02023D27);

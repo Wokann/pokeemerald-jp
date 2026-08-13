@@ -32,34 +32,6 @@
 
 
 
-	thumb_func_start SwapTurnOrder
-SwapTurnOrder: @ 0x0803CB20
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	ldr r2, _0803CB4C
-	adds r4, r0, r2
-	ldrb r5, [r4]
-	adds r2, r1, r2
-	ldrb r3, [r2]
-	strb r3, [r4]
-	strb r5, [r2]
-	ldr r2, _0803CB50
-	adds r0, r0, r2
-	ldrb r5, [r0]
-	adds r1, r1, r2
-	ldrb r2, [r1]
-	strb r2, [r0]
-	strb r5, [r1]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803CB4C: .4byte 0x02023D1E
-_0803CB50: .4byte 0x02023D22
-	thumb_func_end SwapTurnOrder
 
 	thumb_func_start GetWhoStrikesFirst
 GetWhoStrikesFirst: @ 0x0803CB54
