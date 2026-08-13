@@ -2285,49 +2285,13 @@ _0815C2DC: .4byte 0x02022ACC
 _0815C2E0: .4byte 0x02022ACE
 	thumb_func_end sub_0815BFE0
 
-	thumb_func_start sub_0815C2E4
-sub_0815C2E4: @ 0x0815C2E4
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	adds r5, r0, #0
-	ldr r1, _0815C31C
-	lsls r0, r5, #2
-	adds r0, r0, r5
-	lsls r0, r0, #3
-	adds r4, r0, r1
-	movs r1, #8
-	ldrsh r0, [r4, r1]
-	cmp r0, #0
-	bne _0815C324
-	movs r0, #0
-	bl GetAnimBattlerSpriteId
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	ldr r2, _0815C320
-	adds r0, r4, #0
-	bl PrepareAffineAnimInTaskData
-	ldrh r0, [r4, #8]
-	adds r0, #1
-	strh r0, [r4, #8]
-	b _0815C336
-	.align 2, 0
-_0815C31C: .4byte 0x03005B60
-_0815C320: .4byte 0x085AD2B8
-_0815C324:
-	adds r0, r4, #0
-	bl RunAffineAnimFromTaskData
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0815C336
-	adds r0, r5, #0
-	bl DestroyAnimVisualTask
-_0815C336:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0815C2E4
+	.section .text.battle_anim_effects_3_rest6,"ax",%progbits
+
+
+
+
+
+
 
 	thumb_func_start AnimWeakFrustrationAngerMark
 AnimWeakFrustrationAngerMark: @ 0x0815C33C

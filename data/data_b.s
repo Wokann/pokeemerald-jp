@@ -11511,9 +11511,13 @@ gUnknown_85AD2AC: @ 0x85AD2AC
 gUnknown_85AD2B0: @ 0x85AD2B0
 	.incbin "baserom_jp.gba", 0x5ad2b0, 0x8
 
-	.globl gUnknown_85AD2B8
-gUnknown_85AD2B8: @ 0x85AD2B8
-	.incbin "baserom_jp.gba", 0x5ad2b8, 0x140
+	.globl gStrongFrustrationAffineAnimCmds
+gStrongFrustrationAffineAnimCmds: @ 0x85AD2B8
+	.incbin "baserom_jp.gba", 0x5ad2b8, 0x20
+
+	.globl gUnknown_85AD2D8
+gUnknown_85AD2D8: @ 0x85AD2D8
+	.incbin "baserom_jp.gba", 0x5ad2d8, 0x120
 
 	.globl gUnknown_85AD3F8
 gUnknown_85AD3F8: @ 0x85AD3F8
