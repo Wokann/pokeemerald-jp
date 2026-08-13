@@ -28,6 +28,7 @@ static void AnimWishStar(struct Sprite *sprite);
 static void AnimWishStar_Step(struct Sprite *sprite);
 static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
+static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -885,5 +886,28 @@ void AnimTask_StrongFrustrationGrowAndShrink(u8 taskId)
     {
         if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
             DestroyAnimVisualTask(taskId);
+    }
+}
+
+static void AnimWeakFrustrationAngerMark(struct Sprite *sprite)
+{
+    if (sprite->data[0] == 0)
+    {
+        InitSpritePosToAnimAttacker(sprite, FALSE);
+        sprite->data[0]++;
+    }
+    else if (sprite->data[0]++ > 20)
+    {
+        sprite->data[1] += 160;
+        sprite->data[2] += 128;
+
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+            sprite->x2 = -(sprite->data[1] >> 8);
+        else
+            sprite->x2 = sprite->data[1] >> 8;
+
+        sprite->y2 += sprite->data[2] >> 8;
+        if (sprite->y2 > 64)
+            DestroyAnimSprite(sprite);
     }
 }

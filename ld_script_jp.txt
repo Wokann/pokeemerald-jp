@@ -4912,6 +4912,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_SwallowDeformMon);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5);
         src/battle_anim_effects_3.o(.text.AnimTask_StrongFrustrationGrowAndShrink);
+        src/battle_anim_effects_3.o(.text.AnimWeakFrustrationAngerMark);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
