@@ -83,6 +83,7 @@ extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (register-sen
 extern void BattleIntroPlayer1SendsOutMonAnimation(void); // JP asm 0x0803B10C (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern void TryDoEventsBeforeFirstTurn(void); // JP asm 0x0803B26C (register-sensitive, kept in asm)
+extern void BattleTurnPassed(void); // JP asm 0x0803B600 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2057,6 +2058,30 @@ static void BattleIntroPrintOpponentSendsOut(void)
 
     PrepareStringBattle(STRINGID_INTROSENDOUT, GetBattlerAtPosition(position));
     gBattleMainFunc = BattleIntroOpponent1SendsOutMonAnimation;
+}
+
+static void HandleEndTurn_ContinueBattle(void)
+{
+    s32 i;
+
+    if (gBattleControllerExecFlags == 0)
+    {
+        gBattleMainFunc = BattleTurnPassed;
+        for (i = 0; i < BATTLE_COMMUNICATION_ENTRIES_COUNT; i++)
+            gBattleCommunication[i] = 0;
+        for (i = 0; i < gBattlersCount; i++)
+        {
+            gBattleMons[i].status2 &= ~STATUS2_FLINCHED;
+            if ((gBattleMons[i].status1 & STATUS1_SLEEP) && (gBattleMons[i].status2 & STATUS2_MULTIPLETURNS))
+                CancelMultiTurnMoves(i);
+        }
+        gBattleStruct->turnEffectsTracker = 0;
+        gBattleStruct->turnEffectsBattlerId = 0;
+        gBattleStruct->wishPerishSongState = 0;
+        gBattleStruct->wishPerishSongBattlerId = 0;
+        gBattleStruct->turnCountersTracker = 0;
+        gMoveResultFlags = 0;
+    }
 }
 
 

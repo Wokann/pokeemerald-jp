@@ -3250,6 +3250,7 @@ SECTIONS {
         asm/battle_main_introplayer1.o(.text);
         asm/battle_main_introswitchin.o(.text);
         asm/battle_main_trydo.o(.text);
+        src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
