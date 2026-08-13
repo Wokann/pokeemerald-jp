@@ -73,6 +73,25 @@ struct StatFractions
 
 extern const struct StatFractions sAccuracyStageRatios[];
 
+extern const u16 gUnknown_82ECC4C[];
+extern const u8 gUnknown_82ECC6C[];
+extern const struct SpriteTemplate gUnknown_82ECD44;
+
+static void Cmd_drawlvlupbox(void);
+static void DrawLevelUpWindow1(void);
+static void DrawLevelUpWindow2(void);
+static void InitLevelUpBanner(void);
+static bool8 SlideInLevelUpBanner(void);
+static void DrawLevelUpBannerText(void);
+static bool8 SlideOutLevelUpBanner(void);
+static void PutMonIconOnLvlUpBanner(void);
+static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite);
+static bool32 IsMonGettingExpSentOut(void);
+static void Cmd_resetsentmonsvalue(void);
+static void Cmd_setatktoplayer0(void);
+static void Cmd_makevisible(void);
+static void Cmd_recordlastability(void);
+
 static void Cmd_attackcanceler(void)
 {
     s32 i;
@@ -5094,6 +5113,317 @@ static void Cmd_removeitem(void)
 static void Cmd_atknameinbuff1(void)
 {
     PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gBattlerPartyIndexes[gBattlerAttacker])
+
+    gBattlescriptCurrInstr++;
+}
+
+#define LEVEL_UP_BANNER_START 416
+#define LEVEL_UP_BANNER_END   512
+#define TAG_LVLUP_BANNER_MON_ICON 55130
+
+static void Cmd_drawlvlupbox(void)
+{
+    if (gBattleScripting.drawlvlupboxState == 0)
+    {
+        // If the Pokémon getting exp is not in-battle then
+        // slide out a banner with their name and icon on it.
+        // Otherwise skip ahead.
+        if (IsMonGettingExpSentOut())
+            gBattleScripting.drawlvlupboxState = 3;
+        else
+            gBattleScripting.drawlvlupboxState = 1;
+    }
+
+    switch (gBattleScripting.drawlvlupboxState)
+    {
+    case 1:
+        // Start level up banner
+        gBattle_BG2_Y = 96;
+        SetBgAttribute(2, BG_ATTR_PRIORITY, 0);
+        ShowBg(2);
+        InitLevelUpBanner();
+        gBattleScripting.drawlvlupboxState = 2;
+        break;
+    case 2:
+        if (!SlideInLevelUpBanner())
+            gBattleScripting.drawlvlupboxState = 3;
+        break;
+    case 3:
+        // Init level up box
+        gBattle_BG1_X = 0;
+        gBattle_BG1_Y = 256;
+        SetBgAttribute(0, BG_ATTR_PRIORITY, 1);
+        SetBgAttribute(1, BG_ATTR_PRIORITY, 0);
+        ShowBg(0);
+        ShowBg(1);
+        HandleBattleWindow(18, 7, 29, 19, WINDOW_BG1);
+        gBattleScripting.drawlvlupboxState = 4;
+        break;
+    case 4:
+        // Draw page 1 of level up box
+        DrawLevelUpWindow1();
+        PutWindowTilemap(B_WIN_LEVEL_UP_BOX);
+        CopyWindowToVram(B_WIN_LEVEL_UP_BOX, COPYWIN_FULL);
+        gBattleScripting.drawlvlupboxState++;
+        break;
+    case 5:
+    case 7:
+        // Wait for draw after each page
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            gBattle_BG1_Y = 0;
+            gBattleScripting.drawlvlupboxState++;
+        }
+        break;
+    case 6:
+        if (gMain.newKeys != 0)
+        {
+            // Draw page 2 of level up box
+            PlaySE(SE_SELECT);
+            DrawLevelUpWindow2();
+            CopyWindowToVram(B_WIN_LEVEL_UP_BOX, COPYWIN_GFX);
+            gBattleScripting.drawlvlupboxState++;
+        }
+        break;
+    case 8:
+        if (gMain.newKeys != 0)
+        {
+            // Close level up box
+            PlaySE(SE_SELECT);
+            HandleBattleWindow(18, 7, 29, 19, WINDOW_BG1 | WINDOW_CLEAR);
+            gBattleScripting.drawlvlupboxState++;
+        }
+        break;
+    case 9:
+        if (!SlideOutLevelUpBanner())
+        {
+            ClearWindowTilemap(B_WIN_LEVEL_UP_BANNER);
+            CopyWindowToVram(B_WIN_LEVEL_UP_BANNER, COPYWIN_MAP);
+
+            ClearWindowTilemap(B_WIN_LEVEL_UP_BOX);
+            CopyWindowToVram(B_WIN_LEVEL_UP_BOX, COPYWIN_MAP);
+
+            SetBgAttribute(2, BG_ATTR_PRIORITY, 2);
+            ShowBg(2);
+
+            gBattleScripting.drawlvlupboxState = 10;
+        }
+        break;
+    case 10:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            SetBgAttribute(0, BG_ATTR_PRIORITY, 0);
+            SetBgAttribute(1, BG_ATTR_PRIORITY, 1);
+            ShowBg(0);
+            ShowBg(1);
+            gBattlescriptCurrInstr++;
+        }
+        break;
+    }
+}
+
+static void DrawLevelUpWindow1(void)
+{
+    u16 currStats[NUM_STATS];
+
+    GetMonLevelUpWindowStats(&gPlayerParty[gBattleStruct->expGetterMonId], currStats);
+    DrawLevelUpWindowPg1(B_WIN_LEVEL_UP_BOX, gBattleResources->beforeLvlUp->stats, currStats, TEXT_DYNAMIC_COLOR_5, TEXT_DYNAMIC_COLOR_4, TEXT_DYNAMIC_COLOR_6);
+}
+
+static void DrawLevelUpWindow2(void)
+{
+    u16 currStats[NUM_STATS];
+
+    GetMonLevelUpWindowStats(&gPlayerParty[gBattleStruct->expGetterMonId], currStats);
+    DrawLevelUpWindowPg2(B_WIN_LEVEL_UP_BOX, currStats, TEXT_DYNAMIC_COLOR_5, TEXT_DYNAMIC_COLOR_4, TEXT_DYNAMIC_COLOR_6);
+}
+
+static void InitLevelUpBanner(void)
+{
+    gBattle_BG2_Y = 0;
+    gBattle_BG2_X = LEVEL_UP_BANNER_START;
+
+    LoadPalette(gUnknown_82ECC4C, BG_PLTT_ID(6), 0x20);
+    CopyToWindowPixelBuffer(B_WIN_LEVEL_UP_BANNER, gUnknown_82ECC6C, 0, 0);
+    PutWindowTilemap(B_WIN_LEVEL_UP_BANNER);
+    CopyWindowToVram(B_WIN_LEVEL_UP_BANNER, COPYWIN_FULL);
+
+    PutMonIconOnLvlUpBanner();
+}
+
+static bool8 SlideInLevelUpBanner(void)
+{
+    if (IsDma3ManagerBusyWithBgCopy())
+        return TRUE;
+
+    if (gBattle_BG2_X == LEVEL_UP_BANNER_END)
+        return FALSE;
+
+    if (gBattle_BG2_X == LEVEL_UP_BANNER_START)
+        DrawLevelUpBannerText();
+
+    gBattle_BG2_X += 8;
+    if (gBattle_BG2_X >= LEVEL_UP_BANNER_END)
+        gBattle_BG2_X = LEVEL_UP_BANNER_END;
+
+    return (gBattle_BG2_X != LEVEL_UP_BANNER_END);
+}
+
+static void DrawLevelUpBannerText(void)
+{
+    u16 monLevel;
+    u8 monGender;
+    struct TextPrinterTemplate printerTemplate;
+    u8 *txtPtr;
+
+    monLevel = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_LEVEL);
+    monGender = GetMonGender(&gPlayerParty[gBattleStruct->expGetterMonId]);
+    GetMonNickname(&gPlayerParty[gBattleStruct->expGetterMonId], gStringVar4);
+
+    printerTemplate.currentChar = gStringVar4;
+    printerTemplate.windowId = B_WIN_LEVEL_UP_BANNER;
+    printerTemplate.fontId = FONT_SMALL;
+    printerTemplate.x = 32;
+    printerTemplate.y = 0;
+    printerTemplate.currentX = 32;
+    printerTemplate.currentY = 0;
+    printerTemplate.letterSpacing = 0;
+    printerTemplate.lineSpacing = 0;
+    printerTemplate.unk = 0;
+    printerTemplate.fgColor = TEXT_COLOR_WHITE;
+    printerTemplate.bgColor = TEXT_COLOR_TRANSPARENT;
+    printerTemplate.shadowColor = TEXT_COLOR_DARK_GRAY;
+
+    AddTextPrinter(&printerTemplate, TEXT_SKIP_DRAW, NULL);
+
+    txtPtr = gStringVar4;
+    *(txtPtr)++ = CHAR_EXTRA_SYMBOL;
+    *(txtPtr)++ = CHAR_LV_2;
+
+    txtPtr = ConvertIntToDecimalStringN(txtPtr, monLevel, STR_CONV_MODE_RIGHT_ALIGN, 3);
+    txtPtr = StringFill(txtPtr, 0, 1);
+
+    if (monGender != MON_GENDERLESS)
+    {
+        if (monGender == MON_MALE)
+        {
+            txtPtr = WriteColorChangeControlCode(txtPtr, 0, TEXT_DYNAMIC_COLOR_3);
+            txtPtr = WriteColorChangeControlCode(txtPtr, 1, TEXT_DYNAMIC_COLOR_4);
+            *(txtPtr++) = CHAR_MALE;
+        }
+        else
+        {
+            txtPtr = WriteColorChangeControlCode(txtPtr, 0, TEXT_DYNAMIC_COLOR_5);
+            txtPtr = WriteColorChangeControlCode(txtPtr, 1, TEXT_DYNAMIC_COLOR_6);
+            *(txtPtr++) = CHAR_FEMALE;
+        }
+        *(txtPtr++) = EOS;
+    }
+
+    printerTemplate.y = 10;
+    printerTemplate.currentY = 10;
+    AddTextPrinter(&printerTemplate, TEXT_SKIP_DRAW, NULL);
+
+    CopyWindowToVram(B_WIN_LEVEL_UP_BANNER, COPYWIN_GFX);
+}
+
+static bool8 SlideOutLevelUpBanner(void)
+{
+    if (gBattle_BG2_X == LEVEL_UP_BANNER_START)
+        return FALSE;
+
+    if (gBattle_BG2_X - 16 < LEVEL_UP_BANNER_START)
+        gBattle_BG2_X = LEVEL_UP_BANNER_START;
+    else
+        gBattle_BG2_X -= 16;
+
+    return (gBattle_BG2_X != LEVEL_UP_BANNER_START);
+}
+
+#define sDestroy data[0]
+#define sXOffset data[1]
+
+static void PutMonIconOnLvlUpBanner(void)
+{
+    u8 spriteId;
+    const u16 *iconPal;
+    struct SpriteSheet iconSheet;
+    struct SpritePalette iconPalSheet;
+
+    u16 species = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_SPECIES);
+    u32 personality = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_PERSONALITY);
+
+    const u8 *iconPtr = GetMonIconPtr(species, personality, 1);
+    iconSheet.data = iconPtr;
+    iconSheet.size = 0x200;
+    iconSheet.tag = TAG_LVLUP_BANNER_MON_ICON;
+
+    iconPal = GetValidMonIconPalettePtr(species);
+    iconPalSheet.data = iconPal;
+    iconPalSheet.tag = TAG_LVLUP_BANNER_MON_ICON;
+
+    LoadSpriteSheet(&iconSheet);
+    LoadSpritePalette(&iconPalSheet);
+
+    spriteId = CreateSprite(&gUnknown_82ECD44, 256, 10, 0);
+    gSprites[spriteId].sDestroy = FALSE;
+    gSprites[spriteId].sXOffset = gBattle_BG2_X;
+}
+
+static void SpriteCB_MonIconOnLvlUpBanner(struct Sprite *sprite)
+{
+    sprite->x2 = sprite->sXOffset - gBattle_BG2_X;
+
+    if (sprite->x2 != 0)
+    {
+        sprite->sDestroy = TRUE;
+    }
+    else if (sprite->sDestroy)
+    {
+        DestroySprite(sprite);
+        FreeSpriteTilesByTag(TAG_LVLUP_BANNER_MON_ICON);
+        FreeSpritePaletteByTag(TAG_LVLUP_BANNER_MON_ICON);
+    }
+}
+
+#undef sDestroy
+#undef sXOffset
+
+static bool32 IsMonGettingExpSentOut(void)
+{
+    if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
+        return TRUE;
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId)
+        return TRUE;
+
+    return FALSE;
+}
+
+static void Cmd_resetsentmonsvalue(void)
+{
+    ResetSentPokesToOpponentValue();
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setatktoplayer0(void)
+{
+    gBattlerAttacker = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_makevisible(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    BtlController_EmitSpriteInvisibility(B_COMM_TO_CONTROLLER, FALSE);
+    MarkBattlerForControllerExec(gActiveBattler);
+
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_recordlastability(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    RecordAbilityBattle(gActiveBattler, gLastUsedAbility);
 
     gBattlescriptCurrInstr++;
 }
