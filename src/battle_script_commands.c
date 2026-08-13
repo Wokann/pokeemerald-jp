@@ -1510,6 +1510,7 @@ static void Cmd_jumpifconfusedandstatmaxed(void);
 static void Cmd_furycuttercalc(void);
 static void Cmd_friendshiptodamagecalculation(void);
 static void Cmd_presentdamagecalculation(void);
+static void Cmd_setsafeguard(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7801,4 +7802,22 @@ static void Cmd_presentdamagecalculation(void)
         gMoveResultFlags &= ~MOVE_RESULT_DOESNT_AFFECT_FOE;
         gBattlescriptCurrInstr = BattleScript_PresentHealTarget;
     }
+}
+
+static void Cmd_setsafeguard(void)
+{
+    if (gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] & SIDE_STATUS_SAFEGUARD)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SIDE_STATUS_FAILED;
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_SAFEGUARD;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].safeguardTimer = 5;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].safeguardBattlerId = gBattlerAttacker;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SAFEGUARD;
+    }
+
+    gBattlescriptCurrInstr++;
 }
