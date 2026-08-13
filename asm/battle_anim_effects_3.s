@@ -2294,43 +2294,6 @@ _0815C2E0: .4byte 0x02022ACE
 
 
 
-	thumb_func_start sub_0815DF08
-sub_0815DF08: @ 0x0815DF08
-	push {lr}
-	sub sp, #0x1c
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	movs r2, #0xd0
-	lsls r2, r2, #1
-	ldr r1, _0815DF44
-	ldrb r3, [r1]
-	ldr r1, _0815DF48
-	ldrb r1, [r1]
-	str r1, [sp]
-	movs r1, #0xa
-	str r1, [sp, #4]
-	movs r1, #2
-	str r1, [sp, #8]
-	movs r1, #0x1e
-	str r1, [sp, #0xc]
-	ldr r1, _0815DF4C
-	str r1, [sp, #0x10]
-	ldr r1, _0815DF50
-	str r1, [sp, #0x14]
-	subs r1, #0x20
-	str r1, [sp, #0x18]
-	movs r1, #0
-	bl sub_081180A4
-	add sp, #0x1c
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815DF44: .4byte 0x020380D6
-_0815DF48: .4byte 0x020380BE
-_0815DF4C: .4byte 0x08C2DD0C
-_0815DF50: .4byte 0x08C2DE68
-	thumb_func_end sub_0815DF08
-
 	thumb_func_start AnimRoarNoiseLine
 AnimRoarNoiseLine: @ 0x0815DF54
 	push {r4, r5, r6, lr}

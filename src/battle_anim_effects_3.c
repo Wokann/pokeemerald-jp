@@ -2,6 +2,7 @@
 #include "battle_anim.h"
 #include "bg.h"
 #include "contest.h"
+#include "graphics.h"
 #include "palette.h"
 #include "random.h"
 #include "scanline_effect.h"
@@ -2158,6 +2159,22 @@ void AnimTask_FacadeColorBlend(u8 taskId)
     spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
     gTasks[taskId].data[2] = OBJ_PLTT_ID(gSprites[spriteId].oam.paletteNum);
     gTasks[taskId].func = AnimTask_FacadeColorBlend_Step;
+}
+
+void AnimTask_StatusClearedEffect(u8 taskId)
+{
+    StartMonScrollingBgMask(
+        taskId,
+        0,
+        0x1A0,
+        gBattleAnimAttacker,
+        gBattleAnimArgs[0],
+        10,
+        2,
+        30,
+        gCureBubblesGfx,
+        gCureBubblesTilemap,
+        (const u32 *)((const u8 *)gCureBubblesTilemap - 0x20));  // == gCureBubblesPal in the JP layout
 }
 
 static void AnimTask_FacadeColorBlend_Step(u8 taskId)

@@ -2280,8 +2280,8 @@ _0811809C: .4byte 0x02023E88
 _081180A0: .4byte 0x020380BE
 	thumb_func_end sub_08118034
 
-	thumb_func_start sub_081180A4
-sub_081180A4: @ 0x081180A4
+	thumb_func_start StartMonScrollingBgMask
+StartMonScrollingBgMask: @ 0x081180A4
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -2521,7 +2521,7 @@ _081182A0: .4byte 0x02022ACC
 _081182A4: .4byte 0x02022ACE
 _081182A8: .4byte 0x03005B60
 _081182AC: .4byte 0x081182B1
-	thumb_func_end sub_081180A4
+	thumb_func_end StartMonScrollingBgMask
 
 	thumb_func_start sub_081182B0
 sub_081182B0: @ 0x081182B0
@@ -3274,4 +3274,3 @@ _08118870: .4byte 0x02024174
 _08118874: .4byte 0x020380D6
 _08118878: .4byte 0x03005B60
 	thumb_func_end sub_08118820
-

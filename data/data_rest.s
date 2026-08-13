@@ -234,18 +234,18 @@ gUnknown_8C2DCEC: @ 0x8C2DCEC
 	.incbin "baserom_jp.gba", 0xc2dcec, 0x20
 
 
-	.globl gUnknown_8C2DD0C
-gUnknown_8C2DD0C: @ 0x8C2DD0C
+	.globl gCureBubblesGfx
+gCureBubblesGfx: @ 0x8C2DD0C
 	.incbin "baserom_jp.gba", 0xc2dd0c, 0x13c
 
 
-	.globl gUnknown_8C2DE48
-gUnknown_8C2DE48: @ 0x8C2DE48
+	.globl gCureBubblesPal
+gCureBubblesPal: @ 0x8C2DE48
 	.incbin "baserom_jp.gba", 0xc2de48, 0x20
 
 
-	.globl gUnknown_8C2DE68
-gUnknown_8C2DE68: @ 0x8C2DE68
+	.globl gCureBubblesTilemap
+gCureBubblesTilemap: @ 0x8C2DE68
 	.incbin "baserom_jp.gba", 0xc2de68, 0xc8c
 
 
