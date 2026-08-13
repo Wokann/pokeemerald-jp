@@ -4895,7 +4895,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimLeer);
         src/battle_anim_effects_3.o(.text.AnimLetterZ);
         src/battle_anim_effects_3.o(.text.AnimFang);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest2);
+        src/battle_anim_effects_3.o(.text.AnimTask_IsTargetPlayerSide);
+        src/battle_anim_effects_3.o(.text.AnimTask_IsHealingMove);
         src/battle_anim_effects_3.o(.text.AnimSpotlight);
         src/battle_anim_effects_3.o(.text.AnimSpotlight_Step1);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest3);

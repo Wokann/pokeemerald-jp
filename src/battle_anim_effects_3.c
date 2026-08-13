@@ -305,6 +305,26 @@ void AnimTask_SetPsychicBackground(u8 taskId)
     gAnimVisualTaskCount--;
 }
 
+void AnimTask_IsTargetPlayerSide(u8 taskId)
+{
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT)
+        gBattleAnimArgs[ARG_RET_ID] = FALSE;
+    else
+        gBattleAnimArgs[ARG_RET_ID] = TRUE;
+
+    DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_IsHealingMove(u8 taskId)
+{
+    if (gAnimMoveDmg > 0)
+        gBattleAnimArgs[ARG_RET_ID] = FALSE;
+    else
+        gBattleAnimArgs[ARG_RET_ID] = TRUE;
+
+    DestroyAnimVisualTask(taskId);
+}
+
 static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;
