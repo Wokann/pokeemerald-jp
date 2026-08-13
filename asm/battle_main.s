@@ -46,26 +46,6 @@
 
 
 
-	thumb_func_start WaitForEvoSceneToFinish
-WaitForEvoSceneToFinish: @ 0x0803DB88
-	push {lr}
-	ldr r0, _0803DBA0
-	ldr r1, [r0, #4]
-	ldr r0, _0803DBA4
-	cmp r1, r0
-	bne _0803DB9A
-	ldr r1, _0803DBA8
-	ldr r0, _0803DBAC
-	str r0, [r1]
-_0803DB9A:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803DBA0: .4byte 0x03002360
-_0803DBA4: .4byte 0x080380FD
-_0803DBA8: .4byte 0x03005A64
-_0803DBAC: .4byte 0x0803DAF5
-	thumb_func_end WaitForEvoSceneToFinish
 
 	thumb_func_start ReturnFromBattleToOverworld
 ReturnFromBattleToOverworld: @ 0x0803DBB0

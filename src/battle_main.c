@@ -2404,6 +2404,12 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
     }
 }
 
+static void WaitForEvoSceneToFinish(void)
+{
+    if (gMain.callback2 == BattleMainCB2)
+        gBattleMainFunc = TryEvolvePokemon;
+}
+
 
 
 
