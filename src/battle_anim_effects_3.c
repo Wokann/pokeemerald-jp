@@ -3,6 +3,7 @@
 #include "bg.h"
 #include "palette.h"
 #include "task.h"
+#include "trig.h"
 #include "constants/battle_anim.h"
 #include "constants/songs.h"
 
@@ -300,4 +301,47 @@ void AnimTask_RemoveSpotlight(u8 taskId)
         ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_WIN1_ON);
 
     DestroyAnimVisualTask(taskId);
+}
+
+static void AnimRapidSpin_Step(struct Sprite *sprite);
+
+static void AnimRapidSpin(struct Sprite *sprite)
+{
+    if (gBattleAnimArgs[0] == 0)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[1];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + gBattleAnimArgs[1];
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    }
+
+    sprite->y2 = gBattleAnimArgs[2];
+
+    sprite->data[0] = (sprite->y2 > gBattleAnimArgs[3]);
+    sprite->data[1] = 0;
+    sprite->data[2] = gBattleAnimArgs[4];
+    sprite->data[3] = gBattleAnimArgs[5];
+    sprite->data[4] = gBattleAnimArgs[3];
+    sprite->callback = AnimRapidSpin_Step;
+}
+
+static void AnimRapidSpin_Step(struct Sprite *sprite)
+{
+    sprite->data[1] = (sprite->data[1] + sprite->data[2]) & 0xFF;
+    sprite->x2 = gSineTable[sprite->data[1]] >> 4;
+    sprite->y2 += sprite->data[3];
+
+    if (sprite->data[0])
+    {
+        if (sprite->y2 < sprite->data[4])
+            DestroyAnimSprite(sprite);
+    }
+    else
+    {
+        if (sprite->y2 > sprite->data[4])
+            DestroyAnimSprite(sprite);
+    }
 }
