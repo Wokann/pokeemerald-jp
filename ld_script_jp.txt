@@ -3627,6 +3627,12 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setgraphicalstatchangevalues);
         src/battle_script_commands.o(.text.Cmd_playstatchangeanimation);
         src/battle_script_commands.o(.text.Cmd_moveend);
+        src/battle_script_commands.o(.text.Cmd_typecalc2);
+        src/battle_script_commands.o(.text.Cmd_returnatktoball);
+        src/battle_script_commands.o(.text.Cmd_getswitchedmondata);
+        src/battle_script_commands.o(.text.Cmd_switchindataupdate);
+        src/battle_script_commands.o(.text.Cmd_switchinanim);
+        src/battle_script_commands.o(.text.Cmd_jumpifcantswitch);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
