@@ -1554,6 +1554,7 @@ static void Cmd_weightdamagecalculation(void);
 static void Cmd_assistattackselect(void);
 static void Cmd_trysetmagiccoat(void);
 static void Cmd_trysetsnatch(void);
+static void Cmd_trygetintimidatetarget(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8748,4 +8749,27 @@ static void Cmd_trysetsnatch(void)
         gProtectStructs[gBattlerAttacker].stealMove = TRUE;
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_trygetintimidatetarget(void)
+{
+    u8 side;
+
+    gBattleScripting.battler = gBattleStruct->intimidateBattler;
+    side = GetBattlerSide(gBattleScripting.battler);
+
+    PREPARE_ABILITY_BUFFER(gBattleTextBuff1, gBattleMons[gBattleScripting.battler].ability)
+
+    for (;gBattlerTarget < gBattlersCount; gBattlerTarget++)
+    {
+        if (GetBattlerSide(gBattlerTarget) == side)
+            continue;
+        if (!(gAbsentBattlerFlags & gBitTable[gBattlerTarget]))
+            break;
+    }
+
+    if (gBattlerTarget >= gBattlersCount)
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    else
+        gBattlescriptCurrInstr += 5;
 }
