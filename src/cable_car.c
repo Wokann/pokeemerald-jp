@@ -227,3 +227,40 @@ void CB2_CableCar(void)
     UpdatePaletteFade();
     MapMusicMain();
 }
+
+// JP asm name (US: CB2_EndCableCar)
+void CleanupCableCar(void)
+{
+    u8 i = 0;
+
+    HideBg(0);
+    HideBg(1);
+    HideBg(2);
+    HideBg(3);
+    SetBgRegs(FALSE);
+    gSpriteCoordOffsetX = 0;
+    SetCurrentAndNextWeatherNoDelay(WEATHER_NONE);
+    for (i = 0; i < NUM_ASH_SPRITES; i++)
+        gWeatherPtr->sprites.s2.ashSprites[i] = NULL;
+
+    ResetTasks();
+    ResetSpriteData();
+    ResetPaletteFade();
+    UnsetBgTilemapBuffer(0);
+    UnsetBgTilemapBuffer(1);
+    UnsetBgTilemapBuffer(2);
+    UnsetBgTilemapBuffer(3);
+    ResetBgsAndClearDma3BusyFlags(0);
+    sCableCar->pylonTopTilemap = NULL;
+    FREE_AND_SET_NULL(sCableCar->pylonPoleTilemap);
+    FREE_AND_SET_NULL(sCableCar->bgMountainsTilemap);
+    FREE_AND_SET_NULL(sCableCar->treesTilemap);
+    FREE_AND_SET_NULL(sCableCar->groundTilemap);
+    FREE_AND_SET_NULL(sCableCar);
+    DmaFillLarge16(3, 0, (void *)VRAM, VRAM_SIZE, 0x1000);
+    DmaFill32Defvars(3, 0, (void *)OAM, OAM_SIZE);
+    DmaFill16Defvars(3, 0, (void *)PLTT, PLTT_SIZE);
+    WarpIntoMap();
+    gFieldCallback = NULL;
+    SetMainCallback2(CB2_LoadMap);
+}

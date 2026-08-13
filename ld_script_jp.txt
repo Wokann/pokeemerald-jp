@@ -4771,6 +4771,7 @@ SECTIONS {
         src/cable_car.o(.text.CableCar);
         src/cable_car.o(.text.CB2_LoadCableCar);
         src/cable_car.o(.text.CB2_CableCar);
+        src/cable_car.o(.text.CleanupCableCar);
         asm/cable_car.o(.text.cable_car_rest);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
