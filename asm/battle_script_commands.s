@@ -509,64 +509,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD7_setyawn
-atkD7_setyawn: @ 0x08054F5C
-	push {r4, lr}
-	ldr r1, _08054FA0
-	ldr r0, _08054FA4
-	ldrb r3, [r0]
-	lsls r0, r3, #2
-	adds r4, r0, r1
-	ldr r2, [r4]
-	movs r0, #0xc0
-	lsls r0, r0, #5
-	ands r0, r2
-	cmp r0, #0
-	bne _08054F84
-	ldr r1, _08054FA8
-	movs r0, #0x58
-	muls r0, r3, r0
-	adds r1, #0x4c
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _08054FB0
-_08054F84:
-	ldr r3, _08054FAC
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _08054FC0
-	.align 2, 0
-_08054FA0: .4byte 0x02023F50
-_08054FA4: .4byte 0x02023EB0
-_08054FA8: .4byte 0x02023D28
-_08054FAC: .4byte 0x02023EB8
-_08054FB0:
-	movs r0, #0x80
-	lsls r0, r0, #5
-	orrs r2, r0
-	str r2, [r4]
-	ldr r1, _08054FC8
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_08054FC0:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054FC8: .4byte 0x02023EB8
-	thumb_func_end atkD7_setyawn
 
 	thumb_func_start atkD8_setdamagetohealthdifference
 atkD8_setdamagetohealthdifference: @ 0x08054FCC
