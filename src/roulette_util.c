@@ -168,3 +168,43 @@ void RouletteFlash_Run(struct RouletteFlashUtil *flash)
         }
     }
 }
+
+void RouletteFlash_Stop(struct RouletteFlashUtil *flash, u16 flags)
+{
+    u8 i;
+
+    for (i = 0; i < ARRAY_COUNT(flash->palettes); i++)
+    {
+        if ((flash->flags >> i) & 1)
+        {
+            if (flash->palettes[i].available)
+            {
+                if ((flags >> i) & 1)
+                {
+                    u32 offset = flash->palettes[i].settings.paletteOffset;
+                    u16 *faded = &gPlttBufferFaded[offset];
+                    u16 *unfaded = &gPlttBufferUnfaded[offset];
+                    memcpy(faded, unfaded, flash->palettes[i].settings.numColors * 2);
+                    flash->palettes[i].state = 0;
+                    flash->palettes[i].fadeCycleCounter = 0;
+                    flash->palettes[i].delayCounter = 0;
+                    if (flash->palettes[i].settings.colorDeltaDir < 0)
+                        flash->palettes[i].colorDelta = -1;
+                    else
+                        flash->palettes[i].colorDelta = 1;
+                }
+            }
+        }
+    }
+
+    if (flags == 0xFFFF)
+    {
+        // Stopped all
+        flash->enabled = 0;
+        flash->flags = 0;
+    }
+    else
+    {
+        flash->flags &= ~flags;
+    }
+}
