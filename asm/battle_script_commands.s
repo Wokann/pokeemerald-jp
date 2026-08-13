@@ -493,39 +493,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkC7_setminimize
-atkC7_setminimize: @ 0x08054618
-	push {lr}
-	ldr r0, _08054648
-	ldr r0, [r0]
-	movs r1, #0x80
-	lsls r1, r1, #0x12
-	ands r0, r1
-	cmp r0, #0
-	beq _0805463C
-	ldr r2, _0805464C
-	ldr r0, _08054650
-	ldrb r1, [r0]
-	lsls r1, r1, #2
-	adds r1, r1, r2
-	ldr r0, [r1]
-	movs r2, #0x80
-	lsls r2, r2, #1
-	orrs r0, r2
-	str r0, [r1]
-_0805463C:
-	ldr r1, _08054654
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054648: .4byte 0x02023F24
-_0805464C: .4byte 0x02023F50
-_08054650: .4byte 0x02023EAF
-_08054654: .4byte 0x02023EB8
-	thumb_func_end atkC7_setminimize
 
 	thumb_func_start atkC8_sethail
 atkC8_sethail: @ 0x08054658

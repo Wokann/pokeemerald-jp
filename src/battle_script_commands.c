@@ -1525,6 +1525,7 @@ static void Cmd_trysetfutureattack(void);
 static void Cmd_trydobeatup(void);
 static void Cmd_setsemiinvulnerablebit(void);
 static void Cmd_clearsemiinvulnerablebit(void);
+static void Cmd_setminimize(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8207,6 +8208,14 @@ static void Cmd_clearsemiinvulnerablebit(void)
         gStatuses3[gBattlerAttacker] &= ~STATUS3_UNDERWATER;
         break;
     }
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setminimize(void)
+{
+    if (gHitMarker & HITMARKER_OBEYS)
+        gStatuses3[gBattlerAttacker] |= STATUS3_MINIMIZED;
 
     gBattlescriptCurrInstr++;
 }
