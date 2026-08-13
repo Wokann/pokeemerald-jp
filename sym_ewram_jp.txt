@@ -59,6 +59,7 @@ gBattleTextBuff1 = ABSOLUTE(0x02022C0C);
 gBattleTextBuff2 = ABSOLUTE(0x02022C1C);
 gBattleTextBuff3 = ABSOLUTE(0x02022C2C);
 gExpShareExp = ABSOLUTE(0x020240A6);
+gMoveToLearn = ABSOLUTE(0x02024186);
 sFlickerArray = ABSOLUTE(0x02022C2C);
 gHitMarker = ABSOLUTE(0x02023F24);
 sUnusedBattlersArray = ABSOLUTE(0x02023F28);

@@ -1405,6 +1405,7 @@ extern const u8 *const gBattleScriptsForMoveEffects[];
 u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr);
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
+void sub_0814FA04(const u8 *text, u8 windowId);
 
 void SetMoveEffect(bool8 primary, u8 certain)
 {
@@ -4527,4 +4528,337 @@ static void Cmd_returntoball(void)
     MarkBattlerForControllerExec(gActiveBattler);
 
     gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_handlelearnnewmove(void)
+{
+    const u8 *learnedMovePtr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    const u8 *nothingToLearnPtr = T1_READ_PTR(gBattlescriptCurrInstr + 5);
+
+    u16 learnMove = MonTryLearningNewMove(&gPlayerParty[gBattleStruct->expGetterMonId], gBattlescriptCurrInstr[9]);
+    while (learnMove == MON_ALREADY_KNOWS_MOVE)
+        learnMove = MonTryLearningNewMove(&gPlayerParty[gBattleStruct->expGetterMonId], FALSE);
+
+    if (learnMove == MOVE_NONE)
+    {
+        gBattlescriptCurrInstr = nothingToLearnPtr;
+    }
+    else if (learnMove == MON_HAS_MAX_MOVES)
+    {
+        gBattlescriptCurrInstr += 10;
+    }
+    else
+    {
+        gActiveBattler = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+
+        if (gBattlerPartyIndexes[gActiveBattler] == gBattleStruct->expGetterMonId
+            && !(gBattleMons[gActiveBattler].status2 & STATUS2_TRANSFORMED))
+        {
+            GiveMoveToBattleMon(&gBattleMons[gActiveBattler], learnMove);
+        }
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        {
+            gActiveBattler = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+            if (gBattlerPartyIndexes[gActiveBattler] == gBattleStruct->expGetterMonId
+                && !(gBattleMons[gActiveBattler].status2 & STATUS2_TRANSFORMED))
+            {
+                GiveMoveToBattleMon(&gBattleMons[gActiveBattler], learnMove);
+            }
+        }
+
+        gBattlescriptCurrInstr = learnedMovePtr;
+    }
+}
+
+static void Cmd_yesnoboxlearnmove(void)
+{
+    gActiveBattler = 0;
+
+    switch (gBattleScripting.learnMoveState)
+    {
+    case 0:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        sub_0814FA04(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleScripting.learnMoveState++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 1:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            if (gBattleCommunication[1] == 0)
+            {
+                HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+                BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+                gBattleScripting.learnMoveState++;
+            }
+            else
+            {
+                gBattleScripting.learnMoveState = 5;
+            }
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattleScripting.learnMoveState = 5;
+        }
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+        {
+            FreeAllWindowBuffers();
+            ShowSelectMovePokemonSummaryScreen(gPlayerParty, gBattleStruct->expGetterMonId, gPlayerPartyCount - 1, ReshowBattleScreenAfterMenu, gMoveToLearn);
+            gBattleScripting.learnMoveState++;
+        }
+        break;
+    case 3:
+        if (!gPaletteFade.active && gMain.callback2 == BattleMainCB2)
+        {
+            gBattleScripting.learnMoveState++;
+        }
+        break;
+    case 4:
+        if (!gPaletteFade.active && gMain.callback2 == BattleMainCB2)
+        {
+            u8 movePosition = GetMoveSlotToReplace();
+            if (movePosition == MAX_MON_MOVES)
+            {
+                gBattleScripting.learnMoveState = 5;
+            }
+            else
+            {
+                u16 move = GetMonData2(&gPlayerParty[gBattleStruct->expGetterMonId], MON_DATA_MOVE1 + movePosition);
+                if (IsHMMove2(move))
+                {
+                    PrepareStringBattle(STRINGID_HMMOVESCANTBEFORGOTTEN, gActiveBattler);
+                    gBattleScripting.learnMoveState = 6;
+                }
+                else
+                {
+                    gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+
+                    PREPARE_MOVE_BUFFER(gBattleTextBuff2, move)
+
+                    RemoveMonPPBonus(&gPlayerParty[gBattleStruct->expGetterMonId], movePosition);
+                    SetMonMoveSlot(&gPlayerParty[gBattleStruct->expGetterMonId], gMoveToLearn, movePosition);
+
+                    if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId && MOVE_IS_PERMANENT(0, movePosition))
+                    {
+                        RemoveBattleMonPPBonus(&gBattleMons[0], movePosition);
+                        SetBattleMonMoveSlot(&gBattleMons[0], gMoveToLearn, movePosition);
+                    }
+                    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+                        && gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId
+                        && MOVE_IS_PERMANENT(2, movePosition))
+                    {
+                        RemoveBattleMonPPBonus(&gBattleMons[2], movePosition);
+                        SetBattleMonMoveSlot(&gBattleMons[2], gMoveToLearn, movePosition);
+                    }
+                }
+            }
+        }
+        break;
+    case 5:
+        HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+        gBattlescriptCurrInstr += 5;
+        break;
+    case 6:
+        if (gBattleControllerExecFlags == 0)
+        {
+            gBattleScripting.learnMoveState = 2;
+        }
+        break;
+    }
+}
+
+static void Cmd_yesnoboxstoplearningmove(void)
+{
+    switch (gBattleScripting.learnMoveState)
+    {
+    case 0:
+        HandleBattleWindow(YESNOBOX_X_Y, 0);
+        sub_0814FA04(gText_BattleYesNoChoice, B_WIN_YESNO);
+        gBattleScripting.learnMoveState++;
+        gBattleCommunication[CURSOR_POSITION] = 0;
+        BattleCreateYesNoCursorAt(0);
+        break;
+    case 1:
+        if (JOY_NEW(DPAD_UP) && gBattleCommunication[CURSOR_POSITION] != 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 0;
+            BattleCreateYesNoCursorAt(0);
+        }
+        if (JOY_NEW(DPAD_DOWN) && gBattleCommunication[CURSOR_POSITION] == 0)
+        {
+            PlaySE(SE_SELECT);
+            BattleDestroyYesNoCursorAt(gBattleCommunication[CURSOR_POSITION]);
+            gBattleCommunication[CURSOR_POSITION] = 1;
+            BattleCreateYesNoCursorAt(1);
+        }
+        if (JOY_NEW(A_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+
+            if (gBattleCommunication[1] != 0)
+                gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            else
+                gBattlescriptCurrInstr += 5;
+
+            HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+        }
+        else if (JOY_NEW(B_BUTTON))
+        {
+            PlaySE(SE_SELECT);
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+            HandleBattleWindow(YESNOBOX_X_Y, WINDOW_CLEAR);
+        }
+        break;
+    }
+}
+
+static void Cmd_hitanimation(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+    {
+        gBattlescriptCurrInstr += 2;
+    }
+    else if (!(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE) || !(gBattleMons[gActiveBattler].status2 & STATUS2_SUBSTITUTE) || gDisableStructs[gActiveBattler].substituteHP == 0)
+    {
+        BtlController_EmitHitAnimation(B_COMM_TO_CONTROLLER);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 2;
+    }
+    else
+    {
+        gBattlescriptCurrInstr += 2;
+    }
+}
+
+static u32 GetTrainerMoneyToGive(u16 trainerId)
+{
+    u32 i = 0;
+    u32 lastMonLevel = 0;
+    u32 moneyReward;
+
+    if (trainerId == TRAINER_SECRET_BASE)
+    {
+        moneyReward = 20 * gBattleResources->secretBase->party.levels[0] * gBattleStruct->moneyMultiplier;
+    }
+    else
+    {
+        switch (gTrainers[trainerId].partyFlags)
+        {
+        case 0:
+            {
+                const struct TrainerMonNoItemDefaultMoves *party = gTrainers[trainerId].party.NoItemDefaultMoves;
+                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+            }
+            break;
+        case F_TRAINER_PARTY_CUSTOM_MOVESET:
+            {
+                const struct TrainerMonNoItemCustomMoves *party = gTrainers[trainerId].party.NoItemCustomMoves;
+                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+            }
+            break;
+        case F_TRAINER_PARTY_HELD_ITEM:
+            {
+                const struct TrainerMonItemDefaultMoves *party = gTrainers[trainerId].party.ItemDefaultMoves;
+                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+            }
+            break;
+        case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+            {
+                const struct TrainerMonItemCustomMoves *party = gTrainers[trainerId].party.ItemCustomMoves;
+                lastMonLevel = party[gTrainers[trainerId].partySize - 1].lvl;
+            }
+            break;
+        }
+
+        for (; gTrainerMoneyTable[i].classId != 0xFF; i++)
+        {
+            if (gTrainerMoneyTable[i].classId == gTrainers[trainerId].trainerClass)
+                break;
+        }
+
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            moneyReward = 4 * lastMonLevel * gBattleStruct->moneyMultiplier * gTrainerMoneyTable[i].value;
+        else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            moneyReward = 4 * lastMonLevel * gBattleStruct->moneyMultiplier * 2 * gTrainerMoneyTable[i].value;
+        else
+            moneyReward = 4 * lastMonLevel * gBattleStruct->moneyMultiplier * gTrainerMoneyTable[i].value;
+    }
+
+    return moneyReward;
+}
+
+static void Cmd_getmoneyreward(void)
+{
+    u32 moneyReward = GetTrainerMoneyToGive(gTrainerBattleOpponent_A);
+    if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+        moneyReward += GetTrainerMoneyToGive(gTrainerBattleOpponent_B);
+
+    AddMoney(&gSaveBlock1Ptr->money, moneyReward);
+    PREPARE_WORD_NUMBER_BUFFER(gBattleTextBuff1, 5, moneyReward);
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_updatebattlermoves(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    switch (gBattleCommunication[0])
+    {
+    case 0:
+        BtlController_EmitGetMonData(B_COMM_TO_CONTROLLER, REQUEST_ALL_BATTLE, 0);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattleCommunication[0]++;
+        break;
+    case 1:
+         if (gBattleControllerExecFlags == 0)
+         {
+            s32 i;
+            struct BattlePokemon *bufferPoke = (struct BattlePokemon *) &gBattleBufferB[gActiveBattler][4];
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                gBattleMons[gActiveBattler].moves[i] = bufferPoke->moves[i];
+                gBattleMons[gActiveBattler].pp[i] = bufferPoke->pp[i];
+            }
+            gBattlescriptCurrInstr += 2;
+         }
+         break;
+    }
+}
+
+static void Cmd_swapattackerwithtarget(void)
+{
+    gActiveBattler = gBattlerAttacker;
+    gBattlerAttacker = gBattlerTarget;
+    gBattlerTarget = gActiveBattler;
+
+    if (gHitMarker & HITMARKER_SWAP_ATTACKER_TARGET)
+        gHitMarker &= ~HITMARKER_SWAP_ATTACKER_TARGET;
+    else
+        gHitMarker |= HITMARKER_SWAP_ATTACKER_TARGET;
+
+    gBattlescriptCurrInstr++;
 }
