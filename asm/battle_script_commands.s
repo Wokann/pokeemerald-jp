@@ -521,49 +521,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkE3_jumpifhasnohp
-atkE3_jumpifhasnohp: @ 0x08055704
-	push {r4, lr}
-	ldr r4, _08055740
-	ldr r0, [r4]
-	ldrb r0, [r0, #1]
-	bl GetBattlerForBattleScript
-	ldr r1, _08055744
-	strb r0, [r1]
-	ldr r2, _08055748
-	ldrb r1, [r1]
-	movs r0, #0x58
-	muls r0, r1, r0
-	adds r0, r0, r2
-	ldrh r0, [r0, #0x28]
-	cmp r0, #0
-	bne _0805574C
-	ldr r2, [r4]
-	ldrb r1, [r2, #2]
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #5]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r4]
-	b _08055752
-	.align 2, 0
-_08055740: .4byte 0x02023EB8
-_08055744: .4byte 0x02023D08
-_08055748: .4byte 0x02023D28
-_0805574C:
-	ldr r0, [r4]
-	adds r0, #6
-	str r0, [r4]
-_08055752:
-	pop {r4}
-	pop {r0}
-	bx r0
-	thumb_func_end atkE3_jumpifhasnohp
 
 	thumb_func_start atkE4_getsecretpowereffect
 atkE4_getsecretpowereffect: @ 0x08055758

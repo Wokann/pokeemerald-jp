@@ -1556,6 +1556,7 @@ static void Cmd_trysetmagiccoat(void);
 static void Cmd_trysetsnatch(void);
 static void Cmd_trygetintimidatetarget(void);
 static void Cmd_switchoutabilities(void);
+static void Cmd_jumpifhasnohp(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8792,4 +8793,14 @@ static void Cmd_switchoutabilities(void)
     }
 
     gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_jumpifhasnohp(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    if (gBattleMons[gActiveBattler].hp == 0)
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+    else
+        gBattlescriptCurrInstr += 6;
 }
