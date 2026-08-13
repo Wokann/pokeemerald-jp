@@ -23,6 +23,7 @@ extern const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[];
 extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
+extern const union AffineAnimCmd gSmellingSaltsSquishAffineAnimCmds[];
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
@@ -75,6 +76,7 @@ static void AnimAssistPawprint(struct Sprite *sprite);
 static void AnimTask_BarrageBall_Step(u8 taskId);
 static void AnimSmellingSaltsHand(struct Sprite *sprite);
 static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
+static void AnimTask_SmellingSaltsSquish_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2552,6 +2554,50 @@ static void AnimSmellingSaltsHand_Step(struct Sprite *sprite)
             }
         }
         break;
+    }
+}
+
+void AnimTask_SmellingSaltsSquish(u8 taskId)
+{
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+    else
+    {
+        gTasks[taskId].data[0] = gBattleAnimArgs[1];
+        gTasks[taskId].data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+        PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gSmellingSaltsSquishAffineAnimCmds);
+        gTasks[taskId].func = AnimTask_SmellingSaltsSquish_Step;
+    }
+}
+
+static void AnimTask_SmellingSaltsSquish_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    if (++task->data[1] > 1)
+    {
+        task->data[1] = 0;
+        if (!(task->data[2] & 1))
+            gSprites[task->data[15]].x2 = 2;
+        else
+            gSprites[task->data[15]].x2 = -2;
+    }
+
+    if (!RunAffineAnimFromTaskData(task))
+    {
+        gSprites[task->data[15]].x2 = 0;
+        if (--task->data[0])
+        {
+            PrepareAffineAnimInTaskData(&gTasks[taskId], gTasks[taskId].data[15], gSmellingSaltsSquishAffineAnimCmds);
+            task->data[1] = 0;
+            task->data[2] = 0;
+        }
+        else
+        {
+            DestroyAnimVisualTask(taskId);
+        }
     }
 }
 

@@ -11559,9 +11559,13 @@ gBarrageBallSpriteTemplate: @ 0x85AD654
 gUnknown_85AD66C: @ 0x85AD66C
 	.incbin "baserom_jp.gba", 0x5ad66c, 0x18
 
-	.globl gUnknown_85AD684
-gUnknown_85AD684: @ 0x85AD684
-	.incbin "baserom_jp.gba", 0x5ad684, 0x14c
+	.globl gSmellingSaltsSquishAffineAnimCmds
+gSmellingSaltsSquishAffineAnimCmds: @ 0x85AD684
+	.incbin "baserom_jp.gba", 0x5ad684, 0x18
+
+	.globl gUnknown_85AD69C
+gUnknown_85AD69C: @ 0x85AD69C
+	.incbin "baserom_jp.gba", 0x5ad69c, 0x134
 
 	.globl gUnknown_85AD7D0
 gUnknown_85AD7D0: @ 0x85AD7D0
