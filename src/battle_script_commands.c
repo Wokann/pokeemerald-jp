@@ -1483,6 +1483,8 @@ static void Cmd_mimicattackcopy(void);
 #define METRONOME_FORBIDDEN_END         0xFFFF
 extern const u16 sMovesForbiddenToCopy[];
 static void Cmd_metronome(void);
+static void Cmd_dmgtolevel(void);
+static void Cmd_psywavedamageeffect(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7108,4 +7110,21 @@ static void Cmd_metronome(void)
             return;
         }
     }
+}
+
+static void Cmd_dmgtolevel(void)
+{
+    gBattleMoveDamage = gBattleMons[gBattlerAttacker].level;
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_psywavedamageeffect(void)
+{
+    s32 randDamage;
+
+    while ((randDamage = Random() % 16) > 10);
+
+    randDamage *= 10;
+    gBattleMoveDamage = gBattleMons[gBattlerAttacker].level * (randDamage + 50) / 100;
+    gBattlescriptCurrInstr++;
 }

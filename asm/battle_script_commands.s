@@ -270,71 +270,7 @@ _08051F0C: .4byte 0x0000FFFE
 
 
 
-	thumb_func_start atk9F_dmgtolevel
-atk9F_dmgtolevel: @ 0x08052194
-	ldr r3, _080521B4
-	ldr r2, _080521B8
-	ldr r0, _080521BC
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r0, r1, r0
-	adds r0, r0, r2
-	adds r0, #0x2a
-	ldrb r0, [r0]
-	str r0, [r3]
-	ldr r1, _080521C0
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_080521B4: .4byte 0x02023E94
-_080521B8: .4byte 0x02023D28
-_080521BC: .4byte 0x02023EAF
-_080521C0: .4byte 0x02023EB8
-	thumb_func_end atk9F_dmgtolevel
 
-	thumb_func_start atkA0_psywavedamageeffect
-atkA0_psywavedamageeffect: @ 0x080521C4
-	push {r4, lr}
-	movs r4, #0xf
-_080521C8:
-	bl Random
-	adds r3, r4, #0
-	ands r3, r0
-	cmp r3, #0xa
-	bgt _080521C8
-	lsls r0, r3, #2
-	adds r0, r0, r3
-	lsls r3, r0, #1
-	ldr r4, _08052208
-	ldr r2, _0805220C
-	ldr r0, _08052210
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r0, r1, r0
-	adds r0, r0, r2
-	adds r0, #0x2a
-	ldrb r1, [r0]
-	adds r0, r3, #0
-	adds r0, #0x32
-	muls r0, r1, r0
-	movs r1, #0x64
-	bl __divsi3
-	str r0, [r4]
-	ldr r1, _08052214
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052208: .4byte 0x02023E94
-_0805220C: .4byte 0x02023D28
-_08052210: .4byte 0x02023EAF
-_08052214: .4byte 0x02023EB8
-	thumb_func_end atkA0_psywavedamageeffect
 
 	thumb_func_start atkA1_counterdamagecalculator
 atkA1_counterdamagecalculator: @ 0x08052218
