@@ -689,6 +689,51 @@ static void CreateTasksForSendRecvLinkBuffers(void)
     sUnused = 0;
 }
 
+enum
+{
+    LINK_BUFF_BUFFER_ID,
+    LINK_BUFF_ACTIVE_BATTLER,
+    LINK_BUFF_ATTACKER,
+    LINK_BUFF_TARGET,
+    LINK_BUFF_SIZE_LO,
+    LINK_BUFF_SIZE_HI,
+    LINK_BUFF_ABSENT_BATTLER_FLAGS,
+    LINK_BUFF_EFFECT_BATTLER,
+    LINK_BUFF_DATA,
+};
+
+void PrepareBufferDataTransferLink(u8 bufferId, u16 size, u8 *data)
+{
+    s32 alignedSize;
+    s32 i;
+
+    alignedSize = size - size % 4 + 4;
+    if (gTasks[sLinkSendTaskId].tCurrentBlock_End + alignedSize + LINK_BUFF_DATA + 1 > BATTLE_BUFFER_LINK_SIZE)
+    {
+        gTasks[sLinkSendTaskId].tCurrentBlock_WrapFrom = gTasks[sLinkSendTaskId].tCurrentBlock_End;
+        gTasks[sLinkSendTaskId].tCurrentBlock_End      = 0;
+    }
+
+    #define BYTE_TO_SEND(offset) \
+        gLinkBattleSendBuffer[gTasks[sLinkSendTaskId].tCurrentBlock_End + offset]
+
+    BYTE_TO_SEND(LINK_BUFF_BUFFER_ID)            = bufferId;
+    BYTE_TO_SEND(LINK_BUFF_ACTIVE_BATTLER)       = gActiveBattler;
+    BYTE_TO_SEND(LINK_BUFF_ATTACKER)             = gBattlerAttacker;
+    BYTE_TO_SEND(LINK_BUFF_TARGET)               = gBattlerTarget;
+    BYTE_TO_SEND(LINK_BUFF_SIZE_LO)              = alignedSize;
+    BYTE_TO_SEND(LINK_BUFF_SIZE_HI)              = (alignedSize & 0x0000FF00) >> 8;
+    BYTE_TO_SEND(LINK_BUFF_ABSENT_BATTLER_FLAGS) = gAbsentBattlerFlags;
+    BYTE_TO_SEND(LINK_BUFF_EFFECT_BATTLER)       = gEffectBattler;
+
+    for (i = 0; i < size; i++)
+        BYTE_TO_SEND(LINK_BUFF_DATA + i) = data[i];
+
+    #undef BYTE_TO_SEND
+
+    gTasks[sLinkSendTaskId].tCurrentBlock_End = gTasks[sLinkSendTaskId].tCurrentBlock_End + alignedSize + LINK_BUFF_DATA;
+}
+
 #undef tInitialDelayTimer
 #undef tState
 #undef tCurrentBlock_WrapFrom
