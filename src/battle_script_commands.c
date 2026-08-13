@@ -1576,6 +1576,7 @@ static void Cmd_removelightscreenreflect(void);
 static void Cmd_handleballthrow(void);
 static void Cmd_givecaughtmon(void);
 static void Cmd_trysetcaughtmondexflags(void);
+static void Cmd_displaydexinfo(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9300,5 +9301,56 @@ static void Cmd_trysetcaughtmondexflags(void)
     {
         HandleSetPokedexFlag(HoennToNationalOrder(species), FLAG_SET_CAUGHT, personality);
         gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void Cmd_displaydexinfo(void)
+{
+    u16 species = GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL);
+
+    switch (gBattleCommunication[0])
+    {
+    case 0:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gBattleCommunication[0]++;
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            FreeAllWindowBuffers();
+            gBattleCommunication[TASK_ID] = DisplayCaughtMonDexPage(HoennToNationalOrder(species),
+                                                                        gBattleMons[gBattlerTarget].otId,
+                                                                        gBattleMons[gBattlerTarget].personality);
+            gBattleCommunication[0]++;
+        }
+        break;
+    case 2:
+        if (!gPaletteFade.active
+            && gMain.callback2 == BattleMainCB2
+            && !gTasks[gBattleCommunication[TASK_ID]].isActive)
+        {
+            SetVBlankCallback(VBlankCB_Battle);
+            gBattleCommunication[0]++;
+        }
+        break;
+    case 3:
+        InitBattleBgsVideo();
+        LoadBattleTextboxAndBackground();
+        gBattle_BG3_X = 256;
+        gBattleCommunication[0]++;
+        break;
+    case 4:
+        if (!IsDma3ManagerBusyWithBgCopy())
+        {
+            BeginNormalPaletteFade(PALETTES_BG, 0, 16, 0, RGB_BLACK);
+            ShowBg(0);
+            ShowBg(3);
+            gBattleCommunication[0]++;
+        }
+        break;
+    case 5:
+        if (!gPaletteFade.active)
+            gBattlescriptCurrInstr++;
+        break;
     }
 }
