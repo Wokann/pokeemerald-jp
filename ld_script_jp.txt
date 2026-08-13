@@ -788,6 +788,8 @@ task_tutorial_controls_fadein = RouletteFlash_Run;
 sub_08151A78 = RouletteFlash_Stop;
 sub_08151FE4 = FillTilemapRect;
 sub_08152034 = SetTilemapRect;
+sub_081537AC = InitMysteryEventScriptContext;
+sub_081537C0 = RunMysteryEventScriptContextCommand;
 CreateCableCarSprites = LoadCableCarSprites;
 sSpriteTemplates_CableCar = gUnknown_85AC9A4;
 sSpriteTemplate_Cable = gUnknown_85AC9D4;
@@ -4831,7 +4833,8 @@ SECTIONS {
         src/mystery_event_script.o(.text.SetIncompatible);
         src/mystery_event_script.o(.text.InitMysteryEventScript);
         src/mystery_event_script.o(.text.RunMysteryEventScriptCommand);
-        asm/mes_mid_0.o(.text);
+        src/mystery_event_script.o(.text.InitMysteryEventScriptContext);
+        src/mystery_event_script.o(.text.RunMysteryEventScriptContextCommand);
         src/mystery_event_script.o(.text.RunMysteryEventScript);
         src/mystery_event_script.o(.text.SetMysteryEventScriptStatus);
         src/mystery_event_script.o(.text.CalcRecordMixingGiftChecksum);
