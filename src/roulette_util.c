@@ -428,3 +428,36 @@ void UpdatePulseBlend(struct PulseBlend *pulseBlend)
         }
     }
 }
+
+void FillTilemapRect(u16 *dest, u16 value, u8 left, u8 top, u8 width, u8 height)
+{
+    u16 *_dest;
+    u8 i;
+    u8 j;
+
+    i = 0;
+    dest = &dest[top * 32 + left];
+    for (; i < height; i++)
+    {
+        _dest = dest + i * 32;
+        for (j = 0; j < width; j++)
+            *_dest++ = value;
+    }
+}
+
+void SetTilemapRect(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
+{
+    u16 *_dest;
+    u16 *_src = src;
+    u8 i;
+    u8 j;
+
+    i = 0;
+    dest = &dest[top * 32 + left];
+    for (; i < height; i++)
+    {
+        _dest = dest + i * 32;
+        for (j = 0; j < width; j++)
+            *_dest++ = *_src++;
+    }
+}

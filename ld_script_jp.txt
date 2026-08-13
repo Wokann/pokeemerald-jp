@@ -786,6 +786,8 @@ sub_08151928 = RouletteFlash_FlashPalette;
 sub_08151A24 = RouletteFlash_Enable;
 task_tutorial_controls_fadein = RouletteFlash_Run;
 sub_08151A78 = RouletteFlash_Stop;
+sub_08151FE4 = FillTilemapRect;
+sub_08152034 = SetTilemapRect;
 CreateCableCarSprites = LoadCableCarSprites;
 sSpriteTemplates_CableCar = gUnknown_85AC9A4;
 sSpriteTemplate_Cable = gUnknown_85AC9D4;
@@ -4821,6 +4823,8 @@ SECTIONS {
         src/roulette_util.o(.text.MarkUsedPulseBlendPalettes);
         src/roulette_util.o(.text.UnmarkUsedPulseBlendPalettes);
         src/roulette_util.o(.text.UpdatePulseBlend);
+        src/roulette_util.o(.text.FillTilemapRect);
+        src/roulette_util.o(.text.SetTilemapRect);
         asm/roulette_util.o(.text.roulette_util_rest);
         asm/rom_81520A8.o(.text);
         src/save.o(.text);
