@@ -84,6 +84,8 @@ static void AnimHelpingHandClap_Step(struct Sprite *sprite);
 static void AnimTask_HelpingHandAttackerMovement_Step(u8 taskId);
 static void AnimForesightMagnifyingGlass(struct Sprite *sprite);
 static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite);
+static void AnimMeteorMashStar(struct Sprite *sprite);
+static void AnimMeteorMashStar_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2979,6 +2981,48 @@ static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite)
         DestroyAnimSprite(sprite);
         break;
     }
+}
+
+static void AnimMeteorMashStar_Step(struct Sprite *sprite)
+{
+    sprite->x2 = ((sprite->data[2] - sprite->data[0]) * sprite->data[5]) / sprite->data[4];
+    sprite->y2 = ((sprite->data[3] - sprite->data[1]) * sprite->data[5]) / sprite->data[4];
+    if (!(sprite->data[5] & 1))
+    {
+        CreateSprite(
+            &gMiniTwinklingStarSpriteTemplate,
+            sprite->x + sprite->x2,
+            sprite->y + sprite->y2, 5);
+    }
+
+    if (sprite->data[5] == sprite->data[4])
+        DestroyAnimSprite(sprite);
+
+    sprite->data[5]++;
+}
+
+static void AnimMeteorMashStar(struct Sprite *sprite)
+{
+    s16 UNUSED y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    s16 UNUSED x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER || IsContest())
+    {
+        sprite->data[0] = sprite->x - gBattleAnimArgs[0];
+        sprite->data[2] = sprite->x - gBattleAnimArgs[2];
+    }
+    else
+    {
+        sprite->data[0] = sprite->x + gBattleAnimArgs[0];
+        sprite->data[2] = sprite->x + gBattleAnimArgs[2];
+    }
+
+    sprite->data[1] = sprite->y + gBattleAnimArgs[1];
+    sprite->data[3] = sprite->y + gBattleAnimArgs[3];
+    sprite->data[4] = gBattleAnimArgs[4];
+    sprite->x = sprite->data[0];
+    sprite->y = sprite->data[1];
+    sprite->callback = AnimMeteorMashStar_Step;
 }
 
 #undef IDX_ACTIVE_SPRITES
