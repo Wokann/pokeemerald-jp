@@ -510,59 +510,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD8_setdamagetohealthdifference
-atkD8_setdamagetohealthdifference: @ 0x08054FCC
-	push {lr}
-	ldr r2, _08055008
-	ldr r0, _0805500C
-	ldrb r0, [r0]
-	movs r1, #0x58
-	muls r0, r1, r0
-	adds r3, r0, r2
-	ldr r0, _08055010
-	ldrb r0, [r0]
-	muls r0, r1, r0
-	adds r1, r0, r2
-	ldrh r0, [r3, #0x28]
-	ldrh r2, [r1, #0x28]
-	cmp r0, r2
-	bhi _08055018
-	ldr r3, _08055014
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _0805502A
-	.align 2, 0
-_08055008: .4byte 0x02023D28
-_0805500C: .4byte 0x02023EB0
-_08055010: .4byte 0x02023EAF
-_08055014: .4byte 0x02023EB8
-_08055018:
-	ldr r2, _08055030
-	ldrh r0, [r3, #0x28]
-	ldrh r1, [r1, #0x28]
-	subs r0, r0, r1
-	str r0, [r2]
-	ldr r1, _08055034
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_0805502A:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055030: .4byte 0x02023E94
-_08055034: .4byte 0x02023EB8
-	thumb_func_end atkD8_setdamagetohealthdifference
 
 	thumb_func_start atkD9_scaledamagebyhealthratio
 atkD9_scaledamagebyhealthratio: @ 0x08055038
