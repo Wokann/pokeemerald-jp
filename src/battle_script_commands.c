@@ -1490,6 +1490,7 @@ static void Cmd_mirrorcoatdamagecalculator(void);
 static void Cmd_disablelastusedattack(void);
 static void Cmd_trysetencore(void);
 static void Cmd_painsplitdmgcalc(void);
+static void Cmd_settypetorandomresistance(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7259,6 +7260,66 @@ static void Cmd_painsplitdmgcalc(void)
     }
     else
     {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_settypetorandomresistance(void)
+{
+    if (gLastLandedMoves[gBattlerAttacker] == MOVE_NONE
+     || gLastLandedMoves[gBattlerAttacker] == MOVE_UNAVAILABLE)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else if ((u8)IsTwoTurnsMove(gLastLandedMoves[gBattlerAttacker])
+            && gBattleMons[gLastHitBy[gBattlerAttacker]].status2 & STATUS2_MULTIPLETURNS)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        s32 i, j, rands;
+
+        for (rands = 0; rands < 1000; rands++)
+        {
+            while (((i = Random() % 128) > sizeof(gTypeEffectiveness) / 3));
+
+            i *= 3;
+
+            if (TYPE_EFFECT_ATK_TYPE(i) == gLastResultingMoves[gBattlerAttacker]
+                && TYPE_EFFECT_MULTIPLIER(i) <= TYPE_MUL_NOT_EFFECTIVE
+                && !IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_EFFECT_DEF_TYPE(i)))
+            {
+                SET_BATTLER_TYPE(gBattlerAttacker, TYPE_EFFECT_DEF_TYPE(i));
+                PREPARE_TYPE_BUFFER(gBattleTextBuff1, TYPE_EFFECT_DEF_TYPE(i));
+
+                gBattlescriptCurrInstr += 5;
+                return;
+            }
+        }
+
+        for (j = 0, rands = 0; rands < sizeof(gTypeEffectiveness); j += 3, rands += 3)
+        {
+            switch (TYPE_EFFECT_ATK_TYPE(j))
+            {
+            case TYPE_ENDTABLE:
+            case TYPE_FORESIGHT:
+                break;
+            default:
+                if (TYPE_EFFECT_ATK_TYPE(j) == gLastResultingMoves[gBattlerAttacker]
+                 && TYPE_EFFECT_MULTIPLIER(j) <= 5
+                 && !IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_EFFECT_DEF_TYPE(i)))
+                {
+                    SET_BATTLER_TYPE(gBattlerAttacker, TYPE_EFFECT_DEF_TYPE(rands));
+                    PREPARE_TYPE_BUFFER(gBattleTextBuff1, TYPE_EFFECT_DEF_TYPE(rands))
+
+                    gBattlescriptCurrInstr += 5;
+                    return;
+                }
+                break;
+            }
+        }
+
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
