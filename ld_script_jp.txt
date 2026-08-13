@@ -3445,6 +3445,8 @@ SECTIONS {
         src/battle_util.o(.text.HasNoMonsToSwitch);
         src/battle_util.o(.text.CastformDataTypeChange);
         src/battle_util.o(.text.AbilityBattleEffects);
+        src/battle_util.o(.text.BattleScriptExecute);
+        src/battle_util.o(.text.BattleScriptPushCursorAndCallback);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);

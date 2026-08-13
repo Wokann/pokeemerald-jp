@@ -25,6 +25,7 @@
 #include "constants/weather.h"
 
 extern const u16 sSoundMovesTable[];
+void sub_0803DCCC(void);
 
 u8 GetBattlerForBattleScript(u8 caseId)
 {
@@ -2512,4 +2513,20 @@ u8 AbilityBattleEffects(u8 caseID, u8 battler, u8 ability, u8 special, u16 moveA
     }
 
     return effect;
+}
+
+void BattleScriptExecute(const u8 *BS_ptr)
+{
+    gBattlescriptCurrInstr = BS_ptr;
+    gBattleResources->battleCallbackStack->function[gBattleResources->battleCallbackStack->size++] = gBattleMainFunc;
+    gBattleMainFunc = RunBattleScriptCommands_PopCallbacksStack;
+    gCurrentActionFuncId = 0;
+}
+
+void BattleScriptPushCursorAndCallback(const u8 *BS_ptr)
+{
+    BattleScriptPushCursor();
+    gBattlescriptCurrInstr = BS_ptr;
+    gBattleResources->battleCallbackStack->function[gBattleResources->battleCallbackStack->size++] = gBattleMainFunc;
+    gBattleMainFunc = sub_0803DCCC;
 }
