@@ -1479,6 +1479,7 @@ static void Cmd_setmist(void);
 static void Cmd_setfocusenergy(void);
 static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
+static void Cmd_mimicattackcopy(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7022,4 +7023,45 @@ static void Cmd_setsubstitute(void)
     }
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_mimicattackcopy(void)
+{
+    gChosenMove = MOVE_UNAVAILABLE;
+
+    if ((u8)IsMoveUncopyableByMimic(gLastMoves[gBattlerTarget])
+        || gBattleMons[gBattlerAttacker].status2 & STATUS2_TRANSFORMED
+        || gLastMoves[gBattlerTarget] == MOVE_NONE
+        || gLastMoves[gBattlerTarget] == MOVE_UNAVAILABLE)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        int i;
+
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (gBattleMons[gBattlerAttacker].moves[i] == gLastMoves[gBattlerTarget])
+                break;
+        }
+
+        if (i == MAX_MON_MOVES)
+        {
+            gBattleMons[gBattlerAttacker].moves[gCurrMovePos] = gLastMoves[gBattlerTarget];
+            if (gBattleMoves[gLastMoves[gBattlerTarget]].pp < 5)
+                gBattleMons[gBattlerAttacker].pp[gCurrMovePos] = gBattleMoves[gLastMoves[gBattlerTarget]].pp;
+            else
+                gBattleMons[gBattlerAttacker].pp[gCurrMovePos] = 5;
+
+            PREPARE_MOVE_BUFFER(gBattleTextBuff1, gLastMoves[gBattlerTarget])
+
+            gDisableStructs[gBattlerAttacker].mimickedMoves |= gBitTable[gCurrMovePos];
+            gBattlescriptCurrInstr += 5;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+    }
 }

@@ -3743,7 +3743,9 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setfocusenergy);
         src/battle_script_commands.o(.text.Cmd_transformdataexecution);
         src/battle_script_commands.o(.text.Cmd_setsubstitute);
-        asm/battle_script_commands.o(.text.atk7D_battle_rest);
+        asm/battle_script_commands.o(.text.IsMoveUncopyableByMimic);
+        src/battle_script_commands.o(.text.Cmd_mimicattackcopy);
+        asm/battle_script_commands.o(.text.atk9E_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
         asm/battle_gfx_sfx_util.o(.text);
