@@ -2612,6 +2612,19 @@ void HandleAction_SafariZoneRun(void)
     gBattleOutcome = B_OUTCOME_RAN;
 }
 
+void HandleAction_WallyBallThrow(void)
+{
+    gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+
+    PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gBattlerPartyIndexes[gBattlerAttacker])
+
+    gBattlescriptCurrInstr = gBattlescriptsForSafariActions[3];
+    gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
+    gActionsByTurnOrder[1] = B_ACTION_FINISHED;
+}
+
 
 
 

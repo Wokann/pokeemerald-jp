@@ -10,58 +10,6 @@
 
 
 
-	thumb_func_start HandleAction_WallyBallThrow
-HandleAction_WallyBallThrow: @ 0x0803EE6C
-	ldr r3, _0803EEB8
-	ldr r1, _0803EEBC
-	ldr r0, _0803EEC0
-	ldrb r0, [r0]
-	adds r0, r0, r1
-	ldrb r2, [r0]
-	strb r2, [r3]
-	ldr r0, _0803EEC4
-	movs r1, #0
-	strh r1, [r0]
-	ldr r0, _0803EEC8
-	strh r1, [r0]
-	ldr r1, _0803EECC
-	movs r0, #0xfd
-	strb r0, [r1]
-	movs r0, #7
-	strb r0, [r1, #1]
-	strb r2, [r1, #2]
-	ldr r2, _0803EED0
-	ldrb r0, [r3]
-	lsls r0, r0, #1
-	adds r0, r0, r2
-	ldrh r0, [r0]
-	strb r0, [r1, #3]
-	movs r0, #0xff
-	strb r0, [r1, #4]
-	ldr r1, _0803EED4
-	ldr r0, _0803EED8
-	ldr r0, [r0, #0xc]
-	str r0, [r1]
-	ldr r1, _0803EEDC
-	movs r0, #0xa
-	strb r0, [r1]
-	ldr r1, _0803EEE0
-	movs r0, #0xc
-	strb r0, [r1, #1]
-	bx lr
-	.align 2, 0
-_0803EEB8: .4byte 0x02023EAF
-_0803EEBC: .4byte 0x02023D22
-_0803EEC0: .4byte 0x02023D26
-_0803EEC4: .4byte 0x02022AC8
-_0803EEC8: .4byte 0x02022ACA
-_0803EECC: .4byte 0x02022C0C
-_0803EED0: .4byte 0x02023D12
-_0803EED4: .4byte 0x02023EB8
-_0803EED8: .4byte 0x0828A2E0
-_0803EEDC: .4byte 0x02023D27
-_0803EEE0: .4byte 0x02023D1E
-	thumb_func_end HandleAction_WallyBallThrow
 
 	thumb_func_start sub_0803EEE4
 sub_0803EEE4: @ 0x0803EEE4
