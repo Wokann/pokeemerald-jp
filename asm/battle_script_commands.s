@@ -254,53 +254,6 @@ _0804FED4: .4byte 0x02023EB8
 
 	.syntax unified
 
-	thumb_func_start TrySetDestinyBondToHappen
-TrySetDestinyBondToHappen: @ 0x08052D90
-	push {r4, r5, lr}
-	ldr r0, _08052DE0
-	ldrb r0, [r0]
-	bl GetBattlerSide
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	ldr r4, _08052DE4
-	ldrb r0, [r4]
-	bl GetBattlerSide
-	lsls r0, r0, #0x18
-	lsrs r3, r0, #0x18
-	ldr r1, _08052DE8
-	ldrb r2, [r4]
-	movs r0, #0x58
-	muls r0, r2, r0
-	adds r1, #0x50
-	adds r0, r0, r1
-	ldr r0, [r0]
-	movs r1, #0x80
-	lsls r1, r1, #0x12
-	ands r0, r1
-	cmp r0, #0
-	beq _08052DDA
-	cmp r5, r3
-	beq _08052DDA
-	ldr r2, _08052DEC
-	ldr r1, [r2]
-	movs r0, #0x80
-	lsls r0, r0, #0x11
-	ands r0, r1
-	cmp r0, #0
-	bne _08052DDA
-	movs r0, #0x40
-	orrs r1, r0
-	str r1, [r2]
-_08052DDA:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052DE0: .4byte 0x02023EAF
-_08052DE4: .4byte 0x02023EB0
-_08052DE8: .4byte 0x02023D28
-_08052DEC: .4byte 0x02023F24
-	thumb_func_end TrySetDestinyBondToHappen
 	.section .text.atkAC_battle_rest,"ax",%progbits
 
 	.syntax unified

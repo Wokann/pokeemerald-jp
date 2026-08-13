@@ -3783,7 +3783,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.AttacksThisTurn);
         src/battle_script_commands.o(.text.Cmd_trychoosesleeptalkmove);
         src/battle_script_commands.o(.text.Cmd_setdestinybond);
-        asm/battle_script_commands.o(.text.TrySetDestinyBondToHappen);
+        src/battle_script_commands.o(.text.TrySetDestinyBondToHappen);
         src/battle_script_commands.o(.text.Cmd_trysetdestinybondtohappen);
         src/battle_script_commands.o(.text.Cmd_remaininghptopower);
         src/battle_script_commands.o(.text.Cmd_tryspiteppreduce);

@@ -1507,6 +1507,7 @@ static void Cmd_copymovepermanently(void);
 static void Cmd_trychoosesleeptalkmove(void);
 static void Cmd_setdestinybond(void);
 void TrySetDestinyBondToHappen(void);
+void TrySetDestinyBondToHappen(void);
 extern const u8 sFlailHpScaleToPowerTable[];
 static void Cmd_trysetdestinybondtohappen(void);
 static void Cmd_remaininghptopower(void);
@@ -7580,6 +7581,18 @@ static void Cmd_setdestinybond(void)
 {
     gBattleMons[gBattlerAttacker].status2 |= STATUS2_DESTINY_BOND;
     gBattlescriptCurrInstr++;
+}
+
+void TrySetDestinyBondToHappen(void)
+{
+    u8 sideAttacker = GetBattlerSide(gBattlerAttacker);
+    u8 sideTarget = GetBattlerSide(gBattlerTarget);
+    if (gBattleMons[gBattlerTarget].status2 & STATUS2_DESTINY_BOND
+        && sideAttacker != sideTarget
+        && !(gHitMarker & HITMARKER_GRUDGE))
+    {
+        gHitMarker |= HITMARKER_DESTINYBOND;
+    }
 }
 
 static void Cmd_trysetdestinybondtohappen(void)
