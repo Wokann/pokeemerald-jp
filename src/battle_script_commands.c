@@ -1555,6 +1555,7 @@ static void Cmd_assistattackselect(void);
 static void Cmd_trysetmagiccoat(void);
 static void Cmd_trysetsnatch(void);
 static void Cmd_trygetintimidatetarget(void);
+static void Cmd_switchoutabilities(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8772,4 +8773,23 @@ static void Cmd_trygetintimidatetarget(void)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     else
         gBattlescriptCurrInstr += 5;
+}
+
+static void Cmd_switchoutabilities(void)
+{
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    switch (gBattleMons[gActiveBattler].ability)
+    {
+    case ABILITY_NATURAL_CURE:
+        gBattleMons[gActiveBattler].status1 = 0;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE,
+                                     gBitTable[*(gBattleStruct->battlerPartyIndexes + gActiveBattler)],
+                                     sizeof(gBattleMons[gActiveBattler].status1),
+                                     &gBattleMons[gActiveBattler].status1);
+        MarkBattlerForControllerExec(gActiveBattler);
+        break;
+    }
+
+    gBattlescriptCurrInstr += 2;
 }

@@ -520,65 +520,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkE2_switchoutabilities
-atkE2_switchoutabilities: @ 0x08055688
-	push {r4, r5, r6, lr}
-	sub sp, #4
-	ldr r5, _080556F0
-	ldr r0, [r5]
-	ldrb r0, [r0, #1]
-	bl GetBattlerForBattleScript
-	ldr r4, _080556F4
-	strb r0, [r4]
-	ldr r3, _080556F8
-	ldrb r0, [r4]
-	movs r6, #0x58
-	adds r1, r0, #0
-	muls r1, r6, r1
-	adds r0, r1, r3
-	adds r0, #0x20
-	ldrb r0, [r0]
-	cmp r0, #0x1e
-	bne _080556E2
-	adds r3, #0x4c
-	adds r1, r1, r3
-	movs r0, #0
-	str r0, [r1]
-	ldr r2, _080556FC
-	ldrb r1, [r4]
-	ldr r0, _08055700
-	ldr r0, [r0]
-	adds r0, r1, r0
-	adds r0, #0x58
-	ldrb r0, [r0]
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldrb r2, [r0]
-	adds r0, r1, #0
-	muls r0, r6, r0
-	adds r0, r0, r3
-	str r0, [sp]
-	movs r0, #0
-	movs r1, #0x28
-	movs r3, #4
-	bl BtlController_EmitSetMonData
-	ldrb r0, [r4]
-	bl MarkBattlerForControllerExec
-_080556E2:
-	ldr r0, [r5]
-	adds r0, #2
-	str r0, [r5]
-	add sp, #4
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080556F0: .4byte 0x02023EB8
-_080556F4: .4byte 0x02023D08
-_080556F8: .4byte 0x02023D28
-_080556FC: .4byte 0x082FACB4
-_08055700: .4byte 0x02024140
-	thumb_func_end atkE2_switchoutabilities
 
 	thumb_func_start atkE3_jumpifhasnohp
 atkE3_jumpifhasnohp: @ 0x08055704
