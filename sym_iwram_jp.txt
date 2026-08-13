@@ -1,5 +1,6 @@
 gUnknown_3000000 = .;
 gCurrentMapMusic = ABSOLUTE(0x03000F48);
+gPreBattleCallback1 = ABSOLUTE(0x03005A60);
 gMain = ABSOLUTE(0x03002360);
 gBattleResults = ABSOLUTE(0x03005A70);
 sRandMonId = ABSOLUTE(0x03001294);

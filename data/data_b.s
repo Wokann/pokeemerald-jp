@@ -2042,9 +2042,13 @@ gBattleWindowTemplates: @ 0x82EB9F8
 sBattleEnvironmentTable: @ 0x82EBA00 (10 * struct BattleBackground)
 	.incbin "baserom_jp.gba", 0x2eba00, 0xc8
 
-	.globl gUnknown_82EBAC8
-gUnknown_82EBAC8: @ 0x82EBAC8
-	.incbin "baserom_jp.gba", 0x2ebac8, 0x18
+	.globl sIntroScanlineParams16Bit
+sIntroScanlineParams16Bit: @ 0x82EBAC8 (JP: battle_main.c)
+	.incbin "baserom_jp.gba", 0x2ebac8, 0xc
+
+	.globl sIntroScanlineParams32Bit
+sIntroScanlineParams32Bit: @ 0x82EBAD4
+	.incbin "baserom_jp.gba", 0x2ebad4, 0xc
 
 	.globl gUnusedBattleInitSprite
 gUnusedBattleInitSprite: @ 0x82EBAE0 (JP: struct SpriteTemplate)
