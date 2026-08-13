@@ -80,6 +80,7 @@ extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: 
 extern void BattleIntroPrintTrainerWantsToBattle(void); // JP asm 0x0803AD64 (US: same name)
 extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: same name)
 extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
+extern void BattleIntroPrintPlayerSendsOut(void); // JP asm 0x0803B010 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1976,6 +1977,15 @@ static void BattleIntroGetMonsData(void)
                 gBattleCommunication[MULTIUSE_STATE] = 0;
         }
         break;
+    }
+}
+
+static void BattleIntroPrintWildMonAttacked(void)
+{
+    if (gBattleControllerExecFlags == 0)
+    {
+        gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
+        PrepareStringBattle(STRINGID_INTROMSG, 0);
     }
 }
 

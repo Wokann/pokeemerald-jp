@@ -17,27 +17,6 @@
 
 
 
-	thumb_func_start BattleIntroPrintWildMonAttacked
-BattleIntroPrintWildMonAttacked: @ 0x0803AD9C
-	push {lr}
-	ldr r0, _0803ADB8
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _0803ADB4
-	ldr r1, _0803ADBC
-	ldr r0, _0803ADC0
-	str r0, [r1]
-	movs r0, #0
-	movs r1, #0
-	bl PrepareStringBattle
-_0803ADB4:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803ADB8: .4byte 0x02023D0C
-_0803ADBC: .4byte 0x03005A64
-_0803ADC0: .4byte 0x0803B011
-	thumb_func_end BattleIntroPrintWildMonAttacked
 
 	thumb_func_start BattleIntroPrintOpponentSendsOut
 BattleIntroPrintOpponentSendsOut: @ 0x0803ADC4
