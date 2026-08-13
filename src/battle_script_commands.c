@@ -3151,3 +3151,133 @@ static void Cmd_call(void)
     BattleScriptPush(gBattlescriptCurrInstr + 5);
     gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
 }
+
+static void Cmd_jumpiftype2(void)
+{
+    u8 battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    if (gBattlescriptCurrInstr[2] == gBattleMons[battler].types[0] || gBattlescriptCurrInstr[2] == gBattleMons[battler].types[1])
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 3);
+    else
+        gBattlescriptCurrInstr += 7;
+}
+
+static void Cmd_jumpifabilitypresent(void)
+{
+    if (AbilityBattleEffects(ABILITYEFFECT_CHECK_ON_FIELD, 0, gBattlescriptCurrInstr[1], 0, 0))
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+    else
+        gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_endselectionscript(void)
+{
+    *(gBattlerAttacker + gBattleStruct->selectionScriptFinished) = TRUE;
+}
+
+static void Cmd_playanimation(void)
+{
+    const u16 *argumentPtr;
+
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    argumentPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
+
+    if (gBattlescriptCurrInstr[2] == B_ANIM_STATS_CHANGE
+     || gBattlescriptCurrInstr[2] == B_ANIM_SNATCH_MOVE
+     || gBattlescriptCurrInstr[2] == B_ANIM_SUBSTITUTE_FADE)
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, gBattlescriptCurrInstr[2], *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 7;
+    }
+    else if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+    {
+        BattleScriptPush(gBattlescriptCurrInstr + 7);
+        gBattlescriptCurrInstr = BattleScript_Pausex20;
+    }
+    else if (gBattlescriptCurrInstr[2] == B_ANIM_RAIN_CONTINUES
+          || gBattlescriptCurrInstr[2] == B_ANIM_SUN_CONTINUES
+          || gBattlescriptCurrInstr[2] == B_ANIM_SANDSTORM_CONTINUES
+          || gBattlescriptCurrInstr[2] == B_ANIM_HAIL_CONTINUES)
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, gBattlescriptCurrInstr[2], *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 7;
+    }
+    else if (gStatuses3[gActiveBattler] & STATUS3_SEMI_INVULNERABLE)
+    {
+        gBattlescriptCurrInstr += 7;
+    }
+    else
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, gBattlescriptCurrInstr[2], *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 7;
+    }
+}
+
+// Same as playanimation, except it takes a pointer to some animation id, instead of taking the value directly
+static void Cmd_playanimation_var(void)
+{
+    const u16 *argumentPtr;
+    const u8 *animationIdPtr;
+
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    animationIdPtr = T2_READ_PTR(gBattlescriptCurrInstr + 2);
+    argumentPtr = T2_READ_PTR(gBattlescriptCurrInstr + 6);
+
+    if (*animationIdPtr == B_ANIM_STATS_CHANGE
+     || *animationIdPtr == B_ANIM_SNATCH_MOVE
+     || *animationIdPtr == B_ANIM_SUBSTITUTE_FADE)
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, *animationIdPtr, *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 10;
+    }
+    else if (gHitMarker & HITMARKER_NO_ANIMATIONS)
+    {
+        gBattlescriptCurrInstr += 10;
+    }
+    else if (*animationIdPtr == B_ANIM_RAIN_CONTINUES
+          || *animationIdPtr == B_ANIM_SUN_CONTINUES
+          || *animationIdPtr == B_ANIM_SANDSTORM_CONTINUES
+          || *animationIdPtr == B_ANIM_HAIL_CONTINUES)
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, *animationIdPtr, *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 10;
+    }
+    else if (gStatuses3[gActiveBattler] & STATUS3_SEMI_INVULNERABLE)
+    {
+        gBattlescriptCurrInstr += 10;
+    }
+    else
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, *animationIdPtr, *argumentPtr);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 10;
+    }
+}
+
+static void Cmd_setgraphicalstatchangevalues(void)
+{
+    u8 value = 0;
+    switch (GET_STAT_BUFF_VALUE2(gBattleScripting.statChanger))
+    {
+    case SET_STAT_BUFF_VALUE(1): // +1
+        value = STAT_ANIM_PLUS1 + 1;
+        break;
+    case SET_STAT_BUFF_VALUE(2): // +2
+        value = STAT_ANIM_PLUS2 + 1;
+        break;
+    case SET_STAT_BUFF_VALUE(1) | STAT_BUFF_NEGATIVE: // -1
+        value = STAT_ANIM_MINUS1 + 1;
+        break;
+    case SET_STAT_BUFF_VALUE(2) | STAT_BUFF_NEGATIVE: // -2
+        value = STAT_ANIM_MINUS2 + 1;
+        break;
+    }
+    gBattleScripting.animArg1 = GET_STAT_BUFF_ID(gBattleScripting.statChanger) + value - 1;
+    gBattleScripting.animArg2 = 0;
+    gBattlescriptCurrInstr++;
+}
