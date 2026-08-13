@@ -409,6 +409,10 @@ _08052C22:
 
 
 
+	.section .text.TrySetDestinyBondToHappen,"ax",%progbits
+
+	.syntax unified
+
 	thumb_func_start TrySetDestinyBondToHappen
 TrySetDestinyBondToHappen: @ 0x08052D90
 	push {r4, r5, lr}
@@ -456,72 +460,12 @@ _08052DE4: .4byte 0x02023EB0
 _08052DE8: .4byte 0x02023D28
 _08052DEC: .4byte 0x02023F24
 	thumb_func_end TrySetDestinyBondToHappen
+	.section .text.atkAC_battle_rest,"ax",%progbits
 
-	thumb_func_start atkAB_trysetdestinybondtohappen
-atkAB_trysetdestinybondtohappen: @ 0x08052DF0
-	push {lr}
-	bl TrySetDestinyBondToHappen
-	ldr r1, _08052E04
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052E04: .4byte 0x02023EB8
-	thumb_func_end atkAB_trysetdestinybondtohappen
+	.syntax unified
 
-	thumb_func_start atkAC_remaininghptopower
-atkAC_remaininghptopower: @ 0x08052E08
-	push {lr}
-	ldr r2, _08052E5C
-	ldr r0, _08052E60
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r1, r0, r1
-	adds r1, r1, r2
-	movs r2, #0x28
-	ldrsh r0, [r1, r2]
-	movs r2, #0x2c
-	ldrsh r1, [r1, r2]
-	movs r2, #0x30
-	bl GetScaledHPFraction
-	lsls r0, r0, #0x18
-	lsrs r1, r0, #0x18
-	movs r3, #0
-	ldr r0, _08052E64
-	ldrb r2, [r0]
-	cmp r1, r2
-	ble _08052E42
-	adds r2, r0, #0
-_08052E34:
-	adds r3, #2
-	cmp r3, #0xb
-	bgt _08052E42
-	adds r0, r3, r2
-	ldrb r0, [r0]
-	cmp r1, r0
-	bgt _08052E34
-_08052E42:
-	ldr r2, _08052E68
-	ldr r1, _08052E64
-	adds r0, r3, #1
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	strh r0, [r2]
-	ldr r1, _08052E6C
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052E5C: .4byte 0x02023D28
-_08052E60: .4byte 0x02023EAF
-_08052E64: .4byte 0x082ECD8C
-_08052E68: .4byte 0x020240A4
-_08052E6C: .4byte 0x02023EB8
-	thumb_func_end atkAC_remaininghptopower
+
+
 
 	thumb_func_start atkAD_tryspiteppreduce
 atkAD_tryspiteppreduce: @ 0x08052E70

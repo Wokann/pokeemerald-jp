@@ -1495,6 +1495,10 @@ static void Cmd_setalwayshitflag(void);
 static void Cmd_copymovepermanently(void);
 static void Cmd_trychoosesleeptalkmove(void);
 static void Cmd_setdestinybond(void);
+void TrySetDestinyBondToHappen(void);
+extern const u8 sFlailHpScaleToPowerTable[];
+static void Cmd_trysetdestinybondtohappen(void);
+static void Cmd_remaininghptopower(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7430,5 +7434,26 @@ static void Cmd_trychoosesleeptalkmove(void)
 static void Cmd_setdestinybond(void)
 {
     gBattleMons[gBattlerAttacker].status2 |= STATUS2_DESTINY_BOND;
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_trysetdestinybondtohappen(void)
+{
+    TrySetDestinyBondToHappen();
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_remaininghptopower(void)
+{
+    s32 i;
+    s32 hpFraction = GetScaledHPFraction(gBattleMons[gBattlerAttacker].hp, gBattleMons[gBattlerAttacker].maxHP, 48);
+
+    for (i = 0; i < 12; i += 2)
+    {
+        if (hpFraction <= sFlailHpScaleToPowerTable[i])
+            break;
+    }
+
+    gDynamicBasePower = sFlailHpScaleToPowerTable[i + 1];
     gBattlescriptCurrInstr++;
 }
