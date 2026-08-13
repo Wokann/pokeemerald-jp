@@ -21,6 +21,7 @@
 #include "menu.h"
 #include "overworld.h"
 #include "palette.h"
+#include "pokedex.h"
 #include "pokemon.h"
 #include "recorded_battle.h"
 #include "scanline_effect.h"
@@ -74,6 +75,7 @@ extern void SwitchInClearSetData(void); // JP asm 0x08039EC8 (register-sensitive
 extern void FaintClearSetData(void); // JP asm 0x0803A3A0 (register-sensitive, kept in asm)
 extern void BattleIntroPrepareBackgroundSlide(void); // JP asm 0x0803A878 (US: same name)
 extern void BattleIntroDrawTrainersOrMonsSprites(void); // JP asm 0x0803A8C8 (US: same name)
+extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1972,6 +1974,7 @@ static void BattleIntroGetMonsData(void)
         break;
     }
 }
+
 
 
 
