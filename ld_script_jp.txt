@@ -3294,6 +3294,7 @@ SECTIONS {
         src/battle_main.o(.text.FreeResetData_ReturnToOvOrDoEvolutions);
         asm/battle_main_tryevo.o(.text);
         src/battle_main.o(.text.WaitForEvoSceneToFinish);
+        src/battle_main.o(.text.ReturnFromBattleToOverworld);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
