@@ -758,6 +758,9 @@ BattleScript_MoveMissedPause = gUnknown_8286FE8;
 BattleScript_HitFromCritCalc = gUnknown_8286FB8;
 BattleScript_AlreadyAtFullHp = gUnknown_8288483;
 BattleScript_PresentHealTarget = gUnknown_8288469;
+BattleScript_WrapFree = gUnknown_828954D;
+BattleScript_LeechSeedFree = gUnknown_828955E;
+BattleScript_SpikesFree = gUnknown_8289565;
 sMovesForbiddenToCopy = gUnknown_82ECD64;
 sFlailHpScaleToPowerTable = gUnknown_82ECD8C;
 BattleScript_ButItFailed = gUnknown_82884A4;
@@ -3785,6 +3788,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setsunny);
         src/battle_script_commands.o(.text.Cmd_maxattackhalvehp);
         src/battle_script_commands.o(.text.Cmd_copyfoestats);
+        src/battle_script_commands.o(.text.Cmd_rapidspinfree);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

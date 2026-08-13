@@ -1516,6 +1516,7 @@ static void Cmd_jumpifnopursuitswitchdmg(void);
 static void Cmd_setsunny(void);
 static void Cmd_maxattackhalvehp(void);
 static void Cmd_copyfoestats(void);
+static void Cmd_rapidspinfree(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7974,4 +7975,41 @@ static void Cmd_copyfoestats(void)
     }
 
     gBattlescriptCurrInstr += 5; // Has an unused jump ptr(possibly for a failed attempt) parameter.
+}
+
+static void Cmd_rapidspinfree(void)
+{
+    if (gBattleMons[gBattlerAttacker].status2 & STATUS2_WRAPPED)
+    {
+        gBattleScripting.battler = gBattlerTarget;
+        gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_WRAPPED;
+        gBattlerTarget = *(gBattleStruct->wrappedBy + gBattlerAttacker);
+
+        gBattleTextBuff1[0] = B_BUFF_PLACEHOLDER_BEGIN;
+        gBattleTextBuff1[1] = B_BUFF_MOVE;
+        gBattleTextBuff1[2] = *(gBattleStruct->wrappedMove + gBattlerAttacker * 2 + 0);
+        gBattleTextBuff1[3] = *(gBattleStruct->wrappedMove + gBattlerAttacker * 2 + 1);
+        gBattleTextBuff1[4] = B_BUFF_EOS;
+
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_WrapFree;
+    }
+    else if (gStatuses3[gBattlerAttacker] & STATUS3_LEECHSEED)
+    {
+        gStatuses3[gBattlerAttacker] &= ~STATUS3_LEECHSEED;
+        gStatuses3[gBattlerAttacker] &= ~STATUS3_LEECHSEED_BATTLER;
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_LeechSeedFree;
+    }
+    else if (gSideStatuses[GetBattlerSide(gBattlerAttacker)] & SIDE_STATUS_SPIKES)
+    {
+        gSideStatuses[GetBattlerSide(gBattlerAttacker)] &= ~SIDE_STATUS_SPIKES;
+        gSideTimers[GetBattlerSide(gBattlerAttacker)].spikesAmount = 0;
+        BattleScriptPushCursor();
+        gBattlescriptCurrInstr = BattleScript_SpikesFree;
+    }
+    else
+    {
+        gBattlescriptCurrInstr++;
+    }
 }
