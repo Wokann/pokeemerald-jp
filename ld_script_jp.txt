@@ -4890,6 +4890,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimClappingHand);
         src/battle_anim_effects_3.o(.text.AnimClappingHand_Step);
         src/battle_anim_effects_3.o(.text.AnimClappingHand2);
+        src/battle_anim_effects_3.o(.text.AnimTask_CreateSpotlight);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest4);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
