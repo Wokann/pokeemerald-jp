@@ -91,6 +91,16 @@ static void Cmd_resetsentmonsvalue(void);
 static void Cmd_setatktoplayer0(void);
 static void Cmd_makevisible(void);
 static void Cmd_recordlastability(void);
+static void Cmd_buffermovetolearn(void);
+static void Cmd_jumpifplayerran(void);
+static void Cmd_hpthresholds(void);
+static void Cmd_hpthresholds2(void);
+static void Cmd_useitemonopponent(void);
+
+// JP ROM keeps the real PokemonUseItemEffects as an unnamed symbol; the
+// "PokemonUseItemEffects" label in asm/pokemon.s is a fallthrough artifact
+// inside the surrounding function, so call the sub_0806B7EC entry directly.
+bool8 sub_0806B7EC(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, bool8 usedByAI);
 
 static void Cmd_attackcanceler(void)
 {
@@ -5425,5 +5435,84 @@ static void Cmd_recordlastability(void)
     gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
     RecordAbilityBattle(gActiveBattler, gLastUsedAbility);
 
+    gBattlescriptCurrInstr++;
+}
+
+void BufferMoveToLearnIntoBattleTextBuff2(void)
+{
+    PREPARE_MOVE_BUFFER(gBattleTextBuff2, gMoveToLearn);
+}
+
+static void Cmd_buffermovetolearn(void)
+{
+    BufferMoveToLearnIntoBattleTextBuff2();
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_jumpifplayerran(void)
+{
+    if (TryRunFromBattle(gBattlerFainted))
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    else
+        gBattlescriptCurrInstr += 5;
+}
+
+static void Cmd_hpthresholds(void)
+{
+    u8 opposingBattler;
+    s32 result;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        opposingBattler = BATTLE_OPPOSITE(gActiveBattler);
+
+        result = gBattleMons[opposingBattler].hp * 100 / gBattleMons[opposingBattler].maxHP;
+        if (result == 0)
+            result = 1;
+
+        if (result > 69 || gBattleMons[opposingBattler].hp == 0)
+            gBattleStruct->hpScale = 0;
+        else if (result > 39)
+            gBattleStruct->hpScale = 1;
+        else if (result > 9)
+            gBattleStruct->hpScale = 2;
+        else
+            gBattleStruct->hpScale = 3;
+    }
+
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_hpthresholds2(void)
+{
+    u8 opposingBattler;
+    s32 result;
+    u8 hpSwitchout;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        opposingBattler = BATTLE_OPPOSITE(gActiveBattler);
+        hpSwitchout = *(u8 *)&gBattleStruct->hpOnSwitchout[GetBattlerSide(opposingBattler)];
+        result = (hpSwitchout - gBattleMons[opposingBattler].hp) * 100 / hpSwitchout;
+
+        if (gBattleMons[opposingBattler].hp >= hpSwitchout)
+            gBattleStruct->hpScale = 0;
+        else if (result <= 29)
+            gBattleStruct->hpScale = 1;
+        else if (result <= 69)
+            gBattleStruct->hpScale = 2;
+        else
+            gBattleStruct->hpScale = 3;
+    }
+
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_useitemonopponent(void)
+{
+    gBattlerInMenuId = gBattlerAttacker;
+    sub_0806B7EC(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], 0, TRUE);
     gBattlescriptCurrInstr++;
 }

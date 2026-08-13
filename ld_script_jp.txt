@@ -3682,6 +3682,12 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setatktoplayer0);
         src/battle_script_commands.o(.text.Cmd_makevisible);
         src/battle_script_commands.o(.text.Cmd_recordlastability);
+        src/battle_script_commands.o(.text.BufferMoveToLearnIntoBattleTextBuff2);
+        src/battle_script_commands.o(.text.Cmd_buffermovetolearn);
+        src/battle_script_commands.o(.text.Cmd_jumpifplayerran);
+        src/battle_script_commands.o(.text.Cmd_hpthresholds);
+        src/battle_script_commands.o(.text.Cmd_hpthresholds2);
+        src/battle_script_commands.o(.text.Cmd_useitemonopponent);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
