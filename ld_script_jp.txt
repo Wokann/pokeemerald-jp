@@ -3316,6 +3316,8 @@ SECTIONS {
         src/battle_main.o(.text.HandleAction_GoNear);
         src/battle_main.o(.text.HandleAction_SafariZoneRun);
         src/battle_main.o(.text.HandleAction_WallyBallThrow);
+        asm/battle_main_tryfinish2.o(.text);
+        src/battle_main.o(.text.HandleAction_NothingIsFainted);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

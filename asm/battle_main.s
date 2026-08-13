@@ -11,54 +11,7 @@
 
 
 
-	thumb_func_start sub_0803EEE4
-sub_0803EEE4: @ 0x0803EEE4
-	push {lr}
-	bl HandleFaintedMonActions
-	lsls r0, r0, #0x18
-	lsrs r1, r0, #0x18
-	cmp r1, #0
-	bne _0803EF00
-	ldr r0, _0803EF04
-	ldr r0, [r0]
-	adds r0, #0x4d
-	strb r1, [r0]
-	ldr r1, _0803EF08
-	movs r0, #0xc
-	strb r0, [r1]
-_0803EF00:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803EF04: .4byte 0x02024140
-_0803EF08: .4byte 0x02023D27
-	thumb_func_end sub_0803EEE4
 
-	thumb_func_start HandleAction_NothingIsFainted
-HandleAction_NothingIsFainted: @ 0x0803EF0C
-	ldr r1, _0803EF2C
-	ldrb r0, [r1]
-	adds r0, #1
-	strb r0, [r1]
-	ldr r3, _0803EF30
-	ldr r2, _0803EF34
-	ldrb r0, [r1]
-	adds r0, r0, r2
-	ldrb r0, [r0]
-	strb r0, [r3]
-	ldr r2, _0803EF38
-	ldr r0, [r2]
-	ldr r1, _0803EF3C
-	ands r0, r1
-	str r0, [r2]
-	bx lr
-	.align 2, 0
-_0803EF2C: .4byte 0x02023D26
-_0803EF30: .4byte 0x02023D27
-_0803EF34: .4byte 0x02023D1E
-_0803EF38: .4byte 0x02023F24
-_0803EF3C: .4byte 0xF1E892AF
-	thumb_func_end HandleAction_NothingIsFainted
 
 	thumb_func_start HandleAction_ActionFinished
 HandleAction_ActionFinished: @ 0x0803EF40
