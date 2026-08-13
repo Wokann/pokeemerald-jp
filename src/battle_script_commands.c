@@ -1518,6 +1518,7 @@ static void Cmd_maxattackhalvehp(void);
 static void Cmd_copyfoestats(void);
 static void Cmd_rapidspinfree(void);
 static void Cmd_setdefensecurlbit(void);
+static void Cmd_recoverbasedonsunlight(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8019,4 +8020,29 @@ static void Cmd_setdefensecurlbit(void)
 {
     gBattleMons[gBattlerAttacker].status2 |= STATUS2_DEFENSE_CURL;
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_recoverbasedonsunlight(void)
+{
+    gBattlerTarget = gBattlerAttacker;
+
+    if (gBattleMons[gBattlerAttacker].hp != gBattleMons[gBattlerAttacker].maxHP)
+    {
+        if (gBattleWeather == 0 || !WEATHER_HAS_EFFECT)
+            gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 2;
+        else if (gBattleWeather & B_WEATHER_SUN)
+            gBattleMoveDamage = 20 * gBattleMons[gBattlerAttacker].maxHP / 30;
+        else // not sunny weather
+            gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4;
+
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+        gBattleMoveDamage *= -1;
+
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
