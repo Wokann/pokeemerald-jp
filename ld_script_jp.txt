@@ -772,6 +772,8 @@ gBattlescriptsForUsingItem = gUnknown_828A2C4;
 gBattlescriptsForRunningByItem = gUnknown_828A2DC;
 gBattlescriptsForSafariActions = gUnknown_828A2E0;
 sPkblToEscapeFactor = gUnknown_82EC664;
+sGoNearCounterToCatchFactor = gUnknown_82EC673;
+sGoNearCounterToEscapeFactor = gUnknown_82EC677;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
@@ -3311,6 +3313,7 @@ SECTIONS {
         src/battle_main.o(.text.HandleAction_WatchesCarefully);
         src/battle_main.o(.text.HandleAction_SafariZoneBallThrow);
         src/battle_main.o(.text.HandleAction_ThrowPokeblock);
+        src/battle_main.o(.text.HandleAction_GoNear);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

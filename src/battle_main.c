@@ -103,6 +103,8 @@ extern const u8 *const gBattlescriptsForRunningByItem[];
 extern const u8 *const gBattlescriptsForUsingItem[];
 extern const u8 *const gBattlescriptsForSafariActions[];
 extern const u8 sPkblToEscapeFactor[][3];
+extern const u8 sGoNearCounterToCatchFactor[];
+extern const u8 sGoNearCounterToEscapeFactor[];
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2572,6 +2574,33 @@ void HandleAction_ThrowPokeblock(void)
     }
 
     gBattlescriptCurrInstr = gBattlescriptsForSafariActions[2];
+    gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
+}
+
+void HandleAction_GoNear(void)
+{
+    gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
+    gBattle_BG0_X = 0;
+    gBattle_BG0_Y = 0;
+
+    gBattleStruct->safariCatchFactor += sGoNearCounterToCatchFactor[gBattleStruct->safariGoNearCounter];
+    if (gBattleStruct->safariCatchFactor > 20)
+        gBattleStruct->safariCatchFactor = 20;
+
+    gBattleStruct->safariEscapeFactor += sGoNearCounterToEscapeFactor[gBattleStruct->safariGoNearCounter];
+    if (gBattleStruct->safariEscapeFactor > 20)
+        gBattleStruct->safariEscapeFactor = 20;
+
+    if (gBattleStruct->safariGoNearCounter < 3)
+    {
+        gBattleStruct->safariGoNearCounter++;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CREPT_CLOSER;
+    }
+    else
+    {
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_CANT_GET_CLOSER;
+    }
+    gBattlescriptCurrInstr = gBattlescriptsForSafariActions[1];
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
 
