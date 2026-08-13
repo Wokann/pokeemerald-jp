@@ -1545,6 +1545,7 @@ static void Cmd_doubledamagedealtifdamaged(void);
 static void Cmd_setyawn(void);
 static void Cmd_setdamagetohealthdifference(void);
 static void Cmd_scaledamagebyhealthratio(void);
+static void Cmd_tryswapabilities(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8565,4 +8566,24 @@ static void Cmd_scaledamagebyhealthratio(void)
             gDynamicBasePower = 1;
     }
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_tryswapabilities(void)
+{
+    if ((gBattleMons[gBattlerAttacker].ability == ABILITY_NONE
+        && gBattleMons[gBattlerTarget].ability == ABILITY_NONE)
+     || gBattleMons[gBattlerAttacker].ability == ABILITY_WONDER_GUARD
+     || gBattleMons[gBattlerTarget].ability == ABILITY_WONDER_GUARD
+     || gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+     {
+         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+     }
+    else
+    {
+        u8 abilityAtk = gBattleMons[gBattlerAttacker].ability;
+        gBattleMons[gBattlerAttacker].ability = gBattleMons[gBattlerTarget].ability;
+        gBattleMons[gBattlerTarget].ability = abilityAtk;
+
+            gBattlescriptCurrInstr += 5;
+    }
 }
