@@ -3,6 +3,7 @@
 .text
 .syntax unified
 
+	.section .text.battle_anim_effects_3_rest,"ax",%progbits
 	thumb_func_start sub_0815A010
 sub_0815A010: @ 0x0815A010
 	push {lr}
@@ -661,136 +662,8 @@ _0815A4FC: .4byte 0x020380BE
 _0815A500: .4byte 0x0000FFFF
 	thumb_func_end sub_0815A468
 
-	thumb_func_start sub_0815A504
-sub_0815A504: @ 0x0815A504
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r2, _0815A520
-	lsls r1, r0, #2
-	adds r1, r1, r0
-	lsls r1, r1, #3
-	adds r1, r1, r2
-	ldr r0, _0815A524
-	str r0, [r1]
-	ldr r1, _0815A528
-	ldrb r0, [r1]
-	subs r0, #1
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_0815A520: .4byte 0x03005B60
-_0815A524: .4byte 0x0815A52D
-_0815A528: .4byte 0x0203809E
-	thumb_func_end sub_0815A504
 
-	thumb_func_start sub_0815A52C
-sub_0815A52C: @ 0x0815A52C
-	push {r4, r5, r6, r7, lr}
-	mov r7, sl
-	mov r6, sb
-	mov r5, r8
-	push {r5, r6, r7}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	mov r8, r0
-	bl sub_080A665C
-	lsls r0, r0, #0x18
-	lsrs r7, r0, #0x18
-	ldr r5, _0815A5EC
-	mov r0, r8
-	lsls r3, r0, #2
-	adds r1, r3, r0
-	lsls r1, r1, #3
-	adds r1, r1, r5
-	ldrh r0, [r1, #0x12]
-	adds r0, #1
-	strh r0, [r1, #0x12]
-	lsls r0, r0, #0x10
-	asrs r0, r0, #0x10
-	cmp r0, #4
-	bne _0815A5CE
-	ldr r0, _0815A5F0
-	lsls r2, r7, #4
-	adds r1, r2, #0
-	adds r1, #0xb
-	lsls r1, r1, #1
-	adds r1, r1, r0
-	ldrh r6, [r1]
-	movs r4, #0xa
-	mov sl, r3
-	mov sb, r0
-	adds r5, r2, #0
-	ldr r2, _0815A5F4
-	mov ip, r2
-	lsls r0, r7, #5
-	add r0, sb
-	adds r3, r0, #0
-	adds r3, #0x14
-_0815A580:
-	ldrh r0, [r3]
-	strh r0, [r1]
-	subs r3, #2
-	subs r1, #2
-	subs r4, #1
-	cmp r4, #0
-	bgt _0815A580
-	adds r0, r5, #1
-	lsls r0, r0, #1
-	add r0, sb
-	strh r6, [r0]
-	adds r1, r5, #0
-	adds r1, #0xb
-	lsls r1, r1, #1
-	add r1, ip
-	ldrh r6, [r1]
-	movs r4, #0xa
-	lsls r0, r7, #5
-	add r0, ip
-	adds r2, r0, #0
-	adds r2, #0x14
-_0815A5AA:
-	ldrh r0, [r2]
-	strh r0, [r1]
-	subs r2, #2
-	subs r1, #2
-	subs r4, #1
-	cmp r4, #0
-	bgt _0815A5AA
-	adds r0, r5, #1
-	lsls r0, r0, #1
-	add r0, ip
-	movs r1, #0
-	strh r6, [r0]
-	mov r0, sl
-	add r0, r8
-	lsls r0, r0, #3
-	ldr r2, _0815A5EC
-	adds r0, r0, r2
-	strh r1, [r0, #0x12]
-_0815A5CE:
-	ldr r0, _0815A5F8
-	ldrh r1, [r0, #0xe]
-	ldr r0, _0815A5FC
-	cmp r1, r0
-	bne _0815A5DE
-	mov r0, r8
-	bl DestroyTask
-_0815A5DE:
-	pop {r3, r4, r5}
-	mov r8, r3
-	mov sb, r4
-	mov sl, r5
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815A5EC: .4byte 0x03005B60
-_0815A5F0: .4byte 0x020377B4
-_0815A5F4: .4byte 0x020373B4
-_0815A5F8: .4byte 0x020380BE
-_0815A5FC: .4byte 0x0000FFFF
-	thumb_func_end sub_0815A52C
-
+	.section .text.battle_anim_effects_3_rest2,"ax",%progbits
 	thumb_func_start sub_0815A600
 sub_0815A600: @ 0x0815A600
 	push {r4, r5, lr}
@@ -13084,4 +12957,3 @@ _08160550:
 	.align 2, 0
 _08160558: .4byte 0x020205AC
 	thumb_func_end AnimTask_SlackOffSquishStep
-
