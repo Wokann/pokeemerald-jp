@@ -498,57 +498,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkCC_callterrainattack
-atkCC_callterrainattack: @ 0x080547FC
-	push {r4, lr}
-	ldr r2, _0805484C
-	ldr r0, [r2]
-	ldr r1, _08054850
-	ands r0, r1
-	str r0, [r2]
-	ldr r4, _08054854
-	ldr r1, _08054858
-	ldr r0, _0805485C
-	ldrb r0, [r0]
-	lsls r0, r0, #1
-	adds r0, r0, r1
-	ldrh r0, [r0]
-	strh r0, [r4]
-	ldrh r0, [r4]
-	movs r1, #0
-	bl GetMoveTarget
-	ldr r1, _08054860
-	strb r0, [r1]
-	ldr r3, _08054864
-	ldr r2, _08054868
-	ldrh r1, [r4]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldrb r0, [r0]
-	lsls r0, r0, #2
-	adds r0, r0, r3
-	ldr r0, [r0]
-	bl BattleScriptPush
-	ldr r1, _0805486C
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0805484C: .4byte 0x02023F24
-_08054850: .4byte 0xFFFFFBFF
-_08054854: .4byte 0x02023E8E
-_08054858: .4byte 0x082ECD98
-_0805485C: .4byte 0x02022C94
-_08054860: .4byte 0x02023EB0
-_08054864: .4byte 0x08286C30
-_08054868: .4byte 0x082ED220
-_0805486C: .4byte 0x02023EB8
-	thumb_func_end atkCC_callterrainattack
 
 	thumb_func_start atkCD_cureifburnedparalysedorpoisoned
 atkCD_cureifburnedparalysedorpoisoned: @ 0x08054870

@@ -1530,6 +1530,8 @@ static void Cmd_sethail(void);
 static void Cmd_jumpifattackandspecialattackcannotfall(void);
 static void Cmd_setforcedtarget(void);
 static void Cmd_setcharge(void);
+extern const u16 sNaturePowerMoves[];
+static void Cmd_callenvironmentattack(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8271,5 +8273,14 @@ static void Cmd_setcharge(void)
     gStatuses3[gBattlerAttacker] |= STATUS3_CHARGED_UP;
     gDisableStructs[gBattlerAttacker].chargeTimer = 2;
     gDisableStructs[gBattlerAttacker].chargeTimerStartValue = 2;
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_callenvironmentattack(void)
+{
+    gHitMarker &= ~HITMARKER_ATTACKSTRING_PRINTED;
+    gCurrentMove = sNaturePowerMoves[gBattleEnvironment];
+    gBattlerTarget = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
+    BattleScriptPush(gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect]);
     gBattlescriptCurrInstr++;
 }

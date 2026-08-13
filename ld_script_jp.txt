@@ -763,6 +763,7 @@ BattleScript_LeechSeedFree = gUnknown_828955E;
 BattleScript_SpikesFree = gUnknown_8289565;
 sMovesForbiddenToCopy = gUnknown_82ECD64;
 sFlailHpScaleToPowerTable = gUnknown_82ECD8C;
+sNaturePowerMoves = gUnknown_82ECD98;
 BattleScript_ButItFailed = gUnknown_82884A4;
 BattleScript_MistProtected = ABSOLUTE(0x0828938B);
 BattleScript_AbilityNoStatLoss = ABSOLUTE(0x08289B4F);
@@ -3802,6 +3803,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_jumpifattackandspecialattackcannotfall);
         src/battle_script_commands.o(.text.Cmd_setforcedtarget);
         src/battle_script_commands.o(.text.Cmd_setcharge);
+        src/battle_script_commands.o(.text.Cmd_callenvironmentattack);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
