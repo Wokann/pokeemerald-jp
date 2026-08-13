@@ -514,52 +514,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkDC_trysetgrudge
-atkDC_trysetgrudge: @ 0x0805523C
-	push {lr}
-	ldr r1, _08055274
-	ldr r0, _08055278
-	ldrb r0, [r0]
-	lsls r0, r0, #2
-	adds r2, r0, r1
-	ldr r1, [r2]
-	movs r3, #0x80
-	lsls r3, r3, #7
-	adds r0, r1, #0
-	ands r0, r3
-	cmp r0, #0
-	beq _08055280
-	ldr r3, _0805527C
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _0805528C
-	.align 2, 0
-_08055274: .4byte 0x02023F50
-_08055278: .4byte 0x02023EAF
-_0805527C: .4byte 0x02023EB8
-_08055280:
-	orrs r1, r3
-	str r1, [r2]
-	ldr r1, _08055290
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_0805528C:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055290: .4byte 0x02023EB8
-	thumb_func_end atkDC_trysetgrudge
 
 	thumb_func_start atkDD_weightdamagecalculation
 atkDD_weightdamagecalculation: @ 0x08055294

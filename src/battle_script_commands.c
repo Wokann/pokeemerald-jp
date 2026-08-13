@@ -1547,6 +1547,7 @@ static void Cmd_setdamagetohealthdifference(void);
 static void Cmd_scaledamagebyhealthratio(void);
 static void Cmd_tryswapabilities(void);
 static void Cmd_tryimprison(void);
+static void Cmd_trysetgrudge(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8628,5 +8629,18 @@ static void Cmd_tryimprison(void)
         }
         if (battler == gBattlersCount)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_trysetgrudge(void)
+{
+    if (gStatuses3[gBattlerAttacker] & STATUS3_GRUDGE)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gStatuses3[gBattlerAttacker] |= STATUS3_GRUDGE;
+        gBattlescriptCurrInstr += 5;
     }
 }
