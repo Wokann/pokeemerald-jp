@@ -30,6 +30,8 @@ static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
 static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
+static void AnimSweetScentPetal(struct Sprite *sprite);
+static void AnimSweetScentPetal_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1004,5 +1006,48 @@ static void AnimTask_RockMonBackAndForth_Step(u8 taskId)
         ResetSpriteRotScale(task->data[15]);
         DestroyAnimVisualTask(taskId);
         break;
+    }
+}
+
+static void AnimSweetScentPetal(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        sprite->x = 0;
+        sprite->y = gBattleAnimArgs[0];
+    }
+    else
+    {
+        sprite->x = DISPLAY_WIDTH;
+        sprite->y = gBattleAnimArgs[0] - 30;
+    }
+
+    sprite->data[2] = gBattleAnimArgs[2];
+    StartSpriteAnim(sprite, gBattleAnimArgs[1]);
+    sprite->callback = AnimSweetScentPetal_Step;
+}
+
+static void AnimSweetScentPetal_Step(struct Sprite *sprite)
+{
+    sprite->data[0] += 3;
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        sprite->x += 5;
+        sprite->y -= 1;
+
+        if (sprite->x > DISPLAY_WIDTH)
+            DestroyAnimSprite(sprite);
+
+        sprite->y2 = Sin(sprite->data[0] & 0xFF, 16);
+    }
+    else
+    {
+        sprite->x -= 5;
+        sprite->y += 1;
+
+        if (sprite->x < 0)
+            DestroyAnimSprite(sprite);
+
+        sprite->y2 = Cos(sprite->data[0] & 0xFF, 16);
     }
 }
