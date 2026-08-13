@@ -1565,6 +1565,7 @@ static void Cmd_pickup(void);
 static void Cmd_docastformchangeanimation(void);
 static void Cmd_trycastformdatachange(void);
 static void Cmd_settypebasedhalvers(void);
+static void Cmd_setweatherballtype(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8978,4 +8979,25 @@ static void Cmd_settypebasedhalvers(void)
         gBattlescriptCurrInstr += 5;
     else
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+}
+
+static void Cmd_setweatherballtype(void)
+{
+    if (WEATHER_HAS_EFFECT)
+    {
+        if (gBattleWeather & B_WEATHER_ANY)
+            gBattleScripting.dmgMultiplier = 2;
+        if (gBattleWeather & B_WEATHER_RAIN)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_WATER | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_SANDSTORM)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_ROCK | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_SUN)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_FIRE | F_DYNAMIC_TYPE_SET;
+        else if (gBattleWeather & B_WEATHER_HAIL)
+            *(&gBattleStruct->dynamicMoveType) = TYPE_ICE | F_DYNAMIC_TYPE_SET;
+        else
+            *(&gBattleStruct->dynamicMoveType) = TYPE_NORMAL | F_DYNAMIC_TYPE_SET;
+    }
+
+    gBattlescriptCurrInstr++;
 }
