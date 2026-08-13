@@ -734,6 +734,103 @@ void PrepareBufferDataTransferLink(u8 bufferId, u16 size, u8 *data)
     gTasks[sLinkSendTaskId].tCurrentBlock_End = gTasks[sLinkSendTaskId].tCurrentBlock_End + alignedSize + LINK_BUFF_DATA;
 }
 
+enum {
+   SENDTASK_STATE_INITIALIZE        = 0,
+   SENDTASK_STATE_INITIAL_DELAY     = 1,
+   SENDTASK_STATE_COUNT_PLAYERS     = 2,
+   SENDTASK_STATE_BEGIN_SEND_BLOCK  = 3,
+   SENDTASK_STATE_FINISH_SEND_BLOCK = 4,
+   SENDTASK_STATE_UNUSED_STATE      = 5,
+};
+
+static void Task_HandleSendLinkBuffersData(u8 taskId)
+{
+    u16 numPlayers;
+    u16 blockSize;
+
+    #define BYTE_TO_SEND(offset) \
+        gLinkBattleSendBuffer[gTasks[taskId].tCurrentBlock_Start + offset]
+
+    switch (gTasks[taskId].tState)
+    {
+    case SENDTASK_STATE_INITIALIZE:
+        gTasks[taskId].tInitialDelayTimer = 100;
+        gTasks[taskId].tState++;
+        break;
+    case SENDTASK_STATE_INITIAL_DELAY:
+        gTasks[taskId].tInitialDelayTimer--;
+        if (gTasks[taskId].tInitialDelayTimer == 0)
+            gTasks[taskId].tState++;
+        break;
+    case SENDTASK_STATE_COUNT_PLAYERS:
+        if (gWirelessCommType)
+        {
+            gTasks[taskId].tState++;
+        }
+        else
+        {
+            if (gBattleTypeFlags & BATTLE_TYPE_BATTLE_TOWER)
+                numPlayers = 2;
+            else
+                numPlayers = (gBattleTypeFlags & BATTLE_TYPE_MULTI) ? 4 : 2;
+
+            if (GetLinkPlayerCount_2() >= numPlayers)
+            {
+                if (IsLinkMaster())
+                {
+                    CheckShouldAdvanceLinkState();
+                    gTasks[taskId].tState++;
+                }
+                else
+                {
+                    gTasks[taskId].tState++;
+                }
+            }
+        }
+        break;
+    case SENDTASK_STATE_BEGIN_SEND_BLOCK:
+        if (gTasks[taskId].tCurrentBlock_Start != gTasks[taskId].tCurrentBlock_End)
+        {
+            if (gTasks[taskId].tBlockSendDelayTimer == 0)
+            {
+                if (gTasks[taskId].tCurrentBlock_Start >  gTasks[taskId].tCurrentBlock_End
+                 && gTasks[taskId].tCurrentBlock_Start == gTasks[taskId].tCurrentBlock_WrapFrom)
+                {
+                    gTasks[taskId].tCurrentBlock_WrapFrom = 0;
+                    gTasks[taskId].tCurrentBlock_Start    = 0;
+                }
+                blockSize = (BYTE_TO_SEND(LINK_BUFF_SIZE_LO) | (BYTE_TO_SEND(LINK_BUFF_SIZE_HI) << 8)) + LINK_BUFF_DATA;
+                SendBlock(BitmaskAllOtherLinkPlayers(), &BYTE_TO_SEND(0), blockSize);
+                gTasks[taskId].tState++;
+            }
+            else
+            {
+                gTasks[taskId].tBlockSendDelayTimer--;
+                break;
+            }
+        }
+        break;
+    case SENDTASK_STATE_FINISH_SEND_BLOCK:
+        if (IsLinkTaskFinished())
+        {
+            blockSize = BYTE_TO_SEND(LINK_BUFF_SIZE_LO) | (BYTE_TO_SEND(LINK_BUFF_SIZE_HI) << 8);
+            gTasks[taskId].tBlockSendDelayTimer = 1;
+            gTasks[taskId].tCurrentBlock_Start  = gTasks[taskId].tCurrentBlock_Start + blockSize + LINK_BUFF_DATA;
+            gTasks[taskId].tState = SENDTASK_STATE_BEGIN_SEND_BLOCK;
+        }
+        break;
+    case SENDTASK_STATE_UNUSED_STATE:
+        if (--gTasks[taskId].tBlockSendDelayTimer == 0)
+        {
+            gTasks[taskId].tBlockSendDelayTimer = 1;
+            gTasks[taskId].tState = SENDTASK_STATE_BEGIN_SEND_BLOCK;
+        }
+        break;
+    }
+
+    #undef BYTE_TO_SEND
+}
+
 #undef tInitialDelayTimer
 #undef tState
 #undef tCurrentBlock_WrapFrom
