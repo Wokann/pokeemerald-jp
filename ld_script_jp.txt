@@ -4825,7 +4825,6 @@ SECTIONS {
         src/roulette_util.o(.text.UpdatePulseBlend);
         src/roulette_util.o(.text.FillTilemapRect);
         src/roulette_util.o(.text.SetTilemapRect);
-        asm/roulette_util.o(.text.roulette_util_rest);
         asm/rom_81520A8.o(.text);
         src/save.o(.text);
         src/mystery_event_script.o(.text.CheckCompatibility);

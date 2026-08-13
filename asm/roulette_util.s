@@ -18,11 +18,3 @@ _0815164C: .4byte 0x00010000
 _08151650: .4byte 0x00000000
 	thumb_func_end sub_08151638
 
-	.section .text.roulette_util_rest,"ax",%progbits
-
-
-
-
-
-
-
