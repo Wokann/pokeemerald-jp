@@ -766,53 +766,6 @@ _0815A9DC: .4byte 0x00003F3F
 
 
 
-	thumb_func_start sub_0815B274
-sub_0815B274: @ 0x0815B274
-	push {r4, r5, lr}
-	lsls r0, r0, #0x18
-	lsrs r5, r0, #0x18
-	ldr r1, _0815B294
-	lsls r0, r5, #2
-	adds r0, r0, r5
-	lsls r0, r0, #3
-	adds r4, r0, r1
-	movs r1, #8
-	ldrsh r0, [r4, r1]
-	cmp r0, #0
-	beq _0815B298
-	cmp r0, #1
-	beq _0815B2B8
-	b _0815B2CA
-	.align 2, 0
-_0815B294: .4byte 0x03005B60
-_0815B298:
-	movs r0, #0
-	bl GetAnimBattlerSpriteId
-	adds r1, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	ldr r2, _0815B2B4
-	adds r0, r4, #0
-	bl PrepareAffineAnimInTaskData
-	ldrh r0, [r4, #8]
-	adds r0, #1
-	strh r0, [r4, #8]
-	b _0815B2CA
-	.align 2, 0
-_0815B2B4: .4byte 0x085AD158
-_0815B2B8:
-	adds r0, r4, #0
-	bl RunAffineAnimFromTaskData
-	lsls r0, r0, #0x18
-	cmp r0, #0
-	bne _0815B2CA
-	adds r0, r5, #0
-	bl DestroyAnimVisualTask
-_0815B2CA:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_0815B274
 
 	thumb_func_start sub_0815B2D0
 sub_0815B2D0: @ 0x0815B2D0

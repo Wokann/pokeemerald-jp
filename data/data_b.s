@@ -11467,9 +11467,13 @@ gUnknown_85ACD28: @ 0x85ACD28
 sAffineAnims_Torment: @ 0x85AD0A8
 	.incbin "baserom_jp.gba", 0x5ad0a8, 0xb0
 
-	.globl gUnknown_85AD158
-gUnknown_85AD158: @ 0x85AD158
-	.incbin "baserom_jp.gba", 0x5ad158, 0x38
+	.globl DefenseCurlDeformMonAffineAnimCmds
+DefenseCurlDeformMonAffineAnimCmds: @ 0x85AD158
+	.incbin "baserom_jp.gba", 0x5ad158, 0x20
+
+	.globl gUnknown_85AD178
+gUnknown_85AD178: @ 0x85AD178
+	.incbin "baserom_jp.gba", 0x5ad178, 0x18
 
 	.globl gUnknown_85AD190
 gUnknown_85AD190: @ 0x85AD190

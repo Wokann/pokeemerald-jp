@@ -4900,6 +4900,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.TormentAttacker_Step);
         src/battle_anim_effects_3.o(.text.TormentAttacker_Callback);
         src/battle_anim_effects_3.o(.text.AnimTriAttackTriangle);
+        src/battle_anim_effects_3.o(.text.AnimTask_DefenseCurlDeformMon);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest4);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

@@ -11,11 +11,13 @@
 extern u8 gAnimVisualTaskCount;
 extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const union AffineAnimCmd sAffineAnims_Torment[];
+extern const union AffineAnimCmd DefenseCurlDeformMonAffineAnimCmds[];
 
 static void FadeScreenToWhite_Step(u8 taskId);
 static void TormentAttacker_Step(u8 taskId);
 static void TormentAttacker_Callback(struct Sprite *sprite);
 static void AnimTriAttackTriangle(struct Sprite *sprite);
+void AnimTask_DefenseCurlDeformMon(u8 taskId);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -650,5 +652,20 @@ static void AnimTriAttackTriangle(struct Sprite *sprite)
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
         sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
         sprite->callback = InitAndRunAnimFastLinearTranslation;
+    }
+}
+
+void AnimTask_DefenseCurlDeformMon(u8 taskId)
+{
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_ATTACKER), DefenseCurlDeformMonAffineAnimCmds);
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+            DestroyAnimVisualTask(taskId);
+        break;
     }
 }
