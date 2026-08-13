@@ -1141,3 +1141,33 @@ static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite)
 }
 
 extern u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer);
+
+static void UNUSED HBlankCB_Battle(void)
+{
+    if (REG_VCOUNT < DISPLAY_HEIGHT && REG_VCOUNT >= 111)
+        SetGpuReg(REG_OFFSET_BG0CNT, BGCNT_SCREENBASE(24) | BGCNT_TXT256x512);
+}
+
+void VBlankCB_Battle(void)
+{
+    // Change gRngSeed every vblank unless the battle could be recorded.
+    if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER | BATTLE_TYPE_RECORDED)))
+        Random();
+
+    SetGpuReg(REG_OFFSET_BG0HOFS, gBattle_BG0_X);
+    SetGpuReg(REG_OFFSET_BG0VOFS, gBattle_BG0_Y);
+    SetGpuReg(REG_OFFSET_BG1HOFS, gBattle_BG1_X);
+    SetGpuReg(REG_OFFSET_BG1VOFS, gBattle_BG1_Y);
+    SetGpuReg(REG_OFFSET_BG2HOFS, gBattle_BG2_X);
+    SetGpuReg(REG_OFFSET_BG2VOFS, gBattle_BG2_Y);
+    SetGpuReg(REG_OFFSET_BG3HOFS, gBattle_BG3_X);
+    SetGpuReg(REG_OFFSET_BG3VOFS, gBattle_BG3_Y);
+    SetGpuReg(REG_OFFSET_WIN0H, gBattle_WIN0H);
+    SetGpuReg(REG_OFFSET_WIN0V, gBattle_WIN0V);
+    SetGpuReg(REG_OFFSET_WIN1H, gBattle_WIN1H);
+    SetGpuReg(REG_OFFSET_WIN1V, gBattle_WIN1V);
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
+    ScanlineEffect_InitHBlankDmaTransfer();
+}

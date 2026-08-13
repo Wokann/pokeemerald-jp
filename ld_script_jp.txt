@@ -3179,6 +3179,9 @@ SECTIONS {
         src/battle_main.o(.text.CB2_QuitRecordedBattle);
         src/battle_main.o(.text.SpriteCB_UnusedBattleInit);
         src/battle_main.o(.text.SpriteCB_UnusedBattleInit_Main);
+        asm/battle_main_createnpc.o(.text);
+        src/battle_main.o(.text.HBlankCB_Battle);
+        src/battle_main.o(.text.VBlankCB_Battle);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
