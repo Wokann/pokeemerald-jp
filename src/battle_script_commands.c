@@ -1472,6 +1472,9 @@ static void Cmd_setlightscreen(void);
 static void Cmd_tryKO(void);
 static void Cmd_damagetohalftargethp(void);
 static void Cmd_setsandstorm(void);
+static void Cmd_weatherdamage(void);
+static void Cmd_tryinfatuating(void);
+static void Cmd_updatestatusicon(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -6782,4 +6785,134 @@ static void Cmd_setsandstorm(void)
         gWishFutureKnock.weatherDuration = 5;
     }
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_weatherdamage(void)
+{
+    if (WEATHER_HAS_EFFECT)
+    {
+        if (gBattleWeather & B_WEATHER_SANDSTORM)
+        {
+            if (gBattleMons[gBattlerAttacker].types[0] != TYPE_ROCK
+                && gBattleMons[gBattlerAttacker].types[0] != TYPE_STEEL
+                && gBattleMons[gBattlerAttacker].types[0] != TYPE_GROUND
+                && gBattleMons[gBattlerAttacker].types[1] != TYPE_ROCK
+                && gBattleMons[gBattlerAttacker].types[1] != TYPE_STEEL
+                && gBattleMons[gBattlerAttacker].types[1] != TYPE_GROUND
+                && gBattleMons[gBattlerAttacker].ability != ABILITY_SAND_VEIL
+                && !(gStatuses3[gBattlerAttacker] & STATUS3_UNDERGROUND)
+                && !(gStatuses3[gBattlerAttacker] & STATUS3_UNDERWATER))
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+            }
+            else
+            {
+                gBattleMoveDamage = 0;
+            }
+        }
+        if (gBattleWeather & B_WEATHER_HAIL)
+        {
+            if (!IS_BATTLER_OF_TYPE(gBattlerAttacker, TYPE_ICE)
+                && !(gStatuses3[gBattlerAttacker] & STATUS3_UNDERGROUND)
+                && !(gStatuses3[gBattlerAttacker] & STATUS3_UNDERWATER))
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 16;
+                if (gBattleMoveDamage == 0)
+                    gBattleMoveDamage = 1;
+            }
+            else
+            {
+                gBattleMoveDamage = 0;
+            }
+        }
+    }
+    else
+    {
+        gBattleMoveDamage = 0;
+    }
+
+    if (gAbsentBattlerFlags & gBitTable[gBattlerAttacker])
+        gBattleMoveDamage = 0;
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_tryinfatuating(void)
+{
+    struct Pokemon *monAttacker, *monTarget;
+    u16 speciesAttacker, speciesTarget;
+    u32 personalityAttacker, personalityTarget;
+
+    if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+        monAttacker = &gPlayerParty[gBattlerPartyIndexes[gBattlerAttacker]];
+    else
+        monAttacker = &gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]];
+
+    if (GetBattlerSide(gBattlerTarget) == B_SIDE_PLAYER)
+        monTarget = &gPlayerParty[gBattlerPartyIndexes[gBattlerTarget]];
+    else
+        monTarget = &gEnemyParty[gBattlerPartyIndexes[gBattlerTarget]];
+
+    speciesAttacker = GetMonData(monAttacker, MON_DATA_SPECIES);
+    personalityAttacker = GetMonData(monAttacker, MON_DATA_PERSONALITY);
+
+    speciesTarget = GetMonData(monTarget, MON_DATA_SPECIES);
+    personalityTarget = GetMonData(monTarget, MON_DATA_PERSONALITY);
+
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_OBLIVIOUS)
+    {
+        gBattlescriptCurrInstr = BattleScript_ObliviousPreventsAttraction;
+        gLastUsedAbility = ABILITY_OBLIVIOUS;
+        RecordAbilityBattle(gBattlerTarget, ABILITY_OBLIVIOUS);
+    }
+    else
+    {
+        if (GetGenderFromSpeciesAndPersonality(speciesAttacker, personalityAttacker) == GetGenderFromSpeciesAndPersonality(speciesTarget, personalityTarget)
+            || gBattleMons[gBattlerTarget].status2 & STATUS2_INFATUATION
+            || GetGenderFromSpeciesAndPersonality(speciesAttacker, personalityAttacker) == MON_GENDERLESS
+            || GetGenderFromSpeciesAndPersonality(speciesTarget, personalityTarget) == MON_GENDERLESS)
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+        else
+        {
+            gBattleMons[gBattlerTarget].status2 |= STATUS2_INFATUATED_WITH(gBattlerAttacker);
+            gBattlescriptCurrInstr += 5;
+        }
+    }
+}
+
+static void Cmd_updatestatusicon(void)
+{
+    if (gBattleControllerExecFlags)
+        return;
+
+    if (gBattlescriptCurrInstr[1] != BS_ATTACKER_WITH_PARTNER)
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        BtlController_EmitStatusIconUpdate(B_COMM_TO_CONTROLLER, gBattleMons[gActiveBattler].status1, gBattleMons[gActiveBattler].status2);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 2;
+    }
+    else
+    {
+        gActiveBattler = gBattlerAttacker;
+        if (!(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
+        {
+            BtlController_EmitStatusIconUpdate(B_COMM_TO_CONTROLLER, gBattleMons[gActiveBattler].status1, gBattleMons[gActiveBattler].status2);
+            MarkBattlerForControllerExec(gActiveBattler);
+        }
+        if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+        {
+            gActiveBattler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
+            if (!(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
+            {
+                BtlController_EmitStatusIconUpdate(B_COMM_TO_CONTROLLER, gBattleMons[gActiveBattler].status1, gBattleMons[gActiveBattler].status2);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+        }
+        gBattlescriptCurrInstr += 2;
+    }
 }
