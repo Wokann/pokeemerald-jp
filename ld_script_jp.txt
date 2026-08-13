@@ -4894,6 +4894,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_RemoveSpotlight);
         src/battle_anim_effects_3.o(.text.AnimRapidSpin);
         src/battle_anim_effects_3.o(.text.AnimRapidSpin_Step);
+        src/battle_anim_effects_3.o(.text.AnimTask_RapinSpinMonElevation);
+        src/battle_anim_effects_3.o(.text.RapinSpinMonElevation_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest4);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

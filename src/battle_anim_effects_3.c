@@ -2,6 +2,7 @@
 #include "battle_anim.h"
 #include "bg.h"
 #include "palette.h"
+#include "scanline_effect.h"
 #include "task.h"
 #include "trig.h"
 #include "constants/battle_anim.h"
@@ -343,5 +344,150 @@ static void AnimRapidSpin_Step(struct Sprite *sprite)
     {
         if (sprite->y2 > sprite->data[4])
             DestroyAnimSprite(sprite);
+    }
+}
+
+static void RapinSpinMonElevation_Step(u8 taskId);
+
+void AnimTask_RapinSpinMonElevation(u8 taskId)
+{
+    s16 var0;
+    u8 toBG2;
+    s16 var2;
+    int var3;
+    int var4;
+    s16 i;
+    struct ScanlineEffectParams scanlineParams;
+    struct Task *task = &gTasks[taskId];
+
+    if (!gBattleAnimArgs[0])
+    {
+        var0 = GetBattlerYCoordWithElevation(gBattleAnimAttacker);
+        toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker);
+    }
+    else
+    {
+        var0 = GetBattlerYCoordWithElevation(gBattleAnimTarget);
+        toBG2 = GetBattlerSpriteBGPriorityRank(gBattleAnimTarget);
+    }
+
+    task->data[0] = var0 + 36;
+    task->data[1] = task->data[0];
+    task->data[2] = var0 - 33;
+    if (task->data[2] < 0)
+        task->data[2] = 0;
+
+    task->data[3] = task->data[0];
+    task->data[4] = 8;
+    task->data[5] = gBattleAnimArgs[1];
+    task->data[6] = 0;
+    task->data[7] = 0;
+
+    if (toBG2 == 1)
+    {
+        var3 = gBattle_BG1_X;
+        task->data[8] = var3;
+        var4 = var3 + DISPLAY_WIDTH;
+    }
+    else
+    {
+        var3 = gBattle_BG2_X;
+        task->data[8] = var3;
+        var4 = var3 + DISPLAY_WIDTH;
+    }
+
+    task->data[9] = var4;
+    task->data[10] = gBattleAnimArgs[2];
+
+    if (!gBattleAnimArgs[2])
+    {
+        task->data[11] = var4;
+        var2 = task->data[8];
+    }
+    else
+    {
+        task->data[11] = var3;
+        var2 = task->data[9];
+    }
+
+    task->data[15] = 0;
+
+    i = task->data[2];
+    while (i <= task->data[3])
+    {
+        gScanlineEffectRegBuffers[0][i] = var2;
+        gScanlineEffectRegBuffers[1][i] = var2;
+        i++;
+    }
+
+    if (toBG2 == 1)
+        scanlineParams.dmaDest = &REG_BG1HOFS;
+    else
+        scanlineParams.dmaDest = &REG_BG2HOFS;
+
+    scanlineParams.dmaControl = SCANLINE_EFFECT_DMACNT_16BIT;
+    scanlineParams.initState = 1;
+    scanlineParams.unused9 = 0;
+    ScanlineEffect_SetParams(scanlineParams);
+
+    task->func = RapinSpinMonElevation_Step;
+}
+
+static void RapinSpinMonElevation_Step(u8 taskId)
+{
+    s16 i;
+    struct Task *task = &gTasks[taskId];
+
+    task->data[0] -= task->data[5];
+    if (task->data[0] < task->data[2])
+        task->data[0] = task->data[2];
+
+    if (task->data[4] == 0)
+    {
+        task->data[1] -= task->data[5];
+        if (task->data[1] < task->data[2])
+        {
+            task->data[1] = task->data[2];
+            task->data[15] = 1;
+        }
+    }
+    else
+    {
+        task->data[4]--;
+    }
+
+    if (++task->data[6] > 1)
+    {
+        task->data[6] = 0;
+        task->data[7] = task->data[7] == 0 ? 1 : 0;
+
+        if (task->data[7])
+            task->data[12] = task->data[8];
+        else
+            task->data[12] = task->data[9];
+    }
+
+    i = task->data[0];
+    while (i < task->data[1])
+    {
+        gScanlineEffectRegBuffers[0][i] = task->data[12];
+        gScanlineEffectRegBuffers[1][i] = task->data[12];
+        i++;
+    }
+
+    i = task->data[1];
+    while (i <= task->data[3])
+    {
+        gScanlineEffectRegBuffers[0][i] = task->data[11];
+        gScanlineEffectRegBuffers[1][i] = task->data[11];
+        i++;
+    }
+
+    if (task->data[15])
+    {
+        if (task->data[10])
+            gScanlineEffect.state = 3;
+
+        DestroyAnimVisualTask(taskId);
     }
 }
