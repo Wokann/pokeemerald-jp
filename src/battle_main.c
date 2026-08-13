@@ -80,10 +80,10 @@ extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: 
 extern void BattleIntroPrintTrainerWantsToBattle(void); // JP asm 0x0803AD64 (US: same name)
 extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: same name)
 extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
-extern void BattleIntroPrintPlayerSendsOut(void); // JP asm 0x0803B010 (US: same name)
 extern void BattleIntroOpponent1SendsOutMonAnimation(void); // JP asm 0x0803AEA0 (US: same name)
 extern void BattleIntroOpponent2SendsOutMonAnimation(void); // JP asm 0x0803AE20 (register-sensitive, kept in asm)
 extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (register-sensitive, kept in asm)
+extern void BattleIntroPlayer1SendsOutMonAnimation(void); // JP asm 0x0803B10C (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -111,6 +111,7 @@ static void SpriteCB_BounceEffect(struct Sprite *sprite);
 static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite);
 static void BattleMainCB1(void);
 static void BattleIntroGetMonsData(void);
+static void BattleIntroPrintPlayerSendsOut(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -1996,6 +1997,36 @@ static void UNUSED BattleIntroSkipRecordMonsToDex(void)
 {
     if (gBattleControllerExecFlags == 0)
         gBattleMainFunc = BattleIntroPrintPlayerSendsOut;
+}
+
+static void BattleIntroPrintPlayerSendsOut(void)
+{
+    u32 position;
+
+    if (gBattleControllerExecFlags)
+        return;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_RECORDED))
+    {
+        position = B_POSITION_PLAYER_LEFT;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_RECORDED_LINK)
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_RECORDED_IS_MASTER)
+            position = B_POSITION_PLAYER_LEFT;
+        else
+            position = B_POSITION_OPPONENT_LEFT;
+    }
+    else
+    {
+        position = B_POSITION_PLAYER_LEFT;
+    }
+
+    // JP: checks BATTLE_TYPE_SAFARI (US: BATTLE_TYPE_TRAINER)
+    if (!(gBattleTypeFlags & BATTLE_TYPE_SAFARI))
+        PrepareStringBattle(STRINGID_INTROSENDOUT, GetBattlerAtPosition(position));
+
+    gBattleMainFunc = BattleIntroPlayer1SendsOutMonAnimation;
 }
 
 static void BattleIntroPrintOpponentSendsOut(void)

@@ -3243,6 +3243,7 @@ SECTIONS {
         asm/battle_main_introopp1.o(.text);
         asm/battle_main_introrecord.o(.text);
         src/battle_main.o(.text.BattleIntroSkipRecordMonsToDex);
+        src/battle_main.o(.text.BattleIntroPrintPlayerSendsOut);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
