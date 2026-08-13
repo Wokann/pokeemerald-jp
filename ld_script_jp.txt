@@ -3235,6 +3235,7 @@ SECTIONS {
         src/battle_main.o(.text.BattleIntroGetMonsData);
         asm/battle_main_introprep.o(.text);
         asm/battle_main_introsprites.o(.text);
+        asm/battle_main_introsummary.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
