@@ -22,6 +22,8 @@
 
 #define GOING_DOWN gSpecialVar_0x8004
 
+#define STATE_END 0xFF
+
 struct CableCarData
 {
     u8 bgTaskId;
@@ -78,7 +80,7 @@ extern const u32 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
 
 void CB2_CableCar(void);
-extern void Task_CableCar(u8 taskId);
+void Task_CableCar(u8 taskId);
 extern void Task_AnimateBgGoingUp(u8 taskId);
 extern void Task_AnimateBgGoingDown(u8 taskId);
 extern void VBlankCB_CableCar(void);
@@ -263,4 +265,74 @@ void CleanupCableCar(void)
     WarpIntoMap();
     gFieldCallback = NULL;
     SetMainCallback2(CB2_LoadMap);
+}
+
+void Task_CableCar(u8 taskId)
+{
+    u8 i = 0;
+
+    sCableCar->timer++;
+    switch (sCableCar->state)
+    {
+    case 0:
+        // Wait to change weather
+        if (sCableCar->timer == sCableCar->weatherDelay)
+        {
+            SetNextWeather(sCableCar->weather);
+            sCableCar->state = 1;
+        }
+        break;
+    case 1:
+        // Update ash sprites
+        switch (sCableCar->weather)
+        {
+        case WEATHER_VOLCANIC_ASH:
+            if (gWeatherPtr->sprites.s2.ashSprites[0] != NULL && gWeatherPtr->sprites.s2.ashSprites[0]->oam.priority != 0)
+            {
+                for (; i < NUM_ASH_SPRITES; i++)
+                {
+                    if (gWeatherPtr->sprites.s2.ashSprites[i])
+                        gWeatherPtr->sprites.s2.ashSprites[i]->oam.priority = 0;
+                }
+
+                sCableCar->state = 2;
+            }
+            break;
+        case WEATHER_SUNNY:
+            if (gWeatherPtr->currWeather == WEATHER_SUNNY)
+            {
+                sCableCar->state = 2;
+            }
+            else if (sCableCar->timer >= sCableCar->weatherDelay + 8)
+            {
+                for (; i < NUM_ASH_SPRITES; i++)
+                {
+                    if (gWeatherPtr->sprites.s2.ashSprites[i])
+                        gWeatherPtr->sprites.s2.ashSprites[i]->invisible ^= 1;
+                }
+            }
+            break;
+        }
+        break;
+    case 2:
+        // Wait to fade out
+        if (sCableCar->timer == 570)
+        {
+            sCableCar->state = 3;
+            BeginNormalPaletteFade(PALETTES_ALL, 3, 0, 16, RGB_BLACK);
+            FadeOutBGMTemporarily(4);
+        }
+        break;
+    case 3:
+        // Wait for fade out
+        if (!gPaletteFade.active)
+            sCableCar->state = STATE_END;
+        break;
+    case STATE_END:
+        SetVBlankCallback(NULL);
+        DestroyTask(taskId);
+        DestroyTask(sCableCar->bgTaskId);
+        SetMainCallback2(CleanupCableCar);
+        break;
+    }
 }
