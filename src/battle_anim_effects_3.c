@@ -12,6 +12,7 @@ extern u8 gAnimVisualTaskCount;
 extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const union AffineAnimCmd sAffineAnims_Torment[];
 extern const union AffineAnimCmd DefenseCurlDeformMonAffineAnimCmds[];
+extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
 static void TormentAttacker_Step(u8 taskId);
@@ -19,6 +20,8 @@ static void TormentAttacker_Callback(struct Sprite *sprite);
 static void AnimTriAttackTriangle(struct Sprite *sprite);
 void AnimTask_DefenseCurlDeformMon(u8 taskId);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
+static void AnimWishStar(struct Sprite *sprite);
+static void AnimWishStar_Step(struct Sprite *sprite);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -712,4 +715,42 @@ static void AnimBatonPassPokeball(struct Sprite *sprite)
             DestroyAnimSprite(sprite);
         break;
     }
+}
+
+static void AnimWishStar(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        sprite->x = -16;
+    else
+        sprite->x = DISPLAY_WIDTH + 16;
+
+    sprite->y = 0;
+    sprite->callback = AnimWishStar_Step;
+}
+
+static void AnimWishStar_Step(struct Sprite *sprite)
+{
+    u32 newX;
+
+    sprite->data[0] += 72;
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        sprite->x2 = sprite->data[0] >> 4;
+    else
+        sprite->x2 = -(sprite->data[0] >> 4);
+
+    sprite->data[1] += 16;
+    sprite->y2 += sprite->data[1] >> 8;
+
+    if (++sprite->data[2] % 3 == 0)
+    {
+        CreateSpriteAndAnimate(
+            &gMiniTwinklingStarSpriteTemplate,
+            sprite->x + sprite->x2,
+            sprite->y + sprite->y2,
+            sprite->subpriority + 1);
+    }
+
+    newX = sprite->x + sprite->x2 + 32;
+    if (newX > DISPLAY_WIDTH + 64)
+        DestroyAnimSprite(sprite);
 }

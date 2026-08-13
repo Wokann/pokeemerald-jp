@@ -11479,8 +11479,8 @@ gUnknown_85AD178: @ 0x85AD178
 gUnknown_85AD190: @ 0x85AD190
 	.incbin "baserom_jp.gba", 0x5ad190, 0x18
 
-	.globl gUnknown_85AD1A8
-gUnknown_85AD1A8: @ 0x85AD1A8
+	.globl gMiniTwinklingStarSpriteTemplate
+gMiniTwinklingStarSpriteTemplate: @ 0x85AD1A8
 	.incbin "baserom_jp.gba", 0x5ad1a8, 0x18
 
 	.globl gUnknown_85AD1C0
