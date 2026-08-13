@@ -1,1 +1,5 @@
-	.incbin "baserom_jp.gba", 0x245dbb, 0x13
+	setvar 0x8004, 0x0
+	setvar 0x8005, 0x0
+	special InitSecretBaseDecorationSprites
+	setvar 0x4089, 0x1
+	end 

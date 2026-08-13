@@ -1,1 +1,19 @@
-	.incbin "baserom_jp.gba", 0x286425, 0x36
+	return 
+	addobject 0x15BA
+	gotostd 0x2
+	nop 
+	compare_var_to_value 0x107, 0x5100
+	moveobjectoffscreen 0x828
+	setptrbyte 0x39, 0xA082864
+	nop 
+	copyvar 0xCB, 0x1DC0
+	.byte 0xCC
+	nop 
+	showcoinsbox 0x30, 0x3
+	killscript 
+	dowildbattle 
+	copybyte 0x1010208, 0xB0500
+	gotostd 0x3
+	.byte 0x95
+	vcall 0x1020815
+	setworldmapflag 0x800

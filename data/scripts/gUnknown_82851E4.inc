@@ -1,1 +1,11 @@
-	.incbin "baserom_jp.gba", 0x2851e4, 0x1d
+	nop 
+	vcall 0x10000C27
+	compare_local_to_addr 0xD0, 0x20FC000
+	setweather 0x5721
+	gotostd 0x3
+	return 
+	delay 0x0
+	nop 
+	vcall 0x1040527
+	killscript 
+	.byte 0x08

@@ -1,1 +1,17 @@
-	.incbin "baserom_jp.gba", 0x27fa58, 0x2a
+	nop 
+	playse 0x27
+	setholewarp 0x2703, 0x55, 0x1162, 0x208
+	goto_if 0x2, 0x2000200
+	nop 
+	nop 
+	nop 
+	loadbyte 0x0, 0xFB
+	givedecoration 0x8C19
+	nop 
+	showcoinsbox 0xE, 0x3B
+	gotopostbattlescript 
+	delay 0x508
+	setmysteryeventstatus 0x66
+	gotopostbattlescript 
+	delay 0x508
+	.byte 0x08

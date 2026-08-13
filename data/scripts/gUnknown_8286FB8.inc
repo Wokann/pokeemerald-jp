@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x286fb8, 0x1e
+	call 0x9070605
+	gotostd_if 0xE, 0x5C
+	nop 
+	warpsilent 0xB00, 0xC, 0xD00, 0x4012
+	nop 
+	loadword 0x12, 0x19150040
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 
+	nop 

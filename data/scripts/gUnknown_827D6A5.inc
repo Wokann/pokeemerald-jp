@@ -1,1 +1,15 @@
-	.incbin "baserom_jp.gba", 0x27d6a5, 0x1e
+	nop 
+	waitmessage 
+	waitstate 
+	return 
+	goto 0x2081053
+	nop 
+	copyvar 0xC1, 0x5C0
+	end 
+	warphole 0xF256
+	gotostd 0x2
+	nop 
+	compare_local_to_value 0xC1, 0x0
+	showcoinsbox 0x4, 0x2
+	.byte 0x05
+	.byte 0x08

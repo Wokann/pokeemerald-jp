@@ -1,1 +1,38 @@
-	.incbin "baserom_jp.gba", 0x27bca7, 0x43
+	nop 
+	.byte 0xE2
+	waitstate 
+	return 
+	takecoins 0x15C3
+	gotostd 0x5
+	return 
+	nop 
+	nop 
+	end 
+	nop 
+	nop 
+	nop 
+	end 
+	removeobject_at 0x56F5, 0x803
+	end 
+	nop 
+	nop 
+	copylocal 0x0, 0x19
+	.byte 0xD4
+	nop 
+	showcoinsbox 0x4, 0xF
+	end 
+	removeobject_at 0x56F5, 0x803
+	end 
+	.byte 0xEC
+	.byte 0xFF
+	copylocal 0x0, 0x19
+	.byte 0xD4
+	nop 
+	showcoinsbox 0x4, 0xF
+	end 
+	removeobject_at 0x56F5, 0x803
+	end 
+	copylocal 0x0, 0x14
+	nop 
+	copyvar 0xD4, 0x5C0
+	.byte 0x08

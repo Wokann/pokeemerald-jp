@@ -1,1 +1,9 @@
-	.incbin "baserom_jp.gba", 0x280351, 0x14
+	return 
+	resetweather 
+	bufferspeciesname 0x10, 0x208
+	setworldmapflag 0x0
+	call 0xA31B18
+	showcoinsbox 0x3F, 0x2
+	nop 
+	.byte 0x05
+	.byte 0x08

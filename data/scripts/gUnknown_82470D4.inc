@@ -1,1 +1,3 @@
-	.incbin "baserom_jp.gba", 0x2470d4, 0xa
+	setvar 0x8005, 0x0
+	special PlayerEnteredTradeSeat
+	end 

@@ -1,1 +1,24 @@
-	.incbin "baserom_jp.gba", 0x289418, 0x37
+	fadedefaultbgm 
+	gotonative 0x2023F
+	setworldmapflag 0x10
+	callstd_if 0x0, 0xC
+	nop 
+	setholewarp 0x8694, 0x28, 0x1908, 0x0
+	nop 
+	nop 
+	nop 
+	nop 
+	copyvar 0x100, 0x9439
+	delay 0x3C08
+	gettime 
+	savebgm 0x241
+	end 
+	nop 
+	callnative 0x412C2E00
+	end 
+	end 
+	nop 
+	givepcitem 0x0, 0x5528
+	choosecontestmon 
+	.byte 0x28
+	.byte 0x08

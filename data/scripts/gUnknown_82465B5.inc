@@ -1,1 +1,2 @@
-	.incbin "baserom_jp.gba", 0x2465b5, 0x4
+	special sub_080EBE30
+	end 

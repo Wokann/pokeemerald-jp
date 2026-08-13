@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x2423e1, 0xd
+	pokenavcall 0x0
+	waitmessage 
+	return 
+	return 
+	special SaveGame
+	return 

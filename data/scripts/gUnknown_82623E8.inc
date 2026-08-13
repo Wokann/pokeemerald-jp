@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x2623e8, 0x11
+	lockall 
+	playse 0x49
+	message 0x826246D
+	waitmessage 
+	waitbuttonpress 
+	releaseall 
+	goto 0x82623BB

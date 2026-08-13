@@ -1,1 +1,1 @@
-	.incbin "baserom_jp.gba", 0x262d74, 0x5
+	setorcopyvar 0x2A3E, 0xFFAE

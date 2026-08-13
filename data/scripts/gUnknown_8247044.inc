@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x247044, 0xf
+	lockall 
+	setvar 0x8004, 0x0
+	special ShowLinkBattleRecords
+	waitbuttonpress 
+	special RemoveRecordsWindow
+	releaseall 
+	end 

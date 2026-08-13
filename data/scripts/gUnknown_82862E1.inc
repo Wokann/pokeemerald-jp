@@ -1,1 +1,18 @@
-	.incbin "baserom_jp.gba", 0x2862e1, 0x2b
+	compare_local_to_value 0x94, 0x0
+	setdynamicwarp 0xD06, 0x3, 0x4B55, 0x80D
+	end 
+	goto 0x10000
+	nop 
+	nop 
+	loadbytefromaddr 0x3000200
+	addobject 0x1162
+	gotostd 0x2
+	goto_if 0x2, 0x2000200
+	nop 
+	nop 
+	nop 
+	returnram 
+	nop 
+	.byte 0x1E
+	.byte 0x7C
+	.byte 0x08

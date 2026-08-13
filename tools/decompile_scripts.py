@@ -306,6 +306,8 @@ def encode_lines(text, formats_by_name, specials):
     out = bytearray()
     for line in text.splitlines():
         s = line.strip()
+        if not s:
+            continue
         m = re.match(r"\.byte\s+0x([0-9A-Fa-f]{2})", s)
         if m:
             out.append(int(m.group(1), 16))
@@ -394,6 +396,13 @@ def parse_all_chunks():
         lm = LABEL_RE.match(line)
         if lm:
             items.append((lm.group(1), int(lm.group(2), 16)))
+            continue
+        # Labels such as gUnknown_828D2B4 carry no "@ 0x..." comment but
+        # their address is embedded in the name; without them the previous
+        # chunk's size would swallow the trailing data table.
+        gm = re.match(r"^gUnknown_([0-9A-Fa-f]+):", line)
+        if gm:
+            items.append(("gUnknown_%s" % gm.group(1), int(gm.group(1), 16)))
     items.sort(key=lambda t: t[1])
     chunks = []
     for i, (label, addr) in enumerate(items):
@@ -421,7 +430,7 @@ def main():
     cmd, target = sys.argv[1], sys.argv[2]
     data = BIN.read_bytes()
     opcode_table = build_opcode_table()
-    by_name = {const: op for op, (const, _) in opcode_table.items()}
+    by_name = {const: op for const, op in opcode_table.items()}
     formats, formats_by_name = build_macro_formats(by_name)
     specials = build_specials_map()
     print(f"opcodes: {len(opcode_table)}, named formats: {len(formats)}, "
@@ -464,6 +473,14 @@ def main():
         threshold = float(sys.argv[2]) if len(sys.argv) > 2 else 0.55
         converted = []
         for label, addr, rel, size in parse_all_chunks():
+            # Never overwrite files that already contain symbolized text:
+            # they mix script bytes with gJPText/.string definitions that a
+            # blanket script decode would destroy.
+            out_path = SCRIPTS_DIR / f"{label}.inc"
+            if out_path.is_file():
+                cur = out_path.read_text(encoding="utf-8")
+                if "gJPText_" in cur or ".string" in cur:
+                    continue
             raw = data[rel : rel + size]
             # Skip pointer tables: most 4-byte words pointing into ROM/RAM
             # means this is data, not script.
@@ -484,7 +501,7 @@ def main():
             if encode_lines(text, formats_by_name, specials) != raw:
                 continue
             SCRIPTS_DIR.mkdir(exist_ok=True)
-            (SCRIPTS_DIR / f"{label}.inc").write_text(text, encoding="utf-8")
+            out_path.write_text(text, encoding="utf-8")
             converted.append(label)
         # Replace the incbin lines of converted chunks with .include.
         lines = EVENT_S.read_text(encoding="utf-8").splitlines(keepends=True)

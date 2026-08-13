@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x2863a6, 0x1a
+	nop 
+	compare_local_to_local 0x27, 0x3
+	addobject 0xD4B
+	gotostd 0x2
+	goto 0x10000
+	nop 
+	nop 
+	gotostd_if 0x0, 0x1
+	nop 
+	setmysteryeventstatus 0x71
+	settrainerflag 0x828
+	.byte 0x08
