@@ -5,9 +5,11 @@
 #include "battle_message.h"
 #include "battle_setup.h"
 #include "bg.h"
+#include "cable_club.h"
 #include "data.h"
 #include "decompress.h"
 #include "event_data.h"
+#include "graphics.h"
 #include "gpu_regs.h"
 #include "gba/m4a_internal.h"
 #include "link.h"
@@ -23,6 +25,7 @@
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
+#include "strings.h"
 #include "task.h"
 #include "text.h"
 #include "window.h"
@@ -54,6 +57,8 @@ extern struct MultiPartnerMenuPokemon *sMultiPartnerPartyBuffer;
 extern struct ScanlineEffectParams sIntroScanlineParams16Bit;
 extern void sub_08185CDC(void); // JP recorded-battle helper (US: RecordedBattle_ClearFrontierPassFlag)
 extern void sub_08184D04(void); // JP recorded-battle helper (US: RecordedBattle_SetTrainerInfo)
+extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
+extern void CB2_InitAskRecordBattle(void); // JP asm 0x08038F5C (US: same name)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
 
 static void CB2_InitBattleInternal(void);
@@ -62,6 +67,8 @@ static void CB2_PreInitIngamePlayerPartnerBattle(void);
 static void CB2_HandleStartMultiPartnerBattle(void);
 static void CB2_HandleStartMultiBattle(void);
 static void CB2_HandleStartBattle(void);
+static void CB2_EndLinkBattle(void);
+static void EndLinkBattleInSteps(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -1200,4 +1207,251 @@ void SpriteCB_VsLetterInit(struct Sprite *sprite)
     StartSpriteAffineAnim(sprite, 1);
     sprite->callback = SpriteCB_VsLetter;
     PlaySE(SE_MUGSHOT);
+}
+
+static void BufferPartyVsScreenHealth_AtEnd(u8 taskId)
+{
+    struct Pokemon *party1 = NULL;
+    struct Pokemon *party2 = NULL;
+    u8 multiplayerId = gBattleScripting.multiplayerId;
+    u32 flags;
+    s32 i;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+    {
+        switch (gLinkPlayers[multiplayerId].id)
+        {
+        case 0:
+        case 2:
+            party1 = gPlayerParty;
+            party2 = gEnemyParty;
+            break;
+        case 1:
+        case 3:
+            party1 = gEnemyParty;
+            party2 = gPlayerParty;
+            break;
+        }
+    }
+    else
+    {
+        party1 = gPlayerParty;
+        party2 = gEnemyParty;
+    }
+
+    flags = 0;
+    BUFFER_PARTY_VS_SCREEN_STATUS(party1, flags, i);
+    gTasks[taskId].data[3] = flags;
+
+    flags = 0;
+    BUFFER_PARTY_VS_SCREEN_STATUS(party2, flags, i);
+    gTasks[taskId].data[4] = flags;
+}
+
+void CB2_InitEndLinkBattle(void)
+{
+    s32 i;
+    u8 taskId;
+
+    SetHBlankCallback(NULL);
+    SetVBlankCallback(NULL);
+    gBattleTypeFlags &= ~BATTLE_TYPE_LINK_IN_BATTLE;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
+    {
+        SetMainCallback2(gMain.savedCallback);
+        FreeBattleResources();
+        FreeBattleSpritesData();
+        FreeMonSpritesGfx();
+    }
+    else
+    {
+        CpuFill32(0, (void *)(VRAM), VRAM_SIZE);
+        SetGpuReg(REG_OFFSET_MOSAIC, 0);
+        SetGpuReg(REG_OFFSET_WIN0H, DISPLAY_WIDTH);
+        SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(DISPLAY_HEIGHT / 2, DISPLAY_HEIGHT / 2 + 1));
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        gBattle_WIN0H = DISPLAY_WIDTH;
+        gBattle_WIN0V = WIN_RANGE(DISPLAY_HEIGHT / 2, DISPLAY_HEIGHT / 2 + 1);
+        ScanlineEffect_Clear();
+
+        i = 0;
+        while (i < 80)
+        {
+            gScanlineEffectRegBuffers[0][i] = 0xF0;
+            gScanlineEffectRegBuffers[1][i] = 0xF0;
+            i++;
+        }
+
+        while (i < 160)
+        {
+            gScanlineEffectRegBuffers[0][i] = 0xFF10;
+            gScanlineEffectRegBuffers[1][i] = 0xFF10;
+            i++;
+        }
+
+        ResetPaletteFade();
+
+        gBattle_BG0_X = 0;
+        gBattle_BG0_Y = 0;
+        gBattle_BG1_X = 0;
+        gBattle_BG1_Y = 0;
+        gBattle_BG2_X = 0;
+        gBattle_BG2_Y = 0;
+        gBattle_BG3_X = 0;
+        gBattle_BG3_Y = 0;
+
+        InitBattleBgsVideo();
+        LoadCompressedPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        LoadBattleMenuWindowGfx();
+        ResetSpriteData();
+        ResetTasks();
+        DrawBattleEntryBackground();
+        SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG0 | WINOUT_WIN01_BG1 | WINOUT_WIN01_BG2 | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR);
+        FreeAllSpritePalettes();
+        gReservedSpritePaletteCount = MAX_BATTLERS_COUNT;
+        SetVBlankCallback(VBlankCB_Battle);
+
+        // Show end Vs screen with battle results
+        taskId = CreateTask(InitLinkBattleVsScreen, 0);
+        gTasks[taskId].data[1] = 0x10E;
+        gTasks[taskId].data[2] = 0x5A;
+        gTasks[taskId].data[5] = 1;
+        BufferPartyVsScreenHealth_AtEnd(taskId);
+
+        SetMainCallback2(CB2_EndLinkBattle);
+        gBattleCommunication[MULTIUSE_STATE] = 0;
+    }
+}
+
+static void CB2_EndLinkBattle(void)
+{
+    EndLinkBattleInSteps();
+    AnimateSprites();
+    BuildOamBuffer();
+    RunTextPrinters();
+    UpdatePaletteFade();
+    RunTasks();
+}
+
+static void EndLinkBattleInSteps(void)
+{
+    s32 i;
+
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case 0:
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        gBattleCommunication[1] = 0xFF;
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 1:
+        if (--gBattleCommunication[1] == 0)
+        {
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case 2:
+        if (!gPaletteFade.active)
+        {
+            u8 battlerCount;
+
+            gMain.anyLinkBattlerHasFrontierPass = GetRecordedBattleFrontierFacility();
+
+            if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+                battlerCount = 4;
+            else
+                battlerCount = 2;
+
+            for (i = 0; i < battlerCount && (gLinkPlayers[i].version & 0xFF) == VERSION_EMERALD; i++);
+
+            if (!gSaveBlock2Ptr->frontier.disableRecordBattle && i == battlerCount)
+            {
+                if (FlagGet(FLAG_SYS_FRONTIER_PASS))
+                {
+                    // Ask player if they want to record the battle
+                    FreeAllWindowBuffers();
+                    SetMainCallback2(CB2_InitAskRecordBattle);
+                }
+                else if (!gMain.anyLinkBattlerHasFrontierPass)
+                {
+                    // No players can record this battle, end
+                    SetMainCallback2(gMain.savedCallback);
+                    FreeBattleResources();
+                    FreeBattleSpritesData();
+                    FreeMonSpritesGfx();
+                }
+                else if (gReceivedRemoteLinkPlayers == 0)
+                {
+                    // Player can't record battle but
+                    // another player can, reconnect with them
+                    CreateTask(Task_ReconnectWithLinkPlayers, 5);
+                    gBattleCommunication[MULTIUSE_STATE]++;
+                }
+                else
+                {
+                    gBattleCommunication[MULTIUSE_STATE]++;
+                }
+            }
+            else
+            {
+                SetMainCallback2(gMain.savedCallback);
+                FreeBattleResources();
+                FreeBattleSpritesData();
+                FreeMonSpritesGfx();
+            }
+        }
+        break;
+    case 3:
+        CpuFill32(0, (void *)VRAM, VRAM_SIZE);
+
+        for (i = 0; i < 2; i++)
+            LoadChosenBattleElement(i);
+
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 4:
+        if (!gPaletteFade.active)
+            gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 5:
+        if (!FuncIsActiveTask(Task_ReconnectWithLinkPlayers))
+            gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 6:
+        if (IsLinkTaskFinished() == TRUE)
+        {
+            SetLinkStandbyCallback();
+            sub_0814FA04(gText_LinkStandby3, B_WIN_MSG);
+            gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case 7:
+        if (!IsTextPrinterActive(B_WIN_MSG))
+        {
+            if (IsLinkTaskFinished() == TRUE)
+                gBattleCommunication[MULTIUSE_STATE]++;
+        }
+        break;
+    case 8:
+        if (!gWirelessCommType)
+            SetCloseLinkCallback();
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 9:
+        if (!gMain.anyLinkBattlerHasFrontierPass || gWirelessCommType || gReceivedRemoteLinkPlayers != 1)
+        {
+            gMain.anyLinkBattlerHasFrontierPass = FALSE;
+            SetMainCallback2(gMain.savedCallback);
+            FreeBattleResources();
+            FreeBattleSpritesData();
+            FreeMonSpritesGfx();
+        }
+        break;
+    }
 }
