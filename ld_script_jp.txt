@@ -1828,6 +1828,7 @@ gStatusConditionString_ConfusionJpn = ABSOLUTE(0x085ABC62);
 gStatusConditionString_LoveJpn = ABSOLUTE(0x085ABC67);
 BattleScriptPop = DoBattlerEndTurnEffects;
 sub_080416AC = AtkCanceller_UnableToUseMove;
+sub_08043F18 = AbilityBattleEffects;
 RecordedBattle_BufferNewBattlerData = sub_08184F3C;
 sub_08032600 = InitBattleControllers;
 sub_0802691C = GetActiveBerryColumns;
@@ -3443,6 +3444,7 @@ SECTIONS {
         src/battle_util.o(.text.AtkCanceller_UnableToUseMove);
         src/battle_util.o(.text.HasNoMonsToSwitch);
         src/battle_util.o(.text.CastformDataTypeChange);
+        src/battle_util.o(.text.AbilityBattleEffects);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
