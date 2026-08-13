@@ -1513,6 +1513,7 @@ static void Cmd_presentdamagecalculation(void);
 static void Cmd_setsafeguard(void);
 static void Cmd_magnitudedamagecalculation(void);
 static void Cmd_jumpifnopursuitswitchdmg(void);
+static void Cmd_setsunny(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7919,4 +7920,21 @@ static void Cmd_jumpifnopursuitswitchdmg(void)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_setsunny(void)
+{
+    if (gBattleWeather & B_WEATHER_SUN)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_FAILED;
+    }
+    else
+    {
+        gBattleWeather = B_WEATHER_SUN_TEMPORARY;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_SUNLIGHT;
+        gWishFutureKnock.weatherDuration = 5;
+    }
+
+    gBattlescriptCurrInstr++;
 }

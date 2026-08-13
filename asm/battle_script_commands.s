@@ -481,50 +481,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkBB_setsunny
-atkBB_setsunny: @ 0x08053C6C
-	push {lr}
-	ldr r2, _08053C8C
-	ldrh r1, [r2]
-	movs r0, #0x60
-	ands r0, r1
-	cmp r0, #0
-	beq _08053C98
-	ldr r2, _08053C90
-	ldrb r0, [r2]
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2]
-	ldr r1, _08053C94
-	movs r0, #2
-	strb r0, [r1, #5]
-	b _08053CAA
-	.align 2, 0
-_08053C8C: .4byte 0x02024070
-_08053C90: .4byte 0x02023F20
-_08053C94: .4byte 0x02023FD6
-_08053C98:
-	movs r0, #0x20
-	strh r0, [r2]
-	ldr r1, _08053CB8
-	movs r0, #4
-	strb r0, [r1, #5]
-	ldr r0, _08053CBC
-	adds r0, #0x28
-	movs r1, #5
-	strb r1, [r0]
-_08053CAA:
-	ldr r1, _08053CC0
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08053CB8: .4byte 0x02023FD6
-_08053CBC: .4byte 0x02024074
-_08053CC0: .4byte 0x02023EB8
-	thumb_func_end atkBB_setsunny
 
 	thumb_func_start atkBC_maxattackhalvehp
 atkBC_maxattackhalvehp: @ 0x08053CC4
