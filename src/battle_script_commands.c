@@ -1534,6 +1534,7 @@ extern const u16 sNaturePowerMoves[];
 static void Cmd_callenvironmentattack(void);
 static void Cmd_cureifburnedparalyzedorpoisoned(void);
 static void Cmd_settorment(void);
+static void Cmd_jumpifnodamage(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8314,4 +8315,12 @@ static void Cmd_settorment(void)
         gBattleMons[gBattlerTarget].status2 |= STATUS2_TORMENT;
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_jumpifnodamage(void)
+{
+    if (gProtectStructs[gBattlerAttacker].physicalDmg || gProtectStructs[gBattlerAttacker].specialDmg)
+        gBattlescriptCurrInstr += 5;
+    else
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
 }

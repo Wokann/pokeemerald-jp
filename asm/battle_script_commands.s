@@ -501,54 +501,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkCF_jumpifnodamage
-atkCF_jumpifnodamage: @ 0x0805494C
-	push {lr}
-	ldr r2, _08054978
-	ldr r0, _0805497C
-	ldrb r0, [r0]
-	lsls r1, r0, #4
-	adds r0, r2, #4
-	adds r0, r1, r0
-	ldr r0, [r0]
-	cmp r0, #0
-	bne _0805496C
-	adds r0, r2, #0
-	adds r0, #8
-	adds r0, r1, r0
-	ldr r0, [r0]
-	cmp r0, #0
-	beq _08054984
-_0805496C:
-	ldr r1, _08054980
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-	b _0805499E
-	.align 2, 0
-_08054978: .4byte 0x02023FE0
-_0805497C: .4byte 0x02023EAF
-_08054980: .4byte 0x02023EB8
-_08054984:
-	ldr r3, _080549A4
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-_0805499E:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080549A4: .4byte 0x02023EB8
-	thumb_func_end atkCF_jumpifnodamage
 
 	thumb_func_start atkD0_settaunt
 atkD0_settaunt: @ 0x080549A8
