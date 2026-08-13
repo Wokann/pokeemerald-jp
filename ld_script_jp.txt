@@ -748,7 +748,8 @@ StartHealthboxSlideIn = sub_08076320;
 gText_EmptyString3 = gUnknown_85AB3BD;
 BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
 BattleScript_PalacePrintFlavorText = gUnknown_8289E09;
-GetItemHoldEffect = sub_080D6CF8;
+GetItemHoldEffect = sub_080D6CD4;
+GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
 SwitchPartyMonSlots = sub_081B8C50;
 sub_0811980C = DrawBattlerOnBg;
@@ -3262,6 +3263,7 @@ SECTIONS {
         src/battle_main.o(.text.AllAtActionConfirmed);
         src/battle_main.o(.text.UpdateBattlerPartyOrdersOnSwitch);
         src/battle_main.o(.text.SwapTurnOrder);
+        asm/battle_main_who.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

@@ -88,6 +88,7 @@ extern void TryDoEventsBeforeFirstTurn(void); // JP asm 0x0803B26C (register-sen
 extern void BattleTurnPassed(void); // JP asm 0x0803B600 (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-sensitive, kept in asm)
+extern u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves); // JP asm 0x0803CB54 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2171,6 +2172,7 @@ void SwapTurnOrder(u8 id1, u8 id2)
     SWAP(gActionsByTurnOrder[id1], gActionsByTurnOrder[id2], temp);
     SWAP(gBattlerByTurnOrder[id1], gBattlerByTurnOrder[id2], temp);
 }
+
 
 
 
