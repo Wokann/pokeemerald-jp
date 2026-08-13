@@ -82,8 +82,8 @@ extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: sam
 extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
 extern void BattleIntroPrintPlayerSendsOut(void); // JP asm 0x0803B010 (US: same name)
 extern void BattleIntroOpponent1SendsOutMonAnimation(void); // JP asm 0x0803AEA0 (US: same name)
-extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (US: same name)
 extern void BattleIntroOpponent2SendsOutMonAnimation(void); // JP asm 0x0803AE20 (register-sensitive, kept in asm)
+extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2018,6 +2018,7 @@ static void BattleIntroPrintOpponentSendsOut(void)
     PrepareStringBattle(STRINGID_INTROSENDOUT, GetBattlerAtPosition(position));
     gBattleMainFunc = BattleIntroOpponent1SendsOutMonAnimation;
 }
+
 
 
 
