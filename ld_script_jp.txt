@@ -3751,6 +3751,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_psywavedamageeffect);
         src/battle_script_commands.o(.text.Cmd_counterdamagecalculator);
         src/battle_script_commands.o(.text.Cmd_mirrorcoatdamagecalculator);
+        src/battle_script_commands.o(.text.Cmd_disablelastusedattack);
         asm/battle_script_commands.o(.text.atk9E_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
