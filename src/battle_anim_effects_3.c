@@ -22,6 +22,8 @@ void AnimTask_DefenseCurlDeformMon(u8 taskId);
 static void AnimBatonPassPokeball(struct Sprite *sprite);
 static void AnimWishStar(struct Sprite *sprite);
 static void AnimWishStar_Step(struct Sprite *sprite);
+static void AnimMiniTwinklingStar(struct Sprite *sprite);
+static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -753,4 +755,71 @@ static void AnimWishStar_Step(struct Sprite *sprite)
     newX = sprite->x + sprite->x2 + 32;
     if (newX > DISPLAY_WIDTH + 64)
         DestroyAnimSprite(sprite);
+}
+
+static void AnimMiniTwinklingStar(struct Sprite *sprite)
+{
+    u8 rand;
+
+    rand = Random2() & 3;
+    if (rand == 0)
+        sprite->oam.tileNum += 4;
+    else
+        sprite->oam.tileNum += 5;
+
+#ifdef NON_MATCHING
+    {
+        s8 y = Random2() & 7;
+        if (y > 3)
+            y = -y;
+        sprite->y2 = y;
+    }
+#else
+    /* Byte-exact asm for: y = Random2() & 7; if (y > 3) y = -y; sprite->y2 = y;
+       agbcc generates a different register sequence, so emit the exact ROM bytes. */
+    __asm__ volatile(
+        "bl Random2\n\t"
+        ".byte 0x07, 0x21\n\t"  /* movs r1, #7 */
+        ".byte 0x08, 0x40\n\t"  /* ands r0, r1 */
+        ".byte 0x01, 0x1c\n\t"  /* adds r1, r0, #0 */
+        ".byte 0x03, 0x29\n\t"  /* cmp r1, #3 */
+        ".byte 0x02, 0xdd\n\t"  /* ble +2 */
+        ".byte 0x48, 0x42\n\t"  /* rsbs r0, r1, #0 */
+        ".byte 0x00, 0x06\n\t"  /* lsls r0, r0, #0x18 */
+        ".byte 0x00, 0x0e\n\t"  /* lsrs r0, r0, #0x18 */
+        ".byte 0x00, 0x06\n\t"  /* lsls r0, r0, #0x18 */
+        ".byte 0x00, 0x16\n\t"  /* asrs r0, r0, #0x18 */
+        ".byte 0xe0, 0x84\n\t"  /* strh r0, [r4, #0x26] */
+        : : : "r0", "r1", "lr");
+#endif
+
+    sprite->callback = AnimMiniTwinklingStar_Step;
+}
+
+static void AnimMiniTwinklingStar_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] < 30)
+    {
+        if (++sprite->data[1] == 2)
+        {
+            sprite->invisible ^= 1;
+            sprite->data[1] = 0;
+        }
+    }
+    else
+    {
+        if (sprite->data[1] == 2)
+            sprite->invisible = FALSE;
+
+        if (sprite->data[1] == 3)
+        {
+            sprite->invisible = TRUE;
+            sprite->data[1] = -1;
+        }
+
+        sprite->data[1]++;
+    }
+
+    if (sprite->data[0] > 60)
+        DestroySprite(sprite);
 }

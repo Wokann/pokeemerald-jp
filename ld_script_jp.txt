@@ -4904,6 +4904,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimBatonPassPokeball);
         src/battle_anim_effects_3.o(.text.AnimWishStar);
         src/battle_anim_effects_3.o(.text.AnimWishStar_Step);
+        src/battle_anim_effects_3.o(.text.AnimMiniTwinklingStar);
+        src/battle_anim_effects_3.o(.text.AnimMiniTwinklingStar_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest4);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
