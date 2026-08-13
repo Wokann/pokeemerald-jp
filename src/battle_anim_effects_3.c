@@ -2,6 +2,7 @@
 #include "battle_anim.h"
 #include "bg.h"
 #include "palette.h"
+#include "random.h"
 #include "scanline_effect.h"
 #include "task.h"
 #include "trig.h"
@@ -34,6 +35,8 @@ static void AnimSweetScentPetal(struct Sprite *sprite);
 static void AnimSweetScentPetal_Step(struct Sprite *sprite);
 static void AnimTask_FlailMovement_Step(u8 taskId);
 static void AnimPainSplitProjectile(struct Sprite *sprite);
+static void AnimFlatterConfetti(struct Sprite *sprite);
+static void AnimFlatterConfetti_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1231,4 +1234,57 @@ void AnimTask_PainSplitMovement(u8 taskId)
             DestroyAnimVisualTask(taskId);
         }
     }
+}
+
+static void AnimFlatterConfetti(struct Sprite *sprite)
+{
+    u8 tileOffset;
+    int rand1;
+    int rand2;
+
+    tileOffset = Random2() % 12;
+    sprite->oam.tileNum += tileOffset;
+    rand1 = Random2() & 0x1FF;
+    rand2 = Random2() & 0xFF;
+
+    if (rand1 & 1)
+        sprite->data[0] = 0x5E0 + rand1;
+    else
+        sprite->data[0] = 0x5E0 - rand1;
+
+    if (rand2 & 1)
+        sprite->data[1] = 0x480 + rand2;
+    else
+        sprite->data[1] = 0x480 - rand2;
+
+    sprite->data[2] = gBattleAnimArgs[0];
+    if (sprite->data[2] == ANIM_ATTACKER)
+        sprite->x = -8;
+    else
+        sprite->x = DISPLAY_WIDTH + 8;
+
+    sprite->y = 104;
+    sprite->callback = AnimFlatterConfetti_Step;
+}
+
+static void AnimFlatterConfetti_Step(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->x2 += sprite->data[0] >> 8;
+        sprite->y2 -= sprite->data[1] >> 8;
+    }
+    else
+    {
+        sprite->x2 -= sprite->data[0] >> 8;
+        sprite->y2 -= sprite->data[1] >> 8;
+    }
+
+    sprite->data[0] -= 22;
+    sprite->data[1] -= 48;
+    if (sprite->data[0] < 0)
+        sprite->data[0] = 0;
+
+    if (++sprite->data[3] == 31)
+        DestroyAnimSprite(sprite);
 }
