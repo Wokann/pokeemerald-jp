@@ -3140,6 +3140,12 @@ SECTIONS {
         src/battle_controllers.o(.text.BtlController_EmitChosenMonReturnValue);
         src/battle_controllers.o(.text.BtlController_EmitOneReturnValue);
         src/battle_controllers.o(.text.BtlController_EmitOneReturnValue_Duplicate);
+        src/battle_controllers.o(.text.BtlController_EmitCmd37);
+        src/battle_controllers.o(.text.BtlController_EmitCmd38);
+        src/battle_controllers.o(.text.BtlController_EmitCmd39);
+        src/battle_controllers.o(.text.BtlController_EmitCmd40);
+        src/battle_controllers.o(.text.BtlController_EmitHitAnimation);
+        src/battle_controllers.o(.text.BtlController_EmitCmd42);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);

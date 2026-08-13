@@ -1289,6 +1289,58 @@ void BtlController_EmitOneReturnValue_Duplicate(u8 bufferId, u16 ret)
     PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
 }
 
+void BtlController_EmitCmd37(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_CLEARUNKVAR;
+    sBattleBuffersTransferData[1] = CONTROLLER_CLEARUNKVAR;
+    sBattleBuffersTransferData[2] = CONTROLLER_CLEARUNKVAR;
+    sBattleBuffersTransferData[3] = CONTROLLER_CLEARUNKVAR;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitCmd38(u8 bufferId, u8 b)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_SETUNKVAR;
+    sBattleBuffersTransferData[1] = b;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 2);
+}
+
+void BtlController_EmitCmd39(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_CLEARUNKFLAG;
+    sBattleBuffersTransferData[1] = CONTROLLER_CLEARUNKFLAG;
+    sBattleBuffersTransferData[2] = CONTROLLER_CLEARUNKFLAG;
+    sBattleBuffersTransferData[3] = CONTROLLER_CLEARUNKFLAG;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitCmd40(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_TOGGLEUNKFLAG;
+    sBattleBuffersTransferData[1] = CONTROLLER_TOGGLEUNKFLAG;
+    sBattleBuffersTransferData[2] = CONTROLLER_TOGGLEUNKFLAG;
+    sBattleBuffersTransferData[3] = CONTROLLER_TOGGLEUNKFLAG;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitHitAnimation(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_HITANIMATION;
+    sBattleBuffersTransferData[1] = CONTROLLER_HITANIMATION;
+    sBattleBuffersTransferData[2] = CONTROLLER_HITANIMATION;
+    sBattleBuffersTransferData[3] = CONTROLLER_HITANIMATION;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitCmd42(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_CANTSWITCH;
+    sBattleBuffersTransferData[1] = CONTROLLER_CANTSWITCH;
+    sBattleBuffersTransferData[2] = CONTROLLER_CANTSWITCH;
+    sBattleBuffersTransferData[3] = CONTROLLER_CANTSWITCH;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
 void BtlController_EmitUnknownYesNoBox(u8 bufferId)
 {
     sBattleBuffersTransferData[0] = CONTROLLER_YESNOBOX;
