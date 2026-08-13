@@ -4834,7 +4834,7 @@ SECTIONS {
         asm/mes_mid_0.o(.text);
         src/mystery_event_script.o(.text.RunMysteryEventScript);
         src/mystery_event_script.o(.text.SetMysteryEventScriptStatus);
-        asm/mes_mid_1.o(.text);
+        src/mystery_event_script.o(.text.CalcRecordMixingGiftChecksum);
         src/mystery_event_script.o(.text.IsRecordMixingGiftValid);
         src/mystery_event_script.o(.text.ClearRecordMixingGift);
         src/mystery_event_script.o(.text.SetRecordMixingGift);
