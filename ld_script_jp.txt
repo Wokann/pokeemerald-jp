@@ -765,6 +765,7 @@ BattleScript_SmokeBallEscape = gUnknown_8289063;
 BattleScript_RanAwayUsingMonAbility = gUnknown_8289071;
 BattleScript_GotAwaySafely = gUnknown_8289078;
 BattleScript_WildMonFled = gUnknown_828907F;
+BattleScript_ActionSwitch = gUnknown_828909D;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
@@ -3296,6 +3297,8 @@ SECTIONS {
         src/battle_main.o(.text.WaitForEvoSceneToFinish);
         src/battle_main.o(.text.ReturnFromBattleToOverworld);
         src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
+        asm/battle_main_usemove.o(.text);
+        src/battle_main.o(.text.HandleAction_Switch);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
