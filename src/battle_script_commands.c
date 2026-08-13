@@ -1527,6 +1527,7 @@ static void Cmd_setsemiinvulnerablebit(void);
 static void Cmd_clearsemiinvulnerablebit(void);
 static void Cmd_setminimize(void);
 static void Cmd_sethail(void);
+static void Cmd_jumpifattackandspecialattackcannotfall(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8236,4 +8237,22 @@ static void Cmd_sethail(void)
     }
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_jumpifattackandspecialattackcannotfall(void)
+{
+    if (gBattleMons[gBattlerTarget].statStages[STAT_ATK] == 0
+        && gBattleMons[gBattlerTarget].statStages[STAT_SPATK] == 0
+        && gBattleCommunication[MISS_TYPE] != B_MSG_PROTECTED)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gActiveBattler = gBattlerAttacker;
+        gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
+        BtlController_EmitHealthBarUpdate(B_COMM_TO_CONTROLLER, INSTANT_HP_BAR_DROP);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr += 5;
+    }
 }
