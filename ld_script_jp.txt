@@ -1,5 +1,7 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
 gAirWaveProjectileSpriteTemplate = ABSOLUTE(0x0856EF94);
+sVoidLinesSpriteTemplate = ABSOLUTE(0x0856F084);
+InitAnimLinearTranslationWithSpeedAndPos = ABSOLUTE(0x080A68C9);
 RomHeaderGameCode = ABSOLUTE(0x080000AC);
 RomHeaderSoftwareVersion = ABSOLUTE(0x080000BC);
 gUnknown_84FD040 = ABSOLUTE(0x084FD040);
@@ -4705,6 +4707,14 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AirCutterProjectileStep2);
         src/battle_anim_effects_2.o(.text.AirCutterProjectileStep1);
         src/battle_anim_effects_2.o(.text.AnimTask_AirCutterProjectile);
+        src/battle_anim_effects_2.o(.text.AnimVoidLines);
+        src/battle_anim_effects_2.o(.text.AnimVoidLines_Step);
+        src/battle_anim_effects_2.o(.text.AnimCoinThrow);
+        src/battle_anim_effects_2.o(.text.AnimFallingCoin);
+        src/battle_anim_effects_2.o(.text.AnimFallingCoin_Step);
+        src/battle_anim_effects_2.o(.text.AnimBulletSeed);
+        src/battle_anim_effects_2.o(.text.AnimBulletSeed_Step1);
+        src/battle_anim_effects_2.o(.text.AnimBulletSeed_Step2);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);

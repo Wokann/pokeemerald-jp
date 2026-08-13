@@ -19,6 +19,8 @@
 void TranslateSpriteInEllipseOverDuration(struct Sprite *sprite);
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 extern const struct SpriteTemplate gAirWaveProjectileSpriteTemplate;
+extern const struct SpriteTemplate sVoidLinesSpriteTemplate;
+void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
 
 static void AnimTask_Withdraw_Step(u8 taskId);
 static void AnimKinesisZapEnergy(struct Sprite *sprite);
@@ -39,6 +41,14 @@ static void AnimAirWaveProjectile_Step2(struct Sprite *sprite);
 static void AirCutterProjectileStep2(u8 taskId);
 static void AirCutterProjectileStep1(u8 taskId);
 void AnimTask_AirCutterProjectile(u8 taskId);
+static void AnimVoidLines(struct Sprite *sprite);
+static void AnimVoidLines_Step(struct Sprite *sprite);
+static void AnimCoinThrow(struct Sprite *sprite);
+static void AnimFallingCoin(struct Sprite *sprite);
+static void AnimFallingCoin_Step(struct Sprite *sprite);
+static void AnimBulletSeed(struct Sprite *sprite);
+static void AnimBulletSeed_Step1(struct Sprite *sprite);
+static void AnimBulletSeed_Step2(struct Sprite *sprite);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -557,4 +567,144 @@ void AnimTask_AirCutterProjectile(u8 taskId)
         gTasks[taskId].data[2] = 3;
 
     gTasks[taskId].func = AirCutterProjectileStep1;
+}
+
+// Animates the void lines used in ROAR.
+static void AnimVoidLines(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    sprite->data[0] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(sVoidLinesSpriteTemplate.paletteTag));
+    sprite->callback = AnimVoidLines_Step;
+}
+
+static void AnimVoidLines_Step(struct Sprite *sprite)
+{
+    u16 id, val;
+    int i;
+
+    if (++sprite->data[1] == 2)
+    {
+        sprite->data[1] = 0;
+        id = sprite->data[0];
+        val = gPlttBufferFaded[8 + id];
+        for (i = 8; i < 16; i++)
+            gPlttBufferFaded[i + id] = gPlttBufferFaded[i + id + 1];
+
+        gPlttBufferFaded[id + 15] = val;
+
+        if (++sprite->data[2] == 24)
+            DestroyAnimSprite(sprite);
+    }
+}
+
+// Animates a coin being thrown into the air.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: target x pixel offset
+// arg 3: target y pixel offset
+// arg 4: duration
+static void AnimCoinThrow(struct Sprite *sprite)
+{
+    s16 r6;
+    s16 r7;
+    u16 var;
+
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    r6 = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    r7 = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[3];
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        gBattleAnimArgs[2] = -gBattleAnimArgs[2];
+
+    r6 += gBattleAnimArgs[2];
+    var = ArcTan2Neg(r6 - sprite->x, r7 - sprite->y);
+    var -= 0x4000;
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, var);
+    sprite->data[0] = gBattleAnimArgs[4];
+    sprite->data[2] = r6;
+    sprite->data[4] = r7;
+    sprite->callback = InitAnimLinearTranslationWithSpeedAndPos;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+// Animates a coin falling to the ground.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+static void AnimFallingCoin(struct Sprite *sprite)
+{
+    sprite->data[2] = -16;
+    sprite->y += 8;
+    sprite->callback = AnimFallingCoin_Step;
+}
+
+static void AnimFallingCoin_Step(struct Sprite *sprite)
+{
+    sprite->data[0] += 0x80;
+    sprite->x2 = sprite->data[0] >> 8;
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        sprite->x2 = -sprite->x2;
+
+    sprite->y2 = Sin(sprite->data[1], sprite->data[2]);
+    sprite->data[1] += 5;
+    if (sprite->data[1] > 126)
+    {
+        sprite->data[1] = 0;
+        sprite->data[2] /= 2;
+        if (++sprite->data[3] == 2)
+            DestroyAnimSprite(sprite);
+    }
+}
+
+// Animates a seed being thrown at the target.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+static void AnimBulletSeed(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    sprite->data[0] = 20;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    // JP calls InitAndRunAnimFastLinearTranslation (0x080A67B5) here.
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
+    sprite->affineAnimPaused = 1;
+    StoreSpriteCallbackInData6(sprite, AnimBulletSeed_Step1);
+}
+
+static void AnimBulletSeed_Step1(struct Sprite *sprite)
+{
+    int i;
+    u16 rand;
+    s16 *ptr;
+    PlaySE12WithPanning(SE_M_HORN_ATTACK, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+    sprite->x += sprite->x2;
+    sprite->y += sprite->y2;
+    sprite->y2 = 0;
+    sprite->x2 = 0;
+    ptr = &sprite->data[7];
+    for (i = 0; i < 8; i++)
+        ptr[i - 7] = 0;
+
+    rand = Random2();
+    sprite->data[6] = 0xFFF4 - (rand & 7);
+    rand = Random2();
+    sprite->data[7] = (rand % 0xA0) + 0xA0;
+    sprite->callback = AnimBulletSeed_Step2;
+    sprite->affineAnimPaused = 0;
+}
+
+static void AnimBulletSeed_Step2(struct Sprite *sprite)
+{
+    sprite->data[0] += sprite->data[7];
+    sprite->x2 = sprite->data[0] >> 8;
+    if (sprite->data[7] & 1)
+        sprite->x2 = -sprite->x2;
+
+    sprite->y2 = Sin(sprite->data[1], sprite->data[6]);
+    sprite->data[1] += 8;
+    if (sprite->data[1] > 126)
+    {
+        sprite->data[1] = 0;
+        sprite->data[2] /= 2;
+        if (++sprite->data[3] == 1)
+            DestroyAnimSprite(sprite);
+    }
 }
