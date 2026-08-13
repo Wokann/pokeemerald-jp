@@ -13,45 +13,4 @@
 	nop 
 	.byte 0xFF
 	return 
-	return 
-	.byte 0xE9
-	showobject_at 0x80D, 0x505
-	.byte 0xFB
-	.byte 0xFF
-	.byte 0xFB
-	.byte 0xFF
-	goto 0x0
-	nop 
-	end 
-	moveobjectoffscreen 0x56F4
-	gotostd 0x0
-	call_if 0x2D, 0x0
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	setworldmapflag 0x300
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x10001
-	nop 
-	nop 
-	goto_if 0x0, 0x55030001
-	givedecoration 0x80D
-	end 
-	goto 0x10003
-	nop 
-	nop 
-	goto_if 0x0, 0xF5030001
-	lock 
-	writebytetoaddr 0x8, 0x10402
-	nop 
-	nop 
-	goto_if 0x0, 0xB5030001
-	random 0x815
-	.byte 0x05
-	nop 
-	.byte 0x0F
+	.incbin "baserom_jp.gba", 0x283692, 0x5f

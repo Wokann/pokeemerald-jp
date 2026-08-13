@@ -3,28 +3,4 @@
 	showobject_at 0x2862, 0x803
 	setholewarp 0x411, 0x8, 0x103, 0x1
 	return 
-	settrainerflag 0xA74
-	gotostd 0x5
-	goto 0x7FFF0001
-	returnram 
-	nop 
-	return 
-	nop 
-	setworldmapflag 0x1C00
-	cmdD9 
-	nop 
-	showcoinsbox 0x18, 0x3
-	call 0x4410310
-	writebytetoaddr 0x8, 0x103
-	return 
-	settrainerflag 0xA74
-	gotostd 0x5
-	goto 0x7FFF0000
-	returnram 
-	nop 
-	return 
-	nop 
-	setworldmapflag 0x500
-	setmysteryeventstatus 0x64
-	cleartrainerflag 0x828
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27c976, 0x39

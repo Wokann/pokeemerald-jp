@@ -3,6 +3,4 @@
 	goto_if 0x1, 0x8244D20
 	releaseall 
 	end 
-	gotopostbattlescript 
-	releaseall 
-	end 
+	.incbin "baserom_jp.gba", 0x244d20, 0x3

@@ -29,13 +29,4 @@
 	setworldmapflag 0x200
 	nop 
 	end 
-	.byte 0xD4
-	.byte 0xF0
-	addobject_at 0x208, 0x3
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x10001
-	nop 
-	nop 
-	goto_if 0x0, 0xB050001
-	setworldmapflag 0x80D
+	.incbin "baserom_jp.gba", 0x279e78, 0x1c

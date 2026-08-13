@@ -8,15 +8,4 @@
 	setdynamicwarp 0x202, 0x0, 0x1, 0xB00
 	nop 
 	returnram 
-	nop 
-	loadbyte 0x4B, 0x0
-	loadbytefromaddr 0x103E0040
-	drawbox 
-	nop 
-	loadbytefromaddr 0x20390040
-	nop 
-	loadbyte 0x4C, 0x0
-	.byte 0x12
-	.byte 0x40
-	nop 
-	.byte 0x3E
+	.incbin "baserom_jp.gba", 0x28965e, 0x18

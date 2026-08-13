@@ -2,16 +2,4 @@
 	applymovement_at 0x27, 0xF80227E1, 0xEC56
 	gotostd 0xB
 	end 
-	nop 
-	nop 
-	moveobjectoffscreen 0x1900
-	vcall 0x604C000
-	end 
-	checkplayergender 
-	.byte 0xED
-	addobject_at 0xC08, 0x100
-	nop 
-	call 0xA71C18
-	showcoinsbox 0x16, 0x3
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27b4fe, 0x1d

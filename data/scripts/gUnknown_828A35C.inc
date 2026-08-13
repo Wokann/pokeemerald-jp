@@ -5,11 +5,4 @@
 	gotostd 0x29
 	setworldmapflag 0x9D18
 	return 
-	end 
-	nop 
-	playslotmachine 0x28A3
-	gotostd 0x10
-	compare_var_to_var 0x1201, 0x40
-	gettime 
-	buffertrainername 0x3F, 0x202
-	gotostd 0xF6
+	.incbin "baserom_jp.gba", 0x28a377, 0x13

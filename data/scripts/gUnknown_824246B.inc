@@ -10,4 +10,4 @@
 	special BattleSetup_StartRematchBattle
 	releaseall 
 	end 
-	gotobeatenscript 
+	.incbin "baserom_jp.gba", 0x242491, 0x1

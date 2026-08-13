@@ -41,13 +41,4 @@
 	setworldmapflag 0x100
 	nop 
 	return 
-	addobject 0xD4B
-	gotostd 0x2
-	goto 0x50001
-	nop 
-	nop 
-	copylocal 0x0, 0x1
-	nop 
-	goto 0x17150A04
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x283ca1, 0x17

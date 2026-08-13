@@ -9,38 +9,4 @@
 	addobject_at 0x208, 0x101
 	nop 
 	end 
-	delay 0x56EB
-	gotostd 0x84
-	return 
-	nop 
-	nop 
-	nop 
-	nop 
-	gotostd_if 0x0, 0x5
-	return 
-	callstd 0x4D
-	killscript 
-	gotostd 0x2
-	goto 0x20000
-	nop 
-	nop 
-	call 0x3000100
-	playfanfare 0xD4A
-	gotostd 0x2
-	goto 0x50001
-	nop 
-	nop 
-	goto_if 0x0, 0xBC020001
-	.byte 0xE8
-	addobject_at 0x208, 0x102
-	nop 
-	end 
-	.byte 0xCC
-	playse 0x857
-	buffernumberstring 0x4, 0x0
-	nop 
-	nop 
-	setworldmapflag 0x100
-	nop 
-	copyvar 0xA6, 0x53F
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27acc6, 0x4d

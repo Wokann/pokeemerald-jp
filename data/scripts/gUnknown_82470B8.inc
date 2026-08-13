@@ -5,4 +5,4 @@
 	setvar 0x8005, 0x3
 	special ColosseumPlayerSpotTriggered
 	end 
-	end 
+	.incbin "baserom_jp.gba", 0x2470d3, 0x1

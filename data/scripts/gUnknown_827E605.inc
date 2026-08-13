@@ -1,17 +1,4 @@
 	nop 
 	addobject_at 0x27, 0xB827
 	returnram 
-	nop 
-	loadbyte 0x2, 0x74
-	compare_var_to_value 0x857, 0x301
-	delay 0x0
-	nop 
-	setvaddress 0x190A0427
-	gotoram 
-	nop 
-	showcoinsbox 0xE, 0xA0
-	.byte 0xE5
-	waitstate 
-	gotostd 0x5
-	.byte 0x04
-	setworldmapflag 0x80D
+	.incbin "baserom_jp.gba", 0x27e60c, 0x1f

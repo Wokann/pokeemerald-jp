@@ -2,9 +2,4 @@
 	loadbytefromaddr 0xD92E0040
 	setdynamicwarp 0x202, 0x41, 0x2E16, 0x412C
 	end 
-	end 
-	nop 
-	.byte 0x49
-	end 
-	.byte 0x10
-	.byte 0x3D
+	.incbin "baserom_jp.gba", 0x289c72, 0x6

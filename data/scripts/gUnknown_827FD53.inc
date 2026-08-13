@@ -15,16 +15,4 @@
 	setworldmapflag 0x100
 	nop 
 	return 
-	playfanfare 0xD4A
-	gotostd 0x5
-	goto 0x50001
-	nop 
-	nop 
-	goto 0x4000100
-	writebytetoaddr 0x19, 0x2C0007A
-	showobject_at 0x55A9, 0x802
-	end 
-	goto_if 0x0, 0xB05FFFC
-	return 
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27fd81, 0x26

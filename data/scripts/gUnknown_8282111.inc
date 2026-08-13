@@ -7,38 +7,4 @@
 	loadbyte 0x0, 0x0
 	nop 
 	end 
-	nop 
-	call 0xE0780207
-	addobject_at 0x8308, 0x400
-	nop 
-	nop 
-	nop 
-	nop 
-	nop 
-	end 
-	nop 
-	end 
-	braillemessage 0x820856E0
-	call 0x80000
-	setworldmapflag 0x200
-	nop 
-	call 0xE0780207
-	addobject_at 0x8308, 0x400
-	nop 
-	.byte 0xF8
-	.byte 0xFF
-	setworldmapflag 0x200
-	nop 
-	call 0x4B550308
-	killscript 
-	gotostd 0x2
-	goto 0x30001
-	nop 
-	nop 
-	goto_if 0x0, 0x14040001
-	copyvar 0xAA, 0x103F
-	.byte 0x07
-	.byte 0xFF
-	.byte 0xFF
-	.byte 0x05
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x282128, 0x51

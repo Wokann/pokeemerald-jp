@@ -13,35 +13,4 @@
 	call 0xCD1910
 	nop 
 	return 
-	multichoicegrid 0x68, 0x10, 0x8, 0x3, 0x0
-	return 
-	setworldmapflag 0x1069
-	gotostd 0x3
-	nop 
-	call 0x87191E
-	nop 
-	call 0x871918
-	nop 
-	call 0x871910
-	nop 
-	call 0x871910
-	nop 
-	call 0x871910
-	nop 
-	call 0x871910
-	nop 
-	call 0xE21910
-	nop 
-	return 
-	playfanfare 0xD4A
-	gotostd 0x3
-	goto 0x50000
-	nop 
-	nop 
-	call_if 0x0, 0x31030002
-	checkpcitem 0x80D, 0x503
-	setworldmapflag 0x500
-	nop 
-	nop 
-	nop 
-	call_if 0x0, 0x8050002
+	.incbin "baserom_jp.gba", 0x282e18, 0x5b

@@ -72,8 +72,4 @@
 	nop 
 	nop 
 	end 
-	copylocal 0x0, 0x1
-	nop 
-	.byte 0x04
-	.byte 0x01
-	.byte 0x0F
+	.incbin "baserom_jp.gba", 0x281e60, 0x7

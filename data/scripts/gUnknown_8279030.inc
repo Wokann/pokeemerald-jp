@@ -5,24 +5,4 @@
 	applymovement_at 0x80D, 0x502, 0x1000
 	goto_if 0x0, 0x40001
 	end 
-	moveobjectoffscreen 0x56EF
-	gotostd 0x2
-	end 
-	nop 
-	nop 
-	nop 
-	nop 
-	call 0x65E50316
-	writebytetoaddr 0x8, 0x27150702
-	end 
-	nop 
-	end 
-	nop 
-	.byte 0xF2
-	bufferpartymonnick 0x10, 0x0
-	nop 
-	nop 
-	nop 
-	goto 0x40D000B
-	.byte 0x01
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27904e, 0x28

@@ -5,5 +5,4 @@
 	compare_addr_to_value 0x21A0002, 0x28
 	.byte 0x1F
 	killscript 
-	.byte 0xAB
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262d94, 0x2

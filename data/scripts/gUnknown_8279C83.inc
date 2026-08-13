@@ -12,13 +12,4 @@
 	nop 
 	goto 0xC0006619
 	return 
-	addobject 0x1162
-	gotostd 0x2
-	goto_if 0xA, 0x2000000
-	nop 
-	nop 
-	nop 
-	gotostd_if 0x0, 0xFF
-	bufferpartymonnick 0x5, 0x20B
-	killscript 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x279cae, 0x17

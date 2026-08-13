@@ -13,11 +13,4 @@
 	gotostd_if 0x0, 0x0
 	nop 
 	returnram 
-	setmonmove 0x2, 0x0, 0x56F4
-	gotostd 0x3
-	call 0x0
-	nop 
-	nop 
-	nop 
-	nop 
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2835c4, 0x11

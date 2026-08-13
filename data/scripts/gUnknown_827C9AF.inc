@@ -4,22 +4,4 @@
 	gotostd_if 0x28, 0xE
 	showobject_at 0x2862, 0x80A
 	return 
-	return 
-	takemoney 0x5081101, 0x0
-	call 0xA61C08
-	showcoinsbox 0x8, 0x5
-	goto 0x90020404
-	callnative 0x2050857
-	nop 
-	nop 
-	delay 0x300
-	dotimebasedevents 
-	turnobject 0x811, 0x5
-	return 
-	call 0xA000100
-	nop 
-	copyvar 0xD7, 0xBC0
-	return 
-	setmysteryeventstatus 0x64
-	cleartrainerflag 0x828
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x27c9bc, 0x36

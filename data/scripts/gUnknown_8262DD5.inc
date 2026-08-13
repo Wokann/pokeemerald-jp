@@ -7,5 +7,4 @@
 	gettime 
 	nop 
 	returnram 
-	setptrbyte 0x0, 0x20B4108
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262dee, 0x7

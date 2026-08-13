@@ -7,33 +7,4 @@
 	addvar 0x828, 0x5503
 	cleartrainerflag 0x811
 	end 
-	goto_if 0x4, 0x2000200
-	nop 
-	nop 
-	nop 
-	returnram 
-	nop 
-	gotopostbattlescript 
-	bufferleadmonspeciesname 0x5
-	call 0x62640E01
-	delay 0x808
-	copyvar 0xB8, 0x2C0
-	compare_addr_to_addr 0x82085722, 0x8000006
-	nop 
-	nop 
-	nop 
-	gotostd 0x0
-	compare_local_to_local 0x0, 0x0
-	nop 
-	end 
-	compare_addr_to_addr 0x82085722, 0xF8001006
-	.byte 0xFF
-	nop 
-	nop 
-	.byte 0xF8
-	.byte 0xFF
-	compare_local_to_local 0x0, 0x0
-	nop 
-	.byte 0x04
-	.byte 0x06
-	.byte 0x0F
+	.incbin "baserom_jp.gba", 0x281756, 0x43

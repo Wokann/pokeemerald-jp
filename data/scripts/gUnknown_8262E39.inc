@@ -3,15 +3,4 @@
 	loadbytefromaddr 0x9F001009
 	hideobject_at 0x7E73, 0xFD
 	end 
-	.byte 0xFE
-	loadbytefromaddr 0x10041F06
-	nop 
-	setrespawn 0x7359
-	bufferleadmonspeciesname 0x0
-	.byte 0xFD
-	return 
-	nop 
-	.byte 0x06
-	.byte 0xB0
-	.byte 0xB0
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262e4c, 0x13

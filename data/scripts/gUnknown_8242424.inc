@@ -15,4 +15,4 @@
 	waitbuttonpress 
 	release 
 	end 
-	gotobeatenscript 
+	.incbin "baserom_jp.gba", 0x24245b, 0x1
