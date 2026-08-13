@@ -5,6 +5,8 @@
 
 	thumb_func_start sub_08074C24
 sub_08074C24: @ 0x08074C24
+	.globl SmokescreenImpact
+SmokescreenImpact = sub_08074C24
 	push {r4, r5, r6, r7, lr}
 	mov r7, sl
 	mov r6, sb
@@ -219,4 +221,3 @@ _08074DE6:
 	.align 2, 0
 _08074DEC: .4byte 0x020205AC
 	thumb_func_end sub_08074DBC
-

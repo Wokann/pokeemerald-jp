@@ -4874,6 +4874,18 @@ SECTIONS {
         asm/battle_anim_sound_tasks.o(.text);
         asm/battle_controller_safari.o(.text);
         src/fldeff_sweetscent.o(.text);
+        src/battle_anim_effects_3.o(.text.AnimBlackSmoke);
+        src/battle_anim_effects_3.o(.text.AnimBlackSmoke_Step);
+        src/battle_anim_effects_3.o(.text.AnimTask_SmokescreenImpact);
+        src/battle_anim_effects_3.o(.text.AnimWhiteHalo);
+        src/battle_anim_effects_3.o(.text.AnimWhiteHalo_Step1);
+        src/battle_anim_effects_3.o(.text.AnimWhiteHalo_Step2);
+        src/battle_anim_effects_3.o(.text.AnimTealAlert);
+        src/battle_anim_effects_3.o(.text.AnimMeanLookEye);
+        src/battle_anim_effects_3.o(.text.AnimMeanLookEye_Step1);
+        src/battle_anim_effects_3.o(.text.AnimMeanLookEye_Step2);
+        src/battle_anim_effects_3.o(.text.AnimMeanLookEye_Step3);
+        src/battle_anim_effects_3.o(.text.AnimMeanLookEye_Step4);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest);
         src/battle_anim_effects_3.o(.text.AnimTask_SetPsychicBackground);
         src/battle_anim_effects_3.o(.text.FadeScreenToWhite_Step);

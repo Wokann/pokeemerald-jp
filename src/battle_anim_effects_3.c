@@ -101,6 +101,204 @@ void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
 void AnimTask_StrongFrustrationGrowAndShrink(u8 taskId);
 
+static void AnimBlackSmoke_Step(struct Sprite *sprite);
+static void AnimWhiteHalo_Step1(struct Sprite *sprite);
+static void AnimWhiteHalo_Step2(struct Sprite *sprite);
+static void AnimMeanLookEye_Step1(struct Sprite *sprite);
+static void AnimMeanLookEye_Step2(struct Sprite *sprite);
+static void AnimMeanLookEye_Step3(struct Sprite *sprite);
+static void AnimMeanLookEye_Step4(struct Sprite *sprite);
+
+static void AnimBlackSmoke(struct Sprite *sprite)
+{
+    sprite->x += gBattleAnimArgs[0];
+    sprite->y += gBattleAnimArgs[1];
+
+    if (!gBattleAnimArgs[3])
+        sprite->data[0] = gBattleAnimArgs[2];
+    else
+        sprite->data[0] = -gBattleAnimArgs[2];
+
+    sprite->data[1] = gBattleAnimArgs[4];
+    sprite->callback = AnimBlackSmoke_Step;
+}
+
+static void AnimBlackSmoke_Step(struct Sprite *sprite)
+{
+    if (sprite->data[1] > 0)
+    {
+        sprite->x2 = sprite->data[2] >> 8;
+        sprite->data[2] += sprite->data[0];
+        sprite->invisible ^= 1;
+        sprite->data[1]--;
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+void AnimTask_SmokescreenImpact(u8 taskId)
+{
+    SmokescreenImpact(
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + 8,
+        GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 8,
+        FALSE);
+    DestroyAnimVisualTask(taskId);
+}
+
+static void AnimWhiteHalo(struct Sprite *sprite)
+{
+    sprite->data[0] = 90;
+    sprite->callback = WaitAnimForDuration;
+    sprite->data[1] = 7;
+    StoreSpriteCallbackInData6(sprite, AnimWhiteHalo_Step1);
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[1], 16 - sprite->data[1]));
+}
+
+static void AnimWhiteHalo_Step1(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[1], 16 - sprite->data[1]));
+    if (--sprite->data[1] < 0)
+    {
+        sprite->invisible = TRUE;
+        sprite->callback = AnimWhiteHalo_Step2;
+    }
+}
+
+static void AnimWhiteHalo_Step2(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+    DestroyAnimSprite(sprite);
+}
+
+static void AnimTealAlert(struct Sprite *sprite)
+{
+    u16 rotation;
+    u8 x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    u8 y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+
+    InitSpritePosToAnimTarget(sprite, TRUE);
+
+    rotation = ArcTan2Neg(sprite->x - x, sprite->y - y);
+    rotation += 0x6000;
+    if (IsContest())
+        rotation += 0x4000;
+
+    TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, rotation);
+
+    sprite->data[0] = gBattleAnimArgs[2];
+    sprite->data[2] = x;
+    sprite->data[4] = y;
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+static void AnimMeanLookEye(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(0, 16));
+    sprite->data[0] = 4;
+    sprite->callback = AnimMeanLookEye_Step1;
+}
+
+static void AnimMeanLookEye_Step1(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[0], 16 - sprite->data[0]));
+
+    if (sprite->data[1])
+        sprite->data[0]--;
+    else
+        sprite->data[0]++;
+
+    if (sprite->data[0] == 15 || sprite->data[0] == 4)
+        sprite->data[1] ^= 1;
+
+    if (sprite->data[2]++ > 70)
+    {
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        StartSpriteAffineAnim(sprite, 1);
+        sprite->data[2] = 0;
+        sprite->invisible = TRUE;
+        sprite->affineAnimPaused = 1;
+        sprite->callback = AnimMeanLookEye_Step2;
+    }
+}
+
+static void AnimMeanLookEye_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[2]++ > 9)
+    {
+        sprite->invisible = FALSE;
+        sprite->affineAnimPaused = 0;
+        if (sprite->affineAnimEnded)
+            sprite->callback = AnimMeanLookEye_Step3;
+    }
+}
+
+static void AnimMeanLookEye_Step3(struct Sprite *sprite)
+{
+    switch (sprite->data[3])
+    {
+    case 0:
+    case 1:
+        sprite->x2 = 1;
+        sprite->y2 = 0;
+        break;
+    case 2:
+    case 3:
+        sprite->x2 = -1;
+        sprite->y2 = 0;
+        break;
+    case 4:
+    case 5:
+        sprite->x2 = 0;
+        sprite->y2 = 1;
+        break;
+    case 6:
+    default:
+        sprite->x2 = 0;
+        sprite->y2 = -1;
+        break;
+    }
+
+    if (++sprite->data[3] > 7)
+        sprite->data[3] = 0;
+
+    if (sprite->data[4]++ > 15)
+    {
+        sprite->data[0] = 16;
+        sprite->data[1] = 0;
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+        SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[0], 0));
+        sprite->callback = AnimMeanLookEye_Step4;
+    }
+}
+
+static void AnimMeanLookEye_Step4(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_BLDALPHA, (u16)BLDALPHA_BLEND(sprite->data[0], 16 - sprite->data[0]));
+
+    if (sprite->data[1]++ > 1)
+    {
+        sprite->data[0]--;
+        sprite->data[1] = 0;
+    }
+
+    if (sprite->data[0] == 0)
+        sprite->invisible = TRUE;
+
+    if (sprite->data[0] < 0)
+    {
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+        DestroyAnimSprite(sprite);
+    }
+}
+
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
     gTasks[taskId].func = FadeScreenToWhite_Step;
