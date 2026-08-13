@@ -2,7 +2,7 @@
 .include "constants/constants.inc"
 .text
 .syntax unified
-
+	.section .text.sub_08151638,"ax",%progbits
 	thumb_func_start sub_08151638
 sub_08151638: @ 0x08151638
 	push {lr}
@@ -18,125 +18,7 @@ _0815164C: .4byte 0x00010000
 _08151650: .4byte 0x00000000
 	thumb_func_end sub_08151638
 
-	thumb_func_start sub_08151654
-sub_08151654: @ 0x08151654
-	push {lr}
-	movs r1, #0
-	strb r1, [r0]
-	strh r1, [r0, #2]
-	adds r0, #4
-	movs r2, #0xc0
-	bl memset
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08151654
-
-	thumb_func_start sub_08151668
-sub_08151668: @ 0x08151668
-	push {r4, r5, r6, r7, lr}
-	adds r3, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r6, r1, #0x18
-	cmp r6, #0xf
-	bhi _08151684
-	lsls r0, r6, #1
-	adds r0, r0, r6
-	lsls r0, r0, #2
-	adds r5, r3, r0
-	ldrb r7, [r5, #4]
-	lsrs r0, r7, #7
-	cmp r0, #0
-	beq _08151688
-_08151684:
-	movs r0, #0xff
-	b _081516E6
-_08151688:
-	ldrh r0, [r2]
-	movs r4, #0
-	strh r0, [r5, #8]
-	ldrh r0, [r2, #2]
-	strh r0, [r5, #0xa]
-	ldrb r0, [r2, #4]
-	strb r0, [r5, #0xc]
-	ldrb r0, [r2, #5]
-	strb r0, [r5, #0xd]
-	ldrb r0, [r2, #6]
-	strb r0, [r5, #0xe]
-	ldrb r3, [r2, #7]
-	lsls r0, r3, #0x1b
-	lsrs r0, r0, #0x1b
-	ldrb r2, [r5, #0xf]
-	movs r1, #0x20
-	rsbs r1, r1, #0
-	ands r1, r2
-	orrs r1, r0
-	movs r0, #0x60
-	ands r0, r3
-	movs r2, #0x61
-	rsbs r2, r2, #0
-	ands r1, r2
-	orrs r1, r0
-	lsls r3, r3, #0x18
-	asrs r3, r3, #0x1f
-	lsls r3, r3, #7
-	movs r0, #0x7f
-	ands r1, r0
-	orrs r1, r3
-	strb r1, [r5, #0xf]
-	subs r0, #0xff
-	ands r0, r7
-	movs r2, #0x80
-	orrs r0, r2
-	strb r0, [r5, #4]
-	strb r4, [r5, #6]
-	strb r4, [r5, #5]
-	lsls r1, r1, #0x18
-	cmp r1, #0
-	bge _081516E0
-	movs r0, #0xff
-	b _081516E2
-_081516E0:
-	movs r0, #1
-_081516E2:
-	strb r0, [r5, #7]
-	adds r0, r6, #0
-_081516E6:
-	pop {r4, r5, r6, r7}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_08151668
-
-	thumb_func_start sub_081516EC
-sub_081516EC: @ 0x081516EC
-	push {r4, lr}
-	adds r2, r0, #0
-	lsls r1, r1, #0x18
-	lsrs r1, r1, #0x18
-	adds r4, r1, #0
-	cmp r4, #0xf
-	bhi _08151718
-	lsls r0, r4, #1
-	adds r0, r0, r4
-	lsls r0, r0, #2
-	adds r1, r2, r0
-	ldrb r0, [r1, #4]
-	lsrs r0, r0, #7
-	cmp r0, #0
-	beq _08151718
-	adds r0, r1, #4
-	movs r1, #0
-	movs r2, #0xc
-	bl memset
-	adds r0, r4, #0
-	b _0815171A
-_08151718:
-	movs r0, #0xff
-_0815171A:
-	pop {r4}
-	pop {r1}
-	bx r1
-	thumb_func_end sub_081516EC
-
+	.section .text.roulette_util_rest,"ax",%progbits
 	thumb_func_start sub_08151720
 sub_08151720: @ 0x08151720
 	push {r4, r5, r6, r7, lr}
@@ -1462,4 +1344,3 @@ _0815207E:
 	pop {r0}
 	bx r0
 	thumb_func_end sub_08152034
-
