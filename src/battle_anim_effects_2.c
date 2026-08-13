@@ -18,6 +18,7 @@
 
 void TranslateSpriteInEllipseOverDuration(struct Sprite *sprite);
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
+extern const struct SpriteTemplate gAirWaveProjectileSpriteTemplate;
 
 static void AnimTask_Withdraw_Step(u8 taskId);
 static void AnimKinesisZapEnergy(struct Sprite *sprite);
@@ -35,6 +36,9 @@ static void AnimMovingClamp_End(struct Sprite *sprite);
 static void AnimAirWaveProjectile(struct Sprite *sprite);
 static void AnimAirWaveProjectile_Step1(struct Sprite *sprite);
 static void AnimAirWaveProjectile_Step2(struct Sprite *sprite);
+static void AirCutterProjectileStep2(u8 taskId);
+static void AirCutterProjectileStep1(u8 taskId);
+void AnimTask_AirCutterProjectile(u8 taskId);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -414,4 +418,143 @@ static void AnimAirWaveProjectile_Step2(struct Sprite *sprite)
         gTasks[sprite->data[7]].data[1]--;
         DestroySprite(sprite);
     }
+}
+
+static void AirCutterProjectileStep2(u8 taskId)
+{
+    if (gTasks[taskId].data[1] == 0)
+        DestroyAnimVisualTask(taskId);
+}
+
+static void AirCutterProjectileStep1(u8 taskId)
+{
+    if (gTasks[taskId].data[0]-- <= 0)
+    {
+        u8 spriteId;
+        struct Sprite *sprite;
+        spriteId = CreateSprite(&gAirWaveProjectileSpriteTemplate, gTasks[taskId].data[9], gTasks[taskId].data[10], gTasks[taskId].data[2] - gTasks[taskId].data[1]);
+        sprite = &gSprites[spriteId];
+        switch (gTasks[taskId].data[4])
+        {
+        case 1:
+            sprite->oam.matrixNum |= (ST_OAM_HFLIP | ST_OAM_VFLIP);
+            break;
+        case 2:
+            sprite->oam.matrixNum = ST_OAM_HFLIP;
+            break;
+        }
+
+        sprite->data[0] = gTasks[taskId].data[5] - gTasks[taskId].data[6];
+        sprite->data[7] = taskId;
+        gTasks[taskId].data[gTasks[taskId].data[1] + 13] = spriteId;
+        gTasks[taskId].data[0] = gTasks[taskId].data[3];
+        gTasks[taskId].data[1]++;
+        PlaySE12WithPanning(SE_M_BLIZZARD2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER + 1));
+        if (gTasks[taskId].data[1] > 2)
+            gTasks[taskId].func = AirCutterProjectileStep2;
+    }
+}
+
+// Creates the projectile for AIR CUTTER.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: speed
+// arg 3: animation delay
+// arg 4: priority
+void AnimTask_AirCutterProjectile(u8 taskId)
+{
+    s16 attackerY = 0;
+    s16 attackerX = 0;
+    s16 targetX = 0;
+    s16 targetY = 0;
+    s16 xDiff;
+
+    if (IsContest())
+    {
+        gTasks[taskId].data[4] = 2;
+        gBattleAnimArgs[0] = -gBattleAnimArgs[0];
+        if (gBattleAnimArgs[2] & 1)
+            gBattleAnimArgs[2] &= ~1;
+        else
+            gBattleAnimArgs[2] |= 1;
+    }
+    else
+    {
+        if (GET_BATTLER_SIDE2(gBattleAnimTarget) == B_SIDE_PLAYER)
+        {
+            gTasks[taskId].data[4] = 1;
+            gBattleAnimArgs[0] = -gBattleAnimArgs[0];
+            gBattleAnimArgs[1] = -gBattleAnimArgs[1];
+            if (gBattleAnimArgs[2] & 1)
+                gBattleAnimArgs[2] &= ~1;
+            else
+                gBattleAnimArgs[2] |= 1;
+        }
+    }
+
+    attackerX = gTasks[taskId].data[9] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    attackerY = gTasks[taskId].data[10] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    if ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        && IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
+    {
+        SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &targetX, &targetY);
+    }
+    else
+    {
+        targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    }
+
+    targetX = gTasks[taskId].data[11] = targetX + gBattleAnimArgs[0];
+    targetY = gTasks[taskId].data[12] = targetY + gBattleAnimArgs[1];
+    if (targetX >= attackerX)
+        xDiff = targetX - attackerX;
+    else
+        xDiff = attackerX - targetX;
+
+    gTasks[taskId].data[5] = MathUtil_Mul16(xDiff, MathUtil_Inv16(gBattleAnimArgs[2] & ~1));
+    gTasks[taskId].data[6] = MathUtil_Mul16(gTasks[taskId].data[5], Q_8_8(0.5));
+    gTasks[taskId].data[7] = gBattleAnimArgs[2];
+    if (targetY >= attackerY)
+    {
+        gTasks[taskId].data[8] = MathUtil_Mul16(targetY - attackerY, MathUtil_Inv16(gTasks[taskId].data[5])) & ~1;
+    }
+    else
+    {
+        gTasks[taskId].data[8] = MathUtil_Mul16(attackerY - targetY, MathUtil_Inv16(gTasks[taskId].data[5])) | 1;
+    }
+
+    gTasks[taskId].data[3] = gBattleAnimArgs[3];
+    if (gBattleAnimArgs[4] & 0x80)
+    {
+        gBattleAnimArgs[4] ^= 0x80;
+        if (gBattleAnimArgs[4] >= 64)
+        {
+            u16 var = GetBattlerSpriteSubpriority(gBattleAnimTarget) + (gBattleAnimArgs[4] - 64);
+            gTasks[taskId].data[2] = var;
+        }
+        else
+        {
+            u16 var = GetBattlerSpriteSubpriority(gBattleAnimTarget) - gBattleAnimArgs[4];
+            gTasks[taskId].data[2] = var;
+        }
+    }
+    else
+    {
+        if (gBattleAnimArgs[4] >= 64)
+        {
+            u16 var = GetBattlerSpriteSubpriority(gBattleAnimTarget) + (gBattleAnimArgs[4] - 64);
+            gTasks[taskId].data[2] = var;
+        }
+        else
+        {
+            u16 var = GetBattlerSpriteSubpriority(gBattleAnimTarget) - gBattleAnimArgs[4];
+            gTasks[taskId].data[2] = var;
+        }
+    }
+
+    if (gTasks[taskId].data[2] < 3)
+        gTasks[taskId].data[2] = 3;
+
+    gTasks[taskId].func = AirCutterProjectileStep1;
 }

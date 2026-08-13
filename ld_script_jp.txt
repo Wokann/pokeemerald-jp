@@ -1,4 +1,5 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
+gAirWaveProjectileSpriteTemplate = ABSOLUTE(0x0856EF94);
 RomHeaderGameCode = ABSOLUTE(0x080000AC);
 RomHeaderSoftwareVersion = ABSOLUTE(0x080000BC);
 gUnknown_84FD040 = ABSOLUTE(0x084FD040);
@@ -4701,6 +4702,9 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile_Step2);
         src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile_Step1);
         src/battle_anim_effects_2.o(.text.AnimAirWaveProjectile);
+        src/battle_anim_effects_2.o(.text.AirCutterProjectileStep2);
+        src/battle_anim_effects_2.o(.text.AirCutterProjectileStep1);
+        src/battle_anim_effects_2.o(.text.AnimTask_AirCutterProjectile);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);
