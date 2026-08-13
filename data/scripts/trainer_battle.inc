@@ -1,4 +1,4 @@
-gUnknown_82423EE: @ 0x82423EE
+EventScript_StartTrainerApproach: @ 0x82423EE
 	cmdD8 
 	cmdD9 
 	special SetUpTrainerEncounterMusic
@@ -6,7 +6,7 @@ gUnknown_82423EE: @ 0x82423EE
 	waitstate 
 	goto 0x82424D6
 
-gUnknown_82423FC: @ 0x82423FC
+EventScript_TryDoNormalTrainerBattle: @ 0x82423FC
 	lock 
 	faceplayer 
 	applymovement 0x800F, 0x82424D4
@@ -19,7 +19,7 @@ gUnknown_82423FC: @ 0x82423FC
 	goto 0x82424D6
 	gotobeatenscript 
 
-gUnknown_8242424: @ 0x8242424
+EventScript_TryDoDoubleTrainerBattle: @ 0x8242424
 	lock 
 	faceplayer 
 	call 0x82424C9
@@ -39,14 +39,14 @@ gUnknown_8242424: @ 0x8242424
 	end 
 	gotobeatenscript 
 
-gUnknown_824245C: @ 0x824245C
+EventScript_DoNoIntroTrainerBattle: @ 0x824245C
 	applymovement 0x800F, 0x82424D4
 	waitmovement 0x0
 	special SetUpTrainerEncounterMusic
 	dotrainerbattle 
 	gotobeatenscript 
 
-gUnknown_824246B: @ 0x824246B
+EventScript_TryDoRematchBattle: @ 0x824246B
 	call 0x82424C9
 	specialvar 0x800D, IsTrainerReadyForRematch
 	compare_var_to_value 0x800D, 0x0
@@ -61,7 +61,7 @@ gUnknown_824246B: @ 0x824246B
 	end 
 	gotobeatenscript 
 
-gUnknown_8242492: @ 0x8242492
+EventScript_TryDoDoubleRematchBattle: @ 0x8242492
 	specialvar 0x800D, IsTrainerReadyForRematch
 	compare_var_to_value 0x800D, 0x0
 	goto_if 0x1, 0x82424C1

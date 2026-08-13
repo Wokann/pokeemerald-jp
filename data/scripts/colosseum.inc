@@ -1,14 +1,14 @@
-gUnknown_8247053: @ 0x8247053
+Colosseum_PlayerSpot0: @ 0x8247053
 	setvar 0x8005, 0x0
 	special ColosseumPlayerSpotTriggered
 	end 
 
-gUnknown_824705D: @ 0x824705D
+Colosseum_PlayerSpot1: @ 0x824705D
 	setvar 0x8005, 0x1
 	special ColosseumPlayerSpotTriggered
 	end 
 
-gUnknown_8247067: @ 0x8247067
+Colosseum_ChooseHalfParty0: @ 0x8247067
 	fadescreen 0x1
 	special ChooseHalfPartyForBattle
 	compare_var_to_value 0x800D, 0x0
@@ -17,7 +17,7 @@ gUnknown_8247067: @ 0x8247067
 	special ColosseumPlayerSpotTriggered
 	end 
 
-gUnknown_8247082: @ 0x8247082
+Colosseum_ChooseHalfParty1: @ 0x8247082
 	fadescreen 0x1
 	special ChooseHalfPartyForBattle
 	compare_var_to_value 0x800D, 0x0
@@ -26,7 +26,7 @@ gUnknown_8247082: @ 0x8247082
 	special ColosseumPlayerSpotTriggered
 	end 
 
-gUnknown_824709D: @ 0x824709D
+Colosseum_ChooseHalfParty2: @ 0x824709D
 	fadescreen 0x1
 	special ChooseHalfPartyForBattle
 	compare_var_to_value 0x800D, 0x0
@@ -35,7 +35,7 @@ gUnknown_824709D: @ 0x824709D
 	special ColosseumPlayerSpotTriggered
 	end 
 
-gUnknown_82470B8: @ 0x82470B8
+Colosseum_ChooseHalfParty3: @ 0x82470B8
 	fadescreen 0x1
 	special ChooseHalfPartyForBattle
 	compare_var_to_value 0x800D, 0x0

@@ -1,4 +1,4 @@
-gUnknown_8244D23: @ 0x8244D23
+BerryTreeScript: @ 0x8244D23
 	special EventObjectInteractionGetBerryTreeData
 	copyvar 0x8000, 0x8004
 	compare_var_to_value 0x8000, 0xFF
@@ -114,7 +114,7 @@ gUnknown_8244D23: @ 0x8244D23
 	release 
 	end 
 
-gUnknown_8244E9D: @ 0x8244E9D
+BerryTree_EventScript_CheckBerryTree: @ 0x8244E9D
 	lockall 
 	special EventObjectInteractionGetBerryTreeData
 	call 0x8244EF2

@@ -1,4 +1,4 @@
-gUnknown_8245AA0: @ 0x8245AA0
+SecretBase_EventScript_CheckEntrance: @ 0x8245AA0
 	special GetSecretBaseTypeInFrontOfPlayer
 	special CheckPlayerHasSecretBase
 	compare_var_to_value 0x800D, 0x1
@@ -35,7 +35,7 @@ gUnknown_8245AA0: @ 0x8245AA0
 	goto 0x8245B4A
 	end 
 
-gUnknown_8245B35: @ 0x8245B35
+SecretBase_EventScript_Tree: @ 0x8245B35
 	lockall 
 	dofieldeffect 0xB
 	waitstate 
@@ -65,7 +65,7 @@ gUnknown_8245B35: @ 0x8245B35
 	goto 0x8245BA3
 	end 
 
-gUnknown_8245B8E: @ 0x8245B8E
+SecretBase_EventScript_Shrub: @ 0x8245B8E
 	lockall 
 	dofieldeffect 0x1A
 	waitstate 
@@ -95,7 +95,7 @@ gUnknown_8245B8E: @ 0x8245B8E
 	goto 0x8245BFC
 	end 
 
-gUnknown_8245BE7: @ 0x8245BE7
+SecretBase_EventScript_Cave: @ 0x8245BE7
 	lockall 
 	dofieldeffect 0x1B
 	waitstate 
@@ -139,7 +139,7 @@ gUnknown_8245BE7: @ 0x8245BE7
 	callstd 0x9
 	.byte 0xFE
 
-gUnknown_8245C66: @ 0x8245C66
+SecretBase_EventScript_EnterPlayersBase: @ 0x8245C66
 	lockall 
 	setvar 0x4097, 0x1
 	playse 0x9
@@ -232,14 +232,14 @@ gUnknown_8245C66: @ 0x8245C66
 	setflag 0xBB
 	return 
 
-gUnknown_8245DBB: @ 0x8245DBB
+SecretBase_EventScript_InitDecorations: @ 0x8245DBB
 	setvar 0x8004, 0x0
 	setvar 0x8005, 0x0
 	special InitSecretBaseDecorationSprites
 	setvar 0x4089, 0x1
 	end 
 
-gUnknown_8245DCE: @ 0x8245DCE
+SecretBase_EventScript_EnterSecretBase: @ 0x8245DCE
 	setvar 0x8005, 0x0
 	goto 0x8245DD9
 	end 

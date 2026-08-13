@@ -319,12 +319,12 @@ gUnknown_82423D6: @ 0x82423D6
 gUnknown_82423E1: @ 0x82423E1
 	.include "data/scripts/gUnknown_82423E1.inc"
 
-	.globl gUnknown_82423EE
-	.globl gUnknown_82423FC
-	.globl gUnknown_8242424
-	.globl gUnknown_824245C
-	.globl gUnknown_824246B
-	.globl gUnknown_8242492
+	.globl EventScript_StartTrainerApproach
+	.globl EventScript_TryDoNormalTrainerBattle
+	.globl EventScript_TryDoDoubleTrainerBattle
+	.globl EventScript_DoNoIntroTrainerBattle
+	.globl EventScript_TryDoRematchBattle
+	.globl EventScript_TryDoDoubleRematchBattle
 	.include "data/scripts/trainer_battle.inc"
 gUnknown_824252E: @ 0x824252E
 	.include "data/scripts/gUnknown_824252E.inc"
@@ -417,9 +417,9 @@ gUnknown_8244CF3: @ 0x8244CF3
 gUnknown_8244D10: @ 0x8244D10
 	.include "data/scripts/gUnknown_8244D10.inc"
 
-	.globl gUnknown_8244D23
-	.globl gUnknown_8244D23
-	.globl gUnknown_8244E9D
+	.globl BerryTreeScript
+	.globl BerryTreeScript
+	.globl BerryTree_EventScript_CheckBerryTree
 	.include "data/scripts/berry_tree.inc"
 gUnknown_8244ED8: @ 0x8244ED8
 	.include "data/scripts/gUnknown_8244ED8.inc"
@@ -464,14 +464,14 @@ gUnknown_82458F4: @ 0x82458F4
 gUnknown_8245A06: @ 0x8245A06
 	.include "data/scripts/gUnknown_8245A06.inc"
 
-	.globl gUnknown_8245AA0
-	.globl gUnknown_8245AA0
-	.globl gUnknown_8245B35
-	.globl gUnknown_8245B8E
-	.globl gUnknown_8245BE7
-	.globl gUnknown_8245C66
-	.globl gUnknown_8245DBB
-	.globl gUnknown_8245DCE
+	.globl SecretBase_EventScript_CheckEntrance
+	.globl SecretBase_EventScript_CheckEntrance
+	.globl SecretBase_EventScript_Tree
+	.globl SecretBase_EventScript_Shrub
+	.globl SecretBase_EventScript_Cave
+	.globl SecretBase_EventScript_EnterPlayersBase
+	.globl SecretBase_EventScript_InitDecorations
+	.globl SecretBase_EventScript_EnterSecretBase
 	.include "data/scripts/secret_base.inc"
 gUnknown_8245DDD: @ 0x8245DDD
 	.include "data/scripts/gUnknown_8245DDD.inc"
@@ -488,17 +488,17 @@ gUnknown_82465B9: @ 0x82465B9
 gUnknown_8247044: @ 0x8247044
 	.include "data/scripts/gUnknown_8247044.inc"
 
-	.globl gUnknown_8247053
-	.globl gUnknown_824705D
-	.globl gUnknown_8247067
-	.globl gUnknown_8247082
-	.globl gUnknown_824709D
-	.globl gUnknown_82470B8
+	.globl Colosseum_PlayerSpot0
+	.globl Colosseum_PlayerSpot1
+	.globl Colosseum_ChooseHalfParty0
+	.globl Colosseum_ChooseHalfParty1
+	.globl Colosseum_ChooseHalfParty2
+	.globl Colosseum_ChooseHalfParty3
 	.include "data/scripts/colosseum.inc"
-	.globl gUnknown_82470FC
-	.globl gUnknown_8247111
-	.globl gUnknown_8247126
-	.globl gUnknown_824713B
+	.globl EventScript_MixRecordsSpot0
+	.globl EventScript_MixRecordsSpot1
+	.globl EventScript_MixRecordsSpot2
+	.globl EventScript_MixRecordsSpot3
 	.globl gUnknown_82470D4
 gUnknown_82470D4: @ 0x82470D4
 	.include "data/scripts/gUnknown_82470D4.inc"
