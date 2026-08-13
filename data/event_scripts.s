@@ -418,14 +418,9 @@ gUnknown_8244D10: @ 0x8244D10
 	.include "data/scripts/gUnknown_8244D10.inc"
 
 	.globl gUnknown_8244D23
-gUnknown_8244D23: @ 0x8244D23
-	.include "data/scripts/gUnknown_8244D23.inc"
-
+	.globl gUnknown_8244D23
 	.globl gUnknown_8244E9D
-gUnknown_8244E9D: @ 0x8244E9D
-	.include "data/scripts/gUnknown_8244E9D.inc"
-
-	.globl gUnknown_8244ED8
+	.include "data/scripts/berry_tree.inc"
 gUnknown_8244ED8: @ 0x8244ED8
 	.include "data/scripts/gUnknown_8244ED8.inc"
 
@@ -470,34 +465,14 @@ gUnknown_8245A06: @ 0x8245A06
 	.include "data/scripts/gUnknown_8245A06.inc"
 
 	.globl gUnknown_8245AA0
-gUnknown_8245AA0: @ 0x8245AA0
-	.include "data/scripts/gUnknown_8245AA0.inc"
-
+	.globl gUnknown_8245AA0
 	.globl gUnknown_8245B35
-gUnknown_8245B35: @ 0x8245B35
-	.include "data/scripts/gUnknown_8245B35.inc"
-
 	.globl gUnknown_8245B8E
-gUnknown_8245B8E: @ 0x8245B8E
-	.include "data/scripts/gUnknown_8245B8E.inc"
-
 	.globl gUnknown_8245BE7
-gUnknown_8245BE7: @ 0x8245BE7
-	.include "data/scripts/gUnknown_8245BE7.inc"
-
 	.globl gUnknown_8245C66
-gUnknown_8245C66: @ 0x8245C66
-	.include "data/scripts/gUnknown_8245C66.inc"
-
 	.globl gUnknown_8245DBB
-gUnknown_8245DBB: @ 0x8245DBB
-	.include "data/scripts/gUnknown_8245DBB.inc"
-
 	.globl gUnknown_8245DCE
-gUnknown_8245DCE: @ 0x8245DCE
-	.include "data/scripts/gUnknown_8245DCE.inc"
-
-	.globl gUnknown_8245DDD
+	.include "data/scripts/secret_base.inc"
 gUnknown_8245DDD: @ 0x8245DDD
 	.include "data/scripts/gUnknown_8245DDD.inc"
 

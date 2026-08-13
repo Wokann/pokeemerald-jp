@@ -1,3 +1,4 @@
+gUnknown_8244D23: @ 0x8244D23
 	special EventObjectInteractionGetBerryTreeData
 	copyvar 0x8000, 0x8004
 	compare_var_to_value 0x8000, 0xFF
@@ -112,3 +113,22 @@
 	waitbuttonpress 
 	release 
 	end 
+
+gUnknown_8244E9D: @ 0x8244E9D
+	lockall 
+	special EventObjectInteractionGetBerryTreeData
+	call 0x8244EF2
+	releaseall 
+	end 
+	checkitem 0x10C, 0x1
+	compare_var_to_value 0x800D, 0x0
+	goto_if 0x1, 0x8244ED6
+	loadword 0x0, 0x8245027
+	callstd 0x5
+	compare_var_to_value 0x800D, 0x1
+	goto_if 0x1, 0x8244EDC
+	compare_var_to_value 0x800D, 0x0
+	goto_if 0x1, 0x8244ED6
+	releaseall 
+	end 
+
