@@ -42,44 +42,6 @@
 
 
 
-	thumb_func_start HandleEndTurn_MonFled
-HandleEndTurn_MonFled: @ 0x0803D8C4
-	ldr r1, _0803D8F8
-	movs r0, #0
-	strb r0, [r1]
-	ldr r1, _0803D8FC
-	movs r0, #0xfd
-	strb r0, [r1]
-	movs r0, #7
-	strb r0, [r1, #1]
-	ldr r2, _0803D900
-	ldrb r0, [r2]
-	strb r0, [r1, #2]
-	ldr r3, _0803D904
-	ldrb r0, [r2]
-	lsls r0, r0, #1
-	adds r0, r0, r3
-	ldrh r0, [r0]
-	strb r0, [r1, #3]
-	movs r0, #0xff
-	strb r0, [r1, #4]
-	ldr r1, _0803D908
-	ldr r0, _0803D90C
-	str r0, [r1]
-	ldr r1, _0803D910
-	ldr r0, _0803D914
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_0803D8F8: .4byte 0x02023D27
-_0803D8FC: .4byte 0x02022C0C
-_0803D900: .4byte 0x02023EAF
-_0803D904: .4byte 0x02023D12
-_0803D908: .4byte 0x02023EB8
-_0803D90C: .4byte 0x0828907F
-_0803D910: .4byte 0x03005A64
-_0803D914: .4byte 0x0803D919
-	thumb_func_end HandleEndTurn_MonFled
 
 	thumb_func_start HandleEndTurn_FinishBattle
 HandleEndTurn_FinishBattle: @ 0x0803D918

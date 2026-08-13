@@ -2363,6 +2363,16 @@ static void HandleEndTurn_RanFromBattle(void)
     gBattleMainFunc = HandleEndTurn_FinishBattle;
 }
 
+static void HandleEndTurn_MonFled(void)
+{
+    gCurrentActionFuncId = 0;
+
+    PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerAttacker, gBattlerPartyIndexes[gBattlerAttacker]);
+    gBattlescriptCurrInstr = BattleScript_WildMonFled;
+
+    gBattleMainFunc = HandleEndTurn_FinishBattle;
+}
+
 
 
 static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void)

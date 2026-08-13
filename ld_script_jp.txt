@@ -761,6 +761,7 @@ BattleScript_PrintPlayerForfeited = gUnknown_8289F49;
 BattleScript_SmokeBallEscape = gUnknown_8289063;
 BattleScript_RanAwayUsingMonAbility = gUnknown_8289071;
 BattleScript_GotAwaySafely = gUnknown_8289078;
+BattleScript_WildMonFled = gUnknown_828907F;
 GetItemHoldEffect = sub_080D6CD4;
 GetItemHoldEffectParam = sub_080D6CF8;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
@@ -3285,6 +3286,7 @@ SECTIONS {
         asm/battle_main_battlewon.o(.text);
         asm/battle_main_battlelost.o(.text);
         src/battle_main.o(.text.HandleEndTurn_RanFromBattle);
+        src/battle_main.o(.text.HandleEndTurn_MonFled);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
