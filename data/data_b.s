@@ -11535,9 +11535,13 @@ gFacadeSquishAffineAnimCmds: @ 0x85AD554
 gFacadeSweatDropSpriteTemplate: @ 0x85AD574
 	.incbin "baserom_jp.gba", 0x5ad574, 0x18
 
-	.globl gUnknown_85AD58C
-gUnknown_85AD58C: @ 0x85AD58C
-	.incbin "baserom_jp.gba", 0x5ad58c, 0x68
+	.globl gFacadeBlendColors
+gFacadeBlendColors: @ 0x85AD58C
+	.incbin "baserom_jp.gba", 0x5ad58c, 0x34
+
+	.globl gUnknown_85AD5C0
+gUnknown_85AD5C0: @ 0x85AD5C0
+	.incbin "baserom_jp.gba", 0x5ad5c0, 0x34
 
 	.globl gUnknown_85AD5F4
 gUnknown_85AD5F4: @ 0x85AD5F4

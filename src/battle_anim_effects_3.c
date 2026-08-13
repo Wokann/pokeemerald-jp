@@ -7,6 +7,7 @@
 #include "scanline_effect.h"
 #include "task.h"
 #include "trig.h"
+#include "util.h"
 #include "constants/battle_anim.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -21,6 +22,7 @@ extern const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[];
 extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
+extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
@@ -60,6 +62,7 @@ static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId);
 static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId);
 static void CreateSweatDroplets(u8 taskId, bool8 lowerDroplets);
 static void AnimFacadeSweatDrop(struct Sprite *sprite);
+static void AnimTask_FacadeColorBlend_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2145,3 +2148,31 @@ static void AnimFacadeSweatDrop(struct Sprite *sprite)
 #undef sVelocY
 #undef sTaskId
 #undef sActiveSpritesIdx
+
+void AnimTask_FacadeColorBlend(u8 taskId)
+{
+    u8 spriteId;
+
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = gBattleAnimArgs[1];
+    spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+    gTasks[taskId].data[2] = OBJ_PLTT_ID(gSprites[spriteId].oam.paletteNum);
+    gTasks[taskId].func = AnimTask_FacadeColorBlend_Step;
+}
+
+static void AnimTask_FacadeColorBlend_Step(u8 taskId)
+{
+    if (gTasks[taskId].data[1])
+    {
+        BlendPalette(gTasks[taskId].data[2], 16, 8, gFacadeBlendColors[gTasks[taskId].data[0]]);
+        if (++gTasks[taskId].data[0] > 23)
+            gTasks[taskId].data[0] = 0;
+
+        gTasks[taskId].data[1]--;
+    }
+    else
+    {
+        BlendPalette(gTasks[taskId].data[2], 16, 0, RGB_BLACK);
+        DestroyAnimVisualTask(taskId);
+    }
+}
