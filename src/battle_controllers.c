@@ -20,6 +20,7 @@ extern u8 sLinkSendTaskId;
 extern u8 sLinkReceiveTaskId;
 extern u8 sUnused;
 extern const u32 gBitTable[];
+extern u8 sBattleBuffersTransferData[0x100];
 
 void HandleLinkBattleSetup(void)
 {
@@ -921,6 +922,145 @@ static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId)
     }
 
     #undef BYTE_TO_RECEIVE
+}
+
+void BtlController_EmitGetMonData(u8 bufferId, u8 requestId, u8 monToCheck)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_GETMONDATA;
+    sBattleBuffersTransferData[1] = requestId;
+    sBattleBuffersTransferData[2] = monToCheck;
+    sBattleBuffersTransferData[3] = 0;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+static void UNUSED BtlController_EmitGetRawMonData(u8 bufferId, u8 monId, u8 bytes)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_GETRAWMONDATA;
+    sBattleBuffersTransferData[1] = monId;
+    sBattleBuffersTransferData[2] = bytes;
+    sBattleBuffersTransferData[3] = 0;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitSetMonData(u8 bufferId, u8 requestId, u8 monToCheck, u8 bytes, void *data)
+{
+    s32 i;
+
+    sBattleBuffersTransferData[0] = CONTROLLER_SETMONDATA;
+    sBattleBuffersTransferData[1] = requestId;
+    sBattleBuffersTransferData[2] = monToCheck;
+    for (i = 0; i < bytes; i++)
+        sBattleBuffersTransferData[3 + i] = *(u8 *)(data++);
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 3 + bytes);
+}
+
+static void UNUSED BtlController_EmitSetRawMonData(u8 bufferId, u8 monId, u8 bytes, void *data)
+{
+    s32 i;
+
+    sBattleBuffersTransferData[0] = CONTROLLER_SETRAWMONDATA;
+    sBattleBuffersTransferData[1] = monId;
+    sBattleBuffersTransferData[2] = bytes;
+    for (i = 0; i < bytes; i++)
+        sBattleBuffersTransferData[3 + i] = *(u8 *)(data++);
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, bytes + 3);
+}
+
+void BtlController_EmitLoadMonSprite(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_LOADMONSPRITE;
+    sBattleBuffersTransferData[1] = CONTROLLER_LOADMONSPRITE;
+    sBattleBuffersTransferData[2] = CONTROLLER_LOADMONSPRITE;
+    sBattleBuffersTransferData[3] = CONTROLLER_LOADMONSPRITE;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitSwitchInAnim(u8 bufferId, u8 partyId, bool8 dontClearSubstituteBit)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_SWITCHINANIM;
+    sBattleBuffersTransferData[1] = partyId;
+    sBattleBuffersTransferData[2] = dontClearSubstituteBit;
+    sBattleBuffersTransferData[3] = 5;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitReturnMonToBall(u8 bufferId, bool8 skipAnim)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_RETURNMONTOBALL;
+    sBattleBuffersTransferData[1] = skipAnim;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 2);
+}
+
+void BtlController_EmitDrawTrainerPic(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_DRAWTRAINERPIC;
+    sBattleBuffersTransferData[1] = CONTROLLER_DRAWTRAINERPIC;
+    sBattleBuffersTransferData[2] = CONTROLLER_DRAWTRAINERPIC;
+    sBattleBuffersTransferData[3] = CONTROLLER_DRAWTRAINERPIC;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitTrainerSlide(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_TRAINERSLIDE;
+    sBattleBuffersTransferData[1] = CONTROLLER_TRAINERSLIDE;
+    sBattleBuffersTransferData[2] = CONTROLLER_TRAINERSLIDE;
+    sBattleBuffersTransferData[3] = CONTROLLER_TRAINERSLIDE;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitTrainerSlideBack(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_TRAINERSLIDEBACK;
+    sBattleBuffersTransferData[1] = CONTROLLER_TRAINERSLIDEBACK;
+    sBattleBuffersTransferData[2] = CONTROLLER_TRAINERSLIDEBACK;
+    sBattleBuffersTransferData[3] = CONTROLLER_TRAINERSLIDEBACK;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitFaintAnimation(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_FAINTANIMATION;
+    sBattleBuffersTransferData[1] = CONTROLLER_FAINTANIMATION;
+    sBattleBuffersTransferData[2] = CONTROLLER_FAINTANIMATION;
+    sBattleBuffersTransferData[3] = CONTROLLER_FAINTANIMATION;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+static void UNUSED BtlController_EmitPaletteFade(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_PALETTEFADE;
+    sBattleBuffersTransferData[1] = CONTROLLER_PALETTEFADE;
+    sBattleBuffersTransferData[2] = CONTROLLER_PALETTEFADE;
+    sBattleBuffersTransferData[3] = CONTROLLER_PALETTEFADE;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+static void UNUSED BtlController_EmitSuccessBallThrowAnim(u8 bufferId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_SUCCESSBALLTHROWANIM;
+    sBattleBuffersTransferData[1] = CONTROLLER_SUCCESSBALLTHROWANIM;
+    sBattleBuffersTransferData[2] = CONTROLLER_SUCCESSBALLTHROWANIM;
+    sBattleBuffersTransferData[3] = CONTROLLER_SUCCESSBALLTHROWANIM;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 4);
+}
+
+void BtlController_EmitBallThrowAnim(u8 bufferId, u8 caseId)
+{
+    sBattleBuffersTransferData[0] = CONTROLLER_BALLTHROWANIM;
+    sBattleBuffersTransferData[1] = caseId;
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, 2);
+}
+
+static void UNUSED BtlController_EmitPause(u8 bufferId, u8 toWait, void *data)
+{
+    s32 i;
+
+    sBattleBuffersTransferData[0] = CONTROLLER_PAUSE;
+    sBattleBuffersTransferData[1] = toWait;
+    for (i = 0; i < toWait * 3; i++)
+        sBattleBuffersTransferData[2 + i] = *(u8 *)(data++);
+    PrepareBufferDataTransfer(bufferId, sBattleBuffersTransferData, toWait * 3 + 2);
 }
 
 #undef tInitialDelayTimer

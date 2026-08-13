@@ -47,6 +47,7 @@ sStartedPokeBallTask = ABSOLUTE(0x020229B8);
 sLinkSendTaskId = ABSOLUTE(0x020229BC);
 sLinkReceiveTaskId = ABSOLUTE(0x020229BD);
 sUnused = ABSOLUTE(0x020229BE);
+sBattleBuffersTransferData = ABSOLUTE(0x020229C4);
 gBattlePartyCurrentOrder = ABSOLUTE(0x0203CBCC);
 gBattleMons = ABSOLUTE(0x02023D28);
 gBattlerPartyIndexes = ABSOLUTE(0x02023D12);
