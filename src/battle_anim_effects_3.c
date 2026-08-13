@@ -79,6 +79,8 @@ static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
 static void AnimTask_SmellingSaltsSquish_Step(u8 taskId);
 static void AnimSmellingSaltExclamation(struct Sprite *sprite);
 static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
+static void AnimHelpingHandClap(struct Sprite *sprite);
+static void AnimHelpingHandClap_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2635,6 +2637,107 @@ static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite)
         sprite->invisible = sprite->data[2];
         if (sprite->data[2] && --sprite->data[3] == 0)
             DestroyAnimSprite(sprite);
+    }
+}
+
+static void AnimHelpingHandClap(struct Sprite *sprite)
+{
+    if (gBattleAnimArgs[0] == 0)
+    {
+        sprite->oam.matrixNum |= ST_OAM_HFLIP;
+        sprite->x = 100;
+        sprite->data[7] = 1;
+    }
+    else
+    {
+        sprite->x = 140;
+        sprite->data[7] = -1;
+    }
+
+    sprite->y = 56;
+    sprite->callback = AnimHelpingHandClap_Step;
+}
+
+static void AnimHelpingHandClap_Step(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->y -= sprite->data[7] * 2;
+        if (sprite->data[1] & 1)
+            sprite->x -= sprite->data[7] * 2;
+
+        if (++sprite->data[1] == 9)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 1:
+        if (++sprite->data[1] == 4)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 2:
+        sprite->data[1]++;
+        sprite->y += sprite->data[7] * 3;
+        sprite->x2 = sprite->data[7] * (gSineTable[sprite->data[1] * 10] >> 3);
+        if (sprite->data[1] == 12)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 3:
+        if (++sprite->data[1] == 2)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 4:
+        sprite->data[1]++;
+        sprite->y -= sprite->data[7] * 3;
+        sprite->x2 = sprite->data[7] * (gSineTable[sprite->data[1] * 10] >> 3);
+        if (sprite->data[1] == 12)
+            sprite->data[0]++;
+        break;
+    case 5:
+        sprite->data[1]++;
+        sprite->y += sprite->data[7] * 3;
+        sprite->x2 = sprite->data[7] * (gSineTable[sprite->data[1] * 10] >> 3);
+        if (sprite->data[1] == 15)
+            sprite->oam.tileNum += 16;
+
+        if (sprite->data[1] == 18)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 6:
+        sprite->x += sprite->data[7] * 6;
+        if (++sprite->data[1] == 9)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 7:
+        sprite->x += sprite->data[7] * 2;
+        if (++sprite->data[1] == 1)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 8:
+        sprite->x -= sprite->data[7] * 3;
+        if (++sprite->data[1] == 5)
+            DestroyAnimSprite(sprite);
+        break;
     }
 }
 
