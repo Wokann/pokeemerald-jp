@@ -476,67 +476,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkB6_happinesstodamagecalculation
-atkB6_happinesstodamagecalculation: @ 0x080537BC
-	push {r4, lr}
-	ldr r2, _080537E8
-	ldr r0, _080537EC
-	ldrh r1, [r0]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldrb r0, [r0]
-	cmp r0, #0x79
-	bne _080537FC
-	ldr r4, _080537F0
-	ldr r2, _080537F4
-	ldr r0, _080537F8
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r0, r1, r0
-	adds r0, r0, r2
-	adds r0, #0x2b
-	ldrb r1, [r0]
-	b _08053812
-	.align 2, 0
-_080537E8: .4byte 0x082ED220
-_080537EC: .4byte 0x02023E8E
-_080537F0: .4byte 0x020240A4
-_080537F4: .4byte 0x02023D28
-_080537F8: .4byte 0x02023EAF
-_080537FC:
-	ldr r4, _08053830
-	ldr r2, _08053834
-	ldr r0, _08053838
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r0, r1, r0
-	adds r0, r0, r2
-	adds r0, #0x2b
-	ldrb r0, [r0]
-	movs r1, #0xff
-	subs r1, r1, r0
-_08053812:
-	lsls r0, r1, #2
-	adds r0, r0, r1
-	lsls r0, r0, #1
-	movs r1, #0x19
-	bl __divsi3
-	strh r0, [r4]
-	ldr r1, _0805383C
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08053830: .4byte 0x020240A4
-_08053834: .4byte 0x02023D28
-_08053838: .4byte 0x02023EAF
-_0805383C: .4byte 0x02023EB8
-	thumb_func_end atkB6_happinesstodamagecalculation
 
 	thumb_func_start atkB7_presentdamagecalculation
 atkB7_presentdamagecalculation: @ 0x08053840

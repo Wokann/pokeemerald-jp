@@ -1508,6 +1508,7 @@ static void Cmd_trysetperishsong(void);
 static void Cmd_rolloutdamagecalculation(void);
 static void Cmd_jumpifconfusedandstatmaxed(void);
 static void Cmd_furycuttercalc(void);
+static void Cmd_friendshiptodamagecalculation(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7750,4 +7751,14 @@ static void Cmd_furycuttercalc(void)
 
         gBattlescriptCurrInstr++;
     }
+}
+
+static void Cmd_friendshiptodamagecalculation(void)
+{
+    if (gBattleMoves[gCurrentMove].effect == EFFECT_RETURN)
+        gDynamicBasePower = 10 * (gBattleMons[gBattlerAttacker].friendship) / 25;
+    else // EFFECT_FRUSTRATION
+        gDynamicBasePower = 10 * (MAX_FRIENDSHIP - gBattleMons[gBattlerAttacker].friendship) / 25;
+
+    gBattlescriptCurrInstr++;
 }
