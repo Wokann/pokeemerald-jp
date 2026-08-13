@@ -91,3 +91,42 @@ static void AnimLeer(struct Sprite *sprite)
     sprite->callback = RunStoredCallbackWhenAnimEnds;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
 }
+
+static void AnimLetterZ(struct Sprite *sprite)
+{
+    int var0;
+
+    if (sprite->data[0] == 0)
+    {
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
+        SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
+        if (!IsContest())
+        {
+            if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            {
+                sprite->data[1] = gBattleAnimArgs[2];
+                sprite->data[2] = gBattleAnimArgs[3];
+            }
+            else
+            {
+                sprite->data[1] = -1 * gBattleAnimArgs[2];
+                sprite->data[2] = -1 * gBattleAnimArgs[3];
+            }
+        }
+        else
+        {
+            sprite->data[1] = -1 * gBattleAnimArgs[2];
+            sprite->data[2] = gBattleAnimArgs[3];
+        }
+    }
+
+    sprite->data[0]++;
+    var0 = (sprite->data[0] * 20) & 0xFF;
+    sprite->data[3] += sprite->data[1];
+    sprite->data[4] += sprite->data[2];
+    sprite->x2 = sprite->data[3] / 2;
+    sprite->y2 = Sin(var0 & 0xFF, 5) + (sprite->data[4] / 2);
+
+    if ((u16)(sprite->x + sprite->x2) > DISPLAY_WIDTH)
+        DestroyAnimSprite(sprite);
+}
