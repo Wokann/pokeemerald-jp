@@ -749,6 +749,8 @@ gText_EmptyString3 = gUnknown_85AB3BD;
 BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
 BattleScript_PalacePrintFlavorText = gUnknown_8289E09;
 GetItemHoldEffect = sub_080D6CF8;
+GetPartyIdFromBattlePartyId = pokemon_order_func;
+SwitchPartyMonSlots = sub_081B8C50;
 sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
 FillAroundBattleWindows = sub_0805EB30;
@@ -3255,6 +3257,7 @@ SECTIONS {
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
         asm/battle_main_turnpassed.o(.text);
         asm/battle_main_isrunning.o(.text);
+        src/battle_main.o(.text.SwitchPartyOrder);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

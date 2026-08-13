@@ -15109,7 +15109,7 @@ _0804D4FC:
 	b _0804D6B2
 _0804D50A:
 	ldrb r0, [r5]
-	bl sub_0803B9E4
+	bl SwitchPartyOrder
 	b _0804D6B2
 	.align 2, 0
 _0804D514: .4byte 0x02022C90
@@ -15274,7 +15274,7 @@ _0804D644:
 	b _0804D666
 _0804D660:
 	ldrb r0, [r7]
-	bl sub_0803B9E4
+	bl SwitchPartyOrder
 _0804D666:
 	ldr r1, _0804D6C0
 	movs r5, #0xfd
@@ -22429,7 +22429,7 @@ _08050F88:
 	cmp r0, #0
 	bne _08050FA6
 	ldrb r0, [r4]
-	bl sub_0803B9E4
+	bl SwitchPartyOrder
 _08050FA6:
 	ldr r0, _08051014
 	ldr r2, [r0]
