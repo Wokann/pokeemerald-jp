@@ -13,6 +13,7 @@ extern const struct SpriteTemplate gThoughtBubbleSpriteTemplate;
 extern const union AffineAnimCmd sAffineAnims_Torment[];
 extern const union AffineAnimCmd DefenseCurlDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gStockpileDeformMonAffineAnimCmds[];
+extern const union AffineAnimCmd gSpitUpDeformMonAffineAnimCmds[];
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
@@ -26,6 +27,7 @@ static void AnimWishStar_Step(struct Sprite *sprite);
 static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
+void AnimTask_SpitUpDeformMon(u8 taskId);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -831,6 +833,20 @@ void AnimTask_StockpileDeformMon(u8 taskId)
     if (!gTasks[taskId].data[0])
     {
         PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_ATTACKER), gStockpileDeformMonAffineAnimCmds);
+        gTasks[taskId].data[0]++;
+    }
+    else
+    {
+        if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+            DestroyAnimVisualTask(taskId);
+    }
+}
+
+void AnimTask_SpitUpDeformMon(u8 taskId)
+{
+    if (!gTasks[taskId].data[0])
+    {
+        PrepareAffineAnimInTaskData(&gTasks[taskId], GetAnimBattlerSpriteId(ANIM_ATTACKER), gSpitUpDeformMonAffineAnimCmds);
         gTasks[taskId].data[0]++;
     }
     else
