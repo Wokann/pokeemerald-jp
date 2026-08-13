@@ -783,6 +783,7 @@ sub_08151668 = RouletteFlash_Add;
 sub_081516EC = RouletteFlash_Remove;
 sub_08151720 = RouletteFlash_FadePalette;
 sub_08151928 = RouletteFlash_FlashPalette;
+sub_08151A24 = RouletteFlash_Enable;
 CreateCableCarSprites = LoadCableCarSprites;
 sSpriteTemplates_CableCar = gUnknown_85AC9A4;
 sSpriteTemplate_Cable = gUnknown_85AC9D4;
@@ -4808,6 +4809,8 @@ SECTIONS {
         src/roulette_util.o(.text.RouletteFlash_Remove);
         src/roulette_util.o(.text.RouletteFlash_FadePalette);
         src/roulette_util.o(.text.RouletteFlash_FlashPalette);
+        asm/roulette_util.o(.text.roulette_util_mid);
+        src/roulette_util.o(.text.RouletteFlash_Enable);
         asm/roulette_util.o(.text.roulette_util_rest);
         asm/rom_81520A8.o(.text);
         src/save.o(.text);

@@ -18,7 +18,7 @@ _0815164C: .4byte 0x00010000
 _08151650: .4byte 0x00000000
 	thumb_func_end sub_08151638
 
-	.section .text.roulette_util_rest,"ax",%progbits
+	.section .text.roulette_util_mid,"ax",%progbits
 
 
 	thumb_func_start task_tutorial_controls_fadein
@@ -82,54 +82,8 @@ _08151A1C:
 	.align 2, 0
 	thumb_func_end task_tutorial_controls_fadein
 
-	thumb_func_start sub_08151A24
-sub_08151A24: @ 0x08151A24
-	push {r4, r5, r6, r7, lr}
-	adds r3, r0, #0
-	lsls r1, r1, #0x10
-	lsrs r6, r1, #0x10
-	movs r4, #0
-	ldrb r0, [r3]
-	adds r0, #1
-	strb r0, [r3]
-	movs r5, #1
-	movs r7, #0x80
-	rsbs r7, r7, #0
-_08151A3A:
-	adds r0, r6, #0
-	asrs r0, r4
-	ands r0, r5
-	cmp r0, #0
-	beq _08151A68
-	lsls r0, r4, #1
-	adds r0, r0, r4
-	lsls r0, r0, #2
-	adds r2, r3, r0
-	ldrb r0, [r2, #4]
-	lsrs r0, r0, #7
-	cmp r0, #0
-	beq _08151A68
-	adds r0, r5, #0
-	lsls r0, r4
-	ldrh r1, [r3, #2]
-	orrs r0, r1
-	strh r0, [r3, #2]
-	ldrb r1, [r2, #4]
-	adds r0, r7, #0
-	ands r0, r1
-	orrs r0, r5
-	strb r0, [r2, #4]
-_08151A68:
-	adds r0, r4, #1
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #0xf
-	bls _08151A3A
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	thumb_func_end sub_08151A24
 
+	.section .text.roulette_util_rest,"ax",%progbits
 	thumb_func_start sub_08151A78
 sub_08151A78: @ 0x08151A78
 	push {r4, r5, r6, r7, lr}

@@ -127,3 +127,21 @@ u8 RouletteFlash_FlashPalette(struct RouletteFlashPalette *pal)
     }
     return 1;
 }
+
+void RouletteFlash_Enable(struct RouletteFlashUtil *flash, u16 flags)
+{
+    u8 i = 0;
+
+    flash->enabled++;
+    for (i = 0; i < ARRAY_COUNT(flash->palettes); i++)
+    {
+        if ((flags >> i) & 1)
+        {
+            if (flash->palettes[i].available)
+            {
+                flash->flags |= 1 << i;
+                flash->palettes[i].state = 1;
+            }
+        }
+    }
+}
