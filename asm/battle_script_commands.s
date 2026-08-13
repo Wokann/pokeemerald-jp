@@ -508,55 +508,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD6_doubledamagedealtifdamaged
-atkD6_doubledamagedealtifdamaged: @ 0x08054EFC
-	push {lr}
-	ldr r3, _08054F48
-	ldr r0, _08054F4C
-	ldrb r0, [r0]
-	lsls r2, r0, #4
-	adds r0, r3, #4
-	adds r0, r2, r0
-	ldr r0, [r0]
-	cmp r0, #0
-	beq _08054F1C
-	adds r0, r2, r3
-	ldr r1, _08054F50
-	ldrb r0, [r0, #0xc]
-	ldrb r1, [r1]
-	cmp r0, r1
-	beq _08054F34
-_08054F1C:
-	adds r0, r3, #0
-	adds r0, #8
-	adds r0, r2, r0
-	ldr r0, [r0]
-	cmp r0, #0
-	beq _08054F3A
-	adds r0, r2, r3
-	ldr r1, _08054F50
-	ldrb r0, [r0, #0xd]
-	ldrb r1, [r1]
-	cmp r0, r1
-	bne _08054F3A
-_08054F34:
-	ldr r1, _08054F54
-	movs r0, #2
-	strb r0, [r1, #0xe]
-_08054F3A:
-	ldr r1, _08054F58
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054F48: .4byte 0x02023FE0
-_08054F4C: .4byte 0x02023EAF
-_08054F50: .4byte 0x02023EB0
-_08054F54: .4byte 0x02024118
-_08054F58: .4byte 0x02023EB8
-	thumb_func_end atkD6_doubledamagedealtifdamaged
 
 	thumb_func_start atkD7_setyawn
 atkD7_setyawn: @ 0x08054F5C

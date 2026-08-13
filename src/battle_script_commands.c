@@ -1541,6 +1541,7 @@ static void Cmd_tryswapitems(void);
 static void Cmd_trycopyability(void);
 static void Cmd_trywish(void);
 static void Cmd_trysetroots(void);
+static void Cmd_doubledamagedealtifdamaged(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8509,4 +8510,17 @@ static void Cmd_trysetroots(void)
         gStatuses3[gBattlerAttacker] |= STATUS3_ROOTED;
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_doubledamagedealtifdamaged(void)
+{
+    if ((gProtectStructs[gBattlerAttacker].physicalDmg != 0
+         && gProtectStructs[gBattlerAttacker].physicalBattlerId == gBattlerTarget)
+        || (gProtectStructs[gBattlerAttacker].specialDmg != 0
+            && gProtectStructs[gBattlerAttacker].specialBattlerId == gBattlerTarget))
+    {
+        gBattleScripting.dmgMultiplier = 2;
+    }
+
+    gBattlescriptCurrInstr++;
 }
