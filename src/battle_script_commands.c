@@ -3281,3 +3281,102 @@ static void Cmd_setgraphicalstatchangevalues(void)
     gBattleScripting.animArg2 = 0;
     gBattlescriptCurrInstr++;
 }
+
+static void Cmd_playstatchangeanimation(void)
+{
+    u32 currStat = 0;
+    u16 statAnimId = 0;
+    s32 changeableStatsCount = 0;
+    u8 statsToCheck = 0;
+
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    statsToCheck = gBattlescriptCurrInstr[2];
+
+    if (gBattlescriptCurrInstr[3] & STAT_CHANGE_NEGATIVE) // goes down
+    {
+        s16 startingStatAnimId;
+        if (gBattlescriptCurrInstr[3] & STAT_CHANGE_BY_TWO)
+            startingStatAnimId = STAT_ANIM_MINUS2;
+        else
+            startingStatAnimId = STAT_ANIM_MINUS1;
+
+        while (statsToCheck != 0)
+        {
+            if (statsToCheck & 1)
+            {
+                if (gBattlescriptCurrInstr[3] & STAT_CHANGE_CANT_PREVENT)
+                {
+                    if (gBattleMons[gActiveBattler].statStages[currStat] > MIN_STAT_STAGE)
+                    {
+                        statAnimId = startingStatAnimId + currStat;
+                        changeableStatsCount++;
+                    }
+                }
+                else if (!gSideTimers[GET_BATTLER_SIDE(gActiveBattler)].mistTimer
+                        && gBattleMons[gActiveBattler].ability != ABILITY_CLEAR_BODY
+                        && gBattleMons[gActiveBattler].ability != ABILITY_WHITE_SMOKE
+                        && !(gBattleMons[gActiveBattler].ability == ABILITY_KEEN_EYE && currStat == STAT_ACC)
+                        && !(gBattleMons[gActiveBattler].ability == ABILITY_HYPER_CUTTER && currStat == STAT_ATK))
+                {
+                    if (gBattleMons[gActiveBattler].statStages[currStat] > MIN_STAT_STAGE)
+                    {
+                        statAnimId = startingStatAnimId + currStat;
+                        changeableStatsCount++;
+                    }
+                }
+            }
+            statsToCheck >>= 1, currStat++;
+        }
+
+        if (changeableStatsCount > 1) // more than one stat, so the color is gray
+        {
+            if (gBattlescriptCurrInstr[3] & STAT_CHANGE_BY_TWO)
+                statAnimId = STAT_ANIM_MULTIPLE_MINUS2;
+            else
+                statAnimId = STAT_ANIM_MULTIPLE_MINUS1;
+        }
+    }
+    else // goes up
+    {
+        s16 startingStatAnimId;
+        if (gBattlescriptCurrInstr[3] & STAT_CHANGE_BY_TWO)
+            startingStatAnimId = STAT_ANIM_PLUS2;
+        else
+            startingStatAnimId = STAT_ANIM_PLUS1;
+
+        while (statsToCheck != 0)
+        {
+            if (statsToCheck & 1 && gBattleMons[gActiveBattler].statStages[currStat] < MAX_STAT_STAGE)
+            {
+                statAnimId = startingStatAnimId + currStat;
+                changeableStatsCount++;
+            }
+            statsToCheck >>= 1, currStat++;
+        }
+
+        if (changeableStatsCount > 1) // more than one stat, so the color is gray
+        {
+            if (gBattlescriptCurrInstr[3] & STAT_CHANGE_BY_TWO)
+                statAnimId = STAT_ANIM_MULTIPLE_PLUS2;
+            else
+                statAnimId = STAT_ANIM_MULTIPLE_PLUS1;
+        }
+    }
+
+    if (gBattlescriptCurrInstr[3] & STAT_CHANGE_MULTIPLE_STATS && changeableStatsCount < 2)
+    {
+        gBattlescriptCurrInstr += 4;
+    }
+    else if (changeableStatsCount != 0 && !gBattleScripting.statAnimPlayed)
+    {
+        BtlController_EmitBattleAnimation(B_COMM_TO_CONTROLLER, B_ANIM_STATS_CHANGE, statAnimId);
+        MarkBattlerForControllerExec(gActiveBattler);
+        if (gBattlescriptCurrInstr[3] & STAT_CHANGE_MULTIPLE_STATS && changeableStatsCount > 1)
+            gBattleScripting.statAnimPlayed = TRUE;
+        gBattlescriptCurrInstr += 4;
+    }
+    else
+    {
+        gBattlescriptCurrInstr += 4;
+    }
+}
