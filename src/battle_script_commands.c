@@ -1536,6 +1536,7 @@ static void Cmd_cureifburnedparalyzedorpoisoned(void);
 static void Cmd_settorment(void);
 static void Cmd_jumpifnodamage(void);
 static void Cmd_settaunt(void);
+static void Cmd_trysethelpinghand(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8332,6 +8333,24 @@ static void Cmd_settaunt(void)
     {
         gDisableStructs[gBattlerTarget].tauntTimer = 2;
         gDisableStructs[gBattlerTarget].tauntTimer2 = 2;
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_trysethelpinghand(void)
+{
+    gBattlerTarget = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
+
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+        && !(gAbsentBattlerFlags & gBitTable[gBattlerTarget])
+        && !gProtectStructs[gBattlerAttacker].helpingHand
+        && !gProtectStructs[gBattlerTarget].helpingHand)
+    {
+        gProtectStructs[gBattlerTarget].helpingHand = 1;
         gBattlescriptCurrInstr += 5;
     }
     else
