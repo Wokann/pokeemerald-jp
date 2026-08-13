@@ -1486,6 +1486,8 @@ static void Cmd_setfocusenergy(void);
 static void Cmd_transformdataexecution(void);
 static void Cmd_setsubstitute(void);
 static bool8 IsMoveUncopyableByMimic(u16 move);
+static bool8 IsTwoTurnsMove(u16 move);
+static bool8 IsInvalidForSleepTalkOrAssist(u16 move);
 static void Cmd_mimicattackcopy(void);
 #define METRONOME_FORBIDDEN_END         0xFFFF
 #define ASSIST_FORBIDDEN_END              0xFFFF
@@ -7140,6 +7142,51 @@ static bool8 IsMoveUncopyableByMimic(u16 move)
                 && sMovesForbiddenToCopy[i] != move; i++);
 
     return (sMovesForbiddenToCopy[i] != MIMIC_FORBIDDEN_END);
+}
+
+static bool8 IsTwoTurnsMove(u16 move)
+{
+    if (gBattleMoves[move].effect == EFFECT_SKULL_BASH
+     || gBattleMoves[move].effect == EFFECT_RAZOR_WIND
+     || gBattleMoves[move].effect == EFFECT_SKY_ATTACK
+     || gBattleMoves[move].effect == EFFECT_SOLAR_BEAM
+     || gBattleMoves[move].effect == EFFECT_SEMI_INVULNERABLE
+     || gBattleMoves[move].effect == EFFECT_BIDE)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+static bool8 IsInvalidForSleepTalkOrAssist(u16 move)
+{
+    if (move == MOVE_NONE
+     || move == MOVE_SLEEP_TALK
+     || move == MOVE_ASSIST
+     || move == MOVE_MIRROR_MOVE
+     || move == MOVE_METRONOME)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+u8 AttacksThisTurn(u8 battler, u16 move)
+{
+    // first argument is unused
+    if (gBattleMoves[move].effect == EFFECT_SOLAR_BEAM
+        && (gBattleWeather & B_WEATHER_SUN))
+        return 2;
+
+    if (gBattleMoves[move].effect == EFFECT_SKULL_BASH
+     || gBattleMoves[move].effect == EFFECT_RAZOR_WIND
+     || gBattleMoves[move].effect == EFFECT_SKY_ATTACK
+     || gBattleMoves[move].effect == EFFECT_SOLAR_BEAM
+     || gBattleMoves[move].effect == EFFECT_SEMI_INVULNERABLE
+     || gBattleMoves[move].effect == EFFECT_BIDE)
+    {
+        if ((gHitMarker & HITMARKER_CHARGING))
+            return 1;
+    }
+    return 2;
 }
 
 static void Cmd_mimicattackcopy(void)

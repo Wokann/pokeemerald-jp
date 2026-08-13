@@ -3778,7 +3778,9 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_settypetorandomresistance);
         src/battle_script_commands.o(.text.Cmd_setalwayshitflag);
         src/battle_script_commands.o(.text.Cmd_copymovepermanently);
-        asm/battle_script_commands.o(.text.atk9E_battle_rest);
+        src/battle_script_commands.o(.text.IsTwoTurnsMove);
+        src/battle_script_commands.o(.text.IsInvalidForSleepTalkOrAssist);
+        src/battle_script_commands.o(.text.AttacksThisTurn);
         src/battle_script_commands.o(.text.Cmd_trychoosesleeptalkmove);
         src/battle_script_commands.o(.text.Cmd_setdestinybond);
         asm/battle_script_commands.o(.text.TrySetDestinyBondToHappen);
