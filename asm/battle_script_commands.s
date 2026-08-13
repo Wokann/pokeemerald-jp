@@ -494,49 +494,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkC8_sethail
-atkC8_sethail: @ 0x08054658
-	push {lr}
-	ldr r3, _0805467C
-	ldrh r1, [r3]
-	movs r2, #0x80
-	adds r0, r2, #0
-	ands r0, r1
-	cmp r0, #0
-	beq _08054688
-	ldr r2, _08054680
-	ldrb r0, [r2]
-	movs r1, #1
-	orrs r0, r1
-	strb r0, [r2]
-	ldr r1, _08054684
-	movs r0, #2
-	strb r0, [r1, #5]
-	b _08054696
-	.align 2, 0
-_0805467C: .4byte 0x02024070
-_08054680: .4byte 0x02023F20
-_08054684: .4byte 0x02023FD6
-_08054688:
-	strh r2, [r3]
-	ldr r0, _080546A4
-	movs r1, #5
-	strb r1, [r0, #5]
-	ldr r0, _080546A8
-	adds r0, #0x28
-	strb r1, [r0]
-_08054696:
-	ldr r1, _080546AC
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080546A4: .4byte 0x02023FD6
-_080546A8: .4byte 0x02024074
-_080546AC: .4byte 0x02023EB8
-	thumb_func_end atkC8_sethail
 
 	thumb_func_start atkC9_jumpifattackandspecialattackcannotfall
 atkC9_jumpifattackandspecialattackcannotfall: @ 0x080546B0

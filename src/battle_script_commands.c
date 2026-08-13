@@ -1526,6 +1526,7 @@ static void Cmd_trydobeatup(void);
 static void Cmd_setsemiinvulnerablebit(void);
 static void Cmd_clearsemiinvulnerablebit(void);
 static void Cmd_setminimize(void);
+static void Cmd_sethail(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8216,6 +8217,23 @@ static void Cmd_setminimize(void)
 {
     if (gHitMarker & HITMARKER_OBEYS)
         gStatuses3[gBattlerAttacker] |= STATUS3_MINIMIZED;
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_sethail(void)
+{
+    if (gBattleWeather & B_WEATHER_HAIL)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_FAILED;
+    }
+    else
+    {
+        gBattleWeather = B_WEATHER_HAIL_TEMPORARY;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_HAIL;
+        gWishFutureKnock.weatherDuration = 5;
+    }
 
     gBattlescriptCurrInstr++;
 }
