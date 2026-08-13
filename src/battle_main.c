@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_ai_script_commands.h"
+#include "battle_anim.h"
 #include "battle_bg.h"
 #include "battle_controllers.h"
 #include "battle_main.h"
@@ -95,6 +96,9 @@ extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensit
 extern void HandleEndTurn_BattleLost(void); // JP asm 0x0803D700 (register-sensitive, kept in asm)
 extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
 extern void (*gCB2_AfterEvolution)(void); // JP IWRAM 0x03005F28
+extern const u8 *const gBattlescriptsForBallThrow[];
+extern const u8 *const gBattlescriptsForRunningByItem[];
+extern const u8 *const gBattlescriptsForUsingItem[];
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2468,6 +2472,7 @@ void HandleAction_Switch(void)
     if (gBattleResults.playerSwitchesCounter < 255)
         gBattleResults.playerSwitchesCounter++;
 }
+
 
 
 

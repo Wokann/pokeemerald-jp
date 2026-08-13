@@ -3,7 +3,6 @@
 .text
 .syntax unified
 
-
 	thumb_func_start HandleAction_UseItem
 HandleAction_UseItem: @ 0x0803E54C
 	push {r4, r5, r6, r7, lr}
@@ -368,6 +367,7 @@ _0803E854: .4byte 0x02023EB8
 _0803E858: .4byte 0x0828A2C4
 _0803E85C: .4byte 0x02023D27
 	thumb_func_end HandleAction_UseItem
+
 
 	thumb_func_start TryRunFromBattle
 TryRunFromBattle: @ 0x0803E860
