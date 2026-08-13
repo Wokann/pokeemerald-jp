@@ -29,6 +29,7 @@ static void AnimWishStar_Step(struct Sprite *sprite);
 static void AnimMiniTwinklingStar(struct Sprite *sprite);
 static void AnimMiniTwinklingStar_Step(struct Sprite *sprite);
 static void AnimWeakFrustrationAngerMark(struct Sprite *sprite);
+static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -909,5 +910,99 @@ static void AnimWeakFrustrationAngerMark(struct Sprite *sprite)
         sprite->y2 += sprite->data[2] >> 8;
         if (sprite->y2 > 64)
             DestroyAnimSprite(sprite);
+    }
+}
+
+void AnimTask_RockMonBackAndForth(u8 taskId)
+{
+    u8 side;
+    struct Task *task = &gTasks[taskId];
+
+    if (!gBattleAnimArgs[1])
+    {
+        DestroyAnimVisualTask(taskId);
+        return;
+    }
+
+    if (gBattleAnimArgs[2] < 0)
+        gBattleAnimArgs[2] = 0;
+    if (gBattleAnimArgs[2] > 2)
+        gBattleAnimArgs[2] = 2;
+
+    task->data[0] = 0;
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 8 - (2 * gBattleAnimArgs[2]);
+    task->data[4] = 0x100 + (gBattleAnimArgs[2] * 128);
+    task->data[5] = gBattleAnimArgs[2] + 2;
+    task->data[6] = gBattleAnimArgs[1] - 1;
+    task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+        side = GetBattlerSide(gBattleAnimAttacker);
+    else
+        side = GetBattlerSide(gBattleAnimTarget);
+
+    if (side == B_SIDE_OPPONENT)
+    {
+        task->data[4] *= -1;
+        task->data[5] *= -1;
+    }
+
+    PrepareBattlerSpriteForRotScale(task->data[15], ST_OAM_OBJ_NORMAL);
+    task->func = AnimTask_RockMonBackAndForth_Step;
+}
+
+static void AnimTask_RockMonBackAndForth_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        gSprites[task->data[15]].x2 += task->data[5];
+        task->data[2] -= task->data[4];
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
+        if (++task->data[1] >= task->data[3])
+        {
+            task->data[1] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 1:
+        gSprites[task->data[15]].x2 -= task->data[5];
+        task->data[2] += task->data[4];
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
+        if (++task->data[1] >= task->data[3] * 2)
+        {
+            task->data[1] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 2:
+        gSprites[task->data[15]].x2 += task->data[5];
+        task->data[2] -= task->data[4];
+        SetSpriteRotScale(task->data[15], 0x100, 0x100, task->data[2]);
+        SetBattlerSpriteYOffsetFromRotation(task->data[15]);
+        if (++task->data[1] >= task->data[3])
+        {
+            if (task->data[6])
+            {
+                task->data[6]--;
+                task->data[1] = 0;
+                task->data[0] = 0;
+            }
+            else
+            {
+                task->data[0]++;
+            }
+        }
+        break;
+    case 3:
+        ResetSpriteRotScale(task->data[15]);
+        DestroyAnimVisualTask(taskId);
+        break;
     }
 }
