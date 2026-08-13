@@ -319,3 +319,48 @@ void MarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPal
         }
     }
 }
+
+void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+{
+    u16 i;
+    struct PulseBlendPalette *pulseBlendPalette;
+    u8 j = 0;
+
+    if (!multiSelection)
+    {
+        pulseBlendPalette = &pulseBlend->pulseBlendPalettes[pulseBlendPaletteSelector & 0xF];
+        if (!pulseBlendPalette->available && pulseBlendPalette->inUse)
+        {
+            if (pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
+            {
+                for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+                    gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
+            }
+
+            pulseBlendPalette->available = 1;
+            pulseBlend->usedPulseBlendPalettes &= ~(1 << j);
+        }
+    }
+    else
+    {
+        for (j = 0; j < 16; j++)
+        {
+            pulseBlendPalette = &pulseBlend->pulseBlendPalettes[j];
+            if (!(pulseBlendPaletteSelector & 1) || pulseBlendPalette->available || !pulseBlendPalette->inUse)
+            {
+                pulseBlendPaletteSelector <<= 1;
+            }
+            else
+            {
+                if (pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
+                {
+                    for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+                        gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
+                }
+
+                pulseBlendPalette->available = 1;
+                pulseBlend->usedPulseBlendPalettes &= ~(1 << j);
+            }
+        }
+    }
+}

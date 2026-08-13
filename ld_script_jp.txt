@@ -4819,6 +4819,7 @@ SECTIONS {
         src/roulette_util.o(.text.ClearPulseBlendPalettesSettings);
         src/roulette_util.o(.text.UnloadUsedPulseBlendPalettes);
         src/roulette_util.o(.text.MarkUsedPulseBlendPalettes);
+        src/roulette_util.o(.text.UnmarkUsedPulseBlendPalettes);
         asm/roulette_util.o(.text.roulette_util_rest);
         asm/rom_81520A8.o(.text);
         src/save.o(.text);
