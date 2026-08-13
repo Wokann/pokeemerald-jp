@@ -1492,6 +1492,7 @@ static void Cmd_trysetencore(void);
 static void Cmd_painsplitdmgcalc(void);
 static void Cmd_settypetorandomresistance(void);
 static void Cmd_setalwayshitflag(void);
+static void Cmd_copymovepermanently(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7331,4 +7332,57 @@ static void Cmd_setalwayshitflag(void)
     gStatuses3[gBattlerTarget] |= STATUS3_ALWAYS_HITS_TURN(2);
     gDisableStructs[gBattlerTarget].battlerWithSureHit = gBattlerAttacker;
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_copymovepermanently(void)
+{
+    gChosenMove = MOVE_UNAVAILABLE;
+
+    if (!(gBattleMons[gBattlerAttacker].status2 & STATUS2_TRANSFORMED)
+        && gLockedMoves[gBattlerTarget] != MOVE_STRUGGLE
+        && gLockedMoves[gBattlerTarget] != MOVE_NONE
+        && gLockedMoves[gBattlerTarget] != MOVE_UNAVAILABLE
+        && gLockedMoves[gBattlerTarget] != MOVE_SKETCH)
+    {
+        s32 i;
+
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (gBattleMons[gBattlerAttacker].moves[i] == MOVE_SKETCH)
+                continue;
+            if (gBattleMons[gBattlerAttacker].moves[i] == gLockedMoves[gBattlerTarget])
+                break;
+        }
+
+        if (i != MAX_MON_MOVES)
+        {
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+        else // sketch worked
+        {
+            struct MovePPInfo movePPData;
+
+            gBattleMons[gBattlerAttacker].moves[gCurrMovePos] = gLockedMoves[gBattlerTarget];
+            gBattleMons[gBattlerAttacker].pp[gCurrMovePos] = gBattleMoves[gLockedMoves[gBattlerTarget]].pp;
+            gActiveBattler = gBattlerAttacker;
+
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                movePPData.moves[i] = gBattleMons[gBattlerAttacker].moves[i];
+                movePPData.pp[i] = gBattleMons[gBattlerAttacker].pp[i];
+            }
+            movePPData.ppBonuses = gBattleMons[gBattlerAttacker].ppBonuses;
+
+            BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_MOVES_PP_BATTLE, 0, sizeof(movePPData), &movePPData);
+            MarkBattlerForControllerExec(gActiveBattler);
+
+            PREPARE_MOVE_BUFFER(gBattleTextBuff1, gLockedMoves[gBattlerTarget])
+
+            gBattlescriptCurrInstr += 5;
+        }
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
