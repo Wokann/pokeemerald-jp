@@ -2,6 +2,8 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
+#include "battle_main.h"
+#include "battle_message.h"
 #include "battle_scripts.h"
 #include "battle_util.h"
 #include "item.h"
@@ -11,6 +13,8 @@
 #include "constants/battle.h"
 #include "constants/global.h"
 #include "constants/abilities.h"
+#include "constants/battle_anim.h"
+#include "constants/battle_string_ids.h"
 #include "constants/hold_effects.h"
 #include "constants/items.h"
 #include "constants/moves.h"
@@ -470,4 +474,286 @@ u8 GetImprisonedMovesCount(u8 battler, u16 move)
     }
 
     return imprisonedMoves;
+}
+
+enum
+{
+    ENDTURN_ORDER,
+    ENDTURN_REFLECT,
+    ENDTURN_LIGHT_SCREEN,
+    ENDTURN_MIST,
+    ENDTURN_SAFEGUARD,
+    ENDTURN_WISH,
+    ENDTURN_RAIN,
+    ENDTURN_SANDSTORM,
+    ENDTURN_SUN,
+    ENDTURN_HAIL,
+    ENDTURN_FIELD_COUNT,
+};
+
+u8 DoFieldEndTurnEffects(void)
+{
+    u8 effect = 0;
+    s32 i;
+
+    for (gBattlerAttacker = 0; gBattlerAttacker < gBattlersCount && gAbsentBattlerFlags & gBitTable[gBattlerAttacker]; gBattlerAttacker++)
+    {
+    }
+    for (gBattlerTarget = 0; gBattlerTarget < gBattlersCount && gAbsentBattlerFlags & gBitTable[gBattlerTarget]; gBattlerTarget++)
+    {
+    }
+
+    do
+    {
+        u8 side;
+
+        switch (gBattleStruct->turnCountersTracker)
+        {
+        case ENDTURN_ORDER:
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                gBattlerByTurnOrder[i] = i;
+            }
+            for (i = 0; i < gBattlersCount - 1; i++)
+            {
+                s32 j;
+                for (j = i + 1; j < gBattlersCount; j++)
+                {
+                    if (GetWhoStrikesFirst(gBattlerByTurnOrder[i], gBattlerByTurnOrder[j], FALSE))
+                        SwapTurnOrder(i, j);
+                }
+            }
+
+            *(&gBattleStruct->turnCountersTracker) = gBattleStruct->turnCountersTracker + 1;
+            gBattleStruct->turnSideTracker = 0;
+            // fall through
+        case ENDTURN_REFLECT:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].reflectBattlerId;
+                if (gSideStatuses[side] & SIDE_STATUS_REFLECT)
+                {
+                    if (--gSideTimers[side].reflectTimer == 0)
+                    {
+                        gSideStatuses[side] &= ~SIDE_STATUS_REFLECT;
+                        BattleScriptExecute(BattleScript_SideStatusWoreOff);
+                        gBattleTextBuff1[0] = B_BUFF_PLACEHOLDER_BEGIN;
+                        gBattleTextBuff1[1] = B_BUFF_MOVE;
+                        gBattleTextBuff1[2] = MOVE_REFLECT;
+                        gBattleTextBuff1[3] = 0;
+                        gBattleTextBuff1[4] |= B_BUFF_EOS;
+                        effect++;
+                    }
+                }
+                gBattleStruct->turnSideTracker++;
+                if (effect != 0)
+                    break;
+            }
+            if (effect == 0)
+            {
+                gBattleStruct->turnCountersTracker++;
+                gBattleStruct->turnSideTracker = 0;
+            }
+            break;
+        case ENDTURN_LIGHT_SCREEN:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].lightscreenBattlerId;
+                if (gSideStatuses[side] & SIDE_STATUS_LIGHTSCREEN)
+                {
+                    if (--gSideTimers[side].lightscreenTimer == 0)
+                    {
+                        gSideStatuses[side] &= ~SIDE_STATUS_LIGHTSCREEN;
+                        BattleScriptExecute(BattleScript_SideStatusWoreOff);
+                        gBattleCommunication[MULTISTRING_CHOOSER] = side;
+                        gBattleTextBuff1[0] = B_BUFF_PLACEHOLDER_BEGIN;
+                        gBattleTextBuff1[1] = B_BUFF_MOVE;
+                        gBattleTextBuff1[2] = MOVE_LIGHT_SCREEN;
+                        gBattleTextBuff1[3] = 0;
+                        gBattleTextBuff1[4] |= B_BUFF_EOS;
+                        effect++;
+                    }
+                }
+                gBattleStruct->turnSideTracker++;
+                if (effect != 0)
+                    break;
+            }
+            if (effect == 0)
+            {
+                gBattleStruct->turnCountersTracker++;
+                gBattleStruct->turnSideTracker = 0;
+            }
+            break;
+        case ENDTURN_MIST:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].mistBattlerId;
+                if (gSideTimers[side].mistTimer != 0 && --gSideTimers[side].mistTimer == 0)
+                {
+                    gSideStatuses[side] &= ~SIDE_STATUS_MIST;
+                    BattleScriptExecute(BattleScript_SideStatusWoreOff);
+                    gBattleCommunication[MULTISTRING_CHOOSER] = side;
+                    gBattleTextBuff1[0] = B_BUFF_PLACEHOLDER_BEGIN;
+                    gBattleTextBuff1[1] = B_BUFF_MOVE;
+                    gBattleTextBuff1[2] = MOVE_MIST;
+                    gBattleTextBuff1[3] = 0;
+                    gBattleTextBuff1[4] |= B_BUFF_EOS;
+                    effect++;
+                }
+                gBattleStruct->turnSideTracker++;
+                if (effect != 0)
+                    break;
+            }
+            if (effect == 0)
+            {
+                gBattleStruct->turnCountersTracker++;
+                gBattleStruct->turnSideTracker = 0;
+            }
+            break;
+        case ENDTURN_SAFEGUARD:
+            while (gBattleStruct->turnSideTracker < 2)
+            {
+                side = gBattleStruct->turnSideTracker;
+                gActiveBattler = gBattlerAttacker = gSideTimers[side].safeguardBattlerId;
+                if (gSideStatuses[side] & SIDE_STATUS_SAFEGUARD)
+                {
+                    if (--gSideTimers[side].safeguardTimer == 0)
+                    {
+                        gSideStatuses[side] &= ~SIDE_STATUS_SAFEGUARD;
+                        BattleScriptExecute(BattleScript_SafeguardEnds);
+                        effect++;
+                    }
+                }
+                gBattleStruct->turnSideTracker++;
+                if (effect != 0)
+                    break;
+            }
+            if (effect == 0)
+            {
+                gBattleStruct->turnCountersTracker++;
+                gBattleStruct->turnSideTracker = 0;
+            }
+            break;
+        case ENDTURN_WISH:
+            while (gBattleStruct->turnSideTracker < gBattlersCount)
+            {
+                gActiveBattler = gBattlerByTurnOrder[gBattleStruct->turnSideTracker];
+                if (gWishFutureKnock.wishCounter[gActiveBattler] != 0
+                 && --gWishFutureKnock.wishCounter[gActiveBattler] == 0
+                 && gBattleMons[gActiveBattler].hp != 0)
+                {
+                    gBattlerTarget = gActiveBattler;
+                    BattleScriptExecute(BattleScript_WishComesTrue);
+                    effect++;
+                }
+                gBattleStruct->turnSideTracker++;
+                if (effect != 0)
+                    break;
+            }
+            if (effect == 0)
+            {
+                gBattleStruct->turnCountersTracker++;
+            }
+            break;
+        case ENDTURN_RAIN:
+            if (gBattleWeather & B_WEATHER_RAIN)
+            {
+                if (!(gBattleWeather & B_WEATHER_RAIN_PERMANENT))
+                {
+                    if (--gWishFutureKnock.weatherDuration == 0)
+                    {
+                        gBattleWeather &= ~B_WEATHER_RAIN_TEMPORARY;
+                        gBattleWeather &= ~B_WEATHER_RAIN_DOWNPOUR;
+                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_RAIN_STOPPED;
+                    }
+                    else if (gBattleWeather & B_WEATHER_RAIN_DOWNPOUR)
+                    {
+                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DOWNPOUR_CONTINUES;
+                    }
+                    else
+                    {
+                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_RAIN_CONTINUES;
+                    }
+                }
+                else if (gBattleWeather & B_WEATHER_RAIN_DOWNPOUR)
+                {
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DOWNPOUR_CONTINUES;
+                }
+                else
+                {
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_RAIN_CONTINUES;
+                }
+
+                BattleScriptExecute(BattleScript_RainContinuesOrEnds);
+                effect++;
+            }
+            gBattleStruct->turnCountersTracker++;
+            break;
+        case ENDTURN_SANDSTORM:
+            if (gBattleWeather & B_WEATHER_SANDSTORM)
+            {
+                if (!(gBattleWeather & B_WEATHER_SANDSTORM_PERMANENT) && --gWishFutureKnock.weatherDuration == 0)
+                {
+                    gBattleWeather &= ~B_WEATHER_SANDSTORM_TEMPORARY;
+                    gBattlescriptCurrInstr = BattleScript_SandStormHailEnds;
+                }
+                else
+                {
+                    gBattlescriptCurrInstr = BattleScript_DamagingWeatherContinues;
+                }
+
+                gBattleScripting.animArg1 = B_ANIM_SANDSTORM_CONTINUES;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SANDSTORM;
+                BattleScriptExecute(gBattlescriptCurrInstr);
+                effect++;
+            }
+            gBattleStruct->turnCountersTracker++;
+            break;
+        case ENDTURN_SUN:
+            if (gBattleWeather & B_WEATHER_SUN)
+            {
+                if (!(gBattleWeather & B_WEATHER_SUN_PERMANENT) && --gWishFutureKnock.weatherDuration == 0)
+                {
+                    gBattleWeather &= ~B_WEATHER_SUN_TEMPORARY;
+                    gBattlescriptCurrInstr = BattleScript_SunlightFaded;
+                }
+                else
+                {
+                    gBattlescriptCurrInstr = BattleScript_SunlightContinues;
+                }
+
+                BattleScriptExecute(gBattlescriptCurrInstr);
+                effect++;
+            }
+            gBattleStruct->turnCountersTracker++;
+            break;
+        case ENDTURN_HAIL:
+            if (gBattleWeather & B_WEATHER_HAIL)
+            {
+                if (--gWishFutureKnock.weatherDuration == 0)
+                {
+                    gBattleWeather &= ~B_WEATHER_HAIL_TEMPORARY;
+                    gBattlescriptCurrInstr = BattleScript_SandStormHailEnds;
+                }
+                else
+                {
+                    gBattlescriptCurrInstr = BattleScript_DamagingWeatherContinues;
+                }
+
+                gBattleScripting.animArg1 = B_ANIM_HAIL_CONTINUES;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_HAIL;
+                BattleScriptExecute(gBattlescriptCurrInstr);
+                effect++;
+            }
+            gBattleStruct->turnCountersTracker++;
+            break;
+        case ENDTURN_FIELD_COUNT:
+            effect++;
+            break;
+        }
+    } while (effect == 0);
+    return (gBattleMainFunc != BattleTurnPassed);
 }
