@@ -778,6 +778,7 @@ sText_ExclamationMark3 = gUnknown_85AB048;
 sText_ExclamationMark4 = gUnknown_85AB04E;
 sText_ExclamationMark5 = gUnknown_85AB055;
 gBattleMsgDataPtr = gUnknown_203A874;
+CB2_LoadCableCar = CableCarMainCallback_Setup;
 GetPCBoxToSendMon = get_unknown_box_id;
 ShouldShowBoxWasFullMessage = sub_0813B254;
 DisplayCaughtMonDexPage = CreateDexDisplayMonDataTask;
@@ -4749,7 +4750,9 @@ SECTIONS {
         src/battle_message.o(.text.ChooseMoveUsedParticle);
         src/battle_message.o(.text.ChooseTypeOfMoveUsedString);
         asm/battle_message.o(.text.battle_message_tail);
-        asm/cable_car.o(.text);
+        src/cable_car.o(.text.Task_LoadCableCar);
+        src/cable_car.o(.text.CableCar);
+        asm/cable_car.o(.text.cable_car_rest);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
         asm/rom_81520A8.o(.text);

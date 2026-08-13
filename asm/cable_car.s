@@ -3,51 +3,9 @@
 .text
 .syntax unified
 
-	thumb_func_start CableCarTask1
-CableCarTask1: @ 0x0814FC4C
-	push {r4, lr}
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	ldr r0, _0814FC70
-	ldrb r1, [r0, #7]
-	movs r0, #0x80
-	ands r0, r1
-	cmp r0, #0
-	bne _0814FC6A
-	ldr r0, _0814FC74
-	bl SetMainCallback2
-	adds r0, r4, #0
-	bl DestroyTask
-_0814FC6A:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0814FC70: .4byte 0x02037C74
-_0814FC74: .4byte 0x0814FCA5
-	thumb_func_end CableCarTask1
 
-	thumb_func_start CableCar
-CableCar: @ 0x0814FC78
-	push {lr}
-	sub sp, #4
-	bl LockPlayerFieldControls
-	ldr r0, _0814FCA0
-	movs r1, #1
-	bl CreateTask
-	movs r0, #1
-	rsbs r0, r0, #0
-	movs r1, #0
-	str r1, [sp]
-	movs r2, #0
-	movs r3, #0x10
-	bl BeginNormalPaletteFade
-	add sp, #4
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0814FCA0: .4byte 0x0814FC4D
-	thumb_func_end CableCar
+
+	.section .text.cable_car_rest,"ax",%progbits
 
 	thumb_func_start CableCarMainCallback_Setup
 CableCarMainCallback_Setup: @ 0x0814FCA4
