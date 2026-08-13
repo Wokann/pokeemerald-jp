@@ -567,3 +567,33 @@ static void SpriteCB_HikerGoingUp(struct Sprite *sprite)
             DestroySprite(sprite);
     }
 }
+
+static void SpriteCB_HikerGoingDown(struct Sprite *sprite)
+{
+    if (sprite->sTimer == 0)
+        sprite->y += 16 + sprite->centerToCornerVecY;
+
+    if (++sprite->sTimer >= sprite->sDelay)
+    {
+        switch (sprite->sSameDir)
+        {
+        case FALSE:
+            sprite->x--;
+            if ((sprite->sTimer % 4) == 0)
+                sprite->y--;
+            break;
+        case TRUE:
+            // Hiker moves slower if travelling with the Cable Car
+            if ((sprite->sTimer % 2) != 0)
+            {
+                sprite->x--;
+                if ((sprite->x % 4) == 0)
+                    sprite->y--;
+            }
+            break;
+        }
+
+        if (sprite->y < 80)
+            DestroySprite(sprite);
+    }
+}

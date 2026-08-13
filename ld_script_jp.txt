@@ -4776,6 +4776,7 @@ SECTIONS {
         src/cable_car.o(.text.SpriteCB_CableCar);
         src/cable_car.o(.text.SpriteCB_Player);
         src/cable_car.o(.text.SpriteCB_HikerGoingUp);
+        src/cable_car.o(.text.SpriteCB_HikerGoingDown);
         asm/cable_car.o(.text.cable_car_rest);
         asm/cable_car.o(.text.cable_car_mid);
         src/cable_car.o(.text.AnimateGroundGoingUp);
