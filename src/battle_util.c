@@ -16,6 +16,7 @@
 #include "constants/global.h"
 #include "constants/abilities.h"
 #include "constants/battle_anim.h"
+#include "constants/battle_move_effects.h"
 #include "constants/battle_string_ids.h"
 #include "constants/characters.h"
 #include "constants/hold_effects.h"
@@ -1289,4 +1290,300 @@ void TryClearRageStatuses(void)
         if ((gBattleMons[i].status2 & STATUS2_RAGE) && gChosenMoveByBattler[i] != MOVE_RAGE)
             gBattleMons[i].status2 &= ~STATUS2_RAGE;
     }
+}
+
+enum
+{
+    CANCELER_FLAGS,
+    CANCELER_ASLEEP,
+    CANCELER_FROZEN,
+    CANCELER_TRUANT,
+    CANCELER_RECHARGE,
+    CANCELER_FLINCH,
+    CANCELER_DISABLED,
+    CANCELER_TAUNTED,
+    CANCELER_IMPRISONED,
+    CANCELER_CONFUSED,
+    CANCELER_PARALYZED,
+    CANCELER_IN_LOVE,
+    CANCELER_BIDE,
+    CANCELER_THAW,
+    CANCELER_END,
+};
+
+u8 AtkCanceller_UnableToUseMove(void)
+{
+    u8 effect = 0;
+    s32 *bideDmg = &gBattleScripting.bideDmg;
+    do
+    {
+        switch (gBattleStruct->atkCancelerTracker)
+        {
+        case CANCELER_FLAGS: // flags clear
+            gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_DESTINY_BOND;
+            gStatuses3[gBattlerAttacker] &= ~STATUS3_GRUDGE;
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_ASLEEP: // check being asleep
+            if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
+            {
+                if (UproarWakeUpCheck(gBattlerAttacker))
+                {
+                    gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_SLEEP;
+                    gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
+                    BattleScriptPushCursor();
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WOKE_UP_UPROAR;
+                    gBattlescriptCurrInstr = BattleScript_MoveUsedWokeUp;
+                    effect = 2;
+                }
+                else
+                {
+                    u8 toSub;
+                    if (gBattleMons[gBattlerAttacker].ability == ABILITY_EARLY_BIRD)
+                        toSub = 2;
+                    else
+                        toSub = 1;
+                    if ((gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP) < toSub)
+                        gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_SLEEP;
+                    else
+                        gBattleMons[gBattlerAttacker].status1 -= toSub;
+                    if (gBattleMons[gBattlerAttacker].status1 & STATUS1_SLEEP)
+                    {
+                        if (gCurrentMove != MOVE_SNORE && gCurrentMove != MOVE_SLEEP_TALK)
+                        {
+                            gBattlescriptCurrInstr = BattleScript_MoveUsedIsAsleep;
+                            gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                            effect = 2;
+                        }
+                    }
+                    else
+                    {
+                        gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
+                        BattleScriptPushCursor();
+                        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WOKE_UP;
+                        gBattlescriptCurrInstr = BattleScript_MoveUsedWokeUp;
+                        effect = 2;
+                    }
+                }
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_FROZEN: // check being frozen
+            if (gBattleMons[gBattlerAttacker].status1 & STATUS1_FREEZE)
+            {
+                if (Random() % 5)
+                {
+                    if (gBattleMoves[gCurrentMove].effect != EFFECT_THAW_HIT) // unfreezing via a move effect happens in case 13
+                    {
+                        gBattlescriptCurrInstr = BattleScript_MoveUsedIsFrozen;
+                        gHitMarker |= HITMARKER_NO_ATTACKSTRING;
+                    }
+                    else
+                    {
+                        gBattleStruct->atkCancelerTracker++;
+                        break;
+                    }
+                }
+                else // unfreeze
+                {
+                    gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_FREEZE;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_MoveUsedUnfroze;
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DEFROSTED;
+                }
+                effect = 2;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_TRUANT: // truant
+            if (gBattleMons[gBattlerAttacker].ability == ABILITY_TRUANT && gDisableStructs[gBattlerAttacker].truantCounter)
+            {
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_LOAFING;
+                gBattlescriptCurrInstr = BattleScript_MoveUsedLoafingAround;
+                gMoveResultFlags |= MOVE_RESULT_MISSED;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_RECHARGE: // recharge
+            if (gBattleMons[gBattlerAttacker].status2 & STATUS2_RECHARGE)
+            {
+                gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_RECHARGE;
+                gDisableStructs[gBattlerAttacker].rechargeTimer = 0;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedMustRecharge;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_FLINCH: // flinch
+            if (gBattleMons[gBattlerAttacker].status2 & STATUS2_FLINCHED)
+            {
+                gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_FLINCHED;
+                gProtectStructs[gBattlerAttacker].flinchImmobility = 1;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedFlinched;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_DISABLED: // disabled move
+            if (gDisableStructs[gBattlerAttacker].disabledMove == gCurrentMove && gDisableStructs[gBattlerAttacker].disabledMove != MOVE_NONE)
+            {
+                gProtectStructs[gBattlerAttacker].usedDisabledMove = 1;
+                gBattleScripting.battler = gBattlerAttacker;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsDisabled;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_TAUNTED: // taunt
+            if (gDisableStructs[gBattlerAttacker].tauntTimer && gBattleMoves[gCurrentMove].power == 0)
+            {
+                gProtectStructs[gBattlerAttacker].usedTauntedMove = 1;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsTaunted;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_IMPRISONED: // imprisoned
+            if (GetImprisonedMovesCount(gBattlerAttacker, gCurrentMove))
+            {
+                gProtectStructs[gBattlerAttacker].usedImprisonedMove = 1;
+                CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsImprisoned;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_CONFUSED: // confusion
+            if (gBattleMons[gBattlerAttacker].status2 & STATUS2_CONFUSION)
+            {
+                gBattleMons[gBattlerAttacker].status2 -= STATUS2_CONFUSION_TURN(1);
+                if (gBattleMons[gBattlerAttacker].status2 & STATUS2_CONFUSION)
+                {
+                    if (Random() & 1)
+                    {
+                        // The MULTISTRING_CHOOSER is used here as a bool to signal
+                        // to BattleScript_MoveUsedIsConfused whether or not damage was taken
+                        gBattleCommunication[MULTISTRING_CHOOSER] = FALSE;
+                        BattleScriptPushCursor();
+                    }
+                    else // confusion dmg
+                    {
+                        gBattleCommunication[MULTISTRING_CHOOSER] = TRUE;
+                        gBattlerTarget = gBattlerAttacker;
+                        gBattleMoveDamage = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerAttacker], MOVE_POUND, 0, 40, 0, gBattlerAttacker, gBattlerAttacker);
+                        gProtectStructs[gBattlerAttacker].confusionSelfDmg = 1;
+                        gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                    }
+                    gBattlescriptCurrInstr = BattleScript_MoveUsedIsConfused;
+                }
+                else // snapped out of confusion
+                {
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_MoveUsedIsConfusedNoMore;
+                }
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_PARALYZED: // paralysis
+            if ((gBattleMons[gBattlerAttacker].status1 & STATUS1_PARALYSIS) && (Random() % 4) == 0)
+            {
+                gProtectStructs[gBattlerAttacker].prlzImmobility = 1;
+                // This is removed in FRLG and Emerald for some reason
+                //CancelMultiTurnMoves(gBattlerAttacker);
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsParalyzed;
+                gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_IN_LOVE: // infatuation
+            if (gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION)
+            {
+                gBattleScripting.battler = CountTrailingZeroBits((gBattleMons[gBattlerAttacker].status2 & STATUS2_INFATUATION) >> 0x10);
+                if (Random() & 1)
+                {
+                    BattleScriptPushCursor();
+                }
+                else
+                {
+                    BattleScriptPush(BattleScript_MoveUsedIsInLoveCantAttack);
+                    gHitMarker |= HITMARKER_UNABLE_TO_USE_MOVE;
+                    gProtectStructs[gBattlerAttacker].loveImmobility = 1;
+                    CancelMultiTurnMoves(gBattlerAttacker);
+                }
+                gBattlescriptCurrInstr = BattleScript_MoveUsedIsInLove;
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_BIDE: // bide
+            if (gBattleMons[gBattlerAttacker].status2 & STATUS2_BIDE)
+            {
+                gBattleMons[gBattlerAttacker].status2 -= STATUS2_BIDE_TURN(1);
+                if (gBattleMons[gBattlerAttacker].status2 & STATUS2_BIDE)
+                {
+                    gBattlescriptCurrInstr = BattleScript_BideStoringEnergy;
+                }
+                else
+                {
+                    // This is removed in FRLG and Emerald for some reason
+                    //gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_MULTIPLETURNS;
+                    if (gBideDmg[gBattlerAttacker])
+                    {
+                        gCurrentMove = MOVE_BIDE;
+                        *bideDmg = gBideDmg[gBattlerAttacker] * 2;
+                        gBattlerTarget = gBideTarget[gBattlerAttacker];
+                        if (gAbsentBattlerFlags & gBitTable[gBattlerTarget])
+                            gBattlerTarget = GetMoveTarget(MOVE_BIDE, MOVE_TARGET_SELECTED + 1);
+                        gBattlescriptCurrInstr = BattleScript_BideAttack;
+                    }
+                    else
+                    {
+                        gBattlescriptCurrInstr = BattleScript_BideNoEnergyToAttack;
+                    }
+                }
+                effect = 1;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_THAW: // move thawing
+            if (gBattleMons[gBattlerAttacker].status1 & STATUS1_FREEZE)
+            {
+                if (gBattleMoves[gCurrentMove].effect == EFFECT_THAW_HIT)
+                {
+                    gBattleMons[gBattlerAttacker].status1 &= ~STATUS1_FREEZE;
+                    BattleScriptPushCursor();
+                    gBattlescriptCurrInstr = BattleScript_MoveUsedUnfroze;
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DEFROSTED_BY_MOVE;
+                }
+                effect = 2;
+            }
+            gBattleStruct->atkCancelerTracker++;
+            break;
+        case CANCELER_END:
+            break;
+        }
+
+    } while (gBattleStruct->atkCancelerTracker != CANCELER_END && effect == 0);
+
+    if (effect == 2)
+    {
+        gActiveBattler = gBattlerAttacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, 4, &gBattleMons[gActiveBattler].status1);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+    return effect;
 }
