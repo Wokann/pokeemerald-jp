@@ -766,6 +766,7 @@ BattleScript_RanAwayUsingMonAbility = gUnknown_8289071;
 BattleScript_GotAwaySafely = gUnknown_8289078;
 BattleScript_WildMonFled = gUnknown_828907F;
 BattleScript_ActionSwitch = gUnknown_828909D;
+BattleScript_PrintFailedToRunString = gUnknown_828908A;
 gBattlescriptsForBallThrow = gUnknown_828A290;
 gBattlescriptsForUsingItem = gUnknown_828A2C4;
 gBattlescriptsForRunningByItem = gUnknown_828A2DC;
@@ -3304,6 +3305,7 @@ SECTIONS {
         src/battle_main.o(.text.HandleAction_Switch);
         asm/battle_main_useitem.o(.text);
         asm/battle_main_tryrun.o(.text);
+        src/battle_main.o(.text.HandleAction_Run);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
