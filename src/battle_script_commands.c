@@ -1475,6 +1475,8 @@ static void Cmd_setsandstorm(void);
 static void Cmd_weatherdamage(void);
 static void Cmd_tryinfatuating(void);
 static void Cmd_updatestatusicon(void);
+static void Cmd_setmist(void);
+static void Cmd_setfocusenergy(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -6915,4 +6917,36 @@ static void Cmd_updatestatusicon(void)
         }
         gBattlescriptCurrInstr += 2;
     }
+}
+
+static void Cmd_setmist(void)
+{
+    if (gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].mistTimer)
+    {
+        gMoveResultFlags |= MOVE_RESULT_FAILED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_MIST_FAILED;
+    }
+    else
+    {
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].mistTimer = 5;
+        gSideTimers[GET_BATTLER_SIDE(gBattlerAttacker)].mistBattlerId = gBattlerAttacker;
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerAttacker)] |= SIDE_STATUS_MIST;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_MIST;
+    }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setfocusenergy(void)
+{
+    if (gBattleMons[gBattlerAttacker].status2 & STATUS2_FOCUS_ENERGY)
+    {
+        gMoveResultFlags |= MOVE_RESULT_FAILED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_FOCUS_ENERGY_FAILED;
+    }
+    else
+    {
+        gBattleMons[gBattlerAttacker].status2 |= STATUS2_FOCUS_ENERGY;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_GETTING_PUMPED;
+    }
+    gBattlescriptCurrInstr++;
 }
