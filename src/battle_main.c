@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "battle_ai_script_commands.h"
 #include "battle_bg.h"
 #include "battle_main.h"
 #include "battle_message.h"
@@ -28,10 +29,12 @@
 #include "strings.h"
 #include "task.h"
 #include "text.h"
+#include "util.h"
 #include "window.h"
 #include "constants/battle.h"
 #include "constants/battle_anim.h"
 #include "constants/berry.h"
+#include "constants/battle_move_effects.h"
 #include "constants/flags.h"
 #include "constants/global.h"
 #include "constants/hold_effects.h"
@@ -66,6 +69,7 @@ extern u32 sFlickerArray[];
 extern u8 sUnusedBattlersArray[];
 extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
 extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (register-sensitive, kept in asm)
+extern void SwitchInClearSetData(void); // JP asm 0x08039EC8 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1940,6 +1944,7 @@ void SpriteCB_FaintSlideAnim(struct Sprite *sprite)
 void BeginBattleIntroDummy(void)
 {
 }
+
 
 #define sSinIndex           data[0]
 #define sDelta              data[1]
