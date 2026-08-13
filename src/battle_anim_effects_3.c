@@ -3323,6 +3323,152 @@ void AnimTask_GetReturnPowerLevel(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
+// No args.
+void AnimTask_SnatchOpposingMonMove(u8 taskId)
+{
+    u8 spriteId, spriteId2;
+    int personality;
+    int otId;
+    u16 species;
+    u8 subpriority;
+    bool8 isBackPic;
+    s16 x;
+
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+        gTasks[taskId].data[1] += 0x800;
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            gSprites[spriteId].x2 += (gTasks[taskId].data[1] >> 8);
+        else
+            gSprites[spriteId].x2 -= (gTasks[taskId].data[1] >> 8);
+
+        gTasks[taskId].data[1] &= 0xFF;
+        x = gSprites[spriteId].x + gSprites[spriteId].x2;
+        if (x < -32 || x > DISPLAY_WIDTH + 32)
+        {
+            gTasks[taskId].data[1] = 0;
+            gTasks[taskId].data[0]++;
+        }
+        break;
+    case 1:
+        if (IsContest())
+        {
+            personality = gContestResources->moveAnim->personality;
+            otId = gContestResources->moveAnim->otId;
+            species = gContestResources->moveAnim->species;
+            subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
+            isBackPic = FALSE;
+            x = -32;
+        }
+        else
+        {
+            if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            {
+                personality = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_PERSONALITY);
+                otId = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_OT_ID);
+                if (gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies == SPECIES_NONE)
+                    species = GetMonData(&gPlayerParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
+                else
+                    species = gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies;
+
+                subpriority = gSprites[GetAnimBattlerSpriteId(ANIM_TARGET)].subpriority + 1;
+                isBackPic = FALSE;
+                x = DISPLAY_WIDTH + 32;
+            }
+            else
+            {
+                personality = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_PERSONALITY);
+                otId = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_OT_ID);
+                if (gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies == SPECIES_NONE)
+                    species = GetMonData(&gEnemyParty[gBattlerPartyIndexes[gBattleAnimAttacker]], MON_DATA_SPECIES);
+                else
+                    species = gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies;
+
+                subpriority = gSprites[GetAnimBattlerSpriteId(ANIM_TARGET)].subpriority - 1;
+                isBackPic = TRUE;
+                x = -32;
+            }
+        }
+
+        spriteId2 = CreateAdditionalMonSpriteForMoveAnim(species, isBackPic, 0, x, GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y), subpriority, personality, otId, gBattleAnimAttacker, FALSE);
+        if (gBattleSpritesDataPtr->battlerData[gBattleAnimAttacker].transformSpecies != SPECIES_NONE)
+            BlendPalette(OBJ_PLTT_ID(gSprites[spriteId2].oam.paletteNum), 16, 6, RGB_WHITE);
+
+        gTasks[taskId].data[15] = spriteId2;
+        gTasks[taskId].data[0]++;
+        break;
+    case 2:
+        spriteId2 = gTasks[taskId].data[15];
+        gTasks[taskId].data[1] += 0x800;
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            gSprites[spriteId2].x2 -= (gTasks[taskId].data[1] >> 8);
+        else
+            gSprites[spriteId2].x2 += (gTasks[taskId].data[1] >> 8);
+
+        gTasks[taskId].data[1] &= 0xFF;
+        x = gSprites[spriteId2].x + gSprites[spriteId2].x2;
+        if (gTasks[taskId].data[14] == 0)
+        {
+            if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            {
+                if (x < GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X))
+                {
+                    gTasks[taskId].data[14]++;
+                    gBattleAnimArgs[7] = 0xFFFF;
+                }
+            }
+            else
+            {
+                if (x > GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X))
+                {
+                    gTasks[taskId].data[14]++;
+                    gBattleAnimArgs[7] = 0xFFFF;
+                }
+            }
+        }
+
+        if (x < -32 || x > DISPLAY_WIDTH + 32)
+        {
+            gTasks[taskId].data[1] = 0;
+            gTasks[taskId].data[0]++;
+        }
+        break;
+    case 3:
+        spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+        spriteId2 = gTasks[taskId].data[15];
+        DestroySpriteAndFreeResources_(&gSprites[spriteId2]);
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            gSprites[spriteId].x2 = -gSprites[spriteId].x - 32;
+        else
+            gSprites[spriteId].x2 = DISPLAY_WIDTH + 32 - gSprites[spriteId].x;
+
+        gTasks[taskId].data[0]++;
+        break;
+    case 4:
+        spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+        gTasks[taskId].data[1] += 0x800;
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        {
+            gSprites[spriteId].x2 += (gTasks[taskId].data[1] >> 8);
+            if (gSprites[spriteId].x2 + gSprites[spriteId].x >= GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X))
+                gSprites[spriteId].x2 = 0;
+        }
+        else
+        {
+            gSprites[spriteId].x2 -= (gTasks[taskId].data[1] >> 8);
+            if (gSprites[spriteId].x2 + gSprites[spriteId].x <= GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X))
+                gSprites[spriteId].x2 = 0;
+        }
+
+        gTasks[taskId].data[1] &= 0xFF;
+        if (gSprites[spriteId].x2 == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
 #undef IDX_ACTIVE_SPRITES
 #undef tState
 #undef tTimer
