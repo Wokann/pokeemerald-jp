@@ -64,6 +64,8 @@ static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId);
 static void CreateSweatDroplets(u8 taskId, bool8 lowerDroplets);
 static void AnimFacadeSweatDrop(struct Sprite *sprite);
 static void AnimTask_FacadeColorBlend_Step(u8 taskId);
+static void AnimRoarNoiseLine(struct Sprite *sprite);
+static void AnimRoarNoiseLine_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2192,4 +2194,47 @@ static void AnimTask_FacadeColorBlend_Step(u8 taskId)
         BlendPalette(gTasks[taskId].data[2], 16, 0, RGB_BLACK);
         DestroyAnimVisualTask(taskId);
     }
+}
+
+static void AnimRoarNoiseLine(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
+        gBattleAnimArgs[0] = -gBattleAnimArgs[0];
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + gBattleAnimArgs[0];
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + gBattleAnimArgs[1];
+    if (gBattleAnimArgs[2] == 0)
+    {
+        sprite->data[0] = 0x280;
+        sprite->data[1] = -0x280;
+    }
+    else if (gBattleAnimArgs[2] == 1)
+    {
+        sprite->vFlip = 1;
+        sprite->data[0] = 0x280;
+        sprite->data[1] = 0x280;
+    }
+    else
+    {
+        StartSpriteAnim(sprite, 1);
+        sprite->data[0] = 0x280;
+    }
+
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+    {
+        sprite->data[0] = -sprite->data[0];
+        sprite->hFlip = 1;
+    }
+
+    sprite->callback = AnimRoarNoiseLine_Step;
+}
+
+static void AnimRoarNoiseLine_Step(struct Sprite *sprite)
+{
+    sprite->data[6] += sprite->data[0];
+    sprite->data[7] += sprite->data[1];
+    sprite->x2 = sprite->data[6] >> 8;
+    sprite->y2 = sprite->data[7] >> 8;
+    if (++sprite->data[5] == 14)
+        DestroyAnimSprite(sprite);
 }

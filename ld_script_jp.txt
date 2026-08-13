@@ -4949,6 +4949,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_FacadeColorBlend);
         src/battle_anim_effects_3.o(.text.AnimTask_FacadeColorBlend_Step);
         src/battle_anim_effects_3.o(.text.AnimTask_StatusClearedEffect);
+        src/battle_anim_effects_3.o(.text.AnimRoarNoiseLine);
+        src/battle_anim_effects_3.o(.text.AnimRoarNoiseLine_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
