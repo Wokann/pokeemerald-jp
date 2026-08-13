@@ -3832,6 +3832,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_jumpifhasnohp);
         src/battle_script_commands.o(.text.Cmd_getsecretpowereffect);
         src/battle_script_commands.o(.text.Cmd_pickup);
+        src/battle_script_commands.o(.text.Cmd_docastformchangeanimation);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

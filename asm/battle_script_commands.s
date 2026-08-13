@@ -524,55 +524,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkE6_docastformchangeanimation
-atkE6_docastformchangeanimation: @ 0x08055A0C
-	push {r4, lr}
-	ldr r4, _08055A60
-	ldr r0, _08055A64
-	ldrb r0, [r0, #0x17]
-	strb r0, [r4]
-	ldr r1, _08055A68
-	ldrb r2, [r4]
-	movs r0, #0x58
-	muls r0, r2, r0
-	adds r1, #0x50
-	adds r0, r0, r1
-	ldr r0, [r0]
-	movs r1, #0x80
-	lsls r1, r1, #0x11
-	ands r0, r1
-	ldr r3, _08055A6C
-	cmp r0, #0
-	beq _08055A3C
-	ldr r0, [r3]
-	adds r0, #0x7f
-	ldrb r1, [r0]
-	movs r2, #0x80
-	orrs r1, r2
-	strb r1, [r0]
-_08055A3C:
-	ldr r0, [r3]
-	adds r0, #0x7f
-	ldrb r2, [r0]
-	movs r0, #0
-	movs r1, #0
-	bl BtlController_EmitBattleAnimation
-	ldrb r0, [r4]
-	bl MarkBattlerForControllerExec
-	ldr r1, _08055A70
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055A60: .4byte 0x02023D08
-_08055A64: .4byte 0x02024118
-_08055A68: .4byte 0x02023D28
-_08055A6C: .4byte 0x02024140
-_08055A70: .4byte 0x02023EB8
-	thumb_func_end atkE6_docastformchangeanimation
 
 	thumb_func_start atkE7_trycastformdatachange
 atkE7_trycastformdatachange: @ 0x08055A74
