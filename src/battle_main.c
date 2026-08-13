@@ -70,6 +70,7 @@ extern u8 sUnusedBattlersArray[];
 extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
 extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (register-sensitive, kept in asm)
 extern void SwitchInClearSetData(void); // JP asm 0x08039EC8 (register-sensitive, kept in asm)
+extern void FaintClearSetData(void); // JP asm 0x0803A3A0 (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1944,6 +1945,7 @@ void SpriteCB_FaintSlideAnim(struct Sprite *sprite)
 void BeginBattleIntroDummy(void)
 {
 }
+
 
 
 #define sSinIndex           data[0]

@@ -78,6 +78,7 @@ gLastHitBy = ABSOLUTE(0x02023F14);
 gLockedMoves = ABSOLUTE(0x02023EE4);
 gLastPrintedMoves = ABSOLUTE(0x02023F0C);
 gMoveResultFlags = ABSOLUTE(0x02023F20);
+gProtectStructs = ABSOLUTE(0x02023FE0);
 gBattleAnimBgTileBuffer = ABSOLUTE(0x02022D00);
 gBattleAnimBgTilemapBuffer = ABSOLUTE(0x02022D04);
 sCurrItemAndOptionMenuCheck = ABSOLUTE(0x020229BA);
