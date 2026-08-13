@@ -329,17 +329,17 @@ gUnknown_82423E1: @ 0x82423E1
 gUnknown_824252E: @ 0x824252E
 	.include "data/scripts/gUnknown_824252E.inc"
 
-	.globl gUnknown_8242678
-gUnknown_8242678: @ 0x8242678
-	.include "data/scripts/gUnknown_8242678.inc"
+	.globl EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags
+EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags: @ 0x8242678
+	.include "data/scripts/EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags.inc"
 
 	.globl gUnknown_82428F1
 gUnknown_82428F1: @ 0x82428F1
 	.include "data/scripts/gUnknown_82428F1.inc"
 
-	.globl gUnknown_82428FC
-gUnknown_82428FC: @ 0x82428FC
-	.include "data/scripts/gUnknown_82428FC.inc"
+	.globl Common_EventScript_PkmnCenterNurse
+Common_EventScript_PkmnCenterNurse: @ 0x82428FC
+	.include "data/scripts/Common_EventScript_PkmnCenterNurse.inc"
 gUnknown_8242B6D: @ 0x8242B6D
 	.include "data/scripts/gUnknown_8242B6D.inc"
 gUnknown_8242C4F: @ 0x8242C4F
@@ -351,9 +351,9 @@ gUnknown_8242C95: @ 0x8242C95
 gUnknown_8242D49: @ 0x8242D49
 	.include "data/scripts/gUnknown_8242D49.inc"
 
-	.globl gUnknown_8242E1E
-gUnknown_8242E1E: @ 0x8242E1E
-	.include "data/scripts/gUnknown_8242E1E.inc"
+	.globl EventScript_PC
+EventScript_PC: @ 0x8242E1E
+	.include "data/scripts/EventScript_PC.inc"
 
 	.globl gUnknown_8242F2C
 gUnknown_8242F2C: @ 0x8242F2C
@@ -413,9 +413,9 @@ gUnknown_8244749: @ 0x8244749
 gUnknown_8244CF3: @ 0x8244CF3
 	.include "data/scripts/gUnknown_8244CF3.inc"
 
-	.globl gUnknown_8244D10
-gUnknown_8244D10: @ 0x8244D10
-	.include "data/scripts/gUnknown_8244D10.inc"
+	.globl EventScript_TryGetTrainerScript
+EventScript_TryGetTrainerScript: @ 0x8244D10
+	.include "data/scripts/EventScript_TryGetTrainerScript.inc"
 
 	.globl BerryTreeScript
 	.globl BerryTreeScript
@@ -484,9 +484,9 @@ gUnknown_82465B5: @ 0x82465B5
 gUnknown_82465B9: @ 0x82465B9
 	.include "data/scripts/gUnknown_82465B9.inc"
 
-	.globl gUnknown_8247044
-gUnknown_8247044: @ 0x8247044
-	.include "data/scripts/gUnknown_8247044.inc"
+	.globl EventScript_CableBoxResults
+EventScript_CableBoxResults: @ 0x8247044
+	.include "data/scripts/EventScript_CableBoxResults.inc"
 
 	.globl Colosseum_PlayerSpot0
 	.globl Colosseum_PlayerSpot1
@@ -499,13 +499,13 @@ gUnknown_8247044: @ 0x8247044
 	.globl EventScript_MixRecordsSpot1
 	.globl EventScript_MixRecordsSpot2
 	.globl EventScript_MixRecordsSpot3
-	.globl gUnknown_82470D4
-gUnknown_82470D4: @ 0x82470D4
-	.include "data/scripts/gUnknown_82470D4.inc"
+	.globl EventScript_TradeCenter_Chair0
+EventScript_TradeCenter_Chair0: @ 0x82470D4
+	.include "data/scripts/EventScript_TradeCenter_Chair0.inc"
 
-	.globl gUnknown_82470DE
-gUnknown_82470DE: @ 0x82470DE
-	.include "data/scripts/gUnknown_82470DE.inc"
+	.globl EventScript_TradeCenter_Chair1
+EventScript_TradeCenter_Chair1: @ 0x82470DE
+	.include "data/scripts/EventScript_TradeCenter_Chair1.inc"
 
 	.include "data/scripts/record_mix.inc"
 gUnknown_824715D: @ 0x824715D
@@ -711,9 +711,9 @@ gUnknown_825941F: @ 0x825941F
 gUnknown_8262393: @ 0x8262393
 	.include "data/scripts/gUnknown_8262393.inc"
 
-	.globl gUnknown_82623AA
-gUnknown_82623AA: @ 0x82623AA
-	.include "data/scripts/gUnknown_82623AA.inc"
+	.globl SafariZone_EventScript_Exit
+SafariZone_EventScript_Exit: @ 0x82623AA
+	.include "data/scripts/SafariZone_EventScript_Exit.inc"
 
 	.globl gUnknown_82623CD
 gUnknown_82623CD: @ 0x82623CD
