@@ -364,3 +364,67 @@ void UnmarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
         }
     }
 }
+
+void UpdatePulseBlend(struct PulseBlend *pulseBlend)
+{
+    struct PulseBlendPalette *pulseBlendPalette;
+    u8 i = 0;
+
+    if (pulseBlend->usedPulseBlendPalettes)
+    {
+        for (i = 0; i < 16; i++)
+        {
+            pulseBlendPalette = &pulseBlend->pulseBlendPalettes[i];
+            if ((!pulseBlendPalette->available && pulseBlendPalette->inUse) && (!gPaletteFade.active || !pulseBlendPalette->pulseBlendSettings.unk7_7))
+            {
+                if (--pulseBlendPalette->delayCounter == 0xFF)
+                {
+                    pulseBlendPalette->delayCounter = pulseBlendPalette->pulseBlendSettings.delay;
+                    BlendPalette(pulseBlendPalette->pulseBlendSettings.paletteOffset, pulseBlendPalette->pulseBlendSettings.numColors, pulseBlendPalette->blendCoeff, pulseBlendPalette->pulseBlendSettings.blendColor);
+                    switch (pulseBlendPalette->pulseBlendSettings.fadeType)
+                    {
+                    case 0: // Fade all the way to the max blend amount, then wrap around
+                        if (pulseBlendPalette->blendCoeff++ == pulseBlendPalette->pulseBlendSettings.maxBlendCoeff)
+                        {
+                            pulseBlendPalette->fadeCycleCounter++;
+                            pulseBlendPalette->blendCoeff = 0;
+                        }
+                        break;
+                    case 1: // Fade in and out
+                        if (pulseBlendPalette->fadeDirection)
+                        {
+                            if (--pulseBlendPalette->blendCoeff == 0)
+                            {
+                                pulseBlendPalette->fadeCycleCounter++;
+                                pulseBlendPalette->fadeDirection ^= 1;
+                            }
+                        }
+                        else
+                        {
+                            u8 max = (pulseBlendPalette->pulseBlendSettings.maxBlendCoeff - 1) & 0xF;
+                            if (pulseBlendPalette->blendCoeff++ == max)
+                            {
+                                pulseBlendPalette->fadeCycleCounter++;
+                                pulseBlendPalette->fadeDirection ^= 1;
+                            }
+                        }
+                        break;
+                    case 2: // Flip back and forth
+                        if (pulseBlendPalette->fadeDirection)
+                            pulseBlendPalette->blendCoeff = 0;
+                        else
+                            pulseBlendPalette->blendCoeff = pulseBlendPalette->pulseBlendSettings.maxBlendCoeff & 0xF;
+
+                        pulseBlendPalette->fadeDirection ^= 1;
+                        pulseBlendPalette->fadeCycleCounter++;
+                        break;
+                    }
+
+                    if (pulseBlendPalette->pulseBlendSettings.numFadeCycles != 0xFF
+                     && pulseBlendPalette->fadeCycleCounter == pulseBlendPalette->pulseBlendSettings.numFadeCycles)
+                        UnmarkUsedPulseBlendPalettes(pulseBlend, pulseBlendPalette->paletteSelector, FALSE);
+                }
+            }
+        }
+    }
+}
