@@ -44,58 +44,6 @@
 
 
 
-	thumb_func_start FreeResetData_ReturnToOvOrDoEvolutions
-FreeResetData_ReturnToOvOrDoEvolutions: @ 0x0803DA80
-	push {lr}
-	ldr r0, _0803DAAC
-	ldrb r1, [r0, #7]
-	movs r0, #0x80
-	ands r0, r1
-	cmp r0, #0
-	bne _0803DAC6
-	bl ResetSpriteData
-	ldr r0, _0803DAB0
-	ldrb r0, [r0]
-	cmp r0, #0
-	beq _0803DAA2
-	ldr r0, _0803DAB4
-	ldrb r0, [r0]
-	cmp r0, #1
-	beq _0803DAC0
-_0803DAA2:
-	ldr r1, _0803DAB8
-	ldr r0, _0803DABC
-	str r0, [r1]
-	b _0803DAE2
-	.align 2, 0
-_0803DAAC: .4byte 0x02037C74
-_0803DAB0: .4byte 0x03005AB4
-_0803DAB4: .4byte 0x02023FDE
-_0803DAB8: .4byte 0x03005A64
-_0803DABC: .4byte 0x0803DBB1
-_0803DAC0:
-	ldr r1, _0803DAE8
-	ldr r0, _0803DAEC
-	str r0, [r1]
-_0803DAC6:
-	bl FreeAllWindowBuffers
-	ldr r0, _0803DAF0
-	ldr r0, [r0]
-	movs r1, #2
-	ands r0, r1
-	cmp r0, #0
-	bne _0803DAE2
-	bl FreeMonSpritesGfx
-	bl FreeBattleResources
-	bl FreeBattleSpritesData
-_0803DAE2:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803DAE8: .4byte 0x03005A64
-_0803DAEC: .4byte 0x0803DAF5
-_0803DAF0: .4byte 0x02022C90
-	thumb_func_end FreeResetData_ReturnToOvOrDoEvolutions
 
 	thumb_func_start TryEvolvePokemon
 TryEvolvePokemon: @ 0x0803DAF4
