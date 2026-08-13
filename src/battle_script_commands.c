@@ -1401,6 +1401,7 @@ u8 GetBattlerTurnOrderNum(u8 battler)
 extern const u32 sStatusFlagsForMoveEffects[];
 extern const u8 *const sMoveEffectBS_Ptrs[];
 extern const u16 gTrappingMoves[];
+extern const u8 *const gBattleScriptsForMoveEffects[];
 u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr);
 
 void SetMoveEffect(bool8 primary, u8 certain)
@@ -3379,4 +3380,294 @@ static void Cmd_playstatchangeanimation(void)
     {
         gBattlescriptCurrInstr += 4;
     }
+}
+
+static void Cmd_moveend(void)
+{
+    s32 i;
+    bool32 effect = FALSE;
+    u8 moveType = 0;
+    u8 holdEffectAtk = 0;
+    u16 *choicedMoveAtk = NULL;
+    u8 endMode, endState;
+    u16 originallyUsedMove;
+
+    if (gChosenMove == MOVE_UNAVAILABLE)
+        originallyUsedMove = MOVE_NONE;
+    else
+        originallyUsedMove = gChosenMove;
+
+    endMode = gBattlescriptCurrInstr[1];
+    endState = gBattlescriptCurrInstr[2];
+
+    if (gBattleMons[gBattlerAttacker].item == ITEM_ENIGMA_BERRY)
+        holdEffectAtk = gEnigmaBerries[gBattlerAttacker].holdEffect;
+    else
+        holdEffectAtk = GetItemHoldEffect(gBattleMons[gBattlerAttacker].item);
+
+    choicedMoveAtk = &gBattleStruct->choicedMove[gBattlerAttacker];
+    GET_MOVE_TYPE(gCurrentMove, moveType);
+
+    do
+    {
+        switch (gBattleScripting.moveendState)
+        {
+        case MOVEEND_RAGE: // rage check
+            if (gBattleMons[gBattlerTarget].status2 & STATUS2_RAGE
+                && gBattleMons[gBattlerTarget].hp != 0
+                && gBattlerAttacker != gBattlerTarget
+                && GetBattlerSide(gBattlerAttacker) != GetBattlerSide(gBattlerTarget)
+                && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                && TARGET_TURN_DAMAGED
+                && gBattleMoves[gCurrentMove].power != 0
+                && gBattleMons[gBattlerTarget].statStages[STAT_ATK] < MAX_STAT_STAGE)
+            {
+                gBattleMons[gBattlerTarget].statStages[STAT_ATK]++;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_RageIsBuilding;
+                effect = TRUE;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_DEFROST: // defrosting check
+            if (gBattleMons[gBattlerTarget].status1 & STATUS1_FREEZE
+                && gBattleMons[gBattlerTarget].hp != 0
+                && gBattlerAttacker != gBattlerTarget
+                && gSpecialStatuses[gBattlerTarget].specialDmg
+                && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+                && moveType == TYPE_FIRE)
+            {
+                gBattleMons[gBattlerTarget].status1 &= ~STATUS1_FREEZE;
+                gActiveBattler = gBattlerTarget;
+                BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, 0, sizeof(gBattleMons[gBattlerTarget].status1), &gBattleMons[gBattlerTarget].status1);
+                MarkBattlerForControllerExec(gActiveBattler);
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_DefrostedViaFireMove;
+                effect = TRUE;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_SYNCHRONIZE_TARGET: // target synchronize
+            if (AbilityBattleEffects(ABILITYEFFECT_SYNCHRONIZE, gBattlerTarget, 0, 0, 0))
+                effect = TRUE;
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_ON_DAMAGE_ABILITIES: // Such as abilities activating on contact (Effect Spore, Rough Skin, etc.).
+            if (AbilityBattleEffects(ABILITYEFFECT_ON_DAMAGE, gBattlerTarget, 0, 0, 0))
+                effect = TRUE;
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_IMMUNITY_ABILITIES: // status immunities
+            if (AbilityBattleEffects(ABILITYEFFECT_IMMUNITY, 0, 0, 0, 0))
+                effect = TRUE; // it loops through all battlers, so we increment after its done with all battlers
+            else
+                gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_SYNCHRONIZE_ATTACKER: // attacker synchronize
+            if (AbilityBattleEffects(ABILITYEFFECT_ATK_SYNCHRONIZE, gBattlerAttacker, 0, 0, 0))
+                effect = TRUE;
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_CHOICE_MOVE: // update choice band move
+            if (gHitMarker & HITMARKER_OBEYS
+             && holdEffectAtk == HOLD_EFFECT_CHOICE_BAND
+             && gChosenMove != MOVE_STRUGGLE
+             && (*choicedMoveAtk == MOVE_NONE || *choicedMoveAtk == MOVE_UNAVAILABLE))
+            {
+                if (gChosenMove == MOVE_BATON_PASS && !(gMoveResultFlags & MOVE_RESULT_FAILED))
+                {
+                    gBattleScripting.moveendState++;
+                    break;
+                }
+                *choicedMoveAtk = gChosenMove;
+            }
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                if (gBattleMons[gBattlerAttacker].moves[i] == *choicedMoveAtk)
+                    break;
+            }
+            if (i == MAX_MON_MOVES)
+                *choicedMoveAtk = MOVE_NONE;
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_CHANGED_ITEMS: // changed held items
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                u16 *changedItem = &gBattleStruct->changedItems[i];
+                if (*changedItem != ITEM_NONE)
+                {
+                    gBattleMons[i].item = *changedItem;
+                    *changedItem = ITEM_NONE;
+                }
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_ITEM_EFFECTS_ALL: // item effects for all battlers
+            if (ItemBattleEffects(ITEMEFFECT_MOVE_END, 0, FALSE))
+                effect = TRUE;
+            else
+                gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_KINGSROCK_SHELLBELL: // king's rock and shell bell
+            if (ItemBattleEffects(ITEMEFFECT_KINGSROCK_SHELLBELL, 0, FALSE))
+                effect = TRUE;
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_ATTACKER_INVISIBLE: // make attacker sprite invisible
+            if (gStatuses3[gBattlerAttacker] & (STATUS3_SEMI_INVULNERABLE)
+                && gHitMarker & HITMARKER_NO_ANIMATIONS)
+            {
+                gActiveBattler = gBattlerAttacker;
+                BtlController_EmitSpriteInvisibility(B_COMM_TO_CONTROLLER, TRUE);
+                MarkBattlerForControllerExec(gActiveBattler);
+                gBattleScripting.moveendState++;
+                return;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_ATTACKER_VISIBLE: // make attacker sprite visible
+            if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT
+                || !(gStatuses3[gBattlerAttacker] & (STATUS3_SEMI_INVULNERABLE))
+                || WasUnableToUseMove(gBattlerAttacker))
+            {
+                gActiveBattler = gBattlerAttacker;
+                BtlController_EmitSpriteInvisibility(B_COMM_TO_CONTROLLER, FALSE);
+                MarkBattlerForControllerExec(gActiveBattler);
+                gStatuses3[gBattlerAttacker] &= ~STATUS3_SEMI_INVULNERABLE;
+                gSpecialStatuses[gBattlerAttacker].restoredBattlerSprite = 1;
+                gBattleScripting.moveendState++;
+                return;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_TARGET_VISIBLE: // make target sprite visible
+            if (!gSpecialStatuses[gBattlerTarget].restoredBattlerSprite && gBattlerTarget < gBattlersCount
+                && !(gStatuses3[gBattlerTarget] & STATUS3_SEMI_INVULNERABLE))
+            {
+                gActiveBattler = gBattlerTarget;
+                BtlController_EmitSpriteInvisibility(B_COMM_TO_CONTROLLER, FALSE);
+                MarkBattlerForControllerExec(gActiveBattler);
+                gStatuses3[gBattlerTarget] &= ~STATUS3_SEMI_INVULNERABLE;
+                gBattleScripting.moveendState++;
+                return;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_SUBSTITUTE: // update substitute
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                if (gDisableStructs[i].substituteHP == 0)
+                    gBattleMons[i].status2 &= ~STATUS2_SUBSTITUTE;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_UPDATE_LAST_MOVES:
+            if (gHitMarker & HITMARKER_SWAP_ATTACKER_TARGET)
+            {
+                gActiveBattler = gBattlerAttacker;
+                gBattlerAttacker = gBattlerTarget;
+                gBattlerTarget = gActiveBattler;
+                gHitMarker &= ~HITMARKER_SWAP_ATTACKER_TARGET;
+            }
+            if (gHitMarker & HITMARKER_ATTACKSTRING_PRINTED)
+            {
+                gLockedMoves[gBattlerAttacker] = gChosenMove;
+            }
+            if (!(gAbsentBattlerFlags & gBitTable[gBattlerAttacker])
+                && !(gBattleStruct->absentBattlerFlags & gBitTable[gBattlerAttacker])
+                && gBattleMoves[originallyUsedMove].effect != EFFECT_BATON_PASS)
+            {
+                if (gHitMarker & HITMARKER_OBEYS)
+                {
+                    gLastMoves[gBattlerAttacker] = gChosenMove;
+                    gLastHitByType[gBattlerAttacker] = gCurrentMove;
+                }
+                else
+                {
+                    gLastMoves[gBattlerAttacker] = MOVE_UNAVAILABLE;
+                    gLastHitByType[gBattlerAttacker] = MOVE_UNAVAILABLE;
+                }
+
+                if (!(gHitMarker & HITMARKER_FAINTED(gBattlerTarget)))
+                    gLastHitBy[gBattlerTarget] = gBattlerAttacker;
+
+                if (gHitMarker & HITMARKER_OBEYS && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+                {
+                    if (gChosenMove == MOVE_UNAVAILABLE)
+                    {
+                        gLastLandedMoves[gBattlerTarget] = gChosenMove;
+                    }
+                    else
+                    {
+                        gLastLandedMoves[gBattlerTarget] = gCurrentMove;
+                        GET_MOVE_TYPE(gCurrentMove, gLastResultingMoves[gBattlerTarget]);
+                    }
+                }
+                else
+                {
+                    gLastLandedMoves[gBattlerTarget] = MOVE_UNAVAILABLE;
+                }
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_MIRROR_MOVE: // mirror move
+            if (!(gAbsentBattlerFlags & gBitTable[gBattlerAttacker])
+                && !(gBattleStruct->absentBattlerFlags & gBitTable[gBattlerAttacker])
+                && gBattleMoves[originallyUsedMove].flags & FLAG_MIRROR_MOVE_AFFECTED
+                && gHitMarker & HITMARKER_OBEYS
+                && gBattlerAttacker != gBattlerTarget
+                && !(gHitMarker & HITMARKER_FAINTED(gBattlerTarget))
+                && !(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+            {
+                u8 target, attacker;
+
+                *(gBattleStruct->lastTakenMove + gBattlerTarget * 2 + 0) = gChosenMove;
+                *(gBattleStruct->lastTakenMove + gBattlerTarget * 2 + 1) = gChosenMove >> 8;
+
+                target = gBattlerTarget;
+                attacker = gBattlerAttacker;
+                *(attacker * 2 + target * 8 + (u8 *)(gBattleStruct->lastTakenMoveFrom) + 0) = gChosenMove;
+
+                target = gBattlerTarget;
+                attacker = gBattlerAttacker;
+                *(attacker * 2 + target * 8 + (u8 *)(gBattleStruct->lastTakenMoveFrom) + 1) = gChosenMove >> 8;
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_NEXT_TARGET: // For moves hitting two opposing Pokemon.
+            if (!(gHitMarker & HITMARKER_UNABLE_TO_USE_MOVE) && gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+                && !gProtectStructs[gBattlerAttacker].chargingTurn && gBattleMoves[gCurrentMove].target == MOVE_TARGET_BOTH
+                && !(gHitMarker & HITMARKER_NO_ATTACKSTRING))
+            {
+                u8 battler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerTarget)));
+                if (gBattleMons[battler].hp != 0)
+                {
+                    gBattlerTarget = battler;
+                    gHitMarker |= HITMARKER_NO_ATTACKSTRING;
+                    gBattleScripting.moveendState = 0;
+                    MoveValuesCleanUp();
+                    BattleScriptPush(gBattleScriptsForMoveEffects[gBattleMoves[gCurrentMove].effect]);
+                    gBattlescriptCurrInstr = BattleScript_FlushMessageBox;
+                    return;
+                }
+                else
+                {
+                    gHitMarker |= HITMARKER_NO_ATTACKSTRING;
+                }
+            }
+            gBattleScripting.moveendState++;
+            break;
+        case MOVEEND_COUNT:
+            break;
+        }
+
+        if (endMode == 1 && effect == FALSE)
+            gBattleScripting.moveendState = MOVEEND_COUNT;
+        if (endMode == 2 && endState == gBattleScripting.moveendState)
+            gBattleScripting.moveendState = MOVEEND_COUNT;
+
+    } while (gBattleScripting.moveendState != MOVEEND_COUNT && effect == FALSE);
+
+    if (gBattleScripting.moveendState == MOVEEND_COUNT && effect == FALSE)
+        gBattlescriptCurrInstr += 3;
 }
