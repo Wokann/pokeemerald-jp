@@ -527,3 +527,43 @@ static void SpriteCB_Player(struct Sprite *sprite)
         }
     }
 }
+
+#undef sState
+#undef sTimer
+
+#define sTimer      data[0]
+#define sSameDir    data[1]
+#define sDelay      data[2]
+
+static void SpriteCB_HikerGoingUp(struct Sprite *sprite)
+{
+    if (sprite->sTimer == 0)
+    {
+        sprite->x += 2 * sprite->centerToCornerVecX;
+        sprite->y += 16 + sprite->centerToCornerVecY;
+    }
+
+    if (++sprite->sTimer >= sprite->sDelay)
+    {
+        switch (sprite->sSameDir)
+        {
+        case FALSE:
+            sprite->x++;
+            if ((sprite->sTimer % 4) == 0)
+                sprite->y++;
+            break;
+        case TRUE:
+            // Hiker moves slower if travelling with the Cable Car
+            if ((sprite->sTimer % 2) != 0)
+            {
+                sprite->x++;
+                if ((sprite->x % 4) == 0)
+                    sprite->y++;
+            }
+            break;
+        }
+
+        if (sprite->y > DISPLAY_HEIGHT)
+            DestroySprite(sprite);
+    }
+}
