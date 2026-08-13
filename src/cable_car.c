@@ -465,3 +465,23 @@ void AnimateGroundGoingDown(void)
 void nullsub_58(void)
 {
 }
+
+#define sXPos data[0]
+#define sYPos data[1]
+
+static void SpriteCB_CableCar(struct Sprite *sprite)
+{
+    if (sCableCar->state != STATE_END)
+    {
+        if (!GOING_DOWN)
+        {
+            sprite->x = sprite->sXPos - (u8)(0.14f * S16TOPOSFLOAT(sCableCar->timer));
+            sprite->y = sprite->sYPos - (u8)(0.067f * S16TOPOSFLOAT(sCableCar->timer));
+        }
+        else
+        {
+            sprite->x = sprite->sXPos + (u8)(0.14f * S16TOPOSFLOAT(sCableCar->timer));
+            sprite->y = sprite->sYPos + (u8)(0.067f * S16TOPOSFLOAT(sCableCar->timer));
+        }
+    }
+}
