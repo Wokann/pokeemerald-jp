@@ -1528,6 +1528,7 @@ static void Cmd_clearsemiinvulnerablebit(void);
 static void Cmd_setminimize(void);
 static void Cmd_sethail(void);
 static void Cmd_jumpifattackandspecialattackcannotfall(void);
+static void Cmd_setforcedtarget(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8255,4 +8256,11 @@ static void Cmd_jumpifattackandspecialattackcannotfall(void)
         MarkBattlerForControllerExec(gActiveBattler);
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_setforcedtarget(void)
+{
+    gSideTimers[GetBattlerSide(gBattlerAttacker)].followmeTimer = 1;
+    gSideTimers[GetBattlerSide(gBattlerAttacker)].followmeTarget = gBattlerAttacker;
+    gBattlescriptCurrInstr++;
 }

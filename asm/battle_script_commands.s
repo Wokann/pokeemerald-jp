@@ -496,43 +496,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkCA_setforcedtarget
-atkCA_setforcedtarget: @ 0x0805474C
-	push {r4, r5, lr}
-	ldr r4, _0805478C
-	ldrb r0, [r4]
-	bl GetBattlerSide
-	ldr r5, _08054790
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	lsls r1, r0, #1
-	adds r1, r1, r0
-	lsls r1, r1, #2
-	adds r1, r1, r5
-	movs r0, #1
-	strb r0, [r1, #8]
-	ldrb r0, [r4]
-	bl GetBattlerSide
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	lsls r1, r0, #1
-	adds r1, r1, r0
-	lsls r1, r1, #2
-	adds r1, r1, r5
-	ldrb r0, [r4]
-	strb r0, [r1, #9]
-	ldr r1, _08054794
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0805478C: .4byte 0x02023EAF
-_08054790: .4byte 0x02023F38
-_08054794: .4byte 0x02023EB8
-	thumb_func_end atkCA_setforcedtarget
 
 	thumb_func_start atkCB_setcharge
 atkCB_setcharge: @ 0x08054798
