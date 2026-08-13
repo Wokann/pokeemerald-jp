@@ -518,66 +518,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkE0_trysetsnatch
-atkE0_trysetsnatch: @ 0x08055530
-	push {lr}
-	ldr r2, _08055574
-	ldr r3, _08055578
-	ldrb r1, [r3]
-	lsls r0, r1, #2
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldrb r1, [r0]
-	movs r2, #0x20
-	orrs r1, r2
-	strb r1, [r0]
-	ldr r0, _0805557C
-	ldrb r1, [r0]
-	ldr r0, _08055580
-	ldrb r0, [r0]
-	subs r0, #1
-	cmp r1, r0
-	bne _08055588
-	ldr r3, _08055584
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _0805559E
-	.align 2, 0
-_08055574: .4byte 0x02024020
-_08055578: .4byte 0x02023EAF
-_0805557C: .4byte 0x02023D26
-_08055580: .4byte 0x02023D10
-_08055584: .4byte 0x02023EB8
-_08055588:
-	ldr r0, _080555A4
-	ldrb r1, [r3]
-	lsls r1, r1, #4
-	adds r1, r1, r0
-	ldrb r0, [r1]
-	orrs r0, r2
-	strb r0, [r1]
-	ldr r1, _080555A8
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_0805559E:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080555A4: .4byte 0x02023FE0
-_080555A8: .4byte 0x02023EB8
-	thumb_func_end atkE0_trysetsnatch
 
 	thumb_func_start atkE1_trygetintimidatetarget
 atkE1_trygetintimidatetarget: @ 0x080555AC
