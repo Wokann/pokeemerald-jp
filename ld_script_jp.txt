@@ -3793,6 +3793,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_recoverbasedonsunlight);
         src/battle_script_commands.o(.text.Cmd_hiddenpowercalc);
         src/battle_script_commands.o(.text.Cmd_selectfirstvalidtarget);
+        src/battle_script_commands.o(.text.Cmd_trysetfutureattack);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

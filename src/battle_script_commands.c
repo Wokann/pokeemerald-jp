@@ -1521,6 +1521,7 @@ static void Cmd_setdefensecurlbit(void);
 static void Cmd_recoverbasedonsunlight(void);
 static void Cmd_hiddenpowercalc(void);
 static void Cmd_selectfirstvalidtarget(void);
+static void Cmd_trysetfutureattack(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8087,4 +8088,32 @@ static void Cmd_selectfirstvalidtarget(void)
             break;
     }
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_trysetfutureattack(void)
+{
+    if (gWishFutureKnock.futureSightCounter[gBattlerTarget] != 0)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)] |= SIDE_STATUS_FUTUREATTACK;
+        gWishFutureKnock.futureSightMove[gBattlerTarget] = gCurrentMove;
+        gWishFutureKnock.futureSightAttacker[gBattlerTarget] = gBattlerAttacker;
+        gWishFutureKnock.futureSightCounter[gBattlerTarget] = 3;
+        gWishFutureKnock.futureSightDmg[gBattlerTarget] = CalculateBaseDamage(&gBattleMons[gBattlerAttacker], &gBattleMons[gBattlerTarget], gCurrentMove,
+                                                    gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)], 0,
+                                                    0, gBattlerAttacker, gBattlerTarget);
+
+        if (gProtectStructs[gBattlerAttacker].helpingHand)
+            gWishFutureKnock.futureSightDmg[gBattlerTarget] = gWishFutureKnock.futureSightDmg[gBattlerTarget] * 15 / 10;
+
+        if (gCurrentMove == MOVE_DOOM_DESIRE)
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DOOM_DESIRE;
+        else
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_FUTURE_SIGHT;
+
+        gBattlescriptCurrInstr += 5;
+    }
 }
