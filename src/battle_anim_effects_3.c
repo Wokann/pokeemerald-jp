@@ -82,3 +82,12 @@ static void AnimSpikes_Step2(struct Sprite *sprite)
     if (++sprite->data[1] == 16)
         DestroyAnimSprite(sprite);
 }
+
+static void AnimLeer(struct Sprite *sprite)
+{
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
+    sprite->y += gBattleAnimArgs[1];
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}

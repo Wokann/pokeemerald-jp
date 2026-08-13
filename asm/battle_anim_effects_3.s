@@ -665,33 +665,6 @@ _0815A500: .4byte 0x0000FFFF
 
 	.section .text.battle_anim_effects_3_rest2,"ax",%progbits
 
-	thumb_func_start sub_0815A6EC
-sub_0815A6EC: @ 0x0815A6EC
-	push {r4, r5, lr}
-	adds r4, r0, #0
-	bl SetSpriteCoordsToAnimAttackerCoords
-	ldr r5, _0815A71C
-	movs r0, #0
-	ldrsh r1, [r5, r0]
-	adds r0, r4, #0
-	bl SetAnimSpriteInitialXOffset
-	ldrh r0, [r5, #2]
-	ldrh r1, [r4, #0x22]
-	adds r0, r0, r1
-	strh r0, [r4, #0x22]
-	ldr r0, _0815A720
-	str r0, [r4, #0x1c]
-	ldr r1, _0815A724
-	adds r0, r4, #0
-	bl StoreSpriteCallbackInData6
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815A71C: .4byte 0x020380BE
-_0815A720: .4byte 0x080A60A1
-_0815A724: .4byte 0x080A34C5
-	thumb_func_end sub_0815A6EC
 
 	thumb_func_start sub_0815A728
 sub_0815A728: @ 0x0815A728
