@@ -1403,6 +1403,7 @@ extern const u8 *const sMoveEffectBS_Ptrs[];
 extern const u16 gTrappingMoves[];
 extern const u8 *const gBattleScriptsForMoveEffects[];
 u8 ChangeStatBuffs(s8 statValue, u8 statId, u8 flags, const u8 *BS_ptr);
+void BtlController_EmitCmd42(u8 bufferId);
 
 void SetMoveEffect(bool8 primary, u8 certain)
 {
@@ -4021,5 +4022,305 @@ static void Cmd_jumpifcantswitch(void)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
         else
             gBattlescriptCurrInstr += 6;
+    }
+}
+
+// Opens the party screen to choose a new Pokemon to send out.
+// slotId is the Pokemon to replace.
+// Note that this is not used by the Switch action, only replacing fainted Pokemon or Baton Pass
+static void ChooseMonToSendOut(u8 slotId)
+{
+    *(gActiveBattler + gBattleStruct->battlerPartyIndexes) = gBattlerPartyIndexes[gActiveBattler];
+    *(gActiveBattler + gBattleStruct->monToSwitchIntoId) = PARTY_SIZE;
+    gBattleStruct->field_93 &= ~(gBitTable[gActiveBattler]);
+
+    BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, PARTY_ACTION_SEND_OUT, slotId, ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
+    MarkBattlerForControllerExec(gActiveBattler);
+}
+
+static void Cmd_openpartyscreen(void)
+{
+    u32 flags;
+    u8 hitmarkerFaintBits;
+    u8 battler;
+    const u8 *jumpPtr;
+
+    battler = 0;
+    flags = 0;
+    jumpPtr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
+
+    if (gBattlescriptCurrInstr[1] == BS_FAINTED_LINK_MULTIPLE_1)
+    {
+        if ((gBattleTypeFlags & BATTLE_TYPE_MULTI) || !(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
+        {
+            for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+            {
+                if (gHitMarker & HITMARKER_FAINTED(gActiveBattler))
+                {
+                    if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                    {
+                        gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                        gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                        BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                    }
+                    else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                    {
+                        ChooseMonToSendOut(PARTY_SIZE);
+                        gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                    }
+                }
+                else
+                {
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+            }
+        }
+        else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+        {
+            bool8 hasReplacement_0, hasReplacement_1, hasReplacement_2, hasReplacement_3;
+
+            hitmarkerFaintBits = gHitMarker >> 28;
+
+            if (gBitTable[0] & hitmarkerFaintBits)
+            {
+                gActiveBattler = 0;
+                if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                {
+                    gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                    gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                    BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+                else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                {
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[2]);
+                    gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                }
+                else
+                {
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                    flags |= 1;
+                }
+            }
+            if (gBitTable[2] & hitmarkerFaintBits && !(gBitTable[0] & hitmarkerFaintBits))
+            {
+                gActiveBattler = 2;
+                if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                {
+                    gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                    gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                    BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+                else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                {
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[0]);
+                    gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                }
+                else if (!(flags & 1))
+                {
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+            }
+            if (gBitTable[1] & hitmarkerFaintBits)
+            {
+                gActiveBattler = 1;
+                if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                {
+                    gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                    gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                    BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+                else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                {
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[3]);
+                    gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                }
+                else
+                {
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                    flags |= 2;
+                }
+            }
+            if (gBitTable[3] & hitmarkerFaintBits && !(gBitTable[1] & hitmarkerFaintBits))
+            {
+                gActiveBattler = 3;
+                if (HasNoMonsToSwitch(gActiveBattler, PARTY_SIZE, PARTY_SIZE))
+                {
+                    gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                    gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                    BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+                else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                {
+                    ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[1]);
+                    gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                }
+                else if (!(flags & 2))
+                {
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+            }
+
+            hasReplacement_0 = gSpecialStatuses[0].faintedHasReplacement;
+            if (!hasReplacement_0)
+            {
+                hasReplacement_2 = gSpecialStatuses[2].faintedHasReplacement;
+                if (!hasReplacement_2 && hitmarkerFaintBits != 0)
+                {
+                    if (gAbsentBattlerFlags & gBitTable[0])
+                        gActiveBattler = 2;
+                    else
+                        gActiveBattler = 0;
+
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+
+            }
+            hasReplacement_1 = gSpecialStatuses[1].faintedHasReplacement;
+            if (!hasReplacement_1)
+            {
+                hasReplacement_3 = gSpecialStatuses[3].faintedHasReplacement;
+                if (!hasReplacement_3 && hitmarkerFaintBits != 0)
+                {
+                    if (gAbsentBattlerFlags & gBitTable[1])
+                        gActiveBattler = 3;
+                    else
+                        gActiveBattler = 1;
+
+                    BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                    MarkBattlerForControllerExec(gActiveBattler);
+                }
+            }
+        }
+        gBattlescriptCurrInstr += 6;
+    }
+    else if (gBattlescriptCurrInstr[1] == BS_FAINTED_LINK_MULTIPLE_2)
+    {
+        if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+        {
+            if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+            {
+                hitmarkerFaintBits = gHitMarker >> 28;
+                if (gBitTable[2] & hitmarkerFaintBits && gBitTable[0] & hitmarkerFaintBits)
+                {
+                    gActiveBattler = 2;
+                    if (HasNoMonsToSwitch(gActiveBattler, gBattleBufferB[0][1], PARTY_SIZE))
+                    {
+                        gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                        gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                        BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                    }
+                    else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                    {
+                        ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[0]);
+                        gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                    }
+                }
+                if (gBitTable[3] & hitmarkerFaintBits && hitmarkerFaintBits & gBitTable[1])
+                {
+                    gActiveBattler = 3;
+                    if (HasNoMonsToSwitch(gActiveBattler, gBattleBufferB[1][1], PARTY_SIZE))
+                    {
+                        gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+                        gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+                        BtlController_EmitCmd42(B_COMM_TO_CONTROLLER);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                    }
+                    else if (!gSpecialStatuses[gActiveBattler].faintedHasReplacement)
+                    {
+                        ChooseMonToSendOut(gBattleStruct->monToSwitchIntoId[1]);
+                        gSpecialStatuses[gActiveBattler].faintedHasReplacement = TRUE;
+                    }
+                }
+                gBattlescriptCurrInstr += 6;
+            }
+            else
+            {
+                // Not multi or double battle
+                gBattlescriptCurrInstr += 6;
+            }
+        }
+        else
+        {
+            // Multi battle
+            gBattlescriptCurrInstr += 6;
+        }
+
+        hitmarkerFaintBits = gHitMarker >> 28;
+
+        gBattlerFainted = 0;
+        while (!(gBitTable[gBattlerFainted] & hitmarkerFaintBits)
+               && gBattlerFainted < gBattlersCount)
+            gBattlerFainted++;
+
+        if (gBattlerFainted == gBattlersCount)
+            gBattlescriptCurrInstr = jumpPtr;
+    }
+    else
+    {
+        if (gBattlescriptCurrInstr[1] & PARTY_SCREEN_OPTIONAL)
+            hitmarkerFaintBits = PARTY_ACTION_CHOOSE_MON; // Used here as the caseId for the EmitChoose function.
+        else
+            hitmarkerFaintBits = PARTY_ACTION_SEND_OUT;
+
+        battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1] & ~PARTY_SCREEN_OPTIONAL);
+        if (gSpecialStatuses[battler].faintedHasReplacement)
+        {
+            gBattlescriptCurrInstr += 6;
+        }
+        else if (HasNoMonsToSwitch(battler, PARTY_SIZE, PARTY_SIZE))
+        {
+            gActiveBattler = battler;
+            gAbsentBattlerFlags |= gBitTable[gActiveBattler];
+            gHitMarker &= ~HITMARKER_FAINTED(gActiveBattler);
+            gBattlescriptCurrInstr = jumpPtr;
+        }
+        else
+        {
+            gActiveBattler = battler;
+            *(gActiveBattler + gBattleStruct->battlerPartyIndexes) = gBattlerPartyIndexes[gActiveBattler];
+            *(gActiveBattler + gBattleStruct->monToSwitchIntoId) = PARTY_SIZE;
+            gBattleStruct->field_93 &= ~(gBitTable[gActiveBattler]);
+
+            BtlController_EmitChoosePokemon(B_COMM_TO_CONTROLLER, hitmarkerFaintBits, *(BATTLE_PARTNER(gActiveBattler) + gBattleStruct->monToSwitchIntoId), ABILITY_NONE, gBattleStruct->battlerPartyOrders[gActiveBattler]);
+            MarkBattlerForControllerExec(gActiveBattler);
+
+            gBattlescriptCurrInstr += 6;
+
+            if (GetBattlerPosition(gActiveBattler) == B_POSITION_PLAYER_LEFT && gBattleResults.playerSwitchesCounter < 255)
+                gBattleResults.playerSwitchesCounter++;
+
+            if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+            {
+                for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+                {
+                    if (gActiveBattler != battler)
+                    {
+                        BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                        MarkBattlerForControllerExec(gActiveBattler);
+                    }
+                }
+            }
+            else
+            {
+                gActiveBattler = GetBattlerAtPosition(BATTLE_OPPOSITE(GetBattlerPosition(battler)));
+                if (gAbsentBattlerFlags & gBitTable[gActiveBattler])
+                    gActiveBattler ^= BIT_FLANK;
+
+                BtlController_EmitLinkStandbyMsg(B_COMM_TO_CONTROLLER, LINK_STANDBY_MSG_ONLY, FALSE);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+        }
     }
 }
