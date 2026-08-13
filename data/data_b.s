@@ -1890,9 +1890,13 @@ gUnknown_82D29B8: @ 0x82D29B8
 gUnknown_82D2A08: @ 0x82D2A08
 	.incbin "baserom_jp.gba", 0x2d2a08, 0x50
 
-	.globl gUnknown_82D2A58
-gUnknown_82D2A58: @ 0x82D2A58
-	.incbin "baserom_jp.gba", 0x2d2a58, 0x450
+	.globl sTilesPerImage
+sTilesPerImage: @ 0x82D2A58 (JP: digit_obj_util.c sTilesPerImage[4][4])
+	.incbin "baserom_jp.gba", 0x2d2a58, 0x10
+
+	.globl gUnknown_82D2A68
+gUnknown_82D2A68: @ 0x82D2A68
+	.incbin "baserom_jp.gba", 0x2d2a68, 0x440
 
 	.globl gUnknown_82D2EA8
 gUnknown_82D2EA8: @ 0x82D2EA8
@@ -2038,9 +2042,13 @@ gUnknown_82EBA00: @ 0x82EBA00
 gUnknown_82EBAC8: @ 0x82EBAC8
 	.incbin "baserom_jp.gba", 0x2ebac8, 0x18
 
-	.globl gUnknown_82EBAE0
-gUnknown_82EBAE0: @ 0x82EBAE0
-	.incbin "baserom_jp.gba", 0x2ebae0, 0x50
+	.globl gUnusedBattleInitSprite
+gUnusedBattleInitSprite: @ 0x82EBAE0 (JP: struct SpriteTemplate)
+	.incbin "baserom_jp.gba", 0x2ebae0, 0x18
+
+	.globl gUnknown_82EBAEF8
+gUnknown_82EBAEF8: @ 0x82EBAEF8
+	.incbin "baserom_jp.gba", 0x2ebaf8, 0x38
 
 	.globl gUnknown_82EBB30
 gUnknown_82EBB30: @ 0x82EBB30

@@ -473,7 +473,7 @@ sub_081523D0: @ 0x081523D0
 	lsrs r0, r0, #6
 	ldrb r1, [r4, #3]
 	lsrs r1, r1, #6
-	bl sub_08035450
+	bl GetTilesPerImage
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	muls r0, r6, r0
@@ -781,4 +781,3 @@ _08152620: .4byte 0xFFFFFE00
 _08152624: .4byte 0x03002598
 _08152628: .4byte 0x082BF2F8
 	thumb_func_end sub_081525AC
-
