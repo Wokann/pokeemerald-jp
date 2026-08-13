@@ -795,6 +795,7 @@ GetBattleBgPaletteNum = sub_080A665C;
 gBattleAnimArgs = gUnknown_20380BE;
 gBattleAnimAttacker = gUnknown_20380D6;
 gBattleAnimTarget = gUnknown_20380D7;
+AnimSpotlight_Step2 = sub_0815A9A8;
 CreateCableCarSprites = LoadCableCarSprites;
 sSpriteTemplates_CableCar = gUnknown_85AC9A4;
 sSpriteTemplate_Cable = gUnknown_85AC9D4;
@@ -4881,6 +4882,9 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimLetterZ);
         src/battle_anim_effects_3.o(.text.AnimFang);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest2);
+        src/battle_anim_effects_3.o(.text.AnimSpotlight);
+        src/battle_anim_effects_3.o(.text.AnimSpotlight_Step1);
+        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest3);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
         src/decoration_inventory.o(.text);
