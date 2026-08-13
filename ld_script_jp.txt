@@ -754,6 +754,7 @@ BattleScript_SuccessForceOut = gUnknown_8289360;
 BattleScript_PrintPayDayMoneyString = gUnknown_828988F;
 BattleScript_SturdyPreventsOHKO = gUnknown_8289ADA;
 BattleScript_ObliviousPreventsAttraction = gUnknown_8289B7D;
+BattleScript_MoveMissedPause = gUnknown_8286FE8;
 sMovesForbiddenToCopy = gUnknown_82ECD64;
 sFlailHpScaleToPowerTable = gUnknown_82ECD8C;
 BattleScript_ButItFailed = gUnknown_82884A4;
@@ -3770,6 +3771,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_trysetspikes);
         src/battle_script_commands.o(.text.Cmd_setforesight);
         src/battle_script_commands.o(.text.Cmd_trysetperishsong);
+        src/battle_script_commands.o(.text.Cmd_rolloutdamagecalculation);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

@@ -1505,6 +1505,7 @@ static void Cmd_cursetarget(void);
 static void Cmd_trysetspikes(void);
 static void Cmd_setforesight(void);
 static void Cmd_trysetperishsong(void);
+static void Cmd_rolloutdamagecalculation(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7680,4 +7681,39 @@ static void Cmd_trysetperishsong(void)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     else
         gBattlescriptCurrInstr += 5;
+}
+
+static void Cmd_rolloutdamagecalculation(void)
+{
+    if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+    {
+        CancelMultiTurnMoves(gBattlerAttacker);
+        gBattlescriptCurrInstr = BattleScript_MoveMissedPause;
+    }
+    else
+    {
+        s32 i;
+
+        if (!(gBattleMons[gBattlerAttacker].status2 & STATUS2_MULTIPLETURNS)) // first hit
+        {
+            gDisableStructs[gBattlerAttacker].rolloutTimer = 5;
+            gDisableStructs[gBattlerAttacker].rolloutTimerStartValue = 5;
+            gBattleMons[gBattlerAttacker].status2 |= STATUS2_MULTIPLETURNS;
+            gLastPrintedMoves[gBattlerAttacker] = gCurrentMove;
+        }
+        if (--gDisableStructs[gBattlerAttacker].rolloutTimer == 0) // last hit
+        {
+            gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_MULTIPLETURNS;
+        }
+
+        gDynamicBasePower = gBattleMoves[gCurrentMove].power;
+
+        for (i = 1; i < (5 - gDisableStructs[gBattlerAttacker].rolloutTimer); i++)
+            gDynamicBasePower *= 2;
+
+        if (gBattleMons[gBattlerAttacker].status2 & STATUS2_DEFENSE_CURL)
+            gDynamicBasePower *= 2;
+
+        gBattlescriptCurrInstr++;
+    }
 }
