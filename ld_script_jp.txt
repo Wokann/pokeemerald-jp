@@ -4981,7 +4981,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.MoveOdorSleuthClone);
         src/battle_anim_effects_3.o(.text.AnimTask_GetReturnPowerLevel);
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchOpposingMonMove);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
+        src/battle_anim_effects_3.o(.text.AnimUnusedItemBagSteal);
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchPartnerMove);
         src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement);
         src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement_Step);

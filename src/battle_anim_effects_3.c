@@ -3470,6 +3470,49 @@ void AnimTask_SnatchOpposingMonMove(u8 taskId)
     }
 }
 
+static void AnimUnusedItemBagSteal(struct Sprite *sprite)
+{
+    switch (sprite->data[7])
+    {
+    case 0:
+        if (gBattleAnimArgs[7] == -1)
+        {
+            PlaySE12WithPanning(SE_M_VITAL_THROW, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + 16;
+            sprite->data[0] = -32;
+            sprite->data[7]++;
+            sprite->invisible = FALSE;
+            if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT && !IsContest())
+                sprite->subpriority = gSprites[GetAnimBattlerSpriteId(ANIM_TARGET)].subpriority - 1;
+        }
+        else
+        {
+            sprite->invisible = TRUE;
+        }
+        break;
+    case 1:
+        sprite->y2 = Sin(sprite->data[1], sprite->data[0]);
+        sprite->data[1] += 5;
+        if (sprite->data[1] > 0x7F)
+        {
+            sprite->data[0] = sprite->data[0] / 2;
+            sprite->data[3]++;
+            sprite->data[1] -= 0x7F;
+        }
+
+        sprite->data[2] += 0x100;
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+            sprite->x2 -= (sprite->data[2] >> 8);
+        else
+            sprite->x2 += (sprite->data[2] >> 8);
+
+        sprite->data[2] &= 0xFF;
+        if (sprite->data[3] == 2)
+            DestroyAnimSprite(sprite);
+        break;
+    }
+}
+
 void AnimTask_SnatchPartnerMove(u8 taskId)
 {
     s16 attackerX, targetX;
