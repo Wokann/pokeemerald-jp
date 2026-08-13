@@ -60,6 +60,23 @@ static void AnimGuillotinePincer_Step2(struct Sprite *sprite);
 static void AnimGuillotinePincer_Step3(struct Sprite *sprite);
 static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
 void AnimTask_GrowAndGrayscale(u8 taskId);
+extern const union AffineAnimCmd gSplashEffectAffineAnimCmds[];
+extern const union AffineAnimCmd gGrowAndShrinkAffineAnimCmds[];
+extern const union AffineAnimCmd gThrashMoveMonAffineAnimCmds[];
+static void AnimTask_Minimize_Step(u8 taskId);
+void AnimTask_Minimize(u8 taskId);
+static void CreateMinimizeSprite(struct Task *task, u8 taskId);
+static void ClonedMinizeSprite_Step(struct Sprite *sprite);
+static void AnimTask_Splash_Step(u8 taskId);
+void AnimTask_Splash(u8 taskId);
+void AnimTask_GrowAndShrink(u8 taskId);
+static void AnimTask_GrowAndShrink_Step(u8 taskId);
+static void AnimBreathPuff(struct Sprite *sprite);
+static void AnimAngerMark(struct Sprite *sprite);
+void AnimTask_ThrashMoveMonHorizontal(u8 taskId);
+static void AnimTask_ThrashMoveMonHorizontal_Step(u8 taskId);
+void AnimTask_ThrashMoveMonVertical(u8 taskId);
+static void AnimTask_ThrashMoveMonVertical_Step(u8 taskId);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -875,5 +892,364 @@ static void AnimTask_GrowAndGrayscale_Step(u8 taskId)
         ResetSpriteRotScale(spriteId);
         SetGreyscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, TRUE);
         DestroyAnimVisualTask(taskId);
+    }
+}
+
+// Scales down the attacking mon sprite, then back up to its original size.
+// Used by MOVE_MINIMIZE.
+// No args.
+void AnimTask_Minimize(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->data[0] = spriteId;
+    PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 0;
+    task->data[4] = 0x100;
+    task->data[5] = 0;
+    task->data[6] = 0;
+    task->data[7] = GetBattlerSpriteSubpriority(gBattleAnimAttacker);
+    task->func = AnimTask_Minimize_Step;
+}
+
+static void AnimTask_Minimize_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[1])
+    {
+    case 0:
+        if (task->data[2] == 0 || task->data[2] == 3 || task->data[2] == 6)
+            CreateMinimizeSprite(task, taskId);
+        task->data[2]++;
+        task->data[4] += 0x28;
+        SetSpriteRotScale(task->data[0], task->data[4], task->data[4], 0);
+        SetBattlerSpriteYOffsetFromYScale(task->data[0]);
+        if (task->data[2] == 32)
+        {
+            task->data[5]++;
+            task->data[1]++;
+        }
+        break;
+    case 1:
+        if (task->data[6] == 0)
+        {
+            if (task->data[5] == 3)
+            {
+                task->data[2] = 0;
+                task->data[1] = 3;
+            }
+            else
+            {
+                task->data[2] = 0;
+                task->data[3] = 0;
+                task->data[4] = 0x100;
+                SetSpriteRotScale(task->data[0], task->data[4], task->data[4], 0);
+                SetBattlerSpriteYOffsetFromYScale(task->data[0]);
+                task->data[1] = 2;
+            }
+        }
+        break;
+    case 2:
+        task->data[1] = 0;
+        break;
+    case 3:
+        if (++task->data[2] > 32)
+        {
+            task->data[2] = 0;
+            task->data[1]++;
+        }
+        break;
+    case 4:
+        task->data[2] += 2;
+        task->data[4] -= 0x50;
+        SetSpriteRotScale(task->data[0], task->data[4], task->data[4], 0);
+        SetBattlerSpriteYOffsetFromYScale(task->data[0]);
+        if (task->data[2] == 32)
+        {
+            task->data[2] = 0;
+            task->data[1]++;
+        }
+        break;
+    case 5:
+        ResetSpriteRotScale(task->data[0]);
+        gSprites[task->data[15]].y2 = 0;
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void CreateMinimizeSprite(struct Task *task, u8 taskId)
+{
+    u16 matrixNum;
+    s16 spriteId = CloneBattlerSpriteWithBlend(ANIM_ATTACKER);
+    if (spriteId >= 0)
+    {
+        if ((matrixNum = AllocOamMatrix()) == 0xFF)
+        {
+            DestroySpriteWithActiveSheet(&gSprites[spriteId]);
+        }
+        else
+        {
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+            gSprites[spriteId].affineAnimPaused = TRUE;
+            gSprites[spriteId].oam.matrixNum = matrixNum;
+            gSprites[spriteId].subpriority = task->data[7] - task->data[3];
+            task->data[3]++;
+            task->data[6]++;
+            gSprites[spriteId].data[0] = 16;
+            gSprites[spriteId].data[1] = taskId;
+            gSprites[spriteId].data[2] = 6;
+            gSprites[spriteId].callback = ClonedMinizeSprite_Step;
+            SetSpriteRotScale(spriteId, task->data[4], task->data[4], 0);
+            gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+            CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
+        }
+    }
+}
+
+static void ClonedMinizeSprite_Step(struct Sprite *sprite)
+{
+    if (--sprite->data[0] == 0)
+    {
+        gTasks[sprite->data[1]].data[sprite->data[2]]--;
+        FreeOamMatrix(sprite->oam.matrixNum);
+        DestroySpriteWithActiveSheet(sprite);
+    }
+}
+
+// Task to facilitate expanding and hopping effect seen in Splash.
+// arg 0: anim battler
+// arg 1: num hops
+void AnimTask_Splash(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (gBattleAnimArgs[1] == 0)
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+    else
+    {
+        u8 spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+        task->data[0] = spriteId;
+        task->data[1] = 0;
+        task->data[2] = gBattleAnimArgs[1];
+        task->data[3] = 0;
+        task->data[4] = 0;
+        PrepareAffineAnimInTaskData(task, spriteId, gSplashEffectAffineAnimCmds);
+        task->func = AnimTask_Splash_Step;
+    }
+}
+
+static void AnimTask_Splash_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[1])
+    {
+    case 0:
+        RunAffineAnimFromTaskData(task);
+        task->data[4] += 3;
+        gSprites[task->data[0]].y2 += task->data[4];
+        if (++task->data[3] > 7)
+        {
+            task->data[3] = 0;
+            task->data[1]++;
+        }
+        break;
+    case 1:
+        RunAffineAnimFromTaskData(task);
+        gSprites[task->data[0]].y2 += task->data[4];
+        if (++task->data[3] > 7)
+        {
+            task->data[3] = 0;
+            task->data[1]++;
+        }
+        break;
+    case 2:
+        if (task->data[4] != 0)
+        {
+            gSprites[task->data[0]].y2 -= 2;
+            task->data[4] -= 2;
+        }
+        else
+        {
+            task->data[1]++;
+        }
+        break;
+    case 3:
+        if (!RunAffineAnimFromTaskData(task))
+        {
+            if (--task->data[2] == 0)
+            {
+                gSprites[task->data[0]].y2 = 0;
+                DestroyAnimVisualTask(taskId);
+            }
+            else
+            {
+                PrepareAffineAnimInTaskData(task, task->data[0], gSplashEffectAffineAnimCmds);
+                task->data[1] = 0;
+            }
+        }
+        break;
+    }
+}
+
+// Grows, pauses, then shrinks the attacking mon.
+// Used by MOVE_SWAGGER and MOVE_BULK_UP
+// No args.
+void AnimTask_GrowAndShrink(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    PrepareAffineAnimInTaskData(task, spriteId, gGrowAndShrinkAffineAnimCmds);
+    task->func = AnimTask_GrowAndShrink_Step;
+}
+
+static void AnimTask_GrowAndShrink_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (!RunAffineAnimFromTaskData(task))
+        DestroyAnimVisualTask(taskId);
+}
+
+// Animates a little puff of the mon's breath.
+// Used by MOVE_SWAGGER and MOVE_BULK_UP
+// No args.
+static void AnimBreathPuff(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        StartSpriteAnim(sprite, 0);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + 32;
+        sprite->data[1] = 64;
+    }
+    else
+    {
+        StartSpriteAnim(sprite, 1);
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) - 32;
+        sprite->data[1] = -64;
+    }
+
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->data[0] = 52;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback = TranslateSpriteLinearFixedPoint;
+}
+
+// Animates an "angry" mark above a mon's head.
+// arg 0: target mon (0 = attacker, 1 = target)
+// arg 1: x pixel offset
+// arg 2: y pixel offset
+static void AnimAngerMark(struct Sprite *sprite)
+{
+    u8 battler;
+    if (!gBattleAnimArgs[0])
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
+        gBattleAnimArgs[1] *= -1;
+
+    sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2) + gBattleAnimArgs[1];
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + gBattleAnimArgs[2];
+    if (sprite->y < 8)
+        sprite->y = 8;
+
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+}
+
+// left/right movements
+void AnimTask_ThrashMoveMonHorizontal(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->data[0] = spriteId;
+    task->data[1] = 0;
+    PrepareAffineAnimInTaskData(task, spriteId, gThrashMoveMonAffineAnimCmds);
+    task->func = AnimTask_ThrashMoveMonHorizontal_Step;
+}
+
+static void AnimTask_ThrashMoveMonHorizontal_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (!RunAffineAnimFromTaskData(task))
+        DestroyAnimVisualTask(taskId);
+}
+
+// up/down movements
+void AnimTask_ThrashMoveMonVertical(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->data[1] = 0;
+    task->data[2] = 4;
+    task->data[3] = 7;
+    task->data[4] = 3;
+    task->data[5] = gSprites[task->data[0]].x;
+    task->data[6] = gSprites[task->data[0]].y;
+    task->data[7] = 0;
+    task->data[8] = 0;
+    task->data[9] = 2;
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
+        task->data[2] *= -1;
+
+    task->func = AnimTask_ThrashMoveMonVertical_Step;
+}
+
+static void AnimTask_ThrashMoveMonVertical_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (++task->data[7] > 2)
+    {
+        task->data[7] = 0;
+        task->data[8]++;
+        if (task->data[8] & 1)
+            gSprites[task->data[0]].y += task->data[9];
+        else
+            gSprites[task->data[0]].y -= task->data[9];
+    }
+    switch (task->data[1])
+    {
+    case 0:
+        gSprites[task->data[0]].x += task->data[2];
+        if (--task->data[3] == 0)
+        {
+            task->data[3] = 14;
+            task->data[1] = 1;
+        }
+        break;
+    case 1:
+        gSprites[task->data[0]].x -= task->data[2];
+        if (--task->data[3] == 0)
+        {
+            task->data[3] = 7;
+            task->data[1] = 2;
+        }
+        break;
+    case 2:
+        gSprites[task->data[0]].x += task->data[2];
+        if (--task->data[3] == 0)
+        {
+            if (--task->data[4] != 0)
+            {
+                task->data[3] = 7;
+                task->data[1] = 0;
+            }
+            else
+            {
+                // JP restores the sprite's y position before ending.
+                if (task->data[8] & 1)
+                    gSprites[task->data[0]].y -= task->data[9];
+                DestroyAnimVisualTask(taskId);
+            }
+        }
+        break;
     }
 }
