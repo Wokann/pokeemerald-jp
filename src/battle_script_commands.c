@@ -102,6 +102,13 @@ static void Cmd_useitemonopponent(void);
 // inside the surrounding function, so call the sub_0806B7EC entry directly.
 bool8 sub_0806B7EC(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, bool8 usedByAI);
 
+extern const u32 gBitTable[];
+extern const u8 sBattlePalaceNatureToFlavorTextId[];
+extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
+extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
+extern void BtlController_EmitUnknownYesNoBox(u8 bufferId);
+static void Cmd_various(void);
+
 static void Cmd_attackcanceler(void)
 {
     s32 i;
@@ -5515,4 +5522,185 @@ static void Cmd_useitemonopponent(void)
     gBattlerInMenuId = gBattlerAttacker;
     sub_0806B7EC(&gEnemyParty[gBattlerPartyIndexes[gBattlerAttacker]], gLastUsedItem, gBattlerPartyIndexes[gBattlerAttacker], 0, TRUE);
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_various(void)
+{
+    u8 side;
+    s32 i;
+
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+    switch (gBattlescriptCurrInstr[2])
+    {
+    case VARIOUS_CANCEL_MULTI_TURN_MOVES:
+        CancelMultiTurnMoves(gActiveBattler);
+        break;
+    case VARIOUS_SET_MAGIC_COAT_TARGET:
+        gBattlerAttacker = gBattlerTarget;
+        side = BATTLE_OPPOSITE(GetBattlerSide(gBattlerAttacker));
+        if (gSideTimers[side].followmeTimer != 0 && gBattleMons[gSideTimers[side].followmeTarget].hp != 0)
+            gBattlerTarget = gSideTimers[side].followmeTarget;
+        else
+            gBattlerTarget = gActiveBattler;
+        break;
+    case VARIOUS_IS_RUNNING_IMPOSSIBLE:
+        gBattleCommunication[0] = IsRunningFromBattleImpossible();
+        break;
+    case VARIOUS_GET_MOVE_TARGET:
+        gBattlerTarget = GetMoveTarget(gCurrentMove, NO_TARGET_OVERRIDE);
+        break;
+    case VARIOUS_GET_BATTLER_FAINTED:
+        if (gHitMarker & HITMARKER_FAINTED(gActiveBattler))
+            gBattleCommunication[0] = TRUE;
+        else
+            gBattleCommunication[0] = FALSE;
+        break;
+    case VARIOUS_RESET_INTIMIDATE_TRACE_BITS:
+        gSpecialStatuses[gActiveBattler].intimidatedMon = 0;
+        gSpecialStatuses[gActiveBattler].traced = 0;
+        break;
+    case VARIOUS_UPDATE_CHOICE_MOVE_ON_LVL_UP:
+        if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId || gBattlerPartyIndexes[2] == gBattleStruct->expGetterMonId)
+        {
+            u16 *choicedMove;
+
+            if (gBattlerPartyIndexes[0] == gBattleStruct->expGetterMonId)
+                gActiveBattler = 0;
+            else
+                gActiveBattler = 2;
+
+            choicedMove = &gBattleStruct->choicedMove[gActiveBattler];
+
+            for (i = 0; i < MAX_MON_MOVES; i++)
+            {
+                if (gBattleMons[gActiveBattler].moves[i] == *choicedMove)
+                    break;
+            }
+            if (i == MAX_MON_MOVES)
+                *choicedMove = MOVE_NONE;
+        }
+        break;
+    case VARIOUS_RESET_PLAYER_FAINTED:
+        if (!(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_DOUBLE))
+            && gBattleTypeFlags & BATTLE_TYPE_TRAINER
+            && gBattleMons[0].hp != 0
+            && gBattleMons[1].hp != 0)
+        {
+            gHitMarker &= ~HITMARKER_PLAYER_FAINTED;
+        }
+        break;
+    case VARIOUS_PALACE_FLAVOR_TEXT:
+        gBattleCommunication[0] = FALSE;
+        gBattleScripting.battler = gActiveBattler = gBattleCommunication[1];
+
+        if (!(gBattleStruct->palaceFlags & gBitTable[gActiveBattler])
+            && gBattleMons[gActiveBattler].maxHP / 2 >= gBattleMons[gActiveBattler].hp
+            && gBattleMons[gActiveBattler].hp != 0
+            && !(gBattleMons[gActiveBattler].status1 & STATUS1_SLEEP))
+        {
+            gBattleStruct->palaceFlags |= gBitTable[gActiveBattler];
+            gBattleCommunication[0] = TRUE;
+            gBattleCommunication[MULTISTRING_CHOOSER] = sBattlePalaceNatureToFlavorTextId[GetNatureFromPersonality(gBattleMons[gActiveBattler].personality)];
+        }
+        break;
+    case VARIOUS_ARENA_JUDGMENT_WINDOW:
+        i = BattleArena_ShowJudgmentWindow(&gBattleCommunication[0]);
+
+        if (i == ARENA_RESULT_RUNNING)
+            return;
+
+        gBattleCommunication[1] = i;
+        break;
+    case VARIOUS_ARENA_OPPONENT_MON_LOST:
+        gBattleMons[1].hp = 0;
+        gHitMarker |= HITMARKER_FAINTED(1);
+        gBattleStruct->arenaLostOpponentMons |= gBitTable[gBattlerPartyIndexes[1]];
+        gDisableStructs[1].truantSwitchInHack = 1;
+        break;
+    case VARIOUS_ARENA_PLAYER_MON_LOST:
+        gBattleMons[0].hp = 0;
+        gHitMarker |= HITMARKER_FAINTED(0);
+        gHitMarker |= HITMARKER_PLAYER_FAINTED;
+        gBattleStruct->arenaLostPlayerMons |= gBitTable[gBattlerPartyIndexes[0]];
+        gDisableStructs[0].truantSwitchInHack = 1;
+        break;
+    case VARIOUS_ARENA_BOTH_MONS_LOST:
+        gBattleMons[0].hp = 0;
+        gBattleMons[1].hp = 0;
+        gHitMarker |= HITMARKER_FAINTED(0);
+        gHitMarker |= HITMARKER_FAINTED(1);
+        gHitMarker |= HITMARKER_PLAYER_FAINTED;
+        gBattleStruct->arenaLostPlayerMons |= gBitTable[gBattlerPartyIndexes[0]];
+        gBattleStruct->arenaLostOpponentMons |= gBitTable[gBattlerPartyIndexes[1]];
+        gDisableStructs[0].truantSwitchInHack = 1;
+        gDisableStructs[1].truantSwitchInHack = 1;
+        break;
+    case VARIOUS_EMIT_YESNOBOX:
+        BtlController_EmitUnknownYesNoBox(B_COMM_TO_CONTROLLER);
+        MarkBattlerForControllerExec(gActiveBattler);
+        break;
+    case VARIOUS_DRAW_ARENA_REF_TEXT_BOX:
+        DrawArenaRefereeTextBox();
+        break;
+    case VARIOUS_ERASE_ARENA_REF_TEXT_BOX:
+        EraseArenaRefereeTextBox();
+        break;
+    case VARIOUS_ARENA_JUDGMENT_STRING:
+        TryGetStatusString(gRefereeStringsTable[gBattlescriptCurrInstr[1]]);
+        sub_0814FA04(gDisplayedStringBattle, ARENA_WIN_JUDGMENT_TEXT);
+        break;
+    case VARIOUS_ARENA_WAIT_STRING:
+        if (IsTextPrinterActive(ARENA_WIN_JUDGMENT_TEXT))
+            return;
+        break;
+    case VARIOUS_WAIT_CRY:
+        if (!IsCryFinished())
+            return;
+        break;
+    case VARIOUS_RETURN_OPPONENT_MON1:
+        gActiveBattler = 1;
+        if (gBattleMons[gActiveBattler].hp != 0)
+        {
+            BtlController_EmitReturnMonToBall(B_COMM_TO_CONTROLLER, FALSE);
+            MarkBattlerForControllerExec(gActiveBattler);
+        }
+        break;
+    case VARIOUS_RETURN_OPPONENT_MON2:
+        if (gBattlersCount > 3)
+        {
+            gActiveBattler = 3;
+            if (gBattleMons[gActiveBattler].hp != 0)
+            {
+                BtlController_EmitReturnMonToBall(B_COMM_TO_CONTROLLER, FALSE);
+                MarkBattlerForControllerExec(gActiveBattler);
+            }
+        }
+        break;
+    case VARIOUS_VOLUME_DOWN:
+        m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 0x55);
+        break;
+    case VARIOUS_VOLUME_UP:
+        m4aMPlayVolumeControl(&gMPlayInfo_BGM, TRACKS_ALL, 0x100);
+        break;
+    case VARIOUS_SET_ALREADY_STATUS_MOVE_ATTEMPT:
+        gBattleStruct->alreadyStatusedMoveAttempt |= gBitTable[gActiveBattler];
+        break;
+    case VARIOUS_PALACE_TRY_ESCAPE_STATUS:
+        if (BattlePalace_TryEscapeStatus(gActiveBattler))
+            return;
+        break;
+    case VARIOUS_SET_TELEPORT_OUTCOME:
+        if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+            gBattleOutcome = B_OUTCOME_PLAYER_TELEPORTED;
+        else
+            gBattleOutcome = B_OUTCOME_MON_TELEPORTED;
+        break;
+    case VARIOUS_PLAY_TRAINER_DEFEATED_MUSIC:
+        BtlController_EmitPlayFanfareOrBGM(B_COMM_TO_CONTROLLER, MUS_VICTORY_TRAINER, TRUE);
+        MarkBattlerForControllerExec(gActiveBattler);
+        break;
+    }
+
+    gBattlescriptCurrInstr += 3;
 }

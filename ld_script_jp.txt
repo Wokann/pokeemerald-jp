@@ -982,6 +982,9 @@ BattleScript_MoveUsedUnfroze = ABSOLUTE(0x082897FF);
 sBattlePalaceFunctions = ABSOLUTE(0x085D68CC);
 sBattlePalaceEarlyPrizes = ABSOLUTE(0x085D68F4);
 sBattlePalaceLatePrizes = ABSOLUTE(0x085D6900);
+sBattlePalaceNatureToFlavorTextId = gUnknown_82ECE7C;
+gRefereeStringsTable = gUnknown_85AC04C;
+EraseArenaRefereeTextBox = RemoveArenaRefereeTextBox;
 sWinStreakFlags = ABSOLUTE(0x085D6914);
 sWinStreakMasks = ABSOLUTE(0x085D6924);
 sTrainerHillWindowTileset = ABSOLUTE(0x08592EE0);
@@ -3688,6 +3691,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_hpthresholds);
         src/battle_script_commands.o(.text.Cmd_hpthresholds2);
         src/battle_script_commands.o(.text.Cmd_useitemonopponent);
+        src/battle_script_commands.o(.text.Cmd_various);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
