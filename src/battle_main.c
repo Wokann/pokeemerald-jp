@@ -2313,6 +2313,18 @@ void TurnValuesCleanUp(bool8 var0)
     gSideTimers[1].followmeTimer = 0;
 }
 
+void SpecialStatusesClear(void)
+{
+    for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+    {
+        s32 i;
+        u8 *dataPtr = (u8 *)(&gSpecialStatuses[gActiveBattler]);
+
+        for (i = 0; i < sizeof(struct SpecialStatus); i++)
+            dataPtr[i] = 0;
+    }
+}
+
 
 
 
