@@ -4,6 +4,7 @@
 #include "palette.h"
 #include "task.h"
 #include "constants/battle_anim.h"
+#include "constants/songs.h"
 
 extern u8 gAnimVisualTaskCount;
 
@@ -196,4 +197,66 @@ static void AnimSpotlight_Step1(struct Sprite *sprite)
         }
         break;
     }
+}
+
+void AnimClappingHand_Step(struct Sprite *sprite);
+
+void AnimClappingHand(struct Sprite *sprite)
+{
+    if (gBattleAnimArgs[3] == 0)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    }
+
+    sprite->x += gBattleAnimArgs[0];
+    sprite->y += gBattleAnimArgs[1];
+    sprite->oam.tileNum += 16;
+
+    if (gBattleAnimArgs[2] == 0)
+    {
+        sprite->oam.matrixNum = ST_OAM_HFLIP;
+        sprite->x2 = -12;
+        sprite->data[1] = 2;
+    }
+    else
+    {
+        sprite->x2 = 12;
+        sprite->data[1] = -2;
+    }
+
+    sprite->data[0] = gBattleAnimArgs[4];
+
+    if (sprite->data[3] != 255)
+        sprite->data[3] = gBattleAnimArgs[2];
+
+    sprite->callback = AnimClappingHand_Step;
+}
+
+void AnimClappingHand_Step(struct Sprite *sprite)
+{
+    if (sprite->data[2] == 0)
+    {
+        sprite->x2 += sprite->data[1];
+        if (sprite->x2 == 0)
+        {
+            sprite->data[2]++;
+            if (sprite->data[3] == 0)
+            {
+                PlaySE1WithPanning(SE_M_ENCORE, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+            }
+        }
+    }
+    else
+    {
+        sprite->x2 -= sprite->data[1];
+        if (abs(sprite->x2) == 12)
+        {
+            sprite->data[0]--;
+            sprite->data[2]--;
+        }
+    }
+
+    if (sprite->data[0] == 0)
+        DestroyAnimSprite(sprite);
 }
