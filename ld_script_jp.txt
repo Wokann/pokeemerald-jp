@@ -3232,6 +3232,7 @@ SECTIONS {
         asm/battle_main_clear.o(.text);
         asm/battle_main_switchin.o(.text);
         asm/battle_main_faint.o(.text);
+        src/battle_main.o(.text.BattleIntroGetMonsData);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

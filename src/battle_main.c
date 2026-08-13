@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "battle_ai_script_commands.h"
 #include "battle_bg.h"
+#include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle_message.h"
 #include "battle_setup.h"
@@ -71,6 +72,7 @@ extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
 extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (register-sensitive, kept in asm)
 extern void SwitchInClearSetData(void); // JP asm 0x08039EC8 (register-sensitive, kept in asm)
 extern void FaintClearSetData(void); // JP asm 0x0803A3A0 (register-sensitive, kept in asm)
+extern void BattleIntroPrepareBackgroundSlide(void); // JP asm 0x0803A878 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -97,6 +99,7 @@ static void SpriteCB_BattleSpriteSlideLeft(struct Sprite *sprite);
 static void SpriteCB_BounceEffect(struct Sprite *sprite);
 static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite);
 static void BattleMainCB1(void);
+static void BattleIntroGetMonsData(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -1944,6 +1947,29 @@ void SpriteCB_FaintSlideAnim(struct Sprite *sprite)
 
 void BeginBattleIntroDummy(void)
 {
+}
+
+static void BattleIntroGetMonsData(void)
+{
+    switch (gBattleCommunication[MULTIUSE_STATE])
+    {
+    case 0:
+        gActiveBattler = gBattleCommunication[1];
+        BtlController_EmitGetMonData(B_COMM_TO_CONTROLLER, REQUEST_ALL_BATTLE, 0);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattleCommunication[MULTIUSE_STATE]++;
+        break;
+    case 1:
+        if (gBattleControllerExecFlags == 0)
+        {
+            gBattleCommunication[1]++;
+            if (gBattleCommunication[1] == gBattlersCount)
+                gBattleMainFunc = BattleIntroPrepareBackgroundSlide;
+            else
+                gBattleCommunication[MULTIUSE_STATE] = 0;
+        }
+        break;
+    }
 }
 
 
