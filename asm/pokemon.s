@@ -8358,7 +8358,7 @@ _0806B776:
 	adds r0, r0, r1
 	str r2, [r0]
 	ldr r0, [sp, #0x14]
-	bl sub_0803F6B0
+	bl UpdateSentPokesToOpponentValue
 	ldr r0, [sp, #0x14]
 	movs r1, #0
 	bl ClearTemporarySpeciesSpriteData

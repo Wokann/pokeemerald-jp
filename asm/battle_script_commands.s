@@ -15349,7 +15349,7 @@ atk52_switchineffects: @ 0x0804D6DC
 	ldr r4, _0804D818
 	strb r0, [r4]
 	ldrb r0, [r4]
-	bl sub_0803F6B0
+	bl UpdateSentPokesToOpponentValue
 	ldr r1, _0804D81C
 	mov r8, r1
 	ldr r1, _0804D820

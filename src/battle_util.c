@@ -1,0 +1,278 @@
+#include "global.h"
+#include "battle.h"
+#include "battle_anim.h"
+#include "battle_controllers.h"
+#include "link.h"
+#include "util.h"
+#include "constants/battle_script_commands.h"
+#include "constants/battle.h"
+#include "constants/global.h"
+#include "constants/abilities.h"
+#include "constants/moves.h"
+
+u8 GetBattlerForBattleScript(u8 caseId)
+{
+    u8 ret = 0;
+    switch (caseId)
+    {
+    case BS_TARGET:
+        ret = gBattlerTarget;
+        break;
+    case BS_ATTACKER:
+        ret = gBattlerAttacker;
+        break;
+    case BS_EFFECT_BATTLER:
+        ret = gEffectBattler;
+        break;
+    case BS_BATTLER_0:
+        ret = 0;
+        break;
+    case BS_SCRIPTING:
+        ret = gBattleScripting.battler;
+        break;
+    case BS_FAINTED:
+    case BS_FAINTED_LINK_MULTIPLE_1:
+        ret = gBattlerFainted;
+        break;
+    case BS_ATTACKER_WITH_PARTNER:
+    case BS_FAINTED_LINK_MULTIPLE_2:
+    case BS_ATTACKER_SIDE:
+    case BS_NOT_ATTACKER_SIDE:
+    case BS_PLAYER1:
+        ret = GetBattlerAtPosition(B_POSITION_PLAYER_LEFT);
+        break;
+    case BS_OPPONENT1:
+        ret = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+        break;
+    case BS_PLAYER2:
+        ret = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT);
+        break;
+    case BS_OPPONENT2:
+        ret = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+        break;
+    }
+    return ret;
+}
+
+void PressurePPLose(u8 target, u8 attacker, u16 move)
+{
+    int moveIndex;
+
+    if (gBattleMons[target].ability != ABILITY_PRESSURE)
+        return;
+
+    for (moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+    {
+        if (gBattleMons[attacker].moves[moveIndex] == move)
+            break;
+    }
+
+    if (moveIndex == MAX_MON_MOVES)
+        return;
+
+    if (gBattleMons[attacker].pp[moveIndex] != 0)
+        gBattleMons[attacker].pp[moveIndex]--;
+
+    if (MOVE_IS_PERMANENT(attacker, moveIndex))
+    {
+        gActiveBattler = attacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_PPMOVE1_BATTLE + moveIndex, 0, 1, &gBattleMons[gActiveBattler].pp[moveIndex]);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+}
+
+void PressurePPLoseOnUsingImprison(u8 attacker)
+{
+    int i, j;
+    int imprisonPos = MAX_MON_MOVES;
+    u8 atkSide = GetBattlerSide(attacker);
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (atkSide != GetBattlerSide(i) && gBattleMons[i].ability == ABILITY_PRESSURE)
+        {
+            for (j = 0; j < MAX_MON_MOVES; j++)
+            {
+                if (gBattleMons[attacker].moves[j] == MOVE_IMPRISON)
+                    break;
+            }
+            if (j != MAX_MON_MOVES)
+            {
+                imprisonPos = j;
+                if (gBattleMons[attacker].pp[j] != 0)
+                    gBattleMons[attacker].pp[j]--;
+            }
+        }
+    }
+
+    if (imprisonPos != MAX_MON_MOVES && MOVE_IS_PERMANENT(attacker, imprisonPos))
+    {
+        gActiveBattler = attacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_PPMOVE1_BATTLE + imprisonPos, 0, 1, &gBattleMons[gActiveBattler].pp[imprisonPos]);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+}
+
+void PressurePPLoseOnUsingPerishSong(u8 attacker)
+{
+    int i, j;
+    int perishSongPos = MAX_MON_MOVES;
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (gBattleMons[i].ability == ABILITY_PRESSURE && i != attacker)
+        {
+            for (j = 0; j < MAX_MON_MOVES; j++)
+            {
+                if (gBattleMons[attacker].moves[j] == MOVE_PERISH_SONG)
+                    break;
+            }
+            if (j != MAX_MON_MOVES)
+            {
+                perishSongPos = j;
+                if (gBattleMons[attacker].pp[j] != 0)
+                    gBattleMons[attacker].pp[j]--;
+            }
+        }
+    }
+
+    if (perishSongPos != MAX_MON_MOVES && MOVE_IS_PERMANENT(attacker, perishSongPos))
+    {
+        gActiveBattler = attacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_PPMOVE1_BATTLE + perishSongPos, 0, 1, &gBattleMons[gActiveBattler].pp[perishSongPos]);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+}
+
+void MarkAllBattlersForControllerExec(void)
+{
+    int i;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+    {
+        for (i = 0; i < gBattlersCount; i++)
+            MARK_BATTLE_CONTROLLER_MESSAGE_OUTBOUND_OVER_LINK(i);
+    }
+    else
+    {
+        for (i = 0; i < gBattlersCount; i++)
+            MARK_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(i);
+    }
+}
+
+void MarkBattlerForControllerExec(u8 battler)
+{
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+        MARK_BATTLE_CONTROLLER_MESSAGE_OUTBOUND_OVER_LINK(battler);
+    else
+        MARK_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(battler);
+}
+
+void MarkBattlerReceivedLinkData(u8 battler)
+{
+    s32 i;
+
+    for (i = 0; i < GetLinkPlayerCount(); i++)
+        MARK_BATTLE_CONTROLLER_ACTIVE_FOR_PLAYER(battler, i);
+
+    MARK_BATTLE_CONTROLLER_MESSAGE_SYNCHRONIZED_OVER_LINK(battler);
+}
+
+void CancelMultiTurnMoves(u8 battler)
+{
+    gBattleMons[battler].status2 &= ~STATUS2_MULTIPLETURNS;
+    gBattleMons[battler].status2 &= ~STATUS2_LOCK_CONFUSE;
+    gBattleMons[battler].status2 &= ~STATUS2_UPROAR;
+    gBattleMons[battler].status2 &= ~STATUS2_BIDE;
+
+    gStatuses3[battler] &= ~STATUS3_SEMI_INVULNERABLE;
+
+    gDisableStructs[battler].rolloutTimer = 0;
+    gDisableStructs[battler].furyCutterCounter = 0;
+}
+
+bool8 WasUnableToUseMove(u8 battler)
+{
+    if (gProtectStructs[battler].prlzImmobility
+        || gProtectStructs[battler].targetNotAffected
+        || gProtectStructs[battler].usedImprisonedMove
+        || gProtectStructs[battler].loveImmobility
+        || gProtectStructs[battler].usedDisabledMove
+        || gProtectStructs[battler].usedTauntedMove
+        || gProtectStructs[battler].flag2Unknown
+        || gProtectStructs[battler].flinchImmobility
+        || gProtectStructs[battler].confusionSelfDmg)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+void PrepareStringBattle(u16 stringId, u8 battler)
+{
+    gActiveBattler = battler;
+    BtlController_EmitPrintString(B_COMM_TO_CONTROLLER, stringId);
+    MarkBattlerForControllerExec(gActiveBattler);
+}
+
+void ResetSentPokesToOpponentValue(void)
+{
+    s32 i;
+    u32 bits = 0;
+
+    gSentPokesToOpponent[0] = 0;
+    gSentPokesToOpponent[1] = 0;
+
+    for (i = 0; i < gBattlersCount; i += 2)
+        bits |= gBitTable[gBattlerPartyIndexes[i]];
+
+    for (i = 1; i < gBattlersCount; i += 2)
+        gSentPokesToOpponent[(i & BIT_FLANK) >> 1] = bits;
+}
+
+void OpponentSwitchInResetSentPokesToOpponentValue(u8 battler)
+{
+    s32 i = 0;
+    u32 bits = 0;
+
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
+    {
+        u8 flank = ((battler & BIT_FLANK) >> 1);
+        gSentPokesToOpponent[flank] = 0;
+
+        for (i = 0; i < gBattlersCount; i += 2)
+        {
+            if (!(gAbsentBattlerFlags & gBitTable[i]))
+                bits |= gBitTable[gBattlerPartyIndexes[i]];
+        }
+        gSentPokesToOpponent[flank] = bits;
+    }
+}
+
+void UpdateSentPokesToOpponentValue(u8 battler)
+{
+    if (GetBattlerSide(battler) == B_SIDE_OPPONENT)
+    {
+        OpponentSwitchInResetSentPokesToOpponentValue(battler);
+    }
+    else
+    {
+        s32 i;
+        for (i = 1; i < gBattlersCount; i++)
+            gSentPokesToOpponent[(i & BIT_FLANK) >> 1] |= gBitTable[gBattlerPartyIndexes[battler]];
+    }
+}
+
+void BattleScriptPush(const u8 *bsPtr)
+{
+    gBattleResources->battleScriptsStack->ptr[gBattleResources->battleScriptsStack->size++] = bsPtr;
+}
+
+void BattleScriptPushCursor(void)
+{
+    gBattleResources->battleScriptsStack->ptr[gBattleResources->battleScriptsStack->size++] = gBattlescriptCurrInstr;
+}
+
+void HandleAction_RunBattleScript(void)
+{
+    gBattlescriptCurrInstr = gBattleResources->battleScriptsStack->ptr[--gBattleResources->battleScriptsStack->size];
+}
