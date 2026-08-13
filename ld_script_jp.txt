@@ -3295,6 +3295,7 @@ SECTIONS {
         asm/battle_main_tryevo.o(.text);
         src/battle_main.o(.text.WaitForEvoSceneToFinish);
         src/battle_main.o(.text.ReturnFromBattleToOverworld);
+        src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

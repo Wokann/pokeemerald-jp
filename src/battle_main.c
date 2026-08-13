@@ -2436,6 +2436,21 @@ static void ReturnFromBattleToOverworld(void)
     SetMainCallback2(gMain.savedCallback);
 }
 
+void RunBattleScriptCommands_PopCallbacksStack(void)
+{
+    if (gCurrentActionFuncId == B_ACTION_TRY_FINISH || gCurrentActionFuncId == B_ACTION_FINISHED)
+    {
+        if (gBattleResources->battleCallbackStack->size != 0)
+            gBattleResources->battleCallbackStack->size--;
+        gBattleMainFunc = gBattleResources->battleCallbackStack->function[gBattleResources->battleCallbackStack->size];
+    }
+    else
+    {
+        if (gBattleControllerExecFlags == 0)
+            sTurnActionsFuncsTable[gBattlescriptCurrInstr[0]](); // JP: sTurnActionsFuncsTable (US: gBattleScriptingCommandsTable)
+    }
+}
+
 
 
 
