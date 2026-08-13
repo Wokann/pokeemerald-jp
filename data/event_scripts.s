@@ -320,28 +320,12 @@ gUnknown_82423E1: @ 0x82423E1
 	.include "data/scripts/gUnknown_82423E1.inc"
 
 	.globl gUnknown_82423EE
-gUnknown_82423EE: @ 0x82423EE
-	.include "data/scripts/gUnknown_82423EE.inc"
-
 	.globl gUnknown_82423FC
-gUnknown_82423FC: @ 0x82423FC
-	.include "data/scripts/gUnknown_82423FC.inc"
-
 	.globl gUnknown_8242424
-gUnknown_8242424: @ 0x8242424
-	.include "data/scripts/gUnknown_8242424.inc"
-
 	.globl gUnknown_824245C
-gUnknown_824245C: @ 0x824245C
-	.include "data/scripts/gUnknown_824245C.inc"
-
 	.globl gUnknown_824246B
-gUnknown_824246B: @ 0x824246B
-	.include "data/scripts/gUnknown_824246B.inc"
-
 	.globl gUnknown_8242492
-gUnknown_8242492: @ 0x8242492
-	.include "data/scripts/gUnknown_8242492.inc"
+	.include "data/scripts/trainer_battle.inc"
 gUnknown_824252E: @ 0x824252E
 	.include "data/scripts/gUnknown_824252E.inc"
 
@@ -530,29 +514,16 @@ gUnknown_8247044: @ 0x8247044
 	.include "data/scripts/gUnknown_8247044.inc"
 
 	.globl gUnknown_8247053
-gUnknown_8247053: @ 0x8247053
-	.include "data/scripts/gUnknown_8247053.inc"
-
 	.globl gUnknown_824705D
-gUnknown_824705D: @ 0x824705D
-	.include "data/scripts/gUnknown_824705D.inc"
-
 	.globl gUnknown_8247067
-gUnknown_8247067: @ 0x8247067
-	.include "data/scripts/gUnknown_8247067.inc"
-
 	.globl gUnknown_8247082
-gUnknown_8247082: @ 0x8247082
-	.include "data/scripts/gUnknown_8247082.inc"
-
 	.globl gUnknown_824709D
-gUnknown_824709D: @ 0x824709D
-	.include "data/scripts/gUnknown_824709D.inc"
-
 	.globl gUnknown_82470B8
-gUnknown_82470B8: @ 0x82470B8
-	.include "data/scripts/gUnknown_82470B8.inc"
-
+	.include "data/scripts/colosseum.inc"
+	.globl gUnknown_82470FC
+	.globl gUnknown_8247111
+	.globl gUnknown_8247126
+	.globl gUnknown_824713B
 	.globl gUnknown_82470D4
 gUnknown_82470D4: @ 0x82470D4
 	.include "data/scripts/gUnknown_82470D4.inc"
@@ -561,23 +532,7 @@ gUnknown_82470D4: @ 0x82470D4
 gUnknown_82470DE: @ 0x82470DE
 	.include "data/scripts/gUnknown_82470DE.inc"
 
-	.globl gUnknown_82470FC
-gUnknown_82470FC: @ 0x82470FC
-	.include "data/scripts/gUnknown_82470FC.inc"
-
-	.globl gUnknown_8247111
-gUnknown_8247111: @ 0x8247111
-	.include "data/scripts/gUnknown_8247111.inc"
-
-	.globl gUnknown_8247126
-gUnknown_8247126: @ 0x8247126
-	.include "data/scripts/gUnknown_8247126.inc"
-
-	.globl gUnknown_824713B
-gUnknown_824713B: @ 0x824713B
-	.include "data/scripts/gUnknown_824713B.inc"
-
-	.globl gUnknown_824715D
+	.include "data/scripts/record_mix.inc"
 gUnknown_824715D: @ 0x824715D
 	.include "data/scripts/gUnknown_824715D.inc"
 
