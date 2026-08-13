@@ -1517,6 +1517,7 @@ static void Cmd_setsunny(void);
 static void Cmd_maxattackhalvehp(void);
 static void Cmd_copyfoestats(void);
 static void Cmd_rapidspinfree(void);
+static void Cmd_setdefensecurlbit(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8012,4 +8013,10 @@ static void Cmd_rapidspinfree(void)
     {
         gBattlescriptCurrInstr++;
     }
+}
+
+static void Cmd_setdefensecurlbit(void)
+{
+    gBattleMons[gBattlerAttacker].status2 |= STATUS2_DEFENSE_CURL;
+    gBattlescriptCurrInstr++;
 }

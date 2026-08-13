@@ -485,30 +485,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkBF_setdefensecurlbit
-atkBF_setdefensecurlbit: @ 0x08053ED8
-	ldr r1, _08053EFC
-	ldr r0, _08053F00
-	ldrb r2, [r0]
-	movs r0, #0x58
-	muls r2, r0, r2
-	adds r1, #0x50
-	adds r2, r2, r1
-	ldr r0, [r2]
-	movs r1, #0x80
-	lsls r1, r1, #0x17
-	orrs r0, r1
-	str r0, [r2]
-	ldr r1, _08053F04
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_08053EFC: .4byte 0x02023D28
-_08053F00: .4byte 0x02023EAF
-_08053F04: .4byte 0x02023EB8
-	thumb_func_end atkBF_setdefensecurlbit
 
 	thumb_func_start atkC0_recoverbasedonsunlight
 atkC0_recoverbasedonsunlight: @ 0x08053F08
