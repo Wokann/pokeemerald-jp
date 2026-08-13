@@ -3,52 +3,6 @@
 .text
 .syntax unified
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	thumb_func_start sub_0803DCCC
 sub_0803DCCC: @ 0x0803DCCC
 	push {lr}
@@ -72,6 +26,52 @@ _0803DCEC: .4byte 0x02023D0C
 _0803DCF0: .4byte 0x082EC694
 _0803DCF4: .4byte 0x02023EB8
 	thumb_func_end sub_0803DCCC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	thumb_func_start HandleAction_UseMove
 HandleAction_UseMove: @ 0x0803DCF8
