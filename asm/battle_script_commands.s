@@ -488,65 +488,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkC2_selectfirstvalidtarget
-atkC2_selectfirstvalidtarget: @ 0x08054134
-	push {r4, r5, r6, r7, lr}
-	mov r7, r8
-	push {r7}
-	ldr r0, _08054190
-	movs r1, #0
-	strb r1, [r0]
-	ldr r1, _08054194
-	ldrb r1, [r1]
-	adds r6, r0, #0
-	ldr r0, _08054198
-	mov r8, r0
-	cmp r1, #0
-	beq _0805417E
-	adds r3, r6, #0
-	ldr r0, _0805419C
-	ldrb r5, [r0]
-	ldr r0, _080541A0
-	mov ip, r0
-	adds r4, r1, #0
-	ldr r7, _080541A4
-_0805415C:
-	ldrb r2, [r3]
-	cmp r2, r5
-	beq _08054172
-	ldrb r0, [r7]
-	ldrb r1, [r6]
-	lsls r1, r1, #2
-	add r1, ip
-	ldr r1, [r1]
-	ands r0, r1
-	cmp r0, #0
-	beq _0805417E
-_08054172:
-	adds r0, r2, #1
-	strb r0, [r3]
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, r4
-	blo _0805415C
-_0805417E:
-	mov r1, r8
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r3}
-	mov r8, r3
-	pop {r4, r5, r6, r7}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054190: .4byte 0x02023EB0
-_08054194: .4byte 0x02023D10
-_08054198: .4byte 0x02023EB8
-_0805419C: .4byte 0x02023EAF
-_080541A0: .4byte 0x082FACB4
-_080541A4: .4byte 0x02023EB4
-	thumb_func_end atkC2_selectfirstvalidtarget
 
 	thumb_func_start atkC3_trysetfutureattack
 atkC3_trysetfutureattack: @ 0x080541A8
