@@ -5,6 +5,7 @@ InitAnimLinearTranslationWithSpeedAndPos = ABSOLUTE(0x080A68C9);
 gSplashEffectAffineAnimCmds = ABSOLUTE(0x0856F1CC);
 gGrowAndShrinkAffineAnimCmds = ABSOLUTE(0x0856F1EC);
 gThrashMoveMonAffineAnimCmds = ABSOLUTE(0x0856F288);
+AnimSpriteOnMonPos = ABSOLUTE(0x080A7091);
 RomHeaderGameCode = ABSOLUTE(0x080000AC);
 RomHeaderSoftwareVersion = ABSOLUTE(0x080000BC);
 gUnknown_84FD040 = ABSOLUTE(0x084FD040);
@@ -4745,6 +4746,10 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimTask_SketchDrawMon_Step);
         src/battle_anim_effects_2.o(.text.AnimPencil);
         src/battle_anim_effects_2.o(.text.AnimPencil_Step);
+        src/battle_anim_effects_2.o(.text.AnimBlendThinRing);
+        src/battle_anim_effects_2.o(.text.AnimHyperVoiceRing_WaitEnd);
+        src/battle_anim_effects_2.o(.text.AnimHyperVoiceRing);
+        src/battle_anim_effects_2.o(.text.AnimUproarRing);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);

@@ -81,6 +81,10 @@ void AnimTask_SketchDrawMon(u8 taskId);
 static void AnimTask_SketchDrawMon_Step(u8 taskId);
 static void AnimPencil(struct Sprite *sprite);
 static void AnimPencil_Step(struct Sprite *sprite);
+static void AnimBlendThinRing(struct Sprite *sprite);
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite *sprite);
+static void AnimHyperVoiceRing(struct Sprite *sprite);
+static void AnimUproarRing(struct Sprite *sprite);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -1419,4 +1423,162 @@ static void AnimPencil_Step(struct Sprite *sprite)
         }
         break;
     }
+}
+
+// Animates a thin ring that blends in around the battler.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: 0 = attacker, 1 = target
+// arg 3: 0 = vertical, 1 = horizontal
+static void AnimBlendThinRing(struct Sprite *sprite)
+{
+    u8 battler = 0;
+    s16 x = 0;
+    s16 y = 0;
+    u8 r4;
+
+    if (gBattleAnimArgs[2] == 0)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    r4 = gBattleAnimArgs[3] ^ 1;
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(BATTLE_PARTNER(battler)))
+    {
+        SetAverageBattlerPositions(battler, r4, &x, &y);
+        if (r4 == 0)
+            r4 = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+        else
+            r4 = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2);
+
+        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+            gBattleAnimArgs[0] -= (x - r4) - gBattleAnimArgs[0];
+        else
+            gBattleAnimArgs[0] = x - r4;
+    }
+
+    sprite->callback = AnimSpriteOnMonPos;
+    sprite->callback(sprite);
+}
+
+static void AnimHyperVoiceRing_WaitEnd(struct Sprite *sprite)
+{
+    if (AnimTranslateLinear(sprite))
+    {
+        FreeSpriteOamMatrix(sprite);
+        DestroyAnimSprite(sprite);
+    }
+}
+
+// Animates a ring that expands from one battler to the other.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: unused
+// arg 3: target x pixel offset
+// arg 4: target y pixel offset
+// arg 5: 0 = attacker -> target, 1 = target -> attacker
+// arg 6: 0 = vertical, 1 = horizontal
+static void AnimHyperVoiceRing(struct Sprite *sprite)
+{
+    s16 startX = 0;
+    s16 startY = 0;
+    s16 x = 0;
+    s16 y = 0;
+    u8 yCoordType;
+    u8 battler1;
+    u8 battler2;
+    u8 xCoordType;
+
+    if (gBattleAnimArgs[5] == 0)
+    {
+        battler1 = gBattleAnimAttacker;
+        battler2 = gBattleAnimTarget;
+    }
+    else
+    {
+        battler1 = gBattleAnimTarget;
+        battler2 = gBattleAnimAttacker;
+    }
+
+    if (!gBattleAnimArgs[6])
+    {
+        xCoordType = BATTLER_COORD_X;
+        yCoordType = BATTLER_COORD_Y;
+    }
+    else
+    {
+        xCoordType = BATTLER_COORD_X_2;
+        yCoordType = BATTLER_COORD_Y_PIC_OFFSET;
+    }
+
+    if (GetBattlerSide(battler1) != B_SIDE_PLAYER)
+    {
+        startX = GetBattlerSpriteCoord(battler1, xCoordType) + gBattleAnimArgs[0];
+        if (IsBattlerSpriteVisible(BATTLE_PARTNER(battler2)))
+            sprite->subpriority = gSprites[gBattlerSpriteIds[BATTLE_PARTNER(battler2)]].subpriority - 1;
+        else
+            sprite->subpriority = gSprites[gBattlerSpriteIds[battler2]].subpriority - 1;
+    }
+    else
+    {
+        startX = GetBattlerSpriteCoord(battler1, xCoordType) - gBattleAnimArgs[0];
+        if (!IsContest() && IsBattlerSpriteVisible(BATTLE_PARTNER(battler1)))
+        {
+            if (gSprites[gBattlerSpriteIds[battler1]].x < gSprites[gBattlerSpriteIds[BATTLE_PARTNER(battler1)]].x)
+                sprite->subpriority = gSprites[gBattlerSpriteIds[BATTLE_PARTNER(battler1)]].subpriority + 1;
+            else
+                sprite->subpriority = gSprites[gBattlerSpriteIds[battler1]].subpriority - 1;
+        }
+        else
+        {
+            sprite->subpriority = gSprites[gBattlerSpriteIds[battler1]].subpriority - 1;
+        }
+
+    }
+
+    startY = GetBattlerSpriteCoord(battler1, yCoordType) + gBattleAnimArgs[1];
+    if (!IsContest() && IsBattlerSpriteVisible(BATTLE_PARTNER(battler2)))
+    {
+        SetAverageBattlerPositions(battler2, gBattleAnimArgs[6], &x, &y);
+    }
+    else
+    {
+        x = GetBattlerSpriteCoord(battler2, xCoordType);
+        y = GetBattlerSpriteCoord(battler2, yCoordType);
+    }
+
+    if (GetBattlerSide(battler2))
+        x += gBattleAnimArgs[3];
+    else
+        x -= gBattleAnimArgs[3];
+
+    y += gBattleAnimArgs[4];
+    sprite->x = sprite->data[1] = startX;
+    sprite->y = sprite->data[3] = startY;
+    sprite->data[2] = x;
+    sprite->data[4] = y;
+    sprite->data[0] = gBattleAnimArgs[0];
+    InitAnimLinearTranslation(sprite);
+    sprite->callback = AnimHyperVoiceRing_WaitEnd;
+    sprite->callback(sprite);
+}
+
+// Animates a ring used by UP ROAR.
+// arg 0: x pixel offset
+// arg 1: y pixel offset
+// arg 2: 0 = attacker, 1 = target
+// arg 3: unused
+// arg 4: blend amount
+// arg 5: blend coefficient
+static void AnimUproarRing(struct Sprite *sprite)
+{
+    u8 index = IndexOfSpritePaletteTag(ANIM_TAG_THIN_RING);
+    if (index != 0xFF)
+    {
+        BlendPalette((OBJ_PLTT_ID(index) + 1), 15, gBattleAnimArgs[5], gBattleAnimArgs[4]);
+    }
+
+    StartSpriteAffineAnim(sprite, 1);
+    sprite->callback = AnimSpriteOnMonPos;
+    sprite->callback(sprite);
 }
