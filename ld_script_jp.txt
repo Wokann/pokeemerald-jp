@@ -3857,6 +3857,7 @@ SECTIONS {
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_script_commands.o(.text.Cmd_trygivecaughtmonnick);
         src/battle_script_commands.o(.text.Cmd_subattackerhpbydmg);
+        src/battle_script_commands.o(.text.Cmd_removeattackerstatus1);
         asm/battle_script_commands.o(.text.atkF4_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

@@ -1579,6 +1579,7 @@ static void Cmd_trysetcaughtmondexflags(void);
 static void Cmd_displaydexinfo(void);
 static void Cmd_trygivecaughtmonnick(void);
 static void Cmd_subattackerhpbydmg(void);
+static void Cmd_removeattackerstatus1(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9436,5 +9437,11 @@ static void Cmd_trygivecaughtmonnick(void)
 static void Cmd_subattackerhpbydmg(void)
 {
     gBattleMons[gBattlerAttacker].hp -= gBattleMoveDamage;
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_removeattackerstatus1(void)
+{
+    gBattleMons[gBattlerAttacker].status1 = 0;
     gBattlescriptCurrInstr++;
 }

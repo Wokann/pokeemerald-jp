@@ -772,27 +772,6 @@ _080567F8: .4byte 0x00001016
 	.section .text.atkF4_battle_rest,"ax",%progbits
 
 
-	thumb_func_start atkF5_removeattackerstatus1
-atkF5_removeattackerstatus1: @ 0x08056AB8
-	ldr r1, _08056AD4
-	ldr r0, _08056AD8
-	ldrb r2, [r0]
-	movs r0, #0x58
-	muls r0, r2, r0
-	adds r1, #0x4c
-	adds r0, r0, r1
-	movs r1, #0
-	str r1, [r0]
-	ldr r1, _08056ADC
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_08056AD4: .4byte 0x02023D28
-_08056AD8: .4byte 0x02023EAF
-_08056ADC: .4byte 0x02023EB8
-	thumb_func_end atkF5_removeattackerstatus1
 
 	thumb_func_start atkF6_finishaction
 atkF6_finishaction: @ 0x08056AE0
