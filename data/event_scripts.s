@@ -561,7 +561,7 @@ gUnknown_824B32D: @ 0x824B32D
 
 	.globl gUnknown_824B346
 gUnknown_824B346: @ 0x824B346
-	.incbin "baserom_jp.gba", 0x24b346, 0xe
+	.string "{B_COPY_VAR_1}は\n{B_COPY_VAR_2}で　アピール！$"
 
 	.globl gUnknown_824B354
 gUnknown_824B354: @ 0x824B354
@@ -625,15 +625,15 @@ gUnknown_824C0D2: @ 0x824C0D2
 
 	.globl gUnknown_824C0D7
 gUnknown_824C0D7: @ 0x824C0D7
-	.incbin "baserom_jp.gba", 0x24c0d7, 0x5
+	.string "ドキドキ$"
 
 	.globl gUnknown_824C0DC
 gUnknown_824C0DC: @ 0x824C0DC
-	.incbin "baserom_jp.gba", 0x24c0dc, 0x5
+	.string "デレデレ$"
 
 	.globl gUnknown_824C0E1
 gUnknown_824C0E1: @ 0x824C0E1
-	.incbin "baserom_jp.gba", 0x24c0e1, 0x5
+	.string "オロオロ$"
 
 	.globl gUnknown_824C0E6
 gUnknown_824C0E6: @ 0x824C0E6
@@ -701,7 +701,7 @@ gUnknown_82585CF: @ 0x82585CF
 
 	.globl gUnknown_825941C
 gUnknown_825941C: @ 0x825941C
-	.incbin "baserom_jp.gba", 0x25941c, 0x3
+	.string "って$"
 
 	.globl gUnknown_825941F
 gUnknown_825941F: @ 0x825941F
@@ -749,7 +749,7 @@ gUnknown_8262D3F: @ 0x8262D3F
 
 	.globl gUnknown_8262D66
 gUnknown_8262D66: @ 0x8262D66
-	.incbin "baserom_jp.gba", 0x262d66, 0x6
+	.string "あたりー！$"
 
 	.globl gUnknown_8262D6C
 gUnknown_8262D6C: @ 0x8262D6C
@@ -769,7 +769,7 @@ gUnknown_8262D96: @ 0x8262D96
 
 	.globl gUnknown_8262DA3
 gUnknown_8262DA3: @ 0x8262DA3
-	.incbin "baserom_jp.gba", 0x262da3, 0xd
+	.string "つづけて　あそびますか？$"
 
 	.globl gUnknown_8262DB0
 gUnknown_8262DB0: @ 0x8262DB0
@@ -943,9 +943,9 @@ gUnknown_8277200: @ 0x8277200
 gUnknown_8277213: @ 0x8277213
 	.include "data/scripts/gUnknown_8277213.inc"
 
-	.globl gUnknown_8277224
-gUnknown_8277224: @ 0x8277224
-	.incbin "baserom_jp.gba", 0x277224, 0x9
+	.globl gText_Birch_SoItsPlayer
+gText_Birch_SoItsPlayer: @ 0x8277224
+	.string "{MUS_RG_VS_TRAINER}{B_PLAYER_MON1_NAME}　だね？$"
 
 	.globl gUnknown_827722D
 gUnknown_827722D: @ 0x827722D

@@ -64,7 +64,7 @@ extern const u8 gUnknown_8277102[];
 extern const u8 gUnknown_82771F4[];
 extern const u8 gUnknown_8277200[];
 extern const u8 gUnknown_8277213[];
-extern const u8 gUnknown_8277224[];
+extern const u8 gText_Birch_SoItsPlayer[];
 extern const u8 gUnknown_827722D[];
 extern const u8 gUnknown_8277265[];
 extern const u8 gUnknown_85CCCBD[];
@@ -1229,7 +1229,7 @@ static void Task_NewGameBirchSpeech_StartNamingScreen(u8 taskId)
 static void Task_NewGameBirchSpeech_SoItsPlayerName(u8 taskId)
 {
     NewGameBirchSpeech_ClearWindow(0);
-    StringExpandPlaceholders(gStringVar4, gUnknown_8277224);
+    StringExpandPlaceholders(gStringVar4, gText_Birch_SoItsPlayer);
     AddTextPrinterForMessage(TRUE);
     gTasks[taskId].func = Task_NewGameBirchSpeech_CreateNameYesNo;
 }
