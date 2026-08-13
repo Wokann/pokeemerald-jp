@@ -272,3 +272,23 @@ void ClearPulseBlendPalettesSettings(struct PulseBlendPalette *pulseBlendPalette
     pulseBlendPalette->fadeCycleCounter = 0;
     pulseBlendPalette->delayCounter = 0;
 }
+
+void UnloadUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+{
+    u16 i = 0;
+
+    if (!multiSelection)
+    {
+        ClearPulseBlendPalettesSettings(&pulseBlend->pulseBlendPalettes[pulseBlendPaletteSelector & 0xF]);
+    }
+    else
+    {
+        for (i = 0; i < 16; i++)
+        {
+            if ((pulseBlendPaletteSelector & 1) && pulseBlend->pulseBlendPalettes[i].inUse)
+                ClearPulseBlendPalettesSettings(&pulseBlend->pulseBlendPalettes[i]);
+
+            pulseBlendPaletteSelector >>= 1;
+        }
+    }
+}

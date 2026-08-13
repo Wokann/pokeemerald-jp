@@ -22,54 +22,6 @@ _08151650: .4byte 0x00000000
 
 
 
-	thumb_func_start UnloadUsedPulseBlendPalettes
-UnloadUsedPulseBlendPalettes: @ 0x08151C2C
-	push {r4, r5, r6, lr}
-	adds r6, r0, #0
-	lsls r1, r1, #0x10
-	lsrs r4, r1, #0x10
-	lsls r2, r2, #0x18
-	movs r5, #0
-	cmp r2, #0
-	bne _08151C50
-	movs r1, #0xf
-	ands r1, r4
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, #4
-	adds r0, r6, r0
-	bl ClearPulseBlendPalettesSettings
-	b _08151C7C
-_08151C50:
-	movs r0, #1
-	ands r0, r4
-	cmp r0, #0
-	beq _08151C70
-	lsls r0, r5, #1
-	adds r0, r0, r5
-	lsls r1, r0, #2
-	adds r0, r6, r1
-	ldrb r0, [r0, #5]
-	lsrs r0, r0, #7
-	cmp r0, #0
-	beq _08151C70
-	adds r0, r1, #4
-	adds r0, r6, r0
-	bl ClearPulseBlendPalettesSettings
-_08151C70:
-	lsrs r4, r4, #1
-	adds r0, r5, #1
-	lsls r0, r0, #0x10
-	lsrs r5, r0, #0x10
-	cmp r5, #0xf
-	bls _08151C50
-_08151C7C:
-	pop {r4, r5, r6}
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end UnloadUsedPulseBlendPalettes
 
 	thumb_func_start MarkUsedPulseBlendPalettes
 MarkUsedPulseBlendPalettes: @ 0x08151C84
