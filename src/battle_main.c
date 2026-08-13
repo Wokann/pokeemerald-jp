@@ -2118,6 +2118,35 @@ void SwitchPartyOrder(u8 battler)
     }
 }
 
+enum
+{
+    STATE_TURN_START_RECORD,
+    STATE_BEFORE_ACTION_CHOSEN,
+    STATE_WAIT_ACTION_CHOSEN,
+    STATE_WAIT_ACTION_CASE_CHOSEN,
+    STATE_WAIT_ACTION_CONFIRMED_STANDBY,
+    STATE_WAIT_ACTION_CONFIRMED,
+    STATE_SELECTION_SCRIPT,
+    STATE_WAIT_SET_BEFORE_ACTION,
+    STATE_SELECTION_SCRIPT_MAY_RUN
+};
+
+bool8 AllAtActionConfirmed(void)
+{
+    s32 i, count;
+
+    for (count = 0, i = 0; i < gBattlersCount; i++)
+    {
+        if (gBattleCommunication[i] == STATE_WAIT_ACTION_CONFIRMED)
+            count++;
+    }
+
+    if (count + 1 == gBattlersCount)
+        return TRUE;
+    else
+        return FALSE;
+}
+
 
 
 

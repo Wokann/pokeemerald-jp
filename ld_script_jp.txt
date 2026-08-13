@@ -3258,6 +3258,8 @@ SECTIONS {
         asm/battle_main_turnpassed.o(.text);
         asm/battle_main_isrunning.o(.text);
         src/battle_main.o(.text.SwitchPartyOrder);
+        asm/battle_main_selstate.o(.text);
+        src/battle_main.o(.text.AllAtActionConfirmed);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
