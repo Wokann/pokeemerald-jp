@@ -1841,8 +1841,8 @@ gUnknown_82D2EA8: @ 0x82D2EA8
 gUnknown_82D2F24: @ 0x82D2F24
 	.incbin "baserom_jp.gba", 0x2d2f24, 0x2c
 
-	.globl gUnknown_82D2F50
-gUnknown_82D2F50: @ 0x82D2F50
+	.globl gAffineAnims_BattleSpriteContest
+gAffineAnims_BattleSpriteContest: @ 0x82D2F50
 	.incbin "baserom_jp.gba", 0x2d2f50, 0x4c
 
 	.globl gUnknown_82D2F9C

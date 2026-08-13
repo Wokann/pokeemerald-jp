@@ -1,11 +1,14 @@
 #include "global.h"
+#include "battle_gfx_sfx_util.h"
 #include "battle_anim.h"
 #include "bg.h"
 #include "contest.h"
+#include "data.h"
 #include "graphics.h"
 #include "palette.h"
 #include "random.h"
 #include "scanline_effect.h"
+#include "sound.h"
 #include "task.h"
 #include "trig.h"
 #include "util.h"
@@ -86,6 +89,7 @@ static void AnimForesightMagnifyingGlass(struct Sprite *sprite);
 static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite);
 static void AnimMeteorMashStar(struct Sprite *sprite);
 static void AnimMeteorMashStar_Step(struct Sprite *sprite);
+static void AnimTask_MonToSubstituteDoll(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -3023,6 +3027,100 @@ static void AnimMeteorMashStar(struct Sprite *sprite)
     sprite->x = sprite->data[0];
     sprite->y = sprite->data[1];
     sprite->callback = AnimMeteorMashStar_Step;
+}
+
+void AnimTask_MonToSubstitute(u8 taskId)
+{
+    int i;
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+
+    if (gTasks[taskId].data[0] == 0)
+    {
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
+        gTasks[taskId].data[1] = 0x100;
+        gTasks[taskId].data[2] = 0x100;
+        gTasks[taskId].data[0]++;
+    }
+    else if (gTasks[taskId].data[0] == 1)
+    {
+        gTasks[taskId].data[1] += 0x60;
+        gTasks[taskId].data[2] -= 0xD;
+        SetSpriteRotScale(spriteId, gTasks[taskId].data[1], gTasks[taskId].data[2], 0);
+        if (++gTasks[taskId].data[3] == 9)
+        {
+            gTasks[taskId].data[3] = 0;
+            ResetSpriteRotScale(spriteId);
+            gSprites[spriteId].invisible = TRUE;
+            gTasks[taskId].data[0]++;
+        }
+    }
+    else
+    {
+        LoadBattleMonGfxAndAnimate(gBattleAnimAttacker, FALSE, spriteId);
+        if (IsContest())
+        {
+            gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].affineAnims = gAffineAnims_BattleSpriteContest;
+            StartSpriteAffineAnim(&gSprites[gBattlerSpriteIds[gBattleAnimAttacker]], BATTLER_AFFINE_NORMAL);
+        }
+
+        for (i = 0; i < NUM_TASK_DATA; i++)
+            gTasks[taskId].data[i] = 0;
+
+        gTasks[taskId].func = AnimTask_MonToSubstituteDoll;
+    }
+}
+
+static void AnimTask_MonToSubstituteDoll(u8 taskId)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+
+    switch (gTasks[taskId].data[0])
+    {
+    case 0:
+        gSprites[spriteId].y2 = -200;
+        gSprites[spriteId].x2 = 200;
+        gSprites[spriteId].invisible = FALSE;
+        gTasks[taskId].data[10] = 0;
+        gTasks[taskId].data[0]++;
+        break;
+    case 1:
+        gTasks[taskId].data[10] += 112;
+        gSprites[spriteId].y2 += gTasks[taskId].data[10] >> 8;
+        if (gSprites[spriteId].y + gSprites[spriteId].y2 >= -32)
+            gSprites[spriteId].x2 = 0;
+
+        if (gSprites[spriteId].y2 > 0)
+            gSprites[spriteId].y2 = 0;
+
+        if (gSprites[spriteId].y2 == 0)
+        {
+            PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+            gTasks[taskId].data[10] -= 0x800;
+            gTasks[taskId].data[0]++;
+        }
+        break;
+    case 2:
+        gTasks[taskId].data[10] -= 112;
+        if (gTasks[taskId].data[10] < 0)
+            gTasks[taskId].data[10] = 0;
+
+        gSprites[spriteId].y2 -= gTasks[taskId].data[10] >> 8;
+        if (gTasks[taskId].data[10] == 0)
+            gTasks[taskId].data[0]++;
+        break;
+    case 3:
+        gTasks[taskId].data[10] += 112;
+        gSprites[spriteId].y2 += gTasks[taskId].data[10] >> 8;
+        if (gSprites[spriteId].y2 > 0)
+            gSprites[spriteId].y2 = 0;
+
+        if (gSprites[spriteId].y2 == 0)
+        {
+            PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+            DestroyAnimVisualTask(taskId);
+        }
+        break;
+    }
 }
 
 #undef IDX_ACTIVE_SPRITES
