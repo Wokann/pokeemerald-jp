@@ -325,6 +325,29 @@ void AnimTask_IsHealingMove(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
+void AnimSpotlight_Step2(struct Sprite *sprite)
+{
+    SetGpuReg(REG_OFFSET_WINOUT, WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR | WINOUT_WINOBJ_BG_ALL | WINOUT_WINOBJ_OBJ | WINOUT_WINOBJ_CLR);
+#ifdef NON_MATCHING
+    SetGpuReg(REG_OFFSET_DISPCNT, GetGpuReg(REG_OFFSET_DISPCNT) ^ DISPCNT_OBJWIN_ON);
+#else
+    __asm__ volatile(
+        "movs r0, #0\n\t"
+        "bl GetGpuReg\n\t"
+        ".byte 0x01, 0x1c\n\t"  /* adds r1, r0, #0 */
+        ".byte 0x80, 0x22\n\t"  /* movs r2, #0x80 */
+        ".byte 0x12, 0x02\n\t"  /* lsls r2, r2, #8 */
+        ".byte 0x10, 0x1c\n\t"  /* adds r0, r2, #0 */
+        ".byte 0x41, 0x40\n\t"  /* eors r1, r0 */
+        ".byte 0x09, 0x04\n\t"  /* lsls r1, r1, #16 */
+        ".byte 0x09, 0x0c\n\t"  /* lsrs r1, r1, #16 */
+        "movs r0, #0\n\t"
+        "bl SetGpuReg\n\t"
+        : : : "r0", "r1", "r2", "lr");
+#endif
+    DestroyAnimSprite(sprite);
+}
+
 static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;

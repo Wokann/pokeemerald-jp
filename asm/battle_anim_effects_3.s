@@ -108,35 +108,6 @@ _0815A500: .4byte 0x0000FFFF
 	thumb_func_end sub_0815A468
 
 
-	.section .text.battle_anim_effects_3_rest3,"ax",%progbits
-	thumb_func_start sub_0815A9A8
-sub_0815A9A8: @ 0x0815A9A8
-	push {r4, lr}
-	adds r4, r0, #0
-	ldr r1, _0815A9DC
-	movs r0, #0x4a
-	bl SetGpuReg
-	movs r0, #0
-	bl GetGpuReg
-	adds r1, r0, #0
-	movs r2, #0x80
-	lsls r2, r2, #8
-	adds r0, r2, #0
-	eors r1, r0
-	lsls r1, r1, #0x10
-	lsrs r1, r1, #0x10
-	movs r0, #0
-	bl SetGpuReg
-	adds r0, r4, #0
-	bl DestroyAnimSprite
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815A9DC: .4byte 0x00003F3F
-	thumb_func_end sub_0815A9A8
-
-
 	.section .text.battle_anim_effects_3_rest4,"ax",%progbits
 
 

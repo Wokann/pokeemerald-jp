@@ -795,7 +795,6 @@ GetBattleBgPaletteNum = sub_080A665C;
 gBattleAnimArgs = gUnknown_20380BE;
 gBattleAnimAttacker = gUnknown_20380D6;
 gBattleAnimTarget = gUnknown_20380D7;
-AnimSpotlight_Step2 = sub_0815A9A8;
 sub_0815A9E0 = AnimClappingHand;
 sub_0815AA98 = AnimClappingHand_Step;
 CreateCableCarSprites = LoadCableCarSprites;
@@ -4899,7 +4898,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_IsHealingMove);
         src/battle_anim_effects_3.o(.text.AnimSpotlight);
         src/battle_anim_effects_3.o(.text.AnimSpotlight_Step1);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest3);
+        src/battle_anim_effects_3.o(.text.AnimSpotlight_Step2);
         src/battle_anim_effects_3.o(.text.AnimClappingHand);
         src/battle_anim_effects_3.o(.text.AnimClappingHand_Step);
         src/battle_anim_effects_3.o(.text.AnimClappingHand2);
