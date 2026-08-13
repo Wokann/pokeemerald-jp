@@ -4715,6 +4715,15 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimBulletSeed);
         src/battle_anim_effects_2.o(.text.AnimBulletSeed_Step1);
         src/battle_anim_effects_2.o(.text.AnimBulletSeed_Step2);
+        src/battle_anim_effects_2.o(.text.AnimRazorWindTornado);
+        src/battle_anim_effects_2.o(.text.AnimViceGripPincer);
+        src/battle_anim_effects_2.o(.text.AnimViceGripPincer_Step);
+        src/battle_anim_effects_2.o(.text.AnimGuillotinePincer);
+        src/battle_anim_effects_2.o(.text.AnimGuillotinePincer_Step1);
+        src/battle_anim_effects_2.o(.text.AnimGuillotinePincer_Step2);
+        src/battle_anim_effects_2.o(.text.AnimGuillotinePincer_Step3);
+        src/battle_anim_effects_2.o(.text.AnimTask_GrowAndGrayscale);
+        src/battle_anim_effects_2.o(.text.AnimTask_GrowAndGrayscale_Step);
         asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);

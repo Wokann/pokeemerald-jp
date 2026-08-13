@@ -21,6 +21,8 @@ void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 extern const struct SpriteTemplate gAirWaveProjectileSpriteTemplate;
 extern const struct SpriteTemplate sVoidLinesSpriteTemplate;
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
+void TranslateSpriteInCircleOverDuration(struct Sprite *sprite);
+void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
 
 static void AnimTask_Withdraw_Step(u8 taskId);
 static void AnimKinesisZapEnergy(struct Sprite *sprite);
@@ -49,6 +51,15 @@ static void AnimFallingCoin_Step(struct Sprite *sprite);
 static void AnimBulletSeed(struct Sprite *sprite);
 static void AnimBulletSeed_Step1(struct Sprite *sprite);
 static void AnimBulletSeed_Step2(struct Sprite *sprite);
+static void AnimRazorWindTornado(struct Sprite *sprite);
+static void AnimViceGripPincer(struct Sprite *sprite);
+static void AnimViceGripPincer_Step(struct Sprite *sprite);
+static void AnimGuillotinePincer(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step1(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step2(struct Sprite *sprite);
+static void AnimGuillotinePincer_Step3(struct Sprite *sprite);
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId);
+void AnimTask_GrowAndGrayscale(u8 taskId);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -706,5 +717,163 @@ static void AnimBulletSeed_Step2(struct Sprite *sprite)
         sprite->data[2] /= 2;
         if (++sprite->data[3] == 1)
             DestroyAnimSprite(sprite);
+    }
+}
+
+// Moves a tornado in a circlular motion.
+// arg 0: initial x pixel offset
+// arg 1: initial y pixel offset
+// arg 2: wave amplitude
+// arg 3: unused
+// arg 4: initial wave offset
+// arg 5: wave period (higher means faster wave)
+// arg 6: duration
+static void AnimRazorWindTornado(struct Sprite *sprite)
+{
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        sprite->y += 16;
+
+    sprite->data[0] = gBattleAnimArgs[4];
+    sprite->data[1] = gBattleAnimArgs[2];
+    sprite->data[2] = gBattleAnimArgs[5];
+    sprite->data[3] = gBattleAnimArgs[6];
+    sprite->data[4] = gBattleAnimArgs[3];
+    // JP calls TranslateSpriteInCircleOverDuration (0x080A5BB4).
+    sprite->callback = TranslateSpriteInCircleOverDuration;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback(sprite);
+}
+
+// Animates a single pincer line that extends towards the center of the target mon.
+// arg 0: invert
+static void AnimViceGripPincer(struct Sprite *sprite)
+{
+    s16 startXOffset = 32;
+    s16 startYOffset = -32;
+    s16 endXOffset = 16;
+    s16 endYOffset = -16;
+    if (gBattleAnimArgs[0])
+    {
+        startXOffset = -32;
+        startYOffset = 32;
+        endXOffset = -16;
+        endYOffset = 16;
+        StartSpriteAnim(sprite, 1);
+    }
+
+    sprite->x += startXOffset;
+    sprite->y += startYOffset;
+    sprite->data[0] = 6;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + endXOffset;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + endYOffset;
+    // JP calls InitAndRunAnimFastLinearTranslation (0x080A67B5) here.
+    sprite->callback = InitAndRunAnimFastLinearTranslation;
+    StoreSpriteCallbackInData6(sprite, AnimViceGripPincer_Step);
+}
+
+static void AnimViceGripPincer_Step(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
+
+// Animates a pincer on the target mon, which pulls the mon towards the attacker.
+// arg 0: invert
+static void AnimGuillotinePincer(struct Sprite *sprite)
+{
+    s16 startXOffset = 32;
+    s16 startYOffset = -32;
+    s16 endXOffset = 16;
+    s16 endYOffset = -16;
+    if (gBattleAnimArgs[0])
+    {
+        startXOffset = -32;
+        startYOffset = 32;
+        endXOffset = -16;
+        endYOffset = 16;
+        StartSpriteAnim(sprite, gBattleAnimArgs[0]);
+    }
+
+    sprite->x += startXOffset;
+    sprite->y += startYOffset;
+    sprite->data[0] = 6;
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + endXOffset;
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + endYOffset;
+    InitAnimLinearTranslation(sprite);
+    sprite->data[5] = gBattleAnimArgs[0];
+    sprite->data[6] = sprite->data[0];
+    sprite->callback = AnimGuillotinePincer_Step1;
+}
+
+static void AnimGuillotinePincer_Step1(struct Sprite *sprite)
+{
+    if (AnimTranslateLinear(sprite) && sprite->animEnded)
+    {
+        SeekSpriteAnim(sprite, 0);
+        sprite->animPaused = 1;
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 2;
+        sprite->y2 = -2;
+        sprite->data[0] = sprite->data[6];
+        sprite->data[1] ^= 1;
+        sprite->data[2] ^= 1;
+        sprite->data[4] = 0;
+        sprite->data[3] = 0;
+        sprite->callback = AnimGuillotinePincer_Step2;
+    }
+}
+
+static void AnimGuillotinePincer_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[3])
+    {
+        sprite->x2 = -sprite->x2;
+        sprite->y2 = -sprite->y2;
+    }
+
+    sprite->data[3] ^= 1;
+    if (++sprite->data[4] == 51)
+    {
+        sprite->y2 = 0;
+        sprite->x2 = 0;
+        sprite->data[4] = 0;
+        sprite->data[3] = 0;
+        sprite->animPaused = 0;
+        StartSpriteAnim(sprite, sprite->data[5] ^ 1);
+        sprite->callback = AnimGuillotinePincer_Step3;
+    }
+}
+
+static void AnimGuillotinePincer_Step3(struct Sprite *sprite)
+{
+    if (AnimTranslateLinear(sprite))
+        DestroyAnimSprite(sprite);
+}
+
+// Scales up the target mon sprite, and sets the palette to grayscale.
+// Used in MOVE_DISABLE.
+// No args.
+void AnimTask_GrowAndGrayscale(u8 taskId)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+    PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
+    SetSpriteRotScale(spriteId, 0xD0, 0xD0, 0);
+    SetGreyscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, FALSE);
+    gTasks[taskId].data[0] = 80;
+    gTasks[taskId].func = AnimTask_GrowAndGrayscale_Step;
+}
+
+static void AnimTask_GrowAndGrayscale_Step(u8 taskId)
+{
+    if (--gTasks[taskId].data[0] == -1)
+    {
+        u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+        ResetSpriteRotScale(spriteId);
+        SetGreyscaleOrOriginalPalette(gSprites[spriteId].oam.paletteNum + 16, TRUE);
+        DestroyAnimVisualTask(taskId);
     }
 }
