@@ -18,6 +18,7 @@ static void CreateTasksForSendRecvLinkBuffers(void);
 extern u8 sLinkSendTaskId;
 extern u8 sLinkReceiveTaskId;
 extern u8 sUnused;
+extern const u32 gBitTable[];
 
 void HandleLinkBattleSetup(void)
 {
@@ -829,6 +830,44 @@ static void Task_HandleSendLinkBuffersData(u8 taskId)
     }
 
     #undef BYTE_TO_SEND
+}
+
+void TryReceiveLinkBattleData(void)
+{
+    u8 i;
+    s32 j;
+    u8 *recvBuffer;
+
+    if (gReceivedRemoteLinkPlayers && (gBattleTypeFlags & BATTLE_TYPE_LINK_IN_BATTLE))
+    {
+        DestroyTask_RfuIdle();
+        for (i = 0; i < GetLinkPlayerCount(); i++)
+        {
+            if (GetBlockReceivedStatus() & gBitTable[i])
+            {
+                ResetBlockReceivedFlag(i);
+                recvBuffer = (u8 *)gBlockRecvBuffer[i];
+                {
+                    u8 *dest, *src;
+                    u16 dataSize = gBlockRecvBuffer[i][2];
+
+                    if (gTasks[sLinkReceiveTaskId].tCurrentBlock_End + 9 + dataSize > 0x1000)
+                    {
+                        gTasks[sLinkReceiveTaskId].tCurrentBlock_WrapFrom = gTasks[sLinkReceiveTaskId].tCurrentBlock_End;
+                        gTasks[sLinkReceiveTaskId].tCurrentBlock_End = 0;
+                    }
+
+                    dest = &gLinkBattleRecvBuffer[gTasks[sLinkReceiveTaskId].tCurrentBlock_End];
+                    src = recvBuffer;
+
+                    for (j = 0; j < dataSize + 8; j++)
+                        dest[j] = src[j];
+
+                    gTasks[sLinkReceiveTaskId].tCurrentBlock_End = gTasks[sLinkReceiveTaskId].tCurrentBlock_End + dataSize + 8;
+                }
+            }
+        }
+    }
 }
 
 #undef tInitialDelayTimer
