@@ -108,6 +108,12 @@ extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: Ba
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
 extern void BtlController_EmitUnknownYesNoBox(u8 bufferId);
 static void Cmd_various(void);
+extern const u16 sProtectSuccessRates[];
+static void Cmd_setprotectlike(void);
+static void Cmd_tryexplosion(void);
+static void Cmd_setatkhptozero(void);
+static void Cmd_jumpifnexttargetvalid(void);
+static void Cmd_tryhealhalfhealth(void);
 
 static void Cmd_attackcanceler(void)
 {
@@ -5703,4 +5709,130 @@ static void Cmd_various(void)
     }
 
     gBattlescriptCurrInstr += 3;
+}
+
+static void Cmd_setprotectlike(void)
+{
+    bool8 notLastTurn = TRUE;
+    u16 lastMove = gLastHitByType[gBattlerAttacker];
+
+    if (lastMove != MOVE_PROTECT && lastMove != MOVE_DETECT && lastMove != MOVE_ENDURE)
+        gDisableStructs[gBattlerAttacker].protectUses = 0;
+
+    if (gCurrentTurnActionNumber == (gBattlersCount - 1))
+        notLastTurn = FALSE;
+
+    if (sProtectSuccessRates[gDisableStructs[gBattlerAttacker].protectUses] >= Random() && notLastTurn)
+    {
+        if (gBattleMoves[gCurrentMove].effect == EFFECT_PROTECT)
+        {
+            gProtectStructs[gBattlerAttacker].protected = 1;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_PROTECTED_ITSELF;
+        }
+        if (gBattleMoves[gCurrentMove].effect == EFFECT_ENDURE)
+        {
+            gProtectStructs[gBattlerAttacker].endured = 1;
+            gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_BRACED_ITSELF;
+        }
+        gDisableStructs[gBattlerAttacker].protectUses++;
+    }
+    else
+    {
+        gDisableStructs[gBattlerAttacker].protectUses = 0;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_PROTECT_FAILED;
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+    }
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_tryexplosion(void)
+{
+    if (gBattleControllerExecFlags)
+        return;
+
+    for (gBattlerTarget = 0; gBattlerTarget < gBattlersCount; gBattlerTarget++)
+    {
+        if (gBattleMons[gBattlerTarget].ability == ABILITY_DAMP)
+            break;
+    }
+
+    if (gBattlerTarget == gBattlersCount)
+    {
+        gActiveBattler = gBattlerAttacker;
+        gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
+        BtlController_EmitHealthBarUpdate(B_COMM_TO_CONTROLLER, INSTANT_HP_BAR_DROP);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattlescriptCurrInstr++;
+
+        for (gBattlerTarget = 0; gBattlerTarget < gBattlersCount; gBattlerTarget++)
+        {
+            if (gBattlerTarget == gBattlerAttacker)
+                continue;
+            if (!(gAbsentBattlerFlags & gBitTable[gBattlerTarget]))
+                break;
+        }
+    }
+    else
+    {
+        gLastUsedAbility = ABILITY_DAMP;
+        RecordAbilityBattle(gBattlerTarget, gBattleMons[gBattlerTarget].ability);
+        gBattlescriptCurrInstr = BattleScript_DampStopsExplosion;
+    }
+}
+
+static void Cmd_setatkhptozero(void)
+{
+    if (gBattleControllerExecFlags)
+        return;
+
+    gActiveBattler = gBattlerAttacker;
+    gBattleMons[gActiveBattler].hp = 0;
+    BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_HP_BATTLE, 0, sizeof(gBattleMons[gActiveBattler].hp), &gBattleMons[gActiveBattler].hp);
+    MarkBattlerForControllerExec(gActiveBattler);
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_jumpifnexttargetvalid(void)
+{
+    const u8 *jumpPtr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
+    {
+        for (gBattlerTarget++; ; gBattlerTarget++)
+        {
+            if (gBattlerTarget == gBattlerAttacker)
+                continue;
+            if (!(gAbsentBattlerFlags & gBitTable[gBattlerTarget]))
+                break;
+        }
+
+        if (gBattlerTarget >= gBattlersCount)
+            gBattlescriptCurrInstr += 5;
+        else
+            gBattlescriptCurrInstr = jumpPtr;
+    }
+    else
+    {
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void Cmd_tryhealhalfhealth(void)
+{
+    const u8 *failPtr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+
+    if (gBattlescriptCurrInstr[5] == BS_ATTACKER)
+        gBattlerTarget = gBattlerAttacker;
+
+    gBattleMoveDamage = gBattleMons[gBattlerTarget].maxHP / 2;
+    if (gBattleMoveDamage == 0)
+        gBattleMoveDamage = 1;
+    gBattleMoveDamage *= -1;
+
+    if (gBattleMons[gBattlerTarget].hp == gBattleMons[gBattlerTarget].maxHP)
+        gBattlescriptCurrInstr = failPtr;
+    else
+        gBattlescriptCurrInstr += 6;
 }
