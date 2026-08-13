@@ -3585,6 +3585,13 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_jumpifstatus3condition);
         src/battle_script_commands.o(.text.Cmd_jumpiftype);
         src/battle_script_commands.o(.text.Cmd_getexp);
+        src/battle_script_commands.o(.text.Cmd_checkteamslost);
+        src/battle_script_commands.o(.text.MoveValuesCleanUp);
+        src/battle_script_commands.o(.text.Cmd_movevaluescleanup);
+        src/battle_script_commands.o(.text.Cmd_setmultihit);
+        src/battle_script_commands.o(.text.Cmd_decrementmultihit);
+        src/battle_script_commands.o(.text.Cmd_goto);
+        src/battle_script_commands.o(.text.Cmd_jumpifbyte);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

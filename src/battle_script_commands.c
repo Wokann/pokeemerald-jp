@@ -2704,3 +2704,164 @@ static void Cmd_getexp(void)
         break;
     }
 }
+
+static void Cmd_checkteamslost(void)
+{
+    u16 HP_count = 0;
+    s32 i;
+
+    if (gBattleControllerExecFlags)
+        return;
+
+    // Get total HP for the player's party to determine if the player has lost
+    if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && gPartnerTrainerId == TRAINER_STEVEN_PARTNER)
+    {
+        // In multi battle with Steven, skip his Pokemon
+        for (i = 0; i < MULTI_PARTY_SIZE; i++)
+        {
+            if (GetMonData2(&gPlayerParty[i], MON_DATA_SPECIES) && !GetMonData2(&gPlayerParty[i], MON_DATA_IS_EGG))
+                HP_count += GetMonData2(&gPlayerParty[i], MON_DATA_HP);
+        }
+    }
+    else
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData2(&gPlayerParty[i], MON_DATA_SPECIES) && !GetMonData2(&gPlayerParty[i], MON_DATA_IS_EGG)
+             && (!(gBattleTypeFlags & BATTLE_TYPE_ARENA) || !(gBattleStruct->arenaLostPlayerMons & gBitTable[i])))
+            {
+                HP_count += GetMonData2(&gPlayerParty[i], MON_DATA_HP);
+            }
+        }
+    }
+    if (HP_count == 0)
+        gBattleOutcome |= B_OUTCOME_LOST;
+    HP_count = 0;
+
+    // Get total HP for the enemy's party to determine if the player has won
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData2(&gEnemyParty[i], MON_DATA_SPECIES) && !GetMonData2(&gEnemyParty[i], MON_DATA_IS_EGG)
+         && (!(gBattleTypeFlags & BATTLE_TYPE_ARENA) || !(gBattleStruct->arenaLostOpponentMons & gBitTable[i])))
+        {
+            HP_count += GetMonData2(&gEnemyParty[i], MON_DATA_HP);
+        }
+    }
+    if (HP_count == 0)
+        gBattleOutcome |= B_OUTCOME_WON;
+
+    // For link battles that haven't ended, count number of empty battler spots
+    // In link multi battles, jump to pointer if more than 1 spot empty
+    // In non-multi battles, jump to pointer if 1 spot is missing on both sides
+    if (gBattleOutcome == 0 && (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK)))
+    {
+        s32 emptyPlayerSpots = 0;
+        s32 emptyOpponentSpots;
+
+        for (i = 0; i < gBattlersCount; i += 2)
+        {
+            if ((gHitMarker & HITMARKER_FAINTED2(i)) && (!gSpecialStatuses[i].faintedHasReplacement))
+                emptyPlayerSpots++;
+        }
+
+        emptyOpponentSpots = 0;
+        for (i = 1; i < gBattlersCount; i += 2)
+        {
+            if ((gHitMarker & HITMARKER_FAINTED2(i)) && (!gSpecialStatuses[i].faintedHasReplacement))
+                emptyOpponentSpots++;
+        }
+
+        if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+        {
+            if (emptyOpponentSpots + emptyPlayerSpots > 1)
+                gBattlescriptCurrInstr = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+            else
+                gBattlescriptCurrInstr += 5;
+        }
+        else
+        {
+            if (emptyOpponentSpots != 0 && emptyPlayerSpots != 0)
+                gBattlescriptCurrInstr = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+            else
+                gBattlescriptCurrInstr += 5;
+        }
+    }
+    else
+    {
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+void MoveValuesCleanUp(void)
+{
+    gMoveResultFlags = 0;
+    gBattleScripting.dmgMultiplier = 1;
+    gCritMultiplier = 1;
+    gBattleCommunication[MOVE_EFFECT_BYTE] = 0;
+    gBattleCommunication[MISS_TYPE] = 0;
+    gHitMarker &= ~HITMARKER_DESTINYBOND;
+    gHitMarker &= ~HITMARKER_SYNCHRONIZE_EFFECT;
+}
+
+static void Cmd_movevaluescleanup(void)
+{
+    MoveValuesCleanUp();
+    gBattlescriptCurrInstr += 1;
+}
+
+static void Cmd_setmultihit(void)
+{
+    gMultiHitCounter = gBattlescriptCurrInstr[1];
+    gBattlescriptCurrInstr += 2;
+}
+
+static void Cmd_decrementmultihit(void)
+{
+    if (--gMultiHitCounter == 0)
+        gBattlescriptCurrInstr += 5;
+    else
+        gBattlescriptCurrInstr = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+}
+
+static void Cmd_goto(void)
+{
+    gBattlescriptCurrInstr = T2_READ_PTR(gBattlescriptCurrInstr + 1);
+}
+
+static void Cmd_jumpifbyte(void)
+{
+    u8 caseID = gBattlescriptCurrInstr[1];
+    const u8 *memByte = T2_READ_PTR(gBattlescriptCurrInstr + 2);
+    u8 value = gBattlescriptCurrInstr[6];
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 7);
+
+    gBattlescriptCurrInstr += 11;
+
+    switch (caseID)
+    {
+    case CMP_EQUAL:
+        if (*memByte == value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NOT_EQUAL:
+        if (*memByte != value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_GREATER_THAN:
+        if (*memByte > value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_LESS_THAN:
+        if (*memByte < value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_COMMON_BITS:
+        if (*memByte & value)
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    case CMP_NO_COMMON_BITS:
+        if (!(*memByte & value))
+            gBattlescriptCurrInstr = jumpPtr;
+        break;
+    }
+}
