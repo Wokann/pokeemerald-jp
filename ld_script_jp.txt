@@ -4773,6 +4773,10 @@ SECTIONS {
         src/cable_car.o(.text.Task_AnimateBgGoingDown);
         src/cable_car.o(.text.VBlankCB_CableCar);
         asm/cable_car.o(.text.cable_car_rest);
+        asm/cable_car.o(.text.cable_car_mid);
+        src/cable_car.o(.text.AnimateGroundGoingUp);
+        src/cable_car.o(.text.AnimateGroundGoingDown);
+        asm/cable_car.o(.text.cable_car_mid2);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
         asm/rom_81520A8.o(.text);
@@ -5163,5 +5167,4 @@ SECTIONS {
         *(*);
     }
 }
-AnimateGroundGoingUp = sub_08151138;
-AnimateGroundGoingDown = sub_08151194;
+DrawNextGroundSegmentGoingUp = sub_081511F0;

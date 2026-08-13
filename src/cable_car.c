@@ -87,6 +87,8 @@ void VBlankCB_CableCar(void);
 extern void CreateCableCarSprites(void);
 extern void SetBgRegs(bool8 value);
 extern void InitGroundTilemapData(u8 mode);
+extern void DrawNextGroundSegmentGoingUp(void);
+extern void DrawNextGroundSegmentGoingDown(void);
 
 void CB2_LoadCableCar(void)
 {
@@ -337,8 +339,6 @@ void Task_CableCar(u8 taskId)
     }
 }
 
-void AnimateGroundGoingUp(void);
-void AnimateGroundGoingDown(void);
 
 void Task_AnimateBgGoingUp(u8 taskId)
 {
@@ -434,4 +434,30 @@ void VBlankCB_CableCar(void)
     LoadOam();
     ProcessSpriteCopyRequests();
     TransferPlttBuffer();
+}
+
+void AnimateGroundGoingUp(void)
+{
+    sCableCar->groundTimer = (sCableCar->groundTimer + 1) % 96;
+    sCableCar->bg0HorizontalOffset = sCableCar->groundXBase - sCableCar->groundXOffset;
+    sCableCar->bg0VerticalOffset = sCableCar->groundYBase - sCableCar->groundYOffset;
+    sCableCar->groundXOffset++;
+    if ((sCableCar->groundXOffset % 4) == 0)
+        sCableCar->groundYOffset++;
+
+    if (sCableCar->groundXOffset > 16)
+        DrawNextGroundSegmentGoingUp();
+}
+
+void AnimateGroundGoingDown(void)
+{
+    sCableCar->groundTimer = (sCableCar->groundTimer + 1) % 96;
+    sCableCar->bg0HorizontalOffset = sCableCar->groundXBase + sCableCar->groundXOffset;
+    sCableCar->bg0VerticalOffset = sCableCar->groundYBase + sCableCar->groundYOffset;
+    sCableCar->groundXOffset++;
+    if ((sCableCar->groundXOffset % 4) == 0)
+        sCableCar->groundYOffset++;
+
+    if (sCableCar->groundXOffset > 16)
+        DrawNextGroundSegmentGoingDown();
 }

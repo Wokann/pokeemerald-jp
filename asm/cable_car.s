@@ -588,6 +588,8 @@ _08150CF8:
 _08150D00: .4byte 0x0203A878
 	thumb_func_end sub_08150B48
 
+	.section .text.cable_car_mid,"ax",%progbits
+
 	thumb_func_start LoadCableCarSprites
 LoadCableCarSprites: @ 0x08150D04
 	push {r4, r5, r6, r7, lr}
@@ -1108,103 +1110,9 @@ _08151130: .4byte 0x0203A878
 _08151134: .4byte 0x000040FC
 	thumb_func_end BufferNextGroundSegment
 
-	thumb_func_start sub_08151138
-sub_08151138: @ 0x08151138
-	push {r4, r5, lr}
-	ldr r5, _08151190
-	ldr r4, [r5]
-	ldrb r0, [r4, #0x1c]
-	adds r0, #1
-	movs r1, #0x60
-	bl __modsi3
-	strb r0, [r4, #0x1c]
-	ldr r1, [r5]
-	ldrb r0, [r1, #0x1f]
-	ldrb r2, [r1, #0x1d]
-	subs r0, r0, r2
-	strb r0, [r1, #8]
-	ldr r2, [r5]
-	adds r0, r2, #0
-	adds r0, #0x20
-	ldrb r0, [r0]
-	ldrb r1, [r2, #0x1e]
-	subs r0, r0, r1
-	strb r0, [r2, #9]
-	ldr r1, [r5]
-	ldrb r0, [r1, #0x1d]
-	adds r0, #1
-	strb r0, [r1, #0x1d]
-	ldr r2, [r5]
-	ldrb r0, [r2, #0x1d]
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _0815117C
-	ldrb r0, [r2, #0x1e]
-	adds r0, #1
-	strb r0, [r2, #0x1e]
-_0815117C:
-	ldr r0, [r5]
-	ldrb r0, [r0, #0x1d]
-	cmp r0, #0x10
-	bls _08151188
-	bl sub_081511F0
-_08151188:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08151190: .4byte 0x0203A878
-	thumb_func_end sub_08151138
 
-	thumb_func_start sub_08151194
-sub_08151194: @ 0x08151194
-	push {r4, r5, lr}
-	ldr r5, _081511EC
-	ldr r4, [r5]
-	ldrb r0, [r4, #0x1c]
-	adds r0, #1
-	movs r1, #0x60
-	bl __modsi3
-	strb r0, [r4, #0x1c]
-	ldr r1, [r5]
-	ldrb r0, [r1, #0x1d]
-	ldrb r2, [r1, #0x1f]
-	adds r0, r0, r2
-	strb r0, [r1, #8]
-	ldr r1, [r5]
-	adds r2, r1, #0
-	adds r2, #0x20
-	ldrb r0, [r1, #0x1e]
-	ldrb r2, [r2]
-	adds r0, r0, r2
-	strb r0, [r1, #9]
-	ldr r1, [r5]
-	ldrb r0, [r1, #0x1d]
-	adds r0, #1
-	strb r0, [r1, #0x1d]
-	ldr r2, [r5]
-	ldrb r0, [r2, #0x1d]
-	movs r1, #3
-	ands r0, r1
-	cmp r0, #0
-	bne _081511D8
-	ldrb r0, [r2, #0x1e]
-	adds r0, #1
-	strb r0, [r2, #0x1e]
-_081511D8:
-	ldr r0, [r5]
-	ldrb r0, [r0, #0x1d]
-	cmp r0, #0x10
-	bls _081511E4
-	bl DrawNextGroundSegmentGoingDown
-_081511E4:
-	pop {r4, r5}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_081511EC: .4byte 0x0203A878
-	thumb_func_end sub_08151194
+
+	.section .text.cable_car_mid2,"ax",%progbits
 
 	thumb_func_start sub_081511F0
 sub_081511F0: @ 0x081511F0
