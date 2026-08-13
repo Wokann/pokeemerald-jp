@@ -278,49 +278,6 @@ _08051F0C: .4byte 0x0000FFFE
 
 
 
-	thumb_func_start atkA7_setalwayshitflag
-atkA7_setalwayshitflag: @ 0x08052944
-	push {r4, lr}
-	ldr r4, _08052988
-	ldr r3, _0805298C
-	ldrb r1, [r3]
-	lsls r1, r1, #2
-	adds r1, r1, r4
-	ldr r0, [r1]
-	movs r2, #0x19
-	rsbs r2, r2, #0
-	ands r0, r2
-	str r0, [r1]
-	ldrb r1, [r3]
-	lsls r1, r1, #2
-	adds r1, r1, r4
-	ldr r0, [r1]
-	movs r2, #0x10
-	orrs r0, r2
-	str r0, [r1]
-	ldr r2, _08052990
-	ldrb r1, [r3]
-	lsls r0, r1, #3
-	subs r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldr r1, _08052994
-	ldrb r1, [r1]
-	strb r1, [r0, #0x15]
-	ldr r1, _08052998
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08052988: .4byte 0x02023F50
-_0805298C: .4byte 0x02023EB0
-_08052990: .4byte 0x02023F60
-_08052994: .4byte 0x02023EAF
-_08052998: .4byte 0x02023EB8
-	thumb_func_end atkA7_setalwayshitflag
 
 	thumb_func_start atkA8_copymovepermanently
 atkA8_copymovepermanently: @ 0x0805299C

@@ -3755,6 +3755,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_trysetencore);
         src/battle_script_commands.o(.text.Cmd_painsplitdmgcalc);
         src/battle_script_commands.o(.text.Cmd_settypetorandomresistance);
+        src/battle_script_commands.o(.text.Cmd_setalwayshitflag);
         asm/battle_script_commands.o(.text.atk9E_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);

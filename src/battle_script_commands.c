@@ -1491,6 +1491,7 @@ static void Cmd_disablelastusedattack(void);
 static void Cmd_trysetencore(void);
 static void Cmd_painsplitdmgcalc(void);
 static void Cmd_settypetorandomresistance(void);
+static void Cmd_setalwayshitflag(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7322,4 +7323,12 @@ static void Cmd_settypetorandomresistance(void)
 
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_setalwayshitflag(void)
+{
+    gStatuses3[gBattlerTarget] &= ~STATUS3_ALWAYS_HITS;
+    gStatuses3[gBattlerTarget] |= STATUS3_ALWAYS_HITS_TURN(2);
+    gDisableStructs[gBattlerTarget].battlerWithSureHit = gBattlerAttacker;
+    gBattlescriptCurrInstr++;
 }
