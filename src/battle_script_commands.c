@@ -970,3 +970,184 @@ static void Cmd_waitanimation(void)
     if (gBattleControllerExecFlags == 0)
         gBattlescriptCurrInstr++;
 }
+
+static void Cmd_healthbarupdate(void)
+{
+    if (gBattleControllerExecFlags)
+        return;
+
+    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+
+        if (gBattleMons[gActiveBattler].status2 & STATUS2_SUBSTITUTE && gDisableStructs[gActiveBattler].substituteHP && !(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE))
+        {
+            PrepareStringBattle(STRINGID_SUBSTITUTEDAMAGED, gActiveBattler);
+        }
+        else
+        {
+            s16 healthValue;
+
+            s32 currDmg = gBattleMoveDamage;
+            s32 maxPossibleDmgValue = 10000; // not present in R/S, ensures that huge damage values don't change sign
+
+            if (currDmg <= maxPossibleDmgValue)
+                healthValue = currDmg;
+            else
+                healthValue = maxPossibleDmgValue;
+
+            BtlController_EmitHealthBarUpdate(B_COMM_TO_CONTROLLER, healthValue);
+            MarkBattlerForControllerExec(gActiveBattler);
+
+            if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER && gBattleMoveDamage > 0)
+                gBattleResults.playerMonWasDamaged = TRUE;
+        }
+    }
+
+    gBattlescriptCurrInstr += 2;
+}
+
+// Update the active battler's HP and various HP trackers (Substitute, Bide, etc.)
+static void Cmd_datahpupdate(void)
+{
+    u32 moveType;
+
+    if (gBattleControllerExecFlags)
+        return;
+
+    // moveType will be used later to record for Counter/Mirror Coat whether this was physical or special damage.
+    // For moves with a dynamic type that have F_DYNAMIC_TYPE_IGNORE_PHYSICALITY set (in vanilla, just Hidden Power) this will ignore
+    // the dynamic type and use the move's base type instead, meaning (as a Normal type) Hidden Power will only ever trigger Counter.
+    // It also means that Hidden Power Fire is unable to defrost targets.
+    if (gBattleStruct->dynamicMoveType == 0)
+        moveType = gBattleMoves[gCurrentMove].type;
+    else if (!(gBattleStruct->dynamicMoveType & F_DYNAMIC_TYPE_IGNORE_PHYSICALITY))
+        moveType = gBattleStruct->dynamicMoveType & DYNAMIC_TYPE_MASK;
+    else
+        moveType = gBattleMoves[gCurrentMove].type;
+
+    if (!(gMoveResultFlags & MOVE_RESULT_NO_EFFECT))
+    {
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        if (gBattleMons[gActiveBattler].status2 & STATUS2_SUBSTITUTE && gDisableStructs[gActiveBattler].substituteHP && !(gHitMarker & HITMARKER_IGNORE_SUBSTITUTE))
+        {
+            // Target has an active Substitute, deal damage to that instead.
+            if (gDisableStructs[gActiveBattler].substituteHP >= gBattleMoveDamage)
+            {
+                if (gSpecialStatuses[gActiveBattler].shellBellDmg == 0)
+                    gSpecialStatuses[gActiveBattler].shellBellDmg = gBattleMoveDamage;
+                gDisableStructs[gActiveBattler].substituteHP -= gBattleMoveDamage;
+                gHpDealt = gBattleMoveDamage;
+            }
+            else
+            {
+                // Substitute has less HP than the damage dealt, set its HP to 0.
+                if (gSpecialStatuses[gActiveBattler].shellBellDmg == 0)
+                    gSpecialStatuses[gActiveBattler].shellBellDmg = gDisableStructs[gActiveBattler].substituteHP;
+                gHpDealt = gDisableStructs[gActiveBattler].substituteHP;
+                gDisableStructs[gActiveBattler].substituteHP = 0;
+            }
+
+            if (gDisableStructs[gActiveBattler].substituteHP == 0)
+            {
+                // Substitute fades
+                gBattlescriptCurrInstr += 2;
+                BattleScriptPushCursor();
+                gBattlescriptCurrInstr = BattleScript_SubstituteFade;
+                return;
+            }
+        }
+        else
+        {
+            gHitMarker &= ~HITMARKER_IGNORE_SUBSTITUTE;
+            if (gBattleMoveDamage < 0)
+            {
+                // Negative damage is HP gain
+                gBattleMons[gActiveBattler].hp += -gBattleMoveDamage;
+                if (gBattleMons[gActiveBattler].hp > gBattleMons[gActiveBattler].maxHP)
+                    gBattleMons[gActiveBattler].hp = gBattleMons[gActiveBattler].maxHP;
+            }
+            else
+            {
+                if (gHitMarker & HITMARKER_IGNORE_BIDE)
+                {
+                    gHitMarker &= ~HITMARKER_IGNORE_BIDE;
+                }
+                else
+                {
+                    // Record damage/attacker for Bide
+                    gBideDmg[gActiveBattler] += gBattleMoveDamage;
+                    if (gBattlescriptCurrInstr[1] == BS_TARGET)
+                        gBideTarget[gActiveBattler] = gBattlerAttacker;
+                    else
+                        gBideTarget[gActiveBattler] = gBattlerTarget;
+                }
+
+                // Deal damage to the battler
+                if (gBattleMons[gActiveBattler].hp > gBattleMoveDamage)
+                {
+                    gBattleMons[gActiveBattler].hp -= gBattleMoveDamage;
+                    gHpDealt = gBattleMoveDamage;
+                }
+                else
+                {
+                    gHpDealt = gBattleMons[gActiveBattler].hp;
+                    gBattleMons[gActiveBattler].hp = 0;
+                }
+
+                // Record damage for Shell Bell
+                if (gSpecialStatuses[gActiveBattler].shellBellDmg == 0 && !(gHitMarker & HITMARKER_PASSIVE_HP_UPDATE))
+                    gSpecialStatuses[gActiveBattler].shellBellDmg = gHpDealt;
+
+                // Note: While physicalDmg/specialDmg below are only distinguished between for Counter/Mirror Coat, they are
+                //       used in combination as general damage trackers for other purposes. specialDmg is additionally used
+                //       to help determine if a fire move should defrost the target.
+                if (IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_PASSIVE_HP_UPDATE) && gCurrentMove != MOVE_PAIN_SPLIT)
+                {
+                    // Record physical damage/attacker for Counter
+                    gProtectStructs[gActiveBattler].physicalDmg = gHpDealt;
+                    gSpecialStatuses[gActiveBattler].physicalDmg = gHpDealt;
+                    if (gBattlescriptCurrInstr[1] == BS_TARGET)
+                    {
+                        gProtectStructs[gActiveBattler].physicalBattlerId = gBattlerAttacker;
+                        gSpecialStatuses[gActiveBattler].physicalBattlerId = gBattlerAttacker;
+                    }
+                    else
+                    {
+                        gProtectStructs[gActiveBattler].physicalBattlerId = gBattlerTarget;
+                        gSpecialStatuses[gActiveBattler].physicalBattlerId = gBattlerTarget;
+                    }
+                }
+                else if (!IS_TYPE_PHYSICAL(moveType) && !(gHitMarker & HITMARKER_PASSIVE_HP_UPDATE))
+                {
+                    // Record special damage/attacker for Mirror Coat
+                    gProtectStructs[gActiveBattler].specialDmg = gHpDealt;
+                    gSpecialStatuses[gActiveBattler].specialDmg = gHpDealt;
+                    if (gBattlescriptCurrInstr[1] == BS_TARGET)
+                    {
+                        gProtectStructs[gActiveBattler].specialBattlerId = gBattlerAttacker;
+                        gSpecialStatuses[gActiveBattler].specialBattlerId = gBattlerAttacker;
+                    }
+                    else
+                    {
+                        gProtectStructs[gActiveBattler].specialBattlerId = gBattlerTarget;
+                        gSpecialStatuses[gActiveBattler].specialBattlerId = gBattlerTarget;
+                    }
+                }
+            }
+            gHitMarker &= ~HITMARKER_PASSIVE_HP_UPDATE;
+
+            // Send updated HP
+            BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_HP_BATTLE, 0, sizeof(gBattleMons[gActiveBattler].hp), &gBattleMons[gActiveBattler].hp);
+            MarkBattlerForControllerExec(gActiveBattler);
+        }
+    }
+    else
+    {
+        // MOVE_RESULT_NO_EFFECT was set
+        gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        if (gSpecialStatuses[gActiveBattler].shellBellDmg == 0)
+            gSpecialStatuses[gActiveBattler].shellBellDmg = IGNORE_SHELL_BELL;
+    }
+    gBattlescriptCurrInstr += 2;
+}
