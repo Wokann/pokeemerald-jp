@@ -1500,6 +1500,7 @@ extern const u8 sFlailHpScaleToPowerTable[];
 static void Cmd_trysetdestinybondtohappen(void);
 static void Cmd_remaininghptopower(void);
 static void Cmd_tryspiteppreduce(void);
+static void Cmd_healpartystatus(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7509,4 +7510,102 @@ static void Cmd_tryspiteppreduce(void)
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
+}
+
+static void Cmd_healpartystatus(void)
+{
+    u32 zero = 0;
+    u8 toHeal = 0;
+
+    if (gCurrentMove == MOVE_HEAL_BELL)
+    {
+        struct Pokemon *party;
+        s32 i;
+
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_BELL;
+
+        if (GetBattlerSide(gBattlerAttacker) == B_SIDE_PLAYER)
+            party = gPlayerParty;
+        else
+            party = gEnemyParty;
+
+        if (gBattleMons[gBattlerAttacker].ability != ABILITY_SOUNDPROOF)
+        {
+            gBattleMons[gBattlerAttacker].status1 = 0;
+            gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
+        }
+        else
+        {
+            RecordAbilityBattle(gBattlerAttacker, gBattleMons[gBattlerAttacker].ability);
+            gBattleCommunication[MULTISTRING_CHOOSER] |= B_MSG_BELL_SOUNDPROOF_ATTACKER;
+        }
+
+        gActiveBattler = gBattleScripting.battler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
+
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+            && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
+        {
+            if (gBattleMons[gActiveBattler].ability != ABILITY_SOUNDPROOF)
+            {
+                gBattleMons[gActiveBattler].status1 = 0;
+                gBattleMons[gActiveBattler].status2 &= ~STATUS2_NIGHTMARE;
+            }
+            else
+            {
+                RecordAbilityBattle(gActiveBattler, gBattleMons[gActiveBattler].ability);
+                gBattleCommunication[MULTISTRING_CHOOSER] |= B_MSG_BELL_SOUNDPROOF_PARTNER;
+            }
+        }
+
+        // Because the above MULTISTRING_CHOOSER are ORd, if both are set then it will be B_MSG_BELL_BOTH_SOUNDPROOF
+
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            u16 species = GetMonData(&party[i], MON_DATA_SPECIES_OR_EGG);
+            u8 abilityNum = GetMonData(&party[i], MON_DATA_ABILITY_NUM);
+
+            if (species != SPECIES_NONE && species != SPECIES_EGG)
+            {
+                u8 ability;
+
+                if (gBattlerPartyIndexes[gBattlerAttacker] == i)
+                    ability = gBattleMons[gBattlerAttacker].ability;
+                else if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+                         && gBattlerPartyIndexes[gActiveBattler] == i
+                         && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
+                    ability = gBattleMons[gActiveBattler].ability;
+                else
+                    ability = GetAbilityBySpecies(species, abilityNum);
+
+                if (ability != ABILITY_SOUNDPROOF)
+                    toHeal |= (1 << i);
+            }
+        }
+    }
+    else // Aromatherapy
+    {
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SOOTHING_AROMA;
+        toHeal = (1 << PARTY_SIZE) - 1;
+
+        gBattleMons[gBattlerAttacker].status1 = 0;
+        gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_NIGHTMARE;
+
+        gActiveBattler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
+        if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+            && !(gAbsentBattlerFlags & gBitTable[gActiveBattler]))
+        {
+            gBattleMons[gActiveBattler].status1 = 0;
+            gBattleMons[gActiveBattler].status2 &= ~STATUS2_NIGHTMARE;
+        }
+
+    }
+
+    if (toHeal)
+    {
+        gActiveBattler = gBattlerAttacker;
+        BtlController_EmitSetMonData(B_COMM_TO_CONTROLLER, REQUEST_STATUS_BATTLE, toHeal, sizeof(zero), &zero);
+        MarkBattlerForControllerExec(gActiveBattler);
+    }
+
+    gBattlescriptCurrInstr++;
 }
