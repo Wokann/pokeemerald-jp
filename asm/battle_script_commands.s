@@ -532,67 +532,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkEE_removelightscreenreflect
-atkEE_removelightscreenreflect: @ 0x08055E94
-	push {r4, lr}
-	ldr r0, _08055EDC
-	ldrb r0, [r0]
-	bl GetBattlerSide
-	movs r1, #1
-	eors r0, r1
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r1, _08055EE0
-	lsls r3, r0, #1
-	adds r0, r3, r0
-	lsls r0, r0, #2
-	adds r4, r0, r1
-	ldrb r0, [r4]
-	cmp r0, #0
-	bne _08055EBC
-	ldrb r1, [r4, #2]
-	cmp r1, #0
-	beq _08055EF4
-_08055EBC:
-	ldr r2, _08055EE4
-	adds r2, r3, r2
-	ldrh r1, [r2]
-	ldr r0, _08055EE8
-	ands r0, r1
-	movs r3, #0
-	ldr r1, _08055EEC
-	ands r0, r1
-	strh r0, [r2]
-	strb r3, [r4]
-	strb r3, [r4, #2]
-	ldr r1, _08055EF0
-	movs r0, #1
-	strb r0, [r1, #0x18]
-	strb r0, [r1, #0x19]
-	b _08055EFA
-	.align 2, 0
-_08055EDC: .4byte 0x02023EAF
-_08055EE0: .4byte 0x02023F38
-_08055EE4: .4byte 0x02023F32
-_08055EE8: .4byte 0x0000FFFE
-_08055EEC: .4byte 0x0000FFFD
-_08055EF0: .4byte 0x02024118
-_08055EF4:
-	ldr r0, _08055F08
-	strb r1, [r0, #0x18]
-	strb r1, [r0, #0x19]
-_08055EFA:
-	ldr r1, _08055F0C
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055F08: .4byte 0x02024118
-_08055F0C: .4byte 0x02023EB8
-	thumb_func_end atkEE_removelightscreenreflect
 
 	thumb_func_start atkEF_handleballthrow
 atkEF_handleballthrow: @ 0x08055F10

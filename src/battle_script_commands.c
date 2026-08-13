@@ -1571,6 +1571,7 @@ static void Cmd_tryrecycleitem(void);
 static void Cmd_settypetoenvironment(void);
 static void Cmd_pursuitdoubles(void);
 static void Cmd_snatchsetbattlers(void);
+static void Cmd_removelightscreenreflect(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9077,5 +9078,27 @@ static void Cmd_snatchsetbattlers(void)
         gBattlerTarget = gBattleScripting.battler;
 
     gBattleScripting.battler = gEffectBattler;
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_removelightscreenreflect(void)
+{
+    u8 opposingSide = BATTLE_OPPOSITE(GetBattlerSide(gBattlerAttacker));
+
+    if (gSideTimers[opposingSide].reflectTimer || gSideTimers[opposingSide].lightscreenTimer)
+    {
+        gSideStatuses[opposingSide] &= ~SIDE_STATUS_REFLECT;
+        gSideStatuses[opposingSide] &= ~SIDE_STATUS_LIGHTSCREEN;
+        gSideTimers[opposingSide].reflectTimer = 0;
+        gSideTimers[opposingSide].lightscreenTimer = 0;
+        gBattleScripting.animTurn = 1;
+        gBattleScripting.animTargetsHit = 1;
+    }
+    else
+    {
+        gBattleScripting.animTurn = 0;
+        gBattleScripting.animTargetsHit = 0;
+    }
+
     gBattlescriptCurrInstr++;
 }
