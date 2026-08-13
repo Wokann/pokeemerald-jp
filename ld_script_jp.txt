@@ -4942,6 +4942,10 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_SlideMonForFocusBand_Step2);
         src/battle_anim_effects_3.o(.text.AnimTask_SlideMonForFocusBand_Step1);
         src/battle_anim_effects_3.o(.text.AnimTask_SlideMonForFocusBand);
+        src/battle_anim_effects_3.o(.text.AnimTask_SquishAndSweatDroplets);
+        src/battle_anim_effects_3.o(.text.AnimTask_SquishAndSweatDroplets_Step);
+        src/battle_anim_effects_3.o(.text.CreateSweatDroplets);
+        src/battle_anim_effects_3.o(.text.AnimFacadeSweatDrop);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

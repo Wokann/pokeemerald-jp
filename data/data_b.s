@@ -11527,12 +11527,12 @@ gDeepInhaleAffineAnimCmds: @ 0x85AD3F8
 gUnknown_85AD428: @ 0x85AD428
 	.incbin "baserom_jp.gba", 0x5ad428, 0x12c
 
-	.globl gUnknown_85AD554
-gUnknown_85AD554: @ 0x85AD554
+	.globl gFacadeSquishAffineAnimCmds
+gFacadeSquishAffineAnimCmds: @ 0x85AD554
 	.incbin "baserom_jp.gba", 0x5ad554, 0x20
 
-	.globl gUnknown_85AD574
-gUnknown_85AD574: @ 0x85AD574
+	.globl gFacadeSweatDropSpriteTemplate
+gFacadeSweatDropSpriteTemplate: @ 0x85AD574
 	.incbin "baserom_jp.gba", 0x5ad574, 0x18
 
 	.globl gUnknown_85AD58C

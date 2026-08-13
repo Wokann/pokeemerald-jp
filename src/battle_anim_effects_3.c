@@ -20,6 +20,8 @@ extern const union AffineAnimCmd gSpitUpDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gSwallowDeformMonAffineAnimCmds[];
 extern const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[];
 extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
+extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
+extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
@@ -55,6 +57,9 @@ static void AnimYawnCloud_Step(struct Sprite *sprite);
 static void AnimSmokeBallEscapeCloud(struct Sprite *sprite);
 static void AnimTask_SlideMonForFocusBand_Step1(u8 taskId);
 static void AnimTask_SlideMonForFocusBand_Step2(u8 taskId);
+static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId);
+static void CreateSweatDroplets(u8 taskId, bool8 lowerDroplets);
+static void AnimFacadeSweatDrop(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1990,3 +1995,153 @@ void AnimTask_SlideMonForFocusBand(u8 taskId)
     gTasks[taskId].data[5] = gBattleAnimArgs[5];
     gTasks[taskId].func = AnimTask_SlideMonForFocusBand_Step1;
 }
+
+#define IDX_ACTIVE_SPRITES 2  // Used by the sprite callback to modify the number of active sprites
+
+// Task data for AnimTask_SquishAndSweatDroplets
+#define tState           data[0]
+#define tTimer           data[1]
+#define tActiveSprites   data[IDX_ACTIVE_SPRITES]
+#define tNumSquishes     data[3]
+#define tBaseX           data[4]
+#define tBaseY           data[5]
+#define tSubpriority     data[6]
+// data[7]-data[15] used by PrepareAffineAnimInTaskData
+#define tBattlerSpriteId data[15]
+
+// Sprite data for AnimFacadeSweatDrop
+#define sTimer            data[0]
+#define sVelocX           data[1]
+#define sVelocY           data[2]
+#define sTaskId           data[3]
+#define sActiveSpritesIdx data[4]
+
+void AnimTask_SquishAndSweatDroplets(u8 taskId)
+{
+    u8 battler;
+    struct Task *task = &gTasks[taskId];
+
+    if (!gBattleAnimArgs[1])
+        DestroyAnimVisualTask(taskId);
+
+    task->tState = 0;
+    task->tTimer = 0;
+    task->tActiveSprites = 0;
+    task->tNumSquishes = gBattleAnimArgs[1];
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    task->tBaseX = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+    task->tBaseY = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y);
+    task->tSubpriority = GetBattlerSpriteSubpriority(battler);
+    task->tBattlerSpriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+    PrepareAffineAnimInTaskData(task, task->tBattlerSpriteId, gFacadeSquishAffineAnimCmds);
+    task->func = AnimTask_SquishAndSweatDroplets_Step;
+}
+
+static void AnimTask_SquishAndSweatDroplets_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        task->tTimer++;
+        if (task->tTimer == 6)
+            CreateSweatDroplets(taskId, TRUE);
+
+        if (task->tTimer == 18)
+            CreateSweatDroplets(taskId, FALSE);
+
+        if (!RunAffineAnimFromTaskData(task))
+        {
+            if (--task->tNumSquishes == 0)
+            {
+                // Animation is finished
+                task->tState++;
+            }
+            else
+            {
+                // Animation continues, more droplet sprites to create
+                task->tTimer = 0;
+                PrepareAffineAnimInTaskData(task, task->tBattlerSpriteId, gFacadeSquishAffineAnimCmds);
+            }
+        }
+        break;
+    case 1:
+        // Wait for sprites to be destroyed before ending task
+        if (task->tActiveSprites == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void CreateSweatDroplets(u8 taskId, bool8 lowerDroplets)
+{
+    u8 i;
+    s8 xOffset, yOffset;
+    struct Task *task;
+    s16 xCoords[4];
+    s16 yCoords[2];
+
+    task = &gTasks[taskId];
+    if (!lowerDroplets)
+    {
+        xOffset = 18;
+        yOffset = -20;
+    }
+    else
+    {
+        xOffset = 30;
+        yOffset = 20;
+    }
+
+    xCoords[0] = task->tBaseX - xOffset;
+    xCoords[1] = task->tBaseX - xOffset - 4;
+    xCoords[2] = task->tBaseX + xOffset;
+    xCoords[3] = task->tBaseX + xOffset + 4;
+    yCoords[0] = task->tBaseY + yOffset;
+    yCoords[1] = task->tBaseY + yOffset + 6;
+
+    for (i = 0; i < 4; i++)
+    {
+        u8 spriteId = CreateSprite(&gFacadeSweatDropSpriteTemplate, xCoords[i], yCoords[i & 1], task->tSubpriority - 5);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].sTimer = 0;
+            gSprites[spriteId].sVelocX = i < 2 ? -2 : 2; // First two travel left, remaining travel right
+            gSprites[spriteId].sVelocY = -1;
+            gSprites[spriteId].sTaskId = taskId;
+            gSprites[spriteId].sActiveSpritesIdx = IDX_ACTIVE_SPRITES;
+            task->tActiveSprites++;
+        }
+    }
+}
+
+static void AnimFacadeSweatDrop(struct Sprite *sprite)
+{
+    sprite->x += sprite->sVelocX;
+    sprite->y += sprite->sVelocY;
+    if (++sprite->sTimer > 6)
+    {
+        gTasks[sprite->sTaskId].data[sprite->sActiveSpritesIdx]--;
+        DestroySprite(sprite);
+    }
+}
+
+#undef IDX_ACTIVE_SPRITES
+#undef tState
+#undef tTimer
+#undef tActiveSprites
+#undef tNumSquishes
+#undef tBaseX
+#undef tBaseY
+#undef tSubpriority
+#undef tBattlerSpriteId
+#undef sTimer
+#undef sVelocX
+#undef sVelocY
+#undef sTaskId
+#undef sActiveSpritesIdx
