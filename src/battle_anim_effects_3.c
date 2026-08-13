@@ -15,6 +15,7 @@ extern const union AffineAnimCmd sAffineAnims_Torment[];
 static void FadeScreenToWhite_Step(u8 taskId);
 static void TormentAttacker_Step(u8 taskId);
 static void TormentAttacker_Callback(struct Sprite *sprite);
+static void AnimTriAttackTriangle(struct Sprite *sprite);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -618,5 +619,36 @@ static void TormentAttacker_Callback(struct Sprite *sprite)
     {
         gTasks[sprite->data[0]].data[sprite->data[1]]--;
         DestroySprite(sprite);
+    }
+}
+
+static void AnimTriAttackTriangle(struct Sprite *sprite)
+{
+    if (sprite->data[0] == 0)
+        InitSpritePosToAnimAttacker(sprite, FALSE);
+
+    if (++sprite->data[0] < 40)
+    {
+        u16 var = sprite->data[0];
+        if ((var & 1) == 0)
+            sprite->invisible = TRUE;
+        else
+            sprite->invisible = FALSE;
+    }
+
+    if (sprite->data[0] > 30)
+        sprite->invisible = FALSE;
+
+    if (sprite->data[0] == 61)
+    {
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 20;
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+        sprite->callback = InitAndRunAnimFastLinearTranslation;
     }
 }
