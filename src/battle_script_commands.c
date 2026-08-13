@@ -1514,6 +1514,7 @@ static void Cmd_setsafeguard(void);
 static void Cmd_magnitudedamagecalculation(void);
 static void Cmd_jumpifnopursuitswitchdmg(void);
 static void Cmd_setsunny(void);
+static void Cmd_maxattackhalvehp(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7937,4 +7938,27 @@ static void Cmd_setsunny(void)
     }
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_maxattackhalvehp(void)
+{
+    u32 halfHp = gBattleMons[gBattlerAttacker].maxHP / 2;
+
+    if (!(gBattleMons[gBattlerAttacker].maxHP / 2))
+        halfHp = 1;
+
+    if (gBattleMons[gBattlerAttacker].statStages[STAT_ATK] < MAX_STAT_STAGE
+        && gBattleMons[gBattlerAttacker].hp > halfHp)
+    {
+        gBattleMons[gBattlerAttacker].statStages[STAT_ATK] = MAX_STAT_STAGE;
+        gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 2;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+
+        gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
 }
