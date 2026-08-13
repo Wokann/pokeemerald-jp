@@ -1102,3 +1102,100 @@ u8 DoBattlerEndTurnEffects(void)
     gHitMarker &= ~(HITMARKER_GRUDGE | HITMARKER_IGNORE_BIDE);
     return 0;
 }
+
+bool8 HandleWishPerishSongOnTurnEnd(void)
+{
+    gHitMarker |= (HITMARKER_GRUDGE | HITMARKER_IGNORE_BIDE);
+
+    switch (gBattleStruct->wishPerishSongState)
+    {
+    case 0:
+        while (gBattleStruct->wishPerishSongBattlerId < gBattlersCount)
+        {
+            gActiveBattler = gBattleStruct->wishPerishSongBattlerId;
+            if (gAbsentBattlerFlags & gBitTable[gActiveBattler])
+            {
+                gBattleStruct->wishPerishSongBattlerId++;
+                continue;
+            }
+
+            gBattleStruct->wishPerishSongBattlerId++;
+            if (gWishFutureKnock.futureSightCounter[gActiveBattler] != 0
+             && --gWishFutureKnock.futureSightCounter[gActiveBattler] == 0
+             && gBattleMons[gActiveBattler].hp != 0)
+            {
+                if (gWishFutureKnock.futureSightMove[gActiveBattler] == MOVE_FUTURE_SIGHT)
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_FUTURE_SIGHT;
+                else
+                    gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_DOOM_DESIRE;
+
+                PREPARE_MOVE_BUFFER(gBattleTextBuff1, gWishFutureKnock.futureSightMove[gActiveBattler]);
+
+                gBattlerTarget = gActiveBattler;
+                gBattlerAttacker = gWishFutureKnock.futureSightAttacker[gActiveBattler];
+                gBattleMoveDamage = gWishFutureKnock.futureSightDmg[gActiveBattler];
+                gSpecialStatuses[gBattlerTarget].shellBellDmg = IGNORE_SHELL_BELL;
+                BattleScriptExecute(BattleScript_MonTookFutureAttack);
+
+                if (gWishFutureKnock.futureSightCounter[gActiveBattler] == 0
+                 && gWishFutureKnock.futureSightCounter[BATTLE_PARTNER(gActiveBattler)] == 0)
+                {
+                    gSideStatuses[GET_BATTLER_SIDE(gBattlerTarget)] &= ~SIDE_STATUS_FUTUREATTACK;
+                }
+                return TRUE;
+            }
+        }
+        *(&gBattleStruct->wishPerishSongState) = 1;
+        gBattleStruct->wishPerishSongBattlerId = 0;
+    case 1:
+        while (gBattleStruct->wishPerishSongBattlerId < gBattlersCount)
+        {
+            gActiveBattler = gBattlerAttacker = gBattlerByTurnOrder[gBattleStruct->wishPerishSongBattlerId];
+            if (gAbsentBattlerFlags & gBitTable[gActiveBattler])
+            {
+                gBattleStruct->wishPerishSongBattlerId++;
+                continue;
+            }
+            gBattleStruct->wishPerishSongBattlerId++;
+            if (gStatuses3[gActiveBattler] & STATUS3_PERISH_SONG)
+            {
+                PREPARE_BYTE_NUMBER_BUFFER(gBattleTextBuff1, 1, gDisableStructs[gActiveBattler].perishSongTimer);
+                if (gDisableStructs[gActiveBattler].perishSongTimer == 0)
+                {
+                    gStatuses3[gActiveBattler] &= ~STATUS3_PERISH_SONG;
+                    gBattleMoveDamage = gBattleMons[gActiveBattler].hp;
+                    gBattlescriptCurrInstr = BattleScript_PerishSongTakesLife;
+                }
+                else
+                {
+                    gDisableStructs[gActiveBattler].perishSongTimer--;
+                    gBattlescriptCurrInstr = BattleScript_PerishSongCountGoesDown;
+                }
+                BattleScriptExecute(gBattlescriptCurrInstr);
+                return TRUE;
+            }
+        }
+        *(&gBattleStruct->wishPerishSongState) = 2;
+        gBattleStruct->wishPerishSongBattlerId = 0;
+    case 2:
+        if ((gBattleTypeFlags & BATTLE_TYPE_ARENA)
+         && gBattleStruct->arenaTurnCounter == 2
+         && gBattleMons[0].hp != 0 && gBattleMons[1].hp != 0)
+        {
+            s32 i;
+
+            for (i = 0; i < 2; i++)
+                CancelMultiTurnMoves(i);
+
+            gBattlescriptCurrInstr = BattleScript_ArenaDoJudgment;
+            BattleScriptExecute(BattleScript_ArenaDoJudgment);
+            gBattleStruct->wishPerishSongState++;
+            return TRUE;
+        }
+        break;
+    }
+
+    gHitMarker &= ~(HITMARKER_GRUDGE | HITMARKER_IGNORE_BIDE);
+
+    return FALSE;
+}

@@ -782,6 +782,10 @@ BattleScript_ThrashConfuses = gUnknown_8289837;
 BattleScript_DisabledNoMore = gUnknown_82893AB;
 BattleScript_EncoredNoMore = gUnknown_82893BF;
 BattleScript_YawnMakesAsleep = gUnknown_8289900;
+BattleScript_MonTookFutureAttack = gUnknown_828956C;
+BattleScript_PerishSongTakesLife = gUnknown_828948D;
+BattleScript_PerishSongCountGoesDown = gUnknown_82894A8;
+BattleScript_ArenaDoJudgment = gUnknown_8289E7B;
 gBattleScriptingCommandsTable = gUnknown_82EC600;
 sTurnActionsFuncsTable = gUnknown_82EC694;
 RecordedBattle_SetPlaybackFinished = sub_0818619C;
@@ -3378,6 +3382,7 @@ SECTIONS {
         src/battle_util.o(.text.GetImprisonedMovesCount);
         src/battle_util.o(.text.DoFieldEndTurnEffects);
         src/battle_util.o(.text.DoBattlerEndTurnEffects);
+        src/battle_util.o(.text.HandleWishPerishSongOnTurnEnd);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
