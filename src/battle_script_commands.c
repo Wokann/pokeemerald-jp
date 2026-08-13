@@ -1544,6 +1544,7 @@ static void Cmd_trysetroots(void);
 static void Cmd_doubledamagedealtifdamaged(void);
 static void Cmd_setyawn(void);
 static void Cmd_setdamagetohealthdifference(void);
+static void Cmd_scaledamagebyhealthratio(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8552,4 +8553,16 @@ static void Cmd_setdamagetohealthdifference(void)
         gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - gBattleMons[gBattlerAttacker].hp;
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_scaledamagebyhealthratio(void)
+{
+    if (gDynamicBasePower == 0)
+    {
+        u8 power = gBattleMoves[gCurrentMove].power;
+        gDynamicBasePower = gBattleMons[gBattlerAttacker].hp * power / gBattleMons[gBattlerAttacker].maxHP;
+        if (gDynamicBasePower == 0)
+            gDynamicBasePower = 1;
+    }
+    gBattlescriptCurrInstr++;
 }

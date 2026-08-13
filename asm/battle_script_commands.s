@@ -511,53 +511,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD9_scaledamagebyhealthratio
-atkD9_scaledamagebyhealthratio: @ 0x08055038
-	push {r4, lr}
-	ldr r4, _08055084
-	ldrh r0, [r4]
-	cmp r0, #0
-	bne _08055074
-	ldr r2, _08055088
-	ldr r0, _0805508C
-	ldrh r1, [r0]
-	lsls r0, r1, #1
-	adds r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r2
-	ldrb r3, [r0, #1]
-	ldr r2, _08055090
-	ldr r0, _08055094
-	ldrb r1, [r0]
-	movs r0, #0x58
-	muls r1, r0, r1
-	adds r1, r1, r2
-	ldrh r0, [r1, #0x28]
-	muls r0, r3, r0
-	ldrh r1, [r1, #0x2c]
-	bl __divsi3
-	strh r0, [r4]
-	lsls r0, r0, #0x10
-	cmp r0, #0
-	bne _08055074
-	movs r0, #1
-	strh r0, [r4]
-_08055074:
-	ldr r1, _08055098
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055084: .4byte 0x020240A4
-_08055088: .4byte 0x082ED220
-_0805508C: .4byte 0x02023E8E
-_08055090: .4byte 0x02023D28
-_08055094: .4byte 0x02023EAF
-_08055098: .4byte 0x02023EB8
-	thumb_func_end atkD9_scaledamagebyhealthratio
 
 	thumb_func_start atkDA_tryswapabilities
 atkDA_tryswapabilities: @ 0x0805509C
