@@ -35,6 +35,7 @@
 #include "window.h"
 #include "constants/battle.h"
 #include "constants/battle_anim.h"
+#include "constants/battle_string_ids.h"
 #include "constants/berry.h"
 #include "constants/battle_move_effects.h"
 #include "constants/flags.h"
@@ -78,6 +79,7 @@ extern void BattleIntroDrawTrainersOrMonsSprites(void); // JP asm 0x0803A8C8 (US
 extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: same name)
 extern void BattleIntroPrintTrainerWantsToBattle(void); // JP asm 0x0803AD64 (US: same name)
 extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: same name)
+extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -1976,6 +1978,7 @@ static void BattleIntroGetMonsData(void)
         break;
     }
 }
+
 
 
 
