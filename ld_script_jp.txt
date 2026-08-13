@@ -745,6 +745,8 @@ sCenterToCornerVecXs = gUnknown_82EBB30;
 gMonFrontPicCoords = gUnknown_82D45C8;
 gCastformFrontSpriteCoords = gUnknown_84FE684;
 StartHealthboxSlideIn = sub_08076320;
+gText_EmptyString3 = gUnknown_85AB3BD;
+BattleScript_ArenaTurnBeginning = gUnknown_8289E46;
 sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
 FillAroundBattleWindows = sub_0805EB30;
@@ -3247,6 +3249,7 @@ SECTIONS {
         asm/battle_main_introplayer2.o(.text);
         asm/battle_main_introplayer1.o(.text);
         asm/battle_main_introswitchin.o(.text);
+        asm/battle_main_trydo.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

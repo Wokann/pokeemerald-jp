@@ -5,6 +5,7 @@
 #include "battle_controllers.h"
 #include "battle_main.h"
 #include "battle_message.h"
+#include "battle_scripts.h"
 #include "battle_setup.h"
 #include "bg.h"
 #include "cable_club.h"
@@ -70,20 +71,18 @@ extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const s8 sCenterToCornerVecXs[];
 extern u32 sFlickerArray[];
 extern u8 sUnusedBattlersArray[];
-extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
 extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (register-sensitive, kept in asm)
 extern void SwitchInClearSetData(void); // JP asm 0x08039EC8 (register-sensitive, kept in asm)
 extern void FaintClearSetData(void); // JP asm 0x0803A3A0 (register-sensitive, kept in asm)
 extern void BattleIntroPrepareBackgroundSlide(void); // JP asm 0x0803A878 (US: same name)
 extern void BattleIntroDrawTrainersOrMonsSprites(void); // JP asm 0x0803A8C8 (US: same name)
 extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: same name)
-extern void BattleIntroPrintTrainerWantsToBattle(void); // JP asm 0x0803AD64 (US: same name)
-extern void BattleIntroPrintWildMonAttacked(void); // JP asm 0x0803AD9C (US: same name)
-extern void BattleIntroPrintOpponentSendsOut(void); // JP asm 0x0803ADC4 (US: same name)
 extern void BattleIntroOpponent1SendsOutMonAnimation(void); // JP asm 0x0803AEA0 (US: same name)
 extern void BattleIntroOpponent2SendsOutMonAnimation(void); // JP asm 0x0803AE20 (register-sensitive, kept in asm)
 extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (register-sensitive, kept in asm)
 extern void BattleIntroPlayer1SendsOutMonAnimation(void); // JP asm 0x0803B10C (US: same name)
+extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
+extern void TryDoEventsBeforeFirstTurn(void); // JP asm 0x0803B26C (register-sensitive, kept in asm)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -112,6 +111,9 @@ static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite);
 static void BattleMainCB1(void);
 static void BattleIntroGetMonsData(void);
 static void BattleIntroPrintPlayerSendsOut(void);
+static void BattleIntroPrintTrainerWantsToBattle(void);
+static void BattleIntroPrintWildMonAttacked(void);
+static void BattleIntroPrintOpponentSendsOut(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -2028,6 +2030,7 @@ static void BattleIntroPrintPlayerSendsOut(void)
 
     gBattleMainFunc = BattleIntroPlayer1SendsOutMonAnimation;
 }
+
 
 static void BattleIntroPrintOpponentSendsOut(void)
 {
