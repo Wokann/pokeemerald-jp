@@ -1523,6 +1523,7 @@ static void Cmd_hiddenpowercalc(void);
 static void Cmd_selectfirstvalidtarget(void);
 static void Cmd_trysetfutureattack(void);
 static void Cmd_trydobeatup(void);
+static void Cmd_setsemiinvulnerablebit(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8169,4 +8170,23 @@ static void Cmd_trydobeatup(void)
             gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 5);
         }
     }
+}
+
+static void Cmd_setsemiinvulnerablebit(void)
+{
+    switch (gCurrentMove)
+    {
+    case MOVE_FLY:
+    case MOVE_BOUNCE:
+        gStatuses3[gBattlerAttacker] |= STATUS3_ON_AIR;
+        break;
+    case MOVE_DIG:
+        gStatuses3[gBattlerAttacker] |= STATUS3_UNDERGROUND;
+        break;
+    case MOVE_DIVE:
+        gStatuses3[gBattlerAttacker] |= STATUS3_UNDERWATER;
+        break;
+    }
+
+    gBattlescriptCurrInstr++;
 }
