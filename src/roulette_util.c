@@ -208,3 +208,47 @@ void RouletteFlash_Stop(struct RouletteFlashUtil *flash, u16 flags)
         flash->flags &= ~flags;
     }
 }
+
+void InitPulseBlend(struct PulseBlend *pulseBlend)
+{
+    u8 i = 0;
+
+    pulseBlend->usedPulseBlendPalettes = 0;
+    memset(&pulseBlend->pulseBlendPalettes, 0, sizeof(pulseBlend->pulseBlendPalettes));
+    for (; i < 16; i++)
+        pulseBlend->pulseBlendPalettes[i].paletteSelector = i;
+}
+
+int InitPulseBlendPaletteSettings(struct PulseBlend *pulseBlend, const struct PulseBlendSettings *settings)
+{
+    u8 i = 0;
+    struct PulseBlendPalette *pulseBlendPalette = NULL;
+
+    if (!pulseBlend->pulseBlendPalettes[0].inUse)
+    {
+        pulseBlendPalette = &pulseBlend->pulseBlendPalettes[0];
+    }
+    else
+    {
+        while (++i < 16)
+        {
+            if (!pulseBlend->pulseBlendPalettes[i].inUse)
+            {
+                pulseBlendPalette = &pulseBlend->pulseBlendPalettes[i];
+                break;
+            }
+        }
+    }
+
+    if (pulseBlendPalette == NULL)
+        return 0xFF;
+
+    pulseBlendPalette->blendCoeff = 0;
+    pulseBlendPalette->fadeDirection = 0;
+    pulseBlendPalette->available = 1;
+    pulseBlendPalette->inUse = 1;
+    pulseBlendPalette->delayCounter = 0;
+    pulseBlendPalette->fadeCycleCounter = 0;
+    memcpy(&pulseBlendPalette->pulseBlendSettings, settings, sizeof(*settings));
+    return i;
+}

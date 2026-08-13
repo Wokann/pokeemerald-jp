@@ -4814,6 +4814,8 @@ SECTIONS {
         src/roulette_util.o(.text.RouletteFlash_Run);
         src/roulette_util.o(.text.RouletteFlash_Enable);
         src/roulette_util.o(.text.RouletteFlash_Stop);
+        src/roulette_util.o(.text.InitPulseBlend);
+        src/roulette_util.o(.text.InitPulseBlendPaletteSettings);
         asm/roulette_util.o(.text.roulette_util_rest);
         asm/rom_81520A8.o(.text);
         src/save.o(.text);
