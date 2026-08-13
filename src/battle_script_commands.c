@@ -1552,6 +1552,7 @@ static void Cmd_tryimprison(void);
 static void Cmd_trysetgrudge(void);
 static void Cmd_weightdamagecalculation(void);
 static void Cmd_assistattackselect(void);
+static void Cmd_trysetmagiccoat(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8716,5 +8717,20 @@ static void Cmd_assistattackselect(void)
     else
     {
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_trysetmagiccoat(void)
+{
+    gBattlerTarget = gBattlerAttacker;
+    gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+    if (gCurrentTurnActionNumber == gBattlersCount - 1)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gProtectStructs[gBattlerAttacker].bounceMove = TRUE;
+        gBattlescriptCurrInstr += 5;
     }
 }
