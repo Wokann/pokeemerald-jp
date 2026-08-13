@@ -4,7 +4,6 @@
 .syntax unified
 
 
-	thumb_func_start sub_08032600
 	thumb_func_start InitSinglePlayerBtlControllers
 InitSinglePlayerBtlControllers: @ 0x080326BC
 	push {r4, r5, r6, r7, lr}
