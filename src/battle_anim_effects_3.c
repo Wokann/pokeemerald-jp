@@ -33,6 +33,7 @@ static void AnimTask_RockMonBackAndForth_Step(u8 taskId);
 static void AnimSweetScentPetal(struct Sprite *sprite);
 static void AnimSweetScentPetal_Step(struct Sprite *sprite);
 static void AnimTask_FlailMovement_Step(u8 taskId);
+static void AnimPainSplitProjectile(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -1137,6 +1138,97 @@ static void AnimTask_FlailMovement_Step(u8 taskId)
         else
         {
             task->data[0] = 2;
+        }
+    }
+}
+
+static void AnimPainSplitProjectile(struct Sprite *sprite)
+{
+    if (!sprite->data[0])
+    {
+        if (gBattleAnimArgs[2] == ANIM_ATTACKER)
+        {
+            sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+        }
+
+        sprite->x += gBattleAnimArgs[0];
+        sprite->y += gBattleAnimArgs[1];
+        sprite->data[1] = 0x80;
+        sprite->data[2] = 0x300;
+        sprite->data[3] = gBattleAnimArgs[1];
+        sprite->data[0]++;
+    }
+    else
+    {
+        sprite->x2 = sprite->data[1] >> 8;
+        sprite->y2 += sprite->data[2] >> 8;
+        if (sprite->data[4] == 0 && sprite->y2 > -sprite->data[3])
+        {
+            sprite->data[4] = 1;
+            sprite->data[2] = (-sprite->data[2] / 3) * 2;
+        }
+
+        sprite->data[1] += 192;
+        sprite->data[2] += 128;
+        if (sprite->animEnded)
+            DestroyAnimSprite(sprite);
+    }
+}
+
+void AnimTask_PainSplitMovement(u8 taskId)
+{
+    u8 spriteId;
+
+    if (gTasks[taskId].data[0] == 0)
+    {
+        if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+            gTasks[taskId].data[11] = gBattleAnimAttacker;
+        else
+            gTasks[taskId].data[11] = gBattleAnimTarget;
+
+        spriteId = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+        gTasks[taskId].data[10] = spriteId;
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
+
+        switch (gBattleAnimArgs[1])
+        {
+        case 0:
+            SetSpriteRotScale(spriteId, 0xE0, 0x140, 0);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
+            break;
+        case 1:
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF00);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
+            if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
+                gSprites[spriteId].y2 += 16;
+            break;
+        case 2:
+            SetSpriteRotScale(spriteId, 0xD0, 0x130, 0xF100);
+            SetBattlerSpriteYOffsetFromYScale(spriteId);
+            if (IsContest() || GetBattlerSide(gTasks[taskId].data[11]) == B_SIDE_PLAYER)
+                gSprites[spriteId].y2 += 16;
+            break;
+        }
+
+        gSprites[spriteId].x2 = 2;
+        gTasks[taskId].data[0]++;
+    }
+    else
+    {
+        spriteId = gTasks[taskId].data[10];
+        if (++gTasks[taskId].data[2] == 3)
+        {
+            gTasks[taskId].data[2] = 0;
+            gSprites[spriteId].x2 = -gSprites[spriteId].x2;
+        }
+
+        if (++gTasks[taskId].data[1] == 13)
+        {
+            ResetSpriteRotScale(spriteId);
+            gSprites[spriteId].x2 = 0;
+            gSprites[spriteId].y2 = 0;
+            DestroyAnimVisualTask(taskId);
         }
     }
 }
