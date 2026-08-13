@@ -73,6 +73,8 @@ static void GetGlareEyeDotCoords(s16 startX, s16 startY, s16 endX, s16 endY, u8 
 static void AnimGlareEyeDot(struct Sprite *sprite);
 static void AnimAssistPawprint(struct Sprite *sprite);
 static void AnimTask_BarrageBall_Step(u8 taskId);
+static void AnimSmellingSaltsHand(struct Sprite *sprite);
+static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2477,6 +2479,78 @@ static void AnimTask_BarrageBall_Step(u8 taskId)
         break;
     case 3:
         DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void AnimSmellingSaltsHand(struct Sprite *sprite)
+{
+    u8 battler;
+
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    sprite->oam.tileNum += 16;
+    sprite->data[6] = gBattleAnimArgs[2];
+    sprite->data[7] = gBattleAnimArgs[1] == 0 ? -1 : 1;
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET);
+    if (gBattleAnimArgs[1] == 0)
+    {
+        sprite->oam.matrixNum |= ST_OAM_HFLIP;
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) - 8;
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) + 8;
+    }
+
+    sprite->callback = AnimSmellingSaltsHand_Step;
+}
+
+static void AnimSmellingSaltsHand_Step(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        if (++sprite->data[1] > 1)
+        {
+            sprite->data[1] = 0;
+            sprite->x2 += sprite->data[7];
+            if (++sprite->data[2] == 12)
+                sprite->data[0]++;
+        }
+        break;
+    case 1:
+        if (++sprite->data[1] == 8)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 2:
+        sprite->x2 -= sprite->data[7] * 4;
+        if (++sprite->data[1] == 6)
+        {
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 3:
+        sprite->x2 += sprite->data[7] * 3;
+        if (++sprite->data[1] == 8)
+        {
+            if (--sprite->data[6])
+            {
+                sprite->data[1] = 0;
+                sprite->data[0]--;
+            }
+            else
+            {
+                DestroyAnimSprite(sprite);
+            }
+        }
         break;
     }
 }
