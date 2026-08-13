@@ -81,8 +81,8 @@ extern const u16 gCableCarBg_Pal[];
 
 void CB2_CableCar(void);
 void Task_CableCar(u8 taskId);
-extern void Task_AnimateBgGoingUp(u8 taskId);
-extern void Task_AnimateBgGoingDown(u8 taskId);
+void Task_AnimateBgGoingUp(u8 taskId);
+void Task_AnimateBgGoingDown(u8 taskId);
 extern void VBlankCB_CableCar(void);
 extern void CreateCableCarSprites(void);
 extern void SetBgRegs(bool8 value);
@@ -335,4 +335,88 @@ void Task_CableCar(u8 taskId)
         SetMainCallback2(CleanupCableCar);
         break;
     }
+}
+
+void AnimateGroundGoingUp(void);
+void AnimateGroundGoingDown(void);
+
+void Task_AnimateBgGoingUp(u8 taskId)
+{
+    if (sCableCar->state != STATE_END)
+    {
+        sCableCar->bg3HorizontalOffset--;
+        if ((sCableCar->timer % 2) == 0)
+            sCableCar->bg3VerticalOffset--;
+
+        if ((sCableCar->timer % 8) == 0)
+        {
+            sCableCar->bg1HorizontalOffset--;
+            sCableCar->bg1VerticalOffset--;
+        }
+
+        switch (sCableCar->bg3HorizontalOffset)
+        {
+        case 175:
+            FillBgTilemapBufferRect(3, 0, 0, 22, 2, 10, 17);
+            break;
+        case 40:
+            FillBgTilemapBufferRect(3, 0, 3, 0, 2, 2, 17);
+            break;
+        case 32:
+            FillBgTilemapBufferRect(3, 0, 2, 0, 1, 2, 17);
+            break;
+        case 16:
+            CopyToBgTilemapBufferRect_ChangePalette(3, sCableCar->pylonTopTilemap, 0, 0, 5,  2, 17);
+            CopyToBgTilemapBufferRect_ChangePalette(3, sCableCar->pylonPoleTilemap, 0, 2, 2, 30, 17);
+            sCableCar->bg3VerticalOffset = 64;
+            break;
+        }
+    }
+
+    AnimateGroundGoingUp();
+    gSpriteCoordOffsetX = (gSpriteCoordOffsetX + 1) % 128;
+}
+
+void Task_AnimateBgGoingDown(u8 taskId)
+{
+    if (sCableCar->state != STATE_END)
+    {
+        sCableCar->bg3HorizontalOffset++;
+        if ((sCableCar->timer % 2) == 0)
+            sCableCar->bg3VerticalOffset++;
+
+        if ((sCableCar->timer % 8) == 0)
+        {
+            sCableCar->bg1HorizontalOffset++;
+            sCableCar->bg1VerticalOffset++;
+        }
+
+        switch (sCableCar->bg3HorizontalOffset)
+        {
+        case 176:
+            CopyToBgTilemapBufferRect_ChangePalette(3, sCableCar->pylonPoleTilemap, 0, 2, 2, 30, 17);
+            break;
+        case 16:
+            FillBgTilemapBufferRect(3, 0, 2,  0, 3,  2, 17);
+            FillBgTilemapBufferRect(3, 0, 0, 22, 2, 10, 17);
+            sCableCar->bg3VerticalOffset = 192;
+            break;
+        case 32:
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[2], 2, 0, 1, 1, 17);
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[3], 3, 0, 1, 1, 17);
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[7], 2, 1, 1, 1, 17);
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[8], 3, 1, 1, 1, 17);
+            break;
+        case 40:
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[4], 4, 0, 1, 1, 17);
+            FillBgTilemapBufferRect(3, sCableCar->pylonTopTilemap[9], 4, 1, 1, 1, 17);
+            break;
+        }
+    }
+
+    AnimateGroundGoingDown();
+    if (sCableCar->timer < sCableCar->weatherDelay)
+        gSpriteCoordOffsetX = (gSpriteCoordOffsetX + 247) % 248;
+    else
+        gWeatherPtr->ashBaseSpritesX = (gWeatherPtr->ashBaseSpritesX + 247) % 248;
 }

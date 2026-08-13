@@ -779,8 +779,6 @@ sText_ExclamationMark4 = gUnknown_85AB04E;
 sText_ExclamationMark5 = gUnknown_85AB055;
 gBattleMsgDataPtr = gUnknown_203A874;
 SetBgRegs = sub_08150B48;
-Task_AnimateBgGoingUp = sub_0815052C;
-Task_AnimateBgGoingDown = sub_08150640;
 VBlankCB_CableCar = CableCarVblankCallback;
 CreateCableCarSprites = LoadCableCarSprites;
 sCableCar = gUnknown_203A878;
@@ -4772,6 +4770,8 @@ SECTIONS {
         src/cable_car.o(.text.CB2_CableCar);
         src/cable_car.o(.text.CleanupCableCar);
         src/cable_car.o(.text.Task_CableCar);
+        src/cable_car.o(.text.Task_AnimateBgGoingUp);
+        src/cable_car.o(.text.Task_AnimateBgGoingDown);
         asm/cable_car.o(.text.cable_car_rest);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
@@ -5163,3 +5163,5 @@ SECTIONS {
         *(*);
     }
 }
+AnimateGroundGoingUp = sub_08151138;
+AnimateGroundGoingDown = sub_08151194;
