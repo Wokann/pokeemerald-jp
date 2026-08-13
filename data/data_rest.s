@@ -1,16 +1,21 @@
 	.section .rodata
 	.globl gUnknown_89158E0
 gUnknown_89158E0: @ 0x89158E0
-	.incbin "baserom_jp.gba", 0x9158e0, 0x2eac0c
+	.incbin "baserom_jp.gba", 0x9158e0, 0x2ea720
 
 
-	.globl gUnknown_8C004EC
-gUnknown_8C004EC: @ 0x8C004EC
+	.globl gBattleTextboxTiles
+gBattleTextboxTiles: @ 0x8C00000 (JP: LoadBattleTextboxAndBackground)
+	.incbin "baserom_jp.gba", 0xc00000, 0x4ec
+
+
+	.globl gBattleTextboxPalette
+gBattleTextboxPalette: @ 0x8C004EC
 	.incbin "baserom_jp.gba", 0xc004ec, 0x44
 
 
-	.globl gUnknown_8C00530
-gUnknown_8C00530: @ 0x8C00530
+	.globl gBattleTextboxTilemap
+gBattleTextboxTilemap: @ 0x8C00530
 	.incbin "baserom_jp.gba", 0xc00530, 0x1dd8
 
 
@@ -264,178 +269,178 @@ gUnknown_8C50000: @ 0x8C50000
 	.incbin "baserom_jp.gba", 0xc50000, 0x127994
 
 
-	.globl gUnknown_8D77994
-gUnknown_8D77994: @ 0x8D77994
+	.globl gBattleVSFrame_Gfx
+gBattleVSFrame_Gfx: @ 0x8D77994
 	.incbin "baserom_jp.gba", 0xd77994, 0xe8
 
 
-	.globl gUnknown_8D77A7C
-gUnknown_8D77A7C: @ 0x8D77A7C
+	.globl gBattleVSFrame_Tilemap
+gBattleVSFrame_Tilemap: @ 0x8D77A7C
 	.incbin "baserom_jp.gba", 0xd77a7c, 0x10c
 
 
-	.globl gUnknown_8D77B88
-gUnknown_8D77B88: @ 0x8D77B88
+	.globl gBattleVSFrame_Pal
+gBattleVSFrame_Pal: @ 0x8D77B88
 	.incbin "baserom_jp.gba", 0xd77b88, 0x28
 
 
-	.globl gUnknown_8D77BB0
-gUnknown_8D77BB0: @ 0x8D77BB0
+	.globl gVsLettersGfx
+gVsLettersGfx: @ 0x8D77BB0
 	.incbin "baserom_jp.gba", 0xd77bb0, 0x25fc
 
 
-	.globl gUnknown_8D7A1AC
-gUnknown_8D7A1AC: @ 0x8D7A1AC
+	.globl gBattleEnvironmentTiles_Water
+gBattleEnvironmentTiles_Water: @ 0x8D7A1AC
 	.incbin "baserom_jp.gba", 0xd7a1ac, 0x618
 
 
-	.globl gUnknown_8D7A7C4
-gUnknown_8D7A7C4: @ 0x8D7A7C4
+	.globl gBattleEnvironmentTilemap_Water
+gBattleEnvironmentTilemap_Water: @ 0x8D7A7C4
 	.incbin "baserom_jp.gba", 0xd7a7c4, 0x13f4
 
 
-	.globl gUnknown_8D7BBB8
-gUnknown_8D7BBB8: @ 0x8D7BBB8
+	.globl gBattleEnvironmentTiles_Cave
+gBattleEnvironmentTiles_Cave: @ 0x8D7BBB8
 	.incbin "baserom_jp.gba", 0xd7bbb8, 0x640
 
 
-	.globl gUnknown_8D7C1F8
-gUnknown_8D7C1F8: @ 0x8D7C1F8
+	.globl gBattleEnvironmentTilemap_Cave
+gBattleEnvironmentTilemap_Cave: @ 0x8D7C1F8
 	.incbin "baserom_jp.gba", 0xd7c1f8, 0x2ec
 
 
-	.globl gUnknown_8D7C4E4
-gUnknown_8D7C4E4: @ 0x8D7C4E4
+	.globl gBattleEnvironmentTiles_Building
+gBattleEnvironmentTiles_Building: @ 0x8D7C4E4
 	.incbin "baserom_jp.gba", 0xd7c4e4, 0x5ac
 
 
-	.globl gUnknown_8D7CA90
-gUnknown_8D7CA90: @ 0x8D7CA90
+	.globl gBattleEnvironmentPalette_Frontier
+gBattleEnvironmentPalette_Frontier: @ 0x8D7CA90
 	.incbin "baserom_jp.gba", 0xd7ca90, 0x3c
 
 
-	.globl gUnknown_8D7CACC
-gUnknown_8D7CACC: @ 0x8D7CACC
+	.globl gBattleEnvironmentTilemap_Building
+gBattleEnvironmentTilemap_Building: @ 0x8D7CACC
 	.incbin "baserom_jp.gba", 0xd7cacc, 0x2b0
 
 
-	.globl gUnknown_8D7CD7C
-gUnknown_8D7CD7C: @ 0x8D7CD7C
+	.globl gBattleEnvironmentTiles_Stadium
+gBattleEnvironmentTiles_Stadium: @ 0x8D7CD7C
 	.incbin "baserom_jp.gba", 0xd7cd7c, 0x608
 
 
-	.globl gUnknown_8D7D384
-gUnknown_8D7D384: @ 0x8D7D384
+	.globl gBattleEnvironmentTilemap_Stadium
+gBattleEnvironmentTilemap_Stadium: @ 0x8D7D384
 	.incbin "baserom_jp.gba", 0xd7d384, 0x2b0
 
 
-	.globl gUnknown_8D7D634
-gUnknown_8D7D634: @ 0x8D7D634
+	.globl gBattleEnvironmentTiles_Rayquaza
+gBattleEnvironmentTiles_Rayquaza: @ 0x8D7D634
 	.incbin "baserom_jp.gba", 0xd7d634, 0x674
 
 
-	.globl gUnknown_8D7DCA8
-gUnknown_8D7DCA8: @ 0x8D7DCA8
+	.globl gBattleEnvironmentTilemap_Rayquaza
+gBattleEnvironmentTilemap_Rayquaza: @ 0x8D7DCA8
 	.incbin "baserom_jp.gba", 0xd7dca8, 0x2f0
 
 
-	.globl gUnknown_8D7DF98
-gUnknown_8D7DF98: @ 0x8D7DF98
+	.globl gBattleEnvironmentPalette_Kyogre
+gBattleEnvironmentPalette_Kyogre: @ 0x8D7DF98
 	.incbin "baserom_jp.gba", 0xd7df98, 0x3c
 
 
-	.globl gUnknown_8D7DFD4
-gUnknown_8D7DFD4: @ 0x8D7DFD4
+	.globl gBattleEnvironmentPalette_Groudon
+gBattleEnvironmentPalette_Groudon: @ 0x8D7DFD4
 	.incbin "baserom_jp.gba", 0xd7dfd4, 0x58
 
 
-	.globl gUnknown_8D7E02C
-gUnknown_8D7E02C: @ 0x8D7E02C
+	.globl gBattleEnvironmentPalette_BuildingGym
+gBattleEnvironmentPalette_BuildingGym: @ 0x8D7E02C
 	.incbin "baserom_jp.gba", 0xd7e02c, 0x3c
 
 
-	.globl gUnknown_8D7E068
-gUnknown_8D7E068: @ 0x8D7E068
+	.globl gBattleEnvironmentPalette_BuildingLeader
+gBattleEnvironmentPalette_BuildingLeader: @ 0x8D7E068
 	.incbin "baserom_jp.gba", 0xd7e068, 0x3c
 
 
-	.globl gUnknown_8D7E0A4
-gUnknown_8D7E0A4: @ 0x8D7E0A4
+	.globl gBattleEnvironmentPalette_StadiumAqua
+gBattleEnvironmentPalette_StadiumAqua: @ 0x8D7E0A4
 	.incbin "baserom_jp.gba", 0xd7e0a4, 0x60
 
 
-	.globl gUnknown_8D7E104
-gUnknown_8D7E104: @ 0x8D7E104
+	.globl gBattleEnvironmentPalette_StadiumMagma
+gBattleEnvironmentPalette_StadiumMagma: @ 0x8D7E104
 	.incbin "baserom_jp.gba", 0xd7e104, 0x6c
 
 
-	.globl gUnknown_8D7E170
-gUnknown_8D7E170: @ 0x8D7E170
+	.globl gBattleEnvironmentPalette_StadiumSidney
+gBattleEnvironmentPalette_StadiumSidney: @ 0x8D7E170
 	.incbin "baserom_jp.gba", 0xd7e170, 0x50
 
 
-	.globl gUnknown_8D7E1C0
-gUnknown_8D7E1C0: @ 0x8D7E1C0
+	.globl gBattleEnvironmentPalette_StadiumPhoebe
+gBattleEnvironmentPalette_StadiumPhoebe: @ 0x8D7E1C0
 	.incbin "baserom_jp.gba", 0xd7e1c0, 0x48
 
 
-	.globl gUnknown_8D7E208
-gUnknown_8D7E208: @ 0x8D7E208
+	.globl gBattleEnvironmentPalette_StadiumGlacia
+gBattleEnvironmentPalette_StadiumGlacia: @ 0x8D7E208
 	.incbin "baserom_jp.gba", 0xd7e208, 0x44
 
 
-	.globl gUnknown_8D7E24C
-gUnknown_8D7E24C: @ 0x8D7E24C
+	.globl gBattleEnvironmentPalette_StadiumDrake
+gBattleEnvironmentPalette_StadiumDrake: @ 0x8D7E24C
 	.incbin "baserom_jp.gba", 0xd7e24c, 0x50
 
 
-	.globl gUnknown_8D7E29C
-gUnknown_8D7E29C: @ 0x8D7E29C
+	.globl gBattleEnvironmentPalette_StadiumWallace
+gBattleEnvironmentPalette_StadiumWallace: @ 0x8D7E29C
 	.incbin "baserom_jp.gba", 0xd7e29c, 0x3c
 
 
-	.globl gUnknown_8D7E2D8
-gUnknown_8D7E2D8: @ 0x8D7E2D8
+	.globl gBattleEnvironmentPalette_Rayquaza
+gBattleEnvironmentPalette_Rayquaza: @ 0x8D7E2D8
 	.incbin "baserom_jp.gba", 0xd7e2d8, 0x17c4
 
 
-	.globl gUnknown_8D7FA9C
-gUnknown_8D7FA9C: @ 0x8D7FA9C
+	.globl gBattleEnvironmentAnimTiles_Underwater
+gBattleEnvironmentAnimTiles_Underwater: @ 0x8D7FA9C
 	.incbin "baserom_jp.gba", 0xd7fa9c, 0x4cc
 
 
-	.globl gUnknown_8D7FF68
-gUnknown_8D7FF68: @ 0x8D7FF68
+	.globl gBattleEnvironmentAnimTilemap_Underwater
+gBattleEnvironmentAnimTilemap_Underwater: @ 0x8D7FF68
 	.incbin "baserom_jp.gba", 0xd7ff68, 0x174c
 
 
-	.globl gUnknown_8D816B4
-gUnknown_8D816B4: @ 0x8D816B4
+	.globl gBattleEnvironmentAnimTiles_Cave
+gBattleEnvironmentAnimTiles_Cave: @ 0x8D816B4
 	.incbin "baserom_jp.gba", 0xd816b4, 0x81c
 
 
-	.globl gUnknown_8D81ED0
-gUnknown_8D81ED0: @ 0x8D81ED0
+	.globl gBattleEnvironmentAnimTilemap_Cave
+gBattleEnvironmentAnimTilemap_Cave: @ 0x8D81ED0
 	.incbin "baserom_jp.gba", 0xd81ed0, 0x2a8
 
 
-	.globl gUnknown_8D82178
-gUnknown_8D82178: @ 0x8D82178
+	.globl gBattleEnvironmentAnimTiles_Building
+gBattleEnvironmentAnimTiles_Building: @ 0x8D82178
 	.incbin "baserom_jp.gba", 0xd82178, 0x410
 
 
-	.globl gUnknown_8D82588
-gUnknown_8D82588: @ 0x8D82588
+	.globl gBattleEnvironmentAnimTilemap_Building
+gBattleEnvironmentAnimTilemap_Building: @ 0x8D82588
 	.incbin "baserom_jp.gba", 0xd82588, 0x124
 
 
-	.globl gUnknown_8D826AC
-gUnknown_8D826AC: @ 0x8D826AC
+	.globl gBattleEnvironmentAnimTiles_Rayquaza
+gBattleEnvironmentAnimTiles_Rayquaza: @ 0x8D826AC
 	.incbin "baserom_jp.gba", 0xd826ac, 0x668
 
 
-	.globl gUnknown_8D82D14
-gUnknown_8D82D14: @ 0x8D82D14
+	.globl gBattleEnvironmentAnimTilemap_Rayquaza
+gBattleEnvironmentAnimTilemap_Rayquaza: @ 0x8D82D14
 	.incbin "baserom_jp.gba", 0xd82d14, 0x2a0
 
 
@@ -499,8 +504,8 @@ gUnknown_8D855CC: @ 0x8D855CC
 	.incbin "baserom_jp.gba", 0xd855cc, 0x18
 
 
-	.globl gUnknown_8D855E4
-gUnknown_8D855E4: @ 0x8D855E4
+	.globl gBattleWindowTextPalette
+gBattleWindowTextPalette: @ 0x8D855E4
 	.incbin "baserom_jp.gba", 0xd855e4, 0x20
 
 
@@ -519,13 +524,13 @@ gUnknown_8D856AC: @ 0x8D856AC
 	.incbin "baserom_jp.gba", 0xd856ac, 0xe0
 
 
-	.globl gUnknown_8D8578C
-gUnknown_8D8578C: @ 0x8D8578C
+	.globl gMultiBattleIntroBg_Opponent_Tilemap
+gMultiBattleIntroBg_Opponent_Tilemap: @ 0x8D8578C
 	.incbin "baserom_jp.gba", 0xd8578c, 0x274
 
 
-	.globl gUnknown_8D85A00
-gUnknown_8D85A00: @ 0x8D85A00
+	.globl gMultiBattleIntroBg_Player_Tilemap
+gMultiBattleIntroBg_Player_Tilemap: @ 0x8D85A00
 	.incbin "baserom_jp.gba", 0xd85a00, 0x234
 
 

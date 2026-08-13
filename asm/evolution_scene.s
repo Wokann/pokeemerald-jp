@@ -118,7 +118,7 @@ EvolutionScene: @ 0x0813DB90
 	ldr r1, _0813DE38
 	movs r0, #9
 	strb r0, [r1]
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	bl LoadBattleTextboxAndBackground
 	bl ResetSpriteData
 	bl ScanlineEffect_Stop
@@ -438,7 +438,7 @@ CB2_EvolutionSceneLoadGraphics: @ 0x0813DE80
 	ldr r1, _0813E048
 	movs r0, #9
 	strb r0, [r1]
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	bl LoadBattleTextboxAndBackground
 	bl ResetSpriteData
 	bl FreeAllSpritePalettes

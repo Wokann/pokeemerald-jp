@@ -3157,7 +3157,6 @@ SECTIONS {
         src/decompress.o(.text);
         src/digit_obj_util.o(.text);
         src/battle_bg.o(.text);
-        asm/battle_bg.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

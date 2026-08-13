@@ -2014,28 +2014,32 @@ gUnknown_82EA31C: @ 0x82EA31C
 gUnknown_82EACC4: @ 0x82EACC4
 	.incbin "baserom_jp.gba", 0x2eacc4, 0xb64
 
-	.globl gUnknown_82EB828
-gUnknown_82EB828: @ 0x82EB828
+	.globl sVsLetter_V_SpriteTemplate
+sVsLetter_V_SpriteTemplate: @ 0x82EB828
 	.incbin "baserom_jp.gba", 0x2eb828, 0x18
 
-	.globl gUnknown_82EB840
-gUnknown_82EB840: @ 0x82EB840
+	.globl sVsLetter_S_SpriteTemplate
+sVsLetter_S_SpriteTemplate: @ 0x82EB840
 	.incbin "baserom_jp.gba", 0x2eb840, 0x18
 
-	.globl gUnknown_82EB858
-gUnknown_82EB858: @ 0x82EB858
+	.globl sVsLettersSpriteSheet
+sVsLettersSpriteSheet: @ 0x82EB858
 	.incbin "baserom_jp.gba", 0x2eb858, 0x8
 
-	.globl gUnknown_82EB860
-gUnknown_82EB860: @ 0x82EB860
-	.incbin "baserom_jp.gba", 0x2eb860, 0x198
+	.globl gBattleBgTemplates
+gBattleBgTemplates: @ 0x82EB860
+	.incbin "baserom_jp.gba", 0x2eb860, 0x20
 
-	.globl gUnknown_82EB9F8
-gUnknown_82EB9F8: @ 0x82EB9F8
+	.globl gUnknown_82EB880
+gUnknown_82EB880: @ 0x82EB880 (window templates, still raw)
+	.incbin "baserom_jp.gba", 0x2eb880, 0x178
+
+	.globl gBattleWindowTemplates
+gBattleWindowTemplates: @ 0x82EB9F8
 	.incbin "baserom_jp.gba", 0x2eb9f8, 0x8
 
-	.globl gUnknown_82EBA00
-gUnknown_82EBA00: @ 0x82EBA00
+	.globl sBattleEnvironmentTable
+sBattleEnvironmentTable: @ 0x82EBA00 (10 * struct BattleBackground)
 	.incbin "baserom_jp.gba", 0x2eba00, 0xc8
 
 	.globl gUnknown_82EBAC8
@@ -12558,16 +12562,16 @@ gUnknown_85ABC78: @ 0x85ABC78
 gUnknown_85ABC7E: @ 0x85ABC7E
 	.string "ミツル$"
 
-	.globl gUnknown_85ABC82
-gUnknown_85ABC82: @ 0x85ABC82
+	.globl gText_Win
+gText_Win: @ 0x85ABC82
 	.string "{HIGHLIGHT}{TRANSPARENT}{GREEN}ち$"
 
-	.globl gUnknown_85ABC88
-gUnknown_85ABC88: @ 0x85ABC88
+	.globl gText_Loss
+gText_Loss: @ 0x85ABC88
 	.string "{HIGHLIGHT}{TRANSPARENT}ま{LIGHT_BLUE}$"
 
-	.globl gUnknown_85ABC8E
-gUnknown_85ABC8E: @ 0x85ABC8E
+	.globl gText_Draw
+gText_Draw: @ 0x85ABC8E
 	.string "{HIGHLIGHT}{TRANSPARENT}ひ{LIGHT_GREEN}わ{LIGHT_BLUE}$"
 
 	.globl gUnknown_85ABC96

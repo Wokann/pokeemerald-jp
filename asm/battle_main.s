@@ -192,7 +192,7 @@ _08036712:
 	movs r0, #8
 	strb r0, [r2]
 _08036752:
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	bl LoadBattleTextboxAndBackground
 	bl ResetSpriteData
 	bl ResetTasks
@@ -4534,7 +4534,7 @@ _08038ACE:
 	strh r4, [r0]
 	ldr r0, _08038BA8
 	strh r4, [r0]
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	ldr r0, _08038BAC
 	movs r1, #0
 	movs r2, #0x40
@@ -5060,7 +5060,7 @@ sub_08038F5C: @ 0x08038F5C
 	strh r4, [r0]
 	ldr r0, _0803901C
 	strh r4, [r0]
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	movs r1, #0x82
 	lsls r1, r1, #5
 	movs r0, #0

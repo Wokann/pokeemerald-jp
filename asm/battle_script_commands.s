@@ -33263,7 +33263,7 @@ _080565CC: .4byte 0x03005B60
 _080565D0: .4byte 0x02023FD6
 _080565D4: .4byte 0x080386DD
 _080565D8:
-	bl sub_08035528
+	bl InitBattleBgsVideo
 	bl LoadBattleTextboxAndBackground
 	ldr r1, _080565EC
 	movs r2, #0x80
