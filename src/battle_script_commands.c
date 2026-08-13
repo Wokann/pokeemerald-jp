@@ -1546,6 +1546,7 @@ static void Cmd_setyawn(void);
 static void Cmd_setdamagetohealthdifference(void);
 static void Cmd_scaledamagebyhealthratio(void);
 static void Cmd_tryswapabilities(void);
+static void Cmd_tryimprison(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8585,5 +8586,47 @@ static void Cmd_tryswapabilities(void)
         gBattleMons[gBattlerTarget].ability = abilityAtk;
 
             gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void Cmd_tryimprison(void)
+{
+    if ((gStatuses3[gBattlerAttacker] & STATUS3_IMPRISONED_OTHERS))
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        u8 battler, sideAttacker;
+
+        sideAttacker = GetBattlerSide(gBattlerAttacker);
+        PressurePPLoseOnUsingImprison(gBattlerAttacker);
+        for (battler = 0; battler < gBattlersCount; battler++)
+        {
+            if (sideAttacker != GetBattlerSide(battler))
+            {
+                s32 attackerMoveId;
+                for (attackerMoveId = 0; attackerMoveId < MAX_MON_MOVES; attackerMoveId++)
+                {
+                    s32 i;
+                    for (i = 0; i < MAX_MON_MOVES; i++)
+                    {
+                        if (gBattleMons[gBattlerAttacker].moves[attackerMoveId] == gBattleMons[battler].moves[i]
+                            && gBattleMons[gBattlerAttacker].moves[attackerMoveId] != MOVE_NONE)
+                            break;
+                    }
+                    if (i != MAX_MON_MOVES)
+                        break;
+                }
+                if (attackerMoveId != MAX_MON_MOVES)
+                {
+                    gStatuses3[gBattlerAttacker] |= STATUS3_IMPRISONED_OTHERS;
+                    gBattlescriptCurrInstr += 5;
+                    break;
+                }
+            }
+        }
+        if (battler == gBattlersCount)
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
     }
 }
