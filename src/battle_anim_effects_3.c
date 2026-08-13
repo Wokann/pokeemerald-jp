@@ -90,6 +90,8 @@ static void AnimForesightMagnifyingGlass_Step(struct Sprite *sprite);
 static void AnimMeteorMashStar(struct Sprite *sprite);
 static void AnimMeteorMashStar_Step(struct Sprite *sprite);
 static void AnimTask_MonToSubstituteDoll(u8 taskId);
+static void AnimBlockX(struct Sprite *sprite);
+static void AnimBlockX_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -3118,6 +3120,81 @@ static void AnimTask_MonToSubstituteDoll(u8 taskId)
         {
             PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
             DestroyAnimVisualTask(taskId);
+        }
+        break;
+    }
+}
+
+static void AnimBlockX(struct Sprite *sprite)
+{
+    s16 y;
+
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimTarget) - 2;
+        y = -144;
+    }
+    else
+    {
+        sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimTarget) + 2;
+        y = -96;
+    }
+
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->y2 = y;
+    sprite->callback = AnimBlockX_Step;
+}
+
+static void AnimBlockX_Step(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->y2 += 10;
+        if (sprite->y2 >= 0)
+        {
+            PlaySE12WithPanning(SE_M_SKETCH, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+            sprite->y2 = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 1:
+        sprite->data[1] += 4;
+        sprite->y2 = -(gSineTable[sprite->data[1]] >> 3);
+        if (sprite->data[1] > 0x7F)
+        {
+            PlaySE12WithPanning(SE_M_SKETCH, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+            sprite->data[1] = 0;
+            sprite->y2 = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 2:
+        sprite->data[1] += 6;
+        sprite->y2 = -(gSineTable[sprite->data[1]] >> 4);
+        if (sprite->data[1] > 0x7F)
+        {
+            sprite->data[1] = 0;
+            sprite->y2 = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 3:
+        if (++sprite->data[1] > 8)
+        {
+            PlaySE12WithPanning(SE_M_LEER, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+            sprite->data[1] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 4:
+        if (++sprite->data[1] > 8)
+        {
+            sprite->data[1] = 0;
+            sprite->data[2]++;
+            sprite->invisible = sprite->data[2] & 1;
+            if (sprite->data[2] == 7)  // JP checks == 7 (US source says > 7)
+                DestroyAnimSprite(sprite);
         }
         break;
     }

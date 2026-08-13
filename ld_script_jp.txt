@@ -4974,6 +4974,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimMeteorMashStar);
         src/battle_anim_effects_3.o(.text.AnimTask_MonToSubstitute);
         src/battle_anim_effects_3.o(.text.AnimTask_MonToSubstituteDoll);
+        src/battle_anim_effects_3.o(.text.AnimBlockX);
+        src/battle_anim_effects_3.o(.text.AnimBlockX_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
