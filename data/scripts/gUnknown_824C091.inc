@@ -1,1 +1,1 @@
-	.incbin "baserom_jp.gba", 0x24c091, 0x20
+	.string "かんきゃくは\n{B_COPY_VAR_3}を　みつづけている！{PAUSE}そ{PAUSE}そ{PAUSE}そ{PAUSE}そ$"
