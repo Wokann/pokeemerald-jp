@@ -252,3 +252,23 @@ int InitPulseBlendPaletteSettings(struct PulseBlend *pulseBlend, const struct Pu
     memcpy(&pulseBlendPalette->pulseBlendSettings, settings, sizeof(*settings));
     return i;
 }
+
+void ClearPulseBlendPalettesSettings(struct PulseBlendPalette *pulseBlendPalette)
+{
+    u16 i;
+
+    if (!pulseBlendPalette->available && pulseBlendPalette->pulseBlendSettings.restorePaletteOnUnload)
+    {
+        for (i = pulseBlendPalette->pulseBlendSettings.paletteOffset; i < pulseBlendPalette->pulseBlendSettings.paletteOffset + pulseBlendPalette->pulseBlendSettings.numColors; i++)
+            gPlttBufferFaded[i] = gPlttBufferUnfaded[i];
+    }
+
+    memset(&pulseBlendPalette->pulseBlendSettings, 0, sizeof(pulseBlendPalette->pulseBlendSettings));
+    pulseBlendPalette->blendCoeff = 0;
+    pulseBlendPalette->fadeDirection = 0;
+    pulseBlendPalette->unk1_5 = 0;
+    pulseBlendPalette->available = 1;
+    pulseBlendPalette->inUse = 0;
+    pulseBlendPalette->fadeCycleCounter = 0;
+    pulseBlendPalette->delayCounter = 0;
+}
