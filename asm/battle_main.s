@@ -9,34 +9,6 @@
 
 
 
-	thumb_func_start HandleAction_SafariZoneRun
-HandleAction_SafariZoneRun: @ 0x0803EE30
-	push {r4, lr}
-	ldr r2, _0803EE58
-	ldr r1, _0803EE5C
-	ldr r4, _0803EE60
-	ldrb r0, [r4]
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	strb r0, [r2]
-	movs r0, #0x11
-	bl PlaySE
-	ldr r0, _0803EE64
-	ldrb r0, [r0]
-	strb r0, [r4]
-	ldr r1, _0803EE68
-	movs r0, #4
-	strb r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0803EE58: .4byte 0x02023EAF
-_0803EE5C: .4byte 0x02023D22
-_0803EE60: .4byte 0x02023D26
-_0803EE64: .4byte 0x02023D10
-_0803EE68: .4byte 0x02023FDE
-	thumb_func_end HandleAction_SafariZoneRun
 
 	thumb_func_start HandleAction_WallyBallThrow
 HandleAction_WallyBallThrow: @ 0x0803EE6C

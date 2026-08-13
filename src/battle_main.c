@@ -2604,6 +2604,14 @@ void HandleAction_GoNear(void)
     gCurrentActionFuncId = B_ACTION_EXEC_SCRIPT;
 }
 
+void HandleAction_SafariZoneRun(void)
+{
+    gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
+    PlaySE(SE_FLEE);
+    gCurrentTurnActionNumber = gBattlersCount;
+    gBattleOutcome = B_OUTCOME_RAN;
+}
+
 
 
 
