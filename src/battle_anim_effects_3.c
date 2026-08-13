@@ -348,6 +348,25 @@ void AnimSpotlight_Step2(struct Sprite *sprite)
     DestroyAnimSprite(sprite);
 }
 
+static void AnimSwallowBlueOrb(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        InitSpritePosToAnimAttacker(sprite, FALSE);
+        sprite->data[1] = 0x900;
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+        sprite->data[0]++;
+        break;
+    case 1:
+        sprite->y2 -= sprite->data[1] >> 8;
+        sprite->data[1] -= 96;
+        if (sprite->y + sprite->y2 > sprite->data[2])
+            DestroyAnimSprite(sprite);
+        break;
+    }
+}
+
 static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;
