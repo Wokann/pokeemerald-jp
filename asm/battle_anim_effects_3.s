@@ -516,59 +516,8 @@ _0815BA4C: .4byte 0x03005B60
 _0815BA50: .4byte 0x02024174
 	thumb_func_end sub_0815B70C
 
-	thumb_func_start sub_0815BA54
-sub_0815BA54: @ 0x0815BA54
-	push {r4, lr}
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	ldr r4, _0815BA84
-	ldr r3, _0815BA88
-	ldr r2, _0815BA8C
-	ldr r1, _0815BA90
-	ldrb r1, [r1]
-	adds r1, r1, r2
-	ldrb r2, [r1]
-	lsls r1, r2, #4
-	adds r1, r1, r2
-	lsls r1, r1, #2
-	adds r1, r1, r3
-	adds r1, #0x3e
-	ldrb r1, [r1]
-	lsls r1, r1, #0x1d
-	lsrs r1, r1, #0x1f
-	strh r1, [r4, #0xe]
-	bl DestroyAnimVisualTask
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815BA84: .4byte 0x020380BE
-_0815BA88: .4byte 0x020205AC
-_0815BA8C: .4byte 0x02023E88
-_0815BA90: .4byte 0x020380D6
-	thumb_func_end sub_0815BA54
 
-	thumb_func_start sub_0815BA94
-sub_0815BA94: @ 0x0815BA94
-	push {r4, lr}
-	adds r4, r0, #0
-	lsls r4, r4, #0x18
-	lsrs r4, r4, #0x18
-	ldr r0, _0815BAB8
-	ldrb r0, [r0]
-	ldr r1, _0815BABC
-	ldrb r1, [r1]
-	movs r2, #1
-	bl HandleSpeciesGfxDataChange
-	adds r0, r4, #0
-	bl DestroyAnimVisualTask
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815BAB8: .4byte 0x020380D6
-_0815BABC: .4byte 0x020380D7
-	thumb_func_end sub_0815BA94
+	.section .text.battle_anim_effects_3_rest5b,"ax",%progbits
 
 	thumb_func_start sub_0815BAC0
 sub_0815BAC0: @ 0x0815BAC0
@@ -1564,4 +1513,3 @@ _0815C2D2:
 _0815C2DC: .4byte 0x02022ACC
 _0815C2E0: .4byte 0x02022ACE
 	thumb_func_end sub_0815BFE0
-

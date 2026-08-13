@@ -367,6 +367,18 @@ static void AnimSwallowBlueOrb(struct Sprite *sprite)
     }
 }
 
+void AnimTask_IsMonInvisible(u8 taskId)
+{
+    gBattleAnimArgs[ARG_RET_ID] = gSprites[gBattlerSpriteIds[gBattleAnimAttacker]].invisible;
+    DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_CastformGfxDataChange(u8 taskId)
+{
+    HandleSpeciesGfxDataChange(gBattleAnimAttacker, gBattleAnimTarget, TRUE);
+    DestroyAnimVisualTask(taskId);
+}
+
 static void FadeScreenToWhite_Step(u8 taskId)
 {
     int i;
