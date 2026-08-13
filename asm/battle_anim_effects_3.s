@@ -667,23 +667,6 @@ _0815A500: .4byte 0x0000FFFF
 
 
 
-	thumb_func_start sub_0815A7E8
-sub_0815A7E8: @ 0x0815A7E8
-	push {lr}
-	adds r2, r0, #0
-	adds r0, #0x3f
-	ldrb r1, [r0]
-	movs r0, #0x10
-	ands r0, r1
-	cmp r0, #0
-	beq _0815A7FE
-	adds r0, r2, #0
-	bl DestroyAnimSprite
-_0815A7FE:
-	pop {r0}
-	bx r0
-	.align 2, 0
-	thumb_func_end sub_0815A7E8
 
 	thumb_func_start AnimTask_IsTargetPlayerSide
 AnimTask_IsTargetPlayerSide: @ 0x0815A804

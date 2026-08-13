@@ -4879,6 +4879,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimSpikes_Step2);
         src/battle_anim_effects_3.o(.text.AnimLeer);
         src/battle_anim_effects_3.o(.text.AnimLetterZ);
+        src/battle_anim_effects_3.o(.text.AnimFang);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest2);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

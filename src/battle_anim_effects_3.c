@@ -130,3 +130,9 @@ static void AnimLetterZ(struct Sprite *sprite)
     if ((u16)(sprite->x + sprite->x2) > DISPLAY_WIDTH)
         DestroyAnimSprite(sprite);
 }
+
+static void AnimFang(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
