@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x247cb5, 0x25
+	.byte 0xFD
+	end
+	setvar 0x442E, 0x1200
+	return
+	returnram
+	gettime
+	dotimebasedevents
+	nop
+	setorcopyvar 0x223D, 0xD1F
+	.byte 0xFE
+	vgoto_if 0x9A, 0x9B07E60
+	.incbin "baserom_jp.gba", 0x247CCD, 0xD

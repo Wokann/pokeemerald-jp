@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x283895, 0x96
+	nop
+	setvar 0x227, 0xF100
+	addobject_at 0x8208, 0x214
+	nop
+	nop
+	nop
+	.incbin "baserom_jp.gba", 0x2838A3, 0x88

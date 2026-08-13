@@ -1,4 +1,12 @@
-	.incbin "baserom_jp.gba", 0x264358, 0x10a4b
+	lockall
+	delay 0x14
+	applymovement 0xFF, 0x8264371
+	waitmovement 0x0
+	playse 0x2B
+	delay 0x3C
+	special DoFallWarp
+	end
+	.incbin "baserom_jp.gba", 0x264371, 0x10A32
 	.globl gJPText_00274DA3
 gJPText_00274DA3: @ 0x08274DA3
 	.string "では　バトルテントへ\n"

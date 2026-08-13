@@ -1,1 +1,10 @@
-	.incbin "baserom_jp.gba", 0x2795ad, 0x254
+	nop
+	setweather 0x27
+	turnvobject 0x27, 0x0
+	setfieldeffectarg 0x27, 0x30A
+	returnram
+	returnram
+	gotostd 0x3
+	playfanfare 0xD4A
+	gotostd 0x5
+	.incbin "baserom_jp.gba", 0x2795C1, 0x240

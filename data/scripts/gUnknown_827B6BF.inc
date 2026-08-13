@@ -1,1 +1,10 @@
-	.incbin "baserom_jp.gba", 0x27b6bf, 0x48
+	nop
+	setmysteryeventstatus 0x28
+	return
+	takecoins 0x15E3
+	gotostd 0x3
+	nop
+	copyvar 0xC1, 0x4C0
+	subvar 0xBC02, 0x572E
+	gotostd 0x2
+	.incbin "baserom_jp.gba", 0x27B6D5, 0x32

@@ -1,1 +1,4 @@
-	.incbin "baserom_jp.gba", 0x24bd18, 0x26
+	waitmovement 0xAE9C
+	.byte 0x79
+	copyvar 0x800, 0x120
+	.incbin "baserom_jp.gba", 0x24BD21, 0x1D

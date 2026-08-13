@@ -1,1 +1,8 @@
-	.incbin "baserom_jp.gba", 0x289734, 0x1b
+	end
+	return
+	.byte 0xED
+	takeitem 0x1100, 0x0
+	nop
+	nop
+	loadbyte 0xC0, 0x0
+	.incbin "baserom_jp.gba", 0x289741, 0xE

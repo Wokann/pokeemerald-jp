@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x278f0c, 0x71
+	nop
+	fadescreen 0x27
+	gotostd_if 0x1, 0x14
+	setworldmapflag 0x417
+	nop
+	returnram
+	returnram
+	gotostd 0x11
+	checkflag 0x278F
+	gotostd 0x54
+	random 0x827
+	.incbin "baserom_jp.gba", 0x278F22, 0x5B

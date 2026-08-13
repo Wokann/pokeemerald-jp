@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x245455, 0xfb
+	return
+	waitmoncry
+	gettime
+	nop
+	initclock 0xC10, 0x23
+	.incbin "baserom_jp.gba", 0x24545E, 0xF2

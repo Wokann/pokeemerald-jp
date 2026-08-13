@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x2868e8, 0x5e
+	nop
+	.byte 0xF0
+	waitstate
+	return
+	.byte 0xE5
+	pokemart 0x20811
+	setmysteryeventstatus 0x2A
+	releaseall
+	delay 0x408
+	setworldmapflag 0x3D03
+	setobjectxy 0x80D, 0x502, 0x0
+	.incbin "baserom_jp.gba", 0x286902, 0x44

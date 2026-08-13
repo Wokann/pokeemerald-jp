@@ -1,1 +1,4 @@
-	.incbin "baserom_jp.gba", 0x2872ed, 0x6fd
+	takeitem 0x102, 0x4128
+	end
+	end
+	.incbin "baserom_jp.gba", 0x2872F4, 0x6F6

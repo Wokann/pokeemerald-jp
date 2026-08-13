@@ -1,1 +1,8 @@
-	.incbin "baserom_jp.gba", 0x27dc85, 0xeb
+	gotostd_if 0x3, 0xC
+	returnram
+	gotostd 0x0
+	setfieldeffectarg 0x27, 0x9700
+	waitstate
+	nop
+	setrespawn 0x227
+	.incbin "baserom_jp.gba", 0x27DC94, 0xDC

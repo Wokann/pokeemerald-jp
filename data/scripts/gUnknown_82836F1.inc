@@ -1,1 +1,5 @@
-	.incbin "baserom_jp.gba", 0x2836f1, 0xd8
+	nop
+	faceplayer
+	waitstate
+	end
+	.incbin "baserom_jp.gba", 0x2836F5, 0xD4

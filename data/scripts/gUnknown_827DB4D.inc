@@ -1,1 +1,8 @@
-	.incbin "baserom_jp.gba", 0x27db4d, 0x138
+	nop
+	setmonobedient 0x27
+	checkmonobedience 0x27
+	gotoram
+	waitstate
+	gotostd_if 0x3, 0x19
+	setescapewarp 0x3F, 0x2, 0xCE84, 0x85A
+	.incbin "baserom_jp.gba", 0x27DB61, 0x124

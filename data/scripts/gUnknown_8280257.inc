@@ -1,1 +1,9 @@
-	.incbin "baserom_jp.gba", 0x280257, 0xfa
+	nop
+	setfieldeffectarg 0x27, 0xA400
+	waitstate
+	gotostd_if 0x3, 0xC
+	returnram
+	gotostd 0x2
+	release
+	playse 0x857
+	.incbin "baserom_jp.gba", 0x280267, 0xEA

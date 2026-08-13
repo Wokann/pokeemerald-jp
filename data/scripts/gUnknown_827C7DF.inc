@@ -1,1 +1,15 @@
-	.incbin "baserom_jp.gba", 0x27c7df, 0x43
+	nop
+	end
+	delay 0x8903
+	mossdeepgym3 0x815
+	end
+	setworldmapflag 0x0
+	copyvar 0xED, 0x5C0
+	end
+	.byte 0x94
+	.byte 0xD4
+	faceplayer
+	gotostd 0x85
+	setworldmapflag 0x2
+	copyvar 0xE8, 0x4C0
+	.incbin "baserom_jp.gba", 0x27C7FE, 0x24

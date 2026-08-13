@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x280beb, 0xa3
+	nop
+	fadescreen 0x27
+	gotostd_if 0x3, 0xC
+	returnram
+	gotostd 0x19
+	.incbin "baserom_jp.gba", 0x280BF4, 0x9A

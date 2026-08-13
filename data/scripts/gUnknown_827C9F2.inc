@@ -1,1 +1,11 @@
-	.incbin "baserom_jp.gba", 0x27c9f2, 0x28
+	nop
+	killscript
+	delay 0xA
+	setflag 0x214
+	copyvar 0xBD, 0x17C0
+	return
+	vmessage 0x3081134
+	nop
+	compare_local_to_value 0x97, 0x0
+	showcoinsbox 0x10, 0x4
+	.incbin "baserom_jp.gba", 0x27CA0C, 0xE

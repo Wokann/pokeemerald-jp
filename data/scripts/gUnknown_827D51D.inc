@@ -1,1 +1,25 @@
-	.incbin "baserom_jp.gba", 0x27d51d, 0x5b
+	nop
+	fadescreen 0x27
+	nop
+	setrespawn 0x1427
+	end
+	addvar 0x20A, 0x90C
+	gotostd 0x3
+	choosecontestmon
+	bufferstdstring 0xA, 0x208
+	end
+	nop
+	nop
+	killscript
+	nop
+	copyvar 0x8F, 0x4C0
+	goto_if 0x2, 0x8572F3C
+	buffernumberstring 0x4, 0x0
+	nop
+	nop
+	setworldmapflag 0x100
+	nop
+	end
+	checkpartymove 0x571A
+	gotostd 0x84
+	.incbin "baserom_jp.gba", 0x27D551, 0x27

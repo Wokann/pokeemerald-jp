@@ -1,1 +1,8 @@
-	.incbin "baserom_jp.gba", 0x2781b1, 0xc5
+	nop
+	setvar 0x28, 0x2797
+	gotostd_if 0x1, 0x28
+	setworldmapflag 0xC0C
+	gotostd 0x19
+	playslotmachine 0xC000
+	end
+	.incbin "baserom_jp.gba", 0x2781C3, 0xB3

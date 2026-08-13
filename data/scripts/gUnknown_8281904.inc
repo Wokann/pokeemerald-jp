@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x281904, 0xaf
+	nop
+	copyvar 0x27, 0x2797
+	compare_local_to_value 0x78, 0x0
+	showcoinsbox 0x1C, 0x2
+	return
+	.incbin "baserom_jp.gba", 0x281911, 0xA2

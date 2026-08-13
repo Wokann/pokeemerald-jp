@@ -1,1 +1,13 @@
-	.incbin "baserom_jp.gba", 0x27b967, 0x3a
+	nop
+	.byte 0xC7
+	waitstate
+	end
+	loadbyte 0xE9, 0x56
+	gotostd 0x82
+	return
+	setworldmapflag 0xF800
+	.byte 0xFF
+	nop
+	nop
+	copyvar 0x88, 0x43F
+	.incbin "baserom_jp.gba", 0x27B97C, 0x25

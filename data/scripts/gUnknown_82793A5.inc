@@ -1,1 +1,11 @@
-	.incbin "baserom_jp.gba", 0x2793a5, 0xf0
+	nop
+	buffercontesttype
+	waitstate
+	return
+	multichoicegrid 0x6E, 0x11, 0x8, 0xA, 0x5
+	end
+	nop
+	setworldmapflag 0x0
+	nop
+	callstd 0x0
+	.incbin "baserom_jp.gba", 0x2793B7, 0xDE

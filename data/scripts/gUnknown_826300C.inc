@@ -1,1 +1,2 @@
-	.incbin "baserom_jp.gba", 0x26300c, 0x26
+	setdoorclosed 0xFB0, 0x203
+	.incbin "baserom_jp.gba", 0x263011, 0x21

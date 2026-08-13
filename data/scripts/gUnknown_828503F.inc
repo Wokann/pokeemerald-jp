@@ -1,1 +1,5 @@
-	.incbin "baserom_jp.gba", 0x28503f, 0x48
+	nop
+	compare_var_to_value 0x1928, 0xDE
+	showcoinsbox 0x2, 0x58
+	resetobjectsubpriority 0x855, 0x202
+	.incbin "baserom_jp.gba", 0x28504D, 0x3A

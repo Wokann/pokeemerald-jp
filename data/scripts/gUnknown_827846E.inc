@@ -1,1 +1,11 @@
-	.incbin "baserom_jp.gba", 0x27846e, 0x73
+	nop
+	addelevmenuitem 0x27, 0x9700, 0xA27, 0x2801
+	setworldmapflag 0xC0C
+	gotostd 0x1C
+	checkplayergender
+	nop
+	showcoinsbox 0x6, 0x2
+	end
+	delay 0x5726
+	gotostd 0x82
+	.incbin "baserom_jp.gba", 0x278487, 0x5A

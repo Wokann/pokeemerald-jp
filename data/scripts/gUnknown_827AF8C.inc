@@ -1,1 +1,3 @@
-	.incbin "baserom_jp.gba", 0x27af8c, 0xd4
+	nop
+	showobject_at 0xA27, 0x303
+	.incbin "baserom_jp.gba", 0x27AF92, 0xCE

@@ -1,1 +1,5 @@
-	.incbin "baserom_jp.gba", 0x27d83e, 0x7e
+	nop
+	cmdDB 0x3020A27
+	takecoins 0x116E
+	gotostd 0x5
+	.incbin "baserom_jp.gba", 0x27D849, 0x73

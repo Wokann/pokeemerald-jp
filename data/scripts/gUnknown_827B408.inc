@@ -1,1 +1,4 @@
-	.incbin "baserom_jp.gba", 0x27b408, 0x76
+	nop
+	fadescreen 0x27
+	nop
+	.incbin "baserom_jp.gba", 0x27B40C, 0x72

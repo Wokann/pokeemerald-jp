@@ -1,4 +1,8 @@
-	.incbin "baserom_jp.gba", 0x256897, 0xb
+	lockall
+	loadword 0x0, 0x82568A2
+	callstd 0x4
+	releaseall
+	end
 	.globl gJPText_002568A2
 gJPText_002568A2: @ 0x082568A2
 	.string "おおきな　おとを　たてて\n"

@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x2837ee, 0x95
+	nop
+	setrespawn 0x27
+	fadescreen 0x27
+	delay 0xC01
+	returnram
+	gotostd 0x3
+	.incbin "baserom_jp.gba", 0x2837FA, 0x89

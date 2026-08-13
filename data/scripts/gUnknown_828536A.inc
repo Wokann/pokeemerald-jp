@@ -1,1 +1,5 @@
-	.incbin "baserom_jp.gba", 0x28536a, 0x90
+	nop
+	special LoadPlayerParty
+	fadescreen 0x27
+	end
+	.incbin "baserom_jp.gba", 0x285371, 0x89

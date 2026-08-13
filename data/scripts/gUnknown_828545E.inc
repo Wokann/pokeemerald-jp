@@ -1,1 +1,25 @@
-	.incbin "baserom_jp.gba", 0x28545e, 0xf9
+	nop
+	fadescreen 0x27
+	gotostd_if 0x3, 0x28
+	setworldmapflag 0x1114
+	setvar 0xEE19, 0xC000
+	return
+	killscript
+	.byte 0xE3
+	loadbyte 0x8, 0x5
+	setworldmapflag 0x37
+	addvar 0xC0C, 0x408
+	.byte 0x26
+	end
+	checkplayergender
+	resetobjectsubpriority 0x855, 0x205
+	nop
+	nop
+	compare_local_to_value 0x0, 0x0
+	nop
+	nop
+	nop
+	goto 0x3040400
+	addobject 0xD4B
+	gotostd 0x2
+	.incbin "baserom_jp.gba", 0x285494, 0xC3

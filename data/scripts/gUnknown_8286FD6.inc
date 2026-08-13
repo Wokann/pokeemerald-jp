@@ -1,1 +1,3 @@
-	.incbin "baserom_jp.gba", 0x286fd6, 0x12
+	gettime
+	initclock 0x241, 0x2
+	.incbin "baserom_jp.gba", 0x286FDC, 0xC

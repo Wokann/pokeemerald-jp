@@ -1,1 +1,3 @@
-	.incbin "baserom_jp.gba", 0x28169f, 0x9a
+	nop
+	checkcoins 0x1927
+	.incbin "baserom_jp.gba", 0x2816A3, 0x96

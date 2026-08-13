@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x281317, 0x57
+	nop
+	checkflag 0xA27
+	nop
+	delay 0xC00
+	gotostd 0x8
+	copyvar 0xC0, 0x2C0
+	.incbin "baserom_jp.gba", 0x281326, 0x48

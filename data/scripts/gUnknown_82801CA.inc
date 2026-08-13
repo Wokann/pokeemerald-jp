@@ -1,1 +1,22 @@
-	.incbin "baserom_jp.gba", 0x2801ca, 0x8d
+	nop
+	turnvobject 0x27, 0x0
+	setweather 0xA27
+	return
+	delay 0xC01
+	returnram
+	gotostd 0x2
+	.byte 0xEC
+	killscript
+	setobjectxy 0x208, 0x1406, 0x0
+	nop
+	nop
+	nop
+	nop
+	nop
+	delay 0xE700
+	.byte 0xFF
+	copyvar 0x7C, 0x5C0
+	return
+	addobject 0xD4B
+	gotostd 0x5
+	.incbin "baserom_jp.gba", 0x2801F5, 0x62

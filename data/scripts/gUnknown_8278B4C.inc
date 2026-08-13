@@ -1,1 +1,3 @@
-	.incbin "baserom_jp.gba", 0x278b4c, 0x6f
+	nop
+	writebytetoaddr 0x27, 0x271B00
+	.incbin "baserom_jp.gba", 0x278B53, 0x68

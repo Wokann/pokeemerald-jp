@@ -1,4 +1,15 @@
-	.incbin "baserom_jp.gba", 0x2436cd, 0x2aa
+	takeitem 0x190A, 0x9B00
+	gotopostbattlescript
+	faceplayer
+	bufferleadmonspeciesname 0x16
+	nop
+	setmysteryeventstatus 0x12
+	setdivewarp 0x800, 0xC, 0xFE13, 0x312
+	returnram
+	gettime
+	nop
+	returnram
+	.incbin "baserom_jp.gba", 0x2436E5, 0x292
 	.globl gJPText_00243977
 gJPText_00243977: @ 0x08243977
 	.string "ざんねん！\n"

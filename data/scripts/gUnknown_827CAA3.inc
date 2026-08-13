@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x27caa3, 0x117
+	nop
+	compare_local_to_local 0x28, 0x0
+	fadescreen 0x27
+	copylocal 0x3, 0x16
+	return
+	.incbin "baserom_jp.gba", 0x27CAAD, 0x10D

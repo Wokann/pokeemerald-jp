@@ -1,1 +1,13 @@
-	.incbin "baserom_jp.gba", 0x27dec1, 0x15a
+	nop
+	fadedefaultbgm
+	waitstate
+	copylocal 0xB, 0x16
+	return
+	addelevmenuitem 0x7E, 0x811, 0x405, 0xFF00
+	nop
+	nop
+	setworldmapflag 0xFF00
+	.byte 0xFF
+	addvar 0x5802, 0x572E
+	gotostd 0x2
+	.incbin "baserom_jp.gba", 0x27DEDD, 0x13E

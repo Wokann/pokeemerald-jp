@@ -1,1 +1,10 @@
-	.incbin "baserom_jp.gba", 0x27ec4c, 0x137
+	gotostd_if 0x1, 0x28
+	setworldmapflag 0xC0C
+	gotostd 0x0
+	setfieldeffectarg 0x27, 0x5802
+	gettime
+	setobjectxy 0x208, 0x105, 0x100
+	nop
+	nop
+	nop
+	.incbin "baserom_jp.gba", 0x27EC63, 0x120

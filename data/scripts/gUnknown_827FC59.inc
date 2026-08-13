@@ -1,1 +1,6 @@
-	.incbin "baserom_jp.gba", 0x27fc59, 0xfa
+	nop
+	setstepcallback 0x27
+	gotostd_if 0x3, 0x2
+	setweather 0x571D
+	gotostd 0x82
+	.incbin "baserom_jp.gba", 0x27FC64, 0xEF

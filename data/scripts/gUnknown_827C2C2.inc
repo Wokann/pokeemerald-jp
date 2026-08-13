@@ -1,1 +1,10 @@
-	.incbin "baserom_jp.gba", 0x27c2c2, 0x20
+	nop
+	return
+	delay 0xE103
+	cmdDB 0x2020815
+	nop
+	nop
+	return
+	nop
+	return
+	.incbin "baserom_jp.gba", 0x27C2D1, 0x11

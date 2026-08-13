@@ -1,1 +1,2 @@
-	.incbin "baserom_jp.gba", 0x289bf7, 0xd
+	setobjectmovementtype 0x1, 0x0
+	.incbin "baserom_jp.gba", 0x289BFB, 0x9

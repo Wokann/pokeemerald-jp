@@ -1,1 +1,12 @@
-	.incbin "baserom_jp.gba", 0x27becd, 0x6d
+	nop
+	fadescreen 0x27
+	nop
+	.byte 0xF5
+	waitstate
+	gotostd_if 0x0, 0x2
+	givemoney 0x2085AD0, 0x6
+	nop
+	nop
+	nop
+	nop
+	.incbin "baserom_jp.gba", 0x27BEE0, 0x5A

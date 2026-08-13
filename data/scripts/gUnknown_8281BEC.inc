@@ -1,1 +1,7 @@
-	.incbin "baserom_jp.gba", 0x281bec, 0x43
+	nop
+	showcoinsbox 0x27, 0x14
+	end
+	addvar 0xF04, 0x951F
+	showcontestresults
+	copybyte 0xA80708, 0x3FFFC0
+	.incbin "baserom_jp.gba", 0x281C00, 0x2F
