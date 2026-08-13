@@ -1,10 +1,1 @@
-	nop 
-	copyvar 0x27, 0x2797
-	gotostd_if 0x3, 0x28
-	setworldmapflag 0xC0C
-	gotostd 0x19
-	bufferstdstring 0x0, 0x23F
-	removeobject_at 0x571E, 0x802
-	end 
-	.string "{MUS_DUMMY}:$"
-	.incbin "baserom_jp.gba", 0x27ffb4, 0x35
+	.incbin "baserom_jp.gba", 0x27ff98, 0x51

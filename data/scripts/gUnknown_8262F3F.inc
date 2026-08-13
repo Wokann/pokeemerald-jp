@@ -1,10 +1,1 @@
-	setrespawn 0x7359
-	bufferleadmonspeciesname 0x2D
-	nop 
-	loadbytefromaddr 0x29041F06
-	nop 
-	setholewarp 0x944, 0x15, 0xFE08, 0x2E0C
-	goto_if 0x0, 0x19290E0B
-	setorcopyvar 0x4500, 0x4103
-	end 
-	.string "？$"
+	.incbin "baserom_jp.gba", 0x262f3f, 0x22

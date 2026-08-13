@@ -1,11 +1,1 @@
-	nop 
-	.byte 0xCC
-	waitstate 
-	copylocal 0x2, 0x19
-	vmessage 0x317C000
-	copybyte 0x508112C, 0x30000002
-	nop 
-	copyvar 0xC4, 0x4C0
-	waitse 
-	return 
-	.incbin "baserom_jp.gba", 0x27bbd4, 0x3f
+	.incbin "baserom_jp.gba", 0x27bbb8, 0x5b

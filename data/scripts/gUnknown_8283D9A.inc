@@ -1,15 +1,1 @@
-	nop 
-	.byte 0xEF
-	waitstate 
-	nop 
-	fadescreen 0x27
-	gotostd_if 0x1, 0x28
-	setworldmapflag 0xC0C
-	gotostd 0x2
-	showobject_at 0x572E, 0x800
-	goto 0x20001
-	nop 
-	nop 
-	goto 0x5000000
-	end 
-	.incbin "baserom_jp.gba", 0x283dba, 0x184
+	.incbin "baserom_jp.gba", 0x283d9a, 0x1a4

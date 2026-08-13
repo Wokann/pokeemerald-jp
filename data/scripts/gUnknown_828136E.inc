@@ -1,7 +1,1 @@
-	nop 
-	doweather 
-	waitstate 
-	nop 
-	playse 0xA27
-	return 
-	.incbin "baserom_jp.gba", 0x281376, 0x1fb
+	.incbin "baserom_jp.gba", 0x28136e, 0x203

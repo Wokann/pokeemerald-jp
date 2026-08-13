@@ -1,3 +1,1 @@
-	loadword 0x0, 0x8243A80
-	callstd 0x3
-	end 
+	.incbin "baserom_jp.gba", 0x2440dd, 0x9

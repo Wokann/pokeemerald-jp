@@ -1,3 +1,1 @@
-	gotostd_if 0x2, 0xC
-	returnram 
-	.incbin "baserom_jp.gba", 0x27b36a, 0x46
+	.incbin "baserom_jp.gba", 0x27b366, 0x4a

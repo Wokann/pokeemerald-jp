@@ -1,4 +1,1 @@
-	setvar 0x8005, 0x0
-	goto 0x8245DD9
-	end 
-	.incbin "baserom_jp.gba", 0x245dd9, 0x4
+	.incbin "baserom_jp.gba", 0x245dce, 0xf

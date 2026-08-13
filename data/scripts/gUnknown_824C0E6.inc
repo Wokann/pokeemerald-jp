@@ -1,17 +1,1 @@
-	fadescreen 0x58
-	fadescreen 0x58
-	.byte 0xFF
-	goto_if 0x50, 0xFF0B260A
-	return 
-	.string "つ{BLUE}{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{DYNAMIC_COLOR2}$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}$"
-	.string "た{BLUE}ま{DYNAMIC_COLOR3}{DYNAMIC_COLOR2}$"
-	.string "テンション$"
-	.string "{GREEN}っ{MUS_RG_VICTORY_TRAINER}{SE_PC_LOGIN}わざ$"
-	.string "{LIGHT_GRAY}つ{BLUE}{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}わざ$"
-	.string "{GREEN}{MUS_RG_TRAINER_TOWER}{SE_PC_LOGIN}わざ$"
-	.string "{GREEN}{DYNAMIC_COLOR3}{MUS_RG_VICTORY_TRAINER}{TRANSPARENT}わざ$"
-	.string "た{BLUE}ま{MUS_RG_VICTORY_GYM_LEADER}{TRANSPARENT}わざ$"
-	.string "？？？$"
-	.string "や{DYNAMIC_COLOR4}み$"
+	.incbin "baserom_jp.gba", 0x24c0e6, 0x5a

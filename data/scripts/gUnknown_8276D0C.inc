@@ -1,4 +1,6 @@
-	.byte 0x5C
-	returnram 
-	.string "{MUS_RG_CYCLING}{MUS_DUMMY}カcめ{BLUE}カcめ{BLUE}に{RED}ィ{SE_BIKE_BELL}ゆ{B_BUTTON}ニヘネ{DARK_GRAY}テストよ{SE_PC_OFF}メッセージで{DYNAMIC_COLOR4}！\n"
-	.string "{GREEN}んば{SE_WARP_OUT}で{DYNAMIC_COLOR4}$"
+	.incbin "baserom_jp.gba", 0x276d0c, 0x1a
+	.globl gJPText_00276D26
+gJPText_00276D26: @ 0x08276D26
+	.string "テストよう　メッセージです！\n"
+	.string "かんばん　です$"
+

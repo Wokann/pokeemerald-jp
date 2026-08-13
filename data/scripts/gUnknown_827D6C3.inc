@@ -1,9 +1,1 @@
-	nop 
-	.byte 0xE2
-	waitstate 
-	nop 
-	.byte 0xF0
-	waitstate 
-	return 
-	.string "♂Iな{BLUE}{LIGHT_RED}{SE_PC_OFF}{MUS_RG_PALLET}{MUS_DUMMY}{MUS_RG_PALLET}エöカ{BLUE}{MUS_RG_POKE_CENTER}{MUS_DUMMY}{SE_BANG}の{SE_M_CHARM}F{RED}{MUS_RG_ENCOUNTER_RIVAL}エöカ{BLUE}{MUS_RG_POKE_CENTER}x$"
-	.incbin "baserom_jp.gba", 0x27d6f0, 0x30
+	.incbin "baserom_jp.gba", 0x27d6c3, 0x5d

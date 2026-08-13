@@ -1,9 +1,1 @@
-	nop 
-	gettime 
-	cmdD9 
-	setdynamicwarp 0x202, 0xC, 0x118, 0x7910
-	nop 
-	loadbytefromaddr 0xA4280040
-	.byte 0x84
-	.byte 0x28
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x28934c, 0x14

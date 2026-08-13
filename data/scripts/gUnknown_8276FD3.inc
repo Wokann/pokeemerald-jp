@@ -1,14 +1,1 @@
-	writebytetoaddr 0x35, 0xABAB0203
-	.byte 0xFB
-	addelevmenuitem 0x12, 0x743, 0x2706, 0x1A00
-	warpteleport 0x2229, 0xB2, 0xFE44, 0x34A
-	callstd 0x2E
-	nop 
-	returnram 
-	.string "{MUS_RG_CAUGHT_INTRO}{SE_FAINT}レポートが\l"
-	.string "{GREEN}{GREEN}れ{MUS_RG_CAUGHT_INTRO}ま{DYNAMIC_COLOR4}！\p"
-	.string "{DYNAMIC_COLOR6}ちら{SE_NOTE_B}プレイ{DYNAMIC_COLOR3}{MUS_RG_CAUGHT_INTRO}{SE_FAINT}ぼ{LIGHT_GRAY}{LIGHT_BLUE}んや\n"
-	.string "{DYNAMIC_COLOR4}べて{SE_A}ポケモ{SE_M_BUBBLE3}ど{LIGHT_GRAY}{SE_BALL_BOUNCE_2}などが\l"
-	.string "{LIGHT_GREEN}{RED}て{DYNAMIC_COLOR3}{MUS_RG_SEVII_CAVE}ま{DYNAMIC_COLOR4}⋯⋯\p"
-	.string "ほんと{LIGHT_GRAY}に\n"
-	.string "{LIGHT_GRAY}{RED}{GREEN}{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}{GREEN}？$"
+	.incbin "baserom_jp.gba", 0x276fd3, 0x75

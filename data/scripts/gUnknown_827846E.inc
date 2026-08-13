@@ -1,12 +1,1 @@
-	nop 
-	addelevmenuitem 0x27, 0x9700, 0xA27, 0x2801
-	setworldmapflag 0xC0C
-	gotostd 0x1C
-	checkplayergender 
-	nop 
-	showcoinsbox 0x6, 0x2
-	end 
-	.incbin "baserom_jp.gba", 0x278482, 0xa
-	.incbin "baserom_jp.gba", 0x27848c, 0x4
-	.incbin "baserom_jp.gba", 0x278490, 0x31
-	.incbin "baserom_jp.gba", 0x2784c1, 0x20
+	.incbin "baserom_jp.gba", 0x27846e, 0x73

@@ -1,10 +1,1 @@
-	nop 
-	compare_addr_to_addr 0x28210028, 0x284AD311
-	gotostd 0x28
-	givedecoration 0x828
-	nop 
-	opendoor 0x1927, 0xA2
-	showcoinsbox 0x2, 0x74
-	compare_addr_to_addr 0x4020857, 0x0
-	killscript 
-	.incbin "baserom_jp.gba", 0x284ae6, 0x98
+	.incbin "baserom_jp.gba", 0x284ac4, 0xba

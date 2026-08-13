@@ -1,5 +1,1 @@
-	nop 
-	waitmessage 
-	waitstate 
-	return 
-	.incbin "baserom_jp.gba", 0x27d6a9, 0x1a
+	.incbin "baserom_jp.gba", 0x27d6a5, 0x1e

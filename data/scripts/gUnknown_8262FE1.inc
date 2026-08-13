@@ -1,4 +1,1 @@
-	copylocal 0x3, 0x14
-	return 
-	.string "{TRANSPARENT}100{DYNAMIC_COLOR3}ゅ{MUS_RG_VS_LEGEND}{TRANSPARENT}{DYNAMIC_COLOR1}{RED}たの{GREEN}！\n"
-	.string "ポケモンず{GREEN}{SE_WARP_OUT}と{DYNAMIC_COLOR3}{SE_SHIP}みごと{SE_PIN}もんだね！$"
+	.incbin "baserom_jp.gba", 0x262fe1, 0x2b

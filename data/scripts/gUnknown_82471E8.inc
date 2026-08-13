@@ -1,4 +1,1 @@
-	messageautoscroll 0x8247E69
-	waitmessage 
-	special ExitLinkRoom
-	end 
+	.incbin "baserom_jp.gba", 0x2471e8, 0xa

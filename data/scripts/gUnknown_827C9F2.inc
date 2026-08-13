@@ -1,3 +1,1 @@
-	nop 
-	killscript 
-	.incbin "baserom_jp.gba", 0x27c9f4, 0x26
+	.incbin "baserom_jp.gba", 0x27c9f2, 0x28

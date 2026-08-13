@@ -1,10 +1,1 @@
-	nop 
-	vgoto 0x10000C27
-	compare_local_to_addr 0xD0, 0x20FC000
-	startcontest 
-	compare_var_to_value 0x857, 0x303
-	delay 0x0
-	nop 
-	vgoto 0x1040527
-	killscript 
-	.incbin "baserom_jp.gba", 0x27e69a, 0x1
+	.incbin "baserom_jp.gba", 0x27e67e, 0x1d

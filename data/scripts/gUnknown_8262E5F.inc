@@ -1,10 +1,1 @@
-	callnative 0x8001450
-	callstd_if 0x21, 0x27
-	setvar 0x1A00, 0x5002
-	setptrbyte 0xFE, 0x7E73599F
-	dotimebasedevents 
-	nop 
-	callstd_if 0x37, 0xC
-	setptrbyte 0x20, 0x2001429
-	end 
-	.string "な！$"
+	.incbin "baserom_jp.gba", 0x262e5f, 0x22

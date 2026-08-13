@@ -1,4 +1,1 @@
-	playse 0xC300
-	nop 
-	.byte 0x40
-	setworldmapflag 0xFFFF
+	.incbin "baserom_jp.gba", 0x2772f0, 0x8

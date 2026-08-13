@@ -1,6 +1,1 @@
-	nop 
-	vcall_if 0x27, 0x427A600
-	nop 
-	gotostd_if 0x3, 0x29
-	returnram 
-	.incbin "baserom_jp.gba", 0x28157d, 0xd2
+	.incbin "baserom_jp.gba", 0x281571, 0xde

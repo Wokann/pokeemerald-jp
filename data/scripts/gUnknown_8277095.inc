@@ -1,2 +1,1 @@
-	end 
-	.incbin "baserom_jp.gba", 0x277096, 0x6c
+	.incbin "baserom_jp.gba", 0x277095, 0x6d

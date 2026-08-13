@@ -1,4 +1,1 @@
-	copybyte 0x23442E, 0x13021215
-	end 
-	.string "ると\n"
-	.string "{DYNAMIC_COLOR3}ん{SE_WIN_OPEN}{DYNAMIC_COLOR4}{SE_ICE_BREAK}ポケモン{SE_SWITCH}{DARK_GRAY}る{DYNAMIC_COLOR6}{LIGHT_GRAY}だよ！$"
+	.incbin "baserom_jp.gba", 0x263050, 0x22

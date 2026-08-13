@@ -1,6 +1,1 @@
-	nop 
-	animateflash 0x27
-	gotostd_if 0x1, 0xC
-	returnram 
-	.string "{BLUE}{LIGHT_GRAY}♂っ{DYNAMIC_COLOR4}{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}{SE_CONTEST_PLACE}{SE_WIN_OPEN}{SE_USE_ITEM}{SE_SELECT}{LIGHT_GRAY}ちメち{MUS_RG_FUCHSIA}{SE_PC_ON}{TRANSPARENT}{SE_PC_ON}{SE_WALL_HIT}{SE_PC_OFF}{SE_PC_LOGIN}rカ{MUS_RG_FUCHSIA}{LIGHT_GRAY}{SE_ICE_STAIRS}l$"
-	.incbin "baserom_jp.gba", 0x27d613, 0x37
+	.incbin "baserom_jp.gba", 0x27d5e0, 0x6a

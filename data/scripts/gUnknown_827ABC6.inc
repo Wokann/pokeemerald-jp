@@ -1,8 +1,1 @@
-	nop 
-	setrespawn 0x27
-	fadescreen 0x27
-	gotostd_if 0x1, 0xC
-	returnram 
-	.string "{BLUE}{LIGHT_GRAY}♂っ{DYNAMIC_COLOR4}{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}{SE_SLIDING_DOOR}{SE_WIN_OPEN}{SE_USE_ITEM}{SE_PC_ON}の{SE_M_DOUBLE_TEAM}F{RED}{GREEN}の{SE_M_DOUBLE_TEAM}F{MUS_RG_SURF}ッ8オ{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}{SE_BANG}{MUS_DUMMY}{MUS_DUMMY}{SE_PC_ON}{DARK_GRAY}Jはキ{MUS_RG_FUCHSIA}{GREEN}t$"
-	.incbin "baserom_jp.gba", 0x27ac07, 0x19
-	.incbin "baserom_jp.gba", 0x27ac20, 0x29
+	.incbin "baserom_jp.gba", 0x27abc6, 0x83

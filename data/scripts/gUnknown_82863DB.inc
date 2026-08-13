@@ -1,9 +1,1 @@
-	nop 
-	cmdD8 
-	waitstate 
-	gotostd_if 0x3, 0x19
-	.byte 0x79
-	nop 
-	setdynamicwarp 0x2CC, 0x29, 0x857, 0x82
-	return 
-	.incbin "baserom_jp.gba", 0x2863ec, 0x14
+	.incbin "baserom_jp.gba", 0x2863db, 0x25

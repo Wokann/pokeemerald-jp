@@ -1,16 +1,1 @@
-	nop 
-	.byte 0xF0
-	waitstate 
-	nop 
-	pokenavcall 0xE2CC0227
-	addobject_at 0x208, 0x2D8
-	.byte 0xFF
-	applymovement_at 0x200, 0x856E2CC, 0x202
-	cmdD8 
-	.byte 0xFF
-	.byte 0xD0
-	nop 
-	call 0xCD1910
-	nop 
-	return 
-	.incbin "baserom_jp.gba", 0x282e18, 0x5b
+	.incbin "baserom_jp.gba", 0x282df5, 0x7e

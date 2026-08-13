@@ -1,4 +1,1 @@
-	gotostd_if 0x19, 0x0
-	setmysteryeventstatus 0x6
-	end 
-	.incbin "baserom_jp.gba", 0x277108, 0xec
+	.incbin "baserom_jp.gba", 0x277102, 0xf2

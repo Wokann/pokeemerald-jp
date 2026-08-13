@@ -1,12 +1,1 @@
-	yesnobox 0x53, 0x54
-	bufferleadmonspeciesname 0x11
-	compare_addr_to_local 0x1A160003, 0x0
-	gotostd_if 0x2E, 0x15
-	setvar 0xFE23, 0x505
-	gotostd 0x19
-	nop 
-	setrespawn 0x7359
-	bufferleadmonspeciesname 0x37
-	nop 
-	end 
-	.string "たの{GREEN}⋯⋯$"
+	.incbin "baserom_jp.gba", 0x263072, 0x23

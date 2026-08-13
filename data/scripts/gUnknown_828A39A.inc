@@ -1,4 +1,1 @@
-	gettime 
-	initclock 0x241, 0xF02
-	.byte 0x49
-	setworldmapflag 0x3D00
+	.incbin "baserom_jp.gba", 0x28a39a, 0xa

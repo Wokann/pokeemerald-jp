@@ -1,5 +1,1 @@
-	gotostd_if 0x0, 0x28
-	nop 
-	copyvar 0xBD, 0x14C0
-	end 
-	.incbin "baserom_jp.gba", 0x281b14, 0x3e
+	.incbin "baserom_jp.gba", 0x281b0a, 0x48

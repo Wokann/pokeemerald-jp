@@ -1,3 +1,1 @@
-	.byte 0x41
-	warphole 0x9D28
-	gotostd 0x3E
+	.incbin "baserom_jp.gba", 0x289d36, 0x6

@@ -1,5 +1,1 @@
-	turnobject 0x7F6C, 0x78
-	givemoney 0x1A167EAE, 0x0
-	end 
-	.string "った{MUS_RG_POKE_TOWER}？{MUS_RG_VS_WILD}{DYNAMIC_COLOR6}{DYNAMIC_COLOR1}で{DYNAMIC_COLOR3}{SE_WIN_OPEN}つ{GREEN}ま{RED}られ{MUS_RG_GAME_FREAK}\l"
-	.string "ポケモン{SE_SWITCH}{DARK_GRAY}るっ{SE_SHIP}はな{SE_NOT_EFFECTIVE}だぞ！$"
+	.incbin "baserom_jp.gba", 0x262fad, 0x34

@@ -1,5 +1,1 @@
-	message 0x0
-	playfanfare 0x1CB
-	waitfanfare 
-	waitmessage 
-	return 
+	.incbin "baserom_jp.gba", 0x2423d6, 0xb

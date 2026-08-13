@@ -1,13 +1,1 @@
-	nop 
-	waitmoncry 
-	waitstate 
-	gotostd_if 0x3, 0x28
-	setworldmapflag 0xA91C
-	nop 
-	setdynamicwarp 0x120A, 0xE, 0xD04, 0x828
-	setmysteryeventstatus 0x4
-	killscript 
-	.string "り{BLUE}{DYNAMIC_COLOR5}{RED}{DYNAMIC_COLOR4}り{BLUE}{LIGHT_RED}{DYNAMIC_COLOR2}{LIGHT_GRAY}{MUS_RG_FUCHSIA}Vjカ{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}x$"
-	.string "{SE_RAIN}{SE_ESCALATOR}{MUS_DUMMY}{RED}{MUS_RG_VICTORY_GYM_LEADER}Vjカ{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}ü$"
-	.string "{SE_M_BIND}{SE_ESCALATOR}{MUS_DUMMY}{RED}{MUS_RG_VICTORY_GYM_LEADER}Vjカ{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}Ä$"
-	.incbin "baserom_jp.gba", 0x280d35, 0x9
+	.incbin "baserom_jp.gba", 0x280ce4, 0x5a

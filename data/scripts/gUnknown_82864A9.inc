@@ -1,3 +1,1 @@
-	return 
-	.string "だぇぬ{MUS_RG_FUCHSIA}{SE_USE_ITEM}{TRANSPARENT}{LIGHT_GRAY}ドぃぬ{MUS_RG_FUCHSIA}{TRANSPARENT}{SE_PC_ON}へ{SE_M_JUMP_KICK}F{MUS_RG_CAUGHT}äテシ{BLUE}ォ{RED}z$"
-	.incbin "baserom_jp.gba", 0x2864c9, 0x28
+	.incbin "baserom_jp.gba", 0x2864a9, 0x48

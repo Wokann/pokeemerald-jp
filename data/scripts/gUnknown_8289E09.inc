@@ -1,6 +1,1 @@
-	gettime 
-	.byte 0xD7
-	setdynamicwarp 0x202, 0x0, 0x176, 0x2908
-	setworldmapflag 0x3FD6
-	end 
-	.incbin "baserom_jp.gba", 0x289e17, 0x2f
+	.incbin "baserom_jp.gba", 0x289e09, 0x3d

@@ -1,3 +1,1 @@
-	loadbyte 0x6E, 0x0
-	loadbytefromaddr 0x1980040
-	.byte 0x3E
+	.incbin "baserom_jp.gba", 0x2897bc, 0x9

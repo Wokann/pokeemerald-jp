@@ -1,7 +1,1 @@
-	lockall 
-	dofieldeffect 0x1B
-	waitstate 
-	goto 0x8245BFC
-	end 
-	.string "{SE_BALL_OPEN}⋯っや{BLUE}{LIGHT_BLUE}{RED}ヒ{DARK_GRAY}{SE_BALL_OPEN}Äっや{BLUE}{LIGHT_BLUE}{RED}{LIGHT_RED}{DYNAMIC_COLOR1}シや{MUS_RG_FUCHSIA}ネぁ{SE_EXIT}にビ{SE_NOTE_E}{TRANSPARENT}る{SE_M_PERISH_SONG}ゆ{SE_WIN_OPEN}ゆ{SE_DOOR}に{RED}{SE_M_CUT}{TRANSPARENT}に{LIGHT_RED}{SE_M_CUT}{TRANSPARENT}ゆ{SE_SLIDING_DOOR}にグぞ{SE_USE_ITEM}{MUS_RG_VS_DEOXYS}ぽ$"
-	.incbin "baserom_jp.gba", 0x245c32, 0x34
+	.incbin "baserom_jp.gba", 0x245be7, 0x7f

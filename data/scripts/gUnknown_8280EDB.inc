@@ -1,6 +1,1 @@
-	nop 
-	applymovement 0x27, 0x970027B0
-	waitstate 
-	gotostd_if 0x3, 0xC
-	returnram 
-	.incbin "baserom_jp.gba", 0x280ee8, 0xfa
+	.incbin "baserom_jp.gba", 0x280edb, 0x107

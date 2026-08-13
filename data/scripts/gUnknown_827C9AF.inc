@@ -1,7 +1,1 @@
-	nop 
-	callstd 0x28
-	nop 
-	gotostd_if 0x28, 0xE
-	showobject_at 0x2862, 0x80A
-	return 
-	.incbin "baserom_jp.gba", 0x27c9bc, 0x36
+	.incbin "baserom_jp.gba", 0x27c9af, 0x43

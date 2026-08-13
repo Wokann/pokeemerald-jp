@@ -1,9 +1,1 @@
-	nop 
-	checkflag 0xA27
-	nop 
-	delay 0xC00
-	gotostd 0x8
-	copyvar 0xC0, 0x2C0
-	showobject_at 0x5ACF, 0x802
-	end 
-	.incbin "baserom_jp.gba", 0x28132c, 0x42
+	.incbin "baserom_jp.gba", 0x281317, 0x57

@@ -1,8 +1,1 @@
-	nop 
-	callstd_if 0x28, 0xE
-	showobject_at 0x2862, 0x803
-	setholewarp 0x411, 0x8, 0x103, 0x1
-	return 
-	.string "チヤ{DYNAMIC_COLOR1}{BLUE}{LIGHT_RED}{SE_RG_POKE_JUMP_SUCCESS}{TRANSPARENT}$"
-	.string "ァ{SE_NOT_EFFECTIVE}{SE_PC_OFF}{SE_USE_ITEM}ふ{SE_M_REVERSAL}Fね{LIGHT_GRAY}{RED}た{LIGHT_GRAY}だ{RED}ち{BLUE}{SE_RG_HELP_ERROR}{MUS_DUMMY}{LIGHT_GRAY}チヤ{DYNAMIC_COLOR1}{BLUE}{LIGHT_RED}{SE_SELECT}{TRANSPARENT}$"
-	.incbin "baserom_jp.gba", 0x27c9a1, 0xe
+	.incbin "baserom_jp.gba", 0x27c964, 0x4b

@@ -1,5 +1,1 @@
-	faceplayer 
-	waitmovement_at 0x377E, 0x10
-	delay 0xE1F
-	gettime 
-	.byte 0xFF
+	.incbin "baserom_jp.gba", 0x262d18, 0xb

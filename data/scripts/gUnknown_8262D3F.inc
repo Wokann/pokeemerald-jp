@@ -1,4 +1,1 @@
-	setflashradius 0x64A0
-	killscript 
-	.string "{SE_ICE_BREAK}わ{BLUE}{SE_WARP_IN}じゅ{LIGHT_GRAY}じボタン{SE_NOTE_B}{RED}らんで\n"
-	.string "Aボタン{SE_NOTE_B}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}$"
+	.incbin "baserom_jp.gba", 0x262d3f, 0x27

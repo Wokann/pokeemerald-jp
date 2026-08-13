@@ -1,5 +1,1 @@
-	nop 
-	fadescreen 0x27
-	gotostd_if 0x3, 0xC
-	returnram 
-	.incbin "baserom_jp.gba", 0x28405c, 0x488
+	.incbin "baserom_jp.gba", 0x284055, 0x48f

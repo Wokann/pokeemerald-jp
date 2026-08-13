@@ -1,8 +1,1 @@
-	nop 
-	.byte 0xFE
-	waitstate 
-	copyvar 0xEC, 0x2C0
-	takedecoration 0x5AD3
-	gotostd 0x2
-	return 
-	.incbin "baserom_jp.gba", 0x28321b, 0xdc
+	.incbin "baserom_jp.gba", 0x28320d, 0xea

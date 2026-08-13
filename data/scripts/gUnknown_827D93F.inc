@@ -1,10 +1,1 @@
-	nop 
-	callstd 0x28
-	gotostd_if 0x0, 0x28
-	nop 
-	call 0x3C390301
-	writebytetoaddr 0x8, 0xCB190005
-	nop 
-	showcoinsbox 0x4, 0x8
-	return 
-	.incbin "baserom_jp.gba", 0x27d956, 0x58
+	.incbin "baserom_jp.gba", 0x27d93f, 0x6f

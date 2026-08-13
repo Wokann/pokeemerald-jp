@@ -1,5 +1,1 @@
-	nop 
-	applymovement_at 0x27, 0xF80227E1, 0xEC56
-	gotostd 0xB
-	end 
-	.incbin "baserom_jp.gba", 0x27b4fe, 0x1d
+	.incbin "baserom_jp.gba", 0x27b4f1, 0x2a

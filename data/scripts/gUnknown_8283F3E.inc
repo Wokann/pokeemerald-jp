@@ -1,4 +1,1 @@
-	nop 
-	copylocal 0x28, 0xA
-	return 
-	.incbin "baserom_jp.gba", 0x283f43, 0x4b
+	.incbin "baserom_jp.gba", 0x283f3e, 0x50

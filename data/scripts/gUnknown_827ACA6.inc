@@ -1,12 +1,1 @@
-	nop 
-	fadescreen 0x27
-	nop 
-	gotonative 0xE8BC0227
-	addobject_at 0x208, 0x100
-	nop 
-	copyvar 0xA2, 0x5C0
-	call 0xE8BC0202
-	addobject_at 0x208, 0x101
-	nop 
-	end 
-	.incbin "baserom_jp.gba", 0x27acc6, 0x4d
+	.incbin "baserom_jp.gba", 0x27aca6, 0x6d

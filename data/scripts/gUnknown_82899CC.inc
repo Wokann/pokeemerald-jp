@@ -1,3 +1,1 @@
-	takeitem 0x101, 0x4128
-	end 
-	.incbin "baserom_jp.gba", 0x2899d2, 0x8
+	.incbin "baserom_jp.gba", 0x2899cc, 0xe

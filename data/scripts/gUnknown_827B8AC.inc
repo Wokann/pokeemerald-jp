@@ -1,2 +1,1 @@
-	return 
-	.incbin "baserom_jp.gba", 0x27b8ad, 0x14
+	.incbin "baserom_jp.gba", 0x27b8ac, 0x15

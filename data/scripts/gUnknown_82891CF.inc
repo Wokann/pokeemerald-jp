@@ -1,11 +1,1 @@
-	setptrbyte 0xC0, 0x12085AB9
-	setdivewarp 0x46, 0x1, 0x4128, 0x202
-	nop 
-	nop 
-	nop 
-	nop 
-	gettime 
-	buffercontesttype 
-	setdynamicwarp 0x202, 0x0, 0xAF32, 0x23E
-	end 
-	.incbin "baserom_jp.gba", 0x2891ec, 0x65
+	.incbin "baserom_jp.gba", 0x2891cf, 0x82

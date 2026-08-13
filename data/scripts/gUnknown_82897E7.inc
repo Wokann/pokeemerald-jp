@@ -1,4 +1,1 @@
-	loadbyte 0x30, 0x0
-	loadbytefromaddr 0xCB280040
-	fadescreen 0x28
-	.byte 0x08
+	.incbin "baserom_jp.gba", 0x2897e7, 0xb

@@ -1,5 +1,1 @@
-	givedecoration 0x8000
-	copyvar 0x8007, 0x800D
-	call 0x8242C5D
-	return 
-	.incbin "baserom_jp.gba", 0x242c5d, 0x38
+	.incbin "baserom_jp.gba", 0x242c4f, 0x46

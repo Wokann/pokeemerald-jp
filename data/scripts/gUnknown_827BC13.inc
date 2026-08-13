@@ -1,17 +1,1 @@
-	nop 
-	.byte 0xC8
-	waitstate 
-	copyvar 0xAB, 0xEC0
-	removeobject 0x27BC
-	gotostd 0x4
-	gotostd 0x3
-	addobject 0x1162
-	gotostd 0x2
-	goto_if 0x2, 0x2000200
-	nop 
-	nop 
-	nop 
-	callstd_if 0x0, 0x1F
-	nop 
-	return 
-	.incbin "baserom_jp.gba", 0x27bc35, 0x72
+	.incbin "baserom_jp.gba", 0x27bc13, 0x94

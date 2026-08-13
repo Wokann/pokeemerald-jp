@@ -1,4 +1,1 @@
-	nop 
-	addvar 0x28, 0x279D
-	return 
-	.incbin "baserom_jp.gba", 0x27c209, 0x31
+	.incbin "baserom_jp.gba", 0x27c202, 0x38

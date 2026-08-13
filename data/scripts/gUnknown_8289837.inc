@@ -1,10 +1,1 @@
-	waitmessage 
-	setworldmapflag 0x701
-	nop 
-	nop 
-	nop 
-	loadbyte 0x7A, 0x0
-	.byte 0x12
-	.byte 0x40
-	nop 
-	.byte 0x3E
+	.incbin "baserom_jp.gba", 0x289837, 0xe

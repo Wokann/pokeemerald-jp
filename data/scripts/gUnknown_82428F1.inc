@@ -1,3 +1,1 @@
-	call 0x8242966
-	goto 0x82428FC
-	end 
+	.incbin "baserom_jp.gba", 0x2428f1, 0xb

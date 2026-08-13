@@ -1,9 +1,1 @@
-	nop 
-	showobject_at 0x227, 0x582E
-	setobjectxy 0x208, 0x105, 0x200
-	nop 
-	nop 
-	nop 
-	call 0x533F200
-	return 
-	.incbin "baserom_jp.gba", 0x27d3a6, 0xdd
+	.incbin "baserom_jp.gba", 0x27d390, 0xf3

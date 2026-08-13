@@ -1,2 +1,1 @@
-	returnram 
-	.incbin "baserom_jp.gba", 0x27b4df, 0x12
+	.incbin "baserom_jp.gba", 0x27b4de, 0x13

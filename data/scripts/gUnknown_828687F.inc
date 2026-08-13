@@ -1,3 +1,1 @@
-	.byte 0x13
-	end 
-	.incbin "baserom_jp.gba", 0x286881, 0x3
+	.incbin "baserom_jp.gba", 0x28687f, 0x5

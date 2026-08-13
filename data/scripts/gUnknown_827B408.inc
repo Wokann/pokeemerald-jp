@@ -1,9 +1,1 @@
-	nop 
-	fadescreen 0x27
-	nop 
-	message 0xC010A27
-	returnram 
-	.string "{BLUE}{LIGHT_GRAY}チヤ{DYNAMIC_COLOR1}{BLUE}{LIGHT_GRAY}{SE_SELECT}{TRANSPARENT}{SE_SUCCESS}{SE_LEDGE}{MUS_DUMMY}{SE_PC_LOGIN}{DARK_GRAY}ミÖカ{MUS_RG_FUCHSIA}{SE_PC_OFF}{TRANSPARENT}x$"
-	.string "p$"
-	.string "の{SE_M_SWAGGER2}F{RED}{MUS_RG_PHOTO}ミÖカ{MUS_RG_FUCHSIA}{SE_PC_OFF}{TRANSPARENT}{SE_BANG}p$"
-	.incbin "baserom_jp.gba", 0x27b444, 0x3a
+	.incbin "baserom_jp.gba", 0x27b408, 0x76

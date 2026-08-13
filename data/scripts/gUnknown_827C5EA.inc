@@ -1,6 +1,1 @@
-	nop 
-	.byte 0x26
-	delay 0xA
-	returnram 
-	.string "{TRANSPARENT}た{SE_RG_DEOXYS_MOVE}{DARK_GRAY},cコ{MUS_RG_FUCHSIA}{TRANSPARENT}ふ{SE_M_TAKE_DOWN}Fね{LIGHT_GRAY}{LIGHT_RED}{LIGHT_GRAY}チヤ{DYNAMIC_COLOR1}{BLUE}{LIGHT_RED}{SE_SELECT}{TRANSPARENT}$"
-	.incbin "baserom_jp.gba", 0x27c60c, 0x12
+	.incbin "baserom_jp.gba", 0x27c5ea, 0x34

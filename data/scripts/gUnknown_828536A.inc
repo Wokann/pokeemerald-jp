@@ -1,9 +1,1 @@
-	nop 
-	special LoadPlayerParty
-	fadescreen 0x27
-	end 
-	.string "ク8オ{MUS_RG_FUCHSIA}{DARK_GRAY}{SE_PC_ON}{SE_WIN_OPEN}{RED}{RED}の{SE_M_VITAL_THROW}{PH_KIT_HELD}ザcコ{BLUE}ェ{DARK_GRAY}:$"
-	.string ":$"
-	.string "{RED}{MUS_RG_FUCHSIA}ミんキ{MUS_RG_FUCHSIA}{LIGHT_GREEN}{SE_SUCCESS}{SE_SELECT}{SE_USE_ITEM}$"
-	.string "ァ{SE_LEDGE}{MUS_DUMMY}{MUS_DUMMY}{DARK_GRAY}ざぁキ{BLUE}ォ{SE_PC_ON}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{MUS_RG_PALLET}{TRANSPARENT}の{SE_M_COMET_PUNCH}{PH_KIT_HELD}ッ8オ{MUS_RG_FUCHSIA}{SE_RG_POKE_JUMP_SUCCESS}{TRANSPARENT}ä$"
-	.incbin "baserom_jp.gba", 0x2853c1, 0x39
+	.incbin "baserom_jp.gba", 0x28536a, 0x90

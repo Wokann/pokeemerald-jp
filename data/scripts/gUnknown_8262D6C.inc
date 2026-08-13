@@ -1,2 +1,1 @@
-	goto 0x28100105
-	turnvobject 0xAB, 0xFF
+	.incbin "baserom_jp.gba", 0x262d6c, 0x8

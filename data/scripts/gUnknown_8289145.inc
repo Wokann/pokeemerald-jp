@@ -1,6 +1,1 @@
-	addobject 0x16F
-	loadbyte 0xE, 0x0
-	gettime 
-	fadenewbgm 0x241
-	end 
-	.incbin "baserom_jp.gba", 0x289150, 0x64
+	.incbin "baserom_jp.gba", 0x289145, 0x6f

@@ -1,5 +1,1 @@
-	applymovement 0x800F, 0x82424D4
-	waitmovement 0x0
-	special SetUpTrainerEncounterMusic
-	dotrainerbattle 
-	gotobeatenscript 
+	.incbin "baserom_jp.gba", 0x24245c, 0xf

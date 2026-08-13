@@ -1,7 +1,1 @@
-	nop 
-	.byte 0xFA
-	waitstate 
-	compare_local_to_value 0xDC, 0x0
-	showcoinsbox 0x12, 0x3
-	return 
-	.incbin "baserom_jp.gba", 0x279912, 0x2f
+	.incbin "baserom_jp.gba", 0x279908, 0x39

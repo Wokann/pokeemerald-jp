@@ -1,6 +1,1 @@
-	lockall 
-	message 0x0
-	waitmessage 
-	waitbuttonpress 
-	releaseall 
-	return 
+	.incbin "baserom_jp.gba", 0x2423ba, 0xa

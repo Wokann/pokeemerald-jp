@@ -1,14 +1,1 @@
-	nop 
-	fadescreen 0x27
-	nop 
-	setrespawn 0xA27
-	setworldmapflag 0xC0C
-	gotostd 0x11
-	buffermovename 0x88, 0x827
-	setmetatile 0x2788, 0x308, 0x4A31, 0x80D
-	end 
-	.incbin "baserom_jp.gba", 0x278869, 0x1d
-	.incbin "baserom_jp.gba", 0x278886, 0x2
-	.incbin "baserom_jp.gba", 0x278888, 0xd
-	.incbin "baserom_jp.gba", 0x278895, 0x18
-	.incbin "baserom_jp.gba", 0x2788ad, 0x1a
+	.incbin "baserom_jp.gba", 0x27884f, 0x78

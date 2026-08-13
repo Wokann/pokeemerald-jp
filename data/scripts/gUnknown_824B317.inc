@@ -1,8 +1,1 @@
-	goto_if 0x2, 0x51001922
-	dofieldeffect 0x79AE
-	turnvobject 0xFE, 0x45
-	copyvar 0x2C00, 0x2D3C
-	nop 
-	.byte 0x41
-	killscript 
-	.string "？$"
+	.incbin "baserom_jp.gba", 0x24b317, 0x16

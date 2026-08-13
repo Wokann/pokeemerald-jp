@@ -1,5 +1,1 @@
-	copyvar 0xC0, 0x3C0
-	.byte 0xE5
-	checkpartymove 0x811
-	end 
-	.incbin "baserom_jp.gba", 0x27b8a9, 0x3
+	.incbin "baserom_jp.gba", 0x27b89f, 0xd

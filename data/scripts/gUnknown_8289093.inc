@@ -1,3 +1,1 @@
-	copylocal 0xAA, 0xB9
-	faceplayer 
-	gotostd 0x44
+	.incbin "baserom_jp.gba", 0x289093, 0x6

@@ -1,7 +1,1 @@
-	nop 
-	fadescreen 0x27
-	gotostd_if 0x3, 0x28
-	setworldmapflag 0x1114
-	setvar 0xEE19, 0xC000
-	return 
-	.incbin "baserom_jp.gba", 0x28546d, 0xea
+	.incbin "baserom_jp.gba", 0x28545e, 0xf9

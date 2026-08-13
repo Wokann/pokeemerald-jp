@@ -1,8 +1,1 @@
-	copyvar 0xE5, 0x300
-	setworldmapflag 0x1067
-	gotostd 0x5
-	nop 
-	goto 0x3F00CD19
-	return 
-	.string "オぱ{DYNAMIC_COLOR4}{MUS_RG_FUCHSIA}{SE_RG_POKE_JUMP_SUCCESS}{TRANSPARENT}{SE_PC_ON}{MUS_DUMMY}{SE_SELECT}{SE_USE_ITEM}{LIGHT_GRAY}ムネた{BLUE}{SE_PC_OFF}{MUS_RG_SURF}クんキ{MUS_RG_FUCHSIA}{SE_RG_POKE_JUMP_SUCCESS}{TRANSPARENT}{SE_PC_OFF}{SE_FAINT}{MUS_DUMMY}$"
-	.incbin "baserom_jp.gba", 0x2824ee, 0x2
+	.incbin "baserom_jp.gba", 0x2824b5, 0x3b

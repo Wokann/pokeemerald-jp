@@ -1,15 +1,1 @@
-	nop 
-	turnvobject 0x27, 0x0
-	.byte 0xE1
-	waitstate 
-	nop 
-	showobject_at 0x327, 0x9970
-	writebytetoaddr 0x8, 0x27AB0505
-	nop 
-	nop 
-	call 0x6C000400
-	buffermovename 0x5, 0xB503
-	incrementgamestat 0x15
-	gotostd 0x5
-	return 
-	.incbin "baserom_jp.gba", 0x27d276, 0x6e
+	.incbin "baserom_jp.gba", 0x27d254, 0x90

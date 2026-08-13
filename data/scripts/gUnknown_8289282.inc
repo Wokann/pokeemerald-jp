@@ -1,3 +1,1 @@
-	loadbyte 0x5F, 0x1
-	loadbytefromaddr 0x393E0040
-	compare_addr_to_addr 0x501000, 0x3E004012
+	.incbin "baserom_jp.gba", 0x289282, 0x11

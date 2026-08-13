@@ -1,7 +1,1 @@
-	nop 
-	playfanfare 0x27
-	playbgm 0x1C27, 0x95
-	nop 
-	showcoinsbox 0x7, 0x5
-	end 
-	.incbin "baserom_jp.gba", 0x27e0f1, 0x1da
+	.incbin "baserom_jp.gba", 0x27e0e4, 0x1e7

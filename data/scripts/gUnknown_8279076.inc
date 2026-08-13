@@ -1,8 +1,1 @@
-	nop 
-	.byte 0xD4
-	waitstate 
-	gotostd_if 0x2, 0x3
-	dotrainerbattle 
-	setobjectxyperm 0x811, 0x602, 0x1
-	end 
-	.incbin "baserom_jp.gba", 0x279085, 0x63
+	.incbin "baserom_jp.gba", 0x279076, 0x72

@@ -1,5 +1,1 @@
-	giveitem 0x8000, 0x8001
-	copyvar 0x8007, 0x800D
-	call 0x8242B7D
-	return 
-	.incbin "baserom_jp.gba", 0x242b7d, 0xd2
+	.incbin "baserom_jp.gba", 0x242b6d, 0xe2

@@ -1,8 +1,1 @@
-	nop 
-	compare_local_to_addr 0x27, 0x214030A
-	addvar 0xB503, 0x1591
-	gotostd 0x2
-	call 0x3FFFC0
-	end 
-	.incbin "baserom_jp.gba", 0x27a431, 0x36
-	.incbin "baserom_jp.gba", 0x27a467, 0x9
+	.incbin "baserom_jp.gba", 0x27a41d, 0x53

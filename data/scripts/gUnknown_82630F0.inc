@@ -1,8 +1,1 @@
-	call_if 0x20, 0x599F001A
-	drawboxtext 0x7E, 0x1A, 0x6, 0xE
-	nop 
-	copylocal 0xC, 0x13
-	callnative 0xC0325FE
-	fadedefaultbgm 
-	return 
-	.string "{TRANSPARENT}なんだな$"
+	.incbin "baserom_jp.gba", 0x2630f0, 0x1c

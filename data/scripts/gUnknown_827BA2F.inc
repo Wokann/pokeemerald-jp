@@ -1,8 +1,1 @@
-	copylocal 0x2, 0x17
-	gotonative 0x827BA5B
-	gotostd_if 0x3, 0x3
-	playmoncry 0x1124, 0x208
-	nop 
-	return 
-	.string "ぅぼ{DYNAMIC_COLOR4}{MUS_RG_FUCHSIA}{SE_RG_POKE_JUMP_SUCCESS}{TRANSPARENT}{SE_PC_OFF}{MUS_DUMMY}{SE_ICE_STAIRS}{SE_USE_ITEM}の{SE_M_NIGHTMARE}ぜ{LIGHT_RED}{DYNAMIC_COLOR2}{LIGHT_GRAY}なぬ{BLUE}{LIGHT_GRAY}チヤ{DYNAMIC_COLOR1}{MUS_RG_FUCHSIA}{SE_SELECT}{TRANSPARENT}$"
-	.incbin "baserom_jp.gba", 0x27ba65, 0x20
+	.incbin "baserom_jp.gba", 0x27ba2f, 0x56

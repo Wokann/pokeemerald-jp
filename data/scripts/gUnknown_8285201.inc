@@ -1,15 +1,1 @@
-	nop 
-	turnvobject 0x27, 0x0
-	waitse 
-	delay 0x10A
-	delay 0x1901
-	bufferleadmonspeciesname 0x0
-	showcoinsbox 0x2, 0x58
-	gettime 
-	setobjectxy 0x208, 0x105, 0x0
-	nop 
-	nop 
-	nop 
-	call_if 0x0, 0xA047320
-	end 
-	.incbin "baserom_jp.gba", 0x285223, 0xd3
+	.incbin "baserom_jp.gba", 0x285201, 0xf5

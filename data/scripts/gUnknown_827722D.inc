@@ -1,5 +1,1 @@
-	setdoorclosed 0xFB0, 0x603
-	turnvobject 0xFB, 0x7
-	compare_addr_to_addr 0x2E0A0037, 0x102C0045
-	returnram 
-	.incbin "baserom_jp.gba", 0x27723f, 0x26
+	.incbin "baserom_jp.gba", 0x27722d, 0x38

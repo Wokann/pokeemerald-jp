@@ -1,5 +1,1 @@
-	nop 
-	.byte 0xF6
-	waitstate 
-	end 
-	.incbin "baserom_jp.gba", 0x282b20, 0x170
+	.incbin "baserom_jp.gba", 0x282b1c, 0x174

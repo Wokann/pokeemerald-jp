@@ -1,5 +1,1 @@
-	nop 
-	playse 0x327
-	buffermovename 0x4, 0x816
-	end 
-	.incbin "baserom_jp.gba", 0x27d074, 0xf
+	.incbin "baserom_jp.gba", 0x27d06b, 0x18

@@ -1,7 +1,1 @@
-	lock 
-	faceplayer 
-	message 0x0
-	waitmessage 
-	waitbuttonpress 
-	release 
-	return 
+	.incbin "baserom_jp.gba", 0x2423af, 0xb

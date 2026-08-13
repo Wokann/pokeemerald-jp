@@ -1,4 +1,5 @@
-	loadword 0x0, 0x826239C
-	callstd 0x3
-	end 
-	.string "スプレーの{DYNAMIC_COLOR1}{LIGHT_GRAY}{GREEN}{SE_SAVE}{LIGHT_GREEN}れた$"
+	.incbin "baserom_jp.gba", 0x262393, 0x9
+	.globl gJPText_0026239C
+gJPText_0026239C: @ 0x0826239C
+	.string "スプレーのこうかが　きれた$"
+

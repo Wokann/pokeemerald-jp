@@ -1,6 +1,1 @@
-	nop 
-	setweather 0x27
-	turnvobject 0x27, 0x0
-	setfieldeffectarg 0x27, 0x30A
-	returnram 
-	.incbin "baserom_jp.gba", 0x2795b9, 0x248
+	.incbin "baserom_jp.gba", 0x2795ad, 0x254

@@ -1,8 +1,1 @@
-	nop 
-	dotimebasedevents 
-	waitstate 
-	nop 
-	fadescreen 0x27
-	gotostd_if 0x3, 0xC
-	returnram 
-	.incbin "baserom_jp.gba", 0x284c25, 0x2e8
+	.incbin "baserom_jp.gba", 0x284c1b, 0x2f2

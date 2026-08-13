@@ -1,12 +1,1 @@
-	nop 
-	waitbuttonpress 
-	waitstate 
-	setmysteryeventstatus 0x58
-	cleartrainerflag 0x828
-	call 0x23280208
-	setobjectxy 0x1408, 0x1900, 0xBA
-	showcoinsbox 0x4, 0x36
-	compare_local_to_value 0xBA, 0x0
-	showcoinsbox 0x10, 0x3
-	goto 0x2862640E
-	gotostd 0x8
+	.incbin "baserom_jp.gba", 0x27b5e1, 0x24

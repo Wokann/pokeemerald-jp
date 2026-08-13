@@ -1,5 +1,1 @@
-	compare_local_to_local 0xA5, 0x0
-	showcoinsbox 0x3F, 0x2
-	nop 
-	return 
-	.incbin "baserom_jp.gba", 0x28388b, 0xa
+	.incbin "baserom_jp.gba", 0x283883, 0x12

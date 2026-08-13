@@ -1,4 +1,1 @@
-	pokenavcall 0x0
-	waitmessage 
-	return 
-	.incbin "baserom_jp.gba", 0x2423e8, 0x6
+	.incbin "baserom_jp.gba", 0x2423e1, 0xd

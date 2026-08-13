@@ -1,9 +1,1 @@
-	nop 
-	dotimebasedevents 
-	waitstate 
-	compare_local_to_value 0x97, 0x0
-	showcoinsbox 0x5, 0x2
-	end 
-	.string ",たキ{BLUE}ェ{GREEN}{SE_BANG}{MUS_DUMMY}:$"
-	.string "{SE_CONTEST_PLACE}{SE_BANG}{SE_USE_ITEM}{RED}{MUS_RG_SS_ANNE},たキ{BLUE}ェ{GREEN}{SE_BANG}{MUS_DUMMY}{MUS_DUMMY}{SE_CONTEST_PLACE}{SE_BANG}{SE_USE_ITEM}{RED}{MUS_RG_SS_ANNE},たキ{BLUE}ェ{GREEN}{SE_BANG}{MUS_DUMMY}{SE_FAINT}{SE_CONTEST_PLACE}{SE_BANG}{SE_USE_ITEM}{RED}たの{SE_M_FLAME_WHEEL}ぜ{DYNAMIC_COLOR5}Gョら{BLUE}{DYNAMIC_COLOR5}Gョら{BLUE}{DYNAMIC_COLOR5}Gョら{BLUE}{MUS_RG_FUCHSIA}Vたキ{BLUE}ェ{LIGHT_GREEN}t$"
-	.incbin "baserom_jp.gba", 0x2786ca, 0xf
+	.incbin "baserom_jp.gba", 0x278665, 0x74

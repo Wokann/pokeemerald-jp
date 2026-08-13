@@ -1,18 +1,1 @@
-	gotostd_if 0x2, 0x3
-	multichoicegrid 0x6E, 0x11, 0x8, 0xA, 0x5
-	call 0x200
-	nop 
-	loadbyte 0x0, 0xFF
-	bufferpartymonnick 0x2, 0x2E58
-	setobjectxy 0x208, 0x105, 0x200
-	nop 
-	nop 
-	nop 
-	gotostd_if 0x0, 0x0
-	nop 
-	goto 0xC000DC19
-	compare_local_to_addr 0xD1, 0x31EC000
-	copybyte 0x20815CE, 0x20B0500
-	return 
-	.string "ムホち{BLUE}{DYNAMIC_COLOR1}{LIGHT_RED}{SE_PC_ON}{SE_PC_LOGIN}{SE_FAINT}{MUS_DUMMY}$"
-	.incbin "baserom_jp.gba", 0x28357d, 0x15
+	.incbin "baserom_jp.gba", 0x283535, 0x5d

@@ -1,11 +1,1 @@
-	nop 
-	fadescreen 0x27
-	copyvar 0xA6, 0x33F
-	addelevmenuitem 0x5A, 0x80D, 0x402, 0x3
-	nop 
-	.byte 0xFD
-	setworldmapflag 0x200
-	nop 
-	end 
-	.string "Rぁキ{BLUE}ォ{RED}ä$"
-	.incbin "baserom_jp.gba", 0x2800a5, 0x8
+	.incbin "baserom_jp.gba", 0x280086, 0x27

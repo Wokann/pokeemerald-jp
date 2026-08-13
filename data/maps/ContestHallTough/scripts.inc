@@ -1,0 +1,10 @@
+@ ContestHallTough scripts (JP map g25 m36 @ 0x0821D62A)
+
+ContestHallTough_MapScripts::
+	map_script MAP_SCRIPT_ON_WARP_INTO_MAP_TABLE, 0x0821D6C8
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, 0x0821D6BE
+	map_script MAP_SCRIPT_ON_TRANSITION, 0x0821D648
+	map_script MAP_SCRIPT_ON_RESUME, 0x0821D6AC
+	map_script MAP_SCRIPT_ON_RETURN_TO_FIELD, 0x0821D644
+	.byte 0
+

@@ -1,4 +1,1 @@
-	.byte 0xFD
-	end 
-	.string "{SE_A}{B_COPY_VAR_3}に\n"
-	.string "まわり{SE_SAVE}もり{WHITE}がった！{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}{PAUSE}{DYNAMIC_COLOR6}$"
+	.incbin "baserom_jp.gba", 0x24c029, 0x21

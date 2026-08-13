@@ -1,7 +1,1 @@
-	nop 
-	setrespawn 0x27
-	dotimebasedevents 
-	delay 0x30A
-	returnram 
-	.string "{DYNAMIC_COLOR3}{BLUE}の{SE_M_MEGA_KICK}{PH_KIT_HELD}？はキ{MUS_RG_FUCHSIA}{SE_PC_OFF}{MUS_DUMMY}{MUS_DUMMY}{MUS_RG_PALLET}？はキ{MUS_RG_FUCHSIA}{SE_PC_OFF}{MUS_DUMMY}{SE_RG_SS_ANNE_HORN}{TRANSPARENT}{RED}りの{SE_M_RAZOR_WIND}{PH_KIT_HELD}ミんキ{MUS_RG_FUCHSIA}{LIGHT_GREEN}{SE_SUCCESS}{SE_PC_OFF}{SE_USE_ITEM}$"
-	.incbin "baserom_jp.gba", 0x2806c9, 0x2c
+	.incbin "baserom_jp.gba", 0x28068c, 0x69
