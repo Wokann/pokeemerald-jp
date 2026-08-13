@@ -45,3 +45,64 @@ u8 RouletteFlash_Remove(struct RouletteFlashUtil *flash, u8 id)
     memset(&flash->palettes[id], 0, sizeof(flash->palettes[id]));
     return id;
 }
+
+u8 RouletteFlash_FadePalette(struct RouletteFlashPalette *pal)
+{
+    u8 i;
+    u8 returnval;
+
+    for (i = 0; i < pal->settings.numColors; i++)
+    {
+        struct PlttData *faded =   (struct PlttData *)&gPlttBufferFaded[pal->settings.paletteOffset + i];
+        struct PlttData *unfaded = (struct PlttData *)&gPlttBufferUnfaded[pal->settings.paletteOffset + i];
+
+        switch (pal->state)
+        {
+        case 1:
+            // Fade color
+            if (faded->r + pal->colorDelta >= 0 && faded->r + pal->colorDelta < 32)
+                faded->r += pal->colorDelta;
+            if (faded->g + pal->colorDelta >= 0 && faded->g + pal->colorDelta < 32)
+                faded->g += pal->colorDelta;
+            if (faded->b + pal->colorDelta >= 0 && faded->b + pal->colorDelta < 32)
+                faded->b += pal->colorDelta;
+            break;
+        case 2:
+            // Fade back to original color
+            if (pal->colorDelta < 0)
+            {
+                if (faded->r + pal->colorDelta >= unfaded->r)
+                    faded->r += pal->colorDelta;
+                if (faded->g + pal->colorDelta >= unfaded->g)
+                    faded->g += pal->colorDelta;
+                if (faded->b + pal->colorDelta >= unfaded->b)
+                    faded->b += pal->colorDelta;
+            }
+            else
+            {
+                if (faded->r + pal->colorDelta <= unfaded->r)
+                    faded->r += pal->colorDelta;
+                if (faded->g + pal->colorDelta <= unfaded->g)
+                    faded->g += pal->colorDelta;
+                if (faded->b + pal->colorDelta <= unfaded->b)
+                    faded->b += pal->colorDelta;
+            }
+            break;
+        }
+    }
+    if ((u32)pal->fadeCycleCounter++ != pal->settings.numFadeCycles)
+    {
+        returnval = 0;
+    }
+    else
+    {
+        pal->fadeCycleCounter = 0;
+        pal->colorDelta *= -1;
+        if (pal->state == 1)
+            pal->state++;
+        else
+            pal->state--;
+        returnval = 1;
+    }
+    return returnval;
+}
