@@ -4979,6 +4979,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_OdorSleuthMovement);
         src/battle_anim_effects_3.o(.text.AnimTask_OdorSleuthMovementWaitFinish);
         src/battle_anim_effects_3.o(.text.MoveOdorSleuthClone);
+        src/battle_anim_effects_3.o(.text.AnimTask_GetReturnPowerLevel);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

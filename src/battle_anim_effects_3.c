@@ -94,6 +94,7 @@ static void AnimBlockX(struct Sprite *sprite);
 static void AnimBlockX_Step(struct Sprite *sprite);
 static void AnimTask_OdorSleuthMovementWaitFinish(u8 taskId);
 static void MoveOdorSleuthClone(struct Sprite *sprite);
+void AnimTask_GetReturnPowerLevel(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -3305,6 +3306,21 @@ static void MoveOdorSleuthClone(struct Sprite *sprite)
         }
         break;
     }
+}
+
+void AnimTask_GetReturnPowerLevel(u8 taskId)
+{
+    gBattleAnimArgs[ARG_RET_ID] = 0;
+    if (gAnimFriendship < 60)
+        gBattleAnimArgs[ARG_RET_ID] = 0;
+    if (gAnimFriendship > 60 && gAnimFriendship < 92)
+        gBattleAnimArgs[ARG_RET_ID] = 1;
+    if (gAnimFriendship > 91 && gAnimFriendship < 201)
+        gBattleAnimArgs[ARG_RET_ID] = 2;
+    if (gAnimFriendship > 200)
+        gBattleAnimArgs[ARG_RET_ID] = 3;
+
+    DestroyAnimVisualTask(taskId);
 }
 
 #undef IDX_ACTIVE_SPRITES

@@ -2294,53 +2294,6 @@ _0815C2E0: .4byte 0x02022ACE
 
 
 
-	thumb_func_start AnimTask_GetReturnPowerLevel
-AnimTask_GetReturnPowerLevel: @ 0x0815F7D8
-	push {r4, lr}
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	ldr r3, _0815F824
-	movs r2, #0
-	strh r2, [r3, #0xe]
-	ldr r1, _0815F828
-	ldrb r0, [r1]
-	ldrb r1, [r1]
-	adds r0, r1, #0
-	subs r0, #0x3d
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	adds r2, r1, #0
-	cmp r0, #0x1e
-	bhi _0815F7FC
-	movs r0, #1
-	strh r0, [r3, #0xe]
-_0815F7FC:
-	adds r0, r2, #0
-	subs r0, #0x5c
-	lsls r0, r0, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0x6c
-	bhi _0815F80C
-	movs r0, #2
-	strh r0, [r3, #0xe]
-_0815F80C:
-	lsls r0, r1, #0x18
-	lsrs r0, r0, #0x18
-	cmp r0, #0xc8
-	bls _0815F818
-	movs r0, #3
-	strh r0, [r3, #0xe]
-_0815F818:
-	adds r0, r4, #0
-	bl DestroyAnimVisualTask
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815F824: .4byte 0x020380BE
-_0815F828: .4byte 0x020380BA
-	thumb_func_end AnimTask_GetReturnPowerLevel
-
 	thumb_func_start AnimTask_SnatchOpposingMonMove
 AnimTask_SnatchOpposingMonMove: @ 0x0815F82C
 	push {r4, r5, r6, r7, lr}
