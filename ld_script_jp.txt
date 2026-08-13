@@ -4951,6 +4951,11 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_StatusClearedEffect);
         src/battle_anim_effects_3.o(.text.AnimRoarNoiseLine);
         src/battle_anim_effects_3.o(.text.AnimRoarNoiseLine_Step);
+        src/battle_anim_effects_3.o(.text.AnimTask_GlareEyeDots);
+        src/battle_anim_effects_3.o(.text.AnimTask_GlareEyeDots_Step);
+        src/battle_anim_effects_3.o(.text.GetGlareEyeDotCoords);
+        src/battle_anim_effects_3.o(.text.AnimGlareEyeDot);
+        src/battle_anim_effects_3.o(.text.AnimAssistPawprint);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

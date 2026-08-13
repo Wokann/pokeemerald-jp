@@ -11543,9 +11543,13 @@ gFacadeBlendColors: @ 0x85AD58C
 gUnknown_85AD5C0: @ 0x85AD5C0
 	.incbin "baserom_jp.gba", 0x5ad5c0, 0x34
 
-	.globl gUnknown_85AD5F4
-gUnknown_85AD5F4: @ 0x85AD5F4
-	.incbin "baserom_jp.gba", 0x5ad5f4, 0x60
+	.globl gGlareEyeDotSpriteTemplate
+gGlareEyeDotSpriteTemplate: @ 0x85AD5F4
+	.incbin "baserom_jp.gba", 0x5ad5f4, 0x18
+
+	.globl gUnknown_85AD60C
+gUnknown_85AD60C: @ 0x85AD60C
+	.incbin "baserom_jp.gba", 0x5ad60c, 0x48
 
 	.globl gUnknown_85AD654
 gUnknown_85AD654: @ 0x85AD654

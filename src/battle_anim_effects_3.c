@@ -25,6 +25,7 @@ extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
+extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
@@ -66,6 +67,10 @@ static void AnimFacadeSweatDrop(struct Sprite *sprite);
 static void AnimTask_FacadeColorBlend_Step(u8 taskId);
 static void AnimRoarNoiseLine(struct Sprite *sprite);
 static void AnimRoarNoiseLine_Step(struct Sprite *sprite);
+static void AnimTask_GlareEyeDots_Step(u8 taskId);
+static void GetGlareEyeDotCoords(s16 startX, s16 startY, s16 endX, s16 endY, u8 pairMax, u8 pairNum, s16 *x, s16 *y);
+static void AnimGlareEyeDot(struct Sprite *sprite);
+static void AnimAssistPawprint(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2238,3 +2243,184 @@ static void AnimRoarNoiseLine_Step(struct Sprite *sprite)
     if (++sprite->data[5] == 14)
         DestroyAnimSprite(sprite);
 }
+
+#define IDX_ACTIVE_SPRITES 10  // Used by the sprite callback to modify the number of active sprites
+
+// Task data for AnimTask_GlareEyeDots
+#define tState         data[0]
+#define tTimer         data[1]
+#define tPairNum       data[2]
+#define tPairMax       data[5]
+#define tDotOffset     data[6]
+#define tIsContest     data[7]
+#define tActiveSprites data[IDX_ACTIVE_SPRITES]
+#define tStartX        data[11]
+#define tStartY        data[12]
+#define tEndX          data[13]
+#define tEndY          data[14]
+
+// Sprite data for AnimGlareEyeDot
+#define sTimer            data[0]
+#define sTaskId           data[1]
+#define sActiveSpritesIdx data[2]
+
+void AnimTask_GlareEyeDots(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    if (IsContest())
+    {
+        task->tPairMax = 8;
+        task->tDotOffset = 3;
+        task->tIsContest = TRUE;
+    }
+    else
+    {
+        task->tPairMax = 12;
+        task->tDotOffset = 3;
+        task->tIsContest = FALSE;
+    }
+
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        task->tStartX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_HEIGHT) / 4;
+    else
+        task->tStartX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) - GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_HEIGHT) / 4;
+
+    task->tStartY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) - GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_HEIGHT) / 4;
+    task->tEndX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    task->tEndY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    task->func = AnimTask_GlareEyeDots_Step;
+}
+
+static void AnimTask_GlareEyeDots_Step(u8 taskId)
+{
+    u8 i;
+    s16 x, y;
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->tState)
+    {
+    case 0:
+        // Wait to create next pair of dots
+        if (++task->tTimer > 3)
+        {
+            task->tTimer = 0;
+            GetGlareEyeDotCoords(
+                task->tStartX,
+                task->tStartY,
+                task->tEndX,
+                task->tEndY,
+                task->tPairMax,
+                task->tPairNum,
+                &x,
+                &y);
+
+            // Create dot pair
+            for (i = 0; i < 2; i++)
+            {
+                u8 spriteId = CreateSprite(&gGlareEyeDotSpriteTemplate, x, y, 35);
+                if (spriteId != MAX_SPRITES)
+                {
+                    if (!task->tIsContest)
+                    {
+                        if (i == 0)
+                            gSprites[spriteId].x2 = gSprites[spriteId].y2 = -task->tDotOffset;
+                        else
+                            gSprites[spriteId].x2 = gSprites[spriteId].y2 = task->tDotOffset;
+                    }
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            gSprites[spriteId].x2 = -task->tDotOffset;
+                            gSprites[spriteId].y2 = task->tDotOffset;
+                        }
+                        else
+                        {
+                            gSprites[spriteId].x2 = task->tDotOffset;
+                            gSprites[spriteId].y2 = -task->tDotOffset;
+                        }
+                    }
+
+                    gSprites[spriteId].sTimer = 0;
+                    gSprites[spriteId].sTaskId = taskId;
+                    gSprites[spriteId].sActiveSpritesIdx = IDX_ACTIVE_SPRITES;
+                    task->tActiveSprites++;
+                }
+            }
+
+            if (task->tPairNum == task->tPairMax)
+                task->tState++;
+
+            task->tPairNum++;
+        }
+        break;
+    case 1:
+        // Wait for sprites to be destroyed before ending task
+        if (task->tActiveSprites == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void GetGlareEyeDotCoords(s16 startX, s16 startY, s16 endX, s16 endY, u8 pairMax, u8 pairNum, s16 *x, s16 *y)
+{
+    int x2;
+    int y2;
+
+    if (pairNum == 0)
+    {
+        *x = startX;
+        *y = startY;
+        return;
+    }
+
+    if (pairNum >= pairMax)
+    {
+        *x = endX;
+        *y = endY;
+        return;
+    }
+
+    pairMax--;
+    x2 = (startX << 8) + pairNum * (((endX - startX) << 8) / pairMax);
+    y2 = (startY << 8) + pairNum * (((endY - startY) << 8) / pairMax);
+    *x = x2 >> 8;
+    *y = y2 >> 8;
+}
+
+static void AnimGlareEyeDot(struct Sprite *sprite)
+{
+    if (++sprite->sTimer > 36)
+    {
+        gTasks[sprite->sTaskId].data[sprite->sActiveSpritesIdx]--;
+        DestroySprite(sprite);
+    }
+}
+
+static void AnimAssistPawprint(struct Sprite *sprite)
+{
+    sprite->x = gBattleAnimArgs[0];
+    sprite->y = gBattleAnimArgs[1];
+    sprite->data[2] = gBattleAnimArgs[2];
+    sprite->data[4] = gBattleAnimArgs[3];
+    sprite->data[0] = gBattleAnimArgs[4];
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback = StartAnimLinearTranslation;  // JP uses StartAnimLinearTranslation (0x080A6988), not InitAndRunAnimFastLinearTranslation
+}
+
+#undef IDX_ACTIVE_SPRITES
+#undef tState
+#undef tTimer
+#undef tPairNum
+#undef tPairMax
+#undef tDotOffset
+#undef tIsContest
+#undef tActiveSprites
+#undef tStartX
+#undef tStartY
+#undef tEndX
+#undef tEndY
+#undef sTimer
+#undef sTaskId
+#undef sActiveSpritesIdx
