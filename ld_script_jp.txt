@@ -4930,7 +4930,7 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimGreenStar_Step1);
         src/battle_anim_effects_3.o(.text.AnimGreenStar_Step2);
         src/battle_anim_effects_3.o(.text.AnimGreenStar_Callback);
-        asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest5c);
+        src/battle_anim_effects_3.o(.text.AnimTask_DoomDesireLightBeam);
         src/battle_anim_effects_3.o(.text.AnimTask_StrongFrustrationGrowAndShrink);
         src/battle_anim_effects_3.o(.text.AnimWeakFrustrationAngerMark);
         src/battle_anim_effects_3.o(.text.AnimTask_RockMonBackAndForth);
