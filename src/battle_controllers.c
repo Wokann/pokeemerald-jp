@@ -1,6 +1,7 @@
 #include "global.h"
 #include "battle.h"
 #include "battle_controllers.h"
+#include "battle_util.h"
 #include "cable_club.h"
 #include "link.h"
 #include "party_menu.h"
@@ -868,6 +869,58 @@ void TryReceiveLinkBattleData(void)
             }
         }
     }
+}
+
+static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId)
+{
+    u16 blockSize;
+    u8 battler;
+    u8 playerId;
+
+    #define BYTE_TO_RECEIVE(offset) \
+        gLinkBattleRecvBuffer[gTasks[taskId].tCurrentBlock_Start + offset]
+
+    if (gTasks[taskId].tCurrentBlock_Start != gTasks[taskId].tCurrentBlock_End)
+    {
+        if (gTasks[taskId].tCurrentBlock_Start >  gTasks[taskId].tCurrentBlock_End
+         && gTasks[taskId].tCurrentBlock_Start == gTasks[taskId].tCurrentBlock_WrapFrom)
+        {
+            gTasks[taskId].tCurrentBlock_WrapFrom = 0;
+            gTasks[taskId].tCurrentBlock_Start    = 0;
+        }
+        battler = BYTE_TO_RECEIVE(LINK_BUFF_ACTIVE_BATTLER);
+        blockSize = BYTE_TO_RECEIVE(LINK_BUFF_SIZE_LO) | (BYTE_TO_RECEIVE(LINK_BUFF_SIZE_HI) << 8);
+
+        switch (BYTE_TO_RECEIVE(0))
+        {
+        case B_COMM_TO_CONTROLLER:
+            if (IS_BATTLE_CONTROLLER_ACTIVE_ON_LOCAL(battler))
+                return;
+
+            memcpy(gBattleBufferA[battler], &BYTE_TO_RECEIVE(LINK_BUFF_DATA), blockSize);
+            MarkBattlerReceivedLinkData(battler);
+
+            if (!(gBattleTypeFlags & BATTLE_TYPE_IS_MASTER))
+            {
+                gBattlerAttacker    = BYTE_TO_RECEIVE(LINK_BUFF_ATTACKER);
+                gBattlerTarget      = BYTE_TO_RECEIVE(LINK_BUFF_TARGET);
+                gAbsentBattlerFlags = BYTE_TO_RECEIVE(LINK_BUFF_ABSENT_BATTLER_FLAGS);
+                gEffectBattler      = BYTE_TO_RECEIVE(LINK_BUFF_EFFECT_BATTLER);
+            }
+            break;
+        case B_COMM_TO_ENGINE:
+            memcpy(gBattleBufferB[battler], &gLinkBattleRecvBuffer[gTasks[taskId].tCurrentBlock_Start + LINK_BUFF_DATA], blockSize);
+            break;
+        case B_COMM_CONTROLLER_IS_DONE:
+            playerId = BYTE_TO_RECEIVE(LINK_BUFF_DATA);
+            MARK_BATTLE_CONTROLLER_IDLE_FOR_PLAYER(battler, playerId);
+            break;
+        }
+
+        gTasks[taskId].tCurrentBlock_Start = gTasks[taskId].tCurrentBlock_Start + blockSize + LINK_BUFF_DATA;
+    }
+
+    #undef BYTE_TO_RECEIVE
 }
 
 #undef tInitialDelayTimer

@@ -1686,6 +1686,7 @@ RecordedBattle_Init = sub_08184C50;
 BufferBattlePartyCurrentOrderBySide = sub_081B8A04;
 SetControllerToRecordedOpponent = sub_08186218;
 gBitTable = gUnknown_82FACB4;
+MarkBattlerReceivedLinkData = sub_0803F490;
 sub_08032600 = InitBattleControllers;
 sub_0802691C = GetActiveBerryColumns;
 Task_ShowRankings = sub_08021FC0;
@@ -3102,6 +3103,7 @@ SECTIONS {
         src/battle_controllers.o(.text.PrepareBufferDataTransferLink);
         src/battle_controllers.o(.text.Task_HandleSendLinkBuffersData);
         src/battle_controllers.o(.text.TryReceiveLinkBattleData);
+        src/battle_controllers.o(.text.Task_HandleCopyReceivedLinkBuffersData);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
