@@ -525,37 +525,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkE7_trycastformdatachange
-atkE7_trycastformdatachange: @ 0x08055A74
-	push {r4, lr}
-	ldr r1, _08055AA4
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	ldr r0, _08055AA8
-	ldrb r0, [r0, #0x17]
-	bl CastformDataTypeChange
-	lsls r0, r0, #0x18
-	lsrs r4, r0, #0x18
-	cmp r4, #0
-	beq _08055A9E
-	ldr r0, _08055AAC
-	bl BattleScriptPushCursorAndCallback
-	ldr r0, _08055AB0
-	ldr r0, [r0]
-	adds r0, #0x7f
-	subs r1, r4, #1
-	strb r1, [r0]
-_08055A9E:
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08055AA4: .4byte 0x02023EB8
-_08055AA8: .4byte 0x02024118
-_08055AAC: .4byte 0x08289A31
-_08055AB0: .4byte 0x02024140
-	thumb_func_end atkE7_trycastformdatachange
 
 	thumb_func_start atkE8_settypebasedhalvers
 atkE8_settypebasedhalvers: @ 0x08055AB4
