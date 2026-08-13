@@ -1507,6 +1507,7 @@ static void Cmd_setforesight(void);
 static void Cmd_trysetperishsong(void);
 static void Cmd_rolloutdamagecalculation(void);
 static void Cmd_jumpifconfusedandstatmaxed(void);
+static void Cmd_furycuttercalc(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7726,4 +7727,27 @@ static void Cmd_jumpifconfusedandstatmaxed(void)
         gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 2);
     else
         gBattlescriptCurrInstr += 6;
+}
+
+static void Cmd_furycuttercalc(void)
+{
+    if (gMoveResultFlags & MOVE_RESULT_NO_EFFECT)
+    {
+        gDisableStructs[gBattlerAttacker].furyCutterCounter = 0;
+        gBattlescriptCurrInstr = BattleScript_MoveMissedPause;
+    }
+    else
+    {
+        s32 i;
+
+        if (gDisableStructs[gBattlerAttacker].furyCutterCounter != 5)
+            gDisableStructs[gBattlerAttacker].furyCutterCounter++;
+
+        gDynamicBasePower = gBattleMoves[gCurrentMove].power;
+
+        for (i = 1; i < gDisableStructs[gBattlerAttacker].furyCutterCounter; i++)
+            gDynamicBasePower *= 2;
+
+        gBattlescriptCurrInstr++;
+    }
 }
