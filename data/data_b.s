@@ -11567,9 +11567,13 @@ gSmellingSaltsSquishAffineAnimCmds: @ 0x85AD684
 gUnknown_85AD69C: @ 0x85AD69C
 	.incbin "baserom_jp.gba", 0x5ad69c, 0x134
 
-	.globl gUnknown_85AD7D0
-gUnknown_85AD7D0: @ 0x85AD7D0
-	.incbin "baserom_jp.gba", 0x5ad7d0, 0x1d0
+	.globl gSlackOffSquishAffineAnimCmds
+gSlackOffSquishAffineAnimCmds: @ 0x85AD7D0
+	.incbin "baserom_jp.gba", 0x5ad7d0, 0x30
+
+	.globl gUnknown_85AD800
+gUnknown_85AD800: @ 0x85AD800
+	.incbin "baserom_jp.gba", 0x5ad800, 0x1a0
 
 	.globl gUnknown_85AD9A0
 gUnknown_85AD9A0: @ 0x85AD9A0

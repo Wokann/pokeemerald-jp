@@ -27,6 +27,7 @@ extern const union AffineAnimCmd gStrongFrustrationAffineAnimCmds[];
 extern const union AffineAnimCmd gDeepInhaleAffineAnimCmds[];
 extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
 extern const union AffineAnimCmd gSmellingSaltsSquishAffineAnimCmds[];
+extern const union AffineAnimCmd gSlackOffSquishAffineAnimCmds[];
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
@@ -3704,6 +3705,60 @@ static void AnimRecycle_Step(struct Sprite *sprite)
         DestroySpriteAndMatrix(sprite);
         break;
     }
+}
+
+void AnimTask_GetWeather(u8 taskId)
+{
+    gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_NONE;
+    if (gWeatherMoveAnim & B_WEATHER_SUN)
+        gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_SUN;
+    else if (gWeatherMoveAnim & B_WEATHER_RAIN)
+        gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_RAIN;
+    else if (gWeatherMoveAnim & B_WEATHER_SANDSTORM)
+        gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_SANDSTORM;
+    else if (gWeatherMoveAnim & B_WEATHER_HAIL)
+        gBattleAnimArgs[ARG_RET_ID] = ANIM_WEATHER_HAIL;
+
+    DestroyAnimVisualTask(taskId);
+}
+
+static void AnimTask_SlackOffSquish_Step(u8 taskId);
+
+// Squishes the mon sprite vertically, and shakes it back and forth.
+// arg 0: which battler
+void AnimTask_SlackOffSquish(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = 0;
+    task->data[15] = GetAnimBattlerSpriteId(gBattleAnimArgs[0]);
+    PrepareAffineAnimInTaskData(task, task->data[15], gSlackOffSquishAffineAnimCmds);
+    task->func = AnimTask_SlackOffSquish_Step;
+}
+
+static void AnimTask_SlackOffSquish_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    gTasks[taskId].data[0]++;
+    if (gTasks[taskId].data[0] > 16 && gTasks[taskId].data[0] < 40)
+    {
+        if (++task->data[1] > 2)
+        {
+            task->data[1] = 0;
+            task->data[2]++;
+            if (!(task->data[2] & 1))
+                gSprites[task->data[15]].x2 = -1;
+            else
+                gSprites[task->data[15]].x2 = 1;
+        }
+    }
+    else
+    {
+        gSprites[task->data[15]].x2 = 0;
+    }
+
+    if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
+        DestroyAnimVisualTask(taskId);
 }
 
 #undef IDX_ACTIVE_SPRITES
