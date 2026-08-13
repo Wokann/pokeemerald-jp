@@ -18,6 +18,7 @@ static void TormentAttacker_Step(u8 taskId);
 static void TormentAttacker_Callback(struct Sprite *sprite);
 static void AnimTriAttackTriangle(struct Sprite *sprite);
 void AnimTask_DefenseCurlDeformMon(u8 taskId);
+static void AnimBatonPassPokeball(struct Sprite *sprite);
 
 void AnimTask_SetPsychicBackground(u8 taskId)
 {
@@ -666,6 +667,49 @@ void AnimTask_DefenseCurlDeformMon(u8 taskId)
     case 1:
         if (!RunAffineAnimFromTaskData(&gTasks[taskId]))
             DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void AnimBatonPassPokeball(struct Sprite *sprite)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+
+    switch (sprite->data[0])
+    {
+    case 0:
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_NORMAL);
+        sprite->data[1] = 256;
+        sprite->data[2] = 256;
+        sprite->data[0]++;
+        break;
+    case 1:
+        sprite->data[1] += 96;
+        sprite->data[2] -= 26;
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
+
+        if (++sprite->data[3] == 5)
+            sprite->data[0]++;
+        // fall through
+    case 2:
+        sprite->data[1] += 96;
+        sprite->data[2] += 48;
+        SetSpriteRotScale(spriteId, sprite->data[1], sprite->data[2], 0);
+
+        if (++sprite->data[3] == 9)
+        {
+            sprite->data[3] = 0;
+            gSprites[spriteId].invisible = TRUE;
+            ResetSpriteRotScale(spriteId);
+            sprite->data[0]++;
+        }
+        break;
+    case 3:
+        sprite->y2 -= 6;
+        if (sprite->y + sprite->y2 < -32)
+            DestroyAnimSprite(sprite);
         break;
     }
 }
