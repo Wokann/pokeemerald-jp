@@ -75,6 +75,7 @@ extern const struct StatFractions sAccuracyStageRatios[];
 
 extern const u16 gUnknown_82ECC4C[];
 extern const u8 gUnknown_82ECC6C[];
+extern const u16 gUnknown_82ECDAC[];
 extern const struct SpriteTemplate gUnknown_82ECD44;
 
 static void Cmd_drawlvlupbox(void);
@@ -1548,6 +1549,7 @@ static void Cmd_scaledamagebyhealthratio(void);
 static void Cmd_tryswapabilities(void);
 static void Cmd_tryimprison(void);
 static void Cmd_trysetgrudge(void);
+static void Cmd_weightdamagecalculation(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8643,4 +8645,21 @@ static void Cmd_trysetgrudge(void)
         gStatuses3[gBattlerAttacker] |= STATUS3_GRUDGE;
         gBattlescriptCurrInstr += 5;
     }
+}
+
+static void Cmd_weightdamagecalculation(void)
+{
+    s32 i;
+    for (i = 0; gUnknown_82ECDAC[i] != 0xFFFF; i += 2)
+    {
+        if (gUnknown_82ECDAC[i] > GetPokedexHeightWeight(HoennToNationalOrder(gBattleMons[gBattlerTarget].species), 1))
+            break;
+    }
+
+    if (gUnknown_82ECDAC[i] != 0xFFFF)
+        gDynamicBasePower = gUnknown_82ECDAC[i + 1];
+    else
+        gDynamicBasePower = 120;
+
+    gBattlescriptCurrInstr++;
 }
