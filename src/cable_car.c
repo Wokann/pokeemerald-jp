@@ -16,6 +16,7 @@
 #include "sprite.h"
 #include "task.h"
 #include "constants/event_objects.h"
+#include "constants/event_object_movement.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
@@ -78,6 +79,15 @@ extern const struct CompressedSpriteSheet sCableCarSpriteSheets[];
 extern const struct SpritePalette sCableCarSpritePalettes[];
 extern const u32 gCableCarBg_Gfx[];
 extern const u16 gCableCarBg_Pal[];
+
+extern const u8 sCableCarPlayerGraphicsIds[2];
+extern const u8 sCableCarHikerGraphicsIds[4];
+extern const s16 sCableCarHikerCoords[2][2];
+extern const u8 sCableCarHikerMovementDelayTable[4];
+extern void (*sCableCarHikerCallbacks[2])(struct Sprite *);
+extern const struct SpriteTemplate sSpriteTemplates_CableCar[2];
+extern const struct SpriteTemplate sSpriteTemplate_Cable;
+extern u8 AddPseudoEventObject(u16 graphicsId, void (*callback)(struct Sprite *), s16 x, s16 y, u8 subpriority);
 
 void CB2_CableCar(void);
 void Task_CableCar(u8 taskId);
@@ -672,5 +682,137 @@ void SetBgRegs(bool8 active)
         ShowBg(3);
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL);
         break;
+    }
+}
+
+#define sSameDir data[1]
+#define sDelay   data[2]
+
+void LoadCableCarSprites(void)
+{
+    u8 spriteId;
+    u8 i;
+    u8 playerGraphicsIds[2];
+    u8 hikerGraphicsIds[4];
+    s16 hikerCoords[2][2];
+    u8 hikerMovementDelayTable[4];
+    void (*hikerCallbacks[2])(struct Sprite *);
+    u16 rval;
+
+    memcpy(playerGraphicsIds, sCableCarPlayerGraphicsIds, sizeof(playerGraphicsIds));
+    rval = Random();
+    memcpy(hikerGraphicsIds, sCableCarHikerGraphicsIds, sizeof(hikerGraphicsIds));
+    memcpy(hikerCoords, sCableCarHikerCoords, sizeof(hikerCoords));
+    memcpy(hikerMovementDelayTable, sCableCarHikerMovementDelayTable, sizeof(hikerMovementDelayTable));
+    *(u64 *)hikerCallbacks = *(u64 *)sCableCarHikerCallbacks;
+
+    switch (GOING_DOWN)
+    {
+    case FALSE:
+    default:
+        // Create player sprite
+        spriteId = AddPseudoEventObject(playerGraphicsIds[gSaveBlock2Ptr->playerGender], SpriteCB_Player, 200, 73, 102);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].oam.priority = 2;
+            gSprites[spriteId].x2 = 8;
+            gSprites[spriteId].y2 = 16;
+            gSprites[spriteId].sXPos = 200;
+            gSprites[spriteId].sYPos = 73;
+        }
+        // Create car sprite
+        spriteId = CreateSprite(&sSpriteTemplates_CableCar[0], 176, 43, 0x67);
+        gSprites[spriteId].x2 = gSprites[spriteId].y2 = 32;
+        gSprites[spriteId].sXPos = 176;
+        gSprites[spriteId].sYPos = 43;
+        // Create door sprite
+        spriteId = CreateSprite(&sSpriteTemplates_CableCar[1], 200, 99, 0x65);
+        gSprites[spriteId].x2 = 8;
+        gSprites[spriteId].y2 = 4;
+        gSprites[spriteId].sXPos = 200;
+        gSprites[spriteId].sYPos = 99;
+        // Init weather
+        sCableCar->weather = WEATHER_VOLCANIC_ASH;
+        sCableCar->weatherDelay = 350;
+        SetCurrentAndNextWeatherNoDelay(WEATHER_SUNNY);
+        break;
+    case TRUE:
+        CopyToBgTilemapBufferRect_ChangePalette(0, sCableCar->groundTilemap + 0x24, 24, 26, 12, 3, 17);
+        // Create player sprite
+        spriteId = AddPseudoEventObject(playerGraphicsIds[gSaveBlock2Ptr->playerGender], SpriteCB_Player, 128, 39, 102);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].oam.priority = 2;
+            gSprites[spriteId].x2 = 8;
+            gSprites[spriteId].y2 = 16;
+            gSprites[spriteId].sXPos = 128;
+            gSprites[spriteId].sYPos = 39;
+        }
+        // Create car sprite
+        spriteId = CreateSprite(&sSpriteTemplates_CableCar[0], 104, 9, 0x67);
+        gSprites[spriteId].x2 = gSprites[spriteId].y2 = 32;
+        gSprites[spriteId].sXPos = 104;
+        gSprites[spriteId].sYPos = 9;
+        // Create door sprite
+        spriteId = CreateSprite(&sSpriteTemplates_CableCar[1], 128, 65, 0x65);
+        gSprites[spriteId].x2 = 8;
+        gSprites[spriteId].y2 = 4;
+        gSprites[spriteId].sXPos = 128;
+        gSprites[spriteId].sYPos = 65;
+        // Init weather
+        sCableCar->weather = WEATHER_SUNNY;
+        sCableCar->weatherDelay = 265;
+        SetCurrentAndNextWeatherNoDelay(WEATHER_VOLCANIC_ASH);
+        break;
+    }
+
+    for (i = 0; i < 9; i++)
+    {
+        spriteId = CreateSprite(&sSpriteTemplate_Cable, 16 * i + 96, 8 * i - 8, 0x68);
+        gSprites[spriteId].x2 = 8;
+        gSprites[spriteId].y2 = 8;
+    }
+
+    // 1/64 chance for an NPC to appear hiking on the ground below the Cable Car
+    if ((rval % 64) == 0)
+    {
+        spriteId = AddPseudoEventObject(hikerGraphicsIds[rval % (ARRAY_COUNT(hikerGraphicsIds) - 1)], hikerCallbacks[GOING_DOWN], hikerCoords[GOING_DOWN][0], hikerCoords[GOING_DOWN][1], 106);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].oam.priority = 2;
+            gSprites[spriteId].x2 = -gSprites[spriteId].centerToCornerVecX;
+            gSprites[spriteId].y2 = -gSprites[spriteId].centerToCornerVecY;
+
+            // Randomly choose which direction the NPC is going
+            if (!GOING_DOWN)
+            {
+                if (rval % 2)
+                {
+                    StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_WEST);
+                    gSprites[spriteId].sSameDir = TRUE;
+                    gSprites[spriteId].y += 2;
+                }
+                else
+                {
+                    StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_EAST);
+                    gSprites[spriteId].sSameDir = FALSE;
+                }
+            }
+            else
+            {
+                if (rval % 2)
+                {
+                    StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_EAST);
+                    gSprites[spriteId].sSameDir = TRUE;
+                    gSprites[spriteId].y += 2;
+                }
+                else
+                {
+                    StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_WEST);
+                    gSprites[spriteId].sSameDir = FALSE;
+                }
+            }
+            gSprites[spriteId].sDelay = hikerMovementDelayTable[rval % ARRAY_COUNT(hikerMovementDelayTable)];
+        }
     }
 }
