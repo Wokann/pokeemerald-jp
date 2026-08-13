@@ -91,6 +91,9 @@ extern u8 AddPseudoEventObject(u16 graphicsId, void (*callback)(struct Sprite *)
 extern u8 sGroundX_Up;
 extern u8 sGroundY_Up;
 extern u8 sGroundSegmentY_Up;
+extern u8 sGroundX_Down;
+extern u8 sGroundY_Down;
+extern u8 sGroundSegmentY_Down;
 
 void CB2_CableCar(void);
 void Task_CableCar(u8 taskId);
@@ -870,5 +873,37 @@ void DrawNextGroundSegmentGoingUp(void)
         BufferNextGroundSegment();
         sGroundX_Up = (sCableCar->groundSegmentYStart + 1) % 32;
         FillBgTilemapBufferRect(0, 0, 0, sGroundX_Up, 32, 9, 17);
+    }
+}
+
+void DrawNextGroundSegmentGoingDown(void)
+{
+    u8 i = 0;
+
+    sCableCar->groundXOffset = sCableCar->groundYOffset = 0;
+    sCableCar->groundXBase = sCableCar->bg0HorizontalOffset;
+    sCableCar->groundYBase = sCableCar->bg0VerticalOffset;
+    sCableCar->groundSegmentXStart = (sCableCar->groundSegmentXStart + 2) % 32;
+    sCableCar->groundTileIdx += 2;
+    sGroundSegmentY_Down = sCableCar->groundSegmentYStart;
+
+    // Draw next segment
+    for (i = 0; i < ARRAY_COUNT(sCableCar->groundTileBuffer); i++)
+    {
+        sGroundX_Down = sCableCar->groundSegmentXStart;
+        sGroundY_Down = (sGroundSegmentY_Down + i) % 32;
+        FillBgTilemapBufferRect(0, sCableCar->groundTileBuffer[i][sCableCar->groundTileIdx], sGroundX_Down, sGroundY_Down, 1, 1, 17);
+        sGroundX_Down = (sGroundX_Down + 1) % 32;
+        FillBgTilemapBufferRect(0, sCableCar->groundTileBuffer[i][sCableCar->groundTileIdx + 1], sGroundX_Down, sGroundY_Down, 1, 1, 17);
+    }
+
+    // Erase old segment
+    sGroundY_Down = (sCableCar->groundSegmentYStart + 23) % 32;
+    FillBgTilemapBufferRect(0, 0, sCableCar->groundSegmentXStart, sGroundY_Down, 2, 9, 17);
+    if (sCableCar->groundTileIdx == 10)
+    {
+        sCableCar->groundSegmentYStart = (sCableCar->groundSegmentYStart + 3) % 32;
+        sCableCar->groundTileIdx = -2;
+        BufferNextGroundSegment();
     }
 }

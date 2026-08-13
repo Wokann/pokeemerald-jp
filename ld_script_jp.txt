@@ -789,6 +789,9 @@ sCableCarHikerCallbacks = gUnknown_85ACA00;
 sGroundX_Up = gUnknown_203A87C;
 sGroundY_Up = gUnknown_203A87D;
 sGroundSegmentY_Up = gUnknown_203A87E;
+sGroundX_Down = gUnknown_203A87F;
+sGroundY_Down = gUnknown_203A880;
+sGroundSegmentY_Down = gUnknown_203A881;
 sCableCar = gUnknown_203A878;
 sCableCarBgTemplates = gUnknown_85AC474;
 sCableCarGround_Tilemap = gUnknown_85AC484;
@@ -4792,7 +4795,7 @@ SECTIONS {
         src/cable_car.o(.text.AnimateGroundGoingUp);
         src/cable_car.o(.text.AnimateGroundGoingDown);
         src/cable_car.o(.text.DrawNextGroundSegmentGoingUp);
-        asm/cable_car.o(.text.cable_car_mid2);
+        src/cable_car.o(.text.DrawNextGroundSegmentGoingDown);
         src/math_util.o(.text);
         asm/roulette_util.o(.text);
         asm/rom_81520A8.o(.text);
