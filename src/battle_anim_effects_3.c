@@ -29,6 +29,7 @@ extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
 extern const union AffineAnimCmd gSmellingSaltsSquishAffineAnimCmds[];
 extern const union AffineAnimCmd gSlackOffSquishAffineAnimCmds[];
 extern const s8 gMorningSunLightBeamCoordsTable[];
+extern const struct SpriteTemplate gGreenStarSpriteTemplate;
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
@@ -469,6 +470,99 @@ void AnimTask_MorningSunLightBeam(u8 taskId)
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         DestroyAnimVisualTask(taskId);
         break;
+    }
+}
+
+static void AnimGreenStar_Step1(struct Sprite *sprite);
+static void AnimGreenStar_Step2(struct Sprite *sprite);
+static void AnimGreenStar_Callback(struct Sprite *sprite);
+
+static void AnimGreenStar(struct Sprite *sprite)
+{
+    s16 xOffset;
+    u8 spriteId1;
+    u8 spriteId2;
+
+    xOffset = Random2();
+    xOffset &= 0x3F;
+    if (xOffset > 31)
+        xOffset = 32 - xOffset;
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + xOffset;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + 32;
+    sprite->data[1] = gBattleAnimArgs[0];
+    sprite->data[2] = gBattleAnimArgs[1];
+
+    spriteId1 = CreateSprite(&gGreenStarSpriteTemplate, sprite->x, sprite->y, sprite->subpriority + 1);
+    spriteId2 = CreateSprite(&gGreenStarSpriteTemplate, sprite->x, sprite->y, sprite->subpriority + 1);
+    StartSpriteAnim(&gSprites[spriteId1], 1);
+    StartSpriteAnim(&gSprites[spriteId2], 2);
+
+    gSprites[spriteId1].data[1] = gBattleAnimArgs[0];
+    gSprites[spriteId1].data[2] = gBattleAnimArgs[1];
+    gSprites[spriteId2].data[1] = gBattleAnimArgs[0];
+    gSprites[spriteId2].data[2] = gBattleAnimArgs[1];
+    gSprites[spriteId1].data[7] = -1;
+    gSprites[spriteId2].data[7] = -1;
+    gSprites[spriteId1].invisible = TRUE;
+    gSprites[spriteId2].invisible = TRUE;
+    gSprites[spriteId1].callback = AnimGreenStar_Callback;
+    gSprites[spriteId2].callback = AnimGreenStar_Callback;
+
+    sprite->data[6] = spriteId1;
+    sprite->data[7] = spriteId2;
+    sprite->callback = AnimGreenStar_Step1;
+}
+
+static void AnimGreenStar_Step1(struct Sprite *sprite)
+{
+    s16 delta = sprite->data[3] + sprite->data[2];
+    sprite->y2 -= delta >> 8;
+    sprite->data[3] += sprite->data[2];
+    sprite->data[3] &= 0xFF;
+    if (sprite->data[4] == 0 && sprite->y2 < -8)
+    {
+        gSprites[sprite->data[6]].invisible = FALSE;
+        sprite->data[4]++;
+    }
+
+    if (sprite->data[4] == 1 && sprite->y2 < -16)
+    {
+        gSprites[sprite->data[7]].invisible = FALSE;
+        sprite->data[4]++;
+    }
+
+    if (--sprite->data[1] == -1)
+    {
+        sprite->invisible = TRUE;
+        sprite->callback = AnimGreenStar_Step2;
+    }
+}
+
+static void AnimGreenStar_Step2(struct Sprite *sprite)
+{
+    if (gSprites[sprite->data[6]].callback == SpriteCallbackDummy
+     && gSprites[sprite->data[7]].callback == SpriteCallbackDummy)
+    {
+        DestroySprite(&gSprites[sprite->data[6]]);
+        DestroySprite(&gSprites[sprite->data[7]]);
+        DestroyAnimSprite(sprite);
+    }
+}
+
+static void AnimGreenStar_Callback(struct Sprite *sprite)
+{
+    if (!sprite->invisible)
+    {
+        s16 delta = sprite->data[3] + sprite->data[2];
+        sprite->y2 -= delta >> 8;
+        sprite->data[3] += sprite->data[2];
+        sprite->data[3] &= 0xFF;
+        if (--sprite->data[1] == -1)
+        {
+            sprite->invisible = TRUE;
+            sprite->callback = SpriteCallbackDummy;
+        }
     }
 }
 
