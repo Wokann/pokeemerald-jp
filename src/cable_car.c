@@ -597,3 +597,80 @@ static void SpriteCB_HikerGoingDown(struct Sprite *sprite)
             DestroySprite(sprite);
     }
 }
+
+#undef sTimer
+#undef sSameDir
+#undef sDelay
+
+static void SetBgRegs(bool8 active)
+{
+    switch (active)
+    {
+    case FALSE:
+    default:
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN1H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WIN1V, 0);
+        SetGpuReg(REG_OFFSET_DISPCNT, 0);
+        SetGpuReg(REG_OFFSET_BG3CNT, 0);
+        SetGpuReg(REG_OFFSET_BG2CNT, 0);
+        SetGpuReg(REG_OFFSET_BG1CNT, 0);
+        SetGpuReg(REG_OFFSET_BG0CNT, 0);
+        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG1HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG1VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        break;
+    case TRUE:
+        SetGpuReg(REG_OFFSET_WININ, 0);
+        SetGpuReg(REG_OFFSET_WINOUT, 0);
+        SetGpuReg(REG_OFFSET_WIN0H, 0);
+        SetGpuReg(REG_OFFSET_WIN1H, 0);
+        SetGpuReg(REG_OFFSET_WIN0V, 0);
+        SetGpuReg(REG_OFFSET_WIN1V, 0);
+        if (!GOING_DOWN)
+        {
+            sCableCar->bg3HorizontalOffset = 176;
+            sCableCar->bg3VerticalOffset = 16;
+            sCableCar->bg1HorizontalOffset = 0;
+            sCableCar->bg1VerticalOffset = 80;
+            sCableCar->bg0VerticalOffset = 0;
+            sCableCar->bg0VerticalOffset = 0;
+        }
+        else
+        {
+            sCableCar->bg3HorizontalOffset = 96;
+            sCableCar->bg3VerticalOffset = 232;
+            sCableCar->bg1HorizontalOffset = 0;
+            sCableCar->bg1VerticalOffset = 4;
+            sCableCar->bg0VerticalOffset = 0;
+            sCableCar->bg0VerticalOffset = 0;
+        }
+
+        SetGpuReg(REG_OFFSET_BG3HOFS, sCableCar->bg3HorizontalOffset);
+        SetGpuReg(REG_OFFSET_BG3VOFS, sCableCar->bg3VerticalOffset);
+        SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
+        SetGpuReg(REG_OFFSET_BG1HOFS, sCableCar->bg1HorizontalOffset);
+        SetGpuReg(REG_OFFSET_BG1VOFS, sCableCar->bg1VerticalOffset);
+        SetGpuReg(REG_OFFSET_BG0HOFS, sCableCar->bg0HorizontalOffset);
+        SetGpuReg(REG_OFFSET_BG0VOFS, sCableCar->bg0VerticalOffset);
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+        CopyBgTilemapBufferToVram(1);
+        CopyBgTilemapBufferToVram(2);
+        ShowBg(0);
+        ShowBg(1);
+        ShowBg(2);
+        ShowBg(3);
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL);
+        break;
+    }
+}
