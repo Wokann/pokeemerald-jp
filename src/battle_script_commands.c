@@ -1540,6 +1540,7 @@ static void Cmd_trysethelpinghand(void);
 static void Cmd_tryswapitems(void);
 static void Cmd_trycopyability(void);
 static void Cmd_trywish(void);
+static void Cmd_trysetroots(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8494,5 +8495,18 @@ static void Cmd_trywish(void)
             gBattlescriptCurrInstr += 6;
 
         break;
+    }
+}
+
+static void Cmd_trysetroots(void)
+{
+    if (gStatuses3[gBattlerAttacker] & STATUS3_ROOTED)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gStatuses3[gBattlerAttacker] |= STATUS3_ROOTED;
+        gBattlescriptCurrInstr += 5;
     }
 }

@@ -507,52 +507,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkD5_trysetroots
-atkD5_trysetroots: @ 0x08054EA4
-	push {lr}
-	ldr r1, _08054EDC
-	ldr r0, _08054EE0
-	ldrb r0, [r0]
-	lsls r0, r0, #2
-	adds r2, r0, r1
-	ldr r1, [r2]
-	movs r3, #0x80
-	lsls r3, r3, #3
-	adds r0, r1, #0
-	ands r0, r3
-	cmp r0, #0
-	beq _08054EE8
-	ldr r3, _08054EE4
-	ldr r2, [r3]
-	ldrb r1, [r2, #1]
-	ldrb r0, [r2, #2]
-	lsls r0, r0, #8
-	orrs r1, r0
-	ldrb r0, [r2, #3]
-	lsls r0, r0, #0x10
-	orrs r1, r0
-	ldrb r0, [r2, #4]
-	lsls r0, r0, #0x18
-	orrs r1, r0
-	str r1, [r3]
-	b _08054EF4
-	.align 2, 0
-_08054EDC: .4byte 0x02023F50
-_08054EE0: .4byte 0x02023EAF
-_08054EE4: .4byte 0x02023EB8
-_08054EE8:
-	orrs r1, r3
-	str r1, [r2]
-	ldr r1, _08054EF8
-	ldr r0, [r1]
-	adds r0, #5
-	str r0, [r1]
-_08054EF4:
-	pop {r0}
-	bx r0
-	.align 2, 0
-_08054EF8: .4byte 0x02023EB8
-	thumb_func_end atkD5_trysetroots
 
 	thumb_func_start atkD6_doubledamagedealtifdamaged
 atkD6_doubledamagedealtifdamaged: @ 0x08054EFC
