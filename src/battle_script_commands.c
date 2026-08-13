@@ -1501,6 +1501,8 @@ static void Cmd_trysetdestinybondtohappen(void);
 static void Cmd_remaininghptopower(void);
 static void Cmd_tryspiteppreduce(void);
 static void Cmd_healpartystatus(void);
+static void Cmd_cursetarget(void);
+static void Cmd_trysetspikes(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7608,4 +7610,38 @@ static void Cmd_healpartystatus(void)
     }
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_cursetarget(void)
+{
+    if (gBattleMons[gBattlerTarget].status2 & STATUS2_CURSED)
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gBattleMons[gBattlerTarget].status2 |= STATUS2_CURSED;
+        gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 2;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+
+        gBattlescriptCurrInstr += 5;
+    }
+}
+
+static void Cmd_trysetspikes(void)
+{
+    u8 targetSide = BATTLE_OPPOSITE(GetBattlerSide(gBattlerAttacker));
+
+    if (gSideTimers[targetSide].spikesAmount == 3)
+    {
+        gSpecialStatuses[gBattlerAttacker].ppNotAffectedByPressure = 1;
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+    else
+    {
+        gSideStatuses[targetSide] |= SIDE_STATUS_SPIKES;
+        gSideTimers[targetSide].spikesAmount++;
+        gBattlescriptCurrInstr += 5;
+    }
 }
