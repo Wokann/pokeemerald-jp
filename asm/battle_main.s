@@ -6,47 +6,6 @@
 
 
 
-	thumb_func_start HandleAction_SafariZoneBallThrow
-HandleAction_SafariZoneBallThrow: @ 0x0803EC30
-	ldr r2, _0803EC68
-	ldr r1, _0803EC6C
-	ldr r0, _0803EC70
-	ldrb r0, [r0]
-	adds r0, r0, r1
-	ldrb r0, [r0]
-	strb r0, [r2]
-	ldr r0, _0803EC74
-	movs r1, #0
-	strh r1, [r0]
-	ldr r0, _0803EC78
-	strh r1, [r0]
-	ldr r1, _0803EC7C
-	ldrb r0, [r1]
-	subs r0, #1
-	strb r0, [r1]
-	ldr r1, _0803EC80
-	movs r0, #5
-	strh r0, [r1]
-	ldr r1, _0803EC84
-	ldr r0, _0803EC88
-	ldr r0, [r0, #0x14]
-	str r0, [r1]
-	ldr r1, _0803EC8C
-	movs r0, #0xa
-	strb r0, [r1]
-	bx lr
-	.align 2, 0
-_0803EC68: .4byte 0x02023EAF
-_0803EC6C: .4byte 0x02023D22
-_0803EC70: .4byte 0x02023D26
-_0803EC74: .4byte 0x02022AC8
-_0803EC78: .4byte 0x02022ACA
-_0803EC7C: .4byte 0x02039D18
-_0803EC80: .4byte 0x02023EAC
-_0803EC84: .4byte 0x02023EB8
-_0803EC88: .4byte 0x0828A290
-_0803EC8C: .4byte 0x02023D27
-	thumb_func_end HandleAction_SafariZoneBallThrow
 
 	thumb_func_start HandleAction_ThrowPokeblock
 HandleAction_ThrowPokeblock: @ 0x0803EC90

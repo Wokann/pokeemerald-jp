@@ -3308,6 +3308,7 @@ SECTIONS {
         asm/battle_main_tryrun.o(.text);
         src/battle_main.o(.text.HandleAction_Run);
         src/battle_main.o(.text.HandleAction_WatchesCarefully);
+        src/battle_main.o(.text.HandleAction_SafariZoneBallThrow);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
