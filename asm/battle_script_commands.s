@@ -538,68 +538,7 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start BattleCreateYesNoCursorAt
-BattleCreateYesNoCursorAt: @ 0x08056784
-	push {lr}
-	sub sp, #0x10
-	adds r3, r0, #0
-	add r0, sp, #0xc
-	movs r2, #1
-	strh r2, [r0]
-	movs r1, #2
-	strh r1, [r0, #2]
-	lsls r3, r3, #0x19
-	movs r0, #0x90
-	lsls r0, r0, #0x14
-	adds r3, r3, r0
-	lsrs r3, r3, #0x18
-	str r2, [sp]
-	str r1, [sp, #4]
-	movs r0, #0x11
-	str r0, [sp, #8]
-	movs r0, #0
-	add r1, sp, #0xc
-	movs r2, #0x19
-	bl CopyToBgTilemapBufferRect_ChangePalette
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	add sp, #0x10
-	pop {r0}
-	bx r0
-	thumb_func_end BattleCreateYesNoCursorAt
 
-	thumb_func_start BattleDestroyYesNoCursorAt
-BattleDestroyYesNoCursorAt: @ 0x080567BC
-	push {lr}
-	sub sp, #0x10
-	adds r3, r0, #0
-	add r0, sp, #0xc
-	ldr r1, _080567F8
-	strh r1, [r0]
-	strh r1, [r0, #2]
-	lsls r3, r3, #0x19
-	movs r0, #0x90
-	lsls r0, r0, #0x14
-	adds r3, r3, r0
-	lsrs r3, r3, #0x18
-	movs r0, #1
-	str r0, [sp]
-	movs r0, #2
-	str r0, [sp, #4]
-	movs r0, #0x11
-	str r0, [sp, #8]
-	movs r0, #0
-	add r1, sp, #0xc
-	movs r2, #0x19
-	bl CopyToBgTilemapBufferRect_ChangePalette
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	add sp, #0x10
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080567F8: .4byte 0x00001016
-	thumb_func_end BattleDestroyYesNoCursorAt
 
 
 	.section .text.atkF4_battle_rest,"ax",%progbits

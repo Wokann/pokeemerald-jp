@@ -3855,7 +3855,8 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_trysetcaughtmondexflags);
         src/battle_script_commands.o(.text.Cmd_displaydexinfo);
         src/battle_script_commands.o(.text.HandleBattleWindow);
-        asm/battle_script_commands.o(.text.atkAC_battle_rest);
+        src/battle_script_commands.o(.text.BattleCreateYesNoCursorAt);
+        src/battle_script_commands.o(.text.BattleDestroyYesNoCursorAt);
         src/battle_script_commands.o(.text.Cmd_trygivecaughtmonnick);
         src/battle_script_commands.o(.text.Cmd_subattackerhpbydmg);
         src/battle_script_commands.o(.text.Cmd_removeattackerstatus1);
