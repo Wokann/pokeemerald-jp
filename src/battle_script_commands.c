@@ -1569,6 +1569,7 @@ static void Cmd_settypebasedhalvers(void);
 static void Cmd_setweatherballtype(void);
 static void Cmd_tryrecycleitem(void);
 static void Cmd_settypetoenvironment(void);
+static void Cmd_pursuitdoubles(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -9036,6 +9037,28 @@ static void Cmd_settypetoenvironment(void)
         PREPARE_TYPE_BUFFER(gBattleTextBuff1, sEnvironmentToType[gBattleEnvironment]);
 
         gBattlescriptCurrInstr += 5;
+    }
+    else
+    {
+        gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+    }
+}
+
+static void Cmd_pursuitdoubles(void)
+{
+    gActiveBattler = GetBattlerAtPosition(BATTLE_PARTNER(GetBattlerPosition(gBattlerAttacker)));
+
+    if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE
+        && !(gAbsentBattlerFlags & gBitTable[gActiveBattler])
+        && gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_MOVE
+        && gChosenMoveByBattler[gActiveBattler] == MOVE_PURSUIT)
+    {
+        gActionsByTurnOrder[gActiveBattler] = B_ACTION_TRY_FINISH;
+        gCurrentMove = MOVE_PURSUIT;
+        gBattlescriptCurrInstr += 5;
+        gBattleScripting.animTurn = 1;
+        gBattleScripting.pursuitDoublesAttacker = gBattlerAttacker;
+        gBattlerAttacker = gActiveBattler;
     }
     else
     {

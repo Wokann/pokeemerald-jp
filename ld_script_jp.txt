@@ -3839,6 +3839,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setweatherballtype);
         src/battle_script_commands.o(.text.Cmd_tryrecycleitem);
         src/battle_script_commands.o(.text.Cmd_settypetoenvironment);
+        src/battle_script_commands.o(.text.Cmd_pursuitdoubles);
         asm/battle_script_commands.o(.text.atkAC_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
