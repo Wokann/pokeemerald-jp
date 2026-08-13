@@ -523,9 +523,9 @@ gUnknown_824717B: @ 0x824717B
 gUnknown_82471CE: @ 0x82471CE
 	.include "data/scripts/gUnknown_82471CE.inc"
 
-	.globl gUnknown_82471E8
-gUnknown_82471E8: @ 0x82471E8
-	.include "data/scripts/gUnknown_82471E8.inc"
+	.globl CableClub_EventScript_ExitLinkRoom
+CableClub_EventScript_ExitLinkRoom: @ 0x82471E8
+	.include "data/scripts/CableClub_EventScript_ExitLinkRoom.inc"
 
 	.globl gUnknown_82471F2
 gUnknown_82471F2: @ 0x82471F2
