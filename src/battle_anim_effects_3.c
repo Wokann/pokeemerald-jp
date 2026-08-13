@@ -77,6 +77,8 @@ static void AnimTask_BarrageBall_Step(u8 taskId);
 static void AnimSmellingSaltsHand(struct Sprite *sprite);
 static void AnimSmellingSaltsHand_Step(struct Sprite *sprite);
 static void AnimTask_SmellingSaltsSquish_Step(u8 taskId);
+static void AnimSmellingSaltExclamation(struct Sprite *sprite);
+static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2598,6 +2600,41 @@ static void AnimTask_SmellingSaltsSquish_Step(u8 taskId)
         {
             DestroyAnimVisualTask(taskId);
         }
+    }
+}
+
+static void AnimSmellingSaltExclamation(struct Sprite *sprite)
+{
+    if (gBattleAnimArgs[0] == ANIM_ATTACKER)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimAttacker, BATTLER_COORD_ATTR_TOP);
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_TOP);
+    }
+
+    if (sprite->y < 8)
+        sprite->y = 8;
+
+    sprite->data[0] = 0;
+    sprite->data[1] = gBattleAnimArgs[1];
+    sprite->data[2] = 0;
+    sprite->data[3] = gBattleAnimArgs[2];
+    sprite->callback = AnimSmellingSaltExclamation_Step;
+}
+
+static void AnimSmellingSaltExclamation_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] >= sprite->data[1])
+    {
+        sprite->data[0] = 0;
+        sprite->data[2] = (sprite->data[2] + 1) & 1;
+        sprite->invisible = sprite->data[2];
+        if (sprite->data[2] && --sprite->data[3] == 0)
+            DestroyAnimSprite(sprite);
     }
 }
 

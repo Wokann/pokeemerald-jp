@@ -4962,6 +4962,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimSmellingSaltsHand_Step);
         src/battle_anim_effects_3.o(.text.AnimTask_SmellingSaltsSquish);
         src/battle_anim_effects_3.o(.text.AnimTask_SmellingSaltsSquish_Step);
+        src/battle_anim_effects_3.o(.text.AnimSmellingSaltExclamation);
+        src/battle_anim_effects_3.o(.text.AnimSmellingSaltExclamation_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
