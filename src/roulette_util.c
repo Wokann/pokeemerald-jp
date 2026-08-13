@@ -292,3 +292,30 @@ void UnloadUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendP
         }
     }
 }
+
+void MarkUsedPulseBlendPalettes(struct PulseBlend *pulseBlend, u16 pulseBlendPaletteSelector, u8 multiSelection)
+{
+    u8 i = 0;
+
+    if (!multiSelection)
+    {
+        i = pulseBlendPaletteSelector & 0xF;
+        pulseBlend->pulseBlendPalettes[i].available = 0;
+        pulseBlend->usedPulseBlendPalettes |= 1 << i;
+    }
+    else
+    {
+        for (i = 0; i < 16; i++)
+        {
+            if (!(pulseBlendPaletteSelector & 1) || !pulseBlend->pulseBlendPalettes[i].inUse || !pulseBlend->pulseBlendPalettes[i].available)
+            {
+                pulseBlendPaletteSelector <<= 1;
+            }
+            else
+            {
+                pulseBlend->pulseBlendPalettes[i].available = 0;
+                pulseBlend->usedPulseBlendPalettes |= 1 << i;
+            }
+        }
+    }
+}
