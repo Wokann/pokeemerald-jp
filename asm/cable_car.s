@@ -13,47 +13,6 @@
 
 
 
-	thumb_func_start CableCarVblankCallback
-CableCarVblankCallback: @ 0x081507DC
-	push {r4, lr}
-	movs r0, #0
-	bl CopyBgTilemapBufferToVram
-	movs r0, #3
-	bl CopyBgTilemapBufferToVram
-	ldr r4, _0815083C
-	ldr r0, [r4]
-	ldrb r1, [r0, #0x14]
-	movs r0, #0x1c
-	bl SetGpuReg
-	ldr r0, [r4]
-	ldrb r1, [r0, #0x15]
-	movs r0, #0x1e
-	bl SetGpuReg
-	ldr r0, [r4]
-	ldrb r1, [r0, #0xc]
-	movs r0, #0x14
-	bl SetGpuReg
-	ldr r0, [r4]
-	ldrb r1, [r0, #0xd]
-	movs r0, #0x16
-	bl SetGpuReg
-	ldr r0, [r4]
-	ldrb r1, [r0, #8]
-	movs r0, #0x10
-	bl SetGpuReg
-	ldr r0, [r4]
-	ldrb r1, [r0, #9]
-	movs r0, #0x12
-	bl SetGpuReg
-	bl LoadOam
-	bl ProcessSpriteCopyRequests
-	bl TransferPlttBuffer
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_0815083C: .4byte 0x0203A878
-	thumb_func_end CableCarVblankCallback
 
 	thumb_func_start nullsub_58
 nullsub_58: @ 0x08150840

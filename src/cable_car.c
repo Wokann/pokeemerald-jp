@@ -83,7 +83,7 @@ void CB2_CableCar(void);
 void Task_CableCar(u8 taskId);
 void Task_AnimateBgGoingUp(u8 taskId);
 void Task_AnimateBgGoingDown(u8 taskId);
-extern void VBlankCB_CableCar(void);
+void VBlankCB_CableCar(void);
 extern void CreateCableCarSprites(void);
 extern void SetBgRegs(bool8 value);
 extern void InitGroundTilemapData(u8 mode);
@@ -419,4 +419,19 @@ void Task_AnimateBgGoingDown(u8 taskId)
         gSpriteCoordOffsetX = (gSpriteCoordOffsetX + 247) % 248;
     else
         gWeatherPtr->ashBaseSpritesX = (gWeatherPtr->ashBaseSpritesX + 247) % 248;
+}
+
+void VBlankCB_CableCar(void)
+{
+    CopyBgTilemapBufferToVram(0);
+    CopyBgTilemapBufferToVram(3);
+    SetGpuReg(REG_OFFSET_BG3HOFS, sCableCar->bg3HorizontalOffset);
+    SetGpuReg(REG_OFFSET_BG3VOFS, sCableCar->bg3VerticalOffset);
+    SetGpuReg(REG_OFFSET_BG1HOFS, sCableCar->bg1HorizontalOffset);
+    SetGpuReg(REG_OFFSET_BG1VOFS, sCableCar->bg1VerticalOffset);
+    SetGpuReg(REG_OFFSET_BG0HOFS, sCableCar->bg0HorizontalOffset);
+    SetGpuReg(REG_OFFSET_BG0VOFS, sCableCar->bg0VerticalOffset);
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
