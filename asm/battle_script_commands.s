@@ -497,56 +497,6 @@ _08052DEC: .4byte 0x02023F24
 
 
 
-	thumb_func_start atkCB_setcharge
-atkCB_setcharge: @ 0x08054798
-	push {r4, lr}
-	ldr r0, _080547EC
-	ldr r3, _080547F0
-	ldrb r1, [r3]
-	lsls r1, r1, #2
-	adds r1, r1, r0
-	ldr r0, [r1]
-	movs r2, #0x80
-	lsls r2, r2, #2
-	orrs r0, r2
-	str r0, [r1]
-	ldr r4, _080547F4
-	ldrb r1, [r3]
-	lsls r0, r1, #3
-	subs r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r4
-	ldrb r2, [r0, #0x12]
-	movs r1, #0x10
-	rsbs r1, r1, #0
-	ands r1, r2
-	movs r2, #2
-	orrs r1, r2
-	strb r1, [r0, #0x12]
-	ldrb r1, [r3]
-	lsls r0, r1, #3
-	subs r0, r0, r1
-	lsls r0, r0, #2
-	adds r0, r0, r4
-	ldrb r2, [r0, #0x12]
-	movs r1, #0xf
-	ands r1, r2
-	movs r2, #0x20
-	orrs r1, r2
-	strb r1, [r0, #0x12]
-	ldr r1, _080547F8
-	ldr r0, [r1]
-	adds r0, #1
-	str r0, [r1]
-	pop {r4}
-	pop {r0}
-	bx r0
-	.align 2, 0
-_080547EC: .4byte 0x02023F50
-_080547F0: .4byte 0x02023EAF
-_080547F4: .4byte 0x02023F60
-_080547F8: .4byte 0x02023EB8
-	thumb_func_end atkCB_setcharge
 
 	thumb_func_start atkCC_callterrainattack
 atkCC_callterrainattack: @ 0x080547FC
