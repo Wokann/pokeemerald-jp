@@ -3292,6 +3292,7 @@ SECTIONS {
         src/battle_main.o(.text.HandleEndTurn_MonFled);
         asm/battle_main_finish.o(.text);
         src/battle_main.o(.text.FreeResetData_ReturnToOvOrDoEvolutions);
+        asm/battle_main_tryevo.o(.text);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);

@@ -96,7 +96,7 @@ extern void HandleEndTurn_BattleLost(void); // JP asm 0x0803D700 (register-sensi
 extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
 extern void (*gCB2_AfterEvolution)(void); // JP IWRAM 0x03005F28
 extern void ReturnFromBattleToOverworld(void); // JP asm 0x0803E118 (US: same name)
-extern void TryEvolvePokemon(void); // JP asm 0x0803E104 (US: same name)
+extern void WaitForEvoSceneToFinish(void); // JP asm 0x0803E15C (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -131,6 +131,7 @@ static void BattleIntroPrintOpponentSendsOut(void);
 static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void);
 extern void HandleEndTurn_FinishBattle(void); // JP asm 0x0803D918 (register-sensitive, kept in asm)
 static void FreeResetData_ReturnToOvOrDoEvolutions(void);
+extern void TryEvolvePokemon(void); // JP asm 0x0803DAF4 (register-sensitive, kept in asm)
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
@@ -2402,6 +2403,7 @@ static void FreeResetData_ReturnToOvOrDoEvolutions(void)
         FreeBattleSpritesData();
     }
 }
+
 
 
 
