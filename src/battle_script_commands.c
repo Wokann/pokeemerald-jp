@@ -1477,6 +1477,8 @@ static void Cmd_tryinfatuating(void);
 static void Cmd_updatestatusicon(void);
 static void Cmd_setmist(void);
 static void Cmd_setfocusenergy(void);
+static void Cmd_transformdataexecution(void);
+static void Cmd_setsubstitute(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -6948,5 +6950,76 @@ static void Cmd_setfocusenergy(void)
         gBattleMons[gBattlerAttacker].status2 |= STATUS2_FOCUS_ENERGY;
         gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_GETTING_PUMPED;
     }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_transformdataexecution(void)
+{
+    gChosenMove = MOVE_UNAVAILABLE;
+    gBattlescriptCurrInstr++;
+    if (gBattleMons[gBattlerTarget].status2 & STATUS2_TRANSFORMED
+        || gStatuses3[gBattlerTarget] & STATUS3_SEMI_INVULNERABLE)
+    {
+        gMoveResultFlags |= MOVE_RESULT_FAILED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TRANSFORM_FAILED;
+    }
+    else
+    {
+        s32 i;
+        u8 *battleMonAttacker, *battleMonTarget;
+
+        gBattleMons[gBattlerAttacker].status2 |= STATUS2_TRANSFORMED;
+        gDisableStructs[gBattlerAttacker].disabledMove = MOVE_NONE;
+        gDisableStructs[gBattlerAttacker].disableTimer = 0;
+        gDisableStructs[gBattlerAttacker].transformedMonPersonality = gBattleMons[gBattlerTarget].personality;
+        gDisableStructs[gBattlerAttacker].mimickedMoves = 0;
+
+        PREPARE_SPECIES_BUFFER(gBattleTextBuff1, gBattleMons[gBattlerTarget].species)
+
+        battleMonAttacker = (u8 *)(&gBattleMons[gBattlerAttacker]);
+        battleMonTarget = (u8 *)(&gBattleMons[gBattlerTarget]);
+
+        for (i = 0; i < offsetof(struct BattlePokemon, pp); i++)
+            battleMonAttacker[i] = battleMonTarget[i];
+
+        for (i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (gBattleMoves[gBattleMons[gBattlerAttacker].moves[i]].pp < 5)
+                gBattleMons[gBattlerAttacker].pp[i] = gBattleMoves[gBattleMons[gBattlerAttacker].moves[i]].pp;
+            else
+                gBattleMons[gBattlerAttacker].pp[i] = 5;
+        }
+
+        gActiveBattler = gBattlerAttacker;
+        BtlController_EmitResetActionMoveSelection(B_COMM_TO_CONTROLLER, RESET_MOVE_SELECTION);
+        MarkBattlerForControllerExec(gActiveBattler);
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_TRANSFORMED;
+    }
+}
+
+static void Cmd_setsubstitute(void)
+{
+    u32 hp = gBattleMons[gBattlerAttacker].maxHP / 4;
+    if (gBattleMons[gBattlerAttacker].maxHP / 4 == 0)
+        hp = 1;
+
+    if (gBattleMons[gBattlerAttacker].hp <= hp)
+    {
+        gBattleMoveDamage = 0;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SUBSTITUTE_FAILED;
+    }
+    else
+    {
+        gBattleMoveDamage = gBattleMons[gBattlerAttacker].maxHP / 4; // one bit value will only work for Pokémon which max hp can go to 1020(which is more than possible in games)
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+
+        gBattleMons[gBattlerAttacker].status2 |= STATUS2_SUBSTITUTE;
+        gBattleMons[gBattlerAttacker].status2 &= ~STATUS2_WRAPPED;
+        gDisableStructs[gBattlerAttacker].substituteHP = gBattleMoveDamage;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_SUBSTITUTE;
+        gHitMarker |= HITMARKER_IGNORE_SUBSTITUTE;
+    }
+
     gBattlescriptCurrInstr++;
 }

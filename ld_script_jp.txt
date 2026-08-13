@@ -3741,6 +3741,8 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_updatestatusicon);
         src/battle_script_commands.o(.text.Cmd_setmist);
         src/battle_script_commands.o(.text.Cmd_setfocusenergy);
+        src/battle_script_commands.o(.text.Cmd_transformdataexecution);
+        src/battle_script_commands.o(.text.Cmd_setsubstitute);
         asm/battle_script_commands.o(.text.atk7D_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
