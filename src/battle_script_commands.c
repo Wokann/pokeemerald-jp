@@ -2251,3 +2251,177 @@ static void Cmd_cleareffectsonfaint(void)
         gBattlescriptCurrInstr += 2;
     }
 }
+
+static void Cmd_jumpifstatus(void)
+{
+    u8 battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    u32 flags = T2_READ_32(gBattlescriptCurrInstr + 2);
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 6);
+
+    if (gBattleMons[battler].status1 & flags && gBattleMons[battler].hp != 0)
+        gBattlescriptCurrInstr = jumpPtr;
+    else
+        gBattlescriptCurrInstr += 10;
+}
+
+static void Cmd_jumpifstatus2(void)
+{
+    u8 battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    u32 flags = T2_READ_32(gBattlescriptCurrInstr + 2);
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 6);
+
+    if (gBattleMons[battler].status2 & flags && gBattleMons[battler].hp != 0)
+        gBattlescriptCurrInstr = jumpPtr;
+    else
+        gBattlescriptCurrInstr += 10;
+}
+
+static void Cmd_jumpifability(void)
+{
+    u8 battler;
+    u8 ability = gBattlescriptCurrInstr[2];
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
+
+    if (gBattlescriptCurrInstr[1] == BS_ATTACKER_SIDE)
+    {
+        battler = AbilityBattleEffects(ABILITYEFFECT_CHECK_BATTLER_SIDE, gBattlerAttacker, ability, 0, 0);
+        if (battler)
+        {
+            gLastUsedAbility = ability;
+            gBattlescriptCurrInstr = jumpPtr;
+            RecordAbilityBattle(battler - 1, gLastUsedAbility);
+            gBattleScripting.battlerWithAbility = battler - 1;
+        }
+        else
+        {
+            gBattlescriptCurrInstr += 7;
+        }
+    }
+    else if (gBattlescriptCurrInstr[1] == BS_NOT_ATTACKER_SIDE)
+    {
+        battler = AbilityBattleEffects(ABILITYEFFECT_CHECK_OTHER_SIDE, gBattlerAttacker, ability, 0, 0);
+        if (battler)
+        {
+            gLastUsedAbility = ability;
+            gBattlescriptCurrInstr = jumpPtr;
+            RecordAbilityBattle(battler - 1, gLastUsedAbility);
+            gBattleScripting.battlerWithAbility = battler - 1;
+        }
+        else
+        {
+            gBattlescriptCurrInstr += 7;
+        }
+    }
+    else
+    {
+        battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+        if (gBattleMons[battler].ability == ability)
+        {
+            gLastUsedAbility = ability;
+            gBattlescriptCurrInstr = jumpPtr;
+            RecordAbilityBattle(battler, gLastUsedAbility);
+            gBattleScripting.battlerWithAbility = battler;
+        }
+        else
+        {
+            gBattlescriptCurrInstr += 7;
+        }
+    }
+}
+
+static void Cmd_jumpifsideaffecting(void)
+{
+    u8 side;
+    u16 flags;
+    const u8 *jumpPtr;
+
+    if (gBattlescriptCurrInstr[1] == BS_ATTACKER)
+        side = GET_BATTLER_SIDE(gBattlerAttacker);
+    else
+        side = GET_BATTLER_SIDE(gBattlerTarget);
+
+    flags = T2_READ_16(gBattlescriptCurrInstr + 2);
+    jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 4);
+
+    if (gSideStatuses[side] & flags)
+        gBattlescriptCurrInstr = jumpPtr;
+    else
+        gBattlescriptCurrInstr += 8;
+}
+
+static void Cmd_jumpifstat(void)
+{
+    u8 ret = 0;
+    u8 battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    u8 value = gBattleMons[battler].statStages[gBattlescriptCurrInstr[3]];
+
+    switch (gBattlescriptCurrInstr[2])
+    {
+    case CMP_EQUAL:
+        if (value == gBattlescriptCurrInstr[4])
+            ret++;
+        break;
+    case CMP_NOT_EQUAL:
+        if (value != gBattlescriptCurrInstr[4])
+            ret++;
+        break;
+    case CMP_GREATER_THAN:
+        if (value > gBattlescriptCurrInstr[4])
+            ret++;
+        break;
+    case CMP_LESS_THAN:
+        if (value < gBattlescriptCurrInstr[4])
+            ret++;
+        break;
+    case CMP_COMMON_BITS:
+        if (value & gBattlescriptCurrInstr[4])
+            ret++;
+        break;
+    case CMP_NO_COMMON_BITS:
+        if (!(value & gBattlescriptCurrInstr[4]))
+            ret++;
+        break;
+    }
+
+    if (ret)
+        gBattlescriptCurrInstr = T2_READ_PTR(gBattlescriptCurrInstr + 5);
+    else
+        gBattlescriptCurrInstr += 9;
+}
+
+static void Cmd_jumpifstatus3condition(void)
+{
+    u32 status;
+    const u8 *jumpPtr;
+
+    gActiveBattler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    status = T2_READ_32(gBattlescriptCurrInstr + 2);
+    jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 7);
+
+    if (gBattlescriptCurrInstr[6])
+    {
+        if ((gStatuses3[gActiveBattler] & status) != 0)
+            gBattlescriptCurrInstr += 11;
+        else
+            gBattlescriptCurrInstr = jumpPtr;
+    }
+    else
+    {
+        if ((gStatuses3[gActiveBattler] & status) != 0)
+            gBattlescriptCurrInstr = jumpPtr;
+        else
+            gBattlescriptCurrInstr += 11;
+    }
+}
+
+static void Cmd_jumpiftype(void)
+{
+    u8 battler = GetBattlerForBattleScript(gBattlescriptCurrInstr[1]);
+    u8 type = gBattlescriptCurrInstr[2];
+    const u8 *jumpPtr = T2_READ_PTR(gBattlescriptCurrInstr + 3);
+
+    if (IS_BATTLER_OF_TYPE(battler, type))
+        gBattlescriptCurrInstr = jumpPtr;
+    else
+        gBattlescriptCurrInstr += 7;
+}

@@ -3576,6 +3576,13 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_tryfaintmon);
         src/battle_script_commands.o(.text.Cmd_dofaintanimation);
         src/battle_script_commands.o(.text.Cmd_cleareffectsonfaint);
+        src/battle_script_commands.o(.text.Cmd_jumpifstatus);
+        src/battle_script_commands.o(.text.Cmd_jumpifstatus2);
+        src/battle_script_commands.o(.text.Cmd_jumpifability);
+        src/battle_script_commands.o(.text.Cmd_jumpifsideaffecting);
+        src/battle_script_commands.o(.text.Cmd_jumpifstat);
+        src/battle_script_commands.o(.text.Cmd_jumpifstatus3condition);
+        src/battle_script_commands.o(.text.Cmd_jumpiftype);
         asm/battle_script_commands.o(.text);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
