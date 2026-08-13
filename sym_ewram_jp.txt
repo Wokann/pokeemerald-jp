@@ -36,6 +36,7 @@ gUnusedFirstBattleVar1 = ABSOLUTE(0x02022C98);
 gBattleControllerExecFlags = ABSOLUTE(0x02023D0C);
 gBattlerPositions = ABSOLUTE(0x02023D1A);
 gBattleTerrain = ABSOLUTE(0x02022C94);
+gBattleEnvironment = ABSOLUTE(0x02022C94);
 sOamWork = ABSOLUTE(0x02022AC4);
 gMultiPartnerParty = ABSOLUTE(0x02022C9C);
 sMultiPartnerPartyBuffer = ABSOLUTE(0x02022CFC);
