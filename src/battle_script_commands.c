@@ -76,6 +76,9 @@ extern const struct StatFractions sAccuracyStageRatios[];
 extern const u16 gUnknown_82ECC4C[];
 extern const u8 gUnknown_82ECC6C[];
 extern const u16 gUnknown_82ECDAC[];
+extern const u16 sPickupItems[];
+extern const u16 sRarePickupItems[];
+extern const u8 sPickupProbabilities[];
 extern const struct SpriteTemplate gUnknown_82ECD44;
 
 static void Cmd_drawlvlupbox(void);
@@ -1558,6 +1561,7 @@ static void Cmd_trygetintimidatetarget(void);
 static void Cmd_switchoutabilities(void);
 static void Cmd_jumpifhasnohp(void);
 static void Cmd_getsecretpowereffect(void);
+static void Cmd_pickup(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -8838,5 +8842,82 @@ static void Cmd_getsecretpowereffect(void)
         gBattleCommunication[MOVE_EFFECT_BYTE] = MOVE_EFFECT_PARALYSIS;
         break;
     }
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_pickup(void)
+{
+    s32 i;
+    u16 species, heldItem;
+    u8 ability;
+
+    if (InBattlePike())
+    {
+
+    }
+    else if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+            heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+
+            if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
+                ability = gSpeciesInfo[species].abilities[1];
+            else
+                ability = gSpeciesInfo[species].abilities[0];
+
+            if (ability == ABILITY_PICKUP
+                && species != SPECIES_NONE
+                && species != SPECIES_EGG
+                && heldItem == ITEM_NONE
+                && (Random() % 10) == 0)
+            {
+                heldItem = GetBattlePyramidPickupItemId();
+                SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &heldItem);
+            }
+        }
+    }
+    else
+    {
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+            heldItem = GetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM);
+
+            if (GetMonData(&gPlayerParty[i], MON_DATA_ABILITY_NUM))
+                ability = gSpeciesInfo[species].abilities[1];
+            else
+                ability = gSpeciesInfo[species].abilities[0];
+
+            if (ability == ABILITY_PICKUP
+                && species != SPECIES_NONE
+                && species != SPECIES_EGG
+                && heldItem == ITEM_NONE
+                && (Random() % 10) == 0)
+            {
+                s32 j;
+                s32 rand = Random() % 100;
+                u8 lvlDivBy10 = (GetMonData(&gPlayerParty[i], MON_DATA_LEVEL) - 1) / 10;
+                if (lvlDivBy10 > 9)
+                    lvlDivBy10 = 9;
+
+                for (j = 0; j < 9; j++)
+                {
+                    if (sPickupProbabilities[j] > rand)
+                    {
+                        SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &sPickupItems[lvlDivBy10 + j]);
+                        break;
+                    }
+                    else if (rand == 99 || rand == 98)
+                    {
+                        SetMonData(&gPlayerParty[i], MON_DATA_HELD_ITEM, &sRarePickupItems[lvlDivBy10 + (99 - rand)]);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
     gBattlescriptCurrInstr++;
 }
