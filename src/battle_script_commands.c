@@ -1469,6 +1469,11 @@ static void Cmd_forcerandomswitch(void);
 static void Cmd_tryconversiontypechange(void);
 static void Cmd_givepaydaymoney(void);
 static void Cmd_setlightscreen(void);
+static void Cmd_tryKO(void);
+static void Cmd_damagetohalftargethp(void);
+static void Cmd_setsandstorm(void);
+u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
+u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
 void BtlController_EmitCmd55(u8 bufferId, u8 battleOutcome);
 void sub_0814FA04(const u8 *text, u8 windowId);
@@ -6665,5 +6670,116 @@ static void Cmd_setlightscreen(void)
             gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_SET_LIGHTSCREEN_SINGLE;
     }
 
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_tryKO(void)
+{
+    u8 holdEffect, param;
+
+    if (gBattleMons[gBattlerTarget].item == ITEM_ENIGMA_BERRY)
+    {
+       holdEffect = gEnigmaBerries[gBattlerTarget].holdEffect;
+       param = gEnigmaBerries[gBattlerTarget].holdEffectParam;
+    }
+    else
+    {
+        holdEffect = sub_080D6CF8(gBattleMons[gBattlerTarget].item);
+        param = sub_080D6D1C(gBattleMons[gBattlerTarget].item);
+    }
+
+    gPotentialItemEffectBattler = gBattlerTarget;
+
+    if (holdEffect == HOLD_EFFECT_FOCUS_BAND && (Random() % 100) < param)
+    {
+        RecordItemEffectBattle(gBattlerTarget, HOLD_EFFECT_FOCUS_BAND);
+        gSpecialStatuses[gBattlerTarget].focusBanded = 1;
+    }
+
+    if (gBattleMons[gBattlerTarget].ability == ABILITY_STURDY)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gLastUsedAbility = ABILITY_STURDY;
+        gBattlescriptCurrInstr = BattleScript_SturdyPreventsOHKO;
+        RecordAbilityBattle(gBattlerTarget, ABILITY_STURDY);
+    }
+    else
+    {
+        u16 chance;
+        if (!(gStatuses3[gBattlerTarget] & STATUS3_ALWAYS_HITS))
+        {
+            chance = gBattleMoves[gCurrentMove].accuracy + (gBattleMons[gBattlerAttacker].level - gBattleMons[gBattlerTarget].level);
+            if (Random() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+                chance = TRUE;
+            else
+                chance = FALSE;
+        }
+        else if (gDisableStructs[gBattlerTarget].battlerWithSureHit == gBattlerAttacker
+                 && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+        {
+            chance = TRUE;
+        }
+        else
+        {
+            chance = gBattleMoves[gCurrentMove].accuracy + (gBattleMons[gBattlerAttacker].level - gBattleMons[gBattlerTarget].level);
+            if (Random() % 100 + 1 < chance && gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+                chance = TRUE;
+            else
+                chance = FALSE;
+        }
+        if (chance)
+        {
+            if (gProtectStructs[gBattlerTarget].endured)
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
+                gMoveResultFlags |= MOVE_RESULT_FOE_ENDURED;
+            }
+            else if (gSpecialStatuses[gBattlerTarget].focusBanded)
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerTarget].hp - 1;
+                gMoveResultFlags |= MOVE_RESULT_FOE_HUNG_ON;
+                gLastUsedItem = gBattleMons[gBattlerTarget].item;
+            }
+            else
+            {
+                gBattleMoveDamage = gBattleMons[gBattlerTarget].hp;
+                gMoveResultFlags |= MOVE_RESULT_ONE_HIT_KO;
+            }
+            gBattlescriptCurrInstr += 5;
+        }
+        else
+        {
+            gMoveResultFlags |= MOVE_RESULT_MISSED;
+            if (gBattleMons[gBattlerAttacker].level >= gBattleMons[gBattlerTarget].level)
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_KO_MISS;
+            else
+                gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_KO_UNAFFECTED;
+            gBattlescriptCurrInstr = T1_READ_PTR(gBattlescriptCurrInstr + 1);
+        }
+    }
+}
+
+static void Cmd_damagetohalftargethp(void)
+{
+    gBattleMoveDamage = gBattleMons[gBattlerTarget].hp / 2;
+    if (gBattleMoveDamage == 0)
+        gBattleMoveDamage = 1;
+
+    gBattlescriptCurrInstr++;
+}
+
+static void Cmd_setsandstorm(void)
+{
+    if (gBattleWeather & B_WEATHER_SANDSTORM)
+    {
+        gMoveResultFlags |= MOVE_RESULT_MISSED;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_WEATHER_FAILED;
+    }
+    else
+    {
+        gBattleWeather = B_WEATHER_SANDSTORM_TEMPORARY;
+        gBattleCommunication[MULTISTRING_CHOOSER] = B_MSG_STARTED_SANDSTORM;
+        gWishFutureKnock.weatherDuration = 5;
+    }
     gBattlescriptCurrInstr++;
 }

@@ -752,6 +752,7 @@ BattleScript_FocusPunchSetUp = gUnknown_8289787;
 BattleScript_DampStopsExplosion = gUnknown_8289AE8;
 BattleScript_SuccessForceOut = gUnknown_8289360;
 BattleScript_PrintPayDayMoneyString = gUnknown_828988F;
+BattleScript_SturdyPreventsOHKO = gUnknown_8289ADA;
 BattleScript_ButItFailed = gUnknown_82884A4;
 BattleScript_MistProtected = ABSOLUTE(0x0828938B);
 BattleScript_AbilityNoStatLoss = ABSOLUTE(0x08289B4F);
@@ -3731,6 +3732,9 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_tryconversiontypechange);
         src/battle_script_commands.o(.text.Cmd_givepaydaymoney);
         src/battle_script_commands.o(.text.Cmd_setlightscreen);
+        src/battle_script_commands.o(.text.Cmd_tryKO);
+        src/battle_script_commands.o(.text.Cmd_damagetohalftargethp);
+        src/battle_script_commands.o(.text.Cmd_setsandstorm);
         asm/battle_script_commands.o(.text.atk7D_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
