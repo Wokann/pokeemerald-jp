@@ -1509,6 +1509,7 @@ static void Cmd_rolloutdamagecalculation(void);
 static void Cmd_jumpifconfusedandstatmaxed(void);
 static void Cmd_furycuttercalc(void);
 static void Cmd_friendshiptodamagecalculation(void);
+static void Cmd_presentdamagecalculation(void);
 u8 sub_080D6CF8(u16 item); // JP GetItemHoldEffect
 u8 sub_080D6D1C(u16 item); // JP GetItemHoldEffectParam
 void BtlController_EmitCmd42(u8 bufferId);
@@ -7761,4 +7762,43 @@ static void Cmd_friendshiptodamagecalculation(void)
         gDynamicBasePower = 10 * (MAX_FRIENDSHIP - gBattleMons[gBattlerAttacker].friendship) / 25;
 
     gBattlescriptCurrInstr++;
+}
+
+static void Cmd_presentdamagecalculation(void)
+{
+    s32 rand = Random() & 0xFF;
+
+    if (rand < 102)
+    {
+        gDynamicBasePower = 40;
+    }
+    else if (rand < 178)
+    {
+        gDynamicBasePower = 80;
+    }
+    else if (rand < 204)
+    {
+        gDynamicBasePower = 120;
+    }
+    else
+    {
+        gBattleMoveDamage = gBattleMons[gBattlerTarget].maxHP / 4;
+        if (gBattleMoveDamage == 0)
+            gBattleMoveDamage = 1;
+        gBattleMoveDamage *= -1;
+    }
+
+    if (rand < 204)
+    {
+        gBattlescriptCurrInstr = BattleScript_HitFromCritCalc;
+    }
+    else if (gBattleMons[gBattlerTarget].maxHP == gBattleMons[gBattlerTarget].hp)
+    {
+        gBattlescriptCurrInstr = BattleScript_AlreadyAtFullHp;
+    }
+    else
+    {
+        gMoveResultFlags &= ~MOVE_RESULT_DOESNT_AFFECT_FOE;
+        gBattlescriptCurrInstr = BattleScript_PresentHealTarget;
+    }
 }
