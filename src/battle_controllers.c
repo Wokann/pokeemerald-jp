@@ -564,3 +564,73 @@ static void InitLinkBtlControllers(void)
         gBattlersCount = MAX_BATTLERS_COUNT;
     }
 }
+
+static void SetBattlePartyIds(void)
+{
+    s32 i, j;
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+    {
+        for (i = 0; i < gBattlersCount; i++)
+        {
+            for (j = 0; j < PARTY_SIZE; j++)
+            {
+                if (i < 2)
+                {
+                    if (GET_BATTLER_SIDE2(i) == B_SIDE_PLAYER)
+                    {
+                        if (GetMonData(&gPlayerParty[j], MON_DATA_HP) != 0
+                         && GetMonData(&gPlayerParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+                         && GetMonData(&gPlayerParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
+                         && !GetMonData(&gPlayerParty[j], MON_DATA_IS_EGG))
+                        {
+                            gBattlerPartyIndexes[i] = j;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (GetMonData(&gEnemyParty[j], MON_DATA_HP) != 0
+                         && GetMonData(&gEnemyParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+                         && GetMonData(&gEnemyParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
+                         && !GetMonData(&gEnemyParty[j], MON_DATA_IS_EGG))
+                        {
+                            gBattlerPartyIndexes[i] = j;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (GET_BATTLER_SIDE2(i) == B_SIDE_PLAYER)
+                    {
+                        if (GetMonData(&gPlayerParty[j], MON_DATA_HP) != 0
+                         && GetMonData(&gPlayerParty[j], MON_DATA_SPECIES) != SPECIES_NONE
+                         && GetMonData(&gPlayerParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
+                         && !GetMonData(&gPlayerParty[j], MON_DATA_IS_EGG)
+                         && gBattlerPartyIndexes[i - 2] != j)
+                        {
+                            gBattlerPartyIndexes[i] = j;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (GetMonData(&gEnemyParty[j], MON_DATA_HP) != 0
+                         && GetMonData(&gEnemyParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_NONE
+                         && GetMonData(&gEnemyParty[j], MON_DATA_SPECIES_OR_EGG) != SPECIES_EGG
+                         && !GetMonData(&gEnemyParty[j], MON_DATA_IS_EGG)
+                         && gBattlerPartyIndexes[i - 2] != j)
+                        {
+                            gBattlerPartyIndexes[i] = j;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
+            gBattlerPartyIndexes[1] = 0, gBattlerPartyIndexes[3] = 3;
+    }
+}
