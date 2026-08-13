@@ -60,6 +60,13 @@ extern void sub_08184D04(void); // JP recorded-battle helper (US: RecordedBattle
 extern void sub_0814FA04(const u8 *text, u8 windowId); // JP BattlePutTextOnWindow equivalent
 extern void TryGetStatusString(const u8 *text); // JP text-expand helper (US: BattleStringExpandPlaceholdersToDisplayedString)
 extern const struct BgTemplate gBattleBgTemplates[];
+extern const struct MonCoords gCastformFrontSpriteCoords[];
+extern const s8 sCenterToCornerVecXs[];
+extern u32 sFlickerArray[];
+extern void BattleStartClearSetData(void); // JP asm 0x08039B84 (US: same name)
+extern void BattleIntroGetMonsData(void); // JP asm 0x0803A804 (US: same name)
+extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
+extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
 
 static void CB2_InitBattleInternal(void);
@@ -73,12 +80,22 @@ static void EndLinkBattleInSteps(void);
 static void CB2_InitAskRecordBattle(void);
 static void CB2_AskRecordBattle(void);
 static void AskRecordBattle(void);
+static void SpriteCB_MoveWildMonToRight(struct Sprite *sprite);
+static void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite);
+static void SpriteCB_WildMonAnimate(struct Sprite *sprite);
+static void SpriteCB_Flicker(struct Sprite *sprite);
+static void SpriteCB_AnimFaintOpponent(struct Sprite *sprite);
+static void SpriteCB_BlinkVisible(struct Sprite *sprite);
+static void SpriteCB_Idle(struct Sprite *sprite);
+static void SpriteCB_BattleSpriteSlideLeft(struct Sprite *sprite);
+static void SpriteCB_BounceEffect(struct Sprite *sprite);
+static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite);
+static void BattleMainCB1(void);
 extern void SetMultiPartnerMenuParty(u8 offset);
 static void BufferPartyVsScreenHealth_AtStart(void);
 extern void SetPlayerBerryDataInBattleStruct(void);
 extern void SetAllPlayersBerryData(void);
 static void FindLinkBattleMaster(u8 numPlayers, u8 multiPlayerId);
-extern void sub_08039B34(void); // JP main battle callback (US: BattleMainCB1)
 
 void CB2_InitBattle(void)
 {
@@ -484,7 +501,7 @@ static void CB2_HandleStartBattle(void)
         if (BattleInitAllSprites(&gBattleCommunication[SPRITES_INIT_STATE1], &gBattleCommunication[SPRITES_INIT_STATE2]))
         {
             gPreBattleCallback1 = gMain.callback1;
-            gMain.callback1 = sub_08039B34;
+            gMain.callback1 = BattleMainCB1;
             SetMainCallback2(BattleMainCB2);
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
                 gBattleTypeFlags |= BATTLE_TYPE_LINK_IN_BATTLE;
@@ -726,7 +743,7 @@ static void CB2_HandleStartMultiPartnerBattle(void)
         {
             TrySetLinkBattleTowerEnemyPartyLevel();
             gPreBattleCallback1 = gMain.callback1;
-            gMain.callback1 = sub_08039B34;
+            gMain.callback1 = BattleMainCB1;
             SetMainCallback2(BattleMainCB2);
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
                 gBattleTypeFlags |= BATTLE_TYPE_LINK_IN_BATTLE;
@@ -1043,7 +1060,7 @@ static void CB2_HandleStartMultiBattle(void)
         if (BattleInitAllSprites(&gBattleCommunication[SPRITES_INIT_STATE1], &gBattleCommunication[SPRITES_INIT_STATE2]))
         {
             gPreBattleCallback1 = gMain.callback1;
-            gMain.callback1 = sub_08039B34;
+            gMain.callback1 = BattleMainCB1;
             SetMainCallback2(BattleMainCB2);
             if (gBattleTypeFlags & BATTLE_TYPE_LINK)
             {
@@ -1717,4 +1734,324 @@ static void AskRecordBattle(void)
         }
         break;
     }
+}
+
+#define sBattler            data[0]
+#define sSpeciesId          data[2]
+
+void SpriteCB_WildMon(struct Sprite *sprite)
+{
+    sprite->callback = SpriteCB_MoveWildMonToRight;
+    StartSpriteAnimIfDifferent(sprite, 0);
+    BeginNormalPaletteFade(0x20000, 0, 10, 10, RGB(8, 8, 8));
+}
+
+static void SpriteCB_MoveWildMonToRight(struct Sprite *sprite)
+{
+    if ((gIntroSlideFlags & 1) == 0)
+    {
+        sprite->x2 += 2;
+        if (sprite->x2 == 0)
+        {
+            sprite->callback = SpriteCB_WildMonShowHealthbox;
+        }
+    }
+}
+
+static void SpriteCB_WildMonShowHealthbox(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+    {
+        StartHealthboxSlideIn(sprite->sBattler);
+        SetHealthboxSpriteVisible(gHealthboxSpriteIds[sprite->sBattler]);
+        sprite->callback = SpriteCB_WildMonAnimate;
+        StartSpriteAnimIfDifferent(sprite, 0);
+        BeginNormalPaletteFade(0x20000, 0, 10, 0, RGB(8, 8, 8));
+    }
+}
+
+static void SpriteCB_WildMonAnimate(struct Sprite *sprite)
+{
+    if (!gPaletteFade.active)
+    {
+        BattleAnimateFrontSprite(sprite, sprite->sSpeciesId, FALSE, 1);
+    }
+}
+
+void SpriteCallbackDummy_2(struct Sprite *sprite)
+{
+}
+
+#define sNumFlickers data[3]
+#define sDelay       data[4]
+
+static void UNUSED SpriteCB_InitFlicker(struct Sprite *sprite)
+{
+    sprite->sNumFlickers = 6;
+    sprite->sDelay = 1;
+    sprite->callback = SpriteCB_Flicker;
+}
+
+static void SpriteCB_Flicker(struct Sprite *sprite)
+{
+    sprite->sDelay--;
+    if (sprite->sDelay == 0)
+    {
+        sprite->sDelay = 8;
+        sprite->invisible ^= 1;
+        sprite->sNumFlickers--;
+        if (sprite->sNumFlickers == 0)
+        {
+            sprite->invisible = FALSE;
+            sprite->callback = SpriteCallbackDummy_2;
+            sFlickerArray[0] = 0;
+        }
+    }
+}
+
+#undef sNumFlickers
+#undef sDelay
+
+void SpriteCB_FaintOpponentMon(struct Sprite *sprite)
+{
+    u8 battler = sprite->sBattler;
+    u16 species;
+    u8 yOffset;
+
+    if (gBattleSpritesDataPtr->battlerData[battler].transformSpecies != 0)
+        species = gBattleSpritesDataPtr->battlerData[battler].transformSpecies;
+    else
+        species = sprite->sSpeciesId;
+
+    GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_PERSONALITY);  // Unused return value.
+
+    if (species == SPECIES_UNOWN)
+    {
+        u32 personalityValue = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_PERSONALITY);
+        u16 unownForm = GET_UNOWN_LETTER(personalityValue);
+        u16 unownSpecies;
+
+        if (unownForm == 0)
+            unownSpecies = SPECIES_UNOWN;  // Use the A Unown form.
+        else
+            unownSpecies = NUM_SPECIES + unownForm;  // Use one of the other Unown letters.
+
+        yOffset = gMonFrontPicCoords[unownSpecies].y_offset;
+    }
+    else if (species == SPECIES_CASTFORM)
+    {
+        yOffset = gCastformFrontSpriteCoords[gBattleMonForms[battler]].y_offset;
+    }
+    else if (species > NUM_SPECIES)
+    {
+        yOffset = gMonFrontPicCoords[SPECIES_NONE].y_offset;
+    }
+    else
+    {
+        yOffset = gMonFrontPicCoords[species].y_offset;
+    }
+
+    sprite->data[3] = 8 - yOffset / 8;
+    sprite->data[4] = 1;
+    sprite->callback = SpriteCB_AnimFaintOpponent;
+}
+
+// Used when selecting a move, which can hit multiple targets, in double battles.
+void SpriteCB_ShowAsMoveTarget(struct Sprite *sprite)
+{
+    sprite->data[3] = 8;
+    sprite->data[4] = sprite->invisible;
+    sprite->callback = SpriteCB_BlinkVisible;
+}
+
+static void SpriteCB_BlinkVisible(struct Sprite *sprite)
+{
+    if (--sprite->data[3] == 0)
+    {
+        sprite->invisible ^= 1;
+        sprite->data[3] = 8;
+    }
+}
+
+void SpriteCB_HideAsMoveTarget(struct Sprite *sprite)
+{
+    sprite->invisible = sprite->data[4];
+    sprite->data[4] = FALSE;
+    sprite->callback = SpriteCallbackDummy_2;
+}
+
+void SpriteCB_OpponentMonFromBall(struct Sprite *sprite)
+{
+    if (sprite->affineAnimEnded)
+    {
+        if (!(gHitMarker & HITMARKER_NO_ANIMATIONS) || gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+        {
+            if (HasTwoFramesAnimation(sprite->sSpeciesId))
+                StartSpriteAnim(sprite, 1);
+        }
+        BattleAnimateFrontSprite(sprite, sprite->sSpeciesId, TRUE, 1);
+    }
+}
+
+// This callback is frequently overwritten by SpriteCB_TrainerSlideIn
+void SpriteCB_BattleSpriteStartSlideLeft(struct Sprite *sprite)
+{
+    sprite->callback = SpriteCB_BattleSpriteSlideLeft;
+}
+
+static void SpriteCB_BattleSpriteSlideLeft(struct Sprite *sprite)
+{
+    if (!(gIntroSlideFlags & 1))
+    {
+        sprite->x2 -= 2;
+        if (sprite->x2 == 0)
+        {
+            sprite->callback = SpriteCB_Idle;
+            sprite->data[1] = 0;
+        }
+    }
+}
+
+static void UNUSED SetIdleSpriteCallback(struct Sprite *sprite)
+{
+    sprite->callback = SpriteCB_Idle;
+}
+
+static void SpriteCB_Idle(struct Sprite *sprite)
+{
+}
+
+#define sSpeedX data[1]
+#define sSpeedY data[2]
+
+void SpriteCB_FaintSlideAnim(struct Sprite *sprite)
+{
+    if (!(gIntroSlideFlags & 1))
+    {
+        sprite->x2 += sprite->sSpeedX;
+        sprite->y2 += sprite->sSpeedY;
+    }
+}
+
+#undef sSpeedX
+#undef sSpeedY
+
+void BeginBattleIntroDummy(void)
+{
+}
+
+#define sSinIndex           data[0]
+#define sDelta              data[1]
+#define sAmplitude          data[2]
+#define sBouncerSpriteId    data[3]
+#define sWhich              data[4]
+
+void DoBounceEffect(u8 battler, u8 which, s8 delta, s8 amplitude)
+{
+    u8 invisibleSpriteId;
+    u8 bouncerSpriteId;
+
+    switch (which)
+    {
+    case BOUNCE_HEALTHBOX:
+    default:
+        if (gBattleSpritesDataPtr->healthBoxesData[battler].healthboxIsBouncing)
+            return;
+        break;
+    case BOUNCE_MON:
+        if (gBattleSpritesDataPtr->healthBoxesData[battler].battlerIsBouncing)
+            return;
+        break;
+    }
+
+    invisibleSpriteId = CreateInvisibleSpriteWithCallback(SpriteCB_BounceEffect);
+    if (which == BOUNCE_HEALTHBOX)
+    {
+        bouncerSpriteId = gHealthboxSpriteIds[battler];
+        gBattleSpritesDataPtr->healthBoxesData[battler].healthboxBounceSpriteId = invisibleSpriteId;
+        gBattleSpritesDataPtr->healthBoxesData[battler].healthboxIsBouncing = 1;
+        gSprites[invisibleSpriteId].sSinIndex = 128; // 0
+    }
+    else
+    {
+        bouncerSpriteId = gBattlerSpriteIds[battler];
+        gBattleSpritesDataPtr->healthBoxesData[battler].battlerBounceSpriteId = invisibleSpriteId;
+        gBattleSpritesDataPtr->healthBoxesData[battler].battlerIsBouncing = 1;
+        gSprites[invisibleSpriteId].sSinIndex = 192; // -1
+    }
+    gSprites[invisibleSpriteId].sDelta = delta;
+    gSprites[invisibleSpriteId].sAmplitude = amplitude;
+    gSprites[invisibleSpriteId].sBouncerSpriteId = bouncerSpriteId;
+    gSprites[invisibleSpriteId].sWhich = which;
+    gSprites[bouncerSpriteId].x2 = 0;
+    gSprites[bouncerSpriteId].y2 = 0;
+}
+
+void EndBounceEffect(u8 battler, u8 which)
+{
+    u8 bouncerSpriteId;
+
+    if (which == BOUNCE_HEALTHBOX)
+    {
+        if (!gBattleSpritesDataPtr->healthBoxesData[battler].healthboxIsBouncing)
+            return;
+
+        bouncerSpriteId = gSprites[gBattleSpritesDataPtr->healthBoxesData[battler].healthboxBounceSpriteId].sBouncerSpriteId;
+        DestroySprite(&gSprites[gBattleSpritesDataPtr->healthBoxesData[battler].healthboxBounceSpriteId]);
+        gBattleSpritesDataPtr->healthBoxesData[battler].healthboxIsBouncing = 0;
+    }
+    else
+    {
+        if (!gBattleSpritesDataPtr->healthBoxesData[battler].battlerIsBouncing)
+            return;
+
+        bouncerSpriteId = gSprites[gBattleSpritesDataPtr->healthBoxesData[battler].battlerBounceSpriteId].sBouncerSpriteId;
+        DestroySprite(&gSprites[gBattleSpritesDataPtr->healthBoxesData[battler].battlerBounceSpriteId]);
+        gBattleSpritesDataPtr->healthBoxesData[battler].battlerIsBouncing = 0;
+    }
+
+    gSprites[bouncerSpriteId].x2 = 0;
+    gSprites[bouncerSpriteId].y2 = 0;
+}
+
+void SpriteCB_PlayerMonFromBall(struct Sprite *sprite)
+{
+    if (sprite->affineAnimEnded)
+        BattleAnimateBackSprite(sprite, sprite->sSpeciesId);
+}
+
+static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite)
+{
+    AnimSetCenterToCornerVecX(sprite);
+    if (sprite->animEnded)
+        sprite->callback = SpriteCB_Idle;
+}
+
+// Sprite callback for a trainer back pic to throw an object
+// (Wally throwing a ball, throwing PokÃ©blocks/balls in the Safari Zone)
+void SpriteCB_TrainerThrowObject(struct Sprite *sprite)
+{
+    StartSpriteAnim(sprite, 1);
+    sprite->callback = SpriteCB_TrainerThrowObject_Main;
+}
+
+void AnimSetCenterToCornerVecX(struct Sprite *sprite)
+{
+    if (sprite->animDelayCounter == 0)
+        sprite->centerToCornerVecX = sCenterToCornerVecXs[sprite->animCmdIndex];
+}
+
+void BeginBattleIntro(void)
+{
+    BattleStartClearSetData();
+    gBattleCommunication[1] = 0;
+    gBattleMainFunc = BattleIntroGetMonsData;
+}
+
+static void BattleMainCB1(void)
+{
+    gBattleMainFunc();
+
+    for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+        gBattlerControllerFuncs[gActiveBattler]();
 }

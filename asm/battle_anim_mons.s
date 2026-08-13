@@ -2666,7 +2666,7 @@ _080A6874:
 sub_080A687C: @ 0x080A687C
 	push {r4, lr}
 	adds r4, r0, #0
-	bl sub_08039AE0
+	bl AnimSetCenterToCornerVecX
 	adds r0, r4, #0
 	bl AnimTranslateLinear
 	lsls r0, r0, #0x18
