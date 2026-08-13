@@ -4956,6 +4956,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.GetGlareEyeDotCoords);
         src/battle_anim_effects_3.o(.text.AnimGlareEyeDot);
         src/battle_anim_effects_3.o(.text.AnimAssistPawprint);
+        src/battle_anim_effects_3.o(.text.AnimTask_BarrageBall);
+        src/battle_anim_effects_3.o(.text.AnimTask_BarrageBall_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);

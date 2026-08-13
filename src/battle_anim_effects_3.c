@@ -26,6 +26,7 @@ extern const union AffineAnimCmd gFacadeSquishAffineAnimCmds[];
 extern const u16 gFacadeBlendColors[];
 extern const struct SpriteTemplate gFacadeSweatDropSpriteTemplate;
 extern const struct SpriteTemplate gGlareEyeDotSpriteTemplate;
+extern const struct SpriteTemplate gBarrageBallSpriteTemplate;
 extern const struct SpriteTemplate gMiniTwinklingStarSpriteTemplate;
 
 static void FadeScreenToWhite_Step(u8 taskId);
@@ -71,6 +72,7 @@ static void AnimTask_GlareEyeDots_Step(u8 taskId);
 static void GetGlareEyeDotCoords(s16 startX, s16 startY, s16 endX, s16 endY, u8 pairMax, u8 pairNum, s16 *x, s16 *y);
 static void AnimGlareEyeDot(struct Sprite *sprite);
 static void AnimAssistPawprint(struct Sprite *sprite);
+static void AnimTask_BarrageBall_Step(u8 taskId);
 void AnimTask_StockpileDeformMon(u8 taskId);
 void AnimTask_SpitUpDeformMon(u8 taskId);
 void AnimTask_SwallowDeformMon(u8 taskId);
@@ -2407,6 +2409,76 @@ static void AnimAssistPawprint(struct Sprite *sprite)
     sprite->data[0] = gBattleAnimArgs[4];
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback = StartAnimLinearTranslation;  // JP uses StartAnimLinearTranslation (0x080A6988), not InitAndRunAnimFastLinearTranslation
+}
+
+void AnimTask_BarrageBall(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    task->data[11] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    task->data[12] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    task->data[13] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    task->data[14] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_HEIGHT) / 4;
+    task->data[15] = CreateSprite(&gBarrageBallSpriteTemplate, task->data[11], task->data[12], GetBattlerSpriteSubpriority(gBattleAnimTarget) - 5);
+    if (task->data[15] != MAX_SPRITES)
+    {
+        gSprites[task->data[15]].data[0] = 16;
+        gSprites[task->data[15]].data[2] = task->data[13];
+        gSprites[task->data[15]].data[4] = task->data[14];
+        gSprites[task->data[15]].data[5] = -32;
+        InitAnimArcTranslation(&gSprites[task->data[15]]);
+        if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
+            StartSpriteAffineAnim(&gSprites[task->data[15]], 1);
+
+        task->func = AnimTask_BarrageBall_Step;
+    }
+    else
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+}
+
+static void AnimTask_BarrageBall_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        if (++task->data[1] > 1)
+        {
+            task->data[1] = 0;
+            TranslateAnimHorizontalArc(&gSprites[task->data[15]]);
+            if (++task->data[2] > 7)
+                task->data[0]++;
+        }
+        break;
+    case 1:
+        if (TranslateAnimHorizontalArc(&gSprites[task->data[15]]))
+        {
+            task->data[1] = 0;
+            task->data[2] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 2:
+        if (++task->data[1] > 1)
+        {
+            task->data[1] = 0;
+            task->data[2]++;
+            gSprites[task->data[15]].invisible = task->data[2] & 1;
+            if (task->data[2] == 16)
+            {
+                FreeOamMatrix(gSprites[task->data[15]].oam.matrixNum);
+                DestroySprite(&gSprites[task->data[15]]);
+                task->data[0]++;
+            }
+        }
+        break;
+    case 3:
+        DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
 
 #undef IDX_ACTIVE_SPRITES

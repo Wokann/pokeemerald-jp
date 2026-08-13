@@ -11551,9 +11551,13 @@ gGlareEyeDotSpriteTemplate: @ 0x85AD5F4
 gUnknown_85AD60C: @ 0x85AD60C
 	.incbin "baserom_jp.gba", 0x5ad60c, 0x48
 
-	.globl gUnknown_85AD654
-gUnknown_85AD654: @ 0x85AD654
-	.incbin "baserom_jp.gba", 0x5ad654, 0x30
+	.globl gBarrageBallSpriteTemplate
+gBarrageBallSpriteTemplate: @ 0x85AD654
+	.incbin "baserom_jp.gba", 0x5ad654, 0x18
+
+	.globl gUnknown_85AD66C
+gUnknown_85AD66C: @ 0x85AD66C
+	.incbin "baserom_jp.gba", 0x5ad66c, 0x18
 
 	.globl gUnknown_85AD684
 gUnknown_85AD684: @ 0x85AD684
