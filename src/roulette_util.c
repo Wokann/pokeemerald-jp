@@ -145,3 +145,26 @@ void RouletteFlash_Enable(struct RouletteFlashUtil *flash, u16 flags)
         }
     }
 }
+
+void RouletteFlash_Run(struct RouletteFlashUtil *flash)
+{
+    u8 i = 0;
+
+    if (flash->enabled)
+    {
+        for (i = 0; i < ARRAY_COUNT(flash->palettes); i++)
+        {
+            if ((flash->flags >> i) & 1)
+            {
+                if (--flash->palettes[i].delayCounter == (u8)-1)
+                {
+                    if (flash->palettes[i].settings.color & FLASHUTIL_USE_EXISTING_COLOR)
+                        RouletteFlash_FadePalette(&flash->palettes[i]);
+                    else
+                        RouletteFlash_FlashPalette(&flash->palettes[i]);
+                    flash->palettes[i].delayCounter = flash->palettes[i].settings.delay;
+                }
+            }
+        }
+    }
+}
