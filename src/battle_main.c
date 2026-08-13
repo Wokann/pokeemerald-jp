@@ -89,6 +89,7 @@ extern void BattleTurnPassed(void); // JP asm 0x0803B600 (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern u8 IsRunningFromBattleImpossible(void); // JP asm 0x0803B7CC (register-sensitive, kept in asm)
 extern u8 GetWhoStrikesFirst(u8 battler1, u8 battler2, bool8 ignoreChosenMoves); // JP asm 0x0803CB54 (register-sensitive, kept in asm)
+extern void CheckFocusPunch_ClearVarsBeforeTurnStarts(void); // JP asm 0x0803D334 (US: same name)
 extern void SpriteCB_AnimFaintOpponent(struct Sprite *sprite); // JP asm 0x0803968C (register-sensitive, kept in asm)
 extern void SpriteCB_BounceEffect(struct Sprite *sprite); // JP asm 0x08039A3C (register-sensitive, kept in asm)
 static void SpriteCB_UnusedBattleInit_Main(struct Sprite *sprite);
@@ -2171,6 +2172,107 @@ void SwapTurnOrder(u8 id1, u8 id2)
 
     SWAP(gActionsByTurnOrder[id1], gActionsByTurnOrder[id2], temp);
     SWAP(gBattlerByTurnOrder[id1], gBattlerByTurnOrder[id2], temp);
+}
+
+static void SetActionsAndBattlersTurnOrder(void)
+{
+    s32 turnOrderId = 0;
+    s32 i, j;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_SAFARI)
+    {
+        for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+        {
+            gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[gActiveBattler];
+            gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+            turnOrderId++;
+        }
+    }
+    else
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+        {
+            for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+            {
+                if (gChosenActionByBattler[gActiveBattler] == B_ACTION_RUN)
+                {
+                    turnOrderId = 5;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if (gChosenActionByBattler[0] == B_ACTION_RUN)
+            {
+                gActiveBattler = 0;
+                turnOrderId = 5;
+            }
+            if (gChosenActionByBattler[2] == B_ACTION_RUN)
+            {
+                gActiveBattler = 2;
+                turnOrderId = 5;
+            }
+        }
+
+        if (turnOrderId == 5) // One of battlers wants to run.
+        {
+            gActionsByTurnOrder[0] = gChosenActionByBattler[gActiveBattler];
+            gBattlerByTurnOrder[0] = gActiveBattler;
+            turnOrderId = 1;
+            for (i = 0; i < gBattlersCount; i++)
+            {
+                if (i != gActiveBattler)
+                {
+                    gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[i];
+                    gBattlerByTurnOrder[turnOrderId] = i;
+                    turnOrderId++;
+                }
+            }
+            gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
+            gBattleStruct->focusPunchBattlerId = 0;
+            return;
+        }
+        else
+        {
+            for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+            {
+                if (gChosenActionByBattler[gActiveBattler] == B_ACTION_USE_ITEM || gChosenActionByBattler[gActiveBattler] == B_ACTION_SWITCH)
+                {
+                    gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[gActiveBattler];
+                    gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+                    turnOrderId++;
+                }
+            }
+            for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
+            {
+                if (gChosenActionByBattler[gActiveBattler] != B_ACTION_USE_ITEM && gChosenActionByBattler[gActiveBattler] != B_ACTION_SWITCH)
+                {
+                    gActionsByTurnOrder[turnOrderId] = gChosenActionByBattler[gActiveBattler];
+                    gBattlerByTurnOrder[turnOrderId] = gActiveBattler;
+                    turnOrderId++;
+                }
+            }
+            for (i = 0; i < gBattlersCount - 1; i++)
+            {
+                for (j = i + 1; j < gBattlersCount; j++)
+                {
+                    u8 battler1 = gBattlerByTurnOrder[i];
+                    u8 battler2 = gBattlerByTurnOrder[j];
+                    if (gActionsByTurnOrder[i] != B_ACTION_USE_ITEM
+                        && gActionsByTurnOrder[j] != B_ACTION_USE_ITEM
+                        && gActionsByTurnOrder[i] != B_ACTION_SWITCH
+                        && gActionsByTurnOrder[j] != B_ACTION_SWITCH)
+                    {
+                        if (GetWhoStrikesFirst(battler1, battler2, FALSE))
+                            SwapTurnOrder(i, j);
+                    }
+                }
+            }
+        }
+    }
+    gBattleMainFunc = CheckFocusPunch_ClearVarsBeforeTurnStarts;
+    gBattleStruct->focusPunchBattlerId = 0;
 }
 
 

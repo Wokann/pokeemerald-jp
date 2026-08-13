@@ -3264,6 +3264,7 @@ SECTIONS {
         src/battle_main.o(.text.UpdateBattlerPartyOrdersOnSwitch);
         src/battle_main.o(.text.SwapTurnOrder);
         asm/battle_main_who.o(.text);
+        src/battle_main.o(.text.SetActionsAndBattlersTurnOrder);
         asm/battle_main.o(.text);
         asm/battle_util.o(.text);
         asm/battle_script_commands.o(.text);
