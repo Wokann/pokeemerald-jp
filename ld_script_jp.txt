@@ -4925,6 +4925,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimFlatterConfetti_Step);
         src/battle_anim_effects_3.o(.text.AnimFlatterSpotlight);
         src/battle_anim_effects_3.o(.text.AnimFlatterSpotlight_Step);
+        src/battle_anim_effects_3.o(.text.AnimReversalOrb);
+        src/battle_anim_effects_3.o(.text.AnimReversalOrb_Step);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest6);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
