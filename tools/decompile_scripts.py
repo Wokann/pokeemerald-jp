@@ -37,7 +37,7 @@ def build_opcode_table():
         m = re.match(r"\s*script_cmd_table_entry\s+(\S+)\s+(\S+)\s*@", line)
         if m:
             entries.append((m.group(1), m.group(2)))
-    return {i: (const, handler) for i, (const, handler) in enumerate(entries)}
+    return {const: i for i, (const, handler) in enumerate(entries)}
 
 
 # Helper macros used inside command macro bodies.  Emission kinds:
