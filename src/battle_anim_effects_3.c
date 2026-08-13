@@ -3580,6 +3580,52 @@ static void AnimTask_TeeterDanceMovement_Step(u8 taskId)
     }
 }
 
+static void AnimKnockOffStrike_Step(struct Sprite *sprite)
+{
+    // These two cases are identical.
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        sprite->data[1] += sprite->data[0];
+        sprite->data[1] &= 0xFF;
+    }
+    else
+    {
+        sprite->data[1] += sprite->data[0];
+        sprite->data[1] &= 0xFF;
+    }
+
+    sprite->x2 = Cos(sprite->data[1], 20);
+    sprite->y2 = Sin(sprite->data[1], 20);
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+
+    sprite->data[2]++;
+}
+
+// Animates a strike that swipes downard at the target mon.
+// arg 0: initial x pixel offset
+// arg 1: initial y pixel offset
+static void AnimKnockOffStrike(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        sprite->x -= gBattleAnimArgs[0];
+        sprite->y += gBattleAnimArgs[1];
+        sprite->data[0] = -11;
+        sprite->data[1] = 192;
+        StartSpriteAffineAnim(sprite, 1);
+    }
+    else
+    {
+        sprite->data[0] = 11;
+        sprite->data[1] = 192;
+        sprite->x += gBattleAnimArgs[0];
+        sprite->y += gBattleAnimArgs[1];
+    }
+
+    sprite->callback = AnimKnockOffStrike_Step;
+}
+
 #undef IDX_ACTIVE_SPRITES
 #undef tState
 #undef tTimer

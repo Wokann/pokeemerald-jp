@@ -4985,6 +4985,8 @@ SECTIONS {
         src/battle_anim_effects_3.o(.text.AnimTask_SnatchPartnerMove);
         src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement);
         src/battle_anim_effects_3.o(.text.AnimTask_TeeterDanceMovement_Step);
+        src/battle_anim_effects_3.o(.text.AnimKnockOffStrike_Step);
+        src/battle_anim_effects_3.o(.text.AnimKnockOffStrike);
         asm/battle_anim_effects_3.o(.text.battle_anim_effects_3_rest8);
         asm/move_relearner.o(.text);
         src/fldeff_softboiled.o(.text);
