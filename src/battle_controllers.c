@@ -8,11 +8,16 @@
 #include "recorded_battle.h"
 #include "task.h"
 
-extern void CreateTasksForSendRecvLinkBuffers(void);
 extern void RecordedBattle_RestoreSavedParties(void);
 static void InitLinkBtlControllers(void);
 static void InitSinglePlayerBtlControllers(void);
 static void SetBattlePartyIds(void);
+static void Task_HandleSendLinkBuffersData(u8 taskId);
+static void Task_HandleCopyReceivedLinkBuffersData(u8 taskId);
+static void CreateTasksForSendRecvLinkBuffers(void);
+extern u8 sLinkSendTaskId;
+extern u8 sLinkReceiveTaskId;
+extern u8 sUnused;
 
 void HandleLinkBattleSetup(void)
 {
@@ -634,3 +639,59 @@ static void SetBattlePartyIds(void)
             gBattlerPartyIndexes[1] = 0, gBattlerPartyIndexes[3] = 3;
     }
 }
+
+void PrepareBufferDataTransfer(u8 bufferId, u8 *data, u16 size)
+{
+    s32 i;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_LINK)
+    {
+        PrepareBufferDataTransferLink(bufferId, size, data);
+    }
+    else
+    {
+        switch (bufferId)
+        {
+        case B_COMM_TO_CONTROLLER:
+            for (i = 0; i < size; data++, i++)
+                gBattleBufferA[gActiveBattler][i] = *data;
+            break;
+        case B_COMM_TO_ENGINE:
+            for (i = 0; i < size; data++, i++)
+                gBattleBufferB[gActiveBattler][i] = *data;
+            break;
+        }
+    }
+}
+
+#define tInitialDelayTimer      data[10]
+#define tState                  data[11]
+#define tCurrentBlock_WrapFrom  data[12]
+#define tBlockSendDelayTimer    data[13]
+#define tCurrentBlock_End       data[14]
+#define tCurrentBlock_Start     data[15]
+
+static void CreateTasksForSendRecvLinkBuffers(void)
+{
+    sLinkSendTaskId = CreateTask(Task_HandleSendLinkBuffersData, 0);
+    gTasks[sLinkSendTaskId].tState                 = 0;
+    gTasks[sLinkSendTaskId].tCurrentBlock_WrapFrom = 0;
+    gTasks[sLinkSendTaskId].tBlockSendDelayTimer   = 0;
+    gTasks[sLinkSendTaskId].tCurrentBlock_End      = 0;
+    gTasks[sLinkSendTaskId].tCurrentBlock_Start    = 0;
+
+    sLinkReceiveTaskId = CreateTask(Task_HandleCopyReceivedLinkBuffersData, 0);
+    gTasks[sLinkReceiveTaskId].tCurrentBlock_WrapFrom = 0;
+    gTasks[sLinkReceiveTaskId].tBlockSendDelayTimer   = 0;
+    gTasks[sLinkReceiveTaskId].tCurrentBlock_End      = 0;
+    gTasks[sLinkReceiveTaskId].tCurrentBlock_Start    = 0;
+
+    sUnused = 0;
+}
+
+#undef tInitialDelayTimer
+#undef tState
+#undef tCurrentBlock_WrapFrom
+#undef tBlockSendDelayTimer
+#undef tCurrentBlock_End
+#undef tCurrentBlock_Start

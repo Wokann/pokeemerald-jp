@@ -3096,6 +3096,8 @@ SECTIONS {
         src/battle_controllers.o(.text.InitSinglePlayerBtlControllers);
         src/battle_controllers.o(.text.InitLinkBtlControllers);
         src/battle_controllers.o(.text.SetBattlePartyIds);
+        src/battle_controllers.o(.text.PrepareBufferDataTransfer);
+        src/battle_controllers.o(.text.CreateTasksForSendRecvLinkBuffers);
         asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
