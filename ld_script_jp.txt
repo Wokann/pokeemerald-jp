@@ -3160,7 +3160,6 @@ SECTIONS {
         src/battle_controllers.o(.text.BtlController_EmitLinkStandbyMsg);
         src/battle_controllers.o(.text.BtlController_EmitResetActionMoveSelection);
         src/battle_controllers.o(.text.BtlController_EmitCmd55);
-        asm/battle_controllers.o(.text);
         src/decompress.o(.text);
         asm/rom_8034C54.o(.text);
         asm/battle_bg.o(.text);
