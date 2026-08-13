@@ -4684,7 +4684,14 @@ SECTIONS {
         asm/contest_link_80FC4F4.o(.text);
         asm/item_use.o(.text);
         asm/battle_anim_effects_1.o(.text);
-        asm/battle_anim_effects_2.o(.text);
+        asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part1);
+        src/battle_anim_effects_2.o(.text.AnimTask_Withdraw);
+        src/battle_anim_effects_2.o(.text.AnimTask_Withdraw_Step);
+        src/battle_anim_effects_2.o(.text.AnimKinesisZapEnergy);
+        src/battle_anim_effects_2.o(.text.AnimSwordsDanceBlade);
+        src/battle_anim_effects_2.o(.text.AnimSwordsDanceBlade_Step);
+        src/battle_anim_effects_2.o(.text.AnimSonicBoomProjectile);
+        asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_part2);
         asm/water.o(.text);
         asm/fire.o(.text);
         asm/electric.o(.text);
