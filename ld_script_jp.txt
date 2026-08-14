@@ -6717,12 +6717,12 @@ SECTIONS {
 		src/libc/libc_rest_0.o(.text.sub_08297E9C);
 		src/libc/libc_rest_0.o(.text.sub_08297EBC);
 		src/libc/libc_rest_0.o(.text.vfprintf);
-		asm/libc_rest_0_vfprintf.o(.text);
+		src/libc/libc_rest_0.o(.text._vfprintf_r);
 		src/libc/libc_rest_0.o(.text.sub_08298EA4);
 		src/libc/libc_rest_0.o(.text.sub_08298F98);
 		src/libc/libc_rest_0.o(.text.__swsetup);
 		src/libc/libc_rest_0.o(.text.sub_082990B4);
-		asm/libc_rest_0_dtoa.o(.text);
+		src/libc/libc_rest_0.o(.text._dtoa_r);
 		src/libc/libc_rest_0.o(.text.fflush);
 		src/libc/libc_rest_0.o(.text.sub_08299F9C);
 		src/libc/libc_rest_0.o(.text.__sfmoreglue);
