@@ -99,6 +99,19 @@ static void AnimCuttingSlice(struct Sprite *sprite);
 static void AnimAirCutterSlice(struct Sprite *sprite);
 static void AnimSlice_Step(struct Sprite *sprite);
 static void UNUSED UnusedFlickerAnim(struct Sprite *sprite);
+static void AnimCirclingMusicNote(struct Sprite *sprite);
+static void AnimCirclingMusicNote_Step(struct Sprite *sprite);
+static void AnimProtect(struct Sprite *sprite);
+static void AnimProtect_Step(struct Sprite *sprite);
+static void AnimMilkBottle(struct Sprite *sprite);
+static void AnimMilkBottle_Step1(struct Sprite *sprite);
+static void AnimMilkBottle_Step2(struct Sprite *sprite, int unk1, int unk2);
+static void AnimGrantingStars(struct Sprite *sprite);
+static void AnimSparklingStars(struct Sprite *sprite);
+static void AnimBubbleBurst(struct Sprite *sprite);
+static void AnimBubbleBurst_Step(struct Sprite *sprite);
+static void AnimSleepLetterZ(struct Sprite *sprite);
+static void AnimSleepLetterZ_Step(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -1790,4 +1803,336 @@ static void UNUSED UnusedFlickerAnim(struct Sprite *sprite)
         DestroySprite(&gSprites[sprite->data[1]]);
         DestroyAnimSprite(sprite);
     }
+}
+
+static void AnimCirclingMusicNote(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4, unk5);
+
+    sprite->data[0] = cmd->unk2;
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        sprite->x -= cmd->unk0;
+    else
+        sprite->x += cmd->unk0;
+
+    StartSpriteAnim(sprite, cmd->unk5);
+    sprite->data[1] = -cmd->unk3;
+    sprite->y += cmd->unk1;
+    sprite->data[3] = cmd->unk4;
+    sprite->callback = AnimCirclingMusicNote_Step;
+    sprite->callback(sprite);
+}
+
+static void AnimCirclingMusicNote_Step(struct Sprite *sprite)
+{
+    sprite->x2 = Cos(sprite->data[0], 100);
+    sprite->y2 = Sin(sprite->data[0], 20);
+    if (sprite->data[0] < 128)
+        sprite->subpriority = 0;
+    else
+        sprite->subpriority = 14;
+
+    sprite->data[0] = (sprite->data[0] + sprite->data[1]) & 0xFF;
+    sprite->data[5] += 130;
+    sprite->y2 += sprite->data[5] >> 8;
+    sprite->data[2]++;
+    if (sprite->data[2] == sprite->data[3])
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimProtect(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    if (IsContest())
+        cmd->unk1 += 8;
+
+    sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X) + cmd->unk0;
+    sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y) + cmd->unk1;
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER || IsContest())
+        sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker) + 1;
+    else
+        sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimAttacker);
+
+    sprite->data[0] = cmd->unk2;
+    sprite->data[2] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_PROTECT));
+    sprite->data[7] = 16;
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]));
+    sprite->callback = AnimProtect_Step;
+}
+
+static void AnimProtect_Step(struct Sprite *sprite)
+{
+    int i, id, savedPal;
+    sprite->data[5] += 96;
+    sprite->x2 = -(sprite->data[5] >> 8);
+    if (++sprite->data[1] > 1)
+    {
+        sprite->data[1] = 0;
+        savedPal = gPlttBufferFaded[sprite->data[2] + 1];
+        i = 0;
+        while (i < 6)
+        {
+            id = sprite->data[2] + ++i;
+            gPlttBufferFaded[id] = gPlttBufferFaded[id + 1];
+        }
+
+        gPlttBufferFaded[sprite->data[2] + 7] = savedPal;
+    }
+
+    if (sprite->data[7] > 6 && sprite->data[0] >0 && ++sprite->data[6] > 1)
+    {
+        sprite->data[6] = 0;
+        sprite->data[7] -= 1;
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]));
+    }
+
+    if (sprite->data[0] > 0)
+    {
+        sprite->data[0] -= 1;
+    }
+    else if (++sprite->data[6] > 1)
+    {
+        sprite->data[6] = 0;
+        sprite->data[7]++;
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - sprite->data[7], sprite->data[7]));
+        if (sprite->data[7] == 16)
+        {
+            sprite->invisible = TRUE;
+            sprite->callback = DestroyAnimSpriteAndDisableBlend;
+        }
+    }
+}
+
+static void AnimMilkBottle(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + 0xFFE8;
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+    sprite->data[6] = 0;
+    sprite->data[7] = 16;
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(sprite->data[6], sprite->data[7]));
+    sprite->callback = AnimMilkBottle_Step1;
+}
+
+static void AnimMilkBottle_Step1(struct Sprite *sprite)
+{
+    switch (sprite->data[0])
+    {
+    case 0:
+        if (++sprite->data[2] > 0)
+        {
+            sprite->data[2] = 0;
+            if (((++sprite->data[1]) & 1) != 0)
+            {
+                if (sprite->data[6] <= 15)
+                    sprite->data[6]++;
+            }
+            else if (sprite->data[7] > 0)
+            {
+                sprite->data[7]--;
+            }
+
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(sprite->data[6], sprite->data[7]));
+            if (sprite->data[6] == 16 && sprite->data[7] == 0)
+            {
+                sprite->data[1] = 0;
+                sprite->data[0]++;
+            }
+        }
+        break;
+    case 1:
+        if (++sprite->data[1] > 8)
+        {
+            sprite->data[1] = 0;
+            StartSpriteAffineAnim(sprite, 1);
+            sprite->data[0]++;
+        }
+        break;
+    case 2:
+        AnimMilkBottle_Step2(sprite, 16, 4);
+        if (++sprite->data[1] > 2)
+        {
+            sprite->data[1] = 0;
+            sprite->y++;
+        }
+
+        if (++sprite->data[2] <= 29)
+            break;
+
+        if (sprite->data[2] & 1)
+        {
+            if (sprite->data[6] > 0)
+                sprite->data[6]--;
+        }
+        else if (sprite->data[7] <= 15)
+        {
+            sprite->data[7]++;
+        }
+
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(sprite->data[6], sprite->data[7]));
+        if (sprite->data[6] == 0 && sprite->data[7] == 16)
+        {
+            sprite->data[1] = 0;
+            sprite->data[2] = 0;
+            sprite->data[0]++;
+        }
+        break;
+    case 3:
+        sprite->invisible = TRUE;
+        sprite->data[0]++;
+        break;
+    case 4:
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(0, 0));
+        DestroyAnimSprite(sprite);
+        break;
+    }
+}
+
+static void AnimMilkBottle_Step2(struct Sprite *sprite, int unk1, int unk2)
+{
+    if (sprite->data[3] <= 11)
+        sprite->data[4] += 2;
+
+    if ((u16)(sprite->data[3] - 0x12) <= 0x17)
+        sprite->data[4] -= 2;
+
+    if ((sprite->data[3]) > 0x2F)
+        sprite->data[4] += 2;
+
+    sprite->x2 = sprite->data[4] / 9;
+    sprite->y2 = sprite->data[4] / 14;
+    if (sprite->y2 < 0)
+        sprite->y2 *= -1;
+
+    sprite->data[3]++;
+    if (sprite->data[3] > 0x3B)
+        sprite->data[3] = 0;
+}
+
+static void AnimGrantingStars(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4, unk5);
+
+    if (!cmd->unk2)
+        SetSpriteCoordsToAnimAttackerCoords(sprite);
+
+    SetAnimSpriteInitialXOffset(sprite, cmd->unk0);
+    sprite->y += cmd->unk1;
+    sprite->data[0] = cmd->unk5;
+    sprite->data[1] = cmd->unk3;
+    sprite->data[2] = cmd->unk4;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback = TranslateSpriteLinearFixedPoint;
+}
+
+static void AnimSparklingStars(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4, unk5, unk6);
+
+    u8 battler;
+    if (!cmd->unk2)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    if (IsDoubleBattle() && IsBattlerSpriteVisible(BATTLE_PARTNER(battler)))
+    {
+        SetAverageBattlerPositions(battler, cmd->unk6, &sprite->x, &sprite->y);
+        SetAnimSpriteInitialXOffset(sprite, cmd->unk0);
+        sprite->y += cmd->unk1;
+    }
+    else
+    {
+        if (!cmd->unk6)
+        {
+            sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+            sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y) + cmd->unk1;
+        }
+        else
+        {
+            sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X_2);
+            sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk1;
+        }
+
+        SetAnimSpriteInitialXOffset(sprite, cmd->unk0);
+    }
+
+    sprite->data[0] = cmd->unk5;
+    sprite->data[1] = cmd->unk3;
+    sprite->data[2] = cmd->unk4;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback = TranslateSpriteLinearFixedPoint;
+}
+
+static void AnimBubbleBurst(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        sprite->x += cmd->unk0;
+        sprite->y += cmd->unk1;
+    }
+    else
+    {
+        sprite->x -= cmd->unk0;
+        sprite->y += cmd->unk1;
+        StartSpriteAnim(sprite, 1);
+    }
+
+    sprite->callback = AnimBubbleBurst_Step;
+}
+
+static void AnimBubbleBurst_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > 30)
+    {
+        sprite->y2 = (30 - sprite->data[0]) / 3;
+        sprite->x2 = Sin(sprite->data[1] * 4, 3);
+        sprite->data[1]++;
+    }
+
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimSleepLetterZ(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        sprite->x += cmd->unk0;
+        sprite->y += cmd->unk1;
+        sprite->data[3] = 1;
+    }
+    else
+    {
+        sprite->x -= cmd->unk0;
+        sprite->y += cmd->unk1;
+        sprite->data[3] = 0xFFFF;
+        StartSpriteAffineAnim(sprite, 1);
+    }
+
+    sprite->callback = AnimSleepLetterZ_Step;
+}
+
+static void AnimSleepLetterZ_Step(struct Sprite *sprite)
+{
+    sprite->y2 = -(sprite->data[0] / 0x28);
+    sprite->x2 = sprite->data[4] / 10;
+    sprite->data[4] += sprite->data[3] * 2;
+    sprite->data[0] += sprite->data[1];
+    if (++sprite->data[1] > 60)
+        DestroySpriteAndMatrix(sprite);
 }
