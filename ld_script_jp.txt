@@ -3958,7 +3958,7 @@ SECTIONS {
         asm/battle_main_introprep.o(.text);
         src/battle_main.o(.text.BattleIntroDrawTrainersOrMonsSprites);
         src/battle_main.o(.text.BattleIntroDrawPartySummaryScreens);
-        asm/battle_main_introprinttr.o(.text);
+        src/battle_main.o(.text.BattleIntroPrintTrainerWantsToBattle);
         src/battle_main.o(.text.BattleIntroPrintWildMonAttacked);
         src/battle_main.o(.text.BattleIntroPrintOpponentSendsOut);
         src/battle_main.o(.text.BattleIntroOpponent2SendsOutMonAnimation);
@@ -4005,7 +4005,7 @@ SECTIONS {
         src/battle_main.o(.text.HandleAction_GoNear);
         src/battle_main.o(.text.HandleAction_SafariZoneRun);
         src/battle_main.o(.text.HandleAction_WallyBallThrow);
-        asm/battle_main_tryfinish2.o(.text);
+        src/battle_main.o(.text.sub_0803EEE4);
         src/battle_main.o(.text.HandleAction_NothingIsFainted);
         src/battle_main.o(.text.HandleAction_ActionFinished);
         asm/battle_main.o(.text);
@@ -6201,7 +6201,7 @@ SECTIONS {
         src/cable_car.o(.text.DrawNextGroundSegmentGoingUp);
         src/cable_car.o(.text.DrawNextGroundSegmentGoingDown);
         src/math_util.o(.text);
-        asm/roulette_util.o(.text.sub_08151638);
+        src/roulette_util.o(.text.MathUtil_Inv32);
         src/roulette_util.o(.text.RouletteFlash_Reset);
         src/roulette_util.o(.text.RouletteFlash_Add);
         src/roulette_util.o(.text.RouletteFlash_Remove);
@@ -6596,7 +6596,7 @@ SECTIONS {
         src/braille.o(.text.DecompressGlyph_Braille);
         asm/multiboot_init.o(.text);
         src/multiboot.o(.text);
-        asm/unk_81BAD84.o(.text);
+        src/berry_fix_program.o(.text.LoadBerryFixGraphics);
         asm/battle_controller_player_partner.o(.text);
         src/mirage_tower.o(.text.IsMirageTowerVisible);
         src/mirage_tower.o(.text.UpdateMirageTowerPulseBlend);

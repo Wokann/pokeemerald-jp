@@ -191,3 +191,5 @@ void TraderMenuGetDecoration(void)
     u8 taskId = CreateTask(Task_HandleGetDecorationMenuInput, 0);
     CreateAvailableDecorationsMenu(taskId);
 }
+
+

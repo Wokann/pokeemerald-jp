@@ -129,7 +129,6 @@ static void SpriteCB_TrainerThrowObject_Main(struct Sprite *sprite);
 static void BattleMainCB1(void);
 static void BattleIntroGetMonsData(void);
 static void BattleIntroPrintPlayerSendsOut(void);
-static void BattleIntroPrintTrainerWantsToBattle(void);
 static void BattleIntroPrintWildMonAttacked(void);
 static void BattleIntroPrintOpponentSendsOut(void);
 static void CheckFocusPunch_ClearVarsBeforeTurnStarts(void);
@@ -9482,6 +9481,64 @@ __attribute__((naked)) void TryEvolvePokemon(void)
         "_0803DB7C: .4byte 0x03005AB4\n\t"
         "_0803DB80: .4byte 0x03005A64\n\t"
         "_0803DB84: .4byte 0x0803DBB1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+
+__attribute__((naked)) void BattleIntroPrintTrainerWantsToBattle(void)
+{
+    __asm__(".syntax unified\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _0803AD8C\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0803AD86\n\t"
+        "	movs r0, #1\n\t"
+        "	bl GetBattlerAtPosition\n\t"
+        "	ldr r1, _0803AD90\n\t"
+        "	strb r0, [r1]\n\t"
+        "	ldrb r1, [r1]\n\t"
+        "	movs r0, #0\n\t"
+        "	bl PrepareStringBattle\n\t"
+        "	ldr r1, _0803AD94\n\t"
+        "	ldr r0, _0803AD98\n\t"
+        "	str r0, [r1]\n\t"
+        "_0803AD86:\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0803AD8C: .4byte 0x02023D0C\n\t"
+        "_0803AD90: .4byte 0x02023D08\n\t"
+        "_0803AD94: .4byte 0x03005A64\n\t"
+        "_0803AD98: .4byte 0x0803ADC5\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+
+__attribute__((naked)) void sub_0803EEE4(void)
+{
+    __asm__(".syntax unified\n\t"
+        "	push {lr}\n\t"
+        "	bl HandleFaintedMonActions\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r1, r0, #0x18\n\t"
+        "	cmp r1, #0\n\t"
+        "	bne _0803EF00\n\t"
+        "	ldr r0, _0803EF04\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	adds r0, #0x4d\n\t"
+        "	strb r1, [r0]\n\t"
+        "	ldr r1, _0803EF08\n\t"
+        "	movs r0, #0xc\n\t"
+        "	strb r0, [r1]\n\t"
+        "_0803EF00:\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0803EF04: .4byte 0x02024140\n\t"
+        "_0803EF08: .4byte 0x02023D27\n\t"
         ".syntax divided\n\t"
     );
 }
