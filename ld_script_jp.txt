@@ -282,6 +282,7 @@ sSpriteSheet_PressStart = ABSOLUTE(0x0851AD8C);
 sPokemonLogoShineSpriteSheet = ABSOLUTE(0x0851ADD8);
 sSpritePalette_PressStart = ABSOLUTE(0x0851AD9C);
 CB2_InitBerryFixProgram = ABSOLUTE(0x081BF021);
+TryPutBattleSeminarOnAir = sub_080EEE7C;
 sRotatingTilePuzzle = ABSOLUTE(0x0203CB1C);
 sSpecialBattleStrings = ABSOLUTE(0x085D3304);
 sVariableDmgMoves = ABSOLUTE(0x085D2F0C);
@@ -6457,6 +6458,8 @@ SECTIONS {
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnMove);
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnAnimation);
         asm/battle_tv_rest.o(.text);
+        src/battle_tv.o(.text.AddPointsOnFainting);
+        src/battle_tv.o(.text.TrySetBattleSeminarShow);
         src/battle_tv.o(.text.ShouldCalculateDamage);
         src/battle_tv.o(.text.BattleTv_ClearExplosionFaintCause);
         src/battle_tv.o(.text.GetBattlerMoveSlotId);
