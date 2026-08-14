@@ -23251,3 +23251,266 @@ __attribute__((naked)) u8 StorageGetCurrentBox(void)
     );
 }
 
+
+void SetCurrentBox(u8 boxId)
+{
+    if (boxId < TOTAL_BOXES_COUNT)
+        gPokemonStoragePtr->currentBox = boxId;
+}
+
+u32 GetBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        return GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], request);
+    else
+        return 0;
+}
+
+void SetBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request, const void *value)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        SetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], request, value);
+}
+
+u32 GetCurrentBoxMonData(u8 boxPosition, s32 request)
+{
+    return GetBoxMonDataAt(gPokemonStoragePtr->currentBox, boxPosition, request);
+}
+
+void SetCurrentBoxMonData(u8 boxPosition, s32 request, const void *value)
+{
+    SetBoxMonDataAt(gPokemonStoragePtr->currentBox, boxPosition, request, value);
+}
+
+void GetBoxMonNickAt(u8 boxId, u8 boxPosition, u8 *dst)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_NICKNAME, dst);
+    else
+        *dst = EOS;
+}
+
+u32 GetBoxMonLevelAt(u8 boxId, u8 boxPosition)
+{
+    u32 lvl;
+
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT && GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_SANITY_HAS_SPECIES))
+        lvl = GetLevelFromBoxMonExp(&gPokemonStoragePtr->boxes[boxId][boxPosition]);
+    lvl = 0;
+
+    return lvl;
+}
+
+void SetBoxMonNickAt(u8 boxId, u8 boxPosition, const u8 *nick)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        SetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], MON_DATA_NICKNAME, nick);
+}
+
+u32 GetAndCopyBoxMonDataAt(u8 boxId, u8 boxPosition, s32 request, void *dst)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        return GetBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition], request, dst);
+    else
+        return 0;
+}
+
+void SetBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *src)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        gPokemonStoragePtr->boxes[boxId][boxPosition] = *src;
+}
+
+void CopyBoxMonAt(u8 boxId, u8 boxPosition, struct BoxPokemon *dst)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        *dst = gPokemonStoragePtr->boxes[boxId][boxPosition];
+}
+
+void CreateBoxMonAt(u8 boxId, u8 boxPosition, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 personality, u8 otIDType, u32 otID)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+    {
+        CreateBoxMon(&gPokemonStoragePtr->boxes[boxId][boxPosition],
+                     species,
+                     level,
+                     fixedIV,
+                     hasFixedPersonality, personality,
+                     otIDType, otID);
+    }
+}
+
+void ZeroBoxMonAt(u8 boxId, u8 boxPosition)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        ZeroBoxMonData(&gPokemonStoragePtr->boxes[boxId][boxPosition]);
+}
+
+void BoxMonAtToMon(u8 boxId, u8 boxPosition, struct Pokemon *dst)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        BoxMonToMon(&gPokemonStoragePtr->boxes[boxId][boxPosition], dst);
+}
+
+struct BoxPokemon *GetBoxedMonPtr(u8 boxId, u8 boxPosition)
+{
+    if (boxId < TOTAL_BOXES_COUNT && boxPosition < IN_BOX_COUNT)
+        return &gPokemonStoragePtr->boxes[boxId][boxPosition];
+    else
+        return NULL;
+}
+
+u8 *GetBoxNamePtr(u8 boxId)
+{
+    if (boxId < TOTAL_BOXES_COUNT)
+        return gPokemonStoragePtr->boxNames[boxId];
+    else
+        return NULL;
+}
+
+u8 GetBoxWallpaper(u8 boxId)
+{
+    if (boxId < TOTAL_BOXES_COUNT)
+        return gPokemonStoragePtr->boxWallpapers[boxId];
+    else
+        return 0;
+}
+
+void SetBoxWallpaper(u8 boxId, u8 wallpaperId)
+{
+    if (boxId < TOTAL_BOXES_COUNT && wallpaperId <= 16)
+        gPokemonStoragePtr->boxWallpapers[boxId] = wallpaperId;
+}
+
+bool8 CheckFreePokemonStorageSpace(void)
+{
+    s32 i, j;
+
+    for (i = 0; i < TOTAL_BOXES_COUNT; i++)
+    {
+        for (j = 0; j < IN_BOX_COUNT; j++)
+        {
+            if (!GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_SANITY_HAS_SPECIES))
+                return TRUE;
+        }
+    }
+
+    return FALSE;
+}
+
+__attribute__((naked)) void sub_080D19EC(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, r6, r7, lr}\n\t"
+        "	mov r7, r8\n\t"
+        "	push {r7}\n\t"
+        "	mov r8, r0\n\t"
+        "	lsls r1, r1, #0x18\n\t"
+        "	lsrs r0, r1, #0x18\n\t"
+        "	lsls r2, r2, #0x18\n\t"
+        "	lsrs r7, r2, #0x18\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r4, r3, #0\n\t"
+        "	ldr r2, _080D1A50\n\t"
+        "	cmp r3, #1\n\t"
+        "	bhi _080D1A0E\n\t"
+        "	movs r2, #1\n\t"
+        "	cmp r3, #1\n\t"
+        "	beq _080D1A12\n\t"
+        "_080D1A0E:\n\t"
+        "	cmp r4, #3\n\t"
+        "	bne _080D1A5C\n\t"
+        "_080D1A12:\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	asrs r0, r0, #0x18\n\t"
+        "	lsls r2, r2, #0x10\n\t"
+        "	asrs r1, r2, #0x10\n\t"
+        "	adds r1, r1, r0\n\t"
+        "	lsls r0, r1, #0x10\n\t"
+        "	asrs r1, r0, #0x10\n\t"
+        "	adds r6, r2, #0\n\t"
+        "	cmp r1, #0\n\t"
+        "	blt _080D1AA8\n\t"
+        "	cmp r1, r7\n\t"
+        "	bgt _080D1AA8\n\t"
+        "_080D1A2A:\n\t"
+        "	asrs r4, r0, #0x10\n\t"
+        "	lsls r0, r4, #2\n\t"
+        "	adds r0, r0, r4\n\t"
+        "	lsls r0, r0, #4\n\t"
+        "	add r0, r8\n\t"
+        "	movs r1, #0xb\n\t"
+        "	bl GetBoxMonData\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _080D1A54\n\t"
+        "	asrs r0, r6, #0x10\n\t"
+        "	adds r0, r4, r0\n\t"
+        "	lsls r0, r0, #0x10\n\t"
+        "	asrs r2, r0, #0x10\n\t"
+        "	cmp r2, #0\n\t"
+        "	blt _080D1AA8\n\t"
+        "	cmp r2, r7\n\t"
+        "	ble _080D1A2A\n\t"
+        "	b _080D1AA8\n\t"
+        "	.align 2, 0\n\t"
+        "_080D1A50: .4byte 0x0000FFFF\n\t"
+        "_080D1A54:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	b _080D1AAC\n\t"
+        "_080D1A58:\n\t"
+        "	adds r0, r5, #0\n\t"
+        "	b _080D1AAC\n\t"
+        "_080D1A5C:\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	asrs r0, r0, #0x18\n\t"
+        "	lsls r2, r2, #0x10\n\t"
+        "	asrs r1, r2, #0x10\n\t"
+        "	adds r1, r1, r0\n\t"
+        "	lsls r0, r1, #0x10\n\t"
+        "	asrs r1, r0, #0x10\n\t"
+        "	adds r6, r2, #0\n\t"
+        "	cmp r1, #0\n\t"
+        "	blt _080D1AA8\n\t"
+        "	cmp r1, r7\n\t"
+        "	bgt _080D1AA8\n\t"
+        "_080D1A74:\n\t"
+        "	asrs r5, r0, #0x10\n\t"
+        "	lsls r0, r5, #2\n\t"
+        "	adds r0, r0, r5\n\t"
+        "	lsls r0, r0, #4\n\t"
+        "	mov r1, r8\n\t"
+        "	adds r4, r1, r0\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r1, #0xb\n\t"
+        "	bl GetBoxMonData\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _080D1A98\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r1, #0x2d\n\t"
+        "	bl GetBoxMonData\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _080D1A58\n\t"
+        "_080D1A98:\n\t"
+        "	asrs r0, r6, #0x10\n\t"
+        "	adds r0, r5, r0\n\t"
+        "	lsls r0, r0, #0x10\n\t"
+        "	asrs r2, r0, #0x10\n\t"
+        "	cmp r2, #0\n\t"
+        "	blt _080D1AA8\n\t"
+        "	cmp r2, r7\n\t"
+        "	ble _080D1A74\n\t"
+        "_080D1AA8:\n\t"
+        "	movs r0, #1\n\t"
+        "	rsbs r0, r0, #0\n\t"
+        "_080D1AAC:\n\t"
+        "	pop {r3}\n\t"
+        "	mov r8, r3\n\t"
+        "	pop {r4, r5, r6, r7}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
