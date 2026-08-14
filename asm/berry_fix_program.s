@@ -323,7 +323,7 @@ _081BF15C:
 	adds r1, #0x4b
 	movs r4, #0
 	strb r4, [r1]
-	bl GetGlyphWidthFont6
+	bl MultiBootInit
 	strh r4, [r5, #2]
 	movs r0, #5
 	b _081BF270
