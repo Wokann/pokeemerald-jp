@@ -118,6 +118,8 @@ static void AnimRedHeartRising_Step(struct Sprite *sprite);
 extern const u16 sMusicNotePaletteTagsTable[];
 extern const union AffineAnimCmd sAffineAnims_StretchBattlerUp[];
 extern const union AffineAnimCmd sAffineAnims_UproarDistortion[];
+extern const struct SpriteTemplate gSpeedDustSpriteTemplate;
+extern const s8 gSpeedDustPosTable[][2];
 void AnimTask_HeartsBackground(u8 taskId);
 static void AnimTask_HeartsBackground_Step(u8 taskId);
 void AnimTask_ScaryFace(u8 taskId);
@@ -148,6 +150,12 @@ static void AnimPerishSongMusicNote_Step2(struct Sprite *sprite);
 static void AnimGuardRing(struct Sprite *sprite);
 void AnimTask_IsFuryCutterHitRight(u8 taskId);
 void AnimTask_GetFuryCutterHitCount(u8 taskId);
+void AnimTask_ExtremeSpeedImpact(u8 taskId);
+static void AnimTask_ExtremeSpeedImpact_Step(u8 taskId);
+void AnimTask_ExtremeSpeedMonReappear(u8 taskId);
+static void AnimTask_ExtremeSpeedMonReappear_Step(u8 taskId);
+void AnimTask_SpeedDust(u8 taskId);
+static void AnimTask_SpeedDust_Step(u8 taskId);
 
 // Rotates the attacking mon sprite downwards and then back upwards to its original position.
 // No args.
@@ -2589,4 +2597,202 @@ void AnimTask_GetFuryCutterHitCount(u8 taskId)
 {
     gBattleAnimArgs[ARG_RET_ID] = gAnimDisableStructPtr->furyCutterCounter;
     DestroyAnimVisualTask(taskId);
+}
+
+void AnimTask_ExtremeSpeedImpact(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = 0;
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 0;
+    task->data[12] = 3;
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        task->data[13] = 0xFFFF;
+        task->data[14] = 8;
+    }
+    else
+    {
+        task->data[13] = 1;
+        task->data[14] = -8;
+    }
+
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_TARGET);
+    task->func = AnimTask_ExtremeSpeedImpact_Step;
+}
+
+static void AnimTask_ExtremeSpeedImpact_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch (task->data[0])
+    {
+    case 0:
+        gSprites[task->data[15]].x2 += task->data[14];
+        task->data[1] = 0;
+        task->data[2] = 0;
+        task->data[3] = 0;
+        task->data[0]++;
+        break;
+    case 1:
+        if (++task->data[1] > 1)
+        {
+            task->data[1] = 0;
+            task->data[2]++;
+            if (task->data[2] & 1)
+                gSprites[task->data[15]].x2 += 6;
+            else
+                gSprites[task->data[15]].x2 -= 6;
+
+            if (++task->data[3] > 4)
+            {
+                if (task->data[2] & 1)
+                    gSprites[task->data[15]].x2 -= 6;
+
+                task->data[0]++;
+            }
+        }
+        break;
+    case 2:
+        if (--task->data[12] != 0)
+            task->data[0] = 0;
+        else
+            task->data[0]++;
+        break;
+    case 3:
+        gSprites[task->data[15]].x2 += task->data[13];
+        if (gSprites[task->data[15]].x2 == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+void AnimTask_ExtremeSpeedMonReappear(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = 0;
+    task->data[1] = 0;
+    task->data[2] = 0;
+    task->data[3] = 0;
+    task->data[4] = 1;
+    task->data[13] = 14;
+    task->data[14] = 2;
+    task->data[15] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->func = AnimTask_ExtremeSpeedMonReappear_Step;
+}
+
+static void AnimTask_ExtremeSpeedMonReappear_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (task->data[0] == 0 && ++task->data[1] > task->data[4])
+    {
+        task->data[1] = 0;
+        if (++task->data[2] & 1)
+            gSprites[task->data[15]].invisible = FALSE;
+        else
+            gSprites[task->data[15]].invisible = TRUE;
+
+        if (++task->data[3] >= task->data[13])
+        {
+            if (++task->data[4] < task->data[14])
+            {
+                task->data[1] = 0;
+                task->data[2] = 0;
+                task->data[3] = 0;
+            }
+            else
+            {
+                gSprites[task->data[15]].invisible = FALSE;
+                DestroyAnimVisualTask(taskId);
+            }
+        }
+    }
+}
+
+void AnimTask_SpeedDust(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = 0;
+    task->data[1] = 4;
+    task->data[2] = 0;
+    task->data[3] = 0;
+    task->data[4] = 0;
+    task->data[5] = 0;
+    task->data[6] = 0;
+    task->data[7] = 0;
+    task->data[8] = 0;
+    task->data[13] = 0;
+    task->data[14] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    task->data[15] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    task->func = AnimTask_SpeedDust_Step;
+}
+
+static void AnimTask_SpeedDust_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[8])
+    {
+    case 0:
+        if (++task->data[4] > 1)
+        {
+            task->data[4] = 0;
+            task->data[5] = (task->data[5] + 1) & 1;
+            if (++task->data[6] > 20)
+            {
+                if (task->data[7] == 0)
+                {
+                    task->data[6] = 0;
+                    // JP sets data[8] directly without touching data[7]/data[1].
+                    task->data[8] = 1;
+                }
+                else
+                {
+                    task->data[8] = 2;
+                }
+            }
+        }
+        break;
+    case 1:
+        task->data[5] = 0;
+        if (++task->data[4] > 20)
+        {
+            task->data[7] = 1;
+            task->data[8] = 0;
+        }
+        break;
+    case 2:
+        task->data[5] = 1;
+        break;
+    }
+
+    switch (task->data[0])
+    {
+    case 0:
+        if (++task->data[1] > 4)
+        {
+            u8 spriteId;
+            task->data[1] = 0;
+            spriteId = CreateSprite(&gSpeedDustSpriteTemplate, task->data[14], task->data[15], 0);
+            if (spriteId != MAX_SPRITES)
+            {
+                gSprites[spriteId].data[0] = taskId;
+                gSprites[spriteId].data[1] = 13;
+                gSprites[spriteId].x2 = gSpeedDustPosTable[task->data[2]][0];
+                gSprites[spriteId].y2 = gSpeedDustPosTable[task->data[2]][1];
+                task->data[13]++;
+                if (++task->data[2] > 3)
+                {
+                    task->data[2] = 0;
+                    if (++task->data[3] > 5)
+                        task->data[0]++;
+                }
+            }
+        }
+        break;
+    case 1:
+        if (task->data[13] == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
 }
