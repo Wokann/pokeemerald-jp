@@ -6455,7 +6455,7 @@ SECTIONS {
         asm/evolution_graphics.o(.text);
         asm/bard_music.o(.text);
         src/fldeff_teleport.o(.text);
-        asm/battle_tv.o(.text);
+        src/battle_tv.o(.text.BattleTv_SetDataBasedOnString);
         src/battle_tv.o(.text.IsNotSpecialBattleString);
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnMove);
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnAnimation);
