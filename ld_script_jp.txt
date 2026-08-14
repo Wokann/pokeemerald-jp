@@ -4848,7 +4848,8 @@ SECTIONS {
         src/battle_anim_mons.o(.text.SetSpriteCoordsToAnimAttackerCoords);
         src/battle_anim_mons.o(.text.SetAnimSpriteInitialXOffset);
         src/battle_anim_mons.o(.text.InitAnimArcTranslation);
-        asm/battle_anim_mons.o(.text.battle_anim_mons_arc);
+        src/battle_anim_mons.o(.text.TranslateAnimHorizontalArc);
+        src/battle_anim_mons.o(.text.TranslateAnimVerticalArc);
         src/battle_anim_mons.o(.text.SetSpritePrimaryCoordsFromSecondaryCoords);
         src/battle_anim_mons.o(.text.InitSpritePosToAnimTarget);
         src/battle_anim_mons.o(.text.InitSpritePosToAnimAttacker);
@@ -4929,7 +4930,7 @@ SECTIONS {
         src/battle_anim_mons.o(.text.DestroySpriteAndFreeResources_);
         src/battle_anim_mons.o(.text.GetBattlerSpriteCoordAttr);
         src/battle_anim_mons.o(.text.SetAverageBattlerPositions);
-        asm/battle_anim_mons.o(.text.battle_anim_mons_cisc);
+        src/battle_anim_mons.o(.text.CreateInvisibleSpriteCopy);
         src/battle_anim_mons.o(.text.AnimTranslateLinearAndFlicker_Flipped);
         src/battle_anim_mons.o(.text.AnimTranslateLinearAndFlicker);
         src/battle_anim_mons.o(.text.AnimSpinningSparkle);
@@ -4940,7 +4941,6 @@ SECTIONS {
         src/battle_anim_mons.o(.text.AnimWeatherBallUp);
         src/battle_anim_mons.o(.text.AnimWeatherBallUp_Step);
         src/battle_anim_mons.o(.text.AnimWeatherBallDown);
-        asm/battle_anim_mons.o(.text);
         src/task.o(.text);
         src/reshow_battle_screen.o(.text);
         src/battle_anim_status_effects.o(.text.Task_FlashingCircleImpacts);
