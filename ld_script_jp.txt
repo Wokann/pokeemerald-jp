@@ -4772,6 +4772,16 @@ SECTIONS {
         src/battle_anim_effects_1.o(.text.AnimFlyingParticle);
         src/battle_anim_effects_1.o(.text.AnimFlyingParticle_Step);
         src/battle_anim_effects_1.o(.text.AnimTask_CycleMagicalLeafPal);
+        src/battle_anim_effects_1.o(.text.AnimNeedleArmSpike);
+        src/battle_anim_effects_1.o(.text.AnimNeedleArmSpike_Step);
+        src/battle_anim_effects_1.o(.text.AnimWhipHit_WaitEnd);
+        src/battle_anim_effects_1.o(.text.AnimSlidingHit);
+        src/battle_anim_effects_1.o(.text.AnimWhipHit);
+        src/battle_anim_effects_1.o(.text.AnimFlickeringPunch);
+        src/battle_anim_effects_1.o(.text.AnimCuttingSlice);
+        src/battle_anim_effects_1.o(.text.AnimAirCutterSlice);
+        src/battle_anim_effects_1.o(.text.AnimSlice_Step);
+        src/battle_anim_effects_1.o(.text.UnusedFlickerAnim);
         asm/battle_anim_effects_1.o(.text.battle_anim_effects_1_rest);
         src/battle_anim_effects_2.o(.text.AnimCirclingFinger);
         src/battle_anim_effects_2.o(.text.AnimBouncingMusicNote);

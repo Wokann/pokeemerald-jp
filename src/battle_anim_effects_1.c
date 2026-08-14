@@ -89,6 +89,16 @@ static void AnimTask_LeafBlade_Step2_Callback(struct Sprite *sprite);
 static void AnimFlyingParticle(struct Sprite *sprite);
 static void AnimFlyingParticle_Step(struct Sprite *sprite);
 void AnimTask_CycleMagicalLeafPal(u8 taskId);
+static void AnimNeedleArmSpike(struct Sprite *sprite);
+static void AnimNeedleArmSpike_Step(struct Sprite *sprite);
+static void AnimWhipHit_WaitEnd(struct Sprite *sprite);
+static void AnimSlidingHit(struct Sprite *sprite);
+static void AnimWhipHit(struct Sprite *sprite);
+static void AnimFlickeringPunch(struct Sprite *sprite);
+static void AnimCuttingSlice(struct Sprite *sprite);
+static void AnimAirCutterSlice(struct Sprite *sprite);
+static void AnimSlice_Step(struct Sprite *sprite);
+static void UNUSED UnusedFlickerAnim(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -1516,4 +1526,268 @@ void AnimTask_CycleMagicalLeafPal(u8 taskId)
     // TODO: gBattleAnimArgs[ARG_RET_ID]?
     if (gBattleAnimArgs[7] == -1)
         DestroyAnimVisualTask(taskId);
+}
+
+static void AnimNeedleArmSpike(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4);
+
+    u8 a;
+    u8 b;
+    u16 c;
+    u16 x;
+    u16 y;
+
+    if (cmd->unk4 == 0)
+    {
+        DestroyAnimSprite(sprite);
+    }
+    else
+    {
+        if (cmd->unk0 == 0)
+        {
+            a = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            b = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+        }
+        else
+        {
+            a = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+            b = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+        }
+
+        sprite->data[0] = cmd->unk4;
+        if (cmd->unk1 == 0)
+        {
+            sprite->x = cmd->unk2 + a;
+            sprite->y = cmd->unk3 + b;
+            sprite->data[5] = a;
+            sprite->data[6] = b;
+        }
+        else
+        {
+            sprite->x = a;
+            sprite->y = b;
+            sprite->data[5] = cmd->unk2 + a;
+            sprite->data[6] = cmd->unk3 + b;
+        }
+
+        x = sprite->x;
+        sprite->data[1] = x * 16;
+        y = sprite->y;
+        sprite->data[2] = y * 16;
+        sprite->data[3] = (sprite->data[5] - sprite->x) * 16 / cmd->unk4;
+        sprite->data[4] = (sprite->data[6] - sprite->y) * 16 / cmd->unk4;
+        c = ArcTan2Neg(sprite->data[5] - x, sprite->data[6] - y);
+        if (IsContest())
+            c -= 0x8000;
+
+        TrySetSpriteRotScale(sprite, FALSE, 0x100, 0x100, c);
+        sprite->callback = AnimNeedleArmSpike_Step;
+    }
+}
+
+static void AnimNeedleArmSpike_Step(struct Sprite *sprite)
+{
+    if (sprite->data[0])
+    {
+        sprite->data[1] += sprite->data[3];
+        sprite->data[2] += sprite->data[4];
+        sprite->x = sprite->data[1] >> 4 ;
+        sprite->y = sprite->data[2] >> 4 ;
+        sprite->data[0]--;
+    }
+    else
+    {
+        DestroySpriteAndMatrix(sprite);
+    }
+}
+
+static void AnimWhipHit_WaitEnd(struct Sprite *sprite)
+{
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimSlidingHit(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+    {
+        sprite->x -= cmd->unk0;
+        sprite->y += cmd->unk1;
+    }
+    else
+    {
+        sprite->x += cmd->unk0;
+        sprite->y += cmd->unk1;
+    }
+
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+static void AnimWhipHit(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+        StartSpriteAnim(sprite, 1);
+
+    sprite->callback = AnimWhipHit_WaitEnd;
+    SetAnimSpriteInitialXOffset(sprite, cmd->unk0);
+    sprite->y += cmd->unk1;
+}
+
+static void AnimFlickeringPunch(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4, unk5, unk6);
+
+    sprite->x += cmd->unk0;
+    sprite->y += cmd->unk1;
+    sprite->data[0] = cmd->unk2;
+    sprite->data[1] = cmd->unk3;
+    sprite->data[3] = cmd->unk4;
+    sprite->data[5] = cmd->unk5;
+    StartSpriteAffineAnim(sprite, cmd->unk6);
+    StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+    sprite->callback = TranslateSpriteLinearAndFlicker;
+}
+
+// Moves the sprite in a diagonally slashing motion across the target mon.
+// Used by moves such as MOVE_CUT and MOVE_AERIAL_ACE.
+// arg 0: initial x pixel offset
+// arg 1: initial y pixel offset
+// arg 2: slice direction; 0 = right-to-left, 1 = left-to-right
+static void AnimCuttingSlice(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+        sprite->y += 8;
+
+    sprite->callback = AnimSlice_Step;
+    if (cmd->unk2 == 0)
+    {
+        sprite->x += cmd->unk0;
+    }
+    else
+    {
+        sprite->x -= cmd->unk0;
+        sprite->hFlip = 1;
+    }
+
+    sprite->y += cmd->unk1;
+    sprite->data[1] -= 0x400;
+    sprite->data[2] += 0x400;
+    sprite->data[5] = cmd->unk2;
+    if (sprite->data[5] == 1)
+        sprite->data[1] = -sprite->data[1];
+}
+
+static void AnimAirCutterSlice(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3);
+
+    u8 x, y;
+    switch (cmd->unk3)
+    {
+    case 1:
+        x = GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_Y);
+        break;
+    case 2:
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+        if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
+        {
+            x = (GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_X) + x) / 2;
+            y = (GetBattlerSpriteCoord(BATTLE_PARTNER(gBattleAnimTarget), BATTLER_COORD_Y) + y) / 2;
+        }
+        break;
+    case 0:
+    default:
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+        break;
+    }
+
+    sprite->x = x;
+    sprite->y = y;
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+        sprite->y += 8;
+
+    sprite->callback = AnimSlice_Step;
+    if (cmd->unk2 == 0)
+    {
+        sprite->x += cmd->unk0;
+    }
+    else
+    {
+        sprite->x -= cmd->unk0;
+        sprite->hFlip = 1;
+    }
+
+    sprite->y += cmd->unk1;
+    sprite->data[1] -= 0x400;
+    sprite->data[2] += 0x400;
+    sprite->data[5] = cmd->unk2;
+    if (sprite->data[5] == 1)
+        sprite->data[1] = -sprite->data[1];
+}
+
+static void AnimSlice_Step(struct Sprite *sprite)
+{
+    sprite->data[3] += sprite->data[1];
+    sprite->data[4] += sprite->data[2];
+    if (sprite->data[5] == 0)
+        sprite->data[1] += 0x18;
+    else
+        sprite->data[1] -= 0x18;
+
+    sprite->data[2] -= 0x18;
+    sprite->x2 = sprite->data[3] >> 8;
+    sprite->y2 = sprite->data[4] >> 8;
+    sprite->data[0]++;
+    if (sprite->data[0] == 20)
+    {
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+        sprite->data[0] = 3;
+        sprite->callback = WaitAnimForDuration;
+    }
+}
+
+static void UNUSED UnusedFlickerAnim(struct Sprite *sprite)
+{
+    if (sprite->data[2] > 1)
+    {
+        if (sprite->data[3] & 1)
+        {
+            sprite->invisible = FALSE;
+            gSprites[sprite->data[0]].invisible = FALSE;
+            gSprites[sprite->data[1]].invisible = FALSE;
+        }
+        else
+        {
+            sprite->invisible = TRUE;
+            gSprites[sprite->data[0]].invisible = TRUE;
+            gSprites[sprite->data[1]].invisible = TRUE;
+        }
+
+        sprite->data[2] = 0;
+        sprite->data[3]++;
+    }
+    else
+    {
+        sprite->data[2]++;
+    }
+
+    if (sprite->data[3] == 10)
+    {
+        DestroySprite(&gSprites[sprite->data[0]]);
+        DestroySprite(&gSprites[sprite->data[1]]);
+        DestroyAnimSprite(sprite);
+    }
 }
