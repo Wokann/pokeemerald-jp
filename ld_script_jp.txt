@@ -3951,7 +3951,7 @@ SECTIONS {
         src/battle_main.o(.text.BeginBattleIntroDummy);
         src/battle_main.o(.text.BeginBattleIntro);
         src/battle_main.o(.text.BattleMainCB1);
-        asm/battle_main_clear.o(.text);
+        src/battle_main.o(.text.BattleStartClearSetData);
         asm/battle_main_switchin.o(.text);
         asm/battle_main_faint.o(.text);
         src/battle_main.o(.text.BattleIntroGetMonsData);
@@ -3978,7 +3978,7 @@ SECTIONS {
         src/battle_main.o(.text.AllAtActionConfirmed);
         src/battle_main.o(.text.UpdateBattlerPartyOrdersOnSwitch);
         src/battle_main.o(.text.SwapTurnOrder);
-        asm/battle_main_who.o(.text);
+        src/battle_main.o(.text.GetWhoStrikesFirst);
         src/battle_main.o(.text.SetActionsAndBattlersTurnOrder);
         src/battle_main.o(.text.TurnValuesCleanUp);
         src/battle_main.o(.text.SpecialStatusesClear);
