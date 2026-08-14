@@ -22,6 +22,9 @@ extern const s8 gTrickBagCoordinates[][3];
 extern const struct SpriteTemplate gLeafBladeSpriteTemplate;
 extern const u16 gMagicalLeafBlendColors[];
 extern const s8 gInclineMonCoordTable[][2];
+extern const u16 gParticlesColorBlendTable[][6];
+extern const struct SpriteTemplate gMoonSpriteTemplate;
+extern const struct SpriteTemplate gMoonlightSparkleSpriteTemplate;
 struct {
     s16 startX;
     s16 startY;
@@ -150,6 +153,39 @@ static void AnimConversion2_Step(struct Sprite *sprite);
 void AnimTask_Conversion2AlphaBlend(u8 taskId);
 static void UNUSED AnimTask_HideBattlersHealthbox(u8 taskId);
 static void UNUSED AnimTask_ShowBattlersHealthbox(u8 taskId);
+static void AnimMoon(struct Sprite *sprite);
+static void AnimMoon_Step(struct Sprite *sprite);
+static void AnimMoonlightSparkle(struct Sprite *sprite);
+static void AnimMoonlightSparkle_Step(struct Sprite *sprite);
+void AnimTask_MoonlightEndFade(u8 taskId);
+static void AnimTask_MoonlightEndFade_Step(u8 taskId);
+static void AnimHornHit(struct Sprite *sprite);
+static void AnimHornHit_Step(struct Sprite *sprite);
+void AnimTask_DoubleTeam(u8 taskId);
+static void AnimTask_DoubleTeam_Step(u8 taskId);
+static void AnimDoubleTeam(struct Sprite *sprite);
+static void AnimSuperFang(struct Sprite *sprite);
+void AnimTask_MusicNotesRainbowBlend(u8 taskId);
+void AnimTask_MusicNotesClearRainbowBlend(u8 taskId);
+static void AnimWavyMusicNotes(struct Sprite *sprite);
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16 *velocX, s16 *velocY, s8 xSpeedFactor);
+static void AnimWavyMusicNotes_Step(struct Sprite *sprite);
+static void AnimFlyingMusicNotes(struct Sprite *sprite);
+static void AnimFlyingMusicNotes_Step(struct Sprite *sprite);
+static void AnimBellyDrumHand(struct Sprite *sprite);
+void AnimSlowFlyingMusicNotes(struct Sprite *sprite);
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite *sprite);
+void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
+static void AnimThoughtBubble(struct Sprite *sprite);
+static void AnimThoughtBubble_Step(struct Sprite *sprite);
+static void AnimMetronomeFinger(struct Sprite *sprite);
+static void AnimMetronomeFinger_Step(struct Sprite *sprite);
+static void AnimFollowMeFinger(struct Sprite *sprite);
+static void AnimFollowMeFinger_Step1(struct Sprite *sprite);
+static void AnimFollowMeFinger_Step2(struct Sprite *sprite);
+static void AnimTauntFinger(struct Sprite *sprite);
+static void AnimTauntFinger_Step1(struct Sprite *sprite);
+static void AnimTauntFinger_Step2(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -2903,4 +2939,706 @@ static void UNUSED AnimTask_ShowBattlersHealthbox(u8 taskId)
         SetHealthboxSpriteVisible(gHealthboxSpriteIds[i]);
 
     DestroyAnimVisualTask(taskId);
+}
+
+static void AnimMoon(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    if (IsContest())
+    {
+        sprite->x = 48;
+        sprite->y = 40;
+    }
+    else
+    {
+        sprite->x = cmd->unk0;
+        sprite->y = cmd->unk1;
+    }
+
+    sprite->oam.shape = SPRITE_SHAPE(64x64);
+    sprite->oam.size = SPRITE_SIZE(64x64);
+    sprite->data[0] = 0;
+    sprite->callback = AnimMoon_Step;
+}
+
+static void AnimMoon_Step(struct Sprite *sprite)
+{
+    if (sprite->data[0])
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimMoonlightSparkle(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + cmd->unk0;
+    sprite->y = cmd->unk1;
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 1;
+    sprite->callback = AnimMoonlightSparkle_Step;
+}
+
+static void AnimMoonlightSparkle_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[1] > 1)
+    {
+        sprite->data[1] = 0;
+        if (sprite->data[2] < 120)
+        {
+            sprite->y++;
+            sprite->data[2]++;
+        }
+    }
+
+    if (sprite->data[0])
+        DestroyAnimSprite(sprite);
+}
+
+void AnimTask_MoonlightEndFade(u8 taskId)
+{
+    int a = GetBattlePalettesMask(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE) & 0xFFFF;
+    int b;
+    int c;
+    int d;
+
+    gTasks[taskId].data[0] = 0;
+    gTasks[taskId].data[1] = 0;
+    gTasks[taskId].data[2] = 0;
+    gTasks[taskId].data[3] = a;
+    gTasks[taskId].data[4] = 0;
+    gTasks[taskId].data[5] = 0;
+    gTasks[taskId].data[6] = 0;
+    gTasks[taskId].data[7] = 13;
+    gTasks[taskId].data[8] = 14;
+    gTasks[taskId].data[9] = 15;
+    b = GetBattleMonSpritePalettesMask(1, 1, 1, 1);
+    c = a | b;
+    StorePointerInVars(&gTasks[taskId].data[14], &gTasks[taskId].data[15], (void *)c);
+    b = b | (0x10000 << IndexOfSpritePaletteTag(ANIM_TAG_MOON));
+    d = IndexOfSpritePaletteTag(ANIM_TAG_GREEN_SPARKLE);
+    BeginNormalPaletteFade((0x10000 << d) | b, 0, 0, 16, RGB(27, 29, 31));
+    gTasks[taskId].func = AnimTask_MoonlightEndFade_Step;
+    gTasks[taskId].func(taskId);
+}
+
+static void AnimTask_MoonlightEndFade_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[0])
+    {
+    case 0:
+        if (++task->data[1] > 0)
+        {
+            u16 color;
+            u16 bitmask;
+            u16 r3;
+            u16 i;
+            u16 j;
+            task->data[1] = 0;
+            if (++task->data[2] <= 15)
+            {
+                u16 red;
+                u16 green;
+                u16 blue;
+                task->data[4] += task->data[7];
+                task->data[5] += task->data[8];
+                task->data[6] += task->data[9];
+                red = task->data[4] >> 3;
+                green = task->data[5] >> 3;
+                blue = task->data[6] >> 3;
+                color = RGB(red, green, blue);
+            }
+            else
+            {
+                color = RGB(27, 29, 31);
+                task->data[0]++;
+            }
+
+            bitmask = 1;
+            r3 = 0;
+            for (i = 0; i <= 15; i++)
+            {
+                if (task->data[3] & bitmask)
+                {
+                    for (j = 1; j <= 15; j++)
+                    {
+                        gPlttBufferFaded[r3 + j] = color;
+                    }
+                }
+
+                bitmask <<= 1;
+                r3 += 16;
+            }
+        }
+        break;
+    case 1:
+        if (!gPaletteFade.active)
+        {
+            u8 spriteId;
+            for (spriteId = 0; spriteId < MAX_SPRITES; spriteId++)
+            {
+                if (gSprites[spriteId].template == &gMoonSpriteTemplate || gSprites[spriteId].template == &gMoonlightSparkleSpriteTemplate)
+                    gSprites[spriteId].data[0] = 1;
+            }
+
+            task->data[1] = 0;
+            task->data[0]++;
+        }
+        break;
+    case 2:
+        if (++task->data[1] > 30)
+        {
+            BeginNormalPaletteFade((u32)LoadPointerFromVars(task->data[14], task->data[15]), 0, 16, 0, RGB(27, 29, 31));
+            task->data[0]++;
+        }
+        break;
+    case 3:
+        if (!gPaletteFade.active)
+            DestroyAnimVisualTask(taskId);
+        break;
+    }
+}
+
+static void AnimHornHit(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    if (cmd->unk2 < 2)
+        cmd->unk2 = 2;
+
+    if (cmd->unk2 > 0x7F)
+        cmd->unk2 = 0x7F;
+
+    sprite->data[0] = 0;
+    sprite->data[1] = cmd->unk2;
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + cmd->unk0;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk1;
+    sprite->data[6] = sprite->x;
+    sprite->data[7] = sprite->y;
+    if (IsContest())
+    {
+        sprite->oam.matrixNum = ST_OAM_HFLIP;
+        sprite->x += 40;
+        sprite->y += 20;
+        sprite->data[2] = sprite->x << 7;
+        sprite->data[3] = -0x1400 / sprite->data[1];
+        sprite->data[4] = sprite->y << 7;
+        sprite->data[5] = -0xA00 / sprite->data[1];
+    }
+    else if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_PLAYER)
+    {
+        sprite->x -= 40;
+        sprite->y += 20;
+        sprite->data[2] = sprite->x << 7;
+        sprite->data[3] = 0x1400 / sprite->data[1];
+        sprite->data[4] = sprite->y << 7;
+        sprite->data[5] = -0xA00 / sprite->data[1];
+    }
+    else
+    {
+        sprite->x += 40;
+        sprite->y -= 20;
+        sprite->data[2] = sprite->x << 7;
+        sprite->data[3] = -0x1400 / sprite->data[1];
+        sprite->data[4] = sprite->y << 7;
+        sprite->data[5] = 0xA00 / sprite->data[1];
+        sprite->oam.matrixNum = (ST_OAM_HFLIP | ST_OAM_VFLIP);
+    }
+
+    sprite->callback = AnimHornHit_Step;
+}
+
+static void AnimHornHit_Step(struct Sprite *sprite)
+{
+    sprite->data[2] += sprite->data[3];
+    sprite->data[4] += sprite->data[5];
+    sprite->x = sprite->data[2] >> 7;
+    sprite->y = sprite->data[4] >> 7;
+    if (--sprite->data[1] == 1)
+    {
+        sprite->x = sprite->data[6];
+        sprite->y = sprite->data[7];
+    }
+
+    if (sprite->data[1] == 0)
+        DestroyAnimSprite(sprite);
+}
+
+void AnimTask_DoubleTeam(u8 taskId)
+{
+    u16 i;
+    int obj;
+    u16 r3;
+    u16 r4;
+    struct Task *task = &gTasks[taskId];
+    task->data[0] = GetAnimBattlerSpriteId(ANIM_ATTACKER);
+    task->data[1] = AllocSpritePalette(ANIM_TAG_BENT_SPOON);
+    r3 = OBJ_PLTT_ID(task->data[1]);
+    r4 = OBJ_PLTT_ID2(gSprites[task->data[0]].oam.paletteNum);
+    for (i = 1; i < 16; i++)
+        gPlttBufferUnfaded[r3 + i] = gPlttBufferUnfaded[r4 + i];
+
+    BlendPalette(r3, 16, 11, RGB_BLACK);
+    task->data[3] = 0;
+    i = 0;
+    while (i < 2 && (obj = CloneBattlerSpriteWithBlend(0)) >= 0)
+    {
+        gSprites[obj].oam.paletteNum = task->data[1];
+        gSprites[obj].data[0] = 0;
+        gSprites[obj].data[1] = i << 7;
+        gSprites[obj].data[2] = taskId;
+        gSprites[obj].callback = AnimDoubleTeam;
+        task->data[3]++;
+        i++;
+    }
+
+    task->func = AnimTask_DoubleTeam_Step;
+    if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG1_ON);
+    else
+        ClearGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG2_ON);
+}
+
+static void AnimTask_DoubleTeam_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (!task->data[3])
+    {
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
+            SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG1_ON);
+        else
+            SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_BG2_ON);
+
+        FreeSpritePaletteByTag(ANIM_TAG_BENT_SPOON);
+        DestroyAnimVisualTask(taskId);
+    }
+}
+
+static void AnimDoubleTeam(struct Sprite *sprite)
+{
+    if (++sprite->data[3] > 1)
+    {
+        sprite->data[3] = 0;
+        sprite->data[0]++;
+    }
+
+    if (sprite->data[0] > 64)
+    {
+        gTasks[sprite->data[2]].data[3]--;
+        DestroySpriteWithActiveSheet(sprite);
+    }
+    else
+    {
+        sprite->data[4] = gSineTable[sprite->data[0]] / 6;
+        sprite->data[5] = gSineTable[sprite->data[0]] / 13;
+        sprite->data[1] = (sprite->data[1] + sprite->data[5]) & 0xFF;
+        sprite->x2 = Sin(sprite->data[1], sprite->data[4]);
+    }
+}
+
+static void AnimSuperFang(struct Sprite *sprite)
+{
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+}
+
+void AnimTask_MusicNotesRainbowBlend(u8 taskId)
+{
+    u16 i;
+    u16 j;
+    u16 index;
+
+    index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[0][0]);
+    if (index != 0xFF)
+    {
+        index = OBJ_PLTT_ID(index);
+        for (i = 1; i < 6; i++) // gParticlesColorBlendTable has 6 entries per row
+            gPlttBufferFaded[index + i] = gParticlesColorBlendTable[0][i];
+    }
+
+    for (j = 1; j < 4; j++) // 4 rows in gParticlesColorBlendTable
+    {
+        index = AllocSpritePalette(gParticlesColorBlendTable[j][0]);
+        if (index != 0xFF)
+        {
+            index = OBJ_PLTT_ID(index);
+            for (i = 1; i < 6; i++) // gParticlesColorBlendTable has 6 entries per row
+                gPlttBufferFaded[index + i] = gParticlesColorBlendTable[j][i];
+        }
+    }
+    DestroyAnimVisualTask(taskId);
+}
+
+// clears the rainbow effect for musical notes.
+void AnimTask_MusicNotesClearRainbowBlend(u8 taskId)
+{
+    u16 i;
+    for (i = 1; i < 4; i++) // 4 rows in gParticlesColorBlendTable
+        FreeSpritePaletteByTag(gParticlesColorBlendTable[i][0]);
+
+    DestroyAnimVisualTask(taskId);
+}
+
+#define sMoveTimer      data[0]
+#define sBlendTableIdx  data[1]
+#define sBlendTimer     data[2]
+#define sBlendCycleTime data[3]
+#define sX              data[4]
+#define sY              data[5]
+#define sVelocX         data[6]
+#define sVelocY         data[7]
+
+static void AnimWavyMusicNotes(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    u8 index;
+    u8 x, y;
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    StartSpriteAnim(sprite, cmd->unk0);
+    if ((index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[cmd->unk1][0])) != 0xFF)
+        sprite->oam.paletteNum = index;
+
+    sprite->sBlendTableIdx = cmd->unk1;
+    sprite->sBlendTimer = 0;
+    sprite->sBlendCycleTime = cmd->unk2;
+    if (IsContest())
+    {
+        x = 48;
+        y = 40;
+    }
+    else
+    {
+        x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+        y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    }
+
+    sprite->sX = sprite->x << 4;
+    sprite->sY = sprite->y << 4;
+    AnimWavyMusicNotes_CalcVelocity(x - sprite->x, y - sprite->y, &sprite->sVelocX, &sprite->sVelocY, 40);
+    sprite->callback = AnimWavyMusicNotes_Step;
+}
+
+static void AnimWavyMusicNotes_CalcVelocity(s16 x, s16 y, s16 *velocX, s16 *velocY, s8 xSpeedFactor)
+{
+    int x2;
+    int time;
+    if (x < 0)
+        xSpeedFactor = -xSpeedFactor;
+
+    x2 = x * 256;
+    time = x2 / xSpeedFactor;
+    if (time == 0)
+        time = 1;
+
+    *velocX = x2 / time;
+    *velocY = (y * 256) / time;
+}
+
+static void AnimWavyMusicNotes_Step(struct Sprite *sprite)
+{
+    s16 y, trigIdx;
+    u8 index;
+
+    sprite->sMoveTimer++;
+    trigIdx = (sprite->sMoveTimer * 5) % 256;
+    sprite->sX += sprite->sVelocX;
+    sprite->sY += sprite->sVelocY;
+    sprite->x = sprite->sX >> 4;
+    sprite->y = sprite->sY >> 4;
+    sprite->y2 = Sin(trigIdx, 15);
+
+    y = sprite->y;
+    if (sprite->x < -16 || sprite->x > DISPLAY_WIDTH + 16 || y < -16 || y > DISPLAY_HEIGHT - 32)
+    {
+        DestroySpriteAndMatrix(sprite);
+    }
+    else
+    {
+        if (sprite->sBlendCycleTime && ++sprite->sBlendTimer > sprite->sBlendCycleTime)
+        {
+            sprite->sBlendTimer = 0;
+            if (++sprite->sBlendTableIdx > 3) // gParticlesColorBlendTable has 4 rows
+                sprite->sBlendTableIdx = 0;
+
+            index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[sprite->sBlendTableIdx][0]);
+            if (index != 0xFF)
+                sprite->oam.paletteNum = index;
+        }
+    }
+}
+
+static void AnimFlyingMusicNotes(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    if (GetBattlerSide(gBattleAnimAttacker) == B_SIDE_OPPONENT)
+        cmd->unk1 *= -1;
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + cmd->unk1;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk2;
+    StartSpriteAnim(sprite, cmd->unk0);
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = sprite->x << 4;
+    sprite->data[5] = sprite->y << 4;
+    sprite->data[6] = (cmd->unk1 << 4) / 5;
+    sprite->data[7] = (cmd->unk2 << 7) / 5;
+    sprite->callback = AnimFlyingMusicNotes_Step;
+}
+
+static void AnimFlyingMusicNotes_Step(struct Sprite *sprite)
+{
+    sprite->data[4] += sprite->data[6];
+    sprite->data[5] += sprite->data[7];
+    sprite->x = sprite->data[4] >> 4;
+    sprite->y = sprite->data[5] >> 4;
+    if (sprite->data[0] > 5 && sprite->data[3] == 0)
+    {
+        sprite->data[2] = (sprite->data[2] + 16) & 0xFF;
+        sprite->x2 = Cos(sprite->data[2], 18);
+        sprite->y2 = Sin(sprite->data[2], 18);
+        if (sprite->data[2] == 0)
+            sprite->data[3] = 1;
+    }
+
+    if (++sprite->data[0] == 48)
+        DestroySpriteAndMatrix(sprite);
+}
+
+static void AnimBellyDrumHand(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0);
+
+    s16 a;
+    if (cmd->unk0 == 1)
+    {
+        sprite->oam.matrixNum = ST_OAM_HFLIP;
+        a = 16;
+    }
+    else
+    {
+        a = -16;
+    }
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + a;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + 8;
+    sprite->data[0] = 8;
+    sprite->callback = WaitAnimForDuration;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+void AnimSlowFlyingMusicNotes(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3);
+
+    s16 xDiff;
+    u8 index;
+    SetSpriteCoordsToAnimAttackerCoords(sprite);
+    sprite->y += 8;
+    StartSpriteAnim(sprite, cmd->unk1);
+    index = IndexOfSpritePaletteTag(gParticlesColorBlendTable[cmd->unk2][0]);
+    if (index != 0xFF)
+        sprite->oam.paletteNum = index;
+
+    xDiff = (cmd->unk0 == 0) ? -32 : 32;
+    sprite->data[0] = 40;
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = xDiff + sprite->data[1];
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = sprite->data[3] - 40;
+    InitAnimLinearTranslation(sprite);
+    sprite->data[5] = cmd->unk3;
+    sprite->callback = AnimSlowFlyingMusicNotes_Step;
+}
+
+static void AnimSlowFlyingMusicNotes_Step(struct Sprite *sprite)
+{
+    if (AnimTranslateLinear(sprite) == 0)
+    {
+        s16 xDiff;
+        xDiff = Sin(sprite->data[5], 8);
+        if (sprite->x2 < 0)
+            xDiff = -xDiff;
+
+        sprite->x2 += xDiff;
+        sprite->y2 += Sin(sprite->data[5], 4);
+        sprite->data[5] = (sprite->data[5] + 8) & 0xFF;
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite)
+{
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_RIGHT) + 8;
+    else
+        sprite->x = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_LEFT) - 8;
+
+    sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) - (s16)GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_HEIGHT) / 4;
+}
+
+static void AnimThoughtBubble(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    u8 animNum;
+    u8 battler;
+    if (cmd->unk0 == 0)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    SetSpriteNextToMonHead(battler, sprite);
+    animNum = (GetBattlerSide(battler) == B_SIDE_PLAYER) ? 0 : 1;
+    sprite->data[0] = cmd->unk1;
+    sprite->data[1] = animNum + 2;
+    StartSpriteAnim(sprite, animNum);
+    StoreSpriteCallbackInData6(sprite, AnimThoughtBubble_Step);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+}
+
+static void AnimThoughtBubble_Step(struct Sprite *sprite)
+{
+    if (--sprite->data[0] == 0)
+    {
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+        StartSpriteAnim(sprite, sprite->data[1]);
+        sprite->callback = RunStoredCallbackWhenAnimEnds;
+    }
+}
+
+static void AnimMetronomeFinger(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0);
+
+    u8 battler;
+    if (cmd->unk0 == 0)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    SetSpriteNextToMonHead(battler, sprite);
+    sprite->data[0] = 0;
+    StoreSpriteCallbackInData6(sprite, AnimMetronomeFinger_Step);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+}
+
+static void AnimMetronomeFinger_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > 16)
+    {
+        StartSpriteAffineAnim(sprite, 1);
+        StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
+        sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+    }
+}
+
+static void AnimFollowMeFinger(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0);
+
+    u8 battler;
+    if (cmd->unk0 == 0)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    sprite->x = GetBattlerSpriteCoord(battler, BATTLER_COORD_X);
+    sprite->y = GetBattlerSpriteCoordAttr(battler, BATTLER_COORD_ATTR_TOP);
+    if (sprite->y <= 9)
+        sprite->y = 10;
+
+    sprite->data[0] = 1;
+    sprite->data[1] = 0;
+    sprite->data[2] = sprite->subpriority;
+    sprite->data[3] = sprite->subpriority + 4;
+    sprite->data[4] = 0;
+    StoreSpriteCallbackInData6(sprite, AnimFollowMeFinger_Step1);
+    sprite->callback = RunStoredCallbackWhenAffineAnimEnds;
+}
+
+static void AnimFollowMeFinger_Step1(struct Sprite *sprite)
+{
+    if (++sprite->data[4] > 12)
+        sprite->callback = AnimFollowMeFinger_Step2;
+}
+
+static void AnimFollowMeFinger_Step2(struct Sprite *sprite)
+{
+    s16 x1, x2;
+
+    sprite->data[1] += 4;
+    if (sprite->data[1] > 254)
+    {
+        if (--sprite->data[0] == 0)
+        {
+            sprite->x2 = 0;
+            sprite->callback = AnimMetronomeFinger_Step;
+            return;
+        }
+        else
+        {
+            sprite->data[1] &= 0xFF;
+        }
+    }
+
+    if (sprite->data[1] > 0x4F)
+        sprite->subpriority = sprite->data[3];
+
+    if (sprite->data[1] > 0x9F)
+        sprite->subpriority = sprite->data[2];
+
+    x1 = gSineTable[sprite->data[1]];
+    x2 = x1 >> 3;
+    sprite->x2 = (x1 >> 3) + (x2 >> 1);
+}
+
+static void AnimTauntFinger(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0);
+
+    u8 battler;
+    if (cmd->unk0 == 0)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    SetSpriteNextToMonHead(battler, sprite);
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+    {
+        StartSpriteAnim(sprite, 0);
+        sprite->data[0] = 2;
+    }
+    else
+    {
+        StartSpriteAnim(sprite, 1);
+        sprite->data[0] = 3;
+    }
+
+    sprite->callback = AnimTauntFinger_Step1;
+}
+
+static void AnimTauntFinger_Step1(struct Sprite *sprite)
+{
+    if (++sprite->data[1] > 10)
+    {
+        sprite->data[1] = 0;
+        StartSpriteAnim(sprite, sprite->data[0]);
+        StoreSpriteCallbackInData6(sprite, AnimTauntFinger_Step2);
+        sprite->callback = RunStoredCallbackWhenAnimEnds;
+    }
+}
+
+static void AnimTauntFinger_Step2(struct Sprite *sprite)
+{
+    if (++sprite->data[1] > 5)
+        DestroyAnimSprite(sprite);
 }
