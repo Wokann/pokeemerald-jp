@@ -3909,7 +3909,7 @@ SECTIONS {
         src/battle_main.o(.text.CB2_QuitRecordedBattle);
         src/battle_main.o(.text.SpriteCB_UnusedBattleInit);
         src/battle_main.o(.text.SpriteCB_UnusedBattleInit_Main);
-        asm/battle_main_createnpc.o(.text);
+        src/battle_main.o(.text.CreateNPCTrainerParty);
         src/battle_main.o(.text.HBlankCB_Battle);
         src/battle_main.o(.text.VBlankCB_Battle);
         src/battle_main.o(.text.SpriteCallbackDummy_3);
@@ -3952,8 +3952,8 @@ SECTIONS {
         src/battle_main.o(.text.BeginBattleIntro);
         src/battle_main.o(.text.BattleMainCB1);
         src/battle_main.o(.text.BattleStartClearSetData);
-        asm/battle_main_switchin.o(.text);
-        asm/battle_main_faint.o(.text);
+        src/battle_main.o(.text.SwitchInClearSetData);
+        src/battle_main.o(.text.FaintClearSetData);
         src/battle_main.o(.text.BattleIntroGetMonsData);
         asm/battle_main_introprep.o(.text);
         src/battle_main.o(.text.BattleIntroDrawTrainersOrMonsSprites);
