@@ -4734,7 +4734,7 @@ SECTIONS {
         asm/battle_controller_player.o(.text);
         asm/battle_gfx_sfx_util.o(.text);
         asm/battle_controller_opponent.o(.text);
-        asm/battle_ai_switch_items.o(.text);
+        src/battle_ai_switch_items.o(.text);
         asm/battle_controller_link_opponent.o(.text);
         asm/pokemon.o(.text);
         src/trig.o(.text);
