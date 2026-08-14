@@ -3968,10 +3968,10 @@ SECTIONS {
         src/battle_main.o(.text.BattleIntroPrintPlayerSendsOut);
         src/battle_main.o(.text.BattleIntroPlayer2SendsOutMonAnimation);
         src/battle_main.o(.text.BattleIntroPlayer1SendsOutMonAnimation);
-        asm/battle_main_introswitchin.o(.text);
+        src/battle_main.o(.text.BattleIntroSwitchInPlayerMons);
         asm/battle_main_trydo.o(.text);
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
-        asm/battle_main_turnpassed.o(.text);
+        src/battle_main.o(.text.BattleTurnPassed);
         asm/battle_main_isrunning.o(.text);
         src/battle_main.o(.text.SwitchPartyOrder);
         asm/battle_main_selstate.o(.text);
