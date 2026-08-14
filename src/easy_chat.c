@@ -3413,3 +3413,457 @@ __attribute__((naked)) void sub_0811C160(void)
     );
 }
 
+
+__attribute__((naked)) void ReduceToValidKeyboardColumn(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	b _0811C192\n\t"
+        "_0811C180:\n\t"
+        "	ldr r0, _0811C1A0\n\t"
+        "	ldr r1, [r0]\n\t"
+        "	ldrb r2, [r1, #0xa]\n\t"
+        "	movs r0, #0xa\n\t"
+        "	ldrsb r0, [r1, r0]\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _0811C19C\n\t"
+        "	subs r0, r2, #1\n\t"
+        "	strb r0, [r1, #0xa]\n\t"
+        "_0811C192:\n\t"
+        "	bl sub_0811C1CC\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0811C180\n\t"
+        "_0811C19C:\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C1A0: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void ReduceToValidWordSelectColumn(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	b _0811C1BA\n\t"
+        "_0811C1A8:\n\t"
+        "	ldr r0, _0811C1C8\n\t"
+        "	ldr r1, [r0]\n\t"
+        "	ldrb r2, [r1, #0x10]\n\t"
+        "	movs r0, #0x10\n\t"
+        "	ldrsb r0, [r1, r0]\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _0811C1C4\n\t"
+        "	subs r0, r2, #1\n\t"
+        "	strb r0, [r1, #0x10]\n\t"
+        "_0811C1BA:\n\t"
+        "	bl sub_0811C220\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0811C1A8\n\t"
+        "_0811C1C4:\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C1C8: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void sub_0811C1CC(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	ldr r4, _0811C1F8\n\t"
+        "	ldr r1, [r4]\n\t"
+        "	ldrb r0, [r1, #9]\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0811C1FC\n\t"
+        "	bl sub_0811C0B8\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	bl sub_0811F908\n\t"
+        "	movs r1, #0\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsls r4, r4, #0x10\n\t"
+        "	lsrs r4, r4, #0x10\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	cmp r4, r0\n\t"
+        "	blo _0811C1F2\n\t"
+        "	movs r1, #1\n\t"
+        "_0811C1F2:\n\t"
+        "	adds r0, r1, #0\n\t"
+        "	b _0811C218\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C1F8: .4byte 0x02039DE4\n\t"
+        "_0811C1FC:\n\t"
+        "	ldrb r0, [r1, #0xb]\n\t"
+        "	bl sub_0811C160\n\t"
+        "	movs r2, #0\n\t"
+        "	ldr r1, [r4]\n\t"
+        "	ldrb r1, [r1, #0xa]\n\t"
+        "	lsls r1, r1, #0x18\n\t"
+        "	asrs r1, r1, #0x18\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	cmp r1, r0\n\t"
+        "	ble _0811C216\n\t"
+        "	movs r2, #1\n\t"
+        "_0811C216:\n\t"
+        "	adds r0, r2, #0\n\t"
+        "_0811C218:\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 IsSelectedWordIndexInvalid(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	bl sub_0811C140\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	bl sub_0811FB08\n\t"
+        "	movs r1, #0\n\t"
+        "	lsls r4, r4, #0x10\n\t"
+        "	lsls r0, r0, #0x10\n\t"
+        "	cmp r4, r0\n\t"
+        "	blo _0811C238\n\t"
+        "	movs r1, #1\n\t"
+        "_0811C238:\n\t"
+        "	adds r0, r1, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) int FooterHasFourOptions(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r2, _0811C258\n\t"
+        "	ldr r0, _0811C25C\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r1, [r0, #1]\n\t"
+        "	lsls r0, r1, #1\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	lsls r0, r0, #3\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	ldrb r0, [r0, #3]\n\t"
+        "	lsrs r0, r0, #7\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C258: .4byte 0x08573134\n\t"
+        "_0811C25C: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetEasyChatScreenType(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	@ From src/easy_chat.c\n\t"
+        "	ldr r0, _0811C268\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C268: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetEasyChatScreenFrameId(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r2, _0811C284\n\t"
+        "	ldr r0, _0811C288\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r1, [r0, #1]\n\t"
+        "	lsls r0, r1, #1\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	lsls r0, r0, #3\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	ldrb r0, [r0, #3]\n\t"
+        "	lsls r0, r0, #0x19\n\t"
+        "	lsrs r0, r0, #0x19\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C284: .4byte 0x08573134\n\t"
+        "_0811C288: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) const u8 *GetTitleText(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C294\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldr r0, [r0, #0x34]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C294: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 *GetCurrentPhrase(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C2A0\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	adds r0, #0x3c\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C2A0: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetNumRows(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C2AC\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #3]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C2AC: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetNumColumns(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C2B8\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #2]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C2B8: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetMainCursorColumn(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C2C4\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #5]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C2C4: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetMainCursorRow(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C2D0\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #6]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C2D0: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void GetEasyChatInstructionsText(const u8 **str1, const u8 **str2)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	ldr r4, _0811C304\n\t"
+        "	ldr r2, _0811C308\n\t"
+        "	ldr r5, [r2]\n\t"
+        "	ldrb r3, [r5, #1]\n\t"
+        "	lsls r2, r3, #1\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	lsls r2, r2, #3\n\t"
+        "	adds r3, r4, #0\n\t"
+        "	adds r3, #8\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldr r2, [r2]\n\t"
+        "	str r2, [r0]\n\t"
+        "	ldrb r2, [r5, #1]\n\t"
+        "	lsls r0, r2, #1\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	lsls r0, r0, #3\n\t"
+        "	adds r4, #0xc\n\t"
+        "	adds r0, r0, r4\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	str r0, [r1]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C304: .4byte 0x08573134\n\t"
+        "_0811C308: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void GetEasyChatConfirmText(const u8 **str1, const u8 **str2)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	ldr r4, _0811C33C\n\t"
+        "	ldr r2, _0811C340\n\t"
+        "	ldr r5, [r2]\n\t"
+        "	ldrb r3, [r5, #1]\n\t"
+        "	lsls r2, r3, #1\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	lsls r2, r2, #3\n\t"
+        "	adds r3, r4, #0\n\t"
+        "	adds r3, #0x10\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldr r2, [r2]\n\t"
+        "	str r2, [r0]\n\t"
+        "	ldrb r2, [r5, #1]\n\t"
+        "	lsls r0, r2, #1\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	lsls r0, r0, #3\n\t"
+        "	adds r4, #0x14\n\t"
+        "	adds r0, r0, r4\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	str r0, [r1]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C33C: .4byte 0x08573134\n\t"
+        "_0811C340: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void GetEasyChatConfirmExitText(const u8 **str1, const u8 **str2)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	adds r2, r0, #0\n\t"
+        "	ldr r0, _0811C358\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #4\n\t"
+        "	bne _0811C360\n\t"
+        "	ldr r0, _0811C35C\n\t"
+        "	b _0811C37E\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C358: .4byte 0x02039DE4\n\t"
+        "_0811C35C: .4byte 0x085CBA71\n\t"
+        "_0811C360:\n\t"
+        "	cmp r0, #4\n\t"
+        "	blt _0811C37C\n\t"
+        "	cmp r0, #0x10\n\t"
+        "	bgt _0811C37C\n\t"
+        "	cmp r0, #0xf\n\t"
+        "	blt _0811C37C\n\t"
+        "	ldr r0, _0811C374\n\t"
+        "	str r0, [r2]\n\t"
+        "	ldr r0, _0811C378\n\t"
+        "	b _0811C382\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C374: .4byte 0x085CBCAB\n\t"
+        "_0811C378: .4byte 0x085CBCB7\n\t"
+        "_0811C37C:\n\t"
+        "	ldr r0, _0811C388\n\t"
+        "_0811C37E:\n\t"
+        "	str r0, [r2]\n\t"
+        "	movs r0, #0\n\t"
+        "_0811C382:\n\t"
+        "	str r0, [r1]\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C388: .4byte 0x085CBA63\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void GetEasyChatConfirmDeletionText(const u8 **str1, const u8 **str2)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r2, _0811C398\n\t"
+        "	str r2, [r0]\n\t"
+        "	ldr r0, _0811C39C\n\t"
+        "	str r0, [r1]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C398: .4byte 0x085CBAA7\n\t"
+        "_0811C39C: .4byte 0x085CBAB6\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void GetKeyboardCursorColAndRow(s8 *column, s8 *row)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r2, _0811C3B0\n\t"
+        "	ldr r3, [r2]\n\t"
+        "	ldrb r2, [r3, #0xa]\n\t"
+        "	strb r2, [r0]\n\t"
+        "	ldrb r0, [r3, #0xb]\n\t"
+        "	strb r0, [r1]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C3B0: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 GetInAlphabetMode(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C3BC\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #9]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C3BC: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetKeyboardScrollOffset(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldr r0, _0811C3C8\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0, #0xc]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_0811C3C8: .4byte 0x02039DE4\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
