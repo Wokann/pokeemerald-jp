@@ -13067,3 +13067,375 @@ __attribute__((naked)) bool8 MovementType_WalkSlowlyInPlace_Step0(struct ObjectE
     );
 }
 
+
+__attribute__((naked)) void MovementType_JogInPlace(struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	adds r1, r0, #0\n\t"
+        "	movs r0, #0x2e\n\t"
+        "	ldrsh r2, [r1, r0]\n\t"
+        "	lsls r0, r2, #3\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	lsls r0, r0, #2\n\t"
+        "	ldr r2, _08092140\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	ldr r2, _08092144\n\t"
+        "	bl UpdateEventObjectCurrentMovement\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_08092140: .4byte 0x02036FF0\n\t"
+        "_08092144: .4byte 0x08092149\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetAcroWheelieHopFaceDirectionMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	ldr r3, _08092164\n\t"
+        "	movs r4, #0x30\n\t"
+        "	ldrsh r2, [r1, r4]\n\t"
+        "	lsls r2, r2, #2\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldr r2, [r2]\n\t"
+        "	bl _call_via_r2\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08092164: .4byte 0x084E5F04\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementType_JogInPlace_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	bl ClearEventObjectMovement\n\t"
+        "	ldrb r0, [r4, #0x18]\n\t"
+        "	lsls r0, r0, #0x1c\n\t"
+        "	lsrs r0, r0, #0x1c\n\t"
+        "	bl sub_08092F34\n\t"
+        "	adds r2, r0, #0\n\t"
+        "	lsls r2, r2, #0x18\n\t"
+        "	lsrs r2, r2, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl EventObjectSetSingleMovement\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r5, #0x30]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void MovementType_RunInPlace(struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	adds r1, r0, #0\n\t"
+        "	movs r0, #0x2e\n\t"
+        "	ldrsh r2, [r1, r0]\n\t"
+        "	lsls r0, r2, #3\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	lsls r0, r0, #2\n\t"
+        "	ldr r2, _080921B0\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	ldr r2, _080921B4\n\t"
+        "	bl UpdateEventObjectCurrentMovement\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_080921B0: .4byte 0x02036FF0\n\t"
+        "_080921B4: .4byte 0x080921B9\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetAcroWheelieJumpDirectionMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	ldr r3, _080921D4\n\t"
+        "	movs r4, #0x30\n\t"
+        "	ldrsh r2, [r1, r4]\n\t"
+        "	lsls r2, r2, #2\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldr r2, [r2]\n\t"
+        "	bl _call_via_r2\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_080921D4: .4byte 0x084E5F0C\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementType_RunInPlace_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	bl ClearEventObjectMovement\n\t"
+        "	ldrb r0, [r4, #0x18]\n\t"
+        "	lsls r0, r0, #0x1c\n\t"
+        "	lsrs r0, r0, #0x1c\n\t"
+        "	bl sub_08092F60\n\t"
+        "	adds r2, r0, #0\n\t"
+        "	lsls r2, r2, #0x18\n\t"
+        "	lsrs r2, r2, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl EventObjectSetSingleMovement\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r5, #0x30]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void MovementType_Invisible(struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	adds r1, r0, #0\n\t"
+        "	movs r0, #0x2e\n\t"
+        "	ldrsh r2, [r1, r0]\n\t"
+        "	lsls r0, r2, #3\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	lsls r0, r0, #2\n\t"
+        "	ldr r2, _08092220\n\t"
+        "	adds r0, r0, r2\n\t"
+        "	ldr r2, _08092224\n\t"
+        "	bl UpdateEventObjectCurrentMovement\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_08092220: .4byte 0x02036FF0\n\t"
+        "_08092224: .4byte 0x08092229\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetFaceDirectionMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	ldr r3, _08092244\n\t"
+        "	movs r4, #0x30\n\t"
+        "	ldrsh r2, [r1, r4]\n\t"
+        "	lsls r2, r2, #2\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldr r2, [r2]\n\t"
+        "	bl _call_via_r2\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08092244: .4byte 0x084E5F14\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementType_Invisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	bl ClearEventObjectMovement\n\t"
+        "	ldrb r0, [r4, #0x18]\n\t"
+        "	lsls r0, r0, #0x1c\n\t"
+        "	lsrs r0, r0, #0x1c\n\t"
+        "	bl sub_08092CA0\n\t"
+        "	adds r2, r0, #0\n\t"
+        "	lsls r2, r2, #0x18\n\t"
+        "	lsrs r2, r2, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl EventObjectSetSingleMovement\n\t"
+        "	ldrb r0, [r4, #1]\n\t"
+        "	movs r1, #0x20\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r4, #1]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r5, #0x30]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementType_Invisible_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	bl sub_08093234\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0809228E\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08092294\n\t"
+        "_0809228E:\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r4, #0x30]\n\t"
+        "	movs r0, #1\n\t"
+        "_08092294:\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementType_FaceDirection_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r2, [r0]\n\t"
+        "	movs r1, #3\n\t"
+        "	rsbs r1, r1, #0\n\t"
+        "	ands r1, r2\n\t"
+        "	strb r1, [r0]\n\t"
+        "	movs r0, #0\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 ClearEventObjectMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r3, [r0]\n\t"
+        "	movs r2, #3\n\t"
+        "	rsbs r2, r2, #0\n\t"
+        "	ands r2, r3\n\t"
+        "	movs r3, #0x41\n\t"
+        "	rsbs r3, r3, #0\n\t"
+        "	ands r2, r3\n\t"
+        "	movs r3, #0x7f\n\t"
+        "	ands r2, r3\n\t"
+        "	strb r2, [r0]\n\t"
+        "	movs r2, #0xff\n\t"
+        "	strb r2, [r0, #0x1c]\n\t"
+        "	movs r0, #0\n\t"
+        "	strh r0, [r1, #0x30]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetJumpInPlaceMovementAction(u32 direction)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	ldr r1, _080922D8\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_080922D8: .4byte 0x084E5F20\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetJumpInPlaceTurnAroundMovementAction(u32 direction)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	ldr r1, _080922E8\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_080922E8: .4byte 0x084E5F29\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetJumpMovementAction(u32 direction)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	ldr r1, _080922F8\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_080922F8: .4byte 0x084E5F32\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetJumpSpecialMovementAction(u32 direction)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	ldr r1, _08092308\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_08092308: .4byte 0x084E5F3B\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u8 GetPlayerRunMovementAction(u32 direction)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	ldr r1, _08092318\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_08092318: .4byte 0x084E5F44\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
