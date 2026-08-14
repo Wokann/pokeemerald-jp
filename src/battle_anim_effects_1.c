@@ -19,6 +19,8 @@
 
 extern const struct SpriteTemplate gSolarBeamSmallOrbSpriteTemplate;
 extern const s8 gTrickBagCoordinates[][3];
+extern const struct SpriteTemplate gLeafBladeSpriteTemplate;
+extern const u16 gMagicalLeafBlendColors[];
 struct {
     s16 startX;
     s16 startY;
@@ -79,6 +81,14 @@ static void AnimTrickBag(struct Sprite *sprite);
 static void AnimTrickBag_Step1(struct Sprite *sprite);
 static void AnimTrickBag_Step2(struct Sprite *sprite);
 static void AnimTrickBag_Step3(struct Sprite *sprite);
+void AnimTask_LeafBlade(u8 taskId);
+static void AnimTask_LeafBlade_Step(u8 taskId);
+static s16 LeafBladeGetPosFactor(struct Sprite *sprite);
+static void AnimTask_LeafBlade_Step2(struct Task *task, u8 taskId);
+static void AnimTask_LeafBlade_Step2_Callback(struct Sprite *sprite);
+static void AnimFlyingParticle(struct Sprite *sprite);
+static void AnimFlyingParticle_Step(struct Sprite *sprite);
+void AnimTask_CycleMagicalLeafPal(u8 taskId);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -1138,4 +1148,372 @@ static void AnimTrickBag_Step3(struct Sprite *sprite)
 
     sprite->invisible = sprite->data[0] % 2;
     sprite->data[0]++;
+}
+
+void AnimTask_LeafBlade(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    task->data[4] = GetBattlerSpriteSubpriority(gBattleAnimTarget) - 1;
+    task->data[6] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    task->data[7] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    task->data[10] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_WIDTH);
+    task->data[11] = GetBattlerSpriteCoordAttr(gBattleAnimTarget, BATTLER_COORD_ATTR_HEIGHT);
+    task->data[5] = (GetBattlerSide(gBattleAnimTarget) == B_SIDE_OPPONENT) ? 1 : -1;
+    task->data[9] = 56 - (task->data[5] * 64);
+    task->data[8] = task->data[7] - task->data[9] + task->data[6];
+    task->data[2] = CreateSprite(&gLeafBladeSpriteTemplate, task->data[8], task->data[9], task->data[4]);
+    if (task->data[2] == MAX_SPRITES)
+        DestroyAnimVisualTask(taskId);
+
+    gSprites[task->data[2]].data[0] = 10;
+    gSprites[task->data[2]].data[1] = task->data[8];
+    gSprites[task->data[2]].data[2] = task->data[6] - (task->data[10] / 2 + 10) * task->data[5];
+    gSprites[task->data[2]].data[3] = task->data[9];
+    gSprites[task->data[2]].data[4] = task->data[7] + (task->data[11] / 2 + 10) * task->data[5];
+    gSprites[task->data[2]].data[5] = LeafBladeGetPosFactor(&gSprites[task->data[2]]);
+    InitAnimArcTranslation(&gSprites[task->data[2]]);
+    task->func = AnimTask_LeafBlade_Step;
+}
+
+static void AnimTask_LeafBlade_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    struct Sprite *sprite = &gSprites[task->data[2]];
+    int a = task->data[0];
+    switch (a)
+    {
+    case 4:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 5;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 8:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 9;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 0:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 1;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 1:
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[6];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[7];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[4] += 2;
+        task->data[3] = a;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    case 2:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 3;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 3:
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[6] - ((task->data[10] / 2) + 10) * task->data[5];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[7] - ((task->data[11] / 2) + 10) * task->data[5];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[3] = 2;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    case 5:
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[6] + ((task->data[10] / 2) + 10) * task->data[5];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[7] + ((task->data[11] / 2) + 10) * task->data[5];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[4] -= 2;
+        task->data[3] = 3;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    case 6:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 7;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 7:
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[6];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[7];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[4] += 2;
+        task->data[3] = 4;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    case 9:
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[6] - ((task->data[10] / 2) + 10) * task->data[5];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[7] + ((task->data[11] / 2) + 10) * task->data[5];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[3] = 5;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    case 10:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            task->data[15] = 11;
+            task->data[0] = 0xFF;
+        }
+        break;
+    case 11:
+    {
+        sprite->x += sprite->x2;
+        sprite->y += sprite->y2;
+        sprite->x2 = 0;
+        sprite->y2 = 0;
+        sprite->data[0] = 10;
+        sprite->data[1] = sprite->x;
+        sprite->data[2] = task->data[8];
+        sprite->data[3] = sprite->y;
+        sprite->data[4] = task->data[9];
+        sprite->data[5] = LeafBladeGetPosFactor(sprite);
+        task->data[4] -= 2;
+        task->data[3] = 6;
+        sprite->subpriority = task->data[4];
+        StartSpriteAnim(sprite, task->data[3]);
+        InitAnimArcTranslation(sprite);
+        task->data[0]++;
+        break;
+    }
+    case 12:
+        AnimTask_LeafBlade_Step2(task, taskId);
+        if (TranslateAnimHorizontalArc(sprite))
+        {
+            DestroySprite(sprite);
+            task->data[0]++;
+        }
+        break;
+    case 13:
+        if (task->data[12] == 0)
+            DestroyAnimVisualTask(taskId);
+        break;
+    case 0xFF:
+        if (++task->data[1] > 5)
+        {
+            task->data[1] = 0;
+            task->data[0] = task->data[15];
+        }
+        break;
+    }
+}
+
+static s16 LeafBladeGetPosFactor(struct Sprite *sprite)
+{
+    s16 var = 8;
+    if (sprite->data[4] < sprite->y)
+        var = -var;
+
+    return var;
+}
+
+static void AnimTask_LeafBlade_Step2(struct Task *task, u8 taskId)
+{
+    task->data[14]++;
+    if (task->data[14] > 0)
+    {
+        u8 spriteId;
+        s16 spriteX;
+        s16 spriteY;
+        task->data[14] = 0;
+        spriteX = gSprites[task->data[2]].x + gSprites[task->data[2]].x2;
+        spriteY = gSprites[task->data[2]].y + gSprites[task->data[2]].y2;
+        spriteId = CreateSprite(&gLeafBladeSpriteTemplate, spriteX, spriteY, task->data[4]);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].data[6] = taskId;
+            gSprites[spriteId].data[7] = 12;
+            gTasks[taskId].data[12]++;
+            gSprites[spriteId].data[0] = task->data[13] & 1;
+            gTasks[taskId].data[13]++;
+            StartSpriteAnim(&gSprites[spriteId], task->data[3]);
+            gSprites[spriteId].subpriority = task->data[4];
+            gSprites[spriteId].callback = AnimTask_LeafBlade_Step2_Callback;
+        }
+    }
+}
+
+static void AnimTask_LeafBlade_Step2_Callback(struct Sprite *sprite)
+{
+    sprite->data[0]++;
+    if (sprite->data[0] > 1)
+    {
+        sprite->data[0] = 0;
+        sprite->invisible ^= 1;
+        sprite->data[1]++;
+        if (sprite->data[1] > 8)
+        {
+            gTasks[sprite->data[6]].data[sprite->data[7]]--;
+            DestroySprite(sprite);
+        }
+    }
+}
+
+static void AnimFlyingParticle(struct Sprite *sprite)
+{
+    // unk6 chooses an anchor?
+    // unk3 is probably some sort of y offset relative to the center of
+    // the screen?
+    // unk5 is some kind of mode. it affects priority and y.
+    CMD_ARGS(unk0, unk1, unk2, unk3, unk4, unk5, unk6);
+
+    u8 battler;
+    if (!cmd->unk6)
+        battler = gBattleAnimAttacker;
+    else
+        battler = gBattleAnimTarget;
+
+    if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+    {
+        sprite->data[4] = 0;
+        sprite->data[2] = cmd->unk3;
+        sprite->x = -16;
+    }
+    else
+    {
+        sprite->data[4] = 1;
+        sprite->data[2] = -cmd->unk3;
+        sprite->x = DISPLAY_WIDTH + 16;
+    }
+
+    sprite->data[1] = cmd->unk1;
+    sprite->data[0] = cmd->unk2;
+    sprite->data[3] = cmd->unk4;
+    switch (cmd->unk5)
+    {
+    case 0:
+        sprite->y = cmd->unk0;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
+        break;
+    case 1:
+        sprite->y = cmd->unk0;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
+        break;
+    case 2:
+        sprite->y = GetBattlerSpriteCoord(battler, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk0;
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler);
+        break;
+    case 3:
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk0;
+        GetAnimBattlerSpriteId(ANIM_TARGET);
+        sprite->oam.priority = GetBattlerSpriteBGPriority(battler) + 1;
+        break;
+    }
+
+    sprite->callback = AnimFlyingParticle_Step;
+}
+
+static void AnimFlyingParticle_Step(struct Sprite *sprite)
+{
+    int a = sprite->data[7];
+    sprite->data[7]++;
+    sprite->y2 = (sprite->data[1] * gSineTable[sprite->data[0]]) >> 8;
+    sprite->x2 = sprite->data[2] * a;
+    sprite->data[0] = (sprite->data[3] * a) & 0xFF;
+    if (!sprite->data[4])
+    {
+        if (sprite->x2 + sprite->x < DISPLAY_WIDTH + 8)
+            return;
+    }
+    else
+    {
+        if (sprite->x2 + sprite->x > -16)
+            return;
+    }
+
+    DestroySpriteAndMatrix(sprite);
+}
+
+void AnimTask_CycleMagicalLeafPal(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    switch (task->data[0])
+    {
+    case 0:
+        task->data[8] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_LEAF));
+        task->data[12] = OBJ_PLTT_ID(IndexOfSpritePaletteTag(ANIM_TAG_RAZOR_LEAF));
+        task->data[0]++;
+        break;
+    case 1:
+        if (++task->data[9] >= 0)
+        {
+            task->data[9] = 0;
+            BlendPalette(task->data[8], 16, task->data[10], gMagicalLeafBlendColors[task->data[11]]);
+            BlendPalette(task->data[12], 16, task->data[10], gMagicalLeafBlendColors[task->data[11]]);
+            if (++task->data[10] == 17)
+            {
+                task->data[10] = 0;
+                if (++task->data[11] == 7)
+                    task->data[11] = 0;
+            }
+        }
+        break;
+    }
+
+    // TODO: gBattleAnimArgs[ARG_RET_ID]?
+    if (gBattleAnimArgs[7] == -1)
+        DestroyAnimVisualTask(taskId);
 }
