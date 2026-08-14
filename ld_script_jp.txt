@@ -3163,7 +3163,10 @@ SECTIONS {
         src/mystery_event_server.o(.text.mainseq_1);
         src/mystery_event_server.o(.text.mainseq_2);
         src/mystery_event_server.o(.text.mainseq_3);
-        asm/mevent_client.o(.text);
+        src/mevent_client.o(.text.mainseq_4);
+        src/mevent_client.o(.text.mainseq_5);
+        src/mevent_client.o(.text.mainseq_6);
+        src/mevent_client.o(.text.mainseq_7);
         src/mystery_event_server.o(.text.mevent_client_exec);
         src/mystery_event_server.o(.text.mevent_srv_sub_recv);
         src/mystery_event_server.o(.text.mevent_srv_sub_send);
