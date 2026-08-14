@@ -481,7 +481,7 @@ _080FDC40:
 _080FDC60:
 	lsls r0, r6, #0x18
 	lsrs r0, r0, #0x18
-	bl MetatileBehavior_8089510
+	bl MetatileBehavior_IsBridgeOverWaterNoEdge
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -3068,4 +3068,3 @@ ItemUseOutOfBattle_CannotUse: @ 0x080FF070
 	.align 2, 0
 _080FF08C: .4byte 0x03005B60
 	thumb_func_end ItemUseOutOfBattle_CannotUse
-

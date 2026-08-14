@@ -566,7 +566,7 @@ u8 BattleSetup_GetEnvironmentId(void)
         if (MetatileBehavior_GetBridgeType(tileBehavior) != BRIDGE_TYPE_OCEAN)
             return BATTLE_ENVIRONMENT_POND;
 
-        if (MetatileBehavior_IsBridge(tileBehavior) == TRUE) // JP: uses IsBridge
+        if (MetatileBehavior_IsBridgeOverWater(tileBehavior) == TRUE)
             return BATTLE_ENVIRONMENT_WATER;
     }
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE113) && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE113))

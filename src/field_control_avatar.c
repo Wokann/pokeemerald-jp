@@ -39,7 +39,6 @@
 // (0x03005B50) and declared in global.fieldmap.h.
 extern EWRAM_DATA u8 sWildEncounterImmunitySteps;
 extern EWRAM_DATA u16 sPrevMetatileBehavior;
-bool8 MetatileBehavior_IsWarpOrBridge(u8 metatileBehavior); // JP-only metatile helper
 
 static void GetPlayerPosition(struct MapPosition *);
 static void GetInFrontOfPlayerPosition(struct MapPosition *);
@@ -728,7 +727,7 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
             DoTeleportTileWarp();
             return TRUE;
         }
-        if (MetatileBehavior_IsWarpOrBridge(metatileBehavior) == TRUE) // JP: IsWarpOrBridge
+        if (MetatileBehavior_IsUnionRoomWarp(metatileBehavior) == TRUE)
         {
             DoSpinExitWarp();
             return TRUE;
@@ -760,7 +759,7 @@ static bool8 IsWarpMetatileBehavior(u16 metatileBehavior)
      && MetatileBehavior_IsAquaHideoutWarp(metatileBehavior) != TRUE
      && MetatileBehavior_IsMtPyreHole(metatileBehavior) != TRUE
      && MetatileBehavior_IsMossdeepGymWarp(metatileBehavior) != TRUE
-     && MetatileBehavior_IsWarpOrBridge(metatileBehavior) != TRUE) // JP: IsWarpOrBridge
+     && MetatileBehavior_IsUnionRoomWarp(metatileBehavior) != TRUE)
         return FALSE;
     return TRUE;
 }

@@ -617,7 +617,7 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
             }
         }
         else if (MetatileBehavior_IsWaterWildEncounter(curMetatileBehavior) == TRUE
-                 || (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING) && MetatileBehavior_IsBridge(curMetatileBehavior) == TRUE)) // JP: IsBridge
+                 || (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_SURFING) && MetatileBehavior_IsBridgeOverWater(curMetatileBehavior) == TRUE))
         {
             if (AreLegendariesInSootopolisPreventingEncounters() == TRUE)
                 return FALSE;

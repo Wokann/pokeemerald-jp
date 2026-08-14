@@ -3442,7 +3442,7 @@ sub_0812845C: @ 0x0812845C
 	lsrs r0, r0, #0x18
 	lsls r1, r1, #0x10
 	lsrs r4, r1, #0x10
-	bl MetatileBehavior_IsBlockDecoration
+	bl MetatileBehavior_IsSecretBaseTrainerSpot
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -3512,7 +3512,7 @@ sub_081284CC: @ 0x081284CC
 	lsls r0, r6, #0x18
 	lsrs r4, r0, #0x18
 	adds r0, r4, #0
-	bl MetatileBehavior_IsBlockDecoration
+	bl MetatileBehavior_IsSecretBaseTrainerSpot
 	lsls r0, r0, #0x18
 	lsrs r0, r0, #0x18
 	cmp r0, #1
@@ -7688,4 +7688,3 @@ _0812A4E0: .4byte 0x02021C7C
 _0812A4E4: .4byte 0x085CA829
 _0812A4E8: .4byte 0x08127A0D
 	thumb_func_end sub_0812A488
-
