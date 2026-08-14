@@ -6710,7 +6710,10 @@ SECTIONS {
 		src/libc/mprec.o(.text._s2b);
 		src/libc/mprec.o(.text._hi0bits);
 		src/libc/mprec.o(.text._lo0bits);
-		asm/libc_rest_1b_2.o(.text);
+		src/libc/mprec.o(.text._i2b);
+		src/libc/mprec.o(.text._multiply);
+		src/libc/mprec.o(.text._pow5mult);
+		src/libc/mprec.o(.text._lshift);
 		src/libc/mprec.o(.text.__mcmp);
 		asm/libc_rest_1b_3.o(.text);
 		src/libc/strlen.o(.text.strlen);
