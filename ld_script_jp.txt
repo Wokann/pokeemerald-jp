@@ -6721,7 +6721,13 @@ SECTIONS {
 		src/libc/mprec.o(.text._d2b);
 		src/libc/mprec.o(.text._ratio);
 		src/libc/mprec.o(.text._mprec_log10);
-		asm/libc_rest_1b_3.o(.text);
+		src/libc/libc_rest_1b3.o(.text.isinf);
+		src/libc/libc_rest_1b3.o(.text.isnan);
+		src/libc/libc_rest_1b3.o(.text._sbrk_r);
+		src/libc/libc_rest_1b3.o(.text.__sread);
+		src/libc/libc_rest_1b3.o(.text.__swrite);
+		src/libc/libc_rest_1b3.o(.text.__sseek);
+		src/libc/libc_rest_1b3.o(.text.__sclose);
 		src/libc/strlen.o(.text.strlen);
 		asm/libc_rest_2.o(.text);
 		/*
