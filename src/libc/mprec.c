@@ -90,6 +90,36 @@
 #define _Kmax 15
 
 
+_Bigint *
+_DEFUN (Balloc, (ptr, k), struct _reent *ptr _AND int k)
+{
+  int x;
+  _Bigint *rv;
+
+  if (!ptr->_freelist)
+    {
+      ptr->_freelist = (_Bigint **) _calloc_r (ptr, 4, 0x10);
+      if (!ptr->_freelist)
+	return NULL;
+    }
+  if ((rv = ptr->_freelist[k]))
+    {
+      ptr->_freelist[k] = rv->_next;
+    }
+  else
+    {
+      x = 1 << k;
+      rv = (_Bigint *) _calloc_r (ptr, 1, sizeof (_Bigint) + (x - 1) * sizeof (ULong));
+      if (!rv)
+	return NULL;
+      rv->_k = k;
+      rv->_maxwds = x;
+    }
+  rv->_sign = rv->_wds = 0;
+  return rv;
+}
+
+
 void
 _DEFUN (Bfree, (ptr, v), struct _reent *ptr _AND _Bigint * v)
 {

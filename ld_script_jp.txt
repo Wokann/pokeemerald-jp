@@ -6704,7 +6704,7 @@ SECTIONS {
 		src/libc/memmove.o(.text.memmove);
 		src/libc/mlock.o(.text.__malloc_lock);
 		src/libc/mlock.o(.text.__malloc_unlock);
-		asm/libc_rest_1b_0.o(.text);
+		src/libc/mprec.o(.text._Balloc);
 		src/libc/mprec.o(.text._Bfree);
 		src/libc/mprec.o(.text._multadd);
 		src/libc/mprec.o(.text._s2b);
