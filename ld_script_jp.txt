@@ -6715,6 +6715,12 @@ SECTIONS {
 		src/libc/mprec.o(.text._pow5mult);
 		src/libc/mprec.o(.text._lshift);
 		src/libc/mprec.o(.text.__mcmp);
+		src/libc/mprec.o(.text.__mdiff);
+		src/libc/mprec.o(.text._ulp);
+		src/libc/mprec.o(.text._b2d);
+		src/libc/mprec.o(.text._d2b);
+		src/libc/mprec.o(.text._ratio);
+		src/libc/mprec.o(.text._mprec_log10);
 		asm/libc_rest_1b_3.o(.text);
 		src/libc/strlen.o(.text.strlen);
 		asm/libc_rest_2.o(.text);
