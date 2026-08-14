@@ -3972,7 +3972,7 @@ SECTIONS {
         src/battle_main.o(.text.TryDoEventsBeforeFirstTurn);
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
         src/battle_main.o(.text.BattleTurnPassed);
-        asm/battle_main_isrunning.o(.text);
+        src/battle_main.o(.text.IsRunningFromBattleImpossible);
         src/battle_main.o(.text.SwitchPartyOrder);
         asm/battle_main_selstate.o(.text);
         src/battle_main.o(.text.AllAtActionConfirmed);
@@ -3990,14 +3990,14 @@ SECTIONS {
         src/battle_main.o(.text.HandleEndTurn_MonFled);
         src/battle_main.o(.text.HandleEndTurn_FinishBattle);
         src/battle_main.o(.text.FreeResetData_ReturnToOvOrDoEvolutions);
-        asm/battle_main_tryevo.o(.text);
+        src/battle_main.o(.text.TryEvolvePokemon);
         src/battle_main.o(.text.WaitForEvoSceneToFinish);
         src/battle_main.o(.text.ReturnFromBattleToOverworld);
         src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
         asm/battle_main_usemove.o(.text);
         src/battle_main.o(.text.HandleAction_Switch);
         src/battle_main.o(.text.HandleAction_UseItem);
-        asm/battle_main_tryrun.o(.text);
+        src/battle_main.o(.text.TryRunFromBattle);
         src/battle_main.o(.text.HandleAction_Run);
         src/battle_main.o(.text.HandleAction_WatchesCarefully);
         src/battle_main.o(.text.HandleAction_SafariZoneBallThrow);
