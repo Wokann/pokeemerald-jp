@@ -8773,7 +8773,6 @@ SECTIONS {
         src/party_menu.o(.text.sub_081B947C);
         src/party_menu.o(.text.sub_081B957C);
         src/party_menu.o(.text.sub_081B95B8);
-        asm/party_menu.o(.text);
         src/battle_tent.o(.text);
         src/braille.o(.text.FontFunc_Braille);
         src/braille.o(.text.DecompressGlyph_Braille);
