@@ -9734,17 +9734,17 @@ mauville_old_man.s
 08121514 mauville_old_man.s ScrSpecial_HasStorytellerAlreadyRecorded
 08121540 SanitizeReceivedEmeraldOldMan Script_StorytellerInitializeRandomStat
 mail.s
-08121568 mail.s ReadMail
-08121688 mail.s MailReadBuildGraphics
+08121568 ReadMail ReadMail
+08121688 MailReadBuildGraphics MailReadBuildGraphics
 08121a60 CB2_InitMailRead CB2_InitMailRead
-08121a8c mail.s sub_08121A8C_jp
-08121b64 mail.s sub_08121B64_jp
-08121c60 VBlankCB_MailRead VblankCB_StarterChoose
-08121c74 mail.s CB2_MailRead
+08121a8c BufferMailText BufferMailText
+08121b64 PrintMailText PrintMailText
+08121c60 VBlankCB_MailRead VBlankCB_MailRead
+08121c74 CB2_MailRead CB2_MailRead
 08121c94 mail.s sub_08121C94
 08121ca0 CB2_WaitForPaletteExitOnKeyPress CB2_WaitForPaletteExitOnKeyPress
 08121cc4 CB2_ExitOnKeyPress CB2_ExitOnKeyPress
-08121d00 mail.s CB2_ExitMailReadFreeVars
+08121d00 CB2_ExitMailReadFreeVars CB2_ExitMailReadFreeVars
 menu_helpers.s
 08121d90 ResetVramOamAndBgCntRegs ResetVramOamAndBgCntRegs
 08121e00 ResetAllBgsCoordinates ResetAllBgsCoordinates
