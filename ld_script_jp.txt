@@ -9415,6 +9415,15 @@ SECTIONS {
         src/battle_transition.o(.text.Rayquaza_SetBlack);
         src/battle_transition.o(.text.Rayquaza_TriRing);
         src/battle_transition.o(.text.VBlankCB_Rayquaza);
+        src/battle_transition.o(.text.Task_WhiteBarsFade);
+        src/battle_transition.o(.text.WhiteBarsFade_Init);
+        src/battle_transition.o(.text.WhiteBarsFade_StartBars);
+        src/battle_transition.o(.text.WhiteBarsFade_WaitBars);
+        src/battle_transition.o(.text.WhiteBarsFade_BlendToBlack);
+        src/battle_transition.o(.text.WhiteBarsFade_End);
+        src/battle_transition.o(.text.VBlankCB_WhiteBarsFade);
+        src/battle_transition.o(.text.VBlankCB_WhiteBarsFade_Blend);
+        src/battle_transition.o(.text.HBlankCB_WhiteBarsFade);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
