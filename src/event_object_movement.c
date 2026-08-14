@@ -20529,3 +20529,488 @@ __attribute__((naked)) bool8 MovementAction_JumpInPlaceUpDown_Step1(struct Objec
     );
 }
 
+
+__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #2\n\t"
+        "	str r0, [sp]\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r2, #3\n\t"
+        "	movs r3, #0\n\t"
+        "	bl maybe_shadow_1\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl MovementAction_JumpInPlaceLeftRight_Step1\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_JumpInPlaceLeftRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	bl sub_08093B50\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08094D38\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08094D48\n\t"
+        "_08094D38:\n\t"
+        "	ldrb r0, [r4, #2]\n\t"
+        "	movs r1, #0x41\n\t"
+        "	rsbs r1, r1, #0\n\t"
+        "	ands r1, r0\n\t"
+        "	strb r1, [r4, #2]\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "	movs r0, #1\n\t"
+        "_08094D48:\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #2\n\t"
+        "	str r0, [sp]\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r2, #4\n\t"
+        "	movs r3, #0\n\t"
+        "	bl maybe_shadow_1\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl MovementAction_JumpInPlaceRightLeft_Step1\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_JumpInPlaceRightLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	bl sub_08093B50\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08094D90\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08094DA0\n\t"
+        "_08094D90:\n\t"
+        "	ldrb r0, [r4, #2]\n\t"
+        "	movs r1, #0x41\n\t"
+        "	rsbs r1, r1, #0\n\t"
+        "	ands r1, r0\n\t"
+        "	strb r1, [r4, #2]\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "	movs r0, #1\n\t"
+        "_08094DA0:\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_FaceOriginalDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r3, _08094DBC\n\t"
+        "	ldrb r2, [r0, #6]\n\t"
+        "	adds r2, r2, r3\n\t"
+        "	ldrb r2, [r2]\n\t"
+        "	bl FaceDirection\n\t"
+        "	movs r0, #1\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08094DBC: .4byte 0x084DDA21\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_NurseJoyBowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r2, #1\n\t"
+        "	movs r3, #0x14\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_EnableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r3, [r0, #3]\n\t"
+        "	movs r2, #3\n\t"
+        "	rsbs r2, r2, #0\n\t"
+        "	ands r2, r3\n\t"
+        "	strb r2, [r0, #3]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r1, #0x32]\n\t"
+        "	bx lr\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_DisableJumpLandingGroundEffect_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r2, [r0, #3]\n\t"
+        "	movs r3, #2\n\t"
+        "	orrs r2, r3\n\t"
+        "	strb r2, [r0, #3]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r1, #0x32]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_DisableAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r2, [r0, #1]\n\t"
+        "	movs r3, #0x10\n\t"
+        "	orrs r2, r3\n\t"
+        "	strb r2, [r0, #1]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r1, #0x32]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RestoreAnimation_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	ldrb r0, [r4, #5]\n\t"
+        "	bl GetObjectEventGraphicsInfo\n\t"
+        "	ldrb r1, [r0, #0xc]\n\t"
+        "	lsls r1, r1, #0x19\n\t"
+        "	lsrs r1, r1, #0x1f\n\t"
+        "	lsls r1, r1, #4\n\t"
+        "	ldrb r2, [r4, #1]\n\t"
+        "	movs r0, #0x11\n\t"
+        "	rsbs r0, r0, #0\n\t"
+        "	ands r0, r2\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r4, #1]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_SetInvisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r2, [r0, #1]\n\t"
+        "	movs r3, #0x20\n\t"
+        "	orrs r2, r3\n\t"
+        "	strb r2, [r0, #1]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r1, #0x32]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_SetVisible_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	ldrb r3, [r0, #1]\n\t"
+        "	movs r2, #0x21\n\t"
+        "	rsbs r2, r2, #0\n\t"
+        "	ands r2, r3\n\t"
+        "	strb r2, [r0, #1]\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r1, #0x32]\n\t"
+        "	bx lr\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_EmoteExclamationMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	ldr r1, _08094E6C\n\t"
+        "	adds r2, r1, #4\n\t"
+        "	adds r3, r1, #0\n\t"
+        "	adds r3, #8\n\t"
+        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	movs r0, #0\n\t"
+        "	bl FieldEffectStart\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08094E6C: .4byte 0x020388A8\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_EmoteQuestionMark_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	ldr r1, _08094E90\n\t"
+        "	adds r2, r1, #4\n\t"
+        "	adds r3, r1, #0\n\t"
+        "	adds r3, #8\n\t"
+        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	movs r0, #0x21\n\t"
+        "	bl FieldEffectStart\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08094E90: .4byte 0x020388A8\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	ldr r1, _08094EB4\n\t"
+        "	adds r2, r1, #4\n\t"
+        "	adds r3, r1, #0\n\t"
+        "	adds r3, #8\n\t"
+        "	bl EventObjectGetLocalIdAndMap\n\t"
+        "	movs r0, #0x2e\n\t"
+        "	bl FieldEffectStart\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08094EB4: .4byte 0x020388A8\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RevealTrainer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	ldrb r0, [r4, #6]\n\t"
+        "	cmp r0, #0x3f\n\t"
+        "	bne _08094ECE\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl sub_080B3CD0\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08094EF6\n\t"
+        "_08094ECE:\n\t"
+        "	subs r0, #0x39\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	cmp r0, #1\n\t"
+        "	bhi _08094EF0\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl StartRevealDisguise\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl MovementAction_RevealTrainer_Step1\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	b _08094EF6\n\t"
+        "_08094EF0:\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "	movs r0, #1\n\t"
+        "_08094EF6:\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	bl UpdateRevealDisguise\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08094F0E\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08094F14\n\t"
+        "_08094F0E:\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	movs r0, #1\n\t"
+        "_08094F14:\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r1, #1\n\t"
+        "	movs r2, #0\n\t"
+        "	bl SetAndStartSpriteAnim\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl SpriteAnimEnded\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08094F54\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r1, #0x20\n\t"
+        "	bl SetMovementDelay\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "_08094F54:\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_RockSmashBreak_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	ldrb r2, [r4, #1]\n\t"
+        "	lsls r1, r2, #0x1a\n\t"
+        "	lsrs r1, r1, #0x1f\n\t"
+        "	movs r0, #1\n\t"
+        "	eors r1, r0\n\t"
+        "	lsls r1, r1, #5\n\t"
+        "	subs r0, #0x22\n\t"
+        "	ands r0, r2\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r4, #1]\n\t"
+        "	adds r0, r5, #0\n\t"
+        "	bl WaitForMovementDelay\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08094F8E\n\t"
+        "	ldrb r0, [r4, #1]\n\t"
+        "	movs r1, #0x20\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r4, #1]\n\t"
+        "	movs r0, #3\n\t"
+        "	strh r0, [r5, #0x32]\n\t"
+        "_08094F8E:\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
