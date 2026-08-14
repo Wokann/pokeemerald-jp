@@ -9424,6 +9424,18 @@ SECTIONS {
         src/battle_transition.o(.text.VBlankCB_WhiteBarsFade);
         src/battle_transition.o(.text.VBlankCB_WhiteBarsFade_Blend);
         src/battle_transition.o(.text.HBlankCB_WhiteBarsFade);
+        src/battle_transition.o(.text.SpriteCB_WhiteBarFade);
+        src/battle_transition.o(.text.Task_GridSquares);
+        src/battle_transition.o(.text.GridSquares_Init);
+        src/battle_transition.o(.text.GridSquares_Main);
+        src/battle_transition.o(.text.GridSquares_End);
+        src/battle_transition.o(.text.Task_AngledWipes);
+        src/battle_transition.o(.text.AngledWipes_Init);
+        src/battle_transition.o(.text.AngledWipes_SetWipeData);
+        src/battle_transition.o(.text.AngledWipes_DoWipe);
+        src/battle_transition.o(.text.AngledWipes_TryEnd);
+        src/battle_transition.o(.text.AngledWipes_StartNext);
+        src/battle_transition.o(.text.VBlankCB_AngledWipes);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
