@@ -4379,7 +4379,8 @@ SECTIONS {
         src/battle_interface.o(.text.TryAddPokeballIconToHealthbox);
         src/battle_interface.o(.text.UpdateStatusIconInHealthbox);
         src/battle_interface.o(.text.GetStatusIconForBattlerId);
-        asm/battle_interface_tail.o(.text);
+        src/battle_interface_tail.o(.text.AddTextPrinterAndCreateWindowOnHealthbox);
+        src/battle_interface_tail.o(.text.UpdateLeftNoOfBallsTextOnHealthbox);
         src/battle_interface.o(.text.UpdateHealthboxAttribute);
         src/battle_interface.o(.text.MoveBattleBar);
         src/battle_interface.o(.text.MoveBattleBarGraphically);
