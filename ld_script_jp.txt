@@ -286,6 +286,7 @@ TryPutBattleSeminarOnAir = sub_080EEE7C;
 sRotatingTilePuzzle = ABSOLUTE(0x0203CB1C);
 sSpecialBattleStrings = ABSOLUTE(0x085D3304);
 sVariableDmgMoves = ABSOLUTE(0x085D2F0C);
+sPointsArray = ABSOLUTE(0x085D3294);
 sMovement_ShiftRight = ABSOLUTE(0x085DDED0);
 sMovement_ShiftDown = ABSOLUTE(0x085DDED4);
 sMovement_ShiftLeft = ABSOLUTE(0x085DDED8);
@@ -6458,6 +6459,7 @@ SECTIONS {
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnMove);
         src/battle_tv.o(.text.BattleTv_SetDataBasedOnAnimation);
         asm/battle_tv_rest.o(.text);
+        src/battle_tv.o(.text.AddMovePoints);
         src/battle_tv.o(.text.AddPointsOnFainting);
         src/battle_tv.o(.text.TrySetBattleSeminarShow);
         src/battle_tv.o(.text.ShouldCalculateDamage);

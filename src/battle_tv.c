@@ -68,6 +68,129 @@ enum {
 // JP data tables stay in the ROM data region; bound via ld aliases.
 extern const u16 sSpecialBattleStrings[];
 extern const u16 sVariableDmgMoves[];
+extern const u16 *const sPointsArray[];
+
+void AddMovePoints(u8 caseId, u16 arg1, u8 arg2, u8 arg3)
+{
+    struct BattleTvMovePoints *movePoints = &gBattleStruct->tvMovePoints;
+    struct BattleTv *tvPtr = &gBattleStruct->tv;
+    u32 atkSide = GetBattlerSide(gBattlerAttacker);
+    u32 defSide = GetBattlerSide(gBattlerTarget);
+    const u16 *ptr;
+    s32 i;
+
+    switch (caseId)
+    {
+    case PTS_MOVE_EFFECT:
+    case PTS_EFFECTIVENESS:
+    case PTS_CRITICAL_HIT:
+    case PTS_STAT_INCREASE_1:
+    case PTS_STAT_INCREASE_2:
+    case PTS_STAT_DECREASE_SELF:
+    case PTS_STAT_DECREASE_1:
+    case PTS_STAT_DECREASE_2:
+    case PTS_STAT_INCREASE_NOT_SELF:
+        movePoints->points[atkSide][gBattlerPartyIndexes[gBattlerAttacker] * 4 + arg1] += sPointsArray[caseId][arg2];
+        break;
+
+#define move arg1
+    case PTS_RAIN:
+    case PTS_SUN:
+    case PTS_SANDSTORM:
+    case PTS_HAIL:
+    case PTS_ELECTRIC:
+        i = 0;
+        ptr = sPointsArray[caseId];
+        do
+        {
+            if (move == ptr[i])
+            {
+                movePoints->points[atkSide][gBattlerPartyIndexes[gBattlerAttacker] * 4 + arg2] += ptr[i+1];
+                break;
+            }
+            i += 2;
+        } while (ptr[i] != TABLE_END);
+        break;
+#undef move
+
+    case PTS_FAINT:
+        tvPtr->side[arg2 ^ 1].faintCause = FNT_NONE;
+        movePoints->points[arg2][0 * 4 + arg3] += sPointsArray[caseId][arg1];
+        break;
+    case PTS_FAINT_SET_UP:
+        tvPtr->side[arg2].faintCause = FNT_NONE;
+        // fallthrough
+    case PTS_SET_UP:
+        movePoints->points[arg2][0 * 4 + arg3] += sPointsArray[caseId][arg1];
+        break;
+    case PTS_BREAK_WALL:
+        movePoints->points[atkSide][arg2 * 4 + arg3] += sPointsArray[caseId][arg1];
+        break;
+    case PTS_STATUS_DMG:
+    case PTS_STATUS:
+    case PTS_SAFEGUARD:
+    case PTS_MIST:
+    case PTS_FLINCHED:
+        movePoints->points[atkSide ^ BIT_SIDE][arg2 * 4 + arg3] += sPointsArray[caseId][arg1];
+        break;
+    case PTS_SPIKES:
+        movePoints->points[arg1][arg2 * 4 + arg3] += sPointsArray[caseId][0];
+        break;
+
+#define type arg1
+#define power arg2
+    case PTS_WATER_SPORT:
+        // If used fire move during Water Sport
+        if (tvPtr->pos[defSide][0].waterSportMonId != -(tvPtr->pos[defSide][1].waterSportMonId) && type == TYPE_FIRE)
+        {
+            if (tvPtr->pos[defSide][0].waterSportMonId != 0)
+            {
+                u32 id = (tvPtr->pos[defSide][0].waterSportMonId - 1) * 4;
+                movePoints->points[defSide][id + tvPtr->pos[defSide][0].waterSportMoveSlot] += sPointsArray[caseId][0];
+            }
+            if (tvPtr->pos[defSide][1].waterSportMonId != 0)
+            {
+                u32 id = (tvPtr->pos[defSide][1].waterSportMonId - 1) * 4;
+                movePoints->points[defSide][id + tvPtr->pos[defSide][1].waterSportMoveSlot] += sPointsArray[caseId][0];
+            }
+        }
+        break;
+    case PTS_MUD_SPORT:
+        // If used Electric move during Mud Sport
+        if (tvPtr->pos[defSide][0].mudSportMonId != -(tvPtr->pos[defSide][1].mudSportMonId) && type == TYPE_ELECTRIC)
+        {
+            if (tvPtr->pos[defSide][0].mudSportMonId != 0)
+            {
+                u32 id = (tvPtr->pos[defSide][0].mudSportMonId - 1) * 4;
+                movePoints->points[defSide][id + tvPtr->pos[defSide][0].mudSportMoveSlot] += sPointsArray[caseId][0];
+            }
+            if (tvPtr->pos[defSide][1].mudSportMonId != 0)
+            {
+                u32 id = (tvPtr->pos[defSide][1].mudSportMonId - 1) * 4;
+                movePoints->points[defSide][id + tvPtr->pos[defSide][1].mudSportMoveSlot] += sPointsArray[caseId][0];
+            }
+        }
+        break;
+    case PTS_REFLECT:
+        // If hit Reflect with damaging physical move
+        if (IS_TYPE_PHYSICAL(type) && power != 0 && tvPtr->side[defSide].reflectMonId != 0)
+        {
+            u32 id = (tvPtr->side[defSide].reflectMonId - 1) * 4;
+            movePoints->points[defSide][id + tvPtr->side[defSide].reflectMoveSlot] += sPointsArray[caseId][0];
+        }
+        break;
+    case PTS_LIGHT_SCREEN:
+        // If hit Light Screen with damaging special move
+        if (!IS_TYPE_PHYSICAL(type) && power != 0 && tvPtr->side[defSide].lightScreenMonId != 0)
+        {
+            u32 id = (tvPtr->side[defSide].lightScreenMonId - 1) * 4;
+            movePoints->points[defSide][id + tvPtr->side[defSide].lightScreenMoveSlot] += sPointsArray[caseId][0];
+        }
+        break;
+#undef type
+#undef power
+    }
+}
 
 bool8 IsNotSpecialBattleString(u16 stringId)
 {
