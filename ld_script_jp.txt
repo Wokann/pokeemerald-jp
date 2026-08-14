@@ -8279,7 +8279,6 @@ SECTIONS {
         src/slot_machine.o(.text.sub_0812FB18);
         src/slot_machine.o(.text.SetDigitalDisplayImagePtrs);
         src/slot_machine.o(.text.AllocDigitalDisplayGfx);
-        asm/slot_machine.o(.text);
         asm/contest_painting.o(.text);
         asm/battle_ai_script_commands.o(.text);
         asm/trader_jp_only.o(.text);
