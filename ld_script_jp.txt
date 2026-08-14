@@ -5924,7 +5924,7 @@ SECTIONS {
         src/battle_anim_dark.o(.text.AnimTask_AttackerFadeFromInvisible_Step);
         src/battle_anim_dark.o(.text.AnimTask_InitAttackerFadeFromInvisible);
         src/battle_anim_dark.o(.text.AnimUnusedBagSteal);
-        asm/dark_mid.o(.text);
+        src/battle_anim_dark.o(.text.AnimUnusedBagSteal_Step);
         src/battle_anim_dark.o(.text.AnimBite);
         src/battle_anim_dark.o(.text.AnimBite_Step1);
         src/battle_anim_dark.o(.text.AnimBite_Step2);
@@ -6147,7 +6147,7 @@ SECTIONS {
         src/starter_choose.o(.text.Task_AskConfirmStarter);
         src/starter_choose.o(.text.Task_HandleConfirmStarterInput);
         src/starter_choose.o(.text.Task_DeclineStarter);
-        asm/starter_choose_label.o(.text);
+        src/starter_choose.o(.text.CreateStarterPokemonLabel);
         src/starter_choose.o(.text.ClearStarterLabel);
         src/starter_choose.o(.text.Task_MoveStarterChooseCursor);
         src/starter_choose.o(.text.Task_CreateStarterLabel);
