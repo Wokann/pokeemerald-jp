@@ -41,7 +41,7 @@ AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # still live in asm/, so exclude them from the build until converted.
 UNPORTED_SRCS := \
 	src/battle_tower.c src/battle_transition.c \
-	src/berry.c src/cable_club.c src/contest_painting.c src/easy_chat.c \
+	src/berry.c src/cable_club.c src/contest_painting.c \
 	src/field_specials.c src/field_weather.c \
 	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
 	src/menu.c \
@@ -72,6 +72,7 @@ $(C_BUILDDIR)/event_object_movement.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/pokemon_storage_system.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/party_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/slot_machine.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/easy_chat.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
 $(C_BUILDDIR)/mystery_event_script.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/mystery_event_server.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
