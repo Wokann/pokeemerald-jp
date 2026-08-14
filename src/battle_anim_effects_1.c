@@ -30,6 +30,19 @@ static void AnimAbsorptionOrb(struct Sprite *sprite);
 static void AnimAbsorptionOrb_Step(struct Sprite *sprite);
 static void AnimHyperBeamOrb(struct Sprite *sprite);
 static void AnimHyperBeamOrb_Step(struct Sprite *sprite);
+static void AnimLeechSeed(struct Sprite *sprite);
+static void AnimLeechSeed_Step(struct Sprite *sprite);
+static void AnimLeechSeedSprouts(struct Sprite *sprite);
+static void AnimSporeParticle(struct Sprite *sprite);
+static void AnimSporeParticle_Step(struct Sprite *sprite);
+void AnimTask_SporeDoubleBattle(u8 taskId);
+static void AnimPetalDanceBigFlower(struct Sprite *sprite);
+static void AnimPetalDanceBigFlower_Step(struct Sprite *sprite);
+static void AnimPetalDanceSmallFlower(struct Sprite *sprite);
+static void AnimPetalDanceSmallFlower_Step(struct Sprite *sprite);
+static void AnimRazorLeafParticle(struct Sprite *sprite);
+static void AnimRazorLeafParticle_Step1(struct Sprite *sprite);
+static void AnimRazorLeafParticle_Step2(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -219,4 +232,226 @@ static void AnimHyperBeamOrb_Step(struct Sprite *sprite)
         sprite->data[5] += 24;
         sprite->data[5] &= 0xFF;
     }
+}
+
+static void AnimLeechSeed(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, targetX, targetY, duration, waveAmplitude);
+
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        cmd->targetX = -cmd->targetX;
+
+    sprite->data[0] = cmd->duration;
+    sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + cmd->targetX;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + cmd->targetY;
+    sprite->data[5] = cmd->waveAmplitude;
+    InitAnimArcTranslation(sprite);
+    sprite->callback = AnimLeechSeed_Step;
+}
+
+static void AnimLeechSeed_Step(struct Sprite *sprite)
+{
+    if (TranslateAnimHorizontalArc(sprite))
+    {
+        sprite->invisible = TRUE;
+        sprite->data[0] = 10;
+        sprite->callback = WaitAnimForDuration;
+        StoreSpriteCallbackInData6(sprite, AnimLeechSeedSprouts);
+    }
+}
+
+static void AnimLeechSeedSprouts(struct Sprite *sprite)
+{
+    sprite->invisible = FALSE;
+    StartSpriteAnim(sprite, 1);
+    sprite->data[0] = 60;
+    sprite->callback = WaitAnimForDuration;
+    StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+}
+
+// Moves a spore particle in a halo around the target mon.
+static void AnimSporeParticle(struct Sprite *sprite)
+{
+    CMD_ARGS(x, y, waveOffset, duration, blend);
+
+    InitSpritePosToAnimTarget(sprite, TRUE);
+    StartSpriteAnim(sprite, cmd->blend);
+    if (cmd->blend == TRUE)
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = cmd->waveOffset;
+    sprite->callback = AnimSporeParticle_Step;
+    sprite->callback(sprite);
+}
+
+static void AnimSporeParticle_Step(struct Sprite *sprite)
+{
+    sprite->x2 = Sin(sprite->data[1], 32);
+    sprite->y2 = Cos(sprite->data[1], -3) + ((sprite->data[2] += 24) >> 8);
+    if ((u16)(sprite->data[1] - 0x40) < 0x80)
+    {
+        sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget);
+    }
+    else
+    {
+        u8 priority = GetBattlerSpriteBGPriority(gBattleAnimTarget) + 1;
+        if (priority > 3)
+            priority = 3;
+
+        sprite->oam.priority = priority;
+    }
+
+    sprite->data[1] += 2;
+    sprite->data[1] &= 0xFF;
+    if (--sprite->data[0] == -1)
+        DestroyAnimSprite(sprite);
+}
+
+// In a double battle, Updates the mon sprite background priorities to allow
+// the circling effect controlled by AnimSporeParticle.
+void AnimTask_SporeDoubleBattle(u8 taskId)
+{
+    if (IsContest() || !IsDoubleBattle())
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+    else
+    {
+        if (GetBattlerSpriteBGPriorityRank(gBattleAnimTarget) == 1)
+            SetAnimBgAttribute(2, BG_ANIM_PRIORITY, 3);
+        else
+            SetAnimBgAttribute(1, BG_ANIM_PRIORITY, 1);
+
+        DestroyAnimVisualTask(taskId);
+    }
+}
+
+// Rotates a big flower around the attacking mon, and slowly floats downward.
+static void AnimPetalDanceBigFlower(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, targetY, duration);
+
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = sprite->x;
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
+    InitAnimLinearTranslation(sprite);
+    sprite->data[5] = 0x40;
+    sprite->callback = AnimPetalDanceBigFlower_Step;
+    sprite->callback(sprite);
+}
+
+static void AnimPetalDanceBigFlower_Step(struct Sprite *sprite)
+{
+    if (!AnimTranslateLinear(sprite))
+    {
+        sprite->x2 += Sin(sprite->data[5], 32);
+        sprite->y2 += Cos(sprite->data[5], -5);
+        if ((u16)(sprite->data[5] - 0x40) < 0x80)
+            sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker) - 1;
+        else
+            sprite->subpriority = GetBattlerSpriteSubpriority(gBattleAnimAttacker) + 1;
+
+        sprite->data[5] = (sprite->data[5] + 5) & 0xFF;
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+// Slowly floats a small flower downward, while swaying from right to left.
+static void AnimPetalDanceSmallFlower(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, targetY, duration);
+
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = sprite->x;
+    sprite->data[2] = sprite->x;
+    sprite->data[3] = sprite->y;
+    sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
+    InitAnimLinearTranslation(sprite);
+    sprite->data[5] = 0x40;
+    sprite->callback = AnimPetalDanceSmallFlower_Step;
+    sprite->callback(sprite);
+}
+
+static void AnimPetalDanceSmallFlower_Step(struct Sprite *sprite)
+{
+    if (!AnimTranslateLinear(sprite))
+    {
+        sprite->x2 += Sin(sprite->data[5], 8);
+        if ((u16)(sprite->data[5] - 59) < 5 || (u16)(sprite->data[5] - 187) < 5)
+            sprite->oam.matrixNum ^= ST_OAM_HFLIP;
+
+        sprite->data[5] += 5;
+        sprite->data[5] &= 0xFF;
+    }
+    else
+    {
+        DestroyAnimSprite(sprite);
+    }
+}
+
+// Shoots a leaf upward, then floats it downward while swaying back and forth.
+static void AnimRazorLeafParticle(struct Sprite *sprite)
+{
+    CMD_ARGS(upwardDeltaX, upwardDeltaY, upwardDuration);
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    sprite->data[0] = cmd->upwardDeltaX;
+    sprite->data[1] = cmd->upwardDeltaY;
+    sprite->data[2] = cmd->upwardDuration;
+    sprite->callback = AnimRazorLeafParticle_Step1;
+}
+
+static void AnimRazorLeafParticle_Step1(struct Sprite *sprite)
+{
+    if (!sprite->data[2])
+    {
+        if (sprite->data[1] & 1)
+        {
+            sprite->data[0] = 0x80;
+            sprite->data[1] = 0;
+            sprite->data[2] = 0;
+        }
+        else
+        {
+            sprite->data[0] = 0;
+            sprite->data[1] = 0;
+            sprite->data[2] = 0;
+        }
+        sprite->callback = AnimRazorLeafParticle_Step2;
+    }
+    else
+    {
+        sprite->data[2]--;
+        sprite->x += sprite->data[0];
+        sprite->y += sprite->data[1];
+    }
+}
+
+static void AnimRazorLeafParticle_Step2(struct Sprite *sprite)
+{
+    if (GetBattlerSide(gBattleAnimAttacker))
+        sprite->x2 = -Sin(sprite->data[0], 25);
+    else
+        sprite->x2 = Sin(sprite->data[0], 25);
+
+    sprite->data[0] += 2;
+    sprite->data[0] &= 0xFF;
+    sprite->data[1]++;
+    if (!(sprite->data[1] & 1))
+        // JP increments y2 instead of toggling between 2/-2.
+        sprite->y2++;
+
+    // JP destroys the sprite at y > 80 (US uses 64).
+    if (sprite->data[1] > 80)
+        DestroyAnimSprite(sprite);
 }
