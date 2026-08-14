@@ -3333,16 +3333,17 @@ SECTIONS {
         src/berry_crush.o(.text.AreEffectsFinished);
         src/berry_crush.o(.text.FramesToMinSec);
         src/berry_crush.o(.text.PrintTextCentered);
-        asm/berry_crush.o(.text);
+        src/berry_crush.o(.text.sub_08021758);
+        src/berry_crush.o(.text.sub_08021ABC);
         src/berry_crush.o(.text.OpenResultsWindow);
         src/berry_crush.o(.text.CloseResultsWindow);
-        asm/berry_crush6.o(.text);
+        src/berry_crush.o(.text.sub_08021FC0);
         src/berry_crush.o(.text.ShowBerryCrushRankings);
         src/berry_crush.o(.text.PrintTimer);
         src/berry_crush.o(.text.HideTimer);
         src/berry_crush.o(.text.CreatePlayerNameWindows);
         src/berry_crush.o(.text.DrawPlayerNameWindows);
-        asm/berry_crush2.o(.text);
+        src/berry_crush.o(.text.sub_08022434);
         src/berry_crush.o(.text.CreateGameSprites);
         src/berry_crush.o(.text.DestroyGameSprites);
         src/berry_crush.o(.text.SpriteCB_Impact);
@@ -3350,7 +3351,7 @@ SECTIONS {
         src/berry_crush.o(.text.SpriteCB_Sparkle);
         src/berry_crush.o(.text.SpriteCB_Sparkle_Init);
         src/berry_crush.o(.text.RunOrScheduleCommand);
-        asm/berry_crush3.o(.text);
+        src/berry_crush.o(.text.sub_080229BC);
         src/berry_crush.o(.text.Cmd_WaitPaletteFade);
         src/berry_crush.o(.text.Cmd_PrintMessage);
         src/berry_crush.o(.text.Cmd_ShowGameDisplay);
@@ -3370,7 +3371,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_PlayGame_Member);
         src/berry_crush.o(.text.Cmd_FinishGame);
         src/berry_crush.o(.text.Cmd_HandleTimeUp);
-        asm/berry_crush4.o(.text);
+        src/berry_crush.o(.text.sub_08023A40);
         src/berry_crush.o(.text.Cmd_ShowResults);
         src/berry_crush.o(.text.Cmd_SaveGame);
         src/berry_crush.o(.text.Cmd_AskPlayAgain);
