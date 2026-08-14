@@ -288,6 +288,102 @@ void BattleTv_SetDataBasedOnAnimation(u8 animationId)
     }
 }
 
+void TryPutLinkBattleTvShowOnAir(void)
+{
+    u16 playerBestSpecies = 0, opponentBestSpecies = 0;
+    s16 playerBestSum = 0, opponentBestSum = SHRT_MAX;
+    u8 playerBestMonId = 0, opponentBestMonId = 0;
+    struct BattleTvMovePoints *movePoints = NULL;
+    u8 countPlayer = 0, countOpponent = 0;
+    s16 sum = 0;
+    u16 species = 0;
+    u16 move = MOVE_NONE;
+    s32 i, j;
+    int zero = 0, one = 1; //needed for matching
+
+    if (gBattleStruct->anyMonHasTransformed)
+        return;
+
+    movePoints = &gBattleStruct->tvMovePoints;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES, NULL) != SPECIES_NONE)
+            countPlayer++;
+        if (GetMonData3(&gEnemyParty[i], MON_DATA_SPECIES, NULL) != SPECIES_NONE)
+            countOpponent++;
+    }
+
+    if (!(gBattleTypeFlags & BATTLE_TYPE_LINK) || countPlayer != countOpponent)
+        return;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        species = GetMonData3(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
+        if (species != SPECIES_NONE && !GetMonData3(&gPlayerParty[i], MON_DATA_IS_EGG, NULL))
+        {
+            for (sum = 0, j = 0; j < MAX_MON_MOVES; j++)
+                sum += movePoints->points[zero][i * 4 + j];
+
+            if (playerBestSum < sum)
+            {
+                playerBestMonId = i;
+                playerBestSum = sum;
+                playerBestSpecies = species;
+            }
+        }
+
+        species = GetMonData3(&gEnemyParty[i], MON_DATA_SPECIES, NULL);
+        if (species != SPECIES_NONE && !GetMonData3(&gEnemyParty[i], MON_DATA_IS_EGG, NULL))
+        {
+            for (sum = 0, j = 0; j < MAX_MON_MOVES; j++)
+                sum += movePoints->points[one][i * 4 + j];
+
+            if (opponentBestSum == sum)
+            {
+                if (GetMonData3(&gEnemyParty[i], MON_DATA_EXP, NULL) > GetMonData3(&gEnemyParty[opponentBestMonId], MON_DATA_EXP, NULL))
+                {
+                    opponentBestMonId = i;
+                    opponentBestSum = sum;
+                    opponentBestSpecies = species;
+                }
+            }
+            else if (opponentBestSum > sum)
+            {
+                opponentBestMonId = i;
+                opponentBestSum = sum;
+                opponentBestSpecies = species;
+            }
+        }
+    }
+
+    for (sum = 0, i = 0, j = 0; j < MAX_MON_MOVES; j++)
+    {
+        if (sum < movePoints->points[zero][playerBestMonId * 4 + j])
+        {
+            sum = movePoints->points[zero][playerBestMonId * 4 + j];
+            i = j;
+        }
+    }
+
+    move = GetMonData3(&gPlayerParty[playerBestMonId], MON_DATA_MOVE1 + i, NULL);
+    if (playerBestSum == 0 || move == MOVE_NONE)
+        return;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+    {
+        if ((playerBestMonId < MULTI_PARTY_SIZE && !GetLinkTrainerFlankId(gBattleScripting.multiplayerId))
+         || (playerBestMonId >= MULTI_PARTY_SIZE && GetLinkTrainerFlankId(gBattleScripting.multiplayerId)))
+        {
+            j = (opponentBestMonId < MULTI_PARTY_SIZE) ? FALSE : TRUE;
+            PutBattleUpdateOnTheAir(GetOpposingLinkMultiBattlerId(j, gBattleScripting.multiplayerId), move, playerBestSpecies, opponentBestSpecies);
+        }
+    }
+    else
+    {
+        PutBattleUpdateOnTheAir(gBattleScripting.multiplayerId ^ 1, move, playerBestSpecies, opponentBestSpecies);
+    }
+}
+
 bool8 ShouldCalculateDamage(u16 move, s32 *dmg, u16 *powerOverride)
 {
     if (gBattleMoves[move].power == 0)
