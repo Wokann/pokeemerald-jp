@@ -25,8 +25,8 @@
 #include "constants/weather.h"
 
 extern const u16 sSoundMovesTable[];
-void sub_0803DCCC(void);
 extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
+void sub_0803DCCC(void);
 
 u8 GetBattlerForBattleScript(u8 caseId)
 {
@@ -3358,4 +3358,31 @@ u8 IsMonDisobedient(void)
             return DISOBEDIENCE_IGNORED;
         }
     }
+}
+
+__attribute__((naked)) void sub_0803DCCC(void)
+{
+    __asm__(".syntax unified\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _0803DCEC\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _0803DCE8\n\t"
+        "	ldr r1, _0803DCF0\n\t"
+        "	ldr r0, _0803DCF4\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	lsls r0, r0, #2\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldr r0, [r0]\n\t"
+        "	bl _call_via_r0\n\t"
+        "_0803DCE8:\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0803DCEC: .4byte 0x02023D0C\n\t"
+        "_0803DCF0: .4byte 0x082EC694\n\t"
+        "_0803DCF4: .4byte 0x02023EB8\n\t"
+        ".syntax divided\n\t"
+    );
 }

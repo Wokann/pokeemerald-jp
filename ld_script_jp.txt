@@ -3994,7 +3994,8 @@ SECTIONS {
         src/battle_main.o(.text.WaitForEvoSceneToFinish);
         src/battle_main.o(.text.ReturnFromBattleToOverworld);
         src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
-        asm/battle_main_usemove.o(.text);
+        src/battle_util.o(.text.sub_0803DCCC);
+        src/battle_main.o(.text.HandleAction_UseMove);
         src/battle_main.o(.text.HandleAction_Switch);
         src/battle_main.o(.text.HandleAction_UseItem);
         src/battle_main.o(.text.TryRunFromBattle);
