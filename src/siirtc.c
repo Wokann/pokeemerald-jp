@@ -61,12 +61,12 @@
 
 extern bool8 sLocked;
 
-int WriteCommand(u8 value);
-int WriteData(u8 value);
-u8 ReadData();
+static int WriteCommand(u8 value);
+static int WriteData(u8 value);
+static u8 ReadData();
 
-void EnableGpioPortRead();
-void DisableGpioPortRead();
+static void EnableGpioPortRead();
+static void DisableGpioPortRead();
 
 static const char AgbLibRtcVersion[] = "SIIRTC_V001";
 
@@ -334,4 +334,106 @@ bool8 SiiRtcSetTime(struct SiiRtcInfo *rtc)
     sLocked = FALSE;
 
     return TRUE;
+}
+
+static bool8 UNUSED SiiRtcSetAlarm(struct SiiRtcInfo *rtc)
+{
+    u8 i;
+    u8 alarmData[2];
+
+    if (sLocked == TRUE)
+        return FALSE;
+
+    sLocked = TRUE;
+
+    // Decode BCD.
+    alarmData[0] = (rtc->alarmHour & 0xF) + 10 * ((rtc->alarmHour >> 4) & 0xF);
+
+    // The AM/PM flag must be set correctly even in 24-hour mode.
+
+    if (alarmData[0] < 12)
+        alarmData[0] = rtc->alarmHour | ALARM_AM;
+    else
+        alarmData[0] = rtc->alarmHour | ALARM_PM;
+
+    alarmData[1] = rtc->alarmMinute;
+
+    GPIO_PORT_DATA = SCK_HI;
+    GPIO_PORT_DATA = SCK_HI | CS_HI;
+
+    GPIO_PORT_DIRECTION = DIR_ALL_OUT;
+
+    WriteCommand(CMD_ALARM | WR);
+
+    for (i = 0; i < 2; i++)
+        WriteData(alarmData[i]);
+
+    GPIO_PORT_DATA = SCK_HI;
+    GPIO_PORT_DATA = SCK_HI;
+
+    sLocked = FALSE;
+
+    return TRUE;
+}
+
+static int WriteCommand(u8 value)
+{
+    u8 i;
+    u8 temp;
+
+    for (i = 0; i < 8; i++)
+    {
+        temp = ((value >> (7 - i)) & 1);
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | SCK_HI | CS_HI;
+    }
+}
+
+static int WriteData(u8 value)
+{
+    u8 i;
+    u8 temp;
+
+    for (i = 0; i < 8; i++)
+    {
+        temp = ((value >> i) & 1);
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | CS_HI;
+        GPIO_PORT_DATA = (temp << 1) | SCK_HI | CS_HI;
+    }
+}
+
+static u8 ReadData()
+{
+    u8 i;
+    u8 temp;
+    u8 value;
+
+    for (i = 0; i < 8; i++)
+    {
+        GPIO_PORT_DATA = CS_HI;
+        GPIO_PORT_DATA = CS_HI;
+        GPIO_PORT_DATA = CS_HI;
+        GPIO_PORT_DATA = CS_HI;
+        GPIO_PORT_DATA = CS_HI;
+        GPIO_PORT_DATA = SCK_HI | CS_HI;
+
+        temp = ((GPIO_PORT_DATA & SIO_HI) >> 1);
+        value = (value >> 1) | (temp << 7);
+    }
+
+    return value;
+}
+
+static void EnableGpioPortRead()
+{
+    GPIO_PORT_READ_ENABLE = TRUE;
+}
+
+static void DisableGpioPortRead()
+{
+    GPIO_PORT_READ_ENABLE = FALSE;
 }

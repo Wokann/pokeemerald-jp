@@ -5785,7 +5785,12 @@ SECTIONS {
 		src/siirtc.o(.text.SiiRtcSetDateTime);
 		src/siirtc.o(.text.SiiRtcGetTime);
 		src/siirtc.o(.text.SiiRtcSetTime);
-		asm/siirtc_mid.o(.text);
+		src/siirtc.o(.text.SiiRtcSetAlarm);
+		src/siirtc.o(.text.WriteCommand);
+		src/siirtc.o(.text.WriteData);
+		src/siirtc.o(.text.ReadData);
+		src/siirtc.o(.text.EnableGpioPortRead);
+		src/siirtc.o(.text.DisableGpioPortRead);
 		asm/librfu_stwi.o(.text);
 		asm/librfu_intr.o(.text);
 		asm/librfu_rfu.o(.text);
