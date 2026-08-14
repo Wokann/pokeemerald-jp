@@ -30,6 +30,28 @@ void RunStoredCallbackWhenAnimEnds(struct Sprite *sprite);
 void DestroyAnimSpriteAndDisableBlend(struct Sprite *sprite);
 void DestroyAnimVisualTaskAndDisableBlend(u8 taskId);
 void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite);
+void SetAnimSpriteInitialXOffset(struct Sprite *sprite, s16 xOffset);
+void InitAnimArcTranslation(struct Sprite *sprite);
+bool8 TranslateAnimHorizontalArc(struct Sprite *sprite);
+bool8 TranslateAnimVerticalArc(struct Sprite *sprite);
+void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite);
+void InitSpritePosToAnimTarget(struct Sprite *sprite, bool8 respectMonPicOffsets);
+void InitSpritePosToAnimAttacker(struct Sprite *sprite, bool8 respectMonPicOffsets);
+u8 GetBattlerSide(u8 battler);
+u8 GetBattlerPosition(u8 battler);
+u8 GetBattlerAtPosition(u8 position);
+bool8 IsBattlerSpritePresent(u8 battler);
+bool8 IsDoubleBattle(void);
+void GetBattleAnimBg1Data(struct BattleAnimBgData *out);
+void GetBattleAnimBgData(struct BattleAnimBgData *out, u32 bgId);
+void GetBgDataForTransform(struct BattleAnimBgData *out, u8 battler);
+void ClearBattleAnimBg(u32 bgId);
+void AnimLoadCompressedBgGfx(u32 bgId, const u32 *src, u32 tilesOffset);
+void AnimLoadCompressedBgTilemap(u32 bgId, const void *src);
+void AnimLoadCompressedBgTilemapHandleContest(struct BattleAnimBgData *data, const void *src, bool32 largeScreen);
+u8 GetBattleBgPaletteNum(void);
+void UpdateAnimBg3ScreenSize(bool8 largeScreenSize);
+void InitSpriteDataForLinearTranslation(struct Sprite *sprite);
 
 void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite *))
 {
@@ -679,4 +701,291 @@ void SetSpriteCoordsToAnimAttackerCoords(struct Sprite *sprite)
 {
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+}
+
+void SetAnimSpriteInitialXOffset(struct Sprite *sprite, s16 xOffset)
+{
+    u16 attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    u16 targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+
+    if (attackerX > targetX)
+    {
+        sprite->x -= xOffset;
+    }
+    else if (attackerX < targetX)
+    {
+        sprite->x += xOffset;
+    }
+    else
+    {
+        if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+            sprite->x -= xOffset;
+        else
+            sprite->x += xOffset;
+    }
+}
+
+void InitAnimArcTranslation(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimLinearTranslation(sprite);
+    sprite->data[6] = 0x8000 / sprite->data[0];
+    sprite->data[7] = 0;
+}
+
+
+void SetSpritePrimaryCoordsFromSecondaryCoords(struct Sprite *sprite)
+{
+    sprite->x += sprite->x2;
+    sprite->y += sprite->y2;
+    sprite->x2 = 0;
+    sprite->y2 = 0;
+}
+
+void InitSpritePosToAnimTarget(struct Sprite *sprite, bool8 respectMonPicOffsets)
+{
+    // Battle anim sprites are automatically created at the anim target's center, which
+    // is why there is no else clause for the "respectMonPicOffsets" check.
+    if (!respectMonPicOffsets)
+    {
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimTarget, BATTLER_COORD_Y);
+    }
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
+    sprite->y += gBattleAnimArgs[1];
+}
+
+void InitSpritePosToAnimAttacker(struct Sprite *sprite, bool8 respectMonPicOffsets)
+{
+    if (!respectMonPicOffsets)
+    {
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y);
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord2(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    }
+    SetAnimSpriteInitialXOffset(sprite, gBattleAnimArgs[0]);
+    sprite->y += gBattleAnimArgs[1];
+}
+
+u8 GetBattlerSide(u8 battler)
+{
+    return GET_BATTLER_SIDE2(battler);
+}
+
+u8 GetBattlerPosition(u8 battler)
+{
+    return gBattlerPositions[battler];
+}
+
+u8 GetBattlerAtPosition(u8 position)
+{
+    u8 i;
+
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (gBattlerPositions[i] == position)
+            break;
+    }
+    return i;
+}
+
+bool8 IsBattlerSpritePresent(u8 battler)
+{
+    if (IsContest())
+    {
+        if (gBattleAnimAttacker == battler)
+            return TRUE;
+        else if (gBattleAnimTarget == battler)
+            return TRUE;
+        else
+            return FALSE;
+    }
+    else
+    {
+        if (gBattlerPositions[battler] == 0xff)
+        {
+            return FALSE;
+        }
+        else if (GetBattlerSide(battler) != B_SIDE_PLAYER)
+        {
+            if (GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_HP) != 0)
+                return TRUE;
+        }
+        else
+        {
+            if (GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_HP) != 0)
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+bool8 IsDoubleBattle(void)
+{
+    return IS_DOUBLE_BATTLE();
+}
+
+#define BG_ANIM_PAL_1        8
+#define BG_ANIM_PAL_2        9
+#define BG_ANIM_PAL_CONTEST 14
+
+void GetBattleAnimBg1Data(struct BattleAnimBgData *out)
+{
+    if (IsContest())
+    {
+        out->bgTiles = gBattleAnimBgTileBuffer;
+        out->bgTilemap = (u16 *)gBattleAnimBgTilemapBuffer;
+        out->paletteId = BG_ANIM_PAL_CONTEST;
+        out->bgId = 1;
+        out->tilesOffset = 0;
+        out->unused = 0;
+    }
+    else
+    {
+        out->bgTiles = gBattleAnimBgTileBuffer;
+        out->bgTilemap = (u16 *)gBattleAnimBgTilemapBuffer;
+        out->paletteId = BG_ANIM_PAL_1;
+        out->bgId = 1;
+        out->tilesOffset = 0x200;
+        out->unused = 0;
+    }
+}
+
+void GetBattleAnimBgData(struct BattleAnimBgData *out, u32 bgId)
+{
+    if (IsContest())
+    {
+        out->bgTiles = gBattleAnimBgTileBuffer;
+        out->bgTilemap = (u16 *)gBattleAnimBgTilemapBuffer;
+        out->paletteId = BG_ANIM_PAL_CONTEST;
+        out->bgId = 1;
+        out->tilesOffset = 0;
+        out->unused = 0;
+    }
+    else if (bgId == 1)
+    {
+        GetBattleAnimBg1Data(out);
+    }
+    else
+    {
+        out->bgTiles = gBattleAnimBgTileBuffer;
+        out->bgTilemap = (u16 *)gBattleAnimBgTilemapBuffer;
+        out->paletteId = BG_ANIM_PAL_2;
+        out->bgId = 2;
+        out->tilesOffset = 0x300;
+        out->unused = 0;
+    }
+}
+
+void GetBgDataForTransform(struct BattleAnimBgData *out, u8 battler)
+{
+    out->bgTiles = gBattleAnimBgTileBuffer;
+    out->bgTilemap = (u16 *)gBattleAnimBgTilemapBuffer;
+    if (IsContest())
+    {
+        out->paletteId = BG_ANIM_PAL_CONTEST;
+        out->bgId = 1;
+        out->tilesOffset = 0;
+        out->unused = 0;
+    }
+    else if (GetBattlerSpriteBGPriorityRank(gBattleAnimAttacker) == 1)
+    {
+        out->paletteId = BG_ANIM_PAL_1;
+        out->bgId = 1;
+        out->tilesOffset = 0x200;
+        out->unused = 0;
+    }
+    else
+    {
+        out->paletteId = BG_ANIM_PAL_2;
+        out->bgId = 2;
+        out->tilesOffset = 0x300;
+        out->unused = 0;
+    }
+}
+
+void ClearBattleAnimBg(u32 bgId)
+{
+    struct BattleAnimBgData bgAnimData;
+
+    GetBattleAnimBgData(&bgAnimData, bgId);
+    CpuFill32(0, bgAnimData.bgTiles, 0x2000);
+    LoadBgTiles(bgAnimData.bgId, bgAnimData.bgTiles, 0x2000, bgAnimData.tilesOffset);
+    FillBgTilemapBufferRect(bgAnimData.bgId, 0, 0, 0, 32, 64, 17);
+    CopyBgTilemapBufferToVram(bgAnimData.bgId);
+}
+
+void AnimLoadCompressedBgGfx(u32 bgId, const u32 *src, u32 tilesOffset)
+{
+    u32 tmp = 0;
+    CpuSet(&tmp, gBattleAnimBgTileBuffer, 0x05000800);
+    // JP decompresses to VRAM instead of Wram.
+    LZDecompressVram(src, gBattleAnimBgTileBuffer);
+    LoadBgTiles((u8)bgId, gBattleAnimBgTileBuffer, 0x2000, (u16)tilesOffset);
+}
+
+static void InitAnimBgTilemapBuffer(u32 bgId, const void *src)
+{
+    FillBgTilemapBufferRect((u8)bgId, 0, 0, 0, 32, 64, 17);
+    CopyToBgTilemapBuffer((u8)bgId, src, 0, 0);
+}
+
+void AnimLoadCompressedBgTilemap(u32 bgId, const void *src)
+{
+    InitAnimBgTilemapBuffer(bgId, src);
+    CopyBgTilemapBufferToVram((u8)bgId);
+}
+
+void AnimLoadCompressedBgTilemapHandleContest(struct BattleAnimBgData *data, const void *src, bool32 largeScreen)
+{
+    InitAnimBgTilemapBuffer(data->bgId, src);
+    if (IsContest() == TRUE)
+        RelocateBattleBgPal(data->paletteId, data->bgTilemap, 0, largeScreen);
+    CopyBgTilemapBufferToVram(data->bgId);
+}
+
+u8 GetBattleBgPaletteNum(void)
+{
+    if (IsContest())
+        return 1;
+    else
+        return 2;
+}
+
+void UpdateAnimBg3ScreenSize(bool8 largeScreenSize)
+{
+    if (!largeScreenSize || IsContest())
+    {
+        SetAnimBgAttribute(3, BG_ANIM_SCREEN_SIZE, 0);
+        SetAnimBgAttribute(3, BG_ANIM_AREA_OVERFLOW_MODE, 1);
+    }
+    else
+    {
+        SetAnimBgAttribute(3, BG_ANIM_SCREEN_SIZE, 1);
+        SetAnimBgAttribute(3, BG_ANIM_AREA_OVERFLOW_MODE, 0);
+    }
+}
+
+void InitSpriteDataForLinearTranslation(struct Sprite *sprite)
+{
+    s16 x = (sprite->data[2] - sprite->data[1]) << 8;
+    s16 y = (sprite->data[4] - sprite->data[3]) << 8;
+    sprite->data[1] = x / sprite->data[0];
+    sprite->data[2] = y / sprite->data[0];
+    sprite->data[4] = 0;
+    sprite->data[3] = 0;
+}
+
+void Trade_MoveSelectedMonToTarget(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitSpriteDataForLinearTranslation(sprite);
+    sprite->callback = TranslateSpriteLinearFixedPointIconFrame;
+    sprite->callback(sprite);
 }
