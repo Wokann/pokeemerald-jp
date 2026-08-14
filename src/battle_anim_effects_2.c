@@ -1770,6 +1770,17 @@ void AnimTask_AttackerStretchAndDisappear(u8 taskId)
     task->func = AnimTask_AttackerStretchAndDisappear_Step;
 }
 
+static void AnimTask_AttackerStretchAndDisappear_Step(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+    if (!RunAffineAnimFromTaskData(task))
+    {
+        gSprites[task->data[0]].y2 = 0;
+        gSprites[task->data[0]].invisible = TRUE;
+        DestroyAnimVisualTask(taskId);
+    }
+}
+
 static void AnimSpeedDust(struct Sprite *sprite)
 {
     sprite->invisible = gTasks[sprite->data[0]].data[5];

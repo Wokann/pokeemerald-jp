@@ -4946,7 +4946,7 @@ SECTIONS {
         src/battle_anim_effects_2.o(.text.AnimSoftBoiledEgg_Step4);
         src/battle_anim_effects_2.o(.text.AnimSoftBoiledEgg_Step4_Callback);
         src/battle_anim_effects_2.o(.text.AnimTask_AttackerStretchAndDisappear);
-        asm/battle_anim_effects_2.o(.text.battle_anim_effects_2_step);
+        src/battle_anim_effects_2.o(.text.AnimTask_AttackerStretchAndDisappear_Step);
         src/battle_anim_effects_2.o(.text.AnimTask_ExtremeSpeedImpact);
         src/battle_anim_effects_2.o(.text.AnimTask_ExtremeSpeedImpact_Step);
         src/battle_anim_effects_2.o(.text.AnimTask_ExtremeSpeedMonReappear);
