@@ -838,6 +838,7 @@ gLinkContestFlags = ABSOLUTE(0x02039BCA);
 gWirelessCommType = ABSOLUTE(0x0300319C);
 gReceivedRemoteLinkPlayers = ABSOLUTE(0x030031C4);
 sMenu = ABSOLUTE(0x02039DF0);
+gPlttBufferUnfaded = ABSOLUTE(0x020375B4);
 gBattlerPartyIndexes = ABSOLUTE(0x02023D12);
 gTransformedPersonalities = ABSOLUTE(0x02024160);
 gPlayerParty = ABSOLUTE(0x02024190);
@@ -4066,6 +4067,10 @@ SECTIONS {
         src/battle_interface.o(.text.SpriteCB_StatusSummaryBalls_Exit);
         src/battle_interface.o(.text.SpriteCB_StatusSummaryBalls_OnSwitchout);
         asm/battle_interface_mid.o(.text);
+        src/battle_interface.o(.text.TryAddPokeballIconToHealthbox);
+        src/battle_interface.o(.text.UpdateStatusIconInHealthbox);
+        src/battle_interface.o(.text.GetStatusIconForBattlerId);
+        asm/battle_interface_tail.o(.text);
         src/battle_interface.o(.text.UpdateHealthboxAttribute);
         src/battle_interface.o(.text.MoveBattleBar);
         src/battle_interface.o(.text.MoveBattleBarGraphically);

@@ -163,11 +163,13 @@ enum
 const u8 *GetHealthboxElementGfxPtr(u8);
 static void UpdateHpTextInHealthboxInDoubles(u8, s16, u8);
 
-// Defined in asm/battle_interface_mid.s (still being converted to C).
+// Defined in asm/battle_interface_mid.s / battle_interface_tail.s (still being converted to C).
 void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon);
-void UpdateStatusIconInHealthbox(u8 healthboxSpriteId);
 void AddTextPrinterAndCreateWindowOnHealthbox(u8 healthboxSpriteId);
 void UpdateLeftNoOfBallsTextOnHealthbox(u8 healthboxSpriteId);
+static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId);
+static void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus);
+static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler);
 
 static void Task_HidePartyStatusSummary_BattleStart_1(u8);
 static void Task_HidePartyStatusSummary_BattleStart_2(u8);
@@ -330,6 +332,171 @@ static void UNUSED Debug_DrawNumberPair(s16 number1, s16 number2, u16 *dest)
 // data fields for healthbar
 #define hBar_HealthBoxSpriteId      data[5]
 #define hBar_Data6                  data[6]
+
+static void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
+{
+    u8 battler, healthBarSpriteId;
+
+    if (gBattleTypeFlags & BATTLE_TYPE_WALLY_TUTORIAL)
+        return;
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        return;
+
+    battler = gSprites[healthboxSpriteId].hMain_Battler;
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        return;
+    if (!GetSetPokedexFlag(HoennToNationalOrder(GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_SPECIES)), FLAG_GET_CAUGHT))
+        return;
+
+    healthBarSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
+
+    if (noStatus)
+        CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_STATUS_BALL_CAUGHT), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 32);
+    else
+        CpuFill32(0, (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 8) * TILE_SIZE_4BPP), 32);
+}
+
+static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battler)
+{
+    u8 ret = statusElementId;
+
+    switch (statusElementId)
+    {
+    case HEALTHBOX_GFX_STATUS_PSN_BATTLER0:
+        if (battler == 0)
+            ret = HEALTHBOX_GFX_STATUS_PSN_BATTLER0;
+        else if (battler == 1)
+            ret = HEALTHBOX_GFX_STATUS_PSN_BATTLER1;
+        else if (battler == 2)
+            ret = HEALTHBOX_GFX_STATUS_PSN_BATTLER2;
+        else
+            ret = HEALTHBOX_GFX_STATUS_PSN_BATTLER3;
+        break;
+    case HEALTHBOX_GFX_STATUS_PRZ_BATTLER0:
+        if (battler == 0)
+            ret = HEALTHBOX_GFX_STATUS_PRZ_BATTLER0;
+        else if (battler == 1)
+            ret = HEALTHBOX_GFX_STATUS_PRZ_BATTLER1;
+        else if (battler == 2)
+            ret = HEALTHBOX_GFX_STATUS_PRZ_BATTLER2;
+        else
+            ret = HEALTHBOX_GFX_STATUS_PRZ_BATTLER3;
+        break;
+    case HEALTHBOX_GFX_STATUS_SLP_BATTLER0:
+        if (battler == 0)
+            ret = HEALTHBOX_GFX_STATUS_SLP_BATTLER0;
+        else if (battler == 1)
+            ret = HEALTHBOX_GFX_STATUS_SLP_BATTLER1;
+        else if (battler == 2)
+            ret = HEALTHBOX_GFX_STATUS_SLP_BATTLER2;
+        else
+            ret = HEALTHBOX_GFX_STATUS_SLP_BATTLER3;
+        break;
+    case HEALTHBOX_GFX_STATUS_FRZ_BATTLER0:
+        if (battler == 0)
+            ret = HEALTHBOX_GFX_STATUS_FRZ_BATTLER0;
+        else if (battler == 1)
+            ret = HEALTHBOX_GFX_STATUS_FRZ_BATTLER1;
+        else if (battler == 2)
+            ret = HEALTHBOX_GFX_STATUS_FRZ_BATTLER2;
+        else
+            ret = HEALTHBOX_GFX_STATUS_FRZ_BATTLER3;
+        break;
+    case HEALTHBOX_GFX_STATUS_BRN_BATTLER0:
+        if (battler == 0)
+            ret = HEALTHBOX_GFX_STATUS_BRN_BATTLER0;
+        else if (battler == 1)
+            ret = HEALTHBOX_GFX_STATUS_BRN_BATTLER1;
+        else if (battler == 2)
+            ret = HEALTHBOX_GFX_STATUS_BRN_BATTLER2;
+        else
+            ret = HEALTHBOX_GFX_STATUS_BRN_BATTLER3;
+        break;
+    }
+
+    return ret;
+}
+
+static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
+{
+    s32 i;
+    u8 battler, healthBarSpriteId;
+    u32 status, pltAdder;
+    const u8 *statusGfxPtr;
+    s16 tileNumAdder;
+    u8 statusPalId;
+
+    battler = gSprites[healthboxSpriteId].hMain_Battler;
+    healthBarSpriteId = gSprites[healthboxSpriteId].hMain_HealthBarSpriteId;
+    if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+    {
+        status = GetMonData(&gPlayerParty[gBattlerPartyIndexes[battler]], MON_DATA_STATUS);
+        if (!IsDoubleBattle())
+            tileNumAdder = 0x1A;
+        else
+            tileNumAdder = 0x12;
+    }
+    else
+    {
+        status = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_STATUS);
+        tileNumAdder = 0x11;
+    }
+
+    if (status & STATUS1_SLEEP)
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(GetStatusIconForBattlerId(HEALTHBOX_GFX_STATUS_SLP_BATTLER0, battler));
+        statusPalId = PAL_STATUS_SLP;
+    }
+    else if (status & STATUS1_PSN_ANY)
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(GetStatusIconForBattlerId(HEALTHBOX_GFX_STATUS_PSN_BATTLER0, battler));
+        statusPalId = PAL_STATUS_PSN;
+    }
+    else if (status & STATUS1_BURN)
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(GetStatusIconForBattlerId(HEALTHBOX_GFX_STATUS_BRN_BATTLER0, battler));
+        statusPalId = PAL_STATUS_BRN;
+    }
+    else if (status & STATUS1_FREEZE)
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(GetStatusIconForBattlerId(HEALTHBOX_GFX_STATUS_FRZ_BATTLER0, battler));
+        statusPalId = PAL_STATUS_FRZ;
+    }
+    else if (status & STATUS1_PARALYSIS)
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(GetStatusIconForBattlerId(HEALTHBOX_GFX_STATUS_PRZ_BATTLER0, battler));
+        statusPalId = PAL_STATUS_PAR;
+    }
+    else
+    {
+        statusGfxPtr = GetHealthboxElementGfxPtr(HEALTHBOX_GFX_39);
+
+        for (i = 0; i < 3; i++)
+            CpuCopy32(statusGfxPtr, (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder + i) * TILE_SIZE_4BPP), 32);
+
+        if (!gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
+            CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_1), (void *)(OBJ_VRAM0 + gSprites[healthBarSpriteId].oam.tileNum * TILE_SIZE_4BPP), 64);
+
+        TryAddPokeballIconToHealthbox(healthboxSpriteId, TRUE);
+        return;
+    }
+
+    pltAdder = PLTT_ID(gSprites[healthboxSpriteId].oam.paletteNum);
+    pltAdder += battler + 12;
+
+    FillPalette(sStatusIconColors[statusPalId], OBJ_PLTT_OFFSET + pltAdder, PLTT_SIZEOF(1));
+    CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder], (u16 *)OBJ_PLTT + pltAdder, PLTT_SIZEOF(1));
+    CpuCopy32(statusGfxPtr, (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP), 96);
+    if (IsDoubleBattle() == TRUE || GetBattlerSide(battler) == B_SIDE_OPPONENT)
+    {
+        if (!gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars)
+        {
+            CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_0), (void *)(OBJ_VRAM0 + gSprites[healthBarSpriteId].oam.tileNum * TILE_SIZE_4BPP), 32);
+            CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_65), (void *)(OBJ_VRAM0 + (gSprites[healthBarSpriteId].oam.tileNum + 1) * TILE_SIZE_4BPP), 32);
+        }
+    }
+    TryAddPokeballIconToHealthbox(healthboxSpriteId, FALSE);
+}
 
 u8 CreateBattlerHealthboxSprites(u8 battler)
 {
