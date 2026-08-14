@@ -40,7 +40,7 @@ AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # US sources copied for reference but not yet ported to JP: their functions
 # still live in asm/, so exclude them from the build until converted.
 UNPORTED_SRCS := \
-	src/battle_anim_mons.c src/battle_tower.c src/battle_transition.c \
+	src/battle_tower.c src/battle_transition.c \
 	src/berry.c src/cable_club.c src/contest_painting.c src/easy_chat.c \
 	src/event_object_movement.c src/field_specials.c src/field_weather.c \
 	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
@@ -85,6 +85,7 @@ $(C_BUILDDIR)/roulette_util.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunct
 $(C_BUILDDIR)/battle_anim_effects_3.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/battle_anim_effects_2.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/battle_anim_effects_1.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/battle_anim_mons.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
 $(C_BUILDDIR)/sound.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
