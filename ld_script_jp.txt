@@ -4196,7 +4196,7 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_setatkhptozero);
         src/battle_script_commands.o(.text.Cmd_jumpifnexttargetvalid);
         src/battle_script_commands.o(.text.Cmd_tryhealhalfhealth);
-        asm/battle_script_commands.o(.text);
+        src/battle_script_commands.o(.text.atk7C_trymirrormove);
         src/battle_script_commands.o(.text.Cmd_setrain);
         src/battle_script_commands.o(.text.Cmd_setreflect);
         src/battle_script_commands.o(.text.Cmd_setseeded);
@@ -4376,7 +4376,7 @@ SECTIONS {
         src/battle_interface.o(.text.SpriteCB_StatusSummaryBalls_Enter);
         src/battle_interface.o(.text.SpriteCB_StatusSummaryBalls_Exit);
         src/battle_interface.o(.text.SpriteCB_StatusSummaryBalls_OnSwitchout);
-        asm/battle_interface_mid.o(.text);
+        src/battle_interface.o(.text.UpdateNickInHealthbox);
         src/battle_interface.o(.text.TryAddPokeballIconToHealthbox);
         src/battle_interface.o(.text.UpdateStatusIconInHealthbox);
         src/battle_interface.o(.text.GetStatusIconForBattlerId);
