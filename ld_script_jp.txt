@@ -9387,6 +9387,10 @@ SECTIONS {
         src/battle_transition.o(.text.VBlankCB_Slice);
         src/battle_transition.o(.text.HBlankCB_Slice);
         src/battle_transition.o(.text.Task_ShredSplit);
+        src/battle_transition.o(.text.ShredSplit_Init);
+        src/battle_transition.o(.text.ShredSplit_Main);
+        src/battle_transition.o(.text.ShredSplit_BrokenCheck);
+        src/battle_transition.o(.text.ShredSplit_End);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);

@@ -19,7 +19,7 @@ NM = str(ROOT / "tools/binutils/bin/arm-none-eabi-nm")
 
 def count_c_functions():
     total = 0
-    for obj in sorted(glob.glob(str(ROOT / "build/src/*.o"))):
+    for obj in sorted(glob.glob(str(ROOT / "build/pokeemerald-jp/src/*.o"))):
         out = subprocess.run([NM, obj], capture_output=True, text=True).stdout
         for line in out.splitlines():
             parts = line.split()
