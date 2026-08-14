@@ -3527,7 +3527,7 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.LoadGfx);
         src/dodrio_berry_picking.o(.text.ShowNames);
         src/dodrio_berry_picking.o(.text.PrintRankedScores);
-        asm/dodrio_berry_picking8.o(.text);
+        src/dodrio_berry_picking.o(.text.sub_080295A4);
         src/dodrio_berry_picking.o(.text.Msg_WantToPlayAgain);
         src/dodrio_berry_picking.o(.text.Msg_SavingDontTurnOff);
         src/dodrio_berry_picking.o(.text.Msg_CommunicationStandby);
