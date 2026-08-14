@@ -52,6 +52,35 @@ void AnimLoadCompressedBgTilemapHandleContest(struct BattleAnimBgData *data, con
 u8 GetBattleBgPaletteNum(void);
 void UpdateAnimBg3ScreenSize(bool8 largeScreenSize);
 void InitSpriteDataForLinearTranslation(struct Sprite *sprite);
+void InitAnimLinearTranslation(struct Sprite *sprite);
+// JP symbol names for the two fast/linear translation starters are swapped
+// relative to US: JP InitAndRunAnimFastLinearTranslation (0x080A67B4) is US
+// StartAnimLinearTranslation, and JP StartAnimLinearTranslation (0x080A6988)
+// is US InitAndRunAnimFastLinearTranslation. We keep the JP names because
+// existing converted code references them.
+void InitAndRunAnimFastLinearTranslation(struct Sprite *sprite);
+void StartAnimLinearTranslation(struct Sprite *sprite);
+bool8 AnimTranslateLinear(struct Sprite *sprite);
+void InitAnimLinearTranslationWithSpeed(struct Sprite *sprite);
+void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
+void InitAnimFastLinearTranslationWithSpeed(struct Sprite *sprite);
+void InitAnimFastLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
+bool8 AnimFastTranslateLinear(struct Sprite *sprite);
+void SetSpriteRotScale(u8 spriteId, s16 xScale, s16 yScale, u16 rotation);
+void PrepareBattlerSpriteForRotScale(u8 spriteId, u8 objMode);
+void ResetSpriteRotScale(u8 spriteId);
+void SetBattlerSpriteYOffsetFromRotation(u8 spriteId);
+void TrySetSpriteRotScale(struct Sprite *sprite, bool8 recalcCenterVector, s16 xScale, s16 yScale, u16 rotation);
+void ResetSpriteRotScale_PreserveAffine(struct Sprite *sprite);
+u16 ArcTan2Neg(s16 x, s16 y);
+void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
+u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, bool8 attackerPartner, bool8 targetPartner, bool8 anim1, bool8 anim2);
+u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLeft, u8 opponentRight);
+static void AnimTranslateLinear_WithFollowup(struct Sprite *sprite);
+static void AnimTranslateLinear_WithFollowup_SetCornerVecX(struct Sprite *sprite);
+static void InitAnimFastLinearTranslation(struct Sprite *sprite);
+static void AnimFastTranslateLinearWaitEnd(struct Sprite *sprite);
+static bool8 ShouldRotScaleSpeciesBeFlipped(void);
 
 void StoreSpriteCallbackInData6(struct Sprite *sprite, void (*callback)(struct Sprite *))
 {
@@ -988,4 +1017,447 @@ void Trade_MoveSelectedMonToTarget(struct Sprite *sprite)
     InitSpriteDataForLinearTranslation(sprite);
     sprite->callback = TranslateSpriteLinearFixedPointIconFrame;
     sprite->callback(sprite);
+}
+
+void InitAnimLinearTranslation(struct Sprite *sprite)
+{
+    int x = sprite->data[2] - sprite->data[1];
+    int y = sprite->data[4] - sprite->data[3];
+    bool8 movingLeft = x < 0;
+    bool8 movingUp = y < 0;
+    u16 xDelta = abs(x) << 8;
+    u16 yDelta = abs(y) << 8;
+
+    xDelta = xDelta / sprite->data[0];
+    yDelta = yDelta / sprite->data[0];
+
+    if (movingLeft)
+        xDelta |= 1;
+    else
+        xDelta &= ~1;
+
+    if (movingUp)
+        yDelta |= 1;
+    else
+        yDelta &= ~1;
+
+    sprite->data[1] = xDelta;
+    sprite->data[2] = yDelta;
+    sprite->data[4] = 0;
+    sprite->data[3] = 0;
+}
+
+// JP InitAndRunAnimFastLinearTranslation (0x080A67B4) is US StartAnimLinearTranslation.
+void InitAndRunAnimFastLinearTranslation(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimLinearTranslation(sprite);
+    sprite->callback = AnimTranslateLinear_WithFollowup;
+    sprite->callback(sprite);
+}
+
+static void UNUSED StartAnimLinearTranslation_SetCornerVecX(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimLinearTranslation(sprite);
+    sprite->callback = AnimTranslateLinear_WithFollowup_SetCornerVecX;
+    sprite->callback(sprite);
+}
+
+bool8 AnimTranslateLinear(struct Sprite *sprite)
+{
+    u16 v1, v2, x, y;
+
+    if (!sprite->data[0])
+        return TRUE;
+
+    v1 = sprite->data[1];
+    v2 = sprite->data[2];
+    x = sprite->data[3];
+    y = sprite->data[4];
+    x += v1;
+    y += v2;
+
+    if (v1 & 1)
+        sprite->x2 = -(x >> 8);
+    else
+        sprite->x2 = x >> 8;
+
+    if (v2 & 1)
+        sprite->y2 = -(y >> 8);
+    else
+        sprite->y2 = y >> 8;
+
+    sprite->data[3] = x;
+    sprite->data[4] = y;
+    sprite->data[0]--;
+    return FALSE;
+}
+
+void AnimTranslateLinear_WithFollowup(struct Sprite *sprite)
+{
+    if (AnimTranslateLinear(sprite))
+        SetCallbackToStoredInData6(sprite);
+}
+
+// Functionally unused
+static void AnimTranslateLinear_WithFollowup_SetCornerVecX(struct Sprite *sprite)
+{
+    AnimSetCenterToCornerVecX(sprite);
+    if (AnimTranslateLinear(sprite))
+        SetCallbackToStoredInData6(sprite);
+}
+
+void InitAnimLinearTranslationWithSpeed(struct Sprite *sprite)
+{
+    int v1 = abs(sprite->data[2] - sprite->data[1]) << 8;
+    sprite->data[0] = v1 / sprite->data[0];
+    InitAnimLinearTranslation(sprite);
+}
+
+void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimLinearTranslationWithSpeed(sprite);
+    sprite->callback = AnimTranslateLinear_WithFollowup;
+    sprite->callback(sprite);
+}
+
+static void InitAnimFastLinearTranslation(struct Sprite *sprite)
+{
+    int xDiff = sprite->data[2] - sprite->data[1];
+    int yDiff = sprite->data[4] - sprite->data[3];
+    bool8 x_sign = xDiff < 0;
+    bool8 y_sign = yDiff < 0;
+    u16 x2 = abs(xDiff) << 4;
+    u16 y2 = abs(yDiff) << 4;
+
+    x2 /= sprite->data[0];
+    y2 /= sprite->data[0];
+
+    if (x_sign)
+        x2 |= 1;
+    else
+        x2 &= ~1;
+
+    if (y_sign)
+        y2 |= 1;
+    else
+        y2 &= ~1;
+
+    sprite->data[1] = x2;
+    sprite->data[2] = y2;
+    sprite->data[4] = 0;
+    sprite->data[3] = 0;
+}
+
+// JP StartAnimLinearTranslation (0x080A6988) is US InitAndRunAnimFastLinearTranslation.
+void StartAnimLinearTranslation(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimFastLinearTranslation(sprite);
+    sprite->callback = AnimFastTranslateLinearWaitEnd;
+    sprite->callback(sprite);
+}
+
+bool8 AnimFastTranslateLinear(struct Sprite *sprite)
+{
+    u16 v1, v2, x, y;
+
+    if (!sprite->data[0])
+        return TRUE;
+
+    v1 = sprite->data[1];
+    v2 = sprite->data[2];
+    x = sprite->data[3];
+    y = sprite->data[4];
+    x += v1;
+    y += v2;
+
+    if (v1 & 1)
+        sprite->x2 = -(x >> 4);
+    else
+        sprite->x2 = x >> 4;
+
+    if (v2 & 1)
+        sprite->y2 = -(y >> 4);
+    else
+        sprite->y2 = y >> 4;
+
+    sprite->data[3] = x;
+    sprite->data[4] = y;
+    sprite->data[0]--;
+    return FALSE;
+}
+
+static void AnimFastTranslateLinearWaitEnd(struct Sprite *sprite)
+{
+    if (AnimFastTranslateLinear(sprite))
+        SetCallbackToStoredInData6(sprite);
+}
+
+void InitAnimFastLinearTranslationWithSpeed(struct Sprite *sprite)
+{
+    int xDiff = abs(sprite->data[2] - sprite->data[1]) << 4;
+    sprite->data[0] = xDiff / sprite->data[0];
+    InitAnimFastLinearTranslation(sprite);
+}
+
+void InitAnimFastLinearTranslationWithSpeedAndPos(struct Sprite *sprite)
+{
+    sprite->data[1] = sprite->x;
+    sprite->data[3] = sprite->y;
+    InitAnimFastLinearTranslationWithSpeed(sprite);
+    sprite->callback = AnimFastTranslateLinearWaitEnd;
+    sprite->callback(sprite);
+}
+
+void SetSpriteRotScale(u8 spriteId, s16 xScale, s16 yScale, u16 rotation)
+{
+    int i;
+    struct ObjAffineSrcData src;
+    struct OamMatrix matrix;
+
+    src.xScale = xScale;
+    src.yScale = yScale;
+    src.rotation = rotation;
+    if (ShouldRotScaleSpeciesBeFlipped())
+        src.xScale = -src.xScale;
+    i = gSprites[spriteId].oam.matrixNum;
+    ObjAffineSet(&src, &matrix, 1, 2);
+    gOamMatrices[i].a = matrix.a;
+    gOamMatrices[i].b = matrix.b;
+    gOamMatrices[i].c = matrix.c;
+    gOamMatrices[i].d = matrix.d;
+}
+
+// PokÃ©mon in Contests (except Unown) should be flipped.
+static bool8 ShouldRotScaleSpeciesBeFlipped(void)
+{
+    if (IsContest())
+    {
+        if (gSprites[GetAnimBattlerSpriteId(ANIM_ATTACKER)].data[2] == SPECIES_UNOWN)
+            return FALSE;
+        else
+            return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
+}
+
+void PrepareBattlerSpriteForRotScale(u8 spriteId, u8 objMode)
+{
+    u8 battler = gSprites[spriteId].data[0];
+
+    if (IsContest() || IsBattlerSpriteVisible(battler))
+        gSprites[spriteId].invisible = FALSE;
+    gSprites[spriteId].oam.objMode = objMode;
+    gSprites[spriteId].affineAnimPaused = TRUE;
+    if (!IsContest() && !gSprites[spriteId].oam.affineMode)
+        gSprites[spriteId].oam.matrixNum = gBattleSpritesDataPtr->healthBoxesData[battler].matrixNum;
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
+}
+
+void ResetSpriteRotScale(u8 spriteId)
+{
+    SetSpriteRotScale(spriteId, 0x100, 0x100, 0);
+    gSprites[spriteId].oam.affineMode = ST_OAM_AFFINE_NORMAL;
+    gSprites[spriteId].oam.objMode = ST_OAM_OBJ_NORMAL;
+    gSprites[spriteId].affineAnimPaused = FALSE;
+    CalcCenterToCornerVec(&gSprites[spriteId], gSprites[spriteId].oam.shape, gSprites[spriteId].oam.size, gSprites[spriteId].oam.affineMode);
+}
+
+// Sets the sprite's y offset equal to the y displacement caused by the
+// matrix's rotation.
+void SetBattlerSpriteYOffsetFromRotation(u8 spriteId)
+{
+    u16 matrixNum = gSprites[spriteId].oam.matrixNum;
+    // The "c" component of the battler sprite matrix contains the sine of the rotation angle divided by some scale amount.
+    s16 c = gOamMatrices[matrixNum].c;
+    if (c < 0)
+        c = -c;
+
+    gSprites[spriteId].y2 = c >> 3;
+}
+
+void TrySetSpriteRotScale(struct Sprite *sprite, bool8 recalcCenterVector, s16 xScale, s16 yScale, u16 rotation)
+{
+    int i;
+    struct ObjAffineSrcData src;
+    struct OamMatrix matrix;
+
+    if (sprite->oam.affineMode & 1)
+    {
+        sprite->affineAnimPaused = TRUE;
+        if (recalcCenterVector)
+            CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+        src.xScale = xScale;
+        src.yScale = yScale;
+        src.rotation = rotation;
+        if (ShouldRotScaleSpeciesBeFlipped())
+            src.xScale = -src.xScale;
+        i = sprite->oam.matrixNum;
+        ObjAffineSet(&src, &matrix, 1, 2);
+        gOamMatrices[i].a = matrix.a;
+        gOamMatrices[i].b = matrix.b;
+        gOamMatrices[i].c = matrix.c;
+        gOamMatrices[i].d = matrix.d;
+    }
+}
+
+void ResetSpriteRotScale_PreserveAffine(struct Sprite *sprite)
+{
+    TrySetSpriteRotScale(sprite, TRUE, 0x100, 0x100, 0);
+    sprite->affineAnimPaused = FALSE;
+    CalcCenterToCornerVec(sprite, sprite->oam.shape, sprite->oam.size, sprite->oam.affineMode);
+}
+
+static u16 ArcTan2_(s16 x, s16 y)
+{
+    return ArcTan2(x, y);
+}
+
+u16 ArcTan2Neg(s16 x, s16 y)
+{
+    u16 var = ArcTan2_(x, y);
+    return -var;
+}
+
+// JP spelling "Greyscale" is kept (US: SetGrayscaleOrOriginalPalette).
+void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor)
+{
+    int i;
+    struct PlttData *originalColor;
+    struct PlttData *destColor;
+    u16 average;
+    u16 paletteOffset = PLTT_ID(paletteNum);
+
+    if (!restoreOriginalColor)
+    {
+        for (i = 0; i < 16; i++)
+        {
+            originalColor = (struct PlttData *)&gPlttBufferUnfaded[paletteOffset + i];
+            average = originalColor->r + originalColor->g + originalColor->b;
+            average /= 3;
+
+            destColor = (struct PlttData *)&gPlttBufferFaded[paletteOffset + i];
+            destColor->r = average;
+            destColor->g = average;
+            destColor->b = average;
+        }
+    }
+    else
+    {
+        CpuCopy32(&gPlttBufferUnfaded[paletteOffset], &gPlttBufferFaded[paletteOffset], PLTT_SIZE_4BPP);
+    }
+}
+
+u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, bool8 attackerPartner, bool8 targetPartner, bool8 anim1, bool8 anim2)
+{
+    u32 selectedPalettes = 0;
+    u32 shift;
+
+    if (battleBackground)
+    {
+        if (!IsContest())
+            selectedPalettes = 0xe; // Palettes 1, 2, and 3
+        else
+            selectedPalettes = 1 << GetBattleBgPaletteNum();
+    }
+    if (attacker)
+    {
+        shift = gBattleAnimAttacker + 16;
+        selectedPalettes |= 1 << shift;
+    }
+    if (target)
+    {
+        shift = gBattleAnimTarget + 16;
+        selectedPalettes |= 1 << shift;
+    }
+    if (attackerPartner)
+    {
+        if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimAttacker)))
+        {
+            shift = BATTLE_PARTNER(gBattleAnimAttacker) + 16;
+            selectedPalettes |= 1 << shift;
+        }
+    }
+    if (targetPartner)
+    {
+        if (IsBattlerSpriteVisible(BATTLE_PARTNER(gBattleAnimTarget)))
+        {
+            shift = BATTLE_PARTNER(gBattleAnimTarget) + 16;
+            selectedPalettes |= 1 << shift;
+        }
+    }
+    if (anim1)
+    {
+        if (!IsContest())
+            selectedPalettes |= 1 << BG_ANIM_PAL_1;
+        else
+            selectedPalettes |= 1 << BG_ANIM_PAL_CONTEST;
+    }
+    if (anim2)
+    {
+        if (!IsContest())
+            selectedPalettes |= 1 << BG_ANIM_PAL_2;
+    }
+    return selectedPalettes;
+}
+
+u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLeft, u8 opponentRight)
+{
+    u32 selectedPalettes = 0;
+    u32 shift;
+
+    if (IsContest())
+    {
+        if (playerLeft)
+        {
+            selectedPalettes |= 1 << 18;
+            return selectedPalettes;
+        }
+    }
+    else
+    {
+        if (playerLeft)
+        {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
+            {
+                selectedPalettes |= 1 << (GetBattlerAtPosition(B_POSITION_PLAYER_LEFT) + 16);
+            }
+        }
+        if (playerRight)
+        {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)))
+            {
+                shift = GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT) + 16;
+                selectedPalettes |= 1 << shift;
+            }
+        }
+        if (opponentLeft)
+        {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)))
+            {
+                shift = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT) + 16;
+                selectedPalettes |= 1 << shift;
+            }
+        }
+        if (opponentRight)
+        {
+            if (IsBattlerSpriteVisible(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
+            {
+                shift = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT) + 16;
+                selectedPalettes |= 1 << shift;
+            }
+        }
+    }
+    return selectedPalettes;
 }
