@@ -6215,6 +6215,13 @@ SECTIONS {
         asm/pokedex.o(.text);
         asm/trainer_card.o(.text);
         asm/frontier_pass.o(.text);
+        src/pokemon_storage_system.o(.text.CountMonsInBox);
+        src/pokemon_storage_system.o(.text.GetFirstFreeBoxSpot);
+        src/pokemon_storage_system.o(.text.CountPartyNonEggMons);
+        src/pokemon_storage_system.o(.text.CountPartyAliveNonEggMonsExcept);
+        src/pokemon_storage_system.o(.text.CountPartyAliveNonEggMons_IgnoreVar0x8004Slot);
+        src/pokemon_storage_system.o(.text.CountPartyMons);
+        src/pokemon_storage_system.o(.text.StringCopyAndFillWithSpaces);
         asm/pokemon_storage_system.o(.text);
         src/pokemon_icon.o(.text);
         src/script_movement.o(.text);
