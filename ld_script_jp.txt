@@ -6623,7 +6623,11 @@ SECTIONS {
         src/mirage_tower.o(.text.InitMirageTowerShake);
         src/mirage_tower.o(.text.DoMirageTowerDisintegration);
         src/mirage_tower.o(.text.Task_FossilFallAndSink);
-        asm/berry_fix_program.o(.text);
+        src/berry_fix_program.o(.text.SpriteCB_FallingFossil);
+        src/berry_fix_program.o(.text.UpdateDisintegrationEffect);
+        src/berry_fix_program.o(.text.berry_fix_bg_hide);
+        src/berry_fix_program.o(.text.berry_fix_text_print);
+        src/berry_fix_program.o(.text.berry_fix_main);
         asm/pokemon_summary_screen.o(.text);
         src/pokedex_area_region_map.o(.text.LoadPokedexAreaMapGfx);
         src/pokedex_area_region_map.o(.text.TryShowPokedexAreaMap);
