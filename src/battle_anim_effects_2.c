@@ -18,12 +18,12 @@
 
 #define NUM_MUSIC_NOTE_PAL_TAGS  3
 
-void TranslateSpriteInEllipseOverDuration(struct Sprite *sprite);
+void TranslateSpriteInCircle(struct Sprite *sprite);
+void TranslateSpriteInEllipse(struct Sprite *sprite);
 void SetSpriteNextToMonHead(u8 battler, struct Sprite *sprite);
 extern const struct SpriteTemplate gAirWaveProjectileSpriteTemplate;
 extern const struct SpriteTemplate sVoidLinesSpriteTemplate;
 void InitAnimLinearTranslationWithSpeedAndPos(struct Sprite *sprite);
-void TranslateSpriteInCircleOverDuration(struct Sprite *sprite);
 void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
 u32 sub_080A6E74(bool8, bool8, bool8, bool8, bool8, bool8, bool8);
 
@@ -321,8 +321,8 @@ static void AnimCirclingFinger(struct Sprite *sprite)
     sprite->sMoveSteps = gBattleAnimArgs[5];
     sprite->sAmplitudeY = gBattleAnimArgs[3];
     StoreSpriteCallbackInData6(sprite, DestroySpriteAndMatrix);
-    // JP calls TranslateSpriteInEllipseOverDuration (0x080A5D18).
-    sprite->callback = TranslateSpriteInEllipseOverDuration;
+    // JP calls TranslateSpriteInEllipse (0x080A5D18).
+    sprite->callback = TranslateSpriteInEllipse;
     sprite->callback(sprite);
 }
 
@@ -835,8 +835,8 @@ static void AnimRazorWindTornado(struct Sprite *sprite)
     sprite->data[2] = gBattleAnimArgs[5];
     sprite->data[3] = gBattleAnimArgs[6];
     sprite->data[4] = gBattleAnimArgs[3];
-    // JP calls TranslateSpriteInCircleOverDuration (0x080A5BB4).
-    sprite->callback = TranslateSpriteInCircleOverDuration;
+    // JP calls TranslateSpriteInCircle (0x080A5BB4).
+    sprite->callback = TranslateSpriteInCircle;
     StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
     sprite->callback(sprite);
 }
