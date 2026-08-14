@@ -21536,3 +21536,492 @@ __attribute__((naked)) bool8 MovementAction_AcroWheelieFaceUp_Step0(struct Objec
     );
 }
 
+
+__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r2, #3\n\t"
+        "	bl sub_08095230\n\t"
+        "	movs r0, #1\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r2, #4\n\t"
+        "	bl sub_08095230\n\t"
+        "	movs r0, #1\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroPopWheelieDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #1\n\t"
+        "	bl GetSlideMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #1\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroPopWheelieUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #2\n\t"
+        "	bl GetSlideMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #2\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroPopWheelieLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #3\n\t"
+        "	bl GetSlideMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #3\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroPopWheelieRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #4\n\t"
+        "	bl GetSlideMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #4\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #1\n\t"
+        "	bl GetWalkFastestMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #1\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #2\n\t"
+        "	bl GetWalkFastestMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #2\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 sub_08095388(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #3\n\t"
+        "	bl GetWalkFastestMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #3\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroEndWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #4\n\t"
+        "	bl GetWalkFastestMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #4\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_UnusedAcroActionDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #1\n\t"
+        "	bl GetWalkInPlaceFastMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #1\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_UnusedAcroActionUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #2\n\t"
+        "	bl GetWalkInPlaceFastMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #2\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_UnusedAcroActionLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #3\n\t"
+        "	bl GetWalkInPlaceFastMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #3\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_UnusedAcroActionRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #4\n\t"
+        "	bl GetWalkInPlaceFastMovementAction\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	movs r2, #4\n\t"
+        "	bl StartSpriteAnimInDirection\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 sub_08095460(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl sub_080970C0\n\t"
+        "	adds r4, #0x2c\n\t"
+        "	ldrb r1, [r4]\n\t"
+        "	movs r0, #0x41\n\t"
+        "	rsbs r0, r0, #0\n\t"
+        "	ands r0, r1\n\t"
+        "	strb r0, [r4]\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	adds r0, r5, #0\n\t"
+        "	bl sub_080970C8\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08095492\n\t"
+        "	movs r0, #0\n\t"
+        "	b _080954AE\n\t"
+        "_08095492:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl ShiftStillEventObjectCoords\n\t"
+        "	ldrb r0, [r4]\n\t"
+        "	movs r1, #8\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r4]\n\t"
+        "	adds r2, r5, #0\n\t"
+        "	adds r2, #0x2c\n\t"
+        "	ldrb r0, [r2]\n\t"
+        "	movs r1, #0x40\n\t"
+        "	orrs r0, r1\n\t"
+        "	strb r0, [r2]\n\t"
+        "	movs r0, #1\n\t"
+        "_080954AE:\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_Figure8_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	adds r5, r0, #0\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	bl sub_08095460\n\t"
+        "	movs r0, #1\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	adds r0, r5, #0\n\t"
+        "	adds r1, r4, #0\n\t"
+        "	bl sub_080954D4\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r1, #0\n\t"
+        "	bl sub_0809547C\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _080954E6\n\t"
+        "	movs r0, #0\n\t"
+        "	b _080954EC\n\t"
+        "_080954E6:\n\t"
+        "	movs r0, #2\n\t"
+        "	strh r0, [r4, #0x32]\n\t"
+        "	movs r0, #1\n\t"
+        "_080954EC:\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 sub_080954F4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, r6, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	adds r6, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	adds r4, r2, #0\n\t"
+        "	ldr r0, [sp, #0x14]\n\t"
+        "	lsls r4, r4, #0x18\n\t"
+        "	lsrs r4, r4, #0x18\n\t"
+        "	lsls r3, r3, #0x18\n\t"
+        "	lsrs r3, r3, #0x18\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	str r0, [sp]\n\t"
+        "	adds r0, r6, #0\n\t"
+        "	adds r2, r4, #0\n\t"
+        "	bl sub_08093934\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl GetSlideMovementAction\n\t"
+        "	adds r1, r0, #0\n\t"
+        "	lsls r1, r1, #0x18\n\t"
+        "	lsrs r1, r1, #0x18\n\t"
+        "	adds r0, r5, #0\n\t"
+        "	bl StartSpriteAnimIfDifferent\n\t"
+        "	adds r0, r6, #0\n\t"
+        "	bl DoShadowFieldEffect\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4, r5, r6}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool8 MovementAction_AcroWheelieHopFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r5, r1, #0\n\t"
+        "	movs r0, #1\n\t"
+        "	str r0, [sp]\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	movs r2, #1\n\t"
+        "	movs r3, #0\n\t"
+        "	bl sub_080954F4\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	adds r1, r5, #0\n\t"
+        "	bl MovementAction_AcroWheelieHopFaceDown_Step1\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
