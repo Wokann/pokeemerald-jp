@@ -1513,7 +1513,7 @@ _0813D5AC:
 	movs r2, #3
 	bl SetBgAttribute
 	ldr r0, _0813D5D0
-	bl sub_081C4578
+	bl LoadPokedexAreaMapGfx
 	ldr r0, _0813D5D4
 	ldr r0, [r0]
 	movs r1, #0xf7
@@ -1527,12 +1527,12 @@ _0813D5AC:
 _0813D5D0: .4byte 0x085939A0
 _0813D5D4: .4byte 0x0203A848
 _0813D5D8:
-	bl sub_081C4698
+	bl TryShowPokedexAreaMap
 	cmp r0, #1
 	beq _0813D698
 	movs r0, #8
 	rsbs r0, r0, #0
-	bl sub_081C46D8
+	bl PokedexAreaMapChangeBgY
 	b _0813D688
 _0813D5EA:
 	bl ResetDrawAreaGlowState
@@ -1737,7 +1737,7 @@ _0813D756:
 	bl sub_0813D7B8
 	adds r0, r5, #0
 	bl DestroyTask
-	bl sub_081C46BC
+	bl FreePokedexAreaMapBgNum
 	ldr r0, [r4]
 	bl Free
 	str r7, [r4]
@@ -2215,4 +2215,3 @@ _0813DB34:
 _0813DB3C: .4byte 0x02037C74
 _0813DB40: .4byte 0x02024190
 	thumb_func_end sub_0813DAC4
-
