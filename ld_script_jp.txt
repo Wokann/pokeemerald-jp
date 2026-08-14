@@ -3848,7 +3848,8 @@ SECTIONS {
         src/battle_controllers.o(.text.BtlController_EmitBallThrowAnim);
         src/battle_controllers.o(.text.BtlController_EmitPause);
         src/battle_controllers.o(.text.BtlController_EmitMoveAnimation);
-        asm/battle_controllers_ps.o(.text);
+        src/battle_controllers_ps.o(.text.BtlController_EmitPrintString);
+        src/battle_controllers_ps.o(.text.BtlController_EmitPrintSelectionString);
         src/battle_controllers.o(.text.BtlController_EmitChooseAction);
         src/battle_controllers.o(.text.BtlController_EmitUnknownYesNoBox);
         src/battle_controllers.o(.text.BtlController_EmitChooseMove);
