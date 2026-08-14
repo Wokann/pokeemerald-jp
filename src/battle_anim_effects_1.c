@@ -133,6 +133,23 @@ static void AnimTipMon_Step(struct Sprite *sprite);
 void AnimTask_SkullBashPosition(u8 taskId);
 static void AnimTask_SkullBashPositionSet(u8 taskId);
 static void AnimTask_SkullBashPositionReset(u8 taskId);
+static void AnimSlashSlice(struct Sprite *sprite);
+static void AnimFalseSwipeSlice(struct Sprite *sprite);
+static void AnimFalseSwipePositionedSlice(struct Sprite *sprite);
+static void AnimFalseSwipeSlice_Step1(struct Sprite *sprite);
+static void AnimFalseSwipeSlice_Step2(struct Sprite *sprite);
+static void AnimFalseSwipeSlice_Step3(struct Sprite *sprite);
+static void AnimEndureEnergy(struct Sprite *sprite);
+static void AnimEndureEnergy_Step(struct Sprite *sprite);
+static void AnimSharpenSphere(struct Sprite *sprite);
+static void AnimSharpenSphere_Step(struct Sprite *sprite);
+static void AnimConversion(struct Sprite *sprite);
+void AnimTask_ConversionAlphaBlend(u8 taskId);
+static void AnimConversion2(struct Sprite *sprite);
+static void AnimConversion2_Step(struct Sprite *sprite);
+void AnimTask_Conversion2AlphaBlend(u8 taskId);
+static void UNUSED AnimTask_HideBattlersHealthbox(u8 taskId);
+static void UNUSED AnimTask_ShowBattlersHealthbox(u8 taskId);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -2635,4 +2652,255 @@ static void AnimTask_SkullBashPositionReset(u8 taskId)
         ResetSpriteRotScale(task->data[0]);
         DestroyAnimVisualTask(taskId);
     }
+}
+
+static void AnimSlashSlice(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    if (cmd->unk0 == 0)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + cmd->unk1;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk2;
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + cmd->unk1;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + cmd->unk2;
+    }
+
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    StoreSpriteCallbackInData6(sprite, AnimFalseSwipeSlice_Step3);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+}
+
+static void AnimFalseSwipeSlice(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + 0xFFD0;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    StoreSpriteCallbackInData6(sprite, AnimFalseSwipeSlice_Step1);
+    sprite->callback = RunStoredCallbackWhenAnimEnds;
+}
+
+static void AnimFalseSwipePositionedSlice(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0);
+
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) - 48 + cmd->unk0;
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+    StartSpriteAnim(sprite, 1);
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->callback = AnimFalseSwipeSlice_Step3;
+}
+
+static void AnimFalseSwipeSlice_Step1(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > 8)
+    {
+        sprite->data[0] = 12;
+        sprite->data[1] = 8;
+        sprite->data[2] = 0;
+        StoreSpriteCallbackInData6(sprite, AnimFalseSwipeSlice_Step2);
+        sprite->callback = TranslateSpriteLinear;
+    }
+}
+
+static void AnimFalseSwipeSlice_Step2(struct Sprite *sprite)
+{
+    sprite->data[0] = 0;
+    sprite->data[1] = 0;
+    sprite->callback = AnimFalseSwipeSlice_Step3;
+}
+
+static void AnimFalseSwipeSlice_Step3(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > 1)
+    {
+        sprite->data[0] = 0;
+        sprite->invisible = !sprite->invisible;
+        if (++sprite->data[1] > 8)
+            DestroyAnimSprite(sprite);
+    }
+}
+
+static void AnimEndureEnergy(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2, unk3);
+
+    if (cmd->unk0 == 0)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + cmd->unk1;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + cmd->unk2;
+    }
+    else
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + cmd->unk1;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + cmd->unk2;
+    }
+
+    sprite->data[0] = 0;
+    sprite->data[1] = cmd->unk3;
+    sprite->callback = AnimEndureEnergy_Step;
+}
+
+static void AnimEndureEnergy_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > sprite->data[1])
+    {
+        sprite->data[0] = 0;
+        sprite->y--;
+    }
+
+    sprite->y -= sprite->data[0];
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimSharpenSphere(struct Sprite *sprite)
+{
+    sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET) - 12;
+    sprite->data[0] = 0;
+    sprite->data[1] = 2;
+    sprite->data[2] = 0;
+    sprite->data[3] = 0;
+    sprite->data[4] = 0;
+    sprite->data[5] = BattleAnimAdjustPanning(SOUND_PAN_ATTACKER);
+    sprite->callback = AnimSharpenSphere_Step;
+}
+
+static void AnimSharpenSphere_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] >= sprite->data[1])
+    {
+        sprite->invisible = !sprite->invisible;
+        if (!sprite->invisible)
+        {
+            sprite->data[4]++;
+            if (!(sprite->data[4] & 1))
+                PlaySE12WithPanning(SE_M_SWAGGER2, sprite->data[5]);
+        }
+
+        sprite->data[0] = 0;
+        if (++sprite->data[2] > 1)
+        {
+            sprite->data[2] = 0;
+            sprite->data[1]++;
+        }
+    }
+
+    if (sprite->animEnded && sprite->data[1] > 16 && sprite->invisible)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimConversion(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1);
+
+    if (sprite->data[0] == 0)
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X) + cmd->unk0;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + cmd->unk1;
+        if (IsContest())
+            sprite->y += 10;
+
+        sprite->data[0]++;
+    }
+
+    // TODO: gBattleAnimArgs[ARG_RET_ID]?
+    if ((u16)gBattleAnimArgs[7] == 0xFFFF)
+        DestroyAnimSprite(sprite);
+}
+
+void AnimTask_ConversionAlphaBlend(u8 taskId)
+{
+    if (gTasks[taskId].data[2] == 1)
+    {
+        // TODO: gBattleAnimArgs[ARG_RET_ID]?
+        gBattleAnimArgs[7] = 0xFFFF;
+        gTasks[taskId].data[2]++;
+    }
+    else if (gTasks[taskId].data[2] == 2)
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+    else
+    {
+        if (++gTasks[taskId].data[0] == 4)
+        {
+            gTasks[taskId].data[0] = 0;
+            gTasks[taskId].data[1]++;
+            SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16 - gTasks[taskId].data[1], gTasks[taskId].data[1]));
+            if (gTasks[taskId].data[1] == 16)
+                gTasks[taskId].data[2]++;
+        }
+    }
+}
+
+static void AnimConversion2(struct Sprite *sprite)
+{
+    CMD_ARGS(unk0, unk1, unk2);
+
+    InitSpritePosToAnimTarget(sprite, FALSE);
+    sprite->animPaused = 1;
+    sprite->data[0] = cmd->unk2;
+    sprite->callback = AnimConversion2_Step;
+}
+
+static void AnimConversion2_Step(struct Sprite *sprite)
+{
+    if (sprite->data[0])
+    {
+        sprite->data[0]--;
+    }
+    else
+    {
+        sprite->animPaused = 0;
+        sprite->data[0] = 30;
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+        // JP uses InitAndRunAnimFastLinearTranslation (0x080A67B5) instead of US StartAnimLinearTranslation.
+        sprite->callback = InitAndRunAnimFastLinearTranslation;
+        StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+    }
+}
+
+void AnimTask_Conversion2AlphaBlend(u8 taskId)
+{
+    if (++gTasks[taskId].data[0] == 4)
+    {
+        gTasks[taskId].data[0] = 0;
+        gTasks[taskId].data[1]++;
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(gTasks[taskId].data[1], 16 - gTasks[taskId].data[1]));
+        if (gTasks[taskId].data[1] == 16)
+            DestroyAnimVisualTask(taskId);
+    }
+}
+
+static void UNUSED AnimTask_HideBattlersHealthbox(u8 taskId)
+{
+    CMD_ARGS(unk0, unk1);
+
+    u8 i;
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (cmd->unk0 == TRUE && GetBattlerSide(i) == B_SIDE_PLAYER)
+            SetHealthboxSpriteInvisible(gHealthboxSpriteIds[i]);
+
+        if (cmd->unk1 == TRUE && GetBattlerSide(i) == B_SIDE_OPPONENT)
+            SetHealthboxSpriteInvisible(gHealthboxSpriteIds[i]);
+    }
+
+    DestroyAnimVisualTask(taskId);
+}
+
+static void UNUSED AnimTask_ShowBattlersHealthbox(u8 taskId)
+{
+    u8 i;
+    for (i = 0; i < gBattlersCount; i++)
+        SetHealthboxSpriteVisible(gHealthboxSpriteIds[i]);
+
+    DestroyAnimVisualTask(taskId);
 }
