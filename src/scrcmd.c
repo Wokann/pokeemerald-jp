@@ -86,10 +86,6 @@ void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup, u8 priority);
 void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGroup);
 void sub_0812FDE0(u8 a);
 void ShowContestWinner(void);
-u16 MossdeepGym_MoveEvents(u8 a);
-void MossdeepGym_TurnEvents(void);
-void InitMossdeepGymTiles(u8 a);
-void FinishMossdeepGymTiles(void);
 u8 GetPriceReduction(u8 a);
 u8 GetCurrentApproachingTrainerEventObjectId(void);
 u16 IsUpdateLinkStateCBActive(void);
@@ -2148,13 +2144,13 @@ bool8 ScrCmd_mossdeepgym1(struct ScriptContext *ctx)
 {
     u16 a = VarGet(ScriptReadHalfword(ctx));
 
-    sMovingNpcId = MossdeepGym_MoveEvents(a);
+    sMovingNpcId = MoveRotatingTileObjects(a);
     return FALSE;
 }
 
 bool8 sub_0809B48C(struct ScriptContext *ctx)
 {
-    MossdeepGym_TurnEvents();
+    TurnRotatingTileObjects();
     return FALSE;
 }
 
@@ -2162,13 +2158,13 @@ bool8 ScrCmd_mossdeepgym3(struct ScriptContext *ctx)
 {
     u16 a = VarGet(ScriptReadHalfword(ctx));
 
-    InitMossdeepGymTiles(a);
+    InitRotatingTilePuzzle(a);
     return FALSE;
 }
 
 bool8 ScrCmd_buffercontesttype(struct ScriptContext *ctx)
 {
-    FinishMossdeepGymTiles();
+    FreeRotatingTilePuzzle();
     return FALSE;
 }
 
