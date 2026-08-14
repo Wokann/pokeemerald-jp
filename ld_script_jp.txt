@@ -9391,6 +9391,16 @@ SECTIONS {
         src/battle_transition.o(.text.ShredSplit_Main);
         src/battle_transition.o(.text.ShredSplit_BrokenCheck);
         src/battle_transition.o(.text.ShredSplit_End);
+        src/battle_transition.o(.text.Task_Blackhole);
+        src/battle_transition.o(.text.Task_BlackholePulsate);
+        src/battle_transition.o(.text.Blackhole_Init);
+        src/battle_transition.o(.text.Blackhole_GrowEnd);
+        src/battle_transition.o(.text.Blackhole_Vibrate);
+        src/battle_transition.o(.text.BlackholePulsate_Main);
+        src/battle_transition.o(.text.Task_RectangularSpiral);
+        src/battle_transition.o(.text.RectangularSpiral_Init);
+        src/battle_transition.o(.text.RectangularSpiral_Main);
+        src/battle_transition.o(.text.RectangularSpiral_End);
         asm/battle_transition.o(.text);
         asm/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
