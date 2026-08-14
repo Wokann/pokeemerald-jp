@@ -39,9 +39,10 @@ extern struct MonMarkingsMenu *sMenu;
 #define sMarkingId data[0]
 #define sCursorYOffset data[0]
 
-// JP keeps InitMonMarkingsMenu (sMenu = ptr) in asm/easy_chat.s as
-// unref_sub_811BBF4 at 0x0811FE2C; do not re-define it here or the
-// module layout would shift.
+void InitMonMarkingsMenu(struct MonMarkingsMenu *ptr)
+{
+    sMenu = ptr;
+}
 
 static void BufferMenuWindowTiles(void)
 {

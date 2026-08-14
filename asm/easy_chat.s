@@ -11324,12 +11324,3 @@ _0811FE1C:
 	.align 2, 0
 _0811FE28: .4byte 0x0000FFFF
 	thumb_func_end sub_0811FE10
-
-	thumb_func_start InitMonMarkingsMenu
-InitMonMarkingsMenu: @ 0x0811FE2C
-	ldr r1, _0811FE34
-	str r0, [r1]
-	bx lr
-	.align 2, 0
-_0811FE34: .4byte 0x02039DF0
-	thumb_func_end InitMonMarkingsMenu
