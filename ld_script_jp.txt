@@ -5743,7 +5743,6 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_FlyDown_Step0);
         src/event_object_movement.o(.text.MovementAction_FlyDown_Step1);
         src/event_object_movement.o(.text.MovementAction_Finish);
-        asm/event_object_movement.o(.text);
         src/field_message_box.o(.text);
         src/event_object_lock.o(.text.IsPlayerStandingStill);
         src/event_object_lock.o(.text.Task_FreezePlayer);
