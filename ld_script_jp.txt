@@ -8379,7 +8379,6 @@ SECTIONS {
         src/easy_chat.o(.text.IsEasyChatWordUnlocked);
         src/easy_chat.o(.text.InitializeEasyChatWordArray);
         src/easy_chat.o(.text.InitQuestionnaireWords);
-        asm/easy_chat.o(.text);
         src/mon_markings.o(.text.InitMonMarkingsMenu);
         src/mon_markings.o(.text.BufferMenuWindowTiles);
         src/mon_markings.o(.text.BufferMenuFrameTiles);
