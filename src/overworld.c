@@ -6121,3 +6121,473 @@ __attribute__((naked)) u16 GetDirectionForDpadKey(u16 a0)
     );
 }
 
+
+__attribute__((naked)) void ResetPlayerHeldKeys(u16 *keys)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r2, #0x11\n\t"
+        "	adds r1, r0, #6\n\t"
+        "_08086A06:\n\t"
+        "	strh r2, [r1]\n\t"
+        "	subs r1, #2\n\t"
+        "	cmp r1, r0\n\t"
+        "	bge _08086A06\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_SelfIdle(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	bl ArePlayerFieldControlsLocked\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	cmp r0, #1\n\t"
+        "	bne _08086A28\n\t"
+        "	movs r0, #0x11\n\t"
+        "	b _08086A4A\n\t"
+        "_08086A28:\n\t"
+        "	bl GetLinkRecvQueueLength\n\t"
+        "	cmp r0, #4\n\t"
+        "	bls _08086A34\n\t"
+        "	movs r0, #0x1b\n\t"
+        "	b _08086A4A\n\t"
+        "_08086A34:\n\t"
+        "	bl GetLinkSendQueueLength\n\t"
+        "	cmp r0, #4\n\t"
+        "	bls _08086A40\n\t"
+        "	movs r0, #0x1c\n\t"
+        "	b _08086A4A\n\t"
+        "_08086A40:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl KeyInterCB_ReadButtons\n\t"
+        "	lsls r0, r0, #0x10\n\t"
+        "	lsrs r0, r0, #0x10\n\t"
+        "_08086A4A:\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_Idle(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	bl CheckRfuKeepAliveTimer\n\t"
+        "	movs r0, #0x11\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_DeferToEventScript(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	bl ArePlayerFieldControlsLocked\n\t"
+        "	lsls r0, r0, #0x18\n\t"
+        "	lsrs r0, r0, #0x18\n\t"
+        "	movs r4, #0x11\n\t"
+        "	cmp r0, #1\n\t"
+        "	beq _08086A74\n\t"
+        "	movs r4, #0x1a\n\t"
+        "	ldr r0, _08086A7C\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "_08086A74:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086A7C: .4byte 0x08086A51\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_DeferToRecvQueue(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	bl GetLinkRecvQueueLength\n\t"
+        "	movs r4, #0x11\n\t"
+        "	cmp r0, #2\n\t"
+        "	bhi _08086A98\n\t"
+        "	movs r4, #0x1a\n\t"
+        "	bl UnlockPlayerFieldControls\n\t"
+        "	ldr r0, _08086AA0\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "_08086A98:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086AA0: .4byte 0x08086A51\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_DeferToSendQueue(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, lr}\n\t"
+        "	bl GetLinkSendQueueLength\n\t"
+        "	movs r4, #0x11\n\t"
+        "	cmp r0, #2\n\t"
+        "	bhi _08086ABC\n\t"
+        "	movs r4, #0x1a\n\t"
+        "	bl UnlockPlayerFieldControls\n\t"
+        "	ldr r0, _08086AC4\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "_08086ABC:\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	pop {r4}\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086AC4: .4byte 0x08086A51\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_ExitingSeat(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	bl CheckRfuKeepAliveTimer\n\t"
+        "	movs r0, #0x11\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_Ready(u32 keyOrPlayerId)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r1, _08086AF8\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #0x82\n\t"
+        "	bne _08086B04\n\t"
+        "	ldr r0, _08086AFC\n\t"
+        "	ldrh r1, [r0, #0x2e]\n\t"
+        "	movs r0, #2\n\t"
+        "	ands r0, r1\n\t"
+        "	cmp r0, #0\n\t"
+        "	beq _08086B08\n\t"
+        "	ldr r0, _08086B00\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0x1d\n\t"
+        "	b _08086B0A\n\t"
+        "	.align 2, 0\n\t"
+        "_08086AF8: .4byte 0x03000E10\n\t"
+        "_08086AFC: .4byte 0x03002360\n\t"
+        "_08086B00: .4byte 0x08086AC9\n\t"
+        "_08086B04:\n\t"
+        "	bl CheckRfuKeepAliveTimer\n\t"
+        "_08086B08:\n\t"
+        "	movs r0, #0x11\n\t"
+        "_08086B0A:\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_SetReady(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086B20\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0x16\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086B20: .4byte 0x08086AD5\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_SendNothing_2(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	movs r0, #0x11\n\t"
+        "	bx lr\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_WaitForPlayersToExit(u32 keyOrPlayerId)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r1, _08086B54\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #0x83\n\t"
+        "	beq _08086B38\n\t"
+        "	bl CheckRfuKeepAliveTimer\n\t"
+        "_08086B38:\n\t"
+        "	movs r0, #0x83\n\t"
+        "	bl AreAllPlayersInTradingState\n\t"
+        "	cmp r0, #1\n\t"
+        "	bne _08086B4E\n\t"
+        "	ldr r0, _08086B58\n\t"
+        "	bl ScriptContext_SetupScript\n\t"
+        "	ldr r0, _08086B5C\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "_08086B4E:\n\t"
+        "	movs r0, #0x11\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086B54: .4byte 0x03000E10\n\t"
+        "_08086B58: .4byte 0x082471F2\n\t"
+        "_08086B5C: .4byte 0x08086B25\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_SendExitRoomKey(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086B70\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0x17\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086B70: .4byte 0x08086B29\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 KeyInterCB_SendNothing(u32 key)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	movs r0, #0x11\n\t"
+        "	bx lr\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u32 GetCableClubPartnersReady(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r0, #0x83\n\t"
+        "	bl IsAnyPlayerInTradingState\n\t"
+        "	cmp r0, #1\n\t"
+        "	beq _08086BB4\n\t"
+        "	ldr r0, _08086BB8\n\t"
+        "	ldr r2, [r0]\n\t"
+        "	ldr r1, _08086BBC\n\t"
+        "	adds r3, r0, #0\n\t"
+        "	cmp r2, r1\n\t"
+        "	bne _08086B9E\n\t"
+        "	ldr r1, _08086BC0\n\t"
+        "	ldr r0, _08086BC4\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #0x82\n\t"
+        "	bne _08086BD6\n\t"
+        "_08086B9E:\n\t"
+        "	ldr r1, [r3]\n\t"
+        "	ldr r0, _08086BC8\n\t"
+        "	cmp r1, r0\n\t"
+        "	bne _08086BCC\n\t"
+        "	ldr r1, _08086BC0\n\t"
+        "	ldr r0, _08086BC4\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0]\n\t"
+        "	cmp r0, #0x81\n\t"
+        "	bne _08086BCC\n\t"
+        "_08086BB4:\n\t"
+        "	movs r0, #2\n\t"
+        "	b _08086BDC\n\t"
+        "	.align 2, 0\n\t"
+        "_08086BB8: .4byte 0x03000E14\n\t"
+        "_08086BBC: .4byte 0x08086AD5\n\t"
+        "_08086BC0: .4byte 0x03000E10\n\t"
+        "_08086BC4: .4byte 0x03005B14\n\t"
+        "_08086BC8: .4byte 0x08086AC9\n\t"
+        "_08086BCC:\n\t"
+        "	movs r0, #0x82\n\t"
+        "	bl AreAllPlayersInTradingState\n\t"
+        "	cmp r0, #0\n\t"
+        "	bne _08086BDA\n\t"
+        "_08086BD6:\n\t"
+        "	movs r0, #0\n\t"
+        "	b _08086BDC\n\t"
+        "_08086BDA:\n\t"
+        "	movs r0, #1\n\t"
+        "_08086BDC:\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) bool32 IsAnyPlayerExitingCableClub(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	movs r0, #0x83\n\t"
+        "	bl IsAnyPlayerInTradingState\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 SetInCableClubSeat(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086BFC\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086BFC: .4byte 0x08086B11\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 SetLinkWaitingForScript(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086C10\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086C10: .4byte 0x08086A5D\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 QueueExitLinkRoomKey(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086C24\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086C24: .4byte 0x08086B61\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) u16 SetStartedCableClubActivity(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {lr}\n\t"
+        "	ldr r0, _08086C38\n\t"
+        "	bl SetKeyInterceptCallback\n\t"
+        "	movs r0, #0\n\t"
+        "	pop {r1}\n\t"
+        "	bx r1\n\t"
+        "	.align 2, 0\n\t"
+        "_08086C38: .4byte 0x08086B75\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+__attribute__((naked)) void LoadCableClubPlayer(s32 a0, s32 a1, struct CableClubPlayer *a2)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	push {r4, r5, r6, lr}\n\t"
+        "	sub sp, #4\n\t"
+        "	adds r4, r0, #0\n\t"
+        "	adds r6, r2, #0\n\t"
+        "	strb r4, [r6]\n\t"
+        "	movs r0, #0\n\t"
+        "	cmp r4, r1\n\t"
+        "	bne _08086C4E\n\t"
+        "	movs r0, #1\n\t"
+        "_08086C4E:\n\t"
+        "	strb r0, [r6, #1]\n\t"
+        "	ldr r1, _08086CA0\n\t"
+        "	lsls r0, r4, #2\n\t"
+        "	adds r0, r0, r1\n\t"
+        "	ldrb r0, [r0, #3]\n\t"
+        "	strb r0, [r6, #2]\n\t"
+        "	lsls r4, r4, #0x18\n\t"
+        "	lsrs r4, r4, #0x18\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl GetLinkPlayerFacingDirection\n\t"
+        "	strb r0, [r6, #3]\n\t"
+        "	mov r5, sp\n\t"
+        "	adds r5, #2\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	mov r1, sp\n\t"
+        "	adds r2, r5, #0\n\t"
+        "	bl GetLinkPlayerCoords\n\t"
+        "	mov r0, sp\n\t"
+        "	ldrh r0, [r0]\n\t"
+        "	strh r0, [r6, #4]\n\t"
+        "	ldrh r0, [r5]\n\t"
+        "	strh r0, [r6, #6]\n\t"
+        "	adds r0, r4, #0\n\t"
+        "	bl GetLinkPlayerElevation\n\t"
+        "	strb r0, [r6, #8]\n\t"
+        "	mov r0, sp\n\t"
+        "	movs r1, #0\n\t"
+        "	ldrsh r0, [r0, r1]\n\t"
+        "	movs r2, #0\n\t"
+        "	ldrsh r1, [r5, r2]\n\t"
+        "	bl MapGridGetMetatileBehaviorAt\n\t"
+        "	strh r0, [r6, #0xc]\n\t"
+        "	add sp, #4\n\t"
+        "	pop {r4, r5, r6}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_08086CA0: .4byte 0x02031FA8\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
