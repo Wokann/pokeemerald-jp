@@ -47,7 +47,7 @@ static void AnimMonMoveCircular(struct Sprite *);
 
 extern const struct SpriteTemplate gDestinyBondWhiteShadowSpriteTemplate;
 extern const struct SpriteTemplate gGrudgeFlameSpriteTemplate;
-void AnimMonMoveCircular_Step(struct Sprite *sprite);
+static void AnimMonMoveCircular_Step(struct Sprite *sprite);
 
 static void AnimConfuseRayBallBounce(struct Sprite *sprite)
 {
@@ -1138,4 +1138,24 @@ static void AnimMonMoveCircular(struct Sprite *sprite)
     sprite->callback = AnimMonMoveCircular_Step;
 
     gSprites[sprite->data[5]].y += 8;
+}
+
+static void AnimMonMoveCircular_Step(struct Sprite *sprite)
+{
+    if (sprite->data[3])
+    {
+        sprite->data[3]--;
+        gSprites[sprite->data[5]].x2 = Sin(sprite->data[0], sprite->data[1]);
+        gSprites[sprite->data[5]].y2 = Cos(sprite->data[0], sprite->data[1]);
+        sprite->data[0] += sprite->data[2];
+        if (sprite->data[0] > 255)
+            sprite->data[0] -= 256;
+    }
+    else
+    {
+        gSprites[sprite->data[5]].x2 = 0;
+        gSprites[sprite->data[5]].y2 = 0;
+        gSprites[sprite->data[5]].y -= 8;
+        sprite->callback = DestroySpriteAndMatrix;
+    }
 }
