@@ -3896,12 +3896,12 @@ SECTIONS {
         src/battle_main.o(.text.CB2_InitBattleInternal);
         src/battle_main.o(.text.BufferPartyVsScreenHealth_AtStart);
         src/battle_main.o(.text.SetPlayerBerryDataInBattleStruct);
-        asm/battle_main_setall.o(.text);
+        src/battle_main.o(.text.SetAllPlayersBerryData);
         src/battle_main.o(.text.FindLinkBattleMaster);
         src/battle_main.o(.text.CB2_HandleStartBattle);
         src/battle_main.o(.text.CB2_HandleStartMultiPartnerBattle);
         src/battle_main.o(.text.sub_08037770);
-        asm/battle_main_preinitmulti.o(.text);
+        src/battle_main.o(.text.CB2_PreInitMultiBattle);
         src/battle_main.o(.text.CB2_PreInitIngamePlayerPartnerBattle);
         src/battle_main.o(.text.CB2_HandleStartMultiBattle);
         src/battle_main.o(.text.BattleMainCB2);
@@ -3996,7 +3996,7 @@ SECTIONS {
         src/battle_main.o(.text.RunBattleScriptCommands_PopCallbacksStack);
         asm/battle_main_usemove.o(.text);
         src/battle_main.o(.text.HandleAction_Switch);
-        asm/battle_main_useitem.o(.text);
+        src/battle_main.o(.text.HandleAction_UseItem);
         asm/battle_main_tryrun.o(.text);
         src/battle_main.o(.text.HandleAction_Run);
         src/battle_main.o(.text.HandleAction_WatchesCarefully);
