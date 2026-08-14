@@ -3176,7 +3176,8 @@ SECTIONS {
         src/mystery_event_server.o(.text.mevent_recv_block);
         src/mystery_event_server.o(.text.mevent_has_received);
         src/mystery_event_server.o(.text.mevent_reset_recv);
-        asm/mevent_server_helpers.o(.text);
+        src/mevent_server_helpers.o(.text.mevent_receive_func);
+        src/mevent_server_helpers.o(.text.mevent_send_func);
         src/wonder_news.o(.text.WonderNews_SetReward);
         src/wonder_news.o(.text.WonderNews_Reset);
         src/wonder_news.o(.text.WonderNews_IncrementStepCounter);
