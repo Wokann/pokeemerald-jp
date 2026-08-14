@@ -3974,7 +3974,8 @@ SECTIONS {
         src/battle_main.o(.text.BattleTurnPassed);
         src/battle_main.o(.text.IsRunningFromBattleImpossible);
         src/battle_main.o(.text.SwitchPartyOrder);
-        asm/battle_main_selstate.o(.text);
+        src/battle_main.o(.text.HandleAction_TryFinish);
+        src/battle_main.o(.text.HandleTurnActionSelectionState);
         src/battle_main.o(.text.AllAtActionConfirmed);
         src/battle_main.o(.text.UpdateBattlerPartyOrdersOnSwitch);
         src/battle_main.o(.text.SwapTurnOrder);
