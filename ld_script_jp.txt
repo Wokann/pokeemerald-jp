@@ -6696,7 +6696,10 @@ SECTIONS {
 		asm/librfu_stwi.o(.text);
 		asm/librfu_intr.o(.text);
 		asm/librfu_rfu.o(.text);
-		asm/librfu.o(.text);
+		src/librfu.o(.text.sub_082952F4);
+		src/librfu.o(.text.sub_082953A8);
+		src/librfu.o(.text.sub_0829541C);
+		src/librfu.o(.text.sub_08295510);
 		src/libisagbprn_a.o(.text);
 		src/libisagbprn_putc.o(.text);
 		src/libisagbprn_b.o(.text);
