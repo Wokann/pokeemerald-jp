@@ -3961,7 +3961,7 @@ SECTIONS {
         asm/battle_main_introprinttr.o(.text);
         src/battle_main.o(.text.BattleIntroPrintWildMonAttacked);
         src/battle_main.o(.text.BattleIntroPrintOpponentSendsOut);
-        asm/battle_main_introopp2.o(.text);
+        src/battle_main.o(.text.BattleIntroOpponent2SendsOutMonAnimation);
         asm/battle_main_introopp1.o(.text);
         asm/battle_main_introrecord.o(.text);
         src/battle_main.o(.text.BattleIntroSkipRecordMonsToDex);
@@ -6558,11 +6558,11 @@ SECTIONS {
         src/match_call.o(.text.PopulateMatchCallStringVar);
         src/match_call.o(.text.PopulateTrainerName);
         src/match_call.o(.text.PopulateMapName);
-        src/match_call.o(.text.GetLandEncounterSlot);
-        src/match_call.o(.text.GetWaterEncounterSlot);
-        src/match_call.o(.text.PopulateSpeciesFromTrainerLocation);
-        asm/match_call_party.o(.text);
-        src/match_call.o(.text.PopulateBattleFrontierFacilityName);
+		src/match_call.o(.text.GetLandEncounterSlot);
+		src/match_call.o(.text.GetWaterEncounterSlot);
+		src/match_call.o(.text.PopulateSpeciesFromTrainerLocation);
+		src/match_call.o(.text.PopulateSpeciesFromTrainerParty);
+		src/match_call.o(.text.PopulateBattleFrontierFacilityName);
         src/match_call.o(.text.PopulateBattleFrontierStreak);
         src/match_call.o(.text.GetNumOwnedBadges);
         src/match_call.o(.text.ShouldTrainerRequestBattle);

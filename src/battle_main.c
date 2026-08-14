@@ -83,7 +83,6 @@ extern void BattleIntroPrepareBackgroundSlide(void); // JP asm 0x0803A878 (US: s
 extern void BattleIntroDrawTrainersOrMonsSprites(void); // JP asm 0x0803A8C8 (US: same name)
 extern void BattleIntroDrawPartySummaryScreens(void); // JP asm 0x0803ABC4 (US: same name)
 extern void BattleIntroOpponent1SendsOutMonAnimation(void); // JP asm 0x0803AEA0 (US: same name)
-extern void BattleIntroOpponent2SendsOutMonAnimation(void); // JP asm 0x0803AE20 (register-sensitive, kept in asm)
 extern void BattleIntroRecordMonsToDex(void); // JP asm 0x0803AF58 (register-sensitive, kept in asm)
 extern void BattleIntroPlayer1SendsOutMonAnimation(void); // JP asm 0x0803B10C (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
@@ -2827,4 +2826,76 @@ static void BattleMainCB1(void)
 
     for (gActiveBattler = 0; gActiveBattler < gBattlersCount; gActiveBattler++)
         gBattlerControllerFuncs[gActiveBattler]();
+}
+
+// JP byte-exact: JP checks both recorded flags before choosing the
+// opponent-right position and only supports B_POSITION_OPPONENT_RIGHT
+// (2) / B_POSITION_PLAYER_RIGHT (3), unlike US pokeemerald.
+__attribute__((naked)) void BattleIntroOpponent2SendsOutMonAnimation(void)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "push {r4, r5, lr}\n\t"
+        "ldr r0, _0803AE8C\n\t"
+        "ldr r1, [r0]\n\t"
+        "movs r0, #0x80\n\t"
+        "lsls r0, r0, #0x11\n\t"
+        "ands r0, r1\n\t"
+        "cmp r0, #0\n\t"
+        "beq _0803AE40\n\t"
+        "movs r0, #0x80\n\t"
+        "lsls r0, r0, #0x12\n\t"
+        "ands r0, r1\n\t"
+        "cmp r0, #0\n\t"
+        "beq _0803AE40\n\t"
+        "movs r5, #2\n\t"
+        "cmp r1, #0\n\t"
+        "bge _0803AE42\n\t"
+        "_0803AE40:\n\t"
+        "movs r5, #3\n\t"
+        "_0803AE42:\n\t"
+        "ldr r1, _0803AE90\n\t"
+        "movs r0, #0\n\t"
+        "strb r0, [r1]\n\t"
+        "ldr r0, _0803AE94\n\t"
+        "ldrb r0, [r0]\n\t"
+        "cmp r0, #0\n\t"
+        "beq _0803AE7E\n\t"
+        "adds r4, r1, #0\n\t"
+        "_0803AE52:\n\t"
+        "ldrb r0, [r4]\n\t"
+        "bl GetBattlerPosition\n\t"
+        "lsls r0, r0, #0x18\n\t"
+        "lsrs r0, r0, #0x18\n\t"
+        "cmp r0, r5\n\t"
+        "bne _0803AE6C\n\t"
+        "movs r0, #0\n\t"
+        "bl BtlController_EmitIntroTrainerBallThrow\n\t"
+        "ldrb r0, [r4]\n\t"
+        "bl MarkBattlerForControllerExec\n\t"
+        "_0803AE6C:\n\t"
+        "ldrb r0, [r4]\n\t"
+        "adds r0, #1\n\t"
+        "strb r0, [r4]\n\t"
+        "ldr r1, _0803AE94\n\t"
+        "lsls r0, r0, #0x18\n\t"
+        "lsrs r0, r0, #0x18\n\t"
+        "ldrb r1, [r1]\n\t"
+        "cmp r0, r1\n\t"
+        "blo _0803AE52\n\t"
+        "_0803AE7E:\n\t"
+        "ldr r1, _0803AE98\n\t"
+        "ldr r0, _0803AE9C\n\t"
+        "str r0, [r1]\n\t"
+        "pop {r4, r5}\n\t"
+        "pop {r0}\n\t"
+        "bx r0\n\t"
+        ".align 2, 0\n\t"
+        "_0803AE8C: .4byte 0x02022C90\n\t"
+        "_0803AE90: .4byte 0x02023D08\n\t"
+        "_0803AE94: .4byte 0x02023D10\n\t"
+        "_0803AE98: .4byte 0x03005A64\n\t"
+        "_0803AE9C: .4byte 0x0803AF59\n\t"
+        ".syntax divided\n\t"
+    );
 }
