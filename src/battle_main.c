@@ -76,7 +76,6 @@ extern const struct MonCoords gCastformFrontSpriteCoords[];
 extern const s8 sCenterToCornerVecXs[];
 extern u32 sFlickerArray[];
 extern u8 sUnusedBattlersArray[];
-extern void BattleIntroPrepareBackgroundSlide(void); // JP asm 0x0803A878 (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 extern void HandleTurnActionSelectionState(void); // JP asm 0x0803BAE0 (US: same name)
 void TurnValuesCleanUp(bool8 var0);
@@ -104,6 +103,7 @@ void BattleTurnPassed(void);
 u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer);
 void SetAllPlayersBerryData(void);
 extern void CB2_PreInitMultiBattle(void);
+void BattleIntroPrepareBackgroundSlide(void);
 void BattleStartClearSetData(void);
 u8 IsRunningFromBattleImpossible(void);
 void TryEvolvePokemon(void);
@@ -9539,6 +9539,46 @@ __attribute__((naked)) void sub_0803EEE4(void)
         "	.align 2, 0\n\t"
         "_0803EF04: .4byte 0x02024140\n\t"
         "_0803EF08: .4byte 0x02023D27\n\t"
+        ".syntax divided\n\t"
+    );
+}
+
+
+__attribute__((naked)) void BattleIntroPrepareBackgroundSlide(void)
+{
+    __asm__(".syntax unified\n\t"
+        "	push {r4, r5, lr}\n\t"
+        "	ldr r0, _0803A8B0\n\t"
+        "	ldr r5, [r0]\n\t"
+        "	cmp r5, #0\n\t"
+        "	bne _0803A8A8\n\t"
+        "	movs r0, #0\n\t"
+        "	bl GetBattlerAtPosition\n\t"
+        "	ldr r4, _0803A8B4\n\t"
+        "	strb r0, [r4]\n\t"
+        "	ldr r0, _0803A8B8\n\t"
+        "	ldrb r1, [r0]\n\t"
+        "	movs r0, #0\n\t"
+        "	bl BtlController_EmitIntroSlide\n\t"
+        "	ldrb r0, [r4]\n\t"
+        "	bl MarkBattlerForControllerExec\n\t"
+        "	ldr r1, _0803A8BC\n\t"
+        "	ldr r0, _0803A8C0\n\t"
+        "	str r0, [r1]\n\t"
+        "	ldr r0, _0803A8C4\n\t"
+        "	strb r5, [r0]\n\t"
+        "	strb r5, [r0, #1]\n\t"
+        "_0803A8A8:\n\t"
+        "	pop {r4, r5}\n\t"
+        "	pop {r0}\n\t"
+        "	bx r0\n\t"
+        "	.align 2, 0\n\t"
+        "_0803A8B0: .4byte 0x02023D0C\n\t"
+        "_0803A8B4: .4byte 0x02023D08\n\t"
+        "_0803A8B8: .4byte 0x02022C94\n\t"
+        "_0803A8BC: .4byte 0x03005A64\n\t"
+        "_0803A8C0: .4byte 0x0803A8C9\n\t"
+        "_0803A8C4: .4byte 0x02023FD6\n\t"
         ".syntax divided\n\t"
     );
 }

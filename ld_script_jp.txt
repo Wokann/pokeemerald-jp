@@ -3955,7 +3955,7 @@ SECTIONS {
         src/battle_main.o(.text.SwitchInClearSetData);
         src/battle_main.o(.text.FaintClearSetData);
         src/battle_main.o(.text.BattleIntroGetMonsData);
-        asm/battle_main_introprep.o(.text);
+        src/battle_main.o(.text.BattleIntroPrepareBackgroundSlide);
         src/battle_main.o(.text.BattleIntroDrawTrainersOrMonsSprites);
         src/battle_main.o(.text.BattleIntroDrawPartySummaryScreens);
         src/battle_main.o(.text.BattleIntroPrintTrainerWantsToBattle);
