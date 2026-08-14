@@ -81,7 +81,7 @@ u16 ArcTan2Neg(s16 x, s16 y);
 void SetGreyscaleOrOriginalPalette(u16 paletteNum, bool8 restoreOriginalColor);
 u32 GetBattlePalettesMask(bool8 battleBackground, bool8 attacker, bool8 target, bool8 attackerPartner, bool8 targetPartner, bool8 anim1, bool8 anim2);
 u32 GetBattleMonSpritePalettesMask(u8 playerLeft, u8 playerRight, u8 opponentLeft, u8 opponentRight);
-static void AnimTranslateLinear_WithFollowup(struct Sprite *sprite);
+void AnimTranslateLinear_WithFollowup(struct Sprite *sprite);
 static void AnimTranslateLinear_WithFollowup_SetCornerVecX(struct Sprite *sprite);
 static void InitAnimFastLinearTranslation(struct Sprite *sprite);
 static void AnimFastTranslateLinearWaitEnd(struct Sprite *sprite);
