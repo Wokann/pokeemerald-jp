@@ -6451,6 +6451,9 @@ SECTIONS {
         asm/bard_music.o(.text);
         src/fldeff_teleport.o(.text);
         asm/battle_tv.o(.text);
+        src/battle_tv.o(.text.BattleTv_ClearExplosionFaintCause);
+        src/battle_tv.o(.text.GetBattlerMoveSlotId);
+        src/battle_tv.o(.text.AddPointsBasedOnWeather);
         asm/pokemon_animation.o(.text);
         asm/recorded_battle.o(.text);
         asm/battle_controller_recorded_opponent.o(.text);
