@@ -3956,7 +3956,7 @@ SECTIONS {
         asm/battle_main_faint.o(.text);
         src/battle_main.o(.text.BattleIntroGetMonsData);
         asm/battle_main_introprep.o(.text);
-        asm/battle_main_introsprites.o(.text);
+        src/battle_main.o(.text.BattleIntroDrawTrainersOrMonsSprites);
         src/battle_main.o(.text.BattleIntroDrawPartySummaryScreens);
         asm/battle_main_introprinttr.o(.text);
         src/battle_main.o(.text.BattleIntroPrintWildMonAttacked);
@@ -3969,7 +3969,7 @@ SECTIONS {
         src/battle_main.o(.text.BattleIntroPlayer2SendsOutMonAnimation);
         src/battle_main.o(.text.BattleIntroPlayer1SendsOutMonAnimation);
         src/battle_main.o(.text.BattleIntroSwitchInPlayerMons);
-        asm/battle_main_trydo.o(.text);
+        src/battle_main.o(.text.TryDoEventsBeforeFirstTurn);
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
         src/battle_main.o(.text.BattleTurnPassed);
         asm/battle_main_isrunning.o(.text);
