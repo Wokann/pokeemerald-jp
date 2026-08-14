@@ -18,6 +18,7 @@
 #include "constants/songs.h"
 
 extern const struct SpriteTemplate gSolarBeamSmallOrbSpriteTemplate;
+extern const s8 gTrickBagCoordinates[][3];
 struct {
     s16 startX;
     s16 startY;
@@ -63,6 +64,21 @@ static void AnimMimicOrb(struct Sprite *sprite);
 static void AnimIngrainRoot(struct Sprite *sprite);
 static void AnimFrenzyPlantRoot(struct Sprite *sprite);
 static void AnimRootFlickerOut(struct Sprite *sprite);
+static void AnimIngrainOrb(struct Sprite *sprite);
+static void InitItemBagData(struct Sprite *sprite, s16 c);
+bool8 moveAlongLinearPath(struct Sprite *sprite);
+static void AnimItemSteal_Step2(struct Sprite *sprite);
+static void AnimItemSteal_Step1(struct Sprite *sprite);
+static void AnimPresent(struct Sprite *sprite);
+static void AnimKnockOffOpponentsItem(struct Sprite *sprite);
+static void AnimKnockOffItem(struct Sprite *sprite);
+static void AnimPresentHealParticle(struct Sprite *sprite);
+static void AnimItemSteal(struct Sprite *sprite);
+static void AnimItemSteal_Step3(struct Sprite *sprite);
+static void AnimTrickBag(struct Sprite *sprite);
+static void AnimTrickBag_Step1(struct Sprite *sprite);
+static void AnimTrickBag_Step2(struct Sprite *sprite);
+static void AnimTrickBag_Step3(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -793,4 +809,333 @@ static void AnimRootFlickerOut(struct Sprite *sprite)
     // JP destroys the sprite when data[0] exceeds data[2] (US uses ==).
     if (sprite->data[0] > sprite->data[2])
         DestroyAnimSprite(sprite);
+}
+
+// Moves an orb in a fast wavy path.
+static void AnimIngrainOrb(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, velocityX, waveAmplitude, duration);
+
+    if (!sprite->data[0])
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2) + cmd->initialX;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y) + cmd->initialY;
+        sprite->data[1] = cmd->velocityX;
+        sprite->data[2] = cmd->waveAmplitude;
+        sprite->data[3] = cmd->duration;
+    }
+
+    sprite->data[0]++;
+    sprite->x2 = sprite->data[1] * sprite->data[0];
+    sprite->y2 = Sin((sprite->data[0] * 20) & 0xFF, sprite->data[2]);
+    if (sprite->data[0] > sprite->data[3])
+        DestroyAnimSprite(sprite);
+}
+
+static void InitItemBagData(struct Sprite *sprite, s16 c)
+{
+    int a = (sprite->x << 8) | sprite->y;
+    int b = (sprite->data[6] << 8) | sprite->data[7];
+    c <<= 8;
+    sprite->data[5] = a;
+    sprite->data[6] = b;
+    sprite->data[7] = c;
+}
+
+bool8 moveAlongLinearPath(struct Sprite *sprite)
+{
+    u16 xStartPos = (u8)(sprite->data[5] >> 8);
+    u16 yStartPos = (u8)sprite->data[5];
+    s32 xEndPos = (u8)(sprite->data[6] >> 8);
+    s32 yEndPos = (u8)sprite->data[6];
+    s16 totalTime = sprite->data[7] >> 8;
+    s16 currentTime = sprite->data[7] & 0xFF;
+    s16 yEndPos_2;
+    s16 r0;
+    s32 var1;
+    s32 vaxEndPos;
+
+    if (xEndPos == 0)
+        xEndPos = -32;
+    else if (xEndPos == 255)
+        xEndPos = DISPLAY_WIDTH + 32;
+
+    yEndPos_2 = yEndPos - yStartPos;
+    r0 = xEndPos - xStartPos;
+    var1 = r0 * currentTime / totalTime;
+    vaxEndPos = yEndPos_2 * currentTime / totalTime;
+    sprite->x = var1 + xStartPos;
+    sprite->y = vaxEndPos + yStartPos;
+    if (++currentTime == totalTime)
+        return TRUE;
+
+    sprite->data[7] = (totalTime << 8) | currentTime;
+    return FALSE;
+}
+
+static void AnimItemSteal_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[0] == 10)
+        StartSpriteAffineAnim(sprite, 1);
+
+    sprite->data[0]++;
+    if (sprite->data[0] > 50)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimItemSteal_Step1(struct Sprite *sprite)
+{
+    sprite->data[0] += sprite->data[3] * 128 / sprite->data[4];
+    if (sprite->data[0] >= 128)
+    {
+        sprite->data[1]++;
+        sprite->data[0] = 0;
+    }
+
+    sprite->y2 = Sin(sprite->data[0] + 128, 30 - sprite->data[1] * 8);
+    if (moveAlongLinearPath(sprite))
+    {
+        sprite->y2 = 0;
+        sprite->data[0] = 0;
+        sprite->callback = AnimItemSteal_Step2;
+    }
+}
+
+static void AnimPresent(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, unk2, unk3, unk4);
+
+    s16 targetX;
+    s16 targetY;
+    InitSpritePosToAnimAttacker(sprite, FALSE);
+    targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X);
+    targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (BATTLE_PARTNER(gBattleAnimAttacker) == gBattleAnimTarget)
+    {
+        sprite->data[6] = targetX;
+        sprite->data[7] = targetY + 10;
+        InitItemBagData(sprite, 60);
+        sprite->data[3] = 1;
+    }
+    else
+    {
+        sprite->data[6] = targetX;
+        sprite->data[7] = targetY + 10;
+        InitItemBagData(sprite, 60);
+        sprite->data[3] = 3;
+    }
+
+    sprite->data[4] = 60;
+    sprite->callback = AnimItemSteal_Step1;
+}
+
+static void AnimKnockOffOpponentsItem(struct Sprite *sprite)
+{
+    sprite->data[0] += ((sprite->data[3] * 128) / sprite->data[4]);
+    if (sprite->data[0] > 0x7F)
+    {
+        sprite->data[1]++;
+        sprite->data[0] = 0;
+    }
+
+    sprite->y2 = Sin(sprite->data[0] + 0x80, 30 - sprite->data[1] * 8);
+    if (moveAlongLinearPath(sprite))
+    {
+        sprite->y2 = 0;
+        sprite->data[0] = 0;
+        DestroyAnimSprite(sprite);
+    }
+}
+
+static void AnimKnockOffItem(struct Sprite *sprite)
+{
+    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y);
+    if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+    {
+        sprite->data[6] = 0;
+        sprite->data[7] = targetY + 10;
+        InitItemBagData(sprite, 40);
+        sprite->data[3] = 3;
+        sprite->data[4] = 60;
+        sprite->callback = AnimItemSteal_Step1;
+    }
+    else
+    {
+        sprite->data[6] = 255;
+        sprite->data[7] = targetY + 10;
+        if (IsContest())
+            sprite->data[6] = 0;
+
+        InitItemBagData(sprite, 40);
+        sprite->data[3] = 3;
+        sprite->data[4] = 60;
+        sprite->callback = AnimKnockOffOpponentsItem;
+    }
+}
+
+// Animates a heal particle upward.
+static void AnimPresentHealParticle(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, velocityY, unused3);
+
+    if (!sprite->data[0])
+    {
+        InitSpritePosToAnimTarget(sprite, FALSE);
+        sprite->data[1] = cmd->velocityY;
+    }
+
+    sprite->data[0]++;
+    sprite->y2 = sprite->data[1] * sprite->data[0];
+    if (sprite->animEnded)
+        DestroyAnimSprite(sprite);
+}
+
+static void AnimItemSteal(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY);
+
+    s16 attackerX;
+    s16 attackerY;
+    InitSpritePosToAnimTarget(sprite, FALSE);
+    attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X);
+    attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+    if (BATTLE_PARTNER(gBattleAnimTarget) == gBattleAnimAttacker)
+    {
+        sprite->data[6] = attackerX;
+        sprite->data[7] = attackerY + 10;
+        InitItemBagData(sprite, 60);
+        sprite->data[3] = 1;
+    }
+    else
+    {
+        sprite->data[6] = attackerX;
+        sprite->data[7] = attackerY + 10;
+        InitItemBagData(sprite, 60);
+        sprite->data[3] = 3;
+    }
+
+    sprite->data[4] = 60;
+    sprite->callback = AnimItemSteal_Step3;
+}
+
+static void AnimItemSteal_Step3(struct Sprite *sprite)
+{
+    sprite->data[0] += ((sprite->data[3] * 128) / sprite->data[4]);
+    if (sprite->data[0] > 127)
+    {
+        sprite->data[1]++;
+        sprite->data[0] = 0;
+    }
+
+    sprite->y2 = Sin(sprite->data[0] + 0x80, 30 - sprite->data[1] * 8);
+    if (sprite->y2 == 0)
+        PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_TARGET));
+
+    if (moveAlongLinearPath(sprite))
+    {
+        sprite->y2 = 0;
+        sprite->data[0] = 0;
+        sprite->callback = AnimItemSteal_Step2;
+        PlaySE12WithPanning(SE_M_BUBBLE2, BattleAnimAdjustPanning(SOUND_PAN_ATTACKER));
+    }
+}
+
+// Moves a bag in a circular motion.
+static void AnimTrickBag(struct Sprite *sprite)
+{
+    CMD_ARGS(initialY, waveOffset);
+
+    if (!sprite->data[0])
+    {
+        if (!IsContest())
+        {
+            sprite->data[1] = cmd->waveOffset;
+            sprite->x = 120;
+        }
+        else
+        {
+            sprite->data[1] = (cmd->waveOffset - 32) % 256;
+            sprite->x = 70;
+        }
+
+        sprite->y = cmd->initialY;
+        sprite->data[2] = cmd->initialY;
+        sprite->data[4] = 20;
+        sprite->x2 = Cos(sprite->data[1], 60);
+        sprite->y2 = Sin(sprite->data[1], 20);
+        sprite->callback = AnimTrickBag_Step1;
+        if (sprite->data[1] > 0 && sprite->data[1] < 192)
+            sprite->subpriority = 31;
+        else
+            sprite->subpriority = 29;
+    }
+}
+
+static void AnimTrickBag_Step1(struct Sprite *sprite)
+{
+    switch (sprite->data[3])
+    {
+    case 0:
+        if (sprite->data[2] > 78)
+        {
+            sprite->data[3] = 1;
+            StartSpriteAffineAnim(sprite, 1);
+            break;
+        }
+        else
+        {
+            sprite->data[2] += sprite->data[4] / 10;
+            sprite->data[4] += 3;
+            sprite->y = sprite->data[2];
+            break;
+        }
+        break;
+    case 1:
+        if (sprite->data[3] && sprite->affineAnimEnded)
+        {
+            sprite->data[0] = 0;
+            sprite->data[2] = 0;
+            sprite->callback = AnimTrickBag_Step2;
+        }
+        break;
+    }
+}
+
+static void AnimTrickBag_Step2(struct Sprite *sprite)
+{
+    if (sprite->data[2] == gTrickBagCoordinates[sprite->data[0]][1])
+    {
+        if (gTrickBagCoordinates[sprite->data[0]][2] == 127)
+        {
+            sprite->data[0] = 0;
+            sprite->callback = AnimTrickBag_Step3;
+        }
+
+        sprite->data[2] = 0;
+        sprite->data[0]++;
+    }
+    else
+    {
+        sprite->data[2]++;
+        sprite->data[1] = (gTrickBagCoordinates[sprite->data[0]][0] * gTrickBagCoordinates[sprite->data[0]][2] + sprite->data[1]) & 0xFF;
+        if (!IsContest())
+        {
+            if ((u16)(sprite->data[1] - 1) < 191)
+                sprite->subpriority = 31;
+            else
+                sprite->subpriority = 29;
+        }
+
+        sprite->x2 = Cos(sprite->data[1], 60);
+        sprite->y2 = Sin(sprite->data[1], 20);
+    }
+}
+
+static void AnimTrickBag_Step3(struct Sprite *sprite)
+{
+    if (sprite->data[0] > 20)
+        DestroyAnimSprite(sprite);
+
+    sprite->invisible = sprite->data[0] % 2;
+    sprite->data[0]++;
 }

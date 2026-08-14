@@ -1,4 +1,5 @@
 gMonFrontPicTable = ABSOLUTE(0x082DDA1C);
+gTrickBagCoordinates = ABSOLUTE(0x0856E2E4);
 gAirWaveProjectileSpriteTemplate = ABSOLUTE(0x0856EF94);
 sVoidLinesSpriteTemplate = ABSOLUTE(0x0856F084);
 InitAnimLinearTranslationWithSpeedAndPos = ABSOLUTE(0x080A68C9);
@@ -4746,6 +4747,21 @@ SECTIONS {
         src/battle_anim_effects_1.o(.text.AnimIngrainRoot);
         src/battle_anim_effects_1.o(.text.AnimFrenzyPlantRoot);
         src/battle_anim_effects_1.o(.text.AnimRootFlickerOut);
+        src/battle_anim_effects_1.o(.text.AnimIngrainOrb);
+        src/battle_anim_effects_1.o(.text.InitItemBagData);
+        src/battle_anim_effects_1.o(.text.moveAlongLinearPath);
+        src/battle_anim_effects_1.o(.text.AnimItemSteal_Step2);
+        src/battle_anim_effects_1.o(.text.AnimItemSteal_Step1);
+        src/battle_anim_effects_1.o(.text.AnimPresent);
+        src/battle_anim_effects_1.o(.text.AnimKnockOffOpponentsItem);
+        src/battle_anim_effects_1.o(.text.AnimKnockOffItem);
+        src/battle_anim_effects_1.o(.text.AnimPresentHealParticle);
+        src/battle_anim_effects_1.o(.text.AnimItemSteal);
+        src/battle_anim_effects_1.o(.text.AnimItemSteal_Step3);
+        src/battle_anim_effects_1.o(.text.AnimTrickBag);
+        src/battle_anim_effects_1.o(.text.AnimTrickBag_Step1);
+        src/battle_anim_effects_1.o(.text.AnimTrickBag_Step2);
+        src/battle_anim_effects_1.o(.text.AnimTrickBag_Step3);
         asm/battle_anim_effects_1.o(.text.battle_anim_effects_1_rest);
         src/battle_anim_effects_2.o(.text.AnimCirclingFinger);
         src/battle_anim_effects_2.o(.text.AnimBouncingMusicNote);
