@@ -284,6 +284,7 @@ sSpritePalette_PressStart = ABSOLUTE(0x0851AD9C);
 CB2_InitBerryFixProgram = ABSOLUTE(0x081BF021);
 TryPutBattleSeminarOnAir = sub_080EEE7C;
 GetOpposingLinkMultiBattlerId = sub_0806EA10;
+RunTurnActionsFunctions = RunBattleScriptCommands + 0x2C;
 sRotatingTilePuzzle = ABSOLUTE(0x0203CB1C);
 sSpecialBattleStrings = ABSOLUTE(0x085D3304);
 sVariableDmgMoves = ABSOLUTE(0x085D2F0C);
@@ -3982,7 +3983,7 @@ SECTIONS {
         src/battle_main.o(.text.TurnValuesCleanUp);
         src/battle_main.o(.text.SpecialStatusesClear);
         src/battle_main.o(.text.CheckFocusPunch_ClearVarsBeforeTurnStarts);
-        asm/battle_main_turnfuncs.o(.text);
+        src/battle_main_turnfuncs.o(.text.RunBattleScriptCommands);
         asm/battle_main_battlewon.o(.text);
         asm/battle_main_battlelost.o(.text);
         src/battle_main.o(.text.HandleEndTurn_RanFromBattle);
