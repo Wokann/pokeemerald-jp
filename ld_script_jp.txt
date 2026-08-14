@@ -3962,12 +3962,12 @@ SECTIONS {
         src/battle_main.o(.text.BattleIntroPrintWildMonAttacked);
         src/battle_main.o(.text.BattleIntroPrintOpponentSendsOut);
         src/battle_main.o(.text.BattleIntroOpponent2SendsOutMonAnimation);
-        asm/battle_main_introopp1.o(.text);
-        asm/battle_main_introrecord.o(.text);
+        src/battle_main.o(.text.BattleIntroOpponent1SendsOutMonAnimation);
+        src/battle_main.o(.text.BattleIntroRecordMonsToDex);
         src/battle_main.o(.text.BattleIntroSkipRecordMonsToDex);
         src/battle_main.o(.text.BattleIntroPrintPlayerSendsOut);
-        asm/battle_main_introplayer2.o(.text);
-        asm/battle_main_introplayer1.o(.text);
+        src/battle_main.o(.text.BattleIntroPlayer2SendsOutMonAnimation);
+        src/battle_main.o(.text.BattleIntroPlayer1SendsOutMonAnimation);
         asm/battle_main_introswitchin.o(.text);
         asm/battle_main_trydo.o(.text);
         src/battle_main.o(.text.HandleEndTurn_ContinueBattle);
