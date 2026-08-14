@@ -18,6 +18,12 @@
 #include "constants/songs.h"
 
 extern const struct SpriteTemplate gSolarBeamSmallOrbSpriteTemplate;
+struct {
+    s16 startX;
+    s16 startY;
+    s16 targetX;
+    s16 targetY;
+} extern sFrenzyPlantRootData;
 
 static void AnimMovePowderParticle(struct Sprite *sprite);
 static void AnimMovePowderParticle_Step(struct Sprite *sprite);
@@ -43,6 +49,20 @@ static void AnimPetalDanceSmallFlower_Step(struct Sprite *sprite);
 static void AnimRazorLeafParticle(struct Sprite *sprite);
 static void AnimRazorLeafParticle_Step1(struct Sprite *sprite);
 static void AnimRazorLeafParticle_Step2(struct Sprite *sprite);
+static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite);
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite *sprite);
+void AnimMoveTwisterParticle(struct Sprite *sprite);
+static void AnimMoveTwisterParticle_Step(struct Sprite *sprite);
+static void AnimConstrictBinding(struct Sprite *sprite);
+static void AnimConstrictBinding_Step1(struct Sprite *sprite);
+static void AnimConstrictBinding_Step2(struct Sprite *sprite);
+void AnimTask_ShrinkTargetCopy(u8 taskId);
+static void AnimTask_DuplicateAndShrinkToPos_Step1(u8 taskId);
+static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId);
+static void AnimMimicOrb(struct Sprite *sprite);
+static void AnimIngrainRoot(struct Sprite *sprite);
+static void AnimFrenzyPlantRoot(struct Sprite *sprite);
+static void AnimRootFlickerOut(struct Sprite *sprite);
 
 // Sprinkles powder over the target mon.
 // arg 0: x pixel offset
@@ -453,5 +473,324 @@ static void AnimRazorLeafParticle_Step2(struct Sprite *sprite)
 
     // JP destroys the sprite at y > 80 (US uses 64).
     if (sprite->data[1] > 80)
+        DestroyAnimSprite(sprite);
+}
+
+// Animates a sprite that moves linearly from one location to another, with a
+// single-cycle sine wave added to the y position along the way.
+static void AnimTranslateLinearSingleSineWave(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, targetX, targetY, duration, waveAmplitude, targetBoth);
+
+    InitSpritePosToAnimAttacker(sprite, TRUE);
+    if (GetBattlerSide(gBattleAnimAttacker) != B_SIDE_PLAYER)
+        cmd->targetX = -cmd->targetX;
+
+    sprite->data[0] = cmd->duration;
+    if (!cmd->targetBoth)
+    {
+        sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + cmd->targetX;
+        sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET) + cmd->targetY;
+    }
+    else
+    {
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->data[2], &sprite->data[4]);
+        sprite->data[2] += cmd->targetX;
+        sprite->data[4] += cmd->targetY;
+    }
+
+    sprite->data[5] = cmd->waveAmplitude;
+    InitAnimArcTranslation(sprite);
+    if (GetBattlerSide(gBattleAnimAttacker) == GetBattlerSide(gBattleAnimTarget))
+        sprite->data[0] = 1;
+    else
+        sprite->data[0] = 0;
+
+    sprite->callback = AnimTranslateLinearSingleSineWave_Step;
+}
+
+static void AnimTranslateLinearSingleSineWave_Step(struct Sprite *sprite)
+{
+    bool8 destroy = FALSE;
+    s16 a = sprite->data[0];
+    s16 b = sprite->data[7];
+    s16 r0;
+
+    sprite->data[0] = 1;
+    TranslateAnimHorizontalArc(sprite);
+    r0 = sprite->data[7];
+    sprite->data[0] = a;
+    if (b > 200 && r0 < 56 && sprite->oam.affineParam == 0)
+        sprite->oam.affineParam++;
+
+    if (sprite->oam.affineParam && sprite->data[0])
+    {
+        sprite->invisible ^= 1;
+        sprite->oam.affineParam++;
+        if (sprite->oam.affineParam == 30)
+            destroy = TRUE;
+    }
+
+    if (sprite->x + sprite->x2 > DISPLAY_WIDTH + 16
+     || sprite->x + sprite->x2 < -16
+     || sprite->y + sprite->y2 > DISPLAY_HEIGHT
+     || sprite->y + sprite->y2 < -16)
+        destroy = TRUE;
+
+    if (destroy)
+        DestroyAnimSprite(sprite);
+}
+
+// Animates particles in the Twister move animation.
+void AnimMoveTwisterParticle(struct Sprite *sprite)
+{
+    CMD_ARGS(duration, distanceY, wavePeriod, waveAmplitude, speedUpOnFrame);
+
+    if (IsDoubleBattle() == TRUE)
+        SetAverageBattlerPositions(gBattleAnimTarget, TRUE, &sprite->x, &sprite->y);
+
+    sprite->y += 32;
+    sprite->data[0] = cmd->duration;
+    sprite->data[1] = cmd->distanceY;
+    sprite->data[2] = cmd->wavePeriod;
+    sprite->data[3] = cmd->waveAmplitude;
+    sprite->data[4] = cmd->speedUpOnFrame;
+    sprite->callback = AnimMoveTwisterParticle_Step;
+}
+
+static void AnimMoveTwisterParticle_Step(struct Sprite *sprite)
+{
+    if (sprite->data[1] == 0xFF)
+    {
+        sprite->y -= 2;
+    }
+    else if (sprite->data[1] > 0)
+    {
+        sprite->y -= 2;
+        sprite->data[1] -= 2;
+    }
+
+    sprite->data[5] += sprite->data[2];
+    if (sprite->data[0] < sprite->data[4])
+        sprite->data[5] += sprite->data[2];
+
+    sprite->data[5] &= 0xFF;
+    sprite->x2 = Cos(sprite->data[5], sprite->data[3]);
+    sprite->y2 = Sin(sprite->data[5], 5);
+    if (sprite->data[5] < 0x80)
+        sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget) - 1;
+    else
+        sprite->oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget) + 1;
+
+    if (--sprite->data[0] == 0)
+        DestroyAnimSprite(sprite);
+}
+
+// Squeezes a constricting "rope" several times via affine animations.
+static void AnimConstrictBinding(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY, affineAnimation, squeezes);
+
+    InitSpritePosToAnimTarget(sprite, FALSE);
+    sprite->affineAnimPaused = 1;
+    StartSpriteAffineAnim(sprite, cmd->affineAnimation);
+    sprite->data[6] = cmd->affineAnimation;
+    sprite->data[7] = cmd->squeezes;
+    sprite->callback = AnimConstrictBinding_Step1;
+}
+
+static void AnimConstrictBinding_Step1(struct Sprite *sprite)
+{
+    u8 UNUSED spriteId;
+
+    if ((u16)gBattleAnimArgs[7] == 0xFFFF)
+    {
+        sprite->affineAnimPaused = 0;
+        spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+        sprite->data[0] = 0x100;
+        sprite->callback = AnimConstrictBinding_Step2;
+    }
+}
+
+static void AnimConstrictBinding_Step2(struct Sprite *sprite)
+{
+    u8 UNUSED spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+    if (!sprite->data[2])
+        sprite->data[0] += 11;
+    else
+        sprite->data[0] -= 11;
+
+    if (++sprite->data[1] == 6)
+    {
+        sprite->data[1] = 0;
+        sprite->data[2] ^= 1;
+    }
+
+    if (sprite->affineAnimEnded)
+    {
+        if (--sprite->data[7] > 0)
+            StartSpriteAffineAnim(sprite, sprite->data[6]);
+        else
+            DestroyAnimSprite(sprite);
+    }
+}
+
+// unk1 may be some sort of duration?
+void AnimTask_ShrinkTargetCopy(u8 taskId)
+{
+    CMD_ARGS(unk0, unk1);
+
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+    if (gSprites[spriteId].invisible)
+    {
+        DestroyAnimVisualTask(taskId);
+    }
+    else
+    {
+        PrepareBattlerSpriteForRotScale(spriteId, ST_OAM_OBJ_BLEND);
+        gTasks[taskId].data[14] = gSprites[spriteId].oam.priority;
+        gSprites[spriteId].oam.priority = GetBattlerSpriteBGPriority(gBattleAnimTarget);
+        spriteId = GetAnimBattlerSpriteId(ANIM_DEF_PARTNER);
+        gTasks[taskId].data[15] = gSprites[spriteId].oam.priority;
+        gSprites[spriteId].oam.priority = GetBattlerSpriteBGPriority(BATTLE_PARTNER(gBattleAnimTarget));
+        gTasks[taskId].data[0] = cmd->unk0;
+        gTasks[taskId].data[1] = cmd->unk1;
+        gTasks[taskId].data[11] = 0x100;
+        gTasks[taskId].func = AnimTask_DuplicateAndShrinkToPos_Step1;
+    }
+}
+
+static void AnimTask_DuplicateAndShrinkToPos_Step1(u8 taskId)
+{
+    u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+    gTasks[taskId].data[10] += gTasks[taskId].data[0];
+    gSprites[spriteId].x2 = gTasks[taskId].data[10] >> 8;
+    if (GetBattlerSide(gBattleAnimTarget) != B_SIDE_PLAYER)
+        gSprites[spriteId].x2 = -gSprites[spriteId].x2;
+
+    gTasks[taskId].data[11] += 16;
+    SetSpriteRotScale(spriteId, gTasks[taskId].data[11], gTasks[taskId].data[11], 0);
+    SetBattlerSpriteYOffsetFromYScale(spriteId);
+    if (--gTasks[taskId].data[1] == 0)
+    {
+        gTasks[taskId].data[0] = 0;
+        gTasks[taskId].func = AnimTask_DuplicateAndShrinkToPos_Step2;
+    }
+}
+
+static void AnimTask_DuplicateAndShrinkToPos_Step2(u8 taskId)
+{
+    if ((u16)gBattleAnimArgs[7] == 0xFFFF)
+    {
+        if (gTasks[taskId].data[0] == 0)
+        {
+            u8 spriteId = GetAnimBattlerSpriteId(ANIM_TARGET);
+            ResetSpriteRotScale(spriteId);
+            gSprites[spriteId].x2 = 0;
+            gSprites[spriteId].y2 = 0;
+            gSprites[spriteId].oam.priority = gTasks[taskId].data[14];
+            spriteId = GetAnimBattlerSpriteId(ANIM_DEF_PARTNER);
+            gSprites[spriteId].oam.priority = gTasks[taskId].data[15];
+            gTasks[taskId].data[0]++;
+            return;
+        }
+    }
+    else
+    {
+        if (gTasks[taskId].data[0] == 0)
+            return;
+    }
+
+    gTasks[taskId].data[0]++;
+    if (gTasks[taskId].data[0] == 3)
+        DestroyAnimVisualTask(taskId);
+}
+
+// Moves an orb from the target mon to the attacking mon.
+static void AnimMimicOrb(struct Sprite *sprite)
+{
+    CMD_ARGS(initialX, initialY);
+
+    switch (sprite->data[0])
+    {
+    case 0:
+        if (GetBattlerSide(gBattleAnimTarget) == B_SIDE_PLAYER)
+            cmd->initialX *= -1;
+
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X) + cmd->initialX;
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + cmd->initialY;
+        sprite->invisible = TRUE;
+        sprite->data[0]++;
+        break;
+    case 1:
+        sprite->invisible = FALSE;
+        if (sprite->affineAnimEnded)
+        {
+            ChangeSpriteAffineAnim(sprite, 1);
+            sprite->data[0] = 25;
+            sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+            sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+            // JP calls StartAnimLinearTranslation (0x080A6989) here.
+            sprite->callback = StartAnimLinearTranslation;
+            StoreSpriteCallbackInData6(sprite, DestroyAnimSprite);
+            break;
+        }
+    }
+}
+
+// Animates a root that flickers away after some time.
+static void AnimIngrainRoot(struct Sprite *sprite)
+{
+    CMD_ARGS(offsetX, offsetY, subpriorityM30, animation, duration);
+
+    if (!sprite->data[0])
+    {
+        sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+        sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y);
+        sprite->x2 = cmd->offsetX;
+        sprite->y2 = cmd->offsetY;
+        sprite->subpriority = cmd->subpriorityM30 + 30;
+        StartSpriteAnim(sprite, cmd->animation);
+        sprite->data[2] = cmd->duration;
+        sprite->data[0]++;
+        if (sprite->y + sprite->y2 > 120)
+            sprite->y += sprite->y2 + sprite->y - 120;
+    }
+    sprite->callback = AnimRootFlickerOut;
+}
+
+// Places a root on the path to the target mon that flickers away after some time.
+static void AnimFrenzyPlantRoot(struct Sprite *sprite)
+{
+    CMD_ARGS(interpolatePercent, offsetX, offsetY, subpriorityM30, animation, duration);
+
+    s16 attackerX = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
+    s16 attackerY = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
+    s16 targetX = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2);
+    s16 targetY = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y_PIC_OFFSET);
+
+    targetX -= attackerX;
+    targetY -= attackerY;
+    sprite->x = attackerX + targetX * cmd->interpolatePercent / 100;
+    sprite->y = attackerY + targetY * cmd->interpolatePercent / 100;
+    sprite->x2 = cmd->offsetX;
+    sprite->y2 = cmd->offsetY;
+    sprite->subpriority = cmd->subpriorityM30 + 30;
+    StartSpriteAnim(sprite, cmd->animation);
+    sprite->data[2] = cmd->duration;
+    sprite->callback = AnimRootFlickerOut;
+    sFrenzyPlantRootData.startX = sprite->x;
+    sFrenzyPlantRootData.startY = sprite->y;
+    sFrenzyPlantRootData.targetX = targetX;
+    sFrenzyPlantRootData.targetY = targetY;
+}
+
+static void AnimRootFlickerOut(struct Sprite *sprite)
+{
+    if (++sprite->data[0] > (sprite->data[2] - 10))
+        sprite->invisible = sprite->data[0] % 2;
+
+    // JP destroys the sprite when data[0] exceeds data[2] (US uses ==).
+    if (sprite->data[0] > sprite->data[2])
         DestroyAnimSprite(sprite);
 }
