@@ -3744,7 +3744,7 @@ SECTIONS {
         src/main_menu.o(.text.CB2_InitMainMenu);
         src/main_menu.o(.text.CB2_ReinitMainMenu);
         src/main_menu.o(.text.InitMainMenu);
-        asm/main_menu_1.o(.text);
+        src/main_menu.o(.text.Task_MainMenuCheckSaveFile);
         src/main_menu.o(.text.Task_WaitForBatteryDryErrorWindow);
         src/main_menu.o(.text.Task_MainMenuCheckBattery);
         src/main_menu.o(.text.Task_WaitForSaveFileErrorWindow);
@@ -4982,7 +4982,7 @@ SECTIONS {
         src/title_screen.o(.text.CB2_InitTitleScreen);
         src/title_screen.o(.text.MainCB2);
         src/title_screen.o(.text.Task_TitleScreenPhase1);
-        asm/title_screen_phase2.o(.text);
+        src/title_screen.o(.text.Task_TitleScreenPhase2);
         src/title_screen.o(.text.Task_TitleScreenPhase3);
         src/title_screen.o(.text.CB2_GoToMainMenu);
         src/title_screen.o(.text.CB2_GoToCopyrightScreen);
