@@ -45,7 +45,7 @@ UNPORTED_SRCS := \
 	src/field_specials.c src/field_weather.c \
 	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
 	src/menu.c \
-	src/overworld.c src/party_menu.c src/pokemon.c \
+	src/overworld.c src/pokemon.c \
 	src/record_mixing.c src/recorded_battle.c \
 	src/start_menu.c src/tileset_anims.c src/trainer_hill.c
 C_SRCS := $(filter-out $(UNPORTED_SRCS),$(wildcard src/*.c src/*/*.c))
@@ -70,6 +70,7 @@ $(C_BUILDDIR)/contest.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-se
 $(C_BUILDDIR)/trade.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/event_object_movement.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/pokemon_storage_system.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
+$(C_BUILDDIR)/party_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
 $(C_BUILDDIR)/mystery_event_script.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 $(C_BUILDDIR)/mystery_event_server.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
