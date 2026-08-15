@@ -1376,7 +1376,6 @@ sBirchSpeechShadowGfx = gUnknown_82D25C8;
 sBirchSpeechBgMap = gUnknown_82D277C;
 sBirchSpeechBgPals = gUnknown_82D2588;
 sBirchSpeechBgGradientPal = gUnknown_82D28A6;
-sSpriteAffineAnimTable_PlayerShrink = gUnknown_82D29A4;
 gText_CommunicationStandby4 = gUnknown_85CCE99;
 sPokeJumpGfxFuncs = gUnknown_82D1A18;
 sPokeJumpBg_Pal = gUnknown_82CF8D0;

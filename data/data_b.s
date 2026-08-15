@@ -3889,13 +3889,20 @@ sScrollArrowsTemplate_MainMenu: @ 0x82D2984
 	.hword 1 @ palTag
 	.byte 0 @ palNum
 	.byte 0 @ padding
-	.globl gUnknown_82D2994
-gUnknown_82D2994: @ 0x82D2994
-	.incbin "baserom_jp.gba", 0x2d2994, 0x10
+	.globl sSpriteAffineAnim_PlayerShrink
+sSpriteAffineAnim_PlayerShrink: @ 0x82D2994
+	.hword 0xFFFE @ AFFINEANIMCMD_FRAME scaleX -2
+	.hword 0xFFFE @ scaleY -2
+	.hword 0x3000 @ JP frame duration/x field
+	.hword 0x0000 @ x, y
+	.hword 0x7FFF @ AFFINEANIMCMD_END
+	.hword 0x0000 @ pad
+	.hword 0x0000 @ pad
+	.hword 0x0000 @ pad
 
-	.globl gUnknown_82D29A4
-gUnknown_82D29A4: @ 0x82D29A4
-	.incbin "baserom_jp.gba", 0x2d29a4, 0x4
+	.globl sSpriteAffineAnimTable_PlayerShrink
+sSpriteAffineAnimTable_PlayerShrink: @ 0x82D29A4
+	.4byte sSpriteAffineAnim_PlayerShrink
 
 	.globl sMenuActions_Gender
 sMenuActions_Gender: @ 0x82D29A8
