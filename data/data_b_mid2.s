@@ -9,56 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sText_AnOKWasSentToPlayer
-sText_AnOKWasSentToPlayer: @ 0x82C0948
-	.string "{B_COPY_VAR_1}に　OKの\n"
-	.string "へんじを　だしました$　あいての\n"
-	.string "つごうが　わるいみたい⋯\p"
-	.string "$　まだ　とおくの　かたとは\n"
-	.string "つうしんは　できません\p"
-	.string "$　　あいての　じゅんびが\n"
-	.string "できていません\p$"
-	.globl sCantTransmitToTrainerTexts
-sCantTransmitToTrainerTexts: @ 0x82C09A0
-	.incbin "baserom_jp.gba", 0x2c09a0, 0x8
-
-	.globl sText_ModeWithTheseMembersWillBeCanceled
-sText_ModeWithTheseMembersWillBeCanceled: @ 0x82C09A8
-	.string "この　メンバーで　{B_COPY_VAR_1}を\n"
-	.string "するのは　やめます{PAUSE 60}$　　つごうが　わるくなってしまった\n"
-	.string "メンバーが　います\p"
-	.string "$　"
-
-	.globl sPlayerUnavailableTexts
-sPlayerUnavailableTexts: @ 0x82C09E0
-	.incbin "baserom_jp.gba", 0x2c09e0, 0x18
-
-	.globl sText_PlayerSentBackOK
-sText_PlayerSentBackOK: @ 0x82C09F8
-	.string "{B_COPY_VAR_1}から　OKとの\n"
-	.string "へんじが　ありました！$　　"
-
-	.globl sText_PlayerOKdRegistration
-sText_PlayerOKdRegistration: @ 0x82C0A10
-	.string "{B_COPY_VAR_1}から　メンバー　とうろく\n"
-	.string "OKとの　れんらくが　きました！${B_COPY_VAR_1}から　NGとの\n"
-	.string "へんじが　きてしまいました⋯\p"
-	.string "$　　"
-
-	.globl sText_AwaitingOtherMembers
-sText_AwaitingOtherMembers: @ 0x82C0A4C
-	.string "{B_COPY_VAR_1}！\n"
-	.string "ほかの　メンバーを　まっています！$　　"
-
-	.globl sText_QuitBeingMember
-sText_QuitBeingMember: @ 0x82C0A64
-	.string "メンバーから　ぬけますか？$　　メンバーから　ぬけました\p"
-	.string "$　　"
-
-	.globl sPlayerDisconnectedTexts
-sPlayerDisconnectedTexts: @ 0x82C0A84
-	.incbin "baserom_jp.gba", 0x2c0a84, 0x28
-
 	.globl sText_WirelessLinkEstablished
 sText_WirelessLinkEstablished: @ 0x82C0AAC
 	.string "ジョイスポットとの　せつぞくに\n"

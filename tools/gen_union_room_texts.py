@@ -62,6 +62,29 @@ SYMBOLS2 = [
 
 END_ADDR2 = 0x082C0948  # sText_AnOKWasSentToPlayer (next region)
 
+# Third batch: AnOK/member-status texts and their pointer tables.
+# Sub-text boundaries come from the pointer-table targets in the ROM.
+SYMBOLS3 = [
+    ("sText_AnOKWasSentToPlayer", 0x082C0948, "text", None),
+    ("sText_OtherTrainerUnavailableNow", 0x082C095C, "text", None),
+    ("sText_CantTransmitTrainerTooFar", 0x082C0970, "text", None),
+    ("sText_TrainersNotReadyYet", 0x082C098C, "text", None),
+    ("sCantTransmitToTrainerTexts", 0x082C09A0, "table", ["sText_CantTransmitTrainerTooFar", "sText_TrainersNotReadyYet"]),
+    ("sText_ModeWithTheseMembersWillBeCanceled", 0x082C09A8, "text", None),
+    ("sText_MemberNoLongerAvailable", 0x082C09C4, "text", None),
+    ("sPlayerUnavailableTexts", 0x082C09E0, "table", ["sText_OtherTrainerUnavailableNow", "sText_MemberNoLongerAvailable"]),
+    ("sText_TrainerAppearsUnavailable", 0x082C09E8, "text", None),
+    ("sText_PlayerSentBackOK", 0x082C09F8, "text", None),
+    ("sText_PlayerOKdRegistration", 0x082C0A10, "text", None),
+    ("sText_PlayerRepliedNo", 0x082C0A30, "text", None),
+    ("sText_AwaitingOtherMembers", 0x082C0A4C, "text", None),
+    ("sText_QuitBeingMember", 0x082C0A64, "text", None),
+    ("sText_StoppedBeingMember", 0x082C0A74, "text", None),
+    ("sPlayerDisconnectedTexts", 0x082C0A84, "table_rfu", None),
+]
+
+END_ADDR3 = 0x082C0AAC  # sText_WirelessLinkEstablished (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -84,13 +107,11 @@ def emit_ascii(name, content, aligned=False, size=None):
 
 
 def emit_text(name, addr, end, size=None):
-    single, multi = d.build_maps()
-    sounds = d.build_sound_map()
     data = region_bytes(addr, end)
     # Decode the raw ROM bytes, then truncate at the last $ terminator.
     # Everything after it is alignment padding; the trailing $ itself is
     # reproduced by preproc's automatic terminator (which appends 0xFF).
-    text = d.decode(data, single, multi, sounds)
+    text = decode_preproc(data)
     last = text.rfind("$")
     if last >= 0:
         text = text[:last]
@@ -102,11 +123,97 @@ def emit_text(name, addr, end, size=None):
     return f"ALIGNED(4) const u8 {name}{s} = _(\n{body});"
 
 
+def decode_preproc(data):
+    """Decode JP text bytes into preproc-compatible _() content.
+
+    EXT_CTRL_CODE arguments are rendered as decimal numbers ("{COLOR 1}",
+    "{PAUSE 60}", "{PLAY_BGM 240 0}") which preproc re-encodes to the same
+    bytes; multi-byte macros keep their {NAME} form.
+    """
+    single, multi = d.build_maps()
+    max_len = max((len(k) for k in multi), default=1)
+    out = []
+    i = 0
+    while i < len(data):
+        b = data[i]
+        if b == 0xFC:
+            if i + 1 < len(data):
+                code = data[i + 1]
+                name = d.CTRL_NAMES.get(code, "CTRL_%02X" % code)
+                nargs = d.CTRL_ARGS.get(code, 0)
+                args = data[i + 2 : i + 2 + nargs]
+                if code in (0x0B, 0x10):  # PLAY_BGM / PLAY_SE: u16 lo, hi
+                    argtext = " %d %d" % (args[0], args[1]) if len(args) >= 2 else ""
+                elif args:
+                    argtext = " " + " ".join(str(a) for a in args)
+                else:
+                    argtext = ""
+                out.append("{%s%s}" % (name, argtext))
+                i += 2 + nargs
+            else:
+                out.append("[FC]")
+                i += 1
+            continue
+        if b == 0xFF:
+            out.append("$")
+            i += 1
+            continue
+        if b == 0xFE:
+            out.append("\\n")
+            i += 1
+            continue
+        if b not in single:
+            matched = False
+            for ln in range(max_len, 0, -1):
+                seq = bytes(data[i : i + ln])
+                if seq in multi:
+                    out.append("{%s}" % multi[seq])
+                    i += ln
+                    matched = True
+                    break
+            if matched:
+                continue
+        out.append(single.get(b, "?%02X" % b))
+        i += 1
+    return "".join(out)
+
+
+def emit_table(name, entries):
+    out = [f"const u8 *const {name}[] = {{"]
+    for e in entries:
+        out.append(f"    {e},")
+    out.append("};")
+    return "\n".join(out)
+
+
+def emit_table_rfu(name):
+    # sPlayerDisconnectedTexts: RFU status -> text, from US union_room.h.
+    entries = [
+        "[RFU_STATUS_OK] = NULL",
+        "[RFU_STATUS_FATAL_ERROR] = sText_MemberNoLongerAvailable",
+        "[RFU_STATUS_CONNECTION_ERROR] = sText_TrainerAppearsUnavailable",
+        "[RFU_STATUS_CHILD_SEND_COMPLETE] = NULL",
+        "[RFU_STATUS_NEW_CHILD_DETECTED] = NULL",
+        "[RFU_STATUS_JOIN_GROUP_OK] = NULL",
+        "[RFU_STATUS_JOIN_GROUP_NO] = sText_PlayerRepliedNo",
+        "[RFU_STATUS_WAIT_ACK_JOIN_GROUP] = NULL",
+        "[RFU_STATUS_LEAVE_GROUP_NOTICE] = NULL",
+        "[RFU_STATUS_LEAVE_GROUP] = sText_StoppedBeingMember",
+    ]
+    out = [f"const u8 *const {name}[] = {{"]
+    for e in entries:
+        out.append(f"    {e},")
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
     out = []
     out.append('#include "global.h"')
+    if any(sym[2] == "table_rfu" for sym in symbols):
+        out.append('#include "link_rfu.h"')
     out.append("")
     out.append(comment)
     for i, sym in enumerate(symbols):
@@ -124,6 +231,10 @@ def build(symbols, end_addr, out_h, out_c, comment):
             if kind == "text_fixed":
                 size = end_addr - addr
             out.append(emit_text(name, addr, end, size=size))
+        elif kind == "table":
+            out.append(emit_table(name, payload))
+        elif kind == "table_rfu":
+            out.append(emit_table_rfu(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -145,6 +256,8 @@ def main():
           "// RFU assert and debug strings (JP-specific section at 0x82C053C)")
     build(SYMBOLS2, END_ADDR2, "src/data/union_room2.h", "src/data/union_room2.c",
           "// Union-room texts (second batch)")
+    build(SYMBOLS3, END_ADDR3, "src/data/union_room3.h", "src/data/union_room3.c",
+          "// Union-room member-status texts and pointer tables")
 
 
 if __name__ == "__main__":
