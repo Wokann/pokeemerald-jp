@@ -12347,7 +12347,7 @@ gUnknown_85BE8F0: @ 0x85BE8F0
 
 	.globl gUnknown_85BE910
 gUnknown_85BE910: @ 0x85BE910
-	.incbin "baserom_jp.gba", 0x5be910, 0x20
+	.string "\n$$${STRING}$$$$E$$$ァ$$$$\n$$${STRING}$$$\p$$${DYNAMIC}$"
 	.globl gUnknown_85BE930
 gUnknown_85BE930: @ 0x85BE930
 	.incbin "baserom_jp.gba", 0x5be930, 0xa
@@ -13016,15 +13016,15 @@ gUnknown_85C8D93: @ 0x85C8D93
 	.string "ゲームを　つづけて　あそぶことは　できます$しゅじんこう$ポケモンずかん$"
 	.globl gUnknown_85C8DEC
 gUnknown_85C8DEC: @ 0x85C8DEC
-	.incbin "baserom_jp.gba", 0x5c8dec, 0x7c
+	.string "プレイじ{GREEN}ん$もっ{MUS_RG_CAUGHT_INTRO}るバッジ$エーボタン$ビーボタン$アールボタン$エルボタン$スタートボタン$セレクトボタン$じゅ{LIGHT_GRAY}じボタン$Lボタ{SE_M_BUBBLE3}Rボタン${TRANSPARENT}{DYNAMIC_COLOR6}{LIGHT_GRAY}{SE_BIKE_BELL}{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}${MUS_DUMMY}{TRANSPARENT}{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}${MUS_DUMMY}{TRANSPARENT}{A_BUTTON}つぎ${MUS_DUMMY}{TRANSPARENT}{A_BUTTON}つ{SE_BALL_BOUNCE_1}{B_BUTTON}もどる${TRANSPARENT}"
 
 	.globl gUnknown_85C8E68
 gUnknown_85C8E68: @ 0x85C8E68
-	.incbin "baserom_jp.gba", 0x5c8e68, 0x14
+	.string "{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}つ{SE_BALL_BOUNCE_1}{B_BUTTON}{LIGHT_RED}わる${MUS_DUMMY}{TRANSPARENT}"
 
 	.globl gUnknown_85C8E7C
 gUnknown_85C8E7C: @ 0x85C8E7C
-	.incbin "baserom_jp.gba", 0x5c8e7c, 0x10
+	.string "{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}{B_BUTTON}{LIGHT_RED}わる${MUS_DUMMY}"
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
@@ -14643,22 +14643,22 @@ gUnknown_85CC9FC: @ 0x85CC9FC
 	.string "サラサラぐあい$"
 	.globl gUnknown_85CCA04
 gUnknown_85CCA04: @ 0x85CCA04
-	.incbin "baserom_jp.gba", 0x5cca04, 0x4
+	.string "{B_COPY_VAR_1}${TRANSPARENT}"
 
 	.globl gUnknown_85CCA08
 gUnknown_85CCA08: @ 0x85CCA08
-	.incbin "baserom_jp.gba", 0x5cca08, 0x4
+	.string "ふん${TRANSPARENT}"
 
 	.globl gUnknown_85CCA0C
 gUnknown_85CCA0C: @ 0x85CCA0C
-	.incbin "baserom_jp.gba", 0x5cca0c, 0x8
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}${MUS_DUMMY}"
 
 	.globl gUnknown_85CCA14
 gUnknown_85CCA14: @ 0x85CCA14
 	.string "びょう$"
 	.globl gUnknown_85CCA18
 gUnknown_85CCA18: @ 0x85CCA18
-	.incbin "baserom_jp.gba", 0x5cca18, 0x8
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}${MUS_DUMMY}"
 
 	.globl gUnknown_85CCA20
 gUnknown_85CCA20: @ 0x85CCA20
@@ -15362,7 +15362,7 @@ gUnknown_85D3D84: @ 0x85D3D84
 
 	.globl gUnknown_85D3D90
 gUnknown_85D3D90: @ 0x85D3D90
-	.incbin "baserom_jp.gba", 0x5d3d90, 0x20
+	.string "{LIGHT_RED}ね{RED}$ハンサム$ジョバンニ$も{WHITE}も{WHITE}$てつ${LIGHT_GREEN}んに{BLUE}ん${MUS_DUMMY}{TRANSPARENT}"
 
 	.globl gUnknown_85D3DB0
 gUnknown_85D3DB0: @ 0x85D3DB0
@@ -15621,7 +15621,7 @@ gUnknown_85D7A1C: @ 0x85D7A1C
 
 	.globl gUnknown_85D7A28
 gUnknown_85D7A28: @ 0x85D7A28
-	.incbin "baserom_jp.gba", 0x5d7a28, 0x2c
+	.string "どニの{BLUE}ベニの{BLUE}ドヌの{BLUE}ヘネの{BLUE}uネの{BLUE}{LIGHT_BLUE}ノの{BLUE}ナツ$クミ$ゲン$コウ$マリ$ミホ${MUS_DUMMY}"
 
 	.globl gUnknown_85D7A54
 gUnknown_85D7A54: @ 0x85D7A54
@@ -16210,7 +16210,7 @@ gUnknown_85DD99C: @ 0x85DD99C
 
 	.globl gUnknown_85DD9AC
 gUnknown_85DD9AC: @ 0x85DD9AC
-	.incbin "baserom_jp.gba", 0x5dd9ac, 0x10
+	.string "$\n$$${STRING}$$$$$\n$$${STRING}"
 
 	.globl gUnknown_85DD9BC
 gUnknown_85DD9BC: @ 0x85DD9BC
@@ -17960,7 +17960,7 @@ gUnknown_85FB91C: @ 0x85FB91C
 
 	.globl gUnknown_85FB960
 gUnknown_85FB960: @ 0x85FB960
-	.incbin "baserom_jp.gba", 0x5fb960, 0xc
+	.string "ーーーーーーーーー${MUS_DUMMY}"
 
 	.globl gUnknown_85FB96C
 gUnknown_85FB96C: @ 0x85FB96C
