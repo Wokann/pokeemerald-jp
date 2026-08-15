@@ -2999,7 +2999,10 @@ gBattlescriptsForRunningByItem: @ 0x828A2DC
 
 	.globl gBattlescriptsForSafariActions
 gBattlescriptsForSafariActions: @ 0x828A2E0
-	.incbin "baserom_jp.gba", 0x28a2e0, 0x10
+	.4byte 0x0828A445 @ BattleScript_ActionWatchesCarefully
+	.4byte 0x0828A44C @ BattleScript_ActionGetNear
+	.4byte 0x0828A455 @ BattleScript_ActionThrowPokeblock
+	.4byte 0x0828A46B @ BattleScript_ActionWallyThrow
 gUnknown_828A2F0: @ 0x828A2F0
 	.include "data/scripts/gUnknown_828A2F0.inc"
 gUnknown_828A306: @ 0x828A306
