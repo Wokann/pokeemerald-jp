@@ -1,126 +1,126 @@
 	.section .rodata
 
-	.globl gUnknown_82BFF74
-gUnknown_82BFF74: @ 0x82BFF74
+	.globl sTextColors
+sTextColors: @ 0x82BFF74
 	.incbin "baserom_jp.gba", 0x2bff74, 0x14c
 
-	.globl gUnknown_82C00C0
-gUnknown_82C00C0: @ 0x82C00C0
+	.globl sWireless_ASCIItoRSETable
+sWireless_ASCIItoRSETable: @ 0x82C00C0
 	.incbin "baserom_jp.gba", 0x2c00c0, 0x100
 
-	.globl gUnknown_82C01C0
-gUnknown_82C01C0: @ 0x82C01C0
+	.globl sWireless_RSEtoASCIITable
+sWireless_RSEtoASCIITable: @ 0x82C01C0
 	.incbin "baserom_jp.gba", 0x2c01c0, 0x100
 
-	.globl gUnknown_82C02C0
-gUnknown_82C02C0: @ 0x82C02C0
+	.globl sWirelessStatusIndicatorOamData
+sWirelessStatusIndicatorOamData: @ 0x82C02C0
 	.incbin "baserom_jp.gba", 0x2c02c0, 0x70
 
-	.globl gUnknown_82C0330
-gUnknown_82C0330: @ 0x82C0330
+	.globl sWirelessStatusIndicatorSpriteSheet
+sWirelessStatusIndicatorSpriteSheet: @ 0x82C0330
 	.incbin "baserom_jp.gba", 0x2c0330, 0x8
 
-	.globl gUnknown_82C0338
-gUnknown_82C0338: @ 0x82C0338
+	.globl sWirelessStatusIndicatorSpritePalette
+sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
 	.incbin "baserom_jp.gba", 0x2c0338, 0x8
 
-	.globl gUnknown_82C0340
-gUnknown_82C0340: @ 0x82C0340
+	.globl sWirelessStatusIndicatorSpriteTemplate
+sWirelessStatusIndicatorSpriteTemplate: @ 0x82C0340
 	.incbin "baserom_jp.gba", 0x2c0340, 0x18
 
-	.globl gUnknown_82C0358
-gUnknown_82C0358: @ 0x82C0358
+	.globl sRfuReqConfigTemplate
+sRfuReqConfigTemplate: @ 0x82C0358
 	.incbin "baserom_jp.gba", 0x2c0358, 0x18
 
-	.globl gUnknown_82C0370
-gUnknown_82C0370: @ 0x82C0370
+	.globl sAvailSlots
+sAvailSlots: @ 0x82C0370
 	.incbin "baserom_jp.gba", 0x2c0370, 0x8
 
-	.globl gUnknown_82C0378
-gUnknown_82C0378: @ 0x82C0378
+	.globl sAllBlocksReceived
+sAllBlocksReceived: @ 0x82C0378
 	.incbin "baserom_jp.gba", 0x2c0378, 0x64
 
-	.globl gUnknown_82C03DC
-gUnknown_82C03DC: @ 0x82C03DC
+	.globl sSlotToLinkPlayerTableId
+sSlotToLinkPlayerTableId: @ 0x82C03DC
 	.incbin "baserom_jp.gba", 0x2c03dc, 0x9
 
-	.globl gUnknown_82C03E5
-gUnknown_82C03E5: @ 0x82C03E5
+	.globl sPlayerBitsToCount
+sPlayerBitsToCount: @ 0x82C03E5
 	.incbin "baserom_jp.gba", 0x2c03e5, 0x10
 
-	.globl gUnknown_82C03F5
-gUnknown_82C03F5: @ 0x82C03F5
+	.globl sPlayerBitsToNewChildIdx
+sPlayerBitsToNewChildIdx: @ 0x82C03F5
 	.incbin "baserom_jp.gba", 0x2c03f5, 0x13
 
 	.globl gUnknown_82C0408
 gUnknown_82C0408: @ 0x82C0408
 	.incbin "baserom_jp.gba", 0x2c0408, 0x28
 
-	.globl gUnknown_82C0430
-gUnknown_82C0430: @ 0x82C0430
+	.globl sAcceptedSerialNos
+sAcceptedSerialNos: @ 0x82C0430
 	.incbin "baserom_jp.gba", 0x2c0430, 0x100
 
-	.globl gUnknown_82C0530
-gUnknown_82C0530: @ 0x82C0530
+	.globl sShutdownTasks
+sShutdownTasks: @ 0x82C0530
 	.incbin "baserom_jp.gba", 0x2c0530, 0xc
 
-	.globl gUnknown_82C053C
-gUnknown_82C053C: @ 0x82C053C
+	.globl sAssertFile_rfu
+sAssertFile_rfu: @ 0x82C053C
 	.incbin "baserom_jp.gba", 0x2c053c, 0x8
 
-	.globl gUnknown_82C0544
-gUnknown_82C0544: @ 0x82C0544
+	.globl sAssertExpr_RfuFuncNull
+sAssertExpr_RfuFuncNull: @ 0x82C0544
 	.incbin "baserom_jp.gba", 0x2c0544, 0x14
 
-	.globl gUnknown_82C0558
-gUnknown_82C0558: @ 0x82C0558
+	.globl sAssertExpr_SizeLe252
+sAssertExpr_SizeLe252: @ 0x82C0558
 	.incbin "baserom_jp.gba", 0x2c0558, 0xc
 
 	.globl gUnknown_82C0564
 gUnknown_82C0564: @ 0x82C0564
 	.string "っマヒナヘマホウノマべホニマ　　あきと$"
-	.globl gUnknown_82C0578
-gUnknown_82C0578: @ 0x82C0578
+	.globl sASCII_LinkLossDisconnect
+sASCII_LinkLossDisconnect: @ 0x82C0578
 	.incbin "baserom_jp.gba", 0x2c0578, 0x18
 
-	.globl gUnknown_82C0590
-gUnknown_82C0590: @ 0x82C0590
+	.globl sASCII_LinkLossRecoveryNow
+sASCII_LinkLossRecoveryNow: @ 0x82C0590
 	.incbin "baserom_jp.gba", 0x2c0590, 0x18
 
-	.globl gUnknown_82C05A8
-gUnknown_82C05A8: @ 0x82C05A8
+	.globl sASCII_30Spaces
+sASCII_30Spaces: @ 0x82C05A8
 	.incbin "baserom_jp.gba", 0x2c05a8, 0x1f
 
-	.globl gUnknown_82C05C7
-gUnknown_82C05C7: @ 0x82C05C7
+	.globl sASCII_15Spaces
+sASCII_15Spaces: @ 0x82C05C7
 	.incbin "baserom_jp.gba", 0x2c05c7, 0x10
 
-	.globl gUnknown_82C05D7
-gUnknown_82C05D7: @ 0x82C05D7
+	.globl sASCII_8Spaces
+sASCII_8Spaces: @ 0x82C05D7
 	.incbin "baserom_jp.gba", 0x2c05d7, 0xd
 
-	.globl gUnknown_82C05E4
-gUnknown_82C05E4: @ 0x82C05E4
+	.globl sASCII_NowSlot
+sASCII_NowSlot: @ 0x82C05E4
 	.incbin "baserom_jp.gba", 0x2c05e4, 0x60
 
-	.globl gUnknown_82C0644
-gUnknown_82C0644: @ 0x82C0644
+	.globl sText_Colon
+sText_Colon: @ 0x82C0644
 	.incbin "baserom_jp.gba", 0x2c0644, 0x4
 
-	.globl gUnknown_82C0648
-gUnknown_82C0648: @ 0x82C0648
+	.globl sText_ID
+sText_ID: @ 0x82C0648
 	.incbin "baserom_jp.gba", 0x2c0648, 0x4
 
-	.globl gUnknown_82C064C
-gUnknown_82C064C: @ 0x82C064C
+	.globl sText_PleaseStartOver
+sText_PleaseStartOver: @ 0x82C064C
 	.incbin "baserom_jp.gba", 0x2c064c, 0x20
 
-	.globl gUnknown_82C066C
-gUnknown_82C066C: @ 0x82C066C
+	.globl sText_WirelessSearchCanceled
+sText_WirelessSearchCanceled: @ 0x82C066C
 	.incbin "baserom_jp.gba", 0x2c066c, 0x30
 
-	.globl gUnknown_82C069C
-gUnknown_82C069C: @ 0x82C069C
+	.globl sText_AwaitingCommunication
+sText_AwaitingCommunication: @ 0x82C069C
 	.incbin "baserom_jp.gba", 0x2c069c, 0x1c
 
 	.globl gUnknown_82C06B8
@@ -135,32 +135,32 @@ gUnknown_82C06B8: @ 0x82C06B8
 	.string "プレイ$4にん\n"
 	.string "プレイ$5にん\n"
 	.string "プレイ$"
-	.globl gUnknown_82C0840
-gUnknown_82C0840: @ 0x82C0840
+	.globl sPlayersNeededOrModeTexts
+sPlayersNeededOrModeTexts: @ 0x82C0840
 	.incbin "baserom_jp.gba", 0x2c0840, 0x64
 
-	.globl gUnknown_82C08A4
-gUnknown_82C08A4: @ 0x82C08A4
+	.globl sText_BButtonCancel
+sText_BButtonCancel: @ 0x82C08A4
 	.incbin "baserom_jp.gba", 0x2c08a4, 0x20
 
-	.globl gUnknown_82C08C4
-gUnknown_82C08C4: @ 0x82C08C4
+	.globl sText_PlayerContactedYouForXAccept
+sText_PlayerContactedYouForXAccept: @ 0x82C08C4
 	.incbin "baserom_jp.gba", 0x2c08c4, 0x18
 
-	.globl gUnknown_82C08DC
-gUnknown_82C08DC: @ 0x82C08DC
+	.globl sText_PlayerContactedYouShareX
+sText_PlayerContactedYouShareX: @ 0x82C08DC
 	.incbin "baserom_jp.gba", 0x2c08dc, 0x1c
 
-	.globl gUnknown_82C08F8
-gUnknown_82C08F8: @ 0x82C08F8
+	.globl sText_PlayerContactedYouAddToMembers
+sText_PlayerContactedYouAddToMembers: @ 0x82C08F8
 	.incbin "baserom_jp.gba", 0x2c08f8, 0x1c
 
-	.globl gUnknown_82C0914
-gUnknown_82C0914: @ 0x82C0914
+	.globl sText_AreTheseMembersOK
+sText_AreTheseMembersOK: @ 0x82C0914
 	.incbin "baserom_jp.gba", 0x2c0914, 0x18
 
-	.globl gUnknown_82C092C
-gUnknown_82C092C: @ 0x82C092C
+	.globl sText_CancelModeWithTheseMembers
+sText_CancelModeWithTheseMembers: @ 0x82C092C
 	.incbin "baserom_jp.gba", 0x2c092c, 0x1c
 
 	.globl gUnknown_82C0948
@@ -172,64 +172,64 @@ gUnknown_82C0948: @ 0x82C0948
 	.string "つうしんは　できません\p"
 	.string "$　　あいての　じゅんびが\n"
 	.string "できていません\p$"
-	.globl gUnknown_82C09A0
-gUnknown_82C09A0: @ 0x82C09A0
+	.globl sCantTransmitToTrainerTexts
+sCantTransmitToTrainerTexts: @ 0x82C09A0
 	.incbin "baserom_jp.gba", 0x2c09a0, 0x8
 
-	.globl gUnknown_82C09A8
-gUnknown_82C09A8: @ 0x82C09A8
+	.globl sText_ModeWithTheseMembersWillBeCanceled
+sText_ModeWithTheseMembersWillBeCanceled: @ 0x82C09A8
 	.incbin "baserom_jp.gba", 0x2c09a8, 0x38
 
-	.globl gUnknown_82C09E0
-gUnknown_82C09E0: @ 0x82C09E0
+	.globl sPlayerUnavailableTexts
+sPlayerUnavailableTexts: @ 0x82C09E0
 	.incbin "baserom_jp.gba", 0x2c09e0, 0x18
 
-	.globl gUnknown_82C09F8
-gUnknown_82C09F8: @ 0x82C09F8
+	.globl sText_PlayerSentBackOK
+sText_PlayerSentBackOK: @ 0x82C09F8
 	.incbin "baserom_jp.gba", 0x2c09f8, 0x18
 
-	.globl gUnknown_82C0A10
-gUnknown_82C0A10: @ 0x82C0A10
+	.globl sText_PlayerOKdRegistration
+sText_PlayerOKdRegistration: @ 0x82C0A10
 	.incbin "baserom_jp.gba", 0x2c0a10, 0x3c
 
-	.globl gUnknown_82C0A4C
-gUnknown_82C0A4C: @ 0x82C0A4C
+	.globl sText_AwaitingOtherMembers
+sText_AwaitingOtherMembers: @ 0x82C0A4C
 	.incbin "baserom_jp.gba", 0x2c0a4c, 0x18
 
-	.globl gUnknown_82C0A64
-gUnknown_82C0A64: @ 0x82C0A64
+	.globl sText_QuitBeingMember
+sText_QuitBeingMember: @ 0x82C0A64
 	.incbin "baserom_jp.gba", 0x2c0a64, 0x20
 
-	.globl gUnknown_82C0A84
-gUnknown_82C0A84: @ 0x82C0A84
+	.globl sPlayerDisconnectedTexts
+sPlayerDisconnectedTexts: @ 0x82C0A84
 	.incbin "baserom_jp.gba", 0x2c0a84, 0x28
 
-	.globl gUnknown_82C0AAC
-gUnknown_82C0AAC: @ 0x82C0AAC
+	.globl sText_WirelessLinkEstablished
+sText_WirelessLinkEstablished: @ 0x82C0AAC
 	.incbin "baserom_jp.gba", 0x2c0aac, 0x1c
 
 	.globl gUnknown_82C0AC8
 gUnknown_82C0AC8: @ 0x82C0AC8
 	.string "ジョイスポットから　せつぞくを\n"
 	.string "せつだん　されました⋯$"
-	.globl gUnknown_82C0AE4
-gUnknown_82C0AE4: @ 0x82C0AE4
+	.globl sText_LinkWithFriendDropped
+sText_LinkWithFriendDropped: @ 0x82C0AE4
 	.incbin "baserom_jp.gba", 0x2c0ae4, 0x38
 
-	.globl gUnknown_82C0B1C
-gUnknown_82C0B1C: @ 0x82C0B1C
+	.globl sLinkDroppedTexts
+sLinkDroppedTexts: @ 0x82C0B1C
 	.incbin "baserom_jp.gba", 0x2c0b1c, 0x64
 
-	.globl gUnknown_82C0B80
-gUnknown_82C0B80: @ 0x82C0B80
+	.globl sText_AwaitingPlayersResponseAboutTrade
+sText_AwaitingPlayersResponseAboutTrade: @ 0x82C0B80
 	.incbin "baserom_jp.gba", 0x2c0b80, 0x158
 
-	.globl gUnknown_82C0CD8
-gUnknown_82C0CD8: @ 0x82C0CD8
+	.globl sCommunicatingWaitTexts
+sCommunicatingWaitTexts: @ 0x82C0CD8
 	.incbin "baserom_jp.gba", 0x2c0cd8, 0x64
 
-	.globl gUnknown_82C0D3C
-gUnknown_82C0D3C: @ 0x82C0D3C
+	.globl sHiDoSomethingTexts
+sHiDoSomethingTexts: @ 0x82C0D3C
 	.incbin "baserom_jp.gba", 0x2c0d3c, 0x7c
 
 	.globl gUnknown_82C0DB8
@@ -237,24 +237,24 @@ gUnknown_82C0DB8: @ 0x82C0DB8
 	.string "ゾすわく3すわくあいての　へんじを\n"
 	.string "まっています$　　　{B_COPY_VAR_1}の　へんじを\n"
 	.string "まっています$"
-	.globl gUnknown_82C0DE4
-gUnknown_82C0DE4: @ 0x82C0DE4
+	.globl sAwaitingResponseTexts
+sAwaitingResponseTexts: @ 0x82C0DE4
 	.incbin "baserom_jp.gba", 0x2c0de4, 0x8
 
-	.globl gUnknown_82C0DEC
-gUnknown_82C0DEC: @ 0x82C0DEC
+	.globl sText_ShowTrainerCard
+sText_ShowTrainerCard: @ 0x82C0DEC
 	.incbin "baserom_jp.gba", 0x2c0dec, 0x30
 
-	.globl gUnknown_82C0E1C
-gUnknown_82C0E1C: @ 0x82C0E1C
+	.globl sText_BattleChallenge
+sText_BattleChallenge: @ 0x82C0E1C
 	.incbin "baserom_jp.gba", 0x2c0e1c, 0x24
 
-	.globl gUnknown_82C0E40
-gUnknown_82C0E40: @ 0x82C0E40
+	.globl sText_ChatInvitation
+sText_ChatInvitation: @ 0x82C0E40
 	.incbin "baserom_jp.gba", 0x2c0e40, 0x28
 
-	.globl gUnknown_82C0E68
-gUnknown_82C0E68: @ 0x82C0E68
+	.globl sText_OfferToTradeMon
+sText_OfferToTradeMon: @ 0x82C0E68
 	.incbin "baserom_jp.gba", 0x2c0e68, 0x40
 
 	.globl gUnknown_82C0EA8
@@ -265,48 +265,48 @@ gUnknown_82C0EA8: @ 0x82C0EA8
 	.globl gUnknown_82C0ED4
 gUnknown_82C0ED4: @ 0x82C0ED4
 	.string "かいわが　きれました\p$"
-	.globl gUnknown_82C0EE0
-gUnknown_82C0EE0: @ 0x82C0EE0
+	.globl sText_OfferDeclined1
+sText_OfferDeclined1: @ 0x82C0EE0
 	.incbin "baserom_jp.gba", 0x2c0ee0, 0x14
 
 	.globl gUnknown_82C0EF4
 gUnknown_82C0EF4: @ 0x82C0EF4
 	.string "おさそいを\n"
 	.string "ことわり　ました\p$"
-	.globl gUnknown_82C0F04
-gUnknown_82C0F04: @ 0x82C0F04
+	.globl sText_ChatEnded
+sText_ChatEnded: @ 0x82C0F04
 	.incbin "baserom_jp.gba", 0x2c0f04, 0xcc
 
-	.globl gUnknown_82C0FD0
-gUnknown_82C0FD0: @ 0x82C0FD0
+	.globl sJoinChatTexts
+sJoinChatTexts: @ 0x82C0FD0
 	.incbin "baserom_jp.gba", 0x2c0fd0, 0x10
 
-	.globl gUnknown_82C0FE0
-gUnknown_82C0FE0: @ 0x82C0FE0
+	.globl sText_TrainerAppearsBusy
+sText_TrainerAppearsBusy: @ 0x82C0FE0
 	.incbin "baserom_jp.gba", 0x2c0fe0, 0xc4
 
-	.globl gUnknown_82C10A4
-gUnknown_82C10A4: @ 0x82C10A4
+	.globl sText_WaitOrShowCardTexts
+sText_WaitOrShowCardTexts: @ 0x82C10A4
 	.incbin "baserom_jp.gba", 0x2c10a4, 0xe4
 
-	.globl gUnknown_82C1188
-gUnknown_82C1188: @ 0x82C1188
+	.globl sStartActivityTexts
+sStartActivityTexts: @ 0x82C1188
 	.incbin "baserom_jp.gba", 0x2c1188, 0x9c
 
-	.globl gUnknown_82C1224
-gUnknown_82C1224: @ 0x82C1224
+	.globl sBattleDeclinedTexts
+sBattleDeclinedTexts: @ 0x82C1224
 	.incbin "baserom_jp.gba", 0x2c1224, 0x58
 
-	.globl gUnknown_82C127C
-gUnknown_82C127C: @ 0x82C127C
+	.globl sShowTrainerCardDeclinedTexts
+sShowTrainerCardDeclinedTexts: @ 0x82C127C
 	.incbin "baserom_jp.gba", 0x2c127c, 0x40
 
-	.globl gUnknown_82C12BC
-gUnknown_82C12BC: @ 0x82C12BC
+	.globl sIfYouWantToDoSomethingTexts
+sIfYouWantToDoSomethingTexts: @ 0x82C12BC
 	.incbin "baserom_jp.gba", 0x2c12bc, 0x8
 
-	.globl gUnknown_82C12C4
-gUnknown_82C12C4: @ 0x82C12C4
+	.globl sText_TrainerBattleBusy
+sText_TrainerBattleBusy: @ 0x82C12C4
 	.incbin "baserom_jp.gba", 0x2c12c4, 0x20
 
 	.globl gUnknown_82C12E4
@@ -314,76 +314,76 @@ gUnknown_82C12E4: @ 0x82C12E4
 	.string "たいせんを　するためには\n"
 	.string "レベル30より　ひくい　ポケモンが\l"
 	.string "2ひき　ひつよう　だよ\p$"
-	.globl gUnknown_82C1310
-gUnknown_82C1310: @ 0x82C1310
+	.globl sText_NeedTwoMonsOfLevel30OrLower2
+sText_NeedTwoMonsOfLevel30OrLower2: @ 0x82C1310
 	.incbin "baserom_jp.gba", 0x2c1310, 0x54
 
-	.globl gUnknown_82C1364
-gUnknown_82C1364: @ 0x82C1364
+	.globl sDeclineChatTexts
+sDeclineChatTexts: @ 0x82C1364
 	.incbin "baserom_jp.gba", 0x2c1364, 0x60
 
-	.globl gUnknown_82C13C4
-gUnknown_82C13C4: @ 0x82C13C4
+	.globl sChatDeclinedTexts
+sChatDeclinedTexts: @ 0x82C13C4
 	.incbin "baserom_jp.gba", 0x2c13c4, 0xd4
 
-	.globl gUnknown_82C1498
-gUnknown_82C1498: @ 0x82C1498
+	.globl sBattleReactionTexts
+sBattleReactionTexts: @ 0x82C1498
 	.incbin "baserom_jp.gba", 0x2c1498, 0xcc
 
-	.globl gUnknown_82C1564
-gUnknown_82C1564: @ 0x82C1564
+	.globl sChatReactionTexts
+sChatReactionTexts: @ 0x82C1564
 	.incbin "baserom_jp.gba", 0x2c1564, 0x84
 
-	.globl gUnknown_82C15E8
-gUnknown_82C15E8: @ 0x82C15E8
+	.globl sTrainerCardReactionTexts
+sTrainerCardReactionTexts: @ 0x82C15E8
 	.incbin "baserom_jp.gba", 0x2c15e8, 0x80
 
-	.globl gUnknown_82C1668
-gUnknown_82C1668: @ 0x82C1668
+	.globl sTradeReactionTexts
+sTradeReactionTexts: @ 0x82C1668
 	.incbin "baserom_jp.gba", 0x2c1668, 0x20
 
 	.globl gUnknown_82C1688
 gUnknown_82C1688: @ 0x82C1688
 	.string "{B_COPY_VAR_1}は\n"
 	.string "こうかんけいじばんを　みた！\p$"
-	.globl gUnknown_82C169C
-gUnknown_82C169C: @ 0x82C169C
+	.globl sText_RegisterMonAtTradingBoard
+sText_RegisterMonAtTradingBoard: @ 0x82C169C
 	.incbin "baserom_jp.gba", 0x2c169c, 0x44
 
-	.globl gUnknown_82C16E0
-gUnknown_82C16E0: @ 0x82C16E0
+	.globl sText_TradingBoardInfo
+sText_TradingBoardInfo: @ 0x82C16E0
 	.incbin "baserom_jp.gba", 0x2c16e0, 0xec
 
-	.globl gUnknown_82C17CC
-gUnknown_82C17CC: @ 0x82C17CC
+	.globl sText_ChooseRequestedMonType
+sText_ChooseRequestedMonType: @ 0x82C17CC
 	.incbin "baserom_jp.gba", 0x2c17cc, 0x1c
 
 	.globl gUnknown_82C17E8
 gUnknown_82C17E8: @ 0x82C17E8
 	.string "こうかんに　だす　ポケモンを\n"
 	.string "てもちから　えらんで　ください\p$"
-	.globl gUnknown_82C1808
-gUnknown_82C1808: @ 0x82C1808
+	.globl sText_RegistrationCanceled
+sText_RegistrationCanceled: @ 0x82C1808
 	.incbin "baserom_jp.gba", 0x2c1808, 0x14
 
-	.globl gUnknown_82C181C
-gUnknown_82C181C: @ 0x82C181C
+	.globl sText_RegistrationCompleted
+sText_RegistrationCompleted: @ 0x82C181C
 	.incbin "baserom_jp.gba", 0x2c181c, 0x14
 
-	.globl gUnknown_82C1830
-gUnknown_82C1830: @ 0x82C1830
+	.globl sText_TradeCanceled
+sText_TradeCanceled: @ 0x82C1830
 	.incbin "baserom_jp.gba", 0x2c1830, 0x14
 
 	.globl gUnknown_82C1844
 gUnknown_82C1844: @ 0x82C1844
 	.string "とうろく　されている　{B_COPY_VAR_1}\n"
 	.string "レベル{B_COPY_VAR_2}を　かいじょ　しますか？$"
-	.globl gUnknown_82C1864
-gUnknown_82C1864: @ 0x82C1864
+	.globl sText_CancelRegistrationOfEgg
+sText_CancelRegistrationOfEgg: @ 0x82C1864
 	.incbin "baserom_jp.gba", 0x2c1864, 0x1c
 
-	.globl gUnknown_82C1880
-gUnknown_82C1880: @ 0x82C1880
+	.globl sText_RegistrationCanceled2
+sText_RegistrationCanceled2: @ 0x82C1880
 	.incbin "baserom_jp.gba", 0x2c1880, 0x4c
 
 	.globl gUnknown_82C18CC
@@ -397,39 +397,39 @@ gUnknown_82C1918: @ 0x82C1918
 	.string "てもちに\n"
 	.string "{B_COPY_VAR_1}の　ほしがっている\l"
 	.string "{B_COPY_VAR_2}ポケモンが　ありません\p$"
-	.globl gUnknown_82C1938
-gUnknown_82C1938: @ 0x82C1938
+	.globl sText_DontHaveEggTrainerWants
+sText_DontHaveEggTrainerWants: @ 0x82C1938
 	.incbin "baserom_jp.gba", 0x2c1938, 0x60
 
-	.globl gUnknown_82C1998
-gUnknown_82C1998: @ 0x82C1998
+	.globl sText_TradeOfferRejected
+sText_TradeOfferRejected: @ 0x82C1998
 	.incbin "baserom_jp.gba", 0x2c1998, 0x14
 
-	.globl gUnknown_82C19AC
-gUnknown_82C19AC: @ 0x82C19AC
+	.globl sText_EggTrade
+sText_EggTrade: @ 0x82C19AC
 	.incbin "baserom_jp.gba", 0x2c19ac, 0xc
 
 	.globl gUnknown_82C19B8
 gUnknown_82C19B8: @ 0x82C19B8
 	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR4}る:{B_BUTTON}やめる$"
-	.globl gUnknown_82C19CC
-gUnknown_82C19CC: @ 0x82C19CC
+	.globl sText_ChooseTrainer
+sText_ChooseTrainer: @ 0x82C19CC
 	.incbin "baserom_jp.gba", 0x2c19cc, 0x218
 
-	.globl gUnknown_82C1BE4
-gUnknown_82C1BE4: @ 0x82C1BE4
+	.globl sChooseTrainerTexts
+sChooseTrainerTexts: @ 0x82C1BE4
 	.incbin "baserom_jp.gba", 0x2c1be4, 0x58
 
-	.globl gUnknown_82C1C3C
-gUnknown_82C1C3C: @ 0x82C1C3C
+	.globl sText_SearchingForWirelessSystemWait
+sText_SearchingForWirelessSystemWait: @ 0x82C1C3C
 	.incbin "baserom_jp.gba", 0x2c1c3c, 0x44
 
-	.globl gUnknown_82C1C80
-gUnknown_82C1C80: @ 0x82C1C80
+	.globl sText_AwaitingPlayersResponse
+sText_AwaitingPlayersResponse: @ 0x82C1C80
 	.incbin "baserom_jp.gba", 0x2c1c80, 0x14
 
-	.globl gUnknown_82C1C94
-gUnknown_82C1C94: @ 0x82C1C94
+	.globl sText_PlayerHasBeenAskedToRegisterYouPleaseWait
+sText_PlayerHasBeenAskedToRegisterYouPleaseWait: @ 0x82C1C94
 	.incbin "baserom_jp.gba", 0x2c1c94, 0x24
 
 	.globl gUnknown_82C1CB8
@@ -442,159 +442,159 @@ gUnknown_82C1CB8: @ 0x82C1CB8
 	.globl gUnknown_82C1D30
 gUnknown_82C1D30: @ 0x82C1D30
 	.string ":ふわくたへわくたいせん$　　　チャット$　　　あいさつ$　　　やめる$とじる$せつめいをきく$"
-	.globl gUnknown_82C1D60
-gUnknown_82C1D60: @ 0x82C1D60
+	.globl sText_NameWantedOfferLv
+sText_NameWantedOfferLv: @ 0x82C1D60
 	.incbin "baserom_jp.gba", 0x2c1d60, 0xf8
 
-	.globl gUnknown_82C1E58
-gUnknown_82C1E58: @ 0x82C1E58
+	.globl sLinkGroupActivityNameTexts
+sLinkGroupActivityNameTexts: @ 0x82C1E58
 	.incbin "baserom_jp.gba", 0x2c1e58, 0xb0
 
-	.globl gUnknown_82C1F08
-gUnknown_82C1F08: @ 0x82C1F08
+	.globl sCardColorTexts
+sCardColorTexts: @ 0x82C1F08
 	.incbin "baserom_jp.gba", 0x2c1f08, 0x14
 
-	.globl gUnknown_82C1F1C
-gUnknown_82C1F1C: @ 0x82C1F1C
+	.globl sText_TrainerCardInfoPage1
+sText_TrainerCardInfoPage1: @ 0x82C1F1C
 	.incbin "baserom_jp.gba", 0x2c1f1c, 0x38
 
-	.globl gUnknown_82C1F54
-gUnknown_82C1F54: @ 0x82C1F54
+	.globl sText_TrainerCardInfoPage2
+sText_TrainerCardInfoPage2: @ 0x82C1F54
 	.incbin "baserom_jp.gba", 0x2c1f54, 0x50
 
-	.globl gUnknown_82C1FA4
-gUnknown_82C1FA4: @ 0x82C1FA4
+	.globl sGladToMeetYouTexts
+sGladToMeetYouTexts: @ 0x82C1FA4
 	.incbin "baserom_jp.gba", 0x2c1fa4, 0x8
 
 	.globl gUnknown_82C1FAC
 gUnknown_82C1FAC: @ 0x82C1FAC
 	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\n"
 	.string "みおわった！{PAUSE 60}$"
-	.globl gUnknown_82C1FC4
-gUnknown_82C1FC4: @ 0x82C1FC4
+	.globl sWindowTemplate_BButtonCancel
+sWindowTemplate_BButtonCancel: @ 0x82C1FC4
 	.incbin "baserom_jp.gba", 0x2c1fc4, 0x8
 
-	.globl gUnknown_82C1FCC
-gUnknown_82C1FCC: @ 0x82C1FCC
+	.globl sLinkGroupToActivityAndCapacity
+sLinkGroupToActivityAndCapacity: @ 0x82C1FCC
 	.incbin "baserom_jp.gba", 0x2c1fcc, 0x58
 
-	.globl gUnknown_82C2024
-gUnknown_82C2024: @ 0x82C2024
+	.globl sWindowTemplate_PlayerList
+sWindowTemplate_PlayerList: @ 0x82C2024
 	.incbin "baserom_jp.gba", 0x2c2024, 0x8
 
-	.globl gUnknown_82C202C
-gUnknown_82C202C: @ 0x82C202C
+	.globl sWindowTemplate_5PlayerList
+sWindowTemplate_5PlayerList: @ 0x82C202C
 	.incbin "baserom_jp.gba", 0x2c202c, 0x8
 
-	.globl gUnknown_82C2034
-gUnknown_82C2034: @ 0x82C2034
+	.globl sWindowTemplate_NumPlayerMode
+sWindowTemplate_NumPlayerMode: @ 0x82C2034
 	.incbin "baserom_jp.gba", 0x2c2034, 0x30
 
-	.globl gUnknown_82C2064
-gUnknown_82C2064: @ 0x82C2064
+	.globl sListMenuTemplate_PossibleGroupMembers
+sListMenuTemplate_PossibleGroupMembers: @ 0x82C2064
 	.incbin "baserom_jp.gba", 0x2c2064, 0x18
 
-	.globl gUnknown_82C207C
-gUnknown_82C207C: @ 0x82C207C
+	.globl sWindowTemplate_GroupList
+sWindowTemplate_GroupList: @ 0x82C207C
 	.incbin "baserom_jp.gba", 0x2c207c, 0x8
 
-	.globl gUnknown_82C2084
-gUnknown_82C2084: @ 0x82C2084
+	.globl sWindowTemplate_PlayerNameAndId
+sWindowTemplate_PlayerNameAndId: @ 0x82C2084
 	.incbin "baserom_jp.gba", 0x2c2084, 0x88
 
-	.globl gUnknown_82C210C
-gUnknown_82C210C: @ 0x82C210C
+	.globl sListMenuTemplate_UnionRoomGroups
+sListMenuTemplate_UnionRoomGroups: @ 0x82C210C
 	.incbin "baserom_jp.gba", 0x2c210c, 0x18
 
-	.globl gUnknown_82C2124
-gUnknown_82C2124: @ 0x82C2124
+	.globl sWindowTemplate_InviteToActivity
+sWindowTemplate_InviteToActivity: @ 0x82C2124
 	.incbin "baserom_jp.gba", 0x2c2124, 0x28
 
-	.globl gUnknown_82C214C
-gUnknown_82C214C: @ 0x82C214C
+	.globl sListMenuTemplate_InviteToActivity
+sListMenuTemplate_InviteToActivity: @ 0x82C214C
 	.incbin "baserom_jp.gba", 0x2c214c, 0x18
 
-	.globl gUnknown_82C2164
-gUnknown_82C2164: @ 0x82C2164
+	.globl sWindowTemplate_RegisterForTrade
+sWindowTemplate_RegisterForTrade: @ 0x82C2164
 	.incbin "baserom_jp.gba", 0x2c2164, 0x20
 
-	.globl gUnknown_82C2184
-gUnknown_82C2184: @ 0x82C2184
+	.globl sListMenuTemplate_RegisterForTrade
+sListMenuTemplate_RegisterForTrade: @ 0x82C2184
 	.incbin "baserom_jp.gba", 0x2c2184, 0x18
 
-	.globl gUnknown_82C219C
-gUnknown_82C219C: @ 0x82C219C
+	.globl sWindowTemplate_TradingBoardRequestType
+sWindowTemplate_TradingBoardRequestType: @ 0x82C219C
 	.incbin "baserom_jp.gba", 0x2c219c, 0x98
 
-	.globl gUnknown_82C2234
-gUnknown_82C2234: @ 0x82C2234
+	.globl sMenuTemplate_TradingBoardRequestType
+sMenuTemplate_TradingBoardRequestType: @ 0x82C2234
 	.incbin "baserom_jp.gba", 0x2c2234, 0x18
 
-	.globl gUnknown_82C224C
-gUnknown_82C224C: @ 0x82C224C
+	.globl sWindowTemplate_TradingBoardHeader
+sWindowTemplate_TradingBoardHeader: @ 0x82C224C
 	.incbin "baserom_jp.gba", 0x2c224c, 0x8
 
-	.globl gUnknown_82C2254
-gUnknown_82C2254: @ 0x82C2254
+	.globl sWindowTemplate_TradingBoardMain
+sWindowTemplate_TradingBoardMain: @ 0x82C2254
 	.incbin "baserom_jp.gba", 0x2c2254, 0x58
 
-	.globl gUnknown_82C22AC
-gUnknown_82C22AC: @ 0x82C22AC
+	.globl sTradeBoardListMenuTemplate
+sTradeBoardListMenuTemplate: @ 0x82C22AC
 	.incbin "baserom_jp.gba", 0x2c22ac, 0xb8
 
-	.globl gUnknown_82C2364
-gUnknown_82C2364: @ 0x82C2364
+	.globl sUnionRoomPlayer_DummyRfu
+sUnionRoomPlayer_DummyRfu: @ 0x82C2364
 	.incbin "baserom_jp.gba", 0x2c2364, 0x7c
 
-	.globl gUnknown_82C23E0
-gUnknown_82C23E0: @ 0x82C23E0
+	.globl sAcceptedActivityIds
+sAcceptedActivityIds: @ 0x82C23E0
 	.incbin "baserom_jp.gba", 0x2c23e0, 0x58
 
 	.globl gUnknown_82C2438
 gUnknown_82C2438: @ 0x82C2438
 	.string "{MUS_RG_OAK_LAB}うえけ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}か{SE_WALL_HIT}{MUS_DUMMY}{DYNAMIC_COLOR6}{SE_FAINT}ぬねのはひふ{DYNAMIC_COLOR5}{SE_M_HYPER_BEAM2}·{MUS_RG_ROUTE1}$"
-	.globl gUnknown_82C2454
-gUnknown_82C2454: @ 0x82C2454
+	.globl sTextboxBorder_Pal
+sTextboxBorder_Pal: @ 0x82C2454
 	.incbin "baserom_jp.gba", 0x2c2454, 0x20
 
-	.globl gUnknown_82C2474
-gUnknown_82C2474: @ 0x82C2474
+	.globl sTextboxBorder_Gfx
+sTextboxBorder_Gfx: @ 0x82C2474
 	.incbin "baserom_jp.gba", 0x2c2474, 0x30
 
-	.globl gUnknown_82C24A4
-gUnknown_82C24A4: @ 0x82C24A4
+	.globl sBGTemplates
+sBGTemplates: @ 0x82C24A4
 	.incbin "baserom_jp.gba", 0x2c24a4, 0x10
 
-	.globl gUnknown_82C24B4
-gUnknown_82C24B4: @ 0x82C24B4
+	.globl sMainWindows
+sMainWindows: @ 0x82C24B4
 	.incbin "baserom_jp.gba", 0x2c24b4, 0x20
 
-	.globl gUnknown_82C24D4
-gUnknown_82C24D4: @ 0x82C24D4
+	.globl sWindowTemplate_YesNoMsg_Wide
+sWindowTemplate_YesNoMsg_Wide: @ 0x82C24D4
 	.incbin "baserom_jp.gba", 0x2c24d4, 0x8
 
-	.globl gUnknown_82C24DC
-gUnknown_82C24DC: @ 0x82C24DC
+	.globl sWindowTemplate_YesNoMsg
+sWindowTemplate_YesNoMsg: @ 0x82C24DC
 	.incbin "baserom_jp.gba", 0x2c24dc, 0x8
 
-	.globl gUnknown_82C24E4
-gUnknown_82C24E4: @ 0x82C24E4
+	.globl sWindowTemplate_GiftSelect
+sWindowTemplate_GiftSelect: @ 0x82C24E4
 	.incbin "baserom_jp.gba", 0x2c24e4, 0x8
 
-	.globl gUnknown_82C24EC
-gUnknown_82C24EC: @ 0x82C24EC
+	.globl sWindowTemplate_ThreeOptions
+sWindowTemplate_ThreeOptions: @ 0x82C24EC
 	.incbin "baserom_jp.gba", 0x2c24ec, 0x8
 
-	.globl gUnknown_82C24F4
-gUnknown_82C24F4: @ 0x82C24F4
+	.globl sWindowTemplate_YesNoBox
+sWindowTemplate_YesNoBox: @ 0x82C24F4
 	.incbin "baserom_jp.gba", 0x2c24f4, 0x8
 
-	.globl gUnknown_82C24FC
-gUnknown_82C24FC: @ 0x82C24FC
+	.globl sWindowTemplate_GiftSelect_3Options
+sWindowTemplate_GiftSelect_3Options: @ 0x82C24FC
 	.incbin "baserom_jp.gba", 0x2c24fc, 0x8
 
-	.globl gUnknown_82C2504
-gUnknown_82C2504: @ 0x82C2504
+	.globl sWindowTemplate_GiftSelect_2Options
+sWindowTemplate_GiftSelect_2Options: @ 0x82C2504
 	.incbin "baserom_jp.gba", 0x2c2504, 0x8
 
 	.globl gUnknown_82C250C
@@ -615,71 +615,71 @@ gUnknown_82C256C: @ 0x82C256C
 	.string "$$$ャゆわく　　　　ザゆわくあ　　　ぎゆわく\n"
 	.string "$$$ャゆわく　　　　ぎゆわく\n"
 	.string "$$$"
-	.globl gUnknown_82C25F4
-gUnknown_82C25F4: @ 0x82C25F4
+	.globl sListMenu_ReceiveSendToss
+sListMenu_ReceiveSendToss: @ 0x82C25F4
 	.incbin "baserom_jp.gba", 0x2c25f4, 0x18
 
-	.globl gUnknown_82C260C
-gUnknown_82C260C: @ 0x82C260C
+	.globl sListMenu_ReceiveToss
+sListMenu_ReceiveToss: @ 0x82C260C
 	.incbin "baserom_jp.gba", 0x2c260c, 0x18
 
-	.globl gUnknown_82C2624
-gUnknown_82C2624: @ 0x82C2624
+	.globl sListMenu_ReceiveSend
+sListMenu_ReceiveSend: @ 0x82C2624
 	.incbin "baserom_jp.gba", 0x2c2624, 0x18
 
-	.globl gUnknown_82C263C
-gUnknown_82C263C: @ 0x82C263C
+	.globl sListMenu_Receive
+sListMenu_Receive: @ 0x82C263C
 	.incbin "baserom_jp.gba", 0x2c263c, 0x88
 
 	.globl gUnknown_82C26C4
 gUnknown_82C26C4: @ 0x82C26C4
 	.string "ふしぎなカードを　もっていないので\n"
 	.string "あたらしく　カードを　よみこみます$"
-	.globl gUnknown_82C26E8
-gUnknown_82C26E8: @ 0x82C26E8
+	.globl sJPText_MgDontHaveNews
+sJPText_MgDontHaveNews: @ 0x82C26E8
 	.incbin "baserom_jp.gba", 0x2c26e8, 0x28
 
-	.globl gUnknown_82C2710
-gUnknown_82C2710: @ 0x82C2710
+	.globl sJPText_MgWhereCard
+sJPText_MgWhereCard: @ 0x82C2710
 	.incbin "baserom_jp.gba", 0x2c2710, 0x1c
 
-	.globl gUnknown_82C272C
-gUnknown_82C272C: @ 0x82C272C
+	.globl sJPText_MgWhereNews
+sJPText_MgWhereNews: @ 0x82C272C
 	.incbin "baserom_jp.gba", 0x2c272c, 0x40
 
-	.globl gUnknown_82C276C
-gUnknown_82C276C: @ 0x82C276C
+	.globl sJPText_MgCommunicating
+sJPText_MgCommunicating: @ 0x82C276C
 	.incbin "baserom_jp.gba", 0x2c276c, 0x10
 
-	.globl gUnknown_82C277C
-gUnknown_82C277C: @ 0x82C277C
+	.globl sJPText_MgCommCompleted
+sJPText_MgCommCompleted: @ 0x82C277C
 	.incbin "baserom_jp.gba", 0x2c277c, 0x14
 
 	.globl gUnknown_82C2790
 gUnknown_82C2790: @ 0x82C2790
 	.string "つうしんに　しっぱい　しました$"
-	.globl gUnknown_82C27A0
-gUnknown_82C27A0: @ 0x82C27A0
+	.globl sJPText_MeventMsg9
+sJPText_MeventMsg9: @ 0x82C27A0
 	.incbin "baserom_jp.gba", 0x2c27a0, 0x14
 
-	.globl gUnknown_82C27B4
-gUnknown_82C27B4: @ 0x82C27B4
+	.globl sJPText_MgThrowAwayCard
+sJPText_MgThrowAwayCard: @ 0x82C27B4
 	.incbin "baserom_jp.gba", 0x2c27b4, 0x28
 
 	.globl gUnknown_82C27DC
 gUnknown_82C27DC: @ 0x82C27DC
 	.string "まだ　カードの　おくりものを　もらって\n"
 	.string "ませんが　ほんとうに　よみこみますか？$"
-	.globl gUnknown_82C2804
-gUnknown_82C2804: @ 0x82C2804
+	.globl sJPText_MeventMsg2a
+sJPText_MeventMsg2a: @ 0x82C2804
 	.incbin "baserom_jp.gba", 0x2c2804, 0x1c
 
-	.globl gUnknown_82C2820
-gUnknown_82C2820: @ 0x82C2820
+	.globl sJPText_MeventMsg3a
+sJPText_MeventMsg3a: @ 0x82C2820
 	.incbin "baserom_jp.gba", 0x2c2820, 0x18
 
-	.globl gUnknown_82C2838
-gUnknown_82C2838: @ 0x82C2838
+	.globl sJPText_MeventMsg2b
+sJPText_MeventMsg2b: @ 0x82C2838
 	.incbin "baserom_jp.gba", 0x2c2838, 0x1c
 
 	.globl gUnknown_82C2854
@@ -690,60 +690,60 @@ gUnknown_82C2854: @ 0x82C2854
 gUnknown_82C286C: @ 0x82C286C
 	.string "あたらしい　スタンプが\n"
 	.string "おくられて　きました！$"
-	.globl gUnknown_82C2884
-gUnknown_82C2884: @ 0x82C2884
+	.globl sJPText_MeventMsg12
+sJPText_MeventMsg12: @ 0x82C2884
 	.incbin "baserom_jp.gba", 0x2c2884, 0x1c
 
 	.globl gUnknown_82C28A0
 gUnknown_82C28A0: @ 0x82C28A0
 	.string "おなじ　ふしぎなカードを\n"
 	.string "すでに　もっています$"
-	.globl gUnknown_82C28B8
-gUnknown_82C28B8: @ 0x82C28B8
+	.globl sJPText_MeventMsg7
+sJPText_MeventMsg7: @ 0x82C28B8
 	.incbin "baserom_jp.gba", 0x2c28b8, 0x18
 
-	.globl gUnknown_82C28D0
-gUnknown_82C28D0: @ 0x82C28D0
+	.globl sJPText_MeventMsg6
+sJPText_MeventMsg6: @ 0x82C28D0
 	.incbin "baserom_jp.gba", 0x2c28d0, 0x18
 
-	.globl gUnknown_82C28E8
-gUnknown_82C28E8: @ 0x82C28E8
+	.globl sJPText_MeventMsg8
+sJPText_MeventMsg8: @ 0x82C28E8
 	.incbin "baserom_jp.gba", 0x2c28e8, 0x1c
 
-	.globl gUnknown_82C2904
-gUnknown_82C2904: @ 0x82C2904
+	.globl sJPText_MeventMsg1
+sJPText_MeventMsg1: @ 0x82C2904
 	.incbin "baserom_jp.gba", 0x2c2904, 0x20
 
-	.globl gUnknown_82C2924
-gUnknown_82C2924: @ 0x82C2924
+	.globl sJPText_MeventMsg10b
+sJPText_MeventMsg10b: @ 0x82C2924
 	.incbin "baserom_jp.gba", 0x2c2924, 0x20
 
-	.globl gUnknown_82C2944
-gUnknown_82C2944: @ 0x82C2944
+	.globl sJPText_MeventMsg10a
+sJPText_MeventMsg10a: @ 0x82C2944
 	.incbin "baserom_jp.gba", 0x2c2944, 0x1c
 
-	.globl gUnknown_82C2960
-gUnknown_82C2960: @ 0x82C2960
+	.globl sJPText_MeventMsg0
+sJPText_MeventMsg0: @ 0x82C2960
 	.incbin "baserom_jp.gba", 0x2c2960, 0x14
 
-	.globl gUnknown_82C2974
-gUnknown_82C2974: @ 0x82C2974
+	.globl gText_WhatToDoWithCards
+gText_WhatToDoWithCards: @ 0x82C2974
 	.incbin "baserom_jp.gba", 0x2c2974, 0x10
 
-	.globl gUnknown_82C2984
-gUnknown_82C2984: @ 0x82C2984
+	.globl gText_WhatToDoWithNews
+gText_WhatToDoWithNews: @ 0x82C2984
 	.incbin "baserom_jp.gba", 0x2c2984, 0x10
 
-	.globl gUnknown_82C2994
-gUnknown_82C2994: @ 0x82C2994
+	.globl sJPText_MgSendingCard
+sJPText_MgSendingCard: @ 0x82C2994
 	.incbin "baserom_jp.gba", 0x2c2994, 0x18
 
-	.globl gUnknown_82C29AC
-gUnknown_82C29AC: @ 0x82C29AC
+	.globl sJPText_MgSendingNews
+sJPText_MgSendingNews: @ 0x82C29AC
 	.incbin "baserom_jp.gba", 0x2c29ac, 0x14
 
-	.globl gUnknown_82C29C0
-gUnknown_82C29C0: @ 0x82C29C0
+	.globl sJPText_StampMsg2
+sJPText_StampMsg2: @ 0x82C29C0
 	.incbin "baserom_jp.gba", 0x2c29c0, 0x18
 
 	.globl gUnknown_82C29D8
@@ -754,157 +754,157 @@ gUnknown_82C29D8: @ 0x82C29D8
 gUnknown_82C29EC: @ 0x82C29EC
 	.string "{B_COPY_VAR_1}に　スタンプ　を\n"
 	.string "おくり　ました！$"
-	.globl gUnknown_82C2A00
-gUnknown_82C2A00: @ 0x82C2A00
+	.globl sJPText_StampMsg12
+sJPText_StampMsg12: @ 0x82C2A00
 	.incbin "baserom_jp.gba", 0x2c2a00, 0x14
 
-	.globl gUnknown_82C2A14
-gUnknown_82C2A14: @ 0x82C2A14
+	.globl sJPText_StampMsg5
+sJPText_StampMsg5: @ 0x82C2A14
 	.incbin "baserom_jp.gba", 0x2c2a14, 0x1c
 
-	.globl gUnknown_82C2A30
-gUnknown_82C2A30: @ 0x82C2A30
+	.globl sJPText_StampMsg7
+sJPText_StampMsg7: @ 0x82C2A30
 	.incbin "baserom_jp.gba", 0x2c2a30, 0x18
 
-	.globl gUnknown_82C2A48
-gUnknown_82C2A48: @ 0x82C2A48
+	.globl sJPText_StampMsg6
+sJPText_StampMsg6: @ 0x82C2A48
 	.incbin "baserom_jp.gba", 0x2c2a48, 0x18
 
-	.globl gUnknown_82C2A60
-gUnknown_82C2A60: @ 0x82C2A60
+	.globl sJPText_StampMsg9
+sJPText_StampMsg9: @ 0x82C2A60
 	.incbin "baserom_jp.gba", 0x2c2a60, 0x18
 
 	.globl gUnknown_82C2A78
 gUnknown_82C2A78: @ 0x82C2A78
 	.string "この　あいて　には\n"
 	.string "ふしぎなおくりものを　わたせません$"
-	.globl gUnknown_82C2A94
-gUnknown_82C2A94: @ 0x82C2A94
+	.globl sText_DiscardWonderCard
+sText_DiscardWonderCard: @ 0x82C2A94
 	.incbin "baserom_jp.gba", 0x2c2a94, 0x20
 
 	.globl gUnknown_82C2AB4
 gUnknown_82C2AB4: @ 0x82C2AB4
 	.string "ほんとうに　ニュースを\n"
 	.string "すてても　よいですか？$"
-	.globl gUnknown_82C2ACC
-gUnknown_82C2ACC: @ 0x82C2ACC
+	.globl sJPText_MgDiscardConfirm
+sJPText_MgDiscardConfirm: @ 0x82C2ACC
 	.incbin "baserom_jp.gba", 0x2c2acc, 0x20
 
-	.globl gUnknown_82C2AEC
-gUnknown_82C2AEC: @ 0x82C2AEC
+	.globl sText_SavingGame1
+sText_SavingGame1: @ 0x82C2AEC
 	.incbin "baserom_jp.gba", 0x2c2aec, 0x1c
 
-	.globl gUnknown_82C2B08
-gUnknown_82C2B08: @ 0x82C2B08
+	.globl sText_SavingGame2
+sText_SavingGame2: @ 0x82C2B08
 	.incbin "baserom_jp.gba", 0x2c2b08, 0x20
 
-	.globl gUnknown_82C2B28
-gUnknown_82C2B28: @ 0x82C2B28
+	.globl sText_WasThrownAwayWonderCard
+sText_WasThrownAwayWonderCard: @ 0x82C2B28
 	.incbin "baserom_jp.gba", 0x2c2b28, 0x10
 
 	.globl gUnknown_82C2B38
 gUnknown_82C2B38: @ 0x82C2B38
 	.string "ニュースを　すてました$"
-	.globl gUnknown_82C2B44
-gUnknown_82C2B44: @ 0x82C2B44
+	.globl gText_MysteryGift
+gText_MysteryGift: @ 0x82C2B44
 	.incbin "baserom_jp.gba", 0x2c2b44, 0xc
 
-	.globl gUnknown_82C2B50
-gUnknown_82C2B50: @ 0x82C2B50
+	.globl gText_PickOKExit
+gText_PickOKExit: @ 0x82C2B50
 	.incbin "baserom_jp.gba", 0x2c2b50, 0x14
 
-	.globl gUnknown_82C2B64
-gUnknown_82C2B64: @ 0x82C2B64
+	.globl sTextColors_Header
+sTextColors_Header: @ 0x82C2B64
 	.incbin "baserom_jp.gba", 0x2c2b64, 0x8
 
 	.globl gUnknown_82C2B6C
 gUnknown_82C2B6C: @ 0x82C2B6C
 	.string "あいうテスト$むげんのチケット$"
-	.globl gUnknown_82C2B7C
-gUnknown_82C2B7C: @ 0x82C2B7C
+	.globl sUnionRoomObjGfxIds
+sUnionRoomObjGfxIds: @ 0x82C2B7C
 	.incbin "baserom_jp.gba", 0x2c2b7c, 0x14
 
-	.globl gUnknown_82C2B90
-gUnknown_82C2B90: @ 0x82C2B90
+	.globl sUnionRoomPlayerCoords
+sUnionRoomPlayerCoords: @ 0x82C2B90
 	.incbin "baserom_jp.gba", 0x2c2b90, 0x20
 
-	.globl gUnknown_82C2BB0
-gUnknown_82C2BB0: @ 0x82C2BB0
+	.globl sUnionRoomGroupOffsets
+sUnionRoomGroupOffsets: @ 0x82C2BB0
 	.incbin "baserom_jp.gba", 0x2c2bb0, 0xa
 
-	.globl gUnknown_82C2BBA
-gUnknown_82C2BBA: @ 0x82C2BBA
+	.globl sOppositeFacingDirection
+sOppositeFacingDirection: @ 0x82C2BBA
 	.incbin "baserom_jp.gba", 0x2c2bba, 0x5
 
-	.globl gUnknown_82C2BBF
-gUnknown_82C2BBF: @ 0x82C2BBF
+	.globl sMemberFacingDirections
+sMemberFacingDirections: @ 0x82C2BBF
 	.incbin "baserom_jp.gba", 0x2c2bbf, 0x5
 
-	.globl gUnknown_82C2BC4
-gUnknown_82C2BC4: @ 0x82C2BC4
+	.globl sUnionRoomLocalIds
+sUnionRoomLocalIds: @ 0x82C2BC4
 	.incbin "baserom_jp.gba", 0x2c2bc4, 0x18
 
-	.globl gUnknown_82C2BDC
-gUnknown_82C2BDC: @ 0x82C2BDC
+	.globl gAssertFile_rfu_union_tool
+gAssertFile_rfu_union_tool: @ 0x82C2BDC
 	.incbin "baserom_jp.gba", 0x2c2bdc, 0x14
 
-	.globl gUnknown_82C2BF0
-gUnknown_82C2BF0: @ 0x82C2BF0
+	.globl gAssertCond_UnionObjWork
+gAssertCond_UnionObjWork: @ 0x82C2BF0
 	.incbin "baserom_jp.gba", 0x2c2bf0, 0x4
 
-	.globl gUnknown_82C2BF4
-gUnknown_82C2BF4: @ 0x82C2BF4
+	.globl gAssertCond_UnionObjWork2
+gAssertCond_UnionObjWork2: @ 0x82C2BF4
 	.incbin "baserom_jp.gba", 0x2c2bf4, 0x15
 
-	.globl gUnknown_82C2C09
-gUnknown_82C2C09: @ 0x82C2C09
+	.globl sMovement_UnionPlayerExit
+sMovement_UnionPlayerExit: @ 0x82C2C09
 	.incbin "baserom_jp.gba", 0x2c2c09, 0x2
 
-	.globl gUnknown_82C2C0B
-gUnknown_82C2C0B: @ 0x82C2C0B
+	.globl sMovement_UnionPlayerEnter
+sMovement_UnionPlayerEnter: @ 0x82C2C0B
 	.incbin "baserom_jp.gba", 0x2c2c0b, 0x5
 
-	.globl gUnknown_82C2C10
-gUnknown_82C2C10: @ 0x82C2C10
+	.globl sWirelessScreenPalettes
+sWirelessScreenPalettes: @ 0x82C2C10
 	.incbin "baserom_jp.gba", 0x2c2c10, 0x200
 
-	.globl gUnknown_82C2E10
-gUnknown_82C2E10: @ 0x82C2E10
+	.globl sWirelessScreenBgTiles_Gfx
+sWirelessScreenBgTiles_Gfx: @ 0x82C2E10
 	.incbin "baserom_jp.gba", 0x2c2e10, 0x210
 
-	.globl gUnknown_82C3020
-gUnknown_82C3020: @ 0x82C3020
+	.globl sWirelessScreenBgTiles_Tilemap
+sWirelessScreenBgTiles_Tilemap: @ 0x82C3020
 	.incbin "baserom_jp.gba", 0x2c3020, 0x194
 
-	.globl gUnknown_82C31B4
-gUnknown_82C31B4: @ 0x82C31B4
+	.globl sWirelessScreenBgTemplates
+sWirelessScreenBgTemplates: @ 0x82C31B4
 	.incbin "baserom_jp.gba", 0x2c31b4, 0x8
 
 	.globl gUnknown_82C31BC
 gUnknown_82C31BC: @ 0x82C31BC
 	.string "　か　ねうそあ　　おえつそそべ　　なえかそそキあ$　　　　　　　ワイヤレス　つうしん　じょうきょう$こうかん　しているひと$たいせん　しているひと$ユニオンルームに　いるひと$つうしん　しているひと$"
-	.globl gUnknown_82C3220
-gUnknown_82C3220: @ 0x82C3220
+	.globl sWirelessScreenActivityCountTexts
+sWirelessScreenActivityCountTexts: @ 0x82C3220
 	.incbin "baserom_jp.gba", 0x2c3220, 0x18
 
-	.globl gUnknown_82C3238
-gUnknown_82C3238: @ 0x82C3238
+	.globl sWirelessScreenHeaderTexts
+sWirelessScreenHeaderTexts: @ 0x82C3238
 	.incbin "baserom_jp.gba", 0x2c3238, 0x14
 
-	.globl gUnknown_82C324C
-gUnknown_82C324C: @ 0x82C324C
+	.globl sWirelessScreenActivityGroupInfo
+sWirelessScreenActivityGroupInfo: @ 0x82C324C
 	.incbin "baserom_jp.gba", 0x2c324c, 0x60
 
-	.globl gUnknown_82C32AC
-gUnknown_82C32AC: @ 0x82C32AC
+	.globl sUnionRoomBattleBgTemplates
+sUnionRoomBattleBgTemplates: @ 0x82C32AC
 	.incbin "baserom_jp.gba", 0x2c32ac, 0x4
 
-	.globl gUnknown_82C32B0
-gUnknown_82C32B0: @ 0x82C32B0
+	.globl sUnionRoomBattleWindowTemplates
+sUnionRoomBattleWindowTemplates: @ 0x82C32B0
 	.incbin "baserom_jp.gba", 0x2c32b0, 0x10
 
-	.globl gUnknown_82C32C0
-gUnknown_82C32C0: @ 0x82C32C0
+	.globl sWirelessScreenTextColors
+sWirelessScreenTextColors: @ 0x82C32C0
 	.incbin "baserom_jp.gba", 0x2c32c0, 0x3
 
 	.globl gUnknown_82C32C3
@@ -1857,12 +1857,12 @@ gUnknown_82D45C8: @ 0x82D45C8
 gUnknown_82D4CA8: @ 0x82D4CA8
 	.incbin "baserom_jp.gba", 0x2d4ca8, 0xdc0
 
-	.globl gUnknown_82D5A68
-gUnknown_82D5A68: @ 0x82D5A68
+	.globl gMonBackPicCoords
+gMonBackPicCoords: @ 0x82D5A68
 	.incbin "baserom_jp.gba", 0x2d5a68, 0x6e0
 
-	.globl gUnknown_82D6148
-gUnknown_82D6148: @ 0x82D6148
+	.globl gMonBackPicTable
+gMonBackPicTable: @ 0x82D6148
 	.incbin "baserom_jp.gba", 0x2d6148, 0xdc0
 
 	.globl gUnknown_82D6F08
@@ -1881,12 +1881,12 @@ gUnknown_82D8BFC: @ 0x82D8BFC
 gUnknown_82D8D70: @ 0x82D8D70
 	.incbin "baserom_jp.gba", 0x2d8d70, 0x174
 
-	.globl gUnknown_82D8EE4
-gUnknown_82D8EE4: @ 0x82D8EE4
+	.globl gTrainerFrontPicTable
+gTrainerFrontPicTable: @ 0x82D8EE4
 	.incbin "baserom_jp.gba", 0x2d8ee4, 0x2e8
 
-	.globl gUnknown_82D91CC
-gUnknown_82D91CC: @ 0x82D91CC
+	.globl gTrainerFrontPicPaletteTable
+gTrainerFrontPicPaletteTable: @ 0x82D91CC
 	.incbin "baserom_jp.gba", 0x2d91cc, 0x3d0
 
 	.globl gUnknown_82D959C
@@ -1897,32 +1897,32 @@ gUnknown_82D959C: @ 0x82D959C
 gUnknown_82D95BC: @ 0x82D95BC
 	.incbin "baserom_jp.gba", 0x2d95bc, 0x20
 
-	.globl gUnknown_82D95DC
-gUnknown_82D95DC: @ 0x82D95DC
+	.globl gTrainerBackPicTable
+gTrainerBackPicTable: @ 0x82D95DC
 	.incbin "baserom_jp.gba", 0x2d95dc, 0x40
 
 	.globl gUnknown_82D961C
 gUnknown_82D961C: @ 0x82D961C
 	.incbin "baserom_jp.gba", 0x2d961c, 0x40
 
-	.globl gUnknown_82D965C
-gUnknown_82D965C: @ 0x82D965C
+	.globl gEnemyMonElevation
+gEnemyMonElevation: @ 0x82D965C
 	.incbin "baserom_jp.gba", 0x2d965c, 0x3ce0
 
 	.globl gUnknown_82DD33C
 gUnknown_82DD33C: @ 0x82DD33C
 	.incbin "baserom_jp.gba", 0x2dd33c, 0x6e0
 
-	.globl gUnknown_82DDA1C
-gUnknown_82DDA1C: @ 0x82DDA1C
+	.globl gMonFrontPicTable
+gMonFrontPicTable: @ 0x82DDA1C
 	.incbin "baserom_jp.gba", 0x2dda1c, 0x5b48
 
-	.globl gUnknown_82E3564
-gUnknown_82E3564: @ 0x82E3564
+	.globl gTrainerClassNames
+gTrainerClassNames: @ 0x82E3564
 	.incbin "baserom_jp.gba", 0x2e3564, 0x2d8
 
-	.globl gUnknown_82E383C
-gUnknown_82E383C: @ 0x82E383C
+	.globl gTrainers
+gTrainers: @ 0x82E383C
 	.incbin "baserom_jp.gba", 0x2e383c, 0x4
 
 	.globl gUnknown_82E3840
@@ -1941,12 +1941,12 @@ gUnknown_82E9CC0: @ 0x82E9CC0
 gUnknown_82E9D00: @ 0x82E9D00
 	.incbin "baserom_jp.gba", 0x2e9d00, 0x61c
 
-	.globl gUnknown_82EA31C
-gUnknown_82EA31C: @ 0x82EA31C
+	.globl gSpeciesNamesJP
+gSpeciesNamesJP: @ 0x82EA31C
 	.incbin "baserom_jp.gba", 0x2ea31c, 0x9a8
 
-	.globl gUnknown_82EACC4
-gUnknown_82EACC4: @ 0x82EACC4
+	.globl gMoveNamesJP
+gMoveNamesJP: @ 0x82EACC4
 	.incbin "baserom_jp.gba", 0x2eacc4, 0xb64
 
 	.globl sVsLetter_V_SpriteTemplate
@@ -2001,8 +2001,8 @@ gUnknown_82EBB30: @ 0x82EBB30
 gUnknown_82EBB38: @ 0x82EBB38
 	.incbin "baserom_jp.gba", 0x2ebb38, 0x150
 
-	.globl gUnknown_82EBC88
-gUnknown_82EBC88: @ 0x82EBC88
+	.globl gTypeNames
+gTypeNames: @ 0x82EBC88
 	.incbin "baserom_jp.gba", 0x2ebc88, 0x5c
 
 	.globl gUnknown_82EBCE4
@@ -2133,16 +2133,16 @@ gUnknown_82ECF80: @ 0x82ECF80
 gUnknown_82ECF8C: @ 0x82ECF8C
 	.incbin "baserom_jp.gba", 0x2ecf8c, 0x1c
 
-	.globl gUnknown_82ECFA8
-gUnknown_82ECFA8: @ 0x82ECFA8
+	.globl sSmokescreenImpactSpriteSheet
+sSmokescreenImpactSpriteSheet: @ 0x82ECFA8
 	.incbin "baserom_jp.gba", 0x2ecfa8, 0x8
 
-	.globl gUnknown_82ECFB0
-gUnknown_82ECFB0: @ 0x82ECFB0
+	.globl sSmokescreenImpactSpritePalette
+sSmokescreenImpactSpritePalette: @ 0x82ECFB0
 	.incbin "baserom_jp.gba", 0x2ecfb0, 0x60
 
-	.globl gUnknown_82ED010
-gUnknown_82ED010: @ 0x82ED010
+	.globl sSmokescreenImpactSpriteTemplate
+sSmokescreenImpactSpriteTemplate: @ 0x82ED010
 	.incbin "baserom_jp.gba", 0x2ed010, 0x18
 
 	.globl gUnknown_82ED028
@@ -2213,12 +2213,12 @@ gUnknown_82EFF52: @ 0x82EFF52
 gUnknown_82EFFA4: @ 0x82EFFA4
 	.incbin "baserom_jp.gba", 0x2effa4, 0x110
 
-	.globl gUnknown_82F00B4
-gUnknown_82F00B4: @ 0x82F00B4
+	.globl gExperienceTables
+gExperienceTables: @ 0x82F00B4
 	.incbin "baserom_jp.gba", 0x2f00b4, 0xca0
 
-	.globl gUnknown_82F0D54
-gUnknown_82F0D54: @ 0x82F0D54
+	.globl gSpeciesInfo
+gSpeciesInfo: @ 0x82F0D54
 	.incbin "baserom_jp.gba", 0x2f0d54, 0xc
 
 	.globl gUnknown_82F0D60
@@ -3564,28 +3564,28 @@ gUnknown_82FA88A: @ 0x82FA88A
 gUnknown_82FA8B4: @ 0x82FA8B4
 	.incbin "baserom_jp.gba", 0x2fa8b4, 0x18
 
-	.globl gUnknown_82FA8CC
-gUnknown_82FA8CC: @ 0x82FA8CC
+	.globl gSineTable
+gSineTable: @ 0x82FA8CC
 	.incbin "baserom_jp.gba", 0x2fa8cc, 0x280
 
-	.globl gUnknown_82FAB4C
-gUnknown_82FAB4C: @ 0x82FAB4C
+	.globl gSineDegreeTable
+gSineDegreeTable: @ 0x82FAB4C
 	.incbin "baserom_jp.gba", 0x2fab4c, 0x168
 
-	.globl gUnknown_82FACB4
-gUnknown_82FACB4: @ 0x82FACB4
+	.globl gBitTable
+gBitTable: @ 0x82FACB4
 	.incbin "baserom_jp.gba", 0x2facb4, 0x80
 
-	.globl gUnknown_82FAD34
-gUnknown_82FAD34: @ 0x82FAD34
+	.globl sInvisibleSpriteTemplate
+sInvisibleSpriteTemplate: @ 0x82FAD34
 	.incbin "baserom_jp.gba", 0x2fad34, 0x18
 
-	.globl gUnknown_82FAD4C
-gUnknown_82FAD4C: @ 0x82FAD4C
+	.globl sSpriteDimensions
+sSpriteDimensions: @ 0x82FAD4C
 	.incbin "baserom_jp.gba", 0x2fad4c, 0x18
 
-	.globl gUnknown_82FAD64
-gUnknown_82FAD64: @ 0x82FAD64
+	.globl sCrc16Table
+sCrc16Table: @ 0x82FAD64
 	.incbin "baserom_jp.gba", 0x2fad64, 0xa00
 
 	.globl gUnknown_82FB764
@@ -4328,8 +4328,8 @@ gUnknown_830FC50: @ 0x830FC50
 gUnknown_830FC60: @ 0x830FC60
 	.incbin "baserom_jp.gba", 0x30fc60, 0x8
 
-	.globl gUnknown_830FC68
-gUnknown_830FC68: @ 0x830FC68
+	.globl sContestWinnerPicDummy
+sContestWinnerPicDummy: @ 0x830FC68
 	.incbin "baserom_jp.gba", 0x30fc68, 0x20
 
 	.globl gUnknown_830FC88
@@ -4375,56 +4375,56 @@ gUnknown_845A1F4: @ 0x845A1F4
 gUnknown_845E998: @ 0x845E998
 	.incbin "baserom_jp.gba", 0x45e998, 0x980
 
-	.globl gUnknown_845F318
-gUnknown_845F318: @ 0x845F318
+	.globl sDummyConnectionFlags
+sDummyConnectionFlags: @ 0x845F318
 	.incbin "baserom_jp.gba", 0x45f318, 0x4
 
-	.globl gUnknown_845F31C
-gUnknown_845F31C: @ 0x845F31C
+	.globl sTileBitAttributes
+sTileBitAttributes: @ 0x845F31C
 	.incbin "baserom_jp.gba", 0x45f31c, 0x10090
 
-	.globl gUnknown_846F3AC
-gUnknown_846F3AC: @ 0x846F3AC
+	.globl sDoorOpenAnimFrames
+sDoorOpenAnimFrames: @ 0x846F3AC
 	.incbin "baserom_jp.gba", 0x46f3ac, 0x14
 
-	.globl gUnknown_846F3C0
-gUnknown_846F3C0: @ 0x846F3C0
+	.globl sDoorCloseAnimFrames
+sDoorCloseAnimFrames: @ 0x846F3C0
 	.incbin "baserom_jp.gba", 0x46f3c0, 0x14
 
-	.globl gUnknown_846F3D4
-gUnknown_846F3D4: @ 0x846F3D4
+	.globl sBigDoorOpenAnimFrames
+sBigDoorOpenAnimFrames: @ 0x846F3D4
 	.incbin "baserom_jp.gba", 0x46f3d4, 0x1c0
 
-	.globl gUnknown_846F594
-gUnknown_846F594: @ 0x846F594
+	.globl sDoorAnimGraphicsTable
+sDoorAnimGraphicsTable: @ 0x846F594
 	.incbin "baserom_jp.gba", 0x46f594, 0x288
 
-	.globl gUnknown_846F81C
-gUnknown_846F81C: @ 0x846F81C
+	.globl sForcedMovementTestFuncs
+sForcedMovementTestFuncs: @ 0x846F81C
 	.incbin "baserom_jp.gba", 0x46f81c, 0x48
 
-	.globl gUnknown_846F864
-gUnknown_846F864: @ 0x846F864
+	.globl sForcedMovementFuncs
+sForcedMovementFuncs: @ 0x846F864
 	.incbin "baserom_jp.gba", 0x46f864, 0x4c
 
-	.globl gUnknown_846F8B0
-gUnknown_846F8B0: @ 0x846F8B0
+	.globl sPlayerNotOnBikeFuncs
+sPlayerNotOnBikeFuncs: @ 0x846F8B0
 	.incbin "baserom_jp.gba", 0x46f8b0, 0xc
 
-	.globl gUnknown_846F8BC
-gUnknown_846F8BC: @ 0x846F8BC
+	.globl sAcroBikeTrickMetatiles
+sAcroBikeTrickMetatiles: @ 0x846F8BC
 	.incbin "baserom_jp.gba", 0x46f8bc, 0x14
 
-	.globl gUnknown_846F8D0
-gUnknown_846F8D0: @ 0x846F8D0
+	.globl sAcroBikeTrickCollisionTypes
+sAcroBikeTrickCollisionTypes: @ 0x846F8D0
 	.incbin "baserom_jp.gba", 0x46f8d0, 0x8
 
-	.globl gUnknown_846F8D8
-gUnknown_846F8D8: @ 0x846F8D8
+	.globl sPlayerAvatarTransitionFuncs
+sPlayerAvatarTransitionFuncs: @ 0x846F8D8
 	.incbin "baserom_jp.gba", 0x46f8d8, 0x20
 
-	.globl gUnknown_846F8F8
-gUnknown_846F8F8: @ 0x846F8F8
+	.globl sArrowWarpMetatileBehaviorChecks
+sArrowWarpMetatileBehaviorChecks: @ 0x846F8F8
 	.incbin "baserom_jp.gba", 0x46f8f8, 0x10
 
 	.globl gUnknown_846F908
@@ -4511,8 +4511,8 @@ gUnknown_846FA03: @ 0x846FA03
 gUnknown_846FA13: @ 0x846FA13
 	.incbin "baserom_jp.gba", 0x46fa13, 0x5
 
-	.globl gUnknown_846FA18
-gUnknown_846FA18: @ 0x846FA18
+	.globl gReflectionEffectPaletteMap
+gReflectionEffectPaletteMap: @ 0x846FA18
 	.incbin "baserom_jp.gba", 0x46fa18, 0x10
 
 	.globl gUnknown_846FA28
@@ -4559,8 +4559,8 @@ gUnknown_84DDA74: @ 0x84DDA74
 gUnknown_84DDE30: @ 0x84DDE30
 	.incbin "baserom_jp.gba", 0x4dde30, 0x1c
 
-	.globl gUnknown_84DDE4C
-gUnknown_84DDE4C: @ 0x84DDE4C
+	.globl gFieldEffectObjectTemplatePointers
+gFieldEffectObjectTemplatePointers: @ 0x84DDE4C
 	.incbin "baserom_jp.gba", 0x4dde4c, 0x3ab4
 
 	.globl gUnknown_84E1900
@@ -4595,8 +4595,8 @@ gUnknown_84E4CB0: @ 0x84E4CB0
 gUnknown_84E4D5C: @ 0x84E4D5C
 	.incbin "baserom_jp.gba", 0x4e4d5c, 0xc0
 
-	.globl gUnknown_84E4E1C
-gUnknown_84E4E1C: @ 0x84E4E1C
+	.globl gSpritePalette_GeneralFieldEffect1
+gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
 	.incbin "baserom_jp.gba", 0x4e4e1c, 0xd14
 
 	.globl gUnknown_84E5B30
@@ -5226,12 +5226,12 @@ gUnknown_84E6BA8: @ 0x84E6BA8
 gUnknown_84E6BBC: @ 0x84E6BBC
 	.incbin "baserom_jp.gba", 0x4e6bbc, 0xa
 
-	.globl gUnknown_84E6BC6
-gUnknown_84E6BC6: @ 0x84E6BC6
+	.globl sFigure8XOffsets
+sFigure8XOffsets: @ 0x84E6BC6
 	.incbin "baserom_jp.gba", 0x4e6bc6, 0x48
 
-	.globl gUnknown_84E6C0E
-gUnknown_84E6C0E: @ 0x84E6C0E
+	.globl sFigure8YOffsets
+sFigure8YOffsets: @ 0x84E6C0E
 	.incbin "baserom_jp.gba", 0x4e6c0e, 0x7a
 
 	.globl gUnknown_84E6C88
@@ -5262,68 +5262,68 @@ gUnknown_84E6CA8: @ 0x84E6CA8
 gUnknown_84E6CB4: @ 0x84E6CB4
 	.incbin "baserom_jp.gba", 0x4e6cb4, 0x2c
 
-	.globl gUnknown_84E6CE0
-gUnknown_84E6CE0: @ 0x84E6CE0
+	.globl gTextWindowFrame1_Gfx
+gTextWindowFrame1_Gfx: @ 0x84E6CE0
 	.incbin "baserom_jp.gba", 0x4e6ce0, 0x1680
 
-	.globl gUnknown_84E8360
-gUnknown_84E8360: @ 0x84E8360
+	.globl gTextWindowFrame1_Pal
+gTextWindowFrame1_Pal: @ 0x84E8360
 	.incbin "baserom_jp.gba", 0x4e8360, 0x280
 
-	.globl gUnknown_84E85E0
-gUnknown_84E85E0: @ 0x84E85E0
+	.globl gMessageBox_Gfx
+gMessageBox_Gfx: @ 0x84E85E0
 	.incbin "baserom_jp.gba", 0x4e85e0, 0x1c0
 
-	.globl gUnknown_84E87A0
-gUnknown_84E87A0: @ 0x84E87A0
+	.globl sTextWindowPalettes
+sTextWindowPalettes: @ 0x84E87A0
 	.incbin "baserom_jp.gba", 0x4e87a0, 0xa0
 
 	.globl gUnknown_84E8840
 gUnknown_84E8840: @ 0x84E8840
 	.incbin "baserom_jp.gba", 0x4e8840, 0x20
 
-	.globl gUnknown_84E8860
-gUnknown_84E8860: @ 0x84E8860
+	.globl sWindowFrames
+sWindowFrames: @ 0x84E8860
 	.incbin "baserom_jp.gba", 0x4e8860, 0xa0
 
-	.globl gUnknown_84E8900
-gUnknown_84E8900: @ 0x84E8900
+	.globl gNullScriptPtr
+gNullScriptPtr: @ 0x84E8900
 	.incbin "baserom_jp.gba", 0x4e8900, 0x4
 
-	.globl gUnknown_84E8904
-gUnknown_84E8904: @ 0x84E8904
+	.globl sScriptConditionTable
+sScriptConditionTable: @ 0x84E8904
 	.incbin "baserom_jp.gba", 0x4e8904, 0x14
 
-	.globl gUnknown_84E8918
-gUnknown_84E8918: @ 0x84E8918
+	.globl sScriptStringVars
+sScriptStringVars: @ 0x84E8918
 	.incbin "baserom_jp.gba", 0x4e8918, 0xc
 
-	.globl gUnknown_84E8924
-gUnknown_84E8924: @ 0x84E8924
+	.globl sCoordEventWeatherFuncs
+sCoordEventWeatherFuncs: @ 0x84E8924
 	.incbin "baserom_jp.gba", 0x4e8924, 0x68
 
-	.globl gUnknown_84E898C
-gUnknown_84E898C: @ 0x84E898C
+	.globl sPerStepCallbacks
+sPerStepCallbacks: @ 0x84E898C
 	.incbin "baserom_jp.gba", 0x4e898c, 0x20
 
-	.globl gUnknown_84E89AC
-gUnknown_84E89AC: @ 0x84E89AC
+	.globl sHalfSubmergedBridgeMetatileOffsets
+sHalfSubmergedBridgeMetatileOffsets: @ 0x84E89AC
 	.incbin "baserom_jp.gba", 0x4e89ac, 0x20
 
-	.globl gUnknown_84E89CC
-gUnknown_84E89CC: @ 0x84E89CC
+	.globl sFullySubmergedBridgeMetatileOffsets
+sFullySubmergedBridgeMetatileOffsets: @ 0x84E89CC
 	.incbin "baserom_jp.gba", 0x4e89cc, 0x20
 
-	.globl gUnknown_84E89EC
-gUnknown_84E89EC: @ 0x84E89EC
+	.globl sFloatingBridgeMetatileOffsets
+sFloatingBridgeMetatileOffsets: @ 0x84E89EC
 	.incbin "baserom_jp.gba", 0x4e89ec, 0x20
 
-	.globl gUnknown_84E8A0C
-gUnknown_84E8A0C: @ 0x84E8A0C
+	.globl sSootopolisGymIceRowVars
+sSootopolisGymIceRowVars: @ 0x84E8A0C
 	.incbin "baserom_jp.gba", 0x4e8a0c, 0x34
 
-	.globl gUnknown_84E8A40
-gUnknown_84E8A40: @ 0x84E8A40
+	.globl sMuddySlopeMetatiles
+sMuddySlopeMetatiles: @ 0x84E8A40
 	.incbin "baserom_jp.gba", 0x4e8a40, 0x8
 
 	.globl gResetRtcBgTemplates
@@ -5587,8 +5587,8 @@ sFanfares: @ 0x84FCFC8
 gUnknown_84FD010: @ 0x84FD010
 	.incbin "baserom_jp.gba", 0x4fd010, 0x240
 
-	.globl gUnknown_84FD250
-gUnknown_84FD250: @ 0x84FD250
+	.globl gBattleAnimPicTable
+gBattleAnimPicTable: @ 0x84FD250
 	.incbin "baserom_jp.gba", 0x4fd250, 0x1d0
 
 	.globl gUnknown_84FD420
@@ -5631,104 +5631,104 @@ gUnknown_84FE460: @ 0x84FE460
 gUnknown_84FE5A4: @ 0x84FE5A4
 	.incbin "baserom_jp.gba", 0x4fe5a4, 0xc0
 
-	.globl gUnknown_84FE664
-gUnknown_84FE664: @ 0x84FE664
+	.globl sBattlerCoords
+sBattlerCoords: @ 0x84FE664
 	.incbin "baserom_jp.gba", 0x4fe664, 0x20
 
 	.globl gUnknown_84FE684
 gUnknown_84FE684: @ 0x84FE684
 	.incbin "baserom_jp.gba", 0x4fe684, 0x10
 
-	.globl gUnknown_84FE694
-gUnknown_84FE694: @ 0x84FE694
+	.globl sCastformElevations
+sCastformElevations: @ 0x84FE694
 	.incbin "baserom_jp.gba", 0x4fe694, 0x4
 
-	.globl gUnknown_84FE698
-gUnknown_84FE698: @ 0x84FE698
+	.globl sCastformBackSpriteYCoords
+sCastformBackSpriteYCoords: @ 0x84FE698
 	.incbin "baserom_jp.gba", 0x4fe698, 0x4
 
-	.globl gUnknown_84FE69C
-gUnknown_84FE69C: @ 0x84FE69C
+	.globl sSpriteTemplates_MoveEffectMons
+sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
 	.incbin "baserom_jp.gba", 0x4fe69c, 0x30
 
-	.globl gUnknown_84FE6CC
-gUnknown_84FE6CC: @ 0x84FE6CC
+	.globl sSpriteSheets_MoveEffectMons
+sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
 	.incbin "baserom_jp.gba", 0x4fe6cc, 0x18fd0
 
-	.globl gUnknown_851769C
-gUnknown_851769C: @ 0x851769C
+	.globl sFrozenIceCubeSubspriteTable
+sFrozenIceCubeSubspriteTable: @ 0x851769C
 	.incbin "baserom_jp.gba", 0x51769c, 0x8
 
-	.globl gUnknown_85176A4
-gUnknown_85176A4: @ 0x85176A4
+	.globl sFrozenIceCubeSpriteTemplate
+sFrozenIceCubeSpriteTemplate: @ 0x85176A4
 	.incbin "baserom_jp.gba", 0x5176a4, 0x18
 
-	.globl gUnknown_85176BC
-gUnknown_85176BC: @ 0x85176BC
+	.globl sFlashingCircleImpactSpriteTemplate
+sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
 	.incbin "baserom_jp.gba", 0x5176bc, 0x3e4
 
-	.globl gUnknown_8517AA0
-gUnknown_8517AA0: @ 0x8517AA0
+	.globl gTitleScreenPokemonLogoTilemap
+gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
 	.incbin "baserom_jp.gba", 0x517aa0, 0xb8
 
-	.globl gUnknown_8517B58
-gUnknown_8517B58: @ 0x8517B58
+	.globl gTitleScreenBgPalettes
+gTitleScreenBgPalettes: @ 0x8517B58
 	.incbin "baserom_jp.gba", 0x517b58, 0xc0
 
-	.globl gUnknown_8517C18
-gUnknown_8517C18: @ 0x8517C18
+	.globl gTitleScreenPokemonLogoGfx
+gTitleScreenPokemonLogoGfx: @ 0x8517C18
 	.incbin "baserom_jp.gba", 0x517c18, 0x1e9c
 
-	.globl gUnknown_8519AB4
-gUnknown_8519AB4: @ 0x8519AB4
+	.globl sTitleScreenRayquazaGfx
+sTitleScreenRayquazaGfx: @ 0x8519AB4
 	.incbin "baserom_jp.gba", 0x519ab4, 0x7e4
 
-	.globl gUnknown_851A298
-gUnknown_851A298: @ 0x851A298
+	.globl sTitleScreenRayquazaTilemap
+sTitleScreenRayquazaTilemap: @ 0x851A298
 	.incbin "baserom_jp.gba", 0x51a298, 0x450
 
-	.globl gUnknown_851A6E8
-gUnknown_851A6E8: @ 0x851A6E8
+	.globl sTitleScreenCloudsGfx
+sTitleScreenCloudsGfx: @ 0x851A6E8
 	.incbin "baserom_jp.gba", 0x51a6e8, 0x2e4
 
-	.globl gUnknown_851A9CC
-gUnknown_851A9CC: @ 0x851A9CC
+	.globl gTitleScreenCloudsTilemap
+gTitleScreenCloudsTilemap: @ 0x851A9CC
 	.incbin "baserom_jp.gba", 0x51a9cc, 0x240
 
-	.globl gUnknown_851AC0C
-gUnknown_851AC0C: @ 0x851AC0C
+	.globl gTitleScreenAlphaBlend
+gTitleScreenAlphaBlend: @ 0x851AC0C
 	.incbin "baserom_jp.gba", 0x51ac0c, 0xa8
 
-	.globl gUnknown_851ACB4
-gUnknown_851ACB4: @ 0x851ACB4
+	.globl sVersionBannerLeftSpriteTemplate
+sVersionBannerLeftSpriteTemplate: @ 0x851ACB4
 	.incbin "baserom_jp.gba", 0x51acb4, 0x18
 
-	.globl gUnknown_851ACCC
-gUnknown_851ACCC: @ 0x851ACCC
+	.globl sVersionBannerRightSpriteTemplate
+sVersionBannerRightSpriteTemplate: @ 0x851ACCC
 	.incbin "baserom_jp.gba", 0x51accc, 0x18
 
-	.globl gUnknown_851ACE4
-gUnknown_851ACE4: @ 0x851ACE4
+	.globl sSpriteSheet_EmeraldVersion
+sSpriteSheet_EmeraldVersion: @ 0x851ACE4
 	.incbin "baserom_jp.gba", 0x51ace4, 0x90
 
-	.globl gUnknown_851AD74
-gUnknown_851AD74: @ 0x851AD74
+	.globl sStartCopyrightBannerSpriteTemplate
+sStartCopyrightBannerSpriteTemplate: @ 0x851AD74
 	.incbin "baserom_jp.gba", 0x51ad74, 0x18
 
-	.globl gUnknown_851AD8C
-gUnknown_851AD8C: @ 0x851AD8C
+	.globl sSpriteSheet_PressStart
+sSpriteSheet_PressStart: @ 0x851AD8C
 	.incbin "baserom_jp.gba", 0x51ad8c, 0x10
 
-	.globl gUnknown_851AD9C
-gUnknown_851AD9C: @ 0x851AD9C
+	.globl sSpritePalette_PressStart
+sSpritePalette_PressStart: @ 0x851AD9C
 	.incbin "baserom_jp.gba", 0x51ad9c, 0x24
 
-	.globl gUnknown_851ADC0
-gUnknown_851ADC0: @ 0x851ADC0
+	.globl sPokemonLogoShineSpriteTemplate
+sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
 	.incbin "baserom_jp.gba", 0x51adc0, 0x18
 
-	.globl gUnknown_851ADD8
-gUnknown_851ADD8: @ 0x851ADD8
+	.globl sPokemonLogoShineSpriteSheet
+sPokemonLogoShineSpriteSheet: @ 0x851ADD8
 	.incbin "baserom_jp.gba", 0x51add8, 0x10
 
 	.globl gUnknown_851ADE8
@@ -5751,8 +5751,8 @@ gUnknown_8526EDC: @ 0x8526EDC
 gUnknown_8526EEC: @ 0x8526EEC
 	.incbin "baserom_jp.gba", 0x526eec, 0x20
 
-	.globl gUnknown_8526F0C
-gUnknown_8526F0C: @ 0x8526F0C
+	.globl gFogPalette
+gFogPalette: @ 0x8526F0C
 	.incbin "baserom_jp.gba", 0x526f0c, 0x20
 
 	.globl gUnknown_8526F2C
@@ -5763,8 +5763,8 @@ gUnknown_8526F2C: @ 0x8526F2C
 gUnknown_8526F4C: @ 0x8526F4C
 	.incbin "baserom_jp.gba", 0x526f4c, 0x820
 
-	.globl gUnknown_852776C
-gUnknown_852776C: @ 0x852776C
+	.globl gWeatherFogHorizontalTiles
+gWeatherFogHorizontalTiles: @ 0x852776C
 	.incbin "baserom_jp.gba", 0x52776c, 0x3080
 
 	.globl gUnknown_852A7EC
@@ -5863,64 +5863,64 @@ gUnknown_852AAF8: @ 0x852AAF8
 gUnknown_852AAFC: @ 0x852AAFC
 	.incbin "baserom_jp.gba", 0x52aafc, 0x4
 
-	.globl gUnknown_852AB00
-gUnknown_852AB00: @ 0x852AB00
+	.globl sFlashLevelToRadius
+sFlashLevelToRadius: @ 0x852AB00
 	.incbin "baserom_jp.gba", 0x52ab00, 0x14
 
-	.globl gUnknown_852AB14
-gUnknown_852AB14: @ 0x852AB14
+	.globl gMaxFlashLevel
+gMaxFlashLevel: @ 0x852AB14
 	.incbin "baserom_jp.gba", 0x52ab14, 0x4
 
-	.globl gUnknown_852AB18
-gUnknown_852AB18: @ 0x852AB18
+	.globl sFlashEffectParams
+sFlashEffectParams: @ 0x852AB18
 	.incbin "baserom_jp.gba", 0x52ab18, 0xc
 
-	.globl gUnknown_852AB24
-gUnknown_852AB24: @ 0x852AB24
+	.globl sBattleTransitionTable_Wild
+sBattleTransitionTable_Wild: @ 0x852AB24
 	.incbin "baserom_jp.gba", 0x52ab24, 0x8
 
-	.globl gUnknown_852AB2C
-gUnknown_852AB2C: @ 0x852AB2C
+	.globl sBattleTransitionTable_Trainer
+sBattleTransitionTable_Trainer: @ 0x852AB2C
 	.incbin "baserom_jp.gba", 0x52ab2c, 0x8
 
-	.globl gUnknown_852AB34
-gUnknown_852AB34: @ 0x852AB34
+	.globl sBattleTransitionTable_BattleFrontier
+sBattleTransitionTable_BattleFrontier: @ 0x852AB34
 	.incbin "baserom_jp.gba", 0x52ab34, 0xc
 
-	.globl gUnknown_852AB40
-gUnknown_852AB40: @ 0x852AB40
+	.globl sBattleTransitionTable_BattlePyramid
+sBattleTransitionTable_BattlePyramid: @ 0x852AB40
 	.incbin "baserom_jp.gba", 0x52ab40, 0x3
 
-	.globl gUnknown_852AB43
-gUnknown_852AB43: @ 0x852AB43
+	.globl sBattleTransitionTable_BattleDome
+sBattleTransitionTable_BattleDome: @ 0x852AB43
 	.incbin "baserom_jp.gba", 0x52ab43, 0x5
 
-	.globl gUnknown_852AB48
-gUnknown_852AB48: @ 0x852AB48
+	.globl sOrdinaryBattleParams
+sOrdinaryBattleParams: @ 0x852AB48
 	.incbin "baserom_jp.gba", 0x52ab48, 0x48
 
-	.globl gUnknown_852AB90
-gUnknown_852AB90: @ 0x852AB90
+	.globl sContinueScriptBattleParams
+sContinueScriptBattleParams: @ 0x852AB90
 	.incbin "baserom_jp.gba", 0x52ab90, 0x48
 
-	.globl gUnknown_852ABD8
-gUnknown_852ABD8: @ 0x852ABD8
+	.globl sDoubleBattleParams
+sDoubleBattleParams: @ 0x852ABD8
 	.incbin "baserom_jp.gba", 0x52abd8, 0x48
 
-	.globl gUnknown_852AC20
-gUnknown_852AC20: @ 0x852AC20
+	.globl sOrdinaryNoIntroBattleParams
+sOrdinaryNoIntroBattleParams: @ 0x852AC20
 	.incbin "baserom_jp.gba", 0x52ac20, 0x48
 
-	.globl gUnknown_852AC68
-gUnknown_852AC68: @ 0x852AC68
+	.globl sContinueScriptDoubleBattleParams
+sContinueScriptDoubleBattleParams: @ 0x852AC68
 	.incbin "baserom_jp.gba", 0x52ac68, 0x48
 
-	.globl gUnknown_852ACB0
-gUnknown_852ACB0: @ 0x852ACB0
+	.globl sTrainerBOrdinaryBattleParams
+sTrainerBOrdinaryBattleParams: @ 0x852ACB0
 	.incbin "baserom_jp.gba", 0x52acb0, 0x48
 
-	.globl gUnknown_852ACF8
-gUnknown_852ACF8: @ 0x852ACF8
+	.globl sTrainerBContinueScriptBattleParams
+sTrainerBContinueScriptBattleParams: @ 0x852ACF8
 	.incbin "baserom_jp.gba", 0x52acf8, 0x48
 
 	.globl gUnknown_852AD40
@@ -5943,24 +5943,24 @@ gUnknown_852B23C: @ 0x852B23C
 gUnknown_852B23F: @ 0x852B23F
 	.incbin "baserom_jp.gba", 0x52b23f, 0x199
 
-	.globl gUnknown_852B3D8
-gUnknown_852B3D8: @ 0x852B3D8
+	.globl sDirectionalApproachDistanceFuncs
+sDirectionalApproachDistanceFuncs: @ 0x852B3D8
 	.incbin "baserom_jp.gba", 0x52b3d8, 0x10
 
-	.globl gUnknown_852B3E8
-gUnknown_852B3E8: @ 0x852B3E8
+	.globl sTrainerSeeFuncList
+sTrainerSeeFuncList: @ 0x852B3E8
 	.incbin "baserom_jp.gba", 0x52b3e8, 0x30
 
-	.globl gUnknown_852B418
-gUnknown_852B418: @ 0x852B418
+	.globl sTrainerSeeFuncList2
+sTrainerSeeFuncList2: @ 0x852B418
 	.incbin "baserom_jp.gba", 0x52b418, 0x48
 
-	.globl gUnknown_852B460
-gUnknown_852B460: @ 0x852B460
+	.globl sSpriteTemplate_ExclamationQuestionMark
+sSpriteTemplate_ExclamationQuestionMark: @ 0x852B460
 	.incbin "baserom_jp.gba", 0x52b460, 0x18
 
-	.globl gUnknown_852B478
-gUnknown_852B478: @ 0x852B478
+	.globl sSpriteTemplate_HeartIcon
+sSpriteTemplate_HeartIcon: @ 0x852B478
 	.incbin "baserom_jp.gba", 0x52b478, 0x257c
 
 	.globl gUnknown_852D9F4
@@ -7002,67 +7002,67 @@ gUnknown_8556784: @ 0x8556784
 gUnknown_85567A4: @ 0x85567A4
 	.incbin "baserom_jp.gba", 0x5567a4, 0x60
 
-	.globl gUnknown_8556804
-gUnknown_8556804: @ 0x8556804
+	.globl gMonIconTable
+gMonIconTable: @ 0x8556804
 	.incbin "baserom_jp.gba", 0x556804, 0x6e0
 
-	.globl gUnknown_8556EE4
-gUnknown_8556EE4: @ 0x8556EE4
+	.globl gMonIconPaletteIndices
+gMonIconPaletteIndices: @ 0x8556EE4
 	.incbin "baserom_jp.gba", 0x556ee4, 0x1b8
 
-	.globl gUnknown_855709C
-gUnknown_855709C: @ 0x855709C
+	.globl gMonIconPaletteTable
+gMonIconPaletteTable: @ 0x855709C
 	.incbin "baserom_jp.gba", 0x55709c, 0x30
 
-	.globl gUnknown_85570CC
-gUnknown_85570CC: @ 0x85570CC
+	.globl sMonIconOamData
+sMonIconOamData: @ 0x85570CC
 	.incbin "baserom_jp.gba", 0x5570cc, 0x44
 
-	.globl gUnknown_8557110
-gUnknown_8557110: @ 0x8557110
+	.globl sMonIconAnims
+sMonIconAnims: @ 0x8557110
 	.incbin "baserom_jp.gba", 0x557110, 0x34
 
-	.globl gUnknown_8557144
-gUnknown_8557144: @ 0x8557144
+	.globl sMonIconAffineAnims
+sMonIconAffineAnims: @ 0x8557144
 	.incbin "baserom_jp.gba", 0x557144, 0x8
 
-	.globl gUnknown_855714C
-gUnknown_855714C: @ 0x855714C
+	.globl sSpriteImageSizes
+sSpriteImageSizes: @ 0x855714C
 	.incbin "baserom_jp.gba", 0x55714c, 0x18
 
-	.globl gUnknown_8557164
-gUnknown_8557164: @ 0x8557164
+	.globl sHyperCutStruct
+sHyperCutStruct: @ 0x8557164
 	.incbin "baserom_jp.gba", 0x557164, 0x2
 
 	.globl gUnknown_8557166
 gUnknown_8557166: @ 0x8557166
 	.incbin "baserom_jp.gba", 0x557166, 0x62
 
-	.globl gUnknown_85571C8
-gUnknown_85571C8: @ 0x85571C8
+	.globl sSpriteTemplate_CutGrass
+sSpriteTemplate_CutGrass: @ 0x85571C8
 	.incbin "baserom_jp.gba", 0x5571c8, 0x18
 
-	.globl gUnknown_85571E0
-gUnknown_85571E0: @ 0x85571E0
+	.globl sMapPopUp_Table
+sMapPopUp_Table: @ 0x85571E0
 	.incbin "baserom_jp.gba", 0x5571e0, 0x1680
 
-	.globl gUnknown_8558860
-gUnknown_8558860: @ 0x8558860
+	.globl sMapPopUp_OutlineTable
+sMapPopUp_OutlineTable: @ 0x8558860
 	.incbin "baserom_jp.gba", 0x558860, 0x1680
 
-	.globl gUnknown_8559EE0
-gUnknown_8559EE0: @ 0x8559EE0
+	.globl sMapPopUp_PaletteTable
+sMapPopUp_PaletteTable: @ 0x8559EE0
 	.incbin "baserom_jp.gba", 0x559ee0, 0xc0
 
-	.globl gUnknown_8559FA0
-gUnknown_8559FA0: @ 0x8559FA0
+	.globl sMapPopUp_Palette_Underwater
+sMapPopUp_Palette_Underwater: @ 0x8559FA0
 	.incbin "baserom_jp.gba", 0x559fa0, 0x20
 
 	.globl gUnknown_8559FC0
 gUnknown_8559FC0: @ 0x8559FC0
 	.string "　　　　　　　うあああうあうあう　　　　えええええ　　　　　　　　　　　　え　えええええええええええおおおおおいい　あ　い　あいいいいいいおい　い　いい　　いおいいいい　いいあいいい　　いいおいおおおいいいあピラミッド1だんめ$ピラミッド2だんめ$ピラミッド3だんめ$ピラミッド4だんめ$ピラミッド5だんめ$ピラミッド6だんめ$ピラミッド7だんめ$ピラミッド$"
-	.globl gUnknown_855A074
-gUnknown_855A074: @ 0x855A074
+	.globl sBattlePyramid_MapHeaderStrings
+sBattlePyramid_MapHeaderStrings: @ 0x855A074
 	.incbin "baserom_jp.gba", 0x55a074, 0x5f0
 
 	.globl gUnknown_855A664
@@ -7113,12 +7113,12 @@ gUnknown_855A7AC: @ 0x855A7AC
 gUnknown_855A7C4: @ 0x855A7C4
 	.incbin "baserom_jp.gba", 0x55a7c4, 0x158
 
-	.globl gUnknown_855A91C
-gUnknown_855A91C: @ 0x855A91C
+	.globl gBerryCheckCircleSpriteSheet
+gBerryCheckCircleSpriteSheet: @ 0x855A91C
 	.incbin "baserom_jp.gba", 0x55a91c, 0x8
 
-	.globl gUnknown_855A924
-gUnknown_855A924: @ 0x855A924
+	.globl gBerryCheckCirclePaletteTable
+gBerryCheckCirclePaletteTable: @ 0x855A924
 	.incbin "baserom_jp.gba", 0x55a924, 0x1c
 
 	.globl gUnknown_855A940
@@ -7297,32 +7297,32 @@ gUnknown_8562A2C: @ 0x8562A2C
 gUnknown_8562A34: @ 0x8562A34
 	.incbin "baserom_jp.gba", 0x562a34, 0xa
 
-	.globl gUnknown_8562A3E
-gUnknown_8562A3E: @ 0x8562A3E
+	.globl sEscalatorMetatiles_1F_0
+sEscalatorMetatiles_1F_0: @ 0x8562A3E
 	.incbin "baserom_jp.gba", 0x562a3e, 0x6
 
-	.globl gUnknown_8562A44
-gUnknown_8562A44: @ 0x8562A44
+	.globl sEscalatorMetatiles_1F_1
+sEscalatorMetatiles_1F_1: @ 0x8562A44
 	.incbin "baserom_jp.gba", 0x562a44, 0x6
 
-	.globl gUnknown_8562A4A
-gUnknown_8562A4A: @ 0x8562A4A
+	.globl sEscalatorMetatiles_1F_2
+sEscalatorMetatiles_1F_2: @ 0x8562A4A
 	.incbin "baserom_jp.gba", 0x562a4a, 0x6
 
-	.globl gUnknown_8562A50
-gUnknown_8562A50: @ 0x8562A50
+	.globl sEscalatorMetatiles_1F_3
+sEscalatorMetatiles_1F_3: @ 0x8562A50
 	.incbin "baserom_jp.gba", 0x562a50, 0x6
 
-	.globl gUnknown_8562A56
-gUnknown_8562A56: @ 0x8562A56
+	.globl sEscalatorMetatiles_2F_0
+sEscalatorMetatiles_2F_0: @ 0x8562A56
 	.incbin "baserom_jp.gba", 0x562a56, 0x6
 
-	.globl gUnknown_8562A5C
-gUnknown_8562A5C: @ 0x8562A5C
+	.globl sEscalatorMetatiles_2F_1
+sEscalatorMetatiles_2F_1: @ 0x8562A5C
 	.incbin "baserom_jp.gba", 0x562a5c, 0x6
 
-	.globl gUnknown_8562A62
-gUnknown_8562A62: @ 0x8562A62
+	.globl sEscalatorMetatiles_2F_2
+sEscalatorMetatiles_2F_2: @ 0x8562A62
 	.incbin "baserom_jp.gba", 0x562a62, 0x6d2
 
 	.globl gUnknown_8563134
@@ -7344,8 +7344,8 @@ gUnknown_85636B0: @ 0x85636B0
 gUnknown_8564218: @ 0x8564218
 	.incbin "baserom_jp.gba", 0x564218, 0x388
 
-	.globl gUnknown_85645A0
-gUnknown_85645A0: @ 0x85645A0
+	.globl gStdStrings
+gStdStrings: @ 0x85645A0
 	.incbin "baserom_jp.gba", 0x5645a0, 0x78
 
 	.globl gUnknown_8564618
@@ -7598,28 +7598,28 @@ gUnknown_8565EE0: @ 0x8565EE0
 gUnknown_8565F48: @ 0x8565F48
 	.incbin "baserom_jp.gba", 0x565f48, 0x5c
 
-	.globl gUnknown_8565FA4
-gUnknown_8565FA4: @ 0x8565FA4
+	.globl sSpriteTemplate_MoneyLabel
+sSpriteTemplate_MoneyLabel: @ 0x8565FA4
 	.incbin "baserom_jp.gba", 0x565fa4, 0x18
 
-	.globl gUnknown_8565FBC
-gUnknown_8565FBC: @ 0x8565FBC
+	.globl sSpriteSheet_MoneyLabel
+sSpriteSheet_MoneyLabel: @ 0x8565FBC
 	.incbin "baserom_jp.gba", 0x565fbc, 0x8
 
-	.globl gUnknown_8565FC4
-gUnknown_8565FC4: @ 0x8565FC4
+	.globl sSpritePalette_MoneyLabel
+sSpritePalette_MoneyLabel: @ 0x8565FC4
 	.incbin "baserom_jp.gba", 0x565fc4, 0x8
 
-	.globl gUnknown_8565FCC
-gUnknown_8565FCC: @ 0x8565FCC
+	.globl gContestMoves
+gContestMoves: @ 0x8565FCC
 	.incbin "baserom_jp.gba", 0x565fcc, 0xb18
 
-	.globl gUnknown_8566AE4
-gUnknown_8566AE4: @ 0x8566AE4
+	.globl gContestEffects
+gContestEffects: @ 0x8566AE4
 	.incbin "baserom_jp.gba", 0x566ae4, 0xc0
 
-	.globl gUnknown_8566BA4
-gUnknown_8566BA4: @ 0x8566BA4
+	.globl gComboStarterLookupTable
+gComboStarterLookupTable: @ 0x8566BA4
 	.incbin "baserom_jp.gba", 0x566ba4, 0x40
 
 	.globl gUnknown_8566BE4
@@ -8070,16 +8070,16 @@ gUnknown_85694C4: @ 0x85694C4
 gUnknown_85694CC: @ 0x85694CC
 	.incbin "baserom_jp.gba", 0x5694cc, 0x4
 
-	.globl gUnknown_85694D0
-gUnknown_85694D0: @ 0x85694D0
+	.globl sBigMonSizeTable
+sBigMonSizeTable: @ 0x85694D0
 	.incbin "baserom_jp.gba", 0x5694d0, 0x80
 
 	.globl gUnknown_8569550
 gUnknown_8569550: @ 0x8569550
 	.string ",$"
 
-	.globl gUnknown_8569552
-gUnknown_8569552: @ 0x8569552
+	.globl sGiftRibbonsMonDataIds
+sGiftRibbonsMonDataIds: @ 0x8569552
 	.incbin "baserom_jp.gba", 0x569552, 0xc92
 
 	.globl gUnknown_856A1E4
@@ -8106,36 +8106,36 @@ gUnknown_856A448: @ 0x856A448
 gUnknown_856A464: @ 0x856A464
 	.incbin "baserom_jp.gba", 0x56a464, 0x18
 
-	.globl gUnknown_856A47C
-gUnknown_856A47C: @ 0x856A47C
+	.globl sTruckCamera_HorizontalTable
+sTruckCamera_HorizontalTable: @ 0x856A47C
 	.incbin "baserom_jp.gba", 0x56a47c, 0x13
 
-	.globl gUnknown_856A48F
-gUnknown_856A48F: @ 0x856A48F
+	.globl sSSTidalSailEastMovementScript
+sSSTidalSailEastMovementScript: @ 0x856A48F
 	.incbin "baserom_jp.gba", 0x56a48f, 0x2
 
-	.globl gUnknown_856A491
-gUnknown_856A491: @ 0x856A491
+	.globl sSSTidalSailWestMovementScript
+sSSTidalSailWestMovementScript: @ 0x856A491
 	.incbin "baserom_jp.gba", 0x56a491, 0x3
 
-	.globl gUnknown_856A494
-gUnknown_856A494: @ 0x856A494
+	.globl sRotatingGate_FortreePuzzleConfig
+sRotatingGate_FortreePuzzleConfig: @ 0x856A494
 	.incbin "baserom_jp.gba", 0x56a494, 0x40
 
-	.globl gUnknown_856A4D4
-gUnknown_856A4D4: @ 0x856A4D4
+	.globl sRotatingGate_TrickHousePuzzleConfig
+sRotatingGate_TrickHousePuzzleConfig: @ 0x856A4D4
 	.incbin "baserom_jp.gba", 0x56a4d4, 0x3468
 
-	.globl gUnknown_856D93C
-gUnknown_856D93C: @ 0x856D93C
+	.globl sRotatingGatesGraphicsTable
+sRotatingGatesGraphicsTable: @ 0x856D93C
 	.incbin "baserom_jp.gba", 0x56d93c, 0x270
 
-	.globl gUnknown_856DBAC
-gUnknown_856DBAC: @ 0x856DBAC
+	.globl sSpriteTemplate_RotatingGateLarge
+sSpriteTemplate_RotatingGateLarge: @ 0x856DBAC
 	.incbin "baserom_jp.gba", 0x56dbac, 0x18
 
-	.globl gUnknown_856DBC4
-gUnknown_856DBC4: @ 0x856DBC4
+	.globl sSpriteTemplate_RotatingGateRegular
+sSpriteTemplate_RotatingGateRegular: @ 0x856DBC4
 	.incbin "baserom_jp.gba", 0x56dbc4, 0x18
 
 	.globl gUnknown_856DBDC
@@ -8154,16 +8154,16 @@ gUnknown_856DBFC: @ 0x856DBFC
 gUnknown_856DC0C: @ 0x856DC0C
 	.string "$$む$$$み$$$と$$$な$"
 
-	.globl gUnknown_856DC1C
-gUnknown_856DC1C: @ 0x856DC1C
+	.globl sRotatingGate_ArmPositionsClockwiseRotation
+sRotatingGate_ArmPositionsClockwiseRotation: @ 0x856DC1C
 	.incbin "baserom_jp.gba", 0x56dc1c, 0x20
 
-	.globl gUnknown_856DC3C
-gUnknown_856DC3C: @ 0x856DC3C
+	.globl sRotatingGate_ArmPositionsAntiClockwiseRotation
+sRotatingGate_ArmPositionsAntiClockwiseRotation: @ 0x856DC3C
 	.incbin "baserom_jp.gba", 0x56dc3c, 0x20
 
-	.globl gUnknown_856DC5C
-gUnknown_856DC5C: @ 0x856DC5C
+	.globl sRotatingGate_ArmLayout
+sRotatingGate_ArmLayout: @ 0x856DC5C
 	.incbin "baserom_jp.gba", 0x56dc5c, 0x60
 
 	.globl gUnknown_856DCBC
@@ -8178,100 +8178,100 @@ gUnknown_856DCC8: @ 0x856DCC8
 gUnknown_856DCCC: @ 0x856DCCC
 	.incbin "baserom_jp.gba", 0x56dccc, 0x128
 
-	.globl gUnknown_856DDF4
-gUnknown_856DDF4: @ 0x856DDF4
+	.globl gSolarBeamSmallOrbSpriteTemplate
+gSolarBeamSmallOrbSpriteTemplate: @ 0x856DDF4
 	.incbin "baserom_jp.gba", 0x56ddf4, 0x4f0
 
-	.globl gUnknown_856E2E4
-gUnknown_856E2E4: @ 0x856E2E4
+	.globl gTrickBagCoordinates
+gTrickBagCoordinates: @ 0x856E2E4
 	.incbin "baserom_jp.gba", 0x56e2e4, 0x78
 
-	.globl gUnknown_856E35C
-gUnknown_856E35C: @ 0x856E35C
+	.globl gLeafBladeSpriteTemplate
+gLeafBladeSpriteTemplate: @ 0x856E35C
 	.incbin "baserom_jp.gba", 0x56e35c, 0x100
 
-	.globl gUnknown_856E45C
-gUnknown_856E45C: @ 0x856E45C
+	.globl gMagicalLeafBlendColors
+gMagicalLeafBlendColors: @ 0x856E45C
 	.incbin "baserom_jp.gba", 0x56e45c, 0x458
 
-	.globl gUnknown_856E8B4
-gUnknown_856E8B4: @ 0x856E8B4
+	.globl gInclineMonCoordTable
+gInclineMonCoordTable: @ 0x856E8B4
 	.incbin "baserom_jp.gba", 0x56e8b4, 0x1ec
 
-	.globl gUnknown_856EAA0
-gUnknown_856EAA0: @ 0x856EAA0
+	.globl gMoonSpriteTemplate
+gMoonSpriteTemplate: @ 0x856EAA0
 	.incbin "baserom_jp.gba", 0x56eaa0, 0x30
 
-	.globl gUnknown_856EAD0
-gUnknown_856EAD0: @ 0x856EAD0
+	.globl gMoonlightSparkleSpriteTemplate
+gMoonlightSparkleSpriteTemplate: @ 0x856EAD0
 	.incbin "baserom_jp.gba", 0x56ead0, 0x134
 
-	.globl gUnknown_856EC04
-gUnknown_856EC04: @ 0x856EC04
+	.globl gParticlesColorBlendTable
+gParticlesColorBlendTable: @ 0x856EC04
 	.incbin "baserom_jp.gba", 0x56ec04, 0xf4
 
 	.globl gThoughtBubbleSpriteTemplate
 gThoughtBubbleSpriteTemplate: @ 0x856ECF8
 	.incbin "baserom_jp.gba", 0x56ecf8, 0x29c
 
-	.globl gUnknown_856EF94
-gUnknown_856EF94: @ 0x856EF94
+	.globl gAirWaveProjectileSpriteTemplate
+gAirWaveProjectileSpriteTemplate: @ 0x856EF94
 	.incbin "baserom_jp.gba", 0x56ef94, 0xf0
 
-	.globl gUnknown_856F084
-gUnknown_856F084: @ 0x856F084
+	.globl sVoidLinesSpriteTemplate
+sVoidLinesSpriteTemplate: @ 0x856F084
 	.incbin "baserom_jp.gba", 0x56f084, 0x148
 
-	.globl gUnknown_856F1CC
-gUnknown_856F1CC: @ 0x856F1CC
+	.globl gSplashEffectAffineAnimCmds
+gSplashEffectAffineAnimCmds: @ 0x856F1CC
 	.incbin "baserom_jp.gba", 0x56f1cc, 0x20
 
-	.globl gUnknown_856F1EC
-gUnknown_856F1EC: @ 0x856F1EC
+	.globl gGrowAndShrinkAffineAnimCmds
+gGrowAndShrinkAffineAnimCmds: @ 0x856F1EC
 	.incbin "baserom_jp.gba", 0x56f1ec, 0x9c
 
-	.globl gUnknown_856F288
-gUnknown_856F288: @ 0x856F288
+	.globl gThrashMoveMonAffineAnimCmds
+gThrashMoveMonAffineAnimCmds: @ 0x856F288
 	.incbin "baserom_jp.gba", 0x56f288, 0x20c
 
-	.globl gUnknown_856F494
-gUnknown_856F494: @ 0x856F494
+	.globl gStretchAttackerAffineAnimCmds
+gStretchAttackerAffineAnimCmds: @ 0x856F494
 	.incbin "baserom_jp.gba", 0x56f494, 0x2c
 
-	.globl gUnknown_856F4C0
-gUnknown_856F4C0: @ 0x856F4C0
+	.globl gSpeedDustSpriteTemplate
+gSpeedDustSpriteTemplate: @ 0x856F4C0
 	.incbin "baserom_jp.gba", 0x56f4c0, 0x18
 
-	.globl gUnknown_856F4D8
-gUnknown_856F4D8: @ 0x856F4D8
+	.globl gSpeedDustPosTable
+gSpeedDustPosTable: @ 0x856F4D8
 	.incbin "baserom_jp.gba", 0x56f4d8, 0x5c
 
-	.globl gUnknown_856F534
-gUnknown_856F534: @ 0x856F534
+	.globl sMusicNotePaletteTagsTable
+sMusicNotePaletteTagsTable: @ 0x856F534
 	.incbin "baserom_jp.gba", 0x56f534, 0x38
 
-	.globl gUnknown_856F56C
-gUnknown_856F56C: @ 0x856F56C
+	.globl sAffineAnims_StretchBattlerUp
+sAffineAnims_StretchBattlerUp: @ 0x856F56C
 	.incbin "baserom_jp.gba", 0x56f56c, 0x210
 
-	.globl gUnknown_856F77C
-gUnknown_856F77C: @ 0x856F77C
+	.globl sAffineAnims_UproarDistortion
+sAffineAnims_UproarDistortion: @ 0x856F77C
 	.incbin "baserom_jp.gba", 0x56f77c, 0x1488
 
-	.globl gUnknown_8570C04
-gUnknown_8570C04: @ 0x8570C04
+	.globl gRainDropSpriteTemplate
+gRainDropSpriteTemplate: @ 0x8570C04
 	.incbin "baserom_jp.gba", 0x570c04, 0x248
 
-	.globl gUnknown_8570E4C
-gUnknown_8570E4C: @ 0x8570E4C
+	.globl gSmallWaterOrbSpriteTemplate
+gSmallWaterOrbSpriteTemplate: @ 0x8570E4C
 	.incbin "baserom_jp.gba", 0x570e4c, 0xa8
 
-	.globl gUnknown_8570EF4
-gUnknown_8570EF4: @ 0x8570EF4
+	.globl gWaterPulseRingBubbleSpriteTemplate
+gWaterPulseRingBubbleSpriteTemplate: @ 0x8570EF4
 	.incbin "baserom_jp.gba", 0x570ef4, 0x2a4
 
-	.globl gUnknown_8571198
-gUnknown_8571198: @ 0x8571198
+	.globl gEruptionLaunchRockSpriteTemplate
+gEruptionLaunchRockSpriteTemplate: @ 0x8571198
 	.incbin "baserom_jp.gba", 0x571198, 0x18
 
 	.globl gUnknown_85711B0
@@ -8282,120 +8282,120 @@ gUnknown_85711B0: @ 0x85711B0
 gUnknown_85711B2: @ 0x85711B2
 	.incbin "baserom_jp.gba", 0x5711b2, 0xb6
 
-	.globl gUnknown_8571268
-gUnknown_8571268: @ 0x8571268
+	.globl sShakeDirsPattern0
+sShakeDirsPattern0: @ 0x8571268
 	.incbin "baserom_jp.gba", 0x571268, 0x10
 
-	.globl gUnknown_8571278
-gUnknown_8571278: @ 0x8571278
+	.globl sShakeDirsPattern1
+sShakeDirsPattern1: @ 0x8571278
 	.incbin "baserom_jp.gba", 0x571278, 0x2c
 
-	.globl gUnknown_85712A4
-gUnknown_85712A4: @ 0x85712A4
+	.globl gLightningSpriteTemplate
+gLightningSpriteTemplate: @ 0x85712A4
 	.incbin "baserom_jp.gba", 0x5712a4, 0x168
 
-	.globl gUnknown_857140C
-gUnknown_857140C: @ 0x857140C
+	.globl gElectricBoltSegmentSpriteTemplate
+gElectricBoltSegmentSpriteTemplate: @ 0x857140C
 	.incbin "baserom_jp.gba", 0x57140c, 0x18
 
-	.globl gUnknown_8571424
-gUnknown_8571424: @ 0x8571424
+	.globl gThunderWaveSpriteTemplate
+gThunderWaveSpriteTemplate: @ 0x8571424
 	.incbin "baserom_jp.gba", 0x571424, 0x18
 
-	.globl gUnknown_857143C
-gUnknown_857143C: @ 0x857143C
+	.globl sElectricChargingParticleCoordOffsets
+sElectricChargingParticleCoordOffsets: @ 0x857143C
 	.incbin "baserom_jp.gba", 0x57143c, 0x50
 
-	.globl gUnknown_857148C
-gUnknown_857148C: @ 0x857148C
+	.globl gElectricChargingParticlesSpriteTemplate
+gElectricChargingParticlesSpriteTemplate: @ 0x857148C
 	.incbin "baserom_jp.gba", 0x57148c, 0x158
 
-	.globl gUnknown_85715E4
-gUnknown_85715E4: @ 0x85715E4
+	.globl gVoltTackleBoltSpriteTemplate
+gVoltTackleBoltSpriteTemplate: @ 0x85715E4
 	.incbin "baserom_jp.gba", 0x5715e4, 0x30
 
-	.globl gUnknown_8571614
-gUnknown_8571614: @ 0x8571614
+	.globl gShockWaveProgressingBoltSpriteTemplate
+gShockWaveProgressingBoltSpriteTemplate: @ 0x8571614
 	.incbin "baserom_jp.gba", 0x571614, 0x138
 
-	.globl gUnknown_857174C
-gUnknown_857174C: @ 0x857174C
+	.globl gIceCrystalHitLargeSpriteTemplate
+gIceCrystalHitLargeSpriteTemplate: @ 0x857174C
 	.incbin "baserom_jp.gba", 0x57174c, 0xf4
 
-	.globl gUnknown_8571840
-gUnknown_8571840: @ 0x8571840
+	.globl sHazeBlendAmounts
+sHazeBlendAmounts: @ 0x8571840
 	.incbin "baserom_jp.gba", 0x571840, 0x2c
 
-	.globl gUnknown_857186C
-gUnknown_857186C: @ 0x857186C
+	.globl sMistBlendAmounts
+sMistBlendAmounts: @ 0x857186C
 	.incbin "baserom_jp.gba", 0x57186c, 0x2c
 
-	.globl gUnknown_8571898
-gUnknown_8571898: @ 0x8571898
+	.globl sHailCoordData
+sHailCoordData: @ 0x8571898
 	.incbin "baserom_jp.gba", 0x571898, 0x78
 
-	.globl gUnknown_8571910
-gUnknown_8571910: @ 0x8571910
+	.globl gHailParticleSpriteTemplate
+gHailParticleSpriteTemplate: @ 0x8571910
 	.incbin "baserom_jp.gba", 0x571910, 0xa14
 
-	.globl gUnknown_8572324
-gUnknown_8572324: @ 0x8572324
+	.globl sAffineAnims_QuestionMark
+sAffineAnims_QuestionMark: @ 0x8572324
 	.incbin "baserom_jp.gba", 0x572324, 0x1c
 
-	.globl gUnknown_8572340
-gUnknown_8572340: @ 0x8572340
+	.globl sAffineAnim_MeditateStretchAttacker
+sAffineAnim_MeditateStretchAttacker: @ 0x8572340
 	.incbin "baserom_jp.gba", 0x572340, 0x20
 
-	.globl gUnknown_8572360
-gUnknown_8572360: @ 0x8572360
+	.globl sAffineAnim_Teleport
+sAffineAnim_Teleport: @ 0x8572360
 	.incbin "baserom_jp.gba", 0x572360, 0x18
 
-	.globl gUnknown_8572378
-gUnknown_8572378: @ 0x8572378
+	.globl gImprisonOrbSpriteTemplate
+gImprisonOrbSpriteTemplate: @ 0x8572378
 	.incbin "baserom_jp.gba", 0x572378, 0xd0
 
-	.globl gUnknown_8572448
-gUnknown_8572448: @ 0x8572448
+	.globl gSkillSwapOrbSpriteTemplate
+gSkillSwapOrbSpriteTemplate: @ 0x8572448
 	.incbin "baserom_jp.gba", 0x572448, 0x35c
 
-	.globl gUnknown_85727A4
-gUnknown_85727A4: @ 0x85727A4
+	.globl sFlyingSandSubspriteTable
+sFlyingSandSubspriteTable: @ 0x85727A4
 	.incbin "baserom_jp.gba", 0x5727a4, 0x50
 
-	.globl gUnknown_85727F4
-gUnknown_85727F4: @ 0x85727F4
+	.globl gAncientPowerRockSpriteTemplate
+gAncientPowerRockSpriteTemplate: @ 0x85727F4
 	.incbin "baserom_jp.gba", 0x5727f4, 0x18
 
-	.globl gUnknown_857280C
-gUnknown_857280C: @ 0x857280C
+	.globl gRolloutMudSpriteTemplate
+gRolloutMudSpriteTemplate: @ 0x857280C
 	.incbin "baserom_jp.gba", 0x57280c, 0x18
 
-	.globl gUnknown_8572824
-gUnknown_8572824: @ 0x8572824
+	.globl gRolloutRockSpriteTemplate
+gRolloutRockSpriteTemplate: @ 0x8572824
 	.incbin "baserom_jp.gba", 0x572824, 0x178
 
-	.globl gUnknown_857299C
-gUnknown_857299C: @ 0x857299C
+	.globl gDestinyBondWhiteShadowSpriteTemplate
+gDestinyBondWhiteShadowSpriteTemplate: @ 0x857299C
 	.incbin "baserom_jp.gba", 0x57299c, 0x78
 
-	.globl gUnknown_8572A14
-gUnknown_8572A14: @ 0x8572A14
+	.globl gGrudgeFlameSpriteTemplate
+gGrudgeFlameSpriteTemplate: @ 0x8572A14
 	.incbin "baserom_jp.gba", 0x572a14, 0x528
 
-	.globl gUnknown_8572F3C
-gUnknown_8572F3C: @ 0x8572F3C
+	.globl gBasicHitSplatSpriteTemplate
+gBasicHitSplatSpriteTemplate: @ 0x8572F3C
 	.incbin "baserom_jp.gba", 0x572f3c, 0x30
 
-	.globl gUnknown_8572F6C
-gUnknown_8572F6C: @ 0x8572F6C
+	.globl gWaterHitSplatSpriteTemplate
+gWaterHitSplatSpriteTemplate: @ 0x8572F6C
 	.incbin "baserom_jp.gba", 0x572f6c, 0x60
 
-	.globl gUnknown_8572FCC
-gUnknown_8572FCC: @ 0x8572FCC
+	.globl gFlashingHitSplatSpriteTemplate
+gFlashingHitSplatSpriteTemplate: @ 0x8572FCC
 	.incbin "baserom_jp.gba", 0x572fcc, 0x30
 
-	.globl gUnknown_8572FFC
-gUnknown_8572FFC: @ 0x8572FFC
+	.globl sCurseLinesPalette
+sCurseLinesPalette: @ 0x8572FFC
 	.incbin "baserom_jp.gba", 0x572ffc, 0x2
 
 	.globl gUnknown_8572FFE
@@ -8566,44 +8566,44 @@ gUnknown_8579F30: @ 0x8579F30
 gUnknown_8579F34: @ 0x8579F34
 	.incbin "baserom_jp.gba", 0x579f34, 0x4
 
-	.globl gUnknown_8579F38
-gUnknown_8579F38: @ 0x8579F38
+	.globl gMonMarkingsMenu_Pal
+gMonMarkingsMenu_Pal: @ 0x8579F38
 	.incbin "baserom_jp.gba", 0x579f38, 0x20
 
-	.globl gUnknown_8579F58
-gUnknown_8579F58: @ 0x8579F58
+	.globl gMonMarkingsMenu_Gfx
+gMonMarkingsMenu_Gfx: @ 0x8579F58
 	.incbin "baserom_jp.gba", 0x579f58, 0x320
 
-	.globl gUnknown_857A278
-gUnknown_857A278: @ 0x857A278
+	.globl sMonMarkings_Pal
+sMonMarkings_Pal: @ 0x857A278
 	.incbin "baserom_jp.gba", 0x57a278, 0x20
 
-	.globl gUnknown_857A298
-gUnknown_857A298: @ 0x857A298
+	.globl sMonMarkings_Gfx
+sMonMarkings_Gfx: @ 0x857A298
 	.incbin "baserom_jp.gba", 0x57a298, 0x808
 
-	.globl gUnknown_857AAA0
-gUnknown_857AAA0: @ 0x857AAA0
+	.globl sOamData_MenuWindow
+sOamData_MenuWindow: @ 0x857AAA0
 	.incbin "baserom_jp.gba", 0x57aaa0, 0x8
 
-	.globl gUnknown_857AAA8
-gUnknown_857AAA8: @ 0x857AAA8
+	.globl sOamData_8x8
+sOamData_8x8: @ 0x857AAA8
 	.incbin "baserom_jp.gba", 0x57aaa8, 0x58
 
-	.globl gUnknown_857AB00
-gUnknown_857AB00: @ 0x857AB00
+	.globl sAnims_MenuSprite
+sAnims_MenuSprite: @ 0x857AB00
 	.incbin "baserom_jp.gba", 0x57ab00, 0x38
 
-	.globl gUnknown_857AB38
-gUnknown_857AB38: @ 0x857AB38
+	.globl sAnims_MenuWindow
+sAnims_MenuWindow: @ 0x857AB38
 	.incbin "baserom_jp.gba", 0x57ab38, 0x8
 
-	.globl gUnknown_857AB40
-gUnknown_857AB40: @ 0x857AB40
+	.globl sOamData_MarkingCombo
+sOamData_MarkingCombo: @ 0x857AB40
 	.incbin "baserom_jp.gba", 0x57ab40, 0x88
 
-	.globl gUnknown_857ABC8
-gUnknown_857ABC8: @ 0x857ABC8
+	.globl sAnims_MarkingCombo
+sAnims_MarkingCombo: @ 0x857ABC8
 	.incbin "baserom_jp.gba", 0x57abc8, 0x40
 
 	.globl gUnknown_857AC08
@@ -8634,36 +8634,36 @@ gUnknown_857AE9C: @ 0x857AE9C
 gUnknown_857AEAC: @ 0x857AEAC
 	.incbin "baserom_jp.gba", 0x57aeac, 0x8
 
-	.globl gUnknown_857AEB4
-gUnknown_857AEB4: @ 0x857AEB4
+	.globl sMailBgTemplates
+sMailBgTemplates: @ 0x857AEB4
 	.incbin "baserom_jp.gba", 0x57aeb4, 0xc
 
-	.globl gUnknown_857AEC0
-gUnknown_857AEC0: @ 0x857AEC0
+	.globl sMailWindowTemplates
+sMailWindowTemplates: @ 0x857AEC0
 	.incbin "baserom_jp.gba", 0x57aec0, 0x18
 
-	.globl gUnknown_857AED8
-gUnknown_857AED8: @ 0x857AED8
+	.globl sMailTextColors
+sMailTextColors: @ 0x857AED8
 	.incbin "baserom_jp.gba", 0x57aed8, 0x4
 
-	.globl gUnknown_857AEDC
-gUnknown_857AEDC: @ 0x857AEDC
+	.globl sMailBgColors
+sMailBgColors: @ 0x857AEDC
 	.incbin "baserom_jp.gba", 0x57aedc, 0x8
 
-	.globl gUnknown_857AEE4
-gUnknown_857AEE4: @ 0x857AEE4
+	.globl sMailGraphics
+sMailGraphics: @ 0x857AEE4
 	.incbin "baserom_jp.gba", 0x57aee4, 0xfc
 
-	.globl gUnknown_857AFE0
-gUnknown_857AFE0: @ 0x857AFE0
+	.globl sMailLayouts_Wide
+sMailLayouts_Wide: @ 0x857AFE0
 	.incbin "baserom_jp.gba", 0x57afe0, 0x74
 
-	.globl gUnknown_857B054
-gUnknown_857B054: @ 0x857B054
+	.globl sMailLayouts_Tall
+sMailLayouts_Tall: @ 0x857B054
 	.incbin "baserom_jp.gba", 0x57b054, 0x60
 
-	.globl gUnknown_857B0B4
-gUnknown_857B0B4: @ 0x857B0B4
+	.globl sMailFromText
+sMailFromText: @ 0x857B0B4
 	.incbin "baserom_jp.gba", 0x57b0b4, 0x30
 
 	.globl gUnknown_857B0E4
@@ -8678,8 +8678,8 @@ gUnknown_857B0EC: @ 0x857B0EC
 gUnknown_857B0F4: @ 0x857B0F4
 	.incbin "baserom_jp.gba", 0x57b0f4, 0x10
 
-	.globl gUnknown_857B104
-gUnknown_857B104: @ 0x857B104
+	.globl sHealLocations
+sHealLocations: @ 0x857B104
 	.incbin "baserom_jp.gba", 0x57b104, 0x8
 
 	.globl gUnknown_857B10C
@@ -8817,8 +8817,8 @@ gUnknown_857D86C: @ 0x857D86C
 	.globl gUnknown_857D884
 gUnknown_857D884: @ 0x857D884
 	.incbin "baserom_jp.gba", 0x57d884, 0x344c
-	.globl gUnknown_8580CD0
-gUnknown_8580CD0: @ 0x8580CD0
+	.globl gDecorations
+gDecorations: @ 0x8580CD0
 	.incbin "baserom_jp.gba", 0x580cd0, 0x1
 
 	.globl gUnknown_8580CD1
@@ -9434,120 +9434,120 @@ gUnknown_858F64C: @ 0x858F64C
 gUnknown_858F7D8: @ 0x858F7D8
 	.incbin "baserom_jp.gba", 0x58f7d8, 0x1c
 
-	.globl gUnknown_858F7F4
-gUnknown_858F7F4: @ 0x858F7F4
+	.globl sDefaultTraderNames
+sDefaultTraderNames: @ 0x858F7F4
 	.incbin "baserom_jp.gba", 0x58f7f4, 0x10
 
-	.globl gUnknown_858F804
-gUnknown_858F804: @ 0x858F804
+	.globl sDefaultTraderDecorations
+sDefaultTraderDecorations: @ 0x858F804
 	.incbin "baserom_jp.gba", 0x58f804, 0x4
 
-	.globl gUnknown_858F808
-gUnknown_858F808: @ 0x858F808
+	.globl sTraderWindowTemplate
+sTraderWindowTemplate: @ 0x858F808
 	.incbin "baserom_jp.gba", 0x58f808, 0x8
 
-	.globl gUnknown_858F810
-gUnknown_858F810: @ 0x858F810
+	.globl gBirchBagGrass_Pal
+gBirchBagGrass_Pal: @ 0x858F810
 	.incbin "baserom_jp.gba", 0x58f810, 0x2
 
 	.globl gUnknown_858F812
 gUnknown_858F812: @ 0x858F812
 	.incbin "baserom_jp.gba", 0x58f812, 0x7e
 
-	.globl gUnknown_858F890
-gUnknown_858F890: @ 0x858F890
+	.globl gBirchBagTilemap
+gBirchBagTilemap: @ 0x858F890
 	.incbin "baserom_jp.gba", 0x58f890, 0x18c
 
-	.globl gUnknown_858FA1C
-gUnknown_858FA1C: @ 0x858FA1C
+	.globl gBirchGrassTilemap
+gBirchGrassTilemap: @ 0x858FA1C
 	.incbin "baserom_jp.gba", 0x58fa1c, 0x1f8
 
-	.globl gUnknown_858FC14
-gUnknown_858FC14: @ 0x858FC14
+	.globl gBirchBagGrass_Gfx
+gBirchBagGrass_Gfx: @ 0x858FC14
 	.incbin "baserom_jp.gba", 0x58fc14, 0xfc8
 
-	.globl gUnknown_8590BDC
-gUnknown_8590BDC: @ 0x8590BDC
+	.globl sStarterWindowTemplates
+sStarterWindowTemplates: @ 0x8590BDC
 	.incbin "baserom_jp.gba", 0x590bdc, 0x10
 
-	.globl gUnknown_8590BEC
-gUnknown_8590BEC: @ 0x8590BEC
+	.globl sStarterWindowTemplate_ConfirmStarter
+sStarterWindowTemplate_ConfirmStarter: @ 0x8590BEC
 	.incbin "baserom_jp.gba", 0x590bec, 0x8
 
-	.globl gUnknown_8590BF4
-gUnknown_8590BF4: @ 0x8590BF4
+	.globl sStarterWindowTemplate_StarterLabel
+sStarterWindowTemplate_StarterLabel: @ 0x8590BF4
 	.incbin "baserom_jp.gba", 0x590bf4, 0x8
 
-	.globl gUnknown_8590BFC
-gUnknown_8590BFC: @ 0x8590BFC
+	.globl sStarterPokeballCoords
+sStarterPokeballCoords: @ 0x8590BFC
 	.incbin "baserom_jp.gba", 0x590bfc, 0x6
 
-	.globl gUnknown_8590C02
-gUnknown_8590C02: @ 0x8590C02
+	.globl sStarterLabelCoords
+sStarterLabelCoords: @ 0x8590C02
 	.incbin "baserom_jp.gba", 0x590c02, 0x6
 
-	.globl gUnknown_8590C08
-gUnknown_8590C08: @ 0x8590C08
+	.globl sStarterMon
+sStarterMon: @ 0x8590C08
 	.incbin "baserom_jp.gba", 0x590c08, 0x8
 
-	.globl gUnknown_8590C10
-gUnknown_8590C10: @ 0x8590C10
+	.globl sStarterBgTemplates
+sStarterBgTemplates: @ 0x8590C10
 	.incbin "baserom_jp.gba", 0x590c10, 0xc
 
-	.globl gUnknown_8590C1C
-gUnknown_8590C1C: @ 0x8590C1C
+	.globl sStarterTextColors
+sStarterTextColors: @ 0x8590C1C
 	.incbin "baserom_jp.gba", 0x590c1c, 0x1c
 
-	.globl gUnknown_8590C38
-gUnknown_8590C38: @ 0x8590C38
+	.globl sStarterCursorCoords
+sStarterCursorCoords: @ 0x8590C38
 	.incbin "baserom_jp.gba", 0x590c38, 0xa8
 
-	.globl gUnknown_8590CE0
-gUnknown_8590CE0: @ 0x8590CE0
+	.globl sStarterAffineAnims_StarterPokemon
+sStarterAffineAnims_StarterPokemon: @ 0x8590CE0
 	.incbin "baserom_jp.gba", 0x590ce0, 0x8
 
-	.globl gUnknown_8590CE8
-gUnknown_8590CE8: @ 0x8590CE8
+	.globl sStarterSpriteSheet_PokeballSelect
+sStarterSpriteSheet_PokeballSelect: @ 0x8590CE8
 	.incbin "baserom_jp.gba", 0x590ce8, 0x10
 
-	.globl gUnknown_8590CF8
-gUnknown_8590CF8: @ 0x8590CF8
+	.globl sStarterSpriteSheet_StarterCircle
+sStarterSpriteSheet_StarterCircle: @ 0x8590CF8
 	.incbin "baserom_jp.gba", 0x590cf8, 0x10
 
-	.globl gUnknown_8590D08
-gUnknown_8590D08: @ 0x8590D08
+	.globl sStarterSpritePalettes
+sStarterSpritePalettes: @ 0x8590D08
 	.incbin "baserom_jp.gba", 0x590d08, 0x18
 
-	.globl gUnknown_8590D20
-gUnknown_8590D20: @ 0x8590D20
+	.globl sStarterSpriteTemplate_Hand
+sStarterSpriteTemplate_Hand: @ 0x8590D20
 	.incbin "baserom_jp.gba", 0x590d20, 0x18
 
-	.globl gUnknown_8590D38
-gUnknown_8590D38: @ 0x8590D38
+	.globl sStarterSpriteTemplate_Pokeball
+sStarterSpriteTemplate_Pokeball: @ 0x8590D38
 	.incbin "baserom_jp.gba", 0x590d38, 0x18
 
-	.globl gUnknown_8590D50
-gUnknown_8590D50: @ 0x8590D50
+	.globl sStarterSpriteTemplate_StarterCircle
+sStarterSpriteTemplate_StarterCircle: @ 0x8590D50
 	.incbin "baserom_jp.gba", 0x590d50, 0x18
 
-	.globl gUnknown_8590D68
-gUnknown_8590D68: @ 0x8590D68
+	.globl gWallClockMale_Pal
+gWallClockMale_Pal: @ 0x8590D68
 	.incbin "baserom_jp.gba", 0x590d68, 0x20
 
-	.globl gUnknown_8590D88
-gUnknown_8590D88: @ 0x8590D88
+	.globl gWallClockFemale_Pal
+gWallClockFemale_Pal: @ 0x8590D88
 	.incbin "baserom_jp.gba", 0x590d88, 0x20
 
-	.globl gUnknown_8590DA8
-gUnknown_8590DA8: @ 0x8590DA8
+	.globl gWallClockStart_Tilemap
+gWallClockStart_Tilemap: @ 0x8590DA8
 	.incbin "baserom_jp.gba", 0x590da8, 0x2cc
 
-	.globl gUnknown_8591074
-gUnknown_8591074: @ 0x8591074
+	.globl gWallClockView_Tilemap
+gWallClockView_Tilemap: @ 0x8591074
 	.incbin "baserom_jp.gba", 0x591074, 0x298
 
-	.globl gUnknown_859130C
-gUnknown_859130C: @ 0x859130C
+	.globl gWallClock_Gfx
+gWallClock_Gfx: @ 0x859130C
 	.incbin "baserom_jp.gba", 0x59130c, 0x8f8
 
 	.globl gUnknown_8591C04
@@ -9556,52 +9556,52 @@ gUnknown_8591C04: @ 0x8591C04
 	.globl gUnknown_8591C15
 gUnknown_8591C15: @ 0x8591C15
 	.string "けってい$"
-	.globl gUnknown_8591C1A
-gUnknown_8591C1A: @ 0x8591C1A
+	.globl gText_Confirm3
+gText_Confirm3: @ 0x8591C1A
 	.incbin "baserom_jp.gba", 0x591c1a, 0x6
 
-	.globl gUnknown_8591C20
-gUnknown_8591C20: @ 0x8591C20
+	.globl sTextPrompt_Pal
+sTextPrompt_Pal: @ 0x8591C20
 	.incbin "baserom_jp.gba", 0x591c20, 0x8
 
-	.globl gUnknown_8591C28
-gUnknown_8591C28: @ 0x8591C28
+	.globl sWindowTemplates
+sWindowTemplates: @ 0x8591C28
 	.incbin "baserom_jp.gba", 0x591c28, 0x18
 
-	.globl gUnknown_8591C40
-gUnknown_8591C40: @ 0x8591C40
+	.globl sWindowTemplate_ConfirmYesNo
+sWindowTemplate_ConfirmYesNo: @ 0x8591C40
 	.incbin "baserom_jp.gba", 0x591c40, 0x8
 
-	.globl gUnknown_8591C48
-gUnknown_8591C48: @ 0x8591C48
+	.globl sWallclockBgTemplates
+sWallclockBgTemplates: @ 0x8591C48
 	.incbin "baserom_jp.gba", 0x591c48, 0xc
 
-	.globl gUnknown_8591C54
-gUnknown_8591C54: @ 0x8591C54
+	.globl sSpriteSheet_ClockHand
+sSpriteSheet_ClockHand: @ 0x8591C54
 	.incbin "baserom_jp.gba", 0x591c54, 0x10
 
-	.globl gUnknown_8591C64
-gUnknown_8591C64: @ 0x8591C64
+	.globl sSpritePalettes_Clock
+sSpritePalettes_Clock: @ 0x8591C64
 	.incbin "baserom_jp.gba", 0x591c64, 0x38
 
-	.globl gUnknown_8591C9C
-gUnknown_8591C9C: @ 0x8591C9C
+	.globl sSpriteTemplate_MinuteHand
+sSpriteTemplate_MinuteHand: @ 0x8591C9C
 	.incbin "baserom_jp.gba", 0x591c9c, 0x18
 
-	.globl gUnknown_8591CB4
-gUnknown_8591CB4: @ 0x8591CB4
+	.globl sSpriteTemplate_HourHand
+sSpriteTemplate_HourHand: @ 0x8591CB4
 	.incbin "baserom_jp.gba", 0x591cb4, 0x38
 
-	.globl gUnknown_8591CEC
-gUnknown_8591CEC: @ 0x8591CEC
+	.globl sSpriteTemplate_PM
+sSpriteTemplate_PM: @ 0x8591CEC
 	.incbin "baserom_jp.gba", 0x591cec, 0x18
 
-	.globl gUnknown_8591D04
-gUnknown_8591D04: @ 0x8591D04
+	.globl sSpriteTemplate_AM
+sSpriteTemplate_AM: @ 0x8591D04
 	.incbin "baserom_jp.gba", 0x591d04, 0x18
 
-	.globl gUnknown_8591D1C
-gUnknown_8591D1C: @ 0x8591D1C
+	.globl sClockHandCoords
+sClockHandCoords: @ 0x8591D1C
 	.incbin "baserom_jp.gba", 0x591d1c, 0x2d0
 
 	.globl gUnknown_8591FEC
@@ -9612,8 +9612,8 @@ gUnknown_8591FEC: @ 0x8591FEC
 gUnknown_859206C: @ 0x859206C
 	.incbin "baserom_jp.gba", 0x59206c, 0xc
 
-	.globl gUnknown_8592078
-gUnknown_8592078: @ 0x8592078
+	.globl gPokeblockNames
+gPokeblockNames: @ 0x8592078
 	.incbin "baserom_jp.gba", 0x592078, 0x3c
 
 	.globl gUnknown_85920B4
@@ -9676,36 +9676,36 @@ gUnknown_85921F4: @ 0x85921F4
 gUnknown_85921FC: @ 0x85921FC
 	.incbin "baserom_jp.gba", 0x5921fc, 0x18
 
-	.globl gUnknown_8592214
-gUnknown_8592214: @ 0x8592214
+	.globl sTransitionTypes
+sTransitionTypes: @ 0x8592214
 	.incbin "baserom_jp.gba", 0x592214, 0x88
 
-	.globl gUnknown_859229C
-gUnknown_859229C: @ 0x859229C
+	.globl sCaveTransitionPalette_White
+sCaveTransitionPalette_White: @ 0x859229C
 	.incbin "baserom_jp.gba", 0x59229c, 0x20
 
-	.globl gUnknown_85922BC
-gUnknown_85922BC: @ 0x85922BC
+	.globl sCaveTransitionPalette_Black
+sCaveTransitionPalette_Black: @ 0x85922BC
 	.incbin "baserom_jp.gba", 0x5922bc, 0x20
 
-	.globl gUnknown_85922DC
-gUnknown_85922DC: @ 0x85922DC
+	.globl sCaveTransitionPalette_Enter
+sCaveTransitionPalette_Enter: @ 0x85922DC
 	.incbin "baserom_jp.gba", 0x5922dc, 0x10
 
 	.globl gUnknown_85922EC
 gUnknown_85922EC: @ 0x85922EC
 	.incbin "baserom_jp.gba", 0x5922ec, 0x10
 
-	.globl gUnknown_85922FC
-gUnknown_85922FC: @ 0x85922FC
+	.globl sCaveTransitionTilemap
+sCaveTransitionTilemap: @ 0x85922FC
 	.incbin "baserom_jp.gba", 0x5922fc, 0x1e0
 
-	.globl gUnknown_85924DC
-gUnknown_85924DC: @ 0x85924DC
+	.globl sCaveTransitionTiles
+sCaveTransitionTiles: @ 0x85924DC
 	.incbin "baserom_jp.gba", 0x5924dc, 0xb4
 
-	.globl gUnknown_8592590
-gUnknown_8592590: @ 0x8592590
+	.globl gShoalTideTable
+gShoalTideTable: @ 0x8592590
 	.incbin "baserom_jp.gba", 0x592590, 0x18
 
 	.globl gUnknown_85925A8
@@ -9906,28 +9906,28 @@ gUnknown_8592ED0: @ 0x8592ED0
 gUnknown_8592ED8: @ 0x8592ED8
 	.incbin "baserom_jp.gba", 0x592ed8, 0x8
 
-	.globl gUnknown_8592EE0
-gUnknown_8592EE0: @ 0x8592EE0
+	.globl sTrainerHillWindowTileset
+sTrainerHillWindowTileset: @ 0x8592EE0
 	.incbin "baserom_jp.gba", 0x592ee0, 0xc0
 
-	.globl gUnknown_8592FA0
-gUnknown_8592FA0: @ 0x8592FA0
+	.globl sTrainerHillWindowPalette
+sTrainerHillWindowPalette: @ 0x8592FA0
 	.incbin "baserom_jp.gba", 0x592fa0, 0x20
 
-	.globl gUnknown_8592FC0
-gUnknown_8592FC0: @ 0x8592FC0
+	.globl sTrainerHillWindowTilemap
+sTrainerHillWindowTilemap: @ 0x8592FC0
 	.incbin "baserom_jp.gba", 0x592fc0, 0x800
 
-	.globl gUnknown_85937C0
-gUnknown_85937C0: @ 0x85937C0
+	.globl sTrainerHillRecordsBgTemplates
+sTrainerHillRecordsBgTemplates: @ 0x85937C0
 	.incbin "baserom_jp.gba", 0x5937c0, 0x8
 
-	.globl gUnknown_85937C8
-gUnknown_85937C8: @ 0x85937C8
+	.globl sTrainerHillRecordsWindowTemplates
+sTrainerHillRecordsWindowTemplates: @ 0x85937C8
 	.incbin "baserom_jp.gba", 0x5937c8, 0x10
 
-	.globl gUnknown_85937D8
-gUnknown_85937D8: @ 0x85937D8
+	.globl sLinkBattleRecordsWindow
+sLinkBattleRecordsWindow: @ 0x85937D8
 	.incbin "baserom_jp.gba", 0x5937d8, 0x8
 
 	.globl gUnknown_85937E0
@@ -10239,48 +10239,48 @@ gUnknown_85976FA: @ 0x85976FA
 gUnknown_85976FC: @ 0x85976FC
 	.incbin "baserom_jp.gba", 0x5976fc, 0x8d0
 
-	.globl gUnknown_8597FCC
-gUnknown_8597FCC: @ 0x8597FCC
+	.globl sCryMeter_Pal
+sCryMeter_Pal: @ 0x8597FCC
 	.incbin "baserom_jp.gba", 0x597fcc, 0x20
 
-	.globl gUnknown_8597FEC
-gUnknown_8597FEC: @ 0x8597FEC
+	.globl sCryMeter_Gfx
+sCryMeter_Gfx: @ 0x8597FEC
 	.incbin "baserom_jp.gba", 0x597fec, 0x338
 
-	.globl gUnknown_8598324
-gUnknown_8598324: @ 0x8598324
+	.globl sWaveformOffsets
+sWaveformOffsets: @ 0x8598324
 	.incbin "baserom_jp.gba", 0x598324, 0x480
 
-	.globl gUnknown_85987A4
-gUnknown_85987A4: @ 0x85987A4
+	.globl sCryScreenBg_Pal
+sCryScreenBg_Pal: @ 0x85987A4
 	.incbin "baserom_jp.gba", 0x5987a4, 0x20
 
-	.globl gUnknown_85987C4
-gUnknown_85987C4: @ 0x85987C4
+	.globl sCryScreenBg_Gfx
+sCryScreenBg_Gfx: @ 0x85987C4
 	.incbin "baserom_jp.gba", 0x5987c4, 0x20
 
-	.globl gUnknown_85987E4
-gUnknown_85987E4: @ 0x85987E4
+	.globl sWaveformTileDataNybbleMasks
+sWaveformTileDataNybbleMasks: @ 0x85987E4
 	.incbin "baserom_jp.gba", 0x5987e4, 0x2
 
-	.globl gUnknown_85987E6
-gUnknown_85987E6: @ 0x85987E6
+	.globl sWaveformColor
+sWaveformColor: @ 0x85987E6
 	.incbin "baserom_jp.gba", 0x5987e6, 0x36
 
-	.globl gUnknown_859881C
-gUnknown_859881C: @ 0x859881C
+	.globl sCryMeterNeedleSpriteTemplate
+sCryMeterNeedleSpriteTemplate: @ 0x859881C
 	.incbin "baserom_jp.gba", 0x59881c, 0x18
 
-	.globl gUnknown_8598834
-gUnknown_8598834: @ 0x8598834
+	.globl sCryMeterNeedleSpriteSheets
+sCryMeterNeedleSpriteSheets: @ 0x8598834
 	.incbin "baserom_jp.gba", 0x598834, 0x10
 
-	.globl gUnknown_8598844
-gUnknown_8598844: @ 0x8598844
+	.globl sCryMeterNeedleSpritePalettes
+sCryMeterNeedleSpritePalettes: @ 0x8598844
 	.incbin "baserom_jp.gba", 0x598844, 0x424
 
-	.globl gUnknown_8598C68
-gUnknown_8598C68: @ 0x8598C68
+	.globl sLandmarkLists
+sLandmarkLists: @ 0x8598C68
 	.incbin "baserom_jp.gba", 0x598c68, 0x178
 
 	.globl gUnknown_8598DE0
@@ -11427,32 +11427,32 @@ gUnknown_85ACA00: @ 0x85ACA00
 gUnknown_85ACA08: @ 0x85ACA08
 	.incbin "baserom_jp.gba", 0x5aca08, 0x38
 
-	.globl gUnknown_85ACA40
-gUnknown_85ACA40: @ 0x85ACA40
+	.globl sBridgeReflectionVerticalOffsets
+sBridgeReflectionVerticalOffsets: @ 0x85ACA40
 	.incbin "baserom_jp.gba", 0x5aca40, 0x6
 
-	.globl gUnknown_85ACA46
-gUnknown_85ACA46: @ 0x85ACA46
+	.globl sShadowEffectTemplateIds
+sShadowEffectTemplateIds: @ 0x85ACA46
 	.incbin "baserom_jp.gba", 0x5aca46, 0x4
 
-	.globl gUnknown_85ACA4A
-gUnknown_85ACA4A: @ 0x85ACA4A
+	.globl gShadowVerticalOffsets
+gShadowVerticalOffsets: @ 0x85ACA4A
 	.incbin "baserom_jp.gba", 0x5aca4a, 0xa
 
-	.globl gUnknown_85ACA54
-gUnknown_85ACA54: @ 0x85ACA54
+	.globl gFadeFootprintsTireTracksFuncs
+gFadeFootprintsTireTracksFuncs: @ 0x85ACA54
 	.incbin "baserom_jp.gba", 0x5aca54, 0x8
 
-	.globl gUnknown_85ACA5C
-gUnknown_85ACA5C: @ 0x85ACA5C
+	.globl gAshFieldEffectFuncs
+gAshFieldEffectFuncs: @ 0x85ACA5C
 	.incbin "baserom_jp.gba", 0x5aca5c, 0xc
 
-	.globl gUnknown_85ACA68
-gUnknown_85ACA68: @ 0x85ACA68
+	.globl sSurfBlobDirectionAnims
+sSurfBlobDirectionAnims: @ 0x85ACA68
 	.incbin "baserom_jp.gba", 0x5aca68, 0xa
 
-	.globl gUnknown_85ACA72
-gUnknown_85ACA72: @ 0x85ACA72
+	.globl sBobbingIntervals
+sBobbingIntervals: @ 0x85ACA72
 	.incbin "baserom_jp.gba", 0x5aca72, 0x96
 
 	.globl gUnknown_85ACB08
@@ -11631,40 +11631,40 @@ gUnknown_85ADA67: @ 0x85ADA67
 gUnknown_85ADAAF: @ 0x85ADAAF
 	.string "{B_COPY_VAR_1}に　わざを　おぼえさせるのを\n"
 	.string "あきらめますか？$"
-	.globl gUnknown_85ADAC9
-gUnknown_85ADAC9: @ 0x85ADAC9
+	.globl gText_MoveRelearnerWhichMoveToForget
+gText_MoveRelearnerWhichMoveToForget: @ 0x85ADAC9
 	.incbin "baserom_jp.gba", 0x5adac9, 0x2b
 
-	.globl gUnknown_85ADAF4
-gUnknown_85ADAF4: @ 0x85ADAF4
+	.globl sMoveRelearnerSpriteSheet
+sMoveRelearnerSpriteSheet: @ 0x85ADAF4
 	.incbin "baserom_jp.gba", 0x5adaf4, 0x8
 
-	.globl gUnknown_85ADAFC
-gUnknown_85ADAFC: @ 0x85ADAFC
+	.globl sMoveRelearnerPalette
+sMoveRelearnerPalette: @ 0x85ADAFC
 	.incbin "baserom_jp.gba", 0x5adafc, 0x8
 
-	.globl gUnknown_85ADB04
-gUnknown_85ADB04: @ 0x85ADB04
+	.globl sDisplayModeArrowsTemplate
+sDisplayModeArrowsTemplate: @ 0x85ADB04
 	.incbin "baserom_jp.gba", 0x5adb04, 0x10
 
-	.globl gUnknown_85ADB14
-gUnknown_85ADB14: @ 0x85ADB14
+	.globl sMoveListScrollArrowsTemplate
+sMoveListScrollArrowsTemplate: @ 0x85ADB14
 	.incbin "baserom_jp.gba", 0x5adb14, 0x40
 
-	.globl gUnknown_85ADB54
-gUnknown_85ADB54: @ 0x85ADB54
+	.globl sConstestMoveHeartSprite
+sConstestMoveHeartSprite: @ 0x85ADB54
 	.incbin "baserom_jp.gba", 0x5adb54, 0x18
 
-	.globl gUnknown_85ADB6C
-gUnknown_85ADB6C: @ 0x85ADB6C
+	.globl sMoveRelearnerMenuBackgroundTemplates
+sMoveRelearnerMenuBackgroundTemplates: @ 0x85ADB6C
 	.incbin "baserom_jp.gba", 0x5adb6c, 0x8
 
-	.globl gUnknown_85ADB74
-gUnknown_85ADB74: @ 0x85ADB74
+	.globl sRoamerLocations
+sRoamerLocations: @ 0x85ADB74
 	.incbin "baserom_jp.gba", 0x5adb74, 0x80
 
-	.globl gUnknown_85ADBF4
-gUnknown_85ADBF4: @ 0x85ADBF4
+	.globl gBattleFrontierHeldItems
+gBattleFrontierHeldItems: @ 0x85ADBF4
 	.incbin "baserom_jp.gba", 0x5adbf4, 0x6e1c
 
 	.globl gUnknown_85B4A10
@@ -11714,12 +11714,12 @@ gUnknown_85BC619: @ 0x85BC619
 	.globl gUnknown_85BC620
 gUnknown_85BC620: @ 0x85BC620
 	.string "ム　セ　モ　t　o　まろく{NAME_END}　　か{NAME_END}シ　ぴあ♀　Y　ィあまわう　{NAME_END}　{FONT 0}キ　♀　ぴ　アあけ　こ　す　ひ　も　ゆ　れ　わ　を　ん　ぜ　$$け　た　ち　ひ　や　ら　れ　を　ぃ　ぅ　ゅ　$$え　お　か　さ　ふ　め　も　ゆ　ろ　ぉ　ゅ　$$え　お　か　し　は　や　ゆ　よ　り　わ　ん　ぇ　$$　　あ　ち　つ　て　に　ぬ　む　れ　じ　ぞ　だ　ぢ　$$つ　て　な　よ　ら　る　れ　ゃ　ょ　げ　ぜ　$$　　あ　え　お　き　く　つ　と　な　ゆ　よ　り　ず　$$ち　ぬ　ね　の　ま　み　む　め　ら　ろ　わ　ぅ　ぐ　ど　$$え　き　く　け　さ　し　す　ひ　よ　り　を　ん　ぁ　ぜ　$$　　い　し　に　ふ　ほ　も　よ　ろ　わ　ぎ　ぐ　$$　　あ　い　う　せ　そ　ね　の　み　め　ら　ご　ざ　$$ち　つ　て　に　へ　や　れ　ぃ　じ　ず　ぢ　で　ど　$$に　ぬ　ふ　へ　ま　み　め　ら　が　ぞ　だ　づ　$$こ　す　ち　ひ　を　ん　ゅ　ぎ　じ　ず　ぜ　$$く　こ　た　ぬ　へ　ろ　わ　ざ　ず　ぜ　で　$$く　す　な　へ　む　る　ぃ　ょ　ご　じ　で　$$か　き　ち　ぬ　ね　は　み　や　ゃ　ゅ　ぐ　だ　$$　　あ　ひ　ふ　み　め　や　ゆ　ゃ　ゅ　ぐ　だ　$$こ　せ　そ　た　と　な　の　ほ　も　ぁ　ぃ　ぇ　ど　$$こ　た　つ　て　と　な　の　ほ　も　ら　る　ぃ　ど　$$　　あ　や　ゆ　り　ん　ぅ　ぉ　ぞ　づ　で　$$え　お　な　む　ゆ　よ　り　ぉ　ゃ　ぞ　だ　$$い　う　き　く　に　ぬ　ふ　へ　ほ　ぉ　づ　$$せ　そ　ほ　ろ　わ　を　ん　が　げ　ご　ぜ　$$ひ　へ　ほ　み　や　ぃ　ぉ　ゃ　ゅ　ぐ　づ　$$お　か　き　く　こ　た　ち　と　な　ゆ　ろ　わ　$$あ　う　え　お　け　さ　し　と　な　に　ぉ　$$の　ま　も　ゆ　よ　ら　ぇ　ぉ　ゃ　げ　で　ど　$$こ　た　ち　ね　の　ろ　わ　ぁ　ぅ　ゅ　ご　ざ　ぞ　だ　$$い　か　け　す　ち　て　と　ね　ひ　へ　ほ　$$"
-	.globl gUnknown_85BC958
-gUnknown_85BC958: @ 0x85BC958
+	.globl gSlateportBattleTentTrainers
+gSlateportBattleTentTrainers: @ 0x85BC958
 	.incbin "baserom_jp.gba", 0x5bc958, 0x618
 
-	.globl gUnknown_85BCF70
-gUnknown_85BCF70: @ 0x85BCF70
+	.globl gSlateportBattleTentMons
+gSlateportBattleTentMons: @ 0x85BCF70
 	.incbin "baserom_jp.gba", 0x5bcf70, 0x5e4
 	.globl gUnknown_85BD554
 gUnknown_85BD554: @ 0x85BD554
@@ -12099,12 +12099,12 @@ gUnknown_85C610C: @ 0x85C610C
 	.globl gUnknown_85C611C
 gUnknown_85C611C: @ 0x85C611C
 	.string "ホウエンちほう$"
-	.globl gUnknown_85C6124
-gUnknown_85C6124: @ 0x85C6124
+	.globl sFieldRegionMapBgTemplates
+sFieldRegionMapBgTemplates: @ 0x85C6124
 	.incbin "baserom_jp.gba", 0x5c6124, 0x8
 
-	.globl gUnknown_85C612C
-gUnknown_85C612C: @ 0x85C612C
+	.globl sFieldRegionMapWindowTemplates
+sFieldRegionMapWindowTemplates: @ 0x85C612C
 	.incbin "baserom_jp.gba", 0x5c612c, 0x18
 
 	.globl gUnknown_85C6144
@@ -12258,20 +12258,20 @@ gUnknown_85C79D8: @ 0x85C79D8
 gUnknown_85C7A14: @ 0x85C7A14
 	.incbin "baserom_jp.gba", 0x5c7a14, 0x18
 
-	.globl gUnknown_85C7A2C
-gUnknown_85C7A2C: @ 0x85C7A2C
+	.globl sLotteryPrizes
+sLotteryPrizes: @ 0x85C7A2C
 	.incbin "baserom_jp.gba", 0x5c7a2c, 0x8
 
-	.globl gUnknown_85C7A34
-gUnknown_85C7A34: @ 0x85C7A34
+	.globl sDiplomaPalettes
+sDiplomaPalettes: @ 0x85C7A34
 	.incbin "baserom_jp.gba", 0x5c7a34, 0x40
 
-	.globl gUnknown_85C7A74
-gUnknown_85C7A74: @ 0x85C7A74
+	.globl sDiplomaTilemap
+sDiplomaTilemap: @ 0x85C7A74
 	.incbin "baserom_jp.gba", 0x5c7a74, 0x73c
 
-	.globl gUnknown_85C81B0
-gUnknown_85C81B0: @ 0x85C81B0
+	.globl sDiplomaTiles
+sDiplomaTiles: @ 0x85C81B0
 	.incbin "baserom_jp.gba", 0x5c81b0, 0x9f8
 
 	.globl gUnknown_85C8BA8
@@ -12296,20 +12296,20 @@ gUnknown_85C8BBB: @ 0x85C8BBB
 	.globl gUnknown_85C8BF2
 gUnknown_85C8BF2: @ 0x85C8BF2
 	.string "{COLOR 4}{SHADOW 5}ゲームフリーク$"
-	.globl gUnknown_85C8C00
-gUnknown_85C8C00: @ 0x85C8C00
+	.globl gText_Diploma_NameTemplate
+gText_Diploma_NameTemplate: @ 0x85C8C00
 	.incbin "baserom_jp.gba", 0x5c8c00, 0x8
 
-	.globl gUnknown_85C8C08
-gUnknown_85C8C08: @ 0x85C8C08
+	.globl sDiplomaBgTemplates
+sDiplomaBgTemplates: @ 0x85C8C08
 	.incbin "baserom_jp.gba", 0x5c8c08, 0x8
 
-	.globl gUnknown_85C8C10
-gUnknown_85C8C10: @ 0x85C8C10
+	.globl sDiplomaWinTemplates
+sDiplomaWinTemplates: @ 0x85C8C10
 	.incbin "baserom_jp.gba", 0x5c8c10, 0x10
 
-	.globl gUnknown_85C8C20
-gUnknown_85C8C20: @ 0x85C8C20
+	.globl sDiplomaTextColors
+sDiplomaTextColors: @ 0x85C8C20
 	.incbin "baserom_jp.gba", 0x5c8c20, 0x4
 
 	.globl gUnknown_85C8C24
@@ -13641,8 +13641,8 @@ gUnknown_85CB808: @ 0x85CB808
 gUnknown_85CB81B: @ 0x85CB81B
 	.string "{SE_M_HYPER_BEAM2}ばんめ$"
 
-	.globl gUnknown_85CB821
-gUnknown_85CB821: @ 0x85CB821
+	.globl gText_RibbonsF700
+gText_RibbonsF700: @ 0x85CB821
 	.incbin "baserom_jp.gba", 0x5cb821, 0x242
 	.globl gUnknown_85CBA63
 gUnknown_85CBA63: @ 0x85CBA63
@@ -14358,8 +14358,8 @@ sSaveFailedClockPal: @ 0x85CD264
 sSaveFailedClockGfx: @ 0x85CD284
 	.incbin "baserom_jp.gba", 0x5cd284, 0x90
 
-	.globl gUnknown_85CD314
-gUnknown_85CD314: @ 0x85CD314
+	.globl sRegicePathCoords
+sRegicePathCoords: @ 0x85CD314
 	.incbin "baserom_jp.gba", 0x5cd314, 0x48
 
 	.globl gUnknown_85CD35C
@@ -14418,20 +14418,20 @@ gUnknown_85CDB48: @ 0x85CDB48
 gUnknown_85CDB60: @ 0x85CDB60
 	.string "すべての　セーブデータエリアを\n"
 	.string "クリア　しますか？$"
-	.globl gUnknown_85CDB7A
-gUnknown_85CDB7A: @ 0x85CDB7A
+	.globl gText_ClearingData
+gText_ClearingData: @ 0x85CDB7A
 	.incbin "baserom_jp.gba", 0x5cdb7a, 0x16
 
-	.globl gUnknown_85CDB90
-gUnknown_85CDB90: @ 0x85CDB90
+	.globl sClearSaveBgTemplates
+sClearSaveBgTemplates: @ 0x85CDB90
 	.incbin "baserom_jp.gba", 0x5cdb90, 0x8
 
-	.globl gUnknown_85CDB98
-gUnknown_85CDB98: @ 0x85CDB98
+	.globl sClearSaveTextWindow
+sClearSaveTextWindow: @ 0x85CDB98
 	.incbin "baserom_jp.gba", 0x5cdb98, 0x10
 
-	.globl gUnknown_85CDBA8
-gUnknown_85CDBA8: @ 0x85CDBA8
+	.globl sClearSaveYesNo
+sClearSaveYesNo: @ 0x85CDBA8
 	.incbin "baserom_jp.gba", 0x5cdba8, 0x8
 
 	.globl gUnknown_85CDBB0
@@ -14642,20 +14642,20 @@ gUnknown_85D2910: @ 0x85D2910
 gUnknown_85D2928: @ 0x85D2928
 	.incbin "baserom_jp.gba", 0x5d2928, 0x198
 
-	.globl gUnknown_85D2AC0
-gUnknown_85D2AC0: @ 0x85D2AC0
+	.globl sWordSounds
+sWordSounds: @ 0x85D2AC0
 	.incbin "baserom_jp.gba", 0x5d2ac0, 0x8c
 
-	.globl gUnknown_85D2B4C
-gUnknown_85D2B4C: @ 0x85D2B4C
+	.globl sWordPhonemes
+sWordPhonemes: @ 0x85D2B4C
 	.incbin "baserom_jp.gba", 0x5d2b4c, 0x3c0
 
-	.globl gUnknown_85D2F0C
-gUnknown_85D2F0C: @ 0x85D2F0C
+	.globl sVariableDmgMoves
+sVariableDmgMoves: @ 0x85D2F0C
 	.incbin "baserom_jp.gba", 0x5d2f0c, 0x388
 
-	.globl gUnknown_85D3294
-gUnknown_85D3294: @ 0x85D3294
+	.globl sPointsArray
+sPointsArray: @ 0x85D3294
 	.incbin "baserom_jp.gba", 0x5d3294, 0x70
 
 	.globl gUnknown_85D3304
@@ -14716,16 +14716,16 @@ gUnknown_85D38F0: @ 0x85D38F0
 gUnknown_85D39D4: @ 0x85D39D4
 	.incbin "baserom_jp.gba", 0x5d39d4, 0xe4
 
-	.globl gUnknown_85D3AB8
-gUnknown_85D3AB8: @ 0x85D3AB8
+	.globl sDummyPicData
+sDummyPicData: @ 0x85D3AB8
 	.incbin "baserom_jp.gba", 0x5d3ab8, 0xc
 
-	.globl gUnknown_85D3AC4
-gUnknown_85D3AC4: @ 0x85D3AC4
+	.globl sOamData_Normal
+sOamData_Normal: @ 0x85D3AC4
 	.incbin "baserom_jp.gba", 0x5d3ac4, 0x8
 
-	.globl gUnknown_85D3ACC
-gUnknown_85D3ACC: @ 0x85D3ACC
+	.globl sOamData_Affine
+sOamData_Affine: @ 0x85D3ACC
 	.incbin "baserom_jp.gba", 0x5d3acc, 0x8
 
 	.globl gUnknown_85D3AD4
@@ -14951,20 +14951,20 @@ gUnknown_85D678C: @ 0x85D678C
 gUnknown_85D688C: @ 0x85D688C
 	.incbin "baserom_jp.gba", 0x5d688c, 0x40
 
-	.globl gUnknown_85D68CC
-gUnknown_85D68CC: @ 0x85D68CC
+	.globl sBattlePalaceFunctions
+sBattlePalaceFunctions: @ 0x85D68CC
 	.incbin "baserom_jp.gba", 0x5d68cc, 0x28
 
-	.globl gUnknown_85D68F4
-gUnknown_85D68F4: @ 0x85D68F4
+	.globl sBattlePalaceEarlyPrizes
+sBattlePalaceEarlyPrizes: @ 0x85D68F4
 	.incbin "baserom_jp.gba", 0x5d68f4, 0xc
 
-	.globl gUnknown_85D6900
-gUnknown_85D6900: @ 0x85D6900
+	.globl sBattlePalaceLatePrizes
+sBattlePalaceLatePrizes: @ 0x85D6900
 	.incbin "baserom_jp.gba", 0x5d6900, 0x14
 
-	.globl gUnknown_85D6914
-gUnknown_85D6914: @ 0x85D6914
+	.globl sWinStreakFlags
+sWinStreakFlags: @ 0x85D6914
 	.incbin "baserom_jp.gba", 0x5d6914, 0x10
 
 	.globl gUnknown_85D6924
@@ -15039,8 +15039,8 @@ gUnknown_85D7AA0: @ 0x85D7AA0
 gUnknown_85D7AB0: @ 0x85D7AB0
 	.incbin "baserom_jp.gba", 0x5d7ab0, 0x54
 
-	.globl gUnknown_85D7B04
-gUnknown_85D7B04: @ 0x85D7B04
+	.globl gStandardMenuPalette
+gStandardMenuPalette: @ 0x85D7B04
 	.incbin "baserom_jp.gba", 0x5d7b04, 0x20
 
 	.globl gUnknown_85D7B24
@@ -15656,36 +15656,36 @@ gUnknown_85DDEC0: @ 0x85DDEC0
 gUnknown_85DDEC8: @ 0x85DDEC8
 	.incbin "baserom_jp.gba", 0x5ddec8, 0x8
 
-	.globl gUnknown_85DDED0
-gUnknown_85DDED0: @ 0x85DDED0
+	.globl sMovement_ShiftRight
+sMovement_ShiftRight: @ 0x85DDED0
 	.incbin "baserom_jp.gba", 0x5dded0, 0x4
 
-	.globl gUnknown_85DDED4
-gUnknown_85DDED4: @ 0x85DDED4
+	.globl sMovement_ShiftDown
+sMovement_ShiftDown: @ 0x85DDED4
 	.incbin "baserom_jp.gba", 0x5dded4, 0x4
 
-	.globl gUnknown_85DDED8
-gUnknown_85DDED8: @ 0x85DDED8
+	.globl sMovement_ShiftLeft
+sMovement_ShiftLeft: @ 0x85DDED8
 	.incbin "baserom_jp.gba", 0x5dded8, 0x4
 
-	.globl gUnknown_85DDEDC
-gUnknown_85DDEDC: @ 0x85DDEDC
+	.globl sMovement_ShiftUp
+sMovement_ShiftUp: @ 0x85DDEDC
 	.incbin "baserom_jp.gba", 0x5ddedc, 0x4
 
-	.globl gUnknown_85DDEE0
-gUnknown_85DDEE0: @ 0x85DDEE0
+	.globl sMovement_FaceRight
+sMovement_FaceRight: @ 0x85DDEE0
 	.incbin "baserom_jp.gba", 0x5ddee0, 0x2
 
-	.globl gUnknown_85DDEE2
-gUnknown_85DDEE2: @ 0x85DDEE2
+	.globl sMovement_FaceDown
+sMovement_FaceDown: @ 0x85DDEE2
 	.incbin "baserom_jp.gba", 0x5ddee2, 0x2
 
-	.globl gUnknown_85DDEE4
-gUnknown_85DDEE4: @ 0x85DDEE4
+	.globl sMovement_FaceLeft
+sMovement_FaceLeft: @ 0x85DDEE4
 	.incbin "baserom_jp.gba", 0x5ddee4, 0x2
 
-	.globl gUnknown_85DDEE6
-gUnknown_85DDEE6: @ 0x85DDEE6
+	.globl sMovement_FaceUp
+sMovement_FaceUp: @ 0x85DDEE6
 	.incbin "baserom_jp.gba", 0x5ddee6, 0x782
 
 	.globl gUnknown_85DE668
@@ -15929,12 +15929,12 @@ gUnknown_85DFCC2: @ 0x85DFCC2
 gUnknown_85DFCC6: @ 0x85DFCC6
 	.string "$$"
 
-	.globl gUnknown_85DFCC8
-gUnknown_85DFCC8: @ 0x85DFCC8
+	.globl gItemIconTable
+gItemIconTable: @ 0x85DFCC8
 	.incbin "baserom_jp.gba", 0x5dfcc8, 0xbe4
 
-	.globl gUnknown_85E08AC
-gUnknown_85E08AC: @ 0x85E08AC
+	.globl gItemIconSpriteTemplate
+gItemIconSpriteTemplate: @ 0x85E08AC
 	.incbin "baserom_jp.gba", 0x5e08ac, 0x18
 
 	.globl gUnknown_85E08C4
@@ -16237,36 +16237,36 @@ gUnknown_85E18D8: @ 0x85E18D8
 gUnknown_85E18F8: @ 0x85E18F8
 	.incbin "baserom_jp.gba", 0x5e18f8, 0x74
 
-	.globl gUnknown_85E196C
-gUnknown_85E196C: @ 0x85E196C
+	.globl sVerdanturfTentFuncs
+sVerdanturfTentFuncs: @ 0x85E196C
 	.incbin "baserom_jp.gba", 0x5e196c, 0x20
 
-	.globl gUnknown_85E198C
-gUnknown_85E198C: @ 0x85E198C
+	.globl sVerdanturfTentRewards
+sVerdanturfTentRewards: @ 0x85E198C
 	.incbin "baserom_jp.gba", 0x5e198c, 0x4
 
-	.globl gUnknown_85E1990
-gUnknown_85E1990: @ 0x85E1990
+	.globl sFallarborTentFuncs
+sFallarborTentFuncs: @ 0x85E1990
 	.incbin "baserom_jp.gba", 0x5e1990, 0x1c
 
-	.globl gUnknown_85E19AC
-gUnknown_85E19AC: @ 0x85E19AC
+	.globl sFallarborTentRewards
+sFallarborTentRewards: @ 0x85E19AC
 	.incbin "baserom_jp.gba", 0x5e19ac, 0x4
 
-	.globl gUnknown_85E19B0
-gUnknown_85E19B0: @ 0x85E19B0
+	.globl sSlateportTentFuncs
+sSlateportTentFuncs: @ 0x85E19B0
 	.incbin "baserom_jp.gba", 0x5e19b0, 0x28
 
-	.globl gUnknown_85E19D8
-gUnknown_85E19D8: @ 0x85E19D8
+	.globl sSlateportTentRewards
+sSlateportTentRewards: @ 0x85E19D8
 	.incbin "baserom_jp.gba", 0x5e19d8, 0x4
 
-	.globl gUnknown_85E19DC
-gUnknown_85E19DC: @ 0x85E19DC
+	.globl sScrollDistances
+sScrollDistances: @ 0x85E19DC
 	.incbin "baserom_jp.gba", 0x5e19dc, 0x4
 
-	.globl gUnknown_85E19E0
-gUnknown_85E19E0: @ 0x85E19E0
+	.globl sFont_Braille
+sFont_Braille: @ 0x85E19E0
 	.incbin "baserom_jp.gba", 0x5e19e0, 0x5904
 
 	.globl gUnknown_85E72E4
@@ -16334,8 +16334,8 @@ sSpriteTemplate_CeilingCrumbleLarge: @ 0x85E801C
 gUnknown_85E8034: @ 0x85E8034
 	.incbin "baserom_jp.gba", 0x5e8034, 0x4df0
 
-	.globl gUnknown_85ECE24
-gUnknown_85ECE24: @ 0x85ECE24
+	.globl gNatureNamePointers
+gNatureNamePointers: @ 0x85ECE24
 	.incbin "baserom_jp.gba", 0x5ece24, 0x64
 
 	.globl gUnknown_85ECE88
@@ -16454,24 +16454,24 @@ gUnknown_85ED558: @ 0x85ED558
 gUnknown_85ED570: @ 0x85ED570
 	.incbin "baserom_jp.gba", 0x5ed570, 0x20
 
-	.globl gUnknown_85ED590
-gUnknown_85ED590: @ 0x85ED590
+	.globl sPokedexAreaMap_Pal
+sPokedexAreaMap_Pal: @ 0x85ED590
 	.incbin "baserom_jp.gba", 0x5ed590, 0x60
 
-	.globl gUnknown_85ED5F0
-gUnknown_85ED5F0: @ 0x85ED5F0
+	.globl sPokedexAreaMap_Gfx
+sPokedexAreaMap_Gfx: @ 0x85ED5F0
 	.incbin "baserom_jp.gba", 0x5ed5f0, 0xd54
 
-	.globl gUnknown_85EE344
-gUnknown_85EE344: @ 0x85EE344
+	.globl sPokedexAreaMap_Tilemap
+sPokedexAreaMap_Tilemap: @ 0x85EE344
 	.incbin "baserom_jp.gba", 0x5ee344, 0x314
 
-	.globl gUnknown_85EE658
-gUnknown_85EE658: @ 0x85EE658
+	.globl sPokedexAreaMapAffine_Gfx
+sPokedexAreaMapAffine_Gfx: @ 0x85EE658
 	.incbin "baserom_jp.gba", 0x5ee658, 0xd5c
 
-	.globl gUnknown_85EF3B4
-gUnknown_85EF3B4: @ 0x85EF3B4
+	.globl sPokedexAreaMapAffine_Tilemap
+sPokedexAreaMapAffine_Tilemap: @ 0x85EF3B4
 	.incbin "baserom_jp.gba", 0x5ef3b4, 0x350
 
 	.globl gUnknown_85EF704
@@ -16530,116 +16530,116 @@ gUnknown_85EF81C: @ 0x85EF81C
 gUnknown_85EF824: @ 0x85EF824
 	.incbin "baserom_jp.gba", 0x5ef824, 0x18
 
-	.globl gUnknown_85EF83C
-gUnknown_85EF83C: @ 0x85EF83C
+	.globl PokenavMenuCallbacks
+PokenavMenuCallbacks: @ 0x85EF83C
 	.incbin "baserom_jp.gba", 0x5ef83c, 0x1a4
 
-	.globl gUnknown_85EF9E0
-gUnknown_85EF9E0: @ 0x85EF9E0
+	.globl gPokenavHeader_Pal
+gPokenavHeader_Pal: @ 0x85EF9E0
 	.incbin "baserom_jp.gba", 0x5ef9e0, 0x20
 
-	.globl gUnknown_85EFA00
-gUnknown_85EFA00: @ 0x85EFA00
+	.globl gPokenavHeader_Gfx
+gPokenavHeader_Gfx: @ 0x85EFA00
 	.incbin "baserom_jp.gba", 0x5efa00, 0x22c
 
-	.globl gUnknown_85EFC2C
-gUnknown_85EFC2C: @ 0x85EFC2C
+	.globl gPokenavHeader_Tilemap
+gPokenavHeader_Tilemap: @ 0x85EFC2C
 	.incbin "baserom_jp.gba", 0x5efc2c, 0x5f0
 
-	.globl gUnknown_85F021C
-gUnknown_85F021C: @ 0x85F021C
+	.globl gPokenavLeftHeader_Pal
+gPokenavLeftHeader_Pal: @ 0x85F021C
 	.incbin "baserom_jp.gba", 0x5f021c, 0x11ac
 
-	.globl gUnknown_85F13C8
-gUnknown_85F13C8: @ 0x85F13C8
+	.globl gPokenavMainMenuBgTemplates
+gPokenavMainMenuBgTemplates: @ 0x85F13C8
 	.incbin "baserom_jp.gba", 0x5f13c8, 0x4
 
-	.globl gUnknown_85F13CC
-gUnknown_85F13CC: @ 0x85F13CC
+	.globl sHelpBarWindowTemplate
+sHelpBarWindowTemplate: @ 0x85F13CC
 	.incbin "baserom_jp.gba", 0x5f13cc, 0x10
 
-	.globl gUnknown_85F13DC
-gUnknown_85F13DC: @ 0x85F13DC
+	.globl sHelpBarTexts
+sHelpBarTexts: @ 0x85F13DC
 	.incbin "baserom_jp.gba", 0x5f13dc, 0x30
 
-	.globl gUnknown_85F140C
-gUnknown_85F140C: @ 0x85F140C
+	.globl sHelpBarTextColors
+sHelpBarTextColors: @ 0x85F140C
 	.incbin "baserom_jp.gba", 0x5f140c, 0x4
 
-	.globl gUnknown_85F1410
-gUnknown_85F1410: @ 0x85F1410
+	.globl sSpinningPokenavSpriteSheet
+sSpinningPokenavSpriteSheet: @ 0x85F1410
 	.incbin "baserom_jp.gba", 0x5f1410, 0x8
 
-	.globl gUnknown_85F1418
-gUnknown_85F1418: @ 0x85F1418
+	.globl sSpinningNavgearPalettes
+sSpinningNavgearPalettes: @ 0x85F1418
 	.incbin "baserom_jp.gba", 0x5f1418, 0x10
 
-	.globl gUnknown_85F1428
-gUnknown_85F1428: @ 0x85F1428
+	.globl sMenuLeftHeaderSpriteSheet
+sMenuLeftHeaderSpriteSheet: @ 0x85F1428
 	.incbin "baserom_jp.gba", 0x5f1428, 0x8
 
-	.globl gUnknown_85F1430
-gUnknown_85F1430: @ 0x85F1430
+	.globl sMenuLeftHeaderSpriteSheets
+sMenuLeftHeaderSpriteSheets: @ 0x85F1430
 	.incbin "baserom_jp.gba", 0x5f1430, 0x30
 
-	.globl gUnknown_85F1460
-gUnknown_85F1460: @ 0x85F1460
+	.globl sPokenavSubMenuLeftHeaderSpriteSheets
+sPokenavSubMenuLeftHeaderSpriteSheets: @ 0x85F1460
 	.incbin "baserom_jp.gba", 0x5f1460, 0x68
 
-	.globl gUnknown_85F14C8
-gUnknown_85F14C8: @ 0x85F14C8
+	.globl sSpinningPokenavSpriteTemplate
+sSpinningPokenavSpriteTemplate: @ 0x85F14C8
 	.incbin "baserom_jp.gba", 0x5f14c8, 0x28
 
-	.globl gUnknown_85F14F0
-gUnknown_85F14F0: @ 0x85F14F0
+	.globl sLeftHeaderSpriteTemplate
+sLeftHeaderSpriteTemplate: @ 0x85F14F0
 	.incbin "baserom_jp.gba", 0x5f14f0, 0x18
 
-	.globl gUnknown_85F1508
-gUnknown_85F1508: @ 0x85F1508
+	.globl sSubmenuLeftHeaderSpriteTemplate
+sSubmenuLeftHeaderSpriteTemplate: @ 0x85F1508
 	.incbin "baserom_jp.gba", 0x5f1508, 0xa0
 
-	.globl gUnknown_85F15A8
-gUnknown_85F15A8: @ 0x85F15A8
+	.globl sPokenavCheckPageColors
+sPokenavCheckPageColors: @ 0x85F15A8
 	.incbin "baserom_jp.gba", 0x5f15a8, 0x4
 
-	.globl gUnknown_85F15AC
-gUnknown_85F15AC: @ 0x85F15AC
+	.globl sPokenavMatchCallFieldNames
+sPokenavMatchCallFieldNames: @ 0x85F15AC
 	.incbin "baserom_jp.gba", 0x5f15ac, 0xc
 
-	.globl gUnknown_85F15B8
-gUnknown_85F15B8: @ 0x85F15B8
+	.globl sPokenavFieldNameColors
+sPokenavFieldNameColors: @ 0x85F15B8
 	.incbin "baserom_jp.gba", 0x5f15b8, 0x3
 
-	.globl gUnknown_85F15BB
-gUnknown_85F15BB: @ 0x85F15BB
+	.globl lineOffsets
+lineOffsets: @ 0x85F15BB
 	.incbin "baserom_jp.gba", 0x5f15bb, 0x5
 
-	.globl gUnknown_85F15C0
-gUnknown_85F15C0: @ 0x85F15C0
+	.globl sListArrowSpriteSheets
+sListArrowSpriteSheets: @ 0x85F15C0
 	.incbin "baserom_jp.gba", 0x5f15c0, 0x8
 
-	.globl gUnknown_85F15C8
-gUnknown_85F15C8: @ 0x85F15C8
+	.globl sListArrowPalettes
+sListArrowPalettes: @ 0x85F15C8
 	.incbin "baserom_jp.gba", 0x5f15c8, 0x18
 
-	.globl gUnknown_85F15E0
-gUnknown_85F15E0: @ 0x85F15E0
+	.globl sSpriteTemplate_RightArrow
+sSpriteTemplate_RightArrow: @ 0x85F15E0
 	.incbin "baserom_jp.gba", 0x5f15e0, 0x20
 
-	.globl gUnknown_85F1600
-gUnknown_85F1600: @ 0x85F1600
+	.globl sSpriteTemplate_UpDownArrow
+sSpriteTemplate_UpDownArrow: @ 0x85F1600
 	.incbin "baserom_jp.gba", 0x5f1600, 0x18
 
-	.globl gUnknown_85F1618
-gUnknown_85F1618: @ 0x85F1618
+	.globl sLastCursorPositions
+sLastCursorPositions: @ 0x85F1618
 	.incbin "baserom_jp.gba", 0x5f1618, 0x5
 
-	.globl gUnknown_85F161D
-gUnknown_85F161D: @ 0x85F161D
+	.globl sMenuItems
+sMenuItems: @ 0x85F161D
 	.incbin "baserom_jp.gba", 0x5f161d, 0x1f
 
-	.globl gUnknown_85F163C
-gUnknown_85F163C: @ 0x85F163C
+	.globl sPokenavBgDotsPal
+sPokenavBgDotsPal: @ 0x85F163C
 	.incbin "baserom_jp.gba", 0x5f163c, 0x2
 
 	.globl gUnknown_85F163E
@@ -16650,501 +16650,501 @@ gUnknown_85F163E: @ 0x85F163E
 gUnknown_85F164A: @ 0x85F164A
 	.incbin "baserom_jp.gba", 0x5f164a, 0x12
 
-	.globl gUnknown_85F165C
-gUnknown_85F165C: @ 0x85F165C
+	.globl sPokenavBgDotsTiles
+sPokenavBgDotsTiles: @ 0x85F165C
 	.incbin "baserom_jp.gba", 0x5f165c, 0x14
 
-	.globl gUnknown_85F1670
-gUnknown_85F1670: @ 0x85F1670
+	.globl sPokenavBgDotsTilemap
+sPokenavBgDotsTilemap: @ 0x85F1670
 	.incbin "baserom_jp.gba", 0x5f1670, 0xa0
 
-	.globl gUnknown_85F1710
-gUnknown_85F1710: @ 0x85F1710
+	.globl gPokenavMessageBox_Pal
+gPokenavMessageBox_Pal: @ 0x85F1710
 	.incbin "baserom_jp.gba", 0x5f1710, 0x20
 
-	.globl gUnknown_85F1730
-gUnknown_85F1730: @ 0x85F1730
+	.globl gPokenavMessageBox_Gfx
+gPokenavMessageBox_Gfx: @ 0x85F1730
 	.incbin "baserom_jp.gba", 0x5f1730, 0x50
 
-	.globl gUnknown_85F1780
-gUnknown_85F1780: @ 0x85F1780
+	.globl gPokenavMessageBox_Tilemap
+gPokenavMessageBox_Tilemap: @ 0x85F1780
 	.incbin "baserom_jp.gba", 0x5f1780, 0xb8
 
-	.globl gUnknown_85F1838
-gUnknown_85F1838: @ 0x85F1838
+	.globl sPokenavDeviceBgPal
+sPokenavDeviceBgPal: @ 0x85F1838
 	.incbin "baserom_jp.gba", 0x5f1838, 0x20
 
-	.globl gUnknown_85F1858
-gUnknown_85F1858: @ 0x85F1858
+	.globl sPokenavDeviceBgTiles
+sPokenavDeviceBgTiles: @ 0x85F1858
 	.incbin "baserom_jp.gba", 0x5f1858, 0x288
 
-	.globl gUnknown_85F1AE0
-gUnknown_85F1AE0: @ 0x85F1AE0
+	.globl sPokenavDeviceBgTilemap
+sPokenavDeviceBgTilemap: @ 0x85F1AE0
 	.incbin "baserom_jp.gba", 0x5f1ae0, 0xc1c
 
-	.globl gUnknown_85F26FC
-gUnknown_85F26FC: @ 0x85F26FC
+	.globl sPokenavMainMenuBgTemplates
+sPokenavMainMenuBgTemplates: @ 0x85F26FC
 	.incbin "baserom_jp.gba", 0x5f26fc, 0xc
 
-	.globl gUnknown_85F2708
-gUnknown_85F2708: @ 0x85F2708
+	.globl sMenuHandlerLoopTaskFuncs
+sMenuHandlerLoopTaskFuncs: @ 0x85F2708
 	.incbin "baserom_jp.gba", 0x5f2708, 0x24
 
-	.globl gUnknown_85F272C
-gUnknown_85F272C: @ 0x85F272C
+	.globl sPokenavOptionsSpriteSheets
+sPokenavOptionsSpriteSheets: @ 0x85F272C
 	.incbin "baserom_jp.gba", 0x5f272c, 0x10
 
-	.globl gUnknown_85F273C
-gUnknown_85F273C: @ 0x85F273C
+	.globl sPokenavOptionsSpritePalettes
+sPokenavOptionsSpritePalettes: @ 0x85F273C
 	.incbin "baserom_jp.gba", 0x5f273c, 0x6c
 
-	.globl gUnknown_85F27A8
-gUnknown_85F27A8: @ 0x85F27A8
+	.globl sPokenavMenuOptionLabelGfx
+sPokenavMenuOptionLabelGfx: @ 0x85F27A8
 	.incbin "baserom_jp.gba", 0x5f27a8, 0x4
 
 	.globl gUnknown_85F27AC
 gUnknown_85F27AC: @ 0x85F27AC
 	.incbin "baserom_jp.gba", 0x5f27ac, 0x88
 
-	.globl gUnknown_85F2834
-gUnknown_85F2834: @ 0x85F2834
+	.globl sOptionDescWindowTemplate
+sOptionDescWindowTemplate: @ 0x85F2834
 	.incbin "baserom_jp.gba", 0x5f2834, 0x8
 
-	.globl gUnknown_85F283C
-gUnknown_85F283C: @ 0x85F283C
+	.globl sPageDescriptions
+sPageDescriptions: @ 0x85F283C
 	.incbin "baserom_jp.gba", 0x5f283c, 0x38
 
-	.globl gUnknown_85F2874
-gUnknown_85F2874: @ 0x85F2874
+	.globl sOptionDescTextColors
+sOptionDescTextColors: @ 0x85F2874
 	.incbin "baserom_jp.gba", 0x5f2874, 0x3
 
-	.globl gUnknown_85F2877
-gUnknown_85F2877: @ 0x85F2877
+	.globl sOptionDescTextColors2
+sOptionDescTextColors2: @ 0x85F2877
 	.incbin "baserom_jp.gba", 0x5f2877, 0x3d
 
-	.globl gUnknown_85F28B4
-gUnknown_85F28B4: @ 0x85F28B4
+	.globl sMenuOptionSpriteTemplate
+sMenuOptionSpriteTemplate: @ 0x85F28B4
 	.incbin "baserom_jp.gba", 0x5f28b4, 0x20
 
-	.globl gUnknown_85F28D4
-gUnknown_85F28D4: @ 0x85F28D4
+	.globl sMatchCallBlueLightSpriteTemplate
+sMatchCallBlueLightSpriteTemplate: @ 0x85F28D4
 	.incbin "baserom_jp.gba", 0x5f28d4, 0x18
 
-	.globl gUnknown_85F28EC
-gUnknown_85F28EC: @ 0x85F28EC
+	.globl sPokenavMainMenuScanlineEffectParams
+sPokenavMainMenuScanlineEffectParams: @ 0x85F28EC
 	.incbin "baserom_jp.gba", 0x5f28ec, 0x10c8
 
-	.globl gUnknown_85F39B4
-gUnknown_85F39B4: @ 0x85F39B4
+	.globl gMatchCallFlavorTexts
+gMatchCallFlavorTexts: @ 0x85F39B4
 	.incbin "baserom_jp.gba", 0x5f39b4, 0x4e0
 
-	.globl gUnknown_85F3E94
-gUnknown_85F3E94: @ 0x85F3E94
+	.globl sMatchCallOptionsNoCheckPage
+sMatchCallOptionsNoCheckPage: @ 0x85F3E94
 	.incbin "baserom_jp.gba", 0x5f3e94, 0x2
 
-	.globl gUnknown_85F3E96
-gUnknown_85F3E96: @ 0x85F3E96
+	.globl sMatchCallOptionsHasCheckPage
+sMatchCallOptionsHasCheckPage: @ 0x85F3E96
 	.incbin "baserom_jp.gba", 0x5f3e96, 0x3
 
-	.globl gUnknown_85F3E99
-gUnknown_85F3E99: @ 0x85F3E99
+	.globl gText_CallCantBeMadeHere
+gText_CallCantBeMadeHere: @ 0x85F3E99
 	.incbin "baserom_jp.gba", 0x5f3e99, 0x17
 
-	.globl gUnknown_85F3EB0
-gUnknown_85F3EB0: @ 0x85F3EB0
+	.globl sMatchCallUI_Pal
+sMatchCallUI_Pal: @ 0x85F3EB0
 	.incbin "baserom_jp.gba", 0x5f3eb0, 0x20
 
-	.globl gUnknown_85F3ED0
-gUnknown_85F3ED0: @ 0x85F3ED0
+	.globl sMatchCallUI_Gfx
+sMatchCallUI_Gfx: @ 0x85F3ED0
 	.incbin "baserom_jp.gba", 0x5f3ed0, 0xa4
 
-	.globl gUnknown_85F3F74
-gUnknown_85F3F74: @ 0x85F3F74
+	.globl sMatchCallUI_Tilemap
+sMatchCallUI_Tilemap: @ 0x85F3F74
 	.incbin "baserom_jp.gba", 0x5f3f74, 0x10c
 
-	.globl gUnknown_85F4080
-gUnknown_85F4080: @ 0x85F4080
+	.globl sCallWindow_Pal
+sCallWindow_Pal: @ 0x85F4080
 	.incbin "baserom_jp.gba", 0x5f4080, 0x20
 
-	.globl gUnknown_85F40A0
-gUnknown_85F40A0: @ 0x85F40A0
+	.globl sListWindow_Pal
+sListWindow_Pal: @ 0x85F40A0
 	.incbin "baserom_jp.gba", 0x5f40a0, 0x20
 
-	.globl gUnknown_85F40C0
-gUnknown_85F40C0: @ 0x85F40C0
+	.globl sPokeball_Pal
+sPokeball_Pal: @ 0x85F40C0
 	.incbin "baserom_jp.gba", 0x5f40c0, 0x40
 
-	.globl gUnknown_85F4100
-gUnknown_85F4100: @ 0x85F4100
+	.globl sPokeball_Gfx
+sPokeball_Gfx: @ 0x85F4100
 	.incbin "baserom_jp.gba", 0x5f4100, 0x2c
 
-	.globl gUnknown_85F412C
-gUnknown_85F412C: @ 0x85F412C
+	.globl sMatchCallBgTemplates
+sMatchCallBgTemplates: @ 0x85F412C
 	.incbin "baserom_jp.gba", 0x5f412c, 0x8
 
 	.globl gUnknown_85F4134
 gUnknown_85F4134: @ 0x85F4134
 	.incbin "baserom_jp.gba", 0x5f4134, 0x4
 
-	.globl gUnknown_85F4138
-gUnknown_85F4138: @ 0x85F4138
+	.globl sMatchCallLoopTaskFuncs
+sMatchCallLoopTaskFuncs: @ 0x85F4138
 	.incbin "baserom_jp.gba", 0x5f4138, 0x40
 
-	.globl gUnknown_85F4178
-gUnknown_85F4178: @ 0x85F4178
+	.globl sMatchCallLocationWindowTemplate
+sMatchCallLocationWindowTemplate: @ 0x85F4178
 	.incbin "baserom_jp.gba", 0x5f4178, 0x8
 
-	.globl gUnknown_85F4180
-gUnknown_85F4180: @ 0x85F4180
+	.globl sMatchCallInfoBoxWindowTemplate
+sMatchCallInfoBoxWindowTemplate: @ 0x85F4180
 	.incbin "baserom_jp.gba", 0x5f4180, 0x8
 
-	.globl gUnknown_85F4188
-gUnknown_85F4188: @ 0x85F4188
+	.globl sMatchCallOptionTexts
+sMatchCallOptionTexts: @ 0x85F4188
 	.incbin "baserom_jp.gba", 0x5f4188, 0xc
 
-	.globl gUnknown_85F4194
-gUnknown_85F4194: @ 0x85F4194
+	.globl sText_CallingDots
+sText_CallingDots: @ 0x85F4194
 	.incbin "baserom_jp.gba", 0x5f4194, 0x14
 
-	.globl gUnknown_85F41A8
-gUnknown_85F41A8: @ 0x85F41A8
+	.globl sCallMsgBoxWindowTemplate
+sCallMsgBoxWindowTemplate: @ 0x85F41A8
 	.incbin "baserom_jp.gba", 0x5f41a8, 0x8
 
-	.globl gUnknown_85F41B0
-gUnknown_85F41B0: @ 0x85F41B0
+	.globl sOptionsCursorSpriteSheets
+sOptionsCursorSpriteSheets: @ 0x85F41B0
 	.incbin "baserom_jp.gba", 0x5f41b0, 0x8
 
-	.globl gUnknown_85F41B8
-gUnknown_85F41B8: @ 0x85F41B8
+	.globl sOptionsCursorSpritePalettes
+sOptionsCursorSpritePalettes: @ 0x85F41B8
 	.incbin "baserom_jp.gba", 0x5f41b8, 0x18
 
-	.globl gUnknown_85F41D0
-gUnknown_85F41D0: @ 0x85F41D0
+	.globl sOptionsCursorSpriteTemplate
+sOptionsCursorSpriteTemplate: @ 0x85F41D0
 	.incbin "baserom_jp.gba", 0x5f41d0, 0x20
 
-	.globl gUnknown_85F41F0
-gUnknown_85F41F0: @ 0x85F41F0
+	.globl sTrainerPicSpriteTemplate
+sTrainerPicSpriteTemplate: @ 0x85F41F0
 	.incbin "baserom_jp.gba", 0x5f41f0, 0x18
 
-	.globl gUnknown_85F4208
-gUnknown_85F4208: @ 0x85F4208
+	.globl sMapSecInfoWindow_Pal
+sMapSecInfoWindow_Pal: @ 0x85F4208
 	.incbin "baserom_jp.gba", 0x5f4208, 0x20
 
-	.globl gUnknown_85F4228
-gUnknown_85F4228: @ 0x85F4228
+	.globl gRegionMapCityZoomTiles_Pal
+gRegionMapCityZoomTiles_Pal: @ 0x85F4228
 	.incbin "baserom_jp.gba", 0x5f4228, 0x20
 
-	.globl gUnknown_85F4248
-gUnknown_85F4248: @ 0x85F4248
+	.globl sRegionMapCityZoomTiles_Gfx
+sRegionMapCityZoomTiles_Gfx: @ 0x85F4248
 	.incbin "baserom_jp.gba", 0x5f4248, 0xab4
 
-	.globl gUnknown_85F4CFC
-gUnknown_85F4CFC: @ 0x85F4CFC
+	.globl sRegionMapBgTemplates
+sRegionMapBgTemplates: @ 0x85F4CFC
 	.incbin "baserom_jp.gba", 0x5f4cfc, 0xc
 
-	.globl gUnknown_85F4D08
-gUnknown_85F4D08: @ 0x85F4D08
+	.globl sRegionMapLoopTaskFuncs
+sRegionMapLoopTaskFuncs: @ 0x85F4D08
 	.incbin "baserom_jp.gba", 0x5f4d08, 0x14
 
-	.globl gUnknown_85F4D1C
-gUnknown_85F4D1C: @ 0x85F4D1C
+	.globl sCityZoomTextSpriteSheet
+sCityZoomTextSpriteSheet: @ 0x85F4D1C
 	.incbin "baserom_jp.gba", 0x5f4d1c, 0x8
 
-	.globl gUnknown_85F4D24
-gUnknown_85F4D24: @ 0x85F4D24
+	.globl sCityZoomTilesSpritePalette
+sCityZoomTilesSpritePalette: @ 0x85F4D24
 	.incbin "baserom_jp.gba", 0x5f4d24, 0x10
 
-	.globl gUnknown_85F4D34
-gUnknown_85F4D34: @ 0x85F4D34
+	.globl sMapSecInfoWindowTemplate
+sMapSecInfoWindowTemplate: @ 0x85F4D34
 	.incbin "baserom_jp.gba", 0x5f4d34, 0x8
 
-	.globl gUnknown_85F4D3C
-gUnknown_85F4D3C: @ 0x85F4D3C
+	.globl sPokenavCityMaps
+sPokenavCityMaps: @ 0x85F4D3C
 	.incbin "baserom_jp.gba", 0x5f4d3c, 0xb8
 
-	.globl gUnknown_85F4DF4
-gUnknown_85F4DF4: @ 0x85F4DF4
+	.globl sCityZoomTextSpriteTemplate
+sCityZoomTextSpriteTemplate: @ 0x85F4DF4
 	.incbin "baserom_jp.gba", 0x5f4df4, 0x18
 
-	.globl gUnknown_85F4E0C
-gUnknown_85F4E0C: @ 0x85F4E0C
+	.globl gPokenavCondition_Pal
+gPokenavCondition_Pal: @ 0x85F4E0C
 	.incbin "baserom_jp.gba", 0x5f4e0c, 0x20
 
-	.globl gUnknown_85F4E2C
-gUnknown_85F4E2C: @ 0x85F4E2C
+	.globl gConditionGraphData_Pal
+gConditionGraphData_Pal: @ 0x85F4E2C
 	.incbin "baserom_jp.gba", 0x5f4e2c, 0x20
 
-	.globl gUnknown_85F4E4C
-gUnknown_85F4E4C: @ 0x85F4E4C
+	.globl gConditionText_Pal
+gConditionText_Pal: @ 0x85F4E4C
 	.incbin "baserom_jp.gba", 0x5f4e4c, 0x20
 
-	.globl gUnknown_85F4E6C
-gUnknown_85F4E6C: @ 0x85F4E6C
+	.globl gPokenavCondition_Gfx
+gPokenavCondition_Gfx: @ 0x85F4E6C
 	.incbin "baserom_jp.gba", 0x5f4e6c, 0x794
 
-	.globl gUnknown_85F5600
-gUnknown_85F5600: @ 0x85F5600
+	.globl gPokenavCondition_Tilemap
+gPokenavCondition_Tilemap: @ 0x85F5600
 	.incbin "baserom_jp.gba", 0x5f5600, 0x1ec
 
-	.globl gUnknown_85F57EC
-gUnknown_85F57EC: @ 0x85F57EC
+	.globl sConditionGraphData_Gfx
+sConditionGraphData_Gfx: @ 0x85F57EC
 	.incbin "baserom_jp.gba", 0x5f57ec, 0x14
 
-	.globl gUnknown_85F5800
-gUnknown_85F5800: @ 0x85F5800
+	.globl sConditionGraphData_Tilemap
+sConditionGraphData_Tilemap: @ 0x85F5800
 	.incbin "baserom_jp.gba", 0x5f5800, 0xfc
 
-	.globl gUnknown_85F58FC
-gUnknown_85F58FC: @ 0x85F58FC
+	.globl gPokenavOptions_Tilemap
+gPokenavOptions_Tilemap: @ 0x85F58FC
 	.incbin "baserom_jp.gba", 0x5f58fc, 0x48
 
-	.globl gUnknown_85F5944
-gUnknown_85F5944: @ 0x85F5944
+	.globl sPokenavMonMarkings_Pal
+sPokenavMonMarkings_Pal: @ 0x85F5944
 	.incbin "baserom_jp.gba", 0x5f5944, 0x20
 
-	.globl gUnknown_85F5964
-gUnknown_85F5964: @ 0x85F5964
+	.globl sMenuBgTemplates
+sMenuBgTemplates: @ 0x85F5964
 	.incbin "baserom_jp.gba", 0x5f5964, 0xc
 
-	.globl gUnknown_85F5970
-gUnknown_85F5970: @ 0x85F5970
+	.globl sMonNameGenderWindowTemplate
+sMonNameGenderWindowTemplate: @ 0x85F5970
 	.incbin "baserom_jp.gba", 0x5f5970, 0x8
 
-	.globl gUnknown_85F5978
-gUnknown_85F5978: @ 0x85F5978
+	.globl sListIndexWindowTemplate
+sListIndexWindowTemplate: @ 0x85F5978
 	.incbin "baserom_jp.gba", 0x5f5978, 0x8
 
-	.globl gUnknown_85F5980
-gUnknown_85F5980: @ 0x85F5980
+	.globl sUnusedWindowTemplate1
+sUnusedWindowTemplate1: @ 0x85F5980
 	.incbin "baserom_jp.gba", 0x5f5980, 0x8
 
-	.globl gUnknown_85F5988
-gUnknown_85F5988: @ 0x85F5988
+	.globl sUnusedWindowTemplate2
+sUnusedWindowTemplate2: @ 0x85F5988
 	.incbin "baserom_jp.gba", 0x5f5988, 0x8
 
-	.globl gUnknown_85F5990
-gUnknown_85F5990: @ 0x85F5990
+	.globl sLoopedTaskFuncs
+sLoopedTaskFuncs: @ 0x85F5990
 	.incbin "baserom_jp.gba", 0x5f5990, 0x1c
 
-	.globl gUnknown_85F59AC
-gUnknown_85F59AC: @ 0x85F59AC
+	.globl sSearchMonDataIds
+sSearchMonDataIds: @ 0x85F59AC
 	.incbin "baserom_jp.gba", 0x5f59ac, 0x14
 
-	.globl gUnknown_85F59C0
-gUnknown_85F59C0: @ 0x85F59C0
+	.globl sConditionSearchLoopedTaskFuncs
+sConditionSearchLoopedTaskFuncs: @ 0x85F59C0
 	.incbin "baserom_jp.gba", 0x5f59c0, 0x10
 
-	.globl gUnknown_85F59D0
-gUnknown_85F59D0: @ 0x85F59D0
+	.globl sConditionSearchResultFramePal
+sConditionSearchResultFramePal: @ 0x85F59D0
 	.incbin "baserom_jp.gba", 0x5f59d0, 0x20
 
-	.globl gUnknown_85F59F0
-gUnknown_85F59F0: @ 0x85F59F0
+	.globl sConditionSearchResultTiles
+sConditionSearchResultTiles: @ 0x85F59F0
 	.incbin "baserom_jp.gba", 0x5f59f0, 0xc8
 
-	.globl gUnknown_85F5AB8
-gUnknown_85F5AB8: @ 0x85F5AB8
+	.globl sConditionSearchResultTilemap
+sConditionSearchResultTilemap: @ 0x85F5AB8
 	.incbin "baserom_jp.gba", 0x5f5ab8, 0xc4
 
-	.globl gUnknown_85F5B7C
-gUnknown_85F5B7C: @ 0x85F5B7C
+	.globl sListBg_Pal
+sListBg_Pal: @ 0x85F5B7C
 	.incbin "baserom_jp.gba", 0x5f5b7c, 0x20
 
-	.globl gUnknown_85F5B9C
-gUnknown_85F5B9C: @ 0x85F5B9C
+	.globl sConditionSearchResultBgTemplates
+sConditionSearchResultBgTemplates: @ 0x85F5B9C
 	.incbin "baserom_jp.gba", 0x5f5b9c, 0x4
 
-	.globl gUnknown_85F5BA0
-gUnknown_85F5BA0: @ 0x85F5BA0
+	.globl sSearchResultsBgTemplates
+sSearchResultsBgTemplates: @ 0x85F5BA0
 	.incbin "baserom_jp.gba", 0x5f5ba0, 0x4
 
-	.globl gUnknown_85F5BA4
-gUnknown_85F5BA4: @ 0x85F5BA4
+	.globl sSearchResultLoopTaskFuncs
+sSearchResultLoopTaskFuncs: @ 0x85F5BA4
 	.incbin "baserom_jp.gba", 0x5f5ba4, 0x1c
 
-	.globl gUnknown_85F5BC0
-gUnknown_85F5BC0: @ 0x85F5BC0
+	.globl sSearchResultListMenuWindowTemplate
+sSearchResultListMenuWindowTemplate: @ 0x85F5BC0
 	.incbin "baserom_jp.gba", 0x5f5bc0, 0x8
 
-	.globl gUnknown_85F5BC8
-gUnknown_85F5BC8: @ 0x85F5BC8
+	.globl sMonRibbonListLoopTaskFuncs
+sMonRibbonListLoopTaskFuncs: @ 0x85F5BC8
 	.incbin "baserom_jp.gba", 0x5f5bc8, 0xc
 
-	.globl gUnknown_85F5BD4
-gUnknown_85F5BD4: @ 0x85F5BD4
+	.globl sMonRibbonListFramePal
+sMonRibbonListFramePal: @ 0x85F5BD4
 	.incbin "baserom_jp.gba", 0x5f5bd4, 0x20
 
-	.globl gUnknown_85F5BF4
-gUnknown_85F5BF4: @ 0x85F5BF4
+	.globl sMonRibbonListFrameTiles
+sMonRibbonListFrameTiles: @ 0x85F5BF4
 	.incbin "baserom_jp.gba", 0x5f5bf4, 0xc8
 
-	.globl gUnknown_85F5CBC
-gUnknown_85F5CBC: @ 0x85F5CBC
+	.globl sMonRibbonListFrameTilemap
+sMonRibbonListFrameTilemap: @ 0x85F5CBC
 	.incbin "baserom_jp.gba", 0x5f5cbc, 0xc4
 
-	.globl gUnknown_85F5D80
-gUnknown_85F5D80: @ 0x85F5D80
+	.globl sMonRibbonListUi_Pal
+sMonRibbonListUi_Pal: @ 0x85F5D80
 	.incbin "baserom_jp.gba", 0x5f5d80, 0x20
 
-	.globl gUnknown_85F5DA0
-gUnknown_85F5DA0: @ 0x85F5DA0
+	.globl sMonRibbonListBgTemplates
+sMonRibbonListBgTemplates: @ 0x85F5DA0
 	.incbin "baserom_jp.gba", 0x5f5da0, 0x4
 
-	.globl gUnknown_85F5DA4
-gUnknown_85F5DA4: @ 0x85F5DA4
+	.globl sRibbonsMonListBgTemplates
+sRibbonsMonListBgTemplates: @ 0x85F5DA4
 	.incbin "baserom_jp.gba", 0x5f5da4, 0x4
 
-	.globl gUnknown_85F5DA8
-gUnknown_85F5DA8: @ 0x85F5DA8
+	.globl sRibbonsMonMenuLoopTaskFuncs
+sRibbonsMonMenuLoopTaskFuncs: @ 0x85F5DA8
 	.incbin "baserom_jp.gba", 0x5f5da8, 0x1c
 
-	.globl gUnknown_85F5DC4
-gUnknown_85F5DC4: @ 0x85F5DC4
+	.globl sRibbonsMonListWindowTemplate
+sRibbonsMonListWindowTemplate: @ 0x85F5DC4
 	.incbin "baserom_jp.gba", 0x5f5dc4, 0x8
 
 	.globl gUnknown_85F5DCC
 gUnknown_85F5DCC: @ 0x85F5DCC
 	.string "{MUS_DUMMY}{TRANSPARENT}/{SE_M_HYPER_BEAM2}$"
 
-	.globl gUnknown_85F5DD3
-gUnknown_85F5DD3: @ 0x85F5DD3
+	.globl sText_RibbonsMonListItemMale
+sText_RibbonsMonListItemMale: @ 0x85F5DD3
 	.incbin "baserom_jp.gba", 0x5f5dd3, 0x18
-	.globl gUnknown_85F5DEB
-gUnknown_85F5DEB: @ 0x85F5DEB
+	.globl sText_RibbonsMonListItemFemale
+sText_RibbonsMonListItemFemale: @ 0x85F5DEB
 	.incbin "baserom_jp.gba", 0x5f5deb, 0x18
-	.globl gUnknown_85F5E03
-gUnknown_85F5E03: @ 0x85F5E03
+	.globl sText_RibbonsMonListItemUnknown
+sText_RibbonsMonListItemUnknown: @ 0x85F5E03
 	.incbin "baserom_jp.gba", 0x5f5e03, 0x11
 
-	.globl gUnknown_85F5E14
-gUnknown_85F5E14: @ 0x85F5E14
+	.globl sRibbonData
+sRibbonData: @ 0x85F5E14
 	.incbin "baserom_jp.gba", 0x5f5e14, 0x14c
 
 	.globl gUnknown_85F5F60
 gUnknown_85F5F60: @ 0x85F5F60
 	.string "クセソくナセソくヨセソく！セソくヨセソく/セソくヨセソくOセソくヨセソくdセソくゥセソく！セソくゥセソく/セソくゥセソくOセソくゥセソくdセソくザセソく！セソくザセソく/セソくザセソくOセソくザセソくdセソくバセソく！セソくバセソく/セソくバセソくOセソくバセソくdセソくッセソく！セソくッセソく/セソくッセソくOセソくッセソくdセソくsセソくöセソくうソソくてソソくむソソくぅソソくずソソくぷソソく2003ねん　ちほう　たいかい$ゆうしょう　きねんリボン$2003ねん　ぜんこく　たいかい$2003ねん　ワールドカップ$じゅんゆうしょう　きねんリボン$ベスト4　きねんリボン$2004ねん　ちほう　たいかい$2004ねん　ぜんこく　たいかい$2004ねん　ワールドカップ$2005ねん　ちほう　たいかい$2005ねん　ぜんこく　たいかい$2005ねん　ワールドカップ$ポケモン　バトル　カップ$さんか　きねんリボン$ポケモン　リーグ$アドバンス　カップ$ポケモンの　たいかいに$さんかした　きねんリボン$ポケモンの　イベントに$ポケモンの　おまつりに$こんなんに　うちかった$きねんリボン$すべての　こんなんを$のりこえた　きねんリボン$100にんぬき　たっせい$くらやみのとう　クリア$くれないのとう　クリア$くろがねのとう　クリア$さいごのとう　クリア$でんせつを　つくった$ポケモンセンタートウキョー$ポケモンセンターオーサカ$ポケモンセンターナゴヤ$ポケモンセンターニューヨーク$なつやすみ　きねんリボン$$ふゆやすみ　きねんリボン$はるやすみ　きねんリボン$クリスマス　きねんリボン$きねんび　きねんリボン$がんばった　きねんの　リボン$ともだち　いっぱい　きねんリボン$げんき　いっぱい　きねんリボン$だいすきな　ポケモンに$つけてあげる　きねんリボン$ポケモンが　だいすきな　ことを$しょうめいする　リボン$"
-	.globl gUnknown_85F628C
-gUnknown_85F628C: @ 0x85F628C
+	.globl gGiftRibbonDescriptionPointers
+gGiftRibbonDescriptionPointers: @ 0x85F628C
 	.incbin "baserom_jp.gba", 0x5f628c, 0x200
 
-	.globl gUnknown_85F648C
-gUnknown_85F648C: @ 0x85F648C
+	.globl gPokenavRibbonsSummaryBg_Pal
+gPokenavRibbonsSummaryBg_Pal: @ 0x85F648C
 	.incbin "baserom_jp.gba", 0x5f648c, 0x20
 
-	.globl gUnknown_85F64AC
-gUnknown_85F64AC: @ 0x85F64AC
+	.globl gPokenavRibbonsSummaryBg_Gfx
+gPokenavRibbonsSummaryBg_Gfx: @ 0x85F64AC
 	.incbin "baserom_jp.gba", 0x5f64ac, 0xfc
 
-	.globl gUnknown_85F65A8
-gUnknown_85F65A8: @ 0x85F65A8
+	.globl gPokenavRibbonsSummaryBg_Tilemap
+gPokenavRibbonsSummaryBg_Tilemap: @ 0x85F65A8
 	.incbin "baserom_jp.gba", 0x5f65a8, 0xcc
 
-	.globl gUnknown_85F6674
-gUnknown_85F6674: @ 0x85F6674
+	.globl sRibbonIcons1_Pal
+sRibbonIcons1_Pal: @ 0x85F6674
 	.incbin "baserom_jp.gba", 0x5f6674, 0xa0
 
-	.globl gUnknown_85F6714
-gUnknown_85F6714: @ 0x85F6714
+	.globl sMonInfo_Pal
+sMonInfo_Pal: @ 0x85F6714
 	.incbin "baserom_jp.gba", 0x5f6714, 0x20
 
-	.globl gUnknown_85F6734
-gUnknown_85F6734: @ 0x85F6734
+	.globl sRibbonIconsSmall_Gfx
+sRibbonIconsSmall_Gfx: @ 0x85F6734
 	.incbin "baserom_jp.gba", 0x5f6734, 0xae0
 
-	.globl gUnknown_85F7214
-gUnknown_85F7214: @ 0x85F7214
+	.globl sRibbonsSummaryBgTemplates
+sRibbonsSummaryBgTemplates: @ 0x85F7214
 	.incbin "baserom_jp.gba", 0x5f7214, 0x8
 
-	.globl gUnknown_85F721C
-gUnknown_85F721C: @ 0x85F721C
+	.globl sRibbonsSummaryMenuLoopTaskFuncs
+sRibbonsSummaryMenuLoopTaskFuncs: @ 0x85F721C
 	.incbin "baserom_jp.gba", 0x5f721c, 0x18
 
-	.globl gUnknown_85F7234
-gUnknown_85F7234: @ 0x85F7234
+	.globl sRibbonCountWindowTemplate
+sRibbonCountWindowTemplate: @ 0x85F7234
 	.incbin "baserom_jp.gba", 0x5f7234, 0x8
 
-	.globl gUnknown_85F723C
-gUnknown_85F723C: @ 0x85F723C
+	.globl sPlayerNameTextColors
+sPlayerNameTextColors: @ 0x85F723C
 	.incbin "baserom_jp.gba", 0x5f723c, 0x4
 
-	.globl gUnknown_85F7240
-gUnknown_85F7240: @ 0x85F7240
+	.globl sRibbonSummaryMonNameWindowTemplate
+sRibbonSummaryMonNameWindowTemplate: @ 0x85F7240
 	.incbin "baserom_jp.gba", 0x5f7240, 0x8
 
-	.globl gUnknown_85F7248
-gUnknown_85F7248: @ 0x85F7248
+	.globl sRibbonMonListIndexWindowTemplate
+sRibbonMonListIndexWindowTemplate: @ 0x85F7248
 	.incbin "baserom_jp.gba", 0x5f7248, 0x10
 
-	.globl gUnknown_85F7258
-gUnknown_85F7258: @ 0x85F7258
+	.globl sRibbonGfxData
+sRibbonGfxData: @ 0x85F7258
 	.incbin "baserom_jp.gba", 0x5f7258, 0x80
 
-	.globl gUnknown_85F72D8
-gUnknown_85F72D8: @ 0x85F72D8
+	.globl sSpriteSheet_RibbonIconsBig
+sSpriteSheet_RibbonIconsBig: @ 0x85F72D8
 	.incbin "baserom_jp.gba", 0x5f72d8, 0x8
 
-	.globl gUnknown_85F72E0
-gUnknown_85F72E0: @ 0x85F72E0
+	.globl sSpritePalettes_RibbonIcons
+sSpritePalettes_RibbonIcons: @ 0x85F72E0
 	.incbin "baserom_jp.gba", 0x5f72e0, 0x84
 
-	.globl gUnknown_85F7364
-gUnknown_85F7364: @ 0x85F7364
+	.globl sSpriteTemplate_RibbonIconBig
+sSpriteTemplate_RibbonIconBig: @ 0x85F7364
 	.incbin "baserom_jp.gba", 0x5f7364, 0x650
 
-	.globl gUnknown_85F79B4
-gUnknown_85F79B4: @ 0x85F79B4
+	.globl sMatchCallHeaders
+sMatchCallHeaders: @ 0x85F79B4
 	.incbin "baserom_jp.gba", 0x5f79b4, 0x54
 
-	.globl gUnknown_85F7A08
-gUnknown_85F7A08: @ 0x85F7A08
+	.globl sMatchCallGetEnabledFuncs
+sMatchCallGetEnabledFuncs: @ 0x85F7A08
 	.incbin "baserom_jp.gba", 0x5f7a08, 0x14
 
-	.globl gUnknown_85F7A1C
-gUnknown_85F7A1C: @ 0x85F7A1C
+	.globl sMatchCallGetMapSecFuncs
+sMatchCallGetMapSecFuncs: @ 0x85F7A1C
 	.incbin "baserom_jp.gba", 0x5f7a1c, 0x14
 
-	.globl gUnknown_85F7A30
-gUnknown_85F7A30: @ 0x85F7A30
+	.globl sMatchCall_IsRematchableFunctions
+sMatchCall_IsRematchableFunctions: @ 0x85F7A30
 	.incbin "baserom_jp.gba", 0x5f7a30, 0x14
 
-	.globl gUnknown_85F7A44
-gUnknown_85F7A44: @ 0x85F7A44
+	.globl sMatchCall_HasCheckPageFunctions
+sMatchCall_HasCheckPageFunctions: @ 0x85F7A44
 	.incbin "baserom_jp.gba", 0x5f7a44, 0x14
 
-	.globl gUnknown_85F7A58
-gUnknown_85F7A58: @ 0x85F7A58
+	.globl sMatchCall_GetRematchTableIdxFunctions
+sMatchCall_GetRematchTableIdxFunctions: @ 0x85F7A58
 	.incbin "baserom_jp.gba", 0x5f7a58, 0x14
 
-	.globl gUnknown_85F7A6C
-gUnknown_85F7A6C: @ 0x85F7A6C
+	.globl sMatchCall_GetMessageFunctions
+sMatchCall_GetMessageFunctions: @ 0x85F7A6C
 	.incbin "baserom_jp.gba", 0x5f7a6c, 0x14
 
-	.globl gUnknown_85F7A80
-gUnknown_85F7A80: @ 0x85F7A80
+	.globl sMatchCall_GetNameAndDescFunctions
+sMatchCall_GetNameAndDescFunctions: @ 0x85F7A80
 	.incbin "baserom_jp.gba", 0x5f7a80, 0x14
 
-	.globl gUnknown_85F7A94
-gUnknown_85F7A94: @ 0x85F7A94
+	.globl sCheckPageOverrides
+sCheckPageOverrides: @ 0x85F7A94
 	.incbin "baserom_jp.gba", 0x5f7a94, 0x60
 
-	.globl gUnknown_85F7AF4
-gUnknown_85F7AF4: @ 0x85F7AF4
+	.globl sWindowTemplates_MailboxMenu
+sWindowTemplates_MailboxMenu: @ 0x85F7AF4
 	.incbin "baserom_jp.gba", 0x5f7af4, 0x18
 
-	.globl gUnknown_85F7B0C
-gUnknown_85F7B0C: @ 0x85F7B0C
+	.globl sConditionGraphScanline
+sConditionGraphScanline: @ 0x85F7B0C
 	.incbin "baserom_jp.gba", 0x5f7b0c, 0xc
 
-	.globl gUnknown_85F7B18
-gUnknown_85F7B18: @ 0x85F7B18
+	.globl sConditionToLineLength
+sConditionToLineLength: @ 0x85F7B18
 	.incbin "baserom_jp.gba", 0x5f7b18, 0x100
 
-	.globl gUnknown_85F7C18
-gUnknown_85F7C18: @ 0x85F7C18
+	.globl sMoveRelearnerWindowTemplates
+sMoveRelearnerWindowTemplates: @ 0x85F7C18
 	.incbin "baserom_jp.gba", 0x5f7c18, 0x30
 
-	.globl gUnknown_85F7C48
-gUnknown_85F7C48: @ 0x85F7C48
+	.globl sMoveRelearnerYesNoMenuTemplate
+sMoveRelearnerYesNoMenuTemplate: @ 0x85F7C48
 	.incbin "baserom_jp.gba", 0x5f7c48, 0x8
 
 	.globl gText_MoveRelearnerBattleMoves
@@ -17176,44 +17176,44 @@ gText_MoveRelearnerAppeal: @ 0x85F7C75
 gText_MoveRelearnerJam: @ 0x85F7C7A
 	.incbin "baserom_jp.gba", 0x5f7c7a, 0x6
 
-	.globl gUnknown_85F7C80
-gUnknown_85F7C80: @ 0x85F7C80
+	.globl sMoveRelearnerMovesListTemplate
+sMoveRelearnerMovesListTemplate: @ 0x85F7C80
 	.incbin "baserom_jp.gba", 0x5f7c80, 0x2c18
 
-	.globl gUnknown_85FA898
-gUnknown_85FA898: @ 0x85FA898
+	.globl sConditionMonPicSheetDescriptor
+sConditionMonPicSheetDescriptor: @ 0x85FA898
 	.incbin "baserom_jp.gba", 0x5fa898, 0x8
 
-	.globl gUnknown_85FA8A0
-gUnknown_85FA8A0: @ 0x85FA8A0
+	.globl sConditionMonPicTemplateDescriptor
+sConditionMonPicTemplateDescriptor: @ 0x85FA8A0
 	.incbin "baserom_jp.gba", 0x5fa8a0, 0x18
 
-	.globl gUnknown_85FA8B8
-gUnknown_85FA8B8: @ 0x85FA8B8
+	.globl sConditionMonPicPalDescriptor
+sConditionMonPicPalDescriptor: @ 0x85FA8B8
 	.incbin "baserom_jp.gba", 0x5fa8b8, 0x8
 
-	.globl gUnknown_85FA8C0
-gUnknown_85FA8C0: @ 0x85FA8C0
+	.globl sConditionSelectionIconsSheets
+sConditionSelectionIconsSheets: @ 0x85FA8C0
 	.incbin "baserom_jp.gba", 0x5fa8c0, 0x20
 
-	.globl gUnknown_85FA8E0
-gUnknown_85FA8E0: @ 0x85FA8E0
+	.globl sConditionSelectionIconsPals
+sConditionSelectionIconsPals: @ 0x85FA8E0
 	.incbin "baserom_jp.gba", 0x5fa8e0, 0x18
 
-	.globl gUnknown_85FA8F8
-gUnknown_85FA8F8: @ 0x85FA8F8
+	.globl sConditionSelectionIconsTemplate
+sConditionSelectionIconsTemplate: @ 0x85FA8F8
 	.incbin "baserom_jp.gba", 0x5fa8f8, 0x18
 
-	.globl gUnknown_85FA910
-gUnknown_85FA910: @ 0x85FA910
+	.globl sConditionSparkleSheetDescriptor
+sConditionSparkleSheetDescriptor: @ 0x85FA910
 	.incbin "baserom_jp.gba", 0x5fa910, 0x8
 
-	.globl gUnknown_85FA918
-gUnknown_85FA918: @ 0x85FA918
+	.globl sConditionSparklePalDescriptor
+sConditionSparklePalDescriptor: @ 0x85FA918
 	.incbin "baserom_jp.gba", 0x5fa918, 0x4c
 
-	.globl gUnknown_85FA964
-gUnknown_85FA964: @ 0x85FA964
+	.globl sSpriteTemplate_ConditionSparkle
+sSpriteTemplate_ConditionSparkle: @ 0x85FA964
 	.incbin "baserom_jp.gba", 0x5fa964, 0x18
 
 	.globl gUnknown_85FA97C
@@ -17223,16 +17223,16 @@ gUnknown_85FA97C: @ 0x85FA97C
 gUnknown_85FA9C4: @ 0x85FA9C4
 	.string "{PLUS}$"
 
-	.globl gUnknown_85FA9C7
-gUnknown_85FA9C7: @ 0x85FA9C7
+	.globl gText_Dash
+gText_Dash: @ 0x85FA9C7
 	.incbin "baserom_jp.gba", 0x5fa9c7, 0x5
 
-	.globl gUnknown_85FA9CC
-gUnknown_85FA9CC: @ 0x85FA9CC
+	.globl sLvlUpStatStrings
+sLvlUpStatStrings: @ 0x85FA9CC
 	.incbin "baserom_jp.gba", 0x5fa9cc, 0x18
 
-	.globl gUnknown_85FA9E4
-gUnknown_85FA9E4: @ 0x85FA9E4
+	.globl sTrainerHillTrainerTemplates_JP
+sTrainerHillTrainerTemplates_JP: @ 0x85FA9E4
 	.incbin "baserom_jp.gba", 0x5fa9e4, 0x510
 	.globl gUnknown_85FAEF4
 gUnknown_85FAEF4: @ 0x85FAEF4
@@ -17246,8 +17246,8 @@ gUnknown_85FAF04: @ 0x85FAF04
 gUnknown_85FAF18: @ 0x85FAF18
 	.incbin "baserom_jp.gba", 0x5faf18, 0x10
 
-	.globl gUnknown_85FAF28
-gUnknown_85FAF28: @ 0x85FAF28
+	.globl sFarawayIslandRockCoords
+sFarawayIslandRockCoords: @ 0x85FAF28
 	.incbin "baserom_jp.gba", 0x5faf28, 0x2
 
 	.globl gUnknown_85FAF2A
@@ -17518,16 +17518,16 @@ gUnknown_85FBFEC: @ 0x85FBFEC
 gUnknown_85FC004: @ 0x85FC004
 	.incbin "baserom_jp.gba", 0x5fc004, 0xc
 
-	.globl gUnknown_85FC010
-gUnknown_85FC010: @ 0x85FC010
+	.globl gText_Peekaboo
+gText_Peekaboo: @ 0x85FC010
 	.incbin "baserom_jp.gba", 0x5fc010, 0xc
 
-	.globl gUnknown_85FC01C
-gUnknown_85FC01C: @ 0x85FC01C
+	.globl GymLeaderRematches_AfterNewMauville
+GymLeaderRematches_AfterNewMauville: @ 0x85FC01C
 	.incbin "baserom_jp.gba", 0x5fc01c, 0x10
 
-	.globl gUnknown_85FC02C
-gUnknown_85FC02C: @ 0x85FC02C
+	.globl GymLeaderRematches_BeforeNewMauville
+GymLeaderRematches_BeforeNewMauville: @ 0x85FC02C
 	.incbin "baserom_jp.gba", 0x5fc02c, 0x10
 
 	.globl gUnknown_85FC03C
@@ -17621,8 +17621,8 @@ gUnknown_85FCBAA: @ 0x85FCBAA
 	.string "あらたな　トレーナーが\n"
 	.string "ホウエンに　やってきた$バトルタワーに　あらたな\n"
 	.string "たいせんしゃが　あらわれた！$"
-	.globl gUnknown_85FCBDE
-gUnknown_85FCBDE: @ 0x85FCBDE
+	.globl gText_MysteryEventCantBeUsed
+gText_MysteryEventCantBeUsed: @ 0x85FCBDE
 	.incbin "baserom_jp.gba", 0x5fcbde, 0x922
 
 	.globl gUnknown_85FD500
@@ -17721,8 +17721,8 @@ gUnknown_863C2AC: @ 0x863C2AC
 gUnknown_88BA568: @ 0x88BA568
 	.incbin "baserom_jp.gba", 0x8ba568, 0x547ec
 
-	.globl gUnknown_890ED54
-gUnknown_890ED54: @ 0x890ED54
+	.globl sSetupInfos
+sSetupInfos: @ 0x890ED54
 	.incbin "baserom_jp.gba", 0x90ed54, 0x150
 
 	.globl gUnknown_890EEA4

@@ -31,10 +31,6 @@ static void VCountIntr(void);
 static void SerialIntr(void);
 static void IntrDummy(void);
 
-const u8 gGameVersion = GAME_VERSION;
-
-const u8 gGameLanguage = GAME_LANGUAGE; // English
-
 const char BuildDateTime[] = "2005 02 21 11:10";
 
 // JP const data lives in data.s (0x0829BDBC).

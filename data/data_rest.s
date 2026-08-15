@@ -29,8 +29,8 @@ gUnknown_8C093F8: @ 0x8C093F8
 	.incbin "baserom_jp.gba", 0xc093f8, 0x87ec
 
 
-	.globl gUnknown_8C11BE4
-gUnknown_8C11BE4: @ 0x8C11BE4
+	.globl gHealthboxElementsGfxTable
+gHealthboxElementsGfxTable: @ 0x8C11BE4
 	.incbin "baserom_jp.gba", 0xc11be4, 0x52b4
 
 
@@ -94,58 +94,58 @@ gUnknown_8C1C700: @ 0x8C1C700
 	.incbin "baserom_jp.gba", 0xc1c700, 0x9f4
 
 
-	.globl gUnknown_8C1D0F4
-gUnknown_8C1D0F4: @ 0x8C1D0F4
+	.globl gMetalShineGfx
+gMetalShineGfx: @ 0x8C1D0F4
 	.incbin "baserom_jp.gba", 0xc1d0f4, 0x13c
 
 
-	.globl gUnknown_8C1D230
-gUnknown_8C1D230: @ 0x8C1D230
+	.globl gMetalShinePalette
+gMetalShinePalette: @ 0x8C1D230
 	.incbin "baserom_jp.gba", 0xc1d230, 0x28
 
 
-	.globl gUnknown_8C1D258
-gUnknown_8C1D258: @ 0x8C1D258
+	.globl gMetalShineTilemap
+gMetalShineTilemap: @ 0x8C1D258
 	.incbin "baserom_jp.gba", 0xc1d258, 0x34b4
 
 
-	.globl gUnknown_8C2070C
-gUnknown_8C2070C: @ 0x8C2070C
+	.globl gBattleAnimMaskImage_Curse
+gBattleAnimMaskImage_Curse: @ 0x8C2070C
 	.incbin "baserom_jp.gba", 0xc2070c, 0x1c
 
 
-	.globl gUnknown_8C20728
-gUnknown_8C20728: @ 0x8C20728
+	.globl gBattleAnimMaskTilemap_Curse
+gBattleAnimMaskTilemap_Curse: @ 0x8C20728
 	.incbin "baserom_jp.gba", 0xc20728, 0x1f8c
 
 
-	.globl gUnknown_8C226B4
-gUnknown_8C226B4: @ 0x8C226B4
+	.globl gBattleAnimSpritePal_MusicNotes2
+gBattleAnimSpritePal_MusicNotes2: @ 0x8C226B4
 	.incbin "baserom_jp.gba", 0xc226b4, 0xcd0
 
 
-	.globl gUnknown_8C23384
-gUnknown_8C23384: @ 0x8C23384
+	.globl gBattleAnimBgImage_Attract
+gBattleAnimBgImage_Attract: @ 0x8C23384
 	.incbin "baserom_jp.gba", 0xc23384, 0xa70
 
 
-	.globl gUnknown_8C23DF4
-gUnknown_8C23DF4: @ 0x8C23DF4
+	.globl gBattleAnimBgPalette_Attract
+gBattleAnimBgPalette_Attract: @ 0x8C23DF4
 	.incbin "baserom_jp.gba", 0xc23df4, 0x28
 
 
-	.globl gUnknown_8C23E1C
-gUnknown_8C23E1C: @ 0x8C23E1C
+	.globl gBattleAnimBgTilemap_Attract
+gBattleAnimBgTilemap_Attract: @ 0x8C23E1C
 	.incbin "baserom_jp.gba", 0xc23e1c, 0xc58
 
 
-	.globl gUnknown_8C24A74
-gUnknown_8C24A74: @ 0x8C24A74
+	.globl gBattleAnimBgPalette_ScaryFace
+gBattleAnimBgPalette_ScaryFace: @ 0x8C24A74
 	.incbin "baserom_jp.gba", 0xc24a74, 0x28
 
 
-	.globl gUnknown_8C24A9C
-gUnknown_8C24A9C: @ 0x8C24A9C
+	.globl gBattleAnimBgImage_ScaryFace
+gBattleAnimBgImage_ScaryFace: @ 0x8C24A9C
 	.incbin "baserom_jp.gba", 0xc24a9c, 0x5c3c
 
 
@@ -179,58 +179,58 @@ gUnknown_8C2D1C4: @ 0x8C2D1C4
 	.incbin "baserom_jp.gba", 0xc2d1c4, 0x600
 
 
-	.globl gUnknown_8C2D7C4
-gUnknown_8C2D7C4: @ 0x8C2D7C4
+	.globl gStatAnim_Gfx
+gStatAnim_Gfx: @ 0x8C2D7C4
 	.incbin "baserom_jp.gba", 0xc2d7c4, 0x210
 
 
-	.globl gUnknown_8C2D9D4
-gUnknown_8C2D9D4: @ 0x8C2D9D4
+	.globl gStatAnim_Increase_Tilemap
+gStatAnim_Increase_Tilemap: @ 0x8C2D9D4
 	.incbin "baserom_jp.gba", 0xc2d9d4, 0x11c
 
 
-	.globl gUnknown_8C2DAF0
-gUnknown_8C2DAF0: @ 0x8C2DAF0
+	.globl gStatAnim_Decrease_Tilemap
+gStatAnim_Decrease_Tilemap: @ 0x8C2DAF0
 	.incbin "baserom_jp.gba", 0xc2daf0, 0x11c
 
 
-	.globl gUnknown_8C2DC0C
-gUnknown_8C2DC0C: @ 0x8C2DC0C
+	.globl gStatAnim_Defense_Pal
+gStatAnim_Defense_Pal: @ 0x8C2DC0C
 	.incbin "baserom_jp.gba", 0xc2dc0c, 0x20
 
 
-	.globl gUnknown_8C2DC2C
-gUnknown_8C2DC2C: @ 0x8C2DC2C
+	.globl gStatAnim_Attack_Pal
+gStatAnim_Attack_Pal: @ 0x8C2DC2C
 	.incbin "baserom_jp.gba", 0xc2dc2c, 0x20
 
 
-	.globl gUnknown_8C2DC4C
-gUnknown_8C2DC4C: @ 0x8C2DC4C
+	.globl gStatAnim_Accuracy_Pal
+gStatAnim_Accuracy_Pal: @ 0x8C2DC4C
 	.incbin "baserom_jp.gba", 0xc2dc4c, 0x20
 
 
-	.globl gUnknown_8C2DC6C
-gUnknown_8C2DC6C: @ 0x8C2DC6C
+	.globl gStatAnim_Speed_Pal
+gStatAnim_Speed_Pal: @ 0x8C2DC6C
 	.incbin "baserom_jp.gba", 0xc2dc6c, 0x20
 
 
-	.globl gUnknown_8C2DC8C
-gUnknown_8C2DC8C: @ 0x8C2DC8C
+	.globl gStatAnim_Multiple_Pal
+gStatAnim_Multiple_Pal: @ 0x8C2DC8C
 	.incbin "baserom_jp.gba", 0xc2dc8c, 0x20
 
 
-	.globl gUnknown_8C2DCAC
-gUnknown_8C2DCAC: @ 0x8C2DCAC
+	.globl gStatAnim_Evasion_Pal
+gStatAnim_Evasion_Pal: @ 0x8C2DCAC
 	.incbin "baserom_jp.gba", 0xc2dcac, 0x20
 
 
-	.globl gUnknown_8C2DCCC
-gUnknown_8C2DCCC: @ 0x8C2DCCC
+	.globl gStatAnim_SpAttack_Pal
+gStatAnim_SpAttack_Pal: @ 0x8C2DCCC
 	.incbin "baserom_jp.gba", 0xc2dccc, 0x20
 
 
-	.globl gUnknown_8C2DCEC
-gUnknown_8C2DCEC: @ 0x8C2DCEC
+	.globl gStatAnim_SpDefense_Pal
+gStatAnim_SpDefense_Pal: @ 0x8C2DCEC
 	.incbin "baserom_jp.gba", 0xc2dcec, 0x20
 
 
@@ -649,18 +649,18 @@ gUnknown_8D8CCAC: @ 0x8D8CCAC
 	.incbin "baserom_jp.gba", 0xd8ccac, 0x748
 
 
-	.globl gUnknown_8D8D3F4
-gUnknown_8D8D3F4: @ 0x8D8D3F4
+	.globl gBattleAnimBgTilemap_Sandstorm
+gBattleAnimBgTilemap_Sandstorm: @ 0x8D8D3F4
 	.incbin "baserom_jp.gba", 0xd8d3f4, 0x17c
 
 
-	.globl gUnknown_8D8D570
-gUnknown_8D8D570: @ 0x8D8D570
+	.globl gBattleAnimBgImage_Sandstorm
+gBattleAnimBgImage_Sandstorm: @ 0x8D8D570
 	.incbin "baserom_jp.gba", 0xd8d570, 0x52c
 
 
-	.globl gUnknown_8D8DA9C
-gUnknown_8D8DA9C: @ 0x8D8DA9C
+	.globl gBattleAnimSpritePal_FlyingDirt
+gBattleAnimSpritePal_FlyingDirt: @ 0x8D8DA9C
 	.incbin "baserom_jp.gba", 0xd8da9c, 0xee0
 
 
@@ -679,8 +679,8 @@ gUnknown_8D8EBD8: @ 0x8D8EBD8
 	.incbin "baserom_jp.gba", 0xd8ebd8, 0xf78
 
 
-	.globl gUnknown_8D8FB50
-gUnknown_8D8FB50: @ 0x8D8FB50
+	.globl gBattleAnimBackgroundImageMuddyWater_Pal
+gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
 	.incbin "baserom_jp.gba", 0xd8fb50, 0x19fc
 
 
@@ -699,48 +699,48 @@ gUnknown_8D927A0: @ 0x8D927A0
 	.incbin "baserom_jp.gba", 0xd927a0, 0xaf4
 
 
-	.globl gUnknown_8D93294
-gUnknown_8D93294: @ 0x8D93294
+	.globl gBattleAnimFogTilemap
+gBattleAnimFogTilemap: @ 0x8D93294
 	.incbin "baserom_jp.gba", 0xd93294, 0x2b8
 
 
-	.globl gUnknown_8D9354C
-gUnknown_8D9354C: @ 0x8D9354C
+	.globl gBattleAnimBgTilemap_ScaryFacePlayer
+gBattleAnimBgTilemap_ScaryFacePlayer: @ 0x8D9354C
 	.incbin "baserom_jp.gba", 0xd9354c, 0x1e4
 
 
-	.globl gUnknown_8D93730
-gUnknown_8D93730: @ 0x8D93730
+	.globl gBattleAnimBgTilemap_ScaryFaceOpponent
+gBattleAnimBgTilemap_ScaryFaceOpponent: @ 0x8D93730
 	.incbin "baserom_jp.gba", 0xd93730, 0x1e4
 
 
-	.globl gUnknown_8D93914
-gUnknown_8D93914: @ 0x8D93914
+	.globl gBattleAnimBgTilemap_ScaryFaceContest
+gBattleAnimBgTilemap_ScaryFaceContest: @ 0x8D93914
 	.incbin "baserom_jp.gba", 0xd93914, 0x1158
 
 
-	.globl gUnknown_8D94A6C
-gUnknown_8D94A6C: @ 0x8D94A6C
+	.globl gBattleAnimBgImage_Surf
+gBattleAnimBgImage_Surf: @ 0x8D94A6C
 	.incbin "baserom_jp.gba", 0xd94a6c, 0x1320
 
 
-	.globl gUnknown_8D95D8C
-gUnknown_8D95D8C: @ 0x8D95D8C
+	.globl gBattleAnimBgPalette_Surf
+gBattleAnimBgPalette_Surf: @ 0x8D95D8C
 	.incbin "baserom_jp.gba", 0xd95d8c, 0x28
 
 
-	.globl gUnknown_8D95DB4
-gUnknown_8D95DB4: @ 0x8D95DB4
+	.globl gBattleAnimBgTilemap_SurfOpponent
+gBattleAnimBgTilemap_SurfOpponent: @ 0x8D95DB4
 	.incbin "baserom_jp.gba", 0xd95db4, 0x2d0
 
 
-	.globl gUnknown_8D96084
-gUnknown_8D96084: @ 0x8D96084
+	.globl gBattleAnimBgTilemap_SurfPlayer
+gBattleAnimBgTilemap_SurfPlayer: @ 0x8D96084
 	.incbin "baserom_jp.gba", 0xd96084, 0x2d4
 
 
-	.globl gUnknown_8D96358
-gUnknown_8D96358: @ 0x8D96358
+	.globl gBattleAnimBgTilemap_SurfContest
+gBattleAnimBgTilemap_SurfContest: @ 0x8D96358
 	.incbin "baserom_jp.gba", 0xd96358, 0x448
 
 

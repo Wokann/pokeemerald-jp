@@ -10,8 +10,8 @@
 gUnknown_81DABAC:
 	.include "data/script_cmd_table.inc"
 
-	.globl gUnknown_81DAF34
-gUnknown_81DAF34: @ 0x81DAF34
+	.globl gSpecialVars
+gSpecialVars: @ 0x81DAF34
 	.incbin "baserom_jp.gba", 0x1daf34, 0x58
 
 	.set ALLOCATE_SPECIAL_TABLE, 1
@@ -2318,8 +2318,8 @@ gUnknown_8289395: @ 0x8289395
 gUnknown_828939C: @ 0x828939C
 	.incbin "baserom_jp.gba", 0x28939c, 0xb
 
-	.globl gUnknown_82893A7
-gUnknown_82893A7: @ 0x82893A7
+	.globl BattleScript_SelectingDisabledMove
+BattleScript_SelectingDisabledMove: @ 0x82893A7
 	.incbin "baserom_jp.gba", 0x2893a7, 0x4
 
 	.globl gUnknown_82893AB
@@ -2382,12 +2382,12 @@ gUnknown_8289565: @ 0x8289565
 gUnknown_828956C: @ 0x828956C
 	.include "data/scripts/gUnknown_828956C.inc"
 
-	.globl gUnknown_82895FA
-gUnknown_82895FA: @ 0x82895FA
+	.globl BattleScript_NoMovesLeft
+BattleScript_NoMovesLeft: @ 0x82895FA
 	.incbin "baserom_jp.gba", 0x2895fa, 0x4
 
-	.globl gUnknown_82895FE
-gUnknown_82895FE: @ 0x82895FE
+	.globl BattleScript_SelectingMoveWithNoPP
+BattleScript_SelectingMoveWithNoPP: @ 0x82895FE
 	.incbin "baserom_jp.gba", 0x2895fe, 0x4
 
 	.globl gUnknown_8289602
@@ -2438,8 +2438,8 @@ gUnknown_82896FE: @ 0x82896FE
 gUnknown_8289709: @ 0x8289709
 	.incbin "baserom_jp.gba", 0x289709, 0x4
 
-	.globl gUnknown_828970D
-gUnknown_828970D: @ 0x828970D
+	.globl BattleScript_SelectingImprisonedMoveInPalace
+BattleScript_SelectingImprisonedMoveInPalace: @ 0x828970D
 	.incbin "baserom_jp.gba", 0x28970d, 0x8
 
 	.globl gUnknown_8289715
@@ -2810,8 +2810,8 @@ gUnknown_8289D79: @ 0x8289D79
 gUnknown_8289D7F: @ 0x8289D7F
 	.include "data/scripts/gUnknown_8289D7F.inc"
 
-	.globl gUnknown_8289D9A
-gUnknown_8289D9A: @ 0x8289D9A
+	.globl BattleScript_SelectingNotAllowedMoveChoiceItem
+BattleScript_SelectingNotAllowedMoveChoiceItem: @ 0x8289D9A
 	.incbin "baserom_jp.gba", 0x289d9a, 0x4
 
 	.globl gUnknown_8289D9E

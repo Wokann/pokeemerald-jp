@@ -244,7 +244,7 @@ extern const u8 gUnknown_82C5388[];
 extern const u8 gUnknown_82C55BC[];
 extern const u8 gUnknown_82C56B4[];
 extern const u8 gUnknown_82C56D4[];
-extern const u8 gUnknown_85D7B04[];
+extern const u16 gStandardMenuPalette[];
 
 // JP union room chat sprite resources.
 extern const struct CompressedSpriteSheet gUnknown_82C5D4C[];
@@ -2628,7 +2628,7 @@ void LoadKeyboardSwapWindow(void)
     FillWindowPixelBuffer(WIN_SWAP_MENU, PIXEL_FILL(1));
     LoadUserWindowBorderGfx(WIN_SWAP_MENU, 1, BG_PLTT_ID(13));
     LoadUserWindowBorderGfx_(WIN_SWAP_MENU, 0xA, BG_PLTT_ID(2));
-    LoadPalette(gUnknown_85D7B04, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
+    LoadPalette(gStandardMenuPalette, BG_PLTT_ID(14), PLTT_SIZE_4BPP);
 }
 
 void InitScanlineEffect(void)
