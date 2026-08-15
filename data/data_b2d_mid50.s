@@ -44,26 +44,3 @@ gUnknown_830D374: @ 0x830D374
 	.globl gUnknown_830D774
 gUnknown_830D774: @ 0x830D774
 	.incbin "baserom_jp.gba", 0x30d774, 0x1f3a
-
-	.globl gUnknown_830F6AE
-gUnknown_830F6AE: @ 0x830F6AE
-	.string "きのみブレンダーを　きどうします\p"
-	.string "バッグから　きのみブレンダーに　いれる\n"
-	.string "きのみを　えらんでください\p"
-	.string "$カッコイ$カワイイ$ウツクシ$カシコイ$タクマシ$"
-	.globl gUnknown_830F6FB
-gUnknown_830F6FB: @ 0x830F6FB
-	.string "\p$"
-
-	.globl gUnknown_830F6FD
-gUnknown_830F6FD: @ 0x830F6FD
-	.incbin "baserom_jp.gba", 0x30f6fd, 0x51
-
-	.globl gUnknown_830F74E
-gUnknown_830F74E: @ 0x830F74E
-	.string "おじさん$　おとこのこ$おんなのこ$"
-	.globl gUnknown_830F760
-gUnknown_830F760: @ 0x830F760
-	.incbin "baserom_jp.gba", 0x30f760, 0x6
-
-	.globl gUnknown_830F766
