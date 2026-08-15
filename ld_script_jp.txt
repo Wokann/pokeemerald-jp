@@ -944,7 +944,6 @@ BattleScript_SpikesOnFaintedBattler = gUnknown_828944F;
 gMissStringIds = gUnknown_85AB9A0;
 gBattleScriptsForMoveEffects = gUnknown_8286C30;
 gTrappingMoves = gUnknown_85ABAEE;
-gTrainerMoneyTable = gUnknown_82EBCE4;
 GetMoveSlotToReplace = sub_081C14C8;
 RecordedBattle_SetPlaybackFinished = sub_0818619C;
 TryPutBreakingNewsOnAir = sub_080EECA4;

@@ -5,6 +5,7 @@ struct TrainerMoney
 {
     u8 classId;
     u8 value;
+    u8 pad[2]; // JP table entries are 4 bytes each (US: 2 bytes)
 };
 
 // For displaying a multi battle partner's Pokémon in the party menu
