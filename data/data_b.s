@@ -30119,25 +30119,38 @@ gUnknown_85AC9A4: @ 0x85AC9A4
 gUnknown_85AC9D4: @ 0x85AC9D4
 	.incbin "baserom_jp.gba", 0x5ac9d4, 0x18
 
-	.globl gUnknown_85AC9EC
-gUnknown_85AC9EC: @ 0x85AC9EC
-	.incbin "baserom_jp.gba", 0x5ac9ec, 0x2
+	.globl sCableCarPlayerGraphicsIds
+sCableCarPlayerGraphicsIds: @ 0x85AC9EC
+	.byte 100 @ player 0
+	.byte 105 @ player 1
 
-	.globl gUnknown_85AC9EE
-gUnknown_85AC9EE: @ 0x85AC9EE
-	.incbin "baserom_jp.gba", 0x5ac9ee, 0x4
+	.globl sCableCarHikerGraphicsIds
+sCableCarHikerGraphicsIds: @ 0x85AC9EE
+	.byte 55 @ hiker gfx 0
+	.byte 31 @ hiker gfx 1
+	.byte 32 @ hiker gfx 2
+	.byte 98 @ hiker gfx 3
 
-	.globl gUnknown_85AC9F2
-gUnknown_85AC9F2: @ 0x85AC9F2
-	.incbin "baserom_jp.gba", 0x5ac9f2, 0x8
+	.globl sCableCarHikerCoords
+sCableCarHikerCoords: @ 0x85AC9F2
+	.hword 0 @ coord 0
+	.hword 80 @ coord 1
+	.hword 240 @ coord 2
+	.hword 146 @ coord 3
 
-	.globl gUnknown_85AC9FA
-gUnknown_85AC9FA: @ 0x85AC9FA
-	.incbin "baserom_jp.gba", 0x5ac9fa, 0x6
+	.globl sCableCarHikerMovementDelayTable
+sCableCarHikerMovementDelayTable: @ 0x85AC9FA
+	.byte 0 @ delay 0
+	.byte 60 @ delay 1
+	.byte 120 @ delay 2
+	.byte 170 @ delay 3
+	.byte 0 @ delay 4
+	.byte 0 @ delay 5
 
-	.globl gUnknown_85ACA00
-gUnknown_85ACA00: @ 0x85ACA00
-	.incbin "baserom_jp.gba", 0x5aca00, 0x8
+	.globl sCableCarHikerCallbacks
+sCableCarHikerCallbacks: @ 0x85ACA00
+	.4byte SpriteCB_HikerGoingUp
+	.4byte SpriteCB_HikerGoingDown
 
 	.globl gUnknown_85ACA08
 gUnknown_85ACA08: @ 0x85ACA08

@@ -551,7 +551,7 @@ static void SpriteCB_Player(struct Sprite *sprite)
 #define sSameDir    data[1]
 #define sDelay      data[2]
 
-static void SpriteCB_HikerGoingUp(struct Sprite *sprite)
+void SpriteCB_HikerGoingUp(struct Sprite *sprite)
 {
     if (sprite->sTimer == 0)
     {
@@ -584,7 +584,7 @@ static void SpriteCB_HikerGoingUp(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_HikerGoingDown(struct Sprite *sprite)
+void SpriteCB_HikerGoingDown(struct Sprite *sprite)
 {
     if (sprite->sTimer == 0)
         sprite->y += 16 + sprite->centerToCornerVecY;
