@@ -13,6 +13,11 @@
 #include "task.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "decompress.h"
+#include "bg.h"
+#include "palette.h"
+#include "graphics.h"
+#include "save.h"
 
 // JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
 // padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
@@ -28,6 +33,7 @@ struct BerryTagScreenStruct
 
 // Address defined in ld_script_jp.txt (ABSOLUTE 0x0203B9C0).
 extern struct BerryTagScreenStruct *sBerryTag;
+#define BG_TILE 0x42
 void bag_menu_mail_related(void);
 void CB2_InitBerryTagScreen(void);
 void Task_CloseBerryTagScreen(u8 taskId);
@@ -299,189 +305,55 @@ __attribute__((naked)) void AddBerryTagTextToBg0(void)
     );
 }
 
-__attribute__((naked)) void LoadBerryTagGfx(void)
+bool8 LoadBerryTagGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r1, _08177D90\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	ldr r2, _08177D94\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	adds r7, r1, #0\n\t"
-        "	cmp r0, #5\n\t"
-        "	bls _08177D86\n\t"
-        "	b _08177ED4\n\t"
-        "_08177D86:\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08177D98\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	mov pc, r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177D90: .4byte gUnknown_203B9C0\n\t"
-        "_08177D94: .4byte 0x00001808\n\t"
-        "_08177D98: .4byte _08177D9C\n\t"
-        "_08177D9C:\n\t"
-        "	.4byte _08177DB4\n\t"
-        "	.4byte _08177DE0\n\t"
-        "	.4byte _08177E04\n\t"
-        "	.4byte _08177E24\n\t"
-        "	.4byte _08177E90\n\t"
-        "	.4byte _08177EB0\n\t"
-        "_08177DB4:\n\t"
-        "	bl ResetTempTileDataBuffers\n\t"
-        "	ldr r1, _08177DD4\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	bl DecompressAndCopyTileDataToVram\n\t"
-        "	ldr r0, _08177DD8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _08177DDC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08177EBE\n\t"
-        "	.align 2, 0\n\t"
-        "_08177DD4: .4byte gBerryCheck_Gfx\n\t"
-        "_08177DD8: .4byte gUnknown_203B9C0\n\t"
-        "_08177DDC: .4byte 0x00001808\n\t"
-        "_08177DE0:\n\t"
-        "	bl FreeTempTileDataBuffersIfPossible\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _08177DEE\n\t"
-        "	b _08177EE4\n\t"
-        "_08177DEE:\n\t"
-        "	ldr r0, _08177DFC\n\t"
-        "	ldr r4, _08177E00\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	b _08177EBA\n\t"
-        "	.align 2, 0\n\t"
-        "_08177DFC: .4byte gBerryTag_Gfx\n\t"
-        "_08177E00: .4byte gUnknown_203B9C0\n\t"
-        "_08177E04:\n\t"
-        "	ldr r0, _08177E1C\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	ldr r0, _08177E20\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08177EBE\n\t"
-        "	.align 2, 0\n\t"
-        "_08177E1C: .4byte gBerryTag_Tilemap\n\t"
-        "_08177E20: .4byte 0x00001808\n\t"
-        "_08177E24:\n\t"
-        "	ldr r0, _08177E50\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #8]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08177E60\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _08177E54\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	ldr r4, _08177E58\n\t"
-        "	ldr r3, _08177E5C\n\t"
-        "_08177E3A:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, r3\n\t"
-        "	bls _08177E3A\n\t"
-        "	b _08177E80\n\t"
-        "	.align 2, 0\n\t"
-        "_08177E50: .4byte gSaveBlock2Ptr\n\t"
-        "_08177E54: .4byte gUnknown_203B9C0\n\t"
-        "_08177E58: .4byte 0x00004042\n\t"
-        "_08177E5C: .4byte 0x000003FF\n\t"
-        "_08177E60:\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r6, _08177E84\n\t"
-        "	movs r5, #0x80\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	ldr r4, _08177E88\n\t"
-        "	ldr r3, _08177E8C\n\t"
-        "_08177E6C:\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	lsls r1, r2, #1\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r2, r0, #0x10\n\t"
-        "	cmp r2, r3\n\t"
-        "	bls _08177E6C\n\t"
-        "_08177E80:\n\t"
-        "	ldr r1, [r7]\n\t"
-        "	b _08177EBA\n\t"
-        "	.align 2, 0\n\t"
-        "_08177E84: .4byte gUnknown_203B9C0\n\t"
-        "_08177E88: .4byte 0x00005042\n\t"
-        "_08177E8C: .4byte 0x000003FF\n\t"
-        "_08177E90:\n\t"
-        "	ldr r0, _08177EA4\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	bl LoadCompressedPalette\n\t"
-        "	ldr r0, _08177EA8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	ldr r0, _08177EAC\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	b _08177EBE\n\t"
-        "	.align 2, 0\n\t"
-        "_08177EA4: .4byte gBerryCheck_Pal\n\t"
-        "_08177EA8: .4byte gUnknown_203B9C0\n\t"
-        "_08177EAC: .4byte 0x00001808\n\t"
-        "_08177EB0:\n\t"
-        "	ldr r0, _08177EC8\n\t"
-        "	bl LoadCompressedSpriteSheet\n\t"
-        "	ldr r0, _08177ECC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "_08177EBA:\n\t"
-        "	ldr r2, _08177ED0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "_08177EBE:\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	b _08177EE4\n\t"
-        "	.align 2, 0\n\t"
-        "_08177EC8: .4byte gBerryCheckCircleSpriteSheet\n\t"
-        "_08177ECC: .4byte gUnknown_203B9C0\n\t"
-        "_08177ED0: .4byte 0x00001808\n\t"
-        "_08177ED4:\n\t"
-        "	ldr r0, _08177EE0\n\t"
-        "	bl LoadCompressedSpritePalette\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08177EE6\n\t"
-        "	.align 2, 0\n\t"
-        "_08177EE0: .4byte gBerryCheckCirclePaletteTable\n\t"
-        "_08177EE4:\n\t"
-        "	movs r0, #0\n\t"
-        "_08177EE6:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    switch (sBerryTag->gfxState)
+    {
+    case 0:
+        ResetTempTileDataBuffers();
+        DecompressAndCopyTileDataToVram(2, gBerryCheck_Gfx, 0, 0, 0);
+        sBerryTag->gfxState++;
+        break;
+    case 1:
+        if (FreeTempTileDataBuffersIfPossible() != TRUE)
+        {
+            LZDecompressVram(gBerryTag_Gfx, sBerryTag->tilemapBuffers[0]);
+            sBerryTag->gfxState++;
+        }
+        break;
+    case 2:
+        LZDecompressVram(gBerryTag_Tilemap, sBerryTag->tilemapBuffers[2]);
+        sBerryTag->gfxState++;
+        break;
+    case 3:
+        if (gSaveBlock2Ptr->playerGender == MALE)
+        {
+            for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
+                sBerryTag->tilemapBuffers[1][i] = (4 << 12) | BG_TILE;
+        }
+        else
+        {
+            for (i = 0; i < ARRAY_COUNT(sBerryTag->tilemapBuffers[1]); i++)
+                sBerryTag->tilemapBuffers[1][i] = (5 << 12) | BG_TILE;
+        }
+        sBerryTag->gfxState++;
+        break;
+    case 4:
+        LoadCompressedPalette(gBerryCheck_Pal, BG_PLTT_ID(0), 6 * PLTT_SIZE_4BPP);
+        sBerryTag->gfxState++;
+        break;
+    case 5:
+        LoadCompressedSpriteSheet(&gBerryCheckCircleSpriteSheet);
+        sBerryTag->gfxState++;
+        break;
+    default:
+        LoadCompressedSpritePalette(&gBerryCheckCirclePaletteTable);
+        return TRUE;
+    }
+
+    return FALSE;
 }
 
 __attribute__((naked)) void PrintMysteryMenuText(void)
