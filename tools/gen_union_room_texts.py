@@ -257,6 +257,25 @@ SYMBOLS8D = [
 
 END_ADDR8D = 0x082C1688  # sText_XCheckedTradingBoard (next region)
 
+# Eighth batch part 5: trading-board texts.
+SYMBOLS8E = [
+    ("sText_XCheckedTradingBoard", 0x082C1688, "text", None),
+    ("sText_RegisterMonAtTradingBoard", 0x082C169C, "text", None),
+    ("sText_TradingBoardInfo", 0x082C16E0, "text", None),
+    ("sText_ChooseRequestedMonType", 0x082C17CC, "text", None),
+    ("sText_WhichMonWillYouOffer", 0x082C17E8, "text", None),
+    ("sText_RegistrationCanceled", 0x082C1808, "text", None),
+    ("sText_RegistrationCompleted", 0x082C181C, "text", None),
+    ("sText_TradeCanceled", 0x082C1830, "text", None),
+    ("sText_CancelRegistrationOfMon", 0x082C1844, "text", None),
+    ("sText_CancelRegistrationOfEgg", 0x082C1864, "text", None),
+    ("sText_RegistrationCanceled2", 0x082C1880, "text", None),
+    ("sText_AskTrainerToMakeTrade", 0x082C18CC, "text", None),
+    ("sText_DontHaveTypeTrainerWants", 0x082C1918, "text", None),
+]
+
+END_ADDR8E = 0x082C1938  # sText_DontHaveEggTrainerWants (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -557,6 +576,8 @@ def main():
           "// Battle-busy, level-requirement and reaction texts")
     build(SYMBOLS8D, END_ADDR8D, "src/data/union_room8d.h", "src/data/union_room8d.c",
           "// Chat/trainer-card/trade reaction texts")
+    build(SYMBOLS8E, END_ADDR8E, "src/data/union_room8e.h", "src/data/union_room8e.c",
+          "// Trading-board texts")
 
 
 if __name__ == "__main__":
