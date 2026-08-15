@@ -33995,17 +33995,36 @@ sMatchCallTaskFuncs: @ 0x85D79F4
 gUnknown_85D7A14: @ 0x85D7A14
 	.incbin "baserom_jp.gba", 0x5d7a14, 0x8
 
-	.globl gUnknown_85D7A1C
-gUnknown_85D7A1C: @ 0x85D7A1C
-	.incbin "baserom_jp.gba", 0x5d7a1c, 0xc
+	.globl sMatchCallTextStringVars
+sMatchCallTextStringVars: @ 0x85D7A1C
+	.4byte gStringVar1
+	.4byte gStringVar2
+	.4byte gStringVar3
 
 	.globl gUnknown_85D7A28
 gUnknown_85D7A28: @ 0x85D7A28
 	.string "どニのくベニのくドヌのくヘネのくuネのくけノのくナツ$クミ$ゲン$コウ$マリ$ミホ$　　"
 
-	.globl gUnknown_85D7A54
-gUnknown_85D7A54: @ 0x85D7A54
-	.incbin "baserom_jp.gba", 0x5d7a54, 0x30
+	.globl sMultiTrainerMatchCallTexts
+sMultiTrainerMatchCallTexts: @ 0x85D7A54
+	.hword 0x0282 @ trainerId (US TRAINER_KIRA_AND_DAN_1)
+	.hword 0
+	.4byte 0x085D7A40 @ text (gText_* not yet symbolized)
+	.hword 0x01E1 @ trainerId (US TRAINER_AMY_AND_LIV_1)
+	.hword 0
+	.4byte 0x085D7A43 @ text (gText_* not yet symbolized)
+	.hword 0x02A9 @ trainerId (US TRAINER_JOHN_AND_JAY_1)
+	.hword 0
+	.4byte 0x085D7A46 @ text (gText_* not yet symbolized)
+	.hword 0x02AF @ trainerId (US TRAINER_LILA_AND_ROY_1)
+	.hword 0
+	.4byte 0x085D7A49 @ text (gText_* not yet symbolized)
+	.hword 0x0033 @ trainerId (US TRAINER_GABBY_AND_TY_1)
+	.hword 0
+	.4byte 0x085D7A4C @ text (gText_* not yet symbolized)
+	.hword 0x011F @ trainerId (US TRAINER_ANNA_AND_MEG_1)
+	.hword 0
+	.4byte 0x085D7A4F @ text (gText_* not yet symbolized)
 
 	.globl gUnknown_85D7A84
 gUnknown_85D7A84: @ 0x85D7A84
