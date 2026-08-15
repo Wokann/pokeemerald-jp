@@ -742,7 +742,6 @@ sRarePickupItems = gUnknown_82ECDE8;
 sPickupProbabilities = gUnknown_82ECDFE;
 sEnvironmentToType = gUnknown_82ECE07;
 sBallCatchBonuses = gUnknown_82ECE11;
-sGrammarMoveUsedTable = gUnknown_85AC146;
 sText_SpaceIs = gUnknown_85ABC96;
 sText_ApostropheS = gUnknown_85ABC98;
 sText_ExclamationMark = gUnknown_85AB03C;
