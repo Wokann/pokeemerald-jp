@@ -123,11 +123,11 @@ gUnknown_858F812: @ 0x858F812
 
 	.globl gBirchBagTilemap
 gBirchBagTilemap: @ 0x858F890
-	.incbin "baserom_jp.gba", 0x58f890, 0x18c
+	.incbin "graphics/jp/gBirchBagTilemap.bin"
 
 	.globl gBirchGrassTilemap
 gBirchGrassTilemap: @ 0x858FA1C
-	.incbin "baserom_jp.gba", 0x58fa1c, 0x1f8
+	.incbin "graphics/jp/gBirchGrassTilemap.bin"
 
 	.globl gBirchBagGrass_Gfx
 gBirchBagGrass_Gfx: @ 0x858FC14
@@ -220,11 +220,11 @@ gWallClockFemale_Pal: @ 0x8590D88
 
 	.globl gWallClockStart_Tilemap
 gWallClockStart_Tilemap: @ 0x8590DA8
-	.incbin "baserom_jp.gba", 0x590da8, 0x2cc
+	.incbin "graphics/jp/gWallClockStart_Tilemap.bin"
 
 	.globl gWallClockView_Tilemap
 gWallClockView_Tilemap: @ 0x8591074
-	.incbin "baserom_jp.gba", 0x591074, 0x298
+	.incbin "graphics/jp/gWallClockView_Tilemap.bin"
 
 	.globl gWallClock_Gfx
 gWallClock_Gfx: @ 0x859130C

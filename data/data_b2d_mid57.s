@@ -289,11 +289,11 @@ sMonIconOamData: @ 0x85570CC
 
 	.globl sMonIconAnims
 sMonIconAnims: @ 0x8557110
-	.incbin "baserom_jp.gba", 0x557110, 0x34
+	.incbin "graphics/jp/sMonIconAnims.bin"
 
 	.globl sMonIconAffineAnims
 sMonIconAffineAnims: @ 0x8557144
-	.incbin "baserom_jp.gba", 0x557144, 0x8
+	.incbin "graphics/jp/sMonIconAffineAnims.bin"
 
 	.globl sSpriteImageSizes
 sSpriteImageSizes: @ 0x855714C

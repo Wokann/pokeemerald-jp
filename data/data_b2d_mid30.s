@@ -5103,19 +5103,19 @@ sDummyConnectionFlags: @ 0x845F318
 
 	.globl sTileBitAttributes
 sTileBitAttributes: @ 0x845F31C
-	.incbin "baserom_jp.gba", 0x45f31c, 0x10090
+	.incbin "graphics/jp/sTileBitAttributes.bin"
 
 	.globl sDoorOpenAnimFrames
 sDoorOpenAnimFrames: @ 0x846F3AC
-	.incbin "baserom_jp.gba", 0x46f3ac, 0x14
+	.incbin "graphics/jp/sDoorOpenAnimFrames.bin"
 
 	.globl sDoorCloseAnimFrames
 sDoorCloseAnimFrames: @ 0x846F3C0
-	.incbin "baserom_jp.gba", 0x46f3c0, 0x14
+	.incbin "graphics/jp/sDoorCloseAnimFrames.bin"
 
 	.globl sBigDoorOpenAnimFrames
 sBigDoorOpenAnimFrames: @ 0x846F3D4
-	.incbin "baserom_jp.gba", 0x46f3d4, 0x1c0
+	.incbin "graphics/jp/sBigDoorOpenAnimFrames.bin"
 
 	.globl sDoorAnimGraphicsTable
 sDoorAnimGraphicsTable: @ 0x846F594

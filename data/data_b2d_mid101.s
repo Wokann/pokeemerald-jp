@@ -920,7 +920,7 @@ sMirageTower_Gfx: @ 0x85E7430
 
 	.globl sMirageTowerTilemap
 sMirageTowerTilemap: @ 0x85E7D50
-	.incbin "baserom_jp.gba", 0x5e7d50, 0xb0
+	.incbin "graphics/jp/sMirageTowerTilemap.bin"
 
 	.globl sFossil_Gfx
 sFossil_Gfx: @ 0x85E7E00

@@ -74,11 +74,11 @@ sGlyphPaletteIdxTable: @ 0x829BEB8
 
 	.globl sDownArrowTiles
 sDownArrowTiles: @ 0x829BFB8
-	.incbin "baserom_jp.gba", 0x29bfb8, 0xc0
+	.incbin "graphics/jp/sDownArrowTiles.bin"
 
 	.globl sDarkDownArrowTiles
 sDarkDownArrowTiles: @ 0x829C078
-	.incbin "baserom_jp.gba", 0x29c078, 0x5c0
+	.incbin "graphics/jp/sDarkDownArrowTiles.bin"
 
 	.globl sDownArrowYCoords
 sDownArrowYCoords: @ 0x829C638
@@ -94,11 +94,11 @@ sGlyphWidthFuncs: @ 0x829C640
 
 	.globl sKeypadIcons
 sKeypadIcons: @ 0x829C670
-	.incbin "baserom_jp.gba", 0x29c670, 0x34
+	.incbin "graphics/jp/sKeypadIcons.bin"
 
 	.globl sKeypadIconTiles
 sKeypadIconTiles: @ 0x829C6A4
-	.incbin "baserom_jp.gba", 0x29c6a4, 0x800
+	.incbin "graphics/jp/sKeypadIconTiles.bin"
 
 	.globl sFontInfos
 sFontInfos: @ 0x829CEA4
@@ -302,7 +302,7 @@ sWirelessLinkDisplayGfx: @ 0x82BF4D8
 
 	.globl sWirelessLinkDisplayTilemap
 sWirelessLinkDisplayTilemap: @ 0x82BF980
-	.incbin "baserom_jp.gba", 0x2bf980, 0x1ec
+	.incbin "graphics/jp/sWirelessLinkDisplayTilemap.bin"
 
 	.globl sLinkTestDigitsPal
 sLinkTestDigitsPal: @ 0x82BFB6C

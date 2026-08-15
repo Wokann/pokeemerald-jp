@@ -208,11 +208,11 @@ gUnknown_85922EC: @ 0x85922EC
 
 	.globl sCaveTransitionTilemap
 sCaveTransitionTilemap: @ 0x85922FC
-	.incbin "baserom_jp.gba", 0x5922fc, 0x1e0
+	.incbin "graphics/jp/sCaveTransitionTilemap.bin"
 
 	.globl sCaveTransitionTiles
 sCaveTransitionTiles: @ 0x85924DC
-	.incbin "baserom_jp.gba", 0x5924dc, 0xb4
+	.incbin "graphics/jp/sCaveTransitionTiles.bin"
 
 	.globl gShoalTideTable
 gShoalTideTable: @ 0x8592590

@@ -5759,7 +5759,7 @@ sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
 
 	.globl gTitleScreenPokemonLogoTilemap
 gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
-	.incbin "baserom_jp.gba", 0x517aa0, 0xb8
+	.incbin "graphics/jp/gTitleScreenPokemonLogoTilemap.bin"
 
 	.globl gTitleScreenBgPalettes
 gTitleScreenBgPalettes: @ 0x8517B58
@@ -5775,7 +5775,7 @@ sTitleScreenRayquazaGfx: @ 0x8519AB4
 
 	.globl sTitleScreenRayquazaTilemap
 sTitleScreenRayquazaTilemap: @ 0x851A298
-	.incbin "baserom_jp.gba", 0x51a298, 0x450
+	.incbin "graphics/jp/sTitleScreenRayquazaTilemap.bin"
 
 	.globl sTitleScreenCloudsGfx
 sTitleScreenCloudsGfx: @ 0x851A6E8
@@ -5783,7 +5783,7 @@ sTitleScreenCloudsGfx: @ 0x851A6E8
 
 	.globl gTitleScreenCloudsTilemap
 gTitleScreenCloudsTilemap: @ 0x851A9CC
-	.incbin "baserom_jp.gba", 0x51a9cc, 0x240
+	.incbin "graphics/jp/gTitleScreenCloudsTilemap.bin"
 
 	.globl gTitleScreenAlphaBlend
 gTitleScreenAlphaBlend: @ 0x851AC0C
@@ -5819,7 +5819,7 @@ sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
 
 	.globl sPokemonLogoShineSpriteSheet
 sPokemonLogoShineSpriteSheet: @ 0x851ADD8
-	.incbin "baserom_jp.gba", 0x51add8, 0x10
+	.incbin "graphics/jp/sPokemonLogoShineSpriteSheet.bin"
 
 	.globl gUnknown_851ADE8
 gUnknown_851ADE8: @ 0x851ADE8
@@ -5855,7 +5855,7 @@ gUnknown_8526F4C: @ 0x8526F4C
 
 	.globl gWeatherFogHorizontalTiles
 gWeatherFogHorizontalTiles: @ 0x852776C
-	.incbin "baserom_jp.gba", 0x52776c, 0x3080
+	.incbin "graphics/jp/gWeatherFogHorizontalTiles.bin"
 
 	.globl gUnknown_852A7EC
 gUnknown_852A7EC: @ 0x852A7EC

@@ -132,7 +132,7 @@ sClearSaveBgTemplates: @ 0x85CDB90
 
 	.globl sClearSaveTextWindow
 sClearSaveTextWindow: @ 0x85CDB98
-	.incbin "baserom_jp.gba", 0x5cdb98, 0x10
+	.incbin "graphics/jp/sClearSaveTextWindow.bin"
 
 	.globl sClearSaveYesNo
 sClearSaveYesNo: @ 0x85CDBA8

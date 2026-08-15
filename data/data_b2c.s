@@ -140,7 +140,7 @@ sPokedexAreaMap_Gfx: @ 0x85ED5F0
 
 	.globl sPokedexAreaMap_Tilemap
 sPokedexAreaMap_Tilemap: @ 0x85EE344
-	.incbin "baserom_jp.gba", 0x5ee344, 0x314
+	.incbin "graphics/jp/sPokedexAreaMap_Tilemap.bin"
 
 	.globl sPokedexAreaMapAffine_Gfx
 sPokedexAreaMapAffine_Gfx: @ 0x85EE658
@@ -148,7 +148,7 @@ sPokedexAreaMapAffine_Gfx: @ 0x85EE658
 
 	.globl sPokedexAreaMapAffine_Tilemap
 sPokedexAreaMapAffine_Tilemap: @ 0x85EF3B4
-	.incbin "baserom_jp.gba", 0x5ef3b4, 0x350
+	.incbin "graphics/jp/sPokedexAreaMapAffine_Tilemap.bin"
 
 	.globl gUnknown_85EF704
 gUnknown_85EF704: @ 0x85EF704
@@ -220,7 +220,7 @@ gPokenavHeader_Gfx: @ 0x85EFA00
 
 	.globl gPokenavHeader_Tilemap
 gPokenavHeader_Tilemap: @ 0x85EFC2C
-	.incbin "baserom_jp.gba", 0x5efc2c, 0x5f0
+	.incbin "graphics/jp/gPokenavHeader_Tilemap.bin"
 
 	.globl gPokenavLeftHeader_Pal
 gPokenavLeftHeader_Pal: @ 0x85F021C
@@ -330,11 +330,11 @@ gUnknown_85F164A: @ 0x85F164A
 
 	.globl sPokenavBgDotsTiles
 sPokenavBgDotsTiles: @ 0x85F165C
-	.incbin "baserom_jp.gba", 0x5f165c, 0x14
+	.incbin "graphics/jp/sPokenavBgDotsTiles.bin"
 
 	.globl sPokenavBgDotsTilemap
 sPokenavBgDotsTilemap: @ 0x85F1670
-	.incbin "baserom_jp.gba", 0x5f1670, 0xa0
+	.incbin "graphics/jp/sPokenavBgDotsTilemap.bin"
 
 	.globl gPokenavMessageBox_Pal
 gPokenavMessageBox_Pal: @ 0x85F1710
@@ -346,7 +346,7 @@ gPokenavMessageBox_Gfx: @ 0x85F1730
 
 	.globl gPokenavMessageBox_Tilemap
 gPokenavMessageBox_Tilemap: @ 0x85F1780
-	.incbin "baserom_jp.gba", 0x5f1780, 0xb8
+	.incbin "graphics/jp/gPokenavMessageBox_Tilemap.bin"
 
 	.globl sPokenavDeviceBgPal
 sPokenavDeviceBgPal: @ 0x85F1838
@@ -355,11 +355,11 @@ sPokenavDeviceBgPal: @ 0x85F1838
 
 	.globl sPokenavDeviceBgTiles
 sPokenavDeviceBgTiles: @ 0x85F1858
-	.incbin "baserom_jp.gba", 0x5f1858, 0x288
+	.incbin "graphics/jp/sPokenavDeviceBgTiles.bin"
 
 	.globl sPokenavDeviceBgTilemap
 sPokenavDeviceBgTilemap: @ 0x85F1AE0
-	.incbin "baserom_jp.gba", 0x5f1ae0, 0xc1c
+	.incbin "graphics/jp/sPokenavDeviceBgTilemap.bin"
 
 	.globl sPokenavMainMenuBgTemplates
 sPokenavMainMenuBgTemplates: @ 0x85F26FC
@@ -440,7 +440,7 @@ sMatchCallUI_Gfx: @ 0x85F3ED0
 	.globl sMatchCallUI_Tilemap
 	.globl sMatchCallUI_Tilemap
 sMatchCallUI_Tilemap: @ 0x5F3F74
-	.incbin "baserom_jp.gba", 0x5f3f74, 0xc4
+	.incbin "graphics/jp/sMatchCallUI_Tilemap.bin"
 
 	.globl sOptionsCursor_Pal
 sOptionsCursor_Pal: @ 0x5F4038
@@ -598,7 +598,7 @@ gPokenavCondition_Gfx: @ 0x85F4E6C
 
 	.globl gPokenavCondition_Tilemap
 gPokenavCondition_Tilemap: @ 0x85F5600
-	.incbin "baserom_jp.gba", 0x5f5600, 0x1ec
+	.incbin "graphics/jp/gPokenavCondition_Tilemap.bin"
 
 	.globl sConditionGraphData_Gfx
 sConditionGraphData_Gfx: @ 0x85F57EC
@@ -606,11 +606,11 @@ sConditionGraphData_Gfx: @ 0x85F57EC
 
 	.globl sConditionGraphData_Tilemap
 sConditionGraphData_Tilemap: @ 0x85F5800
-	.incbin "baserom_jp.gba", 0x5f5800, 0xfc
+	.incbin "graphics/jp/sConditionGraphData_Tilemap.bin"
 
 	.globl gPokenavOptions_Tilemap
 gPokenavOptions_Tilemap: @ 0x85F58FC
-	.incbin "baserom_jp.gba", 0x5f58fc, 0x48
+	.incbin "graphics/jp/gPokenavOptions_Tilemap.bin"
 
 	.globl sPokenavMonMarkings_Pal
 sPokenavMonMarkings_Pal: @ 0x85F5944
@@ -655,11 +655,11 @@ sConditionSearchResultFramePal: @ 0x85F59D0
 
 	.globl sConditionSearchResultTiles
 sConditionSearchResultTiles: @ 0x85F59F0
-	.incbin "baserom_jp.gba", 0x5f59f0, 0xc8
+	.incbin "graphics/jp/sConditionSearchResultTiles.bin"
 
 	.globl sConditionSearchResultTilemap
 sConditionSearchResultTilemap: @ 0x85F5AB8
-	.incbin "baserom_jp.gba", 0x5f5ab8, 0xc4
+	.incbin "graphics/jp/sConditionSearchResultTilemap.bin"
 
 	.globl sListBg_Pal
 sListBg_Pal: @ 0x85F5B7C
@@ -692,11 +692,11 @@ sMonRibbonListFramePal: @ 0x85F5BD4
 
 	.globl sMonRibbonListFrameTiles
 sMonRibbonListFrameTiles: @ 0x85F5BF4
-	.incbin "baserom_jp.gba", 0x5f5bf4, 0xc8
+	.incbin "graphics/jp/sMonRibbonListFrameTiles.bin"
 
 	.globl sMonRibbonListFrameTilemap
 sMonRibbonListFrameTilemap: @ 0x85F5CBC
-	.incbin "baserom_jp.gba", 0x5f5cbc, 0xc4
+	.incbin "graphics/jp/sMonRibbonListFrameTilemap.bin"
 
 	.globl sMonRibbonListUi_Pal
 sMonRibbonListUi_Pal: @ 0x85F5D80
@@ -1007,7 +1007,7 @@ sRibbonIcons5_Pal: @ 0x5F64E0
 
 	.globl gPokenavRibbonsSummaryBg_Tilemap
 gPokenavRibbonsSummaryBg_Tilemap: @ 0x85F65A8
-	.incbin "baserom_jp.gba", 0x5f65a8, 0xcc
+	.incbin "graphics/jp/gPokenavRibbonsSummaryBg_Tilemap.bin"
 
 	.globl sRibbonIcons1_Pal
 sRibbonIcons1_Pal: @ 0x85F6674
@@ -1063,7 +1063,7 @@ sRibbonGfxData: @ 0x85F7258
 
 	.globl sSpriteSheet_RibbonIconsBig
 sSpriteSheet_RibbonIconsBig: @ 0x85F72D8
-	.incbin "baserom_jp.gba", 0x5f72d8, 0x8
+	.incbin "graphics/jp/sSpriteSheet_RibbonIconsBig.bin"
 
 	.globl sSpritePalettes_RibbonIcons
 sSpritePalettes_RibbonIcons: @ 0x85F72E0
@@ -1197,7 +1197,7 @@ sConditionMonPicPalDescriptor: @ 0x85FA8B8
 
 	.globl sConditionSelectionIconsSheets
 sConditionSelectionIconsSheets: @ 0x85FA8C0
-	.incbin "baserom_jp.gba", 0x5fa8c0, 0x20
+	.incbin "graphics/jp/sConditionSelectionIconsSheets.bin"
 
 	.globl sConditionSelectionIconsPals
 sConditionSelectionIconsPals: @ 0x85FA8E0

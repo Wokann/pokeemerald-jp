@@ -23,7 +23,7 @@ gUnknown_8592ED8: @ 0x8592ED8
 
 	.globl sTrainerHillWindowTileset
 sTrainerHillWindowTileset: @ 0x8592EE0
-	.incbin "baserom_jp.gba", 0x592ee0, 0xc0
+	.incbin "graphics/jp/sTrainerHillWindowTileset.bin"
 
 	.globl sTrainerHillWindowPalette
 sTrainerHillWindowPalette: @ 0x8592FA0
@@ -31,7 +31,7 @@ sTrainerHillWindowPalette: @ 0x8592FA0
 
 	.globl sTrainerHillWindowTilemap
 sTrainerHillWindowTilemap: @ 0x8592FC0
-	.incbin "baserom_jp.gba", 0x592fc0, 0x800
+	.incbin "graphics/jp/sTrainerHillWindowTilemap.bin"
 
 	.globl sTrainerHillRecordsBgTemplates
 sTrainerHillRecordsBgTemplates: @ 0x85937C0
@@ -43,4 +43,4 @@ sTrainerHillRecordsWindowTemplates: @ 0x85937C8
 
 	.globl sLinkBattleRecordsWindow
 sLinkBattleRecordsWindow: @ 0x85937D8
-	.incbin "baserom_jp.gba", 0x5937d8, 0x8
+	.incbin "graphics/jp/sLinkBattleRecordsWindow.bin"

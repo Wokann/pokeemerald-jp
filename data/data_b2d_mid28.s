@@ -801,7 +801,7 @@ gUnknown_84E8840: @ 0x84E8840
 
 	.globl sWindowFrames
 sWindowFrames: @ 0x84E8860
-	.incbin "baserom_jp.gba", 0x4e8860, 0xa0
+	.incbin "graphics/jp/sWindowFrames.bin"
 
 	.globl gNullScriptPtr
 gNullScriptPtr: @ 0x84E8900
@@ -856,4 +856,4 @@ gResetRtcWindowTemplates: @ 0x84E8A4C
 
 	.globl gResetRtcInputTimeWindow
 gResetRtcInputTimeWindow: @ 0x84E8A64
-	.incbin "baserom_jp.gba", 0x4e8a64, 0x8
+	.incbin "graphics/jp/gResetRtcInputTimeWindow.bin"

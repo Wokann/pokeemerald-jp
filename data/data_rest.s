@@ -6,7 +6,7 @@ gUnknown_89158E0: @ 0x89158E0
 
 	.globl gBattleTextboxTiles
 gBattleTextboxTiles: @ 0x8C00000 (JP: LoadBattleTextboxAndBackground)
-	.incbin "baserom_jp.gba", 0xc00000, 0x4ec
+	.incbin "graphics/jp/gBattleTextboxTiles.bin"
 
 
 	.globl gBattleTextboxPalette
@@ -16,7 +16,7 @@ gBattleTextboxPalette: @ 0x8C004EC
 
 	.globl gBattleTextboxTilemap
 gBattleTextboxTilemap: @ 0x8C00530
-	.incbin "baserom_jp.gba", 0xc00530, 0x1dd8
+	.incbin "graphics/jp/gBattleTextboxTilemap.bin"
 
 
 	.globl gUnknown_8C02308
@@ -106,7 +106,7 @@ gMetalShinePalette: @ 0x8C1D230
 
 	.globl gMetalShineTilemap
 gMetalShineTilemap: @ 0x8C1D258
-	.incbin "baserom_jp.gba", 0xc1d258, 0x34b4
+	.incbin "graphics/jp/gMetalShineTilemap.bin"
 
 
 	.globl gBattleAnimMaskImage_Curse
@@ -116,7 +116,7 @@ gBattleAnimMaskImage_Curse: @ 0x8C2070C
 
 	.globl gBattleAnimMaskTilemap_Curse
 gBattleAnimMaskTilemap_Curse: @ 0x8C20728
-	.incbin "baserom_jp.gba", 0xc20728, 0x1f8c
+	.incbin "graphics/jp/gBattleAnimMaskTilemap_Curse.bin"
 
 
 	.globl gBattleAnimSpritePal_MusicNotes2
@@ -136,7 +136,7 @@ gBattleAnimBgPalette_Attract: @ 0x8C23DF4
 
 	.globl gBattleAnimBgTilemap_Attract
 gBattleAnimBgTilemap_Attract: @ 0x8C23E1C
-	.incbin "baserom_jp.gba", 0xc23e1c, 0xc58
+	.incbin "graphics/jp/gBattleAnimBgTilemap_Attract.bin"
 
 
 	.globl gBattleAnimBgPalette_ScaryFace
@@ -161,7 +161,7 @@ gBattleAnimMaskPalette_LightBeam: @ 0x8C2A778
 
 	.globl gBattleAnimMaskTilemap_LightBeam
 gBattleAnimMaskTilemap_LightBeam: @ 0x8C2A790
-	.incbin "baserom_jp.gba", 0xc2a790, 0x27d0
+	.incbin "graphics/jp/gBattleAnimMaskTilemap_LightBeam.bin"
 
 
 	.globl gUnknown_8C2CF60
@@ -186,12 +186,12 @@ gStatAnim_Gfx: @ 0x8C2D7C4
 
 	.globl gStatAnim_Increase_Tilemap
 gStatAnim_Increase_Tilemap: @ 0x8C2D9D4
-	.incbin "baserom_jp.gba", 0xc2d9d4, 0x11c
+	.incbin "graphics/jp/gStatAnim_Increase_Tilemap.bin"
 
 
 	.globl gStatAnim_Decrease_Tilemap
 gStatAnim_Decrease_Tilemap: @ 0x8C2DAF0
-	.incbin "baserom_jp.gba", 0xc2daf0, 0x11c
+	.incbin "graphics/jp/gStatAnim_Decrease_Tilemap.bin"
 
 
 	.globl gStatAnim_Defense_Pal
@@ -246,7 +246,7 @@ gCureBubblesPal: @ 0x8C2DE48
 
 	.globl gCureBubblesTilemap
 gCureBubblesTilemap: @ 0x8C2DE68
-	.incbin "baserom_jp.gba", 0xc2de68, 0xc8c
+	.incbin "graphics/jp/gCureBubblesTilemap.bin"
 
 
 	.globl gUnknown_8C2EAF4
@@ -276,7 +276,7 @@ gBattleVSFrame_Gfx: @ 0x8D77994
 
 	.globl gBattleVSFrame_Tilemap
 gBattleVSFrame_Tilemap: @ 0x8D77A7C
-	.incbin "baserom_jp.gba", 0xd77a7c, 0x10c
+	.incbin "graphics/jp/gBattleVSFrame_Tilemap.bin"
 
 
 	.globl gBattleVSFrame_Pal
@@ -291,27 +291,27 @@ gVsLettersGfx: @ 0x8D77BB0
 
 	.globl gBattleEnvironmentTiles_Water
 gBattleEnvironmentTiles_Water: @ 0x8D7A1AC
-	.incbin "baserom_jp.gba", 0xd7a1ac, 0x618
+	.incbin "graphics/jp/gBattleEnvironmentTiles_Water.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Water
 gBattleEnvironmentTilemap_Water: @ 0x8D7A7C4
-	.incbin "baserom_jp.gba", 0xd7a7c4, 0x13f4
+	.incbin "graphics/jp/gBattleEnvironmentTilemap_Water.bin"
 
 
 	.globl gBattleEnvironmentTiles_Cave
 gBattleEnvironmentTiles_Cave: @ 0x8D7BBB8
-	.incbin "baserom_jp.gba", 0xd7bbb8, 0x640
+	.incbin "graphics/jp/gBattleEnvironmentTiles_Cave.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Cave
 gBattleEnvironmentTilemap_Cave: @ 0x8D7C1F8
-	.incbin "baserom_jp.gba", 0xd7c1f8, 0x2ec
+	.incbin "graphics/jp/gBattleEnvironmentTilemap_Cave.bin"
 
 
 	.globl gBattleEnvironmentTiles_Building
 gBattleEnvironmentTiles_Building: @ 0x8D7C4E4
-	.incbin "baserom_jp.gba", 0xd7c4e4, 0x5ac
+	.incbin "graphics/jp/gBattleEnvironmentTiles_Building.bin"
 
 
 	.globl gBattleEnvironmentPalette_Frontier
@@ -322,27 +322,27 @@ gBattleEnvironmentPalette_Frontier: @ 0x8D7CA90
 
 	.globl gBattleEnvironmentTilemap_Building
 gBattleEnvironmentTilemap_Building: @ 0x8D7CACC
-	.incbin "baserom_jp.gba", 0xd7cacc, 0x2b0
+	.incbin "graphics/jp/gBattleEnvironmentTilemap_Building.bin"
 
 
 	.globl gBattleEnvironmentTiles_Stadium
 gBattleEnvironmentTiles_Stadium: @ 0x8D7CD7C
-	.incbin "baserom_jp.gba", 0xd7cd7c, 0x608
+	.incbin "graphics/jp/gBattleEnvironmentTiles_Stadium.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Stadium
 gBattleEnvironmentTilemap_Stadium: @ 0x8D7D384
-	.incbin "baserom_jp.gba", 0xd7d384, 0x2b0
+	.incbin "graphics/jp/gBattleEnvironmentTilemap_Stadium.bin"
 
 
 	.globl gBattleEnvironmentTiles_Rayquaza
 gBattleEnvironmentTiles_Rayquaza: @ 0x8D7D634
-	.incbin "baserom_jp.gba", 0xd7d634, 0x674
+	.incbin "graphics/jp/gBattleEnvironmentTiles_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Rayquaza
 gBattleEnvironmentTilemap_Rayquaza: @ 0x8D7DCA8
-	.incbin "baserom_jp.gba", 0xd7dca8, 0x2f0
+	.incbin "graphics/jp/gBattleEnvironmentTilemap_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentPalette_Kyogre
@@ -545,42 +545,42 @@ gBattleEnvironmentPalette_Rayquaza: @ 0x8D7E2D8
 
 	.globl gBattleEnvironmentAnimTiles_Underwater
 gBattleEnvironmentAnimTiles_Underwater: @ 0x8D7FA9C
-	.incbin "baserom_jp.gba", 0xd7fa9c, 0x4cc
+	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Underwater.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Underwater
 gBattleEnvironmentAnimTilemap_Underwater: @ 0x8D7FF68
-	.incbin "baserom_jp.gba", 0xd7ff68, 0x174c
+	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Underwater.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Cave
 gBattleEnvironmentAnimTiles_Cave: @ 0x8D816B4
-	.incbin "baserom_jp.gba", 0xd816b4, 0x81c
+	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Cave.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Cave
 gBattleEnvironmentAnimTilemap_Cave: @ 0x8D81ED0
-	.incbin "baserom_jp.gba", 0xd81ed0, 0x2a8
+	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Cave.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Building
 gBattleEnvironmentAnimTiles_Building: @ 0x8D82178
-	.incbin "baserom_jp.gba", 0xd82178, 0x410
+	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Building.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Building
 gBattleEnvironmentAnimTilemap_Building: @ 0x8D82588
-	.incbin "baserom_jp.gba", 0xd82588, 0x124
+	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Building.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Rayquaza
 gBattleEnvironmentAnimTiles_Rayquaza: @ 0x8D826AC
-	.incbin "baserom_jp.gba", 0xd826ac, 0x668
+	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Rayquaza
 gBattleEnvironmentAnimTilemap_Rayquaza: @ 0x8D82D14
-	.incbin "baserom_jp.gba", 0xd82d14, 0x2a0
+	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Rayquaza.bin"
 
 
 	.globl gUnknown_8D82FB4
@@ -665,12 +665,12 @@ gUnknown_8D856AC: @ 0x8D856AC
 
 	.globl gMultiBattleIntroBg_Opponent_Tilemap
 gMultiBattleIntroBg_Opponent_Tilemap: @ 0x8D8578C
-	.incbin "baserom_jp.gba", 0xd8578c, 0x274
+	.incbin "graphics/jp/gMultiBattleIntroBg_Opponent_Tilemap.bin"
 
 
 	.globl gMultiBattleIntroBg_Player_Tilemap
 gMultiBattleIntroBg_Player_Tilemap: @ 0x8D85A00
-	.incbin "baserom_jp.gba", 0xd85a00, 0x234
+	.incbin "graphics/jp/gMultiBattleIntroBg_Player_Tilemap.bin"
 
 
 	.globl gUnknown_8D85C34
@@ -790,7 +790,7 @@ gUnknown_8D8CCAC: @ 0x8D8CCAC
 
 	.globl gBattleAnimBgTilemap_Sandstorm
 gBattleAnimBgTilemap_Sandstorm: @ 0x8D8D3F4
-	.incbin "baserom_jp.gba", 0xd8d3f4, 0x17c
+	.incbin "graphics/jp/gBattleAnimBgTilemap_Sandstorm.bin"
 
 
 	.globl gBattleAnimBgImage_Sandstorm
@@ -919,22 +919,22 @@ gUnknown_8D927A0: @ 0x8D927A0
 
 	.globl gBattleAnimFogTilemap
 gBattleAnimFogTilemap: @ 0x8D93294
-	.incbin "baserom_jp.gba", 0xd93294, 0x2b8
+	.incbin "graphics/jp/gBattleAnimFogTilemap.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFacePlayer
 gBattleAnimBgTilemap_ScaryFacePlayer: @ 0x8D9354C
-	.incbin "baserom_jp.gba", 0xd9354c, 0x1e4
+	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFacePlayer.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFaceOpponent
 gBattleAnimBgTilemap_ScaryFaceOpponent: @ 0x8D93730
-	.incbin "baserom_jp.gba", 0xd93730, 0x1e4
+	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFaceOpponent.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFaceContest
 gBattleAnimBgTilemap_ScaryFaceContest: @ 0x8D93914
-	.incbin "baserom_jp.gba", 0xd93914, 0x1158
+	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFaceContest.bin"
 
 
 	.globl gBattleAnimBgImage_Surf
@@ -949,17 +949,17 @@ gBattleAnimBgPalette_Surf: @ 0x8D95D8C
 
 	.globl gBattleAnimBgTilemap_SurfOpponent
 gBattleAnimBgTilemap_SurfOpponent: @ 0x8D95DB4
-	.incbin "baserom_jp.gba", 0xd95db4, 0x2d0
+	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfOpponent.bin"
 
 
 	.globl gBattleAnimBgTilemap_SurfPlayer
 gBattleAnimBgTilemap_SurfPlayer: @ 0x8D96084
-	.incbin "baserom_jp.gba", 0xd96084, 0x2d4
+	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfPlayer.bin"
 
 
 	.globl gBattleAnimBgTilemap_SurfContest
 gBattleAnimBgTilemap_SurfContest: @ 0x8D96358
-	.incbin "baserom_jp.gba", 0xd96358, 0x448
+	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfContest.bin"
 
 
 	.globl gUnknown_8D967A0

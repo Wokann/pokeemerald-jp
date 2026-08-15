@@ -43,7 +43,7 @@ sAnims_MenuSprite: @ 0x857AB00
 
 	.globl sAnims_MenuWindow
 sAnims_MenuWindow: @ 0x857AB38
-	.incbin "baserom_jp.gba", 0x57ab38, 0x8
+	.incbin "graphics/jp/sAnims_MenuWindow.bin"
 
 	.globl sOamData_MarkingCombo
 sOamData_MarkingCombo: @ 0x857AB40

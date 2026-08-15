@@ -791,7 +791,7 @@ sBGTemplates: @ 0x82C24A4
 
 	.globl sMainWindows
 sMainWindows: @ 0x82C24B4
-	.incbin "baserom_jp.gba", 0x2c24b4, 0x20
+	.incbin "graphics/jp/sMainWindows.bin"
 
 	.globl sWindowTemplate_YesNoMsg_Wide
 sWindowTemplate_YesNoMsg_Wide: @ 0x82C24D4
@@ -1123,7 +1123,7 @@ sWirelessScreenBgTiles_Gfx: @ 0x82C2E10
 
 	.globl sWirelessScreenBgTiles_Tilemap
 sWirelessScreenBgTiles_Tilemap: @ 0x82C3020
-	.incbin "baserom_jp.gba", 0x2c3020, 0x194
+	.incbin "graphics/jp/sWirelessScreenBgTiles_Tilemap.bin"
 
 	.globl sWirelessScreenBgTemplates
 sWirelessScreenBgTemplates: @ 0x82C31B4
@@ -1832,15 +1832,15 @@ gBerryCrush_Crusher_Gfx: @ 0x82C6104
 
 	.globl sCrusherTop_Tilemap
 sCrusherTop_Tilemap: @ 0x82C74D4
-	.incbin "baserom_jp.gba", 0x2c74d4, 0x130
+	.incbin "graphics/jp/sCrusherTop_Tilemap.bin"
 
 	.globl sContainerCap_Tilemap
 sContainerCap_Tilemap: @ 0x82C7604
-	.incbin "baserom_jp.gba", 0x2c7604, 0x198
+	.incbin "graphics/jp/sContainerCap_Tilemap.bin"
 
 	.globl sBg_Tilemap
 sBg_Tilemap: @ 0x82C779C
-	.incbin "baserom_jp.gba", 0x2c779c, 0x228
+	.incbin "graphics/jp/sBg_Tilemap.bin"
 
 	.globl sPlayerNameWindowGfx
 sPlayerNameWindowGfx: @ 0x82C79C4
@@ -3231,15 +3231,15 @@ sDodrio_Gfx: @ 0x82CD148
 
 	.globl sDodrioBg_Tilemap
 sDodrioBg_Tilemap: @ 0x82CE364
-	.incbin "baserom_jp.gba", 0x2ce364, 0x26c
+	.incbin "graphics/jp/sDodrioBg_Tilemap.bin"
 
 	.globl sTreeBorderRight_Tilemap
 sTreeBorderRight_Tilemap: @ 0x82CE5D0
-	.incbin "baserom_jp.gba", 0x2ce5d0, 0x250
+	.incbin "graphics/jp/sTreeBorderRight_Tilemap.bin"
 
 	.globl sTreeBorderLeft_Tilemap
 sTreeBorderLeft_Tilemap: @ 0x82CE820
-	.incbin "baserom_jp.gba", 0x2ce820, 0x24c
+	.incbin "graphics/jp/sTreeBorderLeft_Tilemap.bin"
 
 	.globl sOamData_Dodrio
 sOamData_Dodrio: @ 0x82CEA6C
@@ -3307,27 +3307,27 @@ sDodrioTextColorTable: @ 0x82CEC0C
 
 	.globl sNameWindowCoords_1Player
 sNameWindowCoords_1Player: @ 0x82CEC18
-	.incbin "baserom_jp.gba", 0x2cec18, 0x4
+	.incbin "graphics/jp/sNameWindowCoords_1Player.bin"
 
 	.globl sNameWindowCoords_2Players
 sNameWindowCoords_2Players: @ 0x82CEC1C
-	.incbin "baserom_jp.gba", 0x2cec1c, 0x8
+	.incbin "graphics/jp/sNameWindowCoords_2Players.bin"
 
 	.globl sNameWindowCoords_3Players
 sNameWindowCoords_3Players: @ 0x82CEC24
-	.incbin "baserom_jp.gba", 0x2cec24, 0xc
+	.incbin "graphics/jp/sNameWindowCoords_3Players.bin"
 
 	.globl sNameWindowCoords_4Players
 sNameWindowCoords_4Players: @ 0x82CEC30
-	.incbin "baserom_jp.gba", 0x2cec30, 0x10
+	.incbin "graphics/jp/sNameWindowCoords_4Players.bin"
 
 	.globl sNameWindowCoords_5Players
 sNameWindowCoords_5Players: @ 0x82CEC40
-	.incbin "baserom_jp.gba", 0x2cec40, 0x14
+	.incbin "graphics/jp/sNameWindowCoords_5Players.bin"
 
 	.globl sNameWindowCoords
 sNameWindowCoords: @ 0x82CEC54
-	.incbin "baserom_jp.gba", 0x2cec54, 0x14
+	.incbin "graphics/jp/sNameWindowCoords.bin"
 
 	.globl sRankingTexts
 sRankingTexts: @ 0x82CEC68

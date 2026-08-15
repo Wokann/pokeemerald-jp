@@ -662,8 +662,8 @@ sDiplomaPalettes: @ 0x85C7A34
 
 	.globl sDiplomaTilemap
 sDiplomaTilemap: @ 0x85C7A74
-	.incbin "baserom_jp.gba", 0x5c7a74, 0x73c
+	.incbin "graphics/jp/sDiplomaTilemap.bin"
 
 	.globl sDiplomaTiles
 sDiplomaTiles: @ 0x85C81B0
-	.incbin "baserom_jp.gba", 0x5c81b0, 0x9f8
+	.incbin "graphics/jp/sDiplomaTiles.bin"
