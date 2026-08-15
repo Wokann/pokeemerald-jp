@@ -76,14 +76,14 @@ static void ExecuteMatchCall(u8);
 void DrawMatchCallTextBoxBorder_Internal(u32, u32, u32);
 static void InitMatchCallTextPrinter(int, const u8 *);
 static bool32 RunMatchCallTextPrinter(int);
-static bool32 MatchCall_LoadGfx(u8);
-static bool32 MatchCall_DrawWindow(u8);
-static bool32 MatchCall_ReadyIntro(u8);
-static bool32 MatchCall_SlideWindowIn(u8);
-static bool32 MatchCall_PrintIntro(u8);
-static bool32 MatchCall_PrintMessage(u8);
-static bool32 MatchCall_SlideWindowOut(u8);
-static bool32 MatchCall_EndCall(u8);
+bool32 MatchCall_LoadGfx(u8);
+bool32 MatchCall_DrawWindow(u8);
+bool32 MatchCall_ReadyIntro(u8);
+bool32 MatchCall_SlideWindowIn(u8);
+bool32 MatchCall_PrintIntro(u8);
+bool32 MatchCall_PrintMessage(u8);
+bool32 MatchCall_SlideWindowOut(u8);
+bool32 MatchCall_EndCall(u8);
 
 // Forward declarations for functions defined later in this file.
 struct MatchCallText;
@@ -287,7 +287,7 @@ static void ExecuteMatchCall(u8 taskId)
 #define TILE_MC_WINDOW    0x270
 #define TILE_POKENAV_ICON 0x279
 
-static bool32 MatchCall_LoadGfx(u8 taskId)
+bool32 MatchCall_LoadGfx(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     tWindowId = AddWindow(&sMatchCallTextWindow);
@@ -318,7 +318,7 @@ static bool32 MatchCall_LoadGfx(u8 taskId)
     return TRUE;
 }
 
-static bool32 MatchCall_DrawWindow(u8 taskId)
+bool32 MatchCall_DrawWindow(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (FreeTempTileDataBuffersIfPossible())
@@ -333,7 +333,7 @@ static bool32 MatchCall_DrawWindow(u8 taskId)
     return TRUE;
 }
 
-static bool32 MatchCall_ReadyIntro(u8 taskId)
+bool32 MatchCall_ReadyIntro(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (!IsDma3ManagerBusyWithBgCopy())
@@ -346,7 +346,7 @@ static bool32 MatchCall_ReadyIntro(u8 taskId)
     return FALSE;
 }
 
-static bool32 MatchCall_SlideWindowIn(u8 taskId)
+bool32 MatchCall_SlideWindowIn(u8 taskId)
 {
     if (ChangeBgY(0, 0x600, BG_COORD_ADD) >= 0)
     {
@@ -357,7 +357,7 @@ static bool32 MatchCall_SlideWindowIn(u8 taskId)
     return FALSE;
 }
 
-static bool32 MatchCall_PrintIntro(u8 taskId)
+bool32 MatchCall_PrintIntro(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (!RunMatchCallTextPrinter(tWindowId))
@@ -374,7 +374,7 @@ static bool32 MatchCall_PrintIntro(u8 taskId)
     return FALSE;
 }
 
-static bool32 MatchCall_PrintMessage(u8 taskId)
+bool32 MatchCall_PrintMessage(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (!RunMatchCallTextPrinter(tWindowId) && !IsSEPlaying() && JOY_NEW(A_BUTTON | B_BUTTON))
@@ -388,7 +388,7 @@ static bool32 MatchCall_PrintMessage(u8 taskId)
     return FALSE;
 }
 
-static bool32 MatchCall_SlideWindowOut(u8 taskId)
+bool32 MatchCall_SlideWindowOut(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     if (ChangeBgY(0, 0x600, BG_COORD_SUB) <= -0x2000)
@@ -403,7 +403,7 @@ static bool32 MatchCall_SlideWindowOut(u8 taskId)
     return FALSE;
 }
 
-static bool32 MatchCall_EndCall(u8 taskId)
+bool32 MatchCall_EndCall(u8 taskId)
 {
     u8 playerObjectId;
     if (!IsDma3ManagerBusyWithBgCopy() && !IsSEPlaying())

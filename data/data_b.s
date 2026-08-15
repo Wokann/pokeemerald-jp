@@ -33972,9 +33972,16 @@ gUnknown_85D7608: @ 0x85D7608
 gUnknown_85D79EC: @ 0x85D79EC
 	.string "⋯⋯⋯⋯⋯⋯\p$"
 
-	.globl gUnknown_85D79F4
-gUnknown_85D79F4: @ 0x85D79F4
-	.incbin "baserom_jp.gba", 0x5d79f4, 0x20
+	.globl sMatchCallTaskFuncs
+sMatchCallTaskFuncs: @ 0x85D79F4
+	.4byte MatchCall_LoadGfx @ 0x08195D2D
+	.4byte MatchCall_DrawWindow @ 0x08195DF1
+	.4byte MatchCall_ReadyIntro @ 0x08195E75
+	.4byte MatchCall_SlideWindowIn @ 0x08195EB1
+	.4byte MatchCall_PrintIntro @ 0x08195ED9
+	.4byte MatchCall_PrintMessage @ 0x08195F31
+	.4byte MatchCall_SlideWindowOut @ 0x08195F91
+	.4byte MatchCall_EndCall @ 0x08195FF1
 
 	.globl gUnknown_85D7A14
 gUnknown_85D7A14: @ 0x85D7A14
