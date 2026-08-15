@@ -8,6 +8,7 @@ gMoonSpriteTemplate = ABSOLUTE(0x0856EAA0);
 gMoonlightSparkleSpriteTemplate = ABSOLUTE(0x0856EAD0);
 gPaletteFade = ABSOLUTE(0x02037C74);
 sBerryTag = ABSOLUTE(0x0203B9C0);
+gBagPosition = ABSOLUTE(0x0203CB24);
 gBerryCheck_Gfx = gUnknown_8D9BD90;
 
 gBerryTag_Gfx = gUnknown_8D9C254;

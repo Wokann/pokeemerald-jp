@@ -11,6 +11,8 @@
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"
+#include "constants/item.h"
+#include "constants/items.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "decompress.h"
@@ -34,9 +36,13 @@ struct BerryTagScreenStruct
 // Address defined in ld_script_jp.txt (ABSOLUTE 0x0203B9C0).
 extern struct BerryTagScreenStruct *sBerryTag;
 #define BG_TILE 0x42
+#define tBerryY data[0]
+#define tBgOp data[1]
 void bag_menu_mail_related(void);
 void CB2_InitBerryTagScreen(void);
 void Task_CloseBerryTagScreen(u8 taskId);
+void Task_DisplayAnotherBerry(u8 taskId);
+void HandleBagCursorPositionChange(s8 toMove);
 
 void DoBerryTagScreen(void)
 {
@@ -851,150 +857,48 @@ void Task_HandleInput(u8 taskId)
     }
 }
 
-__attribute__((naked)) void TryChangeDisplayedBerry(void)
+void TryChangeDisplayedBerry(u8 taskId, s8 toMove)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r2, _081785A4\n\t"
-        "	adds r4, r0, r2\n\t"
-        "	ldr r2, _081785A8\n\t"
-        "	ldrh r0, [r2, #0xe]\n\t"
-        "	ldrh r2, [r2, #0x18]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsrs r7, r1, #0x18\n\t"
-        "	asrs r6, r1, #0x18\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	cmp r0, #0x2d\n\t"
-        "	bhi _081785D0\n\t"
-        "	lsls r1, r0, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #4\n\t"
-        "	bl BagGetItemIdByPocketPosition\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081785D0\n\t"
-        "	cmp r6, #0\n\t"
-        "	bge _081785AC\n\t"
-        "	movs r0, #2\n\t"
-        "	b _081785AE\n\t"
-        "	.align 2, 0\n\t"
-        "_081785A4: .4byte gUnknown_3005B68\n\t"
-        "_081785A8: .4byte gUnknown_203CB24\n\t"
-        "_081785AC:\n\t"
-        "	movs r0, #1\n\t"
-        "_081785AE:\n\t"
-        "	strh r0, [r4, #2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r4]\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	lsls r0, r7, #0x18\n\t"
-        "	asrs r0, r0, #0x18\n\t"
-        "	bl HandleBagCursorPositionChange\n\t"
-        "	ldr r1, _081785D8\n\t"
-        "	lsls r0, r5, #2\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081785DC\n\t"
-        "	str r1, [r0]\n\t"
-        "_081785D0:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081785D8: .4byte gTasks\n\t"
-        "_081785DC: .4byte Task_DisplayAnotherBerry + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 *data = gTasks[taskId].data;
+    s16 currPocketPosition = gBagPosition.scrollPosition[BERRIES_POCKET] + gBagPosition.cursorPosition[BERRIES_POCKET];
+    u32 newPocketPosition = currPocketPosition + toMove;
+    if (newPocketPosition < ITEM_TO_BERRY(MAX_BERRY_INDEX) && BagGetItemIdByPocketPosition(POCKET_BERRIES, newPocketPosition) != ITEM_NONE)
+    {
+        if (toMove < 0)
+            tBgOp = BG_COORD_SUB;
+        else
+            tBgOp = BG_COORD_ADD;
+
+        tBerryY = 0;
+        PlaySE(SE_SELECT);
+        HandleBagCursorPositionChange(toMove);
+        gTasks[taskId].func = Task_DisplayAnotherBerry;
+    }
 }
 
-__attribute__((naked)) void HandleBagCursorPositionChange(void)
+void HandleBagCursorPositionChange(s8 toMove)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r5, _08178614\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	subs r6, #0xa\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	asrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0\n\t"
-        "	ble _0817861C\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	cmp r0, #3\n\t"
-        "	bls _0817860A\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	adds r1, #8\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #4\n\t"
-        "	bl BagGetItemIdByPocketPosition\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08178618\n\t"
-        "_0817860A:\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r6]\n\t"
-        "	b _08178632\n\t"
-        "	.align 2, 0\n\t"
-        "_08178614: .4byte gUnknown_203CB3C\n\t"
-        "_08178618:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	b _0817862E\n\t"
-        "_0817861C:\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	cmp r1, #3\n\t"
-        "	bhi _08178628\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817862E\n\t"
-        "_08178628:\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	strh r0, [r6]\n\t"
-        "	b _08178632\n\t"
-        "_0817862E:\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	strh r0, [r5]\n\t"
-        "_08178632:\n\t"
-        "	ldrh r1, [r6]\n\t"
-        "	ldrh r5, [r5]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	movs r0, #4\n\t"
-        "	bl BagGetItemIdByPocketPosition\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	bl ItemIdToBerryType\n\t"
-        "	ldr r1, _08178660\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178660: .4byte gUnknown_203B9C0\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 *scrollPos = &gBagPosition.scrollPosition[BERRIES_POCKET];
+    u16 *cursorPos = &gBagPosition.cursorPosition[BERRIES_POCKET];
+    if (toMove > 0)
+    {
+        if (*cursorPos < 4 || BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + 8) == 0)
+            *cursorPos += toMove;
+        else
+            *scrollPos += toMove;
+    }
+    else
+    {
+        if (*cursorPos > 3 || *scrollPos == 0)
+            *cursorPos += toMove;
+        else
+            *scrollPos += toMove;
+    }
+
+    sBerryTag->berryId = ItemIdToBerryType(BagGetItemIdByPocketPosition(POCKET_BERRIES, *scrollPos + *cursorPos));
 }
 
-__attribute__((naked)) void Task_DisplayAnotherBerry(void)
+__attribute__((naked)) void Task_DisplayAnotherBerry(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
