@@ -6393,9 +6393,23 @@ sEndTurnFuncsTable: @ 0x82EC638
 	.4byte HandleEndTurn_FinishBattle @ B_OUTCOME_FORFEITED
 	.4byte HandleEndTurn_FinishBattle @ B_OUTCOME_MON_TELEPORTED
 
-	.globl gUnknown_82EC664
-gUnknown_82EC664: @ 0x82EC664
-	.incbin "baserom_jp.gba", 0x2ec664, 0xf
+	.globl sPkblToEscapeFactor
+sPkblToEscapeFactor: @ 0x82EC664
+	.byte 0 @ pokeblock grade 0, B_MSG_MON_CURIOUS
+	.byte 0 @ pokeblock grade 0, B_MSG_MON_ENTHRALLED
+	.byte 0 @ pokeblock grade 0, B_MSG_MON_IGNORED
+	.byte 3 @ pokeblock grade 1, B_MSG_MON_CURIOUS
+	.byte 5 @ pokeblock grade 1, B_MSG_MON_ENTHRALLED
+	.byte 0 @ pokeblock grade 1, B_MSG_MON_IGNORED
+	.byte 2 @ pokeblock grade 2, B_MSG_MON_CURIOUS
+	.byte 3 @ pokeblock grade 2, B_MSG_MON_ENTHRALLED
+	.byte 0 @ pokeblock grade 2, B_MSG_MON_IGNORED
+	.byte 1 @ pokeblock grade 3, B_MSG_MON_CURIOUS
+	.byte 2 @ pokeblock grade 3, B_MSG_MON_ENTHRALLED
+	.byte 0 @ pokeblock grade 3, B_MSG_MON_IGNORED
+	.byte 1 @ pokeblock grade 4, B_MSG_MON_CURIOUS
+	.byte 1 @ pokeblock grade 4, B_MSG_MON_ENTHRALLED
+	.byte 0 @ pokeblock grade 4, B_MSG_MON_IGNORED
 
 	.globl gUnknown_82EC673
 gUnknown_82EC673: @ 0x82EC673

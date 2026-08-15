@@ -942,7 +942,6 @@ gBattlescriptsForBallThrow = gUnknown_828A290;
 gBattlescriptsForUsingItem = gUnknown_828A2C4;
 gBattlescriptsForRunningByItem = gUnknown_828A2DC;
 gBattlescriptsForSafariActions = gUnknown_828A2E0;
-sPkblToEscapeFactor = gUnknown_82EC664;
 sGoNearCounterToCatchFactor = gUnknown_82EC673;
 sGoNearCounterToEscapeFactor = gUnknown_82EC677;
 GetItemHoldEffect = sub_080D6CF8;
