@@ -9174,9 +9174,26 @@ sContestWinnerPicDummy: @ 0x830FC68
 gUnknown_830FC88: @ 0x830FC88
 	.incbin "baserom_jp.gba", 0x30fc88, 0x28
 
-	.globl gUnknown_830FCB0
-gUnknown_830FCB0: @ 0x830FCB0
-	.incbin "baserom_jp.gba", 0x30FCB0, 0x48
+	.globl gDirectionToVectors
+gDirectionToVectors: @ 0x830FCB0
+	.4byte 0 @ DIR_NONE.x
+	.4byte 0 @ DIR_NONE.y
+	.4byte 0 @ DIR_SOUTH.x
+	.4byte 1 @ DIR_SOUTH.y
+	.4byte 0 @ DIR_NORTH.x
+	.4byte -1 @ DIR_NORTH.y
+	.4byte -1 @ DIR_WEST.x
+	.4byte 0 @ DIR_WEST.y
+	.4byte 1 @ DIR_EAST.x
+	.4byte 0 @ DIR_EAST.y
+	.4byte -1 @ DIR_SOUTHWEST.x
+	.4byte 1 @ DIR_SOUTHWEST.y
+	.4byte 1 @ DIR_SOUTHEAST.x
+	.4byte 1 @ DIR_SOUTHEAST.y
+	.4byte -1 @ DIR_NORTHWEST.x
+	.4byte -1 @ DIR_NORTHWEST.y
+	.4byte 1 @ DIR_NORTHEAST.x
+	.4byte -1 @ DIR_NORTHEAST.y
 	.globl gUnknown_830FCF8
 gUnknown_830FCF8: @ 0x830FCF8
 	.incbin "baserom_jp.gba", 0x30fcf8, 0x10

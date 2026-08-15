@@ -534,7 +534,6 @@ gMonFrontAnimsPtrTable = gUnknown_82DD33C;
 gAffineAnims_BattleSpriteOpponentSide = gUnknown_82D2F24;
 gAffineAnims_BattleSpritePlayerSide = gUnknown_82D2EA8;
 IsLargeBreakableDecoration = sub_080FB654;
-gDirectionToVectors = gUnknown_830FCB0;
 GenerateTrainerHillFloorLayout = sub_081D590C;
 IncrementDailyWildBattles = sub_080EF7CC;
 sub_080B0124 = DoBattlePyramidTrainerHillBattle;
