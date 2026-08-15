@@ -28,4 +28,8 @@ gUnknown_85CA2CC: @ 0x85CA2CC
 	.string "いまは　こうかん　できません$　いまは　そのポケモンを　\n"
 	.string "あいては　うけとることが　できません$その　あいてとは　いまは　\n"
 	.string "こうかん　できません$　　　あいての　ほしがっている　タイプの\n"
-	.string "ポケモンでは　ありません$　それは　タマゴでは　ありません$とうろくする$"
+	.string "ポケモンでは　ありません$　それは　タマゴでは　ありません$"
+
+	.globl gText_Register
+gText_Register: @ 0x85CA368
+	.string "とうろくする$"

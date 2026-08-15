@@ -361,7 +361,7 @@ static bool32 HasAtLeastTwoMonsOfLevel30OrLower(void);
 static void StartScriptInteraction(void);
 static u8 GetActivePartnersInfo(struct WirelessLink_URoom *data);
 static void TradeBoardPrintItemInfo(u8 windowId, u8 y, struct RfuGameData *gameData, const u8 *playerName, u8 colorIdx);
-static void TradeBoardListMenuItemPrintFunc(u8 windowId, u32 itemId, u8 y);
+static void TradeBoardListMenuItemPrintFunc_internal(u8 windowId, u32 itemId, u8 y);
 static bool32 IsPlayerFacingTradingBoard(void);
 static void ReceiveUnionRoomActivityPacket(struct WirelessLink_URoom *data);
 static bool32 HandleContactFromOtherPlayer(struct WirelessLink_URoom *uroom);
@@ -377,7 +377,7 @@ bool32 UR_PrintFieldMessage(const u8 *str);
 static bool32 PollPartnerYesNoResponse(struct WirelessLink_URoom *uroom);
 extern u8 LeaderUpdateGroupMembership(struct RfuPlayerList *playerList);
 static void PrintGroupCandidateOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
-static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y);
+static void ItemPrintFunc_EmptyList_internal(u8 windowId, u32 itemId, u8 y);
 static void PrintGroupMemberOnWindow(u8 windowId, u8 fontId, u8 y, struct RfuPlayer *player, u8 colorIdx, u8 id);
 static u32 GetNewIncomingPlayerId(struct RfuPlayer *player, struct RfuIncomingPlayer *incomingPlayers);
 static u8 TryAddIncomingPlayerToList(struct RfuPlayer *players, struct RfuIncomingPlayer *incomingPlayer, u8 maxPlayers);
@@ -992,7 +992,7 @@ bool8 Leader_SetStateIfMemberListChanged(struct WirelessLink_Leader *data, u32 j
     return FALSE;
 }
 
-static void ItemPrintFunc_PossibleGroupMembers(u8 windowId, u32 id, u8 y)
+static void ItemPrintFunc_PossibleGroupMembers_internal(u8 windowId, u32 id, u8 y)
 {
     struct WirelessLink_Leader *data = sWirelessLinkMain.leader;
     u8 colorIdx = UR_COLOR_DEFAULT;
@@ -1517,7 +1517,7 @@ u8 GetGroupListTextColor(struct WirelessLink_Group *data, u32 id)
     return UR_COLOR_DEFAULT;
 }
 
-static void ListMenuItemPrintFunc_UnionRoomGroups(u8 windowId, u32 id, u8 y)
+static void ListMenuItemPrintFunc_UnionRoomGroups_internal(u8 windowId, u32 id, u8 y)
 {
     struct WirelessLink_Group *data = sWirelessLinkMain.group;
     u8 colorId = GetGroupListTextColor(data, id);
@@ -4216,7 +4216,7 @@ static void GetURoomActivityStartMsg(u8 *dst, u8 acitivty)
     }
 }
 
-static void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y)
+static void ItemPrintFunc_EmptyList_internal(u8 windowId, u32 itemId, u8 y)
 {
 }
 
@@ -4443,7 +4443,7 @@ static void TradeBoardPrintItemInfo(u8 windowId, u8 y, struct RfuGameData *gameD
     }
 }
 
-static void TradeBoardListMenuItemPrintFunc(u8 windowId, u32 itemId, u8 y)
+static void TradeBoardListMenuItemPrintFunc_internal(u8 windowId, u32 itemId, u8 y)
 {
     struct WirelessLink_Leader *leader = sWirelessLinkMain.leader;
     struct RfuGameData *gameData;
@@ -4616,3 +4616,11 @@ static s32 TradeBoardMenuHandler(u8 *state, u8 *mainWindowId, u8 *listMenuId, u8
 
     return LIST_NOTHING_CHOSEN;
 }
+
+// Global aliases so the union-room data files (union_room8m) can reference
+// these item-print callbacks across translation units without changing the
+// static functions' code (byte-identical to the original ROM).
+void ItemPrintFunc_PossibleGroupMembers(u8 windowId, u32 id, u8 y) __attribute__((alias("ItemPrintFunc_PossibleGroupMembers_internal")));
+void ListMenuItemPrintFunc_UnionRoomGroups(u8 windowId, u32 id, u8 y) __attribute__((alias("ListMenuItemPrintFunc_UnionRoomGroups_internal")));
+void ItemPrintFunc_EmptyList(u8 windowId, u32 itemId, u8 y) __attribute__((alias("ItemPrintFunc_EmptyList_internal")));
+void TradeBoardListMenuItemPrintFunc(u8 windowId, u32 itemId, u8 y) __attribute__((alias("TradeBoardListMenuItemPrintFunc_internal")));
