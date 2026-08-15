@@ -45,7 +45,7 @@ void Task_CloseBerryTagScreen(u8 taskId);
 void Task_DisplayAnotherBerry(u8 taskId);
 void HandleBagCursorPositionChange(s8 toMove);
 void TryChangeDisplayedBerry(u8 taskId, s8 toMove);
-extern const u8 gJPText_085C97BD[];
+extern const u8 gUnknown_85C97BD[];
 
 void DoBerryTagScreen(void)
 {
@@ -308,7 +308,7 @@ __attribute__((naked)) void AddBerryTagTextToBg0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08177D68: .4byte gJPText_085CD068\n\t"
+        "_08177D68: .4byte gUnknown_85CD068\n\t"
         "_08177D6C: .4byte gUnknown_203B9C0\n\t"
         ".syntax divided\n\t"
     );
@@ -395,8 +395,8 @@ __attribute__((naked)) void PrintMysteryMenuText(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08177F2C: .4byte gJPText_085CD0A0\n\t"
-        "_08177F30: .4byte gJPText_085CD078\n\t"
+        "_08177F2C: .4byte gUnknown_85CD0A0\n\t"
+        "_08177F30: .4byte gUnknown_85CD078\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -436,7 +436,7 @@ __attribute__((naked)) void PrintTextInBerryTagScreen(u8 windowId, const u8 *tex
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08177F74: .4byte gJPText_085CD098\n\t"
+        "_08177F74: .4byte gUnknown_85CD098\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -478,7 +478,7 @@ __attribute__((naked)) void PrintBerrySize(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08177FC4: .4byte gUnknown_203B9C0\n\t"
-        "_08177FC8: .4byte gJPText_085C97BD\n\t"
+        "_08177FC8: .4byte gUnknown_85C97BD\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -545,7 +545,7 @@ __attribute__((naked)) void PrintBerryNumberAndName(void)
         "_0817803C: .4byte gStringVar1\n\t"
         "_08178040: .4byte gStringVar2\n\t"
         "_08178044: .4byte gStringVar4\n\t"
-        "_08178048: .4byte gJPText_085C97B5\n\t"
+        "_08178048: .4byte gUnknown_85C97B5\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -614,11 +614,11 @@ __attribute__((naked)) void sub_0817804C(void)
         "	b _081780FA\n\t"
         "	.align 2, 0\n\t"
         "_081780D0: .4byte gUnknown_203B9C0\n\t"
-        "_081780D4: .4byte gJPText_085C977D\n\t"
+        "_081780D4: .4byte gUnknown_85C977D\n\t"
         "_081780D8: .4byte gStringVar1\n\t"
         "_081780DC: .4byte gStringVar2\n\t"
         "_081780E0: .4byte gStringVar4\n\t"
-        "_081780E4: .4byte gJPText_085C9786\n\t"
+        "_081780E4: .4byte gUnknown_85C9786\n\t"
         "_081780E8:\n\t"
         "	ldr r2, _08178104\n\t"
         "	str r7, [sp]\n\t"
@@ -634,7 +634,7 @@ __attribute__((naked)) void sub_0817804C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08178104: .4byte gJPText_085C93F5\n\t"
+        "_08178104: .4byte gUnknown_85C93F5\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -683,8 +683,8 @@ __attribute__((naked)) void PrintBerryFirmness(void)
         "	b _0817817A\n\t"
         "	.align 2, 0\n\t"
         "_0817815C: .4byte gUnknown_203B9C0\n\t"
-        "_08178160: .4byte gJPText_085C9782\n\t"
-        "_08178164: .4byte gJPText_085CD0C8\n\t"
+        "_08178160: .4byte gUnknown_85C9782\n\t"
+        "_08178164: .4byte gUnknown_85CD0C8\n\t"
         "_08178168:\n\t"
         "	ldr r2, _08178184\n\t"
         "	str r5, [sp]\n\t"
@@ -700,7 +700,7 @@ __attribute__((naked)) void PrintBerryFirmness(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08178184: .4byte gJPText_085C93F5\n\t"
+        "_08178184: .4byte gUnknown_85C93F5\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1235,8 +1235,8 @@ __attribute__((naked)) void CB2_InitMysteryEventMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081788E4: .4byte sub_081787FC + 1\n\t"
-        "_081788E8: .4byte gJPText_085CD204\n\t"
-        "_081788EC: .4byte gJPText_085CD208\n\t"
+        "_081788E8: .4byte gUnknown_85CD204\n\t"
+        "_081788EC: .4byte gUnknown_85CD208\n\t"
         "_081788F0: .4byte Task_DestroySelf + 1\n\t"
         "_081788F4: .4byte CB2_MysteryEventMenu + 1\n\t"
         ".syntax divided\n\t"
@@ -1272,8 +1272,8 @@ __attribute__((naked)) void GetEventLoadMessage(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08178928: .4byte gJPText_085CD159\n\t"
-        "_0817892C: .4byte gJPText_085CD19F\n\t"
+        "_08178928: .4byte gUnknown_85CD159\n\t"
+        "_0817892C: .4byte gUnknown_85CD19F\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1363,7 +1363,7 @@ __attribute__((naked)) void CB2_MysteryEventMenu(void)
         "	b _08178CF4\n\t"
         "	.align 2, 0\n\t"
         "_081789F4: .4byte gPaletteFade\n\t"
-        "_081789F8: .4byte gJPText_085CD0DC\n\t"
+        "_081789F8: .4byte gUnknown_85CD0DC\n\t"
         "_081789FC: .4byte gMain\n\t"
         "_08178A00:\n\t"
         "	movs r0, #0\n\t"
@@ -1424,7 +1424,7 @@ __attribute__((naked)) void CB2_MysteryEventMenu(void)
         "	b _08178BB8\n\t"
         "	.align 2, 0\n\t"
         "_08178A78: .4byte gLinkStatus\n\t"
-        "_08178A7C: .4byte gJPText_085CD0FE\n\t"
+        "_08178A7C: .4byte gUnknown_85CD0FE\n\t"
         "_08178A80: .4byte gMain\n\t"
         "_08178A84:\n\t"
         "	movs r0, #0\n\t"
@@ -1473,7 +1473,7 @@ __attribute__((naked)) void CB2_MysteryEventMenu(void)
         "	b _08178CF4\n\t"
         "	.align 2, 0\n\t"
         "_08178AE8: .4byte gMain\n\t"
-        "_08178AEC: .4byte gJPText_085CD123\n\t"
+        "_08178AEC: .4byte gUnknown_85CD123\n\t"
         "_08178AF0:\n\t"
         "	adds r0, r2, #0\n\t"
         "	ands r0, r1\n\t"
@@ -1541,7 +1541,7 @@ __attribute__((naked)) void CB2_MysteryEventMenu(void)
         "	bl sub_08178D7C\n\t"
         "	b _08178CEC\n\t"
         "	.align 2, 0\n\t"
-        "_08178B80: .4byte gJPText_085CD133\n\t"
+        "_08178B80: .4byte gUnknown_85CD133\n\t"
         "_08178B84:\n\t"
         "	bl CloseLink\n\t"
         "_08178B88:\n\t"
