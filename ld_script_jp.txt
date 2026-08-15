@@ -10490,7 +10490,7 @@ SECTIONS {
         src/battle_tent.o(.text);
         src/braille.o(.text.FontFunc_Braille);
         src/braille.o(.text.DecompressGlyph_Braille);
-        asm/multiboot_init.o(.text);
+        src/multiboot.o(.text.MultiBootInit);
         src/multiboot.o(.text);
         src/berry_fix_program.o(.text.LoadBerryFixGraphics);
         asm/battle_controller_player_partner.o(.text);

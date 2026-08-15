@@ -12,7 +12,41 @@ static void MultiBootWaitSendDone(void);
 
 // JP's MultiBootInit lives at 0x081BA36C (mislabeled GetGlyphWidthFont6 in
 // unk_text_util_2.s); the ld_script aliases MultiBootInit to it.
-void MultiBootInit(struct MultiBootParam *mp);
+
+__attribute__((naked)) void MultiBootInit(struct MultiBootParam *mp)
+{
+    __asm__(".syntax unified\n\t"
+        ".code 16\n\t"
+        "	adds r2, r0, #0\n\t"
+        "	movs r1, #0\n\t"
+        "	strb r1, [r2, #0x1e]\n\t"
+        "	strb r1, [r2, #0x18]\n\t"
+        "	strb r1, [r2, #0x1d]\n\t"
+        "	adds r3, r2, #0\n\t"
+        "	adds r3, #0x4a\n\t"
+        "	movs r0, #0xf\n\t"
+        "	strb r0, [r3]\n\t"
+        "	adds r0, r2, #0\n\t"
+        "	adds r0, #0x48\n\t"
+        "	strb r1, [r0]\n\t"
+        "	strh r1, [r2, #0x16]\n\t"
+        "	ldr r0, _081BA398\n\t"
+        "	strh r1, [r0]\n\t"
+        "	ldr r2, _081BA39C\n\t"
+        "	ldr r3, _081BA3A0\n\t"
+        "	adds r0, r3, #0\n\t"
+        "	strh r0, [r2]\n\t"
+        "	ldr r0, _081BA3A4\n\t"
+        "	strh r1, [r0]\n\t"
+        "	bx lr\n\t"
+        "	.align 2, 0\n\t"
+        "_081BA398: .4byte 0x04000134\n\t"
+        "_081BA39C: .4byte 0x04000128\n\t"
+        "_081BA3A0: .4byte 0x00002003\n\t"
+        "_081BA3A4: .4byte 0x0400012A\n\t"
+        ".syntax divided\n\t"
+    );
+}
 
 int MultiBootMain(struct MultiBootParam *mp)
 {
