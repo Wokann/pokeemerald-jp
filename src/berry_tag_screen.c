@@ -837,55 +837,18 @@ void Task_CloseBerryTagScreen(u8 taskId)
     }
 }
 
-__attribute__((naked)) void Task_HandleInput(void)
+void Task_HandleInput(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldr r0, _08178538\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0817855E\n\t"
-        "	ldr r3, _0817853C\n\t"
-        "	ldrh r0, [r3, #0x30]\n\t"
-        "	movs r1, #0xf0\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0x40\n\t"
-        "	bne _08178540\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl TryChangeDisplayedBerry\n\t"
-        "	b _0817855E\n\t"
-        "	.align 2, 0\n\t"
-        "_08178538: .4byte gPaletteFade\n\t"
-        "_0817853C: .4byte gMain\n\t"
-        "_08178540:\n\t"
-        "	cmp r1, #0x80\n\t"
-        "	bne _0817854E\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl TryChangeDisplayedBerry\n\t"
-        "	b _0817855E\n\t"
-        "_0817854E:\n\t"
-        "	ldrh r1, [r3, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0817855E\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl PrepareToCloseBerryTagScreen\n\t"
-        "_0817855E:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        u16 arrowKeys = JOY_REPEAT(DPAD_ANY);
+        if (arrowKeys == DPAD_UP)
+            TryChangeDisplayedBerry(taskId, -1);
+        else if (arrowKeys == DPAD_DOWN)
+            TryChangeDisplayedBerry(taskId, 1);
+        else if (JOY_NEW(A_BUTTON | B_BUTTON))
+            PrepareToCloseBerryTagScreen(taskId);
+    }
 }
 
 __attribute__((naked)) void TryChangeDisplayedBerry(void)
