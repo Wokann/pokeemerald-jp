@@ -112,6 +112,34 @@ SYMBOLS5 = [
 
 END_ADDR5 = 0x082C0CE4  # sHiDoSomethingTexts area (next region)
 
+# Sixth batch: hi/do-something/contacted/awaiting texts and tables.
+SYMBOLS6 = [
+    ("sText_HiDoSomethingMale", 0x082C0CE4, "text", None),
+    ("sText_HiDoSomethingFemale", 0x082C0CF4, "text", None),
+    ("sText_HiDoSomethingAgainMale", 0x082C0D04, "text", None),
+    ("sText_HiDoSomethingAgainFemale", 0x082C0D20, "text", None),
+    ("sHiDoSomethingTexts", 0x082C0D3C, "table",
+        ["sText_HiDoSomethingMale", "sText_HiDoSomethingFemale",
+         "sText_HiDoSomethingAgainMale", "sText_HiDoSomethingAgainFemale"]),
+    ("sText_DoSomethingMale", 0x082C0D4C, "text", None),
+    ("sText_DoSomethingFemale", 0x082C0D58, "text", None),
+    ("sText_DoSomethingAgainMale", 0x082C0D60, "text", None),
+    ("sText_DoSomethingAgainFemale", 0x082C0D70, "text", None),
+    ("sDoSomethingTexts", 0x082C0D80, "table",
+        ["sText_DoSomethingMale", "sText_DoSomethingFemale",
+         "sText_DoSomethingAgainMale", "sText_DoSomethingAgainMale"]),
+    ("sText_SomebodyHasContactedYou", 0x082C0D90, "text", None),
+    ("sText_PlayerHasContactedYou", 0x082C0DA4, "text", None),
+    ("sPlayerContactedYouTexts", 0x082C0DB8, "table",
+        ["sText_SomebodyHasContactedYou", "sText_PlayerHasContactedYou"]),
+    ("sText_AwaitingResponseFromTrainer", 0x082C0DC0, "text", None),
+    ("sText_AwaitingResponseFromPlayer", 0x082C0DD4, "text", None),
+    ("sAwaitingResponseTexts", 0x082C0DE4, "table",
+        ["sText_AwaitingResponseFromTrainer", "sText_AwaitingResponseFromPlayer"]),
+]
+
+END_ADDR6 = 0x082C0DEC  # sText_ShowTrainerCard (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -311,6 +339,8 @@ def main():
           "// Wireless link texts and the link-dropped table")
     build(SYMBOLS5, END_ADDR5, "src/data/union_room5.h", "src/data/union_room5.c",
           "// Trade-request and communicating texts")
+    build(SYMBOLS6, END_ADDR6, "src/data/union_room6.h", "src/data/union_room6.c",
+          "// Hi/do-something and contacted/awaiting texts")
 
 
 if __name__ == "__main__":

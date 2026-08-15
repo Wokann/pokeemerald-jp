@@ -11,23 +11,6 @@
 
 
 
-	.globl gUnknown_82C0CE4
-gUnknown_82C0CE4: @ 0x82C0CE4
-	.incbin "baserom_jp.gba", 0x2c0ce4, 0x58
-
-	.globl sHiDoSomethingTexts
-sHiDoSomethingTexts: @ 0x82C0D3C
-	.incbin "baserom_jp.gba", 0x2c0d3c, 0x7c
-
-	.globl sPlayerContactedYouTexts
-sPlayerContactedYouTexts: @ 0x82C0DB8
-	.string "ゾすわく3すわくあいての　へんじを\n"
-	.string "まっています$　　　{B_COPY_VAR_1}の　へんじを\n"
-	.string "まっています$"
-	.globl sAwaitingResponseTexts
-sAwaitingResponseTexts: @ 0x82C0DE4
-	.incbin "baserom_jp.gba", 0x2c0de4, 0x8
-
 	.globl sText_ShowTrainerCard
 sText_ShowTrainerCard: @ 0x82C0DEC
 	.string "あいてが　トレーナーカードを\n"
