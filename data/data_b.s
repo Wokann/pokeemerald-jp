@@ -6183,9 +6183,49 @@ sStatusFlagsForMoveEffects: @ 0x82ECAB8
 	.4byte 0x00000000
 	.4byte 0x00000000
 
-	.globl gUnknown_82ECBA8
-gUnknown_82ECBA8: @ 0x82ECBA8
-	.incbin "baserom_jp.gba", 0x2ecba8, 0xa4
+	.globl sMoveEffectBS_Ptrs
+sMoveEffectBS_Ptrs: @ 0x82ECBA8
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectPoison  @ BattleScript_MoveEffectPoison
+	.4byte BattleScript_MoveEffectBurn  @ BattleScript_MoveEffectBurn
+	.4byte BattleScript_MoveEffectFreeze  @ BattleScript_MoveEffectFreeze
+	.4byte BattleScript_MoveEffectParalysis  @ BattleScript_MoveEffectParalysis
+	.4byte BattleScript_MoveEffectToxic  @ BattleScript_MoveEffectToxic
+	.4byte BattleScript_MoveEffectConfusion  @ BattleScript_MoveEffectConfusion
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectUproar  @ BattleScript_MoveEffectUproar
+	.4byte BattleScript_MoveEffectPayDay  @ BattleScript_MoveEffectPayDay
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectWrap  @ BattleScript_MoveEffectWrap
+	.4byte BattleScript_MoveEffectRecoil  @ BattleScript_MoveEffectRecoil
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectSleep  @ BattleScript_MoveEffectSleep
+	.4byte BattleScript_MoveEffectRecoil  @ BattleScript_MoveEffectRecoil
+	.4byte 0x07030100
+	.4byte 0x003F1F0F
 
 	.globl gUnknown_82ECC4C
 gUnknown_82ECC4C: @ 0x82ECC4C
