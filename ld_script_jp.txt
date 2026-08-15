@@ -1435,7 +1435,6 @@ sSpriteTemplate_JumpMon = gUnknown_82CF6CC;
 sSpriteTemplate_Star = gUnknown_82CF898;
 sSpriteTemplates_Vine = gUnknown_82CF744;
 gMonStillFrontPicTable = gUnknown_82D4CA8;
-sSoundEffects = gUnknown_82CEEE0;
 sScoreBonuses = gUnknown_82CEF78;
 sPrizeQuantityData = gUnknown_82CEFA0;
 sPokeJumpLeaderFuncs = gUnknown_82CEE80;

@@ -6,6 +6,7 @@
 	.include "constants/battle_string_ids.inc"
 	.include "constants/species.inc"
 	.include "constants/moves.inc"
+	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
 	.globl sTextColors
@@ -3463,9 +3464,12 @@ sVineBaseSpeeds: @ 0x82CEEC8
 sVineSpeedDelays: @ 0x82CEED8
 	.2byte 0, 1, 1, 2
 
-	.globl gUnknown_82CEEE0
-gUnknown_82CEEE0: @ 0x82CEEE0
-	.incbin "baserom_jp.gba", 0x2ceee0, 0x8
+	.globl sSoundEffects
+sSoundEffects: @ 0x82CEEE0
+	.hword SE_SHOP @ 0x005F
+	.hword SE_SHINY @ 0x0066
+	.hword SE_M_MORNING_SUN @ 0x00E4
+	.hword SE_RG_POKE_JUMP_SUCCESS @ 0x0105
 
 	.globl sJumpOffsets
 sJumpOffsets: @ 0x82CEEE8
