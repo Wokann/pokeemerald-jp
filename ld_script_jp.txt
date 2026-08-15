@@ -9519,10 +9519,10 @@ SECTIONS {
         src/battle_transition.o(.text.Phase2_32_Func4);
         src/battle_transition.o(.text.Phase2_32_Func5);
         src/battle_controller_link_partner.o(.text);
-        asm/battle_message.o(.text);
+        src/battle_message_tail.o(.text);
         src/battle_message.o(.text.ChooseMoveUsedParticle);
         src/battle_message.o(.text.ChooseTypeOfMoveUsedString);
-        asm/battle_message.o(.text.battle_message_tail);
+        src/battle_message_tail2.o(.text);
         src/cable_car.o(.text.Task_LoadCableCar);
         src/cable_car.o(.text.CableCar);
         src/cable_car.o(.text.CB2_LoadCableCar);
