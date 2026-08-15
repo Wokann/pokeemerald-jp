@@ -13,14 +13,6 @@
 
 
 
-	.globl gUnknown_82C19DC
-gUnknown_82C19DC: @ 0x82C19DC
-	.incbin "baserom_jp.gba", 0x2c19dc, 0x208
-
-	.globl sChooseTrainerTexts
-sChooseTrainerTexts: @ 0x82C1BE4
-	.incbin "baserom_jp.gba", 0x2c1be4, 0x58
-
 	.globl sText_SearchingForWirelessSystemWait
 sText_SearchingForWirelessSystemWait: @ 0x82C1C3C
 	.string "ジョイスポットを　さがしています\n"

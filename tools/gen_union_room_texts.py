@@ -291,6 +291,31 @@ SYMBOLS8F = [
 
 END_ADDR8F = 0x082C19DC  # sText_ChooseTrainerSingleBattle (next region)
 
+# Eighth batch part 7: ChooseTrainer sub-texts and their table.
+SYMBOLS8G = [
+    ("sText_ChooseTrainerSingleBattle", 0x082C19DC, "text", None),
+    ("sText_ChooseTrainerDoubleBattle", 0x082C19F8, "text", None),
+    ("sText_ChooseLeaderMultiBattle", 0x082C1A14, "text", None),
+    ("sText_ChooseTrainerToTradeWith", 0x082C1A2C, "text", None),
+    ("sText_ChooseTrainerToShareWonderCards", 0x082C1A4C, "text", None),
+    ("sText_ChooseTrainerToShareWonderNews", 0x082C1A6C, "text", None),
+    ("sText_ChooseLeaderPokemonJump", 0x082C1A8C, "text", None),
+    ("sText_ChooseLeaderBerryCrush", 0x082C1AA8, "text", None),
+    ("sText_ChooseLeaderBerryPicking", 0x082C1AC4, "text", None),
+    ("sText_ChooseLeaderBerryBlender", 0x082C1AE0, "text", None),
+    ("sText_ChooseLeaderRecordCorner", 0x082C1AFC, "text", None),
+    ("sText_ChooseLeaderCoolContest", 0x082C1B18, "text", None),
+    ("sText_ChooseLeaderBeautyContest", 0x082C1B34, "text", None),
+    ("sText_ChooseLeaderCuteContest", 0x082C1B50, "text", None),
+    ("sText_ChooseLeaderSmartContest", 0x082C1B6C, "text", None),
+    ("sText_ChooseLeaderToughContest", 0x082C1B88, "text", None),
+    ("sText_ChooseLeaderBattleTowerLv50", 0x082C1BA4, "text", None),
+    ("sText_ChooseLeaderBattleTowerOpenLv", 0x082C1BC4, "text", None),
+    ("sChooseTrainerTexts", 0x082C1BE4, "table_choose_trainer", None),
+]
+
+END_ADDR8G = 0x082C1C3C  # sText_SearchingForWirelessSystemWait (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -510,6 +535,38 @@ def emit_table_trade(name):
     return "\n".join(out)
 
 
+def emit_table_choose_trainer(name):
+    entries = [
+        "[LINK_GROUP_SINGLE_BATTLE] = sText_ChooseTrainerSingleBattle",
+        "[LINK_GROUP_DOUBLE_BATTLE] = sText_ChooseTrainerDoubleBattle",
+        "[LINK_GROUP_MULTI_BATTLE] = sText_ChooseLeaderMultiBattle",
+        "[LINK_GROUP_TRADE] = sText_ChooseTrainerToTradeWith",
+        "[LINK_GROUP_POKEMON_JUMP] = sText_ChooseLeaderPokemonJump",
+        "[LINK_GROUP_BERRY_CRUSH] = sText_ChooseLeaderBerryCrush",
+        "[LINK_GROUP_BERRY_PICKING] = sText_ChooseLeaderBerryPicking",
+        "[LINK_GROUP_WONDER_CARD] = sText_ChooseTrainerToShareWonderCards",
+        "[LINK_GROUP_WONDER_NEWS] = sText_ChooseTrainerToShareWonderNews",
+        "[LINK_GROUP_UNION_ROOM_RESUME] = NULL",
+        "[LINK_GROUP_UNION_ROOM_INIT] = NULL",
+        "[LINK_GROUP_UNK_11] = NULL",
+        "[LINK_GROUP_RECORD_CORNER] = sText_ChooseLeaderRecordCorner",
+        "[LINK_GROUP_BERRY_BLENDER] = sText_ChooseLeaderBerryBlender",
+        "[LINK_GROUP_UNK_14] = NULL",
+        "[LINK_GROUP_COOL_CONTEST] = sText_ChooseLeaderCoolContest",
+        "[LINK_GROUP_BEAUTY_CONTEST] = sText_ChooseLeaderBeautyContest",
+        "[LINK_GROUP_CUTE_CONTEST] = sText_ChooseLeaderCuteContest",
+        "[LINK_GROUP_SMART_CONTEST] = sText_ChooseLeaderSmartContest",
+        "[LINK_GROUP_TOUGH_CONTEST] = sText_ChooseLeaderToughContest",
+        "[LINK_GROUP_BATTLE_TOWER] = sText_ChooseLeaderBattleTowerLv50",
+        "[LINK_GROUP_BATTLE_TOWER_OPEN] = sText_ChooseLeaderBattleTowerOpenLv",
+    ]
+    out = [f"const u8 *const {name}[NUM_LINK_GROUP_TYPES] = {{"]
+    for e in entries:
+        out.append(f"    {e},")
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
@@ -517,6 +574,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
     out.append('#include "global.h"')
     if any(sym[2] in ("table_rfu", "table_link") for sym in symbols):
         out.append('#include "link_rfu.h"')
+    if any(sym[2] == "table_choose_trainer" for sym in symbols):
+        out.append('#include "constants/union_room.h"')
     out.append("")
     out.append(comment)
     for i, sym in enumerate(symbols):
@@ -556,6 +615,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table_2x2(name))
         elif kind == "table_trade":
             out.append(emit_table_trade(name))
+        elif kind == "table_choose_trainer":
+            out.append(emit_table_choose_trainer(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -599,6 +660,8 @@ def main():
           "// Trading-board texts")
     build(SYMBOLS8F, END_ADDR8F, "src/data/union_room8f.h", "src/data/union_room8f.c",
           "// Trade-requirement texts and ChooseTrainer")
+    build(SYMBOLS8G, END_ADDR8G, "src/data/union_room8g.h", "src/data/union_room8g.c",
+          "// ChooseTrainer sub-texts and table")
 
 
 if __name__ == "__main__":

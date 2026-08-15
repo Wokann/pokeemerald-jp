@@ -9219,6 +9219,7 @@ SECTIONS {
         src/data/union_room8d.o(.rodata);
         src/data/union_room8e.o(.rodata);
         src/data/union_room8f.o(.rodata);
+        src/data/union_room8g.o(.rodata);
         data/data_b_mid2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
