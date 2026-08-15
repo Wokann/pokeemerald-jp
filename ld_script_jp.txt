@@ -7616,7 +7616,7 @@ SECTIONS {
         src/contest.o(.text.sub_080DEC00);
         src/contest.o(.text.ContestDebugToggleBitfields);
         src/contest.o(.text.ContestDebugPrintBitStrings);
-        asm/shop.o(.text);
+        src/shop.o(.text);
         src/fldeff_escalator.o(.text);
         asm/berry.o(.text);
         src/script_menu.o(.text);
