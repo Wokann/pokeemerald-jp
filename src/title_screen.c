@@ -532,7 +532,7 @@ static void CB2_GoToBerryFixScreen(void)
     if (!UpdatePaletteFade())
     {
         m4aMPlayAllStop();
-        SetMainCallback2(CB2_InitBerryFixProgram);
+        SetMainCallback2(berry_fix_bg_hide);
     }
 }
 
