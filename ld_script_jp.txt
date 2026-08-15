@@ -6697,7 +6697,7 @@ SECTIONS {
         src/battle_setup.o(.text.HandleRematchVarsOnBattleEnd);
         src/battle_setup.o(.text.ShouldTryGetTrainerScript);
         src/battle_setup.o(.text.CountBattledRematchTeams);
-        asm/cable_club.o(.text);
+        src/cable_club.o(.text);
         src/trainer_see.o(.text.CheckForTrainersWantingBattle);
         src/trainer_see.o(.text.CheckTrainer);
         src/trainer_see.o(.text.GetTrainerApproachDistance);
