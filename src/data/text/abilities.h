@@ -81,7 +81,7 @@ const u8 gAbilityNames[ABILITIES_COUNT][8] = {
 
 // JP stores ability descriptions inline in fixed 19-byte slots
 // (kana + 0x00 word spaces + 0xFF EOS + 0x00 padding).
-const u8 gAbilityDescriptionPointers[ABILITIES_COUNT][19] = {
+const u8 gAbilityDescriptions[ABILITIES_COUNT][19] = {
     [ABILITY_NONE] = _("とくせいなし"),
     [ABILITY_STENCH] = _("ポケモンが　よりつき　にくくなる"),
     [ABILITY_DRIZZLE] = _("せんとうに　でると　あめを　ふらす"),
