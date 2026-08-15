@@ -478,7 +478,6 @@ gWildMonHeaders = gUnknown_852D9F4;
 gSpeciesNames = gSpeciesNamesJP;
 sub_08196C74 = BufferPokedexRatingForMatchCall;
 sRoute119WaterTileData = gUnknown_852E728;
-sWildFeebas = gUnknown_852E724;
 DoGlobalWildEncounterDiceRoll = AllowWildCheckOnNewMetatile;
 DoWildEncounterRateTest = WildEncounterCheck;
 PokeblockGetGain = sub_08137054;

@@ -21799,9 +21799,10 @@ gBattlePikeWildMonHeaders: @ 0x852E6C0
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
 
-	.globl gUnknown_852E724
-gUnknown_852E724: @ 0x852E724
-	.incbin "baserom_jp.gba", 0x52e724, 0x4
+	.globl sWildFeebas
+sWildFeebas: @ 0x852E724
+	.byte 20, 25 @ minLevel, maxLevel
+	.hword SPECIES_FEEBAS @ 0x0148
 
 	.globl gUnknown_852E728
 gUnknown_852E728: @ 0x852E728
