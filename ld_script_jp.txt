@@ -968,7 +968,6 @@ sText_FemaleSymbol = sText_ConditionSearchMonMale + 0xA;
 sGenderlessIconString = sText_ConditionSearchMonFemale + 0x6;
 sBattlePalaceNatureToFlavorTextId = gUnknown_82ECE7C;
 gRefereeStringsTable = gUnknown_85AC04C;
-sProtectSuccessRates = gUnknown_82ECD5C;
 gDummySpriteAnimTable = gUnknown_82BF304;
 gDummySpriteAffineAnimTable = gUnknown_82BF304 + 0xC;
 Menu_LoadStdPal = sub_08197680;

@@ -6702,9 +6702,12 @@ gUnknown_82ECC6C: @ 0x82ECC6C
 gUnknown_82ECD44: @ 0x82ECD44
 	.incbin "baserom_jp.gba", 0x2ecd44, 0x18
 
-	.globl gUnknown_82ECD5C
-gUnknown_82ECD5C: @ 0x82ECD5C
-	.incbin "baserom_jp.gba", 0x2ecd5c, 0x8
+	.globl sProtectSuccessRates
+sProtectSuccessRates: @ 0x82ECD5C
+	.hword 0xFFFF @ protect use 0
+	.hword 0x7FFF @ protect use 1
+	.hword 0x3FFF @ protect use 2
+	.hword 0x1FFF @ protect use 3
 
 	.globl gUnknown_82ECD64
 gUnknown_82ECD64: @ 0x82ECD64
