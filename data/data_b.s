@@ -6049,9 +6049,16 @@ gUnusedBattleInitSprite: @ 0x82EBAE0 (JP: struct SpriteTemplate)
 gUnknown_82EBAEF8: @ 0x82EBAEF8
 	.incbin "baserom_jp.gba", 0x2ebaf8, 0x38
 
-	.globl gUnknown_82EBB30
-gUnknown_82EBB30: @ 0x82EBB30
-	.incbin "baserom_jp.gba", 0x2ebb30, 0x8
+	.globl sCenterToCornerVecXs
+sCenterToCornerVecXs: @ 0x82EBB30
+	.byte -32 @ sprite animCmdIndex 0
+	.byte -16 @ sprite animCmdIndex 1
+	.byte -16 @ sprite animCmdIndex 2
+	.byte -32 @ sprite animCmdIndex 3
+	.byte -32 @ sprite animCmdIndex 4
+	.byte 0 @ zero padding
+	.byte 0 @ zero padding
+	.byte 0 @ zero padding
 
 	.globl gTypeEffectiveness
 gTypeEffectiveness: @ 0x82EBB38
