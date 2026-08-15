@@ -33940,17 +33940,25 @@ sWinStreakMasks: @ 0x85D6924
 gUnknown_85D6934: @ 0x85D6934
 	.incbin "baserom_jp.gba", 0x5d6934, 0xb68
 
-	.globl gUnknown_85D749C
-gUnknown_85D749C: @ 0x85D749C
-	.incbin "baserom_jp.gba", 0x5d749c, 0xc
+	.globl sMatchCallBattleTopics
+sMatchCallBattleTopics: @ 0x85D749C
+	.4byte 0x085D6E34 @ sMatchCallWildBattleTexts
+	.4byte 0x085D6EAC @ sMatchCallNegativeBattleTexts
+	.4byte 0x085D6F1C @ sMatchCallPositiveBattleTexts
 
-	.globl gUnknown_85D74A8
-gUnknown_85D74A8: @ 0x85D74A8
-	.incbin "baserom_jp.gba", 0x5d74a8, 0x8
+	.globl sMatchCallBattleRequestTopics
+sMatchCallBattleRequestTopics: @ 0x85D74A8
+	.4byte 0x085D6F8C @ sMatchCallSameRouteBattleRequestTexts
+	.4byte 0x085D6FFC @ sMatchCallDifferentRouteBattleRequestTexts
 
-	.globl gUnknown_85D74B0
-gUnknown_85D74B0: @ 0x85D74B0
-	.incbin "baserom_jp.gba", 0x5d74b0, 0x18
+	.globl sMatchCallGeneralTopics
+sMatchCallGeneralTopics: @ 0x85D74B0
+	.4byte 0x085D706C @ sMatchCallPersonalizedTexts
+	.4byte 0x085D726C @ sMatchCallBattleFrontierStreakTexts
+	.4byte 0x085D72DC @ sMatchCallBattleFrontierRecordStreakTexts
+	.4byte 0x085D734C @ sMatchCallBattleDomeTexts
+	.4byte 0x085D73BC @ sMatchCallBattlePikeTexts
+	.4byte 0x085D742C @ sMatchCallBattlePyramidTexts
 
 	.globl gUnknown_85D74C8
 gUnknown_85D74C8: @ 0x85D74C8
