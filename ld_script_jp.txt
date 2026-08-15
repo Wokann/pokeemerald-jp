@@ -9224,6 +9224,8 @@ SECTIONS {
         data/data_b2d_mid2.o(.rodata);
         src/data/text/region_texts4.o(.rodata);
         data/data_b2d_mid3.o(.rodata);
+        src/data/text/region_texts6.o(.rodata);
+        data/data_b2d_mid5.o(.rodata);
         src/data/text/region_texts2.o(.rodata);
         data/data_b2d_mid.o(.rodata);
         src/data/text/region_texts5.o(.rodata);
