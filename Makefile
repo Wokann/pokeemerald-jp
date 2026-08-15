@@ -295,7 +295,7 @@ $(C_BUILDDIR)/link_rfu_2.o: src/link_rfu_2.c
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; \
 		printf '.text\n\t.align\t2, 0\n'; } | awk '/^\t\.size\t/{print; print "\t.align\t2, 0"; next} {print}' | $(AS) $(ASFLAGS) -o $@ -
 
-DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_tail.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_tail.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/data_b2d_mid2.o $(OBJ_DIR)/data/data_b2d_mid11.o $(OBJ_DIR)/data/data_b2d_mid6.o $(OBJ_DIR)/data/data_b2d_mid12.o $(OBJ_DIR)/data/data_b2d_mid9.o $(OBJ_DIR)/data/data_b2d_mid3.o $(OBJ_DIR)/data/data_b2d_mid5.o $(OBJ_DIR)/data/data_b2d_mid10.o $(OBJ_DIR)/data/data_b2d_mid.o $(OBJ_DIR)/data/data_b2d_mid13.o $(OBJ_DIR)/data/data_b2d_mid14.o $(OBJ_DIR)/data/data_b2d_mid4.o $(OBJ_DIR)/data/data_b2d_mid8.o $(OBJ_DIR)/data/data_b2d_mid7.o $(OBJ_DIR)/data/data_b2d_mid30.o $(OBJ_DIR)/data/data_b2d_mid27.o $(OBJ_DIR)/data/data_b2d_mid28.o $(OBJ_DIR)/data/data_b2d_mid29.o $(OBJ_DIR)/data/data_b2d_mid26.o $(OBJ_DIR)/data/data_b2d_mid15.o $(OBJ_DIR)/data/data_b2d_rest.o $(OBJ_DIR)/data/data_b2c.o $(OBJ_DIR)/data/data_rest.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
+DATA_OBJS := $(OBJ_DIR)/data/event_scripts.o $(OBJ_DIR)/data/data.o $(OBJ_DIR)/data/data_tail.o $(OBJ_DIR)/data/data_b.o $(OBJ_DIR)/data/data_b_tail.o $(OBJ_DIR)/data/data_b2.o $(OBJ_DIR)/data/data_b2b.o $(OBJ_DIR)/data/data_b2d.o $(OBJ_DIR)/data/data_b2d_mid2.o $(OBJ_DIR)/data/data_b2d_mid11.o $(OBJ_DIR)/data/data_b2d_mid6.o $(OBJ_DIR)/data/data_b2d_mid12.o $(OBJ_DIR)/data/data_b2d_mid9.o $(OBJ_DIR)/data/data_b2d_mid3.o $(OBJ_DIR)/data/data_b2d_mid5.o $(OBJ_DIR)/data/data_b2d_mid10.o $(OBJ_DIR)/data/data_b2d_mid.o $(OBJ_DIR)/data/data_b2d_mid13.o $(OBJ_DIR)/data/data_b2d_mid14.o $(OBJ_DIR)/data/data_b2d_mid4.o $(OBJ_DIR)/data/data_b2d_mid8.o $(OBJ_DIR)/data/data_b2d_mid7.o $(OBJ_DIR)/data/data_b2d_mid30.o $(OBJ_DIR)/data/data_b2d_mid27.o $(OBJ_DIR)/data/data_b2d_mid28.o $(OBJ_DIR)/data/data_b2d_mid29.o $(OBJ_DIR)/data/data_b2d_mid31.o $(OBJ_DIR)/data/data_b2d_mid26.o $(OBJ_DIR)/data/data_b2d_mid15.o $(OBJ_DIR)/data/data_b2d_rest.o $(OBJ_DIR)/data/data_b2c.o $(OBJ_DIR)/data/data_rest.o $(OBJ_DIR)/data/multiboot_ereader.o $(OBJ_DIR)/data/multiboot_berry_glitch_fix.o
 OBJFILE := $(AS_OBJS) $(C_OBJECTS) $(DATA_OBJS)
 OBJFILE_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJFILE))
 NAME := pokeemerald_jp
@@ -426,6 +426,10 @@ $(OBJ_DIR)/data/data_b2d_mid29.o: data/data_b2d_mid29.s baserom_jp.gba
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
 $(OBJ_DIR)/data/data_b2d_mid30.o: data/data_b2d_mid30.s baserom_jp.gba
+	@mkdir -p $(dir $@)
+	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
+
+$(OBJ_DIR)/data/data_b2d_mid31.o: data/data_b2d_mid31.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
 
