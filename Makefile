@@ -43,7 +43,7 @@ UNPORTED_SRCS := \
 	src/battle_tower.c \
 	src/berry.c src/cable_club.c \
 	src/field_specials.c src/field_weather.c \
-	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
+	src/frontier_util.c src/intro.c src/item.c \
 	src/menu.c \
 	src/pokemon.c \
 	src/record_mixing.c src/recorded_battle.c \

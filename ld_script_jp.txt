@@ -7373,7 +7373,7 @@ SECTIONS {
         src/fldeff_cut.o(.text);
         src/mail_data.o(.text);
         src/map_name_popup.o(.text);
-        asm/item_menu_icons.o(.text);
+        src/item_menu_icons.o(.text);
         src/battle_anim_mon_movement.o(.text.AnimTask_ShakeMon);
         src/battle_anim_mon_movement.o(.text.AnimTask_ShakeMon_Step);
         src/battle_anim_mon_movement.o(.text.AnimTask_ShakeMon2);
