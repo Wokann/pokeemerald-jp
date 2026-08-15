@@ -302,7 +302,7 @@ __attribute__((naked)) void m4aSongNumStart(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828E6DC: .4byte 0x0863C27C\n\t"
-        "_0828E6E0: .4byte 0x0863C2AC\n\t"
+        "_0828E6E0: .4byte gSongTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -333,7 +333,7 @@ __attribute__((naked)) void m4aSongNumStartOrChange(void)
         "	b _0828E72C\n\t"
         "	.align 2, 0\n\t"
         "_0828E710: .4byte 0x0863C27C\n\t"
-        "_0828E714: .4byte 0x0863C2AC\n\t"
+        "_0828E714: .4byte gSongTable\n\t"
         "_0828E718:\n\t"
         "	ldr r2, [r1, #4]\n\t"
         "	ldrh r0, [r1, #4]\n\t"
@@ -378,7 +378,7 @@ __attribute__((naked)) void m4aSongNumStartOrContinue(void)
         "	b _0828E780\n\t"
         "	.align 2, 0\n\t"
         "_0828E75C: .4byte 0x0863C27C\n\t"
-        "_0828E760: .4byte 0x0863C2AC\n\t"
+        "_0828E760: .4byte gSongTable\n\t"
         "_0828E764:\n\t"
         "	ldr r2, [r1, #4]\n\t"
         "	ldrh r0, [r1, #4]\n\t"
@@ -427,7 +427,7 @@ __attribute__((naked)) void m4aSongNumStop(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828E7B0: .4byte 0x0863C27C\n\t"
-        "_0828E7B4: .4byte 0x0863C2AC\n\t"
+        "_0828E7B4: .4byte gSongTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -459,7 +459,7 @@ __attribute__((naked)) void m4aSongNumContinue(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828E7E4: .4byte 0x0863C27C\n\t"
-        "_0828E7E8: .4byte 0x0863C2AC\n\t"
+        "_0828E7E8: .4byte gSongTable\n\t"
         ".syntax divided\n\t"
     );
 }
