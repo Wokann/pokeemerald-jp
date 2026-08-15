@@ -3784,13 +3784,36 @@ gUnknown_82D28D8: @ 0x82D28D8
 gUnknown_82D2900: @ 0x82D2900
 	.incbin "baserom_jp.gba", 0x2d2900, 0x10
 
-	.globl gUnknown_82D2910
-gUnknown_82D2910: @ 0x82D2910
-	.incbin "baserom_jp.gba", 0x2d2910, 0x8
-
-	.globl gUnknown_82D2918
-gUnknown_82D2918: @ 0x82D2918
-	.incbin "baserom_jp.gba", 0x2d2918, 0x18
+	.globl sNewGameBirchSpeechTextWindows
+sNewGameBirchSpeechTextWindows: @ 0x82D2910
+	.byte 0 @ [0] bg
+	.byte 4 @ [0] tilemapLeft
+	.byte 15 @ [0] tilemapTop
+	.byte 22 @ [0] width
+	.byte 4 @ [0] height
+	.byte 15 @ [0] paletteNum
+	.hword 0x0001 @ [0] baseBlock
+	.byte 0 @ [1] bg
+	.byte 3 @ [1] tilemapLeft
+	.byte 5 @ [1] tilemapTop
+	.byte 5 @ [1] width
+	.byte 4 @ [1] height
+	.byte 15 @ [1] paletteNum
+	.hword 0x0059 @ [1] baseBlock
+	.byte 0 @ [2] bg
+	.byte 3 @ [2] tilemapLeft
+	.byte 2 @ [2] tilemapTop
+	.byte 9 @ [2] width
+	.byte 10 @ [2] height
+	.byte 15 @ [2] paletteNum
+	.hword 0x006D @ [2] baseBlock
+	.byte 255 @ [3] bg
+	.byte 0 @ [3] tilemapLeft
+	.byte 0 @ [3] tilemapTop
+	.byte 0 @ [3] width
+	.byte 0 @ [3] height
+	.byte 0 @ [3] paletteNum
+	.hword 0x0000 @ [3] baseBlock
 
 	.globl gUnknown_82D2930
 gUnknown_82D2930: @ 0x82D2930
