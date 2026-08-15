@@ -3601,13 +3601,40 @@ gUnknown_82D0A14: @ 0x82D0A14
 gUnknown_82D14C4: @ 0x82D14C4
 	.incbin "baserom_jp.gba", 0x2d14c4, 0x52c
 
-	.globl gUnknown_82D19F0
-gUnknown_82D19F0: @ 0x82D19F0
-	.incbin "baserom_jp.gba", 0x2d19f0, 0x10
+	.globl sPokeJumpBgTemplates
+sPokeJumpBgTemplates: @ 0x82D19F0
+	.hword 0x01B0 @ bg=0 charBaseIndex=0 mapBaseIndex=27 screenSize=0 paletteMode=0 priority=0
+	.hword 0x0000 @ baseTile
+	.hword 0x25E6 @ bg=2 charBaseIndex=1 mapBaseIndex=30 screenSize=2 paletteMode=0 priority=2
+	.hword 0x0000 @ baseTile
+	.hword 0x16C9 @ bg=1 charBaseIndex=2 mapBaseIndex=12 screenSize=3 paletteMode=0 priority=1
+	.hword 0x0000 @ baseTile
+	.hword 0x31DF @ bg=3 charBaseIndex=3 mapBaseIndex=29 screenSize=0 paletteMode=0 priority=3
+	.hword 0x0000 @ baseTile
 
-	.globl gUnknown_82D1A00
-gUnknown_82D1A00: @ 0x82D1A00
-	.incbin "baserom_jp.gba", 0x2d1a00, 0x18
+	.globl sPokeJumpWindowTemplates
+sPokeJumpWindowTemplates: @ 0x82D1A00
+	.byte 0 @ [0] bg
+	.byte 19 @ [0] tilemapLeft
+	.byte 0 @ [0] tilemapTop
+	.byte 2 @ [0] width
+	.byte 2 @ [0] height
+	.byte 2 @ [0] paletteNum
+	.hword 0x0013 @ [0] baseBlock
+	.byte 0 @ [1] bg
+	.byte 8 @ [1] tilemapLeft
+	.byte 0 @ [1] tilemapTop
+	.byte 2 @ [1] width
+	.byte 2 @ [1] height
+	.byte 2 @ [1] paletteNum
+	.hword 0x0017 @ [1] baseBlock
+	.byte 255 @ [2] bg
+	.byte 0 @ [2] tilemapLeft
+	.byte 0 @ [2] tilemapTop
+	.byte 0 @ [2] width
+	.byte 0 @ [2] height
+	.byte 0 @ [2] paletteNum
+	.hword 0x0000 @ [2] baseBlock
 
 	.globl gUnknown_82D1A18
 gUnknown_82D1A18: @ 0x82D1A18
