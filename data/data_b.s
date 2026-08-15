@@ -34797,7 +34797,2266 @@ gSongTable: @ 0x0863C2AC
 	.2byte 0x0000, 0x0000  @ ms, pad
 	.globl gUnknown_863D424
 gUnknown_863D424: @ 0x0863D424
-	.incbin "baserom_jp.gba", 0x63D424, 0x27D144
+	.globl sSongHeader_270
+sSongHeader_270: @ 0x0863D424
+	.byte 0x00, 0x00, 0x00, 0x00  @ trackCount, blockCount, priority, reverb
+	.4byte 0x40000000  @ tone
+	.incbin "baserom_jp.gba", 0x63D42C, 0x22AFB4
+	.globl sSongHeader_0
+sSongHeader_0: @ 0x088683E0
+	.byte 0x00, 0x00, 0x00, 0xA8  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FD824  @ tone
+	.incbin "baserom_jp.gba", 0x8683E8, 0x18
+	.globl sSongHeader_1
+sSongHeader_1: @ 0x08868400
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088683E8  @ parts
+	.incbin "baserom_jp.gba", 0x86840C, 0x20
+	.globl sSongHeader_2
+sSongHeader_2: @ 0x0886842C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886840C  @ parts
+	.incbin "baserom_jp.gba", 0x868438, 0x18
+	.globl sSongHeader_3
+sSongHeader_3: @ 0x08868450
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868438  @ parts
+	.incbin "baserom_jp.gba", 0x86845C, 0x38
+	.globl sSongHeader_4
+sSongHeader_4: @ 0x08868494
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886845C  @ parts
+	.incbin "baserom_jp.gba", 0x8684A0, 0x20
+	.globl sSongHeader_5
+sSongHeader_5: @ 0x088684C0
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088684A0  @ parts
+	.incbin "baserom_jp.gba", 0x8684CC, 0x10
+	.globl sSongHeader_6
+sSongHeader_6: @ 0x088684DC
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088684CC  @ parts
+	.incbin "baserom_jp.gba", 0x8684E8, 0x10
+	.globl sSongHeader_7
+sSongHeader_7: @ 0x088684F8
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088684E8  @ parts
+	.incbin "baserom_jp.gba", 0x868504, 0x10
+	.globl sSongHeader_8
+sSongHeader_8: @ 0x08868514
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868504  @ parts
+	.incbin "baserom_jp.gba", 0x868520, 0x28
+	.globl sSongHeader_9
+sSongHeader_9: @ 0x08868548
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868520  @ parts
+	.incbin "baserom_jp.gba", 0x868554, 0x18
+	.globl sSongHeader_10
+sSongHeader_10: @ 0x0886856C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868554  @ parts
+	.incbin "baserom_jp.gba", 0x868578, 0x10
+	.globl sSongHeader_11
+sSongHeader_11: @ 0x08868588
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868578  @ parts
+	.incbin "baserom_jp.gba", 0x868594, 0x20
+	.globl sSongHeader_12
+sSongHeader_12: @ 0x088685B4
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868594, 0x088685A5  @ parts
+	.incbin "baserom_jp.gba", 0x8685C4, 0x3C
+	.globl sSongHeader_13
+sSongHeader_13: @ 0x08868600
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088685C4, 0x088685E6  @ parts
+	.incbin "baserom_jp.gba", 0x868610, 0x6C
+	.globl sSongHeader_14
+sSongHeader_14: @ 0x0886867C
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868610, 0x08868646  @ parts
+	.incbin "baserom_jp.gba", 0x86868C, 0x44
+	.globl sSongHeader_15
+sSongHeader_15: @ 0x088686D0
+	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886868C, 0x088686A4, 0x088686BB  @ parts
+	.incbin "baserom_jp.gba", 0x8686E4, 0x40
+	.globl sSongHeader_16
+sSongHeader_16: @ 0x08868724
+	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088686E4, 0x088686F7, 0x08868712  @ parts
+	.incbin "baserom_jp.gba", 0x868738, 0x3C
+	.globl sSongHeader_17
+sSongHeader_17: @ 0x08868774
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868738  @ parts
+	.incbin "baserom_jp.gba", 0x868780, 0x10
+	.globl sSongHeader_18
+sSongHeader_18: @ 0x08868790
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868780  @ parts
+	.incbin "baserom_jp.gba", 0x86879C, 0x48
+	.globl sSongHeader_19
+sSongHeader_19: @ 0x088687E4
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886879C  @ parts
+	.incbin "baserom_jp.gba", 0x8687F0, 0x3C
+	.globl sSongHeader_20
+sSongHeader_20: @ 0x0886882C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088687F0  @ parts
+	.incbin "baserom_jp.gba", 0x868838, 0x20
+	.globl sSongHeader_21
+sSongHeader_21: @ 0x08868858
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868838  @ parts
+	.incbin "baserom_jp.gba", 0x868864, 0x18
+	.globl sSongHeader_22
+sSongHeader_22: @ 0x0886887C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868864  @ parts
+	.incbin "baserom_jp.gba", 0x868888, 0x18
+	.globl sSongHeader_23
+sSongHeader_23: @ 0x088688A0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868888  @ parts
+	.incbin "baserom_jp.gba", 0x8688AC, 0x44
+	.globl sSongHeader_24
+sSongHeader_24: @ 0x088688F0
+	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088688AC, 0x088688C6, 0x088688DE  @ parts
+	.incbin "baserom_jp.gba", 0x868904, 0x14
+	.globl sSongHeader_25
+sSongHeader_25: @ 0x08868918
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868904  @ parts
+	.incbin "baserom_jp.gba", 0x868924, 0x14
+	.globl sSongHeader_26
+sSongHeader_26: @ 0x08868938
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868924  @ parts
+	.incbin "baserom_jp.gba", 0x868944, 0x14
+	.globl sSongHeader_27
+sSongHeader_27: @ 0x08868958
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868944  @ parts
+	.incbin "baserom_jp.gba", 0x868964, 0x14
+	.globl sSongHeader_28
+sSongHeader_28: @ 0x08868978
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868964  @ parts
+	.incbin "baserom_jp.gba", 0x868984, 0x14
+	.globl sSongHeader_29
+sSongHeader_29: @ 0x08868998
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868984  @ parts
+	.incbin "baserom_jp.gba", 0x8689A4, 0x14
+	.globl sSongHeader_30
+sSongHeader_30: @ 0x088689B8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088689A4  @ parts
+	.incbin "baserom_jp.gba", 0x8689C4, 0x14
+	.globl sSongHeader_31
+sSongHeader_31: @ 0x088689D8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088689C4  @ parts
+	.incbin "baserom_jp.gba", 0x8689E4, 0x24
+	.globl sSongHeader_32
+sSongHeader_32: @ 0x08868A08
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088689E4  @ parts
+	.incbin "baserom_jp.gba", 0x868A14, 0x88
+	.globl sSongHeader_33
+sSongHeader_33: @ 0x08868A9C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868A14  @ parts
+	.incbin "baserom_jp.gba", 0x868AA8, 0x18
+	.globl sSongHeader_34
+sSongHeader_34: @ 0x08868AC0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868AA8  @ parts
+	.incbin "baserom_jp.gba", 0x868ACC, 0x18
+	.globl sSongHeader_35
+sSongHeader_35: @ 0x08868AE4
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868ACC  @ parts
+	.incbin "baserom_jp.gba", 0x868AF0, 0x18
+	.globl sSongHeader_36
+sSongHeader_36: @ 0x08868B08
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868AF0  @ parts
+	.incbin "baserom_jp.gba", 0x868B14, 0x24
+	.globl sSongHeader_37
+sSongHeader_37: @ 0x08868B38
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868B14  @ parts
+	.incbin "baserom_jp.gba", 0x868B44, 0x18
+	.globl sSongHeader_38
+sSongHeader_38: @ 0x08868B5C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868B44  @ parts
+	.incbin "baserom_jp.gba", 0x868B68, 0x40
+	.globl sSongHeader_39
+sSongHeader_39: @ 0x08868BA8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868B68  @ parts
+	.incbin "baserom_jp.gba", 0x868BB4, 0x2C
+	.globl sSongHeader_40
+sSongHeader_40: @ 0x08868BE0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868BB4, 0x08868BCD  @ parts
+	.incbin "baserom_jp.gba", 0x868BF0, 0x44
+	.globl sSongHeader_41
+sSongHeader_41: @ 0x08868C34
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868BF0, 0x08868C1E  @ parts
+	.incbin "baserom_jp.gba", 0x868C44, 0x2C
+	.globl sSongHeader_42
+sSongHeader_42: @ 0x08868C70
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868C44, 0x08868C5B  @ parts
+	.incbin "baserom_jp.gba", 0x868C80, 0x48
+	.globl sSongHeader_43
+sSongHeader_43: @ 0x08868CC8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868C80  @ parts
+	.incbin "baserom_jp.gba", 0x868CD4, 0x38
+	.globl sSongHeader_44
+sSongHeader_44: @ 0x08868D0C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868CD4, 0x08868CFA  @ parts
+	.incbin "baserom_jp.gba", 0x868D1C, 0x2C
+	.globl sSongHeader_45
+sSongHeader_45: @ 0x08868D48
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868D1C  @ parts
+	.incbin "baserom_jp.gba", 0x868D54, 0x34
+	.globl sSongHeader_46
+sSongHeader_46: @ 0x08868D88
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868D54  @ parts
+	.incbin "baserom_jp.gba", 0x868D94, 0x20
+	.globl sSongHeader_47
+sSongHeader_47: @ 0x08868DB4
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868D94  @ parts
+	.incbin "baserom_jp.gba", 0x868DC0, 0x30
+	.globl sSongHeader_48
+sSongHeader_48: @ 0x08868DF0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868DC0  @ parts
+	.incbin "baserom_jp.gba", 0x868DFC, 0xA0
+	.globl sSongHeader_49
+sSongHeader_49: @ 0x08868E9C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868DFC, 0x08868E28  @ parts
+	.incbin "baserom_jp.gba", 0x868EAC, 0x68
+	.globl sSongHeader_50
+sSongHeader_50: @ 0x08868F14
+	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868EAC, 0x08868EED, 0x08868F00  @ parts
+	.incbin "baserom_jp.gba", 0x868F28, 0x18
+	.globl sSongHeader_51
+sSongHeader_51: @ 0x08868F40
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868F28  @ parts
+	.incbin "baserom_jp.gba", 0x868F4C, 0x28
+	.globl sSongHeader_52
+sSongHeader_52: @ 0x08868F74
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868F4C, 0x08868F61  @ parts
+	.incbin "baserom_jp.gba", 0x868F84, 0x1C
+	.globl sSongHeader_53
+sSongHeader_53: @ 0x08868FA0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08868F84  @ parts
+	.incbin "baserom_jp.gba", 0x868FAC, 0x68
+	.globl sSongHeader_54
+sSongHeader_54: @ 0x08869014
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08868FAC, 0x08868FE6  @ parts
+	.incbin "baserom_jp.gba", 0x869024, 0x38
+	.globl sSongHeader_55
+sSongHeader_55: @ 0x0886905C
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869024, 0x08869042  @ parts
+	.incbin "baserom_jp.gba", 0x86906C, 0x1C
+	.globl sSongHeader_56
+sSongHeader_56: @ 0x08869088
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886906C, 0x0886907B  @ parts
+	.incbin "baserom_jp.gba", 0x869098, 0x1C
+	.globl sSongHeader_57
+sSongHeader_57: @ 0x088690B4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869098, 0x088690A7  @ parts
+	.incbin "baserom_jp.gba", 0x8690C4, 0x1C
+	.globl sSongHeader_58
+sSongHeader_58: @ 0x088690E0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088690C4, 0x088690D3  @ parts
+	.incbin "baserom_jp.gba", 0x8690F0, 0x1C
+	.globl sSongHeader_59
+sSongHeader_59: @ 0x0886910C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088690F0, 0x088690FF  @ parts
+	.incbin "baserom_jp.gba", 0x86911C, 0x44
+	.globl sSongHeader_60
+sSongHeader_60: @ 0x08869160
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886911C, 0x08869146  @ parts
+	.incbin "baserom_jp.gba", 0x869170, 0x34
+	.globl sSongHeader_61
+sSongHeader_61: @ 0x088691A4
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869170  @ parts
+	.incbin "baserom_jp.gba", 0x8691B0, 0x28
+	.globl sSongHeader_62
+sSongHeader_62: @ 0x088691D8
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088691B0, 0x088691C4  @ parts
+	.incbin "baserom_jp.gba", 0x8691E8, 0x28
+	.globl sSongHeader_63
+sSongHeader_63: @ 0x08869210
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088691E8, 0x088691FC  @ parts
+	.incbin "baserom_jp.gba", 0x869220, 0x28
+	.globl sSongHeader_64
+sSongHeader_64: @ 0x08869248
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869220, 0x08869234  @ parts
+	.incbin "baserom_jp.gba", 0x869258, 0x28
+	.globl sSongHeader_65
+sSongHeader_65: @ 0x08869280
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869258, 0x0886926C  @ parts
+	.incbin "baserom_jp.gba", 0x869290, 0x28
+	.globl sSongHeader_66
+sSongHeader_66: @ 0x088692B8
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869290, 0x088692A4  @ parts
+	.incbin "baserom_jp.gba", 0x8692C8, 0x28
+	.globl sSongHeader_67
+sSongHeader_67: @ 0x088692F0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088692C8, 0x088692DC  @ parts
+	.incbin "baserom_jp.gba", 0x869300, 0x28
+	.globl sSongHeader_68
+sSongHeader_68: @ 0x08869328
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869300, 0x08869314  @ parts
+	.incbin "baserom_jp.gba", 0x869338, 0x28
+	.globl sSongHeader_69
+sSongHeader_69: @ 0x08869360
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869338, 0x0886934C  @ parts
+	.incbin "baserom_jp.gba", 0x869370, 0x24
+	.globl sSongHeader_70
+sSongHeader_70: @ 0x08869394
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869370  @ parts
+	.incbin "baserom_jp.gba", 0x8693A0, 0x18
+	.globl sSongHeader_71
+sSongHeader_71: @ 0x088693B8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088693A0  @ parts
+	.incbin "baserom_jp.gba", 0x8693C4, 0x40
+	.globl sSongHeader_72
+sSongHeader_72: @ 0x08869404
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x088693C4, 0x088693E9  @ parts
+	.incbin "baserom_jp.gba", 0x869414, 0x50
+	.globl sSongHeader_73
+sSongHeader_73: @ 0x08869464
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08869414, 0x0886943D  @ parts
+	.incbin "baserom_jp.gba", 0x869474, 0x24
+	.globl sSongHeader_74
+sSongHeader_74: @ 0x08869498
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869474  @ parts
+	.incbin "baserom_jp.gba", 0x8694A4, 0x24
+	.globl sSongHeader_75
+sSongHeader_75: @ 0x088694C8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088694A4  @ parts
+	.incbin "baserom_jp.gba", 0x8694D4, 0x2C
+	.globl sSongHeader_76
+sSongHeader_76: @ 0x08869500
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088694D4  @ parts
+	.incbin "baserom_jp.gba", 0x86950C, 0x38
+	.globl sSongHeader_77
+sSongHeader_77: @ 0x08869544
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886950C  @ parts
+	.incbin "baserom_jp.gba", 0x869550, 0x24
+	.globl sSongHeader_78
+sSongHeader_78: @ 0x08869574
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869550  @ parts
+	.incbin "baserom_jp.gba", 0x869580, 0x1C
+	.globl sSongHeader_79
+sSongHeader_79: @ 0x0886959C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08869580  @ parts
+	.incbin "baserom_jp.gba", 0x8695A8, 0x5C
+	.globl sSongHeader_80
+sSongHeader_80: @ 0x08869604
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088695A8  @ parts
+	.incbin "baserom_jp.gba", 0x869610, 0x30
+	.globl sSongHeader_81
+sSongHeader_81: @ 0x08869640
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869610  @ parts
+	.incbin "baserom_jp.gba", 0x86964C, 0x34
+	.globl sSongHeader_82
+sSongHeader_82: @ 0x08869680
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886964C  @ parts
+	.incbin "baserom_jp.gba", 0x86968C, 0x30
+	.globl sSongHeader_83
+sSongHeader_83: @ 0x088696BC
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886968C  @ parts
+	.incbin "baserom_jp.gba", 0x8696C8, 0x34
+	.globl sSongHeader_84
+sSongHeader_84: @ 0x088696FC
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088696C8  @ parts
+	.incbin "baserom_jp.gba", 0x869708, 0x30
+	.globl sSongHeader_85
+sSongHeader_85: @ 0x08869738
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869708  @ parts
+	.incbin "baserom_jp.gba", 0x869744, 0x34
+	.globl sSongHeader_86
+sSongHeader_86: @ 0x08869778
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869744  @ parts
+	.incbin "baserom_jp.gba", 0x869784, 0x5C
+	.globl sSongHeader_87
+sSongHeader_87: @ 0x088697E0
+	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869784  @ parts
+	.incbin "baserom_jp.gba", 0x8697EC, 0x44
+	.globl sSongHeader_88
+sSongHeader_88: @ 0x08869830
+	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088697EC  @ parts
+	.incbin "baserom_jp.gba", 0x86983C, 0x30
+	.globl sSongHeader_89
+sSongHeader_89: @ 0x0886986C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886983C, 0x08869856  @ parts
+	.incbin "baserom_jp.gba", 0x86987C, 0x20
+	.globl sSongHeader_90
+sSongHeader_90: @ 0x0886989C
+	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886987C  @ parts
+	.incbin "baserom_jp.gba", 0x8698A8, 0x40
+	.globl sSongHeader_91
+sSongHeader_91: @ 0x088698E8
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088698A8, 0x088698CB  @ parts
+	.incbin "baserom_jp.gba", 0x8698F8, 0x14
+	.globl sSongHeader_92
+sSongHeader_92: @ 0x0886990C
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x088698F8  @ parts
+	.incbin "baserom_jp.gba", 0x869918, 0x48
+	.globl sSongHeader_93
+sSongHeader_93: @ 0x08869960
+	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869918  @ parts
+	.incbin "baserom_jp.gba", 0x86996C, 0x88
+	.globl sSongHeader_94
+sSongHeader_94: @ 0x088699F4
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886996C, 0x088699C7  @ parts
+	.incbin "baserom_jp.gba", 0x869A04, 0x2C
+	.globl sSongHeader_95
+sSongHeader_95: @ 0x08869A30
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08869A04, 0x08869A1E  @ parts
+	.incbin "baserom_jp.gba", 0x869A40, 0x14
+	.globl sSongHeader_96
+sSongHeader_96: @ 0x08869A54
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869A40  @ parts
+	.incbin "baserom_jp.gba", 0x869A60, 0x58
+	.globl sSongHeader_97
+sSongHeader_97: @ 0x08869AB8
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869A60, 0x08869A80  @ parts
+	.incbin "baserom_jp.gba", 0x869AC8, 0x58
+	.globl sSongHeader_98
+sSongHeader_98: @ 0x08869B20
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869AC8, 0x08869AE8  @ parts
+	.incbin "baserom_jp.gba", 0x869B30, 0x18
+	.globl sSongHeader_99
+sSongHeader_99: @ 0x08869B48
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869B30  @ parts
+	.incbin "baserom_jp.gba", 0x869B54, 0x28
+	.globl sSongHeader_100
+sSongHeader_100: @ 0x08869B7C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869B54  @ parts
+	.incbin "baserom_jp.gba", 0x869B88, 0x20
+	.globl sSongHeader_101
+sSongHeader_101: @ 0x08869BA8
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869B88  @ parts
+	.incbin "baserom_jp.gba", 0x869BB4, 0x70
+	.globl sSongHeader_102
+sSongHeader_102: @ 0x08869C24
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869BB4  @ parts
+	.incbin "baserom_jp.gba", 0x869C30, 0xB4
+	.globl sSongHeader_103
+sSongHeader_103: @ 0x08869CE4
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x08869C30  @ parts
+	.incbin "baserom_jp.gba", 0x869CF0, 0xDC
+	.globl sSongHeader_104
+sSongHeader_104: @ 0x08869DCC
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869CF0, 0x08869D3A  @ parts
+	.incbin "baserom_jp.gba", 0x869DDC, 0x108
+	.globl sSongHeader_105
+sSongHeader_105: @ 0x08869EE4
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869DDC  @ parts
+	.incbin "baserom_jp.gba", 0x869EF0, 0x18
+	.globl sSongHeader_106
+sSongHeader_106: @ 0x08869F08
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869EF0  @ parts
+	.incbin "baserom_jp.gba", 0x869F14, 0x108
+	.globl sSongHeader_107
+sSongHeader_107: @ 0x0886A01C
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x08869F14, 0x08869F98  @ parts
+	.incbin "baserom_jp.gba", 0x86A02C, 0x1C
+	.globl sSongHeader_108
+sSongHeader_108: @ 0x0886A048
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A02C  @ parts
+	.incbin "baserom_jp.gba", 0x86A054, 0x28
+	.globl sSongHeader_109
+sSongHeader_109: @ 0x0886A07C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A054  @ parts
+	.incbin "baserom_jp.gba", 0x86A088, 0x58
+	.globl sSongHeader_110
+sSongHeader_110: @ 0x0886A0E0
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A088, 0x0886A0B5  @ parts
+	.incbin "baserom_jp.gba", 0x86A0F0, 0x58
+	.globl sSongHeader_111
+sSongHeader_111: @ 0x0886A148
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A0F0, 0x0886A11D  @ parts
+	.incbin "baserom_jp.gba", 0x86A158, 0x1EC
+	.globl sSongHeader_112
+sSongHeader_112: @ 0x0886A344
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A158, 0x0886A251  @ parts
+	.incbin "baserom_jp.gba", 0x86A354, 0x7C
+	.globl sSongHeader_113
+sSongHeader_113: @ 0x0886A3D0
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A354, 0x0886A39B  @ parts
+	.incbin "baserom_jp.gba", 0x86A3E0, 0x40
+	.globl sSongHeader_114
+sSongHeader_114: @ 0x0886A420
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A3E0, 0x0886A40D  @ parts
+	.incbin "baserom_jp.gba", 0x86A430, 0x1C
+	.globl sSongHeader_115
+sSongHeader_115: @ 0x0886A44C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A430  @ parts
+	.incbin "baserom_jp.gba", 0x86A458, 0x14
+	.globl sSongHeader_116
+sSongHeader_116: @ 0x0886A46C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886A458  @ parts
+	.incbin "baserom_jp.gba", 0x86A478, 0x30
+	.globl sSongHeader_117
+sSongHeader_117: @ 0x0886A4A8
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A478  @ parts
+	.incbin "baserom_jp.gba", 0x86A4B4, 0x88
+	.globl sSongHeader_118
+sSongHeader_118: @ 0x0886A53C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A4B4, 0x0886A514  @ parts
+	.incbin "baserom_jp.gba", 0x86A54C, 0x5C
+	.globl sSongHeader_119
+sSongHeader_119: @ 0x0886A5A8
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A54C, 0x0886A57D  @ parts
+	.incbin "baserom_jp.gba", 0x86A5B8, 0x38
+	.globl sSongHeader_120
+sSongHeader_120: @ 0x0886A5F0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A5B8, 0x0886A5DF  @ parts
+	.incbin "baserom_jp.gba", 0x86A600, 0xB4
+	.globl sSongHeader_121
+sSongHeader_121: @ 0x0886A6B4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A600, 0x0886A652  @ parts
+	.incbin "baserom_jp.gba", 0x86A6C4, 0x44
+	.globl sSongHeader_122
+sSongHeader_122: @ 0x0886A708
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A6C4, 0x0886A6F3  @ parts
+	.incbin "baserom_jp.gba", 0x86A718, 0x70
+	.globl sSongHeader_123
+sSongHeader_123: @ 0x0886A788
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A718, 0x0886A76D  @ parts
+	.incbin "baserom_jp.gba", 0x86A798, 0x28
+	.globl sSongHeader_124
+sSongHeader_124: @ 0x0886A7C0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A798  @ parts
+	.incbin "baserom_jp.gba", 0x86A7CC, 0x28
+	.globl sSongHeader_125
+sSongHeader_125: @ 0x0886A7F4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A7CC, 0x0886A7E5  @ parts
+	.incbin "baserom_jp.gba", 0x86A804, 0x30
+	.globl sSongHeader_126
+sSongHeader_126: @ 0x0886A834
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A804  @ parts
+	.incbin "baserom_jp.gba", 0x86A840, 0x6C
+	.globl sSongHeader_127
+sSongHeader_127: @ 0x0886A8AC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A840  @ parts
+	.incbin "baserom_jp.gba", 0x86A8B8, 0x74
+	.globl sSongHeader_128
+sSongHeader_128: @ 0x0886A92C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A8B8, 0x0886A916  @ parts
+	.incbin "baserom_jp.gba", 0x86A93C, 0x48
+	.globl sSongHeader_129
+sSongHeader_129: @ 0x0886A984
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A93C  @ parts
+	.incbin "baserom_jp.gba", 0x86A990, 0x98
+	.globl sSongHeader_130
+sSongHeader_130: @ 0x0886AA28
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886A990, 0x0886A9FF  @ parts
+	.incbin "baserom_jp.gba", 0x86AA38, 0x3C
+	.globl sSongHeader_131
+sSongHeader_131: @ 0x0886AA74
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AA38  @ parts
+	.incbin "baserom_jp.gba", 0x86AA80, 0x70
+	.globl sSongHeader_132
+sSongHeader_132: @ 0x0886AAF0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AA80  @ parts
+	.incbin "baserom_jp.gba", 0x86AAFC, 0x40
+	.globl sSongHeader_133
+sSongHeader_133: @ 0x0886AB3C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AAFC  @ parts
+	.incbin "baserom_jp.gba", 0x86AB48, 0x28
+	.globl sSongHeader_134
+sSongHeader_134: @ 0x0886AB70
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AB48  @ parts
+	.incbin "baserom_jp.gba", 0x86AB7C, 0x40
+	.globl sSongHeader_135
+sSongHeader_135: @ 0x0886ABBC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AB7C  @ parts
+	.incbin "baserom_jp.gba", 0x86ABC8, 0x54
+	.globl sSongHeader_136
+sSongHeader_136: @ 0x0886AC1C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886ABC8, 0x0886AC0B  @ parts
+	.incbin "baserom_jp.gba", 0x86AC2C, 0x3C
+	.globl sSongHeader_137
+sSongHeader_137: @ 0x0886AC68
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AC2C, 0x0886AC4C  @ parts
+	.incbin "baserom_jp.gba", 0x86AC78, 0x74
+	.globl sSongHeader_138
+sSongHeader_138: @ 0x0886ACEC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AC78, 0x0886ACC4  @ parts
+	.incbin "baserom_jp.gba", 0x86ACFC, 0x44
+	.globl sSongHeader_139
+sSongHeader_139: @ 0x0886AD40
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886ACFC, 0x0886AD26  @ parts
+	.incbin "baserom_jp.gba", 0x86AD50, 0xBC
+	.globl sSongHeader_140
+sSongHeader_140: @ 0x0886AE0C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AD50  @ parts
+	.incbin "baserom_jp.gba", 0x86AE18, 0x94
+	.globl sSongHeader_141
+sSongHeader_141: @ 0x0886AEAC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AE18, 0x0886AE80  @ parts
+	.incbin "baserom_jp.gba", 0x86AEBC, 0x2C
+	.globl sSongHeader_142
+sSongHeader_142: @ 0x0886AEE8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AEBC  @ parts
+	.incbin "baserom_jp.gba", 0x86AEF4, 0x40
+	.globl sSongHeader_143
+sSongHeader_143: @ 0x0886AF34
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AEF4  @ parts
+	.incbin "baserom_jp.gba", 0x86AF40, 0x74
+	.globl sSongHeader_144
+sSongHeader_144: @ 0x0886AFB4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AF40, 0x0886AF8B  @ parts
+	.incbin "baserom_jp.gba", 0x86AFC4, 0x60
+	.globl sSongHeader_145
+sSongHeader_145: @ 0x0886B024
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886AFC4, 0x0886B00B  @ parts
+	.incbin "baserom_jp.gba", 0x86B034, 0xC4
+	.globl sSongHeader_146
+sSongHeader_146: @ 0x0886B0F8
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B034, 0x0886B0DB  @ parts
+	.incbin "baserom_jp.gba", 0x86B108, 0x94
+	.globl sSongHeader_147
+sSongHeader_147: @ 0x0886B19C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B108, 0x0886B17E  @ parts
+	.incbin "baserom_jp.gba", 0x86B1AC, 0x60
+	.globl sSongHeader_148
+sSongHeader_148: @ 0x0886B20C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B1AC  @ parts
+	.incbin "baserom_jp.gba", 0x86B218, 0x68
+	.globl sSongHeader_149
+sSongHeader_149: @ 0x0886B280
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B218, 0x0886B260  @ parts
+	.incbin "baserom_jp.gba", 0x86B290, 0xD0
+	.globl sSongHeader_150
+sSongHeader_150: @ 0x0886B360
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B290, 0x0886B33D  @ parts
+	.incbin "baserom_jp.gba", 0x86B370, 0x2C
+	.globl sSongHeader_151
+sSongHeader_151: @ 0x0886B39C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B370  @ parts
+	.incbin "baserom_jp.gba", 0x86B3A8, 0x5C
+	.globl sSongHeader_152
+sSongHeader_152: @ 0x0886B404
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B3A8  @ parts
+	.incbin "baserom_jp.gba", 0x86B410, 0x70
+	.globl sSongHeader_153
+sSongHeader_153: @ 0x0886B480
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B410  @ parts
+	.incbin "baserom_jp.gba", 0x86B48C, 0x40
+	.globl sSongHeader_154
+sSongHeader_154: @ 0x0886B4CC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B48C  @ parts
+	.incbin "baserom_jp.gba", 0x86B4D8, 0x3C
+	.globl sSongHeader_155
+sSongHeader_155: @ 0x0886B514
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B4D8  @ parts
+	.incbin "baserom_jp.gba", 0x86B520, 0x5C
+	.globl sSongHeader_156
+sSongHeader_156: @ 0x0886B57C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B520, 0x0886B56A  @ parts
+	.incbin "baserom_jp.gba", 0x86B58C, 0x8C
+	.globl sSongHeader_157
+sSongHeader_157: @ 0x0886B618
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B58C, 0x0886B5ED  @ parts
+	.incbin "baserom_jp.gba", 0x86B628, 0x154
+	.globl sSongHeader_158
+sSongHeader_158: @ 0x0886B77C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B628, 0x0886B71C  @ parts
+	.incbin "baserom_jp.gba", 0x86B78C, 0x58
+	.globl sSongHeader_159
+sSongHeader_159: @ 0x0886B7E4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B78C, 0x0886B7D5  @ parts
+	.incbin "baserom_jp.gba", 0x86B7F4, 0x34
+	.globl sSongHeader_160
+sSongHeader_160: @ 0x0886B828
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B7F4  @ parts
+	.incbin "baserom_jp.gba", 0x86B834, 0x70
+	.globl sSongHeader_161
+sSongHeader_161: @ 0x0886B8A4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B834, 0x0886B892  @ parts
+	.incbin "baserom_jp.gba", 0x86B8B4, 0x5C
+	.globl sSongHeader_162
+sSongHeader_162: @ 0x0886B910
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B8B4  @ parts
+	.incbin "baserom_jp.gba", 0x86B91C, 0x74
+	.globl sSongHeader_163
+sSongHeader_163: @ 0x0886B990
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B91C  @ parts
+	.incbin "baserom_jp.gba", 0x86B99C, 0x74
+	.globl sSongHeader_164
+sSongHeader_164: @ 0x0886BA10
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886B99C, 0x0886B9EF  @ parts
+	.incbin "baserom_jp.gba", 0x86BA20, 0x8C
+	.globl sSongHeader_165
+sSongHeader_165: @ 0x0886BAAC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BA20  @ parts
+	.incbin "baserom_jp.gba", 0x86BAB8, 0x40
+	.globl sSongHeader_166
+sSongHeader_166: @ 0x0886BAF8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BAB8  @ parts
+	.incbin "baserom_jp.gba", 0x86BB04, 0x34
+	.globl sSongHeader_167
+sSongHeader_167: @ 0x0886BB38
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BB04  @ parts
+	.incbin "baserom_jp.gba", 0x86BB44, 0x6C
+	.globl sSongHeader_168
+sSongHeader_168: @ 0x0886BBB0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BB44  @ parts
+	.incbin "baserom_jp.gba", 0x86BBBC, 0x30
+	.globl sSongHeader_169
+sSongHeader_169: @ 0x0886BBEC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BBBC  @ parts
+	.incbin "baserom_jp.gba", 0x86BBF8, 0x4C
+	.globl sSongHeader_170
+sSongHeader_170: @ 0x0886BC44
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BBF8  @ parts
+	.incbin "baserom_jp.gba", 0x86BC50, 0xBC
+	.globl sSongHeader_171
+sSongHeader_171: @ 0x0886BD0C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BC50  @ parts
+	.incbin "baserom_jp.gba", 0x86BD18, 0x124
+	.globl sSongHeader_172
+sSongHeader_172: @ 0x0886BE3C
+	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BD18, 0x0886BD76, 0x0886BDD9  @ parts
+	.incbin "baserom_jp.gba", 0x86BE50, 0x13C
+	.globl sSongHeader_173
+sSongHeader_173: @ 0x0886BF8C
+	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BE50, 0x0886BEB5, 0x0886BF10  @ parts
+	.incbin "baserom_jp.gba", 0x86BFA0, 0x78
+	.globl sSongHeader_174
+sSongHeader_174: @ 0x0886C018
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886BFA0  @ parts
+	.incbin "baserom_jp.gba", 0x86C024, 0x3C
+	.globl sSongHeader_175
+sSongHeader_175: @ 0x0886C060
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C024  @ parts
+	.incbin "baserom_jp.gba", 0x86C06C, 0x54
+	.globl sSongHeader_176
+sSongHeader_176: @ 0x0886C0C0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C06C  @ parts
+	.incbin "baserom_jp.gba", 0x86C0CC, 0x40
+	.globl sSongHeader_177
+sSongHeader_177: @ 0x0886C10C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C0CC  @ parts
+	.incbin "baserom_jp.gba", 0x86C118, 0x7C
+	.globl sSongHeader_178
+sSongHeader_178: @ 0x0886C194
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C118, 0x0886C177  @ parts
+	.incbin "baserom_jp.gba", 0x86C1A4, 0xAC
+	.globl sSongHeader_179
+sSongHeader_179: @ 0x0886C250
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C1A4, 0x0886C203  @ parts
+	.incbin "baserom_jp.gba", 0x86C260, 0x48
+	.globl sSongHeader_180
+sSongHeader_180: @ 0x0886C2A8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C260  @ parts
+	.incbin "baserom_jp.gba", 0x86C2B4, 0x70
+	.globl sSongHeader_181
+sSongHeader_181: @ 0x0886C324
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C2B4, 0x0886C306  @ parts
+	.incbin "baserom_jp.gba", 0x86C334, 0xB8
+	.globl sSongHeader_182
+sSongHeader_182: @ 0x0886C3EC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C334  @ parts
+	.incbin "baserom_jp.gba", 0x86C3F8, 0xB0
+	.globl sSongHeader_183
+sSongHeader_183: @ 0x0886C4A8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C3F8  @ parts
+	.incbin "baserom_jp.gba", 0x86C4B4, 0xE0
+	.globl sSongHeader_184
+sSongHeader_184: @ 0x0886C594
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C4B4  @ parts
+	.incbin "baserom_jp.gba", 0x86C5A0, 0x34
+	.globl sSongHeader_185
+sSongHeader_185: @ 0x0886C5D4
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C5A0  @ parts
+	.incbin "baserom_jp.gba", 0x86C5E0, 0x50
+	.globl sSongHeader_186
+sSongHeader_186: @ 0x0886C630
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C5E0  @ parts
+	.incbin "baserom_jp.gba", 0x86C63C, 0x2C
+	.globl sSongHeader_187
+sSongHeader_187: @ 0x0886C668
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C63C  @ parts
+	.incbin "baserom_jp.gba", 0x86C674, 0xA8
+	.globl sSongHeader_188
+sSongHeader_188: @ 0x0886C71C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C674  @ parts
+	.incbin "baserom_jp.gba", 0x86C728, 0x94
+	.globl sSongHeader_189
+sSongHeader_189: @ 0x0886C7BC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C728, 0x0886C78F  @ parts
+	.incbin "baserom_jp.gba", 0x86C7CC, 0x58
+	.globl sSongHeader_190
+sSongHeader_190: @ 0x0886C824
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C7CC  @ parts
+	.incbin "baserom_jp.gba", 0x86C830, 0x118
+	.globl sSongHeader_191
+sSongHeader_191: @ 0x0886C948
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C830, 0x0886C92A  @ parts
+	.incbin "baserom_jp.gba", 0x86C958, 0x6C
+	.globl sSongHeader_192
+sSongHeader_192: @ 0x0886C9C4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C958, 0x0886C9AB  @ parts
+	.incbin "baserom_jp.gba", 0x86C9D4, 0x4C
+	.globl sSongHeader_193
+sSongHeader_193: @ 0x0886CA20
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886C9D4  @ parts
+	.incbin "baserom_jp.gba", 0x86CA2C, 0x2C
+	.globl sSongHeader_194
+sSongHeader_194: @ 0x0886CA58
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CA2C  @ parts
+	.incbin "baserom_jp.gba", 0x86CA64, 0x44
+	.globl sSongHeader_195
+sSongHeader_195: @ 0x0886CAA8
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CA64  @ parts
+	.incbin "baserom_jp.gba", 0x86CAB4, 0x80
+	.globl sSongHeader_196
+sSongHeader_196: @ 0x0886CB34
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CAB4  @ parts
+	.incbin "baserom_jp.gba", 0x86CB40, 0x58
+	.globl sSongHeader_197
+sSongHeader_197: @ 0x0886CB98
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CB40, 0x0886CB75  @ parts
+	.incbin "baserom_jp.gba", 0x86CBA8, 0x68
+	.globl sSongHeader_198
+sSongHeader_198: @ 0x0886CC10
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CBA8, 0x0886CBE9  @ parts
+	.incbin "baserom_jp.gba", 0x86CC20, 0x58
+	.globl sSongHeader_199
+sSongHeader_199: @ 0x0886CC78
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CC20  @ parts
+	.incbin "baserom_jp.gba", 0x86CC84, 0x148
+	.globl sSongHeader_200
+sSongHeader_200: @ 0x0886CDCC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CC84  @ parts
+	.incbin "baserom_jp.gba", 0x86CDD8, 0xC8
+	.globl sSongHeader_201
+sSongHeader_201: @ 0x0886CEA0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CDD8  @ parts
+	.incbin "baserom_jp.gba", 0x86CEAC, 0x104
+	.globl sSongHeader_202
+sSongHeader_202: @ 0x0886CFB0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CEAC, 0x0886CF49  @ parts
+	.incbin "baserom_jp.gba", 0x86CFC0, 0xD4
+	.globl sSongHeader_203
+sSongHeader_203: @ 0x0886D094
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886CFC0  @ parts
+	.incbin "baserom_jp.gba", 0x86D0A0, 0xD4
+	.globl sSongHeader_204
+sSongHeader_204: @ 0x0886D174
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D0A0  @ parts
+	.incbin "baserom_jp.gba", 0x86D180, 0x40
+	.globl sSongHeader_205
+sSongHeader_205: @ 0x0886D1C0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D180  @ parts
+	.incbin "baserom_jp.gba", 0x86D1CC, 0x80
+	.globl sSongHeader_206
+sSongHeader_206: @ 0x0886D24C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D1CC, 0x0886D239  @ parts
+	.incbin "baserom_jp.gba", 0x86D25C, 0x180
+	.globl sSongHeader_207
+sSongHeader_207: @ 0x0886D3DC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D25C, 0x0886D374  @ parts
+	.incbin "baserom_jp.gba", 0x86D3EC, 0x190
+	.globl sSongHeader_208
+sSongHeader_208: @ 0x0886D57C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D3EC, 0x0886D514  @ parts
+	.incbin "baserom_jp.gba", 0x86D58C, 0x60
+	.globl sSongHeader_209
+sSongHeader_209: @ 0x0886D5EC
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D58C  @ parts
+	.incbin "baserom_jp.gba", 0x86D5F8, 0x44
+	.globl sSongHeader_210
+sSongHeader_210: @ 0x0886D63C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D5F8  @ parts
+	.incbin "baserom_jp.gba", 0x86D648, 0x118
+	.globl sSongHeader_211
+sSongHeader_211: @ 0x0886D760
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D648, 0x0886D6DE  @ parts
+	.incbin "baserom_jp.gba", 0x86D770, 0x70
+	.globl sSongHeader_212
+sSongHeader_212: @ 0x0886D7E0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D770  @ parts
+	.incbin "baserom_jp.gba", 0x86D7EC, 0xE4
+	.globl sSongHeader_213
+sSongHeader_213: @ 0x0886D8D0
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D7EC  @ parts
+	.incbin "baserom_jp.gba", 0x86D8DC, 0x58
+	.globl sSongHeader_214
+sSongHeader_214: @ 0x0886D934
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D8DC, 0x0886D90D  @ parts
+	.incbin "baserom_jp.gba", 0x86D944, 0x4C
+	.globl sSongHeader_215
+sSongHeader_215: @ 0x0886D990
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D944, 0x0886D972  @ parts
+	.incbin "baserom_jp.gba", 0x86D9A0, 0xA4
+	.globl sSongHeader_216
+sSongHeader_216: @ 0x0886DA44
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886D9A0, 0x0886DA1D  @ parts
+	.incbin "baserom_jp.gba", 0x86DA54, 0x1EC
+	.globl sSongHeader_217
+sSongHeader_217: @ 0x0886DC40
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DA54, 0x0886DBBB  @ parts
+	.incbin "baserom_jp.gba", 0x86DC50, 0x110
+	.globl sSongHeader_218
+sSongHeader_218: @ 0x0886DD60
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DC50  @ parts
+	.incbin "baserom_jp.gba", 0x86DD6C, 0xF0
+	.globl sSongHeader_219
+sSongHeader_219: @ 0x0886DE5C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DD6C, 0x0886DE02  @ parts
+	.incbin "baserom_jp.gba", 0x86DE6C, 0x60
+	.globl sSongHeader_220
+sSongHeader_220: @ 0x0886DECC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DE6C, 0x0886DEB2  @ parts
+	.incbin "baserom_jp.gba", 0x86DEDC, 0x88
+	.globl sSongHeader_221
+sSongHeader_221: @ 0x0886DF64
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DEDC, 0x0886DF53  @ parts
+	.incbin "baserom_jp.gba", 0x86DF74, 0x28
+	.globl sSongHeader_222
+sSongHeader_222: @ 0x0886DF9C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DF74  @ parts
+	.incbin "baserom_jp.gba", 0x86DFA8, 0xCC
+	.globl sSongHeader_223
+sSongHeader_223: @ 0x0886E074
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886DFA8  @ parts
+	.incbin "baserom_jp.gba", 0x86E080, 0xCC
+	.globl sSongHeader_224
+sSongHeader_224: @ 0x0886E14C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E080, 0x0886E129  @ parts
+	.incbin "baserom_jp.gba", 0x86E15C, 0x9C
+	.globl sSongHeader_225
+sSongHeader_225: @ 0x0886E1F8
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E15C, 0x0886E1E1  @ parts
+	.incbin "baserom_jp.gba", 0x86E208, 0x88
+	.globl sSongHeader_226
+sSongHeader_226: @ 0x0886E290
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E208, 0x0886E254  @ parts
+	.incbin "baserom_jp.gba", 0x86E2A0, 0x88
+	.globl sSongHeader_227
+sSongHeader_227: @ 0x0886E328
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E2A0, 0x0886E2E3  @ parts
+	.incbin "baserom_jp.gba", 0x86E338, 0x98
+	.globl sSongHeader_228
+sSongHeader_228: @ 0x0886E3D0
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E338, 0x0886E391  @ parts
+	.incbin "baserom_jp.gba", 0x86E3E0, 0x3C
+	.globl sSongHeader_229
+sSongHeader_229: @ 0x0886E41C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E3E0  @ parts
+	.incbin "baserom_jp.gba", 0x86E428, 0xF0
+	.globl sSongHeader_230
+sSongHeader_230: @ 0x0886E518
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E428, 0x0886E4BE  @ parts
+	.incbin "baserom_jp.gba", 0x86E528, 0x84
+	.globl sSongHeader_231
+sSongHeader_231: @ 0x0886E5AC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E528, 0x0886E567  @ parts
+	.incbin "baserom_jp.gba", 0x86E5BC, 0x54
+	.globl sSongHeader_232
+sSongHeader_232: @ 0x0886E610
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E5BC, 0x0886E5FD  @ parts
+	.incbin "baserom_jp.gba", 0x86E620, 0x8C
+	.globl sSongHeader_233
+sSongHeader_233: @ 0x0886E6AC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E620, 0x0886E68E  @ parts
+	.incbin "baserom_jp.gba", 0x86E6BC, 0x1F8
+	.globl sSongHeader_234
+sSongHeader_234: @ 0x0886E8B4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E6BC, 0x0886E80D  @ parts
+	.incbin "baserom_jp.gba", 0x86E8C4, 0xEC
+	.globl sSongHeader_235
+sSongHeader_235: @ 0x0886E9B0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E8C4, 0x0886E982  @ parts
+	.incbin "baserom_jp.gba", 0x86E9C0, 0xE0
+	.globl sSongHeader_236
+sSongHeader_236: @ 0x0886EAA0
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886E9C0, 0x0886EA33  @ parts
+	.incbin "baserom_jp.gba", 0x86EAB0, 0x74
+	.globl sSongHeader_237
+sSongHeader_237: @ 0x0886EB24
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EAB0, 0x0886EB04  @ parts
+	.incbin "baserom_jp.gba", 0x86EB34, 0x64
+	.globl sSongHeader_238
+sSongHeader_238: @ 0x0886EB98
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EB34, 0x0886EB81  @ parts
+	.incbin "baserom_jp.gba", 0x86EBA8, 0x170
+	.globl sSongHeader_239
+sSongHeader_239: @ 0x0886ED18
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EBA8, 0x0886ECD2  @ parts
+	.incbin "baserom_jp.gba", 0x86ED28, 0xF4
+	.globl sSongHeader_240
+sSongHeader_240: @ 0x0886EE1C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886ED28, 0x0886EDED  @ parts
+	.incbin "baserom_jp.gba", 0x86EE2C, 0x50
+	.globl sSongHeader_241
+sSongHeader_241: @ 0x0886EE7C
+	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EE2C  @ parts
+	.incbin "baserom_jp.gba", 0x86EE88, 0x64
+	.globl sSongHeader_242
+sSongHeader_242: @ 0x0886EEEC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EE88, 0x0886EECD  @ parts
+	.incbin "baserom_jp.gba", 0x86EEFC, 0x10C
+	.globl sSongHeader_243
+sSongHeader_243: @ 0x0886F008
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886EEFC, 0x0886EF9A  @ parts
+	.incbin "baserom_jp.gba", 0x86F018, 0x94
+	.globl sSongHeader_244
+sSongHeader_244: @ 0x0886F0AC
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886F018, 0x0886F071  @ parts
+	.incbin "baserom_jp.gba", 0x86F0BC, 0x160
+	.globl sSongHeader_245
+sSongHeader_245: @ 0x0886F21C
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886F0BC, 0x0886F1D4  @ parts
+	.incbin "baserom_jp.gba", 0x86F22C, 0x124
+	.globl sSongHeader_246
+sSongHeader_246: @ 0x0886F350
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886F22C, 0x0886F312  @ parts
+	.incbin "baserom_jp.gba", 0x86F360, 0x74
+	.globl sSongHeader_247
+sSongHeader_247: @ 0x0886F3D4
+	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886F360, 0x0886F3B7  @ parts
+	.incbin "baserom_jp.gba", 0x86F3E4, 0x48
+	.globl sSongHeader_248
+sSongHeader_248: @ 0x0886F42C
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F3E4, 0x0886F3FF  @ parts
+	.incbin "baserom_jp.gba", 0x86F43C, 0x20
+	.globl sSongHeader_249
+sSongHeader_249: @ 0x0886F45C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F43C  @ parts
+	.incbin "baserom_jp.gba", 0x86F468, 0x2C
+	.globl sSongHeader_250
+sSongHeader_250: @ 0x0886F494
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F468  @ parts
+	.incbin "baserom_jp.gba", 0x86F4A0, 0x80
+	.globl sSongHeader_251
+sSongHeader_251: @ 0x0886F520
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F4A0, 0x0886F509  @ parts
+	.incbin "baserom_jp.gba", 0x86F530, 0x28
+	.globl sSongHeader_252
+sSongHeader_252: @ 0x0886F558
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F530, 0x0886F546  @ parts
+	.incbin "baserom_jp.gba", 0x86F568, 0x34
+	.globl sSongHeader_253
+sSongHeader_253: @ 0x0886F59C
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F568, 0x0886F580  @ parts
+	.incbin "baserom_jp.gba", 0x86F5AC, 0x30
+	.globl sSongHeader_254
+sSongHeader_254: @ 0x0886F5DC
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F5AC, 0x0886F5C9  @ parts
+	.incbin "baserom_jp.gba", 0x86F5EC, 0x18
+	.globl sSongHeader_255
+sSongHeader_255: @ 0x0886F604
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F5EC  @ parts
+	.incbin "baserom_jp.gba", 0x86F610, 0xAC
+	.globl sSongHeader_256
+sSongHeader_256: @ 0x0886F6BC
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F610, 0x0886F687  @ parts
+	.incbin "baserom_jp.gba", 0x86F6CC, 0x64
+	.globl sSongHeader_257
+sSongHeader_257: @ 0x0886F730
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F6CC  @ parts
+	.incbin "baserom_jp.gba", 0x86F73C, 0x60
+	.globl sSongHeader_258
+sSongHeader_258: @ 0x0886F79C
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F73C  @ parts
+	.incbin "baserom_jp.gba", 0x86F7A8, 0x3C
+	.globl sSongHeader_259
+sSongHeader_259: @ 0x0886F7E4
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F7A8  @ parts
+	.incbin "baserom_jp.gba", 0x86F7F0, 0xD4
+	.globl sSongHeader_260
+sSongHeader_260: @ 0x0886F8C4
+	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F7F0, 0x0886F810, 0x0886F863  @ parts
+	.incbin "baserom_jp.gba", 0x86F8D8, 0xAC
+	.globl sSongHeader_261
+sSongHeader_261: @ 0x0886F984
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08625214  @ tone
+	.4byte 0x0886F8D8, 0x0886F937  @ parts
+	.incbin "baserom_jp.gba", 0x86F994, 0x24
+	.globl sSongHeader_262
+sSongHeader_262: @ 0x0886F9B8
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08624C14  @ tone
+	.4byte 0x0886F994  @ parts
+	.incbin "baserom_jp.gba", 0x86F9C4, 0x94
+	.globl sSongHeader_263
+sSongHeader_263: @ 0x0886FA58
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886F9C4, 0x0886F9FD  @ parts
+	.incbin "baserom_jp.gba", 0x86FA68, 0x50
+	.globl sSongHeader_264
+sSongHeader_264: @ 0x0886FAB8
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FA68, 0x0886FA83  @ parts
+	.incbin "baserom_jp.gba", 0x86FAC8, 0x24
+	.globl sSongHeader_265
+sSongHeader_265: @ 0x0886FAEC
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FAC8, 0x0886FAD9  @ parts
+	.incbin "baserom_jp.gba", 0x86FAFC, 0x34
+	.globl sSongHeader_266
+sSongHeader_266: @ 0x0886FB30
+	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FAFC, 0x0886FB18  @ parts
+	.incbin "baserom_jp.gba", 0x86FB40, 0xC4
+	.globl sSongHeader_267
+sSongHeader_267: @ 0x0886FC04
+	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FB40, 0x0886FBBB, 0x0886FBD7  @ parts
+	.incbin "baserom_jp.gba", 0x86FC18, 0xC8
+	.globl sSongHeader_268
+sSongHeader_268: @ 0x0886FCE0
+	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FC18, 0x0886FC95, 0x0886FCB3  @ parts
+	.incbin "baserom_jp.gba", 0x86FCF4, 0x2C
+	.globl sSongHeader_269
+sSongHeader_269: @ 0x0886FD20
+	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08627C74  @ tone
+	.4byte 0x0886FCF4  @ parts
+	.incbin "baserom_jp.gba", 0x86FD2C, 0x9EC
+	.globl sSongHeader_350
+sSongHeader_350: @ 0x08870718
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08605048  @ tone
+	.4byte 0x0886FD2C, 0x0886FDAF, 0x0886FF31, 0x08870175, 0x088701A4, 0x08870259, 0x08870296, 0x08870589, 0x0887068E  @ parts
+	.incbin "baserom_jp.gba", 0x870744, 0x3AC
+	.globl sSongHeader_351
+sSongHeader_351: @ 0x08870AF0
+	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FD824  @ tone
+	.4byte 0x08870744, 0x0887086D, 0x08870954, 0x08870A2F  @ parts
+	.incbin "baserom_jp.gba", 0x870B08, 0x41C
+	.globl sSongHeader_352
+sSongHeader_352: @ 0x08870F24
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602AD4  @ tone
+	.4byte 0x08870B08, 0x08870B9D, 0x08870C0F, 0x08870D80, 0x08870DBE, 0x08870E2B, 0x08870E7E  @ parts
+	.incbin "baserom_jp.gba", 0x870F48, 0x50C
+	.globl sSongHeader_353
+sSongHeader_353: @ 0x08871454
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602AD4  @ tone
+	.4byte 0x08870F48, 0x0887100B, 0x088710AA, 0x08871245, 0x088712AE, 0x08871348, 0x088713B2  @ parts
+	.incbin "baserom_jp.gba", 0x871478, 0xECC
+	.globl sSongHeader_354
+sSongHeader_354: @ 0x08872344
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602690  @ tone
+	.4byte 0x08871478, 0x088716A1, 0x08871952, 0x08871ABB, 0x08871CE9, 0x08871F2F, 0x0887209D, 0x088721BD  @ parts
+	.incbin "baserom_jp.gba", 0x87236C, 0xB6C
+	.globl sSongHeader_355
+sSongHeader_355: @ 0x08872ED8
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08603CA4  @ tone
+	.4byte 0x0887236C, 0x08872551, 0x08872706, 0x0887280F, 0x088729EA, 0x08872BB3, 0x08872CDF, 0x08872DCB  @ parts
+	.incbin "baserom_jp.gba", 0x872F00, 0x2BC
+	.globl sSongHeader_356
+sSongHeader_356: @ 0x088731BC
+	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FD824  @ tone
+	.4byte 0x08872F00, 0x08873012, 0x088730F0  @ parts
+	.incbin "baserom_jp.gba", 0x8731D0, 0x5AC
+	.globl sSongHeader_357
+sSongHeader_357: @ 0x0887377C
+	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FD824  @ tone
+	.4byte 0x088731D0, 0x08873371, 0x088734DD, 0x0887361A  @ parts
+	.incbin "baserom_jp.gba", 0x873794, 0x9C0
+	.globl sSongHeader_358
+sSongHeader_358: @ 0x08874154
+	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FD824  @ tone
+	.4byte 0x08873794, 0x08873A47, 0x08873DC1  @ parts
+	.incbin "baserom_jp.gba", 0x874168, 0x8B8
+	.globl sSongHeader_359
+sSongHeader_359: @ 0x08874A20
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF048  @ tone
+	.4byte 0x08874168, 0x088742A1, 0x088743C6, 0x088744D7, 0x08874681, 0x088747D0, 0x08874869, 0x0887490E  @ parts
+	.incbin "baserom_jp.gba", 0x874A48, 0xB50
+	.globl sSongHeader_360
+sSongHeader_360: @ 0x08875598
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FEC58  @ tone
+	.4byte 0x08874A48, 0x08874C3B, 0x08874DFC, 0x08874F21, 0x088750D2, 0x088752A3, 0x088753CF, 0x088754A0, 0x088754FE  @ parts
+	.incbin "baserom_jp.gba", 0x8755C4, 0x1270
+	.globl sSongHeader_361
+sSongHeader_361: @ 0x08876834
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FFF48  @ tone
+	.4byte 0x088755C4, 0x088756EE, 0x08875A2C, 0x08875DA4, 0x08876027, 0x0887605B, 0x0887634D, 0x08876669  @ parts
+	.incbin "baserom_jp.gba", 0x87685C, 0xA9C
+	.globl sSongHeader_362
+sSongHeader_362: @ 0x088772F8
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08600344  @ tone
+	.4byte 0x0887685C, 0x088769EA, 0x08876ADD, 0x08876BC1, 0x08876D51, 0x0887700C, 0x088770BD, 0x088771BC  @ parts
+	.incbin "baserom_jp.gba", 0x877320, 0x8C4
+	.globl sSongHeader_363
+sSongHeader_363: @ 0x08877BE4
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086014E4  @ tone
+	.4byte 0x08877320, 0x088774E8, 0x08877637, 0x088777F7, 0x08877920, 0x08877A89, 0x08877B94  @ parts
+	.incbin "baserom_jp.gba", 0x877C08, 0x9DC
+	.globl sSongHeader_364
+sSongHeader_364: @ 0x088785E4
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FFB10  @ tone
+	.4byte 0x08877C08, 0x08877D9D, 0x08877E92, 0x08878075, 0x088781FD, 0x08878303, 0x088783E6  @ parts
+	.incbin "baserom_jp.gba", 0x878608, 0xE80
+	.globl sSongHeader_365
+sSongHeader_365: @ 0x08879488
+	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08600AA0  @ tone
+	.4byte 0x08878608, 0x088788C7, 0x08878AD6, 0x08878CAA, 0x08878F14, 0x088791F7  @ parts
+	.incbin "baserom_jp.gba", 0x8794A8, 0x900
+	.globl sSongHeader_366
+sSongHeader_366: @ 0x08879DA8
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08600EE4  @ tone
+	.4byte 0x088794A8, 0x08879532, 0x08879611, 0x0887999D, 0x08879A6E, 0x08879B68, 0x08879C0B, 0x08879CCC, 0x08879D61  @ parts
+	.incbin "baserom_jp.gba", 0x879DD4, 0xC8
+	.globl sSongHeader_367
+sSongHeader_367: @ 0x08879E9C
+	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08879DD4, 0x08879DF3, 0x08879E16, 0x08879E33, 0x08879E66  @ parts
+	.incbin "baserom_jp.gba", 0x879EB8, 0xB0
+	.globl sSongHeader_368
+sSongHeader_368: @ 0x08879F68
+	.byte 0x04, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08879EB8, 0x08879EE0, 0x08879F03, 0x08879F23  @ parts
+	.incbin "baserom_jp.gba", 0x879F80, 0x2B4
+	.globl sSongHeader_369
+sSongHeader_369: @ 0x0887A234
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08879F80, 0x0887A00B, 0x0887A081, 0x0887A0B4, 0x0887A0EC, 0x0887A197, 0x0887A1B8  @ parts
+	.incbin "baserom_jp.gba", 0x87A258, 0x130
+	.globl sSongHeader_370
+sSongHeader_370: @ 0x0887A388
+	.byte 0x06, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x0887A258, 0x0887A28D, 0x0887A2BF, 0x0887A2E5, 0x0887A31D, 0x0887A355  @ parts
+	.incbin "baserom_jp.gba", 0x87A3A8, 0x17C
+	.globl sSongHeader_371
+sSongHeader_371: @ 0x0887A524
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x0887A3A8, 0x0887A3E8, 0x0887A429, 0x0887A449, 0x0887A484, 0x0887A4C2, 0x0887A4E1  @ parts
+	.incbin "baserom_jp.gba", 0x87A548, 0x168
+	.globl sSongHeader_372
+sSongHeader_372: @ 0x0887A6B0
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x0887A548, 0x0887A573, 0x0887A59C, 0x0887A5B3, 0x0887A5F7, 0x0887A640, 0x0887A65D  @ parts
+	.incbin "baserom_jp.gba", 0x87A6D4, 0xAA0
+	.globl sSongHeader_373
+sSongHeader_373: @ 0x0887B174
+	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086018E0  @ tone
+	.4byte 0x0887A6D4, 0x0887AA29, 0x0887AB83, 0x0887ADA7, 0x0887AF17, 0x0887B045  @ parts
+	.incbin "baserom_jp.gba", 0x87B194, 0xE88
+	.globl sSongHeader_374
+sSongHeader_374: @ 0x0887C01C
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08601CF4  @ tone
+	.4byte 0x0887B194, 0x0887B37E, 0x0887B526, 0x0887B684, 0x0887B9BF, 0x0887BC59, 0x0887BDB0, 0x0887BE10  @ parts
+	.incbin "baserom_jp.gba", 0x87C044, 0xE34
+	.globl sSongHeader_375
+sSongHeader_375: @ 0x0887CE78
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602264  @ tone
+	.4byte 0x0887C044, 0x0887C3FE, 0x0887C536, 0x0887C6E5, 0x0887C8D4, 0x0887CAAC, 0x0887CD0C  @ parts
+	.incbin "baserom_jp.gba", 0x87CE9C, 0x50
+	.globl sSongHeader_376
+sSongHeader_376: @ 0x0887CEEC
+	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602EC4  @ tone
+	.4byte 0x0887CE9C, 0x0887CEAB, 0x0887CEC3, 0x0887CEDC  @ parts
+	.incbin "baserom_jp.gba", 0x87CF04, 0x558
+	.globl sSongHeader_377
+sSongHeader_377: @ 0x0887D45C
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08602EC4  @ tone
+	.4byte 0x0887CF04, 0x0887CFB6, 0x0887D068, 0x0887D100, 0x0887D1D3, 0x0887D264, 0x0887D2F7  @ parts
+	.incbin "baserom_jp.gba", 0x87D480, 0xC0
+	.globl sSongHeader_378
+sSongHeader_378: @ 0x0887D540
+	.byte 0x06, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x0887D480, 0x0887D4A7, 0x0887D4CD, 0x0887D4ED, 0x0887D50D, 0x0887D527  @ parts
+	.incbin "baserom_jp.gba", 0x87D560, 0x568
+	.globl sSongHeader_379
+sSongHeader_379: @ 0x0887DAC8
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086032C0  @ tone
+	.4byte 0x0887D560, 0x0887D6B7, 0x0887D736, 0x0887D7C1, 0x0887D868, 0x0887D927, 0x0887D99E, 0x0887DA43  @ parts
+	.incbin "baserom_jp.gba", 0x87DAF0, 0x634
+	.globl sSongHeader_380
+sSongHeader_380: @ 0x0887E124
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086038C0  @ tone
+	.4byte 0x0887DAF0, 0x0887DBC8, 0x0887DC9C, 0x0887DD27, 0x0887DE19, 0x0887DF5D, 0x0887E025  @ parts
+	.incbin "baserom_jp.gba", 0x87E148, 0x918
+	.globl sSongHeader_381
+sSongHeader_381: @ 0x0887EA60
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086040C4  @ tone
+	.4byte 0x0887E148, 0x0887E2F3, 0x0887E481, 0x0887E52B, 0x0887E6FF, 0x0887E80F, 0x0887E8A9, 0x0887E956  @ parts
+	.incbin "baserom_jp.gba", 0x87EA88, 0x90C
+	.globl sSongHeader_382
+sSongHeader_382: @ 0x0887F394
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08604664  @ tone
+	.4byte 0x0887EA88, 0x0887EC3B, 0x0887ED44, 0x0887EE35, 0x0887EF3B, 0x0887F03F, 0x0887F11D, 0x0887F264  @ parts
+	.incbin "baserom_jp.gba", 0x87F3BC, 0x688
+	.globl sSongHeader_383
+sSongHeader_383: @ 0x0887FA44
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08604C64  @ tone
+	.4byte 0x0887F3BC, 0x0887F4D9, 0x0887F5A7, 0x0887F704, 0x0887F824, 0x0887F8F9, 0x0887F9DD  @ parts
+	.incbin "baserom_jp.gba", 0x87FA68, 0xB64
+	.globl sSongHeader_384
+sSongHeader_384: @ 0x088805CC
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08605438  @ tone
+	.4byte 0x0887FA68, 0x0887FC8E, 0x0887FDE5, 0x0887FEF6, 0x088800C1, 0x088802B8, 0x08880414, 0x08880496, 0x088804D9  @ parts
+	.incbin "baserom_jp.gba", 0x8805F8, 0x4B4
+	.globl sSongHeader_385
+sSongHeader_385: @ 0x08880AAC
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08605834  @ tone
+	.4byte 0x088805F8, 0x0888068D, 0x088806DF, 0x0888077C, 0x08880882, 0x0888098C, 0x088809BF, 0x08880A38  @ parts
+	.incbin "baserom_jp.gba", 0x880AD4, 0x8FC
+	.globl sSongHeader_386
+sSongHeader_386: @ 0x088813D0
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08605E34  @ tone
+	.4byte 0x08880AD4, 0x08880C57, 0x08880CC0, 0x08880DA7, 0x08880F42, 0x08881128, 0x08881241, 0x088812EE, 0x08881397  @ parts
+	.incbin "baserom_jp.gba", 0x8813FC, 0xB4
+	.globl sSongHeader_387
+sSongHeader_387: @ 0x088814B0
+	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x088813FC, 0x08881429, 0x0888143F, 0x08881457, 0x0888146F  @ parts
+	.incbin "baserom_jp.gba", 0x8814CC, 0x348
+	.globl sSongHeader_388
+sSongHeader_388: @ 0x08881814
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x088814CC, 0x0888153B, 0x088815A8, 0x08881679, 0x088816D5, 0x088817B1, 0x088817D7  @ parts
+	.incbin "baserom_jp.gba", 0x881838, 0x208
+	.globl sSongHeader_389
+sSongHeader_389: @ 0x08881A40
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08881838, 0x08881896, 0x088818DD, 0x08881927, 0x08881969, 0x088819AB, 0x088819D2  @ parts
+	.incbin "baserom_jp.gba", 0x881A64, 0x11C
+	.globl sSongHeader_390
+sSongHeader_390: @ 0x08881B80
+	.byte 0x07, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08881A64, 0x08881A9B, 0x08881AB7, 0x08881ADB, 0x08881B01, 0x08881B31, 0x08881B4A  @ parts
+	.incbin "baserom_jp.gba", 0x881BA4, 0xD8
+	.globl sSongHeader_391
+sSongHeader_391: @ 0x08881C7C
+	.byte 0x05, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x085FF648  @ tone
+	.4byte 0x08881BA4, 0x08881BE7, 0x08881C1C, 0x08881C46, 0x08881C63  @ parts
+	.incbin "baserom_jp.gba", 0x881C98, 0x5F8
+	.globl sSongHeader_392
+sSongHeader_392: @ 0x08882290
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08606260  @ tone
+	.4byte 0x08881C98, 0x08881D3C, 0x08881E0A, 0x08881ED4, 0x08881FA8, 0x088820E1, 0x08882201  @ parts
+	.incbin "baserom_jp.gba", 0x8822B4, 0x864
+	.globl sSongHeader_393
+sSongHeader_393: @ 0x08882B18
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08606638  @ tone
+	.4byte 0x088822B4, 0x08882403, 0x0888254E, 0x08882653, 0x0888270B, 0x088827BA, 0x08882A0E  @ parts
+	.incbin "baserom_jp.gba", 0x882B3C, 0x920
+	.globl sSongHeader_394
+sSongHeader_394: @ 0x0888345C
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08606C38  @ tone
+	.4byte 0x08882B3C, 0x08882B88, 0x08882D72, 0x08882E45, 0x08882F2C, 0x08883014, 0x08883268  @ parts
+	.incbin "baserom_jp.gba", 0x883480, 0x958
+	.globl sSongHeader_395
+sSongHeader_395: @ 0x08883DD8
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08607238  @ tone
+	.4byte 0x08883480, 0x088835C6, 0x08883704, 0x088837C5, 0x08883888, 0x08883ADC, 0x08883C94  @ parts
+	.incbin "baserom_jp.gba", 0x883DFC, 0x880
+	.globl sSongHeader_396
+sSongHeader_396: @ 0x0888467C
+	.byte 0x05, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08607838  @ tone
+	.4byte 0x08883DFC, 0x08883F3E, 0x088840D2, 0x08884271, 0x088844C5  @ parts
+	.incbin "baserom_jp.gba", 0x884698, 0x628
+	.globl sSongHeader_397
+sSongHeader_397: @ 0x08884CC0
+	.byte 0x05, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08607E38  @ tone
+	.4byte 0x08884698, 0x08884857, 0x088849CC, 0x08884AB8, 0x08884BC5  @ parts
+	.incbin "baserom_jp.gba", 0x884CDC, 0xA94
+	.globl sSongHeader_398
+sSongHeader_398: @ 0x08885770
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08608204  @ tone
+	.4byte 0x08884CDC, 0x08884D70, 0x08884FAB, 0x088850DB, 0x0888518E, 0x0888525D, 0x08885325, 0x08885447, 0x0888556C, 0x088856C8  @ parts
+	.incbin "baserom_jp.gba", 0x8857A0, 0x12CC
+	.globl sSongHeader_399
+sSongHeader_399: @ 0x08886A6C
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086085D0  @ tone
+	.4byte 0x088857A0, 0x08885ACA, 0x08885E90, 0x08886193, 0x08886351, 0x088864B1, 0x08886757, 0x0888688E  @ parts
+	.incbin "baserom_jp.gba", 0x886A94, 0xC18
+	.globl sSongHeader_400
+sSongHeader_400: @ 0x088876AC
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08608BD0  @ tone
+	.4byte 0x08886A94, 0x08886AE4, 0x08886D24, 0x08886DD9, 0x08886FCF, 0x08887106, 0x08887249, 0x088874F8, 0x08887527  @ parts
+	.incbin "baserom_jp.gba", 0x8876D8, 0x139C
+	.globl sSongHeader_401
+sSongHeader_401: @ 0x08888A74
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086091D0  @ tone
+	.4byte 0x088876D8, 0x088879FF, 0x08887B20, 0x08887C6A, 0x08887FA7, 0x0888807D, 0x08888206, 0x088884EF, 0x0888869F, 0x08888890  @ parts
+	.incbin "baserom_jp.gba", 0x888AA4, 0x1CD8
+	.globl sSongHeader_402
+sSongHeader_402: @ 0x0888A77C
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086097D0  @ tone
+	.4byte 0x08888AA4, 0x08888CE2, 0x08889112, 0x08889427, 0x08889964, 0x08889D8A, 0x0888A1C4, 0x0888A3D1, 0x0888A5D4  @ parts
+	.incbin "baserom_jp.gba", 0x88A7A8, 0x17B8
+	.globl sSongHeader_403
+sSongHeader_403: @ 0x0888BF60
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08609BF0  @ tone
+	.4byte 0x0888A7A8, 0x0888AA86, 0x0888AD7E, 0x0888B0EE, 0x0888B2B8, 0x0888B649, 0x0888B9AF, 0x0888BD77, 0x0888BDEB  @ parts
+	.incbin "baserom_jp.gba", 0x88BF8C, 0x1294
+	.globl sSongHeader_404
+sSongHeader_404: @ 0x0888D220
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860A1F0  @ tone
+	.4byte 0x0888BF8C, 0x0888C30C, 0x0888C5B6, 0x0888CA3E, 0x0888CACF, 0x0888CD99, 0x0888CE82, 0x0888CF1A  @ parts
+	.incbin "baserom_jp.gba", 0x88D248, 0x122C
+	.globl sSongHeader_405
+sSongHeader_405: @ 0x0888E474
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860A7F0  @ tone
+	.4byte 0x0888D248, 0x0888D371, 0x0888D6E6, 0x0888DBB6, 0x0888DC64, 0x0888DD21, 0x0888DED7, 0x0888E2EC, 0x0888E3F7  @ parts
+	.incbin "baserom_jp.gba", 0x88E4A0, 0x2494
+	.globl sSongHeader_406
+sSongHeader_406: @ 0x08890934
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860AB68  @ tone
+	.4byte 0x0888E4A0, 0x0888E9A8, 0x0888EB82, 0x0888F1FA, 0x0888F958, 0x0888FAB3, 0x0888FD46, 0x08890282, 0x088907CE  @ parts
+	.incbin "baserom_jp.gba", 0x890960, 0x644
+	.globl sSongHeader_407
+sSongHeader_407: @ 0x08890FA4
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860B168  @ tone
+	.4byte 0x08890960, 0x08890A23, 0x08890B52, 0x08890C01, 0x08890C3B, 0x08890CF9, 0x08890E01, 0x08890E5A, 0x08890EE7  @ parts
+	.incbin "baserom_jp.gba", 0x890FD0, 0x11C8
+	.globl sSongHeader_408
+sSongHeader_408: @ 0x08892198
+	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860B768  @ tone
+	.4byte 0x08890FD0, 0x088912AC, 0x088916A8, 0x08891A69, 0x08891D71, 0x08891E5F  @ parts
+	.incbin "baserom_jp.gba", 0x8921B8, 0xF5C
+	.globl sSongHeader_409
+sSongHeader_409: @ 0x08893114
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860BD68  @ tone
+	.4byte 0x088921B8, 0x088923D5, 0x08892631, 0x08892830, 0x08892A45, 0x08892CF0, 0x08892E8F, 0x08892F38  @ parts
+	.incbin "baserom_jp.gba", 0x89313C, 0x3AC
+	.globl sSongHeader_410
+sSongHeader_410: @ 0x088934E8
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860C368  @ tone
+	.4byte 0x0889313C, 0x088931D4, 0x08893246, 0x0889329A, 0x08893317, 0x088933D5, 0x08893425  @ parts
+	.incbin "baserom_jp.gba", 0x89350C, 0x15E0
+	.globl sSongHeader_411
+sSongHeader_411: @ 0x08894AEC
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860C968  @ tone
+	.4byte 0x0889350C, 0x08893880, 0x0889394D, 0x08893B42, 0x08893BDB, 0x08893E52, 0x088941BA, 0x088944BB, 0x08894817, 0x088949E2  @ parts
+	.incbin "baserom_jp.gba", 0x894B1C, 0x115C
+	.globl sSongHeader_412
+sSongHeader_412: @ 0x08895C78
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860CF68  @ tone
+	.4byte 0x08894B1C, 0x08894BA0, 0x08894F21, 0x08895191, 0x088954EE, 0x08895624, 0x0889586B, 0x08895AB0, 0x08895B99  @ parts
+	.incbin "baserom_jp.gba", 0x895CA4, 0x2DD8
+	.globl sSongHeader_413
+sSongHeader_413: @ 0x08898A7C
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860D568  @ tone
+	.4byte 0x08895CA4, 0x0889604F, 0x0889666A, 0x08896A58, 0x088970D2, 0x088972AC, 0x088979F5, 0x08897F68, 0x0889852C, 0x088986B1  @ parts
+	.incbin "baserom_jp.gba", 0x898AAC, 0x116C
+	.globl sSongHeader_414
+sSongHeader_414: @ 0x08899C18
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860D994  @ tone
+	.4byte 0x08898AAC, 0x08898BE2, 0x08898E6E, 0x08899094, 0x08899372, 0x088994FB, 0x08899697, 0x08899896, 0x08899AD5, 0x08899B49  @ parts
+	.incbin "baserom_jp.gba", 0x899C48, 0xCD4
+	.globl sSongHeader_415
+sSongHeader_415: @ 0x0889A91C
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860DF94  @ tone
+	.4byte 0x08899C48, 0x08899E2C, 0x08899EA3, 0x0889A091, 0x0889A1BD, 0x0889A210, 0x0889A2DB, 0x0889A48B, 0x0889A64F, 0x0889A76F  @ parts
+	.incbin "baserom_jp.gba", 0x89A94C, 0x904
+	.globl sSongHeader_416
+sSongHeader_416: @ 0x0889B250
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860E594  @ tone
+	.4byte 0x0889A94C, 0x0889A9BE, 0x0889A9E4, 0x0889AB81, 0x0889ACF6, 0x0889AE6E, 0x0889AFB8, 0x0889B0FE  @ parts
+	.incbin "baserom_jp.gba", 0x89B278, 0xCA8
+	.globl sSongHeader_417
+sSongHeader_417: @ 0x0889BF20
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860EB94  @ tone
+	.4byte 0x0889B278, 0x0889B368, 0x0889B39D, 0x0889B606, 0x0889B908, 0x0889BBF4, 0x0889BC40, 0x0889BD37, 0x0889BE2E  @ parts
+	.incbin "baserom_jp.gba", 0x89BF4C, 0x1718
+	.globl sSongHeader_418
+sSongHeader_418: @ 0x0889D664
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860F194  @ tone
+	.4byte 0x0889BF4C, 0x0889C06A, 0x0889C423, 0x0889C7E8, 0x0889C858, 0x0889CABF, 0x0889CD64, 0x0889D186, 0x0889D414  @ parts
+	.incbin "baserom_jp.gba", 0x89D690, 0xE10
+	.globl sSongHeader_419
+sSongHeader_419: @ 0x0889E4A0
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860F794  @ tone
+	.4byte 0x0889D690, 0x0889D712, 0x0889D793, 0x0889D9F1, 0x0889DBBA, 0x0889DDA4, 0x0889DDF8, 0x0889DFE7, 0x0889E206, 0x0889E2EA  @ parts
+	.incbin "baserom_jp.gba", 0x89E4D0, 0x608
+	.globl sSongHeader_420
+sSongHeader_420: @ 0x0889EAD8
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0860FD94  @ tone
+	.4byte 0x0889E4D0, 0x0889E5B7, 0x0889E674, 0x0889E728, 0x0889E7D6, 0x0889E883, 0x0889E930, 0x0889EA11  @ parts
+	.incbin "baserom_jp.gba", 0x89EB00, 0xCD4
+	.globl sSongHeader_421
+sSongHeader_421: @ 0x0889F7D4
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08610394  @ tone
+	.4byte 0x0889EB00, 0x0889ECE6, 0x0889ED5D, 0x0889EF4B, 0x0889F078, 0x0889F0CB, 0x0889F196, 0x0889F346, 0x0889F50A, 0x0889F62A  @ parts
+	.incbin "baserom_jp.gba", 0x89F804, 0xDD8
+	.globl sSongHeader_422
+sSongHeader_422: @ 0x088A05DC
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08610994  @ tone
+	.4byte 0x0889F804, 0x0889FA31, 0x0889FBC2, 0x0889FE75, 0x088A0080, 0x088A01BD, 0x088A0300, 0x088A0446  @ parts
+	.incbin "baserom_jp.gba", 0x8A0604, 0x8A0
+	.globl sSongHeader_423
+sSongHeader_423: @ 0x088A0EA4
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08610F94  @ tone
+	.4byte 0x088A0604, 0x088A0787, 0x088A07D9, 0x088A08B4, 0x088A099E, 0x088A0A74, 0x088A0BAF, 0x088A0C44, 0x088A0D2F  @ parts
+	.incbin "baserom_jp.gba", 0x8A0ED0, 0x4A4
+	.globl sSongHeader_424
+sSongHeader_424: @ 0x088A1374
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08611594  @ tone
+	.4byte 0x088A0ED0, 0x088A0F7F, 0x088A1040, 0x088A10FE, 0x088A1167, 0x088A11C6, 0x088A1233, 0x088A127A, 0x088A12C9  @ parts
+	.incbin "baserom_jp.gba", 0x8A13A0, 0x648
+	.globl sSongHeader_425
+sSongHeader_425: @ 0x088A19E8
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08611B94  @ tone
+	.4byte 0x088A13A0, 0x088A14FB, 0x088A1586, 0x088A1699, 0x088A1720, 0x088A17F5, 0x088A18B0, 0x088A196E, 0x088A1999  @ parts
+	.incbin "baserom_jp.gba", 0x8A1A14, 0x16F8
+	.globl sSongHeader_426
+sSongHeader_426: @ 0x088A310C
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08612194  @ tone
+	.4byte 0x088A1A14, 0x088A1BED, 0x088A1D97, 0x088A1F4A, 0x088A23B8, 0x088A27BB, 0x088A29E4, 0x088A2C16, 0x088A2CC2, 0x088A2F81  @ parts
+	.incbin "baserom_jp.gba", 0x8A313C, 0xE1C
+	.globl sSongHeader_427
+sSongHeader_427: @ 0x088A3F58
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08612794  @ tone
+	.4byte 0x088A313C, 0x088A32D9, 0x088A3481, 0x088A35DD, 0x088A37B2, 0x088A37F4, 0x088A39E8, 0x088A3BE2, 0x088A3CB4, 0x088A3E17  @ parts
+	.incbin "baserom_jp.gba", 0x8A3F88, 0x760
+	.globl sSongHeader_428
+sSongHeader_428: @ 0x088A46E8
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08612D94  @ tone
+	.4byte 0x088A3F88, 0x088A3FEF, 0x088A4044, 0x088A40C0, 0x088A429B, 0x088A4315, 0x088A43D8, 0x088A449B, 0x088A464A  @ parts
+	.incbin "baserom_jp.gba", 0x8A4714, 0x1370
+	.globl sSongHeader_429
+sSongHeader_429: @ 0x088A5A84
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08613394  @ tone
+	.4byte 0x088A4714, 0x088A486F, 0x088A4A35, 0x088A4CC3, 0x088A4F52, 0x088A5235, 0x088A550A, 0x088A57D6, 0x088A5840, 0x088A59FB  @ parts
+	.incbin "baserom_jp.gba", 0x8A5AB4, 0x8E0
+	.globl sSongHeader_430
+sSongHeader_430: @ 0x088A6394
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08613994  @ tone
+	.4byte 0x088A5AB4, 0x088A5B5B, 0x088A5C5B, 0x088A5D5F, 0x088A5E78, 0x088A5F21, 0x088A6037, 0x088A6107, 0x088A6211  @ parts
+	.incbin "baserom_jp.gba", 0x8A63C0, 0xDDC
+	.globl sSongHeader_431
+sSongHeader_431: @ 0x088A719C
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08613F94  @ tone
+	.4byte 0x088A63C0, 0x088A6567, 0x088A663C, 0x088A68D8, 0x088A6A06, 0x088A6C76, 0x088A6DC7, 0x088A6F15, 0x088A70AE  @ parts
+	.incbin "baserom_jp.gba", 0x8A71C8, 0xC84
+	.globl sSongHeader_432
+sSongHeader_432: @ 0x088A7E4C
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08614594  @ tone
+	.4byte 0x088A71C8, 0x088A72E9, 0x088A73F7, 0x088A74E8, 0x088A767D, 0x088A77E7, 0x088A799A, 0x088A7B4D, 0x088A7B73, 0x088A7C34  @ parts
+	.incbin "baserom_jp.gba", 0x8A7E7C, 0x1E0C
+	.globl sSongHeader_433
+sSongHeader_433: @ 0x088A9C88
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08614B94  @ tone
+	.4byte 0x088A7E7C, 0x088A7FF9, 0x088A82FE, 0x088A867D, 0x088A8835, 0x088A88F4, 0x088A8E37, 0x088A9343, 0x088A9730, 0x088A9A8E  @ parts
+	.incbin "baserom_jp.gba", 0x8A9CB8, 0x2224
+	.globl sSongHeader_434
+sSongHeader_434: @ 0x088ABEDC
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08615194  @ tone
+	.4byte 0x088A9CB8, 0x088A9E43, 0x088AA168, 0x088AA38C, 0x088AA91F, 0x088AAC89, 0x088AB1CE, 0x088AB58A, 0x088AB9ED, 0x088ABD5D  @ parts
+	.incbin "baserom_jp.gba", 0x8ABF0C, 0x330
+	.globl sSongHeader_435
+sSongHeader_435: @ 0x088AC23C
+	.byte 0x04, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08615794  @ tone
+	.4byte 0x088ABF0C, 0x088ABF47, 0x088AC0A9, 0x088AC199  @ parts
+	.incbin "baserom_jp.gba", 0x8AC254, 0xB80
+	.globl sSongHeader_436
+sSongHeader_436: @ 0x088ACDD4
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x086157AC  @ tone
+	.4byte 0x088AC254, 0x088AC2D9, 0x088AC34C, 0x088AC3E1, 0x088AC570, 0x088AC799, 0x088AC978, 0x088ACB1B, 0x088ACB4E, 0x088ACCD8  @ parts
+	.incbin "baserom_jp.gba", 0x8ACE04, 0xE8C
+	.globl sSongHeader_437
+sSongHeader_437: @ 0x088ADC90
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08615DAC  @ tone
+	.4byte 0x088ACE04, 0x088AD0AE, 0x088AD160, 0x088AD1CF, 0x088AD395, 0x088AD603, 0x088AD7F0, 0x088AD9D9, 0x088ADB06  @ parts
+	.incbin "baserom_jp.gba", 0x8ADCBC, 0x7E8
+	.globl sSongHeader_438
+sSongHeader_438: @ 0x088AE4A4
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861619C  @ tone
+	.4byte 0x088ADCBC, 0x088ADD9E, 0x088ADF54, 0x088AE0AA, 0x088AE160, 0x088AE210, 0x088AE23B, 0x088AE353  @ parts
+	.incbin "baserom_jp.gba", 0x8AE4CC, 0x5E4
+	.globl sSongHeader_439
+sSongHeader_439: @ 0x088AEAB0
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861679C  @ tone
+	.4byte 0x088AE4CC, 0x088AE53A, 0x088AE63D, 0x088AE6B3, 0x088AE7A5, 0x088AE888, 0x088AE910, 0x088AE9EB  @ parts
+	.incbin "baserom_jp.gba", 0x8AEAD8, 0xE9C
+	.globl sSongHeader_440
+sSongHeader_440: @ 0x088AF974
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08616D9C  @ tone
+	.4byte 0x088AEAD8, 0x088AEC5B, 0x088AED97, 0x088AEE7B, 0x088AF134, 0x088AF3F8, 0x088AF64C, 0x088AF82D  @ parts
+	.incbin "baserom_jp.gba", 0x8AF99C, 0xB38
+	.globl sSongHeader_441
+sSongHeader_441: @ 0x088B04D4
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861739C  @ tone
+	.4byte 0x088AF99C, 0x088AFBDF, 0x088AFCA1, 0x088AFE6D, 0x088AFF47, 0x088AFFED, 0x088B0129, 0x088B0299, 0x088B02DA, 0x088B0429  @ parts
+	.incbin "baserom_jp.gba", 0x8B0504, 0xBF4
+	.globl sSongHeader_442
+sSongHeader_442: @ 0x088B10F8
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861799C  @ tone
+	.4byte 0x088B0504, 0x088B05B8, 0x088B0727, 0x088B07A5, 0x088B0927, 0x088B0AE4, 0x088B0C55, 0x088B0DEE, 0x088B0FE1  @ parts
+	.incbin "baserom_jp.gba", 0x8B1124, 0x634
+	.globl sSongHeader_443
+sSongHeader_443: @ 0x088B1758
+	.byte 0x06, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08617F9C  @ tone
+	.4byte 0x088B1124, 0x088B1211, 0x088B1295, 0x088B13F9, 0x088B151A, 0x088B1592  @ parts
+	.incbin "baserom_jp.gba", 0x8B1778, 0x2BC
+	.globl sSongHeader_444
+sSongHeader_444: @ 0x088B1A34
+	.byte 0x03, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861859C  @ tone
+	.4byte 0x088B1778, 0x088B184D, 0x088B1989  @ parts
+	.incbin "baserom_jp.gba", 0x8B1A48, 0x10C8
+	.globl sSongHeader_445
+sSongHeader_445: @ 0x088B2B10
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08618B9C  @ tone
+	.4byte 0x088B1A48, 0x088B1B55, 0x088B1F45, 0x088B1F87, 0x088B21EF, 0x088B2463, 0x088B24AF, 0x088B271B  @ parts
+	.incbin "baserom_jp.gba", 0x8B2B38, 0x43C
+	.globl sSongHeader_446
+sSongHeader_446: @ 0x088B2F74
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861919C  @ tone
+	.4byte 0x088B2B38, 0x088B2BB5, 0x088B2C3B, 0x088B2CC9, 0x088B2DB7, 0x088B2E1B, 0x088B2E7F, 0x088B2EFA  @ parts
+	.incbin "baserom_jp.gba", 0x8B2F9C, 0x794
+	.globl sSongHeader_447
+sSongHeader_447: @ 0x088B3730
+	.byte 0x07, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861979C  @ tone
+	.4byte 0x088B2F9C, 0x088B3360, 0x088B33AC, 0x088B34B3, 0x088B355C, 0x088B35FF, 0x088B36AB  @ parts
+	.incbin "baserom_jp.gba", 0x8B3754, 0xEBC
+	.globl sSongHeader_448
+sSongHeader_448: @ 0x088B4610
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x08619D9C  @ tone
+	.4byte 0x088B3754, 0x088B380E, 0x088B3A9C, 0x088B3DFE, 0x088B3FCF, 0x088B417C, 0x088B423C, 0x088B43EE  @ parts
+	.incbin "baserom_jp.gba", 0x8B4638, 0x4E0
+	.globl sSongHeader_449
+sSongHeader_449: @ 0x088B4B18
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861A39C  @ tone
+	.4byte 0x088B4638, 0x088B46E3, 0x088B4709, 0x088B47A9, 0x088B4851, 0x088B4872, 0x088B4932, 0x088B49A9, 0x088B4A22, 0x088B4A7D  @ parts
+	.incbin "baserom_jp.gba", 0x8B4B48, 0xC58
+	.globl sSongHeader_450
+sSongHeader_450: @ 0x088B57A0
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861A99C  @ tone
+	.4byte 0x088B4B48, 0x088B4B98, 0x088B4D6E, 0x088B5054, 0x088B5099, 0x088B5224, 0x088B53B2, 0x088B547A, 0x088B5620  @ parts
+	.incbin "baserom_jp.gba", 0x8B57CC, 0x558
+	.globl sSongHeader_451
+sSongHeader_451: @ 0x088B5D24
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861AF9C  @ tone
+	.4byte 0x088B57CC, 0x088B57FB, 0x088B58F8, 0x088B5978, 0x088B5A68, 0x088B5B33, 0x088B5BFD, 0x088B5C7C  @ parts
+	.incbin "baserom_jp.gba", 0x8B5D4C, 0x660
+	.globl sSongHeader_452
+sSongHeader_452: @ 0x088B63AC
+	.byte 0x08, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861B59C  @ tone
+	.4byte 0x088B5D4C, 0x088B5DF6, 0x088B5E7D, 0x088B5F87, 0x088B6068, 0x088B6149, 0x088B627C, 0x088B6306  @ parts
+	.incbin "baserom_jp.gba", 0x8B63D4, 0x55C
+	.globl sSongHeader_453
+sSongHeader_453: @ 0x088B6930
+	.byte 0x09, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861BB9C  @ tone
+	.4byte 0x088B63D4, 0x088B64CC, 0x088B655F, 0x088B65C4, 0x088B6657, 0x088B667F, 0x088B675C, 0x088B6839, 0x088B689D  @ parts
+	.incbin "baserom_jp.gba", 0x8B695C, 0x10BC
+	.globl sSongHeader_454
+sSongHeader_454: @ 0x088B7A18
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861C19C  @ tone
+	.4byte 0x088B695C, 0x088B6A93, 0x088B6D3A, 0x088B6FD5, 0x088B71B2, 0x088B7241, 0x088B73E6, 0x088B75C9, 0x088B76F8, 0x088B78E8  @ parts
+	.incbin "baserom_jp.gba", 0x8B7A48, 0x25FC
+	.globl sSongHeader_455
+sSongHeader_455: @ 0x088BA044
+	.byte 0x0A, 0x00, 0x00, 0xB2  @ trackCount, blockCount, priority, reverb
+	.4byte 0x0861C79C  @ tone
+	.4byte 0x088B7A48, 0x088B7D7E, 0x088B8395, 0x088B864E, 0x088B8BD8, 0x088B906A, 0x088B9570, 0x088B98FB, 0x088B9965, 0x088B9BA1  @ parts
+	.incbin "baserom_jp.gba", 0x8BA074, 0x4F4
 
 	.globl gUnknown_88BA568
 gUnknown_88BA568: @ 0x88BA568
