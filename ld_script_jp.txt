@@ -941,7 +941,6 @@ BattleScript_FlushMessageBox = gUnknown_8289E05;
 BattleScript_SpikesOnTarget = gUnknown_8289418;
 BattleScript_SpikesOnAttacker = gUnknown_82893E1;
 BattleScript_SpikesOnFaintedBattler = gUnknown_828944F;
-gMissStringIds = gUnknown_85AB9A0;
 gBattleScriptsForMoveEffects = gUnknown_8286C30;
 gTrappingMoves = gUnknown_85ABAEE;
 GetMoveSlotToReplace = sub_081C14C8;
