@@ -10502,7 +10502,7 @@ SECTIONS {
         src/multiboot.o(.text.MultiBootInit);
         src/multiboot.o(.text);
         src/berry_fix_program.o(.text.LoadBerryFixGraphics);
-        asm/battle_controller_player_partner.o(.text);
+        src/battle_controller_player_partner.o(.text);
         src/mirage_tower.o(.text.IsMirageTowerVisible);
         src/mirage_tower.o(.text.UpdateMirageTowerPulseBlend);
         src/mirage_tower.o(.text.ClearMirageTowerPulseBlend);
