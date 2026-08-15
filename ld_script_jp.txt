@@ -9216,6 +9216,8 @@ SECTIONS {
         data/data_b2.o(.rodata);
         src/data/text/type_names.o(.rodata);
         data/data_b2b.o(.rodata);
+        src/data/text/abilities.o(.rodata);
+        data/data_b2d.o(.rodata);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c.o(.rodata);
         data/multiboot_ereader.o(.rodata);
