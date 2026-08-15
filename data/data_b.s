@@ -34194,9 +34194,15 @@ sMultiTrainerMatchCallTexts: @ 0x85D7A54
 	.hword 0
 	.4byte 0x085D7A4F @ text (gText_* not yet symbolized)
 
-	.globl gUnknown_85D7A84
-gUnknown_85D7A84: @ 0x85D7A84
-	.incbin "baserom_jp.gba", 0x5d7a84, 0x1c
+	.globl sBattleFrontierFacilityNames
+sBattleFrontierFacilityNames: @ 0x85D7A84
+	.4byte 0x085CC423 @ FRONTIER_FACILITY_TOWER (US gText_*)
+	.4byte 0x085CC42A @ FRONTIER_FACILITY_DOME (US gText_*)
+	.4byte 0x085CC431 @ FRONTIER_FACILITY_PALACE (US gText_*)
+	.4byte 0x085CC442 @ FRONTIER_FACILITY_ARENA (US gText_*)
+	.4byte 0x085CC44A @ MATCH_CALL_PIKE (US gText_*)
+	.4byte 0x085CC438 @ MATCH_CALL_FACTORY (US gText_*)
+	.4byte 0x085CC452 @ FRONTIER_FACILITY_PYRAMID (US gText_*)
 
 	.globl sBadgeFlags
 sBadgeFlags: @ 0x85D7AA0
