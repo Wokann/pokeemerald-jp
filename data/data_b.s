@@ -39106,1543 +39106,19332 @@ sSongHeader_11: @ 0x08868588
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte sSong11_Part0  @ parts
-	.incbin "baserom_jp.gba", 0x868594, 0x20
+	.globl sSong12_Part0
+sSong12_Part0: @ 0x08868594
+	.byte	KEYSH , 0
+	.byte	TEMPO , 45
+	.byte	VOICE , 127
+	.byte	VOL , 110
+	.byte	N03, Gn2, 100
+	.byte	W03
+	.byte	N06, As2
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong12_Part1
+sSong12_Part1: @ 0x088685A5
+	.byte	KEYSH , 0
+	.byte	VOICE , 0
+	.byte	VOL , 110
+	.byte	N09, As1, 127
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8685B2, 0x2
 	.globl sSongHeader_12
 sSongHeader_12: @ 0x088685B4
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08868594, 0x088685A5  @ parts
-	.incbin "baserom_jp.gba", 0x8685C4, 0x3C
+	.globl sSong13_Part0
+sSong13_Part0: @ 0x088685C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 45
+	.byte	VOICE , 125
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, As2, 100
+	.byte	W03
+	.byte	BEND , 31
+	.byte	N36, Ds3
+	.byte	W03
+	.byte	BEND , 64
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong13_Part1
+sSong13_Part1: @ 0x088685E6
+	.byte	KEYSH , 0
+	.byte	VOICE , 0
+	.byte	VOL , 110
+	.byte	N03, Cn3, 127
+	.byte	W03
+	.byte	N18
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8685FF, 0x1
 	.globl sSongHeader_13
 sSongHeader_13: @ 0x08868600
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x088685C4, 0x088685E6  @ parts
-	.incbin "baserom_jp.gba", 0x868610, 0x6C
+	.globl sSong14_Part0
+sSong14_Part0: @ 0x08868610
+	.byte	KEYSH , 0
+	.byte	TEMPO , 45
+	.byte	VOICE , 125
+	.byte	VOL , 110
+	.byte	N03, Cn3, 100
+	.byte	W03
+	.byte	An2
+	.byte	W03
+	.byte	Cn3
+	.byte	W03
+	.byte	N06, Gn3, 72
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 52
+	.byte	W03
+	.byte	N06, Gn3, 48
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 28
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 12
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong14_Part1
+sSong14_Part1: @ 0x08868646
+	.byte	KEYSH , 0
+	.byte	VOICE , 0
+	.byte	VOL , 110
+	.byte	N03, Cn4, 127
+	.byte	W03
+	.byte	Cn3
+	.byte	W03
+	.byte	Cn4
+	.byte	W03
+	.byte	N06, Gn3, 88
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 64
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 44
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 28
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	N03, Cn3, 12
+	.byte	W03
+	.byte	N06, Gn3
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86867A, 0x2
 	.globl sSongHeader_14
 sSongHeader_14: @ 0x0886867C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08868610, 0x08868646  @ parts
-	.incbin "baserom_jp.gba", 0x86868C, 0x44
+	.globl sSong15_Part0
+sSong15_Part0: @ 0x0886868C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 45
+	.byte	VOICE , 86
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N02, Gn1, 100
+	.byte	W03
+	.byte	N05, Fn2
+	.byte	W03
+	.byte	W03
+	.byte	N06, Fn2, 52
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong15_Part1
+sSong15_Part1: @ 0x088686A4
+	.byte	KEYSH , 0
+	.byte	VOICE , 0
+	.byte	VOL , 100
+	.byte	BENDR , 12
+	.byte	BEND , 64
+	.byte	N03, Gn3, 52
+	.byte	W03
+	.byte	Cn2, 112
+	.byte	W03
+	.byte	W03
+	.byte	Cn1, 92
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong15_Part2
+sSong15_Part2: @ 0x088686BB
+	.byte	KEYSH , 0
+	.byte	VOICE , 124
+	.byte	VOL , 100
+	.byte	N03, Gn3, 52
+	.byte	W03
+	.byte	N06, Gs4
+	.byte	W03
+	.byte	W03
+	.byte	Gs4, 20
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8686CE, 0x2
 	.globl sSongHeader_15
 sSongHeader_15: @ 0x088686D0
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x0886868C, 0x088686A4, 0x088686BB  @ parts
-	.incbin "baserom_jp.gba", 0x8686E4, 0x40
+	.globl sSong16_Part0
+sSong16_Part0: @ 0x088686E4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 45
+	.byte	VOICE , 90
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N09, Cn4, 100
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong16_Part1
+sSong16_Part1: @ 0x088686F7
+	.byte	KEYSH , 0
+	.byte	VOICE , 124
+	.byte	BENDR , 12
+	.byte	VOL , 82
+	.byte	BEND , 64
+	.byte	N05, Gs4, 60
+	.byte	W03
+	.byte	VOL , 94
+	.byte	W03
+	.byte	103
+	.byte	N22
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W03
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong16_Part2
+sSong16_Part2: @ 0x08868712
+	.byte	KEYSH , 0
+	.byte	VOICE , 0
+	.byte	VOL , 110
+	.byte	N06, Cn3, 80
+	.byte	W06
+	.byte	N18, Cn3, 92
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_16
 sSongHeader_16: @ 0x08868724
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x088686E4, 0x088686F7, 0x08868712  @ parts
-	.incbin "baserom_jp.gba", 0x868738, 0x3C
+	.globl sSong17_Part0
+sSong17_Part0: @ 0x08868738
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 126
+	.byte	VOL , 90
+	.byte	N03, Fn4, 120
+	.byte	W03
+	.byte	Gs4, 112
+	.byte	W03
+	.byte	N02, Fs3
+	.byte	W03
+	.byte	N03, Gs4, 72
+	.byte	W03
+	.byte	N02, Fs3, 96
+	.byte	W03
+	.byte	N03, Gs4, 56
+	.byte	W03
+	.byte	N02, Fs3, 80
+	.byte	W03
+	.byte	N03, Gs4, 40
+	.byte	W03
+	.byte	N02, Fs3, 64
+	.byte	W03
+	.byte	N03, Gs4, 24
+	.byte	W03
+	.byte	N02, Fs3, 48
+	.byte	W03
+	.byte	N03, Gs4, 20
+	.byte	W03
+	.byte	Fs3, 28
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868772, 0x2
 	.globl sSongHeader_17
 sSongHeader_17: @ 0x08868774
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868738  @ parts
-	.incbin "baserom_jp.gba", 0x868780, 0x10
+	.4byte sSong17_Part0  @ parts
+	.globl sSong18_Part0
+sSong18_Part0: @ 0x08868780
+	.byte	KEYSH , 0
+	.byte	TEMPO , 60
+	.byte	VOICE , 1
+	.byte	VOL , 95
+	.byte	N12, Cn2, 127
+	.byte	W12
+	.byte	VOL , 0
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86878F, 0x1
 	.globl sSongHeader_18
 sSongHeader_18: @ 0x08868790
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868780  @ parts
-	.incbin "baserom_jp.gba", 0x86879C, 0x48
+	.4byte sSong18_Part0  @ parts
+	.globl sSong19_Part0
+sSong19_Part0: @ 0x0886879C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 123
+	.byte	VOL , 75
+	.byte	N03, Ds3, 127
+	.byte	W03
+	.byte	TIE , 72
+	.byte	W21
+	.byte	W24
+	.byte	W18
+	.byte	VOL , 75
+	.byte	W06
+	.byte	71
+	.byte	W05
+	.byte	67
+	.byte	W03
+	.byte	62
+	.byte	W04
+	.byte	59
+	.byte	W05
+	.byte	57
+	.byte	W03
+	.byte	54
+	.byte	W04
+	.byte	W02
+	.byte	50
+	.byte	W03
+	.byte	49
+	.byte	W03
+	.byte	44
+	.byte	W04
+	.byte	41
+	.byte	W02
+	.byte	38
+	.byte	W03
+	.byte	35
+	.byte	W03
+	.byte	32
+	.byte	W04
+	.byte	28
+	.byte	W02
+	.byte	24
+	.byte	W03
+	.byte	21
+	.byte	W03
+	.byte	18
+	.byte	W04
+	.byte	14
+	.byte	W02
+	.byte	11
+	.byte	W03
+	.byte	9
+	.byte	W03
+	.byte	6
+	.byte	W04
+	.byte	3
+	.byte	W02
+	.byte	1
+	.byte	W22
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8687E1, 0x3
 	.globl sSongHeader_19
 sSongHeader_19: @ 0x088687E4
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886879C  @ parts
-	.incbin "baserom_jp.gba", 0x8687F0, 0x3C
+	.4byte sSong19_Part0  @ parts
+	.globl sSong20_Part0
+sSong20_Part0: @ 0x088687F0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, En2, 127
+	.byte	W03
+	.byte	Dn2
+	.byte	W03
+	.byte	N06, Gn1
+	.byte	W06
+	.byte	N60, An2
+	.byte	W12
+	.byte	W24
+	.byte	VOL , 94
+	.byte	BEND , 59
+	.byte	W03
+	.byte	VOL , 81
+	.byte	W03
+	.byte	71
+	.byte	BEND , 52
+	.byte	W03
+	.byte	VOL , 47
+	.byte	W03
+	.byte	32
+	.byte	BEND , 45
+	.byte	W03
+	.byte	VOL , 20
+	.byte	W03
+	.byte	7
+	.byte	BEND , 36
+	.byte	W03
+	.byte	VOL , 0
+	.byte	BEND , 27
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868829, 0x3
 	.globl sSongHeader_20
 sSongHeader_20: @ 0x0886882C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088687F0  @ parts
-	.incbin "baserom_jp.gba", 0x868838, 0x20
+	.4byte sSong20_Part0  @ parts
+	.globl sSong21_Part0
+sSong21_Part0: @ 0x08868838
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 5
+	.byte	BENDR , 12
+	.byte	VOL , 60
+	.byte	BEND , 64
+	.byte	N03, Gn5, 127
+	.byte	W03
+	.byte	Gn6, 112
+	.byte	W03
+	.byte	Gn6, 24
+	.byte	W03
+	.byte	Gn6, 68
+	.byte	W03
+	.byte	Gn6, 24
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868855, 0x3
 	.globl sSongHeader_21
 sSongHeader_21: @ 0x08868858
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868838  @ parts
-	.incbin "baserom_jp.gba", 0x868864, 0x18
+	.4byte sSong21_Part0  @ parts
+	.globl sSong22_Part0
+sSong22_Part0: @ 0x08868864
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 5
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Cn3, 127
+	.byte	W03
+	.byte	Cn2, 112
+	.byte	W03
+	.byte	W03
+	.byte	Cn2, 24
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_22
 sSongHeader_22: @ 0x0886887C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868864  @ parts
-	.incbin "baserom_jp.gba", 0x868888, 0x18
+	.4byte sSong22_Part0  @ parts
+	.globl sSong23_Part0
+sSong23_Part0: @ 0x08868888
+	.byte	KEYSH , 0
+	.byte	TEMPO , 64
+	.byte	VOICE , 7
+	.byte	BENDR , 12
+	.byte	VOL , 70
+	.byte	BEND , 66
+	.byte	N04, Fn2, 127
+	.byte	W04
+	.byte	N01, Dn3
+	.byte	W02
+	.byte	VOICE , 8
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86889E, 0x2
 	.globl sSongHeader_23
 sSongHeader_23: @ 0x088688A0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868888  @ parts
-	.incbin "baserom_jp.gba", 0x8688AC, 0x44
+	.4byte sSong23_Part0  @ parts
+	.globl sSong24_Part0
+sSong24_Part0: @ 0x088688AC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 72
+	.byte	VOICE , 80
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	W06
+	.byte	N06, Cn3, 112
+	.byte	W06
+	.byte	N15, Gn3
+	.byte	W12
+	.byte	W03
+	.byte	PAN , 16
+	.byte	N09, Gn3, 24
+	.byte	W09
+	.byte	FINE
+	.globl sSong24_Part1
+sSong24_Part1: @ 0x088688C6
+	.byte	KEYSH , 0
+	.byte	VOICE , 81
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	W06
+	.byte	N06, Gn2, 112
+	.byte	W06
+	.byte	N15, Cn3
+	.byte	W12
+	.byte	W03
+	.byte	PAN , 112
+	.byte	N09, Cn3, 24
+	.byte	W09
+	.byte	FINE
+	.globl sSong24_Part2
+sSong24_Part2: @ 0x088688DE
+	.byte	KEYSH , 0
+	.byte	VOICE , 47
+	.byte	VOL , 110
+	.byte	N06, Cn3, 24
+	.byte	W06
+	.byte	Cn2, 127
+	.byte	W06
+	.byte	N15, Gn2
+	.byte	W12
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_24
 sSongHeader_24: @ 0x088688F0
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x088688AC, 0x088688C6, 0x088688DE  @ parts
-	.incbin "baserom_jp.gba", 0x868904, 0x14
+	.globl sSong25_Part0
+sSong25_Part0: @ 0x08868904
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 122
+	.byte	BENDR , 12
+	.byte	VOL , 95
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_25
 sSongHeader_25: @ 0x08868918
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868904  @ parts
-	.incbin "baserom_jp.gba", 0x868924, 0x14
+	.4byte sSong25_Part0  @ parts
+	.globl sSong26_Part0
+sSong26_Part0: @ 0x08868924
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 123
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_26
 sSongHeader_26: @ 0x08868938
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868924  @ parts
-	.incbin "baserom_jp.gba", 0x868944, 0x14
+	.4byte sSong26_Part0  @ parts
+	.globl sSong27_Part0
+sSong27_Part0: @ 0x08868944
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 124
+	.byte	BENDR , 12
+	.byte	VOL , 127
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_27
 sSongHeader_27: @ 0x08868958
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868944  @ parts
-	.incbin "baserom_jp.gba", 0x868964, 0x14
+	.4byte sSong27_Part0  @ parts
+	.globl sSong28_Part0
+sSong28_Part0: @ 0x08868964
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 125
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_28
 sSongHeader_28: @ 0x08868978
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868964  @ parts
-	.incbin "baserom_jp.gba", 0x868984, 0x14
+	.4byte sSong28_Part0  @ parts
+	.globl sSong29_Part0
+sSong29_Part0: @ 0x08868984
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 126
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_29
 sSongHeader_29: @ 0x08868998
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868984  @ parts
-	.incbin "baserom_jp.gba", 0x8689A4, 0x14
+	.4byte sSong29_Part0  @ parts
+	.globl sSong30_Part0
+sSong30_Part0: @ 0x088689A4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 127
+	.byte	BENDR , 12
+	.byte	VOL , 127
+	.byte	BEND , 64
+	.byte	N72, Cn3, 127
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_30
 sSongHeader_30: @ 0x088689B8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088689A4  @ parts
-	.incbin "baserom_jp.gba", 0x8689C4, 0x14
+	.4byte sSong30_Part0  @ parts
+	.globl sSong31_Part0
+sSong31_Part0: @ 0x088689C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 5
+	.byte	BENDR , 12
+	.byte	VOL , 80
+	.byte	BEND , 64
+	.byte	N06, Gn5, 127
+	.byte	W06
+	.byte	N18, Ds5
+	.byte	W18
+	.byte	FINE
 	.globl sSongHeader_31
 sSongHeader_31: @ 0x088689D8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x088689C4  @ parts
-	.incbin "baserom_jp.gba", 0x8689E4, 0x24
+	.4byte sSong31_Part0  @ parts
+	.globl sSong32_Part0
+sSong32_Part0: @ 0x088689E4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 92
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	BEND , 64
+	.byte	N03, Cn2, 127
+	.byte	W03
+	.byte	Cn2, 20
+	.byte	W03
+	.byte	N18, Cn2, 127
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	N09, Cn2, 20
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868A07, 0x1
 	.globl sSongHeader_32
 sSongHeader_32: @ 0x08868A08
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x088689E4  @ parts
-	.incbin "baserom_jp.gba", 0x868A14, 0x88
+	.4byte sSong32_Part0  @ parts
+	.globl sSong33_Part0
+sSong33_Part0: @ 0x08868A14
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 13
+	.byte	BENDR , 12
+	.byte	24
+	.byte	VOL , 80
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N12, Cn4, 112
+	.byte	W02
+	.byte	BEND , 72
+	.byte	W02
+	.byte	VOL , 74
+	.byte	BEND , 80
+	.byte	W03
+	.byte	VOL , 61
+	.byte	BEND , 86
+	.byte	W02
+	.byte	VOL , 45
+	.byte	BEND , 97
+	.byte	W03
+	.byte	VOL , 80
+	.byte	BEND , 64
+	.byte	TIE
+	.byte	W06
+	.byte	BEND , 67
+	.byte	W02
+	.byte	64
+	.byte	W04
+	.byte	70
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	73
+	.byte	W02
+	.byte	72
+	.byte	W04
+	.byte	76
+	.byte	W03
+	.byte	73
+	.byte	W03
+	.byte	78
+	.byte	W03
+	.byte	76
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	78
+	.byte	W03
+	.byte	83
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	86
+	.byte	W03
+	.byte	83
+	.byte	W03
+	.byte	89
+	.byte	W03
+	.byte	86
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	89
+	.byte	W03
+	.byte	96
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	99
+	.byte	W03
+	.byte	96
+	.byte	W03
+	.byte	100
+	.byte	W03
+	.byte	99
+	.byte	W03
+	.byte	104
+	.byte	W03
+	.byte	100
+	.byte	W03
+	.byte	107
+	.byte	W03
+	.byte	104
+	.byte	W03
+	.byte	110
+	.byte	W03
+	.byte	107
+	.byte	W03
+	.byte	113
+	.byte	W03
+	.byte	110
+	.byte	W03
+	.byte	117
+	.byte	W03
+	.byte	113
+	.byte	W03
+	.byte	119
+	.byte	W03
+	.byte	117
+	.byte	W03
+	.byte	122
+	.byte	W03
+	.byte	119
+	.byte	W03
+	.byte	124
+	.byte	W03
+	.byte	122
+	.byte	W03
+	.byte	127
+	.byte	W04
+	.byte	124
+	.byte	W03
+	.byte	127
+	.byte	W05
+	.byte	EOT
+	.byte	FINE
 	.globl sSongHeader_33
 sSongHeader_33: @ 0x08868A9C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868A14  @ parts
-	.incbin "baserom_jp.gba", 0x868AA8, 0x18
+	.4byte sSong33_Part0  @ parts
+	.globl sSong34_Part0
+sSong34_Part0: @ 0x08868AA8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 85
+	.byte	VOL , 90
+	.byte	BEND , 58
+	.byte	N02, Cn3, 80
+	.byte	W02
+	.byte	VOICE , 86
+	.byte	N03, Cn4, 127
+	.byte	W01
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868ABE, 0x2
 	.globl sSongHeader_34
 sSongHeader_34: @ 0x08868AC0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868AA8  @ parts
-	.incbin "baserom_jp.gba", 0x868ACC, 0x18
+	.4byte sSong34_Part0  @ parts
+	.globl sSong35_Part0
+sSong35_Part0: @ 0x08868ACC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 122
+	.byte	VOL , 100
+	.byte	N01, Ds3, 127
+	.byte	W02
+	.byte	VOICE , 126
+	.byte	N01, Gs4
+	.byte	W01
+	.byte	W03
+	.byte	W01
+	.byte	Gs4, 88
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868AE3, 0x1
 	.globl sSongHeader_35
 sSongHeader_35: @ 0x08868AE4
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868ACC  @ parts
-	.incbin "baserom_jp.gba", 0x868AF0, 0x18
+	.4byte sSong35_Part0  @ parts
+	.globl sSong36_Part0
+sSong36_Part0: @ 0x08868AF0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 126
+	.byte	VOL , 110
+	.byte	N01, Gs3, 127
+	.byte	W01
+	.byte	Cn4, 68
+	.byte	W02
+	.byte	W02
+	.byte	N03, Gs4, 127
+	.byte	W01
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868B06, 0x2
 	.globl sSongHeader_36
 sSongHeader_36: @ 0x08868B08
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868AF0  @ parts
-	.incbin "baserom_jp.gba", 0x868B14, 0x24
+	.4byte sSong36_Part0  @ parts
+	.globl sSong37_Part0
+sSong37_Part0: @ 0x08868B14
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 126
+	.byte	VOL , 120
+	.byte	N01, Cn3, 68
+	.byte	W01
+	.byte	En3, 64
+	.byte	W01
+	.byte	Gn3
+	.byte	W03
+	.byte	N02, An2, 48
+	.byte	W08
+	.byte	N01, Cn3, 68
+	.byte	W01
+	.byte	En3, 64
+	.byte	W01
+	.byte	Gn3
+	.byte	W03
+	.byte	N02, An2, 48
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868B37, 0x1
 	.globl sSongHeader_37
 sSongHeader_37: @ 0x08868B38
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868B14  @ parts
-	.incbin "baserom_jp.gba", 0x868B44, 0x18
+	.4byte sSong37_Part0  @ parts
+	.globl sSong38_Part0
+sSong38_Part0: @ 0x08868B44
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 126
+	.byte	VOL , 110
+	.byte	N01, An2, 112
+	.byte	W01
+	.byte	En3
+	.byte	W01
+	.byte	Gn3
+	.byte	W01
+	.byte	W02
+	.byte	N02, Cn3, 92
+	.byte	W01
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868B5B, 0x1
 	.globl sSongHeader_38
 sSongHeader_38: @ 0x08868B5C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868B44  @ parts
-	.incbin "baserom_jp.gba", 0x868B68, 0x40
+	.4byte sSong38_Part0  @ parts
+	.globl sSong39_Part0
+sSong39_Part0: @ 0x08868B68
+	.byte	KEYSH , 0
+	.byte	TEMPO , 60
+	.byte	VOICE , 126
+	.byte	VOL , 127
+	.byte	N08, An2, 112
+	.byte	W03
+	.byte	W03
+	.byte	W02
+	.byte	N01, Gs2
+	.byte	W01
+	.byte	W01
+	.byte	N08, An2, 96
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W01
+	.byte	N01, Gs2, 92
+	.byte	W01
+	.byte	N08, An2, 80
+	.byte	W01
+	.byte	W03
+	.byte	W03
+	.byte	W02
+	.byte	N01, Gs2, 76
+	.byte	W01
+	.byte	N08, An2, 64
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	N01, Gs2, 60
+	.byte	W02
+	.byte	N09, An2, 48
+	.byte	W01
+	.byte	W03
+	.byte	W03
+	.byte	W02
+	.byte	N01, Gs2, 40
+	.byte	W01
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868BA7, 0x1
 	.globl sSongHeader_39
 sSongHeader_39: @ 0x08868BA8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868B68  @ parts
-	.incbin "baserom_jp.gba", 0x868BB4, 0x2C
+	.4byte sSong39_Part0  @ parts
+	.globl sSong40_Part0
+sSong40_Part0: @ 0x08868BB4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 3
+	.byte	VOL , 90
+	.byte	BEND , 80
+	.byte	N03, En3, 112
+	.byte	W01
+	.byte	BEND , 102
+	.byte	W01
+	.byte	126
+	.byte	W02
+	.byte	N12, En4
+	.byte	W02
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong40_Part1
+sSong40_Part1: @ 0x08868BCD
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 90
+	.byte	N03, Gs3, 96
+	.byte	W04
+	.byte	N12, Gs4
+	.byte	W02
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868BDD, 0x3
 	.globl sSongHeader_40
 sSongHeader_40: @ 0x08868BE0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868BB4, 0x08868BCD  @ parts
-	.incbin "baserom_jp.gba", 0x868BF0, 0x44
+	.globl sSong41_Part0
+sSong41_Part0: @ 0x08868BF0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 60
+	.byte	VOICE , 3
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N01, Gn3, 120
+	.byte	W03
+	.byte	W01
+	.byte	Cn4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W01
+	.byte	86
+	.byte	W01
+	.byte	N01, Cn5, 112
+	.byte	W01
+	.byte	BEND , 99
+	.byte	W01
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	118
+	.byte	N01, Cn4, 104
+	.byte	W01
+	.byte	W01
+	.byte	BEND , 127
+	.byte	W01
+	.byte	N01, Cn5, 96
+	.byte	W01
+	.byte	FINE
+	.globl sSong41_Part1
+sSong41_Part1: @ 0x08868C1E
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 100
+	.byte	N01, Gs3, 64
+	.byte	W03
+	.byte	W01
+	.byte	N01
+	.byte	W02
+	.byte	Fn4
+	.byte	W03
+	.byte	Gs3
+	.byte	W03
+	.byte	Fn4
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868C32, 0x2
 	.globl sSongHeader_41
 sSongHeader_41: @ 0x08868C34
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868BF0, 0x08868C1E  @ parts
-	.incbin "baserom_jp.gba", 0x868C44, 0x2C
+	.globl sSong42_Part0
+sSong42_Part0: @ 0x08868C44
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 9
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N01, Gn5, 88
+	.byte	W01
+	.byte	N01
+	.byte	W02
+	.byte	Cn6, 72
+	.byte	W03
+	.byte	Cn6, 56
+	.byte	W03
+	.byte	FINE
+	.globl sSong42_Part1
+sSong42_Part1: @ 0x08868C5B
+	.byte	KEYSH , 0
+	.byte	VOICE , 122
+	.byte	VOL , 100
+	.byte	N01, Gn2, 112
+	.byte	W02
+	.byte	VOICE , 123
+	.byte	W01
+	.byte	N01, Gs4, 96
+	.byte	W03
+	.byte	Gs4, 112
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_42
 sSongHeader_42: @ 0x08868C70
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08868C44, 0x08868C5B  @ parts
-	.incbin "baserom_jp.gba", 0x868C80, 0x48
+	.globl sSong43_Part0
+sSong43_Part0: @ 0x08868C80
+	.byte	KEYSH , 0
+	.byte	TEMPO , 85
+	.byte	VOICE , 22
+	.byte	VOL , 110
+	.byte	BEND , 124
+	.byte	N44, Gn3, 80
+	.byte	W03
+	.byte	BEND , 121
+	.byte	W03
+	.byte	116
+	.byte	W03
+	.byte	107
+	.byte	W03
+	.byte	100
+	.byte	W03
+	.byte	94
+	.byte	W03
+	.byte	86
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	VOL , 104
+	.byte	BEND , 75
+	.byte	W03
+	.byte	VOL , 90
+	.byte	BEND , 67
+	.byte	W03
+	.byte	VOL , 82
+	.byte	BEND , 56
+	.byte	W03
+	.byte	VOL , 71
+	.byte	BEND , 48
+	.byte	W03
+	.byte	VOL , 58
+	.byte	BEND , 40
+	.byte	W03
+	.byte	VOL , 45
+	.byte	BEND , 28
+	.byte	W03
+	.byte	VOL , 36
+	.byte	BEND , 14
+	.byte	W03
+	.byte	VOL , 11
+	.byte	BEND , 1
+	.byte	W03
+	.byte	VOL , 3
+	.byte	FINE
 	.globl sSongHeader_43
 sSongHeader_43: @ 0x08868CC8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868C80  @ parts
-	.incbin "baserom_jp.gba", 0x868CD4, 0x38
+	.4byte sSong43_Part0  @ parts
+	.globl sSong44_Part0
+sSong44_Part0: @ 0x08868CD4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 8
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N01, Cn3, 127
+	.byte	W02
+	.byte	N02, Gn2
+	.byte	W04
+	.byte	N17, Cn3
+	.byte	W06
+	.byte	VOL , 98
+	.byte	W01
+	.byte	91
+	.byte	W01
+	.byte	81
+	.byte	W02
+	.byte	75
+	.byte	W01
+	.byte	60
+	.byte	W01
+	.byte	42
+	.byte	W01
+	.byte	25
+	.byte	W02
+	.byte	10
+	.byte	W03
+	.byte	FINE
+	.globl sSong44_Part1
+sSong44_Part1: @ 0x08868CFA
+	.byte	VOL , 100
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	N01, Cn3, 64
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	N02
+	.byte	W18
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868D09, 0x3
 	.globl sSongHeader_44
 sSongHeader_44: @ 0x08868D0C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868CD4, 0x08868CFA  @ parts
-	.incbin "baserom_jp.gba", 0x868D1C, 0x2C
+	.globl sSong45_Part0
+sSong45_Part0: @ 0x08868D1C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 90
+	.byte	VOL , 90
+	.byte	N06, En4, 127
+	.byte	W03
+	.byte	W03
+	.byte	N03, En4, 16
+	.byte	W03
+	.byte	N06, En4, 112
+	.byte	W03
+	.byte	W03
+	.byte	N03, En4, 16
+	.byte	W03
+	.byte	N06, En4, 88
+	.byte	W03
+	.byte	W03
+	.byte	N03, En4, 16
+	.byte	W03
+	.byte	N06, En4, 64
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868D45, 0x3
 	.globl sSongHeader_45
 sSongHeader_45: @ 0x08868D48
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868D1C  @ parts
-	.incbin "baserom_jp.gba", 0x868D54, 0x34
+	.4byte sSong45_Part0  @ parts
+	.globl sSong46_Part0
+sSong46_Part0: @ 0x08868D54
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 93
+	.byte	XCMD , 8 , 9
+	.byte	9 , 8
+	.byte	VOL , 90
+	.byte	N06, En5, 64
+	.byte	W03
+	.byte	W03
+	.byte	N03, En5, 16
+	.byte	W03
+	.byte	N06, En5, 88
+	.byte	W03
+	.byte	W03
+	.byte	N03, En5, 16
+	.byte	W03
+	.byte	N06, En5, 112
+	.byte	W03
+	.byte	W03
+	.byte	N03, En5, 16
+	.byte	W03
+	.byte	N06, En5, 127
+	.byte	W03
+	.byte	W03
+	.byte	N03, En5, 16
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868D86, 0x2
 	.globl sSongHeader_46
 sSongHeader_46: @ 0x08868D88
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868D54  @ parts
-	.incbin "baserom_jp.gba", 0x868D94, 0x20
+	.4byte sSong46_Part0  @ parts
+	.globl sSong47_Part0
+sSong47_Part0: @ 0x08868D94
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 123
+	.byte	VOL , 90
+	.byte	N03, Cn4, 84
+	.byte	W03
+	.byte	VOL , 62
+	.byte	N32, Gs4
+	.byte	W03
+	.byte	VOL , 68
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	78
+	.byte	W03
+	.byte	85
+	.byte	W03
+	.byte	90
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868DB3, 0x1
 	.globl sSongHeader_47
 sSongHeader_47: @ 0x08868DB4
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868D94  @ parts
-	.incbin "baserom_jp.gba", 0x868DC0, 0x30
+	.4byte sSong47_Part0  @ parts
+	.globl sSong48_Part0
+sSong48_Part0: @ 0x08868DC0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 9
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N03, Gn4, 112
+	.byte	W03
+	.byte	Dn4
+	.byte	W03
+	.byte	Gn4
+	.byte	W03
+	.byte	N21, Gn5
+	.byte	W03
+	.byte	W03
+	.byte	VOL , 81
+	.byte	BEND , 70
+	.byte	W03
+	.byte	VOL , 72
+	.byte	BEND , 84
+	.byte	W03
+	.byte	VOL , 46
+	.byte	BEND , 101
+	.byte	W03
+	.byte	VOL , 24
+	.byte	BEND , 127
+	.byte	W03
+	.byte	VOL , 7
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868DEE, 0x2
 	.globl sSongHeader_48
 sSongHeader_48: @ 0x08868DF0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868DC0  @ parts
-	.incbin "baserom_jp.gba", 0x868DFC, 0xA0
+	.4byte sSong48_Part0  @ parts
+	.globl sSong49_Part0
+sSong49_Part0: @ 0x08868DFC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 10
+	.byte	VOL , 18
+	.byte	BEND , 64
+	.byte	N96, Cs3, 127
+	.byte	W08
+	.byte	VOL , 31
+	.byte	W08
+	.byte	42
+	.byte	W08
+	.byte	59
+	.byte	W08
+	.byte	74
+	.byte	W08
+	.byte	88
+	.byte	W08
+	.byte	106
+	.byte	W08
+	.byte	118
+	.byte	W08
+	.byte	127
+	.byte	W32
+	.byte	TIE , 61, 127
+	.byte	W96
+	.byte	W96
+	.byte	W96
+	.byte	EOT
+	.byte	GOTO , 27, 142
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.globl sSong49_Part1
+sSong49_Part1: @ 0x08868E28
+	.byte	KEYSH , 0
+	.byte	VOICE , 11
+	.byte	VOL , 18
+	.byte	W08
+	.byte	31
+	.byte	W04
+	.byte	N03, Fn2, 44
+	.byte	W04
+	.byte	VOL , 42
+	.byte	W02
+	.byte	N03, An2
+	.byte	W06
+	.byte	VOL , 59
+	.byte	W06
+	.byte	N03, Cs2, 52
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W08
+	.byte	88
+	.byte	W08
+	.byte	106
+	.byte	N03, Gn2, 44
+	.byte	W08
+	.byte	VOL , 118
+	.byte	W08
+	.byte	127
+	.byte	W08
+	.byte	N01, Bn2, 32
+	.byte	W12
+	.byte	N03, Fn2, 44
+	.byte	W12
+	.byte	W12
+	.byte	N03, Fn2, 44
+	.byte	W06
+	.byte	An2, 32
+	.byte	W12
+	.byte	Cs2, 52
+	.byte	W12
+	.byte	An2, 32
+	.byte	W06
+	.byte	Gn2, 44
+	.byte	W24
+	.byte	N03
+	.byte	W12
+	.byte	Fn2
+	.byte	W12
+	.byte	Gn2
+	.byte	W18
+	.byte	Cs2, 52
+	.byte	W12
+	.byte	N01, Bn2, 32
+	.byte	W06
+	.byte	N03, Fn2, 44
+	.byte	W24
+	.byte	N03
+	.byte	W18
+	.byte	Cs2, 52
+	.byte	W18
+	.byte	Gn2, 44
+	.byte	W18
+	.byte	An2
+	.byte	W12
+	.byte	Cs2, 52
+	.byte	W18
+	.byte	Gn2, 44
+	.byte	W12
+	.byte	Fn2
+	.byte	W18
+	.byte	N01, Bn2, 32
+	.byte	W06
+	.byte	N03, Fn2, 44
+	.byte	W12
+	.byte	GOTO , 89, 142
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868E9B, 0x1
 	.globl sSongHeader_49
 sSongHeader_49: @ 0x08868E9C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868DFC, 0x08868E28  @ parts
-	.incbin "baserom_jp.gba", 0x868EAC, 0x68
+	.globl sSong50_Part0
+sSong50_Part0: @ 0x08868EAC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 10
+	.byte	VOL , 127
+	.byte	BEND , 64
+	.byte	TIE , 61, 127
+	.byte	W09
+	.byte	BEND , 55
+	.byte	W09
+	.byte	46
+	.byte	W06
+	.byte	W09
+	.byte	38
+	.byte	W09
+	.byte	30
+	.byte	W06
+	.byte	W06
+	.byte	21
+	.byte	W05
+	.byte	VOL , 123
+	.byte	W04
+	.byte	BEND , 10
+	.byte	W02
+	.byte	VOL , 117
+	.byte	W06
+	.byte	110
+	.byte	W01
+	.byte	BEND , 0
+	.byte	W08
+	.byte	VOL , 101
+	.byte	W06
+	.byte	89
+	.byte	W09
+	.byte	77
+	.byte	W01
+	.byte	W05
+	.byte	60
+	.byte	W09
+	.byte	48
+	.byte	W06
+	.byte	36
+	.byte	W04
+	.byte	W03
+	.byte	23
+	.byte	W06
+	.byte	8
+	.byte	W09
+	.byte	0
+	.byte	W01
+	.byte	EOT
+	.byte	W05
+	.byte	FINE
+	.globl sSong50_Part1
+sSong50_Part1: @ 0x08868EED
+	.byte	KEYSH , 0
+	.byte	VOICE , 13
+	.byte	VOL , 90
+	.byte	W06
+	.byte	N09, Gs6, 24
+	.byte	W18
+	.byte	W05
+	.byte	N15
+	.byte	W19
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.globl sSong50_Part2
+sSong50_Part2: @ 0x08868F00
+	.byte	KEYSH , 0
+	.byte	VOICE , 12
+	.byte	VOL , 90
+	.byte	W06
+	.byte	N09, An6, 24
+	.byte	W18
+	.byte	W05
+	.byte	N15
+	.byte	W19
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868F13, 0x1
 	.globl sSongHeader_50
 sSongHeader_50: @ 0x08868F14
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868EAC, 0x08868EED, 0x08868F00  @ parts
-	.incbin "baserom_jp.gba", 0x868F28, 0x18
+	.globl sSong51_Part0
+sSong51_Part0: @ 0x08868F28
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 120
+	.byte	VOL , 127
+	.byte	N06, Bn3, 28
+	.byte	W03
+	.byte	W03
+	.byte	N21, Gs4
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868F3F, 0x1
 	.globl sSongHeader_51
 sSongHeader_51: @ 0x08868F40
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08868F28  @ parts
-	.incbin "baserom_jp.gba", 0x868F4C, 0x28
+	.4byte sSong51_Part0  @ parts
+	.globl sSong52_Part0
+sSong52_Part0: @ 0x08868F4C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 8
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Cn2, 92
+	.byte	W06
+	.byte	N01, Cn3
+	.byte	W02
+	.byte	N02, Cn4
+	.byte	W04
+	.byte	FINE
+	.globl sSong52_Part1
+sSong52_Part1: @ 0x08868F61
+	.byte	VOL , 110
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	N03, Cn2, 32
+	.byte	W05
+	.byte	N01, Cn4
+	.byte	W01
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868F72, 0x2
 	.globl sSongHeader_52
 sSongHeader_52: @ 0x08868F74
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08868F4C, 0x08868F61  @ parts
-	.incbin "baserom_jp.gba", 0x868F84, 0x1C
+	.globl sSong53_Part0
+sSong53_Part0: @ 0x08868F84
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 15
+	.byte	VOL , 90
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	TIE , 55, 100
+	.byte	W96
+	.byte	W96
+	.byte	W48
+	.byte	EOT
+	.byte	GOTO , 134, 143
+	.byte	W06
+	.byte	GsM2
+	.byte	W48
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x868F9E, 0x2
 	.globl sSongHeader_53
 sSongHeader_53: @ 0x08868FA0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08868F84  @ parts
-	.incbin "baserom_jp.gba", 0x868FAC, 0x68
+	.4byte sSong53_Part0  @ parts
+	.globl sSong54_Part0
+sSong54_Part0: @ 0x08868FAC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 12
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N02, Bn3, 104
+	.byte	W10
+	.byte	BEND , 1
+	.byte	W05
+	.byte	VOICE , 11
+	.byte	BEND , 11
+	.byte	N48, Cn4, 88
+	.byte	W04
+	.byte	BEND , 22
+	.byte	W04
+	.byte	32
+	.byte	W04
+	.byte	43
+	.byte	W05
+	.byte	53
+	.byte	W04
+	.byte	63
+	.byte	W04
+	.byte	74
+	.byte	W04
+	.byte	84
+	.byte	W05
+	.byte	95
+	.byte	W04
+	.byte	105
+	.byte	W04
+	.byte	116
+	.byte	W04
+	.byte	126
+	.byte	W11
+	.byte	VOICE , 12
+	.byte	BEND , 64
+	.byte	W04
+	.byte	N02, Bn3, 104
+	.byte	W20
+	.byte	FINE
+	.globl sSong54_Part1
+sSong54_Part1: @ 0x08868FE6
+	.byte	KEYSH , 0
+	.byte	VOICE , 124
+	.byte	VOL , 100
+	.byte	N02, Cn4, 127
+	.byte	W02
+	.byte	VOICE , 121
+	.byte	N08, Gs4
+	.byte	W13
+	.byte	N48, Gs4, 52
+	.byte	W52
+	.byte	VOL , 25
+	.byte	N08, Gs4, 127
+	.byte	W01
+	.byte	VOL , 43
+	.byte	W02
+	.byte	66
+	.byte	W03
+	.byte	85
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	VOICE , 124
+	.byte	VOL , 96
+	.byte	W01
+	.byte	100
+	.byte	N02, Cn4
+	.byte	W20
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869012, 0x2
 	.globl sSongHeader_54
 sSongHeader_54: @ 0x08869014
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08868FAC, 0x08868FE6  @ parts
-	.incbin "baserom_jp.gba", 0x869024, 0x38
+	.globl sSong55_Part0
+sSong55_Part0: @ 0x08869024
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 14
+	.byte	VOL , 80
+	.byte	BEND , 81
+	.byte	N03, En3, 96
+	.byte	W03
+	.byte	Bn2
+	.byte	W03
+	.byte	En3
+	.byte	W03
+	.byte	Bn3
+	.byte	W03
+	.byte	N06, Cn5
+	.byte	W06
+	.byte	N24, Cn6
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong55_Part1
+sSong55_Part1: @ 0x08869042
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 80
+	.byte	N03, En3, 100
+	.byte	W03
+	.byte	Bn2
+	.byte	W03
+	.byte	En3
+	.byte	W03
+	.byte	Bn3
+	.byte	W03
+	.byte	N06, Cn5
+	.byte	W06
+	.byte	N24, Cn6
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_55
 sSongHeader_55: @ 0x0886905C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869024, 0x08869042  @ parts
-	.incbin "baserom_jp.gba", 0x86906C, 0x1C
+	.globl sSong56_Part0
+sSong56_Part0: @ 0x0886906C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	VOL , 100
+	.byte	BEND , 65
+	.byte	N12, Fn4, 112
+	.byte	W12
+	.byte	FINE
+	.globl sSong56_Part1
+sSong56_Part1: @ 0x0886907B
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N09, Fn4, 100
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_56
 sSongHeader_56: @ 0x08869088
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886906C, 0x0886907B  @ parts
-	.incbin "baserom_jp.gba", 0x869098, 0x1C
+	.globl sSong57_Part0
+sSong57_Part0: @ 0x08869098
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	VOL , 100
+	.byte	BEND , 65
+	.byte	N12, Fn4, 100
+	.byte	W12
+	.byte	FINE
+	.globl sSong57_Part1
+sSong57_Part1: @ 0x088690A7
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N09, Fn4, 88
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_57
 sSongHeader_57: @ 0x088690B4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869098, 0x088690A7  @ parts
-	.incbin "baserom_jp.gba", 0x8690C4, 0x1C
+	.globl sSong58_Part0
+sSong58_Part0: @ 0x088690C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	VOL , 100
+	.byte	BEND , 65
+	.byte	N12, Fn4, 88
+	.byte	W12
+	.byte	FINE
+	.globl sSong58_Part1
+sSong58_Part1: @ 0x088690D3
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N09, Fn4, 72
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_58
 sSongHeader_58: @ 0x088690E0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088690C4, 0x088690D3  @ parts
-	.incbin "baserom_jp.gba", 0x8690F0, 0x1C
+	.globl sSong59_Part0
+sSong59_Part0: @ 0x088690F0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	VOL , 100
+	.byte	BEND , 65
+	.byte	N12, Fn4, 76
+	.byte	W12
+	.byte	FINE
+	.globl sSong59_Part1
+sSong59_Part1: @ 0x088690FF
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N09, Fn4, 56
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_59
 sSongHeader_59: @ 0x0886910C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088690F0, 0x088690FF  @ parts
-	.incbin "baserom_jp.gba", 0x86911C, 0x44
+	.globl sSong60_Part0
+sSong60_Part0: @ 0x0886911C
+	.byte	KEYSH , 0
+	.byte	VOICE , 13
+	.byte	BENDR , 12
+	.byte	VOL , 12
+	.byte	BEND , 113
+	.byte	N06, Gn4, 80
+	.byte	W01
+	.byte	VOL , 44
+	.byte	BEND , 86
+	.byte	W01
+	.byte	VOL , 75
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 87
+	.byte	BEND , 97
+	.byte	W01
+	.byte	VOL , 100
+	.byte	BEND , 118
+	.byte	W01
+	.byte	127
+	.byte	W01
+	.byte	W03
+	.byte	N03, Gn4, 40
+	.byte	W03
+	.byte	FINE
+	.globl sSong60_Part1
+sSong60_Part1: @ 0x08869146
+	.byte	KEYSH , 0
+	.byte	VOICE , 123
+	.byte	VOL , 59
+	.byte	N06, Gs4, 52
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	90
+	.byte	W01
+	.byte	100
+	.byte	W03
+	.byte	W03
+	.byte	N03, Gs4, 24
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86915D, 0x3
 	.globl sSongHeader_60
 sSongHeader_60: @ 0x08869160
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x0886911C, 0x08869146  @ parts
-	.incbin "baserom_jp.gba", 0x869170, 0x34
+	.globl sSong61_Part0
+sSong61_Part0: @ 0x08869170
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	BEND , 76
+	.byte	N06, An2, 127
+	.byte	W03
+	.byte	VOL , 78
+	.byte	BEND , 84
+	.byte	W03
+	.byte	VOL , 120
+	.byte	BEND , 100
+	.byte	N18, Cn3
+	.byte	W02
+	.byte	BEND , 99
+	.byte	W03
+	.byte	96
+	.byte	W02
+	.byte	90
+	.byte	W03
+	.byte	VOL , 102
+	.byte	BEND , 82
+	.byte	W02
+	.byte	VOL , 68
+	.byte	BEND , 71
+	.byte	W03
+	.byte	VOL , 34
+	.byte	BEND , 55
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8691A3, 0x1
 	.globl sSongHeader_61
 sSongHeader_61: @ 0x088691A4
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869170  @ parts
-	.incbin "baserom_jp.gba", 0x8691B0, 0x28
+	.4byte sSong61_Part0  @ parts
+	.globl sSong62_Part0
+sSong62_Part0: @ 0x088691B0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Cn5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Cn5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong62_Part1
+sSong62_Part1: @ 0x088691C4
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Gn5, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Gn5, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8691D6, 0x2
 	.globl sSongHeader_62
 sSongHeader_62: @ 0x088691D8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088691B0, 0x088691C4  @ parts
-	.incbin "baserom_jp.gba", 0x8691E8, 0x28
+	.globl sSong63_Part0
+sSong63_Part0: @ 0x088691E8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Dn5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Dn5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong63_Part1
+sSong63_Part1: @ 0x088691FC
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, An5, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, An5, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86920E, 0x2
 	.globl sSongHeader_63
 sSongHeader_63: @ 0x08869210
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088691E8, 0x088691FC  @ parts
-	.incbin "baserom_jp.gba", 0x869220, 0x28
+	.globl sSong64_Part0
+sSong64_Part0: @ 0x08869220
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, En5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, En5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong64_Part1
+sSong64_Part1: @ 0x08869234
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Bn5, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Bn5, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869246, 0x2
 	.globl sSongHeader_64
 sSongHeader_64: @ 0x08869248
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869220, 0x08869234  @ parts
-	.incbin "baserom_jp.gba", 0x869258, 0x28
+	.globl sSong65_Part0
+sSong65_Part0: @ 0x08869258
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Fn5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Fn5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong65_Part1
+sSong65_Part1: @ 0x0886926C
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Cn6, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Cn6, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86927E, 0x2
 	.globl sSongHeader_65
 sSongHeader_65: @ 0x08869280
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869258, 0x0886926C  @ parts
-	.incbin "baserom_jp.gba", 0x869290, 0x28
+	.globl sSong66_Part0
+sSong66_Part0: @ 0x08869290
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Gn5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Gn5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong66_Part1
+sSong66_Part1: @ 0x088692A4
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Dn6, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Dn6, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8692B6, 0x2
 	.globl sSongHeader_66
 sSongHeader_66: @ 0x088692B8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869290, 0x088692A4  @ parts
-	.incbin "baserom_jp.gba", 0x8692C8, 0x28
+	.globl sSong67_Part0
+sSong67_Part0: @ 0x088692C8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, An5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, An5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong67_Part1
+sSong67_Part1: @ 0x088692DC
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, En6, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, En6, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8692EE, 0x2
 	.globl sSongHeader_67
 sSongHeader_67: @ 0x088692F0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088692C8, 0x088692DC  @ parts
-	.incbin "baserom_jp.gba", 0x869300, 0x28
+	.globl sSong68_Part0
+sSong68_Part0: @ 0x08869300
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Bn5, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Bn5, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong68_Part1
+sSong68_Part1: @ 0x08869314
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Fs6, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Fs6, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869326, 0x2
 	.globl sSongHeader_68
 sSongHeader_68: @ 0x08869328
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869300, 0x08869314  @ parts
-	.incbin "baserom_jp.gba", 0x869338, 0x28
+	.globl sSong69_Part0
+sSong69_Part0: @ 0x08869338
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 48
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Cn6, 112
+	.byte	W06
+	.byte	W06
+	.byte	N06, Cn6, 40
+	.byte	W06
+	.byte	FINE
+	.globl sSong69_Part1
+sSong69_Part1: @ 0x0886934C
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 110
+	.byte	BEND , 57
+	.byte	N12, Gn6, 60
+	.byte	W06
+	.byte	W06
+	.byte	N06, Gn6, 32
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86935E, 0x2
 	.globl sSongHeader_69
 sSongHeader_69: @ 0x08869360
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869338, 0x0886934C  @ parts
-	.incbin "baserom_jp.gba", 0x869370, 0x24
+	.globl sSong70_Part0
+sSong70_Part0: @ 0x08869370
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 23
+	.byte	VOL , 20
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 39
+	.byte	N03, Gs4, 112
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	73
+	.byte	W04
+	.byte	W02
+	.byte	VOL , 17
+	.byte	BEND , 82
+	.byte	N02, Gs4, 127
+	.byte	W01
+	.byte	BEND , 98
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_70
 sSongHeader_70: @ 0x08869394
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869370  @ parts
-	.incbin "baserom_jp.gba", 0x8693A0, 0x18
+	.4byte sSong70_Part0  @ parts
+	.globl sSong71_Part0
+sSong71_Part0: @ 0x088693A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 64
+	.byte	N01, Cn3, 127
+	.byte	W03
+	.byte	W03
+	.byte	Gn3
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8693B6, 0x2
 	.globl sSongHeader_71
 sSongHeader_71: @ 0x088693B8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088693A0  @ parts
-	.incbin "baserom_jp.gba", 0x8693C4, 0x40
+	.4byte sSong71_Part0  @ parts
+	.globl sSong72_Part0
+sSong72_Part0: @ 0x088693C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 64
+	.byte	VOICE , 89
+	.byte	BENDR , 12
+	.byte	VOL , 90
+	.byte	BEND , 63
+	.byte	N03, Fs2, 127
+	.byte	W03
+	.byte	N01, Ds3
+	.byte	W03
+	.byte	VOICE , 6
+	.byte	N03, Gs3, 100
+	.byte	W03
+	.byte	W01
+	.byte	N18, Fn5, 72
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong72_Part1
+sSong72_Part1: @ 0x088693E9
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 90
+	.byte	BEND , 56
+	.byte	N03, Gs3, 100
+	.byte	W03
+	.byte	W03
+	.byte	Gs3, 60
+	.byte	W03
+	.byte	W01
+	.byte	N18, Fn5
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_72
 sSongHeader_72: @ 0x08869404
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x088693C4, 0x088693E9  @ parts
-	.incbin "baserom_jp.gba", 0x869414, 0x50
+	.globl sSong73_Part0
+sSong73_Part0: @ 0x08869414
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 15
+	.byte	BENDR , 2
+	.byte	VOL , 90
+	.byte	BEND , 65
+	.byte	N24, Ds4, 92
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	BEND , 79
+	.byte	N36, Bn3
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong73_Part1
+sSong73_Part1: @ 0x0886943D
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 90
+	.byte	BEND , 65
+	.byte	N24, Ds4, 72
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	BEND , 79
+	.byte	N36, Bn3
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869462, 0x2
 	.globl sSongHeader_73
 sSongHeader_73: @ 0x08869464
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08869414, 0x0886943D  @ parts
-	.incbin "baserom_jp.gba", 0x869474, 0x24
+	.globl sSong74_Part0
+sSong74_Part0: @ 0x08869474
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 105
+	.byte	BEND , 64
+	.byte	N06, Cn4, 127
+	.byte	W06
+	.byte	VOICE , 23
+	.byte	N02, Cn3, 112
+	.byte	W07
+	.byte	N01, Cn4
+	.byte	W05
+	.byte	Cn3, 100
+	.byte	W02
+	.byte	Gn3, 92
+	.byte	W02
+	.byte	Cn3, 72
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869497, 0x1
 	.globl sSongHeader_74
 sSongHeader_74: @ 0x08869498
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869474  @ parts
-	.incbin "baserom_jp.gba", 0x8694A4, 0x24
+	.4byte sSong74_Part0  @ parts
+	.globl sSong75_Part0
+sSong75_Part0: @ 0x088694A4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 105
+	.byte	BEND , 64
+	.byte	N03, Gn4, 127
+	.byte	W04
+	.byte	N01, Gn4, 112
+	.byte	W02
+	.byte	W02
+	.byte	Gs3, 52
+	.byte	W04
+	.byte	VOICE , 23
+	.byte	N02, Fn3, 112
+	.byte	W04
+	.byte	N01, Cn4, 72
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8694C7, 0x1
 	.globl sSongHeader_75
 sSongHeader_75: @ 0x088694C8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088694A4  @ parts
-	.incbin "baserom_jp.gba", 0x8694D4, 0x2C
+	.4byte sSong75_Part0  @ parts
+	.globl sSong76_Part0
+sSong76_Part0: @ 0x088694D4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 105
+	.byte	BEND , 64
+	.byte	N02, Fn3, 127
+	.byte	W02
+	.byte	N01, Cn4, 112
+	.byte	W02
+	.byte	N03, Fn3, 52
+	.byte	W02
+	.byte	W02
+	.byte	VOICE , 23
+	.byte	N01, En4, 92
+	.byte	W01
+	.byte	Cn5
+	.byte	W03
+	.byte	Gn3
+	.byte	W01
+	.byte	En4
+	.byte	W02
+	.byte	En3, 48
+	.byte	W01
+	.byte	Bn3
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8694FF, 0x1
 	.globl sSongHeader_76
 sSongHeader_76: @ 0x08869500
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088694D4  @ parts
-	.incbin "baserom_jp.gba", 0x86950C, 0x38
+	.4byte sSong76_Part0  @ parts
+	.globl sSong77_Part0
+sSong77_Part0: @ 0x0886950C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 41
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Fs4, 127
+	.byte	W01
+	.byte	BEND , 56
+	.byte	W01
+	.byte	41
+	.byte	W01
+	.byte	W01
+	.byte	64
+	.byte	N10, Cn4
+	.byte	W02
+	.byte	W03
+	.byte	W01
+	.byte	VOL , 96
+	.byte	W02
+	.byte	82
+	.byte	W01
+	.byte	45
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	W03
+	.byte	W01
+	.byte	110
+	.byte	N10, Cn4, 40
+	.byte	W02
+	.byte	W03
+	.byte	W01
+	.byte	VOL , 96
+	.byte	W01
+	.byte	82
+	.byte	W01
+	.byte	45
+	.byte	W01
+	.byte	20
+	.byte	W02
+	.byte	FINE
 	.globl sSongHeader_77
 sSongHeader_77: @ 0x08869544
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886950C  @ parts
-	.incbin "baserom_jp.gba", 0x869550, 0x24
+	.4byte sSong77_Part0  @ parts
+	.globl sSong78_Part0
+sSong78_Part0: @ 0x08869550
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N01, Cn4, 112
+	.byte	W01
+	.byte	VOICE , 26
+	.byte	W01
+	.byte	N01, Fn4, 127
+	.byte	W01
+	.byte	W01
+	.byte	VOICE , 36
+	.byte	W02
+	.byte	N01, Cn3, 56
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869572, 0x2
 	.globl sSongHeader_78
 sSongHeader_78: @ 0x08869574
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869550  @ parts
-	.incbin "baserom_jp.gba", 0x869580, 0x1C
+	.4byte sSong78_Part0  @ parts
+	.globl sSong79_Part0
+sSong79_Part0: @ 0x08869580
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N02, Ds3, 100
+	.byte	W04
+	.byte	N02
+	.byte	W05
+	.byte	N02
+	.byte	W05
+	.byte	N02
+	.byte	W05
+	.byte	N02
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869599, 0x3
 	.globl sSongHeader_79
 sSongHeader_79: @ 0x0886959C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08869580  @ parts
-	.incbin "baserom_jp.gba", 0x8695A8, 0x5C
+	.4byte sSong79_Part0  @ parts
+	.globl sSong80_Part0
+sSong80_Part0: @ 0x088695A8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 38
+	.byte	BENDR , 2
+	.byte	VOL , 51
+	.byte	BEND , 32
+	.byte	TIE , 88, 80
+	.byte	W01
+	.byte	BEND , 38
+	.byte	W01
+	.byte	VOL , 56
+	.byte	W01
+	.byte	BEND , 43
+	.byte	W01
+	.byte	VOL , 62
+	.byte	W02
+	.byte	BEND , 49
+	.byte	W01
+	.byte	VOL , 69
+	.byte	W01
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 75
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W02
+	.byte	VOL , 85
+	.byte	W02
+	.byte	92
+	.byte	W02
+	.byte	100
+	.byte	W08
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W03
+	.byte	96
+	.byte	W03
+	.byte	88
+	.byte	W03
+	.byte	81
+	.byte	BEND , 59
+	.byte	W03
+	.byte	VOL , 74
+	.byte	BEND , 56
+	.byte	W02
+	.byte	VOL , 62
+	.byte	BEND , 52
+	.byte	W02
+	.byte	VOL , 49
+	.byte	BEND , 43
+	.byte	W03
+	.byte	VOL , 39
+	.byte	BEND , 38
+	.byte	W02
+	.byte	VOL , 25
+	.byte	BEND , 32
+	.byte	W03
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869601, 0x3
 	.globl sSongHeader_80
 sSongHeader_80: @ 0x08869604
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088695A8  @ parts
-	.incbin "baserom_jp.gba", 0x869610, 0x30
+	.4byte sSong80_Part0  @ parts
+	.globl sSong81_Part0
+sSong81_Part0: @ 0x08869610
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 15
+	.byte	BEND , 64
+	.byte	N24, Gn3, 60
+	.byte	W03
+	.byte	VOL , 27
+	.byte	W03
+	.byte	39
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	52
+	.byte	W03
+	.byte	59
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	N60, Gn3, 60
+	.byte	W24
+	.byte	W24
+	.byte	W12
+	.byte	GOTO , 49, 150
+	.byte	W06
+	.byte	GsM2
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86963E, 0x2
 	.globl sSongHeader_81
 sSongHeader_81: @ 0x08869640
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869610  @ parts
-	.incbin "baserom_jp.gba", 0x86964C, 0x34
+	.4byte sSong81_Part0  @ parts
+	.globl sSong82_Part0
+sSong82_Part0: @ 0x0886964C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 80
+	.byte	BEND , 64
+	.byte	N24, Gn3, 60
+	.byte	W03
+	.byte	VOL , 76
+	.byte	W03
+	.byte	74
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	58
+	.byte	W03
+	.byte	50
+	.byte	W03
+	.byte	44
+	.byte	N24
+	.byte	W03
+	.byte	VOL , 38
+	.byte	W03
+	.byte	34
+	.byte	W03
+	.byte	27
+	.byte	W03
+	.byte	20
+	.byte	W03
+	.byte	15
+	.byte	W03
+	.byte	10
+	.byte	W03
+	.byte	6
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_82
 sSongHeader_82: @ 0x08869680
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886964C  @ parts
-	.incbin "baserom_jp.gba", 0x86968C, 0x30
+	.4byte sSong82_Part0  @ parts
+	.globl sSong83_Part0
+sSong83_Part0: @ 0x0886968C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 18
+	.byte	BEND , 64
+	.byte	N24, Cn3, 60
+	.byte	W03
+	.byte	VOL , 33
+	.byte	W03
+	.byte	48
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	65
+	.byte	W03
+	.byte	74
+	.byte	W03
+	.byte	85
+	.byte	W03
+	.byte	100
+	.byte	W03
+	.byte	N36, Cn3, 60
+	.byte	W24
+	.byte	W12
+	.byte	GOTO , 173, 150
+	.byte	W06
+	.byte	GsM2
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8696B9, 0x3
 	.globl sSongHeader_83
 sSongHeader_83: @ 0x088696BC
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886968C  @ parts
-	.incbin "baserom_jp.gba", 0x8696C8, 0x34
+	.4byte sSong83_Part0  @ parts
+	.globl sSong84_Part0
+sSong84_Part0: @ 0x088696C8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N24, Cn3, 60
+	.byte	W03
+	.byte	VOL , 96
+	.byte	W03
+	.byte	93
+	.byte	W03
+	.byte	90
+	.byte	W03
+	.byte	85
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	73
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	55
+	.byte	N24
+	.byte	W03
+	.byte	VOL , 48
+	.byte	W03
+	.byte	42
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	25
+	.byte	W03
+	.byte	18
+	.byte	W03
+	.byte	12
+	.byte	W03
+	.byte	7
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_84
 sSongHeader_84: @ 0x088696FC
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088696C8  @ parts
-	.incbin "baserom_jp.gba", 0x869708, 0x30
+	.4byte sSong84_Part0  @ parts
+	.globl sSong85_Part0
+sSong85_Part0: @ 0x08869708
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 15
+	.byte	BEND , 64
+	.byte	N24, Bn3, 52
+	.byte	W03
+	.byte	VOL , 27
+	.byte	W03
+	.byte	39
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	52
+	.byte	W03
+	.byte	59
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	N60, Bn3, 52
+	.byte	W24
+	.byte	W24
+	.byte	W12
+	.byte	GOTO , 41, 151
+	.byte	W06
+	.byte	GsM2
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869736, 0x2
 	.globl sSongHeader_85
 sSongHeader_85: @ 0x08869738
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869708  @ parts
-	.incbin "baserom_jp.gba", 0x869744, 0x34
+	.4byte sSong85_Part0  @ parts
+	.globl sSong86_Part0
+sSong86_Part0: @ 0x08869744
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 80
+	.byte	BEND , 64
+	.byte	N24, Bn3, 52
+	.byte	W03
+	.byte	VOL , 76
+	.byte	W03
+	.byte	74
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	58
+	.byte	W03
+	.byte	50
+	.byte	W03
+	.byte	44
+	.byte	N24
+	.byte	W03
+	.byte	VOL , 38
+	.byte	W03
+	.byte	34
+	.byte	W03
+	.byte	27
+	.byte	W03
+	.byte	20
+	.byte	W03
+	.byte	15
+	.byte	W03
+	.byte	10
+	.byte	W03
+	.byte	6
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_86
 sSongHeader_86: @ 0x08869778
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869744  @ parts
-	.incbin "baserom_jp.gba", 0x869784, 0x5C
+	.4byte sSong86_Part0  @ parts
+	.globl sSong87_Part0
+sSong87_Part0: @ 0x08869784
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N09, En3, 112
+	.byte	W03
+	.byte	BEND , 85
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	70
+	.byte	N15, En3, 120
+	.byte	W03
+	.byte	BEND , 66
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	35
+	.byte	W06
+	.byte	64
+	.byte	N09, Gn2
+	.byte	W06
+	.byte	BEND , 56
+	.byte	W03
+	.byte	49
+	.byte	TIE , 56, 112
+	.byte	W03
+	.byte	BEND , 60
+	.byte	W09
+	.byte	56
+	.byte	W03
+	.byte	W06
+	.byte	51
+	.byte	W03
+	.byte	42
+	.byte	W09
+	.byte	32
+	.byte	W06
+	.byte	VOL , 102
+	.byte	BEND , 26
+	.byte	W09
+	.byte	VOL , 97
+	.byte	W09
+	.byte	92
+	.byte	BEND , 19
+	.byte	W06
+	.byte	W03
+	.byte	VOL , 83
+	.byte	W06
+	.byte	BEND , 12
+	.byte	W03
+	.byte	VOL , 72
+	.byte	W09
+	.byte	63
+	.byte	W03
+	.byte	W06
+	.byte	57
+	.byte	W06
+	.byte	46
+	.byte	W12
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8697DE, 0x2
 	.globl sSongHeader_87
 sSongHeader_87: @ 0x088697E0
 	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869784  @ parts
-	.incbin "baserom_jp.gba", 0x8697EC, 0x44
+	.4byte sSong87_Part0  @ parts
+	.globl sSong88_Part0
+sSong88_Part0: @ 0x088697EC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 99
+	.byte	TIE , 50, 112
+	.byte	W03
+	.byte	BEND , 75
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	70
+	.byte	W06
+	.byte	64
+	.byte	W09
+	.byte	W15
+	.byte	64
+	.byte	W06
+	.byte	60
+	.byte	W03
+	.byte	W06
+	.byte	51
+	.byte	W09
+	.byte	46
+	.byte	W09
+	.byte	VOL , 102
+	.byte	BEND , 39
+	.byte	W09
+	.byte	VOL , 97
+	.byte	BEND , 26
+	.byte	W09
+	.byte	VOL , 92
+	.byte	BEND , 19
+	.byte	W06
+	.byte	W03
+	.byte	VOL , 83
+	.byte	W06
+	.byte	BEND , 12
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W06
+	.byte	47
+	.byte	W06
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86982E, 0x2
 	.globl sSongHeader_88
 sSongHeader_88: @ 0x08869830
 	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088697EC  @ parts
-	.incbin "baserom_jp.gba", 0x86983C, 0x30
+	.4byte sSong88_Part0  @ parts
+	.globl sSong89_Part0
+sSong89_Part0: @ 0x0886983C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 38
+	.byte	BENDR , 2
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	TIE , 78, 80
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	EOT
+	.byte	FINE
+	.globl sSong89_Part1
+sSong89_Part1: @ 0x08869856
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	VOL , 100
+	.byte	TIE , 65, 32
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86986A, 0x2
 	.globl sSongHeader_89
 sSongHeader_89: @ 0x0886986C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886983C, 0x08869856  @ parts
-	.incbin "baserom_jp.gba", 0x86987C, 0x20
+	.globl sSong90_Part0
+sSong90_Part0: @ 0x0886987C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 15
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 100
+	.byte	BEND , 81
+	.byte	N12, Dn4, 80
+	.byte	W12
+	.byte	BEND , 95
+	.byte	N12, An3
+	.byte	W12
+	.byte	W12
+	.byte	GOTO , 126, 152
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86989B, 0x1
 	.globl sSongHeader_90
 sSongHeader_90: @ 0x0886989C
 	.byte 0x01, 0x00, 0x03, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886987C  @ parts
-	.incbin "baserom_jp.gba", 0x8698A8, 0x40
+	.4byte sSong90_Part0  @ parts
+	.globl sSong91_Part0
+sSong91_Part0: @ 0x088698A8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 94
+	.byte	BENDR , 2
+	.byte	LFOS , 40
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	N06, An5, 112
+	.byte	W01
+	.byte	N15, En6, 104
+	.byte	W02
+	.byte	W01
+	.byte	MOD , 8
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	FINE
+	.globl sSong91_Part1
+sSong91_Part1: @ 0x088698CB
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	N06, An4, 108
+	.byte	W01
+	.byte	N12, Cs6, 104
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x8698E5, 0x3
 	.globl sSongHeader_91
 sSongHeader_91: @ 0x088698E8
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x088698A8, 0x088698CB  @ parts
-	.incbin "baserom_jp.gba", 0x8698F8, 0x14
+	.globl sSong92_Part0
+sSong92_Part0: @ 0x088698F8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 63
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	TIE , 62, 127
+	.byte	W96
+	.byte	W96
+	.byte	W96
+	.byte	W96
+	.byte	W96
+	.byte	EOT
+	.byte	FINE
 	.globl sSongHeader_92
 sSongHeader_92: @ 0x0886990C
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x088698F8  @ parts
-	.incbin "baserom_jp.gba", 0x869918, 0x48
+	.4byte sSong92_Part0  @ parts
+	.globl sSong93_Part0
+sSong93_Part0: @ 0x08869918
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 63
+	.byte	BENDR , 6
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N72, Dn3, 127
+	.byte	W06
+	.byte	VOL , 107
+	.byte	BEND , 61
+	.byte	W06
+	.byte	VOL , 106
+	.byte	BEND , 59
+	.byte	W06
+	.byte	VOL , 104
+	.byte	BEND , 57
+	.byte	W06
+	.byte	VOL , 102
+	.byte	BEND , 54
+	.byte	W06
+	.byte	VOL , 97
+	.byte	BEND , 52
+	.byte	W06
+	.byte	VOL , 90
+	.byte	BEND , 50
+	.byte	W06
+	.byte	VOL , 73
+	.byte	BEND , 45
+	.byte	W06
+	.byte	VOL , 58
+	.byte	BEND , 40
+	.byte	W06
+	.byte	VOL , 40
+	.byte	BEND , 35
+	.byte	W06
+	.byte	VOL , 25
+	.byte	BEND , 29
+	.byte	W06
+	.byte	VOL , 12
+	.byte	BEND , 18
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_93
 sSongHeader_93: @ 0x08869960
 	.byte 0x01, 0x00, 0x02, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869918  @ parts
-	.incbin "baserom_jp.gba", 0x86996C, 0x88
+	.4byte sSong93_Part0  @ parts
+	.globl sSong94_Part0
+sSong94_Part0: @ 0x0886996C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 40
+	.byte	BEND , 32
+	.byte	N07, An1, 127
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 74
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 68
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 82
+	.byte	PAN , 55
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 64
+	.byte	BEND , 101
+	.byte	W02
+	.byte	PAN , 74
+	.byte	BEND , 127
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 40
+	.byte	PAN , 74
+	.byte	BEND , 65
+	.byte	N06
+	.byte	W02
+	.byte	VOL , 52
+	.byte	PAN , 64
+	.byte	BEND , 102
+	.byte	W01
+	.byte	VOL , 79
+	.byte	PAN , 55
+	.byte	BEND , 112
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W10
+	.byte	W12
+	.byte	W12
+	.byte	GOTO , 110, 153
+	.byte	W06
+	.byte	8
+	.byte	FINE
+	.globl sSong94_Part1
+sSong94_Part1: @ 0x088699C7
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 52
+	.byte	N07, Gn2, 40
+	.byte	W01
+	.byte	VOL , 69
+	.byte	W01
+	.byte	83
+	.byte	W01
+	.byte	105
+	.byte	W01
+	.byte	67
+	.byte	W02
+	.byte	23
+	.byte	W04
+	.byte	VOICE , 25
+	.byte	VOL , 52
+	.byte	N06, Gs4
+	.byte	W02
+	.byte	VOL , 81
+	.byte	W01
+	.byte	105
+	.byte	W02
+	.byte	52
+	.byte	W09
+	.byte	W12
+	.byte	W12
+	.byte	GOTO , 201, 153
+	.byte	W06
+	.byte	8
+	.byte	FINE
 	.globl sSongHeader_94
 sSongHeader_94: @ 0x088699F4
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886996C, 0x088699C7  @ parts
-	.incbin "baserom_jp.gba", 0x869A04, 0x2C
+	.globl sSong95_Part0
+sSong95_Part0: @ 0x08869A04
+	.byte	KEYSH , 0
+	.byte	TEMPO , 64
+	.byte	VOICE , 6
+	.byte	BENDR , 12
+	.byte	VOL , 90
+	.byte	BEND , 63
+	.byte	N01, Ds3, 127
+	.byte	W02
+	.byte	N03, Gs3, 100
+	.byte	W05
+	.byte	N16, Fn5, 72
+	.byte	W05
+	.byte	W12
+	.byte	FINE
+	.globl sSong95_Part1
+sSong95_Part1: @ 0x08869A1E
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 90
+	.byte	BEND , 56
+	.byte	W02
+	.byte	N03, Gs3, 60
+	.byte	W05
+	.byte	N16, Fn5
+	.byte	W05
+	.byte	W12
+	.byte	FINE
 	.globl sSongHeader_95
 sSongHeader_95: @ 0x08869A30
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x08869A04, 0x08869A1E  @ parts
-	.incbin "baserom_jp.gba", 0x869A40, 0x14
+	.globl sSong96_Part0
+sSong96_Part0: @ 0x08869A40
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 14
+	.byte	VOL , 90
+	.byte	BEND , 57
+	.byte	N02, Cn5, 112
+	.byte	W02
+	.byte	N09, Gn4
+	.byte	W04
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869A53, 0x1
 	.globl sSongHeader_96
 sSongHeader_96: @ 0x08869A54
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869A40  @ parts
-	.incbin "baserom_jp.gba", 0x869A60, 0x58
+	.4byte sSong96_Part0  @ parts
+	.globl sSong97_Part0
+sSong97_Part0: @ 0x08869A60
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 25
+	.byte	VOL , 12
+	.byte	BEND , 64
+	.byte	N12, Gs4, 60
+	.byte	W01
+	.byte	VOL , 22
+	.byte	W01
+	.byte	33
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	58
+	.byte	W02
+	.byte	70
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	42
+	.byte	W01
+	.byte	22
+	.byte	W02
+	.byte	FINE
+	.globl sSong97_Part1
+sSong97_Part1: @ 0x08869A80
+	.byte	KEYSH , 0
+	.byte	VOICE , 15
+	.byte	VOL , 12
+	.byte	BEND , 64
+	.byte	N12, Fn3, 100
+	.byte	W01
+	.byte	VOL , 22
+	.byte	BEND , 67
+	.byte	W01
+	.byte	VOL , 33
+	.byte	BEND , 70
+	.byte	W01
+	.byte	VOL , 46
+	.byte	BEND , 73
+	.byte	W01
+	.byte	VOL , 58
+	.byte	BEND , 76
+	.byte	W02
+	.byte	VOL , 70
+	.byte	BEND , 81
+	.byte	W01
+	.byte	84
+	.byte	W01
+	.byte	VOL , 60
+	.byte	BEND , 89
+	.byte	W01
+	.byte	VOL , 42
+	.byte	BEND , 96
+	.byte	W01
+	.byte	VOL , 22
+	.byte	BEND , 102
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869AB7, 0x1
 	.globl sSongHeader_97
 sSongHeader_97: @ 0x08869AB8
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869A60, 0x08869A80  @ parts
-	.incbin "baserom_jp.gba", 0x869AC8, 0x58
+	.globl sSong98_Part0
+sSong98_Part0: @ 0x08869AC8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 25
+	.byte	VOL , 12
+	.byte	BEND , 64
+	.byte	N12, Gs4, 60
+	.byte	W01
+	.byte	VOL , 22
+	.byte	W01
+	.byte	33
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	58
+	.byte	W02
+	.byte	70
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	42
+	.byte	W01
+	.byte	22
+	.byte	W02
+	.byte	FINE
+	.globl sSong98_Part1
+sSong98_Part1: @ 0x08869AE8
+	.byte	KEYSH , 0
+	.byte	VOICE , 15
+	.byte	VOL , 12
+	.byte	BEND , 64
+	.byte	N12, Fn3, 100
+	.byte	W01
+	.byte	VOL , 22
+	.byte	BEND , 60
+	.byte	W01
+	.byte	VOL , 33
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 46
+	.byte	BEND , 54
+	.byte	W01
+	.byte	VOL , 58
+	.byte	BEND , 49
+	.byte	W02
+	.byte	VOL , 70
+	.byte	BEND , 41
+	.byte	W01
+	.byte	33
+	.byte	W01
+	.byte	VOL , 60
+	.byte	BEND , 25
+	.byte	W01
+	.byte	VOL , 42
+	.byte	BEND , 16
+	.byte	W01
+	.byte	VOL , 22
+	.byte	BEND , 9
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869B1F, 0x1
 	.globl sSongHeader_98
 sSongHeader_98: @ 0x08869B20
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869AC8, 0x08869AE8  @ parts
-	.incbin "baserom_jp.gba", 0x869B30, 0x18
+	.globl sSong99_Part0
+sSong99_Part0: @ 0x08869B30
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Gn3, 112
+	.byte	W04
+	.byte	Gn4, 64
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869B46, 0x2
 	.globl sSongHeader_99
 sSongHeader_99: @ 0x08869B48
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869B30  @ parts
-	.incbin "baserom_jp.gba", 0x869B54, 0x28
+	.4byte sSong99_Part0  @ parts
+	.globl sSong100_Part0
+sSong100_Part0: @ 0x08869B54
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	VOL , 49
+	.byte	BEND , 0
+	.byte	N03, Cn6, 112
+	.byte	W01
+	.byte	VOL , 68
+	.byte	BEND , 63
+	.byte	W01
+	.byte	VOL , 90
+	.byte	BEND , 127
+	.byte	W01
+	.byte	VOL , 69
+	.byte	BEND , 64
+	.byte	N02, Cn6, 40
+	.byte	W01
+	.byte	VOL , 90
+	.byte	BEND , 127
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869B7A, 0x2
 	.globl sSongHeader_100
 sSongHeader_100: @ 0x08869B7C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869B54  @ parts
-	.incbin "baserom_jp.gba", 0x869B88, 0x20
+	.4byte sSong100_Part0  @ parts
+	.globl sSong101_Part0
+sSong101_Part0: @ 0x08869B88
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 14
+	.byte	VOL , 90
+	.byte	BEND , 57
+	.byte	N02, Cn5, 112
+	.byte	W02
+	.byte	Cn6
+	.byte	W04
+	.byte	W01
+	.byte	Cn6, 60
+	.byte	W05
+	.byte	W02
+	.byte	Cn5, 112
+	.byte	W02
+	.byte	Cn6
+	.byte	W02
+	.byte	W03
+	.byte	Cn6, 60
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869BA7, 0x1
 	.globl sSongHeader_101
 sSongHeader_101: @ 0x08869BA8
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869B88  @ parts
-	.incbin "baserom_jp.gba", 0x869BB4, 0x70
+	.4byte sSong101_Part0  @ parts
+	.globl sSong102_Part0
+sSong102_Part0: @ 0x08869BB4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 46
+	.byte	VOL , 95
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	N03, Cn6, 127
+	.byte	W01
+	.byte	PAN , 66
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Gn6
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W02
+	.byte	W03
+	.byte	BEND , 65
+	.byte	N03, Cn6, 104
+	.byte	W01
+	.byte	PAN , 62
+	.byte	BEND , 66
+	.byte	W02
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Gn6
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W04
+	.byte	W01
+	.byte	BEND , 65
+	.byte	N03, Cs6, 80
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Gs6
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W04
+	.byte	BEND , 65
+	.byte	N03, Cs6, 48
+	.byte	W02
+	.byte	PAN , 59
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Gs6
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	W02
+	.byte	68
+	.byte	BEND , 65
+	.byte	N03, Cs6, 32
+	.byte	W01
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W02
+	.byte	64
+	.byte	N06, Gs6
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_102
 sSongHeader_102: @ 0x08869C24
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869BB4  @ parts
-	.incbin "baserom_jp.gba", 0x869C30, 0xB4
+	.4byte sSong102_Part0  @ parts
+	.globl sSong103_Part0
+sSong103_Part0: @ 0x08869C30
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 123
+	.byte	BENDR , 12
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N60, Gs2, 52
+	.byte	W06
+	.byte	W06
+	.byte	BEND , 64
+	.byte	W02
+	.byte	65
+	.byte	W04
+	.byte	66
+	.byte	W02
+	.byte	67
+	.byte	W02
+	.byte	69
+	.byte	W02
+	.byte	W01
+	.byte	70
+	.byte	W02
+	.byte	72
+	.byte	W03
+	.byte	73
+	.byte	W02
+	.byte	75
+	.byte	W02
+	.byte	77
+	.byte	W02
+	.byte	W01
+	.byte	79
+	.byte	W02
+	.byte	81
+	.byte	W03
+	.byte	83
+	.byte	W02
+	.byte	88
+	.byte	W02
+	.byte	91
+	.byte	W02
+	.byte	W01
+	.byte	94
+	.byte	W02
+	.byte	102
+	.byte	W03
+	.byte	107
+	.byte	W02
+	.byte	120
+	.byte	W02
+	.byte	127
+	.byte	W02
+	.byte	64
+	.byte	N72, Gs3
+	.byte	W04
+	.byte	BEND , 64
+	.byte	W02
+	.byte	W01
+	.byte	65
+	.byte	W03
+	.byte	66
+	.byte	W02
+	.byte	W01
+	.byte	67
+	.byte	W02
+	.byte	69
+	.byte	W03
+	.byte	70
+	.byte	W02
+	.byte	72
+	.byte	W02
+	.byte	73
+	.byte	W02
+	.byte	VOL , 98
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	VOL , 96
+	.byte	W01
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 92
+	.byte	W02
+	.byte	BEND , 79
+	.byte	W01
+	.byte	VOL , 92
+	.byte	W01
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 85
+	.byte	W01
+	.byte	BEND , 83
+	.byte	W02
+	.byte	VOL , 81
+	.byte	W01
+	.byte	BEND , 88
+	.byte	W01
+	.byte	VOL , 74
+	.byte	W01
+	.byte	BEND , 91
+	.byte	W01
+	.byte	VOL , 66
+	.byte	W02
+	.byte	BEND , 94
+	.byte	W01
+	.byte	VOL , 62
+	.byte	W01
+	.byte	BEND , 102
+	.byte	W01
+	.byte	VOL , 56
+	.byte	W01
+	.byte	BEND , 107
+	.byte	W02
+	.byte	VOL , 50
+	.byte	W01
+	.byte	BEND , 120
+	.byte	W01
+	.byte	VOL , 42
+	.byte	W01
+	.byte	BEND , 127
+	.byte	W01
+	.byte	VOL , 34
+	.byte	W02
+	.byte	W01
+	.byte	29
+	.byte	W02
+	.byte	25
+	.byte	W03
+	.byte	23
+	.byte	W02
+	.byte	19
+	.byte	W02
+	.byte	14
+	.byte	W02
+	.byte	W01
+	.byte	11
+	.byte	W02
+	.byte	5
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869CE2, 0x2
 	.globl sSongHeader_103
 sSongHeader_103: @ 0x08869CE4
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x08869C30  @ parts
-	.incbin "baserom_jp.gba", 0x869CF0, 0xDC
+	.4byte sSong103_Part0  @ parts
+	.globl sSong104_Part0
+sSong104_Part0: @ 0x08869CF0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 66
+	.byte	BENDR , 12
+	.byte	VOL , 90
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N90, Gs3, 40
+	.byte	W06
+	.byte	W06
+	.byte	BEND , 65
+	.byte	W04
+	.byte	67
+	.byte	W02
+	.byte	W04
+	.byte	69
+	.byte	W02
+	.byte	W04
+	.byte	72
+	.byte	W02
+	.byte	W03
+	.byte	75
+	.byte	W03
+	.byte	W03
+	.byte	82
+	.byte	W03
+	.byte	W02
+	.byte	88
+	.byte	W04
+	.byte	94
+	.byte	W02
+	.byte	102
+	.byte	W02
+	.byte	107
+	.byte	W02
+	.byte	W01
+	.byte	120
+	.byte	W02
+	.byte	127
+	.byte	W03
+	.byte	W03
+	.byte	VOL , 83
+	.byte	W03
+	.byte	75
+	.byte	W04
+	.byte	68
+	.byte	W02
+	.byte	W01
+	.byte	55
+	.byte	W04
+	.byte	42
+	.byte	W01
+	.byte	W03
+	.byte	29
+	.byte	W03
+	.byte	17
+	.byte	W03
+	.byte	8
+	.byte	W03
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong104_Part1
+sSong104_Part1: @ 0x08869D3A
+	.byte	KEYSH , 0
+	.byte	VOICE , 2
+	.byte	VOL , 14
+	.byte	PAN , 63
+	.byte	BEND , 64
+	.byte	TIE , 67, 100
+	.byte	W01
+	.byte	VOL , 19
+	.byte	W01
+	.byte	30
+	.byte	W02
+	.byte	37
+	.byte	W02
+	.byte	W02
+	.byte	44
+	.byte	W04
+	.byte	49
+	.byte	W04
+	.byte	53
+	.byte	W02
+	.byte	W03
+	.byte	58
+	.byte	W03
+	.byte	W02
+	.byte	64
+	.byte	W04
+	.byte	68
+	.byte	W03
+	.byte	74
+	.byte	W03
+	.byte	W01
+	.byte	BEND , 65
+	.byte	W01
+	.byte	VOL , 81
+	.byte	W04
+	.byte	BEND , 66
+	.byte	W01
+	.byte	VOL , 90
+	.byte	W03
+	.byte	BEND , 68
+	.byte	W02
+	.byte	W03
+	.byte	69
+	.byte	W03
+	.byte	W01
+	.byte	70
+	.byte	W03
+	.byte	70
+	.byte	W02
+	.byte	W02
+	.byte	72
+	.byte	W02
+	.byte	74
+	.byte	W02
+	.byte	W01
+	.byte	78
+	.byte	W02
+	.byte	81
+	.byte	W03
+	.byte	88
+	.byte	W02
+	.byte	94
+	.byte	W01
+	.byte	105
+	.byte	W01
+	.byte	110
+	.byte	W02
+	.byte	119
+	.byte	W01
+	.byte	124
+	.byte	W01
+	.byte	127
+	.byte	W01
+	.byte	VOL , 87
+	.byte	W03
+	.byte	85
+	.byte	PAN , 60
+	.byte	W02
+	.byte	VOL , 78
+	.byte	PAN , 68
+	.byte	W02
+	.byte	VOL , 75
+	.byte	PAN , 58
+	.byte	W02
+	.byte	W01
+	.byte	VOL , 69
+	.byte	PAN , 70
+	.byte	W02
+	.byte	VOL , 59
+	.byte	PAN , 44
+	.byte	W03
+	.byte	VOL , 49
+	.byte	PAN , 86
+	.byte	W02
+	.byte	VOL , 41
+	.byte	PAN , 27
+	.byte	W02
+	.byte	VOL , 30
+	.byte	PAN , 101
+	.byte	W02
+	.byte	W01
+	.byte	VOL , 19
+	.byte	PAN , 16
+	.byte	W02
+	.byte	VOL , 10
+	.byte	PAN , 112
+	.byte	W01
+	.byte	VOL , 4
+	.byte	W02
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869DCB, 0x1
 	.globl sSongHeader_104
 sSongHeader_104: @ 0x08869DCC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869CF0, 0x08869D3A  @ parts
-	.incbin "baserom_jp.gba", 0x869DDC, 0x108
+	.globl sSong105_Part0
+sSong105_Part0: @ 0x08869DDC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 60
+	.byte	BENDR , 12
+	.byte	VOL , 25
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	TIE , 59, 127
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 34
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 46
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 56
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 70
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 80
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 88
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	VOL , 96
+	.byte	PAN , 69
+	.byte	W02
+	.byte	66
+	.byte	W02
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	62
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W02
+	.byte	66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	62
+	.byte	W02
+	.byte	PEND
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	PATT , 55, 158
+	.byte	W06
+	.byte	8
+	.byte	VOL , 96
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 92
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 72
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	VOL , 63
+	.byte	PAN , 69
+	.byte	W02
+	.byte	VOL , 52
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 37
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W01
+	.byte	VOL , 22
+	.byte	W01
+	.byte	12
+	.byte	PAN , 62
+	.byte	W02
+	.byte	EOT , 59
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869EE1, 0x3
 	.globl sSongHeader_105
 sSongHeader_105: @ 0x08869EE4
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869DDC  @ parts
-	.incbin "baserom_jp.gba", 0x869EF0, 0x18
+	.4byte sSong105_Part0  @ parts
+	.globl sSong106_Part0
+sSong106_Part0: @ 0x08869EF0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 8
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N01, Cn4, 92
+	.byte	W03
+	.byte	Cn5
+	.byte	W03
+	.byte	W03
+	.byte	N02, En3, 127
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x869F06, 0x2
 	.globl sSongHeader_106
 sSongHeader_106: @ 0x08869F08
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x08869EF0  @ parts
-	.incbin "baserom_jp.gba", 0x869F14, 0x108
+	.4byte sSong106_Part0  @ parts
+	.globl sSong107_Part0
+sSong107_Part0: @ 0x08869F14
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 15
+	.byte	BENDR , 12
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 94
+	.byte	TIE , 72, 100
+	.byte	W01
+	.byte	BEND , 88
+	.byte	W01
+	.byte	83
+	.byte	W01
+	.byte	78
+	.byte	W01
+	.byte	72
+	.byte	W02
+	.byte	68
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	64
+	.byte	W04
+	.byte	W04
+	.byte	65
+	.byte	W02
+	.byte	W06
+	.byte	65
+	.byte	W06
+	.byte	65
+	.byte	W06
+	.byte	66
+	.byte	W06
+	.byte	67
+	.byte	W06
+	.byte	67
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	70
+	.byte	W06
+	.byte	72
+	.byte	W06
+	.byte	74
+	.byte	W06
+	.byte	76
+	.byte	W06
+	.byte	78
+	.byte	W06
+	.byte	80
+	.byte	W06
+	.byte	82
+	.byte	W06
+	.byte	84
+	.byte	W06
+	.byte	VOL , 98
+	.byte	BEND , 86
+	.byte	W03
+	.byte	VOL , 97
+	.byte	W03
+	.byte	BEND , 88
+	.byte	W01
+	.byte	VOL , 94
+	.byte	W03
+	.byte	91
+	.byte	W02
+	.byte	BEND , 90
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	85
+	.byte	W02
+	.byte	BEND , 92
+	.byte	W02
+	.byte	VOL , 80
+	.byte	W02
+	.byte	73
+	.byte	W02
+	.byte	BEND , 94
+	.byte	W01
+	.byte	VOL , 68
+	.byte	W02
+	.byte	62
+	.byte	W03
+	.byte	55
+	.byte	BEND , 96
+	.byte	W02
+	.byte	VOL , 47
+	.byte	W02
+	.byte	37
+	.byte	W02
+	.byte	BEND , 100
+	.byte	W01
+	.byte	VOL , 30
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	13
+	.byte	W01
+	.byte	4
+	.byte	W02
+	.byte	EOT
+	.byte	FINE
+	.globl sSong107_Part1
+sSong107_Part1: @ 0x08869F98
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 15
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	TIE , 56, 60
+	.byte	W01
+	.byte	VOL , 21
+	.byte	W01
+	.byte	33
+	.byte	W01
+	.byte	41
+	.byte	W01
+	.byte	49
+	.byte	W02
+	.byte	55
+	.byte	W01
+	.byte	61
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	76
+	.byte	W01
+	.byte	80
+	.byte	W02
+	.byte	86
+	.byte	W01
+	.byte	90
+	.byte	W01
+	.byte	100
+	.byte	W04
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W01
+	.byte	BEND , 65
+	.byte	W05
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W02
+	.byte	66
+	.byte	W04
+	.byte	W01
+	.byte	68
+	.byte	W05
+	.byte	69
+	.byte	W03
+	.byte	VOL , 97
+	.byte	BEND , 70
+	.byte	W03
+	.byte	VOL , 94
+	.byte	W01
+	.byte	BEND , 70
+	.byte	W01
+	.byte	VOL , 87
+	.byte	W02
+	.byte	83
+	.byte	BEND , 72
+	.byte	W02
+	.byte	W01
+	.byte	VOL , 77
+	.byte	BEND , 74
+	.byte	W02
+	.byte	VOL , 66
+	.byte	BEND , 78
+	.byte	W03
+	.byte	VOL , 55
+	.byte	BEND , 81
+	.byte	W02
+	.byte	VOL , 45
+	.byte	BEND , 88
+	.byte	W02
+	.byte	VOL , 33
+	.byte	BEND , 94
+	.byte	W02
+	.byte	105
+	.byte	W01
+	.byte	VOL , 21
+	.byte	BEND , 110
+	.byte	W01
+	.byte	119
+	.byte	W01
+	.byte	VOL , 11
+	.byte	BEND , 124
+	.byte	W01
+	.byte	VOL , 5
+	.byte	BEND , 127
+	.byte	W02
+	.byte	EOT
+	.byte	FINE
 	.globl sSongHeader_107
 sSongHeader_107: @ 0x0886A01C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x08869F14, 0x08869F98  @ parts
-	.incbin "baserom_jp.gba", 0x86A02C, 0x1C
+	.globl sSong108_Part0
+sSong108_Part0: @ 0x0886A02C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 4
+	.byte	BENDR , 12
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 40
+	.byte	BEND , 68
+	.byte	N01, Gn4, 127
+	.byte	W01
+	.byte	Gn4, 20
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A045, 0x3
 	.globl sSongHeader_108
 sSongHeader_108: @ 0x0886A048
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886A02C  @ parts
-	.incbin "baserom_jp.gba", 0x86A054, 0x28
+	.4byte sSong108_Part0  @ parts
+	.globl sSong109_Part0
+sSong109_Part0: @ 0x0886A054
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 4
+	.byte	BENDR , 12
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 90
+	.byte	BEND , 68
+	.byte	N01, Cn5, 64
+	.byte	W01
+	.byte	Cn5, 20
+	.byte	W01
+	.byte	Cn5, 64
+	.byte	W01
+	.byte	Cn5, 20
+	.byte	W01
+	.byte	Cn6, 64
+	.byte	W02
+	.byte	Cn6, 20
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A079, 0x3
 	.globl sSongHeader_109
 sSongHeader_109: @ 0x0886A07C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886A054  @ parts
-	.incbin "baserom_jp.gba", 0x86A088, 0x58
+	.4byte sSong109_Part0  @ parts
+	.globl sSong110_Part0
+sSong110_Part0: @ 0x0886A088
+	.byte	KEYSH , 0
+	.byte	TEMPO , 72
+	.byte	VOICE , 4
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 100
+	.byte	BEND , 58
+	.byte	N02, Cn4, 60
+	.byte	W02
+	.byte	N01, Cn4, 32
+	.byte	W01
+	.byte	N02, Gn4, 60
+	.byte	W03
+	.byte	N01, Gn4, 32
+	.byte	W01
+	.byte	N02, Cn4, 60
+	.byte	W02
+	.byte	Cn4, 32
+	.byte	W03
+	.byte	Cn5, 60
+	.byte	W02
+	.byte	Cn5, 32
+	.byte	W04
+	.byte	FINE
+	.globl sSong110_Part1
+sSong110_Part1: @ 0x0886A0B5
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 50
+	.byte	BEND , 62
+	.byte	W01
+	.byte	N02, Cn4, 60
+	.byte	W02
+	.byte	N01, Cn4, 32
+	.byte	W01
+	.byte	N02, Gn4, 60
+	.byte	W02
+	.byte	W01
+	.byte	N01, Gn4, 32
+	.byte	W01
+	.byte	N02, Cn4, 60
+	.byte	W02
+	.byte	Cn4, 32
+	.byte	W02
+	.byte	W01
+	.byte	Cn5, 60
+	.byte	W02
+	.byte	Cn5, 32
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A0DE, 0x2
 	.globl sSongHeader_110
 sSongHeader_110: @ 0x0886A0E0
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x0886A088, 0x0886A0B5  @ parts
-	.incbin "baserom_jp.gba", 0x86A0F0, 0x58
+	.globl sSong111_Part0
+sSong111_Part0: @ 0x0886A0F0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 72
+	.byte	VOICE , 4
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 100
+	.byte	BEND , 58
+	.byte	N02, Gn4, 60
+	.byte	W02
+	.byte	N01, Gn4, 32
+	.byte	W01
+	.byte	N02, Dn4, 60
+	.byte	W03
+	.byte	N01, Dn4, 32
+	.byte	W01
+	.byte	N02, Gn4, 60
+	.byte	W02
+	.byte	Gn4, 32
+	.byte	W03
+	.byte	Gn3, 60
+	.byte	W02
+	.byte	Gn3, 32
+	.byte	W04
+	.byte	FINE
+	.globl sSong111_Part1
+sSong111_Part1: @ 0x0886A11D
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 50
+	.byte	BEND , 62
+	.byte	W01
+	.byte	N02, Gn4, 60
+	.byte	W02
+	.byte	N01, Gn4, 32
+	.byte	W01
+	.byte	N02, Dn4, 60
+	.byte	W02
+	.byte	W01
+	.byte	N01, Dn4, 32
+	.byte	W01
+	.byte	N02, Gn4, 60
+	.byte	W02
+	.byte	Gn4, 32
+	.byte	W02
+	.byte	W01
+	.byte	Gn3, 60
+	.byte	W02
+	.byte	Gn3, 32
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A146, 0x2
 	.globl sSongHeader_111
 sSongHeader_111: @ 0x0886A148
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x0886A0F0, 0x0886A11D  @ parts
-	.incbin "baserom_jp.gba", 0x86A158, 0x1EC
+	.globl sSong112_Part0
+sSong112_Part0: @ 0x0886A158
+	.byte	KEYSH , 0
+	.byte	TEMPO , 72
+	.byte	VOICE , 4
+	.byte	XCMD , 8 , 12
+	.byte	9 , 10
+	.byte	VOL , 100
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds4, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, As4, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W02
+	.byte	BEND , 58
+	.byte	N02, As4, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds4, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds4, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds3, 40
+	.byte	W02
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, As4, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, As4, 60
+	.byte	W02
+	.byte	W01
+	.byte	BEND , 70
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W02
+	.byte	BEND , 58
+	.byte	N02, Ds4, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds5, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, As4, 60
+	.byte	W02
+	.byte	BEND , 70
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	BEND , 58
+	.byte	N02, Ds4, 60
+	.byte	W03
+	.byte	BEND , 70
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	BEND , 57
+	.byte	N02, Ds5, 60
+	.byte	W04
+	.byte	FINE
+	.globl sSong112_Part1
+sSong112_Part1: @ 0x0886A251
+	.byte	KEYSH , 0
+	.byte	VOICE , 14
+	.byte	VOL , 50
+	.byte	BEND , 56
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, Ds4, 60
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W02
+	.byte	N02, As4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W02
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, As4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, Ds4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds3, 40
+	.byte	W02
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, Ds4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W02
+	.byte	56
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, As4, 60
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W02
+	.byte	N02, As4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, As3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W02
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, Ds4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds4, 40
+	.byte	W01
+	.byte	N02, As4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, As3, 40
+	.byte	W02
+	.byte	N02, Ds4, 60
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	56
+	.byte	N01, Ds3, 40
+	.byte	W01
+	.byte	N02, Ds5, 60
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A343, 0x1
 	.globl sSongHeader_112
 sSongHeader_112: @ 0x0886A344
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
 	.4byte 0x0886A158, 0x0886A251  @ parts
-	.incbin "baserom_jp.gba", 0x86A354, 0x7C
+	.globl sSong113_Part0
+sSong113_Part0: @ 0x0886A354
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 21
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 120
+	.byte	BEND , 65
+	.byte	N01, Bn5, 127
+	.byte	W01
+	.byte	Cn5, 100
+	.byte	W01
+	.byte	VOICE , 18
+	.byte	N01, Cn4, 127
+	.byte	W02
+	.byte	VOICE , 36
+	.byte	N19, Cn6, 40
+	.byte	W02
+	.byte	VOL , 63
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOL , 77
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 91
+	.byte	BEND , 85
+	.byte	W01
+	.byte	VOL , 106
+	.byte	BEND , 97
+	.byte	W01
+	.byte	VOL , 120
+	.byte	W05
+	.byte	109
+	.byte	W01
+	.byte	102
+	.byte	W02
+	.byte	84
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	10
+	.byte	W02
+	.byte	FINE
+	.globl sSong113_Part1
+sSong113_Part1: @ 0x0886A39B
+	.byte	KEYSH , 0
+	.byte	VOL , 120
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	W07
+	.byte	VOICE , 46
+	.byte	N01, Cn6, 100
+	.byte	W02
+	.byte	BEND , 68
+	.byte	N01, Gn5, 88
+	.byte	W03
+	.byte	BEND , 72
+	.byte	N01, Cn6, 72
+	.byte	W02
+	.byte	BEND , 80
+	.byte	N01, Gn5, 56
+	.byte	W02
+	.byte	BEND , 87
+	.byte	N01, Cn6, 40
+	.byte	W03
+	.byte	BEND , 97
+	.byte	N01, Gn5, 28
+	.byte	W02
+	.byte	BEND , 117
+	.byte	N01, Cn6, 12
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A3CF, 0x1
 	.globl sSongHeader_113
 sSongHeader_113: @ 0x0886A3D0
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A354, 0x0886A39B  @ parts
-	.incbin "baserom_jp.gba", 0x86A3E0, 0x40
+	.globl sSong114_Part0
+sSong114_Part0: @ 0x0886A3E0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 32
+	.byte	VOL , 16
+	.byte	BEND , 65
+	.byte	N09, Gn5, 32
+	.byte	W01
+	.byte	VOL , 63
+	.byte	W01
+	.byte	98
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	99
+	.byte	BEND , 69
+	.byte	W02
+	.byte	VOL , 63
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 22
+	.byte	BEND , 85
+	.byte	W01
+	.byte	VOL , 9
+	.byte	BEND , 97
+	.byte	W04
+	.byte	FINE
+	.globl sSong114_Part1
+sSong114_Part1: @ 0x0886A40D
+	.byte	KEYSH , 0
+	.byte	VOICE , 71
+	.byte	PAN , 96
+	.byte	VOL , 110
+	.byte	BEND , 65
+	.byte	N09, Fs4, 60
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A41D, 0x3
 	.globl sSongHeader_114
 sSongHeader_114: @ 0x0886A420
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A3E0, 0x0886A40D  @ parts
-	.incbin "baserom_jp.gba", 0x86A430, 0x1C
+	.globl sSong115_Part0
+sSong115_Part0: @ 0x0886A430
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 16
+	.byte	VOL , 110
+	.byte	BEND , 65
+	.byte	N03, Gs4, 72
+	.byte	W01
+	.byte	BEND , 62
+	.byte	W01
+	.byte	VOL , 58
+	.byte	BEND , 54
+	.byte	W01
+	.byte	VOL , 28
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A44A, 0x2
 	.globl sSongHeader_115
 sSongHeader_115: @ 0x0886A44C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A430  @ parts
-	.incbin "baserom_jp.gba", 0x86A458, 0x14
+	.4byte sSong115_Part0  @ parts
+	.globl sSong116_Part0
+sSong116_Part0: @ 0x0886A458
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 119
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 65
+	.byte	N02, Gs4, 40
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A46B, 0x1
 	.globl sSongHeader_116
 sSongHeader_116: @ 0x0886A46C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886A458  @ parts
-	.incbin "baserom_jp.gba", 0x86A478, 0x30
+	.4byte sSong116_Part0  @ parts
+	.globl sSong117_Part0
+sSong117_Part0: @ 0x0886A478
+	.byte	KEYSH , 0
+	.byte	TEMPO , 60
+	.byte	VOICE , 28
+	.byte	VOL , 26
+	.byte	BENDR , 8
+	.byte	BEND , 64
+	.byte	N01, En3, 116
+	.byte	W01
+	.byte	VOL , 105
+	.byte	BEND , 60
+	.byte	N01, Bn2
+	.byte	W01
+	.byte	BEND , 67
+	.byte	N01, Cn3
+	.byte	W04
+	.byte	W04
+	.byte	BEND , 64
+	.byte	N04, Bn3
+	.byte	W02
+	.byte	VOL , 26
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 105
+	.byte	BEND , 51
+	.byte	W01
+	.byte	41
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A4A7, 0x1
 	.globl sSongHeader_117
 sSongHeader_117: @ 0x0886A4A8
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A478  @ parts
-	.incbin "baserom_jp.gba", 0x86A4B4, 0x88
+	.4byte sSong117_Part0  @ parts
+	.globl sSong118_Part0
+sSong118_Part0: @ 0x0886A4B4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	VOL , 120
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 96
+	.byte	N06, Dn3, 127
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 48
+	.byte	W02
+	.byte	64
+	.byte	BEND , 96
+	.byte	N06, Dn2, 104
+	.byte	W02
+	.byte	PAN , 73
+	.byte	W01
+	.byte	BEND , 52
+	.byte	W01
+	.byte	PAN , 80
+	.byte	W02
+	.byte	64
+	.byte	BEND , 64
+	.byte	N21, Dn3, 127
+	.byte	W03
+	.byte	PAN , 56
+	.byte	W03
+	.byte	49
+	.byte	W01
+	.byte	BEND , 51
+	.byte	W02
+	.byte	PAN , 57
+	.byte	W01
+	.byte	BEND , 41
+	.byte	W02
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 24
+	.byte	W01
+	.byte	VOL , 86
+	.byte	W01
+	.byte	BEND , 10
+	.byte	W01
+	.byte	PAN , 74
+	.byte	VOL , 68
+	.byte	W02
+	.byte	37
+	.byte	BEND , 0
+	.byte	W01
+	.byte	PAN , 80
+	.byte	W02
+	.byte	VOL , 17
+	.byte	W01
+	.byte	PAN , 74
+	.byte	W15
+	.byte	FINE
+	.globl sSong118_Part1
+sSong118_Part1: @ 0x0886A514
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 120
+	.byte	PAN , 57
+	.byte	N02, En3, 48
+	.byte	W05
+	.byte	PAN , 74
+	.byte	N02, En3, 40
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N02, En3, 32
+	.byte	W07
+	.byte	PAN , 74
+	.byte	N02, En3, 24
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N02, En3, 16
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A539, 0x3
 	.globl sSongHeader_118
 sSongHeader_118: @ 0x0886A53C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A4B4, 0x0886A514  @ parts
-	.incbin "baserom_jp.gba", 0x86A54C, 0x5C
+	.globl sSong119_Part0
+sSong119_Part0: @ 0x0886A54C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	VOL , 100
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Cn4, 88
+	.byte	W06
+	.byte	PAN , 55
+	.byte	N03, Cn4, 80
+	.byte	W06
+	.byte	PAN , 73
+	.byte	N03, Cn4, 72
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N03, Cn4, 64
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03, Cn4, 60
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N03, Cn4, 52
+	.byte	W18
+	.byte	FINE
+	.globl sSong119_Part1
+sSong119_Part1: @ 0x0886A57D
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 100
+	.byte	PAN , 73
+	.byte	N02, Gn3, 72
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N02, Gn3, 68
+	.byte	W06
+	.byte	PAN , 73
+	.byte	N02, Gn3, 64
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N02, Gn3, 60
+	.byte	W06
+	.byte	PAN , 73
+	.byte	N02, Gn3, 56
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N02, Gn3, 48
+	.byte	W18
+	.byte	FINE
 	.globl sSongHeader_119
 sSongHeader_119: @ 0x0886A5A8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A54C, 0x0886A57D  @ parts
-	.incbin "baserom_jp.gba", 0x86A5B8, 0x38
+	.globl sSong120_Part0
+sSong120_Part0: @ 0x0886A5B8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 28
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 80
+	.byte	N03, Gs3, 80
+	.byte	W01
+	.byte	BEND , 102
+	.byte	W01
+	.byte	126
+	.byte	W02
+	.byte	N17, Gs4, 96
+	.byte	W03
+	.byte	PAN , 70
+	.byte	W02
+	.byte	64
+	.byte	W03
+	.byte	56
+	.byte	W02
+	.byte	64
+	.byte	W02
+	.byte	70
+	.byte	W03
+	.byte	64
+	.byte	W05
+	.byte	FINE
+	.globl sSong120_Part1
+sSong120_Part1: @ 0x0886A5DF
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	N01, En4, 60
+	.byte	W04
+	.byte	N17, Gs4, 96
+	.byte	W20
+	.byte	FINE
 	.globl sSongHeader_120
 sSongHeader_120: @ 0x0886A5F0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A5B8, 0x0886A5DF  @ parts
-	.incbin "baserom_jp.gba", 0x86A600, 0xB4
+	.globl sSong121_Part0
+sSong121_Part0: @ 0x0886A600
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 3
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W06
+	.byte	N03, Gn2, 92
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N03, Gn2, 88
+	.byte	W09
+	.byte	PAN , 63
+	.byte	N03, Fs3, 104
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 80
+	.byte	N03, Fs3, 88
+	.byte	W06
+	.byte	PAN , 64
+	.byte	N03, Ds3
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N03
+	.byte	W09
+	.byte	PAN , 63
+	.byte	N03, An2, 96
+	.byte	W06
+	.byte	PAN , 81
+	.byte	N03, An2, 88
+	.byte	W09
+	.byte	PAN , 63
+	.byte	N03, Gs3, 104
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N03, Gs3, 88
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 63
+	.byte	N03, Fn3
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03
+	.byte	W15
+	.byte	FINE
+	.globl sSong121_Part1
+sSong121_Part1: @ 0x0886A652
+	.byte	KEYSH , 0
+	.byte	VOICE , 20
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 110
+	.byte	PAN , 57
+	.byte	BEND , 119
+	.byte	N03, Cn2, 100
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 100
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 81
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 66
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 56
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 76
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 70
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 64
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 58
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 45
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 33
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 20
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 57
+	.byte	BEND , 9
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 70
+	.byte	BEND , 0
+	.byte	N03
+	.byte	W18
+	.byte	FINE
 	.globl sSongHeader_121
 sSongHeader_121: @ 0x0886A6B4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A600, 0x0886A652  @ parts
-	.incbin "baserom_jp.gba", 0x86A6C4, 0x44
+	.globl sSong122_Part0
+sSong122_Part0: @ 0x0886A6C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 22
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 80
+	.byte	BEND , 110
+	.byte	N09, Cn3, 127
+	.byte	W03
+	.byte	VOL , 104
+	.byte	PAN , 64
+	.byte	BEND , 87
+	.byte	W03
+	.byte	VOL , 93
+	.byte	PAN , 48
+	.byte	BEND , 49
+	.byte	W03
+	.byte	VOICE , 21
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Gn4
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03, Cn5
+	.byte	W09
+	.byte	FINE
+	.globl sSong122_Part1
+sSong122_Part1: @ 0x0886A6F3
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	W09
+	.byte	PAN , 72
+	.byte	N03, Cn3, 52
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N03
+	.byte	W09
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A705, 0x3
 	.globl sSongHeader_122
 sSongHeader_122: @ 0x0886A708
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A6C4, 0x0886A6F3  @ parts
-	.incbin "baserom_jp.gba", 0x86A718, 0x70
+	.globl sSong123_Part0
+sSong123_Part0: @ 0x0886A718
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 6
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, Cn3, 127
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 24
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, En3
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	43
+	.byte	W01
+	.byte	PAN , 71
+	.byte	BEND , 24
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N09, An2
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	45
+	.byte	W01
+	.byte	35
+	.byte	W01
+	.byte	VOL , 86
+	.byte	BEND , 25
+	.byte	W02
+	.byte	VOL , 69
+	.byte	BEND , 19
+	.byte	W01
+	.byte	VOL , 53
+	.byte	BEND , 8
+	.byte	W01
+	.byte	VOL , 20
+	.byte	BEND , 0
+	.byte	W04
+	.byte	0
+	.byte	FINE
+	.globl sSong123_Part1
+sSong123_Part1: @ 0x0886A76D
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 110
+	.byte	PAN , 73
+	.byte	N03, Gs2, 52
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 64
+	.byte	N03
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A787, 0x1
 	.globl sSongHeader_123
 sSongHeader_123: @ 0x0886A788
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A718, 0x0886A76D  @ parts
-	.incbin "baserom_jp.gba", 0x86A798, 0x28
+	.globl sSong124_Part0
+sSong124_Part0: @ 0x0886A798
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 23
+	.byte	VOL , 95
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N09, Cn3, 127
+	.byte	W03
+	.byte	PAN , 48
+	.byte	BEND , 70
+	.byte	W01
+	.byte	80
+	.byte	W02
+	.byte	PAN , 80
+	.byte	BEND , 101
+	.byte	W01
+	.byte	112
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 63
+	.byte	N03, En3
+	.byte	W15
+	.byte	FINE
 	.globl sSongHeader_124
 sSongHeader_124: @ 0x0886A7C0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A798  @ parts
-	.incbin "baserom_jp.gba", 0x86A7CC, 0x28
+	.4byte sSong124_Part0  @ parts
+	.globl sSong125_Part0
+sSong125_Part0: @ 0x0886A7CC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 24
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W03
+	.byte	N09, Gn4, 127
+	.byte	W02
+	.byte	BEND , 95
+	.byte	W02
+	.byte	30
+	.byte	W17
+	.byte	FINE
+	.globl sSong125_Part1
+sSong125_Part1: @ 0x0886A7E5
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	N01, Cn4, 44
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A7F2, 0x2
 	.globl sSongHeader_125
 sSongHeader_125: @ 0x0886A7F4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A7CC, 0x0886A7E5  @ parts
-	.incbin "baserom_jp.gba", 0x86A804, 0x30
+	.globl sSong126_Part0
+sSong126_Part0: @ 0x0886A804
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 23
+	.byte	VOL , 95
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N12, Gn2, 127
+	.byte	W06
+	.byte	PAN , 47
+	.byte	BEND , 70
+	.byte	W01
+	.byte	80
+	.byte	W02
+	.byte	PAN , 80
+	.byte	BEND , 89
+	.byte	W01
+	.byte	95
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 63
+	.byte	W03
+	.byte	N06
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W01
+	.byte	77
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A831, 0x3
 	.globl sSongHeader_126
 sSongHeader_126: @ 0x0886A834
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A804  @ parts
-	.incbin "baserom_jp.gba", 0x86A840, 0x6C
+	.4byte sSong126_Part0  @ parts
+	.globl sSong127_Part0
+sSong127_Part0: @ 0x0886A840
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 20
+	.byte	BEND , 64
+	.byte	TIE , 67, 64
+	.byte	W03
+	.byte	VOL , 37
+	.byte	W03
+	.byte	53
+	.byte	W03
+	.byte	60
+	.byte	W03
+	.byte	71
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	93
+	.byte	W03
+	.byte	110
+	.byte	W03
+	.byte	PAN , 67
+	.byte	W06
+	.byte	75
+	.byte	W12
+	.byte	84
+	.byte	W06
+	.byte	89
+	.byte	W12
+	.byte	78
+	.byte	W06
+	.byte	72
+	.byte	W06
+	.byte	W06
+	.byte	61
+	.byte	W12
+	.byte	48
+	.byte	W06
+	.byte	W06
+	.byte	38
+	.byte	W12
+	.byte	48
+	.byte	W06
+	.byte	VOL , 104
+	.byte	PAN , 59
+	.byte	W03
+	.byte	VOL , 101
+	.byte	W03
+	.byte	98
+	.byte	PAN , 70
+	.byte	W03
+	.byte	VOL , 93
+	.byte	W03
+	.byte	90
+	.byte	PAN , 78
+	.byte	W03
+	.byte	VOL , 86
+	.byte	W03
+	.byte	83
+	.byte	W03
+	.byte	77
+	.byte	W03
+	.byte	73
+	.byte	PAN , 88
+	.byte	W03
+	.byte	VOL , 66
+	.byte	W03
+	.byte	58
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	32
+	.byte	PAN , 79
+	.byte	W03
+	.byte	VOL , 16
+	.byte	W03
+	.byte	1
+	.byte	PAN , 68
+	.byte	W06
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A8AA, 0x2
 	.globl sSongHeader_127
 sSongHeader_127: @ 0x0886A8AC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A840  @ parts
-	.incbin "baserom_jp.gba", 0x86A8B8, 0x74
+	.4byte sSong127_Part0  @ parts
+	.globl sSong128_Part0
+sSong128_Part0: @ 0x0886A8B8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 120
+	.byte	BEND , 64
+	.byte	N15, Cn3, 108
+	.byte	W03
+	.byte	VOL , 102
+	.byte	BEND , 86
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	VOL , 88
+	.byte	W03
+	.byte	75
+	.byte	BEND , 51
+	.byte	W03
+	.byte	VOL , 55
+	.byte	W03
+	.byte	VOICE , 18
+	.byte	VOL , 120
+	.byte	PAN , 78
+	.byte	BEND , 64
+	.byte	N09, Cn5, 92
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 32
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 92
+	.byte	W03
+	.byte	VOICE , 2
+	.byte	BEND , 0
+	.byte	N21, Cn3, 108
+	.byte	W03
+	.byte	BEND , 9
+	.byte	W03
+	.byte	PAN , 68
+	.byte	BEND , 19
+	.byte	W03
+	.byte	PAN , 59
+	.byte	BEND , 94
+	.byte	W03
+	.byte	PAN , 79
+	.byte	BEND , 103
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 118
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W06
+	.byte	FINE
+	.globl sSong128_Part1
+sSong128_Part1: @ 0x0886A916
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	PAN , 64
+	.byte	VOL , 120
+	.byte	N15, Cn2, 40
+	.byte	W15
+	.byte	N06, Fs3
+	.byte	W09
+	.byte	N24, Gs3
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A929, 0x3
 	.globl sSongHeader_128
 sSongHeader_128: @ 0x0886A92C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A8B8, 0x0886A916  @ parts
-	.incbin "baserom_jp.gba", 0x86A93C, 0x48
+	.globl sSong129_Part0
+sSong129_Part0: @ 0x0886A93C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 125
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N48, Fn4, 108
+	.byte	W03
+	.byte	PAN , 69
+	.byte	BEND , 70
+	.byte	W03
+	.byte	PAN , 79
+	.byte	BEND , 76
+	.byte	W03
+	.byte	PAN , 70
+	.byte	BEND , 85
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	PAN , 63
+	.byte	W03
+	.byte	55
+	.byte	BEND , 56
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 50
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 56
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W06
+	.byte	VOL , 90
+	.byte	W03
+	.byte	71
+	.byte	W03
+	.byte	58
+	.byte	W03
+	.byte	41
+	.byte	W03
+	.byte	27
+	.byte	W03
+	.byte	7
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86A983, 0x1
 	.globl sSongHeader_129
 sSongHeader_129: @ 0x0886A984
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886A93C  @ parts
-	.incbin "baserom_jp.gba", 0x86A990, 0x98
+	.4byte sSong129_Part0  @ parts
+	.globl sSong130_Part0
+sSong130_Part0: @ 0x0886A990
+	.byte	KEYSH , 0
+	.byte	TEMPO , 125
+	.byte	VOICE , 10
+	.byte	BENDR , 12
+	.byte	VOL , 105
+	.byte	PAN , 63
+	.byte	BEND , 64
+	.byte	N09, En4, 112
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W03
+	.byte	76
+	.byte	W05
+	.byte	72
+	.byte	W01
+	.byte	PAN , 80
+	.byte	N09, Gn4
+	.byte	W03
+	.byte	BEND , 56
+	.byte	W03
+	.byte	50
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 53
+	.byte	N09, En4
+	.byte	W03
+	.byte	BEND , 59
+	.byte	W03
+	.byte	65
+	.byte	W05
+	.byte	61
+	.byte	W01
+	.byte	PAN , 48
+	.byte	N09, Gn4
+	.byte	W03
+	.byte	BEND , 45
+	.byte	W03
+	.byte	39
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 45
+	.byte	N09, En4
+	.byte	W03
+	.byte	BEND , 51
+	.byte	W03
+	.byte	58
+	.byte	W05
+	.byte	54
+	.byte	W01
+	.byte	PAN , 80
+	.byte	N09, Gn4, 96
+	.byte	W03
+	.byte	BEND , 37
+	.byte	W03
+	.byte	32
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 32
+	.byte	N09, En4, 84
+	.byte	W03
+	.byte	BEND , 38
+	.byte	W03
+	.byte	45
+	.byte	W05
+	.byte	41
+	.byte	W01
+	.byte	PAN , 48
+	.byte	N09, Gn4, 60
+	.byte	W03
+	.byte	BEND , 24
+	.byte	W03
+	.byte	19
+	.byte	W06
+	.byte	FINE
+	.globl sSong130_Part1
+sSong130_Part1: @ 0x0886A9FF
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 105
+	.byte	PAN , 73
+	.byte	N09, Cn3, 52
+	.byte	W12
+	.byte	PAN , 57
+	.byte	N09, Gn2
+	.byte	W12
+	.byte	PAN , 73
+	.byte	N09, Cn3, 52
+	.byte	W12
+	.byte	PAN , 58
+	.byte	N09, Gn2
+	.byte	W12
+	.byte	PEND
+	.byte	PATT , 16, 170
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 16, 170
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AA27, 0x1
 	.globl sSongHeader_130
 sSongHeader_130: @ 0x0886AA28
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886A990, 0x0886A9FF  @ parts
-	.incbin "baserom_jp.gba", 0x86AA38, 0x3C
+	.globl sSong131_Part0
+sSong131_Part0: @ 0x0886AA38
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 105
+	.byte	BEND , 64
+	.byte	N06, En3, 127
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 30
+	.byte	W03
+	.byte	PAN , 71
+	.byte	N03, Gn3, 100
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 68
+	.byte	N06, En3, 127
+	.byte	W03
+	.byte	PAN , 80
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 63
+	.byte	BEND , 64
+	.byte	N06, Cn3, 84
+	.byte	W06
+	.byte	BEND , 44
+	.byte	N06, En3, 68
+	.byte	W03
+	.byte	BEND , 23
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_131
 sSongHeader_131: @ 0x0886AA74
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AA38  @ parts
-	.incbin "baserom_jp.gba", 0x86AA80, 0x70
+	.4byte sSong131_Part0  @ parts
+	.globl sSong132_Part0
+sSong132_Part0: @ 0x0886AA80
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 64
+	.byte	BEND , 64
+	.byte	N24, Cn3, 108
+	.byte	W03
+	.byte	VOL , 79
+	.byte	BEND , 86
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 60
+	.byte	W03
+	.byte	VOL , 91
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 100
+	.byte	PAN , 56
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W03
+	.byte	PAN , 52
+	.byte	W06
+	.byte	PAN , 47
+	.byte	BEND , 64
+	.byte	N48, Cn3, 108
+	.byte	W03
+	.byte	BEND , 57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	PAN , 61
+	.byte	W03
+	.byte	70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 58
+	.byte	W03
+	.byte	PAN , 80
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W03
+	.byte	PAN , 77
+	.byte	BEND , 75
+	.byte	W03
+	.byte	84
+	.byte	W03
+	.byte	PAN , 72
+	.byte	W03
+	.byte	64
+	.byte	BEND , 76
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 71
+	.byte	W03
+	.byte	PAN , 53
+	.byte	W03
+	.byte	GOTO , 174, 170
+	.byte	W06
+	.byte	8
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AAEF, 0x1
 	.globl sSongHeader_132
 sSongHeader_132: @ 0x0886AAF0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AA80  @ parts
-	.incbin "baserom_jp.gba", 0x86AAFC, 0x40
+	.4byte sSong132_Part0  @ parts
+	.globl sSong133_Part0
+sSong133_Part0: @ 0x0886AAFC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N24, Cn3, 108
+	.byte	W02
+	.byte	PAN , 45
+	.byte	W04
+	.byte	64
+	.byte	W01
+	.byte	VOL , 97
+	.byte	W01
+	.byte	PAN , 80
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W03
+	.byte	76
+	.byte	PAN , 66
+	.byte	W02
+	.byte	VOL , 55
+	.byte	PAN , 56
+	.byte	W02
+	.byte	VOL , 39
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 25
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W01
+	.byte	VOL , 13
+	.byte	W03
+	.byte	7
+	.byte	PAN , 64
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AB39, 0x3
 	.globl sSongHeader_133
 sSongHeader_133: @ 0x0886AB3C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AAFC  @ parts
-	.incbin "baserom_jp.gba", 0x86AB48, 0x28
+	.4byte sSong133_Part0  @ parts
+	.globl sSong134_Part0
+sSong134_Part0: @ 0x0886AB48
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 73
+	.byte	BEND , 64
+	.byte	N02, Bn3, 112
+	.byte	W04
+	.byte	PAN , 55
+	.byte	N02, Fn5, 64
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N02, Bn3, 36
+	.byte	W03
+	.byte	VOICE , 18
+	.byte	N02, Cn6, 96
+	.byte	W15
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AB6D, 0x3
 	.globl sSongHeader_134
 sSongHeader_134: @ 0x0886AB70
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AB48  @ parts
-	.incbin "baserom_jp.gba", 0x86AB7C, 0x40
+	.4byte sSong134_Part0  @ parts
+	.globl sSong135_Part0
+sSong135_Part0: @ 0x0886AB7C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 46
+	.byte	N19, Dn3, 108
+	.byte	W02
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 101
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 72
+	.byte	W02
+	.byte	VOL , 84
+	.byte	BEND , 68
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 64
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W02
+	.byte	VOL , 45
+	.byte	BEND , 33
+	.byte	W02
+	.byte	VOL , 32
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOICE , 2
+	.byte	W01
+	.byte	VOL , 13
+	.byte	BEND , 12
+	.byte	W08
+	.byte	FINE
 	.globl sSongHeader_135
 sSongHeader_135: @ 0x0886ABBC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AB7C  @ parts
-	.incbin "baserom_jp.gba", 0x86ABC8, 0x54
+	.4byte sSong135_Part0  @ parts
+	.globl sSong136_Part0
+sSong136_Part0: @ 0x0886ABC8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	PAN , 78
+	.byte	BEND , 64
+	.byte	N09, Cn5, 92
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 32
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 92
+	.byte	W03
+	.byte	VOICE , 2
+	.byte	BEND , 0
+	.byte	N21, Bn2, 108
+	.byte	W03
+	.byte	BEND , 9
+	.byte	W03
+	.byte	PAN , 68
+	.byte	BEND , 19
+	.byte	W03
+	.byte	PAN , 59
+	.byte	BEND , 94
+	.byte	W03
+	.byte	PAN , 79
+	.byte	BEND , 103
+	.byte	W03
+	.byte	PAN , 49
+	.byte	BEND , 118
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W21
+	.byte	FINE
+	.globl sSong136_Part1
+sSong136_Part1: @ 0x0886AC0B
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N06, Fn3, 40
+	.byte	W09
+	.byte	N24, Gn3
+	.byte	W15
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_136
 sSongHeader_136: @ 0x0886AC1C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886ABC8, 0x0886AC0B  @ parts
-	.incbin "baserom_jp.gba", 0x86AC2C, 0x3C
+	.globl sSong137_Part0
+sSong137_Part0: @ 0x0886AC2C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 3
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	N01, Ds4, 112
+	.byte	W04
+	.byte	PAN , 70
+	.byte	N01, Bn4, 40
+	.byte	W04
+	.byte	PAN , 59
+	.byte	N01, Ds4, 112
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Bn4
+	.byte	W15
+	.byte	FINE
+	.globl sSong137_Part1
+sSong137_Part1: @ 0x0886AC4C
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	N01, Dn4, 40
+	.byte	W04
+	.byte	Bn3
+	.byte	W02
+	.byte	PAN , 57
+	.byte	W02
+	.byte	73
+	.byte	W01
+	.byte	N01, Dn4
+	.byte	W01
+	.byte	PAN , 57
+	.byte	W14
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AC66, 0x2
 	.globl sSongHeader_137
 sSongHeader_137: @ 0x0886AC68
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886AC2C, 0x0886AC4C  @ parts
-	.incbin "baserom_jp.gba", 0x86AC78, 0x74
+	.globl sSong138_Part0
+sSong138_Part0: @ 0x0886AC78
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 18
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 96
+	.byte	N06, Gn3, 127
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 96
+	.byte	N04, Cn3
+	.byte	W02
+	.byte	PAN , 73
+	.byte	W01
+	.byte	BEND , 52
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N01, Gn3
+	.byte	W02
+	.byte	Bn2
+	.byte	W02
+	.byte	N13, Gn3
+	.byte	W02
+	.byte	VOL , 96
+	.byte	W01
+	.byte	85
+	.byte	W01
+	.byte	BEND , 41
+	.byte	W01
+	.byte	VOL , 66
+	.byte	W01
+	.byte	BEND , 24
+	.byte	W01
+	.byte	VOL , 36
+	.byte	W01
+	.byte	BEND , 10
+	.byte	W02
+	.byte	VOL , 12
+	.byte	W01
+	.byte	BEND , 0
+	.byte	W21
+	.byte	FINE
+	.globl sSong138_Part1
+sSong138_Part1: @ 0x0886ACC4
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 110
+	.byte	PAN , 57
+	.byte	N02, En3, 52
+	.byte	W04
+	.byte	PAN , 74
+	.byte	N02, En3, 44
+	.byte	W04
+	.byte	PAN , 57
+	.byte	N02, En3, 36
+	.byte	W04
+	.byte	PAN , 74
+	.byte	N02, En3, 28
+	.byte	W04
+	.byte	PAN , 57
+	.byte	N02, En3, 20
+	.byte	W08
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86ACEA, 0x2
 	.globl sSongHeader_138
 sSongHeader_138: @ 0x0886ACEC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886AC78, 0x0886ACC4  @ parts
-	.incbin "baserom_jp.gba", 0x86ACFC, 0x44
+	.globl sSong139_Part0
+sSong139_Part0: @ 0x0886ACFC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 6
+	.byte	VOL , 120
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Cn3, 127
+	.byte	W01
+	.byte	PAN , 54
+	.byte	BEND , 37
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 17
+	.byte	W01
+	.byte	0
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	N02, Dn3, 84
+	.byte	W02
+	.byte	BEND , 32
+	.byte	W18
+	.byte	FINE
+	.globl sSong139_Part1
+sSong139_Part1: @ 0x0886AD26
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 120
+	.byte	PAN , 73
+	.byte	N03, An2, 52
+	.byte	W04
+	.byte	N02
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W18
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AD3D, 0x3
 	.globl sSongHeader_139
 sSongHeader_139: @ 0x0886AD40
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886ACFC, 0x0886AD26  @ parts
-	.incbin "baserom_jp.gba", 0x86AD50, 0xBC
+	.globl sSong140_Part0
+sSong140_Part0: @ 0x0886AD50
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 63
+	.byte	BEND , 16
+	.byte	N72, Fn4, 108
+	.byte	W02
+	.byte	VOL , 68
+	.byte	BEND , 21
+	.byte	W01
+	.byte	PAN , 69
+	.byte	W01
+	.byte	BEND , 26
+	.byte	W02
+	.byte	PAN , 79
+	.byte	VOL , 70
+	.byte	W01
+	.byte	BEND , 30
+	.byte	W02
+	.byte	PAN , 70
+	.byte	VOL , 75
+	.byte	BEND , 34
+	.byte	W03
+	.byte	PAN , 63
+	.byte	BEND , 36
+	.byte	W01
+	.byte	VOL , 78
+	.byte	W01
+	.byte	BEND , 40
+	.byte	W01
+	.byte	PAN , 55
+	.byte	W01
+	.byte	VOL , 85
+	.byte	BEND , 43
+	.byte	W02
+	.byte	PAN , 49
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 90
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 56
+	.byte	W02
+	.byte	61
+	.byte	W01
+	.byte	PAN , 69
+	.byte	W01
+	.byte	BEND , 66
+	.byte	W02
+	.byte	PAN , 79
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W02
+	.byte	PAN , 70
+	.byte	BEND , 73
+	.byte	W03
+	.byte	PAN , 63
+	.byte	BEND , 75
+	.byte	W02
+	.byte	78
+	.byte	W01
+	.byte	PAN , 55
+	.byte	W01
+	.byte	BEND , 83
+	.byte	W02
+	.byte	PAN , 49
+	.byte	W01
+	.byte	BEND , 87
+	.byte	W02
+	.byte	PAN , 55
+	.byte	BEND , 91
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 93
+	.byte	W02
+	.byte	97
+	.byte	W01
+	.byte	PAN , 69
+	.byte	W01
+	.byte	BEND , 99
+	.byte	W02
+	.byte	VOL , 74
+	.byte	PAN , 79
+	.byte	W01
+	.byte	BEND , 102
+	.byte	W02
+	.byte	VOL , 58
+	.byte	PAN , 70
+	.byte	BEND , 106
+	.byte	W03
+	.byte	VOL , 47
+	.byte	PAN , 63
+	.byte	BEND , 109
+	.byte	W02
+	.byte	112
+	.byte	W01
+	.byte	VOL , 34
+	.byte	PAN , 55
+	.byte	W01
+	.byte	BEND , 114
+	.byte	W02
+	.byte	VOL , 22
+	.byte	PAN , 49
+	.byte	W01
+	.byte	BEND , 118
+	.byte	W02
+	.byte	VOL , 6
+	.byte	PAN , 55
+	.byte	BEND , 122
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AE0A, 0x2
 	.globl sSongHeader_140
 sSongHeader_140: @ 0x0886AE0C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AD50  @ parts
-	.incbin "baserom_jp.gba", 0x86AE18, 0x94
+	.4byte sSong140_Part0  @ parts
+	.globl sSong141_Part0
+sSong141_Part0: @ 0x0886AE18
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 6
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N04, En3, 127
+	.byte	W01
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 74
+	.byte	BEND , 26
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 0
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, An2
+	.byte	W01
+	.byte	PAN , 71
+	.byte	BEND , 36
+	.byte	W01
+	.byte	0
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Cn3, 60
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 36
+	.byte	W02
+	.byte	0
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N10, Gn2, 127
+	.byte	W01
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 101
+	.byte	PAN , 58
+	.byte	BEND , 49
+	.byte	W02
+	.byte	44
+	.byte	W01
+	.byte	VOL , 83
+	.byte	PAN , 70
+	.byte	BEND , 40
+	.byte	W01
+	.byte	34
+	.byte	W01
+	.byte	VOL , 58
+	.byte	PAN , 64
+	.byte	BEND , 25
+	.byte	W01
+	.byte	11
+	.byte	W02
+	.byte	VOL , 25
+	.byte	BEND , 0
+	.byte	W24
+	.byte	FINE
+	.globl sSong141_Part1
+sSong141_Part1: @ 0x0886AE80
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 110
+	.byte	PAN , 73
+	.byte	N03, Gs2, 92
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N03, Gs2, 52
+	.byte	W03
+	.byte	N03
+	.byte	W05
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	N13
+	.byte	W04
+	.byte	VOL , 101
+	.byte	W02
+	.byte	83
+	.byte	W02
+	.byte	58
+	.byte	W02
+	.byte	W01
+	.byte	25
+	.byte	W23
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AEAA, 0x2
 	.globl sSongHeader_141
 sSongHeader_141: @ 0x0886AEAC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886AE18, 0x0886AE80  @ parts
-	.incbin "baserom_jp.gba", 0x86AEBC, 0x2C
+	.globl sSong142_Part0
+sSong142_Part0: @ 0x0886AEBC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 23
+	.byte	VOL , 100
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 66
+	.byte	N02, Dn3, 127
+	.byte	W01
+	.byte	PAN , 54
+	.byte	BEND , 68
+	.byte	W02
+	.byte	PAN , 72
+	.byte	BEND , 70
+	.byte	N02, Dn3, 84
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	W02
+	.byte	63
+	.byte	W02
+	.byte	96
+	.byte	N02, Dn3, 56
+	.byte	W16
+	.byte	FINE
 	.globl sSongHeader_142
 sSongHeader_142: @ 0x0886AEE8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AEBC  @ parts
-	.incbin "baserom_jp.gba", 0x86AEF4, 0x40
+	.4byte sSong142_Part0  @ parts
+	.globl sSong143_Part0
+sSong143_Part0: @ 0x0886AEF4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 52
+	.byte	N19, Gn3, 108
+	.byte	W02
+	.byte	BEND , 59
+	.byte	W01
+	.byte	VOL , 101
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 72
+	.byte	W02
+	.byte	VOL , 84
+	.byte	BEND , 68
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 64
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W02
+	.byte	VOL , 45
+	.byte	BEND , 33
+	.byte	W02
+	.byte	VOL , 32
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOICE , 2
+	.byte	W01
+	.byte	VOL , 13
+	.byte	BEND , 12
+	.byte	W08
+	.byte	FINE
 	.globl sSongHeader_143
 sSongHeader_143: @ 0x0886AF34
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886AEF4  @ parts
-	.incbin "baserom_jp.gba", 0x86AF40, 0x74
+	.4byte sSong143_Part0  @ parts
+	.globl sSong144_Part0
+sSong144_Part0: @ 0x0886AF40
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 22
+	.byte	BEND , 64
+	.byte	N30, Dn4, 127
+	.byte	W01
+	.byte	VOL , 49
+	.byte	W01
+	.byte	71
+	.byte	W01
+	.byte	95
+	.byte	BEND , 72
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W02
+	.byte	PAN , 69
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 95
+	.byte	W02
+	.byte	88
+	.byte	PAN , 64
+	.byte	BEND , 71
+	.byte	W01
+	.byte	VOL , 93
+	.byte	W02
+	.byte	110
+	.byte	PAN , 59
+	.byte	BEND , 64
+	.byte	W02
+	.byte	VOL , 86
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 55
+	.byte	W01
+	.byte	VOL , 63
+	.byte	W02
+	.byte	37
+	.byte	BEND , 40
+	.byte	W03
+	.byte	VOL , 13
+	.byte	BEND , 18
+	.byte	W03
+	.byte	W24
+	.byte	FINE
+	.globl sSong144_Part1
+sSong144_Part1: @ 0x0886AF8B
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 22
+	.byte	N30, Gn2, 32
+	.byte	W01
+	.byte	VOL , 49
+	.byte	W01
+	.byte	71
+	.byte	W01
+	.byte	95
+	.byte	W01
+	.byte	110
+	.byte	W03
+	.byte	95
+	.byte	W02
+	.byte	88
+	.byte	W01
+	.byte	93
+	.byte	W02
+	.byte	110
+	.byte	W02
+	.byte	86
+	.byte	W02
+	.byte	63
+	.byte	W02
+	.byte	37
+	.byte	W03
+	.byte	13
+	.byte	W03
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86AFB2, 0x2
 	.globl sSongHeader_144
 sSongHeader_144: @ 0x0886AFB4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886AF40, 0x0886AF8B  @ parts
-	.incbin "baserom_jp.gba", 0x86AFC4, 0x60
+	.globl sSong145_Part0
+sSong145_Part0: @ 0x0886AFC4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N48, Cn4, 127
+	.byte	W06
+	.byte	PAN , 68
+	.byte	W03
+	.byte	BEND , 66
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 69
+	.byte	W03
+	.byte	VOL , 98
+	.byte	PAN , 68
+	.byte	W03
+	.byte	BEND , 67
+	.byte	W03
+	.byte	VOL , 88
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 59
+	.byte	W03
+	.byte	VOL , 68
+	.byte	PAN , 59
+	.byte	W03
+	.byte	71
+	.byte	BEND , 55
+	.byte	W03
+	.byte	VOL , 44
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 49
+	.byte	W03
+	.byte	VOL , 13
+	.byte	BEND , 40
+	.byte	W03
+	.byte	24
+	.byte	W03
+	.byte	FINE
+	.globl sSong145_Part1
+sSong145_Part1: @ 0x0886B00B
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N48, Gn2, 32
+	.byte	W18
+	.byte	VOL , 98
+	.byte	W06
+	.byte	88
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	44
+	.byte	W06
+	.byte	13
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B023, 0x1
 	.globl sSongHeader_145
 sSongHeader_145: @ 0x0886B024
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886AFC4, 0x0886B00B  @ parts
-	.incbin "baserom_jp.gba", 0x86B034, 0xC4
+	.globl sSong146_Part0
+sSong146_Part0: @ 0x0886B034
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 68
+	.byte	BEND , 114
+	.byte	TIE , 60, 127
+	.byte	W01
+	.byte	BEND , 96
+	.byte	W02
+	.byte	PAN , 59
+	.byte	BEND , 80
+	.byte	W02
+	.byte	56
+	.byte	W02
+	.byte	PAN , 72
+	.byte	BEND , 49
+	.byte	W02
+	.byte	54
+	.byte	W01
+	.byte	PAN , 55
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W02
+	.byte	PAN , 68
+	.byte	BEND , 66
+	.byte	W04
+	.byte	PAN , 59
+	.byte	BEND , 74
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 80
+	.byte	W03
+	.byte	PAN , 68
+	.byte	W01
+	.byte	BEND , 85
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W04
+	.byte	72
+	.byte	W03
+	.byte	55
+	.byte	W04
+	.byte	68
+	.byte	W04
+	.byte	59
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	PAN , 68
+	.byte	W03
+	.byte	59
+	.byte	W04
+	.byte	72
+	.byte	W03
+	.byte	55
+	.byte	W04
+	.byte	68
+	.byte	W04
+	.byte	59
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	PEND
+	.byte	PATT , 127, 176
+	.byte	W06
+	.byte	8
+	.byte	PATT , 127, 176
+	.byte	W06
+	.byte	8
+	.byte	PATT , 127, 176
+	.byte	W06
+	.byte	8
+	.byte	PAN , 68
+	.byte	W03
+	.byte	59
+	.byte	W03
+	.byte	VOL , 103
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W03
+	.byte	VOL , 96
+	.byte	PAN , 55
+	.byte	W04
+	.byte	68
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W03
+	.byte	64
+	.byte	W01
+	.byte	VOL , 73
+	.byte	W02
+	.byte	PAN , 68
+	.byte	W03
+	.byte	VOL , 62
+	.byte	PAN , 59
+	.byte	W04
+	.byte	72
+	.byte	W01
+	.byte	VOL , 47
+	.byte	W02
+	.byte	PAN , 55
+	.byte	W03
+	.byte	VOL , 27
+	.byte	W01
+	.byte	PAN , 68
+	.byte	W04
+	.byte	VOL , 10
+	.byte	PAN , 59
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	EOT , 60
+	.byte	FINE
+	.globl sSong146_Part1
+sSong146_Part1: @ 0x0886B0DB
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N24, Fn2, 60
+	.byte	W10
+	.byte	VOL , 99
+	.byte	W05
+	.byte	82
+	.byte	W04
+	.byte	54
+	.byte	W02
+	.byte	25
+	.byte	W03
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_146
 sSongHeader_146: @ 0x0886B0F8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B034, 0x0886B0DB  @ parts
-	.incbin "baserom_jp.gba", 0x86B108, 0x94
+	.globl sSong147_Part0
+sSong147_Part0: @ 0x0886B108
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 6
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, Cn3, 127
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 24
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, En3
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	43
+	.byte	W01
+	.byte	PAN , 71
+	.byte	BEND , 24
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N09, An2
+	.byte	W01
+	.byte	BEND , 55
+	.byte	W01
+	.byte	45
+	.byte	W01
+	.byte	35
+	.byte	W01
+	.byte	VOL , 86
+	.byte	BEND , 25
+	.byte	W02
+	.byte	VOL , 69
+	.byte	BEND , 19
+	.byte	W01
+	.byte	VOL , 53
+	.byte	BEND , 8
+	.byte	W01
+	.byte	VOL , 20
+	.byte	BEND , 0
+	.byte	W01
+	.byte	VOICE , 29
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N48
+	.byte	W03
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W04
+	.byte	69
+	.byte	W03
+	.byte	58
+	.byte	W04
+	.byte	70
+	.byte	W03
+	.byte	61
+	.byte	W08
+	.byte	W03
+	.byte	VOL , 78
+	.byte	W04
+	.byte	64
+	.byte	W03
+	.byte	51
+	.byte	W04
+	.byte	38
+	.byte	W04
+	.byte	25
+	.byte	W03
+	.byte	12
+	.byte	W03
+	.byte	FINE
+	.globl sSong147_Part1
+sSong147_Part1: @ 0x0886B17E
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 110
+	.byte	PAN , 73
+	.byte	N03, Gs2, 52
+	.byte	W06
+	.byte	PAN , 57
+	.byte	N03
+	.byte	W06
+	.byte	PAN , 64
+	.byte	N03
+	.byte	W12
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B19A, 0x2
 	.globl sSongHeader_147
 sSongHeader_147: @ 0x0886B19C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B108, 0x0886B17E  @ parts
-	.incbin "baserom_jp.gba", 0x86B1AC, 0x60
+	.globl sSong148_Part0
+sSong148_Part0: @ 0x0886B1AC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 31
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Dn2, 127
+	.byte	W01
+	.byte	BEND , 96
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	BEND , 64
+	.byte	N02, Gn1, 112
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 127
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Cn2
+	.byte	W02
+	.byte	PAN , 57
+	.byte	BEND , 80
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W01
+	.byte	N01
+	.byte	W01
+	.byte	PAN , 72
+	.byte	N01, Cn3
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 48
+	.byte	N01, Dn2
+	.byte	W02
+	.byte	VOICE , 23
+	.byte	PAN , 64
+	.byte	N01, Cn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 80
+	.byte	N01, Dn2, 96
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 56
+	.byte	BEND , 80
+	.byte	N01, Cn3
+	.byte	W02
+	.byte	PAN , 72
+	.byte	N01, Cn2
+	.byte	W08
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B20B, 0x1
 	.globl sSongHeader_148
 sSongHeader_148: @ 0x0886B20C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B1AC  @ parts
-	.incbin "baserom_jp.gba", 0x86B218, 0x68
+	.4byte sSong148_Part0  @ parts
+	.globl sSong149_Part0
+sSong149_Part0: @ 0x0886B218
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 69
+	.byte	BEND , 64
+	.byte	N04, Cn3, 127
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W01
+	.byte	N18, Gn4
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W01
+	.byte	VOL , 98
+	.byte	BEND , 66
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 83
+	.byte	BEND , 70
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W01
+	.byte	BEND , 73
+	.byte	W01
+	.byte	VOL , 63
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	BEND , 77
+	.byte	W02
+	.byte	VOL , 44
+	.byte	PAN , 59
+	.byte	W02
+	.byte	VOL , 28
+	.byte	BEND , 84
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W01
+	.byte	VOL , 12
+	.byte	W02
+	.byte	FINE
+	.globl sSong149_Part1
+sSong149_Part1: @ 0x0886B260
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N01, Gn2, 32
+	.byte	W02
+	.byte	N01
+	.byte	W02
+	.byte	N18
+	.byte	W03
+	.byte	VOL , 98
+	.byte	W03
+	.byte	83
+	.byte	W04
+	.byte	63
+	.byte	W04
+	.byte	44
+	.byte	W02
+	.byte	28
+	.byte	W02
+	.byte	12
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B27E, 0x2
 	.globl sSongHeader_149
 sSongHeader_149: @ 0x0886B280
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B218, 0x0886B260  @ parts
-	.incbin "baserom_jp.gba", 0x86B290, 0xD0
+	.globl sSong150_Part0
+sSong150_Part0: @ 0x0886B290
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	VOL , 22
+	.byte	PAN , 69
+	.byte	BEND , 64
+	.byte	N96, Gn3, 127
+	.byte	W01
+	.byte	VOL , 49
+	.byte	W01
+	.byte	71
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 72
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W02
+	.byte	PAN , 59
+	.byte	BEND , 80
+	.byte	W03
+	.byte	VOL , 97
+	.byte	PAN , 64
+	.byte	BEND , 71
+	.byte	W03
+	.byte	PAN , 69
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 55
+	.byte	W03
+	.byte	VOL , 76
+	.byte	PAN , 59
+	.byte	BEND , 40
+	.byte	W03
+	.byte	PAN , 62
+	.byte	BEND , 18
+	.byte	W03
+	.byte	VOL , 84
+	.byte	PAN , 69
+	.byte	W03
+	.byte	64
+	.byte	W01
+	.byte	VOL , 92
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W01
+	.byte	BEND , 32
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 86
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W02
+	.byte	BEND , 46
+	.byte	W01
+	.byte	VOL , 78
+	.byte	PAN , 64
+	.byte	W03
+	.byte	59
+	.byte	W02
+	.byte	VOL , 71
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W03
+	.byte	69
+	.byte	W03
+	.byte	64
+	.byte	VOL , 78
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W02
+	.byte	VOL , 86
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	69
+	.byte	W02
+	.byte	VOL , 90
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	59
+	.byte	W03
+	.byte	62
+	.byte	W01
+	.byte	VOL , 80
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W03
+	.byte	64
+	.byte	W01
+	.byte	VOL , 86
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W03
+	.byte	64
+	.byte	VOL , 83
+	.byte	W03
+	.byte	PAN , 69
+	.byte	VOL , 63
+	.byte	W03
+	.byte	37
+	.byte	PAN , 64
+	.byte	W03
+	.byte	59
+	.byte	VOL , 13
+	.byte	W03
+	.byte	PAN , 62
+	.byte	W03
+	.byte	FINE
+	.globl sSong150_Part1
+sSong150_Part1: @ 0x0886B33D
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	VOL , 22
+	.byte	N96, Gn2, 32
+	.byte	W01
+	.byte	VOL , 49
+	.byte	W01
+	.byte	71
+	.byte	W01
+	.byte	95
+	.byte	W01
+	.byte	110
+	.byte	W05
+	.byte	97
+	.byte	W15
+	.byte	W24
+	.byte	W24
+	.byte	W09
+	.byte	83
+	.byte	W03
+	.byte	63
+	.byte	W03
+	.byte	37
+	.byte	W03
+	.byte	13
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B35E, 0x2
 	.globl sSongHeader_150
 sSongHeader_150: @ 0x0886B360
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B290, 0x0886B33D  @ parts
-	.incbin "baserom_jp.gba", 0x86B370, 0x2C
+	.globl sSong151_Part0
+sSong151_Part0: @ 0x0886B370
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 61
+	.byte	BEND , 72
+	.byte	N10, Gn3, 127
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W01
+	.byte	97
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W01
+	.byte	BEND , 71
+	.byte	W02
+	.byte	52
+	.byte	W01
+	.byte	VOL , 89
+	.byte	W01
+	.byte	64
+	.byte	BEND , 22
+	.byte	W01
+	.byte	VOL , 34
+	.byte	W15
+	.byte	FINE
 	.globl sSongHeader_151
 sSongHeader_151: @ 0x0886B39C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B370  @ parts
-	.incbin "baserom_jp.gba", 0x86B3A8, 0x5C
+	.4byte sSong151_Part0  @ parts
+	.globl sSong152_Part0
+sSong152_Part0: @ 0x0886B3A8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 105
+	.byte	BEND , 16
+	.byte	N10, Gn0, 127
+	.byte	W02
+	.byte	PAN , 71
+	.byte	BEND , 32
+	.byte	W01
+	.byte	48
+	.byte	W01
+	.byte	PAN , 75
+	.byte	BEND , 64
+	.byte	W02
+	.byte	79
+	.byte	W01
+	.byte	PAN , 78
+	.byte	W01
+	.byte	BEND , 96
+	.byte	W01
+	.byte	PAN , 83
+	.byte	W03
+	.byte	64
+	.byte	VOL , 105
+	.byte	BEND , 32
+	.byte	N10
+	.byte	W02
+	.byte	PAN , 56
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	PAN , 53
+	.byte	BEND , 80
+	.byte	W02
+	.byte	96
+	.byte	W01
+	.byte	PAN , 49
+	.byte	W01
+	.byte	BEND , 112
+	.byte	W01
+	.byte	PAN , 44
+	.byte	W03
+	.byte	64
+	.byte	VOL , 105
+	.byte	BEND , 48
+	.byte	N10
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W01
+	.byte	80
+	.byte	W01
+	.byte	96
+	.byte	W02
+	.byte	111
+	.byte	W02
+	.byte	127
+	.byte	W16
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B402, 0x2
 	.globl sSongHeader_152
 sSongHeader_152: @ 0x0886B404
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B3A8  @ parts
-	.incbin "baserom_jp.gba", 0x86B410, 0x70
+	.4byte sSong152_Part0  @ parts
+	.globl sSong153_Part0
+sSong153_Part0: @ 0x0886B410
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 64
+	.byte	BEND , 64
+	.byte	N24, Gn3, 108
+	.byte	W03
+	.byte	VOL , 79
+	.byte	BEND , 86
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 60
+	.byte	W03
+	.byte	VOL , 91
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 100
+	.byte	PAN , 56
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W03
+	.byte	PAN , 52
+	.byte	W06
+	.byte	PAN , 47
+	.byte	BEND , 64
+	.byte	N48, Gn3, 108
+	.byte	W03
+	.byte	BEND , 57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	PAN , 61
+	.byte	W03
+	.byte	70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 58
+	.byte	W03
+	.byte	PAN , 80
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W03
+	.byte	PAN , 77
+	.byte	BEND , 75
+	.byte	W03
+	.byte	84
+	.byte	W03
+	.byte	PAN , 72
+	.byte	W03
+	.byte	64
+	.byte	BEND , 76
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 71
+	.byte	W03
+	.byte	PAN , 53
+	.byte	W03
+	.byte	GOTO , 62, 180
+	.byte	W06
+	.byte	8
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B47F, 0x1
 	.globl sSongHeader_153
 sSongHeader_153: @ 0x0886B480
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B410  @ parts
-	.incbin "baserom_jp.gba", 0x86B48C, 0x40
+	.4byte sSong153_Part0  @ parts
+	.globl sSong154_Part0
+sSong154_Part0: @ 0x0886B48C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N24, Gn3, 108
+	.byte	W02
+	.byte	PAN , 45
+	.byte	W04
+	.byte	64
+	.byte	W01
+	.byte	VOL , 97
+	.byte	W01
+	.byte	PAN , 80
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W03
+	.byte	76
+	.byte	PAN , 66
+	.byte	W02
+	.byte	VOL , 55
+	.byte	PAN , 56
+	.byte	W02
+	.byte	VOL , 39
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 25
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W01
+	.byte	VOL , 13
+	.byte	W03
+	.byte	7
+	.byte	PAN , 64
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B4C9, 0x3
 	.globl sSongHeader_154
 sSongHeader_154: @ 0x0886B4CC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B48C  @ parts
-	.incbin "baserom_jp.gba", 0x86B4D8, 0x3C
+	.4byte sSong154_Part0  @ parts
+	.globl sSong155_Part0
+sSong155_Part0: @ 0x0886B4D8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 78
+	.byte	VOL , 42
+	.byte	BEND , 103
+	.byte	N10, Gn5, 92
+	.byte	W01
+	.byte	VOL , 55
+	.byte	W01
+	.byte	71
+	.byte	BEND , 87
+	.byte	W01
+	.byte	PAN , 49
+	.byte	VOL , 86
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 110
+	.byte	BEND , 41
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 30
+	.byte	W01
+	.byte	9
+	.byte	W01
+	.byte	0
+	.byte	W02
+	.byte	VOICE , 21
+	.byte	BEND , 127
+	.byte	N01, Cn5
+	.byte	W02
+	.byte	Gn5
+	.byte	W02
+	.byte	Gn5, 64
+	.byte	W10
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B513, 0x1
 	.globl sSongHeader_155
 sSongHeader_155: @ 0x0886B514
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B4D8  @ parts
-	.incbin "baserom_jp.gba", 0x86B520, 0x5C
+	.4byte sSong155_Part0  @ parts
+	.globl sSong156_Part0
+sSong156_Part0: @ 0x0886B520
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 68
+	.byte	VOL , 42
+	.byte	BEND , 103
+	.byte	N06, Cn5, 84
+	.byte	W01
+	.byte	VOL , 55
+	.byte	BEND , 82
+	.byte	W01
+	.byte	VOL , 71
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 60
+	.byte	VOL , 86
+	.byte	BEND , 46
+	.byte	W01
+	.byte	VOL , 110
+	.byte	BEND , 14
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W04
+	.byte	VOICE , 8
+	.byte	PAN , 53
+	.byte	BEND , 64
+	.byte	N06, Gn4, 120
+	.byte	W02
+	.byte	PAN , 75
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 38
+	.byte	W01
+	.byte	PAN , 52
+	.byte	BEND , 18
+	.byte	W01
+	.byte	PAN , 75
+	.byte	BEND , 10
+	.byte	W09
+	.byte	FINE
+	.globl sSong156_Part1
+sSong156_Part1: @ 0x0886B56A
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	N06, Cn2, 40
+	.byte	W10
+	.byte	N02, Gn2
+	.byte	W14
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B57A, 0x2
 	.globl sSongHeader_156
 sSongHeader_156: @ 0x0886B57C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B520, 0x0886B56A  @ parts
-	.incbin "baserom_jp.gba", 0x86B58C, 0x8C
+	.globl sSong157_Part0
+sSong157_Part0: @ 0x0886B58C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 40
+	.byte	BEND , 32
+	.byte	N10, An1, 127
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 74
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 68
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 82
+	.byte	PAN , 55
+	.byte	BEND , 72
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 64
+	.byte	BEND , 83
+	.byte	W02
+	.byte	PAN , 74
+	.byte	BEND , 92
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 102
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 113
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W05
+	.byte	VOL , 40
+	.byte	BEND , 65
+	.byte	N06
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 74
+	.byte	BEND , 102
+	.byte	W01
+	.byte	VOL , 79
+	.byte	PAN , 64
+	.byte	BEND , 112
+	.byte	W02
+	.byte	VOL , 105
+	.byte	PAN , 55
+	.byte	BEND , 127
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W05
+	.byte	FINE
+	.globl sSong157_Part1
+sSong157_Part1: @ 0x0886B5ED
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 52
+	.byte	N10, Gn2, 40
+	.byte	W01
+	.byte	VOL , 69
+	.byte	W01
+	.byte	83
+	.byte	W01
+	.byte	105
+	.byte	W01
+	.byte	85
+	.byte	W02
+	.byte	52
+	.byte	W01
+	.byte	29
+	.byte	W01
+	.byte	12
+	.byte	W06
+	.byte	VOICE , 25
+	.byte	VOL , 52
+	.byte	N06, Gs4
+	.byte	W01
+	.byte	VOL , 81
+	.byte	W01
+	.byte	105
+	.byte	W03
+	.byte	52
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B617, 0x1
 	.globl sSongHeader_157
 sSongHeader_157: @ 0x0886B618
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B58C, 0x0886B5ED  @ parts
-	.incbin "baserom_jp.gba", 0x86B628, 0x154
+	.globl sSong158_Part0
+sSong158_Part0: @ 0x0886B628
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N01, En2, 127
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 74
+	.byte	BEND , 48
+	.byte	N07, An1
+	.byte	W01
+	.byte	VOL , 71
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 55
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 97
+	.byte	W02
+	.byte	PAN , 74
+	.byte	BEND , 118
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W02
+	.byte	VOL , 90
+	.byte	PAN , 74
+	.byte	BEND , 65
+	.byte	N04
+	.byte	W01
+	.byte	VOL , 54
+	.byte	PAN , 64
+	.byte	BEND , 102
+	.byte	W02
+	.byte	VOL , 83
+	.byte	PAN , 55
+	.byte	BEND , 112
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W03
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N01, Ds2, 104
+	.byte	W02
+	.byte	PAN , 74
+	.byte	VOL , 55
+	.byte	BEND , 48
+	.byte	N07, Gs1, 100
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 71
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 55
+	.byte	VOL , 86
+	.byte	BEND , 81
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 97
+	.byte	W01
+	.byte	PAN , 74
+	.byte	BEND , 118
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W02
+	.byte	PAN , 74
+	.byte	VOL , 90
+	.byte	BEND , 65
+	.byte	N04
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 54
+	.byte	BEND , 102
+	.byte	W01
+	.byte	PAN , 55
+	.byte	VOL , 83
+	.byte	BEND , 112
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 127
+	.byte	W03
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N01, Dn2, 88
+	.byte	W01
+	.byte	PAN , 74
+	.byte	VOL , 55
+	.byte	BEND , 48
+	.byte	N07, Gn1, 60
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 71
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 55
+	.byte	VOL , 86
+	.byte	BEND , 81
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 97
+	.byte	W01
+	.byte	PAN , 74
+	.byte	BEND , 118
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	W03
+	.byte	PAN , 74
+	.byte	VOL , 90
+	.byte	BEND , 65
+	.byte	N04
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 54
+	.byte	BEND , 102
+	.byte	W01
+	.byte	PAN , 55
+	.byte	VOL , 83
+	.byte	BEND , 112
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 127
+	.byte	W02
+	.byte	FINE
+	.globl sSong158_Part1
+sSong158_Part1: @ 0x0886B71C
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N08, Cn2, 40
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	89
+	.byte	W02
+	.byte	49
+	.byte	W01
+	.byte	14
+	.byte	W02
+	.byte	110
+	.byte	N04, Gn4
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W02
+	.byte	110
+	.byte	W02
+	.byte	55
+	.byte	W02
+	.byte	110
+	.byte	N08, Cn2, 32
+	.byte	W02
+	.byte	VOL , 72
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	89
+	.byte	W01
+	.byte	49
+	.byte	W02
+	.byte	14
+	.byte	W02
+	.byte	110
+	.byte	N04, Gn4
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W01
+	.byte	110
+	.byte	W03
+	.byte	55
+	.byte	W02
+	.byte	110
+	.byte	N08, Cn2, 20
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W02
+	.byte	87
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	89
+	.byte	W01
+	.byte	49
+	.byte	W01
+	.byte	14
+	.byte	W03
+	.byte	110
+	.byte	N04, Gn4
+	.byte	W01
+	.byte	VOL , 84
+	.byte	W01
+	.byte	110
+	.byte	W03
+	.byte	55
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B77A, 0x2
 	.globl sSongHeader_158
 sSongHeader_158: @ 0x0886B77C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B628, 0x0886B71C  @ parts
-	.incbin "baserom_jp.gba", 0x86B78C, 0x58
+	.globl sSong159_Part0
+sSong159_Part0: @ 0x0886B78C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N02, Gn5, 92
+	.byte	W02
+	.byte	Cn5
+	.byte	W04
+	.byte	VOICE , 36
+	.byte	VOL , 84
+	.byte	PAN , 69
+	.byte	N15, Gn5, 40
+	.byte	W01
+	.byte	PAN , 54
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	54
+	.byte	W01
+	.byte	VOL , 94
+	.byte	PAN , 69
+	.byte	W02
+	.byte	54
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	54
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 69
+	.byte	W01
+	.byte	54
+	.byte	W02
+	.byte	VOL , 96
+	.byte	PAN , 69
+	.byte	W01
+	.byte	VOL , 68
+	.byte	PAN , 54
+	.byte	W01
+	.byte	VOL , 15
+	.byte	PAN , 69
+	.byte	W01
+	.byte	54
+	.byte	W03
+	.byte	FINE
+	.globl sSong159_Part1
+sSong159_Part1: @ 0x0886B7D5
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	N01, Cn3, 40
+	.byte	W02
+	.byte	N01
+	.byte	W22
+	.byte	FINE
 	.globl sSongHeader_159
 sSongHeader_159: @ 0x0886B7E4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B78C, 0x0886B7D5  @ parts
-	.incbin "baserom_jp.gba", 0x86B7F4, 0x34
+	.globl sSong160_Part0
+sSong160_Part0: @ 0x0886B7F4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 125
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N14, An4, 108
+	.byte	W03
+	.byte	PAN , 69
+	.byte	BEND , 70
+	.byte	W01
+	.byte	VOL , 80
+	.byte	W02
+	.byte	PAN , 79
+	.byte	BEND , 65
+	.byte	W01
+	.byte	VOL , 64
+	.byte	W02
+	.byte	PAN , 70
+	.byte	VOL , 38
+	.byte	BEND , 55
+	.byte	W02
+	.byte	30
+	.byte	W01
+	.byte	PAN , 63
+	.byte	VOL , 11
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B825, 0x3
 	.globl sSongHeader_160
 sSongHeader_160: @ 0x0886B828
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B7F4  @ parts
-	.incbin "baserom_jp.gba", 0x86B834, 0x70
+	.4byte sSong160_Part0  @ parts
+	.globl sSong161_Part0
+sSong161_Part0: @ 0x0886B834
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 70
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N02, Gn3, 112
+	.byte	W02
+	.byte	Gs3
+	.byte	W01
+	.byte	PAN , 57
+	.byte	W01
+	.byte	N02, An3
+	.byte	W02
+	.byte	PAN , 71
+	.byte	W02
+	.byte	56
+	.byte	W02
+	.byte	VOICE , 21
+	.byte	PAN , 64
+	.byte	N01, Cn5, 116
+	.byte	W02
+	.byte	PAN , 74
+	.byte	N01, Cn4, 108
+	.byte	W01
+	.byte	PAN , 56
+	.byte	N01, Gn4, 104
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Gn3, 96
+	.byte	W01
+	.byte	PAN , 74
+	.byte	N01, Cn4, 88
+	.byte	W01
+	.byte	PAN , 56
+	.byte	N01, Cn3, 80
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N01, Gn3, 72
+	.byte	W01
+	.byte	PAN , 74
+	.byte	N01, Gn2, 64
+	.byte	W01
+	.byte	PAN , 56
+	.byte	N01, Cn3, 56
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Gn2, 48
+	.byte	W03
+	.byte	FINE
+	.globl sSong161_Part1
+sSong161_Part1: @ 0x0886B892
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W10
+	.byte	N01, Gn2, 40
+	.byte	W08
+	.byte	N01
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_161
 sSongHeader_161: @ 0x0886B8A4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B834, 0x0886B892  @ parts
-	.incbin "baserom_jp.gba", 0x86B8B4, 0x5C
+	.globl sSong162_Part0
+sSong162_Part0: @ 0x0886B8B4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 2
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 25
+	.byte	BEND , 16
+	.byte	N07, Cn1, 127
+	.byte	W01
+	.byte	VOL , 41
+	.byte	BEND , 33
+	.byte	W01
+	.byte	PAN , 71
+	.byte	VOL , 57
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 79
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 75
+	.byte	VOL , 110
+	.byte	BEND , 78
+	.byte	W02
+	.byte	96
+	.byte	W01
+	.byte	PAN , 78
+	.byte	W01
+	.byte	VOL , 25
+	.byte	BEND , 16
+	.byte	N07, Dn1
+	.byte	W01
+	.byte	PAN , 83
+	.byte	VOL , 41
+	.byte	BEND , 33
+	.byte	W01
+	.byte	VOL , 57
+	.byte	BEND , 48
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 79
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 110
+	.byte	BEND , 78
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 96
+	.byte	W02
+	.byte	PAN , 53
+	.byte	W03
+	.byte	49
+	.byte	W05
+	.byte	VOL , 110
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86B90F, 0x1
 	.globl sSongHeader_162
 sSongHeader_162: @ 0x0886B910
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B8B4  @ parts
-	.incbin "baserom_jp.gba", 0x86B91C, 0x74
+	.4byte sSong162_Part0  @ parts
+	.globl sSong163_Part0
+sSong163_Part0: @ 0x0886B91C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	VOL , 27
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N96, Cn3, 112
+	.byte	W04
+	.byte	VOL , 45
+	.byte	W02
+	.byte	PAN , 60
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W01
+	.byte	VOL , 60
+	.byte	W03
+	.byte	PAN , 54
+	.byte	W02
+	.byte	BEND , 73
+	.byte	W01
+	.byte	VOL , 88
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W02
+	.byte	BEND , 78
+	.byte	W04
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W02
+	.byte	BEND , 83
+	.byte	W03
+	.byte	PAN , 68
+	.byte	W02
+	.byte	BEND , 88
+	.byte	W04
+	.byte	PAN , 75
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	60
+	.byte	W02
+	.byte	BEND , 83
+	.byte	W04
+	.byte	PAN , 54
+	.byte	W01
+	.byte	VOL , 98
+	.byte	W05
+	.byte	81
+	.byte	PAN , 59
+	.byte	BEND , 76
+	.byte	W06
+	.byte	VOL , 68
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 50
+	.byte	W02
+	.byte	PAN , 68
+	.byte	W03
+	.byte	VOL , 31
+	.byte	W03
+	.byte	PAN , 75
+	.byte	BEND , 86
+	.byte	W02
+	.byte	VOL , 11
+	.byte	W04
+	.byte	6
+	.byte	PAN , 68
+	.byte	BEND , 94
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_163
 sSongHeader_163: @ 0x0886B990
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886B91C  @ parts
-	.incbin "baserom_jp.gba", 0x86B99C, 0x74
+	.4byte sSong163_Part0  @ parts
+	.globl sSong164_Part0
+sSong164_Part0: @ 0x0886B99C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 115
+	.byte	BEND , 64
+	.byte	TIE , 55, 127
+	.byte	W06
+	.byte	PAN , 60
+	.byte	W06
+	.byte	54
+	.byte	W06
+	.byte	59
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	75
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	60
+	.byte	W06
+	.byte	54
+	.byte	W06
+	.byte	59
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	68
+	.byte	W06
+	.byte	75
+	.byte	W02
+	.byte	VOL , 103
+	.byte	W04
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 85
+	.byte	W05
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 71
+	.byte	W05
+	.byte	52
+	.byte	PAN , 60
+	.byte	W04
+	.byte	VOL , 32
+	.byte	W02
+	.byte	PAN , 54
+	.byte	W03
+	.byte	VOL , 11
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W01
+	.byte	VOL , 6
+	.byte	W05
+	.byte	EOT
+	.byte	FINE
+	.globl sSong164_Part1
+sSong164_Part1: @ 0x0886B9EF
+	.byte	KEYSH , 0
+	.byte	VOL , 58
+	.byte	N14, Gn3, 80
+	.byte	W01
+	.byte	VOICE , 25
+	.byte	VOL , 76
+	.byte	W01
+	.byte	89
+	.byte	W01
+	.byte	100
+	.byte	W01
+	.byte	115
+	.byte	W06
+	.byte	90
+	.byte	W02
+	.byte	76
+	.byte	W01
+	.byte	58
+	.byte	W11
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BA0D, 0x3
 	.globl sSongHeader_164
 sSongHeader_164: @ 0x0886BA10
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886B99C, 0x0886B9EF  @ parts
-	.incbin "baserom_jp.gba", 0x86BA20, 0x8C
+	.globl sSong165_Part0
+sSong165_Part0: @ 0x0886BA20
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 115
+	.byte	BEND , 46
+	.byte	TIE , 50, 127
+	.byte	W03
+	.byte	BEND , 52
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W02
+	.byte	BEND , 56
+	.byte	W04
+	.byte	PAN , 54
+	.byte	W01
+	.byte	BEND , 61
+	.byte	W03
+	.byte	66
+	.byte	W02
+	.byte	PAN , 51
+	.byte	W04
+	.byte	BEND , 69
+	.byte	W02
+	.byte	PAN , 48
+	.byte	W04
+	.byte	BEND , 78
+	.byte	W02
+	.byte	PAN , 50
+	.byte	W06
+	.byte	55
+	.byte	BEND , 82
+	.byte	W06
+	.byte	PAN , 58
+	.byte	W01
+	.byte	BEND , 88
+	.byte	W05
+	.byte	PAN , 64
+	.byte	W06
+	.byte	67
+	.byte	W06
+	.byte	71
+	.byte	W06
+	.byte	75
+	.byte	BEND , 81
+	.byte	W06
+	.byte	PAN , 80
+	.byte	BEND , 74
+	.byte	W06
+	.byte	PAN , 75
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W05
+	.byte	PAN , 70
+	.byte	W02
+	.byte	VOL , 103
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W03
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 85
+	.byte	W01
+	.byte	BEND , 59
+	.byte	W04
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 71
+	.byte	W02
+	.byte	BEND , 56
+	.byte	W03
+	.byte	VOL , 52
+	.byte	PAN , 60
+	.byte	W03
+	.byte	BEND , 52
+	.byte	W01
+	.byte	VOL , 32
+	.byte	W02
+	.byte	PAN , 54
+	.byte	W03
+	.byte	VOL , 11
+	.byte	BEND , 45
+	.byte	W03
+	.byte	PAN , 49
+	.byte	W01
+	.byte	VOL , 6
+	.byte	W01
+	.byte	BEND , 36
+	.byte	W04
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BAAB, 0x1
 	.globl sSongHeader_165
 sSongHeader_165: @ 0x0886BAAC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BA20  @ parts
-	.incbin "baserom_jp.gba", 0x86BAB8, 0x40
+	.4byte sSong165_Part0  @ parts
+	.globl sSong166_Part0
+sSong166_Part0: @ 0x0886BAB8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 21
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 65
+	.byte	N01, Bn5, 127
+	.byte	W02
+	.byte	VOICE , 18
+	.byte	N01, Cn4
+	.byte	W02
+	.byte	VOICE , 36
+	.byte	N06, Gn5, 40
+	.byte	W02
+	.byte	VOL , 58
+	.byte	PAN , 80
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOL , 71
+	.byte	PAN , 50
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 80
+	.byte	BEND , 85
+	.byte	W01
+	.byte	VOL , 97
+	.byte	PAN , 50
+	.byte	BEND , 97
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W14
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BAF5, 0x3
 	.globl sSongHeader_166
 sSongHeader_166: @ 0x0886BAF8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BAB8  @ parts
-	.incbin "baserom_jp.gba", 0x86BB04, 0x34
+	.4byte sSong166_Part0  @ parts
+	.globl sSong167_Part0
+sSong167_Part0: @ 0x0886BB04
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 15
+	.byte	BENDR , 12
+	.byte	PAN , 82
+	.byte	VOL , 48
+	.byte	BEND , 16
+	.byte	N04, Gn2, 127
+	.byte	W01
+	.byte	VOL , 81
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 110
+	.byte	BEND , 80
+	.byte	W01
+	.byte	64
+	.byte	W04
+	.byte	VOL , 48
+	.byte	PAN , 48
+	.byte	BEND , 16
+	.byte	N04, An2
+	.byte	W01
+	.byte	VOL , 81
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 110
+	.byte	BEND , 80
+	.byte	W15
+	.byte	VOL , 110
+	.byte	FINE
 	.globl sSongHeader_167
 sSongHeader_167: @ 0x0886BB38
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BB04  @ parts
-	.incbin "baserom_jp.gba", 0x86BB44, 0x6C
+	.4byte sSong167_Part0  @ parts
+	.globl sSong168_Part0
+sSong168_Part0: @ 0x0886BB44
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 7
+	.byte	BEND , 65
+	.byte	N18, Cn5, 52
+	.byte	W01
+	.byte	VOL , 20
+	.byte	PAN , 80
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 41
+	.byte	PAN , 50
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 80
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 93
+	.byte	PAN , 50
+	.byte	BEND , 64
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 72
+	.byte	W01
+	.byte	PAN , 80
+	.byte	BEND , 80
+	.byte	W01
+	.byte	PAN , 50
+	.byte	W01
+	.byte	VOL , 98
+	.byte	PAN , 80
+	.byte	BEND , 74
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 50
+	.byte	BEND , 68
+	.byte	W02
+	.byte	VOL , 69
+	.byte	PAN , 64
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 51
+	.byte	PAN , 80
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 50
+	.byte	VOL , 38
+	.byte	BEND , 36
+	.byte	W01
+	.byte	VOL , 17
+	.byte	BEND , 32
+	.byte	W01
+	.byte	VOL , 4
+	.byte	BEND , 26
+	.byte	W08
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BBAF, 0x1
 	.globl sSongHeader_168
 sSongHeader_168: @ 0x0886BBB0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BB44  @ parts
-	.incbin "baserom_jp.gba", 0x86BBBC, 0x30
+	.4byte sSong168_Part0  @ parts
+	.globl sSong169_Part0
+sSong169_Part0: @ 0x0886BBBC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	VOL , 55
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	N01, Cn6, 100
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W01
+	.byte	VOICE , 36
+	.byte	VOL , 55
+	.byte	N02, Gn6, 80
+	.byte	W01
+	.byte	VOL , 110
+	.byte	W04
+	.byte	PAN , 84
+	.byte	N01, Gn6, 24
+	.byte	W03
+	.byte	Gn6, 16
+	.byte	W02
+	.byte	PAN , 43
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BBE9, 0x3
 	.globl sSongHeader_169
 sSongHeader_169: @ 0x0886BBEC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BBBC  @ parts
-	.incbin "baserom_jp.gba", 0x86BBF8, 0x4C
+	.4byte sSong169_Part0  @ parts
+	.globl sSong170_Part0
+sSong170_Part0: @ 0x0886BBF8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 38
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N05, Fs2, 127
+	.byte	W01
+	.byte	PAN , 59
+	.byte	BEND , 61
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 59
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 55
+	.byte	W01
+	.byte	PAN , 75
+	.byte	BEND , 52
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N11
+	.byte	W02
+	.byte	BEND , 54
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	PAN , 59
+	.byte	BEND , 60
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 61
+	.byte	W02
+	.byte	67
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 55
+	.byte	W01
+	.byte	43
+	.byte	W01
+	.byte	PAN , 75
+	.byte	BEND , 36
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_170
 sSongHeader_170: @ 0x0886BC44
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BBF8  @ parts
-	.incbin "baserom_jp.gba", 0x86BC50, 0xBC
+	.4byte sSong170_Part0  @ parts
+	.globl sSong171_Part0
+sSong171_Part0: @ 0x0886BC50
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	PAN , 69
+	.byte	VOL , 21
+	.byte	BEND , 64
+	.byte	N10, An2, 127
+	.byte	W02
+	.byte	VOL , 47
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 88
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W01
+	.byte	VOL , 120
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 21
+	.byte	BEND , 74
+	.byte	N10, Bn2
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W01
+	.byte	VOL , 47
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 88
+	.byte	W03
+	.byte	PAN , 59
+	.byte	VOL , 120
+	.byte	W03
+	.byte	PAN , 62
+	.byte	VOL , 21
+	.byte	BEND , 82
+	.byte	N10, Cs3
+	.byte	W03
+	.byte	PAN , 69
+	.byte	VOL , 47
+	.byte	W02
+	.byte	88
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 120
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W02
+	.byte	VOL , 20
+	.byte	BEND , 93
+	.byte	N10, Dn3
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 47
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W01
+	.byte	VOL , 88
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 120
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W01
+	.byte	VOL , 21
+	.byte	BEND , 101
+	.byte	N10, En3
+	.byte	W02
+	.byte	PAN , 62
+	.byte	VOL , 46
+	.byte	W03
+	.byte	PAN , 69
+	.byte	VOL , 102
+	.byte	W02
+	.byte	120
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	59
+	.byte	VOL , 20
+	.byte	BEND , 106
+	.byte	N20, Fs3
+	.byte	W02
+	.byte	VOL , 47
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 88
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W01
+	.byte	VOL , 120
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 99
+	.byte	BEND , 114
+	.byte	W02
+	.byte	PAN , 59
+	.byte	W01
+	.byte	VOL , 74
+	.byte	W01
+	.byte	BEND , 120
+	.byte	W01
+	.byte	PAN , 62
+	.byte	VOL , 53
+	.byte	W03
+	.byte	34
+	.byte	BEND , 127
+	.byte	W01
+	.byte	VOL , 15
+	.byte	W23
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BD0A, 0x2
 	.globl sSongHeader_171
 sSongHeader_171: @ 0x0886BD0C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BC50  @ parts
-	.incbin "baserom_jp.gba", 0x86BD18, 0x124
+	.4byte sSong171_Part0  @ parts
+	.globl sSong172_Part0
+sSong172_Part0: @ 0x0886BD18
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 73
+	.byte	BENDR , 12
+	.byte	LFOS , 40
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 64
+	.byte	N44, Gn4, 112
+	.byte	W15
+	.byte	MOD , 7
+	.byte	W06
+	.byte	VOL , 83
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W06
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	N21, Fn5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	N21, Ds5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	N66, Gn4
+	.byte	W24
+	.byte	MOD , 7
+	.byte	W18
+	.byte	VOL , 83
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W06
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W30
+	.byte	FINE
+	.globl sSong172_Part1
+sSong172_Part1: @ 0x0886BD76
+	.byte	KEYSH , 0
+	.byte	VOICE , 73
+	.byte	LFOS , 40
+	.byte	VOL , 95
+	.byte	BEND , 73
+	.byte	W12
+	.byte	PAN , 76
+	.byte	N44, Gn4, 60
+	.byte	W15
+	.byte	MOD , 7
+	.byte	W06
+	.byte	VOL , 83
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W03
+	.byte	W03
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 52
+	.byte	N21, Fn5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 76
+	.byte	N21, Ds5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 52
+	.byte	N66, Gn4
+	.byte	W24
+	.byte	MOD , 7
+	.byte	W12
+	.byte	W06
+	.byte	VOL , 83
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W06
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W18
+	.byte	FINE
+	.globl sSong172_Part2
+sSong172_Part2: @ 0x0886BDD9
+	.byte	KEYSH , 0
+	.byte	VOICE , 73
+	.byte	LFOS , 40
+	.byte	VOL , 95
+	.byte	BEND , 56
+	.byte	W24
+	.byte	PAN , 47
+	.byte	N44, Gn4, 40
+	.byte	W15
+	.byte	MOD , 7
+	.byte	W06
+	.byte	VOL , 83
+	.byte	W03
+	.byte	W03
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W06
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 81
+	.byte	N21, Fn5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 47
+	.byte	N21, Ds5
+	.byte	W12
+	.byte	VOL , 86
+	.byte	MOD , 7
+	.byte	W03
+	.byte	VOL , 75
+	.byte	W03
+	.byte	55
+	.byte	W03
+	.byte	26
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 81
+	.byte	N66, Gn4
+	.byte	W24
+	.byte	MOD , 7
+	.byte	W18
+	.byte	VOL , 83
+	.byte	W06
+	.byte	69
+	.byte	W06
+	.byte	50
+	.byte	W06
+	.byte	24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BE3B, 0x1
 	.globl sSongHeader_172
 sSongHeader_172: @ 0x0886BE3C
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886BD18, 0x0886BD76, 0x0886BDD9  @ parts
-	.incbin "baserom_jp.gba", 0x86BE50, 0x13C
+	.globl sSong173_Part0
+sSong173_Part0: @ 0x0886BE50
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 73
+	.byte	BENDR , 12
+	.byte	LFOS , 40
+	.byte	PAN , 71
+	.byte	VOL , 25
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	33
+	.byte	N48, An3, 112
+	.byte	W03
+	.byte	VOL , 40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	100
+	.byte	W09
+	.byte	82
+	.byte	W03
+	.byte	52
+	.byte	W03
+	.byte	25
+	.byte	MOD , 0
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	33
+	.byte	N72, Gs3
+	.byte	W03
+	.byte	VOL , 40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	100
+	.byte	W15
+	.byte	W03
+	.byte	87
+	.byte	W03
+	.byte	75
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	48
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	25
+	.byte	W03
+	.byte	10
+	.byte	W24
+	.byte	W03
+	.byte	FINE
+	.globl sSong173_Part1
+sSong173_Part1: @ 0x0886BEB5
+	.byte	KEYSH , 0
+	.byte	VOICE , 73
+	.byte	VOL , 25
+	.byte	PAN , 47
+	.byte	N48, Cn4, 100
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	100
+	.byte	W09
+	.byte	82
+	.byte	W03
+	.byte	52
+	.byte	W03
+	.byte	25
+	.byte	MOD , 0
+	.byte	N72, Bn3
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	92
+	.byte	W03
+	.byte	100
+	.byte	W15
+	.byte	W03
+	.byte	87
+	.byte	W03
+	.byte	75
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	48
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	25
+	.byte	W03
+	.byte	10
+	.byte	W24
+	.byte	W03
+	.byte	FINE
+	.globl sSong173_Part2
+sSong173_Part2: @ 0x0886BF10
+	.byte	KEYSH , 0
+	.byte	VOICE , 73
+	.byte	PAN , 80
+	.byte	VOL , 25
+	.byte	BEND , 71
+	.byte	W06
+	.byte	N48, An3, 80
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	PAN , 48
+	.byte	VOL , 33
+	.byte	W03
+	.byte	40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	PAN , 80
+	.byte	VOL , 56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	PAN , 48
+	.byte	VOL , 92
+	.byte	W03
+	.byte	100
+	.byte	W09
+	.byte	PAN , 80
+	.byte	VOL , 82
+	.byte	W03
+	.byte	52
+	.byte	W03
+	.byte	25
+	.byte	MOD , 0
+	.byte	N72, Gs3
+	.byte	W03
+	.byte	VOL , 29
+	.byte	W03
+	.byte	PAN , 48
+	.byte	VOL , 33
+	.byte	W03
+	.byte	40
+	.byte	W03
+	.byte	45
+	.byte	MOD , 8
+	.byte	W03
+	.byte	VOL , 51
+	.byte	W03
+	.byte	PAN , 80
+	.byte	VOL , 56
+	.byte	W03
+	.byte	62
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	81
+	.byte	W03
+	.byte	PAN , 48
+	.byte	VOL , 92
+	.byte	W03
+	.byte	100
+	.byte	W09
+	.byte	PAN , 80
+	.byte	W09
+	.byte	VOL , 87
+	.byte	W03
+	.byte	75
+	.byte	PAN , 48
+	.byte	W03
+	.byte	VOL , 62
+	.byte	W03
+	.byte	48
+	.byte	W03
+	.byte	33
+	.byte	W03
+	.byte	25
+	.byte	PAN , 80
+	.byte	W03
+	.byte	VOL , 10
+	.byte	W21
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86BF8B, 0x1
 	.globl sSongHeader_173
 sSongHeader_173: @ 0x0886BF8C
 	.byte 0x03, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886BE50, 0x0886BEB5, 0x0886BF10  @ parts
-	.incbin "baserom_jp.gba", 0x86BFA0, 0x78
+	.globl sSong174_Part0
+sSong174_Part0: @ 0x0886BFA0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 39
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 64
+	.byte	N01, An5, 100
+	.byte	W01
+	.byte	Fn5, 64
+	.byte	W01
+	.byte	N06, Gn5, 100
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 51
+	.byte	W01
+	.byte	VOL , 59
+	.byte	PAN , 75
+	.byte	W02
+	.byte	VOL , 33
+	.byte	PAN , 50
+	.byte	W01
+	.byte	VOL , 5
+	.byte	PAN , 75
+	.byte	W03
+	.byte	VOL , 95
+	.byte	PAN , 65
+	.byte	N01, An5
+	.byte	W02
+	.byte	Fn5, 64
+	.byte	W01
+	.byte	N19, Gn5, 100
+	.byte	W01
+	.byte	PAN , 51
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	50
+	.byte	W02
+	.byte	75
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	75
+	.byte	VOL , 85
+	.byte	W01
+	.byte	PAN , 50
+	.byte	VOL , 77
+	.byte	W01
+	.byte	PAN , 75
+	.byte	VOL , 69
+	.byte	W02
+	.byte	PAN , 51
+	.byte	VOL , 59
+	.byte	W01
+	.byte	PAN , 75
+	.byte	VOL , 52
+	.byte	W01
+	.byte	PAN , 50
+	.byte	VOL , 41
+	.byte	W01
+	.byte	33
+	.byte	PAN , 75
+	.byte	W01
+	.byte	VOL , 23
+	.byte	PAN , 50
+	.byte	W02
+	.byte	VOL , 14
+	.byte	PAN , 75
+	.byte	W01
+	.byte	VOL , 5
+	.byte	PAN , 51
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C017, 0x1
 	.globl sSongHeader_174
 sSongHeader_174: @ 0x0886C018
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886BFA0  @ parts
-	.incbin "baserom_jp.gba", 0x86C024, 0x3C
+	.4byte sSong174_Part0  @ parts
+	.globl sSong175_Part0
+sSong175_Part0: @ 0x0886C024
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 115
+	.byte	BEND , 64
+	.byte	N01, Cn2, 112
+	.byte	W01
+	.byte	VOICE , 26
+	.byte	N02, Cn3, 127
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 68
+	.byte	W01
+	.byte	80
+	.byte	N03
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 92
+	.byte	W02
+	.byte	109
+	.byte	W01
+	.byte	VOICE , 36
+	.byte	PAN , 76
+	.byte	BEND , 64
+	.byte	N02, Cn3, 56
+	.byte	W02
+	.byte	W03
+	.byte	PAN , 52
+	.byte	N02, Cn3, 36
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C05D, 0x3
 	.globl sSongHeader_175
 sSongHeader_175: @ 0x0886C060
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C024  @ parts
-	.incbin "baserom_jp.gba", 0x86C06C, 0x54
+	.4byte sSong175_Part0  @ parts
+	.globl sSong176_Part0
+sSong176_Part0: @ 0x0886C06C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 19
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 5
+	.byte	BEND , 64
+	.byte	N07, Bn5, 80
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 75
+	.byte	BEND , 67
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 86
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 64
+	.byte	BEND , 58
+	.byte	W01
+	.byte	PAN , 52
+	.byte	BEND , 50
+	.byte	W02
+	.byte	VOL , 4
+	.byte	PAN , 42
+	.byte	BEND , 41
+	.byte	W01
+	.byte	PAN , 51
+	.byte	BEND , 64
+	.byte	N04, Cn6
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 75
+	.byte	BEND , 67
+	.byte	W01
+	.byte	VOL , 4
+	.byte	PAN , 85
+	.byte	BEND , 69
+	.byte	W14
+	.byte	VOL , 90
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C0BE, 0x2
 	.globl sSongHeader_176
 sSongHeader_176: @ 0x0886C0C0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C06C  @ parts
-	.incbin "baserom_jp.gba", 0x86C0CC, 0x40
+	.4byte sSong176_Part0  @ parts
+	.globl sSong177_Part0
+sSong177_Part0: @ 0x0886C0CC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 41
+	.byte	VOL , 115
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N01, Gn3, 127
+	.byte	W01
+	.byte	Cn3
+	.byte	W01
+	.byte	N24, An3
+	.byte	W06
+	.byte	PAN , 70
+	.byte	W04
+	.byte	64
+	.byte	W01
+	.byte	VOL , 102
+	.byte	W02
+	.byte	PAN , 56
+	.byte	VOL , 88
+	.byte	W03
+	.byte	78
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 67
+	.byte	W01
+	.byte	BEND , 62
+	.byte	W01
+	.byte	PAN , 71
+	.byte	VOL , 45
+	.byte	W02
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 13
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 49
+	.byte	W22
+	.byte	FINE
 	.globl sSongHeader_177
 sSongHeader_177: @ 0x0886C10C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C0CC  @ parts
-	.incbin "baserom_jp.gba", 0x86C118, 0x7C
+	.4byte sSong177_Part0  @ parts
+	.globl sSong178_Part0
+sSong178_Part0: @ 0x0886C118
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 41
+	.byte	VOL , 125
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N01, Ds3, 127
+	.byte	W01
+	.byte	As2
+	.byte	W02
+	.byte	PAN , 56
+	.byte	N02, Gn3
+	.byte	W01
+	.byte	PAN , 71
+	.byte	W03
+	.byte	64
+	.byte	N01, Ds3
+	.byte	W01
+	.byte	As2
+	.byte	W02
+	.byte	N54, Fn3
+	.byte	W11
+	.byte	BEND , 67
+	.byte	W03
+	.byte	W02
+	.byte	PAN , 70
+	.byte	BEND , 71
+	.byte	W04
+	.byte	PAN , 64
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W01
+	.byte	BEND , 84
+	.byte	W02
+	.byte	PAN , 71
+	.byte	W02
+	.byte	BEND , 89
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W04
+	.byte	56
+	.byte	BEND , 84
+	.byte	W03
+	.byte	PAN , 70
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W03
+	.byte	PAN , 56
+	.byte	W02
+	.byte	BEND , 67
+	.byte	W01
+	.byte	PAN , 71
+	.byte	W04
+	.byte	56
+	.byte	W10
+	.byte	FINE
+	.globl sSong178_Part1
+sSong178_Part1: @ 0x0886C177
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 125
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	N02, Cn3, 52
+	.byte	W01
+	.byte	VOL , 74
+	.byte	W06
+	.byte	125
+	.byte	N02
+	.byte	W01
+	.byte	VOL , 74
+	.byte	W16
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C191, 0x3
 	.globl sSongHeader_178
 sSongHeader_178: @ 0x0886C194
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C118, 0x0886C177  @ parts
-	.incbin "baserom_jp.gba", 0x86C1A4, 0xAC
+	.globl sSong179_Part0
+sSong179_Part0: @ 0x0886C1A4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 110
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	W01
+	.byte	N02, Dn6, 112
+	.byte	W02
+	.byte	Cs6
+	.byte	W03
+	.byte	PAN , 72
+	.byte	N02, An5
+	.byte	W02
+	.byte	Fs5
+	.byte	W01
+	.byte	W01
+	.byte	Dn5
+	.byte	W02
+	.byte	PAN , 57
+	.byte	W01
+	.byte	N02, Dn5, 104
+	.byte	W02
+	.byte	Cs5, 100
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N02, An4, 96
+	.byte	W02
+	.byte	Fs4, 92
+	.byte	W01
+	.byte	W01
+	.byte	Dn4, 88
+	.byte	W02
+	.byte	PAN , 79
+	.byte	W01
+	.byte	N02, Dn6
+	.byte	W02
+	.byte	Cs6, 84
+	.byte	W03
+	.byte	An5, 80
+	.byte	W02
+	.byte	Fs5, 76
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 72
+	.byte	W02
+	.byte	PAN , 48
+	.byte	W01
+	.byte	N02, Dn6, 68
+	.byte	W02
+	.byte	Cs6, 64
+	.byte	W03
+	.byte	An5, 60
+	.byte	W02
+	.byte	Fs5, 56
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 52
+	.byte	W02
+	.byte	W03
+	.byte	FINE
+	.globl sSong179_Part1
+sSong179_Part1: @ 0x0886C203
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	BEND , 79
+	.byte	N02, An6, 112
+	.byte	W02
+	.byte	Fs6
+	.byte	W01
+	.byte	W01
+	.byte	Dn6
+	.byte	W02
+	.byte	W01
+	.byte	Cs6
+	.byte	W02
+	.byte	An5
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	Fs5, 104
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 100
+	.byte	W02
+	.byte	W01
+	.byte	Cs5, 96
+	.byte	W02
+	.byte	An4, 92
+	.byte	W03
+	.byte	An6, 88
+	.byte	W02
+	.byte	Fs6, 84
+	.byte	W01
+	.byte	W01
+	.byte	Dn6, 80
+	.byte	W02
+	.byte	W01
+	.byte	Cs6, 76
+	.byte	W02
+	.byte	An5, 72
+	.byte	W03
+	.byte	An6, 68
+	.byte	W02
+	.byte	Fs6, 64
+	.byte	W01
+	.byte	W01
+	.byte	Dn6, 60
+	.byte	W02
+	.byte	W01
+	.byte	Cs6, 56
+	.byte	W02
+	.byte	An5, 52
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C24F, 0x1
 	.globl sSongHeader_179
 sSongHeader_179: @ 0x0886C250
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C1A4, 0x0886C203  @ parts
-	.incbin "baserom_jp.gba", 0x86C260, 0x48
+	.globl sSong180_Part0
+sSong180_Part0: @ 0x0886C260
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 24
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N01, Cn6, 127
+	.byte	W01
+	.byte	Gn6, 112
+	.byte	W01
+	.byte	VOICE , 38
+	.byte	VOL , 58
+	.byte	N08, Gn4
+	.byte	W01
+	.byte	VOL , 68
+	.byte	PAN , 72
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 75
+	.byte	PAN , 56
+	.byte	BEND , 16
+	.byte	W02
+	.byte	VOL , 83
+	.byte	PAN , 72
+	.byte	BEND , 46
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 56
+	.byte	BEND , 74
+	.byte	W01
+	.byte	VOL , 101
+	.byte	PAN , 73
+	.byte	BEND , 103
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 56
+	.byte	BEND , 127
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C2A7, 0x1
 	.globl sSongHeader_180
 sSongHeader_180: @ 0x0886C2A8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C260  @ parts
-	.incbin "baserom_jp.gba", 0x86C2B4, 0x70
+	.4byte sSong180_Part0  @ parts
+	.globl sSong181_Part0
+sSong181_Part0: @ 0x0886C2B4
+	.byte	VOL , 110
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 44
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N21, Fs5, 112
+	.byte	W01
+	.byte	PAN , 59
+	.byte	W01
+	.byte	54
+	.byte	VOL , 15
+	.byte	W01
+	.byte	PAN , 60
+	.byte	VOL , 41
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 69
+	.byte	W02
+	.byte	PAN , 68
+	.byte	W01
+	.byte	74
+	.byte	VOL , 84
+	.byte	W01
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 97
+	.byte	PAN , 64
+	.byte	W01
+	.byte	59
+	.byte	W02
+	.byte	VOL , 110
+	.byte	PAN , 54
+	.byte	W01
+	.byte	60
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	74
+	.byte	W02
+	.byte	VOL , 100
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 55
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W02
+	.byte	FINE
+	.globl sSong181_Part1
+sSong181_Part1: @ 0x0886C306
+	.byte	VOL , 110
+	.byte	KEYSH , 0
+	.byte	VOICE , 42
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N21, Fn6, 64
+	.byte	W06
+	.byte	PAN , 64
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	W01
+	.byte	64
+	.byte	W03
+	.byte	BEND , 64
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C323, 0x1
 	.globl sSongHeader_181
 sSongHeader_181: @ 0x0886C324
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C2B4, 0x0886C306  @ parts
-	.incbin "baserom_jp.gba", 0x86C334, 0xB8
+	.globl sSong182_Part0
+sSong182_Part0: @ 0x0886C334
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 9
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	VOL , 24
+	.byte	BEND , 47
+	.byte	N78, Bn4, 80
+	.byte	W01
+	.byte	VOL , 32
+	.byte	PAN , 70
+	.byte	W01
+	.byte	VOL , 38
+	.byte	PAN , 57
+	.byte	W01
+	.byte	VOL , 48
+	.byte	PAN , 73
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 51
+	.byte	W02
+	.byte	VOL , 78
+	.byte	PAN , 70
+	.byte	W01
+	.byte	VOL , 94
+	.byte	PAN , 58
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	57
+	.byte	W02
+	.byte	PAN , 73
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	PEND
+	.byte	PAN , 70
+	.byte	W01
+	.byte	57
+	.byte	W01
+	.byte	73
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	70
+	.byte	W02
+	.byte	PEND
+	.byte	58
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	57
+	.byte	W01
+	.byte	73
+	.byte	W02
+	.byte	51
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	70
+	.byte	W02
+	.byte	57
+	.byte	W01
+	.byte	73
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	58
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	57
+	.byte	W01
+	.byte	73
+	.byte	W01
+	.byte	51
+	.byte	W02
+	.byte	70
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	57
+	.byte	W02
+	.byte	PATT , 109, 195
+	.byte	W06
+	.byte	8
+	.byte	PATT , 121, 195
+	.byte	W06
+	.byte	8
+	.byte	PAN , 58
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	70
+	.byte	W01
+	.byte	VOL , 103
+	.byte	PAN , 57
+	.byte	W01
+	.byte	VOL , 91
+	.byte	PAN , 73
+	.byte	W02
+	.byte	VOL , 72
+	.byte	PAN , 51
+	.byte	W01
+	.byte	VOL , 58
+	.byte	PAN , 70
+	.byte	W01
+	.byte	VOL , 38
+	.byte	PAN , 58
+	.byte	W01
+	.byte	VOL , 15
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 7
+	.byte	PAN , 70
+	.byte	W02
+	.byte	FINE
 	.globl sSongHeader_182
 sSongHeader_182: @ 0x0886C3EC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C334  @ parts
-	.incbin "baserom_jp.gba", 0x86C3F8, 0xB0
+	.4byte sSong182_Part0  @ parts
+	.globl sSong183_Part0
+sSong183_Part0: @ 0x0886C3F8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 9
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	VOL , 26
+	.byte	BEND , 41
+	.byte	N09, Dn5, 127
+	.byte	W01
+	.byte	VOL , 34
+	.byte	PAN , 70
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 42
+	.byte	PAN , 57
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 73
+	.byte	W01
+	.byte	VOL , 72
+	.byte	PAN , 51
+	.byte	BEND , 46
+	.byte	W02
+	.byte	VOL , 85
+	.byte	PAN , 70
+	.byte	BEND , 43
+	.byte	W01
+	.byte	VOL , 102
+	.byte	PAN , 58
+	.byte	BEND , 41
+	.byte	W01
+	.byte	VOL , 120
+	.byte	BEND , 40
+	.byte	W02
+	.byte	VOL , 26
+	.byte	PAN , 64
+	.byte	BEND , 41
+	.byte	N09, Dn5, 100
+	.byte	W02
+	.byte	VOL , 34
+	.byte	PAN , 70
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 42
+	.byte	PAN , 57
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 73
+	.byte	W01
+	.byte	VOL , 72
+	.byte	PAN , 51
+	.byte	BEND , 46
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 70
+	.byte	BEND , 43
+	.byte	W02
+	.byte	VOL , 102
+	.byte	PAN , 58
+	.byte	BEND , 41
+	.byte	W01
+	.byte	VOL , 120
+	.byte	BEND , 40
+	.byte	W02
+	.byte	VOL , 26
+	.byte	PAN , 64
+	.byte	BEND , 41
+	.byte	N09, Dn5, 80
+	.byte	W01
+	.byte	VOL , 34
+	.byte	PAN , 70
+	.byte	BEND , 44
+	.byte	W02
+	.byte	VOL , 42
+	.byte	PAN , 57
+	.byte	BEND , 48
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 73
+	.byte	W01
+	.byte	VOL , 72
+	.byte	PAN , 51
+	.byte	BEND , 46
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 70
+	.byte	BEND , 43
+	.byte	W01
+	.byte	VOL , 102
+	.byte	PAN , 58
+	.byte	BEND , 41
+	.byte	W02
+	.byte	VOL , 120
+	.byte	BEND , 40
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C4A6, 0x2
 	.globl sSongHeader_183
 sSongHeader_183: @ 0x0886C4A8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C3F8  @ parts
-	.incbin "baserom_jp.gba", 0x86C4B4, 0xE0
+	.4byte sSong183_Part0  @ parts
+	.globl sSong184_Part0
+sSong184_Part0: @ 0x0886C4B4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 43
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	VOL , 61
+	.byte	BEND , 60
+	.byte	N07, Gs4, 127
+	.byte	W01
+	.byte	PAN , 70
+	.byte	VOL , 75
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 57
+	.byte	VOL , 93
+	.byte	BEND , 66
+	.byte	W01
+	.byte	PAN , 73
+	.byte	VOL , 110
+	.byte	BEND , 68
+	.byte	W01
+	.byte	PAN , 52
+	.byte	BEND , 71
+	.byte	W02
+	.byte	W02
+	.byte	VOL , 0
+	.byte	PAN , 64
+	.byte	BEND , 60
+	.byte	N32
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 57
+	.byte	VOL , 36
+	.byte	BEND , 66
+	.byte	W02
+	.byte	PAN , 73
+	.byte	VOL , 67
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 51
+	.byte	VOL , 84
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 58
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 92
+	.byte	BEND , 56
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 57
+	.byte	W02
+	.byte	PAN , 70
+	.byte	VOL , 99
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 57
+	.byte	BEND , 63
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 73
+	.byte	BEND , 66
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 51
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 63
+	.byte	BEND , 60
+	.byte	W02
+	.byte	VOL , 46
+	.byte	PAN , 64
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 66
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 57
+	.byte	BEND , 63
+	.byte	W01
+	.byte	PAN , 73
+	.byte	BEND , 60
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 51
+	.byte	BEND , 58
+	.byte	W02
+	.byte	VOL , 100
+	.byte	PAN , 70
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 110
+	.byte	PAN , 58
+	.byte	BEND , 57
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 63
+	.byte	W01
+	.byte	VOL , 101
+	.byte	PAN , 57
+	.byte	BEND , 66
+	.byte	W02
+	.byte	VOL , 85
+	.byte	PAN , 73
+	.byte	BEND , 63
+	.byte	W01
+	.byte	VOL , 75
+	.byte	PAN , 51
+	.byte	BEND , 60
+	.byte	W01
+	.byte	VOL , 48
+	.byte	PAN , 63
+	.byte	BEND , 58
+	.byte	W01
+	.byte	VOL , 24
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 6
+	.byte	BEND , 57
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C591, 0x3
 	.globl sSongHeader_184
 sSongHeader_184: @ 0x0886C594
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C4B4  @ parts
-	.incbin "baserom_jp.gba", 0x86C5A0, 0x34
+	.4byte sSong184_Part0  @ parts
+	.globl sSong185_Part0
+sSong185_Part0: @ 0x0886C5A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 6
+	.byte	BENDR , 12
+	.byte	VOL , 115
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N19, An2, 127
+	.byte	W01
+	.byte	BEND , 58
+	.byte	W01
+	.byte	54
+	.byte	W01
+	.byte	50
+	.byte	W01
+	.byte	52
+	.byte	W02
+	.byte	50
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	VOL , 108
+	.byte	BEND , 44
+	.byte	W01
+	.byte	42
+	.byte	W01
+	.byte	VOL , 94
+	.byte	W03
+	.byte	78
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	40
+	.byte	W01
+	.byte	27
+	.byte	W02
+	.byte	12
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_185
 sSongHeader_185: @ 0x0886C5D4
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C5A0  @ parts
-	.incbin "baserom_jp.gba", 0x86C5E0, 0x50
+	.4byte sSong185_Part0  @ parts
+	.globl sSong186_Part0
+sSong186_Part0: @ 0x0886C5E0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 37
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 115
+	.byte	BEND , 64
+	.byte	N15, En3, 127
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 57
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 59
+	.byte	W02
+	.byte	PAN , 68
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 67
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 70
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 78
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 84
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 89
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 110
+	.byte	W10
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C62F, 0x1
 	.globl sSongHeader_186
 sSongHeader_186: @ 0x0886C630
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C5E0  @ parts
-	.incbin "baserom_jp.gba", 0x86C63C, 0x2C
+	.4byte sSong186_Part0  @ parts
+	.globl sSong187_Part0
+sSong187_Part0: @ 0x0886C63C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 24
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N01, Cn5, 127
+	.byte	W01
+	.byte	PAN , 74
+	.byte	N01, Cn6
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Cn5
+	.byte	W04
+	.byte	N01
+	.byte	W01
+	.byte	PAN , 53
+	.byte	N01, Cn6
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Cn5
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C665, 0x3
 	.globl sSongHeader_187
 sSongHeader_187: @ 0x0886C668
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C63C  @ parts
-	.incbin "baserom_jp.gba", 0x86C674, 0xA8
+	.4byte sSong187_Part0  @ parts
+	.globl sSong188_Part0
+sSong188_Part0: @ 0x0886C674
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 31
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 59
+	.byte	N32, Cn3, 127
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 55
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 39
+	.byte	W02
+	.byte	PAN , 68
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 58
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 61
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 70
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 67
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 70
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 72
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 80
+	.byte	W02
+	.byte	PAN , 60
+	.byte	VOL , 102
+	.byte	BEND , 76
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 80
+	.byte	W01
+	.byte	PAN , 68
+	.byte	VOL , 97
+	.byte	BEND , 82
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	W01
+	.byte	PAN , 60
+	.byte	VOL , 92
+	.byte	BEND , 82
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 84
+	.byte	W01
+	.byte	PAN , 68
+	.byte	VOL , 88
+	.byte	BEND , 81
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	W01
+	.byte	PAN , 60
+	.byte	VOL , 81
+	.byte	BEND , 80
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 64
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 68
+	.byte	VOL , 49
+	.byte	BEND , 78
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 25
+	.byte	BEND , 75
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C719, 0x3
 	.globl sSongHeader_188
 sSongHeader_188: @ 0x0886C71C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C674  @ parts
-	.incbin "baserom_jp.gba", 0x86C728, 0x94
+	.4byte sSong188_Part0  @ parts
+	.globl sSong189_Part0
+sSong189_Part0: @ 0x0886C728
+	.byte	KEYSH , 0
+	.byte	TEMPO , 95
+	.byte	VOICE , 45
+	.byte	BENDR , 8
+	.byte	PAN , 64
+	.byte	VOL , 38
+	.byte	MOD , 30
+	.byte	BEND , 65
+	.byte	N42, As2, 120
+	.byte	W01
+	.byte	PAN , 67
+	.byte	W01
+	.byte	69
+	.byte	VOL , 57
+	.byte	W01
+	.byte	PAN , 73
+	.byte	W01
+	.byte	VOL , 71
+	.byte	W02
+	.byte	PAN , 69
+	.byte	W01
+	.byte	65
+	.byte	VOL , 82
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	61
+	.byte	VOL , 94
+	.byte	W01
+	.byte	PAN , 58
+	.byte	W02
+	.byte	54
+	.byte	VOL , 110
+	.byte	W02
+	.byte	PAN , 58
+	.byte	W01
+	.byte	61
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	W06
+	.byte	67
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	73
+	.byte	W02
+	.byte	69
+	.byte	W02
+	.byte	65
+	.byte	VOL , 95
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	61
+	.byte	VOL , 83
+	.byte	W01
+	.byte	PAN , 58
+	.byte	W01
+	.byte	54
+	.byte	VOL , 71
+	.byte	W02
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 56
+	.byte	W01
+	.byte	PAN , 61
+	.byte	W01
+	.byte	VOL , 38
+	.byte	W03
+	.byte	PAN , 64
+	.byte	FINE
+	.globl sSong189_Part1
+sSong189_Part1: @ 0x0886C78F
+	.byte	KEYSH , 0
+	.byte	VOICE , 47
+	.byte	BENDR , 8
+	.byte	PAN , 64
+	.byte	VOL , 38
+	.byte	MOD , 30
+	.byte	BEND , 65
+	.byte	N42, As1, 40
+	.byte	W02
+	.byte	VOL , 57
+	.byte	W02
+	.byte	71
+	.byte	W02
+	.byte	W01
+	.byte	82
+	.byte	W02
+	.byte	94
+	.byte	W03
+	.byte	110
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	95
+	.byte	W02
+	.byte	83
+	.byte	W02
+	.byte	71
+	.byte	W02
+	.byte	W01
+	.byte	56
+	.byte	W02
+	.byte	38
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C7BB, 0x1
 	.globl sSongHeader_189
 sSongHeader_189: @ 0x0886C7BC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C728, 0x0886C78F  @ parts
-	.incbin "baserom_jp.gba", 0x86C7CC, 0x58
+	.globl sSong190_Part0
+sSong190_Part0: @ 0x0886C7CC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 45
+	.byte	VOL , 100
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 59
+	.byte	N06, Cn3, 112
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W01
+	.byte	101
+	.byte	W01
+	.byte	119
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 59
+	.byte	N06, Cs3, 96
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W01
+	.byte	101
+	.byte	W01
+	.byte	119
+	.byte	W03
+	.byte	PAN , 71
+	.byte	BEND , 59
+	.byte	N06, Dn3, 80
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W01
+	.byte	101
+	.byte	W01
+	.byte	119
+	.byte	W03
+	.byte	PAN , 50
+	.byte	BEND , 59
+	.byte	N06, Ds3, 60
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W01
+	.byte	101
+	.byte	W01
+	.byte	119
+	.byte	W03
+	.byte	PAN , 78
+	.byte	BEND , 59
+	.byte	N06, En3, 40
+	.byte	W01
+	.byte	BEND , 74
+	.byte	W01
+	.byte	101
+	.byte	W01
+	.byte	119
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C822, 0x2
 	.globl sSongHeader_190
 sSongHeader_190: @ 0x0886C824
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C7CC  @ parts
-	.incbin "baserom_jp.gba", 0x86C830, 0x118
+	.4byte sSong190_Part0  @ parts
+	.globl sSong191_Part0
+sSong191_Part0: @ 0x0886C830
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 28
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N01, Fn5, 100
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N01, Fs5, 88
+	.byte	W01
+	.byte	PAN , 69
+	.byte	N01, Gn5
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Fs5
+	.byte	W01
+	.byte	N14, Gn5, 100
+	.byte	W02
+	.byte	PAN , 60
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 95
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 92
+	.byte	PAN , 69
+	.byte	W01
+	.byte	VOL , 87
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 79
+	.byte	PAN , 60
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 64
+	.byte	W02
+	.byte	VOL , 58
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	VOL , 100
+	.byte	N10, Cn4, 92
+	.byte	W01
+	.byte	BEND , 67
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	PAN , 63
+	.byte	BEND , 71
+	.byte	W02
+	.byte	VOL , 96
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 61
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 84
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 58
+	.byte	BEND , 90
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 96
+	.byte	W03
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N10
+	.byte	W01
+	.byte	BEND , 67
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	PAN , 66
+	.byte	BEND , 71
+	.byte	W02
+	.byte	VOL , 96
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 69
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 84
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 71
+	.byte	BEND , 90
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 96
+	.byte	W03
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N16
+	.byte	W01
+	.byte	BEND , 67
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	PAN , 67
+	.byte	BEND , 71
+	.byte	W02
+	.byte	VOL , 96
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 90
+	.byte	PAN , 62
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 84
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 70
+	.byte	BEND , 90
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 96
+	.byte	W02
+	.byte	VOL , 56
+	.byte	PAN , 60
+	.byte	BEND , 100
+	.byte	W01
+	.byte	VOL , 48
+	.byte	BEND , 106
+	.byte	W01
+	.byte	VOL , 37
+	.byte	PAN , 75
+	.byte	BEND , 112
+	.byte	W01
+	.byte	VOL , 25
+	.byte	BEND , 120
+	.byte	W01
+	.byte	VOL , 11
+	.byte	PAN , 53
+	.byte	BEND , 127
+	.byte	W02
+	.byte	FINE
+	.globl sSong191_Part1
+sSong191_Part1: @ 0x0886C92A
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 100
+	.byte	N04, Cn3, 40
+	.byte	W04
+	.byte	N14, Gs4
+	.byte	W08
+	.byte	VOL , 89
+	.byte	W01
+	.byte	72
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	25
+	.byte	W01
+	.byte	11
+	.byte	W08
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C946, 0x2
 	.globl sSongHeader_191
 sSongHeader_191: @ 0x0886C948
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C830, 0x0886C92A  @ parts
-	.incbin "baserom_jp.gba", 0x86C958, 0x6C
+	.globl sSong192_Part0
+sSong192_Part0: @ 0x0886C958
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 18
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, En3, 124
+	.byte	W02
+	.byte	As3
+	.byte	W04
+	.byte	W01
+	.byte	N03, En3, 92
+	.byte	W05
+	.byte	W04
+	.byte	PAN , 58
+	.byte	N02, En3, 76
+	.byte	W02
+	.byte	W01
+	.byte	PAN , 70
+	.byte	N02, As3
+	.byte	W05
+	.byte	PAN , 64
+	.byte	N03, En3, 52
+	.byte	W06
+	.byte	W03
+	.byte	PAN , 52
+	.byte	N02, En3, 56
+	.byte	W03
+	.byte	PAN , 74
+	.byte	N02, As3
+	.byte	W04
+	.byte	PAN , 64
+	.byte	N03, En3, 32
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	PAN , 48
+	.byte	N02, En3, 44
+	.byte	W02
+	.byte	PAN , 80
+	.byte	N02, As3
+	.byte	W03
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N03, En3, 20
+	.byte	W04
+	.byte	FINE
+	.globl sSong192_Part1
+sSong192_Part1: @ 0x0886C9AB
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 110
+	.byte	N01, Cn3, 40
+	.byte	W03
+	.byte	En3
+	.byte	W03
+	.byte	W01
+	.byte	Gn3
+	.byte	W05
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86C9C3, 0x1
 	.globl sSongHeader_192
 sSongHeader_192: @ 0x0886C9C4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886C958, 0x0886C9AB  @ parts
-	.incbin "baserom_jp.gba", 0x86C9D4, 0x4C
+	.globl sSong193_Part0
+sSong193_Part0: @ 0x0886C9D4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 95
+	.byte	VOICE , 2
+	.byte	BENDR , 8
+	.byte	PAN , 64
+	.byte	VOL , 28
+	.byte	BEND , 64
+	.byte	N15, An1, 127
+	.byte	W01
+	.byte	VOL , 60
+	.byte	W01
+	.byte	111
+	.byte	W01
+	.byte	120
+	.byte	W01
+	.byte	BEND , 61
+	.byte	W02
+	.byte	PAN , 69
+	.byte	BEND , 58
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 109
+	.byte	PAN , 73
+	.byte	BEND , 54
+	.byte	W01
+	.byte	PAN , 55
+	.byte	BEND , 50
+	.byte	W01
+	.byte	VOL , 95
+	.byte	PAN , 64
+	.byte	BEND , 45
+	.byte	W02
+	.byte	VOL , 71
+	.byte	BEND , 35
+	.byte	W01
+	.byte	VOL , 41
+	.byte	BEND , 26
+	.byte	W01
+	.byte	VOL , 15
+	.byte	BEND , 12
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CA1D, 0x3
 	.globl sSongHeader_193
 sSongHeader_193: @ 0x0886CA20
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886C9D4  @ parts
-	.incbin "baserom_jp.gba", 0x86CA2C, 0x2C
+	.4byte sSong193_Part0  @ parts
+	.globl sSong194_Part0
+sSong194_Part0: @ 0x0886CA2C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 56
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 65
+	.byte	BEND , 72
+	.byte	N01, Cs6, 112
+	.byte	W01
+	.byte	BEND , 64
+	.byte	N01, Dn6, 100
+	.byte	W01
+	.byte	Dn6, 60
+	.byte	W04
+	.byte	BEND , 56
+	.byte	N01, Ds6, 112
+	.byte	W01
+	.byte	BEND , 64
+	.byte	N01, En6, 100
+	.byte	W01
+	.byte	En6, 60
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CA57, 0x1
 	.globl sSongHeader_194
 sSongHeader_194: @ 0x0886CA58
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CA2C  @ parts
-	.incbin "baserom_jp.gba", 0x86CA64, 0x44
+	.4byte sSong194_Part0  @ parts
+	.globl sSong195_Part0
+sSong195_Part0: @ 0x0886CA64
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 51
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 68
+	.byte	N03, As5, 100
+	.byte	W01
+	.byte	PAN , 51
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	65
+	.byte	N01, An5
+	.byte	W01
+	.byte	MOD , 7
+	.byte	N18, Bn5
+	.byte	W02
+	.byte	PAN , 75
+	.byte	W01
+	.byte	MOD , 0
+	.byte	PAN , 50
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	75
+	.byte	W02
+	.byte	50
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	51
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	MOD , 7
+	.byte	PAN , 50
+	.byte	W02
+	.byte	75
+	.byte	W01
+	.byte	50
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	51
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_195
 sSongHeader_195: @ 0x0886CAA8
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CA64  @ parts
-	.incbin "baserom_jp.gba", 0x86CAB4, 0x80
+	.4byte sSong195_Part0  @ parts
+	.globl sSong196_Part0
+sSong196_Part0: @ 0x0886CAB4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 52
+	.byte	VOL , 127
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, As3, 120
+	.byte	W01
+	.byte	BEND , 56
+	.byte	W01
+	.byte	48
+	.byte	W01
+	.byte	63
+	.byte	N12, As2, 127
+	.byte	W03
+	.byte	PAN , 68
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 60
+	.byte	BEND , 75
+	.byte	W01
+	.byte	82
+	.byte	W01
+	.byte	PAN , 74
+	.byte	BEND , 92
+	.byte	W02
+	.byte	99
+	.byte	W01
+	.byte	PAN , 54
+	.byte	W02
+	.byte	64
+	.byte	BEND , 64
+	.byte	N03, As3, 108
+	.byte	W01
+	.byte	BEND , 56
+	.byte	W02
+	.byte	47
+	.byte	W01
+	.byte	63
+	.byte	N12, As2
+	.byte	W02
+	.byte	PAN , 68
+	.byte	BEND , 72
+	.byte	W03
+	.byte	PAN , 60
+	.byte	BEND , 75
+	.byte	W01
+	.byte	82
+	.byte	W01
+	.byte	PAN , 74
+	.byte	BEND , 92
+	.byte	W01
+	.byte	99
+	.byte	W01
+	.byte	PAN , 54
+	.byte	W03
+	.byte	64
+	.byte	BEND , 64
+	.byte	N03, As3, 72
+	.byte	W01
+	.byte	BEND , 56
+	.byte	W01
+	.byte	48
+	.byte	W01
+	.byte	63
+	.byte	N12, As2
+	.byte	W03
+	.byte	PAN , 68
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 60
+	.byte	BEND , 75
+	.byte	W01
+	.byte	82
+	.byte	W02
+	.byte	PAN , 74
+	.byte	BEND , 92
+	.byte	W01
+	.byte	99
+	.byte	W01
+	.byte	PAN , 54
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CB33, 0x1
 	.globl sSongHeader_196
 sSongHeader_196: @ 0x0886CB34
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CAB4  @ parts
-	.incbin "baserom_jp.gba", 0x86CB40, 0x58
+	.4byte sSong196_Part0  @ parts
+	.globl sSong197_Part0
+sSong197_Part0: @ 0x0886CB40
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 38
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 27
+	.byte	BEND , 64
+	.byte	N10, An1, 127
+	.byte	W01
+	.byte	VOL , 75
+	.byte	W01
+	.byte	120
+	.byte	W04
+	.byte	W02
+	.byte	75
+	.byte	W01
+	.byte	28
+	.byte	W03
+	.byte	VOICE , 36
+	.byte	VOL , 83
+	.byte	N18, En2, 112
+	.byte	W02
+	.byte	VOL , 87
+	.byte	W02
+	.byte	91
+	.byte	W02
+	.byte	W01
+	.byte	97
+	.byte	W02
+	.byte	102
+	.byte	W01
+	.byte	109
+	.byte	W02
+	.byte	113
+	.byte	W01
+	.byte	120
+	.byte	W05
+	.byte	FINE
+	.globl sSong197_Part1
+sSong197_Part1: @ 0x0886CB75
+	.byte	VOL , 120
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	N01, En2, 52
+	.byte	W02
+	.byte	Dn2
+	.byte	W02
+	.byte	En2
+	.byte	W02
+	.byte	W01
+	.byte	Dn2
+	.byte	W02
+	.byte	En2
+	.byte	W03
+	.byte	W01
+	.byte	En2, 64
+	.byte	W02
+	.byte	Gs2
+	.byte	W03
+	.byte	Dn3
+	.byte	W02
+	.byte	En2
+	.byte	W02
+	.byte	Gs2
+	.byte	W02
+	.byte	W01
+	.byte	Dn3
+	.byte	W05
+	.byte	FINE
 	.globl sSongHeader_197
 sSongHeader_197: @ 0x0886CB98
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886CB40, 0x0886CB75  @ parts
-	.incbin "baserom_jp.gba", 0x86CBA8, 0x68
+	.globl sSong198_Part0
+sSong198_Part0: @ 0x0886CBA8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 41
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	N01, Cn4, 127
+	.byte	W01
+	.byte	N03, Cn5
+	.byte	W01
+	.byte	PAN , 69
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	VOICE , 3
+	.byte	PAN , 64
+	.byte	N01, Gs4, 112
+	.byte	W02
+	.byte	W03
+	.byte	PAN , 71
+	.byte	N01, Dn5, 96
+	.byte	W03
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N01, Gs4, 84
+	.byte	W04
+	.byte	W01
+	.byte	PAN , 56
+	.byte	N01, Dn5, 68
+	.byte	W05
+	.byte	PAN , 71
+	.byte	N01, Gs4, 52
+	.byte	W04
+	.byte	PAN , 56
+	.byte	N01, Dn5, 32
+	.byte	W02
+	.byte	W06
+	.byte	FINE
+	.globl sSong198_Part1
+sSong198_Part1: @ 0x0886CBE9
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	N01, Cn3, 64
+	.byte	W01
+	.byte	N03, Gn3
+	.byte	W05
+	.byte	W01
+	.byte	N02, En4, 40
+	.byte	W05
+	.byte	Gn3
+	.byte	W04
+	.byte	En4, 32
+	.byte	W02
+	.byte	W03
+	.byte	Gn3
+	.byte	W03
+	.byte	W02
+	.byte	En4, 20
+	.byte	W04
+	.byte	W01
+	.byte	Gn3
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CC0D, 0x3
 	.globl sSongHeader_198
 sSongHeader_198: @ 0x0886CC10
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886CBA8, 0x0886CBE9  @ parts
-	.incbin "baserom_jp.gba", 0x86CC20, 0x58
+	.globl sSong199_Part0
+sSong199_Part0: @ 0x0886CC20
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Gn2, 127
+	.byte	W02
+	.byte	PAN , 67
+	.byte	BEND , 66
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	N02, Cn3, 104
+	.byte	W01
+	.byte	PAN , 61
+	.byte	BEND , 69
+	.byte	W02
+	.byte	VOICE , 36
+	.byte	N02, Cn2, 127
+	.byte	W01
+	.byte	PAN , 71
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	BEND , 68
+	.byte	N06, Cn3, 104
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 64
+	.byte	W01
+	.byte	59
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 52
+	.byte	W01
+	.byte	41
+	.byte	W01
+	.byte	VOICE , 36
+	.byte	BEND , 64
+	.byte	N03, An2, 100
+	.byte	W04
+	.byte	PAN , 69
+	.byte	N03, Bn2, 76
+	.byte	W03
+	.byte	PAN , 58
+	.byte	N02, Cs3, 40
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CC76, 0x2
 	.globl sSongHeader_199
 sSongHeader_199: @ 0x0886CC78
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CC20  @ parts
-	.incbin "baserom_jp.gba", 0x86CC84, 0x148
+	.4byte sSong199_Part0  @ parts
+	.globl sSong200_Part0
+sSong200_Part0: @ 0x0886CC84
+	.byte	KEYSH , 0
+	.byte	TEMPO , 95
+	.byte	VOICE , 45
+	.byte	BENDR , 8
+	.byte	VOL , 36
+	.byte	PAN , 64
+	.byte	BEND , 20
+	.byte	N12, Gs2, 127
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 70
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 58
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 78
+	.byte	PAN , 64
+	.byte	BEND , 91
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 70
+	.byte	BEND , 108
+	.byte	W02
+	.byte	PAN , 58
+	.byte	BEND , 127
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 108
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 70
+	.byte	BEND , 92
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 58
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 33
+	.byte	BEND , 69
+	.byte	W02
+	.byte	VOICE , 37
+	.byte	VOL , 105
+	.byte	N02, Gs3, 80
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOICE , 45
+	.byte	VOL , 36
+	.byte	PAN , 64
+	.byte	BEND , 20
+	.byte	N12, As2, 127
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 70
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 58
+	.byte	BEND , 81
+	.byte	W02
+	.byte	VOL , 78
+	.byte	PAN , 64
+	.byte	BEND , 91
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 75
+	.byte	BEND , 108
+	.byte	W01
+	.byte	PAN , 53
+	.byte	BEND , 127
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 108
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 75
+	.byte	BEND , 92
+	.byte	W02
+	.byte	VOL , 55
+	.byte	PAN , 53
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 33
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOICE , 37
+	.byte	VOL , 105
+	.byte	N02, As3, 56
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOICE , 45
+	.byte	VOL , 36
+	.byte	BEND , 20
+	.byte	N12, Gs2, 80
+	.byte	W02
+	.byte	VOL , 52
+	.byte	PAN , 64
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 70
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 78
+	.byte	PAN , 58
+	.byte	BEND , 91
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 64
+	.byte	BEND , 108
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 127
+	.byte	W02
+	.byte	PAN , 58
+	.byte	BEND , 108
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 64
+	.byte	BEND , 92
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 70
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 33
+	.byte	PAN , 58
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOICE , 37
+	.byte	VOL , 105
+	.byte	N02, Gs3, 24
+	.byte	W02
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOICE , 45
+	.byte	VOL , 36
+	.byte	BEND , 20
+	.byte	N12, As2, 40
+	.byte	W01
+	.byte	VOL , 52
+	.byte	PAN , 64
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 67
+	.byte	PAN , 70
+	.byte	BEND , 81
+	.byte	W01
+	.byte	VOL , 78
+	.byte	PAN , 58
+	.byte	BEND , 91
+	.byte	W02
+	.byte	VOL , 105
+	.byte	PAN , 64
+	.byte	BEND , 108
+	.byte	W01
+	.byte	PAN , 75
+	.byte	BEND , 127
+	.byte	W01
+	.byte	PAN , 53
+	.byte	BEND , 108
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 64
+	.byte	BEND , 92
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 75
+	.byte	BEND , 81
+	.byte	W02
+	.byte	VOL , 33
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOICE , 37
+	.byte	VOL , 105
+	.byte	N02, As3, 16
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CDC9, 0x3
 	.globl sSongHeader_200
 sSongHeader_200: @ 0x0886CDCC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CC84  @ parts
-	.incbin "baserom_jp.gba", 0x86CDD8, 0xC8
+	.4byte sSong200_Part0  @ parts
+	.globl sSong201_Part0
+sSong201_Part0: @ 0x0886CDD8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 24
+	.byte	VOL , 25
+	.byte	PAN , 64
+	.byte	BEND , 127
+	.byte	TIE , 72, 112
+	.byte	W04
+	.byte	VOL , 40
+	.byte	W02
+	.byte	PAN , 60
+	.byte	BEND , 116
+	.byte	W03
+	.byte	VOL , 55
+	.byte	W03
+	.byte	PAN , 54
+	.byte	BEND , 105
+	.byte	W03
+	.byte	VOL , 80
+	.byte	W03
+	.byte	PAN , 59
+	.byte	BEND , 94
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 86
+	.byte	W01
+	.byte	VOL , 100
+	.byte	W05
+	.byte	PAN , 68
+	.byte	BEND , 127
+	.byte	W06
+	.byte	PAN , 75
+	.byte	BEND , 116
+	.byte	W06
+	.byte	PAN , 68
+	.byte	BEND , 105
+	.byte	W04
+	.byte	97
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 89
+	.byte	W03
+	.byte	PAN , 60
+	.byte	W03
+	.byte	BEND , 86
+	.byte	W03
+	.byte	PAN , 54
+	.byte	W06
+	.byte	59
+	.byte	BEND , 81
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	W06
+	.byte	PAN , 68
+	.byte	W02
+	.byte	BEND , 68
+	.byte	W04
+	.byte	PAN , 75
+	.byte	W06
+	.byte	68
+	.byte	BEND , 64
+	.byte	W06
+	.byte	PAN , 64
+	.byte	W06
+	.byte	60
+	.byte	W02
+	.byte	BEND , 61
+	.byte	W04
+	.byte	PAN , 54
+	.byte	W06
+	.byte	59
+	.byte	W04
+	.byte	BEND , 59
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W06
+	.byte	68
+	.byte	W02
+	.byte	BEND , 57
+	.byte	W04
+	.byte	PAN , 75
+	.byte	W06
+	.byte	68
+	.byte	W01
+	.byte	BEND , 54
+	.byte	W05
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 60
+	.byte	W06
+	.byte	54
+	.byte	BEND , 46
+	.byte	W03
+	.byte	VOL , 89
+	.byte	W03
+	.byte	PAN , 59
+	.byte	W02
+	.byte	VOL , 74
+	.byte	BEND , 39
+	.byte	W04
+	.byte	PAN , 64
+	.byte	W02
+	.byte	VOL , 62
+	.byte	W01
+	.byte	BEND , 32
+	.byte	W03
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 45
+	.byte	W01
+	.byte	BEND , 24
+	.byte	W04
+	.byte	VOL , 28
+	.byte	PAN , 75
+	.byte	BEND , 15
+	.byte	W03
+	.byte	0
+	.byte	W01
+	.byte	VOL , 10
+	.byte	W02
+	.byte	PAN , 68
+	.byte	W02
+	.byte	VOL , 5
+	.byte	W04
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CE9E, 0x2
 	.globl sSongHeader_201
 sSongHeader_201: @ 0x0886CEA0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CDD8  @ parts
-	.incbin "baserom_jp.gba", 0x86CEAC, 0x104
+	.4byte sSong201_Part0  @ parts
+	.globl sSong202_Part0
+sSong202_Part0: @ 0x0886CEAC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 95
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	W03
+	.byte	N06, Dn6, 112
+	.byte	W03
+	.byte	W03
+	.byte	An5, 104
+	.byte	W03
+	.byte	W03
+	.byte	Dn6, 100
+	.byte	W03
+	.byte	W03
+	.byte	An5
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Dn6, 96
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 92
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Dn6, 88
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 84
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Dn6, 80
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 76
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Dn6
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 72
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Dn6, 68
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 64
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Dn6, 60
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 56
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 56
+	.byte	N06, Dn6, 52
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 48
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 72
+	.byte	N06, Dn6, 44
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 40
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 56
+	.byte	N06, Dn6, 36
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, An5, 32
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong202_Part1
+sSong202_Part1: @ 0x0886CF49
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	N06, En6, 108
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 104
+	.byte	W03
+	.byte	W03
+	.byte	En6, 100
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 96
+	.byte	W03
+	.byte	W03
+	.byte	En6, 92
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 88
+	.byte	W03
+	.byte	W03
+	.byte	En6
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 84
+	.byte	W03
+	.byte	W03
+	.byte	En6, 80
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 76
+	.byte	W03
+	.byte	W03
+	.byte	En6, 72
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 68
+	.byte	W03
+	.byte	W03
+	.byte	En6, 64
+	.byte	W03
+	.byte	W03
+	.byte	Bn5
+	.byte	W03
+	.byte	W03
+	.byte	En6, 60
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 56
+	.byte	W03
+	.byte	W03
+	.byte	En6, 52
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 48
+	.byte	W03
+	.byte	W03
+	.byte	En6, 44
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 40
+	.byte	W03
+	.byte	W03
+	.byte	En6, 36
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 32
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86CFAE, 0x2
 	.globl sSongHeader_202
 sSongHeader_202: @ 0x0886CFB0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886CEAC, 0x0886CF49  @ parts
-	.incbin "baserom_jp.gba", 0x86CFC0, 0xD4
+	.globl sSong203_Part0
+sSong203_Part0: @ 0x0886CFC0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 45
+	.byte	BENDR , 24
+	.byte	PAN , 64
+	.byte	VOL , 32
+	.byte	MOD , 30
+	.byte	BEND , 64
+	.byte	N06, Cn3, 127
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	VOL , 49
+	.byte	PAN , 69
+	.byte	BEND , 73
+	.byte	W01
+	.byte	80
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 88
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 66
+	.byte	N06, Dn3, 116
+	.byte	W01
+	.byte	VOL , 71
+	.byte	BEND , 71
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 81
+	.byte	BEND , 82
+	.byte	W01
+	.byte	91
+	.byte	W02
+	.byte	VOL , 95
+	.byte	PAN , 64
+	.byte	BEND , 68
+	.byte	N06, En3, 112
+	.byte	W01
+	.byte	BEND , 73
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 78
+	.byte	W01
+	.byte	84
+	.byte	W01
+	.byte	93
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 70
+	.byte	N06, Fn3
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 79
+	.byte	W01
+	.byte	86
+	.byte	W01
+	.byte	95
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	N06, Gn3, 108
+	.byte	W01
+	.byte	BEND , 78
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 82
+	.byte	W01
+	.byte	89
+	.byte	W01
+	.byte	98
+	.byte	W02
+	.byte	VOL , 82
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	N06, An3, 100
+	.byte	W01
+	.byte	BEND , 82
+	.byte	W01
+	.byte	VOL , 71
+	.byte	PAN , 56
+	.byte	BEND , 87
+	.byte	W01
+	.byte	94
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 102
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	N06, Bn3, 60
+	.byte	W01
+	.byte	BEND , 82
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 87
+	.byte	W01
+	.byte	94
+	.byte	W01
+	.byte	102
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	N06, Cn4, 40
+	.byte	W01
+	.byte	BEND , 82
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 87
+	.byte	W01
+	.byte	94
+	.byte	W01
+	.byte	102
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	N06, Dn4, 20
+	.byte	W01
+	.byte	BEND , 82
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 87
+	.byte	W01
+	.byte	94
+	.byte	W01
+	.byte	102
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D093, 0x1
 	.globl sSongHeader_203
 sSongHeader_203: @ 0x0886D094
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886CFC0  @ parts
-	.incbin "baserom_jp.gba", 0x86D0A0, 0xD4
+	.4byte sSong203_Part0  @ parts
+	.globl sSong204_Part0
+sSong204_Part0: @ 0x0886D0A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 45
+	.byte	BENDR , 24
+	.byte	PAN , 64
+	.byte	VOL , 32
+	.byte	MOD , 30
+	.byte	BEND , 103
+	.byte	N06, Dn4, 127
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOL , 49
+	.byte	PAN , 69
+	.byte	BEND , 87
+	.byte	W01
+	.byte	79
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 99
+	.byte	N06, Cn4, 116
+	.byte	W01
+	.byte	VOL , 71
+	.byte	BEND , 91
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 83
+	.byte	W01
+	.byte	VOL , 81
+	.byte	BEND , 76
+	.byte	W01
+	.byte	69
+	.byte	W02
+	.byte	VOL , 95
+	.byte	PAN , 64
+	.byte	BEND , 96
+	.byte	N06, Bn3, 112
+	.byte	W01
+	.byte	BEND , 88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	W01
+	.byte	72
+	.byte	W01
+	.byte	65
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 92
+	.byte	N06, An3
+	.byte	W01
+	.byte	BEND , 84
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 76
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	62
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 88
+	.byte	N06, Gn3, 108
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 73
+	.byte	W01
+	.byte	65
+	.byte	W01
+	.byte	58
+	.byte	W02
+	.byte	VOL , 82
+	.byte	PAN , 64
+	.byte	BEND , 85
+	.byte	N06, Fn3, 100
+	.byte	W01
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 71
+	.byte	PAN , 56
+	.byte	BEND , 69
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	VOL , 61
+	.byte	BEND , 54
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 81
+	.byte	N06, En3, 60
+	.byte	W01
+	.byte	BEND , 73
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 66
+	.byte	W01
+	.byte	58
+	.byte	W01
+	.byte	51
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 78
+	.byte	N06, Dn3, 40
+	.byte	W01
+	.byte	BEND , 70
+	.byte	W01
+	.byte	PAN , 56
+	.byte	BEND , 62
+	.byte	W01
+	.byte	54
+	.byte	W01
+	.byte	47
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N06, Cn3, 20
+	.byte	W01
+	.byte	BEND , 68
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 60
+	.byte	W01
+	.byte	53
+	.byte	W01
+	.byte	46
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D173, 0x1
 	.globl sSongHeader_204
 sSongHeader_204: @ 0x0886D174
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D0A0  @ parts
-	.incbin "baserom_jp.gba", 0x86D180, 0x40
+	.4byte sSong204_Part0  @ parts
+	.globl sSong205_Part0
+sSong205_Part0: @ 0x0886D180
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 38
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N02, Gn4, 127
+	.byte	W01
+	.byte	VOL , 74
+	.byte	BEND , 53
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	VOL , 40
+	.byte	BEND , 63
+	.byte	N03, Cs5
+	.byte	W01
+	.byte	VOL , 64
+	.byte	PAN , 58
+	.byte	BEND , 52
+	.byte	W01
+	.byte	VOL , 86
+	.byte	PAN , 68
+	.byte	BEND , 48
+	.byte	W02
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, As5
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 0
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D1BE, 0x2
 	.globl sSongHeader_205
 sSongHeader_205: @ 0x0886D1C0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D180  @ parts
-	.incbin "baserom_jp.gba", 0x86D1CC, 0x80
+	.4byte sSong205_Part0  @ parts
+	.globl sSong206_Part0
+sSong206_Part0: @ 0x0886D1CC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 16
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06, Ds6, 100
+	.byte	W01
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W02
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W02
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06, Ds6, 56
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W02
+	.byte	FINE
+	.globl sSong206_Part1
+sSong206_Part1: @ 0x0886D239
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	VOL , 100
+	.byte	W02
+	.byte	N06, Cn6, 40
+	.byte	W04
+	.byte	W02
+	.byte	N04, Cn6, 32
+	.byte	W04
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D24B, 0x1
 	.globl sSongHeader_206
 sSongHeader_206: @ 0x0886D24C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D1CC, 0x0886D239  @ parts
-	.incbin "baserom_jp.gba", 0x86D25C, 0x180
+	.globl sSong207_Part0
+sSong207_Part0: @ 0x0886D25C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 19
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 70
+	.byte	N06, Gn6, 80
+	.byte	W01
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 74
+	.byte	BEND , 50
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 60
+	.byte	BEND , 33
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 20
+	.byte	BEND , 23
+	.byte	W02
+	.byte	VOL , 90
+	.byte	BEND , 64
+	.byte	N06, Gn6, 72
+	.byte	W01
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 74
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 60
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 20
+	.byte	BEND , 17
+	.byte	W02
+	.byte	VOL , 90
+	.byte	BEND , 63
+	.byte	N06, Gn6, 68
+	.byte	W01
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 74
+	.byte	BEND , 43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 60
+	.byte	BEND , 26
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 20
+	.byte	BEND , 16
+	.byte	W02
+	.byte	VOL , 90
+	.byte	BEND , 63
+	.byte	N06, Gn6, 60
+	.byte	W01
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 74
+	.byte	BEND , 43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 60
+	.byte	BEND , 26
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 20
+	.byte	BEND , 16
+	.byte	W02
+	.byte	VOL , 90
+	.byte	BEND , 62
+	.byte	N06, Gn6, 52
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 52
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 74
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 60
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 20
+	.byte	BEND , 15
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 62
+	.byte	N06, Gn6, 48
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 52
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 74
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 60
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 20
+	.byte	BEND , 15
+	.byte	W02
+	.byte	VOL , 90
+	.byte	BEND , 62
+	.byte	N06, Gn6, 40
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 74
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 60
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 20
+	.byte	BEND , 15
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	BEND , 62
+	.byte	N06, Gn6, 32
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 74
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 60
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 20
+	.byte	BEND , 15
+	.byte	W02
+	.byte	W06
+	.byte	FINE
+	.globl sSong207_Part1
+sSong207_Part1: @ 0x0886D374
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	PAN , 64
+	.byte	VOL , 90
+	.byte	W02
+	.byte	N06, En6, 64
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 56
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	VOL , 60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 52
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	PEND
+	.byte	PATT , 144, 211
+	.byte	W06
+	.byte	8
+	.byte	VOL , 60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 48
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 44
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 40
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	20
+	.byte	W01
+	.byte	90
+	.byte	N06, En6, 36
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	20
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D3D9, 0x3
 	.globl sSongHeader_207
 sSongHeader_207: @ 0x0886D3DC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D25C, 0x0886D374  @ parts
-	.incbin "baserom_jp.gba", 0x86D3EC, 0x190
+	.globl sSong208_Part0
+sSong208_Part0: @ 0x0886D3EC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 19
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 67
+	.byte	N06, Cn6, 88
+	.byte	W01
+	.byte	VOL , 88
+	.byte	BEND , 56
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 56
+	.byte	BEND , 47
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 24
+	.byte	BEND , 30
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 11
+	.byte	BEND , 19
+	.byte	W02
+	.byte	VOL , 95
+	.byte	BEND , 64
+	.byte	N06, Cn6, 84
+	.byte	W01
+	.byte	VOL , 88
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 56
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 24
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 11
+	.byte	BEND , 17
+	.byte	W02
+	.byte	VOL , 95
+	.byte	BEND , 63
+	.byte	N06, Cn6, 76
+	.byte	W01
+	.byte	VOL , 88
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 56
+	.byte	BEND , 43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 24
+	.byte	BEND , 26
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 11
+	.byte	BEND , 16
+	.byte	W02
+	.byte	VOL , 95
+	.byte	BEND , 63
+	.byte	N06, Cn6, 64
+	.byte	W01
+	.byte	VOL , 88
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 56
+	.byte	BEND , 43
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 24
+	.byte	BEND , 26
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 11
+	.byte	BEND , 16
+	.byte	W02
+	.byte	VOL , 95
+	.byte	BEND , 62
+	.byte	N06, Cn6, 56
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 88
+	.byte	BEND , 52
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 56
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 24
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 11
+	.byte	BEND , 15
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 62
+	.byte	N06, Cn6, 44
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 88
+	.byte	BEND , 52
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 56
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 24
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 11
+	.byte	BEND , 15
+	.byte	W02
+	.byte	VOL , 95
+	.byte	BEND , 62
+	.byte	N06, Cn6, 36
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 88
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 56
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 24
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 11
+	.byte	BEND , 15
+	.byte	W02
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 62
+	.byte	N06, Cn6, 28
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 88
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 56
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 24
+	.byte	BEND , 25
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 11
+	.byte	BEND , 15
+	.byte	W02
+	.byte	W06
+	.byte	FINE
+	.globl sSong208_Part1
+sSong208_Part1: @ 0x0886D514
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	PAN , 64
+	.byte	VOL , 95
+	.byte	BEND , 59
+	.byte	W02
+	.byte	N06, An5, 64
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 56
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	VOL , 56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 52
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	PEND
+	.byte	PATT , 50, 213
+	.byte	W06
+	.byte	8
+	.byte	VOL , 56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 48
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 44
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 40
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W01
+	.byte	95
+	.byte	N06, An5, 36
+	.byte	W02
+	.byte	VOL , 88
+	.byte	W02
+	.byte	56
+	.byte	W01
+	.byte	24
+	.byte	W05
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D57B, 0x1
 	.globl sSongHeader_208
 sSongHeader_208: @ 0x0886D57C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D3EC, 0x0886D514  @ parts
-	.incbin "baserom_jp.gba", 0x86D58C, 0x60
+	.globl sSong209_Part0
+sSong209_Part0: @ 0x0886D58C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 54
+	.byte	VOL , 100
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 65
+	.byte	N03, As5, 127
+	.byte	W01
+	.byte	PAN , 66
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Bn5
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W02
+	.byte	W03
+	.byte	BEND , 65
+	.byte	N03, As5, 104
+	.byte	W01
+	.byte	PAN , 62
+	.byte	BEND , 66
+	.byte	W02
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Bn5
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W04
+	.byte	W01
+	.byte	BEND , 65
+	.byte	N03, As5, 80
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Bn5
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W04
+	.byte	BEND , 65
+	.byte	N03, As5, 48
+	.byte	W02
+	.byte	PAN , 59
+	.byte	BEND , 66
+	.byte	W01
+	.byte	68
+	.byte	W01
+	.byte	65
+	.byte	N06, Bn5
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	W06
+	.byte	FINE
 	.globl sSongHeader_209
 sSongHeader_209: @ 0x0886D5EC
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D58C  @ parts
-	.incbin "baserom_jp.gba", 0x86D5F8, 0x44
+	.4byte sSong209_Part0  @ parts
+	.globl sSong210_Part0
+sSong210_Part0: @ 0x0886D5F8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 40
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N01, Cn4, 100
+	.byte	W01
+	.byte	Gn3, 64
+	.byte	W01
+	.byte	N03, Bn3, 100
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 70
+	.byte	W01
+	.byte	PAN , 59
+	.byte	BEND , 58
+	.byte	W02
+	.byte	PAN , 70
+	.byte	BEND , 70
+	.byte	N01, Cn4
+	.byte	W01
+	.byte	Gn3, 64
+	.byte	W02
+	.byte	PAN , 59
+	.byte	BEND , 58
+	.byte	N01, Bn3, 100
+	.byte	W01
+	.byte	Gn3, 64
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, Bn3, 100
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D639, 0x3
 	.globl sSongHeader_210
 sSongHeader_210: @ 0x0886D63C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D5F8  @ parts
-	.incbin "baserom_jp.gba", 0x86D648, 0x118
+	.4byte sSong210_Part0  @ parts
+	.globl sSong211_Part0
+sSong211_Part0: @ 0x0886D648
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 100
+	.byte	BENDR , 4
+	.byte	PAN , 64
+	.byte	MOD , 6
+	.byte	BEND , 67
+	.byte	N01, Ds6, 92
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	N20, Gn6, 100
+	.byte	W21
+	.byte	N01, Ds6, 56
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	N20, Gn6, 64
+	.byte	W03
+	.byte	PAN , 70
+	.byte	W04
+	.byte	60
+	.byte	W05
+	.byte	70
+	.byte	W05
+	.byte	60
+	.byte	W04
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	N01, Gs5, 92
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	Cn5
+	.byte	W01
+	.byte	N20, Cn6, 100
+	.byte	W21
+	.byte	PEND
+	.byte	PAN , 80
+	.byte	N01, Gs5, 56
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	Cn5
+	.byte	W01
+	.byte	N20, Cn6, 64
+	.byte	W21
+	.byte	PEND
+	.byte	PAN , 48
+	.byte	N01, Gs5, 40
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	Cn5
+	.byte	W01
+	.byte	N20, Cn6
+	.byte	W21
+	.byte	PEND
+	.byte	PAN , 96
+	.byte	N01, Gs5, 20
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	Cn5
+	.byte	W01
+	.byte	PAN , 32
+	.byte	N20, Cn6
+	.byte	W21
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	N01, Ds6, 92
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	N20, Gn6, 100
+	.byte	W21
+	.byte	PATT , 100, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 122, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 137, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 152, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 166, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.globl sSong211_Part1
+sSong211_Part1: @ 0x0886D6DE
+	.byte	KEYSH , 0
+	.byte	VOICE , 55
+	.byte	PAN , 64
+	.byte	VOL , 39
+	.byte	BEND , 60
+	.byte	W10
+	.byte	N01, Ds6, 112
+	.byte	W02
+	.byte	Dn6
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	N04, Gn6
+	.byte	W05
+	.byte	Gn6, 96
+	.byte	W05
+	.byte	PAN , 114
+	.byte	N04, Gn6, 80
+	.byte	W04
+	.byte	PAN , 16
+	.byte	N04, Gn6, 64
+	.byte	W05
+	.byte	PAN , 114
+	.byte	N04, Gn6, 48
+	.byte	W05
+	.byte	PAN , 15
+	.byte	N04, Gn6, 32
+	.byte	W10
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	W10
+	.byte	N01, Gs5, 112
+	.byte	W02
+	.byte	Gn5
+	.byte	W01
+	.byte	Cn5
+	.byte	W01
+	.byte	N04, Cn6
+	.byte	W05
+	.byte	Cn6, 96
+	.byte	W05
+	.byte	PEND
+	.byte	PAN , 114
+	.byte	N04, Cn6, 80
+	.byte	W04
+	.byte	PAN , 16
+	.byte	N04, Cn6, 64
+	.byte	W05
+	.byte	PAN , 114
+	.byte	N04, Cn6, 48
+	.byte	W05
+	.byte	PAN , 15
+	.byte	N04, Cn6, 32
+	.byte	W10
+	.byte	PEND
+	.byte	W24
+	.byte	W24
+	.byte	PAN , 64
+	.byte	W10
+	.byte	N01, Ds6, 112
+	.byte	W02
+	.byte	Dn6
+	.byte	W01
+	.byte	Gn5
+	.byte	W01
+	.byte	N04, Gn6
+	.byte	W05
+	.byte	Gn6, 96
+	.byte	W05
+	.byte	PATT , 247, 214
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 16, 215
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 34, 215
+	.byte	W06
+	.byte	GsM2
+	.byte	W24
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_211
 sSongHeader_211: @ 0x0886D760
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D648, 0x0886D6DE  @ parts
-	.incbin "baserom_jp.gba", 0x86D770, 0x70
+	.globl sSong212_Part0
+sSong212_Part0: @ 0x0886D770
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 37
+	.byte	BENDR , 24
+	.byte	PAN , 64
+	.byte	VOL , 25
+	.byte	BEND , 75
+	.byte	N02, Fn4, 127
+	.byte	W01
+	.byte	VOL , 42
+	.byte	PAN , 68
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOL , 62
+	.byte	PAN , 60
+	.byte	BEND , 64
+	.byte	N15
+	.byte	W01
+	.byte	VOL , 77
+	.byte	PAN , 64
+	.byte	BEND , 69
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 68
+	.byte	BEND , 76
+	.byte	W02
+	.byte	VOL , 96
+	.byte	PAN , 60
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 89
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 94
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 98
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 104
+	.byte	W02
+	.byte	VOL , 94
+	.byte	PAN , 68
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 60
+	.byte	BEND , 101
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 64
+	.byte	BEND , 100
+	.byte	W01
+	.byte	VOL , 49
+	.byte	PAN , 68
+	.byte	BEND , 98
+	.byte	W01
+	.byte	VOL , 32
+	.byte	PAN , 60
+	.byte	BEND , 96
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D7DE, 0x2
 	.globl sSongHeader_212
 sSongHeader_212: @ 0x0886D7E0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D770  @ parts
-	.incbin "baserom_jp.gba", 0x86D7EC, 0xE4
+	.4byte sSong212_Part0  @ parts
+	.globl sSong213_Part0
+sSong213_Part0: @ 0x0886D7EC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 34
+	.byte	BEND , 64
+	.byte	N66, Cn5, 127
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W01
+	.byte	VOL , 43
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	BEND , 62
+	.byte	W01
+	.byte	VOL , 58
+	.byte	PAN , 64
+	.byte	W02
+	.byte	62
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 60
+	.byte	BEND , 60
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W01
+	.byte	VOL , 76
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	BEND , 58
+	.byte	W02
+	.byte	VOL , 90
+	.byte	PAN , 68
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	64
+	.byte	BEND , 56
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	62
+	.byte	W02
+	.byte	64
+	.byte	BEND , 51
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	62
+	.byte	BEND , 49
+	.byte	W01
+	.byte	PAN , 60
+	.byte	W02
+	.byte	62
+	.byte	W01
+	.byte	64
+	.byte	BEND , 45
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W01
+	.byte	68
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	BEND , 45
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	62
+	.byte	BEND , 47
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W02
+	.byte	64
+	.byte	BEND , 45
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W01
+	.byte	62
+	.byte	BEND , 42
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W02
+	.byte	66
+	.byte	BEND , 36
+	.byte	W01
+	.byte	PAN , 68
+	.byte	BEND , 40
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 64
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	62
+	.byte	W01
+	.byte	VOL , 78
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	BEND , 37
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 70
+	.byte	PAN , 62
+	.byte	W02
+	.byte	60
+	.byte	W01
+	.byte	VOL , 55
+	.byte	PAN , 62
+	.byte	BEND , 35
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 46
+	.byte	PAN , 66
+	.byte	W01
+	.byte	68
+	.byte	BEND , 33
+	.byte	W02
+	.byte	VOL , 36
+	.byte	PAN , 66
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	VOL , 24
+	.byte	PAN , 64
+	.byte	BEND , 28
+	.byte	W01
+	.byte	PAN , 62
+	.byte	W01
+	.byte	VOL , 13
+	.byte	PAN , 64
+	.byte	BEND , 22
+	.byte	W02
+	.byte	VOL , 5
+	.byte	PAN , 66
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D8CD, 0x3
 	.globl sSongHeader_213
 sSongHeader_213: @ 0x0886D8D0
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886D7EC  @ parts
-	.incbin "baserom_jp.gba", 0x86D8DC, 0x58
+	.4byte sSong213_Part0  @ parts
+	.globl sSong214_Part0
+sSong214_Part0: @ 0x0886D8DC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Gn2, 127
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Fs2, 120
+	.byte	W04
+	.byte	PAN , 58
+	.byte	N03, Fn2, 116
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, En2, 112
+	.byte	W04
+	.byte	PAN , 53
+	.byte	N03, Ds2, 108
+	.byte	W04
+	.byte	PAN , 64
+	.byte	N03, Dn2, 100
+	.byte	W06
+	.byte	FINE
+	.globl sSong214_Part1
+sSong214_Part1: @ 0x0886D90D
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N02, Fn2, 72
+	.byte	W02
+	.byte	N01
+	.byte	W01
+	.byte	N02, Gn2
+	.byte	W03
+	.byte	N01, Gs2, 60
+	.byte	W01
+	.byte	N02, Cn3, 40
+	.byte	W03
+	.byte	Cn3, 32
+	.byte	W04
+	.byte	N01, Cn3, 28
+	.byte	W04
+	.byte	Cn3, 20
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D931, 0x3
 	.globl sSongHeader_214
 sSongHeader_214: @ 0x0886D934
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D8DC, 0x0886D90D  @ parts
-	.incbin "baserom_jp.gba", 0x86D944, 0x4C
+	.globl sSong215_Part0
+sSong215_Part0: @ 0x0886D944
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 18
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, En3, 127
+	.byte	W03
+	.byte	N01, As3
+	.byte	W03
+	.byte	N02, Gn3
+	.byte	W03
+	.byte	N01, Cs4
+	.byte	W03
+	.byte	PAN , 71
+	.byte	N02, En3, 72
+	.byte	W03
+	.byte	N01, As3
+	.byte	W03
+	.byte	PAN , 57
+	.byte	N02, Gn3, 40
+	.byte	W03
+	.byte	N01, Cs4
+	.byte	W03
+	.byte	FINE
+	.globl sSong215_Part1
+sSong215_Part1: @ 0x0886D972
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 110
+	.byte	N01, Cn3, 40
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	N01
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	N01, Cn3, 20
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	PEND
+	.byte	PATT , 130, 217
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86D98F, 0x1
 	.globl sSongHeader_215
 sSongHeader_215: @ 0x0886D990
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D944, 0x0886D972  @ parts
-	.incbin "baserom_jp.gba", 0x86D9A0, 0xA4
+	.globl sSong216_Part0
+sSong216_Part0: @ 0x0886D9A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 115
+	.byte	BEND , 46
+	.byte	N60, Gn2, 127
+	.byte	W03
+	.byte	PAN , 67
+	.byte	BEND , 48
+	.byte	W04
+	.byte	PAN , 70
+	.byte	BEND , 50
+	.byte	W03
+	.byte	PAN , 67
+	.byte	BEND , 53
+	.byte	W02
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 56
+	.byte	W04
+	.byte	PAN , 61
+	.byte	BEND , 59
+	.byte	W03
+	.byte	PAN , 58
+	.byte	BEND , 62
+	.byte	W03
+	.byte	W01
+	.byte	PAN , 61
+	.byte	BEND , 65
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 68
+	.byte	W04
+	.byte	PAN , 67
+	.byte	BEND , 71
+	.byte	W02
+	.byte	VOL , 109
+	.byte	W02
+	.byte	PAN , 70
+	.byte	BEND , 74
+	.byte	W02
+	.byte	VOL , 103
+	.byte	W01
+	.byte	PAN , 67
+	.byte	BEND , 77
+	.byte	W03
+	.byte	VOL , 92
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 80
+	.byte	W03
+	.byte	VOL , 79
+	.byte	PAN , 61
+	.byte	BEND , 82
+	.byte	W02
+	.byte	W02
+	.byte	VOL , 62
+	.byte	PAN , 58
+	.byte	BEND , 85
+	.byte	W04
+	.byte	VOL , 40
+	.byte	PAN , 61
+	.byte	BEND , 90
+	.byte	W02
+	.byte	VOL , 22
+	.byte	BEND , 97
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 8
+	.byte	BEND , 107
+	.byte	W02
+	.byte	FINE
+	.globl sSong216_Part1
+sSong216_Part1: @ 0x0886DA1D
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 115
+	.byte	N06, Cn3, 40
+	.byte	W06
+	.byte	Gn2
+	.byte	W06
+	.byte	N06, Cn3, 40
+	.byte	W06
+	.byte	Gn2
+	.byte	W06
+	.byte	PEND
+	.byte	PATT , 41, 218
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Cn3, 32
+	.byte	W06
+	.byte	Gn2
+	.byte	W06
+	.byte	Cn3, 12
+	.byte	W06
+	.byte	Gn2
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DA41, 0x3
 	.globl sSongHeader_216
 sSongHeader_216: @ 0x0886DA44
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886D9A0, 0x0886DA1D  @ parts
-	.incbin "baserom_jp.gba", 0x86DA54, 0x1EC
+	.globl sSong217_Part0
+sSong217_Part0: @ 0x0886DA54
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 19
+	.byte	BENDR , 24
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	N03, Cn5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 54
+	.byte	BEND , 64
+	.byte	N01, Gn4, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, Cs5, 92
+	.byte	W02
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 74
+	.byte	BEND , 64
+	.byte	N01, Gs4, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 31
+	.byte	N03, Dn5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W02
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 50
+	.byte	BEND , 64
+	.byte	N01, An4, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, Ds5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W02
+	.byte	VOICE , 22
+	.byte	PAN , 78
+	.byte	BEND , 64
+	.byte	N01, As4, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 31
+	.byte	N03, En5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 46
+	.byte	BEND , 64
+	.byte	N01, Bn4, 127
+	.byte	W02
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, Fn5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 82
+	.byte	BEND , 64
+	.byte	N01, Cn5, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 31
+	.byte	N03, Fs5, 92
+	.byte	W02
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 50
+	.byte	BEND , 64
+	.byte	N01, Cs5, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, Gn5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W02
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 78
+	.byte	BEND , 64
+	.byte	N01, Dn5, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 31
+	.byte	N03, Gs5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W02
+	.byte	VOICE , 22
+	.byte	PAN , 54
+	.byte	BEND , 64
+	.byte	N01, Ds5, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, An5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 74
+	.byte	BEND , 64
+	.byte	N01, En5, 127
+	.byte	W02
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	BEND , 31
+	.byte	N03, As5, 92
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 54
+	.byte	BEND , 64
+	.byte	N01, Fn5, 127
+	.byte	W01
+	.byte	VOICE , 19
+	.byte	VOL , 100
+	.byte	PAN , 63
+	.byte	BEND , 31
+	.byte	N03, Bn5, 92
+	.byte	W02
+	.byte	VOL , 72
+	.byte	W01
+	.byte	40
+	.byte	BEND , 95
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 74
+	.byte	BEND , 64
+	.byte	N01, Fs5, 127
+	.byte	W01
+	.byte	BEND , 31
+	.byte	W03
+	.byte	W06
+	.byte	FINE
+	.globl sSong217_Part1
+sSong217_Part1: @ 0x0886DBBB
+	.byte	KEYSH , 0
+	.byte	VOICE , 17
+	.byte	VOL , 100
+	.byte	W02
+	.byte	BEND , 95
+	.byte	N03, Cn5, 40
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	W01
+	.byte	95
+	.byte	N03, Cs5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W03
+	.byte	95
+	.byte	N03, Dn5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, Ds5
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, En5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W02
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, Fn5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	W01
+	.byte	95
+	.byte	N03, Fs5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W03
+	.byte	95
+	.byte	N03, Gn5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, Gs5
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, An5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W02
+	.byte	31
+	.byte	W02
+	.byte	95
+	.byte	N03, As5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W02
+	.byte	W01
+	.byte	95
+	.byte	N03, Bn5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W03
+	.byte	95
+	.byte	N03, Bn5, 20
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	31
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DC3E, 0x2
 	.globl sSongHeader_217
 sSongHeader_217: @ 0x0886DC40
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886DA54, 0x0886DBBB  @ parts
-	.incbin "baserom_jp.gba", 0x86DC50, 0x110
+	.globl sSong218_Part0
+sSong218_Part0: @ 0x0886DC50
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 31
+	.byte	VOL , 110
+	.byte	BENDR , 24
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N06, Gn0, 127
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	91
+	.byte	W01
+	.byte	110
+	.byte	W02
+	.byte	VOICE , 23
+	.byte	PAN , 75
+	.byte	N01, Cn1
+	.byte	W01
+	.byte	PAN , 54
+	.byte	N01, Cn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 70
+	.byte	BEND , 27
+	.byte	N06, Dn1
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	91
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 63
+	.byte	N01, Fn1
+	.byte	W01
+	.byte	PAN , 54
+	.byte	N01, Fn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N02, Gn0
+	.byte	W02
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	PAN , 69
+	.byte	BEND , 91
+	.byte	N02
+	.byte	W01
+	.byte	BEND , 110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 74
+	.byte	N01, Cn1
+	.byte	W02
+	.byte	PAN , 55
+	.byte	N01, Cn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N06, Dn1
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	91
+	.byte	W02
+	.byte	110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 69
+	.byte	N01, Cn1
+	.byte	W01
+	.byte	PAN , 56
+	.byte	N01, Cn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N06, Gn0, 112
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	91
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 75
+	.byte	N01, Cn1, 100
+	.byte	W01
+	.byte	PAN , 54
+	.byte	N01, Cn2, 96
+	.byte	W02
+	.byte	VOICE , 31
+	.byte	PAN , 70
+	.byte	BEND , 27
+	.byte	N06, Dn1
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	91
+	.byte	W01
+	.byte	110
+	.byte	W02
+	.byte	VOICE , 23
+	.byte	PAN , 63
+	.byte	N01, Fn1, 84
+	.byte	W01
+	.byte	PAN , 54
+	.byte	N01, Fn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N02, Gn0, 80
+	.byte	W01
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	PAN , 69
+	.byte	BEND , 91
+	.byte	N02, Gn0, 72
+	.byte	W01
+	.byte	BEND , 110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 74
+	.byte	N01, Cn1, 68
+	.byte	W01
+	.byte	PAN , 55
+	.byte	N01, Cn2
+	.byte	W01
+	.byte	VOICE , 31
+	.byte	PAN , 64
+	.byte	BEND , 27
+	.byte	N06, Dn1, 64
+	.byte	W02
+	.byte	BEND , 48
+	.byte	W01
+	.byte	64
+	.byte	W01
+	.byte	91
+	.byte	W01
+	.byte	110
+	.byte	W01
+	.byte	VOICE , 23
+	.byte	PAN , 69
+	.byte	N01, Cn1, 56
+	.byte	W02
+	.byte	PAN , 56
+	.byte	N01, Cn2, 52
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DD5F, 0x1
 	.globl sSongHeader_218
 sSongHeader_218: @ 0x0886DD60
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886DC50  @ parts
-	.incbin "baserom_jp.gba", 0x86DD6C, 0xF0
+	.4byte sSong218_Part0  @ parts
+	.globl sSong219_Part0
+sSong219_Part0: @ 0x0886DD6C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 75
+	.byte	BEND , 64
+	.byte	N96, En2, 127
+	.byte	W03
+	.byte	VOL , 92
+	.byte	BEND , 86
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	VOL , 98
+	.byte	PAN , 60
+	.byte	W03
+	.byte	VOL , 106
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 116
+	.byte	PAN , 56
+	.byte	W03
+	.byte	VOL , 127
+	.byte	W03
+	.byte	PAN , 52
+	.byte	W06
+	.byte	47
+	.byte	BEND , 64
+	.byte	W03
+	.byte	57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	PAN , 61
+	.byte	W03
+	.byte	70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 58
+	.byte	W03
+	.byte	PAN , 80
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W03
+	.byte	PAN , 77
+	.byte	BEND , 75
+	.byte	W03
+	.byte	84
+	.byte	W03
+	.byte	PAN , 72
+	.byte	W03
+	.byte	64
+	.byte	BEND , 76
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 71
+	.byte	W03
+	.byte	PAN , 53
+	.byte	W03
+	.byte	47
+	.byte	VOL , 114
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 104
+	.byte	BEND , 57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W01
+	.byte	VOL , 93
+	.byte	W02
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 82
+	.byte	W02
+	.byte	PAN , 61
+	.byte	W02
+	.byte	VOL , 67
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	VOL , 52
+	.byte	W02
+	.byte	32
+	.byte	W01
+	.byte	BEND , 58
+	.byte	W01
+	.byte	VOL , 13
+	.byte	W02
+	.byte	FINE
+	.globl sSong219_Part1
+sSong219_Part1: @ 0x0886DE02
+	.byte	KEYSH , 0
+	.byte	VOICE , 57
+	.byte	PAN , 64
+	.byte	VOL , 127
+	.byte	N03, Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	W01
+	.byte	En3, 80
+	.byte	W03
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W03
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W02
+	.byte	W02
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 92
+	.byte	W04
+	.byte	En3, 60
+	.byte	W03
+	.byte	Dn3, 52
+	.byte	W04
+	.byte	Cn3, 60
+	.byte	W04
+	.byte	En3, 32
+	.byte	W03
+	.byte	N02, Dn3, 20
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DE59, 0x3
 	.globl sSongHeader_219
 sSongHeader_219: @ 0x0886DE5C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886DD6C, 0x0886DE02  @ parts
-	.incbin "baserom_jp.gba", 0x86DE6C, 0x60
+	.globl sSong220_Part0
+sSong220_Part0: @ 0x0886DE6C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 58
+	.byte	BENDR , 24
+	.byte	PAN , 64
+	.byte	VOL , 19
+	.byte	BEND , 32
+	.byte	N16, Gn1, 127
+	.byte	W01
+	.byte	VOL , 43
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 72
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 92
+	.byte	BEND , 71
+	.byte	W01
+	.byte	VOL , 109
+	.byte	BEND , 83
+	.byte	W02
+	.byte	92
+	.byte	W01
+	.byte	104
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	VOL , 102
+	.byte	BEND , 83
+	.byte	W01
+	.byte	VOL , 88
+	.byte	BEND , 69
+	.byte	W02
+	.byte	VOL , 69
+	.byte	BEND , 55
+	.byte	W01
+	.byte	VOL , 37
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 17
+	.byte	BEND , 30
+	.byte	W10
+	.byte	FINE
+	.globl sSong220_Part1
+sSong220_Part1: @ 0x0886DEB2
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	N02, Gs3, 32
+	.byte	W02
+	.byte	Gn3
+	.byte	W02
+	.byte	Fn3
+	.byte	W03
+	.byte	En3
+	.byte	W02
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3
+	.byte	W02
+	.byte	Gs2
+	.byte	W10
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DEC9, 0x3
 	.globl sSongHeader_220
 sSongHeader_220: @ 0x0886DECC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886DE6C, 0x0886DEB2  @ parts
-	.incbin "baserom_jp.gba", 0x86DEDC, 0x88
+	.globl sSong221_Part0
+sSong221_Part0: @ 0x0886DEDC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 18
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N09, An3, 127
+	.byte	W03
+	.byte	BEND , 85
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	70
+	.byte	N15, An3, 120
+	.byte	W03
+	.byte	BEND , 66
+	.byte	W01
+	.byte	PAN , 74
+	.byte	W02
+	.byte	BEND , 55
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 35
+	.byte	W06
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N09, Cn3, 127
+	.byte	W06
+	.byte	BEND , 56
+	.byte	W03
+	.byte	49
+	.byte	N60, Cs3, 124
+	.byte	W03
+	.byte	BEND , 60
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W06
+	.byte	64
+	.byte	BEND , 56
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 55
+	.byte	W03
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 42
+	.byte	W06
+	.byte	VOL , 103
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 32
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W03
+	.byte	VOL , 95
+	.byte	BEND , 26
+	.byte	W03
+	.byte	PAN , 55
+	.byte	W05
+	.byte	BEND , 19
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 64
+	.byte	W05
+	.byte	74
+	.byte	W01
+	.byte	BEND , 12
+	.byte	W03
+	.byte	VOL , 21
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W04
+	.byte	FINE
+	.globl sSong221_Part1
+sSong221_Part1: @ 0x0886DF53
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	N06, Cn3, 60
+	.byte	W09
+	.byte	N15
+	.byte	W15
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DF63, 0x1
 	.globl sSongHeader_221
 sSongHeader_221: @ 0x0886DF64
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886DEDC, 0x0886DF53  @ parts
-	.incbin "baserom_jp.gba", 0x86DF74, 0x28
+	.globl sSong222_Part0
+sSong222_Part0: @ 0x0886DF74
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 59
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N06, En3, 127
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W01
+	.byte	55
+	.byte	W01
+	.byte	78
+	.byte	W01
+	.byte	54
+	.byte	W02
+	.byte	64
+	.byte	N03, An3, 48
+	.byte	W01
+	.byte	PAN , 80
+	.byte	W01
+	.byte	48
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86DF9A, 0x2
 	.globl sSongHeader_222
 sSongHeader_222: @ 0x0886DF9C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886DF74  @ parts
-	.incbin "baserom_jp.gba", 0x86DFA8, 0xCC
+	.4byte sSong222_Part0  @ parts
+	.globl sSong223_Part0
+sSong223_Part0: @ 0x0886DFA8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 60
+	.byte	BENDR , 12
+	.byte	VOL , 25
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	TIE , 60, 127
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 34
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 46
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 56
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 70
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 80
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 88
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	VOL , 96
+	.byte	PAN , 69
+	.byte	W02
+	.byte	66
+	.byte	W02
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	62
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W02
+	.byte	66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	62
+	.byte	W02
+	.byte	PEND
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	PATT , 3, 224
+	.byte	W06
+	.byte	8
+	.byte	VOL , 96
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W01
+	.byte	VOL , 92
+	.byte	W01
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W02
+	.byte	VOL , 72
+	.byte	PAN , 62
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	VOL , 63
+	.byte	PAN , 69
+	.byte	W02
+	.byte	VOL , 52
+	.byte	PAN , 66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 37
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	W01
+	.byte	VOL , 22
+	.byte	W01
+	.byte	12
+	.byte	PAN , 62
+	.byte	W02
+	.byte	EOT , 60
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E071, 0x3
 	.globl sSongHeader_223
 sSongHeader_223: @ 0x0886E074
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886DFA8  @ parts
-	.incbin "baserom_jp.gba", 0x86E080, 0xCC
+	.4byte sSong223_Part0  @ parts
+	.globl sSong224_Part0
+sSong224_Part0: @ 0x0886E080
+	.byte	KEYSH , 0
+	.byte	VOICE , 19
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 12
+	.byte	BEND , 113
+	.byte	N06, Gn4, 80
+	.byte	W01
+	.byte	VOL , 44
+	.byte	BEND , 86
+	.byte	W01
+	.byte	VOL , 62
+	.byte	PAN , 72
+	.byte	VOL , 75
+	.byte	BEND , 84
+	.byte	W01
+	.byte	VOL , 87
+	.byte	BEND , 97
+	.byte	W01
+	.byte	VOL , 96
+	.byte	PAN , 57
+	.byte	VOL , 100
+	.byte	BEND , 118
+	.byte	W01
+	.byte	127
+	.byte	W01
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N04, Gn4, 40
+	.byte	W01
+	.byte	W03
+	.byte	W03
+	.byte	VOICE , 45
+	.byte	MOD , 30
+	.byte	BENDR , 24
+	.byte	VOL , 54
+	.byte	BEND , 64
+	.byte	N06, Gn3, 108
+	.byte	W01
+	.byte	VOL , 70
+	.byte	BEND , 68
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 80
+	.byte	BEND , 73
+	.byte	W01
+	.byte	VOL , 100
+	.byte	BEND , 80
+	.byte	W01
+	.byte	88
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 66
+	.byte	N06, An3, 100
+	.byte	W01
+	.byte	BEND , 71
+	.byte	W01
+	.byte	PAN , 60
+	.byte	BEND , 76
+	.byte	W01
+	.byte	82
+	.byte	W01
+	.byte	91
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 68
+	.byte	N06, Bn3, 60
+	.byte	W01
+	.byte	BEND , 73
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 78
+	.byte	W01
+	.byte	84
+	.byte	W01
+	.byte	93
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 70
+	.byte	N06, Cn4, 40
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 79
+	.byte	W01
+	.byte	86
+	.byte	W01
+	.byte	95
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	N06, Dn4, 20
+	.byte	W01
+	.byte	BEND , 78
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 82
+	.byte	W01
+	.byte	89
+	.byte	W01
+	.byte	98
+	.byte	W02
+	.byte	FINE
+	.globl sSong224_Part1
+sSong224_Part1: @ 0x0886E129
+	.byte	KEYSH , 0
+	.byte	VOICE , 57
+	.byte	VOL , 59
+	.byte	N06, Gs4, 52
+	.byte	W01
+	.byte	VOL , 72
+	.byte	W01
+	.byte	90
+	.byte	W01
+	.byte	100
+	.byte	W03
+	.byte	W02
+	.byte	N04, Gs4, 24
+	.byte	W01
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_224
 sSongHeader_224: @ 0x0886E14C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E080, 0x0886E129  @ parts
-	.incbin "baserom_jp.gba", 0x86E15C, 0x9C
+	.globl sSong225_Part0
+sSong225_Part0: @ 0x0886E15C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 90
+	.byte	VOICE , 16
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06, An6, 100
+	.byte	W01
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 64
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W02
+	.byte	N02, An6, 56
+	.byte	W01
+	.byte	PAN , 69
+	.byte	W01
+	.byte	58
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06, An6, 100
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 54
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W02
+	.byte	PAN , 65
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N02, An6, 56
+	.byte	W01
+	.byte	PAN , 72
+	.byte	W01
+	.byte	54
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N06, An6, 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 53
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 90
+	.byte	BEND , 44
+	.byte	W01
+	.byte	PAN , 58
+	.byte	VOL , 77
+	.byte	BEND , 27
+	.byte	W01
+	.byte	PAN , 72
+	.byte	VOL , 37
+	.byte	BEND , 17
+	.byte	W01
+	.byte	PAN , 54
+	.byte	W02
+	.byte	W06
+	.byte	FINE
+	.globl sSong225_Part1
+sSong225_Part1: @ 0x0886E1E1
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	VOL , 100
+	.byte	W02
+	.byte	N06, Fs6, 40
+	.byte	W04
+	.byte	W04
+	.byte	N06
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	Fs6, 32
+	.byte	W05
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E1F6, 0x2
 	.globl sSongHeader_225
 sSongHeader_225: @ 0x0886E1F8
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E15C, 0x0886E1E1  @ parts
-	.incbin "baserom_jp.gba", 0x86E208, 0x88
+	.globl sSong226_Part0
+sSong226_Part0: @ 0x0886E208
+	.byte	KEYSH , 0
+	.byte	TEMPO , 105
+	.byte	VOICE , 46
+	.byte	VOL , 95
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	W03
+	.byte	N06, Cn6, 116
+	.byte	W03
+	.byte	W03
+	.byte	En6, 108
+	.byte	W03
+	.byte	W03
+	.byte	Cs5, 100
+	.byte	W03
+	.byte	W03
+	.byte	Gs5, 88
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Cs6, 80
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, Dn6, 72
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Fs6, 60
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, Ds5, 52
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, As5, 40
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W03
+	.byte	W03
+	.byte	68
+	.byte	W03
+	.byte	W03
+	.byte	64
+	.byte	FINE
+	.globl sSong226_Part1
+sSong226_Part1: @ 0x0886E254
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	N06, Cn5, 120
+	.byte	W03
+	.byte	W03
+	.byte	Gn5, 112
+	.byte	W03
+	.byte	W03
+	.byte	Cn6, 104
+	.byte	W03
+	.byte	W03
+	.byte	Cs6, 92
+	.byte	W03
+	.byte	W03
+	.byte	Fn6, 84
+	.byte	W03
+	.byte	W03
+	.byte	Dn5, 76
+	.byte	W03
+	.byte	W03
+	.byte	An5, 64
+	.byte	W03
+	.byte	W03
+	.byte	Dn6, 56
+	.byte	W03
+	.byte	W03
+	.byte	Ds6, 48
+	.byte	W03
+	.byte	W03
+	.byte	Gn6, 36
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E28D, 0x3
 	.globl sSongHeader_226
 sSongHeader_226: @ 0x0886E290
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E208, 0x0886E254  @ parts
-	.incbin "baserom_jp.gba", 0x86E2A0, 0x88
+	.globl sSong227_Part0
+sSong227_Part0: @ 0x0886E2A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 61
+	.byte	BENDR , 44
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	MOD , 30
+	.byte	BEND , 66
+	.byte	N54, Dn4, 80
+	.byte	W12
+	.byte	PAN , 60
+	.byte	W12
+	.byte	54
+	.byte	W12
+	.byte	60
+	.byte	W12
+	.byte	64
+	.byte	W06
+	.byte	N54, Cn4
+	.byte	W06
+	.byte	PAN , 70
+	.byte	W12
+	.byte	73
+	.byte	W12
+	.byte	69
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	60
+	.byte	N54, Dn4
+	.byte	W12
+	.byte	PAN , 54
+	.byte	W12
+	.byte	60
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	70
+	.byte	W06
+	.byte	N54, Cn4
+	.byte	W06
+	.byte	PAN , 73
+	.byte	W12
+	.byte	69
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	60
+	.byte	W12
+	.byte	FINE
+	.globl sSong227_Part1
+sSong227_Part1: @ 0x0886E2E3
+	.byte	KEYSH , 0
+	.byte	VOICE , 62
+	.byte	BENDR , 44
+	.byte	VOL , 110
+	.byte	MOD , 30
+	.byte	PAN , 65
+	.byte	BEND , 65
+	.byte	N24, Dn4, 40
+	.byte	W24
+	.byte	W02
+	.byte	PAN , 111
+	.byte	N24, Dn4, 32
+	.byte	W22
+	.byte	W06
+	.byte	PAN , 64
+	.byte	N24, Cn4, 40
+	.byte	W18
+	.byte	W08
+	.byte	PAN , 15
+	.byte	N24, Cn4, 32
+	.byte	W16
+	.byte	W12
+	.byte	PAN , 65
+	.byte	N24, Dn4, 40
+	.byte	W12
+	.byte	W14
+	.byte	PAN , 111
+	.byte	N24, Dn4, 32
+	.byte	W10
+	.byte	W18
+	.byte	PAN , 64
+	.byte	N24, Cn4, 40
+	.byte	W06
+	.byte	W20
+	.byte	PAN , 16
+	.byte	N24, Cn4, 32
+	.byte	W04
+	.byte	W24
+	.byte	FINE
 	.globl sSongHeader_227
 sSongHeader_227: @ 0x0886E328
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E2A0, 0x0886E2E3  @ parts
-	.incbin "baserom_jp.gba", 0x86E338, 0x98
+	.globl sSong228_Part0
+sSong228_Part0: @ 0x0886E338
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 95
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	W03
+	.byte	N06, Ds6, 112
+	.byte	W03
+	.byte	W03
+	.byte	En5, 104
+	.byte	W03
+	.byte	W03
+	.byte	Ds6, 96
+	.byte	W03
+	.byte	W03
+	.byte	En5, 88
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Ds6, 80
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, En5, 72
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Ds6, 64
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, En5, 56
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 60
+	.byte	N06, Ds6, 44
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, En5, 36
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 68
+	.byte	N06, Ds6, 28
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N06, En5, 20
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong228_Part1
+sSong228_Part1: @ 0x0886E391
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	N06, Gs6, 108
+	.byte	W03
+	.byte	W03
+	.byte	Bn5
+	.byte	W03
+	.byte	W03
+	.byte	Gs6, 100
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 92
+	.byte	W03
+	.byte	W03
+	.byte	Gs6, 84
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 76
+	.byte	W03
+	.byte	W03
+	.byte	Gs6, 68
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 60
+	.byte	W03
+	.byte	W03
+	.byte	Gs6, 52
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 40
+	.byte	W03
+	.byte	W03
+	.byte	Gs6, 32
+	.byte	W03
+	.byte	W03
+	.byte	Bn5, 24
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E3CF, 0x1
 	.globl sSongHeader_228
 sSongHeader_228: @ 0x0886E3D0
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E338, 0x0886E391  @ parts
-	.incbin "baserom_jp.gba", 0x86E3E0, 0x3C
+	.globl sSong229_Part0
+sSong229_Part0: @ 0x0886E3E0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 41
+	.byte	VOL , 100
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N01, Dn5, 127
+	.byte	W01
+	.byte	Gn4
+	.byte	W01
+	.byte	N09, En5
+	.byte	W02
+	.byte	PAN , 70
+	.byte	W02
+	.byte	VOL , 92
+	.byte	PAN , 56
+	.byte	W01
+	.byte	VOL , 83
+	.byte	PAN , 70
+	.byte	W01
+	.byte	VOL , 71
+	.byte	PAN , 56
+	.byte	BEND , 60
+	.byte	W01
+	.byte	VOL , 46
+	.byte	PAN , 75
+	.byte	BEND , 56
+	.byte	W01
+	.byte	VOL , 22
+	.byte	PAN , 52
+	.byte	BEND , 49
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E41A, 0x2
 	.globl sSongHeader_229
 sSongHeader_229: @ 0x0886E41C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886E3E0  @ parts
-	.incbin "baserom_jp.gba", 0x86E428, 0xF0
+	.4byte sSong229_Part0  @ parts
+	.globl sSong230_Part0
+sSong230_Part0: @ 0x0886E428
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 64
+	.byte	BEND , 64
+	.byte	N96, En2, 127
+	.byte	W03
+	.byte	VOL , 79
+	.byte	BEND , 86
+	.byte	W02
+	.byte	72
+	.byte	W01
+	.byte	VOL , 84
+	.byte	PAN , 60
+	.byte	W03
+	.byte	VOL , 91
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 100
+	.byte	PAN , 56
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W03
+	.byte	PAN , 52
+	.byte	W06
+	.byte	47
+	.byte	BEND , 64
+	.byte	W03
+	.byte	57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W03
+	.byte	44
+	.byte	W03
+	.byte	PAN , 61
+	.byte	W03
+	.byte	70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W03
+	.byte	BEND , 58
+	.byte	W03
+	.byte	PAN , 80
+	.byte	W03
+	.byte	BEND , 70
+	.byte	W03
+	.byte	PAN , 77
+	.byte	BEND , 75
+	.byte	W03
+	.byte	84
+	.byte	W03
+	.byte	PAN , 72
+	.byte	W03
+	.byte	64
+	.byte	BEND , 76
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 71
+	.byte	W03
+	.byte	PAN , 53
+	.byte	W03
+	.byte	47
+	.byte	VOL , 98
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 90
+	.byte	BEND , 57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	BEND , 52
+	.byte	W01
+	.byte	VOL , 80
+	.byte	W02
+	.byte	BEND , 44
+	.byte	W01
+	.byte	VOL , 71
+	.byte	W02
+	.byte	PAN , 61
+	.byte	W02
+	.byte	VOL , 58
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 51
+	.byte	W03
+	.byte	PAN , 74
+	.byte	VOL , 45
+	.byte	W02
+	.byte	27
+	.byte	W01
+	.byte	BEND , 58
+	.byte	W01
+	.byte	VOL , 11
+	.byte	W02
+	.byte	FINE
+	.globl sSong230_Part1
+sSong230_Part1: @ 0x0886E4BE
+	.byte	KEYSH , 0
+	.byte	VOICE , 57
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N03, Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	W01
+	.byte	En3, 80
+	.byte	W03
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W03
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W02
+	.byte	W02
+	.byte	Dn3
+	.byte	W04
+	.byte	Cn3, 100
+	.byte	W03
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 100
+	.byte	W04
+	.byte	En3, 80
+	.byte	W04
+	.byte	Dn3
+	.byte	W03
+	.byte	Cn3, 92
+	.byte	W04
+	.byte	En3, 60
+	.byte	W03
+	.byte	Dn3, 52
+	.byte	W04
+	.byte	Cn3, 60
+	.byte	W04
+	.byte	En3, 32
+	.byte	W03
+	.byte	N02, Dn3, 20
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E515, 0x3
 	.globl sSongHeader_230
 sSongHeader_230: @ 0x0886E518
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E428, 0x0886E4BE  @ parts
-	.incbin "baserom_jp.gba", 0x86E528, 0x84
+	.globl sSong231_Part0
+sSong231_Part0: @ 0x0886E528
+	.byte	KEYSH , 0
+	.byte	TEMPO , 50
+	.byte	VOICE , 64
+	.byte	BENDR , 2
+	.byte	LFOS , 40
+	.byte	PAN , 64
+	.byte	VOL , 70
+	.byte	BEND , 48
+	.byte	N21, Gn5, 112
+	.byte	W03
+	.byte	BEND , 56
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	MOD , 10
+	.byte	W03
+	.byte	W09
+	.byte	0
+	.byte	W03
+	.byte	N09, An5
+	.byte	W12
+	.byte	En5
+	.byte	W12
+	.byte	BEND , 50
+	.byte	N66, Gn5
+	.byte	W06
+	.byte	BEND , 56
+	.byte	W06
+	.byte	60
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	MOD , 10
+	.byte	W12
+	.byte	W12
+	.byte	W06
+	.byte	VOL , 61
+	.byte	W06
+	.byte	51
+	.byte	W06
+	.byte	36
+	.byte	W06
+	.byte	18
+	.byte	W12
+	.byte	FINE
+	.globl sSong231_Part1
+sSong231_Part1: @ 0x0886E567
+	.byte	KEYSH , 0
+	.byte	VOICE , 64
+	.byte	BENDR , 2
+	.byte	LFOS , 40
+	.byte	VOL , 70
+	.byte	W12
+	.byte	PAN , 76
+	.byte	BEND , 48
+	.byte	N21, Gn5, 72
+	.byte	W03
+	.byte	BEND , 56
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	MOD , 10
+	.byte	W03
+	.byte	W09
+	.byte	0
+	.byte	W03
+	.byte	PAN , 52
+	.byte	N09, An5
+	.byte	W12
+	.byte	PAN , 78
+	.byte	N09, En5
+	.byte	W12
+	.byte	PAN , 49
+	.byte	BEND , 50
+	.byte	N66, Gn5
+	.byte	W06
+	.byte	BEND , 56
+	.byte	W06
+	.byte	60
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	MOD , 10
+	.byte	W12
+	.byte	W06
+	.byte	VOL , 61
+	.byte	W06
+	.byte	51
+	.byte	W06
+	.byte	36
+	.byte	W06
+	.byte	18
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E5AB, 0x1
 	.globl sSongHeader_231
 sSongHeader_231: @ 0x0886E5AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E528, 0x0886E567  @ parts
-	.incbin "baserom_jp.gba", 0x86E5BC, 0x54
+	.globl sSong232_Part0
+sSong232_Part0: @ 0x0886E5BC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 65
+	.byte	BENDR , 12
+	.byte	VOL , 110
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Gn3, 112
+	.byte	W01
+	.byte	PAN , 57
+	.byte	BEND , 47
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 28
+	.byte	W01
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Gn4
+	.byte	W02
+	.byte	PAN , 57
+	.byte	BEND , 79
+	.byte	W01
+	.byte	PAN , 72
+	.byte	BEND , 92
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Gn4, 64
+	.byte	W01
+	.byte	PAN , 57
+	.byte	BEND , 79
+	.byte	W02
+	.byte	PAN , 72
+	.byte	BEND , 92
+	.byte	W03
+	.byte	FINE
+	.globl sSong232_Part1
+sSong232_Part1: @ 0x0886E5FD
+	.byte	KEYSH , 0
+	.byte	VOICE , 57
+	.byte	VOL , 110
+	.byte	N03, En3, 52
+	.byte	W03
+	.byte	W01
+	.byte	N03
+	.byte	W02
+	.byte	W03
+	.byte	En3, 32
+	.byte	W03
+	.byte	W03
+	.byte	FINE
 	.globl sSongHeader_232
 sSongHeader_232: @ 0x0886E610
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E5BC, 0x0886E5FD  @ parts
-	.incbin "baserom_jp.gba", 0x86E620, 0x8C
+	.globl sSong233_Part0
+sSong233_Part0: @ 0x0886E620
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 36
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 105
+	.byte	BEND , 46
+	.byte	N06, Fn2, 127
+	.byte	W03
+	.byte	PAN , 67
+	.byte	BEND , 48
+	.byte	W04
+	.byte	PAN , 70
+	.byte	BEND , 50
+	.byte	N04
+	.byte	W03
+	.byte	PAN , 67
+	.byte	BEND , 53
+	.byte	W02
+	.byte	N36, Gn3, 92
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 56
+	.byte	W04
+	.byte	PAN , 61
+	.byte	BEND , 59
+	.byte	W02
+	.byte	VOL , 100
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 62
+	.byte	W03
+	.byte	VOL , 94
+	.byte	W01
+	.byte	PAN , 61
+	.byte	BEND , 65
+	.byte	W02
+	.byte	VOL , 84
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 68
+	.byte	W04
+	.byte	PAN , 67
+	.byte	VOL , 72
+	.byte	BEND , 66
+	.byte	W04
+	.byte	PAN , 70
+	.byte	VOL , 57
+	.byte	BEND , 61
+	.byte	W03
+	.byte	PAN , 67
+	.byte	VOL , 37
+	.byte	BEND , 57
+	.byte	W03
+	.byte	VOL , 20
+	.byte	W01
+	.byte	PAN , 64
+	.byte	BEND , 53
+	.byte	W01
+	.byte	VOL , 7
+	.byte	W02
+	.byte	PAN , 61
+	.byte	BEND , 48
+	.byte	W02
+	.byte	FINE
+	.globl sSong233_Part1
+sSong233_Part1: @ 0x0886E68E
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 105
+	.byte	N06, An2, 40
+	.byte	W06
+	.byte	Gn2
+	.byte	W06
+	.byte	Gs3, 44
+	.byte	W07
+	.byte	Gs3, 36
+	.byte	W05
+	.byte	W02
+	.byte	Gs3, 28
+	.byte	W07
+	.byte	Gs3, 20
+	.byte	W03
+	.byte	W04
+	.byte	Gs3, 12
+	.byte	W08
+	.byte	FINE
 	.globl sSongHeader_233
 sSongHeader_233: @ 0x0886E6AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E620, 0x0886E68E  @ parts
-	.incbin "baserom_jp.gba", 0x86E6BC, 0x1F8
+	.globl sSong234_Part0
+sSong234_Part0: @ 0x0886E6BC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 26
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N03, Cs2, 127
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Cn2, 120
+	.byte	W03
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N03, Bn1, 116
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, Cn2, 112
+	.byte	W02
+	.byte	W02
+	.byte	PAN , 53
+	.byte	N03, Cs2, 108
+	.byte	W04
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Cs2, 116
+	.byte	W03
+	.byte	PEND
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N03, Cn2, 112
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, Cs2, 108
+	.byte	W02
+	.byte	PEND
+	.byte	W02
+	.byte	PAN , 53
+	.byte	N03, Cn2, 100
+	.byte	W04
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	N03, Cs2, 116
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Cn2, 112
+	.byte	W03
+	.byte	PEND
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N03, Cs2, 108
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, Cn2, 100
+	.byte	W02
+	.byte	PEND
+	.byte	W02
+	.byte	PAN , 53
+	.byte	N03, Cs2, 116
+	.byte	W04
+	.byte	PEND
+	.byte	PAN , 64
+	.byte	N03, Cn2, 112
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Cs2, 108
+	.byte	W03
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, Cs2, 116
+	.byte	W02
+	.byte	W02
+	.byte	PAN , 53
+	.byte	N03, Cn2, 112
+	.byte	W04
+	.byte	PAN , 64
+	.byte	N03, Cs2, 108
+	.byte	W03
+	.byte	PAN , 70
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	PEND
+	.byte	W01
+	.byte	PAN , 58
+	.byte	N03, Cs2, 116
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N03, Cn2, 112
+	.byte	W02
+	.byte	PEND
+	.byte	PATT , 225, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 233, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 246, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 4, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 79, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 92, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 225, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 233, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 246, 230
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 4, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 12, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 25, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	PATT , 39, 231
+	.byte	W06
+	.byte	GsM2
+	.byte	VOL , 106
+	.byte	PAN , 64
+	.byte	N03, Cn2, 112
+	.byte	W03
+	.byte	VOL , 103
+	.byte	PAN , 70
+	.byte	N03, Cs2, 108
+	.byte	W03
+	.byte	W01
+	.byte	VOL , 97
+	.byte	PAN , 58
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	VOL , 89
+	.byte	PAN , 75
+	.byte	N03, Cs2, 116
+	.byte	W02
+	.byte	W02
+	.byte	VOL , 85
+	.byte	PAN , 53
+	.byte	N03, Cn2, 112
+	.byte	W04
+	.byte	VOL , 78
+	.byte	PAN , 64
+	.byte	N03, Cs2, 108
+	.byte	W03
+	.byte	VOL , 72
+	.byte	PAN , 70
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	W01
+	.byte	VOL , 66
+	.byte	PAN , 58
+	.byte	N03, Cs2, 116
+	.byte	W03
+	.byte	VOL , 58
+	.byte	PAN , 75
+	.byte	N03, Cn2, 112
+	.byte	W02
+	.byte	W02
+	.byte	VOL , 46
+	.byte	PAN , 53
+	.byte	N03, Cs2, 108
+	.byte	W04
+	.byte	VOL , 30
+	.byte	PAN , 64
+	.byte	N03, Cn2, 100
+	.byte	W03
+	.byte	VOL , 12
+	.byte	PAN , 70
+	.byte	W03
+	.byte	FINE
+	.globl sSong234_Part1
+sSong234_Part1: @ 0x0886E80D
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	N02, Fn2, 72
+	.byte	W02
+	.byte	N01
+	.byte	W01
+	.byte	N02, Gn2
+	.byte	W03
+	.byte	N01, Gs2, 60
+	.byte	W06
+	.byte	VOICE , 27
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	PAN , 64
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	PEND
+	.byte	N06
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	PATT , 40, 232
+	.byte	W06
+	.byte	GsM2
+	.byte	N06, Bn1, 80
+	.byte	W06
+	.byte	N06
+	.byte	W06
+	.byte	VOL , 106
+	.byte	PAN , 64
+	.byte	N06
+	.byte	W03
+	.byte	VOL , 103
+	.byte	W03
+	.byte	N06
+	.byte	W01
+	.byte	VOL , 97
+	.byte	W03
+	.byte	89
+	.byte	W02
+	.byte	N06
+	.byte	W02
+	.byte	VOL , 85
+	.byte	W04
+	.byte	78
+	.byte	PAN , 64
+	.byte	N06
+	.byte	W03
+	.byte	VOL , 72
+	.byte	W03
+	.byte	N06
+	.byte	W01
+	.byte	VOL , 66
+	.byte	W03
+	.byte	58
+	.byte	W02
+	.byte	N06
+	.byte	W02
+	.byte	VOL , 46
+	.byte	W04
+	.byte	30
+	.byte	PAN , 64
+	.byte	N06
+	.byte	W03
+	.byte	VOL , 12
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E8B2, 0x2
 	.globl sSongHeader_234
 sSongHeader_234: @ 0x0886E8B4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E6BC, 0x0886E80D  @ parts
-	.incbin "baserom_jp.gba", 0x86E8C4, 0xEC
+	.globl sSong235_Part0
+sSong235_Part0: @ 0x0886E8C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 22
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 67
+	.byte	BEND , 64
+	.byte	TIE , 50, 127
+	.byte	W03
+	.byte	VOL , 83
+	.byte	BEND , 86
+	.byte	W03
+	.byte	VOL , 88
+	.byte	PAN , 60
+	.byte	W03
+	.byte	VOL , 95
+	.byte	W02
+	.byte	BEND , 72
+	.byte	W01
+	.byte	VOL , 105
+	.byte	PAN , 56
+	.byte	W03
+	.byte	VOL , 115
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W01
+	.byte	PAN , 52
+	.byte	W06
+	.byte	47
+	.byte	BEND , 64
+	.byte	W03
+	.byte	57
+	.byte	W03
+	.byte	PAN , 55
+	.byte	W06
+	.byte	61
+	.byte	W01
+	.byte	BEND , 52
+	.byte	W02
+	.byte	PAN , 70
+	.byte	W03
+	.byte	74
+	.byte	W06
+	.byte	80
+	.byte	W01
+	.byte	BEND , 44
+	.byte	W05
+	.byte	PAN , 77
+	.byte	W06
+	.byte	72
+	.byte	W03
+	.byte	64
+	.byte	W01
+	.byte	BEND , 51
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W03
+	.byte	53
+	.byte	W03
+	.byte	47
+	.byte	W01
+	.byte	BEND , 58
+	.byte	W05
+	.byte	PAN , 55
+	.byte	W06
+	.byte	61
+	.byte	W03
+	.byte	70
+	.byte	W03
+	.byte	74
+	.byte	W01
+	.byte	BEND , 70
+	.byte	W05
+	.byte	PAN , 80
+	.byte	W06
+	.byte	77
+	.byte	W06
+	.byte	72
+	.byte	W03
+	.byte	64
+	.byte	BEND , 75
+	.byte	W03
+	.byte	PAN , 56
+	.byte	W03
+	.byte	53
+	.byte	VOL , 103
+	.byte	W03
+	.byte	PAN , 47
+	.byte	W01
+	.byte	BEND , 84
+	.byte	W05
+	.byte	PAN , 55
+	.byte	W01
+	.byte	VOL , 97
+	.byte	W05
+	.byte	PAN , 61
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 70
+	.byte	VOL , 88
+	.byte	W03
+	.byte	PAN , 74
+	.byte	W02
+	.byte	BEND , 71
+	.byte	W02
+	.byte	VOL , 79
+	.byte	W02
+	.byte	PAN , 80
+	.byte	W04
+	.byte	VOL , 62
+	.byte	BEND , 64
+	.byte	W02
+	.byte	PAN , 77
+	.byte	W04
+	.byte	VOL , 45
+	.byte	W02
+	.byte	PAN , 72
+	.byte	W01
+	.byte	BEND , 57
+	.byte	W01
+	.byte	VOL , 33
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W03
+	.byte	56
+	.byte	W01
+	.byte	VOL , 18
+	.byte	W02
+	.byte	PAN , 53
+	.byte	W03
+	.byte	EOT
+	.byte	FINE
+	.globl sSong235_Part1
+sSong235_Part1: @ 0x0886E982
+	.byte	KEYSH , 0
+	.byte	VOICE , 25
+	.byte	VOL , 67
+	.byte	TIE , 80, 12
+	.byte	W03
+	.byte	VOL , 83
+	.byte	W03
+	.byte	88
+	.byte	W03
+	.byte	95
+	.byte	W03
+	.byte	105
+	.byte	W03
+	.byte	115
+	.byte	W09
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W21
+	.byte	103
+	.byte	W03
+	.byte	W07
+	.byte	97
+	.byte	W08
+	.byte	88
+	.byte	W07
+	.byte	79
+	.byte	W02
+	.byte	W04
+	.byte	62
+	.byte	W06
+	.byte	45
+	.byte	W04
+	.byte	33
+	.byte	W05
+	.byte	18
+	.byte	W05
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86E9AF, 0x1
 	.globl sSongHeader_235
 sSongHeader_235: @ 0x0886E9B0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E8C4, 0x0886E982  @ parts
-	.incbin "baserom_jp.gba", 0x86E9C0, 0xE0
+	.globl sSong236_Part0
+sSong236_Part0: @ 0x0886E9C0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 61
+	.byte	BENDR , 44
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 66
+	.byte	N36, En3, 96
+	.byte	W12
+	.byte	PAN , 60
+	.byte	BEND , 66
+	.byte	W12
+	.byte	PAN , 54
+	.byte	BEND , 68
+	.byte	W12
+	.byte	PAN , 60
+	.byte	BEND , 69
+	.byte	N36, Fn3
+	.byte	W12
+	.byte	PAN , 64
+	.byte	BEND , 70
+	.byte	W12
+	.byte	PAN , 70
+	.byte	BEND , 71
+	.byte	W12
+	.byte	PAN , 73
+	.byte	BEND , 72
+	.byte	N36, En3, 88
+	.byte	W12
+	.byte	PAN , 69
+	.byte	BEND , 72
+	.byte	W12
+	.byte	PAN , 64
+	.byte	BEND , 73
+	.byte	W12
+	.byte	PAN , 60
+	.byte	BEND , 74
+	.byte	N60, Fs3, 56
+	.byte	W12
+	.byte	PAN , 54
+	.byte	BEND , 75
+	.byte	W12
+	.byte	PAN , 60
+	.byte	BEND , 76
+	.byte	W04
+	.byte	VOL , 103
+	.byte	W04
+	.byte	97
+	.byte	W04
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	W01
+	.byte	VOL , 91
+	.byte	W05
+	.byte	81
+	.byte	W03
+	.byte	72
+	.byte	W03
+	.byte	PAN , 70
+	.byte	BEND , 77
+	.byte	W01
+	.byte	VOL , 62
+	.byte	W02
+	.byte	51
+	.byte	W03
+	.byte	39
+	.byte	W02
+	.byte	24
+	.byte	W02
+	.byte	12
+	.byte	W02
+	.byte	FINE
+	.globl sSong236_Part1
+sSong236_Part1: @ 0x0886EA33
+	.byte	KEYSH , 0
+	.byte	VOICE , 22
+	.byte	BENDR , 44
+	.byte	PAN , 65
+	.byte	VOL , 38
+	.byte	BEND , 65
+	.byte	TIE , 67, 100
+	.byte	W03
+	.byte	VOL , 50
+	.byte	W04
+	.byte	62
+	.byte	W02
+	.byte	BEND , 63
+	.byte	W01
+	.byte	VOL , 65
+	.byte	W04
+	.byte	74
+	.byte	W04
+	.byte	78
+	.byte	BEND , 62
+	.byte	W03
+	.byte	VOL , 86
+	.byte	W03
+	.byte	95
+	.byte	W03
+	.byte	105
+	.byte	W01
+	.byte	BEND , 60
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W13
+	.byte	BEND , 62
+	.byte	W04
+	.byte	W10
+	.byte	63
+	.byte	W10
+	.byte	64
+	.byte	W04
+	.byte	W03
+	.byte	65
+	.byte	W10
+	.byte	65
+	.byte	W11
+	.byte	W02
+	.byte	66
+	.byte	W14
+	.byte	67
+	.byte	W08
+	.byte	VOL , 105
+	.byte	W03
+	.byte	101
+	.byte	W05
+	.byte	96
+	.byte	W04
+	.byte	BEND , 66
+	.byte	W01
+	.byte	VOL , 91
+	.byte	W03
+	.byte	86
+	.byte	W05
+	.byte	78
+	.byte	W03
+	.byte	W02
+	.byte	68
+	.byte	W01
+	.byte	BEND , 65
+	.byte	W04
+	.byte	VOL , 58
+	.byte	W03
+	.byte	48
+	.byte	W04
+	.byte	37
+	.byte	BEND , 64
+	.byte	W04
+	.byte	VOL , 23
+	.byte	W01
+	.byte	BEND , 63
+	.byte	W02
+	.byte	VOL , 12
+	.byte	W03
+	.byte	EOT
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EA9E, 0x2
 	.globl sSongHeader_236
 sSongHeader_236: @ 0x0886EAA0
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886E9C0, 0x0886EA33  @ parts
-	.incbin "baserom_jp.gba", 0x86EAB0, 0x74
+	.globl sSong237_Part0
+sSong237_Part0: @ 0x0886EAB0
+	.byte	VOL , 110
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 61
+	.byte	BENDR , 44
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N48, Cn4, 108
+	.byte	W02
+	.byte	BEND , 63
+	.byte	W01
+	.byte	64
+	.byte	W03
+	.byte	64
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	PAN , 60
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	65
+	.byte	W02
+	.byte	65
+	.byte	W02
+	.byte	65
+	.byte	W02
+	.byte	65
+	.byte	W01
+	.byte	65
+	.byte	W03
+	.byte	PAN , 54
+	.byte	BEND , 65
+	.byte	W01
+	.byte	66
+	.byte	W02
+	.byte	66
+	.byte	W03
+	.byte	65
+	.byte	W02
+	.byte	66
+	.byte	W01
+	.byte	65
+	.byte	W03
+	.byte	PAN , 60
+	.byte	BEND , 65
+	.byte	W01
+	.byte	65
+	.byte	W02
+	.byte	65
+	.byte	W01
+	.byte	64
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	63
+	.byte	W01
+	.byte	63
+	.byte	W01
+	.byte	61
+	.byte	W01
+	.byte	61
+	.byte	W02
+	.byte	FINE
+	.globl sSong237_Part1
+sSong237_Part1: @ 0x0886EB04
+	.byte	KEYSH , 0
+	.byte	VOICE , 66
+	.byte	BENDR , 44
+	.byte	PAN , 65
+	.byte	VOL , 110
+	.byte	N48, Dn3, 20
+	.byte	W24
+	.byte	W03
+	.byte	VOL , 103
+	.byte	W04
+	.byte	96
+	.byte	W03
+	.byte	83
+	.byte	W04
+	.byte	67
+	.byte	W04
+	.byte	49
+	.byte	W03
+	.byte	23
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EB21, 0x3
 	.globl sSongHeader_237
 sSongHeader_237: @ 0x0886EB24
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886EAB0, 0x0886EB04  @ parts
-	.incbin "baserom_jp.gba", 0x86EB34, 0x64
+	.globl sSong238_Part0
+sSong238_Part0: @ 0x0886EB34
+	.byte	KEYSH , 0
+	.byte	TEMPO , 110
+	.byte	VOICE , 41
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 70
+	.byte	BEND , 64
+	.byte	N02, Cn4, 127
+	.byte	W03
+	.byte	VOL , 104
+	.byte	W03
+	.byte	93
+	.byte	PAN , 58
+	.byte	N02, Cn5
+	.byte	W03
+	.byte	VOL , 110
+	.byte	W01
+	.byte	VOICE , 22
+	.byte	PAN , 64
+	.byte	N24, Cn4, 60
+	.byte	W02
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W04
+	.byte	65
+	.byte	W03
+	.byte	65
+	.byte	W01
+	.byte	VOL , 105
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W01
+	.byte	VOL , 103
+	.byte	W02
+	.byte	91
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 77
+	.byte	BEND , 63
+	.byte	W02
+	.byte	VOL , 61
+	.byte	BEND , 62
+	.byte	W01
+	.byte	VOL , 38
+	.byte	W01
+	.byte	15
+	.byte	BEND , 61
+	.byte	W02
+	.byte	FINE
+	.globl sSong238_Part1
+sSong238_Part1: @ 0x0886EB81
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 110
+	.byte	N02, Cn3, 60
+	.byte	W03
+	.byte	Gn2
+	.byte	W03
+	.byte	Gs4
+	.byte	W04
+	.byte	Gs4, 20
+	.byte	W02
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EB97, 0x1
 	.globl sSongHeader_238
 sSongHeader_238: @ 0x0886EB98
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886EB34, 0x0886EB81  @ parts
-	.incbin "baserom_jp.gba", 0x86EBA8, 0x170
+	.globl sSong239_Part0
+sSong239_Part0: @ 0x0886EBA8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 85
+	.byte	VOICE , 67
+	.byte	VOL , 70
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, An5, 76
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 69
+	.byte	N02, An4
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, Dn5
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 96
+	.byte	N02, Dn4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, As5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 69
+	.byte	N02, As4
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, Ds5
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 96
+	.byte	N02, Ds4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Bn5
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 69
+	.byte	N02, Bn4
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, En5
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 96
+	.byte	N02, En4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Cn6
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 69
+	.byte	N02, Cn5
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, Fn5
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 96
+	.byte	N02, Fn4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Cs6
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 69
+	.byte	N02, Cs5
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, Fn5, 56
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 52
+	.byte	BEND , 96
+	.byte	N02, Fn4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Cs6
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 76
+	.byte	BEND , 69
+	.byte	N02, Cs5
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 76
+	.byte	N02, Fn5, 32
+	.byte	W01
+	.byte	BEND , 80
+	.byte	W01
+	.byte	87
+	.byte	W01
+	.byte	PAN , 48
+	.byte	BEND , 96
+	.byte	N02, Fn4
+	.byte	W01
+	.byte	BEND , 106
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N02, Cs6
+	.byte	W01
+	.byte	BEND , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 80
+	.byte	BEND , 69
+	.byte	N02, Cs5
+	.byte	W01
+	.byte	BEND , 72
+	.byte	W02
+	.byte	FINE
+	.globl sSong239_Part1
+sSong239_Part1: @ 0x0886ECD2
+	.byte	KEYSH , 0
+	.byte	VOICE , 55
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 70
+	.byte	N02, Cn3, 52
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	W01
+	.byte	Cs3
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	W02
+	.byte	Dn3
+	.byte	W04
+	.byte	N02
+	.byte	W03
+	.byte	Ds3
+	.byte	W03
+	.byte	W01
+	.byte	N02
+	.byte	W03
+	.byte	En3
+	.byte	W02
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	Fn3
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	W01
+	.byte	Fs3
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	W02
+	.byte	Gn3
+	.byte	W04
+	.byte	Gn3, 32
+	.byte	W03
+	.byte	Gs3
+	.byte	W03
+	.byte	W01
+	.byte	N02
+	.byte	W03
+	.byte	An3, 20
+	.byte	W02
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	As3, 12
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86ED17, 0x1
 	.globl sSongHeader_239
 sSongHeader_239: @ 0x0886ED18
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886EBA8, 0x0886ECD2  @ parts
-	.incbin "baserom_jp.gba", 0x86ED28, 0xF4
+	.globl sSong240_Part0
+sSong240_Part0: @ 0x0886ED28
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 29
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 23
+	.byte	BEND , 64
+	.byte	TIE , 77, 127
+	.byte	W01
+	.byte	VOL , 51
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	99
+	.byte	BEND , 72
+	.byte	W01
+	.byte	VOL , 115
+	.byte	W02
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	W01
+	.byte	VOL , 99
+	.byte	W02
+	.byte	92
+	.byte	BEND , 71
+	.byte	W01
+	.byte	VOL , 97
+	.byte	W02
+	.byte	105
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	W03
+	.byte	VOL , 110
+	.byte	BEND , 55
+	.byte	W03
+	.byte	PAN , 56
+	.byte	BEND , 40
+	.byte	W03
+	.byte	VOL , 115
+	.byte	BEND , 26
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 23
+	.byte	W04
+	.byte	19
+	.byte	W02
+	.byte	PAN , 70
+	.byte	W02
+	.byte	BEND , 25
+	.byte	W04
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 29
+	.byte	W03
+	.byte	PAN , 56
+	.byte	W03
+	.byte	BEND , 34
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W03
+	.byte	BEND , 38
+	.byte	W03
+	.byte	PAN , 70
+	.byte	W01
+	.byte	BEND , 42
+	.byte	W05
+	.byte	PAN , 64
+	.byte	BEND , 46
+	.byte	W04
+	.byte	51
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W06
+	.byte	64
+	.byte	W06
+	.byte	70
+	.byte	W03
+	.byte	BEND , 57
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W04
+	.byte	BEND , 61
+	.byte	W02
+	.byte	PAN , 56
+	.byte	VOL , 113
+	.byte	W04
+	.byte	110
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W02
+	.byte	BEND , 57
+	.byte	W02
+	.byte	VOL , 105
+	.byte	W02
+	.byte	PAN , 70
+	.byte	W03
+	.byte	VOL , 98
+	.byte	BEND , 53
+	.byte	W03
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 91
+	.byte	W03
+	.byte	81
+	.byte	BEND , 49
+	.byte	W02
+	.byte	PAN , 56
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W01
+	.byte	BEND , 42
+	.byte	W03
+	.byte	PAN , 64
+	.byte	VOL , 63
+	.byte	W01
+	.byte	BEND , 34
+	.byte	W01
+	.byte	VOL , 50
+	.byte	W02
+	.byte	40
+	.byte	BEND , 25
+	.byte	W02
+	.byte	PAN , 70
+	.byte	W01
+	.byte	VOL , 28
+	.byte	BEND , 12
+	.byte	W02
+	.byte	VOL , 17
+	.byte	W03
+	.byte	EOT
+	.byte	FINE
+	.globl sSong240_Part1
+sSong240_Part1: @ 0x0886EDED
+	.byte	KEYSH , 0
+	.byte	VOICE , 27
+	.byte	PAN , 64
+	.byte	VOL , 23
+	.byte	N30, Gn2, 32
+	.byte	W01
+	.byte	VOL , 51
+	.byte	W01
+	.byte	75
+	.byte	W01
+	.byte	99
+	.byte	W01
+	.byte	115
+	.byte	W03
+	.byte	99
+	.byte	W02
+	.byte	92
+	.byte	W01
+	.byte	97
+	.byte	W02
+	.byte	115
+	.byte	W12
+	.byte	PAN , 64
+	.byte	W12
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	W12
+	.byte	64
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EE1A, 0x2
 	.globl sSongHeader_240
 sSongHeader_240: @ 0x0886EE1C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886ED28, 0x0886EDED  @ parts
-	.incbin "baserom_jp.gba", 0x86EE2C, 0x50
+	.globl sSong241_Part0
+sSong241_Part0: @ 0x0886EE2C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 60
+	.byte	BENDR , 12
+	.byte	VOL , 25
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N24, Gs2, 127
+	.byte	W01
+	.byte	PAN , 66
+	.byte	VOL , 51
+	.byte	W01
+	.byte	PAN , 69
+	.byte	VOL , 74
+	.byte	W01
+	.byte	89
+	.byte	BEND , 65
+	.byte	W01
+	.byte	PAN , 66
+	.byte	VOL , 100
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	62
+	.byte	BEND , 68
+	.byte	W01
+	.byte	PAN , 60
+	.byte	W02
+	.byte	62
+	.byte	BEND , 69
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	69
+	.byte	W02
+	.byte	66
+	.byte	W02
+	.byte	64
+	.byte	W01
+	.byte	VOL , 85
+	.byte	PAN , 62
+	.byte	W01
+	.byte	60
+	.byte	VOL , 62
+	.byte	W01
+	.byte	33
+	.byte	W01
+	.byte	PAN , 62
+	.byte	VOL , 11
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EE7B, 0x1
 	.globl sSongHeader_241
 sSongHeader_241: @ 0x0886EE7C
 	.byte 0x01, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
-	.4byte 0x0886EE2C  @ parts
-	.incbin "baserom_jp.gba", 0x86EE88, 0x64
+	.4byte sSong241_Part0  @ parts
+	.globl sSong242_Part0
+sSong242_Part0: @ 0x0886EE88
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 3
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	N01, Fn4, 112
+	.byte	W04
+	.byte	PAN , 70
+	.byte	N02, Ds5, 40
+	.byte	W02
+	.byte	W02
+	.byte	PAN , 59
+	.byte	N01, Gn4, 112
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Ds5
+	.byte	W03
+	.byte	W01
+	.byte	PAN , 70
+	.byte	N02, Ds5, 20
+	.byte	W03
+	.byte	PAN , 59
+	.byte	N01, Gn4, 64
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N01, Ds5
+	.byte	W03
+	.byte	PAN , 75
+	.byte	N02, Ds5, 20
+	.byte	W03
+	.byte	W01
+	.byte	PAN , 51
+	.byte	N01, Gn4, 64
+	.byte	W01
+	.byte	PAN , 64
+	.byte	N01, Ds5
+	.byte	W04
+	.byte	FINE
+	.globl sSong242_Part1
+sSong242_Part1: @ 0x0886EECD
+	.byte	KEYSH , 0
+	.byte	VOICE , 4
+	.byte	VOL , 100
+	.byte	PAN , 64
+	.byte	N01, Dn4, 40
+	.byte	W04
+	.byte	Bn3
+	.byte	W02
+	.byte	W03
+	.byte	Dn4
+	.byte	W03
+	.byte	W01
+	.byte	Bn3, 32
+	.byte	W05
+	.byte	Dn4
+	.byte	W03
+	.byte	Bn3, 12
+	.byte	W03
+	.byte	W02
+	.byte	Dn4
+	.byte	W04
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86EEEB, 0x1
 	.globl sSongHeader_242
 sSongHeader_242: @ 0x0886EEEC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886EE88, 0x0886EECD  @ parts
-	.incbin "baserom_jp.gba", 0x86EEFC, 0x10C
+	.globl sSong243_Part0
+sSong243_Part0: @ 0x0886EEFC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 60
+	.byte	N09, As5, 112
+	.byte	W06
+	.byte	W03
+	.byte	PAN , 59
+	.byte	N08, Cn5
+	.byte	W03
+	.byte	W06
+	.byte	PAN , 55
+	.byte	N10, Gn5
+	.byte	W06
+	.byte	W04
+	.byte	PAN , 59
+	.byte	N09, Fn6
+	.byte	W02
+	.byte	W06
+	.byte	W02
+	.byte	PAN , 64
+	.byte	N09, An5
+	.byte	W04
+	.byte	W06
+	.byte	PAN , 68
+	.byte	N09, As5
+	.byte	W06
+	.byte	W03
+	.byte	PAN , 73
+	.byte	N08, Cn5, 108
+	.byte	W03
+	.byte	W06
+	.byte	PAN , 68
+	.byte	N10, Gn5, 104
+	.byte	W06
+	.byte	W04
+	.byte	PAN , 64
+	.byte	N09, Fn6, 96
+	.byte	W02
+	.byte	W06
+	.byte	W02
+	.byte	PAN , 59
+	.byte	N09, An5, 92
+	.byte	W04
+	.byte	W04
+	.byte	PAN , 55
+	.byte	W02
+	.byte	N09, As5, 84
+	.byte	W06
+	.byte	W03
+	.byte	PAN , 59
+	.byte	N08, Cn5, 80
+	.byte	W03
+	.byte	W06
+	.byte	N10, Gn5, 72
+	.byte	W01
+	.byte	PAN , 64
+	.byte	W05
+	.byte	W04
+	.byte	68
+	.byte	N09, Fn6, 68
+	.byte	W02
+	.byte	W06
+	.byte	W02
+	.byte	PAN , 73
+	.byte	N09, An5, 60
+	.byte	W04
+	.byte	W04
+	.byte	PAN , 68
+	.byte	W02
+	.byte	N09, As5, 56
+	.byte	W06
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N08, Cn5, 52
+	.byte	W03
+	.byte	W06
+	.byte	N10, Gn5, 44
+	.byte	W01
+	.byte	PAN , 59
+	.byte	W05
+	.byte	W03
+	.byte	55
+	.byte	W01
+	.byte	N09, Fn6, 40
+	.byte	W02
+	.byte	W06
+	.byte	W02
+	.byte	PAN , 59
+	.byte	N09, An5, 32
+	.byte	W04
+	.byte	W06
+	.byte	PAN , 64
+	.byte	W06
+	.byte	FINE
+	.globl sSong243_Part1
+sSong243_Part1: @ 0x0886EF9A
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	XCMD , 8 , 9
+	.byte	9 , 8
+	.byte	VOL , 43
+	.byte	BEND , 62
+	.byte	W04
+	.byte	N08, Fn5, 112
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	N10, Ds5
+	.byte	W05
+	.byte	W06
+	.byte	N09, As6
+	.byte	W06
+	.byte	W03
+	.byte	Cn6
+	.byte	W03
+	.byte	W06
+	.byte	N10, Fn5
+	.byte	W06
+	.byte	W04
+	.byte	N08
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	N10, Ds5, 104
+	.byte	W05
+	.byte	W06
+	.byte	N09, As6, 100
+	.byte	W06
+	.byte	W03
+	.byte	Cn6, 92
+	.byte	W03
+	.byte	W06
+	.byte	N10, Fn5, 88
+	.byte	W06
+	.byte	W04
+	.byte	N08, Fn5, 80
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	N10, Ds5, 76
+	.byte	W05
+	.byte	W06
+	.byte	N09, As6, 72
+	.byte	W06
+	.byte	W03
+	.byte	Cn6, 64
+	.byte	W03
+	.byte	W06
+	.byte	N10, Fn5, 60
+	.byte	W06
+	.byte	W04
+	.byte	N08, Fn5, 52
+	.byte	W02
+	.byte	W06
+	.byte	W01
+	.byte	N10, Ds5, 48
+	.byte	W05
+	.byte	W06
+	.byte	N09, As6, 40
+	.byte	W06
+	.byte	W03
+	.byte	Cn6, 36
+	.byte	W03
+	.byte	W06
+	.byte	N12, Fn5, 32
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F007, 0x1
 	.globl sSongHeader_243
 sSongHeader_243: @ 0x0886F008
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886EEFC, 0x0886EF9A  @ parts
-	.incbin "baserom_jp.gba", 0x86F018, 0x94
+	.globl sSong244_Part0
+sSong244_Part0: @ 0x0886F018
+	.byte	KEYSH , 0
+	.byte	TEMPO , 85
+	.byte	VOICE , 37
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 60
+	.byte	N03, Gn4, 100
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03, Gn4, 56
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N03, An5, 100
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 49
+	.byte	N03, An5, 56
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N03, Cn6, 100
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03, Cn6, 56
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N03, Gn4, 72
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 48
+	.byte	N03, Gn4, 28
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N03, An5, 72
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N03, An5, 28
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N03, Cn6, 72
+	.byte	W03
+	.byte	W03
+	.byte	PAN , 48
+	.byte	N03, Cn6, 28
+	.byte	W03
+	.byte	W06
+	.byte	FINE
+	.globl sSong244_Part1
+sSong244_Part1: @ 0x0886F071
+	.byte	KEYSH , 0
+	.byte	VOICE , 47
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	MOD , 20
+	.byte	VOL , 44
+	.byte	BEND , 62
+	.byte	W03
+	.byte	N03, Gn3, 112
+	.byte	W03
+	.byte	W03
+	.byte	Gn3, 68
+	.byte	W03
+	.byte	An4, 112
+	.byte	W06
+	.byte	An4, 68
+	.byte	W03
+	.byte	Cn5, 112
+	.byte	W03
+	.byte	W03
+	.byte	Cn5, 68
+	.byte	W03
+	.byte	Gn3, 80
+	.byte	W06
+	.byte	Gn3, 36
+	.byte	W03
+	.byte	An4, 80
+	.byte	W03
+	.byte	W03
+	.byte	An4, 36
+	.byte	W03
+	.byte	Cn5, 80
+	.byte	W06
+	.byte	Cn5, 36
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F0AA, 0x2
 	.globl sSongHeader_244
 sSongHeader_244: @ 0x0886F0AC
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886F018, 0x0886F071  @ parts
-	.incbin "baserom_jp.gba", 0x86F0BC, 0x160
+	.globl sSong245_Part0
+sSong245_Part0: @ 0x0886F0BC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 85
+	.byte	VOICE , 67
+	.byte	VOL , 70
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, Cs6, 76
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	N02, Cs5
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, Fs5
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 64
+	.byte	N02, Fs4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, Cn6
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	N02, Cn5
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, Fn5
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 64
+	.byte	N02, Fn4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, Bn5
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	N02, Bn4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, En5
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 64
+	.byte	N02, En4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, As5
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	N02, As4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, Ds5
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 58
+	.byte	BEND , 64
+	.byte	N02, Ds4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, An5
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 70
+	.byte	BEND , 80
+	.byte	N02, An4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, Cs5, 56
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 52
+	.byte	BEND , 64
+	.byte	N02, Cs4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, An5
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 76
+	.byte	BEND , 80
+	.byte	N02, An4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	BEND , 72
+	.byte	N02, Cs5, 32
+	.byte	W01
+	.byte	BEND , 69
+	.byte	W01
+	.byte	66
+	.byte	W01
+	.byte	PAN , 48
+	.byte	BEND , 64
+	.byte	N02, Cs4
+	.byte	W03
+	.byte	PAN , 64
+	.byte	BEND , 106
+	.byte	N02, An5
+	.byte	W01
+	.byte	BEND , 95
+	.byte	W01
+	.byte	88
+	.byte	W01
+	.byte	PAN , 80
+	.byte	BEND , 80
+	.byte	N02, An4
+	.byte	W01
+	.byte	BEND , 76
+	.byte	W02
+	.byte	FINE
+	.globl sSong245_Part1
+sSong245_Part1: @ 0x0886F1D4
+	.byte	KEYSH , 0
+	.byte	VOICE , 55
+	.byte	XCMD , 8 , 10
+	.byte	9 , 8
+	.byte	VOL , 70
+	.byte	N02, As3, 52
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	W01
+	.byte	An3
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	W02
+	.byte	Gs3
+	.byte	W04
+	.byte	N02
+	.byte	W03
+	.byte	Gn3
+	.byte	W03
+	.byte	W01
+	.byte	N02
+	.byte	W03
+	.byte	Fs3
+	.byte	W02
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	Fn3
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	W01
+	.byte	En3
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	W02
+	.byte	Ds3
+	.byte	W04
+	.byte	Ds3, 32
+	.byte	W03
+	.byte	Dn3
+	.byte	W03
+	.byte	W01
+	.byte	N02
+	.byte	W03
+	.byte	Cs3, 20
+	.byte	W02
+	.byte	W02
+	.byte	N02
+	.byte	W04
+	.byte	Cn3, 12
+	.byte	W03
+	.byte	N02
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F219, 0x3
 	.globl sSongHeader_245
 sSongHeader_245: @ 0x0886F21C
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886F0BC, 0x0886F1D4  @ parts
-	.incbin "baserom_jp.gba", 0x86F22C, 0x124
+	.globl sSong246_Part0
+sSong246_Part0: @ 0x0886F22C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 95
+	.byte	VOICE , 45
+	.byte	BENDR , 8
+	.byte	PAN , 17
+	.byte	VOL , 10
+	.byte	MOD , 30
+	.byte	BEND , 65
+	.byte	TIE , 58, 100
+	.byte	W03
+	.byte	VOL , 14
+	.byte	W03
+	.byte	22
+	.byte	PAN , 19
+	.byte	W02
+	.byte	VOL , 31
+	.byte	W02
+	.byte	39
+	.byte	W02
+	.byte	PAN , 21
+	.byte	W02
+	.byte	VOL , 45
+	.byte	W02
+	.byte	50
+	.byte	W02
+	.byte	PAN , 23
+	.byte	W01
+	.byte	VOL , 61
+	.byte	W02
+	.byte	66
+	.byte	W03
+	.byte	PAN , 25
+	.byte	VOL , 73
+	.byte	W02
+	.byte	78
+	.byte	W04
+	.byte	84
+	.byte	PAN , 27
+	.byte	W03
+	.byte	VOL , 91
+	.byte	W03
+	.byte	98
+	.byte	PAN , 29
+	.byte	W02
+	.byte	VOL , 104
+	.byte	W04
+	.byte	110
+	.byte	PAN , 32
+	.byte	W06
+	.byte	36
+	.byte	W06
+	.byte	39
+	.byte	VOL , 106
+	.byte	W04
+	.byte	104
+	.byte	W02
+	.byte	PAN , 41
+	.byte	W03
+	.byte	VOL , 101
+	.byte	W03
+	.byte	PAN , 44
+	.byte	W03
+	.byte	VOL , 97
+	.byte	W03
+	.byte	PAN , 47
+	.byte	W02
+	.byte	VOL , 91
+	.byte	W04
+	.byte	PAN , 51
+	.byte	W03
+	.byte	VOL , 88
+	.byte	W03
+	.byte	PAN , 54
+	.byte	W03
+	.byte	VOL , 81
+	.byte	W03
+	.byte	PAN , 57
+	.byte	W04
+	.byte	VOL , 75
+	.byte	W02
+	.byte	PAN , 61
+	.byte	W02
+	.byte	VOL , 74
+	.byte	W02
+	.byte	76
+	.byte	W02
+	.byte	PAN , 64
+	.byte	W01
+	.byte	VOL , 79
+	.byte	W02
+	.byte	83
+	.byte	W03
+	.byte	W01
+	.byte	86
+	.byte	W02
+	.byte	PAN , 66
+	.byte	VOL , 90
+	.byte	W03
+	.byte	95
+	.byte	W03
+	.byte	98
+	.byte	W03
+	.byte	PAN , 71
+	.byte	VOL , 102
+	.byte	W02
+	.byte	104
+	.byte	W04
+	.byte	PAN , 74
+	.byte	VOL , 110
+	.byte	W06
+	.byte	PAN , 78
+	.byte	W06
+	.byte	80
+	.byte	W02
+	.byte	VOL , 106
+	.byte	W04
+	.byte	PAN , 83
+	.byte	W01
+	.byte	VOL , 100
+	.byte	W05
+	.byte	PAN , 86
+	.byte	VOL , 94
+	.byte	W06
+	.byte	PAN , 89
+	.byte	VOL , 88
+	.byte	W04
+	.byte	83
+	.byte	W02
+	.byte	PAN , 91
+	.byte	W06
+	.byte	93
+	.byte	VOL , 75
+	.byte	W06
+	.byte	PAN , 96
+	.byte	VOL , 64
+	.byte	W06
+	.byte	PAN , 98
+	.byte	W01
+	.byte	VOL , 55
+	.byte	W05
+	.byte	PAN , 102
+	.byte	W01
+	.byte	VOL , 47
+	.byte	W05
+	.byte	PAN , 105
+	.byte	W01
+	.byte	VOL , 41
+	.byte	W05
+	.byte	PAN , 108
+	.byte	VOL , 32
+	.byte	W03
+	.byte	25
+	.byte	W03
+	.byte	PAN , 111
+	.byte	W01
+	.byte	VOL , 12
+	.byte	W03
+	.byte	6
+	.byte	W02
+	.byte	EOT
+	.byte	FINE
+	.globl sSong246_Part1
+sSong246_Part1: @ 0x0886F312
+	.byte	KEYSH , 0
+	.byte	VOICE , 70
+	.byte	BENDR , 8
+	.byte	PAN , 64
+	.byte	VOL , 110
+	.byte	BEND , 64
+	.byte	N24, Fn4, 20
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Fs4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Gn4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Gs4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Gn4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Fs4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	Fn4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	En4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	N18, Ds4
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F34E, 0x2
 	.globl sSongHeader_246
 sSongHeader_246: @ 0x0886F350
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886F22C, 0x0886F312  @ parts
-	.incbin "baserom_jp.gba", 0x86F360, 0x74
+	.globl sSong247_Part0
+sSong247_Part0: @ 0x0886F360
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 45
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, Gn3, 92
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	64
+	.byte	N02, Cs4
+	.byte	W01
+	.byte	BEND , 94
+	.byte	W02
+	.byte	64
+	.byte	N03, As3
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	64
+	.byte	N02, En4
+	.byte	W01
+	.byte	BEND , 94
+	.byte	W02
+	.byte	PAN , 71
+	.byte	BEND , 64
+	.byte	N03, Gn3, 40
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	64
+	.byte	N02, Cs4
+	.byte	W01
+	.byte	BEND , 94
+	.byte	W02
+	.byte	PAN , 57
+	.byte	BEND , 64
+	.byte	N03, As3, 16
+	.byte	W01
+	.byte	BEND , 75
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	64
+	.byte	N02, En4
+	.byte	W01
+	.byte	BEND , 94
+	.byte	W02
+	.byte	FINE
+	.globl sSong247_Part1
+sSong247_Part1: @ 0x0886F3B7
+	.byte	KEYSH , 0
+	.byte	VOICE , 5
+	.byte	VOL , 110
+	.byte	N01, Cn3, 32
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	N01
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	N01, Cn3, 20
+	.byte	W02
+	.byte	N01
+	.byte	W04
+	.byte	PEND
+	.byte	PATT , 199, 243
+	.byte	W06
+	.byte	GsM2
+	.byte	FINE
 	.globl sSongHeader_247
 sSongHeader_247: @ 0x0886F3D4
 	.byte 0x02, 0x00, 0x04, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886F360, 0x0886F3B7  @ parts
-	.incbin "baserom_jp.gba", 0x86F3E4, 0x48
+	.globl sSong248_Part0
+sSong248_Part0: @ 0x0886F3E4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 55
+	.byte	VOICE , 127
+	.byte	VOL , 100
+	.byte	N03, Fn2, 100
+	.byte	N03, As2, 127
+	.byte	W06
+	.byte	N08, Fs3, 96
+	.byte	W06
+	.byte	VOL , 88
+	.byte	W03
+	.byte	54
+	.byte	W03
+	.byte	68
+	.byte	W06
+	.byte	FINE
+	.globl sSong248_Part1
+sSong248_Part1: @ 0x0886F3FF
+	.byte	KEYSH , 0
+	.byte	VOICE , 92
+	.byte	BENDR , 12
+	.byte	VOL , 43
+	.byte	BEND , 64
+	.byte	W04
+	.byte	14
+	.byte	N10, Bn5, 52
+	.byte	W02
+	.byte	BEND , 19
+	.byte	W01
+	.byte	41
+	.byte	W01
+	.byte	62
+	.byte	W01
+	.byte	86
+	.byte	W01
+	.byte	92
+	.byte	W01
+	.byte	105
+	.byte	W01
+	.byte	VOL , 29
+	.byte	BEND , 117
+	.byte	W01
+	.byte	124
+	.byte	W02
+	.byte	VOL , 18
+	.byte	BEND , 127
+	.byte	W09
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F429, 0x3
 	.globl sSongHeader_248
 sSongHeader_248: @ 0x0886F42C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F3E4, 0x0886F3FF  @ parts
-	.incbin "baserom_jp.gba", 0x86F43C, 0x20
+	.globl sSong249_Part0
+sSong249_Part0: @ 0x0886F43C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 91
+	.byte	VOICE , 125
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	PAN , 64
+	.byte	VOL , 127
+	.byte	BEND , 66
+	.byte	N01, Cn4, 127
+	.byte	W03
+	.byte	VOICE , 124
+	.byte	N01, Cn5, 64
+	.byte	W21
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F459, 0x3
 	.globl sSongHeader_249
 sSongHeader_249: @ 0x0886F45C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F43C  @ parts
-	.incbin "baserom_jp.gba", 0x86F468, 0x2C
+	.4byte sSong249_Part0  @ parts
+	.globl sSong250_Part0
+sSong250_Part0: @ 0x0886F468
+	.byte	KEYSH , 0
+	.byte	TEMPO , 91
+	.byte	VOICE , 125
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	PAN , 64
+	.byte	VOL , 16
+	.byte	BEND , 66
+	.byte	N24, Gn5, 88
+	.byte	W03
+	.byte	VOL , 32
+	.byte	W03
+	.byte	48
+	.byte	W03
+	.byte	64
+	.byte	W03
+	.byte	80
+	.byte	W03
+	.byte	96
+	.byte	W03
+	.byte	112
+	.byte	W03
+	.byte	127
+	.byte	W03
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F491, 0x3
 	.globl sSongHeader_250
 sSongHeader_250: @ 0x0886F494
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F468  @ parts
-	.incbin "baserom_jp.gba", 0x86F4A0, 0x80
+	.4byte sSong250_Part0  @ parts
+	.globl sSong251_Part0
+sSong251_Part0: @ 0x0886F4A0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 87
+	.byte	VOICE , 46
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	VOL , 112
+	.byte	PAN , 64
+	.byte	VOL , 112
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N03, An5, 112
+	.byte	W03
+	.byte	VOL , 64
+	.byte	N03, Bn5
+	.byte	W03
+	.byte	VOL , 112
+	.byte	PAN , 16
+	.byte	N06, En6
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W03
+	.byte	112
+	.byte	PAN , 112
+	.byte	N06, En6, 40
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W03
+	.byte	PAN , 16
+	.byte	VOL , 97
+	.byte	N06, En6, 32
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W03
+	.byte	PAN , 112
+	.byte	VOL , 96
+	.byte	N06, En6, 24
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W03
+	.byte	PAN , 16
+	.byte	VOL , 80
+	.byte	N06, En6, 16
+	.byte	W03
+	.byte	VOL , 64
+	.byte	W03
+	.byte	PAN , 112
+	.byte	VOL , 80
+	.byte	N06, En6, 12
+	.byte	W03
+	.byte	VOL , 48
+	.byte	W03
+	.byte	N06, En6, 8
+	.byte	W03
+	.byte	VOL , 2
+	.byte	W03
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.globl sSong251_Part1
+sSong251_Part1: @ 0x0886F509
+	.byte	KEYSH , 0
+	.byte	VOICE , 124
+	.byte	PAN , 64
+	.byte	VOL , 64
+	.byte	N03, Cn5, 92
+	.byte	W06
+	.byte	Cn5, 32
+	.byte	W18
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F51D, 0x3
 	.globl sSongHeader_251
 sSongHeader_251: @ 0x0886F520
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F4A0, 0x0886F509  @ parts
-	.incbin "baserom_jp.gba", 0x86F530, 0x28
+	.globl sSong252_Part0
+sSong252_Part0: @ 0x0886F530
+	.byte	KEYSH , 0
+	.byte	TEMPO , 155
+	.byte	VOICE , 10
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	VOL , 127
+	.byte	BEND , 66
+	.byte	N01, Cs4, 72
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong252_Part1
+sSong252_Part1: @ 0x0886F546
+	.byte	VOL , 127
+	.byte	KEYSH , 0
+	.byte	VOICE , 124
+	.byte	N01, Cs5, 72
+	.byte	W01
+	.byte	Ds5, 104
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F556, 0x2
 	.globl sSongHeader_252
 sSongHeader_252: @ 0x0886F558
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F530, 0x0886F546  @ parts
-	.incbin "baserom_jp.gba", 0x86F568, 0x34
+	.globl sSong253_Part0
+sSong253_Part0: @ 0x0886F568
+	.byte	KEYSH , 0
+	.byte	TEMPO , 211
+	.byte	VOICE , 80
+	.byte	VOL , 64
+	.byte	BEND , 64
+	.byte	N02, Dn4, 84
+	.byte	W02
+	.byte	BEND , 81
+	.byte	N03, Fs4, 80
+	.byte	W01
+	.byte	BEND , 24
+	.byte	W03
+	.byte	FINE
+	.globl sSong253_Part1
+sSong253_Part1: @ 0x0886F580
+	.byte	KEYSH , 0
+	.byte	VOICE , 2
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	VOL , 127
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N04, En3, 127
+	.byte	W03
+	.byte	W01
+	.byte	VOICE , 2
+	.byte	N02, Bn3
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F59A, 0x2
 	.globl sSongHeader_253
 sSongHeader_253: @ 0x0886F59C
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F568, 0x0886F580  @ parts
-	.incbin "baserom_jp.gba", 0x86F5AC, 0x30
+	.globl sSong254_Part0
+sSong254_Part0: @ 0x0886F5AC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 155
+	.byte	VOICE , 3
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	VOL , 100
+	.byte	BEND , 64
+	.byte	N02, Bn3, 120
+	.byte	W03
+	.byte	W03
+	.byte	W02
+	.byte	En4, 127
+	.byte	W01
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.globl sSong254_Part1
+sSong254_Part1: @ 0x0886F5C9
+	.byte	KEYSH , 0
+	.byte	VOICE , 126
+	.byte	VOL , 100
+	.byte	W03
+	.byte	W01
+	.byte	N01, Cn2, 120
+	.byte	W02
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F5DB, 0x1
 	.globl sSongHeader_254
 sSongHeader_254: @ 0x0886F5DC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F5AC, 0x0886F5C9  @ parts
-	.incbin "baserom_jp.gba", 0x86F5EC, 0x18
+	.globl sSong255_Part0
+sSong255_Part0: @ 0x0886F5EC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 62
+	.byte	VOICE , 8
+	.byte	VOL , 80
+	.byte	PAN , 64
+	.byte	BEND , 64
+	.byte	N30, Cn3, 120
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F601, 0x3
 	.globl sSongHeader_255
 sSongHeader_255: @ 0x0886F604
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F5EC  @ parts
-	.incbin "baserom_jp.gba", 0x86F610, 0xAC
+	.4byte sSong255_Part0  @ parts
+	.globl sSong256_Part0
+sSong256_Part0: @ 0x0886F610
+	.byte	KEYSH , 0
+	.byte	TEMPO , 82
+	.byte	VOICE , 9
+	.byte	BENDR , 12
+	.byte	LFOS , 44
+	.byte	PAN , 64
+	.byte	VOL , 96
+	.byte	MOD , 1
+	.byte	N04, En2, 127
+	.byte	W04
+	.byte	N10, En2, 104
+	.byte	W20
+	.byte	W10
+	.byte	PAN , 0
+	.byte	TIE , 52, 127
+	.byte	W08
+	.byte	PAN , 16
+	.byte	W06
+	.byte	W02
+	.byte	32
+	.byte	W08
+	.byte	48
+	.byte	W08
+	.byte	64
+	.byte	W06
+	.byte	80
+	.byte	W06
+	.byte	95
+	.byte	W06
+	.byte	112
+	.byte	W06
+	.byte	127
+	.byte	W06
+	.byte	W18
+	.byte	111
+	.byte	W06
+	.byte	104
+	.byte	W06
+	.byte	94
+	.byte	W06
+	.byte	74
+	.byte	W06
+	.byte	53
+	.byte	W06
+	.byte	39
+	.byte	W06
+	.byte	30
+	.byte	W06
+	.byte	14
+	.byte	W06
+	.byte	0
+	.byte	W06
+	.byte	W18
+	.byte	VOL , 80
+	.byte	PAN , 12
+	.byte	W06
+	.byte	VOL , 72
+	.byte	PAN , 23
+	.byte	W06
+	.byte	VOL , 64
+	.byte	PAN , 35
+	.byte	W06
+	.byte	VOL , 53
+	.byte	PAN , 46
+	.byte	W06
+	.byte	VOL , 48
+	.byte	PAN , 79
+	.byte	W06
+	.byte	VOL , 42
+	.byte	PAN , 89
+	.byte	W06
+	.byte	VOL , 32
+	.byte	PAN , 104
+	.byte	W02
+	.byte	VOL , 24
+	.byte	W04
+	.byte	16
+	.byte	PAN , 111
+	.byte	W04
+	.byte	VOL , 8
+	.byte	W02
+	.byte	EOT
+	.byte	VOL , 0
+	.byte	W06
+	.byte	FINE
+	.globl sSong256_Part1
+sSong256_Part1: @ 0x0886F687
+	.byte	KEYSH , 0
+	.byte	VOICE , 81
+	.byte	PAN , 64
+	.byte	MOD , 15
+	.byte	VOL , 48
+	.byte	N04, En1, 127
+	.byte	W04
+	.byte	N10, En1, 104
+	.byte	W20
+	.byte	W10
+	.byte	TIE , 40, 127
+	.byte	W14
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W18
+	.byte	VOL , 42
+	.byte	W06
+	.byte	36
+	.byte	W06
+	.byte	32
+	.byte	W06
+	.byte	26
+	.byte	W06
+	.byte	23
+	.byte	W06
+	.byte	15
+	.byte	W06
+	.byte	13
+	.byte	W06
+	.byte	8
+	.byte	W06
+	.byte	EOT
+	.byte	VOL , 0
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F6BA, 0x2
 	.globl sSongHeader_256
 sSongHeader_256: @ 0x0886F6BC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F610, 0x0886F687  @ parts
-	.incbin "baserom_jp.gba", 0x86F6CC, 0x64
+	.globl sSong257_Part0
+sSong257_Part0: @ 0x0886F6CC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 210
+	.byte	VOICE , 24
+	.byte	LFOS , 44
+	.byte	BENDR , 12
+	.byte	VOL , 96
+	.byte	PAN , 16
+	.byte	N04, Dn4, 96
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn4, 32
+	.byte	W06
+	.byte	PAN , 32
+	.byte	N04, Fs4, 96
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Fs4, 32
+	.byte	W06
+	.byte	PAN , 32
+	.byte	N04, An4, 96
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, An4, 32
+	.byte	W06
+	.byte	PAN , 48
+	.byte	N04, Cs5, 96
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Cs5, 32
+	.byte	W06
+	.byte	PAN , 96
+	.byte	N04, Dn5, 76
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn5, 32
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Dn5, 24
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn5, 16
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Dn5, 8
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn5, 4
+	.byte	W18
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F72D, 0x3
 	.globl sSongHeader_257
 sSongHeader_257: @ 0x0886F730
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F6CC  @ parts
-	.incbin "baserom_jp.gba", 0x86F73C, 0x60
+	.4byte sSong257_Part0  @ parts
+	.globl sSong258_Part0
+sSong258_Part0: @ 0x0886F73C
+	.byte	KEYSH , 0
+	.byte	TEMPO , 210
+	.byte	VOICE , 24
+	.byte	LFOS , 44
+	.byte	BENDR , 12
+	.byte	VOL , 95
+	.byte	PAN , 112
+	.byte	N04, Dn5, 92
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn5, 32
+	.byte	W06
+	.byte	PAN , 96
+	.byte	N04, An4, 96
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, An4, 32
+	.byte	W06
+	.byte	PAN , 96
+	.byte	N04, Fs4, 92
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Fs4, 32
+	.byte	W06
+	.byte	PAN , 80
+	.byte	N04, En4, 92
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, En4, 32
+	.byte	W06
+	.byte	PAN , 25
+	.byte	N04, Dn4, 96
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Dn4, 32
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Dn4, 16
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn4, 12
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Dn4, 4
+	.byte	W18
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F79B, 0x1
 	.globl sSongHeader_258
 sSongHeader_258: @ 0x0886F79C
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F73C  @ parts
-	.incbin "baserom_jp.gba", 0x86F7A8, 0x3C
+	.4byte sSong258_Part0  @ parts
+	.globl sSong259_Part0
+sSong259_Part0: @ 0x0886F7A8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 210
+	.byte	VOICE , 24
+	.byte	LFOS , 44
+	.byte	BENDR , 12
+	.byte	PAN , 64
+	.byte	VOL , 96
+	.byte	N04, Dn4, 120
+	.byte	W06
+	.byte	PAN , 0
+	.byte	N04, Dn4, 32
+	.byte	W06
+	.byte	PAN , 63
+	.byte	N04, Fs4, 96
+	.byte	W06
+	.byte	PAN , 127
+	.byte	N04, Fs4, 32
+	.byte	W06
+	.byte	VOICE , 92
+	.byte	PAN , 64
+	.byte	VOL , 125
+	.byte	N04, An1, 112
+	.byte	W10
+	.byte	MOD , 8
+	.byte	W02
+	.byte	N06, An1, 88
+	.byte	W06
+	.byte	An1, 24
+	.byte	W06
+	.byte	MOD , 0
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F7E3, 0x1
 	.globl sSongHeader_259
 sSongHeader_259: @ 0x0886F7E4
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
-	.4byte 0x0886F7A8  @ parts
-	.incbin "baserom_jp.gba", 0x86F7F0, 0xD4
+	.4byte sSong259_Part0  @ parts
+	.globl sSong260_Part0
+sSong260_Part0: @ 0x0886F7F0
+	.byte	KEYSH , 0
+	.byte	TEMPO , 131
+	.byte	VOICE , 123
+	.byte	XCMD , 8 , 8
+	.byte	9 , 8
+	.byte	PAN , 64
+	.byte	VOL , 40
+	.byte	BEND , 66
+	.byte	N02, Cn2, 120
+	.byte	W08
+	.byte	N04, Cn5
+	.byte	W16
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	W24
+	.byte	FINE
+	.globl sSong260_Part1
+sSong260_Part1: @ 0x0886F810
+	.byte	KEYSH , 0
+	.byte	VOICE , 31
+	.byte	LFOS , 44
+	.byte	BENDR , 12
+	.byte	VOL , 80
+	.byte	PAN , 64
+	.byte	BEND , 0
+	.byte	TIE , 76, 32
+	.byte	W24
+	.byte	W04
+	.byte	BEND , 9
+	.byte	W02
+	.byte	14
+	.byte	W02
+	.byte	25
+	.byte	W02
+	.byte	32
+	.byte	W02
+	.byte	41
+	.byte	W02
+	.byte	46
+	.byte	W02
+	.byte	55
+	.byte	W02
+	.byte	62
+	.byte	W02
+	.byte	80
+	.byte	W02
+	.byte	87
+	.byte	W02
+	.byte	96
+	.byte	W02
+	.byte	103
+	.byte	W02
+	.byte	112
+	.byte	W02
+	.byte	120
+	.byte	W02
+	.byte	127
+	.byte	W16
+	.byte	W24
+	.byte	W24
+	.byte	VOL , 70
+	.byte	W04
+	.byte	66
+	.byte	W06
+	.byte	60
+	.byte	W06
+	.byte	55
+	.byte	W08
+	.byte	49
+	.byte	W06
+	.byte	44
+	.byte	W06
+	.byte	40
+	.byte	W06
+	.byte	35
+	.byte	W06
+	.byte	30
+	.byte	W04
+	.byte	24
+	.byte	W02
+	.byte	20
+	.byte	W02
+	.byte	15
+	.byte	W04
+	.byte	10
+	.byte	W06
+	.byte	0
+	.byte	W06
+	.byte	EOT
+	.byte	FINE
+	.globl sSong260_Part2
+sSong260_Part2: @ 0x0886F863
+	.byte	KEYSH , 0
+	.byte	VOICE , 50
+	.byte	VOL , 69
+	.byte	PAN , 0
+	.byte	W24
+	.byte	127
+	.byte	N01, Fs4, 64
+	.byte	W06
+	.byte	Gs4
+	.byte	W03
+	.byte	PAN , 0
+	.byte	W07
+	.byte	N01, En5
+	.byte	W05
+	.byte	Fs5
+	.byte	W03
+	.byte	PAN , 127
+	.byte	W10
+	.byte	N01, Dn5
+	.byte	W03
+	.byte	Cn5
+	.byte	W07
+	.byte	PAN , 0
+	.byte	W04
+	.byte	N01, Fs3
+	.byte	W03
+	.byte	Gs3
+	.byte	W09
+	.byte	PAN , 127
+	.byte	W04
+	.byte	N01, Bn4
+	.byte	W04
+	.byte	Dn5
+	.byte	W04
+	.byte	PAN , 0
+	.byte	W09
+	.byte	N01, Fs5
+	.byte	W09
+	.byte	Cs5
+	.byte	W06
+	.byte	PAN , 127
+	.byte	W02
+	.byte	N01, Cs4, 36
+	.byte	W02
+	.byte	As3
+	.byte	W08
+	.byte	Fs3
+	.byte	W03
+	.byte	Gs3
+	.byte	W09
+	.byte	PAN , 0
+	.byte	W03
+	.byte	N01, Dn5, 28
+	.byte	W03
+	.byte	Cn5
+	.byte	W06
+	.byte	Fs4
+	.byte	W03
+	.byte	Cn4
+	.byte	W04
+	.byte	Gn3
+	.byte	W05
+	.byte	PAN , 127
+	.byte	W06
+	.byte	N01, Gn4, 20
+	.byte	W02
+	.byte	An4
+	.byte	W16
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F8C1, 0x3
 	.globl sSongHeader_260
 sSongHeader_260: @ 0x0886F8C4
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F7F0, 0x0886F810, 0x0886F863  @ parts
-	.incbin "baserom_jp.gba", 0x86F8D8, 0xAC
+	.globl sSong261_Part0
+sSong261_Part0: @ 0x0886F8D8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 75
+	.byte	VOICE , 46
+	.byte	VOL , 110
+	.byte	BENDR , 2
+	.byte	PAN , 64
+	.byte	BEND , 79
+	.byte	W01
+	.byte	N02, Dn6, 112
+	.byte	W02
+	.byte	Cs6
+	.byte	W03
+	.byte	PAN , 72
+	.byte	N02, An5
+	.byte	W02
+	.byte	Fs5
+	.byte	W01
+	.byte	W01
+	.byte	Dn5
+	.byte	W02
+	.byte	PAN , 57
+	.byte	W01
+	.byte	N02, Dn5, 104
+	.byte	W02
+	.byte	Cs5, 100
+	.byte	W03
+	.byte	PAN , 64
+	.byte	N02, An4, 96
+	.byte	W02
+	.byte	Fs4, 92
+	.byte	W01
+	.byte	W01
+	.byte	Dn4, 88
+	.byte	W02
+	.byte	PAN , 79
+	.byte	W01
+	.byte	N02, Dn6
+	.byte	W02
+	.byte	Cs6, 84
+	.byte	W03
+	.byte	An5, 80
+	.byte	W02
+	.byte	Fs5, 76
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 72
+	.byte	W02
+	.byte	PAN , 48
+	.byte	W01
+	.byte	N02, Dn6, 68
+	.byte	W02
+	.byte	Cs6, 64
+	.byte	W03
+	.byte	An5, 60
+	.byte	W02
+	.byte	Fs5, 56
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 52
+	.byte	W02
+	.byte	W03
+	.byte	FINE
+	.globl sSong261_Part1
+sSong261_Part1: @ 0x0886F937
+	.byte	KEYSH , 0
+	.byte	VOICE , 53
+	.byte	BENDR , 2
+	.byte	VOL , 43
+	.byte	BEND , 79
+	.byte	N02, An6, 112
+	.byte	W02
+	.byte	Fs6
+	.byte	W01
+	.byte	W01
+	.byte	Dn6
+	.byte	W02
+	.byte	W01
+	.byte	Cs6
+	.byte	W02
+	.byte	An5
+	.byte	W03
+	.byte	N02
+	.byte	W02
+	.byte	Fs5, 104
+	.byte	W01
+	.byte	W01
+	.byte	Dn5, 100
+	.byte	W02
+	.byte	W01
+	.byte	Cs5, 96
+	.byte	W02
+	.byte	An4, 92
+	.byte	W03
+	.byte	An6, 88
+	.byte	W02
+	.byte	Fs6, 84
+	.byte	W01
+	.byte	W01
+	.byte	Dn6, 80
+	.byte	W02
+	.byte	W01
+	.byte	Cs6, 76
+	.byte	W02
+	.byte	An5, 72
+	.byte	W03
+	.byte	An6, 68
+	.byte	W02
+	.byte	Fs6, 64
+	.byte	W01
+	.byte	W01
+	.byte	Dn6, 60
+	.byte	W02
+	.byte	W01
+	.byte	Cs6, 56
+	.byte	W02
+	.byte	An5, 52
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F983, 0x1
 	.globl sSongHeader_261
 sSongHeader_261: @ 0x0886F984
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08625214  @ tone
 	.4byte 0x0886F8D8, 0x0886F937  @ parts
-	.incbin "baserom_jp.gba", 0x86F994, 0x24
+	.globl sSong262_Part0
+sSong262_Part0: @ 0x0886F994
+	.byte	KEYSH , 0
+	.byte	TEMPO , 120
+	.byte	VOICE , 92
+	.byte	BENDR , 12
+	.byte	VOL , 127
+	.byte	BEND , 64
+	.byte	N03, Cn2, 127
+	.byte	W03
+	.byte	Cn2, 20
+	.byte	W03
+	.byte	N18, Cn2, 127
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	N09, Cn2, 20
+	.byte	W03
+	.byte	W03
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86F9B7, 0x1
 	.globl sSongHeader_262
 sSongHeader_262: @ 0x0886F9B8
 	.byte 0x01, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gToneData_08624C14  @ tone
-	.4byte 0x0886F994  @ parts
-	.incbin "baserom_jp.gba", 0x86F9C4, 0x94
+	.4byte sSong262_Part0  @ parts
+	.globl sSong263_Part0
+sSong263_Part0: @ 0x0886F9C4
+	.byte	KEYSH , 0
+	.byte	TEMPO , 68
+	.byte	VOICE , 13
+	.byte	LFOS , 44
+	.byte	BENDR , 12
+	.byte	VOL , 120
+	.byte	PAN , 48
+	.byte	N01, An5, 64
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	An5
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	Fs6
+	.byte	W02
+	.byte	An5
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	An5
+	.byte	W01
+	.byte	Fs6
+	.byte	W01
+	.byte	An5
+	.byte	W02
+	.byte	N01
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	An5
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	Fs6
+	.byte	W02
+	.byte	An5
+	.byte	W01
+	.byte	Dn6
+	.byte	W01
+	.byte	An5
+	.byte	W01
+	.byte	Fs6
+	.byte	W01
+	.byte	An5
+	.byte	W02
+	.byte	FINE
+	.globl sSong263_Part1
+sSong263_Part1: @ 0x0886F9FD
+	.byte	KEYSH , 0
+	.byte	VOICE , 80
+	.byte	LFOS , 44
+	.byte	XCMD , 8 , 18
+	.byte	8 , 16
+	.byte	BENDR , 12
+	.byte	VOL , 45
+	.byte	MOD , 2
+	.byte	PAN , 127
+	.byte	BEND , 66
+	.byte	N01, Dn5, 64
+	.byte	W01
+	.byte	Fs5
+	.byte	W01
+	.byte	PAN , 2
+	.byte	N01, Dn5
+	.byte	W01
+	.byte	Fs5
+	.byte	W01
+	.byte	PAN , 127
+	.byte	N01, An5
+	.byte	W02
+	.byte	Dn5
+	.byte	W01
+	.byte	PAN , 3
+	.byte	N01, Fs5
+	.byte	W01
+	.byte	Dn5
+	.byte	W01
+	.byte	PAN , 127
+	.byte	N01, An5
+	.byte	W01
+	.byte	Dn5
+	.byte	W02
+	.byte	PAN , 3
+	.byte	N01
+	.byte	W01
+	.byte	Fs5
+	.byte	W01
+	.byte	PAN , 127
+	.byte	N01, Dn5
+	.byte	W01
+	.byte	Fs5
+	.byte	W01
+	.byte	PAN , 3
+	.byte	N01, An5
+	.byte	W02
+	.byte	Dn5
+	.byte	W01
+	.byte	PAN , 127
+	.byte	N01, Fs5
+	.byte	W01
+	.byte	Dn5
+	.byte	W01
+	.byte	PAN , 3
+	.byte	N01, An5
+	.byte	W01
+	.byte	Dn5
+	.byte	W02
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FA57, 0x1
 	.globl sSongHeader_263
 sSongHeader_263: @ 0x0886FA58
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886F9C4, 0x0886F9FD  @ parts
-	.incbin "baserom_jp.gba", 0x86FA68, 0x50
+	.globl sSong264_Part0
+sSong264_Part0: @ 0x0886FA68
+	.byte	KEYSH , 0
+	.byte	TEMPO , 60
+	.byte	VOICE , 10
+	.byte	VOL , 110
+	.byte	BEND , 56
+	.byte	W01
+	.byte	N01, Ds3, 112
+	.byte	W04
+	.byte	Gs1
+	.byte	W01
+	.byte	Bn1, 56
+	.byte	W04
+	.byte	Bn1, 24
+	.byte	W02
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.globl sSong264_Part1
+sSong264_Part1: @ 0x0886FA83
+	.byte	KEYSH , 0
+	.byte	VOICE , 82
+	.byte	VOL , 110
+	.byte	BENDR , 12
+	.byte	LFOS , 44
+	.byte	BEND , 64
+	.byte	N01, Cs3, 64
+	.byte	W01
+	.byte	Fs4, 32
+	.byte	W01
+	.byte	BEND , 64
+	.byte	N01, Gs5, 28
+	.byte	W01
+	.byte	BEND , 127
+	.byte	W01
+	.byte	1
+	.byte	N01, Cs3, 36
+	.byte	W01
+	.byte	BEND , 127
+	.byte	W01
+	.byte	1
+	.byte	N01, Bn4, 52
+	.byte	W02
+	.byte	BEND , 64
+	.byte	W02
+	.byte	N01, Cs1
+	.byte	W02
+	.byte	W06
+	.byte	W06
+	.byte	W06
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FAB6, 0x2
 	.globl sSongHeader_264
 sSongHeader_264: @ 0x0886FAB8
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886FA68, 0x0886FA83  @ parts
-	.incbin "baserom_jp.gba", 0x86FAC8, 0x24
+	.globl sSong265_Part0
+sSong265_Part0: @ 0x0886FAC8
+	.byte	KEYSH , 0
+	.byte	TEMPO , 46
+	.byte	VOICE , 116
+	.byte	VOL , 127
+	.byte	PAN , 2
+	.byte	N32, Fn3, 127
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.globl sSong265_Part1
+sSong265_Part1: @ 0x0886FAD9
+	.byte	KEYSH , 0
+	.byte	VOICE , 117
+	.byte	VOL , 127
+	.byte	PAN , 127
+	.byte	BEND , 65
+	.byte	N32, An3, 100
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FAEA, 0x2
 	.globl sSongHeader_265
 sSongHeader_265: @ 0x0886FAEC
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886FAC8, 0x0886FAD9  @ parts
-	.incbin "baserom_jp.gba", 0x86FAFC, 0x34
+	.globl sSong266_Part0
+sSong266_Part0: @ 0x0886FAFC
+	.byte	KEYSH , 0
+	.byte	TEMPO , 46
+	.byte	VOICE , 116
+	.byte	VOL , 127
+	.byte	PAN , 2
+	.byte	N04, Fn3, 127
+	.byte	W04
+	.byte	VOICE , 10
+	.byte	N04, Cn3
+	.byte	W05
+	.byte	VOICE , 116
+	.byte	N32, Fn3
+	.byte	W03
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.globl sSong266_Part1
+sSong266_Part1: @ 0x0886FB18
+	.byte	KEYSH , 0
+	.byte	VOICE , 117
+	.byte	VOL , 127
+	.byte	PAN , 127
+	.byte	BEND , 65
+	.byte	N04, Gn3, 100
+	.byte	W04
+	.byte	Dn3
+	.byte	W05
+	.byte	N32, Gn3
+	.byte	W03
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FB2F, 0x1
 	.globl sSongHeader_266
 sSongHeader_266: @ 0x0886FB30
 	.byte 0x02, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886FAFC, 0x0886FB18  @ parts
-	.incbin "baserom_jp.gba", 0x86FB40, 0xC4
+	.globl sSong267_Part0
+sSong267_Part0: @ 0x0886FB40
+	.byte	KEYSH , 0
+	.byte	TEMPO , 49
+	.byte	PAN , 64
+	.byte	VOL , 127
+	.byte	W19
+	.byte	TEMPO , 56
+	.byte	VOICE , 38
+	.byte	MOD , 2
+	.byte	N04, Gs1, 120
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	1
+	.byte	N04, Cn2
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, En2
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, Gs2
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, Cn3
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	1
+	.byte	N04, Ds3
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	1
+	.byte	N04, En3, 96
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 32
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 127
+	.byte	MOD , 1
+	.byte	N04, En3, 48
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 12
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	PAN , 127
+	.byte	MOD , 1
+	.byte	N04, En3, 32
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 8
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	2
+	.byte	W03
+	.byte	FINE
+	.globl sSong267_Part1
+sSong267_Part1: @ 0x0886FBBB
+	.byte	KEYSH , 0
+	.byte	PAN , 64
+	.byte	VOL , 112
+	.byte	W19
+	.byte	VOICE , 100
+	.byte	W12
+	.byte	W07
+	.byte	N04, Cn4, 112
+	.byte	W05
+	.byte	As4
+	.byte	W07
+	.byte	Gs5, 64
+	.byte	W05
+	.byte	Ds6, 48
+	.byte	W07
+	.byte	Gn6, 32
+	.byte	W05
+	.byte	W12
+	.byte	FINE
+	.globl sSong267_Part2
+sSong267_Part2: @ 0x0886FBD7
+	.byte	KEYSH , 0
+	.byte	VOICE , 125
+	.byte	LFOS , 44
+	.byte	XCMD , 8 , 18
+	.byte	8 , 16
+	.byte	BENDR , 12
+	.byte	MOD , 2
+	.byte	VOL , 86
+	.byte	BEND , 7
+	.byte	N09, Cn5, 64
+	.byte	W01
+	.byte	BEND , 19
+	.byte	W01
+	.byte	34
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	53
+	.byte	W02
+	.byte	64
+	.byte	W03
+	.byte	N01, Gn5, 96
+	.byte	W10
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FC03, 0x1
 	.globl sSongHeader_267
 sSongHeader_267: @ 0x0886FC04
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
 	.4byte gJP_CryTable_Reverse_3 + 0x30  @ tone
 	.4byte 0x0886FB40, 0x0886FBBB, 0x0886FBD7  @ parts
-	.incbin "baserom_jp.gba", 0x86FC18, 0xC8
+	.globl sSong268_Part0
+sSong268_Part0: @ 0x0886FC18
+	.byte	VOL , 127
+	.byte	KEYSH , 0
+	.byte	TEMPO , 56
+	.byte	VOICE , 38
+	.byte	MOD , 2
+	.byte	N04, Gs1, 120
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, Cn2
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, En2
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, Gs2
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	1
+	.byte	N04, Cn3
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	1
+	.byte	N04, Ds3
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	1
+	.byte	N04, En3, 96
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 32
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 127
+	.byte	MOD , 1
+	.byte	N04, En3, 48
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 12
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W03
+	.byte	PAN , 127
+	.byte	MOD , 1
+	.byte	N04, En3, 32
+	.byte	W02
+	.byte	MOD , 7
+	.byte	W02
+	.byte	PAN , 2
+	.byte	MOD , 1
+	.byte	N04, En4, 8
+	.byte	W03
+	.byte	MOD , 7
+	.byte	W02
+	.byte	2
+	.byte	W03
+	.byte	TEMPO , 49
+	.byte	PAN , 64
+	.byte	VOL , 127
+	.byte	W12
+	.byte	FINE
+	.globl sSong268_Part1
+sSong268_Part1: @ 0x0886FC95
+	.byte	VOL , 127
+	.byte	KEYSH , 0
+	.byte	VOICE , 100
+	.byte	W12
+	.byte	W07
+	.byte	N04, Cn4, 112
+	.byte	W05
+	.byte	As4
+	.byte	W07
+	.byte	Gs5, 64
+	.byte	W05
+	.byte	Ds6, 48
+	.byte	W07
+	.byte	Gn6, 32
+	.byte	W05
+	.byte	W12
+	.byte	PAN , 64
+	.byte	VOL , 112
+	.byte	W12
+	.byte	FINE
+	.globl sSong268_Part2
+sSong268_Part2: @ 0x0886FCB3
+	.byte	KEYSH , 0
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	W12
+	.byte	VOICE , 125
+	.byte	LFOS , 44
+	.byte	XCMD , 8 , 18
+	.byte	8 , 16
+	.byte	BENDR , 12
+	.byte	MOD , 2
+	.byte	VOL , 86
+	.byte	BEND , 7
+	.byte	N09, Cn5, 64
+	.byte	W01
+	.byte	BEND , 19
+	.byte	W01
+	.byte	34
+	.byte	W01
+	.byte	46
+	.byte	W01
+	.byte	53
+	.byte	W02
+	.byte	64
+	.byte	W03
+	.byte	N01, Gn5, 96
+	.byte	W03
+	.byte	FINE
+	.incbin "baserom_jp.gba", 0x86FCDF, 0x1
 	.globl sSongHeader_268
 sSongHeader_268: @ 0x0886FCE0
 	.byte 0x03, 0x00, 0x05, 0xB2  @ trackCount, blockCount, priority, reverb
