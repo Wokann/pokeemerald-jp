@@ -34078,17 +34078,47 @@ sMatchCallGeneralTopics: @ 0x85D74B0
 	.4byte 0x085D73BC @ sMatchCallBattlePikeTexts
 	.4byte 0x085D742C @ sMatchCallBattlePyramidTexts
 
-	.globl gUnknown_85D74C8
-gUnknown_85D74C8: @ 0x85D74C8
-	.incbin "baserom_jp.gba", 0x5d74c8, 0x20
+	.globl sMatchCallWindow_Pal
+sMatchCallWindow_Pal: @ 0x85D74C8
+	.hword 0x0000 @ color 0
+	.hword 0x7FFF @ color 1
+	.hword 0x0000 @ color 2
+	.hword 0x6718 @ color 3
+	.hword 0x4B64 @ color 4
+	.hword 0x5BAD @ color 5
+	.hword 0x6BF6 @ color 6
+	.hword 0x7F1A @ color 7
+	.hword 0x7F9D @ color 8
+	.hword 0x5AFF @ color 9
+	.hword 0x6B7F @ color 10
+	.hword 0x0257 @ color 11
+	.hword 0x73BD @ color 12
+	.hword 0x0000 @ color 13
+	.hword 0x0000 @ color 14
+	.hword 0x0000 @ color 15
 
 	.globl gUnknown_85D74E8
 gUnknown_85D74E8: @ 0x85D74E8
 	.incbin "baserom_jp.gba", 0x5d74e8, 0x100
 
-	.globl gUnknown_85D75E8
-gUnknown_85D75E8: @ 0x85D75E8
-	.incbin "baserom_jp.gba", 0x5d75e8, 0x20
+	.globl sPokenavIcon_Pal
+sPokenavIcon_Pal: @ 0x85D75E8
+	.hword 0x7FFF @ color 0
+	.hword 0x1595 @ color 1
+	.hword 0x4A55 @ color 2
+	.hword 0x56B6 @ color 3
+	.hword 0x001F @ color 4
+	.hword 0x31FE @ color 5
+	.hword 0x6694 @ color 6
+	.hword 0x798C @ color 7
+	.hword 0x7FFF @ color 8
+	.hword 0x7EC1 @ color 9
+	.hword 0x0000 @ color 10
+	.hword 0x0000 @ color 11
+	.hword 0x0000 @ color 12
+	.hword 0x3B1F @ color 13
+	.hword 0x6B39 @ color 14
+	.hword 0x5EB5 @ color 15
 
 	.globl gUnknown_85D7608
 gUnknown_85D7608: @ 0x85D7608
