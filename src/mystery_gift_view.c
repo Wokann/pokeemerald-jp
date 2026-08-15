@@ -91,15 +91,15 @@ extern EWRAM_DATA struct WonderCardData *gWonderCardData; // 0x02022928
 extern EWRAM_DATA struct WonderNewsData *gWonderNewsData; // 0x0202292C
 extern const struct WonderGfx sCardGraphics[];
 extern const struct WonderGfx gUnknown_82C49F4[]; // news gfx table
-extern const u8 gUnknown_82C4324[]; // news scroll arrow template data
+extern const struct ScrollArrowsTemplate sNews_ArrowsTemplate;
 extern const u8 gUnknown_82C333C[]; // card text color table (3-byte entries)
 extern const u8 gUnknown_82C3344[]; // card footer text offsets
 extern const struct WindowTemplate sCard_WindowTemplates[];
 extern const struct CompressedSpriteSheet sSpriteSheet_StampShadow;
 extern const struct SpritePalette sSpritePalettes_StampShadow[];
 extern const struct SpriteTemplate sSpriteTemplate_StampShadow;
-extern const u8 gUnknown_82C430C[]; // news text color table (3-byte entries)
-extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
+extern const u8 sTextColors_News[];
+extern const struct WindowTemplate sNews_WindowTemplates[];
 extern const struct OamData gUnknown_84FD040;
 
 
@@ -372,7 +372,7 @@ static void BufferNewsText(void)
             gWonderNewsData->scrollEnd++;
     }
 
-    *(struct ScrollArrowsTemplate *)&gWonderNewsData->unk_1DC = *(const struct ScrollArrowsTemplate *)gUnknown_82C4324;
+    *(struct ScrollArrowsTemplate *)&gWonderNewsData->unk_1DC = sNews_ArrowsTemplate;
     gWonderNewsData->unk_1E4 = gWonderNewsData->scrollEnd;
 }
 
@@ -387,10 +387,10 @@ static void DrawNewsWindows(void)
     FillWindowPixelBuffer(gWonderNewsData->windowIds[1], 0);
 
     x = (u8)(0x71 - (StringLength(gWonderNewsData->titleText) * ((u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_LETTER_SPACING) + (u8)GetFontAttribute(FONT_SHORT_COPY_1, FONTATTR_MAX_LETTER_WIDTH)) >> 1));
-    AddTextPrinterParameterized3(gWonderNewsData->windowIds[0], FONT_SHORT_COPY_1, x, 6, &gUnknown_82C430C[gWonderNewsData->gfx->titleTextPal * 3], i, gWonderNewsData->titleText);
+    AddTextPrinterParameterized3(gWonderNewsData->windowIds[0], FONT_SHORT_COPY_1, x, 6, &sTextColors_News[gWonderNewsData->gfx->titleTextPal * 3], i, gWonderNewsData->titleText);
 
     for (; i < WONDER_NEWS_BODY_TEXT_LINES; i++)
-        AddTextPrinterParameterized3(gWonderNewsData->windowIds[1], FONT_SHORT_COPY_1, 3, (u8)(i * 16 + 4), &gUnknown_82C430C[gWonderNewsData->gfx->bodyTextPal * 3], 0, gWonderNewsData->bodyText[i]);
+        AddTextPrinterParameterized3(gWonderNewsData->windowIds[1], FONT_SHORT_COPY_1, 3, (u8)(i * 16 + 4), &sTextColors_News[gWonderNewsData->gfx->bodyTextPal * 3], 0, gWonderNewsData->bodyText[i]);
 
     CopyWindowToVram(gWonderNewsData->windowIds[0], COPYWIN_FULL);
     CopyWindowToVram(gWonderNewsData->windowIds[1], COPYWIN_FULL);
@@ -460,8 +460,8 @@ s32 FadeToWonderNewsMenu(void)
         CopyBgTilemapBufferToVram(2);
         CopyBgTilemapBufferToVram(3);
         DecompressAndCopyTileDataToVram(3, gWonderNewsData->gfx->tiles, 0, 8, 0);
-        gWonderNewsData->windowIds[0] = AddWindow(&gUnknown_82C4314[0]);
-        gWonderNewsData->windowIds[1] = AddWindow(&gUnknown_82C4314[1]);
+        gWonderNewsData->windowIds[0] = AddWindow(&sNews_WindowTemplates[0]);
+        gWonderNewsData->windowIds[1] = AddWindow(&sNews_WindowTemplates[1]);
         break;
     case 3:
         if (FreeTempTileDataBuffersIfPossible() != 0)
