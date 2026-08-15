@@ -12,50 +12,10 @@
 
 
 
-	.globl sText_DontHaveEggTrainerWants
-sText_DontHaveEggTrainerWants: @ 0x82C1938
-	.string "{B_COPY_VAR_1}の　ほしがっている\n"
-	.string "タマゴを　もっていません\p"
-	.string "$　　いまは　{B_COPY_VAR_1}は　あなたの\n"
-	.string "ポケモンと　こうかんできません\p"
-	.string "$　　{B_COPY_VAR_1}の　ポケモンとは\n"
-	.string "いまは　こうかんできません\p"
-	.string "$　　エのわくヤのわく"
 
-	.globl sText_TradeOfferRejected
-sText_TradeOfferRejected: @ 0x82C1998
-	.string "こうかんを\n"
-	.string "ことわられ　ました\p"
-	.string "$　　　"
-
-	.globl sText_EggTrade
-sText_EggTrade: @ 0x82C19AC
-	.string "タマゴのこうかん$　　　"
-
-	.globl sText_ChooseJoinCancel
-sText_ChooseJoinCancel: @ 0x82C19B8
-	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}さんかする:{B_BUTTON}やめる$"
-	.globl sText_ChooseTrainer
-sText_ChooseTrainer: @ 0x82C19CC
-	.string "ともだちを　えらんでください$　シングルバトルをする　ともだちを\n"
-	.string "えらんでください$　　ダブルバトルをする　ともだちを\n"
-	.string "えらんでください$　　　マルチバトル！\n"
-	.string "リーダーを　えらんでください$　ポケモンの　こうかんをする\n"
-	.string "ともだちを　えらんでください$　　　ふしぎなカードを　くばっている\n"
-	.string "ともだちを　えらんでください$　ふしぎなニュースを　くばっている\n"
-	.string "ともだちを　えらんでください$ミニポケモンでジャンプ！\n"
-	.string "リーダーを　えらんでください$きのみクラッシュ！\n"
-	.string "リーダーを　えらんでください$　　　ドードリオのきのみどり！\n"
-	.string "リーダーを　えらんでください$きのみブレンダー！\n"
-	.string "リーダーを　えらんでください$　　　レコードコーナー！\n"
-	.string "リーダーを　えらんでください$　　　かっこよさコンテスト！\n"
-	.string "リーダーを　えらんでください$　うつくしさコンテスト！\n"
-	.string "リーダーを　えらんでください$　かわいさコンテスト！\n"
-	.string "リーダーを　えらんでください$　　かしこさコンテスト！\n"
-	.string "リーダーを　えらんでください$　　たくましさコンテスト！\n"
-	.string "リーダーを　えらんでください$　バトルタワー　レベル50！\n"
-	.string "リーダーを　えらんでください$　　　バトルタワー　オープンレベル！\n"
-	.string "リーダーを　えらんでください$　"
+	.globl gUnknown_82C19DC
+gUnknown_82C19DC: @ 0x82C19DC
+	.incbin "baserom_jp.gba", 0x2c19dc, 0x208
 
 	.globl sChooseTrainerTexts
 sChooseTrainerTexts: @ 0x82C1BE4

@@ -276,6 +276,21 @@ SYMBOLS8E = [
 
 END_ADDR8E = 0x082C1938  # sText_DontHaveEggTrainerWants (next region)
 
+# Eighth batch part 6: trade-requirement texts and ChooseTrainer start.
+SYMBOLS8F = [
+    ("sText_DontHaveEggTrainerWants", 0x082C1938, "text", None),
+    ("sText_PlayerCantTradeForYourMon", 0x082C1954, "text", None),
+    ("sText_CantTradeForPartnersMon", 0x082C1974, "text", None),
+    ("sCantTradeMonTexts", 0x082C1990, "table",
+        ["sText_PlayerCantTradeForYourMon", "sText_CantTradeForPartnersMon"]),
+    ("sText_TradeOfferRejected", 0x082C1998, "text", None),
+    ("sText_EggTrade", 0x082C19AC, "text", None),
+    ("sText_ChooseJoinCancel", 0x082C19B8, "text", None),
+    ("sText_ChooseTrainer", 0x082C19CC, "text_fixed", None),
+]
+
+END_ADDR8F = 0x082C19DC  # sText_ChooseTrainerSingleBattle (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -517,10 +532,14 @@ def build(symbols, end_addr, out_h, out_c, comment):
         elif kind in ("text", "text_fixed"):
             size = None
             if kind == "text_fixed":
-                size = end_addr - addr
+                size = end - addr
             out.append(emit_text(name, addr, end, size=size))
         elif kind == "table":
             out.append(emit_table(name, payload))
+        elif kind == "raw_bytes":
+            b = ", ".join("0x%02X" % x for x in payload)
+            out.append(f"// Unused in US; raw bytes preserved for byte-exactness")
+            out.append(f"const u8 {name}[] = {{{b}}};")
         elif kind == "table_rfu":
             out.append(emit_table_rfu(name))
         elif kind == "table_link":
@@ -578,6 +597,8 @@ def main():
           "// Chat/trainer-card/trade reaction texts")
     build(SYMBOLS8E, END_ADDR8E, "src/data/union_room8e.h", "src/data/union_room8e.c",
           "// Trading-board texts")
+    build(SYMBOLS8F, END_ADDR8F, "src/data/union_room8f.h", "src/data/union_room8f.c",
+          "// Trade-requirement texts and ChooseTrainer")
 
 
 if __name__ == "__main__":
