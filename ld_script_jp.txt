@@ -10600,7 +10600,7 @@ SECTIONS {
 		src/siirtc.o(.text.ReadData);
 		src/siirtc.o(.text.EnableGpioPortRead);
 		src/siirtc.o(.text.DisableGpioPortRead);
-		asm/librfu_stwi.o(.text);
+		src/librfu_stwi.o(.text);
 		asm/librfu_intr.o(.text);
 		asm/librfu_rfu.o(.text);
 		src/librfu.o(.text.sub_082952F4);
