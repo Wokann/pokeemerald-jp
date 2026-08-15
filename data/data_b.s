@@ -21551,9 +21551,9 @@ sPokemonLogoShineSpriteSheet: @ 0x851ADD8
 gUnknown_851ADE8: @ 0x851ADE8
 	.incbin "baserom_jp.gba", 0x51ade8, 0xc000
 
-	.globl gUnknown_8526DE8
-gUnknown_8526DE8: @ 0x8526DE8
-	.incbin "baserom_jp.gba", 0x526de8, 0x4
+	.globl gWeatherPtr
+gWeatherPtr: @ 0x8526DE8
+	.4byte gUnknown_20380F4 @ &gWeather
 
 	.globl gUnknown_8526DEC
 gUnknown_8526DEC: @ 0x8526DEC

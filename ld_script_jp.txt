@@ -748,7 +748,6 @@ sCableCarSpriteSheets = gUnknown_85AC95C;
 sCableCarSpritePalettes = gUnknown_85AC97C;
 gCableCarBg_Gfx = gUnknown_8DBA860;
 gCableCarBg_Pal = gUnknown_8DBA7C0;
-gWeatherPtr = gUnknown_8526DE8;
 GetPCBoxToSendMon = get_unknown_box_id;
 ShouldShowBoxWasFullMessage = sub_0813B254;
 DisplayCaughtMonDexPage = CreateDexDisplayMonDataTask;
