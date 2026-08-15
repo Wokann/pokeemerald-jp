@@ -7100,7 +7100,2173 @@ gUnknown_83B8098: @ 0x83B8098
 
 	.globl gUnknown_845A1F4
 gUnknown_845A1F4: @ 0x845A1F4
-	.incbin "baserom_jp.gba", 0x45a1f4, 0x47a4
+	.incbin "baserom_jp.gba", 0x45a1f4, 0x6e4
+	.globl gMapHeaders
+gMapHeaders: @ 0x0845A8D8
+	@ struct MapHeader { mapLayout, events, mapScripts, connections, music, mapLayoutId, regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType }
+	@ MAP_PETALBURG_CITY (g0 m0)
+	.4byte 0x083B8944  @ mapLayout
+	.4byte 0x084FE8C4  @ events
+	.4byte PetalburgCity_MapScripts  @ mapScripts
+	.4byte 0x0845EB0C  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x0001  @ mapLayoutId
+	.byte 0x07, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY (g0 m1)
+	.4byte 0x083B9C24  @ mapLayout
+	.4byte 0x084FED24  @ events
+	.4byte SlateportCity_MapScripts  @ mapScripts
+	.4byte 0x0845EB38  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0002  @ mapLayoutId
+	.byte 0x08, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY (g0 m2)
+	.4byte 0x083BA284  @ mapLayout
+	.4byte 0x084FEED8  @ events
+	.4byte MauvilleCity_MapScripts  @ mapScripts
+	.4byte 0x0845EB70  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0003  @ mapLayoutId
+	.byte 0x09, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY (g0 m3)
+	.4byte 0x083BB564  @ mapLayout
+	.4byte 0x084FF294  @ events
+	.4byte RustboroCity_MapScripts  @ mapScripts
+	.4byte 0x0845EB9C  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0004  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY (g0 m4)
+	.4byte 0x083BBBC4  @ mapLayout
+	.4byte 0x084FF3E0  @ events
+	.4byte FortreeCity_MapScripts  @ mapScripts
+	.4byte 0x0845EBBC  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0005  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY (g0 m5)
+	.4byte 0x083BD4E4  @ mapLayout
+	.4byte 0x084FF710  @ events
+	.4byte LilycoveCity_MapScripts  @ mapScripts
+	.4byte 0x0845EBDC  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0006  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY (g0 m6)
+	.4byte 0x083BEE04  @ mapLayout
+	.4byte 0x084FFA0C  @ events
+	.4byte MossdeepCity_MapScripts  @ mapScripts
+	.4byte 0x0845EC08  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0007  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY (g0 m7)
+	.4byte 0x083C0A44  @ mapLayout
+	.4byte 0x084FFC80  @ events
+	.4byte SootopolisCity_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0008  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY (g0 m8)
+	.4byte 0x083C2364  @ mapLayout
+	.4byte 0x084FFDA0  @ events
+	.4byte EverGrandeCity_MapScripts  @ mapScripts
+	.4byte 0x0845EC24  @ connections
+	.2byte 0x01A6  @ music
+	.2byte 0x0009  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN (g0 m9)
+	.4byte 0x083C26A4  @ mapLayout
+	.4byte 0x084FFF4C  @ events
+	.4byte LittlerootTown_MapScripts  @ mapScripts
+	.4byte 0x0845EA2C  @ connections
+	.2byte 0x0195  @ music
+	.2byte 0x000A  @ mapLayoutId
+	.byte 0x00, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN (g0 m10)
+	.4byte 0x083C29E4  @ mapLayout
+	.4byte 0x0850005C  @ events
+	.4byte OldaleTown_MapScripts  @ mapScripts
+	.4byte 0x0845EA58  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x000B  @ mapLayoutId
+	.byte 0x01, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN (g0 m11)
+	.4byte 0x083C2D24  @ mapLayout
+	.4byte 0x0850014C  @ events
+	.4byte DewfordTown_MapScripts  @ mapScripts
+	.4byte 0x0845EA78  @ connections
+	.2byte 0x01AB  @ music
+	.2byte 0x000C  @ mapLayoutId
+	.byte 0x02, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN (g0 m12)
+	.4byte 0x083C3064  @ mapLayout
+	.4byte 0x085002D8  @ events
+	.4byte LavaridgeTown_MapScripts  @ mapScripts
+	.4byte 0x0845EA8C  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x000D  @ mapLayoutId
+	.byte 0x03, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN (g0 m13)
+	.4byte 0x083C33A4  @ mapLayout
+	.4byte 0x085003D4  @ events
+	.4byte FallarborTown_MapScripts  @ mapScripts
+	.4byte 0x0845EAAC  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x000E  @ mapLayoutId
+	.byte 0x04, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN (g0 m14)
+	.4byte 0x083C36E4  @ mapLayout
+	.4byte 0x085004E0  @ events
+	.4byte VerdanturfTown_MapScripts  @ mapScripts
+	.4byte 0x0845EACC  @ connections
+	.2byte 0x018E  @ music
+	.2byte 0x000F  @ mapLayoutId
+	.byte 0x05, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN (g0 m15)
+	.4byte 0x083C3D44  @ mapLayout
+	.4byte 0x08500590  @ events
+	.4byte PacifidlogTown_MapScripts  @ mapScripts
+	.4byte 0x0845EAEC  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0010  @ mapLayoutId
+	.byte 0x06, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE101 (g0 m16)
+	.4byte 0x083C4084  @ mapLayout
+	.4byte 0x085006D0  @ events
+	.4byte Route101_MapScripts  @ mapScripts
+	.4byte 0x0845EC44  @ connections
+	.2byte 0x0167  @ music
+	.2byte 0x0011  @ mapLayoutId
+	.byte 0x10, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE102 (g0 m17)
+	.4byte 0x083C4874  @ mapLayout
+	.4byte 0x085007D4  @ events
+	.4byte 0x081E6824  @ mapScripts
+	.4byte 0x0845EC64  @ connections
+	.2byte 0x0167  @ music
+	.2byte 0x0012  @ mapLayoutId
+	.byte 0x11, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE103 (g0 m18)
+	.4byte 0x083C5654  @ mapLayout
+	.4byte 0x085009DC  @ events
+	.4byte Route103_MapScripts  @ mapScripts
+	.4byte 0x0845EC84  @ connections
+	.2byte 0x0167  @ music
+	.2byte 0x0013  @ mapLayoutId
+	.byte 0x12, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE104 (g0 m19)
+	.4byte 0x083C6F74  @ mapLayout
+	.4byte 0x08500DE8  @ events
+	.4byte Route104_MapScripts  @ mapScripts
+	.4byte 0x0845ECB0  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0014  @ mapLayoutId
+	.byte 0x13, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE105 (g0 m20)
+	.4byte 0x083C8894  @ mapLayout
+	.4byte 0x08500EDC  @ events
+	.4byte Route105_MapScripts  @ mapScripts
+	.4byte 0x0845ECDC  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0015  @ mapLayoutId
+	.byte 0x14, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE106 (g0 m21)
+	.4byte 0x083C9534  @ mapLayout
+	.4byte 0x08500FA0  @ events
+	.4byte 0x081E83CA  @ mapScripts
+	.4byte 0x0845ECFC  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0016  @ mapLayoutId
+	.byte 0x15, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE107 (g0 m22)
+	.4byte 0x083C9EB4  @ mapLayout
+	.4byte 0x0850105C  @ events
+	.4byte 0x081E84AB  @ mapScripts
+	.4byte 0x0845ED1C  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0017  @ mapLayoutId
+	.byte 0x16, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE108 (g0 m23)
+	.4byte 0x083CA834  @ mapLayout
+	.4byte 0x0850112C  @ events
+	.4byte 0x081E85A0  @ mapScripts
+	.4byte 0x0845ED3C  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0018  @ mapLayoutId
+	.byte 0x17, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE109 (g0 m24)
+	.4byte 0x083CBC04  @ mapLayout
+	.4byte 0x085013E8  @ events
+	.4byte 0x081E8676  @ mapScripts
+	.4byte 0x0845ED5C  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0019  @ mapLayoutId
+	.byte 0x18, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE110 (g0 m25)
+	.4byte 0x083CDB64  @ mapLayout
+	.4byte 0x085018E8  @ events
+	.4byte Route110_MapScripts  @ mapScripts
+	.4byte 0x0845ED88  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x001A  @ mapLayoutId
+	.byte 0x19, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE111 (g0 m26)
+	.4byte 0x083D0744  @ mapLayout
+	.4byte 0x0850206C  @ events
+	.4byte Route111_MapScripts  @ mapScripts
+	.4byte 0x0845EDB4  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x001B  @ mapLayoutId
+	.byte 0x1A, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE112 (g0 m27)
+	.4byte 0x083D1A24  @ mapLayout
+	.4byte 0x08502224  @ events
+	.4byte Route112_MapScripts  @ mapScripts
+	.4byte 0x0845EDE0  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x001C  @ mapLayoutId
+	.byte 0x1B, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE113 (g0 m28)
+	.4byte 0x083D29E4  @ mapLayout
+	.4byte 0x08502560  @ events
+	.4byte Route113_MapScripts  @ mapScripts
+	.4byte 0x0845EE0C  @ connections
+	.2byte 0x01A2  @ music
+	.2byte 0x001D  @ mapLayoutId
+	.byte 0x1C, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE114 (g0 m29)
+	.4byte 0x083D4304  @ mapLayout
+	.4byte 0x085028B4  @ events
+	.4byte Route114_MapScripts  @ mapScripts
+	.4byte 0x0845EE2C  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x001E  @ mapLayoutId
+	.byte 0x1D, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE115 (g0 m30)
+	.4byte 0x083D5C24  @ mapLayout
+	.4byte 0x08502BB0  @ events
+	.4byte Route115_MapScripts  @ mapScripts
+	.4byte 0x0845EE4C  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x001F  @ mapLayoutId
+	.byte 0x1E, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE116 (g0 m31)
+	.4byte 0x083D6BE4  @ mapLayout
+	.4byte 0x08502F20  @ events
+	.4byte Route116_MapScripts  @ mapScripts
+	.4byte 0x0845EE6C  @ connections
+	.2byte 0x0191  @ music
+	.2byte 0x0020  @ mapLayoutId
+	.byte 0x1F, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE117 (g0 m32)
+	.4byte 0x083D7564  @ mapLayout
+	.4byte 0x085031AC  @ events
+	.4byte Route117_MapScripts  @ mapScripts
+	.4byte 0x0845EE8C  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x0021  @ mapLayoutId
+	.byte 0x20, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE118 (g0 m33)
+	.4byte 0x083D8204  @ mapLayout
+	.4byte 0x08503464  @ events
+	.4byte Route118_MapScripts  @ mapScripts
+	.4byte 0x0845EEB8  @ connections
+	.2byte 0x7FFF  @ music
+	.2byte 0x0022  @ mapLayoutId
+	.byte 0x21, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE119 (g0 m34)
+	.4byte 0x083DADE4  @ mapLayout
+	.4byte 0x08503B10  @ events
+	.4byte Route119_MapScripts  @ mapScripts
+	.4byte 0x0845EED8  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x0023  @ mapLayoutId
+	.byte 0x22, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE120 (g0 m35)
+	.4byte 0x083DCD44  @ mapLayout
+	.4byte 0x0850412C  @ events
+	.4byte Route120_MapScripts  @ mapScripts
+	.4byte 0x0845EEF8  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x0024  @ mapLayoutId
+	.byte 0x23, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE121 (g0 m36)
+	.4byte 0x083DD9E4  @ mapLayout
+	.4byte 0x085044B8  @ events
+	.4byte 0x081EE0D9  @ mapScripts
+	.4byte 0x0845EF24  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x0025  @ mapLayoutId
+	.byte 0x24, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE122 (g0 m37)
+	.4byte 0x083DE684  @ mapLayout
+	.4byte 0x085044D4  @ events
+	.4byte 0x081EE3D5  @ mapScripts
+	.4byte 0x0845EF44  @ connections
+	.2byte 0x0176  @ music
+	.2byte 0x0026  @ mapLayoutId
+	.byte 0x25, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE123 (g0 m38)
+	.4byte 0x083DFC84  @ mapLayout
+	.4byte 0x08504ADC  @ events
+	.4byte Route123_MapScripts  @ mapScripts
+	.4byte 0x0845EF64  @ connections
+	.2byte 0x0176  @ music
+	.2byte 0x0027  @ mapLayoutId
+	.byte 0x26, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE124 (g0 m39)
+	.4byte 0x083E2EA4  @ mapLayout
+	.4byte 0x08504C24  @ events
+	.4byte Route124_MapScripts  @ mapScripts
+	.4byte 0x0845EFA8  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x0028  @ mapLayoutId
+	.byte 0x27, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE125 (g0 m40)
+	.4byte 0x083E47C4  @ mapLayout
+	.4byte 0x08504D60  @ events
+	.4byte Route125_MapScripts  @ mapScripts
+	.4byte 0x0845EFD4  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x0029  @ mapLayoutId
+	.byte 0x28, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE126 (g0 m41)
+	.4byte 0x083E79E4  @ mapLayout
+	.4byte 0x08504E4C  @ events
+	.4byte Route126_MapScripts  @ mapScripts
+	.4byte 0x0845F000  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x002A  @ mapLayoutId
+	.byte 0x29, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE127 (g0 m42)
+	.4byte 0x083EAC04  @ mapLayout
+	.4byte 0x08504FA4  @ events
+	.4byte Route127_MapScripts  @ mapScripts
+	.4byte 0x0845F038  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x002B  @ mapLayoutId
+	.byte 0x2A, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE128 (g0 m43)
+	.4byte 0x083ED1A4  @ mapLayout
+	.4byte 0x085050CC  @ events
+	.4byte Route128_MapScripts  @ mapScripts
+	.4byte 0x0845F070  @ connections
+	.2byte 0x0169  @ music
+	.2byte 0x002C  @ mapLayoutId
+	.byte 0x2B, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE129 (g0 m44)
+	.4byte 0x083EEAC4  @ mapLayout
+	.4byte 0x08505158  @ events
+	.4byte Route129_MapScripts  @ mapScripts
+	.4byte 0x0845F09C  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x002D  @ mapLayoutId
+	.byte 0x2C, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE130 (g0 m45)
+	.4byte 0x08423268  @ mapLayout
+	.4byte 0x085051CC  @ events
+	.4byte Route130_MapScripts  @ mapScripts
+	.4byte 0x0845F0BC  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x0107  @ mapLayoutId
+	.byte 0x2D, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE131 (g0 m46)
+	.4byte 0x083F16C4  @ mapLayout
+	.4byte 0x085052A8  @ events
+	.4byte Route131_MapScripts  @ mapScripts
+	.4byte 0x0845F0DC  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x002F  @ mapLayoutId
+	.byte 0x2E, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE132 (g0 m47)
+	.4byte 0x083F2FE4  @ mapLayout
+	.4byte 0x085053AC  @ events
+	.4byte 0x081EF519  @ mapScripts
+	.4byte 0x0845F0FC  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x0030  @ mapLayoutId
+	.byte 0x2F, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE133 (g0 m48)
+	.4byte 0x083F4904  @ mapLayout
+	.4byte 0x085054B0  @ events
+	.4byte 0x081EF5D2  @ mapScripts
+	.4byte 0x0845F11C  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x0031  @ mapLayoutId
+	.byte 0x30, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE134 (g0 m49)
+	.4byte 0x083F6224  @ mapLayout
+	.4byte 0x085055CC  @ events
+	.4byte Route134_MapScripts  @ mapScripts
+	.4byte 0x0845F13C  @ connections
+	.2byte 0x0192  @ music
+	.2byte 0x0032  @ mapLayoutId
+	.byte 0x31, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE124 (g0 m50)
+	.4byte 0x08429000  @ mapLayout
+	.4byte 0x08505634  @ events
+	.4byte 0x081EF752  @ mapScripts
+	.4byte 0x0845F170  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0112  @ mapLayoutId
+	.byte 0x32, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE126 (g0 m51)
+	.4byte 0x083F9444  @ mapLayout
+	.4byte 0x085056B0  @ events
+	.4byte 0x081EF753  @ mapScripts
+	.4byte 0x0845F1B0  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0033  @ mapLayoutId
+	.byte 0x33, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE127 (g0 m52)
+	.4byte 0x083FC664  @ mapLayout
+	.4byte 0x08505704  @ events
+	.4byte Underwater_Route127_MapScripts  @ mapScripts
+	.4byte 0x0845F1DC  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0034  @ mapLayoutId
+	.byte 0x34, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE128 (g0 m53)
+	.4byte 0x083FEC04  @ mapLayout
+	.4byte 0x08505738  @ events
+	.4byte 0x081EF760  @ mapScripts
+	.4byte 0x0845F1FC  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0035  @ mapLayoutId
+	.byte 0x35, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE129 (g0 m54)
+	.4byte 0x08454138  @ mapLayout
+	.4byte 0x0850575C  @ events
+	.4byte Underwater_Route129_MapScripts  @ mapScripts
+	.4byte 0x0845F210  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x019C  @ mapLayoutId
+	.byte 0xD0, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE105 (g0 m55)
+	.4byte 0x08450EF8  @ mapLayout
+	.4byte 0x08505780  @ events
+	.4byte Underwater_Route105_MapScripts  @ mapScripts
+	.4byte 0x0845F150  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x019A  @ mapLayoutId
+	.byte 0xCE, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_ROUTE125 (g0 m56)
+	.4byte 0x08452818  @ mapLayout
+	.4byte 0x085057A4  @ events
+	.4byte Underwater_Route125_MapScripts  @ mapScripts
+	.4byte 0x0845F184  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x019B  @ mapLayoutId
+	.byte 0xCF, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F (g1 m0)
+	.4byte 0x083FECEC  @ mapLayout
+	.4byte 0x085058B8  @ events
+	.4byte LittlerootTown_BrendansHouse_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0195  @ music
+	.2byte 0x0036  @ mapLayoutId
+	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F (g1 m1)
+	.4byte 0x083FED9C  @ mapLayout
+	.4byte 0x08505A84  @ events
+	.4byte LittlerootTown_BrendansHouse_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0195  @ music
+	.2byte 0x0037  @ mapLayoutId
+	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F (g1 m2)
+	.4byte 0x083FEE84  @ mapLayout
+	.4byte 0x08505B98  @ events
+	.4byte LittlerootTown_MaysHouse_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0195  @ music
+	.2byte 0x0038  @ mapLayoutId
+	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F (g1 m3)
+	.4byte 0x083FEF34  @ mapLayout
+	.4byte 0x08505D64  @ events
+	.4byte LittlerootTown_MaysHouse_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0195  @ music
+	.2byte 0x0039  @ mapLayoutId
+	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB (g1 m4)
+	.4byte 0x083FF0A8  @ mapLayout
+	.4byte 0x08505ECC  @ events
+	.4byte LittlerootTown_ProfessorBirchsLab_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017F  @ music
+	.2byte 0x003A  @ mapLayoutId
+	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN_HOUSE1 (g2 m0)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x08505F08  @ events
+	.4byte 0x081F28D3  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN_HOUSE2 (g2 m1)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x08505F5C  @ events
+	.4byte 0x081F2949  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN_POKEMON_CENTER_1F (g2 m2)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08505FE8  @ events
+	.4byte OldaleTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN_POKEMON_CENTER_2F (g2 m3)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08506074  @ events
+	.4byte OldaleTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_OLDALE_TOWN_MART (g2 m4)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x085060E0  @ events
+	.4byte 0x081F2B0B  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_HOUSE1 (g3 m0)
+	.4byte 0x083FF630  @ mapLayout
+	.4byte 0x0850614C  @ events
+	.4byte 0x081F2C10  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AB  @ music
+	.2byte 0x0040  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_1F (g3 m1)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x085061C0  @ events
+	.4byte DewfordTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_2F (g3 m2)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850624C  @ events
+	.4byte DewfordTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_GYM (g3 m3)
+	.4byte 0x083FFA40  @ mapLayout
+	.4byte 0x08506360  @ events
+	.4byte DewfordTown_Gym_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x0041  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_HALL (g3 m4)
+	.4byte 0x083FFB94  @ mapLayout
+	.4byte 0x08506474  @ events
+	.4byte 0x081F3788  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AB  @ music
+	.2byte 0x0042  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DEWFORD_TOWN_HOUSE2 (g3 m5)
+	.4byte 0x083FFC68  @ mapLayout
+	.4byte 0x085064C8  @ events
+	.4byte 0x081F4008  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AB  @ music
+	.2byte 0x0043  @ mapLayoutId
+	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_HERB_SHOP (g4 m0)
+	.4byte 0x083FFD38  @ mapLayout
+	.4byte 0x08506534  @ events
+	.4byte 0x081F4185  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x0044  @ mapLayoutId
+	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_GYM_1F (g4 m1)
+	.4byte 0x083FFFE0  @ mapLayout
+	.4byte 0x085066C0  @ events
+	.4byte LavaridgeTown_Gym_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x0045  @ mapLayoutId
+	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_GYM_B1F (g4 m2)
+	.4byte 0x08400288  @ mapLayout
+	.4byte 0x085067F4  @ events
+	.4byte LavaridgeTown_Gym_B1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x0046  @ mapLayoutId
+	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_HOUSE (g4 m3)
+	.4byte 0x083FF630  @ mapLayout
+	.4byte 0x08506860  @ events
+	.4byte 0x081F4E4D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016B  @ music
+	.2byte 0x0040  @ mapLayoutId
+	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_MART (g4 m4)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x085068CC  @ events
+	.4byte 0x081F4ECC  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F (g4 m5)
+	.4byte 0x084003A4  @ mapLayout
+	.4byte 0x08506960  @ events
+	.4byte LavaridgeTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x0047  @ mapLayoutId
+	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_2F (g4 m6)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x085069EC  @ events
+	.4byte LavaridgeTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_MART (g5 m0)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08506A88  @ events
+	.4byte 0x081F5098  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY (g5 m1)
+	.4byte 0x08444424  @ mapLayout
+	.4byte 0x08506B30  @ events
+	.4byte FallarborTown_BattleTentLobby_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0180  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR (g5 m2)
+	.4byte 0x08444494  @ mapLayout
+	.4byte 0x08506B5C  @ events
+	.4byte FallarborTown_BattleTentCorridor_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0181  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM (g5 m3)
+	.4byte 0x08444568  @ mapLayout
+	.4byte 0x08506BB8  @ events
+	.4byte FallarborTown_BattleTentBattleRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0182  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F (g5 m4)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08506C44  @ events
+	.4byte FallarborTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_2F (g5 m5)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08506CD0  @ events
+	.4byte FallarborTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_COZMOS_HOUSE (g5 m6)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x08506D24  @ events
+	.4byte 0x081F5E78  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE (g5 m7)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x08506D60  @ events
+	.4byte 0x081F6155  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY (g6 m0)
+	.4byte 0x08444424  @ mapLayout
+	.4byte 0x08506E20  @ events
+	.4byte VerdanturfTown_BattleTentLobby_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0180  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR (g6 m1)
+	.4byte 0x08444494  @ mapLayout
+	.4byte 0x08506E4C  @ events
+	.4byte VerdanturfTown_BattleTentCorridor_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0181  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM (g6 m2)
+	.4byte 0x08444674  @ mapLayout
+	.4byte 0x08506EA8  @ events
+	.4byte VerdanturfTown_BattleTentBattleRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0183  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_MART (g6 m3)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08506F2C  @ events
+	.4byte 0x081F6F27  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_1F (g6 m4)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08506FB8  @ events
+	.4byte VerdanturfTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_2F (g6 m5)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08507044  @ events
+	.4byte VerdanturfTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_WANDAS_HOUSE (g6 m6)
+	.4byte 0x084009A0  @ mapLayout
+	.4byte 0x085070E0  @ events
+	.4byte 0x081F7105  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018E  @ music
+	.2byte 0x004C  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE (g6 m7)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x08507134  @ events
+	.4byte 0x081F7556  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018E  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_VERDANTURF_TOWN_HOUSE (g6 m8)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x08507188  @ events
+	.4byte 0x081F777F  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018E  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F (g7 m0)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850722C  @ events
+	.4byte PacifidlogTown_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_2F (g7 m1)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x085072B8  @ events
+	.4byte PacifidlogTown_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_HOUSE1 (g7 m2)
+	.4byte 0x08400A74  @ mapLayout
+	.4byte 0x0850730C  @ events
+	.4byte 0x081F793E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004D  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_HOUSE2 (g7 m3)
+	.4byte 0x08400B48  @ mapLayout
+	.4byte 0x08507378  @ events
+	.4byte 0x081F79FF  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004E  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_HOUSE3 (g7 m4)
+	.4byte 0x08400A74  @ mapLayout
+	.4byte 0x085073CC  @ events
+	.4byte 0x081F7D1A  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004D  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_HOUSE4 (g7 m5)
+	.4byte 0x08400B48  @ mapLayout
+	.4byte 0x08507438  @ events
+	.4byte 0x081F7F3D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004E  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PACIFIDLOG_TOWN_HOUSE5 (g7 m6)
+	.4byte 0x08400A74  @ mapLayout
+	.4byte 0x0850748C  @ events
+	.4byte 0x081F8055  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004D  @ mapLayoutId
+	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_WALLYS_HOUSE (g8 m0)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x085074E0  @ events
+	.4byte PetalburgCity_WallysHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_GYM (g8 m1)
+	.4byte 0x08401348  @ mapLayout
+	.4byte 0x085077D4  @ events
+	.4byte PetalburgCity_Gym_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x004F  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_HOUSE1 (g8 m2)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x08507828  @ events
+	.4byte 0x081FA63D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_HOUSE2 (g8 m3)
+	.4byte 0x08401408  @ mapLayout
+	.4byte 0x0850787C  @ events
+	.4byte 0x081FA720  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x0050  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_POKEMON_CENTER_1F (g8 m4)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08507920  @ events
+	.4byte PetalburgCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_POKEMON_CENTER_2F (g8 m5)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x085079AC  @ events
+	.4byte PetalburgCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_CITY_MART (g8 m6)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08507A30  @ events
+	.4byte 0x081FA9E9  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F (g9 m0)
+	.4byte 0x084016A0  @ mapLayout
+	.4byte 0x08507ABC  @ events
+	.4byte 0x081FAB28  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0051  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_2F (g9 m1)
+	.4byte 0x084018C0  @ mapLayout
+	.4byte 0x08507B20  @ events
+	.4byte 0x081FAFA2  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0052  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY (g9 m2)
+	.4byte 0x08444424  @ mapLayout
+	.4byte 0x08507BC8  @ events
+	.4byte SlateportCity_BattleTentLobby_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0180  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR (g9 m3)
+	.4byte 0x08444494  @ mapLayout
+	.4byte 0x08507BF4  @ events
+	.4byte SlateportCity_BattleTentCorridor_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0181  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM (g9 m4)
+	.4byte 0x08444568  @ mapLayout
+	.4byte 0x08507C50  @ events
+	.4byte SlateportCity_BattleTentBattleRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0180  @ music
+	.2byte 0x0182  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_NAME_RATERS_HOUSE (g9 m5)
+	.4byte 0x08401408  @ mapLayout
+	.4byte 0x08507C8C  @ events
+	.4byte 0x081FBD9D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0050  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_POKEMON_FAN_CLUB (g9 m6)
+	.4byte 0x08401A5C  @ mapLayout
+	.4byte 0x08507D88  @ events
+	.4byte 0x081FC027  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0055  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F (g9 m7)
+	.4byte 0x08401BE4  @ mapLayout
+	.4byte 0x08507FC0  @ events
+	.4byte 0x081FCA3E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0177  @ music
+	.2byte 0x0056  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_2F (g9 m8)
+	.4byte 0x08401D6C  @ mapLayout
+	.4byte 0x08508180  @ events
+	.4byte 0x081FD309  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0177  @ music
+	.2byte 0x0057  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_HARBOR (g9 m9)
+	.4byte 0x0840205C  @ mapLayout
+	.4byte 0x085082B4  @ events
+	.4byte SlateportCity_Harbor_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x0058  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_HOUSE (g9 m10)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x08508308  @ events
+	.4byte 0x081FE772  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B1  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_1F (g9 m11)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850837C  @ events
+	.4byte SlateportCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_2F (g9 m12)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08508408  @ events
+	.4byte SlateportCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SLATEPORT_CITY_MART (g9 m13)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08508474  @ events
+	.4byte 0x081FE8F9  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_GYM (g10 m0)
+	.4byte 0x08402220  @ mapLayout
+	.4byte 0x08508598  @ events
+	.4byte MauvilleCity_Gym_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x0059  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_BIKE_SHOP (g10 m1)
+	.4byte 0x08402318  @ mapLayout
+	.4byte 0x08508604  @ events
+	.4byte 0x081FF3EB  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x005A  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_HOUSE1 (g10 m2)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x08508640  @ events
+	.4byte 0x081FFD77  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_GAME_CORNER (g10 m3)
+	.4byte 0x0840251C  @ mapLayout
+	.4byte 0x085088A4  @ events
+	.4byte 0x081FFEE7  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AA  @ music
+	.2byte 0x005B  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_HOUSE2 (g10 m4)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x085088E0  @ events
+	.4byte 0x08200C5A  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_1F (g10 m5)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08508984  @ events
+	.4byte MauvilleCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_2F (g10 m6)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08508A28  @ events
+	.4byte MauvilleCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MAUVILLE_CITY_MART (g10 m7)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08508A94  @ events
+	.4byte 0x08200F4F  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_DEVON_CORP_1F (g11 m0)
+	.4byte 0x08402694  @ mapLayout
+	.4byte 0x08508B20  @ events
+	.4byte RustboroCity_DevonCorp_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x005C  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_DEVON_CORP_2F (g11 m1)
+	.4byte 0x0840280C  @ mapLayout
+	.4byte 0x08508BD4  @ events
+	.4byte RustboroCity_DevonCorp_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x005D  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_DEVON_CORP_3F (g11 m2)
+	.4byte 0x0842579C  @ mapLayout
+	.4byte 0x08508C50  @ events
+	.4byte RustboroCity_DevonCorp_3F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x010D  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_GYM (g11 m3)
+	.4byte 0x084029E4  @ mapLayout
+	.4byte 0x08508D04  @ events
+	.4byte 0x082022C5  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x005E  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_POKEMON_SCHOOL (g11 m4)
+	.4byte 0x08402B0C  @ mapLayout
+	.4byte 0x08508E0C  @ events
+	.4byte 0x08202C1A  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B3  @ music
+	.2byte 0x005F  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_1F (g11 m5)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08508E98  @ events
+	.4byte RustboroCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_2F (g11 m6)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x08508F24  @ events
+	.4byte RustboroCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_MART (g11 m7)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08508FA8  @ events
+	.4byte 0x082035E0  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_FLAT1_1F (g11 m8)
+	.4byte 0x084328B4  @ mapLayout
+	.4byte 0x08509004  @ events
+	.4byte 0x08203714  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0139  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_FLAT1_2F (g11 m9)
+	.4byte 0x084329B4  @ mapLayout
+	.4byte 0x085090E0  @ events
+	.4byte 0x08203770  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x013A  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_HOUSE1 (g11 m10)
+	.4byte 0x08402CF4  @ mapLayout
+	.4byte 0x08509134  @ events
+	.4byte 0x08203BC8  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0061  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_CUTTERS_HOUSE (g11 m11)
+	.4byte 0x08402DDC  @ mapLayout
+	.4byte 0x08509188  @ events
+	.4byte 0x08203D7C  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0062  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_HOUSE2 (g11 m12)
+	.4byte 0x08402C04  @ mapLayout
+	.4byte 0x085091DC  @ events
+	.4byte 0x08203F15  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0060  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_FLAT2_1F (g11 m13)
+	.4byte 0x0842EFDC  @ mapLayout
+	.4byte 0x08509238  @ events
+	.4byte 0x08203F99  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0126  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_FLAT2_2F (g11 m14)
+	.4byte 0x0842F0F8  @ mapLayout
+	.4byte 0x0850928C  @ events
+	.4byte 0x08203FE8  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0127  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_FLAT2_3F (g11 m15)
+	.4byte 0x0842F214  @ mapLayout
+	.4byte 0x085092D8  @ events
+	.4byte 0x082040B5  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0128  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTBORO_CITY_HOUSE3 (g11 m16)
+	.4byte 0x08402C04  @ mapLayout
+	.4byte 0x08509344  @ events
+	.4byte 0x08204117  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0060  @ mapLayoutId
+	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_HOUSE1 (g12 m0)
+	.4byte 0x08402E5C  @ mapLayout
+	.4byte 0x085093B0  @ events
+	.4byte 0x082041CA  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0063  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_GYM (g12 m1)
+	.4byte 0x08403264  @ mapLayout
+	.4byte 0x085094AC  @ events
+	.4byte FortreeCity_Gym_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x0064  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_POKEMON_CENTER_1F (g12 m2)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x08509538  @ events
+	.4byte FortreeCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_POKEMON_CENTER_2F (g12 m3)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x085095C4  @ events
+	.4byte FortreeCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_MART (g12 m4)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x08509648  @ events
+	.4byte 0x08204DBD  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_HOUSE2 (g12 m5)
+	.4byte 0x084032E4  @ mapLayout
+	.4byte 0x0850969C  @ events
+	.4byte 0x08204E9B  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0065  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_HOUSE3 (g12 m6)
+	.4byte 0x08402E5C  @ mapLayout
+	.4byte 0x085096F0  @ events
+	.4byte 0x082050D0  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0063  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_HOUSE4 (g12 m7)
+	.4byte 0x084032E4  @ mapLayout
+	.4byte 0x0850975C  @ events
+	.4byte 0x082051A2  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0065  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_HOUSE5 (g12 m8)
+	.4byte 0x08402E5C  @ mapLayout
+	.4byte 0x085097C8  @ events
+	.4byte 0x08205343  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x0063  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FORTREE_CITY_DECORATION_SHOP (g12 m9)
+	.4byte 0x08421064  @ mapLayout
+	.4byte 0x0850984C  @ events
+	.4byte 0x082053F0  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x00FF  @ mapLayoutId
+	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_1F (g13 m0)
+	.4byte 0x0842F5BC  @ mapLayout
+	.4byte 0x085098A0  @ events
+	.4byte 0x082054FC  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x012B  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_2F (g13 m1)
+	.4byte 0x0842F6B4  @ mapLayout
+	.4byte 0x08509964  @ events
+	.4byte 0x08205887  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x012C  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F (g13 m2)
+	.4byte 0x08403648  @ mapLayout
+	.4byte 0x08509B40  @ events
+	.4byte 0x08205BE2  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0175  @ music
+	.2byte 0x0067  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F (g13 m3)
+	.4byte 0x084038A4  @ mapLayout
+	.4byte 0x08509C4C  @ events
+	.4byte LilycoveCity_LilycoveMuseum_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0175  @ music
+	.2byte 0x0068  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_CONTEST_LOBBY (g13 m4)
+	.4byte 0x08403BAC  @ mapLayout
+	.4byte 0x08509F68  @ events
+	.4byte LilycoveCity_ContestLobby_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01C4  @ music
+	.2byte 0x0069  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_CONTEST_HALL (g13 m5)
+	.4byte 0x084048F4  @ mapLayout
+	.4byte 0x0850A2E4  @ events
+	.4byte 0x082077B9  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01C4  @ music
+	.2byte 0x006A  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_1F (g13 m6)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850A388  @ events
+	.4byte LilycoveCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_2F (g13 m7)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850A414  @ events
+	.4byte LilycoveCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_UNUSED_MART (g13 m8)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x0850A438  @ events
+	.4byte 0x0820839D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB (g13 m9)
+	.4byte 0x08404A64  @ mapLayout
+	.4byte 0x0850A534  @ events
+	.4byte LilycoveCity_PokemonTrainerFanClub_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x006B  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_HARBOR (g13 m10)
+	.4byte 0x0840205C  @ mapLayout
+	.4byte 0x0850A5D0  @ events
+	.4byte LilycoveCity_Harbor_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0058  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_MOVE_DELETERS_HOUSE (g13 m11)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x0850A60C  @ events
+	.4byte 0x08209D70  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_HOUSE1 (g13 m12)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x0850A660  @ events
+	.4byte 0x08209F66  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_HOUSE2 (g13 m13)
+	.4byte 0x0840084C  @ mapLayout
+	.4byte 0x0850A69C  @ events
+	.4byte 0x08209FDC  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x004A  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_HOUSE3 (g13 m14)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x0850A750  @ events
+	.4byte LilycoveCity_House3_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_HOUSE4 (g13 m15)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x0850A7A4  @ events
+	.4byte 0x0820A51A  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F (g13 m16)
+	.4byte 0x08421278  @ mapLayout
+	.4byte 0x0850A874  @ events
+	.4byte 0x0820A5AF  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0101  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F (g13 m17)
+	.4byte 0x084213B8  @ mapLayout
+	.4byte 0x0850A918  @ events
+	.4byte 0x0820A920  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x0102  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F (g13 m18)
+	.4byte 0x084214F8  @ mapLayout
+	.4byte 0x0850A9BC  @ events
+	.4byte 0x0820AA19  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x0103  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F (g13 m19)
+	.4byte 0x08421638  @ mapLayout
+	.4byte 0x0850AA60  @ events
+	.4byte 0x0820AB4E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x0104  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F (g13 m20)
+	.4byte 0x08421778  @ mapLayout
+	.4byte 0x0850AB34  @ events
+	.4byte LilycoveCity_DepartmentStore_5F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x0105  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP (g13 m21)
+	.4byte 0x08421948  @ mapLayout
+	.4byte 0x0850ABC8  @ events
+	.4byte LilycoveCity_DepartmentStoreRooftop_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0106  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR (g13 m22)
+	.4byte 0x08425DE0  @ mapLayout
+	.4byte 0x0850AC04  @ events
+	.4byte 0x0820B18C  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0198  @ music
+	.2byte 0x0111  @ mapLayoutId
+	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_GYM (g14 m0)
+	.4byte 0x084051D4  @ mapLayout
+	.4byte 0x0850B090  @ events
+	.4byte MossdeepCity_Gym_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x006C  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_HOUSE1 (g14 m1)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x0850B0E4  @ events
+	.4byte 0x0820C332  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_HOUSE2 (g14 m2)
+	.4byte 0x083FF17C  @ mapLayout
+	.4byte 0x0850B150  @ events
+	.4byte 0x0820C3D2  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003B  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F (g14 m3)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850B1C4  @ events
+	.4byte MossdeepCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_2F (g14 m4)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850B268  @ events
+	.4byte MossdeepCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_MART (g14 m5)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x0850B2EC  @ events
+	.4byte 0x0820C5B2  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_HOUSE3 (g14 m6)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x0850B328  @ events
+	.4byte 0x0820C6FA  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_STEVENS_HOUSE (g14 m7)
+	.4byte 0x084371A4  @ mapLayout
+	.4byte 0x0850B3C4  @ events
+	.4byte MossdeepCity_StevensHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0147  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_HOUSE4 (g14 m8)
+	.4byte 0x08401408  @ mapLayout
+	.4byte 0x0850B430  @ events
+	.4byte 0x0820CC5B  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0050  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_1F (g14 m9)
+	.4byte 0x08429160  @ mapLayout
+	.4byte 0x0850B564  @ events
+	.4byte MossdeepCity_SpaceCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0113  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_2F (g14 m10)
+	.4byte 0x084292C0  @ mapLayout
+	.4byte 0x0850B658  @ events
+	.4byte MossdeepCity_SpaceCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0114  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_GAME_CORNER_1F (g14 m11)
+	.4byte 0x08431A58  @ mapLayout
+	.4byte 0x0850B6D8  @ events
+	.4byte MossdeepCity_GameCorner_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0131  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MOSSDEEP_CITY_GAME_CORNER_B1F (g14 m12)
+	.4byte 0x08431B50  @ mapLayout
+	.4byte 0x0850B70C  @ events
+	.4byte 0x0820E223  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0132  @ mapLayoutId
+	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_GYM_1F (g15 m0)
+	.4byte 0x08405568  @ mapLayout
+	.4byte 0x0850B780  @ events
+	.4byte SootopolisCity_Gym_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x006D  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_GYM_B1F (g15 m1)
+	.4byte 0x084058FC  @ mapLayout
+	.4byte 0x0850B88C  @ events
+	.4byte 0x0820EAC6  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016C  @ music
+	.2byte 0x006E  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F (g15 m2)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850B918  @ events
+	.4byte SootopolisCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_2F (g15 m3)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850B9A4  @ events
+	.4byte SootopolisCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_MART (g15 m4)
+	.4byte 0x083FF570  @ mapLayout
+	.4byte 0x0850BA10  @ events
+	.4byte 0x0820F1B7  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0194  @ music
+	.2byte 0x003F  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE1 (g15 m5)
+	.4byte 0x08431BE0  @ mapLayout
+	.4byte 0x0850BA64  @ events
+	.4byte 0x0820F300  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0133  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE2 (g15 m6)
+	.4byte 0x08431C70  @ mapLayout
+	.4byte 0x0850BAA0  @ events
+	.4byte 0x0820F3C6  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0134  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE3 (g15 m7)
+	.4byte 0x08431D00  @ mapLayout
+	.4byte 0x0850BAF4  @ events
+	.4byte 0x0820F479  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0135  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE4 (g15 m8)
+	.4byte 0x08431BE0  @ mapLayout
+	.4byte 0x0850BB60  @ events
+	.4byte 0x0820F593  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0133  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE5 (g15 m9)
+	.4byte 0x08431C70  @ mapLayout
+	.4byte 0x0850BBB4  @ events
+	.4byte 0x0820F657  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0134  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE6 (g15 m10)
+	.4byte 0x08431D00  @ mapLayout
+	.4byte 0x0850BBF0  @ events
+	.4byte 0x0820F6D0  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0135  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_HOUSE7 (g15 m11)
+	.4byte 0x08431BE0  @ mapLayout
+	.4byte 0x0850BC44  @ events
+	.4byte 0x0820F7BA  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0133  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE (g15 m12)
+	.4byte 0x0842F2A4  @ mapLayout
+	.4byte 0x0850BCB0  @ events
+	.4byte 0x0820F861  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x0129  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F (g15 m13)
+	.4byte 0x0845A014  @ mapLayout
+	.4byte 0x0850BCF4  @ events
+	.4byte SootopolisCity_MysteryEventsHouse_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x01B7  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F (g15 m14)
+	.4byte 0x0845A10C  @ mapLayout
+	.4byte 0x0850BD28  @ events
+	.4byte SootopolisCity_MysteryEventsHouse_B1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BD  @ music
+	.2byte 0x01B8  @ mapLayoutId
+	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM (g16 m0)
+	.4byte 0x08405A88  @ mapLayout
+	.4byte 0x0850BD64  @ events
+	.4byte EverGrandeCity_SidneysRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x006F  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x04  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_PHOEBES_ROOM (g16 m1)
+	.4byte 0x08405C14  @ mapLayout
+	.4byte 0x0850BDA0  @ events
+	.4byte EverGrandeCity_PhoebesRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0070  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x05  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_GLACIAS_ROOM (g16 m2)
+	.4byte 0x08405DA0  @ mapLayout
+	.4byte 0x0850BDDC  @ events
+	.4byte EverGrandeCity_GlaciasRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0071  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_DRAKES_ROOM (g16 m3)
+	.4byte 0x08405F2C  @ mapLayout
+	.4byte 0x0850BE18  @ events
+	.4byte EverGrandeCity_DrakesRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0072  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x07  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM (g16 m4)
+	.4byte 0x084060A0  @ mapLayout
+	.4byte 0x0850BE84  @ events
+	.4byte EverGrandeCity_ChampionsRoom_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0073  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL1 (g16 m5)
+	.4byte 0x084061E0  @ mapLayout
+	.4byte 0x0850BEB8  @ events
+	.4byte EverGrandeCity_Hall1_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0074  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL2 (g16 m6)
+	.4byte 0x084061E0  @ mapLayout
+	.4byte 0x0850BEEC  @ events
+	.4byte EverGrandeCity_Hall2_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0074  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL3 (g16 m7)
+	.4byte 0x084061E0  @ mapLayout
+	.4byte 0x0850BF20  @ events
+	.4byte EverGrandeCity_Hall3_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0074  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL4 (g16 m8)
+	.4byte 0x08432CC0  @ mapLayout
+	.4byte 0x0850BF44  @ events
+	.4byte EverGrandeCity_Hall4_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x013B  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL5 (g16 m9)
+	.4byte 0x084061E0  @ mapLayout
+	.4byte 0x0850BF78  @ events
+	.4byte EverGrandeCity_Hall5_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AD  @ music
+	.2byte 0x0074  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F (g16 m10)
+	.4byte 0x08425984  @ mapLayout
+	.4byte 0x0850C014  @ events
+	.4byte EverGrandeCity_PokemonLeague_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x010E  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_HALL_OF_FAME (g16 m11)
+	.4byte 0x0842F4C4  @ mapLayout
+	.4byte 0x0850C048  @ events
+	.4byte EverGrandeCity_HallOfFame_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01BF  @ music
+	.2byte 0x012A  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F (g16 m12)
+	.4byte 0x083FF368  @ mapLayout
+	.4byte 0x0850C0D4  @ events
+	.4byte EverGrandeCity_PokemonCenter_1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003D  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_2F (g16 m13)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850C160  @ events
+	.4byte EverGrandeCity_PokemonCenter_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F (g16 m14)
+	.4byte 0x083FF4A0  @ mapLayout
+	.4byte 0x0850C1EC  @ events
+	.4byte EverGrandeCity_PokemonLeague_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0190  @ music
+	.2byte 0x003E  @ mapLayoutId
+	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE104_MR_BRINEYS_HOUSE (g17 m0)
+	.4byte 0x084033DC  @ mapLayout
+	.4byte 0x0850C240  @ events
+	.4byte Route104_MrBrineysHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x0066  @ mapLayoutId
+	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE104_PRETTY_PETAL_FLOWER_SHOP (g17 m1)
+	.4byte 0x08406310  @ mapLayout
+	.4byte 0x0850C2AC  @ events
+	.4byte Route104_PrettyPetalFlowerShop_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016A  @ music
+	.2byte 0x0075  @ mapLayoutId
+	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE111_WINSTRATE_FAMILYS_HOUSE (g18 m0)
+	.4byte 0x083FF24C  @ mapLayout
+	.4byte 0x0850C330  @ events
+	.4byte 0x08211AF4  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x003C  @ mapLayoutId
+	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE111_OLD_LADYS_REST_STOP (g18 m1)
+	.4byte 0x083FF630  @ mapLayout
+	.4byte 0x0850C36C  @ events
+	.4byte Route111_OldLadysRestStop_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x0040  @ mapLayoutId
+	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE112_CABLE_CAR_STATION (g19 m0)
+	.4byte 0x08406468  @ mapLayout
+	.4byte 0x0850C3C0  @ events
+	.4byte Route112_CableCarStation_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x0076  @ mapLayoutId
+	.byte 0x1B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_CHIMNEY_CABLE_CAR_STATION (g19 m1)
+	.4byte 0x08406468  @ mapLayout
+	.4byte 0x0850C414  @ events
+	.4byte MtChimney_CableCarStation_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0168  @ music
+	.2byte 0x0076  @ mapLayoutId
+	.byte 0x38, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE114_FOSSIL_MANIACS_HOUSE (g20 m0)
+	.4byte 0x08406528  @ mapLayout
+	.4byte 0x0850C488  @ events
+	.4byte Route114_FossilManiacsHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x0077  @ mapLayoutId
+	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE114_FOSSIL_MANIACS_TUNNEL (g20 m1)
+	.4byte 0x084067EC  @ mapLayout
+	.4byte 0x0850C4EC  @ events
+	.4byte Route114_FossilManiacsTunnel_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x0078  @ mapLayoutId
+	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE114_LANETTES_HOUSE (g20 m2)
+	.4byte 0x084068BC  @ mapLayout
+	.4byte 0x0850C54C  @ events
+	.4byte Route114_LanettesHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B5  @ music
+	.2byte 0x0079  @ mapLayoutId
+	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE116_TUNNELERS_REST_HOUSE (g21 m0)
+	.4byte 0x08406990  @ mapLayout
+	.4byte 0x0850C5B8  @ events
+	.4byte Route116_TunnelersRestHouse_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x007A  @ mapLayoutId
+	.byte 0x1F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE117_POKEMON_DAY_CARE (g22 m0)
+	.4byte 0x08406A88  @ mapLayout
+	.4byte 0x0850C5F4  @ events
+	.4byte Route117_PokemonDayCare_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x018F  @ music
+	.2byte 0x007B  @ mapLayoutId
+	.byte 0x20, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_ROUTE121_SAFARI_ZONE_ENTRANCE (g23 m0)
+	.4byte 0x08406CA0  @ mapLayout
+	.4byte 0x0850C68C  @ events
+	.4byte Route121_SafariZoneEntrance_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x017E  @ music
+	.2byte 0x007C  @ mapLayoutId
+	.byte 0x24, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_METEOR_FALLS_1F_1R (g24 m0)
+	.4byte 0x08407698  @ mapLayout
+	.4byte 0x0850C7DC  @ events
+	.4byte MeteorFalls_1F_1R_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0182  @ music
+	.2byte 0x007D  @ mapLayoutId
+	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_METEOR_FALLS_1F_2R (g24 m1)
+	.4byte 0x08407E38  @ mapLayout
+	.4byte 0x0850C864  @ events
+	.4byte 0x08213079  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0182  @ music
+	.2byte 0x007E  @ mapLayoutId
+	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_METEOR_FALLS_B1F_1R (g24 m2)
+	.4byte 0x084086F4  @ mapLayout
+	.4byte 0x0850C8A8  @ events
+	.4byte 0x082135EE  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0182  @ music
+	.2byte 0x007F  @ mapLayoutId
+	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_METEOR_FALLS_B1F_2R (g24 m3)
+	.4byte 0x084088A0  @ mapLayout
+	.4byte 0x0850C8DC  @ events
+	.4byte 0x082135EF  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0182  @ music
+	.2byte 0x0080  @ mapLayoutId
+	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_RUSTURF_TUNNEL (g24 m4)
+	.4byte 0x08408F80  @ mapLayout
+	.4byte 0x0850CA48  @ events
+	.4byte RusturfTunnel_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0081  @ mapLayoutId
+	.byte 0x3C, 0x00, 0x06, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_SOOTOPOLIS_CITY (g24 m5)
+	.4byte 0x08409130  @ mapLayout
+	.4byte 0x0850CA6C  @ events
+	.4byte Underwater_SootopolisCity_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0082  @ mapLayoutId
+	.byte 0x36, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_DESERT_RUINS (g24 m6)
+	.4byte 0x084095B4  @ mapLayout
+	.4byte 0x0850CAD4  @ events
+	.4byte DesertRuins_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B6  @ music
+	.2byte 0x0083  @ mapLayoutId
+	.byte 0x52, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_GRANITE_CAVE_1F (g24 m7)
+	.4byte 0x08409AC0  @ mapLayout
+	.4byte 0x0850CB38  @ events
+	.4byte 0x08213EE1  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0084  @ mapLayoutId
+	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_GRANITE_CAVE_B1F (g24 m8)
+	.4byte 0x0840A160  @ mapLayout
+	.4byte 0x0850CB9C  @ events
+	.4byte GraniteCave_B1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0085  @ mapLayoutId
+	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_GRANITE_CAVE_B2F (g24 m9)
+	.4byte 0x0840A800  @ mapLayout
+	.4byte 0x0850CCC8  @ events
+	.4byte 0x08214026  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0086  @ mapLayoutId
+	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_GRANITE_CAVE_STEVENS_ROOM (g24 m10)
+	.4byte 0x0842CB08  @ mapLayout
+	.4byte 0x0850CCFC  @ events
+	.4byte 0x08214027  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0120  @ mapLayoutId
+	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_PETALBURG_WOODS (g24 m11)
+	.4byte 0x0840B8A0  @ mapLayout
+	.4byte 0x0850CEE0  @ events
+	.4byte 0x08214278  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0087  @ mapLayoutId
+	.byte 0x3B, 0x00, 0x0B, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_CHIMNEY (g24 m12)
+	.4byte 0x0840C770  @ mapLayout
+	.4byte 0x0850D1FC  @ events
+	.4byte MtChimney_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0088  @ mapLayoutId
+	.byte 0x38, 0x00, 0x07, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_JAGGED_PASS (g24 m13)
+	.4byte 0x0842E43C  @ mapLayout
+	.4byte 0x0850D398  @ events
+	.4byte JaggedPass_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0124  @ mapLayoutId
+	.byte 0x4C, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_FIERY_PATH (g24 m14)
+	.4byte 0x0842EEC0  @ mapLayout
+	.4byte 0x0850D47C  @ events
+	.4byte FieryPath_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x016E  @ music
+	.2byte 0x0125  @ mapLayoutId
+	.byte 0x4A, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_1F (g24 m15)
+	.4byte 0x0840CAD4  @ mapLayout
+	.4byte 0x0850D508  @ events
+	.4byte 0x08216119  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x0089  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_2F (g24 m16)
+	.4byte 0x0840CC48  @ mapLayout
+	.4byte 0x0850D604  @ events
+	.4byte MtPyre_2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x008A  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_3F (g24 m17)
+	.4byte 0x0840CDBC  @ mapLayout
+	.4byte 0x0850D6A8  @ events
+	.4byte 0x082165F1  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x008B  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_4F (g24 m18)
+	.4byte 0x0840CF30  @ mapLayout
+	.4byte 0x0850D71C  @ events
+	.4byte 0x08216880  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x008C  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_5F (g24 m19)
+	.4byte 0x0840D0A4  @ mapLayout
+	.4byte 0x0850D788  @ events
+	.4byte 0x082168FA  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x008D  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_6F (g24 m20)
+	.4byte 0x0840D218  @ mapLayout
+	.4byte 0x0850D7F4  @ events
+	.4byte 0x08216986  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B0  @ music
+	.2byte 0x008E  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_EXTERIOR (g24 m21)
+	.4byte 0x084306CC  @ mapLayout
+	.4byte 0x0850D8B8  @ events
+	.4byte MtPyre_Exterior_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B2  @ music
+	.2byte 0x012E  @ mapLayoutId
+	.byte 0x41, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_MT_PYRE_SUMMIT (g24 m22)
+	.4byte 0x08431560  @ mapLayout
+	.4byte 0x0850DA1C  @ events
+	.4byte MtPyre_Summit_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01B2  @ music
+	.2byte 0x012F  @ mapLayoutId
+	.byte 0x41, 0x00, 0x06, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_AQUA_HIDEOUT_1F (g24 m23)
+	.4byte 0x0840D8C8  @ mapLayout
+	.4byte 0x0850DA90  @ events
+	.4byte 0x08217935  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AE  @ music
+	.2byte 0x008F  @ mapLayoutId
+	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_AQUA_HIDEOUT_B1F (g24 m24)
+	.4byte 0x0840E278  @ mapLayout
+	.4byte 0x0850DC44  @ events
+	.4byte AquaHideout_B1F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AE  @ music
+	.2byte 0x0090  @ mapLayoutId
+	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_AQUA_HIDEOUT_B2F (g24 m25)
+	.4byte 0x0840E8F8  @ mapLayout
+	.4byte 0x0850DD58  @ events
+	.4byte AquaHideout_B2F_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x01AE  @ music
+	.2byte 0x0091  @ mapLayoutId
+	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_UNDERWATER_SEAFLOOR_CAVERN (g24 m26)
+	.4byte 0x0840EA14  @ mapLayout
+	.4byte 0x0850DDD4  @ events
+	.4byte Underwater_SeafloorCavern_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x019B  @ music
+	.2byte 0x0092  @ mapLayoutId
+	.byte 0x45, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SEAFLOOR_CAVERN_ENTRANCE (g24 m27)
+	.4byte 0x0840ED54  @ mapLayout
+	.4byte 0x0850DE10  @ events
+	.4byte SeafloorCavern_Entrance_MapScripts  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0093  @ mapLayoutId
+	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SEAFLOOR_CAVERN_ROOM1 (g24 m28)
+	.4byte 0x0840F0BC  @ mapLayout
+	.4byte 0x0850DEB4  @ events
+	.4byte 0x0821865E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0094  @ mapLayoutId
+	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SEAFLOOR_CAVERN_ROOM2 (g24 m29)
+	.4byte 0x0840F28C  @ mapLayout
+	.4byte 0x0850DFA8  @ events
+	.4byte 0x0821873D  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0095  @ mapLayoutId
+	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SEAFLOOR_CAVERN_ROOM3 (g24 m30)
+	.4byte 0x0840F4CC  @ mapLayout
+	.4byte 0x0850E0AC  @ events
+	.4byte 0x0821873E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0096  @ mapLayoutId
+	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	@ MAP_SEAFLOOR_CAVERN_ROOM4 (g24 m31)
+	.4byte 0x0840F798  @ mapLayout
+	.4byte 0x0850E110  @ events
+	.4byte 0x0821892E  @ mapScripts
+	.4byte 0x00000000  @ connections
+	.2byte 0x0196  @ music
+	.2byte 0x0097  @ mapLayoutId
+	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
+	.globl gUnknown_845C660
+gUnknown_845C660: @ 0x0845C660
+	.incbin "baserom_jp.gba", 0x45c660, 0x2338
 
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x845E998
