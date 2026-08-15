@@ -6990,7 +6990,8 @@ SECTIONS {
         src/field_effect.o(.text.SpriteCB_DeoxysRockFragment);
         src/field_effect.o(.text.FldEff_MoveDeoxysRock);
         src/field_effect.o(.text.Task_MoveDeoxysRock);
-        asm/scanline_effect.o(.text);
+        asm/scanline_effect_stub.o(.text);
+        src/scanline_effect.o(.text);
         asm/pokedex.o(.text);
         asm/trainer_card.o(.text);
         src/frontier_pass.o(.text);
