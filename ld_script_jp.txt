@@ -10120,7 +10120,7 @@ SECTIONS {
         asm/frontier_util.o(.text);
         src/battle_arena.o(.text);
         asm/battle_factory.o(.text);
-        asm/battle_pike.o(.text);
+        src/battle_pike.o(.text);
         src/rotating_tile_puzzle.o(.text.InitRotatingTilePuzzle);
         src/rotating_tile_puzzle.o(.text.FreeRotatingTilePuzzle);
         src/rotating_tile_puzzle.o(.text.MoveRotatingTileObjects);
