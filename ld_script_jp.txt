@@ -10556,7 +10556,7 @@ SECTIONS {
         src/faraway_island.o(.text);
         src/ereader_screen.o(.text);
         src/trainer_hill.o(.text);
-        asm/rayquaza_scene.o(.text);
+        src/rayquaza_scene.o(.text);
         src/walda_phrase.o(.text);
         src/contest_link_util.o(.text.Task_LinkContest_StartCommunicationEm);
         src/contest_link_util.o(.text.Task_LinkContest_StartCommunicateRngEm);
