@@ -26337,9 +26337,36 @@ sAcroBikeJumpTimerList: @ 0x5730A2
 	.byte 0x04, 0x00
 
 
-	.globl gUnknown_85730A4
-gUnknown_85730A4: @ 0x85730A4
-	.incbin "baserom_jp.gba", 0x5730a4, 0x70
+	.globl sAcroBikeTricksList
+sAcroBikeTricksList: @ 0x85730A4
+	.4byte 1 @ dirHistoryMatch DIR_SOUTH
+	.4byte 2 @ abStartSelectHistoryMatch B_BUTTON
+	.4byte 0xF @ dirHistoryMask
+	.4byte 0xF @ abStartSelectHistoryMask
+	.4byte sAcroBikeJumpTimerList
+	.4byte sAcroBikeJumpTimerList
+	.4byte 1 @ direction DIR_SOUTH
+	.4byte 2 @ dirHistoryMatch DIR_NORTH
+	.4byte 2 @ abStartSelectHistoryMatch B_BUTTON
+	.4byte 0xF @ dirHistoryMask
+	.4byte 0xF @ abStartSelectHistoryMask
+	.4byte sAcroBikeJumpTimerList
+	.4byte sAcroBikeJumpTimerList
+	.4byte 2 @ direction DIR_NORTH
+	.4byte 3 @ dirHistoryMatch DIR_WEST
+	.4byte 2 @ abStartSelectHistoryMatch B_BUTTON
+	.4byte 0xF @ dirHistoryMask
+	.4byte 0xF @ abStartSelectHistoryMask
+	.4byte sAcroBikeJumpTimerList
+	.4byte sAcroBikeJumpTimerList
+	.4byte 3 @ direction DIR_WEST
+	.4byte 4 @ dirHistoryMatch DIR_EAST
+	.4byte 2 @ abStartSelectHistoryMatch B_BUTTON
+	.4byte 0xF @ dirHistoryMask
+	.4byte 0xF @ abStartSelectHistoryMask
+	.4byte sAcroBikeJumpTimerList
+	.4byte sAcroBikeJumpTimerList
+	.4byte 4 @ direction DIR_EAST
 
 	.globl gUnknown_8573114
 gUnknown_8573114: @ 0x8573114
