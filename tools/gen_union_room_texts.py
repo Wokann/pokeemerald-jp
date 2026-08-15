@@ -50,12 +50,24 @@ SYMBOLS = [
 
 END_ADDR = 0x082C06B8  # sText_AwaitingLinkPressStart (next region)
 
+# Second batch: six simple union-room texts (no embedded tables).
+SYMBOLS2 = [
+    ("sText_BButtonCancel", 0x082C08A4, "text", None),
+    ("sText_PlayerContactedYouForXAccept", 0x082C08C4, "text", None),
+    ("sText_PlayerContactedYouShareX", 0x082C08DC, "text", None),
+    ("sText_PlayerContactedYouAddToMembers", 0x082C08F8, "text", None),
+    ("sText_AreTheseMembersOK", 0x082C0914, "text", None),
+    ("sText_CancelModeWithTheseMembers", 0x082C092C, "text_fixed", None),
+]
 
-def next_addr(addr):
-    for sym in SYMBOLS:
+END_ADDR2 = 0x082C0948  # sText_AnOKWasSentToPlayer (next region)
+
+
+def next_addr(addr, symbols, end_addr):
+    for sym in symbols:
         if sym[1] > addr:
             return sym[1]
-    return END_ADDR
+    return end_addr
 
 
 def region_bytes(addr, end):
@@ -90,18 +102,18 @@ def emit_text(name, addr, end, size=None):
     return f"ALIGNED(4) const u8 {name}{s} = _(\n{body});"
 
 
-def main():
+def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
     out = []
     out.append('#include "global.h"')
     out.append("")
-    out.append("// RFU assert and debug strings (JP-specific section at 0x82C053C)")
-    for i, sym in enumerate(SYMBOLS):
+    out.append(comment)
+    for i, sym in enumerate(symbols):
         name, addr, kind, payload = sym[0], sym[1], sym[2], sym[3]
-        end = next_addr(addr)
+        end = next_addr(addr, symbols, end_addr)
         if kind == "ascii_fixed":
-            out.append(emit_ascii(name, payload, size=SYMBOLS[i][4]))
+            out.append(emit_ascii(name, payload, size=symbols[i][4]))
         elif kind in ("ascii", "ascii_aligned"):
             out.append(emit_ascii(name, payload, aligned=(kind == "ascii_aligned")))
         elif kind == "gap":
@@ -110,7 +122,7 @@ def main():
         elif kind in ("text", "text_fixed"):
             size = None
             if kind == "text_fixed":
-                size = END_ADDR - addr
+                size = end_addr - addr
             out.append(emit_text(name, addr, end, size=size))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
@@ -123,11 +135,16 @@ def main():
                 out.append(f'    "{row}",')
             out.append("};")
         out.append("")
-    (ROOT / "src/data/union_room.h").write_text("\n".join(out) + "\n", encoding="utf-8")
-    (ROOT / "src/data/union_room.c").write_text(
-        '#include "union_room.h"\n', encoding="utf-8"
-    )
-    print("wrote src/data/union_room.h and src/data/union_room.c")
+    (ROOT / out_h).write_text("\n".join(out) + "\n", encoding="utf-8")
+    (ROOT / out_c).write_text(f'#include "{Path(out_h).name}"\n', encoding="utf-8")
+    print(f"wrote {out_h} and {out_c}")
+
+
+def main():
+    build(SYMBOLS, END_ADDR, "src/data/union_room.h", "src/data/union_room.c",
+          "// RFU assert and debug strings (JP-specific section at 0x82C053C)")
+    build(SYMBOLS2, END_ADDR2, "src/data/union_room2.h", "src/data/union_room2.c",
+          "// Union-room texts (second batch)")
 
 
 if __name__ == "__main__":

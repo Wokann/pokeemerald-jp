@@ -9207,6 +9207,8 @@ SECTIONS {
         data/data_b.o(.rodata);
         src/data/union_room.o(.rodata);
         data/data_b_mid1.o(.rodata);
+        src/data/union_room2.o(.rodata);
+        data/data_b_mid2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
         src/data/text/species_names.o(.rodata);
