@@ -9773,7 +9773,7 @@ SECTIONS {
         src/braille_puzzles.o(.text.DoBrailleWait);
         src/braille_puzzles.o(.text.FldEff_UsePuzzleEffect);
         src/braille_puzzles.o(.text.ShouldDoBrailleRegicePuzzle);
-        asm/pokeblock_feed.o(.text);
+        src/pokeblock_feed.o(.text);
         src/clear_save_data_screen.o(.text);
         src/intro_credits_graphics.o(.text);
         src/evolution_graphics.o(.text);
