@@ -9412,6 +9412,11 @@ SECTIONS {
         data/data_b2d_mid98.o(.rodata);
         src/data/text/region_texts113.o(.rodata);
         data/data_b2d_mid99.o(.rodata);
+        src/data/text/region_texts114.o(.rodata);
+        data/data_b2d_mid100.o(.rodata);
+        src/data/text/region_texts115.o(.rodata);
+        src/data/text/region_texts116.o(.rodata);
+        data/data_b2d_mid101.o(.rodata);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c.o(.rodata);
         data/multiboot_ereader.o(.rodata);
