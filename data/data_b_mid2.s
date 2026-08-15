@@ -13,34 +13,6 @@
 
 
 
-	.globl sUnionRoomPlayer_DummyRfu
-sUnionRoomPlayer_DummyRfu: @ 0x82C2364
-	.incbin "baserom_jp.gba", 0x2c2364, 0x7c
-
-	.globl sAcceptedActivityIds
-sAcceptedActivityIds: @ 0x82C23E0
-	.incbin "baserom_jp.gba", 0x2c23e0, 0x58
-
-	.globl sLinkGroupToURoomActivity
-sLinkGroupToURoomActivity: @ 0x82C2438
-	.byte 0x01, 0x02, 0x03, 0x04, 0x09, 0x0A, 0x0B, 0x06, 0x07, 0x00, 0x00, 0x00, 0x0F, 0x10, 0x00, 0x17
-	.byte 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x0E, 0xF7, 0x00, 0xAF, 0xF7, 0x01, 0xFF
-	.globl sTextboxBorder_Pal
-sTextboxBorder_Pal: @ 0x82C2454
-	.incbin "graphics/text_window/sTextboxBorder_Pal.bin"
-
-	.globl sTextboxBorder_Gfx
-sTextboxBorder_Gfx: @ 0x82C2474
-	.incbin "graphics/text_window/sTextboxBorder_Gfx.bin"
-
-	.globl sBGTemplates
-sBGTemplates: @ 0x82C24A4
-	.incbin "baserom_jp.gba", 0x2c24a4, 0x10
-
-	.globl sMainWindows
-sMainWindows: @ 0x82C24B4
-	.incbin "graphics/menu_ui/sMainWindows.bin"
-
 	.globl sWindowTemplate_YesNoMsg_Wide
 sWindowTemplate_YesNoMsg_Wide: @ 0x82C24D4
 	.incbin "baserom_jp.gba", 0x2c24d4, 0x8
