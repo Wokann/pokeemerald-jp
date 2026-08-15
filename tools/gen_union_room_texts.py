@@ -96,6 +96,22 @@ SYMBOLS4 = [
 
 END_ADDR4 = 0x082C0B44  # unlabeled trade-request texts (next region)
 
+# Fifth batch: trade-request/communicating texts and their tables.
+SYMBOLS5 = [
+    ("sText_DoYouWantXMode", 0x082C0B44, "text", None),
+    ("sText_DoYouWantXMode2", 0x082C0B50, "text", None),
+    ("sDoYouWantModeTexts", 0x082C0B5C, "table", ["sText_DoYouWantXMode", "sText_DoYouWantXMode2"]),
+    ("sText_CommunicatingPleaseWait", 0x082C0B64, "text", None),
+    ("sText_AwaitingPlayersResponseAboutTrade", 0x082C0B80, "text", None),
+    ("sText_Communicating", 0x082C0B9C, "text", None),
+    ("sText_CommunicatingWithPlayer", 0x082C0C04, "text", None),
+    ("sText_PleaseWaitAWhile", 0x082C0C68, "text", None),
+    ("sCommunicatingWaitTexts", 0x082C0CD8, "table",
+        ["sText_Communicating", "sText_CommunicatingWithPlayer", "sText_PleaseWaitAWhile"]),
+]
+
+END_ADDR5 = 0x082C0CE4  # sHiDoSomethingTexts area (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -293,6 +309,8 @@ def main():
           "// Union-room member-status texts and pointer tables")
     build(SYMBOLS4, END_ADDR4, "src/data/union_room4.h", "src/data/union_room4.c",
           "// Wireless link texts and the link-dropped table")
+    build(SYMBOLS5, END_ADDR5, "src/data/union_room5.h", "src/data/union_room5.c",
+          "// Trade-request and communicating texts")
 
 
 if __name__ == "__main__":

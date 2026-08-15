@@ -10,21 +10,10 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.globl gUnknown_82C0B44
-gUnknown_82C0B44: @ 0x82C0B44
-	.incbin "baserom_jp.gba", 0x2c0b44, 0x3c
 
-	.globl sText_AwaitingPlayersResponseAboutTrade
-sText_AwaitingPlayersResponseAboutTrade: @ 0x82C0B80
-	.string "{B_COPY_VAR_1}からの　こうかんの\n"
-	.string "へんじを　まっています⋯$　　　はなしかけています{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
-	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　{B_COPY_VAR_1}に　はなしかけています{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
-	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　しょうしょうおまちください{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
-	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　"
-
-	.globl sCommunicatingWaitTexts
-sCommunicatingWaitTexts: @ 0x82C0CD8
-	.incbin "baserom_jp.gba", 0x2c0cd8, 0x64
+	.globl gUnknown_82C0CE4
+gUnknown_82C0CE4: @ 0x82C0CE4
+	.incbin "baserom_jp.gba", 0x2c0ce4, 0x58
 
 	.globl sHiDoSomethingTexts
 sHiDoSomethingTexts: @ 0x82C0D3C
