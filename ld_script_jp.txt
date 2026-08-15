@@ -10529,7 +10529,7 @@ SECTIONS {
         src/pokedex_area_region_map.o(.text.TryShowPokedexAreaMap);
         src/pokedex_area_region_map.o(.text.FreePokedexAreaMapBgNum);
         src/pokedex_area_region_map.o(.text.PokedexAreaMapChangeBgY);
-        asm/battle_pyramid_bag.o(.text);
+        src/battle_pyramid_bag.o(.text);
         src/pokenav.o(.text);
         src/pokenav_main_menu.o(.text);
         src/pokenav_list.o(.text);
