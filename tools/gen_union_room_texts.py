@@ -325,6 +325,24 @@ SYMBOLS8H = [
 
 END_ADDR8H = 0x082C1CB8  # sText_AwaitingResponseFromWirelessSystem (next region)
 
+# Eighth batch part 9: wireless response and short menu texts.
+SYMBOLS8I = [
+    ("sText_AwaitingResponseFromWirelessSystem", 0x082C1CB8, "text", None),
+    ("sText_PleaseWaitForOtherTrainersToGather", 0x082C1CD0, "text", None),
+    ("sText_NoCardsSharedRightNow", 0x082C1CF0, "text", None),
+    ("sText_NoNewsSharedRightNow", 0x082C1D10, "text", None),
+    ("sNoWonderSharedTexts", 0x082C1D30, "table",
+        ["sText_NoCardsSharedRightNow", "sText_NoNewsSharedRightNow"]),
+    ("sText_Battle", 0x082C1D38, "text", None),
+    ("sText_Chat2", 0x082C1D40, "text", None),
+    ("sText_Greetings", 0x082C1D48, "text", None),
+    ("sText_Exit", 0x082C1D50, "text", None),
+    ("sText_Exit2", 0x082C1D54, "text", None),
+    ("sText_Info", 0x082C1D58, "text", None),
+]
+
+END_ADDR8I = 0x082C1D60  # sText_NameWantedOfferLv (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -673,6 +691,8 @@ def main():
           "// ChooseTrainer sub-texts and table")
     build(SYMBOLS8H, END_ADDR8H, "src/data/union_room8h.h", "src/data/union_room8h.c",
           "// Wireless-system waiting texts")
+    build(SYMBOLS8I, END_ADDR8I, "src/data/union_room8i.h", "src/data/union_room8i.c",
+          "// Wireless response and short menu texts")
 
 
 if __name__ == "__main__":

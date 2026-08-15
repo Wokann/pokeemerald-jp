@@ -13,16 +13,6 @@
 
 
 
-	.globl sText_AwaitingResponseFromWirelessSystem
-sText_AwaitingResponseFromWirelessSystem: @ 0x82C1CB8
-	.string "ジョイスポットからの\n"
-	.string "へんじを　まっています$　ほかの　さんかしゃが　そろうまで\n"
-	.string "しょうしょう　おまちください$ただいま　カードの　はいふは\n"
-	.string "おこなわれて　いないようです⋯$　ただいま　ニュースの　はいふは\n"
-	.string "おこなわれて　いないようです⋯$"
-	.globl sNoWonderSharedTexts
-sNoWonderSharedTexts: @ 0x82C1D30
-	.string ":ふわくたへわくたいせん$　　　チャット$　　　あいさつ$　　　やめる$とじる$せつめいをきく$"
 	.globl sText_NameWantedOfferLv
 sText_NameWantedOfferLv: @ 0x82C1D60
 	.string "なまえ　　　　ほしいタイプ　あげるポケモン　　レベル$　シングルバトル$ダブルバトル$　マルチバトル$　ポケモンこうかん$　　　チャット$　　　カード$ふしぎなカード$ふしぎなニュース$　　　ポケモンジャンプ$　　　きのみクラッシュ$　　　きのみどり$　　サーチ$きのみブレンダー$　　　レコードコーナー$　　　かっこよさコンテスト$　うつくしさコンテスト$　かわいさコンテスト$　　かしこさコンテスト$　　たくましさコンテスト$　バトルタワー　レベル50$　　　バトルタワー　オープンレベル$　"
