@@ -13,64 +13,6 @@
 
 
 
-	.globl sWindowTemplate_YesNoMsg_Wide
-sWindowTemplate_YesNoMsg_Wide: @ 0x82C24D4
-	.incbin "baserom_jp.gba", 0x2c24d4, 0x8
-
-	.globl sWindowTemplate_YesNoMsg
-sWindowTemplate_YesNoMsg: @ 0x82C24DC
-	.incbin "baserom_jp.gba", 0x2c24dc, 0x8
-
-	.globl sWindowTemplate_GiftSelect
-sWindowTemplate_GiftSelect: @ 0x82C24E4
-	.incbin "baserom_jp.gba", 0x2c24e4, 0x8
-
-	.globl sWindowTemplate_ThreeOptions
-sWindowTemplate_ThreeOptions: @ 0x82C24EC
-	.incbin "baserom_jp.gba", 0x2c24ec, 0x8
-
-	.globl sWindowTemplate_YesNoBox
-sWindowTemplate_YesNoBox: @ 0x82C24F4
-	.incbin "baserom_jp.gba", 0x2c24f4, 0x8
-
-	.globl sWindowTemplate_GiftSelect_3Options
-sWindowTemplate_GiftSelect_3Options: @ 0x82C24FC
-	.incbin "baserom_jp.gba", 0x2c24fc, 0x8
-
-	.globl sWindowTemplate_GiftSelect_2Options
-sWindowTemplate_GiftSelect_2Options: @ 0x82C2504
-	.incbin "baserom_jp.gba", 0x2c2504, 0x8
-
-	.globl sWindowTemplate_GiftSelect_1Option
-sWindowTemplate_GiftSelect_1Option: @ 0x82C250C
-	.string "　にそかえしオあふしぎなカード$ふしぎなニュース$　　　ジョイスポット$ともだち$　　　やめる$"
-	.globl sListMenuItems_CardsOrNews
-sListMenuItems_CardsOrNews: @ 0x82C253C
-	.string "とゆわく　　　　ふゆわくあ　　　ぎゆわく\n"
-	.string "$$$"
-	.globl sListMenuItems_WirelessOrFriend
-sListMenuItems_WirelessOrFriend: @ 0x82C2554
-	.string "りゆわく　　　　ぃゆわくあ　　　ぎゆわく\n"
-	.string "$$$"
-	.globl sListMenuTemplate_ThreeOptions
-sListMenuTemplate_ThreeOptions: @ 0x82C256C
-	.incbin "baserom_jp.gba", 0x2C256C, 0x88
-	.globl sListMenu_ReceiveSendToss
-sListMenu_ReceiveSendToss: @ 0x82C25F4
-	.incbin "baserom_jp.gba", 0x2c25f4, 0x18
-
-	.globl sListMenu_ReceiveToss
-sListMenu_ReceiveToss: @ 0x82C260C
-	.incbin "baserom_jp.gba", 0x2c260c, 0x18
-
-	.globl sListMenu_ReceiveSend
-sListMenu_ReceiveSend: @ 0x82C2624
-	.incbin "baserom_jp.gba", 0x2c2624, 0x18
-
-	.globl sListMenu_Receive
-sListMenu_Receive: @ 0x82C263C
-	.incbin "baserom_jp.gba", 0x2c263c, 0x88
-
 	.globl sJPText_MgDontHaveCard
 sJPText_MgDontHaveCard: @ 0x82C26C4
 	.string "ふしぎなカードを　もっていないので\n"
