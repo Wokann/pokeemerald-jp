@@ -5,6 +5,13 @@
 #include "main.h"
 #include "malloc.h"
 #include "menu_helpers.h"
+#include "menu.h"
+#include "palette.h"
+#include "sound.h"
+#include "sprite.h"
+#include "task.h"
+#include "constants/rgb.h"
+#include "constants/songs.h"
 
 // JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
 // padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
@@ -20,7 +27,9 @@ struct BerryTagScreenStruct
 
 // Address defined in ld_script_jp.txt (ABSOLUTE 0x0203B9C0).
 extern struct BerryTagScreenStruct *sBerryTag;
+void bag_menu_mail_related(void);
 void CB2_InitBerryTagScreen(void);
+void Task_CloseBerryTagScreen(u8 taskId);
 
 void DoBerryTagScreen(void)
 {
@@ -908,393 +917,77 @@ __attribute__((naked)) void CreateBerrySprite(void)
     );
 }
 
-__attribute__((naked)) void DestroyBerrySprite(void)
+void DestroyBerrySprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08178248\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _0817824C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08178250\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	bl FreeBerryTagSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178248: .4byte gUnknown_203B9C0\n\t"
-        "_0817824C: .4byte 0x00001802\n\t"
-        "_08178250: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroySprite(&gSprites[sBerryTag->berrySpriteId]);
+    FreeBerryTagSpritePalette();
 }
 
-__attribute__((naked)) void CreateFlavorCircleSprites(void)
+void CreateFlavorCircleSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r0, #0x3c\n\t"
-        "	bl CreateBerryFlavorCircleSprite\n\t"
-        "	ldr r4, _081782A4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081782A8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x5c\n\t"
-        "	bl CreateBerryFlavorCircleSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081782AC\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x7c\n\t"
-        "	bl CreateBerryFlavorCircleSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081782B0\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0x9c\n\t"
-        "	bl CreateBerryFlavorCircleSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081782B4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0xbc\n\t"
-        "	bl CreateBerryFlavorCircleSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _081782B8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081782A4: .4byte gUnknown_203B9C0\n\t"
-        "_081782A8: .4byte 0x00001803\n\t"
-        "_081782AC: .4byte 0x00001804\n\t"
-        "_081782B0: .4byte 0x00001805\n\t"
-        "_081782B4: .4byte 0x00001806\n\t"
-        "_081782B8: .4byte 0x00001807\n\t"
-        ".syntax divided\n\t"
-    );
+    sBerryTag->flavorCircleIds[FLAVOR_SPICY] = CreateBerryFlavorCircleSprite(60);
+    sBerryTag->flavorCircleIds[FLAVOR_DRY] = CreateBerryFlavorCircleSprite(92);
+    sBerryTag->flavorCircleIds[FLAVOR_SWEET] = CreateBerryFlavorCircleSprite(124);
+    sBerryTag->flavorCircleIds[FLAVOR_BITTER] = CreateBerryFlavorCircleSprite(156);
+    sBerryTag->flavorCircleIds[FLAVOR_SOUR] = CreateBerryFlavorCircleSprite(188);
 }
 
-__attribute__((naked)) void SetFlavorCirclesVisiblity(void)
+void SetFlavorCirclesVisiblity(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _081782F4\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBerryInfo\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	ldrb r0, [r5, #0x15]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178300\n\t"
-        "	ldr r3, _081782F8\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _081782FC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	b _0817831A\n\t"
-        "	.align 2, 0\n\t"
-        "_081782F4: .4byte gUnknown_203B9C0\n\t"
-        "_081782F8: .4byte gSprites\n\t"
-        "_081782FC: .4byte 0x00001803\n\t"
-        "_08178300:\n\t"
-        "	ldr r3, _08178344\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldr r1, _08178348\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "_0817831A:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r4, r3, #0\n\t"
-        "	ldrb r0, [r5, #0x16]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178354\n\t"
-        "	ldr r3, _0817834C\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08178350\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	b _0817836E\n\t"
-        "	.align 2, 0\n\t"
-        "_08178344: .4byte gSprites\n\t"
-        "_08178348: .4byte 0x00001803\n\t"
-        "_0817834C: .4byte gUnknown_203B9C0\n\t"
-        "_08178350: .4byte 0x00001804\n\t"
-        "_08178354:\n\t"
-        "	ldr r3, _08178394\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08178398\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "_0817836E:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r0, [r5, #0x17]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081783A0\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _0817839C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	b _081783B8\n\t"
-        "	.align 2, 0\n\t"
-        "_08178394: .4byte gUnknown_203B9C0\n\t"
-        "_08178398: .4byte 0x00001804\n\t"
-        "_0817839C: .4byte 0x00001805\n\t"
-        "_081783A0:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _081783DC\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "_081783B8:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r0, [r5, #0x18]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _081783E4\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _081783E0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	b _081783FC\n\t"
-        "	.align 2, 0\n\t"
-        "_081783DC: .4byte 0x00001805\n\t"
-        "_081783E0: .4byte 0x00001806\n\t"
-        "_081783E4:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08178420\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "_081783FC:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldrb r0, [r5, #0x19]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08178428\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08178424\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	movs r1, #5\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	b _08178440\n\t"
-        "	.align 2, 0\n\t"
-        "_08178420: .4byte 0x00001806\n\t"
-        "_08178424: .4byte 0x00001807\n\t"
-        "_08178428:\n\t"
-        "	ldr r0, [r3]\n\t"
-        "	ldr r1, _08178448\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x3e\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "_08178440:\n\t"
-        "	strb r1, [r0]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178448: .4byte 0x00001807\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct Berry *berry = GetBerryInfo(sBerryTag->berryId);
+
+    if (berry->spicy)
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SPICY]].invisible = FALSE;
+    else
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SPICY]].invisible = TRUE;
+
+    if (berry->dry)
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_DRY]].invisible = FALSE;
+    else
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_DRY]].invisible = TRUE;
+
+    if (berry->sweet)
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SWEET]].invisible = FALSE;
+    else
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SWEET]].invisible = TRUE;
+
+    if (berry->bitter)
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_BITTER]].invisible = FALSE;
+    else
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_BITTER]].invisible = TRUE;
+
+    if (berry->sour)
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SOUR]].invisible = FALSE;
+    else
+        gSprites[sBerryTag->flavorCircleIds[FLAVOR_SOUR]].invisible = TRUE;
 }
 
-__attribute__((naked)) void DestroyFlavorCircleSprites(void)
+void DestroyFlavorCircleSprites(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_08178450:\n\t"
-        "	ldr r0, _0817847C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08178480\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _08178484\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r4, #4\n\t"
-        "	bls _08178450\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817847C: .4byte gUnknown_203B9C0\n\t"
-        "_08178480: .4byte 0x00001803\n\t"
-        "_08178484: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 i;
+
+    for (i = 0; i < FLAVOR_COUNT; i++)
+        DestroySprite(&gSprites[sBerryTag->flavorCircleIds[i]]);
 }
 
-__attribute__((naked)) void PrepareToCloseBerryTagScreen(void)
+void PrepareToCloseBerryTagScreen(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	movs r0, #5\n\t"
-        "	bl PlaySE\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldr r1, _081784C0\n\t"
-        "	lsls r0, r4, #2\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081784C4\n\t"
-        "	str r1, [r0]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_081784C0: .4byte gTasks\n\t"
-        "_081784C4: .4byte Task_CloseBerryTagScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    PlaySE(SE_SELECT);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
+    gTasks[taskId].func = Task_CloseBerryTagScreen;
 }
 
-__attribute__((naked)) void Task_CloseBerryTagScreen(void)
+void Task_CloseBerryTagScreen(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r0, _08178500\n\t"
-        "	ldrb r1, [r0, #7]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _081784FA\n\t"
-        "	bl DestroyBerrySprite\n\t"
-        "	bl DestroyFlavorCircleSprites\n\t"
-        "	ldr r0, _08178504\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl Free\n\t"
-        "	bl FreeAllWindowBuffers\n\t"
-        "	ldr r0, _08178508\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "_081784FA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08178500: .4byte gPaletteFade\n\t"
-        "_08178504: .4byte gUnknown_203B9C0\n\t"
-        "_08178508: .4byte bag_menu_mail_related + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!gPaletteFade.active)
+    {
+        DestroyBerrySprite();
+        DestroyFlavorCircleSprites();
+        Free(sBerryTag);
+        FreeAllWindowBuffers();
+        SetMainCallback2(bag_menu_mail_related);
+        DestroyTask(taskId);
+    }
 }
 
 __attribute__((naked)) void Task_HandleInput(void)
