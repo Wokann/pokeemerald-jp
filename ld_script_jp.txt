@@ -718,7 +718,6 @@ sText_ExclamationMark = gUnknown_85AB03C;
 sText_ExclamationMark2 = gUnknown_85AB044;
 sText_ExclamationMark3 = gUnknown_85AB048;
 sText_ExclamationMark4 = gUnknown_85AB04E;
-sText_ExclamationMark5 = gUnknown_85AB055;
 sub_08151654 = RouletteFlash_Reset;
 sub_08151668 = RouletteFlash_Add;
 sub_081516EC = RouletteFlash_Remove;

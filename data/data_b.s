@@ -29569,9 +29569,12 @@ gUnknown_85AB048: @ 0x85AB048
 	.globl gUnknown_85AB04E
 gUnknown_85AB04E: @ 0x85AB04E
 	.string "　こうげき！$"
-	.globl gUnknown_85AB055
-gUnknown_85AB055: @ 0x85AB055
-	.incbin "baserom_jp.gba", 0x5ab055, 0x37
+	.globl sText_ExclamationMark5
+sText_ExclamationMark5: @ 0x85AB055
+	.string "！$"
+	.globl gUnknown_85AB057
+gUnknown_85AB057: @ 0x85AB057
+	.incbin "baserom_jp.gba", 0x5ab057, 0x35
 
 	.globl gUnknown_85AB08C
 gUnknown_85AB08C: @ 0x85AB08C
