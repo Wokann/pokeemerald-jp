@@ -1359,7 +1359,7 @@ SECTIONS {
     .text :
     ALIGN(4)
     {
-        asm/crt0.o(.text);
+  src/crt0.o(.text);
         src/main.o(.text);
         src/malloc.o(.text);
         src/dma3_manager.o(.text);
@@ -9010,8 +9010,8 @@ SECTIONS {
     libtext :
     ALIGN(4)
     {
-		asm/libgcnmultiboot.o(.text);
-		asm/m4a.o(.text);
+  src/libgcnmultiboot.o(.text);
+  src/m4a_1.o(.text);
 		src/m4a_tail8.o(.text);
 		src/m4a_tail7.o(.text);
 		src/m4a_tail6.o(.text);
