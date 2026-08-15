@@ -107,9 +107,18 @@ sPlayerBitsToNewChildIdx: @ 0x82C03F5
 	.byte 0x00, 0x00, 0x01, 0x00, 0x02, 0x00, 0x01, 0x00, 0x03, 0x00, 0x01, 0x00
 	.byte 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00
 
-	.globl gUnknown_82C0408
-gUnknown_82C0408: @ 0x82C0408
-	.incbin "baserom_jp.gba", 0x2c0408, 0x28
+	.globl sBlockRequests
+sBlockRequests: @ 0x82C0408
+	.4byte gBlockSendBuffer @ BLOCK_REQ_SIZE_NONE.address
+	.4byte 200 @ BLOCK_REQ_SIZE_NONE.size
+	.4byte gBlockSendBuffer @ BLOCK_REQ_SIZE_200.address
+	.4byte 200 @ BLOCK_REQ_SIZE_200.size
+	.4byte gBlockSendBuffer @ BLOCK_REQ_SIZE_100.address
+	.4byte 100 @ BLOCK_REQ_SIZE_100.size
+	.4byte gBlockSendBuffer @ BLOCK_REQ_SIZE_220.address
+	.4byte 220 @ BLOCK_REQ_SIZE_220.size
+	.4byte gBlockSendBuffer @ BLOCK_REQ_SIZE_40.address
+	.4byte 40 @ BLOCK_REQ_SIZE_40.size
 
 	.globl sAcceptedSerialNos
 sAcceptedSerialNos: @ 0x82C0430

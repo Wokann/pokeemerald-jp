@@ -960,7 +960,6 @@ gRefereeStringsTable = gUnknown_85AC04C;
 gDummySpriteAnimTable = gUnknown_82BF304;
 gDummySpriteAffineAnimTable = gUnknown_82BF304 + 0xC;
 Menu_LoadStdPal = sub_08197680;
-sBlockRequests = gUnknown_82C0408;
 gSpeciesNames = gSpeciesNamesJP;
 BerryBlenderLinkBecomeLeader = TryBecomeLinkLeader;
 BerryBlenderLinkJoinGroup = TryJoinLinkGroup;
