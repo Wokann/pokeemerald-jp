@@ -22,7 +22,7 @@ extern const u8 gUnknown_82C4FC0[];
 extern u32 (*const gMeventServerFuncs[])(void *);
 extern u16 gBlockRecvBuffer[MAX_RFU_PLAYERS][BLOCK_BUFFER_SIZE / 2];
 extern u32 (*const gMeventServerClientFuncs[])(void *);
-extern const u8 gUnknown_82C4B6C[];
+extern const u8 gMeventServerClientInitData[];
 
 #define ME_SEND_BUF_SIZE 0x400
 
@@ -558,7 +558,7 @@ u32 mainseq_0(void *data)
 {
     struct MeventClientData *cli = data;
 
-    memcpy(cli->unk1C, gUnknown_82C4B6C, 0x400);
+    memcpy(cli->unk1C, gMeventServerClientInitData, 0x400);
     cli->unk10 = 0;
     cli->unk8 = 4;
     cli->unkC = 0;
