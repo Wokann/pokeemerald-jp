@@ -89,15 +89,15 @@ struct WonderNewsData
 
 extern EWRAM_DATA struct WonderCardData *gWonderCardData; // 0x02022928
 extern EWRAM_DATA struct WonderNewsData *gWonderNewsData; // 0x0202292C
-extern const struct WonderGfx gUnknown_82C428C[]; // card gfx table
+extern const struct WonderGfx sCardGraphics[];
 extern const struct WonderGfx gUnknown_82C49F4[]; // news gfx table
 extern const u8 gUnknown_82C4324[]; // news scroll arrow template data
 extern const u8 gUnknown_82C333C[]; // card text color table (3-byte entries)
 extern const u8 gUnknown_82C3344[]; // card footer text offsets
-extern const struct WindowTemplate gUnknown_82C3348[]; // card window templates
-extern const struct CompressedSpriteSheet gUnknown_82C422C; // stamp shadow compressed sheet
-extern const struct SpritePalette gUnknown_82C4234[]; // stamp shadow palettes
-extern const struct SpriteTemplate gUnknown_82C4274; // stamp shadow template
+extern const struct WindowTemplate sCard_WindowTemplates[];
+extern const struct CompressedSpriteSheet sSpriteSheet_StampShadow;
+extern const struct SpritePalette sSpritePalettes_StampShadow[];
+extern const struct SpriteTemplate sSpriteTemplate_StampShadow;
 extern const u8 gUnknown_82C430C[]; // news text color table (3-byte entries)
 extern const struct WindowTemplate gUnknown_82C4314[]; // news window templates
 extern const struct OamData gUnknown_84FD040;
@@ -120,7 +120,7 @@ bool32 InitWonderCardResources(struct WonderCard *card, struct WonderCardMetadat
         gWonderCardData->card.type = 0;
     if (gWonderCardData->card.maxStamps > MAX_STAMP_CARD_STAMPS)
         gWonderCardData->card.maxStamps = 0;
-    gWonderCardData->gfx = &gUnknown_82C428C[gWonderCardData->card.bgType];
+    gWonderCardData->gfx = &sCardGraphics[gWonderCardData->card.bgType];
     return TRUE;
 }
 
@@ -296,13 +296,13 @@ static void CreateCardSprites(void)
 
     if (gWonderCardData->card.maxStamps != 0 && gWonderCardData->card.type == CARD_TYPE_STAMP)
     {
-        LoadCompressedSpriteSheetUsingHeap(&gUnknown_82C422C);
-        LoadSpritePalette(&gUnknown_82C4234[gWonderCardData->gfx->stampShadowPal]);
+        LoadCompressedSpriteSheetUsingHeap(&sSpriteSheet_StampShadow);
+        LoadSpritePalette(&sSpritePalettes_StampShadow[gWonderCardData->gfx->stampShadowPal]);
         for (; i < gWonderCardData->card.maxStamps; i++)
         {
             gWonderCardData->stampSpriteIds[i][0] |= SPRITE_NONE;
             gWonderCardData->stampSpriteIds[i][1] |= SPRITE_NONE;
-            gWonderCardData->stampSpriteIds[i][0] = CreateSprite(&gUnknown_82C4274, 0xD8 - 0x20 * i, 0x90, 8);
+            gWonderCardData->stampSpriteIds[i][0] = CreateSprite(&sSpriteTemplate_StampShadow, 0xD8 - 0x20 * i, 0x90, 8);
             if (gWonderCardData->cardMetadata.stampData[STAMP_SPECIES][i] != SPECIES_NONE)
                 gWonderCardData->stampSpriteIds[i][1] = CreateMonIconNoPersonality(GetIconSpeciesNoPersonality(gWonderCardData->cardMetadata.stampData[STAMP_SPECIES][i]), SpriteCallbackDummy, 0xD8 - 0x20 * i, 0x88, 0, 0);
         }
@@ -647,9 +647,9 @@ s32 FadeToWonderCardMenu(void)
         CopyBgTilemapBufferToVram(1);
         CopyBgTilemapBufferToVram(2);
         DecompressAndCopyTileDataToVram(2, gWonderCardData->gfx->tiles, 0, 8, 0);
-        gWonderCardData->windowIds[0] = AddWindow(&gUnknown_82C3348[0]);
-        gWonderCardData->windowIds[1] = AddWindow(&gUnknown_82C3348[1]);
-        gWonderCardData->windowIds[2] = AddWindow(&gUnknown_82C3348[2]);
+        gWonderCardData->windowIds[0] = AddWindow(&sCard_WindowTemplates[0]);
+        gWonderCardData->windowIds[1] = AddWindow(&sCard_WindowTemplates[1]);
+        gWonderCardData->windowIds[2] = AddWindow(&sCard_WindowTemplates[2]);
         break;
     case 3:
         if (FreeTempTileDataBuffersIfPossible() != 0)
