@@ -331,6 +331,8 @@ Transition_BigPokeball_Vblank = VBlankCB_SetWinAndBlend;
 Phase2Task_PokeballsTrail = DoMugshotTransition;
 sub_08149FC8 = InitTransitionData;
 ChooseContestMon = sub_080F8D08;
+ScriptMenu_HidePokemonPic = ScriptMenu_GetPicboxWaitFunc;
+ScriptMenu_MultichoiceGrid = sp106_CreateStartMenu;
 ContestLinkTransfer = sub_080F8D48;
 StartContest = sub_080F8C90;
 BattleArena_DeductMindPoints = BattleArena_DeductSkillPoints;
@@ -7615,7 +7617,7 @@ SECTIONS {
         asm/shop.o(.text);
         src/fldeff_escalator.o(.text);
         asm/berry.o(.text);
-        asm/script_menu.o(.text);
+        src/script_menu.o(.text);
         asm/naming_screen.o(.text);
         src/money.o(.text);
         src/contest_effect.o(.text.AreMovesContestCombo);
