@@ -10,9 +10,8 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.globl gUnknown_82EC034
-gUnknown_82EC034: @ 0x82EC034
-	.incbin "baserom_jp.gba", 0x2ec034, 0x5cc
+gUnknown_82EC5FE: @ 0x82EC5FE
+	.incbin "baserom_jp.gba", 0x2ec5fe, 0x2
 
 	.globl sTurnActionsFuncsTable
 sTurnActionsFuncsTable: @ 0x82EC600 @ 14 B_ACTION_* entries; [10]/[11] are JP-specific functions equivalent to US HandleAction_RunBattleScript/HandleAction_TryFinish
