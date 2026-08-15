@@ -1697,7 +1697,7 @@ __attribute__((naked)) u16 CountTotalItemQuantityInBag(u16 itemId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6920: .4byte gUnknown_2039A70\n\t"
+        "_080D6920: .4byte sCutGrassSpriteArrayPtr\n\t"
         ".syntax divided\n\t"
     );
 }

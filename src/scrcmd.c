@@ -92,7 +92,7 @@ u16 IsUpdateLinkStateCBActive(void);
 void sub_08097FB8(void);
 void sub_0808C9E4(u8 a);
 extern IWRAM_DATA u8 gApproachingTrainerId;
-extern IWRAM_DATA u8 gUnknown_3005B50;
+extern IWRAM_DATA u8 gSelectedObjectEvent;
 extern EWRAM_DATA u32 gRamScriptRetAddr;
 extern IWRAM_DATA u8 sBrailleWindowId;
 
@@ -2170,7 +2170,7 @@ bool8 ScrCmd_buffercontesttype(struct ScriptContext *ctx)
 
 bool8 ScrCmd_cmdD8(struct ScriptContext *ctx)
 {
-    gUnknown_3005B50 = GetCurrentApproachingTrainerEventObjectId();
+    gSelectedObjectEvent = GetCurrentApproachingTrainerEventObjectId();
     return FALSE;
 }
 

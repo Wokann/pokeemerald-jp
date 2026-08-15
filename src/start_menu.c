@@ -2592,7 +2592,7 @@ __attribute__((naked)) void sub_0809FE28(void)
         "	b _0809FF80\n\t"
         "	.align 2, 0\n\t"
         "_0809FEEC: .4byte gText_SavingDontTurnOffPower\n\t"
-        "_0809FEF0: .4byte gUnknown_300319C\n\t"
+        "_0809FEF0: .4byte gWirelessCommType\n\t"
         "_0809FEF4:\n\t"
         "	movs r0, #5\n\t"
         "	b _0809FF7E\n\t"

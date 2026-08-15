@@ -586,7 +586,7 @@ __attribute__((naked)) void CreateStarterPokemonLabel(u8 selection)
         "_08134638: .4byte 0x08590C02\n\t"
         "_0813463C: .4byte 0xFFFF00FF\n\t"
         "_08134640: .4byte 0xFF00FFFF\n\t"
-        "_08134644: .4byte gUnknown_30011F8\n\t"
+        "_08134644: .4byte sStarterLabelWindowId\n\t"
         "_08134648: .4byte 0x08590C1C\n\t"
         ".syntax divided\n\t"
     );

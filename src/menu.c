@@ -17,8 +17,8 @@ __attribute__((naked)) void InitStandardTextBoxWindows()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08196DDC: .4byte 0x085D7B28\n\t"
-        "_08196DE0: .4byte gUnknown_203CA58\n\t"
-        "_08196DE4: .4byte gUnknown_203CA59\n\t"
+        "_08196DE0: .4byte sStartMenuWindowId\n\t"
+        "_08196DE4: .4byte sMapNamePopupWindowId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1429,7 +1429,7 @@ __attribute__((naked)) void sub_081977C8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08197808: .4byte gUnknown_203CA58\n\t"
+        "_08197808: .4byte sStartMenuWindowId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1466,7 +1466,7 @@ __attribute__((naked)) void RemoveMapNamePopUpWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197830: .4byte gUnknown_203CA58\n\t"
+        "_08197830: .4byte sStartMenuWindowId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1525,7 +1525,7 @@ __attribute__((naked)) u8 AddMapNamePopUpWindow()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08197878: .4byte gUnknown_203CA59\n\t"
+        "_08197878: .4byte sMapNamePopupWindowId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1562,7 +1562,7 @@ __attribute__((naked)) void RemoveStartMenuWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081978A0: .4byte gUnknown_203CA59\n\t"
+        "_081978A0: .4byte sMapNamePopupWindowId\n\t"
         ".syntax divided\n\t"
     );
 }

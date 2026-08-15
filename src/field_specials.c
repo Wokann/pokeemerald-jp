@@ -8306,7 +8306,7 @@ __attribute__((naked)) void sub_0813B5B4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B804: .4byte gUnknown_300319C\n\t"
+        "_0813B804: .4byte gWirelessCommType\n\t"
         "_0813B808: .4byte gBattleTypeFlags\n\t"
         "_0813B80C: .4byte gUnknown_203A83C\n\t"
         ".syntax divided\n\t"

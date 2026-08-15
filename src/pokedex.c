@@ -62,7 +62,7 @@ __attribute__((naked)) void ResetPokedex()
         "	.align 2, 0\n\t"
         "_080BAA78: .4byte gUnknown_20397F0\n\t"
         "_080BAA7C: .4byte gUnknown_20397F2\n\t"
-        "_080BAA80: .4byte gUnknown_3005E10\n\t"
+        "_080BAA80: .4byte gUnusedPokedexU8\n\t"
         "_080BAA84: .4byte gSaveBlock2Ptr\n\t"
         "_080BAA88: .4byte gSaveBlock1Ptr\n\t"
         "_080BAA8C: .4byte 0x00000988\n\t"

@@ -20,7 +20,7 @@ extern const char gUnknown_82C4B10[]; // "svr->mainseqno < NELEMS(func_tbl)"
 extern const u8 gUnknown_82C4F60[];
 extern const u8 gUnknown_82C4FC0[];
 extern u32 (*const gUnknown_82C4AFC[])(void *);
-extern u8 gUnknown_202207C[];
+extern u16 gBlockRecvBuffer[MAX_RFU_PLAYERS][BLOCK_BUFFER_SIZE / 2];
 extern u32 (*const gUnknown_82C4B34[])(void *);
 extern const u8 gUnknown_82C4B6C[];
 
@@ -458,7 +458,7 @@ void mevent_srv_sub_init_recv(struct MeventServerSub *sub, u32 a, void *buffer)
 
 void mevent_recv_block(u32 block, void *dst, u32 size)
 {
-    memcpy(dst, &gUnknown_202207C[block << 8], size);
+    memcpy(dst, (u8 *)gBlockRecvBuffer + (block << 8), size);
 }
 
 bool32 mevent_has_received(u32 block)

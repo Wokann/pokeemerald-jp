@@ -252,7 +252,7 @@ __attribute__((naked)) void sub_080C1D8C(void)
         "	ldr r1, [r4]\n\t"
         "	b _080C1F04\n\t"
         "	.align 2, 0\n\t"
-        "_080C1EB8: .4byte gUnknown_300319C\n\t"
+        "_080C1EB8: .4byte gWirelessCommType\n\t"
         "_080C1EBC: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_080C1EC0: .4byte gUnknown_2039988\n\t"
         "_080C1EC4: .4byte 0x080C1CBD\n\t"

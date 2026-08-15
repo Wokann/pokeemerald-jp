@@ -61,7 +61,7 @@ struct CableCarData
 };
 
 // JP: no EWRAM_DATA attribute (breaks agbcc struct tag parsing); ld alias
-// sCableCar = gUnknown_203A878 places the pointer at the JP ROM address.
+// sCableCar = gGroundTilemapData places the pointer at the JP ROM address.
 extern struct CableCarData *sCableCar;
 
 extern void CB2_LoadCableCar(void);

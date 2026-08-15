@@ -791,7 +791,7 @@ sGroundSegmentY_Up = gUnknown_203A87E;
 sGroundX_Down = gUnknown_203A87F;
 sGroundY_Down = gUnknown_203A880;
 sGroundSegmentY_Down = gUnknown_203A881;
-sCableCar = gUnknown_203A878;
+sCableCar = gGroundTilemapData;
 sCableCarBgTemplates = gUnknown_85AC474;
 sCableCarGround_Tilemap = gUnknown_85AC484;
 sCableCarTrees_Tilemap = gUnknown_85AC5DC;
@@ -9534,3 +9534,18 @@ SECTIONS {
         *(*);
     }
 }
+gMessageBox_Pal = gUnknown_84E8840;
+TrainerHill_EventScript_TrainerBattle = gUnknown_8276D0C;
+gText_ExpandedPlaceholder_Emerald = gUnknown_85C8C36;
+gText_ExpandedPlaceholder_Aqua = gUnknown_85C8C3C;
+gText_ExpandedPlaceholder_Magma = gUnknown_85C8C40;
+gText_ExpandedPlaceholder_Archie = gUnknown_85C8C44;
+gText_ExpandedPlaceholder_Maxie = gUnknown_85C8C49;
+gText_ExpandedPlaceholder_Kyogre = gUnknown_85C8C4E;
+gText_ExpandedPlaceholder_Groudon = gUnknown_85C8C54;
+gText_ExpandedPlaceholder_Empty = gUnknown_85C8C24;
+gText_ExpandedPlaceholder_Kun = gUnknown_85C8C25;
+gText_ExpandedPlaceholder_Chan = gUnknown_85C8C28;
+gText_ExpandedPlaceholder_May = gUnknown_85C8C5E;
+gText_ExpandedPlaceholder_Brendan = gUnknown_85C8C5A;
+gFacilityClassToPicIndex = gUnknown_82EFF00;

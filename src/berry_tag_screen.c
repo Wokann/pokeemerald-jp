@@ -179,7 +179,7 @@ __attribute__((naked)) void InitBerryTagScreen(void)
         "	strh r1, [r0]\n\t"
         "	b _08177CC4\n\t"
         "	.align 2, 0\n\t"
-        "_08177C58: .4byte gUnknown_203B9C0\n\t"
+        "_08177C58: .4byte sBerryTag\n\t"
         "_08177C5C: .4byte 0x00001808\n\t"
         "_08177C60:\n\t"
         "	bl LoadBerryTagGfx\n\t"
@@ -309,7 +309,7 @@ __attribute__((naked)) void AddBerryTagTextToBg0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08177D68: .4byte gUnknown_85CD068\n\t"
-        "_08177D6C: .4byte gUnknown_203B9C0\n\t"
+        "_08177D6C: .4byte sBerryTag\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -477,7 +477,7 @@ __attribute__((naked)) void PrintBerrySize(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08177FC4: .4byte gUnknown_203B9C0\n\t"
+        "_08177FC4: .4byte sBerryTag\n\t"
         "_08177FC8: .4byte gUnknown_85C97BD\n\t"
         ".syntax divided\n\t"
     );
@@ -541,7 +541,7 @@ __attribute__((naked)) void PrintBerryNumberAndName(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08178038: .4byte gUnknown_203B9C0\n\t"
+        "_08178038: .4byte sBerryTag\n\t"
         "_0817803C: .4byte gStringVar1\n\t"
         "_08178040: .4byte gStringVar2\n\t"
         "_08178044: .4byte gStringVar4\n\t"
@@ -613,7 +613,7 @@ __attribute__((naked)) void sub_0817804C(void)
         "	bl AddTextPrinterParameterized\n\t"
         "	b _081780FA\n\t"
         "	.align 2, 0\n\t"
-        "_081780D0: .4byte gUnknown_203B9C0\n\t"
+        "_081780D0: .4byte sBerryTag\n\t"
         "_081780D4: .4byte gUnknown_85C977D\n\t"
         "_081780D8: .4byte gStringVar1\n\t"
         "_081780DC: .4byte gStringVar2\n\t"
@@ -682,7 +682,7 @@ __attribute__((naked)) void PrintBerryFirmness(void)
         "	bl AddTextPrinterParameterized\n\t"
         "	b _0817817A\n\t"
         "	.align 2, 0\n\t"
-        "_0817815C: .4byte gUnknown_203B9C0\n\t"
+        "_0817815C: .4byte sBerryTag\n\t"
         "_08178160: .4byte gUnknown_85C9782\n\t"
         "_08178164: .4byte gUnknown_85CD0C8\n\t"
         "_08178168:\n\t"
@@ -732,7 +732,7 @@ __attribute__((naked)) void PrintBerryDescription1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081781B8: .4byte gUnknown_203B9C0\n\t"
+        "_081781B8: .4byte sBerryTag\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -764,7 +764,7 @@ __attribute__((naked)) void PrintBerryDescription2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081781EC: .4byte gUnknown_203B9C0\n\t"
+        "_081781EC: .4byte sBerryTag\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1113,7 +1113,7 @@ __attribute__((naked)) void Task_DisplayAnotherBerry(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081787E4: .4byte gSprites\n\t"
-        "_081787E8: .4byte gUnknown_203B9C0\n\t"
+        "_081787E8: .4byte sBerryTag\n\t"
         "_081787EC: .4byte 0x00001802\n\t"
         "_081787F0: .4byte 0x00001803\n\t"
         "_081787F4: .4byte gTasks\n\t"

@@ -2491,7 +2491,7 @@ __attribute__((naked)) void sub_080F730C(void)
         "	.align 2, 0\n\t"
         "_080F7384: .4byte gLinkContestFlags\n\t"
         "_080F7388: .4byte gSprites\n\t"
-        "_080F738C: .4byte gUnknown_20227C8\n\t"
+        "_080F738C: .4byte gWirelessStatusIndicatorSpriteId\n\t"
         "_080F7390: .4byte 0x085694C4\n\t"
         "_080F7394: .4byte 0x06010000\n\t"
         "_080F7398: .4byte 0x085694AC\n\t"

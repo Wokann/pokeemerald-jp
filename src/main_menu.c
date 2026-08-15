@@ -2115,7 +2115,7 @@ __attribute__((naked)) void Task_MainMenuCheckSaveFile(u8 taskId)
         "	.align 2, 0\n\t"
         "_0802F6BC: .4byte 0x085C8D80\n\t"
         "_0802F6C0: .4byte 0x0802F719\n\t"
-        "_0802F6C4: .4byte gUnknown_20229BA\n\t"
+        "_0802F6C4: .4byte sCurrItemAndOptionMenuCheck\n\t"
         "_0802F6C8:\n\t"
         "	cmp r0, #0\n\t"
         "	blt _0802F6F2\n\t"
@@ -2157,7 +2157,7 @@ __attribute__((naked)) void Task_MainMenuCheckSaveFile(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0802F710: .4byte gUnknown_20229BA\n\t"
+        "_0802F710: .4byte sCurrItemAndOptionMenuCheck\n\t"
         "_0802F714: .4byte 0x00007FFF\n\t"
         ".syntax divided\n\t"
     );

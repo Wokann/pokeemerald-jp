@@ -5885,7 +5885,7 @@ __attribute__((naked)) void sub_08164A54(void)
         "_08164C64: .4byte gTrainerBattleOpponent_A\n\t"
         "_08164C68: .4byte gTrainerBattleOpponent_B\n\t"
         "_08164C6C: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_08164C70: .4byte gUnknown_300319C\n\t"
+        "_08164C70: .4byte gWirelessCommType\n\t"
         "_08164C74: .4byte gSpecialVar_Result\n\t"
         "_08164C78:\n\t"
         "	bl SetCloseLinkCallback\n\t"
@@ -5933,7 +5933,7 @@ __attribute__((naked)) void sub_08164CAC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08164CC0: .4byte gUnknown_300319C\n\t"
+        "_08164CC0: .4byte gWirelessCommType\n\t"
         ".syntax divided\n\t"
     );
 }
