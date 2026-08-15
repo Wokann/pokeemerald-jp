@@ -6572,9 +6572,47 @@ gBattleScriptingCommandsTable: @ 0x82EC694
 	.4byte Cmd_finishturn @ B_SCR_OP_FINISHTURN
 	.4byte Cmd_trainerslideout @ B_SCR_OP_TRAINERSLIDEOUT
 
-	.globl gUnknown_82ECA78
-gUnknown_82ECA78: @ 0x82ECA78
-	.incbin "baserom_jp.gba", 0x2eca78, 0x34
+	.globl sAccuracyStageRatios
+sAccuracyStageRatios: @ 0x82ECA78
+	.byte 33 @ stage -6 dividend
+	.byte 100 @ stage -6 divisor
+	.hword 0
+	.byte 36 @ stage -5 dividend
+	.byte 100 @ stage -5 divisor
+	.hword 0
+	.byte 43 @ stage -4 dividend
+	.byte 100 @ stage -4 divisor
+	.hword 0
+	.byte 50 @ stage -3 dividend
+	.byte 100 @ stage -3 divisor
+	.hword 0
+	.byte 60 @ stage -2 dividend
+	.byte 100 @ stage -2 divisor
+	.hword 0
+	.byte 75 @ stage -1 dividend
+	.byte 100 @ stage -1 divisor
+	.hword 0
+	.byte 1 @ stage 0 dividend
+	.byte 1 @ stage 0 divisor
+	.hword 0
+	.byte 133 @ stage +1 dividend
+	.byte 100 @ stage +1 divisor
+	.hword 0
+	.byte 166 @ stage +2 dividend
+	.byte 100 @ stage +2 divisor
+	.hword 0
+	.byte 2 @ stage +3 dividend
+	.byte 1 @ stage +3 divisor
+	.hword 0
+	.byte 233 @ stage +4 dividend
+	.byte 100 @ stage +4 divisor
+	.hword 0
+	.byte 133 @ stage +5 dividend
+	.byte 50 @ stage +5 divisor
+	.hword 0
+	.byte 3 @ stage +6 dividend
+	.byte 1 @ stage +6 divisor
+	.hword 0
 
 	.globl sCriticalHitChance
 sCriticalHitChance: @ 0x82ECAAC
