@@ -10,11 +10,31 @@ sys.path.insert(0, str(ROOT / "tools"))
 from decode_rom_text import decode
 
 rom = (ROOT / "baserom_jp.gba").read_bytes()
-import glob
-all_lines = []
-for f in sorted(glob.glob(str(ROOT / "data" / "data_b2d*.s"))):
-    all_lines += (Path(f).read_text(encoding="utf-8", errors="replace").splitlines())
-lines = all_lines
+
+
+def _all_data_lines():
+    """Symbol table from git HEAD so truncated working-tree .s files do not
+    hide addresses that were already split into region C files."""
+    import glob
+    import subprocess
+    lines = []
+    for f in sorted(glob.glob(str(ROOT / "data" / "data_b2d*.s"))):
+        name = Path(f).name
+        try:
+            raw = subprocess.run(
+                ["git", "show", f"HEAD:data/{name}"],
+                capture_output=True,
+                cwd=ROOT,
+            ).stdout
+            if not raw:
+                raw = Path(f).read_bytes()
+        except Exception:
+            raw = Path(f).read_bytes()
+        lines += raw.decode("utf-8", errors="replace").splitlines()
+    return lines
+
+
+lines = _all_data_lines()
 
 addrs = {}
 for l in lines:
@@ -67,25 +87,18 @@ def gen_region(start, end, out_name):
         if not raw:
             continue
         txt = decode(raw)
-        # split $ sub-texts; trailing empty segments = extra 0xFF terminators
-        subs = txt.split("$")
-        trailing = 0
-        while subs and subs[-1] == "":
-            subs.pop()
-            trailing += 1
-        for i, sub in enumerate(subs):
-            if i > 0:
-                pass  # keep leading 0x00 spaces: they are content (menu indent), not ALIGN(4) fill in these regions
-            if sub == "":
-                continue
-            if i == len(subs) - 1 and trailing > 1:
-                sub = sub + "$" * (trailing - 1)
-            sn = name if i == 0 else f"{name}_sub{i}"
-            if sn in used:
-                sn = f"{name}_sub{i}_{len(used)}"
-            used.add(sn)
-            out_lines.append(fmt_multi(sn, sub))
-            out_lines.append("")
+        # Keep $-separated sub-messages in ONE string: the game reads them
+        # as separate messages delimited by FF, and preproc appends the
+        # final EOS byte.  Dropping the empty segments (from consecutive
+        # "$" terminators) or splitting into _sub symbols changes bytes.
+        if txt.endswith("$$$"):
+            txt = txt[:-1]
+        elif txt.endswith("$$"):
+            txt = txt[:-1]
+        elif txt.endswith("$"):
+            txt = txt[:-1]
+        out_lines.append(fmt_multi(name, txt))
+        out_lines.append("")
     out = ROOT / "src/data/text" / out_name
     out.write_text("\n".join(out_lines), encoding="utf-8")
     print(f"written {out}; defs: {sum(1 for l in out_lines if l.startswith('ALIGNED(4)'))}")

@@ -30,6 +30,26 @@ for l in (ROOT / "charmap.txt").read_text(encoding="utf-8").splitlines():
 # control-code prefixes (FD xx / FC xx / FE / FA / FB) take priority as multi-byte
 multi_len = sorted(set(len(b) for b in multi), reverse=True)
 
+# extended control codes that take argument bytes after the code.
+# key: charmap constant name; value: number of argument bytes.
+CTRL_ARG_BYTES = {
+    "COLOR": 1,
+    "HIGHLIGHT": 1,
+    "SHADOW": 1,
+    "COLOR_HIGHLIGHT_SHADOW": 3,
+    "PALETTE": 1,
+    "FONT": 1,
+    "PAUSE": 1,
+    "WAIT_SE": 1,
+    "PLAY_BGM": 1,
+    "SHIFT_RIGHT": 1,
+    "SHIFT_DOWN": 1,
+    "FILL_WINDOW": 1,
+    "PLAY_SE": 1,
+    "CLEAR_TO": 1,
+    "MIN_LETTER_SPACING": 1,
+}
+
 
 def decode(data):
     """Decode inner-code bytes to charmap text (kana/symbol first)."""
@@ -47,8 +67,16 @@ def decode(data):
         # multi-byte control codes
         for L in multi_len:
             if i + L <= len(data) and data[i:i + L] in multi:
-                out.append(multi[data[i:i + L]])
-                i += L
+                token = multi[data[i:i + L]]
+                name = token.strip("{}")
+                nargs = CTRL_ARG_BYTES.get(name, 0)
+                args = data[i + L:i + L + nargs]
+                if nargs and len(args) == nargs:
+                    out.append("{" + name + " " + " ".join(str(x) for x in args) + "}")
+                    i += L + nargs
+                else:
+                    out.append(token)
+                    i += L
                 matched = True
                 break
         if not matched:

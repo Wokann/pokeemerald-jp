@@ -13,7 +13,16 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--header", default="test_region.h")
 ap.add_argument("--src", default="data/data_b2d.s")
 a = ap.parse_args()
-lines = (ROOT / a.src).read_text(encoding="utf-8", errors="replace").splitlines()
+import subprocess
+try:
+    raw = subprocess.run(
+        ["git", "show", f"HEAD:{a.src}"], capture_output=True, cwd=ROOT
+    ).stdout
+    if not raw:
+        raw = (ROOT / a.src).read_bytes()
+except Exception:
+    raw = (ROOT / a.src).read_bytes()
+lines = raw.decode("utf-8", errors="replace").splitlines()
 addrs = {}
 for l in lines:
     m = re.match(r'^\s*(\w+):\s*@\s*0x([0-9A-Fa-f]+)', l)
