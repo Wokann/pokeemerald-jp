@@ -227,9 +227,9 @@ extern const u8 gText_Yes[];
 extern const u8 gText_No[];
 
 // JP standard chat message templates (0x082C57D4, in data/data_b.s).
-extern const struct MessageWindowInfo gUnknown_82C57D4[];
+extern const struct MessageWindowInfo sDisplayStdMessages[];
 // JP keyboard swap menu title text (0x082C5858).
-extern const u8 gUnknown_82C5858[];
+extern const struct MenuAction sKeyboardPageTitleTexts[6];
 
 // JP union room chat graphics data.
 extern const u16 sKeyboardPal1[];
@@ -238,9 +238,9 @@ extern const u16 sKeyboardTilemap[];
 extern const u16 sKeyboardPal2[];
 extern const u16 sKeyboardPal3[];
 extern const u32 sKeyboardGfx2[];
-extern const u8 gUnknown_82C55BC[];
-extern const u8 gUnknown_82C56B4[];
-extern const u8 gUnknown_82C56D4[];
+extern const u16 sKeyboardBg2Tilemap[];
+extern const u16 sChatMessagesWindow_Pal[];
+extern const u16 sUnionRoomChatInterfacePal[];
 extern const u16 gStandardMenuPalette[];
 
 // JP union room chat sprite resources.
@@ -280,9 +280,9 @@ void Task_ReceiveChatMessage(u8 taskId);
 
 extern EWRAM_DATA struct UnionRoomChatDisplay *sDisplay;
 extern EWRAM_DATA struct UnionRoomChatSprites *sSprites;
-extern const struct BgTemplate gUnknown_82C56F4[];
-extern const struct WindowTemplate gUnknown_82C5704[];
-extern const struct SubtaskInfo gUnknown_82C572C[];
+extern const u16 sChatBgTemplates[];
+extern const struct WindowTemplate sWinTemplates[];
+extern const struct SubtaskInfo sDisplaySubtasks[];
 extern bool32 Display_Dummy(u8 *state);
 extern bool32 TryAllocSprites(void);
 extern void FreeSprites(void);
@@ -1684,8 +1684,8 @@ bool8 TryAllocDisplay(void)
     if (sDisplay && TryAllocSprites())
     {
         ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(0, gUnknown_82C56F4, 4);
-        InitWindows(gUnknown_82C5704);
+        InitBgsFromTemplates(0, (const struct BgTemplate *)sChatBgTemplates, 4);
+        InitWindows(sWinTemplates);
         ResetTempTileDataBuffers();
         InitScanlineEffect();
         InitDisplay(sDisplay);
@@ -1760,9 +1760,9 @@ void StartDisplaySubtask(u16 subtaskId, u8 assignId)
     sDisplay->subtasks[assignId].callback = Display_Dummy;
     for (i = 0; i < 21; i++)
     {
-        if (gUnknown_82C572C[i].idx == subtaskId)
+        if (sDisplaySubtasks[i].idx == subtaskId)
         {
-            sDisplay->subtasks[assignId].callback = gUnknown_82C572C[i].callback;
+            sDisplay->subtasks[assignId].callback = sDisplaySubtasks[i].callback;
             sDisplay->subtasks[assignId].active = TRUE;
             sDisplay->subtasks[assignId].state = 0;
             break;
@@ -2355,7 +2355,7 @@ void AddStdMessageWindow(int msgId, u16 bg0vofs)
     template.height = 4;
     template.paletteNum = 14;
     template.baseBlock = 0x71; // JP standard message window base block (US uses 0x6A)
-    if (gUnknown_82C57D4[msgId].useWiderBox)
+    if (sDisplayStdMessages[msgId].useWiderBox)
     {
         template.tilemapLeft -= 7;
         template.width += 7;
@@ -2366,32 +2366,32 @@ void AddStdMessageWindow(int msgId, u16 bg0vofs)
     if (sDisplay->messageWindowId == WINDOW_NONE)
         return;
 
-    if (gUnknown_82C57D4[msgId].hasPlaceholders)
+    if (sDisplayStdMessages[msgId].hasPlaceholders)
     {
-        DynamicPlaceholderTextUtil_ExpandPlaceholders(sDisplay->expandedPlaceholdersBuffer, gUnknown_82C57D4[msgId].text);
+        DynamicPlaceholderTextUtil_ExpandPlaceholders(sDisplay->expandedPlaceholdersBuffer, sDisplayStdMessages[msgId].text);
         str = sDisplay->expandedPlaceholdersBuffer;
     }
     else
     {
-        str = gUnknown_82C57D4[msgId].text;
+        str = sDisplayStdMessages[msgId].text;
     }
 
     ChangeBgY(0, bg0vofs * 256, BG_COORD_SET);
     FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
     PutWindowTilemap(windowId);
-    if (gUnknown_82C57D4[msgId].boxType == 1)
+    if (sDisplayStdMessages[msgId].boxType == 1)
     {
         DrawTextBorderInner(windowId, 0xA, 2);
         AddTextPrinterParameterized5(
             windowId,
             FONT_NORMAL,
             str,
-            gUnknown_82C57D4[msgId].x + 8,
-            gUnknown_82C57D4[msgId].y + 8,
+            sDisplayStdMessages[msgId].x + 8,
+            sDisplayStdMessages[msgId].y + 8,
             TEXT_SKIP_DRAW,
             NULL,
-            gUnknown_82C57D4[msgId].letterSpacing,
-            gUnknown_82C57D4[msgId].lineSpacing);
+            sDisplayStdMessages[msgId].letterSpacing,
+            sDisplayStdMessages[msgId].lineSpacing);
     }
     else
     {
@@ -2400,12 +2400,12 @@ void AddStdMessageWindow(int msgId, u16 bg0vofs)
             windowId,
             FONT_NORMAL,
             str,
-            gUnknown_82C57D4[msgId].x,
-            gUnknown_82C57D4[msgId].y,
+            sDisplayStdMessages[msgId].x,
+            sDisplayStdMessages[msgId].y,
             TEXT_SKIP_DRAW,
             NULL,
-            gUnknown_82C57D4[msgId].letterSpacing,
-            gUnknown_82C57D4[msgId].lineSpacing);
+            sDisplayStdMessages[msgId].letterSpacing,
+            sDisplayStdMessages[msgId].lineSpacing);
     }
 
     sDisplay->messageWindowId = windowId;
@@ -2497,7 +2497,7 @@ void ShowKeyboardSwapMenu(void)
 {
     FillWindowPixelBuffer(WIN_SWAP_MENU, PIXEL_FILL(1));
     DrawTextBorderOuter(WIN_SWAP_MENU, 1, 13);
-    sub_08198964(WIN_SWAP_MENU, 1, 13, 6, gUnknown_82C5858);
+    sub_08198964(WIN_SWAP_MENU, 1, 13, 6, (const u8 *)sKeyboardPageTitleTexts);
     sub_081984B0(WIN_SWAP_MENU, 1, 0, 0, 13, 6, GetCurrentKeyboardPage());
     PutWindowTilemap(WIN_SWAP_MENU);
 }
@@ -2580,19 +2580,19 @@ void LoadChatWindowGfx(void)
         CpuFastCopy(&ptr[0x21 * TILE_SIZE_4BPP], &sDisplay->textEntryTiles[TILE_SIZE_4BPP * 1], TILE_SIZE_4BPP);
     }
 
-    CopyToBgTilemapBuffer(2, gUnknown_82C55BC, 0, 0);
+    CopyToBgTilemapBuffer(2, (const u8 *)sKeyboardBg2Tilemap, 0, 0);
     CopyBgTilemapBufferToVram(2);
 }
 
 void LoadChatUnkPalette(void)
 {
-    LoadPalette(gUnknown_82C56B4, BG_PLTT_ID(8), 0x20);
+    LoadPalette(sChatMessagesWindow_Pal, BG_PLTT_ID(8), 0x20);
     RequestDma3Fill(0, (void *)BG_CHAR_ADDR(1) + TILE_SIZE_4BPP, TILE_SIZE_4BPP, 1);
 }
 
 void LoadChatMessagesWindow(void)
 {
-    LoadPalette(gUnknown_82C56D4, BG_PLTT_ID(15), 0x20);
+    LoadPalette(sUnionRoomChatInterfacePal, BG_PLTT_ID(15), 0x20);
     PutWindowTilemap(WIN_CHAT_HISTORY);
     FillWindowPixelBuffer(WIN_CHAT_HISTORY, PIXEL_FILL(1));
     CopyWindowToVram(WIN_CHAT_HISTORY, COPYWIN_FULL);
