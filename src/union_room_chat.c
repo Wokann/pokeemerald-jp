@@ -190,8 +190,7 @@ extern const u8 sCaseToggleTable[];
 
 // JP keyboard text pointer table (0x082C5180, in data/data_b.s),
 // [page][row] with 4 pages x 10 rows of u8 pointers.
-extern const u8 *const gUnknown_82C5180[][UNION_ROOM_KB_ROW_COUNT];
-#define sUnionRoomKeyboardText gUnknown_82C5180
+extern const u8 *const sUnionRoomKeyboardText[][UNION_ROOM_KB_ROW_COUNT];
 
 enum {
     CHAT_MESSAGE_NONE,
@@ -233,12 +232,12 @@ extern const struct MessageWindowInfo gUnknown_82C57D4[];
 extern const u8 gUnknown_82C5858[];
 
 // JP union room chat graphics data.
-extern const u8 gUnknown_82C5220[];
-extern const u8 gUnknown_82C5240[];
-extern const u8 gUnknown_82C529C[];
-extern const u8 gUnknown_82C5348[];
-extern const u8 gUnknown_82C5368[];
-extern const u8 gUnknown_82C5388[];
+extern const u16 sKeyboardPal1[];
+extern const u32 sKeyboardGfx1[];
+extern const u16 sKeyboardTilemap[];
+extern const u16 sKeyboardPal2[];
+extern const u16 sKeyboardPal3[];
+extern const u32 sKeyboardGfx2[];
 extern const u8 gUnknown_82C55BC[];
 extern const u8 gUnknown_82C56B4[];
 extern const u8 gUnknown_82C56D4[];
@@ -2562,10 +2561,10 @@ void ClearBg0(void)
 
 void LoadKeyboardWindowGfx(void)
 {
-    LoadPalette(gUnknown_82C5220, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
-    LoadPalette(gUnknown_82C5348, BG_PLTT_ID(12), PLTT_SIZE_4BPP);
-    DecompressAndCopyTileDataToVram(1, gUnknown_82C5240, 0, 0, 0);
-    CopyToBgTilemapBuffer(1, gUnknown_82C529C, 0, 0);
+    LoadPalette(sKeyboardPal1, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
+    LoadPalette(sKeyboardPal2, BG_PLTT_ID(12), PLTT_SIZE_4BPP);
+    DecompressAndCopyTileDataToVram(1, sKeyboardGfx1, 0, 0, 0);
+    CopyToBgTilemapBuffer(1, sKeyboardTilemap, 0, 0);
     CopyBgTilemapBufferToVram(1);
 }
 
@@ -2573,8 +2572,8 @@ void LoadChatWindowGfx(void)
 {
     u8 *ptr;
 
-    LoadPalette(gUnknown_82C5368, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
-    ptr = DecompressAndCopyTileDataToVram(2, gUnknown_82C5388, 0, 0, 0);
+    LoadPalette(sKeyboardPal3, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+    ptr = DecompressAndCopyTileDataToVram(2, sKeyboardGfx2, 0, 0, 0);
     if (ptr)
     {
         CpuFastCopy(&ptr[0x11 * TILE_SIZE_4BPP], &sDisplay->textEntryTiles[TILE_SIZE_4BPP * 0], TILE_SIZE_4BPP);
