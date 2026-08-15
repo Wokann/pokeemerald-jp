@@ -7,6 +7,7 @@ gParticlesColorBlendTable = ABSOLUTE(0x0856EC04);
 gMoonSpriteTemplate = ABSOLUTE(0x0856EAA0);
 gMoonlightSparkleSpriteTemplate = ABSOLUTE(0x0856EAD0);
 gPaletteFade = ABSOLUTE(0x02037C74);
+sBerryTag = ABSOLUTE(0x0203B9C0);
 sub_080A5DB4 = ConvertPosDataToTranslateLinearData;
 SetSavedWeather = SetSav1Weather;
 SetSavedWeatherFromCurrMapHeader = DoCurrentWeather;

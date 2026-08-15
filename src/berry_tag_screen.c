@@ -1,37 +1,31 @@
 #include "global.h"
 #include "berry_tag_screen.h"
+#include "berry.h"
+#include "item_menu.h"
+#include "main.h"
+#include "malloc.h"
 
-__attribute__((naked)) void DoBerryTagScreen(void)
+// JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
+// padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
+struct BerryTagScreenStruct
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _08177B2C\n\t"
-        "	ldr r0, _08177B30\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r0, _08177B34\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bl ItemIdToBerryType\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r2, #0xc0\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r0, _08177B38\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08177B2C: .4byte gUnknown_203B9C0\n\t"
-        "_08177B30: .4byte 0x0000180C\n\t"
-        "_08177B34: .4byte gSpecialVar_ItemId\n\t"
-        "_08177B38: .4byte CB2_InitBerryTagScreen + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tilemapBuffers[3][0x400];
+    u16 berryId;
+    u8 berrySpriteId;
+    u8 flavorCircleIds[FLAVOR_COUNT];
+    u16 gfxState;
+    u16 unused;
+};
+
+// Address defined in ld_script_jp.txt (ABSOLUTE 0x0203B9C0).
+extern struct BerryTagScreenStruct *sBerryTag;
+void CB2_InitBerryTagScreen(void);
+
+void DoBerryTagScreen(void)
+{
+    sBerryTag = AllocZeroed(sizeof(*sBerryTag));
+    sBerryTag->berryId = ItemIdToBerryType(gSpecialVar_ItemId);
+    SetMainCallback2(CB2_InitBerryTagScreen);
 }
 
 __attribute__((naked)) void CB2_BerryTagScreen(void)
@@ -2460,4 +2454,3 @@ __attribute__((naked)) void sub_08178D7C(void)
         ".syntax divided\n\t"
     );
 }
-
