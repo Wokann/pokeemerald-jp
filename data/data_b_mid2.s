@@ -13,37 +13,6 @@
 
 
 
-	.globl sURBattleText_CommStandby
-sURBattleText_CommStandby: @ 0x82C32C3
-	.string "つうしんたいきちゅう\n"
-	.string "あいての　せんたくを　まっています⋯$"
-	.globl sURBattleText_BattleWasRefused
-sURBattleText_BattleWasRefused: @ 0x82C32E1
-	.string "たいせんを　ことわられました{PAUSE 60}$"
-	.globl sURBattleText_RefusedBattle
-sURBattleText_RefusedBattle: @ 0x82C32F3
-	.string "たいせんを　ことわりました{PAUSE 60}$"
-	.globl sReceivedGiftFlags
-sReceivedGiftFlags: @ 0x82C3304
-	.hword 0x013A, 0x013B, 0x013C, 0x013D, 0x013E, 0x013F, 0x0140, 0x0141, 0x0142, 0x0143, 0x0144, 0x0145
-	.hword 0x0146, 0x0147, 0x0148, 0x0149, 0x014A, 0x014B, 0x014C, 0x014D
-
-	.globl sMeventAssertFile
-sMeventAssertFile: @ 0x82C332C
-	.incbin "baserom_jp.gba", 0x2c332c, 0xc
-
-	.globl sMeventAssertExpr0
-sMeventAssertExpr0: @ 0x82C3338
-	.incbin "baserom_jp.gba", 0x2c3338, 0x4
-
-	.globl gUnknown_82C333C
-gUnknown_82C333C: @ 0x82C333C
-	.byte 0x00, 0x02, 0x03, 0x00, 0x01, 0x02, 0x00, 0x00
-
-	.globl gUnknown_82C3344
-gUnknown_82C3344: @ 0x82C3344
-	.byte 0x07, 0x04, 0x07, 0x00
-
 	.globl gUnknown_82C3348
 gUnknown_82C3348: @ 0x82C3348
 	.incbin "baserom_jp.gba", 0x2c3348, 0xee4
