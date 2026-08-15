@@ -9583,7 +9583,7 @@ SECTIONS {
         src/battle_anim_sound_tasks.o(.text.SoundTask_PlaySE2WithPanning);
         src/battle_anim_sound_tasks.o(.text.SoundTask_AdjustPanningVar);
         src/battle_anim_sound_tasks.o(.text.SoundTask_AdjustPanningVar_Step);
-        asm/battle_controller_safari.o(.text);
+        src/battle_controller_safari.o(.text);
         src/fldeff_sweetscent.o(.text);
         src/battle_anim_effects_3.o(.text.AnimBlackSmoke);
         src/battle_anim_effects_3.o(.text.AnimBlackSmoke_Step);
