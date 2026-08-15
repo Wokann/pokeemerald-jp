@@ -10126,7 +10126,7 @@ SECTIONS {
         asm/menu.o(.text);
         asm/battle_factory_screen.o(.text);
         asm/apprentice.o(.text);
-        asm/frontier_util.o(.text);
+        src/frontier_util.o(.text);
         src/battle_arena.o(.text);
         src/battle_factory.o(.text);
         src/battle_pike.o(.text);
