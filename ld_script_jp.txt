@@ -9262,7 +9262,7 @@ SECTIONS {
         asm/field_specials.o(.text);
         src/battle_records.o(.text);
         src/pokedex_area_screen.o(.text);
-        asm/evolution_scene.o(.text);
+        src/evolution_scene.o(.text);
         asm/roulette.o(.text);
         src/pokedex_cry_screen.o(.text);
         src/coins.o(.text);
