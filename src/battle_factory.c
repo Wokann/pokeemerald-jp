@@ -408,26 +408,8 @@ __attribute__((naked)) void sub_081A5ED4(void)
     );
 }
 
-__attribute__((naked)) void sub_081A5F18(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void nullsub_123(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_081A5F18(void) {}
+void nullsub_123(void) {}
 __attribute__((naked)) void SelectInitialRentalMons(void)
 {
     __asm__(".syntax unified\n\t"

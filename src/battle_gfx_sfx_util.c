@@ -1844,26 +1844,8 @@ __attribute__((naked)) void BattleLoadPlayerMonSpriteGfx(struct Pokemon *mon, u8
     );
 }
 
-__attribute__((naked)) void nullsub_25(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void sub_0805DB50(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_25(void) {}
+void sub_0805DB50(void) {}
 __attribute__((naked)) void DecompressTrainerFrontPic(u16 frontPicId, u8 battler)
 {
     __asm__(".syntax unified\n\t"
@@ -1952,16 +1934,7 @@ __attribute__((naked)) void DecompressTrainerBackPic(u16 backPicId, u8 battler)
     );
 }
 
-__attribute__((naked)) void sub_0805DBFC(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_0805DBFC(void) {}
 __attribute__((naked)) void FreeTrainerFrontPicPalette(u16 frontPicId)
 {
     __asm__(".syntax unified\n\t"

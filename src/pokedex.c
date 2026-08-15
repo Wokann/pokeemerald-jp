@@ -6216,16 +6216,7 @@ __attribute__((naked)) void CreateInterfaceSprites(void)
     );
 }
 
-__attribute__((naked)) void nullsub_38(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_38(void) {}
 __attribute__((naked)) void sub_080BDBEC(void)
 {
     __asm__(".syntax unified\n\t"

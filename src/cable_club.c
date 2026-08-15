@@ -2760,16 +2760,7 @@ __attribute__((naked)) void sub_080B30AC(void)
     );
 }
 
-__attribute__((naked)) void nullsub_37(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_37(void) {}
 __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
 {
     __asm__(".syntax unified\n\t"

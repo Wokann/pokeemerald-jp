@@ -1,16 +1,7 @@
 #include "global.h"
 #include "battle_controllers.h"
 
-__attribute__((naked)) void SpriteCB_Null2(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SpriteCB_Null2(void) {}
 __attribute__((naked)) void SetControllerToLinkPartner(void)
 {
     __asm__(".syntax unified\n\t"
@@ -6478,13 +6469,4 @@ __attribute__((naked)) void LinkPartnerHandleCmd55(void)
     );
 }
 
-__attribute__((naked)) void LinkPartnerCmdEnd(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void LinkPartnerCmdEnd(void) {}

@@ -1,16 +1,7 @@
 #include "global.h"
 #include "evolution_graphics.h"
 
-__attribute__((naked)) void PokeEvoSprite_DummySpriteCB(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void PokeEvoSprite_DummySpriteCB(void) {}
 __attribute__((naked)) void SetEvoSparklesMatrices(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1384,16 +1375,7 @@ __attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(voi
     );
 }
 
-__attribute__((naked)) void EvoSparkle_DummySpriteCb(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void EvoSparkle_DummySpriteCb(void) {}
 __attribute__((naked)) void sub_0817C260(void)
 {
     __asm__(".syntax unified\n\t"

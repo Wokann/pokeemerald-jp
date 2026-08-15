@@ -1,16 +1,7 @@
 #include "global.h"
 #include "battle_controllers.h"
 
-__attribute__((naked)) void nullsub_28(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_28(void) {}
 __attribute__((naked)) void SetControllerToLinkOpponent(void)
 {
     __asm__(".syntax unified\n\t"
@@ -7088,13 +7079,4 @@ __attribute__((naked)) void LinkOpponentHandleCmd55(void)
     );
 }
 
-__attribute__((naked)) void LinkOpponentCmdEnd(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void LinkOpponentCmdEnd(void) {}

@@ -904,16 +904,7 @@ __attribute__((naked)) void sub_0817B664(void)
     );
 }
 
-__attribute__((naked)) void nullsub_65(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_65(void) {}
 __attribute__((naked)) void sub_0817B684(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1071,16 +1062,7 @@ __attribute__((naked)) void intro_create_may_sprite(void)
     );
 }
 
-__attribute__((naked)) void nullsub_66(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_66(void) {}
 __attribute__((naked)) void sub_0817B7A8(void)
 {
     __asm__(".syntax unified\n\t"

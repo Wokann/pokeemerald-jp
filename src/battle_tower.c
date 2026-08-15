@@ -4339,16 +4339,7 @@ __attribute__((naked)) void SaveBattleTowerProgress(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_Null6(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SpriteCB_Null6(void) {}
 __attribute__((naked)) u8 GetEreaderTrainerFrontSpriteId()
 {
     __asm__(".syntax unified\n\t"

@@ -2799,16 +2799,7 @@ __attribute__((naked)) void SpriteCallback_CursorFull(void)
     );
 }
 
-__attribute__((naked)) void SpriteCallback_CursorZoomed(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SpriteCallback_CursorZoomed(void) {}
 __attribute__((naked)) void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
 {
     __asm__(".syntax unified\n\t"

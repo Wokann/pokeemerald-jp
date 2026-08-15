@@ -2505,16 +2505,7 @@ __attribute__((naked)) void FreeCursorAndSymbolSprites(void)
     );
 }
 
-__attribute__((naked)) void SpriteCb_Dummy(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SpriteCb_Dummy(void) {}
 __attribute__((naked)) void ShowFrontierMap(void)
 {
     __asm__(".syntax unified\n\t"

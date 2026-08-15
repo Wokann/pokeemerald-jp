@@ -394,16 +394,7 @@ __attribute__((naked)) void None_Init(void)
     );
 }
 
-__attribute__((naked)) void sub_080AAB88(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_080AAB88(void) {}
 __attribute__((naked)) void None_Finish(void)
 {
     __asm__(".syntax unified\n\t"
@@ -922,16 +913,7 @@ __attribute__((naked)) void FadeInScreen_Fog1(void)
     );
 }
 
-__attribute__((naked)) void DoNothing(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void DoNothing(void) {}
 __attribute__((naked)) void ApplyGammaShift(void)
 {
     __asm__(".syntax unified\n\t"

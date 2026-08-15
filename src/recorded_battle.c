@@ -2981,16 +2981,7 @@ __attribute__((naked)) u16 *GetRecordedBattleEasyChatSpeech(void)
     );
 }
 
-__attribute__((naked)) void sub_08186214(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_08186214(void) {}
 __attribute__((naked)) void sub_08186218(void)
 {
     __asm__(".syntax unified\n\t"

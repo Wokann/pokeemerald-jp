@@ -1,16 +1,7 @@
 #include "global.h"
 #include "list_menu.h"
 
-__attribute__((naked)) void Task_RedArrowCursor(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void Task_RedArrowCursor(void) {}
 __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *windowTemplate, const struct ListMenuTemplate *listMenuTemplate, u8 drawMode, u16 tileNum, u16 palOffset)
 {
     __asm__(".syntax unified\n\t"
@@ -2652,16 +2643,7 @@ __attribute__((naked)) void ListMenuRemoveCursorObject(void)
     );
 }
 
-__attribute__((naked)) void Task_RedOutlineCursor(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void Task_RedOutlineCursor(void) {}
 __attribute__((naked)) void ListMenuGetRedOutlineCursorSpriteCount(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3130,16 +3112,7 @@ __attribute__((naked)) void SpriteCallback_RedArrowCursor(void)
     );
 }
 
-__attribute__((naked)) void ListMenuDummyTask(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void ListMenuDummyTask(void) {}
 __attribute__((naked)) void ListMenuAddRedArrowCursorObject(void)
 {
     __asm__(".syntax unified\n\t"

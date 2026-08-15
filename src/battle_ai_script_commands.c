@@ -3745,26 +3745,8 @@ __attribute__((naked)) void BattleAICmd_if_user_doesnt_go(void)
     );
 }
 
-__attribute__((naked)) void BattleAICmd_nullsub_2B(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_32(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void BattleAICmd_nullsub_2B(void) {}
+void BattleAICmd_nullsub_32(void) {}
 __attribute__((naked)) void BattleAICmd_count_usable_party_mons(void)
 {
     __asm__(".syntax unified\n\t"
@@ -4457,26 +4439,8 @@ __attribute__((naked)) void BattleAICmd_if_type_effectiveness(void)
     );
 }
 
-__attribute__((naked)) void BattleAICmd_nullsub_33(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_52(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void BattleAICmd_nullsub_33(void) {}
+void BattleAICmd_nullsub_52(void) {}
 __attribute__((naked)) void BattleAICmd_if_status_in_party(void)
 {
     __asm__(".syntax unified\n\t"
@@ -6612,66 +6576,12 @@ __attribute__((naked)) void BattleAICmd_get_protect_count(void)
     );
 }
 
-__attribute__((naked)) void BattleAICmd_nullsub_53(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_54(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_55(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_56(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_57(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void BattleAICmd_nullsub_2A(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void BattleAICmd_nullsub_53(void) {}
+void BattleAICmd_nullsub_54(void) {}
+void BattleAICmd_nullsub_55(void) {}
+void BattleAICmd_nullsub_56(void) {}
+void BattleAICmd_nullsub_57(void) {}
+void BattleAICmd_nullsub_2A(void) {}
 __attribute__((naked)) void BattleAICmd_call(void)
 {
     __asm__(".syntax unified\n\t"

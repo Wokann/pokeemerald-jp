@@ -571,26 +571,8 @@ __attribute__((naked)) void sub_081A7198(void)
     );
 }
 
-__attribute__((naked)) void sub_081A71E0(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void nullsub_124(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_081A71E0(void) {}
+void nullsub_124(void) {}
 __attribute__((naked)) void GetRoomInflictedStatus(void)
 {
     __asm__(".syntax unified\n\t"

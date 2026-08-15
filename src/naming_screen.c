@@ -3015,16 +3015,7 @@ __attribute__((naked)) void TaskDummy3(void)
     );
 }
 
-__attribute__((naked)) void TaskDummy2(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void TaskDummy2(void) {}
 __attribute__((naked)) void NamingScreen_CreatePlayerIcon(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3953,16 +3944,7 @@ __attribute__((naked)) void InputState_Disabled(void)
     );
 }
 
-__attribute__((naked)) void sub_080E3E78(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_080E3E78(void) {}
 __attribute__((naked)) void sub_080E3E7C(void)
 {
     __asm__(".syntax unified\n\t"

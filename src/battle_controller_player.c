@@ -1,16 +1,7 @@
 #include "global.h"
 #include "battle_controllers.h"
 
-__attribute__((naked)) void nullsub_21(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_21(void) {}
 __attribute__((naked)) void SetControllerToPlayer(void)
 {
     __asm__(".syntax unified\n\t"
@@ -11815,12 +11806,4 @@ __attribute__((naked)) void PlayerHandleCmd55(void)
     );
 }
 
-__attribute__((naked)) void PlayerCmdEnd(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
+void PlayerCmdEnd(void) {}

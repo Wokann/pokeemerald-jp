@@ -5331,16 +5331,7 @@ __attribute__((naked)) void InterviewAfter_PkmnFanClubOpinions(void)
     );
 }
 
-__attribute__((naked)) void InterviewAfter_DummyShow4(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void InterviewAfter_DummyShow4(void) {}
 __attribute__((naked)) void sub_080EE238(void)
 {
     __asm__(".syntax unified\n\t"
@@ -13482,16 +13473,7 @@ __attribute__((naked)) void DoTVShowPokemonFanClubOpinions(void)
     );
 }
 
-__attribute__((naked)) void DoTVShowDummiedOut(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void DoTVShowDummiedOut(void) {}
 __attribute__((naked)) void DoTVShowPokemonNewsMassOutbreak(void)
 {
     __asm__(".syntax unified\n\t"

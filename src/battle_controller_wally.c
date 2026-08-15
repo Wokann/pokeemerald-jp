@@ -1,16 +1,7 @@
 #include "global.h"
 #include "battle_controllers.h"
 
-__attribute__((naked)) void WallyCmdEnd(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void WallyCmdEnd(void) {}
 __attribute__((naked)) void SetControllerToWally(void)
 {
     __asm__(".syntax unified\n\t"
@@ -5524,13 +5515,4 @@ __attribute__((naked)) void WallyHandleCmd55(void)
     );
 }
 
-__attribute__((naked)) void SpriteCB_Null7(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SpriteCB_Null7(void) {}

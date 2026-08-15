@@ -8758,16 +8758,7 @@ __attribute__((naked)) void sub_0812E0C0(void)
     );
 }
 
-__attribute__((naked)) void sub_0812E0F0(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_0812E0F0(void) {}
 __attribute__((naked)) void CreateReelSymbolSprites(void)
 {
     __asm__(".syntax unified\n\t"
@@ -12007,16 +11998,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *
     );
 }
 
-__attribute__((naked)) void sub_0812F790(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void sub_0812F790(void) {}
 __attribute__((naked)) void EndDigitalDisplayScene_StopReel(void)
 {
     __asm__(".syntax unified\n\t"

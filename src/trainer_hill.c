@@ -1153,16 +1153,7 @@ __attribute__((naked)) void sub_081D5334(void)
     );
 }
 
-__attribute__((naked)) void nullsub_129(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void nullsub_129(void) {}
 __attribute__((naked)) void sub_081D5360(void)
 {
     __asm__(".syntax unified\n\t"

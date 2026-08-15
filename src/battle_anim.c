@@ -907,26 +907,8 @@ __attribute__((naked)) void ScriptCmd_waitbgfadein(void)
     );
 }
 
-__attribute__((naked)) void ScriptCmd_hang2(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ScriptCmd_stopsound(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void ScriptCmd_hang2(void) {}
+void ScriptCmd_stopsound(void) {}
 __attribute__((naked)) void ScriptCmd_end(void)
 {
     __asm__(".syntax unified\n\t"
