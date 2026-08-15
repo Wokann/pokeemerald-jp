@@ -10610,7 +10610,7 @@ SECTIONS {
 		src/libisagbprn_a.o(.text);
 		src/libisagbprn_putc.o(.text);
 		src/libisagbprn_b.o(.text);
-		asm/libagbsyscall.o(.text);
+		src/libagbsyscall.o(.text);
 		asm/libgcc.o(.text);
 		src/libc/memcpy.o(.text.memcpy);
 		src/libc/memset.o(.text.memset);
