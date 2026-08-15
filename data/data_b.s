@@ -5553,7 +5553,7 @@ gTrainerClassNames: @ 0x82E3564
 
 	.globl gTrainers
 gTrainers: @ 0x82E383C
-	.incbin "baserom_jp.gba", 0x2e383c, 0x6ae0  @ 856 x struct Trainer
+	.incbin "baserom_jp.gba", 0x2e383c, 0x6ae0  @ 855 x struct Trainer (0x82E383C..0x82EA31C)
 
 	.globl gSpeciesNamesJP
 gSpeciesNamesJP: @ 0x82EA31C
