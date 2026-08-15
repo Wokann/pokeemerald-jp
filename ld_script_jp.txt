@@ -486,7 +486,6 @@ sMachBikeTransitions = gUnknown_8573030;
 sMachBikeSpeedCallbacks = gUnknown_8573040;
 sAcroBikeTransitions = gUnknown_8573040;
 sAcroBikeInputHandlers = gUnknown_8573080;
-sMachBikeSpeeds = gUnknown_857309C;
 PlayerUseAcroBikeOnBumpySlope = sub_0808BB18;
 PlayerWheelieInPlace = sub_0808B2E4;
 PlayerPopWheelieWhileMoving = sub_0808B308;

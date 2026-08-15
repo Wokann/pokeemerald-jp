@@ -26338,10 +26338,11 @@ gUnknown_857304C: @ 0x857304C
 gUnknown_8573080: @ 0x8573080
 	.incbin "baserom_jp.gba", 0x573080, 0x1c
 
-	.globl gUnknown_857309C
-	.globl gUnknown_857309C
-gUnknown_857309C: @ 0x57309C
-	.incbin "baserom_jp.gba", 0x57309c, 0x6
+	.globl sMachBikeSpeeds
+sMachBikeSpeeds: @ 0x857309C
+	.hword 1 @ PLAYER_SPEED_NORMAL
+	.hword 2 @ PLAYER_SPEED_FAST
+	.hword 4 @ PLAYER_SPEED_FASTEST
 
 	.globl sAcroBikeJumpTimerList
 sAcroBikeJumpTimerList: @ 0x5730A2
