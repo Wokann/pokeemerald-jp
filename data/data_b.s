@@ -21361,9 +21361,59 @@ sSpriteTemplate_HeartIcon: @ 0x852B478
 gUnknown_852D9F4: @ 0x852D9F4
 	.incbin "baserom_jp.gba", 0x52d9f4, 0xb4c
 
-	.globl gUnknown_852E540
-gUnknown_852E540: @ 0x852E540
-	.incbin "baserom_jp.gba", 0x52e540, 0x180
+	.globl gBattlePyramidWildMonHeaders
+gBattlePyramidWildMonHeaders: @ 0x852E540
+	.byte 0, 1 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E3E8 @ landMonsInfo (gBattlePyramid_1_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 2 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E420 @ landMonsInfo (gBattlePyramid_2_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 3 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E458 @ landMonsInfo (gBattlePyramid_3_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 4 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E490 @ landMonsInfo (gBattlePyramid_4_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 5 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E4C8 @ landMonsInfo (gBattlePyramid_5_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 6 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E500 @ landMonsInfo (gBattlePyramid_6_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 0, 7 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E538 @ landMonsInfo (gBattlePyramid_7_LandMonsInfo)
+	.4byte 0x00000000 @ waterMonsInfo
+	.4byte 0x00000000 @ rockSmashMonsInfo
+	.4byte 0x00000000 @ fishingMonsInfo
+	.byte 255, 255
+	.hword 0
+	.4byte 0 @ landMonsInfo NULL
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
+	.globl gUnknown_852E5E0
+gUnknown_852E5E0: @ 0x852E5E0
+	.incbin "baserom_jp.gba", 0x52e5e0, 0xe0
 
 	.globl gUnknown_852E6C0
 gUnknown_852E6C0: @ 0x852E6C0
