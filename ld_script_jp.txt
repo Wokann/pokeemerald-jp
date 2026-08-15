@@ -10614,6 +10614,7 @@ SECTIONS {
     {
 		asm/libgcnmultiboot.o(.text);
 		asm/m4a.o(.text);
+		src/m4a_tail7.o(.text);
 		src/m4a_tail6.o(.text);
 		src/m4a_tail5.o(.text);
 		src/m4a_tail4.o(.text);
