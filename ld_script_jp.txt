@@ -7417,7 +7417,7 @@ SECTIONS {
         src/battle_anim_mon_movement.o(.text.AnimTask_RotateMonSpriteToSide_Step);
         src/battle_anim_mon_movement.o(.text.AnimTask_ShakeTargetBasedOnMovePowerOrDmg);
         src/battle_anim_mon_movement.o(.text.AnimTask_ShakeTargetBasedOnMovePowerOrDmg_Step);
-        asm/item.o(.text);
+        src/item.o(.text);
         src/contest.o(.text.TaskDummy1);
         src/contest.o(.text.ResetLinkContestBoolean);
         src/contest.o(.text.SetupContestGpuRegs);
