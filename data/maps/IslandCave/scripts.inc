@@ -43,7 +43,7 @@ IslandCave_EventScript_0021B7F0::
 	clearflag 0x3A8
 	return
 
-gUnknown_821B7F4:: @ 0x0821B7F4
+IslandCave_EventScript_OpenRegiEntrance:: @ 0x0821B7F4
 	.incbin "baserom_jp.gba", 0x21b7f4, 0x40
 IslandCave_EventScript_0021B834::
 	lockall

@@ -20,8 +20,8 @@ gSpecialVars: @ 0x81DAF34
 gUnknown_81DAF8C:
 	.include "data/specials.inc"
 
-	.globl gUnknown_81DB7BC
-gUnknown_81DB7BC: @ 0x81DB7BC
+	.globl gStdScripts
+gStdScripts: @ 0x81DB7BC
 	.4byte gUnknown_8242B6D                  @ 000
 	.4byte gUnknown_8242C95                  @ 001
 	.4byte gUnknown_82423AF                  @ 002
@@ -34,8 +34,8 @@ gUnknown_81DB7BC: @ 0x81DB7BC
 	.4byte gUnknown_82423D6                  @ 009
 	.4byte gUnknown_82423E1                  @ 010
 
-	.globl gUnknown_81DB7E8
-gUnknown_81DB7E8: @ 0x81DB7E8
+	.globl gStdScripts_End
+gStdScripts_End: @ 0x81DB7E8
 	.include "data/maps/PetalburgCity/scripts.inc"
 	.include "data/maps/SlateportCity/scripts.inc"
 	.include "data/maps/MauvilleCity/scripts.inc"
@@ -347,48 +347,48 @@ gUnknown_8242C4F: @ 0x8242C4F
 gUnknown_8242C95: @ 0x8242C95
 	.include "data/scripts/gUnknown_8242C95.inc"
 
-	.globl gUnknown_8242D49
-gUnknown_8242D49: @ 0x8242D49
+	.globl EventScript_HiddenItemScript
+EventScript_HiddenItemScript: @ 0x8242D49
 	.include "data/scripts/gUnknown_8242D49.inc"
 
 	.globl EventScript_PC
 EventScript_PC: @ 0x8242E1E
 	.include "data/scripts/EventScript_PC.inc"
 
-	.globl gUnknown_8242F2C
-gUnknown_8242F2C: @ 0x8242F2C
+	.globl EventScript_UseSurf
+EventScript_UseSurf: @ 0x8242F2C
 	.include "data/scripts/gUnknown_8242F2C.inc"
 
-	.globl gUnknown_824311B
-gUnknown_824311B: @ 0x824311B
+	.globl EventScript_RegionMap
+EventScript_RegionMap: @ 0x824311B
 	.include "data/scripts/gUnknown_824311B.inc"
 
-	.globl gUnknown_8243651
-gUnknown_8243651: @ 0x8243651
+	.globl EventScript_PictureBookShelf
+EventScript_PictureBookShelf: @ 0x8243651
 	.include "data/scripts/gUnknown_8243651.inc"
 
-	.globl gUnknown_824365A
-gUnknown_824365A: @ 0x824365A
+	.globl EventScript_BookShelf
+EventScript_BookShelf: @ 0x824365A
 	.include "data/scripts/gUnknown_824365A.inc"
 
-	.globl gUnknown_8243663
-gUnknown_8243663: @ 0x8243663
+	.globl EventScript_PokemonCenterBookShelf
+EventScript_PokemonCenterBookShelf: @ 0x8243663
 	.include "data/scripts/gUnknown_8243663.inc"
 
-	.globl gUnknown_824366C
-gUnknown_824366C: @ 0x824366C
+	.globl EventScript_Vase
+EventScript_Vase: @ 0x824366C
 	.include "data/scripts/gUnknown_824366C.inc"
 
-	.globl gUnknown_8243675
-gUnknown_8243675: @ 0x8243675
+	.globl EventScript_EmptyTrashCan
+EventScript_EmptyTrashCan: @ 0x8243675
 	.include "data/scripts/gUnknown_8243675.inc"
 
-	.globl gUnknown_824367E
-gUnknown_824367E: @ 0x824367E
+	.globl EventScript_ShopShelf
+EventScript_ShopShelf: @ 0x824367E
 	.include "data/scripts/gUnknown_824367E.inc"
 
-	.globl gUnknown_8243687
-gUnknown_8243687: @ 0x8243687
+	.globl EventScript_Blueprint
+EventScript_Blueprint: @ 0x8243687
 	.include "data/scripts/gUnknown_8243687.inc"
 
 	.globl gUnknown_82436CD
@@ -399,16 +399,16 @@ gUnknown_82436CD: @ 0x82436CD
 gUnknown_82440DD: @ 0x82440DD
 	.include "data/scripts/gUnknown_82440DD.inc"
 
-	.globl gUnknown_82440E6
-gUnknown_82440E6: @ 0x82440E6
+	.globl EventScript_FieldPoison
+EventScript_FieldPoison: @ 0x82440E6
 	.include "data/scripts/gUnknown_82440E6.inc"
 
-	.globl gUnknown_8244245
-gUnknown_8244245: @ 0x8244245
+	.globl EventScript_Questionnaire
+EventScript_Questionnaire: @ 0x8244245
 	.include "data/scripts/gUnknown_8244245.inc"
 
-	.globl gUnknown_8244749
-gUnknown_8244749: @ 0x8244749
+	.globl AbnormalWeather_EventScript_EndEventAndCleanup_1
+AbnormalWeather_EventScript_EndEventAndCleanup_1: @ 0x8244749
 	.include "data/scripts/gUnknown_8244749.inc"
 gUnknown_8244CF3: @ 0x8244CF3
 	.include "data/scripts/gUnknown_8244CF3.inc"
@@ -476,12 +476,12 @@ gUnknown_8245A06: @ 0x8245A06
 gUnknown_8245DDD: @ 0x8245DDD
 	.include "data/scripts/gUnknown_8245DDD.inc"
 
-	.globl gUnknown_82465B5
-gUnknown_82465B5: @ 0x82465B5
+	.globl SecretBase_EventScript_DollInteract
+SecretBase_EventScript_DollInteract: @ 0x82465B5
 	.include "data/scripts/gUnknown_82465B5.inc"
 
-	.globl gUnknown_82465B9
-gUnknown_82465B9: @ 0x82465B9
+	.globl SecretBase_EventScript_CushionInteract
+SecretBase_EventScript_CushionInteract: @ 0x82465B9
 	.include "data/scripts/gUnknown_82465B9.inc"
 
 	.globl EventScript_CableBoxResults
@@ -531,8 +531,8 @@ CableClub_EventScript_ExitLinkRoom: @ 0x82471E8
 gUnknown_82471F2: @ 0x82471F2
 	.include "data/scripts/gUnknown_82471F2.inc"
 
-	.globl gUnknown_8247869
-gUnknown_8247869: @ 0x8247869
+	.globl EventScript_WirelessBoxResults
+EventScript_WirelessBoxResults: @ 0x8247869
 	.include "data/scripts/gUnknown_8247869.inc"
 
 	.globl gUnknown_8247C79
@@ -651,52 +651,52 @@ gUnknown_824C1F5: @ 0x824C1F5
 gUnknown_824C200: @ 0x824C200
 	.include "data/scripts/gUnknown_824C200.inc"
 
-	.globl gUnknown_824C47B
-gUnknown_824C47B: @ 0x824C47B
+	.globl EventScript_TV
+EventScript_TV: @ 0x824C47B
 	.include "data/scripts/gUnknown_824C47B.inc"
 
-	.globl gUnknown_8256612
-gUnknown_8256612: @ 0x8256612
+	.globl EventScript_UseCut
+EventScript_UseCut: @ 0x8256612
 	.include "data/scripts/gUnknown_8256612.inc"
 
-	.globl gUnknown_82566C6
-gUnknown_82566C6: @ 0x82566C6
+	.globl EventScript_UseRockSmash
+EventScript_UseRockSmash: @ 0x82566C6
 	.include "data/scripts/gUnknown_82566C6.inc"
 
-	.globl gUnknown_8256797
-gUnknown_8256797: @ 0x8256797
+	.globl EventScript_UseStrength
+EventScript_UseStrength: @ 0x8256797
 	.include "data/scripts/gUnknown_8256797.inc"
 
-	.globl gUnknown_825685D
-gUnknown_825685D: @ 0x825685D
+	.globl EventScript_UseWaterfall
+EventScript_UseWaterfall: @ 0x825685D
 	.include "data/scripts/gUnknown_825685D.inc"
 
-	.globl gUnknown_8256897
-gUnknown_8256897: @ 0x8256897
+	.globl EventScript_CannotUseWaterfall
+EventScript_CannotUseWaterfall: @ 0x8256897
 	.include "data/scripts/gUnknown_8256897.inc"
 
-	.globl gUnknown_82568EA
-gUnknown_82568EA: @ 0x82568EA
+	.globl EventScript_UseDive
+EventScript_UseDive: @ 0x82568EA
 	.include "data/scripts/gUnknown_82568EA.inc"
 
-	.globl gUnknown_8256935
-gUnknown_8256935: @ 0x8256935
+	.globl EventScript_UseDiveUnderwater
+EventScript_UseDiveUnderwater: @ 0x8256935
 	.include "data/scripts/gUnknown_8256935.inc"
 
-	.globl gUnknown_8256A14
-gUnknown_8256A14: @ 0x8256A14
+	.globl EventScript_FailSweetScent
+EventScript_FailSweetScent: @ 0x8256A14
 	.include "data/scripts/gUnknown_8256A14.inc"
 
-	.globl gUnknown_8257A89
-gUnknown_8257A89: @ 0x8257A89
+	.globl EventScript_EggHatch
+EventScript_EggHatch: @ 0x8257A89
 	.include "data/scripts/gUnknown_8257A89.inc"
 
-	.globl gUnknown_8257EE2
-gUnknown_8257EE2: @ 0x8257EE2
+	.globl EventScript_UseFlash
+EventScript_UseFlash: @ 0x8257EE2
 	.include "data/scripts/gUnknown_8257EE2.inc"
 
-	.globl gUnknown_82585CF
-gUnknown_82585CF: @ 0x82585CF
+	.globl EventScript_RunningShoesManual
+EventScript_RunningShoesManual: @ 0x82585CF
 	.include "data/scripts/gUnknown_82585CF.inc"
 
 	.globl gUnknown_825941C
@@ -707,28 +707,28 @@ gUnknown_825941C: @ 0x825941C
 gUnknown_825941F: @ 0x825941F
 	.include "data/scripts/gUnknown_825941F.inc"
 
-	.globl gUnknown_8262393
-gUnknown_8262393: @ 0x8262393
+	.globl EventScript_RepelWoreOff
+EventScript_RepelWoreOff: @ 0x8262393
 	.include "data/scripts/gUnknown_8262393.inc"
 
 	.globl SafariZone_EventScript_Exit
 SafariZone_EventScript_Exit: @ 0x82623AA
 	.include "data/scripts/SafariZone_EventScript_Exit.inc"
 
-	.globl gUnknown_82623CD
-gUnknown_82623CD: @ 0x82623CD
+	.globl SafariZone_EventScript_RetirePrompt
+SafariZone_EventScript_RetirePrompt: @ 0x82623CD
 	.include "data/scripts/gUnknown_82623CD.inc"
 
-	.globl gUnknown_82623E8
-gUnknown_82623E8: @ 0x82623E8
+	.globl SafariZone_EventScript_TimesUp
+SafariZone_EventScript_TimesUp: @ 0x82623E8
 	.include "data/scripts/gUnknown_82623E8.inc"
 
-	.globl gUnknown_82623F9
-gUnknown_82623F9: @ 0x82623F9
+	.globl SafariZone_EventScript_OutOfBalls
+SafariZone_EventScript_OutOfBalls: @ 0x82623F9
 	.include "data/scripts/gUnknown_82623F9.inc"
 
-	.globl gUnknown_826240A
-gUnknown_826240A: @ 0x826240A
+	.globl EventScript_PokeBlockFeeder
+EventScript_PokeBlockFeeder: @ 0x826240A
 	.include "data/scripts/gUnknown_826240A.inc"
 
 	.globl gUnknown_8262CF3
@@ -779,120 +779,120 @@ gUnknown_8262DB0: @ 0x8262DB0
 gUnknown_8262DD5: @ 0x8262DD5
 	.include "data/scripts/gUnknown_8262DD5.inc"
 
-	.globl gUnknown_8262DF5
-gUnknown_8262DF5: @ 0x8262DF5
+	.globl gBirchDexRatingText_AreYouCurious
+gBirchDexRatingText_AreYouCurious: @ 0x8262DF5
 	.include "data/scripts/gUnknown_8262DF5.inc"
 
-	.globl gUnknown_8262E39
-gUnknown_8262E39: @ 0x8262E39
+	.globl gBirchDexRatingText_SoYouveSeenAndCaught
+gBirchDexRatingText_SoYouveSeenAndCaught: @ 0x8262E39
 	.include "data/scripts/gUnknown_8262E39.inc"
 
-	.globl gUnknown_8262E5F
-gUnknown_8262E5F: @ 0x8262E5F
+	.globl gBirchDexRatingText_LessThan10
+gBirchDexRatingText_LessThan10: @ 0x8262E5F
 	.include "data/scripts/gUnknown_8262E5F.inc"
 
-	.globl gUnknown_8262E81
-gUnknown_8262E81: @ 0x8262E81
+	.globl gBirchDexRatingText_LessThan20
+gBirchDexRatingText_LessThan20: @ 0x8262E81
 	.include "data/scripts/gUnknown_8262E81.inc"
 
-	.globl gUnknown_8262EA6
-gUnknown_8262EA6: @ 0x8262EA6
+	.globl gBirchDexRatingText_LessThan30
+gBirchDexRatingText_LessThan30: @ 0x8262EA6
 	.include "data/scripts/gUnknown_8262EA6.inc"
 
-	.globl gUnknown_8262ECF
-gUnknown_8262ECF: @ 0x8262ECF
+	.globl gBirchDexRatingText_LessThan40
+gBirchDexRatingText_LessThan40: @ 0x8262ECF
 	.include "data/scripts/gUnknown_8262ECF.inc"
 
-	.globl gUnknown_8262EF5
-gUnknown_8262EF5: @ 0x8262EF5
+	.globl gBirchDexRatingText_LessThan50
+gBirchDexRatingText_LessThan50: @ 0x8262EF5
 	.include "data/scripts/gUnknown_8262EF5.inc"
 
-	.globl gUnknown_8262F18
-gUnknown_8262F18: @ 0x8262F18
+	.globl gBirchDexRatingText_LessThan60
+gBirchDexRatingText_LessThan60: @ 0x8262F18
 	.include "data/scripts/gUnknown_8262F18.inc"
 
-	.globl gUnknown_8262F3F
-gUnknown_8262F3F: @ 0x8262F3F
+	.globl gBirchDexRatingText_LessThan70
+gBirchDexRatingText_LessThan70: @ 0x8262F3F
 	.include "data/scripts/gUnknown_8262F3F.inc"
 
-	.globl gUnknown_8262F61
-gUnknown_8262F61: @ 0x8262F61
+	.globl gBirchDexRatingText_LessThan80
+gBirchDexRatingText_LessThan80: @ 0x8262F61
 	.include "data/scripts/gUnknown_8262F61.inc"
 
-	.globl gUnknown_8262F8A
-gUnknown_8262F8A: @ 0x8262F8A
+	.globl gBirchDexRatingText_LessThan90
+gBirchDexRatingText_LessThan90: @ 0x8262F8A
 	.include "data/scripts/gUnknown_8262F8A.inc"
 
-	.globl gUnknown_8262FAD
-gUnknown_8262FAD: @ 0x8262FAD
+	.globl gBirchDexRatingText_LessThan100
+gBirchDexRatingText_LessThan100: @ 0x8262FAD
 	.include "data/scripts/gUnknown_8262FAD.inc"
 
-	.globl gUnknown_8262FE1
-gUnknown_8262FE1: @ 0x8262FE1
+	.globl gBirchDexRatingText_LessThan110
+gBirchDexRatingText_LessThan110: @ 0x8262FE1
 	.include "data/scripts/gUnknown_8262FE1.inc"
 
-	.globl gUnknown_826300C
-gUnknown_826300C: @ 0x826300C
+	.globl gBirchDexRatingText_LessThan120
+gBirchDexRatingText_LessThan120: @ 0x826300C
 	.include "data/scripts/gUnknown_826300C.inc"
 
-	.globl gUnknown_8263032
-gUnknown_8263032: @ 0x8263032
+	.globl gBirchDexRatingText_LessThan130
+gBirchDexRatingText_LessThan130: @ 0x8263032
 	.include "data/scripts/gUnknown_8263032.inc"
 
-	.globl gUnknown_8263050
-gUnknown_8263050: @ 0x8263050
+	.globl gBirchDexRatingText_LessThan140
+gBirchDexRatingText_LessThan140: @ 0x8263050
 	.include "data/scripts/gUnknown_8263050.inc"
 
-	.globl gUnknown_8263072
-gUnknown_8263072: @ 0x8263072
+	.globl gBirchDexRatingText_LessThan150
+gBirchDexRatingText_LessThan150: @ 0x8263072
 	.include "data/scripts/gUnknown_8263072.inc"
 
-	.globl gUnknown_8263095
-gUnknown_8263095: @ 0x8263095
+	.globl gBirchDexRatingText_LessThan160
+gBirchDexRatingText_LessThan160: @ 0x8263095
 	.include "data/scripts/gUnknown_8263095.inc"
 
-	.globl gUnknown_82630C7
-gUnknown_82630C7: @ 0x82630C7
+	.globl gBirchDexRatingText_LessThan170
+gBirchDexRatingText_LessThan170: @ 0x82630C7
 	.include "data/scripts/gUnknown_82630C7.inc"
 
-	.globl gUnknown_82630F0
-gUnknown_82630F0: @ 0x82630F0
+	.globl gBirchDexRatingText_LessThan180
+gBirchDexRatingText_LessThan180: @ 0x82630F0
 	.include "data/scripts/gUnknown_82630F0.inc"
 
-	.globl gUnknown_826310C
-gUnknown_826310C: @ 0x826310C
+	.globl gBirchDexRatingText_LessThan190
+gBirchDexRatingText_LessThan190: @ 0x826310C
 	.include "data/scripts/gUnknown_826310C.inc"
 
-	.globl gUnknown_826312D
-gUnknown_826312D: @ 0x826312D
+	.globl gBirchDexRatingText_LessThan200
+gBirchDexRatingText_LessThan200: @ 0x826312D
 	.include "data/scripts/gUnknown_826312D.inc"
 
-	.globl gUnknown_826314F
-gUnknown_826314F: @ 0x826314F
+	.globl gBirchDexRatingText_DexCompleted
+gBirchDexRatingText_DexCompleted: @ 0x826314F
 	.include "data/scripts/gUnknown_826314F.inc"
 
-	.globl gUnknown_826316A
-gUnknown_826316A: @ 0x826316A
+	.globl gBirchDexRatingText_OnANationwideBasis
+gBirchDexRatingText_OnANationwideBasis: @ 0x826316A
 	.include "data/scripts/gUnknown_826316A.inc"
 
-	.globl gUnknown_826433F
-gUnknown_826433F: @ 0x826433F
+	.globl EventScript_FallDownHole
+EventScript_FallDownHole: @ 0x826433F
 	.include "data/scripts/gUnknown_826433F.inc"
 
-	.globl gUnknown_8264358
-gUnknown_8264358: @ 0x8264358
+	.globl EventScript_FallDownHoleMtPyre
+EventScript_FallDownHoleMtPyre: @ 0x8264358
 	.include "data/scripts/gUnknown_8264358.inc"
 
-	.globl gUnknown_8276CAF
-gUnknown_8276CAF: @ 0x8276CAF
+	.globl EventScript_TrainerHillTimer
+EventScript_TrainerHillTimer: @ 0x8276CAF
 	.include "data/scripts/gUnknown_8276CAF.inc"
 
 	.globl gUnknown_8276D0C
 gUnknown_8276D0C: @ 0x8276D0C
 	.include "data/scripts/gUnknown_8276D0C.inc"
 
-	.globl gUnknown_8276D3D
-gUnknown_8276D3D: @ 0x8276D3D
+	.globl EventScript_TestSignpostMsg
+EventScript_TestSignpostMsg: @ 0x8276D3D
 	.include "data/scripts/gUnknown_8276D3D.inc"
 
 	.globl gUnknown_8276F58
@@ -919,8 +919,8 @@ gUnknown_8276FD3: @ 0x8276FD3
 gUnknown_8277048: @ 0x8277048
 	.include "data/scripts/gUnknown_8277048.inc"
 
-	.globl gUnknown_8277071
-gUnknown_8277071: @ 0x8277071
+	.globl gText_SavingDontTurnOffPower
+gText_SavingDontTurnOffPower: @ 0x8277071
 	.include "data/scripts/gUnknown_8277071.inc"
 
 	.globl gUnknown_8277095
@@ -1318,8 +1318,8 @@ gUnknown_82772F8: @ 0x82772F8
 	.4byte gUnknown_82852F6                  @ 354
 	.4byte gUnknown_8285C76                  @ 355
 
-	.globl gUnknown_8277888
-gUnknown_8277888: @ 0x8277888
+	.globl gBattleAnims_StatusConditions
+gBattleAnims_StatusConditions: @ 0x8277888
 	.4byte gUnknown_82862E1                  @ 000
 	.4byte gUnknown_828630C                  @ 001
 	.4byte gUnknown_8286315                  @ 002
@@ -2306,8 +2306,8 @@ gUnknown_828934C: @ 0x828934C
 gUnknown_8289360: @ 0x8289360
 	.include "data/scripts/gUnknown_8289360.inc"
 
-	.globl gUnknown_828938B
-gUnknown_828938B: @ 0x828938B
+	.globl BattleScript_MistProtected
+BattleScript_MistProtected: @ 0x828938B
 	.include "data/scripts/gUnknown_828938B.inc"
 
 	.globl gUnknown_8289395
@@ -2326,8 +2326,8 @@ BattleScript_SelectingDisabledMove: @ 0x82893A7
 gUnknown_82893AB: @ 0x82893AB
 	.incbin "baserom_jp.gba", 0x2893ab, 0x7
 
-	.globl gUnknown_82893B2
-gUnknown_82893B2: @ 0x82893B2
+	.globl BattleScript_SelectingDisabledMoveInPalace
+BattleScript_SelectingDisabledMoveInPalace: @ 0x82893B2
 	.include "data/scripts/gUnknown_82893B2.inc"
 
 	.globl gUnknown_82893BF
@@ -2470,12 +2470,12 @@ gUnknown_828975D: @ 0x828975D
 gUnknown_8289787: @ 0x8289787
 	.include "data/scripts/gUnknown_8289787.inc"
 
-	.globl gUnknown_828979B
-gUnknown_828979B: @ 0x828979B
+	.globl BattleScript_MoveUsedIsAsleep
+BattleScript_MoveUsedIsAsleep: @ 0x828979B
 	.include "data/scripts/gUnknown_828979B.inc"
 
-	.globl gUnknown_82897A8
-gUnknown_82897A8: @ 0x82897A8
+	.globl BattleScript_MoveUsedWokeUp
+BattleScript_MoveUsedWokeUp: @ 0x82897A8
 	.include "data/scripts/gUnknown_82897A8.inc"
 
 	.globl gUnknown_82897BC
@@ -2490,12 +2490,12 @@ gUnknown_82897C5: @ 0x82897C5
 gUnknown_82897E7: @ 0x82897E7
 	.include "data/scripts/gUnknown_82897E7.inc"
 
-	.globl gUnknown_82897F2
-gUnknown_82897F2: @ 0x82897F2
+	.globl BattleScript_MoveUsedIsFrozen
+BattleScript_MoveUsedIsFrozen: @ 0x82897F2
 	.include "data/scripts/gUnknown_82897F2.inc"
 
-	.globl gUnknown_82897FF
-gUnknown_82897FF: @ 0x82897FF
+	.globl BattleScript_MoveUsedUnfroze
+BattleScript_MoveUsedUnfroze: @ 0x82897FF
 	.include "data/scripts/gUnknown_82897FF.inc"
 
 	.globl gUnknown_828980A
@@ -2642,8 +2642,8 @@ gUnknown_8289B2F: @ 0x8289B2F
 gUnknown_8289B30: @ 0x8289B30
 	.include "data/scripts/gUnknown_8289B30.inc"
 
-	.globl gUnknown_8289B4F
-gUnknown_8289B4F: @ 0x8289B4F
+	.globl BattleScript_AbilityNoStatLoss
+BattleScript_AbilityNoStatLoss: @ 0x8289B4F
 	.include "data/scripts/gUnknown_8289B4F.inc"
 
 	.globl gUnknown_8289B59
@@ -2670,8 +2670,8 @@ gUnknown_8289B8B: @ 0x8289B8B
 gUnknown_8289BA7: @ 0x8289BA7
 	.include "data/scripts/gUnknown_8289BA7.inc"
 
-	.globl gUnknown_8289BB7
-gUnknown_8289BB7: @ 0x8289BB7
+	.globl BattleScript_AbilityNoSpecificStatLoss
+BattleScript_AbilityNoSpecificStatLoss: @ 0x8289BB7
 	.include "data/scripts/gUnknown_8289BB7.inc"
 
 	.globl gUnknown_8289BC7

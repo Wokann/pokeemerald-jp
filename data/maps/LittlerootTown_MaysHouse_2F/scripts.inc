@@ -205,7 +205,7 @@ LittlerootTown_MaysHouse_2F_EventScript_001F0D96::
 	callstd 0x4
 	return
 
-gUnknown_81F0D9F:: @ 0x081F0D9F
+LittlerootTown_MaysHouse_2F_EventScript_PC:: @ 0x081F0D9F
 LittlerootTown_MaysHouse_2F_EventScript_001F0D9F::
 	lockall
 	checkplayergender

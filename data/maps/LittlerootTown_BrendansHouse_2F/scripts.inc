@@ -146,7 +146,7 @@ LittlerootTown_BrendansHouse_2F_EventScript_001F0143::
 	return
 
 	.incbin "baserom_jp.gba", 0x1f016b, 0x51
-gUnknown_81F01BC:: @ 0x081F01BC
+LittlerootTown_BrendansHouse_2F_EventScript_PC:: @ 0x081F01BC
 LittlerootTown_BrendansHouse_2F_EventScript_001F01BC::
 	lockall
 	checkplayergender

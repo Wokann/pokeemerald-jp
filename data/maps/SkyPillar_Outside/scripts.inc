@@ -100,7 +100,7 @@ SkyPillar_Outside_EventScript_0021BC49::
 SkyPillar_Outside_EventScript_0021BD3D::
 	end
 
-gUnknown_821BD3E:: @ 0x0821BD3E
+SkyPillar_Outside_EventScript_ClosedDoor:: @ 0x0821BD3E
 	.incbin "baserom_jp.gba", 0x21bd3e, 0x18
 	.globl gJPText_0021BD56
 gJPText_0021BD56: @ 0x0821BD56

@@ -633,7 +633,7 @@ SootopolisCity_EventScript_001E27EE::
 	callstd 0x3
 	end
 
-gUnknown_81E27F7:: @ 0x081E27F7
+EventScript_ClosedSootopolisDoor:: @ 0x081E27F7
 	.incbin "baserom_jp.gba", 0x1e27f7, 0x9
 SootopolisCity_EventScript_001E2800::
 	lockall

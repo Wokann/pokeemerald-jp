@@ -692,7 +692,7 @@ LittlerootTown_ProfessorBirchsLab_EventScript_001F1A68::
 	callstd 0x3
 	end
 
-gUnknown_81F1A71:: @ 0x081F1A71
+LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall:: @ 0x081F1A71
 	.incbin "baserom_jp.gba", 0x1f1a71, 0x13c
 	.globl gJPText_001F1BAD
 gJPText_001F1BAD: @ 0x081F1BAD

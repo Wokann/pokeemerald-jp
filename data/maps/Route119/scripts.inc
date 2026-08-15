@@ -181,5 +181,5 @@ Route119_EventScript_001ED2A4::
 	callstd 0x3
 	end
 
-gUnknown_81ED2AD:: @ 0x081ED2AD
+Route119_EventScript_ScottWonAtFortreeGymCall:: @ 0x081ED2AD
 	.incbin "baserom_jp.gba", 0x1ed2ad, 0x5b7

@@ -76,8 +76,8 @@ sAssertExpr_RfuFuncNull: @ 0x82C0544
 sAssertExpr_SizeLe252: @ 0x82C0558
 	.incbin "baserom_jp.gba", 0x2c0558, 0xc
 
-	.globl gUnknown_82C0564
-gUnknown_82C0564: @ 0x82C0564
+	.globl sASCII_PokemonSioInfo
+sASCII_PokemonSioInfo: @ 0x82C0564
 	.string "っマヒナヘマホウノマべホニマ　　あきと$"
 	.globl sASCII_LinkLossDisconnect
 sASCII_LinkLossDisconnect: @ 0x82C0578
@@ -123,8 +123,8 @@ sText_WirelessSearchCanceled: @ 0x82C066C
 sText_AwaitingCommunication: @ 0x82C069C
 	.incbin "baserom_jp.gba", 0x2c069c, 0x1c
 
-	.globl gUnknown_82C06B8
-gUnknown_82C06B8: @ 0x82C06B8
+	.globl sText_AwaitingLinkPressStart
+sText_AwaitingLinkPressStart: @ 0x82C06B8
 	.string "{B_COPY_VAR_1}！　れんらくまち！\n"
 	.string "にんずうが　そろったら　STARTボタン$　　　シングルバトルを　かいさいする$ダブルバトルを　かいさいする$　マルチバトルを　かいさいする$　ポケモンこうかんを　かいさいする$　　　チャットを　かいさいする$　　　ふしぎなカードをくばる$ふしぎなニュースをくばる$　　　ふしぎなできごとを　かいさいする$　　　なわとびを　かいさいする$　　　きのみマッシャーを　かいさいする$　　　きのみどりを　かいさいする$　　ぐるぐるこうかんを　かいさいする$　　　ぐるぐるショップを　かいさいする$　　　hかわくxかわく{FONT 44}くしきわくみきわくぃきわくざきわくぃきわくタきわくミきわくャきわくャきわくデきわく7きわくあと1にん\n"
 	.string "ひつよう$あと2にん\n"
@@ -163,8 +163,8 @@ sText_AreTheseMembersOK: @ 0x82C0914
 sText_CancelModeWithTheseMembers: @ 0x82C092C
 	.incbin "baserom_jp.gba", 0x2c092c, 0x1c
 
-	.globl gUnknown_82C0948
-gUnknown_82C0948: @ 0x82C0948
+	.globl sText_AnOKWasSentToPlayer
+sText_AnOKWasSentToPlayer: @ 0x82C0948
 	.string "{B_COPY_VAR_1}に　OKの\n"
 	.string "へんじを　だしました$　あいての\n"
 	.string "つごうが　わるいみたい⋯\p"
@@ -208,8 +208,8 @@ sPlayerDisconnectedTexts: @ 0x82C0A84
 sText_WirelessLinkEstablished: @ 0x82C0AAC
 	.incbin "baserom_jp.gba", 0x2c0aac, 0x1c
 
-	.globl gUnknown_82C0AC8
-gUnknown_82C0AC8: @ 0x82C0AC8
+	.globl sText_WirelessLinkDropped
+sText_WirelessLinkDropped: @ 0x82C0AC8
 	.string "ジョイスポットから　せつぞくを\n"
 	.string "せつだん　されました⋯$"
 	.globl sText_LinkWithFriendDropped
@@ -232,8 +232,8 @@ sCommunicatingWaitTexts: @ 0x82C0CD8
 sHiDoSomethingTexts: @ 0x82C0D3C
 	.incbin "baserom_jp.gba", 0x2c0d3c, 0x7c
 
-	.globl gUnknown_82C0DB8
-gUnknown_82C0DB8: @ 0x82C0DB8
+	.globl sPlayerContactedYouTexts
+sPlayerContactedYouTexts: @ 0x82C0DB8
 	.string "ゾすわく3すわくあいての　へんじを\n"
 	.string "まっています$　　　{B_COPY_VAR_1}の　へんじを\n"
 	.string "まっています$"
@@ -257,20 +257,20 @@ sText_ChatInvitation: @ 0x82C0E40
 sText_OfferToTradeMon: @ 0x82C0E68
 	.incbin "baserom_jp.gba", 0x2c0e68, 0x40
 
-	.globl gUnknown_82C0EA8
-gUnknown_82C0EA8: @ 0x82C0EA8
+	.globl sText_OfferToTradeEgg
+sText_OfferToTradeEgg: @ 0x82C0EA8
 	.string "とうろく　していた　タマゴの\n"
 	.string "こうかん　もうしこみが　きています\l"
 	.string "こうかん　しますか？$"
-	.globl gUnknown_82C0ED4
-gUnknown_82C0ED4: @ 0x82C0ED4
+	.globl sText_ChatDropped
+sText_ChatDropped: @ 0x82C0ED4
 	.string "かいわが　きれました\p$"
 	.globl sText_OfferDeclined1
 sText_OfferDeclined1: @ 0x82C0EE0
 	.incbin "baserom_jp.gba", 0x2c0ee0, 0x14
 
-	.globl gUnknown_82C0EF4
-gUnknown_82C0EF4: @ 0x82C0EF4
+	.globl sText_OfferDeclined2
+sText_OfferDeclined2: @ 0x82C0EF4
 	.string "おさそいを\n"
 	.string "ことわり　ました\p$"
 	.globl sText_ChatEnded
@@ -309,8 +309,8 @@ sIfYouWantToDoSomethingTexts: @ 0x82C12BC
 sText_TrainerBattleBusy: @ 0x82C12C4
 	.incbin "baserom_jp.gba", 0x2c12c4, 0x20
 
-	.globl gUnknown_82C12E4
-gUnknown_82C12E4: @ 0x82C12E4
+	.globl sText_NeedTwoMonsOfLevel30OrLower1
+sText_NeedTwoMonsOfLevel30OrLower1: @ 0x82C12E4
 	.string "たいせんを　するためには\n"
 	.string "レベル30より　ひくい　ポケモンが\l"
 	.string "2ひき　ひつよう　だよ\p$"
@@ -342,8 +342,8 @@ sTrainerCardReactionTexts: @ 0x82C15E8
 sTradeReactionTexts: @ 0x82C1668
 	.incbin "baserom_jp.gba", 0x2c1668, 0x20
 
-	.globl gUnknown_82C1688
-gUnknown_82C1688: @ 0x82C1688
+	.globl sText_XCheckedTradingBoard
+sText_XCheckedTradingBoard: @ 0x82C1688
 	.string "{B_COPY_VAR_1}は\n"
 	.string "こうかんけいじばんを　みた！\p$"
 	.globl sText_RegisterMonAtTradingBoard
@@ -358,8 +358,8 @@ sText_TradingBoardInfo: @ 0x82C16E0
 sText_ChooseRequestedMonType: @ 0x82C17CC
 	.incbin "baserom_jp.gba", 0x2c17cc, 0x1c
 
-	.globl gUnknown_82C17E8
-gUnknown_82C17E8: @ 0x82C17E8
+	.globl sText_WhichMonWillYouOffer
+sText_WhichMonWillYouOffer: @ 0x82C17E8
 	.string "こうかんに　だす　ポケモンを\n"
 	.string "てもちから　えらんで　ください\p$"
 	.globl sText_RegistrationCanceled
@@ -374,8 +374,8 @@ sText_RegistrationCompleted: @ 0x82C181C
 sText_TradeCanceled: @ 0x82C1830
 	.incbin "baserom_jp.gba", 0x2c1830, 0x14
 
-	.globl gUnknown_82C1844
-gUnknown_82C1844: @ 0x82C1844
+	.globl sText_CancelRegistrationOfMon
+sText_CancelRegistrationOfMon: @ 0x82C1844
 	.string "とうろく　されている　{B_COPY_VAR_1}\n"
 	.string "レベル{B_COPY_VAR_2}を　かいじょ　しますか？$"
 	.globl sText_CancelRegistrationOfEgg
@@ -386,14 +386,14 @@ sText_CancelRegistrationOfEgg: @ 0x82C1864
 sText_RegistrationCanceled2: @ 0x82C1880
 	.incbin "baserom_jp.gba", 0x2c1880, 0x4c
 
-	.globl gUnknown_82C18CC
-gUnknown_82C18CC: @ 0x82C18CC
+	.globl sText_AskTrainerToMakeTrade
+sText_AskTrainerToMakeTrade: @ 0x82C18CC
 	.string "{B_COPY_VAR_1}に　こうかんを\n"
 	.string "もうしこみ　ますか？$　　　⋯⋯\n"
 	.string "あいての　へんじを　まっています$あなたが　こうかんにだす\n"
 	.string "ポケモンが　とうろくされていません\p$"
-	.globl gUnknown_82C1918
-gUnknown_82C1918: @ 0x82C1918
+	.globl sText_DontHaveTypeTrainerWants
+sText_DontHaveTypeTrainerWants: @ 0x82C1918
 	.string "てもちに\n"
 	.string "{B_COPY_VAR_1}の　ほしがっている\l"
 	.string "{B_COPY_VAR_2}ポケモンが　ありません\p$"
@@ -409,8 +409,8 @@ sText_TradeOfferRejected: @ 0x82C1998
 sText_EggTrade: @ 0x82C19AC
 	.incbin "baserom_jp.gba", 0x2c19ac, 0xc
 
-	.globl gUnknown_82C19B8
-gUnknown_82C19B8: @ 0x82C19B8
+	.globl sText_ChooseJoinCancel
+sText_ChooseJoinCancel: @ 0x82C19B8
 	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR4}る:{B_BUTTON}やめる$"
 	.globl sText_ChooseTrainer
 sText_ChooseTrainer: @ 0x82C19CC
@@ -432,15 +432,15 @@ sText_AwaitingPlayersResponse: @ 0x82C1C80
 sText_PlayerHasBeenAskedToRegisterYouPleaseWait: @ 0x82C1C94
 	.incbin "baserom_jp.gba", 0x2c1c94, 0x24
 
-	.globl gUnknown_82C1CB8
-gUnknown_82C1CB8: @ 0x82C1CB8
+	.globl sText_AwaitingResponseFromWirelessSystem
+sText_AwaitingResponseFromWirelessSystem: @ 0x82C1CB8
 	.string "ジョイスポットからの\n"
 	.string "へんじを　まっています$　ほかの　さんかしゃが　そろうまで\n"
 	.string "しょうしょう　おまちください$ただいま　カードの　はいふは\n"
 	.string "おこなわれて　いないようです⋯$　ただいま　ニュースの　はいふは\n"
 	.string "おこなわれて　いないようです⋯$"
-	.globl gUnknown_82C1D30
-gUnknown_82C1D30: @ 0x82C1D30
+	.globl sNoWonderSharedTexts
+sNoWonderSharedTexts: @ 0x82C1D30
 	.string ":ふわくたへわくたいせん$　　　チャット$　　　あいさつ$　　　やめる$とじる$せつめいをきく$"
 	.globl sText_NameWantedOfferLv
 sText_NameWantedOfferLv: @ 0x82C1D60
@@ -466,8 +466,8 @@ sText_TrainerCardInfoPage2: @ 0x82C1F54
 sGladToMeetYouTexts: @ 0x82C1FA4
 	.incbin "baserom_jp.gba", 0x2c1fa4, 0x8
 
-	.globl gUnknown_82C1FAC
-gUnknown_82C1FAC: @ 0x82C1FAC
+	.globl sText_FinishedCheckingPlayersTrainerCard
+sText_FinishedCheckingPlayersTrainerCard: @ 0x82C1FAC
 	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\n"
 	.string "みおわった！{PAUSE 60}$"
 	.globl sWindowTemplate_BButtonCancel
@@ -550,8 +550,8 @@ sUnionRoomPlayer_DummyRfu: @ 0x82C2364
 sAcceptedActivityIds: @ 0x82C23E0
 	.incbin "baserom_jp.gba", 0x2c23e0, 0x58
 
-	.globl gUnknown_82C2438
-gUnknown_82C2438: @ 0x82C2438
+	.globl sLinkGroupToURoomActivity
+sLinkGroupToURoomActivity: @ 0x82C2438
 	.string "{MUS_RG_OAK_LAB}うえけ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}か{SE_WALL_HIT}{MUS_DUMMY}{DYNAMIC_COLOR6}{SE_FAINT}ぬねのはひふ{DYNAMIC_COLOR5}{SE_M_HYPER_BEAM2}·{MUS_RG_ROUTE1}$"
 	.globl sTextboxBorder_Pal
 sTextboxBorder_Pal: @ 0x82C2454
@@ -597,19 +597,19 @@ sWindowTemplate_GiftSelect_3Options: @ 0x82C24FC
 sWindowTemplate_GiftSelect_2Options: @ 0x82C2504
 	.incbin "baserom_jp.gba", 0x2c2504, 0x8
 
-	.globl gUnknown_82C250C
-gUnknown_82C250C: @ 0x82C250C
+	.globl sWindowTemplate_GiftSelect_1Option
+sWindowTemplate_GiftSelect_1Option: @ 0x82C250C
 	.string "　にそかえしオあふしぎなカード$ふしぎなニュース$　　　ジョイスポット$ともだち$　　　やめる$"
-	.globl gUnknown_82C253C
-gUnknown_82C253C: @ 0x82C253C
+	.globl sListMenuItems_CardsOrNews
+sListMenuItems_CardsOrNews: @ 0x82C253C
 	.string "とゆわく　　　　ふゆわくあ　　　ぎゆわく\n"
 	.string "$$$"
-	.globl gUnknown_82C2554
-gUnknown_82C2554: @ 0x82C2554
+	.globl sListMenuItems_WirelessOrFriend
+sListMenuItems_WirelessOrFriend: @ 0x82C2554
 	.string "りゆわく　　　　ぃゆわくあ　　　ぎゆわく\n"
 	.string "$$$"
-	.globl gUnknown_82C256C
-gUnknown_82C256C: @ 0x82C256C
+	.globl sListMenuTemplate_ThreeOptions
+sListMenuTemplate_ThreeOptions: @ 0x82C256C
 	.string "　　　　アyはく　　　　う　う　　　さあめぅ　あよみこむ$　　　おくる$すてる$ャゆわく　　　　ザゆわくあ　　　ゾゆわくい　　　ぎゆわく\n"
 	.string "$$$ャゆわく　　　　ゾゆわくい　　　ぎゆわく\n"
 	.string "$$$ャゆわく　　　　ザゆわくあ　　　ぎゆわく\n"
@@ -631,8 +631,8 @@ sListMenu_ReceiveSend: @ 0x82C2624
 sListMenu_Receive: @ 0x82C263C
 	.incbin "baserom_jp.gba", 0x2c263c, 0x88
 
-	.globl gUnknown_82C26C4
-gUnknown_82C26C4: @ 0x82C26C4
+	.globl sJPText_MgDontHaveCard
+sJPText_MgDontHaveCard: @ 0x82C26C4
 	.string "ふしぎなカードを　もっていないので\n"
 	.string "あたらしく　カードを　よみこみます$"
 	.globl sJPText_MgDontHaveNews
@@ -655,8 +655,8 @@ sJPText_MgCommunicating: @ 0x82C276C
 sJPText_MgCommCompleted: @ 0x82C277C
 	.incbin "baserom_jp.gba", 0x2c277c, 0x14
 
-	.globl gUnknown_82C2790
-gUnknown_82C2790: @ 0x82C2790
+	.globl sJPText_MeventMsg11
+sJPText_MeventMsg11: @ 0x82C2790
 	.string "つうしんに　しっぱい　しました$"
 	.globl sJPText_MeventMsg9
 sJPText_MeventMsg9: @ 0x82C27A0
@@ -666,8 +666,8 @@ sJPText_MeventMsg9: @ 0x82C27A0
 sJPText_MgThrowAwayCard: @ 0x82C27B4
 	.incbin "baserom_jp.gba", 0x2c27b4, 0x28
 
-	.globl gUnknown_82C27DC
-gUnknown_82C27DC: @ 0x82C27DC
+	.globl sJPText_MgHaventReceived
+sJPText_MgHaventReceived: @ 0x82C27DC
 	.string "まだ　カードの　おくりものを　もらって\n"
 	.string "ませんが　ほんとうに　よみこみますか？$"
 	.globl sJPText_MeventMsg2a
@@ -682,20 +682,20 @@ sJPText_MeventMsg3a: @ 0x82C2820
 sJPText_MeventMsg2b: @ 0x82C2838
 	.incbin "baserom_jp.gba", 0x2c2838, 0x1c
 
-	.globl gUnknown_82C2854
-gUnknown_82C2854: @ 0x82C2854
+	.globl sJPText_MeventMsg3b
+sJPText_MeventMsg3b: @ 0x82C2854
 	.string "あたらしい　ニュースが\n"
 	.string "おくられて　きました！$"
-	.globl gUnknown_82C286C
-gUnknown_82C286C: @ 0x82C286C
+	.globl sJPText_MeventMsg4
+sJPText_MeventMsg4: @ 0x82C286C
 	.string "あたらしい　スタンプが\n"
 	.string "おくられて　きました！$"
 	.globl sJPText_MeventMsg12
 sJPText_MeventMsg12: @ 0x82C2884
 	.incbin "baserom_jp.gba", 0x2c2884, 0x1c
 
-	.globl gUnknown_82C28A0
-gUnknown_82C28A0: @ 0x82C28A0
+	.globl sJPText_MeventMsg5
+sJPText_MeventMsg5: @ 0x82C28A0
 	.string "おなじ　ふしぎなカードを\n"
 	.string "すでに　もっています$"
 	.globl sJPText_MeventMsg7
@@ -746,12 +746,12 @@ sJPText_MgSendingNews: @ 0x82C29AC
 sJPText_StampMsg2: @ 0x82C29C0
 	.incbin "baserom_jp.gba", 0x2c29c0, 0x18
 
-	.globl gUnknown_82C29D8
-gUnknown_82C29D8: @ 0x82C29D8
+	.globl sJPText_StampMsg3
+sJPText_StampMsg3: @ 0x82C29D8
 	.string "{B_COPY_VAR_1}に　ニュース　を\n"
 	.string "おくり　ました！$"
-	.globl gUnknown_82C29EC
-gUnknown_82C29EC: @ 0x82C29EC
+	.globl sJPText_StampMsg4
+sJPText_StampMsg4: @ 0x82C29EC
 	.string "{B_COPY_VAR_1}に　スタンプ　を\n"
 	.string "おくり　ました！$"
 	.globl sJPText_StampMsg12
@@ -774,16 +774,16 @@ sJPText_StampMsg6: @ 0x82C2A48
 sJPText_StampMsg9: @ 0x82C2A60
 	.incbin "baserom_jp.gba", 0x2c2a60, 0x18
 
-	.globl gUnknown_82C2A78
-gUnknown_82C2A78: @ 0x82C2A78
+	.globl sJPText_StampMsg14
+sJPText_StampMsg14: @ 0x82C2A78
 	.string "この　あいて　には\n"
 	.string "ふしぎなおくりものを　わたせません$"
 	.globl sText_DiscardWonderCard
 sText_DiscardWonderCard: @ 0x82C2A94
 	.incbin "baserom_jp.gba", 0x2c2a94, 0x20
 
-	.globl gUnknown_82C2AB4
-gUnknown_82C2AB4: @ 0x82C2AB4
+	.globl sText_DiscardWonderNews
+sText_DiscardWonderNews: @ 0x82C2AB4
 	.string "ほんとうに　ニュースを\n"
 	.string "すてても　よいですか？$"
 	.globl sJPText_MgDiscardConfirm
@@ -802,8 +802,8 @@ sText_SavingGame2: @ 0x82C2B08
 sText_WasThrownAwayWonderCard: @ 0x82C2B28
 	.incbin "baserom_jp.gba", 0x2c2b28, 0x10
 
-	.globl gUnknown_82C2B38
-gUnknown_82C2B38: @ 0x82C2B38
+	.globl sText_WasThrownAwayWonderNews
+sText_WasThrownAwayWonderNews: @ 0x82C2B38
 	.string "ニュースを　すてました$"
 	.globl gText_MysteryGift
 gText_MysteryGift: @ 0x82C2B44
@@ -817,8 +817,8 @@ gText_PickOKExit: @ 0x82C2B50
 sTextColors_Header: @ 0x82C2B64
 	.incbin "baserom_jp.gba", 0x2c2b64, 0x8
 
-	.globl gUnknown_82C2B6C
-gUnknown_82C2B6C: @ 0x82C2B6C
+	.globl sMG_Ereader_TextColor_2
+sMG_Ereader_TextColor_2: @ 0x82C2B6C
 	.string "あいうテスト$むげんのチケット$"
 	.globl sUnionRoomObjGfxIds
 sUnionRoomObjGfxIds: @ 0x82C2B7C
@@ -880,8 +880,8 @@ sWirelessScreenBgTiles_Tilemap: @ 0x82C3020
 sWirelessScreenBgTemplates: @ 0x82C31B4
 	.incbin "baserom_jp.gba", 0x2c31b4, 0x8
 
-	.globl gUnknown_82C31BC
-gUnknown_82C31BC: @ 0x82C31BC
+	.globl sWirelessScreenWindowTemplates
+sWirelessScreenWindowTemplates: @ 0x82C31BC
 	.string "　か　ねうそあ　　おえつそそべ　　なえかそそキあ$　　　　　　　ワイヤレス　つうしん　じょうきょう$こうかん　しているひと$たいせん　しているひと$ユニオンルームに　いるひと$つうしん　しているひと$"
 	.globl sWirelessScreenActivityCountTexts
 sWirelessScreenActivityCountTexts: @ 0x82C3220
@@ -907,15 +907,15 @@ sUnionRoomBattleWindowTemplates: @ 0x82C32B0
 sWirelessScreenTextColors: @ 0x82C32C0
 	.incbin "baserom_jp.gba", 0x2c32c0, 0x3
 
-	.globl gUnknown_82C32C3
-gUnknown_82C32C3: @ 0x82C32C3
+	.globl sURBattleText_CommStandby
+sURBattleText_CommStandby: @ 0x82C32C3
 	.string "つうしんたいきちゅう\n"
 	.string "あいての　せんたくを　まっています⋯$"
-	.globl gUnknown_82C32E1
-gUnknown_82C32E1: @ 0x82C32E1
+	.globl sURBattleText_BattleWasRefused
+sURBattleText_BattleWasRefused: @ 0x82C32E1
 	.string "たいせんを　ことわられました{PAUSE 60}$"
-	.globl gUnknown_82C32F3
-gUnknown_82C32F3: @ 0x82C32F3
+	.globl sURBattleText_RefusedBattle
+sURBattleText_RefusedBattle: @ 0x82C32F3
 	.string "たいせんを　ことわりました{PAUSE 60}$"
 	.globl sReceivedGiftFlags
 sReceivedGiftFlags: @ 0x82C3304
@@ -7076,8 +7076,8 @@ sMapPopUp_PaletteTable: @ 0x8559EE0
 sMapPopUp_Palette_Underwater: @ 0x8559FA0
 	.incbin "baserom_jp.gba", 0x559fa0, 0x20
 
-	.globl gUnknown_8559FC0
-gUnknown_8559FC0: @ 0x8559FC0
+	.globl sMapSectionToThemeId
+sMapSectionToThemeId: @ 0x8559FC0
 	.string "　　　　　　　うあああうあうあう　　　　えええええ　　　　　　　　　　　　え　えええええええええええおおおおおいい　あ　い　あいいいいいいおい　い　いい　　いおいいいい　いいあいいい　　いいおいおおおいいいあピラミッド1だんめ$ピラミッド2だんめ$ピラミッド3だんめ$ピラミッド4だんめ$ピラミッド5だんめ$ピラミッド6だんめ$ピラミッド7だんめ$ピラミッド$"
 	.globl sBattlePyramid_MapHeaderStrings
 sBattlePyramid_MapHeaderStrings: @ 0x855A074
@@ -8092,8 +8092,8 @@ gUnknown_85694CC: @ 0x85694CC
 sBigMonSizeTable: @ 0x85694D0
 	.incbin "baserom_jp.gba", 0x5694d0, 0x80
 
-	.globl gUnknown_8569550
-gUnknown_8569550: @ 0x8569550
+	.globl gText_DecimalPoint
+gText_DecimalPoint: @ 0x8569550
 	.string ",$"
 
 	.globl sGiftRibbonsMonDataIds
@@ -8156,20 +8156,20 @@ sSpriteTemplate_RotatingGateLarge: @ 0x856DBAC
 sSpriteTemplate_RotatingGateRegular: @ 0x856DBC4
 	.incbin "baserom_jp.gba", 0x56dbc4, 0x18
 
-	.globl gUnknown_856DBDC
-gUnknown_856DBDC: @ 0x856DBDC
+	.globl sRotatingGate_RotationInfoNorth
+sRotatingGate_RotationInfoNorth: @ 0x856DBDC
 	.string "$$$$らよつて$$$$$$$$"
 
-	.globl gUnknown_856DBEC
-gUnknown_856DBEC: @ 0x856DBEC
+	.globl sRotatingGate_RotationInfoSouth
+sRotatingGate_RotationInfoSouth: @ 0x856DBEC
 	.string "$$$$$$$$ぬにめも$$$$"
 
-	.globl gUnknown_856DBFC
-gUnknown_856DBFC: @ 0x856DBFC
+	.globl sRotatingGate_RotationInfoWest
+sRotatingGate_RotationInfoWest: @ 0x856DBFC
 	.string "$ち$$$た$$$や$$$ゆ$$"
 
-	.globl gUnknown_856DC0C
-gUnknown_856DC0C: @ 0x856DC0C
+	.globl sRotatingGate_RotationInfoEast
+sRotatingGate_RotationInfoEast: @ 0x856DC0C
 	.string "$$む$$$み$$$と$$$な$"
 
 	.globl sRotatingGate_ArmPositionsClockwiseRotation
@@ -8344,8 +8344,8 @@ gFireSpiralOutwardSpriteTemplate: @ 0x571168
 gEruptionLaunchRockSpriteTemplate: @ 0x8571198
 	.incbin "baserom_jp.gba", 0x571198, 0x18
 
-	.globl gUnknown_85711B0
-gUnknown_85711B0: @ 0x85711B0
+	.globl sEruptionLaunchRockSpeeds
+sEruptionLaunchRockSpeeds: @ 0x85711B0
 	.string "\n$"
 
 	.globl gUnknown_85711B2
@@ -10150,11 +10150,11 @@ gWallClockView_Tilemap: @ 0x8591074
 gWallClock_Gfx: @ 0x859130C
 	.incbin "baserom_jp.gba", 0x59130c, 0x8f8
 
-	.globl gUnknown_8591C04
-gUnknown_8591C04: @ 0x8591C04
+	.globl gText_IsThisTheCorrectTime
+gText_IsThisTheCorrectTime: @ 0x8591C04
 	.string "この　じかんで　よろしいですか？$"
-	.globl gUnknown_8591C15
-gUnknown_8591C15: @ 0x8591C15
+	.globl gText_Cancel4
+gText_Cancel4: @ 0x8591C15
 	.string "けってい$"
 	.globl gText_Confirm3
 gText_Confirm3: @ 0x8591C1A
@@ -10530,21 +10530,21 @@ sTrainerHillRecordsWindowTemplates: @ 0x85937C8
 sLinkBattleRecordsWindow: @ 0x85937D8
 	.incbin "baserom_jp.gba", 0x5937d8, 0x8
 
-	.globl gUnknown_85937E0
-gUnknown_85937E0: @ 0x85937E0
+	.globl gText_PlayersBattleResults
+gText_PlayersBattleResults: @ 0x85937E0
 	.string "{MUS_RG_VS_TRAINER}　の　たいせん　せいせき$"
-	.globl gUnknown_85937EF
-gUnknown_85937EF: @ 0x85937EF
+	.globl gText_TotalRecordWLD
+gText_TotalRecordWLD: @ 0x85937EF
 	.string "{B_COPY_VAR_1}しょう　{B_COPY_VAR_2}はい　{B_COPY_VAR_3}ひきわけ$"
-	.globl gUnknown_8593801
-gUnknown_8593801: @ 0x8593801
+	.globl gText_WinLoseDraw
+gText_WinLoseDraw: @ 0x8593801
 	.string "かち　　　　まけ　　　ひきわけ$"
-	.globl gUnknown_8593811
-gUnknown_8593811: @ 0x8593811
+	.globl sText_DashesNoPlayer
+sText_DashesNoPlayer: @ 0x8593811
 	.string "ーーーーー$"
 
-	.globl gUnknown_8593817
-gUnknown_8593817: @ 0x8593817
+	.globl sText_DashesNoScore
+sText_DashesNoScore: @ 0x8593817
 	.string "ーーーー$"
 
 	.globl gUnknown_859381C
@@ -11781,37 +11781,37 @@ gUnknown_85ABBC9: @ 0x85ABBC9
 gUnknown_85ABBD8: @ 0x85ABBD8
 	.incbin "baserom_jp.gba", 0x5abbd8, 0x60
 
-	.globl gUnknown_85ABC38
-gUnknown_85ABC38: @ 0x85ABC38
+	.globl gText_SafariBalls
+gText_SafariBalls: @ 0x85ABC38
 	.string "{HIGHLIGHT 2}サファリボール$"
-	.globl gUnknown_85ABC43
-gUnknown_85ABC43: @ 0x85ABC43
+	.globl gText_SafariBallLeft
+gText_SafariBallLeft: @ 0x85ABC43
 	.string "{HIGHLIGHT 2}のこり　$"
-	.globl gUnknown_85ABC4B
-gUnknown_85ABC4B: @ 0x85ABC4B
+	.globl gText_SafariBallsLeft2
+gText_SafariBallsLeft2: @ 0x85ABC4B
 	.string "{HIGHLIGHT 2}こ$"
-	.globl gUnknown_85ABC50
-gUnknown_85ABC50: @ 0x85ABC50
+	.globl gStatusConditionString_SleepJpn
+gStatusConditionString_SleepJpn: @ 0x85ABC50
 	.string "ねむり$"
 
-	.globl gUnknown_85ABC54
-gUnknown_85ABC54: @ 0x85ABC54
+	.globl gStatusConditionString_PoisonJpn
+gStatusConditionString_PoisonJpn: @ 0x85ABC54
 	.string "どく$"
-	.globl gUnknown_85ABC57
-gUnknown_85ABC57: @ 0x85ABC57
+	.globl gStatusConditionString_BurnJpn
+gStatusConditionString_BurnJpn: @ 0x85ABC57
 	.string "やけど$"
-	.globl gUnknown_85ABC5B
-gUnknown_85ABC5B: @ 0x85ABC5B
+	.globl gStatusConditionString_ParalysisJpn
+gStatusConditionString_ParalysisJpn: @ 0x85ABC5B
 	.string "まひ$"
 
-	.globl gUnknown_85ABC5E
-gUnknown_85ABC5E: @ 0x85ABC5E
+	.globl gStatusConditionString_IceJpn
+gStatusConditionString_IceJpn: @ 0x85ABC5E
 	.string "こおり$"
-	.globl gUnknown_85ABC62
-gUnknown_85ABC62: @ 0x85ABC62
+	.globl gStatusConditionString_ConfusionJpn
+gStatusConditionString_ConfusionJpn: @ 0x85ABC62
 	.string "こんらん$"
-	.globl gUnknown_85ABC67
-gUnknown_85ABC67: @ 0x85ABC67
+	.globl gStatusConditionString_LoveJpn
+gStatusConditionString_LoveJpn: @ 0x85ABC67
 	.string "メロメロ$"
 
 	.globl gUnknown_85ABC6C
@@ -12195,40 +12195,40 @@ gSlackOffSquishAffineAnimCmds: @ 0x85AD7D0
 gUnknown_85AD800: @ 0x85AD800
 	.incbin "baserom_jp.gba", 0x5ad800, 0x1a0
 
-	.globl gUnknown_85AD9A0
-gUnknown_85AD9A0: @ 0x85AD9A0
+	.globl gText_TeachWhichMoveToPkmn
+gText_TeachWhichMoveToPkmn: @ 0x85AD9A0
 	.string "{B_COPY_VAR_1}に　どのわざを　おぼえさせる？$"
-	.globl gUnknown_85AD9B2
-gUnknown_85AD9B2: @ 0x85AD9B2
+	.globl gText_MoveRelearnerTeachMoveConfirm
+gText_MoveRelearnerTeachMoveConfirm: @ 0x85AD9B2
 	.string "{B_COPY_VAR_2}を　おぼえさせますか？$"
-	.globl gUnknown_85AD9C0
-gUnknown_85AD9C0: @ 0x85AD9C0
+	.globl gText_MoveRelearnerPkmnLearnedMove
+gText_MoveRelearnerPkmnLearnedMove: @ 0x85AD9C0
 	.string "{B_COPY_VAR_1}は　あたらしく\n"
 	.string "{B_COPY_VAR_2}を　おぼえた！$"
-	.globl gUnknown_85AD9D4
-gUnknown_85AD9D4: @ 0x85AD9D4
+	.globl gText_MoveRelearnerPkmnTryingToLearnMove
+gText_MoveRelearnerPkmnTryingToLearnMove: @ 0x85AD9D4
 	.string "{B_COPY_VAR_1}は　あたらしく　\n"
 	.string "{B_COPY_VAR_2}を　おぼえたい⋯！\p"
 	.string "しかし　{B_COPY_VAR_1}は　わざを　4つ\n"
 	.string "おぼえているので　せいいっぱいだ！\p"
 	.string "{B_COPY_VAR_2}の　かわりに　ほかの　わざを\n"
 	.string "わすれさせますか？$"
-	.globl gUnknown_85ADA27
-gUnknown_85ADA27: @ 0x85ADA27
+	.globl gText_MoveRelearnerStopTryingToTeachMove
+gText_MoveRelearnerStopTryingToTeachMove: @ 0x85ADA27
 	.string "それでは⋯⋯　{B_COPY_VAR_2}を\n"
 	.string "おぼえるのを　あきらめますか？$"
-	.globl gUnknown_85ADA42
-gUnknown_85ADA42: @ 0x85ADA42
+	.globl gText_MoveRelearnerAndPoof
+gText_MoveRelearnerAndPoof: @ 0x85ADA42
 	.string "{PAUSE 32}1　{PAUSE 15}2の　{PAUSE 15}⋯{PAUSE 15}⋯{PAUSE 15}⋯　{PAUSE 15}{PLAY_SE SE_BALL_BOUNCE_1}ポカン！\p$"
-	.globl gUnknown_85ADA67
-gUnknown_85ADA67: @ 0x85ADA67
+	.globl gText_MoveRelearnerPkmnForgotMoveAndLearnedNew
+gText_MoveRelearnerPkmnForgotMoveAndLearnedNew: @ 0x85ADA67
 	.string "{B_COPY_VAR_1}は　{B_COPY_VAR_3}の　つかいかたを\n"
 	.string "きれいに　わすれた！\p"
 	.string "そして⋯！\p"
 	.string "{B_COPY_VAR_1}は　あたらしく\n"
 	.string "{B_COPY_VAR_2}を　おぼえた！${B_COPY_VAR_1}は　{B_COPY_VAR_2}を　おぼえずに　おわった！$"
-	.globl gUnknown_85ADAAF
-gUnknown_85ADAAF: @ 0x85ADAAF
+	.globl gText_MoveRelearnerGiveUp
+gText_MoveRelearnerGiveUp: @ 0x85ADAAF
 	.string "{B_COPY_VAR_1}に　わざを　おぼえさせるのを\n"
 	.string "あきらめますか？$"
 	.globl gText_MoveRelearnerWhichMoveToForget
@@ -12696,8 +12696,8 @@ gUnknown_85C60FC: @ 0x85C60FC
 gUnknown_85C610C: @ 0x85C610C
 	.incbin "baserom_jp.gba", 0x5c610c, 0x10
 
-	.globl gUnknown_85C611C
-gUnknown_85C611C: @ 0x85C611C
+	.globl gText_Hoenn
+gText_Hoenn: @ 0x85C611C
 	.string "ホウエンちほう$"
 	.globl sFieldRegionMapBgTemplates
 sFieldRegionMapBgTemplates: @ 0x85C6124
@@ -12874,27 +12874,27 @@ sDiplomaTilemap: @ 0x85C7A74
 sDiplomaTiles: @ 0x85C81B0
 	.incbin "baserom_jp.gba", 0x5c81b0, 0x9f8
 
-	.globl gUnknown_85C8BA8
-gUnknown_85C8BA8: @ 0x85C8BA8
+	.globl gText_Diploma_1
+gText_Diploma_1: @ 0x85C8BA8
 	.string "プレイヤー$"
 
-	.globl gUnknown_85C8BAE
-gUnknown_85C8BAE: @ 0x85C8BAE
+	.globl gText_Diploma_2
+gText_Diploma_2: @ 0x85C8BAE
 	.string "さま$"
-	.globl gUnknown_85C8BB1
-gUnknown_85C8BB1: @ 0x85C8BB1
+	.globl gText_Diploma_Hoenn
+gText_Diploma_Hoenn: @ 0x85C8BB1
 	.string "ホウエン$"
-	.globl gUnknown_85C8BB6
-gUnknown_85C8BB6: @ 0x85C8BB6
+	.globl gText_Diploma_National
+gText_Diploma_National: @ 0x85C8BB6
 	.string "ぜんこく$"
-	.globl gUnknown_85C8BBB
-gUnknown_85C8BBB: @ 0x85C8BBB
+	.globl gText_Diploma_3
+gText_Diploma_3: @ 0x85C8BBB
 	.string "　　　　　ポケモンずかんを\n"
 	.string "みごと　かんせい　させた\n"
 	.string "いだいなこうせきを　たたえ\n"
 	.string "ここに　しょうめい　します$"
-	.globl gUnknown_85C8BF2
-gUnknown_85C8BF2: @ 0x85C8BF2
+	.globl gText_Diploma_4
+gText_Diploma_4: @ 0x85C8BF2
 	.string "{COLOR 4}{SHADOW 5}ゲームフリーク$"
 	.globl gText_Diploma_NameTemplate
 gText_Diploma_NameTemplate: @ 0x85C8C00
@@ -12959,12 +12959,12 @@ gUnknown_85C8C5A: @ 0x85C8C5A
 gUnknown_85C8C5E: @ 0x85C8C5E
 	.string "ハルカ$"
 
-	.globl gUnknown_85C8C62
-gUnknown_85C8C62: @ 0x85C8C62
+	.globl gText_EggNickname
+gText_EggNickname: @ 0x85C8C62
 	.string "タマゴ$"
 
-	.globl gUnknown_85C8C66
-gUnknown_85C8C66: @ 0x85C8C66
+	.globl gText_Pokemon
+gText_Pokemon: @ 0x85C8C66
 	.string "ポケモン$オダマキ$"
 
 	.globl gUnknown_85C8C70
@@ -13127,15 +13127,15 @@ gUnknown_85C9359: @ 0x85C9359
 gUnknown_85C935D: @ 0x85C935D
 	.string "IDNo,$"
 
-	.globl gUnknown_85C9363
-gUnknown_85C9363: @ 0x85C9363
+	.globl gText_BirchInTrouble
+gText_BirchInTrouble: @ 0x85C9363
 	.string "オダマキはかせが　ピンチだ！\n"
 	.string "ポケモンを　だして　たすけてあげよう！$"
-	.globl gUnknown_85C9386
-gUnknown_85C9386: @ 0x85C9386
+	.globl gText_ConfirmStarterChoice
+gText_ConfirmStarterChoice: @ 0x85C9386
 	.string "このポケモンにしますか？$"
-	.globl gUnknown_85C9393
-gUnknown_85C9393: @ 0x85C9393
+	.globl gStarterCategorySuffix
+gStarterCategorySuffix: @ 0x85C9393
 	.string "ポケモン$"
 
 	.globl gUnknown_85C9398
@@ -13144,15 +13144,15 @@ gUnknown_85C9398: @ 0x85C9398
 	.globl gUnknown_85C93BB
 gUnknown_85C93BB: @ 0x85C93BB
 	.string "けってい$おりる$"
-	.globl gUnknown_85C93C4
-gUnknown_85C93C4: @ 0x85C93C4
+	.globl gText_Cancel
+gText_Cancel: @ 0x85C93C4
 	.string "もどる$"
 
-	.globl gUnknown_85C93C8
-gUnknown_85C93C8: @ 0x85C93C8
+	.globl gText_Exit
+gText_Exit: @ 0x85C93C8
 	.string "やめる$みせる$"
-	.globl gUnknown_85C93D0
-gUnknown_85C93D0: @ 0x85C93D0
+	.globl gText_EmptyString2
+gText_EmptyString2: @ 0x85C93D0
 	.string "$キャンセル$もちもの$メール$あずかる$あずける$みる$"
 	.globl gUnknown_85C93ED
 gUnknown_85C93ED: @ 0x85C93ED
@@ -13161,12 +13161,12 @@ gUnknown_85C93ED: @ 0x85C93ED
 gUnknown_85C93F5: @ 0x85C93F5
 	.string "？？？$"
 
-	.globl gUnknown_85C93F9
-gUnknown_85C93F9: @ 0x85C93F9
+	.globl gText_FiveMarks
+gText_FiveMarks: @ 0x85C93F9
 	.string "？？？？？$"
 
-	.globl gUnknown_85C93FF
-gUnknown_85C93FF: @ 0x85C93FF
+	.globl gText_Slash
+gText_Slash: @ 0x85C93FF
 	.string "/$"
 
 	.globl gUnknown_85C9401
@@ -13222,8 +13222,8 @@ gUnknown_85C943C: @ 0x85C943C
 gUnknown_85C9440: @ 0x85C9440
 	.string "のみ$"
 
-	.globl gUnknown_85C9443
-gUnknown_85C9443: @ 0x85C9443
+	.globl gText_Coins
+gText_Coins: @ 0x85C9443
 	.string "{B_COPY_VAR_1}まい$"
 	.globl gUnknown_85C9448
 gUnknown_85C9448: @ 0x85C9448
@@ -13507,8 +13507,8 @@ gUnknown_85C9A6C: @ 0x85C9A6C
 gUnknown_85C9A88: @ 0x85C9A88
 	.string "{B_COPY_VAR_2}　を　わたして\n"
 	.string "{B_COPY_VAR_1}¥　うけとった！$"
-	.globl gUnknown_85C9A9D
-gUnknown_85C9A9D: @ 0x85C9A9D
+	.globl gText_PokedollarVar1
+gText_PokedollarVar1: @ 0x85C9A9D
 	.string "{B_COPY_VAR_1}¥$いれかえる$せんとうにだす$ならびかえ$つよさをみる$つかえるわざ$さんかする$さんかしない$メールを　とる$メールを　よむ$こうかんする$"
 	.globl gUnknown_85C9AE7
 gUnknown_85C9AE7: @ 0x85C9AE7
@@ -13522,8 +13522,8 @@ gUnknown_85C9AF2: @ 0x85C9AF2
 	.globl gUnknown_85C9AF7
 gUnknown_85C9AF7: @ 0x85C9AF7
 	.string "つかっても　こうかがないよ{PAUSE_UNTIL_PRESS}$"
-	.globl gUnknown_85C9B07
-gUnknown_85C9B07: @ 0x85C9B07
+	.globl gText_CantBeUsedOnPkmn
+gText_CantBeUsedOnPkmn: @ 0x85C9B07
 	.string "そのポケモンには\n"
 	.string "つかえません！{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9B1A
@@ -13654,8 +13654,8 @@ gUnknown_85C9E35: @ 0x85C9E35
 gUnknown_85C9E79: @ 0x85C9E79
 	.string "{B_COPY_VAR_1}は　すでに\n"
 	.string "{B_COPY_VAR_2}を　おぼえています{PAUSE_UNTIL_PRESS}$"
-	.globl gUnknown_85C9E8F
-gUnknown_85C9E8F: @ 0x85C9E8F
+	.globl gText_PkmnHPRestoredByVar2
+gText_PkmnHPRestoredByVar2: @ 0x85C9E8F
 	.string "{B_COPY_VAR_1}の　たいりょくが\n"
 	.string "{B_COPY_VAR_2}　かいふくした{PAUSE_UNTIL_PRESS}$"
 	.globl gUnknown_85C9EA6
@@ -14199,46 +14199,46 @@ gUnknown_85CB55C: @ 0x85CB55C
 	.globl gUnknown_85CB584
 gUnknown_85CB584: @ 0x85CB584
 	.string "ボックス$ホウエンちほうの　マップを　みます$ポケモンを　くわしく　しらべます$とうろくした　ひとを　よびだします$てにいれた　きねんリボンを　みます$ポケナビを　しまいます$"
-	.globl gUnknown_85CB5DC
-gUnknown_85CB5DC: @ 0x85CB5DC
+	.globl gText_NoRibbonWinners
+gText_NoRibbonWinners: @ 0x85CB5DC
 	.string "リボンを　もっている　ポケモンが　いません$トレーナーが　とうろく　されていません$てもちポケモンを　くわしく　しらべます$すべてのポケモンを　くわしく　しらべます$ポケナビの　メニューに　もどります$かっこいい　ポケモンを　みつけます$うつくしい　ポケモンを　みつけます$かわいい　ポケモンを　みつけます$かしこい　ポケモンを　みつけます$たくましい　ポケモンを　みつけます$コンディションの　メニューに　もどります$"
-	.globl gUnknown_85CB6AE
-gUnknown_85CB6AE: @ 0x85CB6AE
+	.globl gText_NumberRegistered
+gText_NumberRegistered: @ 0x85CB6AE
 	.string "とうろく　にんずう$"
-	.globl gUnknown_85CB6B8
-gUnknown_85CB6B8: @ 0x85CB6B8
+	.globl gText_NumberOfBattles
+gText_NumberOfBattles: @ 0x85CB6B8
 	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}う${DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}$よびだ{DYNAMIC_COLOR4}$やめる${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{MUS_RG_OAK_LAB}て{SE_WARP_IN}よびだ{SE_EFFECTIVE}{DYNAMIC_COLOR1}とが\n"
 	.string "でき{MUS_RG_GAME_FREAK}ようだ${DYNAMIC_COLOR2}く{DYNAMIC_COLOR5}ん$もって{SE_ICE_BREAK}ポケモン$じ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょう{MUS_RG_POKE_TOWER}${MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}${A_BUTTON}かく{PH_PRICE_BLEND}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}ぜん{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}コンディションをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}マーキン{SE_M_ICY_WIND}{B_BUTTON}もどる${A_BUTTON}マークをえら{SE_ITEMFINDER}{B_BUTTON}やめる${A_BUTTON}メニュ{SE_M_PAY_DAY}{B_BUTTON}もどる${A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる${A_BUTTON}リボンをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}{DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる$"
 	.globl gUnknown_85CB7A2
 gUnknown_85CB7A2: @ 0x85CB7A2
 	.string "せいかく/$"
-	.globl gUnknown_85CB7A8
-gUnknown_85CB7A8: @ 0x85CB7A8
+	.globl gText_TrainerCloseBy
+gText_TrainerCloseBy: @ 0x85CB7A8
 	.string "ちかくに　いるみたいだから\n"
 	.string "ちょくせつ　あって　はなそう！$"
-	.globl gUnknown_85CB7C6
-gUnknown_85CB7C6: @ 0x85CB7C6
+	.globl gText_InParty
+gText_InParty: @ 0x85CB7C6
 	.string "てもちポケモン$"
 
-	.globl gUnknown_85CB7CE
-gUnknown_85CB7CE: @ 0x85CB7CE
+	.globl gText_Number2
+gText_Number2: @ 0x85CB7CE
 	.string "ばんめ$リボン$"
 
-	.globl gUnknown_85CB7D6
-gUnknown_85CB7D6: @ 0x85CB7D6
+	.globl sText_ConditionSearchMonMale
+sText_ConditionSearchMonMale: @ 0x85CB7D6
 	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
-	.globl gUnknown_85CB7EA
-gUnknown_85CB7EA: @ 0x85CB7EA
+	.globl sText_ConditionSearchMonFemale
+sText_ConditionSearchMonFemale: @ 0x85CB7EA
 	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
-	.globl gUnknown_85CB7FE
-gUnknown_85CB7FE: @ 0x85CB7FE
+	.globl sText_ConditionSearchMonUnknown
+sText_ConditionSearchMonUnknown: @ 0x85CB7FE
 	.string "{SE_M_HYPER_BEAM2}{MUS_DUMMY}/{LV_2}{MUS_RG_ROUTE1}$"
 
-	.globl gUnknown_85CB808
-gUnknown_85CB808: @ 0x85CB808
+	.globl gText_Unknown
+gText_Unknown: @ 0x85CB808
 	.string "ふめい$よびだし$しょうさい$もどる$"
-	.globl gUnknown_85CB81B
-gUnknown_85CB81B: @ 0x85CB81B
+	.globl gText_SearchResultRank
+gText_SearchResultRank: @ 0x85CB81B
 	.string "{SE_M_HYPER_BEAM2}ばんめ$"
 
 	.globl gText_RibbonsF700
@@ -14373,8 +14373,8 @@ gUnknown_85CBF52: @ 0x85CBF52
 gUnknown_85CBF69: @ 0x85CBF69
 	.string "レポートが　ないので\n"
 	.string "じかんの　せっていは　できません！$"
-	.globl gUnknown_85CBF86
-gUnknown_85CBF86: @ 0x85CBF86
+	.globl sMEScrCmdGivenationaldexText
+sMEScrCmdGivenationaldexText: @ 0x85CBF86
 	.string "ゲームない　じかんの　しゅうせい　システムが\n"
 	.string "つかえる　ように　なりました！$"
 	.globl gUnknown_85CBFAD
@@ -14430,12 +14430,12 @@ gUnknown_85CBFE8: @ 0x85CBFE8
 	.globl gUnknown_85CBFEC
 gUnknown_85CBFEC: @ 0x85CBFEC
 	.string "とく$　　0てん$　10てん$　20てん$　30てん$　40てん$　50てん$　60てん$　70てん$　80てん$　90てん$100てん$　　？$キッスポスター　　　16BP$キッスクッション　　32BP$ムチュールドール　　32BP$トゲピードール　　　48BP$ニャースドール　　　48BP$ピッピドール　　　　48BP$メタモンドール　　　48BP$ヒノアラシドール　　80BP$チコリータドール　　80BP$ワニノコドール　　　80BP$ラプラスドール　　128BP$カビゴンドール　　128BP$フシギバナドール　256BP$リザードンドール　256BP$カメックスドール　256BP$タウリン　　　　　　　1BP$リゾチウム　　　　　　1BP$ブロムヘキシン　　　　1BP$キトサン　　　　　　　1BP$インドメタシン　　　　1BP$マックスアップ　　　　1BP$たべのこし　　　　　48BP$しろいハーブ　　　　48BP$せんせいのツメ　　　48BP$メンタルハーブ　　　48BP$ひかりのこな　　　　64BP$こだわりハチマキ　　64BP$おうじゃのしるし　　64BP$きあいのハチマキ　　64BP$ピントレンズ　　　　64BP$タマゴうみ　　　　16BP$ちきゅうなげ　　　24BP$ゆめくい　　　　　24BP$メガトンパンチ　　24BP$メガトンキック　　48BP$のしかかり　　　　48BP$いわなだれ　　　　48BP$カウンター　　　　48BP$でんじは　　　　　48BP$つるぎのまい　　　48BP$まるくなる　　　　16BP$いびき　　　　　　24BP$どろかけ　　　　　24BP$スピードスター　　24BP$こごえるかぜ　　　24BP$こらえる　　　　　48BP$じこあんじ　　　　48BP$れいとうパンチ　　48BP$かみなりパンチ　　48BP$ほのおのパンチ　　48BP$"
-	.globl gUnknown_85CC30F
-gUnknown_85CC30F: @ 0x85CC30F
+	.globl gText_PkmnFainted_FldPsn
+gText_PkmnFainted_FldPsn: @ 0x85CC30F
 	.string "{B_COPY_VAR_1}は\n"
 	.string "ちからつきた\p$"
-	.globl gUnknown_85CC31B
-gUnknown_85CC31B: @ 0x85CC31B
+	.globl gText_Marco
+gText_Marco: @ 0x85CC31B
 	.string "コウジ$"
 
 	.globl gUnknown_85CC31F
@@ -14553,20 +14553,20 @@ gUnknown_85CC4E0: @ 0x85CC4E0
 	.globl gUnknown_85CC4E4
 gUnknown_85CC4E4: @ 0x85CC4E4
 	.string "{COLOR_HIGHLIGHT_SHADOW 15 1 14}$"
-	.globl gUnknown_85CC4EA
-gUnknown_85CC4EA: @ 0x85CC4EA
+	.globl gText_HealthboxNickname
+gText_HealthboxNickname: @ 0x85CC4EA
 	.string "{HIGHLIGHT 2}$"
 	.globl gUnknown_85CC4EE
 gUnknown_85CC4EE: @ 0x85CC4EE
 	.string "　$"
-	.globl gUnknown_85CC4F0
-gUnknown_85CC4F0: @ 0x85CC4F0
+	.globl gText_HealthboxGender_Male
+gText_HealthboxGender_Male: @ 0x85CC4F0
 	.string "{COLOR 11}♂$"
-	.globl gUnknown_85CC4F5
-gUnknown_85CC4F5: @ 0x85CC4F5
+	.globl gText_HealthboxGender_Female
+gText_HealthboxGender_Female: @ 0x85CC4F5
 	.string "{COLOR 10}♀$"
-	.globl gUnknown_85CC4FA
-gUnknown_85CC4FA: @ 0x85CC4FA
+	.globl gText_HealthboxGender_None
+gText_HealthboxGender_None: @ 0x85CC4FA
 	.string "{COLOR 11}${MUS_RG_OAK_LAB}うえお$かきくけ{DYNAMIC_COLOR1}${DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$たちつてと$なにぬねの$はひふへほ$まみむめも$やゆよ！？$らりるれろ$わをん{SE_M_PAY_DAY}$アイ{PKMN}オ$カキクケコ$サシスセソ$タチツテト$ナニヌネノ$ハヒフヘホ$マミムメモ$ヤユヨ！？$ラリルレロ$ワヲン{SE_M_PAY_DAY}$ABCDE$FGHIJ$KLMNO$PQRST$UVWXY$Z·{SE_M_DIZZY_PUNCH}{TRANSPARENT}$01234$56789${EMOJI_MISCHIEVOUS}{EMOJI_HAPPY}{EMOJI_ANGRY}{EMOJI_SURPRISED}{EMOJI_BIGANGER}${EMOJI_BIGSMILE}{EMOJI_EVIL}{EMOJI_NEUTRAL}{EMOJI_TIRED}{EMOJI_SHOCKED}${EMOJI_LEAF}{EMOJI_FIRE}{EMOJI_WATER}{EMOJI_BOLT}{EMOJI_BALL}$♂♀{EMOJI_LEFT_PAREN}{EMOJI_RIGHT_PAREN}{EMOJI_TILDE}${EMOJI_LEFT_EYE}{EMOJI_RIGHT_EYE}{EMOJI_SMALLWHEEL}{EMOJI_SPHERE}{EMOJI_IRRITATED}${EMOJI_SPIRAL}{EMOJI_BIGWHEEL}{EMOJI_TONGUE}{EMOJI_ACUTE}{EMOJI_GRAVE}${EMOJI_RIGHT_FIST}{EMOJI_LEFT_FIST}{EMOJI_TRIANGLE_OUTLINE}{EMOJI_UNION}{EMOJI_GREATER_THAN}${EMOJI_CIRCLE}{EMOJI_TRIANGLE}{EMOJI_SQUARE}{EMOJI_HEART}{EMOJI_MOON}${EMOJI_NOTE}{EMOJI_PLUS}{EMOJI_MINUS}{EMOJI_EQUALS}{EMOJI_PIPE}${EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}{SE_M_HEAT_WAVE}$ひらがな$カタカナ$ABC$きごう$とうろく$とじる$チャット{SE_WARP_IN}やめま{DYNAMIC_COLOR4}か？$ど{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}とば{SE_WARP_IN}いれ{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}！$"
 	.globl gUnknown_85CC663
 gUnknown_85CC663: @ 0x85CC663
@@ -14714,8 +14714,8 @@ gUnknown_85CCCD4: @ 0x85CCCD4
 	.globl gUnknown_85CCCE1
 gUnknown_85CCCE1: @ 0x85CCCE1
 	.string "もっているバッジ　{B_COPY_VAR_1}こ$"
-	.globl gUnknown_85CCCEE
-gUnknown_85CCCEE: @ 0x85CCCEE
+	.globl gText_Powder
+gText_Powder: @ 0x85CCCEE
 	.string "きのみのこな$"
 	.globl gUnknown_85CCCF5
 gUnknown_85CCCF5: @ 0x85CCCF5
@@ -14811,11 +14811,11 @@ gUnknown_85CCEC5: @ 0x85CCEC5
 gUnknown_85CCECD: @ 0x85CCECD
 	.string "pokemon$"
 
-	.globl gUnknown_85CCED5
-gUnknown_85CCED5: @ 0x85CCED5
+	.globl gJPText_MysteryGift
+gJPText_MysteryGift: @ 0x85CCED5
 	.string "ふしぎなもらいもの$"
-	.globl gUnknown_85CCEDF
-gUnknown_85CCEDF: @ 0x85CCEDF
+	.globl gJPText_DecideStop
+gJPText_DecideStop: @ 0x85CCEDF
 	.string "{A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}やめる$"
 	.globl gJPText_ReceiveMysteryGiftWithEReader
 gJPText_ReceiveMysteryGiftWithEReader: @ 0x85CCEEC
@@ -15014,8 +15014,8 @@ gUnknown_85CDB40: @ 0x85CDB40
 gUnknown_85CDB48: @ 0x85CDB48
 	.incbin "baserom_jp.gba", 0x5cdb48, 0x18
 
-	.globl gUnknown_85CDB60
-gUnknown_85CDB60: @ 0x85CDB60
+	.globl gText_ClearAllSaveData
+gText_ClearAllSaveData: @ 0x85CDB60
 	.string "すべての　セーブデータエリアを\n"
 	.string "クリア　しますか？$"
 	.globl gText_ClearingData
@@ -15258,8 +15258,8 @@ sVariableDmgMoves: @ 0x85D2F0C
 sPointsArray: @ 0x85D3294
 	.incbin "baserom_jp.gba", 0x5d3294, 0x70
 
-	.globl gUnknown_85D3304
-gUnknown_85D3304: @ 0x85D3304
+	.globl sSpecialBattleStrings
+sSpecialBattleStrings: @ 0x85D3304
 	.string "ビ　”　B　ザ　'　♂　ヅ　ハ　ダ　セ　ぃ　れ　ド　ふ　へ　ト　タ　$$"
 	.globl gUnknown_85D3328
 gUnknown_85D3328: @ 0x85D3328
@@ -15567,8 +15567,8 @@ sBattlePalaceLatePrizes: @ 0x85D6900
 sWinStreakFlags: @ 0x85D6914
 	.incbin "baserom_jp.gba", 0x5d6914, 0x10
 
-	.globl gUnknown_85D6924
-gUnknown_85D6924: @ 0x85D6924
+	.globl sWinStreakMasks
+sWinStreakMasks: @ 0x85D6924
 	.string "▶$$$k$$$$$E$$$ァ$"
 
 	.globl gUnknown_85D6934
@@ -16519,14 +16519,14 @@ gUnknown_85DFBF0: @ 0x85DFBF0
 gUnknown_85DFC30: @ 0x85DFC30
 	.incbin "baserom_jp.gba", 0x5dfc30, 0x44
 
-	.globl gUnknown_85DFC74
-gUnknown_85DFC74: @ 0x85DFC74
+	.globl sSaveLocationPokeCenterList
+sSaveLocationPokeCenterList: @ 0x85DFC74
 	.string "いいういあういうおえかええおおおえかおか　きあきえくおくさけしけおこかこおさかさいしうしかすきすうせえせいそうそしたすたこたせたゅはょはねのののはのひの$$"
-	.globl gUnknown_85DFCC2
-gUnknown_85DFCC2: @ 0x85DFCC2
+	.globl sSaveLocationReloadLocList
+sSaveLocationReloadLocList: @ 0x85DFCC2
 	.string "おは$$"
-	.globl gUnknown_85DFCC6
-gUnknown_85DFCC6: @ 0x85DFCC6
+	.globl sEmptyMapList
+sEmptyMapList: @ 0x85DFCC6
 	.string "$$"
 
 	.globl gItemIconTable
@@ -17636,8 +17636,8 @@ sRibbonsMonMenuLoopTaskFuncs: @ 0x85F5DA8
 sRibbonsMonListWindowTemplate: @ 0x85F5DC4
 	.incbin "baserom_jp.gba", 0x5f5dc4, 0x8
 
-	.globl gUnknown_85F5DCC
-gUnknown_85F5DCC: @ 0x85F5DCC
+	.globl gText_RibbonsMonListCount
+gText_RibbonsMonListCount: @ 0x85F5DCC
 	.string "{MUS_DUMMY}{TRANSPARENT}/{SE_M_HYPER_BEAM2}$"
 
 	.globl sText_RibbonsMonListItemMale
@@ -17654,8 +17654,8 @@ sText_RibbonsMonListItemUnknown: @ 0x85F5E03
 sRibbonData: @ 0x85F5E14
 	.incbin "baserom_jp.gba", 0x5f5e14, 0x14c
 
-	.globl gUnknown_85F5F60
-gUnknown_85F5F60: @ 0x85F5F60
+	.globl gRibbonDescriptionPointers
+gRibbonDescriptionPointers: @ 0x85F5F60
 	.string "クセソくナセソくヨセソく！セソくヨセソく/セソくヨセソくOセソくヨセソくdセソくゥセソく！セソくゥセソく/セソくゥセソくOセソくゥセソくdセソくザセソく！セソくザセソく/セソくザセソくOセソくザセソくdセソくバセソく！セソくバセソく/セソくバセソくOセソくバセソくdセソくッセソく！セソくッセソく/セソくッセソくOセソくッセソくdセソくsセソくöセソくうソソくてソソくむソソくぅソソくずソソくぷソソく2003ねん　ちほう　たいかい$ゆうしょう　きねんリボン$2003ねん　ぜんこく　たいかい$2003ねん　ワールドカップ$じゅんゆうしょう　きねんリボン$ベスト4　きねんリボン$2004ねん　ちほう　たいかい$2004ねん　ぜんこく　たいかい$2004ねん　ワールドカップ$2005ねん　ちほう　たいかい$2005ねん　ぜんこく　たいかい$2005ねん　ワールドカップ$ポケモン　バトル　カップ$さんか　きねんリボン$ポケモン　リーグ$アドバンス　カップ$ポケモンの　たいかいに$さんかした　きねんリボン$ポケモンの　イベントに$ポケモンの　おまつりに$こんなんに　うちかった$きねんリボン$すべての　こんなんを$のりこえた　きねんリボン$100にんぬき　たっせい$くらやみのとう　クリア$くれないのとう　クリア$くろがねのとう　クリア$さいごのとう　クリア$でんせつを　つくった$ポケモンセンタートウキョー$ポケモンセンターオーサカ$ポケモンセンターナゴヤ$ポケモンセンターニューヨーク$なつやすみ　きねんリボン$$ふゆやすみ　きねんリボン$はるやすみ　きねんリボン$クリスマス　きねんリボン$きねんび　きねんリボン$がんばった　きねんの　リボン$ともだち　いっぱい　きねんリボン$げんき　いっぱい　きねんリボン$だいすきな　ポケモンに$つけてあげる　きねんリボン$ポケモンが　だいすきな　ことを$しょうめいする　リボン$"
 	.globl gGiftRibbonDescriptionPointers
 gGiftRibbonDescriptionPointers: @ 0x85F628C
@@ -17880,11 +17880,11 @@ sConditionSparklePalDescriptor: @ 0x85FA918
 sSpriteTemplate_ConditionSparkle: @ 0x85FA964
 	.incbin "baserom_jp.gba", 0x5fa964, 0x18
 
-	.globl gUnknown_85FA97C
-gUnknown_85FA97C: @ 0x85FA97C
+	.globl sConditionSparkleCoords
+sConditionSparkleCoords: @ 0x85FA97C
 	.string "　　i$と　p$む　ü$む　こ　と　ふ　　　も　x$ふ　k$こ　k$ü$x$p$さいだいHP$こうげき$ぼうぎょ$すばやさ$とくこう$とくぼう$"
-	.globl gUnknown_85FA9C4
-gUnknown_85FA9C4: @ 0x85FA9C4
+	.globl gText_Plus
+gText_Plus: @ 0x85FA9C4
 	.string "{PLUS}$"
 
 	.globl gText_Dash
@@ -18250,38 +18250,38 @@ gUnknown_85FCAD0: @ 0x85FCAD0
 gUnknown_85FCAE4: @ 0x85FCAE4
 	.incbin "baserom_jp.gba", 0x5fcae4, 0x14
 
-	.globl gUnknown_85FCAF8
-gUnknown_85FCAF8: @ 0x85FCAF8
+	.globl gText_MysteryEventBerry
+gText_MysteryEventBerry: @ 0x85FCAF8
 	.string "{B_COPY_VAR_2}のみを　てに　いれた！\n"
 	.string "トウカジムの　パパから　うけとろう！$"
-	.globl gUnknown_85FCB19
-gUnknown_85FCB19: @ 0x85FCB19
+	.globl gText_MysteryEventBerryTransform
+gText_MysteryEventBerryTransform: @ 0x85FCB19
 	.string "{B_COPY_VAR_1}のみは\n"
 	.string "{B_COPY_VAR_2}のみに　へんかした！$"
-	.globl gUnknown_85FCB2C
-gUnknown_85FCB2C: @ 0x85FCB2C
+	.globl gText_MysteryEventBerryObtained
+gText_MysteryEventBerryObtained: @ 0x85FCB2C
 	.string "{B_COPY_VAR_1}のみは　すでに\n"
 	.string "はいっていた$"
-	.globl gUnknown_85FCB3D
-gUnknown_85FCB3D: @ 0x85FCB3D
+	.globl gText_MysteryEventSpecialRibbon
+gText_MysteryEventSpecialRibbon: @ 0x85FCB3D
 	.string "てもちのポケモンに\n"
 	.string "とくべつなリボンが　あたえられた！$"
-	.globl gUnknown_85FCB59
-gUnknown_85FCB59: @ 0x85FCB59
+	.globl sMEScrCmdEnableresetrtcText
+sMEScrCmdEnableresetrtcText: @ 0x85FCB59
 	.string "ずかんに　ぜんこくモードが\n"
 	.string "ついか　された！$"
-	.globl gUnknown_85FCB70
-gUnknown_85FCB70: @ 0x85FCB70
+	.globl gText_MysteryEventRareWord
+gText_MysteryEventRareWord: @ 0x85FCB70
 	.string "めずらしい　ことばを　ついかしました$"
-	.globl gUnknown_85FCB83
-gUnknown_85FCB83: @ 0x85FCB83
+	.globl gText_MysteryEventSentOver
+gText_MysteryEventSentOver: @ 0x85FCB83
 	.string "{B_COPY_VAR_1}が　おくられてきた！$"
-	.globl gUnknown_85FCB90
-gUnknown_85FCB90: @ 0x85FCB90
+	.globl gText_MysteryEventFullParty
+gText_MysteryEventFullParty: @ 0x85FCB90
 	.string "てもちが　いっぱいなので\n"
 	.string "{B_COPY_VAR_1}は　もらえなかった⋯$"
-	.globl gUnknown_85FCBAA
-gUnknown_85FCBAA: @ 0x85FCBAA
+	.globl gText_MysteryEventNewTrainer
+gText_MysteryEventNewTrainer: @ 0x85FCBAA
 	.string "あらたな　トレーナーが\n"
 	.string "ホウエンに　やってきた$バトルタワーに　あらたな\n"
 	.string "たいせんしゃが　あらわれた！$"

@@ -146,5 +146,5 @@ FarawayIsland_Interior_EventScript_0023B59E::
 	waitmovement 0x0
 	return
 
-gUnknown_823B5A9:: @ 0x0823B5A9
+FarawayIsland_Interior_EventScript_HideMewWhenGrassCut:: @ 0x0823B5A9
 	.incbin "baserom_jp.gba", 0x23b5a9, 0x25

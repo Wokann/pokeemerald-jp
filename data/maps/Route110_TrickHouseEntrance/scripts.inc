@@ -643,7 +643,7 @@ Route110_TrickHouseEntrance_EventScript_0023CFF1::
 	releaseall
 	end
 
-gUnknown_823CFFB:: @ 0x0823CFFB
+Route110_TrickHousePuzzle_EventScript_Door:: @ 0x0823CFFB
 	.incbin "baserom_jp.gba", 0x23cffb, 0x1ce
 Route110_TrickHouseEntrance_EventScript_0023D1C9::
 	lockall

@@ -1,6 +1,6 @@
 @ PetalburgCity scripts (JP map g0 m0 @ 0x081DB7E8)
 
-gUnknown_81DB7E8:: @ 0x081DB7E8
+gStdScripts_End:: @ 0x081DB7E8
 PetalburgCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, PetalburgCity_EventScript_001DB7F3
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, PetalburgCity_MapScriptTable_001DB838

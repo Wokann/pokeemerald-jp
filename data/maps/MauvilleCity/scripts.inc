@@ -292,5 +292,5 @@ MauvilleCity_EventScript_001DDDE9::
 	release
 	end
 
-gUnknown_81DDDF3:: @ 0x081DDDF3
+MauvilleCity_EventScript_RegisterWallyCall:: @ 0x081DDDF3
 	.incbin "baserom_jp.gba", 0x1dddf3, 0x903

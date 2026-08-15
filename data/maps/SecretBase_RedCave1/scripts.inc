@@ -25,7 +25,7 @@ SecretBase_RedCave1_EventScript_0021D3A7::
 	setstepcallback 0x6
 	end
 
-gUnknown_821D3AA:: @ 0x0821D3AA
+SecretBase_EventScript_PC:: @ 0x0821D3AA
 	.incbin "baserom_jp.gba", 0x21d3aa, 0x269
 	.globl gJPText_0021D613
 gJPText_0021D613: @ 0x0821D613

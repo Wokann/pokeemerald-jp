@@ -127,8 +127,8 @@ sFontGlyphData_BD25C: @ 0x82BD25C
 sCenterToCornerVecTable: @ 0x82BF299
 	.incbin "baserom_jp.gba", 0x2bf299, 0x1b
 
-	.globl gUnknown_82BF2B4
-gUnknown_82BF2B4: @ 0x82BF2B4
+	.globl sDummySprite
+sDummySprite: @ 0x82BF2B4
 	.string "ッ　ぃあ　し　　えÜろく　　　　たÜろくとÜろく　　　　だム　くぃあッ　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$"
 	.globl gDummyOamData
 gDummyOamData: @ 0x82BF2F8
@@ -186,8 +186,8 @@ sDigits: @ 0x82BF43C
 sPowersOfTen: @ 0x82BF44C
 	.incbin "baserom_jp.gba", 0x2bf44c, 0x28
 
-	.globl gUnknown_82BF474
-gUnknown_82BF474: @ 0x82BF474
+	.globl sBrailleFont
+sBrailleFont: @ 0x82BF474
 	.string "{FONT 6}$"
 	.globl sBrailleGotoLine2
 sBrailleGotoLine2: @ 0x82BF478
@@ -213,8 +213,8 @@ sWirelessLinkDisplayTilemap: @ 0x82BF980
 sLinkTestDigitsPal: @ 0x82BFB6C
 	.incbin "baserom_jp.gba", 0x2bfb6c, 0x20
 
-	.globl gUnknown_82BFB8C
-gUnknown_82BFB8C: @ 0x82BFB8C
+	.globl sLinkTestDigitsGfx
+sLinkTestDigitsGfx: @ 0x82BFB8C
 	.string "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　l　　　\n"
 	.string "せ　l▶▶　\n"
 	.string "せ\n"
@@ -320,24 +320,24 @@ gUnknown_82BFB8C: @ 0x82BFB8C
 	.string "zz　\n"
 	.string "せ　　\n"
 	.string "せ　　l　　　せつぞく　ちゅうです$　せつぞく　できません$　かくにん　ちゅうです$　かくにん　できました$　かくにん　できません$　かくにん　を　かくにん$かくにん　は　しっぱい$"
-	.globl gUnknown_82BFE00
-gUnknown_82BFE00: @ 0x82BFE00
+	.globl gText_CommErrorCheckConnections
+gText_CommErrorCheckConnections: @ 0x82BFE00
 	.string "　　つうしん　エラーが　はっせいしました\n"
 	.string "　　　しゅうへんきき　との　せつぞくを\n"
 	.string "　　　　きちんと　かくにん　してから\n"
 	.string "　　　でんげんを　いれなおしてください$"
-	.globl gUnknown_82BFE50
-gUnknown_82BFE50: @ 0x82BFE50
+	.globl gText_CommErrorEllipsis
+gText_CommErrorEllipsis: @ 0x82BFE50
 	.string "つうしんエラーが　はっせいしました$"
-	.globl gUnknown_82BFE62
-gUnknown_82BFE62: @ 0x82BFE62
+	.globl gText_MoveCloserToLinkPartner
+gText_MoveCloserToLinkPartner: @ 0x82BFE62
 	.string "　つうしんあいてと　ちかづいて　ください\n"
 	.string "しょうがいぶつが　ないように　してください$"
-	.globl gUnknown_82BFE8D
-gUnknown_82BFE8D: @ 0x82BFE8D
+	.globl gText_ABtnRegistrationCounter
+gText_ABtnRegistrationCounter: @ 0x82BFE8D
 	.string "Aボタンで　うけつけに　もどります$"
-	.globl gUnknown_82BFE9F
-gUnknown_82BFE9F: @ 0x82BFE9F
+	.globl gText_ABtnTitleScreen
+gText_ABtnTitleScreen: @ 0x82BFE9F
 	.string "Aボタンで　タイトルに　もどります${HIGHLIGHT 0}{COLOR 1}$"
 	.globl sCommErrorBg_Gfx
 sCommErrorBg_Gfx: @ 0x82BFEB8
