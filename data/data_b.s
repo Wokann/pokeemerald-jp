@@ -6713,10 +6713,28 @@ sProtectSuccessRates: @ 0x82ECD5C
 	.hword 0x3FFF @ protect use 2
 	.hword 0x1FFF @ protect use 3
 
-	.globl gUnknown_82ECD64
-gUnknown_82ECD64: @ 0x82ECD64
-	.string "ヨ　4　5　ニ　\n"
-	.string "$で　Ü　♀　K　Q　H　b　7　こあむあせあキあそあくあ$$"
+	.globl sMovesForbiddenToCopy
+sMovesForbiddenToCopy: @ 0x82ECD64
+	.hword MOVE_METRONOME @ 0x0076
+	.hword MOVE_STRUGGLE @ 0x00A5
+	.hword MOVE_SKETCH @ 0x00A6
+	.hword MOVE_MIMIC @ 0x0066
+	.hword 0xFFFE @ MIMIC_FORBIDDEN_END
+	.hword MOVE_COUNTER @ 0x0044
+	.hword MOVE_MIRROR_COAT @ 0x00F3
+	.hword MOVE_PROTECT @ 0x00B6
+	.hword MOVE_DETECT @ 0x00C5
+	.hword MOVE_ENDURE @ 0x00CB
+	.hword MOVE_DESTINY_BOND @ 0x00C2
+	.hword MOVE_SLEEP_TALK @ 0x00D6
+	.hword MOVE_THIEF @ 0x00A8
+	.hword MOVE_FOLLOW_ME @ 0x010A
+	.hword MOVE_SNATCH @ 0x0121
+	.hword MOVE_HELPING_HAND @ 0x010E
+	.hword MOVE_COVET @ 0x0157
+	.hword MOVE_TRICK @ 0x010F
+	.hword MOVE_FOCUS_PUNCH @ 0x0108
+	.hword 0xFFFF @ METRONOME_FORBIDDEN_END
 	.globl gUnknown_82ECD8C
 gUnknown_82ECD8C: @ 0x82ECD8C
 	.incbin "baserom_jp.gba", 0x2ecd8c, 0xc

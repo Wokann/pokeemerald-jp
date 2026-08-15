@@ -724,7 +724,6 @@ BattleScript_PresentHealTarget = gUnknown_8288469;
 BattleScript_WrapFree = gUnknown_828954D;
 BattleScript_LeechSeedFree = gUnknown_828955E;
 BattleScript_SpikesFree = gUnknown_8289565;
-sMovesForbiddenToCopy = gUnknown_82ECD64;
 sFlailHpScaleToPowerTable = gUnknown_82ECD8C;
 sNaturePowerMoves = gUnknown_82ECD98;
 sPickupItems = gUnknown_82ECDC4;
