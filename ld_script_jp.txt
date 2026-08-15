@@ -8966,7 +8966,7 @@ SECTIONS {
         src/mon_markings.o(.text.CreateMonMarkingComboSprite);
         src/mon_markings.o(.text.CreateMarkingComboSprite);
         src/mon_markings.o(.text.UpdateMonMarkingTiles);
-        asm/mauville_old_man.o(.text);
+        src/mauville_old_man.o(.text);
         src/mail.o(.text.ReadMail);
         src/mail.o(.text.MailReadBuildGraphics);
         src/mail.o(.text.CB2_InitMailRead);
