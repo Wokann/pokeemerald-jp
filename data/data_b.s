@@ -3474,9 +3474,17 @@ sJumpOffsets: @ 0x82CEEE8
 gUnknown_82CEF78: @ 0x82CEF78
 	.incbin "baserom_jp.gba", 0x2cef78, 0x18
 
-	.globl gUnknown_82CEF90
-gUnknown_82CEF90: @ 0x82CEF90
-	.incbin "baserom_jp.gba", 0x2cef90, 0x10
+	.globl sPrizeItems
+sPrizeItems: @ 0x82CEF90
+	.2byte 138  @ ITEM_LEPPA_BERRY
+	.2byte 141  @ ITEM_LUM_BERRY
+	.2byte 142  @ ITEM_SITRUS_BERRY
+	.2byte 143  @ ITEM_FIGY_BERRY
+	.2byte 144  @ ITEM_WIKI_BERRY
+	.2byte 145  @ ITEM_MAGO_BERRY
+	.2byte 146  @ ITEM_AGUAV_BERRY
+	.2byte 147  @ ITEM_IAPAPA_BERRY
+
 
 	.globl gUnknown_82CEFA0
 gUnknown_82CEFA0: @ 0x82CEFA0
@@ -3494,13 +3502,18 @@ gUnknown_82CF6BC: @ 0x82CF6BC
 gUnknown_82CF6CC: @ 0x82CF6CC
 	.incbin "baserom_jp.gba", 0x2cf6cc, 0x18
 
-	.globl gUnknown_82CF6E4
-gUnknown_82CF6E4: @ 0x82CF6E4
-	.incbin "baserom_jp.gba", 0x2cf6e4, 0x50
+	.globl sVineYCoords
+sVineYCoords: @ 0x82CF6E4
+	.2byte 96, 96, 96, 114, 120, 120, 120, 114
+	.2byte 96, 96, 70, 80, 96, 114, 120, 128
+	.2byte 120, 114, 96, 80, 50, 72, 96, 114
+	.2byte 128, 136, 128, 114, 96, 72, 42, 72
+	.2byte 96, 114, 128, 136, 128, 114, 96, 72
 
-	.globl gUnknown_82CF734
-gUnknown_82CF734: @ 0x82CF734
-	.incbin "baserom_jp.gba", 0x2cf734, 0x10
+	.globl sVineXCoords
+sVineXCoords: @ 0x82CF734
+	.2byte 16, 40, 72, 104, 136, 168, 200, 224
+
 
 	.globl gUnknown_82CF744
 gUnknown_82CF744: @ 0x82CF744
