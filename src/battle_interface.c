@@ -1874,6 +1874,7 @@ u8 GetHPBarLevel(s16 hp, s16 maxhp)
     return result;
 }
 
+#ifndef NONMATCHING
 __attribute__((naked)) void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
 {
     __asm__(".syntax unified\n\t"
@@ -2197,3 +2198,63 @@ __attribute__((naked)) void UpdateNickInHealthbox(u8 healthboxSpriteId, struct P
         ".syntax divided\n\t"
     );
 }
+#else
+void UpdateNickInHealthbox(u8 healthboxSpriteId, struct Pokemon *mon)
+{
+    u8 nickname[POKEMON_NAME_LENGTH + 1];
+    void *ptr;
+    u32 windowId, spriteTileNum;
+    u8 *windowTileData;
+    u16 species;
+    u8 gender;
+
+    StringCopy(gDisplayedStringBattle, gText_HealthboxNickname);
+    GetMonData(mon, MON_DATA_NICKNAME, nickname);
+    StringGet_Nickname(nickname);
+    ptr = StringAppend(gDisplayedStringBattle, nickname);
+
+    gender = GetMonGender(mon);
+    species = GetMonData(mon, MON_DATA_SPECIES);
+
+    if ((species == SPECIES_NIDORAN_F || species == SPECIES_NIDORAN_M) && StringCompare(nickname, gSpeciesNames[species]) == 0)
+        gender = 100;
+
+    // AddTextPrinterAndCreateWindowOnHealthbox's arguments are the same in all 3 cases.
+    // It's possible they may have been different in early development phases.
+    switch (gender)
+    {
+    default:
+        StringCopy(ptr, gText_HealthboxGender_None);
+        windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(gDisplayedStringBattle, 0, 3, 2, &windowId);
+        break;
+    case MON_MALE:
+        StringCopy(ptr, gText_HealthboxGender_Male);
+        windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(gDisplayedStringBattle, 0, 3, 2, &windowId);
+        break;
+    case MON_FEMALE:
+        StringCopy(ptr, gText_HealthboxGender_Female);
+        windowTileData = AddTextPrinterAndCreateWindowOnHealthbox(gDisplayedStringBattle, 0, 3, 2, &windowId);
+        break;
+    }
+
+    spriteTileNum = gSprites[healthboxSpriteId].oam.tileNum * TILE_SIZE_4BPP;
+
+    if (GetBattlerSide(gSprites[healthboxSpriteId].data[6]) == B_SIDE_PLAYER)
+    {
+        TextIntoHealthboxObject((void *)(OBJ_VRAM0 + 0x40 + spriteTileNum), windowTileData, 6);
+        ptr = (void *)(OBJ_VRAM0);
+        if (!IsDoubleBattle())
+            ptr += spriteTileNum + 0x800;
+        else
+            ptr += spriteTileNum + 0x400;
+        TextIntoHealthboxObject(ptr, windowTileData + 0xC0, 1);
+    }
+    else
+    {
+        TextIntoHealthboxObject((void *)(OBJ_VRAM0 + 0x20 + spriteTileNum), windowTileData, 7);
+    }
+
+    RemoveWindowOnHealthbox(windowId);
+}
+#endif
+

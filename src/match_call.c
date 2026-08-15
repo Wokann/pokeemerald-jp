@@ -1146,6 +1146,7 @@ static void Task_SpinPokenavIcon(u8 taskId)
 // JP byte-exact: JP party layout stores species names as 6-byte JP entries
 // (gSpeciesNames); partyFlags selection differs from US pokeemerald
 // (JP: flags 1/2 use 8-byte entries, 0/3 use 16-byte entries).
+#ifndef NONMATCHING
 __attribute__((naked)) void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
 {
     __asm__(".syntax unified\n\t"
@@ -1213,3 +1214,36 @@ __attribute__((naked)) void PopulateSpeciesFromTrainerParty(int matchCallId, u8 
         ".syntax divided\n\t"
     );
 }
+#else
+void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
+{
+    u16 trainerId;
+    union TrainerMonPtr party;
+    u8 monId;
+    const u8 *speciesName;
+
+    trainerId = GetLastBeatenRematchTrainerId(sMatchCallTrainers[matchCallId].trainerId);
+    party = gTrainers[trainerId].party;
+    monId = Random() % gTrainers[trainerId].partySize;
+
+    switch (gTrainers[trainerId].partyFlags)
+    {
+    case 0:
+    default:
+        speciesName = gSpeciesNames[party.NoItemDefaultMoves[monId].species];
+        break;
+    case F_TRAINER_PARTY_CUSTOM_MOVESET:
+        speciesName = gSpeciesNames[party.NoItemCustomMoves[monId].species];
+        break;
+    case F_TRAINER_PARTY_HELD_ITEM:
+        speciesName = gSpeciesNames[party.ItemDefaultMoves[monId].species];
+        break;
+    case F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM:
+        speciesName = gSpeciesNames[party.ItemCustomMoves[monId].species];
+        break;
+    }
+
+    StringCopy(destStr, speciesName);
+}
+#endif
+

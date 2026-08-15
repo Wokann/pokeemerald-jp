@@ -13,6 +13,7 @@ static void MultiBootWaitSendDone(void);
 // JP's MultiBootInit lives at 0x081BA36C (mislabeled GetGlyphWidthFont6 in
 // unk_text_util_2.s); the ld_script aliases MultiBootInit to it.
 
+#ifndef NONMATCHING
 __attribute__((naked)) void MultiBootInit(struct MultiBootParam *mp)
 {
     __asm__(".syntax unified\n\t"
@@ -47,6 +48,24 @@ __attribute__((naked)) void MultiBootInit(struct MultiBootParam *mp)
         ".syntax divided\n\t"
     );
 }
+#else
+void MultiBootInit(struct MultiBootParam *mp)
+{
+    mp->client_bit = 0;
+    mp->probe_count = 0;
+    mp->response_bit = 0;
+
+    mp->check_wait = MULTIBOOT_CONNECTION_CHECK_WAIT;
+    mp->sendflag = 0;
+
+    mp->handshake_timeout = 0;
+
+    REG_RCNT = 0;
+    REG_SIOCNT = SIO_MULTI_MODE | SIO_115200_BPS;
+    REG_SIODATA8 = 0;
+}
+#endif
+
 
 int MultiBootMain(struct MultiBootParam *mp)
 {

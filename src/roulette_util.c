@@ -462,6 +462,7 @@ void SetTilemapRect(u16 *dest, u16 *src, u8 left, u8 top, u8 width, u8 height)
     }
 }
 
+#ifndef NONMATCHING
 __attribute__((naked)) s32 MathUtil_Inv32(s32 y)
 {
     __asm__(".syntax unified\n\t"
@@ -479,4 +480,12 @@ __attribute__((naked)) s32 MathUtil_Inv32(s32 y)
         ".syntax divided\n\t"
     );
 }
+#else
+s32 MathUtil_Inv32(s32 y)
+{
+    // Computes floor(0x100000000 / y) as a signed 64-bit division.
+    return (s32)((s64)0x100000000 / y);
+}
+#endif
+
 
