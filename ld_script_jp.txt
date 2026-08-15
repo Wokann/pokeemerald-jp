@@ -461,7 +461,6 @@ PlayerFreeze = sub_0808B1C8;
 StopPlayerAvatar = sub_0808B658;
 sMatchCallTrainers = gUnknown_85D6934;
 sPopulateMatchCallStringVarFuncs = gUnknown_85D7A28;
-sBirchDexRatingTexts = gUnknown_85D7AB0;
 gWildMonHeaders = gUnknown_852D9F4;
 gSpeciesNames = gSpeciesNamesJP;
 sub_08196C74 = BufferPokedexRatingForMatchCall;
