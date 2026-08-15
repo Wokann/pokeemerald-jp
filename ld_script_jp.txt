@@ -9207,6 +9207,8 @@ SECTIONS {
     ALIGN(4)
     {
         data/data.o(.rodata);
+        src/data/text/comm_error_texts.o(.rodata);
+        data/data_tail.o(.rodata);
         src/link.o(.rodata);
         data/data_b.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);

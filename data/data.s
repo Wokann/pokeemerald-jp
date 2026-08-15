@@ -416,25 +416,3 @@ sLinkTestDigitsGfx: @ 0x82BFB8C
 	.string "zz　\n"
 	.string "せ　　\n"
 	.string "せ　　l　　　せつぞく　ちゅうです$　せつぞく　できません$　かくにん　ちゅうです$　かくにん　できました$　かくにん　できません$　かくにん　を　かくにん$かくにん　は　しっぱい$"
-	.globl gText_CommErrorCheckConnections
-gText_CommErrorCheckConnections: @ 0x82BFE00
-	.string "　　つうしん　エラーが　はっせいしました\n"
-	.string "　　　しゅうへんきき　との　せつぞくを\n"
-	.string "　　　　きちんと　かくにん　してから\n"
-	.string "　　　でんげんを　いれなおしてください$"
-	.globl gText_CommErrorEllipsis
-gText_CommErrorEllipsis: @ 0x82BFE50
-	.string "つうしんエラーが　はっせいしました$"
-	.globl gText_MoveCloserToLinkPartner
-gText_MoveCloserToLinkPartner: @ 0x82BFE62
-	.string "　つうしんあいてと　ちかづいて　ください\n"
-	.string "しょうがいぶつが　ないように　してください$"
-	.globl gText_ABtnRegistrationCounter
-gText_ABtnRegistrationCounter: @ 0x82BFE8D
-	.string "Aボタンで　うけつけに　もどります$"
-	.globl gText_ABtnTitleScreen
-gText_ABtnTitleScreen: @ 0x82BFE9F
-	.string "Aボタンで　タイトルに　もどります${HIGHLIGHT 0}{COLOR 1}$"
-	.globl sCommErrorBg_Gfx
-sCommErrorBg_Gfx: @ 0x82BFEB8
-	.incbin "baserom_jp.gba", 0x2bfeb8, 0x40
