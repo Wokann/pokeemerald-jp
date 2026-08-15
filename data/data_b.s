@@ -3339,9 +3339,109 @@ sGfxFuncs: @ 0x82CEC98
 sRankingOrder: @ 0x82CECE8
 	.byte 0x00, 0x01, 0x02, 0x03, 0x04, 0x00, 0x00, 0x00
 
-	.globl gUnknown_82CECF0
-gUnknown_82CECF0: @ 0x82CECF0
-	.incbin "baserom_jp.gba", 0x2cecf0, 0x190
+	.globl sPokeJumpMons
+sPokeJumpMons: @ 0x82CECF0
+	.2byte 1, 2  @ SPECIES_BULBASAUR
+	.2byte 4, 1  @ SPECIES_CHARMANDER
+	.2byte 7, 0  @ SPECIES_SQUIRTLE
+	.2byte 10, 1  @ SPECIES_CATERPIE
+	.2byte 11, 1  @ SPECIES_METAPOD
+	.2byte 13, 1  @ SPECIES_WEEDLE
+	.2byte 14, 1  @ SPECIES_KAKUNA
+	.2byte 19, 1  @ SPECIES_RATTATA
+	.2byte 20, 1  @ SPECIES_RATICATE
+	.2byte 25, 0  @ SPECIES_PIKACHU
+	.2byte 27, 0  @ SPECIES_SANDSHREW
+	.2byte 29, 0  @ SPECIES_NIDORAN_F
+	.2byte 32, 0  @ SPECIES_NIDORAN_M
+	.2byte 35, 0  @ SPECIES_CLEFAIRY
+	.2byte 37, 0  @ SPECIES_VULPIX
+	.2byte 39, 2  @ SPECIES_JIGGLYPUFF
+	.2byte 43, 2  @ SPECIES_ODDISH
+	.2byte 46, 1  @ SPECIES_PARAS
+	.2byte 52, 0  @ SPECIES_MEOWTH
+	.2byte 54, 2  @ SPECIES_PSYDUCK
+	.2byte 56, 1  @ SPECIES_MANKEY
+	.2byte 58, 1  @ SPECIES_GROWLITHE
+	.2byte 60, 2  @ SPECIES_POLIWAG
+	.2byte 69, 2  @ SPECIES_BELLSPROUT
+	.2byte 90, 1  @ SPECIES_SHELLDER
+	.2byte 98, 1  @ SPECIES_KRABBY
+	.2byte 102, 2  @ SPECIES_EXEGGCUTE
+	.2byte 104, 0  @ SPECIES_CUBONE
+	.2byte 132, 2  @ SPECIES_DITTO
+	.2byte 133, 0  @ SPECIES_EEVEE
+	.2byte 138, 1  @ SPECIES_OMANYTE
+	.2byte 140, 1  @ SPECIES_KABUTO
+	.2byte 152, 2  @ SPECIES_CHIKORITA
+	.2byte 155, 1  @ SPECIES_CYNDAQUIL
+	.2byte 158, 0  @ SPECIES_TOTODILE
+	.2byte 167, 1  @ SPECIES_SPINARAK
+	.2byte 172, 0  @ SPECIES_PICHU
+	.2byte 173, 0  @ SPECIES_CLEFFA
+	.2byte 174, 2  @ SPECIES_IGGLYBUFF
+	.2byte 175, 2  @ SPECIES_TOGEPI
+	.2byte 179, 0  @ SPECIES_MAREEP
+	.2byte 182, 2  @ SPECIES_BELLOSSOM
+	.2byte 183, 2  @ SPECIES_MARILL
+	.2byte 191, 2  @ SPECIES_SUNKERN
+	.2byte 194, 2  @ SPECIES_WOOPER
+	.2byte 204, 2  @ SPECIES_PINECO
+	.2byte 209, 0  @ SPECIES_SNUBBULL
+	.2byte 213, 2  @ SPECIES_SHUCKLE
+	.2byte 216, 0  @ SPECIES_TEDDIURSA
+	.2byte 218, 2  @ SPECIES_SLUGMA
+	.2byte 220, 0  @ SPECIES_SWINUB
+	.2byte 228, 1  @ SPECIES_HOUNDOUR
+	.2byte 231, 0  @ SPECIES_PHANPY
+	.2byte 233, 0  @ SPECIES_PORYGON2
+	.2byte 236, 1  @ SPECIES_TYROGUE
+	.2byte 238, 2  @ SPECIES_SMOOCHUM
+	.2byte 239, 1  @ SPECIES_ELEKID
+	.2byte 240, 1  @ SPECIES_MAGBY
+	.2byte 246, 1  @ SPECIES_LARVITAR
+	.2byte 277, 1  @ SPECIES_TREECKO
+	.2byte 280, 2  @ SPECIES_TORCHIC
+	.2byte 283, 0  @ SPECIES_MUDKIP
+	.2byte 284, 0  @ SPECIES_MARSHTOMP
+	.2byte 286, 1  @ SPECIES_POOCHYENA
+	.2byte 288, 0  @ SPECIES_ZIGZAGOON
+	.2byte 289, 0  @ SPECIES_LINOONE
+	.2byte 290, 1  @ SPECIES_WURMPLE
+	.2byte 291, 2  @ SPECIES_SILCOON
+	.2byte 293, 2  @ SPECIES_CASCOON
+	.2byte 295, 2  @ SPECIES_LOTAD
+	.2byte 298, 1  @ SPECIES_SEEDOT
+	.2byte 392, 0  @ SPECIES_RALTS
+	.2byte 393, 0  @ SPECIES_KIRLIA
+	.2byte 311, 2  @ SPECIES_SURSKIT
+	.2byte 306, 2  @ SPECIES_SHROOMISH
+	.2byte 301, 1  @ SPECIES_NINCADA
+	.2byte 370, 0  @ SPECIES_WHISMUR
+	.2byte 350, 2  @ SPECIES_AZURILL
+	.2byte 315, 0  @ SPECIES_SKITTY
+	.2byte 322, 0  @ SPECIES_SABLEYE
+	.2byte 355, 0  @ SPECIES_MAWILE
+	.2byte 382, 1  @ SPECIES_ARON
+	.2byte 356, 2  @ SPECIES_MEDITITE
+	.2byte 337, 1  @ SPECIES_ELECTRIKE
+	.2byte 353, 1  @ SPECIES_PLUSLE
+	.2byte 354, 1  @ SPECIES_MINUN
+	.2byte 386, 0  @ SPECIES_VOLBEAT
+	.2byte 387, 0  @ SPECIES_ILLUMISE
+	.2byte 363, 2  @ SPECIES_ROSELIA
+	.2byte 367, 2  @ SPECIES_GULPIN
+	.2byte 339, 2  @ SPECIES_NUMEL
+	.2byte 321, 2  @ SPECIES_TORKOAL
+	.2byte 351, 0  @ SPECIES_SPOINK
+	.2byte 332, 2  @ SPECIES_TRAPINCH
+	.2byte 344, 2  @ SPECIES_CACNEA
+	.2byte 390, 1  @ SPECIES_ANORITH
+	.2byte 360, 0  @ SPECIES_WYNAUT
+	.2byte 346, 0  @ SPECIES_SNORUNT
+	.2byte 373, 1  @ SPECIES_CLAMPERL
+	.2byte 395, 1  @ SPECIES_BAGON
+
 
 	.globl gUnknown_82CEE80
 gUnknown_82CEE80: @ 0x82CEE80
@@ -3351,21 +3451,24 @@ gUnknown_82CEE80: @ 0x82CEE80
 gUnknown_82CEEA4: @ 0x82CEEA4
 	.incbin "baserom_jp.gba", 0x2ceea4, 0x24
 
-	.globl gUnknown_82CEEC8
-gUnknown_82CEEC8: @ 0x82CEEC8
-	.incbin "baserom_jp.gba", 0x2ceec8, 0x10
+	.globl sVineBaseSpeeds
+sVineBaseSpeeds: @ 0x82CEEC8
+	.2byte 26, 31, 36, 41, 46, 51, 56, 61
 
-	.globl gUnknown_82CEED8
-gUnknown_82CEED8: @ 0x82CEED8
-	.incbin "baserom_jp.gba", 0x2ceed8, 0x8
+	.globl sVineSpeedDelays
+sVineSpeedDelays: @ 0x82CEED8
+	.2byte 0, 1, 1, 2
 
 	.globl gUnknown_82CEEE0
 gUnknown_82CEEE0: @ 0x82CEEE0
 	.incbin "baserom_jp.gba", 0x2ceee0, 0x8
 
-	.globl gUnknown_82CEEE8
-gUnknown_82CEEE8: @ 0x82CEEE8
-	.incbin "baserom_jp.gba", 0x2ceee8, 0x90
+	.globl sJumpOffsets
+sJumpOffsets: @ 0x82CEEE8
+	.byte 253, 250, 248, 246, 243, 241, 239, 237, 235, 233, 231, 229, 228, 227, 226, 226, 226, 228, 229, 230, 231, 233, 234, 236, 238, 239, 241, 243, 245, 248, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  @ row 0 (NORMAL=0 FAST=1 SLOW=2)
+	.byte 253, 250, 247, 245, 242, 240, 238, 236, 234, 232, 230, 228, 227, 226, 226, 228, 230, 232, 234, 236, 238, 240, 242, 245, 247, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  @ row 1 (NORMAL=0 FAST=1 SLOW=2)
+	.byte 253, 250, 247, 245, 243, 241, 239, 237, 235, 233, 231, 229, 228, 227, 226, 226, 226, 226, 227, 227, 228, 228, 229, 229, 230, 231, 232, 234, 236, 238, 240, 242, 244, 245, 247, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  @ row 2 (NORMAL=0 FAST=1 SLOW=2)
+
 
 	.globl gUnknown_82CEF78
 gUnknown_82CEF78: @ 0x82CEF78
