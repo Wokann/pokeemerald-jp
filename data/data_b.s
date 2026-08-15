@@ -6737,13 +6737,30 @@ gUnknown_82ECDC4: @ 0x82ECDC4
 gUnknown_82ECDE8: @ 0x82ECDE8
 	.incbin "baserom_jp.gba", 0x2ecde8, 0x16
 
-	.globl gUnknown_82ECDFE
-gUnknown_82ECDFE: @ 0x82ECDFE
-	.incbin "baserom_jp.gba", 0x2ecdfe, 0x9
+	.globl sPickupProbabilities
+sPickupProbabilities: @ 0x82ECDFE
+	.byte 30
+	.byte 40
+	.byte 50
+	.byte 60
+	.byte 70
+	.byte 80
+	.byte 90
+	.byte 94
+	.byte 98
 
-	.globl gUnknown_82ECE07
-gUnknown_82ECE07: @ 0x82ECE07
-	.incbin "baserom_jp.gba", 0x2ece07, 0xa
+	.globl sEnvironmentToType
+sEnvironmentToType: @ 0x82ECE07
+	.byte 12 @ BATTLE_ENVIRONMENT_GRASS -> TYPE_GRASS
+	.byte 12 @ BATTLE_ENVIRONMENT_LONG_GRASS -> TYPE_GRASS
+	.byte 4 @ BATTLE_ENVIRONMENT_SAND -> TYPE_GROUND
+	.byte 11 @ BATTLE_ENVIRONMENT_UNDERWATER -> TYPE_WATER
+	.byte 11 @ BATTLE_ENVIRONMENT_WATER -> TYPE_WATER
+	.byte 11 @ BATTLE_ENVIRONMENT_POND -> TYPE_WATER
+	.byte 5 @ BATTLE_ENVIRONMENT_MOUNTAIN -> TYPE_ROCK
+	.byte 5 @ BATTLE_ENVIRONMENT_CAVE -> TYPE_ROCK
+	.byte 0 @ BATTLE_ENVIRONMENT_BUILDING -> TYPE_NORMAL
+	.byte 0 @ BATTLE_ENVIRONMENT_PLAIN -> TYPE_NORMAL
 
 	.globl gUnknown_82ECE11
 gUnknown_82ECE11: @ 0x82ECE11
