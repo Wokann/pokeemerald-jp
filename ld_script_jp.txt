@@ -6596,7 +6596,7 @@ SECTIONS {
         src/title_screen.o(.text.CB2_GoToResetRtcScreen);
         src/title_screen.o(.text.CB2_GoToBerryFixScreen);
         src/title_screen.o(.text.UpdateLegendaryMarkingColor);
-        asm/field_weather.o(.text);
+        src/field_weather.o(.text);
         src/field_weather_effect.o(.text);
         src/field_screen_effect.o(.text);
         src/battle_setup.o(.text.Task_BattleStart);

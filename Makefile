@@ -42,7 +42,7 @@ AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 UNPORTED_SRCS := \
 	src/battle_tower.c \
 	src/cable_club.c \
-	src/field_specials.c src/field_weather.c \
+	src/field_specials.c \
 	src/frontier_util.c src/intro.c src/item.c \
 	src/menu.c \
 	src/pokemon.c \
@@ -92,6 +92,7 @@ $(C_BUILDDIR)/battle_controller_recorded_opponent.o: CFLAGS := -mthumb-interwork
 $(C_BUILDDIR)/mauville_old_man.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_controller_safari.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/script_pokemon_util_80F87D8.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/field_weather.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/tileset_anims.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_transition.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
