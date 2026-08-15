@@ -1,0 +1,779 @@
+.include "sound/MPlayDef.s"
+	.section .rodata
+	.include "asm/macros.inc"
+	.include "constants/map_constants.inc"
+	.include "constants/trainers.inc"
+	.include "constants/battle_string_ids.inc"
+	.include "constants/species.inc"
+	.include "constants/moves.inc"
+	.include "constants/songs.inc"
+	.include "constants/ribbon_constants.inc"
+
+	.globl gUnknown_859381C
+gUnknown_859381C: @ 0x859381C
+	.incbin "baserom_jp.gba", 0x59381c, 0x20
+
+	.globl gUnknown_859383C
+gUnknown_859383C: @ 0x859383C
+	.incbin "baserom_jp.gba", 0x59383c, 0x134
+
+	.globl gUnknown_8593970
+gUnknown_8593970: @ 0x8593970
+	.incbin "baserom_jp.gba", 0x593970, 0x2
+
+	.globl gUnknown_8593972
+gUnknown_8593972: @ 0x8593972
+	.incbin "baserom_jp.gba", 0x593972, 0x6
+
+	.globl gUnknown_8593978
+gUnknown_8593978: @ 0x8593978
+	.incbin "baserom_jp.gba", 0x593978, 0xc
+
+	.globl gUnknown_8593984
+gUnknown_8593984: @ 0x8593984
+	.incbin "baserom_jp.gba", 0x593984, 0x1c
+
+	.globl gUnknown_85939A0
+gUnknown_85939A0: @ 0x85939A0
+	.incbin "baserom_jp.gba", 0x5939a0, 0x4
+
+	.globl gUnknown_85939A4
+gUnknown_85939A4: @ 0x85939A4
+	.incbin "baserom_jp.gba", 0x5939a4, 0x8
+
+	.globl gUnknown_85939AC
+gUnknown_85939AC: @ 0x85939AC
+	.incbin "baserom_jp.gba", 0x5939ac, 0x10
+
+	.globl gUnknown_85939BC
+gUnknown_85939BC: @ 0x85939BC
+	.incbin "baserom_jp.gba", 0x5939bc, 0xb8
+
+	.globl gUnknown_8593A74
+gUnknown_8593A74: @ 0x8593A74
+	.incbin "baserom_jp.gba", 0x593a74, 0x10
+
+	.globl gUnknown_8593A84
+gUnknown_8593A84: @ 0x8593A84
+	.incbin "baserom_jp.gba", 0x593a84, 0x38
+
+	.globl gUnknown_8593ABC
+gUnknown_8593ABC: @ 0x8593ABC
+	.incbin "baserom_jp.gba", 0x593abc, 0x1e4
+
+	.globl gUnknown_8593CA0
+gUnknown_8593CA0: @ 0x8593CA0
+	.incbin "baserom_jp.gba", 0x593ca0, 0x6f8
+
+	.globl gUnknown_8594398
+gUnknown_8594398: @ 0x8594398
+	.incbin "baserom_jp.gba", 0x594398, 0x4e4
+
+	.globl gUnknown_859487C
+gUnknown_859487C: @ 0x859487C
+	.incbin "baserom_jp.gba", 0x59487c, 0x4d4
+
+	.globl gUnknown_8594D50
+gUnknown_8594D50: @ 0x8594D50
+	.incbin "baserom_jp.gba", 0x594d50, 0x6a0
+
+	.globl gUnknown_85953F0
+gUnknown_85953F0: @ 0x85953F0
+	.incbin "baserom_jp.gba", 0x5953f0, 0x40
+
+	.globl gUnknown_8595430
+gUnknown_8595430: @ 0x8595430
+	.incbin "baserom_jp.gba", 0x595430, 0x45
+
+	.globl gUnknown_8595475
+gUnknown_8595475: @ 0x8595475
+	.incbin "baserom_jp.gba", 0x595475, 0x10
+
+	.globl gUnknown_8595485
+gUnknown_8595485: @ 0x8595485
+	.incbin "baserom_jp.gba", 0x595485, 0x323
+
+	.globl gUnknown_85957A8
+gUnknown_85957A8: @ 0x85957A8
+	.incbin "baserom_jp.gba", 0x5957a8, 0x200
+
+	.globl gUnknown_85959A8
+gUnknown_85959A8: @ 0x85959A8
+	.incbin "baserom_jp.gba", 0x5959a8, 0x1a4
+
+	.globl gUnknown_8595B4C
+gUnknown_8595B4C: @ 0x8595B4C
+	.incbin "baserom_jp.gba", 0x595b4c, 0x1a0
+
+	.globl gUnknown_8595CEC
+gUnknown_8595CEC: @ 0x8595CEC
+	.incbin "baserom_jp.gba", 0x595cec, 0xc
+
+	.globl gUnknown_8595CF8
+gUnknown_8595CF8: @ 0x8595CF8
+	.incbin "baserom_jp.gba", 0x595cf8, 0x8
+
+	.globl gUnknown_8595D00
+gUnknown_8595D00: @ 0x8595D00
+	.incbin "baserom_jp.gba", 0x595d00, 0xc
+
+	.globl gUnknown_8595D0C
+gUnknown_8595D0C: @ 0x8595D0C
+	.incbin "baserom_jp.gba", 0x595d0c, 0x184
+
+	.globl gUnknown_8595E90
+gUnknown_8595E90: @ 0x8595E90
+	.incbin "baserom_jp.gba", 0x595e90, 0x4
+
+	.globl gUnknown_8595E94
+gUnknown_8595E94: @ 0x8595E94
+	.incbin "baserom_jp.gba", 0x595e94, 0x5c
+
+	.globl gUnknown_8595EF0
+gUnknown_8595EF0: @ 0x8595EF0
+	.incbin "baserom_jp.gba", 0x595ef0, 0x4
+
+	.globl gUnknown_8595EF4
+gUnknown_8595EF4: @ 0x8595EF4
+	.incbin "baserom_jp.gba", 0x595ef4, 0x40
+
+	.globl gUnknown_8595F34
+gUnknown_8595F34: @ 0x8595F34
+	.incbin "baserom_jp.gba", 0x595f34, 0x68
+
+	.globl gUnknown_8595F9C
+gUnknown_8595F9C: @ 0x8595F9C
+	.incbin "baserom_jp.gba", 0x595f9c, 0x20
+
+	.globl gUnknown_8595FBC
+gUnknown_8595FBC: @ 0x8595FBC
+	.incbin "baserom_jp.gba", 0x595fbc, 0x8
+
+	.globl gUnknown_8595FC4
+gUnknown_8595FC4: @ 0x8595FC4
+	.incbin "baserom_jp.gba", 0x595fc4, 0x8
+
+	.globl gUnknown_8595FCC
+gUnknown_8595FCC: @ 0x8595FCC
+	.incbin "baserom_jp.gba", 0x595fcc, 0x6
+
+	.globl gUnknown_8595FD2
+gUnknown_8595FD2: @ 0x8595FD2
+	.incbin "baserom_jp.gba", 0x595fd2, 0x4
+
+	.globl gUnknown_8595FD6
+gUnknown_8595FD6: @ 0x8595FD6
+	.incbin "baserom_jp.gba", 0x595fd6, 0xa
+
+	.globl gUnknown_8595FE0
+gUnknown_8595FE0: @ 0x8595FE0
+	.incbin "baserom_jp.gba", 0x595fe0, 0x10
+
+	.globl gUnknown_8595FF0
+gUnknown_8595FF0: @ 0x8595FF0
+	.incbin "baserom_jp.gba", 0x595ff0, 0xc
+
+	.globl gUnknown_8595FFC
+gUnknown_8595FFC: @ 0x8595FFC
+	.incbin "baserom_jp.gba", 0x595ffc, 0xf3c
+
+	.globl gUnknown_8596F38
+gUnknown_8596F38: @ 0x8596F38
+	.incbin "baserom_jp.gba", 0x596f38, 0x98
+
+	.globl gUnknown_8596FD0
+gUnknown_8596FD0: @ 0x8596FD0
+	.incbin "baserom_jp.gba", 0x596fd0, 0x6c
+
+	.globl gUnknown_859703C
+gUnknown_859703C: @ 0x859703C
+	.incbin "baserom_jp.gba", 0x59703c, 0x8
+
+	.globl gUnknown_8597044
+gUnknown_8597044: @ 0x8597044
+	.incbin "baserom_jp.gba", 0x597044, 0x78
+
+	.globl gUnknown_85970BC
+gUnknown_85970BC: @ 0x85970BC
+	.incbin "baserom_jp.gba", 0x5970bc, 0x60
+
+	.globl gUnknown_859711C
+gUnknown_859711C: @ 0x859711C
+	.incbin "baserom_jp.gba", 0x59711c, 0x48
+
+	.globl gUnknown_8597164
+gUnknown_8597164: @ 0x8597164
+	.incbin "baserom_jp.gba", 0x597164, 0x60
+
+	.globl gUnknown_85971C4
+gUnknown_85971C4: @ 0x85971C4
+	.incbin "baserom_jp.gba", 0x5971c4, 0x140
+
+	.globl gUnknown_8597304
+gUnknown_8597304: @ 0x8597304
+	.incbin "baserom_jp.gba", 0x597304, 0x94
+
+	.globl gUnknown_8597398
+gUnknown_8597398: @ 0x8597398
+	.incbin "baserom_jp.gba", 0x597398, 0x18
+
+	.globl gUnknown_85973B0
+gUnknown_85973B0: @ 0x85973B0
+	.incbin "baserom_jp.gba", 0x5973b0, 0x18
+
+	.globl gUnknown_85973C8
+gUnknown_85973C8: @ 0x85973C8
+	.incbin "baserom_jp.gba", 0x5973c8, 0x18
+
+	.globl gUnknown_85973E0
+gUnknown_85973E0: @ 0x85973E0
+	.incbin "baserom_jp.gba", 0x5973e0, 0x18
+
+	.globl gUnknown_85973F8
+gUnknown_85973F8: @ 0x85973F8
+	.incbin "baserom_jp.gba", 0x5973f8, 0x20
+
+	.globl gUnknown_8597418
+gUnknown_8597418: @ 0x8597418
+	.incbin "baserom_jp.gba", 0x597418, 0xc4
+
+	.globl gUnknown_85974DC
+gUnknown_85974DC: @ 0x85974DC
+	.incbin "baserom_jp.gba", 0x5974dc, 0x20
+
+	.globl gUnknown_85974FC
+gUnknown_85974FC: @ 0x85974FC
+	.incbin "baserom_jp.gba", 0x5974fc, 0x8
+
+	.globl gUnknown_8597504
+gUnknown_8597504: @ 0x8597504
+	.incbin "baserom_jp.gba", 0x597504, 0x28
+
+	.globl gUnknown_859752C
+gUnknown_859752C: @ 0x859752C
+	.incbin "baserom_jp.gba", 0x59752c, 0x80
+
+	.globl gUnknown_85975AC
+gUnknown_85975AC: @ 0x85975AC
+	.incbin "baserom_jp.gba", 0x5975ac, 0x18
+
+	.globl gUnknown_85975C4
+gUnknown_85975C4: @ 0x85975C4
+	.incbin "baserom_jp.gba", 0x5975c4, 0x30
+
+	.globl gUnknown_85975F4
+gUnknown_85975F4: @ 0x85975F4
+	.incbin "baserom_jp.gba", 0x5975f4, 0x7c
+
+	.globl gUnknown_8597670
+gUnknown_8597670: @ 0x8597670
+	.incbin "baserom_jp.gba", 0x597670, 0x30
+
+	.globl gUnknown_85976A0
+gUnknown_85976A0: @ 0x85976A0
+	.incbin "baserom_jp.gba", 0x5976a0, 0x18
+
+	.globl gUnknown_85976B8
+gUnknown_85976B8: @ 0x85976B8
+	.incbin "baserom_jp.gba", 0x5976b8, 0x6
+
+	.globl gUnknown_85976BE
+gUnknown_85976BE: @ 0x85976BE
+	.incbin "baserom_jp.gba", 0x5976be, 0x8
+
+	.globl gUnknown_85976C6
+gUnknown_85976C6: @ 0x85976C6
+	.incbin "baserom_jp.gba", 0x5976c6, 0x8
+
+	.globl gUnknown_85976CE
+gUnknown_85976CE: @ 0x85976CE
+	.incbin "baserom_jp.gba", 0x5976ce, 0x14
+
+	.globl gUnknown_85976E2
+gUnknown_85976E2: @ 0x85976E2
+	.incbin "baserom_jp.gba", 0x5976e2, 0x18
+
+	.globl gUnknown_85976FA
+gUnknown_85976FA: @ 0x85976FA
+	.incbin "baserom_jp.gba", 0x5976fa, 0x2
+
+	.globl gUnknown_85976FC
+gUnknown_85976FC: @ 0x85976FC
+	.incbin "baserom_jp.gba", 0x5976fc, 0x8d0
+
+	.globl sCryMeter_Pal
+sCryMeter_Pal: @ 0x8597FCC
+	.incbin "baserom_jp.gba", 0x597fcc, 0x20
+
+	.globl sCryMeter_Gfx
+sCryMeter_Gfx: @ 0x8597FEC
+	.incbin "baserom_jp.gba", 0x597fec, 0x338
+
+	.globl sWaveformOffsets
+sWaveformOffsets: @ 0x8598324
+	.hword 0x0000, 0x0004, 0x0008, 0x000C, 0x0010, 0x0014, 0x0018, 0x001C, 0x0400, 0x0404, 0x0408, 0x040C
+	.hword 0x0410, 0x0414, 0x0418, 0x041C, 0x0800, 0x0804, 0x0808, 0x080C, 0x0810, 0x0814, 0x0818, 0x081C
+	.hword 0x0C00, 0x0C04, 0x0C08, 0x0C0C, 0x0C10, 0x0C14, 0x0C18, 0x0C1C, 0x1000, 0x1004, 0x1008, 0x100C
+	.hword 0x1010, 0x1014, 0x1018, 0x101C, 0x1400, 0x1404, 0x1408, 0x140C, 0x1410, 0x1414, 0x1418, 0x141C
+	.hword 0x1800, 0x1804, 0x1808, 0x180C, 0x1810, 0x1814, 0x1818, 0x181C, 0x1C00, 0x1C04, 0x1C08, 0x1C0C
+	.hword 0x1C10, 0x1C14, 0x1C18, 0x1C1C, 0x2000, 0x2004, 0x2008, 0x200C, 0x2010, 0x2014, 0x2018, 0x201C
+	.hword 0x0000, 0x0004, 0x0008, 0x000C, 0x0010, 0x0014, 0x0018, 0x001C, 0x0400, 0x0404, 0x0408, 0x040C
+	.hword 0x0410, 0x0414, 0x0418, 0x041C, 0x0800, 0x0804, 0x0808, 0x080C, 0x0810, 0x0814, 0x0818, 0x081C
+	.hword 0x0C00, 0x0C04, 0x0C08, 0x0C0C, 0x0C10, 0x0C14, 0x0C18, 0x0C1C, 0x1000, 0x1004, 0x1008, 0x100C
+	.hword 0x1010, 0x1014, 0x1018, 0x101C, 0x1400, 0x1404, 0x1408, 0x140C, 0x1410, 0x1414, 0x1418, 0x141C
+	.hword 0x1800, 0x1804, 0x1808, 0x180C, 0x1810, 0x1814, 0x1818, 0x181C, 0x1C00, 0x1C04, 0x1C08, 0x1C0C
+	.hword 0x1C10, 0x1C14, 0x1C18, 0x1C1C, 0x2000, 0x2004, 0x2008, 0x200C, 0x2010, 0x2014, 0x2018, 0x201C
+	.hword 0x0001, 0x0005, 0x0009, 0x000D, 0x0011, 0x0015, 0x0019, 0x001D, 0x0401, 0x0405, 0x0409, 0x040D
+	.hword 0x0411, 0x0415, 0x0419, 0x041D, 0x0801, 0x0805, 0x0809, 0x080D, 0x0811, 0x0815, 0x0819, 0x081D
+	.hword 0x0C01, 0x0C05, 0x0C09, 0x0C0D, 0x0C11, 0x0C15, 0x0C19, 0x0C1D, 0x1001, 0x1005, 0x1009, 0x100D
+	.hword 0x1011, 0x1015, 0x1019, 0x101D, 0x1401, 0x1405, 0x1409, 0x140D, 0x1411, 0x1415, 0x1419, 0x141D
+	.hword 0x1801, 0x1805, 0x1809, 0x180D, 0x1811, 0x1815, 0x1819, 0x181D, 0x1C01, 0x1C05, 0x1C09, 0x1C0D
+	.hword 0x1C11, 0x1C15, 0x1C19, 0x1C1D, 0x2001, 0x2005, 0x2009, 0x200D, 0x2011, 0x2015, 0x2019, 0x201D
+	.hword 0x0001, 0x0005, 0x0009, 0x000D, 0x0011, 0x0015, 0x0019, 0x001D, 0x0401, 0x0405, 0x0409, 0x040D
+	.hword 0x0411, 0x0415, 0x0419, 0x041D, 0x0801, 0x0805, 0x0809, 0x080D, 0x0811, 0x0815, 0x0819, 0x081D
+	.hword 0x0C01, 0x0C05, 0x0C09, 0x0C0D, 0x0C11, 0x0C15, 0x0C19, 0x0C1D, 0x1001, 0x1005, 0x1009, 0x100D
+	.hword 0x1011, 0x1015, 0x1019, 0x101D, 0x1401, 0x1405, 0x1409, 0x140D, 0x1411, 0x1415, 0x1419, 0x141D
+	.hword 0x1801, 0x1805, 0x1809, 0x180D, 0x1811, 0x1815, 0x1819, 0x181D, 0x1C01, 0x1C05, 0x1C09, 0x1C0D
+	.hword 0x1C11, 0x1C15, 0x1C19, 0x1C1D, 0x2001, 0x2005, 0x2009, 0x200D, 0x2011, 0x2015, 0x2019, 0x201D
+	.hword 0x0002, 0x0006, 0x000A, 0x000E, 0x0012, 0x0016, 0x001A, 0x001E, 0x0402, 0x0406, 0x040A, 0x040E
+	.hword 0x0412, 0x0416, 0x041A, 0x041E, 0x0802, 0x0806, 0x080A, 0x080E, 0x0812, 0x0816, 0x081A, 0x081E
+	.hword 0x0C02, 0x0C06, 0x0C0A, 0x0C0E, 0x0C12, 0x0C16, 0x0C1A, 0x0C1E, 0x1002, 0x1006, 0x100A, 0x100E
+	.hword 0x1012, 0x1016, 0x101A, 0x101E, 0x1402, 0x1406, 0x140A, 0x140E, 0x1412, 0x1416, 0x141A, 0x141E
+	.hword 0x1802, 0x1806, 0x180A, 0x180E, 0x1812, 0x1816, 0x181A, 0x181E, 0x1C02, 0x1C06, 0x1C0A, 0x1C0E
+	.hword 0x1C12, 0x1C16, 0x1C1A, 0x1C1E, 0x2002, 0x2006, 0x200A, 0x200E, 0x2012, 0x2016, 0x201A, 0x201E
+	.hword 0x0002, 0x0006, 0x000A, 0x000E, 0x0012, 0x0016, 0x001A, 0x001E, 0x0402, 0x0406, 0x040A, 0x040E
+	.hword 0x0412, 0x0416, 0x041A, 0x041E, 0x0802, 0x0806, 0x080A, 0x080E, 0x0812, 0x0816, 0x081A, 0x081E
+	.hword 0x0C02, 0x0C06, 0x0C0A, 0x0C0E, 0x0C12, 0x0C16, 0x0C1A, 0x0C1E, 0x1002, 0x1006, 0x100A, 0x100E
+	.hword 0x1012, 0x1016, 0x101A, 0x101E, 0x1402, 0x1406, 0x140A, 0x140E, 0x1412, 0x1416, 0x141A, 0x141E
+	.hword 0x1802, 0x1806, 0x180A, 0x180E, 0x1812, 0x1816, 0x181A, 0x181E, 0x1C02, 0x1C06, 0x1C0A, 0x1C0E
+	.hword 0x1C12, 0x1C16, 0x1C1A, 0x1C1E, 0x2002, 0x2006, 0x200A, 0x200E, 0x2012, 0x2016, 0x201A, 0x201E
+	.hword 0x0003, 0x0007, 0x000B, 0x000F, 0x0013, 0x0017, 0x001B, 0x001F, 0x0403, 0x0407, 0x040B, 0x040F
+	.hword 0x0413, 0x0417, 0x041B, 0x041F, 0x0803, 0x0807, 0x080B, 0x080F, 0x0813, 0x0817, 0x081B, 0x081F
+	.hword 0x0C03, 0x0C07, 0x0C0B, 0x0C0F, 0x0C13, 0x0C17, 0x0C1B, 0x0C1F, 0x1003, 0x1007, 0x100B, 0x100F
+	.hword 0x1013, 0x1017, 0x101B, 0x101F, 0x1403, 0x1407, 0x140B, 0x140F, 0x1413, 0x1417, 0x141B, 0x141F
+	.hword 0x1803, 0x1807, 0x180B, 0x180F, 0x1813, 0x1817, 0x181B, 0x181F, 0x1C03, 0x1C07, 0x1C0B, 0x1C0F
+	.hword 0x1C13, 0x1C17, 0x1C1B, 0x1C1F, 0x2003, 0x2007, 0x200B, 0x200F, 0x2013, 0x2017, 0x201B, 0x201F
+	.hword 0x0003, 0x0007, 0x000B, 0x000F, 0x0013, 0x0017, 0x001B, 0x001F, 0x0403, 0x0407, 0x040B, 0x040F
+	.hword 0x0413, 0x0417, 0x041B, 0x041F, 0x0803, 0x0807, 0x080B, 0x080F, 0x0813, 0x0817, 0x081B, 0x081F
+	.hword 0x0C03, 0x0C07, 0x0C0B, 0x0C0F, 0x0C13, 0x0C17, 0x0C1B, 0x0C1F, 0x1003, 0x1007, 0x100B, 0x100F
+	.hword 0x1013, 0x1017, 0x101B, 0x101F, 0x1403, 0x1407, 0x140B, 0x140F, 0x1413, 0x1417, 0x141B, 0x141F
+	.hword 0x1803, 0x1807, 0x180B, 0x180F, 0x1813, 0x1817, 0x181B, 0x181F, 0x1C03, 0x1C07, 0x1C0B, 0x1C0F
+	.hword 0x1C13, 0x1C17, 0x1C1B, 0x1C1F, 0x2003, 0x2007, 0x200B, 0x200F, 0x2013, 0x2017, 0x201B, 0x201F
+
+	.globl sCryScreenBg_Pal
+sCryScreenBg_Pal: @ 0x85987A4
+	.incbin "baserom_jp.gba", 0x5987a4, 0x20
+
+	.globl sCryScreenBg_Gfx
+sCryScreenBg_Gfx: @ 0x85987C4
+	.incbin "baserom_jp.gba", 0x5987c4, 0x20
+
+	.globl sWaveformTileDataNybbleMasks
+sWaveformTileDataNybbleMasks: @ 0x85987E4
+	.byte 0xF0, 0x0F
+
+	.globl sWaveformColor
+sWaveformColor: @ 0x85987E6
+	.byte 0x0F, 0x0E, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x08, 0x09, 0x0A, 0x0B
+	.byte 0x0C, 0x0D, 0x0E, 0x0F, 0xF0, 0xE0, 0xD0, 0xC0, 0xB0, 0xA0, 0x90, 0x80
+	.byte 0x80, 0x90, 0xA0, 0xB0, 0xC0, 0xD0, 0xE0, 0xF0, 0x00, 0x00, 0x00, 0x00
+	.byte 0x1E, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x08, 0x88, 0x59, 0x08, 0xA0, 0x01
+	.byte 0x00, 0xC0, 0x00, 0x04, 0x00, 0x00
+
+	.globl sCryMeterNeedleSpriteTemplate
+sCryMeterNeedleSpriteTemplate: @ 0x859881C
+	.incbin "baserom_jp.gba", 0x59881c, 0x18
+
+	.globl sCryMeterNeedleSpriteSheets
+sCryMeterNeedleSpriteSheets: @ 0x8598834
+	.incbin "baserom_jp.gba", 0x598834, 0x10
+
+	.globl sCryMeterNeedleSpritePalettes
+sCryMeterNeedleSpritePalettes: @ 0x8598844
+	.incbin "baserom_jp.gba", 0x598844, 0x424
+
+	.globl sLandmarkLists
+sLandmarkLists: @ 0x8598C68
+	.incbin "baserom_jp.gba", 0x598c68, 0x178
+
+	.globl gUnknown_8598DE0
+gUnknown_8598DE0: @ 0x8598DE0
+	.incbin "baserom_jp.gba", 0x598de0, 0x580
+
+	.globl gUnknown_8599360
+gUnknown_8599360: @ 0x8599360
+	.incbin "baserom_jp.gba", 0x599360, 0x240
+
+	.globl gUnknown_85995A0
+gUnknown_85995A0: @ 0x85995A0
+	.incbin "baserom_jp.gba", 0x5995a0, 0x11e0
+
+	.globl gUnknown_859A780
+gUnknown_859A780: @ 0x859A780
+	.incbin "baserom_jp.gba", 0x59A780, 0x1E0
+	.globl gUnknown_859A960
+gUnknown_859A960: @ 0x859A960
+	.incbin "baserom_jp.gba", 0x59a960, 0x20
+
+	.globl gUnknown_859A980
+gUnknown_859A980: @ 0x859A980
+	.incbin "baserom_jp.gba", 0x59a980, 0x378
+
+	.globl gUnknown_859ACF8
+gUnknown_859ACF8: @ 0x859ACF8
+	.incbin "baserom_jp.gba", 0x59acf8, 0x25c
+
+	.globl gUnknown_859AF54
+gUnknown_859AF54: @ 0x859AF54
+	.incbin "baserom_jp.gba", 0x59af54, 0x48c
+
+	.globl gUnknown_859B3E0
+gUnknown_859B3E0: @ 0x859B3E0
+	.incbin "baserom_jp.gba", 0x59b3e0, 0x2e4
+
+	.globl gUnknown_859B6C4
+gUnknown_859B6C4: @ 0x859B6C4
+	.incbin "baserom_jp.gba", 0x59b6c4, 0x6a0
+
+	.globl gUnknown_859BD64
+gUnknown_859BD64: @ 0x859BD64
+	.incbin "baserom_jp.gba", 0x59bd64, 0x20
+
+	.globl gUnknown_859BD84
+gUnknown_859BD84: @ 0x859BD84
+	.incbin "baserom_jp.gba", 0x59bd84, 0x20
+
+	.globl gUnknown_859BDA4
+gUnknown_859BDA4: @ 0x859BDA4
+	.incbin "baserom_jp.gba", 0x59bda4, 0x20
+
+	.globl gUnknown_859BDC4
+gUnknown_859BDC4: @ 0x859BDC4
+	.incbin "baserom_jp.gba", 0x59bdc4, 0x800
+
+	.globl gUnknown_859C5C4
+gUnknown_859C5C4: @ 0x859C5C4
+	.incbin "baserom_jp.gba", 0x59c5c4, 0x800
+
+	.globl gUnknown_859CDC4
+gUnknown_859CDC4: @ 0x859CDC4
+	.incbin "baserom_jp.gba", 0x59cdc4, 0x820
+
+	.globl gUnknown_859D5E4
+gUnknown_859D5E4: @ 0x859D5E4
+	.incbin "baserom_jp.gba", 0x59d5e4, 0x6b4
+
+	.globl gUnknown_859DC98
+gUnknown_859DC98: @ 0x859DC98
+	.incbin "baserom_jp.gba", 0x59dc98, 0x334
+
+	.globl gUnknown_859DFCC
+gUnknown_859DFCC: @ 0x859DFCC
+	.incbin "baserom_jp.gba", 0x59dfcc, 0x56c
+
+	.globl gUnknown_859E538
+gUnknown_859E538: @ 0x859E538
+	.incbin "baserom_jp.gba", 0x59e538, 0x318
+
+	.globl gUnknown_859E850
+gUnknown_859E850: @ 0x859E850
+	.incbin "baserom_jp.gba", 0x59e850, 0x140
+
+	.globl gUnknown_859E990
+gUnknown_859E990: @ 0x859E990
+	.incbin "baserom_jp.gba", 0x59e990, 0x1c0
+
+	.globl gUnknown_859EB50
+gUnknown_859EB50: @ 0x859EB50
+	.incbin "baserom_jp.gba", 0x59eb50, 0x200
+
+	.globl gUnknown_859ED50
+gUnknown_859ED50: @ 0x859ED50
+	.incbin "baserom_jp.gba", 0x59ed50, 0x200
+
+	.globl gUnknown_859EF50
+gUnknown_859EF50: @ 0x859EF50
+	.incbin "baserom_jp.gba", 0x59ef50, 0xa0
+
+	.globl gUnknown_859EFF0
+gUnknown_859EFF0: @ 0x859EFF0
+	.incbin "baserom_jp.gba", 0x59eff0, 0x160
+
+	.globl gUnknown_859F150
+gUnknown_859F150: @ 0x859F150
+	.incbin "baserom_jp.gba", 0x59f150, 0x7540
+
+	.globl gUnknown_85A6690
+gUnknown_85A6690: @ 0x85A6690
+	.incbin "baserom_jp.gba", 0x5a6690, 0x1000
+
+	.globl gUnknown_85A7690
+gUnknown_85A7690: @ 0x85A7690
+	.incbin "baserom_jp.gba", 0x5a7690, 0x20
+
+	.globl gUnknown_85A76B0
+gUnknown_85A76B0: @ 0x85A76B0
+	.incbin "baserom_jp.gba", 0x5a76b0, 0x68c
+
+	.globl gUnknown_85A7D3C
+gUnknown_85A7D3C: @ 0x85A7D3C
+	.incbin "baserom_jp.gba", 0x5a7d3c, 0x2ec
+
+	.globl gUnknown_85A8028
+gUnknown_85A8028: @ 0x85A8028
+	.incbin "baserom_jp.gba", 0x5a8028, 0x20
+
+	.globl gUnknown_85A8048
+gUnknown_85A8048: @ 0x85A8048
+	.incbin "baserom_jp.gba", 0x5a8048, 0x15c
+
+	.globl gUnknown_85A81A4
+gUnknown_85A81A4: @ 0x85A81A4
+	.incbin "baserom_jp.gba", 0x5a81a4, 0x100
+
+	.globl gUnknown_85A82A4
+gUnknown_85A82A4: @ 0x85A82A4
+	.incbin "baserom_jp.gba", 0x5a82a4, 0xb0
+
+	.globl gUnknown_85A8354
+gUnknown_85A8354: @ 0x85A8354
+	.incbin "baserom_jp.gba", 0x5a8354, 0x84
+
+	.globl gUnknown_85A83D8
+gUnknown_85A83D8: @ 0x85A83D8
+	.incbin "baserom_jp.gba", 0x5a83d8, 0x20
+
+	.globl gUnknown_85A83F8
+gUnknown_85A83F8: @ 0x85A83F8
+	.incbin "baserom_jp.gba", 0x5a83f8, 0xa8
+
+	.globl gUnknown_85A84A0
+gUnknown_85A84A0: @ 0x85A84A0
+	.incbin "baserom_jp.gba", 0x5a84a0, 0xa8
+
+	.globl gUnknown_85A8548
+gUnknown_85A8548: @ 0x85A8548
+	.incbin "baserom_jp.gba", 0x5a8548, 0x10
+
+	.globl gUnknown_85A8558
+gUnknown_85A8558: @ 0x85A8558
+	.incbin "baserom_jp.gba", 0x5a8558, 0xc
+
+	.globl gUnknown_85A8564
+gUnknown_85A8564: @ 0x85A8564
+	.incbin "baserom_jp.gba", 0x5a8564, 0x8
+
+	.globl gUnknown_85A856C
+gUnknown_85A856C: @ 0x85A856C
+	.incbin "baserom_jp.gba", 0x5a856c, 0x8
+
+	.globl gUnknown_85A8574
+gUnknown_85A8574: @ 0x85A8574
+	.incbin "baserom_jp.gba", 0x5a8574, 0x1c
+
+	.globl gUnknown_85A8590
+gUnknown_85A8590: @ 0x85A8590
+	.incbin "baserom_jp.gba", 0x5a8590, 0x1c
+
+	.globl gUnknown_85A85AC
+gUnknown_85A85AC: @ 0x85A85AC
+	.incbin "baserom_jp.gba", 0x5a85ac, 0x18
+
+	.globl gUnknown_85A85C4
+gUnknown_85A85C4: @ 0x85A85C4
+	.incbin "baserom_jp.gba", 0x5a85c4, 0x18
+
+	.globl gUnknown_85A85DC
+gUnknown_85A85DC: @ 0x85A85DC
+	.incbin "baserom_jp.gba", 0x5a85dc, 0x18
+
+	.globl gUnknown_85A85F4
+gUnknown_85A85F4: @ 0x85A85F4
+	.incbin "baserom_jp.gba", 0x5a85f4, 0x18
+
+	.globl gUnknown_85A860C
+gUnknown_85A860C: @ 0x85A860C
+	.incbin "baserom_jp.gba", 0x5a860c, 0x20
+
+	.globl gUnknown_85A862C
+gUnknown_85A862C: @ 0x85A862C
+	.incbin "baserom_jp.gba", 0x5a862c, 0xc
+
+	.globl gUnknown_85A8638
+gUnknown_85A8638: @ 0x85A8638
+	.incbin "baserom_jp.gba", 0x5a8638, 0x4
+
+	.globl gUnknown_85A863C
+gUnknown_85A863C: @ 0x85A863C
+	.incbin "baserom_jp.gba", 0x5a863c, 0xa
+
+	.globl gUnknown_85A8646
+gUnknown_85A8646: @ 0x85A8646
+	.incbin "baserom_jp.gba", 0x5a8646, 0x6
+
+	.globl gUnknown_85A864C
+gUnknown_85A864C: @ 0x85A864C
+	.incbin "baserom_jp.gba", 0x5a864c, 0x1c
+
+	.globl gUnknown_85A8668
+gUnknown_85A8668: @ 0x85A8668
+	.incbin "baserom_jp.gba", 0x5a8668, 0x8
+
+	.globl gUnknown_85A8670
+gUnknown_85A8670: @ 0x85A8670
+	.incbin "baserom_jp.gba", 0x5a8670, 0xc
+
+	.globl gUnknown_85A867C
+gUnknown_85A867C: @ 0x85A867C
+	.incbin "baserom_jp.gba", 0x5a867c, 0x28
+
+	.globl gUnknown_85A86A4
+gUnknown_85A86A4: @ 0x85A86A4
+	.incbin "baserom_jp.gba", 0x5a86a4, 0x6
+
+	.globl gUnknown_85A86AA
+gUnknown_85A86AA: @ 0x85A86AA
+	.incbin "baserom_jp.gba", 0x5a86aa, 0x14
+
+	.globl gUnknown_85A86BE
+gUnknown_85A86BE: @ 0x85A86BE
+	.incbin "baserom_jp.gba", 0x5a86be, 0x16
+
+	.globl gUnknown_85A86D4
+gUnknown_85A86D4: @ 0x85A86D4
+	.incbin "baserom_jp.gba", 0x5a86d4, 0x1c
+
+	.globl gUnknown_85A86F0
+gUnknown_85A86F0: @ 0x85A86F0
+	.string "し　ä$"
+	.globl gUnknown_85A86F4
+gUnknown_85A86F4: @ 0x85A86F4
+	.incbin "baserom_jp.gba", 0x5a86f4, 0x4
+
+	.globl gUnknown_85A86F8
+gUnknown_85A86F8: @ 0x85A86F8
+	.incbin "baserom_jp.gba", 0x5a86f8, 0xc
+
+	.globl gUnknown_85A8704
+gUnknown_85A8704: @ 0x85A8704
+	.incbin "baserom_jp.gba", 0x5a8704, 0x10
+
+	.globl gUnknown_85A8714
+gUnknown_85A8714: @ 0x85A8714
+	.incbin "baserom_jp.gba", 0x5a8714, 0x2
+
+	.globl gUnknown_85A8716
+gUnknown_85A8716: @ 0x85A8716
+	.incbin "baserom_jp.gba", 0x5a8716, 0x6
+
+	.globl gUnknown_85A871C
+gUnknown_85A871C: @ 0x85A871C
+	.incbin "baserom_jp.gba", 0x5a871c, 0xc
+
+	.globl gUnknown_85A8728
+gUnknown_85A8728: @ 0x85A8728
+	.incbin "baserom_jp.gba", 0x5a8728, 0x8
+
+	.globl gUnknown_85A8730
+gUnknown_85A8730: @ 0x85A8730
+	.incbin "baserom_jp.gba", 0x5a8730, 0x4
+
+	.globl gUnknown_85A8734
+gUnknown_85A8734: @ 0x85A8734
+	.incbin "baserom_jp.gba", 0x5a8734, 0xb4
+
+	.globl gUnknown_85A87E8
+gUnknown_85A87E8: @ 0x85A87E8
+	.incbin "baserom_jp.gba", 0x5a87e8, 0x8
+
+	.globl gUnknown_85A87F0
+gUnknown_85A87F0: @ 0x85A87F0
+	.incbin "baserom_jp.gba", 0x5a87f0, 0x20
+
+	.globl gUnknown_85A8810
+gUnknown_85A8810: @ 0x85A8810
+	.incbin "baserom_jp.gba", 0x5a8810, 0x2c
+
+	.globl gUnknown_85A883C
+gUnknown_85A883C: @ 0x85A883C
+	.incbin "baserom_jp.gba", 0x5a883c, 0x14
+
+	.globl gUnknown_85A8850
+gUnknown_85A8850: @ 0x85A8850
+	.incbin "baserom_jp.gba", 0x5a8850, 0x10
+
+	.globl gUnknown_85A8860
+gUnknown_85A8860: @ 0x85A8860
+	.incbin "baserom_jp.gba", 0x5a8860, 0xc
+
+	.globl gUnknown_85A886C
+gUnknown_85A886C: @ 0x85A886C
+	.incbin "baserom_jp.gba", 0x5a886c, 0x14
+
+	.globl gUnknown_85A8880
+gUnknown_85A8880: @ 0x85A8880
+	.incbin "baserom_jp.gba", 0x5a8880, 0x46
+
+	.globl gUnknown_85A88C6
+gUnknown_85A88C6: @ 0x85A88C6
+	.incbin "baserom_jp.gba", 0x5a88c6, 0xe
+
+	.globl gUnknown_85A88D4
+gUnknown_85A88D4: @ 0x85A88D4
+	.incbin "baserom_jp.gba", 0x5a88d4, 0x44
+
+	.globl gUnknown_85A8918
+gUnknown_85A8918: @ 0x85A8918
+	.incbin "baserom_jp.gba", 0x5a8918, 0x6c
+
+	.globl gUnknown_85A8984
+gUnknown_85A8984: @ 0x85A8984
+	.incbin "baserom_jp.gba", 0x5a8984, 0x108
+
+	.globl gUnknown_85A8A8C
+gUnknown_85A8A8C: @ 0x85A8A8C
+	.incbin "baserom_jp.gba", 0x5a8a8c, 0x14
+
+	.globl gUnknown_85A8AA0
+gUnknown_85A8AA0: @ 0x85A8AA0
+	.incbin "baserom_jp.gba", 0x5a8aa0, 0x30
+
+	.globl gUnknown_85A8AD0
+gUnknown_85A8AD0: @ 0x85A8AD0
+	.incbin "baserom_jp.gba", 0x5a8ad0, 0x4b0
+
+	.globl gUnknown_85A8F80
+gUnknown_85A8F80: @ 0x85A8F80
+	.incbin "baserom_jp.gba", 0x5a8f80, 0x500
+
+	.globl gUnknown_85A9480
+gUnknown_85A9480: @ 0x85A9480
+	.incbin "baserom_jp.gba", 0x5a9480, 0x18
+
+	.globl gUnknown_85A9498
+gUnknown_85A9498: @ 0x85A9498
+	.incbin "baserom_jp.gba", 0x5a9498, 0x10
+
+	.globl gUnknown_85A94A8
+gUnknown_85A94A8: @ 0x85A94A8
+	.incbin "baserom_jp.gba", 0x5a94a8, 0x10
+
+	.globl gUnknown_85A94B8
+gUnknown_85A94B8: @ 0x85A94B8
+	.incbin "baserom_jp.gba", 0x5a94b8, 0x14
+
+	.globl gUnknown_85A94CC
+gUnknown_85A94CC: @ 0x85A94CC
+	.incbin "baserom_jp.gba", 0x5a94cc, 0x14
+
+	.globl gUnknown_85A94E0
+gUnknown_85A94E0: @ 0x85A94E0
+	.incbin "baserom_jp.gba", 0x5a94e0, 0x23
+
+	.globl gUnknown_85A9503
+gUnknown_85A9503: @ 0x85A9503
+	.incbin "baserom_jp.gba", 0x5a9503, 0x41
+
+	.globl gUnknown_85A9544
+gUnknown_85A9544: @ 0x85A9544
+	.incbin "baserom_jp.gba", 0x5a9544, 0x7d1
