@@ -229,7 +229,7 @@ extern const u8 sText_LinkWithFriendDropped[];
 extern const u8 sText_PleaseStartOver[];
 extern const u8 sText_PlayerHasBeenAskedToRegisterYouPleaseWait[];
 extern const u8 gSpeciesNames[][6];
-extern const u8 gTypeNamesJP[][5];
+extern const u8 gTypeNames[][5];
 extern const u8 sText_BattleChallenge[];
 extern const u8 sText_ChatInvitation[];
 extern const u8 sText_ShowTrainerCard[];
@@ -3311,12 +3311,12 @@ static void Task_RunUnionRoom(u8 taskId)
                     break;
                 case UR_TRADE_NOTYPE:
                     StringCopy(gStringVar1, &uroom->playerList->players[input].rfu.name);
-                    StringCopy(gStringVar2, gTypeNamesJP[uroom->playerList->players[input].rfu.data.tradeType]);
+                    StringCopy(gStringVar2, gTypeNames[uroom->playerList->players[input].rfu.data.tradeType]);
                     ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveTypeTrainerWants);
                     break;
                 case UR_TRADE_NOEGG:
                     StringCopy(gStringVar1, &uroom->playerList->players[input].rfu.name);
-                    StringCopy(gStringVar2, gTypeNamesJP[uroom->playerList->players[input].rfu.data.tradeType]);
+                    StringCopy(gStringVar2, gTypeNames[uroom->playerList->players[input].rfu.data.tradeType]);
                     ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveEggTrainerWants);
                     break;
                 }

@@ -9212,6 +9212,8 @@ SECTIONS {
         src/data/text/species_names.o(.rodata);
         src/data/text/move_names.o(.rodata);
         data/data_b2.o(.rodata);
+        src/data/text/type_names.o(.rodata);
+        data/data_b2b.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/data_rest.o(.rodata);
