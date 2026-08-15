@@ -887,8 +887,8 @@ EventScript_FallDownHoleMtPyre: @ 0x8264358
 EventScript_TrainerHillTimer: @ 0x8276CAF
 	.include "data/scripts/gUnknown_8276CAF.inc"
 
-	.globl gUnknown_8276D0C
-gUnknown_8276D0C: @ 0x8276D0C
+	.globl TrainerHill_EventScript_TrainerBattle
+TrainerHill_EventScript_TrainerBattle: @ 0x8276D0C
 	.include "data/scripts/gUnknown_8276D0C.inc"
 
 	.globl EventScript_TestSignpostMsg
@@ -2130,108 +2130,108 @@ gUnknown_8286AAA: @ 0x8286AAA
 gUnknown_8286AED: @ 0x8286AED
 	.include "data/scripts/gUnknown_8286AED.inc"
 
-	.globl gUnknown_8286C30
-gUnknown_8286C30: @ 0x8286C30
+	.globl gBattleScriptsForMoveEffects
+gBattleScriptsForMoveEffects: @ 0x8286C30
 	.incbin "baserom_jp.gba", 0x286c30, 0x388
 
-	.globl gUnknown_8286FB8
-gUnknown_8286FB8: @ 0x8286FB8
+	.globl BattleScript_HitFromCritCalc
+BattleScript_HitFromCritCalc: @ 0x8286FB8
 	.include "data/scripts/gUnknown_8286FB8.inc"
 
-	.globl gUnknown_8286FD6
-gUnknown_8286FD6: @ 0x8286FD6
+	.globl BattleScript_MoveEnd
+BattleScript_MoveEnd: @ 0x8286FD6
 	.include "data/scripts/gUnknown_8286FD6.inc"
 
-	.globl gUnknown_8286FE8
-gUnknown_8286FE8: @ 0x8286FE8
+	.globl BattleScript_MoveMissedPause
+BattleScript_MoveMissedPause: @ 0x8286FE8
 	.include "data/scripts/gUnknown_8286FE8.inc"
 
-	.globl gUnknown_828725C
-gUnknown_828725C: @ 0x828725C
+	.globl BattleScript_StatUp
+BattleScript_StatUp: @ 0x828725C
 	.include "data/scripts/gUnknown_828725C.inc"
 
-	.globl gUnknown_82872ED
-gUnknown_82872ED: @ 0x82872ED
+	.globl BattleScript_StatDown
+BattleScript_StatDown: @ 0x82872ED
 	.include "data/scripts/gUnknown_82872ED.inc"
 
-	.globl gUnknown_82879EA
-gUnknown_82879EA: @ 0x82879EA
+	.globl BattleScript_MoveUsedMustRecharge
+BattleScript_MoveUsedMustRecharge: @ 0x82879EA
 	.include "data/scripts/gUnknown_82879EA.inc"
 
-	.globl gUnknown_8288469
-gUnknown_8288469: @ 0x8288469
+	.globl BattleScript_PresentHealTarget
+BattleScript_PresentHealTarget: @ 0x8288469
 	.include "data/scripts/gUnknown_8288469.inc"
 
-	.globl gUnknown_8288483
-gUnknown_8288483: @ 0x8288483
+	.globl BattleScript_AlreadyAtFullHp
+BattleScript_AlreadyAtFullHp: @ 0x8288483
 	.include "data/scripts/gUnknown_8288483.inc"
 
-	.globl gUnknown_82884A4
-gUnknown_82884A4: @ 0x82884A4
+	.globl BattleScript_ButItFailed
+BattleScript_ButItFailed: @ 0x82884A4
 	.include "data/scripts/gUnknown_82884A4.inc"
 
-	.globl gUnknown_8288D32
-gUnknown_8288D32: @ 0x8288D32
+	.globl BattleScript_FaintAttacker
+BattleScript_FaintAttacker: @ 0x8288D32
 	.include "data/scripts/gUnknown_8288D32.inc"
 
-	.globl gUnknown_8288D3F
-gUnknown_8288D3F: @ 0x8288D3F
+	.globl BattleScript_FaintTarget
+BattleScript_FaintTarget: @ 0x8288D3F
 	.include "data/scripts/gUnknown_8288D3F.inc"
 
-	.globl gUnknown_8288D4C
-gUnknown_8288D4C: @ 0x8288D4C
+	.globl BattleScript_GiveExp
+BattleScript_GiveExp: @ 0x8288D4C
 	.include "data/scripts/gUnknown_8288D4C.inc"
 
-	.globl gUnknown_8288D55
-gUnknown_8288D55: @ 0x8288D55
+	.globl BattleScript_HandleFaintedMon
+BattleScript_HandleFaintedMon: @ 0x8288D55
 	.include "data/scripts/gUnknown_8288D55.inc"
 
-	.globl gUnknown_8288EB5
-gUnknown_8288EB5: @ 0x8288EB5
+	.globl BattleScript_LocalTrainerBattleWon
+BattleScript_LocalTrainerBattleWon: @ 0x8288EB5
 	.include "data/scripts/gUnknown_8288EB5.inc"
 
-	.globl gUnknown_8288EF2
-gUnknown_8288EF2: @ 0x8288EF2
+	.globl BattleScript_PayDayMoneyAndPickUpItems
+BattleScript_PayDayMoneyAndPickUpItems: @ 0x8288EF2
 	.incbin "baserom_jp.gba", 0x288ef2, 0x3
 
-	.globl gUnknown_8288EF5
-gUnknown_8288EF5: @ 0x8288EF5
+	.globl BattleScript_LocalBattleLost
+BattleScript_LocalBattleLost: @ 0x8288EF5
 	.include "data/scripts/gUnknown_8288EF5.inc"
 
-	.globl gUnknown_8288F93
-gUnknown_8288F93: @ 0x8288F93
+	.globl BattleScript_FrontierLinkBattleLost
+BattleScript_FrontierLinkBattleLost: @ 0x8288F93
 	.include "data/scripts/gUnknown_8288F93.inc"
 
-	.globl gUnknown_8288FBD
-gUnknown_8288FBD: @ 0x8288FBD
+	.globl BattleScript_LinkBattleWonOrLost
+BattleScript_LinkBattleWonOrLost: @ 0x8288FBD
 	.include "data/scripts/gUnknown_8288FBD.inc"
 
-	.globl gUnknown_828900F
-gUnknown_828900F: @ 0x828900F
+	.globl BattleScript_FrontierTrainerBattleWon
+BattleScript_FrontierTrainerBattleWon: @ 0x828900F
 	.include "data/scripts/gUnknown_828900F.inc"
 
-	.globl gUnknown_8289063
-gUnknown_8289063: @ 0x8289063
+	.globl BattleScript_SmokeBallEscape
+BattleScript_SmokeBallEscape: @ 0x8289063
 	.include "data/scripts/gUnknown_8289063.inc"
 
-	.globl gUnknown_8289071
-gUnknown_8289071: @ 0x8289071
+	.globl BattleScript_RanAwayUsingMonAbility
+BattleScript_RanAwayUsingMonAbility: @ 0x8289071
 	.incbin "baserom_jp.gba", 0x289071, 0x7
 
-	.globl gUnknown_8289078
-gUnknown_8289078: @ 0x8289078
+	.globl BattleScript_GotAwaySafely
+BattleScript_GotAwaySafely: @ 0x8289078
 	.incbin "baserom_jp.gba", 0x289078, 0x7
 
-	.globl gUnknown_828907F
-gUnknown_828907F: @ 0x828907F
+	.globl BattleScript_WildMonFled
+BattleScript_WildMonFled: @ 0x828907F
 	.incbin "baserom_jp.gba", 0x28907f, 0x7
 
 	.globl gUnknown_8289086
 gUnknown_8289086: @ 0x8289086
 	.incbin "baserom_jp.gba", 0x289086, 0x4
 
-	.globl gUnknown_828908A
-gUnknown_828908A: @ 0x828908A
+	.globl BattleScript_PrintFailedToRunString
+BattleScript_PrintFailedToRunString: @ 0x828908A
 	.incbin "baserom_jp.gba", 0x28908a, 0x9
 
 	.globl gUnknown_8289093
@@ -2242,144 +2242,144 @@ gUnknown_8289093: @ 0x8289093
 gUnknown_8289099: @ 0x8289099
 	.incbin "baserom_jp.gba", 0x289099, 0x4
 
-	.globl gUnknown_828909D
-gUnknown_828909D: @ 0x828909D
+	.globl BattleScript_ActionSwitch
+BattleScript_ActionSwitch: @ 0x828909D
 	.include "data/scripts/gUnknown_828909D.inc"
 
-	.globl gUnknown_8289141
-gUnknown_8289141: @ 0x8289141
+	.globl BattleScript_Pausex20
+BattleScript_Pausex20: @ 0x8289141
 	.incbin "baserom_jp.gba", 0x289141, 0x4
 
-	.globl gUnknown_8289145
-gUnknown_8289145: @ 0x8289145
+	.globl BattleScript_LevelUp
+BattleScript_LevelUp: @ 0x8289145
 	.include "data/scripts/gUnknown_8289145.inc"
 
-	.globl gUnknown_82891B4
-gUnknown_82891B4: @ 0x82891B4
+	.globl BattleScript_RainContinuesOrEnds
+BattleScript_RainContinuesOrEnds: @ 0x82891B4
 	.include "data/scripts/gUnknown_82891B4.inc"
 
-	.globl gUnknown_82891CF
-gUnknown_82891CF: @ 0x82891CF
+	.globl BattleScript_DamagingWeatherContinues
+BattleScript_DamagingWeatherContinues: @ 0x82891CF
 	.include "data/scripts/gUnknown_82891CF.inc"
 
-	.globl gUnknown_8289251
-gUnknown_8289251: @ 0x8289251
+	.globl BattleScript_SandStormHailEnds
+BattleScript_SandStormHailEnds: @ 0x8289251
 	.incbin "baserom_jp.gba", 0x289251, 0x9
 
-	.globl gUnknown_828925A
-gUnknown_828925A: @ 0x828925A
+	.globl BattleScript_SunlightContinues
+BattleScript_SunlightContinues: @ 0x828925A
 	.include "data/scripts/gUnknown_828925A.inc"
 
-	.globl gUnknown_8289268
-gUnknown_8289268: @ 0x8289268
+	.globl BattleScript_SunlightFaded
+BattleScript_SunlightFaded: @ 0x8289268
 	.incbin "baserom_jp.gba", 0x289268, 0x7
 
-	.globl gUnknown_828926F
-gUnknown_828926F: @ 0x828926F
+	.globl BattleScript_OverworldWeatherStarts
+BattleScript_OverworldWeatherStarts: @ 0x828926F
 	.include "data/scripts/gUnknown_828926F.inc"
 
-	.globl gUnknown_8289282
-gUnknown_8289282: @ 0x8289282
+	.globl BattleScript_SideStatusWoreOff
+BattleScript_SideStatusWoreOff: @ 0x8289282
 	.include "data/scripts/gUnknown_8289282.inc"
 
-	.globl gUnknown_8289293
-gUnknown_8289293: @ 0x8289293
+	.globl BattleScript_SafeguardEnds
+BattleScript_SafeguardEnds: @ 0x8289293
 	.include "data/scripts/gUnknown_8289293.inc"
 
-	.globl gUnknown_828929D
-gUnknown_828929D: @ 0x828929D
+	.globl BattleScript_LeechSeedTurnDrain
+BattleScript_LeechSeedTurnDrain: @ 0x828929D
 	.include "data/scripts/gUnknown_828929D.inc"
 
-	.globl gUnknown_82892F9
-gUnknown_82892F9: @ 0x82892F9
+	.globl BattleScript_BideStoringEnergy
+BattleScript_BideStoringEnergy: @ 0x82892F9
 	.incbin "baserom_jp.gba", 0x2892f9, 0xb
 
-	.globl gUnknown_8289304
-gUnknown_8289304: @ 0x8289304
+	.globl BattleScript_BideAttack
+BattleScript_BideAttack: @ 0x8289304
 	.include "data/scripts/gUnknown_8289304.inc"
 
-	.globl gUnknown_828934C
-gUnknown_828934C: @ 0x828934C
+	.globl BattleScript_BideNoEnergyToAttack
+BattleScript_BideNoEnergyToAttack: @ 0x828934C
 	.include "data/scripts/gUnknown_828934C.inc"
 
-	.globl gUnknown_8289360
-gUnknown_8289360: @ 0x8289360
+	.globl BattleScript_SuccessForceOut
+BattleScript_SuccessForceOut: @ 0x8289360
 	.include "data/scripts/gUnknown_8289360.inc"
 
 	.globl BattleScript_MistProtected
 BattleScript_MistProtected: @ 0x828938B
 	.include "data/scripts/gUnknown_828938B.inc"
 
-	.globl gUnknown_8289395
-gUnknown_8289395: @ 0x8289395
+	.globl BattleScript_RageIsBuilding
+BattleScript_RageIsBuilding: @ 0x8289395
 	.incbin "baserom_jp.gba", 0x289395, 0x7
 
-	.globl gUnknown_828939C
-gUnknown_828939C: @ 0x828939C
+	.globl BattleScript_MoveUsedIsDisabled
+BattleScript_MoveUsedIsDisabled: @ 0x828939C
 	.incbin "baserom_jp.gba", 0x28939c, 0xb
 
 	.globl BattleScript_SelectingDisabledMove
 BattleScript_SelectingDisabledMove: @ 0x82893A7
 	.incbin "baserom_jp.gba", 0x2893a7, 0x4
 
-	.globl gUnknown_82893AB
-gUnknown_82893AB: @ 0x82893AB
+	.globl BattleScript_DisabledNoMore
+BattleScript_DisabledNoMore: @ 0x82893AB
 	.incbin "baserom_jp.gba", 0x2893ab, 0x7
 
 	.globl BattleScript_SelectingDisabledMoveInPalace
 BattleScript_SelectingDisabledMoveInPalace: @ 0x82893B2
 	.include "data/scripts/gUnknown_82893B2.inc"
 
-	.globl gUnknown_82893BF
-gUnknown_82893BF: @ 0x82893BF
+	.globl BattleScript_EncoredNoMore
+BattleScript_EncoredNoMore: @ 0x82893BF
 	.incbin "baserom_jp.gba", 0x2893bf, 0x7
 
-	.globl gUnknown_82893C6
-gUnknown_82893C6: @ 0x82893C6
+	.globl BattleScript_DestinyBondTakesLife
+BattleScript_DestinyBondTakesLife: @ 0x82893C6
 	.include "data/scripts/gUnknown_82893C6.inc"
 
-	.globl gUnknown_82893E1
-gUnknown_82893E1: @ 0x82893E1
+	.globl BattleScript_SpikesOnAttacker
+BattleScript_SpikesOnAttacker: @ 0x82893E1
 	.include "data/scripts/gUnknown_82893E1.inc"
 
-	.globl gUnknown_8289418
-gUnknown_8289418: @ 0x8289418
+	.globl BattleScript_SpikesOnTarget
+BattleScript_SpikesOnTarget: @ 0x8289418
 	.include "data/scripts/gUnknown_8289418.inc"
 
-	.globl gUnknown_828944F
-gUnknown_828944F: @ 0x828944F
+	.globl BattleScript_SpikesOnFaintedBattler
+BattleScript_SpikesOnFaintedBattler: @ 0x828944F
 	.include "data/scripts/gUnknown_828944F.inc"
 
-	.globl gUnknown_828948D
-gUnknown_828948D: @ 0x828948D
+	.globl BattleScript_PerishSongTakesLife
+BattleScript_PerishSongTakesLife: @ 0x828948D
 	.include "data/scripts/gUnknown_828948D.inc"
 
-	.globl gUnknown_82894A8
-gUnknown_82894A8: @ 0x82894A8
+	.globl BattleScript_PerishSongCountGoesDown
+BattleScript_PerishSongCountGoesDown: @ 0x82894A8
 	.incbin "baserom_jp.gba", 0x2894a8, 0x7
 
-	.globl gUnknown_82894AF
-gUnknown_82894AF: @ 0x82894AF
+	.globl BattleScript_AllStatsUp
+BattleScript_AllStatsUp: @ 0x82894AF
 	.include "data/scripts/gUnknown_82894AF.inc"
 
-	.globl gUnknown_828954B
-gUnknown_828954B: @ 0x828954B
+	.globl BattleScript_RapidSpinAway
+BattleScript_RapidSpinAway: @ 0x828954B
 	.incbin "baserom_jp.gba", 0x28954b, 0x2
 
-	.globl gUnknown_828954D
-gUnknown_828954D: @ 0x828954D
+	.globl BattleScript_WrapFree
+BattleScript_WrapFree: @ 0x828954D
 	.include "data/scripts/gUnknown_828954D.inc"
 
-	.globl gUnknown_828955E
-gUnknown_828955E: @ 0x828955E
+	.globl BattleScript_LeechSeedFree
+BattleScript_LeechSeedFree: @ 0x828955E
 	.incbin "baserom_jp.gba", 0x28955e, 0x7
 
-	.globl gUnknown_8289565
-gUnknown_8289565: @ 0x8289565
+	.globl BattleScript_SpikesFree
+BattleScript_SpikesFree: @ 0x8289565
 	.incbin "baserom_jp.gba", 0x289565, 0x7
 
-	.globl gUnknown_828956C
-gUnknown_828956C: @ 0x828956C
+	.globl BattleScript_MonTookFutureAttack
+BattleScript_MonTookFutureAttack: @ 0x828956C
 	.include "data/scripts/gUnknown_828956C.inc"
 
 	.globl BattleScript_NoMovesLeft
@@ -2390,84 +2390,84 @@ BattleScript_NoMovesLeft: @ 0x82895FA
 BattleScript_SelectingMoveWithNoPP: @ 0x82895FE
 	.incbin "baserom_jp.gba", 0x2895fe, 0x4
 
-	.globl gUnknown_8289602
-gUnknown_8289602: @ 0x8289602
+	.globl BattleScript_NoPPForMove
+BattleScript_NoPPForMove: @ 0x8289602
 	.include "data/scripts/gUnknown_8289602.inc"
 
-	.globl gUnknown_8289611
-gUnknown_8289611: @ 0x8289611
+	.globl BattleScript_SelectingTormentedMove
+BattleScript_SelectingTormentedMove: @ 0x8289611
 	.incbin "baserom_jp.gba", 0x289611, 0xf
 
-	.globl gUnknown_8289620
-gUnknown_8289620: @ 0x8289620
+	.globl BattleScript_SelectingTormentedMoveInPalace
+BattleScript_SelectingTormentedMoveInPalace: @ 0x8289620
 	.incbin "baserom_jp.gba", 0x289620, 0x8
 
-	.globl gUnknown_8289628
-gUnknown_8289628: @ 0x8289628
+	.globl BattleScript_SelectingNotAllowedMoveTaunt
+BattleScript_SelectingNotAllowedMoveTaunt: @ 0x8289628
 	.incbin "baserom_jp.gba", 0x289628, 0x4
 
-	.globl gUnknown_828962C
-gUnknown_828962C: @ 0x828962C
+	.globl BattleScript_MoveUsedIsTaunted
+BattleScript_MoveUsedIsTaunted: @ 0x828962C
 	.incbin "baserom_jp.gba", 0x28962c, 0xb
 
-	.globl gUnknown_8289637
-gUnknown_8289637: @ 0x8289637
+	.globl BattleScript_SelectingNotAllowedMoveTauntInPalace
+BattleScript_SelectingNotAllowedMoveTauntInPalace: @ 0x8289637
 	.incbin "baserom_jp.gba", 0x289637, 0x8
 
-	.globl gUnknown_828963F
-gUnknown_828963F: @ 0x828963F
+	.globl BattleScript_WishComesTrue
+BattleScript_WishComesTrue: @ 0x828963F
 	.include "data/scripts/gUnknown_828963F.inc"
 
-	.globl gUnknown_8289676
-gUnknown_8289676: @ 0x8289676
+	.globl BattleScript_IngrainTurnHeal
+BattleScript_IngrainTurnHeal: @ 0x8289676
 	.include "data/scripts/gUnknown_8289676.inc"
 
-	.globl gUnknown_828969F
-gUnknown_828969F: @ 0x828969F
+	.globl BattleScript_AtkDefDown
+BattleScript_AtkDefDown: @ 0x828969F
 	.include "data/scripts/gUnknown_828969F.inc"
 
-	.globl gUnknown_82896F0
-gUnknown_82896F0: @ 0x82896F0
+	.globl BattleScript_KnockedOff
+BattleScript_KnockedOff: @ 0x82896F0
 	.include "data/scripts/gUnknown_82896F0.inc"
 
-	.globl gUnknown_82896FE
-gUnknown_82896FE: @ 0x82896FE
+	.globl BattleScript_MoveUsedIsImprisoned
+BattleScript_MoveUsedIsImprisoned: @ 0x82896FE
 	.incbin "baserom_jp.gba", 0x2896fe, 0xb
 
-	.globl gUnknown_8289709
-gUnknown_8289709: @ 0x8289709
+	.globl BattleScript_SelectingImprisonedMove
+BattleScript_SelectingImprisonedMove: @ 0x8289709
 	.incbin "baserom_jp.gba", 0x289709, 0x4
 
 	.globl BattleScript_SelectingImprisonedMoveInPalace
 BattleScript_SelectingImprisonedMoveInPalace: @ 0x828970D
 	.incbin "baserom_jp.gba", 0x28970d, 0x8
 
-	.globl gUnknown_8289715
-gUnknown_8289715: @ 0x8289715
+	.globl BattleScript_GrudgeTakesPP
+BattleScript_GrudgeTakesPP: @ 0x8289715
 	.incbin "baserom_jp.gba", 0x289715, 0x7
 
-	.globl gUnknown_828971C
-gUnknown_828971C: @ 0x828971C
+	.globl BattleScript_MagicCoatBounce
+BattleScript_MagicCoatBounce: @ 0x828971C
 	.include "data/scripts/gUnknown_828971C.inc"
 
-	.globl gUnknown_8289734
-gUnknown_8289734: @ 0x8289734
+	.globl BattleScript_SnatchedMove
+BattleScript_SnatchedMove: @ 0x8289734
 	.include "data/scripts/gUnknown_8289734.inc"
 
-	.globl gUnknown_828974F
-gUnknown_828974F: @ 0x828974F
+	.globl BattleScript_EnduredMsg
+BattleScript_EnduredMsg: @ 0x828974F
 	.incbin "baserom_jp.gba", 0x28974f, 0x7
 
-	.globl gUnknown_8289756
-gUnknown_8289756: @ 0x8289756
+	.globl BattleScript_OneHitKOMsg
+BattleScript_OneHitKOMsg: @ 0x8289756
 	.incbin "baserom_jp.gba", 0x289756, 0x7
 
-	.globl gUnknown_828975D
-gUnknown_828975D: @ 0x828975D
+	.globl BattleScript_SAtkDown2
+BattleScript_SAtkDown2: @ 0x828975D
 	.include "data/scripts/gUnknown_828975D.inc"
 
-	.globl gUnknown_8289787
-gUnknown_8289787: @ 0x8289787
+	.globl BattleScript_FocusPunchSetUp
+BattleScript_FocusPunchSetUp: @ 0x8289787
 	.include "data/scripts/gUnknown_8289787.inc"
 
 	.globl BattleScript_MoveUsedIsAsleep
@@ -2478,16 +2478,16 @@ BattleScript_MoveUsedIsAsleep: @ 0x828979B
 BattleScript_MoveUsedWokeUp: @ 0x82897A8
 	.include "data/scripts/gUnknown_82897A8.inc"
 
-	.globl gUnknown_82897BC
-gUnknown_82897BC: @ 0x82897BC
+	.globl BattleScript_MonWokeUpInUproar
+BattleScript_MonWokeUpInUproar: @ 0x82897BC
 	.include "data/scripts/gUnknown_82897BC.inc"
 
-	.globl gUnknown_82897C5
-gUnknown_82897C5: @ 0x82897C5
+	.globl BattleScript_PoisonTurnDmg
+BattleScript_PoisonTurnDmg: @ 0x82897C5
 	.include "data/scripts/gUnknown_82897C5.inc"
 
-	.globl gUnknown_82897E7
-gUnknown_82897E7: @ 0x82897E7
+	.globl BattleScript_BurnTurnDmg
+BattleScript_BurnTurnDmg: @ 0x82897E7
 	.include "data/scripts/gUnknown_82897E7.inc"
 
 	.globl BattleScript_MoveUsedIsFrozen
@@ -2498,376 +2498,376 @@ BattleScript_MoveUsedIsFrozen: @ 0x82897F2
 BattleScript_MoveUsedUnfroze: @ 0x82897FF
 	.include "data/scripts/gUnknown_82897FF.inc"
 
-	.globl gUnknown_828980A
-gUnknown_828980A: @ 0x828980A
+	.globl BattleScript_DefrostedViaFireMove
+BattleScript_DefrostedViaFireMove: @ 0x828980A
 	.include "data/scripts/gUnknown_828980A.inc"
 
-	.globl gUnknown_8289813
-gUnknown_8289813: @ 0x8289813
+	.globl BattleScript_MoveUsedIsParalyzed
+BattleScript_MoveUsedIsParalyzed: @ 0x8289813
 	.include "data/scripts/gUnknown_8289813.inc"
 
-	.globl gUnknown_8289823
-gUnknown_8289823: @ 0x8289823
+	.globl BattleScript_MoveUsedFlinched
+BattleScript_MoveUsedFlinched: @ 0x8289823
 	.incbin "baserom_jp.gba", 0x289823, 0xb
 
-	.globl gUnknown_828982E
-gUnknown_828982E: @ 0x828982E
+	.globl BattleScript_PrintUproarOverTurns
+BattleScript_PrintUproarOverTurns: @ 0x828982E
 	.incbin "baserom_jp.gba", 0x28982e, 0x9
 
-	.globl gUnknown_8289837
-gUnknown_8289837: @ 0x8289837
+	.globl BattleScript_ThrashConfuses
+BattleScript_ThrashConfuses: @ 0x8289837
 	.include "data/scripts/gUnknown_8289837.inc"
 
-	.globl gUnknown_8289845
-gUnknown_8289845: @ 0x8289845
+	.globl BattleScript_MoveUsedIsConfused
+BattleScript_MoveUsedIsConfused: @ 0x8289845
 	.include "data/scripts/gUnknown_8289845.inc"
 
-	.globl gUnknown_8289888
-gUnknown_8289888: @ 0x8289888
+	.globl BattleScript_MoveUsedIsConfusedNoMore
+BattleScript_MoveUsedIsConfusedNoMore: @ 0x8289888
 	.incbin "baserom_jp.gba", 0x289888, 0x7
 
-	.globl gUnknown_828988F
-gUnknown_828988F: @ 0x828988F
+	.globl BattleScript_PrintPayDayMoneyString
+BattleScript_PrintPayDayMoneyString: @ 0x828988F
 	.incbin "baserom_jp.gba", 0x28988f, 0x7
 
-	.globl gUnknown_8289896
-gUnknown_8289896: @ 0x8289896
+	.globl BattleScript_WrapTurnDmg
+BattleScript_WrapTurnDmg: @ 0x8289896
 	.include "data/scripts/gUnknown_8289896.inc"
 
-	.globl gUnknown_82898A8
-gUnknown_82898A8: @ 0x82898A8
+	.globl BattleScript_WrapEnds
+BattleScript_WrapEnds: @ 0x82898A8
 	.incbin "baserom_jp.gba", 0x2898a8, 0x7
 
-	.globl gUnknown_82898AF
-gUnknown_82898AF: @ 0x82898AF
+	.globl BattleScript_MoveUsedIsInLove
+BattleScript_MoveUsedIsInLove: @ 0x82898AF
 	.include "data/scripts/gUnknown_82898AF.inc"
 
-	.globl gUnknown_82898BC
-gUnknown_82898BC: @ 0x82898BC
+	.globl BattleScript_MoveUsedIsInLoveCantAttack
+BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
 	.incbin "baserom_jp.gba", 0x2898bc, 0xb
 
-	.globl gUnknown_82898C7
-gUnknown_82898C7: @ 0x82898C7
+	.globl BattleScript_NightmareTurnDmg
+BattleScript_NightmareTurnDmg: @ 0x82898C7
 	.include "data/scripts/gUnknown_82898C7.inc"
 
-	.globl gUnknown_82898D8
-gUnknown_82898D8: @ 0x82898D8
+	.globl BattleScript_CurseTurnDmg
+BattleScript_CurseTurnDmg: @ 0x82898D8
 	.include "data/scripts/gUnknown_82898D8.inc"
 
-	.globl gUnknown_82898E9
-gUnknown_82898E9: @ 0x82898E9
+	.globl BattleScript_TargetPRLZHeal
+BattleScript_TargetPRLZHeal: @ 0x82898E9
 	.include "data/scripts/gUnknown_82898E9.inc"
 
-	.globl gUnknown_8289900
-gUnknown_8289900: @ 0x8289900
+	.globl BattleScript_YawnMakesAsleep
+BattleScript_YawnMakesAsleep: @ 0x8289900
 	.include "data/scripts/gUnknown_8289900.inc"
 
-	.globl gUnknown_82899AA
-gUnknown_82899AA: @ 0x82899AA
+	.globl BattleScript_ItemSteal
+BattleScript_ItemSteal: @ 0x82899AA
 	.include "data/scripts/gUnknown_82899AA.inc"
 
-	.globl gUnknown_82899B8
-gUnknown_82899B8: @ 0x82899B8
+	.globl BattleScript_DrizzleActivates
+BattleScript_DrizzleActivates: @ 0x82899B8
 	.include "data/scripts/gUnknown_82899B8.inc"
 
-	.globl gUnknown_82899CC
-gUnknown_82899CC: @ 0x82899CC
+	.globl BattleScript_SpeedBoostActivates
+BattleScript_SpeedBoostActivates: @ 0x82899CC
 	.include "data/scripts/gUnknown_82899CC.inc"
 
-	.globl gUnknown_82899DA
-gUnknown_82899DA: @ 0x82899DA
+	.globl BattleScript_TraceActivates
+BattleScript_TraceActivates: @ 0x82899DA
 	.include "data/scripts/gUnknown_82899DA.inc"
 
-	.globl gUnknown_82899E4
-gUnknown_82899E4: @ 0x82899E4
+	.globl BattleScript_RainDishActivates
+BattleScript_RainDishActivates: @ 0x82899E4
 	.include "data/scripts/gUnknown_82899E4.inc"
 
-	.globl gUnknown_82899F8
-gUnknown_82899F8: @ 0x82899F8
+	.globl BattleScript_SandstreamActivates
+BattleScript_SandstreamActivates: @ 0x82899F8
 	.include "data/scripts/gUnknown_82899F8.inc"
 
-	.globl gUnknown_8289A0C
-gUnknown_8289A0C: @ 0x8289A0C
+	.globl BattleScript_ShedSkinActivates
+BattleScript_ShedSkinActivates: @ 0x8289A0C
 	.include "data/scripts/gUnknown_8289A0C.inc"
 
-	.globl gUnknown_8289A31
-gUnknown_8289A31: @ 0x8289A31
+	.globl BattleScript_CastformChange
+BattleScript_CastformChange: @ 0x8289A31
 	.incbin "baserom_jp.gba", 0x289a31, 0xf
 
-	.globl gUnknown_8289A40
-gUnknown_8289A40: @ 0x8289A40
+	.globl BattleScript_IntimidateActivatesEnd3
+BattleScript_IntimidateActivatesEnd3: @ 0x8289A40
 	.include "data/scripts/gUnknown_8289A40.inc"
 
-	.globl gUnknown_8289A49
-gUnknown_8289A49: @ 0x8289A49
+	.globl BattleScript_IntimidateActivates
+BattleScript_IntimidateActivates: @ 0x8289A49
 	.include "data/scripts/gUnknown_8289A49.inc"
 
-	.globl gUnknown_8289AB2
-gUnknown_8289AB2: @ 0x8289AB2
+	.globl BattleScript_DroughtActivates
+BattleScript_DroughtActivates: @ 0x8289AB2
 	.include "data/scripts/gUnknown_8289AB2.inc"
 
-	.globl gUnknown_8289AC6
-gUnknown_8289AC6: @ 0x8289AC6
+	.globl BattleScript_TookAttack
+BattleScript_TookAttack: @ 0x8289AC6
 	.include "data/scripts/gUnknown_8289AC6.inc"
 
-	.globl gUnknown_8289ADA
-gUnknown_8289ADA: @ 0x8289ADA
+	.globl BattleScript_SturdyPreventsOHKO
+BattleScript_SturdyPreventsOHKO: @ 0x8289ADA
 	.include "data/scripts/gUnknown_8289ADA.inc"
 
-	.globl gUnknown_8289AE8
-gUnknown_8289AE8: @ 0x8289AE8
+	.globl BattleScript_DampStopsExplosion
+BattleScript_DampStopsExplosion: @ 0x8289AE8
 	.include "data/scripts/gUnknown_8289AE8.inc"
 
-	.globl gUnknown_8289AF6
-gUnknown_8289AF6: @ 0x8289AF6
+	.globl BattleScript_MoveHPDrain_PPLoss
+BattleScript_MoveHPDrain_PPLoss: @ 0x8289AF6
 	.include "data/scripts/gUnknown_8289AF6.inc"
 
-	.globl gUnknown_8289AF7
-gUnknown_8289AF7: @ 0x8289AF7
+	.globl BattleScript_MoveHPDrain
+BattleScript_MoveHPDrain: @ 0x8289AF7
 	.include "data/scripts/gUnknown_8289AF7.inc"
 
-	.globl gUnknown_8289B19
-gUnknown_8289B19: @ 0x8289B19
+	.globl BattleScript_MonMadeMoveUseless_PPLoss
+BattleScript_MonMadeMoveUseless_PPLoss: @ 0x8289B19
 	.include "data/scripts/gUnknown_8289B19.inc"
 
-	.globl gUnknown_8289B1A
-gUnknown_8289B1A: @ 0x8289B1A
+	.globl BattleScript_MonMadeMoveUseless
+BattleScript_MonMadeMoveUseless: @ 0x8289B1A
 	.include "data/scripts/gUnknown_8289B1A.inc"
 
-	.globl gUnknown_8289B2F
-gUnknown_8289B2F: @ 0x8289B2F
+	.globl BattleScript_FlashFireBoost_PPLoss
+BattleScript_FlashFireBoost_PPLoss: @ 0x8289B2F
 	.include "data/scripts/gUnknown_8289B2F.inc"
 
-	.globl gUnknown_8289B30
-gUnknown_8289B30: @ 0x8289B30
+	.globl BattleScript_FlashFireBoost
+BattleScript_FlashFireBoost: @ 0x8289B30
 	.include "data/scripts/gUnknown_8289B30.inc"
 
 	.globl BattleScript_AbilityNoStatLoss
 BattleScript_AbilityNoStatLoss: @ 0x8289B4F
 	.include "data/scripts/gUnknown_8289B4F.inc"
 
-	.globl gUnknown_8289B59
-gUnknown_8289B59: @ 0x8289B59
+	.globl BattleScript_BRNPrevention
+BattleScript_BRNPrevention: @ 0x8289B59
 	.incbin "baserom_jp.gba", 0x289b59, 0xc
 
-	.globl gUnknown_8289B65
-gUnknown_8289B65: @ 0x8289B65
+	.globl BattleScript_PRLZPrevention
+BattleScript_PRLZPrevention: @ 0x8289B65
 	.incbin "baserom_jp.gba", 0x289b65, 0xc
 
-	.globl gUnknown_8289B71
-gUnknown_8289B71: @ 0x8289B71
+	.globl BattleScript_PSNPrevention
+BattleScript_PSNPrevention: @ 0x8289B71
 	.incbin "baserom_jp.gba", 0x289b71, 0xc
 
-	.globl gUnknown_8289B7D
-gUnknown_8289B7D: @ 0x8289B7D
+	.globl BattleScript_ObliviousPreventsAttraction
+BattleScript_ObliviousPreventsAttraction: @ 0x8289B7D
 	.include "data/scripts/gUnknown_8289B7D.inc"
 
-	.globl gUnknown_8289B8B
-gUnknown_8289B8B: @ 0x8289B8B
+	.globl BattleScript_FlinchPrevention
+BattleScript_FlinchPrevention: @ 0x8289B8B
 	.include "data/scripts/gUnknown_8289B8B.inc"
 
-	.globl gUnknown_8289BA7
-gUnknown_8289BA7: @ 0x8289BA7
+	.globl BattleScript_SoundproofProtected
+BattleScript_SoundproofProtected: @ 0x8289BA7
 	.include "data/scripts/gUnknown_8289BA7.inc"
 
 	.globl BattleScript_AbilityNoSpecificStatLoss
 BattleScript_AbilityNoSpecificStatLoss: @ 0x8289BB7
 	.include "data/scripts/gUnknown_8289BB7.inc"
 
-	.globl gUnknown_8289BC7
-gUnknown_8289BC7: @ 0x8289BC7
+	.globl BattleScript_StickyHoldActivates
+BattleScript_StickyHoldActivates: @ 0x8289BC7
 	.include "data/scripts/gUnknown_8289BC7.inc"
 
-	.globl gUnknown_8289BD5
-gUnknown_8289BD5: @ 0x8289BD5
+	.globl BattleScript_ColorChangeActivates
+BattleScript_ColorChangeActivates: @ 0x8289BD5
 	.incbin "baserom_jp.gba", 0x289bd5, 0x7
 
-	.globl gUnknown_8289BDC
-gUnknown_8289BDC: @ 0x8289BDC
+	.globl BattleScript_RoughSkinActivates
+BattleScript_RoughSkinActivates: @ 0x8289BDC
 	.include "data/scripts/gUnknown_8289BDC.inc"
 
-	.globl gUnknown_8289BF7
-gUnknown_8289BF7: @ 0x8289BF7
+	.globl BattleScript_CuteCharmActivates
+BattleScript_CuteCharmActivates: @ 0x8289BF7
 	.include "data/scripts/gUnknown_8289BF7.inc"
 
-	.globl gUnknown_8289C04
-gUnknown_8289C04: @ 0x8289C04
+	.globl BattleScript_ApplySecondaryEffect
+BattleScript_ApplySecondaryEffect: @ 0x8289C04
 	.incbin "baserom_jp.gba", 0x289c04, 0x3
 
-	.globl gUnknown_8289C07
-gUnknown_8289C07: @ 0x8289C07
+	.globl BattleScript_SynchronizeActivates
+BattleScript_SynchronizeActivates: @ 0x8289C07
 	.incbin "baserom_jp.gba", 0x289c07, 0x3
 
-	.globl gUnknown_8289C0A
-gUnknown_8289C0A: @ 0x8289C0A
+	.globl BattleScript_NoItemSteal
+BattleScript_NoItemSteal: @ 0x8289C0A
 	.include "data/scripts/gUnknown_8289C0A.inc"
 
-	.globl gUnknown_8289C14
-gUnknown_8289C14: @ 0x8289C14
+	.globl BattleScript_AbilityCuredStatus
+BattleScript_AbilityCuredStatus: @ 0x8289C14
 	.include "data/scripts/gUnknown_8289C14.inc"
 
-	.globl gUnknown_8289C1D
-gUnknown_8289C1D: @ 0x8289C1D
+	.globl BattleScript_IgnoresWhileAsleep
+BattleScript_IgnoresWhileAsleep: @ 0x8289C1D
 	.include "data/scripts/gUnknown_8289C1D.inc"
 
-	.globl gUnknown_8289C2D
-gUnknown_8289C2D: @ 0x8289C2D
+	.globl BattleScript_IgnoresAndUsesRandomMove
+BattleScript_IgnoresAndUsesRandomMove: @ 0x8289C2D
 	.include "data/scripts/gUnknown_8289C2D.inc"
 
-	.globl gUnknown_8289C35
-gUnknown_8289C35: @ 0x8289C35
+	.globl BattleScript_MoveUsedLoafingAround
+BattleScript_MoveUsedLoafingAround: @ 0x8289C35
 	.include "data/scripts/gUnknown_8289C35.inc"
 
-	.globl gUnknown_8289C61
-gUnknown_8289C61: @ 0x8289C61
+	.globl BattleScript_IgnoresAndFallsAsleep
+BattleScript_IgnoresAndFallsAsleep: @ 0x8289C61
 	.include "data/scripts/gUnknown_8289C61.inc"
 
-	.globl gUnknown_8289C78
-gUnknown_8289C78: @ 0x8289C78
+	.globl BattleScript_IgnoresAndHitsItself
+BattleScript_IgnoresAndHitsItself: @ 0x8289C78
 	.include "data/scripts/gUnknown_8289C78.inc"
 
-	.globl gUnknown_8289C83
-gUnknown_8289C83: @ 0x8289C83
+	.globl BattleScript_SubstituteFade
+BattleScript_SubstituteFade: @ 0x8289C83
 	.include "data/scripts/gUnknown_8289C83.inc"
 
-	.globl gUnknown_8289C8E
-gUnknown_8289C8E: @ 0x8289C8E
+	.globl BattleScript_BerryCurePrlzEnd2
+BattleScript_BerryCurePrlzEnd2: @ 0x8289C8E
 	.incbin "baserom_jp.gba", 0x289c8e, 0x6
 
-	.globl gUnknown_8289C94
-gUnknown_8289C94: @ 0x8289C94
+	.globl BattleScript_BerryCureParRet
+BattleScript_BerryCureParRet: @ 0x8289C94
 	.include "data/scripts/gUnknown_8289C94.inc"
 
-	.globl gUnknown_8289CA6
-gUnknown_8289CA6: @ 0x8289CA6
+	.globl BattleScript_BerryCurePsnEnd2
+BattleScript_BerryCurePsnEnd2: @ 0x8289CA6
 	.incbin "baserom_jp.gba", 0x289ca6, 0x6
 
-	.globl gUnknown_8289CAC
-gUnknown_8289CAC: @ 0x8289CAC
+	.globl BattleScript_BerryCurePsnRet
+BattleScript_BerryCurePsnRet: @ 0x8289CAC
 	.include "data/scripts/gUnknown_8289CAC.inc"
 
-	.globl gUnknown_8289CBE
-gUnknown_8289CBE: @ 0x8289CBE
+	.globl BattleScript_BerryCureBrnEnd2
+BattleScript_BerryCureBrnEnd2: @ 0x8289CBE
 	.incbin "baserom_jp.gba", 0x289cbe, 0x6
 
-	.globl gUnknown_8289CC4
-gUnknown_8289CC4: @ 0x8289CC4
+	.globl BattleScript_BerryCureBrnRet
+BattleScript_BerryCureBrnRet: @ 0x8289CC4
 	.include "data/scripts/gUnknown_8289CC4.inc"
 
-	.globl gUnknown_8289CD6
-gUnknown_8289CD6: @ 0x8289CD6
+	.globl BattleScript_BerryCureFrzEnd2
+BattleScript_BerryCureFrzEnd2: @ 0x8289CD6
 	.include "data/scripts/gUnknown_8289CD6.inc"
 
-	.globl gUnknown_8289CDC
-gUnknown_8289CDC: @ 0x8289CDC
+	.globl BattleScript_BerryCureFrzRet
+BattleScript_BerryCureFrzRet: @ 0x8289CDC
 	.include "data/scripts/gUnknown_8289CDC.inc"
 
-	.globl gUnknown_8289CEE
-gUnknown_8289CEE: @ 0x8289CEE
+	.globl BattleScript_BerryCureSlpEnd2
+BattleScript_BerryCureSlpEnd2: @ 0x8289CEE
 	.incbin "baserom_jp.gba", 0x289cee, 0x6
 
-	.globl gUnknown_8289CF4
-gUnknown_8289CF4: @ 0x8289CF4
+	.globl BattleScript_BerryCureSlpRet
+BattleScript_BerryCureSlpRet: @ 0x8289CF4
 	.include "data/scripts/gUnknown_8289CF4.inc"
 
-	.globl gUnknown_8289D06
-gUnknown_8289D06: @ 0x8289D06
+	.globl BattleScript_BerryCureConfusionEnd2
+BattleScript_BerryCureConfusionEnd2: @ 0x8289D06
 	.include "data/scripts/gUnknown_8289D06.inc"
 
-	.globl gUnknown_8289D0C
-gUnknown_8289D0C: @ 0x8289D0C
+	.globl BattleScript_BerryCureConfusionRet
+BattleScript_BerryCureConfusionRet: @ 0x8289D0C
 	.include "data/scripts/gUnknown_8289D0C.inc"
 
-	.globl gUnknown_8289D1C
-gUnknown_8289D1C: @ 0x8289D1C
+	.globl BattleScript_BerryCureChosenStatusEnd2
+BattleScript_BerryCureChosenStatusEnd2: @ 0x8289D1C
 	.incbin "baserom_jp.gba", 0x289d1c, 0x6
 
-	.globl gUnknown_8289D22
-gUnknown_8289D22: @ 0x8289D22
+	.globl BattleScript_BerryCureChosenStatusRet
+BattleScript_BerryCureChosenStatusRet: @ 0x8289D22
 	.include "data/scripts/gUnknown_8289D22.inc"
 
-	.globl gUnknown_8289D36
-gUnknown_8289D36: @ 0x8289D36
+	.globl BattleScript_WhiteHerbEnd2
+BattleScript_WhiteHerbEnd2: @ 0x8289D36
 	.include "data/scripts/gUnknown_8289D36.inc"
 
-	.globl gUnknown_8289D3C
-gUnknown_8289D3C: @ 0x8289D3C
+	.globl BattleScript_WhiteHerbRet
+BattleScript_WhiteHerbRet: @ 0x8289D3C
 	.include "data/scripts/gUnknown_8289D3C.inc"
 
-	.globl gUnknown_8289D4C
-gUnknown_8289D4C: @ 0x8289D4C
+	.globl BattleScript_ItemHealHP_RemoveItem
+BattleScript_ItemHealHP_RemoveItem: @ 0x8289D4C
 	.include "data/scripts/gUnknown_8289D4C.inc"
 
-	.globl gUnknown_8289D69
-gUnknown_8289D69: @ 0x8289D69
+	.globl BattleScript_BerryPPHealEnd2
+BattleScript_BerryPPHealEnd2: @ 0x8289D69
 	.include "data/scripts/gUnknown_8289D69.inc"
 
-	.globl gUnknown_8289D79
-gUnknown_8289D79: @ 0x8289D79
+	.globl BattleScript_ItemHealHP_End2
+BattleScript_ItemHealHP_End2: @ 0x8289D79
 	.incbin "baserom_jp.gba", 0x289d79, 0x6
 
-	.globl gUnknown_8289D7F
-gUnknown_8289D7F: @ 0x8289D7F
+	.globl BattleScript_ItemHealHP_Ret
+BattleScript_ItemHealHP_Ret: @ 0x8289D7F
 	.include "data/scripts/gUnknown_8289D7F.inc"
 
 	.globl BattleScript_SelectingNotAllowedMoveChoiceItem
 BattleScript_SelectingNotAllowedMoveChoiceItem: @ 0x8289D9A
 	.incbin "baserom_jp.gba", 0x289d9a, 0x4
 
-	.globl gUnknown_8289D9E
-gUnknown_8289D9E: @ 0x8289D9E
+	.globl BattleScript_FocusBandActivates
+BattleScript_FocusBandActivates: @ 0x8289D9E
 	.include "data/scripts/gUnknown_8289D9E.inc"
 
-	.globl gUnknown_8289DAC
-gUnknown_8289DAC: @ 0x8289DAC
+	.globl BattleScript_BerryConfuseHealEnd2
+BattleScript_BerryConfuseHealEnd2: @ 0x8289DAC
 	.include "data/scripts/gUnknown_8289DAC.inc"
 
-	.globl gUnknown_8289DD6
-gUnknown_8289DD6: @ 0x8289DD6
+	.globl BattleScript_BerryStatRaiseEnd2
+BattleScript_BerryStatRaiseEnd2: @ 0x8289DD6
 	.include "data/scripts/gUnknown_8289DD6.inc"
 
-	.globl gUnknown_8289DF1
-gUnknown_8289DF1: @ 0x8289DF1
+	.globl BattleScript_BerryFocusEnergyEnd2
+BattleScript_BerryFocusEnergyEnd2: @ 0x8289DF1
 	.include "data/scripts/gUnknown_8289DF1.inc"
 
 	.globl gUnknown_8289E01
 gUnknown_8289E01: @ 0x8289E01
 	.incbin "baserom_jp.gba", 0x289e01, 0x4
 
-	.globl gUnknown_8289E05
-gUnknown_8289E05: @ 0x8289E05
+	.globl BattleScript_FlushMessageBox
+BattleScript_FlushMessageBox: @ 0x8289E05
 	.incbin "baserom_jp.gba", 0x289e05, 0x4
 
-	.globl gUnknown_8289E09
-gUnknown_8289E09: @ 0x8289E09
+	.globl BattleScript_PalacePrintFlavorText
+BattleScript_PalacePrintFlavorText: @ 0x8289E09
 	.include "data/scripts/gUnknown_8289E09.inc"
 
-	.globl gUnknown_8289E46
-gUnknown_8289E46: @ 0x8289E46
+	.globl BattleScript_ArenaTurnBeginning
+BattleScript_ArenaTurnBeginning: @ 0x8289E46
 	.include "data/scripts/gUnknown_8289E46.inc"
 
-	.globl gUnknown_8289E7B
-gUnknown_8289E7B: @ 0x8289E7B
+	.globl BattleScript_ArenaDoJudgment
+BattleScript_ArenaDoJudgment: @ 0x8289E7B
 	.include "data/scripts/gUnknown_8289E7B.inc"
 
 	.globl gUnknown_8289F42
 gUnknown_8289F42: @ 0x8289F42
 	.incbin "baserom_jp.gba", 0x289f42, 0x7
 
-	.globl gUnknown_8289F49
-gUnknown_8289F49: @ 0x8289F49
+	.globl BattleScript_PrintPlayerForfeited
+BattleScript_PrintPlayerForfeited: @ 0x8289F49
 	.incbin "baserom_jp.gba", 0x289f49, 0x7
 
-	.globl gUnknown_8289F50
-gUnknown_8289F50: @ 0x8289F50
+	.globl BattleScript_PrintPlayerForfeitedLinkBattle
+BattleScript_PrintPlayerForfeitedLinkBattle: @ 0x8289F50
 	.include "data/scripts/gUnknown_8289F50.inc"
 
 	.globl gUnknown_8289F5C
 gUnknown_8289F5C: @ 0x8289F5C
 	.include "data/scripts/gUnknown_8289F5C.inc"
 
-	.globl gUnknown_828A290
-gUnknown_828A290: @ 0x828A290
+	.globl gBattlescriptsForBallThrow
+gBattlescriptsForBallThrow: @ 0x828A290
 	.4byte gUnknown_828A2F0                  @ 000
 	.4byte gUnknown_828A2F0                  @ 001
 	.4byte gUnknown_828A2F0                  @ 002
@@ -2882,8 +2882,8 @@ gUnknown_828A290: @ 0x828A290
 	.4byte gUnknown_828A2F0                  @ 011
 	.4byte gUnknown_828A2F0                  @ 012
 
-	.globl gUnknown_828A2C4
-gUnknown_828A2C4: @ 0x828A2C4
+	.globl gBattlescriptsForUsingItem
+gBattlescriptsForUsingItem: @ 0x828A2C4
 	.4byte gUnknown_828A39A                  @ 000
 	.4byte gUnknown_828A3A4                  @ 001
 	.4byte gUnknown_828A3A4                  @ 002
@@ -2891,32 +2891,32 @@ gUnknown_828A2C4: @ 0x828A2C4
 	.4byte gUnknown_828A3F7                  @ 004
 	.4byte gUnknown_828A419                  @ 005
 
-	.globl gUnknown_828A2DC
-gUnknown_828A2DC: @ 0x828A2DC
+	.globl gBattlescriptsForRunningByItem
+gBattlescriptsForRunningByItem: @ 0x828A2DC
 	.4byte gUnknown_828A43B                  @ 000
 
-	.globl gUnknown_828A2E0
-gUnknown_828A2E0: @ 0x828A2E0
+	.globl gBattlescriptsForSafariActions
+gBattlescriptsForSafariActions: @ 0x828A2E0
 	.incbin "baserom_jp.gba", 0x28a2e0, 0x10
 gUnknown_828A2F0: @ 0x828A2F0
 	.include "data/scripts/gUnknown_828A2F0.inc"
 gUnknown_828A306: @ 0x828A306
 	.include "data/scripts/gUnknown_828A306.inc"
 
-	.globl gUnknown_828A30C
-gUnknown_828A30C: @ 0x828A30C
+	.globl BattleScript_SuccessBallThrow
+BattleScript_SuccessBallThrow: @ 0x828A30C
 	.include "data/scripts/gUnknown_828A30C.inc"
 
-	.globl gUnknown_828A352
-gUnknown_828A352: @ 0x828A352
+	.globl BattleScript_WallyBallThrow
+BattleScript_WallyBallThrow: @ 0x828A352
 	.include "data/scripts/gUnknown_828A352.inc"
 
-	.globl gUnknown_828A35C
-gUnknown_828A35C: @ 0x828A35C
+	.globl BattleScript_ShakeBallThrow
+BattleScript_ShakeBallThrow: @ 0x828A35C
 	.include "data/scripts/gUnknown_828A35C.inc"
 
-	.globl gUnknown_828A38A
-gUnknown_828A38A: @ 0x828A38A
+	.globl BattleScript_TrainerBallBlock
+BattleScript_TrainerBallBlock: @ 0x828A38A
 	.include "data/scripts/gUnknown_828A38A.inc"
 gUnknown_828A39A: @ 0x828A39A
 	.include "data/scripts/gUnknown_828A39A.inc"
