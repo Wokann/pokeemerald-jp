@@ -93,7 +93,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	lsls r3, r5, #4\n\t"
         "	b _081DA048\n\t"
         "	.align 2, 0\n\t"
-        "_081DA004: .4byte 0x020205AC\n\t"
+        "_081DA004: .4byte gSprites\n\t"
         "_081DA008:\n\t"
         "	ldr r2, _081DA01C\n\t"
         "	lsls r3, r5, #4\n\t"
@@ -105,7 +105,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	movs r1, #0x2d\n\t"
         "	b _081DA044\n\t"
         "	.align 2, 0\n\t"
-        "_081DA01C: .4byte 0x020205AC\n\t"
+        "_081DA01C: .4byte gSprites\n\t"
         "_081DA020:\n\t"
         "	ldr r2, _081DA030\n\t"
         "	lsls r3, r5, #4\n\t"
@@ -115,7 +115,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	movs r1, #0x59\n\t"
         "	b _081DA040\n\t"
         "	.align 2, 0\n\t"
-        "_081DA030: .4byte 0x020205AC\n\t"
+        "_081DA030: .4byte gSprites\n\t"
         "_081DA034:\n\t"
         "	ldr r2, _081DA090\n\t"
         "	lsls r3, r5, #4\n\t"
@@ -166,7 +166,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA090: .4byte 0x020205AC\n\t"
+        "_081DA090: .4byte gSprites\n\t"
         "_081DA094: .4byte 0x081DA099\n\t"
         ".syntax divided\n\t"
     );
@@ -304,7 +304,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	lsls r3, r6, #4\n\t"
         "	b _081DA1C2\n\t"
         "	.align 2, 0\n\t"
-        "_081DA180: .4byte 0x020205AC\n\t"
+        "_081DA180: .4byte gSprites\n\t"
         "_081DA184:\n\t"
         "	ldr r2, _081DA198\n\t"
         "	lsls r3, r6, #4\n\t"
@@ -316,7 +316,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	movs r1, #0x2d\n\t"
         "	b _081DA1C0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA198: .4byte 0x020205AC\n\t"
+        "_081DA198: .4byte gSprites\n\t"
         "_081DA19C:\n\t"
         "	ldr r2, _081DA1AC\n\t"
         "	lsls r3, r6, #4\n\t"
@@ -326,7 +326,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	movs r1, #0x59\n\t"
         "	b _081DA1BC\n\t"
         "	.align 2, 0\n\t"
-        "_081DA1AC: .4byte 0x020205AC\n\t"
+        "_081DA1AC: .4byte gSprites\n\t"
         "_081DA1B0:\n\t"
         "	ldr r2, _081DA204\n\t"
         "	lsls r3, r6, #4\n\t"
@@ -373,7 +373,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA204: .4byte 0x020205AC\n\t"
+        "_081DA204: .4byte gSprites\n\t"
         "_081DA208: .4byte 0x081DA20D\n\t"
         ".syntax divided\n\t"
     );
@@ -474,7 +474,7 @@ __attribute__((naked)) void sub_081DA270(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA2BC: .4byte 0x00002E90\n\t"
-        "_081DA2C0: .4byte 0x020205AC\n\t"
+        "_081DA2C0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -519,7 +519,7 @@ __attribute__((naked)) void sub_081DA2C4(void)
         "	movs r0, #1\n\t"
         "	b _081DA316\n\t"
         "	.align 2, 0\n\t"
-        "_081DA30C: .4byte 0x020205AC\n\t"
+        "_081DA30C: .4byte gSprites\n\t"
         "_081DA310: .4byte 0x08007141\n\t"
         "_081DA314:\n\t"
         "	movs r0, #0\n\t"
@@ -714,7 +714,7 @@ __attribute__((naked)) void Phase2Task_34(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA45C: .4byte 0x085FCA58\n\t"
-        "_081DA460: .4byte 0x03005B60\n\t"
+        "_081DA460: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -802,7 +802,7 @@ __attribute__((naked)) void sub_081DA4D0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA4FC: .4byte 0x02037C74\n\t"
+        "_081DA4FC: .4byte gPaletteFade\n\t"
         "_081DA500: .4byte 0x081DA42D\n\t"
         ".syntax divided\n\t"
     );
@@ -837,7 +837,7 @@ __attribute__((naked)) void Phase2Task_35(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA534: .4byte 0x085FCA6C\n\t"
-        "_081DA538: .4byte 0x03005B60\n\t"
+        "_081DA538: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -925,7 +925,7 @@ __attribute__((naked)) void sub_081DA5A8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA5D4: .4byte 0x02037C74\n\t"
+        "_081DA5D4: .4byte gPaletteFade\n\t"
         "_081DA5D8: .4byte 0x081DA505\n\t"
         ".syntax divided\n\t"
     );
@@ -960,7 +960,7 @@ __attribute__((naked)) void Phase2Task_36(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA60C: .4byte 0x085FCA80\n\t"
-        "_081DA610: .4byte 0x03005B60\n\t"
+        "_081DA610: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1058,7 +1058,7 @@ __attribute__((naked)) void sub_081DA694(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA6C0: .4byte 0x02037C74\n\t"
+        "_081DA6C0: .4byte gPaletteFade\n\t"
         "_081DA6C4: .4byte 0x081DA5DD\n\t"
         ".syntax divided\n\t"
     );
@@ -1093,7 +1093,7 @@ __attribute__((naked)) void Phase2Task_37(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA6F8: .4byte 0x085FCA94\n\t"
-        "_081DA6FC: .4byte 0x03005B60\n\t"
+        "_081DA6FC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1193,7 +1193,7 @@ __attribute__((naked)) void sub_081DA784(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA7B0: .4byte 0x02037C74\n\t"
+        "_081DA7B0: .4byte gPaletteFade\n\t"
         "_081DA7B4: .4byte 0x081DA6C9\n\t"
         ".syntax divided\n\t"
     );
@@ -1228,7 +1228,7 @@ __attribute__((naked)) void Phase2Task_38(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA7E8: .4byte 0x085FCAA8\n\t"
-        "_081DA7EC: .4byte 0x03005B60\n\t"
+        "_081DA7EC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1335,7 +1335,7 @@ __attribute__((naked)) void sub_081DA87C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA8A8: .4byte 0x02037C74\n\t"
+        "_081DA8A8: .4byte gPaletteFade\n\t"
         "_081DA8AC: .4byte 0x081DA7B9\n\t"
         ".syntax divided\n\t"
     );
@@ -1370,7 +1370,7 @@ __attribute__((naked)) void Phase2Task_39(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA8E0: .4byte 0x085FCABC\n\t"
-        "_081DA8E4: .4byte 0x03005B60\n\t"
+        "_081DA8E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1477,7 +1477,7 @@ __attribute__((naked)) void sub_081DA974(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DA9A0: .4byte 0x02037C74\n\t"
+        "_081DA9A0: .4byte gPaletteFade\n\t"
         "_081DA9A4: .4byte 0x081DA8B1\n\t"
         ".syntax divided\n\t"
     );
@@ -1512,7 +1512,7 @@ __attribute__((naked)) void Phase2Task_40(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DA9D8: .4byte 0x085FCAD0\n\t"
-        "_081DA9DC: .4byte 0x03005B60\n\t"
+        "_081DA9DC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1623,7 +1623,7 @@ __attribute__((naked)) void sub_081DAA74(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DAAA0: .4byte 0x02037C74\n\t"
+        "_081DAAA0: .4byte gPaletteFade\n\t"
         "_081DAAA4: .4byte 0x081DA9A9\n\t"
         ".syntax divided\n\t"
     );
@@ -1658,7 +1658,7 @@ __attribute__((naked)) void Phase2Task_41(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081DAAD8: .4byte 0x085FCAE4\n\t"
-        "_081DAADC: .4byte 0x03005B60\n\t"
+        "_081DAADC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1771,7 +1771,7 @@ __attribute__((naked)) void sub_081DAB78(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081DABA4: .4byte 0x02037C74\n\t"
+        "_081DABA4: .4byte gPaletteFade\n\t"
         "_081DABA8: .4byte 0x081DAAA9\n\t"
         ".syntax divided\n\t"
     );

@@ -196,10 +196,10 @@ __attribute__((naked)) void Task_HandleMonAnimation(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817F3E0: .4byte 0x03005B60\n\t"
+        "_0817F3E0: .4byte gTasks\n\t"
         "_0817F3E4: .4byte 0x08007141\n\t"
         "_0817F3E8: .4byte 0x085D34E8\n\t"
-        "_0817F3EC: .4byte 0x03001274\n\t"
+        "_0817F3EC: .4byte gUnknown_3001274\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -231,7 +231,7 @@ __attribute__((naked)) void LaunchAnimationTaskForFrontSprite(struct Sprite *spr
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817F41C: .4byte 0x0817F345\n\t"
-        "_0817F420: .4byte 0x03005B60\n\t"
+        "_0817F420: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -251,7 +251,7 @@ __attribute__((naked)) void StartMonSummaryAnimation(struct Sprite *sprite, u8 f
         "	str r1, [r0, #0x1c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0817F438: .4byte 0x03001274\n\t"
+        "_0817F438: .4byte gUnknown_3001274\n\t"
         "_0817F43C: .4byte 0x085D34E8\n\t"
         ".syntax divided\n\t"
     );
@@ -308,9 +308,9 @@ __attribute__((naked)) void LaunchAnimationTaskForBackSprite(struct Sprite *spri
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817F4A0: .4byte 0x0817F345\n\t"
-        "_0817F4A4: .4byte 0x03005B60\n\t"
-        "_0817F4A8: .4byte 0x02023D12\n\t"
-        "_0817F4AC: .4byte 0x02024190\n\t"
+        "_0817F4A4: .4byte gTasks\n\t"
+        "_0817F4A8: .4byte gBattlerPartyIndexes\n\t"
+        "_0817F4AC: .4byte gPlayerParty\n\t"
         "_0817F4B0: .4byte 0x085D378F\n\t"
         "_0817F4B4: .4byte 0x085D3744\n\t"
         ".syntax divided\n\t"
@@ -374,7 +374,7 @@ __attribute__((naked)) void SetAffineData(struct Sprite *sprite, s16 xScale, s16
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817F514: .4byte 0xFFFF0000\n\t"
-        "_0817F518: .4byte 0x02021B3C\n\t"
+        "_0817F518: .4byte gOamMatrices\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -408,7 +408,7 @@ __attribute__((naked)) void HandleStartAffineAnim(struct Sprite *sprite)
         "	b _0817F55C\n\t"
         "	.align 2, 0\n\t"
         "_0817F54C: .4byte 0x085D37C8\n\t"
-        "_0817F550: .4byte 0x03001274\n\t"
+        "_0817F550: .4byte gUnknown_3001274\n\t"
         "_0817F554:\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #0\n\t"
@@ -516,7 +516,7 @@ __attribute__((naked)) void sub_0817F5D0(u8 a0)
         "	movs r0, #1\n\t"
         "	b _0817F5FE\n\t"
         "	.align 2, 0\n\t"
-        "_0817F5F8: .4byte 0x03001240\n\t"
+        "_0817F5F8: .4byte gUnknown_3001240\n\t"
         "_0817F5FC:\n\t"
         "	movs r0, #0\n\t"
         "_0817F5FE:\n\t"
@@ -547,7 +547,7 @@ __attribute__((naked)) u8 AddNewAnim(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817F624: .4byte 0x03001270\n\t"
+        "_0817F624: .4byte gUnknown_3001270\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -588,7 +588,7 @@ __attribute__((naked)) void ResetSpriteAfterAnim(struct Sprite *sprite)
         "	adds r5, r1, #0\n\t"
         "	b _0817F67C\n\t"
         "	.align 2, 0\n\t"
-        "_0817F668: .4byte 0x03001274\n\t"
+        "_0817F668: .4byte gUnknown_3001274\n\t"
         "_0817F66C:\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r0, #0x3f\n\t"
@@ -1582,7 +1582,7 @@ __attribute__((naked)) void Twist(struct Sprite *sprite)
         "	strh r0, [r5]\n\t"
         "	b _0817FDA4\n\t"
         "	.align 2, 0\n\t"
-        "_0817FCFC: .4byte 0x03001240\n\t"
+        "_0817FCFC: .4byte gUnknown_3001240\n\t"
         "_0817FD00:\n\t"
         "	movs r1, #0x32\n\t"
         "	ldrsh r0, [r4, r1]\n\t"
@@ -1630,7 +1630,7 @@ __attribute__((naked)) void Twist(struct Sprite *sprite)
         "	strh r1, [r4, #0x32]\n\t"
         "	b _0817FD9E\n\t"
         "	.align 2, 0\n\t"
-        "_0817FD5C: .4byte 0x03001240\n\t"
+        "_0817FD5C: .4byte gUnknown_3001240\n\t"
         "_0817FD60:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0817F628\n\t"
@@ -1703,7 +1703,7 @@ __attribute__((naked)) void Anim_Twist(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817FDE0: .4byte 0x03001240\n\t"
+        "_0817FDE0: .4byte gUnknown_3001240\n\t"
         "_0817FDE4: .4byte 0x0817FCDD\n\t"
         ".syntax divided\n\t"
     );
@@ -1747,7 +1747,7 @@ __attribute__((naked)) void Spin(struct Sprite *sprite)
         "	str r0, [r4, #0x1c]\n\t"
         "	b _0817FE56\n\t"
         "	.align 2, 0\n\t"
-        "_0817FE30: .4byte 0x03001240\n\t"
+        "_0817FE30: .4byte gUnknown_3001240\n\t"
         "_0817FE34: .4byte 0x08184C35\n\t"
         "_0817FE38:\n\t"
         "	movs r2, #8\n\t"
@@ -1802,7 +1802,7 @@ __attribute__((naked)) void Anim_Spin_Long(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817FE94: .4byte 0x03001240\n\t"
+        "_0817FE94: .4byte gUnknown_3001240\n\t"
         "_0817FE98: .4byte 0x0817FDE9\n\t"
         ".syntax divided\n\t"
     );
@@ -1837,7 +1837,7 @@ __attribute__((naked)) void CircleCounterclockwise(struct Sprite *sprite)
         "	str r0, [r5, #0x1c]\n\t"
         "	b _0817FF16\n\t"
         "	.align 2, 0\n\t"
-        "_0817FED0: .4byte 0x03001240\n\t"
+        "_0817FED0: .4byte gUnknown_3001240\n\t"
         "_0817FED4: .4byte 0x08184C35\n\t"
         "_0817FED8:\n\t"
         "	movs r0, #0x32\n\t"
@@ -1887,7 +1887,7 @@ __attribute__((naked)) void CircleCounterclockwise(struct Sprite *sprite)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817FF34: .4byte 0x000001BF\n\t"
-        "_0817FF38: .4byte 0x03001240\n\t"
+        "_0817FF38: .4byte gUnknown_3001240\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1922,7 +1922,7 @@ __attribute__((naked)) void Anim_CircleCounterclockwise(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817FF74: .4byte 0x03001240\n\t"
+        "_0817FF74: .4byte gUnknown_3001240\n\t"
         "_0817FF78: .4byte 0x0817FE9D\n\t"
         ".syntax divided\n\t"
     );
@@ -3141,7 +3141,7 @@ __attribute__((naked)) void BounceRotateToSides(struct Sprite *sprite)
         "	str r0, [r4, #0x1c]\n\t"
         "	b _081808E6\n\t"
         "	.align 2, 0\n\t"
-        "_08180850: .4byte 0x03001240\n\t"
+        "_08180850: .4byte gUnknown_3001240\n\t"
         "_08180854: .4byte 0x085D37EE\n\t"
         "_08180858: .4byte 0x08184C35\n\t"
         "_0818085C:\n\t"
@@ -3256,7 +3256,7 @@ __attribute__((naked)) void Anim_BounceRotateToSides(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08180930: .4byte 0x03001240\n\t"
+        "_08180930: .4byte gUnknown_3001240\n\t"
         "_08180934: .4byte 0x081807AD\n\t"
         ".syntax divided\n\t"
     );
@@ -4371,7 +4371,7 @@ __attribute__((naked)) void Anim_TumblingFrontFlip(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081810B8: .4byte 0x03001240\n\t"
+        "_081810B8: .4byte gUnknown_3001240\n\t"
         "_081810BC: .4byte 0x081810C1\n\t"
         ".syntax divided\n\t"
     );
@@ -4397,7 +4397,7 @@ __attribute__((naked)) void TumblingFrontFlip(struct Sprite *sprite)
         "	strh r0, [r1]\n\t"
         "	b _081811F6\n\t"
         "	.align 2, 0\n\t"
-        "_081810E0: .4byte 0x03001240\n\t"
+        "_081810E0: .4byte gUnknown_3001240\n\t"
         "_081810E4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0817F5B8\n\t"
@@ -4519,7 +4519,7 @@ __attribute__((naked)) void TumblingFrontFlip(struct Sprite *sprite)
         "	strh r1, [r0]\n\t"
         "	b _081811DE\n\t"
         "	.align 2, 0\n\t"
-        "_081811D0: .4byte 0x03001240\n\t"
+        "_081811D0: .4byte gUnknown_3001240\n\t"
         "_081811D4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0817F628\n\t"
@@ -4809,7 +4809,7 @@ __attribute__((naked)) void SwingConcave(struct Sprite *sprite)
         "	strh r3, [r6, #0x32]\n\t"
         "	b _08181434\n\t"
         "	.align 2, 0\n\t"
-        "_081813E4: .4byte 0x03001240\n\t"
+        "_081813E4: .4byte gUnknown_3001240\n\t"
         "_081813E8:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_0817F628\n\t"
@@ -4885,7 +4885,7 @@ __attribute__((naked)) void Anim_SwingConcave_FastShort(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181478: .4byte 0x03001240\n\t"
+        "_08181478: .4byte gUnknown_3001240\n\t"
         "_0818147C: .4byte 0x08181381\n\t"
         ".syntax divided\n\t"
     );
@@ -4943,7 +4943,7 @@ __attribute__((naked)) void SwingConvex(struct Sprite *sprite)
         "	strh r3, [r6, #0x32]\n\t"
         "	b _08181536\n\t"
         "	.align 2, 0\n\t"
-        "_081814E4: .4byte 0x03001240\n\t"
+        "_081814E4: .4byte gUnknown_3001240\n\t"
         "_081814E8:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_0817F628\n\t"
@@ -5020,7 +5020,7 @@ __attribute__((naked)) void Anim_SwingConvex_FastShort(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181578: .4byte 0x03001240\n\t"
+        "_08181578: .4byte gUnknown_3001240\n\t"
         "_0818157C: .4byte 0x08181481\n\t"
         ".syntax divided\n\t"
     );
@@ -5224,7 +5224,7 @@ __attribute__((naked)) void DeepVerticalSquishBounce(struct Sprite *sprite)
         "	strh r0, [r1]\n\t"
         "	b _081817FC\n\t"
         "	.align 2, 0\n\t"
-        "_081816DC: .4byte 0x03001240\n\t"
+        "_081816DC: .4byte gUnknown_3001240\n\t"
         "_081816E0:\n\t"
         "	movs r1, #0x32\n\t"
         "	ldrsh r0, [r5, r1]\n\t"
@@ -5367,7 +5367,7 @@ __attribute__((naked)) void DeepVerticalSquishBounce(struct Sprite *sprite)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08181804: .4byte 0x08184C35\n\t"
-        "_08181808: .4byte 0x03001240\n\t"
+        "_08181808: .4byte gUnknown_3001240\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5397,7 +5397,7 @@ __attribute__((naked)) void Anim_DeepVerticalSquishBounce(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181838: .4byte 0x03001240\n\t"
+        "_08181838: .4byte gUnknown_3001240\n\t"
         "_0818183C: .4byte 0x081816BD\n\t"
         ".syntax divided\n\t"
     );
@@ -5570,7 +5570,7 @@ __attribute__((naked)) void Anim_HorizontalJumpsVerticalStretch(struct Sprite *s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0818195C: .4byte 0x03001240\n\t"
+        "_0818195C: .4byte gUnknown_3001240\n\t"
         "_08181960: .4byte 0x0000FFFF\n\t"
         "_08181964: .4byte 0x08181969\n\t"
         ".syntax divided\n\t"
@@ -5598,7 +5598,7 @@ __attribute__((naked)) void HorizontalJumpsVerticalStretch_0(struct Sprite *spri
         "	strh r0, [r1]\n\t"
         "	b _081819F0\n\t"
         "	.align 2, 0\n\t"
-        "_08181988: .4byte 0x03001240\n\t"
+        "_08181988: .4byte gUnknown_3001240\n\t"
         "_0818198C:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0817F5B8\n\t"
@@ -5771,7 +5771,7 @@ __attribute__((naked)) void HorizontalJumpsVerticalStretch_1(struct Sprite *spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181AD4: .4byte 0x03001240\n\t"
+        "_08181AD4: .4byte gUnknown_3001240\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5816,7 +5816,7 @@ __attribute__((naked)) void HorizontalJumpsVerticalStretch_2(struct Sprite *spri
         "	ldr r0, _08181B24\n\t"
         "	b _08181B30\n\t"
         "	.align 2, 0\n\t"
-        "_08181B20: .4byte 0x03001240\n\t"
+        "_08181B20: .4byte gUnknown_3001240\n\t"
         "_08181B24: .4byte 0x08181969\n\t"
         "_08181B28:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -5874,7 +5874,7 @@ __attribute__((naked)) void HorizontalJumpsVerticalStretch_2(struct Sprite *spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181B90: .4byte 0x03001240\n\t"
+        "_08181B90: .4byte gUnknown_3001240\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5929,7 +5929,7 @@ __attribute__((naked)) void RotateToSides(struct Sprite *sprite)
         "	strh r5, [r4, #0x3c]\n\t"
         "	b _08181BFE\n\t"
         "	.align 2, 0\n\t"
-        "_08181BF0: .4byte 0x03001240\n\t"
+        "_08181BF0: .4byte gUnknown_3001240\n\t"
         "_08181BF4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_0817F628\n\t"
@@ -5978,7 +5978,7 @@ __attribute__((naked)) void RotateToSides(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181C58: .4byte 0x03001240\n\t"
+        "_08181C58: .4byte gUnknown_3001240\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6008,7 +6008,7 @@ __attribute__((naked)) void Anim_RotateToSides_Fast(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08181C88: .4byte 0x03001240\n\t"
+        "_08181C88: .4byte gUnknown_3001240\n\t"
         "_08181C8C: .4byte 0x08181B95\n\t"
         ".syntax divided\n\t"
     );
@@ -8242,7 +8242,7 @@ __attribute__((naked)) void Anim_BounceRotateToSides_Small(struct Sprite *sprite
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182C58: .4byte 0x03001240\n\t"
+        "_08182C58: .4byte gUnknown_3001240\n\t"
         "_08182C5C: .4byte 0x081807AD\n\t"
         ".syntax divided\n\t"
     );
@@ -8385,7 +8385,7 @@ __attribute__((naked)) void Anim_Twist_Twice(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182D20: .4byte 0x03001240\n\t"
+        "_08182D20: .4byte gUnknown_3001240\n\t"
         "_08182D24: .4byte 0x0817FCDD\n\t"
         ".syntax divided\n\t"
     );
@@ -8421,7 +8421,7 @@ __attribute__((naked)) void Anim_CircleCounterclockwise_Slow(struct Sprite *spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182D60: .4byte 0x03001240\n\t"
+        "_08182D60: .4byte gUnknown_3001240\n\t"
         "_08182D64: .4byte 0x0817FE9D\n\t"
         ".syntax divided\n\t"
     );
@@ -8517,7 +8517,7 @@ __attribute__((naked)) void Anim_Spin(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182DEC: .4byte 0x03001240\n\t"
+        "_08182DEC: .4byte gUnknown_3001240\n\t"
         "_08182DF0: .4byte 0x0817FDE9\n\t"
         ".syntax divided\n\t"
     );
@@ -8550,7 +8550,7 @@ __attribute__((naked)) void Anim_TumblingFrontFlip_Twice(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182E24: .4byte 0x03001240\n\t"
+        "_08182E24: .4byte gUnknown_3001240\n\t"
         "_08182E28: .4byte 0x081810C1\n\t"
         ".syntax divided\n\t"
     );
@@ -8583,7 +8583,7 @@ __attribute__((naked)) void Anim_DeepVerticalSquishBounce_Twice(struct Sprite *s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182E5C: .4byte 0x03001240\n\t"
+        "_08182E5C: .4byte gUnknown_3001240\n\t"
         "_08182E60: .4byte 0x081816BD\n\t"
         ".syntax divided\n\t"
     );
@@ -8620,7 +8620,7 @@ __attribute__((naked)) void Anim_HorizontalJumpsVerticalStretch_Twice(struct Spr
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182EA0: .4byte 0x03001240\n\t"
+        "_08182EA0: .4byte gUnknown_3001240\n\t"
         "_08182EA4: .4byte 0x08181969\n\t"
         ".syntax divided\n\t"
     );
@@ -8651,7 +8651,7 @@ __attribute__((naked)) void Anim_RotateToSides(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182ED4: .4byte 0x03001240\n\t"
+        "_08182ED4: .4byte gUnknown_3001240\n\t"
         "_08182ED8: .4byte 0x08181B95\n\t"
         ".syntax divided\n\t"
     );
@@ -8684,7 +8684,7 @@ __attribute__((naked)) void Anim_RotateToSides_Twice(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182F0C: .4byte 0x03001240\n\t"
+        "_08182F0C: .4byte gUnknown_3001240\n\t"
         "_08182F10: .4byte 0x08181B95\n\t"
         ".syntax divided\n\t"
     );
@@ -8715,7 +8715,7 @@ __attribute__((naked)) void Anim_SwingConcave(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182F40: .4byte 0x03001240\n\t"
+        "_08182F40: .4byte gUnknown_3001240\n\t"
         "_08182F44: .4byte 0x08181381\n\t"
         ".syntax divided\n\t"
     );
@@ -8748,7 +8748,7 @@ __attribute__((naked)) void Anim_SwingConcave_Fast(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182F78: .4byte 0x03001240\n\t"
+        "_08182F78: .4byte gUnknown_3001240\n\t"
         "_08182F7C: .4byte 0x08181381\n\t"
         ".syntax divided\n\t"
     );
@@ -8779,7 +8779,7 @@ __attribute__((naked)) void Anim_SwingConvex(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182FAC: .4byte 0x03001240\n\t"
+        "_08182FAC: .4byte gUnknown_3001240\n\t"
         "_08182FB0: .4byte 0x08181481\n\t"
         ".syntax divided\n\t"
     );
@@ -8812,7 +8812,7 @@ __attribute__((naked)) void Anim_SwingConvex_Fast(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08182FE4: .4byte 0x03001240\n\t"
+        "_08182FE4: .4byte gUnknown_3001240\n\t"
         "_08182FE8: .4byte 0x08181481\n\t"
         ".syntax divided\n\t"
     );
@@ -9799,7 +9799,7 @@ __attribute__((naked)) void Anim_CircleCounterclockwise_Long(struct Sprite *spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08183680: .4byte 0x03001240\n\t"
+        "_08183680: .4byte gUnknown_3001240\n\t"
         "_08183684: .4byte 0x0817FE9D\n\t"
         ".syntax divided\n\t"
     );

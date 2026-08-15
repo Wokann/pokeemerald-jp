@@ -201,7 +201,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "bl ValidateEReaderTrainer\n\t"
         "b _0801D614\n\t"
         ".align 2, 0\n\t"
-        "_0801D5F8: .4byte 0x03005AF0\n\t"
+        "_0801D5F8: .4byte gSaveBlock2Ptr\n\t"
         "_0801D5FC: .4byte 0x00000BEC\n\t"
         "_0801D600:\n\t"
         "ldr r0, _0801D61C\n\t"
@@ -221,7 +221,7 @@ __attribute__((naked)) u32 mainseq_4(void *data)
         "pop {r1}\n\t"
         "bx r1\n\t"
         ".align 2, 0\n\t"
-        "_0801D61C: .4byte 0x0201C000\n\t"
+        "_0801D61C: .4byte gDecompressionBuffer\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -309,9 +309,9 @@ __attribute__((naked)) u32 mainseq_7(void *data)
         "pop {r1}\n\t"
         "bx r1\n\t"
         ".align 2, 0\n\t"
-        "_0801D698: .4byte 0x0201C000\n\t"
-        "_0801D69C: .4byte 0x03005AF0\n\t"
-        "_0801D6A0: .4byte 0x03005AEC\n\t"
+        "_0801D698: .4byte gDecompressionBuffer\n\t"
+        "_0801D69C: .4byte gSaveBlock2Ptr\n\t"
+        "_0801D6A0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -30,7 +30,7 @@ __attribute__((naked)) void DoWhiteOut(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08083FE0: .4byte 0x082428F1\n\t"
-        "_08083FE4: .4byte 0x03005AEC\n\t"
+        "_08083FE4: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -89,7 +89,7 @@ __attribute__((naked)) void Overworld_ResetStateAfterTeleport(void)
         "_0808405C: .4byte 0x0000088C\n\t"
         "_08084060: .4byte 0x00000889\n\t"
         "_08084064: .4byte 0x00000888\n\t"
-        "_08084068: .4byte 0x082428FC\n\t"
+        "_08084068: .4byte Common_EventScript_PkmnCenterNurse\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -265,9 +265,9 @@ __attribute__((naked)) u32 GetGameStat(u8 index)
         "	eors r0, r1\n\t"
         "	b _080841B2\n\t"
         "	.align 2, 0\n\t"
-        "_080841A4: .4byte 0x03005AEC\n\t"
+        "_080841A4: .4byte gSaveBlock1Ptr\n\t"
         "_080841A8: .4byte 0x0000159C\n\t"
-        "_080841AC: .4byte 0x03005AF0\n\t"
+        "_080841AC: .4byte gSaveBlock2Ptr\n\t"
         "_080841B0:\n\t"
         "	movs r0, #0\n\t"
         "_080841B2:\n\t"
@@ -304,9 +304,9 @@ __attribute__((naked)) void SetGameStat(u8 index, u32 value)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080841E0: .4byte 0x03005AEC\n\t"
+        "_080841E0: .4byte gSaveBlock1Ptr\n\t"
         "_080841E4: .4byte 0x0000159C\n\t"
-        "_080841E8: .4byte 0x03005AF0\n\t"
+        "_080841E8: .4byte gSaveBlock2Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -336,7 +336,7 @@ __attribute__((naked)) void ApplyNewEncryptionKeyToGameStats(u32 newKey)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084214: .4byte 0x03005AEC\n\t"
+        "_08084214: .4byte gSaveBlock1Ptr\n\t"
         "_08084218: .4byte 0x0000159C\n\t"
         ".syntax divided\n\t"
     );
@@ -376,9 +376,9 @@ __attribute__((naked)) void LoadObjEventTemplatesFromHeader(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808425C: .4byte 0x03005AEC\n\t"
+        "_0808425C: .4byte gSaveBlock1Ptr\n\t"
         "_08084260: .4byte 0x05000180\n\t"
-        "_08084264: .4byte 0x02036FB8\n\t"
+        "_08084264: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -408,8 +408,8 @@ __attribute__((naked)) void LoadSaveblockEventObjScripts(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084290: .4byte 0x02036FB8\n\t"
-        "_08084294: .4byte 0x03005AEC\n\t"
+        "_08084290: .4byte gMapHeader\n\t"
+        "_08084294: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -439,7 +439,7 @@ __attribute__((naked)) void SetObjEventTemplateCoords(u8 localId, s16 x, s16 y)
         "	strh r2, [r3, #6]\n\t"
         "	b _080842CC\n\t"
         "	.align 2, 0\n\t"
-        "_080842C0: .4byte 0x03005AEC\n\t"
+        "_080842C0: .4byte gSaveBlock1Ptr\n\t"
         "_080842C4:\n\t"
         "	adds r3, #0x18\n\t"
         "	adds r1, #1\n\t"
@@ -476,7 +476,7 @@ __attribute__((naked)) void SetObjEventTemplateMovementType(u8 localId, u8 movem
         "	strb r1, [r2, #9]\n\t"
         "	b _08084300\n\t"
         "	.align 2, 0\n\t"
-        "_080842F4: .4byte 0x03005AEC\n\t"
+        "_080842F4: .4byte gSaveBlock1Ptr\n\t"
         "_080842F8:\n\t"
         "	adds r2, #0x18\n\t"
         "	adds r3, #1\n\t"
@@ -508,7 +508,7 @@ __attribute__((naked)) void InitMapView(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808432C: .4byte 0x02036FB8\n\t"
+        "_0808432C: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -526,7 +526,7 @@ __attribute__((naked)) const struct MapLayout *GetMapLayout(void)
         "	movs r0, #0\n\t"
         "	b _0808434E\n\t"
         "	.align 2, 0\n\t"
-        "_08084340: .4byte 0x03005AEC\n\t"
+        "_08084340: .4byte gSaveBlock1Ptr\n\t"
         "_08084344:\n\t"
         "	ldr r0, _08084354\n\t"
         "	subs r1, #1\n\t"
@@ -569,12 +569,12 @@ __attribute__((naked)) void ApplyCurrentWarp(void)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084384: .4byte 0x02031F7C\n\t"
-        "_08084388: .4byte 0x03005AEC\n\t"
-        "_0808438C: .4byte 0x02031F84\n\t"
-        "_08084390: .4byte 0x02031F8C\n\t"
-        "_08084394: .4byte 0x0830FC88\n\t"
-        "_08084398: .4byte 0x02031F94\n\t"
+        "_08084384: .4byte gUnknown_2031F7C\n\t"
+        "_08084388: .4byte gSaveBlock1Ptr\n\t"
+        "_0808438C: .4byte gUnknown_2031F84\n\t"
+        "_08084390: .4byte gUnknown_2031F8C\n\t"
+        "_08084394: .4byte gUnknown_830FC88\n\t"
+        "_08084398: .4byte gUnknown_2031F94\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -683,7 +683,7 @@ __attribute__((naked)) struct MapHeader const *const GetDestinationWarpMapHeader
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08084430: .4byte 0x02031F84\n\t"
+        "_08084430: .4byte gUnknown_2031F84\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -725,9 +725,9 @@ __attribute__((naked)) void LoadCurrentMapData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084478: .4byte 0x02031F9C\n\t"
-        "_0808447C: .4byte 0x02036FB8\n\t"
-        "_08084480: .4byte 0x03005AEC\n\t"
+        "_08084478: .4byte gUnknown_2031F9C\n\t"
+        "_0808447C: .4byte gMapHeader\n\t"
+        "_08084480: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -763,8 +763,8 @@ __attribute__((naked)) void LoadSaveblockMapHeader(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080844BC: .4byte 0x02036FB8\n\t"
-        "_080844C0: .4byte 0x03005AEC\n\t"
+        "_080844BC: .4byte gMapHeader\n\t"
+        "_080844C0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -798,8 +798,8 @@ __attribute__((naked)) void SetPlayerCoordsFromWarp(void)
         "	strh r0, [r2, #2]\n\t"
         "	b _08084534\n\t"
         "	.align 2, 0\n\t"
-        "_080844F4: .4byte 0x03005AEC\n\t"
-        "_080844F8: .4byte 0x02036FB8\n\t"
+        "_080844F4: .4byte gSaveBlock1Ptr\n\t"
+        "_080844F8: .4byte gMapHeader\n\t"
         "_080844FC:\n\t"
         "	ldr r1, [r4]\n\t"
         "	ldrh r3, [r1, #8]\n\t"
@@ -835,7 +835,7 @@ __attribute__((naked)) void SetPlayerCoordsFromWarp(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808453C: .4byte 0x02036FB8\n\t"
+        "_0808453C: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -887,7 +887,7 @@ __attribute__((naked)) void SetWarpDestination(s8 mapGroup, s8 mapNum, s8 warpId
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808458C: .4byte 0x02031F84\n\t"
+        "_0808458C: .4byte gUnknown_2031F84\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -943,7 +943,7 @@ __attribute__((naked)) void SetDynamicWarp(s32 unused, s8 mapGroup, s8 mapNum, s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080845E0: .4byte 0x03005AEC\n\t"
+        "_080845E0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -977,7 +977,7 @@ __attribute__((naked)) void SetDynamicWarpWithCoords(s32 unused, s8 mapGroup, s8
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084618: .4byte 0x03005AEC\n\t"
+        "_08084618: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -995,8 +995,8 @@ __attribute__((naked)) void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808462C: .4byte 0x02031F84\n\t"
-        "_08084630: .4byte 0x03005AEC\n\t"
+        "_0808462C: .4byte gUnknown_2031F84\n\t"
+        "_08084630: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1049,8 +1049,8 @@ __attribute__((naked)) void SetWarpDestinationToLastHealLocation(void)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808467C: .4byte 0x02031F84\n\t"
-        "_08084680: .4byte 0x03005AEC\n\t"
+        "_0808467C: .4byte gUnknown_2031F84\n\t"
+        "_08084680: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1089,7 +1089,7 @@ __attribute__((naked)) void SetLastHealLocationWarp(u8 healLocationId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080846C0: .4byte 0x03005AEC\n\t"
+        "_080846C0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1151,8 +1151,8 @@ __attribute__((naked)) void UpdateEscapeWarp(s16 x, s16 y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084734: .4byte 0x02031F84\n\t"
-        "_08084738: .4byte 0x03005AEC\n\t"
+        "_08084734: .4byte gUnknown_2031F84\n\t"
+        "_08084738: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1191,7 +1191,7 @@ __attribute__((naked)) void SetEscapeWarp(s8 mapGroup, s8 mapNum, s8 warpId, s8 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084778: .4byte 0x03005AEC\n\t"
+        "_08084778: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1209,8 +1209,8 @@ __attribute__((naked)) void SetWarpDestinationToEscapeWarp(void)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808478C: .4byte 0x02031F84\n\t"
-        "_08084790: .4byte 0x03005AEC\n\t"
+        "_0808478C: .4byte gUnknown_2031F84\n\t"
+        "_08084790: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1247,7 +1247,7 @@ __attribute__((naked)) void SetFixedDiveWarp(s8 mapGroup, s8 mapNum, s8 warpId, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080847CC: .4byte 0x02031F8C\n\t"
+        "_080847CC: .4byte gUnknown_2031F8C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1264,8 +1264,8 @@ __attribute__((naked)) void SetWarpDestinationToDiveWarp(void)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080847E0: .4byte 0x02031F84\n\t"
-        "_080847E4: .4byte 0x02031F8C\n\t"
+        "_080847E0: .4byte gUnknown_2031F84\n\t"
+        "_080847E4: .4byte gUnknown_2031F8C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1302,7 +1302,7 @@ __attribute__((naked)) void SetFixedHoleWarp(s8 mapGroup, s8 mapNum, s8 warpId, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084820: .4byte 0x02031F94\n\t"
+        "_08084820: .4byte gUnknown_2031F94\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1331,9 +1331,9 @@ __attribute__((naked)) void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
         "	str r1, [r2, #4]\n\t"
         "	b _08084872\n\t"
         "	.align 2, 0\n\t"
-        "_0808484C: .4byte 0x02031F94\n\t"
-        "_08084850: .4byte 0x02031F84\n\t"
-        "_08084854: .4byte 0x02031F7C\n\t"
+        "_0808484C: .4byte gUnknown_2031F94\n\t"
+        "_08084850: .4byte gUnknown_2031F84\n\t"
+        "_08084854: .4byte gUnknown_2031F7C\n\t"
         "_08084858:\n\t"
         "	movs r0, #0\n\t"
         "	ldrsb r0, [r4, r0]\n\t"
@@ -1370,8 +1370,8 @@ __attribute__((naked)) void SetWarpDestinationToContinueGameWarp(void)
         "	str r1, [r2, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808488C: .4byte 0x02031F84\n\t"
-        "_08084890: .4byte 0x03005AEC\n\t"
+        "_0808488C: .4byte gUnknown_2031F84\n\t"
+        "_08084890: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1410,7 +1410,7 @@ __attribute__((naked)) void SetContinueGameWarp(s8 mapGroup, s8 mapNum, s8 warpI
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080848D0: .4byte 0x03005AEC\n\t"
+        "_080848D0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1449,7 +1449,7 @@ __attribute__((naked)) void SetContinueGameWarpToHealLocation(u8 healLocationId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084910: .4byte 0x03005AEC\n\t"
+        "_08084910: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1466,7 +1466,7 @@ __attribute__((naked)) void SetContinueGameWarpToDynamicWarp(int unused)
         "	str r1, [r2, #0x10]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084924: .4byte 0x03005AEC\n\t"
+        "_08084924: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1486,7 +1486,7 @@ __attribute__((naked)) const struct MapConnection *GetMapConnection(u8 dir)
         "	bne _08084944\n\t"
         "	b _08084958\n\t"
         "	.align 2, 0\n\t"
-        "_0808493C: .4byte 0x02036FB8\n\t"
+        "_0808493C: .4byte gMapHeader\n\t"
         "_08084940:\n\t"
         "	adds r0, r1, #0\n\t"
         "	b _0808495A\n\t"
@@ -1551,7 +1551,7 @@ __attribute__((naked)) bool8 SetDiveWarp(u8 dir, u16 x, u16 y)
         "	movs r0, #0\n\t"
         "	b _080849B6\n\t"
         "	.align 2, 0\n\t"
-        "_080849AC: .4byte 0x02031F8C\n\t"
+        "_080849AC: .4byte gUnknown_2031F8C\n\t"
         "_080849B0:\n\t"
         "	bl SetWarpDestinationToDiveWarp\n\t"
         "_080849B4:\n\t"
@@ -1690,8 +1690,8 @@ __attribute__((naked)) void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084AC0: .4byte 0x02036FB8\n\t"
-        "_08084AC4: .4byte 0x02031F9C\n\t"
+        "_08084AC0: .4byte gMapHeader\n\t"
+        "_08084AC4: .4byte gUnknown_2031F9C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1717,8 +1717,8 @@ __attribute__((naked)) void LoadMapFromWarp(bool32 a1)
         "	bl LoadBattlePyramidEventObjectTemplates\n\t"
         "	b _08084B0A\n\t"
         "	.align 2, 0\n\t"
-        "_08084AEC: .4byte 0x02031F78\n\t"
-        "_08084AF0: .4byte 0x02036FB8\n\t"
+        "_08084AEC: .4byte gUnknown_2031F78\n\t"
+        "_08084AF0: .4byte gMapHeader\n\t"
         "_08084AF4: .4byte 0x00000169\n\t"
         "_08084AF8:\n\t"
         "	bl InTrainerHill\n\t"
@@ -1779,8 +1779,8 @@ __attribute__((naked)) void LoadMapFromWarp(bool32 a1)
         "	bl InitBattlePyramidMap\n\t"
         "	b _08084BAE\n\t"
         "	.align 2, 0\n\t"
-        "_08084B8C: .4byte 0x02036FB8\n\t"
-        "_08084B90: .4byte 0x03005AEC\n\t"
+        "_08084B8C: .4byte gMapHeader\n\t"
+        "_08084B90: .4byte gSaveBlock1Ptr\n\t"
         "_08084B94: .4byte 0x00000888\n\t"
         "_08084B98: .4byte 0x00000169\n\t"
         "_08084B9C:\n\t"
@@ -1807,7 +1807,7 @@ __attribute__((naked)) void LoadMapFromWarp(bool32 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084BCC: .4byte 0x03005B20\n\t"
+        "_08084BCC: .4byte gBackupMapLayout\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1822,7 +1822,7 @@ __attribute__((naked)) void ResetInitialPlayerAvatarState(void)
         "	strb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084BDC: .4byte 0x02031FA0\n\t"
+        "_08084BDC: .4byte gUnknown_2031FA0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1843,7 +1843,7 @@ __attribute__((naked)) void StoreInitialPlayerAvatarState(void)
         "	movs r0, #2\n\t"
         "	b _08084C32\n\t"
         "	.align 2, 0\n\t"
-        "_08084BFC: .4byte 0x02031FA0\n\t"
+        "_08084BFC: .4byte gUnknown_2031FA0\n\t"
         "_08084C00:\n\t"
         "	movs r0, #4\n\t"
         "	bl TestPlayerAvatarFlags\n\t"
@@ -1919,7 +1919,7 @@ __attribute__((naked)) struct InitialPlayerAvatarState *GetInitialPlayerAvatarSt
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08084C88: .4byte 0x02031FA0\n\t"
+        "_08084C88: .4byte gUnknown_2031FA0\n\t"
         "_08084C8C: .4byte 0xFFFFFF00\n\t"
         "_08084C90: .4byte 0xFFFF00FF\n\t"
         ".syntax divided\n\t"
@@ -2112,7 +2112,7 @@ __attribute__((naked)) u16 GetCenterScreenMetatileBehavior(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08084DD8: .4byte 0x03005AEC\n\t"
+        "_08084DD8: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2131,7 +2131,7 @@ __attribute__((naked)) bool32 Overworld_IsBikingAllowed(void)
         "	movs r0, #1\n\t"
         "	b _08084DF6\n\t"
         "	.align 2, 0\n\t"
-        "_08084DF0: .4byte 0x02036FB8\n\t"
+        "_08084DF0: .4byte gMapHeader\n\t"
         "_08084DF4:\n\t"
         "	movs r0, #0\n\t"
         "_08084DF6:\n\t"
@@ -2157,8 +2157,8 @@ __attribute__((naked)) void SetDefaultFlashLevel(void)
         "	strb r1, [r0]\n\t"
         "	b _08084E46\n\t"
         "	.align 2, 0\n\t"
-        "_08084E10: .4byte 0x02036FB8\n\t"
-        "_08084E14: .4byte 0x03005AEC\n\t"
+        "_08084E10: .4byte gMapHeader\n\t"
+        "_08084E14: .4byte gSaveBlock1Ptr\n\t"
         "_08084E18:\n\t"
         "	ldr r0, _08084E30\n\t"
         "	bl FlagGet\n\t"
@@ -2173,7 +2173,7 @@ __attribute__((naked)) void SetDefaultFlashLevel(void)
         "	b _08084E46\n\t"
         "	.align 2, 0\n\t"
         "_08084E30: .4byte 0x00000888\n\t"
-        "_08084E34: .4byte 0x03005AEC\n\t"
+        "_08084E34: .4byte gSaveBlock1Ptr\n\t"
         "_08084E38:\n\t"
         "	ldr r0, _08084E4C\n\t"
         "	ldr r1, [r0]\n\t"
@@ -2186,8 +2186,8 @@ __attribute__((naked)) void SetDefaultFlashLevel(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084E4C: .4byte 0x03005AEC\n\t"
-        "_08084E50: .4byte 0x0852AB14\n\t"
+        "_08084E4C: .4byte gSaveBlock1Ptr\n\t"
+        "_08084E50: .4byte gMaxFlashLevel\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2214,8 +2214,8 @@ __attribute__((naked)) void SetFlashLevel(s32 flashLevel)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084E74: .4byte 0x0852AB14\n\t"
-        "_08084E78: .4byte 0x03005AEC\n\t"
+        "_08084E74: .4byte gMaxFlashLevel\n\t"
+        "_08084E78: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2231,7 +2231,7 @@ __attribute__((naked)) u8 GetFlashLevel(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084E88: .4byte 0x03005AEC\n\t"
+        "_08084E88: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2250,8 +2250,8 @@ __attribute__((naked)) void SetCurrentMapLayout(u16 mapLayoutId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08084EA0: .4byte 0x03005AEC\n\t"
-        "_08084EA4: .4byte 0x02036FB8\n\t"
+        "_08084EA0: .4byte gSaveBlock1Ptr\n\t"
+        "_08084EA4: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2264,7 +2264,7 @@ __attribute__((naked)) void SetObjectEventLoadFlag(u8 flag)
         "	strb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084EB0: .4byte 0x02031F78\n\t"
+        "_08084EB0: .4byte gUnknown_2031F78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2277,7 +2277,7 @@ __attribute__((naked)) u8 GetObjectEventLoadFlag(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08084EBC: .4byte 0x02031F78\n\t"
+        "_08084EBC: .4byte gUnknown_2031F78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2533,7 +2533,7 @@ __attribute__((naked)) u16 GetCurrLocationDefaultMusic(void)
         "	ldr r0, _08085060\n\t"
         "	b _08085098\n\t"
         "	.align 2, 0\n\t"
-        "_0808505C: .4byte 0x03005AEC\n\t"
+        "_0808505C: .4byte gSaveBlock1Ptr\n\t"
         "_08085060: .4byte 0x00000199\n\t"
         "_08085064:\n\t"
         "	ldr r4, _0808507C\n\t"
@@ -2548,7 +2548,7 @@ __attribute__((naked)) u16 GetCurrLocationDefaultMusic(void)
         "	adds r0, r1, #0\n\t"
         "	b _08085098\n\t"
         "	.align 2, 0\n\t"
-        "_0808507C: .4byte 0x03005AEC\n\t"
+        "_0808507C: .4byte gSaveBlock1Ptr\n\t"
         "_08085080: .4byte 0x00007FFF\n\t"
         "_08085084:\n\t"
         "	ldr r0, [r4]\n\t"
@@ -2586,7 +2586,7 @@ __attribute__((naked)) u16 GetWarpDestinationMusic(void)
         "	adds r0, r1, #0\n\t"
         "	b _080850DC\n\t"
         "	.align 2, 0\n\t"
-        "_080850B8: .4byte 0x02031F84\n\t"
+        "_080850B8: .4byte gUnknown_2031F84\n\t"
         "_080850BC: .4byte 0x00007FFF\n\t"
         "_080850C0:\n\t"
         "	ldr r0, _080850D4\n\t"
@@ -2599,7 +2599,7 @@ __attribute__((naked)) u16 GetWarpDestinationMusic(void)
         "	subs r0, #0x6e\n\t"
         "	b _080850DC\n\t"
         "	.align 2, 0\n\t"
-        "_080850D4: .4byte 0x03005AEC\n\t"
+        "_080850D4: .4byte gSaveBlock1Ptr\n\t"
         "_080850D8:\n\t"
         "	movs r0, #0xb4\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -2647,7 +2647,7 @@ __attribute__((naked)) void Overworld_PlaySpecialMapMusic(void)
         "	.align 2, 0\n\t"
         "_08085110: .4byte 0x000001BB\n\t"
         "_08085114: .4byte 0x0000FFFF\n\t"
-        "_08085118: .4byte 0x03005AEC\n\t"
+        "_08085118: .4byte gSaveBlock1Ptr\n\t"
         "_0808511C:\n\t"
         "	bl GetCurrentMapType\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2692,7 +2692,7 @@ __attribute__((naked)) void Overworld_SetSavedMusic(u16 songNum)
         "	strh r0, [r1, #0x2c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08085164: .4byte 0x03005AEC\n\t"
+        "_08085164: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2707,7 +2707,7 @@ __attribute__((naked)) void Overworld_ClearSavedMusic(void)
         "	strh r0, [r1, #0x2c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08085174: .4byte 0x03005AEC\n\t"
+        "_08085174: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2919,9 +2919,9 @@ __attribute__((naked)) void TryFadeOutOldMapMusic(void)
         "_080852EC: .4byte 0x00004001\n\t"
         "_080852F0: .4byte 0x0000016D\n\t"
         "_080852F4: .4byte 0x000040CA\n\t"
-        "_080852F8: .4byte 0x03005AEC\n\t"
+        "_080852F8: .4byte gSaveBlock1Ptr\n\t"
         "_080852FC: .4byte 0x0000FFFF\n\t"
-        "_08085300: .4byte 0x02031F84\n\t"
+        "_08085300: .4byte gUnknown_2031F84\n\t"
         "_08085304: .4byte 0x0035001D\n\t"
         ".syntax divided\n\t"
     );
@@ -3016,8 +3016,8 @@ __attribute__((naked)) void PlayAmbientCry(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808539C: .4byte 0x02031FA6\n\t"
-        "_080853A0: .4byte 0x02031FA4\n\t"
+        "_0808539C: .4byte gUnknown_2031FA6\n\t"
+        "_080853A0: .4byte gUnknown_2031FA4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3057,7 +3057,7 @@ __attribute__((naked)) void UpdateAmbientCry(s16 *state, u16 *delayCounter)
         "	movs r0, #4\n\t"
         "	b _08085486\n\t"
         "	.align 2, 0\n\t"
-        "_080853E8: .4byte 0x02031FA4\n\t"
+        "_080853E8: .4byte gUnknown_2031FA4\n\t"
         "_080853EC:\n\t"
         "	movs r0, #1\n\t"
         "	b _08085486\n\t"
@@ -3123,7 +3123,7 @@ __attribute__((naked)) void UpdateAmbientCry(s16 *state, u16 *delayCounter)
         "	movs r0, #3\n\t"
         "	b _08085486\n\t"
         "	.align 2, 0\n\t"
-        "_08085470: .4byte 0x02024190\n\t"
+        "_08085470: .4byte gPlayerParty\n\t"
         "_08085474:\n\t"
         "	ldrh r0, [r7]\n\t"
         "	subs r0, #1\n\t"
@@ -3168,8 +3168,8 @@ __attribute__((naked)) void ChooseAmbientCrySpecies(void)
         "	bl GetLocalWaterMon\n\t"
         "	b _080854CA\n\t"
         "	.align 2, 0\n\t"
-        "_080854BC: .4byte 0x03005AEC\n\t"
-        "_080854C0: .4byte 0x02031FA6\n\t"
+        "_080854BC: .4byte gSaveBlock1Ptr\n\t"
+        "_080854C0: .4byte gUnknown_2031FA6\n\t"
         "_080854C4:\n\t"
         "	ldr r0, _080854D4\n\t"
         "	bl GetLocalWildMon\n\t"
@@ -3179,8 +3179,8 @@ __attribute__((naked)) void ChooseAmbientCrySpecies(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080854D4: .4byte 0x02031FA6\n\t"
-        "_080854D8: .4byte 0x02031FA4\n\t"
+        "_080854D4: .4byte gUnknown_2031FA6\n\t"
+        "_080854D8: .4byte gUnknown_2031FA4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3237,7 +3237,7 @@ __attribute__((naked)) u8 GetCurrentMapType(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08085520: .4byte 0x03005AEC\n\t"
+        "_08085520: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3254,7 +3254,7 @@ __attribute__((naked)) u8 GetLastUsedWarpMapType(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08085534: .4byte 0x02031F7C\n\t"
+        "_08085534: .4byte gUnknown_2031F7C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3360,7 +3360,7 @@ __attribute__((naked)) mapsec_u8_t GetSavedWarpRegionMapSectionId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080855BC: .4byte 0x03005AEC\n\t"
+        "_080855BC: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3386,7 +3386,7 @@ __attribute__((naked)) mapsec_u8_t GetCurrentRegionMapSectionId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080855E4: .4byte 0x03005AEC\n\t"
+        "_080855E4: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3412,7 +3412,7 @@ __attribute__((naked)) u8 GetCurrentMapBattleScene(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808560C: .4byte 0x03005AEC\n\t"
+        "_0808560C: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3473,10 +3473,10 @@ __attribute__((naked)) void InitOverworldBgs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808568C: .4byte 0x0830FCF8\n\t"
-        "_08085690: .4byte 0x03005B00\n\t"
-        "_08085694: .4byte 0x03005AFC\n\t"
-        "_08085698: .4byte 0x03005B04\n\t"
+        "_0808568C: .4byte gUnknown_830FCF8\n\t"
+        "_08085690: .4byte gOverworldTilemapBuffer_Bg1\n\t"
+        "_08085694: .4byte gOverworldTilemapBuffer_Bg2\n\t"
+        "_08085698: .4byte gOverworldTilemapBuffer_Bg3\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3516,9 +3516,9 @@ __attribute__((naked)) void CleanupOverworldWindowsAndTilemaps(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080856DC: .4byte 0x03005B04\n\t"
-        "_080856E0: .4byte 0x03005AFC\n\t"
-        "_080856E4: .4byte 0x03005B00\n\t"
+        "_080856DC: .4byte gOverworldTilemapBuffer_Bg3\n\t"
+        "_080856E0: .4byte gOverworldTilemapBuffer_Bg2\n\t"
+        "_080856E4: .4byte gOverworldTilemapBuffer_Bg1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3550,7 +3550,7 @@ __attribute__((naked)) bool8 IsUpdateLinkStateCBActive(void)
         "	movs r0, #0\n\t"
         "	b _0808570E\n\t"
         "	.align 2, 0\n\t"
-        "_08085704: .4byte 0x03002360\n\t"
+        "_08085704: .4byte gMain\n\t"
         "_08085708: .4byte 0x0808653D\n\t"
         "_0808570C:\n\t"
         "	movs r0, #1\n\t"
@@ -3626,7 +3626,7 @@ __attribute__((naked)) void CB1_Overworld(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085784: .4byte 0x03002360\n\t"
+        "_08085784: .4byte gMain\n\t"
         "_08085788: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
     );
@@ -3689,7 +3689,7 @@ __attribute__((naked)) void CB2_Overworld(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080857EC: .4byte 0x02037C74\n\t"
+        "_080857EC: .4byte gPaletteFade\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3702,7 +3702,7 @@ __attribute__((naked)) void SetMainCallback1(MainCallback cb)
         "	str r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080857F8: .4byte 0x03002360\n\t"
+        "_080857F8: .4byte gMain\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3715,7 +3715,7 @@ __attribute__((naked)) void SetUnusedCallback(void *func)
         "	str r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08085804: .4byte 0x03000E0C\n\t"
+        "_08085804: .4byte gUnknown_3000E0C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3736,7 +3736,7 @@ __attribute__((naked)) bool8 RunFieldCallback(void)
         "	movs r0, #0\n\t"
         "	b _08085854\n\t"
         "	.align 2, 0\n\t"
-        "_08085820: .4byte 0x03005B10\n\t"
+        "_08085820: .4byte gFieldCallback2\n\t"
         "_08085824:\n\t"
         "	movs r1, #0\n\t"
         "	str r1, [r4]\n\t"
@@ -3744,7 +3744,7 @@ __attribute__((naked)) bool8 RunFieldCallback(void)
         "	str r1, [r0]\n\t"
         "	b _08085852\n\t"
         "	.align 2, 0\n\t"
-        "_08085830: .4byte 0x03005B0C\n\t"
+        "_08085830: .4byte gFieldCallback\n\t"
         "_08085834:\n\t"
         "	ldr r0, _08085844\n\t"
         "	ldr r0, [r0]\n\t"
@@ -3753,7 +3753,7 @@ __attribute__((naked)) bool8 RunFieldCallback(void)
         "	bl _call_via_r0\n\t"
         "	b _0808584C\n\t"
         "	.align 2, 0\n\t"
-        "_08085844: .4byte 0x03005B0C\n\t"
+        "_08085844: .4byte gFieldCallback\n\t"
         "_08085848:\n\t"
         "	bl FieldCB_DefaultWarpExit\n\t"
         "_0808584C:\n\t"
@@ -3767,7 +3767,7 @@ __attribute__((naked)) bool8 RunFieldCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808585C: .4byte 0x03005B0C\n\t"
+        "_0808585C: .4byte gFieldCallback\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3801,10 +3801,10 @@ __attribute__((naked)) void CB2_NewGame(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080858A8: .4byte 0x03005B0C\n\t"
+        "_080858A8: .4byte gFieldCallback\n\t"
         "_080858AC: .4byte 0x080FBD51\n\t"
-        "_080858B0: .4byte 0x03005B10\n\t"
-        "_080858B4: .4byte 0x03002798\n\t"
+        "_080858B0: .4byte gFieldCallback2\n\t"
+        "_080858B4: .4byte gUnknown_3002798\n\t"
         "_080858B8: .4byte 0x0808576D\n\t"
         "_080858BC: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
@@ -3853,8 +3853,8 @@ __attribute__((naked)) void CB2_WhiteOut(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085920: .4byte 0x03002360\n\t"
-        "_08085924: .4byte 0x03005B0C\n\t"
+        "_08085920: .4byte gMain\n\t"
+        "_08085924: .4byte gFieldCallback\n\t"
         "_08085928: .4byte 0x080AECC5\n\t"
         "_0808592C: .4byte 0x0808576D\n\t"
         "_08085930: .4byte 0x080857C5\n\t"
@@ -3881,7 +3881,7 @@ __attribute__((naked)) void CB2_LoadMap(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085958: .4byte 0x08137271\n\t"
-        "_0808595C: .4byte 0x03002360\n\t"
+        "_0808595C: .4byte gMain\n\t"
         "_08085960: .4byte 0x08085965\n\t"
         ".syntax divided\n\t"
     );
@@ -3902,7 +3902,7 @@ __attribute__((naked)) void CB2_LoadMap2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085980: .4byte 0x03002798\n\t"
+        "_08085980: .4byte gUnknown_3002798\n\t"
         "_08085984: .4byte 0x0808576D\n\t"
         "_08085988: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
@@ -3942,7 +3942,7 @@ __attribute__((naked)) void CB2_ReturnToFieldContestHall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080859D0: .4byte 0x03002360\n\t"
+        "_080859D0: .4byte gMain\n\t"
         "_080859D4: .4byte 0x0808576D\n\t"
         "_080859D8: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
@@ -3963,7 +3963,7 @@ __attribute__((naked)) void CB2_ReturnToFieldCableClub(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080859F4: .4byte 0x03005B0C\n\t"
+        "_080859F4: .4byte gFieldCallback\n\t"
         "_080859F8: .4byte 0x080AEC11\n\t"
         "_080859FC: .4byte 0x08085A01\n\t"
         ".syntax divided\n\t"
@@ -3989,7 +3989,7 @@ __attribute__((naked)) void CB2_LoadMapOnReturnToFieldCableClub(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085A24: .4byte 0x03002798\n\t"
+        "_08085A24: .4byte gUnknown_3002798\n\t"
         "_08085A28: .4byte 0x0808653D\n\t"
         "_08085A2C: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
@@ -4038,7 +4038,7 @@ __attribute__((naked)) void CB2_ReturnToFieldLocal(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085A78: .4byte 0x03002798\n\t"
+        "_08085A78: .4byte gUnknown_3002798\n\t"
         "_08085A7C: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
     );
@@ -4062,7 +4062,7 @@ __attribute__((naked)) void CB2_ReturnToFieldLink(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085AA0: .4byte 0x03002798\n\t"
+        "_08085AA0: .4byte gUnknown_3002798\n\t"
         "_08085AA4: .4byte 0x080857C5\n\t"
         ".syntax divided\n\t"
     );
@@ -4087,8 +4087,8 @@ __attribute__((naked)) void CB2_ReturnToFieldFromMultiplayer(void)
         "	b _08085AE0\n\t"
         "	.align 2, 0\n\t"
         "_08085ACC: .4byte 0x0808653D\n\t"
-        "_08085AD0: .4byte 0x0300319C\n\t"
-        "_08085AD4: .4byte 0x03005B0C\n\t"
+        "_08085AD0: .4byte gUnknown_300319C\n\t"
+        "_08085AD4: .4byte gFieldCallback\n\t"
         "_08085AD8: .4byte 0x080AEC11\n\t"
         "_08085ADC:\n\t"
         "	ldr r1, _08085AF4\n\t"
@@ -4101,7 +4101,7 @@ __attribute__((naked)) void CB2_ReturnToFieldFromMultiplayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085AF4: .4byte 0x03005B0C\n\t"
+        "_08085AF4: .4byte gFieldCallback\n\t"
         "_08085AF8: .4byte 0x080AEB11\n\t"
         ".syntax divided\n\t"
     );
@@ -4120,7 +4120,7 @@ __attribute__((naked)) void CB2_ReturnToFieldWithOpenMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085B10: .4byte 0x03005B10\n\t"
+        "_08085B10: .4byte gFieldCallback2\n\t"
         "_08085B14: .4byte 0x080AEFA1\n\t"
         ".syntax divided\n\t"
     );
@@ -4139,7 +4139,7 @@ __attribute__((naked)) void CB2_ReturnToFieldContinueScript(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085B2C: .4byte 0x03005B0C\n\t"
+        "_08085B2C: .4byte gFieldCallback\n\t"
         "_08085B30: .4byte 0x080AEA85\n\t"
         ".syntax divided\n\t"
     );
@@ -4159,7 +4159,7 @@ __attribute__((naked)) void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085B48: .4byte 0x03005B0C\n\t"
+        "_08085B48: .4byte gFieldCallback\n\t"
         "_08085B4C: .4byte 0x080AEA65\n\t"
         ".syntax divided\n\t"
     );
@@ -4178,7 +4178,7 @@ __attribute__((naked)) void CB2_ReturnToFieldFadeFromBlack(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085B64: .4byte 0x03005B0C\n\t"
+        "_08085B64: .4byte gFieldCallback\n\t"
         "_08085B68: .4byte 0x080AECC5\n\t"
         ".syntax divided\n\t"
     );
@@ -4206,7 +4206,7 @@ __attribute__((naked)) void FieldCB_FadeTryShowMapPopup(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085B94: .4byte 0x02036FB8\n\t"
+        "_08085B94: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4237,8 +4237,8 @@ __attribute__((naked)) void CB2_ContinueSavedGame(void)
         "	bl LoadBattlePyramidFloorEventObjectScripts\n\t"
         "	b _08085BEE\n\t"
         "	.align 2, 0\n\t"
-        "_08085BD0: .4byte 0x03005F50\n\t"
-        "_08085BD4: .4byte 0x02036FB8\n\t"
+        "_08085BD0: .4byte gSaveFileStatus\n\t"
+        "_08085BD4: .4byte gMapHeader\n\t"
         "_08085BD8: .4byte 0x00000169\n\t"
         "_08085BDC:\n\t"
         "	cmp r4, #0\n\t"
@@ -4262,7 +4262,7 @@ __attribute__((naked)) void CB2_ContinueSavedGame(void)
         "	bl InitBattlePyramidMap\n\t"
         "	b _08085C22\n\t"
         "	.align 2, 0\n\t"
-        "_08085C0C: .4byte 0x02036FB8\n\t"
+        "_08085C0C: .4byte gMapHeader\n\t"
         "_08085C10: .4byte 0x00000169\n\t"
         "_08085C14:\n\t"
         "	cmp r4, #0\n\t"
@@ -4301,7 +4301,7 @@ __attribute__((naked)) void CB2_ContinueSavedGame(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085C74: .4byte 0x03005B0C\n\t"
+        "_08085C74: .4byte gFieldCallback\n\t"
         "_08085C78: .4byte 0x08085B6D\n\t"
         "_08085C7C: .4byte 0x0808576D\n\t"
         ".syntax divided\n\t"
@@ -4330,7 +4330,7 @@ __attribute__((naked)) void FieldClearVBlankHBlankCallbacks(void)
         "	bl DisableInterrupts\n\t"
         "	b _08085CC6\n\t"
         "	.align 2, 0\n\t"
-        "_08085CA8: .4byte 0x0300319C\n\t"
+        "_08085CA8: .4byte gUnknown_300319C\n\t"
         "_08085CAC:\n\t"
         "	ldr r4, _08085CD8\n\t"
         "	ldrh r3, [r4]\n\t"
@@ -4411,7 +4411,7 @@ __attribute__((naked)) void InitCurrentFlashLevelScanlineEffect(void)
         "	bl ScanlineEffect_SetParams\n\t"
         "	b _08085D54\n\t"
         "	.align 2, 0\n\t"
-        "_08085D34: .4byte 0x0830FD08\n\t"
+        "_08085D34: .4byte gUnknown_830FD08\n\t"
         "_08085D38:\n\t"
         "	bl GetFlashLevel\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4428,7 +4428,7 @@ __attribute__((naked)) void InitCurrentFlashLevelScanlineEffect(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085D58: .4byte 0x0830FD08\n\t"
+        "_08085D58: .4byte gUnknown_830FD08\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4501,14 +4501,14 @@ __attribute__((naked)) bool32 LoadMapInStepsLink(u8 *a0)
         "	bl copy_map_tileset1_to_vram\n\t"
         "	b _08085E6A\n\t"
         "	.align 2, 0\n\t"
-        "_08085E08: .4byte 0x02036FB8\n\t"
+        "_08085E08: .4byte gMapHeader\n\t"
         "_08085E0C:\n\t"
         "	ldr r0, _08085E18\n\t"
         "	ldr r0, [r0]\n\t"
         "	bl copy_map_tileset2_to_vram\n\t"
         "	b _08085E6A\n\t"
         "	.align 2, 0\n\t"
-        "_08085E18: .4byte 0x02036FB8\n\t"
+        "_08085E18: .4byte gMapHeader\n\t"
         "_08085E1C:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4520,7 +4520,7 @@ __attribute__((naked)) bool32 LoadMapInStepsLink(u8 *a0)
         "	bl apply_map_tileset1_tileset2_palette\n\t"
         "	b _08085E6A\n\t"
         "	.align 2, 0\n\t"
-        "_08085E34: .4byte 0x02036FB8\n\t"
+        "_08085E34: .4byte gMapHeader\n\t"
         "_08085E38:\n\t"
         "	bl DrawWholeMapView\n\t"
         "	b _08085E6A\n\t"
@@ -4538,7 +4538,7 @@ __attribute__((naked)) bool32 LoadMapInStepsLink(u8 *a0)
         "	bl CreateWirelessStatusIndicatorSprite\n\t"
         "	b _08085E6A\n\t"
         "	.align 2, 0\n\t"
-        "_08085E5C: .4byte 0x0300319C\n\t"
+        "_08085E5C: .4byte gUnknown_300319C\n\t"
         "_08085E60:\n\t"
         "	bl map_post_load_hook_exec\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4628,14 +4628,14 @@ __attribute__((naked)) bool32 LoadMapInStepsLocal(u8 *a0, bool32 a1)
         "	bl copy_map_tileset1_to_vram\n\t"
         "	b _08085F86\n\t"
         "	.align 2, 0\n\t"
-        "_08085F1C: .4byte 0x02036FB8\n\t"
+        "_08085F1C: .4byte gMapHeader\n\t"
         "_08085F20:\n\t"
         "	ldr r0, _08085F2C\n\t"
         "	ldr r0, [r0]\n\t"
         "	bl copy_map_tileset2_to_vram\n\t"
         "	b _08085F86\n\t"
         "	.align 2, 0\n\t"
-        "_08085F2C: .4byte 0x02036FB8\n\t"
+        "_08085F2C: .4byte gMapHeader\n\t"
         "_08085F30:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4647,7 +4647,7 @@ __attribute__((naked)) bool32 LoadMapInStepsLocal(u8 *a0, bool32 a1)
         "	bl apply_map_tileset1_tileset2_palette\n\t"
         "	b _08085F86\n\t"
         "	.align 2, 0\n\t"
-        "_08085F48: .4byte 0x02036FB8\n\t"
+        "_08085F48: .4byte gMapHeader\n\t"
         "_08085F4C:\n\t"
         "	bl DrawWholeMapView\n\t"
         "	b _08085F86\n\t"
@@ -4669,7 +4669,7 @@ __attribute__((naked)) bool32 LoadMapInStepsLocal(u8 *a0, bool32 a1)
         "	bl ShowMapNamePopup\n\t"
         "	b _08085F86\n\t"
         "	.align 2, 0\n\t"
-        "_08085F78: .4byte 0x02036FB8\n\t"
+        "_08085F78: .4byte gMapHeader\n\t"
         "_08085F7C:\n\t"
         "	bl map_post_load_hook_exec\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4811,14 +4811,14 @@ __attribute__((naked)) bool32 ReturnToFieldLink(u8 *a0)
         "	bl copy_map_tileset1_to_vram\n\t"
         "	b _080860F6\n\t"
         "	.align 2, 0\n\t"
-        "_08086094: .4byte 0x02036FB8\n\t"
+        "_08086094: .4byte gMapHeader\n\t"
         "_08086098:\n\t"
         "	ldr r0, _080860A4\n\t"
         "	ldr r0, [r0]\n\t"
         "	bl copy_map_tileset2_to_vram\n\t"
         "	b _080860F6\n\t"
         "	.align 2, 0\n\t"
-        "_080860A4: .4byte 0x02036FB8\n\t"
+        "_080860A4: .4byte gMapHeader\n\t"
         "_080860A8:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4830,7 +4830,7 @@ __attribute__((naked)) bool32 ReturnToFieldLink(u8 *a0)
         "	bl apply_map_tileset1_tileset2_palette\n\t"
         "	b _080860F6\n\t"
         "	.align 2, 0\n\t"
-        "_080860C0: .4byte 0x02036FB8\n\t"
+        "_080860C0: .4byte gMapHeader\n\t"
         "_080860C4:\n\t"
         "	bl DrawWholeMapView\n\t"
         "	b _080860F6\n\t"
@@ -4848,7 +4848,7 @@ __attribute__((naked)) bool32 ReturnToFieldLink(u8 *a0)
         "	bl CreateWirelessStatusIndicatorSprite\n\t"
         "	b _080860F6\n\t"
         "	.align 2, 0\n\t"
-        "_080860E8: .4byte 0x0300319C\n\t"
+        "_080860E8: .4byte gUnknown_300319C\n\t"
         "_080860EC:\n\t"
         "	bl map_post_load_hook_exec\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5161,8 +5161,8 @@ __attribute__((naked)) void InitObjectEventsLink(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086360: .4byte 0x03005B4C\n\t"
-        "_08086364: .4byte 0x03005B48\n\t"
+        "_08086360: .4byte gTotalCameraPixelOffsetX\n\t"
+        "_08086364: .4byte gTotalCameraPixelOffsetY\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5208,9 +5208,9 @@ __attribute__((naked)) void InitObjectEventsLocal(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080863C0: .4byte 0x03005B4C\n\t"
-        "_080863C4: .4byte 0x03005B48\n\t"
-        "_080863C8: .4byte 0x03005AF0\n\t"
+        "_080863C0: .4byte gTotalCameraPixelOffsetX\n\t"
+        "_080863C4: .4byte gTotalCameraPixelOffsetY\n\t"
+        "_080863C8: .4byte gSaveBlock2Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5254,8 +5254,8 @@ __attribute__((naked)) void SetCameraToTrackPlayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086408: .4byte 0x02036FF0\n\t"
-        "_0808640C: .4byte 0x02037230\n\t"
+        "_08086408: .4byte gObjectEvents\n\t"
+        "_0808640C: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5274,7 +5274,7 @@ __attribute__((naked)) void SetCameraToTrackGuestPlayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086428: .4byte 0x03005B14\n\t"
+        "_08086428: .4byte gLocalLinkPlayerId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5293,7 +5293,7 @@ __attribute__((naked)) void SetCameraToTrackGuestPlayer_2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086444: .4byte 0x03005B14\n\t"
+        "_08086444: .4byte gLocalLinkPlayerId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5323,7 +5323,7 @@ __attribute__((naked)) void OffsetCameraFocusByLinkPlayerId(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086474: .4byte 0x03005B14\n\t"
+        "_08086474: .4byte gLocalLinkPlayerId\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5392,9 +5392,9 @@ __attribute__((naked)) void SpawnLinkPlayers(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080864F4: .4byte 0x03005B14\n\t"
-        "_080864F8: .4byte 0x03005B18\n\t"
-        "_080864FC: .4byte 0x020226A0\n\t"
+        "_080864F4: .4byte gLocalLinkPlayerId\n\t"
+        "_080864F8: .4byte gFieldLinkPlayerCount\n\t"
+        "_080864FC: .4byte gLinkPlayers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5431,8 +5431,8 @@ __attribute__((naked)) void CreateLinkPlayerSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086534: .4byte 0x03005B18\n\t"
-        "_08086538: .4byte 0x020226A0\n\t"
+        "_08086534: .4byte gFieldLinkPlayerCount\n\t"
+        "_08086538: .4byte gLinkPlayers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5471,10 +5471,10 @@ __attribute__((naked)) void CB1_OverworldLink(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086580: .4byte 0x0300319C\n\t"
-        "_08086584: .4byte 0x03005B14\n\t"
-        "_08086588: .4byte 0x030030C0\n\t"
-        "_0808658C: .4byte 0x03000E14\n\t"
+        "_08086580: .4byte gUnknown_300319C\n\t"
+        "_08086584: .4byte gLocalLinkPlayerId\n\t"
+        "_08086588: .4byte gLinkPartnersHeldKeys\n\t"
+        "_0808658C: .4byte gUnknown_3000E14\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5523,7 +5523,7 @@ __attribute__((naked)) void SetKeyInterceptCallback(u16 (*func)(u32))
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_080865C0: .4byte 0x03000E19\n\t"
-        "_080865C4: .4byte 0x03000E14\n\t"
+        "_080865C4: .4byte gUnknown_3000E14\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5550,7 +5550,7 @@ __attribute__((naked)) void CheckRfuKeepAliveTimer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080865EC: .4byte 0x0300319C\n\t"
+        "_080865EC: .4byte gUnknown_300319C\n\t"
         "_080865F0: .4byte 0x03000E19\n\t"
         ".syntax divided\n\t"
     );
@@ -5572,7 +5572,7 @@ __attribute__((naked)) void ResetAllPlayerLinkStates(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086608: .4byte 0x03000E10\n\t"
+        "_08086608: .4byte gUnknown_3000E10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5598,8 +5598,8 @@ __attribute__((naked)) bool8 AreAllPlayersInTradingState(void)
         "	movs r0, #0\n\t"
         "	b _0808663C\n\t"
         "	.align 2, 0\n\t"
-        "_0808662C: .4byte 0x03005B18\n\t"
-        "_08086630: .4byte 0x03000E10\n\t"
+        "_0808662C: .4byte gFieldLinkPlayerCount\n\t"
+        "_08086630: .4byte gUnknown_3000E10\n\t"
         "_08086634:\n\t"
         "	adds r1, #1\n\t"
         "	cmp r1, r2\n\t"
@@ -5636,8 +5636,8 @@ __attribute__((naked)) bool8 IsAnyPlayerInTradingState(void)
         "	movs r0, #1\n\t"
         "	b _08086674\n\t"
         "	.align 2, 0\n\t"
-        "_08086664: .4byte 0x03005B18\n\t"
-        "_08086668: .4byte 0x03000E10\n\t"
+        "_08086664: .4byte gFieldLinkPlayerCount\n\t"
+        "_08086668: .4byte gUnknown_3000E10\n\t"
         "_0808666C:\n\t"
         "	adds r1, #1\n\t"
         "	cmp r1, r2\n\t"
@@ -5695,7 +5695,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl InitMenuBasedScript\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_080866CC: .4byte 0x03000E10\n\t"
+        "_080866CC: .4byte gUnknown_3000E10\n\t"
         "_080866D0: .4byte 0x08086A5D\n\t"
         "_080866D4:\n\t"
         "	movs r0, #0x83\n\t"
@@ -5758,7 +5758,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl InitLinkRoomStartMenuScript\n\t"
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
-        "_08086764: .4byte 0x03000E10\n\t"
+        "_08086764: .4byte gUnknown_3000E10\n\t"
         "_08086768: .4byte 0x08086A5D\n\t"
         "_0808676C:\n\t"
         "	adds r0, r6, #0\n\t"
@@ -5777,7 +5777,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl CreateConfirmLeaveTradeRoomPrompt\n\t"
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
-        "_08086790: .4byte 0x03000E10\n\t"
+        "_08086790: .4byte gUnknown_3000E10\n\t"
         "_08086794: .4byte 0x08086A5D\n\t"
         "_08086798:\n\t"
         "	adds r0, r6, #0\n\t"
@@ -5798,7 +5798,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl sub_08086ECC\n\t"
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
-        "_080867C0: .4byte 0x03000E10\n\t"
+        "_080867C0: .4byte gUnknown_3000E10\n\t"
         "_080867C4: .4byte 0x08086A5D\n\t"
         "_080867C8:\n\t"
         "	adds r0, r6, #0\n\t"
@@ -5817,7 +5817,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl sub_08086E74\n\t"
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
-        "_080867EC: .4byte 0x03000E10\n\t"
+        "_080867EC: .4byte gUnknown_3000E10\n\t"
         "_080867F0: .4byte 0x08086A81\n\t"
         "_080867F4:\n\t"
         "	adds r0, r6, #0\n\t"
@@ -5844,7 +5844,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	beq _0808684C\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_08086828: .4byte 0x03000E10\n\t"
+        "_08086828: .4byte gUnknown_3000E10\n\t"
         "_0808682C: .4byte 0x08086AA5\n\t"
         "_08086830:\n\t"
         "	mov r1, r8\n\t"
@@ -5860,7 +5860,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	strb r1, [r0]\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_08086848: .4byte 0x03000E10\n\t"
+        "_08086848: .4byte gUnknown_3000E10\n\t"
         "_0808684C:\n\t"
         "	ldr r0, _08086858\n\t"
         "	adds r0, r7, r0\n\t"
@@ -5868,7 +5868,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	strb r1, [r0]\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_08086858: .4byte 0x03000E10\n\t"
+        "_08086858: .4byte gUnknown_3000E10\n\t"
         "_0808685C:\n\t"
         "	ldr r0, _08086874\n\t"
         "	adds r0, r7, r0\n\t"
@@ -5881,7 +5881,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl SetKeyInterceptCallback\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_08086874: .4byte 0x03000E10\n\t"
+        "_08086874: .4byte gUnknown_3000E10\n\t"
         "_08086878: .4byte 0x08086A15\n\t"
         "_0808687C:\n\t"
         "	ldr r0, _08086898\n\t"
@@ -5899,7 +5899,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086898: .4byte 0x03000E10\n\t"
+        "_08086898: .4byte gUnknown_3000E10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5957,7 +5957,7 @@ __attribute__((naked)) void UpdateAllLinkPlayers(u16 *a0, s32 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086900: .4byte 0x03000E10\n\t"
+        "_08086900: .4byte gUnknown_3000E10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5979,7 +5979,7 @@ __attribute__((naked)) void UpdateHeldKeyCode(u16 a0)
         "	b _0808692A\n\t"
         "	.align 2, 0\n\t"
         "_0808691C: .4byte 0xFFEF0000\n\t"
-        "_08086920: .4byte 0x03005B08\n\t"
+        "_08086920: .4byte gHeldKeyCodeToSend\n\t"
         "_08086924:\n\t"
         "	ldr r1, _08086968\n\t"
         "	movs r0, #0x11\n\t"
@@ -6015,8 +6015,8 @@ __attribute__((naked)) void UpdateHeldKeyCode(u16 a0)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086968: .4byte 0x03005B08\n\t"
-        "_0808696C: .4byte 0x0300319C\n\t"
+        "_08086968: .4byte gHeldKeyCodeToSend\n\t"
+        "_0808696C: .4byte gUnknown_300319C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6035,7 +6035,7 @@ __attribute__((naked)) u16 KeyInterCB_ReadButtons(u32 key)
         "	movs r0, #0x13\n\t"
         "	b _080869C8\n\t"
         "	.align 2, 0\n\t"
-        "_08086984: .4byte 0x03002360\n\t"
+        "_08086984: .4byte gMain\n\t"
         "_08086988:\n\t"
         "	movs r0, #0x80\n\t"
         "	ands r0, r1\n\t"
@@ -6299,8 +6299,8 @@ __attribute__((naked)) u16 KeyInterCB_Ready(u32 keyOrPlayerId)
         "	movs r0, #0x1d\n\t"
         "	b _08086B0A\n\t"
         "	.align 2, 0\n\t"
-        "_08086AF8: .4byte 0x03000E10\n\t"
-        "_08086AFC: .4byte 0x03002360\n\t"
+        "_08086AF8: .4byte gUnknown_3000E10\n\t"
+        "_08086AFC: .4byte gMain\n\t"
         "_08086B00: .4byte 0x08086AC9\n\t"
         "_08086B04:\n\t"
         "	bl CheckRfuKeepAliveTimer\n\t"
@@ -6365,7 +6365,7 @@ __attribute__((naked)) u16 KeyInterCB_WaitForPlayersToExit(u32 keyOrPlayerId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086B54: .4byte 0x03000E10\n\t"
+        "_08086B54: .4byte gUnknown_3000E10\n\t"
         "_08086B58: .4byte 0x082471F2\n\t"
         "_08086B5C: .4byte 0x08086B25\n\t"
         ".syntax divided\n\t"
@@ -6436,10 +6436,10 @@ __attribute__((naked)) u32 GetCableClubPartnersReady(void)
         "	movs r0, #2\n\t"
         "	b _08086BDC\n\t"
         "	.align 2, 0\n\t"
-        "_08086BB8: .4byte 0x03000E14\n\t"
+        "_08086BB8: .4byte gUnknown_3000E14\n\t"
         "_08086BBC: .4byte 0x08086AD5\n\t"
-        "_08086BC0: .4byte 0x03000E10\n\t"
-        "_08086BC4: .4byte 0x03005B14\n\t"
+        "_08086BC0: .4byte gUnknown_3000E10\n\t"
+        "_08086BC4: .4byte gLocalLinkPlayerId\n\t"
         "_08086BC8: .4byte 0x08086AC9\n\t"
         "_08086BCC:\n\t"
         "	movs r0, #0x82\n\t"
@@ -6586,7 +6586,7 @@ __attribute__((naked)) void LoadCableClubPlayer(s32 a0, s32 a1, struct CableClub
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086CA0: .4byte 0x02031FA8\n\t"
+        "_08086CA0: .4byte gLinkPlayerObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6763,11 +6763,11 @@ __attribute__((naked)) const u8 *TryInteractWithPlayer(struct CableClubPlayer *a
         "	ldr r0, _08086DB0\n\t"
         "	b _08086DDA\n\t"
         "	.align 2, 0\n\t"
-        "_08086D9C: .4byte 0x0830FCB0\n\t"
+        "_08086D9C: .4byte gDirectionToVectors\n\t"
         "_08086DA0: .4byte 0xFFFF0000\n\t"
         "_08086DA4: .4byte 0x0000FFFF\n\t"
         "_08086DA8: .4byte 0xFFFFFF00\n\t"
-        "_08086DAC: .4byte 0x03000E10\n\t"
+        "_08086DAC: .4byte gUnknown_3000E10\n\t"
         "_08086DB0: .4byte 0x0824717B\n\t"
         "_08086DB4:\n\t"
         "	adds r0, r2, #0\n\t"
@@ -6842,16 +6842,16 @@ __attribute__((naked)) u16 GetDirectionForEventScript(const u8 *a0)
         "	b _08086E6E\n\t"
         "	.align 2, 0\n\t"
         "_08086E30: .4byte 0x08247067\n\t"
-        "_08086E34: .4byte 0x08247082\n\t"
+        "_08086E34: .4byte Colosseum_ChooseHalfParty1\n\t"
         "_08086E38: .4byte 0x0824709D\n\t"
-        "_08086E3C: .4byte 0x082470B8\n\t"
-        "_08086E40: .4byte 0x082470FC\n\t"
+        "_08086E3C: .4byte Colosseum_ChooseHalfParty3\n\t"
+        "_08086E40: .4byte EventScript_MixRecordsSpot0\n\t"
         "_08086E44: .4byte 0x08247111\n\t"
-        "_08086E48: .4byte 0x08247126\n\t"
+        "_08086E48: .4byte EventScript_MixRecordsSpot2\n\t"
         "_08086E4C: .4byte 0x0824713B\n\t"
         "_08086E50: .4byte 0x08247053\n\t"
         "_08086E54: .4byte 0x0824705D\n\t"
-        "_08086E58: .4byte 0x082470D4\n\t"
+        "_08086E58: .4byte EventScript_TradeCenter_Chair0\n\t"
         "_08086E5C:\n\t"
         "	ldr r0, _08086E68\n\t"
         "	cmp r1, r0\n\t"
@@ -6859,7 +6859,7 @@ __attribute__((naked)) u16 GetDirectionForEventScript(const u8 *a0)
         "	movs r0, #0\n\t"
         "	b _08086E6E\n\t"
         "	.align 2, 0\n\t"
-        "_08086E68: .4byte 0x082470DE\n\t"
+        "_08086E68: .4byte EventScript_TradeCenter_Chair1\n\t"
         "_08086E6C:\n\t"
         "	movs r0, #9\n\t"
         "_08086E6E:\n\t"
@@ -6965,7 +6965,7 @@ __attribute__((naked)) void RunTerminateLinkScript(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086EF8: .4byte 0x082471E8\n\t"
+        "_08086EF8: .4byte CableClub_EventScript_ExitLinkRoom\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6988,7 +6988,7 @@ __attribute__((naked)) bool32 Overworld_IsRecvQueueAtMax(void)
         "	movs r0, #1\n\t"
         "	b _08086F20\n\t"
         "	.align 2, 0\n\t"
-        "_08086F18: .4byte 0x03000E18\n\t"
+        "_08086F18: .4byte gUnknown_3000E18\n\t"
         "_08086F1C:\n\t"
         "	ldr r1, _08086F28\n\t"
         "	movs r0, #0\n\t"
@@ -6999,7 +6999,7 @@ __attribute__((naked)) bool32 Overworld_IsRecvQueueAtMax(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086F28: .4byte 0x03000E18\n\t"
+        "_08086F28: .4byte gUnknown_3000E18\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7047,11 +7047,11 @@ __attribute__((naked)) bool32 Overworld_RecvKeysFromLinkIsRunning(void)
         "	movs r0, #1\n\t"
         "	b _08086F92\n\t"
         "	.align 2, 0\n\t"
-        "_08086F7C: .4byte 0x03000E14\n\t"
+        "_08086F7C: .4byte gUnknown_3000E14\n\t"
         "_08086F80: .4byte 0x08086A81\n\t"
         "_08086F84: .4byte 0x08086A5D\n\t"
-        "_08086F88: .4byte 0x03000E18\n\t"
-        "_08086F8C: .4byte 0x02037C74\n\t"
+        "_08086F88: .4byte gUnknown_3000E18\n\t"
+        "_08086F8C: .4byte gPaletteFade\n\t"
         "_08086F90:\n\t"
         "	movs r0, #0\n\t"
         "_08086F92:\n\t"
@@ -7085,7 +7085,7 @@ __attribute__((naked)) bool32 Overworld_SendKeysToLinkIsRunning(void)
         "	movs r0, #0\n\t"
         "	b _08086FCA\n\t"
         "	.align 2, 0\n\t"
-        "_08086FC0: .4byte 0x03000E14\n\t"
+        "_08086FC0: .4byte gUnknown_3000E14\n\t"
         "_08086FC4: .4byte 0x08086AA5\n\t"
         "_08086FC8:\n\t"
         "	movs r0, #1\n\t"
@@ -7112,7 +7112,7 @@ __attribute__((naked)) bool32 IsSendingKeysOverCable(void)
         "	movs r0, #1\n\t"
         "	b _08086FEE\n\t"
         "	.align 2, 0\n\t"
-        "_08086FE8: .4byte 0x0300319C\n\t"
+        "_08086FE8: .4byte gUnknown_300319C\n\t"
         "_08086FEC:\n\t"
         "	movs r0, #0\n\t"
         "_08086FEE:\n\t"
@@ -7138,8 +7138,8 @@ __attribute__((naked)) u32 GetLinkSendQueueLength(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0808701C\n\t"
         "	.align 2, 0\n\t"
-        "_08087008: .4byte 0x0300319C\n\t"
-        "_0808700C: .4byte 0x03003210\n\t"
+        "_08087008: .4byte gUnknown_300319C\n\t"
+        "_0808700C: .4byte gLink\n\t"
         "_08087010: .4byte 0x00000339\n\t"
         "_08087014:\n\t"
         "	ldr r0, _08087020\n\t"
@@ -7150,7 +7150,7 @@ __attribute__((naked)) u32 GetLinkSendQueueLength(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08087020: .4byte 0x030050A0\n\t"
+        "_08087020: .4byte gRfu\n\t"
         "_08087024: .4byte 0x000008D2\n\t"
         ".syntax divided\n\t"
     );
@@ -7181,7 +7181,7 @@ __attribute__((naked)) void ClearLinkPlayerObjectEvents(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08087040: .4byte 0x02031FA8\n\t"
+        "_08087040: .4byte gLinkPlayerObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7285,8 +7285,8 @@ __attribute__((naked)) void SpawnLinkPlayerEventObject(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080870F8: .4byte 0x02031FA8\n\t"
-        "_080870FC: .4byte 0x02036FF0\n\t"
+        "_080870F8: .4byte gLinkPlayerObjectEvents\n\t"
+        "_080870FC: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7354,8 +7354,8 @@ __attribute__((naked)) void SetLinkPlayerObjectRange(u8 linkPlayerId, u8 dir)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08087168: .4byte 0x02031FA8\n\t"
-        "_0808716C: .4byte 0x02036FF0\n\t"
+        "_08087168: .4byte gLinkPlayerObjectEvents\n\t"
+        "_0808716C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7396,9 +7396,9 @@ __attribute__((naked)) void DestroyLinkPlayerObject(u8 linkPlayerId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080871B0: .4byte 0x02031FA8\n\t"
-        "_080871B4: .4byte 0x02036FF0\n\t"
-        "_080871B8: .4byte 0x020205AC\n\t"
+        "_080871B0: .4byte gLinkPlayerObjectEvents\n\t"
+        "_080871B4: .4byte gObjectEvents\n\t"
+        "_080871B8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7420,8 +7420,8 @@ __attribute__((naked)) u8 GetSpriteForLinkedPlayer(u8 a0)
         "	ldrb r0, [r0, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080871D4: .4byte 0x02031FA8\n\t"
-        "_080871D8: .4byte 0x02036FF0\n\t"
+        "_080871D4: .4byte gLinkPlayerObjectEvents\n\t"
+        "_080871D8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7446,8 +7446,8 @@ __attribute__((naked)) void GetLinkPlayerCoords(u8 a0, s16 *a1, s16 *a2)
         "	strh r0, [r2]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080871FC: .4byte 0x02031FA8\n\t"
-        "_08087200: .4byte 0x02036FF0\n\t"
+        "_080871FC: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087200: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7469,8 +7469,8 @@ __attribute__((naked)) u8 GetLinkPlayerFacingDirection(u8 a0)
         "	ldrb r0, [r0, #0x19]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808721C: .4byte 0x02031FA8\n\t"
-        "_08087220: .4byte 0x02036FF0\n\t"
+        "_0808721C: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087220: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7494,8 +7494,8 @@ __attribute__((naked)) u8 GetLinkPlayerElevation(u8 a0)
         "	lsrs r0, r0, #0x1c\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08087240: .4byte 0x02031FA8\n\t"
-        "_08087244: .4byte 0x02036FF0\n\t"
+        "_08087240: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087244: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7521,8 +7521,8 @@ __attribute__((naked)) s16 GetLinkPlayerObjectStepTimer(u8 linkPlayerId)
         "	subs r0, r0, r1\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08087268: .4byte 0x02031FA8\n\t"
-        "_0808726C: .4byte 0x02036FF0\n\t"
+        "_08087268: .4byte gLinkPlayerObjectEvents\n\t"
+        "_0808726C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7567,8 +7567,8 @@ __attribute__((naked)) u8 GetLinkPlayerIdAt(s16 a0, s16 a1)
         "	adds r0, r2, #0\n\t"
         "	b _080872C8\n\t"
         "	.align 2, 0\n\t"
-        "_080872B4: .4byte 0x02031FA8\n\t"
-        "_080872B8: .4byte 0x02036FF0\n\t"
+        "_080872B4: .4byte gLinkPlayerObjectEvents\n\t"
+        "_080872B8: .4byte gObjectEvents\n\t"
         "_080872BC:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -7614,8 +7614,8 @@ __attribute__((naked)) void SetPlayerFacingDirection(u8 a0, u8 a1)
         "	strb r0, [r6]\n\t"
         "	b _0808732C\n\t"
         "	.align 2, 0\n\t"
-        "_08087300: .4byte 0x02031FA8\n\t"
-        "_08087304: .4byte 0x02036FF0\n\t"
+        "_08087300: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087304: .4byte gObjectEvents\n\t"
         "_08087308:\n\t"
         "	ldr r4, _08087334\n\t"
         "	ldr r1, _08087338\n\t"
@@ -7638,8 +7638,8 @@ __attribute__((naked)) void SetPlayerFacingDirection(u8 a0, u8 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08087334: .4byte 0x0830FD4C\n\t"
-        "_08087338: .4byte 0x0830FD14\n\t"
+        "_08087334: .4byte gUnknown_830FD4C\n\t"
+        "_08087338: .4byte gUnknown_830FD14\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7662,7 +7662,7 @@ __attribute__((naked)) u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEven
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08087358: .4byte 0x0830FD20\n\t"
+        "_08087358: .4byte gUnknown_830FD20\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7695,7 +7695,7 @@ __attribute__((naked)) u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808737C: .4byte 0x0830FD20\n\t"
+        "_0808737C: .4byte gUnknown_830FD20\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7943,7 +7943,7 @@ __attribute__((naked)) u8 LinkPlayerGetCollision(u8 a0, u8 a1, s16 a2, s16 a3)
         "	movs r0, #1\n\t"
         "	b _08087522\n\t"
         "	.align 2, 0\n\t"
-        "_08087508: .4byte 0x02036FF0\n\t"
+        "_08087508: .4byte gObjectEvents\n\t"
         "_0808750C:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -7998,8 +7998,8 @@ __attribute__((naked)) void CreateLinkPlayerSprite(u8 a0, u8 a1)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_08087564: .4byte 0x02031FA8\n\t"
-        "_08087568: .4byte 0x02036FF0\n\t"
+        "_08087564: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087568: .4byte gObjectEvents\n\t"
         "_0808756C: .4byte 0x08087570\n\t"
         "_08087570: @ jump table\n\t"
         "	.4byte _08087590 @ case 0\n\t"
@@ -8060,7 +8060,7 @@ __attribute__((naked)) void CreateLinkPlayerSprite(u8 a0, u8 a1)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080875E8: .4byte 0x080875F1\n\t"
-        "_080875EC: .4byte 0x020205AC\n\t"
+        "_080875EC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8115,8 +8115,8 @@ __attribute__((naked)) void SpriteCB_LinkPlayer(struct Sprite *sprite)
         "	bl StartSpriteAnim\n\t"
         "	b _0808766E\n\t"
         "	.align 2, 0\n\t"
-        "_08087654: .4byte 0x02031FA8\n\t"
-        "_08087658: .4byte 0x02036FF0\n\t"
+        "_08087654: .4byte gLinkPlayerObjectEvents\n\t"
+        "_08087658: .4byte gObjectEvents\n\t"
         "_0808765C:\n\t"
         "	ldrb r0, [r6, #0x19]\n\t"
         "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"

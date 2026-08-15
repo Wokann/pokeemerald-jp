@@ -41,9 +41,9 @@ __attribute__((naked)) void RemoveBagSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4578: .4byte 0x0203CB20\n\t"
+        "_080D4578: .4byte gUnknown_203CB20\n\t"
         "_080D457C: .4byte 0x00000804\n\t"
-        "_080D4580: .4byte 0x020205AC\n\t"
+        "_080D4580: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -73,7 +73,7 @@ __attribute__((naked)) void AddBagVisualSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D45B0: .4byte 0x0203CB20\n\t"
+        "_080D45B0: .4byte gUnknown_203CB20\n\t"
         "_080D45B4: .4byte 0x00000804\n\t"
         "_080D45B8: .4byte 0x0855A67C\n\t"
         ".syntax divided\n\t"
@@ -111,9 +111,9 @@ __attribute__((naked)) void SetBagVisualPocketId(void)
         "	bl StartSpriteAnim\n\t"
         "	b _080D4614\n\t"
         "	.align 2, 0\n\t"
-        "_080D45F4: .4byte 0x0203CB20\n\t"
+        "_080D45F4: .4byte gUnknown_203CB20\n\t"
         "_080D45F8: .4byte 0x00000804\n\t"
-        "_080D45FC: .4byte 0x020205AC\n\t"
+        "_080D45FC: .4byte gSprites\n\t"
         "_080D4600: .4byte 0x0000FFFB\n\t"
         "_080D4604: .4byte 0x080D4619\n\t"
         "_080D4608:\n\t"
@@ -193,9 +193,9 @@ __attribute__((naked)) void ShakeBagVisual(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4680: .4byte 0x0203CB20\n\t"
+        "_080D4680: .4byte gUnknown_203CB20\n\t"
         "_080D4684: .4byte 0x00000804\n\t"
-        "_080D4688: .4byte 0x020205AC\n\t"
+        "_080D4688: .4byte gSprites\n\t"
         "_080D468C: .4byte 0x080D4691\n\t"
         ".syntax divided\n\t"
     );
@@ -261,12 +261,12 @@ __attribute__((naked)) void AddSwitchPocketRotatingBallSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D46F8: .4byte 0x0203CB20\n\t"
+        "_080D46F8: .4byte gUnknown_203CB20\n\t"
         "_080D46FC: .4byte 0x00000805\n\t"
         "_080D4700: .4byte 0x0855A6D0\n\t"
         "_080D4704: .4byte 0x0855A6D8\n\t"
         "_080D4708: .4byte 0x0855A6E0\n\t"
-        "_080D470C: .4byte 0x020205AC\n\t"
+        "_080D470C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -422,9 +422,9 @@ __attribute__((naked)) void AddBagItemIconSprite(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4810: .4byte 0x0203CB20\n\t"
+        "_080D4810: .4byte gUnknown_203CB20\n\t"
         "_080D4814: .4byte 0x00000806\n\t"
-        "_080D4818: .4byte 0x020205AC\n\t"
+        "_080D4818: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -460,7 +460,7 @@ __attribute__((naked)) void sub_080D4830(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4844: .4byte 0x0203CB20\n\t"
+        "_080D4844: .4byte gUnknown_203CB20\n\t"
         "_080D4848: .4byte 0x00000808\n\t"
         ".syntax divided\n\t"
     );
@@ -483,7 +483,7 @@ __attribute__((naked)) void sub_080D484C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4868: .4byte 0x0203CB20\n\t"
+        "_080D4868: .4byte gUnknown_203CB20\n\t"
         "_080D486C: .4byte 0x00000808\n\t"
         ".syntax divided\n\t"
     );
@@ -511,7 +511,7 @@ __attribute__((naked)) void sub_080D4870(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4894: .4byte 0x0203CB20\n\t"
+        "_080D4894: .4byte gUnknown_203CB20\n\t"
         "_080D4898: .4byte 0x00000808\n\t"
         ".syntax divided\n\t"
     );
@@ -614,7 +614,7 @@ __attribute__((naked)) void LoadBerryGfx(void)
         "_080D4944: .4byte 0x0855A7C4\n\t"
         "_080D4948: .4byte 0xFFFF0000\n\t"
         "_080D494C: .4byte 0x00007544\n\t"
-        "_080D4950: .4byte 0x0201D000\n\t"
+        "_080D4950: .4byte gUnknown_201D000\n\t"
         "_080D4954: .4byte 0xFFFFF000\n\t"
         ".syntax divided\n\t"
     );
@@ -722,7 +722,7 @@ __attribute__((naked)) void LoadSpinningBerryPicGfx(void)
         "	.align 2, 0\n\t"
         "_080D4A04: .4byte 0x00007544\n\t"
         "_080D4A08: .4byte 0x0855A7AC\n\t"
-        "_080D4A0C: .4byte 0x020205AC\n\t"
+        "_080D4A0C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }

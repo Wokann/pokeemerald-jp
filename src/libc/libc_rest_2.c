@@ -9,7 +9,7 @@ __attribute__((naked)) int sub_0829B7CC(void *fd)
         "ldr r2, _0829B7D4\n\t"
         "b _0829B7E0\n\t"
         ".align 2, 0\n\t"
-        "_0829B7D4: .4byte 0x03001AB0\n\t"
+        "_0829B7D4: .4byte gUnknown_3001AB0\n\t"
         "_0829B7D8:\n\t"
         "adds r2, #8\n\t"
         "adds r1, #1\n\t"
@@ -41,8 +41,8 @@ __attribute__((naked)) void *sub_0829B7EC(void *fd)
         "ldr r0, _0829B804\n\t"
         "b _0829B82E\n\t"
         ".align 2, 0\n\t"
-        "_0829B800: .4byte 0x0203CF1C\n\t"
-        "_0829B804: .4byte 0x03001AA4\n\t"
+        "_0829B800: .4byte gUnknown_203CF1C\n\t"
+        "_0829B804: .4byte gUnknown_3001AA4\n\t"
         "_0829B808:\n\t"
         "ldr r0, [r1, #8]\n\t"
         "movs r3, #0xe\n\t"
@@ -52,7 +52,7 @@ __attribute__((naked)) void *sub_0829B7EC(void *fd)
         "ldr r0, _0829B818\n\t"
         "b _0829B82E\n\t"
         ".align 2, 0\n\t"
-        "_0829B818: .4byte 0x03001AA8\n\t"
+        "_0829B818: .4byte gUnknown_3001AA8\n\t"
         "_0829B81C:\n\t"
         "ldr r0, [r1, #0xc]\n\t"
         "movs r1, #0xe\n\t"
@@ -69,7 +69,7 @@ __attribute__((naked)) void *sub_0829B7EC(void *fd)
         "_0829B830:\n\t"
         "bx lr\n\t"
         ".align 2, 0\n\t"
-        "_0829B834: .4byte 0x03001AAC\n\t"
+        "_0829B834: .4byte gUnknown_3001AAC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -126,11 +126,11 @@ __attribute__((naked)) void initialise_monitor_handles(void)
         "add sp, #0xc\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829B894: .4byte 0x0890F34C\n\t"
-        "_0829B898: .4byte 0x03001AA4\n\t"
-        "_0829B89C: .4byte 0x03001AA8\n\t"
-        "_0829B8A0: .4byte 0x03001AAC\n\t"
-        "_0829B8A4: .4byte 0x03001AB0\n\t"
+        "_0829B894: .4byte gUnknown_890F34C\n\t"
+        "_0829B898: .4byte gUnknown_3001AA4\n\t"
+        "_0829B89C: .4byte gUnknown_3001AA8\n\t"
+        "_0829B8A0: .4byte gUnknown_3001AAC\n\t"
+        "_0829B8A4: .4byte gUnknown_3001AB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -250,7 +250,7 @@ __attribute__((naked)) int _read(int fd, void *ptr, unsigned int len)
         "_0829B94C:\n\t"
         "pop {r4, r5, r6, r7, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829B950: .4byte 0x03001AB0\n\t"
+        "_0829B950: .4byte gUnknown_3001AB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -326,7 +326,7 @@ __attribute__((naked)) int _swilseek(int fd, long ptr, int dir)
         "mov r8, r3\n\t"
         "pop {r4, r5, r6, r7, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829B9D4: .4byte 0x03001AB0\n\t"
+        "_0829B9D4: .4byte gUnknown_3001AB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -408,7 +408,7 @@ __attribute__((naked)) int _write(int fd, char *ptr, int len)
         "_0829BA4E:\n\t"
         "pop {r4, r5, r6, r7, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BA50: .4byte 0x03001AB0\n\t"
+        "_0829BA50: .4byte gUnknown_3001AB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -490,7 +490,7 @@ __attribute__((naked)) int _swiopen(const char *path, int flags, int mode)
         "adds r0, #0x20\n\t"
         "b _0829BAEA\n\t"
         ".align 2, 0\n\t"
-        "_0829BAE0: .4byte 0x03001AB0\n\t"
+        "_0829BAE0: .4byte gUnknown_3001AB0\n\t"
         "_0829BAE4:\n\t"
         "adds r0, r3, #0\n\t"
         "bl sub_0829B8BC\n\t"
@@ -547,7 +547,7 @@ __attribute__((naked)) int _swiclose(int fd)
         "add sp, #4\n\t"
         "pop {pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BB38: .4byte 0x03001AB0\n\t"
+        "_0829BB38: .4byte gUnknown_3001AB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -649,9 +649,9 @@ __attribute__((naked)) void *_sbrk(int incr)
         "adds r0, r5, #0\n\t"
         "pop {r4, r5, r6, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BBBC: .4byte 0x03001AA0\n\t"
-        "_0829BBC0: .4byte 0x088BA568\n\t"
-        "_0829BBC4: .4byte 0x0890F350\n\t"
+        "_0829BBBC: .4byte gUnknown_3001AA0\n\t"
+        "_0829BBC0: .4byte gUnknown_88BA568\n\t"
+        "_0829BBC4: .4byte gUnknown_890F350\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -773,7 +773,7 @@ __attribute__((naked)) int _write_r(void *ptr, int fd, char *buf, int len)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BC5C: .4byte 0x0300764C\n\t"
+        "_0829BC5C: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -857,7 +857,7 @@ __attribute__((naked)) int _close_r(void *ptr, int fd)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BCE0: .4byte 0x0300764C\n\t"
+        "_0829BCE0: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -870,7 +870,7 @@ __attribute__((naked)) int *__errno(void)
         "ldr r0, [r0]\n\t"
         "bx lr\n\t"
         ".align 2, 0\n\t"
-        "_0829BCEC: .4byte 0x0203CF1C\n\t"
+        "_0829BCEC: .4byte gUnknown_203CF1C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -900,7 +900,7 @@ __attribute__((naked)) int _fstat_r(void *ptr, int fd, void *st)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BD18: .4byte 0x0300764C\n\t"
+        "_0829BD18: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -973,7 +973,7 @@ __attribute__((naked)) int _lseek_r(void *ptr, int fd, long off, int dir)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BD70: .4byte 0x0300764C\n\t"
+        "_0829BD70: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1004,7 +1004,7 @@ __attribute__((naked)) int _read_r(void *ptr, int fd, void *buf, int len)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829BDA0: .4byte 0x0300764C\n\t"
+        "_0829BDA0: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }

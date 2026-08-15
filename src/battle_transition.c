@@ -36,7 +36,7 @@ __attribute__((naked)) void CB2_TestBattleTransition(void)
         "	strb r0, [r4]\n\t"
         "	b _08145F80\n\t"
         "	.align 2, 0\n\t"
-        "_08145F68: .4byte 0x0300120A\n\t"
+        "_08145F68: .4byte gUnknown_300120A\n\t"
         "_08145F6C:\n\t"
         "	bl IsBattleTransitionDone\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -72,7 +72,7 @@ __attribute__((naked)) void TestBattleTransition(u8 transitionId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08145FAC: .4byte 0x0300120A\n\t"
+        "_08145FAC: .4byte gUnknown_300120A\n\t"
         "_08145FB0: .4byte 0x08145F45\n\t"
         ".syntax divided\n\t"
     );
@@ -92,7 +92,7 @@ __attribute__((naked)) void BattleTransition_StartOnField(u8 transitionId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08145FC8: .4byte 0x03002360\n\t"
+        "_08145FC8: .4byte gMain\n\t"
         "_08145FCC: .4byte 0x080857B9\n\t"
         ".syntax divided\n\t"
     );
@@ -136,7 +136,7 @@ __attribute__((naked)) bool8 IsBattleTransitionDone(void)
         "	b _08146020\n\t"
         "	.align 2, 0\n\t"
         "_08146004: .4byte 0x08146069\n\t"
-        "_08146008: .4byte 0x03005B60\n\t"
+        "_08146008: .4byte gTasks\n\t"
         "_0814600C:\n\t"
         "	adds r0, r2, #0\n\t"
         "	bl DestroyTask\n\t"
@@ -151,7 +151,7 @@ __attribute__((naked)) bool8 IsBattleTransitionDone(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146028: .4byte 0x0203A86C\n\t"
+        "_08146028: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -184,8 +184,8 @@ __attribute__((naked)) void LaunchBattleTransitionTask(u8 a0)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814605C: .4byte 0x08146069\n\t"
-        "_08146060: .4byte 0x03005B60\n\t"
-        "_08146064: .4byte 0x0203A86C\n\t"
+        "_08146060: .4byte gTasks\n\t"
+        "_08146064: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -219,7 +219,7 @@ __attribute__((naked)) void Task_BattleTransition(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08146098: .4byte 0x085A8548\n\t"
-        "_0814609C: .4byte 0x03005B60\n\t"
+        "_0814609C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -248,8 +248,8 @@ __attribute__((naked)) bool8 Transition_StartIntro(struct Task *task)
         "	movs r0, #1\n\t"
         "	b _081460EA\n\t"
         "	.align 2, 0\n\t"
-        "_081460CC: .4byte 0x020377B4\n\t"
-        "_081460D0: .4byte 0x020373B4\n\t"
+        "_081460CC: .4byte gPlttBufferFaded\n\t"
+        "_081460D0: .4byte gPlttBufferUnfaded\n\t"
         "_081460D4: .4byte 0x04000100\n\t"
         "_081460D8: .4byte 0x085A83F8\n\t"
         "_081460DC:\n\t"
@@ -391,7 +391,7 @@ __attribute__((naked)) void Task_Intro(u8 taskId)
         "	bl CreatePhase1Task\n\t"
         "	b _081461C4\n\t"
         "	.align 2, 0\n\t"
-        "_081461B0: .4byte 0x03005B60\n\t"
+        "_081461B0: .4byte gTasks\n\t"
         "_081461B4:\n\t"
         "	bl IsPhase1Done\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -437,7 +437,7 @@ __attribute__((naked)) void Task_Blur(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081461FC: .4byte 0x085A8558\n\t"
-        "_08146200: .4byte 0x03005B60\n\t"
+        "_08146200: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -550,7 +550,7 @@ __attribute__((naked)) bool8 Blur_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081462BC: .4byte 0x02037C74\n\t"
+        "_081462BC: .4byte gPaletteFade\n\t"
         "_081462C0: .4byte 0x081461CD\n\t"
         ".syntax divided\n\t"
     );
@@ -585,7 +585,7 @@ __attribute__((naked)) void Task_Swirl(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081462F4: .4byte 0x085A8564\n\t"
-        "_081462F8: .4byte 0x03005B60\n\t"
+        "_081462F8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -633,8 +633,8 @@ __attribute__((naked)) bool8 Swirl_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146358: .4byte 0x02039048\n\t"
-        "_0814635C: .4byte 0x0203A86C\n\t"
+        "_08146358: .4byte gUnknown_2039048\n\t"
+        "_0814635C: .4byte gUnknown_203A86C\n\t"
         "_08146360: .4byte 0x081463E1\n\t"
         "_08146364: .4byte 0x08146419\n\t"
         ".syntax divided\n\t"
@@ -695,9 +695,9 @@ __attribute__((naked)) bool8 Swirl_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081463D0: .4byte 0x0203A86C\n\t"
-        "_081463D4: .4byte 0x020388C8\n\t"
-        "_081463D8: .4byte 0x02037C74\n\t"
+        "_081463D0: .4byte gUnknown_203A86C\n\t"
+        "_081463D4: .4byte gScanlineEffectRegBuffers\n\t"
+        "_081463D8: .4byte gPaletteFade\n\t"
         "_081463DC: .4byte 0x081462C5\n\t"
         ".syntax divided\n\t"
     );
@@ -728,9 +728,9 @@ __attribute__((naked)) void VBlankCB_Swirl(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146408: .4byte 0x0203A86C\n\t"
+        "_08146408: .4byte gUnknown_203A86C\n\t"
         "_0814640C: .4byte 0x040000D4\n\t"
-        "_08146410: .4byte 0x020388C8\n\t"
+        "_08146410: .4byte gScanlineEffectRegBuffers\n\t"
         "_08146414: .4byte 0x800000A0\n\t"
         ".syntax divided\n\t"
     );
@@ -758,7 +758,7 @@ __attribute__((naked)) void HBlankCB_Shuffle(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08146438: .4byte 0x020388C8\n\t"
+        "_08146438: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814643C: .4byte 0x04000006\n\t"
         "_08146440: .4byte 0x04000014\n\t"
         ".syntax divided\n\t"
@@ -794,7 +794,7 @@ __attribute__((naked)) void Task_Shuffle(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08146474: .4byte 0x085A856C\n\t"
-        "_08146478: .4byte 0x03005B60\n\t"
+        "_08146478: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -839,8 +839,8 @@ __attribute__((naked)) bool8 Shuffle_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081464D0: .4byte 0x0203A86C\n\t"
-        "_081464D4: .4byte 0x02039048\n\t"
+        "_081464D0: .4byte gUnknown_203A86C\n\t"
+        "_081464D4: .4byte gUnknown_2039048\n\t"
         "_081464D8: .4byte 0x08146571\n\t"
         "_081464DC: .4byte 0x081465A9\n\t"
         ".syntax divided\n\t"
@@ -915,9 +915,9 @@ __attribute__((naked)) bool8 Shuffle_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146560: .4byte 0x0203A86C\n\t"
-        "_08146564: .4byte 0x020388C8\n\t"
-        "_08146568: .4byte 0x02037C74\n\t"
+        "_08146560: .4byte gUnknown_203A86C\n\t"
+        "_08146564: .4byte gScanlineEffectRegBuffers\n\t"
+        "_08146568: .4byte gPaletteFade\n\t"
         "_0814656C: .4byte 0x08146445\n\t"
         ".syntax divided\n\t"
     );
@@ -948,9 +948,9 @@ __attribute__((naked)) void VBlankCB_Shuffle(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08146598: .4byte 0x0203A86C\n\t"
+        "_08146598: .4byte gUnknown_203A86C\n\t"
         "_0814659C: .4byte 0x040000D4\n\t"
-        "_081465A0: .4byte 0x020388C8\n\t"
+        "_081465A0: .4byte gScanlineEffectRegBuffers\n\t"
         "_081465A4: .4byte 0x800000A0\n\t"
         ".syntax divided\n\t"
     );
@@ -977,7 +977,7 @@ __attribute__((naked)) void HBlankCB_Swirl(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081465C8: .4byte 0x020388C8\n\t"
+        "_081465C8: .4byte gScanlineEffectRegBuffers\n\t"
         "_081465CC: .4byte 0x04000006\n\t"
         "_081465D0: .4byte 0x04000016\n\t"
         ".syntax divided\n\t"
@@ -1013,7 +1013,7 @@ __attribute__((naked)) void Task_BigPokeball(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08146604: .4byte 0x085A85AC\n\t"
-        "_08146608: .4byte 0x03005B60\n\t"
+        "_08146608: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1047,7 +1047,7 @@ __attribute__((naked)) void Task_Aqua(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814663C: .4byte 0x085A8574\n\t"
-        "_08146640: .4byte 0x03005B60\n\t"
+        "_08146640: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1081,7 +1081,7 @@ __attribute__((naked)) void Task_Magma(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08146674: .4byte 0x085A8590\n\t"
-        "_08146678: .4byte 0x03005B60\n\t"
+        "_08146678: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1115,7 +1115,7 @@ __attribute__((naked)) void Task_Regice(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081466AC: .4byte 0x085A85C4\n\t"
-        "_081466B0: .4byte 0x03005B60\n\t"
+        "_081466B0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1149,7 +1149,7 @@ __attribute__((naked)) void Task_Registeel(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081466E4: .4byte 0x085A85DC\n\t"
-        "_081466E8: .4byte 0x03005B60\n\t"
+        "_081466E8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1183,7 +1183,7 @@ __attribute__((naked)) void Task_Regirock(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814671C: .4byte 0x085A85F4\n\t"
-        "_08146720: .4byte 0x03005B60\n\t"
+        "_08146720: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1217,7 +1217,7 @@ __attribute__((naked)) void Task_Kyogre(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08146754: .4byte 0x085A860C\n\t"
-        "_08146758: .4byte 0x03005B60\n\t"
+        "_08146758: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1271,9 +1271,9 @@ __attribute__((naked)) void InitPatternWeaveTransition(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081467B8: .4byte 0x0203A86C\n\t"
+        "_081467B8: .4byte gUnknown_203A86C\n\t"
         "_081467BC: .4byte 0x00003F41\n\t"
-        "_081467C0: .4byte 0x020388C8\n\t"
+        "_081467C0: .4byte gScanlineEffectRegBuffers\n\t"
         "_081467C4: .4byte 0x000008BE\n\t"
         "_081467C8: .4byte 0x08146FFD\n\t"
         ".syntax divided\n\t"
@@ -1523,7 +1523,7 @@ __attribute__((naked)) bool8 BigPokeball_SetGfx(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814699C: .4byte 0x085A8AD0\n\t"
-        "_081469A0: .4byte 0x020388C8\n\t"
+        "_081469A0: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1562,7 +1562,7 @@ __attribute__((naked)) bool8 Aqua_SetGfx(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081469E4: .4byte 0x0859ACF8\n\t"
-        "_081469E8: .4byte 0x020388C8\n\t"
+        "_081469E8: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1602,7 +1602,7 @@ __attribute__((naked)) bool8 Magma_SetGfx(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146A2C: .4byte 0x0859B3E0\n\t"
-        "_08146A30: .4byte 0x020388C8\n\t"
+        "_08146A30: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1648,7 +1648,7 @@ __attribute__((naked)) bool8 Regice_SetGfx(struct Task *task)
         "	.align 2, 0\n\t"
         "_08146A80: .4byte 0x0859BD64\n\t"
         "_08146A84: .4byte 0x0859BDC4\n\t"
-        "_08146A88: .4byte 0x020388C8\n\t"
+        "_08146A88: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1694,7 +1694,7 @@ __attribute__((naked)) bool8 Registeel_SetGfx(struct Task *task)
         "	.align 2, 0\n\t"
         "_08146AD8: .4byte 0x0859BD84\n\t"
         "_08146ADC: .4byte 0x0859C5C4\n\t"
-        "_08146AE0: .4byte 0x020388C8\n\t"
+        "_08146AE0: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1740,7 +1740,7 @@ __attribute__((naked)) bool8 Regirock_SetGfx(struct Task *task)
         "	.align 2, 0\n\t"
         "_08146B30: .4byte 0x0859BDA4\n\t"
         "_08146B34: .4byte 0x0859CDC4\n\t"
-        "_08146B38: .4byte 0x020388C8\n\t"
+        "_08146B38: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1948,7 +1948,7 @@ __attribute__((naked)) bool8 WeatherDuo_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146CA8: .4byte 0x02037C74\n\t"
+        "_08146CA8: .4byte gPaletteFade\n\t"
         "_08146CAC: .4byte 0x040000B0\n\t"
         "_08146CB0: .4byte 0x0000C5FF\n\t"
         "_08146CB4: .4byte 0x00007FFF\n\t"
@@ -2030,9 +2030,9 @@ __attribute__((naked)) bool8 PatternWeave_Blend1(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146D40: .4byte 0x0203A86C\n\t"
+        "_08146D40: .4byte gUnknown_203A86C\n\t"
         "_08146D44: .4byte 0xFFFFFF00\n\t"
-        "_08146D48: .4byte 0x020388C8\n\t"
+        "_08146D48: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2111,9 +2111,9 @@ __attribute__((naked)) bool8 PatternWeave_Blend2(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146DD4: .4byte 0x0203A86C\n\t"
+        "_08146DD4: .4byte gUnknown_203A86C\n\t"
         "_08146DD8: .4byte 0xFFFFFF00\n\t"
-        "_08146DDC: .4byte 0x020388C8\n\t"
+        "_08146DDC: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2173,9 +2173,9 @@ __attribute__((naked)) bool8 PatternWeave_FinishAppear(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146E44: .4byte 0x0203A86C\n\t"
+        "_08146E44: .4byte gUnknown_203A86C\n\t"
         "_08146E48: .4byte 0xFFFFFF00\n\t"
-        "_08146E4C: .4byte 0x020388C8\n\t"
+        "_08146E4C: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2251,7 +2251,7 @@ __attribute__((naked)) bool8 WeatherTrio_WaitFade(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08146EB4: .4byte 0x02037C74\n\t"
+        "_08146EB4: .4byte gPaletteFade\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2322,9 +2322,9 @@ __attribute__((naked)) bool8 PatternWeave_CircularMask(struct Task *task)
         "	bl DestroyTask\n\t"
         "	b _08146F70\n\t"
         "	.align 2, 0\n\t"
-        "_08146F38: .4byte 0x0203A86C\n\t"
+        "_08146F38: .4byte gUnknown_203A86C\n\t"
         "_08146F3C: .4byte 0x000003FF\n\t"
-        "_08146F40: .4byte 0x020388C8\n\t"
+        "_08146F40: .4byte gScanlineEffectRegBuffers\n\t"
         "_08146F44: .4byte 0x040000B0\n\t"
         "_08146F48: .4byte 0x0000C5FF\n\t"
         "_08146F4C: .4byte 0x00007FFF\n\t"
@@ -2352,7 +2352,7 @@ __attribute__((naked)) bool8 PatternWeave_CircularMask(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08146F78: .4byte 0x08147029\n\t"
-        "_08146F7C: .4byte 0x0203A86C\n\t"
+        "_08146F7C: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2411,9 +2411,9 @@ __attribute__((naked)) void VBlankCB_SetWinAndBlend(void)
         "_08146FDC: .4byte 0x040000B0\n\t"
         "_08146FE0: .4byte 0x0000C5FF\n\t"
         "_08146FE4: .4byte 0x00007FFF\n\t"
-        "_08146FE8: .4byte 0x0203A86C\n\t"
+        "_08146FE8: .4byte gUnknown_203A86C\n\t"
         "_08146FEC: .4byte 0x040000D4\n\t"
-        "_08146FF0: .4byte 0x020388C8\n\t"
+        "_08146FF0: .4byte gScanlineEffectRegBuffers\n\t"
         "_08146FF4: .4byte 0x800000A0\n\t"
         "_08146FF8: .4byte 0x04000048\n\t"
         ".syntax divided\n\t"
@@ -2438,7 +2438,7 @@ __attribute__((naked)) void VBlankCB_PatternWeave(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08147018: .4byte 0x040000B0\n\t"
-        "_0814701C: .4byte 0x02039048\n\t"
+        "_0814701C: .4byte gUnknown_2039048\n\t"
         "_08147020: .4byte 0x04000010\n\t"
         "_08147024: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -2463,7 +2463,7 @@ __attribute__((naked)) void VBlankCB_CircularMask(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08147044: .4byte 0x040000B0\n\t"
-        "_08147048: .4byte 0x02039048\n\t"
+        "_08147048: .4byte gUnknown_2039048\n\t"
         "_0814704C: .4byte 0x04000040\n\t"
         "_08147050: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -2499,7 +2499,7 @@ __attribute__((naked)) void Task_PokeballsTrail(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08147084: .4byte 0x085A862C\n\t"
-        "_08147088: .4byte 0x03005B60\n\t"
+        "_08147088: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2613,7 +2613,7 @@ __attribute__((naked)) bool8 PokeballsTrail_Main(struct Task *task)
         "	.align 2, 0\n\t"
         "_08147158: .4byte 0x085A8638\n\t"
         "_0814715C: .4byte 0x085A863C\n\t"
-        "_08147160: .4byte 0x020388A8\n\t"
+        "_08147160: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2693,8 +2693,8 @@ __attribute__((naked)) bool8 FldEff_PokeballTrail(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081471EC: .4byte 0x085A8918\n\t"
-        "_081471F0: .4byte 0x020388A8\n\t"
-        "_081471F4: .4byte 0x020205AC\n\t"
+        "_081471F0: .4byte gFieldEffectArguments\n\t"
+        "_081471F4: .4byte gSprites\n\t"
         "_081471F8: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -2836,7 +2836,7 @@ __attribute__((naked)) void Task_ClockwiseWipe(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081472F4: .4byte 0x085A864C\n\t"
-        "_081472F8: .4byte 0x03005B60\n\t"
+        "_081472F8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2885,9 +2885,9 @@ __attribute__((naked)) bool8 ClockwiseWipe_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147350: .4byte 0x0203A86C\n\t"
+        "_08147350: .4byte gUnknown_203A86C\n\t"
         "_08147354: .4byte 0x0000F0F1\n\t"
-        "_08147358: .4byte 0x02039048\n\t"
+        "_08147358: .4byte gUnknown_2039048\n\t"
         "_0814735C: .4byte 0x0000F3F4\n\t"
         "_08147360: .4byte 0x08147749\n\t"
         ".syntax divided\n\t"
@@ -2967,8 +2967,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_TopRight(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081473EC: .4byte 0x0203A86C\n\t"
-        "_081473F0: .4byte 0x020388C8\n\t"
+        "_081473EC: .4byte gUnknown_203A86C\n\t"
+        "_081473F0: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3043,8 +3043,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_Right(struct Task *task)
         "	strb r0, [r5]\n\t"
         "	b _08147432\n\t"
         "	.align 2, 0\n\t"
-        "_08147478: .4byte 0x0203A86C\n\t"
-        "_0814747C: .4byte 0x020388C8\n\t"
+        "_08147478: .4byte gUnknown_203A86C\n\t"
+        "_0814747C: .4byte gScanlineEffectRegBuffers\n\t"
         "_08147480:\n\t"
         "	ldr r1, [r7]\n\t"
         "	ldrh r0, [r1, #0x2e]\n\t"
@@ -3099,7 +3099,7 @@ __attribute__((naked)) bool8 ClockwiseWipe_Right(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081474E4: .4byte 0x0203A86C\n\t"
+        "_081474E4: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3173,8 +3173,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_Bottom(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147568: .4byte 0x0203A86C\n\t"
-        "_0814756C: .4byte 0x020388C8\n\t"
+        "_08147568: .4byte gUnknown_203A86C\n\t"
+        "_0814756C: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3252,8 +3252,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_Left(struct Task *task)
         "	strb r0, [r6]\n\t"
         "	b _081475B4\n\t"
         "	.align 2, 0\n\t"
-        "_081475F8: .4byte 0x0203A86C\n\t"
-        "_081475FC: .4byte 0x020388C8\n\t"
+        "_081475F8: .4byte gUnknown_203A86C\n\t"
+        "_081475FC: .4byte gScanlineEffectRegBuffers\n\t"
         "_08147600:\n\t"
         "	mov r0, r8\n\t"
         "	ldr r2, [r0]\n\t"
@@ -3310,8 +3310,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_Left(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147668: .4byte 0x020388C8\n\t"
-        "_0814766C: .4byte 0x0203A86C\n\t"
+        "_08147668: .4byte gScanlineEffectRegBuffers\n\t"
+        "_0814766C: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3393,8 +3393,8 @@ __attribute__((naked)) bool8 ClockwiseWipe_TopLeft(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147700: .4byte 0x0203A86C\n\t"
-        "_08147704: .4byte 0x020388C8\n\t"
+        "_08147700: .4byte gUnknown_203A86C\n\t"
+        "_08147704: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3493,9 +3493,9 @@ __attribute__((naked)) void VBlankCB_ClockwiseWipe(void)
         "_081477B4: .4byte 0x040000B0\n\t"
         "_081477B8: .4byte 0x0000C5FF\n\t"
         "_081477BC: .4byte 0x00007FFF\n\t"
-        "_081477C0: .4byte 0x0203A86C\n\t"
+        "_081477C0: .4byte gUnknown_203A86C\n\t"
         "_081477C4: .4byte 0x040000D4\n\t"
-        "_081477C8: .4byte 0x020388C8\n\t"
+        "_081477C8: .4byte gScanlineEffectRegBuffers\n\t"
         "_081477CC: .4byte 0x800000A0\n\t"
         "_081477D0: .4byte 0x04000048\n\t"
         "_081477D4: .4byte 0xA2400001\n\t"
@@ -3532,7 +3532,7 @@ __attribute__((naked)) void Task_Ripple(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08147808: .4byte 0x085A8668\n\t"
-        "_0814780C: .4byte 0x03005B60\n\t"
+        "_0814780C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3573,8 +3573,8 @@ __attribute__((naked)) bool8 Ripple_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147858: .4byte 0x02039048\n\t"
-        "_0814785C: .4byte 0x0203A86C\n\t"
+        "_08147858: .4byte gUnknown_2039048\n\t"
+        "_0814785C: .4byte gUnknown_203A86C\n\t"
         "_08147860: .4byte 0x08147949\n\t"
         "_08147864: .4byte 0x08147981\n\t"
         ".syntax divided\n\t"
@@ -3688,10 +3688,10 @@ __attribute__((naked)) bool8 Ripple_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147934: .4byte 0x0203A86C\n\t"
+        "_08147934: .4byte gUnknown_203A86C\n\t"
         "_08147938: .4byte 0x1FFF0000\n\t"
-        "_0814793C: .4byte 0x020388C8\n\t"
-        "_08147940: .4byte 0x02037C74\n\t"
+        "_0814793C: .4byte gScanlineEffectRegBuffers\n\t"
+        "_08147940: .4byte gPaletteFade\n\t"
         "_08147944: .4byte 0x081477D9\n\t"
         ".syntax divided\n\t"
     );
@@ -3722,9 +3722,9 @@ __attribute__((naked)) void VBlankCB_Ripple(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147970: .4byte 0x0203A86C\n\t"
+        "_08147970: .4byte gUnknown_203A86C\n\t"
         "_08147974: .4byte 0x040000D4\n\t"
-        "_08147978: .4byte 0x020388C8\n\t"
+        "_08147978: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814797C: .4byte 0x800000A0\n\t"
         ".syntax divided\n\t"
     );
@@ -3751,7 +3751,7 @@ __attribute__((naked)) void HBlankCB_Ripple(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081479A0: .4byte 0x020388C8\n\t"
+        "_081479A0: .4byte gScanlineEffectRegBuffers\n\t"
         "_081479A4: .4byte 0x04000006\n\t"
         "_081479A8: .4byte 0x04000016\n\t"
         ".syntax divided\n\t"
@@ -3787,7 +3787,7 @@ __attribute__((naked)) void Task_Wave(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081479DC: .4byte 0x085A8670\n\t"
-        "_081479E0: .4byte 0x03005B60\n\t"
+        "_081479E0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3833,8 +3833,8 @@ __attribute__((naked)) bool8 Wave_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147A30: .4byte 0x0203A86C\n\t"
-        "_08147A34: .4byte 0x02039048\n\t"
+        "_08147A30: .4byte gUnknown_203A86C\n\t"
+        "_08147A34: .4byte gUnknown_2039048\n\t"
         "_08147A38: .4byte 0x08147B19\n\t"
         ".syntax divided\n\t"
     );
@@ -3922,8 +3922,8 @@ __attribute__((naked)) bool8 Wave_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147AD0: .4byte 0x0203A86C\n\t"
-        "_08147AD4: .4byte 0x020388C8\n\t"
+        "_08147AD0: .4byte gUnknown_203A86C\n\t"
+        "_08147AD4: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4017,12 +4017,12 @@ __attribute__((naked)) void VBlankCB_Wave(void)
         "_08147B78: .4byte 0x040000B0\n\t"
         "_08147B7C: .4byte 0x0000C5FF\n\t"
         "_08147B80: .4byte 0x00007FFF\n\t"
-        "_08147B84: .4byte 0x0203A86C\n\t"
+        "_08147B84: .4byte gUnknown_203A86C\n\t"
         "_08147B88: .4byte 0x040000D4\n\t"
-        "_08147B8C: .4byte 0x020388C8\n\t"
+        "_08147B8C: .4byte gScanlineEffectRegBuffers\n\t"
         "_08147B90: .4byte 0x800000A0\n\t"
         "_08147B94: .4byte 0x04000048\n\t"
-        "_08147B98: .4byte 0x02039048\n\t"
+        "_08147B98: .4byte gUnknown_2039048\n\t"
         "_08147B9C: .4byte 0x04000040\n\t"
         "_08147BA0: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -4047,7 +4047,7 @@ __attribute__((naked)) void Task_Sidney(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147BC0: .4byte 0x03005B60\n\t"
+        "_08147BC0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4070,7 +4070,7 @@ __attribute__((naked)) void Task_Phoebe(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147BE0: .4byte 0x03005B60\n\t"
+        "_08147BE0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4093,7 +4093,7 @@ __attribute__((naked)) void Task_Glacia(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147C00: .4byte 0x03005B60\n\t"
+        "_08147C00: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4116,7 +4116,7 @@ __attribute__((naked)) void Task_Drake(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147C20: .4byte 0x03005B60\n\t"
+        "_08147C20: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4139,7 +4139,7 @@ __attribute__((naked)) void Task_Champion(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08147C40: .4byte 0x03005B60\n\t"
+        "_08147C40: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4173,7 +4173,7 @@ __attribute__((naked)) void DoMugshotTransition(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08147C74: .4byte 0x085A867C\n\t"
-        "_08147C78: .4byte 0x03005B60\n\t"
+        "_08147C78: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4224,8 +4224,8 @@ __attribute__((naked)) bool8 Mugshot_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147CD4: .4byte 0x0203A86C\n\t"
-        "_08147CD8: .4byte 0x02039048\n\t"
+        "_08147CD4: .4byte gUnknown_203A86C\n\t"
+        "_08147CD8: .4byte gUnknown_2039048\n\t"
         "_08147CDC: .4byte 0x0000F0F1\n\t"
         "_08147CE0: .4byte 0x0814818D\n\t"
         ".syntax divided\n\t"
@@ -4321,7 +4321,7 @@ __attribute__((naked)) bool8 Mugshot_SetGfx(struct Task *task)
         "_08147D90: .4byte 0x085995A0\n\t"
         "_08147D94: .4byte 0x085A8A8C\n\t"
         "_08147D98: .4byte 0x085A8AA0\n\t"
-        "_08147D9C: .4byte 0x03005AF0\n\t"
+        "_08147D9C: .4byte gSaveBlock2Ptr\n\t"
         "_08147DA0: .4byte 0x081482A1\n\t"
         ".syntax divided\n\t"
     );
@@ -4453,8 +4453,8 @@ __attribute__((naked)) bool8 Mugshot_ShowBanner(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147E88: .4byte 0x0203A86C\n\t"
-        "_08147E8C: .4byte 0x020388C8\n\t"
+        "_08147E88: .4byte gUnknown_203A86C\n\t"
+        "_08147E8C: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4518,8 +4518,8 @@ __attribute__((naked)) bool8 Mugshot_StartOpponentSlide(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147F04: .4byte 0x0203A86C\n\t"
-        "_08147F08: .4byte 0x020388C8\n\t"
+        "_08147F04: .4byte gUnknown_203A86C\n\t"
+        "_08147F08: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4556,7 +4556,7 @@ __attribute__((naked)) bool8 Mugshot_WaitStartPlayerSlide(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147F44: .4byte 0x0203A86C\n\t"
+        "_08147F44: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4640,11 +4640,11 @@ __attribute__((naked)) bool8 Mugshot_WaitPlayerSlide(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08147FE8: .4byte 0x0203A86C\n\t"
+        "_08147FE8: .4byte gUnknown_203A86C\n\t"
         "_08147FEC: .4byte 0x040000B0\n\t"
         "_08147FF0: .4byte 0x0000C5FF\n\t"
         "_08147FF4: .4byte 0x00007FFF\n\t"
-        "_08147FF8: .4byte 0x020388C8\n\t"
+        "_08147FF8: .4byte gScanlineEffectRegBuffers\n\t"
         "_08147FFC: .4byte 0x08148221\n\t"
         ".syntax divided\n\t"
     );
@@ -4757,8 +4757,8 @@ __attribute__((naked)) bool8 Mugshot_GradualWhiteFade(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081480C0: .4byte 0x0203A86C\n\t"
-        "_081480C4: .4byte 0x020388C8\n\t"
+        "_081480C0: .4byte gUnknown_203A86C\n\t"
+        "_081480C4: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4791,7 +4791,7 @@ __attribute__((naked)) bool8 Mugshot_InitFadeWhiteToBlack(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081480F8: .4byte 0x0203A86C\n\t"
+        "_081480F8: .4byte gUnknown_203A86C\n\t"
         "_081480FC: .4byte 0x00007FFF\n\t"
         ".syntax divided\n\t"
     );
@@ -4835,8 +4835,8 @@ __attribute__((naked)) bool8 Mugshot_FadeToBlack(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148144: .4byte 0x0203A86C\n\t"
-        "_08148148: .4byte 0x020388C8\n\t"
+        "_08148144: .4byte gUnknown_203A86C\n\t"
+        "_08148148: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4935,12 +4935,12 @@ __attribute__((naked)) void VBlankCB_Mugshots(void)
         "_081481F4: .4byte 0x040000B0\n\t"
         "_081481F8: .4byte 0x0000C5FF\n\t"
         "_081481FC: .4byte 0x00007FFF\n\t"
-        "_08148200: .4byte 0x0203A86C\n\t"
+        "_08148200: .4byte gUnknown_203A86C\n\t"
         "_08148204: .4byte 0x040000D4\n\t"
-        "_08148208: .4byte 0x020388C8\n\t"
+        "_08148208: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814820C: .4byte 0x800000A0\n\t"
         "_08148210: .4byte 0x04000012\n\t"
-        "_08148214: .4byte 0x02039048\n\t"
+        "_08148214: .4byte gUnknown_2039048\n\t"
         "_08148218: .4byte 0x04000040\n\t"
         "_0814821C: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -4997,12 +4997,12 @@ __attribute__((naked)) void VBlankCB_MugshotsFadeOut(void)
         "_08148274: .4byte 0x040000B0\n\t"
         "_08148278: .4byte 0x0000C5FF\n\t"
         "_0814827C: .4byte 0x00007FFF\n\t"
-        "_08148280: .4byte 0x0203A86C\n\t"
+        "_08148280: .4byte gUnknown_203A86C\n\t"
         "_08148284: .4byte 0x040000D4\n\t"
-        "_08148288: .4byte 0x020388C8\n\t"
+        "_08148288: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814828C: .4byte 0x800000A0\n\t"
         "_08148290: .4byte 0x04000050\n\t"
-        "_08148294: .4byte 0x02039048\n\t"
+        "_08148294: .4byte gUnknown_2039048\n\t"
         "_08148298: .4byte 0x04000054\n\t"
         "_0814829C: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -5026,7 +5026,7 @@ __attribute__((naked)) void HBlankCB_Mugshots(void)
         "	.align 2, 0\n\t"
         "_081482B4: .4byte 0x04000006\n\t"
         "_081482B8: .4byte 0x04000010\n\t"
-        "_081482BC: .4byte 0x0203A86C\n\t"
+        "_081482BC: .4byte gUnknown_203A86C\n\t"
         "_081482C0:\n\t"
         "	ldr r1, _081482D0\n\t"
         "	ldr r0, _081482D4\n\t"
@@ -5038,7 +5038,7 @@ __attribute__((naked)) void HBlankCB_Mugshots(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081482D0: .4byte 0x04000010\n\t"
-        "_081482D4: .4byte 0x0203A86C\n\t"
+        "_081482D4: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5204,9 +5204,9 @@ __attribute__((naked)) void Mugshots_CreateTrainerPics(struct Task *task)
         "	.align 2, 0\n\t"
         "_08148420: .4byte 0x085A86A4\n\t"
         "_08148424: .4byte 0x085A86BE\n\t"
-        "_08148428: .4byte 0x0201C000\n\t"
-        "_0814842C: .4byte 0x03005AF0\n\t"
-        "_08148430: .4byte 0x020205AC\n\t"
+        "_08148428: .4byte gDecompressionBuffer\n\t"
+        "_0814842C: .4byte gSaveBlock2Ptr\n\t"
+        "_08148430: .4byte gSprites\n\t"
         "_08148434: .4byte 0x08148441\n\t"
         "_08148438: .4byte 0x085A86AA\n\t"
         "_0814843C: .4byte 0xFFFFFE00\n\t"
@@ -5407,7 +5407,7 @@ __attribute__((naked)) void SetTrainerPicSlideDirection(s16 a0, s16 a1)
         "	strh r1, [r2, #0x3c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08148558: .4byte 0x020205AC\n\t"
+        "_08148558: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5428,7 +5428,7 @@ __attribute__((naked)) void IncrementTrainerPicState(s16 a0)
         "	strh r0, [r1, #0x2e]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08148574: .4byte 0x020205AC\n\t"
+        "_08148574: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5448,7 +5448,7 @@ __attribute__((naked)) s16 IsTrainerPicSlideDone(s16 a0)
         "	ldrsh r0, [r1, r2]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0814858C: .4byte 0x020205AC\n\t"
+        "_0814858C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5482,7 +5482,7 @@ __attribute__((naked)) void Task_Slice(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081485C0: .4byte 0x085A86F8\n\t"
-        "_081485C4: .4byte 0x03005B60\n\t"
+        "_081485C4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5547,8 +5547,8 @@ __attribute__((naked)) bool8 Slice_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148640: .4byte 0x0203A86C\n\t"
-        "_08148644: .4byte 0x02039048\n\t"
+        "_08148640: .4byte gUnknown_203A86C\n\t"
+        "_08148644: .4byte gUnknown_2039048\n\t"
         "_08148648: .4byte 0x0814875D\n\t"
         "_0814864C: .4byte 0x081487E9\n\t"
         ".syntax divided\n\t"
@@ -5625,9 +5625,9 @@ __attribute__((naked)) bool8 Slice_Main(struct Task *task)
         "	subs r0, r0, r1\n\t"
         "	b _081486EA\n\t"
         "	.align 2, 0\n\t"
-        "_081486CC: .4byte 0x0203A86C\n\t"
+        "_081486CC: .4byte gUnknown_203A86C\n\t"
         "_081486D0: .4byte 0x00000FFF\n\t"
-        "_081486D4: .4byte 0x020388C8\n\t"
+        "_081486D4: .4byte gScanlineEffectRegBuffers\n\t"
         "_081486D8:\n\t"
         "	ldr r0, [r6]\n\t"
         "	ldrh r0, [r0, #0x14]\n\t"
@@ -5758,11 +5758,11 @@ __attribute__((naked)) void VBlankCB_Slice(void)
         "_081487C0: .4byte 0x0000C5FF\n\t"
         "_081487C4: .4byte 0x00007FFF\n\t"
         "_081487C8: .4byte 0x04000048\n\t"
-        "_081487CC: .4byte 0x0203A86C\n\t"
+        "_081487CC: .4byte gUnknown_203A86C\n\t"
         "_081487D0: .4byte 0x040000D4\n\t"
-        "_081487D4: .4byte 0x020388C8\n\t"
+        "_081487D4: .4byte gScanlineEffectRegBuffers\n\t"
         "_081487D8: .4byte 0x80000140\n\t"
-        "_081487DC: .4byte 0x02039188\n\t"
+        "_081487DC: .4byte gUnknown_2039188\n\t"
         "_081487E0: .4byte 0x04000040\n\t"
         "_081487E4: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -5797,7 +5797,7 @@ __attribute__((naked)) void HBlankCB_Slice(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08148814: .4byte 0x04000006\n\t"
-        "_08148818: .4byte 0x020388C8\n\t"
+        "_08148818: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814881C: .4byte 0x04000014\n\t"
         ".syntax divided\n\t"
     );
@@ -5832,7 +5832,7 @@ __attribute__((naked)) void Task_ShredSplit(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08148850: .4byte 0x085A8704\n\t"
-        "_08148854: .4byte 0x03005B60\n\t"
+        "_08148854: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5933,8 +5933,8 @@ __attribute__((naked)) bool8 ShredSplit_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148914: .4byte 0x0203A86C\n\t"
-        "_08148918: .4byte 0x020388C8\n\t"
+        "_08148914: .4byte gUnknown_203A86C\n\t"
+        "_08148918: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814891C: .4byte 0x0814875D\n\t"
         "_08148920: .4byte 0x081487E9\n\t"
         ".syntax divided\n\t"
@@ -6034,9 +6034,9 @@ __attribute__((naked)) bool8 ShredSplit_Main(struct Task *task)
         "	.align 2, 0\n\t"
         "_081489CC: .4byte 0x085A8714\n\t"
         "_081489D0: .4byte 0x085A8716\n\t"
-        "_081489D4: .4byte 0x0203A86C\n\t"
-        "_081489D8: .4byte 0x02038B48\n\t"
-        "_081489DC: .4byte 0x02038DC8\n\t"
+        "_081489D4: .4byte gUnknown_203A86C\n\t"
+        "_081489D8: .4byte gUnknown_2038B48\n\t"
+        "_081489DC: .4byte gUnknown_2038DC8\n\t"
         "_081489E0:\n\t"
         "	ldrh r0, [r3]\n\t"
         "	lsrs r0, r0, #8\n\t"
@@ -6142,11 +6142,11 @@ __attribute__((naked)) bool8 ShredSplit_Main(struct Task *task)
         "	b _08148AD8\n\t"
         "	.align 2, 0\n\t"
         "_08148AA0: .4byte 0x00000FFF\n\t"
-        "_08148AA4: .4byte 0x020388C8\n\t"
-        "_08148AA8: .4byte 0x02038A08\n\t"
-        "_08148AAC: .4byte 0x0203A86C\n\t"
-        "_08148AB0: .4byte 0x02038B48\n\t"
-        "_08148AB4: .4byte 0x02038DC8\n\t"
+        "_08148AA4: .4byte gScanlineEffectRegBuffers\n\t"
+        "_08148AA8: .4byte gUnknown_2038A08\n\t"
+        "_08148AAC: .4byte gUnknown_203A86C\n\t"
+        "_08148AB0: .4byte gUnknown_2038B48\n\t"
+        "_08148AB4: .4byte gUnknown_2038DC8\n\t"
         "_08148AB8:\n\t"
         "	ldrh r0, [r3]\n\t"
         "	lsrs r0, r0, #8\n\t"
@@ -6260,9 +6260,9 @@ __attribute__((naked)) bool8 ShredSplit_Main(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08148B84: .4byte 0x00000FFF\n\t"
-        "_08148B88: .4byte 0x020388C8\n\t"
-        "_08148B8C: .4byte 0x02038A08\n\t"
-        "_08148B90: .4byte 0x0203A86C\n\t"
+        "_08148B88: .4byte gScanlineEffectRegBuffers\n\t"
+        "_08148B8C: .4byte gUnknown_2038A08\n\t"
+        "_08148B90: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6305,7 +6305,7 @@ __attribute__((naked)) bool8 ShredSplit_BrokenCheck(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08148BCC: .4byte 0x0000FF10\n\t"
-        "_08148BD0: .4byte 0x02039048\n\t"
+        "_08148BD0: .4byte gUnknown_2039048\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6373,7 +6373,7 @@ __attribute__((naked)) void Task_Blackhole(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08148C44: .4byte 0x085A871C\n\t"
-        "_08148C48: .4byte 0x03005B60\n\t"
+        "_08148C48: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6408,7 +6408,7 @@ __attribute__((naked)) void Task_BlackholePulsate(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08148C7C: .4byte 0x085A8728\n\t"
-        "_08148C80: .4byte 0x03005B60\n\t"
+        "_08148C80: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6459,8 +6459,8 @@ __attribute__((naked)) bool8 Blackhole_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148CD8: .4byte 0x0203A86C\n\t"
-        "_08148CDC: .4byte 0x020388C8\n\t"
+        "_08148CD8: .4byte gUnknown_203A86C\n\t"
+        "_08148CDC: .4byte gScanlineEffectRegBuffers\n\t"
         "_08148CE0: .4byte 0x000008BE\n\t"
         "_08148CE4: .4byte 0x08147029\n\t"
         ".syntax divided\n\t"
@@ -6549,9 +6549,9 @@ __attribute__((naked)) bool8 Blackhole_GrowEnd(struct Task *task)
         "	bl sub_0814A044\n\t"
         "	b _08148D9E\n\t"
         "	.align 2, 0\n\t"
-        "_08148D88: .4byte 0x0203A86C\n\t"
+        "_08148D88: .4byte gUnknown_203A86C\n\t"
         "_08148D8C: .4byte 0x000003FF\n\t"
-        "_08148D90: .4byte 0x020388C8\n\t"
+        "_08148D90: .4byte gScanlineEffectRegBuffers\n\t"
         "_08148D94:\n\t"
         "	ldr r0, [r5]\n\t"
         "	ldrb r1, [r0]\n\t"
@@ -6634,9 +6634,9 @@ __attribute__((naked)) bool8 Blackhole_Vibrate(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148E20: .4byte 0x0203A86C\n\t"
+        "_08148E20: .4byte gUnknown_203A86C\n\t"
         "_08148E24: .4byte 0x085A8730\n\t"
-        "_08148E28: .4byte 0x020388C8\n\t"
+        "_08148E28: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6707,8 +6707,8 @@ __attribute__((naked)) bool8 BlackholePulsate_Main(struct Task *task)
         "	adds r0, #8\n\t"
         "	b _08148EC8\n\t"
         "	.align 2, 0\n\t"
-        "_08148EA8: .4byte 0x0203A86C\n\t"
-        "_08148EAC: .4byte 0x020388C8\n\t"
+        "_08148EA8: .4byte gUnknown_203A86C\n\t"
+        "_08148EAC: .4byte gScanlineEffectRegBuffers\n\t"
         "_08148EB0: .4byte 0x040000B0\n\t"
         "_08148EB4: .4byte 0x0000C5FF\n\t"
         "_08148EB8: .4byte 0x00007FFF\n\t"
@@ -6758,7 +6758,7 @@ __attribute__((naked)) bool8 BlackholePulsate_Main(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08148F10: .4byte 0x0203A86C\n\t"
+        "_08148F10: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6793,7 +6793,7 @@ __attribute__((naked)) void Task_RectangularSpiral(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08148F44: .4byte 0x085A8734\n\t"
-        "_08148F48: .4byte 0x03005B60\n\t"
+        "_08148F48: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6884,7 +6884,7 @@ __attribute__((naked)) bool8 RectangularSpiral_Init(struct Task *task)
         "_08148FF0: .4byte 0x0859A780\n\t"
         "_08148FF4: .4byte 0x01000400\n\t"
         "_08148FF8: .4byte 0x085A8984\n\t"
-        "_08148FFC: .4byte 0x03001210\n\t"
+        "_08148FFC: .4byte gUnknown_3001210\n\t"
         "_08149000: .4byte 0x0000FFFF\n\t"
         "_08149004: .4byte 0x0000FFFD\n\t"
         "_08149008: .4byte 0x00000133\n\t"
@@ -6988,7 +6988,7 @@ __attribute__((naked)) bool8 RectangularSpiral_Main(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081490B8: .4byte 0x085A87E8\n\t"
-        "_081490BC: .4byte 0x03001210\n\t"
+        "_081490BC: .4byte gUnknown_3001210\n\t"
         "_081490C0: .4byte 0x0000027D\n\t"
         "_081490C4: .4byte 0x0000F002\n\t"
         ".syntax divided\n\t"
@@ -7059,7 +7059,7 @@ __attribute__((naked)) void Task_Groudon(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149230: .4byte 0x085A87F0\n\t"
-        "_08149234: .4byte 0x03005B60\n\t"
+        "_08149234: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7240,7 +7240,7 @@ __attribute__((naked)) void Task_Rayquaza(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814936C: .4byte 0x085A8810\n\t"
-        "_08149370: .4byte 0x03005B60\n\t"
+        "_08149370: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7314,9 +7314,9 @@ __attribute__((naked)) bool8 Rayquaza_Init(struct Task *task)
         "_081493FC: .4byte 0x00009A08\n\t"
         "_08149400: .4byte 0x01000400\n\t"
         "_08149404: .4byte 0x0859F150\n\t"
-        "_08149408: .4byte 0x0203A86C\n\t"
+        "_08149408: .4byte gUnknown_203A86C\n\t"
         "_0814940C: .4byte 0x0859EFF0\n\t"
-        "_08149410: .4byte 0x020388C8\n\t"
+        "_08149410: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149414: .4byte 0x081495C9\n\t"
         ".syntax divided\n\t"
     );
@@ -7464,8 +7464,8 @@ __attribute__((naked)) bool8 Rayquaza_WaitFade(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081494F4: .4byte 0x02037C74\n\t"
-        "_081494F8: .4byte 0x0203A86C\n\t"
+        "_081494F4: .4byte gPaletteFade\n\t"
+        "_081494F8: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7574,9 +7574,9 @@ __attribute__((naked)) bool8 Rayquaza_TriRing(struct Task *task)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081495B8: .4byte 0x0859EF50\n\t"
-        "_081495BC: .4byte 0x0203A86C\n\t"
+        "_081495BC: .4byte gUnknown_203A86C\n\t"
         "_081495C0: .4byte 0x08147029\n\t"
-        "_081495C4: .4byte 0x02039048\n\t"
+        "_081495C4: .4byte gUnknown_2039048\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7610,8 +7610,8 @@ __attribute__((naked)) void VBlankCB_Rayquaza(void)
         "_081495F4: .4byte 0x040000B0\n\t"
         "_081495F8: .4byte 0x0000C5FF\n\t"
         "_081495FC: .4byte 0x00007FFF\n\t"
-        "_08149600: .4byte 0x0203A86C\n\t"
-        "_08149604: .4byte 0x020388C8\n\t"
+        "_08149600: .4byte gUnknown_203A86C\n\t"
+        "_08149604: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149608:\n\t"
         "	ldr r2, _08149628\n\t"
         "	cmp r0, #1\n\t"
@@ -7630,7 +7630,7 @@ __attribute__((naked)) void VBlankCB_Rayquaza(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149628: .4byte 0x020388C8\n\t"
+        "_08149628: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814962C: .4byte 0x040000B0\n\t"
         "_08149630: .4byte 0x04000012\n\t"
         "_08149634: .4byte 0xA2400001\n\t"
@@ -7676,7 +7676,7 @@ __attribute__((naked)) bool16 UpdateRectangularSpiralLine(const s16 *const *move
         "	beq _0814915A\n\t"
         "	b _08149172\n\t"
         "	.align 2, 0\n\t"
-        "_0814914C: .4byte 0x03001208\n\t"
+        "_0814914C: .4byte gUnknown_3001208\n\t"
         "_08149150:\n\t"
         "	cmp r0, #3\n\t"
         "	beq _08149166\n\t"
@@ -7811,7 +7811,7 @@ __attribute__((naked)) void Task_WhiteBarsFade(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149668: .4byte 0x085A883C\n\t"
-        "_0814966C: .4byte 0x03005B60\n\t"
+        "_0814966C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7869,8 +7869,8 @@ __attribute__((naked)) bool8 WhiteBarsFade_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081496D8: .4byte 0x0203A86C\n\t"
-        "_081496DC: .4byte 0x02039048\n\t"
+        "_081496D8: .4byte gUnknown_203A86C\n\t"
+        "_081496DC: .4byte gUnknown_2039048\n\t"
         "_081496E0: .4byte 0x08149901\n\t"
         "_081496E4: .4byte 0x08149835\n\t"
         ".syntax divided\n\t"
@@ -7935,7 +7935,7 @@ __attribute__((naked)) bool8 WhiteBarsFade_StartBars(struct Task *task)
         "	.align 2, 0\n\t"
         "_08149750: .4byte 0x085A8850\n\t"
         "_08149754: .4byte 0x08149925\n\t"
-        "_08149758: .4byte 0x020205AC\n\t"
+        "_08149758: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7971,7 +7971,7 @@ __attribute__((naked)) bool8 WhiteBarsFade_WaitBars(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149790: .4byte 0x0203A86C\n\t"
+        "_08149790: .4byte gUnknown_203A86C\n\t"
         "_08149794: .4byte 0x00007FFF\n\t"
         ".syntax divided\n\t"
     );
@@ -8021,7 +8021,7 @@ __attribute__((naked)) bool8 WhiteBarsFade_BlendToBlack(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081497EC: .4byte 0x0203A86C\n\t"
+        "_081497EC: .4byte gUnknown_203A86C\n\t"
         "_081497F0: .4byte 0x040000B0\n\t"
         "_081497F4: .4byte 0x0000C5FF\n\t"
         "_081497F8: .4byte 0x00007FFF\n\t"
@@ -8056,7 +8056,7 @@ __attribute__((naked)) bool8 WhiteBarsFade_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814982C: .4byte 0x0203A86C\n\t"
+        "_0814982C: .4byte gUnknown_203A86C\n\t"
         "_08149830: .4byte 0x08149639\n\t"
         ".syntax divided\n\t"
     );
@@ -8122,11 +8122,11 @@ __attribute__((naked)) void VBlankCB_WhiteBarsFade(void)
         "_0814989C: .4byte 0x0000C5FF\n\t"
         "_081498A0: .4byte 0x00007FFF\n\t"
         "_081498A4: .4byte 0x04000050\n\t"
-        "_081498A8: .4byte 0x0203A86C\n\t"
+        "_081498A8: .4byte gUnknown_203A86C\n\t"
         "_081498AC: .4byte 0x040000D4\n\t"
-        "_081498B0: .4byte 0x020388C8\n\t"
+        "_081498B0: .4byte gScanlineEffectRegBuffers\n\t"
         "_081498B4: .4byte 0x80000140\n\t"
-        "_081498B8: .4byte 0x02039188\n\t"
+        "_081498B8: .4byte gUnknown_2039188\n\t"
         "_081498BC: .4byte 0x04000040\n\t"
         "_081498C0: .4byte 0xA2400001\n\t"
         ".syntax divided\n\t"
@@ -8164,7 +8164,7 @@ __attribute__((naked)) void VBlankCB_WhiteBarsFade_Blend(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081498F8: .4byte 0x04000054\n\t"
-        "_081498FC: .4byte 0x0203A86C\n\t"
+        "_081498FC: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8188,7 +8188,7 @@ __attribute__((naked)) void HBlankCB_WhiteBarsFade(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_08149918: .4byte 0x04000054\n\t"
-        "_0814991C: .4byte 0x020388C8\n\t"
+        "_0814991C: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149920: .4byte 0x04000006\n\t"
         ".syntax divided\n\t"
     );
@@ -8218,7 +8218,7 @@ __attribute__((naked)) void SpriteCB_WhiteBarFade(struct Sprite *sprite)
         "	strb r0, [r1]\n\t"
         "	b _08149A0C\n\t"
         "	.align 2, 0\n\t"
-        "_0814994C: .4byte 0x0203A86C\n\t"
+        "_0814994C: .4byte gUnknown_203A86C\n\t"
         "_08149950:\n\t"
         "	movs r2, #0x22\n\t"
         "	ldrsh r1, [r3, r2]\n\t"
@@ -8324,8 +8324,8 @@ __attribute__((naked)) void SpriteCB_WhiteBarFade(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149A14: .4byte 0x020388C8\n\t"
-        "_08149A18: .4byte 0x0203A86C\n\t"
+        "_08149A14: .4byte gScanlineEffectRegBuffers\n\t"
+        "_08149A18: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8360,7 +8360,7 @@ __attribute__((naked)) void Task_GridSquares(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149A4C: .4byte 0x085A8860\n\t"
-        "_08149A50: .4byte 0x03005B60\n\t"
+        "_08149A50: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8518,7 +8518,7 @@ __attribute__((naked)) void Task_AngledWipes(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149B5C: .4byte 0x085A886C\n\t"
-        "_08149B60: .4byte 0x03005B60\n\t"
+        "_08149B60: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8569,8 +8569,8 @@ __attribute__((naked)) bool8 AngledWipes_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149BBC: .4byte 0x0203A86C\n\t"
-        "_08149BC0: .4byte 0x020388C8\n\t"
+        "_08149BBC: .4byte gUnknown_203A86C\n\t"
+        "_08149BC0: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149BC4: .4byte 0x08149DA9\n\t"
         ".syntax divided\n\t"
     );
@@ -8638,7 +8638,7 @@ __attribute__((naked)) bool8 AngledWipes_SetWipeData(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149C3C: .4byte 0x0203A86C\n\t"
+        "_08149C3C: .4byte gUnknown_203A86C\n\t"
         "_08149C40: .4byte 0x085A8880\n\t"
         ".syntax divided\n\t"
     );
@@ -8692,8 +8692,8 @@ __attribute__((naked)) bool8 AngledWipes_DoWipe(struct Task *task)
         "	lsrs r3, r1, #0x10\n\t"
         "	b _08149CB4\n\t"
         "	.align 2, 0\n\t"
-        "_08149C94: .4byte 0x0203A86C\n\t"
-        "_08149C98: .4byte 0x020388C8\n\t"
+        "_08149C94: .4byte gUnknown_203A86C\n\t"
+        "_08149C98: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149C9C:\n\t"
         "	lsls r0, r5, #0x10\n\t"
         "	asrs r0, r0, #0x10\n\t"
@@ -8728,7 +8728,7 @@ __attribute__((naked)) bool8 AngledWipes_DoWipe(struct Task *task)
         "	strh r0, [r6, #8]\n\t"
         "	b _08149D00\n\t"
         "	.align 2, 0\n\t"
-        "_08149CD8: .4byte 0x0203A86C\n\t"
+        "_08149CD8: .4byte gUnknown_203A86C\n\t"
         "_08149CDC:\n\t"
         "	adds r0, r4, #0\n\t"
         "	adds r0, #0x24\n\t"
@@ -8762,7 +8762,7 @@ __attribute__((naked)) bool8 AngledWipes_DoWipe(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08149D1C: .4byte 0x0203A86C\n\t"
+        "_08149D1C: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8913,9 +8913,9 @@ __attribute__((naked)) void VBlankCB_AngledWipes(void)
         "_08149E14: .4byte 0x040000B0\n\t"
         "_08149E18: .4byte 0x0000C5FF\n\t"
         "_08149E1C: .4byte 0x00007FFF\n\t"
-        "_08149E20: .4byte 0x0203A86C\n\t"
+        "_08149E20: .4byte gUnknown_203A86C\n\t"
         "_08149E24: .4byte 0x040000D4\n\t"
-        "_08149E28: .4byte 0x020388C8\n\t"
+        "_08149E28: .4byte gScanlineEffectRegBuffers\n\t"
         "_08149E2C: .4byte 0x800000A0\n\t"
         "_08149E30: .4byte 0x04000048\n\t"
         "_08149E34: .4byte 0xA2400001\n\t"
@@ -8974,7 +8974,7 @@ __attribute__((naked)) void CreatePhase1Task(u8 a, u8 b, u8 c, u8 d)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149E94: .4byte 0x08149EBD\n\t"
-        "_08149E98: .4byte 0x03005B60\n\t"
+        "_08149E98: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9035,7 +9035,7 @@ __attribute__((naked)) void Phase2Task_Magma(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08149EEC: .4byte 0x085A88D4\n\t"
-        "_08149EF0: .4byte 0x03005B60\n\t"
+        "_08149EF0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9186,7 +9186,7 @@ __attribute__((naked)) void InitTransitionData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08149FE8: .4byte 0x0203A86C\n\t"
+        "_08149FE8: .4byte gUnknown_203A86C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9866,7 +9866,7 @@ __attribute__((naked)) void Phase2_29_Func2(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814A474: .4byte 0x085A7D3C\n\t"
-        "_0814A478: .4byte 0x020388C8\n\t"
+        "_0814A478: .4byte gScanlineEffectRegBuffers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9901,7 +9901,7 @@ __attribute__((naked)) void Phase2Task_Swirl(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A4AC: .4byte 0x085A9480\n\t"
-        "_0814A4B0: .4byte 0x03005B60\n\t"
+        "_0814A4B0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9936,7 +9936,7 @@ __attribute__((naked)) void Phase2Task_Wave(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A4E4: .4byte 0x085A9498\n\t"
-        "_0814A4E8: .4byte 0x03005B60\n\t"
+        "_0814A4E8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10008,7 +10008,7 @@ __attribute__((naked)) void Phase2_30_Func1(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814A574: .4byte 0x00007FFF\n\t"
-        "_0814A578: .4byte 0x0203A86C\n\t"
+        "_0814A578: .4byte gUnknown_203A86C\n\t"
         "_0814A57C: .4byte 0x00003F41\n\t"
         "_0814A580: .4byte 0x04000050\n\t"
         "_0814A584: .4byte 0x04000052\n\t"
@@ -10084,8 +10084,8 @@ __attribute__((naked)) void Phase2_30_Func3(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0814A600: .4byte 0x0814A745\n\t"
-        "_0814A604: .4byte 0x02039048\n\t"
-        "_0814A608: .4byte 0x0203A86C\n\t"
+        "_0814A604: .4byte gUnknown_2039048\n\t"
+        "_0814A608: .4byte gUnknown_203A86C\n\t"
         "_0814A60C: .4byte 0x0814A78D\n\t"
         ".syntax divided\n\t"
     );
@@ -10133,7 +10133,7 @@ __attribute__((naked)) void Phase2_30_Func4(void)
         "	strh r0, [r4, #0xc]\n\t"
         "	b _0814A662\n\t"
         "	.align 2, 0\n\t"
-        "_0814A658: .4byte 0x0203A86C\n\t"
+        "_0814A658: .4byte gUnknown_203A86C\n\t"
         "_0814A65C: .4byte 0xFFFFFE80\n\t"
         "_0814A660:\n\t"
         "	strh r3, [r4, #0xc]\n\t"
@@ -10245,9 +10245,9 @@ __attribute__((naked)) void Phase2_30_Func4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814A734: .4byte 0x020388C8\n\t"
-        "_0814A738: .4byte 0x0203A86C\n\t"
-        "_0814A73C: .4byte 0x02037C74\n\t"
+        "_0814A734: .4byte gScanlineEffectRegBuffers\n\t"
+        "_0814A738: .4byte gUnknown_203A86C\n\t"
+        "_0814A73C: .4byte gPaletteFade\n\t"
         "_0814A740: .4byte 0x0814A4B5\n\t"
         ".syntax divided\n\t"
     );
@@ -10286,9 +10286,9 @@ __attribute__((naked)) void VBlankCB_Phase2_30(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A778: .4byte 0x04000050\n\t"
-        "_0814A77C: .4byte 0x0203A86C\n\t"
+        "_0814A77C: .4byte gUnknown_203A86C\n\t"
         "_0814A780: .4byte 0x040000D4\n\t"
-        "_0814A784: .4byte 0x020388C8\n\t"
+        "_0814A784: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814A788: .4byte 0x800000A0\n\t"
         ".syntax divided\n\t"
     );
@@ -10312,7 +10312,7 @@ __attribute__((naked)) void HBlankCB_Phase2_30(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0814A7A4: .4byte 0x020388C8\n\t"
+        "_0814A7A4: .4byte gScanlineEffectRegBuffers\n\t"
         "_0814A7A8: .4byte 0x04000006\n\t"
         "_0814A7AC: .4byte 0x04000012\n\t"
         ".syntax divided\n\t"
@@ -10349,7 +10349,7 @@ __attribute__((naked)) void Phase2Task_WhiteFade(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A7E0: .4byte 0x085A94A8\n\t"
-        "_0814A7E4: .4byte 0x03005B60\n\t"
+        "_0814A7E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10384,7 +10384,7 @@ __attribute__((naked)) void Task_BattleTransitionMain(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A818: .4byte 0x085A94B8\n\t"
-        "_0814A81C: .4byte 0x03005B60\n\t"
+        "_0814A81C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10419,7 +10419,7 @@ __attribute__((naked)) void TransitionPhase1_Task_RunFuncs(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0814A850: .4byte 0x085A94CC\n\t"
-        "_0814A854: .4byte 0x03005B60\n\t"
+        "_0814A854: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10613,8 +10613,8 @@ __attribute__((naked)) void Phase2_31_Func3(void)
         "	bls _0814A99C\n\t"
         "	b _0814AA0C\n\t"
         "	.align 2, 0\n\t"
-        "_0814A9B4: .4byte 0x020373B4\n\t"
-        "_0814A9B8: .4byte 0x020377B4\n\t"
+        "_0814A9B4: .4byte gPlttBufferUnfaded\n\t"
+        "_0814A9B8: .4byte gPlttBufferFaded\n\t"
         "_0814A9BC:\n\t"
         "	ldr r0, _0814A9CC\n\t"
         "	movs r1, #0x10\n\t"
@@ -11047,9 +11047,9 @@ __attribute__((naked)) void sub_0814ACA4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0814ACEC: .4byte 0x03005B60\n\t"
-        "_0814ACF0: .4byte 0x02022AC8\n\t"
-        "_0814ACF4: .4byte 0x02022ACA\n\t"
+        "_0814ACEC: .4byte gTasks\n\t"
+        "_0814ACF0: .4byte gBattle_BG0_X\n\t"
+        "_0814ACF4: .4byte gBattle_BG0_Y\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -11115,8 +11115,8 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	.align 2, 0\n\t"
         "_0814AD74: .4byte 0x085A8048\n\t"
         "_0814AD78: .4byte 0x085A8028\n\t"
-        "_0814AD7C: .4byte 0x02022AC8\n\t"
-        "_0814AD80: .4byte 0x02022ACA\n\t"
+        "_0814AD7C: .4byte gBattle_BG0_X\n\t"
+        "_0814AD80: .4byte gBattle_BG0_Y\n\t"
         "_0814AD84: .4byte 0x0814ACA5\n\t"
         "_0814AD88:\n\t"
         "	cmp r1, #2\n\t"
@@ -11133,7 +11133,7 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	strh r0, [r1, #0xa]\n\t"
         "	b _0814ADEE\n\t"
         "	.align 2, 0\n\t"
-        "_0814ADA0: .4byte 0x03005B60\n\t"
+        "_0814ADA0: .4byte gTasks\n\t"
         "_0814ADA4:\n\t"
         "	ldr r1, _0814ADB8\n\t"
         "	lsls r0, r5, #2\n\t"
@@ -11146,7 +11146,7 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	rsbs r1, r1, #0\n\t"
         "	b _0814ADEC\n\t"
         "	.align 2, 0\n\t"
-        "_0814ADB8: .4byte 0x03005B60\n\t"
+        "_0814ADB8: .4byte gTasks\n\t"
         "_0814ADBC: .4byte 0x0000FFFF\n\t"
         "_0814ADC0:\n\t"
         "	ldr r1, _0814ADD4\n\t"
@@ -11159,7 +11159,7 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	ldr r1, _0814ADD8\n\t"
         "	b _0814ADEC\n\t"
         "	.align 2, 0\n\t"
-        "_0814ADD4: .4byte 0x03005B60\n\t"
+        "_0814ADD4: .4byte gTasks\n\t"
         "_0814ADD8: .4byte 0x0000FFFF\n\t"
         "_0814ADDC:\n\t"
         "	ldr r1, _0814AE00\n\t"
@@ -11182,7 +11182,7 @@ __attribute__((naked)) void Phase2_32_Func1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AE00: .4byte 0x03005B60\n\t"
+        "_0814AE00: .4byte gTasks\n\t"
         "_0814AE04: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -11379,8 +11379,8 @@ __attribute__((naked)) void Phase2_32_Func5(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0814AF64: .4byte 0x02022AC8\n\t"
-        "_0814AF68: .4byte 0x02022ACA\n\t"
+        "_0814AF64: .4byte gBattle_BG0_X\n\t"
+        "_0814AF68: .4byte gBattle_BG0_Y\n\t"
         ".syntax divided\n\t"
     );
 }

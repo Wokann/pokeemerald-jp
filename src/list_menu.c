@@ -86,8 +86,8 @@ __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *wi
         "	strb r0, [r4, #4]\n\t"
         "	b _081AE248\n\t"
         "	.align 2, 0\n\t"
-        "_081AE1C4: .4byte 0x0203CB50\n\t"
-        "_081AE1C8: .4byte 0x03006050\n\t"
+        "_081AE1C4: .4byte gUnknown_203CB50\n\t"
+        "_081AE1C8: .4byte gMultiuseListMenuTemplate\n\t"
         "_081AE1CC:\n\t"
         "	ldrb r0, [r5, #6]\n\t"
         "	bl ListMenu_ProcessInput\n\t"
@@ -120,7 +120,7 @@ __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *wi
         "	bl ClearWindowTilemap\n\t"
         "	b _081AE21E\n\t"
         "	.align 2, 0\n\t"
-        "_081AE208: .4byte 0x03002360\n\t"
+        "_081AE208: .4byte gMain\n\t"
         "_081AE20C:\n\t"
         "	mov r4, sl\n\t"
         "	cmp r4, #0\n\t"
@@ -137,7 +137,7 @@ __attribute__((naked)) s32 DoMysteryGiftListMenu(const struct WindowTemplate *wi
         "	bl CopyWindowToVram\n\t"
         "	b _081AE248\n\t"
         "	.align 2, 0\n\t"
-        "_081AE22C: .4byte 0x0203CB50\n\t"
+        "_081AE22C: .4byte gUnknown_203CB50\n\t"
         "_081AE230:\n\t"
         "	ldrb r0, [r5, #6]\n\t"
         "	movs r1, #0\n\t"
@@ -268,8 +268,8 @@ __attribute__((naked)) s32 ListMenu_ProcessInput(u8 listTaskId)
         "	ldr r0, [r0, #4]\n\t"
         "	b _081AE39A\n\t"
         "	.align 2, 0\n\t"
-        "_081AE308: .4byte 0x03005B68\n\t"
-        "_081AE30C: .4byte 0x03002360\n\t"
+        "_081AE308: .4byte gUnknown_3005B68\n\t"
+        "_081AE30C: .4byte gMain\n\t"
         "_081AE310:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -397,7 +397,7 @@ __attribute__((naked)) void DestroyListMenuTask(u8 listTaskId, u16 *scrollOffset
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE3E0: .4byte 0x03005B68\n\t"
+        "_081AE3E0: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -435,7 +435,7 @@ __attribute__((naked)) void RedrawListMenu(u8 listTaskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE424: .4byte 0x03005B68\n\t"
+        "_081AE424: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -477,7 +477,7 @@ __attribute__((naked)) void ChangeListMenuPals(u8 listTaskId, u8 cursorPal, u8 f
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE468: .4byte 0x03005B68\n\t"
+        "_081AE468: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -512,7 +512,7 @@ __attribute__((naked)) void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE4A4: .4byte 0x03005B68\n\t"
+        "_081AE4A4: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -602,7 +602,7 @@ __attribute__((naked)) void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *ar
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE534: .4byte 0x03005B68\n\t"
+        "_081AE534: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -633,7 +633,7 @@ __attribute__((naked)) void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOf
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AE560: .4byte 0x03005B68\n\t"
+        "_081AE560: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -675,7 +675,7 @@ __attribute__((naked)) u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081AE5A8: .4byte 0x03005B68\n\t"
+        "_081AE5A8: .4byte gUnknown_3005B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -785,8 +785,8 @@ __attribute__((naked)) void ListMenuInitInternal(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081AE67C: .4byte 0x081AE131\n\t"
-        "_081AE680: .4byte 0x03005B68\n\t"
-        "_081AE684: .4byte 0x03006040\n\t"
+        "_081AE680: .4byte gUnknown_3005B68\n\t"
+        "_081AE684: .4byte gUnknown_3006040\n\t"
         "_081AE688: .4byte 0xFFFC0FFF\n\t"
         ".syntax divided\n\t"
     );
@@ -847,7 +847,7 @@ __attribute__((naked)) void ListMenuPrint(void)
         "	strb r0, [r5, #3]\n\t"
         "	b _081AE736\n\t"
         "	.align 2, 0\n\t"
-        "_081AE6F4: .4byte 0x03006040\n\t"
+        "_081AE6F4: .4byte gUnknown_3006040\n\t"
         "_081AE6F8:\n\t"
         "	add r2, sp, #0x14\n\t"
         "	ldrb r1, [r4, #0x15]\n\t"
@@ -1730,7 +1730,7 @@ __attribute__((naked)) void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AED4C: .4byte 0x03006040\n\t"
+        "_081AED4C: .4byte gUnknown_3006040\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1775,7 +1775,7 @@ __attribute__((naked)) void ListMenuGetUnkIndicatorsStructFields(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AED88: .4byte 0x03005B68\n\t"
+        "_081AED88: .4byte gUnknown_3005B68\n\t"
         "_081AED8C: .4byte 0x081AED90\n\t"
         "_081AED90:\n\t"
         "	.4byte _081AEDD4\n\t"
@@ -1888,7 +1888,7 @@ __attribute__((naked)) void ListMenuSetUnkIndicatorsStructField(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AEE58: .4byte 0x03005B68\n\t"
+        "_081AEE58: .4byte gUnknown_3005B68\n\t"
         "_081AEE5C: .4byte 0x081AEE60\n\t"
         "_081AEE60:\n\t"
         "	.4byte _081AEEA4\n\t"
@@ -2060,7 +2060,7 @@ __attribute__((naked)) void SpriteCallback_ScrollIndicatorArrow(void)
         "	strh r0, [r4, #0x24]\n\t"
         "	b _081AEFB6\n\t"
         "	.align 2, 0\n\t"
-        "_081AEF94: .4byte 0x082FA8CC\n\t"
+        "_081AEF94: .4byte gSineTable\n\t"
         "_081AEF98:\n\t"
         "	movs r0, #0x34\n\t"
         "	ldrsh r3, [r4, r0]\n\t"
@@ -2087,7 +2087,7 @@ __attribute__((naked)) void SpriteCallback_ScrollIndicatorArrow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AEFC4: .4byte 0x082FA8CC\n\t"
+        "_081AEFC4: .4byte gSineTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2162,7 +2162,7 @@ __attribute__((naked)) void AddScrollIndicatorArrowObject(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081AF04C: .4byte 0x085DFAFC\n\t"
-        "_081AF050: .4byte 0x020205AC\n\t"
+        "_081AF050: .4byte gSprites\n\t"
         "_081AF054: .4byte 0x085DFAB4\n\t"
         ".syntax divided\n\t"
     );
@@ -2303,9 +2303,9 @@ __attribute__((naked)) u8 AddScrollIndicatorArrowPair(const struct ScrollArrowsT
         "	.align 2, 0\n\t"
         "_081AF164: .4byte 0x085DFB60\n\t"
         "_081AF168: .4byte 0x081AF1DD\n\t"
-        "_081AF16C: .4byte 0x03005B68\n\t"
+        "_081AF16C: .4byte gUnknown_3005B68\n\t"
         "_081AF170: .4byte 0x0000FFFF\n\t"
-        "_081AF174: .4byte 0x020205AC\n\t"
+        "_081AF174: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2330,7 +2330,7 @@ __attribute__((naked)) u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType
         "	strb r3, [r0, #5]\n\t"
         "	b _081AF1AE\n\t"
         "	.align 2, 0\n\t"
-        "_081AF198: .4byte 0x0203CB58\n\t"
+        "_081AF198: .4byte gTempScrollArrowTemplate\n\t"
         "_081AF19C:\n\t"
         "	ldr r0, _081AF1D8\n\t"
         "	movs r1, #0\n\t"
@@ -2362,7 +2362,7 @@ __attribute__((naked)) u8 AddScrollIndicatorArrowPairParameterized(u32 arrowType
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081AF1D8: .4byte 0x0203CB58\n\t"
+        "_081AF1D8: .4byte gTempScrollArrowTemplate\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2399,9 +2399,9 @@ __attribute__((naked)) void Task_ScrollIndicatorArrowPair(void)
         "	orrs r1, r2\n\t"
         "	b _081AF236\n\t"
         "	.align 2, 0\n\t"
-        "_081AF214: .4byte 0x03005B68\n\t"
+        "_081AF214: .4byte gUnknown_3005B68\n\t"
         "_081AF218: .4byte 0x0000FFFF\n\t"
-        "_081AF21C: .4byte 0x020205AC\n\t"
+        "_081AF21C: .4byte gSprites\n\t"
         "_081AF220:\n\t"
         "	ldr r3, _081AF254\n\t"
         "	ldrb r1, [r4, #0xc]\n\t"
@@ -2430,7 +2430,7 @@ __attribute__((naked)) void Task_ScrollIndicatorArrowPair(void)
         "	orrs r1, r2\n\t"
         "	b _081AF26C\n\t"
         "	.align 2, 0\n\t"
-        "_081AF254: .4byte 0x020205AC\n\t"
+        "_081AF254: .4byte gSprites\n\t"
         "_081AF258:\n\t"
         "	ldrb r1, [r4, #0xd]\n\t"
         "	lsls r0, r1, #4\n\t"
@@ -2490,8 +2490,8 @@ __attribute__((naked)) void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
         "	orrs r1, r2\n\t"
         "	b _081AF2EA\n\t"
         "	.align 2, 0\n\t"
-        "_081AF2B8: .4byte 0x03005B68\n\t"
-        "_081AF2BC: .4byte 0x020205AC\n\t"
+        "_081AF2B8: .4byte gUnknown_3005B68\n\t"
+        "_081AF2BC: .4byte gSprites\n\t"
         "_081AF2C0:\n\t"
         "	ldr r3, _081AF2F4\n\t"
         "	ldrb r1, [r4, #0xc]\n\t"
@@ -2520,7 +2520,7 @@ __attribute__((naked)) void Task_ScrollIndicatorArrowPairOnMainMenu(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF2F4: .4byte 0x020205AC\n\t"
+        "_081AF2F4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2568,9 +2568,9 @@ __attribute__((naked)) void RemoveScrollIndicatorArrowPair(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF34C: .4byte 0x03005B68\n\t"
+        "_081AF34C: .4byte gUnknown_3005B68\n\t"
         "_081AF350: .4byte 0x0000FFFF\n\t"
-        "_081AF354: .4byte 0x020205AC\n\t"
+        "_081AF354: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3005,9 +3005,9 @@ __attribute__((naked)) void ListMenuAddRedOutlineCursorObject(void)
         "	.align 2, 0\n\t"
         "_081AF654: .4byte 0x085DFB60\n\t"
         "_081AF658: .4byte 0x081AF3BD\n\t"
-        "_081AF65C: .4byte 0x03005B68\n\t"
-        "_081AF660: .4byte 0x082BF314\n\t"
-        "_081AF664: .4byte 0x020205AC\n\t"
+        "_081AF65C: .4byte gUnknown_3005B68\n\t"
+        "_081AF660: .4byte gDummySpriteTemplate\n\t"
+        "_081AF664: .4byte gSprites\n\t"
         "_081AF668: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -3048,8 +3048,8 @@ __attribute__((naked)) void ListMenuUpdateRedOutlineCursorObject(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF6A8: .4byte 0x03005B68\n\t"
-        "_081AF6AC: .4byte 0x020205AC\n\t"
+        "_081AF6A8: .4byte gUnknown_3005B68\n\t"
+        "_081AF6AC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3093,9 +3093,9 @@ __attribute__((naked)) void ListMenuRemoveRedOutlineCursorObject(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF6FC: .4byte 0x03005B68\n\t"
+        "_081AF6FC: .4byte gUnknown_3005B68\n\t"
         "_081AF700: .4byte 0x0000FFFF\n\t"
-        "_081AF704: .4byte 0x020205AC\n\t"
+        "_081AF704: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3125,7 +3125,7 @@ __attribute__((naked)) void SpriteCallback_RedArrowCursor(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF730: .4byte 0x082FA8CC\n\t"
+        "_081AF730: .4byte gSineTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3261,9 +3261,9 @@ __attribute__((naked)) void ListMenuAddRedArrowCursorObject(void)
         "	.align 2, 0\n\t"
         "_081AF828: .4byte 0x085DFB60\n\t"
         "_081AF82C: .4byte 0x081AF735\n\t"
-        "_081AF830: .4byte 0x03005B68\n\t"
+        "_081AF830: .4byte gUnknown_3005B68\n\t"
         "_081AF834: .4byte 0x085DFB48\n\t"
-        "_081AF838: .4byte 0x020205AC\n\t"
+        "_081AF838: .4byte gSprites\n\t"
         "_081AF83C: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -3298,8 +3298,8 @@ __attribute__((naked)) void ListMenuUpdateRedArrowCursorObject(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF870: .4byte 0x03005B68\n\t"
-        "_081AF874: .4byte 0x020205AC\n\t"
+        "_081AF870: .4byte gUnknown_3005B68\n\t"
+        "_081AF874: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3341,9 +3341,9 @@ __attribute__((naked)) void ListMenuRemoveRedArrowCursorObject(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AF8BC: .4byte 0x03005B68\n\t"
+        "_081AF8BC: .4byte gUnknown_3005B68\n\t"
         "_081AF8C0: .4byte 0x0000FFFF\n\t"
-        "_081AF8C4: .4byte 0x020205AC\n\t"
+        "_081AF8C4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }

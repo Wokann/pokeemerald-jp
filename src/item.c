@@ -16,7 +16,7 @@ __attribute__((naked)) void GetBagItemQuantity(void)
         "	lsrs r0, r0, #0x10\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080D5DEC: .4byte 0x03005AF0\n\t"
+        "_080D5DEC: .4byte gSaveBlock2Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -35,7 +35,7 @@ __attribute__((naked)) void SetBagItemQuantity(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080D5E04: .4byte 0x03005AF0\n\t"
+        "_080D5E04: .4byte gSaveBlock2Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -109,7 +109,7 @@ __attribute__((naked)) void ApplyNewEncryptionKeyToBagItems(u32 newKey)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D5E64: .4byte 0x02039A78\n\t"
+        "_080D5E64: .4byte gUnknown_2039A78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -169,8 +169,8 @@ __attribute__((naked)) void SetBagItemsPointers()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D5EC0: .4byte 0x02039A78\n\t"
-        "_080D5EC4: .4byte 0x03005AEC\n\t"
+        "_080D5EC0: .4byte gUnknown_2039A78\n\t"
+        "_080D5EC4: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -234,7 +234,7 @@ __attribute__((naked)) bool8 IsBagPocketNonEmpty(u8 pocket)
         "	movs r0, #1\n\t"
         "	b _080D5F38\n\t"
         "	.align 2, 0\n\t"
-        "_080D5F28: .4byte 0x02039A78\n\t"
+        "_080D5F28: .4byte gUnknown_2039A78\n\t"
         "_080D5F2C:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -296,7 +296,7 @@ __attribute__((naked)) bool8 CheckBagHasItem(u16 itemId, u16 count)
         "	lsrs r4, r0, #0x15\n\t"
         "	b _080D5FC6\n\t"
         "	.align 2, 0\n\t"
-        "_080D5F94: .4byte 0x02039A78\n\t"
+        "_080D5F94: .4byte gUnknown_2039A78\n\t"
         "_080D5F98:\n\t"
         "	adds r0, r4, r1\n\t"
         "	ldr r1, [r0]\n\t"
@@ -333,7 +333,7 @@ __attribute__((naked)) bool8 CheckBagHasItem(u16 itemId, u16 count)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D5FD8: .4byte 0x02039A78\n\t"
+        "_080D5FD8: .4byte gUnknown_2039A78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -357,7 +357,7 @@ __attribute__((naked)) bool8 HasAtLeastOneBerry()
         "	movs r0, #1\n\t"
         "	b _080D600E\n\t"
         "	.align 2, 0\n\t"
-        "_080D5FF8: .4byte 0x02037290\n\t"
+        "_080D5FF8: .4byte gSpecialVar_Result\n\t"
         "_080D5FFC:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -373,7 +373,7 @@ __attribute__((naked)) bool8 HasAtLeastOneBerry()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6014: .4byte 0x02037290\n\t"
+        "_080D6014: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -520,7 +520,7 @@ __attribute__((naked)) bool8 CheckBagHasSpace(u16 itemId, u16 count)
         "	b _080D612E\n\t"
         "	.align 2, 0\n\t"
         "_080D6124: .4byte 0x000003E7\n\t"
-        "_080D6128: .4byte 0x02039A78\n\t"
+        "_080D6128: .4byte gUnknown_2039A78\n\t"
         "_080D612C:\n\t"
         "	movs r0, #1\n\t"
         "_080D612E:\n\t"
@@ -674,7 +674,7 @@ __attribute__((naked)) bool8 AddBagItem(u16 itemId, u16 count)
         "	bl SetBagItemQuantity\n\t"
         "	b _080D6296\n\t"
         "	.align 2, 0\n\t"
-        "_080D6250: .4byte 0x02039A78\n\t"
+        "_080D6250: .4byte gUnknown_2039A78\n\t"
         "_080D6254: .4byte 0x000003E7\n\t"
         "_080D6258:\n\t"
         "	cmp r4, #1\n\t"
@@ -812,7 +812,7 @@ __attribute__((naked)) bool8 RemoveBagItem(u16 itemId, u16 count)
         "	movs r0, #0\n\t"
         "	b _080D6472\n\t"
         "	.align 2, 0\n\t"
-        "_080D6354: .4byte 0x02039A78\n\t"
+        "_080D6354: .4byte gUnknown_2039A78\n\t"
         "_080D6358:\n\t"
         "	bl CurMapIsSecretBase\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1036,7 +1036,7 @@ __attribute__((naked)) void FindFreePCItemSlot(void)
         "	adds r0, r1, #0\n\t"
         "	b _080D64F8\n\t"
         "	.align 2, 0\n\t"
-        "_080D64E4: .4byte 0x03005AEC\n\t"
+        "_080D64E4: .4byte gSaveBlock1Ptr\n\t"
         "_080D64E8:\n\t"
         "	adds r0, r1, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1085,7 +1085,7 @@ __attribute__((naked)) u8 CountUsedPCItemSlots()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6530: .4byte 0x03005AEC\n\t"
+        "_080D6530: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1122,7 +1122,7 @@ __attribute__((naked)) bool8 CheckPCHasItem(u16 itemId, u16 count)
         "	movs r0, #1\n\t"
         "	b _080D6580\n\t"
         "	.align 2, 0\n\t"
-        "_080D656C: .4byte 0x03005AEC\n\t"
+        "_080D656C: .4byte gSaveBlock1Ptr\n\t"
         "_080D6570: .4byte 0x0000049A\n\t"
         "_080D6574:\n\t"
         "	adds r0, r4, #1\n\t"
@@ -1209,7 +1209,7 @@ __attribute__((naked)) bool8 AddPCItem(u16 itemId, u16 count)
         "	movs r0, #0\n\t"
         "	b _080D6652\n\t"
         "	.align 2, 0\n\t"
-        "_080D6610: .4byte 0x03005AEC\n\t"
+        "_080D6610: .4byte gSaveBlock1Ptr\n\t"
         "_080D6614: .4byte 0x000003E7\n\t"
         "_080D6618: .4byte 0x0000FC19\n\t"
         "_080D661C:\n\t"
@@ -1245,7 +1245,7 @@ __attribute__((naked)) bool8 AddPCItem(u16 itemId, u16 count)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D665C: .4byte 0x03005AEC\n\t"
+        "_080D665C: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1280,7 +1280,7 @@ __attribute__((naked)) void RemovePCItem(u8 index, u16 count)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D6694: .4byte 0x03005AEC\n\t"
+        "_080D6694: .4byte gSaveBlock1Ptr\n\t"
         "_080D6698: .4byte 0x0000049A\n\t"
         ".syntax divided\n\t"
     );
@@ -1337,7 +1337,7 @@ __attribute__((naked)) void CompactPCItems()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D66F0: .4byte 0x03005AEC\n\t"
+        "_080D66F0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1361,7 +1361,7 @@ __attribute__((naked)) void SwapRegisteredBike()
         "	beq _080D6724\n\t"
         "	b _080D6726\n\t"
         "	.align 2, 0\n\t"
-        "_080D6710: .4byte 0x03005AEC\n\t"
+        "_080D6710: .4byte gSaveBlock1Ptr\n\t"
         "_080D6714: .4byte 0x00000496\n\t"
         "_080D6718: .4byte 0x00000103\n\t"
         "_080D671C:\n\t"
@@ -1395,7 +1395,7 @@ __attribute__((naked)) u16 BagGetItemIdByPocketPosition(u8 pocketId, u16 pocketP
         "	ldrh r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080D6744: .4byte 0x02039A78\n\t"
+        "_080D6744: .4byte gUnknown_2039A78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1421,7 +1421,7 @@ __attribute__((naked)) u16 BagGetQuantityByPocketPosition(u8 pocketId, u16 pocke
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D676C: .4byte 0x02039A78\n\t"
+        "_080D676C: .4byte gUnknown_2039A78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1649,7 +1649,7 @@ __attribute__((naked)) void ClearBag()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D68D0: .4byte 0x02039A78\n\t"
+        "_080D68D0: .4byte gUnknown_2039A78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1697,7 +1697,7 @@ __attribute__((naked)) u16 CountTotalItemQuantityInBag(u16 itemId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6920: .4byte 0x02039A70\n\t"
+        "_080D6920: .4byte gUnknown_2039A70\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1751,7 +1751,7 @@ __attribute__((naked)) void CheckPyramidBagHasItem(void)
         "	movs r0, #1\n\t"
         "	b _080D6994\n\t"
         "	.align 2, 0\n\t"
-        "_080D6978: .4byte 0x03005AF0\n\t"
+        "_080D6978: .4byte gSaveBlock2Ptr\n\t"
         "_080D697C: .4byte 0x00000CA9\n\t"
         "_080D6980: .4byte 0x00000E2C\n\t"
         "_080D6984: .4byte 0x00000E54\n\t"
@@ -1824,7 +1824,7 @@ __attribute__((naked)) void CheckPyramidBagHasSpace(void)
         "	movs r0, #1\n\t"
         "	b _080D6A14\n\t"
         "	.align 2, 0\n\t"
-        "_080D69F8: .4byte 0x03005AF0\n\t"
+        "_080D69F8: .4byte gSaveBlock2Ptr\n\t"
         "_080D69FC: .4byte 0x00000CA9\n\t"
         "_080D6A00: .4byte 0x00000E2C\n\t"
         "_080D6A04: .4byte 0x00000E54\n\t"
@@ -1917,7 +1917,7 @@ __attribute__((naked)) bool8 AddPyramidBagItem(u16 itemId, u16 count)
         "	strb r0, [r1]\n\t"
         "	b _080D6ABE\n\t"
         "	.align 2, 0\n\t"
-        "_080D6AAC: .4byte 0x03005AF0\n\t"
+        "_080D6AAC: .4byte gSaveBlock2Ptr\n\t"
         "_080D6AB0: .4byte 0x00000CA9\n\t"
         "_080D6AB4: .4byte 0x00000E2C\n\t"
         "_080D6AB8: .4byte 0x00000E54\n\t"
@@ -2059,11 +2059,11 @@ __attribute__((naked)) bool8 RemovePyramidBagItem(u16 itemId, u16 count)
         "	strh r0, [r3]\n\t"
         "	b _080D6C64\n\t"
         "	.align 2, 0\n\t"
-        "_080D6BB8: .4byte 0x03005AF0\n\t"
+        "_080D6BB8: .4byte gSaveBlock2Ptr\n\t"
         "_080D6BBC: .4byte 0x00000CA9\n\t"
         "_080D6BC0: .4byte 0x00000E2C\n\t"
         "_080D6BC4: .4byte 0x00000E54\n\t"
-        "_080D6BC8: .4byte 0x0203CBFC\n\t"
+        "_080D6BC8: .4byte gUnknown_203CBFC\n\t"
         "_080D6BCC:\n\t"
         "	movs r0, #0x14\n\t"
         "	bl Alloc\n\t"
@@ -2191,7 +2191,7 @@ __attribute__((naked)) void ItemId_GetName(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6CAC: .4byte 0x0855CEE8\n\t"
+        "_080D6CAC: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2216,7 +2216,7 @@ __attribute__((naked)) void sub_080D6CB0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6CD0: .4byte 0x0855CEE8\n\t"
+        "_080D6CD0: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2241,7 +2241,7 @@ __attribute__((naked)) void sub_080D6CD4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6CF4: .4byte 0x0855CEE8\n\t"
+        "_080D6CF4: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2266,7 +2266,7 @@ __attribute__((naked)) void sub_080D6CF8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6D18: .4byte 0x0855CEE8\n\t"
+        "_080D6D18: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2291,7 +2291,7 @@ __attribute__((naked)) void sub_080D6D1C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6D3C: .4byte 0x0855CEE8\n\t"
+        "_080D6D3C: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2317,7 +2317,7 @@ __attribute__((naked)) void ItemId_GetHoldEffect(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6D64: .4byte 0x0855CEE8\n\t"
+        "_080D6D64: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2342,7 +2342,7 @@ __attribute__((naked)) void ItemId_GetHoldEffectParam(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6D88: .4byte 0x0855CEE8\n\t"
+        "_080D6D88: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2367,7 +2367,7 @@ __attribute__((naked)) void sub_080D6D8C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6DAC: .4byte 0x0855CEE8\n\t"
+        "_080D6DAC: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2392,7 +2392,7 @@ __attribute__((naked)) void ItemId_GetImportance(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6DD0: .4byte 0x0855CEE8\n\t"
+        "_080D6DD0: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2417,7 +2417,7 @@ __attribute__((naked)) void ItemId_GetPocket(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6DF4: .4byte 0x0855CEE8\n\t"
+        "_080D6DF4: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2443,7 +2443,7 @@ __attribute__((naked)) void sub_080D6DF8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6E1C: .4byte 0x0855CEE8\n\t"
+        "_080D6E1C: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2468,7 +2468,7 @@ __attribute__((naked)) void ItemId_GetSecondaryId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6E40: .4byte 0x0855CEE8\n\t"
+        "_080D6E40: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2494,7 +2494,7 @@ __attribute__((naked)) void sub_080D6E44(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6E68: .4byte 0x0855CEE8\n\t"
+        "_080D6E68: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2520,7 +2520,7 @@ __attribute__((naked)) void sub_080D6E6C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D6E90: .4byte 0x0855CEE8\n\t"
+        "_080D6E90: .4byte gItems\n\t"
         ".syntax divided\n\t"
     );
 }

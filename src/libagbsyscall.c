@@ -137,7 +137,7 @@ __attribute__((naked)) void SoftReset(u32 resetFlags)
         "	movs r0, r0\n\t"
         "	.align 2, 0\n\t"
         "_082959F4: .4byte 0x04000208\n\t"
-        "_082959F8: .4byte 0x03007F00\n\t"
+        "_082959F8: .4byte gUnknown_3007F00\n\t"
         ".syntax divided\n\t"
     );
 }

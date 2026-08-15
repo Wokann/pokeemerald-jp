@@ -71,7 +71,7 @@ __attribute__((naked)) void *_sbrk_r(void *ptr, int incr)
         "adds r0, r1, #0\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829B6C0: .4byte 0x0300764C\n\t"
+        "_0829B6C0: .4byte gUnknown_300764C\n\t"
         ".syntax divided\n\t"
     );
 }

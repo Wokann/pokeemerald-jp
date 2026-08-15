@@ -92,8 +92,8 @@ __attribute__((naked)) void load_intro_part2_graphics(void)
         "_0817AFFC: .4byte 0x085CECB4\n\t"
         "_0817B000: .4byte 0x085D25BC\n\t"
         "_0817B004: .4byte 0x085CF680\n\t"
-        "_0817B008: .4byte 0x0203B9F4\n\t"
-        "_0817B00C: .4byte 0x030030BC\n\t"
+        "_0817B008: .4byte gUnknown_203B9F4\n\t"
+        "_0817B00C: .4byte gReservedSpritePaletteCount\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -334,8 +334,8 @@ __attribute__((naked)) void sub_0817B088(void)
         "_0817B254: .4byte 0x085CF7EC\n\t"
         "_0817B258: .4byte 0x085D2650\n\t"
         "_0817B25C: .4byte 0x085CFA18\n\t"
-        "_0817B260: .4byte 0x030030BC\n\t"
-        "_0817B264: .4byte 0x0203B9F4\n\t"
+        "_0817B260: .4byte gReservedSpritePaletteCount\n\t"
+        "_0817B264: .4byte gUnknown_203B9F4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -430,7 +430,7 @@ __attribute__((naked)) void CreateBicycleAnimationTask(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0817B310: .4byte 0x0817B319\n\t"
-        "_0817B314: .4byte 0x03005B60\n\t"
+        "_0817B314: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -506,9 +506,9 @@ __attribute__((naked)) void sub_0817B318(void)
         "	bl SetGpuReg\n\t"
         "	b _0817B3BA\n\t"
         "	.align 2, 0\n\t"
-        "_0817B3A4: .4byte 0x03005B60\n\t"
-        "_0817B3A8: .4byte 0x0203B9F0\n\t"
-        "_0817B3AC: .4byte 0x0203B9F2\n\t"
+        "_0817B3A4: .4byte gTasks\n\t"
+        "_0817B3A8: .4byte gUnknown_203B9F0\n\t"
+        "_0817B3AC: .4byte gUnknown_203B9F2\n\t"
         "_0817B3B0:\n\t"
         "	ldr r0, _0817B3F8\n\t"
         "	ldrh r1, [r0]\n\t"
@@ -546,8 +546,8 @@ __attribute__((naked)) void sub_0817B318(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B3F8: .4byte 0x0203B9F0\n\t"
-        "_0817B3FC: .4byte 0x03005B60\n\t"
+        "_0817B3F8: .4byte gUnknown_203B9F0\n\t"
+        "_0817B3FC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -590,9 +590,9 @@ __attribute__((naked)) void sub_0817B400(void)
         "	ldrh r1, [r2, #0x14]\n\t"
         "	b _0817B456\n\t"
         "	.align 2, 0\n\t"
-        "_0817B440: .4byte 0x03002360\n\t"
-        "_0817B444: .4byte 0x02037C74\n\t"
-        "_0817B448: .4byte 0x020373B4\n\t"
+        "_0817B440: .4byte gMain\n\t"
+        "_0817B444: .4byte gPaletteFade\n\t"
+        "_0817B448: .4byte gPlttBufferUnfaded\n\t"
         "_0817B44C:\n\t"
         "	ldr r2, _0817B474\n\t"
         "	ldrh r1, [r2, #0x14]\n\t"
@@ -613,7 +613,7 @@ __attribute__((naked)) void sub_0817B400(void)
         "	bl LoadPalette\n\t"
         "	b _0817B4E0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B474: .4byte 0x020373B4\n\t"
+        "_0817B474: .4byte gPlttBufferUnfaded\n\t"
         "_0817B478:\n\t"
         "	ldr r0, _0817B4A8\n\t"
         "	ldr r2, [r0, #0x20]\n\t"
@@ -639,8 +639,8 @@ __attribute__((naked)) void sub_0817B400(void)
         "	ldr r2, _0817B4B4\n\t"
         "	b _0817B4C6\n\t"
         "	.align 2, 0\n\t"
-        "_0817B4A8: .4byte 0x03002360\n\t"
-        "_0817B4AC: .4byte 0x02037C74\n\t"
+        "_0817B4A8: .4byte gMain\n\t"
+        "_0817B4AC: .4byte gPaletteFade\n\t"
         "_0817B4B0: .4byte 0x00003D27\n\t"
         "_0817B4B4: .4byte 0x00000295\n\t"
         "_0817B4B8:\n\t"
@@ -691,7 +691,7 @@ __attribute__((naked)) void sub_0817B4EC(void)
         "	bl DestroySprite\n\t"
         "	b _0817B550\n\t"
         "	.align 2, 0\n\t"
-        "_0817B508: .4byte 0x0203B9F4\n\t"
+        "_0817B508: .4byte gUnknown_203B9F4\n\t"
         "_0817B50C:\n\t"
         "	movs r1, #0x20\n\t"
         "	ldrsh r0, [r2, r1]\n\t"
@@ -720,8 +720,8 @@ __attribute__((naked)) void sub_0817B4EC(void)
         "	b _0817B54C\n\t"
         "	.align 2, 0\n\t"
         "_0817B53C: .4byte 0x0000FFE0\n\t"
-        "_0817B540: .4byte 0x0203B9F0\n\t"
-        "_0817B544: .4byte 0x0203B9F2\n\t"
+        "_0817B540: .4byte gUnknown_203B9F0\n\t"
+        "_0817B544: .4byte gUnknown_203B9F2\n\t"
         "_0817B548:\n\t"
         "	ldr r0, _0817B554\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -732,7 +732,7 @@ __attribute__((naked)) void sub_0817B4EC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B554: .4byte 0x0203B9F0\n\t"
+        "_0817B554: .4byte gUnknown_203B9F0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -840,9 +840,9 @@ __attribute__((naked)) void sub_0817B558(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B620: .4byte 0x020205AC\n\t"
+        "_0817B620: .4byte gSprites\n\t"
         "_0817B624: .4byte 0x085D251C\n\t"
-        "_0817B628: .4byte 0x020205B4\n\t"
+        "_0817B628: .4byte gUnknown_20205B4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -972,7 +972,7 @@ __attribute__((naked)) void sub_0817B684(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B6F0: .4byte 0x020205AC\n\t"
+        "_0817B6F0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1019,7 +1019,7 @@ __attribute__((naked)) void intro_create_brendan_sprite(void)
         "	.align 2, 0\n\t"
         "_0817B740: .4byte 0x085D26BC\n\t"
         "_0817B744: .4byte 0x085D270C\n\t"
-        "_0817B748: .4byte 0x020205AC\n\t"
+        "_0817B748: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1066,7 +1066,7 @@ __attribute__((naked)) void intro_create_may_sprite(void)
         "	.align 2, 0\n\t"
         "_0817B798: .4byte 0x085D26D4\n\t"
         "_0817B79C: .4byte 0x085D2724\n\t"
-        "_0817B7A0: .4byte 0x020205AC\n\t"
+        "_0817B7A0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1132,7 +1132,7 @@ __attribute__((naked)) void sub_0817B7A8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817B804: .4byte 0x020205AC\n\t"
+        "_0817B804: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1194,7 +1194,7 @@ __attribute__((naked)) void intro_create_flygon_sprite(void)
         "	.align 2, 0\n\t"
         "_0817B874: .4byte 0x085D275C\n\t"
         "_0817B878: .4byte 0xFFE00000\n\t"
-        "_0817B87C: .4byte 0x020205AC\n\t"
+        "_0817B87C: .4byte gSprites\n\t"
         "_0817B880: .4byte 0x0817B7A9\n\t"
         ".syntax divided\n\t"
     );
@@ -1257,7 +1257,7 @@ __attribute__((naked)) void sub_0817B884(void)
         "	.align 2, 0\n\t"
         "_0817B8F0: .4byte 0x085D2774\n\t"
         "_0817B8F4: .4byte 0xFFE00000\n\t"
-        "_0817B8F8: .4byte 0x020205AC\n\t"
+        "_0817B8F8: .4byte gSprites\n\t"
         "_0817B8FC: .4byte 0x0817B7A9\n\t"
         ".syntax divided\n\t"
     );

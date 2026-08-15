@@ -237,8 +237,8 @@ __attribute__((naked)) void StorePokemonInDaycare(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806F640: .4byte 0x03005AF0\n\t"
-        "_0806F644: .4byte 0x03005AEC\n\t"
+        "_0806F640: .4byte gSaveBlock2Ptr\n\t"
+        "_0806F644: .4byte gSaveBlock1Ptr\n\t"
         "_0806F648: .4byte 0x00002BE0\n\t"
         ".syntax divided\n\t"
     );
@@ -288,8 +288,8 @@ __attribute__((naked)) void StoreSelectedPokemonInDaycare()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806F694: .4byte 0x02024190\n\t"
-        "_0806F698: .4byte 0x03005AEC\n\t"
+        "_0806F694: .4byte gPlayerParty\n\t"
+        "_0806F698: .4byte gSaveBlock1Ptr\n\t"
         "_0806F69C: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -388,7 +388,7 @@ __attribute__((naked)) void ApplyDaycareExperience(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806F74C: .4byte 0x02024186\n\t"
+        "_0806F74C: .4byte gMoveToLearn\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -465,8 +465,8 @@ __attribute__((naked)) void TakeSelectedPokemonFromDaycare(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806F7EC: .4byte 0x02021C40\n\t"
-        "_0806F7F0: .4byte 0x02024190\n\t"
+        "_0806F7EC: .4byte gStringVar1\n\t"
+        "_0806F7F0: .4byte gPlayerParty\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -514,9 +514,9 @@ __attribute__((naked)) u16 TakePokemonFromDaycare()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806F838: .4byte 0x03005AEC\n\t"
+        "_0806F838: .4byte gSaveBlock1Ptr\n\t"
         "_0806F83C: .4byte 0x00003030\n\t"
-        "_0806F840: .4byte 0x02037280\n\t"
+        "_0806F840: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -606,8 +606,8 @@ __attribute__((naked)) void GetNumLevelsGainedForDaycareMon(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806F8D8: .4byte 0x02021C54\n\t"
-        "_0806F8DC: .4byte 0x02021C40\n\t"
+        "_0806F8D8: .4byte gStringVar2\n\t"
+        "_0806F8DC: .4byte gStringVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -638,8 +638,8 @@ __attribute__((naked)) void GetDaycareCostForSelectedMon(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806F910: .4byte 0x02021C40\n\t"
-        "_0806F914: .4byte 0x02021C54\n\t"
+        "_0806F910: .4byte gStringVar1\n\t"
+        "_0806F914: .4byte gStringVar2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -680,10 +680,10 @@ __attribute__((naked)) void GetDaycareCost(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806F94C: .4byte 0x03005AEC\n\t"
+        "_0806F94C: .4byte gSaveBlock1Ptr\n\t"
         "_0806F950: .4byte 0x00003030\n\t"
-        "_0806F954: .4byte 0x02037280\n\t"
-        "_0806F958: .4byte 0x02037282\n\t"
+        "_0806F954: .4byte gSpecialVar_0x8004\n\t"
+        "_0806F958: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -708,7 +708,7 @@ __attribute__((naked)) void Debug_AddDaycareSteps(void)
         "	str r1, [r2]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0806F97C: .4byte 0x03005AEC\n\t"
+        "_0806F97C: .4byte gSaveBlock1Ptr\n\t"
         "_0806F980: .4byte 0x000030B8\n\t"
         "_0806F984: .4byte 0x00003144\n\t"
         ".syntax divided\n\t"
@@ -737,8 +737,8 @@ __attribute__((naked)) u8 GetNumLevelsGainedFromDaycare()
         "	movs r0, #0\n\t"
         "	b _0806F9CE\n\t"
         "	.align 2, 0\n\t"
-        "_0806F9AC: .4byte 0x03005AEC\n\t"
-        "_0806F9B0: .4byte 0x02037280\n\t"
+        "_0806F9AC: .4byte gSaveBlock1Ptr\n\t"
+        "_0806F9B0: .4byte gSpecialVar_0x8004\n\t"
         "_0806F9B4: .4byte 0x00003030\n\t"
         "_0806F9B8:\n\t"
         "	ldrh r0, [r5]\n\t"
@@ -1043,7 +1043,7 @@ __attribute__((naked)) void _TriggerPendingDaycareEgg(void)
         "	str r4, [r5]\n\t"
         "	b _0806FC04\n\t"
         "	.align 2, 0\n\t"
-        "_0806FBB0: .4byte 0x03002360\n\t"
+        "_0806FBB0: .4byte gMain\n\t"
         "_0806FBB4: .4byte 0x0000FFFE\n\t"
         "_0806FBB8:\n\t"
         "	movs r0, #0x8c\n\t"
@@ -1131,7 +1131,7 @@ __attribute__((naked)) void TriggerPendingDaycareEgg()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806FC4C: .4byte 0x03005AEC\n\t"
+        "_0806FC4C: .4byte gSaveBlock1Ptr\n\t"
         "_0806FC50: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -1150,7 +1150,7 @@ __attribute__((naked)) void TriggerPendingDaycareMaleEgg(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806FC68: .4byte 0x03005AEC\n\t"
+        "_0806FC68: .4byte gSaveBlock1Ptr\n\t"
         "_0806FC6C: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -1609,11 +1609,11 @@ __attribute__((naked)) void BuildEggMoveset(void)
         "	bl DeleteFirstMoveAndGiveMoveToMon\n\t"
         "	b _0806FFEE\n\t"
         "	.align 2, 0\n\t"
-        "_0806FFCC: .4byte 0x020246F0\n\t"
-        "_0806FFD0: .4byte 0x020246CC\n\t"
-        "_0806FFD4: .4byte 0x020246D4\n\t"
-        "_0806FFD8: .4byte 0x020246DC\n\t"
-        "_0806FFDC: .4byte 0x02024668\n\t"
+        "_0806FFCC: .4byte gUnknown_20246F0\n\t"
+        "_0806FFD0: .4byte gUnknown_20246CC\n\t"
+        "_0806FFD4: .4byte gUnknown_20246D4\n\t"
+        "_0806FFD8: .4byte gUnknown_20246DC\n\t"
+        "_0806FFDC: .4byte gUnknown_2024668\n\t"
         "_0806FFE0: .4byte 0x0000FFFF\n\t"
         "_0806FFE4:\n\t"
         "	adds r0, r5, #1\n\t"
@@ -1777,12 +1777,12 @@ __attribute__((naked)) void BuildEggMoveset(void)
         "	bl DeleteFirstMoveAndGiveMoveToMon\n\t"
         "	b _0807013C\n\t"
         "	.align 2, 0\n\t"
-        "_08070118: .4byte 0x020246CC\n\t"
+        "_08070118: .4byte gUnknown_20246CC\n\t"
         "_0807011C: .4byte 0x0000FFFF\n\t"
         "_08070120: .4byte 0x00000121\n\t"
-        "_08070124: .4byte 0x020246D4\n\t"
-        "_08070128: .4byte 0x020246F0\n\t"
-        "_0807012C: .4byte 0x02024668\n\t"
+        "_08070124: .4byte gUnknown_20246D4\n\t"
+        "_08070128: .4byte gUnknown_20246F0\n\t"
+        "_0807012C: .4byte gUnknown_2024668\n\t"
         "_08070130:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -1813,7 +1813,7 @@ __attribute__((naked)) void BuildEggMoveset(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070164: .4byte 0x020246D4\n\t"
+        "_08070164: .4byte gUnknown_20246D4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1851,7 +1851,7 @@ __attribute__((naked)) void RejectEggFromDayCare()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070194: .4byte 0x03005AEC\n\t"
+        "_08070194: .4byte gSaveBlock1Ptr\n\t"
         "_08070198: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2137,7 +2137,7 @@ __attribute__((naked)) void _GiveEggFromDaycare(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080703A8: .4byte 0x02024190\n\t"
+        "_080703A8: .4byte gPlayerParty\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2216,7 +2216,7 @@ __attribute__((naked)) void CreateEgg(struct Pokemon *mon, u16 species, bool8 se
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070444: .4byte 0x085C8C62\n\t"
+        "_08070444: .4byte gText_EggNickname\n\t"
         "_08070448: .4byte 0x082F0D65\n\t"
         ".syntax divided\n\t"
     );
@@ -2283,7 +2283,7 @@ __attribute__((naked)) void SetInitialEggData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080704C8: .4byte 0x085C8C62\n\t"
+        "_080704C8: .4byte gText_EggNickname\n\t"
         "_080704CC: .4byte 0x082F0D65\n\t"
         ".syntax divided\n\t"
     );
@@ -2302,7 +2302,7 @@ __attribute__((naked)) void GiveEggFromDaycare()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080704E4: .4byte 0x03005AEC\n\t"
+        "_080704E4: .4byte gSaveBlock1Ptr\n\t"
         "_080704E8: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2410,7 +2410,7 @@ __attribute__((naked)) void _DoEggActions_CheckHatch(void)
         "	.align 2, 0\n\t"
         "_080705B4: .4byte 0x0000FFFF\n\t"
         "_080705B8: .4byte 0x0202418D\n\t"
-        "_080705BC: .4byte 0x02024190\n\t"
+        "_080705BC: .4byte gPlayerParty\n\t"
         "_080705C0:\n\t"
         "	subs r0, r1, #1\n\t"
         "_080705C2:\n\t"
@@ -2426,7 +2426,7 @@ __attribute__((naked)) void _DoEggActions_CheckHatch(void)
         "	movs r0, #1\n\t"
         "	b _080705EA\n\t"
         "	.align 2, 0\n\t"
-        "_080705D8: .4byte 0x02037280\n\t"
+        "_080705D8: .4byte gSpecialVar_0x8004\n\t"
         "_080705DC:\n\t"
         "	adds r4, #0x64\n\t"
         "	adds r5, #1\n\t"
@@ -2462,7 +2462,7 @@ __attribute__((naked)) bool8 ShouldEggHatch()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08070610: .4byte 0x03005AEC\n\t"
+        "_08070610: .4byte gSaveBlock1Ptr\n\t"
         "_08070614: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2524,9 +2524,9 @@ __attribute__((naked)) void _GetDaycareMonNicknames(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070674: .4byte 0x02021C40\n\t"
-        "_08070678: .4byte 0x02021C68\n\t"
-        "_0807067C: .4byte 0x02021C54\n\t"
+        "_08070674: .4byte gStringVar1\n\t"
+        "_08070678: .4byte gStringVar3\n\t"
+        "_0807067C: .4byte gStringVar2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2558,8 +2558,8 @@ __attribute__((naked)) void GetSelectedMonNickAndSpecies(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080706B4: .4byte 0x02024190\n\t"
-        "_080706B8: .4byte 0x02021C40\n\t"
+        "_080706B4: .4byte gPlayerParty\n\t"
+        "_080706B8: .4byte gStringVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2577,7 +2577,7 @@ __attribute__((naked)) void GetDaycareMonNicknames()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080706D0: .4byte 0x03005AEC\n\t"
+        "_080706D0: .4byte gSaveBlock1Ptr\n\t"
         "_080706D4: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2599,7 +2599,7 @@ __attribute__((naked)) u8 GetDaycareState()
         "	movs r0, #1\n\t"
         "	b _0807071A\n\t"
         "	.align 2, 0\n\t"
-        "_080706F0: .4byte 0x03005AEC\n\t"
+        "_080706F0: .4byte gSaveBlock1Ptr\n\t"
         "_080706F4: .4byte 0x00003030\n\t"
         "_080706F8:\n\t"
         "	ldr r0, [r4]\n\t"
@@ -2645,7 +2645,7 @@ __attribute__((naked)) void GetDaycarePokemonCount(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0807073C: .4byte 0x03005AEC\n\t"
+        "_0807073C: .4byte gSaveBlock1Ptr\n\t"
         "_08070740: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2780,7 +2780,7 @@ __attribute__((naked)) void GetDaycareCompatibilityScore(void)
         "	movs r0, #0\n\t"
         "	b _08070884\n\t"
         "	.align 2, 0\n\t"
-        "_08070828: .4byte 0x082F0D54\n\t"
+        "_08070828: .4byte gSpeciesInfo\n\t"
         "_0807082C:\n\t"
         "	cmp r0, #0xd\n\t"
         "	bne _0807083C\n\t"
@@ -2858,7 +2858,7 @@ __attribute__((naked)) void GetDaycareCompatibilityScoreFromSave(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080708AC: .4byte 0x03005AEC\n\t"
+        "_080708AC: .4byte gSaveBlock1Ptr\n\t"
         "_080708B0: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -2899,7 +2899,7 @@ __attribute__((naked)) void SetDaycareCompatibilityString()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080708EC: .4byte 0x02021C7C\n\t"
+        "_080708EC: .4byte gStringVar4\n\t"
         "_080708F0: .4byte 0x082FC0E8\n\t"
         ".syntax divided\n\t"
     );
@@ -3229,7 +3229,7 @@ __attribute__((naked)) void DaycareAddTextPrinter(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070B34: .4byte 0x030030B4\n\t"
+        "_08070B34: .4byte gTextFlags\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3359,7 +3359,7 @@ __attribute__((naked)) void DaycarePrintMonInfo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070C1C: .4byte 0x03005AEC\n\t"
+        "_08070C1C: .4byte gSaveBlock1Ptr\n\t"
         "_08070C20: .4byte 0x00003030\n\t"
         ".syntax divided\n\t"
     );
@@ -3393,14 +3393,14 @@ __attribute__((naked)) void Task_HandleDaycareLevelMenuInput(void)
         "	beq _08070C68\n\t"
         "	b _08070C6E\n\t"
         "	.align 2, 0\n\t"
-        "_08070C54: .4byte 0x03005B60\n\t"
-        "_08070C58: .4byte 0x03002360\n\t"
+        "_08070C54: .4byte gTasks\n\t"
+        "_08070C58: .4byte gMain\n\t"
         "_08070C5C:\n\t"
         "	ldr r0, _08070C64\n\t"
         "	strh r1, [r0]\n\t"
         "	b _08070C6E\n\t"
         "	.align 2, 0\n\t"
-        "_08070C64: .4byte 0x02037290\n\t"
+        "_08070C64: .4byte gSpecialVar_Result\n\t"
         "_08070C68:\n\t"
         "	ldr r1, _08070C9C\n\t"
         "	movs r0, #2\n\t"
@@ -3425,8 +3425,8 @@ __attribute__((naked)) void Task_HandleDaycareLevelMenuInput(void)
         "	bl ScriptContext_Enable\n\t"
         "	b _08070CD4\n\t"
         "	.align 2, 0\n\t"
-        "_08070C9C: .4byte 0x02037290\n\t"
-        "_08070CA0: .4byte 0x03005B60\n\t"
+        "_08070C9C: .4byte gSpecialVar_Result\n\t"
+        "_08070CA0: .4byte gTasks\n\t"
         "_08070CA4:\n\t"
         "	movs r1, #2\n\t"
         "	adds r0, r1, #0\n\t"
@@ -3452,7 +3452,7 @@ __attribute__((naked)) void Task_HandleDaycareLevelMenuInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070CDC: .4byte 0x02037290\n\t"
+        "_08070CDC: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3508,7 +3508,7 @@ __attribute__((naked)) void ShowDaycareLevelMenu()
         "_08070D40: .4byte 0x082FC04C\n\t"
         "_08070D44: .4byte 0x082FC06C\n\t"
         "_08070D48: .4byte 0x08070C25\n\t"
-        "_08070D4C: .4byte 0x03005B60\n\t"
+        "_08070D4C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3525,7 +3525,7 @@ __attribute__((naked)) void ChooseSendDaycareMon()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070D60: .4byte 0x03002360\n\t"
+        "_08070D60: .4byte gMain\n\t"
         "_08070D64: .4byte 0x08085A31\n\t"
         ".syntax divided\n\t"
     );

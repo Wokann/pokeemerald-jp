@@ -3380,9 +3380,9 @@ __attribute__((naked)) void sub_0803DCCC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0803DCEC: .4byte 0x02023D0C\n\t"
+        "_0803DCEC: .4byte gBattleControllerExecFlags\n\t"
         "_0803DCF0: .4byte 0x082EC694\n\t"
-        "_0803DCF4: .4byte 0x02023EB8\n\t"
+        "_0803DCF4: .4byte gBattlescriptCurrInstr\n\t"
         ".syntax divided\n\t"
     );
 }

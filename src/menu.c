@@ -17,7 +17,7 @@ __attribute__((naked)) void InitStandardTextBoxWindows()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08196DDC: .4byte 0x085D7B28\n\t"
-        "_08196DE0: .4byte 0x0203CA58\n\t"
+        "_08196DE0: .4byte gUnknown_203CA58\n\t"
         "_08196DE4: .4byte 0x0203CA59\n\t"
         ".syntax divided\n\t"
     );
@@ -146,7 +146,7 @@ __attribute__((naked)) bool16 AddTextPrinterParameterized2(u8 windowId, u8 fontI
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08196EB4: .4byte 0x030030B4\n\t"
+        "_08196EB4: .4byte gTextFlags\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -188,8 +188,8 @@ __attribute__((naked)) void AddTextPrinterForMessage(bool8 allowSkippingDelayWit
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196EFC: .4byte 0x030030B4\n\t"
-        "_08196F00: .4byte 0x02021C7C\n\t"
+        "_08196EFC: .4byte gTextFlags\n\t"
+        "_08196F00: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -231,8 +231,8 @@ __attribute__((naked)) void AddTextPrinterForMessage_2(bool8 allowSkippingDelayW
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196F48: .4byte 0x030030B4\n\t"
-        "_08196F4C: .4byte 0x02021C7C\n\t"
+        "_08196F48: .4byte gTextFlags\n\t"
+        "_08196F4C: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -273,8 +273,8 @@ __attribute__((naked)) void AddTextPrinterWithCustomSpeedForMessage(bool8 allowS
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196F90: .4byte 0x030030B4\n\t"
-        "_08196F94: .4byte 0x02021C7C\n\t"
+        "_08196F90: .4byte gTextFlags\n\t"
+        "_08196F94: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1004,13 +1004,13 @@ __attribute__((naked)) void WindowFunc_DrawDialogueFrame(void)
         "_08197548: .4byte 0x00000202\n\t"
         "_0819754C: .4byte 0x00000203\n\t"
         "_08197550: .4byte 0x00000205\n\t"
-        "_08197554: .4byte 0x00000206\n\t"
+        "_08197554: .4byte SPECIAL_sub_081B95B8\n\t"
         "_08197558: .4byte 0x00000207\n\t"
         "_0819755C: .4byte 0x0000020D\n\t"
         "_08197560: .4byte 0x0000020B\n\t"
         "_08197564: .4byte 0x00000209\n\t"
         "_08197568: .4byte 0x0000060B\n\t"
-        "_0819756C: .4byte 0x0000020A\n\t"
+        "_0819756C: .4byte SPECIAL_sub_08139C4C\n\t"
         "_08197570: .4byte 0x00000A07\n\t"
         "_08197574: .4byte 0x00000A0D\n\t"
         "_08197578: .4byte 0x00000A0B\n\t"
@@ -1178,7 +1178,7 @@ __attribute__((naked)) void sub_08197680(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197690: .4byte 0x085D7B04\n\t"
+        "_08197690: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1197,7 +1197,7 @@ __attribute__((naked)) void Menu_LoadStdPalAt(u16 offset)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081976A8: .4byte 0x085D7B04\n\t"
+        "_081976A8: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1209,7 +1209,7 @@ __attribute__((naked)) void sub_081976AC(void)
         "	ldr r0, _081976B0\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081976B0: .4byte 0x085D7B04\n\t"
+        "_081976B0: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1232,7 +1232,7 @@ __attribute__((naked)) void sub_081976B4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081976CC: .4byte 0x085D7B04\n\t"
+        "_081976CC: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1349,8 +1349,8 @@ __attribute__((naked)) u32 GetPlayerTextSpeed()
         "	lsrs r0, r0, #0x1d\n\t"
         "	b _0819778E\n\t"
         "	.align 2, 0\n\t"
-        "_08197784: .4byte 0x030030B4\n\t"
-        "_08197788: .4byte 0x03005AF0\n\t"
+        "_08197784: .4byte gTextFlags\n\t"
+        "_08197788: .4byte gSaveBlock2Ptr\n\t"
         "_0819778C:\n\t"
         "	movs r0, #1\n\t"
         "_0819778E:\n\t"
@@ -1387,7 +1387,7 @@ __attribute__((naked)) u8 GetPlayerTextSpeedDelay()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081977C0: .4byte 0x03005AF0\n\t"
+        "_081977C0: .4byte gSaveBlock2Ptr\n\t"
         "_081977C4: .4byte 0x085D7B24\n\t"
         ".syntax divided\n\t"
     );
@@ -1429,7 +1429,7 @@ __attribute__((naked)) void sub_081977C8(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08197808: .4byte 0x0203CA58\n\t"
+        "_08197808: .4byte gUnknown_203CA58\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1466,7 +1466,7 @@ __attribute__((naked)) void RemoveMapNamePopUpWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197830: .4byte 0x0203CA58\n\t"
+        "_08197830: .4byte gUnknown_203CA58\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1604,8 +1604,8 @@ __attribute__((naked)) void AddTextPrinterWithCallbackForMessage(bool8 canSpeedU
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081978E8: .4byte 0x030030B4\n\t"
-        "_081978EC: .4byte 0x02021C7C\n\t"
+        "_081978E8: .4byte gTextFlags\n\t"
+        "_081978EC: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1675,8 +1675,8 @@ __attribute__((naked)) void DrawDialogFrameWithCustomTileAndPalette(u8 windowId,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197960: .4byte 0x0203CA68\n\t"
-        "_08197964: .4byte 0x0203CA6A\n\t"
+        "_08197960: .4byte gUnknown_203CA68\n\t"
+        "_08197964: .4byte gUnknown_203CA6A\n\t"
         "_08197968: .4byte 0x081979BD\n\t"
         ".syntax divided\n\t"
     );
@@ -1717,8 +1717,8 @@ __attribute__((naked)) void DrawDialogFrameWithCustomTile(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081979B0: .4byte 0x0203CA68\n\t"
-        "_081979B4: .4byte 0x0203CA6A\n\t"
+        "_081979B0: .4byte gUnknown_203CA68\n\t"
+        "_081979B4: .4byte gUnknown_203CA6A\n\t"
         "_081979B8: .4byte 0x081979BD\n\t"
         ".syntax divided\n\t"
     );
@@ -2222,8 +2222,8 @@ __attribute__((naked)) void WindowFunc_DrawDialogFrameWithCustomTileAndPalette(v
         "	adds r1, r1, r2\n\t"
         "	b _08197E00\n\t"
         "	.align 2, 0\n\t"
-        "_08197DD0: .4byte 0x0203CA68\n\t"
-        "_08197DD4: .4byte 0x0203CA6A\n\t"
+        "_08197DD0: .4byte gUnknown_203CA68\n\t"
+        "_08197DD4: .4byte gUnknown_203CA6A\n\t"
         "_08197DD8: .4byte 0x0000040B\n\t"
         "_08197DDC: .4byte 0x00000807\n\t"
         "_08197DE0: .4byte 0x0000080D\n\t"
@@ -2438,8 +2438,8 @@ __attribute__((naked)) void DrawStdFrameWithCustomTileAndPalette(u8 windowId, bo
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197F80: .4byte 0x0203CA68\n\t"
-        "_08197F84: .4byte 0x0203CA6A\n\t"
+        "_08197F80: .4byte gUnknown_203CA68\n\t"
+        "_08197F84: .4byte gUnknown_203CA6A\n\t"
         "_08197F88: .4byte 0x08197FDD\n\t"
         ".syntax divided\n\t"
     );
@@ -2480,8 +2480,8 @@ __attribute__((naked)) void DrawStdFrameWithCustomTile(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197FD0: .4byte 0x0203CA68\n\t"
-        "_08197FD4: .4byte 0x0203CA6A\n\t"
+        "_08197FD0: .4byte gUnknown_203CA68\n\t"
+        "_08197FD4: .4byte gUnknown_203CA6A\n\t"
         "_08197FD8: .4byte 0x08197FDD\n\t"
         ".syntax divided\n\t"
     );
@@ -2651,8 +2651,8 @@ __attribute__((naked)) void WindowFunc_DrawStdFrameWithCustomTileAndPalette(void
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819812C: .4byte 0x0203CA68\n\t"
-        "_08198130: .4byte 0x0203CA6A\n\t"
+        "_0819812C: .4byte gUnknown_203CA68\n\t"
+        "_08198130: .4byte gUnknown_203CA6A\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2787,7 +2787,7 @@ __attribute__((naked)) void sub_081981B4(void)
         "	movs r5, #0xf0\n\t"
         "	b _08198220\n\t"
         "	.align 2, 0\n\t"
-        "_08198218: .4byte 0x0203CA6C\n\t"
+        "_08198218: .4byte gUnknown_203CA6C\n\t"
         "_0819821C:\n\t"
         "	lsls r0, r5, #0x1c\n\t"
         "	lsrs r5, r0, #0x18\n\t"
@@ -2806,7 +2806,7 @@ __attribute__((naked)) void sub_081981B4(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0819823C: .4byte 0x085D7B48\n\t"
-        "_08198240: .4byte 0x0203CA6C\n\t"
+        "_08198240: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2892,7 +2892,7 @@ __attribute__((naked)) void sub_08198244(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081982E0: .4byte 0x0203CA6C\n\t"
+        "_081982E0: .4byte gUnknown_203CA6C\n\t"
         "_081982E4: .4byte 0x085D7B68\n\t"
         ".syntax divided\n\t"
     );
@@ -2929,7 +2929,7 @@ __attribute__((naked)) void sub_081982E8(void)
         "	adds r1, r0, #0\n\t"
         "	b _08198326\n\t"
         "	.align 2, 0\n\t"
-        "_0819831C: .4byte 0x0203CA6C\n\t"
+        "_0819831C: .4byte gUnknown_203CA6C\n\t"
         "_08198320:\n\t"
         "	add r1, sp, #0x14\n\t"
         "	movs r0, #0xf\n\t"
@@ -3022,7 +3022,7 @@ __attribute__((naked)) void sub_081982E8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081983D8: .4byte 0x0203CA6C\n\t"
+        "_081983D8: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3042,7 +3042,7 @@ __attribute__((naked)) void sub_081983DC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081983F0: .4byte 0x0203CA6C\n\t"
+        "_081983F0: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3066,7 +3066,7 @@ __attribute__((naked)) void sub_081983F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08198414: .4byte 0x0203CA6C\n\t"
+        "_08198414: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3096,7 +3096,7 @@ __attribute__((naked)) void sub_08198418(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08198448: .4byte 0x0203CA6C\n\t"
+        "_08198448: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3141,7 +3141,7 @@ __attribute__((naked)) void sub_0819844C(void)
         "	strb r6, [r5, #2]\n\t"
         "	b _08198496\n\t"
         "	.align 2, 0\n\t"
-        "_08198490: .4byte 0x0203CA5C\n\t"
+        "_08198490: .4byte gUnknown_203CA5C\n\t"
         "_08198494:\n\t"
         "	strb r7, [r5, #2]\n\t"
         "_08198496:\n\t"
@@ -3155,7 +3155,7 @@ __attribute__((naked)) void sub_0819844C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081984AC: .4byte 0x0203CA5C\n\t"
+        "_081984AC: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3325,7 +3325,7 @@ __attribute__((naked)) void RedrawMenuCursor(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081985E0: .4byte 0x085D7B6C\n\t"
-        "_081985E4: .4byte 0x0203CA5C\n\t"
+        "_081985E4: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3350,7 +3350,7 @@ __attribute__((naked)) u8 Menu_MoveCursor(s8 cursorDelta)
         "	ldrb r0, [r4, #4]\n\t"
         "	b _0819861A\n\t"
         "	.align 2, 0\n\t"
-        "_08198608: .4byte 0x0203CA5C\n\t"
+        "_08198608: .4byte gUnknown_203CA5C\n\t"
         "_0819860C:\n\t"
         "	movs r0, #4\n\t"
         "	ldrsb r0, [r4, r0]\n\t"
@@ -3393,7 +3393,7 @@ __attribute__((naked)) u8 Menu_MoveCursorNoWrapAround(s8 cursorDelta)
         "	ldrb r0, [r4, #3]\n\t"
         "	b _0819865E\n\t"
         "	.align 2, 0\n\t"
-        "_0819864C: .4byte 0x0203CA5C\n\t"
+        "_0819864C: .4byte gUnknown_203CA5C\n\t"
         "_08198650:\n\t"
         "	movs r0, #4\n\t"
         "	ldrsb r0, [r4, r0]\n\t"
@@ -3424,7 +3424,7 @@ __attribute__((naked)) u8 Menu_GetCursorPos()
         "	ldrb r0, [r0, #2]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08198678: .4byte 0x0203CA5C\n\t"
+        "_08198678: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3451,8 +3451,8 @@ __attribute__((naked)) s8 Menu_ProcessInput()
         "	ldrsb r0, [r4, r0]\n\t"
         "	b _081986E2\n\t"
         "	.align 2, 0\n\t"
-        "_081986A0: .4byte 0x03002360\n\t"
-        "_081986A4: .4byte 0x0203CA5C\n\t"
+        "_081986A0: .4byte gMain\n\t"
+        "_081986A4: .4byte gUnknown_203CA5C\n\t"
         "_081986A8:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -3516,8 +3516,8 @@ __attribute__((naked)) s8 Menu_ProcessInputNoWrap()
         "	ldrsb r0, [r4, r0]\n\t"
         "	b _08198760\n\t"
         "	.align 2, 0\n\t"
-        "_08198710: .4byte 0x0203CA5C\n\t"
-        "_08198714: .4byte 0x03002360\n\t"
+        "_08198710: .4byte gUnknown_203CA5C\n\t"
+        "_08198714: .4byte gMain\n\t"
         "_08198718:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -3587,8 +3587,8 @@ __attribute__((naked)) s8 ProcessMenuInput_other()
         "	ldrsb r0, [r4, r0]\n\t"
         "	b _081987CC\n\t"
         "	.align 2, 0\n\t"
-        "_0819878C: .4byte 0x03002360\n\t"
-        "_08198790: .4byte 0x0203CA5C\n\t"
+        "_0819878C: .4byte gMain\n\t"
+        "_08198790: .4byte gUnknown_203CA5C\n\t"
         "_08198794:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -3652,8 +3652,8 @@ __attribute__((naked)) s8 Menu_ProcessInputNoWrapAround_other()
         "	ldrsb r0, [r4, r0]\n\t"
         "	b _0819884A\n\t"
         "	.align 2, 0\n\t"
-        "_081987FC: .4byte 0x0203CA5C\n\t"
-        "_08198800: .4byte 0x03002360\n\t"
+        "_081987FC: .4byte gUnknown_203CA5C\n\t"
+        "_08198800: .4byte gMain\n\t"
         "_08198804:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -4876,7 +4876,7 @@ __attribute__((naked)) void sub_08199068(void)
         "	strb r6, [r5, #2]\n\t"
         "	b _081990C6\n\t"
         "	.align 2, 0\n\t"
-        "_081990C0: .4byte 0x0203CA5C\n\t"
+        "_081990C0: .4byte gUnknown_203CA5C\n\t"
         "_081990C4:\n\t"
         "	strb r7, [r5, #2]\n\t"
         "_081990C6:\n\t"
@@ -4893,7 +4893,7 @@ __attribute__((naked)) void sub_08199068(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081990E0: .4byte 0x0203CA5C\n\t"
+        "_081990E0: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5078,7 +5078,7 @@ __attribute__((naked)) void sub_08199170(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08199248: .4byte 0x085D7B6C\n\t"
-        "_0819924C: .4byte 0x0203CA5C\n\t"
+        "_0819924C: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5116,7 +5116,7 @@ __attribute__((naked)) void sub_08199250(void)
         "	add r0, r8\n\t"
         "	b _081992A4\n\t"
         "	.align 2, 0\n\t"
-        "_0819928C: .4byte 0x0203CA5C\n\t"
+        "_0819928C: .4byte gUnknown_203CA5C\n\t"
         "_08199290:\n\t"
         "	cmp r0, r4\n\t"
         "	blt _081992A0\n\t"
@@ -5257,7 +5257,7 @@ __attribute__((naked)) void sub_08199314(void)
         "	bl sub_08199170\n\t"
         "	b _08199392\n\t"
         "	.align 2, 0\n\t"
-        "_0819938C: .4byte 0x0203CA5C\n\t"
+        "_0819938C: .4byte gUnknown_203CA5C\n\t"
         "_08199390:\n\t"
         "	strb r7, [r5, #2]\n\t"
         "_08199392:\n\t"
@@ -5291,8 +5291,8 @@ __attribute__((naked)) void sub_081993A0(void)
         "	asrs r0, r0, #0x18\n\t"
         "	b _08199448\n\t"
         "	.align 2, 0\n\t"
-        "_081993C0: .4byte 0x03002360\n\t"
-        "_081993C4: .4byte 0x0203CA5C\n\t"
+        "_081993C0: .4byte gMain\n\t"
+        "_081993C4: .4byte gUnknown_203CA5C\n\t"
         "_081993C8:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -5388,8 +5388,8 @@ __attribute__((naked)) void Menu_ProcessInputGridLayout(void)
         "	ldrsb r0, [r5, r0]\n\t"
         "	b _081994EE\n\t"
         "	.align 2, 0\n\t"
-        "_08199470: .4byte 0x0203CA5C\n\t"
-        "_08199474: .4byte 0x03002360\n\t"
+        "_08199470: .4byte gUnknown_203CA5C\n\t"
+        "_08199474: .4byte gMain\n\t"
         "_08199478:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -5482,8 +5482,8 @@ __attribute__((naked)) void sub_081994F4(void)
         "	asrs r0, r0, #0x18\n\t"
         "	b _08199598\n\t"
         "	.align 2, 0\n\t"
-        "_08199514: .4byte 0x03002360\n\t"
-        "_08199518: .4byte 0x0203CA5C\n\t"
+        "_08199514: .4byte gMain\n\t"
+        "_08199518: .4byte gUnknown_203CA5C\n\t"
         "_0819951C:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -5577,8 +5577,8 @@ __attribute__((naked)) void sub_081995A0(void)
         "	ldrsb r0, [r6, r0]\n\t"
         "	b _0819963A\n\t"
         "	.align 2, 0\n\t"
-        "_081995C0: .4byte 0x0203CA5C\n\t"
-        "_081995C4: .4byte 0x03002360\n\t"
+        "_081995C0: .4byte gUnknown_203CA5C\n\t"
+        "_081995C4: .4byte gMain\n\t"
         "_081995C8:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -5662,7 +5662,7 @@ __attribute__((naked)) void ClearScheduledBgCopiesToVram()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199650: .4byte 0x0203CA70\n\t"
+        "_08199650: .4byte gUnknown_203CA70\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5679,7 +5679,7 @@ __attribute__((naked)) void ScheduleBgCopyTilemapToVram(u8 bgId)
         "	strb r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08199664: .4byte 0x0203CA70\n\t"
+        "_08199664: .4byte gUnknown_203CA70\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5726,7 +5726,7 @@ __attribute__((naked)) void DoScheduledBgTilemapCopiesToVram()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081996B4: .4byte 0x0203CA70\n\t"
+        "_081996B4: .4byte gUnknown_203CA70\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5751,8 +5751,8 @@ __attribute__((naked)) void ResetTempTileDataBuffers()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081996D4: .4byte 0x0203CA74\n\t"
-        "_081996D8: .4byte 0x0203CA78\n\t"
+        "_081996D4: .4byte gUnknown_203CA74\n\t"
+        "_081996D8: .4byte gUnknown_203CA78\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5793,8 +5793,8 @@ __attribute__((naked)) bool8 FreeTempTileDataBuffersIfPossible()
         "	movs r0, #0\n\t"
         "	b _08199722\n\t"
         "	.align 2, 0\n\t"
-        "_08199718: .4byte 0x0203CA74\n\t"
-        "_0819971C: .4byte 0x0203CA78\n\t"
+        "_08199718: .4byte gUnknown_203CA74\n\t"
+        "_0819971C: .4byte gUnknown_203CA78\n\t"
         "_08199720:\n\t"
         "	movs r0, #1\n\t"
         "_08199722:\n\t"
@@ -5858,8 +5858,8 @@ __attribute__((naked)) void *DecompressAndCopyTileDataToVram(u8 bgId, const void
         "	adds r0, r4, #0\n\t"
         "	b _08199792\n\t"
         "	.align 2, 0\n\t"
-        "_08199788: .4byte 0x0203CA74\n\t"
-        "_0819978C: .4byte 0x0203CA78\n\t"
+        "_08199788: .4byte gUnknown_203CA74\n\t"
+        "_0819978C: .4byte gUnknown_203CA78\n\t"
         "_08199790:\n\t"
         "	movs r0, #0\n\t"
         "_08199792:\n\t"
@@ -5936,7 +5936,7 @@ __attribute__((naked)) void DecompressAndLoadBgGfxUsingHeap(u8 bgId, const void 
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08199814: .4byte 0x0819981D\n\t"
-        "_08199818: .4byte 0x03005B60\n\t"
+        "_08199818: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5970,7 +5970,7 @@ __attribute__((naked)) void task_free_buf_after_copying_tile_data_to_vram(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199854: .4byte 0x03005B60\n\t"
+        "_08199854: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6653,8 +6653,8 @@ __attribute__((naked)) void PrintPlayerNameOnWindow(u8 windowId, const u8 *src, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199D10: .4byte 0x03005AF0\n\t"
-        "_08199D14: .4byte 0x02021C7C\n\t"
+        "_08199D10: .4byte gSaveBlock2Ptr\n\t"
+        "_08199D14: .4byte gStringVar4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7110,7 +7110,7 @@ __attribute__((naked)) void sub_08199FDC(void)
         "	bl StringCopy\n\t"
         "	b _0819A0DE\n\t"
         "	.align 2, 0\n\t"
-        "_0819A03C: .4byte 0x03005AF0\n\t"
+        "_0819A03C: .4byte gSaveBlock2Ptr\n\t"
         "_0819A040:\n\t"
         "	bl IsNationalPokedexEnabled\n\t"
         "	cmp r0, #0\n\t"
@@ -7155,7 +7155,7 @@ __attribute__((naked)) void sub_08199FDC(void)
         "	bl ConvertIntToDecimalStringN\n\t"
         "	b _0819A0DE\n\t"
         "	.align 2, 0\n\t"
-        "_0819A09C: .4byte 0x03005AF0\n\t"
+        "_0819A09C: .4byte gSaveBlock2Ptr\n\t"
         "_0819A0A0:\n\t"
         "	ldr r0, _0819A0AC\n\t"
         "	ldrb r1, [r0, #0x14]\n\t"
@@ -7163,7 +7163,7 @@ __attribute__((naked)) void sub_08199FDC(void)
         "	bl sub_081245E8\n\t"
         "	b _0819A0DE\n\t"
         "	.align 2, 0\n\t"
-        "_0819A0AC: .4byte 0x02036FB8\n\t"
+        "_0819A0AC: .4byte gMapHeader\n\t"
         "_0819A0B0:\n\t"
         "	ldr r4, _0819A0E4\n\t"
         "	movs r6, #0\n\t"

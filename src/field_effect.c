@@ -407,7 +407,7 @@ __attribute__((naked)) void FieldEffectFreeTilesIfUnused(u16 tileStart)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B54B8: .4byte 0x0000FFFF\n\t"
-        "_080B54BC: .4byte 0x020205AC\n\t"
+        "_080B54BC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -458,7 +458,7 @@ __attribute__((naked)) void FieldEffectFreePaletteIfUnused(u8 paletteNum)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5510: .4byte 0x0000FFFF\n\t"
-        "_080B5514: .4byte 0x020205AC\n\t"
+        "_080B5514: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -486,7 +486,7 @@ __attribute__((naked)) void FieldEffectActiveListClear(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5538: .4byte 0x03000F58\n\t"
+        "_080B5538: .4byte gUnknown_3000F58\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -508,7 +508,7 @@ __attribute__((naked)) void FieldEffectActiveListAdd(u8 id)
         "	strb r3, [r1]\n\t"
         "	b _080B5562\n\t"
         "	.align 2, 0\n\t"
-        "_080B5554: .4byte 0x03000F58\n\t"
+        "_080B5554: .4byte gUnknown_3000F58\n\t"
         "_080B5558:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -542,7 +542,7 @@ __attribute__((naked)) void FieldEffectActiveListRemove(u8 id)
         "	strb r0, [r1]\n\t"
         "	b _080B5592\n\t"
         "	.align 2, 0\n\t"
-        "_080B5584: .4byte 0x03000F58\n\t"
+        "_080B5584: .4byte gUnknown_3000F58\n\t"
         "_080B5588:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -574,7 +574,7 @@ __attribute__((naked)) bool8 FieldEffectActiveListContains(u8 id)
         "	movs r0, #1\n\t"
         "	b _080B55C0\n\t"
         "	.align 2, 0\n\t"
-        "_080B55B0: .4byte 0x03000F58\n\t"
+        "_080B55B0: .4byte gUnknown_3000F58\n\t"
         "_080B55B4:\n\t"
         "	adds r0, r1, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -659,11 +659,11 @@ __attribute__((naked)) u8 CreateTrainerSprite(u8 trainerSpriteID, s16 x, s16 y, 
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B564C: .4byte 0x082D91CC\n\t"
-        "_080B5650: .4byte 0x082D8EE4\n\t"
+        "_080B564C: .4byte gTrainerFrontPicPaletteTable\n\t"
+        "_080B5650: .4byte gTrainerFrontPicTable\n\t"
         "_080B5654: .4byte 0x08536EBC\n\t"
-        "_080B5658: .4byte 0x082BF304\n\t"
-        "_080B565C: .4byte 0x082BF310\n\t"
+        "_080B5658: .4byte gDummySpriteAnimTable\n\t"
+        "_080B565C: .4byte gDummySpriteAffineAnimTable\n\t"
         "_080B5660: .4byte 0x08007141\n\t"
         ".syntax divided\n\t"
     );
@@ -695,8 +695,8 @@ __attribute__((naked)) void LoadTrainerGfx_TrainerCard(u8 gender, u16 palOffset,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5694: .4byte 0x082D8EE4\n\t"
-        "_080B5698: .4byte 0x082D91CC\n\t"
+        "_080B5694: .4byte gTrainerFrontPicTable\n\t"
+        "_080B5698: .4byte gTrainerFrontPicPaletteTable\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -965,8 +965,8 @@ __attribute__((naked)) void MultiplyInvertedPaletteRGBComponents(u16 i, u8 r, u8
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5878: .4byte 0x020373B4\n\t"
-        "_080B587C: .4byte 0x020377B4\n\t"
+        "_080B5878: .4byte gPlttBufferUnfaded\n\t"
+        "_080B587C: .4byte gPlttBufferFaded\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1031,8 +1031,8 @@ __attribute__((naked)) void MultiplyPaletteRGBComponents(u16 i, u8 r, u8 g, u8 b
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B58F0: .4byte 0x020373B4\n\t"
-        "_080B58F4: .4byte 0x020377B4\n\t"
+        "_080B58F0: .4byte gPlttBufferUnfaded\n\t"
+        "_080B58F4: .4byte gPlttBufferFaded\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1071,7 +1071,7 @@ __attribute__((naked)) bool8 FldEff_PokecenterHeal(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B5934: .4byte 0x080B593D\n\t"
-        "_080B5938: .4byte 0x03005B60\n\t"
+        "_080B5938: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1099,7 +1099,7 @@ __attribute__((naked)) void Task_HallOfFameRecord(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5964: .4byte 0x03005B60\n\t"
+        "_080B5964: .4byte gTasks\n\t"
         "_080B5968: .4byte 0x08537010\n\t"
 
         ".syntax divided\n\t"
@@ -1178,7 +1178,7 @@ __attribute__((naked)) void PokecenterHealEffect_WaitForBallPlacement(struct Tas
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B59E0: .4byte 0x020205AC\n\t"
+        "_080B59E0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1207,7 +1207,7 @@ __attribute__((naked)) void PokecenterHealEffect_2(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5A08: .4byte 0x020205AC\n\t"
+        "_080B5A08: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1241,7 +1241,7 @@ __attribute__((naked)) void PokecenterHealEffect_WaitForSoundAndEnd(struct Task 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5A44: .4byte 0x020205AC\n\t"
+        "_080B5A44: .4byte gSprites\n\t"
         "_080B5A48: .4byte 0x080B593D\n\t"
         ".syntax divided\n\t"
     );
@@ -1277,7 +1277,7 @@ __attribute__((naked)) bool8 FldEff_HallOfFameRecord(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B5A80: .4byte 0x080B5A89\n\t"
-        "_080B5A84: .4byte 0x03005B60\n\t"
+        "_080B5A84: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1306,7 +1306,7 @@ __attribute__((naked)) void Task_PokecenterHeal(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5AB0: .4byte 0x03005B60\n\t"
+        "_080B5AB0: .4byte gTasks\n\t"
         "_080B5AB4: .4byte 0x08537020\n\t"
 
         ".syntax divided\n\t"
@@ -1401,7 +1401,7 @@ __attribute__((naked)) void HallOfFameRecordEffect_WaitForBallPlacement(struct T
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5B58: .4byte 0x020205AC\n\t"
+        "_080B5B58: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1430,7 +1430,7 @@ __attribute__((naked)) void HallOfFameRecordEffect_2(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5B80: .4byte 0x020205AC\n\t"
+        "_080B5B80: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1464,7 +1464,7 @@ __attribute__((naked)) void HallOfFameRecordEffect_WaitForSoundAndEnd(struct Tas
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5BBC: .4byte 0x020205AC\n\t"
+        "_080B5BBC: .4byte gSprites\n\t"
         "_080B5BC0: .4byte 0x080B5A89\n\t"
         ".syntax divided\n\t"
     );
@@ -1512,7 +1512,7 @@ __attribute__((naked)) u8 CreateGlowingPokeballsEffect(s16 a0, s16 a1, s16 a2, b
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B5C10: .4byte 0x080B5C19\n\t"
-        "_080B5C14: .4byte 0x020205AC\n\t"
+        "_080B5C14: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1615,7 +1615,7 @@ __attribute__((naked)) void PokeballGlowEffect_PlaceBalls(struct Sprite *sprite)
         "	.align 2, 0\n\t"
         "_080B5CC0: .4byte 0x08536FB0\n\t"
         "_080B5CC4: .4byte 0x08537050\n\t"
-        "_080B5CC8: .4byte 0x020205AC\n\t"
+        "_080B5CC8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2020,7 +2020,7 @@ __attribute__((naked)) void SpriteCB_PokeballGlow(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5FA4: .4byte 0x020205AC\n\t"
+        "_080B5FA4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2069,7 +2069,7 @@ __attribute__((naked)) u8 CreatePokecenterMonitorSprite(s16 x, s16 y)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B5FF8: .4byte 0x08536FC8\n\t"
-        "_080B5FFC: .4byte 0x020205AC\n\t"
+        "_080B5FFC: .4byte gSprites\n\t"
         "_080B6000: .4byte 0x08536F58\n\t"
         ".syntax divided\n\t"
     );
@@ -2148,7 +2148,7 @@ __attribute__((naked)) void CreateHofMonitorSprite(s16 a0, s16 a1, s16 a2, bool8
         "	b _080B60A0\n\t"
         "	.align 2, 0\n\t"
         "_080B6080: .4byte 0x08536FE0\n\t"
-        "_080B6084: .4byte 0x020205AC\n\t"
+        "_080B6084: .4byte gSprites\n\t"
         "_080B6088: .4byte 0x08536F70\n\t"
         "_080B608C:\n\t"
         "	ldr r0, _080B60C0\n\t"
@@ -2178,7 +2178,7 @@ __attribute__((naked)) void CreateHofMonitorSprite(s16 a0, s16 a1, s16 a2, bool8
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B60C0: .4byte 0x08536FF8\n\t"
-        "_080B60C4: .4byte 0x020205AC\n\t"
+        "_080B60C4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2244,7 +2244,7 @@ __attribute__((naked)) void SpriteCB_HallOfFameMonitor(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6130: .4byte 0x03005B60\n\t"
+        "_080B6130: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2263,7 +2263,7 @@ __attribute__((naked)) void ReturnToFieldFromFlyMapSelect(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6148: .4byte 0x08085A31\n\t"
-        "_080B614C: .4byte 0x03005B0C\n\t"
+        "_080B614C: .4byte gFieldCallback\n\t"
         "_080B6150: .4byte 0x080B6155\n\t"
         ".syntax divided\n\t"
     );
@@ -2287,7 +2287,7 @@ __attribute__((naked)) void FieldCallback_UseFly(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6174: .4byte 0x080B617D\n\t"
-        "_080B6178: .4byte 0x03005B0C\n\t"
+        "_080B6178: .4byte gFieldCallback\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2346,10 +2346,10 @@ __attribute__((naked)) void Task_UseFly(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B61E8: .4byte 0x03005B60\n\t"
-        "_080B61EC: .4byte 0x020388A8\n\t"
+        "_080B61E8: .4byte gTasks\n\t"
+        "_080B61EC: .4byte gFieldEffectArguments\n\t"
         "_080B61F0: .4byte 0x08085935\n\t"
-        "_080B61F4: .4byte 0x03005B0C\n\t"
+        "_080B61F4: .4byte gFieldCallback\n\t"
         "_080B61F8: .4byte 0x080B61FD\n\t"
         ".syntax divided\n\t"
     );
@@ -2399,9 +2399,9 @@ __attribute__((naked)) void FieldCallback_FlyIntoMap(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6254: .4byte 0x080B6265\n\t"
-        "_080B6258: .4byte 0x02036FF0\n\t"
-        "_080B625C: .4byte 0x02037230\n\t"
-        "_080B6260: .4byte 0x03005B0C\n\t"
+        "_080B6258: .4byte gObjectEvents\n\t"
+        "_080B625C: .4byte gPlayerAvatar\n\t"
+        "_080B6260: .4byte gFieldCallback\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2449,8 +2449,8 @@ __attribute__((naked)) void Task_FlyIntoMap(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B62B8: .4byte 0x03005B60\n\t"
-        "_080B62BC: .4byte 0x02037C74\n\t"
+        "_080B62B8: .4byte gTasks\n\t"
+        "_080B62BC: .4byte gPaletteFade\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2474,7 +2474,7 @@ __attribute__((naked)) void FieldCB_FallWarpExit(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B62E4: .4byte 0x080B62ED\n\t"
-        "_080B62E8: .4byte 0x03005B0C\n\t"
+        "_080B62E8: .4byte gFieldCallback\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2507,7 +2507,7 @@ __attribute__((naked)) void Task_FallWarpFieldEffect(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B631C: .4byte 0x03005B60\n\t"
+        "_080B631C: .4byte gTasks\n\t"
         "_080B6320: .4byte 0x08537074\n\t"
         ".syntax divided\n\t"
     );
@@ -2591,9 +2591,9 @@ __attribute__((naked)) bool8 FallWarpEffect_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B63C0: .4byte 0x02037230\n\t"
-        "_080B63C4: .4byte 0x02036FF0\n\t"
-        "_080B63C8: .4byte 0x020205AC\n\t"
+        "_080B63C0: .4byte gPlayerAvatar\n\t"
+        "_080B63C4: .4byte gObjectEvents\n\t"
+        "_080B63C8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2673,10 +2673,10 @@ __attribute__((naked)) bool8 FallWarpEffect_StartFall(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B644C: .4byte 0x02037230\n\t"
-        "_080B6450: .4byte 0x020205AC\n\t"
-        "_080B6454: .4byte 0x02021B3A\n\t"
-        "_080B6458: .4byte 0x02036FF0\n\t"
+        "_080B644C: .4byte gPlayerAvatar\n\t"
+        "_080B6450: .4byte gSprites\n\t"
+        "_080B6454: .4byte gSpriteCoordOffsetY\n\t"
+        "_080B6458: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2774,9 +2774,9 @@ __attribute__((naked)) bool8 FallWarpEffect_Fall(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6508: .4byte 0x02037230\n\t"
-        "_080B650C: .4byte 0x02036FF0\n\t"
-        "_080B6510: .4byte 0x020205AC\n\t"
+        "_080B6508: .4byte gPlayerAvatar\n\t"
+        "_080B650C: .4byte gObjectEvents\n\t"
+        "_080B6510: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2864,7 +2864,7 @@ __attribute__((naked)) bool8 FallWarpEffect_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B659C: .4byte 0x02037230\n\t"
+        "_080B659C: .4byte gPlayerAvatar\n\t"
         "_080B65A0: .4byte 0x080B62ED\n\t"
         ".syntax divided\n\t"
     );
@@ -2901,7 +2901,7 @@ __attribute__((naked)) void StartEscalatorWarp(u8 metatileBehavior, u8 priority)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B65D8: .4byte 0x080B65E1\n\t"
-        "_080B65DC: .4byte 0x03005B60\n\t"
+        "_080B65DC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2934,7 +2934,7 @@ __attribute__((naked)) void Task_EscalatorWarpOut(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6610: .4byte 0x03005B60\n\t"
+        "_080B6610: .4byte gTasks\n\t"
         "_080B6614: .4byte 0x08537090\n\t"
         ".syntax divided\n\t"
     );
@@ -3014,8 +3014,8 @@ __attribute__((naked)) bool8 EscalatorWarpOut_WaitForPlayer(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B66A0: .4byte 0x02037230\n\t"
-        "_080B66A4: .4byte 0x02036FF0\n\t"
+        "_080B66A0: .4byte gPlayerAvatar\n\t"
+        "_080B66A4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3137,8 +3137,8 @@ __attribute__((naked)) void RideUpEscalatorOut(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6754: .4byte 0x02037230\n\t"
-        "_080B6758: .4byte 0x020205AC\n\t"
+        "_080B6754: .4byte gPlayerAvatar\n\t"
+        "_080B6758: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3181,8 +3181,8 @@ __attribute__((naked)) void RideDownEscalatorOut(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B67A0: .4byte 0x02037230\n\t"
-        "_080B67A4: .4byte 0x020205AC\n\t"
+        "_080B67A0: .4byte gPlayerAvatar\n\t"
+        "_080B67A4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3233,8 +3233,8 @@ __attribute__((naked)) void WarpAtEndOfEscalator(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B67F8: .4byte 0x02037C74\n\t"
-        "_080B67FC: .4byte 0x03005B0C\n\t"
+        "_080B67F8: .4byte gPaletteFade\n\t"
+        "_080B67FC: .4byte gFieldCallback\n\t"
         "_080B6800: .4byte 0x080B680D\n\t"
         "_080B6804: .4byte 0x08085935\n\t"
         "_080B6808: .4byte 0x080B65E1\n\t"
@@ -3260,7 +3260,7 @@ __attribute__((naked)) void FieldCallback_EscalatorWarpIn(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B682C: .4byte 0x080B6835\n\t"
-        "_080B6830: .4byte 0x03005B0C\n\t"
+        "_080B6830: .4byte gFieldCallback\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3293,7 +3293,7 @@ __attribute__((naked)) void Task_EscalatorWarpIn(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6864: .4byte 0x03005B60\n\t"
+        "_080B6864: .4byte gTasks\n\t"
         "_080B6868: .4byte 0x085370A8\n\t"
         ".syntax divided\n\t"
     );
@@ -3346,8 +3346,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_Init(struct Task *task)
         "	strh r0, [r5, #8]\n\t"
         "	b _080B68D6\n\t"
         "	.align 2, 0\n\t"
-        "_080B68CC: .4byte 0x02037230\n\t"
-        "_080B68D0: .4byte 0x02036FF0\n\t"
+        "_080B68CC: .4byte gPlayerAvatar\n\t"
+        "_080B68D0: .4byte gObjectEvents\n\t"
         "_080B68D4:\n\t"
         "	movs r1, #0\n\t"
         "_080B68D6:\n\t"
@@ -3394,8 +3394,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_Down_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6920: .4byte 0x02037230\n\t"
-        "_080B6924: .4byte 0x020205AC\n\t"
+        "_080B6920: .4byte gPlayerAvatar\n\t"
+        "_080B6924: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3448,8 +3448,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_Down_Ride(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6980: .4byte 0x02037230\n\t"
-        "_080B6984: .4byte 0x020205AC\n\t"
+        "_080B6980: .4byte gPlayerAvatar\n\t"
+        "_080B6984: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3485,8 +3485,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_Up_Init(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B69C0: .4byte 0x02037230\n\t"
-        "_080B69C4: .4byte 0x020205AC\n\t"
+        "_080B69C0: .4byte gPlayerAvatar\n\t"
+        "_080B69C4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3540,8 +3540,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_Up_Ride(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6A20: .4byte 0x02037230\n\t"
-        "_080B6A24: .4byte 0x020205AC\n\t"
+        "_080B6A20: .4byte gPlayerAvatar\n\t"
+        "_080B6A24: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3609,8 +3609,8 @@ __attribute__((naked)) bool8 EscalatorWarpIn_End(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6A98: .4byte 0x02037230\n\t"
-        "_080B6A9C: .4byte 0x02036FF0\n\t"
+        "_080B6A98: .4byte gPlayerAvatar\n\t"
+        "_080B6A9C: .4byte gObjectEvents\n\t"
         "_080B6AA0: .4byte 0x080B6835\n\t"
         ".syntax divided\n\t"
     );
@@ -3642,8 +3642,8 @@ __attribute__((naked)) bool8 FldEff_UseWaterfall(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B6AD0: .4byte 0x080B6ADD\n\t"
-        "_080B6AD4: .4byte 0x03005B60\n\t"
-        "_080B6AD8: .4byte 0x020388A8\n\t"
+        "_080B6AD4: .4byte gTasks\n\t"
+        "_080B6AD8: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3684,9 +3684,9 @@ __attribute__((naked)) void sub_080B6ADC(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6B18: .4byte 0x085370C4\n\t"
-        "_080B6B1C: .4byte 0x03005B60\n\t"
-        "_080B6B20: .4byte 0x02037230\n\t"
-        "_080B6B24: .4byte 0x02036FF0\n\t"
+        "_080B6B1C: .4byte gTasks\n\t"
+        "_080B6B20: .4byte gPlayerAvatar\n\t"
+        "_080B6B24: .4byte gObjectEvents\n\t"
 
         ".syntax divided\n\t"
 
@@ -3712,7 +3712,7 @@ __attribute__((naked)) void sub_080B6B28(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6B44: .4byte 0x02037230\n\t"
+        "_080B6B44: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3748,7 +3748,7 @@ __attribute__((naked)) bool8 WaterfallFieldEffect_ShowMon(struct Task *task, str
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6B80: .4byte 0x020388A8\n\t"
+        "_080B6B80: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3840,7 +3840,7 @@ __attribute__((naked)) bool8 WaterfallFieldEffect_ContinueRideOrEnd(struct Task 
         "	movs r0, #0\n\t"
         "	b _080B6C22\n\t"
         "	.align 2, 0\n\t"
-        "_080B6C14: .4byte 0x02037230\n\t"
+        "_080B6C14: .4byte gPlayerAvatar\n\t"
         "_080B6C18: .4byte 0x080B6ADD\n\t"
         "_080B6C1C:\n\t"
         "	movs r0, #3\n\t"
@@ -3882,8 +3882,8 @@ __attribute__((naked)) bool8 FldEff_UseDive(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B6C58: .4byte 0x080B6C65\n\t"
-        "_080B6C5C: .4byte 0x03005B60\n\t"
-        "_080B6C60: .4byte 0x020388A8\n\t"
+        "_080B6C5C: .4byte gTasks\n\t"
+        "_080B6C60: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3917,7 +3917,7 @@ __attribute__((naked)) void Task_UseDive(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6C94: .4byte 0x085370D8\n\t"
-        "_080B6C98: .4byte 0x03005B60\n\t"
+        "_080B6C98: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3935,7 +3935,7 @@ __attribute__((naked)) bool8 DiveFieldEffect_Init(struct Task *task)
         "	movs r0, #0\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080B6CAC: .4byte 0x02037230\n\t"
+        "_080B6CAC: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3961,7 +3961,7 @@ __attribute__((naked)) bool8 DiveFieldEffect_ShowMon(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6CD4: .4byte 0x020388A8\n\t"
+        "_080B6CD4: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4004,8 +4004,8 @@ __attribute__((naked)) bool8 DiveFieldEffect_TryWarp(struct Task *task)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6D24: .4byte 0x02036FF0\n\t"
-        "_080B6D28: .4byte 0x02037230\n\t"
+        "_080B6D24: .4byte gObjectEvents\n\t"
+        "_080B6D28: .4byte gPlayerAvatar\n\t"
         "_080B6D2C: .4byte 0x080B6C65\n\t"
         ".syntax divided\n\t"
     );
@@ -4071,10 +4071,10 @@ __attribute__((naked)) void Task_LavaridgeGymB1FWarp(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6D90: .4byte 0x085370E4\n\t"
-        "_080B6D94: .4byte 0x03005B60\n\t"
-        "_080B6D98: .4byte 0x02037230\n\t"
-        "_080B6D9C: .4byte 0x02036FF0\n\t"
-        "_080B6DA0: .4byte 0x020205AC\n\t"
+        "_080B6D94: .4byte gTasks\n\t"
+        "_080B6D98: .4byte gPlayerAvatar\n\t"
+        "_080B6D9C: .4byte gObjectEvents\n\t"
+        "_080B6DA0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4106,7 +4106,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Init(struct Task *task, s
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6DD8: .4byte 0x02037230\n\t"
+        "_080B6DD8: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4183,7 +4183,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Launch(struct Task *task,
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6E58: .4byte 0x020388A8\n\t"
+        "_080B6E58: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4267,7 +4267,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Rise(struct Task *task, s
         "	strh r0, [r4, #0xe]\n\t"
         "	b _080B6EF4\n\t"
         "	.align 2, 0\n\t"
-        "_080B6EEC: .4byte 0x02021B3A\n\t"
+        "_080B6EEC: .4byte gSpriteCoordOffsetY\n\t"
         "_080B6EF0:\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r4, #0x10]\n\t"
@@ -4376,8 +4376,8 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpEffect_Warp(struct Task *task, s
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B6FAC: .4byte 0x02037C74\n\t"
-        "_080B6FB0: .4byte 0x03005B0C\n\t"
+        "_080B6FAC: .4byte gPaletteFade\n\t"
+        "_080B6FB0: .4byte gFieldCallback\n\t"
         "_080B6FB4: .4byte 0x080B6FC1\n\t"
         "_080B6FB8: .4byte 0x08085935\n\t"
         "_080B6FBC: .4byte 0x080B6D49\n\t"
@@ -4401,7 +4401,7 @@ __attribute__((naked)) void FieldCB_LavaridgeGymB1FWarpExit(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6FE0: .4byte 0x03005B0C\n\t"
+        "_080B6FE0: .4byte gFieldCallback\n\t"
         "_080B6FE4: .4byte 0x080B6FE9\n\t"
         ".syntax divided\n\t"
     );
@@ -4449,10 +4449,10 @@ __attribute__((naked)) void Task_LavaridgeGymB1FWarpExit(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7030: .4byte 0x085370FC\n\t"
-        "_080B7034: .4byte 0x03005B60\n\t"
-        "_080B7038: .4byte 0x02037230\n\t"
-        "_080B703C: .4byte 0x02036FF0\n\t"
-        "_080B7040: .4byte 0x020205AC\n\t"
+        "_080B7034: .4byte gTasks\n\t"
+        "_080B7038: .4byte gPlayerAvatar\n\t"
+        "_080B703C: .4byte gObjectEvents\n\t"
+        "_080B7040: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4481,7 +4481,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_Init(struct Task *tas
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B7070: .4byte 0x02037230\n\t"
+        "_080B7070: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4527,7 +4527,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_StartPopOut(struct Ta
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B70BC: .4byte 0x020388A8\n\t"
+        "_080B70BC: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4574,7 +4574,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_PopOut(struct Task *t
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B7110: .4byte 0x020205AC\n\t"
+        "_080B7110: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4604,7 +4604,7 @@ __attribute__((naked)) bool8 LavaridgeGymB1FWarpExitEffect_End(struct Task *task
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B7144: .4byte 0x02037230\n\t"
+        "_080B7144: .4byte gPlayerAvatar\n\t"
         "_080B7148: .4byte 0x080B6FE9\n\t"
         ".syntax divided\n\t"
     );
@@ -4656,9 +4656,9 @@ __attribute__((naked)) u8 FldEff_AshLaunch(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B71A4: .4byte 0x020388A8\n\t"
-        "_080B71A8: .4byte 0x084DDE4C\n\t"
-        "_080B71AC: .4byte 0x020205AC\n\t"
+        "_080B71A4: .4byte gFieldEffectArguments\n\t"
+        "_080B71A8: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_080B71AC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4745,10 +4745,10 @@ __attribute__((naked)) void Task_LavaridgeGym1FWarp(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B722C: .4byte 0x0853710C\n\t"
-        "_080B7230: .4byte 0x03005B60\n\t"
-        "_080B7234: .4byte 0x02037230\n\t"
-        "_080B7238: .4byte 0x02036FF0\n\t"
-        "_080B723C: .4byte 0x020205AC\n\t"
+        "_080B7230: .4byte gTasks\n\t"
+        "_080B7234: .4byte gPlayerAvatar\n\t"
+        "_080B7238: .4byte gObjectEvents\n\t"
+        "_080B723C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4777,7 +4777,7 @@ __attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Init(struct Task *task, st
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B726C: .4byte 0x02037230\n\t"
+        "_080B726C: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4824,7 +4824,7 @@ __attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_AshPuff(struct Task *task,
         "	strh r0, [r5, #8]\n\t"
         "	b _080B72E4\n\t"
         "	.align 2, 0\n\t"
-        "_080B72C0: .4byte 0x020388A8\n\t"
+        "_080B72C0: .4byte gFieldEffectArguments\n\t"
         "_080B72C4:\n\t"
         "	adds r0, r1, #1\n\t"
         "	strh r0, [r5, #0xa]\n\t"
@@ -4879,7 +4879,7 @@ __attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Disappear(struct Task *tas
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B7320: .4byte 0x020205AC\n\t"
+        "_080B7320: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4942,8 +4942,8 @@ __attribute__((naked)) bool8 LavaridgeGym1FWarpEffect_Warp(struct Task *task, st
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B738C: .4byte 0x02037C74\n\t"
-        "_080B7390: .4byte 0x03005B0C\n\t"
+        "_080B738C: .4byte gPaletteFade\n\t"
+        "_080B7390: .4byte gFieldCallback\n\t"
         "_080B7394: .4byte 0x080B62C1\n\t"
         "_080B7398: .4byte 0x08085935\n\t"
         "_080B739C: .4byte 0x080B71E5\n\t"
@@ -4997,9 +4997,9 @@ __attribute__((naked)) u8 FldEff_AshPuff(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B73F8: .4byte 0x020388A8\n\t"
-        "_080B73FC: .4byte 0x084DDE4C\n\t"
-        "_080B7400: .4byte 0x020205AC\n\t"
+        "_080B73F8: .4byte gFieldEffectArguments\n\t"
+        "_080B73FC: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_080B7400: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5068,7 +5068,7 @@ __attribute__((naked)) void Task_EscapeRopeWarpOut(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7464: .4byte 0x08537120\n\t"
-        "_080B7468: .4byte 0x03005B60\n\t"
+        "_080B7468: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5173,10 +5173,10 @@ __attribute__((naked)) void EscapeRopeWarpOutEffect_Spin(struct Task *task)
         "	b _080B7598\n\t"
         "	.align 2, 0\n\t"
         "_080B7530: .4byte 0x08537128\n\t"
-        "_080B7534: .4byte 0x02037230\n\t"
-        "_080B7538: .4byte 0x02036FF0\n\t"
-        "_080B753C: .4byte 0x02037C74\n\t"
-        "_080B7540: .4byte 0x03005B0C\n\t"
+        "_080B7534: .4byte gPlayerAvatar\n\t"
+        "_080B7538: .4byte gObjectEvents\n\t"
+        "_080B753C: .4byte gPaletteFade\n\t"
+        "_080B7540: .4byte gFieldCallback\n\t"
         "_080B7544: .4byte 0x080B75A1\n\t"
         "_080B7548: .4byte 0x08085935\n\t"
         "_080B754C: .4byte 0x080B743D\n\t"
@@ -5255,9 +5255,9 @@ __attribute__((naked)) void FieldCallback_EscapeRopeWarpIn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B75DC: .4byte 0x03005B0C\n\t"
-        "_080B75E0: .4byte 0x02036FF0\n\t"
-        "_080B75E4: .4byte 0x02037230\n\t"
+        "_080B75DC: .4byte gFieldCallback\n\t"
+        "_080B75E0: .4byte gObjectEvents\n\t"
+        "_080B75E4: .4byte gPlayerAvatar\n\t"
         "_080B75E8: .4byte 0x080B75ED\n\t"
         ".syntax divided\n\t"
     );
@@ -5287,7 +5287,7 @@ __attribute__((naked)) void Task_EscapeRopeWarpIn(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7614: .4byte 0x08537130\n\t"
-        "_080B7618: .4byte 0x03005B60\n\t"
+        "_080B7618: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5384,8 +5384,8 @@ __attribute__((naked)) void EscapeRopeWarpInEffect_Spin(struct Task *task)
         "	b _080B7718\n\t"
         "	.align 2, 0\n\t"
         "_080B76C4: .4byte 0x08537128\n\t"
-        "_080B76C8: .4byte 0x02037230\n\t"
-        "_080B76CC: .4byte 0x02036FF0\n\t"
+        "_080B76C8: .4byte gPlayerAvatar\n\t"
+        "_080B76CC: .4byte gObjectEvents\n\t"
         "_080B76D0: .4byte 0x080B75ED\n\t"
         "_080B76D4:\n\t"
         "	ldrb r0, [r6, #0x18]\n\t"
@@ -5471,7 +5471,7 @@ __attribute__((naked)) void Task_TeleportWarpOut(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B775C: .4byte 0x08537138\n\t"
-        "_080B7760: .4byte 0x03005B60\n\t"
+        "_080B7760: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5571,8 +5571,8 @@ __attribute__((naked)) void TeleportWarpOutFieldEffect_SpinGround(struct Task *t
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7810: .4byte 0x08537128\n\t"
-        "_080B7814: .4byte 0x02037230\n\t"
-        "_080B7818: .4byte 0x02036FF0\n\t"
+        "_080B7814: .4byte gPlayerAvatar\n\t"
+        "_080B7818: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5680,9 +5680,9 @@ __attribute__((naked)) void TeleportWarpOutFieldEffect_SpinExit(struct Task *tas
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B78E0: .4byte 0x08537128\n\t"
-        "_080B78E4: .4byte 0x02037230\n\t"
-        "_080B78E8: .4byte 0x02036FF0\n\t"
-        "_080B78EC: .4byte 0x020205AC\n\t"
+        "_080B78E4: .4byte gPlayerAvatar\n\t"
+        "_080B78E8: .4byte gObjectEvents\n\t"
+        "_080B78EC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5729,9 +5729,9 @@ __attribute__((naked)) void TeleportWarpOutFieldEffect_End(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7944: .4byte 0x02037C74\n\t"
+        "_080B7944: .4byte gPaletteFade\n\t"
         "_080B7948: .4byte 0x08085935\n\t"
-        "_080B794C: .4byte 0x03005B0C\n\t"
+        "_080B794C: .4byte gFieldCallback\n\t"
         "_080B7950: .4byte 0x080B7959\n\t"
         "_080B7954: .4byte 0x080B7735\n\t"
         ".syntax divided\n\t"
@@ -5768,9 +5768,9 @@ __attribute__((naked)) void FieldCallback_TeleportWarpIn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7998: .4byte 0x03005B0C\n\t"
-        "_080B799C: .4byte 0x02036FF0\n\t"
-        "_080B79A0: .4byte 0x02037230\n\t"
+        "_080B7998: .4byte gFieldCallback\n\t"
+        "_080B799C: .4byte gObjectEvents\n\t"
+        "_080B79A0: .4byte gPlayerAvatar\n\t"
         "_080B79A4: .4byte 0x080B79A9\n\t"
         ".syntax divided\n\t"
     );
@@ -5800,7 +5800,7 @@ __attribute__((naked)) void Task_TeleportWarpIn(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B79D0: .4byte 0x08537148\n\t"
-        "_080B79D4: .4byte 0x03005B60\n\t"
+        "_080B79D4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5870,10 +5870,10 @@ __attribute__((naked)) void TeleportWarpInFieldEffect_Init(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7A54: .4byte 0x02037230\n\t"
-        "_080B7A58: .4byte 0x020205AC\n\t"
-        "_080B7A5C: .4byte 0x02021B3A\n\t"
-        "_080B7A60: .4byte 0x02036FF0\n\t"
+        "_080B7A54: .4byte gPlayerAvatar\n\t"
+        "_080B7A58: .4byte gSprites\n\t"
+        "_080B7A5C: .4byte gSpriteCoordOffsetY\n\t"
+        "_080B7A60: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5935,9 +5935,9 @@ __attribute__((naked)) void TeleportWarpInFieldEffect_SpinEnter(struct Task *tas
         "	b _080B7B02\n\t"
         "	.align 2, 0\n\t"
         "_080B7ACC: .4byte 0x08537128\n\t"
-        "_080B7AD0: .4byte 0x02037230\n\t"
-        "_080B7AD4: .4byte 0x02036FF0\n\t"
-        "_080B7AD8: .4byte 0x020205AC\n\t"
+        "_080B7AD0: .4byte gPlayerAvatar\n\t"
+        "_080B7AD4: .4byte gObjectEvents\n\t"
+        "_080B7AD8: .4byte gSprites\n\t"
         "_080B7ADC:\n\t"
         "	ldrb r1, [r5, #5]\n\t"
         "	movs r0, #0xd\n\t"
@@ -6078,8 +6078,8 @@ __attribute__((naked)) void TeleportWarpInFieldEffect_SpinGround(struct Task *ta
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7BE4: .4byte 0x08537128\n\t"
-        "_080B7BE8: .4byte 0x02037230\n\t"
-        "_080B7BEC: .4byte 0x02036FF0\n\t"
+        "_080B7BE8: .4byte gPlayerAvatar\n\t"
+        "_080B7BEC: .4byte gObjectEvents\n\t"
         "_080B7BF0: .4byte 0x080B79A9\n\t"
         ".syntax divided\n\t"
     );
@@ -6128,8 +6128,8 @@ __attribute__((naked)) bool8 FldEff_FieldMoveShowMon(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B7C44: .4byte 0x080B800D\n\t"
-        "_080B7C48: .4byte 0x020388A8\n\t"
-        "_080B7C4C: .4byte 0x03005B60\n\t"
+        "_080B7C48: .4byte gFieldEffectArguments\n\t"
+        "_080B7C4C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6175,8 +6175,8 @@ __attribute__((naked)) bool8 FldEff_FieldMoveShowMonInit(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B7CA4: .4byte 0x020388A8\n\t"
-        "_080B7CA8: .4byte 0x02024190\n\t"
+        "_080B7CA4: .4byte gFieldEffectArguments\n\t"
+        "_080B7CA8: .4byte gPlayerParty\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6205,7 +6205,7 @@ __attribute__((naked)) void Task_FieldMoveShowMonOutdoors(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7CD4: .4byte 0x08537154\n\t"
-        "_080B7CD8: .4byte 0x03005B60\n\t"
+        "_080B7CD8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6257,7 +6257,7 @@ __attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_Init(struct Task *tas
         "	.align 2, 0\n\t"
         "_080B7D38: .4byte 0x04000048\n\t"
         "_080B7D3C: .4byte 0x0400004A\n\t"
-        "_080B7D40: .4byte 0x03002360\n\t"
+        "_080B7D40: .4byte gMain\n\t"
         "_080B7D44: .4byte 0x0000F0F1\n\t"
         "_080B7D48: .4byte 0x00005051\n\t"
         "_080B7D4C: .4byte 0x080B7F65\n\t"
@@ -6391,7 +6391,7 @@ __attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_CreateBanner(struct T
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7E3C: .4byte 0x020205AC\n\t"
+        "_080B7E3C: .4byte gSprites\n\t"
         "_080B7E40: .4byte 0x080B8419\n\t"
         ".syntax divided\n\t"
     );
@@ -6424,7 +6424,7 @@ __attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_WaitForMon(struct Tas
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7E70: .4byte 0x020205AC\n\t"
+        "_080B7E70: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6561,7 +6561,7 @@ __attribute__((naked)) void FieldMoveShowMonOutdoorsEffect_End(struct Task *task
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7F5C: .4byte 0x020205AC\n\t"
+        "_080B7F5C: .4byte gSprites\n\t"
         "_080B7F60: .4byte 0x080B7CAD\n\t"
         ".syntax divided\n\t"
     );
@@ -6612,7 +6612,7 @@ __attribute__((naked)) void sub_080B7F64(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B7FC4: .4byte 0x080B7CAD\n\t"
-        "_080B7FC8: .4byte 0x03005B60\n\t"
+        "_080B7FC8: .4byte gTasks\n\t"
 
         ".syntax divided\n\t"
 
@@ -6682,7 +6682,7 @@ __attribute__((naked)) void Task_FieldMoveShowMonIndoors(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8034: .4byte 0x08537170\n\t"
-        "_080B8038: .4byte 0x03005B60\n\t"
+        "_080B8038: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6713,7 +6713,7 @@ __attribute__((naked)) void FieldMoveShowMonIndoorsEffect_Init(struct Task *task
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8070: .4byte 0x03002360\n\t"
+        "_080B8070: .4byte gMain\n\t"
         "_080B8074: .4byte 0x080B8239\n\t"
         ".syntax divided\n\t"
     );
@@ -6812,7 +6812,7 @@ __attribute__((naked)) void FieldMoveShowMonIndoorsEffect_SlideBannerOn(struct T
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8128: .4byte 0x00002878\n\t"
-        "_080B812C: .4byte 0x020205AC\n\t"
+        "_080B812C: .4byte gSprites\n\t"
         "_080B8130: .4byte 0x080B8419\n\t"
         ".syntax divided\n\t"
     );
@@ -6844,7 +6844,7 @@ __attribute__((naked)) void FieldMoveShowMonIndoorsEffect_WaitForMon(struct Task
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8160: .4byte 0x020205AC\n\t"
+        "_080B8160: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6956,7 +6956,7 @@ __attribute__((naked)) void FieldMoveShowMonIndoorsEffect_End(struct Task *task)
         "	.align 2, 0\n\t"
         "_080B8228: .4byte 0x04000008\n\t"
         "_080B822C: .4byte 0x05000200\n\t"
-        "_080B8230: .4byte 0x020205AC\n\t"
+        "_080B8230: .4byte gSprites\n\t"
         "_080B8234: .4byte 0x080B800D\n\t"
         ".syntax divided\n\t"
     );
@@ -6995,7 +6995,7 @@ __attribute__((naked)) void sub_080B8238(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8278: .4byte 0x080B800D\n\t"
-        "_080B827C: .4byte 0x03005B60\n\t"
+        "_080B827C: .4byte gTasks\n\t"
 
         ".syntax divided\n\t"
 
@@ -7235,7 +7235,7 @@ __attribute__((naked)) u8 InitFieldMoveMonSprite(u32 a0, u32 a1, u32 a2)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B840C: .4byte 0x7FFFFFFF\n\t"
-        "_080B8410: .4byte 0x020205AC\n\t"
+        "_080B8410: .4byte gSprites\n\t"
         "_080B8414: .4byte 0x08007141\n\t"
         ".syntax divided\n\t"
     );
@@ -7361,8 +7361,8 @@ __attribute__((naked)) u8 FldEff_UseSurf(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B84CC: .4byte 0x080B84DD\n\t"
-        "_080B84D0: .4byte 0x03005B60\n\t"
-        "_080B84D4: .4byte 0x020388A8\n\t"
+        "_080B84D0: .4byte gTasks\n\t"
+        "_080B84D4: .4byte gFieldEffectArguments\n\t"
         "_080B84D8: .4byte 0x0000016D\n\t"
         ".syntax divided\n\t"
     );
@@ -7392,7 +7392,7 @@ __attribute__((naked)) void Task_SurfFieldEffect(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8504: .4byte 0x0853718C\n\t"
-        "_080B8508: .4byte 0x03005B60\n\t"
+        "_080B8508: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7440,8 +7440,8 @@ __attribute__((naked)) void SurfFieldEffect_Init(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8564: .4byte 0x02037230\n\t"
-        "_080B8568: .4byte 0x02036FF0\n\t"
+        "_080B8564: .4byte gPlayerAvatar\n\t"
+        "_080B8568: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7482,8 +7482,8 @@ __attribute__((naked)) void SurfFieldEffect_FieldMovePose(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B85B0: .4byte 0x02037230\n\t"
-        "_080B85B4: .4byte 0x02036FF0\n\t"
+        "_080B85B0: .4byte gPlayerAvatar\n\t"
+        "_080B85B4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7522,9 +7522,9 @@ __attribute__((naked)) void SurfFieldEffect_ShowMon(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B85F4: .4byte 0x02037230\n\t"
-        "_080B85F8: .4byte 0x02036FF0\n\t"
-        "_080B85FC: .4byte 0x020388A8\n\t"
+        "_080B85F4: .4byte gPlayerAvatar\n\t"
+        "_080B85F8: .4byte gObjectEvents\n\t"
+        "_080B85FC: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7584,9 +7584,9 @@ __attribute__((naked)) void SurfFieldEffect_JumpOnSurfBlob(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8670: .4byte 0x02037230\n\t"
-        "_080B8674: .4byte 0x02036FF0\n\t"
-        "_080B8678: .4byte 0x020388A8\n\t"
+        "_080B8670: .4byte gPlayerAvatar\n\t"
+        "_080B8674: .4byte gObjectEvents\n\t"
+        "_080B8678: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7639,8 +7639,8 @@ __attribute__((naked)) void SurfFieldEffect_End(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B86E4: .4byte 0x02037230\n\t"
-        "_080B86E8: .4byte 0x02036FF0\n\t"
+        "_080B86E4: .4byte gPlayerAvatar\n\t"
+        "_080B86E8: .4byte gObjectEvents\n\t"
         "_080B86EC: .4byte 0x080B84DD\n\t"
         ".syntax divided\n\t"
     );
@@ -7779,8 +7779,8 @@ __attribute__((naked)) u8 FldEff_RayquazaSpotlight(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B87F4: .4byte 0x084DDE4C\n\t"
-        "_080B87F8: .4byte 0x020205AC\n\t"
+        "_080B87F4: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_080B87F8: .4byte gSprites\n\t"
         "_080B87FC: .4byte 0x0000FFFF\n\t"
         "_080B8800: .4byte 0x00003E41\n\t"
         "_080B8804: .4byte 0x00000E0E\n\t"
@@ -7835,10 +7835,10 @@ __attribute__((naked)) u8 FldEff_NPCFlyOut(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B8870: .4byte 0x084DDE4C\n\t"
-        "_080B8874: .4byte 0x020205AC\n\t"
+        "_080B8870: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_080B8874: .4byte gSprites\n\t"
         "_080B8878: .4byte 0x080B8881\n\t"
-        "_080B887C: .4byte 0x020388A8\n\t"
+        "_080B887C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7907,7 +7907,7 @@ __attribute__((naked)) void SpriteCB_NPCFlyOut(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B88F8: .4byte 0x020205AC\n\t"
+        "_080B88F8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7935,8 +7935,8 @@ __attribute__((naked)) u8 FldEff_UseFly(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B8920: .4byte 0x080B892D\n\t"
-        "_080B8924: .4byte 0x03005B60\n\t"
-        "_080B8928: .4byte 0x020388A8\n\t"
+        "_080B8924: .4byte gTasks\n\t"
+        "_080B8928: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7965,7 +7965,7 @@ __attribute__((naked)) void Task_FlyOut(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8954: .4byte 0x085371A0\n\t"
-        "_080B8958: .4byte 0x03005B60\n\t"
+        "_080B8958: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8011,8 +8011,8 @@ __attribute__((naked)) void FlyOutFieldEffect_FieldMovePose(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B89AC: .4byte 0x02037230\n\t"
-        "_080B89B0: .4byte 0x02036FF0\n\t"
+        "_080B89AC: .4byte gPlayerAvatar\n\t"
+        "_080B89B0: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8048,9 +8048,9 @@ __attribute__((naked)) void FlyOutFieldEffect_ShowMon(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B89EC: .4byte 0x02037230\n\t"
-        "_080B89F0: .4byte 0x02036FF0\n\t"
-        "_080B89F4: .4byte 0x020388A8\n\t"
+        "_080B89EC: .4byte gPlayerAvatar\n\t"
+        "_080B89F0: .4byte gObjectEvents\n\t"
+        "_080B89F4: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8097,8 +8097,8 @@ __attribute__((naked)) void FlyOutFieldEffect_BirdLeaveBall(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8A48: .4byte 0x02037230\n\t"
-        "_080B8A4C: .4byte 0x02036FF0\n\t"
+        "_080B8A48: .4byte gPlayerAvatar\n\t"
+        "_080B8A4C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8135,8 +8135,8 @@ __attribute__((naked)) void FlyOutFieldEffect_WaitBirdLeave(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8A8C: .4byte 0x02037230\n\t"
-        "_080B8A90: .4byte 0x02036FF0\n\t"
+        "_080B8A8C: .4byte gPlayerAvatar\n\t"
+        "_080B8A90: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8182,8 +8182,8 @@ __attribute__((naked)) void FlyOutFieldEffect_BirdSwoopDown(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8AE0: .4byte 0x02037230\n\t"
-        "_080B8AE4: .4byte 0x02036FF0\n\t"
+        "_080B8AE0: .4byte gPlayerAvatar\n\t"
+        "_080B8AE4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8253,9 +8253,9 @@ __attribute__((naked)) void FlyOutFieldEffect_JumpOnBird(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8B64: .4byte 0x02037230\n\t"
-        "_080B8B68: .4byte 0x02036FF0\n\t"
-        "_080B8B6C: .4byte 0x020205AC\n\t"
+        "_080B8B64: .4byte gPlayerAvatar\n\t"
+        "_080B8B68: .4byte gObjectEvents\n\t"
+        "_080B8B6C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8304,8 +8304,8 @@ __attribute__((naked)) void FlyOutFieldEffect_FlyOffWithBird(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8BC4: .4byte 0x02037230\n\t"
-        "_080B8BC8: .4byte 0x02036FF0\n\t"
+        "_080B8BC4: .4byte gPlayerAvatar\n\t"
+        "_080B8BC8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8355,7 +8355,7 @@ __attribute__((naked)) void FlyOutFieldEffect_End(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8C14: .4byte 0x02037C74\n\t"
+        "_080B8C14: .4byte gPaletteFade\n\t"
         "_080B8C18: .4byte 0x080B892D\n\t"
         ".syntax divided\n\t"
     );
@@ -8393,8 +8393,8 @@ __attribute__((naked)) u8 CreateFlyBirdSprite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B8C54: .4byte 0x084DDE4C\n\t"
-        "_080B8C58: .4byte 0x020205AC\n\t"
+        "_080B8C54: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_080B8C58: .4byte gSprites\n\t"
         "_080B8C5C: .4byte 0x080B8CD5\n\t"
         ".syntax divided\n\t"
     );
@@ -8416,7 +8416,7 @@ __attribute__((naked)) u8 GetFlyBirdAnimCompleted(u8 a0)
         "	lsrs r0, r0, #0x18\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080B8C78: .4byte 0x020205AC\n\t"
+        "_080B8C78: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8451,7 +8451,7 @@ __attribute__((naked)) void StartFlyBirdSwoopDown(u8 a0)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8CB0: .4byte 0x020205AC\n\t"
+        "_080B8CB0: .4byte gSprites\n\t"
         "_080B8CB4: .4byte 0x080B8D95\n\t"
         ".syntax divided\n\t"
     );
@@ -8473,7 +8473,7 @@ __attribute__((naked)) void SetFlyBirdPlayerSpriteId(u8 a0, u8 a1)
         "	strh r1, [r2, #0x3a]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080B8CD0: .4byte 0x020205AC\n\t"
+        "_080B8CD0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8637,7 +8637,7 @@ __attribute__((naked)) void SpriteCB_FlyBirdSwoopDown(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8E04: .4byte 0x020205AC\n\t"
+        "_080B8E04: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8784,7 +8784,7 @@ __attribute__((naked)) void StartFlyBirdReturnToBall(u8 spriteId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8F10: .4byte 0x020205AC\n\t"
+        "_080B8F10: .4byte gSprites\n\t"
         "_080B8F14: .4byte 0x080B8E09\n\t"
         ".syntax divided\n\t"
     );
@@ -8831,7 +8831,7 @@ __attribute__((naked)) void Task_FlyIn(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B8F54: .4byte 0x085371FC\n\t"
-        "_080B8F58: .4byte 0x03005B60\n\t"
+        "_080B8F58: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8916,9 +8916,9 @@ __attribute__((naked)) void FlyInFieldEffect_BirdSwoopDown(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9004: .4byte 0x02037230\n\t"
-        "_080B9008: .4byte 0x02036FF0\n\t"
-        "_080B900C: .4byte 0x020205AC\n\t"
+        "_080B9004: .4byte gPlayerAvatar\n\t"
+        "_080B9008: .4byte gObjectEvents\n\t"
+        "_080B900C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8976,9 +8976,9 @@ __attribute__((naked)) void FlyInFieldEffect_FlyInWithBird(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9070: .4byte 0x02037230\n\t"
-        "_080B9074: .4byte 0x02036FF0\n\t"
-        "_080B9078: .4byte 0x020205AC\n\t"
+        "_080B9070: .4byte gPlayerAvatar\n\t"
+        "_080B9074: .4byte gObjectEvents\n\t"
+        "_080B9078: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9024,8 +9024,8 @@ __attribute__((naked)) void FlyInFieldEffect_JumpOffBird(struct Task *task)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B90C4: .4byte 0x08537218\n\t"
-        "_080B90C8: .4byte 0x02037230\n\t"
-        "_080B90CC: .4byte 0x020205AC\n\t"
+        "_080B90C8: .4byte gPlayerAvatar\n\t"
+        "_080B90CC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9085,9 +9085,9 @@ __attribute__((naked)) void FlyInFieldEffect_FieldMovePose(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B913C: .4byte 0x02037230\n\t"
-        "_080B9140: .4byte 0x02036FF0\n\t"
-        "_080B9144: .4byte 0x020205AC\n\t"
+        "_080B913C: .4byte gPlayerAvatar\n\t"
+        "_080B9140: .4byte gObjectEvents\n\t"
+        "_080B9144: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9119,8 +9119,8 @@ __attribute__((naked)) void FlyInFieldEffect_BirdReturnToBall(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9178: .4byte 0x02037230\n\t"
-        "_080B917C: .4byte 0x02036FF0\n\t"
+        "_080B9178: .4byte gPlayerAvatar\n\t"
+        "_080B917C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9154,7 +9154,7 @@ __attribute__((naked)) void FlyInFieldEffect_WaitBirdReturn(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B91B4: .4byte 0x020205AC\n\t"
+        "_080B91B4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9216,8 +9216,8 @@ __attribute__((naked)) void FlyInFieldEffect_End(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9228: .4byte 0x02037230\n\t"
-        "_080B922C: .4byte 0x02036FF0\n\t"
+        "_080B9228: .4byte gPlayerAvatar\n\t"
+        "_080B922C: .4byte gObjectEvents\n\t"
         "_080B9230: .4byte 0x080B8F2D\n\t"
         ".syntax divided\n\t"
     );
@@ -9259,9 +9259,9 @@ __attribute__((naked)) bool8 FldEff_DestroyDeoxysRock(void)
         "	strh r0, [r1, #0x18]\n\t"
         "	b _080B928A\n\t"
         "	.align 2, 0\n\t"
-        "_080B9278: .4byte 0x020388A8\n\t"
+        "_080B9278: .4byte gFieldEffectArguments\n\t"
         "_080B927C: .4byte 0x080B9341\n\t"
-        "_080B9280: .4byte 0x03005B60\n\t"
+        "_080B9280: .4byte gTasks\n\t"
         "_080B9284:\n\t"
         "	movs r0, #0x41\n\t"
         "	bl FieldEffectActiveListRemove\n\t"
@@ -9308,7 +9308,7 @@ __attribute__((naked)) void Task_DeoxysRockCameraShake(u8 taskId)
         "	subs r0, r1, #1\n\t"
         "	b _080B92D2\n\t"
         "	.align 2, 0\n\t"
-        "_080B92CC: .4byte 0x03005B68\n\t"
+        "_080B92CC: .4byte gUnknown_3005B68\n\t"
         "_080B92D0:\n\t"
         "	movs r0, #4\n\t"
         "_080B92D2:\n\t"
@@ -9374,7 +9374,7 @@ __attribute__((naked)) void StartEndingDeoxysRockCameraShake(u8 taskId)
         "	strh r0, [r1, #0x16]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080B933C: .4byte 0x03005B60\n\t"
+        "_080B933C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9408,7 +9408,7 @@ __attribute__((naked)) void sub_080B9340(u8 a0)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9378: .4byte 0x03005B68\n\t"
+        "_080B9378: .4byte gUnknown_3005B68\n\t"
         "_080B937C: .4byte 0x0853723C\n\t"
 
         ".syntax divided\n\t"
@@ -9504,8 +9504,8 @@ __attribute__((naked)) void DestroyDeoxysRockEffect_RockFragments(s16 *a0, u8 a1
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9424: .4byte 0x02036FF0\n\t"
-        "_080B9428: .4byte 0x020205AC\n\t"
+        "_080B9424: .4byte gObjectEvents\n\t"
+        "_080B9428: .4byte gSprites\n\t"
         "_080B942C: .4byte 0x0000FFFF\n\t"
         "_080B9430: .4byte 0x00007FFF\n\t"
         ".syntax divided\n\t"
@@ -9545,7 +9545,7 @@ __attribute__((naked)) void DestroyDeoxysRockEffect_WaitAndEnd(s16 *a0, u8 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9474: .4byte 0x02037C74\n\t"
+        "_080B9474: .4byte gPaletteFade\n\t"
         "_080B9478: .4byte 0x080B9295\n\t"
         ".syntax divided\n\t"
     );
@@ -9621,10 +9621,10 @@ __attribute__((naked)) void CreateDeoxysRockFragments(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9500: .4byte 0x03005B4C\n\t"
-        "_080B9504: .4byte 0x03005B48\n\t"
+        "_080B9500: .4byte gTotalCameraPixelOffsetX\n\t"
+        "_080B9504: .4byte gTotalCameraPixelOffsetY\n\t"
         "_080B9508: .4byte 0x08537298\n\t"
-        "_080B950C: .4byte 0x020205AC\n\t"
+        "_080B950C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9785,11 +9785,11 @@ __attribute__((naked)) bool8 FldEff_MoveDeoxysRock(struct Sprite *sprite)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B9620: .4byte 0x020388A8\n\t"
-        "_080B9624: .4byte 0x02036FF0\n\t"
+        "_080B9620: .4byte gFieldEffectArguments\n\t"
+        "_080B9624: .4byte gObjectEvents\n\t"
         "_080B9628: .4byte 0x080B9635\n\t"
-        "_080B962C: .4byte 0x03005B60\n\t"
-        "_080B9630: .4byte 0x020205AC\n\t"
+        "_080B962C: .4byte gTasks\n\t"
+        "_080B9630: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9821,8 +9821,8 @@ __attribute__((naked)) void Task_MoveDeoxysRock(u8 taskId)
         "	beq _080B96A6\n\t"
         "	b _080B9704\n\t"
         "	.align 2, 0\n\t"
-        "_080B9660: .4byte 0x03005B68\n\t"
-        "_080B9664: .4byte 0x020205AC\n\t"
+        "_080B9660: .4byte gUnknown_3005B68\n\t"
+        "_080B9664: .4byte gSprites\n\t"
         "_080B9668:\n\t"
         "	ldrh r0, [r6, #0x20]\n\t"
         "	lsls r0, r0, #4\n\t"
@@ -9904,7 +9904,7 @@ __attribute__((naked)) void Task_MoveDeoxysRock(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B970C: .4byte 0x02036FF0\n\t"
+        "_080B970C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }

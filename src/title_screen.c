@@ -602,8 +602,8 @@ __attribute__((naked)) void Task_TitleScreenPhase2(u8 taskId)
         "	strh r0, [r5, #8]\n\t"
         "	b _080AA5BA\n\t"
         "	.align 2, 0\n\t"
-        "_080AA578: .4byte 0x03002360\n\t"
-        "_080AA57C: .4byte 0x03005B60\n\t"
+        "_080AA578: .4byte gMain\n\t"
+        "_080AA57C: .4byte gTasks\n\t"
         "_080AA580:\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0xa]\n\t"
@@ -697,7 +697,7 @@ __attribute__((naked)) void Task_TitleScreenPhase2(u8 taskId)
         "_080AA640: .4byte 0x00000F06\n\t"
         "_080AA644: .4byte 0x00001741\n\t"
         "_080AA648: .4byte 0x080AA651\n\t"
-        "_080AA64C: .4byte 0x03005B60\n\t"
+        "_080AA64C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }

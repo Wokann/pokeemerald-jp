@@ -50,7 +50,7 @@ __attribute__((naked)) void ClearAllEventObjects(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808CDA4: .4byte 0x02036FF0\n\t"
+        "_0808CDA4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -148,8 +148,8 @@ __attribute__((naked)) void CreateReflectionEffectSprites(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808CE5C: .4byte 0x084DDE4C\n\t"
-        "_0808CE60: .4byte 0x020205AC\n\t"
+        "_0808CE5C: .4byte gFieldEffectObjectTemplatePointers\n\t"
+        "_0808CE60: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -164,7 +164,7 @@ __attribute__((naked)) void GetFirstInactiveEventObjectId(void)
         "	ldrb r0, [r2]\n\t"
         "	b _0808CE88\n\t"
         "	.align 2, 0\n\t"
-        "_0808CE70: .4byte 0x02036FF0\n\t"
+        "_0808CE70: .4byte gObjectEvents\n\t"
         "_0808CE74:\n\t"
         "	adds r0, r1, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -285,7 +285,7 @@ __attribute__((naked)) void GetEventObjectIdByXY(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808CF24: .4byte 0x02036FF0\n\t"
+        "_0808CF24: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -324,7 +324,7 @@ __attribute__((naked)) void GetEventObjectIdByLocalIdAndMapInternal(void)
         "	adds r0, r1, #0\n\t"
         "	b _0808CF70\n\t"
         "	.align 2, 0\n\t"
-        "_0808CF60: .4byte 0x02036FF0\n\t"
+        "_0808CF60: .4byte gObjectEvents\n\t"
         "_0808CF64:\n\t"
         "	adds r0, r1, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -365,7 +365,7 @@ __attribute__((naked)) void GetEventObjectIdByLocalId(void)
         "	adds r0, r2, #0\n\t"
         "	b _0808CFAC\n\t"
         "	.align 2, 0\n\t"
-        "_0808CF9C: .4byte 0x02036FF0\n\t"
+        "_0808CF9C: .4byte gObjectEvents\n\t"
         "_0808CFA0:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -537,7 +537,7 @@ __attribute__((naked)) void InitEventObjectStateFromTemplate(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D0E0: .4byte 0x02036FF0\n\t"
+        "_0808D0E0: .4byte gObjectEvents\n\t"
         "_0808D0E4: .4byte 0x084DDA21\n\t"
         "_0808D0E8: .4byte 0x084DD9D0\n\t"
         ".syntax divided\n\t"
@@ -567,7 +567,7 @@ __attribute__((naked)) void Unref_TryInitLocalEventObject(void)
         "	lsrs r6, r0, #0x18\n\t"
         "	b _0808D13A\n\t"
         "	.align 2, 0\n\t"
-        "_0808D114: .4byte 0x02036FB8\n\t"
+        "_0808D114: .4byte gMapHeader\n\t"
         "_0808D118:\n\t"
         "	bl InTrainerHill\n\t"
         "	cmp r0, #0\n\t"
@@ -623,7 +623,7 @@ __attribute__((naked)) void Unref_TryInitLocalEventObject(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D17C: .4byte 0x03005AEC\n\t"
+        "_0808D17C: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -683,7 +683,7 @@ __attribute__((naked)) void GetAvailableEventObjectId(void)
         "	movs r0, #1\n\t"
         "	b _0808D214\n\t"
         "	.align 2, 0\n\t"
-        "_0808D1DC: .4byte 0x02036FF0\n\t"
+        "_0808D1DC: .4byte gObjectEvents\n\t"
         "_0808D1E0:\n\t"
         "	mov r0, ip\n\t"
         "	strb r2, [r0]\n\t"
@@ -718,7 +718,7 @@ __attribute__((naked)) void GetAvailableEventObjectId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D21C: .4byte 0x02036FF0\n\t"
+        "_0808D21C: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -776,7 +776,7 @@ __attribute__((naked)) void RemoveObjectEventByLocalIdAndMap(u8 localId, u8 mapN
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808D278: .4byte 0x02036FF0\n\t"
+        "_0808D278: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -818,7 +818,7 @@ __attribute__((naked)) void RemoveEventObjectInternal(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0808D2C0: .4byte 0xFFFF0000\n\t"
-        "_0808D2C4: .4byte 0x020205AC\n\t"
+        "_0808D2C4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -850,8 +850,8 @@ __attribute__((naked)) void RemoveAllEventObjectsExceptPlayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808D2F4: .4byte 0x02037230\n\t"
-        "_0808D2F8: .4byte 0x02036FF0\n\t"
+        "_0808D2F4: .4byte gPlayerAvatar\n\t"
+        "_0808D2F8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -909,7 +909,7 @@ __attribute__((naked)) void TrySetupEventObjectSprite(void)
         "	bl LoadPlayerObjectReflectionPalette\n\t"
         "	b _0808D386\n\t"
         "	.align 2, 0\n\t"
-        "_0808D360: .4byte 0x02036FF0\n\t"
+        "_0808D360: .4byte gObjectEvents\n\t"
         "_0808D364:\n\t"
         "	cmp r5, #0xa\n\t"
         "	bne _0808D372\n\t"
@@ -964,7 +964,7 @@ __attribute__((naked)) void TrySetupEventObjectSprite(void)
         "	b _0808D49C\n\t"
         "	.align 2, 0\n\t"
         "_0808D3CC: .4byte 0x0000FFFF\n\t"
-        "_0808D3D0: .4byte 0x02036FF0\n\t"
+        "_0808D3D0: .4byte gObjectEvents\n\t"
         "_0808D3D4:\n\t"
         "	mov r1, r8\n\t"
         "	lsls r0, r1, #4\n\t"
@@ -1072,7 +1072,7 @@ __attribute__((naked)) void TrySetupEventObjectSprite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D4AC: .4byte 0x020205AC\n\t"
+        "_0808D4AC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1176,8 +1176,8 @@ __attribute__((naked)) void TrySpawnObjectEventTemplate(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D570: .4byte 0x020205AC\n\t"
-        "_0808D574: .4byte 0x02036FF0\n\t"
+        "_0808D570: .4byte gSprites\n\t"
+        "_0808D574: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1213,7 +1213,7 @@ __attribute__((naked)) void SpawnSpecialEventObject(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808D5B0: .4byte 0x03005AEC\n\t"
+        "_0808D5B0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1477,7 +1477,7 @@ __attribute__((naked)) void AddPseudoEventObject(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0808D774: .4byte 0x0000FFFF\n\t"
-        "_0808D778: .4byte 0x020205AC\n\t"
+        "_0808D778: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1613,7 +1613,7 @@ __attribute__((naked)) void sprite_new(void)
         "	.align 2, 0\n\t"
         "_0808D87C: .4byte 0x08097439\n\t"
         "_0808D880: .4byte 0x0000FFFF\n\t"
-        "_0808D884: .4byte 0x020205AC\n\t"
+        "_0808D884: .4byte gSprites\n\t"
         "_0808D888:\n\t"
         "	lsls r1, r1, #0x1c\n\t"
         "	lsrs r0, r1, #0x1c\n\t"
@@ -1714,8 +1714,8 @@ __attribute__((naked)) void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
         "	lsrs r6, r0, #0x18\n\t"
         "	b _0808D960\n\t"
         "	.align 2, 0\n\t"
-        "_0808D948: .4byte 0x02036FB8\n\t"
-        "_0808D94C: .4byte 0x03005AEC\n\t"
+        "_0808D948: .4byte gMapHeader\n\t"
+        "_0808D94C: .4byte gSaveBlock1Ptr\n\t"
         "_0808D950:\n\t"
         "	bl InTrainerHill\n\t"
         "	cmp r0, #0\n\t"
@@ -1804,7 +1804,7 @@ __attribute__((naked)) void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808D9F8: .4byte 0x03005AEC\n\t"
+        "_0808D9F8: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1859,8 +1859,8 @@ __attribute__((naked)) void RemoveEventObjectsOutsideView(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DA50: .4byte 0x02031FA8\n\t"
-        "_0808DA54: .4byte 0x02036FF0\n\t"
+        "_0808DA50: .4byte gLinkPlayerObjectEvents\n\t"
+        "_0808DA54: .4byte gObjectEvents\n\t"
         "_0808DA58: .4byte 0x00010001\n\t"
         ".syntax divided\n\t"
     );
@@ -1934,7 +1934,7 @@ __attribute__((naked)) void RemoveEventObjectIfOutsideView(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DAD8: .4byte 0x03005AEC\n\t"
+        "_0808DAD8: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1979,7 +1979,7 @@ __attribute__((naked)) void sub_0808DADC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DB24: .4byte 0x02036FF0\n\t"
+        "_0808DB24: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2060,8 +2060,8 @@ __attribute__((naked)) void sub_0808DB28(void)
         "	bl LoadPlayerObjectReflectionPalette\n\t"
         "	b _0808DBEE\n\t"
         "	.align 2, 0\n\t"
-        "_0808DBB8: .4byte 0x02031FA8\n\t"
-        "_0808DBBC: .4byte 0x02036FF0\n\t"
+        "_0808DBB8: .4byte gLinkPlayerObjectEvents\n\t"
+        "_0808DBBC: .4byte gObjectEvents\n\t"
         "_0808DBC0: .4byte 0xFFFF0000\n\t"
         "_0808DBC4: .4byte 0x0000FFFF\n\t"
         "_0808DBC8:\n\t"
@@ -2212,7 +2212,7 @@ __attribute__((naked)) void sub_0808DB28(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0808DCF4: .4byte 0x0000FFFF\n\t"
-        "_0808DCF8: .4byte 0x020205AC\n\t"
+        "_0808DCF8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2277,8 +2277,8 @@ __attribute__((naked)) void SetPlayerAvatarEventObjectIdAndObjectId(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DD60: .4byte 0x02037230\n\t"
-        "_0808DD64: .4byte 0x02036FF0\n\t"
+        "_0808DD60: .4byte gPlayerAvatar\n\t"
+        "_0808DD64: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2313,7 +2313,7 @@ __attribute__((naked)) void ObjectEventSetGraphicsId(struct ObjectEvent *objectE
         "	bl PatchObjectPalette\n\t"
         "	b _0808DDC6\n\t"
         "	.align 2, 0\n\t"
-        "_0808DDA0: .4byte 0x020205AC\n\t"
+        "_0808DDA0: .4byte gSprites\n\t"
         "_0808DDA4:\n\t"
         "	cmp r5, #0xa\n\t"
         "	bne _0808DDB2\n\t"
@@ -2456,7 +2456,7 @@ __attribute__((naked)) void EventObjectSetGraphicsIdByLocalIdAndMap(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DEB0: .4byte 0x02036FF0\n\t"
+        "_0808DEB0: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2501,7 +2501,7 @@ __attribute__((naked)) void EventObjectTurn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DF00: .4byte 0x020205AC\n\t"
+        "_0808DF00: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2540,7 +2540,7 @@ __attribute__((naked)) void EventObjectTurnByLocalIdAndMap(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DF40: .4byte 0x02036FF0\n\t"
+        "_0808DF40: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2562,7 +2562,7 @@ __attribute__((naked)) void PlayerObjectTurn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808DF60: .4byte 0x02036FF0\n\t"
+        "_0808DF60: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2760,7 +2760,7 @@ __attribute__((naked)) void npc_by_local_id_and_map_set_field_1_bit_x20(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E0B4: .4byte 0x02036FF0\n\t"
+        "_0808E0B4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2810,7 +2810,7 @@ __attribute__((naked)) void AllowObjectAtPosTriggerGroundEffects(s16 x, s16 y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E0F8: .4byte 0x02036FF0\n\t"
+        "_0808E0F8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2859,8 +2859,8 @@ __attribute__((naked)) void SetObjectSubpriority(u8 localId, u8 mapNum, u8 mapGr
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E14C: .4byte 0x02036FF0\n\t"
-        "_0808E150: .4byte 0x020205AC\n\t"
+        "_0808E14C: .4byte gObjectEvents\n\t"
+        "_0808E150: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2903,7 +2903,7 @@ __attribute__((naked)) void ResetObjectSubpriority(u8 localId, u8 mapNum, u8 map
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E198: .4byte 0x02036FF0\n\t"
+        "_0808E198: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2951,8 +2951,8 @@ __attribute__((naked)) void sub_0808E19C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E1E8: .4byte 0x02036FF0\n\t"
-        "_0808E1EC: .4byte 0x020205AC\n\t"
+        "_0808E1E8: .4byte gObjectEvents\n\t"
+        "_0808E1EC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2969,7 +2969,7 @@ __attribute__((naked)) void FreeAndReserveObjectSpritePalettes(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E200: .4byte 0x030030BC\n\t"
+        "_0808E200: .4byte gReservedSpritePaletteCount\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3215,8 +3215,8 @@ __attribute__((naked)) void LoadPlayerObjectReflectionPalette(u16 tag, u8 slot)
         "	.align 2, 0\n\t"
         "_0808E380: .4byte 0x084E4154\n\t"
         "_0808E384: .4byte 0x000011FF\n\t"
-        "_0808E388: .4byte 0x0846FA18\n\t"
-        "_0808E38C: .4byte 0x02037254\n\t"
+        "_0808E388: .4byte gReflectionEffectPaletteMap\n\t"
+        "_0808E38C: .4byte gUnknown_2037254\n\t"
         "_0808E390:\n\t"
         "	adds r0, r3, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3276,11 +3276,11 @@ __attribute__((naked)) void LoadSpecialObjectReflectionPalette(u16 tag, u8 slot)
         "	bl PatchObjectPalette\n\t"
         "	b _0808E418\n\t"
         "	.align 2, 0\n\t"
-        "_0808E3F4: .4byte 0x02037256\n\t"
+        "_0808E3F4: .4byte gUnknown_2037256\n\t"
         "_0808E3F8: .4byte 0x084E41CC\n\t"
         "_0808E3FC: .4byte 0x000011FF\n\t"
-        "_0808E400: .4byte 0x0846FA18\n\t"
-        "_0808E404: .4byte 0x02037254\n\t"
+        "_0808E400: .4byte gReflectionEffectPaletteMap\n\t"
+        "_0808E404: .4byte gUnknown_2037254\n\t"
         "_0808E408:\n\t"
         "	adds r0, r3, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3454,7 +3454,7 @@ __attribute__((naked)) void MoveEventObjectToMapCoords(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E514: .4byte 0x020205AC\n\t"
+        "_0808E514: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3503,7 +3503,7 @@ __attribute__((naked)) void TryMoveEventObjectToMapCoords(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E568: .4byte 0x02036FF0\n\t"
+        "_0808E568: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3580,8 +3580,8 @@ __attribute__((naked)) void UpdateEventObjectCoordsForCameraUpdate(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E5E0: .4byte 0x02036FD4\n\t"
-        "_0808E5E4: .4byte 0x02036FF0\n\t"
+        "_0808E5E0: .4byte gCamera\n\t"
+        "_0808E5E4: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3629,7 +3629,7 @@ __attribute__((naked)) u8 GetObjectEventIdByPosition(u16 x, u16 y, u8 elevation)
         "	adds r0, r4, #0\n\t"
         "	b _0808E644\n\t"
         "	.align 2, 0\n\t"
-        "_0808E634: .4byte 0x02036FF0\n\t"
+        "_0808E634: .4byte gObjectEvents\n\t"
         "_0808E638:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3739,7 +3739,7 @@ __attribute__((naked)) u8 AddCameraObject(u8 linkedSpriteId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0808E6E0: .4byte 0x0846FA28\n\t"
-        "_0808E6E4: .4byte 0x020205AC\n\t"
+        "_0808E6E4: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3802,7 +3802,7 @@ __attribute__((naked)) void CameraObject_0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E748: .4byte 0x020205AC\n\t"
+        "_0808E748: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3837,7 +3837,7 @@ __attribute__((naked)) void CameraObject_1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E780: .4byte 0x020205AC\n\t"
+        "_0808E780: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3869,7 +3869,7 @@ __attribute__((naked)) void CameraObject_2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808E7B0: .4byte 0x020205AC\n\t"
+        "_0808E7B0: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3902,7 +3902,7 @@ __attribute__((naked)) void FindCameraObject(void)
         "	adds r0, r2, #0\n\t"
         "	b _0808E7F4\n\t"
         "	.align 2, 0\n\t"
-        "_0808E7E0: .4byte 0x020205AC\n\t"
+        "_0808E7E0: .4byte gSprites\n\t"
         "_0808E7E4: .4byte 0x0808E6E9\n\t"
         "_0808E7E8:\n\t"
         "	adds r0, r3, #1\n\t"
@@ -4038,7 +4038,7 @@ __attribute__((naked)) void CopySprite(void)
         "	strb r7, [r0]\n\t"
         "	b _0808E8B2\n\t"
         "	.align 2, 0\n\t"
-        "_0808E8A4: .4byte 0x020205AC\n\t"
+        "_0808E8A4: .4byte gSprites\n\t"
         "_0808E8A8:\n\t"
         "	adds r0, r5, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4103,7 +4103,7 @@ __attribute__((naked)) u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y
         "	lsrs r0, r0, #0x18\n\t"
         "	b _0808E926\n\t"
         "	.align 2, 0\n\t"
-        "_0808E914: .4byte 0x020205AC\n\t"
+        "_0808E914: .4byte gSprites\n\t"
         "_0808E918:\n\t"
         "	subs r0, r1, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4204,7 +4204,7 @@ __attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808E9AC: .4byte 0x02036FF0\n\t"
+        "_0808E9AC: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4249,7 +4249,7 @@ __attribute__((naked)) void GetEventObjectFlagIdByEventObjectId(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808E9EC: .4byte 0x02036FF0\n\t"
+        "_0808E9EC: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4281,7 +4281,7 @@ __attribute__((naked)) void sub_0808E9F0(void)
         "	ldrb r0, [r0, #7]\n\t"
         "	b _0808EA26\n\t"
         "	.align 2, 0\n\t"
-        "_0808EA20: .4byte 0x02036FF0\n\t"
+        "_0808EA20: .4byte gObjectEvents\n\t"
         "_0808EA24:\n\t"
         "	movs r0, #0xff\n\t"
         "_0808EA26:\n\t"
@@ -4306,7 +4306,7 @@ __attribute__((naked)) void sub_0808EA2C(void)
         "	ldrb r0, [r1, #7]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808EA40: .4byte 0x02036FF0\n\t"
+        "_0808EA40: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4338,7 +4338,7 @@ __attribute__((naked)) void sub_0808EA44(void)
         "	ldrb r0, [r0, #0x1d]\n\t"
         "	b _0808EA7A\n\t"
         "	.align 2, 0\n\t"
-        "_0808EA74: .4byte 0x02036FF0\n\t"
+        "_0808EA74: .4byte gObjectEvents\n\t"
         "_0808EA78:\n\t"
         "	movs r0, #0xff\n\t"
         "_0808EA7A:\n\t"
@@ -4363,7 +4363,7 @@ __attribute__((naked)) void EventObjectGetBerryTreeId(void)
         "	ldrb r0, [r1, #0x1d]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808EA94: .4byte 0x02036FF0\n\t"
+        "_0808EA94: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4396,8 +4396,8 @@ __attribute__((naked)) void GetEventObjectTemplateByLocalIdAndMap(void)
         "	ldr r0, [r0, #4]\n\t"
         "	b _0808EADC\n\t"
         "	.align 2, 0\n\t"
-        "_0808EAC8: .4byte 0x03005AEC\n\t"
-        "_0808EACC: .4byte 0x02036FB8\n\t"
+        "_0808EAC8: .4byte gSaveBlock1Ptr\n\t"
+        "_0808EACC: .4byte gMapHeader\n\t"
         "_0808EAD0:\n\t"
         "	adds r0, r2, #0\n\t"
         "	adds r1, r3, #0\n\t"
@@ -4476,7 +4476,7 @@ __attribute__((naked)) void GetBaseTemplateForEventObject(void)
         "	beq _0808EB52\n\t"
         "	b _0808EB70\n\t"
         "	.align 2, 0\n\t"
-        "_0808EB44: .4byte 0x03005AEC\n\t"
+        "_0808EB44: .4byte gSaveBlock1Ptr\n\t"
         "_0808EB48:\n\t"
         "	movs r1, #0xc7\n\t"
         "	lsls r1, r1, #4\n\t"
@@ -4602,7 +4602,7 @@ __attribute__((naked)) void TryOverrideEventObjectTemplateCoords(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808EBF8: .4byte 0x02036FF0\n\t"
+        "_0808EBF8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4643,7 +4643,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	bl OverrideEventObjectTemplateScript\n\t"
         "	b _0808EC58\n\t"
         "	.align 2, 0\n\t"
-        "_0808EC3C: .4byte 0x02036FF0\n\t"
+        "_0808EC3C: .4byte gObjectEvents\n\t"
         "_0808EC40: .4byte 0x082465B5\n\t"
         "_0808EC44:\n\t"
         "	mov r0, sp\n\t"
@@ -4661,7 +4661,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808EC60: .4byte 0x02036FF0\n\t"
+        "_0808EC60: .4byte gObjectEvents\n\t"
         "_0808EC64: .4byte 0x082465B9\n\t"
         ".syntax divided\n\t"
     );
@@ -4697,11 +4697,11 @@ __attribute__((naked)) void InitEventObjectPalettes(void)
         "	strb r0, [r1]\n\t"
         "	b _0808ECC6\n\t"
         "	.align 2, 0\n\t"
-        "_0808ECA0: .4byte 0x02037256\n\t"
+        "_0808ECA0: .4byte gUnknown_2037256\n\t"
         "_0808ECA4: .4byte 0x000011FF\n\t"
-        "_0808ECA8: .4byte 0x02037254\n\t"
+        "_0808ECA8: .4byte gUnknown_2037254\n\t"
         "_0808ECAC: .4byte 0x084E428C\n\t"
-        "_0808ECB0: .4byte 0x030030BC\n\t"
+        "_0808ECB0: .4byte gReservedSpritePaletteCount\n\t"
         "_0808ECB4:\n\t"
         "	ldr r0, _0808ECCC\n\t"
         "	ldrb r1, [r2]\n\t"
@@ -4740,7 +4740,7 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
         "	b _0808ED00\n\t"
         "	.align 2, 0\n\t"
         "_0808ECEC: .4byte 0x084E428C\n\t"
-        "_0808ECF0: .4byte 0x02037254\n\t"
+        "_0808ECF0: .4byte gUnknown_2037254\n\t"
         "_0808ECF4:\n\t"
         "	adds r1, r4, #4\n\t"
         "	adds r1, r2, r1\n\t"
@@ -4753,7 +4753,7 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
         "	ldrh r0, [r0]\n\t"
         "	b _0808ED3E\n\t"
         "	.align 2, 0\n\t"
-        "_0808ED08: .4byte 0x02037254\n\t"
+        "_0808ED08: .4byte gUnknown_2037254\n\t"
         "_0808ED0C:\n\t"
         "	movs r3, #0\n\t"
         "	ldr r0, _0808ED44\n\t"
@@ -4789,7 +4789,7 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
         "	.align 2, 0\n\t"
         "_0808ED44: .4byte 0x084E41CC\n\t"
         "_0808ED48: .4byte 0x000011FF\n\t"
-        "_0808ED4C: .4byte 0x02037256\n\t"
+        "_0808ED4C: .4byte gUnknown_2037256\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4812,7 +4812,7 @@ __attribute__((naked)) void MovementType_None(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808ED6C: .4byte 0x02036FF0\n\t"
+        "_0808ED6C: .4byte gObjectEvents\n\t"
         "_0808ED70: .4byte 0x0808ED75\n\t"
         ".syntax divided\n\t"
     );
@@ -4847,7 +4847,7 @@ __attribute__((naked)) void MovementType_WanderAround(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808ED94: .4byte 0x02036FF0\n\t"
+        "_0808ED94: .4byte gObjectEvents\n\t"
         "_0808ED98: .4byte 0x0808ED9D\n\t"
         ".syntax divided\n\t"
     );
@@ -5698,7 +5698,7 @@ __attribute__((naked)) void MovementType_LookAround(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F2D0: .4byte 0x02036FF0\n\t"
+        "_0808F2D0: .4byte gObjectEvents\n\t"
         "_0808F2D4: .4byte 0x0808F2D9\n\t"
         ".syntax divided\n\t"
     );
@@ -5902,7 +5902,7 @@ __attribute__((naked)) void MovementType_WanderUpAndDown(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F410: .4byte 0x02036FF0\n\t"
+        "_0808F410: .4byte gObjectEvents\n\t"
         "_0808F414: .4byte 0x0808F419\n\t"
         ".syntax divided\n\t"
     );
@@ -6157,7 +6157,7 @@ __attribute__((naked)) void MovementType_WanderLeftAndRight(struct Sprite *sprit
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F594: .4byte 0x02036FF0\n\t"
+        "_0808F594: .4byte gObjectEvents\n\t"
         "_0808F598: .4byte 0x0808F59D\n\t"
         ".syntax divided\n\t"
     );
@@ -6411,7 +6411,7 @@ __attribute__((naked)) void MovementType_FaceDirection(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F718: .4byte 0x02036FF0\n\t"
+        "_0808F718: .4byte gObjectEvents\n\t"
         "_0808F71C: .4byte 0x0808F721\n\t"
         ".syntax divided\n\t"
     );
@@ -6542,7 +6542,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F7D8: .4byte 0x02036FF0\n\t"
+        "_0808F7D8: .4byte gObjectEvents\n\t"
         "_0808F7DC: .4byte 0x0808F7E1\n\t"
         ".syntax divided\n\t"
     );
@@ -6628,7 +6628,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step0(void)
         "	movs r0, #0\n\t"
         "	b _0808F8B2\n\t"
         "	.align 2, 0\n\t"
-        "_0808F86C: .4byte 0x020388A8\n\t"
+        "_0808F86C: .4byte gFieldEffectArguments\n\t"
         "_0808F870:\n\t"
         "	ldrb r1, [r4, #1]\n\t"
         "	movs r0, #0x21\n\t"
@@ -6735,7 +6735,7 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F920: .4byte 0x020388A8\n\t"
+        "_0808F920: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6855,7 +6855,7 @@ __attribute__((naked)) void MovementType_FaceDownAndUp(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808F9DC: .4byte 0x02036FF0\n\t"
+        "_0808F9DC: .4byte gObjectEvents\n\t"
         "_0808F9E0: .4byte 0x0808F9E5\n\t"
         ".syntax divided\n\t"
     );
@@ -7059,7 +7059,7 @@ __attribute__((naked)) void MovementType_FaceLeftAndRight(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808FB1C: .4byte 0x02036FF0\n\t"
+        "_0808FB1C: .4byte gObjectEvents\n\t"
         "_0808FB20: .4byte 0x0808FB25\n\t"
         ".syntax divided\n\t"
     );
@@ -7264,7 +7264,7 @@ __attribute__((naked)) void MovementType_FaceUpAndLeft(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808FC5C: .4byte 0x02036FF0\n\t"
+        "_0808FC5C: .4byte gObjectEvents\n\t"
         "_0808FC60: .4byte 0x0808FC65\n\t"
         ".syntax divided\n\t"
     );
@@ -7468,7 +7468,7 @@ __attribute__((naked)) void MovementType_FaceUpAndRight(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808FD9C: .4byte 0x02036FF0\n\t"
+        "_0808FD9C: .4byte gObjectEvents\n\t"
         "_0808FDA0: .4byte 0x0808FDA5\n\t"
         ".syntax divided\n\t"
     );
@@ -7672,7 +7672,7 @@ __attribute__((naked)) void MovementType_FaceDownAndLeft(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808FEDC: .4byte 0x02036FF0\n\t"
+        "_0808FEDC: .4byte gObjectEvents\n\t"
         "_0808FEE0: .4byte 0x0808FEE5\n\t"
         ".syntax divided\n\t"
     );
@@ -7877,7 +7877,7 @@ __attribute__((naked)) void MovementType_FaceDownAndRight(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809001C: .4byte 0x02036FF0\n\t"
+        "_0809001C: .4byte gObjectEvents\n\t"
         "_08090020: .4byte 0x08090025\n\t"
         ".syntax divided\n\t"
     );
@@ -8081,7 +8081,7 @@ __attribute__((naked)) void MovementType_FaceDownUpAndLeft(struct Sprite *sprite
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809015C: .4byte 0x02036FF0\n\t"
+        "_0809015C: .4byte gObjectEvents\n\t"
         "_08090160: .4byte 0x08090165\n\t"
         ".syntax divided\n\t"
     );
@@ -8286,7 +8286,7 @@ __attribute__((naked)) void MovementType_FaceDownUpAndRight(struct Sprite *sprit
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809029C: .4byte 0x02036FF0\n\t"
+        "_0809029C: .4byte gObjectEvents\n\t"
         "_080902A0: .4byte 0x080902A5\n\t"
         ".syntax divided\n\t"
     );
@@ -8490,7 +8490,7 @@ __attribute__((naked)) void MovementType_FaceUpRightAndLeft(struct Sprite *sprit
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080903DC: .4byte 0x02036FF0\n\t"
+        "_080903DC: .4byte gObjectEvents\n\t"
         "_080903E0: .4byte 0x080903E5\n\t"
         ".syntax divided\n\t"
     );
@@ -8694,7 +8694,7 @@ __attribute__((naked)) void MovementType_FaceDownRightAndLeft(struct Sprite *spr
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809051C: .4byte 0x02036FF0\n\t"
+        "_0809051C: .4byte gObjectEvents\n\t"
         "_08090520: .4byte 0x08090525\n\t"
         ".syntax divided\n\t"
     );
@@ -8899,7 +8899,7 @@ __attribute__((naked)) void MovementType_RotateCounterclockwise(struct Sprite *s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809065C: .4byte 0x02036FF0\n\t"
+        "_0809065C: .4byte gObjectEvents\n\t"
         "_08090660: .4byte 0x08090665\n\t"
         ".syntax divided\n\t"
     );
@@ -9068,7 +9068,7 @@ __attribute__((naked)) void MovementType_RotateClockwise(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090760: .4byte 0x02036FF0\n\t"
+        "_08090760: .4byte gObjectEvents\n\t"
         "_08090764: .4byte 0x08090769\n\t"
         ".syntax divided\n\t"
     );
@@ -9237,7 +9237,7 @@ __attribute__((naked)) void MovementType_WalkBackAndForth(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090864: .4byte 0x02036FF0\n\t"
+        "_08090864: .4byte gObjectEvents\n\t"
         "_08090868: .4byte 0x0809086D\n\t"
         ".syntax divided\n\t"
     );
@@ -9596,7 +9596,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpRightLeftDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090AC4: .4byte 0x02036FF0\n\t"
+        "_08090AC4: .4byte gObjectEvents\n\t"
         "_08090AC8: .4byte 0x08090ACD\n\t"
         ".syntax divided\n\t"
     );
@@ -9685,7 +9685,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightLeftDownUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090B50: .4byte 0x02036FF0\n\t"
+        "_08090B50: .4byte gObjectEvents\n\t"
         "_08090B54: .4byte 0x08090B59\n\t"
         ".syntax divided\n\t"
     );
@@ -9774,7 +9774,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownUpRightLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090BDC: .4byte 0x02036FF0\n\t"
+        "_08090BDC: .4byte gObjectEvents\n\t"
         "_08090BE0: .4byte 0x08090BE5\n\t"
         ".syntax divided\n\t"
     );
@@ -9864,7 +9864,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftDownUpRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090C68: .4byte 0x02036FF0\n\t"
+        "_08090C68: .4byte gObjectEvents\n\t"
         "_08090C6C: .4byte 0x08090C71\n\t"
         ".syntax divided\n\t"
     );
@@ -9953,7 +9953,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpLeftRightDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090CF4: .4byte 0x02036FF0\n\t"
+        "_08090CF4: .4byte gObjectEvents\n\t"
         "_08090CF8: .4byte 0x08090CFD\n\t"
         ".syntax divided\n\t"
     );
@@ -10042,7 +10042,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftRightDownUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090D80: .4byte 0x02036FF0\n\t"
+        "_08090D80: .4byte gObjectEvents\n\t"
         "_08090D84: .4byte 0x08090D89\n\t"
         ".syntax divided\n\t"
     );
@@ -10131,7 +10131,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownUpLeftRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090E0C: .4byte 0x02036FF0\n\t"
+        "_08090E0C: .4byte gObjectEvents\n\t"
         "_08090E10: .4byte 0x08090E15\n\t"
         ".syntax divided\n\t"
     );
@@ -10220,7 +10220,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightDownUpLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090E98: .4byte 0x02036FF0\n\t"
+        "_08090E98: .4byte gObjectEvents\n\t"
         "_08090E9C: .4byte 0x08090EA1\n\t"
         ".syntax divided\n\t"
     );
@@ -10310,7 +10310,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftUpDownRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090F24: .4byte 0x02036FF0\n\t"
+        "_08090F24: .4byte gObjectEvents\n\t"
         "_08090F28: .4byte 0x08090F2D\n\t"
         ".syntax divided\n\t"
     );
@@ -10399,7 +10399,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpDownRightLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08090FB0: .4byte 0x02036FF0\n\t"
+        "_08090FB0: .4byte gObjectEvents\n\t"
         "_08090FB4: .4byte 0x08090FB9\n\t"
         ".syntax divided\n\t"
     );
@@ -10488,7 +10488,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightLeftUpDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809103C: .4byte 0x02036FF0\n\t"
+        "_0809103C: .4byte gObjectEvents\n\t"
         "_08091040: .4byte 0x08091045\n\t"
         ".syntax divided\n\t"
     );
@@ -10577,7 +10577,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownRightLeftUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080910C8: .4byte 0x02036FF0\n\t"
+        "_080910C8: .4byte gObjectEvents\n\t"
         "_080910CC: .4byte 0x080910D1\n\t"
         ".syntax divided\n\t"
     );
@@ -10666,7 +10666,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightUpDownLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091154: .4byte 0x02036FF0\n\t"
+        "_08091154: .4byte gObjectEvents\n\t"
         "_08091158: .4byte 0x0809115D\n\t"
         ".syntax divided\n\t"
     );
@@ -10756,7 +10756,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpDownLeftRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080911E0: .4byte 0x02036FF0\n\t"
+        "_080911E0: .4byte gObjectEvents\n\t"
         "_080911E4: .4byte 0x080911E9\n\t"
         ".syntax divided\n\t"
     );
@@ -10845,7 +10845,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftRightUpDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809126C: .4byte 0x02036FF0\n\t"
+        "_0809126C: .4byte gObjectEvents\n\t"
         "_08091270: .4byte 0x08091275\n\t"
         ".syntax divided\n\t"
     );
@@ -10934,7 +10934,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownLeftRightUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080912F8: .4byte 0x02036FF0\n\t"
+        "_080912F8: .4byte gObjectEvents\n\t"
         "_080912FC: .4byte 0x08091301\n\t"
         ".syntax divided\n\t"
     );
@@ -11023,7 +11023,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpLeftDownRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091384: .4byte 0x02036FF0\n\t"
+        "_08091384: .4byte gObjectEvents\n\t"
         "_08091388: .4byte 0x0809138D\n\t"
         ".syntax divided\n\t"
     );
@@ -11112,7 +11112,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownRightUpLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091410: .4byte 0x02036FF0\n\t"
+        "_08091410: .4byte gObjectEvents\n\t"
         "_08091414: .4byte 0x08091419\n\t"
         ".syntax divided\n\t"
     );
@@ -11202,7 +11202,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftDownRightUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809149C: .4byte 0x02036FF0\n\t"
+        "_0809149C: .4byte gObjectEvents\n\t"
         "_080914A0: .4byte 0x080914A5\n\t"
         ".syntax divided\n\t"
     );
@@ -11291,7 +11291,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightUpLeftDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091528: .4byte 0x02036FF0\n\t"
+        "_08091528: .4byte gObjectEvents\n\t"
         "_0809152C: .4byte 0x08091531\n\t"
         ".syntax divided\n\t"
     );
@@ -11380,7 +11380,7 @@ __attribute__((naked)) void MovementType_WalkSequenceUpRightDownLeft(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080915B4: .4byte 0x02036FF0\n\t"
+        "_080915B4: .4byte gObjectEvents\n\t"
         "_080915B8: .4byte 0x080915BD\n\t"
         ".syntax divided\n\t"
     );
@@ -11469,7 +11469,7 @@ __attribute__((naked)) void MovementType_WalkSequenceDownLeftUpRight(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091640: .4byte 0x02036FF0\n\t"
+        "_08091640: .4byte gObjectEvents\n\t"
         "_08091644: .4byte 0x08091649\n\t"
         ".syntax divided\n\t"
     );
@@ -11558,7 +11558,7 @@ __attribute__((naked)) void MovementType_WalkSequenceLeftUpRightDown(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080916CC: .4byte 0x02036FF0\n\t"
+        "_080916CC: .4byte gObjectEvents\n\t"
         "_080916D0: .4byte 0x080916D5\n\t"
         ".syntax divided\n\t"
     );
@@ -11648,7 +11648,7 @@ __attribute__((naked)) void MovementType_WalkSequenceRightDownLeftUp(struct Spri
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091758: .4byte 0x02036FF0\n\t"
+        "_08091758: .4byte gObjectEvents\n\t"
         "_0809175C: .4byte 0x08091761\n\t"
         ".syntax divided\n\t"
     );
@@ -11737,7 +11737,7 @@ __attribute__((naked)) void MovementType_CopyPlayer(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080917E4: .4byte 0x02036FF0\n\t"
+        "_080917E4: .4byte gObjectEvents\n\t"
         "_080917E8: .4byte 0x080917ED\n\t"
         ".syntax divided\n\t"
     );
@@ -11815,8 +11815,8 @@ __attribute__((naked)) bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *o
         "	movs r0, #0\n\t"
         "	b _08091884\n\t"
         "	.align 2, 0\n\t"
-        "_08091854: .4byte 0x02036FF0\n\t"
-        "_08091858: .4byte 0x02037230\n\t"
+        "_08091854: .4byte gObjectEvents\n\t"
+        "_08091858: .4byte gPlayerAvatar\n\t"
         "_0809185C:\n\t"
         "	ldr r5, _0809188C\n\t"
         "	bl PlayerGetCopyableMovement\n\t"
@@ -12586,7 +12586,7 @@ __attribute__((naked)) void MovementType_CopyPlayerInGrass(struct Sprite *sprite
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091E20: .4byte 0x02036FF0\n\t"
+        "_08091E20: .4byte gObjectEvents\n\t"
         "_08091E24: .4byte 0x08091E29\n\t"
         ".syntax divided\n\t"
     );
@@ -12639,8 +12639,8 @@ __attribute__((naked)) bool8 MovementType_CopyPlayerInGrass_Step1(struct ObjectE
         "	movs r0, #0\n\t"
         "	b _08091E9C\n\t"
         "	.align 2, 0\n\t"
-        "_08091E6C: .4byte 0x02036FF0\n\t"
-        "_08091E70: .4byte 0x02037230\n\t"
+        "_08091E6C: .4byte gObjectEvents\n\t"
+        "_08091E70: .4byte gPlayerAvatar\n\t"
         "_08091E74:\n\t"
         "	ldr r5, _08091EA4\n\t"
         "	bl PlayerGetCopyableMovement\n\t"
@@ -12724,8 +12724,8 @@ __attribute__((naked)) void MovementType_TreeDisguise(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091F10: .4byte 0x02036FF0\n\t"
-        "_08091F14: .4byte 0x020388A8\n\t"
+        "_08091F10: .4byte gObjectEvents\n\t"
+        "_08091F14: .4byte gFieldEffectArguments\n\t"
         "_08091F18: .4byte 0x08091F1D\n\t"
         ".syntax divided\n\t"
     );
@@ -12798,8 +12798,8 @@ __attribute__((naked)) void MovementType_MountainDisguise(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091F8C: .4byte 0x02036FF0\n\t"
-        "_08091F90: .4byte 0x020388A8\n\t"
+        "_08091F8C: .4byte gObjectEvents\n\t"
+        "_08091F90: .4byte gFieldEffectArguments\n\t"
         "_08091F94: .4byte 0x08091F1D\n\t"
         ".syntax divided\n\t"
     );
@@ -12855,7 +12855,7 @@ __attribute__((naked)) void MovementType_Hidden(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08091FF4: .4byte 0x02036FF0\n\t"
+        "_08091FF4: .4byte gObjectEvents\n\t"
         "_08091FF8: .4byte 0x08091FFD\n\t"
         ".syntax divided\n\t"
     );
@@ -12937,7 +12937,7 @@ __attribute__((naked)) void MovementType_WalkInPlace(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08092060: .4byte 0x02036FF0\n\t"
+        "_08092060: .4byte gObjectEvents\n\t"
         "_08092064: .4byte 0x08092069\n\t"
         ".syntax divided\n\t"
     );
@@ -13011,7 +13011,7 @@ __attribute__((naked)) void MovementType_WalkSlowlyInPlace(struct Sprite *sprite
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080920D0: .4byte 0x02036FF0\n\t"
+        "_080920D0: .4byte gObjectEvents\n\t"
         "_080920D4: .4byte 0x080920D9\n\t"
         ".syntax divided\n\t"
     );
@@ -13086,7 +13086,7 @@ __attribute__((naked)) void MovementType_JogInPlace(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08092140: .4byte 0x02036FF0\n\t"
+        "_08092140: .4byte gObjectEvents\n\t"
         "_08092144: .4byte 0x08092149\n\t"
         ".syntax divided\n\t"
     );
@@ -13160,7 +13160,7 @@ __attribute__((naked)) void MovementType_RunInPlace(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080921B0: .4byte 0x02036FF0\n\t"
+        "_080921B0: .4byte gObjectEvents\n\t"
         "_080921B4: .4byte 0x080921B9\n\t"
         ".syntax divided\n\t"
     );
@@ -13234,7 +13234,7 @@ __attribute__((naked)) void MovementType_Invisible(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08092220: .4byte 0x02036FF0\n\t"
+        "_08092220: .4byte gObjectEvents\n\t"
         "_08092224: .4byte 0x08092229\n\t"
         ".syntax divided\n\t"
     );
@@ -13793,7 +13793,7 @@ __attribute__((naked)) void SetTrainerMovementType(struct ObjectEvent *objectEve
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080924E0: .4byte 0x020205AC\n\t"
+        "_080924E0: .4byte gSprites\n\t"
         "_080924E4: .4byte 0x084DD88C\n\t"
         ".syntax divided\n\t"
     );
@@ -14240,7 +14240,7 @@ __attribute__((naked)) bool8 DoesObjectCollideWithObjectAt(struct ObjectEvent *o
         "	movs r0, #1\n\t"
         "	b _08092804\n\t"
         "	.align 2, 0\n\t"
-        "_080927F4: .4byte 0x02036FF0\n\t"
+        "_080927F4: .4byte gObjectEvents\n\t"
         "_080927F8:\n\t"
         "	adds r0, r4, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -14295,8 +14295,8 @@ __attribute__((naked)) bool8 IsBerryTreeSparkling(u8 localId, u8 mapNum, u8 mapG
         "	movs r0, #1\n\t"
         "	b _0809285A\n\t"
         "	.align 2, 0\n\t"
-        "_08092850: .4byte 0x020205AC\n\t"
-        "_08092854: .4byte 0x02036FF0\n\t"
+        "_08092850: .4byte gSprites\n\t"
+        "_08092854: .4byte gObjectEvents\n\t"
         "_08092858:\n\t"
         "	movs r0, #0\n\t"
         "_0809285A:\n\t"
@@ -14346,8 +14346,8 @@ __attribute__((naked)) void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080928A4: .4byte 0x020205AC\n\t"
-        "_080928A8: .4byte 0x02036FF0\n\t"
+        "_080928A4: .4byte gSprites\n\t"
+        "_080928A8: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14503,9 +14503,9 @@ __attribute__((naked)) void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809299C: .4byte 0x03005AEC\n\t"
-        "_080929A0: .4byte 0x03005B4C\n\t"
-        "_080929A4: .4byte 0x03005B48\n\t"
+        "_0809299C: .4byte gSaveBlock1Ptr\n\t"
+        "_080929A0: .4byte gTotalCameraPixelOffsetX\n\t"
+        "_080929A4: .4byte gTotalCameraPixelOffsetY\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14592,11 +14592,11 @@ __attribute__((naked)) void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *des
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08092A3C: .4byte 0x03005B4C\n\t"
-        "_08092A40: .4byte 0x03005B30\n\t"
-        "_08092A44: .4byte 0x03005B48\n\t"
+        "_08092A3C: .4byte gTotalCameraPixelOffsetX\n\t"
+        "_08092A40: .4byte gFieldCamera\n\t"
+        "_08092A44: .4byte gTotalCameraPixelOffsetY\n\t"
         "_08092A48: .4byte 0xFFF00000\n\t"
-        "_08092A4C: .4byte 0x03005AEC\n\t"
+        "_08092A4C: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14685,7 +14685,7 @@ __attribute__((naked)) void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08092AD8: .4byte 0x03005B30\n\t"
+        "_08092AD8: .4byte gFieldCamera\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14791,7 +14791,7 @@ __attribute__((naked)) bool8 ObjectEventSetHeldMovement(struct ObjectEvent *obje
         "	movs r0, #0\n\t"
         "	b _08092B72\n\t"
         "	.align 2, 0\n\t"
-        "_08092B6C: .4byte 0x020205AC\n\t"
+        "_08092B6C: .4byte gSprites\n\t"
         "_08092B70:\n\t"
         "	movs r0, #1\n\t"
         "_08092B72:\n\t"
@@ -14871,7 +14871,7 @@ __attribute__((naked)) void EventObjectClearHeldMovement(struct ObjectEvent *obj
         "	strh r2, [r0, #0x32]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08092BDC: .4byte 0x020205AC\n\t"
+        "_08092BDC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -16173,7 +16173,7 @@ __attribute__((naked)) void npc_apply_direction(struct ObjectEvent *objectEvent,
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08093398: .4byte 0x02037258\n\t"
+        "_08093398: .4byte gUnknown_2037258\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -19847,7 +19847,7 @@ __attribute__((naked)) bool8 MovementAction_FacePlayer_Step0(struct ObjectEvent 
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08094900: .4byte 0x02036FF0\n\t"
+        "_08094900: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -19901,7 +19901,7 @@ __attribute__((naked)) bool8 MovementAction_FaceAwayPlayer_Step0(struct ObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08094964: .4byte 0x02036FF0\n\t"
+        "_08094964: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -20810,7 +20810,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteExclamationMark_Step0(struct Ob
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08094E6C: .4byte 0x020388A8\n\t"
+        "_08094E6C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -20834,7 +20834,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteQuestionMark_Step0(struct Objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08094E90: .4byte 0x020388A8\n\t"
+        "_08094E90: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -20858,7 +20858,7 @@ __attribute__((naked)) bool8 MovementAction_EmoteHeart_Step0(struct ObjectEvent 
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08094EB4: .4byte 0x020388A8\n\t"
+        "_08094EB4: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -23711,8 +23711,8 @@ __attribute__((naked)) void sub_08095EA0(struct ObjectEvent *objectEvent, struct
         "	adds r0, r0, r2\n\t"
         "	b _08095F2C\n\t"
         "	.align 2, 0\n\t"
-        "_08095EFC: .4byte 0x02021B38\n\t"
-        "_08095F00: .4byte 0x02021B3A\n\t"
+        "_08095EFC: .4byte gSpriteCoordOffsetX\n\t"
+        "_08095F00: .4byte gSpriteCoordOffsetY\n\t"
         "_08095F04:\n\t"
         "	ldrh r1, [r4, #0x24]\n\t"
         "	ldrh r0, [r4, #0x20]\n\t"
@@ -24466,7 +24466,7 @@ __attribute__((naked)) void GetGroundEffectFlags_JumpLanding(struct ObjectEvent 
         "	str r1, [r6]\n\t"
         "	b _080963F2\n\t"
         "	.align 2, 0\n\t"
-        "_080963DC: .4byte 0x02000020\n\t"
+        "_080963DC: .4byte gUnknown_2000020\n\t"
         "_080963E0: .4byte 0x084E6A38\n\t"
         "_080963E4: .4byte 0x084E6A50\n\t"
         "_080963E8:\n\t"
@@ -25034,7 +25034,7 @@ __attribute__((naked)) void SetObjectSubpriorityByElevation(u8 elevation, struct
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080967BC: .4byte 0x02021B3A\n\t"
+        "_080967BC: .4byte gSpriteCoordOffsetY\n\t"
         "_080967C0: .4byte 0x084E6A78\n\t"
         ".syntax divided\n\t"
     );
@@ -25127,8 +25127,8 @@ __attribute__((naked)) void GroundEffect_SpawnOnTallGrass(struct ObjectEvent *ob
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096844: .4byte 0x020388A8\n\t"
-        "_08096848: .4byte 0x03005AEC\n\t"
+        "_08096844: .4byte gFieldEffectArguments\n\t"
+        "_08096848: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25171,8 +25171,8 @@ __attribute__((naked)) void GroundEffect_StepOnTallGrass(struct ObjectEvent *obj
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096890: .4byte 0x020388A8\n\t"
-        "_08096894: .4byte 0x03005AEC\n\t"
+        "_08096890: .4byte gFieldEffectArguments\n\t"
+        "_08096894: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25215,8 +25215,8 @@ __attribute__((naked)) void GroundEffect_SpawnOnLongGrass(struct ObjectEvent *ob
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080968DC: .4byte 0x020388A8\n\t"
-        "_080968E0: .4byte 0x03005AEC\n\t"
+        "_080968DC: .4byte gFieldEffectArguments\n\t"
+        "_080968E0: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25259,8 +25259,8 @@ __attribute__((naked)) void GroundEffect_StepOnLongGrass(struct ObjectEvent *obj
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096928: .4byte 0x020388A8\n\t"
-        "_0809692C: .4byte 0x03005AEC\n\t"
+        "_08096928: .4byte gFieldEffectArguments\n\t"
+        "_0809692C: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25412,7 +25412,7 @@ __attribute__((naked)) void DoTracksGroundEffect_Footprints(struct ObjectEvent *
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080969FC: .4byte 0x084E6AB4\n\t"
-        "_08096A00: .4byte 0x020388A8\n\t"
+        "_08096A00: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25458,7 +25458,7 @@ __attribute__((naked)) void DoTracksGroundEffect_BikeTireTracks(struct ObjectEve
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096A4C: .4byte 0x020388A8\n\t"
+        "_08096A4C: .4byte gFieldEffectArguments\n\t"
         "_08096A50: .4byte 0x084E6AB8\n\t"
         ".syntax divided\n\t"
     );
@@ -25551,7 +25551,7 @@ __attribute__((naked)) void GroundEffect_JumpOnTallGrass(struct ObjectEvent *obj
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096AD4: .4byte 0x020388A8\n\t"
+        "_08096AD4: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25578,7 +25578,7 @@ __attribute__((naked)) void GroundEffect_JumpOnLongGrass(struct ObjectEvent *obj
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096AFC: .4byte 0x020388A8\n\t"
+        "_08096AFC: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25608,7 +25608,7 @@ __attribute__((naked)) void GroundEffect_JumpOnShallowWater(struct ObjectEvent *
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096B2C: .4byte 0x020388A8\n\t"
+        "_08096B2C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25638,7 +25638,7 @@ __attribute__((naked)) void GroundEffect_JumpOnWater(struct ObjectEvent *objEven
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096B5C: .4byte 0x020388A8\n\t"
+        "_08096B5C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25668,7 +25668,7 @@ __attribute__((naked)) void GroundEffect_JumpLandingDust(struct ObjectEvent *obj
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096B8C: .4byte 0x020388A8\n\t"
+        "_08096B8C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25720,7 +25720,7 @@ __attribute__((naked)) void GroundEffect_Seaweed(struct ObjectEvent *objEvent, s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096BCC: .4byte 0x020388A8\n\t"
+        "_08096BCC: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26044,7 +26044,7 @@ __attribute__((naked)) void FreezeEventObject(struct ObjectEvent *objectEvent)
         "	movs r0, #0\n\t"
         "	b _08096DFE\n\t"
         "	.align 2, 0\n\t"
-        "_08096DF8: .4byte 0x020205AC\n\t"
+        "_08096DF8: .4byte gSprites\n\t"
         "_08096DFC:\n\t"
         "	movs r0, #1\n\t"
         "_08096DFE:\n\t"
@@ -26087,8 +26087,8 @@ __attribute__((naked)) void FreezeObjectEvents(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096E38: .4byte 0x02036FF0\n\t"
-        "_08096E3C: .4byte 0x02037230\n\t"
+        "_08096E38: .4byte gObjectEvents\n\t"
+        "_08096E3C: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26129,8 +26129,8 @@ __attribute__((naked)) void FreezeEventObjectsExceptOne(u8 objectEventId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096E7C: .4byte 0x02036FF0\n\t"
-        "_08096E80: .4byte 0x02037230\n\t"
+        "_08096E7C: .4byte gObjectEvents\n\t"
+        "_08096E80: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26189,7 +26189,7 @@ __attribute__((naked)) void UnfreezeEventObject(struct ObjectEvent *objectEvent)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08096EE4: .4byte 0x00000101\n\t"
-        "_08096EE8: .4byte 0x020205AC\n\t"
+        "_08096EE8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26222,7 +26222,7 @@ __attribute__((naked)) void UnfreezeObjectEvents(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096F18: .4byte 0x02036FF0\n\t"
+        "_08096F18: .4byte gObjectEvents\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26977,8 +26977,8 @@ __attribute__((naked)) void UpdateObjectEventSpriteInvisibility(struct ObjectEve
         "	adds r2, r3, #0\n\t"
         "	b _080973DA\n\t"
         "	.align 2, 0\n\t"
-        "_080973A4: .4byte 0x02021B38\n\t"
-        "_080973A8: .4byte 0x02021B3A\n\t"
+        "_080973A4: .4byte gSpriteCoordOffsetX\n\t"
+        "_080973A8: .4byte gSpriteCoordOffsetY\n\t"
         "_080973AC:\n\t"
         "	mov r0, ip\n\t"
         "	ldrh r1, [r0, #0x24]\n\t"
@@ -27116,7 +27116,7 @@ __attribute__((naked)) void sub_08097460(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08097494: .4byte 0x020205AC\n\t"
+        "_08097494: .4byte gSprites\n\t"
         "_08097498: .4byte 0x08097439\n\t"
         ".syntax divided\n\t"
     );
@@ -27153,7 +27153,7 @@ __attribute__((naked)) int GetVirtualObjectSpriteId(u8 virtualObjId)
         "	adds r0, r3, #0\n\t"
         "	b _080974E2\n\t"
         "	.align 2, 0\n\t"
-        "_080974D0: .4byte 0x020205AC\n\t"
+        "_080974D0: .4byte gSprites\n\t"
         "_080974D4: .4byte 0x08097439\n\t"
         "_080974D8:\n\t"
         "	adds r4, #0x44\n\t"
@@ -27200,7 +27200,7 @@ __attribute__((naked)) void TurnVirtualObject(u8 virtualObjId, u8 direction)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08097520: .4byte 0x020205AC\n\t"
+        "_08097520: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27257,7 +27257,7 @@ __attribute__((naked)) void SetVirtualObjectGraphics(u8 virtualObjId, u8 graphic
         "	strb r1, [r0]\n\t"
         "	b _080975A6\n\t"
         "	.align 2, 0\n\t"
-        "_08097588: .4byte 0x020205AC\n\t"
+        "_08097588: .4byte gSprites\n\t"
         "_0809758C: .4byte 0xFFFFFC00\n\t"
         "_08097590:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -27307,7 +27307,7 @@ __attribute__((naked)) void SetVirtualObjectInvisibility(u8 virtualObjId, bool32
         "	strh r0, [r1, #0x32]\n\t"
         "	b _080975F0\n\t"
         "	.align 2, 0\n\t"
-        "_080975E0: .4byte 0x020205AC\n\t"
+        "_080975E0: .4byte gSprites\n\t"
         "_080975E4:\n\t"
         "	ldr r1, _080975F8\n\t"
         "	lsls r0, r3, #4\n\t"
@@ -27320,7 +27320,7 @@ __attribute__((naked)) void SetVirtualObjectInvisibility(u8 virtualObjId, bool32
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080975F8: .4byte 0x020205AC\n\t"
+        "_080975F8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27357,7 +27357,7 @@ __attribute__((naked)) bool32 IsVirtualObjectInvisible(u8 virtualObjId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08097630: .4byte 0x020205AC\n\t"
+        "_08097630: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27389,7 +27389,7 @@ __attribute__((naked)) void SetVirtualObjectSpriteAnim(u8 virtualObjId, u8 animN
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08097660: .4byte 0x020205AC\n\t"
+        "_08097660: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27544,7 +27544,7 @@ __attribute__((naked)) bool32 IsVirtualObjectAnimating(u8 virtualObjId)
         "	movs r0, #0\n\t"
         "	b _08097752\n\t"
         "	.align 2, 0\n\t"
-        "_0809774C: .4byte 0x020205AC\n\t"
+        "_0809774C: .4byte gSprites\n\t"
         "_08097750:\n\t"
         "	movs r0, #1\n\t"
         "_08097752:\n\t"
@@ -27575,7 +27575,7 @@ __attribute__((naked)) u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, stru
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809777C: .4byte 0x020388A8\n\t"
+        "_0809777C: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27632,7 +27632,7 @@ __attribute__((naked)) void DoRippleFieldEffect(struct ObjectEvent *objEvent, st
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080977D4: .4byte 0x020388A8\n\t"
+        "_080977D4: .4byte gFieldEffectArguments\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27663,7 +27663,7 @@ __attribute__((naked)) bool8 MovementAction_StoreAndLockAnim_Step0(struct Object
         "	strb r0, [r1, #0x10]\n\t"
         "	b _08097854\n\t"
         "	.align 2, 0\n\t"
-        "_08097804: .4byte 0x02037258\n\t"
+        "_08097804: .4byte gUnknown_2037258\n\t"
         "_08097808:\n\t"
         "	movs r2, #0x10\n\t"
         "	movs r5, #0\n\t"
@@ -27803,7 +27803,7 @@ __attribute__((naked)) bool8 MovementAction_FreeAndUnlockAnim_Step0(struct Objec
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080978FC: .4byte 0x02037258\n\t"
+        "_080978FC: .4byte gUnknown_2037258\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27825,7 +27825,7 @@ __attribute__((naked)) s8 FindLockedEventObjectIndex(struct ObjectEvent *objectE
         "	adds r0, r2, #0\n\t"
         "	b _08097928\n\t"
         "	.align 2, 0\n\t"
-        "_08097918: .4byte 0x02037258\n\t"
+        "_08097918: .4byte gUnknown_2037258\n\t"
         "_0809791C:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -27869,7 +27869,7 @@ __attribute__((naked)) void CreateLevitateMovementTask(struct ObjectEvent *objec
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08097960: .4byte 0x0809796D\n\t"
-        "_08097964: .4byte 0x03005B60\n\t"
+        "_08097964: .4byte gTasks\n\t"
         "_08097968: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -27925,8 +27925,8 @@ __attribute__((naked)) void ApplyLevitateMovement(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080979C4: .4byte 0x03005B60\n\t"
-        "_080979C8: .4byte 0x020205AC\n\t"
+        "_080979C4: .4byte gTasks\n\t"
+        "_080979C8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -27955,7 +27955,7 @@ __attribute__((naked)) void DestroyExtraMovementTask(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080979F8: .4byte 0x03005B60\n\t"
+        "_080979F8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -28000,8 +28000,8 @@ __attribute__((naked)) bool8 sub_080979FC(u8 a, u8 b)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08097A40: .4byte 0x02036FF0\n\t"
-        "_08097A44: .4byte 0x02037230\n\t"
+        "_08097A40: .4byte gObjectEvents\n\t"
+        "_08097A44: .4byte gPlayerAvatar\n\t"
         ".syntax divided\n\t"
     );
 }
