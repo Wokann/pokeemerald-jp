@@ -2656,7 +2656,7 @@ __attribute__((naked)) void Task_HofPC_PrintDataIsCorrupted(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081747DC: .4byte 0x085C8E8C\n\t"
+        "_081747DC: .4byte gUnknown_85C8E8C\n\t"
         "_081747E0: .4byte 0x085C9311\n\t"
         "_081747E4: .4byte gTasks\n\t"
         "_081747E8: .4byte Task_HofPC_ExitOnButtonPress + 1\n\t"
@@ -4178,4 +4178,3 @@ __attribute__((naked)) void sub_08175268(void)
         ".syntax divided\n\t"
     );
 }
-

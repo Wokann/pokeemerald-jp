@@ -3727,14 +3727,50 @@ gUnknown_82D29A4: @ 0x82D29A4
 gUnknown_82D29A8: @ 0x82D29A8
 	.incbin "baserom_jp.gba", 0x2d29a8, 0x10
 
-	.globl gUnknown_82D29B8
-gUnknown_82D29B8: @ 0x82D29B8
-	.incbin "baserom_jp.gba", 0x2d29b8, 0x50
-
-	.globl gUnknown_82D2A08
-gUnknown_82D2A08: @ 0x82D2A08
-	.incbin "baserom_jp.gba", 0x2d2a08, 0x50
-
+	.globl sMalePresetNames
+sMalePresetNames: @ 0x82D29B8
+	.4byte gText_DefaultName_Itsuo @ 0x85C8E9A
+	.4byte gText_DefaultName_Gyoku @ 0x85C8EA0
+	.4byte gText_DefaultName_Kei @ 0x85C8EA6
+	.4byte gText_DefaultName_Shuusaku @ 0x85C8EAC
+	.4byte gText_DefaultName_Seigo @ 0x85C8EB2
+	.4byte gText_DefaultName_Daisaku @ 0x85C8EB8
+	.4byte gText_DefaultName_Takahito @ 0x85C8EBE
+	.4byte gText_DefaultName_Tatsuya @ 0x85C8EC4
+	.4byte gText_DefaultName_Daniel @ 0x85C8ECA
+	.4byte gText_DefaultName_Teruki @ 0x85C8ED0
+	.4byte gText_DefaultName_Tom @ 0x85C8ED6
+	.4byte gText_DefaultName_Tomoya @ 0x85C8EDC
+	.4byte gText_DefaultName_Hitoshi @ 0x85C8EE2
+	.4byte gText_DefaultName_Hiroaki @ 0x85C8EE8
+	.4byte gText_DefaultName_Yukihiko @ 0x85C8EEE
+	.4byte gText_DefaultName_Raldo @ 0x85C8EF4
+	.4byte gText_DefaultName_Rikuya @ 0x85C8EFA
+	.4byte gText_DefaultName_Richard @ 0x85C8F00
+	.4byte gText_DefaultName_Ryuu @ 0x85C8F06
+	.4byte gText_DefaultName_Ryouta @ 0x85C8F0C
+	.globl sFemalePresetNames
+sFemalePresetNames: @ 0x82D2A08
+	.4byte gText_DefaultName_Aiko @ 0x85C8F12
+	.4byte gText_DefaultName_Ayana @ 0x85C8F18
+	.4byte gText_DefaultName_Ann @ 0x85C8F1E
+	.4byte gText_DefaultName_Emii @ 0x85C8F24
+	.4byte gText_DefaultName_Kaori @ 0x85C8F28
+	.4byte gText_DefaultName_Karen @ 0x85C8F2E
+	.4byte gText_DefaultName_Kyouko @ 0x85C8F34
+	.4byte gText_DefaultName_Sae @ 0x85C8F3A
+	.4byte gText_DefaultName_Sui @ 0x85C8F40
+	.4byte gText_DefaultName_Juri @ 0x85C8F46
+	.4byte gText_DefaultName_Chiemi @ 0x85C8F4C
+	.4byte gText_DefaultName_Chiyoko @ 0x85C8F52
+	.4byte gText_DefaultName_Teruko @ 0x85C8F58
+	.4byte gText_DefaultName_Nanae @ 0x85C8F5E
+	.4byte gText_DefaultName_Hina @ 0x85C8F64
+	.4byte gText_DefaultName_Makiko @ 0x85C8F6A
+	.4byte gText_DefaultName_Misako @ 0x85C8F70
+	.4byte gText_DefaultName_Mutsumi @ 0x85C8F76
+	.4byte gText_DefaultName_Monica @ 0x85C8F7C
+	.4byte gText_DefaultName_Yuume @ 0x85C8F82
 	.globl sTilesPerImage
 sTilesPerImage: @ 0x82D2A58 (JP: digit_obj_util.c sTilesPerImage[4][4])
 	.incbin "baserom_jp.gba", 0x2d2a58, 0x10
@@ -29872,7 +29908,127 @@ gUnknown_85C8E7C: @ 0x85C8E7C
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
-	.string "{A_BUTTON}おわる$おとこ$おんな$イツオ$$$ギョク$$$ケイ$$$$シュウサク$セイゴ$$$ダイサク$$タカヒト$$タツヤ$$$ダニエル$$テルキ$$$トム$$$$トモヤ$$$ヒトシ$$$ヒロアキ$$ユキヒコ$$ラルド$$$リクヤ$$$リチャード$リュウ$$$リョウタ$$アイコ$$$アヤナ$$$アン$$$$エミィ$カオリ$$$カレン$$$キョウコ$$サエ$$$$スイ$$$$ジュリ$$$チエミ$$$チヨコ$$$テルコ$$$ナナエ$$$ヒナ$$$$マキコ$$$ミサコ$$$ムツミ$$$モニカ$$$ユウメ$$$"
+	.string "{A_BUTTON}おわる$おとこ$おんな$"
+	.globl gText_DefaultName_Itsuo
+gText_DefaultName_Itsuo: @ 0x85C8E9A
+	.string "イツオ$$$"
+	.globl gText_DefaultName_Gyoku
+gText_DefaultName_Gyoku: @ 0x85C8EA0
+	.string "ギョク$$$"
+	.globl gText_DefaultName_Kei
+gText_DefaultName_Kei: @ 0x85C8EA6
+	.string "ケイ$$$$"
+	.globl gText_DefaultName_Shuusaku
+gText_DefaultName_Shuusaku: @ 0x85C8EAC
+	.string "シュウサク$"
+	.globl gText_DefaultName_Seigo
+gText_DefaultName_Seigo: @ 0x85C8EB2
+	.string "セイゴ$$$"
+	.globl gText_DefaultName_Daisaku
+gText_DefaultName_Daisaku: @ 0x85C8EB8
+	.string "ダイサク$$"
+	.globl gText_DefaultName_Takahito
+gText_DefaultName_Takahito: @ 0x85C8EBE
+	.string "タカヒト$$"
+	.globl gText_DefaultName_Tatsuya
+gText_DefaultName_Tatsuya: @ 0x85C8EC4
+	.string "タツヤ$$$"
+	.globl gText_DefaultName_Daniel
+gText_DefaultName_Daniel: @ 0x85C8ECA
+	.string "ダニエル$$"
+	.globl gText_DefaultName_Teruki
+gText_DefaultName_Teruki: @ 0x85C8ED0
+	.string "テルキ$$$"
+	.globl gText_DefaultName_Tom
+gText_DefaultName_Tom: @ 0x85C8ED6
+	.string "トム$$$$"
+	.globl gText_DefaultName_Tomoya
+gText_DefaultName_Tomoya: @ 0x85C8EDC
+	.string "トモヤ$$$"
+	.globl gText_DefaultName_Hitoshi
+gText_DefaultName_Hitoshi: @ 0x85C8EE2
+	.string "ヒトシ$$$"
+	.globl gText_DefaultName_Hiroaki
+gText_DefaultName_Hiroaki: @ 0x85C8EE8
+	.string "ヒロアキ$$"
+	.globl gText_DefaultName_Yukihiko
+gText_DefaultName_Yukihiko: @ 0x85C8EEE
+	.string "ユキヒコ$$"
+	.globl gText_DefaultName_Raldo
+gText_DefaultName_Raldo: @ 0x85C8EF4
+	.string "ラルド$$$"
+	.globl gText_DefaultName_Rikuya
+gText_DefaultName_Rikuya: @ 0x85C8EFA
+	.string "リクヤ$$$"
+	.globl gText_DefaultName_Richard
+gText_DefaultName_Richard: @ 0x85C8F00
+	.string "リチャード$"
+	.globl gText_DefaultName_Ryuu
+gText_DefaultName_Ryuu: @ 0x85C8F06
+	.string "リュウ$$$"
+	.globl gText_DefaultName_Ryouta
+gText_DefaultName_Ryouta: @ 0x85C8F0C
+	.string "リョウタ$$"
+	.globl gText_DefaultName_Aiko
+gText_DefaultName_Aiko: @ 0x85C8F12
+	.string "アイコ$$$"
+	.globl gText_DefaultName_Ayana
+gText_DefaultName_Ayana: @ 0x85C8F18
+	.string "アヤナ$$$"
+	.globl gText_DefaultName_Ann
+gText_DefaultName_Ann: @ 0x85C8F1E
+	.string "アン$$$$"
+	.globl gText_DefaultName_Emii
+gText_DefaultName_Emii: @ 0x85C8F24
+	.string "エミィ$"
+	.globl gText_DefaultName_Kaori
+gText_DefaultName_Kaori: @ 0x85C8F28
+	.string "カオリ$$$"
+	.globl gText_DefaultName_Karen
+gText_DefaultName_Karen: @ 0x85C8F2E
+	.string "カレン$$$"
+	.globl gText_DefaultName_Kyouko
+gText_DefaultName_Kyouko: @ 0x85C8F34
+	.string "キョウコ$$"
+	.globl gText_DefaultName_Sae
+gText_DefaultName_Sae: @ 0x85C8F3A
+	.string "サエ$$$$"
+	.globl gText_DefaultName_Sui
+gText_DefaultName_Sui: @ 0x85C8F40
+	.string "スイ$$$$"
+	.globl gText_DefaultName_Juri
+gText_DefaultName_Juri: @ 0x85C8F46
+	.string "ジュリ$$$"
+	.globl gText_DefaultName_Chiemi
+gText_DefaultName_Chiemi: @ 0x85C8F4C
+	.string "チエミ$$$"
+	.globl gText_DefaultName_Chiyoko
+gText_DefaultName_Chiyoko: @ 0x85C8F52
+	.string "チヨコ$$$"
+	.globl gText_DefaultName_Teruko
+gText_DefaultName_Teruko: @ 0x85C8F58
+	.string "テルコ$$$"
+	.globl gText_DefaultName_Nanae
+gText_DefaultName_Nanae: @ 0x85C8F5E
+	.string "ナナエ$$$"
+	.globl gText_DefaultName_Hina
+gText_DefaultName_Hina: @ 0x85C8F64
+	.string "ヒナ$$$$"
+	.globl gText_DefaultName_Makiko
+gText_DefaultName_Makiko: @ 0x85C8F6A
+	.string "マキコ$$$"
+	.globl gText_DefaultName_Misako
+gText_DefaultName_Misako: @ 0x85C8F70
+	.string "ミサコ$$$"
+	.globl gText_DefaultName_Mutsumi
+gText_DefaultName_Mutsumi: @ 0x85C8F76
+	.string "ムツミ$$$"
+	.globl gText_DefaultName_Monica
+gText_DefaultName_Monica: @ 0x85C8F7C
+	.string "モニカ$$$"
+	.globl gText_DefaultName_Yuume
+gText_DefaultName_Yuume: @ 0x85C8F82
+	.string "ユウメ$$$"
 	.globl gUnknown_85C8F88
 gUnknown_85C8F88: @ 0x85C8F88
 	.string "ポケットモンスター\n"
