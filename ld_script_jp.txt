@@ -4744,7 +4744,7 @@ SECTIONS {
         src/random.o(.text);
         src/util.o(.text);
         asm/daycare.o(.text);
-        asm/egg_hatch.o(.text);
+        src/egg_hatch.o(.text);
         src/battle_interface.o(.text.DummiedOutFunction);
         src/battle_interface.o(.text.Debug_DrawNumber);
         src/battle_interface.o(.text.Debug_DrawNumberPair);
