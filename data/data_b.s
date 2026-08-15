@@ -33580,7 +33580,10 @@ gText_MysteryEventNewTrainer: @ 0x85FCBAA
 	.string "たいせんしゃが　あらわれた！$"
 	.globl gText_MysteryEventCantBeUsed
 gText_MysteryEventCantBeUsed: @ 0x85FCBDE
-	.incbin "baserom_jp.gba", 0x5fcbde, 0x922
+	.string "このデータは　このバージョンでは\nしよう　できません$"
+	.globl gUnknown_85FCBF9
+gUnknown_85FCBF9: @ 0x085FCBF9
+	.incbin "baserom_jp.gba", 0x5FCBF9, 0x907
 
 	.globl gUnknown_85FD500
 gUnknown_85FD500: @ 0x85FD500
