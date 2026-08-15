@@ -45,7 +45,7 @@
 #include "union_room_chat.h"
 #include "constants/items.h"
 
-extern const u8 EventScript_ResetAllMapFlags[];
+extern const u8 EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags[];
 extern const struct ContestWinner sContestWinnerPicDummy;
 extern u8 gUnusedPokedexU8;
 extern bool8 gDifferentSaveFile;
@@ -186,7 +186,7 @@ void NewGameInitData(void)
     ResetFanClub();
     ResetLotteryCorner();
     WarpToTruck();
-    RunScriptImmediately(EventScript_ResetAllMapFlags);
+    RunScriptImmediately(EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags);
     ResetMiniGamesRecords();
     InitUnionRoomChatRegisteredTexts();
     InitLilycoveLady();
