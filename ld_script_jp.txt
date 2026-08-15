@@ -4936,7 +4936,7 @@ SECTIONS {
         src/trade.o(.text.c3_0805465C);
         src/trade.o(.text.sub_0807EDD4);
         src/trade.o(.text.sub_0807EE9C);
-        asm/berry_blender.o(.text);
+        src/berry_blender.o(.text);
         src/play_time.o(.text);
         src/new_game.o(.text);
         src/overworld.o(.text.DoWhiteOut);
