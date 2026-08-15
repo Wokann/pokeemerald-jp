@@ -10562,7 +10562,7 @@ SECTIONS {
         src/contest_link_util.o(.text.Task_LinkContest_CommunicateCategoryEm);
         src/contest_link_util.o(.text.Task_LinkContest_CommunicateAIMonsEm);
         src/gym_leader_rematch.o(.text);
-        asm/unk_transition.o(.text);
+        src/unk_transition.o(.text);
     } =0
     script_data :
     ALIGN(4)
