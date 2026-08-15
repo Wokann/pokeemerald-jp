@@ -47,7 +47,7 @@ UNPORTED_SRCS := \
 	src/menu.c \
 	src/pokemon.c \
 	src/record_mixing.c src/recorded_battle.c \
-	src/start_menu.c src/tileset_anims.c src/trainer_hill.c
+	src/start_menu.c src/tileset_anims.c
 C_SRCS := $(filter-out $(UNPORTED_SRCS),$(wildcard src/*.c src/*/*.c))
 C_BUILDDIR := $(OBJ_DIR)/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
