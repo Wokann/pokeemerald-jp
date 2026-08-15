@@ -10123,7 +10123,7 @@ SECTIONS {
         src/match_call.o(.text.BufferPokedexRatingForMatchCall);
         src/match_call.o(.text.LoadMatchCallWindowGfx);
         src/match_call.o(.text.DrawMatchCallTextBoxBorder);
-        asm/menu.o(.text);
+        src/menu.o(.text);
         src/battle_factory_screen.o(.text);
         src/apprentice.o(.text);
         src/frontier_util.o(.text);
