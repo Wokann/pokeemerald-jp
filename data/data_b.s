@@ -552,7 +552,7 @@ sAcceptedActivityIds: @ 0x82C23E0
 
 	.globl sLinkGroupToURoomActivity
 sLinkGroupToURoomActivity: @ 0x82C2438
-	.string "{MUS_RG_OAK_LAB}うえけ{DYNAMIC_COLOR1}{DYNAMIC_COLOR2}か{SE_WALL_HIT}{MUS_DUMMY}{DYNAMIC_COLOR6}{SE_FAINT}ぬねのはひふ{DYNAMIC_COLOR5}{SE_M_HYPER_BEAM2}·{MUS_RG_ROUTE1}$"
+	.incbin "baserom_jp.gba", 0x2C2438, 0x1C
 	.globl sTextboxBorder_Pal
 sTextboxBorder_Pal: @ 0x82C2454
 	.incbin "baserom_jp.gba", 0x2c2454, 0x20
@@ -610,11 +610,7 @@ sListMenuItems_WirelessOrFriend: @ 0x82C2554
 	.string "$$$"
 	.globl sListMenuTemplate_ThreeOptions
 sListMenuTemplate_ThreeOptions: @ 0x82C256C
-	.string "　　　　アyはく　　　　う　う　　　さあめぅ　あよみこむ$　　　おくる$すてる$ャゆわく　　　　ザゆわくあ　　　ゾゆわくい　　　ぎゆわく\n"
-	.string "$$$ャゆわく　　　　ゾゆわくい　　　ぎゆわく\n"
-	.string "$$$ャゆわく　　　　ザゆわくあ　　　ぎゆわく\n"
-	.string "$$$ャゆわく　　　　ぎゆわく\n"
-	.string "$$$"
+	.incbin "baserom_jp.gba", 0x2C256C, 0x88
 	.globl sListMenu_ReceiveSendToss
 sListMenu_ReceiveSendToss: @ 0x82C25F4
 	.incbin "baserom_jp.gba", 0x2c25f4, 0x18
@@ -882,7 +878,7 @@ sWirelessScreenBgTemplates: @ 0x82C31B4
 
 	.globl sWirelessScreenWindowTemplates
 sWirelessScreenWindowTemplates: @ 0x82C31BC
-	.string "　か　ねうそあ　　おえつそそべ　　なえかそそキあ$　　　　　　　ワイヤレス　つうしん　じょうきょう$こうかん　しているひと$たいせん　しているひと$ユニオンルームに　いるひと$つうしん　しているひと$"
+	.incbin "baserom_jp.gba", 0x2C31BC, 0x64
 	.globl sWirelessScreenActivityCountTexts
 sWirelessScreenActivityCountTexts: @ 0x82C3220
 	.incbin "baserom_jp.gba", 0x2c3220, 0x18
@@ -3855,7 +3851,7 @@ gUnknown_8300A97: @ 0x8300A97
 
 	.globl gUnknown_8300A99
 gUnknown_8300A99: @ 0x8300A99
-	.string "$$"
+	.incbin "baserom_jp.gba", 0x300A99, 0x2
 
 	.globl gUnknown_8300A9B
 gUnknown_8300A9B: @ 0x8300A9B
@@ -3914,7 +3910,7 @@ gUnknown_8300C14: @ 0x8300C14
 
 	.globl gUnknown_8300CAC
 gUnknown_8300CAC: @ 0x8300CAC
-	.string "　ぬすおえそüあK　START$かいめの　そうしん$　　　かいめの　じゅしん$　　　ポケモンアイコンセット$　OBJテキストセット$　　セルセット$　　　　　　　OBJテキストADD$　　システムメッセージADD$はいけいセット$　　　　　こうかんせいりつ　　　　　$だめだたらしいよ　　　　　$"
+	.incbin "baserom_jp.gba", 0x300CAC, 0x94
 	.globl gUnknown_8300D40
 gUnknown_8300D40: @ 0x8300D40
 	.incbin "baserom_jp.gba", 0x300d40, 0x2024
@@ -4344,7 +4340,7 @@ gUnknown_830FC88: @ 0x830FC88
 
 	.globl gUnknown_830FCB0
 gUnknown_830FCB0: @ 0x830FCB0
-	.string "　　　　　　　　　　　　あ　　　　　　　$$$$$$$$　　　　あ　　　　　　　$$$$あ　　　あ　　　あ　　　$$$$$$$$あ　　　$$$$"
+	.incbin "baserom_jp.gba", 0x30FCB0, 0x48
 	.globl gUnknown_830FCF8
 gUnknown_830FCF8: @ 0x830FCF8
 	.incbin "baserom_jp.gba", 0x30fcf8, 0x10
@@ -5043,7 +5039,7 @@ gUnknown_84E5FC0: @ 0x84E5FC0
 
 	.globl gUnknown_84E5FD0
 gUnknown_84E5FD0: @ 0x84E5FD0
-	.string "　　　　　　あ　　　$$$$　　あ　　　$$あ　あ　あ　$$$$あ　$$"
+	.incbin "baserom_jp.gba", 0x4E5FD0, 0x24
 	.globl gUnknown_84E5FF4
 gUnknown_84E5FF4: @ 0x84E5FF4
 	.incbin "baserom_jp.gba", 0x4e5ff4, 0x5
@@ -6457,13 +6453,13 @@ gUnknown_85441A0: @ 0x85441A0
 	.string "$$$あ$$　い$うあえい$あえ$$いお$$えか$$お$"
 	.globl gUnknown_85441BC
 gUnknown_85441BC: @ 0x85441BC
-	.string "$$$$$$$$$$$$$$$$$$$お$$えか$$お$"
+	.incbin "baserom_jp.gba", 0x5441BC, 0x1C
 	.globl gUnknown_85441D8
 gUnknown_85441D8: @ 0x85441D8
-	.string "$$$あ$$　い$うあえい$あえ$$いか$$$$$$え$"
+	.incbin "baserom_jp.gba", 0x5441D8, 0x1C
 	.globl gUnknown_85441F4
 gUnknown_85441F4: @ 0x85441F4
-	.string "$$$$$$$$$$$$$$$$$$$か$$$$$$え$"
+	.incbin "baserom_jp.gba", 0x5441F4, 0x1C
 	.globl gUnknown_8544210
 gUnknown_8544210: @ 0x8544210
 	.incbin "baserom_jp.gba", 0x544210, 0x18
@@ -7078,7 +7074,7 @@ sMapPopUp_Palette_Underwater: @ 0x8559FA0
 
 	.globl sMapSectionToThemeId
 sMapSectionToThemeId: @ 0x8559FC0
-	.string "　　　　　　　うあああうあうあう　　　　えええええ　　　　　　　　　　　　え　えええええええええええおおおおおいい　あ　い　あいいいいいいおい　い　いい　　いおいいいい　いいあいいい　　いいおいおおおいいいあピラミッド1だんめ$ピラミッド2だんめ$ピラミッド3だんめ$ピラミッド4だんめ$ピラミッド5だんめ$ピラミッド6だんめ$ピラミッド7だんめ$ピラミッド$"
+	.incbin "baserom_jp.gba", 0x559FC0, 0xB4
 	.globl sBattlePyramid_MapHeaderStrings
 sBattlePyramid_MapHeaderStrings: @ 0x855A074
 	.incbin "baserom_jp.gba", 0x55a074, 0x5f0
@@ -7523,7 +7519,7 @@ gUnknown_8565B00: @ 0x8565B00
 
 	.globl gUnknown_8565B06
 gUnknown_8565B06: @ 0x8565B06
-	.string "あいうえおかきくけこさしすせそたちつてとはひふへほやゆよゃゅょぁぃぅぇぉがぎぐげござじずぜぞだぢづでどっばびぶべぼぱぴぷぺぽアイウエオカキクケコサシスセソタチツテトハヒフヘホヤユヨャュョァィゥェォガギグゲゴザジズゼゾダヂヅデドッバビブベボパピプペポABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$"
+	.incbin "baserom_jp.gba", 0x565B06, 0xBB
 	.globl gUnknown_8565BC1
 gUnknown_8565BC1: @ 0x8565BC1
 	.incbin "baserom_jp.gba", 0x565bc1, 0xba
@@ -8158,19 +8154,19 @@ sSpriteTemplate_RotatingGateRegular: @ 0x856DBC4
 
 	.globl sRotatingGate_RotationInfoNorth
 sRotatingGate_RotationInfoNorth: @ 0x856DBDC
-	.string "$$$$らよつて$$$$$$$$"
+	.incbin "baserom_jp.gba", 0x56DBDC, 0x10
 
 	.globl sRotatingGate_RotationInfoSouth
 sRotatingGate_RotationInfoSouth: @ 0x856DBEC
-	.string "$$$$$$$$ぬにめも$$$$"
+	.incbin "baserom_jp.gba", 0x56DBEC, 0x10
 
 	.globl sRotatingGate_RotationInfoWest
 sRotatingGate_RotationInfoWest: @ 0x856DBFC
-	.string "$ち$$$た$$$や$$$ゆ$$"
+	.incbin "baserom_jp.gba", 0x56DBFC, 0x10
 
 	.globl sRotatingGate_RotationInfoEast
 sRotatingGate_RotationInfoEast: @ 0x856DC0C
-	.string "$$む$$$み$$$と$$$な$"
+	.incbin "baserom_jp.gba", 0x56DC0C, 0x10
 
 	.globl sRotatingGate_ArmPositionsClockwiseRotation
 sRotatingGate_ArmPositionsClockwiseRotation: @ 0x856DC1C
@@ -8346,7 +8342,7 @@ gEruptionLaunchRockSpriteTemplate: @ 0x8571198
 
 	.globl sEruptionLaunchRockSpeeds
 sEruptionLaunchRockSpeeds: @ 0x85711B0
-	.string "\n$"
+	.incbin "baserom_jp.gba", 0x5711B0, 0x2
 
 	.globl gUnknown_85711B2
 	.globl gUnknown_85711B2
@@ -10897,7 +10893,7 @@ gUnknown_85995A0: @ 0x85995A0
 
 	.globl gUnknown_859A780
 gUnknown_859A780: @ 0x859A780
-	.string "　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$$$$　　　　　　　　　　　　　　　　　　　　　　　　　　　　$$$$　　　:　　　:　　　:　　　:　　　:　　　:　　　:$$$$　　　:　　　:　　　:　　　:　　　:　　　:$$$$$$$$そ　　:そ　　:そ　　:そ　　:そ　　:そ　　:$$$$$$$$$$$$そ　　:そ　　:そ　　:そ　　:そ　　:$$$$$$$$$$$$そ　　$そ　　$そ　　$そ　　$そ　　$$$$$$$$$$$$$そ　　$そ　　$そ　　$そ　　$$$$$$$$$$$$$$$$$$　　$$　　$$　　$$　　$$$$$$$$$$$$$$$$$$$$$$　　$$　　$$　　$$$$$$$$$$$$$$$$$$$$$$　:$$　:$$　:$$$$$$$$$$$$$$$$$$$$$$　:$$　:$$$$$$$$$$$$$$$$$$$$$$$$$$そ:$$そ:$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$そ:$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+	.incbin "baserom_jp.gba", 0x59A780, 0x1E0
 	.globl gUnknown_859A960
 gUnknown_859A960: @ 0x859A960
 	.incbin "baserom_jp.gba", 0x59a960, 0x20
@@ -12313,7 +12309,7 @@ gUnknown_85BC619: @ 0x85BC619
 
 	.globl gUnknown_85BC620
 gUnknown_85BC620: @ 0x85BC620
-	.string "ム　セ　モ　t　o　まろく{NAME_END}　　か{NAME_END}シ　ぴあ♀　Y　ィあまわう　{NAME_END}　{FONT 0}キ　♀　ぴ　アあけ　こ　す　ひ　も　ゆ　れ　わ　を　ん　ぜ　$$け　た　ち　ひ　や　ら　れ　を　ぃ　ぅ　ゅ　$$え　お　か　さ　ふ　め　も　ゆ　ろ　ぉ　ゅ　$$え　お　か　し　は　や　ゆ　よ　り　わ　ん　ぇ　$$　　あ　ち　つ　て　に　ぬ　む　れ　じ　ぞ　だ　ぢ　$$つ　て　な　よ　ら　る　れ　ゃ　ょ　げ　ぜ　$$　　あ　え　お　き　く　つ　と　な　ゆ　よ　り　ず　$$ち　ぬ　ね　の　ま　み　む　め　ら　ろ　わ　ぅ　ぐ　ど　$$え　き　く　け　さ　し　す　ひ　よ　り　を　ん　ぁ　ぜ　$$　　い　し　に　ふ　ほ　も　よ　ろ　わ　ぎ　ぐ　$$　　あ　い　う　せ　そ　ね　の　み　め　ら　ご　ざ　$$ち　つ　て　に　へ　や　れ　ぃ　じ　ず　ぢ　で　ど　$$に　ぬ　ふ　へ　ま　み　め　ら　が　ぞ　だ　づ　$$こ　す　ち　ひ　を　ん　ゅ　ぎ　じ　ず　ぜ　$$く　こ　た　ぬ　へ　ろ　わ　ざ　ず　ぜ　で　$$く　す　な　へ　む　る　ぃ　ょ　ご　じ　で　$$か　き　ち　ぬ　ね　は　み　や　ゃ　ゅ　ぐ　だ　$$　　あ　ひ　ふ　み　め　や　ゆ　ゃ　ゅ　ぐ　だ　$$こ　せ　そ　た　と　な　の　ほ　も　ぁ　ぃ　ぇ　ど　$$こ　た　つ　て　と　な　の　ほ　も　ら　る　ぃ　ど　$$　　あ　や　ゆ　り　ん　ぅ　ぉ　ぞ　づ　で　$$え　お　な　む　ゆ　よ　り　ぉ　ゃ　ぞ　だ　$$い　う　き　く　に　ぬ　ふ　へ　ほ　ぉ　づ　$$せ　そ　ほ　ろ　わ　を　ん　が　げ　ご　ぜ　$$ひ　へ　ほ　み　や　ぃ　ぉ　ゃ　ゅ　ぐ　づ　$$お　か　き　く　こ　た　ち　と　な　ゆ　ろ　わ　$$あ　う　え　お　け　さ　し　と　な　に　ぉ　$$の　ま　も　ゆ　よ　ら　ぇ　ぉ　ゃ　げ　で　ど　$$こ　た　ち　ね　の　ろ　わ　ぁ　ぅ　ゅ　ご　ざ　ぞ　だ　$$い　か　け　す　ち　て　と　ね　ひ　へ　ほ　$$"
+	.incbin "baserom_jp.gba", 0x5BC620, 0x338
 	.globl gSlateportBattleTentTrainers
 gSlateportBattleTentTrainers: @ 0x85BC958
 	.incbin "baserom_jp.gba", 0x5bc958, 0x618
@@ -15569,7 +15565,7 @@ sWinStreakFlags: @ 0x85D6914
 
 	.globl sWinStreakMasks
 sWinStreakMasks: @ 0x85D6924
-	.string "▶$$$k$$$$$E$$$ァ$"
+	.incbin "baserom_jp.gba", 0x5D6924, 0x10
 
 	.globl gUnknown_85D6934
 gUnknown_85D6934: @ 0x85D6934
@@ -16527,7 +16523,7 @@ sSaveLocationReloadLocList: @ 0x85DFCC2
 	.string "おは$$"
 	.globl sEmptyMapList
 sEmptyMapList: @ 0x85DFCC6
-	.string "$$"
+	.incbin "baserom_jp.gba", 0x5DFCC6, 0x2
 
 	.globl gItemIconTable
 gItemIconTable: @ 0x85DFCC8
@@ -17656,7 +17652,7 @@ sRibbonData: @ 0x85F5E14
 
 	.globl gRibbonDescriptionPointers
 gRibbonDescriptionPointers: @ 0x85F5F60
-	.string "クセソくナセソくヨセソく！セソくヨセソく/セソくヨセソくOセソくヨセソくdセソくゥセソく！セソくゥセソく/セソくゥセソくOセソくゥセソくdセソくザセソく！セソくザセソく/セソくザセソくOセソくザセソくdセソくバセソく！セソくバセソく/セソくバセソくOセソくバセソくdセソくッセソく！セソくッセソく/セソくッセソくOセソくッセソくdセソくsセソくöセソくうソソくてソソくむソソくぅソソくずソソくぷソソく2003ねん　ちほう　たいかい$ゆうしょう　きねんリボン$2003ねん　ぜんこく　たいかい$2003ねん　ワールドカップ$じゅんゆうしょう　きねんリボン$ベスト4　きねんリボン$2004ねん　ちほう　たいかい$2004ねん　ぜんこく　たいかい$2004ねん　ワールドカップ$2005ねん　ちほう　たいかい$2005ねん　ぜんこく　たいかい$2005ねん　ワールドカップ$ポケモン　バトル　カップ$さんか　きねんリボン$ポケモン　リーグ$アドバンス　カップ$ポケモンの　たいかいに$さんかした　きねんリボン$ポケモンの　イベントに$ポケモンの　おまつりに$こんなんに　うちかった$きねんリボン$すべての　こんなんを$のりこえた　きねんリボン$100にんぬき　たっせい$くらやみのとう　クリア$くれないのとう　クリア$くろがねのとう　クリア$さいごのとう　クリア$でんせつを　つくった$ポケモンセンタートウキョー$ポケモンセンターオーサカ$ポケモンセンターナゴヤ$ポケモンセンターニューヨーク$なつやすみ　きねんリボン$$ふゆやすみ　きねんリボン$はるやすみ　きねんリボン$クリスマス　きねんリボン$きねんび　きねんリボン$がんばった　きねんの　リボン$ともだち　いっぱい　きねんリボン$げんき　いっぱい　きねんリボン$だいすきな　ポケモンに$つけてあげる　きねんリボン$ポケモンが　だいすきな　ことを$しょうめいする　リボン$"
+	.incbin "baserom_jp.gba", 0x5F5F60, 0x32C
 	.globl gGiftRibbonDescriptionPointers
 gGiftRibbonDescriptionPointers: @ 0x85F628C
 	.incbin "baserom_jp.gba", 0x5f628c, 0x200
@@ -18471,7 +18467,7 @@ gUnknown_890F1E8: @ 0x890F1E8
 
 	.globl gUnknown_890F1EC
 gUnknown_890F1EC: @ 0x890F1EC
-	.string "みÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾくふÖゾく$$$$$$$$"
+	.incbin "baserom_jp.gba", 0x90F1EC, 0x30
 	.globl gUnknown_890F21C
 gUnknown_890F21C: @ 0x890F21C
 	.incbin "baserom_jp.gba", 0x90f21c, 0x8
