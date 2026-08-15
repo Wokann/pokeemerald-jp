@@ -4721,9 +4721,32 @@ gTrainerFrontPicPaletteTable: @ 0x82D91CC
 gUnknown_82D959C: @ 0x82D959C
 	.incbin "baserom_jp.gba", 0x2d959c, 0x20
 
-	.globl gUnknown_82D95BC
-gUnknown_82D95BC: @ 0x82D95BC
-	.incbin "baserom_jp.gba", 0x2d95bc, 0x20
+	.globl gTrainerBackPicCoords
+gTrainerBackPicCoords: @ 0x82D95BC
+	.byte 8 @ TRAINER_BACK_PIC_BRENDAN.size
+	.byte 4 @ TRAINER_BACK_PIC_BRENDAN.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_MAY.size
+	.byte 4 @ TRAINER_BACK_PIC_MAY.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_RED.size
+	.byte 5 @ TRAINER_BACK_PIC_RED.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_LEAF.size
+	.byte 5 @ TRAINER_BACK_PIC_LEAF.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN.size
+	.byte 4 @ TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY.size
+	.byte 4 @ TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_WALLY.size
+	.byte 4 @ TRAINER_BACK_PIC_WALLY.y_offset
+	.hword 0
+	.byte 8 @ TRAINER_BACK_PIC_STEVEN.size
+	.byte 4 @ TRAINER_BACK_PIC_STEVEN.y_offset
+	.hword 0
 
 	.globl gTrainerBackPicTable
 gTrainerBackPicTable: @ 0x82D95DC
