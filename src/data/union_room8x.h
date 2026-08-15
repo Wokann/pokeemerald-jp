@@ -106,5 +106,3 @@ const struct MenuAction sKeyboardPageTitleTexts[6] = {
     { sKeyboardFunctionTexts + 0x17, NULL },
 };
 
-// 0x82C5888 (2-byte tail after the title table)
-const u8 sKeyboardPageTitleTexts_Tail[2] = { 0x13, 0x33 };

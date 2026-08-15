@@ -251,7 +251,7 @@ extern const struct SpriteTemplate gUnknown_82C5DD4;
 extern const struct SpriteTemplate gUnknown_82C5DEC;
 extern const struct SpriteTemplate gUnknown_82C5E44;
 extern const struct SpriteTemplate gUnknown_82C5E5C;
-extern const u16 gUnknown_82C588A[];
+extern const u16 sKeyboardCursorPal[];
 
 u8 *GetRegisteredTextByRow(int row);
 u8 *GetLastCharOfMessagePtr(void);
@@ -2707,7 +2707,7 @@ void MoveKeyboardCursor(void)
 
 void SetRegisteredTextPalette(bool32 registering)
 {
-    const u16 *palette = &gUnknown_82C588A[registering * 2];
+    const u16 *palette = &sKeyboardCursorPal[registering * 2 + 1]; // JP registers texts at +1 offset into the cursor palette
     u8 index = IndexOfSpritePaletteTag(PALTAG_INTERFACE);
     LoadPalette(palette, OBJ_PLTT_ID(index) + 1, PLTT_SIZEOF(2));
 }
