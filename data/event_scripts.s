@@ -2999,10 +2999,10 @@ gBattlescriptsForRunningByItem: @ 0x828A2DC
 
 	.globl gBattlescriptsForSafariActions
 gBattlescriptsForSafariActions: @ 0x828A2E0
-	.4byte 0x0828A445 @ BattleScript_ActionWatchesCarefully
-	.4byte 0x0828A44C @ BattleScript_ActionGetNear
-	.4byte 0x0828A455 @ BattleScript_ActionThrowPokeblock
-	.4byte 0x0828A46B @ BattleScript_ActionWallyThrow
+	.4byte gUnknown_828A445 @ BattleScript_ActionWatchesCarefully
+	.4byte gUnknown_828A44C @ BattleScript_ActionGetNear
+	.4byte gUnknown_828A455 @ BattleScript_ActionThrowPokeblock
+	.4byte gUnknown_828A46B @ BattleScript_ActionWallyThrow
 gUnknown_828A2F0: @ 0x828A2F0
 	.include "data/scripts/gUnknown_828A2F0.inc"
 gUnknown_828A306: @ 0x828A306
@@ -3033,8 +3033,36 @@ gUnknown_828A3F7: @ 0x828A3F7
 	.include "data/scripts/gUnknown_828A3F7.inc"
 gUnknown_828A419: @ 0x828A419
 	.include "data/scripts/gUnknown_828A419.inc"
-gUnknown_828A43B: @ 0x828A43B
-	.include "data/scripts/gUnknown_828A43B.inc"
+gUnknown_828A43B: @ 0x828A43B @ running-by-item script
+	.byte 0x54, 0x11, 0x00, 0x2E, 0xDE, 0x3F, 0x02, 0x02, 0x04, 0xF7
+gUnknown_828A445: @ 0x828A445 @ BattleScript_ActionWatchesCarefully
+	.byte 0x10, 0x1D, 0x01 @ printstring STRINGID_PKMNWATCHINGCAREFULLY
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
+gUnknown_828A44C: @ 0x828A44C @ BattleScript_ActionGetNear
+	.byte 0x13, 0xB0, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAB0
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
+gUnknown_828A455: @ 0x828A455 @ BattleScript_ActionThrowPokeblock
+	.byte 0x10, 0x21, 0x01 @ printstring STRINGID_THREWPOKEBLOCKATPKMN
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x45, 0x01, 0x04, 0x00, 0x00, 0x00, 0x00 @ playanimation 0x01, 0x04, 0x00000000
+	.byte 0x13, 0xB4, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAB4
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
+gUnknown_828A46B: @ 0x828A46B @ BattleScript_ActionWallyThrow
+	.byte 0x10, 0x02, 0x00 @ printstring STRINGID_RETURNMON
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x4B @ returnatktoball
+	.byte 0x3A @ waitstate
+	.byte 0x53, 0x00 @ trainerslidein 0x00
+	.byte 0x3A @ waitstate
+	.byte 0x10, 0x4D, 0x01 @ printstring STRINGID_YOUTHROWABALLNOWRIGHT
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
+	.byte 0x00 @ attackcanceler
+	.byte 0x00 @ attackcanceler
+	.byte 0x00 @ attackcanceler
 
 	.globl gUnknown_828A480
 gUnknown_828A480: @ 0x828A480
