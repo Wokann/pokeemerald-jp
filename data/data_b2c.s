@@ -7275,307 +7275,307 @@ sSongHeader_270: @ 0x0863D424
 	.4byte 0x40000000  @ tone
 	.globl DirectSoundWaveData_sc88pro_glockenspiel
 	.set DirectSoundWaveData_sc88pro_glockenspiel, sSongHeader_270 + 4  @ 0x0863D428
-	.incbin "baserom_jp.gba", 0x63D42C, 0x69E
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_glockenspiel.bin"
 	.incbin "baserom_jp.gba", 0x63DACA, 0x2
 	.globl DirectSoundWaveData_sc88pro_organ2
 DirectSoundWaveData_sc88pro_organ2: @ 0x0863DACC
-	.incbin "baserom_jp.gba", 0x63DACC, 0x7F7
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_organ2.bin"
 	.incbin "baserom_jp.gba", 0x63E2C3, 0x1
 	.globl DirectSoundWaveData_sc88pro_fretless_bass
 DirectSoundWaveData_sc88pro_fretless_bass: @ 0x0863E2C4
-	.incbin "baserom_jp.gba", 0x63E2C4, 0xBC8
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_fretless_bass.bin"
 	.incbin "baserom_jp.gba", 0x63EE8C, 0x4
 	.globl DirectSoundWaveData_sc88pro_slap_bass
 DirectSoundWaveData_sc88pro_slap_bass: @ 0x0863EE90
-	.incbin "baserom_jp.gba", 0x63EE90, 0xF36
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_slap_bass.bin"
 	.incbin "baserom_jp.gba", 0x63FDC6, 0x2
 	.globl DirectSoundWaveData_sc88pro_synth_bass
 DirectSoundWaveData_sc88pro_synth_bass: @ 0x0863FDC8
-	.incbin "baserom_jp.gba", 0x63FDC8, 0xC71
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_synth_bass.bin"
 	.incbin "baserom_jp.gba", 0x640A39, 0x3
 	.globl DirectSoundWaveData_sc88pro_timpani_with_snare
 DirectSoundWaveData_sc88pro_timpani_with_snare: @ 0x08640A3C
-	.incbin "baserom_jp.gba", 0x640A3C, 0x14CD
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_timpani_with_snare.bin"
 	.incbin "baserom_jp.gba", 0x641F09, 0x3
 	.globl DirectSoundWaveData_classical_choir_voice_ahhs
 DirectSoundWaveData_classical_choir_voice_ahhs: @ 0x08641F0C
-	.incbin "baserom_jp.gba", 0x641F0C, 0x16AC
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_classical_choir_voice_ahhs.bin"
 	.incbin "baserom_jp.gba", 0x6435B8, 0x4
 	.globl DirectSoundWaveData_sd90_classical_oboe
 DirectSoundWaveData_sd90_classical_oboe: @ 0x086435BC
-	.incbin "baserom_jp.gba", 0x6435BC, 0x1340
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_oboe.bin"
 	.incbin "baserom_jp.gba", 0x6448FC, 0x4
 	.globl DirectSoundWaveData_unused_sd90_oboe
 DirectSoundWaveData_unused_sd90_oboe: @ 0x08644900
-	.incbin "baserom_jp.gba", 0x644900, 0xAA3
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sd90_oboe.bin"
 	.incbin "baserom_jp.gba", 0x6453A3, 0x1
 	.globl DirectSoundWaveData_unused_guitar_separates_power_chord
 DirectSoundWaveData_unused_guitar_separates_power_chord: @ 0x086453A4
-	.incbin "baserom_jp.gba", 0x6453A4, 0x1312
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_guitar_separates_power_chord.bin"
 	.incbin "baserom_jp.gba", 0x6466B6, 0x2
 	.globl DirectSoundWaveData_unused_sc88pro_unison_slap
 DirectSoundWaveData_unused_sc88pro_unison_slap: @ 0x086466B8
-	.incbin "baserom_jp.gba", 0x6466B8, 0x35F8
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sc88pro_unison_slap.bin"
 	.incbin "baserom_jp.gba", 0x649CB0, 0x4D7C
 	.globl DirectSoundWaveData_unused_sc55_tom
 DirectSoundWaveData_unused_sc55_tom: @ 0x0864EA2C
-	.incbin "baserom_jp.gba", 0x64EA2C, 0x103D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_sc55_tom.bin"
 	.incbin "baserom_jp.gba", 0x64FA69, 0x417
 	.globl DirectSoundWaveData_unknown_open_hihat
 DirectSoundWaveData_unknown_open_hihat: @ 0x0864FE80
-	.incbin "baserom_jp.gba", 0x64FE80, 0xE2D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_open_hihat.bin"
 	.incbin "baserom_jp.gba", 0x650CAD, 0x3
 	.globl DirectSoundWaveData_unknown_bell
 DirectSoundWaveData_unknown_bell: @ 0x08650CB0
-	.incbin "baserom_jp.gba", 0x650CB0, 0xF93
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_bell.bin"
 	.incbin "baserom_jp.gba", 0x651C43, 0x8B5
 	.globl DirectSoundWaveData_trinity_cymbal_crash
 DirectSoundWaveData_trinity_cymbal_crash: @ 0x086524F8
-	.incbin "baserom_jp.gba", 0x6524F8, 0x8E1
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_cymbal_crash.bin"
 	.incbin "baserom_jp.gba", 0x652DD9, 0x3
 	.globl DirectSoundWaveData_sc88pro_orchestra_cymbal_crash
 DirectSoundWaveData_sc88pro_orchestra_cymbal_crash: @ 0x08652DDC
-	.incbin "baserom_jp.gba", 0x652DDC, 0xF28
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_orchestra_cymbal_crash.bin"
 	.incbin "baserom_jp.gba", 0x653D04, 0x147B8
 	.globl DirectSoundWaveData_sc88pro_piano1_48
 DirectSoundWaveData_sc88pro_piano1_48: @ 0x086684BC
-	.incbin "baserom_jp.gba", 0x6684BC, 0xF5C
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_48.bin"
 	.incbin "baserom_jp.gba", 0x669418, 0x4
 	.globl DirectSoundWaveData_sc88pro_piano1_60
 DirectSoundWaveData_sc88pro_piano1_60: @ 0x0866941C
-	.incbin "baserom_jp.gba", 0x66941C, 0x165D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_60.bin"
 	.incbin "baserom_jp.gba", 0x66AA79, 0x3
 	.globl DirectSoundWaveData_sc88pro_piano1_72
 DirectSoundWaveData_sc88pro_piano1_72: @ 0x0866AA7C
-	.incbin "baserom_jp.gba", 0x66AA7C, 0x1559
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_72.bin"
 	.incbin "baserom_jp.gba", 0x66BFD5, 0x3
 	.globl DirectSoundWaveData_sc88pro_piano1_84
 DirectSoundWaveData_sc88pro_piano1_84: @ 0x0866BFD8
-	.incbin "baserom_jp.gba", 0x66BFD8, 0xB89
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_piano1_84.bin"
 	.incbin "baserom_jp.gba", 0x66CB61, 0x3
 	.globl DirectSoundWaveData_sc88pro_string_ensemble_60
 DirectSoundWaveData_sc88pro_string_ensemble_60: @ 0x0866CB64
-	.incbin "baserom_jp.gba", 0x66CB64, 0x35A3
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_60.bin"
 	.incbin "baserom_jp.gba", 0x670107, 0x1
 	.globl DirectSoundWaveData_sc88pro_string_ensemble_72
 DirectSoundWaveData_sc88pro_string_ensemble_72: @ 0x08670108
-	.incbin "baserom_jp.gba", 0x670108, 0x231A
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_72.bin"
 	.incbin "baserom_jp.gba", 0x672422, 0x2
 	.globl DirectSoundWaveData_sc88pro_string_ensemble_84
 DirectSoundWaveData_sc88pro_string_ensemble_84: @ 0x08672424
-	.incbin "baserom_jp.gba", 0x672424, 0x36C8
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_string_ensemble_84.bin"
 	.incbin "baserom_jp.gba", 0x675AEC, 0x4
 	.globl DirectSoundWaveData_sc88pro_trumpet_60
 DirectSoundWaveData_sc88pro_trumpet_60: @ 0x08675AF0
-	.incbin "baserom_jp.gba", 0x675AF0, 0x134D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_60.bin"
 	.incbin "baserom_jp.gba", 0x676E3D, 0x3
 	.globl DirectSoundWaveData_sc88pro_trumpet_72
 DirectSoundWaveData_sc88pro_trumpet_72: @ 0x08676E40
-	.incbin "baserom_jp.gba", 0x676E40, 0x150E
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_72.bin"
 	.incbin "baserom_jp.gba", 0x67834E, 0x2
 	.globl DirectSoundWaveData_sc88pro_trumpet_84
 DirectSoundWaveData_sc88pro_trumpet_84: @ 0x08678350
-	.incbin "baserom_jp.gba", 0x678350, 0x141C
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_trumpet_84.bin"
 	.incbin "baserom_jp.gba", 0x67976C, 0x10A0
 	.globl DirectSoundWaveData_sc88pro_tuba_51
 DirectSoundWaveData_sc88pro_tuba_51: @ 0x0867A80C
-	.incbin "baserom_jp.gba", 0x67A80C, 0x1058
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_tuba_51.bin"
 	.incbin "baserom_jp.gba", 0x67B864, 0x4
 	.globl DirectSoundWaveData_sc88pro_french_horn_60
 DirectSoundWaveData_sc88pro_french_horn_60: @ 0x0867B868
-	.incbin "baserom_jp.gba", 0x67B868, 0x6F93
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_french_horn_60.bin"
 	.incbin "baserom_jp.gba", 0x6827FB, 0x1
 	.globl DirectSoundWaveData_sc88pro_french_horn_72
 DirectSoundWaveData_sc88pro_french_horn_72: @ 0x086827FC
-	.incbin "baserom_jp.gba", 0x6827FC, 0x4581
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_french_horn_72.bin"
 	.incbin "baserom_jp.gba", 0x686D7D, 0x3
 	.globl DirectSoundWaveData_sc88pro_flute
 DirectSoundWaveData_sc88pro_flute: @ 0x08686D80
-	.incbin "baserom_jp.gba", 0x686D80, 0x762
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_flute.bin"
 	.incbin "baserom_jp.gba", 0x6874E2, 0x2
 	.globl DirectSoundWaveData_sc88pro_fingered_bass
 DirectSoundWaveData_sc88pro_fingered_bass: @ 0x086874E4
-	.incbin "baserom_jp.gba", 0x6874E4, 0x1C4D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_fingered_bass.bin"
 	.incbin "baserom_jp.gba", 0x689131, 0x3
 	.globl DirectSoundWaveData_unknown_koto_high
 DirectSoundWaveData_unknown_koto_high: @ 0x08689134
-	.incbin "baserom_jp.gba", 0x689134, 0x1803
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_koto_high.bin"
 	.incbin "baserom_jp.gba", 0x68A937, 0x1
 	.globl DirectSoundWaveData_sd90_classical_shakuhachi
 DirectSoundWaveData_sd90_classical_shakuhachi: @ 0x0868A938
-	.incbin "baserom_jp.gba", 0x68A938, 0x3BB4
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_shakuhachi.bin"
 	.incbin "baserom_jp.gba", 0x68E4EC, 0x4
 	.globl DirectSoundWaveData_unknown_koto_low
 DirectSoundWaveData_unknown_koto_low: @ 0x0868E4F0
-	.incbin "baserom_jp.gba", 0x68E4F0, 0x2235
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_koto_low.bin"
 	.incbin "baserom_jp.gba", 0x690725, 0x3
 	.globl DirectSoundWaveData_sd90_classical_overdrive_guitar
 DirectSoundWaveData_sd90_classical_overdrive_guitar: @ 0x08690728
-	.incbin "baserom_jp.gba", 0x690728, 0x1E6C
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_overdrive_guitar.bin"
 	.incbin "baserom_jp.gba", 0x692594, 0x4
 	.globl DirectSoundWaveData_sd90_classical_distortion_guitar_high
 DirectSoundWaveData_sd90_classical_distortion_guitar_high: @ 0x08692598
-	.incbin "baserom_jp.gba", 0x692598, 0x2FEF
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_distortion_guitar_high.bin"
 	.incbin "baserom_jp.gba", 0x695587, 0x1
 	.globl DirectSoundWaveData_sd90_classical_distortion_guitar_low
 DirectSoundWaveData_sd90_classical_distortion_guitar_low: @ 0x08695588
-	.incbin "baserom_jp.gba", 0x695588, 0x2C50
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_distortion_guitar_low.bin"
 	.incbin "baserom_jp.gba", 0x6981D8, 0x4
 	.globl DirectSoundWaveData_heart_of_asia_gamelan
 DirectSoundWaveData_heart_of_asia_gamelan: @ 0x086981DC
-	.incbin "baserom_jp.gba", 0x6981DC, 0x457F
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_heart_of_asia_gamelan.bin"
 	.incbin "baserom_jp.gba", 0x69C75B, 0x1
 	.globl DirectSoundWaveData_sc88pro_church_organ3_low
 DirectSoundWaveData_sc88pro_church_organ3_low: @ 0x0869C75C
-	.incbin "baserom_jp.gba", 0x69C75C, 0x2944
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_church_organ3_low.bin"
 	.incbin "baserom_jp.gba", 0x69F0A0, 0x4
 	.globl DirectSoundWaveData_sc88pro_church_organ3_high
 DirectSoundWaveData_sc88pro_church_organ3_high: @ 0x0869F0A4
-	.incbin "baserom_jp.gba", 0x69F0A4, 0x175D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_church_organ3_high.bin"
 	.incbin "baserom_jp.gba", 0x6A0801, 0x3
 	.globl DirectSoundWaveData_unknown_female_voice
 DirectSoundWaveData_unknown_female_voice: @ 0x086A0804
-	.incbin "baserom_jp.gba", 0x6A0804, 0x1642
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_female_voice.bin"
 	.incbin "baserom_jp.gba", 0x6A1E46, 0x2
 	.globl DirectSoundWaveData_unused_unknown_male_voice
 DirectSoundWaveData_unused_unknown_male_voice: @ 0x086A1E48
-	.incbin "baserom_jp.gba", 0x6A1E48, 0x24A4
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unused_unknown_male_voice.bin"
 	.incbin "baserom_jp.gba", 0x6A42EC, 0x4
 	.globl DirectSoundWaveData_sd90_classical_detuned_ep1_low
 DirectSoundWaveData_sd90_classical_detuned_ep1_low: @ 0x086A42F0
-	.incbin "baserom_jp.gba", 0x6A42F0, 0x2666
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_detuned_ep1_low.bin"
 	.incbin "baserom_jp.gba", 0x6A6956, 0x2
 	.globl DirectSoundWaveData_sd90_classical_detuned_ep1_high
 DirectSoundWaveData_sd90_classical_detuned_ep1_high: @ 0x086A6958
-	.incbin "baserom_jp.gba", 0x6A6958, 0x13A7
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_detuned_ep1_high.bin"
 	.incbin "baserom_jp.gba", 0x6A7CFF, 0x14D1
 	.globl DirectSoundWaveData_unknown_synth_snare
 DirectSoundWaveData_unknown_synth_snare: @ 0x086A91D0
-	.incbin "baserom_jp.gba", 0x6A91D0, 0xA0A
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_synth_snare.bin"
 	.incbin "baserom_jp.gba", 0x6A9BDA, 0x2
 	.globl DirectSoundWaveData_sc88pro_square_wave
 DirectSoundWaveData_sc88pro_square_wave: @ 0x086A9BDC
-	.incbin "baserom_jp.gba", 0x6A9BDC, 0x1C13
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_square_wave.bin"
 	.incbin "baserom_jp.gba", 0x6AB7EF, 0x2E25
 	.globl DirectSoundWaveData_sc88pro_pizzicato_strings
 DirectSoundWaveData_sc88pro_pizzicato_strings: @ 0x086AE614
-	.incbin "baserom_jp.gba", 0x6AE614, 0x738
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_pizzicato_strings.bin"
 	.incbin "baserom_jp.gba", 0x6AED4C, 0x4
 	.globl DirectSoundWaveData_unknown_2
 DirectSoundWaveData_unknown_2: @ 0x086AED50
-	.incbin "baserom_jp.gba", 0x6AED50, 0x1BEF
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_2.bin"
 	.incbin "baserom_jp.gba", 0x6B093F, 0x1
 	.globl DirectSoundWaveData_unknown_3
 DirectSoundWaveData_unknown_3: @ 0x086B0940
-	.incbin "baserom_jp.gba", 0x6B0940, 0x13B2
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_3.bin"
 	.incbin "baserom_jp.gba", 0x6B1CF2, 0x2
 	.globl DirectSoundWaveData_unknown_4
 DirectSoundWaveData_unknown_4: @ 0x086B1CF4
-	.incbin "baserom_jp.gba", 0x6B1CF4, 0x2680
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_4.bin"
 	.incbin "baserom_jp.gba", 0x6B4374, 0x4
 	.globl DirectSoundWaveData_sc88pro_wind
 DirectSoundWaveData_sc88pro_wind: @ 0x086B4378
-	.incbin "baserom_jp.gba", 0x6B4378, 0x1241
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_wind.bin"
 	.incbin "baserom_jp.gba", 0x6B55B9, 0x1013
 	.globl DirectSoundWaveData_unknown_5
 DirectSoundWaveData_unknown_5: @ 0x086B65CC
-	.incbin "baserom_jp.gba", 0x6B65CC, 0x1304
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_5.bin"
 	.incbin "baserom_jp.gba", 0x6B78D0, 0x4
 	.globl DirectSoundWaveData_unknown_6
 DirectSoundWaveData_unknown_6: @ 0x086B78D4
-	.incbin "baserom_jp.gba", 0x6B78D4, 0x2108
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_6.bin"
 	.incbin "baserom_jp.gba", 0x6B99DC, 0x4
 	.globl DirectSoundWaveData_trinity_30303_mega_bass
 DirectSoundWaveData_trinity_30303_mega_bass: @ 0x086B99E0
-	.incbin "baserom_jp.gba", 0x6B99E0, 0x1FDA
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_30303_mega_bass.bin"
 	.incbin "baserom_jp.gba", 0x6BB9BA, 0x2
 	.globl DirectSoundWaveData_unknown_7
 DirectSoundWaveData_unknown_7: @ 0x086BB9BC
-	.incbin "baserom_jp.gba", 0x6BB9BC, 0x220F
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_7.bin"
 	.incbin "baserom_jp.gba", 0x6BDBCB, 0x1
 	.globl DirectSoundWaveData_unknown_8
 DirectSoundWaveData_unknown_8: @ 0x086BDBCC
-	.incbin "baserom_jp.gba", 0x6BDBCC, 0x7CA
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_8.bin"
 	.incbin "baserom_jp.gba", 0x6BE396, 0x2
 	.globl DirectSoundWaveData_sc88pro_tubular_bell
 DirectSoundWaveData_sc88pro_tubular_bell: @ 0x086BE398
-	.incbin "baserom_jp.gba", 0x6BE398, 0x196F
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_tubular_bell.bin"
 	.incbin "baserom_jp.gba", 0x6BFD07, 0x1
 	.globl DirectSoundWaveData_unknown_9
 DirectSoundWaveData_unknown_9: @ 0x086BFD08
-	.incbin "baserom_jp.gba", 0x6BFD08, 0x1FAC
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_9.bin"
 	.incbin "baserom_jp.gba", 0x6C1CB4, 0x4
 	.globl DirectSoundWaveData_trinity_big_boned
 DirectSoundWaveData_trinity_big_boned: @ 0x086C1CB8
-	.incbin "baserom_jp.gba", 0x6C1CB8, 0x32DE
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_trinity_big_boned.bin"
 	.incbin "baserom_jp.gba", 0x6C4F96, 0x2
 	.globl DirectSoundWaveData_sc88pro_harp
 DirectSoundWaveData_sc88pro_harp: @ 0x086C4F98
-	.incbin "baserom_jp.gba", 0x6C4F98, 0xA2F
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_harp.bin"
 	.incbin "baserom_jp.gba", 0x6C59C7, 0x1
 	.globl DirectSoundWaveData_sc88pro_xylophone
 DirectSoundWaveData_sc88pro_xylophone: @ 0x086C59C8
-	.incbin "baserom_jp.gba", 0x6C59C8, 0xA32
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_xylophone.bin"
 	.incbin "baserom_jp.gba", 0x6C63FA, 0x2
 	.globl DirectSoundWaveData_unknown_10
 DirectSoundWaveData_unknown_10: @ 0x086C63FC
-	.incbin "baserom_jp.gba", 0x6C63FC, 0x1B3C
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_10.bin"
 	.incbin "baserom_jp.gba", 0x6C7F38, 0x4
 	.globl DirectSoundWaveData_unknown_11
 DirectSoundWaveData_unknown_11: @ 0x086C7F3C
-	.incbin "baserom_jp.gba", 0x6C7F3C, 0x8C7
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_11.bin"
 	.incbin "baserom_jp.gba", 0x6C8803, 0x1
 	.globl DirectSoundWaveData_sc88pro_accordion_duplicate
 DirectSoundWaveData_sc88pro_accordion_duplicate: @ 0x086C8804
-	.incbin "baserom_jp.gba", 0x6C8804, 0x13CE
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_accordion_duplicate.bin"
 	.incbin "baserom_jp.gba", 0x6C9BD2, 0x2
 	.globl DirectSoundWaveData_unknown_12
 DirectSoundWaveData_unknown_12: @ 0x086C9BD4
-	.incbin "baserom_jp.gba", 0x6C9BD4, 0xC0F
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_12.bin"
 	.incbin "baserom_jp.gba", 0x6CA7E3, 0x1
 	.globl DirectSoundWaveData_unknown_13
 DirectSoundWaveData_unknown_13: @ 0x086CA7E4
-	.incbin "baserom_jp.gba", 0x6CA7E4, 0xB8E
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_13.bin"
 	.incbin "baserom_jp.gba", 0x6CB372, 0x2
 	.globl DirectSoundWaveData_unknown_14
 DirectSoundWaveData_unknown_14: @ 0x086CB374
-	.incbin "baserom_jp.gba", 0x6CB374, 0xA9B
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_14.bin"
 	.incbin "baserom_jp.gba", 0x6CBE0F, 0x1
 	.globl DirectSoundWaveData_unknown_15
 DirectSoundWaveData_unknown_15: @ 0x086CBE10
-	.incbin "baserom_jp.gba", 0x6CBE10, 0x947
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_15.bin"
 	.incbin "baserom_jp.gba", 0x6CC757, 0x1
 	.globl DirectSoundWaveData_unknown_16
 DirectSoundWaveData_unknown_16: @ 0x086CC758
-	.incbin "baserom_jp.gba", 0x6CC758, 0xA46
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_16.bin"
 	.incbin "baserom_jp.gba", 0x6CD19E, 0x2
 	.globl DirectSoundWaveData_unknown_17
 DirectSoundWaveData_unknown_17: @ 0x086CD1A0
-	.incbin "baserom_jp.gba", 0x6CD1A0, 0xC86
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_17.bin"
 	.incbin "baserom_jp.gba", 0x6CDE26, 0x19027E
 	.globl DirectSoundWaveData_unknown_18
 DirectSoundWaveData_unknown_18: @ 0x0885E0A4
-	.incbin "baserom_jp.gba", 0x85E0A4, 0x1A9E
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_unknown_18.bin"
 	.incbin "baserom_jp.gba", 0x85FB42, 0x2
 	.globl DirectSoundWaveData_sc88pro_nylon_str_guitar
 DirectSoundWaveData_sc88pro_nylon_str_guitar: @ 0x0885FB44
-	.incbin "baserom_jp.gba", 0x85FB44, 0x1F6D
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sc88pro_nylon_str_guitar.bin"
 	.incbin "baserom_jp.gba", 0x861AB1, 0x3
 	.globl DirectSoundWaveData_sd90_special_scream_drive
 DirectSoundWaveData_sd90_special_scream_drive: @ 0x08861AB4
-	.incbin "baserom_jp.gba", 0x861AB4, 0x1837
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_special_scream_drive.bin"
 	.incbin "baserom_jp.gba", 0x8632EB, 0x13D1
 	.globl DirectSoundWaveData_steinway_b_piano
 DirectSoundWaveData_steinway_b_piano: @ 0x088646BC
-	.incbin "baserom_jp.gba", 0x8646BC, 0x11C0
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_steinway_b_piano.bin"
 	.incbin "baserom_jp.gba", 0x86587C, 0x4
 	.globl DirectSoundWaveData_sd90_classical_whistle
 DirectSoundWaveData_sd90_classical_whistle: @ 0x08865880
-	.incbin "baserom_jp.gba", 0x865880, 0xA5C
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_classical_whistle.bin"
 	.incbin "baserom_jp.gba", 0x8662DC, 0x4
 	.globl DirectSoundWaveData_sd90_enhanced_delay_shaku
 DirectSoundWaveData_sd90_enhanced_delay_shaku: @ 0x088662E0
-	.incbin "baserom_jp.gba", 0x8662E0, 0x20FE
+	.incbin "sound/direct_sound_samples/DirectSoundWaveData_sd90_enhanced_delay_shaku.bin"
 	.incbin "baserom_jp.gba", 0x8683DE, 0x2
 	.globl sSongHeader_0
 sSongHeader_0: @ 0x088683E0
