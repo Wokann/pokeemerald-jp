@@ -10040,7 +10040,7 @@ SECTIONS {
         src/pokemon_animation.o(.text.Anim_ShakeGlowBlue_Slow);
         src/pokemon_animation.o(.text.SpriteCB_SetDummyOnAnimEnd);
         asm/recorded_battle.o(.text);
-        asm/battle_controller_recorded_opponent.o(.text);
+        src/battle_controller_recorded_opponent.o(.text);
         asm/battle_controller_recorded_player.o(.text);
         src/trainer_pokemon_sprites.o(.text.DummyPicSpriteCallback);
         src/trainer_pokemon_sprites.o(.text.ResetAllPicSprites);
