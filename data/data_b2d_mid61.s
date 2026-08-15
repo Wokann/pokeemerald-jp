@@ -15,19 +15,19 @@ gUnknown_8579F34: @ 0x8579F34
 
 	.globl gMonMarkingsMenu_Pal
 gMonMarkingsMenu_Pal: @ 0x8579F38
-	.incbin "baserom_jp.gba", 0x579f38, 0x20
+	.incbin "graphics/jp/gMonMarkingsMenu_Pal.bin"
 
 	.globl gMonMarkingsMenu_Gfx
 gMonMarkingsMenu_Gfx: @ 0x8579F58
-	.incbin "baserom_jp.gba", 0x579f58, 0x320
+	.incbin "graphics/jp/gMonMarkingsMenu_Gfx.bin"
 
 	.globl sMonMarkings_Pal
 sMonMarkings_Pal: @ 0x857A278
-	.incbin "baserom_jp.gba", 0x57a278, 0x20
+	.incbin "graphics/jp/sMonMarkings_Pal.bin"
 
 	.globl sMonMarkings_Gfx
 sMonMarkings_Gfx: @ 0x857A298
-	.incbin "baserom_jp.gba", 0x57a298, 0x808
+	.incbin "graphics/jp/sMonMarkings_Gfx.bin"
 
 	.globl sOamData_MenuWindow
 sOamData_MenuWindow: @ 0x857AAA0
@@ -99,7 +99,7 @@ sMailBgColors: @ 0x857AEDC
 
 	.globl sMailGraphics
 sMailGraphics: @ 0x857AEE4
-	.incbin "baserom_jp.gba", 0x57aee4, 0xfc
+	.incbin "graphics/jp/sMailGraphics.bin"
 
 	.globl sMailLayouts_Wide
 sMailLayouts_Wide: @ 0x857AFE0

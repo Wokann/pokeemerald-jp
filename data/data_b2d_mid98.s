@@ -54,7 +54,7 @@ sSaveFailedClockPal: @ 0x85CD264
 
 	.globl sSaveFailedClockGfx
 sSaveFailedClockGfx: @ 0x85CD284
-	.incbin "baserom_jp.gba", 0x5cd284, 0x90
+	.incbin "graphics/jp/sSaveFailedClockGfx.bin"
 
 	.globl sRegicePathCoords
 sRegicePathCoords: @ 0x85CD314
@@ -459,7 +459,7 @@ gUnknown_85D39D4: @ 0x85D39D4
 
 	.globl sDummyPicData
 sDummyPicData: @ 0x85D3AB8
-	.incbin "baserom_jp.gba", 0x5d3ab8, 0xc
+	.incbin "graphics/jp/sDummyPicData.bin"
 
 	.globl sOamData_Normal
 sOamData_Normal: @ 0x85D3AC4
@@ -694,7 +694,7 @@ gUnknown_85D688C: @ 0x85D688C
 
 	.globl sBattlePalaceFunctions
 sBattlePalaceFunctions: @ 0x85D68CC
-	.incbin "baserom_jp.gba", 0x5d68cc, 0x28
+	.incbin "graphics/jp/sBattlePalaceFunctions.bin"
 
 	.globl sBattlePalaceEarlyPrizes
 sBattlePalaceEarlyPrizes: @ 0x85D68F4
@@ -885,7 +885,7 @@ sBirchDexRatingTexts: @ 0x85D7AB0
 
 	.globl gStandardMenuPalette
 gStandardMenuPalette: @ 0x85D7B04
-	.incbin "baserom_jp.gba", 0x5d7b04, 0x20
+	.incbin "graphics/jp/gStandardMenuPalette.bin"
 
 	.globl gUnknown_85D7B24
 gUnknown_85D7B24: @ 0x85D7B24

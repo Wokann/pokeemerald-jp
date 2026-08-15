@@ -15,7 +15,7 @@ gUnknown_846FA13: @ 0x846FA13
 
 	.globl gReflectionEffectPaletteMap
 gReflectionEffectPaletteMap: @ 0x846FA18
-	.incbin "baserom_jp.gba", 0x46fa18, 0x10
+	.incbin "graphics/jp/gReflectionEffectPaletteMap.bin"
 
 	.globl gUnknown_846FA28
 gUnknown_846FA28: @ 0x846FA28
@@ -99,7 +99,7 @@ gUnknown_84E4D5C: @ 0x84E4D5C
 
 	.globl gSpritePalette_GeneralFieldEffect1
 gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
-	.incbin "baserom_jp.gba", 0x4e4e1c, 0xd14
+	.incbin "graphics/jp/gSpritePalette_GeneralFieldEffect1.bin"
 
 	.globl gUnknown_84E5B30
 gUnknown_84E5B30: @ 0x84E5B30
@@ -781,19 +781,19 @@ gUnknown_84E6CB4: @ 0x84E6CB4
 
 	.globl gTextWindowFrame1_Gfx
 gTextWindowFrame1_Gfx: @ 0x84E6CE0
-	.incbin "baserom_jp.gba", 0x4e6ce0, 0x1680
+	.incbin "graphics/jp/gTextWindowFrame1_Gfx.bin"
 
 	.globl gTextWindowFrame1_Pal
 gTextWindowFrame1_Pal: @ 0x84E8360
-	.incbin "baserom_jp.gba", 0x4e8360, 0x280
+	.incbin "graphics/jp/gTextWindowFrame1_Pal.bin"
 
 	.globl gMessageBox_Gfx
 gMessageBox_Gfx: @ 0x84E85E0
-	.incbin "baserom_jp.gba", 0x4e85e0, 0x1c0
+	.incbin "graphics/text_window/message_box_jp.4bpp"
 
 	.globl sTextWindowPalettes
 sTextWindowPalettes: @ 0x84E87A0
-	.incbin "baserom_jp.gba", 0x4e87a0, 0xa0
+	.incbin "graphics/jp/sTextWindowPalettes.bin"
 
 	.globl gUnknown_84E8840
 gUnknown_84E8840: @ 0x84E8840

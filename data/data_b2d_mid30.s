@@ -35,7 +35,7 @@ gUnknown_830FC60: @ 0x830FC60
 
 	.globl sContestWinnerPicDummy
 sContestWinnerPicDummy: @ 0x830FC68
-	.incbin "baserom_jp.gba", 0x30fc68, 0x20
+	.incbin "graphics/jp/sContestWinnerPicDummy.bin"
 
 	.globl gUnknown_830FC88
 gUnknown_830FC88: @ 0x830FC88

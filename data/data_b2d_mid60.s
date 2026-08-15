@@ -1303,7 +1303,7 @@ gFlashingHitSplatSpriteTemplate: @ 0x8572FCC
 
 	.globl sCurseLinesPalette
 sCurseLinesPalette: @ 0x8572FFC
-	.incbin "baserom_jp.gba", 0x572ffc, 0x2
+	.incbin "graphics/jp/sCurseLinesPalette.bin"
 
 	.globl gUnknown_8572FFE
 gUnknown_8572FFE: @ 0x8572FFE

@@ -73,7 +73,7 @@ sWirelessStatusIndicatorSpriteSheet: @ 0x82C0330
 
 	.globl sWirelessStatusIndicatorSpritePalette
 sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
-	.incbin "baserom_jp.gba", 0x2c0338, 0x8
+	.incbin "graphics/jp/sWirelessStatusIndicatorSpritePalette.bin"
 
 	.globl sWirelessStatusIndicatorSpriteTemplate
 sWirelessStatusIndicatorSpriteTemplate: @ 0x82C0340
@@ -779,11 +779,11 @@ sLinkGroupToURoomActivity: @ 0x82C2438
 	.byte 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x0E, 0xF7, 0x00, 0xAF, 0xF7, 0x01, 0xFF
 	.globl sTextboxBorder_Pal
 sTextboxBorder_Pal: @ 0x82C2454
-	.incbin "baserom_jp.gba", 0x2c2454, 0x20
+	.incbin "graphics/jp/sTextboxBorder_Pal.bin"
 
 	.globl sTextboxBorder_Gfx
 sTextboxBorder_Gfx: @ 0x82C2474
-	.incbin "baserom_jp.gba", 0x2c2474, 0x30
+	.incbin "graphics/jp/sTextboxBorder_Gfx.bin"
 
 	.globl sBGTemplates
 sBGTemplates: @ 0x82C24A4
@@ -1115,11 +1115,11 @@ sMovement_UnionPlayerEnter: @ 0x82C2C0B
 
 	.globl sWirelessScreenPalettes
 sWirelessScreenPalettes: @ 0x82C2C10
-	.incbin "baserom_jp.gba", 0x2c2c10, 0x200
+	.incbin "graphics/jp/sWirelessScreenPalettes.bin"
 
 	.globl sWirelessScreenBgTiles_Gfx
 sWirelessScreenBgTiles_Gfx: @ 0x82C2E10
-	.incbin "baserom_jp.gba", 0x2c2e10, 0x210
+	.incbin "graphics/jp/sWirelessScreenBgTiles_Gfx.bin"
 
 	.globl sWirelessScreenBgTiles_Tilemap
 sWirelessScreenBgTiles_Tilemap: @ 0x82C3020
@@ -1824,11 +1824,11 @@ sPressingSpeedConversionTable: @ 0x82C5F64
 
 	.globl gBerryCrush_Crusher_Pal
 gBerryCrush_Crusher_Pal: @ 0x82C5F84
-	.incbin "baserom_jp.gba", 0x2c5f84, 0x180
+	.incbin "graphics/jp/gBerryCrush_Crusher_Pal.bin"
 
 	.globl gBerryCrush_Crusher_Gfx
 gBerryCrush_Crusher_Gfx: @ 0x82C6104
-	.incbin "baserom_jp.gba", 0x2c6104, 0x13d0
+	.incbin "graphics/jp/gBerryCrush_Crusher_Gfx.bin"
 
 	.globl sCrusherTop_Tilemap
 sCrusherTop_Tilemap: @ 0x82C74D4
@@ -1844,7 +1844,7 @@ sBg_Tilemap: @ 0x82C779C
 
 	.globl sPlayerNameWindowGfx
 sPlayerNameWindowGfx: @ 0x82C79C4
-	.incbin "baserom_jp.gba", 0x2c79c4, 0x44
+	.incbin "graphics/jp/sPlayerNameWindowGfx.bin"
 
 	.globl sPlayerIdToPosId
 sPlayerIdToPosId: @ 0x82C7A08
@@ -1874,7 +1874,7 @@ sSpriteSheets: @ 0x82C7A80
 
 	.globl sSpritePals
 sSpritePals: @ 0x82C7AA8
-	.incbin "baserom_jp.gba", 0x2c7aa8, 0xf0
+	.incbin "graphics/jp/sSpritePals.bin"
 
 	.globl sSpriteTemplate_CrusherBase
 sSpriteTemplate_CrusherBase: @ 0x82C7B98
@@ -3191,15 +3191,15 @@ sWindowTemplate_CommStandby: @ 0x82CB478
 
 	.globl sBg_Pal
 sBg_Pal: @ 0x82CB67C
-	.incbin "baserom_jp.gba", 0x2cb67c, 0x40
+	.incbin "graphics/jp/sBg_Pal.bin"
 
 	.globl sDodrioNormalPal
 sDodrioNormalPal: @ 0x82CB6BC
-	.incbin "baserom_jp.gba", 0x2cb6bc, 0x20
+	.incbin "graphics/jp/sDodrioNormalPal.bin"
 
 	.globl sDodrioShinyPal
 sDodrioShinyPal: @ 0x82CB6DC
-	.incbin "baserom_jp.gba", 0x2cb6dc, 0x20
+	.incbin "graphics/jp/sDodrioShinyPal.bin"
 
 	.globl gUnknown_82CB6FC
 gUnknown_82CB6FC: @ 0x82CB6FC
@@ -3207,27 +3207,27 @@ gUnknown_82CB6FC: @ 0x82CB6FC
 
 	.globl sBerry_Gfx
 sBerry_Gfx: @ 0x82CB73C
-	.incbin "baserom_jp.gba", 0x2cb73c, 0x1d4
+	.incbin "graphics/jp/sBerry_Gfx.bin"
 
 	.globl sBg_Gfx
 sBg_Gfx: @ 0x82CB910
-	.incbin "baserom_jp.gba", 0x2cb910, 0x890
+	.incbin "graphics/jp/sBg_Gfx.bin"
 
 	.globl sTreeBorder_Gfx
 sTreeBorder_Gfx: @ 0x82CC1A0
-	.incbin "baserom_jp.gba", 0x2cc1a0, 0xdcc
+	.incbin "graphics/jp/sTreeBorder_Gfx.bin"
 
 	.globl sStatus_Gfx
 sStatus_Gfx: @ 0x82CCF6C
-	.incbin "baserom_jp.gba", 0x2ccf6c, 0x94
+	.incbin "graphics/jp/sStatus_Gfx.bin"
 
 	.globl sCloud_Gfx
 sCloud_Gfx: @ 0x82CD000
-	.incbin "baserom_jp.gba", 0x2cd000, 0x148
+	.incbin "graphics/jp/sCloud_Gfx.bin"
 
 	.globl sDodrio_Gfx
 sDodrio_Gfx: @ 0x82CD148
-	.incbin "baserom_jp.gba", 0x2cd148, 0x121c
+	.incbin "graphics/jp/sDodrio_Gfx.bin"
 
 	.globl sDodrioBg_Tilemap
 sDodrioBg_Tilemap: @ 0x82CE364
@@ -3251,15 +3251,15 @@ sAnims_Dodrio: @ 0x82CEAB4
 
 	.globl sDodrioNormalSpritePalette
 sDodrioNormalSpritePalette: @ 0x82CEB64
-	.incbin "baserom_jp.gba", 0x2ceb64, 0x8
+	.incbin "graphics/jp/sDodrioNormalSpritePalette.bin"
 
 	.globl sDodrioShinySpritePalette
 sDodrioShinySpritePalette: @ 0x82CEB6C
-	.incbin "baserom_jp.gba", 0x2ceb6c, 0x8
+	.incbin "graphics/jp/sDodrioShinySpritePalette.bin"
 
 	.globl sStatusPalette
 sStatusPalette: @ 0x82CEB74
-	.incbin "baserom_jp.gba", 0x2ceb74, 0x8
+	.incbin "graphics/jp/sStatusPalette.bin"
 
 	.globl sStatusSpriteTemplate
 sStatusSpriteTemplate: @ 0x82CEB7C
@@ -3267,7 +3267,7 @@ sStatusSpriteTemplate: @ 0x82CEB7C
 
 	.globl sBerryPalette
 sBerryPalette: @ 0x82CEBA0
-	.incbin "baserom_jp.gba", 0x2ceba0, 0x8
+	.incbin "graphics/jp/sBerryPalette.bin"
 
 	.globl sBerryIconXCoords
 sBerryIconXCoords: @ 0x82CEBA8
@@ -3295,7 +3295,7 @@ gUnknown_82CEBEA: @ 0x82CEBEA
 
 	.globl sCloudPalette
 sCloudPalette: @ 0x82CEBEC
-	.incbin "baserom_jp.gba", 0x2cebec, 0x8
+	.incbin "graphics/jp/sCloudPalette.bin"
 
 	.globl sCloudSpriteTemplate
 sCloudSpriteTemplate: @ 0x82CEBF4
@@ -4028,7 +4028,7 @@ sFemalePresetNames: @ 0x82D2A08
 	.4byte gText_DefaultName_Yuume @ 0x85C8F82
 	.globl sTilesPerImage
 sTilesPerImage: @ 0x82D2A58 (JP: digit_obj_util.c sTilesPerImage[4][4])
-	.incbin "baserom_jp.gba", 0x2d2a58, 0x10
+	.incbin "graphics/jp/sTilesPerImage.bin"
 
 	.globl gUnknown_82D2A68
 gUnknown_82D2A68: @ 0x82D2A68

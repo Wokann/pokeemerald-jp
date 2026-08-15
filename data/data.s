@@ -298,7 +298,7 @@ sWirelessLinkDisplayPal: @ 0x82BF4B8
 
 	.globl sWirelessLinkDisplayGfx
 sWirelessLinkDisplayGfx: @ 0x82BF4D8
-	.incbin "baserom_jp.gba", 0x2bf4d8, 0x4a8
+	.incbin "graphics/jp/sWirelessLinkDisplayGfx.bin"
 
 	.globl sWirelessLinkDisplayTilemap
 sWirelessLinkDisplayTilemap: @ 0x82BF980

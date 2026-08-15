@@ -29,7 +29,7 @@ gUnknown_84E8A71: @ 0x84E8A71
 
 	.globl gResetRtcArrowPalette
 gResetRtcArrowPalette: @ 0x84E8B14
-	.incbin "baserom_jp.gba", 0x4e8b14, 0x2c
+	.incbin "graphics/jp/gResetRtcArrowPalette.bin"
 
 	.globl gResetRtcArrowSpriteTemplate
 gResetRtcArrowSpriteTemplate: @ 0x84E8B40

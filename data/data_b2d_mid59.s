@@ -209,7 +209,7 @@ sSpriteSheet_MoneyLabel: @ 0x8565FBC
 
 	.globl sSpritePalette_MoneyLabel
 sSpritePalette_MoneyLabel: @ 0x8565FC4
-	.incbin "baserom_jp.gba", 0x565fc4, 0x8
+	.incbin "graphics/jp/sSpritePalette_MoneyLabel.bin"
 
 	.globl gContestMoves
 gContestMoves: @ 0x8565FCC

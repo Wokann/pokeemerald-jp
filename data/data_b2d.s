@@ -653,7 +653,7 @@ sSmokescreenImpactSpriteSheet: @ 0x82ECFA8
 
 	.globl sSmokescreenImpactSpritePalette
 sSmokescreenImpactSpritePalette: @ 0x82ECFB0
-	.incbin "baserom_jp.gba", 0x2ecfb0, 0x60
+	.incbin "graphics/jp/sSmokescreenImpactSpritePalette.bin"
 
 	.globl sSmokescreenImpactSpriteTemplate
 sSmokescreenImpactSpriteTemplate: @ 0x82ED010

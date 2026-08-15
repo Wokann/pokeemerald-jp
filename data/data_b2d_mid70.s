@@ -25,7 +25,7 @@ sMoveRelearnerSpriteSheet: @ 0x85ADAF4
 
 	.globl sMoveRelearnerPalette
 sMoveRelearnerPalette: @ 0x85ADAFC
-	.incbin "baserom_jp.gba", 0x5adafc, 0x8
+	.incbin "graphics/jp/sMoveRelearnerPalette.bin"
 
 	.globl sDisplayModeArrowsTemplate
 sDisplayModeArrowsTemplate: @ 0x85ADB04
@@ -658,7 +658,7 @@ sLotteryPrizes: @ 0x85C7A2C
 
 	.globl sDiplomaPalettes
 sDiplomaPalettes: @ 0x85C7A34
-	.incbin "baserom_jp.gba", 0x5c7a34, 0x40
+	.incbin "graphics/jp/sDiplomaPalettes.bin"
 
 	.globl sDiplomaTilemap
 sDiplomaTilemap: @ 0x85C7A74

@@ -5763,15 +5763,15 @@ gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
 
 	.globl gTitleScreenBgPalettes
 gTitleScreenBgPalettes: @ 0x8517B58
-	.incbin "baserom_jp.gba", 0x517b58, 0xc0
+	.incbin "graphics/jp/gTitleScreenBgPalettes.bin"
 
 	.globl gTitleScreenPokemonLogoGfx
 gTitleScreenPokemonLogoGfx: @ 0x8517C18
-	.incbin "baserom_jp.gba", 0x517c18, 0x1e9c
+	.incbin "graphics/jp/gTitleScreenPokemonLogoGfx.bin"
 
 	.globl sTitleScreenRayquazaGfx
 sTitleScreenRayquazaGfx: @ 0x8519AB4
-	.incbin "baserom_jp.gba", 0x519ab4, 0x7e4
+	.incbin "graphics/jp/sTitleScreenRayquazaGfx.bin"
 
 	.globl sTitleScreenRayquazaTilemap
 sTitleScreenRayquazaTilemap: @ 0x851A298
@@ -5779,7 +5779,7 @@ sTitleScreenRayquazaTilemap: @ 0x851A298
 
 	.globl sTitleScreenCloudsGfx
 sTitleScreenCloudsGfx: @ 0x851A6E8
-	.incbin "baserom_jp.gba", 0x51a6e8, 0x2e4
+	.incbin "graphics/jp/sTitleScreenCloudsGfx.bin"
 
 	.globl gTitleScreenCloudsTilemap
 gTitleScreenCloudsTilemap: @ 0x851A9CC
@@ -5811,7 +5811,7 @@ sSpriteSheet_PressStart: @ 0x851AD8C
 
 	.globl sSpritePalette_PressStart
 sSpritePalette_PressStart: @ 0x851AD9C
-	.incbin "baserom_jp.gba", 0x51ad9c, 0x24
+	.incbin "graphics/jp/sSpritePalette_PressStart.bin"
 
 	.globl sPokemonLogoShineSpriteTemplate
 sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
@@ -5843,7 +5843,7 @@ gUnknown_8526EEC: @ 0x8526EEC
 
 	.globl gFogPalette
 gFogPalette: @ 0x8526F0C
-	.incbin "baserom_jp.gba", 0x526f0c, 0x20
+	.incbin "graphics/jp/gFogPalette.bin"
 
 	.globl gUnknown_8526F2C
 gUnknown_8526F2C: @ 0x8526F2C

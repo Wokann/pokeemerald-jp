@@ -13,7 +13,7 @@
 
 	.globl sTextPrompt_Pal
 sTextPrompt_Pal: @ 0x8591C20
-	.incbin "baserom_jp.gba", 0x591c20, 0x8
+	.incbin "graphics/jp/sTextPrompt_Pal.bin"
 
 	.globl sWindowTemplates
 sWindowTemplates: @ 0x8591C28
@@ -33,7 +33,7 @@ sSpriteSheet_ClockHand: @ 0x8591C54
 
 	.globl sSpritePalettes_Clock
 sSpritePalettes_Clock: @ 0x8591C64
-	.incbin "baserom_jp.gba", 0x591c64, 0x38
+	.incbin "graphics/jp/sSpritePalettes_Clock.bin"
 
 	.globl sSpriteTemplate_MinuteHand
 sSpriteTemplate_MinuteHand: @ 0x8591C9C
@@ -192,15 +192,15 @@ sTransitionTypes: @ 0x8592214
 
 	.globl sCaveTransitionPalette_White
 sCaveTransitionPalette_White: @ 0x859229C
-	.incbin "baserom_jp.gba", 0x59229c, 0x20
+	.incbin "graphics/jp/sCaveTransitionPalette_White.bin"
 
 	.globl sCaveTransitionPalette_Black
 sCaveTransitionPalette_Black: @ 0x85922BC
-	.incbin "baserom_jp.gba", 0x5922bc, 0x20
+	.incbin "graphics/jp/sCaveTransitionPalette_Black.bin"
 
 	.globl sCaveTransitionPalette_Enter
 sCaveTransitionPalette_Enter: @ 0x85922DC
-	.incbin "baserom_jp.gba", 0x5922dc, 0x10
+	.incbin "graphics/jp/sCaveTransitionPalette_Enter.bin"
 
 	.globl gUnknown_85922EC
 gUnknown_85922EC: @ 0x85922EC

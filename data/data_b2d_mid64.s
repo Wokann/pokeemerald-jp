@@ -27,7 +27,7 @@ sTrainerHillWindowTileset: @ 0x8592EE0
 
 	.globl sTrainerHillWindowPalette
 sTrainerHillWindowPalette: @ 0x8592FA0
-	.incbin "baserom_jp.gba", 0x592fa0, 0x20
+	.incbin "graphics/jp/sTrainerHillWindowPalette.bin"
 
 	.globl sTrainerHillWindowTilemap
 sTrainerHillWindowTilemap: @ 0x8592FC0

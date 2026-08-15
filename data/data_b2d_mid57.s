@@ -1283,7 +1283,7 @@ sMapPopUp_PaletteTable: @ 0x8559EE0
 
 	.globl sMapPopUp_Palette_Underwater
 sMapPopUp_Palette_Underwater: @ 0x8559FA0
-	.incbin "baserom_jp.gba", 0x559fa0, 0x20
+	.incbin "graphics/jp/sMapPopUp_Palette_Underwater.bin"
 
 	.globl sMapSectionToThemeId
 sMapSectionToThemeId: @ 0x8559FC0
