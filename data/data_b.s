@@ -411,7 +411,7 @@ sText_EggTrade: @ 0x82C19AC
 
 	.globl sText_ChooseJoinCancel
 sText_ChooseJoinCancel: @ 0x82C19B8
-	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR4}る:{B_BUTTON}やめる$"
+	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}さんかする:{B_BUTTON}やめる$"
 	.globl sText_ChooseTrainer
 sText_ChooseTrainer: @ 0x82C19CC
 	.incbin "baserom_jp.gba", 0x2c19cc, 0x218
@@ -468,7 +468,7 @@ sGladToMeetYouTexts: @ 0x82C1FA4
 
 	.globl sText_FinishedCheckingPlayersTrainerCard
 sText_FinishedCheckingPlayersTrainerCard: @ 0x82C1FAC
-	.string "{MUS_RG_ROUTE1}{SE_A}トレーナーカードを\n"
+	.string "{DYNAMIC 1}の　トレーナーカードを\n"
 	.string "みおわった！{PAUSE 60}$"
 	.globl sWindowTemplate_BButtonCancel
 sWindowTemplate_BButtonCancel: @ 0x82C1FC4
@@ -3553,7 +3553,7 @@ gUnknown_82FA85A: @ 0x82FA85A
 
 	.globl gUnknown_82FA876
 gUnknown_82FA876: @ 0x82FA876
-	.string "{SE_BALL_OPEN}{SE_SHIP}{SE_BALL_BOUNCE_2}{SE_PUDDLE}{SE_M_TOXIC}{UP_ARROW_2}{SE_M_RAIN_DANCE}もあ$$"
+	.string "そ　て　ぐ　ば　デ　{UP_ARROW_2}ァ　もあ$$"
 	.globl gUnknown_82FA888
 gUnknown_82FA888: @ 0x82FA888
 	.incbin "baserom_jp.gba", 0x2fa888, 0x2
@@ -13012,19 +13012,19 @@ gUnknown_85C8D93: @ 0x85C8D93
 	.string "ゲームを　つづけて　あそぶことは　できます$しゅじんこう$ポケモンずかん$"
 	.globl gUnknown_85C8DEC
 gUnknown_85C8DEC: @ 0x85C8DEC
-	.string "プレイじ{GREEN}ん$もっ{MUS_RG_CAUGHT_INTRO}るバッジ$エーボタン$ビーボタン$アールボタン$エルボタン$スタートボタン$セレクトボタン$じゅ{LIGHT_GRAY}じボタン$Lボタ{SE_M_BUBBLE3}Rボタン${TRANSPARENT}{DYNAMIC_COLOR6}{LIGHT_GRAY}{SE_BIKE_BELL}{DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}${MUS_DUMMY}{TRANSPARENT}{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}{LIGHT_BLUE}っ{MUS_RG_CAUGHT_INTRO}${MUS_DUMMY}{TRANSPARENT}{A_BUTTON}つぎ${MUS_DUMMY}{TRANSPARENT}{A_BUTTON}つ{SE_BALL_BOUNCE_1}{B_BUTTON}もどる${TRANSPARENT}"
+	.string "プレイじかん$もっているバッジ$エーボタン$ビーボタン$アールボタン$エルボタン$スタートボタン$セレクトボタン$じゅうじボタン$Lボタン　Rボタン$　そうさ　せつめい$　　　{DPAD_UPDOWN}えらぶ　{A_BUTTON}けってい$　　　{A_BUTTON}つぎ$　　　{A_BUTTON}つぎ　{B_BUTTON}もどる$　"
 
 	.globl gUnknown_85C8E68
 gUnknown_85C8E68: @ 0x85C8E68
-	.string "{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}つ{SE_BALL_BOUNCE_1}{B_BUTTON}{LIGHT_RED}わる${MUS_DUMMY}{TRANSPARENT}"
+	.string "{DPAD_UPDOWN}えらぶ　{A_BUTTON}つぎ　{B_BUTTON}おわる$　　　"
 
 	.globl gUnknown_85C8E7C
 gUnknown_85C8E7C: @ 0x85C8E7C
-	.string "{DPAD_UPDOWN}{RED}ら{SE_ITEMFINDER}{A_BUTTON}{B_BUTTON}{LIGHT_RED}わる${MUS_DUMMY}"
+	.string "{DPAD_UPDOWN}えらぶ　{A_BUTTON}{B_BUTTON}おわる$　　"
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
-	.string "{A_BUTTON}おわる$おと{DYNAMIC_COLOR1}$おんな$イツオ$$$ギョク$$$ケイ$$$$シュウサク$セイゴ$$$ダイサク$$タカヒト$$タツヤ$$$ダニエル$$テルキ$$$トム$$$$トモヤ$$$ヒトシ$$$ヒロアキ$$ユキヒコ$$ラルド$$$リクヤ$$$リチャード$リュウ$$$リョウタ$$アイコ$$$アヤナ$$$アン$$$$エミィ$カオリ$$$カレン$$$キョウコ$$サエ$$$$スイ$$$$ジュリ$$$チエミ$$$チヨコ$$$テルコ$$$ナナエ$$$ヒナ$$$$マキコ$$$ミサコ$$$ムツミ$$$モニカ$$$ユウメ$$$"
+	.string "{A_BUTTON}おわる$おとこ$おんな$イツオ$$$ギョク$$$ケイ$$$$シュウサク$セイゴ$$$ダイサク$$タカヒト$$タツヤ$$$ダニエル$$テルキ$$$トム$$$$トモヤ$$$ヒトシ$$$ヒロアキ$$ユキヒコ$$ラルド$$$リクヤ$$$リチャード$リュウ$$$リョウタ$$アイコ$$$アヤナ$$$アン$$$$エミィ$カオリ$$$カレン$$$キョウコ$$サエ$$$$スイ$$$$ジュリ$$$チエミ$$$チヨコ$$$テルコ$$$ナナエ$$$ヒナ$$$$マキコ$$$ミサコ$$$ムツミ$$$モニカ$$$ユウメ$$$"
 	.globl gUnknown_85C8F88
 gUnknown_85C8F88: @ 0x85C8F88
 	.string "ポケットモンスター\n"
@@ -13379,7 +13379,7 @@ gUnknown_85C9786: @ 0x85C9786
 	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}cm$とても　やわらかい$やわらかい$かたい$とても　かたい$とてつもなく　かたい$"
 	.globl gUnknown_85C97B5
 gUnknown_85C97B5: @ 0x85C97B5
-	.string "{NO}{B_COPY_VAR_1}{TRANSPARENT}{B_COPY_VAR_2}$"
+	.string "{NO}{B_COPY_VAR_1}　{B_COPY_VAR_2}$"
 
 	.globl gUnknown_85C97BD
 gUnknown_85C97BD: @ 0x85C97BD
@@ -14178,12 +14178,12 @@ gUnknown_85CB0C8: @ 0x85CB0C8
 	.string "BP$ちからのこな　　{FONT 0}　　50$ちからのねっこ　{FONT 0}　　80$ばんのうごな　　{FONT 0}　　50$ふっかつそう　　{FONT 0}　300$タウリン　　　　{FONT 0}1000$ブロムヘキシン　{FONT 0}1000$インドメタシン　{FONT 0}1000$リゾチウム　　　{FONT 0}1000$キトサン　　　　{FONT 0}1000$マックスアップ　{FONT 0}1000$ポイントアップ　{FONT 0}3000$ランキングホール$ひきかえサービス$ミナモシティ$カイナシティ$めざめのほこら$おくりびやま$そらのはしら$おぼえていない$"
 	.globl gUnknown_85CB1B9
 gUnknown_85CB1B9: @ 0x85CB1B9
-	.string "やめる$ボックス{SE_WARP_IN}{DYNAMIC_COLOR3}ゅうりょう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か{SE_M_SING}${DYNAMIC_COLOR1}のボックス{SE_WARP_IN}どう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}テーマに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}かべがみに{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}どう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}ボックス{SE_BOO}ジャンプ{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ど{SE_A}ボックス{SE_BOO}あずけま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}あずけま{DYNAMIC_COLOR3}た${DYNAMIC_COLOR1}のボックス{SE_I}いっ{PH_THOUGHT_HELD}だ！$ほんとう{SE_BOO}にが{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}{DYNAMIC_COLOR6}と{SE_BOO}にが{DYNAMIC_COLOR3}てあげた${PH_LOT_SOLO}{PH_LOT_SOLO}{TRANSPARENT}{SE_M_HYPER_BEAM2}！$マーキング{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$たたかうポケモン{SE_SAVE}いなくなりま{DYNAMIC_COLOR4}！$てもち{SE_SAVE}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$ポケモン{SE_WARP_IN}つかんだままで{DYNAMIC_COLOR4}よ！$つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}ポケモン{SE_WARP_IN}えらんで！$タマゴ{SE_WARP_IN}にが{DYNAMIC_COLOR4}{DYNAMIC_COLOR1}と{SE_I}できま{DYNAMIC_COLOR5}ん！$ボックス{DYNAMIC_COLOR6}う{DYNAMIC_COLOR2}{SE_WARP_IN}つづけま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_I}かえってきた！${DYNAMIC_COLOR3}ん{PH_THOUGHT_HELD}{TRANSPARENT}だったのかな⋯⋯$⋯⋯⋯⋯⋯！$メール{SE_WARP_IN}はず{DYNAMIC_COLOR3}{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}！$どうぐ{SE_WARP_IN}もた{DYNAMIC_COLOR5}ま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}バッグ{MUS_RG_MYSTERY_GIFT}れた！$バッグ{SE_SAVE}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}！$どうぐ{SE_WARP_IN}バッグ{SE_BOO}いれま{DYNAMIC_COLOR4}か？${SE_M_HYPER_BEAM2}{SE_WARP_IN}もた{DYNAMIC_COLOR5}た！${SE_M_HYPER_BEAM2}{SE_BANG}とりかえた！$メール{SE_WARP_IN}あずかる{DYNAMIC_COLOR1}と{SE_I}できま{DYNAMIC_COLOR5}ん！$やめ{SE_ICE_BREAK}{MUS_DUMMY}$あずけ{SE_ICE_BREAK}{TRANSPARENT}$つれ{MUS_RG_CAUGHT_INTRO}{SE_DOOR}$いれかえ{SE_ICE_BREAK}$つか{SE_EXP}{MUS_DUMMY}${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}にお{SE_DOOR}$よう{DYNAMIC_COLOR4}をみる$にが{SE_EFFECTIVE}{MUS_DUMMY}$マーキン{SE_M_ICY_WIND}$なま{SE_PC_ON}{MUS_DUMMY}$ジャンプ$かべが{SE_FAILURE}{TRANSPARENT}$あずかる$もた{DYNAMIC_COLOR5}る$とりかえる$バッグへ${DYNAMIC_COLOR5}つ{MUS_RG_SEVII_DUNGEON}$ふう{MUS_RG_CELADON}1$ふう{MUS_RG_CELADON}2$ふう{MUS_RG_CELADON}3$エトセトラ${PH_PRICE_BLEND}{DYNAMIC_COLOR4}き$もり$シティ${DYNAMIC_COLOR2}ばく$サバンナ$いわやま$かざん$ゆきやま$どうくつ$うみべ${MUS_RG_POKE_TOWER}{MUS_RG_CAUGHT_INTRO}$かわ${DYNAMIC_COLOR6}ら$みずたま$ポケセン$き{MUS_RG_POKE_TOWER}$シンプル$なに{SE_WARP_IN}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？$ポケモン{SE_WARP_IN}つれ{MUS_RG_CAUGHT_INTRO}く$ポケモン{SE_WARP_IN}あずけ{SE_ICE_BREAK}$ボックス{SE_WARP_IN}{MUS_RG_PEWTER}り{DYNAMIC_COLOR4}る$どうぐ{MUS_RG_PEWTER}り${DYNAMIC_COLOR2}ようなら$ボックス{SE_BOO}あずけ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_WARP_IN}\n"
-	.string "てもち{SE_BOO}くわえ{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}できま{SE_EFFECTIVE}$てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}\n"
-	.string "ボックス{SE_BOO}あずけ{SE_ICE_BREAK}{DYNAMIC_COLOR1}と{SE_SAVE}できま{DYNAMIC_COLOR4}$ボックス{SE_BOO}あずけ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}ポケモン{SE_CLICK}\n"
-	.string "てもち{SE_A}ポケモン{SE_WARP_IN}{MUS_RG_PEWTER}{SE_ICE_STAIRS}できま{DYNAMIC_COLOR4}$ポケモン{SE_SAVE}もっ{MUS_RG_CAUGHT_INTRO}{SE_ICE_BREAK}どうぐを\n"
-	.string "{MUS_RG_PEWTER}{SE_ICE_STAIRS}できま{DYNAMIC_COLOR4}$ひと{SE_SLIDING_DOOR}まえ{SE_A}メニュー{SE_BOO}もどりま{DYNAMIC_COLOR4}\n"
-	.string "{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{TRANSPARENT}$"
+	.string "やめる$ボックスを　しゅうりょうしますか？　$このボックスを　どうしますか？$どの　テーマにしますか？$どの　かべがみにしますか？${DYNAMIC 0}を　どうしますか？$どの　ボックスに　ジャンプしますか？$どの　ボックスに　あずけますか？${DYNAMIC 0}を　あずけました$このボックスは　いっぱいだ！$ほんとうに　にがしますか？${DYNAMIC 0}を　そとに　にがしてあげた$ばいばい　{DYNAMIC 0}！$マーキングしてください$たたかうポケモンが　いなくなります！$てもちが　いっぱいです！$ポケモンを　つかんだままですよ！$つれていく　ポケモンを　えらんで！$タマゴを　にがすことは　できません！$ボックスそうさを　つづけますか？${DYNAMIC 0}は　かえってきた！$しんぱい　だったのかな⋯⋯$⋯⋯⋯⋯⋯！$メールを　はずして　ください！$どうぐを　もたせますか？${DYNAMIC 0}を　バッグへいれた！$バッグが　いっぱいです！$どうぐを　バッグに　いれますか？${DYNAMIC 0}を　もたせた！${DYNAMIC 0}と　とりかえた！$メールを　あずかることは　できません！$やめる　　　$あずける　　$つれていく　$いれかえる　$つかむ　　　$ここにおく　$ようすをみる$にがす　　　$マーキング　$なまえ　　　$ジャンプ$かべがみ　　$あずかる$もたせる$とりかえる$バッグへ$せつめい$ふうけい1$ふうけい2$ふうけい3$エトセトラ$だいすき$もり$シティ$さばく$サバンナ$いわやま$かざん$ゆきやま$どうくつ$うみべ$かいてい$かわ$そら$みずたま$ポケセン$きかい$シンプル$なにを　しますか？$ポケモンを　つれていく$ポケモンを　あずける　$ボックスを　せいりする$どうぐせいり$さようなら$ボックスに　あずけている　ポケモンを　\n"
+	.string "てもちに　くわえる　ことが　できます　$てもちの　ポケモンを　　　　　　　　　\n"
+	.string "ボックスに　あずける　ことが　できます$ボックスに　あずけている　ポケモンや　\n"
+	.string "てもちの　ポケモンを　せいり　できます$ポケモンが　もっている　どうぐを\n"
+	.string "せいり　できます$ひとつ　まえの　メニューに　もどります\n"
+	.string "　　　　　　　　　　　　　　　　　　　$"
 	.globl gUnknown_85CB534
 gUnknown_85CB534: @ 0x85CB534
 	.string "てもちポケモンが　1ひきしかいません！\n"
@@ -14203,8 +14203,8 @@ gText_NumberRegistered: @ 0x85CB6AE
 	.string "とうろく　にんずう$"
 	.globl gText_NumberOfBattles
 gText_NumberOfBattles: @ 0x85CB6B8
-	.string "{MUS_RG_RIVAL_EXIT}{DYNAMIC_COLOR5}{SE_WARP_OUT}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR4}う${DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}$よびだ{DYNAMIC_COLOR4}$やめる${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}で{SE_I}{MUS_RG_OAK_LAB}て{SE_WARP_IN}よびだ{SE_EFFECTIVE}{DYNAMIC_COLOR1}とが\n"
-	.string "でき{MUS_RG_GAME_FREAK}ようだ${DYNAMIC_COLOR2}く{DYNAMIC_COLOR5}ん$もって{SE_ICE_BREAK}ポケモン$じ{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}ょう{MUS_RG_POKE_TOWER}${MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}{MUS_DUMMY}${A_BUTTON}かく{PH_PRICE_BLEND}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}ぜん{MUS_RG_RIVAL_EXIT}{TRANSPARENT}{B_BUTTON}もどる${A_BUTTON}コンディションをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}マーキン{SE_M_ICY_WIND}{B_BUTTON}もどる${A_BUTTON}マークをえら{SE_ITEMFINDER}{B_BUTTON}やめる${A_BUTTON}メニュ{SE_M_PAY_DAY}{B_BUTTON}もどる${A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる${A_BUTTON}リボンをみ{SE_ICE_BREAK}{B_BUTTON}もどる${A_BUTTON}{DYNAMIC_COLOR3}ょう{MUS_RG_VICTORY_WILD}{TRANSPARENT}{B_BUTTON}もどる${B_BUTTON}もどる$"
+	.string "たいせん　かいすう$しょうさい$よびだす$やめる$ここでは　あいてを　よびだす　ことが\n"
+	.string "できないようだ$さくせん$もってる　ポケモン$じこしょうかい$　　　　　　　　　　　　　　　　${A_BUTTON}かくだい　{B_BUTTON}もどる${A_BUTTON}ぜんたい　{B_BUTTON}もどる${A_BUTTON}コンディションをみる　{B_BUTTON}もどる${A_BUTTON}マーキング　{B_BUTTON}もどる${A_BUTTON}マークをえらぶ　{B_BUTTON}やめる${A_BUTTON}メニュー　{B_BUTTON}もどる${A_BUTTON}けってい　{B_BUTTON}もどる${B_BUTTON}もどる${A_BUTTON}リボンをみる　{B_BUTTON}もどる${A_BUTTON}しょうさい　{B_BUTTON}もどる${B_BUTTON}もどる$"
 	.globl gUnknown_85CB7A2
 gUnknown_85CB7A2: @ 0x85CB7A2
 	.string "せいかく/$"
@@ -14222,20 +14222,20 @@ gText_Number2: @ 0x85CB7CE
 
 	.globl sText_ConditionSearchMonMale
 sText_ConditionSearchMonMale: @ 0x85CB7D6
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
+	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}$"
 	.globl sText_ConditionSearchMonFemale
 sText_ConditionSearchMonFemale: @ 0x85CB7EA
-	.string "{SE_M_HYPER_BEAM2}{TRANSPARENT}{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{MUS_RG_ROUTE1}$"
+	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}$"
 	.globl sText_ConditionSearchMonUnknown
 sText_ConditionSearchMonUnknown: @ 0x85CB7FE
-	.string "{SE_M_HYPER_BEAM2}{MUS_DUMMY}/{LV_2}{MUS_RG_ROUTE1}$"
+	.string "{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}$"
 
 	.globl gText_Unknown
 gText_Unknown: @ 0x85CB808
 	.string "ふめい$よびだし$しょうさい$もどる$"
 	.globl gText_SearchResultRank
 gText_SearchResultRank: @ 0x85CB81B
-	.string "{SE_M_HYPER_BEAM2}ばんめ$"
+	.string "{DYNAMIC 0}ばんめ$"
 
 	.globl gText_RibbonsF700
 gText_RibbonsF700: @ 0x85CB821
@@ -14269,7 +14269,7 @@ gUnknown_85CBC6D: @ 0x85CBC6D
 	.string "やめることは　できません！$"
 	.globl gUnknown_85CBC7B
 gUnknown_85CBC7B: @ 0x85CBC7B
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_A}クイズ$"
+	.string "{DYNAMIC 0}さんの　クイズ$"
 
 	.globl gUnknown_85CBC85
 gUnknown_85CBC85: @ 0x85CBC85
@@ -14563,20 +14563,20 @@ gText_HealthboxGender_Female: @ 0x85CC4F5
 	.string "{COLOR 10}♀$"
 	.globl gText_HealthboxGender_None
 gText_HealthboxGender_None: @ 0x85CC4FA
-	.string "{COLOR 11}${MUS_RG_OAK_LAB}うえお$かきくけ{DYNAMIC_COLOR1}${DYNAMIC_COLOR2}{DYNAMIC_COLOR3}{DYNAMIC_COLOR4}{DYNAMIC_COLOR5}{DYNAMIC_COLOR6}$たちつてと$なにぬねの$はひふへほ$まみむめも$やゆよ！？$らりるれろ$わをん{SE_M_PAY_DAY}$アイ{PKMN}オ$カキクケコ$サシスセソ$タチツテト$ナニヌネノ$ハヒフヘホ$マミムメモ$ヤユヨ！？$ラリルレロ$ワヲン{SE_M_PAY_DAY}$ABCDE$FGHIJ$KLMNO$PQRST$UVWXY$Z·{SE_M_DIZZY_PUNCH}{TRANSPARENT}$01234$56789${EMOJI_MISCHIEVOUS}{EMOJI_HAPPY}{EMOJI_ANGRY}{EMOJI_SURPRISED}{EMOJI_BIGANGER}${EMOJI_BIGSMILE}{EMOJI_EVIL}{EMOJI_NEUTRAL}{EMOJI_TIRED}{EMOJI_SHOCKED}${EMOJI_LEAF}{EMOJI_FIRE}{EMOJI_WATER}{EMOJI_BOLT}{EMOJI_BALL}$♂♀{EMOJI_LEFT_PAREN}{EMOJI_RIGHT_PAREN}{EMOJI_TILDE}${EMOJI_LEFT_EYE}{EMOJI_RIGHT_EYE}{EMOJI_SMALLWHEEL}{EMOJI_SPHERE}{EMOJI_IRRITATED}${EMOJI_SPIRAL}{EMOJI_BIGWHEEL}{EMOJI_TONGUE}{EMOJI_ACUTE}{EMOJI_GRAVE}${EMOJI_RIGHT_FIST}{EMOJI_LEFT_FIST}{EMOJI_TRIANGLE_OUTLINE}{EMOJI_UNION}{EMOJI_GREATER_THAN}${EMOJI_CIRCLE}{EMOJI_TRIANGLE}{EMOJI_SQUARE}{EMOJI_HEART}{EMOJI_MOON}${EMOJI_NOTE}{EMOJI_PLUS}{EMOJI_MINUS}{EMOJI_EQUALS}{EMOJI_PIPE}${EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}{SE_M_HEAT_WAVE}$ひらがな$カタカナ$ABC$きごう$とうろく$とじる$チャット{SE_WARP_IN}やめま{DYNAMIC_COLOR4}か？$ど{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}{DYNAMIC_COLOR1}{SE_BOO}とうろく{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}か？${DYNAMIC_COLOR1}とば{SE_WARP_IN}いれ{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}！$"
+	.string "{COLOR 11}$あいうえお$かきくけこ$さしすせそ$たちつてと$なにぬねの$はひふへほ$まみむめも$やゆよ！？$らりるれろ$わをんー　$アイウエオ$カキクケコ$サシスセソ$タチツテト$ナニヌネノ$ハヒフヘホ$マミムメモ$ヤユヨ！？$ラリルレロ$ワヲンー　$ABCDE$FGHIJ$KLMNO$PQRST$UVWXY$Z·⋯　　$01234$56789${EMOJI_MISCHIEVOUS}{EMOJI_HAPPY}{EMOJI_ANGRY}{EMOJI_SURPRISED}{EMOJI_BIGANGER}${EMOJI_BIGSMILE}{EMOJI_EVIL}{EMOJI_NEUTRAL}{EMOJI_TIRED}{EMOJI_SHOCKED}${EMOJI_LEAF}{EMOJI_FIRE}{EMOJI_WATER}{EMOJI_BOLT}{EMOJI_BALL}$♂♀{EMOJI_LEFT_PAREN}{EMOJI_RIGHT_PAREN}{EMOJI_TILDE}${EMOJI_LEFT_EYE}{EMOJI_RIGHT_EYE}{EMOJI_SMALLWHEEL}{EMOJI_SPHERE}{EMOJI_IRRITATED}${EMOJI_SPIRAL}{EMOJI_BIGWHEEL}{EMOJI_TONGUE}{EMOJI_ACUTE}{EMOJI_GRAVE}${EMOJI_RIGHT_FIST}{EMOJI_LEFT_FIST}{EMOJI_TRIANGLE_OUTLINE}{EMOJI_UNION}{EMOJI_GREATER_THAN}${EMOJI_CIRCLE}{EMOJI_TRIANGLE}{EMOJI_SQUARE}{EMOJI_HEART}{EMOJI_MOON}${EMOJI_NOTE}{EMOJI_PLUS}{EMOJI_MINUS}{EMOJI_EQUALS}{EMOJI_PIPE}${EMOJI_HIGHBAR}{UNDERSCORE}{EMOJI_SEMICOLON}:　$ひらがな$カタカナ$ABC$きごう$とうろく$とじる$チャットを　やめますか？$どこに　とうろくしますか？$ここに　とうろくしますか？$ことばを　いれて　ください！$"
 	.globl gUnknown_85CC663
 gUnknown_85CC663: @ 0x85CC663
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}{DYNAMIC_COLOR2}んか{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た！$"
+	.string "{DYNAMIC 0}さんが　さんかしました！$"
 	.globl gUnknown_85CC672
 gUnknown_85CC672: @ 0x85CC672
-	.string "{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}ん{SE_SAVE}ぬけま{DYNAMIC_COLOR3}た${SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひきめ:${SE_M_HYPER_BEAM2}の{MUS_RG_ROUTE1}ひきめ{SE_I}いま{DYNAMIC_COLOR5}ん${DYNAMIC_COLOR2}んか{DYNAMIC_COLOR3}ゃ{SE_SAVE}いなくなったので\n"
-	.string "{DYNAMIC_COLOR3}ゅうりょう{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$リーダー{SE_A}{SE_M_HYPER_BEAM2}{DYNAMIC_COLOR2}んが\n"
-	.string "ぬけたの{SE_NOTE_B}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR4}！$とうろく{SE_SAVE}かわりま{DYNAMIC_COLOR3}た\n"
-	.string "ポケモンレポート{SE_BOO}かき{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}か？$まえ{SE_BOO}かかれ{SE_FAINT}レポートに\n"
-	.string "うえか{SE_LAVARIDGE_FALL_WARP}{MUS_RG_POKE_TOWER}て{SE_SWITCH}{MUS_RG_OAK}で{DYNAMIC_COLOR4}か？$ポケモンレポート{SE_BOO}かき{DYNAMIC_COLOR1}ん{PH_LOT_BLEND}ま{DYNAMIC_COLOR4}\n"
-	.string "でんげん{SE_WARP_IN}きら{MUS_RG_GAME_FREAK}{SE_NOTE_B}くだ{MUS_RG_VICTORY_WILD}${SE_M_HYPER_BEAM2}{TRANSPARENT}は\n"
-	.string "レポート{SE_BOO}{DYNAMIC_COLOR3}っか{SE_ICE_STAIRS}かきの{DYNAMIC_COLOR1}{DYNAMIC_COLOR3}た！$リーダー{SE_SAVE}やめる{SE_BANG}{MUS_RG_POKE_TOWER}{DYNAMIC_COLOR2}ん\n"
-	.string "になりま{DYNAMIC_COLOR4}{SE_SAVE}よろ{MUS_RG_VICTORY_GYM_LEADER}で{DYNAMIC_COLOR4}か？$"
+	.string "{DYNAMIC 0}さんが　ぬけました${DYNAMIC 0}の{DYNAMIC 1}ひきめ:${DYNAMIC 0}の{DYNAMIC 1}ひきめは　いません$さんかしゃが　いなくなったので\n"
+	.string "しゅうりょうします！$リーダーの　{DYNAMIC 0}さんが\n"
+	.string "ぬけたので　かいさんします！$とうろくが　かわりました\n"
+	.string "ポケモンレポートに　かきこみますか？$まえに　かかれた　レポートに\n"
+	.string "うえから　かいても　いいですか？$ポケモンレポートに　かきこんでいます\n"
+	.string "でんげんを　きらないで　ください${DYNAMIC 0}　は\n"
+	.string "レポートに　しっかり　かきのこした！$リーダーが　やめると　かいさん\n"
+	.string "になりますが　よろしいですか？$"
 	.globl gUnknown_85CC769
 gUnknown_85CC769: @ 0x85CC769
 	.string "こんにちは$"
@@ -14639,22 +14639,22 @@ gUnknown_85CC9FC: @ 0x85CC9FC
 	.string "サラサラぐあい$"
 	.globl gUnknown_85CCA04
 gUnknown_85CCA04: @ 0x85CCA04
-	.string "{B_COPY_VAR_1}${TRANSPARENT}"
+	.string "{B_COPY_VAR_1}$　"
 
 	.globl gUnknown_85CCA08
 gUnknown_85CCA08: @ 0x85CCA08
-	.string "ふん${TRANSPARENT}"
+	.string "ふん$　"
 
 	.globl gUnknown_85CCA0C
 gUnknown_85CCA0C: @ 0x85CCA0C
-	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}${MUS_DUMMY}"
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}$　　"
 
 	.globl gUnknown_85CCA14
 gUnknown_85CCA14: @ 0x85CCA14
 	.string "びょう$"
 	.globl gUnknown_85CCA18
 gUnknown_85CCA18: @ 0x85CCA18
-	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}${MUS_DUMMY}"
+	.string "{B_COPY_VAR_1},{B_COPY_VAR_2}$　　"
 
 	.globl gUnknown_85CCA20
 gUnknown_85CCA20: @ 0x85CCA20
@@ -14722,7 +14722,7 @@ gText_BerryPickingResults: @ 0x85CCD34
 	.string "きのみの　けっか　はっぴょう！！$"
 	.globl gText_10P30P50P50P
 gText_10P30P50P50P: @ 0x85CCD45
-	.string "10{SE_M_PETAL_DANCE}{TRANSPARENT}30{SE_M_PETAL_DANCE}{TRANSPARENT}50{SE_M_PETAL_DANCE}{TRANSPARENT}{EMOJI_MINUS}50P$"
+	.string "10P　　30P　　50P　　{EMOJI_MINUS}50P$"
 	.globl gText_AnnouncingRankings
 gText_AnnouncingRankings: @ 0x85CCD5A
 	.string "じゅんいの　はっぴょう！！$"
@@ -14731,14 +14731,14 @@ gText_AnnouncingPrizes: @ 0x85CCD68
 	.string "しょうひんの　はっぴょう！！$1:$2:$3:$4:$5:$"
 	.globl gText_FirstPlacePrize
 gText_FirstPlacePrize: @ 0x85CCD86
-	.string "1ばん{SE_BOO}なっ{SE_FAINT}ひとに\n"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}プレゼント！！$"
+	.string "1ばんに　なった　ひとに\n"
+	.string "{DYNAMIC 0}を　プレゼント！！$"
 	.globl gText_CantHoldAnyMore
 gText_CantHoldAnyMore: @ 0x85CCD9F
-	.string "{SE_M_HYPER_BEAM2}{SE_I}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
+	.string "{DYNAMIC 0}は　いっぱいです⋯$"
 	.globl gText_FilledStorageSpace
 gText_FilledStorageSpace: @ 0x85CCDAB
-	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}いっ{PH_THOUGHT_HELD}になって{DYNAMIC_COLOR3}まった！$"
+	.string "{DYNAMIC 0}が　いっぱいになってしまった！$"
 	.globl gText_WantToPlayAgain
 gText_WantToPlayAgain: @ 0x85CCDBD
 	.string "もういちど　あそびますか？$"
@@ -14765,15 +14765,15 @@ gUnknown_85CCDFE: @ 0x85CCDFE
 	.string "ミニポケモンでジャンプの　きろく$さいこう　ジャンプかいすう$さいこう　とくてん$れんぞく　EXCELLENT$"
 	.globl gUnknown_85CCE36
 gUnknown_85CCE36: @ 0x85CCE36
-	.string "{MUS_RG_PEWTER}{DYNAMIC_COLOR5}き{SE_SAVE}よかったので\n"
-	.string "{SE_M_HYPER_BEAM2}{SE_WARP_IN}{MUS_RG_ROUTE1}{SE_LEDGE}プレゼント！$"
+	.string "せいせきが　よかったので\n"
+	.string "{DYNAMIC 0}を　{DYNAMIC 1}こ　プレゼント！$"
 	.globl gUnknown_85CCE52
 gUnknown_85CCE52: @ 0x85CCE52
-	.string "{SE_M_HYPER_BEAM2}{SE_SAVE}いっ{PH_THOUGHT_HELD}に\n"
-	.string "なって{DYNAMIC_COLOR3}まった！$"
+	.string "{DYNAMIC 0}が　いっぱいに\n"
+	.string "なってしまった！$"
 	.globl gUnknown_85CCE65
 gUnknown_85CCE65: @ 0x85CCE65
-	.string "{SE_M_HYPER_BEAM2}{SE_I}いっ{PH_THOUGHT_HELD}で{DYNAMIC_COLOR4}⋯$"
+	.string "{DYNAMIC 0}は　いっぱいです⋯$"
 	.globl gUnknown_85CCE71
 gUnknown_85CCE71: @ 0x85CCE71
 	.string "もういちど　あそびますか？$"
@@ -14812,29 +14812,29 @@ gJPText_MysteryGift: @ 0x85CCED5
 	.string "ふしぎなもらいもの$"
 	.globl gJPText_DecideStop
 gJPText_DecideStop: @ 0x85CCEDF
-	.string "{A_BUTTON}けっ{MUS_RG_CAUGHT_INTRO}{TRANSPARENT}{B_BUTTON}やめる$"
+	.string "{A_BUTTON}けってい　{B_BUTTON}やめる$"
 	.globl gJPText_ReceiveMysteryGiftWithEReader
 gJPText_ReceiveMysteryGiftWithEReader: @ 0x85CCEEC
-	.string "カードeリーダー{PLUS}{TRANSPARENT}で\n"
-	.string "ふ{DYNAMIC_COLOR3}ぎなも{MUS_RG_VS_DEOXYS}もの{SE_WARP_IN}よみ{DYNAMIC_COLOR1}みま{DYNAMIC_COLOR4}$"
+	.string "カードeリーダー{PLUS}　で\n"
+	.string "ふしぎなもらいものを　よみこみます$"
 	.globl gJPText_SelectConnectFromEReaderMenu
 gJPText_SelectConnectFromEReaderMenu: @ 0x85CCF0B
-	.string "カードeリーダー{PLUS}{SE_A}メニューから\n"
-	.string "‘つう{DYNAMIC_COLOR3}ん'{SE_WARP_IN}えらび$"
+	.string "カードeリーダー{PLUS}の　メニューから\n"
+	.string "‘つうしん'を　えらび$"
 	.globl gJPText_SelectConnectWithGBA
 gJPText_SelectConnectWithGBA: @ 0x85CCF2A
-	.string "‘ゲームボーイアドバンスとつう{DYNAMIC_COLOR3}ん'\n"
-	.string "{SE_WARP_IN}{DYNAMIC_COLOR5}んた{SE_DOOR}{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$カードeリーダー{PLUS}{SE_A}‘つう{DYNAMIC_COLOR3}ん'を\n"
-	.string "えらん{SE_NOTE_B}Aボタン{SE_WARP_IN}お{DYNAMIC_COLOR3}てくだ{MUS_RG_VICTORY_WILD}$"
+	.string "‘ゲームボーイアドバンスとつうしん'\n"
+	.string "を　せんたく　してください$カードeリーダー{PLUS}の　‘つうしん'を\n"
+	.string "えらんで　Aボタンを　おしてください$"
 	.globl gJPText_LinkIsIncorrect
 gJPText_LinkIsIncorrect: @ 0x85CCF72
 	.string "せつぞくが　まちがっています$"
 
 	.globl gJPText_CardReadingHasBeenHalted
 gJPText_CardReadingHasBeenHalted: @ 0x85CCF81
-	.string "カード{SE_A}よみ{DYNAMIC_COLOR1}みを\n"
-	.string "ちゅう{SE_NOT_EFFECTIVE}{DYNAMIC_COLOR3}ま{DYNAMIC_COLOR3}た$カードeリーダー{PLUS}と\n"
-	.string "つう{DYNAMIC_COLOR3}{SE_WARP_OUT}できま{DYNAMIC_COLOR5}ん$"
+	.string "カードの　よみこみを\n"
+	.string "ちゅうし　しました$カードeリーダー{PLUS}と\n"
+	.string "つうしん　できません$"
 	.globl gJPText_Connecting
 gJPText_Connecting: @ 0x85CCFAD
 	.string "つうしん　ちゅう　です$"
@@ -14851,8 +14851,8 @@ gJPText_ConnectionErrorTryAgain: @ 0x85CCFD5
 
 	.globl gJPText_AllowEReaderToLoadCard
 gJPText_AllowEReaderToLoadCard: @ 0x85CCFF2
-	.string "カードeリーダー{PLUS}{TRANSPARENT}に\n"
-	.string "カード{SE_WARP_IN}よみ{DYNAMIC_COLOR1}ま{DYNAMIC_COLOR5}{SE_SHIP}くだ{MUS_RG_VICTORY_WILD}$"
+	.string "カードeリーダー{PLUS}　に\n"
+	.string "カードを　よみこませて　ください$"
 	.globl gJPText_ConnectionComplete
 gJPText_ConnectionComplete: @ 0x85CD010
 	.string "つうしん　しゅうりょう！$"
@@ -15358,7 +15358,7 @@ gUnknown_85D3D84: @ 0x85D3D84
 
 	.globl gUnknown_85D3D90
 gUnknown_85D3D90: @ 0x85D3D90
-	.string "{LIGHT_RED}ね{RED}$ハンサム$ジョバンニ$も{WHITE}も{WHITE}$てつ${LIGHT_GREEN}んに{BLUE}ん${MUS_DUMMY}{TRANSPARENT}"
+	.string "おねえ$ハンサム$ジョバンニ$もあもあ$てつ$きんにくん$　　　"
 
 	.globl gUnknown_85D3DB0
 gUnknown_85D3DB0: @ 0x85D3DB0
@@ -15617,7 +15617,7 @@ gUnknown_85D7A1C: @ 0x85D7A1C
 
 	.globl gUnknown_85D7A28
 gUnknown_85D7A28: @ 0x85D7A28
-	.string "どニの{BLUE}ベニの{BLUE}ドヌの{BLUE}ヘネの{BLUE}uネの{BLUE}{LIGHT_BLUE}ノの{BLUE}ナツ$クミ$ゲン$コウ$マリ$ミホ${MUS_DUMMY}"
+	.string "どニのくベニのくドヌのくヘネのくuネのくけノのくナツ$クミ$ゲン$コウ$マリ$ミホ$　　"
 
 	.globl gUnknown_85D7A54
 gUnknown_85D7A54: @ 0x85D7A54
@@ -16134,9 +16134,9 @@ gUnknown_85DD47F: @ 0x85DD47F
 
 	.globl gUnknown_85DD48E
 gUnknown_85DD48E: @ 0x85DD48E
-	.string "{SE_M_EMBER}{SE_M_SACRED_FIRE2}\l"
-	.string "{TRANSPARENT}{UP_ARROW_2}\p"
-	.string "{TRANSPARENT}{MUS_POKE_MART}{MUS_LITTLEROOT}{MUS_MT_CHIMNEY}{MUS_DESERT}{MUS_HELP}$$"
+	.string "ビ　バ　\l"
+	.string "　{UP_ARROW_2}\p"
+	.string "　デあドあバあベあボあ$$"
 	.globl gUnknown_85DD4A4
 gUnknown_85DD4A4: @ 0x85DD4A4
 	.string "もJシくシJシくもJシくトJシくもJシくフJシくれJシくシJシくぅJシくシJシくぢJシくワJシくぎJシくシJシくぼJシくワJシくイJシくワJシくもJシくヤJシく　レベル50$　オープンレベル$"
@@ -17634,7 +17634,7 @@ sRibbonsMonListWindowTemplate: @ 0x85F5DC4
 
 	.globl gText_RibbonsMonListCount
 gText_RibbonsMonListCount: @ 0x85F5DCC
-	.string "{MUS_DUMMY}{TRANSPARENT}/{SE_M_HYPER_BEAM2}$"
+	.string "　　　/{DYNAMIC 0}$"
 
 	.globl sText_RibbonsMonListItemMale
 sText_RibbonsMonListItemMale: @ 0x85F5DD3
@@ -17956,7 +17956,7 @@ gUnknown_85FB91C: @ 0x85FB91C
 
 	.globl gUnknown_85FB960
 gUnknown_85FB960: @ 0x85FB960
-	.string "ーーーーーーーーー${MUS_DUMMY}"
+	.string "ーーーーーーーーー$　　"
 
 	.globl gUnknown_85FB96C
 gUnknown_85FB96C: @ 0x85FB96C
