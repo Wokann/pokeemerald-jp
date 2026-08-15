@@ -1987,16 +1987,7 @@ __attribute__((naked)) void PokeballGlowEffect_6(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void PokeballGlowEffect_7(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void PokeballGlowEffect_7(struct Sprite *sprite) {}
 __attribute__((naked)) void SpriteCB_PokeballGlow(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"

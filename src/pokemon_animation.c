@@ -4,16 +4,7 @@
 #include "task.h"
 #include "main.h"
 
-__attribute__((naked)) void MonAnimDummySpriteCallback(struct Sprite *sprite)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void MonAnimDummySpriteCallback(struct Sprite *sprite) {}
 __attribute__((naked)) void SetPosForRotation(struct Sprite *sprite, u16 index, s16 amplitudeX, s16 amplitudeY)
 {
     __asm__(".syntax unified\n\t"

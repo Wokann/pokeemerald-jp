@@ -210,16 +210,7 @@ __attribute__((naked)) void Sunny_InitAll()
     );
 }
 
-__attribute__((naked)) void Sunny_Main()
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void Sunny_Main() {}
 __attribute__((naked)) bool8 Shade_Finish()
 {
     __asm__(".syntax unified\n\t"
@@ -5273,16 +5264,7 @@ __attribute__((naked)) void Shade_InitAll()
     );
 }
 
-__attribute__((naked)) void Shade_Main()
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void Shade_Main() {}
 __attribute__((naked)) bool8 Drought_Finish()
 {
     __asm__(".syntax unified\n\t"

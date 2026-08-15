@@ -25363,16 +25363,7 @@ __attribute__((naked)) void sub_08096984(struct ObjectEvent *objectEvent, struct
     );
 }
 
-__attribute__((naked)) void DoTracksGroundEffect_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void DoTracksGroundEffect_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a) {}
 __attribute__((naked)) void DoTracksGroundEffect_Footprints(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
 {
     __asm__(".syntax unified\n\t"

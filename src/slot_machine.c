@@ -338,16 +338,7 @@ __attribute__((naked)) void sub_0812A720(void)
     );
 }
 
-__attribute__((naked)) void SlotMachineDummyTask(u8 taskId)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void SlotMachineDummyTask(u8 taskId) {}
 __attribute__((naked)) void SlotMachineSetup_0_0(u8 taskId)
 {
     __asm__(".syntax unified\n\t"
@@ -6646,16 +6637,7 @@ __attribute__((naked)) void Task_CreatePikaPowerBolt(u8 taskId)
     );
 }
 
-__attribute__((naked)) void PikaPowerBolt_Idle(struct Task *task)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
+void PikaPowerBolt_Idle(struct Task *task) {}
 __attribute__((naked)) void PikaPowerBolt_AddBolt(struct Task *task)
 {
     __asm__(".syntax unified\n\t"
