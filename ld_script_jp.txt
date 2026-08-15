@@ -9567,7 +9567,7 @@ SECTIONS {
         src/field_effect_helpers.o(.text);
         src/field_effect_helpers_get.o(.text);
         src/field_effect_helpers_rest.o(.text);
-        asm/contest_ai.o(.text);
+        src/contest_ai.o(.text);
         src/battle_anim_sound_tasks.o(.text.SoundTask_FireBlast);
         src/battle_anim_sound_tasks.o(.text.SoundTask_FireBlast_Step1);
         src/battle_anim_sound_tasks.o(.text.SoundTask_FireBlast_Step2);
