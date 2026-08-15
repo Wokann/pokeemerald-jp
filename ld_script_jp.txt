@@ -2182,7 +2182,7 @@ SECTIONS {
         src/berry_crush.o(.text.SpriteCB_Sparkle);
         src/berry_crush.o(.text.SpriteCB_Sparkle_Init);
         src/berry_crush.o(.text.RunOrScheduleCommand);
-        src/berry_crush.o(.text.sub_080229BC);
+        src/berry_crush.o(.text.Cmd_BeginNormalPaletteFade);
         src/berry_crush.o(.text.Cmd_WaitPaletteFade);
         src/berry_crush.o(.text.Cmd_PrintMessage);
         src/berry_crush.o(.text.Cmd_ShowGameDisplay);
@@ -2202,7 +2202,7 @@ SECTIONS {
         src/berry_crush.o(.text.Cmd_PlayGame_Member);
         src/berry_crush.o(.text.Cmd_FinishGame);
         src/berry_crush.o(.text.Cmd_HandleTimeUp);
-        src/berry_crush.o(.text.sub_08023A40);
+        src/berry_crush.o(.text.Cmd_TabulateResults);
         src/berry_crush.o(.text.Cmd_ShowResults);
         src/berry_crush.o(.text.Cmd_SaveGame);
         src/berry_crush.o(.text.Cmd_AskPlayAgain);
@@ -9245,6 +9245,7 @@ SECTIONS {
         src/data/berry_crush1.o(.rodata);
         data/data_b_mid2a.o(.rodata);
         src/data/berry_crush2.o(.rodata);
+        src/data/berry_crush3.o(.rodata);
         data/data_b_mid2b.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);

@@ -83,36 +83,6 @@ enum {
     MSG_COMM_STANDBY,
 };
 
-// IDs for the main berry crush game functions
-enum {
-    CMD_NONE,
-    CMD_FADE,
-    CMD_WAIT_FADE,
-    CMD_PRINT_MSG,
-    CMD_SHOW_GAME,
-    CMD_HIDE_GAME,
-    CMD_READY_BEGIN,
-    CMD_ASK_PICK_BERRY,
-    CMD_PICK_BERRY,
-    CMD_WAIT_BERRIES,
-    CMD_DROP_BERRIES,
-    CMD_DROP_LID,
-    CMD_COUNTDOWN,
-    CMD_PLAY_GAME_LEADER,
-    CMD_PLAY_GAME_MEMBER,
-    CMD_FINISH_GAME,
-    CMD_TIMES_UP,
-    CMD_CALC_RESULTS,
-    CMD_SHOW_RESULTS,
-    CMD_SAVE,
-    CMD_ASK_PLAY_AGAIN,
-    CMD_COMM_PLAY_AGAIN,
-    CMD_PLAY_AGAIN_YES,
-    CMD_PLAY_AGAIN_NO,
-    CMD_CLOSE_LINK,
-    CMD_QUIT,
-};
-
 #define PLAY_AGAIN_YES        0
 #define PLAY_AGAIN_NO         1
 #define PLAY_AGAIN_NO_BERRIES 3
@@ -2758,7 +2728,7 @@ __attribute__((naked)) void sub_08022434(void)
 }
 
 
-__attribute__((naked)) void sub_080229BC(void)
+__attribute__((naked)) u32 Cmd_BeginNormalPaletteFade(struct BerryCrushGame *game, u8 *args)
 {
     __asm__(".syntax unified\n\t"
         "	push {r4, r5, r6, lr}\n\t"
@@ -2808,7 +2778,7 @@ __attribute__((naked)) void sub_080229BC(void)
 }
 
 
-__attribute__((naked)) void sub_08023A40(void)
+__attribute__((naked)) u32 Cmd_TabulateResults(struct BerryCrushGame *game, u8 *args)
 {
     __asm__(".syntax unified\n\t"
         "	push {r4, r5, r6, r7, lr}\n\t"
@@ -4084,4 +4054,3 @@ __attribute__((naked)) void sub_08021ABC(void)
         ".syntax divided\n\t"
     );
 }
-
