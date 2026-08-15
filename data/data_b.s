@@ -5010,23 +5010,7 @@ gTrainerClassNames: @ 0x82E3564
 
 	.globl gTrainers
 gTrainers: @ 0x82E383C
-	.incbin "baserom_jp.gba", 0x2e383c, 0x4
-
-	.globl gUnknown_82E3840
-gUnknown_82E3840: @ 0x82E3840
-	.incbin "baserom_jp.gba", 0x2e3840, 0x6
-
-	.globl gUnknown_82E3846
-gUnknown_82E3846: @ 0x82E3846
-	.incbin "baserom_jp.gba", 0x2e3846, 0x647a
-
-	.globl gUnknown_82E9CC0
-gUnknown_82E9CC0: @ 0x82E9CC0
-	.incbin "baserom_jp.gba", 0x2e9cc0, 0x40
-
-	.globl gUnknown_82E9D00
-gUnknown_82E9D00: @ 0x82E9D00
-	.incbin "baserom_jp.gba", 0x2e9d00, 0x61c
+	.incbin "baserom_jp.gba", 0x2e383c, 0x6ae0  @ 856 x struct Trainer
 
 	.globl gSpeciesNamesJP
 gSpeciesNamesJP: @ 0x82EA31C
