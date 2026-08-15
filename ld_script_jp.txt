@@ -9487,7 +9487,7 @@ SECTIONS {
         src/battle_transition.o(.text.Phase2_32_Func3);
         src/battle_transition.o(.text.Phase2_32_Func4);
         src/battle_transition.o(.text.Phase2_32_Func5);
-        asm/battle_controller_link_partner.o(.text);
+        src/battle_controller_link_partner.o(.text);
         asm/battle_message.o(.text);
         src/battle_message.o(.text.ChooseMoveUsedParticle);
         src/battle_message.o(.text.ChooseTypeOfMoveUsedString);
