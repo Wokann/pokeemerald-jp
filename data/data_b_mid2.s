@@ -13,31 +13,6 @@
 
 
 
-	.globl sText_TrainerCardInfoPage1
-sText_TrainerCardInfoPage1: @ 0x82C1F1C
-	.string "{DYNAMIC 0}の　{DYNAMIC 1}の\n"
-	.string "トレーナーカードを　みせてもらった\l"
-	.string "{DYNAMIC 2}\p"
-	.string "ポケモンずかん　{DYNAMIC 3}\n"
-	.string "プレイ　じかん　{DYNAMIC 4}:{DYNAMIC 5}\p"
-	.string "$　"
-
-	.globl sText_TrainerCardInfoPage2
-sText_TrainerCardInfoPage2: @ 0x82C1F54
-	.string "たいせん　かち{DYNAMIC 0}　まけ{DYNAMIC 2}\n"
-	.string "こうかん　{DYNAMIC 3}かい\p"
-	.string "‘{DYNAMIC 4}　{DYNAMIC 5}\n"
-	.string "　{DYNAMIC 6}　{DYNAMIC 7}\p"
-	.string "${DYNAMIC 1}‘これからも　よろしく！{PAUSE 60}$　　{DYNAMIC 1}‘これからも　よろしくね！{PAUSE 60}$　"
-
-	.globl sGladToMeetYouTexts
-sGladToMeetYouTexts: @ 0x82C1FA4
-	.incbin "baserom_jp.gba", 0x2c1fa4, 0x8
-
-	.globl sText_FinishedCheckingPlayersTrainerCard
-sText_FinishedCheckingPlayersTrainerCard: @ 0x82C1FAC
-	.string "{DYNAMIC 1}の　トレーナーカードを\n"
-	.string "みおわった！{PAUSE 60}$"
 	.globl sWindowTemplate_BButtonCancel
 sWindowTemplate_BButtonCancel: @ 0x82C1FC4
 	.incbin "baserom_jp.gba", 0x2c1fc4, 0x8

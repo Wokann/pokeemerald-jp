@@ -386,6 +386,16 @@ SYMBOLS8K = [
 
 END_ADDR8K = 0x082C1F1C  # sText_TrainerCardInfoPage1 (next region)
 
+# Eighth batch part 12: trainer-card info texts and glad-to-meet table.
+SYMBOLS8L = [
+    ("sText_TrainerCardInfoPage1", 0x082C1F1C, "text", None),
+    ("sText_TrainerCardInfoPage2", 0x082C1F54, "text", None),
+    ("sGladToMeetYouTexts", 0x082C1FA4, "table_glad_to_meet", None),
+    ("sText_FinishedCheckingPlayersTrainerCard", 0x082C1FAC, "text", None),
+]
+
+END_ADDR8L = 0x082C1FC4  # sWindowTemplate_BButtonCancel (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -677,6 +687,19 @@ def emit_table_activity_names(name):
     return "\n".join(out)
 
 
+def emit_table_glad_to_meet(name):
+    # JP keeps the two glad-to-meet lines embedded inside
+    # sText_TrainerCardInfoPage2 (separated by $), so the table points at
+    # offsets into that string instead of separate symbols (US has separate
+    # sText_GladToMeetYouMale/Female texts).
+    return "\n".join([
+        f"const u8 *const {name}[2] = {{",
+        "    sText_TrainerCardInfoPage2 + 0x28,",
+        "    sText_TrainerCardInfoPage2 + 0x3C,",
+        "};",
+    ])
+
+
 def build(symbols, end_addr, out_h, out_c, comment, extra_externs=None):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
@@ -740,6 +763,8 @@ def build(symbols, end_addr, out_h, out_c, comment, extra_externs=None):
             out.append(emit_table_choose_trainer(name))
         elif kind == "table_activity_names":
             out.append(emit_table_activity_names(name))
+        elif kind == "table_glad_to_meet":
+            out.append(emit_table_glad_to_meet(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -799,6 +824,8 @@ def main():
            "sText_Search", "sText_BattleTowerOpenLv", "sText_RecordCorner", "sText_BerryBlender",
            "sText_CoolContest", "sText_BeautyContest", "sText_CuteContest", "sText_SmartContest",
            "sText_ToughContest", "sText_BattleTowerLv50"])
+    build(SYMBOLS8L, END_ADDR8L, "src/data/union_room8l.h", "src/data/union_room8l.c",
+          "// Trainer-card info texts and glad-to-meet table")
 
 
 if __name__ == "__main__":
