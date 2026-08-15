@@ -7024,7 +7024,7 @@ SECTIONS {
         src/field_effect.o(.text.SpriteCB_DeoxysRockFragment);
         src/field_effect.o(.text.FldEff_MoveDeoxysRock);
         src/field_effect.o(.text.Task_MoveDeoxysRock);
-        asm/scanline_effect_stub.o(.text);
+        src/scanline_effect_stub.o(.text);
         src/scanline_effect.o(.text);
         src/pokedex.o(.text);
         src/trainer_card.o(.text);
@@ -8526,7 +8526,7 @@ SECTIONS {
         src/battle_anim_ghost.o(.text.AnimLick_Step);
         src/battle_anim_ghost.o(.text.AnimTask_NightmareClone);
         src/battle_anim_ghost.o(.text.AnimTask_NightmareClone_Step);
-        asm/ghost_mid.o(.text);
+        src/ghost_mid.o(.text);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step1);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step2);
         src/battle_anim_ghost.o(.text.AnimTask_SpiteTargetShadow_Step3);
@@ -8689,13 +8689,13 @@ SECTIONS {
         src/battle_anim_utility_funcs.o(.text.AnimTask_WaitAndRestoreVisibility);
         src/battle_intro.o(.text);
         src/bike.o(.text.MovePlayerOnBike);
-        asm/bike_stub_face.o(.text);
+        src/bike_stub_face.o(.text);
         src/bike.o(.text.GetMachBikeTransition);
         src/bike.o(.text.MachBikeTransition_FaceDirection);
         src/bike.o(.text.MachBikeTransition_TurnDirection);
         src/bike.o(.text.MachBikeTransition_TrySpeedUp);
         src/bike.o(.text.MachBikeTransition_TrySlowDown);
-        asm/bike_stub_44.o(.text);
+        src/bike_stub_44.o(.text);
         src/bike.o(.text.CheckMovementInputAcroBike);
         src/bike.o(.text.AcroBikeHandleInputNormal);
         src/bike.o(.text.AcroBikeHandleInputTurning);
@@ -9270,7 +9270,7 @@ SECTIONS {
         src/slot_machine.o(.text.AllocDigitalDisplayGfx);
         src/contest_painting.o(.text);
         src/battle_ai_script_commands.o(.text);
-        asm/trader_jp_only.o(.text);
+        src/trader_jp_only.o(.text);
         src/trader.o(.text);
         src/starter_choose.o(.text.GetStarterPokemon);
         src/starter_choose.o(.text.VblankCB_StarterChoose);
@@ -10098,7 +10098,7 @@ SECTIONS {
         src/trainer_pokemon_sprites.o(.text.PlayerGenderToFrontTrainerPicId_Debug);
         src/lilycove_lady.o(.text);
         src/battle_dome.o(.text);
-        asm/battle_palace_jp_only.o(.text);
+        src/battle_palace_jp_only.o(.text);
         src/battle_palace.o(.text);
         src/match_call.o(.text.InitMatchCallCounters);
         src/match_call.o(.text.GetCurrentTotalMinutes);
