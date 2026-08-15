@@ -9512,4 +9512,3 @@ gText_ExpandedPlaceholder_Kun = gUnknown_85C8C25;
 gText_ExpandedPlaceholder_Chan = gUnknown_85C8C28;
 gText_ExpandedPlaceholder_May = gUnknown_85C8C5E;
 gText_ExpandedPlaceholder_Brendan = gUnknown_85C8C5A;
-gFacilityClassToPicIndex = gUnknown_82EFF00;
