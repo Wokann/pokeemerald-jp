@@ -13,14 +13,6 @@
 
 
 
-	.globl sLinkGroupActivityNameTexts
-sLinkGroupActivityNameTexts: @ 0x82C1E58
-	.incbin "baserom_jp.gba", 0x2c1e58, 0xb0
-
-	.globl sCardColorTexts
-sCardColorTexts: @ 0x82C1F08
-	.incbin "baserom_jp.gba", 0x2c1f08, 0x14
-
 	.globl sText_TrainerCardInfoPage1
 sText_TrainerCardInfoPage1: @ 0x82C1F1C
 	.string "{DYNAMIC 0}の　{DYNAMIC 1}の\n"

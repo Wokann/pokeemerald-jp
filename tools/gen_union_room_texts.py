@@ -40,7 +40,7 @@ SYMBOLS = [
     ("sASCII_NowSlot", 0x082C05E4, "ascii", "NOWSLOT"),
     ("sASCII_ClockCmds", 0x082C05EC, "clock_cmds", None),
     ("sASCII_ChildParentSearch", 0x082C0628, "child_search", None),
-    ("sUnknown_82C0640", 0x082C0640, "gap", bytes([0xFF, 0x00, 0x00, 0x00])),
+    ("sText_EmptyString", 0x082C0640, "gap", bytes([0xFF, 0x00, 0x00, 0x00])),
     ("sText_Colon", 0x082C0644, "text", None),
     ("sText_ID", 0x082C0648, "text", None),
     ("sText_PleaseStartOver", 0x082C064C, "text", None),
@@ -371,6 +371,21 @@ SYMBOLS8J = [
 
 END_ADDR8J = 0x082C1E58  # sLinkGroupActivityNameTexts (next region)
 
+# Eighth batch part 11: activity-name and card-color tables/texts.
+SYMBOLS8K = [
+    ("sLinkGroupActivityNameTexts", 0x082C1E58, "table_activity_names", None),
+    ("sText_ItsNormalCard", 0x082C1ECC, "text", None),
+    ("sText_ItsBronzeCard", 0x082C1ED8, "text", None),
+    ("sText_ItsCopperCard", 0x082C1EE4, "text", None),
+    ("sText_ItsSilverCard", 0x082C1EF0, "text", None),
+    ("sText_ItsGoldCard", 0x082C1EFC, "text", None),
+    ("sCardColorTexts", 0x082C1F08, "table",
+        ["sText_ItsNormalCard", "sText_ItsBronzeCard", "sText_ItsCopperCard",
+         "sText_ItsSilverCard", "sText_ItsGoldCard"]),
+]
+
+END_ADDR8K = 0x082C1F1C  # sText_TrainerCardInfoPage1 (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -623,7 +638,46 @@ def emit_table_choose_trainer(name):
     return "\n".join(out)
 
 
-def build(symbols, end_addr, out_h, out_c, comment):
+def emit_table_activity_names(name):
+    entries = [
+        "[ACTIVITY_NONE] = sText_EmptyString",
+        "[ACTIVITY_BATTLE_SINGLE] = sText_SingleBattle",
+        "[ACTIVITY_BATTLE_DOUBLE] = sText_DoubleBattle",
+        "[ACTIVITY_BATTLE_MULTI] = sText_MultiBattle",
+        "[ACTIVITY_TRADE] = sText_PokemonTrades",
+        "[ACTIVITY_CHAT] = sText_Chat",
+        "[ACTIVITY_WONDER_CARD_DUP] = sText_WonderCards",
+        "[ACTIVITY_WONDER_NEWS_DUP] = sText_WonderNews",
+        "[ACTIVITY_CARD] = sText_Cards",
+        "[ACTIVITY_POKEMON_JUMP] = sText_PokemonJump",
+        "[ACTIVITY_BERRY_CRUSH] = sText_BerryCrush",
+        "[ACTIVITY_BERRY_PICK] = sText_BerryPicking",
+        "[ACTIVITY_SEARCH] = sText_Search",
+        "[ACTIVITY_SPIN_TRADE] = sText_EmptyString",
+        "[ACTIVITY_BATTLE_TOWER_OPEN] = sText_BattleTowerOpenLv + 3",
+        "[ACTIVITY_RECORD_CORNER] = sText_RecordCorner",
+        "[ACTIVITY_BERRY_BLENDER] = sText_BerryBlender",
+        "[ACTIVITY_ACCEPT] = sText_EmptyString",
+        "[ACTIVITY_DECLINE] = sText_EmptyString",
+        "[ACTIVITY_NPCTALK] = sText_EmptyString",
+        "[ACTIVITY_PLYRTALK] = sText_EmptyString",
+        "[ACTIVITY_WONDER_CARD] = sText_EmptyString",
+        "[ACTIVITY_WONDER_NEWS] = sText_EmptyString",
+        "[ACTIVITY_CONTEST_COOL] = sText_CoolContest",
+        "[ACTIVITY_CONTEST_BEAUTY] = sText_BeautyContest",
+        "[ACTIVITY_CONTEST_CUTE] = sText_CuteContest",
+        "[ACTIVITY_CONTEST_SMART] = sText_SmartContest",
+        "[ACTIVITY_CONTEST_TOUGH] = sText_ToughContest",
+        "[ACTIVITY_BATTLE_TOWER] = sText_BattleTowerLv50 + 1",
+    ]
+    out = [f"const u8 *const {name}[] = {{"]
+    for e in entries:
+        out.append(f"    {e},")
+    out.append("};")
+    return "\n".join(out)
+
+
+def build(symbols, end_addr, out_h, out_c, comment, extra_externs=None):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
     out = []
@@ -632,8 +686,14 @@ def build(symbols, end_addr, out_h, out_c, comment):
         out.append('#include "link_rfu.h"')
     if any(sym[2] == "table_choose_trainer" for sym in symbols):
         out.append('#include "constants/union_room.h"')
+    if any(sym[2] == "table_activity_names" for sym in symbols):
+        out.append('#include "constants/union_room.h"')
     out.append("")
     out.append(comment)
+    for e in (extra_externs or []):
+        out.append(f"extern const u8 {e}[];")
+    if extra_externs:
+        out.append("")
     for i, sym in enumerate(symbols):
         name, addr, kind, payload = sym[0], sym[1], sym[2], sym[3]
         end = next_addr(addr, symbols, end_addr)
@@ -678,6 +738,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table_trade(name))
         elif kind == "table_choose_trainer":
             out.append(emit_table_choose_trainer(name))
+        elif kind == "table_activity_names":
+            out.append(emit_table_activity_names(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -729,6 +791,14 @@ def main():
           "// Wireless response and short menu texts")
     build(SYMBOLS8J, END_ADDR8J, "src/data/union_room8j.h", "src/data/union_room8j.c",
           "// Trading-board header and activity names")
+    build(SYMBOLS8K, END_ADDR8K, "src/data/union_room8k.h", "src/data/union_room8k.c",
+          "// Activity-name and card-color tables/texts",
+          ["sText_EmptyString", "sText_SingleBattle", "sText_DoubleBattle", "sText_MultiBattle",
+           "sText_PokemonTrades", "sText_Chat", "sText_WonderCards", "sText_WonderNews",
+           "sText_Cards", "sText_PokemonJump", "sText_BerryCrush", "sText_BerryPicking",
+           "sText_Search", "sText_BattleTowerOpenLv", "sText_RecordCorner", "sText_BerryBlender",
+           "sText_CoolContest", "sText_BeautyContest", "sText_CuteContest", "sText_SmartContest",
+           "sText_ToughContest", "sText_BattleTowerLv50"])
 
 
 if __name__ == "__main__":

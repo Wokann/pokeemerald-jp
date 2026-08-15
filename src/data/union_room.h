@@ -41,7 +41,7 @@ const char sASCII_ChildParentSearch[][8] = {
     "SEARCH",
 };
 
-const u8 sUnknown_82C0640[] = {0xFF, 0x00, 0x00, 0x00};
+const u8 sText_EmptyString[] = {0xFF, 0x00, 0x00, 0x00};
 
 ALIGNED(4) const u8 sText_Colon[] = _(":");
 
