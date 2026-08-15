@@ -11,26 +11,6 @@
 
 
 
-	.globl gUnknown_82C10C4
-gUnknown_82C10C4: @ 0x082C10C4
-	.incbin "baserom_jp.gba", 0x2c10c4, 0xc4
-
-	.globl sStartActivityTexts
-sStartActivityTexts: @ 0x82C1188
-	.incbin "baserom_jp.gba", 0x2c1188, 0x9c
-
-	.globl sBattleDeclinedTexts
-sBattleDeclinedTexts: @ 0x82C1224
-	.incbin "baserom_jp.gba", 0x2c1224, 0x58
-
-	.globl sShowTrainerCardDeclinedTexts
-sShowTrainerCardDeclinedTexts: @ 0x82C127C
-	.incbin "baserom_jp.gba", 0x2c127c, 0x40
-
-	.globl sIfYouWantToDoSomethingTexts
-sIfYouWantToDoSomethingTexts: @ 0x82C12BC
-	.incbin "baserom_jp.gba", 0x2c12bc, 0x8
-
 	.globl sText_TrainerBattleBusy
 sText_TrainerBattleBusy: @ 0x82C12C4
 	.string "あ！　ごめん\n"
