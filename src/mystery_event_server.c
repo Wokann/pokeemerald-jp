@@ -17,8 +17,8 @@ extern const char gMeventServerAssertExpr1[];
 extern const char gMeventServerAssertExpr2[];
 extern const char gMeventServerAssertExpr3[];
 extern const char gMeventServerAssertExpr4[];
-extern const u8 gUnknown_82C4F60[];
-extern const u8 gUnknown_82C4FC0[];
+extern const u8 gMeventServerCmdTable1[];
+extern const u8 gMeventServerCmdTable2[];
 extern u32 (*const gMeventServerFuncs[])(void *);
 extern u16 gBlockRecvBuffer[MAX_RFU_PLAYERS][BLOCK_BUFFER_SIZE / 2];
 extern u32 (*const gMeventServerClientFuncs[])(void *);
@@ -107,13 +107,13 @@ void mevent_client_free_resources(void *data);
 void mevent_srv_init_wnews(void)
 {
     gUnknown_2022930 = AllocZeroed(0x60);
-    mevent_srv_init_common(gUnknown_2022930, gUnknown_82C4F60, 0, 1);
+    mevent_srv_init_common(gUnknown_2022930, gMeventServerCmdTable1, 0, 1);
 }
 
 void mevent_srv_new_wcard(void)
 {
     gUnknown_2022930 = AllocZeroed(0x60);
-    mevent_srv_init_common(gUnknown_2022930, gUnknown_82C4FC0, 0, 1);
+    mevent_srv_init_common(gUnknown_2022930, gMeventServerCmdTable2, 0, 1);
 }
 
 u32 mevent_srv_common_do_exec(u16 *result)

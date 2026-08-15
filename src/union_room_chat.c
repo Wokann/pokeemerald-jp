@@ -180,15 +180,13 @@ struct UnionRoomChatSprites
 #define PALTAG_INTERFACE 0
 
 // Chat main function table (0x082C5064, in data/data_b.s).
-extern void (*const gUnknown_82C5064[])(void);
+extern void (*const sChatFuncs[])(void);
 
 // JP keyboard max row per page (0x082C508C, in data/data_b.s): {9, 9, 7, 9, 9}
-extern const u8 gUnknown_82C508C[];
-#define sKeyboardPageMaxRow gUnknown_82C508C
+extern const u8 sKeyboardPageMaxRow[];
 
 // JP kana case-toggle table (0x082C5091, in data/data_b.s, 0xEF bytes).
-extern const u8 gUnknown_82C5091[];
-#define sCaseToggleTable gUnknown_82C5091
+extern const u8 sCaseToggleTable[];
 
 // JP keyboard text pointer table (0x082C5180, in data/data_b.s),
 // [page][row] with 4 pages x 10 rows of u8 pointers.
@@ -410,16 +408,16 @@ static void CB2_LoadInterface(void);
 static void VBlankCB_UnionRoomChatMain(void);
 static void CB2_UnionRoomChatMain(void);
 static void Task_HandlePlayerInput(u8 taskId);
-static void Chat_Join(void);
-static void Chat_HandleInput(void);
-static void Chat_Switch(void);
-static void Chat_AskQuitChatting(void);
-static void Chat_Exit(void);
-static void Chat_Drop(void);
-static void Chat_Disbanded(void);
-static void Chat_SendMessage(void);
-static void Chat_Register(void);
-static void Chat_SaveAndExit(void);
+static void Chat_Join_internal(void);
+static void Chat_HandleInput_internal(void);
+static void Chat_Switch_internal(void);
+static void Chat_AskQuitChatting_internal(void);
+static void Chat_Exit_internal(void);
+static void Chat_Drop_internal(void);
+static void Chat_Disbanded_internal(void);
+static void Chat_SendMessage_internal(void);
+static void Chat_Register_internal(void);
+static void Chat_SaveAndExit_internal(void);
 void SetChatFunction(u16 funcId);
 static bool32 HandleDPadInput(void);
 
@@ -535,10 +533,10 @@ static void Task_HandlePlayerInput(u8 taskId)
         break;
     }
 
-    gUnknown_82C5064[sChat->funcId]();
+    sChatFuncs[sChat->funcId]();
 }
 
-static void Chat_Join(void)
+static void Chat_Join_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -560,7 +558,7 @@ static void Chat_Join(void)
     }
 }
 
-static void Chat_HandleInput(void)
+static void Chat_HandleInput_internal(void)
 {
     bool8 updateMsgActive, cursorBlinkActive;
 
@@ -624,7 +622,7 @@ static void Chat_HandleInput(void)
     }
 }
 
-static void Chat_Switch(void)
+static void Chat_Switch_internal(void)
 {
     s16 input;
     bool32 shouldSwitchPages;
@@ -686,7 +684,7 @@ static void Chat_Switch(void)
     }
 }
 
-static void Chat_AskQuitChatting(void)
+static void Chat_AskQuitChatting_internal(void)
 {
     s8 input;
 
@@ -782,7 +780,7 @@ static void Chat_AskQuitChatting(void)
     }
 }
 
-static void Chat_Exit(void)
+static void Chat_Exit_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -839,7 +837,7 @@ static void Chat_Exit(void)
     }
 }
 
-static void Chat_Drop(void)
+static void Chat_Drop_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -874,7 +872,7 @@ static void Chat_Drop(void)
     }
 }
 
-static void Chat_Disbanded(void)
+static void Chat_Disbanded_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -920,7 +918,7 @@ static void Chat_Disbanded(void)
     }
 }
 
-static void Chat_SendMessage(void)
+static void Chat_SendMessage_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -954,7 +952,7 @@ static void Chat_SendMessage(void)
     }
 }
 
-static void Chat_Register(void)
+static void Chat_Register_internal(void)
 {
     switch (sChat->funcState)
     {
@@ -1017,7 +1015,7 @@ static void Chat_Register(void)
     }
 }
 
-static void Chat_SaveAndExit(void)
+static void Chat_SaveAndExit_internal(void)
 {
     s8 input;
 
@@ -2812,3 +2810,15 @@ void UpdateRButtonLabel(void)
         }
     }
 }
+
+// Global aliases for the chat main function table (union_room8v).
+void Chat_Join(void) __attribute__((alias("Chat_Join_internal")));
+void Chat_HandleInput(void) __attribute__((alias("Chat_HandleInput_internal")));
+void Chat_Switch(void) __attribute__((alias("Chat_Switch_internal")));
+void Chat_AskQuitChatting(void) __attribute__((alias("Chat_AskQuitChatting_internal")));
+void Chat_SendMessage(void) __attribute__((alias("Chat_SendMessage_internal")));
+void Chat_Register(void) __attribute__((alias("Chat_Register_internal")));
+void Chat_Exit(void) __attribute__((alias("Chat_Exit_internal")));
+void Chat_Drop(void) __attribute__((alias("Chat_Drop_internal")));
+void Chat_Disbanded(void) __attribute__((alias("Chat_Disbanded_internal")));
+void Chat_SaveAndExit(void) __attribute__((alias("Chat_SaveAndExit_internal")));

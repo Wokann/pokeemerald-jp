@@ -12,8 +12,8 @@
 // must take 500 steps before any more rewards can be received.
 #define MAX_REWARD 5
 
-extern const char gUnknown_82C5050[]; // "menews_jisan.c"
-extern const char gUnknown_82C5060[]; // "0"
+extern const char gMeventNewsAssertFile[];
+extern const char gMeventNewsAssertExpr0[];
 
 static u32 GetRewardItem(struct WonderNewsMetadata *);
 static u32 GetRewardType(struct WonderNewsMetadata *);
@@ -153,7 +153,7 @@ static u32 GetRewardType(struct WonderNewsMetadata *data)
             return NEWS_REWARD_SENT_SMALL;
         return NEWS_REWARD_SENT_BIG;
     default:
-        AGBAssert(gUnknown_82C5050, 0x180, gUnknown_82C5060, TRUE);
+        AGBAssert(gMeventNewsAssertFile, 0x180, gMeventNewsAssertExpr0, TRUE);
         return NEWS_REWARD_NONE;
     }
 }
