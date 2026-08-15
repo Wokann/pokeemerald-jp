@@ -17665,14 +17665,233 @@ sText_RibbonsMonListItemUnknown: @ 0x85F5E03
 
 	.globl sRibbonData
 sRibbonData: @ 0x85F5E14
-	.incbin "baserom_jp.gba", 0x5f5e14, 0x14c
+	.incbin "baserom_jp.gba", 0x5f5e14, 0x44
+	.globl gUnknown_85F5E58
+gUnknown_85F5E58: @ 0x085F5E58
+	.string "チャンピオンを　たおして$"
+	.globl gUnknown_85F5E65
+gUnknown_85F5E65: @ 0x085F5E65
+	.string "でんどういり　した　きねんリボン$"
+	.globl gUnknown_85F5E76
+gUnknown_85F5E76: @ 0x085F5E76
+	.string "かっこよさコンテスト$"
+	.globl gUnknown_85F5E81
+gUnknown_85F5E81: @ 0x085F5E81
+	.string "うつくしさコンテスト$"
+	.globl gUnknown_85F5E8C
+gUnknown_85F5E8C: @ 0x085F5E8C
+	.string "かわいさコンテスト$"
+	.globl gUnknown_85F5E96
+gUnknown_85F5E96: @ 0x085F5E96
+	.string "かしこさコンテスト$"
+	.globl gUnknown_85F5EA0
+gUnknown_85F5EA0: @ 0x085F5EA0
+	.string "たくましさコンテスト$"
+	.globl gUnknown_85F5EAB
+gUnknown_85F5EAB: @ 0x085F5EAB
+	.string "ノーマルランク　ゆうしょう！$"
+	.globl gUnknown_85F5EBA
+gUnknown_85F5EBA: @ 0x085F5EBA
+	.string "スーパーランク　ゆうしょう！$"
+	.globl gUnknown_85F5EC9
+gUnknown_85F5EC9: @ 0x085F5EC9
+	.string "ハイパーランク　ゆうしょう！$"
+	.globl gUnknown_85F5ED8
+gUnknown_85F5ED8: @ 0x085F5ED8
+	.string "マスターランク　ゆうしょう！$"
+	.globl gUnknown_85F5EE7
+gUnknown_85F5EE7: @ 0x085F5EE7
+	.string "バトルタワー　レベル50を$"
+	.globl gUnknown_85F5EF5
+gUnknown_85F5EF5: @ 0x085F5EF5
+	.string "かちぬいた　きねんのリボン$"
+	.globl gUnknown_85F5F03
+gUnknown_85F5F03: @ 0x085F5F03
+	.string "バトルタワー　オープンレベルを$"
+	.globl gUnknown_85F5F13
+gUnknown_85F5F13: @ 0x085F5F13
+	.string "かちぬいた　きねんのリボン$"
+	.globl gUnknown_85F5F21
+gUnknown_85F5F21: @ 0x085F5F21
+	.string "ごうかな　にがおえの　モデルに$"
+	.globl gUnknown_85F5F31
+gUnknown_85F5F31: @ 0x085F5F31
+	.string "なった　きねんの　リボン$"
+	.globl gUnknown_85F5F3E
+gUnknown_85F5F3E: @ 0x085F5F3E
+	.string "たくさん　どりょく　している$"
+	.globl gUnknown_85F5F4D
+gUnknown_85F5F4D: @ 0x085F5F4D
+	.string "ポケモンに　おくられる　リボン$　　　"
 
 	.globl gRibbonDescriptionPointers
 gRibbonDescriptionPointers: @ 0x85F5F60
-	.incbin "baserom_jp.gba", 0x5F5F60, 0x32C
+	.4byte gUnknown_85F5E58, gUnknown_85F5E65, gUnknown_85F5E76, gUnknown_85F5EAB, gUnknown_85F5E76, gUnknown_85F5EBA, gUnknown_85F5E76, gUnknown_85F5EC9
+	.4byte gUnknown_85F5E76, gUnknown_85F5ED8, gUnknown_85F5E81, gUnknown_85F5EAB, gUnknown_85F5E81, gUnknown_85F5EBA, gUnknown_85F5E81, gUnknown_85F5EC9
+	.4byte gUnknown_85F5E81, gUnknown_85F5ED8, gUnknown_85F5E8C, gUnknown_85F5EAB, gUnknown_85F5E8C, gUnknown_85F5EBA, gUnknown_85F5E8C, gUnknown_85F5EC9
+	.4byte gUnknown_85F5E8C, gUnknown_85F5ED8, gUnknown_85F5E96, gUnknown_85F5EAB, gUnknown_85F5E96, gUnknown_85F5EBA, gUnknown_85F5E96, gUnknown_85F5EC9
+	.4byte gUnknown_85F5E96, gUnknown_85F5ED8, gUnknown_85F5EA0, gUnknown_85F5EAB, gUnknown_85F5EA0, gUnknown_85F5EBA, gUnknown_85F5EA0, gUnknown_85F5EC9
+	.4byte gUnknown_85F5EA0, gUnknown_85F5ED8, gUnknown_85F5EE7, gUnknown_85F5EF5, gUnknown_85F5F03, gUnknown_85F5F13, gUnknown_85F5F21, gUnknown_85F5F31
+	.4byte gUnknown_85F5F3E, gUnknown_85F5F4D
+	.globl gUnknown_85F6028
+gUnknown_85F6028: @ 0x085F6028
+	.string "2003ねん　ちほう　たいかい$"
+	.globl gUnknown_85F6038
+gUnknown_85F6038: @ 0x085F6038
+	.string "ゆうしょう　きねんリボン$"
+	.globl gUnknown_85F6045
+gUnknown_85F6045: @ 0x085F6045
+	.string "2003ねん　ぜんこく　たいかい$"
+	.globl gUnknown_85F6056
+gUnknown_85F6056: @ 0x085F6056
+	.string "2003ねん　ワールドカップ$"
+	.globl gUnknown_85F6065
+gUnknown_85F6065: @ 0x085F6065
+	.string "じゅんゆうしょう　きねんリボン$"
+	.globl gUnknown_85F6075
+gUnknown_85F6075: @ 0x085F6075
+	.string "ベスト4　きねんリボン$"
+	.globl gUnknown_85F6081
+gUnknown_85F6081: @ 0x085F6081
+	.string "2004ねん　ちほう　たいかい$"
+	.globl gUnknown_85F6091
+gUnknown_85F6091: @ 0x085F6091
+	.string "2004ねん　ぜんこく　たいかい$"
+	.globl gUnknown_85F60A2
+gUnknown_85F60A2: @ 0x085F60A2
+	.string "2004ねん　ワールドカップ$"
+	.globl gUnknown_85F60B1
+gUnknown_85F60B1: @ 0x085F60B1
+	.string "2005ねん　ちほう　たいかい$"
+	.globl gUnknown_85F60C1
+gUnknown_85F60C1: @ 0x085F60C1
+	.string "2005ねん　ぜんこく　たいかい$"
+	.globl gUnknown_85F60D2
+gUnknown_85F60D2: @ 0x085F60D2
+	.string "2005ねん　ワールドカップ$"
+	.globl gUnknown_85F60E1
+gUnknown_85F60E1: @ 0x085F60E1
+	.string "ポケモン　バトル　カップ$"
+	.globl gUnknown_85F60EE
+gUnknown_85F60EE: @ 0x085F60EE
+	.string "さんか　きねんリボン$"
+	.globl gUnknown_85F60F9
+gUnknown_85F60F9: @ 0x085F60F9
+	.string "ポケモン　リーグ$"
+	.globl gUnknown_85F6102
+gUnknown_85F6102: @ 0x085F6102
+	.string "アドバンス　カップ$"
+	.globl gUnknown_85F610C
+gUnknown_85F610C: @ 0x085F610C
+	.string "ポケモンの　たいかいに$"
+	.globl gUnknown_85F6118
+gUnknown_85F6118: @ 0x085F6118
+	.string "さんかした　きねんリボン$"
+	.globl gUnknown_85F6125
+gUnknown_85F6125: @ 0x085F6125
+	.string "ポケモンの　イベントに$"
+	.globl gUnknown_85F6131
+gUnknown_85F6131: @ 0x085F6131
+	.string "ポケモンの　おまつりに$"
+	.globl gUnknown_85F613D
+gUnknown_85F613D: @ 0x085F613D
+	.string "こんなんに　うちかった$"
+	.globl gUnknown_85F6149
+gUnknown_85F6149: @ 0x085F6149
+	.string "きねんリボン$"
+	.globl gUnknown_85F6150
+gUnknown_85F6150: @ 0x085F6150
+	.string "すべての　こんなんを$"
+	.globl gUnknown_85F615B
+gUnknown_85F615B: @ 0x085F615B
+	.string "のりこえた　きねんリボン$"
+	.globl gUnknown_85F6168
+gUnknown_85F6168: @ 0x085F6168
+	.string "100にんぬき　たっせい$"
+	.globl gUnknown_85F6175
+gUnknown_85F6175: @ 0x085F6175
+	.string "くらやみのとう　クリア$"
+	.globl gUnknown_85F6181
+gUnknown_85F6181: @ 0x085F6181
+	.string "くれないのとう　クリア$"
+	.globl gUnknown_85F618D
+gUnknown_85F618D: @ 0x085F618D
+	.string "くろがねのとう　クリア$"
+	.globl gUnknown_85F6199
+gUnknown_85F6199: @ 0x085F6199
+	.string "さいごのとう　クリア$"
+	.globl gUnknown_85F61A4
+gUnknown_85F61A4: @ 0x085F61A4
+	.string "でんせつを　つくった$"
+	.globl gUnknown_85F61AF
+gUnknown_85F61AF: @ 0x085F61AF
+	.string "ポケモンセンタートウキョー$"
+	.globl gUnknown_85F61BD
+gUnknown_85F61BD: @ 0x085F61BD
+	.string "ポケモンセンターオーサカ$"
+	.globl gUnknown_85F61CA
+gUnknown_85F61CA: @ 0x085F61CA
+	.string "ポケモンセンターナゴヤ$"
+	.globl gUnknown_85F61D6
+gUnknown_85F61D6: @ 0x085F61D6
+	.string "ポケモンセンターニューヨーク$"
+	.globl gUnknown_85F61E5
+gUnknown_85F61E5: @ 0x085F61E5
+	.string "なつやすみ　きねんリボン$"
+	.globl gUnknown_85F61F2
+gUnknown_85F61F2: @ 0x085F61F2
+	.string "$"
+	.globl gUnknown_85F61F3
+gUnknown_85F61F3: @ 0x085F61F3
+	.string "ふゆやすみ　きねんリボン$"
+	.globl gUnknown_85F6200
+gUnknown_85F6200: @ 0x085F6200
+	.string "はるやすみ　きねんリボン$"
+	.globl gUnknown_85F620D
+gUnknown_85F620D: @ 0x085F620D
+	.string "クリスマス　きねんリボン$"
+	.globl gUnknown_85F621A
+gUnknown_85F621A: @ 0x085F621A
+	.string "きねんび　きねんリボン$"
+	.globl gUnknown_85F6226
+gUnknown_85F6226: @ 0x085F6226
+	.string "がんばった　きねんの　リボン$"
+	.globl gUnknown_85F6235
+gUnknown_85F6235: @ 0x085F6235
+	.string "ともだち　いっぱい　きねんリボン$"
+	.globl gUnknown_85F6246
+gUnknown_85F6246: @ 0x085F6246
+	.string "げんき　いっぱい　きねんリボン$"
+	.globl gUnknown_85F6256
+gUnknown_85F6256: @ 0x085F6256
+	.string "だいすきな　ポケモンに$"
+	.globl gUnknown_85F6262
+gUnknown_85F6262: @ 0x085F6262
+	.string "つけてあげる　きねんリボン$"
+	.globl gUnknown_85F6270
+gUnknown_85F6270: @ 0x085F6270
+	.string "ポケモンが　だいすきな　ことを$"
+	.globl gUnknown_85F6280
+gUnknown_85F6280: @ 0x085F6280
+	.string "しょうめいする　リボン$"
 	.globl gGiftRibbonDescriptionPointers
 gGiftRibbonDescriptionPointers: @ 0x85F628C
-	.incbin "baserom_jp.gba", 0x5f628c, 0x200
+	.4byte gUnknown_85F6028, gUnknown_85F6038, gUnknown_85F6045, gUnknown_85F6038, gUnknown_85F6056, gUnknown_85F6038, gUnknown_85F6028, gUnknown_85F6065
+	.4byte gUnknown_85F6045, gUnknown_85F6065, gUnknown_85F6056, gUnknown_85F6065, gUnknown_85F6028, gUnknown_85F6075, gUnknown_85F6045, gUnknown_85F6075
+	.4byte gUnknown_85F6056, gUnknown_85F6075, gUnknown_85F6081, gUnknown_85F6038, gUnknown_85F6091, gUnknown_85F6038, gUnknown_85F60A2, gUnknown_85F6038
+	.4byte gUnknown_85F6081, gUnknown_85F6065, gUnknown_85F6091, gUnknown_85F6065, gUnknown_85F60A2, gUnknown_85F6065, gUnknown_85F6081, gUnknown_85F6075
+	.4byte gUnknown_85F6091, gUnknown_85F6075, gUnknown_85F60A2, gUnknown_85F6075, gUnknown_85F60B1, gUnknown_85F6038, gUnknown_85F60C1, gUnknown_85F6038
+	.4byte gUnknown_85F60D2, gUnknown_85F6038, gUnknown_85F60B1, gUnknown_85F6065, gUnknown_85F60C1, gUnknown_85F6065, gUnknown_85F60D2, gUnknown_85F6065
+	.4byte gUnknown_85F60B1, gUnknown_85F6075, gUnknown_85F60C1, gUnknown_85F6075, gUnknown_85F60D2, gUnknown_85F6075, gUnknown_85F60E1, gUnknown_85F6038
+	.4byte gUnknown_85F60E1, gUnknown_85F6065, gUnknown_85F60E1, gUnknown_85F6075, gUnknown_85F60E1, gUnknown_85F60EE, gUnknown_85F60F9, gUnknown_85F6038
+	.4byte gUnknown_85F60F9, gUnknown_85F6065, gUnknown_85F60F9, gUnknown_85F6075, gUnknown_85F60F9, gUnknown_85F60EE, gUnknown_85F6102, gUnknown_85F6038
+	.4byte gUnknown_85F6102, gUnknown_85F6065, gUnknown_85F6102, gUnknown_85F6075, gUnknown_85F6102, gUnknown_85F60EE, gUnknown_85F610C, gUnknown_85F6118
+	.4byte gUnknown_85F6125, gUnknown_85F6118, gUnknown_85F6131, gUnknown_85F6118, gUnknown_85F613D, gUnknown_85F6149, gUnknown_85F6150, gUnknown_85F615B
+	.4byte gUnknown_85F6168, gUnknown_85F6149, gUnknown_85F6175, gUnknown_85F6149, gUnknown_85F6181, gUnknown_85F6149, gUnknown_85F618D, gUnknown_85F6149
+	.4byte gUnknown_85F6199, gUnknown_85F6149, gUnknown_85F61A4, gUnknown_85F6149, gUnknown_85F61AF, gUnknown_85F6149, gUnknown_85F61BD, gUnknown_85F6149
+	.4byte gUnknown_85F61CA, gUnknown_85F6149, gUnknown_85F61D6, gUnknown_85F6149, gUnknown_85F61E5, gUnknown_85F61F2, gUnknown_85F61F3, gUnknown_85F61F2
+	.4byte gUnknown_85F6200, gUnknown_85F61F2, gUnknown_85F620D, gUnknown_85F61F2, gUnknown_85F621A, gUnknown_85F61F2, gUnknown_85F6226, gUnknown_85F61F2
+	.4byte gUnknown_85F6235, gUnknown_85F61F2, gUnknown_85F6246, gUnknown_85F61F2, gUnknown_85F6256, gUnknown_85F6262, gUnknown_85F6270, gUnknown_85F6280
 
 	.globl gPokenavRibbonsSummaryBg_Pal
 gPokenavRibbonsSummaryBg_Pal: @ 0x85F648C
