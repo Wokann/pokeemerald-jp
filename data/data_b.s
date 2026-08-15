@@ -6305,9 +6305,20 @@ gUnknown_82EC673: @ 0x82EC673
 gUnknown_82EC677: @ 0x82EC677
 	.incbin "baserom_jp.gba", 0x2ec677, 0x5
 
-	.globl gUnknown_82EC67C
-gUnknown_82EC67C: @ 0x82EC67C
-	.incbin "baserom_jp.gba", 0x2ec67c, 0x18
+	.globl sSoundMovesTable
+sSoundMovesTable: @ 0x82EC67C
+	.hword MOVE_GROWL
+	.hword MOVE_ROAR
+	.hword MOVE_SING
+	.hword MOVE_SUPERSONIC
+	.hword MOVE_SCREECH
+	.hword MOVE_SNORE
+	.hword MOVE_UPROAR
+	.hword MOVE_METAL_SOUND
+	.hword MOVE_GRASS_WHISTLE
+	.hword MOVE_HYPER_VOICE
+	.hword 0xFFFF @ SOUND_MOVES_END
+	.hword 0 @ JP trailing entry
 
 	.globl gBattleScriptingCommandsTable
 gBattleScriptingCommandsTable: @ 0x82EC694

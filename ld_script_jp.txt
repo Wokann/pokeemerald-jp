@@ -1468,7 +1468,6 @@ BattleControllerDummy = nullsub_21;
 RecordedBattle_Init = sub_08184C50;
 BufferBattlePartyCurrentOrderBySide = sub_081B8A04;
 SetControllerToRecordedOpponent = sub_08186218;
-sSoundMovesTable = gUnknown_82EC67C;
 sAccuracyStageRatios = gUnknown_82ECA78;
 BattleScriptPop = DoBattlerEndTurnEffects;
 sub_080416AC = AtkCanceler_UnableToUseMove;
