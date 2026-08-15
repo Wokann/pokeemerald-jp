@@ -4,6 +4,7 @@
 #include "item_menu.h"
 #include "main.h"
 #include "malloc.h"
+#include "menu_helpers.h"
 
 // JP ROM layout matches pokeemerald's struct plus a trailing 2-byte
 // padding, giving sizeof(*sBerryTag) == 0x180C (matches AllocZeroed size).
@@ -28,36 +29,20 @@ void DoBerryTagScreen(void)
     SetMainCallback2(CB2_InitBerryTagScreen);
 }
 
-__attribute__((naked)) void CB2_BerryTagScreen(void)
+void CB2_BerryTagScreen(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RunTasks\n\t"
-        "	bl AnimateSprites\n\t"
-        "	bl BuildOamBuffer\n\t"
-        "	bl DoScheduledBgTilemapCopiesToVram\n\t"
-        "	bl UpdatePaletteFade\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RunTasks();
+    AnimateSprites();
+    BuildOamBuffer();
+    DoScheduledBgTilemapCopiesToVram();
+    UpdatePaletteFade();
 }
 
-__attribute__((naked)) void VblankCB(void)
+void VblankCB(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadOam\n\t"
-        "	bl ProcessSpriteCopyRequests\n\t"
-        "	bl TransferPlttBuffer\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadOam();
+    ProcessSpriteCopyRequests();
+    TransferPlttBuffer();
 }
 
 __attribute__((naked)) void CB2_InitBerryTagScreen(void)
@@ -66,7 +51,7 @@ __attribute__((naked)) void CB2_InitBerryTagScreen(void)
         ".code 16\n\t"
         "	push {lr}\n\t"
         "_08177B6E:\n\t"
-        "	bl sub_081221F8\n\t"
+        "	bl MenuHelpers_ShouldWaitForLinkRecv\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
@@ -76,7 +61,7 @@ __attribute__((naked)) void CB2_InitBerryTagScreen(void)
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
         "	beq _08177B92\n\t"
-        "	bl sub_081221B8\n\t"
+        "	bl MenuHelpers_IsLinkActive\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	cmp r0, #1\n\t"
