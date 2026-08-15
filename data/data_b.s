@@ -162,23 +162,27 @@ sASCII_NowSlot: @ 0x82C05E4
 
 	.globl sText_Colon
 sText_Colon: @ 0x82C0644
-	.incbin "baserom_jp.gba", 0x2c0644, 0x4
+	.string ":$　　"
 
 	.globl sText_ID
 sText_ID: @ 0x82C0648
-	.incbin "baserom_jp.gba", 0x2c0648, 0x4
+	.string "{ID}$　"
 
 	.globl sText_PleaseStartOver
 sText_PleaseStartOver: @ 0x82C064C
-	.incbin "baserom_jp.gba", 0x2c064c, 0x20
+	.string "もういちど　さいしょから\n"
+	.string "てつづきを　やりなおして　ください$　"
 
 	.globl sText_WirelessSearchCanceled
 sText_WirelessSearchCanceled: @ 0x82C066C
-	.incbin "baserom_jp.gba", 0x2c066c, 0x30
+	.string "ジョイスポットの　けんさくを\n"
+	.string "ちゅうししました$ともだちからの　れんらくを\n"
+	.string "まっています$　　　"
 
 	.globl sText_AwaitingCommunication
 sText_AwaitingCommunication: @ 0x82C069C
-	.incbin "baserom_jp.gba", 0x2c069c, 0x1c
+	.string "{B_COPY_VAR_1}！\n"
+	.string "ともだちからの　れんらくを　まっています$　　　"
 
 	.globl sText_AwaitingLinkPressStart
 sText_AwaitingLinkPressStart: @ 0x82C06B8
@@ -198,27 +202,33 @@ sPlayersNeededOrModeTexts: @ 0x82C0840
 
 	.globl sText_BButtonCancel
 sText_BButtonCancel: @ 0x82C08A4
-	.incbin "baserom_jp.gba", 0x2c08a4, 0x20
+	.string "{B_BUTTON}やめる$　　ため\n"
+	.string "さんかしゃ　ぼしゅうちゅう　です！$　　　"
 
 	.globl sText_PlayerContactedYouForXAccept
 sText_PlayerContactedYouForXAccept: @ 0x82C08C4
-	.incbin "baserom_jp.gba", 0x2c08c4, 0x18
+	.string "{B_COPY_VAR_2}から　れんらくあり！\n"
+	.string "{B_COPY_VAR_1}を　しますか？$　"
 
 	.globl sText_PlayerContactedYouShareX
 sText_PlayerContactedYouShareX: @ 0x82C08DC
-	.incbin "baserom_jp.gba", 0x2c08dc, 0x1c
+	.string "{B_COPY_VAR_2}から　れんらくあり！\n"
+	.string "{B_COPY_VAR_1}を　くばりますか？$　　　"
 
 	.globl sText_PlayerContactedYouAddToMembers
 sText_PlayerContactedYouAddToMembers: @ 0x82C08F8
-	.incbin "baserom_jp.gba", 0x2c08f8, 0x1c
+	.string "{B_COPY_VAR_2}から　れんらくあり！\n"
+	.string "メンバーに　しますか？$　　　"
 
 	.globl sText_AreTheseMembersOK
 sText_AreTheseMembersOK: @ 0x82C0914
-	.incbin "baserom_jp.gba", 0x2c0914, 0x18
+	.string "{B_COPY_VAR_1}！\n"
+	.string "この　メンバーで　よろしいですか？$　　"
 
 	.globl sText_CancelModeWithTheseMembers
 sText_CancelModeWithTheseMembers: @ 0x82C092C
-	.incbin "baserom_jp.gba", 0x2c092c, 0x1c
+	.string "この　メンバーで　{B_COPY_VAR_1}を\n"
+	.string "するのは　やめますか？$　　　"
 
 	.globl sText_AnOKWasSentToPlayer
 sText_AnOKWasSentToPlayer: @ 0x82C0948
@@ -235,7 +245,10 @@ sCantTransmitToTrainerTexts: @ 0x82C09A0
 
 	.globl sText_ModeWithTheseMembersWillBeCanceled
 sText_ModeWithTheseMembersWillBeCanceled: @ 0x82C09A8
-	.incbin "baserom_jp.gba", 0x2c09a8, 0x38
+	.string "この　メンバーで　{B_COPY_VAR_1}を\n"
+	.string "するのは　やめます{PAUSE 60}$　　つごうが　わるくなってしまった\n"
+	.string "メンバーが　います\p"
+	.string "$　"
 
 	.globl sPlayerUnavailableTexts
 sPlayerUnavailableTexts: @ 0x82C09E0
@@ -243,19 +256,25 @@ sPlayerUnavailableTexts: @ 0x82C09E0
 
 	.globl sText_PlayerSentBackOK
 sText_PlayerSentBackOK: @ 0x82C09F8
-	.incbin "baserom_jp.gba", 0x2c09f8, 0x18
+	.string "{B_COPY_VAR_1}から　OKとの\n"
+	.string "へんじが　ありました！$　　"
 
 	.globl sText_PlayerOKdRegistration
 sText_PlayerOKdRegistration: @ 0x82C0A10
-	.incbin "baserom_jp.gba", 0x2c0a10, 0x3c
+	.string "{B_COPY_VAR_1}から　メンバー　とうろく\n"
+	.string "OKとの　れんらくが　きました！${B_COPY_VAR_1}から　NGとの\n"
+	.string "へんじが　きてしまいました⋯\p"
+	.string "$　　"
 
 	.globl sText_AwaitingOtherMembers
 sText_AwaitingOtherMembers: @ 0x82C0A4C
-	.incbin "baserom_jp.gba", 0x2c0a4c, 0x18
+	.string "{B_COPY_VAR_1}！\n"
+	.string "ほかの　メンバーを　まっています！$　　"
 
 	.globl sText_QuitBeingMember
 sText_QuitBeingMember: @ 0x82C0A64
-	.incbin "baserom_jp.gba", 0x2c0a64, 0x20
+	.string "メンバーから　ぬけますか？$　　メンバーから　ぬけました\p"
+	.string "$　　"
 
 	.globl sPlayerDisconnectedTexts
 sPlayerDisconnectedTexts: @ 0x82C0A84
@@ -263,7 +282,8 @@ sPlayerDisconnectedTexts: @ 0x82C0A84
 
 	.globl sText_WirelessLinkEstablished
 sText_WirelessLinkEstablished: @ 0x82C0AAC
-	.incbin "baserom_jp.gba", 0x2c0aac, 0x1c
+	.string "ジョイスポットとの　せつぞくに\n"
+	.string "せいこう　しました！$　"
 
 	.globl sText_WirelessLinkDropped
 sText_WirelessLinkDropped: @ 0x82C0AC8
@@ -271,7 +291,9 @@ sText_WirelessLinkDropped: @ 0x82C0AC8
 	.string "せつだん　されました⋯$"
 	.globl sText_LinkWithFriendDropped
 sText_LinkWithFriendDropped: @ 0x82C0AE4
-	.incbin "baserom_jp.gba", 0x2c0ae4, 0x38
+	.string "おともだちとの　つうしんが\n"
+	.string "せつだん　されました⋯$　　{B_COPY_VAR_1}から　NGとの\n"
+	.string "へんじが　きてしまいました⋯$　　　"
 
 	.globl sLinkDroppedTexts
 sLinkDroppedTexts: @ 0x82C0B1C
@@ -279,7 +301,11 @@ sLinkDroppedTexts: @ 0x82C0B1C
 
 	.globl sText_AwaitingPlayersResponseAboutTrade
 sText_AwaitingPlayersResponseAboutTrade: @ 0x82C0B80
-	.incbin "baserom_jp.gba", 0x2c0b80, 0x158
+	.string "{B_COPY_VAR_1}からの　こうかんの\n"
+	.string "へんじを　まっています⋯$　　　はなしかけています{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
+	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　{B_COPY_VAR_1}に　はなしかけています{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
+	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　しょうしょうおまちください{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·\n"
+	.string "{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·{PAUSE 15}·$　"
 
 	.globl sCommunicatingWaitTexts
 sCommunicatingWaitTexts: @ 0x82C0CD8
@@ -300,19 +326,31 @@ sAwaitingResponseTexts: @ 0x82C0DE4
 
 	.globl sText_ShowTrainerCard
 sText_ShowTrainerCard: @ 0x82C0DEC
-	.incbin "baserom_jp.gba", 0x2c0dec, 0x30
+	.string "あいてが　トレーナーカードを\n"
+	.string "みせて　きました\p"
+	.string "こちらも　トレーナーカードを\n"
+	.string "みせますか？$　　"
 
 	.globl sText_BattleChallenge
 sText_BattleChallenge: @ 0x82C0E1C
-	.incbin "baserom_jp.gba", 0x2c0e1c, 0x24
+	.string "あいてが　たいせんを\n"
+	.string "もうしこんで　きました\p"
+	.string "たいせん　しますか？$　　"
 
 	.globl sText_ChatInvitation
 sText_ChatInvitation: @ 0x82C0E40
-	.incbin "baserom_jp.gba", 0x2c0e40, 0x28
+	.string "あいてが　チャット　に\n"
+	.string "さそって　きました\p"
+	.string "いっしょに　チャット\n"
+	.string "しますか？$　"
 
 	.globl sText_OfferToTradeMon
 sText_OfferToTradeMon: @ 0x82C0E68
-	.incbin "baserom_jp.gba", 0x2c0e68, 0x40
+	.string "とうろく　していた\n"
+	.string "LV{DYNAMIC 0}の　{DYNAMIC 1}　と\p"
+	.string "LV{DYNAMIC 2}の　{DYNAMIC 3}　の\n"
+	.string "こうかん　もうしこみが　きています\p"
+	.string "こうかん　しますか？$　　　"
 
 	.globl sText_OfferToTradeEgg
 sText_OfferToTradeEgg: @ 0x82C0EA8
@@ -324,7 +362,9 @@ sText_ChatDropped: @ 0x82C0ED4
 	.string "かいわが　きれました\p$"
 	.globl sText_OfferDeclined1
 sText_OfferDeclined1: @ 0x82C0EE0
-	.incbin "baserom_jp.gba", 0x2c0ee0, 0x14
+	.string "もうしこみを\n"
+	.string "ことわり　ました\p"
+	.string "$　　　"
 
 	.globl sText_OfferDeclined2
 sText_OfferDeclined2: @ 0x82C0EF4
@@ -332,7 +372,16 @@ sText_OfferDeclined2: @ 0x82C0EF4
 	.string "ことわり　ました\p$"
 	.globl sText_ChatEnded
 sText_ChatEnded: @ 0x82C0F04
-	.incbin "baserom_jp.gba", 0x2c0f04, 0xcc
+	.string "かいわを　きりました\p"
+	.string "$xすわくふせわくぞせわくネせわくお！　いま　おれたち\n"
+	.string "チャットちゅう　なんだ！\l"
+	.string "よかったら　いっしょに　はいるかい？$　{B_COPY_VAR_1}‘お！　{MUS_RG_VS_TRAINER}\n"
+	.string "いま　チャットちゅう　なんだ！\l"
+	.string "よかったら　いっしょに　はいるかい？$あ！　いまね　わたしたち\n"
+	.string "チャット　してるんだ\l"
+	.string "よかったら　いっしょに　しない？$　　　{B_COPY_VAR_1}‘あ！　{MUS_RG_VS_TRAINER}\n"
+	.string "いまね　チャット　してるんだ\l"
+	.string "よかったら　いっしょに　しない？$　　　"
 
 	.globl sJoinChatTexts
 sJoinChatTexts: @ 0x82C0FD0
@@ -340,11 +389,31 @@ sJoinChatTexts: @ 0x82C0FD0
 
 	.globl sText_TrainerAppearsBusy
 sText_TrainerAppearsBusy: @ 0x82C0FE0
-	.incbin "baserom_jp.gba", 0x2c0fe0, 0xc4
-
+	.string "⋯⋯\nいまは　とりこみちゅうの　ようだ\p$　　　"
+	.globl gUnknown_82C0FF8
+gUnknown_82C0FF8: @ 0x082C0FF8
+	.string "たいせんだね！\nよーし　ちょっと　まってて！$　"
+	.globl gUnknown_82C1010
+gUnknown_82C1010: @ 0x082C1010
+	.string "チャットだね！\nわかった　ちょっと　まってて！$"
+	.globl gUnknown_82C1028
+gUnknown_82C1028: @ 0x082C1028
+	.string "わかった！　じゃあ　あいさつがわりに\nトレーナーカードを　みせてあげるよ$　　　"
+	.globl gUnknown_82C1050
+gUnknown_82C1050: @ 0x082C1050
+	.string "たいせんね！\nよーし　ちょっと　まってて！$　　"
+	.globl gUnknown_82C1068
+gUnknown_82C1068: @ 0x082C1068
+	.string "チャットね！\nわかったわ　ちょっと　まってて！$"
+	.globl gUnknown_82C1080
+gUnknown_82C1080: @ 0x082C1080
+	.string "じゃあ　あいさつの　かわりに\nトレーナーカードを　みせてあげるね$　　　"
 	.globl sText_WaitOrShowCardTexts
 sText_WaitOrShowCardTexts: @ 0x82C10A4
-	.incbin "baserom_jp.gba", 0x2c10a4, 0xe4
+	.4byte gUnknown_82C0FF8, gUnknown_82C1010, 0x00000000, gUnknown_82C1028, gUnknown_82C1050, gUnknown_82C1068, 0x00000000, gUnknown_82C1080
+	.globl gUnknown_82C10C4
+gUnknown_82C10C4: @ 0x082C10C4
+	.incbin "baserom_jp.gba", 0x2c10c4, 0xc4
 
 	.globl sStartActivityTexts
 sStartActivityTexts: @ 0x82C1188
@@ -364,7 +433,10 @@ sIfYouWantToDoSomethingTexts: @ 0x82C12BC
 
 	.globl sText_TrainerBattleBusy
 sText_TrainerBattleBusy: @ 0x82C12C4
-	.incbin "baserom_jp.gba", 0x2c12c4, 0x20
+	.string "あ！　ごめん\n"
+	.string "ほかに　ようじが　あるから\l"
+	.string "またこんどね\p"
+	.string "$　　　"
 
 	.globl sText_NeedTwoMonsOfLevel30OrLower1
 sText_NeedTwoMonsOfLevel30OrLower1: @ 0x82C12E4
@@ -373,7 +445,14 @@ sText_NeedTwoMonsOfLevel30OrLower1: @ 0x82C12E4
 	.string "2ひき　ひつよう　だよ\p$"
 	.globl sText_NeedTwoMonsOfLevel30OrLower2
 sText_NeedTwoMonsOfLevel30OrLower2: @ 0x82C1310
-	.incbin "baserom_jp.gba", 0x2c1310, 0x54
+	.string "たいせんを　するためには\n"
+	.string "レベル30　よりひくい　ポケモンが\l"
+	.string "2ひき　ひつようです\p"
+	.string "$　そうか\n"
+	.string "また　いつでも　おいでよ！\p"
+	.string "$　そう⋯⋯\n"
+	.string "また　いつでも　きてね！\p"
+	.string "$　"
 
 	.globl sDeclineChatTexts
 sDeclineChatTexts: @ 0x82C1364
@@ -405,15 +484,37 @@ sText_XCheckedTradingBoard: @ 0x82C1688
 	.string "こうかんけいじばんを　みた！\p$"
 	.globl sText_RegisterMonAtTradingBoard
 sText_RegisterMonAtTradingBoard: @ 0x82C169C
-	.incbin "baserom_jp.gba", 0x2c169c, 0x44
+	.string "いらっしゃいませ\n"
+	.string "ここでは　こうかんけいじばん　に\p"
+	.string "ごじぶんの　ポケモンを　とうろく\n"
+	.string "することが　できます\p"
+	.string "とうろく　しますか？$　　　"
 
 	.globl sText_TradingBoardInfo
 sText_TradingBoardInfo: @ 0x82C16E0
-	.incbin "baserom_jp.gba", 0x2c16e0, 0xec
+	.string "この　こうかんけいじばん　に\n"
+	.string "ポケモンを　とうろく　しておくと\p"
+	.string "けいじばんを　みた　トレーナーが\n"
+	.string "その　とうろくされた　ポケモンと\p"
+	.string "てもちの　ポケモンを\n"
+	.string "こうかん　することが　できます\p"
+	.string "ぜひポケモンを　とうろくして\n"
+	.string "いろいろな　トレーナー　との\l"
+	.string "こうかんを　たのしんで　ください\p"
+	.string "とうろく　しますか？$　こうかんけいじばん　の　とうろくが\n"
+	.string "かんりょう　しました\p"
+	.string "ごりよう　ありがとう\n"
+	.string "ございました！\p"
+	.string "$　　　けいじばんに　だれも　ポケモンを\n"
+	.string "とうろく　していません\p"
+	.string "\n"
+	.string "$　"
 
 	.globl sText_ChooseRequestedMonType
 sText_ChooseRequestedMonType: @ 0x82C17CC
-	.incbin "baserom_jp.gba", 0x2c17cc, 0x1c
+	.string "ほしい　ポケモンの　タイプを\n"
+	.string "えらんで　ください\n"
+	.string "$　　"
 
 	.globl sText_WhichMonWillYouOffer
 sText_WhichMonWillYouOffer: @ 0x82C17E8
@@ -421,15 +522,18 @@ sText_WhichMonWillYouOffer: @ 0x82C17E8
 	.string "てもちから　えらんで　ください\p$"
 	.globl sText_RegistrationCanceled
 sText_RegistrationCanceled: @ 0x82C1808
-	.incbin "baserom_jp.gba", 0x2c1808, 0x14
+	.string "とうろくを　ちゅうし　しました\p"
+	.string "$　　　"
 
 	.globl sText_RegistrationCompleted
 sText_RegistrationCompleted: @ 0x82C181C
-	.incbin "baserom_jp.gba", 0x2c181c, 0x14
+	.string "とうろくが　かんりょう　しました！\p"
+	.string "$　"
 
 	.globl sText_TradeCanceled
 sText_TradeCanceled: @ 0x82C1830
-	.incbin "baserom_jp.gba", 0x2c1830, 0x14
+	.string "こうかんを　キャンセルしました\p"
+	.string "$　　　"
 
 	.globl sText_CancelRegistrationOfMon
 sText_CancelRegistrationOfMon: @ 0x82C1844
@@ -437,11 +541,15 @@ sText_CancelRegistrationOfMon: @ 0x82C1844
 	.string "レベル{B_COPY_VAR_2}を　かいじょ　しますか？$"
 	.globl sText_CancelRegistrationOfEgg
 sText_CancelRegistrationOfEgg: @ 0x82C1864
-	.incbin "baserom_jp.gba", 0x2c1864, 0x1c
+	.string "とうろく　されている　タマゴを\n"
+	.string "かいじょ　しますか？$　"
 
 	.globl sText_RegistrationCanceled2
 sText_RegistrationCanceled2: @ 0x82C1880
-	.incbin "baserom_jp.gba", 0x2c1880, 0x4c
+	.string "とうろくを　かいじょ　しました\p"
+	.string "$　　　こうかんを　きぼうしているひとを\n"
+	.string "ひょうじします$　　　こうかん　したい　トレーナーを\n"
+	.string "えらんで　ください$　　"
 
 	.globl sText_AskTrainerToMakeTrade
 sText_AskTrainerToMakeTrade: @ 0x82C18CC
@@ -456,22 +564,48 @@ sText_DontHaveTypeTrainerWants: @ 0x82C1918
 	.string "{B_COPY_VAR_2}ポケモンが　ありません\p$"
 	.globl sText_DontHaveEggTrainerWants
 sText_DontHaveEggTrainerWants: @ 0x82C1938
-	.incbin "baserom_jp.gba", 0x2c1938, 0x60
+	.string "{B_COPY_VAR_1}の　ほしがっている\n"
+	.string "タマゴを　もっていません\p"
+	.string "$　　いまは　{B_COPY_VAR_1}は　あなたの\n"
+	.string "ポケモンと　こうかんできません\p"
+	.string "$　　{B_COPY_VAR_1}の　ポケモンとは\n"
+	.string "いまは　こうかんできません\p"
+	.string "$　　エのわくヤのわく"
 
 	.globl sText_TradeOfferRejected
 sText_TradeOfferRejected: @ 0x82C1998
-	.incbin "baserom_jp.gba", 0x2c1998, 0x14
+	.string "こうかんを\n"
+	.string "ことわられ　ました\p"
+	.string "$　　　"
 
 	.globl sText_EggTrade
 sText_EggTrade: @ 0x82C19AC
-	.incbin "baserom_jp.gba", 0x2c19ac, 0xc
+	.string "タマゴのこうかん$　　　"
 
 	.globl sText_ChooseJoinCancel
 sText_ChooseJoinCancel: @ 0x82C19B8
 	.string "{DPAD_UPDOWN}えらぶ:{A_BUTTON}さんかする:{B_BUTTON}やめる$"
 	.globl sText_ChooseTrainer
 sText_ChooseTrainer: @ 0x82C19CC
-	.incbin "baserom_jp.gba", 0x2c19cc, 0x218
+	.string "ともだちを　えらんでください$　シングルバトルをする　ともだちを\n"
+	.string "えらんでください$　　ダブルバトルをする　ともだちを\n"
+	.string "えらんでください$　　　マルチバトル！\n"
+	.string "リーダーを　えらんでください$　ポケモンの　こうかんをする\n"
+	.string "ともだちを　えらんでください$　　　ふしぎなカードを　くばっている\n"
+	.string "ともだちを　えらんでください$　ふしぎなニュースを　くばっている\n"
+	.string "ともだちを　えらんでください$ミニポケモンでジャンプ！\n"
+	.string "リーダーを　えらんでください$きのみクラッシュ！\n"
+	.string "リーダーを　えらんでください$　　　ドードリオのきのみどり！\n"
+	.string "リーダーを　えらんでください$きのみブレンダー！\n"
+	.string "リーダーを　えらんでください$　　　レコードコーナー！\n"
+	.string "リーダーを　えらんでください$　　　かっこよさコンテスト！\n"
+	.string "リーダーを　えらんでください$　うつくしさコンテスト！\n"
+	.string "リーダーを　えらんでください$　かわいさコンテスト！\n"
+	.string "リーダーを　えらんでください$　　かしこさコンテスト！\n"
+	.string "リーダーを　えらんでください$　　たくましさコンテスト！\n"
+	.string "リーダーを　えらんでください$　バトルタワー　レベル50！\n"
+	.string "リーダーを　えらんでください$　　　バトルタワー　オープンレベル！\n"
+	.string "リーダーを　えらんでください$　"
 
 	.globl sChooseTrainerTexts
 sChooseTrainerTexts: @ 0x82C1BE4
@@ -479,15 +613,20 @@ sChooseTrainerTexts: @ 0x82C1BE4
 
 	.globl sText_SearchingForWirelessSystemWait
 sText_SearchingForWirelessSystemWait: @ 0x82C1C3C
-	.incbin "baserom_jp.gba", 0x2c1c3c, 0x44
+	.string "ジョイスポットを　さがしています\n"
+	.string "しばらく　おまちください$　　ダブルバトルでは　2ひき　いじょうの\n"
+	.string "ポケモンが　ひつようです\p"
+	.string "$　　　"
 
 	.globl sText_AwaitingPlayersResponse
 sText_AwaitingPlayersResponse: @ 0x82C1C80
-	.incbin "baserom_jp.gba", 0x2c1c80, 0x14
+	.string "{B_COPY_VAR_1}からの\n"
+	.string "へんじを　まっています$　　"
 
 	.globl sText_PlayerHasBeenAskedToRegisterYouPleaseWait
 sText_PlayerHasBeenAskedToRegisterYouPleaseWait: @ 0x82C1C94
-	.incbin "baserom_jp.gba", 0x2c1c94, 0x24
+	.string "{B_COPY_VAR_1}に　メンバー　とうろくを\n"
+	.string "おねがいしています！　おまちください$　　"
 
 	.globl sText_AwaitingResponseFromWirelessSystem
 sText_AwaitingResponseFromWirelessSystem: @ 0x82C1CB8
@@ -501,7 +640,7 @@ sNoWonderSharedTexts: @ 0x82C1D30
 	.string ":ふわくたへわくたいせん$　　　チャット$　　　あいさつ$　　　やめる$とじる$せつめいをきく$"
 	.globl sText_NameWantedOfferLv
 sText_NameWantedOfferLv: @ 0x82C1D60
-	.incbin "baserom_jp.gba", 0x2c1d60, 0xf8
+	.string "なまえ　　　　ほしいタイプ　あげるポケモン　　レベル$　シングルバトル$ダブルバトル$　マルチバトル$　ポケモンこうかん$　　　チャット$　　　カード$ふしぎなカード$ふしぎなニュース$　　　ポケモンジャンプ$　　　きのみクラッシュ$　　　きのみどり$　　サーチ$きのみブレンダー$　　　レコードコーナー$　　　かっこよさコンテスト$　うつくしさコンテスト$　かわいさコンテスト$　　かしこさコンテスト$　　たくましさコンテスト$　バトルタワー　レベル50$　　　バトルタワー　オープンレベル$　"
 
 	.globl sLinkGroupActivityNameTexts
 sLinkGroupActivityNameTexts: @ 0x82C1E58
@@ -513,11 +652,20 @@ sCardColorTexts: @ 0x82C1F08
 
 	.globl sText_TrainerCardInfoPage1
 sText_TrainerCardInfoPage1: @ 0x82C1F1C
-	.incbin "baserom_jp.gba", 0x2c1f1c, 0x38
+	.string "{DYNAMIC 0}の　{DYNAMIC 1}の\n"
+	.string "トレーナーカードを　みせてもらった\l"
+	.string "{DYNAMIC 2}\p"
+	.string "ポケモンずかん　{DYNAMIC 3}\n"
+	.string "プレイ　じかん　{DYNAMIC 4}:{DYNAMIC 5}\p"
+	.string "$　"
 
 	.globl sText_TrainerCardInfoPage2
 sText_TrainerCardInfoPage2: @ 0x82C1F54
-	.incbin "baserom_jp.gba", 0x2c1f54, 0x50
+	.string "たいせん　かち{DYNAMIC 0}　まけ{DYNAMIC 2}\n"
+	.string "こうかん　{DYNAMIC 3}かい\p"
+	.string "‘{DYNAMIC 4}　{DYNAMIC 5}\n"
+	.string "　{DYNAMIC 6}　{DYNAMIC 7}\p"
+	.string "${DYNAMIC 1}‘これからも　よろしく！{PAUSE 60}$　　{DYNAMIC 1}‘これからも　よろしくね！{PAUSE 60}$　"
 
 	.globl sGladToMeetYouTexts
 sGladToMeetYouTexts: @ 0x82C1FA4
@@ -692,34 +840,39 @@ sJPText_MgDontHaveCard: @ 0x82C26C4
 	.string "あたらしく　カードを　よみこみます$"
 	.globl sJPText_MgDontHaveNews
 sJPText_MgDontHaveNews: @ 0x82C26E8
-	.incbin "baserom_jp.gba", 0x2c26e8, 0x28
+	.string "ふしぎなニュースを　もっていないので\n"
+	.string "あたらしく　ニュースを　よみこみます$　　"
 
 	.globl sJPText_MgWhereCard
 sJPText_MgWhereCard: @ 0x82C2710
-	.incbin "baserom_jp.gba", 0x2c2710, 0x1c
+	.string "どちらから　ふしぎなカードを\n"
+	.string "よみこみ　ますか？$　　　"
 
 	.globl sJPText_MgWhereNews
 sJPText_MgWhereNews: @ 0x82C272C
-	.incbin "baserom_jp.gba", 0x2c272c, 0x40
+	.string "どちらから　ふしぎなニュースを\n"
+	.string "よみこみ　ますか？$　　つうしん　たいき　ちゅう　です\n"
+	.string ",,,Bボタンで　キャンセル　します$　"
 
 	.globl sJPText_MgCommunicating
 sJPText_MgCommunicating: @ 0x82C276C
-	.incbin "baserom_jp.gba", 0x2c276c, 0x10
+	.string "つうしん　しています,,,$　　"
 
 	.globl sJPText_MgCommCompleted
 sJPText_MgCommCompleted: @ 0x82C277C
-	.incbin "baserom_jp.gba", 0x2c277c, 0x14
+	.string "つうしんが　しゅうりょう　しました$　　"
 
 	.globl sJPText_MeventMsg11
 sJPText_MeventMsg11: @ 0x82C2790
 	.string "つうしんに　しっぱい　しました$"
 	.globl sJPText_MeventMsg9
 sJPText_MeventMsg9: @ 0x82C27A0
-	.incbin "baserom_jp.gba", 0x2c27a0, 0x14
+	.string "つうしんを　キャンセル　しました$　　　"
 
 	.globl sJPText_MgThrowAwayCard
 sJPText_MgThrowAwayCard: @ 0x82C27B4
-	.incbin "baserom_jp.gba", 0x2c27b4, 0x28
+	.string "いまの　ふしぎなカードを　すてて\n"
+	.string "あたらしい　カードを　よみこみますか？$　　　"
 
 	.globl sJPText_MgHaventReceived
 sJPText_MgHaventReceived: @ 0x82C27DC
@@ -727,15 +880,18 @@ sJPText_MgHaventReceived: @ 0x82C27DC
 	.string "ませんが　ほんとうに　よみこみますか？$"
 	.globl sJPText_MeventMsg2a
 sJPText_MeventMsg2a: @ 0x82C2804
-	.incbin "baserom_jp.gba", 0x2c2804, 0x1c
+	.string "{B_COPY_VAR_1}から　ふしぎなカードが\n"
+	.string "おくられて　きました！$　　"
 
 	.globl sJPText_MeventMsg3a
 sJPText_MeventMsg3a: @ 0x82C2820
-	.incbin "baserom_jp.gba", 0x2c2820, 0x18
+	.string "{B_COPY_VAR_1}から　ニュースが\n"
+	.string "おくられて　きました！$　"
 
 	.globl sJPText_MeventMsg2b
 sJPText_MeventMsg2b: @ 0x82C2838
-	.incbin "baserom_jp.gba", 0x2c2838, 0x1c
+	.string "あたらしい　ふしぎなカードが\n"
+	.string "おくられて　きました！$　"
 
 	.globl sJPText_MeventMsg3b
 sJPText_MeventMsg3b: @ 0x82C2854
@@ -747,7 +903,8 @@ sJPText_MeventMsg4: @ 0x82C286C
 	.string "おくられて　きました！$"
 	.globl sJPText_MeventMsg12
 sJPText_MeventMsg12: @ 0x82C2884
-	.incbin "baserom_jp.gba", 0x2c2884, 0x1c
+	.string "あたらしい　トレーナーが\n"
+	.string "おくられて　きました！$　　　"
 
 	.globl sJPText_MeventMsg5
 sJPText_MeventMsg5: @ 0x82C28A0
@@ -755,51 +912,61 @@ sJPText_MeventMsg5: @ 0x82C28A0
 	.string "すでに　もっています$"
 	.globl sJPText_MeventMsg7
 sJPText_MeventMsg7: @ 0x82C28B8
-	.incbin "baserom_jp.gba", 0x2c28b8, 0x18
+	.string "おなじ　ニュースを\n"
+	.string "すでに　もっています$　　　"
 
 	.globl sJPText_MeventMsg6
 sJPText_MeventMsg6: @ 0x82C28D0
-	.incbin "baserom_jp.gba", 0x2c28d0, 0x18
+	.string "おなじ　スタンプを\n"
+	.string "すでに　もっています$　　　"
 
 	.globl sJPText_MeventMsg8
 sJPText_MeventMsg8: @ 0x82C28E8
-	.incbin "baserom_jp.gba", 0x2c28e8, 0x1c
+	.string "スタンプが　いっぱい　なので\n"
+	.string "もう　おせません！$　　　"
 
 	.globl sJPText_MeventMsg1
 sJPText_MeventMsg1: @ 0x82C2904
-	.incbin "baserom_jp.gba", 0x2c2904, 0x20
+	.string "じぶんの　きろくを\n"
+	.string "ジョイスポットに　よみこませ　ました！$　　"
 
 	.globl sJPText_MeventMsg10b
 sJPText_MeventMsg10b: @ 0x82C2924
-	.incbin "baserom_jp.gba", 0x2c2924, 0x20
+	.string "この　あいて　からは　ふしぎなカードを\n"
+	.string "うけとれません！$　　　"
 
 	.globl sJPText_MeventMsg10a
 sJPText_MeventMsg10a: @ 0x82C2944
-	.incbin "baserom_jp.gba", 0x2c2944, 0x1c
+	.string "この　あいて　からは　ニュースを\n"
+	.string "うけとれません！$　　"
 
 	.globl sJPText_MeventMsg0
 sJPText_MeventMsg0: @ 0x82C2960
-	.incbin "baserom_jp.gba", 0x2c2960, 0x14
+	.string "なにも　おくられて\n"
+	.string "きません　でした$　"
 
 	.globl gText_WhatToDoWithCards
 gText_WhatToDoWithCards: @ 0x82C2974
-	.incbin "baserom_jp.gba", 0x2c2974, 0x10
+	.string "カードを　どうしますか？$　　　"
 
 	.globl gText_WhatToDoWithNews
 gText_WhatToDoWithNews: @ 0x82C2984
-	.incbin "baserom_jp.gba", 0x2c2984, 0x10
+	.string "ニュースを　どうしますか？$　　"
 
 	.globl sJPText_MgSendingCard
 sJPText_MgSendingCard: @ 0x82C2994
-	.incbin "baserom_jp.gba", 0x2c2994, 0x18
+	.string "ふしぎなカード　を\n"
+	.string "おくって　います,,,$　　"
 
 	.globl sJPText_MgSendingNews
 sJPText_MgSendingNews: @ 0x82C29AC
-	.incbin "baserom_jp.gba", 0x2c29ac, 0x14
+	.string "ニュースを\n"
+	.string "おくって　います,,,$　　"
 
 	.globl sJPText_StampMsg2
 sJPText_StampMsg2: @ 0x82C29C0
-	.incbin "baserom_jp.gba", 0x2c29c0, 0x18
+	.string "{B_COPY_VAR_1}に　ふしぎなカードを\n"
+	.string "おくり　ました！$　　"
 
 	.globl sJPText_StampMsg3
 sJPText_StampMsg3: @ 0x82C29D8
@@ -811,23 +978,27 @@ sJPText_StampMsg4: @ 0x82C29EC
 	.string "おくり　ました！$"
 	.globl sJPText_StampMsg12
 sJPText_StampMsg12: @ 0x82C2A00
-	.incbin "baserom_jp.gba", 0x2c2a00, 0x14
+	.string "{B_COPY_VAR_1}に　おくりものを　しました！$　　　"
 
 	.globl sJPText_StampMsg5
 sJPText_StampMsg5: @ 0x82C2A14
-	.incbin "baserom_jp.gba", 0x2c2a14, 0x1c
+	.string "あいてが　おなじ\n"
+	.string "ふしぎなカードを　もっています！$　　"
 
 	.globl sJPText_StampMsg7
 sJPText_StampMsg7: @ 0x82C2A30
-	.incbin "baserom_jp.gba", 0x2c2a30, 0x18
+	.string "あいてが　おなじ\n"
+	.string "ニュースを　もっています！$　"
 
 	.globl sJPText_StampMsg6
 sJPText_StampMsg6: @ 0x82C2A48
-	.incbin "baserom_jp.gba", 0x2c2a48, 0x18
+	.string "あいてが　おなじ\n"
+	.string "スタンプを　もっています！$　"
 
 	.globl sJPText_StampMsg9
 sJPText_StampMsg9: @ 0x82C2A60
-	.incbin "baserom_jp.gba", 0x2c2a60, 0x18
+	.string "あいてが　つうしんを　\n"
+	.string "キャンセル　しました$　"
 
 	.globl sJPText_StampMsg14
 sJPText_StampMsg14: @ 0x82C2A78
@@ -835,7 +1006,8 @@ sJPText_StampMsg14: @ 0x82C2A78
 	.string "ふしぎなおくりものを　わたせません$"
 	.globl sText_DiscardWonderCard
 sText_DiscardWonderCard: @ 0x82C2A94
-	.incbin "baserom_jp.gba", 0x2c2a94, 0x20
+	.string "カードをすてると　できごとも\n"
+	.string "なくなりますが　よいですか？$　　"
 
 	.globl sText_DiscardWonderNews
 sText_DiscardWonderNews: @ 0x82C2AB4
@@ -843,30 +1015,33 @@ sText_DiscardWonderNews: @ 0x82C2AB4
 	.string "すてても　よいですか？$"
 	.globl sJPText_MgDiscardConfirm
 sJPText_MgDiscardConfirm: @ 0x82C2ACC
-	.incbin "baserom_jp.gba", 0x2c2acc, 0x20
+	.string "おくりものを　もらってません\n"
+	.string "が　ほんとうに　すてますか？$　　"
 
 	.globl sText_SavingGame1
 sText_SavingGame1: @ 0x82C2AEC
-	.incbin "baserom_jp.gba", 0x2c2aec, 0x1c
+	.string "レポートを　かいています\n"
+	.string "しばらく　おまちください$　　"
 
 	.globl sText_SavingGame2
 sText_SavingGame2: @ 0x82C2B08
-	.incbin "baserom_jp.gba", 0x2c2b08, 0x20
+	.string "レポートを　かきこみました！\n"
+	.string "Aボタンを　おしてください$　　　"
 
 	.globl sText_WasThrownAwayWonderCard
 sText_WasThrownAwayWonderCard: @ 0x82C2B28
-	.incbin "baserom_jp.gba", 0x2c2b28, 0x10
+	.string "ふしぎなカードを　すてました$　"
 
 	.globl sText_WasThrownAwayWonderNews
 sText_WasThrownAwayWonderNews: @ 0x82C2B38
 	.string "ニュースを　すてました$"
 	.globl gText_MysteryGift
 gText_MysteryGift: @ 0x82C2B44
-	.incbin "baserom_jp.gba", 0x2c2b44, 0xc
+	.string "ふしぎなおくりもの$　　"
 
 	.globl gText_PickOKExit
 gText_PickOKExit: @ 0x82C2B50
-	.incbin "baserom_jp.gba", 0x2c2b50, 0x14
+	.string "{DPAD_UPDOWN}えらぶ　{A_BUTTON}けってい　{B_BUTTON}やめる$　"
 
 	.globl sTextColors_Header
 sTextColors_Header: @ 0x82C2B64
@@ -14195,7 +14370,7 @@ gText_Cancel4: @ 0x8591C15
 	.string "けってい$"
 	.globl gText_Confirm3
 gText_Confirm3: @ 0x8591C1A
-	.incbin "baserom_jp.gba", 0x591c1a, 0x6
+	.string "もどる　$　"
 
 	.globl sTextPrompt_Pal
 sTextPrompt_Pal: @ 0x8591C20
@@ -16390,7 +16565,9 @@ gText_MoveRelearnerGiveUp: @ 0x85ADAAF
 	.string "あきらめますか？$"
 	.globl gText_MoveRelearnerWhichMoveToForget
 gText_MoveRelearnerWhichMoveToForget: @ 0x85ADAC9
-	.incbin "baserom_jp.gba", 0x5adac9, 0x2b
+	.string "どの　わざを\n"
+	.string "わすれさせたい？\p"
+	.string "$　　　　　　　　　　　ィ　　　　　　　ぞ　　　　　　"
 
 	.globl sMoveRelearnerSpriteSheet
 sMoveRelearnerSpriteSheet: @ 0x85ADAF4
@@ -17065,7 +17242,7 @@ gText_Diploma_4: @ 0x85C8BF2
 	.string "{COLOR 4}{SHADOW 5}ゲームフリーク$"
 	.globl gText_Diploma_NameTemplate
 gText_Diploma_NameTemplate: @ 0x85C8C00
-	.incbin "baserom_jp.gba", 0x5c8c00, 0x8
+	.string "{COLOR 4}{SHADOW 5}$　"
 
 	.globl sDiplomaBgTemplates
 sDiplomaBgTemplates: @ 0x85C8C08
@@ -18410,7 +18587,7 @@ gText_SearchResultRank: @ 0x85CB81B
 
 	.globl gText_RibbonsF700
 gText_RibbonsF700: @ 0x85CB821
-	.incbin "baserom_jp.gba", 0x5cb821, 0x242
+	.string "リボン　{DYNAMIC 0}こ${DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ${DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ${DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$4つの　ことばを　くみあわせて$プロフィールを　つくろう！$6つの　ことばで　メッセージを　つくろう！$7もじの　ことばは　1ぎょうに　2つまで！$いまの　きもちに　ぴったりあう$ことばを　みつけよう！$4つの　ことばで$9つの　ことばを　くみあわせて$メッセージを　つくろう！$ことばを　1つだけ　いれかえて$オヤジのうたを　よくして　あげよう！$プロフィールは$たいせんが　はじまるときの　きもちは$たいせんに　かったときの　あいさつは$たいせんに　まけたときの　あいさつは$こたえは$メールに　のせる　メッセージは$はがきに　のせる　あいさつは$あたらしい　うたは$2つの　ことばを　くみあわせて$はやらせたい　ことばを　つくろう！$はやらせたい　ことばは$これで　いいですか？$2つの　ことばを　くみあわせて$いい　ことばを　おしえてあげよう！$トレーナーの　イメージに$ぴったりの　ことばを　みつけよう！$イメージは$ことばの　なかから$クイズの　こたえを　えらぼう！$クイズを　つくろう！$ことばの　なかから　ひとつを　えらんで$クイズの　こたえを　つくろう！$こたえは$クイズは$でしの　きめゼリフは$"
 	.globl gUnknown_85CBA63
 gUnknown_85CBA63: @ 0x85CBA63
 	.string "へんしゅうを　やめますか？$"
@@ -18837,7 +19014,7 @@ gUnknown_85CCA28: @ 0x85CCA28
 
 	.globl gText_PressesRankings
 gText_PressesRankings: @ 0x85CCA30
-	.incbin "baserom_jp.gba", 0x5cca30, 0x10
+	.string "おした　かいすう　ランキング$　"
 
 	.globl gText_CrushingResults
 gText_CrushingResults: @ 0x85CCA40
@@ -19195,7 +19372,8 @@ gText_ClearAllSaveData: @ 0x85CDB60
 	.string "クリア　しますか？$"
 	.globl gText_ClearingData
 gText_ClearingData: @ 0x85CDB7A
-	.incbin "baserom_jp.gba", 0x5cdb7a, 0x16
+	.string "クリア　しています\n"
+	.string "おまち　ください$　　　"
 
 	.globl sClearSaveBgTemplates
 sClearSaveBgTemplates: @ 0x85CDB90
@@ -21730,7 +21908,7 @@ sMatchCallOptionsHasCheckPage: @ 0x85F3E96
 
 	.globl gText_CallCantBeMadeHere
 gText_CallCantBeMadeHere: @ 0x85F3E99
-	.incbin "baserom_jp.gba", 0x5f3e99, 0x17
+	.string "ここでは　よびだすことが　できないようだ$　　"
 
 	.globl sMatchCallUI_Pal
 sMatchCallUI_Pal: @ 0x85F3EB0
@@ -21796,7 +21974,8 @@ sMatchCallOptionTexts: @ 0x85F4188
 
 	.globl sText_CallingDots
 sText_CallingDots: @ 0x85F4194
-	.incbin "baserom_jp.gba", 0x5f4194, 0x14
+	.string "·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·{PAUSE 4}·\p"
+	.string "$　"
 
 	.globl sCallMsgBoxWindowTemplate
 sCallMsgBoxWindowTemplate: @ 0x85F41A8
@@ -22026,13 +22205,13 @@ gText_RibbonsMonListCount: @ 0x85F5DCC
 
 	.globl sText_RibbonsMonListItemMale
 sText_RibbonsMonListItemMale: @ 0x85F5DD3
-	.incbin "baserom_jp.gba", 0x5f5dd3, 0x18
+	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 5 1 6}♂{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"
 	.globl sText_RibbonsMonListItemFemale
 sText_RibbonsMonListItemFemale: @ 0x85F5DEB
-	.incbin "baserom_jp.gba", 0x5f5deb, 0x18
+	.string "{DYNAMIC 0}　{COLOR_HIGHLIGHT_SHADOW 7 1 8}♀{COLOR_HIGHLIGHT_SHADOW 2 1 3}/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$"
 	.globl sText_RibbonsMonListItemUnknown
 sText_RibbonsMonListItemUnknown: @ 0x85F5E03
-	.incbin "baserom_jp.gba", 0x5f5e03, 0x11
+	.string "{DYNAMIC 0}　　/{LV_2}{DYNAMIC 1}　{DYNAMIC 2}こ$　　　"
 
 	.globl sRibbonData
 sRibbonData: @ 0x85F5E14
@@ -22479,7 +22658,7 @@ gText_MoveRelearnerAppeal: @ 0x85F7C75
 
 	.globl gText_MoveRelearnerJam
 gText_MoveRelearnerJam: @ 0x85F7C7A
-	.incbin "baserom_jp.gba", 0x5f7c7a, 0x6
+	.string "ぼうがい$　"
 
 	.globl sMoveRelearnerMovesListTemplate
 sMoveRelearnerMovesListTemplate: @ 0x85F7C80
@@ -22530,7 +22709,7 @@ gText_Plus: @ 0x85FA9C4
 
 	.globl gText_Dash
 gText_Dash: @ 0x85FA9C7
-	.incbin "baserom_jp.gba", 0x5fa9c7, 0x5
+	.string "ー$　　　"
 
 	.globl sLvlUpStatStrings
 sLvlUpStatStrings: @ 0x85FA9CC
@@ -22825,7 +23004,7 @@ gUnknown_85FC004: @ 0x85FC004
 
 	.globl gText_Peekaboo
 gText_Peekaboo: @ 0x85FC010
-	.incbin "baserom_jp.gba", 0x5fc010, 0xc
+	.string "いないいないばあー$　　"
 
 	.globl GymLeaderRematches_AfterNewMauville
 GymLeaderRematches_AfterNewMauville: @ 0x85FC01C
