@@ -12,22 +12,6 @@
 
 
 
-	.globl gUnknown_82C14B8
-gUnknown_82C14B8: @ 0x82C14B8
-	.incbin "baserom_jp.gba", 0x2c14b8, 0xac
-
-	.globl sChatReactionTexts
-sChatReactionTexts: @ 0x82C1564
-	.incbin "baserom_jp.gba", 0x2c1564, 0x84
-
-	.globl sTrainerCardReactionTexts
-sTrainerCardReactionTexts: @ 0x82C15E8
-	.incbin "baserom_jp.gba", 0x2c15e8, 0x80
-
-	.globl sTradeReactionTexts
-sTradeReactionTexts: @ 0x82C1668
-	.incbin "baserom_jp.gba", 0x2c1668, 0x20
-
 	.globl sText_XCheckedTradingBoard
 sText_XCheckedTradingBoard: @ 0x82C1688
 	.string "{B_COPY_VAR_1}は\n"

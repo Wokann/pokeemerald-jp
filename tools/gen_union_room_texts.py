@@ -232,6 +232,31 @@ SYMBOLS8C = [
 
 END_ADDR8C = 0x082C14B8  # chat reaction texts (next region)
 
+# Eighth batch part 4: chat/trainer-card/trade reaction texts.
+SYMBOLS8D = [
+    ("sText_LearnedSomethingMale", 0x082C14B8, "text", None),
+    ("sText_ThatsFunnyMale", 0x082C14C8, "text", None),
+    ("sText_RandomChatMale1", 0x082C14E4, "text", None),
+    ("sText_RandomChatMale2", 0x082C14F8, "text", None),
+    ("sText_LearnedSomethingFemale", 0x082C1518, "text", None),
+    ("sText_ThatsFunnyFemale", 0x082C1530, "text", None),
+    ("sText_RandomChatFemale1", 0x082C153C, "text", None),
+    ("sText_RandomChatFemale2", 0x082C1550, "text", None),
+    ("sChatReactionTexts", 0x082C1564, "table_chat", None),
+    ("sText_ShowedTrainerCardMale1", 0x082C1584, "text", None),
+    ("sText_ShowedTrainerCardMale2", 0x082C15A4, "text", None),
+    ("sText_ShowedTrainerCardFemale1", 0x082C15B4, "text", None),
+    ("sText_ShowedTrainerCardFemale2", 0x082C15D8, "text", None),
+    ("sTrainerCardReactionTexts", 0x082C15E8, "table_2x2", None),
+    ("sText_MaleTraded1", 0x082C15F8, "text", None),
+    ("sText_MaleTraded2", 0x082C1610, "text", None),
+    ("sText_FemaleTraded1", 0x082C1630, "text", None),
+    ("sText_FemaleTraded2", 0x082C1648, "text", None),
+    ("sTradeReactionTexts", 0x082C1668, "table_trade", None),
+]
+
+END_ADDR8D = 0x082C1688  # sText_XCheckedTradingBoard (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -419,6 +444,38 @@ def emit_table_2x4_battle(name):
     return "\n".join(out)
 
 
+def emit_table_chat(name):
+    rows = [
+        ["sText_LearnedSomethingMale", "sText_ThatsFunnyMale", "sText_RandomChatMale1", "sText_RandomChatMale2"],
+        ["sText_LearnedSomethingFemale", "sText_ThatsFunnyFemale", "sText_RandomChatFemale1", "sText_RandomChatFemale2"],
+    ]
+    out = [f"const u8 *const {name}[][4] = {{"]
+    for row in rows:
+        out.append("    { %s }," % ", ".join(row))
+    out.append("};")
+    return "\n".join(out)
+
+
+def emit_table_2x2(name):
+    rows = [
+        ["sText_ShowedTrainerCardMale1", "sText_ShowedTrainerCardMale2"],
+        ["sText_ShowedTrainerCardFemale1", "sText_ShowedTrainerCardFemale2"],
+    ]
+    out = [f"const u8 *const {name}[][2] = {{"]
+    for row in rows:
+        out.append("    { %s }," % ", ".join(row))
+    out.append("};")
+    return "\n".join(out)
+
+
+def emit_table_trade(name):
+    out = [f"const u8 *const {name}[][4] = {{"]
+    out.append("    { sText_MaleTraded1, sText_MaleTraded2, NULL, NULL },")
+    out.append("    { sText_FemaleTraded1, sText_FemaleTraded2, NULL, NULL },")
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
@@ -455,6 +512,12 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table_start_activity(name))
         elif kind == "table_2x4_battle":
             out.append(emit_table_2x4_battle(name))
+        elif kind == "table_chat":
+            out.append(emit_table_chat(name))
+        elif kind == "table_2x2":
+            out.append(emit_table_2x2(name))
+        elif kind == "table_trade":
+            out.append(emit_table_trade(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -492,6 +555,8 @@ def main():
           "// Start-activity and battle-declined texts")
     build(SYMBOLS8C, END_ADDR8C, "src/data/union_room8c.h", "src/data/union_room8c.c",
           "// Battle-busy, level-requirement and reaction texts")
+    build(SYMBOLS8D, END_ADDR8D, "src/data/union_room8d.h", "src/data/union_room8d.c",
+          "// Chat/trainer-card/trade reaction texts")
 
 
 if __name__ == "__main__":
