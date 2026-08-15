@@ -922,7 +922,7 @@ __attribute__((naked)) void GetEggSpecies(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0806FAD8: .4byte 0x0000019B\n\t"
+        "_0806FAD8: .4byte SPECIAL_sub_08139938\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1779,7 +1779,7 @@ __attribute__((naked)) void BuildEggMoveset(void)
         "	.align 2, 0\n\t"
         "_08070118: .4byte gUnknown_20246CC\n\t"
         "_0807011C: .4byte 0x0000FFFF\n\t"
-        "_08070120: .4byte 0x00000121\n\t"
+        "_08070120: .4byte SPECIAL_FoundAbandonedShipRoom4Key\n\t"
         "_08070124: .4byte gUnknown_20246D4\n\t"
         "_08070128: .4byte gUnknown_20246F0\n\t"
         "_0807012C: .4byte gUnknown_2024668\n\t"
@@ -2070,7 +2070,7 @@ __attribute__((naked)) void DetermineEggSpeciesAndParentSlots(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0807031C: .4byte 0x00000183\n\t"
+        "_0807031C: .4byte SPECIAL_sub_0818E0D8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2409,7 +2409,7 @@ __attribute__((naked)) void _DoEggActions_CheckHatch(void)
         "	b _080705C2\n\t"
         "	.align 2, 0\n\t"
         "_080705B4: .4byte 0x0000FFFF\n\t"
-        "_080705B8: .4byte 0x0202418D\n\t"
+        "_080705B8: .4byte gPlayerPartyCount\n\t"
         "_080705BC: .4byte gPlayerParty\n\t"
         "_080705C0:\n\t"
         "	subs r0, r1, #1\n\t"
@@ -2442,7 +2442,7 @@ __attribute__((naked)) void _DoEggActions_CheckHatch(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080705F4: .4byte 0x0202418D\n\t"
+        "_080705F4: .4byte gPlayerPartyCount\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3001,7 +3001,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	ldr r1, _0807098C\n\t"
         "	b _080709AE\n\t"
         "	.align 2, 0\n\t"
-        "_0807098C: .4byte 0x08300A95\n\t"
+        "_0807098C: .4byte gUnknown_8300A95\n\t"
         "_08070990:\n\t"
         "	cmp r1, #0xfe\n\t"
         "	bne _080709AC\n\t"
@@ -3014,7 +3014,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	ldr r1, _080709A8\n\t"
         "	b _080709AE\n\t"
         "	.align 2, 0\n\t"
-        "_080709A8: .4byte 0x08300A97\n\t"
+        "_080709A8: .4byte gUnknown_8300A97\n\t"
         "_080709AC:\n\t"
         "	ldr r1, _080709BC\n\t"
         "_080709AE:\n\t"
@@ -3024,7 +3024,7 @@ __attribute__((naked)) void AppendGenderSymbol(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080709BC: .4byte 0x08300A99\n\t"
+        "_080709BC: .4byte gUnknown_8300A99\n\t"
         ".syntax divided\n\t"
     );
 }

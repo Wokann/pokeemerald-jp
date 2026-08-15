@@ -6653,7 +6653,7 @@ __attribute__((naked)) void LoadFieldMoveOutdoorStreaksTilemap(u16 a0)
         "	.align 2, 0\n\t"
         "_080B8000: .4byte 0x06000140\n\t"
         "_080B8004: .4byte 0x08535D1C\n\t"
-        "_080B8008: .4byte 0x0000013F\n\t"
+        "_080B8008: .4byte SPECIAL_ShowContestEntryMonPic\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7363,7 +7363,7 @@ __attribute__((naked)) u8 FldEff_UseSurf(void)
         "_080B84CC: .4byte 0x080B84DD\n\t"
         "_080B84D0: .4byte gTasks\n\t"
         "_080B84D4: .4byte gFieldEffectArguments\n\t"
-        "_080B84D8: .4byte 0x0000016D\n\t"
+        "_080B84D8: .4byte SPECIAL_sub_0818D98C\n\t"
         ".syntax divided\n\t"
     );
 }

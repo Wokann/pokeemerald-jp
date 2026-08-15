@@ -1345,7 +1345,7 @@ __attribute__((naked)) void sub_08170BE8(void)
         "_08170CB0: .4byte gLastUsedItem\n\t"
         "_08170CB4: .4byte 0x082FCF94\n\t"
         "_08170CB8: .4byte gSprites\n\t"
-        "_08170CBC: .4byte 0x020380D7\n\t"
+        "_08170CBC: .4byte gBattleAnimTarget\n\t"
         "_08170CC0: .4byte 0x08170EE9\n\t"
         "_08170CC4: .4byte gBattleSpritesDataPtr\n\t"
         "_08170CC8: .4byte gBattlerSpriteIds\n\t"
@@ -1505,7 +1505,7 @@ __attribute__((naked)) void sub_08170D10(void)
         "_08170DF0: .4byte gLastUsedItem\n\t"
         "_08170DF4: .4byte 0x082FCF94\n\t"
         "_08170DF8: .4byte gSprites\n\t"
-        "_08170DFC: .4byte 0x020380D7\n\t"
+        "_08170DFC: .4byte gBattleAnimTarget\n\t"
         "_08170E00: .4byte 0x08007141\n\t"
         "_08170E04: .4byte gBattlerSpriteIds\n\t"
         "_08170E08: .4byte 0x08039AC9\n\t"
@@ -1741,7 +1741,7 @@ __attribute__((naked)) void sub_08170F18(void)
         "	.align 2, 0\n\t"
         "_08170FC0: .4byte 0x08170FCD\n\t"
         "_08170FC4: .4byte gLastUsedItem\n\t"
-        "_08170FC8: .4byte 0x020380D7\n\t"
+        "_08170FC8: .4byte gBattleAnimTarget\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1788,7 +1788,7 @@ __attribute__((naked)) void sub_08170FCC(void)
         "_08171014: .4byte 0x08171025\n\t"
         "_08171018: .4byte gSprites\n\t"
         "_0817101C: .4byte gBattlerSpriteIds\n\t"
-        "_08171020: .4byte 0x020380D7\n\t"
+        "_08171020: .4byte gBattleAnimTarget\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1833,7 +1833,7 @@ __attribute__((naked)) void sub_08171024(void)
         "	b _08171138\n\t"
         "	.align 2, 0\n\t"
         "_08171068: .4byte gBattlerSpriteIds\n\t"
-        "_0817106C: .4byte 0x020380D7\n\t"
+        "_0817106C: .4byte gBattleAnimTarget\n\t"
         "_08171070: .4byte gTasks\n\t"
         "_08171074:\n\t"
         "	cmp r0, #2\n\t"
@@ -2054,7 +2054,7 @@ __attribute__((naked)) void sub_081711B4(void)
         "	beq _0817121E\n\t"
         "	b _08171236\n\t"
         "	.align 2, 0\n\t"
-        "_08171214: .4byte 0x00000101\n\t"
+        "_08171214: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_08171218:\n\t"
         "	cmp r0, #3\n\t"
         "	beq _0817122E\n\t"
@@ -2607,7 +2607,7 @@ __attribute__((naked)) void sub_081715DC(void)
         "	bl sub_081717D0\n\t"
         "	b _081716A0\n\t"
         "	.align 2, 0\n\t"
-        "_0817161C: .4byte 0x020380D7\n\t"
+        "_0817161C: .4byte gBattleAnimTarget\n\t"
         "_08171620:\n\t"
         "	cmp r1, #0x3c\n\t"
         "	bne _0817163E\n\t"
@@ -2636,7 +2636,7 @@ __attribute__((naked)) void sub_081715DC(void)
         "	bl PlaySE\n\t"
         "	b _081716A0\n\t"
         "	.align 2, 0\n\t"
-        "_0817165C: .4byte 0x0202415D\n\t"
+        "_0817165C: .4byte gUnknown_202415D\n\t"
         "_08171660: .4byte 0x00000213\n\t"
         "_08171664:\n\t"
         "	ldr r0, _081716AC\n\t"
@@ -2675,7 +2675,7 @@ __attribute__((naked)) void sub_081715DC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081716AC: .4byte 0x0000013B\n\t"
+        "_081716AC: .4byte SPECIAL_FoundBlackGlasses\n\t"
         "_081716B0: .4byte gSprites\n\t"
         "_081716B4: .4byte gBattlerSpriteIds\n\t"
         "_081716B8: .4byte 0x081716BD\n\t"
@@ -3060,7 +3060,7 @@ __attribute__((naked)) void sub_081718C8(void)
         "	.align 2, 0\n\t"
         "_0817197C: .4byte 0x08171991\n\t"
         "_08171980: .4byte gLastUsedItem\n\t"
-        "_08171984: .4byte 0x020380D7\n\t"
+        "_08171984: .4byte gBattleAnimTarget\n\t"
         "_08171988: .4byte gSprites\n\t"
         "_0817198C: .4byte gBattlerSpriteIds\n\t"
         ".syntax divided\n\t"
@@ -3111,7 +3111,7 @@ __attribute__((naked)) void sub_08171990(void)
         "	.align 2, 0\n\t"
         "_081719DC: .4byte gSprites\n\t"
         "_081719E0: .4byte gBattlerSpriteIds\n\t"
-        "_081719E4: .4byte 0x020380D7\n\t"
+        "_081719E4: .4byte gBattleAnimTarget\n\t"
         "_081719E8:\n\t"
         "	ldr r6, _08171A74\n\t"
         "	adds r0, r6, #0\n\t"
@@ -3188,10 +3188,10 @@ __attribute__((naked)) void sub_08171990(void)
         "_08171A74: .4byte 0xFFFFFEE0\n\t"
         "_08171A78: .4byte gSprites\n\t"
         "_08171A7C: .4byte gBattlerSpriteIds\n\t"
-        "_08171A80: .4byte 0x020380D7\n\t"
+        "_08171A80: .4byte gBattleAnimTarget\n\t"
         "_08171A84: .4byte gBattleSpritesDataPtr\n\t"
         "_08171A88: .4byte 0x081717A5\n\t"
-        "_08171A8C: .4byte 0x0202415D\n\t"
+        "_08171A8C: .4byte gUnknown_202415D\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3297,7 +3297,7 @@ __attribute__((naked)) void sub_08171ACC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08171B3C: .4byte 0x081717A5\n\t"
-        "_08171B40: .4byte 0x0202415D\n\t"
+        "_08171B40: .4byte gUnknown_202415D\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5631,7 +5631,7 @@ __attribute__((naked)) void AnimTask_TargetToEffectBattler(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08172CCC: .4byte 0x020380D7\n\t"
+        "_08172CCC: .4byte gBattleAnimTarget\n\t"
         "_08172CD0: .4byte gEffectBattler\n\t"
         ".syntax divided\n\t"
     );
@@ -6410,7 +6410,7 @@ __attribute__((naked)) void sub_08173240(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08173290: .4byte gBattleAnimAttacker\n\t"
-        "_08173294: .4byte 0x020380D7\n\t"
+        "_08173294: .4byte gBattleAnimTarget\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6499,7 +6499,7 @@ __attribute__((naked)) void AnimTask_GetBattlersFromArg(void)
         "	.align 2, 0\n\t"
         "_08173324: .4byte gBattleAnimAttacker\n\t"
         "_08173328: .4byte gBattleSpritesDataPtr\n\t"
-        "_0817332C: .4byte 0x020380D7\n\t"
+        "_0817332C: .4byte gBattleAnimTarget\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -2026,7 +2026,7 @@ __attribute__((naked)) void UpdateNickInHealthbox(u8 healthboxSpriteId, struct P
         "	movs r0, #0x2c\n\t"
         "	b _08073C52\n\t"
         "	.align 2, 0\n\t"
-        "_08073C20: .4byte 0x085CC4F5\n\t"
+        "_08073C20: .4byte gText_HealthboxGender_Female\n\t"
         "_08073C24: .4byte gSprites\n\t"
         "_08073C28: .4byte gMonSpritesGfxPtr\n\t"
         "_08073C2C: .4byte gDisplayedStringBattle\n\t"

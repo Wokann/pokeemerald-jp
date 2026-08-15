@@ -755,7 +755,7 @@ __attribute__((naked)) void sub_08135DF8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08135E48: .4byte 0x00000111\n\t"
+        "_08135E48: .4byte SPECIAL_ShakeScreenInElevator\n\t"
         "_08135E4C: .4byte 0x085C983E\n\t"
         "_08135E50: .4byte 0x085C9842\n\t"
         "_08135E54: .4byte 0x085C9846\n\t"

@@ -954,7 +954,7 @@ __attribute__((naked)) void CreateShopMenu(void)
         "_080DF6FC: .4byte gStringVar1\n\t"
         "_080DF700: .4byte gDecorations\n\t"
         "_080DF704: .4byte gStringVar4\n\t"
-        "_080DF708: .4byte 0x085C9A9D\n\t"
+        "_080DF708: .4byte gText_PokedollarVar1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1064,7 +1064,7 @@ __attribute__((naked)) void BuyMenuPrintCursor(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF7C4: .4byte 0x085C9421\n\t"
+        "_080DF7C4: .4byte gText_SelectorArrow2\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1547,7 +1547,7 @@ __attribute__((naked)) void BuyMenuDrawMapBg(void)
         "	bl BuyMenuDrawMapMetatile\n\t"
         "	b _080DFB88\n\t"
         "	.align 2, 0\n\t"
-        "_080DFB6C: .4byte 0x000001FF\n\t"
+        "_080DFB6C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_080DFB70:\n\t"
         "	asrs r0, r4, #0x10\n\t"
         "	mov r3, sb\n\t"

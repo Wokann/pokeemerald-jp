@@ -319,7 +319,7 @@ __attribute__((naked)) void SetLilycoveFavourLady(void)
         "_0818D8E0: .4byte gUnknown_203CA30\n\t"
         "_0818D8E4: .4byte gSaveBlock1Ptr\n\t"
         "_0818D8E8: .4byte 0x00003B58\n\t"
-        "_0818D8EC: .4byte 0x0829BDA5\n\t"
+        "_0818D8EC: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -670,7 +670,7 @@ __attribute__((naked)) void sub_0818DA90(void)
         "_0818DB24: .4byte 0x085D3D6C\n\t"
         "_0818DB28: .4byte gStringVar2\n\t"
         "_0818DB2C: .4byte gSaveBlock2Ptr\n\t"
-        "_0818DB30: .4byte 0x0829BDA5\n\t"
+        "_0818DB30: .4byte gGameLanguage\n\t"
         "_0818DB34:\n\t"
         "	movs r0, #0\n\t"
         "	strb r0, [r2, #2]\n\t"
@@ -953,7 +953,7 @@ __attribute__((naked)) void SetLilycoveQuizLady(void)
         "_0818DCFC: .4byte gUnknown_203CA34\n\t"
         "_0818DD00: .4byte gSaveBlock1Ptr\n\t"
         "_0818DD04: .4byte 0x00003B58\n\t"
-        "_0818DD08: .4byte 0x0829BDA5\n\t"
+        "_0818DD08: .4byte gGameLanguage\n\t"
         "_0818DD0C: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -1278,7 +1278,7 @@ __attribute__((naked)) void sub_0818DEF4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0818DF30: .4byte 0x0829BDA5\n\t"
+        "_0818DF30: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1631,7 +1631,7 @@ __attribute__((naked)) void sub_0818E100(void)
         "_0818E15C: .4byte 0x00003B58\n\t"
         "_0818E160: .4byte gSpecialVar_ItemId\n\t"
         "_0818E164: .4byte gSaveBlock2Ptr\n\t"
-        "_0818E168: .4byte 0x0829BDA5\n\t"
+        "_0818E168: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1839,7 +1839,7 @@ __attribute__((naked)) void SetLilycoveContestLady(void)
         "_0818E2C0: .4byte gUnknown_203CA38\n\t"
         "_0818E2C4: .4byte gSaveBlock1Ptr\n\t"
         "_0818E2C8: .4byte 0x00003B58\n\t"
-        "_0818E2CC: .4byte 0x0829BDA5\n\t"
+        "_0818E2CC: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1921,7 +1921,7 @@ __attribute__((naked)) void sub_0818E30C(void)
         "_0818E350: .4byte gSaveBlock1Ptr\n\t"
         "_0818E354: .4byte 0x00003B58\n\t"
         "_0818E358: .4byte gSaveBlock2Ptr\n\t"
-        "_0818E35C: .4byte 0x0829BDA5\n\t"
+        "_0818E35C: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }

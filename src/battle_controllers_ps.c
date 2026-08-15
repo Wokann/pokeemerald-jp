@@ -115,7 +115,7 @@ __attribute__((naked)) void BtlController_EmitPrintString(u8 bufferId, u16 strin
         "_08033B54: .4byte gLastUsedAbility\n\t"
         "_08033B58: .4byte gBattleScripting\n\t"
         "_08033B5C: .4byte gBattleStruct\n\t"
-        "_08033B60: .4byte 0x02023EB3\n\t"
+        "_08033B60: .4byte gPotentialItemEffectBattler\n\t"
         "_08033B64: .4byte gBattleMoves\n\t"
         "_08033B68: .4byte gBattleMons\n\t"
         "_08033B6C: .4byte gBattleTextBuff1\n\t"

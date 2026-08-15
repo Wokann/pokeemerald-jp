@@ -2379,7 +2379,7 @@ __attribute__((naked)) u8 GetMostSuitableMonToSwitchInto(void)
         "_08063A48: .4byte gBattleStruct\n\t"
         "_08063A4C: .4byte gBattleScripting\n\t"
         "_08063A50: .4byte gMoveResultFlags\n\t"
-        "_08063A54: .4byte 0x02023EB5\n\t"
+        "_08063A54: .4byte gCritMultiplier\n\t"
         "_08063A58: .4byte gBattlerPartyIndexes\n\t"
         "_08063A5C: .4byte gBattleMoveDamage\n\t"
         "_08063A60: .4byte gActiveBattler\n\t"

@@ -53,7 +53,7 @@ __attribute__((naked)) void ResetCyclingRoadChallengeData()
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_08137D70: .4byte gBikeCyclingChallenge\n\t"
-        "_08137D74: .4byte 0x0203A821\n\t"
+        "_08137D74: .4byte gBikeCollisions\n\t"
         "_08137D78: .4byte gUnknown_203A824\n\t"
         ".syntax divided\n\t"
     );
@@ -76,7 +76,7 @@ __attribute__((naked)) void Special_BeginCyclingRoadChallenge(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_08137D94: .4byte gBikeCyclingChallenge\n\t"
-        "_08137D98: .4byte 0x0203A821\n\t"
+        "_08137D98: .4byte gBikeCollisions\n\t"
         "_08137D9C: .4byte gUnknown_203A824\n\t"
         "_08137DA0: .4byte gMain\n\t"
         ".syntax divided\n\t"
@@ -274,7 +274,7 @@ __attribute__((naked)) void FinishCyclingRoadChallenge(void)
         "	.align 2, 0\n\t"
         "_08137F00: .4byte gMain\n\t"
         "_08137F04: .4byte gUnknown_203A824\n\t"
-        "_08137F08: .4byte 0x0203A821\n\t"
+        "_08137F08: .4byte gBikeCollisions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1235,7 +1235,7 @@ __attribute__((naked)) void MauvilleGymSpecial1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081385AC: .4byte 0x00000205\n\t"
+        "_081385AC: .4byte SPECIAL_sub_0813B9D8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1671,7 +1671,7 @@ __attribute__((naked)) void PetalburgGymSpecial1(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08138974: .4byte gUnknown_203A828\n\t"
-        "_08138978: .4byte 0x0203A829\n\t"
+        "_08138978: .4byte gUnknown_203A829\n\t"
         "_0813897C: .4byte 0x08138981\n\t"
         ".syntax divided\n\t"
     );
@@ -1715,7 +1715,7 @@ __attribute__((naked)) void Task_PetalburgGym(void)
         "	b _081389E0\n\t"
         "	.align 2, 0\n\t"
         "_081389C8: .4byte 0x085925C4\n\t"
-        "_081389CC: .4byte 0x0203A829\n\t"
+        "_081389CC: .4byte gUnknown_203A829\n\t"
         "_081389D0: .4byte gUnknown_203A828\n\t"
         "_081389D4: .4byte gSpecialVar_0x8004\n\t"
         "_081389D8: .4byte 0x085925CA\n\t"
@@ -2719,7 +2719,7 @@ __attribute__((naked)) void ResetTrickHouseEndRoomFlag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08139054: .4byte gSpecialVar_0x8004\n\t"
-        "_08139058: .4byte 0x000001F5\n\t"
+        "_08139058: .4byte SPECIAL_sub_0813B54C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2737,7 +2737,7 @@ __attribute__((naked)) void SetTrickHouseEndRoomFlag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813906C: .4byte gSpecialVar_0x8004\n\t"
-        "_08139070: .4byte 0x000001F5\n\t"
+        "_08139070: .4byte SPECIAL_sub_0813B54C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6331,7 +6331,7 @@ __attribute__((naked)) void sub_0813A904(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813A974: .4byte 0x0203A839\n\t"
+        "_0813A974: .4byte gUnknown_203A839\n\t"
         "_0813A978: .4byte 0x08592B78\n\t"
         "_0813A97C: .4byte 0x085CB0C8\n\t"
         "_0813A980: .4byte gStringVar1\n\t"
@@ -6375,7 +6375,7 @@ __attribute__((naked)) void sub_0813A98C(void)
         "_0813A9C4: .4byte gStringVar1\n\t"
         "_0813A9C8: .4byte gSaveBlock2Ptr\n\t"
         "_0813A9CC: .4byte 0x00000EB8\n\t"
-        "_0813A9D0: .4byte 0x0203A839\n\t"
+        "_0813A9D0: .4byte gUnknown_203A839\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6395,7 +6395,7 @@ __attribute__((naked)) void sub_0813A9D4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813A9EC: .4byte 0x0203A839\n\t"
+        "_0813A9EC: .4byte gUnknown_203A839\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7538,7 +7538,7 @@ __attribute__((naked)) void set_unknown_box_id(void)
         "	strb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0813B244: .4byte 0x0203A83B\n\t"
+        "_0813B244: .4byte gUnknown_203A83B\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7551,7 +7551,7 @@ __attribute__((naked)) void get_unknown_box_id(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0813B250: .4byte 0x0203A83B\n\t"
+        "_0813B250: .4byte gUnknown_203A83B\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7696,7 +7696,7 @@ __attribute__((naked)) void CreateUnusualWeatherEvent(void)
         "	b _0813B3A2\n\t"
         "	.align 2, 0\n\t"
         "_0813B35C: .4byte 0x00004038\n\t"
-        "_0813B360: .4byte 0x000001BF\n\t"
+        "_0813B360: .4byte SPECIAL_sub_081C472C\n\t"
         "_0813B364: .4byte 0x00004037\n\t"
         "_0813B368:\n\t"
         "	movs r0, #1\n\t"
@@ -8553,7 +8553,7 @@ __attribute__((naked)) void sub_0813B8E8(void)
         "	.align 2, 0\n\t"
         "_0813B994: .4byte gUnknown_3005B68\n\t"
         "_0813B998: .4byte gSaveBlock1Ptr\n\t"
-        "_0813B99C: .4byte 0x00000201\n\t"
+        "_0813B99C: .4byte SPECIAL_sub_0813B9A0\n\t"
         ".syntax divided\n\t"
     );
 }

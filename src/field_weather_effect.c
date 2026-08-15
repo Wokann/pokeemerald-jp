@@ -1032,7 +1032,7 @@ __attribute__((naked)) void StartRainSpriteFall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AC464: .4byte 0x00000169\n\t"
+        "_080AC464: .4byte SPECIAL_sub_0818D6EC\n\t"
         "_080AC468: .4byte 0x41C64E6D\n\t"
         "_080AC46C: .4byte 0x00003039\n\t"
         "_080AC470: .4byte 0x0852A8E8\n\t"
@@ -2175,7 +2175,7 @@ __attribute__((naked)) void UpdateSnowflakeSprite(void)
         "	.align 2, 0\n\t"
         "_080ACC80: .4byte gSineTable\n\t"
         "_080ACC84: .4byte gSpriteCoordOffsetX\n\t"
-        "_080ACC88: .4byte 0x000001FF\n\t"
+        "_080ACC88: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_080ACC8C: .4byte 0xFFFFFF00\n\t"
         "_080ACC90:\n\t"
         "	cmp r0, #0xf2\n\t"
@@ -3365,7 +3365,7 @@ __attribute__((naked)) void Fog1SpriteCallback(void)
         "_080AD598: .4byte 0x08526DE8\n\t"
         "_080AD59C: .4byte 0x000006EE\n\t"
         "_080AD5A0: .4byte 0x010F0000\n\t"
-        "_080AD5A4: .4byte 0x000001FF\n\t"
+        "_080AD5A4: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3635,7 +3635,7 @@ __attribute__((naked)) void Ash_Main()
         "	.align 2, 0\n\t"
         "_080AD788: .4byte 0x08526DE8\n\t"
         "_080AD78C: .4byte gSpriteCoordOffsetX\n\t"
-        "_080AD790: .4byte 0x000001FF\n\t"
+        "_080AD790: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_080AD794: .4byte 0x000006FC\n\t"
         "_080AD798: .4byte 0x000006CC\n\t"
         "_080AD79C:\n\t"
@@ -3963,7 +3963,7 @@ __attribute__((naked)) void UpdateAshSprite(void)
         "_080AD9D0: .4byte 0x08526DE8\n\t"
         "_080AD9D4: .4byte 0x000006FC\n\t"
         "_080AD9D8: .4byte 0x010F0000\n\t"
-        "_080AD9DC: .4byte 0x000001FF\n\t"
+        "_080AD9DC: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4452,7 +4452,7 @@ __attribute__((naked)) void UpdateFog2Sprite(void)
         "_080ADD48: .4byte 0x08526DE8\n\t"
         "_080ADD4C: .4byte 0x0000071A\n\t"
         "_080ADD50: .4byte 0x010F0000\n\t"
-        "_080ADD54: .4byte 0x000001FF\n\t"
+        "_080ADD54: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5133,7 +5133,7 @@ __attribute__((naked)) void UpdateSandstormSprite(void)
         "_080AE244: .4byte 0x08526DE8\n\t"
         "_080AE248: .4byte 0x0000070E\n\t"
         "_080AE24C: .4byte 0x010F0000\n\t"
-        "_080AE250: .4byte 0x000001FF\n\t"
+        "_080AE250: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }

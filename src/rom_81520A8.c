@@ -460,7 +460,7 @@ __attribute__((naked)) void sub_081522B0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081523B8: .4byte 0x000001FF\n\t"
+        "_081523B8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_081523BC: .4byte 0xFFFFFE00\n\t"
         "_081523C0: .4byte 0x000003FF\n\t"
         "_081523C4: .4byte 0xFFFFFC00\n\t"

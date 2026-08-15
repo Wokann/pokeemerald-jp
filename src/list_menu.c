@@ -1043,7 +1043,7 @@ __attribute__((naked)) void ListMenuDrawCursor(void)
         "	bl ListMenuPrint\n\t"
         "	b _081AE8E4\n\t"
         "	.align 2, 0\n\t"
-        "_081AE858: .4byte 0x085C9421\n\t"
+        "_081AE858: .4byte gText_SelectorArrow2\n\t"
         "_081AE85C:\n\t"
         "	ldrb r0, [r6, #0x1e]\n\t"
         "	cmp r0, #0xff\n\t"

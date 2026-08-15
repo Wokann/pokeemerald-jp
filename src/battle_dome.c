@@ -1695,7 +1695,7 @@ __attribute__((naked)) void CalcDomeMonStats(void)
         "	movs r0, #1\n\t"
         "	b _0818F426\n\t"
         "	.align 2, 0\n\t"
-        "_0818F3F8: .4byte 0x0000012F\n\t"
+        "_0818F3F8: .4byte SPECIAL_ScriptCheckFreePokemonStorageSpace\n\t"
         "_0818F3FC:\n\t"
         "	mov r2, sl\n\t"
         "	subs r0, r2, r6\n\t"
@@ -14106,7 +14106,7 @@ __attribute__((naked)) void CopyDomeTrainerName(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08195508: .4byte 0x0000012B\n\t"
+        "_08195508: .4byte SPECIAL_DoContestHallWarp\n\t"
         "_0819550C: .4byte gFacilityTrainers\n\t"
         ".syntax divided\n\t"
     );

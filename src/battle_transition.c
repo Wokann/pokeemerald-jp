@@ -26,7 +26,7 @@ __attribute__((naked)) void CB2_TestBattleTransition(void)
         "	beq _08145F6C\n\t"
         "	b _08145F80\n\t"
         "	.align 2, 0\n\t"
-        "_08145F54: .4byte 0x0300120B\n\t"
+        "_08145F54: .4byte gUnknown_300120B\n\t"
         "_08145F58:\n\t"
         "	ldr r0, _08145F68\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -6887,7 +6887,7 @@ __attribute__((naked)) bool8 RectangularSpiral_Init(struct Task *task)
         "_08148FFC: .4byte gUnknown_3001210\n\t"
         "_08149000: .4byte 0x0000FFFF\n\t"
         "_08149004: .4byte 0x0000FFFD\n\t"
-        "_08149008: .4byte 0x00000133\n\t"
+        "_08149008: .4byte SPECIAL_IsPokerusInParty\n\t"
         ".syntax divided\n\t"
     );
 }

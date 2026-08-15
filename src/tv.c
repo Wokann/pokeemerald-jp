@@ -1374,7 +1374,7 @@ __attribute__((naked)) void PutPokemonTodayCaughtOnAir(void)
         "_080ED428: .4byte gLastUsedItem\n\t"
         "_080ED42C: .4byte gSaveBlock2Ptr\n\t"
         "_080ED430: .4byte gUnknown_3005A9A\n\t"
-        "_080ED434: .4byte 0x0829BDA5\n\t"
+        "_080ED434: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1535,7 +1535,7 @@ __attribute__((naked)) void PutPokemonTodayFailedOnTheAir(void)
         "_080ED56C: .4byte gBattleResults\n\t"
         "_080ED570: .4byte gMapHeader\n\t"
         "_080ED574: .4byte gSaveBlock2Ptr\n\t"
-        "_080ED578: .4byte 0x0829BDA5\n\t"
+        "_080ED578: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1684,7 +1684,7 @@ __attribute__((naked)) void InterviewAfter_ContestLiveUpdates(void)
         "_080ED684: .4byte gContestMonPartyIndex\n\t"
         "_080ED688: .4byte gPlayerParty\n\t"
         "_080ED68C: .4byte 0x00002B30\n\t"
-        "_080ED690: .4byte 0x0829BDA5\n\t"
+        "_080ED690: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1807,7 +1807,7 @@ __attribute__((naked)) void PutBattleUpdateOnTheAir(u8 opponentLinkPlayerId, u16
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080ED77C: .4byte gUnknown_20226A8\n\t"
-        "_080ED780: .4byte 0x0829BDA5\n\t"
+        "_080ED780: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1915,7 +1915,7 @@ __attribute__((naked)) bool8 Put3CheersForPokeblocksOnTheAir(const u8 *partnersN
         "	b _080ED85C\n\t"
         "	.align 2, 0\n\t"
         "_080ED850: .4byte gSaveBlock2Ptr\n\t"
-        "_080ED854: .4byte 0x0829BDA5\n\t"
+        "_080ED854: .4byte gGameLanguage\n\t"
         "_080ED858:\n\t"
         "	mov r2, sb\n\t"
         "	strb r2, [r4, #0x15]\n\t"
@@ -1995,7 +1995,7 @@ __attribute__((naked)) void PutFanClubSpecialOnTheAir(void)
         "_080ED8E4: .4byte gSpecialVar_0x8005\n\t"
         "_080ED8E8: .4byte gSaveBlock2Ptr\n\t"
         "_080ED8EC: .4byte gStringVar1\n\t"
-        "_080ED8F0: .4byte 0x0829BDA5\n\t"
+        "_080ED8F0: .4byte gGameLanguage\n\t"
         "_080ED8F4: .4byte 0x000031A0\n\t"
         "_080ED8F8:\n\t"
         "	strb r0, [r4, #0x18]\n\t"
@@ -2467,7 +2467,7 @@ __attribute__((naked)) void TV_PutSecretBaseVisitOnTheAir(void)
         "_080EEC94: .4byte 0x000027CC\n\t"
         "_080EEC98: .4byte gUnknown_3005E20\n\t"
         "_080EEC9C: .4byte gSaveBlock2Ptr\n\t"
-        "_080EECA0: .4byte 0x0829BDA5\n\t"
+        "_080EECA0: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2635,7 +2635,7 @@ __attribute__((naked)) void sub_080EECA4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EEDE8: .4byte 0x0829BDA5\n\t"
+        "_080EEDE8: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2706,7 +2706,7 @@ __attribute__((naked)) void sub_080EEDEC(void)
         "_080EEE6C: .4byte gSaveBlock2Ptr\n\t"
         "_080EEE70: .4byte gSpecialVar_0x8004\n\t"
         "_080EEE74: .4byte gSpecialVar_0x8005\n\t"
-        "_080EEE78: .4byte 0x0829BDA5\n\t"
+        "_080EEE78: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2828,7 +2828,7 @@ __attribute__((naked)) void sub_080EEE7C(void)
         "_080EEF5C: .4byte 0x000027CC\n\t"
         "_080EEF60: .4byte gUnknown_3005E20\n\t"
         "_080EEF64: .4byte gSaveBlock2Ptr\n\t"
-        "_080EEF68: .4byte 0x0829BDA5\n\t"
+        "_080EEF68: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2901,7 +2901,7 @@ __attribute__((naked)) void sub_080EEF6C(void)
         "_080EEFEC: .4byte 0x000027CC\n\t"
         "_080EEFF0: .4byte gUnknown_3005E20\n\t"
         "_080EEFF4: .4byte gSaveBlock2Ptr\n\t"
-        "_080EEFF8: .4byte 0x0829BDA5\n\t"
+        "_080EEFF8: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2984,7 +2984,7 @@ __attribute__((naked)) void TryPutSpotTheCutiesOnAir(struct Pokemon *pokemon, u8
         "_080EF098: .4byte 0x000027CC\n\t"
         "_080EF09C: .4byte gUnknown_3005E20\n\t"
         "_080EF0A0: .4byte gSaveBlock2Ptr\n\t"
-        "_080EF0A4: .4byte 0x0829BDA5\n\t"
+        "_080EF0A4: .4byte gGameLanguage\n\t"
         "_080EF0A8:\n\t"
         "	adds r0, r5, #0\n\t"
         "	movs r1, #3\n\t"
@@ -3281,7 +3281,7 @@ __attribute__((naked)) void sub_080EF244(void)
         "_080EF2C8: .4byte gSaveBlock2Ptr\n\t"
         "_080EF2CC: .4byte 0x00002BB0\n\t"
         "_080EF2D0: .4byte 0x00002BB2\n\t"
-        "_080EF2D4: .4byte 0x0829BDA5\n\t"
+        "_080EF2D4: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3618,7 +3618,7 @@ __attribute__((naked)) void sub_080EF3E0(void)
         "_080EF578: .4byte gSaveBlock2Ptr\n\t"
         "_080EF57C: .4byte 0x00000CAA\n\t"
         "_080EF580: .4byte 0x00000CAC\n\t"
-        "_080EF584: .4byte 0x0829BDA5\n\t"
+        "_080EF584: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3721,7 +3721,7 @@ __attribute__((naked)) void sub_080EF588(void)
         "_080EF65C: .4byte 0x000040ED\n\t"
         "_080EF660: .4byte 0x000040EE\n\t"
         "_080EF664: .4byte 0x000040EF\n\t"
-        "_080EF668: .4byte 0x0829BDA5\n\t"
+        "_080EF668: .4byte gGameLanguage\n\t"
         "_080EF66C: .4byte 0x00004054\n\t"
         "_080EF670: .4byte 0x00001AA9\n\t"
         "_080EF674:\n\t"
@@ -3865,7 +3865,7 @@ __attribute__((naked)) void sub_080EF6F8(void)
         "_080EF774: .4byte gUnknown_3005E20\n\t"
         "_080EF778: .4byte gSaveBlock2Ptr\n\t"
         "_080EF77C: .4byte 0x08568B98\n\t"
-        "_080EF780: .4byte 0x0829BDA5\n\t"
+        "_080EF780: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4369,7 +4369,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_5(void)
         "_080EDA74: .4byte gContestMons\n\t"
         "_080EDA78: .4byte 0x00002B30\n\t"
         "_080EDA7C: .4byte gNumLinkContestPlayers\n\t"
-        "_080EDA80: .4byte 0x0829BDA5\n\t"
+        "_080EDA80: .4byte gGameLanguage\n\t"
         "_080EDA84:\n\t"
         "	ldr r0, _080EDAA8\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -4392,7 +4392,7 @@ __attribute__((naked)) void ContestLiveUpdates_BeforeInterview_5(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EDAA8: .4byte 0x0829BDA5\n\t"
+        "_080EDAA8: .4byte gGameLanguage\n\t"
         "_080EDAAC: .4byte gLinkPlayers\n\t"
         ".syntax divided\n\t"
     );
@@ -4488,7 +4488,7 @@ __attribute__((naked)) void InterviewAfter_BravoTrainerPokemonProfile(void)
         "_080EDB60: .4byte 0x000027CC\n\t"
         "_080EDB64: .4byte gSaveBlock2Ptr\n\t"
         "_080EDB68: .4byte 0x00002B34\n\t"
-        "_080EDB6C: .4byte 0x0829BDA5\n\t"
+        "_080EDB6C: .4byte gGameLanguage\n\t"
         "_080EDB70:\n\t"
         "	strb r0, [r4, #0x1f]\n\t"
         "_080EDB72:\n\t"
@@ -4746,7 +4746,7 @@ __attribute__((naked)) void InterviewAfter_BravoTrainerBattleTowerProfile(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EDD70: .4byte gSpecialVar_0x8004\n\t"
-        "_080EDD74: .4byte 0x0829BDA5\n\t"
+        "_080EDD74: .4byte gGameLanguage\n\t"
         "_080EDD78: .4byte gSaveBlock2Ptr\n\t"
         "_080EDD7C: .4byte 0x00000BEB\n\t"
         ".syntax divided\n\t"
@@ -4858,7 +4858,7 @@ __attribute__((naked)) void SaveRecordedItemPurchasesForTVShow(void)
         "_080EDE58: .4byte gUnknown_2039C20\n\t"
         "_080EDE5C: .4byte gMapHeader\n\t"
         "_080EDE60: .4byte gSaveBlock2Ptr\n\t"
-        "_080EDE64: .4byte 0x0829BDA5\n\t"
+        "_080EDE64: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4972,7 +4972,7 @@ __attribute__((naked)) void PutNameRaterShowOnTheAir(void)
         "_080EDF54: .4byte gSaveBlock1Ptr\n\t"
         "_080EDF58: .4byte gUnknown_3005E20\n\t"
         "_080EDF5C: .4byte 0x000027CC\n\t"
-        "_080EDF60: .4byte 0x0829BDA5\n\t"
+        "_080EDF60: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5168,7 +5168,7 @@ __attribute__((naked)) void InterviewAfter_FanClubLetter(void)
         "_080EE0DC: .4byte 0x000027CC\n\t"
         "_080EE0E0: .4byte gSaveBlock2Ptr\n\t"
         "_080EE0E4: .4byte gPlayerParty\n\t"
-        "_080EE0E8: .4byte 0x0829BDA5\n\t"
+        "_080EE0E8: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5213,7 +5213,7 @@ __attribute__((naked)) void InterviewAfter_RecentHappenings(void)
         "_080EE134: .4byte gUnknown_3005E20\n\t"
         "_080EE138: .4byte 0x000027CC\n\t"
         "_080EE13C: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE140: .4byte 0x0829BDA5\n\t"
+        "_080EE140: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5312,7 +5312,7 @@ __attribute__((naked)) void InterviewAfter_PkmnFanClubOpinions(void)
         "_080EE208: .4byte gPlayerParty\n\t"
         "_080EE20C: .4byte gUnknown_2037286\n\t"
         "_080EE210: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE214: .4byte 0x0829BDA5\n\t"
+        "_080EE214: .4byte gGameLanguage\n\t"
         "_080EE218:\n\t"
         "	bl GetLeadMonIndex\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5450,10 +5450,10 @@ __attribute__((naked)) void sub_080EE238(void)
         "_080EE30C: .4byte 0x00000864\n\t"
         "_080EE310: .4byte gSaveBlock1Ptr\n\t"
         "_080EE314: .4byte 0x000027CC\n\t"
-        "_080EE318: .4byte 0x00000147\n\t"
+        "_080EE318: .4byte SPECIAL_sub_081B957C\n\t"
         "_080EE31C: .4byte gUnknown_3005E20\n\t"
         "_080EE320: .4byte 0x08568B40\n\t"
-        "_080EE324: .4byte 0x0829BDA5\n\t"
+        "_080EE324: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5764,7 +5764,7 @@ __attribute__((naked)) void PutFishingAdviceShowOnTheAir(void)
         "_080EE54C: .4byte gUnknown_2039CF2\n\t"
         "_080EE550: .4byte gUnknown_2039CF0\n\t"
         "_080EE554: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE558: .4byte 0x0829BDA5\n\t"
+        "_080EE558: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5904,7 +5904,7 @@ __attribute__((naked)) void sub_080EE5A0(void)
         "_080EE654: .4byte 0x000027CC\n\t"
         "_080EE658: .4byte gUnknown_3005E20\n\t"
         "_080EE65C: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE660: .4byte 0x0829BDA5\n\t"
+        "_080EE660: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6041,7 +6041,7 @@ __attribute__((naked)) void sub_080EE664(void)
         "_080EE770: .4byte 0x08568B7C\n\t"
         "_080EE774: .4byte gSaveBlock2Ptr\n\t"
         "_080EE778: .4byte 0x00000EB8\n\t"
-        "_080EE77C: .4byte 0x0829BDA5\n\t"
+        "_080EE77C: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6112,7 +6112,7 @@ __attribute__((naked)) void sub_080EE780(void)
         "_080EE7F8: .4byte 0x000027CC\n\t"
         "_080EE7FC: .4byte gUnknown_3005E20\n\t"
         "_080EE800: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE804: .4byte 0x0829BDA5\n\t"
+        "_080EE804: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6183,7 +6183,7 @@ __attribute__((naked)) void sub_080EE808(void)
         "_080EE888: .4byte gSpecialVar_0x8005\n\t"
         "_080EE88C: .4byte gMapHeader\n\t"
         "_080EE890: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE894: .4byte 0x0829BDA5\n\t"
+        "_080EE894: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6309,7 +6309,7 @@ __attribute__((naked)) void AlertTVOfNewCoinTotal(void)
         "_080EE980: .4byte gUnknown_3005E20\n\t"
         "_080EE984: .4byte 0x000027CC\n\t"
         "_080EE988: .4byte gSaveBlock2Ptr\n\t"
-        "_080EE98C: .4byte 0x0829BDA5\n\t"
+        "_080EE98C: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7962,14 +7962,14 @@ __attribute__((naked)) void TV_GetSomeOtherSpeciesAlreadySeenByPlayer(void)
         "	adds r6, r4, #0\n\t"
         "	b _080F0552\n\t"
         "	.align 2, 0\n\t"
-        "_080F0534: .4byte 0x0000019B\n\t"
+        "_080F0534: .4byte SPECIAL_sub_08139938\n\t"
         "_080F0538:\n\t"
         "	cmp r4, #1\n\t"
         "	bne _080F0544\n\t"
         "	ldr r4, _080F0540\n\t"
         "	b _080F054A\n\t"
         "	.align 2, 0\n\t"
-        "_080F0540: .4byte 0x0000019B\n\t"
+        "_080F0540: .4byte SPECIAL_sub_08139938\n\t"
         "_080F0544:\n\t"
         "	subs r0, r4, #1\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -10598,7 +10598,7 @@ __attribute__((naked)) void sub_080F183C(void)
         "	str r1, [sp, #0x20]\n\t"
         "	b _080F1904\n\t"
         "	.align 2, 0\n\t"
-        "_080F1878: .4byte 0x03001175\n\t"
+        "_080F1878: .4byte gUnknown_3001175\n\t"
         "_080F187C:\n\t"
         "	lsls r4, r7, #2\n\t"
         "	mov r1, sp\n\t"
@@ -10687,7 +10687,7 @@ __attribute__((naked)) void sub_080F183C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F1928: .4byte gUnknown_3001176\n\t"
-        "_080F192C: .4byte 0x03001175\n\t"
+        "_080F192C: .4byte gUnknown_3001175\n\t"
         "_080F1930: .4byte gUnknown_3005E20\n\t"
         ".syntax divided\n\t"
     );
@@ -15535,7 +15535,7 @@ __attribute__((naked)) void DoTVShowTodaysRivalTrainer(void)
         "	strb r0, [r2]\n\t"
         "	b _080F4456\n\t"
         "	.align 2, 0\n\t"
-        "_080F4304: .4byte 0x00000117\n\t"
+        "_080F4304: .4byte SPECIAL_CheckRelicanthWailord\n\t"
         "_080F4308:\n\t"
         "	movs r0, #9\n\t"
         "	strb r0, [r2]\n\t"
@@ -15931,7 +15931,7 @@ __attribute__((naked)) void DoTVShowHoennTreasureInvestigators(void)
         "	b _080F46C2\n\t"
         "	.align 2, 0\n\t"
         "_080F4654: .4byte gStringVar1\n\t"
-        "_080F4658: .4byte 0x00000117\n\t"
+        "_080F4658: .4byte SPECIAL_CheckRelicanthWailord\n\t"
         "_080F465C:\n\t"
         "	ldr r1, _080F4664\n\t"
         "	movs r0, #1\n\t"
@@ -18361,7 +18361,7 @@ __attribute__((naked)) void DoTVShowSecretBaseSecrets(void)
         "	ldrb r1, [r4]\n\t"
         "	b _080F5C42\n\t"
         "	.align 2, 0\n\t"
-        "_080F5B64: .4byte 0x02039CFD\n\t"
+        "_080F5B64: .4byte gUnknown_2039CFD\n\t"
         "_080F5B68:\n\t"
         "	ldr r0, _080F5B88\n\t"
         "	adds r1, r5, #0\n\t"
@@ -18389,7 +18389,7 @@ __attribute__((naked)) void DoTVShowSecretBaseSecrets(void)
         "	movs r1, #1\n\t"
         "	b _080F5C44\n\t"
         "	.align 2, 0\n\t"
-        "_080F5B9C: .4byte 0x02039CFD\n\t"
+        "_080F5B9C: .4byte gUnknown_2039CFD\n\t"
         "_080F5BA0:\n\t"
         "	adds r0, r5, #0\n\t"
         "	movs r1, #0\n\t"
@@ -18419,7 +18419,7 @@ __attribute__((naked)) void DoTVShowSecretBaseSecrets(void)
         "	ldrb r1, [r7, #1]\n\t"
         "	b _080F5C42\n\t"
         "	.align 2, 0\n\t"
-        "_080F5BD8: .4byte 0x02039CFD\n\t"
+        "_080F5BD8: .4byte gUnknown_2039CFD\n\t"
         "_080F5BDC: .4byte 0x0000FFFE\n\t"
         "_080F5BE0:\n\t"
         "	ldr r0, _080F5C00\n\t"
@@ -18479,7 +18479,7 @@ __attribute__((naked)) void DoTVShowSecretBaseSecrets(void)
         "	strb r0, [r1]\n\t"
         "	b _080F5D36\n\t"
         "	.align 2, 0\n\t"
-        "_080F5C50: .4byte 0x02039CFD\n\t"
+        "_080F5C50: .4byte gUnknown_2039CFD\n\t"
         "_080F5C54: .4byte 0x0000FFFE\n\t"
         "_080F5C58: .4byte gUnknown_2039CFC\n\t"
         "_080F5C5C:\n\t"

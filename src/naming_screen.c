@@ -1817,7 +1817,7 @@ __attribute__((naked)) void sub_080E2FA4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E3014: .4byte 0x00000101\n\t"
+        "_080E3014: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         ".syntax divided\n\t"
     );
 }

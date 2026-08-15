@@ -273,8 +273,8 @@ __attribute__((naked)) void ResetAllApprenticeData()
         "	.align 2, 0\n\t"
         "_0819FA78: .4byte gSaveBlock2Ptr\n\t"
         "_0819FA7C: .4byte 0x0000FFFF\n\t"
-        "_0819FA80: .4byte 0x0829BDA5\n\t"
-        "_0819FA84: .4byte 0x0000011B\n\t"
+        "_0819FA80: .4byte gGameLanguage\n\t"
+        "_0819FA84: .4byte SPECIAL_WaitWeather\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -970,8 +970,8 @@ __attribute__((naked)) void sub_0819FE70(void)
         "_0819FF84: .4byte 0x085DC21C\n\t"
         "_0819FF88: .4byte 0x082F9D04\n\t"
         "_0819FF8C: .4byte 0x0000FFFF\n\t"
-        "_0819FF90: .4byte 0x000001FF\n\t"
-        "_0819FF94: .4byte 0x00000121\n\t"
+        "_0819FF90: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
+        "_0819FF94: .4byte SPECIAL_FoundAbandonedShipRoom4Key\n\t"
         "_0819FF98:\n\t"
         "	subs r0, r5, #4\n\t"
         "	b _0819FF9E\n\t"
@@ -1031,7 +1031,7 @@ __attribute__((naked)) void sub_0819FE70(void)
         "	mov r0, r8\n\t"
         "	b _081A0016\n\t"
         "	.align 2, 0\n\t"
-        "_081A0000: .4byte 0x000001FF\n\t"
+        "_081A0000: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_081A0004:\n\t"
         "	adds r0, r3, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1230,7 +1230,7 @@ __attribute__((naked)) void GetLatestLearnedMoves(void)
         "_081A0150: .4byte gSaveBlock2Ptr\n\t"
         "_081A0154: .4byte 0x082F9D04\n\t"
         "_081A0158: .4byte 0x0000FFFF\n\t"
-        "_081A015C: .4byte 0x000001FF\n\t"
+        "_081A015C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1759,7 +1759,7 @@ __attribute__((naked)) void CreateMenuWithAnswers(void)
         "	b _081A0556\n\t"
         "	.align 2, 0\n\t"
         "_081A0544: .4byte gText_Yes\n\t"
-        "_081A0548: .4byte 0x085CAADB\n\t"
+        "_081A0548: .4byte gText_No\n\t"
         "_081A054C:\n\t"
         "	movs r0, #0\n\t"
         "	mov sl, r0\n\t"
@@ -3836,8 +3836,8 @@ __attribute__((naked)) void sub_081A1344(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A140C: .4byte gSaveBlock2Ptr\n\t"
-        "_081A1410: .4byte 0x0829BDA5\n\t"
-        "_081A1414: .4byte 0x0000011B\n\t"
+        "_081A1410: .4byte gGameLanguage\n\t"
+        "_081A1414: .4byte SPECIAL_WaitWeather\n\t"
         ".syntax divided\n\t"
     );
 }

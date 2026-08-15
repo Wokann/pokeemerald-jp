@@ -2374,10 +2374,10 @@ __attribute__((naked)) void sub_080BA890(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA9FC: .4byte 0x000001A3\n\t"
-        "_080BAA00: .4byte 0x000001A5\n\t"
-        "_080BAA04: .4byte 0x000001A7\n\t"
-        "_080BAA08: .4byte 0x000001A9\n\t"
+        "_080BA9FC: .4byte SPECIAL_WonderNews_GetRewardInfo\n\t"
+        "_080BAA00: .4byte SPECIAL_sub_08017B4C\n\t"
+        "_080BAA04: .4byte SPECIAL_ValidateSavedWonderCard\n\t"
+        "_080BAA08: .4byte SPECIAL_sub_0802C614\n\t"
         ".syntax divided\n\t"
     );
 }

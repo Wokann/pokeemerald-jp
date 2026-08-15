@@ -55,7 +55,7 @@ __attribute__((naked)) void RunBattleScriptCommands(void)
         "b _0803D4F0\n\t"
         ".align 2, 0\n\t"
         "_0803D4B0: .4byte gBattleOutcome\n\t"
-        "_0803D4B4: .4byte 0x02023D27\n\t"
+        "_0803D4B4: .4byte gCurrentActionFuncId\n\t"
         "_0803D4B8: .4byte gBattleStruct\n\t"
         "_0803D4BC: .4byte gCurrentTurnActionNumber\n\t"
         "_0803D4C0: .4byte gBattleScriptingCommandsTable\n\t"

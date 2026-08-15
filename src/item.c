@@ -1363,7 +1363,7 @@ __attribute__((naked)) void SwapRegisteredBike()
         "	.align 2, 0\n\t"
         "_080D6710: .4byte gSaveBlock1Ptr\n\t"
         "_080D6714: .4byte 0x00000496\n\t"
-        "_080D6718: .4byte 0x00000103\n\t"
+        "_080D6718: .4byte SPECIAL_ShowBerryBlenderRecordWindow\n\t"
         "_080D671C:\n\t"
         "	movs r0, #0x88\n\t"
         "	lsls r0, r0, #1\n\t"

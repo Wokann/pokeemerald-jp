@@ -18,7 +18,7 @@ __attribute__((naked)) void InitStandardTextBoxWindows()
         "	.align 2, 0\n\t"
         "_08196DDC: .4byte 0x085D7B28\n\t"
         "_08196DE0: .4byte gUnknown_203CA58\n\t"
-        "_08196DE4: .4byte 0x0203CA59\n\t"
+        "_08196DE4: .4byte gUnknown_203CA59\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1000,15 +1000,15 @@ __attribute__((naked)) void WindowFunc_DrawDialogueFrame(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197544: .4byte 0x00000201\n\t"
+        "_08197544: .4byte SPECIAL_sub_0813B9A0\n\t"
         "_08197548: .4byte 0x00000202\n\t"
-        "_0819754C: .4byte 0x00000203\n\t"
-        "_08197550: .4byte 0x00000205\n\t"
+        "_0819754C: .4byte SPECIAL_ShowTrainerHillRecords\n\t"
+        "_08197550: .4byte SPECIAL_sub_0813B9D8\n\t"
         "_08197554: .4byte SPECIAL_sub_081B95B8\n\t"
-        "_08197558: .4byte 0x00000207\n\t"
+        "_08197558: .4byte SPECIAL_sub_08071CF0\n\t"
         "_0819755C: .4byte 0x0000020D\n\t"
-        "_08197560: .4byte 0x0000020B\n\t"
-        "_08197564: .4byte 0x00000209\n\t"
+        "_08197560: .4byte SPECIAL_sub_080B331C\n\t"
+        "_08197564: .4byte SPECIAL_RemoveRecordsWindow\n\t"
         "_08197568: .4byte 0x0000060B\n\t"
         "_0819756C: .4byte SPECIAL_sub_08139C4C\n\t"
         "_08197570: .4byte 0x00000A07\n\t"
@@ -1525,7 +1525,7 @@ __attribute__((naked)) u8 AddMapNamePopUpWindow()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08197878: .4byte 0x0203CA59\n\t"
+        "_08197878: .4byte gUnknown_203CA59\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1562,7 +1562,7 @@ __attribute__((naked)) void RemoveStartMenuWindow()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081978A0: .4byte 0x0203CA59\n\t"
+        "_081978A0: .4byte gUnknown_203CA59\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4373,7 +4373,7 @@ __attribute__((naked)) void CreateYesNoMenuAtPos(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08198D3C: .4byte 0x0203CA6B\n\t"
+        "_08198D3C: .4byte gUnknown_203CA6B\n\t"
         "_08198D40: .4byte 0x085D7B40\n\t"
         ".syntax divided\n\t"
     );
@@ -4442,7 +4442,7 @@ __attribute__((naked)) void sub_08198D88(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08198DA0: .4byte 0x0203CA6B\n\t"
+        "_08198DA0: .4byte gUnknown_203CA6B\n\t"
         ".syntax divided\n\t"
     );
 }

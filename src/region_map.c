@@ -2983,7 +2983,7 @@ __attribute__((naked)) void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812423C: .4byte gUnknown_2039E10\n\t"
-        "_08124240: .4byte 0x00000101\n\t"
+        "_08124240: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         ".syntax divided\n\t"
     );
 }

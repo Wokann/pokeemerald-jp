@@ -1893,7 +1893,7 @@ __attribute__((naked)) void sub_080FE5C8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE5F0: .4byte gSpecialVar_ItemId\n\t"
-        "_080FE5F4: .4byte 0x08244E9D\n\t"
+        "_080FE5F4: .4byte BerryTree_EventScript_CheckBerryTree\n\t"
         ".syntax divided\n\t"
     );
 }

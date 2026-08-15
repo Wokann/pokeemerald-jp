@@ -1918,7 +1918,7 @@ __attribute__((naked)) void sub_080B2A0C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B2A58: .4byte gBattleTypeFlags\n\t"
-        "_080B2A5C: .4byte 0x0000014B\n\t"
+        "_080B2A5C: .4byte SPECIAL_Script_FadeOutMapMusic\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2012,7 +2012,7 @@ __attribute__((naked)) void sub_080B2A60(void)
         "	b _080B2B24\n\t"
         "	.align 2, 0\n\t"
         "_080B2B14: .4byte gLinkPlayers\n\t"
-        "_080B2B18: .4byte 0x000001DD\n\t"
+        "_080B2B18: .4byte SPECIAL_DoDeoxysRockInteraction\n\t"
         "_080B2B1C:\n\t"
         "	movs r0, #0xee\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -2198,7 +2198,7 @@ __attribute__((naked)) void sub_080B2B68(void)
         "	b _080B2CAC\n\t"
         "	.align 2, 0\n\t"
         "_080B2C9C: .4byte gLinkPlayers\n\t"
-        "_080B2CA0: .4byte 0x000001DD\n\t"
+        "_080B2CA0: .4byte SPECIAL_DoDeoxysRockInteraction\n\t"
         "_080B2CA4:\n\t"
         "	movs r0, #0xee\n\t"
         "	lsls r0, r0, #1\n\t"

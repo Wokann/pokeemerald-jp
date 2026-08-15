@@ -723,7 +723,7 @@ __attribute__((naked)) void FieldCallback_SecretBaseCave(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FA964: .4byte gFieldEffectArguments\n\t"
-        "_080FA968: .4byte 0x08245B35\n\t"
+        "_080FA968: .4byte SecretBase_EventScript_Tree\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1113,7 +1113,7 @@ __attribute__((naked)) void FieldCallback_SecretBaseTree(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FABD4: .4byte gFieldEffectArguments\n\t"
-        "_080FABD8: .4byte 0x08245BE7\n\t"
+        "_080FABD8: .4byte SecretBase_EventScript_Cave\n\t"
         ".syntax divided\n\t"
     );
 }

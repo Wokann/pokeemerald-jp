@@ -1451,7 +1451,7 @@ __attribute__((naked)) void Task_IntroHandleBikeAndFlygonMovement(void)
         "_0816D5BC: .4byte 0x00000576\n\t"
         "_0816D5C0: .4byte 0x000006BF\n\t"
         "_0816D5C4: .4byte gUnknown_203B998\n\t"
-        "_0816D5C8: .4byte 0x000001FF\n\t"
+        "_0816D5C8: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2620,7 +2620,7 @@ __attribute__((naked)) void Task_IntroGroudonScene(void)
         "	bl PlayCryInternal\n\t"
         "	b _0816DF32\n\t"
         "	.align 2, 0\n\t"
-        "_0816DEA8: .4byte 0x00000195\n\t"
+        "_0816DEA8: .4byte SPECIAL_ShouldTryGetTrainerScript\n\t"
         "_0816DEAC:\n\t"
         "	ldrh r0, [r4, #0xc]\n\t"
         "	subs r0, #1\n\t"
@@ -6073,7 +6073,7 @@ __attribute__((naked)) void SpriteCB_IntroGraphicsFlygon(void)
         "	adds r0, #8\n\t"
         "	b _0816F8F4\n\t"
         "	.align 2, 0\n\t"
-        "_0816F8C4: .4byte 0x0000012F\n\t"
+        "_0816F8C4: .4byte SPECIAL_ScriptCheckFreePokemonStorageSpace\n\t"
         "_0816F8C8:\n\t"
         "	movs r0, #2\n\t"
         "	strh r0, [r4, #0x2e]\n\t"

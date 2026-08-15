@@ -29,7 +29,7 @@ __attribute__((naked)) void sub_0812FDE0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812FE10: .4byte 0x02039BFD\n\t"
+        "_0812FE10: .4byte gUnknown_2039BFD\n\t"
         "_0812FE14: .4byte gUnknown_2039BFC\n\t"
         "_0812FE18: .4byte gSaveBlock1Ptr\n\t"
         "_0812FE1C: .4byte gUnknown_2039BDC\n\t"
@@ -97,7 +97,7 @@ __attribute__((naked)) void CB2_QuitContestPainting(void)
         "_0812FE80: .4byte gMain\n\t"
         "_0812FE84: .4byte gUnknown_3005F04\n\t"
         "_0812FE88: .4byte gUnknown_3005ED0\n\t"
-        "_0812FE8C: .4byte 0x030011F7\n\t"
+        "_0812FE8C: .4byte gUnknown_30011F7\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -215,7 +215,7 @@ __attribute__((naked)) void ShowContestPainting(void)
         "	strb r0, [r1]\n\t"
         "	b _0812FFD8\n\t"
         "	.align 2, 0\n\t"
-        "_0812FF80: .4byte 0x02039BFD\n\t"
+        "_0812FF80: .4byte gUnknown_2039BFD\n\t"
         "_0812FF84: .4byte gUnknown_2039BFC\n\t"
         "_0812FF88: .4byte gMain\n\t"
         "_0812FF8C:\n\t"
@@ -257,7 +257,7 @@ __attribute__((naked)) void ShowContestPainting(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812FFE0: .4byte 0x02039BFD\n\t"
+        "_0812FFE0: .4byte gUnknown_2039BFD\n\t"
         "_0812FFE4: .4byte gUnknown_2039BFC\n\t"
         "_0812FFE8: .4byte 0x0858F648\n\t"
         "_0812FFEC: .4byte 0x040000D4\n\t"
@@ -424,7 +424,7 @@ __attribute__((naked)) void InitContestPaintingWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08130138: .4byte 0x0858F5F8\n\t"
-        "_0813013C: .4byte 0x030011F7\n\t"
+        "_0813013C: .4byte gUnknown_30011F7\n\t"
         "_08130140: .4byte 0x0858F5FC\n\t"
         ".syntax divided\n\t"
     );
@@ -503,7 +503,7 @@ __attribute__((naked)) void PrintContestPaintingCaption(void)
         "_081301E4: .4byte gStringVar3\n\t"
         "_081301E8: .4byte gStringVar4\n\t"
         "_081301EC: .4byte 0x0824C1F5\n\t"
-        "_081301F0: .4byte 0x030011F7\n\t"
+        "_081301F0: .4byte gUnknown_30011F7\n\t"
         "_081301F4:\n\t"
         "	ldr r0, _08130234\n\t"
         "	adds r1, #0xb\n\t"
@@ -538,7 +538,7 @@ __attribute__((naked)) void PrintContestPaintingCaption(void)
         "_08130234: .4byte gStringVar1\n\t"
         "_08130238: .4byte gStringVar4\n\t"
         "_0813023C: .4byte 0x0858F604\n\t"
-        "_08130240: .4byte 0x030011F7\n\t"
+        "_08130240: .4byte gUnknown_30011F7\n\t"
         ".syntax divided\n\t"
     );
 }

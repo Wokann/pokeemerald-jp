@@ -474,7 +474,7 @@ __attribute__((naked)) void PlayerPC_TurnOff(void)
         "	bl ScriptContext_SetupScript\n\t"
         "	b _0816AF9C\n\t"
         "	.align 2, 0\n\t"
-        "_0816AF94: .4byte 0x081F0DDB\n\t"
+        "_0816AF94: .4byte gUnknown_81F0DDB\n\t"
         "_0816AF98:\n\t"
         "	bl ScriptContext_Enable\n\t"
         "_0816AF9C:\n\t"
@@ -2588,7 +2588,7 @@ __attribute__((naked)) void sub_0816BE14(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816BE8C: .4byte 0x085C0C70\n\t"
-        "_0816BE90: .4byte 0x085C9421\n\t"
+        "_0816BE90: .4byte gText_SelectorArrow2\n\t"
         ".syntax divided\n\t"
     );
 }

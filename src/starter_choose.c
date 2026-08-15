@@ -582,7 +582,7 @@ __attribute__((naked)) void CreateStarterPokemonLabel(u8 selection)
         "	.align 2, 0\n\t"
         "_0813462C: .4byte gSpeciesNames\n\t"
         "_08134630: .4byte 0x08590BF4\n\t"
-        "_08134634: .4byte 0x085C9393\n\t"
+        "_08134634: .4byte gStarterCategorySuffix\n\t"
         "_08134638: .4byte 0x08590C02\n\t"
         "_0813463C: .4byte 0xFFFF00FF\n\t"
         "_08134640: .4byte 0xFF00FFFF\n\t"

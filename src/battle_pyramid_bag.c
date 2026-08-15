@@ -1637,7 +1637,7 @@ __attribute__((naked)) void sub_081C52B4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C530C: .4byte 0x085C9421\n\t"
+        "_081C530C: .4byte gText_SelectorArrow2\n\t"
         ".syntax divided\n\t"
     );
 }

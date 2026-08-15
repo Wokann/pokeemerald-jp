@@ -4644,7 +4644,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	b _0808EC58\n\t"
         "	.align 2, 0\n\t"
         "_0808EC3C: .4byte gObjectEvents\n\t"
-        "_0808EC40: .4byte 0x082465B5\n\t"
+        "_0808EC40: .4byte SecretBase_EventScript_DollInteract\n\t"
         "_0808EC44:\n\t"
         "	mov r0, sp\n\t"
         "	ldrb r1, [r0]\n\t"
@@ -4662,7 +4662,7 @@ __attribute__((naked)) void OverrideSecretBaseDecorationSpriteScript(u8 localId,
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0808EC60: .4byte gObjectEvents\n\t"
-        "_0808EC64: .4byte 0x082465B9\n\t"
+        "_0808EC64: .4byte SecretBase_EventScript_CushionInteract\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -26188,7 +26188,7 @@ __attribute__((naked)) void UnfreezeEventObject(struct ObjectEvent *objectEvent)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096EE4: .4byte 0x00000101\n\t"
+        "_08096EE4: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_08096EE8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );

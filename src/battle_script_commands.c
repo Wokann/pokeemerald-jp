@@ -9701,7 +9701,7 @@ __attribute__((naked)) void atk7C_trymirrormove(void)
         "	.align 2, 0\n\t"
         "_0804FE10: .4byte gBattlersCount\n\t"
         "_0804FE14: .4byte gBattleStruct\n\t"
-        "_0804FE18: .4byte 0x02023EAF\n\t"
+        "_0804FE18: .4byte gBattlerAttacker\n\t"
         "_0804FE1C: .4byte 0x0000FFFF\n\t"
         "_0804FE20: .4byte gHitMarker\n\t"
         "_0804FE24: .4byte 0xFFFFFBFF\n\t"
@@ -9781,7 +9781,7 @@ __attribute__((naked)) void atk7C_trymirrormove(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0804FECC: .4byte gSpecialStatuses\n\t"
-        "_0804FED0: .4byte 0x02023EAF\n\t"
+        "_0804FED0: .4byte gBattlerAttacker\n\t"
         "_0804FED4: .4byte gBattlescriptCurrInstr\n\t"
         ".syntax divided\n\t"
     );

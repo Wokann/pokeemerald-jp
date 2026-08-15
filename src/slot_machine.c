@@ -1480,7 +1480,7 @@ __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
         "	b _0812AF72\n\t"
         "	.align 2, 0\n\t"
         "_0812AF40: .4byte gUnknown_203A800\n\t"
-        "_0812AF44: .4byte 0x00000185\n\t"
+        "_0812AF44: .4byte SPECIAL_sub_081398CC\n\t"
         "_0812AF48:\n\t"
         "	movs r0, #0x40\n\t"
         "	ands r0, r1\n\t"
@@ -1492,7 +1492,7 @@ __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
         "	bl sub_0812DEF4\n\t"
         "	b _0812AF72\n\t"
         "	.align 2, 0\n\t"
-        "_0812AF60: .4byte 0x00000185\n\t"
+        "_0812AF60: .4byte SPECIAL_sub_081398CC\n\t"
         "_0812AF64:\n\t"
         "	movs r0, #0xc3\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -2669,7 +2669,7 @@ __attribute__((naked)) void SlowReelSpeed(void)
         "	b _0812B7D2\n\t"
         "	.align 2, 0\n\t"
         "_0812B7B4: .4byte gUnknown_203A800\n\t"
-        "_0812B7B8: .4byte 0x0000012B\n\t"
+        "_0812B7B8: .4byte SPECIAL_DoContestHallWarp\n\t"
         "_0812B7BC:\n\t"
         "	cmp r1, #0xf9\n\t"
         "	ble _0812B7C4\n\t"
@@ -7180,7 +7180,7 @@ __attribute__((naked)) void ReelTime_WindowEnter(struct Task *task)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812D614: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812D618: .4byte 0x000001FF\n\t"
+        "_0812D618: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7566,7 +7566,7 @@ __attribute__((naked)) void ReelTime_PikachuReact(struct Task *task)
         "	.align 2, 0\n\t"
         "_0812D8D4: .4byte gUnknown_203A800\n\t"
         "_0812D8D8: .4byte gSprites\n\t"
-        "_0812D8DC: .4byte 0x00000187\n\t"
+        "_0812D8DC: .4byte SPECIAL_sub_0818E16C\n\t"
         "_0812D8E0:\n\t"
         "	movs r0, #0xc0\n\t"
         "	strh r0, [r4, #0x10]\n\t"
@@ -7680,7 +7680,7 @@ __attribute__((naked)) void ReelTime_CloseWindow(struct Task *task)
         "	b _0812D9AE\n\t"
         "	.align 2, 0\n\t"
         "_0812D9A0: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812D9A4: .4byte 0x000001FF\n\t"
+        "_0812D9A4: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_0812D9A8:\n\t"
         "	ldrh r0, [r4, #8]\n\t"
         "	adds r0, #1\n\t"
@@ -7874,7 +7874,7 @@ __attribute__((naked)) void ReelTime_ExplodeMachine(struct Task *task)
         "	.align 2, 0\n\t"
         "_0812DB08: .4byte gSprites\n\t"
         "_0812DB0C: .4byte gUnknown_203A800\n\t"
-        "_0812DB10: .4byte 0x00000187\n\t"
+        "_0812DB10: .4byte SPECIAL_sub_0818E16C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12500,8 +12500,8 @@ __attribute__((naked)) void SetReelButtonTilemap(s16 a0, u16 a1, u16 a2, u16 a3,
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812FB0C: .4byte gUnknown_203A7A8\n\t"
-        "_0812FB10: .4byte 0x000001E1\n\t"
-        "_0812FB14: .4byte 0x00000201\n\t"
+        "_0812FB10: .4byte SPECIAL_StartMirageTowerFossilFallAndSink\n\t"
+        "_0812FB14: .4byte SPECIAL_sub_0813B9A0\n\t"
         ".syntax divided\n\t"
     );
 }

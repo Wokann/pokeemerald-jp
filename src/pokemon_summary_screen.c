@@ -3880,7 +3880,7 @@ __attribute__((naked)) void HandleReplaceMoveInput(void)
         "	bl BeginCloseSummaryScreen\n\t"
         "	b _081C11CE\n\t"
         "	.align 2, 0\n\t"
-        "_081C118C: .4byte 0x0203CBED\n\t"
+        "_081C118C: .4byte gUnknown_203CBED\n\t"
         "_081C1190: .4byte gUnknown_203CBE8\n\t"
         "_081C1194: .4byte 0x000040C6\n\t"
         "_081C1198: .4byte gSpecialVar_0x8005\n\t"
@@ -3911,7 +3911,7 @@ __attribute__((naked)) void HandleReplaceMoveInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C11D4: .4byte 0x0203CBED\n\t"
+        "_081C11D4: .4byte gUnknown_203CBED\n\t"
         "_081C11D8: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
     );
@@ -4290,7 +4290,7 @@ __attribute__((naked)) void sub_081C14C8(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081C14D0: .4byte 0x0203CBED\n\t"
+        "_081C14D0: .4byte gUnknown_203CBED\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7437,7 +7437,7 @@ __attribute__((naked)) void PrintLeftColumnStats(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C2C7C: .4byte 0x085ED114\n\t"
-        "_081C2C80: .4byte 0x085C93F9\n\t"
+        "_081C2C80: .4byte gText_FiveMarks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7466,7 +7466,7 @@ __attribute__((naked)) void PrintRightColumnStats(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C2CAC: .4byte 0x085ED114\n\t"
-        "_081C2CB0: .4byte 0x085C93F9\n\t"
+        "_081C2CB0: .4byte gText_FiveMarks\n\t"
         ".syntax divided\n\t"
     );
 }

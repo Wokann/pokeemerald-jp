@@ -42,7 +42,7 @@ __attribute__((naked)) void SetupBard(void)
         "_08120600: .4byte gSaveBlock1Ptr\n\t"
         "_08120604: .4byte 0x00002E28\n\t"
         "_08120608: .4byte 0x00002E51\n\t"
-        "_0812060C: .4byte 0x0829BDA5\n\t"
+        "_0812060C: .4byte gGameLanguage\n\t"
         "_08120610: .4byte 0x00002E2A\n\t"
         "_08120614: .4byte 0x0857AC08\n\t"
         ".syntax divided\n\t"
@@ -68,7 +68,7 @@ __attribute__((naked)) void SetupHipster(void)
         "	.align 2, 0\n\t"
         "_08120630: .4byte gSaveBlock1Ptr\n\t"
         "_08120634: .4byte 0x00002E28\n\t"
-        "_08120638: .4byte 0x0829BDA5\n\t"
+        "_08120638: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -107,7 +107,7 @@ __attribute__((naked)) void SetupGiddy(void)
         "	.align 2, 0\n\t"
         "_08120664: .4byte gSaveBlock1Ptr\n\t"
         "_08120668: .4byte 0x00002E28\n\t"
-        "_0812066C: .4byte 0x0829BDA5\n\t"
+        "_0812066C: .4byte gGameLanguage\n\t"
         "_08120670: .4byte 0x00002E48\n\t"
         ".syntax divided\n\t"
     );
@@ -1796,7 +1796,7 @@ __attribute__((naked)) void StorytellerRecordNewStat(void)
         "_081211A0: .4byte gSaveBlock2Ptr\n\t"
         "_081211A4: .4byte gStringVar1\n\t"
         "_081211A8: .4byte gStringVar2\n\t"
-        "_081211AC: .4byte 0x0829BDA5\n\t"
+        "_081211AC: .4byte gGameLanguage\n\t"
         ".syntax divided\n\t"
     );
 }
