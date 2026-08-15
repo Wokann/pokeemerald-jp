@@ -17,32 +17,32 @@
 void MovePlayerOnMachBike(u8, u16, u16);
 void MovePlayerOnAcroBike(u8, u16, u16);
 u8 GetMachBikeTransition(u8 *);
-static void MachBikeTransition_FaceDirection(u8);
-static void MachBikeTransition_TurnDirection(u8);
-static void MachBikeTransition_TrySpeedUp(u8);
-static void MachBikeTransition_TrySlowDown(u8);
+void MachBikeTransition_FaceDirection(u8);
+void MachBikeTransition_TurnDirection(u8);
+void MachBikeTransition_TrySpeedUp(u8);
+void MachBikeTransition_TrySlowDown(u8);
 static void MovePlayerOnAcroBike(u8, u16, u16);
 u8 CheckMovementInputAcroBike(u8 *, u16, u16);
-static u8 AcroBikeHandleInputNormal(u8 *, u16, u16);
-static u8 AcroBikeHandleInputTurning(u8 *, u16, u16);
-static u8 AcroBikeHandleInputWheelieStanding(u8 *, u16, u16);
-static u8 AcroBikeHandleInputBunnyHop(u8 *, u16, u16);
-static u8 AcroBikeHandleInputWheelieMoving(u8 *, u16, u16);
-static u8 AcroBikeHandleInputSidewaysJump(u8 *, u16, u16);
-static u8 AcroBikeHandleInputTurnJump(u8 *, u16, u16);
-static void AcroBikeTransition_FaceDirection(u8);
-static void AcroBikeTransition_TurnDirection(u8);
-static void AcroBikeTransition_Moving(u8);
-static void AcroBikeTransition_NormalToWheelie(u8);
-static void AcroBikeTransition_WheelieToNormal(u8);
-static void AcroBikeTransition_WheelieIdle(u8);
-static void AcroBikeTransition_WheelieHoppingStanding(u8);
-static void AcroBikeTransition_WheelieHoppingMoving(u8);
-static void AcroBikeTransition_SideJump(u8);
-static void AcroBikeTransition_TurnJump(u8);
-static void AcroBikeTransition_WheelieMoving(u8);
-static void AcroBikeTransition_WheelieRisingMoving(u8);
-static void AcroBikeTransition_WheelieLoweringMoving(u8);
+u8 AcroBikeHandleInputNormal(u8 *, u16, u16);
+u8 AcroBikeHandleInputTurning(u8 *, u16, u16);
+u8 AcroBikeHandleInputWheelieStanding(u8 *, u16, u16);
+u8 AcroBikeHandleInputBunnyHop(u8 *, u16, u16);
+u8 AcroBikeHandleInputWheelieMoving(u8 *, u16, u16);
+u8 AcroBikeHandleInputSidewaysJump(u8 *, u16, u16);
+u8 AcroBikeHandleInputTurnJump(u8 *, u16, u16);
+void AcroBikeTransition_FaceDirection(u8);
+void AcroBikeTransition_TurnDirection(u8);
+void AcroBikeTransition_Moving(u8);
+void AcroBikeTransition_NormalToWheelie(u8);
+void AcroBikeTransition_WheelieToNormal(u8);
+void AcroBikeTransition_WheelieIdle(u8);
+void AcroBikeTransition_WheelieHoppingStanding(u8);
+void AcroBikeTransition_WheelieHoppingMoving(u8);
+void AcroBikeTransition_SideJump(u8);
+void AcroBikeTransition_TurnJump(u8);
+void AcroBikeTransition_WheelieMoving(u8);
+void AcroBikeTransition_WheelieRisingMoving(u8);
+void AcroBikeTransition_WheelieLoweringMoving(u8);
 static void AcroBike_TryHistoryUpdate(u16, u16);
 static u8 AcroBike_GetJumpDirection(void);
 static void Bike_UpdateDirTimerHistory(u8);
@@ -135,13 +135,13 @@ u8 GetMachBikeTransition(u8 *dirTraveling)
 }
 
 // the difference between face direction and turn direction is that one changes direction while the other does the animation of turning as well as changing direction.
-static void MachBikeTransition_FaceDirection(u8 direction)
+void MachBikeTransition_FaceDirection(u8 direction)
 {
     PlayerFaceDirection(direction);
     Bike_SetBikeStill();
 }
 
-static void MachBikeTransition_TurnDirection(u8 direction)
+void MachBikeTransition_TurnDirection(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -156,7 +156,7 @@ static void MachBikeTransition_TurnDirection(u8 direction)
     }
 }
 
-static void MachBikeTransition_TrySpeedUp(u8 direction)
+void MachBikeTransition_TrySpeedUp(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
     u8 collision;
@@ -200,7 +200,7 @@ static void MachBikeTransition_TrySpeedUp(u8 direction)
     }
 }
 
-static void MachBikeTransition_TrySlowDown(u8 direction)
+void MachBikeTransition_TrySlowDown(u8 direction)
 {
     u8 collision;
 
@@ -235,7 +235,7 @@ u8 CheckMovementInputAcroBike(u8 *newDirection, u16 newKeys, u16 heldKeys)
     return sAcroBikeInputHandlers[gPlayerAvatar.acroBikeState](newDirection, newKeys, heldKeys);
 }
 
-static u8 AcroBikeHandleInputNormal(u8 *newDirection, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputNormal(u8 *newDirection, u16 newKeys, u16 heldKeys)
 {
     u8 direction = GetPlayerMovementDirection();
 
@@ -275,7 +275,7 @@ static u8 AcroBikeHandleInputNormal(u8 *newDirection, u16 newKeys, u16 heldKeys)
     return ACRO_TRANS_MOVING;
 }
 
-static u8 AcroBikeHandleInputTurning(u8 *newDirection, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputTurning(u8 *newDirection, u16 newKeys, u16 heldKeys)
 {
     u8 direction;
 
@@ -314,7 +314,7 @@ static u8 AcroBikeHandleInputTurning(u8 *newDirection, u16 newKeys, u16 heldKeys
     return ACRO_TRANS_FACE_DIRECTION;
 }
 
-static u8 AcroBikeHandleInputWheelieStanding(u8 *newDirection, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputWheelieStanding(u8 *newDirection, u16 newKeys, u16 heldKeys)
 {
     u8 direction;
     struct ObjectEvent *playerObjEvent;
@@ -363,7 +363,7 @@ static u8 AcroBikeHandleInputWheelieStanding(u8 *newDirection, u16 newKeys, u16 
     return ACRO_TRANS_WHEELIE_IDLE;
 }
 
-static u8 AcroBikeHandleInputBunnyHop(u8 *newDirection, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputBunnyHop(u8 *newDirection, u16 newKeys, u16 heldKeys)
 {
     u8 direction;
     struct ObjectEvent *playerObjEvent;
@@ -410,7 +410,7 @@ static u8 AcroBikeHandleInputBunnyHop(u8 *newDirection, u16 newKeys, u16 heldKey
     return ACRO_TRANS_WHEELIE_HOPPING_MOVING;
 }
 
-static u8 AcroBikeHandleInputWheelieMoving(u8 *newDirection, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputWheelieMoving(u8 *newDirection, u16 newKeys, u16 heldKeys)
 {
     u8 direction;
     struct ObjectEvent *playerObjEvent;
@@ -465,7 +465,7 @@ static u8 AcroBikeHandleInputWheelieMoving(u8 *newDirection, u16 newKeys, u16 he
     return ACRO_TRANS_WHEELIE_MOVING;
 }
 
-static u8 AcroBikeHandleInputSidewaysJump(u8 *ptr, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputSidewaysJump(u8 *ptr, u16 newKeys, u16 heldKeys)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -475,7 +475,7 @@ static u8 AcroBikeHandleInputSidewaysJump(u8 *ptr, u16 newKeys, u16 heldKeys)
     return CheckMovementInputAcroBike(ptr, newKeys, heldKeys);
 }
 
-static u8 AcroBikeHandleInputTurnJump(u8 *ptr, u16 newKeys, u16 heldKeys)
+u8 AcroBikeHandleInputTurnJump(u8 *ptr, u16 newKeys, u16 heldKeys)
 {
     gPlayerAvatar.acroBikeState = ACRO_STATE_NORMAL;
     return CheckMovementInputAcroBike(ptr, newKeys, heldKeys);
@@ -484,7 +484,7 @@ static u8 AcroBikeHandleInputTurnJump(u8 *ptr, u16 newKeys, u16 heldKeys)
 // JP: AcroBikeTransition_FaceDirection (0x08119A10) is an empty stub kept in
 // asm/bike_stub_face.s; its behavior lives in AcroBikeTransition_TurnJump.
 
-static void AcroBikeTransition_TurnDirection(u8 direction)
+void AcroBikeTransition_TurnDirection(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -493,7 +493,7 @@ static void AcroBikeTransition_TurnDirection(u8 direction)
     PlayerFaceDirection(direction);
 }
 
-static void AcroBikeTransition_Moving(u8 direction)
+void AcroBikeTransition_Moving(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -519,7 +519,7 @@ static void AcroBikeTransition_Moving(u8 direction)
     }
 }
 
-static void AcroBikeTransition_NormalToWheelie(u8 direction)
+void AcroBikeTransition_NormalToWheelie(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -528,7 +528,7 @@ static void AcroBikeTransition_NormalToWheelie(u8 direction)
     PlayerStartWheelie(direction);
 }
 
-static void AcroBikeTransition_WheelieToNormal(u8 direction)
+void AcroBikeTransition_WheelieToNormal(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -537,7 +537,7 @@ static void AcroBikeTransition_WheelieToNormal(u8 direction)
     PlayerEndWheelie(direction);
 }
 
-static void AcroBikeTransition_WheelieIdle(u8 direction)
+void AcroBikeTransition_WheelieIdle(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -546,7 +546,7 @@ static void AcroBikeTransition_WheelieIdle(u8 direction)
     PlayerIdleWheelie(direction);
 }
 
-static void AcroBikeTransition_WheelieHoppingStanding(u8 direction)
+void AcroBikeTransition_WheelieHoppingStanding(u8 direction)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
 
@@ -555,7 +555,7 @@ static void AcroBikeTransition_WheelieHoppingStanding(u8 direction)
     PlayerStandingHoppingWheelie(direction);
 }
 
-static void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
+void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -586,7 +586,7 @@ static void AcroBikeTransition_WheelieHoppingMoving(u8 direction)
     PlayerMovingHoppingWheelie(direction);
 }
 
-static void AcroBikeTransition_SideJump(u8 direction)
+void AcroBikeTransition_SideJump(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent;
@@ -613,19 +613,19 @@ static void AcroBikeTransition_SideJump(u8 direction)
     PlayerSetAnimId(sub_08092E84(direction), COPY_MOVE_WALK);
 }
 
-static void AcroBikeTransition_TurnJump(u8 direction)
+void AcroBikeTransition_TurnJump(u8 direction)
 {
     // JP: AcroBikeTransition_TurnJump faces the direction instead (0x0811A034).
     PlayerFaceDirection(direction);
 }
 
-static void sub_0811A2E4(u8 direction)
+void sub_0811A2E4(u8 direction)
 {
     // JP: turn-jump behavior lives at 0x0811A2E4 (called from the JP table).
     PlayerAcroTurnJump(direction);
 }
 
-static void AcroBikeTransition_WheelieMoving(u8 direction)
+void AcroBikeTransition_WheelieMoving(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -659,7 +659,7 @@ static void AcroBikeTransition_WheelieMoving(u8 direction)
     gPlayerAvatar.runningState = MOVING;
 }
 
-static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
+void AcroBikeTransition_WheelieRisingMoving(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -693,7 +693,7 @@ static void AcroBikeTransition_WheelieRisingMoving(u8 direction)
     gPlayerAvatar.runningState = MOVING;
 }
 
-static void AcroBikeTransition_WheelieLoweringMoving(u8 direction)
+void AcroBikeTransition_WheelieLoweringMoving(u8 direction)
 {
     u8 collision;
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];

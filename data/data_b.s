@@ -26337,21 +26337,44 @@ gUnknown_8573002: @ 0x8573002
 gUnknown_8573008: @ 0x8573008
 	.incbin "baserom_jp.gba", 0x573008, 0x28
 
-	.globl gUnknown_8573030
-gUnknown_8573030: @ 0x8573030
-	.incbin "baserom_jp.gba", 0x573030, 0x10
+	.globl sMachBikeTransitions
+sMachBikeTransitions: @ 0x8573030
+	.4byte MachBikeTransition_FaceDirection @ 0x08119A75
+	.4byte MachBikeTransition_TurnDirection @ 0x08119A89
+	.4byte MachBikeTransition_TrySpeedUp @ 0x08119AD1
+	.4byte MachBikeTransition_TrySlowDown @ 0x08119B95
 
-	.globl gUnknown_8573040
-gUnknown_8573040: @ 0x8573040
-	.incbin "baserom_jp.gba", 0x573040, 0xc
+	.globl sMachBikeSpeedCallbacks
+sMachBikeSpeedCallbacks: @ 0x8573040
+	.4byte PlayerWalkNormal @ 0x0808B085
+	.4byte PlayerWalkFast @ 0x0808B09D
+	.4byte PlayerWalkFaster @ 0x0808B0CD
 
-	.globl gUnknown_857304C
-gUnknown_857304C: @ 0x857304C
-	.incbin "baserom_jp.gba", 0x57304c, 0x34
+	.globl sAcroBikeTransitions
+sAcroBikeTransitions: @ 0x857304C
+	.4byte AcroBikeTransition_TurnJump @ 0x0811A035
+	.4byte AcroBikeTransition_TurnDirection @ 0x0811A045
+	.4byte AcroBikeTransition_Moving @ 0x0811A081
+	.4byte AcroBikeTransition_NormalToWheelie @ 0x0811A111
+	.4byte AcroBikeTransition_WheelieToNormal @ 0x0811A14D
+	.4byte AcroBikeTransition_WheelieIdle @ 0x0811A189
+	.4byte AcroBikeTransition_WheelieHoppingStanding @ 0x0811A1C5
+	.4byte AcroBikeTransition_WheelieHoppingMoving @ 0x0811A201
+	.4byte AcroBikeTransition_SideJump @ 0x0811A275
+	.4byte sub_0811A2E4 @ 0x0811A2E5
+	.4byte AcroBikeTransition_WheelieMoving @ 0x0811A2F5
+	.4byte AcroBikeTransition_WheelieRisingMoving @ 0x0811A385
+	.4byte AcroBikeTransition_WheelieLoweringMoving @ 0x0811A415
 
-	.globl gUnknown_8573080
-gUnknown_8573080: @ 0x8573080
-	.incbin "baserom_jp.gba", 0x573080, 0x1c
+	.globl sAcroBikeInputHandlers
+sAcroBikeInputHandlers: @ 0x8573080
+	.4byte AcroBikeHandleInputNormal @ 0x08119C7D
+	.4byte AcroBikeHandleInputTurning @ 0x08119D19
+	.4byte AcroBikeHandleInputWheelieStanding @ 0x08119D91
+	.4byte AcroBikeHandleInputBunnyHop @ 0x08119E31
+	.4byte AcroBikeHandleInputWheelieMoving @ 0x08119ED9
+	.4byte AcroBikeHandleInputSidewaysJump @ 0x08119FB5
+	.4byte AcroBikeHandleInputTurnJump @ 0x0811A011
 
 	.globl sMachBikeSpeeds
 sMachBikeSpeeds: @ 0x857309C
