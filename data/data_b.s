@@ -1150,8 +1150,14 @@ sMessages: @ 0x82C5EBC
 	.incbin "baserom_jp.gba", 0x2c5ebc, 0x24
 
 	.globl sBgTemplates
-sBgTemplates: @ 0x82C5EE0
-	.incbin "baserom_jp.gba", 0x2c5ee0, 0x10
+	.globl sBgTemplates
+sBgTemplates: @ 0x2C5EE0
+	.incbin "baserom_jp.gba", 0x2c5ee0, 0x4
+
+	.globl sWindowTemplates_Results
+sWindowTemplates_Results: @ 0x2C5EE4
+	.incbin "baserom_jp.gba", 0x2c5ee4, 0xc
+
 
 	.globl sTextColorTable
 sTextColorTable: @ 0x82C5EF0
@@ -5584,8 +5590,14 @@ sFanfares: @ 0x84FCFC8
 	.incbin "baserom_jp.gba", 0x4fcfc8, 0x48
 
 	.globl gUnknown_84FD010
-gUnknown_84FD010: @ 0x84FD010
-	.incbin "baserom_jp.gba", 0x4fd010, 0x240
+	.globl gUnknown_84FD010
+gUnknown_84FD010: @ 0x4FD010
+	.incbin "baserom_jp.gba", 0x4fd010, 0x30
+
+	.globl gUnknown_84FD040
+gUnknown_84FD040: @ 0x4FD040
+	.incbin "baserom_jp.gba", 0x4fd040, 0x210
+
 
 	.globl gBattleAnimPicTable
 gBattleAnimPicTable: @ 0x84FD250
@@ -5604,8 +5616,14 @@ gUnknown_84FD998: @ 0x84FD998
 	.incbin "baserom_jp.gba", 0x4fd998, 0x120
 
 	.globl gUnknown_84FDAB8
-gUnknown_84FDAB8: @ 0x84FDAB8
-	.incbin "baserom_jp.gba", 0x4fdab8, 0x270
+	.globl gUnknown_84FDAB8
+gUnknown_84FDAB8: @ 0x4FDAB8
+	.incbin "baserom_jp.gba", 0x4fdab8, 0xa0
+
+	.globl gBattleAnimPaletteTable
+gBattleAnimPaletteTable: @ 0x4FDB58
+	.incbin "baserom_jp.gba", 0x4fdb58, 0x1d0
+
 
 	.globl gUnknown_84FDD28
 gUnknown_84FDD28: @ 0x84FDD28
@@ -8259,16 +8277,68 @@ sAffineAnims_UproarDistortion: @ 0x856F77C
 	.incbin "baserom_jp.gba", 0x56f77c, 0x1488
 
 	.globl gRainDropSpriteTemplate
-gRainDropSpriteTemplate: @ 0x8570C04
-	.incbin "baserom_jp.gba", 0x570c04, 0x248
+	.globl gRainDropSpriteTemplate
+gRainDropSpriteTemplate: @ 0x570C04
+	.incbin "baserom_jp.gba", 0x570c04, 0x1e0
+
+	.globl gAnims_WaterBubble
+gAnims_WaterBubble: @ 0x570DE4
+	.incbin "baserom_jp.gba", 0x570de4, 0x68
+
 
 	.globl gSmallWaterOrbSpriteTemplate
 gSmallWaterOrbSpriteTemplate: @ 0x8570E4C
 	.incbin "baserom_jp.gba", 0x570e4c, 0xa8
 
 	.globl gWaterPulseRingBubbleSpriteTemplate
-gWaterPulseRingBubbleSpriteTemplate: @ 0x8570EF4
-	.incbin "baserom_jp.gba", 0x570ef4, 0x2a4
+	.globl gWaterPulseRingBubbleSpriteTemplate
+gWaterPulseRingBubbleSpriteTemplate: @ 0x570EF4
+	.incbin "baserom_jp.gba", 0x570ef4, 0x58
+
+	.globl gFireSpiralInwardSpriteTemplate
+gFireSpiralInwardSpriteTemplate: @ 0x570F4C
+	.incbin "baserom_jp.gba", 0x570f4c, 0x18
+
+	.globl gFireSpreadSpriteTemplate
+gFireSpreadSpriteTemplate: @ 0x570F64
+	.incbin "baserom_jp.gba", 0x570f64, 0x78
+
+	.globl gLargeFlameSpriteTemplate
+gLargeFlameSpriteTemplate: @ 0x570FDC
+	.incbin "baserom_jp.gba", 0x570fdc, 0x18
+
+	.globl gLargeFlameScatterSpriteTemplate
+gLargeFlameScatterSpriteTemplate: @ 0x570FF4
+	.incbin "baserom_jp.gba", 0x570ff4, 0x18
+
+	.globl gFirePlumeSpriteTemplate
+gFirePlumeSpriteTemplate: @ 0x57100C
+	.incbin "baserom_jp.gba", 0x57100c, 0x78
+
+	.globl gSunlightRaySpriteTemplate
+gSunlightRaySpriteTemplate: @ 0x571084
+	.incbin "baserom_jp.gba", 0x571084, 0x4c
+
+	.globl gEmberFlareSpriteTemplate
+gEmberFlareSpriteTemplate: @ 0x5710D0
+	.incbin "baserom_jp.gba", 0x5710d0, 0x18
+
+	.globl gBurnFlameSpriteTemplate
+gBurnFlameSpriteTemplate: @ 0x5710E8
+	.incbin "baserom_jp.gba", 0x5710e8, 0x18
+
+	.globl gFireBlastRingSpriteTemplate
+gFireBlastRingSpriteTemplate: @ 0x571100
+	.incbin "baserom_jp.gba", 0x571100, 0x50
+
+	.globl gFireBlastCrossSpriteTemplate
+gFireBlastCrossSpriteTemplate: @ 0x571150
+	.incbin "baserom_jp.gba", 0x571150, 0x18
+
+	.globl gFireSpiralOutwardSpriteTemplate
+gFireSpiralOutwardSpriteTemplate: @ 0x571168
+	.incbin "baserom_jp.gba", 0x571168, 0x30
+
 
 	.globl gEruptionLaunchRockSpriteTemplate
 gEruptionLaunchRockSpriteTemplate: @ 0x8571198
@@ -8279,8 +8349,22 @@ gUnknown_85711B0: @ 0x85711B0
 	.string "\n$"
 
 	.globl gUnknown_85711B2
-gUnknown_85711B2: @ 0x85711B2
-	.incbin "baserom_jp.gba", 0x5711b2, 0xb6
+	.globl gUnknown_85711B2
+gUnknown_85711B2: @ 0x5711B2
+	.incbin "baserom_jp.gba", 0x5711b2, 0x1a
+
+	.globl gEruptionFallingRockSpriteTemplate
+gEruptionFallingRockSpriteTemplate: @ 0x5711CC
+	.incbin "baserom_jp.gba", 0x5711cc, 0x54
+
+	.globl gWillOWispOrbSpriteTemplate
+gWillOWispOrbSpriteTemplate: @ 0x571220
+	.incbin "baserom_jp.gba", 0x571220, 0x30
+
+	.globl gWillOWispFireSpriteTemplate
+gWillOWispFireSpriteTemplate: @ 0x571250
+	.incbin "baserom_jp.gba", 0x571250, 0x18
+
 
 	.globl sShakeDirsPattern0
 sShakeDirsPattern0: @ 0x8571268
@@ -8291,8 +8375,30 @@ sShakeDirsPattern1: @ 0x8571278
 	.incbin "baserom_jp.gba", 0x571278, 0x2c
 
 	.globl gLightningSpriteTemplate
-gLightningSpriteTemplate: @ 0x85712A4
-	.incbin "baserom_jp.gba", 0x5712a4, 0x168
+	.globl gLightningSpriteTemplate
+gLightningSpriteTemplate: @ 0x5712A4
+	.incbin "baserom_jp.gba", 0x5712a4, 0x8c
+
+	.globl gSparkElectricitySpriteTemplate
+gSparkElectricitySpriteTemplate: @ 0x571330
+	.incbin "baserom_jp.gba", 0x571330, 0x44
+
+	.globl gZapCannonSparkSpriteTemplate
+gZapCannonSparkSpriteTemplate: @ 0x571374
+	.incbin "baserom_jp.gba", 0x571374, 0x50
+
+	.globl gThunderboltOrbSpriteTemplate
+gThunderboltOrbSpriteTemplate: @ 0x5713C4
+	.incbin "baserom_jp.gba", 0x5713c4, 0x18
+
+	.globl gSparkElectricityFlashingSpriteTemplate
+gSparkElectricityFlashingSpriteTemplate: @ 0x5713DC
+	.incbin "baserom_jp.gba", 0x5713dc, 0x18
+
+	.globl gElectricitySpriteTemplate
+gElectricitySpriteTemplate: @ 0x5713F4
+	.incbin "baserom_jp.gba", 0x5713f4, 0x18
+
 
 	.globl gElectricBoltSegmentSpriteTemplate
 gElectricBoltSegmentSpriteTemplate: @ 0x857140C
@@ -8307,40 +8413,342 @@ sElectricChargingParticleCoordOffsets: @ 0x857143C
 	.incbin "baserom_jp.gba", 0x57143c, 0x50
 
 	.globl gElectricChargingParticlesSpriteTemplate
-gElectricChargingParticlesSpriteTemplate: @ 0x857148C
-	.incbin "baserom_jp.gba", 0x57148c, 0x158
+	.globl gElectricChargingParticlesSpriteTemplate
+gElectricChargingParticlesSpriteTemplate: @ 0x57148C
+	.incbin "baserom_jp.gba", 0x57148c, 0xb4
+
+	.globl gGrowingChargeOrbSpriteTemplate
+gGrowingChargeOrbSpriteTemplate: @ 0x571540
+	.incbin "baserom_jp.gba", 0x571540, 0x30
+
+	.globl gElectricPuffSpriteTemplate
+gElectricPuffSpriteTemplate: @ 0x571570
+	.incbin "baserom_jp.gba", 0x571570, 0x18
+
+	.globl gVoltTackleOrbSlideSpriteTemplate
+gVoltTackleOrbSlideSpriteTemplate: @ 0x571588
+	.incbin "baserom_jp.gba", 0x571588, 0x5c
+
 
 	.globl gVoltTackleBoltSpriteTemplate
-gVoltTackleBoltSpriteTemplate: @ 0x85715E4
-	.incbin "baserom_jp.gba", 0x5715e4, 0x30
+	.globl gVoltTackleBoltSpriteTemplate
+gVoltTackleBoltSpriteTemplate: @ 0x5715E4
+	.incbin "baserom_jp.gba", 0x5715e4, 0x18
+
+	.globl gGrowingShockWaveOrbSpriteTemplate
+gGrowingShockWaveOrbSpriteTemplate: @ 0x5715FC
+	.incbin "baserom_jp.gba", 0x5715fc, 0x18
+
 
 	.globl gShockWaveProgressingBoltSpriteTemplate
-gShockWaveProgressingBoltSpriteTemplate: @ 0x8571614
-	.incbin "baserom_jp.gba", 0x571614, 0x138
+	.globl gShockWaveProgressingBoltSpriteTemplate
+gShockWaveProgressingBoltSpriteTemplate: @ 0x571614
+	.incbin "baserom_jp.gba", 0x571614, 0x28
+
+	.globl gUnusedIceCrystalSpriteTemplate
+gUnusedIceCrystalSpriteTemplate: @ 0x57163C
+	.incbin "baserom_jp.gba", 0x57163c, 0x78
+
+	.globl gIceCrystalSpiralInwardLarge
+gIceCrystalSpiralInwardLarge: @ 0x5716B4
+	.incbin "baserom_jp.gba", 0x5716b4, 0x18
+
+	.globl gIceCrystalSpiralInwardSmall
+gIceCrystalSpiralInwardSmall: @ 0x5716CC
+	.incbin "baserom_jp.gba", 0x5716cc, 0x2c
+
+	.globl gIceBeamInnerCrystalSpriteTemplate
+gIceBeamInnerCrystalSpriteTemplate: @ 0x5716F8
+	.incbin "baserom_jp.gba", 0x5716f8, 0x18
+
+	.globl gIceBeamOuterCrystalSpriteTemplate
+gIceBeamOuterCrystalSpriteTemplate: @ 0x571710
+	.incbin "baserom_jp.gba", 0x571710, 0x3c
+
 
 	.globl gIceCrystalHitLargeSpriteTemplate
-gIceCrystalHitLargeSpriteTemplate: @ 0x857174C
-	.incbin "baserom_jp.gba", 0x57174c, 0xf4
+	.globl gIceCrystalHitLargeSpriteTemplate
+gIceCrystalHitLargeSpriteTemplate: @ 0x57174C
+	.incbin "baserom_jp.gba", 0x57174c, 0x18
+
+	.globl gIceCrystalHitSmallSpriteTemplate
+gIceCrystalHitSmallSpriteTemplate: @ 0x571764
+	.incbin "baserom_jp.gba", 0x571764, 0x18
+
+	.globl gSwirlingSnowballSpriteTemplate
+gSwirlingSnowballSpriteTemplate: @ 0x57177C
+	.incbin "baserom_jp.gba", 0x57177c, 0x18
+
+	.globl gBlizzardIceCrystalSpriteTemplate
+gBlizzardIceCrystalSpriteTemplate: @ 0x571794
+	.incbin "baserom_jp.gba", 0x571794, 0x18
+
+	.globl gPowderSnowSnowballSpriteTemplate
+gPowderSnowSnowballSpriteTemplate: @ 0x5717AC
+	.incbin "baserom_jp.gba", 0x5717ac, 0x3c
+
+	.globl gIceGroundSpikeSpriteTemplate
+gIceGroundSpikeSpriteTemplate: @ 0x5717E8
+	.incbin "baserom_jp.gba", 0x5717e8, 0x28
+
+	.globl gMistCloudSpriteTemplate
+gMistCloudSpriteTemplate: @ 0x571810
+	.incbin "baserom_jp.gba", 0x571810, 0x18
+
+	.globl gSmogCloudSpriteTemplate
+gSmogCloudSpriteTemplate: @ 0x571828
+	.incbin "baserom_jp.gba", 0x571828, 0x18
+
 
 	.globl sHazeBlendAmounts
-sHazeBlendAmounts: @ 0x8571840
-	.incbin "baserom_jp.gba", 0x571840, 0x2c
+	.globl sHazeBlendAmounts
+sHazeBlendAmounts: @ 0x571840
+	.incbin "baserom_jp.gba", 0x571840, 0x14
+
+	.globl gMistBallSpriteTemplate
+gMistBallSpriteTemplate: @ 0x571854
+	.incbin "baserom_jp.gba", 0x571854, 0x18
+
 
 	.globl sMistBlendAmounts
-sMistBlendAmounts: @ 0x857186C
-	.incbin "baserom_jp.gba", 0x57186c, 0x2c
+	.globl sMistBlendAmounts
+sMistBlendAmounts: @ 0x57186C
+	.incbin "baserom_jp.gba", 0x57186c, 0x14
+
+	.globl gPoisonGasCloudSpriteTemplate
+gPoisonGasCloudSpriteTemplate: @ 0x571880
+	.incbin "baserom_jp.gba", 0x571880, 0x18
+
 
 	.globl sHailCoordData
-sHailCoordData: @ 0x8571898
-	.incbin "baserom_jp.gba", 0x571898, 0x78
+	.globl sHailCoordData
+sHailCoordData: @ 0x571898
+	.incbin "baserom_jp.gba", 0x571898, 0x68
+
+	.globl sAffineAnims_HailParticle
+sAffineAnims_HailParticle: @ 0x571900
+	.incbin "baserom_jp.gba", 0x571900, 0x10
+
 
 	.globl gHailParticleSpriteTemplate
-gHailParticleSpriteTemplate: @ 0x8571910
-	.incbin "baserom_jp.gba", 0x571910, 0xa14
+	.globl gHailParticleSpriteTemplate
+gHailParticleSpriteTemplate: @ 0x571910
+	.incbin "baserom_jp.gba", 0x571910, 0xb8
+
+	.globl gIceBallChunkSpriteTemplate
+gIceBallChunkSpriteTemplate: @ 0x5719C8
+	.incbin "baserom_jp.gba", 0x5719c8, 0x18
+
+	.globl gIceBallImpactShardSpriteTemplate
+gIceBallImpactShardSpriteTemplate: @ 0x5719E0
+	.incbin "baserom_jp.gba", 0x5719e0, 0x18
+
+	.globl gUnusedHumanoidFootSpriteTemplate
+gUnusedHumanoidFootSpriteTemplate: @ 0x5719F8
+	.incbin "baserom_jp.gba", 0x5719f8, 0x54
+
+	.globl gKarateChopSpriteTemplate
+gKarateChopSpriteTemplate: @ 0x571A4C
+	.incbin "baserom_jp.gba", 0x571a4c, 0x18
+
+	.globl gJumpKickSpriteTemplate
+gJumpKickSpriteTemplate: @ 0x571A64
+	.incbin "baserom_jp.gba", 0x571a64, 0x18
+
+	.globl gFistFootSpriteTemplate
+gFistFootSpriteTemplate: @ 0x571A7C
+	.incbin "baserom_jp.gba", 0x571a7c, 0x18
+
+	.globl gFistFootRandomPosSpriteTemplate
+gFistFootRandomPosSpriteTemplate: @ 0x571A94
+	.incbin "baserom_jp.gba", 0x571a94, 0x18
+
+	.globl gCrossChopHandSpriteTemplate
+gCrossChopHandSpriteTemplate: @ 0x571AAC
+	.incbin "baserom_jp.gba", 0x571aac, 0x18
+
+	.globl gSlidingKickSpriteTemplate
+gSlidingKickSpriteTemplate: @ 0x571AC4
+	.incbin "baserom_jp.gba", 0x571ac4, 0x34
+
+	.globl gSpinningHandOrFootSpriteTemplate
+gSpinningHandOrFootSpriteTemplate: @ 0x571AF8
+	.incbin "baserom_jp.gba", 0x571af8, 0x34
+
+	.globl gMegaPunchKickSpriteTemplate
+gMegaPunchKickSpriteTemplate: @ 0x571B2C
+	.incbin "baserom_jp.gba", 0x571b2c, 0x18
+
+	.globl gStompFootSpriteTemplate
+gStompFootSpriteTemplate: @ 0x571B44
+	.incbin "baserom_jp.gba", 0x571b44, 0x18
+
+	.globl gDizzyPunchDuckSpriteTemplate
+gDizzyPunchDuckSpriteTemplate: @ 0x571B5C
+	.incbin "baserom_jp.gba", 0x571b5c, 0x18
+
+	.globl gBrickBreakWallSpriteTemplate
+gBrickBreakWallSpriteTemplate: @ 0x571B74
+	.incbin "baserom_jp.gba", 0x571b74, 0x18
+
+	.globl gBrickBreakWallShardSpriteTemplate
+gBrickBreakWallShardSpriteTemplate: @ 0x571B8C
+	.incbin "baserom_jp.gba", 0x571b8c, 0x44
+
+	.globl gSuperpowerOrbSpriteTemplate
+gSuperpowerOrbSpriteTemplate: @ 0x571BD0
+	.incbin "baserom_jp.gba", 0x571bd0, 0x18
+
+	.globl gSuperpowerRockSpriteTemplate
+gSuperpowerRockSpriteTemplate: @ 0x571BE8
+	.incbin "baserom_jp.gba", 0x571be8, 0x18
+
+	.globl gSuperpowerFireballSpriteTemplate
+gSuperpowerFireballSpriteTemplate: @ 0x571C00
+	.incbin "baserom_jp.gba", 0x571c00, 0x18
+
+	.globl gArmThrustHandSpriteTemplate
+gArmThrustHandSpriteTemplate: @ 0x571C18
+	.incbin "baserom_jp.gba", 0x571c18, 0x54
+
+	.globl gRevengeSmallScratchSpriteTemplate
+gRevengeSmallScratchSpriteTemplate: @ 0x571C6C
+	.incbin "baserom_jp.gba", 0x571c6c, 0x48
+
+	.globl gRevengeBigScratchSpriteTemplate
+gRevengeBigScratchSpriteTemplate: @ 0x571CB4
+	.incbin "baserom_jp.gba", 0x571cb4, 0x34
+
+	.globl gFocusPunchFistSpriteTemplate
+gFocusPunchFistSpriteTemplate: @ 0x571CE8
+	.incbin "baserom_jp.gba", 0x571ce8, 0x30
+
+	.globl gToxicBubbleSpriteTemplate
+gToxicBubbleSpriteTemplate: @ 0x571D18
+	.incbin "baserom_jp.gba", 0x571d18, 0x74
+
+	.globl gSludgeProjectileSpriteTemplate
+gSludgeProjectileSpriteTemplate: @ 0x571D8C
+	.incbin "baserom_jp.gba", 0x571d8c, 0x18
+
+	.globl gAcidPoisonBubbleSpriteTemplate
+gAcidPoisonBubbleSpriteTemplate: @ 0x571DA4
+	.incbin "baserom_jp.gba", 0x571da4, 0x18
+
+	.globl gSludgeBombHitParticleSpriteTemplate
+gSludgeBombHitParticleSpriteTemplate: @ 0x571DBC
+	.incbin "baserom_jp.gba", 0x571dbc, 0x30
+
+	.globl gAffineAnims_Droplet
+gAffineAnims_Droplet: @ 0x571DEC
+	.incbin "baserom_jp.gba", 0x571dec, 0x4
+
+	.globl gAcidPoisonDropletSpriteTemplate
+gAcidPoisonDropletSpriteTemplate: @ 0x571DF0
+	.incbin "baserom_jp.gba", 0x571df0, 0x34
+
+	.globl gPoisonBubbleSpriteTemplate
+gPoisonBubbleSpriteTemplate: @ 0x571E24
+	.incbin "baserom_jp.gba", 0x571e24, 0x18
+
+	.globl gWaterBubbleSpriteTemplate
+gWaterBubbleSpriteTemplate: @ 0x571E3C
+	.incbin "baserom_jp.gba", 0x571e3c, 0x18
+
+	.globl gEllipticalGustSpriteTemplate
+gEllipticalGustSpriteTemplate: @ 0x571E54
+	.incbin "baserom_jp.gba", 0x571e54, 0x34
+
+	.globl gGustToTargetSpriteTemplate
+gGustToTargetSpriteTemplate: @ 0x571E88
+	.incbin "baserom_jp.gba", 0x571e88, 0x30
+
+	.globl gAirWaveCrescentSpriteTemplate
+gAirWaveCrescentSpriteTemplate: @ 0x571EB8
+	.incbin "baserom_jp.gba", 0x571eb8, 0x6c
+
+	.globl gFlyBallUpSpriteTemplate
+gFlyBallUpSpriteTemplate: @ 0x571F24
+	.incbin "baserom_jp.gba", 0x571f24, 0x18
+
+	.globl gFlyBallAttackSpriteTemplate
+gFlyBallAttackSpriteTemplate: @ 0x571F3C
+	.incbin "baserom_jp.gba", 0x571f3c, 0x30
+
+	.globl gFallingFeatherSpriteTemplate
+gFallingFeatherSpriteTemplate: @ 0x571F6C
+	.incbin "baserom_jp.gba", 0x571f6c, 0x4c
+
+	.globl gWhirlwindLineSpriteTemplate
+gWhirlwindLineSpriteTemplate: @ 0x571FB8
+	.incbin "baserom_jp.gba", 0x571fb8, 0x4c
+
+	.globl gBounceBallShrinkSpriteTemplate
+gBounceBallShrinkSpriteTemplate: @ 0x572004
+	.incbin "baserom_jp.gba", 0x572004, 0x2c
+
+	.globl gBounceBallLandSpriteTemplate
+gBounceBallLandSpriteTemplate: @ 0x572030
+	.incbin "baserom_jp.gba", 0x572030, 0x44
+
+	.globl gDiveBallSpriteTemplate
+gDiveBallSpriteTemplate: @ 0x572074
+	.incbin "baserom_jp.gba", 0x572074, 0x3c
+
+	.globl gDiveWaterSplashSpriteTemplate
+gDiveWaterSplashSpriteTemplate: @ 0x5720B0
+	.incbin "baserom_jp.gba", 0x5720b0, 0x18
+
+	.globl gSprayWaterDropletSpriteTemplate
+gSprayWaterDropletSpriteTemplate: @ 0x5720C8
+	.incbin "baserom_jp.gba", 0x5720c8, 0x30
+
+	.globl gSkyAttackBirdSpriteTemplate
+gSkyAttackBirdSpriteTemplate: @ 0x5720F8
+	.incbin "baserom_jp.gba", 0x5720f8, 0x4c
+
+	.globl gLightScreenWallSpriteTemplate
+gLightScreenWallSpriteTemplate: @ 0x572144
+	.incbin "baserom_jp.gba", 0x572144, 0x18
+
+	.globl gReflectWallSpriteTemplate
+gReflectWallSpriteTemplate: @ 0x57215C
+	.incbin "baserom_jp.gba", 0x57215c, 0x18
+
+	.globl gMirrorCoatWallSpriteTemplate
+gMirrorCoatWallSpriteTemplate: @ 0x572174
+	.incbin "baserom_jp.gba", 0x572174, 0x18
+
+	.globl gBarrierWallSpriteTemplate
+gBarrierWallSpriteTemplate: @ 0x57218C
+	.incbin "baserom_jp.gba", 0x57218c, 0x18
+
+	.globl gMagicCoatWallSpriteTemplate
+gMagicCoatWallSpriteTemplate: @ 0x5721A4
+	.incbin "baserom_jp.gba", 0x5721a4, 0x34
+
+	.globl gReflectSparkleSpriteTemplate
+gReflectSparkleSpriteTemplate: @ 0x5721D8
+	.incbin "baserom_jp.gba", 0x5721d8, 0x30
+
+	.globl gSpecialScreenSparkleSpriteTemplate
+gSpecialScreenSparkleSpriteTemplate: @ 0x572208
+	.incbin "baserom_jp.gba", 0x572208, 0xb8
+
+	.globl gBentSpoonSpriteTemplate
+gBentSpoonSpriteTemplate: @ 0x5722C0
+	.incbin "baserom_jp.gba", 0x5722c0, 0x64
+
 
 	.globl sAffineAnims_QuestionMark
-sAffineAnims_QuestionMark: @ 0x8572324
-	.incbin "baserom_jp.gba", 0x572324, 0x1c
+	.globl sAffineAnims_QuestionMark
+sAffineAnims_QuestionMark: @ 0x572324
+	.incbin "baserom_jp.gba", 0x572324, 0x4
+
+	.globl gQuestionMarkSpriteTemplate
+gQuestionMarkSpriteTemplate: @ 0x572328
+	.incbin "baserom_jp.gba", 0x572328, 0x18
+
 
 	.globl sAffineAnim_MeditateStretchAttacker
 sAffineAnim_MeditateStretchAttacker: @ 0x8572340
@@ -8351,12 +8759,84 @@ sAffineAnim_Teleport: @ 0x8572360
 	.incbin "baserom_jp.gba", 0x572360, 0x18
 
 	.globl gImprisonOrbSpriteTemplate
-gImprisonOrbSpriteTemplate: @ 0x8572378
-	.incbin "baserom_jp.gba", 0x572378, 0xd0
+	.globl gImprisonOrbSpriteTemplate
+gImprisonOrbSpriteTemplate: @ 0x572378
+	.incbin "baserom_jp.gba", 0x572378, 0x18
+
+	.globl gRedXSpriteTemplate
+gRedXSpriteTemplate: @ 0x572390
+	.incbin "baserom_jp.gba", 0x572390, 0xb8
+
 
 	.globl gSkillSwapOrbSpriteTemplate
-gSkillSwapOrbSpriteTemplate: @ 0x8572448
-	.incbin "baserom_jp.gba", 0x572448, 0x35c
+	.globl gSkillSwapOrbSpriteTemplate
+gSkillSwapOrbSpriteTemplate: @ 0x572448
+	.incbin "baserom_jp.gba", 0x572448, 0xbc
+
+	.globl gPsychoBoostOrbSpriteTemplate
+gPsychoBoostOrbSpriteTemplate: @ 0x572504
+	.incbin "baserom_jp.gba", 0x572504, 0x54
+
+	.globl gMegahornHornSpriteTemplate
+gMegahornHornSpriteTemplate: @ 0x572558
+	.incbin "baserom_jp.gba", 0x572558, 0x54
+
+	.globl gLeechLifeNeedleSpriteTemplate
+gLeechLifeNeedleSpriteTemplate: @ 0x5725AC
+	.incbin "baserom_jp.gba", 0x5725ac, 0x18
+
+	.globl gWebThreadSpriteTemplate
+gWebThreadSpriteTemplate: @ 0x5725C4
+	.incbin "baserom_jp.gba", 0x5725c4, 0x18
+
+	.globl gStringWrapSpriteTemplate
+gStringWrapSpriteTemplate: @ 0x5725DC
+	.incbin "baserom_jp.gba", 0x5725dc, 0x34
+
+	.globl gSpiderWebSpriteTemplate
+gSpiderWebSpriteTemplate: @ 0x572610
+	.incbin "baserom_jp.gba", 0x572610, 0x18
+
+	.globl gLinearStingerSpriteTemplate
+gLinearStingerSpriteTemplate: @ 0x572628
+	.incbin "baserom_jp.gba", 0x572628, 0x18
+
+	.globl gPinMissileSpriteTemplate
+gPinMissileSpriteTemplate: @ 0x572640
+	.incbin "baserom_jp.gba", 0x572640, 0x18
+
+	.globl gIcicleSpearSpriteTemplate
+gIcicleSpearSpriteTemplate: @ 0x572658
+	.incbin "baserom_jp.gba", 0x572658, 0x54
+
+	.globl gTailGlowOrbSpriteTemplate
+gTailGlowOrbSpriteTemplate: @ 0x5726AC
+	.incbin "baserom_jp.gba", 0x5726ac, 0x3c
+
+	.globl gFallingRockSpriteTemplate
+gFallingRockSpriteTemplate: @ 0x5726E8
+	.incbin "baserom_jp.gba", 0x5726e8, 0x18
+
+	.globl gRockFragmentSpriteTemplate
+gRockFragmentSpriteTemplate: @ 0x572700
+	.incbin "baserom_jp.gba", 0x572700, 0x18
+
+	.globl gSwirlingDirtSpriteTemplate
+gSwirlingDirtSpriteTemplate: @ 0x572718
+	.incbin "baserom_jp.gba", 0x572718, 0x3c
+
+	.globl gWhirlpoolSpriteTemplate
+gWhirlpoolSpriteTemplate: @ 0x572754
+	.incbin "baserom_jp.gba", 0x572754, 0x18
+
+	.globl gFireSpinSpriteTemplate
+gFireSpinSpriteTemplate: @ 0x57276C
+	.incbin "baserom_jp.gba", 0x57276c, 0x18
+
+	.globl gFlyingSandCrescentSpriteTemplate
+gFlyingSandCrescentSpriteTemplate: @ 0x572784
+	.incbin "baserom_jp.gba", 0x572784, 0x20
+
 
 	.globl sFlyingSandSubspriteTable
 sFlyingSandSubspriteTable: @ 0x85727A4
@@ -8371,16 +8851,130 @@ gRolloutMudSpriteTemplate: @ 0x857280C
 	.incbin "baserom_jp.gba", 0x57280c, 0x18
 
 	.globl gRolloutRockSpriteTemplate
-gRolloutRockSpriteTemplate: @ 0x8572824
-	.incbin "baserom_jp.gba", 0x572824, 0x178
+	.globl gRolloutRockSpriteTemplate
+gRolloutRockSpriteTemplate: @ 0x572824
+	.incbin "baserom_jp.gba", 0x572824, 0x18
+
+	.globl gRockTombRockSpriteTemplate
+gRockTombRockSpriteTemplate: @ 0x57283C
+	.incbin "baserom_jp.gba", 0x57283c, 0x40
+
+	.globl gRockBlastRockSpriteTemplate
+gRockBlastRockSpriteTemplate: @ 0x57287C
+	.incbin "baserom_jp.gba", 0x57287c, 0x18
+
+	.globl gRockScatterSpriteTemplate
+gRockScatterSpriteTemplate: @ 0x572894
+	.incbin "baserom_jp.gba", 0x572894, 0x64
+
+	.globl gConfuseRayBallBounceSpriteTemplate
+gConfuseRayBallBounceSpriteTemplate: @ 0x5728F8
+	.incbin "baserom_jp.gba", 0x5728f8, 0x18
+
+	.globl gConfuseRayBallSpiralSpriteTemplate
+gConfuseRayBallSpiralSpriteTemplate: @ 0x572910
+	.incbin "baserom_jp.gba", 0x572910, 0x2c
+
+	.globl gShadowBallSpriteTemplate
+gShadowBallSpriteTemplate: @ 0x57293C
+	.incbin "baserom_jp.gba", 0x57293c, 0x34
+
+	.globl gLickSpriteTemplate
+gLickSpriteTemplate: @ 0x572970
+	.incbin "baserom_jp.gba", 0x572970, 0x2c
+
 
 	.globl gDestinyBondWhiteShadowSpriteTemplate
-gDestinyBondWhiteShadowSpriteTemplate: @ 0x857299C
-	.incbin "baserom_jp.gba", 0x57299c, 0x78
+	.globl gDestinyBondWhiteShadowSpriteTemplate
+gDestinyBondWhiteShadowSpriteTemplate: @ 0x57299C
+	.incbin "baserom_jp.gba", 0x57299c, 0x18
+
+	.globl gCurseNailSpriteTemplate
+gCurseNailSpriteTemplate: @ 0x5729B4
+	.incbin "baserom_jp.gba", 0x5729b4, 0x18
+
+	.globl gCurseGhostSpriteTemplate
+gCurseGhostSpriteTemplate: @ 0x5729CC
+	.incbin "baserom_jp.gba", 0x5729cc, 0x18
+
+	.globl gNightmareDevilSpriteTemplate
+gNightmareDevilSpriteTemplate: @ 0x5729E4
+	.incbin "baserom_jp.gba", 0x5729e4, 0x30
+
 
 	.globl gGrudgeFlameSpriteTemplate
-gGrudgeFlameSpriteTemplate: @ 0x8572A14
-	.incbin "baserom_jp.gba", 0x572a14, 0x528
+	.globl gGrudgeFlameSpriteTemplate
+gGrudgeFlameSpriteTemplate: @ 0x572A14
+	.incbin "baserom_jp.gba", 0x572a14, 0x4c
+
+	.globl gOutrageFlameSpriteTemplate
+gOutrageFlameSpriteTemplate: @ 0x572A60
+	.incbin "baserom_jp.gba", 0x572a60, 0x78
+
+	.globl gDragonBreathFireSpriteTemplate
+gDragonBreathFireSpriteTemplate: @ 0x572AD8
+	.incbin "baserom_jp.gba", 0x572ad8, 0x34
+
+	.globl gDragonRageFirePlumeSpriteTemplate
+gDragonRageFirePlumeSpriteTemplate: @ 0x572B0C
+	.incbin "baserom_jp.gba", 0x572b0c, 0x58
+
+	.globl gDragonRageFireSpitSpriteTemplate
+gDragonRageFireSpitSpriteTemplate: @ 0x572B64
+	.incbin "baserom_jp.gba", 0x572b64, 0x18
+
+	.globl gDragonDanceOrbSpriteTemplate
+gDragonDanceOrbSpriteTemplate: @ 0x572B7C
+	.incbin "baserom_jp.gba", 0x572b7c, 0x18
+
+	.globl gOverheatFlameSpriteTemplate
+gOverheatFlameSpriteTemplate: @ 0x572B94
+	.incbin "baserom_jp.gba", 0x572b94, 0xd0
+
+	.globl gSharpTeethSpriteTemplate
+gSharpTeethSpriteTemplate: @ 0x572C64
+	.incbin "baserom_jp.gba", 0x572c64, 0x18
+
+	.globl gClampJawSpriteTemplate
+gClampJawSpriteTemplate: @ 0x572C7C
+	.incbin "baserom_jp.gba", 0x572c7c, 0x50
+
+	.globl gTearDropSpriteTemplate
+gTearDropSpriteTemplate: @ 0x572CCC
+	.incbin "baserom_jp.gba", 0x572ccc, 0x50
+
+	.globl gClawSlashSpriteTemplate
+gClawSlashSpriteTemplate: @ 0x572D1C
+	.incbin "baserom_jp.gba", 0x572d1c, 0x40
+
+	.globl gBonemerangSpriteTemplate
+gBonemerangSpriteTemplate: @ 0x572D5C
+	.incbin "baserom_jp.gba", 0x572d5c, 0x18
+
+	.globl gSpinningBoneSpriteTemplate
+gSpinningBoneSpriteTemplate: @ 0x572D74
+	.incbin "baserom_jp.gba", 0x572d74, 0x18
+
+	.globl gSandAttackDirtSpriteTemplate
+gSandAttackDirtSpriteTemplate: @ 0x572D8C
+	.incbin "baserom_jp.gba", 0x572d8c, 0x24
+
+	.globl gMudSlapMudSpriteTemplate
+gMudSlapMudSpriteTemplate: @ 0x572DB0
+	.incbin "baserom_jp.gba", 0x572db0, 0x18
+
+	.globl gMudsportMudSpriteTemplate
+gMudsportMudSpriteTemplate: @ 0x572DC8
+	.incbin "baserom_jp.gba", 0x572dc8, 0x18
+
+	.globl gDirtPlumeSpriteTemplate
+gDirtPlumeSpriteTemplate: @ 0x572DE0
+	.incbin "baserom_jp.gba", 0x572de0, 0x18
+
+	.globl gDirtMoundSpriteTemplate
+gDirtMoundSpriteTemplate: @ 0x572DF8
+	.incbin "baserom_jp.gba", 0x572df8, 0x144
+
 
 	.globl gBasicHitSplatSpriteTemplate
 gBasicHitSplatSpriteTemplate: @ 0x8572F3C
@@ -8427,8 +9021,14 @@ gUnknown_8573080: @ 0x8573080
 	.incbin "baserom_jp.gba", 0x573080, 0x1c
 
 	.globl gUnknown_857309C
-gUnknown_857309C: @ 0x857309C
-	.incbin "baserom_jp.gba", 0x57309c, 0x8
+	.globl gUnknown_857309C
+gUnknown_857309C: @ 0x57309C
+	.incbin "baserom_jp.gba", 0x57309c, 0x6
+
+	.globl sAcroBikeJumpTimerList
+sAcroBikeJumpTimerList: @ 0x5730A2
+	.incbin "baserom_jp.gba", 0x5730a2, 0x2
+
 
 	.globl gUnknown_85730A4
 gUnknown_85730A4: @ 0x85730A4
@@ -16759,8 +17359,18 @@ sMatchCallUI_Gfx: @ 0x85F3ED0
 	.incbin "baserom_jp.gba", 0x5f3ed0, 0xa4
 
 	.globl sMatchCallUI_Tilemap
-sMatchCallUI_Tilemap: @ 0x85F3F74
-	.incbin "baserom_jp.gba", 0x5f3f74, 0x10c
+	.globl sMatchCallUI_Tilemap
+sMatchCallUI_Tilemap: @ 0x5F3F74
+	.incbin "baserom_jp.gba", 0x5f3f74, 0xc4
+
+	.globl sOptionsCursor_Pal
+sOptionsCursor_Pal: @ 0x5F4038
+	.incbin "baserom_jp.gba", 0x5f4038, 0x20
+
+	.globl sOptionsCursor_Gfx
+sOptionsCursor_Gfx: @ 0x5F4058
+	.incbin "baserom_jp.gba", 0x5f4058, 0x28
+
 
 	.globl sCallWindow_Pal
 sCallWindow_Pal: @ 0x85F4080
@@ -16815,12 +17425,24 @@ sOptionsCursorSpriteSheets: @ 0x85F41B0
 	.incbin "baserom_jp.gba", 0x5f41b0, 0x8
 
 	.globl sOptionsCursorSpritePalettes
-sOptionsCursorSpritePalettes: @ 0x85F41B8
-	.incbin "baserom_jp.gba", 0x5f41b8, 0x18
+	.globl sOptionsCursorSpritePalettes
+sOptionsCursorSpritePalettes: @ 0x5F41B8
+	.incbin "baserom_jp.gba", 0x5f41b8, 0x10
+
+	.globl sOptionsCursorOamData
+sOptionsCursorOamData: @ 0x5F41C8
+	.incbin "baserom_jp.gba", 0x5f41c8, 0x8
+
 
 	.globl sOptionsCursorSpriteTemplate
-sOptionsCursorSpriteTemplate: @ 0x85F41D0
-	.incbin "baserom_jp.gba", 0x5f41d0, 0x20
+	.globl sOptionsCursorSpriteTemplate
+sOptionsCursorSpriteTemplate: @ 0x5F41D0
+	.incbin "baserom_jp.gba", 0x5f41d0, 0x18
+
+	.globl sTrainerPicOamData
+sTrainerPicOamData: @ 0x5F41E8
+	.incbin "baserom_jp.gba", 0x5f41e8, 0x8
+
 
 	.globl sTrainerPicSpriteTemplate
 sTrainerPicSpriteTemplate: @ 0x85F41F0
@@ -16835,8 +17457,14 @@ gRegionMapCityZoomTiles_Pal: @ 0x85F4228
 	.incbin "baserom_jp.gba", 0x5f4228, 0x20
 
 	.globl sRegionMapCityZoomTiles_Gfx
-sRegionMapCityZoomTiles_Gfx: @ 0x85F4248
-	.incbin "baserom_jp.gba", 0x5f4248, 0xab4
+	.globl sRegionMapCityZoomTiles_Gfx
+sRegionMapCityZoomTiles_Gfx: @ 0x5F4248
+	.incbin "baserom_jp.gba", 0x5f4248, 0x850
+
+	.globl gRegionMapCityZoomText_Gfx
+gRegionMapCityZoomText_Gfx: @ 0x5F4A98
+	.incbin "baserom_jp.gba", 0x5f4a98, 0x264
+
 
 	.globl sRegionMapBgTemplates
 sRegionMapBgTemplates: @ 0x85F4CFC
@@ -16859,8 +17487,14 @@ sMapSecInfoWindowTemplate: @ 0x85F4D34
 	.incbin "baserom_jp.gba", 0x5f4d34, 0x8
 
 	.globl sPokenavCityMaps
-sPokenavCityMaps: @ 0x85F4D3C
-	.incbin "baserom_jp.gba", 0x5f4d3c, 0xb8
+	.globl sPokenavCityMaps
+sPokenavCityMaps: @ 0x5F4D3C
+	.incbin "baserom_jp.gba", 0x5f4d3c, 0xb0
+
+	.globl sCityZoomTextSprite_OamData
+sCityZoomTextSprite_OamData: @ 0x5F4DEC
+	.incbin "baserom_jp.gba", 0x5f4dec, 0x8
+
 
 	.globl sCityZoomTextSpriteTemplate
 sCityZoomTextSpriteTemplate: @ 0x85F4DF4
@@ -17032,8 +17666,26 @@ gPokenavRibbonsSummaryBg_Pal: @ 0x85F648C
 	.incbin "baserom_jp.gba", 0x5f648c, 0x20
 
 	.globl gPokenavRibbonsSummaryBg_Gfx
-gPokenavRibbonsSummaryBg_Gfx: @ 0x85F64AC
-	.incbin "baserom_jp.gba", 0x5f64ac, 0xfc
+	.globl gPokenavRibbonsSummaryBg_Gfx
+gPokenavRibbonsSummaryBg_Gfx: @ 0x5F64AC
+	.incbin "baserom_jp.gba", 0x5f64ac, 0x4
+
+	.globl sRibbonIcons2_Pal
+sRibbonIcons2_Pal: @ 0x5F64B0
+	.incbin "baserom_jp.gba", 0x5f64b0, 0x10
+
+	.globl sRibbonIcons3_Pal
+sRibbonIcons3_Pal: @ 0x5F64C0
+	.incbin "baserom_jp.gba", 0x5f64c0, 0x10
+
+	.globl sRibbonIcons4_Pal
+sRibbonIcons4_Pal: @ 0x5F64D0
+	.incbin "baserom_jp.gba", 0x5f64d0, 0x10
+
+	.globl sRibbonIcons5_Pal
+sRibbonIcons5_Pal: @ 0x5F64E0
+	.incbin "baserom_jp.gba", 0x5f64e0, 0xc8
+
 
 	.globl gPokenavRibbonsSummaryBg_Tilemap
 gPokenavRibbonsSummaryBg_Tilemap: @ 0x85F65A8
@@ -17044,12 +17696,24 @@ sRibbonIcons1_Pal: @ 0x85F6674
 	.incbin "baserom_jp.gba", 0x5f6674, 0xa0
 
 	.globl sMonInfo_Pal
-sMonInfo_Pal: @ 0x85F6714
-	.incbin "baserom_jp.gba", 0x5f6714, 0x20
+	.globl sMonInfo_Pal
+sMonInfo_Pal: @ 0x5F6714
+	.incbin "baserom_jp.gba", 0x5f6714, 0x1c
+
+	.globl sRibbonIconsBig_Gfx
+sRibbonIconsBig_Gfx: @ 0x5F6730
+	.incbin "baserom_jp.gba", 0x5f6730, 0x4
+
 
 	.globl sRibbonIconsSmall_Gfx
-sRibbonIconsSmall_Gfx: @ 0x85F6734
-	.incbin "baserom_jp.gba", 0x5f6734, 0xae0
+	.globl sRibbonIconsSmall_Gfx
+sRibbonIconsSmall_Gfx: @ 0x5F6734
+	.incbin "baserom_jp.gba", 0x5f6734, 0xadc
+
+	.globl sPokenavRibbonsBgTemplates
+sPokenavRibbonsBgTemplates: @ 0x5F7210
+	.incbin "baserom_jp.gba", 0x5f7210, 0x4
+
 
 	.globl sRibbonsSummaryBgTemplates
 sRibbonsSummaryBgTemplates: @ 0x85F7214
