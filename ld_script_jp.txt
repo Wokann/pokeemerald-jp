@@ -4732,7 +4732,7 @@ SECTIONS {
         asm/battle_script_commands.o(.text.atkF4_battle_rest);
         src/battle_util2.o(.text);
         asm/battle_controller_player.o(.text);
-        asm/battle_gfx_sfx_util.o(.text);
+        src/battle_gfx_sfx_util.o(.text);
         asm/battle_controller_opponent.o(.text);
         src/battle_ai_switch_items.o(.text);
         asm/battle_controller_link_opponent.o(.text);
