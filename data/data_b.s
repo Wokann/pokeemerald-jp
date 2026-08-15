@@ -21334,9 +21334,16 @@ sTrainerBContinueScriptBattleParams: @ 0x852ACF8
 gUnknown_852AD40: @ 0x852AD40
 	.incbin "baserom_jp.gba", 0x52ad40, 0x4e0
 
-	.globl gUnknown_852B220
-gUnknown_852B220: @ 0x852B220
-	.incbin "baserom_jp.gba", 0x52b220, 0x10
+	.globl sBadgeFlagsJp
+sBadgeFlagsJp: @ 0x852B220
+	.hword 0x867 @ FLAG_BADGE01_GET
+	.hword 0x868 @ FLAG_BADGE02_GET
+	.hword 0x869 @ FLAG_BADGE03_GET
+	.hword 0x86A @ FLAG_BADGE04_GET
+	.hword 0x86B @ FLAG_BADGE05_GET
+	.hword 0x86C @ FLAG_BADGE06_GET
+	.hword 0x86D @ FLAG_BADGE07_GET
+	.hword 0x86E @ FLAG_BADGE08_GET
 
 	.globl gUnknown_852B230
 gUnknown_852B230: @ 0x852B230
@@ -33670,9 +33677,16 @@ gUnknown_85D7A54: @ 0x85D7A54
 gUnknown_85D7A84: @ 0x85D7A84
 	.incbin "baserom_jp.gba", 0x5d7a84, 0x1c
 
-	.globl gUnknown_85D7AA0
-gUnknown_85D7AA0: @ 0x85D7AA0
-	.incbin "baserom_jp.gba", 0x5d7aa0, 0x10
+	.globl sBadgeFlags
+sBadgeFlags: @ 0x85D7AA0
+	.hword 0x867 @ FLAG_BADGE01_GET
+	.hword 0x868 @ FLAG_BADGE02_GET
+	.hword 0x869 @ FLAG_BADGE03_GET
+	.hword 0x86A @ FLAG_BADGE04_GET
+	.hword 0x86B @ FLAG_BADGE05_GET
+	.hword 0x86C @ FLAG_BADGE06_GET
+	.hword 0x86D @ FLAG_BADGE07_GET
+	.hword 0x86E @ FLAG_BADGE08_GET
 
 	.globl gUnknown_85D7AB0
 gUnknown_85D7AB0: @ 0x85D7AB0
