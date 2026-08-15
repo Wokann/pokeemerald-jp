@@ -10065,7 +10065,7 @@ SECTIONS {
         src/trainer_pokemon_sprites.o(.text.LoadTrainerPicInWindow);
         src/trainer_pokemon_sprites.o(.text.CreateTrainerCardTrainerPicSprite);
         src/trainer_pokemon_sprites.o(.text.PlayerGenderToFrontTrainerPicId_Debug);
-        asm/lilycove_lady.o(.text);
+        src/lilycove_lady.o(.text);
         src/battle_dome.o(.text);
         asm/battle_palace_jp_only.o(.text);
         src/battle_palace.o(.text);
