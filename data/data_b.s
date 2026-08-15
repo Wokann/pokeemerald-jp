@@ -6120,9 +6120,68 @@ gUnknown_82ECA78: @ 0x82ECA78
 gUnknown_82ECAAC: @ 0x82ECAAC
 	.incbin "baserom_jp.gba", 0x2ecaac, 0xc
 
-	.globl gUnknown_82ECAB8
-gUnknown_82ECAB8: @ 0x82ECAB8
-	.incbin "baserom_jp.gba", 0x2ecab8, 0xf0
+	.globl sStatusFlagsForMoveEffects
+sStatusFlagsForMoveEffects: @ 0x82ECAB8
+	.4byte 0x00000000
+	.4byte 0x00000007  @ STATUS1_SLEEP
+	.4byte 0x00000008  @ STATUS1_POISON
+	.4byte 0x00000010  @ STATUS1_BURN
+	.4byte 0x00000020  @ STATUS1_FREEZE
+	.4byte 0x00000040  @ STATUS1_PARALYSIS
+	.4byte 0x00000080  @ STATUS1_TOXIC_POISON
+	.4byte 0x00000007  @ STATUS1_SLEEP
+	.4byte 0x00000008  @ STATUS1_POISON
+	.4byte 0x00000000
+	.4byte 0x00000070  @ STATUS1_PSN_ANY
+	.4byte 0x00000000
+	.4byte 0x00001000
+	.4byte 0x0000E000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00400000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x04000000
+	.4byte 0x08000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000C00
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
+	.4byte 0x00000000
 
 	.globl gUnknown_82ECBA8
 gUnknown_82ECBA8: @ 0x82ECBA8

@@ -944,7 +944,6 @@ BattleScript_SpikesOnFaintedBattler = gUnknown_828944F;
 gMissStringIds = gUnknown_85AB9A0;
 gBattleScriptingCommandsTable = gUnknown_82EC600;
 sTurnActionsFuncsTable = gUnknown_82EC694;
-sStatusFlagsForMoveEffects = gUnknown_82ECAB8;
 sMoveEffectBS_Ptrs = gUnknown_82ECBA8;
 gBattleScriptsForMoveEffects = gUnknown_8286C30;
 gTrappingMoves = gUnknown_85ABAEE;
