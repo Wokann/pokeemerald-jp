@@ -10,6 +10,7 @@
 	.include "constants/ribbon_constants.inc"
 
 
-	.globl gUnknown_82F5196
-gUnknown_82F5196: @ 0x82F5196
-	.incbin "baserom_jp.gba", 0x2f5196, 0x16
+	.globl gUnknown_82F51C6
+gUnknown_82F51C6: @ 0x82F51C6
+	.incbin "baserom_jp.gba", 0x2f51c6, 0x16
+	.globl gUnknown_82F51DC

@@ -9240,6 +9240,10 @@ SECTIONS {
         data/data_b2d_mid.o(.rodata);
         src/data/text/region_texts5.o(.rodata);
         data/data_b2d_mid4.o(.rodata);
+        src/data/text/region_texts14.o(.rodata);
+        data/data_b2d_mid13.o(.rodata);
+        src/data/text/region_texts15.o(.rodata);
+        data/data_b2d_mid14.o(.rodata);
         src/data/text/region_texts9.o(.rodata);
         data/data_b2d_mid8.o(.rodata);
         src/data/text/region_texts8.o(.rodata);
