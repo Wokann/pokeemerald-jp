@@ -4,6 +4,7 @@
 	.include "constants/map_constants.inc"
 	.include "constants/trainers.inc"
 	.include "constants/battle_string_ids.inc"
+	.include "constants/species.inc"
 	.include "constants/ribbon_constants.inc"
 
 	.globl sTextColors
@@ -21411,33 +21412,154 @@ gBattlePyramidWildMonHeaders: @ 0x852E540
 	.4byte 0 @ waterMonsInfo NULL
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
-	.globl gUnknown_852E5E0
-gUnknown_852E5E0: @ 0x852E5E0
-	.incbin "baserom_jp.gba", 0x52e5e0, 0xe0
+	.globl gBattlePike_1_LandMons
+gBattlePike_1_LandMons: @ 0x852E5E0
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_DUSCLOPS
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.globl gBattlePike_1_LandMonsInfo
+gBattlePike_1_LandMonsInfo: @ 0x852E610
+	.byte 10
+	.byte 0, 0, 0
+	.4byte gBattlePike_1_LandMons
+	.globl gBattlePike_2_LandMons
+gBattlePike_2_LandMons: @ 0x852E618
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_ELECTRODE
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.globl gBattlePike_2_LandMonsInfo
+gBattlePike_2_LandMonsInfo: @ 0x852E648
+	.byte 10
+	.byte 0, 0, 0
+	.4byte gBattlePike_2_LandMons
+	.globl gBattlePike_3_LandMons
+gBattlePike_3_LandMons: @ 0x852E650
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_BRELOOM
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.globl gBattlePike_3_LandMonsInfo
+gBattlePike_3_LandMonsInfo: @ 0x852E680
+	.byte 10
+	.byte 0, 0, 0
+	.4byte gBattlePike_3_LandMons
+	.globl gBattlePike_4_LandMons
+gBattlePike_4_LandMons: @ 0x852E688
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_WOBBUFFET
+	.byte 5, 5
+	.hword SPECIES_SEVIPER
+	.byte 5, 5
+	.hword SPECIES_MILOTIC
+	.globl gBattlePike_4_LandMonsInfo
+gBattlePike_4_LandMonsInfo: @ 0x852E6B8
+	.byte 10
+	.byte 0, 0, 0
+	.4byte gBattlePike_4_LandMons
 
 	.globl gBattlePikeWildMonHeaders
 gBattlePikeWildMonHeaders: @ 0x852E6C0
 	.byte 0, 1 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E610 @ landMonsInfo (gBattlePike_1_LandMonsInfo)
+	.4byte gBattlePike_1_LandMonsInfo
 	.4byte 0 @ waterMonsInfo NULL
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
 	.byte 0, 2 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E648 @ landMonsInfo (gBattlePike_2_LandMonsInfo)
+	.4byte gBattlePike_2_LandMonsInfo
 	.4byte 0 @ waterMonsInfo NULL
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
 	.byte 0, 3 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E680 @ landMonsInfo (gBattlePike_3_LandMonsInfo)
+	.4byte gBattlePike_3_LandMonsInfo
 	.4byte 0 @ waterMonsInfo NULL
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
 	.byte 0, 4 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E6B8 @ landMonsInfo (gBattlePike_4_LandMonsInfo)
+	.4byte gBattlePike_4_LandMonsInfo
 	.4byte 0 @ waterMonsInfo NULL
 	.4byte 0 @ rockSmashMonsInfo NULL
 	.4byte 0 @ fishingMonsInfo NULL
