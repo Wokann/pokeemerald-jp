@@ -3448,13 +3448,29 @@ sPokeJumpMons: @ 0x82CECF0
 	.2byte 395, 1  @ SPECIES_BAGON
 
 
-	.globl gUnknown_82CEE80
-gUnknown_82CEE80: @ 0x82CEE80
-	.incbin "baserom_jp.gba", 0x2cee80, 0x24
+	.globl sPokeJumpLeaderFuncs
+sPokeJumpLeaderFuncs: @ 0x82CEE80
+	.4byte sub_0802AF3C @ FUNC_GAME_INTRO (US GameIntro_Leader)
+	.4byte sub_0802AFC8 @ FUNC_WAIT_ROUND (US WaitRound_Leader)
+	.4byte sub_0802B05C @ FUNC_GAME_ROUND (US GameRound_Leader)
+	.4byte sub_0802B0C8 @ FUNC_GAME_OVER (US GameOver_Leader)
+	.4byte sub_0802B1C0 @ FUNC_ASK_PLAY_AGAIN (US AskPlayAgain_Leader)
+	.4byte sub_0802B2BC @ FUNC_RESET_GAME (US ResetGame_Leader)
+	.4byte sub_0802B358 @ FUNC_EXIT (US ExitGame)
+	.4byte sub_0802B3AC @ FUNC_GIVE_PRIZE (US GivePrize_Leader)
+	.4byte sub_0802B414 @ FUNC_SAVE (US SavePokeJump)
 
-	.globl gUnknown_82CEEA4
-gUnknown_82CEEA4: @ 0x82CEEA4
-	.incbin "baserom_jp.gba", 0x2ceea4, 0x24
+	.globl sPokeJumpMemberFuncs
+sPokeJumpMemberFuncs: @ 0x82CEEA4
+	.4byte sub_0802AF90 @ FUNC_GAME_INTRO (US GameIntro_Member)
+	.4byte sub_0802B010 @ FUNC_WAIT_ROUND (US WaitRound_Member)
+	.4byte sub_0802B0A8 @ FUNC_GAME_ROUND (US GameRound_Member)
+	.4byte sub_0802B164 @ FUNC_GAME_OVER (US GameOver_Member)
+	.4byte sub_0802B25C @ FUNC_ASK_PLAY_AGAIN (US AskPlayAgain_Member)
+	.4byte sub_0802B31C @ FUNC_RESET_GAME (US ResetGame_Member)
+	.4byte sub_0802B358 @ FUNC_EXIT (US ExitGame)
+	.4byte sub_0802B3F8 @ FUNC_GIVE_PRIZE (US GivePrize_Member)
+	.4byte sub_0802B414 @ FUNC_SAVE (US SavePokeJump)
 
 	.globl sVineBaseSpeeds
 sVineBaseSpeeds: @ 0x82CEEC8
