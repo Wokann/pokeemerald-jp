@@ -9368,6 +9368,14 @@ SECTIONS {
         data/data_b2d_mid80.o(.rodata);
         src/data/text/region_texts87.o(.rodata);
         data/data_b2d_mid81.o(.rodata);
+        src/data/text/region_texts88.o(.rodata);
+        src/data/text/region_texts89.o(.rodata);
+        data/data_b2d_mid82.o(.rodata);
+        src/data/text/region_texts90.o(.rodata);
+        src/data/text/region_texts91.o(.rodata);
+        data/data_b2d_mid83.o(.rodata);
+        src/data/text/region_texts92.o(.rodata);
+        data/data_b2d_mid84.o(.rodata);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c.o(.rodata);
         data/multiboot_ereader.o(.rodata);
