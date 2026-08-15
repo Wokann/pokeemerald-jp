@@ -454,7 +454,6 @@ PlayCry4 = PlayCry_ReleaseDouble;
 PlayCry5 = PlayCry_Script;
 PlayCry6 = PlayCry_DuckNoRestore;
 sInputMap = gUnknown_84E8A6C;
-sMatchCallTextWindow = gUnknown_85D7A14;
 sMatchCallWindow_Pal = gUnknown_85D74C8;
 sMatchCallWindow_Gfx = gUnknown_85D74E8;
 sPokenavIcon_Pal = gUnknown_85D75E8;

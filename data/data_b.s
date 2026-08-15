@@ -33991,9 +33991,15 @@ sMatchCallTaskFuncs: @ 0x85D79F4
 	.4byte MatchCall_SlideWindowOut @ 0x08195F91
 	.4byte MatchCall_EndCall @ 0x08195FF1
 
-	.globl gUnknown_85D7A14
-gUnknown_85D7A14: @ 0x85D7A14
-	.incbin "baserom_jp.gba", 0x5d7a14, 0x8
+	.globl sMatchCallTextWindow
+sMatchCallTextWindow: @ 0x85D7A14
+	.byte 0 @ bg
+	.byte 1 @ tilemapLeft
+	.byte 15 @ tilemapTop
+	.byte 28 @ width
+	.byte 4 @ height
+	.byte 15 @ paletteNum
+	.hword 0x0200 @ baseBlock
 
 	.globl sMatchCallTextStringVars
 sMatchCallTextStringVars: @ 0x85D7A1C
