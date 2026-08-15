@@ -7096,7 +7096,7 @@ __attribute__((naked)) void sub_08199FDC(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819A018: .4byte 0x0819A01C\n\t"
+        "_0819A018: .4byte _0819A01C\n\t"
         "_0819A01C:\n\t"
         "	.4byte _0819A030\n\t"
         "	.4byte _0819A040\n\t"

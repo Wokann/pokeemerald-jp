@@ -2856,7 +2856,7 @@ __attribute__((naked)) void ItemStorage_GetItemPcResponse(void)
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
         "_0816C088: .4byte 0xFFFF0009\n\t"
-        "_0816C08C: .4byte 0x0816C090\n\t"
+        "_0816C08C: .4byte _0816C090\n\t"
         "_0816C090:\n\t"
         "	.4byte _0816C0F4\n\t"
         "	.4byte _0816C0EC\n\t"

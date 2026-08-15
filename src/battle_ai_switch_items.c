@@ -2615,7 +2615,7 @@ __attribute__((naked)) bool8 ShouldUseItem(void)
         "	.align 2, 0\n\t"
         "_08063C08: .4byte gActiveBattler\n\t"
         "_08063C0C: .4byte gBattleStruct\n\t"
-        "_08063C10: .4byte 0x08063C14\n\t"
+        "_08063C10: .4byte _08063C14\n\t"
         "_08063C14:\n\t"
         "	.4byte _08063C2C\n\t"
         "	.4byte _08063C58\n\t"

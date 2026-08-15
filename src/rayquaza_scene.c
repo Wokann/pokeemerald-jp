@@ -3944,7 +3944,7 @@ __attribute__((naked)) void Task_HandleRayDescends(void)
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
         "_081D7EDC: .4byte gUnknown_3005B68\n\t"
-        "_081D7EE0: .4byte 0x081D7EE4\n\t"
+        "_081D7EE0: .4byte _081D7EE4\n\t"
         "_081D7EE4:\n\t"
         "	.4byte _081D7EF8\n\t"
         "	.4byte _081D7F18\n\t"

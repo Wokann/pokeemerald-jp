@@ -1275,7 +1275,7 @@ __attribute__((naked)) void InheritIVs(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806FD40: .4byte 0x0806FD44\n\t"
+        "_0806FD40: .4byte _0806FD44\n\t"
         "_0806FD44:\n\t"
         "	.4byte _0806FD5C\n\t"
         "	.4byte _0806FD7A\n\t"

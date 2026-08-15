@@ -1748,7 +1748,7 @@ __attribute__((naked)) void sub_080E1F88(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E1FA0: .4byte 0x080E1FA4\n\t"
+        "_080E1FA0: .4byte _080E1FA4\n\t"
         "_080E1FA4:\n\t"
         "	.4byte _080E2034\n\t"
         "	.4byte _080E1FFC\n\t"

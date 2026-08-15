@@ -49,7 +49,7 @@ __attribute__((naked)) u8 BattleArena_ShowJudgmentWindow(u8 *state)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A4E64: .4byte 0x081A4E68\n\t"
+        "_081A4E64: .4byte _081A4E68\n\t"
         "_081A4E68:\n\t"
         "	.4byte _081A4E94\n\t"
         "	.4byte _081A4EE4\n\t"

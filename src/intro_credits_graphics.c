@@ -180,7 +180,7 @@ __attribute__((naked)) void sub_0817B088(void)
         "_0817B0B0: .4byte 0x06004000\n\t"
         "_0817B0B4: .4byte 0x085CE090\n\t"
         "_0817B0B8: .4byte 0x06007800\n\t"
-        "_0817B0BC: .4byte 0x0817B0C0\n\t"
+        "_0817B0BC: .4byte _0817B0C0\n\t"
         "_0817B0C0:\n\t"
         "	.4byte _0817B0D4\n\t"
         "	.4byte _0817B130\n\t"

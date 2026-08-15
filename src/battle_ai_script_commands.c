@@ -3035,7 +3035,7 @@ __attribute__((naked)) void BattleAICmd_get_type(void)
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
         "_08131DCC: .4byte gUnknown_203A804\n\t"
-        "_08131DD0: .4byte 0x08131DD4\n\t"
+        "_08131DD0: .4byte _08131DD4\n\t"
         "_08131DD4:\n\t"
         "	.4byte _08131E0C\n\t"
         "	.4byte _08131DE8\n\t"

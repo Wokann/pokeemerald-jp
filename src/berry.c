@@ -362,7 +362,7 @@ __attribute__((naked)) void BerryTreeGrow(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0D38: .4byte 0x080E0D3C\n\t"
+        "_080E0D38: .4byte _080E0D3C\n\t"
         "_080E0D3C:\n\t"
         "	.4byte _080E0D22\n\t"
         "	.4byte _080E0D5C\n\t"

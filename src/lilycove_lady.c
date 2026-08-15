@@ -1953,7 +1953,7 @@ __attribute__((naked)) bool8 GivePokeblockToContestLady(struct Pokeblock *pokebl
         "_0818E388: .4byte gUnknown_203CA38\n\t"
         "_0818E38C: .4byte gSaveBlock1Ptr\n\t"
         "_0818E390: .4byte 0x00003B58\n\t"
-        "_0818E394: .4byte 0x0818E398\n\t"
+        "_0818E394: .4byte _0818E398\n\t"
         "_0818E398:\n\t"
         "	.4byte _0818E3AC\n\t"
         "	.4byte _0818E3B0\n\t"
