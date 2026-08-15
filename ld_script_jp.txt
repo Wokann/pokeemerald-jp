@@ -5435,7 +5435,7 @@ SECTIONS {
         src/field_player_avatar.o(.text.CheckForObjectEventStaticCollision);
         src/field_player_avatar.o(.text.CanStopSurfing);
         src/field_player_avatar.o(.text.ShouldJumpLedge);
-        asm/field_player_avatar.o(.text.sub_0808AB9C);
+        src/field_player_avatar_tail.o(.text.sub_0808AB9C);
         src/field_player_avatar.o(.text.CheckAcroBikeCollision);
         src/field_player_avatar.o(.text.IsPlayerCollidingWithFarawayIslandMew);
         src/field_player_avatar.o(.text.SetPlayerAvatarTransitionFlags);
@@ -5483,8 +5483,8 @@ SECTIONS {
         src/field_player_avatar.o(.text.PlayCollisionSoundIfNotFacingWarp);
         src/field_player_avatar.o(.text.GetXYCoordsOneStepInFrontOfPlayer);
         src/field_player_avatar.o(.text.PlayerGetDestCoords);
-        asm/field_player_avatar.o(.text.player_get_pos_including_state_based_drift);
-        asm/field_player_avatar.o(.text);
+        src/field_player_avatar_tail.o(.text.player_get_pos_including_state_based_drift);
+        src/field_player_avatar_tail.o(.text);
         src/event_object_movement.o(.text.ClearEventObject);
         src/event_object_movement.o(.text.ClearAllEventObjects);
         src/event_object_movement.o(.text.ResetEventObjects);
