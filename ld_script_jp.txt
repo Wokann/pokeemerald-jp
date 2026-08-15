@@ -6433,7 +6433,7 @@ SECTIONS {
         src/sound.o(.text.IsSEPlaying);
         src/sound.o(.text.IsBGMPlaying);
         src/sound.o(.text.IsSpecialSEPlaying);
-        asm/battle_anim.o(.text);
+        src/battle_anim.o(.text);
         src/battle_anim_mons.o(.text.GetBattlerSpriteCoord);
         src/battle_anim_mons.o(.text.GetBattlerYDelta);
         src/battle_anim_mons.o(.text.GetBattlerElevation);
