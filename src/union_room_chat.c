@@ -244,13 +244,13 @@ extern const u16 sUnionRoomChatInterfacePal[];
 extern const u16 gStandardMenuPalette[];
 
 // JP union room chat sprite resources.
-extern const struct CompressedSpriteSheet gUnknown_82C5D4C[];
-extern const struct SpritePalette gUnknown_82C5D74;
-extern const struct SpriteTemplate gUnknown_82C5DB4;
-extern const struct SpriteTemplate gUnknown_82C5DD4;
-extern const struct SpriteTemplate gUnknown_82C5DEC;
-extern const struct SpriteTemplate gUnknown_82C5E44;
-extern const struct SpriteTemplate gUnknown_82C5E5C;
+extern const struct CompressedSpriteSheet sChatSpriteSheets[];
+extern const struct SpritePalette sSpritePalette;
+extern const struct SpriteTemplate sSpriteTemplate_KeyboardCursor;
+extern const struct SpriteTemplate sSpriteTemplate_TextEntryCursor;
+extern const struct SpriteTemplate sSpriteTemplate_TextEntryArrow;
+extern const struct SpriteTemplate sSpriteTemplate_RButtonIcon;
+extern const struct SpriteTemplate sSpriteTemplate_RButtonLabels;
 extern const u16 sKeyboardCursorPal[];
 
 u8 *GetRegisteredTextByRow(int row);
@@ -393,8 +393,8 @@ bool32 TryKeyboardCursorReopen(void);
 void CreateTextEntrySprites(void);
 void CreateRButtonSprites(void);
 void UpdateRButtonLabel(void);
-static void SpriteCB_TextEntryCursor(struct Sprite *sprite);
-static void SpriteCB_TextEntryArrow(struct Sprite *sprite);
+static void SpriteCB_TextEntryCursor_internal(struct Sprite *sprite);
+static void SpriteCB_TextEntryArrow_internal(struct Sprite *sprite);
 static void PrepareSendBuffer_Null(u8 *buffer);
 static void PrepareSendBuffer_Join(u8 *buffer);
 static void PrepareSendBuffer_Chat(u8 *buffer);
@@ -2658,9 +2658,9 @@ bool32 TryAllocSprites(void)
 {
     u32 i;
     for (i = 0; i < 5; i++)
-        LoadCompressedSpriteSheet(&gUnknown_82C5D4C[i]);
+        LoadCompressedSpriteSheet(&sChatSpriteSheets[i]);
 
-    LoadSpritePalette(&gUnknown_82C5D74);
+    LoadSpritePalette(&sSpritePalette);
     sSprites = Alloc(sizeof(*sSprites));
     if (!sSprites)
         return FALSE;
@@ -2676,7 +2676,7 @@ void FreeSprites(void)
 
 void CreateKeyboardCursorSprite(void)
 {
-    u8 spriteId = CreateSprite(&gUnknown_82C5DB4, 10, 24, 0);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_KeyboardCursor, 10, 24, 0);
     sSprites->keyboardCursor = &gSprites[spriteId];
 }
 
@@ -2742,13 +2742,13 @@ bool32 TryKeyboardCursorReopen(void)
 
 void CreateTextEntrySprites(void)
 {
-    u8 spriteId = CreateSprite(&gUnknown_82C5DD4, 76, 152, 2);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_TextEntryCursor, 76, 152, 2);
     sSprites->textEntryCursor = &gSprites[spriteId];
-    spriteId = CreateSprite(&gUnknown_82C5DEC, 64, 152, 1);
+    spriteId = CreateSprite(&sSpriteTemplate_TextEntryArrow, 64, 152, 1);
     sSprites->textEntryArrow = &gSprites[spriteId];
 }
 
-static void SpriteCB_TextEntryCursor(struct Sprite *sprite)
+static void SpriteCB_TextEntryCursor_internal(struct Sprite *sprite)
 {
     int pos = GetTextEntryCursorPosition();
     if (pos == MAX_MESSAGE_LENGTH)
@@ -2762,7 +2762,7 @@ static void SpriteCB_TextEntryCursor(struct Sprite *sprite)
     }
 }
 
-static void SpriteCB_TextEntryArrow(struct Sprite *sprite)
+static void SpriteCB_TextEntryArrow_internal(struct Sprite *sprite)
 {
     if (++sprite->data[0] > 4)
     {
@@ -2774,9 +2774,9 @@ static void SpriteCB_TextEntryArrow(struct Sprite *sprite)
 
 void CreateRButtonSprites(void)
 {
-    u8 spriteId = CreateSprite(&gUnknown_82C5E44, 8, 152, 3);
+    u8 spriteId = CreateSprite(&sSpriteTemplate_RButtonIcon, 8, 152, 3);
     sSprites->rButtonIcon = &gSprites[spriteId];
-    spriteId = CreateSprite(&gUnknown_82C5E5C, 32, 152, 4);
+    spriteId = CreateSprite(&sSpriteTemplate_RButtonLabels, 32, 152, 4);
     sSprites->rButtonLabel = &gSprites[spriteId];
     sSprites->rButtonLabel->invisible = TRUE;
 }
@@ -2821,3 +2821,6 @@ void Chat_Exit(void) __attribute__((alias("Chat_Exit_internal")));
 void Chat_Drop(void) __attribute__((alias("Chat_Drop_internal")));
 void Chat_Disbanded(void) __attribute__((alias("Chat_Disbanded_internal")));
 void Chat_SaveAndExit(void) __attribute__((alias("Chat_SaveAndExit_internal")));
+
+void SpriteCB_TextEntryCursor(struct Sprite *sprite) __attribute__((alias("SpriteCB_TextEntryCursor_internal")));
+void SpriteCB_TextEntryArrow(struct Sprite *sprite) __attribute__((alias("SpriteCB_TextEntryArrow_internal")));

@@ -13,34 +13,6 @@
 
 
 
-	.globl gUnknown_82C5D4C
-gUnknown_82C5D4C: @ 0x82C5D4C
-	.incbin "baserom_jp.gba", 0x2c5d4c, 0x28
-
-	.globl gUnknown_82C5D74
-gUnknown_82C5D74: @ 0x82C5D74
-	.incbin "baserom_jp.gba", 0x2c5d74, 0x40
-
-	.globl gUnknown_82C5DB4
-gUnknown_82C5DB4: @ 0x82C5DB4
-	.incbin "baserom_jp.gba", 0x2c5db4, 0x20
-
-	.globl gUnknown_82C5DD4
-gUnknown_82C5DD4: @ 0x82C5DD4
-	.incbin "baserom_jp.gba", 0x2c5dd4, 0x18
-
-	.globl gUnknown_82C5DEC
-gUnknown_82C5DEC: @ 0x82C5DEC
-	.incbin "baserom_jp.gba", 0x2c5dec, 0x58
-
-	.globl gUnknown_82C5E44
-gUnknown_82C5E44: @ 0x82C5E44
-	.incbin "baserom_jp.gba", 0x2c5e44, 0x18
-
-	.globl gUnknown_82C5E5C
-gUnknown_82C5E5C: @ 0x82C5E5C
-	.incbin "baserom_jp.gba", 0x2c5e5c, 0x18
-
 	.globl sBitTable
 sBitTable: @ 0x82C5E74
 	.byte 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80

@@ -2137,8 +2137,8 @@ SECTIONS {
         src/union_room_chat.o(.text.StartKeyboardCursorAnim);
         src/union_room_chat.o(.text.TryKeyboardCursorReopen);
         src/union_room_chat.o(.text.CreateTextEntrySprites);
-        src/union_room_chat.o(.text.SpriteCB_TextEntryCursor);
-        src/union_room_chat.o(.text.SpriteCB_TextEntryArrow);
+        src/union_room_chat.o(.text.SpriteCB_TextEntryCursor_internal);
+        src/union_room_chat.o(.text.SpriteCB_TextEntryArrow_internal);
         src/union_room_chat.o(.text.CreateRButtonSprites);
         src/union_room_chat.o(.text.UpdateRButtonLabel);
         src/berry_crush.o(.text.GetBerryCrushGame);
@@ -9241,6 +9241,7 @@ SECTIONS {
         src/data/union_room8w.o(.rodata);
         src/data/union_room8x.o(.rodata);
         src/data/union_room8y.o(.rodata);
+        src/data/union_room8z.o(.rodata);
         data/data_b_mid2.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
