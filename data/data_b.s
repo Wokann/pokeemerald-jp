@@ -3824,9 +3824,12 @@ gUnknown_82D2984: @ 0x82D2984
 gUnknown_82D29A4: @ 0x82D29A4
 	.incbin "baserom_jp.gba", 0x2d29a4, 0x4
 
-	.globl gUnknown_82D29A8
-gUnknown_82D29A8: @ 0x82D29A8
-	.incbin "baserom_jp.gba", 0x2d29a8, 0x10
+	.globl sMenuActions_Gender
+sMenuActions_Gender: @ 0x82D29A8
+	.4byte gText_BirchBoy @ text (US gText_BirchBoy)
+	.4byte 0 @ func NULL
+	.4byte gText_BirchGirl @ text (US gText_BirchGirl)
+	.4byte 0 @ func NULL
 
 	.globl sMalePresetNames
 sMalePresetNames: @ 0x82D29B8
@@ -31161,7 +31164,13 @@ gUnknown_85C8E7C: @ 0x85C8E7C
 
 	.globl gUnknown_85C8E8C
 gUnknown_85C8E8C: @ 0x85C8E8C
-	.string "{A_BUTTON}おわる$おとこ$おんな$"
+	.string "{A_BUTTON}おわる$"
+	.globl gText_BirchBoy
+gText_BirchBoy: @ 0x85C8E92
+	.string "おとこ$"
+	.globl gText_BirchGirl
+gText_BirchGirl: @ 0x85C8E96
+	.string "おんな$"
 	.globl gText_DefaultName_Itsuo
 gText_DefaultName_Itsuo: @ 0x85C8E9A
 	.string "イツオ$$$"
