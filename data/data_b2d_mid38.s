@@ -115,7 +115,7 @@ sTraderWindowTemplate: @ 0x858F808
 
 	.globl gBirchBagGrass_Pal
 gBirchBagGrass_Pal: @ 0x858F810
-	.incbin "graphics/jp/gBirchBagGrass_Pal.bin"
+	.incbin "graphics/misc/gBirchBagGrass_Pal.bin"
 
 	.globl gUnknown_858F812
 gUnknown_858F812: @ 0x858F812
@@ -123,15 +123,15 @@ gUnknown_858F812: @ 0x858F812
 
 	.globl gBirchBagTilemap
 gBirchBagTilemap: @ 0x858F890
-	.incbin "graphics/jp/gBirchBagTilemap.bin"
+	.incbin "graphics/misc/gBirchBagTilemap.bin"
 
 	.globl gBirchGrassTilemap
 gBirchGrassTilemap: @ 0x858FA1C
-	.incbin "graphics/jp/gBirchGrassTilemap.bin"
+	.incbin "graphics/misc/gBirchGrassTilemap.bin"
 
 	.globl gBirchBagGrass_Gfx
 gBirchBagGrass_Gfx: @ 0x858FC14
-	.incbin "graphics/jp/gBirchBagGrass_Gfx.bin"
+	.incbin "graphics/misc/gBirchBagGrass_Gfx.bin"
 
 	.globl sStarterWindowTemplates
 sStarterWindowTemplates: @ 0x8590BDC
@@ -196,7 +196,7 @@ sStarterSpriteSheet_StarterCircle: @ 0x8590CF8
 
 	.globl sStarterSpritePalettes
 sStarterSpritePalettes: @ 0x8590D08
-	.incbin "graphics/jp/sStarterSpritePalettes.bin"
+	.incbin "graphics/misc/sStarterSpritePalettes.bin"
 
 	.globl sStarterSpriteTemplate_Hand
 sStarterSpriteTemplate_Hand: @ 0x8590D20
@@ -212,20 +212,20 @@ sStarterSpriteTemplate_StarterCircle: @ 0x8590D50
 
 	.globl gWallClockMale_Pal
 gWallClockMale_Pal: @ 0x8590D68
-	.incbin "graphics/jp/gWallClockMale_Pal.bin"
+	.incbin "graphics/wallclock/gWallClockMale_Pal.bin"
 
 	.globl gWallClockFemale_Pal
 gWallClockFemale_Pal: @ 0x8590D88
-	.incbin "graphics/jp/gWallClockFemale_Pal.bin"
+	.incbin "graphics/wallclock/gWallClockFemale_Pal.bin"
 
 	.globl gWallClockStart_Tilemap
 gWallClockStart_Tilemap: @ 0x8590DA8
-	.incbin "graphics/jp/gWallClockStart_Tilemap.bin"
+	.incbin "graphics/wallclock/gWallClockStart_Tilemap.bin"
 
 	.globl gWallClockView_Tilemap
 gWallClockView_Tilemap: @ 0x8591074
-	.incbin "graphics/jp/gWallClockView_Tilemap.bin"
+	.incbin "graphics/wallclock/gWallClockView_Tilemap.bin"
 
 	.globl gWallClock_Gfx
 gWallClock_Gfx: @ 0x859130C
-	.incbin "graphics/jp/gWallClock_Gfx.bin"
+	.incbin "graphics/wallclock/gWallClock_Gfx.bin"

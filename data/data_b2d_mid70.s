@@ -25,7 +25,7 @@ sMoveRelearnerSpriteSheet: @ 0x85ADAF4
 
 	.globl sMoveRelearnerPalette
 sMoveRelearnerPalette: @ 0x85ADAFC
-	.incbin "graphics/jp/sMoveRelearnerPalette.bin"
+	.incbin "graphics/misc/sMoveRelearnerPalette.bin"
 
 	.globl sDisplayModeArrowsTemplate
 sDisplayModeArrowsTemplate: @ 0x85ADB04
@@ -658,12 +658,12 @@ sLotteryPrizes: @ 0x85C7A2C
 
 	.globl sDiplomaPalettes
 sDiplomaPalettes: @ 0x85C7A34
-	.incbin "graphics/jp/sDiplomaPalettes.bin"
+	.incbin "graphics/diploma/sDiplomaPalettes.bin"
 
 	.globl sDiplomaTilemap
 sDiplomaTilemap: @ 0x85C7A74
-	.incbin "graphics/jp/sDiplomaTilemap.bin"
+	.incbin "graphics/diploma/sDiplomaTilemap.bin"
 
 	.globl sDiplomaTiles
 sDiplomaTiles: @ 0x85C81B0
-	.incbin "graphics/jp/sDiplomaTiles.bin"
+	.incbin "graphics/diploma/sDiplomaTiles.bin"

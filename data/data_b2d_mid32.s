@@ -303,11 +303,11 @@ gUnknown_85976FC: @ 0x85976FC
 
 	.globl sCryMeter_Pal
 sCryMeter_Pal: @ 0x8597FCC
-	.incbin "graphics/jp/sCryMeter_Pal.bin"
+	.incbin "graphics/cry_screen/sCryMeter_Pal.bin"
 
 	.globl sCryMeter_Gfx
 sCryMeter_Gfx: @ 0x8597FEC
-	.incbin "graphics/jp/sCryMeter_Gfx.bin"
+	.incbin "graphics/cry_screen/sCryMeter_Gfx.bin"
 
 	.globl sWaveformOffsets
 sWaveformOffsets: @ 0x8598324
@@ -362,11 +362,11 @@ sWaveformOffsets: @ 0x8598324
 
 	.globl sCryScreenBg_Pal
 sCryScreenBg_Pal: @ 0x85987A4
-	.incbin "graphics/jp/sCryScreenBg_Pal.bin"
+	.incbin "graphics/cry_screen/sCryScreenBg_Pal.bin"
 
 	.globl sCryScreenBg_Gfx
 sCryScreenBg_Gfx: @ 0x85987C4
-	.incbin "graphics/jp/sCryScreenBg_Gfx.bin"
+	.incbin "graphics/cry_screen/sCryScreenBg_Gfx.bin"
 
 	.globl sWaveformTileDataNybbleMasks
 sWaveformTileDataNybbleMasks: @ 0x85987E4
@@ -390,7 +390,7 @@ sCryMeterNeedleSpriteSheets: @ 0x8598834
 
 	.globl sCryMeterNeedleSpritePalettes
 sCryMeterNeedleSpritePalettes: @ 0x8598844
-	.incbin "graphics/jp/sCryMeterNeedleSpritePalettes.bin"
+	.incbin "graphics/cry_screen/sCryMeterNeedleSpritePalettes.bin"
 
 	.globl sLandmarkLists
 sLandmarkLists: @ 0x8598C68

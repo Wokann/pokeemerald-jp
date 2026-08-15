@@ -23,15 +23,15 @@ gUnknown_8592ED8: @ 0x8592ED8
 
 	.globl sTrainerHillWindowTileset
 sTrainerHillWindowTileset: @ 0x8592EE0
-	.incbin "graphics/jp/sTrainerHillWindowTileset.bin"
+	.incbin "graphics/misc/sTrainerHillWindowTileset.bin"
 
 	.globl sTrainerHillWindowPalette
 sTrainerHillWindowPalette: @ 0x8592FA0
-	.incbin "graphics/jp/sTrainerHillWindowPalette.bin"
+	.incbin "graphics/misc/sTrainerHillWindowPalette.bin"
 
 	.globl sTrainerHillWindowTilemap
 sTrainerHillWindowTilemap: @ 0x8592FC0
-	.incbin "graphics/jp/sTrainerHillWindowTilemap.bin"
+	.incbin "graphics/misc/sTrainerHillWindowTilemap.bin"
 
 	.globl sTrainerHillRecordsBgTemplates
 sTrainerHillRecordsBgTemplates: @ 0x85937C0
@@ -43,4 +43,4 @@ sTrainerHillRecordsWindowTemplates: @ 0x85937C8
 
 	.globl sLinkBattleRecordsWindow
 sLinkBattleRecordsWindow: @ 0x85937D8
-	.incbin "graphics/jp/sLinkBattleRecordsWindow.bin"
+	.incbin "graphics/text_window/sLinkBattleRecordsWindow.bin"

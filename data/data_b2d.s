@@ -653,7 +653,7 @@ sSmokescreenImpactSpriteSheet: @ 0x82ECFA8
 
 	.globl sSmokescreenImpactSpritePalette
 sSmokescreenImpactSpritePalette: @ 0x82ECFB0
-	.incbin "graphics/jp/sSmokescreenImpactSpritePalette.bin"
+	.incbin "graphics/misc/sSmokescreenImpactSpritePalette.bin"
 
 	.globl sSmokescreenImpactSpriteTemplate
 sSmokescreenImpactSpriteTemplate: @ 0x82ED010

@@ -916,19 +916,19 @@ gUnknown_85E732C: @ 0x85E732C
 
 	.globl sMirageTower_Gfx
 sMirageTower_Gfx: @ 0x85E7430
-	.incbin "graphics/jp/sMirageTower_Gfx.bin"
+	.incbin "graphics/mirage_tower/sMirageTower_Gfx.bin"
 
 	.globl sMirageTowerTilemap
 sMirageTowerTilemap: @ 0x85E7D50
-	.incbin "graphics/jp/sMirageTowerTilemap.bin"
+	.incbin "graphics/mirage_tower/sMirageTowerTilemap.bin"
 
 	.globl sFossil_Gfx
 sFossil_Gfx: @ 0x85E7E00
-	.incbin "graphics/jp/sFossil_Gfx.bin"
+	.incbin "graphics/mirage_tower/sFossil_Gfx.bin"
 
 	.globl sMirageTowerCrumbles_Gfx
 sMirageTowerCrumbles_Gfx: @ 0x85E7E80
-	.incbin "graphics/jp/sMirageTowerCrumbles_Gfx.bin"
+	.incbin "graphics/mirage_tower/sMirageTowerCrumbles_Gfx.bin"
 
 	.globl gUnknown_85E7F00
 gUnknown_85E7F00: @ 0x85E7F00

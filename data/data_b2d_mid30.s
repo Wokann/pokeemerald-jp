@@ -35,7 +35,7 @@ gUnknown_830FC60: @ 0x830FC60
 
 	.globl sContestWinnerPicDummy
 sContestWinnerPicDummy: @ 0x830FC68
-	.incbin "graphics/jp/sContestWinnerPicDummy.bin"
+	.incbin "graphics/misc/sContestWinnerPicDummy.bin"
 
 	.globl gUnknown_830FC88
 gUnknown_830FC88: @ 0x830FC88
@@ -5103,19 +5103,19 @@ sDummyConnectionFlags: @ 0x845F318
 
 	.globl sTileBitAttributes
 sTileBitAttributes: @ 0x845F31C
-	.incbin "graphics/jp/sTileBitAttributes.bin"
+	.incbin "graphics/misc/sTileBitAttributes.bin"
 
 	.globl sDoorOpenAnimFrames
 sDoorOpenAnimFrames: @ 0x846F3AC
-	.incbin "graphics/jp/sDoorOpenAnimFrames.bin"
+	.incbin "graphics/misc/sDoorOpenAnimFrames.bin"
 
 	.globl sDoorCloseAnimFrames
 sDoorCloseAnimFrames: @ 0x846F3C0
-	.incbin "graphics/jp/sDoorCloseAnimFrames.bin"
+	.incbin "graphics/misc/sDoorCloseAnimFrames.bin"
 
 	.globl sBigDoorOpenAnimFrames
 sBigDoorOpenAnimFrames: @ 0x846F3D4
-	.incbin "graphics/jp/sBigDoorOpenAnimFrames.bin"
+	.incbin "graphics/misc/sBigDoorOpenAnimFrames.bin"
 
 	.globl sDoorAnimGraphicsTable
 sDoorAnimGraphicsTable: @ 0x846F594

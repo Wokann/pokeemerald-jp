@@ -289,11 +289,11 @@ sMonIconOamData: @ 0x85570CC
 
 	.globl sMonIconAnims
 sMonIconAnims: @ 0x8557110
-	.incbin "graphics/jp/sMonIconAnims.bin"
+	.incbin "graphics/misc/sMonIconAnims.bin"
 
 	.globl sMonIconAffineAnims
 sMonIconAffineAnims: @ 0x8557144
-	.incbin "graphics/jp/sMonIconAffineAnims.bin"
+	.incbin "graphics/misc/sMonIconAffineAnims.bin"
 
 	.globl sSpriteImageSizes
 sSpriteImageSizes: @ 0x855714C
@@ -1283,7 +1283,7 @@ sMapPopUp_PaletteTable: @ 0x8559EE0
 
 	.globl sMapPopUp_Palette_Underwater
 sMapPopUp_Palette_Underwater: @ 0x8559FA0
-	.incbin "graphics/jp/sMapPopUp_Palette_Underwater.bin"
+	.incbin "graphics/misc/sMapPopUp_Palette_Underwater.bin"
 
 	.globl sMapSectionToThemeId
 sMapSectionToThemeId: @ 0x8559FC0

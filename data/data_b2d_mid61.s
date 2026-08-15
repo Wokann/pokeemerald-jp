@@ -15,19 +15,19 @@ gUnknown_8579F34: @ 0x8579F34
 
 	.globl gMonMarkingsMenu_Pal
 gMonMarkingsMenu_Pal: @ 0x8579F38
-	.incbin "graphics/jp/gMonMarkingsMenu_Pal.bin"
+	.incbin "graphics/mon_markings/gMonMarkingsMenu_Pal.bin"
 
 	.globl gMonMarkingsMenu_Gfx
 gMonMarkingsMenu_Gfx: @ 0x8579F58
-	.incbin "graphics/jp/gMonMarkingsMenu_Gfx.bin"
+	.incbin "graphics/mon_markings/gMonMarkingsMenu_Gfx.bin"
 
 	.globl sMonMarkings_Pal
 sMonMarkings_Pal: @ 0x857A278
-	.incbin "graphics/jp/sMonMarkings_Pal.bin"
+	.incbin "graphics/mon_markings/sMonMarkings_Pal.bin"
 
 	.globl sMonMarkings_Gfx
 sMonMarkings_Gfx: @ 0x857A298
-	.incbin "graphics/jp/sMonMarkings_Gfx.bin"
+	.incbin "graphics/mon_markings/sMonMarkings_Gfx.bin"
 
 	.globl sOamData_MenuWindow
 sOamData_MenuWindow: @ 0x857AAA0
@@ -43,7 +43,7 @@ sAnims_MenuSprite: @ 0x857AB00
 
 	.globl sAnims_MenuWindow
 sAnims_MenuWindow: @ 0x857AB38
-	.incbin "graphics/jp/sAnims_MenuWindow.bin"
+	.incbin "graphics/battle_anims/sAnims_MenuWindow.bin"
 
 	.globl sOamData_MarkingCombo
 sOamData_MarkingCombo: @ 0x857AB40
@@ -99,7 +99,7 @@ sMailBgColors: @ 0x857AEDC
 
 	.globl sMailGraphics
 sMailGraphics: @ 0x857AEE4
-	.incbin "graphics/jp/sMailGraphics.bin"
+	.incbin "graphics/misc/sMailGraphics.bin"
 
 	.globl sMailLayouts_Wide
 sMailLayouts_Wide: @ 0x857AFE0

@@ -5759,31 +5759,31 @@ sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
 
 	.globl gTitleScreenPokemonLogoTilemap
 gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
-	.incbin "graphics/jp/gTitleScreenPokemonLogoTilemap.bin"
+	.incbin "graphics/title_screen/gTitleScreenPokemonLogoTilemap.bin"
 
 	.globl gTitleScreenBgPalettes
 gTitleScreenBgPalettes: @ 0x8517B58
-	.incbin "graphics/jp/gTitleScreenBgPalettes.bin"
+	.incbin "graphics/title_screen/gTitleScreenBgPalettes.bin"
 
 	.globl gTitleScreenPokemonLogoGfx
 gTitleScreenPokemonLogoGfx: @ 0x8517C18
-	.incbin "graphics/jp/gTitleScreenPokemonLogoGfx.bin"
+	.incbin "graphics/title_screen/gTitleScreenPokemonLogoGfx.bin"
 
 	.globl sTitleScreenRayquazaGfx
 sTitleScreenRayquazaGfx: @ 0x8519AB4
-	.incbin "graphics/jp/sTitleScreenRayquazaGfx.bin"
+	.incbin "graphics/title_screen/sTitleScreenRayquazaGfx.bin"
 
 	.globl sTitleScreenRayquazaTilemap
 sTitleScreenRayquazaTilemap: @ 0x851A298
-	.incbin "graphics/jp/sTitleScreenRayquazaTilemap.bin"
+	.incbin "graphics/title_screen/sTitleScreenRayquazaTilemap.bin"
 
 	.globl sTitleScreenCloudsGfx
 sTitleScreenCloudsGfx: @ 0x851A6E8
-	.incbin "graphics/jp/sTitleScreenCloudsGfx.bin"
+	.incbin "graphics/title_screen/sTitleScreenCloudsGfx.bin"
 
 	.globl gTitleScreenCloudsTilemap
 gTitleScreenCloudsTilemap: @ 0x851A9CC
-	.incbin "graphics/jp/gTitleScreenCloudsTilemap.bin"
+	.incbin "graphics/title_screen/gTitleScreenCloudsTilemap.bin"
 
 	.globl gTitleScreenAlphaBlend
 gTitleScreenAlphaBlend: @ 0x851AC0C
@@ -5811,7 +5811,7 @@ sSpriteSheet_PressStart: @ 0x851AD8C
 
 	.globl sSpritePalette_PressStart
 sSpritePalette_PressStart: @ 0x851AD9C
-	.incbin "graphics/jp/sSpritePalette_PressStart.bin"
+	.incbin "graphics/misc/sSpritePalette_PressStart.bin"
 
 	.globl sPokemonLogoShineSpriteTemplate
 sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
@@ -5819,7 +5819,7 @@ sPokemonLogoShineSpriteTemplate: @ 0x851ADC0
 
 	.globl sPokemonLogoShineSpriteSheet
 sPokemonLogoShineSpriteSheet: @ 0x851ADD8
-	.incbin "graphics/jp/sPokemonLogoShineSpriteSheet.bin"
+	.incbin "graphics/misc/sPokemonLogoShineSpriteSheet.bin"
 
 	.globl gUnknown_851ADE8
 gUnknown_851ADE8: @ 0x851ADE8
@@ -5843,7 +5843,7 @@ gUnknown_8526EEC: @ 0x8526EEC
 
 	.globl gFogPalette
 gFogPalette: @ 0x8526F0C
-	.incbin "graphics/jp/gFogPalette.bin"
+	.incbin "graphics/field_effects/gFogPalette.bin"
 
 	.globl gUnknown_8526F2C
 gUnknown_8526F2C: @ 0x8526F2C
@@ -5855,7 +5855,7 @@ gUnknown_8526F4C: @ 0x8526F4C
 
 	.globl gWeatherFogHorizontalTiles
 gWeatherFogHorizontalTiles: @ 0x852776C
-	.incbin "graphics/jp/gWeatherFogHorizontalTiles.bin"
+	.incbin "graphics/misc/gWeatherFogHorizontalTiles.bin"
 
 	.globl gUnknown_852A7EC
 gUnknown_852A7EC: @ 0x852A7EC

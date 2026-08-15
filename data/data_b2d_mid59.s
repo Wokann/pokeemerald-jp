@@ -209,7 +209,7 @@ sSpriteSheet_MoneyLabel: @ 0x8565FBC
 
 	.globl sSpritePalette_MoneyLabel
 sSpritePalette_MoneyLabel: @ 0x8565FC4
-	.incbin "graphics/jp/sSpritePalette_MoneyLabel.bin"
+	.incbin "graphics/misc/sSpritePalette_MoneyLabel.bin"
 
 	.globl gContestMoves
 gContestMoves: @ 0x8565FCC

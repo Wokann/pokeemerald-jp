@@ -29,7 +29,7 @@ gUnknown_84E8A71: @ 0x84E8A71
 
 	.globl gResetRtcArrowPalette
 gResetRtcArrowPalette: @ 0x84E8B14
-	.incbin "graphics/jp/gResetRtcArrowPalette.bin"
+	.incbin "graphics/misc/gResetRtcArrowPalette.bin"
 
 	.globl gResetRtcArrowSpriteTemplate
 gResetRtcArrowSpriteTemplate: @ 0x84E8B40

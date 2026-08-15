@@ -73,7 +73,7 @@ sWirelessStatusIndicatorSpriteSheet: @ 0x82C0330
 
 	.globl sWirelessStatusIndicatorSpritePalette
 sWirelessStatusIndicatorSpritePalette: @ 0x82C0338
-	.incbin "graphics/jp/sWirelessStatusIndicatorSpritePalette.bin"
+	.incbin "graphics/battle_anims/sWirelessStatusIndicatorSpritePalette.bin"
 
 	.globl sWirelessStatusIndicatorSpriteTemplate
 sWirelessStatusIndicatorSpriteTemplate: @ 0x82C0340
@@ -779,11 +779,11 @@ sLinkGroupToURoomActivity: @ 0x82C2438
 	.byte 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x0E, 0xF7, 0x00, 0xAF, 0xF7, 0x01, 0xFF
 	.globl sTextboxBorder_Pal
 sTextboxBorder_Pal: @ 0x82C2454
-	.incbin "graphics/jp/sTextboxBorder_Pal.bin"
+	.incbin "graphics/text_window/sTextboxBorder_Pal.bin"
 
 	.globl sTextboxBorder_Gfx
 sTextboxBorder_Gfx: @ 0x82C2474
-	.incbin "graphics/jp/sTextboxBorder_Gfx.bin"
+	.incbin "graphics/text_window/sTextboxBorder_Gfx.bin"
 
 	.globl sBGTemplates
 sBGTemplates: @ 0x82C24A4
@@ -791,7 +791,7 @@ sBGTemplates: @ 0x82C24A4
 
 	.globl sMainWindows
 sMainWindows: @ 0x82C24B4
-	.incbin "graphics/jp/sMainWindows.bin"
+	.incbin "graphics/menu_ui/sMainWindows.bin"
 
 	.globl sWindowTemplate_YesNoMsg_Wide
 sWindowTemplate_YesNoMsg_Wide: @ 0x82C24D4
@@ -1115,15 +1115,15 @@ sMovement_UnionPlayerEnter: @ 0x82C2C0B
 
 	.globl sWirelessScreenPalettes
 sWirelessScreenPalettes: @ 0x82C2C10
-	.incbin "graphics/jp/sWirelessScreenPalettes.bin"
+	.incbin "graphics/wireless/sWirelessScreenPalettes.bin"
 
 	.globl sWirelessScreenBgTiles_Gfx
 sWirelessScreenBgTiles_Gfx: @ 0x82C2E10
-	.incbin "graphics/jp/sWirelessScreenBgTiles_Gfx.bin"
+	.incbin "graphics/wireless/sWirelessScreenBgTiles_Gfx.bin"
 
 	.globl sWirelessScreenBgTiles_Tilemap
 sWirelessScreenBgTiles_Tilemap: @ 0x82C3020
-	.incbin "graphics/jp/sWirelessScreenBgTiles_Tilemap.bin"
+	.incbin "graphics/wireless/sWirelessScreenBgTiles_Tilemap.bin"
 
 	.globl sWirelessScreenBgTemplates
 sWirelessScreenBgTemplates: @ 0x82C31B4
@@ -1824,27 +1824,27 @@ sPressingSpeedConversionTable: @ 0x82C5F64
 
 	.globl gBerryCrush_Crusher_Pal
 gBerryCrush_Crusher_Pal: @ 0x82C5F84
-	.incbin "graphics/jp/gBerryCrush_Crusher_Pal.bin"
+	.incbin "graphics/berry_crush/gBerryCrush_Crusher_Pal.bin"
 
 	.globl gBerryCrush_Crusher_Gfx
 gBerryCrush_Crusher_Gfx: @ 0x82C6104
-	.incbin "graphics/jp/gBerryCrush_Crusher_Gfx.bin"
+	.incbin "graphics/berry_crush/gBerryCrush_Crusher_Gfx.bin"
 
 	.globl sCrusherTop_Tilemap
 sCrusherTop_Tilemap: @ 0x82C74D4
-	.incbin "graphics/jp/sCrusherTop_Tilemap.bin"
+	.incbin "graphics/berry_crush/sCrusherTop_Tilemap.bin"
 
 	.globl sContainerCap_Tilemap
 sContainerCap_Tilemap: @ 0x82C7604
-	.incbin "graphics/jp/sContainerCap_Tilemap.bin"
+	.incbin "graphics/misc/sContainerCap_Tilemap.bin"
 
 	.globl sBg_Tilemap
 sBg_Tilemap: @ 0x82C779C
-	.incbin "graphics/jp/sBg_Tilemap.bin"
+	.incbin "graphics/misc/sBg_Tilemap.bin"
 
 	.globl sPlayerNameWindowGfx
 sPlayerNameWindowGfx: @ 0x82C79C4
-	.incbin "graphics/jp/sPlayerNameWindowGfx.bin"
+	.incbin "graphics/naming_screen/sPlayerNameWindowGfx.bin"
 
 	.globl sPlayerIdToPosId
 sPlayerIdToPosId: @ 0x82C7A08
@@ -1874,7 +1874,7 @@ sSpriteSheets: @ 0x82C7A80
 
 	.globl sSpritePals
 sSpritePals: @ 0x82C7AA8
-	.incbin "graphics/jp/sSpritePals.bin"
+	.incbin "graphics/misc/sSpritePals.bin"
 
 	.globl sSpriteTemplate_CrusherBase
 sSpriteTemplate_CrusherBase: @ 0x82C7B98
@@ -3191,15 +3191,15 @@ sWindowTemplate_CommStandby: @ 0x82CB478
 
 	.globl sBg_Pal
 sBg_Pal: @ 0x82CB67C
-	.incbin "graphics/jp/sBg_Pal.bin"
+	.incbin "graphics/misc/sBg_Pal.bin"
 
 	.globl sDodrioNormalPal
 sDodrioNormalPal: @ 0x82CB6BC
-	.incbin "graphics/jp/sDodrioNormalPal.bin"
+	.incbin "graphics/dodrio/sDodrioNormalPal.bin"
 
 	.globl sDodrioShinyPal
 sDodrioShinyPal: @ 0x82CB6DC
-	.incbin "graphics/jp/sDodrioShinyPal.bin"
+	.incbin "graphics/dodrio/sDodrioShinyPal.bin"
 
 	.globl gUnknown_82CB6FC
 gUnknown_82CB6FC: @ 0x82CB6FC
@@ -3207,39 +3207,39 @@ gUnknown_82CB6FC: @ 0x82CB6FC
 
 	.globl sBerry_Gfx
 sBerry_Gfx: @ 0x82CB73C
-	.incbin "graphics/jp/sBerry_Gfx.bin"
+	.incbin "graphics/misc/sBerry_Gfx.bin"
 
 	.globl sBg_Gfx
 sBg_Gfx: @ 0x82CB910
-	.incbin "graphics/jp/sBg_Gfx.bin"
+	.incbin "graphics/misc/sBg_Gfx.bin"
 
 	.globl sTreeBorder_Gfx
 sTreeBorder_Gfx: @ 0x82CC1A0
-	.incbin "graphics/jp/sTreeBorder_Gfx.bin"
+	.incbin "graphics/misc/sTreeBorder_Gfx.bin"
 
 	.globl sStatus_Gfx
 sStatus_Gfx: @ 0x82CCF6C
-	.incbin "graphics/jp/sStatus_Gfx.bin"
+	.incbin "graphics/battle_anims/sStatus_Gfx.bin"
 
 	.globl sCloud_Gfx
 sCloud_Gfx: @ 0x82CD000
-	.incbin "graphics/jp/sCloud_Gfx.bin"
+	.incbin "graphics/misc/sCloud_Gfx.bin"
 
 	.globl sDodrio_Gfx
 sDodrio_Gfx: @ 0x82CD148
-	.incbin "graphics/jp/sDodrio_Gfx.bin"
+	.incbin "graphics/dodrio/sDodrio_Gfx.bin"
 
 	.globl sDodrioBg_Tilemap
 sDodrioBg_Tilemap: @ 0x82CE364
-	.incbin "graphics/jp/sDodrioBg_Tilemap.bin"
+	.incbin "graphics/dodrio/sDodrioBg_Tilemap.bin"
 
 	.globl sTreeBorderRight_Tilemap
 sTreeBorderRight_Tilemap: @ 0x82CE5D0
-	.incbin "graphics/jp/sTreeBorderRight_Tilemap.bin"
+	.incbin "graphics/misc/sTreeBorderRight_Tilemap.bin"
 
 	.globl sTreeBorderLeft_Tilemap
 sTreeBorderLeft_Tilemap: @ 0x82CE820
-	.incbin "graphics/jp/sTreeBorderLeft_Tilemap.bin"
+	.incbin "graphics/misc/sTreeBorderLeft_Tilemap.bin"
 
 	.globl sOamData_Dodrio
 sOamData_Dodrio: @ 0x82CEA6C
@@ -3251,15 +3251,15 @@ sAnims_Dodrio: @ 0x82CEAB4
 
 	.globl sDodrioNormalSpritePalette
 sDodrioNormalSpritePalette: @ 0x82CEB64
-	.incbin "graphics/jp/sDodrioNormalSpritePalette.bin"
+	.incbin "graphics/dodrio/sDodrioNormalSpritePalette.bin"
 
 	.globl sDodrioShinySpritePalette
 sDodrioShinySpritePalette: @ 0x82CEB6C
-	.incbin "graphics/jp/sDodrioShinySpritePalette.bin"
+	.incbin "graphics/dodrio/sDodrioShinySpritePalette.bin"
 
 	.globl sStatusPalette
 sStatusPalette: @ 0x82CEB74
-	.incbin "graphics/jp/sStatusPalette.bin"
+	.incbin "graphics/battle_anims/sStatusPalette.bin"
 
 	.globl sStatusSpriteTemplate
 sStatusSpriteTemplate: @ 0x82CEB7C
@@ -3267,7 +3267,7 @@ sStatusSpriteTemplate: @ 0x82CEB7C
 
 	.globl sBerryPalette
 sBerryPalette: @ 0x82CEBA0
-	.incbin "graphics/jp/sBerryPalette.bin"
+	.incbin "graphics/misc/sBerryPalette.bin"
 
 	.globl sBerryIconXCoords
 sBerryIconXCoords: @ 0x82CEBA8
@@ -3295,7 +3295,7 @@ gUnknown_82CEBEA: @ 0x82CEBEA
 
 	.globl sCloudPalette
 sCloudPalette: @ 0x82CEBEC
-	.incbin "graphics/jp/sCloudPalette.bin"
+	.incbin "graphics/misc/sCloudPalette.bin"
 
 	.globl sCloudSpriteTemplate
 sCloudSpriteTemplate: @ 0x82CEBF4
@@ -3307,27 +3307,27 @@ sDodrioTextColorTable: @ 0x82CEC0C
 
 	.globl sNameWindowCoords_1Player
 sNameWindowCoords_1Player: @ 0x82CEC18
-	.incbin "graphics/jp/sNameWindowCoords_1Player.bin"
+	.incbin "graphics/misc/sNameWindowCoords_1Player.bin"
 
 	.globl sNameWindowCoords_2Players
 sNameWindowCoords_2Players: @ 0x82CEC1C
-	.incbin "graphics/jp/sNameWindowCoords_2Players.bin"
+	.incbin "graphics/misc/sNameWindowCoords_2Players.bin"
 
 	.globl sNameWindowCoords_3Players
 sNameWindowCoords_3Players: @ 0x82CEC24
-	.incbin "graphics/jp/sNameWindowCoords_3Players.bin"
+	.incbin "graphics/misc/sNameWindowCoords_3Players.bin"
 
 	.globl sNameWindowCoords_4Players
 sNameWindowCoords_4Players: @ 0x82CEC30
-	.incbin "graphics/jp/sNameWindowCoords_4Players.bin"
+	.incbin "graphics/misc/sNameWindowCoords_4Players.bin"
 
 	.globl sNameWindowCoords_5Players
 sNameWindowCoords_5Players: @ 0x82CEC40
-	.incbin "graphics/jp/sNameWindowCoords_5Players.bin"
+	.incbin "graphics/misc/sNameWindowCoords_5Players.bin"
 
 	.globl sNameWindowCoords
 sNameWindowCoords: @ 0x82CEC54
-	.incbin "graphics/jp/sNameWindowCoords.bin"
+	.incbin "graphics/misc/sNameWindowCoords.bin"
 
 	.globl sRankingTexts
 sRankingTexts: @ 0x82CEC68
@@ -4028,7 +4028,7 @@ sFemalePresetNames: @ 0x82D2A08
 	.4byte gText_DefaultName_Yuume @ 0x85C8F82
 	.globl sTilesPerImage
 sTilesPerImage: @ 0x82D2A58 (JP: digit_obj_util.c sTilesPerImage[4][4])
-	.incbin "graphics/jp/sTilesPerImage.bin"
+	.incbin "graphics/misc/sTilesPerImage.bin"
 
 	.globl gUnknown_82D2A68
 gUnknown_82D2A68: @ 0x82D2A68

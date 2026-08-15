@@ -13,7 +13,7 @@
 
 	.globl sTextPrompt_Pal
 sTextPrompt_Pal: @ 0x8591C20
-	.incbin "graphics/jp/sTextPrompt_Pal.bin"
+	.incbin "graphics/misc/sTextPrompt_Pal.bin"
 
 	.globl sWindowTemplates
 sWindowTemplates: @ 0x8591C28
@@ -33,7 +33,7 @@ sSpriteSheet_ClockHand: @ 0x8591C54
 
 	.globl sSpritePalettes_Clock
 sSpritePalettes_Clock: @ 0x8591C64
-	.incbin "graphics/jp/sSpritePalettes_Clock.bin"
+	.incbin "graphics/misc/sSpritePalettes_Clock.bin"
 
 	.globl sSpriteTemplate_MinuteHand
 sSpriteTemplate_MinuteHand: @ 0x8591C9C
@@ -192,15 +192,15 @@ sTransitionTypes: @ 0x8592214
 
 	.globl sCaveTransitionPalette_White
 sCaveTransitionPalette_White: @ 0x859229C
-	.incbin "graphics/jp/sCaveTransitionPalette_White.bin"
+	.incbin "graphics/cave_transition/sCaveTransitionPalette_White.bin"
 
 	.globl sCaveTransitionPalette_Black
 sCaveTransitionPalette_Black: @ 0x85922BC
-	.incbin "graphics/jp/sCaveTransitionPalette_Black.bin"
+	.incbin "graphics/cave_transition/sCaveTransitionPalette_Black.bin"
 
 	.globl sCaveTransitionPalette_Enter
 sCaveTransitionPalette_Enter: @ 0x85922DC
-	.incbin "graphics/jp/sCaveTransitionPalette_Enter.bin"
+	.incbin "graphics/cave_transition/sCaveTransitionPalette_Enter.bin"
 
 	.globl gUnknown_85922EC
 gUnknown_85922EC: @ 0x85922EC
@@ -208,11 +208,11 @@ gUnknown_85922EC: @ 0x85922EC
 
 	.globl sCaveTransitionTilemap
 sCaveTransitionTilemap: @ 0x85922FC
-	.incbin "graphics/jp/sCaveTransitionTilemap.bin"
+	.incbin "graphics/cave_transition/sCaveTransitionTilemap.bin"
 
 	.globl sCaveTransitionTiles
 sCaveTransitionTiles: @ 0x85924DC
-	.incbin "graphics/jp/sCaveTransitionTiles.bin"
+	.incbin "graphics/cave_transition/sCaveTransitionTiles.bin"
 
 	.globl gShoalTideTable
 gShoalTideTable: @ 0x8592590

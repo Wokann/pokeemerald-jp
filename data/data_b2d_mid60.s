@@ -1303,7 +1303,7 @@ gFlashingHitSplatSpriteTemplate: @ 0x8572FCC
 
 	.globl sCurseLinesPalette
 sCurseLinesPalette: @ 0x8572FFC
-	.incbin "graphics/jp/sCurseLinesPalette.bin"
+	.incbin "graphics/misc/sCurseLinesPalette.bin"
 
 	.globl gUnknown_8572FFE
 gUnknown_8572FFE: @ 0x8572FFE

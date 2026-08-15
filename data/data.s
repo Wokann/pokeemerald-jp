@@ -74,11 +74,11 @@ sGlyphPaletteIdxTable: @ 0x829BEB8
 
 	.globl sDownArrowTiles
 sDownArrowTiles: @ 0x829BFB8
-	.incbin "graphics/jp/sDownArrowTiles.bin"
+	.incbin "graphics/misc/sDownArrowTiles.bin"
 
 	.globl sDarkDownArrowTiles
 sDarkDownArrowTiles: @ 0x829C078
-	.incbin "graphics/jp/sDarkDownArrowTiles.bin"
+	.incbin "graphics/misc/sDarkDownArrowTiles.bin"
 
 	.globl sDownArrowYCoords
 sDownArrowYCoords: @ 0x829C638
@@ -94,11 +94,11 @@ sGlyphWidthFuncs: @ 0x829C640
 
 	.globl sKeypadIcons
 sKeypadIcons: @ 0x829C670
-	.incbin "graphics/jp/sKeypadIcons.bin"
+	.incbin "graphics/naming_screen/sKeypadIcons.bin"
 
 	.globl sKeypadIconTiles
 sKeypadIconTiles: @ 0x829C6A4
-	.incbin "graphics/jp/sKeypadIconTiles.bin"
+	.incbin "graphics/naming_screen/sKeypadIconTiles.bin"
 
 	.globl sFontInfos
 sFontInfos: @ 0x829CEA4
@@ -298,11 +298,11 @@ sWirelessLinkDisplayPal: @ 0x82BF4B8
 
 	.globl sWirelessLinkDisplayGfx
 sWirelessLinkDisplayGfx: @ 0x82BF4D8
-	.incbin "graphics/jp/sWirelessLinkDisplayGfx.bin"
+	.incbin "graphics/wireless/sWirelessLinkDisplayGfx.bin"
 
 	.globl sWirelessLinkDisplayTilemap
 sWirelessLinkDisplayTilemap: @ 0x82BF980
-	.incbin "graphics/jp/sWirelessLinkDisplayTilemap.bin"
+	.incbin "graphics/wireless/sWirelessLinkDisplayTilemap.bin"
 
 	.globl sLinkTestDigitsPal
 sLinkTestDigitsPal: @ 0x82BFB6C

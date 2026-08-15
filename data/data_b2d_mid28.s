@@ -15,7 +15,7 @@ gUnknown_846FA13: @ 0x846FA13
 
 	.globl gReflectionEffectPaletteMap
 gReflectionEffectPaletteMap: @ 0x846FA18
-	.incbin "graphics/jp/gReflectionEffectPaletteMap.bin"
+	.incbin "graphics/field_effects/gReflectionEffectPaletteMap.bin"
 
 	.globl gUnknown_846FA28
 gUnknown_846FA28: @ 0x846FA28
@@ -99,7 +99,7 @@ gUnknown_84E4D5C: @ 0x84E4D5C
 
 	.globl gSpritePalette_GeneralFieldEffect1
 gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
-	.incbin "graphics/jp/gSpritePalette_GeneralFieldEffect1.bin"
+	.incbin "graphics/misc/gSpritePalette_GeneralFieldEffect1.bin"
 
 	.globl gUnknown_84E5B30
 gUnknown_84E5B30: @ 0x84E5B30
@@ -781,11 +781,11 @@ gUnknown_84E6CB4: @ 0x84E6CB4
 
 	.globl gTextWindowFrame1_Gfx
 gTextWindowFrame1_Gfx: @ 0x84E6CE0
-	.incbin "graphics/jp/gTextWindowFrame1_Gfx.bin"
+	.incbin "graphics/text_window/gTextWindowFrame1_Gfx.bin"
 
 	.globl gTextWindowFrame1_Pal
 gTextWindowFrame1_Pal: @ 0x84E8360
-	.incbin "graphics/jp/gTextWindowFrame1_Pal.bin"
+	.incbin "graphics/text_window/gTextWindowFrame1_Pal.bin"
 
 	.globl gMessageBox_Gfx
 gMessageBox_Gfx: @ 0x84E85E0
@@ -793,7 +793,7 @@ gMessageBox_Gfx: @ 0x84E85E0
 
 	.globl sTextWindowPalettes
 sTextWindowPalettes: @ 0x84E87A0
-	.incbin "graphics/jp/sTextWindowPalettes.bin"
+	.incbin "graphics/text_window/sTextWindowPalettes.bin"
 
 	.globl gUnknown_84E8840
 gUnknown_84E8840: @ 0x84E8840
@@ -801,7 +801,7 @@ gUnknown_84E8840: @ 0x84E8840
 
 	.globl sWindowFrames
 sWindowFrames: @ 0x84E8860
-	.incbin "graphics/jp/sWindowFrames.bin"
+	.incbin "graphics/text_window/sWindowFrames.bin"
 
 	.globl gNullScriptPtr
 gNullScriptPtr: @ 0x84E8900
@@ -856,4 +856,4 @@ gResetRtcWindowTemplates: @ 0x84E8A4C
 
 	.globl gResetRtcInputTimeWindow
 gResetRtcInputTimeWindow: @ 0x84E8A64
-	.incbin "graphics/jp/gResetRtcInputTimeWindow.bin"
+	.incbin "graphics/misc/gResetRtcInputTimeWindow.bin"

@@ -6,17 +6,17 @@ gUnknown_89158E0: @ 0x89158E0
 
 	.globl gBattleTextboxTiles
 gBattleTextboxTiles: @ 0x8C00000 (JP: LoadBattleTextboxAndBackground)
-	.incbin "graphics/jp/gBattleTextboxTiles.bin"
+	.incbin "graphics/battle_textbox/gBattleTextboxTiles.bin"
 
 
 	.globl gBattleTextboxPalette
 gBattleTextboxPalette: @ 0x8C004EC
-	.incbin "graphics/jp/gBattleTextboxPalette.bin"
+	.incbin "graphics/battle_textbox/gBattleTextboxPalette.bin"
 
 
 	.globl gBattleTextboxTilemap
 gBattleTextboxTilemap: @ 0x8C00530
-	.incbin "graphics/jp/gBattleTextboxTilemap.bin"
+	.incbin "graphics/battle_textbox/gBattleTextboxTilemap.bin"
 
 
 	.globl gUnknown_8C02308
@@ -96,7 +96,7 @@ gUnknown_8C1C700: @ 0x8C1C700
 
 	.globl gMetalShineGfx
 gMetalShineGfx: @ 0x8C1D0F4
-	.incbin "graphics/jp/gMetalShineGfx.bin"
+	.incbin "graphics/misc/gMetalShineGfx.bin"
 
 
 	.globl gMetalShinePalette
@@ -106,62 +106,62 @@ gMetalShinePalette: @ 0x8C1D230
 
 	.globl gMetalShineTilemap
 gMetalShineTilemap: @ 0x8C1D258
-	.incbin "graphics/jp/gMetalShineTilemap.bin"
+	.incbin "graphics/misc/gMetalShineTilemap.bin"
 
 
 	.globl gBattleAnimMaskImage_Curse
 gBattleAnimMaskImage_Curse: @ 0x8C2070C
-	.incbin "graphics/jp/gBattleAnimMaskImage_Curse.bin"
+	.incbin "graphics/battle_anims/gBattleAnimMaskImage_Curse.bin"
 
 
 	.globl gBattleAnimMaskTilemap_Curse
 gBattleAnimMaskTilemap_Curse: @ 0x8C20728
-	.incbin "graphics/jp/gBattleAnimMaskTilemap_Curse.bin"
+	.incbin "graphics/battle_anims/gBattleAnimMaskTilemap_Curse.bin"
 
 
 	.globl gBattleAnimSpritePal_MusicNotes2
 gBattleAnimSpritePal_MusicNotes2: @ 0x8C226B4
-	.incbin "graphics/jp/gBattleAnimSpritePal_MusicNotes2.bin"
+	.incbin "graphics/battle_anims/gBattleAnimSpritePal_MusicNotes2.bin"
 
 
 	.globl gBattleAnimBgImage_Attract
 gBattleAnimBgImage_Attract: @ 0x8C23384
-	.incbin "graphics/jp/gBattleAnimBgImage_Attract.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgImage_Attract.bin"
 
 
 	.globl gBattleAnimBgPalette_Attract
 gBattleAnimBgPalette_Attract: @ 0x8C23DF4
-	.incbin "graphics/jp/gBattleAnimBgPalette_Attract.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgPalette_Attract.bin"
 
 
 	.globl gBattleAnimBgTilemap_Attract
 gBattleAnimBgTilemap_Attract: @ 0x8C23E1C
-	.incbin "graphics/jp/gBattleAnimBgTilemap_Attract.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_Attract.bin"
 
 
 	.globl gBattleAnimBgPalette_ScaryFace
 gBattleAnimBgPalette_ScaryFace: @ 0x8C24A74
-	.incbin "graphics/jp/gBattleAnimBgPalette_ScaryFace.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgPalette_ScaryFace.bin"
 
 
 	.globl gBattleAnimBgImage_ScaryFace
 gBattleAnimBgImage_ScaryFace: @ 0x8C24A9C
-	.incbin "graphics/jp/gBattleAnimBgImage_ScaryFace.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgImage_ScaryFace.bin"
 
 
 	.globl gBattleAnimMaskImage_LightBeam
 gBattleAnimMaskImage_LightBeam: @ 0x8C2A6D8
-	.incbin "graphics/jp/gBattleAnimMaskImage_LightBeam.bin"
+	.incbin "graphics/battle_anims/gBattleAnimMaskImage_LightBeam.bin"
 
 
 	.globl gBattleAnimMaskPalette_LightBeam
 gBattleAnimMaskPalette_LightBeam: @ 0x8C2A778
-	.incbin "graphics/jp/gBattleAnimMaskPalette_LightBeam.bin"
+	.incbin "graphics/battle_anims/gBattleAnimMaskPalette_LightBeam.bin"
 
 
 	.globl gBattleAnimMaskTilemap_LightBeam
 gBattleAnimMaskTilemap_LightBeam: @ 0x8C2A790
-	.incbin "graphics/jp/gBattleAnimMaskTilemap_LightBeam.bin"
+	.incbin "graphics/battle_anims/gBattleAnimMaskTilemap_LightBeam.bin"
 
 
 	.globl gUnknown_8C2CF60
@@ -181,72 +181,72 @@ gUnknown_8C2D1C4: @ 0x8C2D1C4
 
 	.globl gStatAnim_Gfx
 gStatAnim_Gfx: @ 0x8C2D7C4
-	.incbin "graphics/jp/gStatAnim_Gfx.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Gfx.bin"
 
 
 	.globl gStatAnim_Increase_Tilemap
 gStatAnim_Increase_Tilemap: @ 0x8C2D9D4
-	.incbin "graphics/jp/gStatAnim_Increase_Tilemap.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Increase_Tilemap.bin"
 
 
 	.globl gStatAnim_Decrease_Tilemap
 gStatAnim_Decrease_Tilemap: @ 0x8C2DAF0
-	.incbin "graphics/jp/gStatAnim_Decrease_Tilemap.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Decrease_Tilemap.bin"
 
 
 	.globl gStatAnim_Defense_Pal
 gStatAnim_Defense_Pal: @ 0x8C2DC0C
-	.incbin "graphics/jp/gStatAnim_Defense_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Defense_Pal.bin"
 
 
 	.globl gStatAnim_Attack_Pal
 gStatAnim_Attack_Pal: @ 0x8C2DC2C
-	.incbin "graphics/jp/gStatAnim_Attack_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Attack_Pal.bin"
 
 
 	.globl gStatAnim_Accuracy_Pal
 gStatAnim_Accuracy_Pal: @ 0x8C2DC4C
-	.incbin "graphics/jp/gStatAnim_Accuracy_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Accuracy_Pal.bin"
 
 
 	.globl gStatAnim_Speed_Pal
 gStatAnim_Speed_Pal: @ 0x8C2DC6C
-	.incbin "graphics/jp/gStatAnim_Speed_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Speed_Pal.bin"
 
 
 	.globl gStatAnim_Multiple_Pal
 gStatAnim_Multiple_Pal: @ 0x8C2DC8C
-	.incbin "graphics/jp/gStatAnim_Multiple_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Multiple_Pal.bin"
 
 
 	.globl gStatAnim_Evasion_Pal
 gStatAnim_Evasion_Pal: @ 0x8C2DCAC
-	.incbin "graphics/jp/gStatAnim_Evasion_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_Evasion_Pal.bin"
 
 
 	.globl gStatAnim_SpAttack_Pal
 gStatAnim_SpAttack_Pal: @ 0x8C2DCCC
-	.incbin "graphics/jp/gStatAnim_SpAttack_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_SpAttack_Pal.bin"
 
 
 	.globl gStatAnim_SpDefense_Pal
 gStatAnim_SpDefense_Pal: @ 0x8C2DCEC
-	.incbin "graphics/jp/gStatAnim_SpDefense_Pal.bin"
+	.incbin "graphics/battle_anims/gStatAnim_SpDefense_Pal.bin"
 
 
 	.globl gCureBubblesGfx
 gCureBubblesGfx: @ 0x8C2DD0C
-	.incbin "graphics/jp/gCureBubblesGfx.bin"
+	.incbin "graphics/misc/gCureBubblesGfx.bin"
 
 
 	.globl gCureBubblesPal
 gCureBubblesPal: @ 0x8C2DE48
-	.incbin "graphics/jp/gCureBubblesPal.bin"
+	.incbin "graphics/misc/gCureBubblesPal.bin"
 
 
 	.globl gCureBubblesTilemap
 gCureBubblesTilemap: @ 0x8C2DE68
-	.incbin "graphics/jp/gCureBubblesTilemap.bin"
+	.incbin "graphics/misc/gCureBubblesTilemap.bin"
 
 
 	.globl gUnknown_8C2EAF4
@@ -271,47 +271,47 @@ gUnknown_8C50000: @ 0x8C50000
 
 	.globl gBattleVSFrame_Gfx
 gBattleVSFrame_Gfx: @ 0x8D77994
-	.incbin "graphics/jp/gBattleVSFrame_Gfx.bin"
+	.incbin "graphics/misc/gBattleVSFrame_Gfx.bin"
 
 
 	.globl gBattleVSFrame_Tilemap
 gBattleVSFrame_Tilemap: @ 0x8D77A7C
-	.incbin "graphics/jp/gBattleVSFrame_Tilemap.bin"
+	.incbin "graphics/misc/gBattleVSFrame_Tilemap.bin"
 
 
 	.globl gBattleVSFrame_Pal
 gBattleVSFrame_Pal: @ 0x8D77B88
-	.incbin "graphics/jp/gBattleVSFrame_Pal.bin"
+	.incbin "graphics/misc/gBattleVSFrame_Pal.bin"
 
 
 	.globl gVsLettersGfx
 gVsLettersGfx: @ 0x8D77BB0
-	.incbin "graphics/jp/gVsLettersGfx.bin"
+	.incbin "graphics/misc/gVsLettersGfx.bin"
 
 
 	.globl gBattleEnvironmentTiles_Water
 gBattleEnvironmentTiles_Water: @ 0x8D7A1AC
-	.incbin "graphics/jp/gBattleEnvironmentTiles_Water.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTiles_Water.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Water
 gBattleEnvironmentTilemap_Water: @ 0x8D7A7C4
-	.incbin "graphics/jp/gBattleEnvironmentTilemap_Water.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTilemap_Water.bin"
 
 
 	.globl gBattleEnvironmentTiles_Cave
 gBattleEnvironmentTiles_Cave: @ 0x8D7BBB8
-	.incbin "graphics/jp/gBattleEnvironmentTiles_Cave.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTiles_Cave.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Cave
 gBattleEnvironmentTilemap_Cave: @ 0x8D7C1F8
-	.incbin "graphics/jp/gBattleEnvironmentTilemap_Cave.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTilemap_Cave.bin"
 
 
 	.globl gBattleEnvironmentTiles_Building
 gBattleEnvironmentTiles_Building: @ 0x8D7C4E4
-	.incbin "graphics/jp/gBattleEnvironmentTiles_Building.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTiles_Building.bin"
 
 
 	.globl gBattleEnvironmentPalette_Frontier
@@ -322,27 +322,27 @@ gBattleEnvironmentPalette_Frontier: @ 0x8D7CA90
 
 	.globl gBattleEnvironmentTilemap_Building
 gBattleEnvironmentTilemap_Building: @ 0x8D7CACC
-	.incbin "graphics/jp/gBattleEnvironmentTilemap_Building.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTilemap_Building.bin"
 
 
 	.globl gBattleEnvironmentTiles_Stadium
 gBattleEnvironmentTiles_Stadium: @ 0x8D7CD7C
-	.incbin "graphics/jp/gBattleEnvironmentTiles_Stadium.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTiles_Stadium.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Stadium
 gBattleEnvironmentTilemap_Stadium: @ 0x8D7D384
-	.incbin "graphics/jp/gBattleEnvironmentTilemap_Stadium.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTilemap_Stadium.bin"
 
 
 	.globl gBattleEnvironmentTiles_Rayquaza
 gBattleEnvironmentTiles_Rayquaza: @ 0x8D7D634
-	.incbin "graphics/jp/gBattleEnvironmentTiles_Rayquaza.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTiles_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentTilemap_Rayquaza
 gBattleEnvironmentTilemap_Rayquaza: @ 0x8D7DCA8
-	.incbin "graphics/jp/gBattleEnvironmentTilemap_Rayquaza.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentTilemap_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentPalette_Kyogre
@@ -545,42 +545,42 @@ gBattleEnvironmentPalette_Rayquaza: @ 0x8D7E2D8
 
 	.globl gBattleEnvironmentAnimTiles_Underwater
 gBattleEnvironmentAnimTiles_Underwater: @ 0x8D7FA9C
-	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Underwater.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTiles_Underwater.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Underwater
 gBattleEnvironmentAnimTilemap_Underwater: @ 0x8D7FF68
-	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Underwater.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTilemap_Underwater.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Cave
 gBattleEnvironmentAnimTiles_Cave: @ 0x8D816B4
-	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Cave.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTiles_Cave.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Cave
 gBattleEnvironmentAnimTilemap_Cave: @ 0x8D81ED0
-	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Cave.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTilemap_Cave.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Building
 gBattleEnvironmentAnimTiles_Building: @ 0x8D82178
-	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Building.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTiles_Building.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Building
 gBattleEnvironmentAnimTilemap_Building: @ 0x8D82588
-	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Building.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTilemap_Building.bin"
 
 
 	.globl gBattleEnvironmentAnimTiles_Rayquaza
 gBattleEnvironmentAnimTiles_Rayquaza: @ 0x8D826AC
-	.incbin "graphics/jp/gBattleEnvironmentAnimTiles_Rayquaza.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTiles_Rayquaza.bin"
 
 
 	.globl gBattleEnvironmentAnimTilemap_Rayquaza
 gBattleEnvironmentAnimTilemap_Rayquaza: @ 0x8D82D14
-	.incbin "graphics/jp/gBattleEnvironmentAnimTilemap_Rayquaza.bin"
+	.incbin "graphics/battle_environment/gBattleEnvironmentAnimTilemap_Rayquaza.bin"
 
 
 	.globl gUnknown_8D82FB4
@@ -645,7 +645,7 @@ gUnknown_8D855CC: @ 0x8D855CC
 
 	.globl gBattleWindowTextPalette
 gBattleWindowTextPalette: @ 0x8D855E4
-	.incbin "graphics/jp/gBattleWindowTextPalette.bin"
+	.incbin "graphics/misc/gBattleWindowTextPalette.bin"
 
 
 	.globl gUnknown_8D85604
@@ -665,12 +665,12 @@ gUnknown_8D856AC: @ 0x8D856AC
 
 	.globl gMultiBattleIntroBg_Opponent_Tilemap
 gMultiBattleIntroBg_Opponent_Tilemap: @ 0x8D8578C
-	.incbin "graphics/jp/gMultiBattleIntroBg_Opponent_Tilemap.bin"
+	.incbin "graphics/misc/gMultiBattleIntroBg_Opponent_Tilemap.bin"
 
 
 	.globl gMultiBattleIntroBg_Player_Tilemap
 gMultiBattleIntroBg_Player_Tilemap: @ 0x8D85A00
-	.incbin "graphics/jp/gMultiBattleIntroBg_Player_Tilemap.bin"
+	.incbin "graphics/misc/gMultiBattleIntroBg_Player_Tilemap.bin"
 
 
 	.globl gUnknown_8D85C34
@@ -790,12 +790,12 @@ gUnknown_8D8CCAC: @ 0x8D8CCAC
 
 	.globl gBattleAnimBgTilemap_Sandstorm
 gBattleAnimBgTilemap_Sandstorm: @ 0x8D8D3F4
-	.incbin "graphics/jp/gBattleAnimBgTilemap_Sandstorm.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_Sandstorm.bin"
 
 
 	.globl gBattleAnimBgImage_Sandstorm
 gBattleAnimBgImage_Sandstorm: @ 0x8D8D570
-	.incbin "graphics/jp/gBattleAnimBgImage_Sandstorm.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgImage_Sandstorm.bin"
 
 
 	.globl gBattleAnimSpritePal_FlyingDirt
@@ -899,7 +899,7 @@ gUnknown_8D8EBD8: @ 0x8D8EBD8
 
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
-	.incbin "graphics/jp/gBattleAnimBackgroundImageMuddyWater_Pal.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin"
 
 
 	.globl gUnknown_8D9154C
@@ -919,47 +919,47 @@ gUnknown_8D927A0: @ 0x8D927A0
 
 	.globl gBattleAnimFogTilemap
 gBattleAnimFogTilemap: @ 0x8D93294
-	.incbin "graphics/jp/gBattleAnimFogTilemap.bin"
+	.incbin "graphics/battle_anims/gBattleAnimFogTilemap.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFacePlayer
 gBattleAnimBgTilemap_ScaryFacePlayer: @ 0x8D9354C
-	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFacePlayer.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFacePlayer.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFaceOpponent
 gBattleAnimBgTilemap_ScaryFaceOpponent: @ 0x8D93730
-	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFaceOpponent.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFaceOpponent.bin"
 
 
 	.globl gBattleAnimBgTilemap_ScaryFaceContest
 gBattleAnimBgTilemap_ScaryFaceContest: @ 0x8D93914
-	.incbin "graphics/jp/gBattleAnimBgTilemap_ScaryFaceContest.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_ScaryFaceContest.bin"
 
 
 	.globl gBattleAnimBgImage_Surf
 gBattleAnimBgImage_Surf: @ 0x8D94A6C
-	.incbin "graphics/jp/gBattleAnimBgImage_Surf.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgImage_Surf.bin"
 
 
 	.globl gBattleAnimBgPalette_Surf
 gBattleAnimBgPalette_Surf: @ 0x8D95D8C
-	.incbin "graphics/jp/gBattleAnimBgPalette_Surf.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgPalette_Surf.bin"
 
 
 	.globl gBattleAnimBgTilemap_SurfOpponent
 gBattleAnimBgTilemap_SurfOpponent: @ 0x8D95DB4
-	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfOpponent.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfOpponent.bin"
 
 
 	.globl gBattleAnimBgTilemap_SurfPlayer
 gBattleAnimBgTilemap_SurfPlayer: @ 0x8D96084
-	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfPlayer.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfPlayer.bin"
 
 
 	.globl gBattleAnimBgTilemap_SurfContest
 gBattleAnimBgTilemap_SurfContest: @ 0x8D96358
-	.incbin "graphics/jp/gBattleAnimBgTilemap_SurfContest.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBgTilemap_SurfContest.bin"
 
 
 	.globl gUnknown_8D967A0
@@ -1264,7 +1264,7 @@ gUnknown_8DBA860: @ 0x8DBA860
 
 	.globl gRouletteMenu_Gfx
 gRouletteMenu_Gfx: @ 0x8DBC590
-	.incbin "graphics/jp/gRouletteMenu_Gfx.bin"
+	.incbin "graphics/roulette/gRouletteMenu_Gfx.bin"
 
 
 	.globl gRouletteWheel_Gfx

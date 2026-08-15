@@ -54,7 +54,7 @@ sSaveFailedClockPal: @ 0x85CD264
 
 	.globl sSaveFailedClockGfx
 sSaveFailedClockGfx: @ 0x85CD284
-	.incbin "graphics/jp/sSaveFailedClockGfx.bin"
+	.incbin "graphics/misc/sSaveFailedClockGfx.bin"
 
 	.globl sRegicePathCoords
 sRegicePathCoords: @ 0x85CD314
@@ -132,7 +132,7 @@ sClearSaveBgTemplates: @ 0x85CDB90
 
 	.globl sClearSaveTextWindow
 sClearSaveTextWindow: @ 0x85CDB98
-	.incbin "graphics/jp/sClearSaveTextWindow.bin"
+	.incbin "graphics/misc/sClearSaveTextWindow.bin"
 
 	.globl sClearSaveYesNo
 sClearSaveYesNo: @ 0x85CDBA8
@@ -459,7 +459,7 @@ gUnknown_85D39D4: @ 0x85D39D4
 
 	.globl sDummyPicData
 sDummyPicData: @ 0x85D3AB8
-	.incbin "graphics/jp/sDummyPicData.bin"
+	.incbin "graphics/misc/sDummyPicData.bin"
 
 	.globl sOamData_Normal
 sOamData_Normal: @ 0x85D3AC4
@@ -694,7 +694,7 @@ gUnknown_85D688C: @ 0x85D688C
 
 	.globl sBattlePalaceFunctions
 sBattlePalaceFunctions: @ 0x85D68CC
-	.incbin "graphics/jp/sBattlePalaceFunctions.bin"
+	.incbin "graphics/battle_palace/sBattlePalaceFunctions.bin"
 
 	.globl sBattlePalaceEarlyPrizes
 sBattlePalaceEarlyPrizes: @ 0x85D68F4
@@ -885,7 +885,7 @@ sBirchDexRatingTexts: @ 0x85D7AB0
 
 	.globl gStandardMenuPalette
 gStandardMenuPalette: @ 0x85D7B04
-	.incbin "graphics/jp/gStandardMenuPalette.bin"
+	.incbin "graphics/misc/gStandardMenuPalette.bin"
 
 	.globl gUnknown_85D7B24
 gUnknown_85D7B24: @ 0x85D7B24

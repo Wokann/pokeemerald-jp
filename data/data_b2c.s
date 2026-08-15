@@ -132,23 +132,23 @@ gUnknown_85ED570: @ 0x85ED570
 
 	.globl sPokedexAreaMap_Pal
 sPokedexAreaMap_Pal: @ 0x85ED590
-	.incbin "graphics/jp/sPokedexAreaMap_Pal.bin"
+	.incbin "graphics/misc/sPokedexAreaMap_Pal.bin"
 
 	.globl sPokedexAreaMap_Gfx
 sPokedexAreaMap_Gfx: @ 0x85ED5F0
-	.incbin "graphics/jp/sPokedexAreaMap_Gfx.bin"
+	.incbin "graphics/misc/sPokedexAreaMap_Gfx.bin"
 
 	.globl sPokedexAreaMap_Tilemap
 sPokedexAreaMap_Tilemap: @ 0x85EE344
-	.incbin "graphics/jp/sPokedexAreaMap_Tilemap.bin"
+	.incbin "graphics/misc/sPokedexAreaMap_Tilemap.bin"
 
 	.globl sPokedexAreaMapAffine_Gfx
 sPokedexAreaMapAffine_Gfx: @ 0x85EE658
-	.incbin "graphics/jp/sPokedexAreaMapAffine_Gfx.bin"
+	.incbin "graphics/misc/sPokedexAreaMapAffine_Gfx.bin"
 
 	.globl sPokedexAreaMapAffine_Tilemap
 sPokedexAreaMapAffine_Tilemap: @ 0x85EF3B4
-	.incbin "graphics/jp/sPokedexAreaMapAffine_Tilemap.bin"
+	.incbin "graphics/misc/sPokedexAreaMapAffine_Tilemap.bin"
 
 	.globl gUnknown_85EF704
 gUnknown_85EF704: @ 0x85EF704
@@ -212,19 +212,19 @@ PokenavMenuCallbacks: @ 0x85EF83C
 
 	.globl gPokenavHeader_Pal
 gPokenavHeader_Pal: @ 0x85EF9E0
-	.incbin "graphics/jp/gPokenavHeader_Pal.bin"
+	.incbin "graphics/pokenav/gPokenavHeader_Pal.bin"
 
 	.globl gPokenavHeader_Gfx
 gPokenavHeader_Gfx: @ 0x85EFA00
-	.incbin "graphics/jp/gPokenavHeader_Gfx.bin"
+	.incbin "graphics/pokenav/gPokenavHeader_Gfx.bin"
 
 	.globl gPokenavHeader_Tilemap
 gPokenavHeader_Tilemap: @ 0x85EFC2C
-	.incbin "graphics/jp/gPokenavHeader_Tilemap.bin"
+	.incbin "graphics/pokenav/gPokenavHeader_Tilemap.bin"
 
 	.globl gPokenavLeftHeader_Pal
 gPokenavLeftHeader_Pal: @ 0x85F021C
-	.incbin "graphics/jp/gPokenavLeftHeader_Pal.bin"
+	.incbin "graphics/pokenav/gPokenavLeftHeader_Pal.bin"
 
 	.globl gPokenavMainMenuBgTemplates
 gPokenavMainMenuBgTemplates: @ 0x85F13C8
@@ -248,7 +248,7 @@ sSpinningPokenavSpriteSheet: @ 0x85F1410
 
 	.globl sSpinningNavgearPalettes
 sSpinningNavgearPalettes: @ 0x85F1418
-	.incbin "graphics/jp/sSpinningNavgearPalettes.bin"
+	.incbin "graphics/misc/sSpinningNavgearPalettes.bin"
 
 	.globl sMenuLeftHeaderSpriteSheet
 sMenuLeftHeaderSpriteSheet: @ 0x85F1428
@@ -296,7 +296,7 @@ sListArrowSpriteSheets: @ 0x85F15C0
 
 	.globl sListArrowPalettes
 sListArrowPalettes: @ 0x85F15C8
-	.incbin "graphics/jp/sListArrowPalettes.bin"
+	.incbin "graphics/list_ui/sListArrowPalettes.bin"
 
 	.globl sSpriteTemplate_RightArrow
 sSpriteTemplate_RightArrow: @ 0x85F15E0
@@ -330,23 +330,23 @@ gUnknown_85F164A: @ 0x85F164A
 
 	.globl sPokenavBgDotsTiles
 sPokenavBgDotsTiles: @ 0x85F165C
-	.incbin "graphics/jp/sPokenavBgDotsTiles.bin"
+	.incbin "graphics/pokenav/sPokenavBgDotsTiles.bin"
 
 	.globl sPokenavBgDotsTilemap
 sPokenavBgDotsTilemap: @ 0x85F1670
-	.incbin "graphics/jp/sPokenavBgDotsTilemap.bin"
+	.incbin "graphics/pokenav/sPokenavBgDotsTilemap.bin"
 
 	.globl gPokenavMessageBox_Pal
 gPokenavMessageBox_Pal: @ 0x85F1710
-	.incbin "graphics/jp/gPokenavMessageBox_Pal.bin"
+	.incbin "graphics/pokenav/gPokenavMessageBox_Pal.bin"
 
 	.globl gPokenavMessageBox_Gfx
 gPokenavMessageBox_Gfx: @ 0x85F1730
-	.incbin "graphics/jp/gPokenavMessageBox_Gfx.bin"
+	.incbin "graphics/pokenav/gPokenavMessageBox_Gfx.bin"
 
 	.globl gPokenavMessageBox_Tilemap
 gPokenavMessageBox_Tilemap: @ 0x85F1780
-	.incbin "graphics/jp/gPokenavMessageBox_Tilemap.bin"
+	.incbin "graphics/pokenav/gPokenavMessageBox_Tilemap.bin"
 
 	.globl sPokenavDeviceBgPal
 sPokenavDeviceBgPal: @ 0x85F1838
@@ -355,11 +355,11 @@ sPokenavDeviceBgPal: @ 0x85F1838
 
 	.globl sPokenavDeviceBgTiles
 sPokenavDeviceBgTiles: @ 0x85F1858
-	.incbin "graphics/jp/sPokenavDeviceBgTiles.bin"
+	.incbin "graphics/pokenav/sPokenavDeviceBgTiles.bin"
 
 	.globl sPokenavDeviceBgTilemap
 sPokenavDeviceBgTilemap: @ 0x85F1AE0
-	.incbin "graphics/jp/sPokenavDeviceBgTilemap.bin"
+	.incbin "graphics/pokenav/sPokenavDeviceBgTilemap.bin"
 
 	.globl sPokenavMainMenuBgTemplates
 sPokenavMainMenuBgTemplates: @ 0x85F26FC
@@ -375,11 +375,11 @@ sPokenavOptionsSpriteSheets: @ 0x85F272C
 
 	.globl sPokenavOptionsSpritePalettes
 sPokenavOptionsSpritePalettes: @ 0x85F273C
-	.incbin "graphics/jp/sPokenavOptionsSpritePalettes.bin"
+	.incbin "graphics/pokenav/sPokenavOptionsSpritePalettes.bin"
 
 	.globl sPokenavMenuOptionLabelGfx
 sPokenavMenuOptionLabelGfx: @ 0x85F27A8
-	.incbin "graphics/jp/sPokenavMenuOptionLabelGfx.bin"
+	.incbin "graphics/pokenav/sPokenavMenuOptionLabelGfx.bin"
 
 	.globl gUnknown_85F27AC
 gUnknown_85F27AC: @ 0x85F27AC
@@ -431,41 +431,41 @@ gText_CallCantBeMadeHere: @ 0x85F3E99
 
 	.globl sMatchCallUI_Pal
 sMatchCallUI_Pal: @ 0x85F3EB0
-	.incbin "graphics/jp/sMatchCallUI_Pal.bin"
+	.incbin "graphics/misc/sMatchCallUI_Pal.bin"
 
 	.globl sMatchCallUI_Gfx
 sMatchCallUI_Gfx: @ 0x85F3ED0
-	.incbin "graphics/jp/sMatchCallUI_Gfx.bin"
+	.incbin "graphics/misc/sMatchCallUI_Gfx.bin"
 
 	.globl sMatchCallUI_Tilemap
 	.globl sMatchCallUI_Tilemap
 sMatchCallUI_Tilemap: @ 0x5F3F74
-	.incbin "graphics/jp/sMatchCallUI_Tilemap.bin"
+	.incbin "graphics/misc/sMatchCallUI_Tilemap.bin"
 
 	.globl sOptionsCursor_Pal
 sOptionsCursor_Pal: @ 0x5F4038
-	.incbin "graphics/jp/sOptionsCursor_Pal.bin"
+	.incbin "graphics/misc/sOptionsCursor_Pal.bin"
 
 	.globl sOptionsCursor_Gfx
 sOptionsCursor_Gfx: @ 0x5F4058
-	.incbin "graphics/jp/sOptionsCursor_Gfx.bin"
+	.incbin "graphics/misc/sOptionsCursor_Gfx.bin"
 
 
 	.globl sCallWindow_Pal
 sCallWindow_Pal: @ 0x85F4080
-	.incbin "graphics/jp/sCallWindow_Pal.bin"
+	.incbin "graphics/misc/sCallWindow_Pal.bin"
 
 	.globl sListWindow_Pal
 sListWindow_Pal: @ 0x85F40A0
-	.incbin "graphics/jp/sListWindow_Pal.bin"
+	.incbin "graphics/list_ui/sListWindow_Pal.bin"
 
 	.globl sPokeball_Pal
 sPokeball_Pal: @ 0x85F40C0
-	.incbin "graphics/jp/sPokeball_Pal.bin"
+	.incbin "graphics/misc/sPokeball_Pal.bin"
 
 	.globl sPokeball_Gfx
 sPokeball_Gfx: @ 0x85F4100
-	.incbin "graphics/jp/sPokeball_Gfx.bin"
+	.incbin "graphics/misc/sPokeball_Gfx.bin"
 
 	.globl sMatchCallBgTemplates
 sMatchCallBgTemplates: @ 0x85F412C
@@ -507,7 +507,7 @@ sOptionsCursorSpriteSheets: @ 0x85F41B0
 	.globl sOptionsCursorSpritePalettes
 	.globl sOptionsCursorSpritePalettes
 sOptionsCursorSpritePalettes: @ 0x5F41B8
-	.incbin "graphics/jp/sOptionsCursorSpritePalettes.bin"
+	.incbin "graphics/misc/sOptionsCursorSpritePalettes.bin"
 
 	.globl sOptionsCursorOamData
 sOptionsCursorOamData: @ 0x5F41C8
@@ -530,20 +530,20 @@ sTrainerPicSpriteTemplate: @ 0x85F41F0
 
 	.globl sMapSecInfoWindow_Pal
 sMapSecInfoWindow_Pal: @ 0x85F4208
-	.incbin "graphics/jp/sMapSecInfoWindow_Pal.bin"
+	.incbin "graphics/misc/sMapSecInfoWindow_Pal.bin"
 
 	.globl gRegionMapCityZoomTiles_Pal
 gRegionMapCityZoomTiles_Pal: @ 0x85F4228
-	.incbin "graphics/jp/gRegionMapCityZoomTiles_Pal.bin"
+	.incbin "graphics/misc/gRegionMapCityZoomTiles_Pal.bin"
 
 	.globl sRegionMapCityZoomTiles_Gfx
 	.globl sRegionMapCityZoomTiles_Gfx
 sRegionMapCityZoomTiles_Gfx: @ 0x5F4248
-	.incbin "graphics/jp/sRegionMapCityZoomTiles_Gfx.bin"
+	.incbin "graphics/misc/sRegionMapCityZoomTiles_Gfx.bin"
 
 	.globl gRegionMapCityZoomText_Gfx
 gRegionMapCityZoomText_Gfx: @ 0x5F4A98
-	.incbin "graphics/jp/gRegionMapCityZoomText_Gfx.bin"
+	.incbin "graphics/misc/gRegionMapCityZoomText_Gfx.bin"
 
 
 	.globl sRegionMapBgTemplates
@@ -560,7 +560,7 @@ sCityZoomTextSpriteSheet: @ 0x85F4D1C
 
 	.globl sCityZoomTilesSpritePalette
 sCityZoomTilesSpritePalette: @ 0x85F4D24
-	.incbin "graphics/jp/sCityZoomTilesSpritePalette.bin"
+	.incbin "graphics/misc/sCityZoomTilesSpritePalette.bin"
 
 	.globl sMapSecInfoWindowTemplate
 sMapSecInfoWindowTemplate: @ 0x85F4D34
@@ -582,39 +582,39 @@ sCityZoomTextSpriteTemplate: @ 0x85F4DF4
 
 	.globl gPokenavCondition_Pal
 gPokenavCondition_Pal: @ 0x85F4E0C
-	.incbin "graphics/jp/gPokenavCondition_Pal.bin"
+	.incbin "graphics/pokenav/gPokenavCondition_Pal.bin"
 
 	.globl gConditionGraphData_Pal
 gConditionGraphData_Pal: @ 0x85F4E2C
-	.incbin "graphics/jp/gConditionGraphData_Pal.bin"
+	.incbin "graphics/pokenav_conditions/gConditionGraphData_Pal.bin"
 
 	.globl gConditionText_Pal
 gConditionText_Pal: @ 0x85F4E4C
-	.incbin "graphics/jp/gConditionText_Pal.bin"
+	.incbin "graphics/pokenav_conditions/gConditionText_Pal.bin"
 
 	.globl gPokenavCondition_Gfx
 gPokenavCondition_Gfx: @ 0x85F4E6C
-	.incbin "graphics/jp/gPokenavCondition_Gfx.bin"
+	.incbin "graphics/pokenav/gPokenavCondition_Gfx.bin"
 
 	.globl gPokenavCondition_Tilemap
 gPokenavCondition_Tilemap: @ 0x85F5600
-	.incbin "graphics/jp/gPokenavCondition_Tilemap.bin"
+	.incbin "graphics/pokenav/gPokenavCondition_Tilemap.bin"
 
 	.globl sConditionGraphData_Gfx
 sConditionGraphData_Gfx: @ 0x85F57EC
-	.incbin "graphics/jp/sConditionGraphData_Gfx.bin"
+	.incbin "graphics/pokenav_conditions/sConditionGraphData_Gfx.bin"
 
 	.globl sConditionGraphData_Tilemap
 sConditionGraphData_Tilemap: @ 0x85F5800
-	.incbin "graphics/jp/sConditionGraphData_Tilemap.bin"
+	.incbin "graphics/pokenav_conditions/sConditionGraphData_Tilemap.bin"
 
 	.globl gPokenavOptions_Tilemap
 gPokenavOptions_Tilemap: @ 0x85F58FC
-	.incbin "graphics/jp/gPokenavOptions_Tilemap.bin"
+	.incbin "graphics/pokenav/gPokenavOptions_Tilemap.bin"
 
 	.globl sPokenavMonMarkings_Pal
 sPokenavMonMarkings_Pal: @ 0x85F5944
-	.incbin "graphics/jp/sPokenavMonMarkings_Pal.bin"
+	.incbin "graphics/pokenav/sPokenavMonMarkings_Pal.bin"
 
 	.globl sMenuBgTemplates
 sMenuBgTemplates: @ 0x85F5964
@@ -655,15 +655,15 @@ sConditionSearchResultFramePal: @ 0x85F59D0
 
 	.globl sConditionSearchResultTiles
 sConditionSearchResultTiles: @ 0x85F59F0
-	.incbin "graphics/jp/sConditionSearchResultTiles.bin"
+	.incbin "graphics/pokenav_conditions/sConditionSearchResultTiles.bin"
 
 	.globl sConditionSearchResultTilemap
 sConditionSearchResultTilemap: @ 0x85F5AB8
-	.incbin "graphics/jp/sConditionSearchResultTilemap.bin"
+	.incbin "graphics/pokenav_conditions/sConditionSearchResultTilemap.bin"
 
 	.globl sListBg_Pal
 sListBg_Pal: @ 0x85F5B7C
-	.incbin "graphics/jp/sListBg_Pal.bin"
+	.incbin "graphics/list_ui/sListBg_Pal.bin"
 
 	.globl sConditionSearchResultBgTemplates
 sConditionSearchResultBgTemplates: @ 0x85F5B9C
@@ -692,15 +692,15 @@ sMonRibbonListFramePal: @ 0x85F5BD4
 
 	.globl sMonRibbonListFrameTiles
 sMonRibbonListFrameTiles: @ 0x85F5BF4
-	.incbin "graphics/jp/sMonRibbonListFrameTiles.bin"
+	.incbin "graphics/pokemon_summary/sMonRibbonListFrameTiles.bin"
 
 	.globl sMonRibbonListFrameTilemap
 sMonRibbonListFrameTilemap: @ 0x85F5CBC
-	.incbin "graphics/jp/sMonRibbonListFrameTilemap.bin"
+	.incbin "graphics/pokemon_summary/sMonRibbonListFrameTilemap.bin"
 
 	.globl sMonRibbonListUi_Pal
 sMonRibbonListUi_Pal: @ 0x85F5D80
-	.incbin "graphics/jp/sMonRibbonListUi_Pal.bin"
+	.incbin "graphics/pokemon_summary/sMonRibbonListUi_Pal.bin"
 
 	.globl sMonRibbonListBgTemplates
 sMonRibbonListBgTemplates: @ 0x85F5DA0
@@ -981,52 +981,52 @@ gGiftRibbonDescriptionPointers: @ 0x85F628C
 
 	.globl gPokenavRibbonsSummaryBg_Pal
 gPokenavRibbonsSummaryBg_Pal: @ 0x85F648C
-	.incbin "graphics/jp/gPokenavRibbonsSummaryBg_Pal.bin"
+	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Pal.bin"
 
 	.globl gPokenavRibbonsSummaryBg_Gfx
 	.globl gPokenavRibbonsSummaryBg_Gfx
 gPokenavRibbonsSummaryBg_Gfx: @ 0x5F64AC
-	.incbin "graphics/jp/gPokenavRibbonsSummaryBg_Gfx.bin"
+	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Gfx.bin"
 
 	.globl sRibbonIcons2_Pal
 sRibbonIcons2_Pal: @ 0x5F64B0
-	.incbin "graphics/jp/sRibbonIcons2_Pal.bin"
+	.incbin "graphics/ribbons/sRibbonIcons2_Pal.bin"
 
 	.globl sRibbonIcons3_Pal
 sRibbonIcons3_Pal: @ 0x5F64C0
-	.incbin "graphics/jp/sRibbonIcons3_Pal.bin"
+	.incbin "graphics/ribbons/sRibbonIcons3_Pal.bin"
 
 	.globl sRibbonIcons4_Pal
 sRibbonIcons4_Pal: @ 0x5F64D0
-	.incbin "graphics/jp/sRibbonIcons4_Pal.bin"
+	.incbin "graphics/ribbons/sRibbonIcons4_Pal.bin"
 
 	.globl sRibbonIcons5_Pal
 sRibbonIcons5_Pal: @ 0x5F64E0
-	.incbin "graphics/jp/sRibbonIcons5_Pal.bin"
+	.incbin "graphics/ribbons/sRibbonIcons5_Pal.bin"
 
 
 	.globl gPokenavRibbonsSummaryBg_Tilemap
 gPokenavRibbonsSummaryBg_Tilemap: @ 0x85F65A8
-	.incbin "graphics/jp/gPokenavRibbonsSummaryBg_Tilemap.bin"
+	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Tilemap.bin"
 
 	.globl sRibbonIcons1_Pal
 sRibbonIcons1_Pal: @ 0x85F6674
-	.incbin "graphics/jp/sRibbonIcons1_Pal.bin"
+	.incbin "graphics/ribbons/sRibbonIcons1_Pal.bin"
 
 	.globl sMonInfo_Pal
 	.globl sMonInfo_Pal
 sMonInfo_Pal: @ 0x5F6714
-	.incbin "graphics/jp/sMonInfo_Pal.bin"
+	.incbin "graphics/pokemon_summary/sMonInfo_Pal.bin"
 
 	.globl sRibbonIconsBig_Gfx
 sRibbonIconsBig_Gfx: @ 0x5F6730
-	.incbin "graphics/jp/sRibbonIconsBig_Gfx.bin"
+	.incbin "graphics/ribbons/sRibbonIconsBig_Gfx.bin"
 
 
 	.globl sRibbonIconsSmall_Gfx
 	.globl sRibbonIconsSmall_Gfx
 sRibbonIconsSmall_Gfx: @ 0x5F6734
-	.incbin "graphics/jp/sRibbonIconsSmall_Gfx.bin"
+	.incbin "graphics/ribbons/sRibbonIconsSmall_Gfx.bin"
 
 	.globl sPokenavRibbonsBgTemplates
 sPokenavRibbonsBgTemplates: @ 0x5F7210
@@ -1059,15 +1059,15 @@ sRibbonMonListIndexWindowTemplate: @ 0x85F7248
 
 	.globl sRibbonGfxData
 sRibbonGfxData: @ 0x85F7258
-	.incbin "graphics/jp/sRibbonGfxData.bin"
+	.incbin "graphics/ribbons/sRibbonGfxData.bin"
 
 	.globl sSpriteSheet_RibbonIconsBig
 sSpriteSheet_RibbonIconsBig: @ 0x85F72D8
-	.incbin "graphics/jp/sSpriteSheet_RibbonIconsBig.bin"
+	.incbin "graphics/misc/sSpriteSheet_RibbonIconsBig.bin"
 
 	.globl sSpritePalettes_RibbonIcons
 sSpritePalettes_RibbonIcons: @ 0x85F72E0
-	.incbin "graphics/jp/sSpritePalettes_RibbonIcons.bin"
+	.incbin "graphics/misc/sSpritePalettes_RibbonIcons.bin"
 
 	.globl sSpriteTemplate_RibbonIconBig
 sSpriteTemplate_RibbonIconBig: @ 0x85F7364
@@ -1197,11 +1197,11 @@ sConditionMonPicPalDescriptor: @ 0x85FA8B8
 
 	.globl sConditionSelectionIconsSheets
 sConditionSelectionIconsSheets: @ 0x85FA8C0
-	.incbin "graphics/jp/sConditionSelectionIconsSheets.bin"
+	.incbin "graphics/pokenav_conditions/sConditionSelectionIconsSheets.bin"
 
 	.globl sConditionSelectionIconsPals
 sConditionSelectionIconsPals: @ 0x85FA8E0
-	.incbin "graphics/jp/sConditionSelectionIconsPals.bin"
+	.incbin "graphics/pokenav_conditions/sConditionSelectionIconsPals.bin"
 
 	.globl sConditionSelectionIconsTemplate
 sConditionSelectionIconsTemplate: @ 0x85FA8F8
