@@ -8809,7 +8809,7 @@ gMapHeaders: @ 0x0845A8D8
 	@ struct MapHeader { mapLayout, events, mapScripts, connections, music, mapLayoutId, regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType }
 	@ MAP_PETALBURG_CITY (g0 m0)
 	.4byte gMapLayout_PETALBURG_CITY  @ mapLayout
-	.4byte 0x084FE8C4  @ events
+	.4byte gMapEvents_PETALBURG_CITY  @ events
 	.4byte PetalburgCity_MapScripts  @ mapScripts
 	.4byte 0x0845EB0C  @ connections
 	.2byte 0x016A  @ music
@@ -8817,7 +8817,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY (g0 m1)
 	.4byte gMapLayout_SLATEPORT_CITY  @ mapLayout
-	.4byte 0x084FED24  @ events
+	.4byte gMapEvents_SLATEPORT_CITY  @ events
 	.4byte SlateportCity_MapScripts  @ mapScripts
 	.4byte 0x0845EB38  @ connections
 	.2byte 0x01B1  @ music
@@ -8825,7 +8825,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY (g0 m2)
 	.4byte gMapLayout_MAUVILLE_CITY  @ mapLayout
-	.4byte 0x084FEED8  @ events
+	.4byte gMapEvents_MAUVILLE_CITY  @ events
 	.4byte MauvilleCity_MapScripts  @ mapScripts
 	.4byte 0x0845EB70  @ connections
 	.2byte 0x018F  @ music
@@ -8833,7 +8833,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY (g0 m3)
 	.4byte gMapLayout_RUSTBORO_CITY  @ mapLayout
-	.4byte 0x084FF294  @ events
+	.4byte gMapEvents_RUSTBORO_CITY  @ events
 	.4byte RustboroCity_MapScripts  @ mapScripts
 	.4byte 0x0845EB9C  @ connections
 	.2byte 0x018F  @ music
@@ -8841,7 +8841,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY (g0 m4)
 	.4byte gMapLayout_FORTREE_CITY  @ mapLayout
-	.4byte 0x084FF3E0  @ events
+	.4byte gMapEvents_FORTREE_CITY  @ events
 	.4byte FortreeCity_MapScripts  @ mapScripts
 	.4byte 0x0845EBBC  @ connections
 	.2byte 0x017E  @ music
@@ -8849,7 +8849,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY (g0 m5)
 	.4byte gMapLayout_LILYCOVE_CITY  @ mapLayout
-	.4byte 0x084FF710  @ events
+	.4byte gMapEvents_LILYCOVE_CITY  @ events
 	.4byte LilycoveCity_MapScripts  @ mapScripts
 	.4byte 0x0845EBDC  @ connections
 	.2byte 0x0198  @ music
@@ -8857,7 +8857,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY (g0 m6)
 	.4byte gMapLayout_MOSSDEEP_CITY  @ mapLayout
-	.4byte 0x084FFA0C  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY  @ events
 	.4byte MossdeepCity_MapScripts  @ mapScripts
 	.4byte 0x0845EC08  @ connections
 	.2byte 0x018F  @ music
@@ -8865,7 +8865,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY (g0 m7)
 	.4byte gMapLayout_SOOTOPOLIS_CITY  @ mapLayout
-	.4byte 0x084FFC80  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY  @ events
 	.4byte SootopolisCity_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -8873,7 +8873,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY (g0 m8)
 	.4byte gMapLayout_EVER_GRANDE_CITY  @ mapLayout
-	.4byte 0x084FFDA0  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY  @ events
 	.4byte EverGrandeCity_MapScripts  @ mapScripts
 	.4byte 0x0845EC24  @ connections
 	.2byte 0x01A6  @ music
@@ -8881,7 +8881,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x02, 0x02, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN (g0 m9)
 	.4byte gMapLayout_LITTLEROOT_TOWN  @ mapLayout
-	.4byte 0x084FFF4C  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN  @ events
 	.4byte LittlerootTown_MapScripts  @ mapScripts
 	.4byte 0x0845EA2C  @ connections
 	.2byte 0x0195  @ music
@@ -8889,7 +8889,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN (g0 m10)
 	.4byte gMapLayout_OLDALE_TOWN  @ mapLayout
-	.4byte 0x0850005C  @ events
+	.4byte gMapEvents_OLDALE_TOWN  @ events
 	.4byte OldaleTown_MapScripts  @ mapScripts
 	.4byte 0x0845EA58  @ connections
 	.2byte 0x016B  @ music
@@ -8897,7 +8897,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN (g0 m11)
 	.4byte gMapLayout_DEWFORD_TOWN  @ mapLayout
-	.4byte 0x0850014C  @ events
+	.4byte gMapEvents_DEWFORD_TOWN  @ events
 	.4byte DewfordTown_MapScripts  @ mapScripts
 	.4byte 0x0845EA78  @ connections
 	.2byte 0x01AB  @ music
@@ -8905,7 +8905,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN (g0 m12)
 	.4byte gMapLayout_LAVARIDGE_TOWN  @ mapLayout
-	.4byte 0x085002D8  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN  @ events
 	.4byte LavaridgeTown_MapScripts  @ mapScripts
 	.4byte 0x0845EA8C  @ connections
 	.2byte 0x016B  @ music
@@ -8913,7 +8913,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN (g0 m13)
 	.4byte gMapLayout_FALLARBOR_TOWN  @ mapLayout
-	.4byte 0x085003D4  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN  @ events
 	.4byte FallarborTown_MapScripts  @ mapScripts
 	.4byte 0x0845EAAC  @ connections
 	.2byte 0x01B5  @ music
@@ -8921,7 +8921,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN (g0 m14)
 	.4byte gMapLayout_VERDANTURF_TOWN  @ mapLayout
-	.4byte 0x085004E0  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN  @ events
 	.4byte VerdanturfTown_MapScripts  @ mapScripts
 	.4byte 0x0845EACC  @ connections
 	.2byte 0x018E  @ music
@@ -8929,7 +8929,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN (g0 m15)
 	.4byte gMapLayout_PACIFIDLOG_TOWN  @ mapLayout
-	.4byte 0x08500590  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN  @ events
 	.4byte PacifidlogTown_MapScripts  @ mapScripts
 	.4byte 0x0845EAEC  @ connections
 	.2byte 0x0198  @ music
@@ -8937,7 +8937,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x02, 0x01, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE101 (g0 m16)
 	.4byte gMapLayout_ROUTE101  @ mapLayout
-	.4byte 0x085006D0  @ events
+	.4byte gMapEvents_ROUTE101  @ events
 	.4byte Route101_MapScripts  @ mapScripts
 	.4byte 0x0845EC44  @ connections
 	.2byte 0x0167  @ music
@@ -8945,7 +8945,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x10, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE102 (g0 m17)
 	.4byte gMapLayout_ROUTE102  @ mapLayout
-	.4byte 0x085007D4  @ events
+	.4byte gMapEvents_ROUTE102  @ events
 	.4byte 0x081E6824  @ mapScripts
 	.4byte 0x0845EC64  @ connections
 	.2byte 0x0167  @ music
@@ -8953,7 +8953,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x11, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE103 (g0 m18)
 	.4byte gMapLayout_ROUTE103  @ mapLayout
-	.4byte 0x085009DC  @ events
+	.4byte gMapEvents_ROUTE103  @ events
 	.4byte Route103_MapScripts  @ mapScripts
 	.4byte 0x0845EC84  @ connections
 	.2byte 0x0167  @ music
@@ -8961,7 +8961,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x12, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE104 (g0 m19)
 	.4byte gMapLayout_ROUTE104  @ mapLayout
-	.4byte 0x08500DE8  @ events
+	.4byte gMapEvents_ROUTE104  @ events
 	.4byte Route104_MapScripts  @ mapScripts
 	.4byte 0x0845ECB0  @ connections
 	.2byte 0x0191  @ music
@@ -8969,7 +8969,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x13, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE105 (g0 m20)
 	.4byte gMapLayout_ROUTE105  @ mapLayout
-	.4byte 0x08500EDC  @ events
+	.4byte gMapEvents_ROUTE105  @ events
 	.4byte Route105_MapScripts  @ mapScripts
 	.4byte 0x0845ECDC  @ connections
 	.2byte 0x0191  @ music
@@ -8977,7 +8977,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x14, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE106 (g0 m21)
 	.4byte gMapLayout_ROUTE106  @ mapLayout
-	.4byte 0x08500FA0  @ events
+	.4byte gMapEvents_ROUTE106  @ events
 	.4byte 0x081E83CA  @ mapScripts
 	.4byte 0x0845ECFC  @ connections
 	.2byte 0x0191  @ music
@@ -8985,7 +8985,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x15, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE107 (g0 m22)
 	.4byte gMapLayout_ROUTE107  @ mapLayout
-	.4byte 0x0850105C  @ events
+	.4byte gMapEvents_ROUTE107  @ events
 	.4byte 0x081E84AB  @ mapScripts
 	.4byte 0x0845ED1C  @ connections
 	.2byte 0x0191  @ music
@@ -8993,7 +8993,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x16, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE108 (g0 m23)
 	.4byte gMapLayout_ROUTE108  @ mapLayout
-	.4byte 0x0850112C  @ events
+	.4byte gMapEvents_ROUTE108  @ events
 	.4byte 0x081E85A0  @ mapScripts
 	.4byte 0x0845ED3C  @ connections
 	.2byte 0x0191  @ music
@@ -9001,7 +9001,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x17, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE109 (g0 m24)
 	.4byte gMapLayout_ROUTE109  @ mapLayout
-	.4byte 0x085013E8  @ events
+	.4byte gMapEvents_ROUTE109  @ events
 	.4byte 0x081E8676  @ mapScripts
 	.4byte 0x0845ED5C  @ connections
 	.2byte 0x0191  @ music
@@ -9009,7 +9009,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x18, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE110 (g0 m25)
 	.4byte gMapLayout_ROUTE110  @ mapLayout
-	.4byte 0x085018E8  @ events
+	.4byte gMapEvents_ROUTE110  @ events
 	.4byte Route110_MapScripts  @ mapScripts
 	.4byte 0x0845ED88  @ connections
 	.2byte 0x0168  @ music
@@ -9017,7 +9017,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x19, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE111 (g0 m26)
 	.4byte gMapLayout_ROUTE111  @ mapLayout
-	.4byte 0x0850206C  @ events
+	.4byte gMapEvents_ROUTE111  @ events
 	.4byte Route111_MapScripts  @ mapScripts
 	.4byte 0x0845EDB4  @ connections
 	.2byte 0x0168  @ music
@@ -9025,7 +9025,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1A, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE112 (g0 m27)
 	.4byte gMapLayout_ROUTE112  @ mapLayout
-	.4byte 0x08502224  @ events
+	.4byte gMapEvents_ROUTE112  @ events
 	.4byte Route112_MapScripts  @ mapScripts
 	.4byte 0x0845EDE0  @ connections
 	.2byte 0x0168  @ music
@@ -9033,7 +9033,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1B, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE113 (g0 m28)
 	.4byte gMapLayout_ROUTE113  @ mapLayout
-	.4byte 0x08502560  @ events
+	.4byte gMapEvents_ROUTE113  @ events
 	.4byte Route113_MapScripts  @ mapScripts
 	.4byte 0x0845EE0C  @ connections
 	.2byte 0x01A2  @ music
@@ -9041,7 +9041,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1C, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE114 (g0 m29)
 	.4byte gMapLayout_ROUTE114  @ mapLayout
-	.4byte 0x085028B4  @ events
+	.4byte gMapEvents_ROUTE114  @ events
 	.4byte Route114_MapScripts  @ mapScripts
 	.4byte 0x0845EE2C  @ connections
 	.2byte 0x0168  @ music
@@ -9049,7 +9049,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1D, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE115 (g0 m30)
 	.4byte gMapLayout_ROUTE115  @ mapLayout
-	.4byte 0x08502BB0  @ events
+	.4byte gMapEvents_ROUTE115  @ events
 	.4byte Route115_MapScripts  @ mapScripts
 	.4byte 0x0845EE4C  @ connections
 	.2byte 0x0191  @ music
@@ -9057,7 +9057,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1E, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE116 (g0 m31)
 	.4byte gMapLayout_ROUTE116  @ mapLayout
-	.4byte 0x08502F20  @ events
+	.4byte gMapEvents_ROUTE116  @ events
 	.4byte Route116_MapScripts  @ mapScripts
 	.4byte 0x0845EE6C  @ connections
 	.2byte 0x0191  @ music
@@ -9065,7 +9065,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1F, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE117 (g0 m32)
 	.4byte gMapLayout_ROUTE117  @ mapLayout
-	.4byte 0x085031AC  @ events
+	.4byte gMapEvents_ROUTE117  @ events
 	.4byte Route117_MapScripts  @ mapScripts
 	.4byte 0x0845EE8C  @ connections
 	.2byte 0x0168  @ music
@@ -9073,7 +9073,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x20, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE118 (g0 m33)
 	.4byte gMapLayout_ROUTE118  @ mapLayout
-	.4byte 0x08503464  @ events
+	.4byte gMapEvents_ROUTE118  @ events
 	.4byte Route118_MapScripts  @ mapScripts
 	.4byte 0x0845EEB8  @ connections
 	.2byte 0x7FFF  @ music
@@ -9081,7 +9081,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x21, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE119 (g0 m34)
 	.4byte gMapLayout_ROUTE119  @ mapLayout
-	.4byte 0x08503B10  @ events
+	.4byte gMapEvents_ROUTE119  @ events
 	.4byte Route119_MapScripts  @ mapScripts
 	.4byte 0x0845EED8  @ connections
 	.2byte 0x0192  @ music
@@ -9089,7 +9089,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x22, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE120 (g0 m35)
 	.4byte gMapLayout_ROUTE120  @ mapLayout
-	.4byte 0x0850412C  @ events
+	.4byte gMapEvents_ROUTE120  @ events
 	.4byte Route120_MapScripts  @ mapScripts
 	.4byte 0x0845EEF8  @ connections
 	.2byte 0x0169  @ music
@@ -9097,7 +9097,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x23, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE121 (g0 m36)
 	.4byte gMapLayout_ROUTE121  @ mapLayout
-	.4byte 0x085044B8  @ events
+	.4byte gMapEvents_ROUTE121  @ events
 	.4byte 0x081EE0D9  @ mapScripts
 	.4byte 0x0845EF24  @ connections
 	.2byte 0x0169  @ music
@@ -9105,7 +9105,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x24, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE122 (g0 m37)
 	.4byte gMapLayout_ROUTE122  @ mapLayout
-	.4byte 0x085044D4  @ events
+	.4byte gMapEvents_ROUTE122  @ events
 	.4byte 0x081EE3D5  @ mapScripts
 	.4byte 0x0845EF44  @ connections
 	.2byte 0x0176  @ music
@@ -9113,7 +9113,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x25, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE123 (g0 m38)
 	.4byte gMapLayout_ROUTE123  @ mapLayout
-	.4byte 0x08504ADC  @ events
+	.4byte gMapEvents_ROUTE123  @ events
 	.4byte Route123_MapScripts  @ mapScripts
 	.4byte 0x0845EF64  @ connections
 	.2byte 0x0176  @ music
@@ -9121,7 +9121,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x26, 0x00, 0x02, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE124 (g0 m39)
 	.4byte gMapLayout_ROUTE124  @ mapLayout
-	.4byte 0x08504C24  @ events
+	.4byte gMapEvents_ROUTE124  @ events
 	.4byte Route124_MapScripts  @ mapScripts
 	.4byte 0x0845EFA8  @ connections
 	.2byte 0x0169  @ music
@@ -9129,7 +9129,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x27, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE125 (g0 m40)
 	.4byte gMapLayout_ROUTE125  @ mapLayout
-	.4byte 0x08504D60  @ events
+	.4byte gMapEvents_ROUTE125  @ events
 	.4byte Route125_MapScripts  @ mapScripts
 	.4byte 0x0845EFD4  @ connections
 	.2byte 0x0169  @ music
@@ -9137,7 +9137,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x28, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE126 (g0 m41)
 	.4byte gMapLayout_ROUTE126  @ mapLayout
-	.4byte 0x08504E4C  @ events
+	.4byte gMapEvents_ROUTE126  @ events
 	.4byte Route126_MapScripts  @ mapScripts
 	.4byte 0x0845F000  @ connections
 	.2byte 0x0169  @ music
@@ -9145,7 +9145,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x29, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE127 (g0 m42)
 	.4byte gMapLayout_ROUTE127  @ mapLayout
-	.4byte 0x08504FA4  @ events
+	.4byte gMapEvents_ROUTE127  @ events
 	.4byte Route127_MapScripts  @ mapScripts
 	.4byte 0x0845F038  @ connections
 	.2byte 0x0169  @ music
@@ -9153,7 +9153,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2A, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE128 (g0 m43)
 	.4byte gMapLayout_ROUTE128  @ mapLayout
-	.4byte 0x085050CC  @ events
+	.4byte gMapEvents_ROUTE128  @ events
 	.4byte Route128_MapScripts  @ mapScripts
 	.4byte 0x0845F070  @ connections
 	.2byte 0x0169  @ music
@@ -9161,7 +9161,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2B, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE129 (g0 m44)
 	.4byte gMapLayout_ROUTE129  @ mapLayout
-	.4byte 0x08505158  @ events
+	.4byte gMapEvents_ROUTE129  @ events
 	.4byte Route129_MapScripts  @ mapScripts
 	.4byte 0x0845F09C  @ connections
 	.2byte 0x0192  @ music
@@ -9169,7 +9169,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2C, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE130 (g0 m45)
 	.4byte gMapLayout_ROUTE130  @ mapLayout
-	.4byte 0x085051CC  @ events
+	.4byte gMapEvents_ROUTE130  @ events
 	.4byte Route130_MapScripts  @ mapScripts
 	.4byte 0x0845F0BC  @ connections
 	.2byte 0x0192  @ music
@@ -9177,7 +9177,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2D, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE131 (g0 m46)
 	.4byte gMapLayout_ROUTE131  @ mapLayout
-	.4byte 0x085052A8  @ events
+	.4byte gMapEvents_ROUTE131  @ events
 	.4byte Route131_MapScripts  @ mapScripts
 	.4byte 0x0845F0DC  @ connections
 	.2byte 0x0192  @ music
@@ -9185,7 +9185,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2E, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE132 (g0 m47)
 	.4byte gMapLayout_ROUTE132  @ mapLayout
-	.4byte 0x085053AC  @ events
+	.4byte gMapEvents_ROUTE132  @ events
 	.4byte 0x081EF519  @ mapScripts
 	.4byte 0x0845F0FC  @ connections
 	.2byte 0x0192  @ music
@@ -9193,7 +9193,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x2F, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE133 (g0 m48)
 	.4byte gMapLayout_ROUTE133  @ mapLayout
-	.4byte 0x085054B0  @ events
+	.4byte gMapEvents_ROUTE133  @ events
 	.4byte 0x081EF5D2  @ mapScripts
 	.4byte 0x0845F11C  @ connections
 	.2byte 0x0192  @ music
@@ -9201,7 +9201,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x30, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE134 (g0 m49)
 	.4byte gMapLayout_ROUTE134  @ mapLayout
-	.4byte 0x085055CC  @ events
+	.4byte gMapEvents_ROUTE134  @ events
 	.4byte Route134_MapScripts  @ mapScripts
 	.4byte 0x0845F13C  @ connections
 	.2byte 0x0192  @ music
@@ -9209,7 +9209,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x31, 0x00, 0x02, 0x06, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE124 (g0 m50)
 	.4byte gMapLayout_UNDERWATER_ROUTE124  @ mapLayout
-	.4byte 0x08505634  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE124  @ events
 	.4byte 0x081EF752  @ mapScripts
 	.4byte 0x0845F170  @ connections
 	.2byte 0x019B  @ music
@@ -9217,7 +9217,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x32, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE126 (g0 m51)
 	.4byte gMapLayout_UNDERWATER_ROUTE126  @ mapLayout
-	.4byte 0x085056B0  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE126  @ events
 	.4byte 0x081EF753  @ mapScripts
 	.4byte 0x0845F1B0  @ connections
 	.2byte 0x019B  @ music
@@ -9225,7 +9225,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x33, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE127 (g0 m52)
 	.4byte gMapLayout_UNDERWATER_ROUTE127  @ mapLayout
-	.4byte 0x08505704  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE127  @ events
 	.4byte Underwater_Route127_MapScripts  @ mapScripts
 	.4byte 0x0845F1DC  @ connections
 	.2byte 0x019B  @ music
@@ -9233,7 +9233,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x34, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE128 (g0 m53)
 	.4byte gMapLayout_UNDERWATER_ROUTE128  @ mapLayout
-	.4byte 0x08505738  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE128  @ events
 	.4byte 0x081EF760  @ mapScripts
 	.4byte 0x0845F1FC  @ connections
 	.2byte 0x019B  @ music
@@ -9241,7 +9241,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x35, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE129 (g0 m54)
 	.4byte gMapLayout_UNDERWATER_ROUTE129  @ mapLayout
-	.4byte 0x0850575C  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE129  @ events
 	.4byte Underwater_Route129_MapScripts  @ mapScripts
 	.4byte 0x0845F210  @ connections
 	.2byte 0x019B  @ music
@@ -9249,7 +9249,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xD0, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE105 (g0 m55)
 	.4byte gMapLayout_UNDERWATER_ROUTE105  @ mapLayout
-	.4byte 0x08505780  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE105  @ events
 	.4byte Underwater_Route105_MapScripts  @ mapScripts
 	.4byte 0x0845F150  @ connections
 	.2byte 0x019B  @ music
@@ -9257,7 +9257,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xCE, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_ROUTE125 (g0 m56)
 	.4byte gMapLayout_UNDERWATER_ROUTE125  @ mapLayout
-	.4byte 0x085057A4  @ events
+	.4byte gMapEvents_UNDERWATER_ROUTE125  @ events
 	.4byte Underwater_Route125_MapScripts  @ mapScripts
 	.4byte 0x0845F184  @ connections
 	.2byte 0x019B  @ music
@@ -9265,7 +9265,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xCF, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F (g1 m0)
 	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ mapLayout
-	.4byte 0x085058B8  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F  @ events
 	.4byte LittlerootTown_BrendansHouse_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0195  @ music
@@ -9273,7 +9273,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F (g1 m1)
 	.4byte gMapLayout_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F  @ mapLayout
-	.4byte 0x08505A84  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F  @ events
 	.4byte LittlerootTown_BrendansHouse_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0195  @ music
@@ -9281,7 +9281,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F (g1 m2)
 	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_1F  @ mapLayout
-	.4byte 0x08505B98  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F  @ events
 	.4byte LittlerootTown_MaysHouse_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0195  @ music
@@ -9289,7 +9289,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_MAYS_HOUSE_2F (g1 m3)
 	.4byte gMapLayout_LITTLEROOT_TOWN_MAYS_HOUSE_2F  @ mapLayout
-	.4byte 0x08505D64  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F  @ events
 	.4byte LittlerootTown_MaysHouse_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0195  @ music
@@ -9297,7 +9297,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB (g1 m4)
 	.4byte gMapLayout_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB  @ mapLayout
-	.4byte 0x08505ECC  @ events
+	.4byte gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB  @ events
 	.4byte LittlerootTown_ProfessorBirchsLab_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017F  @ music
@@ -9305,7 +9305,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_HOUSE1 (g2 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x08505F08  @ events
+	.4byte gMapEvents_OLDALE_TOWN_HOUSE1  @ events
 	.4byte 0x081F28D3  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music
@@ -9313,7 +9313,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_HOUSE2 (g2 m1)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08505F5C  @ events
+	.4byte gMapEvents_OLDALE_TOWN_HOUSE2  @ events
 	.4byte 0x081F2949  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music
@@ -9321,7 +9321,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_POKEMON_CENTER_1F (g2 m2)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08505FE8  @ events
+	.4byte gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte OldaleTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9329,7 +9329,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_POKEMON_CENTER_2F (g2 m3)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08506074  @ events
+	.4byte gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte OldaleTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9337,7 +9337,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_OLDALE_TOWN_MART (g2 m4)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x085060E0  @ events
+	.4byte gMapEvents_OLDALE_TOWN_MART  @ events
 	.4byte 0x081F2B0B  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9345,7 +9345,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x01, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_HOUSE1 (g3 m0)
 	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850614C  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_HOUSE1  @ events
 	.4byte 0x081F2C10  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AB  @ music
@@ -9353,7 +9353,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_1F (g3 m1)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x085061C0  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte DewfordTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9361,7 +9361,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_POKEMON_CENTER_2F (g3 m2)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850624C  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte DewfordTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9369,7 +9369,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_GYM (g3 m3)
 	.4byte gMapLayout_DEWFORD_TOWN_GYM  @ mapLayout
-	.4byte 0x08506360  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_GYM  @ events
 	.4byte DewfordTown_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9377,7 +9377,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_HALL (g3 m4)
 	.4byte gMapLayout_DEWFORD_TOWN_HALL  @ mapLayout
-	.4byte 0x08506474  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_HALL  @ events
 	.4byte 0x081F3788  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AB  @ music
@@ -9385,7 +9385,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DEWFORD_TOWN_HOUSE2 (g3 m5)
 	.4byte gMapLayout_DEWFORD_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x085064C8  @ events
+	.4byte gMapEvents_DEWFORD_TOWN_HOUSE2  @ events
 	.4byte 0x081F4008  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AB  @ music
@@ -9393,7 +9393,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x02, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_HERB_SHOP (g4 m0)
 	.4byte gMapLayout_LAVARIDGE_TOWN_HERB_SHOP  @ mapLayout
-	.4byte 0x08506534  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_HERB_SHOP  @ events
 	.4byte 0x081F4185  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music
@@ -9401,7 +9401,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_GYM_1F (g4 m1)
 	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_1F  @ mapLayout
-	.4byte 0x085066C0  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_GYM_1F  @ events
 	.4byte LavaridgeTown_Gym_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9409,7 +9409,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_GYM_B1F (g4 m2)
 	.4byte gMapLayout_LAVARIDGE_TOWN_GYM_B1F  @ mapLayout
-	.4byte 0x085067F4  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_GYM_B1F  @ events
 	.4byte LavaridgeTown_Gym_B1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9417,7 +9417,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x06, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_HOUSE (g4 m3)
 	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x08506860  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_HOUSE  @ events
 	.4byte 0x081F4E4D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016B  @ music
@@ -9425,7 +9425,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_MART (g4 m4)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x085068CC  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_MART  @ events
 	.4byte 0x081F4ECC  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9433,7 +9433,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_1F (g4 m5)
 	.4byte gMapLayout_LAVARIDGE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08506960  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte LavaridgeTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9441,7 +9441,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LAVARIDGE_TOWN_POKEMON_CENTER_2F (g4 m6)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x085069EC  @ events
+	.4byte gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte LavaridgeTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9449,7 +9449,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x03, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_MART (g5 m0)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08506A88  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_MART  @ events
 	.4byte 0x081F5098  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9457,7 +9457,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_LOBBY (g5 m1)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte 0x08506B30  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ events
 	.4byte FallarborTown_BattleTentLobby_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9465,7 +9465,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR (g5 m2)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte 0x08506B5C  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ events
 	.4byte FallarborTown_BattleTentCorridor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9473,7 +9473,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM (g5 m3)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte 0x08506BB8  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM  @ events
 	.4byte FallarborTown_BattleTentBattleRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9481,7 +9481,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_1F (g5 m4)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08506C44  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte FallarborTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9489,7 +9489,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_POKEMON_CENTER_2F (g5 m5)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08506CD0  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte FallarborTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9497,7 +9497,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_COZMOS_HOUSE (g5 m6)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x08506D24  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE  @ events
 	.4byte 0x081F5E78  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
@@ -9505,7 +9505,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE (g5 m7)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08506D60  @ events
+	.4byte gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE  @ events
 	.4byte 0x081F6155  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
@@ -9513,7 +9513,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x04, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_LOBBY (g6 m0)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte 0x08506E20  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY  @ events
 	.4byte VerdanturfTown_BattleTentLobby_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9521,7 +9521,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR (g6 m1)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte 0x08506E4C  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR  @ events
 	.4byte VerdanturfTown_BattleTentCorridor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9529,7 +9529,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM (g6 m2)
 	.4byte gMapLayout_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte 0x08506EA8  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM  @ events
 	.4byte VerdanturfTown_BattleTentBattleRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9537,7 +9537,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_MART (g6 m3)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08506F2C  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_MART  @ events
 	.4byte 0x081F6F27  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9545,7 +9545,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_1F (g6 m4)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08506FB8  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte VerdanturfTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9553,7 +9553,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_POKEMON_CENTER_2F (g6 m5)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08507044  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte VerdanturfTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9561,7 +9561,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_WANDAS_HOUSE (g6 m6)
 	.4byte gMapLayout_VERDANTURF_TOWN_WANDAS_HOUSE  @ mapLayout
-	.4byte 0x085070E0  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE  @ events
 	.4byte 0x081F7105  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018E  @ music
@@ -9569,7 +9569,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE (g6 m7)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08507134  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE  @ events
 	.4byte 0x081F7556  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018E  @ music
@@ -9577,7 +9577,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_VERDANTURF_TOWN_HOUSE (g6 m8)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x08507188  @ events
+	.4byte gMapEvents_VERDANTURF_TOWN_HOUSE  @ events
 	.4byte 0x081F777F  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018E  @ music
@@ -9585,7 +9585,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x05, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_1F (g7 m0)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850722C  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_1F  @ events
 	.4byte PacifidlogTown_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9593,7 +9593,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_POKEMON_CENTER_2F (g7 m1)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x085072B8  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F  @ events
 	.4byte PacifidlogTown_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9601,7 +9601,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_HOUSE1 (g7 m2)
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850730C  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_HOUSE1  @ events
 	.4byte 0x081F793E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -9609,7 +9609,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_HOUSE2 (g7 m3)
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08507378  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_HOUSE2  @ events
 	.4byte 0x081F79FF  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -9617,7 +9617,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_HOUSE3 (g7 m4)
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x085073CC  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_HOUSE3  @ events
 	.4byte 0x081F7D1A  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -9625,7 +9625,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_HOUSE4 (g7 m5)
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08507438  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_HOUSE4  @ events
 	.4byte 0x081F7F3D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -9633,7 +9633,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PACIFIDLOG_TOWN_HOUSE5 (g7 m6)
 	.4byte gMapLayout_PACIFIDLOG_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850748C  @ events
+	.4byte gMapEvents_PACIFIDLOG_TOWN_HOUSE5  @ events
 	.4byte 0x081F8055  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -9641,7 +9641,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x06, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_WALLYS_HOUSE (g8 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x085074E0  @ events
+	.4byte gMapEvents_PETALBURG_CITY_WALLYS_HOUSE  @ events
 	.4byte PetalburgCity_WallysHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
@@ -9649,7 +9649,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_GYM (g8 m1)
 	.4byte gMapLayout_PETALBURG_CITY_GYM  @ mapLayout
-	.4byte 0x085077D4  @ events
+	.4byte gMapEvents_PETALBURG_CITY_GYM  @ events
 	.4byte PetalburgCity_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9657,7 +9657,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_HOUSE1 (g8 m2)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x08507828  @ events
+	.4byte gMapEvents_PETALBURG_CITY_HOUSE1  @ events
 	.4byte 0x081FA63D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
@@ -9665,7 +9665,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_HOUSE2 (g8 m3)
 	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850787C  @ events
+	.4byte gMapEvents_PETALBURG_CITY_HOUSE2  @ events
 	.4byte 0x081FA720  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
@@ -9673,7 +9673,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_POKEMON_CENTER_1F (g8 m4)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08507920  @ events
+	.4byte gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F  @ events
 	.4byte PetalburgCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9681,7 +9681,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_POKEMON_CENTER_2F (g8 m5)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x085079AC  @ events
+	.4byte gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F  @ events
 	.4byte PetalburgCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9689,7 +9689,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_CITY_MART (g8 m6)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08507A30  @ events
+	.4byte gMapEvents_PETALBURG_CITY_MART  @ events
 	.4byte 0x081FA9E9  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9697,7 +9697,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x07, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_1F (g9 m0)
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ mapLayout
-	.4byte 0x08507ABC  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F  @ events
 	.4byte 0x081FAB28  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9705,7 +9705,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_STERNS_SHIPYARD_2F (g9 m1)
 	.4byte gMapLayout_SLATEPORT_CITY_STERNS_SHIPYARD_2F  @ mapLayout
-	.4byte 0x08507B20  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F  @ events
 	.4byte 0x081FAFA2  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9713,7 +9713,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_LOBBY (g9 m2)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_LOBBY  @ mapLayout
-	.4byte 0x08507BC8  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY  @ events
 	.4byte SlateportCity_BattleTentLobby_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9721,7 +9721,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR (g9 m3)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR  @ mapLayout
-	.4byte 0x08507BF4  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR  @ events
 	.4byte SlateportCity_BattleTentCorridor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9729,7 +9729,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM (g9 m4)
 	.4byte gMapLayout_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM  @ mapLayout
-	.4byte 0x08507C50  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM  @ events
 	.4byte SlateportCity_BattleTentBattleRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0180  @ music
@@ -9737,7 +9737,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_NAME_RATERS_HOUSE (g9 m5)
 	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte 0x08507C8C  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE  @ events
 	.4byte 0x081FBD9D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9745,7 +9745,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_POKEMON_FAN_CLUB (g9 m6)
 	.4byte gMapLayout_SLATEPORT_CITY_POKEMON_FAN_CLUB  @ mapLayout
-	.4byte 0x08507D88  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB  @ events
 	.4byte 0x081FC027  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9753,7 +9753,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_1F (g9 m7)
 	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_1F  @ mapLayout
-	.4byte 0x08507FC0  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_1F  @ events
 	.4byte 0x081FCA3E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0177  @ music
@@ -9761,7 +9761,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_OCEANIC_MUSEUM_2F (g9 m8)
 	.4byte gMapLayout_SLATEPORT_CITY_OCEANIC_MUSEUM_2F  @ mapLayout
-	.4byte 0x08508180  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F  @ events
 	.4byte 0x081FD309  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0177  @ music
@@ -9769,7 +9769,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_HARBOR (g9 m9)
 	.4byte gMapLayout_SLATEPORT_CITY_HARBOR  @ mapLayout
-	.4byte 0x085082B4  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_HARBOR  @ events
 	.4byte SlateportCity_Harbor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9777,7 +9777,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_HOUSE (g9 m10)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08508308  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_HOUSE  @ events
 	.4byte 0x081FE772  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B1  @ music
@@ -9785,7 +9785,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_1F (g9 m11)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850837C  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F  @ events
 	.4byte SlateportCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9793,7 +9793,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_POKEMON_CENTER_2F (g9 m12)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08508408  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_2F  @ events
 	.4byte SlateportCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9801,7 +9801,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SLATEPORT_CITY_MART (g9 m13)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08508474  @ events
+	.4byte gMapEvents_SLATEPORT_CITY_MART  @ events
 	.4byte 0x081FE8F9  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9809,7 +9809,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x08, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_GYM (g10 m0)
 	.4byte gMapLayout_MAUVILLE_CITY_GYM  @ mapLayout
-	.4byte 0x08508598  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_GYM  @ events
 	.4byte MauvilleCity_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9817,7 +9817,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_BIKE_SHOP (g10 m1)
 	.4byte gMapLayout_MAUVILLE_CITY_BIKE_SHOP  @ mapLayout
-	.4byte 0x08508604  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_BIKE_SHOP  @ events
 	.4byte 0x081FF3EB  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9825,7 +9825,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_HOUSE1 (g10 m2)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x08508640  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_HOUSE1  @ events
 	.4byte 0x081FFD77  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9833,7 +9833,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_GAME_CORNER (g10 m3)
 	.4byte gMapLayout_MAUVILLE_CITY_GAME_CORNER  @ mapLayout
-	.4byte 0x085088A4  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_GAME_CORNER  @ events
 	.4byte 0x081FFEE7  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AA  @ music
@@ -9841,7 +9841,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_HOUSE2 (g10 m4)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x085088E0  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_HOUSE2  @ events
 	.4byte 0x08200C5A  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9849,7 +9849,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_1F (g10 m5)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08508984  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F  @ events
 	.4byte MauvilleCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9857,7 +9857,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_POKEMON_CENTER_2F (g10 m6)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08508A28  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F  @ events
 	.4byte MauvilleCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9865,7 +9865,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MAUVILLE_CITY_MART (g10 m7)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08508A94  @ events
+	.4byte gMapEvents_MAUVILLE_CITY_MART  @ events
 	.4byte 0x08200F4F  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9873,7 +9873,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x09, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_1F (g11 m0)
 	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_1F  @ mapLayout
-	.4byte 0x08508B20  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F  @ events
 	.4byte RustboroCity_DevonCorp_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9881,7 +9881,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_2F (g11 m1)
 	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_2F  @ mapLayout
-	.4byte 0x08508BD4  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F  @ events
 	.4byte RustboroCity_DevonCorp_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9889,7 +9889,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_DEVON_CORP_3F (g11 m2)
 	.4byte gMapLayout_RUSTBORO_CITY_DEVON_CORP_3F  @ mapLayout
-	.4byte 0x08508C50  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F  @ events
 	.4byte RustboroCity_DevonCorp_3F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9897,7 +9897,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_GYM (g11 m3)
 	.4byte gMapLayout_RUSTBORO_CITY_GYM  @ mapLayout
-	.4byte 0x08508D04  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_GYM  @ events
 	.4byte 0x082022C5  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -9905,7 +9905,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_POKEMON_SCHOOL (g11 m4)
 	.4byte gMapLayout_RUSTBORO_CITY_POKEMON_SCHOOL  @ mapLayout
-	.4byte 0x08508E0C  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL  @ events
 	.4byte 0x08202C1A  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B3  @ music
@@ -9913,7 +9913,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_1F (g11 m5)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08508E98  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_1F  @ events
 	.4byte RustboroCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9921,7 +9921,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_POKEMON_CENTER_2F (g11 m6)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x08508F24  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_2F  @ events
 	.4byte RustboroCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -9929,7 +9929,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_MART (g11 m7)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08508FA8  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_MART  @ events
 	.4byte 0x082035E0  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -9937,7 +9937,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_FLAT1_1F (g11 m8)
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_1F  @ mapLayout
-	.4byte 0x08509004  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_FLAT1_1F  @ events
 	.4byte 0x08203714  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9945,7 +9945,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_FLAT1_2F (g11 m9)
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT1_2F  @ mapLayout
-	.4byte 0x085090E0  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_FLAT1_2F  @ events
 	.4byte 0x08203770  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9953,7 +9953,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_HOUSE1 (g11 m10)
 	.4byte gMapLayout_RUSTBORO_CITY_HOUSE1  @ mapLayout
-	.4byte 0x08509134  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_HOUSE1  @ events
 	.4byte 0x08203BC8  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9961,7 +9961,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_CUTTERS_HOUSE (g11 m11)
 	.4byte gMapLayout_RUSTBORO_CITY_CUTTERS_HOUSE  @ mapLayout
-	.4byte 0x08509188  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_CUTTERS_HOUSE  @ events
 	.4byte 0x08203D7C  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9969,7 +9969,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_HOUSE2 (g11 m12)
 	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2  @ mapLayout
-	.4byte 0x085091DC  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_HOUSE2  @ events
 	.4byte 0x08203F15  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9977,7 +9977,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_FLAT2_1F (g11 m13)
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_1F  @ mapLayout
-	.4byte 0x08509238  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_FLAT2_1F  @ events
 	.4byte 0x08203F99  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9985,7 +9985,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_FLAT2_2F (g11 m14)
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_2F  @ mapLayout
-	.4byte 0x0850928C  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_FLAT2_2F  @ events
 	.4byte 0x08203FE8  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -9993,7 +9993,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_FLAT2_3F (g11 m15)
 	.4byte gMapLayout_RUSTBORO_CITY_FLAT2_3F  @ mapLayout
-	.4byte 0x085092D8  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_FLAT2_3F  @ events
 	.4byte 0x082040B5  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10001,7 +10001,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTBORO_CITY_HOUSE3 (g11 m16)
 	.4byte gMapLayout_RUSTBORO_CITY_HOUSE2  @ mapLayout
-	.4byte 0x08509344  @ events
+	.4byte gMapEvents_RUSTBORO_CITY_HOUSE3  @ events
 	.4byte 0x08204117  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10009,7 +10009,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE1 (g12 m0)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte 0x085093B0  @ events
+	.4byte gMapEvents_FORTREE_CITY_HOUSE1  @ events
 	.4byte 0x082041CA  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10017,7 +10017,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_GYM (g12 m1)
 	.4byte gMapLayout_FORTREE_CITY_GYM  @ mapLayout
-	.4byte 0x085094AC  @ events
+	.4byte gMapEvents_FORTREE_CITY_GYM  @ events
 	.4byte FortreeCity_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -10025,7 +10025,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_POKEMON_CENTER_1F (g12 m2)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x08509538  @ events
+	.4byte gMapEvents_FORTREE_CITY_POKEMON_CENTER_1F  @ events
 	.4byte FortreeCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10033,7 +10033,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_POKEMON_CENTER_2F (g12 m3)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x085095C4  @ events
+	.4byte gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F  @ events
 	.4byte FortreeCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10041,7 +10041,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_MART (g12 m4)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x08509648  @ events
+	.4byte gMapEvents_FORTREE_CITY_MART  @ events
 	.4byte 0x08204DBD  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10049,7 +10049,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE2 (g12 m5)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850969C  @ events
+	.4byte gMapEvents_FORTREE_CITY_HOUSE2  @ events
 	.4byte 0x08204E9B  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10057,7 +10057,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE3 (g12 m6)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte 0x085096F0  @ events
+	.4byte gMapEvents_FORTREE_CITY_HOUSE3  @ events
 	.4byte 0x082050D0  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10065,7 +10065,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE4 (g12 m7)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850975C  @ events
+	.4byte gMapEvents_FORTREE_CITY_HOUSE4  @ events
 	.4byte 0x082051A2  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10073,7 +10073,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_HOUSE5 (g12 m8)
 	.4byte gMapLayout_FORTREE_CITY_HOUSE1  @ mapLayout
-	.4byte 0x085097C8  @ events
+	.4byte gMapEvents_FORTREE_CITY_HOUSE5  @ events
 	.4byte 0x08205343  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10081,7 +10081,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FORTREE_CITY_DECORATION_SHOP (g12 m9)
 	.4byte gMapLayout_FORTREE_CITY_DECORATION_SHOP  @ mapLayout
-	.4byte 0x0850984C  @ events
+	.4byte gMapEvents_FORTREE_CITY_DECORATION_SHOP  @ events
 	.4byte 0x082053F0  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10089,7 +10089,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_1F (g13 m0)
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_1F  @ mapLayout
-	.4byte 0x085098A0  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F  @ events
 	.4byte 0x082054FC  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10097,7 +10097,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_COVE_LILY_MOTEL_2F (g13 m1)
 	.4byte gMapLayout_LILYCOVE_CITY_COVE_LILY_MOTEL_2F  @ mapLayout
-	.4byte 0x08509964  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F  @ events
 	.4byte 0x08205887  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10105,7 +10105,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F (g13 m2)
 	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F  @ mapLayout
-	.4byte 0x08509B40  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F  @ events
 	.4byte 0x08205BE2  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0175  @ music
@@ -10113,7 +10113,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F (g13 m3)
 	.4byte gMapLayout_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F  @ mapLayout
-	.4byte 0x08509C4C  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F  @ events
 	.4byte LilycoveCity_LilycoveMuseum_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0175  @ music
@@ -10121,7 +10121,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_CONTEST_LOBBY (g13 m4)
 	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_LOBBY  @ mapLayout
-	.4byte 0x08509F68  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY  @ events
 	.4byte LilycoveCity_ContestLobby_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01C4  @ music
@@ -10129,7 +10129,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_CONTEST_HALL (g13 m5)
 	.4byte gMapLayout_LILYCOVE_CITY_CONTEST_HALL  @ mapLayout
-	.4byte 0x0850A2E4  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_CONTEST_HALL  @ events
 	.4byte 0x082077B9  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01C4  @ music
@@ -10137,7 +10137,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_1F (g13 m6)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850A388  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F  @ events
 	.4byte LilycoveCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10145,7 +10145,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_POKEMON_CENTER_2F (g13 m7)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850A414  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F  @ events
 	.4byte LilycoveCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10153,7 +10153,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_UNUSED_MART (g13 m8)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x0850A438  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_UNUSED_MART  @ events
 	.4byte 0x0820839D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10161,7 +10161,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB (g13 m9)
 	.4byte gMapLayout_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB  @ mapLayout
-	.4byte 0x0850A534  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB  @ events
 	.4byte LilycoveCity_PokemonTrainerFanClub_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10169,7 +10169,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HARBOR (g13 m10)
 	.4byte gMapLayout_SLATEPORT_CITY_HARBOR  @ mapLayout
-	.4byte 0x0850A5D0  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_HARBOR  @ events
 	.4byte LilycoveCity_Harbor_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10177,7 +10177,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_MOVE_DELETERS_HOUSE (g13 m11)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x0850A60C  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_MOVE_DELETERS_HOUSE  @ events
 	.4byte 0x08209D70  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10185,7 +10185,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HOUSE1 (g13 m12)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850A660  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_HOUSE1  @ events
 	.4byte 0x08209F66  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10193,7 +10193,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HOUSE2 (g13 m13)
 	.4byte gMapLayout_LILYCOVE_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850A69C  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_HOUSE2  @ events
 	.4byte 0x08209FDC  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10201,7 +10201,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HOUSE3 (g13 m14)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x0850A750  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_HOUSE3  @ events
 	.4byte LilycoveCity_House3_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10209,7 +10209,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_HOUSE4 (g13 m15)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850A7A4  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_HOUSE4  @ events
 	.4byte 0x0820A51A  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10217,7 +10217,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F (g13 m16)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_1F  @ mapLayout
-	.4byte 0x0850A874  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F  @ events
 	.4byte 0x0820A5AF  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10225,7 +10225,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_2F (g13 m17)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_2F  @ mapLayout
-	.4byte 0x0850A918  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_2F  @ events
 	.4byte 0x0820A920  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10233,7 +10233,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_3F (g13 m18)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_3F  @ mapLayout
-	.4byte 0x0850A9BC  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F  @ events
 	.4byte 0x0820AA19  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10241,7 +10241,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_4F (g13 m19)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_4F  @ mapLayout
-	.4byte 0x0850AA60  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_4F  @ events
 	.4byte 0x0820AB4E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10249,7 +10249,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_5F (g13 m20)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_5F  @ mapLayout
-	.4byte 0x0850AB34  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F  @ events
 	.4byte LilycoveCity_DepartmentStore_5F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10257,7 +10257,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP (g13 m21)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP  @ mapLayout
-	.4byte 0x0850ABC8  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP  @ events
 	.4byte LilycoveCity_DepartmentStoreRooftop_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10265,7 +10265,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR (g13 m22)
 	.4byte gMapLayout_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR  @ mapLayout
-	.4byte 0x0850AC04  @ events
+	.4byte gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR  @ events
 	.4byte 0x0820B18C  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0198  @ music
@@ -10273,7 +10273,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0C, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_GYM (g14 m0)
 	.4byte gMapLayout_MOSSDEEP_CITY_GYM  @ mapLayout
-	.4byte 0x0850B090  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_GYM  @ events
 	.4byte MossdeepCity_Gym_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -10281,7 +10281,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_HOUSE1 (g14 m1)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x0850B0E4  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE1  @ events
 	.4byte 0x0820C332  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10289,7 +10289,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_HOUSE2 (g14 m2)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850B150  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE2  @ events
 	.4byte 0x0820C3D2  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10297,7 +10297,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_1F (g14 m3)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850B1C4  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F  @ events
 	.4byte MossdeepCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10305,7 +10305,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_POKEMON_CENTER_2F (g14 m4)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850B268  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F  @ events
 	.4byte MossdeepCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10313,7 +10313,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_MART (g14 m5)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x0850B2EC  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_MART  @ events
 	.4byte 0x0820C5B2  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10321,7 +10321,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_HOUSE3 (g14 m6)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x0850B328  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE3  @ events
 	.4byte 0x0820C6FA  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10329,7 +10329,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_STEVENS_HOUSE (g14 m7)
 	.4byte gMapLayout_MOSSDEEP_CITY_STEVENS_HOUSE  @ mapLayout
-	.4byte 0x0850B3C4  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE  @ events
 	.4byte MossdeepCity_StevensHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10337,7 +10337,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_HOUSE4 (g14 m8)
 	.4byte gMapLayout_PETALBURG_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850B430  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_HOUSE4  @ events
 	.4byte 0x0820CC5B  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10345,7 +10345,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_1F (g14 m9)
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_1F  @ mapLayout
-	.4byte 0x0850B564  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F  @ events
 	.4byte MossdeepCity_SpaceCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10353,7 +10353,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_SPACE_CENTER_2F (g14 m10)
 	.4byte gMapLayout_MOSSDEEP_CITY_SPACE_CENTER_2F  @ mapLayout
-	.4byte 0x0850B658  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F  @ events
 	.4byte MossdeepCity_SpaceCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10361,7 +10361,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_GAME_CORNER_1F (g14 m11)
 	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_1F  @ mapLayout
-	.4byte 0x0850B6D8  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F  @ events
 	.4byte MossdeepCity_GameCorner_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10369,7 +10369,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MOSSDEEP_CITY_GAME_CORNER_B1F (g14 m12)
 	.4byte gMapLayout_MOSSDEEP_CITY_GAME_CORNER_B1F  @ mapLayout
-	.4byte 0x0850B70C  @ events
+	.4byte gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F  @ events
 	.4byte 0x0820E223  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10377,7 +10377,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_GYM_1F (g15 m0)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_1F  @ mapLayout
-	.4byte 0x0850B780  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_GYM_1F  @ events
 	.4byte SootopolisCity_Gym_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -10385,7 +10385,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_GYM_B1F (g15 m1)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_GYM_B1F  @ mapLayout
-	.4byte 0x0850B88C  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_GYM_B1F  @ events
 	.4byte 0x0820EAC6  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016C  @ music
@@ -10393,7 +10393,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_1F (g15 m2)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850B918  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F  @ events
 	.4byte SootopolisCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10401,7 +10401,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_POKEMON_CENTER_2F (g15 m3)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850B9A4  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F  @ events
 	.4byte SootopolisCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10409,7 +10409,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_MART (g15 m4)
 	.4byte gMapLayout_OLDALE_TOWN_MART  @ mapLayout
-	.4byte 0x0850BA10  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_MART  @ events
 	.4byte 0x0820F1B7  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0194  @ music
@@ -10417,7 +10417,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE1 (g15 m5)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte 0x0850BA64  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE1  @ events
 	.4byte 0x0820F300  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10425,7 +10425,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE2 (g15 m6)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850BAA0  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE2  @ events
 	.4byte 0x0820F3C6  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10433,7 +10433,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE3 (g15 m7)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3  @ mapLayout
-	.4byte 0x0850BAF4  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE3  @ events
 	.4byte 0x0820F479  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10441,7 +10441,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE4 (g15 m8)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte 0x0850BB60  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE4  @ events
 	.4byte 0x0820F593  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10449,7 +10449,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE5 (g15 m9)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE2  @ mapLayout
-	.4byte 0x0850BBB4  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE5  @ events
 	.4byte 0x0820F657  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10457,7 +10457,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE6 (g15 m10)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE3  @ mapLayout
-	.4byte 0x0850BBF0  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE6  @ events
 	.4byte 0x0820F6D0  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10465,7 +10465,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_HOUSE7 (g15 m11)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_HOUSE1  @ mapLayout
-	.4byte 0x0850BC44  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_HOUSE7  @ events
 	.4byte 0x0820F7BA  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10473,7 +10473,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE (g15 m12)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE  @ mapLayout
-	.4byte 0x0850BCB0  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE  @ events
 	.4byte 0x0820F861  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10481,7 +10481,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F (g15 m13)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F  @ mapLayout
-	.4byte 0x0850BCF4  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F  @ events
 	.4byte SootopolisCity_MysteryEventsHouse_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10489,7 +10489,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F (g15 m14)
 	.4byte gMapLayout_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F  @ mapLayout
-	.4byte 0x0850BD28  @ events
+	.4byte gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F  @ events
 	.4byte SootopolisCity_MysteryEventsHouse_B1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BD  @ music
@@ -10497,7 +10497,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0E, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_SIDNEYS_ROOM (g16 m0)
 	.4byte gMapLayout_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ mapLayout
-	.4byte 0x0850BD64  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM  @ events
 	.4byte EverGrandeCity_SidneysRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10505,7 +10505,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x04  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_PHOEBES_ROOM (g16 m1)
 	.4byte gMapLayout_EVER_GRANDE_CITY_PHOEBES_ROOM  @ mapLayout
-	.4byte 0x0850BDA0  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM  @ events
 	.4byte EverGrandeCity_PhoebesRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10513,7 +10513,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x05  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_GLACIAS_ROOM (g16 m2)
 	.4byte gMapLayout_EVER_GRANDE_CITY_GLACIAS_ROOM  @ mapLayout
-	.4byte 0x0850BDDC  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM  @ events
 	.4byte EverGrandeCity_GlaciasRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10521,7 +10521,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_DRAKES_ROOM (g16 m3)
 	.4byte gMapLayout_EVER_GRANDE_CITY_DRAKES_ROOM  @ mapLayout
-	.4byte 0x0850BE18  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM  @ events
 	.4byte EverGrandeCity_DrakesRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10529,7 +10529,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x07  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_CHAMPIONS_ROOM (g16 m4)
 	.4byte gMapLayout_EVER_GRANDE_CITY_CHAMPIONS_ROOM  @ mapLayout
-	.4byte 0x0850BE84  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM  @ events
 	.4byte EverGrandeCity_ChampionsRoom_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10537,7 +10537,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL1 (g16 m5)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte 0x0850BEB8  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL1  @ events
 	.4byte EverGrandeCity_Hall1_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10545,7 +10545,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL2 (g16 m6)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte 0x0850BEEC  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL2  @ events
 	.4byte EverGrandeCity_Hall2_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10553,7 +10553,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL3 (g16 m7)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte 0x0850BF20  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL3  @ events
 	.4byte EverGrandeCity_Hall3_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10561,7 +10561,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL4 (g16 m8)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL4  @ mapLayout
-	.4byte 0x0850BF44  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL4  @ events
 	.4byte EverGrandeCity_Hall4_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10569,7 +10569,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL5 (g16 m9)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL1  @ mapLayout
-	.4byte 0x0850BF78  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL5  @ events
 	.4byte EverGrandeCity_Hall5_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AD  @ music
@@ -10577,7 +10577,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F (g16 m10)
 	.4byte gMapLayout_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F  @ mapLayout
-	.4byte 0x0850C014  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F  @ events
 	.4byte EverGrandeCity_PokemonLeague_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10585,7 +10585,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_HALL_OF_FAME (g16 m11)
 	.4byte gMapLayout_EVER_GRANDE_CITY_HALL_OF_FAME  @ mapLayout
-	.4byte 0x0850C048  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME  @ events
 	.4byte EverGrandeCity_HallOfFame_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01BF  @ music
@@ -10593,7 +10593,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_1F (g16 m12)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_1F  @ mapLayout
-	.4byte 0x0850C0D4  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F  @ events
 	.4byte EverGrandeCity_PokemonCenter_1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10601,7 +10601,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_POKEMON_CENTER_2F (g16 m13)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850C160  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F  @ events
 	.4byte EverGrandeCity_PokemonCenter_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10609,7 +10609,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F (g16 m14)
 	.4byte gMapLayout_OLDALE_TOWN_POKEMON_CENTER_2F  @ mapLayout
-	.4byte 0x0850C1EC  @ events
+	.4byte gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F  @ events
 	.4byte EverGrandeCity_PokemonLeague_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0190  @ music
@@ -10617,7 +10617,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x0F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE104_MR_BRINEYS_HOUSE (g17 m0)
 	.4byte gMapLayout_ROUTE104_MR_BRINEYS_HOUSE  @ mapLayout
-	.4byte 0x0850C240  @ events
+	.4byte gMapEvents_ROUTE104_MR_BRINEYS_HOUSE  @ events
 	.4byte Route104_MrBrineysHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
@@ -10625,7 +10625,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE104_PRETTY_PETAL_FLOWER_SHOP (g17 m1)
 	.4byte gMapLayout_ROUTE104_PRETTY_PETAL_FLOWER_SHOP  @ mapLayout
-	.4byte 0x0850C2AC  @ events
+	.4byte gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP  @ events
 	.4byte Route104_PrettyPetalFlowerShop_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016A  @ music
@@ -10633,7 +10633,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE111_WINSTRATE_FAMILYS_HOUSE (g18 m0)
 	.4byte gMapLayout_OLDALE_TOWN_HOUSE2  @ mapLayout
-	.4byte 0x0850C330  @ events
+	.4byte gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE  @ events
 	.4byte 0x08211AF4  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10641,7 +10641,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE111_OLD_LADYS_REST_STOP (g18 m1)
 	.4byte gMapLayout_DEWFORD_TOWN_HOUSE1  @ mapLayout
-	.4byte 0x0850C36C  @ events
+	.4byte gMapEvents_ROUTE111_OLD_LADYS_REST_STOP  @ events
 	.4byte Route111_OldLadysRestStop_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10649,7 +10649,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1A, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE112_CABLE_CAR_STATION (g19 m0)
 	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION  @ mapLayout
-	.4byte 0x0850C3C0  @ events
+	.4byte gMapEvents_ROUTE112_CABLE_CAR_STATION  @ events
 	.4byte Route112_CableCarStation_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0168  @ music
@@ -10657,7 +10657,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1B, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_CHIMNEY_CABLE_CAR_STATION (g19 m1)
 	.4byte gMapLayout_ROUTE112_CABLE_CAR_STATION  @ mapLayout
-	.4byte 0x0850C414  @ events
+	.4byte gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION  @ events
 	.4byte MtChimney_CableCarStation_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0168  @ music
@@ -10665,7 +10665,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x38, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE114_FOSSIL_MANIACS_HOUSE (g20 m0)
 	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_HOUSE  @ mapLayout
-	.4byte 0x0850C488  @ events
+	.4byte gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE  @ events
 	.4byte Route114_FossilManiacsHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
@@ -10673,7 +10673,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE114_FOSSIL_MANIACS_TUNNEL (g20 m1)
 	.4byte gMapLayout_ROUTE114_FOSSIL_MANIACS_TUNNEL  @ mapLayout
-	.4byte 0x0850C4EC  @ events
+	.4byte gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL  @ events
 	.4byte Route114_FossilManiacsTunnel_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
@@ -10681,7 +10681,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE114_LANETTES_HOUSE (g20 m2)
 	.4byte gMapLayout_ROUTE114_LANETTES_HOUSE  @ mapLayout
-	.4byte 0x0850C54C  @ events
+	.4byte gMapEvents_ROUTE114_LANETTES_HOUSE  @ events
 	.4byte Route114_LanettesHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B5  @ music
@@ -10689,7 +10689,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1D, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE116_TUNNELERS_REST_HOUSE (g21 m0)
 	.4byte gMapLayout_ROUTE116_TUNNELERS_REST_HOUSE  @ mapLayout
-	.4byte 0x0850C5B8  @ events
+	.4byte gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE  @ events
 	.4byte Route116_TunnelersRestHouse_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10697,7 +10697,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x1F, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE117_POKEMON_DAY_CARE (g22 m0)
 	.4byte gMapLayout_ROUTE117_POKEMON_DAY_CARE  @ mapLayout
-	.4byte 0x0850C5F4  @ events
+	.4byte gMapEvents_ROUTE117_POKEMON_DAY_CARE  @ events
 	.4byte Route117_PokemonDayCare_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x018F  @ music
@@ -10705,7 +10705,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x20, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_ROUTE121_SAFARI_ZONE_ENTRANCE (g23 m0)
 	.4byte gMapLayout_ROUTE121_SAFARI_ZONE_ENTRANCE  @ mapLayout
-	.4byte 0x0850C68C  @ events
+	.4byte gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE  @ events
 	.4byte Route121_SafariZoneEntrance_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x017E  @ music
@@ -10713,7 +10713,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x24, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_METEOR_FALLS_1F_1R (g24 m0)
 	.4byte gMapLayout_METEOR_FALLS_1F_1R  @ mapLayout
-	.4byte 0x0850C7DC  @ events
+	.4byte gMapEvents_METEOR_FALLS_1F_1R  @ events
 	.4byte MeteorFalls_1F_1R_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0182  @ music
@@ -10721,7 +10721,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_METEOR_FALLS_1F_2R (g24 m1)
 	.4byte gMapLayout_METEOR_FALLS_1F_2R  @ mapLayout
-	.4byte 0x0850C864  @ events
+	.4byte gMapEvents_METEOR_FALLS_1F_2R  @ events
 	.4byte 0x08213079  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0182  @ music
@@ -10729,7 +10729,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_METEOR_FALLS_B1F_1R (g24 m2)
 	.4byte gMapLayout_METEOR_FALLS_B1F_1R  @ mapLayout
-	.4byte 0x0850C8A8  @ events
+	.4byte gMapEvents_METEOR_FALLS_B1F_1R  @ events
 	.4byte 0x082135EE  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0182  @ music
@@ -10737,7 +10737,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_METEOR_FALLS_B1F_2R (g24 m3)
 	.4byte gMapLayout_METEOR_FALLS_B1F_2R  @ mapLayout
-	.4byte 0x0850C8DC  @ events
+	.4byte gMapEvents_METEOR_FALLS_B1F_2R  @ events
 	.4byte 0x082135EF  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0182  @ music
@@ -10745,7 +10745,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3F, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_RUSTURF_TUNNEL (g24 m4)
 	.4byte gMapLayout_RUSTURF_TUNNEL  @ mapLayout
-	.4byte 0x0850CA48  @ events
+	.4byte gMapEvents_RUSTURF_TUNNEL  @ events
 	.4byte RusturfTunnel_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10753,7 +10753,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3C, 0x00, 0x06, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_SOOTOPOLIS_CITY (g24 m5)
 	.4byte gMapLayout_UNDERWATER_SOOTOPOLIS_CITY  @ mapLayout
-	.4byte 0x0850CA6C  @ events
+	.4byte gMapEvents_UNDERWATER_SOOTOPOLIS_CITY  @ events
 	.4byte Underwater_SootopolisCity_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x019B  @ music
@@ -10761,7 +10761,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x36, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_DESERT_RUINS (g24 m6)
 	.4byte gMapLayout_DESERT_RUINS  @ mapLayout
-	.4byte 0x0850CAD4  @ events
+	.4byte gMapEvents_DESERT_RUINS  @ events
 	.4byte DesertRuins_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B6  @ music
@@ -10769,7 +10769,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x52, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_GRANITE_CAVE_1F (g24 m7)
 	.4byte gMapLayout_GRANITE_CAVE_1F  @ mapLayout
-	.4byte 0x0850CB38  @ events
+	.4byte gMapEvents_GRANITE_CAVE_1F  @ events
 	.4byte 0x08213EE1  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10777,7 +10777,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_GRANITE_CAVE_B1F (g24 m8)
 	.4byte gMapLayout_GRANITE_CAVE_B1F  @ mapLayout
-	.4byte 0x0850CB9C  @ events
+	.4byte gMapEvents_GRANITE_CAVE_B1F  @ events
 	.4byte GraniteCave_B1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10785,7 +10785,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_GRANITE_CAVE_B2F (g24 m9)
 	.4byte gMapLayout_GRANITE_CAVE_B2F  @ mapLayout
-	.4byte 0x0850CCC8  @ events
+	.4byte gMapEvents_GRANITE_CAVE_B2F  @ events
 	.4byte 0x08214026  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10793,7 +10793,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x37, 0x01, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_GRANITE_CAVE_STEVENS_ROOM (g24 m10)
 	.4byte gMapLayout_GRANITE_CAVE_STEVENS_ROOM  @ mapLayout
-	.4byte 0x0850CCFC  @ events
+	.4byte gMapEvents_GRANITE_CAVE_STEVENS_ROOM  @ events
 	.4byte 0x08214027  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10801,7 +10801,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x37, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_PETALBURG_WOODS (g24 m11)
 	.4byte gMapLayout_PETALBURG_WOODS  @ mapLayout
-	.4byte 0x0850CEE0  @ events
+	.4byte gMapEvents_PETALBURG_WOODS  @ events
 	.4byte 0x08214278  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10809,7 +10809,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x3B, 0x00, 0x0B, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_CHIMNEY (g24 m12)
 	.4byte gMapLayout_MT_CHIMNEY  @ mapLayout
-	.4byte 0x0850D1FC  @ events
+	.4byte gMapEvents_MT_CHIMNEY  @ events
 	.4byte MtChimney_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -10817,7 +10817,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x38, 0x00, 0x07, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_JAGGED_PASS (g24 m13)
 	.4byte gMapLayout_JAGGED_PASS  @ mapLayout
-	.4byte 0x0850D398  @ events
+	.4byte gMapEvents_JAGGED_PASS  @ events
 	.4byte JaggedPass_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10825,7 +10825,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x4C, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_FIERY_PATH (g24 m14)
 	.4byte gMapLayout_FIERY_PATH  @ mapLayout
-	.4byte 0x0850D47C  @ events
+	.4byte gMapEvents_FIERY_PATH  @ events
 	.4byte FieryPath_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x016E  @ music
@@ -10833,7 +10833,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x4A, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_1F (g24 m15)
 	.4byte gMapLayout_MT_PYRE_1F  @ mapLayout
-	.4byte 0x0850D508  @ events
+	.4byte gMapEvents_MT_PYRE_1F  @ events
 	.4byte 0x08216119  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10841,7 +10841,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_2F (g24 m16)
 	.4byte gMapLayout_MT_PYRE_2F  @ mapLayout
-	.4byte 0x0850D604  @ events
+	.4byte gMapEvents_MT_PYRE_2F  @ events
 	.4byte MtPyre_2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10849,7 +10849,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_3F (g24 m17)
 	.4byte gMapLayout_MT_PYRE_3F  @ mapLayout
-	.4byte 0x0850D6A8  @ events
+	.4byte gMapEvents_MT_PYRE_3F  @ events
 	.4byte 0x082165F1  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10857,7 +10857,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_4F (g24 m18)
 	.4byte gMapLayout_MT_PYRE_4F  @ mapLayout
-	.4byte 0x0850D71C  @ events
+	.4byte gMapEvents_MT_PYRE_4F  @ events
 	.4byte 0x08216880  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10865,7 +10865,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_5F (g24 m19)
 	.4byte gMapLayout_MT_PYRE_5F  @ mapLayout
-	.4byte 0x0850D788  @ events
+	.4byte gMapEvents_MT_PYRE_5F  @ events
 	.4byte 0x082168FA  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10873,7 +10873,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_6F (g24 m20)
 	.4byte gMapLayout_MT_PYRE_6F  @ mapLayout
-	.4byte 0x0850D7F4  @ events
+	.4byte gMapEvents_MT_PYRE_6F  @ events
 	.4byte 0x08216986  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B0  @ music
@@ -10881,7 +10881,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_EXTERIOR (g24 m21)
 	.4byte gMapLayout_MT_PYRE_EXTERIOR  @ mapLayout
-	.4byte 0x0850D8B8  @ events
+	.4byte gMapEvents_MT_PYRE_EXTERIOR  @ events
 	.4byte MtPyre_Exterior_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B2  @ music
@@ -10889,7 +10889,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x00, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_MT_PYRE_SUMMIT (g24 m22)
 	.4byte gMapLayout_MT_PYRE_SUMMIT  @ mapLayout
-	.4byte 0x0850DA1C  @ events
+	.4byte gMapEvents_MT_PYRE_SUMMIT  @ events
 	.4byte MtPyre_Summit_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01B2  @ music
@@ -10897,7 +10897,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x41, 0x00, 0x06, 0x03, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_AQUA_HIDEOUT_1F (g24 m23)
 	.4byte gMapLayout_AQUA_HIDEOUT_1F  @ mapLayout
-	.4byte 0x0850DA90  @ events
+	.4byte gMapEvents_AQUA_HIDEOUT_1F  @ events
 	.4byte 0x08217935  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AE  @ music
@@ -10905,7 +10905,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_AQUA_HIDEOUT_B1F (g24 m24)
 	.4byte gMapLayout_AQUA_HIDEOUT_B1F  @ mapLayout
-	.4byte 0x0850DC44  @ events
+	.4byte gMapEvents_AQUA_HIDEOUT_B1F  @ events
 	.4byte AquaHideout_B1F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AE  @ music
@@ -10913,7 +10913,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_AQUA_HIDEOUT_B2F (g24 m25)
 	.4byte gMapLayout_AQUA_HIDEOUT_B2F  @ mapLayout
-	.4byte 0x0850DD58  @ events
+	.4byte gMapEvents_AQUA_HIDEOUT_B2F  @ events
 	.4byte AquaHideout_B2F_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x01AE  @ music
@@ -10921,7 +10921,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0xC5, 0x00, 0x00, 0x08, 0x00, 0x00, 0x08, 0x03  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_UNDERWATER_SEAFLOOR_CAVERN (g24 m26)
 	.4byte gMapLayout_UNDERWATER_SEAFLOOR_CAVERN  @ mapLayout
-	.4byte 0x0850DDD4  @ events
+	.4byte gMapEvents_UNDERWATER_SEAFLOOR_CAVERN  @ events
 	.4byte Underwater_SeafloorCavern_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x019B  @ music
@@ -10929,7 +10929,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x45, 0x00, 0x0E, 0x05, 0x00, 0x00, 0x0D, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SEAFLOOR_CAVERN_ENTRANCE (g24 m27)
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ENTRANCE  @ mapLayout
-	.4byte 0x0850DE10  @ events
+	.4byte gMapEvents_SEAFLOOR_CAVERN_ENTRANCE  @ events
 	.4byte SeafloorCavern_Entrance_MapScripts  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -10937,7 +10937,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SEAFLOOR_CAVERN_ROOM1 (g24 m28)
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM1  @ mapLayout
-	.4byte 0x0850DEB4  @ events
+	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM1  @ events
 	.4byte 0x0821865E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -10945,7 +10945,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SEAFLOOR_CAVERN_ROOM2 (g24 m29)
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM2  @ mapLayout
-	.4byte 0x0850DFA8  @ events
+	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM2  @ events
 	.4byte 0x0821873D  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -10953,7 +10953,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SEAFLOOR_CAVERN_ROOM3 (g24 m30)
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM3  @ mapLayout
-	.4byte 0x0850E0AC  @ events
+	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM3  @ events
 	.4byte 0x0821873E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -10961,7 +10961,7 @@ gMapHeaders: @ 0x0845A8D8
 	.byte 0x44, 0x00, 0x00, 0x04, 0x00, 0x00, 0x0F, 0x00  @ regionMapSectionId, cave, weather, mapType, filler[2], flags, battleType
 	@ MAP_SEAFLOOR_CAVERN_ROOM4 (g24 m31)
 	.4byte gMapLayout_SEAFLOOR_CAVERN_ROOM4  @ mapLayout
-	.4byte 0x0850E110  @ events
+	.4byte gMapEvents_SEAFLOOR_CAVERN_ROOM4  @ events
 	.4byte 0x0821892E  @ mapScripts
 	.4byte 0x00000000  @ connections
 	.2byte 0x0196  @ music
@@ -12298,7 +12298,2167 @@ sSpriteTemplates_MoveEffectMons: @ 0x84FE69C
 
 	.globl sSpriteSheets_MoveEffectMons
 sSpriteSheets_MoveEffectMons: @ 0x84FE6CC
-	.incbin "baserom_jp.gba", 0x4fe6cc, 0x18fd0
+	.incbin "baserom_jp.gba", 0x4FE6CC, 0x1F8
+	.globl gMapEvents_PETALBURG_CITY
+gMapEvents_PETALBURG_CITY: @ 0x084FE8C4
+	.byte 0x09, 0x06, 0x08, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FE6DC  @ objectEvents
+	.4byte 0x084FE7B4  @ warps
+	.4byte 0x084FE7E4  @ coordEvents
+	.4byte 0x084FE864  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FE8D8, 0x44C
+	.globl gMapEvents_SLATEPORT_CITY
+gMapEvents_SLATEPORT_CITY: @ 0x084FED24
+	.byte 0x23, 0x0B, 0x01, 0x0D  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FE8D8  @ objectEvents
+	.4byte 0x084FEC20  @ warps
+	.4byte 0x084FEC78  @ coordEvents
+	.4byte 0x084FEC88  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FED38, 0x1A0
+	.globl gMapEvents_MAUVILLE_CITY
+gMapEvents_MAUVILLE_CITY: @ 0x084FEED8
+	.byte 0x0B, 0x07, 0x00, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FED38  @ objectEvents
+	.4byte 0x084FEE40  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x084FEE78  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FEEEC, 0x3A8
+	.globl gMapEvents_RUSTBORO_CITY
+gMapEvents_RUSTBORO_CITY: @ 0x084FF294
+	.byte 0x10, 0x0C, 0x15, 0x0A  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FEEEC  @ objectEvents
+	.4byte 0x084FF06C  @ warps
+	.4byte 0x084FF0CC  @ coordEvents
+	.4byte 0x084FF21C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FF2A8, 0x138
+	.globl gMapEvents_FORTREE_CITY
+gMapEvents_FORTREE_CITY: @ 0x084FF3E0
+	.byte 0x07, 0x09, 0x00, 0x06  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FF2A8  @ objectEvents
+	.4byte 0x084FF350  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x084FF398  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FF3F4, 0x31C
+	.globl gMapEvents_LILYCOVE_CITY
+gMapEvents_LILYCOVE_CITY: @ 0x084FF710
+	.byte 0x16, 0x0E, 0x00, 0x0D  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FF3F4  @ objectEvents
+	.4byte 0x084FF604  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x084FF674  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FF724, 0x2E8
+	.globl gMapEvents_MOSSDEEP_CITY
+gMapEvents_MOSSDEEP_CITY: @ 0x084FFA0C
+	.byte 0x11, 0x0A, 0x0A, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FF724  @ objectEvents
+	.4byte 0x084FF8BC  @ warps
+	.4byte 0x084FF90C  @ coordEvents
+	.4byte 0x084FF9AC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FFA20, 0x260
+	.globl gMapEvents_SOOTOPOLIS_CITY
+gMapEvents_SOOTOPOLIS_CITY: @ 0x084FFC80
+	.byte 0x12, 0x0D, 0x00, 0x06  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FFA20  @ objectEvents
+	.4byte 0x084FFBD0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x084FFC38  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FFC94, 0x10C
+	.globl gMapEvents_EVER_GRANDE_CITY
+gMapEvents_EVER_GRANDE_CITY: @ 0x084FFDA0
+	.byte 0x00, 0x04, 0x0B, 0x05  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x084FFC94  @ warps
+	.4byte 0x084FFCB4  @ coordEvents
+	.4byte 0x084FFD64  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FFDB4, 0x198
+	.globl gMapEvents_LITTLEROOT_TOWN
+gMapEvents_LITTLEROOT_TOWN: @ 0x084FFF4C
+	.byte 0x08, 0x03, 0x09, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FFDB4  @ objectEvents
+	.4byte 0x084FFE74  @ warps
+	.4byte 0x084FFE8C  @ coordEvents
+	.4byte 0x084FFF1C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x4FFF60, 0xFC
+	.globl gMapEvents_OLDALE_TOWN
+gMapEvents_OLDALE_TOWN: @ 0x0850005C
+	.byte 0x04, 0x04, 0x04, 0x05  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x084FFF60  @ objectEvents
+	.4byte 0x084FFFC0  @ warps
+	.4byte 0x084FFFE0  @ coordEvents
+	.4byte 0x08500020  @ bgEvents
+	.incbin "baserom_jp.gba", 0x500070, 0xDC
+	.globl gMapEvents_DEWFORD_TOWN
+gMapEvents_DEWFORD_TOWN: @ 0x0850014C
+	.byte 0x05, 0x05, 0x00, 0x05  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08500070  @ objectEvents
+	.4byte 0x085000E8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08500110  @ bgEvents
+	.incbin "baserom_jp.gba", 0x500160, 0x178
+	.globl gMapEvents_LAVARIDGE_TOWN
+gMapEvents_LAVARIDGE_TOWN: @ 0x085002D8
+	.byte 0x09, 0x06, 0x01, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08500160  @ objectEvents
+	.4byte 0x08500238  @ warps
+	.4byte 0x08500268  @ coordEvents
+	.4byte 0x08500278  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5002EC, 0xE8
+	.globl gMapEvents_FALLARBOR_TOWN
+gMapEvents_FALLARBOR_TOWN: @ 0x085003D4
+	.byte 0x04, 0x05, 0x00, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085002EC  @ objectEvents
+	.4byte 0x0850034C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08500374  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5003E8, 0xF8
+	.globl gMapEvents_VERDANTURF_TOWN
+gMapEvents_VERDANTURF_TOWN: @ 0x085004E0
+	.byte 0x04, 0x07, 0x00, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085003E8  @ objectEvents
+	.4byte 0x08500448  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08500480  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5004F4, 0x9C
+	.globl gMapEvents_PACIFIDLOG_TOWN
+gMapEvents_PACIFIDLOG_TOWN: @ 0x08500590
+	.byte 0x03, 0x06, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085004F4  @ objectEvents
+	.4byte 0x0850053C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850056C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5005A4, 0x12C
+	.globl gMapEvents_ROUTE101
+gMapEvents_ROUTE101: @ 0x085006D0
+	.byte 0x06, 0x00, 0x09, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085005A4  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x08500634  @ coordEvents
+	.4byte 0x085006C4  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5006E4, 0xF0
+	.globl gMapEvents_ROUTE102
+gMapEvents_ROUTE102: @ 0x085007D4
+	.byte 0x09, 0x00, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085006E4  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085007BC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5007E8, 0x1F4
+	.globl gMapEvents_ROUTE103
+gMapEvents_ROUTE103: @ 0x085009DC
+	.byte 0x14, 0x01, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085007E8  @ objectEvents
+	.4byte 0x085009C8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085009D0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5009F0, 0x3F8
+	.globl gMapEvents_ROUTE104
+gMapEvents_ROUTE104: @ 0x08500DE8
+	.byte 0x22, 0x08, 0x01, 0x0A  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085009F0  @ objectEvents
+	.4byte 0x08500D20  @ warps
+	.4byte 0x08500D60  @ coordEvents
+	.4byte 0x08500D70  @ bgEvents
+	.incbin "baserom_jp.gba", 0x500DFC, 0xE0
+	.globl gMapEvents_ROUTE105
+gMapEvents_ROUTE105: @ 0x08500EDC
+	.byte 0x08, 0x01, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08500DFC  @ objectEvents
+	.4byte 0x08500EBC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08500EC4  @ bgEvents
+	.incbin "baserom_jp.gba", 0x500EF0, 0xB0
+	.globl gMapEvents_ROUTE106
+gMapEvents_ROUTE106: @ 0x08500FA0
+	.byte 0x05, 0x01, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08500EF0  @ objectEvents
+	.4byte 0x08500F68  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08500F70  @ bgEvents
+	.incbin "baserom_jp.gba", 0x500FB4, 0xA8
+	.globl gMapEvents_ROUTE107
+gMapEvents_ROUTE107: @ 0x0850105C
+	.byte 0x07, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08500FB4  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x501070, 0xBC
+	.globl gMapEvents_ROUTE108
+gMapEvents_ROUTE108: @ 0x0850112C
+	.byte 0x07, 0x01, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08501070  @ objectEvents
+	.4byte 0x08501118  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08501120  @ bgEvents
+	.incbin "baserom_jp.gba", 0x501140, 0x2A8
+	.globl gMapEvents_ROUTE109
+gMapEvents_ROUTE109: @ 0x085013E8
+	.byte 0x18, 0x01, 0x00, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08501140  @ objectEvents
+	.4byte 0x08501380  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08501388  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5013FC, 0x4EC
+	.globl gMapEvents_ROUTE110
+gMapEvents_ROUTE110: @ 0x085018E8
+	.byte 0x24, 0x06, 0x09, 0x11  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085013FC  @ objectEvents
+	.4byte 0x0850175C  @ warps
+	.4byte 0x0850178C  @ coordEvents
+	.4byte 0x0850181C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5018FC, 0x770
+	.globl gMapEvents_ROUTE111
+gMapEvents_ROUTE111: @ 0x0850206C
+	.byte 0x2E, 0x05, 0x22, 0x12  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085018FC  @ objectEvents
+	.4byte 0x08501D4C  @ warps
+	.4byte 0x08501D74  @ coordEvents
+	.4byte 0x08501F94  @ bgEvents
+	.incbin "baserom_jp.gba", 0x502080, 0x1A4
+	.globl gMapEvents_ROUTE112
+gMapEvents_ROUTE112: @ 0x08502224
+	.byte 0x0E, 0x06, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08502080  @ objectEvents
+	.4byte 0x085021D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08502200  @ bgEvents
+	.incbin "baserom_jp.gba", 0x502238, 0x328
+	.globl gMapEvents_ROUTE113
+gMapEvents_ROUTE113: @ 0x08502560
+	.byte 0x10, 0x03, 0x13, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08502238  @ objectEvents
+	.4byte 0x085023B8  @ warps
+	.4byte 0x085023D0  @ coordEvents
+	.4byte 0x08502500  @ bgEvents
+	.incbin "baserom_jp.gba", 0x502574, 0x340
+	.globl gMapEvents_ROUTE114
+gMapEvents_ROUTE114: @ 0x085028B4
+	.byte 0x1B, 0x05, 0x00, 0x0C  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08502574  @ objectEvents
+	.4byte 0x085027FC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08502824  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5028C8, 0x2E8
+	.globl gMapEvents_ROUTE115
+gMapEvents_ROUTE115: @ 0x08502BB0
+	.byte 0x17, 0x03, 0x00, 0x0E  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085028C8  @ objectEvents
+	.4byte 0x08502AF0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08502B08  @ bgEvents
+	.incbin "baserom_jp.gba", 0x502BC4, 0x35C
+	.globl gMapEvents_ROUTE116
+gMapEvents_ROUTE116: @ 0x08502F20
+	.byte 0x1C, 0x05, 0x01, 0x0B  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08502BC4  @ objectEvents
+	.4byte 0x08502E64  @ warps
+	.4byte 0x08502E8C  @ coordEvents
+	.4byte 0x08502E9C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x502F34, 0x278
+	.globl gMapEvents_ROUTE117
+gMapEvents_ROUTE117: @ 0x085031AC
+	.byte 0x18, 0x01, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08502F34  @ objectEvents
+	.4byte 0x08503174  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850317C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5031C0, 0x2A4
+	.globl gMapEvents_ROUTE118
+gMapEvents_ROUTE118: @ 0x08503464
+	.byte 0x15, 0x02, 0x03, 0x09  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085031C0  @ objectEvents
+	.4byte 0x085033B8  @ warps
+	.4byte 0x085033C8  @ coordEvents
+	.4byte 0x085033F8  @ bgEvents
+	.incbin "baserom_jp.gba", 0x503478, 0x698
+	.globl gMapEvents_ROUTE119
+gMapEvents_ROUTE119: @ 0x08503B10
+	.byte 0x2B, 0x02, 0x19, 0x14  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08503478  @ objectEvents
+	.4byte 0x08503880  @ warps
+	.4byte 0x08503890  @ coordEvents
+	.4byte 0x08503A20  @ bgEvents
+	.incbin "baserom_jp.gba", 0x503B24, 0x608
+	.globl gMapEvents_ROUTE120
+gMapEvents_ROUTE120: @ 0x0850412C
+	.byte 0x2C, 0x02, 0x13, 0x0E  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08503B24  @ objectEvents
+	.4byte 0x08503F44  @ warps
+	.4byte 0x08503F54  @ coordEvents
+	.4byte 0x08504084  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504140, 0x378
+	.globl gMapEvents_ROUTE121
+gMapEvents_ROUTE121: @ 0x085044B8
+	.byte 0x1D, 0x01, 0x04, 0x0A  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504140  @ objectEvents
+	.4byte 0x085043F8  @ warps
+	.4byte 0x08504400  @ coordEvents
+	.4byte 0x08504440  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5044CC, 0x8
+	.globl gMapEvents_ROUTE122
+gMapEvents_ROUTE122: @ 0x085044D4
+	.byte 0x00, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x085044CC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5044E8, 0x5F4
+	.globl gMapEvents_ROUTE123
+gMapEvents_ROUTE123: @ 0x08504ADC
+	.byte 0x2B, 0x01, 0x16, 0x0B  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085044E8  @ objectEvents
+	.4byte 0x085048F0  @ warps
+	.4byte 0x085048F8  @ coordEvents
+	.4byte 0x08504A58  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504AF0, 0x134
+	.globl gMapEvents_ROUTE124
+gMapEvents_ROUTE124: @ 0x08504C24
+	.byte 0x0C, 0x01, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504AF0  @ objectEvents
+	.4byte 0x08504C10  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08504C18  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504C38, 0x128
+	.globl gMapEvents_ROUTE125
+gMapEvents_ROUTE125: @ 0x08504D60
+	.byte 0x0A, 0x01, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504C38  @ objectEvents
+	.4byte 0x08504D28  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08504D30  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504D74, 0xD8
+	.globl gMapEvents_ROUTE126
+gMapEvents_ROUTE126: @ 0x08504E4C
+	.byte 0x09, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504D74  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504E60, 0x144
+	.globl gMapEvents_ROUTE127
+gMapEvents_ROUTE127: @ 0x08504FA4
+	.byte 0x0B, 0x00, 0x00, 0x05  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504E60  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08504F68  @ bgEvents
+	.incbin "baserom_jp.gba", 0x504FB8, 0x114
+	.globl gMapEvents_ROUTE128
+gMapEvents_ROUTE128: @ 0x085050CC
+	.byte 0x0A, 0x00, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08504FB8  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085050A8  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5050E0, 0x78
+	.globl gMapEvents_ROUTE129
+gMapEvents_ROUTE129: @ 0x08505158
+	.byte 0x05, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085050E0  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50516C, 0x60
+	.globl gMapEvents_ROUTE130
+gMapEvents_ROUTE130: @ 0x085051CC
+	.byte 0x04, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850516C  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5051E0, 0xC8
+	.globl gMapEvents_ROUTE131
+gMapEvents_ROUTE131: @ 0x085052A8
+	.byte 0x08, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085051E0  @ objectEvents
+	.4byte 0x085052A0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5052BC, 0xF0
+	.globl gMapEvents_ROUTE132
+gMapEvents_ROUTE132: @ 0x085053AC
+	.byte 0x0A, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085052BC  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5053C0, 0xF0
+	.globl gMapEvents_ROUTE133
+gMapEvents_ROUTE133: @ 0x085054B0
+	.byte 0x0A, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085053C0  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5054C4, 0x108
+	.globl gMapEvents_ROUTE134
+gMapEvents_ROUTE134: @ 0x085055CC
+	.byte 0x0B, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085054C4  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5055E0, 0x54
+	.globl gMapEvents_UNDERWATER_ROUTE124
+gMapEvents_UNDERWATER_ROUTE124: @ 0x08505634
+	.byte 0x00, 0x00, 0x00, 0x07  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085055E0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505648, 0x68
+	.globl gMapEvents_UNDERWATER_ROUTE126
+gMapEvents_UNDERWATER_ROUTE126: @ 0x085056B0
+	.byte 0x00, 0x01, 0x00, 0x08  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x08505648  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08505650  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5056C4, 0x40
+	.globl gMapEvents_UNDERWATER_ROUTE127
+gMapEvents_UNDERWATER_ROUTE127: @ 0x08505704
+	.byte 0x00, 0x02, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x085056C4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085056D4  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505718, 0x20
+	.globl gMapEvents_UNDERWATER_ROUTE128
+gMapEvents_UNDERWATER_ROUTE128: @ 0x08505738
+	.byte 0x00, 0x01, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x08505718  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08505720  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50574C, 0x10
+	.globl gMapEvents_UNDERWATER_ROUTE129
+gMapEvents_UNDERWATER_ROUTE129: @ 0x0850575C
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850574C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505770, 0x10
+	.globl gMapEvents_UNDERWATER_ROUTE105
+gMapEvents_UNDERWATER_ROUTE105: @ 0x08505780
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x08505770  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505794, 0x10
+	.globl gMapEvents_UNDERWATER_ROUTE125
+gMapEvents_UNDERWATER_ROUTE125: @ 0x085057A4
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x08505794  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5057B8, 0x100
+	.globl gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F
+gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F: @ 0x085058B8
+	.byte 0x07, 0x03, 0x04, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085057B8  @ objectEvents
+	.4byte 0x08505860  @ warps
+	.4byte 0x08505878  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5058CC, 0x1B8
+	.globl gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F
+gMapEvents_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F: @ 0x08505A84
+	.byte 0x10, 0x01, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085058CC  @ objectEvents
+	.4byte 0x08505A4C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08505A54  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505A98, 0x100
+	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F
+gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_1F: @ 0x08505B98
+	.byte 0x07, 0x03, 0x04, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505A98  @ objectEvents
+	.4byte 0x08505B40  @ warps
+	.4byte 0x08505B58  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505BAC, 0x1B8
+	.globl gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F
+gMapEvents_LITTLEROOT_TOWN_MAYS_HOUSE_2F: @ 0x08505D64
+	.byte 0x10, 0x01, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505BAC  @ objectEvents
+	.4byte 0x08505D2C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08505D34  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505D78, 0x154
+	.globl gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB
+gMapEvents_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB: @ 0x08505ECC
+	.byte 0x06, 0x02, 0x00, 0x0F  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505D78  @ objectEvents
+	.4byte 0x08505E08  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08505E18  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505EE0, 0x28
+	.globl gMapEvents_OLDALE_TOWN_HOUSE1
+gMapEvents_OLDALE_TOWN_HOUSE1: @ 0x08505F08
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505EE0  @ objectEvents
+	.4byte 0x08505EF8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505F1C, 0x40
+	.globl gMapEvents_OLDALE_TOWN_HOUSE2
+gMapEvents_OLDALE_TOWN_HOUSE2: @ 0x08505F5C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505F1C  @ objectEvents
+	.4byte 0x08505F4C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505F70, 0x78
+	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F
+gMapEvents_OLDALE_TOWN_POKEMON_CENTER_1F: @ 0x08505FE8
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505F70  @ objectEvents
+	.4byte 0x08505FD0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x505FFC, 0x78
+	.globl gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F
+gMapEvents_OLDALE_TOWN_POKEMON_CENTER_2F: @ 0x08506074
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08505FFC  @ objectEvents
+	.4byte 0x0850605C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506088, 0x58
+	.globl gMapEvents_OLDALE_TOWN_MART
+gMapEvents_OLDALE_TOWN_MART: @ 0x085060E0
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506088  @ objectEvents
+	.4byte 0x085060D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5060F4, 0x58
+	.globl gMapEvents_DEWFORD_TOWN_HOUSE1
+gMapEvents_DEWFORD_TOWN_HOUSE1: @ 0x0850614C
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085060F4  @ objectEvents
+	.4byte 0x0850613C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506160, 0x60
+	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F
+gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_1F: @ 0x085061C0
+	.byte 0x03, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506160  @ objectEvents
+	.4byte 0x085061A8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5061D4, 0x78
+	.globl gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F
+gMapEvents_DEWFORD_TOWN_POKEMON_CENTER_2F: @ 0x0850624C
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085061D4  @ objectEvents
+	.4byte 0x08506234  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506260, 0x100
+	.globl gMapEvents_DEWFORD_TOWN_GYM
+gMapEvents_DEWFORD_TOWN_GYM: @ 0x08506360
+	.byte 0x08, 0x02, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506260  @ objectEvents
+	.4byte 0x08506320  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08506330  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506374, 0x100
+	.globl gMapEvents_DEWFORD_TOWN_HALL
+gMapEvents_DEWFORD_TOWN_HALL: @ 0x08506474
+	.byte 0x09, 0x02, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506374  @ objectEvents
+	.4byte 0x0850644C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850645C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506488, 0x40
+	.globl gMapEvents_DEWFORD_TOWN_HOUSE2
+gMapEvents_DEWFORD_TOWN_HOUSE2: @ 0x085064C8
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506488  @ objectEvents
+	.4byte 0x085064B8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5064DC, 0x58
+	.globl gMapEvents_LAVARIDGE_TOWN_HERB_SHOP
+gMapEvents_LAVARIDGE_TOWN_HERB_SHOP: @ 0x08506534
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085064DC  @ objectEvents
+	.4byte 0x08506524  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506548, 0x178
+	.globl gMapEvents_LAVARIDGE_TOWN_GYM_1F
+gMapEvents_LAVARIDGE_TOWN_GYM_1F: @ 0x085066C0
+	.byte 0x06, 0x1A, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506548  @ objectEvents
+	.4byte 0x085065D8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085066A8  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5066D4, 0x120
+	.globl gMapEvents_LAVARIDGE_TOWN_GYM_B1F
+gMapEvents_LAVARIDGE_TOWN_GYM_B1F: @ 0x085067F4
+	.byte 0x04, 0x18, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085066D4  @ objectEvents
+	.4byte 0x08506734  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506808, 0x58
+	.globl gMapEvents_LAVARIDGE_TOWN_HOUSE
+gMapEvents_LAVARIDGE_TOWN_HOUSE: @ 0x08506860
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506808  @ objectEvents
+	.4byte 0x08506850  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506874, 0x58
+	.globl gMapEvents_LAVARIDGE_TOWN_MART
+gMapEvents_LAVARIDGE_TOWN_MART: @ 0x085068CC
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506874  @ objectEvents
+	.4byte 0x085068BC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5068E0, 0x80
+	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F
+gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_1F: @ 0x08506960
+	.byte 0x04, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085068E0  @ objectEvents
+	.4byte 0x08506940  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506974, 0x78
+	.globl gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F
+gMapEvents_LAVARIDGE_TOWN_POKEMON_CENTER_2F: @ 0x085069EC
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506974  @ objectEvents
+	.4byte 0x085069D4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506A00, 0x88
+	.globl gMapEvents_FALLARBOR_TOWN_MART
+gMapEvents_FALLARBOR_TOWN_MART: @ 0x08506A88
+	.byte 0x05, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506A00  @ objectEvents
+	.4byte 0x08506A78  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506A9C, 0x94
+	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY
+gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_LOBBY: @ 0x08506B30
+	.byte 0x05, 0x02, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506A9C  @ objectEvents
+	.4byte 0x08506B14  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08506B24  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506B44, 0x18
+	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR
+gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_CORRIDOR: @ 0x08506B5C
+	.byte 0x01, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506B44  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506B70, 0x48
+	.globl gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM
+gMapEvents_FALLARBOR_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08506BB8
+	.byte 0x03, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506B70  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506BCC, 0x78
+	.globl gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F
+gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_1F: @ 0x08506C44
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506BCC  @ objectEvents
+	.4byte 0x08506C2C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506C58, 0x78
+	.globl gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F
+gMapEvents_FALLARBOR_TOWN_POKEMON_CENTER_2F: @ 0x08506CD0
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506C58  @ objectEvents
+	.4byte 0x08506CB8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506CE4, 0x40
+	.globl gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE
+gMapEvents_FALLARBOR_TOWN_COZMOS_HOUSE: @ 0x08506D24
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506CE4  @ objectEvents
+	.4byte 0x08506D14  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506D38, 0x28
+	.globl gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE
+gMapEvents_FALLARBOR_TOWN_MOVE_RELEARNERS_HOUSE: @ 0x08506D60
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506D38  @ objectEvents
+	.4byte 0x08506D50  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506D74, 0xAC
+	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY
+gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_LOBBY: @ 0x08506E20
+	.byte 0x06, 0x02, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506D74  @ objectEvents
+	.4byte 0x08506E04  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08506E14  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506E34, 0x18
+	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR
+gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_CORRIDOR: @ 0x08506E4C
+	.byte 0x01, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506E34  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506E60, 0x48
+	.globl gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM
+gMapEvents_VERDANTURF_TOWN_BATTLE_TENT_BATTLE_ROOM: @ 0x08506EA8
+	.byte 0x03, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506E60  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506EBC, 0x70
+	.globl gMapEvents_VERDANTURF_TOWN_MART
+gMapEvents_VERDANTURF_TOWN_MART: @ 0x08506F2C
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506EBC  @ objectEvents
+	.4byte 0x08506F1C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506F40, 0x78
+	.globl gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F
+gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_1F: @ 0x08506FB8
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506F40  @ objectEvents
+	.4byte 0x08506FA0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x506FCC, 0x78
+	.globl gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_2F
+gMapEvents_VERDANTURF_TOWN_POKEMON_CENTER_2F: @ 0x08507044
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08506FCC  @ objectEvents
+	.4byte 0x0850702C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507058, 0x88
+	.globl gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE
+gMapEvents_VERDANTURF_TOWN_WANDAS_HOUSE: @ 0x085070E0
+	.byte 0x05, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507058  @ objectEvents
+	.4byte 0x085070D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5070F4, 0x40
+	.globl gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE
+gMapEvents_VERDANTURF_TOWN_FRIENDSHIP_RATERS_HOUSE: @ 0x08507134
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085070F4  @ objectEvents
+	.4byte 0x08507124  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507148, 0x40
+	.globl gMapEvents_VERDANTURF_TOWN_HOUSE
+gMapEvents_VERDANTURF_TOWN_HOUSE: @ 0x08507188
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507148  @ objectEvents
+	.4byte 0x08507178  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50719C, 0x90
+	.globl gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_1F
+gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_1F: @ 0x0850722C
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850719C  @ objectEvents
+	.4byte 0x08507214  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507240, 0x78
+	.globl gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F
+gMapEvents_PACIFIDLOG_TOWN_POKEMON_CENTER_2F: @ 0x085072B8
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507240  @ objectEvents
+	.4byte 0x085072A0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5072CC, 0x40
+	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE1
+gMapEvents_PACIFIDLOG_TOWN_HOUSE1: @ 0x0850730C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085072CC  @ objectEvents
+	.4byte 0x085072FC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507320, 0x58
+	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE2
+gMapEvents_PACIFIDLOG_TOWN_HOUSE2: @ 0x08507378
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507320  @ objectEvents
+	.4byte 0x08507368  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50738C, 0x40
+	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE3
+gMapEvents_PACIFIDLOG_TOWN_HOUSE3: @ 0x085073CC
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850738C  @ objectEvents
+	.4byte 0x085073BC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5073E0, 0x58
+	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE4
+gMapEvents_PACIFIDLOG_TOWN_HOUSE4: @ 0x08507438
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085073E0  @ objectEvents
+	.4byte 0x08507428  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50744C, 0x40
+	.globl gMapEvents_PACIFIDLOG_TOWN_HOUSE5
+gMapEvents_PACIFIDLOG_TOWN_HOUSE5: @ 0x0850748C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850744C  @ objectEvents
+	.4byte 0x0850747C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5074A0, 0x40
+	.globl gMapEvents_PETALBURG_CITY_WALLYS_HOUSE
+gMapEvents_PETALBURG_CITY_WALLYS_HOUSE: @ 0x085074E0
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085074A0  @ objectEvents
+	.4byte 0x085074D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5074F4, 0x2E0
+	.globl gMapEvents_PETALBURG_CITY_GYM
+gMapEvents_PETALBURG_CITY_GYM: @ 0x085077D4
+	.byte 0x0B, 0x26, 0x00, 0x0E  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085074F4  @ objectEvents
+	.4byte 0x085075FC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850772C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5077E8, 0x40
+	.globl gMapEvents_PETALBURG_CITY_HOUSE1
+gMapEvents_PETALBURG_CITY_HOUSE1: @ 0x08507828
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085077E8  @ objectEvents
+	.4byte 0x08507818  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50783C, 0x40
+	.globl gMapEvents_PETALBURG_CITY_HOUSE2
+gMapEvents_PETALBURG_CITY_HOUSE2: @ 0x0850787C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850783C  @ objectEvents
+	.4byte 0x0850786C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507890, 0x90
+	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F
+gMapEvents_PETALBURG_CITY_POKEMON_CENTER_1F: @ 0x08507920
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507890  @ objectEvents
+	.4byte 0x08507908  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507934, 0x78
+	.globl gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F
+gMapEvents_PETALBURG_CITY_POKEMON_CENTER_2F: @ 0x085079AC
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507934  @ objectEvents
+	.4byte 0x08507994  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5079C0, 0x70
+	.globl gMapEvents_PETALBURG_CITY_MART
+gMapEvents_PETALBURG_CITY_MART: @ 0x08507A30
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085079C0  @ objectEvents
+	.4byte 0x08507A20  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507A44, 0x78
+	.globl gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F
+gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_1F: @ 0x08507ABC
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507A44  @ objectEvents
+	.4byte 0x08507AA4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507AD0, 0x50
+	.globl gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F
+gMapEvents_SLATEPORT_CITY_STERNS_SHIPYARD_2F: @ 0x08507B20
+	.byte 0x03, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507AD0  @ objectEvents
+	.4byte 0x08507B18  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507B34, 0x94
+	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY
+gMapEvents_SLATEPORT_CITY_BATTLE_TENT_LOBBY: @ 0x08507BC8
+	.byte 0x05, 0x02, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507B34  @ objectEvents
+	.4byte 0x08507BAC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08507BBC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507BDC, 0x18
+	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR
+gMapEvents_SLATEPORT_CITY_BATTLE_TENT_CORRIDOR: @ 0x08507BF4
+	.byte 0x01, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507BDC  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507C08, 0x48
+	.globl gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM
+gMapEvents_SLATEPORT_CITY_BATTLE_TENT_BATTLE_ROOM: @ 0x08507C50
+	.byte 0x03, 0x00, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507C08  @ objectEvents
+	.4byte 0x00000000  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507C64, 0x28
+	.globl gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE
+gMapEvents_SLATEPORT_CITY_NAME_RATERS_HOUSE: @ 0x08507C8C
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507C64  @ objectEvents
+	.4byte 0x08507C7C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507CA0, 0xE8
+	.globl gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB
+gMapEvents_SLATEPORT_CITY_POKEMON_FAN_CLUB: @ 0x08507D88
+	.byte 0x09, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507CA0  @ objectEvents
+	.4byte 0x08507D78  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507D9C, 0x224
+	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_1F
+gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_1F: @ 0x08507FC0
+	.byte 0x0E, 0x03, 0x02, 0x0D  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507D9C  @ objectEvents
+	.4byte 0x08507EEC  @ warps
+	.4byte 0x08507F04  @ coordEvents
+	.4byte 0x08507F24  @ bgEvents
+	.incbin "baserom_jp.gba", 0x507FD4, 0x1AC
+	.globl gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F
+gMapEvents_SLATEPORT_CITY_OCEANIC_MUSEUM_2F: @ 0x08508180
+	.byte 0x07, 0x01, 0x00, 0x15  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08507FD4  @ objectEvents
+	.4byte 0x0850807C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508084  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508194, 0x120
+	.globl gMapEvents_SLATEPORT_CITY_HARBOR
+gMapEvents_SLATEPORT_CITY_HARBOR: @ 0x085082B4
+	.byte 0x08, 0x04, 0x04, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508194  @ objectEvents
+	.4byte 0x08508254  @ warps
+	.4byte 0x08508274  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5082C8, 0x40
+	.globl gMapEvents_SLATEPORT_CITY_HOUSE
+gMapEvents_SLATEPORT_CITY_HOUSE: @ 0x08508308
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085082C8  @ objectEvents
+	.4byte 0x085082F8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50831C, 0x60
+	.globl gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F
+gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_1F: @ 0x0850837C
+	.byte 0x03, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850831C  @ objectEvents
+	.4byte 0x08508364  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508390, 0x78
+	.globl gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_2F
+gMapEvents_SLATEPORT_CITY_POKEMON_CENTER_2F: @ 0x08508408
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508390  @ objectEvents
+	.4byte 0x085083F0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50841C, 0x58
+	.globl gMapEvents_SLATEPORT_CITY_MART
+gMapEvents_SLATEPORT_CITY_MART: @ 0x08508474
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850841C  @ objectEvents
+	.4byte 0x08508464  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508488, 0x110
+	.globl gMapEvents_MAUVILLE_CITY_GYM
+gMapEvents_MAUVILLE_CITY_GYM: @ 0x08508598
+	.byte 0x07, 0x02, 0x04, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508488  @ objectEvents
+	.4byte 0x08508530  @ warps
+	.4byte 0x08508540  @ coordEvents
+	.4byte 0x08508580  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5085AC, 0x58
+	.globl gMapEvents_MAUVILLE_CITY_BIKE_SHOP
+gMapEvents_MAUVILLE_CITY_BIKE_SHOP: @ 0x08508604
+	.byte 0x02, 0x02, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085085AC  @ objectEvents
+	.4byte 0x085085DC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x085085EC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508618, 0x28
+	.globl gMapEvents_MAUVILLE_CITY_HOUSE1
+gMapEvents_MAUVILLE_CITY_HOUSE1: @ 0x08508640
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508618  @ objectEvents
+	.4byte 0x08508630  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508654, 0x250
+	.globl gMapEvents_MAUVILLE_CITY_GAME_CORNER
+gMapEvents_MAUVILLE_CITY_GAME_CORNER: @ 0x085088A4
+	.byte 0x0C, 0x02, 0x00, 0x18  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508654  @ objectEvents
+	.4byte 0x08508774  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508784  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5088B8, 0x28
+	.globl gMapEvents_MAUVILLE_CITY_HOUSE2
+gMapEvents_MAUVILLE_CITY_HOUSE2: @ 0x085088E0
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085088B8  @ objectEvents
+	.4byte 0x085088D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5088F4, 0x90
+	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F
+gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_1F: @ 0x08508984
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085088F4  @ objectEvents
+	.4byte 0x0850896C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508998, 0x90
+	.globl gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F
+gMapEvents_MAUVILLE_CITY_POKEMON_CENTER_2F: @ 0x08508A28
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508998  @ objectEvents
+	.4byte 0x08508A10  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508A3C, 0x58
+	.globl gMapEvents_MAUVILLE_CITY_MART
+gMapEvents_MAUVILLE_CITY_MART: @ 0x08508A94
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508A3C  @ objectEvents
+	.4byte 0x08508A84  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508AA8, 0x78
+	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F
+gMapEvents_RUSTBORO_CITY_DEVON_CORP_1F: @ 0x08508B20
+	.byte 0x03, 0x03, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508AA8  @ objectEvents
+	.4byte 0x08508AF0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508B08  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508B34, 0xA0
+	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F
+gMapEvents_RUSTBORO_CITY_DEVON_CORP_2F: @ 0x08508BD4
+	.byte 0x06, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508B34  @ objectEvents
+	.4byte 0x08508BC4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508BE8, 0x68
+	.globl gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F
+gMapEvents_RUSTBORO_CITY_DEVON_CORP_3F: @ 0x08508C50
+	.byte 0x03, 0x01, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508BE8  @ objectEvents
+	.4byte 0x08508C30  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508C38  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508C64, 0xA0
+	.globl gMapEvents_RUSTBORO_CITY_GYM
+gMapEvents_RUSTBORO_CITY_GYM: @ 0x08508D04
+	.byte 0x05, 0x02, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508C64  @ objectEvents
+	.4byte 0x08508CDC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508CEC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508D18, 0xF4
+	.globl gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL
+gMapEvents_RUSTBORO_CITY_POKEMON_SCHOOL: @ 0x08508E0C
+	.byte 0x07, 0x02, 0x00, 0x05  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508D18  @ objectEvents
+	.4byte 0x08508DC0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08508DD0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508E20, 0x78
+	.globl gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_1F
+gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_1F: @ 0x08508E98
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508E20  @ objectEvents
+	.4byte 0x08508E80  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508EAC, 0x78
+	.globl gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_2F
+gMapEvents_RUSTBORO_CITY_POKEMON_CENTER_2F: @ 0x08508F24
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508EAC  @ objectEvents
+	.4byte 0x08508F0C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508F38, 0x70
+	.globl gMapEvents_RUSTBORO_CITY_MART
+gMapEvents_RUSTBORO_CITY_MART: @ 0x08508FA8
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508F38  @ objectEvents
+	.4byte 0x08508F98  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x508FBC, 0x48
+	.globl gMapEvents_RUSTBORO_CITY_FLAT1_1F
+gMapEvents_RUSTBORO_CITY_FLAT1_1F: @ 0x08509004
+	.byte 0x02, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08508FBC  @ objectEvents
+	.4byte 0x08508FEC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509018, 0xC8
+	.globl gMapEvents_RUSTBORO_CITY_FLAT1_2F
+gMapEvents_RUSTBORO_CITY_FLAT1_2F: @ 0x085090E0
+	.byte 0x08, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509018  @ objectEvents
+	.4byte 0x085090D8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5090F4, 0x40
+	.globl gMapEvents_RUSTBORO_CITY_HOUSE1
+gMapEvents_RUSTBORO_CITY_HOUSE1: @ 0x08509134
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085090F4  @ objectEvents
+	.4byte 0x08509124  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509148, 0x40
+	.globl gMapEvents_RUSTBORO_CITY_CUTTERS_HOUSE
+gMapEvents_RUSTBORO_CITY_CUTTERS_HOUSE: @ 0x08509188
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509148  @ objectEvents
+	.4byte 0x08509178  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50919C, 0x40
+	.globl gMapEvents_RUSTBORO_CITY_HOUSE2
+gMapEvents_RUSTBORO_CITY_HOUSE2: @ 0x085091DC
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850919C  @ objectEvents
+	.4byte 0x085091CC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5091F0, 0x48
+	.globl gMapEvents_RUSTBORO_CITY_FLAT2_1F
+gMapEvents_RUSTBORO_CITY_FLAT2_1F: @ 0x08509238
+	.byte 0x02, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085091F0  @ objectEvents
+	.4byte 0x08509220  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50924C, 0x40
+	.globl gMapEvents_RUSTBORO_CITY_FLAT2_2F
+gMapEvents_RUSTBORO_CITY_FLAT2_2F: @ 0x0850928C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850924C  @ objectEvents
+	.4byte 0x0850927C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5092A0, 0x38
+	.globl gMapEvents_RUSTBORO_CITY_FLAT2_3F
+gMapEvents_RUSTBORO_CITY_FLAT2_3F: @ 0x085092D8
+	.byte 0x02, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085092A0  @ objectEvents
+	.4byte 0x085092D0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5092EC, 0x58
+	.globl gMapEvents_RUSTBORO_CITY_HOUSE3
+gMapEvents_RUSTBORO_CITY_HOUSE3: @ 0x08509344
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085092EC  @ objectEvents
+	.4byte 0x08509334  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509358, 0x58
+	.globl gMapEvents_FORTREE_CITY_HOUSE1
+gMapEvents_FORTREE_CITY_HOUSE1: @ 0x085093B0
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509358  @ objectEvents
+	.4byte 0x085093A0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5093C4, 0xE8
+	.globl gMapEvents_FORTREE_CITY_GYM
+gMapEvents_FORTREE_CITY_GYM: @ 0x085094AC
+	.byte 0x08, 0x02, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085093C4  @ objectEvents
+	.4byte 0x08509484  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08509494  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5094C0, 0x78
+	.globl gMapEvents_FORTREE_CITY_POKEMON_CENTER_1F
+gMapEvents_FORTREE_CITY_POKEMON_CENTER_1F: @ 0x08509538
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085094C0  @ objectEvents
+	.4byte 0x08509520  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50954C, 0x78
+	.globl gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F
+gMapEvents_FORTREE_CITY_POKEMON_CENTER_2F: @ 0x085095C4
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850954C  @ objectEvents
+	.4byte 0x085095AC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5095D8, 0x70
+	.globl gMapEvents_FORTREE_CITY_MART
+gMapEvents_FORTREE_CITY_MART: @ 0x08509648
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085095D8  @ objectEvents
+	.4byte 0x08509638  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50965C, 0x40
+	.globl gMapEvents_FORTREE_CITY_HOUSE2
+gMapEvents_FORTREE_CITY_HOUSE2: @ 0x0850969C
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850965C  @ objectEvents
+	.4byte 0x0850968C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5096B0, 0x40
+	.globl gMapEvents_FORTREE_CITY_HOUSE3
+gMapEvents_FORTREE_CITY_HOUSE3: @ 0x085096F0
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085096B0  @ objectEvents
+	.4byte 0x085096E0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509704, 0x58
+	.globl gMapEvents_FORTREE_CITY_HOUSE4
+gMapEvents_FORTREE_CITY_HOUSE4: @ 0x0850975C
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509704  @ objectEvents
+	.4byte 0x0850974C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509770, 0x58
+	.globl gMapEvents_FORTREE_CITY_HOUSE5
+gMapEvents_FORTREE_CITY_HOUSE5: @ 0x085097C8
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509770  @ objectEvents
+	.4byte 0x085097B8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5097DC, 0x70
+	.globl gMapEvents_FORTREE_CITY_DECORATION_SHOP
+gMapEvents_FORTREE_CITY_DECORATION_SHOP: @ 0x0850984C
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085097DC  @ objectEvents
+	.4byte 0x0850983C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509860, 0x40
+	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F
+gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_1F: @ 0x085098A0
+	.byte 0x01, 0x03, 0x01, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509860  @ objectEvents
+	.4byte 0x08509878  @ warps
+	.4byte 0x08509890  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x5098B4, 0xB0
+	.globl gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F
+gMapEvents_LILYCOVE_CITY_COVE_LILY_MOTEL_2F: @ 0x08509964
+	.byte 0x07, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x085098B4  @ objectEvents
+	.4byte 0x0850995C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509978, 0x1C8
+	.globl gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F
+gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F: @ 0x08509B40
+	.byte 0x0A, 0x03, 0x00, 0x10  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509978  @ objectEvents
+	.4byte 0x08509A68  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08509A80  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509B54, 0xF8
+	.globl gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F
+gMapEvents_LILYCOVE_CITY_LILYCOVE_MUSEUM_2F: @ 0x08509C4C
+	.byte 0x04, 0x01, 0x00, 0x0C  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509B54  @ objectEvents
+	.4byte 0x08509BB4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08509BBC  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509C60, 0x308
+	.globl gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY
+gMapEvents_LILYCOVE_CITY_CONTEST_LOBBY: @ 0x08509F68
+	.byte 0x19, 0x04, 0x00, 0x0C  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509C60  @ objectEvents
+	.4byte 0x08509EB8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x08509ED8  @ bgEvents
+	.incbin "baserom_jp.gba", 0x509F7C, 0x368
+	.globl gMapEvents_LILYCOVE_CITY_CONTEST_HALL
+gMapEvents_LILYCOVE_CITY_CONTEST_HALL: @ 0x0850A2E4
+	.byte 0x20, 0x04, 0x00, 0x06  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x08509F7C  @ objectEvents
+	.4byte 0x0850A27C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850A29C  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A2F8, 0x90
+	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F
+gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_1F: @ 0x0850A388
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A2F8  @ objectEvents
+	.4byte 0x0850A370  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A39C, 0x78
+	.globl gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F
+gMapEvents_LILYCOVE_CITY_POKEMON_CENTER_2F: @ 0x0850A414
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A39C  @ objectEvents
+	.4byte 0x0850A3FC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A428, 0x10
+	.globl gMapEvents_LILYCOVE_CITY_UNUSED_MART
+gMapEvents_LILYCOVE_CITY_UNUSED_MART: @ 0x0850A438
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850A428  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A44C, 0xE8
+	.globl gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB
+gMapEvents_LILYCOVE_CITY_POKEMON_TRAINER_FAN_CLUB: @ 0x0850A534
+	.byte 0x09, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A44C  @ objectEvents
+	.4byte 0x0850A524  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A548, 0x88
+	.globl gMapEvents_LILYCOVE_CITY_HARBOR
+gMapEvents_LILYCOVE_CITY_HARBOR: @ 0x0850A5D0
+	.byte 0x05, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A548  @ objectEvents
+	.4byte 0x0850A5C0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A5E4, 0x28
+	.globl gMapEvents_LILYCOVE_CITY_MOVE_DELETERS_HOUSE
+gMapEvents_LILYCOVE_CITY_MOVE_DELETERS_HOUSE: @ 0x0850A60C
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A5E4  @ objectEvents
+	.4byte 0x0850A5FC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A620, 0x40
+	.globl gMapEvents_LILYCOVE_CITY_HOUSE1
+gMapEvents_LILYCOVE_CITY_HOUSE1: @ 0x0850A660
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A620  @ objectEvents
+	.4byte 0x0850A650  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A674, 0x28
+	.globl gMapEvents_LILYCOVE_CITY_HOUSE2
+gMapEvents_LILYCOVE_CITY_HOUSE2: @ 0x0850A69C
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A674  @ objectEvents
+	.4byte 0x0850A68C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A6B0, 0xA0
+	.globl gMapEvents_LILYCOVE_CITY_HOUSE3
+gMapEvents_LILYCOVE_CITY_HOUSE3: @ 0x0850A750
+	.byte 0x06, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A6B0  @ objectEvents
+	.4byte 0x0850A740  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A764, 0x40
+	.globl gMapEvents_LILYCOVE_CITY_HOUSE4
+gMapEvents_LILYCOVE_CITY_HOUSE4: @ 0x0850A7A4
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A764  @ objectEvents
+	.4byte 0x0850A794  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A7B8, 0xBC
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_1F: @ 0x0850A874
+	.byte 0x06, 0x04, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A7B8  @ objectEvents
+	.4byte 0x0850A848  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850A868  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A888, 0x90
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_2F
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_2F: @ 0x0850A918
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A888  @ objectEvents
+	.4byte 0x0850A900  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A92C, 0x90
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_3F: @ 0x0850A9BC
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A92C  @ objectEvents
+	.4byte 0x0850A9A4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50A9D0, 0x90
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_4F
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_4F: @ 0x0850AA60
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850A9D0  @ objectEvents
+	.4byte 0x0850AA48  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50AA74, 0xC0
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_5F: @ 0x0850AB34
+	.byte 0x07, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850AA74  @ objectEvents
+	.4byte 0x0850AB1C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50AB48, 0x80
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ROOFTOP: @ 0x0850ABC8
+	.byte 0x04, 0x01, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850AB48  @ objectEvents
+	.4byte 0x0850ABA8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850ABB0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50ABDC, 0x28
+	.globl gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR
+gMapEvents_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR: @ 0x0850AC04
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850ABDC  @ objectEvents
+	.4byte 0x0850ABF4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50AC18, 0x478
+	.globl gMapEvents_MOSSDEEP_CITY_GYM
+gMapEvents_MOSSDEEP_CITY_GYM: @ 0x0850B090
+	.byte 0x24, 0x0E, 0x09, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850AC18  @ objectEvents
+	.4byte 0x0850AF78  @ warps
+	.4byte 0x0850AFE8  @ coordEvents
+	.4byte 0x0850B078  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B0A4, 0x40
+	.globl gMapEvents_MOSSDEEP_CITY_HOUSE1
+gMapEvents_MOSSDEEP_CITY_HOUSE1: @ 0x0850B0E4
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B0A4  @ objectEvents
+	.4byte 0x0850B0D4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B0F8, 0x58
+	.globl gMapEvents_MOSSDEEP_CITY_HOUSE2
+gMapEvents_MOSSDEEP_CITY_HOUSE2: @ 0x0850B150
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B0F8  @ objectEvents
+	.4byte 0x0850B140  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B164, 0x60
+	.globl gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F
+gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_1F: @ 0x0850B1C4
+	.byte 0x03, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B164  @ objectEvents
+	.4byte 0x0850B1AC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B1D8, 0x90
+	.globl gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F
+gMapEvents_MOSSDEEP_CITY_POKEMON_CENTER_2F: @ 0x0850B268
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B1D8  @ objectEvents
+	.4byte 0x0850B250  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B27C, 0x70
+	.globl gMapEvents_MOSSDEEP_CITY_MART
+gMapEvents_MOSSDEEP_CITY_MART: @ 0x0850B2EC
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B27C  @ objectEvents
+	.4byte 0x0850B2DC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B300, 0x28
+	.globl gMapEvents_MOSSDEEP_CITY_HOUSE3
+gMapEvents_MOSSDEEP_CITY_HOUSE3: @ 0x0850B328
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B300  @ objectEvents
+	.4byte 0x0850B318  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B33C, 0x88
+	.globl gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE
+gMapEvents_MOSSDEEP_CITY_STEVENS_HOUSE: @ 0x0850B3C4
+	.byte 0x03, 0x02, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B33C  @ objectEvents
+	.4byte 0x0850B384  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850B394  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B3D8, 0x58
+	.globl gMapEvents_MOSSDEEP_CITY_HOUSE4
+gMapEvents_MOSSDEEP_CITY_HOUSE4: @ 0x0850B430
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B3D8  @ objectEvents
+	.4byte 0x0850B420  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B444, 0x120
+	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F
+gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_1F: @ 0x0850B564
+	.byte 0x0B, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B444  @ objectEvents
+	.4byte 0x0850B54C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B578, 0xE0
+	.globl gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F
+gMapEvents_MOSSDEEP_CITY_SPACE_CENTER_2F: @ 0x0850B658
+	.byte 0x09, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B578  @ objectEvents
+	.4byte 0x0850B650  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B66C, 0x6C
+	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F
+gMapEvents_MOSSDEEP_CITY_GAME_CORNER_1F: @ 0x0850B6D8
+	.byte 0x02, 0x03, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B66C  @ objectEvents
+	.4byte 0x0850B69C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850B6B4  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B6EC, 0x20
+	.globl gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F
+gMapEvents_MOSSDEEP_CITY_GAME_CORNER_B1F: @ 0x0850B70C
+	.byte 0x01, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B6EC  @ objectEvents
+	.4byte 0x0850B704  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B720, 0x60
+	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_1F
+gMapEvents_SOOTOPOLIS_CITY_GYM_1F: @ 0x0850B780
+	.byte 0x02, 0x03, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B720  @ objectEvents
+	.4byte 0x0850B750  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850B768  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B794, 0xF8
+	.globl gMapEvents_SOOTOPOLIS_CITY_GYM_B1F
+gMapEvents_SOOTOPOLIS_CITY_GYM_B1F: @ 0x0850B88C
+	.byte 0x0A, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B794  @ objectEvents
+	.4byte 0x0850B884  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B8A0, 0x78
+	.globl gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F
+gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_1F: @ 0x0850B918
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B8A0  @ objectEvents
+	.4byte 0x0850B900  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B92C, 0x78
+	.globl gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F
+gMapEvents_SOOTOPOLIS_CITY_POKEMON_CENTER_2F: @ 0x0850B9A4
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B92C  @ objectEvents
+	.4byte 0x0850B98C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50B9B8, 0x58
+	.globl gMapEvents_SOOTOPOLIS_CITY_MART
+gMapEvents_SOOTOPOLIS_CITY_MART: @ 0x0850BA10
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850B9B8  @ objectEvents
+	.4byte 0x0850BA00  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BA24, 0x40
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE1
+gMapEvents_SOOTOPOLIS_CITY_HOUSE1: @ 0x0850BA64
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BA24  @ objectEvents
+	.4byte 0x0850BA54  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BA78, 0x28
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE2
+gMapEvents_SOOTOPOLIS_CITY_HOUSE2: @ 0x0850BAA0
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BA78  @ objectEvents
+	.4byte 0x0850BA90  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BAB4, 0x40
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE3
+gMapEvents_SOOTOPOLIS_CITY_HOUSE3: @ 0x0850BAF4
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BAB4  @ objectEvents
+	.4byte 0x0850BAE4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BB08, 0x58
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE4
+gMapEvents_SOOTOPOLIS_CITY_HOUSE4: @ 0x0850BB60
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BB08  @ objectEvents
+	.4byte 0x0850BB50  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BB74, 0x40
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE5
+gMapEvents_SOOTOPOLIS_CITY_HOUSE5: @ 0x0850BBB4
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BB74  @ objectEvents
+	.4byte 0x0850BBA4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BBC8, 0x28
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE6
+gMapEvents_SOOTOPOLIS_CITY_HOUSE6: @ 0x0850BBF0
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BBC8  @ objectEvents
+	.4byte 0x0850BBE0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BC04, 0x40
+	.globl gMapEvents_SOOTOPOLIS_CITY_HOUSE7
+gMapEvents_SOOTOPOLIS_CITY_HOUSE7: @ 0x0850BC44
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BC04  @ objectEvents
+	.4byte 0x0850BC34  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BC58, 0x58
+	.globl gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE
+gMapEvents_SOOTOPOLIS_CITY_LOTAD_AND_SEEDOT_HOUSE: @ 0x0850BCB0
+	.byte 0x02, 0x02, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BC58  @ objectEvents
+	.4byte 0x0850BC88  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850BC98  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BCC4, 0x30
+	.globl gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F
+gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F: @ 0x0850BCF4
+	.byte 0x01, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BCC4  @ objectEvents
+	.4byte 0x0850BCDC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BD08, 0x20
+	.globl gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F
+gMapEvents_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_B1F: @ 0x0850BD28
+	.byte 0x01, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BD08  @ objectEvents
+	.4byte 0x0850BD20  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BD3C, 0x28
+	.globl gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM
+gMapEvents_EVER_GRANDE_CITY_SIDNEYS_ROOM: @ 0x0850BD64
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BD3C  @ objectEvents
+	.4byte 0x0850BD54  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BD78, 0x28
+	.globl gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM
+gMapEvents_EVER_GRANDE_CITY_PHOEBES_ROOM: @ 0x0850BDA0
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BD78  @ objectEvents
+	.4byte 0x0850BD90  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BDB4, 0x28
+	.globl gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM
+gMapEvents_EVER_GRANDE_CITY_GLACIAS_ROOM: @ 0x0850BDDC
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BDB4  @ objectEvents
+	.4byte 0x0850BDCC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BDF0, 0x28
+	.globl gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM
+gMapEvents_EVER_GRANDE_CITY_DRAKES_ROOM: @ 0x0850BE18
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BDF0  @ objectEvents
+	.4byte 0x0850BE08  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BE2C, 0x58
+	.globl gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM
+gMapEvents_EVER_GRANDE_CITY_CHAMPIONS_ROOM: @ 0x0850BE84
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BE2C  @ objectEvents
+	.4byte 0x0850BE74  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BE98, 0x20
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL1
+gMapEvents_EVER_GRANDE_CITY_HALL1: @ 0x0850BEB8
+	.byte 0x00, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850BE98  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BECC, 0x20
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL2
+gMapEvents_EVER_GRANDE_CITY_HALL2: @ 0x0850BEEC
+	.byte 0x00, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850BECC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BF00, 0x20
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL3
+gMapEvents_EVER_GRANDE_CITY_HALL3: @ 0x0850BF20
+	.byte 0x00, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850BF00  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BF34, 0x10
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL4
+gMapEvents_EVER_GRANDE_CITY_HALL4: @ 0x0850BF44
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850BF34  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BF58, 0x20
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL5
+gMapEvents_EVER_GRANDE_CITY_HALL5: @ 0x0850BF78
+	.byte 0x00, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850BF58  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50BF8C, 0x88
+	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F
+gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_1F: @ 0x0850C014
+	.byte 0x04, 0x05, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850BF8C  @ objectEvents
+	.4byte 0x0850BFEC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C028, 0x20
+	.globl gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME
+gMapEvents_EVER_GRANDE_CITY_HALL_OF_FAME: @ 0x0850C048
+	.byte 0x01, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C028  @ objectEvents
+	.4byte 0x0850C040  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C05C, 0x78
+	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F
+gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_1F: @ 0x0850C0D4
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C05C  @ objectEvents
+	.4byte 0x0850C0BC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C0E8, 0x78
+	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F
+gMapEvents_EVER_GRANDE_CITY_POKEMON_CENTER_2F: @ 0x0850C160
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C0E8  @ objectEvents
+	.4byte 0x0850C148  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C174, 0x78
+	.globl gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F
+gMapEvents_EVER_GRANDE_CITY_POKEMON_LEAGUE_2F: @ 0x0850C1EC
+	.byte 0x04, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C174  @ objectEvents
+	.4byte 0x0850C1D4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C200, 0x40
+	.globl gMapEvents_ROUTE104_MR_BRINEYS_HOUSE
+gMapEvents_ROUTE104_MR_BRINEYS_HOUSE: @ 0x0850C240
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C200  @ objectEvents
+	.4byte 0x0850C230  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C254, 0x58
+	.globl gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP
+gMapEvents_ROUTE104_PRETTY_PETAL_FLOWER_SHOP: @ 0x0850C2AC
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C254  @ objectEvents
+	.4byte 0x0850C29C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C2C0, 0x70
+	.globl gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE
+gMapEvents_ROUTE111_WINSTRATE_FAMILYS_HOUSE: @ 0x0850C330
+	.byte 0x04, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C2C0  @ objectEvents
+	.4byte 0x0850C320  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C344, 0x28
+	.globl gMapEvents_ROUTE111_OLD_LADYS_REST_STOP
+gMapEvents_ROUTE111_OLD_LADYS_REST_STOP: @ 0x0850C36C
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C344  @ objectEvents
+	.4byte 0x0850C35C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C380, 0x40
+	.globl gMapEvents_ROUTE112_CABLE_CAR_STATION
+gMapEvents_ROUTE112_CABLE_CAR_STATION: @ 0x0850C3C0
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C380  @ objectEvents
+	.4byte 0x0850C3B0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C3D4, 0x40
+	.globl gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION
+gMapEvents_MT_CHIMNEY_CABLE_CAR_STATION: @ 0x0850C414
+	.byte 0x02, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C3D4  @ objectEvents
+	.4byte 0x0850C404  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C428, 0x60
+	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE
+gMapEvents_ROUTE114_FOSSIL_MANIACS_HOUSE: @ 0x0850C488
+	.byte 0x01, 0x03, 0x00, 0x04  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C428  @ objectEvents
+	.4byte 0x0850C440  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850C458  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C49C, 0x50
+	.globl gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL
+gMapEvents_ROUTE114_FOSSIL_MANIACS_TUNNEL: @ 0x0850C4EC
+	.byte 0x01, 0x03, 0x02, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C49C  @ objectEvents
+	.4byte 0x0850C4B4  @ warps
+	.4byte 0x0850C4CC  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C500, 0x4C
+	.globl gMapEvents_ROUTE114_LANETTES_HOUSE
+gMapEvents_ROUTE114_LANETTES_HOUSE: @ 0x0850C54C
+	.byte 0x01, 0x02, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C500  @ objectEvents
+	.4byte 0x0850C518  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850C528  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C560, 0x58
+	.globl gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE
+gMapEvents_ROUTE116_TUNNELERS_REST_HOUSE: @ 0x0850C5B8
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C560  @ objectEvents
+	.4byte 0x0850C5A8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C5CC, 0x28
+	.globl gMapEvents_ROUTE117_POKEMON_DAY_CARE
+gMapEvents_ROUTE117_POKEMON_DAY_CARE: @ 0x0850C5F4
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C5CC  @ objectEvents
+	.4byte 0x0850C5E4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C608, 0x84
+	.globl gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE
+gMapEvents_ROUTE121_SAFARI_ZONE_ENTRANCE: @ 0x0850C68C
+	.byte 0x03, 0x04, 0x01, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C608  @ objectEvents
+	.4byte 0x0850C650  @ warps
+	.4byte 0x0850C670  @ coordEvents
+	.4byte 0x0850C680  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C6A0, 0x13C
+	.globl gMapEvents_METEOR_FALLS_1F_1R
+gMapEvents_METEOR_FALLS_1F_1R: @ 0x0850C7DC
+	.byte 0x0A, 0x06, 0x01, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C6A0  @ objectEvents
+	.4byte 0x0850C790  @ warps
+	.4byte 0x0850C7C0  @ coordEvents
+	.4byte 0x0850C7D0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C7F0, 0x74
+	.globl gMapEvents_METEOR_FALLS_1F_2R
+gMapEvents_METEOR_FALLS_1F_2R: @ 0x0850C864
+	.byte 0x03, 0x04, 0x00, 0x01  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C7F0  @ objectEvents
+	.4byte 0x0850C838  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850C858  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C878, 0x30
+	.globl gMapEvents_METEOR_FALLS_B1F_1R
+gMapEvents_METEOR_FALLS_B1F_1R: @ 0x0850C8A8
+	.byte 0x00, 0x06, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850C878  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C8BC, 0x20
+	.globl gMapEvents_METEOR_FALLS_B1F_2R
+gMapEvents_METEOR_FALLS_B1F_2R: @ 0x0850C8DC
+	.byte 0x01, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C8BC  @ objectEvents
+	.4byte 0x0850C8D4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50C8F0, 0x158
+	.globl gMapEvents_RUSTURF_TUNNEL
+gMapEvents_RUSTURF_TUNNEL: @ 0x0850CA48
+	.byte 0x0A, 0x03, 0x05, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850C8F0  @ objectEvents
+	.4byte 0x0850C9E0  @ warps
+	.4byte 0x0850C9F8  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CA5C, 0x10
+	.globl gMapEvents_UNDERWATER_SOOTOPOLIS_CITY
+gMapEvents_UNDERWATER_SOOTOPOLIS_CITY: @ 0x0850CA6C
+	.byte 0x00, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x00000000  @ objectEvents
+	.4byte 0x0850CA5C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CA80, 0x54
+	.globl gMapEvents_DESERT_RUINS
+gMapEvents_DESERT_RUINS: @ 0x0850CAD4
+	.byte 0x01, 0x03, 0x00, 0x03  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CA80  @ objectEvents
+	.4byte 0x0850CA98  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850CAB0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CAE8, 0x50
+	.globl gMapEvents_GRANITE_CAVE_1F
+gMapEvents_GRANITE_CAVE_1F: @ 0x0850CB38
+	.byte 0x02, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CAE8  @ objectEvents
+	.4byte 0x0850CB18  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CB4C, 0x50
+	.globl gMapEvents_GRANITE_CAVE_B1F
+gMapEvents_GRANITE_CAVE_B1F: @ 0x0850CB9C
+	.byte 0x01, 0x07, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CB4C  @ objectEvents
+	.4byte 0x0850CB64  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CBB0, 0x118
+	.globl gMapEvents_GRANITE_CAVE_B2F
+gMapEvents_GRANITE_CAVE_B2F: @ 0x0850CCC8
+	.byte 0x09, 0x05, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CBB0  @ objectEvents
+	.4byte 0x0850CC88  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850CCB0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CCDC, 0x20
+	.globl gMapEvents_GRANITE_CAVE_STEVENS_ROOM
+gMapEvents_GRANITE_CAVE_STEVENS_ROOM: @ 0x0850CCFC
+	.byte 0x01, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CCDC  @ objectEvents
+	.4byte 0x0850CCF4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CD10, 0x1D0
+	.globl gMapEvents_PETALBURG_WOODS
+gMapEvents_PETALBURG_WOODS: @ 0x0850CEE0
+	.byte 0x0D, 0x06, 0x02, 0x06  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CD10  @ objectEvents
+	.4byte 0x0850CE48  @ warps
+	.4byte 0x0850CE78  @ coordEvents
+	.4byte 0x0850CE98  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50CEF4, 0x308
+	.globl gMapEvents_MT_CHIMNEY
+gMapEvents_MT_CHIMNEY: @ 0x0850D1FC
+	.byte 0x1E, 0x04, 0x00, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850CEF4  @ objectEvents
+	.4byte 0x0850D1C4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x0850D1E4  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D210, 0x188
+	.globl gMapEvents_JAGGED_PASS
+gMapEvents_JAGGED_PASS: @ 0x0850D398
+	.byte 0x07, 0x05, 0x0A, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D210  @ objectEvents
+	.4byte 0x0850D2B8  @ warps
+	.4byte 0x0850D2E0  @ coordEvents
+	.4byte 0x0850D380  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D3AC, 0xD0
+	.globl gMapEvents_FIERY_PATH
+gMapEvents_FIERY_PATH: @ 0x0850D47C
+	.byte 0x08, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D3AC  @ objectEvents
+	.4byte 0x0850D46C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D490, 0x78
+	.globl gMapEvents_MT_PYRE_1F
+gMapEvents_MT_PYRE_1F: @ 0x0850D508
+	.byte 0x03, 0x06, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D490  @ objectEvents
+	.4byte 0x0850D4D8  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D51C, 0xE8
+	.globl gMapEvents_MT_PYRE_2F
+gMapEvents_MT_PYRE_2F: @ 0x0850D604
+	.byte 0x08, 0x05, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D51C  @ objectEvents
+	.4byte 0x0850D5DC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D618, 0x90
+	.globl gMapEvents_MT_PYRE_3F
+gMapEvents_MT_PYRE_3F: @ 0x0850D6A8
+	.byte 0x04, 0x06, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D618  @ objectEvents
+	.4byte 0x0850D678  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D6BC, 0x60
+	.globl gMapEvents_MT_PYRE_4F
+gMapEvents_MT_PYRE_4F: @ 0x0850D71C
+	.byte 0x02, 0x06, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D6BC  @ objectEvents
+	.4byte 0x0850D6EC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D730, 0x58
+	.globl gMapEvents_MT_PYRE_5F
+gMapEvents_MT_PYRE_5F: @ 0x0850D788
+	.byte 0x02, 0x05, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D730  @ objectEvents
+	.4byte 0x0850D760  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D79C, 0x58
+	.globl gMapEvents_MT_PYRE_6F
+gMapEvents_MT_PYRE_6F: @ 0x0850D7F4
+	.byte 0x03, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D79C  @ objectEvents
+	.4byte 0x0850D7E4  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D808, 0xB0
+	.globl gMapEvents_MT_PYRE_EXTERIOR
+gMapEvents_MT_PYRE_EXTERIOR: @ 0x0850D8B8
+	.byte 0x02, 0x03, 0x05, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D808  @ objectEvents
+	.4byte 0x0850D838  @ warps
+	.4byte 0x0850D850  @ coordEvents
+	.4byte 0x0850D8A0  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50D8CC, 0x150
+	.globl gMapEvents_MT_PYRE_SUMMIT
+gMapEvents_MT_PYRE_SUMMIT: @ 0x0850DA1C
+	.byte 0x08, 0x03, 0x06, 0x02  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850D8CC  @ objectEvents
+	.4byte 0x0850D98C  @ warps
+	.4byte 0x0850D9A4  @ coordEvents
+	.4byte 0x0850DA04  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DA30, 0x60
+	.globl gMapEvents_AQUA_HIDEOUT_1F
+gMapEvents_AQUA_HIDEOUT_1F: @ 0x0850DA90
+	.byte 0x03, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DA30  @ objectEvents
+	.4byte 0x0850DA78  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DAA4, 0x1A0
+	.globl gMapEvents_AQUA_HIDEOUT_B1F
+gMapEvents_AQUA_HIDEOUT_B1F: @ 0x0850DC44
+	.byte 0x09, 0x19, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DAA4  @ objectEvents
+	.4byte 0x0850DB7C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DC58, 0x100
+	.globl gMapEvents_AQUA_HIDEOUT_B2F
+gMapEvents_AQUA_HIDEOUT_B2F: @ 0x0850DD58
+	.byte 0x06, 0x0A, 0x02, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DC58  @ objectEvents
+	.4byte 0x0850DCE8  @ warps
+	.4byte 0x0850DD38  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DD6C, 0x68
+	.globl gMapEvents_UNDERWATER_SEAFLOOR_CAVERN
+gMapEvents_UNDERWATER_SEAFLOOR_CAVERN: @ 0x0850DDD4
+	.byte 0x04, 0x01, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DD6C  @ objectEvents
+	.4byte 0x0850DDCC  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DDE8, 0x28
+	.globl gMapEvents_SEAFLOOR_CAVERN_ENTRANCE
+gMapEvents_SEAFLOOR_CAVERN_ENTRANCE: @ 0x0850DE10
+	.byte 0x01, 0x02, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DDE8  @ objectEvents
+	.4byte 0x0850DE00  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DE24, 0x90
+	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM1
+gMapEvents_SEAFLOOR_CAVERN_ROOM1: @ 0x0850DEB4
+	.byte 0x05, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DE24  @ objectEvents
+	.4byte 0x0850DE9C  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DEC8, 0xE0
+	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM2
+gMapEvents_SEAFLOOR_CAVERN_ROOM2: @ 0x0850DFA8
+	.byte 0x08, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DEC8  @ objectEvents
+	.4byte 0x0850DF88  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50DFBC, 0xF0
+	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM3
+gMapEvents_SEAFLOOR_CAVERN_ROOM3: @ 0x0850E0AC
+	.byte 0x09, 0x03, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850DFBC  @ objectEvents
+	.4byte 0x0850E094  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50E0C0, 0x50
+	.globl gMapEvents_SEAFLOOR_CAVERN_ROOM4
+gMapEvents_SEAFLOOR_CAVERN_ROOM4: @ 0x0850E110
+	.byte 0x02, 0x04, 0x00, 0x00  @ objectEventCount, warpCount, coordEventCount, bgEventCount
+	.4byte 0x0850E0C0  @ objectEvents
+	.4byte 0x0850E0F0  @ warps
+	.4byte 0x00000000  @ coordEvents
+	.4byte 0x00000000  @ bgEvents
+	.incbin "baserom_jp.gba", 0x50E124, 0x9578
 
 	.globl sFrozenIceCubeSubspriteTable
 sFrozenIceCubeSubspriteTable: @ 0x851769C
