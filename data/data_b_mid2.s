@@ -13,42 +13,6 @@
 
 
 
-	.globl gUnknown_82C49F4
-gUnknown_82C49F4: @ 0x82C49F4
-	.incbin "baserom_jp.gba", 0x2c49f4, 0x80
-
-	.globl gUnknown_82C4A74
-gUnknown_82C4A74: @ 0x82C4A74
-	.incbin "baserom_jp.gba", 0x2c4a74, 0x10
-
-	.globl gUnknown_82C4A84
-gUnknown_82C4A84: @ 0x82C4A84
-	.incbin "baserom_jp.gba", 0x2c4a84, 0x1c
-
-	.globl gUnknown_82C4AA0
-gUnknown_82C4AA0: @ 0x82C4AA0
-	.incbin "baserom_jp.gba", 0x2c4aa0, 0x18
-
-	.globl gUnknown_82C4AB8
-gUnknown_82C4AB8: @ 0x82C4AB8
-	.incbin "baserom_jp.gba", 0x2c4ab8, 0x14
-
-	.globl gUnknown_82C4ACC
-gUnknown_82C4ACC: @ 0x82C4ACC
-	.incbin "baserom_jp.gba", 0x2c4acc, 0x30
-
-	.globl gUnknown_82C4AFC
-gUnknown_82C4AFC: @ 0x82C4AFC
-	.incbin "baserom_jp.gba", 0x2c4afc, 0x14
-
-	.globl gUnknown_82C4B10
-gUnknown_82C4B10: @ 0x82C4B10
-	.incbin "baserom_jp.gba", 0x2c4b10, 0x24
-
-	.globl gUnknown_82C4B34
-gUnknown_82C4B34: @ 0x82C4B34
-	.incbin "baserom_jp.gba", 0x2c4b34, 0x38
-
 	.globl gUnknown_82C4B6C
 gUnknown_82C4B6C: @ 0x82C4B6C
 	.byte 0x02, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00

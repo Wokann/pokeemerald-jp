@@ -90,7 +90,7 @@ struct WonderNewsData
 extern EWRAM_DATA struct WonderCardData *gWonderCardData; // 0x02022928
 extern EWRAM_DATA struct WonderNewsData *gWonderNewsData; // 0x0202292C
 extern const struct WonderGfx sCardGraphics[];
-extern const struct WonderGfx gUnknown_82C49F4[]; // news gfx table
+extern const struct WonderGfx sNewsGraphics[];
 extern const struct ScrollArrowsTemplate sNews_ArrowsTemplate;
 extern const u8 gUnknown_82C333C[]; // card text color table (3-byte entries)
 extern const u8 gUnknown_82C3344[]; // card footer text offsets
@@ -342,7 +342,7 @@ bool32 InitWonderNewsResources(struct WonderNews *news)
     memcpy(gWonderNewsData, news, sizeof(struct WonderNews));
     if (gWonderNewsData->news.bgType >= NUM_WONDER_BGS)
         gWonderNewsData->news.bgType = 0;
-    gWonderNewsData->gfx = &gUnknown_82C49F4[gWonderNewsData->news.bgType];
+    gWonderNewsData->gfx = &sNewsGraphics[gWonderNewsData->news.bgType];
     gWonderNewsData->arrowTaskId = TASK_NONE;
     return TRUE;
 }

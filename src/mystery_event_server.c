@@ -11,17 +11,17 @@
 // (svr->mainseqno, cmd->parameter/cmd->flag, ME_SEND_BUF_SIZE,
 // func_tbl).
 
-extern const char gUnknown_82C4A74[]; // "mevent_server.c"
-extern const char gUnknown_82C4A84[]; // "size <= ME_SEND_BUF_SIZE"
-extern const char gUnknown_82C4AA0[]; // "cmd->parameter == NULL"
-extern const char gUnknown_82C4AB8[]; // "cmd->flag == FALSE"
-extern const char gUnknown_82C4ACC[]; // "cmd->flag == FALSE && cmd->parameter == NULL"
-extern const char gUnknown_82C4B10[]; // "svr->mainseqno < NELEMS(func_tbl)"
+extern const char gMeventServerAssertFile[];
+extern const char gMeventServerAssertExpr0[];
+extern const char gMeventServerAssertExpr1[];
+extern const char gMeventServerAssertExpr2[];
+extern const char gMeventServerAssertExpr3[];
+extern const char gMeventServerAssertExpr4[];
 extern const u8 gUnknown_82C4F60[];
 extern const u8 gUnknown_82C4FC0[];
-extern u32 (*const gUnknown_82C4AFC[])(void *);
+extern u32 (*const gMeventServerFuncs[])(void *);
 extern u16 gBlockRecvBuffer[MAX_RFU_PLAYERS][BLOCK_BUFFER_SIZE / 2];
-extern u32 (*const gUnknown_82C4B34[])(void *);
+extern u32 (*const gMeventServerClientFuncs[])(void *);
 extern const u8 gUnknown_82C4B6C[];
 
 #define ME_SEND_BUF_SIZE 0x400
@@ -161,7 +161,7 @@ void mevent_srv_free_resources(void *data)
 void mevent_srv_common_init_send(void *data, u32 size, void *buffer, u32 size2)
 {
     if (size2 > ME_SEND_BUF_SIZE)
-        AGBAssert(gUnknown_82C4A74, 0x101, gUnknown_82C4A84, TRUE);
+        AGBAssert(gMeventServerAssertFile, 0x101, gMeventServerAssertExpr0, TRUE);
     mevent_srv_sub_init_send(&((struct MeventServerData *)data)->sub, size, buffer, size2);
 }
 
@@ -216,10 +216,10 @@ u32 mevent_srv_exec_common(void *data)
     u32 status;
 
     if (svr->mainseqno > 4)
-        AGBAssert(gUnknown_82C4A74, 0x228, gUnknown_82C4B10, TRUE);
-    status = gUnknown_82C4AFC[svr->mainseqno](svr);
+        AGBAssert(gMeventServerAssertFile, 0x228, gMeventServerAssertExpr4, TRUE);
+    status = gMeventServerFuncs[svr->mainseqno](svr);
     if (svr->mainseqno > 4)
-        AGBAssert(gUnknown_82C4A74, 0x22A, gUnknown_82C4B10, TRUE);
+        AGBAssert(gMeventServerAssertFile, 0x22A, gMeventServerAssertExpr4, TRUE);
     return status;
 }
 
@@ -234,7 +234,7 @@ u32 common_mainseq_4(void *data)
     {
     case 0:
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x162, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x162, gMeventServerAssertExpr1, TRUE);
         svr->mainseqno = 1;
         svr->result = cmd->flag;
         break;
@@ -243,35 +243,35 @@ u32 common_mainseq_4(void *data)
         break;
     case 2:
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x16C, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x16C, gMeventServerAssertExpr1, TRUE);
         mevent_srv_sub_init_recv(&svr->sub, cmd->flag, svr->unk14);
         svr->mainseqno = 2;
         break;
     case 3:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x172, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x172, gMeventServerAssertExpr2, TRUE);
         svr->cmdIndex = 0;
         svr->script = cmd->parameter;
         break;
     case 5:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x178, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x178, gMeventServerAssertExpr2, TRUE);
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x179, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x179, gMeventServerAssertExpr1, TRUE);
         memcpy(svr->unk20, svr->unk14, 0x64);
         break;
     case 6:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x17E, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x17E, gMeventServerAssertExpr2, TRUE);
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x17F, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x17F, gMeventServerAssertExpr1, TRUE);
         svr->result = MysteryGift_ValidateLinkGameData(svr->unk20, FALSE);
         break;
     case 30:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x184, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x184, gMeventServerAssertExpr2, TRUE);
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x185, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x185, gMeventServerAssertExpr1, TRUE);
         svr->result = MysteryGift_ValidateLinkGameData(svr->unk20, TRUE);
         break;
     case 4:
@@ -283,53 +283,53 @@ u32 common_mainseq_4(void *data)
         break;
     case 7:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x192, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x192, gMeventServerAssertExpr2, TRUE);
         buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
         svr->result = MysteryGift_CompareCardFlags(buf, svr->unk20, buf);
         break;
     case 8:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x198, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x198, gMeventServerAssertExpr2, TRUE);
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x199, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x199, gMeventServerAssertExpr1, TRUE);
         svr->result = *(u32 *)svr->unk14;
         break;
     case 9:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x19E, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x19E, gMeventServerAssertExpr2, TRUE);
         buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
         svr->result = MysteryGift_CheckStamps(buf, svr->unk20, buf);
         break;
     case 10:
         if (cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x1A5, gUnknown_82C4AA0, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1A5, gMeventServerAssertExpr1, TRUE);
         svr->result = MysteryGift_GetCardStatFromLinkData(svr->unk20, cmd->flag);
         break;
     case 11:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1AA, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1AA, gMeventServerAssertExpr2, TRUE);
         svr->result = MysteryGift_DoesQuestionnaireMatch(svr->unk20, cmd->parameter);
         break;
     case 12:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1B0, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1B0, gMeventServerAssertExpr2, TRUE);
         svr->result = mevent_compare_pointers(cmd->parameter, *(u32 *)svr->unk14);
         break;
     case 14:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1B6, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1B6, gMeventServerAssertExpr2, TRUE);
         buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk1C);
         mevent_srv_common_init_send(svr, 0x17, buf, 0xE0);
         break;
     case 13:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1BC, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1BC, gMeventServerAssertExpr2, TRUE);
         buf = mevent_first_if_not_null_else_second(cmd->parameter, svr->unk18);
         mevent_srv_common_init_send(svr, 0x16, buf, 0xA4);
         break;
     case 16:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1C2, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1C2, gMeventServerAssertExpr2, TRUE);
         buf = mevent_first_if_not_null_else_second(cmd->parameter, &svr->unk34);
         mevent_srv_common_init_send(svr, 0x18, buf, 4);
         break;
@@ -349,7 +349,7 @@ u32 common_mainseq_4(void *data)
         break;
     case 19:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1D8, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1D8, gMeventServerAssertExpr2, TRUE);
         mevent_srv_common_init_send(svr, 0x1A, cmd->parameter, 0xBC);
         break;
     case 20:
@@ -360,17 +360,17 @@ u32 common_mainseq_4(void *data)
         break;
     case 22:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1E7, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1E7, gMeventServerAssertExpr2, TRUE);
         memcpy(svr->unk18, cmd->parameter, 0xA4);
         break;
     case 23:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1EC, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1EC, gMeventServerAssertExpr2, TRUE);
         memcpy(svr->unk1C, cmd->parameter, 0xE0);
         break;
     case 21:
         if (cmd->flag != FALSE)
-            AGBAssert(gUnknown_82C4A74, 0x1F1, gUnknown_82C4AB8, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x1F1, gMeventServerAssertExpr2, TRUE);
         svr->unk34 = *(u32 *)cmd->parameter;
         break;
     case 24:
@@ -383,18 +383,18 @@ u32 common_mainseq_4(void *data)
         break;
     case 26:
         if (cmd->flag != FALSE || cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x200, gUnknown_82C4ACC, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x200, gMeventServerAssertExpr3, TRUE);
         memcpy(svr->unk18, GetSavedWonderCard(), 0xA4);
         DisableWonderCardSending(svr->unk18);
         break;
     case 27:
         if (cmd->flag != FALSE || cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x206, gUnknown_82C4ACC, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x206, gMeventServerAssertExpr3, TRUE);
         memcpy(svr->unk1C, GetSavedWonderNews(), 0xE0);
         break;
     case 28:
         if (cmd->flag != FALSE || cmd->parameter != NULL)
-            AGBAssert(gUnknown_82C4A74, 0x20B, gUnknown_82C4ACC, TRUE);
+            AGBAssert(gMeventServerAssertFile, 0x20B, gMeventServerAssertExpr3, TRUE);
         svr->unk24 = (u32)GetSavedRamScriptIfValid();
         break;
     case 29:
@@ -599,6 +599,6 @@ u32 mevent_client_exec(void *data)
     struct MeventClientData *cli = data;
     u32 (*funcs[8])(void *);
 
-    memcpy(funcs, gUnknown_82C4B34, sizeof(funcs));
+    memcpy(funcs, gMeventServerClientFuncs, sizeof(funcs));
     return funcs[cli->unk8](data);
 }
