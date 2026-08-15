@@ -343,6 +343,34 @@ SYMBOLS8I = [
 
 END_ADDR8I = 0x082C1D60  # sText_NameWantedOfferLv (next region)
 
+# Eighth batch part 10: trading-board header and activity names.
+SYMBOLS8J = [
+    ("sText_NameWantedOfferLv", 0x082C1D60, "text", None),
+    ("sText_SingleBattle", 0x082C1D7C, "text", None),
+    ("sText_DoubleBattle", 0x082C1D84, "text", None),
+    ("sText_MultiBattle", 0x082C1D8C, "text", None),
+    ("sText_PokemonTrades", 0x082C1D94, "text", None),
+    ("sText_Chat", 0x082C1DA0, "text", None),
+    ("sText_Cards", 0x082C1DA8, "text", None),
+    ("sText_WonderCards", 0x082C1DAC, "text", None),
+    ("sText_WonderNews", 0x082C1DB4, "text", None),
+    ("sText_PokemonJump", 0x082C1DC0, "text", None),
+    ("sText_BerryCrush", 0x082C1DCC, "text", None),
+    ("sText_BerryPicking", 0x082C1DD8, "text", None),
+    ("sText_Search", 0x082C1DE0, "text", None),
+    ("sText_BerryBlender", 0x082C1DE4, "text", None),
+    ("sText_RecordCorner", 0x082C1DF0, "text", None),
+    ("sText_CoolContest", 0x082C1DFC, "text", None),
+    ("sText_BeautyContest", 0x082C1E08, "text", None),
+    ("sText_CuteContest", 0x082C1E14, "text", None),
+    ("sText_SmartContest", 0x082C1E20, "text", None),
+    ("sText_ToughContest", 0x082C1E2C, "text", None),
+    ("sText_BattleTowerLv50", 0x082C1E37, "text_packed", None),
+    ("sText_BattleTowerOpenLv", 0x082C1E45, "text_packed_fixed", None),
+]
+
+END_ADDR8J = 0x082C1E58  # sLinkGroupActivityNameTexts (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -364,7 +392,7 @@ def emit_ascii(name, content, aligned=False, size=None):
     return f'{a}const char {name}{s} = {{"{content}"}};'
 
 
-def emit_text(name, addr, end, size=None):
+def emit_text(name, addr, end, size=None, packed=False):
     data = region_bytes(addr, end)
     # Decode the raw ROM bytes, then truncate at the last $ terminator.
     # Everything after it is alignment padding; the trailing $ itself is
@@ -375,10 +403,11 @@ def emit_text(name, addr, end, size=None):
         text = text[:last]
     lines = text.split("\\n")
     s = f"[{size}]" if size else "[]"
+    a = "" if packed else "ALIGNED(4) "
     if len(lines) == 1:
-        return f'ALIGNED(4) const u8 {name}{s} = _("{text}");'
+        return f'{a}const u8 {name}{s} = _("{text}");'
     body = "\n".join('    "%s\\n"' % ln for ln in lines[:-1]) + "\n" + '    "%s"' % lines[-1]
-    return f"ALIGNED(4) const u8 {name}{s} = _(\n{body});"
+    return f"{a}const u8 {name}{s} = _(\n{body});"
 
 
 def decode_preproc(data):
@@ -620,6 +649,11 @@ def build(symbols, end_addr, out_h, out_c, comment):
             if kind == "text_fixed":
                 size = end - addr
             out.append(emit_text(name, addr, end, size=size))
+        elif kind in ("text_packed", "text_packed_fixed"):
+            size = None
+            if kind == "text_packed_fixed":
+                size = end - addr
+            out.append(emit_text(name, addr, end, size=size, packed=True))
         elif kind == "table":
             out.append(emit_table(name, payload))
         elif kind == "raw_bytes":
@@ -693,6 +727,8 @@ def main():
           "// Wireless-system waiting texts")
     build(SYMBOLS8I, END_ADDR8I, "src/data/union_room8i.h", "src/data/union_room8i.c",
           "// Wireless response and short menu texts")
+    build(SYMBOLS8J, END_ADDR8J, "src/data/union_room8j.h", "src/data/union_room8j.c",
+          "// Trading-board header and activity names")
 
 
 if __name__ == "__main__":

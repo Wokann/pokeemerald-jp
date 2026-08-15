@@ -13,10 +13,6 @@
 
 
 
-	.globl sText_NameWantedOfferLv
-sText_NameWantedOfferLv: @ 0x82C1D60
-	.string "なまえ　　　　ほしいタイプ　あげるポケモン　　レベル$　シングルバトル$ダブルバトル$　マルチバトル$　ポケモンこうかん$　　　チャット$　　　カード$ふしぎなカード$ふしぎなニュース$　　　ポケモンジャンプ$　　　きのみクラッシュ$　　　きのみどり$　　サーチ$きのみブレンダー$　　　レコードコーナー$　　　かっこよさコンテスト$　うつくしさコンテスト$　かわいさコンテスト$　　かしこさコンテスト$　　たくましさコンテスト$　バトルタワー　レベル50$　　　バトルタワー　オープンレベル$　"
-
 	.globl sLinkGroupActivityNameTexts
 sLinkGroupActivityNameTexts: @ 0x82C1E58
 	.incbin "baserom_jp.gba", 0x2c1e58, 0xb0
