@@ -9,24 +9,10 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sText_WirelessLinkEstablished
-sText_WirelessLinkEstablished: @ 0x82C0AAC
-	.string "ジョイスポットとの　せつぞくに\n"
-	.string "せいこう　しました！$　"
 
-	.globl sText_WirelessLinkDropped
-sText_WirelessLinkDropped: @ 0x82C0AC8
-	.string "ジョイスポットから　せつぞくを\n"
-	.string "せつだん　されました⋯$"
-	.globl sText_LinkWithFriendDropped
-sText_LinkWithFriendDropped: @ 0x82C0AE4
-	.string "おともだちとの　つうしんが\n"
-	.string "せつだん　されました⋯$　　{B_COPY_VAR_1}から　NGとの\n"
-	.string "へんじが　きてしまいました⋯$　　　"
-
-	.globl sLinkDroppedTexts
-sLinkDroppedTexts: @ 0x82C0B1C
-	.incbin "baserom_jp.gba", 0x2c0b1c, 0x64
+	.globl gUnknown_82C0B44
+gUnknown_82C0B44: @ 0x82C0B44
+	.incbin "baserom_jp.gba", 0x2c0b44, 0x3c
 
 	.globl sText_AwaitingPlayersResponseAboutTrade
 sText_AwaitingPlayersResponseAboutTrade: @ 0x82C0B80

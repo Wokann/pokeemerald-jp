@@ -85,6 +85,17 @@ SYMBOLS3 = [
 
 END_ADDR3 = 0x082C0AAC  # sText_WirelessLinkEstablished (next region)
 
+# Fourth batch: wireless link texts and the link-dropped table.
+SYMBOLS4 = [
+    ("sText_WirelessLinkEstablished", 0x082C0AAC, "text", None),
+    ("sText_WirelessLinkDropped", 0x082C0AC8, "text", None),
+    ("sText_LinkWithFriendDropped", 0x082C0AE4, "text", None),
+    ("sText_PlayerRepliedNo2", 0x082C0B00, "text", None),
+    ("sLinkDroppedTexts", 0x082C0B1C, "table_link", None),
+]
+
+END_ADDR4 = 0x082C0B44  # unlabeled trade-request texts (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -207,12 +218,32 @@ def emit_table_rfu(name):
     return "\n".join(out)
 
 
+def emit_table_link(name):
+    entries = [
+        "[RFU_STATUS_OK] = NULL",
+        "[RFU_STATUS_FATAL_ERROR] = sText_LinkWithFriendDropped",
+        "[RFU_STATUS_CONNECTION_ERROR] = sText_LinkWithFriendDropped",
+        "[RFU_STATUS_CHILD_SEND_COMPLETE] = NULL",
+        "[RFU_STATUS_NEW_CHILD_DETECTED] = NULL",
+        "[RFU_STATUS_JOIN_GROUP_OK] = NULL",
+        "[RFU_STATUS_JOIN_GROUP_NO] = sText_PlayerRepliedNo2",
+        "[RFU_STATUS_WAIT_ACK_JOIN_GROUP] = NULL",
+        "[RFU_STATUS_LEAVE_GROUP_NOTICE] = NULL",
+        "[RFU_STATUS_LEAVE_GROUP] = NULL",
+    ]
+    out = [f"const u8 *const {name}[] = {{"]
+    for e in entries:
+        out.append(f"    {e},")
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
     out = []
     out.append('#include "global.h"')
-    if any(sym[2] == "table_rfu" for sym in symbols):
+    if any(sym[2] in ("table_rfu", "table_link") for sym in symbols):
         out.append('#include "link_rfu.h"')
     out.append("")
     out.append(comment)
@@ -235,6 +266,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table(name, payload))
         elif kind == "table_rfu":
             out.append(emit_table_rfu(name))
+        elif kind == "table_link":
+            out.append(emit_table_link(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -258,6 +291,8 @@ def main():
           "// Union-room texts (second batch)")
     build(SYMBOLS3, END_ADDR3, "src/data/union_room3.h", "src/data/union_room3.c",
           "// Union-room member-status texts and pointer tables")
+    build(SYMBOLS4, END_ADDR4, "src/data/union_room4.h", "src/data/union_room4.c",
+          "// Wireless link texts and the link-dropped table")
 
 
 if __name__ == "__main__":
