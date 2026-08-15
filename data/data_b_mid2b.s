@@ -8,84 +8,6 @@
 	.include "constants/moves.inc"
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
-	.globl gBerryCrush_Crusher_Pal
-gBerryCrush_Crusher_Pal: @ 0x82C5F84
-	.incbin "graphics/berry_crush/gBerryCrush_Crusher_Pal.bin"
-
-	.globl gBerryCrush_Crusher_Gfx
-gBerryCrush_Crusher_Gfx: @ 0x82C6104
-	.incbin "graphics/berry_crush/gBerryCrush_Crusher_Gfx.bin"
-
-	.globl sCrusherTop_Tilemap
-sCrusherTop_Tilemap: @ 0x82C74D4
-	.incbin "graphics/berry_crush/sCrusherTop_Tilemap.bin"
-
-	.globl sContainerCap_Tilemap
-sContainerCap_Tilemap: @ 0x82C7604
-	.incbin "graphics/misc/sContainerCap_Tilemap.bin"
-
-	.globl sBg_Tilemap
-sBg_Tilemap: @ 0x82C779C
-	.incbin "graphics/misc/sBg_Tilemap.bin"
-
-	.globl sPlayerNameWindowGfx
-sPlayerNameWindowGfx: @ 0x82C79C4
-	.incbin "graphics/naming_screen/sPlayerNameWindowGfx.bin"
-
-	.globl sPlayerIdToPosId
-sPlayerIdToPosId: @ 0x82C7A08
-	.byte 0x01, 0x03, 0x00, 0x00, 0x00, 0x00, 0x01, 0x03, 0x00, 0x00, 0x01, 0x03
-	.byte 0x02, 0x04, 0x00, 0x00, 0x01, 0x03, 0x02, 0x04
-
-	.globl sPlayerCoords
-sPlayerCoords: @ 0x82C7A1C
-	.incbin "baserom_jp.gba", 0x2c7a1c, 0x3c
-
-	.globl sImpactCoords
-sImpactCoords: @ 0x82C7A58
-	.byte 0x00, 0x00, 0xFF, 0x00, 0x01, 0x01
-
-	.globl sSparkleCoords
-sSparkleCoords: @ 0x82C7A5E
-	.byte 0x00, 0x00, 0xF0, 0xFC, 0x10, 0xFC, 0xF8, 0xFE, 0x08, 0xFE, 0xE8, 0xF8
-	.byte 0x18, 0xF8, 0xE0, 0xF4, 0x20, 0xF4, 0xD8, 0xF0, 0x28, 0xF0
-
-	.globl sPlayerBerrySpriteTags
-sPlayerBerrySpriteTags: @ 0x82C7A74
-	.hword 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x0000
-
-	.globl sSpriteSheets
-sSpriteSheets: @ 0x82C7A80
-	.incbin "baserom_jp.gba", 0x2c7a80, 0x28
-
-	.globl sSpritePals
-sSpritePals: @ 0x82C7AA8
-	.incbin "graphics/misc/sSpritePals.bin"
-
-	.globl sSpriteTemplate_CrusherBase
-sSpriteTemplate_CrusherBase: @ 0x82C7B98
-	.incbin "baserom_jp.gba", 0x2c7b98, 0x18
-
-	.globl sSpriteTemplate_Impact
-sSpriteTemplate_Impact: @ 0x82C7BB0
-	.incbin "baserom_jp.gba", 0x2c7bb0, 0x18
-
-	.globl sSpriteTemplate_Sparkle
-sSpriteTemplate_Sparkle: @ 0x82C7BC8
-	.incbin "baserom_jp.gba", 0x2c7bc8, 0x18
-
-	.globl sSpriteTemplate_Timer
-sSpriteTemplate_Timer: @ 0x82C7BE0
-	.incbin "baserom_jp.gba", 0x2c7be0, 0x18
-
-	.globl sSpriteTemplate_PlayerBerry
-sSpriteTemplate_PlayerBerry: @ 0x82C7BF8
-	.incbin "baserom_jp.gba", 0x2c7bf8, 0x18
-
-	.globl sDigitObjTemplates
-sDigitObjTemplates: @ 0x82C7C10
-	.incbin "baserom_jp.gba", 0x2c7c10, 0x30
-
 	.globl sResultsTexts
 sResultsTexts: @ 0x82C7C40
 	.incbin "baserom_jp.gba", 0x2c7c40, 0x18
@@ -3732,4 +3654,5 @@ gUnknown_82DD33C: @ 0x82DD33C
 	.globl gMonFrontPicTable
 gMonFrontPicTable: @ 0x82DDA1C
 	.incbin "baserom_jp.gba", 0x2dda1c, 0x5b48
+
 

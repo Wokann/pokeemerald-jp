@@ -9243,7 +9243,9 @@ SECTIONS {
         src/data/union_room8y.o(.rodata);
         src/data/union_room8z.o(.rodata);
         src/data/berry_crush1.o(.rodata);
-        data/data_b_mid2.o(.rodata);
+        data/data_b_mid2a.o(.rodata);
+        src/data/berry_crush2.o(.rodata);
+        data/data_b_mid2b.o(.rodata);
         src/data/text/trainer_class_names.o(.rodata);
         data/data_b_tail.o(.rodata);
         src/data/text/species_names.o(.rodata);

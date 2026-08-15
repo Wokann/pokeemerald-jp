@@ -1,5 +1,6 @@
 #include "global.h"
 #include "berry.h"
+#include "berry_crush.h"
 #include "bg.h"
 #include "berry_powder.h"
 #include "decompress.h"
@@ -210,17 +211,6 @@ struct BerryCrushGame_LinkState
     u16 timer;
     u16 inputFlags;
     u16 sparkleAmount;
-};
-
-struct BerryCrushPlayerCoords
-{
-    u8 playerId;
-    u8 windowGfxX;
-    u8 windowGfxY;
-    s16 impactXOffset;
-    s16 impactYOffset;
-    s16 berryXOffset;
-    s16 berryXDest;
 };
 
 struct BerryCrushGame_Gfx
