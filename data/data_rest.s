@@ -1044,11 +1044,11 @@ gUnknown_8DBA860: @ 0x8DBA860
 	.incbin "baserom_jp.gba", 0xdba860, 0x1d30
 
 
-	.globl gUnknown_8DBC590
-gUnknown_8DBC590: @ 0x8DBC590
+	.globl gRouletteMenu_Gfx
+gRouletteMenu_Gfx: @ 0x8DBC590
 	.incbin "baserom_jp.gba", 0xdbc590, 0x72c
 
 
-	.globl gUnknown_8DBCCBC
-gUnknown_8DBCCBC: @ 0x8DBCCBC
+	.globl gRouletteWheel_Gfx
+gRouletteWheel_Gfx: @ 0x8DBCCBC
 	.incbin "baserom_jp.gba", 0xdbccbc, 0x243344

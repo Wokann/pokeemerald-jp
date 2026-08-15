@@ -526,8 +526,8 @@ __attribute__((naked)) void sub_08140694(void)
         "	b _081408C0\n\t"
         "	.align 2, 0\n\t"
         "_08140758: .4byte 0x085957A8\n\t"
-        "_0814075C: .4byte gUnknown_8DBC590\n\t"
-        "_08140760: .4byte gUnknown_8DBCCBC\n\t"
+        "_0814075C: .4byte gRouletteMenu_Gfx\n\t"
+        "_08140760: .4byte gRouletteWheel_Gfx\n\t"
         "_08140764:\n\t"
         "	bl FreeTempTileDataBuffersIfPossible\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -10530,4 +10530,3 @@ __attribute__((naked)) void sub_08145360(void)
         ".syntax divided\n\t"
     );
 }
-
