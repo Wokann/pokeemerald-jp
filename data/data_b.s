@@ -6586,13 +6586,17 @@ sPkblToEscapeFactor: @ 0x82EC664
 	.byte 1 @ pokeblock grade 4, B_MSG_MON_ENTHRALLED
 	.byte 0 @ pokeblock grade 4, B_MSG_MON_IGNORED
 
-	.globl gUnknown_82EC673
-gUnknown_82EC673: @ 0x82EC673
-	.incbin "baserom_jp.gba", 0x2ec673, 0x4
+	.globl sGoNearCounterToCatchFactor
+sGoNearCounterToCatchFactor: @ 0x82EC673
+	.byte 4 @ safariGoNearCounter 0
+	.byte 3 @ safariGoNearCounter 1
+	.byte 2 @ safariGoNearCounter 2
+	.byte 1 @ safariGoNearCounter 3
 
-	.globl gUnknown_82EC677
-gUnknown_82EC677: @ 0x82EC677
-	.incbin "baserom_jp.gba", 0x2ec677, 0x5
+	.globl sGoNearCounterToEscapeFactor
+sGoNearCounterToEscapeFactor: @ 0x82EC677
+	.byte 4, 4, 4, 4 @ safariGoNearCounter 0..3
+	.byte 0 @ JP trailing entry
 
 	.globl sSoundMovesTable
 sSoundMovesTable: @ 0x82EC67C
