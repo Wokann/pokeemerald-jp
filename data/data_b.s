@@ -3831,13 +3831,17 @@ gUnknown_82D2970: @ 0x82D2970
 gUnknown_82D2973: @ 0x82D2973
 	.incbin "baserom_jp.gba", 0x2d2973, 0x5
 
-	.globl gUnknown_82D2978
-gUnknown_82D2978: @ 0x82D2978
-	.incbin "baserom_jp.gba", 0x2d2978, 0x8
+	.globl sMainMenuBgTemplates
+sMainMenuBgTemplates: @ 0x82D2978
+	.hword 0x01E8 @ bg=0 charBaseIndex=2 mapBaseIndex=30 screenSize=0 paletteMode=0 priority=0
+	.hword 0x0000 @ baseTile
+	.hword 0x3071 @ bg=1 charBaseIndex=0 mapBaseIndex=7 screenSize=0 paletteMode=0 priority=3
+	.hword 0x0000 @ baseTile
 
-	.globl gUnknown_82D2980
-gUnknown_82D2980: @ 0x82D2980
-	.incbin "baserom_jp.gba", 0x2d2980, 0x4
+	.globl sBirchBgTemplate
+sBirchBgTemplate: @ 0x82D2980
+	.hword 0x01EC @ bg=0 charBaseIndex=3 mapBaseIndex=30 screenSize=0 paletteMode=0 priority=0
+	.hword 0x0000 @ baseTile
 
 	.globl gUnknown_82D2984
 gUnknown_82D2984: @ 0x82D2984
