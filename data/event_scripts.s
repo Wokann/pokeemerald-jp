@@ -2192,7 +2192,9 @@ BattleScript_LocalTrainerBattleWon: @ 0x8288EB5
 
 	.globl BattleScript_PayDayMoneyAndPickUpItems
 BattleScript_PayDayMoneyAndPickUpItems: @ 0x8288EF2
-	.incbin "baserom_jp.gba", 0x288ef2, 0x3
+	.byte 0x91 @ givepaydaymoney
+	.byte 0xE5 @ pickup
+	.byte 0x3E @ end2
 
 	.globl BattleScript_LocalBattleLost
 BattleScript_LocalBattleLost: @ 0x8288EF5
@@ -2216,23 +2218,32 @@ BattleScript_SmokeBallEscape: @ 0x8289063
 
 	.globl BattleScript_RanAwayUsingMonAbility
 BattleScript_RanAwayUsingMonAbility: @ 0x8289071
-	.incbin "baserom_jp.gba", 0x289071, 0x7
+	.byte 0x10, 0x53, 0x01 @ printstring STRINGID_PKMNFLEDUSING
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_GotAwaySafely
 BattleScript_GotAwaySafely: @ 0x8289078
-	.incbin "baserom_jp.gba", 0x289078, 0x7
+	.byte 0x10, 0xDF, 0x00 @ printstring STRINGID_GOTAWAYSAFELY
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_WildMonFled
 BattleScript_WildMonFled: @ 0x828907F
-	.incbin "baserom_jp.gba", 0x28907f, 0x7
+	.byte 0x10, 0xE0, 0x00 @ printstring STRINGID_WILDPKMNFLED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl gUnknown_8289086
 gUnknown_8289086: @ 0x8289086
-	.incbin "baserom_jp.gba", 0x289086, 0x4
+	.byte 0x10, 0xE1, 0x00 @ printstring STRINGID_NORUNNINGFROMTRAINERS
+	.byte 0x3E @ end2
 
 	.globl BattleScript_PrintFailedToRunString
 BattleScript_PrintFailedToRunString: @ 0x828908A
-	.incbin "baserom_jp.gba", 0x28908a, 0x9
+	.byte 0x13, 0xAA, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9AA
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl gUnknown_8289093
 gUnknown_8289093: @ 0x8289093
@@ -2240,7 +2251,8 @@ gUnknown_8289093: @ 0x8289093
 
 	.globl gUnknown_8289099
 gUnknown_8289099: @ 0x8289099
-	.incbin "baserom_jp.gba", 0x289099, 0x4
+	.byte 0x11, 0x58, 0x01 @ printselectionstring STRINGID_BOXISFULL
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_ActionSwitch
 BattleScript_ActionSwitch: @ 0x828909D
@@ -2248,7 +2260,8 @@ BattleScript_ActionSwitch: @ 0x828909D
 
 	.globl BattleScript_Pausex20
 BattleScript_Pausex20: @ 0x8289141
-	.incbin "baserom_jp.gba", 0x289141, 0x4
+	.byte 0x39, 0x20, 0x00 @ pause 0x0020
+	.byte 0x3C @ return
 
 	.globl BattleScript_LevelUp
 BattleScript_LevelUp: @ 0x8289145
@@ -2264,7 +2277,9 @@ BattleScript_DamagingWeatherContinues: @ 0x82891CF
 
 	.globl BattleScript_SandStormHailEnds
 BattleScript_SandStormHailEnds: @ 0x8289251
-	.incbin "baserom_jp.gba", 0x289251, 0x9
+	.byte 0x13, 0xC8, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9C8
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_SunlightContinues
 BattleScript_SunlightContinues: @ 0x828925A
@@ -2272,7 +2287,9 @@ BattleScript_SunlightContinues: @ 0x828925A
 
 	.globl BattleScript_SunlightFaded
 BattleScript_SunlightFaded: @ 0x8289268
-	.incbin "baserom_jp.gba", 0x289268, 0x7
+	.byte 0x10, 0xF2, 0x00 @ printstring STRINGID_SUNLIGHTFADED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_OverworldWeatherStarts
 BattleScript_OverworldWeatherStarts: @ 0x828926F
@@ -2292,7 +2309,9 @@ BattleScript_LeechSeedTurnDrain: @ 0x828929D
 
 	.globl BattleScript_BideStoringEnergy
 BattleScript_BideStoringEnergy: @ 0x82892F9
-	.incbin "baserom_jp.gba", 0x2892f9, 0xb
+	.byte 0x10, 0x78, 0x00 @ printstring STRINGID_PKMNSTORINGENERGY
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_BideAttack
 BattleScript_BideAttack: @ 0x8289304
@@ -2312,19 +2331,26 @@ BattleScript_MistProtected: @ 0x828938B
 
 	.globl BattleScript_RageIsBuilding
 BattleScript_RageIsBuilding: @ 0x8289395
-	.incbin "baserom_jp.gba", 0x289395, 0x7
+	.byte 0x10, 0x83, 0x00 @ printstring STRINGID_PKMNRAGEBUILDING
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_MoveUsedIsDisabled
 BattleScript_MoveUsedIsDisabled: @ 0x828939C
-	.incbin "baserom_jp.gba", 0x28939c, 0xb
+	.byte 0x10, 0x85, 0x00 @ printstring STRINGID_PKMNMOVEISDISABLED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_SelectingDisabledMove
 BattleScript_SelectingDisabledMove: @ 0x82893A7
-	.incbin "baserom_jp.gba", 0x2893a7, 0x4
+	.byte 0x11, 0x85, 0x00 @ printselectionstring STRINGID_PKMNMOVEISDISABLED
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_DisabledNoMore
 BattleScript_DisabledNoMore: @ 0x82893AB
-	.incbin "baserom_jp.gba", 0x2893ab, 0x7
+	.byte 0x10, 0x86, 0x00 @ printstring STRINGID_PKMNMOVEDISABLEDNOMORE
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_SelectingDisabledMoveInPalace
 BattleScript_SelectingDisabledMoveInPalace: @ 0x82893B2
@@ -2332,7 +2358,9 @@ BattleScript_SelectingDisabledMoveInPalace: @ 0x82893B2
 
 	.globl BattleScript_EncoredNoMore
 BattleScript_EncoredNoMore: @ 0x82893BF
-	.incbin "baserom_jp.gba", 0x2893bf, 0x7
+	.byte 0x10, 0x88, 0x00 @ printstring STRINGID_PKMNENCOREENDED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_DestinyBondTakesLife
 BattleScript_DestinyBondTakesLife: @ 0x82893C6
@@ -2356,7 +2384,9 @@ BattleScript_PerishSongTakesLife: @ 0x828948D
 
 	.globl BattleScript_PerishSongCountGoesDown
 BattleScript_PerishSongCountGoesDown: @ 0x82894A8
-	.incbin "baserom_jp.gba", 0x2894a8, 0x7
+	.byte 0x10, 0x97, 0x00 @ printstring STRINGID_PKMNPERISHCOUNTFELL
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_AllStatsUp
 BattleScript_AllStatsUp: @ 0x82894AF
@@ -2364,7 +2394,8 @@ BattleScript_AllStatsUp: @ 0x82894AF
 
 	.globl BattleScript_RapidSpinAway
 BattleScript_RapidSpinAway: @ 0x828954B
-	.incbin "baserom_jp.gba", 0x28954b, 0x2
+	.byte 0xBE @ rapidspinfree
+	.byte 0x3C @ return
 
 	.globl BattleScript_WrapFree
 BattleScript_WrapFree: @ 0x828954D
@@ -2372,11 +2403,15 @@ BattleScript_WrapFree: @ 0x828954D
 
 	.globl BattleScript_LeechSeedFree
 BattleScript_LeechSeedFree: @ 0x828955E
-	.incbin "baserom_jp.gba", 0x28955e, 0x7
+	.byte 0x10, 0x9E, 0x00 @ printstring STRINGID_PKMNSHEDLEECHSEED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_SpikesFree
 BattleScript_SpikesFree: @ 0x8289565
-	.incbin "baserom_jp.gba", 0x289565, 0x7
+	.byte 0x10, 0x9F, 0x00 @ printstring STRINGID_PKMNBLEWAWAYSPIKES
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_MonTookFutureAttack
 BattleScript_MonTookFutureAttack: @ 0x828956C
@@ -2384,11 +2419,13 @@ BattleScript_MonTookFutureAttack: @ 0x828956C
 
 	.globl BattleScript_NoMovesLeft
 BattleScript_NoMovesLeft: @ 0x82895FA
-	.incbin "baserom_jp.gba", 0x2895fa, 0x4
+	.byte 0x11, 0xA8, 0x00 @ printselectionstring STRINGID_PKMNHASNOMOVESLEFT
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_SelectingMoveWithNoPP
 BattleScript_SelectingMoveWithNoPP: @ 0x82895FE
-	.incbin "baserom_jp.gba", 0x2895fe, 0x4
+	.byte 0x11, 0xFF, 0x00 @ printselectionstring STRINGID_NOPPLEFT
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_NoPPForMove
 BattleScript_NoPPForMove: @ 0x8289602
@@ -2396,23 +2433,32 @@ BattleScript_NoPPForMove: @ 0x8289602
 
 	.globl BattleScript_SelectingTormentedMove
 BattleScript_SelectingTormentedMove: @ 0x8289611
-	.incbin "baserom_jp.gba", 0x289611, 0xf
+	.byte 0x11, 0xAA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETORMENT
+	.byte 0x44 @ endselectionscript
+	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_SelectingTormentedMoveInPalace
 BattleScript_SelectingTormentedMoveInPalace: @ 0x8289620
-	.incbin "baserom_jp.gba", 0x289620, 0x8
+	.byte 0x10, 0xAA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETORMENT
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
 
 	.globl BattleScript_SelectingNotAllowedMoveTaunt
 BattleScript_SelectingNotAllowedMoveTaunt: @ 0x8289628
-	.incbin "baserom_jp.gba", 0x289628, 0x4
+	.byte 0x11, 0xAD, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVETAUNT
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_MoveUsedIsTaunted
 BattleScript_MoveUsedIsTaunted: @ 0x828962C
-	.incbin "baserom_jp.gba", 0x28962c, 0xb
+	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_SelectingNotAllowedMoveTauntInPalace
 BattleScript_SelectingNotAllowedMoveTauntInPalace: @ 0x8289637
-	.incbin "baserom_jp.gba", 0x289637, 0x8
+	.byte 0x10, 0xAD, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVETAUNT
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
 
 	.globl BattleScript_WishComesTrue
 BattleScript_WishComesTrue: @ 0x828963F
@@ -2432,19 +2478,25 @@ BattleScript_KnockedOff: @ 0x82896F0
 
 	.globl BattleScript_MoveUsedIsImprisoned
 BattleScript_MoveUsedIsImprisoned: @ 0x82896FE
-	.incbin "baserom_jp.gba", 0x2896fe, 0xb
+	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_SelectingImprisonedMove
 BattleScript_SelectingImprisonedMove: @ 0x8289709
-	.incbin "baserom_jp.gba", 0x289709, 0x4
+	.byte 0x11, 0xBA, 0x00 @ printselectionstring STRINGID_PKMNCANTUSEMOVESEALED
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_SelectingImprisonedMoveInPalace
 BattleScript_SelectingImprisonedMoveInPalace: @ 0x828970D
-	.incbin "baserom_jp.gba", 0x28970d, 0x8
+	.byte 0x10, 0xBA, 0x00 @ printstring STRINGID_PKMNCANTUSEMOVESEALED
+	.byte 0x28, 0xB5, 0x93, 0x28, 0x08 @ goto 0x082893B5
 
 	.globl BattleScript_GrudgeTakesPP
 BattleScript_GrudgeTakesPP: @ 0x8289715
-	.incbin "baserom_jp.gba", 0x289715, 0x7
+	.byte 0x10, 0xBC, 0x00 @ printstring STRINGID_PKMNLOSTPPGRUDGE
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_MagicCoatBounce
 BattleScript_MagicCoatBounce: @ 0x828971C
@@ -2456,11 +2508,15 @@ BattleScript_SnatchedMove: @ 0x8289734
 
 	.globl BattleScript_EnduredMsg
 BattleScript_EnduredMsg: @ 0x828974F
-	.incbin "baserom_jp.gba", 0x28974f, 0x7
+	.byte 0x10, 0x99, 0x00 @ printstring STRINGID_PKMNENDUREDHIT
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_OneHitKOMsg
 BattleScript_OneHitKOMsg: @ 0x8289756
-	.incbin "baserom_jp.gba", 0x289756, 0x7
+	.byte 0x10, 0xDA, 0x00 @ printstring STRINGID_ONEHITKO
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_SAtkDown2
 BattleScript_SAtkDown2: @ 0x828975D
@@ -2508,11 +2564,15 @@ BattleScript_MoveUsedIsParalyzed: @ 0x8289813
 
 	.globl BattleScript_MoveUsedFlinched
 BattleScript_MoveUsedFlinched: @ 0x8289823
-	.incbin "baserom_jp.gba", 0x289823, 0xb
+	.byte 0x10, 0x4A, 0x00 @ printstring STRINGID_PKMNFLINCHED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_PrintUproarOverTurns
 BattleScript_PrintUproarOverTurns: @ 0x828982E
-	.incbin "baserom_jp.gba", 0x28982e, 0x9
+	.byte 0x13, 0xF2, 0xB9, 0x5A, 0x08 @ printfromtable 0x085AB9F2
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_ThrashConfuses
 BattleScript_ThrashConfuses: @ 0x8289837
@@ -2524,11 +2584,15 @@ BattleScript_MoveUsedIsConfused: @ 0x8289845
 
 	.globl BattleScript_MoveUsedIsConfusedNoMore
 BattleScript_MoveUsedIsConfusedNoMore: @ 0x8289888
-	.incbin "baserom_jp.gba", 0x289888, 0x7
+	.byte 0x10, 0x42, 0x00 @ printstring STRINGID_PKMNHEALEDCONFUSION
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_PrintPayDayMoneyString
 BattleScript_PrintPayDayMoneyString: @ 0x828988F
-	.incbin "baserom_jp.gba", 0x28988f, 0x7
+	.byte 0x10, 0x7B, 0x00 @ printstring STRINGID_PLAYERPICKEDUPMONEY
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_WrapTurnDmg
 BattleScript_WrapTurnDmg: @ 0x8289896
@@ -2536,7 +2600,9 @@ BattleScript_WrapTurnDmg: @ 0x8289896
 
 	.globl BattleScript_WrapEnds
 BattleScript_WrapEnds: @ 0x82898A8
-	.incbin "baserom_jp.gba", 0x2898a8, 0x7
+	.byte 0x10, 0x5F, 0x00 @ printstring STRINGID_PKMNFREEDFROM
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_MoveUsedIsInLove
 BattleScript_MoveUsedIsInLove: @ 0x82898AF
@@ -2544,7 +2610,9 @@ BattleScript_MoveUsedIsInLove: @ 0x82898AF
 
 	.globl BattleScript_MoveUsedIsInLoveCantAttack
 BattleScript_MoveUsedIsInLoveCantAttack: @ 0x82898BC
-	.incbin "baserom_jp.gba", 0x2898bc, 0xb
+	.byte 0x10, 0x47, 0x00 @ printstring STRINGID_PKMNIMMOBILIZEDBYLOVE
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x28, 0xD6, 0x6F, 0x28, 0x08 @ goto 0x08286FD6
 
 	.globl BattleScript_NightmareTurnDmg
 BattleScript_NightmareTurnDmg: @ 0x82898C7
@@ -2592,7 +2660,13 @@ BattleScript_ShedSkinActivates: @ 0x8289A0C
 
 	.globl BattleScript_CastformChange
 BattleScript_CastformChange: @ 0x8289A31
-	.incbin "baserom_jp.gba", 0x289a31, 0xf
+	.byte 0x41, 0x37, 0x9A, 0x28, 0x08 @ call 0x08289A37
+	.byte 0x3F @ end3
+	.byte 0xE6 @ docastformchangeanimation
+	.byte 0x3A @ waitstate
+	.byte 0x10, 0x3A, 0x01 @ printstring STRINGID_PKMNTRANSFORMED
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_IntimidateActivatesEnd3
 BattleScript_IntimidateActivatesEnd3: @ 0x8289A40
@@ -2648,15 +2722,24 @@ BattleScript_AbilityNoStatLoss: @ 0x8289B4F
 
 	.globl BattleScript_BRNPrevention
 BattleScript_BRNPrevention: @ 0x8289B59
-	.incbin "baserom_jp.gba", 0x289b59, 0xc
+	.byte 0x39, 0x20, 0x00 @ pause 0x0020
+	.byte 0x13, 0xCA, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABACA
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_PRLZPrevention
 BattleScript_PRLZPrevention: @ 0x8289B65
-	.incbin "baserom_jp.gba", 0x289b65, 0xc
+	.byte 0x39, 0x20, 0x00 @ pause 0x0020
+	.byte 0x13, 0xD0, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAD0
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_PSNPrevention
 BattleScript_PSNPrevention: @ 0x8289B71
-	.incbin "baserom_jp.gba", 0x289b71, 0xc
+	.byte 0x39, 0x20, 0x00 @ pause 0x0020
+	.byte 0x13, 0xD6, 0xBA, 0x5A, 0x08 @ printfromtable 0x085ABAD6
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_ObliviousPreventsAttraction
 BattleScript_ObliviousPreventsAttraction: @ 0x8289B7D
@@ -2680,7 +2763,9 @@ BattleScript_StickyHoldActivates: @ 0x8289BC7
 
 	.globl BattleScript_ColorChangeActivates
 BattleScript_ColorChangeActivates: @ 0x8289BD5
-	.incbin "baserom_jp.gba", 0x289bd5, 0x7
+	.byte 0x10, 0xC6, 0x00 @ printstring STRINGID_PKMNCHANGEDTYPEWITH
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3C @ return
 
 	.globl BattleScript_RoughSkinActivates
 BattleScript_RoughSkinActivates: @ 0x8289BDC
@@ -2692,11 +2777,15 @@ BattleScript_CuteCharmActivates: @ 0x8289BF7
 
 	.globl BattleScript_ApplySecondaryEffect
 BattleScript_ApplySecondaryEffect: @ 0x8289C04
-	.incbin "baserom_jp.gba", 0x289c04, 0x3
+	.byte 0x3A @ waitstate
+	.byte 0x17 @ seteffectsecondary
+	.byte 0x3C @ return
 
 	.globl BattleScript_SynchronizeActivates
 BattleScript_SynchronizeActivates: @ 0x8289C07
-	.incbin "baserom_jp.gba", 0x289c07, 0x3
+	.byte 0x3A @ waitstate
+	.byte 0x16 @ seteffectprimary
+	.byte 0x3C @ return
 
 	.globl BattleScript_NoItemSteal
 BattleScript_NoItemSteal: @ 0x8289C0A
@@ -2732,7 +2821,8 @@ BattleScript_SubstituteFade: @ 0x8289C83
 
 	.globl BattleScript_BerryCurePrlzEnd2
 BattleScript_BerryCurePrlzEnd2: @ 0x8289C8E
-	.incbin "baserom_jp.gba", 0x289c8e, 0x6
+	.byte 0x41, 0x94, 0x9C, 0x28, 0x08 @ call 0x08289C94
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureParRet
 BattleScript_BerryCureParRet: @ 0x8289C94
@@ -2740,7 +2830,8 @@ BattleScript_BerryCureParRet: @ 0x8289C94
 
 	.globl BattleScript_BerryCurePsnEnd2
 BattleScript_BerryCurePsnEnd2: @ 0x8289CA6
-	.incbin "baserom_jp.gba", 0x289ca6, 0x6
+	.byte 0x41, 0xAC, 0x9C, 0x28, 0x08 @ call 0x08289CAC
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCurePsnRet
 BattleScript_BerryCurePsnRet: @ 0x8289CAC
@@ -2748,7 +2839,8 @@ BattleScript_BerryCurePsnRet: @ 0x8289CAC
 
 	.globl BattleScript_BerryCureBrnEnd2
 BattleScript_BerryCureBrnEnd2: @ 0x8289CBE
-	.incbin "baserom_jp.gba", 0x289cbe, 0x6
+	.byte 0x41, 0xC4, 0x9C, 0x28, 0x08 @ call 0x08289CC4
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureBrnRet
 BattleScript_BerryCureBrnRet: @ 0x8289CC4
@@ -2764,7 +2856,8 @@ BattleScript_BerryCureFrzRet: @ 0x8289CDC
 
 	.globl BattleScript_BerryCureSlpEnd2
 BattleScript_BerryCureSlpEnd2: @ 0x8289CEE
-	.incbin "baserom_jp.gba", 0x289cee, 0x6
+	.byte 0x41, 0xF4, 0x9C, 0x28, 0x08 @ call 0x08289CF4
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureSlpRet
 BattleScript_BerryCureSlpRet: @ 0x8289CF4
@@ -2780,7 +2873,8 @@ BattleScript_BerryCureConfusionRet: @ 0x8289D0C
 
 	.globl BattleScript_BerryCureChosenStatusEnd2
 BattleScript_BerryCureChosenStatusEnd2: @ 0x8289D1C
-	.incbin "baserom_jp.gba", 0x289d1c, 0x6
+	.byte 0x41, 0x22, 0x9D, 0x28, 0x08 @ call 0x08289D22
+	.byte 0x3E @ end2
 
 	.globl BattleScript_BerryCureChosenStatusRet
 BattleScript_BerryCureChosenStatusRet: @ 0x8289D22
@@ -2804,7 +2898,8 @@ BattleScript_BerryPPHealEnd2: @ 0x8289D69
 
 	.globl BattleScript_ItemHealHP_End2
 BattleScript_ItemHealHP_End2: @ 0x8289D79
-	.incbin "baserom_jp.gba", 0x289d79, 0x6
+	.byte 0x41, 0x7F, 0x9D, 0x28, 0x08 @ call 0x08289D7F
+	.byte 0x3E @ end2
 
 	.globl BattleScript_ItemHealHP_Ret
 BattleScript_ItemHealHP_Ret: @ 0x8289D7F
@@ -2812,7 +2907,8 @@ BattleScript_ItemHealHP_Ret: @ 0x8289D7F
 
 	.globl BattleScript_SelectingNotAllowedMoveChoiceItem
 BattleScript_SelectingNotAllowedMoveChoiceItem: @ 0x8289D9A
-	.incbin "baserom_jp.gba", 0x289d9a, 0x4
+	.byte 0x11, 0x2E, 0x01 @ printselectionstring STRINGID_ITEMALLOWSONLYYMOVE
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_FocusBandActivates
 BattleScript_FocusBandActivates: @ 0x8289D9E
@@ -2832,11 +2928,13 @@ BattleScript_BerryFocusEnergyEnd2: @ 0x8289DF1
 
 	.globl gUnknown_8289E01
 gUnknown_8289E01: @ 0x8289E01
-	.incbin "baserom_jp.gba", 0x289e01, 0x4
+	.byte 0x11, 0x43, 0x01 @ printselectionstring STRINGID_ITEMSCANTBEUSEDNOW
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_FlushMessageBox
 BattleScript_FlushMessageBox: @ 0x8289E05
-	.incbin "baserom_jp.gba", 0x289e05, 0x4
+	.byte 0x10, 0x30, 0x01 @ printstring STRINGID_EMPTYSTRING3
+	.byte 0x3C @ return
 
 	.globl BattleScript_PalacePrintFlavorText
 BattleScript_PalacePrintFlavorText: @ 0x8289E09
@@ -2852,11 +2950,15 @@ BattleScript_ArenaDoJudgment: @ 0x8289E7B
 
 	.globl gUnknown_8289F42
 gUnknown_8289F42: @ 0x8289F42
-	.incbin "baserom_jp.gba", 0x289f42, 0x7
+	.byte 0x11, 0x75, 0x01 @ printselectionstring STRINGID_QUESTIONFORFEITMATCH
+	.byte 0x76, 0x01, 0x0D @ various 0x01, 0x0D
+	.byte 0x44 @ endselectionscript
 
 	.globl BattleScript_PrintPlayerForfeited
 BattleScript_PrintPlayerForfeited: @ 0x8289F49
-	.incbin "baserom_jp.gba", 0x289f49, 0x7
+	.byte 0x10, 0x76, 0x01 @ printstring STRINGID_FORFEITEDMATCH
+	.byte 0x12, 0x40, 0x00 @ waitmessage 0x0040
+	.byte 0x3E @ end2
 
 	.globl BattleScript_PrintPlayerForfeitedLinkBattle
 BattleScript_PrintPlayerForfeitedLinkBattle: @ 0x8289F50
