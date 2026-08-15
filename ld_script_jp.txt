@@ -9751,7 +9751,7 @@ SECTIONS {
         asm/use_pokeblock.o(.text);
         src/battle_controller_wally.o(.text);
         src/player_pc.o(.text);
-        asm/intro.o(.text);
+        src/intro.o(.text);
         src/reload_save.o(.text);
         src/field_region_map.o(.text);
         asm/battle_anim_special.o(.text);
