@@ -50,7 +50,7 @@ __attribute__((naked)) u8 DoPokeballSendOutAnimation(s16 pan, u8 kindOfThrow)
         "_08074E44: .4byte gUnknown_202415D\n\t"
         "_08074E48: .4byte gBattleSpritesDataPtr\n\t"
         "_08074E4C: .4byte gActiveBattler\n\t"
-        "_08074E50: .4byte 0x08074E59\n\t"
+        "_08074E50: .4byte Task_DoPokeballSendOutAnim + 1\n\t"
         "_08074E54: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -173,7 +173,7 @@ __attribute__((naked)) void Task_DoPokeballSendOutAnim(void)
         "_08074F40: .4byte 0x082FCF94\n\t"
         "_08074F44: .4byte gSprites\n\t"
         "_08074F48: .4byte gBattlerTarget\n\t"
-        "_08074F4C: .4byte 0x08075BBD\n\t"
+        "_08074F4C: .4byte SpriteCB_PlayerMonSendOut_1 + 1\n\t"
         "_08074F50:\n\t"
         "	adds r0, r5, #0\n\t"
         "	movs r1, #0\n\t"
@@ -200,7 +200,7 @@ __attribute__((naked)) void Task_DoPokeballSendOutAnim(void)
         "	b _08074F9A\n\t"
         "	.align 2, 0\n\t"
         "_08074F84: .4byte gBattlerTarget\n\t"
-        "_08074F88: .4byte 0x08075DA1\n\t"
+        "_08074F88: .4byte SpriteCB_OpponentMonSendOut + 1\n\t"
         "_08074F8C:\n\t"
         "	movs r0, #1\n\t"
         "	bl GetBattlerAtPosition\n\t"
@@ -272,7 +272,7 @@ __attribute__((naked)) void Task_DoPokeballSendOutAnim(void)
         "	.align 2, 0\n\t"
         "_0807501C: .4byte 0x0000FFD8\n\t"
         "_08075020: .4byte gTasks\n\t"
-        "_08075024: .4byte 0x080A8A41\n\t"
+        "_08075024: .4byte TaskDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -363,7 +363,7 @@ __attribute__((naked)) void SpriteCB_BallThrow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080750D4: .4byte gTasks\n\t"
-        "_080750D8: .4byte 0x080750DD\n\t"
+        "_080750D8: .4byte SpriteCB_BallThrow_ReachMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -376,7 +376,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_ReachMon(void)
         "	str r1, [r0, #0x1c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080750E4: .4byte 0x080750E9\n\t"
+        "_080750E4: .4byte SpriteCB_BallThrow_StartShrinkMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -433,7 +433,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_StartShrinkMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075148: .4byte 0x08075155\n\t"
+        "_08075148: .4byte SpriteCB_BallThrow_ShrinkMon + 1\n\t"
         "_0807514C: .4byte gBattlerSpriteIds\n\t"
         "_08075150: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -496,7 +496,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_ShrinkMon(void)
         "	.align 2, 0\n\t"
         "_080751B8: .4byte gSprites\n\t"
         "_080751BC: .4byte gBattlerSpriteIds\n\t"
-        "_080751C0: .4byte 0x080751ED\n\t"
+        "_080751C0: .4byte SpriteCB_BallThrow_Close + 1\n\t"
         "_080751C4:\n\t"
         "	ldrh r0, [r1, #0x30]\n\t"
         "	adds r0, #0x60\n\t"
@@ -566,7 +566,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_Close(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0807523C: .4byte 0x08075241\n\t"
+        "_0807523C: .4byte SpriteCB_BallThrow_FallToGround + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -689,7 +689,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_FallToGround(void)
         "	b _0807532E\n\t"
         "	.align 2, 0\n\t"
         "_0807531C: .4byte 0xFFFFFF00\n\t"
-        "_08075320: .4byte 0x0807571D\n\t"
+        "_08075320: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
         "_08075324:\n\t"
         "	ldr r0, _08075334\n\t"
         "	str r0, [r4, #0x1c]\n\t"
@@ -701,7 +701,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_FallToGround(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075334: .4byte 0x08075339\n\t"
+        "_08075334: .4byte SpriteCB_BallThrow_StartShakes + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -739,7 +739,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_StartShakes(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075374: .4byte 0x08075379\n\t"
+        "_08075374: .4byte SpriteCB_BallThrow_Shake + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -854,7 +854,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_Shake(void)
         "	str r0, [r4, #0x1c]\n\t"
         "	b _080754BE\n\t"
         "	.align 2, 0\n\t"
-        "_0807544C: .4byte 0x0807571D\n\t"
+        "_0807544C: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
         "_08075450:\n\t"
         "	cmp r1, #4\n\t"
         "	bne _08075464\n\t"
@@ -864,7 +864,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_Shake(void)
         "	str r0, [r4, #0x1c]\n\t"
         "	b _0807546A\n\t"
         "	.align 2, 0\n\t"
-        "_08075460: .4byte 0x080759BD\n\t"
+        "_08075460: .4byte SpriteCB_BallThrow_StartCaptureMon + 1\n\t"
         "_08075464:\n\t"
         "	ldrh r0, [r4, #0x34]\n\t"
         "	adds r0, #1\n\t"
@@ -1267,7 +1267,7 @@ __attribute__((naked)) void SpriteCB_ReleaseMonFromBall(void)
         "	mov sl, r4\n\t"
         "	b _080757DC\n\t"
         "	.align 2, 0\n\t"
-        "_080757B4: .4byte 0x080759DD\n\t"
+        "_080757B4: .4byte HandleBallAnimEnd + 1\n\t"
         "_080757B8: .4byte gMain\n\t"
         "_080757BC: .4byte 0x00000439\n\t"
         "_080757C0: .4byte gBattlerPartyIndexes\n\t"
@@ -1454,11 +1454,11 @@ __attribute__((naked)) void SpriteCB_ReleaseMonFromBall(void)
         "	b _0807596E\n\t"
         "	.align 2, 0\n\t"
         "_08075940: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075944: .4byte 0x080754C5\n\t"
+        "_08075944: .4byte Task_PlayCryWhenReleasedFromBall + 1\n\t"
         "_08075948: .4byte gTasks\n\t"
         "_0807594C: .4byte gBattlerSpriteIds\n\t"
         "_08075950: .4byte gSprites\n\t"
-        "_08075954: .4byte 0x0803979D\n\t"
+        "_08075954: .4byte SpriteCB_OpponentMonFromBall + 1\n\t"
         "_08075958:\n\t"
         "	movs r1, #0x3a\n\t"
         "	ldrsh r0, [r6, r1]\n\t"
@@ -1504,7 +1504,7 @@ __attribute__((naked)) void SpriteCB_ReleaseMonFromBall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080759B0: .4byte 0x08039A89\n\t"
+        "_080759B0: .4byte SpriteCB_PlayerMonFromBall + 1\n\t"
         "_080759B4: .4byte gBattlerSpriteIds\n\t"
         "_080759B8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -1529,7 +1529,7 @@ __attribute__((naked)) void SpriteCB_BallThrow_StartCaptureMon(void)
         "	strh r1, [r0, #0x38]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080759D8: .4byte 0x08075B01\n\t"
+        "_080759D8: .4byte SpriteCB_BallThrow_CaptureMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1816,7 +1816,7 @@ __attribute__((naked)) void SpriteCB_PlayerMonSendOut_1(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08075C04: .4byte 0x0000FFE2\n\t"
-        "_08075C08: .4byte 0x08075C0D\n\t"
+        "_08075C08: .4byte SpriteCB_PlayerMonSendOut_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1987,7 +1987,7 @@ __attribute__((naked)) void SpriteCB_PlayerMonSendOut_2(void)
         "	b _08075D62\n\t"
         "	.align 2, 0\n\t"
         "_08075D58: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075D5C: .4byte 0x08075D7D\n\t"
+        "_08075D5C: .4byte SpriteCB_ReleaseMon2FromBall + 1\n\t"
         "_08075D60:\n\t"
         "	ldr r0, _08075D78\n\t"
         "_08075D62:\n\t"
@@ -2002,7 +2002,7 @@ __attribute__((naked)) void SpriteCB_PlayerMonSendOut_2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075D78: .4byte 0x0807571D\n\t"
+        "_08075D78: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2028,7 +2028,7 @@ __attribute__((naked)) void SpriteCB_ReleaseMon2FromBall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075D9C: .4byte 0x0807571D\n\t"
+        "_08075D9C: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2072,7 +2072,7 @@ __attribute__((naked)) void SpriteCB_OpponentMonSendOut(void)
         "	b _08075DF2\n\t"
         "	.align 2, 0\n\t"
         "_08075DE8: .4byte gBattleSpritesDataPtr\n\t"
-        "_08075DEC: .4byte 0x08075D7D\n\t"
+        "_08075DEC: .4byte SpriteCB_ReleaseMon2FromBall + 1\n\t"
         "_08075DF0:\n\t"
         "	ldr r0, _08075DFC\n\t"
         "_08075DF2:\n\t"
@@ -2082,7 +2082,7 @@ __attribute__((naked)) void SpriteCB_OpponentMonSendOut(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08075DFC: .4byte 0x0807571D\n\t"
+        "_08075DFC: .4byte SpriteCB_ReleaseMonFromBall + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2246,7 +2246,7 @@ __attribute__((naked)) void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 
         "_08075F1C: .4byte 0x082FCE6C\n\t"
         "_08075F20: .4byte 0x082FCF94\n\t"
         "_08075F24: .4byte gSprites\n\t"
-        "_08075F28: .4byte 0x08075F2D\n\t"
+        "_08075F28: .4byte SpriteCB_PokeballReleaseMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2335,7 +2335,7 @@ __attribute__((naked)) void SpriteCB_PokeballReleaseMon(void)
         "	strh r5, [r6, #0x3c]\n\t"
         "	b _08075FDC\n\t"
         "	.align 2, 0\n\t"
-        "_08075FD0: .4byte 0x08075FE9\n\t"
+        "_08075FD0: .4byte SpriteCB_ReleasedMonFlyOut + 1\n\t"
         "_08075FD4: .4byte gSprites\n\t"
         "_08075FD8:\n\t"
         "	subs r0, r1, #1\n\t"
@@ -2608,7 +2608,7 @@ __attribute__((naked)) u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum
         "_080761CC: .4byte 0x082FCE6C\n\t"
         "_080761D0: .4byte 0x082FCF94\n\t"
         "_080761D4: .4byte gSprites\n\t"
-        "_080761D8: .4byte 0x080761DD\n\t"
+        "_080761D8: .4byte SpriteCB_TradePokeball + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2687,7 +2687,7 @@ __attribute__((naked)) void SpriteCB_TradePokeball(void)
         "	strh r5, [r4, #0x30]\n\t"
         "	b _08076278\n\t"
         "	.align 2, 0\n\t"
-        "_0807626C: .4byte 0x08076285\n\t"
+        "_0807626C: .4byte SpriteCB_TradePokeballSendOff + 1\n\t"
         "_08076270: .4byte gSprites\n\t"
         "_08076274:\n\t"
         "	subs r0, r1, #1\n\t"
@@ -2749,7 +2749,7 @@ __attribute__((naked)) void SpriteCB_TradePokeballSendOff(void)
         "	b _080762F0\n\t"
         "	.align 2, 0\n\t"
         "_080762D8: .4byte gSprites\n\t"
-        "_080762DC: .4byte 0x080762F9\n\t"
+        "_080762DC: .4byte SpriteCB_TradePokeballEnd + 1\n\t"
         "_080762E0:\n\t"
         "	ldrh r0, [r4, #0x30]\n\t"
         "	adds r0, #0x60\n\t"
@@ -2786,7 +2786,7 @@ __attribute__((naked)) void SpriteCB_TradePokeballEnd(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08076310: .4byte 0x08007141\n\t"
+        "_08076310: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2873,8 +2873,8 @@ __attribute__((naked)) void StartHealthboxSlideIn(u8 battler)
         "	.align 2, 0\n\t"
         "_080763A0: .4byte gHealthboxSpriteIds\n\t"
         "_080763A4: .4byte gSprites\n\t"
-        "_080763A8: .4byte 0x080763D5\n\t"
-        "_080763AC: .4byte 0x080763B1\n\t"
+        "_080763A8: .4byte SpriteCB_HealthboxSlideIn + 1\n\t"
+        "_080763AC: .4byte SpriteCB_HealthboxSlideInDelayed + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2900,7 +2900,7 @@ __attribute__((naked)) void SpriteCB_HealthboxSlideInDelayed(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080763D0: .4byte 0x080763D5\n\t"
+        "_080763D0: .4byte SpriteCB_HealthboxSlideIn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2928,7 +2928,7 @@ __attribute__((naked)) void SpriteCB_HealthboxSlideIn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080763F8: .4byte 0x08007141\n\t"
+        "_080763F8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2964,7 +2964,7 @@ __attribute__((naked)) void DoHitAnimHealthboxEffect(u8 battler)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08076434: .4byte 0x08076441\n\t"
+        "_08076434: .4byte SpriteCB_HitAnimHealthoxEffect + 1\n\t"
         "_08076438: .4byte gSprites\n\t"
         "_0807643C: .4byte gHealthboxSpriteIds\n\t"
         ".syntax divided\n\t"

@@ -40,7 +40,7 @@ __attribute__((naked)) void DoRayquazaScene(u8 animId, bool8 endEarly, MainCallb
         "_081D60A0: .4byte 0x00002018\n\t"
         "_081D60A4: .4byte 0x00002006\n\t"
         "_081D60A8: .4byte 0x00002007\n\t"
-        "_081D60AC: .4byte 0x081D60B1\n\t"
+        "_081D60AC: .4byte CB2_InitRayquazaScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -80,7 +80,7 @@ __attribute__((naked)) void CB2_InitRayquazaScene(void)
         "_081D60FC: .4byte 0x085FB99C\n\t"
         "_081D6100: .4byte gUnknown_203CC2C\n\t"
         "_081D6104: .4byte 0x00002006\n\t"
-        "_081D6108: .4byte 0x081D610D\n\t"
+        "_081D6108: .4byte CB2_RayquazaScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -186,7 +186,7 @@ __attribute__((naked)) void Task_SetNextAnim(void)
         "_081D61B4: .4byte gUnknown_203CC2C\n\t"
         "_081D61B8: .4byte 0x00002007\n\t"
         "_081D61BC: .4byte gTasks\n\t"
-        "_081D61C0: .4byte 0x081D613D\n\t"
+        "_081D61C0: .4byte Task_EndAfterFadeScreen + 1\n\t"
         "_081D61C4:\n\t"
         "	ldr r4, _081D61F4\n\t"
         "	adds r1, r1, r4\n\t"
@@ -401,7 +401,7 @@ __attribute__((naked)) void sub_081D62C0(void)
         "	.align 2, 0\n\t"
         "_081D6348: .4byte 0x085FBA28\n\t"
         "_081D634C: .4byte gSprites\n\t"
-        "_081D6350: .4byte 0x081D635D\n\t"
+        "_081D6350: .4byte sub_081D635C + 1\n\t"
         "_081D6354: .4byte 0x085FBA4C\n\t"
         "_081D6358: .4byte 0x085FBA70\n\t"
         ".syntax divided\n\t"
@@ -782,7 +782,7 @@ __attribute__((naked)) void sub_081D64B8(void)
         "	.align 2, 0\n\t"
         "_081D6648: .4byte 0x085FBB18\n\t"
         "_081D664C: .4byte gSprites\n\t"
-        "_081D6650: .4byte 0x081D665D\n\t"
+        "_081D6650: .4byte sub_081D665C + 1\n\t"
         "_081D6654: .4byte 0x085FBB48\n\t"
         "_081D6658: .4byte 0x085FBB60\n\t"
         ".syntax divided\n\t"
@@ -1360,10 +1360,10 @@ __attribute__((naked)) void Task_DuoFightAnim(void)
         "_081D6AEC: .4byte gScanlineEffectRegBuffers\n\t"
         "_081D6AF0: .4byte 0x010003C0\n\t"
         "_081D6AF4: .4byte 0x085FBB78\n\t"
-        "_081D6AF8: .4byte 0x081D6B65\n\t"
+        "_081D6AF8: .4byte sub_081D6B64 + 1\n\t"
         "_081D6AFC: .4byte gUnknown_203CC2C\n\t"
         "_081D6B00: .4byte 0x00002006\n\t"
-        "_081D6B04: .4byte 0x081D6259\n\t"
+        "_081D6B04: .4byte Task_HandleDuoFightPre + 1\n\t"
         "_081D6B08:\n\t"
         "	bl sub_081D6FA0\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1402,8 +1402,8 @@ __attribute__((naked)) void Task_DuoFightAnim(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D6B5C: .4byte 0x081D6CA9\n\t"
-        "_081D6B60: .4byte 0x081D690D\n\t"
+        "_081D6B5C: .4byte Task_HandleDuoFight + 1\n\t"
+        "_081D6B60: .4byte VBlankCB_DuoFight + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1686,7 +1686,7 @@ __attribute__((naked)) void Task_HandleDuoFight(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D6D70: .4byte 0x081D6E69\n\t"
+        "_081D6D70: .4byte sub_081D6E68 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1937,7 +1937,7 @@ __attribute__((naked)) void DuoFightEnd(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D6F34: .4byte gTasks\n\t"
-        "_081D6F38: .4byte 0x081D6F3D\n\t"
+        "_081D6F38: .4byte Task_DuoFightEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1987,7 +1987,7 @@ __attribute__((naked)) void Task_DuoFightEnd(void)
         "	.align 2, 0\n\t"
         "_081D6F94: .4byte gUnknown_3005B68\n\t"
         "_081D6F98: .4byte gPaletteFade\n\t"
-        "_081D6F9C: .4byte 0x081D617D\n\t"
+        "_081D6F9C: .4byte Task_SetNextAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2061,7 +2061,7 @@ __attribute__((naked)) void sub_081D6FA0(void)
         "	.align 2, 0\n\t"
         "_081D7028: .4byte 0x085FBBD0\n\t"
         "_081D702C: .4byte gSprites\n\t"
-        "_081D7030: .4byte 0x081D703D\n\t"
+        "_081D7030: .4byte sub_081D703C + 1\n\t"
         "_081D7034: .4byte 0x085FBBFC\n\t"
         "_081D7038: .4byte 0x085FBC28\n\t"
         ".syntax divided\n\t"
@@ -2498,7 +2498,7 @@ __attribute__((naked)) void sub_081D71F8(void)
         "	.align 2, 0\n\t"
         "_081D7388: .4byte 0x085FBCE0\n\t"
         "_081D738C: .4byte gSprites\n\t"
-        "_081D7390: .4byte 0x081D739D\n\t"
+        "_081D7390: .4byte sub_081D739C + 1\n\t"
         "_081D7394: .4byte 0x085FBD18\n\t"
         "_081D7398: .4byte 0x085FBD38\n\t"
         ".syntax divided\n\t"
@@ -3183,9 +3183,9 @@ __attribute__((naked)) void Task_RayTakesFlightAnim(void)
         "	.align 2, 0\n\t"
         "_081D78E8: .4byte gUnknown_3005B68\n\t"
         "_081D78EC: .4byte 0x00000808\n\t"
-        "_081D78F0: .4byte 0x081D6129\n\t"
-        "_081D78F4: .4byte 0x081D7AE1\n\t"
-        "_081D78F8: .4byte 0x081D78FD\n\t"
+        "_081D78F0: .4byte VBlankCB_RayquazaScene + 1\n\t"
+        "_081D78F4: .4byte sub_081D7AE0 + 1\n\t"
+        "_081D78F8: .4byte Task_HandleRayTakesFlight + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3444,7 +3444,7 @@ __attribute__((naked)) void Task_RayTakesFlightEnd(void)
         "	.align 2, 0\n\t"
         "_081D7AD4: .4byte gPaletteFade\n\t"
         "_081D7AD8: .4byte gTasks\n\t"
-        "_081D7ADC: .4byte 0x081D617D\n\t"
+        "_081D7ADC: .4byte Task_SetNextAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3911,11 +3911,11 @@ __attribute__((naked)) void Task_RayDescendsAnim(void)
         "	.align 2, 0\n\t"
         "_081D7E9C: .4byte gUnknown_3005B68\n\t"
         "_081D7EA0: .4byte 0x00001E41\n\t"
-        "_081D7EA4: .4byte 0x081D6129\n\t"
+        "_081D7EA4: .4byte VBlankCB_RayquazaScene + 1\n\t"
         "_081D7EA8: .4byte gUnknown_203CC2C\n\t"
         "_081D7EAC: .4byte 0x00002008\n\t"
         "_081D7EB0: .4byte 0x0000200A\n\t"
-        "_081D7EB4: .4byte 0x081D7EB9\n\t"
+        "_081D7EB4: .4byte Task_HandleRayDescends + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3992,7 +3992,7 @@ __attribute__((naked)) void Task_HandleRayDescends(void)
         "	b _081D7FB0\n\t"
         "	.align 2, 0\n\t"
         "_081D7F48: .4byte gPaletteFade\n\t"
-        "_081D7F4C: .4byte 0x081D7D89\n\t"
+        "_081D7F4C: .4byte sub_081D7D88 + 1\n\t"
         "_081D7F50:\n\t"
         "	adds r0, r2, #1\n\t"
         "	strh r0, [r5, #2]\n\t"
@@ -4052,7 +4052,7 @@ __attribute__((naked)) void Task_HandleRayDescends(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D7FB8: .4byte gTasks\n\t"
-        "_081D7FBC: .4byte 0x081D7FC1\n\t"
+        "_081D7FBC: .4byte Task_RayDescendsEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4090,7 +4090,7 @@ __attribute__((naked)) void Task_RayDescendsEnd(void)
         "	.align 2, 0\n\t"
         "_081D7FFC: .4byte gPaletteFade\n\t"
         "_081D8000: .4byte gTasks\n\t"
-        "_081D8004: .4byte 0x081D617D\n\t"
+        "_081D8004: .4byte Task_SetNextAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4156,7 +4156,7 @@ __attribute__((naked)) void sub_081D8008(void)
         "_081D8078: .4byte 0x085FBE10\n\t"
         "_081D807C: .4byte gUnknown_20205DA\n\t"
         "_081D8080: .4byte 0x085FBE28\n\t"
-        "_081D8084: .4byte 0x081D8089\n\t"
+        "_081D8084: .4byte sub_081D8088 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4472,9 +4472,9 @@ __attribute__((naked)) void Task_RayChargesAnim(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D830C: .4byte gUnknown_3005B68\n\t"
-        "_081D8310: .4byte 0x081D6129\n\t"
-        "_081D8314: .4byte 0x081D8415\n\t"
-        "_081D8318: .4byte 0x081D831D\n\t"
+        "_081D8310: .4byte VBlankCB_RayquazaScene + 1\n\t"
+        "_081D8314: .4byte sub_081D8414 + 1\n\t"
+        "_081D8318: .4byte Task_HandleRayCharges + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4566,7 +4566,7 @@ __attribute__((naked)) void Task_HandleRayCharges(void)
         "	b _081D8400\n\t"
         "	.align 2, 0\n\t"
         "_081D83C0: .4byte gTasks\n\t"
-        "_081D83C4: .4byte 0x081D8469\n\t"
+        "_081D83C4: .4byte sub_081D8468 + 1\n\t"
         "_081D83C8:\n\t"
         "	ldrh r1, [r4, #2]\n\t"
         "	movs r2, #2\n\t"
@@ -4607,7 +4607,7 @@ __attribute__((naked)) void Task_HandleRayCharges(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081D840C: .4byte gTasks\n\t"
-        "_081D8410: .4byte 0x081D8529\n\t"
+        "_081D8410: .4byte Task_RayChargesEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4801,7 +4801,7 @@ __attribute__((naked)) void Task_RayChargesEnd(void)
         "	.align 2, 0\n\t"
         "_081D8568: .4byte gUnknown_3005B68\n\t"
         "_081D856C: .4byte gPaletteFade\n\t"
-        "_081D8570: .4byte 0x081D617D\n\t"
+        "_081D8570: .4byte Task_SetNextAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5046,9 +5046,9 @@ __attribute__((naked)) void Task_RayChasesAwayAnim(void)
         "_081D87A4: .4byte gUnknown_3005B68\n\t"
         "_081D87A8: .4byte 0x00000241\n\t"
         "_081D87AC: .4byte 0x00000E09\n\t"
-        "_081D87B0: .4byte 0x081D6129\n\t"
-        "_081D87B4: .4byte 0x081D87BD\n\t"
-        "_081D87B8: .4byte 0x081D88ED\n\t"
+        "_081D87B0: .4byte VBlankCB_RayquazaScene + 1\n\t"
+        "_081D87B4: .4byte Task_HandleRayChasesAway + 1\n\t"
+        "_081D87B8: .4byte sub_081D88EC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5128,7 +5128,7 @@ __attribute__((naked)) void Task_HandleRayChasesAway(void)
         "	b _081D8868\n\t"
         "	.align 2, 0\n\t"
         "_081D884C: .4byte gSprites\n\t"
-        "_081D8850: .4byte 0x081D911D\n\t"
+        "_081D8850: .4byte sub_081D911C + 1\n\t"
         "_081D8854:\n\t"
         "	adds r0, r1, #1\n\t"
         "	strh r0, [r4, #2]\n\t"
@@ -5205,7 +5205,7 @@ __attribute__((naked)) void Task_HandleRayChasesAway(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D88E8: .4byte 0x081D8971\n\t"
+        "_081D88E8: .4byte Task_RayChasesAwayEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5335,7 +5335,7 @@ __attribute__((naked)) void Task_RayChasesAwayEnd(void)
         "	.align 2, 0\n\t"
         "_081D89CC: .4byte gUnknown_3005B68\n\t"
         "_081D89D0: .4byte gPaletteFade\n\t"
-        "_081D89D4: .4byte 0x081D617D\n\t"
+        "_081D89D4: .4byte Task_SetNextAnim + 1\n\t"
         "_081D89D8:\n\t"
         "	adds r0, r1, #1\n\t"
         "	strh r0, [r4, #2]\n\t"
@@ -5668,7 +5668,7 @@ __attribute__((naked)) void sub_081D8BB0(void)
         "	.align 2, 0\n\t"
         "_081D8C68: .4byte gUnknown_3005B68\n\t"
         "_081D8C6C: .4byte gSprites\n\t"
-        "_081D8C70: .4byte 0x081D8C75\n\t"
+        "_081D8C70: .4byte sub_081D8C74 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5749,7 +5749,7 @@ __attribute__((naked)) void sub_081D8C74(void)
         "	b _081D8D0E\n\t"
         "	.align 2, 0\n\t"
         "_081D8D00: .4byte gSprites\n\t"
-        "_081D8D04: .4byte 0x08007141\n\t"
+        "_081D8D04: .4byte SpriteCallbackDummy + 1\n\t"
         "_081D8D08:\n\t"
         "	ldrh r0, [r4, #0x36]\n\t"
         "	adds r0, #1\n\t"
@@ -5798,7 +5798,7 @@ __attribute__((naked)) void sub_081D8D14(void)
         "	.align 2, 0\n\t"
         "_081D8D50: .4byte gUnknown_3005B68\n\t"
         "_081D8D54: .4byte gSprites\n\t"
-        "_081D8D58: .4byte 0x081D8D5D\n\t"
+        "_081D8D58: .4byte sub_081D8D5C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5945,7 +5945,7 @@ __attribute__((naked)) void sub_081D8E10(void)
         "	.align 2, 0\n\t"
         "_081D8E58: .4byte gUnknown_3005B68\n\t"
         "_081D8E5C: .4byte gUnknown_20205DA\n\t"
-        "_081D8E60: .4byte 0x081D8E65\n\t"
+        "_081D8E60: .4byte sub_081D8E64 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6229,7 +6229,7 @@ __attribute__((naked)) void sub_081D8F58(void)
         "	b _081D90DA\n\t"
         "	.align 2, 0\n\t"
         "_081D9080: .4byte gSprites\n\t"
-        "_081D9084: .4byte 0x081D91F1\n\t"
+        "_081D9084: .4byte sub_081D91F0 + 1\n\t"
         "_081D9088:\n\t"
         "	movs r0, #0xb0\n\t"
         "	lsls r0, r0, #1\n\t"
@@ -6260,7 +6260,7 @@ __attribute__((naked)) void sub_081D8F58(void)
         "	b _081D910E\n\t"
         "	.align 2, 0\n\t"
         "_081D90C4: .4byte gSprites\n\t"
-        "_081D90C8: .4byte 0x081D911D\n\t"
+        "_081D90C8: .4byte sub_081D911C + 1\n\t"
         "_081D90CC:\n\t"
         "	ldr r0, _081D9114\n\t"
         "	bl FindTaskIdByFunc\n\t"
@@ -6300,7 +6300,7 @@ __attribute__((naked)) void sub_081D8F58(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D9114: .4byte 0x081D87BD\n\t"
+        "_081D9114: .4byte Task_HandleRayChasesAway + 1\n\t"
         "_081D9118: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );

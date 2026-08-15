@@ -529,7 +529,7 @@ __attribute__((naked)) u8 ScanlineEffect_InitWave(u8 startLine, u8 endLine, u8 f
         "	.align 2, 0\n\t"
         "_080B9BE8: .4byte 0x04000010\n\t"
         "_080B9BEC: .4byte 0xA2600001\n\t"
-        "_080B9BF0: .4byte 0x080B98CD\n\t"
+        "_080B9BF0: .4byte TaskFunc_UpdateWavePerFrame + 1\n\t"
         "_080B9BF4: .4byte gTasks\n\t"
         "_080B9BF8: .4byte gScanlineEffect\n\t"
         "_080B9BFC: .4byte gUnknown_20397E4\n\t"
@@ -918,7 +918,7 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	strb r0, [r1]\n\t"
         "	b _080B9F80\n\t"
         "	.align 2, 0\n\t"
-        "_080B9F54: .4byte 0x080B9F95\n\t"
+        "_080B9F54: .4byte Task_OptionMenuFadeIn + 1\n\t"
         "_080B9F58: .4byte gTasks\n\t"
         "_080B9F5C: .4byte gSaveBlock2Ptr\n\t"
         "_080B9F60: .4byte gMain\n\t"
@@ -942,8 +942,8 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B9F8C: .4byte 0x080B9C21\n\t"
-        "_080B9F90: .4byte 0x080B9C09\n\t"
+        "_080B9F8C: .4byte BattleStyle_ProcessInput + 1\n\t"
+        "_080B9F90: .4byte BattleScene_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -974,7 +974,7 @@ __attribute__((naked)) void Task_OptionMenuFadeIn(void)
         "	.align 2, 0\n\t"
         "_080B9FB8: .4byte gPaletteFade\n\t"
         "_080B9FBC: .4byte gTasks\n\t"
-        "_080B9FC0: .4byte 0x080B9FC5\n\t"
+        "_080B9FC0: .4byte Task_OptionMenuProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1023,7 +1023,7 @@ __attribute__((naked)) void Task_OptionMenuProcessInput(void)
         "	b _080BA1B2\n\t"
         "	.align 2, 0\n\t"
         "_080BA00C: .4byte gTasks\n\t"
-        "_080BA010: .4byte 0x080BA1BD\n\t"
+        "_080BA010: .4byte Task_OptionMenuSave + 1\n\t"
         "_080BA014:\n\t"
         "	movs r0, #0x40\n\t"
         "	ands r0, r1\n\t"
@@ -1317,7 +1317,7 @@ __attribute__((naked)) void Task_OptionMenuSave(void)
         "	.align 2, 0\n\t"
         "_080BA254: .4byte gSaveBlock2Ptr\n\t"
         "_080BA258: .4byte gTasks\n\t"
-        "_080BA25C: .4byte 0x080BA261\n\t"
+        "_080BA25C: .4byte Task_OptionMenuFadeOut + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -224,7 +224,7 @@ __attribute__((naked)) void DoSecretBaseDecorationMenu(u8 taskId)
         "_08126AE4: .4byte 0x00001AAE\n\t"
         "_08126AE8: .4byte 0x00001ABE\n\t"
         "_08126AEC: .4byte gTasks\n\t"
-        "_08126AF0: .4byte 0x08126B49\n\t"
+        "_08126AF0: .4byte HandleDecorationActionsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -267,7 +267,7 @@ __attribute__((naked)) void DoPlayerRoomDecorationMenu(u8 taskId)
         "_08126B38: .4byte 0x0000271C\n\t"
         "_08126B3C: .4byte 0x00002728\n\t"
         "_08126B40: .4byte gTasks\n\t"
-        "_08126B44: .4byte 0x08126B49\n\t"
+        "_08126B44: .4byte HandleDecorationActionsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -401,7 +401,7 @@ __attribute__((naked)) void DecorationMenuAction_Decorate(void)
         "	.align 2, 0\n\t"
         "_08126C38: .4byte gStringVar4\n\t"
         "_08126C3C: .4byte 0x085CA70B\n\t"
-        "_08126C40: .4byte 0x08126D6D\n\t"
+        "_08126C40: .4byte ReturnToDecorationActionsAfterInvalidSelection + 1\n\t"
         "_08126C44:\n\t"
         "	ldr r1, _08126C64\n\t"
         "	lsls r0, r5, #2\n\t"
@@ -450,7 +450,7 @@ __attribute__((naked)) void DecorationMenuAction_PutAway(void)
         "	.align 2, 0\n\t"
         "_08126C94: .4byte gStringVar4\n\t"
         "_08126C98: .4byte 0x085CA87A\n\t"
-        "_08126C9C: .4byte 0x08126D6D\n\t"
+        "_08126C9C: .4byte ReturnToDecorationActionsAfterInvalidSelection + 1\n\t"
         "_08126CA0:\n\t"
         "	movs r0, #0\n\t"
         "	bl RemoveDecorationWindow\n\t"
@@ -475,7 +475,7 @@ __attribute__((naked)) void DecorationMenuAction_PutAway(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08126CD0: .4byte gTasks\n\t"
-        "_08126CD4: .4byte 0x08129AAD\n\t"
+        "_08126CD4: .4byte sub_08129AAC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -503,7 +503,7 @@ __attribute__((naked)) void DecorationMenuAction_Toss(void)
         "	.align 2, 0\n\t"
         "_08126D00: .4byte gStringVar4\n\t"
         "_08126D04: .4byte 0x085CA70B\n\t"
-        "_08126D08: .4byte 0x08126D6D\n\t"
+        "_08126D08: .4byte ReturnToDecorationActionsAfterInvalidSelection + 1\n\t"
         "_08126D0C:\n\t"
         "	ldr r1, _08126D2C\n\t"
         "	lsls r0, r5, #2\n\t"
@@ -581,7 +581,7 @@ __attribute__((naked)) void ReturnToDecorationActionsAfterInvalidSelection(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08126D8C: .4byte gTasks\n\t"
-        "_08126D90: .4byte 0x08126B49\n\t"
+        "_08126D90: .4byte HandleDecorationActionsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -656,7 +656,7 @@ __attribute__((naked)) void sub_08126DC4(void)
         "	.align 2, 0\n\t"
         "_08126E10: .4byte gUnknown_2039E3F\n\t"
         "_08126E14: .4byte gTasks\n\t"
-        "_08126E18: .4byte 0x08127041\n\t"
+        "_08126E18: .4byte HandleDecorationCategoriesMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -703,7 +703,7 @@ __attribute__((naked)) void sub_08126E1C(void)
         "_08126E68: .4byte gUnknown_2039E54\n\t"
         "_08126E6C: .4byte gUnknown_2039E3F\n\t"
         "_08126E70: .4byte gTasks\n\t"
-        "_08126E74: .4byte 0x08127041\n\t"
+        "_08126E74: .4byte HandleDecorationCategoriesMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1043,7 +1043,7 @@ __attribute__((naked)) void SelectDecorationCategory(void)
         "_081270FC: .4byte gUnknown_2039E3C\n\t"
         "_08127100: .4byte gUnknown_2039E3A\n\t"
         "_08127104: .4byte gTasks\n\t"
-        "_08127108: .4byte 0x081275CD\n\t"
+        "_08127108: .4byte ShowDecorationItemsWindow + 1\n\t"
         "_0812710C:\n\t"
         "	movs r0, #1\n\t"
         "	bl RemoveDecorationWindow\n\t"
@@ -1062,7 +1062,7 @@ __attribute__((naked)) void SelectDecorationCategory(void)
         "	.align 2, 0\n\t"
         "_0812712C: .4byte gStringVar4\n\t"
         "_08127130: .4byte 0x085CA70B\n\t"
-        "_08127134: .4byte 0x08127139\n\t"
+        "_08127134: .4byte ReturnToDecorationCategoriesAfterInvalidSelection + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1146,7 +1146,7 @@ __attribute__((naked)) void ReturnToActionsMenuFromCategories(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081271B8: .4byte gTasks\n\t"
-        "_081271BC: .4byte 0x08126B49\n\t"
+        "_081271BC: .4byte HandleDecorationActionsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1748,7 +1748,7 @@ __attribute__((naked)) void ShowDecorationItemsWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081275F0: .4byte gTasks\n\t"
-        "_081275F4: .4byte 0x081275F9\n\t"
+        "_081275F4: .4byte HandleDecorationItemsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2332,7 +2332,7 @@ __attribute__((naked)) void sub_081279E0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08127A04: .4byte gTasks\n\t"
-        "_08127A08: .4byte 0x081279C5\n\t"
+        "_08127A08: .4byte sub_081279C4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3080,7 +3080,7 @@ __attribute__((naked)) void sub_08127F3C(void)
         "_08127F70: .4byte gUnknown_2039E3F\n\t"
         "_08127F74: .4byte gStringVar4\n\t"
         "_08127F78: .4byte 0x085CA7D9\n\t"
-        "_08127F7C: .4byte 0x08127A0D\n\t"
+        "_08127F7C: .4byte sub_08127A0C + 1\n\t"
         "_08127F80:\n\t"
         "	bl IsSelectedDecorInThePC\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3107,7 +3107,7 @@ __attribute__((naked)) void sub_08127F3C(void)
         "	b _08128020\n\t"
         "	.align 2, 0\n\t"
         "_08127FB4: .4byte gTasks\n\t"
-        "_08127FB8: .4byte 0x08128035\n\t"
+        "_08127FB8: .4byte sub_08128034 + 1\n\t"
         "_08127FBC:\n\t"
         "	ldr r0, _08127FDC\n\t"
         "	ldr r4, _08127FE0\n\t"
@@ -3140,7 +3140,7 @@ __attribute__((naked)) void sub_08127F3C(void)
         "	.align 2, 0\n\t"
         "_08128000: .4byte gStringVar4\n\t"
         "_08128004: .4byte 0x085CA799\n\t"
-        "_08128008: .4byte 0x08127A0D\n\t"
+        "_08128008: .4byte sub_08127A0C + 1\n\t"
         "_0812800C:\n\t"
         "	ldr r4, _08128028\n\t"
         "	ldr r1, _0812802C\n\t"
@@ -3157,7 +3157,7 @@ __attribute__((naked)) void sub_08127F3C(void)
         "	.align 2, 0\n\t"
         "_08128028: .4byte gStringVar4\n\t"
         "_0812802C: .4byte 0x085CA768\n\t"
-        "_08128030: .4byte 0x08127A0D\n\t"
+        "_08128030: .4byte sub_08127A0C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3323,7 +3323,7 @@ __attribute__((naked)) void ConfigureCameraObjectForPlacingDecoration(void)
         "_08128168: .4byte gUnknown_203A704\n\t"
         "_0812816C: .4byte gSprites\n\t"
         "_08128170: .4byte gFieldCamera\n\t"
-        "_08128174: .4byte 0x081292B1\n\t"
+        "_08128174: .4byte sub_081292B0 + 1\n\t"
         "_08128178: .4byte 0x08582134\n\t"
         ".syntax divided\n\t"
     );
@@ -3381,7 +3381,7 @@ __attribute__((naked)) void SetUpPlacingDecorationPlayerAvatar(void)
         "_081281D0: .4byte gTasks\n\t"
         "_081281D4: .4byte 0x08582134\n\t"
         "_081281D8: .4byte gSaveBlock2Ptr\n\t"
-        "_081281DC: .4byte 0x08007141\n\t"
+        "_081281DC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081281E0:\n\t"
         "	ldr r1, _0812822C\n\t"
         "	movs r0, #0\n\t"
@@ -3421,7 +3421,7 @@ __attribute__((naked)) void SetUpPlacingDecorationPlayerAvatar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812822C: .4byte 0x08007141\n\t"
+        "_0812822C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08128230: .4byte gUnknown_203A705\n\t"
         "_08128234: .4byte gSprites\n\t"
         "_08128238: .4byte gUnknown_203A704\n\t"
@@ -3696,7 +3696,7 @@ __attribute__((naked)) void sub_081283EC(void)
         "_0812844C: .4byte gUnknown_203A705\n\t"
         "_08128450: .4byte gStringVar4\n\t"
         "_08128454: .4byte 0x085CA75C\n\t"
-        "_08128458: .4byte 0x08128B61\n\t"
+        "_08128458: .4byte sub_08128B60 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4395,7 +4395,7 @@ __attribute__((naked)) void sub_08128928(void)
         "_08128970: .4byte gDecorations\n\t"
         "_08128974: .4byte gStringVar4\n\t"
         "_08128978: .4byte 0x085CA745\n\t"
-        "_0812897C: .4byte 0x081289AD\n\t"
+        "_0812897C: .4byte sub_081289AC + 1\n\t"
         "_08128980:\n\t"
         "	movs r0, #0x20\n\t"
         "	bl PlaySE\n\t"
@@ -4414,7 +4414,7 @@ __attribute__((naked)) void sub_08128928(void)
         "	.align 2, 0\n\t"
         "_081289A0: .4byte gStringVar4\n\t"
         "_081289A4: .4byte 0x085CA750\n\t"
-        "_081289A8: .4byte 0x08129001\n\t"
+        "_081289A8: .4byte sub_08129000 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4714,7 +4714,7 @@ __attribute__((naked)) void sub_08128B9C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08128BC4: .4byte gTasks\n\t"
-        "_08128BC8: .4byte 0x08128BCD\n\t"
+        "_08128BC8: .4byte c1_overworld_prev_quest + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4773,8 +4773,8 @@ __attribute__((naked)) void c1_overworld_prev_quest(void)
         "	.align 2, 0\n\t"
         "_08128C34: .4byte 0x00000BE5\n\t"
         "_08128C38: .4byte gFieldCallback\n\t"
-        "_08128C3C: .4byte 0x08128CB5\n\t"
-        "_08128C40: .4byte 0x08085A31\n\t"
+        "_08128C3C: .4byte sub_08128CB4 + 1\n\t"
+        "_08128C40: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4840,7 +4840,7 @@ __attribute__((naked)) void sub_08128C44(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08128CB0: .4byte 0x081275F9\n\t"
+        "_08128CB0: .4byte HandleDecorationItemsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4871,7 +4871,7 @@ __attribute__((naked)) void sub_08128CB4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08128CE8: .4byte 0x08128C45\n\t"
+        "_08128CE8: .4byte sub_08128C44 + 1\n\t"
         "_08128CEC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5306,7 +5306,7 @@ __attribute__((naked)) void sub_08128FB8(void)
         "_08128FF0: .4byte gSprites\n\t"
         "_08128FF4: .4byte gUnknown_203A704\n\t"
         "_08128FF8: .4byte gTasks\n\t"
-        "_08128FFC: .4byte 0x08128DF9\n\t"
+        "_08128FFC: .4byte sub_08128DF8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5734,7 +5734,7 @@ __attribute__((naked)) void sub_081292B0(void)
         "	str r1, [r0, #0x1c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081292C4: .4byte 0x081292C9\n\t"
+        "_081292C4: .4byte sub_081292C8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5862,7 +5862,7 @@ __attribute__((naked)) void gpu_pal_decompress_alloc_tag_and_upload(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081293B8: .4byte 0x08007141\n\t"
+        "_081293B8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6111,7 +6111,7 @@ __attribute__((naked)) void AddDecorationIconObjectFromEventObject(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081295B0: .4byte 0x08007141\n\t"
+        "_081295B0: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6646,7 +6646,7 @@ __attribute__((naked)) void sub_081298DC(void)
         "	.align 2, 0\n\t"
         "_0812998C: .4byte gStringVar4\n\t"
         "_08129990: .4byte 0x085CA867\n\t"
-        "_08129994: .4byte 0x08129D55\n\t"
+        "_08129994: .4byte sub_08129D54 + 1\n\t"
         "_08129998: .4byte gMapHeader\n\t"
         ".syntax divided\n\t"
     );
@@ -6730,7 +6730,7 @@ __attribute__((naked)) void SetUpPuttingAwayDecorationPlayerAvatar(void)
         "_08129A1C: .4byte gFieldCamera\n\t"
         "_08129A20: .4byte 0x085822E8\n\t"
         "_08129A24: .4byte gSaveBlock2Ptr\n\t"
-        "_08129A28: .4byte 0x08007141\n\t"
+        "_08129A28: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129A2C:\n\t"
         "	ldr r1, _08129A98\n\t"
         "	movs r0, #0\n\t"
@@ -6786,7 +6786,7 @@ __attribute__((naked)) void SetUpPuttingAwayDecorationPlayerAvatar(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08129A98: .4byte 0x08007141\n\t"
+        "_08129A98: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129A9C: .4byte gUnknown_203A705\n\t"
         "_08129AA0: .4byte gSprites\n\t"
         "_08129AA4: .4byte gUnknown_203A704\n\t"
@@ -6930,10 +6930,10 @@ __attribute__((naked)) void sub_08129B24(void)
         "	.align 2, 0\n\t"
         "_08129BA4: .4byte gSprites\n\t"
         "_08129BA8: .4byte gUnknown_203A704\n\t"
-        "_08129BAC: .4byte 0x0812A379\n\t"
+        "_08129BAC: .4byte sub_0812A378 + 1\n\t"
         "_08129BB0: .4byte gUnknown_203A705\n\t"
         "_08129BB4: .4byte gTasks\n\t"
-        "_08129BB8: .4byte 0x08128DF9\n\t"
+        "_08129BB8: .4byte sub_08128DF8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7017,10 +7017,10 @@ __attribute__((naked)) void sub_08129BE8(void)
         "_08129C48: .4byte gTasks\n\t"
         "_08129C4C: .4byte gSprites\n\t"
         "_08129C50: .4byte gUnknown_203A704\n\t"
-        "_08129C54: .4byte 0x08007141\n\t"
+        "_08129C54: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129C58: .4byte gStringVar4\n\t"
         "_08129C5C: .4byte 0x085CA835\n\t"
-        "_08129C60: .4byte 0x0812A1FD\n\t"
+        "_08129C60: .4byte sub_0812A1FC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7048,7 +7048,7 @@ __attribute__((naked)) void sub_08129C64(void)
         "_08129C88: .4byte gUnknown_203A790\n\t"
         "_08129C8C: .4byte gStringVar4\n\t"
         "_08129C90: .4byte 0x085CA852\n\t"
-        "_08129C94: .4byte 0x0812A1AD\n\t"
+        "_08129C94: .4byte sub_0812A1AC + 1\n\t"
         "_08129C98:\n\t"
         "	lsls r1, r5, #2\n\t"
         "	adds r1, r1, r5\n\t"
@@ -7110,10 +7110,10 @@ __attribute__((naked)) void sub_08129C64(void)
         "_08129D10: .4byte gUnknown_3005B68\n\t"
         "_08129D14: .4byte gSprites\n\t"
         "_08129D18: .4byte gUnknown_203A704\n\t"
-        "_08129D1C: .4byte 0x08007141\n\t"
+        "_08129D1C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129D20: .4byte gStringVar4\n\t"
         "_08129D24: .4byte 0x085CA835\n\t"
-        "_08129D28: .4byte 0x0812A1FD\n\t"
+        "_08129D28: .4byte sub_0812A1FC + 1\n\t"
         "_08129D2C:\n\t"
         "	ldr r4, _08129D48\n\t"
         "	ldr r1, _08129D4C\n\t"
@@ -7130,7 +7130,7 @@ __attribute__((naked)) void sub_08129C64(void)
         "	.align 2, 0\n\t"
         "_08129D48: .4byte gStringVar4\n\t"
         "_08129D4C: .4byte 0x085CA842\n\t"
-        "_08129D50: .4byte 0x08129D55\n\t"
+        "_08129D50: .4byte sub_08129D54 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7302,7 +7302,7 @@ __attribute__((naked)) void sub_08129E04(void)
         "	.align 2, 0\n\t"
         "_08129E5C: .4byte gSprites\n\t"
         "_08129E60: .4byte gUnknown_203A704\n\t"
-        "_08129E64: .4byte 0x08007141\n\t"
+        "_08129E64: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129E68: .4byte gUnknown_203A705\n\t"
         ".syntax divided\n\t"
     );
@@ -7792,7 +7792,7 @@ __attribute__((naked)) void sub_0812A1CC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812A1F4: .4byte gTasks\n\t"
-        "_0812A1F8: .4byte 0x081298DD\n\t"
+        "_0812A1F8: .4byte sub_081298DC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7863,7 +7863,7 @@ __attribute__((naked)) void sub_0812A238(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812A260: .4byte gTasks\n\t"
-        "_0812A264: .4byte 0x0812A269\n\t"
+        "_0812A264: .4byte sub_0812A268 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7918,8 +7918,8 @@ __attribute__((naked)) void sub_0812A268(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812A2C4: .4byte gFieldCallback\n\t"
-        "_0812A2C8: .4byte 0x0812A341\n\t"
-        "_0812A2CC: .4byte 0x08085A31\n\t"
+        "_0812A2C8: .4byte sub_0812A340 + 1\n\t"
+        "_0812A2CC: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7985,7 +7985,7 @@ __attribute__((naked)) void sub_0812A2D0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A33C: .4byte 0x08126B49\n\t"
+        "_0812A33C: .4byte HandleDecorationActionsMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8015,7 +8015,7 @@ __attribute__((naked)) void sub_0812A340(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A370: .4byte 0x0812A2D1\n\t"
+        "_0812A370: .4byte sub_0812A2D0 + 1\n\t"
         "_0812A374: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8137,7 +8137,7 @@ __attribute__((naked)) void sub_0812A3E0(void)
         "_0812A430: .4byte 0x08580CD1\n\t"
         "_0812A434: .4byte gStringVar4\n\t"
         "_0812A438: .4byte 0x085CA812\n\t"
-        "_0812A43C: .4byte 0x0812A469\n\t"
+        "_0812A43C: .4byte sub_0812A468 + 1\n\t"
         "_0812A440:\n\t"
         "	ldr r4, _0812A45C\n\t"
         "	ldr r1, _0812A460\n\t"
@@ -8154,7 +8154,7 @@ __attribute__((naked)) void sub_0812A3E0(void)
         "	.align 2, 0\n\t"
         "_0812A45C: .4byte gStringVar4\n\t"
         "_0812A460: .4byte 0x085CA7F2\n\t"
-        "_0812A464: .4byte 0x08127A0D\n\t"
+        "_0812A464: .4byte sub_08127A0C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8222,7 +8222,7 @@ __attribute__((naked)) void sub_0812A488(void)
         "_0812A4DC: .4byte gUnknown_2039E1D\n\t"
         "_0812A4E0: .4byte gStringVar4\n\t"
         "_0812A4E4: .4byte 0x085CA829\n\t"
-        "_0812A4E8: .4byte 0x08127A0D\n\t"
+        "_0812A4E8: .4byte sub_08127A0C + 1\n\t"
         ".syntax divided\n\t"
     );
 }

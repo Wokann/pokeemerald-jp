@@ -793,7 +793,7 @@ __attribute__((naked)) void sub_0805D330(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0805D388: .4byte 0x08007141\n\t"
+        "_0805D388: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -820,7 +820,7 @@ __attribute__((naked)) void sub_0805D38C(void)
         "	bl StartSpriteAffineAnim\n\t"
         "	b _0805D3BC\n\t"
         "	.align 2, 0\n\t"
-        "_0805D3B0: .4byte 0x08007141\n\t"
+        "_0805D3B0: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805D3B4:\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #1\n\t"
@@ -862,7 +862,7 @@ __attribute__((naked)) void sub_0805D3C8(void)
         "	b _0805D3FE\n\t"
         "	.align 2, 0\n\t"
         "_0805D3F4: .4byte gIntroSlideFlags\n\t"
-        "_0805D3F8: .4byte 0x0805D409\n\t"
+        "_0805D3F8: .4byte sub_0805D408 + 1\n\t"
         "_0805D3FC:\n\t"
         "	ldr r0, _0805D404\n\t"
         "_0805D3FE:\n\t"
@@ -871,7 +871,7 @@ __attribute__((naked)) void sub_0805D3C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0805D404: .4byte 0x08007141\n\t"
+        "_0805D404: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -894,7 +894,7 @@ __attribute__((naked)) void sub_0805D408(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0805D420: .4byte 0x08007141\n\t"
+        "_0805D420: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1186,7 +1186,7 @@ __attribute__((naked)) bool8 TryHandleLaunchBattleTableAnimation(u8 activeBattle
         "_0805D650: .4byte gBattleAnimTarget\n\t"
         "_0805D654: .4byte gBattleSpritesDataPtr\n\t"
         "_0805D658: .4byte 0x082778AC\n\t"
-        "_0805D65C: .4byte 0x0805D665\n\t"
+        "_0805D65C: .4byte nullsub_23 + 1\n\t"
         "_0805D660: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1327,7 +1327,7 @@ __attribute__((naked)) void InitAndLaunchSpecialAnimation(u8 activeBattler, u8 a
         "_0805D738: .4byte gBattleAnimAttacker\n\t"
         "_0805D73C: .4byte gBattleAnimTarget\n\t"
         "_0805D740: .4byte 0x08277908\n\t"
-        "_0805D744: .4byte 0x0805D751\n\t"
+        "_0805D744: .4byte nullsub_24 + 1\n\t"
         "_0805D748: .4byte gTasks\n\t"
         "_0805D74C: .4byte gBattleSpritesDataPtr\n\t"
         ".syntax divided\n\t"
@@ -3757,7 +3757,7 @@ __attribute__((naked)) void SpriteCB_EnemyShadow(void)
         "	.align 2, 0\n\t"
         "_0805E9D0: .4byte gBattlerSpriteIds\n\t"
         "_0805E9D4: .4byte gSprites\n\t"
-        "_0805E9D8: .4byte 0x0805EA65\n\t"
+        "_0805E9D8: .4byte SpriteCB_SetInvisible + 1\n\t"
         "_0805E9DC:\n\t"
         "	ldr r0, _0805E9F8\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -3896,7 +3896,7 @@ __attribute__((naked)) void SetBattlerShadowSpriteCallback(u8 battler, u16 speci
         "_0805EAC0: .4byte gBattleSpritesDataPtr\n\t"
         "_0805EAC4: .4byte gEnemyMonElevation\n\t"
         "_0805EAC8: .4byte gSprites\n\t"
-        "_0805EACC: .4byte 0x0805E98D\n\t"
+        "_0805EACC: .4byte SpriteCB_EnemyShadow + 1\n\t"
         "_0805EAD0:\n\t"
         "	ldr r2, _0805EAF4\n\t"
         "	ldr r1, [r3, #4]\n\t"
@@ -3919,7 +3919,7 @@ __attribute__((naked)) void SetBattlerShadowSpriteCallback(u8 battler, u16 speci
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0805EAF4: .4byte gSprites\n\t"
-        "_0805EAF8: .4byte 0x0805EA65\n\t"
+        "_0805EAF8: .4byte SpriteCB_SetInvisible + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3950,7 +3950,7 @@ __attribute__((naked)) void HideBattlerShadowSprite(u8 battler)
         "	.align 2, 0\n\t"
         "_0805EB24: .4byte gSprites\n\t"
         "_0805EB28: .4byte gBattleSpritesDataPtr\n\t"
-        "_0805EB2C: .4byte 0x0805EA65\n\t"
+        "_0805EB2C: .4byte SpriteCB_SetInvisible + 1\n\t"
         ".syntax divided\n\t"
     );
 }

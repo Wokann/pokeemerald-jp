@@ -68,7 +68,7 @@ __attribute__((naked)) void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 m
         "_080E22C0: .4byte 0x00001E38\n\t"
         "_080E22C4: .4byte 0x00001E30\n\t"
         "_080E22C8: .4byte 0x00001E3C\n\t"
-        "_080E22CC: .4byte 0x080E22D1\n\t"
+        "_080E22CC: .4byte C2_NamingScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -518,8 +518,8 @@ __attribute__((naked)) void sub_080E265C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E2670: .4byte 0x080E2679\n\t"
-        "_080E2674: .4byte 0x080E474D\n\t"
+        "_080E2670: .4byte sub_080E2678 + 1\n\t"
+        "_080E2674: .4byte sub_080E474C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1045,7 +1045,7 @@ __attribute__((naked)) void MainState_WaitFadeOutAndExit(void)
         "_080E2A68: .4byte gUnknown_2039C34\n\t"
         "_080E2A6C: .4byte 0x00001E2C\n\t"
         "_080E2A70: .4byte 0x00001E3C\n\t"
-        "_080E2A74: .4byte 0x080E2679\n\t"
+        "_080E2A74: .4byte sub_080E2678 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1302,7 +1302,7 @@ __attribute__((naked)) void StartPageSwapAnim(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E2C88: .4byte 0x080E2C8D\n\t"
+        "_080E2C88: .4byte Task_HandlePageSwapAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1355,7 +1355,7 @@ __attribute__((naked)) void IsPageSwapAnimNotInProgress(void)
         "	movs r0, #0\n\t"
         "	b _080E2CDE\n\t"
         "	.align 2, 0\n\t"
-        "_080E2CD8: .4byte 0x080E2C8D\n\t"
+        "_080E2CD8: .4byte Task_HandlePageSwapAnim + 1\n\t"
         "_080E2CDC:\n\t"
         "	movs r0, #1\n\t"
         "_080E2CDE:\n\t"
@@ -1561,7 +1561,7 @@ __attribute__((naked)) void PageSwapAnimState_Done(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E2E4C: .4byte 0x080E2C8D\n\t"
+        "_080E2E4C: .4byte Task_HandlePageSwapAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1586,7 +1586,7 @@ __attribute__((naked)) void MoveCursorToOKButton(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E2E70: .4byte 0x080E2EED\n\t"
+        "_080E2E70: .4byte Task_80E39BC + 1\n\t"
         "_080E2E74: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1623,7 +1623,7 @@ __attribute__((naked)) void sub_080E2E78(void)
         "	strh r0, [r4, #0xc]\n\t"
         "	b _080E2EE4\n\t"
         "	.align 2, 0\n\t"
-        "_080E2EB0: .4byte 0x080E2EED\n\t"
+        "_080E2EB0: .4byte Task_80E39BC + 1\n\t"
         "_080E2EB4: .4byte gTasks\n\t"
         "_080E2EB8:\n\t"
         "	cmp r5, #3\n\t"
@@ -3066,7 +3066,7 @@ __attribute__((naked)) void NamingScreen_CreatePlayerIcon(void)
         "	.align 2, 0\n\t"
         "_080E389C: .4byte gUnknown_2039C34\n\t"
         "_080E38A0: .4byte 0x00001E34\n\t"
-        "_080E38A4: .4byte 0x08007141\n\t"
+        "_080E38A4: .4byte SpriteCallbackDummy + 1\n\t"
         "_080E38A8: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -3148,7 +3148,7 @@ __attribute__((naked)) void NamingScreen_CreateMonIcon(void)
         "	.align 2, 0\n\t"
         "_080E3934: .4byte gUnknown_2039C34\n\t"
         "_080E3938: .4byte 0x00001E34\n\t"
-        "_080E393C: .4byte 0x08007141\n\t"
+        "_080E393C: .4byte SpriteCallbackDummy + 1\n\t"
         "_080E3940: .4byte 0x00001E38\n\t"
         "_080E3944: .4byte gSprites\n\t"
         ".syntax divided\n\t"
@@ -3186,7 +3186,7 @@ __attribute__((naked)) void NamingScreen_CreateWandaDadIcon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3980: .4byte 0x08007141\n\t"
+        "_080E3980: .4byte SpriteCallbackDummy + 1\n\t"
         "_080E3984: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -3406,7 +3406,7 @@ __attribute__((naked)) void InputInit(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3AE0: .4byte 0x080E3B35\n\t"
+        "_080E3AE0: .4byte sub_080E3B34 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3429,7 +3429,7 @@ __attribute__((naked)) void GetInputEvent(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E3B00: .4byte 0x080E3B35\n\t"
+        "_080E3B00: .4byte sub_080E3B34 + 1\n\t"
         "_080E3B04: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3457,7 +3457,7 @@ __attribute__((naked)) void SetInputState(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E3B2C: .4byte 0x080E3B35\n\t"
+        "_080E3B2C: .4byte sub_080E3B34 + 1\n\t"
         "_080E3B30: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5273,7 +5273,7 @@ __attribute__((naked)) void NamingScreen_InitDisplayMode(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E4784: .4byte 0x080E4789\n\t"
+        "_080E4784: .4byte VBlankCB_NamingScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5416,7 +5416,7 @@ __attribute__((naked)) void sub_080E4868(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E4888: .4byte gSaveBlock2Ptr\n\t"
-        "_080E488C: .4byte 0x08085AFD\n\t"
+        "_080E488C: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5442,7 +5442,7 @@ __attribute__((naked)) void sub_080E4890(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E48B0: .4byte gSaveBlock2Ptr\n\t"
-        "_080E48B4: .4byte 0x08085AFD\n\t"
+        "_080E48B4: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5468,7 +5468,7 @@ __attribute__((naked)) void sub_080E48B8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E48D8: .4byte gSaveBlock2Ptr\n\t"
-        "_080E48DC: .4byte 0x08085AFD\n\t"
+        "_080E48DC: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5494,7 +5494,7 @@ __attribute__((naked)) void sub_080E48E0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E4900: .4byte gSaveBlock2Ptr\n\t"
-        "_080E4904: .4byte 0x08085AFD\n\t"
+        "_080E4904: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }

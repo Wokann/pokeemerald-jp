@@ -528,7 +528,7 @@ __attribute__((naked)) void PrintStartMenuActions(void)
         "_0809F0F0: .4byte 0x084E8C2C\n\t"
         "_0809F0F4: .4byte gStringVar4\n\t"
         "_0809F0F8: .4byte gUnknown_20372B0\n\t"
-        "_0809F0FC: .4byte 0x0809F565\n\t"
+        "_0809F0FC: .4byte StartMenuPlayerNameCallback + 1\n\t"
         "_0809F100:\n\t"
         "	mov r1, sb\n\t"
         "	adds r0, r3, r1\n\t"
@@ -778,7 +778,7 @@ __attribute__((naked)) void CreateStartMenuTask(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0809F2D0: .4byte gUnknown_20372B9\n\t"
-        "_0809F2D4: .4byte 0x0809F28D\n\t"
+        "_0809F2D4: .4byte StartMenuTask + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -818,7 +818,7 @@ __attribute__((naked)) void ShowReturnToFieldStartMenu()
         "	.align 2, 0\n\t"
         "_0809F300: .4byte gUnknown_20372B9\n\t"
         "_0809F304: .4byte gFieldCallback2\n\t"
-        "_0809F308: .4byte 0x0809F2D9\n\t"
+        "_0809F308: .4byte sub_0809F2D8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -859,7 +859,7 @@ __attribute__((naked)) void Task_ShowStartMenu(u8 taskId)
         "	b _0809F36A\n\t"
         "	.align 2, 0\n\t"
         "_0809F34C: .4byte gUnknown_3005B54\n\t"
-        "_0809F350: .4byte 0x0809F39D\n\t"
+        "_0809F350: .4byte HandleStartMenuInput + 1\n\t"
         "_0809F354:\n\t"
         "	ldr r0, _0809F370\n\t"
         "	ldr r0, [r0]\n\t"
@@ -898,7 +898,7 @@ __attribute__((naked)) void ShowStartMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809F398: .4byte 0x0809F30D\n\t"
+        "_0809F398: .4byte Task_ShowStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -993,12 +993,12 @@ __attribute__((naked)) void HandleStartMenuInput(void)
         "_0809F44C: .4byte gUnknown_20372AE\n\t"
         "_0809F450: .4byte 0x084E8C2C\n\t"
         "_0809F454: .4byte gUnknown_20372B0\n\t"
-        "_0809F458: .4byte 0x0809F48D\n\t"
+        "_0809F458: .4byte StartMenuPokedexCallback + 1\n\t"
         "_0809F45C: .4byte gUnknown_3005B54\n\t"
-        "_0809F460: .4byte 0x0809F5D5\n\t"
-        "_0809F464: .4byte 0x0809F63D\n\t"
-        "_0809F468: .4byte 0x0809F64D\n\t"
-        "_0809F46C: .4byte 0x0809F699\n\t"
+        "_0809F460: .4byte StartMenuSaveCallback + 1\n\t"
+        "_0809F464: .4byte StartMenuExitCallback + 1\n\t"
+        "_0809F468: .4byte StartMenuSafariZoneRetireCallback + 1\n\t"
+        "_0809F46C: .4byte StartMenuBattlePyramidRetireCallback + 1\n\t"
         "_0809F470:\n\t"
         "	movs r0, #0xa\n\t"
         "	ands r0, r1\n\t"
@@ -1047,7 +1047,7 @@ __attribute__((naked)) void StartMenuPokedexCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F4C4: .4byte 0x080BAC71\n\t"
+        "_0809F4C4: .4byte CB2_Pokedex + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1078,7 +1078,7 @@ __attribute__((naked)) void StartMenuPokemonCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F4F8: .4byte 0x081B7BD5\n\t"
+        "_0809F4F8: .4byte CB2_PartyMenuFromStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1109,7 +1109,7 @@ __attribute__((naked)) void StartMenuBagCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F52C: .4byte 0x081AA915\n\t"
+        "_0809F52C: .4byte CB2_BagMenuFromStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1140,7 +1140,7 @@ __attribute__((naked)) void StartMenuPokeNavCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F560: .4byte 0x081C6A11\n\t"
+        "_0809F560: .4byte CB2_InitPokeNav + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1171,7 +1171,7 @@ __attribute__((naked)) void StartMenuPlayerNameCallback(void)
         "	b _0809F5C2\n\t"
         "	.align 2, 0\n\t"
         "_0809F598: .4byte gPaletteFade\n\t"
-        "_0809F59C: .4byte 0x08085AFD\n\t"
+        "_0809F59C: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         "_0809F5A0:\n\t"
         "	ldr r0, _0809F5B4\n\t"
         "	bl FlagGet\n\t"
@@ -1183,7 +1183,7 @@ __attribute__((naked)) void StartMenuPlayerNameCallback(void)
         "	b _0809F5C2\n\t"
         "	.align 2, 0\n\t"
         "_0809F5B4: .4byte 0x000008D2\n\t"
-        "_0809F5B8: .4byte 0x08085AFD\n\t"
+        "_0809F5B8: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         "_0809F5BC:\n\t"
         "	ldr r0, _0809F5C8\n\t"
         "	bl ShowPlayerTrainerCard\n\t"
@@ -1191,7 +1191,7 @@ __attribute__((naked)) void StartMenuPlayerNameCallback(void)
         "	movs r0, #1\n\t"
         "	b _0809F5CE\n\t"
         "	.align 2, 0\n\t"
-        "_0809F5C8: .4byte 0x08085AFD\n\t"
+        "_0809F5C8: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         "_0809F5CC:\n\t"
         "	movs r0, #0\n\t"
         "_0809F5CE:\n\t"
@@ -1221,7 +1221,7 @@ __attribute__((naked)) void StartMenuSaveCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F5F0: .4byte gUnknown_3005B54\n\t"
-        "_0809F5F4: .4byte 0x0809F701\n\t"
+        "_0809F5F4: .4byte SaveStartCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1255,9 +1255,9 @@ __attribute__((naked)) void StartMenuOptionCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F630: .4byte 0x080B9C35\n\t"
+        "_0809F630: .4byte CB2_InitOptionMenu + 1\n\t"
         "_0809F634: .4byte gMain\n\t"
-        "_0809F638: .4byte 0x08085AFD\n\t"
+        "_0809F638: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1319,7 +1319,7 @@ __attribute__((naked)) void StartMenuLinkModePlayerNameCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F690: .4byte gLocalLinkPlayerId\n\t"
-        "_0809F694: .4byte 0x08085AFD\n\t"
+        "_0809F694: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1335,7 +1335,7 @@ __attribute__((naked)) void StartMenuBattlePyramidRetireCallback(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0809F6A4: .4byte gUnknown_3005B54\n\t"
-        "_0809F6A8: .4byte 0x0809F775\n\t"
+        "_0809F6A8: .4byte BattlePyramidRetireStartCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1355,7 +1355,7 @@ __attribute__((naked)) void sub_0809F6AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809F6C8: .4byte 0x0809F30D\n\t"
+        "_0809F6C8: .4byte Task_ShowStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1386,7 +1386,7 @@ __attribute__((naked)) void StartMenuBattlePyramidBagCallback(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0809F6FC: .4byte 0x081C4705\n\t"
+        "_0809F6FC: .4byte CB2_PyramidBagMenuFromStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1405,7 +1405,7 @@ __attribute__((naked)) void SaveStartCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F714: .4byte gUnknown_3005B54\n\t"
-        "_0809F718: .4byte 0x0809F71D\n\t"
+        "_0809F718: .4byte SaveCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1438,7 +1438,7 @@ __attribute__((naked)) void SaveCallback(void)
         "	b _0809F76C\n\t"
         "	.align 2, 0\n\t"
         "_0809F74C: .4byte gUnknown_3005B54\n\t"
-        "_0809F750: .4byte 0x0809F39D\n\t"
+        "_0809F750: .4byte HandleStartMenuInput + 1\n\t"
         "_0809F754:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #1\n\t"
@@ -1472,7 +1472,7 @@ __attribute__((naked)) void BattlePyramidRetireStartCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F788: .4byte gUnknown_3005B54\n\t"
-        "_0809F78C: .4byte 0x0809F7AD\n\t"
+        "_0809F78C: .4byte BattlePyramidRetireCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1491,7 +1491,7 @@ __attribute__((naked)) void BattlePyramidRetireReturnCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F7A4: .4byte gUnknown_3005B54\n\t"
-        "_0809F7A8: .4byte 0x0809F39D\n\t"
+        "_0809F7A8: .4byte HandleStartMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1519,7 +1519,7 @@ __attribute__((naked)) void BattlePyramidRetireCallback(void)
         "	b _0809F7F8\n\t"
         "	.align 2, 0\n\t"
         "_0809F7D0: .4byte gUnknown_3005B54\n\t"
-        "_0809F7D4: .4byte 0x0809F791\n\t"
+        "_0809F7D4: .4byte BattlePyramidRetireReturnCallback + 1\n\t"
         "_0809F7D8:\n\t"
         "	movs r0, #0\n\t"
         "	movs r1, #1\n\t"
@@ -1558,7 +1558,7 @@ __attribute__((naked)) void InitSave(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0809F818: .4byte gUnknown_20372BC\n\t"
-        "_0809F81C: .4byte 0x0809F979\n\t"
+        "_0809F81C: .4byte SaveConfirmSaveCallback + 1\n\t"
         "_0809F820: .4byte gUnknown_20372C1\n\t"
         ".syntax divided\n\t"
     );
@@ -1608,7 +1608,7 @@ __attribute__((naked)) void SaveGame()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809F86C: .4byte 0x0809F8A9\n\t"
+        "_0809F86C: .4byte SaveGameTask + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1819,7 +1819,7 @@ __attribute__((naked)) void SaveConfirmSaveCallback(void)
         "	b _0809F9B4\n\t"
         "	.align 2, 0\n\t"
         "_0809F9A4: .4byte 0x0822D762\n\t"
-        "_0809F9A8: .4byte 0x0809F9C5\n\t"
+        "_0809F9A8: .4byte SaveConfirmOverwriteCallback + 1\n\t"
         "_0809F9AC:\n\t"
         "	ldr r0, _0809F9BC\n\t"
         "	ldr r1, _0809F9C0\n\t"
@@ -1830,7 +1830,7 @@ __attribute__((naked)) void SaveConfirmSaveCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F9BC: .4byte 0x08276F58\n\t"
-        "_0809F9C0: .4byte 0x0809F9C5\n\t"
+        "_0809F9C0: .4byte SaveConfirmOverwriteCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1849,7 +1849,7 @@ __attribute__((naked)) void SaveConfirmOverwriteCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809F9D8: .4byte gUnknown_20372BC\n\t"
-        "_0809F9DC: .4byte 0x0809F9E1\n\t"
+        "_0809F9DC: .4byte SaveConfirmInputCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1896,7 +1896,7 @@ __attribute__((naked)) void SaveConfirmInputCallback(void)
         "_0809FA20: .4byte gSaveFileStatus\n\t"
         "_0809FA24: .4byte gDifferentSaveFile\n\t"
         "_0809FA28: .4byte gUnknown_20372BC\n\t"
-        "_0809FA2C: .4byte 0x0809FA55\n\t"
+        "_0809FA2C: .4byte SaveFileExistsCallback + 1\n\t"
         "_0809FA30:\n\t"
         "	ldr r1, _0809FA38\n\t"
         "	ldr r0, _0809FA3C\n\t"
@@ -1904,7 +1904,7 @@ __attribute__((naked)) void SaveConfirmInputCallback(void)
         "	b _0809FA4C\n\t"
         "	.align 2, 0\n\t"
         "_0809FA38: .4byte gUnknown_20372BC\n\t"
-        "_0809FA3C: .4byte 0x0809FB0D\n\t"
+        "_0809FA3C: .4byte SaveSavingMessageCallback + 1\n\t"
         "_0809FA40:\n\t"
         "	bl HideSaveInfoWindow\n\t"
         "	bl sub_0809F8EC\n\t"
@@ -1936,7 +1936,7 @@ __attribute__((naked)) void SaveFileExistsCallback(void)
         "	.align 2, 0\n\t"
         "_0809FA68: .4byte gDifferentSaveFile\n\t"
         "_0809FA6C: .4byte 0x08276FD3\n\t"
-        "_0809FA70: .4byte 0x0809FA8D\n\t"
+        "_0809FA70: .4byte BattlePyramidRetireYesNoCallback + 1\n\t"
         "_0809FA74:\n\t"
         "	ldr r0, _0809FA84\n\t"
         "	ldr r1, _0809FA88\n\t"
@@ -1947,7 +1947,7 @@ __attribute__((naked)) void SaveFileExistsCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FA84: .4byte 0x08276F77\n\t"
-        "_0809FA88: .4byte 0x0809FAA9\n\t"
+        "_0809FA88: .4byte SaveYesNoCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1967,7 +1967,7 @@ __attribute__((naked)) void BattlePyramidRetireYesNoCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FAA0: .4byte gUnknown_20372BC\n\t"
-        "_0809FAA4: .4byte 0x0809FAC5\n\t"
+        "_0809FAA4: .4byte SaveOverwriteInputCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1986,7 +1986,7 @@ __attribute__((naked)) void SaveYesNoCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FABC: .4byte gUnknown_20372BC\n\t"
-        "_0809FAC0: .4byte 0x0809FAC5\n\t"
+        "_0809FAC0: .4byte SaveOverwriteInputCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2019,7 +2019,7 @@ __attribute__((naked)) void SaveOverwriteInputCallback(void)
         "	b _0809FB04\n\t"
         "	.align 2, 0\n\t"
         "_0809FAF0: .4byte gUnknown_20372BC\n\t"
-        "_0809FAF4: .4byte 0x0809FB0D\n\t"
+        "_0809FAF4: .4byte SaveSavingMessageCallback + 1\n\t"
         "_0809FAF8:\n\t"
         "	bl HideSaveInfoWindow\n\t"
         "	bl sub_0809F8EC\n\t"
@@ -2048,7 +2048,7 @@ __attribute__((naked)) void SaveSavingMessageCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FB1C: .4byte 0x08276F97\n\t"
-        "_0809FB20: .4byte 0x0809FB25\n\t"
+        "_0809FB20: .4byte SaveDoSaveCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2088,7 +2088,7 @@ __attribute__((naked)) void SaveDoSaveCallback(void)
         "	b _0809FB74\n\t"
         "	.align 2, 0\n\t"
         "_0809FB64: .4byte 0x08276FBB\n\t"
-        "_0809FB68: .4byte 0x0809FB89\n\t"
+        "_0809FB68: .4byte SaveSuccessCallback + 1\n\t"
         "_0809FB6C:\n\t"
         "	ldr r0, _0809FB80\n\t"
         "	ldr r1, _0809FB84\n\t"
@@ -2101,7 +2101,7 @@ __attribute__((naked)) void SaveDoSaveCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FB80: .4byte 0x08277048\n\t"
-        "_0809FB84: .4byte 0x0809FBD5\n\t"
+        "_0809FB84: .4byte SaveErrorCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2127,7 +2127,7 @@ __attribute__((naked)) void SaveSuccessCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FBA8: .4byte gUnknown_20372BC\n\t"
-        "_0809FBAC: .4byte 0x0809FBB1\n\t"
+        "_0809FBAC: .4byte SaveReturnSuccessCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2178,7 +2178,7 @@ __attribute__((naked)) void SaveErrorCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FBF4: .4byte gUnknown_20372BC\n\t"
-        "_0809FBF8: .4byte 0x0809FBFD\n\t"
+        "_0809FBF8: .4byte SaveReturnErrorCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2218,7 +2218,7 @@ __attribute__((naked)) void InitBattlePyramidRetire(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0809FC28: .4byte gUnknown_20372BC\n\t"
-        "_0809FC2C: .4byte 0x0809FC35\n\t"
+        "_0809FC2C: .4byte BattlePyramidConfirmRetireCallback + 1\n\t"
         "_0809FC30: .4byte gUnknown_20372C1\n\t"
         ".syntax divided\n\t"
     );
@@ -2243,7 +2243,7 @@ __attribute__((naked)) void BattlePyramidConfirmRetireCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FC58: .4byte 0x0822D78F\n\t"
-        "_0809FC5C: .4byte 0x0809FC61\n\t"
+        "_0809FC5C: .4byte SaveConfirmOverwriteDefaultNoCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2263,7 +2263,7 @@ __attribute__((naked)) void SaveConfirmOverwriteDefaultNoCallback(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0809FC74: .4byte gUnknown_20372BC\n\t"
-        "_0809FC78: .4byte 0x0809FC7D\n\t"
+        "_0809FC78: .4byte BattlePyramidRetireInputCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2440,7 +2440,7 @@ __attribute__((naked)) void sub_0809FCBC(void)
         "	bl EnableInterrupts\n\t"
         "	b _0809FDD4\n\t"
         "	.align 2, 0\n\t"
-        "_0809FDCC: .4byte 0x0809FCB1\n\t"
+        "_0809FDCC: .4byte sub_0809FCB0 + 1\n\t"
         "_0809FDD0:\n\t"
         "	movs r0, #1\n\t"
         "	b _0809FDDE\n\t"
@@ -2481,8 +2481,8 @@ __attribute__((naked)) void sub_0809FDEC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0809FE0C: .4byte gUnknown_3002798\n\t"
-        "_0809FE10: .4byte 0x0809FE29\n\t"
-        "_0809FE14: .4byte 0x0809FE19\n\t"
+        "_0809FE10: .4byte sub_0809FE28 + 1\n\t"
+        "_0809FE14: .4byte sub_0809FE18 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2650,7 +2650,7 @@ __attribute__((naked)) void sub_0809FE28(void)
         "	movs r0, #6\n\t"
         "	b _0809FF7E\n\t"
         "	.align 2, 0\n\t"
-        "_0809FF6C: .4byte 0x081535C5\n\t"
+        "_0809FF6C: .4byte Task_LinkFullSave + 1\n\t"
         "_0809FF70:\n\t"
         "	ldr r0, _0809FF88\n\t"
         "	bl FuncIsActiveTask\n\t"
@@ -2666,7 +2666,7 @@ __attribute__((naked)) void sub_0809FE28(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0809FF88: .4byte 0x081535C5\n\t"
+        "_0809FF88: .4byte Task_LinkFullSave + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2920,7 +2920,7 @@ __attribute__((naked)) void sub_080A016C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0190: .4byte 0x081535C5\n\t"
+        "_080A0190: .4byte Task_LinkFullSave + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2957,9 +2957,9 @@ __attribute__((naked)) void sub_080A0194(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A01D0: .4byte 0x081535C5\n\t"
+        "_080A01D0: .4byte Task_LinkFullSave + 1\n\t"
         "_080A01D4: .4byte gTasks\n\t"
-        "_080A01D8: .4byte 0x080A016D\n\t"
+        "_080A01D8: .4byte sub_080A016C + 1\n\t"
         ".syntax divided\n\t"
     );
 }

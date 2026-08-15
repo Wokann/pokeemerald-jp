@@ -47,7 +47,7 @@ __attribute__((naked)) void InitRegionMapData(struct RegionMap *regionMap, const
         "	b _08122D36\n\t"
         "	.align 2, 0\n\t"
         "_08122D2C: .4byte gUnknown_2039E10\n\t"
-        "_08122D30: .4byte 0x08123261\n\t"
+        "_08122D30: .4byte ProcessRegionMapInput_Zoomed + 1\n\t"
         "_08122D34:\n\t"
         "	ldr r0, _08122D6C\n\t"
         "_08122D36:\n\t"
@@ -78,7 +78,7 @@ __attribute__((naked)) void InitRegionMapData(struct RegionMap *regionMap, const
         "	strb r1, [r0]\n\t"
         "	b _08122D8C\n\t"
         "	.align 2, 0\n\t"
-        "_08122D6C: .4byte 0x081230D1\n\t"
+        "_08122D6C: .4byte ProcessRegionMapInput_Full + 1\n\t"
         "_08122D70:\n\t"
         "	ldr r0, [r3]\n\t"
         "	adds r0, #0x80\n\t"
@@ -640,7 +640,7 @@ __attribute__((naked)) void ProcessRegionMapInput_Full(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08123198: .4byte 0x0812319D\n\t"
+        "_08123198: .4byte MoveRegionMapCursor_Full + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -748,7 +748,7 @@ __attribute__((naked)) void MoveRegionMapCursor_Full(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812325C: .4byte 0x081230D1\n\t"
+        "_0812325C: .4byte ProcessRegionMapInput_Full + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -871,7 +871,7 @@ __attribute__((naked)) void ProcessRegionMapInput_Zoomed(void)
         "_08123330: .4byte gUnknown_2039E10\n\t"
         "_08123334: .4byte gMain\n\t"
         "_08123338: .4byte 0x0000FFFF\n\t"
-        "_0812333C: .4byte 0x08123341\n\t"
+        "_0812333C: .4byte MoveRegionMapCursor_Zoomed + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -987,7 +987,7 @@ __attribute__((naked)) void MoveRegionMapCursor_Zoomed(void)
         "	b _0812341E\n\t"
         "	.align 2, 0\n\t"
         "_08123414: .4byte gUnknown_2039E10\n\t"
-        "_08123418: .4byte 0x08123261\n\t"
+        "_08123418: .4byte ProcessRegionMapInput_Zoomed + 1\n\t"
         "_0812341C:\n\t"
         "	movs r0, #2\n\t"
         "_0812341E:\n\t"
@@ -1210,8 +1210,8 @@ __attribute__((naked)) bool8 UpdateRegionMapZoom()
         "	movs r4, #0\n\t"
         "	b _08123692\n\t"
         "	.align 2, 0\n\t"
-        "_081235A8: .4byte 0x08123261\n\t"
-        "_081235AC: .4byte 0x081230D1\n\t"
+        "_081235A8: .4byte ProcessRegionMapInput_Zoomed + 1\n\t"
+        "_081235AC: .4byte ProcessRegionMapInput_Full + 1\n\t"
         "_081235B0:\n\t"
         "	ldr r2, [r3, #0x3c]\n\t"
         "	ldr r0, [r3, #0x44]\n\t"
@@ -2874,7 +2874,7 @@ __attribute__((naked)) void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         "_08124154: .4byte 0x0857D4F8\n\t"
         "_08124158: .4byte gUnknown_2039E10\n\t"
         "_0812415C: .4byte 0xFFFF0000\n\t"
-        "_08124160: .4byte 0x08124095\n\t"
+        "_08124160: .4byte SpriteCallback_CursorFull + 1\n\t"
         "_08124164:\n\t"
         "	movs r3, #0xa1\n\t"
         "	lsls r3, r3, #2\n\t"
@@ -2934,7 +2934,7 @@ __attribute__((naked)) void CreateRegionMapCursor(u16 tileTag, u16 paletteTag)
         "	bl StartSpriteAnim\n\t"
         "	b _08124210\n\t"
         "	.align 2, 0\n\t"
-        "_081241DC: .4byte 0x081240DD\n\t"
+        "_081241DC: .4byte SpriteCallback_CursorZoomed + 1\n\t"
         "_081241E0: .4byte gUnknown_2039E10\n\t"
         "_081241E4: .4byte gSprites\n\t"
         "_081241E8:\n\t"
@@ -3102,7 +3102,7 @@ __attribute__((naked)) void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTa
         "_081242F8: .4byte 0x0857D510\n\t"
         "_081242FC: .4byte 0x0857D520\n\t"
         "_08124300: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_08124304: .4byte 0x08007141\n\t"
+        "_08124304: .4byte SpriteCallbackDummy + 1\n\t"
         "_08124308: .4byte gMapHeader\n\t"
         "_0812430C: .4byte gUnknown_2039E10\n\t"
         "_08124310:\n\t"
@@ -3162,7 +3162,7 @@ __attribute__((naked)) void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTa
         "_08124380: .4byte 0x0857C49C\n\t"
         "_08124384: .4byte gUnknown_2039E10\n\t"
         "_08124388: .4byte gSprites\n\t"
-        "_0812438C: .4byte 0x081244F9\n\t"
+        "_0812438C: .4byte RegionMapPlayerIconSpriteCallback_Full + 1\n\t"
         "_08124390:\n\t"
         "	adds r0, r2, #0\n\t"
         "	adds r0, #0x74\n\t"
@@ -3187,7 +3187,7 @@ __attribute__((naked)) void CreateRegionMapPlayerIcon(u16 tileTag, u16 paletteTa
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081243B8: .4byte 0x08124469\n\t"
+        "_081243B8: .4byte RegionMapPlayerIconSpriteCallback_Zoomed + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3216,7 +3216,7 @@ __attribute__((naked)) void HideRegionMapPlayerIcon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081243E0: .4byte gUnknown_2039E10\n\t"
-        "_081243E4: .4byte 0x08007141\n\t"
+        "_081243E4: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3254,7 +3254,7 @@ __attribute__((naked)) void UnhideRegionMapPlayerIcon(void)
         "	b _08124450\n\t"
         "	.align 2, 0\n\t"
         "_08124420: .4byte gUnknown_2039E10\n\t"
-        "_08124424: .4byte 0x08124469\n\t"
+        "_08124424: .4byte RegionMapPlayerIconSpriteCallback_Zoomed + 1\n\t"
         "_08124428:\n\t"
         "	adds r0, r3, #0\n\t"
         "	adds r0, #0x74\n\t"
@@ -3288,7 +3288,7 @@ __attribute__((naked)) void UnhideRegionMapPlayerIcon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124464: .4byte 0x081244F9\n\t"
+        "_08124464: .4byte RegionMapPlayerIconSpriteCallback_Full + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3739,7 +3739,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	.align 2, 0\n\t"
         "_08124754: .4byte gUnknown_2039E14\n\t"
         "_08124758: .4byte 0x00000A74\n\t"
-        "_0812475C: .4byte 0x08085AFD\n\t"
+        "_0812475C: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         "_08124760:\n\t"
         "	bl ResetPaletteFade\n\t"
         "	bl ResetSpriteData\n\t"
@@ -3854,7 +3854,7 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	bl SetVBlankCallback\n\t"
         "	b _081248A8\n\t"
         "	.align 2, 0\n\t"
-        "_08124874: .4byte 0x081248CD\n\t"
+        "_08124874: .4byte sub_081248CC + 1\n\t"
         "_08124878:\n\t"
         "	movs r0, #0x50\n\t"
         "	movs r1, #0\n\t"
@@ -3887,8 +3887,8 @@ __attribute__((naked)) void MCB2_FlyMap(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081248C0: .4byte 0x08124CFD\n\t"
-        "_081248C4: .4byte 0x081248E1\n\t"
+        "_081248C0: .4byte sub_08124CFC + 1\n\t"
+        "_081248C4: .4byte sub_081248E0 + 1\n\t"
         "_081248C8: .4byte gMain\n\t"
         ".syntax divided\n\t"
     );
@@ -4260,7 +4260,7 @@ __attribute__((naked)) void sub_08124ABC(void)
         "	.align 2, 0\n\t"
         "_08124B78: .4byte 0x0857D86C\n\t"
         "_08124B7C: .4byte gSprites\n\t"
-        "_08124B80: .4byte 0x08124CA5\n\t"
+        "_08124B80: .4byte sub_08124CA4 + 1\n\t"
         "_08124B84:\n\t"
         "	adds r0, r7, #3\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -4410,7 +4410,7 @@ __attribute__((naked)) void sub_08124BCC(void)
         "_08124C94: .4byte 0x0857D808\n\t"
         "_08124C98: .4byte gSprites\n\t"
         "_08124C9C: .4byte 0x0857D86C\n\t"
-        "_08124CA0: .4byte 0x08124CA5\n\t"
+        "_08124CA0: .4byte sub_08124CA4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4511,7 +4511,7 @@ __attribute__((naked)) void sub_08124CFC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124D48: .4byte 0x08124D4D\n\t"
+        "_08124D48: .4byte sub_08124D4C + 1\n\t"
         ".syntax divided\n\t"
     );
 }

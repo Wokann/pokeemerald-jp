@@ -40,7 +40,7 @@ __attribute__((naked)) void SetControllerToWally(void)
         "	.align 2, 0\n\t"
         "_081681EC: .4byte gBattlerControllerFuncs\n\t"
         "_081681F0: .4byte gActiveBattler\n\t"
-        "_081681F4: .4byte 0x081681FD\n\t"
+        "_081681F4: .4byte WallyBufferRunCommand + 1\n\t"
         "_081681F8: .4byte gBattleStruct\n\t"
         ".syntax divided\n\t"
     );
@@ -267,7 +267,7 @@ __attribute__((naked)) void CompleteOnChosenItem(void)
         "_0816839C: .4byte gSprites\n\t"
         "_081683A0: .4byte gBattlerSpriteIds\n\t"
         "_081683A4: .4byte gActiveBattler\n\t"
-        "_081683A8: .4byte 0x08007141\n\t"
+        "_081683A8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -338,7 +338,7 @@ __attribute__((naked)) void OpenBagAfterPaletteFade(void)
         "_08168408: .4byte gPaletteFade\n\t"
         "_0816840C: .4byte gBattlerControllerFuncs\n\t"
         "_08168410: .4byte gActiveBattler\n\t"
-        "_08168414: .4byte 0x08168419\n\t"
+        "_08168414: .4byte WallyHandleCmd39 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -369,7 +369,7 @@ __attribute__((naked)) void WallyHandleCmd39(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08168444: .4byte gMain\n\t"
-        "_08168448: .4byte 0x080380FD\n\t"
+        "_08168448: .4byte BattleMainCB2 + 1\n\t"
         "_0816844C: .4byte gPaletteFade\n\t"
         "_08168450: .4byte gSpecialVar_ItemId\n\t"
         ".syntax divided\n\t"
@@ -586,12 +586,12 @@ __attribute__((naked)) void sub_08168454(void)
         "_081685FC: .4byte gPlayerParty\n\t"
         "_08168600: .4byte gSprites\n\t"
         "_08168604: .4byte gUnknown_3005ADC\n\t"
-        "_08168608: .4byte 0x08007141\n\t"
+        "_08168608: .4byte SpriteCallbackDummy + 1\n\t"
         "_0816860C: .4byte gBattlerSpriteIds\n\t"
         "_08168610: .4byte gBattleTypeFlags\n\t"
         "_08168614: .4byte gHealthboxSpriteIds\n\t"
         "_08168618: .4byte gBattlerControllerFuncs\n\t"
-        "_0816861C: .4byte 0x08168621\n\t"
+        "_0816861C: .4byte sub_08168620 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -724,10 +724,10 @@ __attribute__((naked)) void sub_08168620(void)
         "_08168718: .4byte gSprites\n\t"
         "_0816871C: .4byte gHealthboxSpriteIds\n\t"
         "_08168720: .4byte gActiveBattler\n\t"
-        "_08168724: .4byte 0x08007141\n\t"
+        "_08168724: .4byte SpriteCallbackDummy + 1\n\t"
         "_08168728: .4byte gBattleSpritesDataPtr\n\t"
         "_0816872C: .4byte 0x000027F9\n\t"
-        "_08168730: .4byte 0x08058D11\n\t"
+        "_08168730: .4byte c3_0802FDF4 + 1\n\t"
         "_08168734: .4byte gBattlerPartyIndexes\n\t"
         "_08168738: .4byte gPlayerParty\n\t"
         ".syntax divided\n\t"
@@ -944,7 +944,7 @@ __attribute__((naked)) void WallyHandleOneReturnValue(void)
         "_081688C0: .4byte gSprites\n\t"
         "_081688C4: .4byte gBattlerSpriteIds\n\t"
         "_081688C8: .4byte gActiveBattler\n\t"
-        "_081688CC: .4byte 0x08007141\n\t"
+        "_081688CC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1015,7 +1015,7 @@ __attribute__((naked)) void WallyBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_08168940: .4byte gBattlerControllerFuncs\n\t"
         "_08168944: .4byte gActiveBattler\n\t"
-        "_08168948: .4byte 0x081681FD\n\t"
+        "_08168948: .4byte WallyBufferRunCommand + 1\n\t"
         "_0816894C: .4byte gBattleTypeFlags\n\t"
         "_08168950: .4byte gBattleBufferA\n\t"
         "_08168954:\n\t"
@@ -3341,7 +3341,7 @@ __attribute__((naked)) void WallyHandleReturnMonToBall(void)
         "_08169C78: .4byte gBattleBufferA\n\t"
         "_08169C7C: .4byte gActiveBattler\n\t"
         "_08169C80: .4byte gBattlerControllerFuncs\n\t"
-        "_08169C84: .4byte 0x08168829\n\t"
+        "_08169C84: .4byte sub_08168828 + 1\n\t"
         "_08169C88:\n\t"
         "	ldr r5, _08169CC4\n\t"
         "	adds r0, r2, r5\n\t"
@@ -3469,9 +3469,9 @@ __attribute__((naked)) void WallyHandleDrawTrainerPic(void)
         "_08169D84: .4byte gBattlerSpriteIds\n\t"
         "_08169D88: .4byte gSprites\n\t"
         "_08169D8C: .4byte 0x0000FFFE\n\t"
-        "_08169D90: .4byte 0x0805D3C9\n\t"
+        "_08169D90: .4byte sub_0805D3C8 + 1\n\t"
         "_08169D94: .4byte gBattlerControllerFuncs\n\t"
-        "_08169D98: .4byte 0x08168375\n\t"
+        "_08169D98: .4byte CompleteOnChosenItem + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3567,9 +3567,9 @@ __attribute__((naked)) void WallyHandleTrainerSlide(void)
         "_08169E50: .4byte gBattlerSpriteIds\n\t"
         "_08169E54: .4byte gSprites\n\t"
         "_08169E58: .4byte 0x0000FFA0\n\t"
-        "_08169E5C: .4byte 0x0805D3C9\n\t"
+        "_08169E5C: .4byte sub_0805D3C8 + 1\n\t"
         "_08169E60: .4byte gBattlerControllerFuncs\n\t"
-        "_08169E64: .4byte 0x08168899\n\t"
+        "_08169E64: .4byte WallyHandleOneReturnValue + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3651,7 +3651,7 @@ __attribute__((naked)) void WallyHandleSuccessBallThrowAnim(void)
         "_08169ED0: .4byte gUnknown_202415D\n\t"
         "_08169ED4: .4byte gActiveBattler\n\t"
         "_08169ED8: .4byte gBattlerControllerFuncs\n\t"
-        "_08169EDC: .4byte 0x081683C5\n\t"
+        "_08169EDC: .4byte CompleteOnFinishedAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3700,7 +3700,7 @@ __attribute__((naked)) void WallyHandleBallThrowAnim(void)
         "_08169F30: .4byte gBattleSpritesDataPtr\n\t"
         "_08169F34: .4byte gUnknown_202415D\n\t"
         "_08169F38: .4byte gBattlerControllerFuncs\n\t"
-        "_08169F3C: .4byte 0x081683C5\n\t"
+        "_08169F3C: .4byte CompleteOnFinishedAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3859,7 +3859,7 @@ __attribute__((naked)) void WallyHandleMoveAnimation(void)
         "	.align 2, 0\n\t"
         "_0816A068: .4byte gBattleSpritesDataPtr\n\t"
         "_0816A06C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A070: .4byte 0x0816A075\n\t"
+        "_0816A070: .4byte WallyDoMoveAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4069,7 +4069,7 @@ __attribute__((naked)) void WallyHandlePrintString(void)
         "_0816A204: .4byte gUnknown_2022D0A\n\t"
         "_0816A208: .4byte gDisplayedStringBattle\n\t"
         "_0816A20C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A210: .4byte 0x081683AD\n\t"
+        "_0816A210: .4byte WallyHandleChosenMonReturnValue + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4128,7 +4128,7 @@ __attribute__((naked)) void HandleChooseActionAfterDma3(void)
         "_0816A268: .4byte gBattle_BG0_Y\n\t"
         "_0816A26C: .4byte gBattlerControllerFuncs\n\t"
         "_0816A270: .4byte gActiveBattler\n\t"
-        "_0816A274: .4byte 0x0816824D\n\t"
+        "_0816A274: .4byte WallyHandleActions + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4174,7 +4174,7 @@ __attribute__((naked)) void WallyHandleChooseAction(void)
         "	.align 2, 0\n\t"
         "_0816A2C4: .4byte gBattlerControllerFuncs\n\t"
         "_0816A2C8: .4byte gActiveBattler\n\t"
-        "_0816A2CC: .4byte 0x0816A239\n\t"
+        "_0816A2CC: .4byte HandleChooseActionAfterDma3 + 1\n\t"
         "_0816A2D0: .4byte 0x085ABB72\n\t"
         "_0816A2D4: .4byte gActionSelectionCursor\n\t"
         "_0816A2D8: .4byte 0x085ABB57\n\t"
@@ -4307,7 +4307,7 @@ __attribute__((naked)) void WallyHandleChooseItem(void)
         "	.align 2, 0\n\t"
         "_0816A3B4: .4byte gBattlerControllerFuncs\n\t"
         "_0816A3B8: .4byte gActiveBattler\n\t"
-        "_0816A3BC: .4byte 0x081683DD\n\t"
+        "_0816A3BC: .4byte OpenBagAfterPaletteFade + 1\n\t"
         "_0816A3C0: .4byte gBattlerInMenuId\n\t"
         ".syntax divided\n\t"
     );
@@ -4453,7 +4453,7 @@ __attribute__((naked)) void WallyHandleHealthBarUpdate(void)
         "_0816A4CC: .4byte gHealthboxSpriteIds\n\t"
         "_0816A4D0: .4byte gBattlerControllerFuncs\n\t"
         "_0816A4D4: .4byte gActiveBattler\n\t"
-        "_0816A4D8: .4byte 0x0816873D\n\t"
+        "_0816A4D8: .4byte sub_0816873C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4720,7 +4720,7 @@ __attribute__((naked)) void WallyHandleHitAnimation(void)
         "	.align 2, 0\n\t"
         "_0816A600: .4byte gUnknown_202415D\n\t"
         "_0816A604: .4byte gBattlerControllerFuncs\n\t"
-        "_0816A608: .4byte 0x081687AD\n\t"
+        "_0816A608: .4byte WallyHandleGetRawMonData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5036,15 +5036,15 @@ __attribute__((naked)) void WallyHandleIntroTrainerBallThrow(void)
         "_0816A850: .4byte gActiveBattler\n\t"
         "_0816A854: .4byte gSprites\n\t"
         "_0816A858: .4byte 0x0000FFD8\n\t"
-        "_0816A85C: .4byte 0x080A67B5\n\t"
-        "_0816A860: .4byte 0x0805C81D\n\t"
+        "_0816A85C: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_0816A860: .4byte sub_0805C81C + 1\n\t"
         "_0816A864: .4byte 0x0000D6F8\n\t"
         "_0816A868: .4byte 0x082D961C\n\t"
-        "_0816A86C: .4byte 0x0816AA0D\n\t"
+        "_0816A86C: .4byte sub_0816AA0C + 1\n\t"
         "_0816A870: .4byte gTasks\n\t"
         "_0816A874: .4byte gBattleSpritesDataPtr\n\t"
         "_0816A878: .4byte gUnknown_2024158\n\t"
-        "_0816A87C: .4byte 0x0807352D\n\t"
+        "_0816A87C: .4byte Task_HidePartyStatusSummary + 1\n\t"
         "_0816A880: .4byte gBattlerControllerFuncs\n\t"
         "_0816A884: .4byte 0x08057069\n\t"
         ".syntax divided\n\t"
@@ -5221,13 +5221,13 @@ __attribute__((naked)) void sub_0816A888(void)
         "_0816A9E4: .4byte gBattlerPartyIndexes\n\t"
         "_0816A9E8: .4byte gBattleBufferA\n\t"
         "_0816A9EC: .4byte gPlayerParty\n\t"
-        "_0816A9F0: .4byte 0x0805D331\n\t"
+        "_0816A9F0: .4byte sub_0805D330 + 1\n\t"
         "_0816A9F4: .4byte gUnknown_3005ADC\n\t"
         "_0816A9F8: .4byte gMultiuseSpriteTemplate\n\t"
         "_0816A9FC: .4byte gBattlerSpriteIds\n\t"
         "_0816AA00: .4byte gSprites\n\t"
         "_0816AA04: .4byte gBattleMonForms\n\t"
-        "_0816AA08: .4byte 0x08007141\n\t"
+        "_0816AA08: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5289,7 +5289,7 @@ __attribute__((naked)) void sub_0816AA0C(void)
         "_0816AA70: .4byte gBattleBufferA\n\t"
         "_0816AA74: .4byte gBattlerPartyIndexes\n\t"
         "_0816AA78: .4byte gBattlerControllerFuncs\n\t"
-        "_0816AA7C: .4byte 0x08168455\n\t"
+        "_0816AA7C: .4byte sub_08168454 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5447,7 +5447,7 @@ __attribute__((naked)) void WallyHandleBattleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AB7C: .4byte gBattlerControllerFuncs\n\t"
-        "_0816AB80: .4byte 0x081688D1\n\t"
+        "_0816AB80: .4byte sub_081688D0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5519,7 +5519,7 @@ __attribute__((naked)) void WallyHandleCmd55(void)
         "_0816ABE8: .4byte gActiveBattler\n\t"
         "_0816ABEC: .4byte gBattleTypeFlags\n\t"
         "_0816ABF0: .4byte gBattlerControllerFuncs\n\t"
-        "_0816ABF4: .4byte 0x080583C1\n\t"
+        "_0816ABF4: .4byte sub_080583C0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

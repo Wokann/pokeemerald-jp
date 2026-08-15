@@ -82,9 +82,9 @@ __attribute__((naked)) void BedroomPC(void)
         "_0816AC88: .4byte gUnknown_203B97C\n\t"
         "_0816AC8C: .4byte 0x085C0BB8\n\t"
         "_0816AC90: .4byte gUnknown_203B980\n\t"
-        "_0816AC94: .4byte 0x080A8A41\n\t"
+        "_0816AC94: .4byte TaskDummy + 1\n\t"
         "_0816AC98: .4byte 0x085C942E\n\t"
-        "_0816AC9C: .4byte 0x0816ACE1\n\t"
+        "_0816AC9C: .4byte InitPlayerPCMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -114,9 +114,9 @@ __attribute__((naked)) void PlayerPC(void)
         "_0816ACC8: .4byte gUnknown_203B97C\n\t"
         "_0816ACCC: .4byte 0x085C0BBC\n\t"
         "_0816ACD0: .4byte gUnknown_203B980\n\t"
-        "_0816ACD4: .4byte 0x080A8A41\n\t"
+        "_0816ACD4: .4byte TaskDummy + 1\n\t"
         "_0816ACD8: .4byte 0x085C942E\n\t"
-        "_0816ACDC: .4byte 0x0816ACE1\n\t"
+        "_0816ACDC: .4byte InitPlayerPCMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -215,7 +215,7 @@ __attribute__((naked)) void InitPlayerPCMenu(void)
         "_0816ADA0: .4byte 0x085C0B98\n\t"
         "_0816ADA4: .4byte gUnknown_203B97C\n\t"
         "_0816ADA8: .4byte gTasks\n\t"
-        "_0816ADAC: .4byte 0x0816ADB1\n\t"
+        "_0816ADAC: .4byte PlayerPCProcessMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -276,7 +276,7 @@ __attribute__((naked)) void PlayerPCProcessMenuInput(void)
         "	b _0816AE64\n\t"
         "	.align 2, 0\n\t"
         "_0816AE24: .4byte gTasks\n\t"
-        "_0816AE28: .4byte 0x0816AF61\n\t"
+        "_0816AE28: .4byte PlayerPC_TurnOff + 1\n\t"
         "_0816AE2C:\n\t"
         "	ldrb r0, [r4, #8]\n\t"
         "	movs r1, #0\n\t"
@@ -328,7 +328,7 @@ __attribute__((naked)) void ReshowPlayerPC(u8 var)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AE8C: .4byte 0x085C942E\n\t"
-        "_0816AE90: .4byte 0x0816ACE1\n\t"
+        "_0816AE90: .4byte InitPlayerPCMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -356,7 +356,7 @@ __attribute__((naked)) void PlayerPC_ItemStorage(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AEB8: .4byte gTasks\n\t"
-        "_0816AEBC: .4byte 0x0816B06D\n\t"
+        "_0816AEBC: .4byte ItemStorageMenuProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -384,7 +384,7 @@ __attribute__((naked)) void PlayerPC_Mailbox(void)
         "	.align 2, 0\n\t"
         "_0816AEE4: .4byte gUnknown_203B984\n\t"
         "_0816AEE8: .4byte 0x085CA976\n\t"
-        "_0816AEEC: .4byte 0x0816AE79\n\t"
+        "_0816AEEC: .4byte ReshowPlayerPC + 1\n\t"
         "_0816AEF0:\n\t"
         "	strh r1, [r5]\n\t"
         "	strh r1, [r5, #2]\n\t"
@@ -414,7 +414,7 @@ __attribute__((naked)) void PlayerPC_Mailbox(void)
         "	b _0816AF42\n\t"
         "	.align 2, 0\n\t"
         "_0816AF30: .4byte gTasks\n\t"
-        "_0816AF34: .4byte 0x0816B489\n\t"
+        "_0816AF34: .4byte Mailbox_ProcessInput + 1\n\t"
         "_0816AF38:\n\t"
         "	ldr r1, _0816AF48\n\t"
         "	ldr r2, _0816AF4C\n\t"
@@ -426,7 +426,7 @@ __attribute__((naked)) void PlayerPC_Mailbox(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816AF48: .4byte 0x085CA976\n\t"
-        "_0816AF4C: .4byte 0x0816AE79\n\t"
+        "_0816AF4C: .4byte ReshowPlayerPC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -675,7 +675,7 @@ __attribute__((naked)) void ItemStorage_Deposit(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B10C: .4byte gTasks\n\t"
-        "_0816B110: .4byte 0x0816B115\n\t"
+        "_0816B110: .4byte Task_ItemStorage_Deposit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -721,8 +721,8 @@ __attribute__((naked)) void sub_0816B140(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B154: .4byte gFieldCallback\n\t"
-        "_0816B158: .4byte 0x0816B161\n\t"
-        "_0816B15C: .4byte 0x08085A31\n\t"
+        "_0816B158: .4byte Mailbox_DoRedrawMailboxMenuAfterReturn + 1\n\t"
+        "_0816B15C: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -747,7 +747,7 @@ __attribute__((naked)) void Mailbox_DoRedrawMailboxMenuAfterReturn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816B188: .4byte 0x0816B18D\n\t"
+        "_0816B188: .4byte ItemStorage_HandleReturnToProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -777,7 +777,7 @@ __attribute__((naked)) void ItemStorage_HandleReturnToProcessInput(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B1B4: .4byte gTasks\n\t"
-        "_0816B1B8: .4byte 0x0816B06D\n\t"
+        "_0816B1B8: .4byte ItemStorageMenuProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -819,7 +819,7 @@ __attribute__((naked)) void ItemStorage_Withdraw(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B200: .4byte 0x085CA918\n\t"
-        "_0816B204: .4byte 0x0816AE95\n\t"
+        "_0816B204: .4byte PlayerPC_ItemStorage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -861,7 +861,7 @@ __attribute__((naked)) void ItemStorage_Toss(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B24C: .4byte 0x085CA918\n\t"
-        "_0816B250: .4byte 0x0816AE95\n\t"
+        "_0816B250: .4byte PlayerPC_ItemStorage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -916,7 +916,7 @@ __attribute__((naked)) void ItemStorage_WithdrawToss_Helper(void)
         "_0816B2B8: .4byte gUnknown_3005B68\n\t"
         "_0816B2BC: .4byte gUnknown_203B984\n\t"
         "_0816B2C0: .4byte gUnknown_203B990\n\t"
-        "_0816B2C4: .4byte 0x0816BF8D\n\t"
+        "_0816B2C4: .4byte ItemStorage_ProcessWithdrawTossInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1268,7 +1268,7 @@ __attribute__((naked)) void Mailbox_ProcessInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816B540: .4byte 0x0816B545\n\t"
+        "_0816B540: .4byte Mailbox_PrintWhatToDoWithPlayerMailText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1314,7 +1314,7 @@ __attribute__((naked)) void Mailbox_PrintWhatToDoWithPlayerMailText(void)
         "_0816B594: .4byte 0x00002BF2\n\t"
         "_0816B598: .4byte gStringVar4\n\t"
         "_0816B59C: .4byte 0x085CA988\n\t"
-        "_0816B5A0: .4byte 0x0816B5E9\n\t"
+        "_0816B5A0: .4byte Mailbox_PrintMailOptions + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1415,7 +1415,7 @@ __attribute__((naked)) void Mailbox_PrintMailOptions(void)
         "	.align 2, 0\n\t"
         "_0816B660: .4byte 0x085C0BE8\n\t"
         "_0816B664: .4byte gTasks\n\t"
-        "_0816B668: .4byte 0x0816B66D\n\t"
+        "_0816B668: .4byte Mailbox_MailOptionsProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1486,7 +1486,7 @@ __attribute__((naked)) void Mailbox_DoMailRead(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B6DC: .4byte gTasks\n\t"
-        "_0816B6E0: .4byte 0x0816B6E5\n\t"
+        "_0816B6E0: .4byte Mailbox_FadeAndReadMail + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1533,7 +1533,7 @@ __attribute__((naked)) void Mailbox_FadeAndReadMail(void)
         "_0816B730: .4byte gSaveBlock1Ptr\n\t"
         "_0816B734: .4byte gUnknown_203B984\n\t"
         "_0816B738: .4byte 0x00002BE0\n\t"
-        "_0816B73C: .4byte 0x0816B741\n\t"
+        "_0816B73C: .4byte Mailbox_ReturnToFieldFromReadMail + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1552,8 +1552,8 @@ __attribute__((naked)) void Mailbox_ReturnToFieldFromReadMail(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B754: .4byte gFieldCallback\n\t"
-        "_0816B758: .4byte 0x0816B761\n\t"
-        "_0816B75C: .4byte 0x08085A31\n\t"
+        "_0816B758: .4byte pal_fill_for_maplights_or_black + 1\n\t"
+        "_0816B75C: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1580,7 +1580,7 @@ __attribute__((naked)) void pal_fill_for_maplights_or_black(void)
         "	bl Mailbox_DrawMailboxMenu\n\t"
         "	b _0816B79A\n\t"
         "	.align 2, 0\n\t"
-        "_0816B78C: .4byte 0x0816B7A5\n\t"
+        "_0816B78C: .4byte Mailbox_HandleReturnToProcessInput + 1\n\t"
         "_0816B790: .4byte gUnknown_203B984\n\t"
         "_0816B794:\n\t"
         "	adds r0, r4, #0\n\t"
@@ -1619,7 +1619,7 @@ __attribute__((naked)) void Mailbox_HandleReturnToProcessInput(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B7CC: .4byte gTasks\n\t"
-        "_0816B7D0: .4byte 0x0816B489\n\t"
+        "_0816B7D0: .4byte Mailbox_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1638,7 +1638,7 @@ __attribute__((naked)) void Mailbox_MoveToBag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B7E8: .4byte 0x085CA99A\n\t"
-        "_0816B7EC: .4byte 0x0816B7F1\n\t"
+        "_0816B7EC: .4byte Mailbox_DrawYesNoBeforeMove + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1664,7 +1664,7 @@ __attribute__((naked)) void Mailbox_DrawYesNoBeforeMove(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B810: .4byte gTasks\n\t"
-        "_0816B814: .4byte 0x0816B819\n\t"
+        "_0816B814: .4byte Mailbox_MoveToBagYesNoPrompt + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1745,7 +1745,7 @@ __attribute__((naked)) void Mailbox_DoMailMoveToBag(void)
         "_0816B898: .4byte gUnknown_203B984\n\t"
         "_0816B89C: .4byte 0x00002BE0\n\t"
         "_0816B8A0: .4byte 0x085CA9B3\n\t"
-        "_0816B8A4: .4byte 0x0816BA15\n\t"
+        "_0816B8A4: .4byte Mailbox_Cancel + 1\n\t"
         "_0816B8A8:\n\t"
         "	ldr r1, _0816B8E4\n\t"
         "	ldr r2, _0816B8E8\n\t"
@@ -1776,7 +1776,7 @@ __attribute__((naked)) void Mailbox_DoMailMoveToBag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B8E4: .4byte 0x085CA9C2\n\t"
-        "_0816B8E8: .4byte 0x0816BA15\n\t"
+        "_0816B8E8: .4byte Mailbox_Cancel + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1827,7 +1827,7 @@ __attribute__((naked)) void Mailbox_Give(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B930: .4byte gTasks\n\t"
-        "_0816B934: .4byte 0x0816B939\n\t"
+        "_0816B934: .4byte Mailbox_DoGiveMailPokeMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1874,8 +1874,8 @@ __attribute__((naked)) void Mailbox_ReturnToMailListAfterDeposit()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816B97C: .4byte gFieldCallback\n\t"
-        "_0816B980: .4byte 0x0816B989\n\t"
-        "_0816B984: .4byte 0x08085A31\n\t"
+        "_0816B980: .4byte Mailbox_UpdateMailListAfterDeposit + 1\n\t"
+        "_0816B984: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1923,7 +1923,7 @@ __attribute__((naked)) void Mailbox_UpdateMailListAfterDeposit(void)
         "	bl Mailbox_DrawMailboxMenu\n\t"
         "	b _0816B9EE\n\t"
         "	.align 2, 0\n\t"
-        "_0816B9E0: .4byte 0x0816B7A5\n\t"
+        "_0816B9E0: .4byte Mailbox_HandleReturnToProcessInput + 1\n\t"
         "_0816B9E4: .4byte gUnknown_203B984\n\t"
         "_0816B9E8:\n\t"
         "	adds r0, r6, #0\n\t"
@@ -1951,7 +1951,7 @@ __attribute__((naked)) void Mailbox_NoPokemonForMail(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816BA0C: .4byte 0x085C9472\n\t"
-        "_0816BA10: .4byte 0x0816BA15\n\t"
+        "_0816BA10: .4byte Mailbox_Cancel + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1985,7 +1985,7 @@ __attribute__((naked)) void Mailbox_Cancel(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816BA4C: .4byte gTasks\n\t"
-        "_0816BA50: .4byte 0x0816B489\n\t"
+        "_0816BA50: .4byte Mailbox_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2833,7 +2833,7 @@ __attribute__((naked)) void ItemStorage_ProcessWithdrawTossInput(void)
         "_0816C060: .4byte gMultiuseListMenuTemplate\n\t"
         "_0816C064: .4byte gUnknown_203B984\n\t"
         "_0816C068: .4byte gTasks\n\t"
-        "_0816C06C: .4byte 0x0816C155\n\t"
+        "_0816C06C: .4byte ItemStorage_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3097,7 +3097,7 @@ __attribute__((naked)) void ItemStorage_GoBackToPlayerPCMenu_InitStorage(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816C260: .4byte gTasks\n\t"
-        "_0816C264: .4byte 0x0816B06D\n\t"
+        "_0816C264: .4byte ItemStorageMenuProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3178,7 +3178,7 @@ __attribute__((naked)) void ItemStorage_ItemSwapChoosePrompt(void)
         "_0816C304: .4byte gSaveBlock1Ptr\n\t"
         "_0816C308: .4byte gStringVar1\n\t"
         "_0816C30C: .4byte 0x0000FFF7\n\t"
-        "_0816C310: .4byte 0x0816C315\n\t"
+        "_0816C310: .4byte sub_0816C314 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3378,7 +3378,7 @@ __attribute__((naked)) void ItemStorage_DoItemSwap(void)
         "_0816C498: .4byte gSaveBlock1Ptr\n\t"
         "_0816C49C: .4byte gMultiuseListMenuTemplate\n\t"
         "_0816C4A0: .4byte gTasks\n\t"
-        "_0816C4A4: .4byte 0x0816C155\n\t"
+        "_0816C4A4: .4byte ItemStorage_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3574,7 +3574,7 @@ __attribute__((naked)) void ItemStorage_DoItemAction(void)
         "_0816C620: .4byte gStringVar1\n\t"
         "_0816C624: .4byte 0x0000FFFC\n\t"
         "_0816C628: .4byte gTasks\n\t"
-        "_0816C62C: .4byte 0x0816C631\n\t"
+        "_0816C62C: .4byte ItemStorage_HandleQuantityRolling + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3749,7 +3749,7 @@ __attribute__((naked)) void ItemStorage_DoItemWithdraw(void)
         "_0816C78C: .4byte gStringVar1\n\t"
         "_0816C790: .4byte gStringVar2\n\t"
         "_0816C794: .4byte 0x0000FFFD\n\t"
-        "_0816C798: .4byte 0x0816C915\n\t"
+        "_0816C798: .4byte ItemStorage_HandleRemoveItem + 1\n\t"
         "_0816C79C:\n\t"
         "	movs r0, #0\n\t"
         "	strh r0, [r4, #4]\n\t"
@@ -3769,7 +3769,7 @@ __attribute__((naked)) void ItemStorage_DoItemWithdraw(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816C7C0: .4byte 0x0000FFFA\n\t"
-        "_0816C7C4: .4byte 0x0816C985\n\t"
+        "_0816C7C4: .4byte ItemStorage_WaitPressHandleResumeProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3872,7 +3872,7 @@ __attribute__((naked)) void ItemStorage_DoItemToss(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816C89C: .4byte 0x0000FFF9\n\t"
-        "_0816C8A0: .4byte 0x0816C985\n\t"
+        "_0816C8A0: .4byte ItemStorage_WaitPressHandleResumeProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3901,7 +3901,7 @@ __attribute__((naked)) void ItemStorage_ResumeInputFromYesToss(void)
         "	.align 2, 0\n\t"
         "_0816C8CC: .4byte 0x0000FFFB\n\t"
         "_0816C8D0: .4byte gTasks\n\t"
-        "_0816C8D4: .4byte 0x0816C915\n\t"
+        "_0816C8D4: .4byte ItemStorage_HandleRemoveItem + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4057,7 +4057,7 @@ __attribute__((naked)) void ItemStorage_StartScrollIndicatorAndProcessInput(void
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816C9F0: .4byte gTasks\n\t"
-        "_0816C9F4: .4byte 0x0816C155\n\t"
+        "_0816C9F4: .4byte ItemStorage_ProcessInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -3551,7 +3551,7 @@ __attribute__((naked)) bool8 IsUpdateLinkStateCBActive(void)
         "	b _0808570E\n\t"
         "	.align 2, 0\n\t"
         "_08085704: .4byte gMain\n\t"
-        "_08085708: .4byte 0x0808653D\n\t"
+        "_08085708: .4byte CB1_OverworldLink + 1\n\t"
         "_0808570C:\n\t"
         "	movs r0, #1\n\t"
         "_0808570E:\n\t"
@@ -3627,7 +3627,7 @@ __attribute__((naked)) void CB1_Overworld(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085784: .4byte gMain\n\t"
-        "_08085788: .4byte 0x080857C5\n\t"
+        "_08085788: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3802,11 +3802,11 @@ __attribute__((naked)) void CB2_NewGame(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080858A8: .4byte gFieldCallback\n\t"
-        "_080858AC: .4byte 0x080FBD51\n\t"
+        "_080858AC: .4byte ExecuteTruckSequence + 1\n\t"
         "_080858B0: .4byte gFieldCallback2\n\t"
         "_080858B4: .4byte gUnknown_3002798\n\t"
-        "_080858B8: .4byte 0x0808576D\n\t"
-        "_080858BC: .4byte 0x080857C5\n\t"
+        "_080858B8: .4byte CB1_Overworld + 1\n\t"
+        "_080858BC: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3855,9 +3855,9 @@ __attribute__((naked)) void CB2_WhiteOut(void)
         "	.align 2, 0\n\t"
         "_08085920: .4byte gMain\n\t"
         "_08085924: .4byte gFieldCallback\n\t"
-        "_08085928: .4byte 0x080AECC5\n\t"
-        "_0808592C: .4byte 0x0808576D\n\t"
-        "_08085930: .4byte 0x080857C5\n\t"
+        "_08085928: .4byte FieldCB_WarpExitFadeFromBlack + 1\n\t"
+        "_0808592C: .4byte CB1_Overworld + 1\n\t"
+        "_08085930: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3880,9 +3880,9 @@ __attribute__((naked)) void CB2_LoadMap(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085958: .4byte 0x08137271\n\t"
+        "_08085958: .4byte CB2_DoChangeMap + 1\n\t"
         "_0808595C: .4byte gMain\n\t"
-        "_08085960: .4byte 0x08085965\n\t"
+        "_08085960: .4byte CB2_LoadMap2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3903,8 +3903,8 @@ __attribute__((naked)) void CB2_LoadMap2(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085980: .4byte gUnknown_3002798\n\t"
-        "_08085984: .4byte 0x0808576D\n\t"
-        "_08085988: .4byte 0x080857C5\n\t"
+        "_08085984: .4byte CB1_Overworld + 1\n\t"
+        "_08085988: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3943,8 +3943,8 @@ __attribute__((naked)) void CB2_ReturnToFieldContestHall(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080859D0: .4byte gMain\n\t"
-        "_080859D4: .4byte 0x0808576D\n\t"
-        "_080859D8: .4byte 0x080857C5\n\t"
+        "_080859D4: .4byte CB1_Overworld + 1\n\t"
+        "_080859D8: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3964,8 +3964,8 @@ __attribute__((naked)) void CB2_ReturnToFieldCableClub(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080859F4: .4byte gFieldCallback\n\t"
-        "_080859F8: .4byte 0x080AEC11\n\t"
-        "_080859FC: .4byte 0x08085A01\n\t"
+        "_080859F8: .4byte FieldCB_ReturnToFieldWirelessLink + 1\n\t"
+        "_080859FC: .4byte CB2_LoadMapOnReturnToFieldCableClub + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3990,8 +3990,8 @@ __attribute__((naked)) void CB2_LoadMapOnReturnToFieldCableClub(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085A24: .4byte gUnknown_3002798\n\t"
-        "_08085A28: .4byte 0x0808653D\n\t"
-        "_08085A2C: .4byte 0x080857C5\n\t"
+        "_08085A28: .4byte CB1_OverworldLink + 1\n\t"
+        "_08085A2C: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4008,7 +4008,7 @@ __attribute__((naked)) void CB2_ReturnToField(void)
         "	bl SetMainCallback2\n\t"
         "	b _08085A52\n\t"
         "	.align 2, 0\n\t"
-        "_08085A44: .4byte 0x08085A81\n\t"
+        "_08085A44: .4byte CB2_ReturnToFieldLink + 1\n\t"
         "_08085A48:\n\t"
         "	bl FieldClearVBlankHBlankCallbacks\n\t"
         "	ldr r0, _08085A58\n\t"
@@ -4017,7 +4017,7 @@ __attribute__((naked)) void CB2_ReturnToField(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085A58: .4byte 0x08085A5D\n\t"
+        "_08085A58: .4byte CB2_ReturnToFieldLocal + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4039,7 +4039,7 @@ __attribute__((naked)) void CB2_ReturnToFieldLocal(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085A78: .4byte gUnknown_3002798\n\t"
-        "_08085A7C: .4byte 0x080857C5\n\t"
+        "_08085A7C: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4063,7 +4063,7 @@ __attribute__((naked)) void CB2_ReturnToFieldLink(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085AA0: .4byte gUnknown_3002798\n\t"
-        "_08085AA4: .4byte 0x080857C5\n\t"
+        "_08085AA4: .4byte CB2_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4086,10 +4086,10 @@ __attribute__((naked)) void CB2_ReturnToFieldFromMultiplayer(void)
         "	ldr r0, _08085AD8\n\t"
         "	b _08085AE0\n\t"
         "	.align 2, 0\n\t"
-        "_08085ACC: .4byte 0x0808653D\n\t"
+        "_08085ACC: .4byte CB1_OverworldLink + 1\n\t"
         "_08085AD0: .4byte gUnknown_300319C\n\t"
         "_08085AD4: .4byte gFieldCallback\n\t"
-        "_08085AD8: .4byte 0x080AEC11\n\t"
+        "_08085AD8: .4byte FieldCB_ReturnToFieldWirelessLink + 1\n\t"
         "_08085ADC:\n\t"
         "	ldr r1, _08085AF4\n\t"
         "	ldr r0, _08085AF8\n\t"
@@ -4102,7 +4102,7 @@ __attribute__((naked)) void CB2_ReturnToFieldFromMultiplayer(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085AF4: .4byte gFieldCallback\n\t"
-        "_08085AF8: .4byte 0x080AEB11\n\t"
+        "_08085AF8: .4byte FieldCB_ReturnToFieldCableLink + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4121,7 +4121,7 @@ __attribute__((naked)) void CB2_ReturnToFieldWithOpenMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085B10: .4byte gFieldCallback2\n\t"
-        "_08085B14: .4byte 0x080AEFA1\n\t"
+        "_08085B14: .4byte FieldCB_ReturnToFieldOpenStartMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4140,7 +4140,7 @@ __attribute__((naked)) void CB2_ReturnToFieldContinueScript(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085B2C: .4byte gFieldCallback\n\t"
-        "_08085B30: .4byte 0x080AEA85\n\t"
+        "_08085B30: .4byte FieldCB_ContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4160,7 +4160,7 @@ __attribute__((naked)) void CB2_ReturnToFieldContinueScriptPlayMapMusic(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085B48: .4byte gFieldCallback\n\t"
-        "_08085B4C: .4byte 0x080AEA65\n\t"
+        "_08085B4C: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4179,7 +4179,7 @@ __attribute__((naked)) void CB2_ReturnToFieldFadeFromBlack(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085B64: .4byte gFieldCallback\n\t"
-        "_08085B68: .4byte 0x080AECC5\n\t"
+        "_08085B68: .4byte FieldCB_WarpExitFadeFromBlack + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4287,7 +4287,7 @@ __attribute__((naked)) void CB2_ContinueSavedGame(void)
         "	bl SetMainCallback2\n\t"
         "	b _08085C6C\n\t"
         "	.align 2, 0\n\t"
-        "_08085C54: .4byte 0x08085935\n\t"
+        "_08085C54: .4byte CB2_LoadMap + 1\n\t"
         "_08085C58:\n\t"
         "	bl sub_080EE664\n\t"
         "	ldr r0, _08085C74\n\t"
@@ -4302,8 +4302,8 @@ __attribute__((naked)) void CB2_ContinueSavedGame(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08085C74: .4byte gFieldCallback\n\t"
-        "_08085C78: .4byte 0x08085B6D\n\t"
-        "_08085C7C: .4byte 0x0808576D\n\t"
+        "_08085C78: .4byte FieldCB_FadeTryShowMapPopup + 1\n\t"
+        "_08085C7C: .4byte CB1_Overworld + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4371,7 +4371,7 @@ __attribute__((naked)) void SetFieldVBlankCallback(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08085CF0: .4byte 0x08085CF5\n\t"
+        "_08085CF0: .4byte VBlankCB_Field + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5490,7 +5490,7 @@ __attribute__((naked)) void ResetAllMultiplayerState(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080865A0: .4byte 0x08086A15\n\t"
+        "_080865A0: .4byte KeyInterCB_SelfIdle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5696,7 +5696,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
         "_080866CC: .4byte gUnknown_3000E10\n\t"
-        "_080866D0: .4byte 0x08086A5D\n\t"
+        "_080866D0: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_080866D4:\n\t"
         "	movs r0, #0x83\n\t"
         "	bl IsAnyPlayerInTradingState\n\t"
@@ -5714,7 +5714,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	bl sub_08086EE8\n\t"
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
-        "_080866F8: .4byte 0x08086A5D\n\t"
+        "_080866F8: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_080866FC:\n\t"
         "	mov r0, r8\n\t"
         "	subs r0, #0x12\n\t"
@@ -5759,7 +5759,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
         "_08086764: .4byte gUnknown_3000E10\n\t"
-        "_08086768: .4byte 0x08086A5D\n\t"
+        "_08086768: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_0808676C:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl PlayerIsAtSouthExit\n\t"
@@ -5778,7 +5778,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
         "_08086790: .4byte gUnknown_3000E10\n\t"
-        "_08086794: .4byte 0x08086A5D\n\t"
+        "_08086794: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_08086798:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl TryInteractWithPlayer\n\t"
@@ -5799,7 +5799,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
         "_080867C0: .4byte gUnknown_3000E10\n\t"
-        "_080867C4: .4byte 0x08086A5D\n\t"
+        "_080867C4: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_080867C8:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08086CA4\n\t"
@@ -5818,7 +5818,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _08086816\n\t"
         "	.align 2, 0\n\t"
         "_080867EC: .4byte gUnknown_3000E10\n\t"
-        "_080867F0: .4byte 0x08086A81\n\t"
+        "_080867F0: .4byte KeyInterCB_DeferToRecvQueue + 1\n\t"
         "_080867F4:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_08086CA4\n\t"
@@ -5845,7 +5845,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
         "_08086828: .4byte gUnknown_3000E10\n\t"
-        "_0808682C: .4byte 0x08086AA5\n\t"
+        "_0808682C: .4byte KeyInterCB_DeferToSendQueue + 1\n\t"
         "_08086830:\n\t"
         "	mov r1, r8\n\t"
         "	cmp r1, #0x1a\n\t"
@@ -5882,7 +5882,7 @@ __attribute__((naked)) void HandleLinkPlayerKeyInput(u32 playerId, u16 key, stru
         "	b _0808688A\n\t"
         "	.align 2, 0\n\t"
         "_08086874: .4byte gUnknown_3000E10\n\t"
-        "_08086878: .4byte 0x08086A15\n\t"
+        "_08086878: .4byte KeyInterCB_SelfIdle + 1\n\t"
         "_0808687C:\n\t"
         "	ldr r0, _08086898\n\t"
         "	adds r1, r7, r0\n\t"
@@ -6212,7 +6212,7 @@ __attribute__((naked)) u16 KeyInterCB_DeferToEventScript(u32 key)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086A7C: .4byte 0x08086A51\n\t"
+        "_08086A7C: .4byte KeyInterCB_Idle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6236,7 +6236,7 @@ __attribute__((naked)) u16 KeyInterCB_DeferToRecvQueue(u32 key)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086AA0: .4byte 0x08086A51\n\t"
+        "_08086AA0: .4byte KeyInterCB_Idle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6260,7 +6260,7 @@ __attribute__((naked)) u16 KeyInterCB_DeferToSendQueue(u32 key)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086AC4: .4byte 0x08086A51\n\t"
+        "_08086AC4: .4byte KeyInterCB_Idle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6301,7 +6301,7 @@ __attribute__((naked)) u16 KeyInterCB_Ready(u32 keyOrPlayerId)
         "	.align 2, 0\n\t"
         "_08086AF8: .4byte gUnknown_3000E10\n\t"
         "_08086AFC: .4byte gMain\n\t"
-        "_08086B00: .4byte 0x08086AC9\n\t"
+        "_08086B00: .4byte KeyInterCB_ExitingSeat + 1\n\t"
         "_08086B04:\n\t"
         "	bl CheckRfuKeepAliveTimer\n\t"
         "_08086B08:\n\t"
@@ -6325,7 +6325,7 @@ __attribute__((naked)) u16 KeyInterCB_SetReady(u32 key)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086B20: .4byte 0x08086AD5\n\t"
+        "_08086B20: .4byte KeyInterCB_Ready + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6367,7 +6367,7 @@ __attribute__((naked)) u16 KeyInterCB_WaitForPlayersToExit(u32 keyOrPlayerId)
         "	.align 2, 0\n\t"
         "_08086B54: .4byte gUnknown_3000E10\n\t"
         "_08086B58: .4byte 0x082471F2\n\t"
-        "_08086B5C: .4byte 0x08086B25\n\t"
+        "_08086B5C: .4byte KeyInterCB_SendNothing_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6383,7 +6383,7 @@ __attribute__((naked)) u16 KeyInterCB_SendExitRoomKey(u32 key)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086B70: .4byte 0x08086B29\n\t"
+        "_08086B70: .4byte KeyInterCB_WaitForPlayersToExit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6437,10 +6437,10 @@ __attribute__((naked)) u32 GetCableClubPartnersReady(void)
         "	b _08086BDC\n\t"
         "	.align 2, 0\n\t"
         "_08086BB8: .4byte gUnknown_3000E14\n\t"
-        "_08086BBC: .4byte 0x08086AD5\n\t"
+        "_08086BBC: .4byte KeyInterCB_Ready + 1\n\t"
         "_08086BC0: .4byte gUnknown_3000E10\n\t"
         "_08086BC4: .4byte gLocalLinkPlayerId\n\t"
-        "_08086BC8: .4byte 0x08086AC9\n\t"
+        "_08086BC8: .4byte KeyInterCB_ExitingSeat + 1\n\t"
         "_08086BCC:\n\t"
         "	movs r0, #0x82\n\t"
         "	bl AreAllPlayersInTradingState\n\t"
@@ -6482,7 +6482,7 @@ __attribute__((naked)) u16 SetInCableClubSeat(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086BFC: .4byte 0x08086B11\n\t"
+        "_08086BFC: .4byte KeyInterCB_SetReady + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6498,7 +6498,7 @@ __attribute__((naked)) u16 SetLinkWaitingForScript(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086C10: .4byte 0x08086A5D\n\t"
+        "_08086C10: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6514,7 +6514,7 @@ __attribute__((naked)) u16 QueueExitLinkRoomKey(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086C24: .4byte 0x08086B61\n\t"
+        "_08086C24: .4byte KeyInterCB_SendExitRoomKey + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6530,7 +6530,7 @@ __attribute__((naked)) u16 SetStartedCableClubActivity(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08086C38: .4byte 0x08086B75\n\t"
+        "_08086C38: .4byte KeyInterCB_SendNothing + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7048,8 +7048,8 @@ __attribute__((naked)) bool32 Overworld_RecvKeysFromLinkIsRunning(void)
         "	b _08086F92\n\t"
         "	.align 2, 0\n\t"
         "_08086F7C: .4byte gUnknown_3000E14\n\t"
-        "_08086F80: .4byte 0x08086A81\n\t"
-        "_08086F84: .4byte 0x08086A5D\n\t"
+        "_08086F80: .4byte KeyInterCB_DeferToRecvQueue + 1\n\t"
+        "_08086F84: .4byte KeyInterCB_DeferToEventScript + 1\n\t"
         "_08086F88: .4byte gUnknown_3000E18\n\t"
         "_08086F8C: .4byte gPaletteFade\n\t"
         "_08086F90:\n\t"
@@ -7086,7 +7086,7 @@ __attribute__((naked)) bool32 Overworld_SendKeysToLinkIsRunning(void)
         "	b _08086FCA\n\t"
         "	.align 2, 0\n\t"
         "_08086FC0: .4byte gUnknown_3000E14\n\t"
-        "_08086FC4: .4byte 0x08086AA5\n\t"
+        "_08086FC4: .4byte KeyInterCB_DeferToSendQueue + 1\n\t"
         "_08086FC8:\n\t"
         "	movs r0, #1\n\t"
         "_08086FCA:\n\t"
@@ -8059,7 +8059,7 @@ __attribute__((naked)) void CreateLinkPlayerSprite(u8 a0, u8 a1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080875E8: .4byte 0x080875F1\n\t"
+        "_080875E8: .4byte SpriteCB_LinkPlayer + 1\n\t"
         "_080875EC: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );

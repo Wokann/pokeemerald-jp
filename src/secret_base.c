@@ -791,8 +791,8 @@ __attribute__((naked)) void Task_EnterSecretBase(void)
         "_080E9CE0: .4byte gSaveBlock1Ptr\n\t"
         "_080E9CE4: .4byte 0x00001AAC\n\t"
         "_080E9CE8: .4byte gFieldCallback\n\t"
-        "_080E9CEC: .4byte 0x080AEA65\n\t"
-        "_080E9CF0: .4byte 0x08085935\n\t"
+        "_080E9CEC: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
+        "_080E9CF0: .4byte CB2_LoadMap + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -821,7 +821,7 @@ __attribute__((naked)) void EnterSecretBase(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E9D20: .4byte 0x080E9C5D\n\t"
+        "_080E9D20: .4byte Task_EnterSecretBase + 1\n\t"
         "_080E9D24: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
@@ -937,7 +937,7 @@ __attribute__((naked)) void EnterNewlyCreatedSecretBase_StartFadeIn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E9DF4: .4byte 0x080E9D55\n\t"
+        "_080E9DF4: .4byte EnterNewlyCreatedSecretBase_WaitFadeIn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1004,8 +1004,8 @@ __attribute__((naked)) void Task_EnterNewlyCreatedSecretBase(void)
         "_080E9E70: .4byte gSaveBlock1Ptr\n\t"
         "_080E9E74: .4byte 0x08568A94\n\t"
         "_080E9E78: .4byte gFieldCallback\n\t"
-        "_080E9E7C: .4byte 0x080E9D95\n\t"
-        "_080E9E80: .4byte 0x08085935\n\t"
+        "_080E9E7C: .4byte EnterNewlyCreatedSecretBase_StartFadeIn + 1\n\t"
+        "_080E9E80: .4byte CB2_LoadMap + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1024,7 +1024,7 @@ __attribute__((naked)) void EnterNewlyCreatedSecretBase(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E9E9C: .4byte 0x080E9DF9\n\t"
+        "_080E9E9C: .4byte Task_EnterNewlyCreatedSecretBase + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1718,8 +1718,8 @@ __attribute__((naked)) void Task_WarpOutOfSecretBase(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EA3BC: .4byte gFieldCallback\n\t"
-        "_080EA3C0: .4byte 0x080AEC95\n\t"
-        "_080EA3C4: .4byte 0x08085935\n\t"
+        "_080EA3C0: .4byte FieldCB_DefaultWarpExit + 1\n\t"
+        "_080EA3C4: .4byte CB2_LoadMap + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1738,7 +1738,7 @@ __attribute__((naked)) void WarpOutOfSecretBase(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EA3E0: .4byte 0x080EA345\n\t"
+        "_080EA3E0: .4byte Task_WarpOutOfSecretBase + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2447,7 +2447,7 @@ __attribute__((naked)) void ShowSecretBaseDecorationMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EA8E4: .4byte 0x08126AA1\n\t"
+        "_080EA8E4: .4byte DoSecretBaseDecorationMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2463,7 +2463,7 @@ __attribute__((naked)) void ShowSecretBaseRegistryMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EA8F8: .4byte 0x080EA8FD\n\t"
+        "_080EA8F8: .4byte Task_ShowSecretBaseRegistryMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2518,7 +2518,7 @@ __attribute__((naked)) void Task_ShowSecretBaseRegistryMenu(void)
         "_080EA960: .4byte gUnknown_3005B68\n\t"
         "_080EA964: .4byte gUnknown_2039CEC\n\t"
         "_080EA968: .4byte 0x08568B18\n\t"
-        "_080EA96C: .4byte 0x080EAAF1\n\t"
+        "_080EA96C: .4byte HandleRegistryMenuInput + 1\n\t"
         "_080EA970:\n\t"
         "	ldr r1, _080EA984\n\t"
         "	ldr r2, _080EA988\n\t"
@@ -2532,7 +2532,7 @@ __attribute__((naked)) void Task_ShowSecretBaseRegistryMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EA984: .4byte 0x085CA688\n\t"
-        "_080EA988: .4byte 0x080EAE19\n\t"
+        "_080EA988: .4byte GoToSecretBasePCMainMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2861,7 +2861,7 @@ __attribute__((naked)) void ShowRegistryMenuActions(void)
         "_080EABE8: .4byte gUnknown_3005B68\n\t"
         "_080EABEC: .4byte 0x08568B20\n\t"
         "_080EABF0: .4byte 0x08568AF4\n\t"
-        "_080EABF4: .4byte 0x080EABF9\n\t"
+        "_080EABF4: .4byte HandleRegistryMenuActionsInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2955,7 +2955,7 @@ __attribute__((naked)) void ShowRegistryMenuDeleteConfirmation(void)
         "_080EACA4: .4byte gStringVar1\n\t"
         "_080EACA8: .4byte gStringVar4\n\t"
         "_080EACAC: .4byte 0x085CA658\n\t"
-        "_080EACB0: .4byte 0x080EACB5\n\t"
+        "_080EACB0: .4byte ShowRegistryMenuDeleteYesNo + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3050,7 +3050,7 @@ __attribute__((naked)) void DeleteRegistry_Yes_Callback(void)
         "_080EAD58: .4byte gUnknown_3005B68\n\t"
         "_080EAD5C: .4byte gSaveBlock1Ptr\n\t"
         "_080EAD60: .4byte 0x00001A9D\n\t"
-        "_080EAD64: .4byte 0x080EAAF1\n\t"
+        "_080EAD64: .4byte HandleRegistryMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3069,7 +3069,7 @@ __attribute__((naked)) void sub_080EAD68(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EAD7C: .4byte 0x085CA676\n\t"
-        "_080EAD80: .4byte 0x080EACD5\n\t"
+        "_080EAD80: .4byte DeleteRegistry_Yes_Callback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3113,7 +3113,7 @@ __attribute__((naked)) void DeleteRegistry_No(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EADCC: .4byte gUnknown_3005B68\n\t"
-        "_080EADD0: .4byte 0x080EAAF1\n\t"
+        "_080EADD0: .4byte HandleRegistryMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3149,7 +3149,7 @@ __attribute__((naked)) void ReturnToMainRegistryMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EAE10: .4byte gUnknown_3005B68\n\t"
-        "_080EAE14: .4byte 0x080EAAF1\n\t"
+        "_080EAE14: .4byte HandleRegistryMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }

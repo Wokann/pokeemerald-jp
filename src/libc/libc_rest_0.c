@@ -153,7 +153,7 @@ __attribute__((naked)) int fflush(void *fp)
         "b _08299F9A\n\t"
         ".align 2, 0\n\t"
         "_08299F1C: .4byte gUnknown_203CF1C\n\t"
-        "_08299F20: .4byte 0x08299F09\n\t"
+        "_08299F20: .4byte fflush + 1\n\t"
         "_08299F24:\n\t"
         "ldr r0, [r4, #0x54]\n\t"
         "cmp r0, #0\n\t"
@@ -368,7 +368,7 @@ __attribute__((naked)) void _cleanup_r(void *ptr)
         "bl _fwalk\n\t"
         "pop {pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829A084: .4byte 0x08299F09\n\t"
+        "_0829A084: .4byte fflush + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -436,7 +436,7 @@ __attribute__((naked)) void __sinit(void *ptr)
         "str r4, [r0]\n\t"
         "pop {r4, r5, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829A0F4: .4byte 0x0829A079\n\t"
+        "_0829A0F4: .4byte _cleanup_r + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -685,7 +685,7 @@ __attribute__((naked)) void __smakebuf(void *fp)
         "add sp, #0x3c\n\t"
         "pop {r4, r5, r6, r7, pc}\n\t"
         ".align 2, 0\n\t"
-        "_0829A728: .4byte 0x0829A079\n\t"
+        "_0829A728: .4byte _cleanup_r + 1\n\t"
         ".syntax divided\n\t"
     );
 }

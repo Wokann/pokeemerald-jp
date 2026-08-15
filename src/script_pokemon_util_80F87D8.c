@@ -453,7 +453,7 @@ __attribute__((naked)) void ShowContestWinnerCleanup(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F9368: .4byte 0x08085B35\n\t"
+        "_080F9368: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -471,9 +471,9 @@ __attribute__((naked)) void ShowContestWinner(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F9380: .4byte 0x0812FE25\n\t"
+        "_080F9380: .4byte CB2_ContestPainting + 1\n\t"
         "_080F9384: .4byte gMain\n\t"
-        "_080F9388: .4byte 0x080F935D\n\t"
+        "_080F9388: .4byte ShowContestWinnerCleanup + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -833,7 +833,7 @@ __attribute__((naked)) void ShowContestEntryMonPic(void)
         "	bl HandleLoadSpecialPokePic_2\n\t"
         "	b _080F9668\n\t"
         "	.align 2, 0\n\t"
-        "_080F9638: .4byte 0x080F9779\n\t"
+        "_080F9638: .4byte sub_080F9778 + 1\n\t"
         "_080F963C: .4byte gContestMons\n\t"
         "_080F9640: .4byte gSpecialVar_0x8006\n\t"
         "_080F9644: .4byte gTasks\n\t"
@@ -952,7 +952,7 @@ __attribute__((naked)) void ShowContestEntryMonPic(void)
         "	.align 2, 0\n\t"
         "_080F973C: .4byte gSprites\n\t"
         "_080F9740: .4byte gTasks\n\t"
-        "_080F9744: .4byte 0x08007141\n\t"
+        "_080F9744: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -981,7 +981,7 @@ __attribute__((naked)) void sub_080F9748(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F9770: .4byte 0x080F9779\n\t"
+        "_080F9770: .4byte sub_080F9778 + 1\n\t"
         "_080F9774: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1213,7 +1213,7 @@ __attribute__((naked)) void sub_080F98EC(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080F9914: .4byte 0x080F9919\n\t"
+        "_080F9914: .4byte sub_080F9918 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1796,7 +1796,7 @@ __attribute__((naked)) void ChooseHalfPartyForBattle(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F9CE4: .4byte gMain\n\t"
-        "_080F9CE8: .4byte 0x080F9CF1\n\t"
+        "_080F9CE8: .4byte CB2_ReturnFromChooseHalfParty + 1\n\t"
         "_080F9CEC: .4byte 0x000040CF\n\t"
         ".syntax divided\n\t"
     );
@@ -1828,7 +1828,7 @@ __attribute__((naked)) void CB2_ReturnFromChooseHalfParty(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F9D18: .4byte gSpecialVar_Result\n\t"
-        "_080F9D1C: .4byte 0x08085B35\n\t"
+        "_080F9D1C: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1851,7 +1851,7 @@ __attribute__((naked)) void sub_080F9D20(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F9D3C: .4byte gMain\n\t"
-        "_080F9D40: .4byte 0x080F9D49\n\t"
+        "_080F9D40: .4byte sub_080F9D48 + 1\n\t"
         "_080F9D44: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
@@ -1883,7 +1883,7 @@ __attribute__((naked)) void sub_080F9D48(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F9D70: .4byte gSpecialVar_Result\n\t"
-        "_080F9D74: .4byte 0x08085B35\n\t"
+        "_080F9D74: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -2000,7 +2000,7 @@ __attribute__((naked)) void CreateChooseAnswerTask(void)
         "	movs r0, #1\n\t"
         "	b _081A070A\n\t"
         "	.align 2, 0\n\t"
-        "_081A0700: .4byte 0x081A05D5\n\t"
+        "_081A0700: .4byte Task_ChooseAnswer + 1\n\t"
         "_081A0704: .4byte gTasks\n\t"
         "_081A0708:\n\t"
         "	movs r0, #0\n\t"
@@ -2359,7 +2359,7 @@ __attribute__((naked)) void Task_WaitForPrintingMessage(void)
         "	b _081A0930\n\t"
         "	.align 2, 0\n\t"
         "_081A0924: .4byte gSpecialVar_0x8005\n\t"
-        "_081A0928: .4byte 0x080988C5\n\t"
+        "_081A0928: .4byte ScriptContext_Enable + 1\n\t"
         "_081A092C:\n\t"
         "	bl ScriptContext_Enable\n\t"
         "_081A0930:\n\t"
@@ -2643,7 +2643,7 @@ __attribute__((naked)) void PrintMessage(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A0B5C: .4byte gStringVar4\n\t"
-        "_081A0B60: .4byte 0x081A08FD\n\t"
+        "_081A0B60: .4byte Task_WaitForPrintingMessage + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4129,7 +4129,7 @@ __attribute__((naked)) void ExecuteFuncAfterButtonPress(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A15FC: .4byte 0x081A1585\n\t"
+        "_081A15FC: .4byte Task_ExecuteFuncAfterButtonPress + 1\n\t"
         "_081A1600: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4154,7 +4154,7 @@ __attribute__((naked)) void sub_081A1604(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A1624: .4byte 0x081A155D\n\t"
+        "_081A1624: .4byte sub_081A155C + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -27,7 +27,7 @@ __attribute__((naked)) void CB2_PyramidBagMenuFromStartMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4714: .4byte 0x08085AFD\n\t"
+        "_081C4714: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -43,7 +43,7 @@ __attribute__((naked)) void sub_081C4718(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4728: .4byte 0x0805996D\n\t"
+        "_081C4728: .4byte sub_0805996C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -63,7 +63,7 @@ __attribute__((naked)) void sub_081C472C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4748: .4byte 0x081C474D\n\t"
+        "_081C4748: .4byte sub_081C474C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -97,8 +97,8 @@ __attribute__((naked)) void sub_081C474C(void)
         "	.align 2, 0\n\t"
         "_081C477C: .4byte gPaletteFade\n\t"
         "_081C4780: .4byte gFieldCallback2\n\t"
-        "_081C4784: .4byte 0x081B9069\n\t"
-        "_081C4788: .4byte 0x08085A31\n\t"
+        "_081C4784: .4byte hm_add_c3_without_phase_2 + 1\n\t"
+        "_081C4788: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -180,7 +180,7 @@ __attribute__((naked)) void sub_081C47A0(void)
         "_081C4814: .4byte 0x00000816\n\t"
         "_081C4818: .4byte 0x00000804\n\t"
         "_081C481C: .4byte 0x0000080F\n\t"
-        "_081C4820: .4byte 0x081C4855\n\t"
+        "_081C4820: .4byte sub_081C4854 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -398,8 +398,8 @@ __attribute__((naked)) void sub_081C4880(void)
         "	movs r0, #1\n\t"
         "	b _081C49DE\n\t"
         "	.align 2, 0\n\t"
-        "_081C49D4: .4byte 0x081C4841\n\t"
-        "_081C49D8: .4byte 0x081C4825\n\t"
+        "_081C49D4: .4byte sub_081C4840 + 1\n\t"
+        "_081C49D8: .4byte sub_081C4824 + 1\n\t"
         "_081C49DC:\n\t"
         "	movs r0, #0\n\t"
         "_081C49DE:\n\t"
@@ -1084,7 +1084,7 @@ __attribute__((naked)) void sub_081C4EF4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4F24: .4byte 0x081C53C5\n\t"
+        "_081C4F24: .4byte Task_HandlePyramidBagInput + 1\n\t"
         "_081C4F28: .4byte gUnknown_3005B68\n\t"
         "_081C4F2C: .4byte gMultiuseListMenuTemplate\n\t"
         "_081C4F30: .4byte gUnknown_203CBFC\n\t"
@@ -1671,7 +1671,7 @@ __attribute__((naked)) void sub_081C5310(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C5340: .4byte gTasks\n\t"
-        "_081C5344: .4byte 0x081C5349\n\t"
+        "_081C5344: .4byte sub_081C5348 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2065,7 +2065,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	.align 2, 0\n\t"
         "_081C567C: .4byte gUnknown_203CBF8\n\t"
         "_081C5680: .4byte gTasks\n\t"
-        "_081C5684: .4byte 0x081C5811\n\t"
+        "_081C5684: .4byte HandleMenuActionInput + 1\n\t"
         "_081C5688:\n\t"
         "	ldr r0, _081C56A0\n\t"
         "	lsls r1, r5, #2\n\t"
@@ -2081,7 +2081,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C56A0: .4byte gTasks\n\t"
-        "_081C56A4: .4byte 0x081C5795\n\t"
+        "_081C56A4: .4byte HandleFewMenuActionsInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2575,7 +2575,7 @@ __attribute__((naked)) void BagAction_UseOnField(void)
         "	.align 2, 0\n\t"
         "_081C5A48: .4byte gSpecialVar_ItemId\n\t"
         "_081C5A4C: .4byte 0x085C9556\n\t"
-        "_081C5A50: .4byte 0x081C5F25\n\t"
+        "_081C5A50: .4byte sub_081C5F24 + 1\n\t"
         "_081C5A54:\n\t"
         "	ldrh r0, [r4]\n\t"
         "	bl sub_080D6DF8\n\t"
@@ -2656,7 +2656,7 @@ __attribute__((naked)) void SetTaskToMainPyramidBagInputHandler(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C5AE8: .4byte gTasks\n\t"
-        "_081C5AEC: .4byte 0x081C53C5\n\t"
+        "_081C5AEC: .4byte Task_HandlePyramidBagInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2724,7 +2724,7 @@ __attribute__((naked)) void BagAction_Toss(void)
         "_081C5B6C: .4byte gStringVar1\n\t"
         "_081C5B70: .4byte gStringVar4\n\t"
         "_081C5B74: .4byte 0x085C9523\n\t"
-        "_081C5B78: .4byte 0x081C5CC5\n\t"
+        "_081C5B78: .4byte sub_081C5CC4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3025,7 +3025,7 @@ __attribute__((naked)) void TossItem(void)
         "_081C5DCC: .4byte gStringVar2\n\t"
         "_081C5DD0: .4byte gStringVar4\n\t"
         "_081C5DD4: .4byte 0x085C9532\n\t"
-        "_081C5DD8: .4byte 0x081C5DDD\n\t"
+        "_081C5DD8: .4byte sub_081C5DDC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3112,7 +3112,7 @@ __attribute__((naked)) void BagAction_Give(void)
         "	.align 2, 0\n\t"
         "_081C5E80: .4byte gSpecialVar_ItemId\n\t"
         "_081C5E84: .4byte 0x085C945C\n\t"
-        "_081C5E88: .4byte 0x081C5EFD\n\t"
+        "_081C5E88: .4byte sub_081C5EFC + 1\n\t"
         "_081C5E8C:\n\t"
         "	ldrh r0, [r5]\n\t"
         "	bl ItemId_GetHoldEffectParam\n\t"
@@ -3128,7 +3128,7 @@ __attribute__((naked)) void BagAction_Give(void)
         "	b _081C5EB6\n\t"
         "	.align 2, 0\n\t"
         "_081C5EA8: .4byte gUnknown_203CBF8\n\t"
-        "_081C5EAC: .4byte 0x081B7C01\n\t"
+        "_081C5EAC: .4byte sub_081B7C00 + 1\n\t"
         "_081C5EB0:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl sub_081C5EBC\n\t"
@@ -3168,7 +3168,7 @@ __attribute__((naked)) void sub_081C5EBC(void)
         "_081C5EEC: .4byte gStringVar1\n\t"
         "_081C5EF0: .4byte gStringVar4\n\t"
         "_081C5EF4: .4byte 0x085C948E\n\t"
-        "_081C5EF8: .4byte 0x081C5EFD\n\t"
+        "_081C5EF8: .4byte sub_081C5EFC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3253,7 +3253,7 @@ __attribute__((naked)) void sub_081C5F5C(void)
         "	.align 2, 0\n\t"
         "_081C5F80: .4byte gSpecialVar_ItemId\n\t"
         "_081C5F84: .4byte 0x085C945C\n\t"
-        "_081C5F88: .4byte 0x081C5EFD\n\t"
+        "_081C5F88: .4byte sub_081C5EFC + 1\n\t"
         "_081C5F8C:\n\t"
         "	ldrh r0, [r5]\n\t"
         "	bl ItemId_GetHoldEffectParam\n\t"
@@ -3406,7 +3406,7 @@ __attribute__((naked)) void Task_BeginItemSwap(void)
         "_081C60B8: .4byte gStringVar1\n\t"
         "_081C60BC: .4byte gStringVar4\n\t"
         "_081C60C0: .4byte 0x085C947F\n\t"
-        "_081C60C4: .4byte 0x081C60C9\n\t"
+        "_081C60C4: .4byte Task_ItemSwapHandleInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4262,7 +4262,7 @@ __attribute__((naked)) void sub_081C66E0(void)
         "_081C6718: .4byte gUnknown_203CBF8\n\t"
         "_081C671C: .4byte 0x00000804\n\t"
         "_081C6720: .4byte gSprites\n\t"
-        "_081C6724: .4byte 0x081C6729\n\t"
+        "_081C6724: .4byte sub_081C6728 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4289,7 +4289,7 @@ __attribute__((naked)) void sub_081C6728(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C674C: .4byte 0x08007141\n\t"
+        "_081C674C: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }

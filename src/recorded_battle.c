@@ -368,7 +368,7 @@ __attribute__((naked)) u8 RecordedBattle_GetBattlerAction(u8 battler)
         "_08184F0C: .4byte gUnknown_203BA00\n\t"
         "_08184F10: .4byte gSpecialVar_Result\n\t"
         "_08184F14: .4byte gBattleOutcome\n\t"
-        "_08184F18: .4byte 0x080381C1\n\t"
+        "_08184F18: .4byte CB2_QuitRecordedBattle + 1\n\t"
         "_08184F1C:\n\t"
         "	adds r0, r1, #1\n\t"
         "	strh r0, [r2]\n\t"
@@ -1683,8 +1683,8 @@ __attribute__((naked)) void Task_StartAfterCountdown(void)
         "	.align 2, 0\n\t"
         "_0818590C: .4byte gTasks\n\t"
         "_08185910: .4byte gMain\n\t"
-        "_08185914: .4byte 0x0818586D\n\t"
-        "_08185918: .4byte 0x080365B5\n\t"
+        "_08185914: .4byte CB2_RecordedBattleEnd + 1\n\t"
+        "_08185918: .4byte CB2_InitBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2016,10 +2016,10 @@ __attribute__((naked)) void PlayRecordedBattle(void (*CB2_After)(void))
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08185BD4: .4byte 0x081858D9\n\t"
+        "_08185BD4: .4byte Task_StartAfterCountdown + 1\n\t"
         "_08185BD8: .4byte gTasks\n\t"
         "_08185BDC: .4byte gUnknown_203C47C\n\t"
-        "_08185BE0: .4byte 0x08185BE5\n\t"
+        "_08185BE0: .4byte CB2_RecordedBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3006,7 +3006,7 @@ __attribute__((naked)) void sub_08186218(void)
         "	.align 2, 0\n\t"
         "_08186228: .4byte gBattlerControllerFuncs\n\t"
         "_0818622C: .4byte gActiveBattler\n\t"
-        "_08186230: .4byte 0x08186235\n\t"
+        "_08186230: .4byte sub_08186234 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3083,7 +3083,7 @@ __attribute__((naked)) void sub_08186284(void)
         "_081862AC: .4byte gSprites\n\t"
         "_081862B0: .4byte gBattlerSpriteIds\n\t"
         "_081862B4: .4byte gActiveBattler\n\t"
-        "_081862B8: .4byte 0x08007141\n\t"
+        "_081862B8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3116,7 +3116,7 @@ __attribute__((naked)) void sub_081862BC(void)
         "_081862E4: .4byte gSprites\n\t"
         "_081862E8: .4byte gBattlerSpriteIds\n\t"
         "_081862EC: .4byte gActiveBattler\n\t"
-        "_081862F0: .4byte 0x08007141\n\t"
+        "_081862F0: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3170,7 +3170,7 @@ __attribute__((naked)) void sub_081862F4(void)
         "_0818634C: .4byte gSprites\n\t"
         "_08186350: .4byte gBattlerSpriteIds\n\t"
         "_08186354: .4byte gActiveBattler\n\t"
-        "_08186358: .4byte 0x08007141\n\t"
+        "_08186358: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3277,7 +3277,7 @@ __attribute__((naked)) void sub_081863A4(void)
         "_08186410: .4byte gSprites\n\t"
         "_08186414: .4byte gHealthboxSpriteIds\n\t"
         "_08186418: .4byte gActiveBattler\n\t"
-        "_0818641C: .4byte 0x08007141\n\t"
+        "_0818641C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186420: .4byte gBattlerSpriteIds\n\t"
         "_08186424:\n\t"
         "	ldr r6, _08186574\n\t"
@@ -3452,12 +3452,12 @@ __attribute__((naked)) void sub_081863A4(void)
         "_08186574: .4byte gSprites\n\t"
         "_08186578: .4byte gHealthboxSpriteIds\n\t"
         "_0818657C: .4byte gActiveBattler\n\t"
-        "_08186580: .4byte 0x08007141\n\t"
+        "_08186580: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186584: .4byte gBattlerSpriteIds\n\t"
         "_08186588: .4byte gBattleSpritesDataPtr\n\t"
         "_0818658C: .4byte 0x000027F9\n\t"
         "_08186590: .4byte gBattlerControllerFuncs\n\t"
-        "_08186594: .4byte 0x0818635D\n\t"
+        "_08186594: .4byte sub_0818635C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3747,7 +3747,7 @@ __attribute__((naked)) void sub_08186598(void)
         "_081867E0: .4byte gActiveBattler\n\t"
         "_081867E4: .4byte gSprites\n\t"
         "_081867E8: .4byte gUnknown_3005ADC\n\t"
-        "_081867EC: .4byte 0x08007141\n\t"
+        "_081867EC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081867F0: .4byte gBattlerSpriteIds\n\t"
         "_081867F4:\n\t"
         "	ldr r2, _08186948\n\t"
@@ -3921,14 +3921,14 @@ __attribute__((naked)) void sub_08186598(void)
         "_08186948: .4byte gSprites\n\t"
         "_0818694C: .4byte gUnknown_3005ADC\n\t"
         "_08186950: .4byte gActiveBattler\n\t"
-        "_08186954: .4byte 0x08007141\n\t"
+        "_08186954: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186958: .4byte gBattlerSpriteIds\n\t"
         "_0818695C: .4byte gBattleTypeFlags\n\t"
         "_08186960: .4byte gBattlerPartyIndexes\n\t"
         "_08186964: .4byte gEnemyParty\n\t"
         "_08186968: .4byte gBattleSpritesDataPtr\n\t"
         "_0818696C: .4byte gBattlerControllerFuncs\n\t"
-        "_08186970: .4byte 0x081863A5\n\t"
+        "_08186970: .4byte sub_081863A4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3985,7 +3985,7 @@ __attribute__((naked)) void sub_08186974(void)
         "_081869D0: .4byte gSprites\n\t"
         "_081869D4: .4byte gBattlerSpriteIds\n\t"
         "_081869D8: .4byte gActiveBattler\n\t"
-        "_081869DC: .4byte 0x08007141\n\t"
+        "_081869DC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081869E0: .4byte gBattleSpritesDataPtr\n\t"
         "_081869E4: .4byte gBattlerPartyIndexes\n\t"
         "_081869E8: .4byte gEnemyParty\n\t"
@@ -4304,10 +4304,10 @@ __attribute__((naked)) void sub_08186BD0(void)
         "_08186C24: .4byte gSprites\n\t"
         "_08186C28: .4byte gHealthboxSpriteIds\n\t"
         "_08186C2C: .4byte gActiveBattler\n\t"
-        "_08186C30: .4byte 0x08007141\n\t"
+        "_08186C30: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186C34: .4byte gBattleSpritesDataPtr\n\t"
         "_08186C38: .4byte gBattlerControllerFuncs\n\t"
-        "_08186C3C: .4byte 0x08186C41\n\t"
+        "_08186C3C: .4byte sub_08186C40 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4368,8 +4368,8 @@ __attribute__((naked)) void sub_08186C40(void)
         "_08186CA4: .4byte gActiveBattler\n\t"
         "_08186CA8: .4byte gSprites\n\t"
         "_08186CAC: .4byte gBattlerSpriteIds\n\t"
-        "_08186CB0: .4byte 0x08007141\n\t"
-        "_08186CB4: .4byte 0x080394FD\n\t"
+        "_08186CB0: .4byte SpriteCallbackDummy + 1\n\t"
+        "_08186CB4: .4byte SpriteCallbackDummy_2 + 1\n\t"
         "_08186CB8: .4byte gMPlayInfo_BGM\n\t"
         "_08186CBC: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
@@ -4476,13 +4476,13 @@ __attribute__((naked)) void sub_08186CC0(void)
         "_08186D88: .4byte gActiveBattler\n\t"
         "_08186D8C: .4byte gSprites\n\t"
         "_08186D90: .4byte gBattlerSpriteIds\n\t"
-        "_08186D94: .4byte 0x08007141\n\t"
+        "_08186D94: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186D98: .4byte 0x000027F9\n\t"
         "_08186D9C: .4byte gHealthboxSpriteIds\n\t"
         "_08186DA0: .4byte gBattlerPartyIndexes\n\t"
         "_08186DA4: .4byte gEnemyParty\n\t"
         "_08186DA8: .4byte gBattlerControllerFuncs\n\t"
-        "_08186DAC: .4byte 0x08186BD1\n\t"
+        "_08186DAC: .4byte sub_08186BD0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4577,9 +4577,9 @@ __attribute__((naked)) void sub_08186DB0(void)
         "_08186E60: .4byte gEnemyParty\n\t"
         "_08186E64: .4byte gSprites\n\t"
         "_08186E68: .4byte gUnknown_3005ADC\n\t"
-        "_08186E6C: .4byte 0x08007141\n\t"
+        "_08186E6C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08186E70: .4byte gBattlerControllerFuncs\n\t"
-        "_08186E74: .4byte 0x08186CC1\n\t"
+        "_08186E74: .4byte sub_08186CC0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

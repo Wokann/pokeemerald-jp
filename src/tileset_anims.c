@@ -294,7 +294,7 @@ __attribute__((naked)) void InitTilesetAnim_General()
         "_080A0400: .4byte gUnknown_3000F36\n\t"
         "_080A0404: .4byte gUnknown_3000F38\n\t"
         "_080A0408: .4byte gUnknown_3000F40\n\t"
-        "_080A040C: .4byte 0x080A0439\n\t"
+        "_080A040C: .4byte TilesetAnim_General + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -319,7 +319,7 @@ __attribute__((naked)) void InitTilesetAnim_Building()
         "_080A0428: .4byte gUnknown_3000F36\n\t"
         "_080A042C: .4byte gUnknown_3000F38\n\t"
         "_080A0430: .4byte gUnknown_3000F40\n\t"
-        "_080A0434: .4byte 0x080A047D\n\t"
+        "_080A0434: .4byte TilesetAnim_Building + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -532,7 +532,7 @@ __attribute__((naked)) void InitTilesetAnim_BattleFrontierOutsideEast()
         "_080A0578: .4byte gUnknown_3000F3C\n\t"
         "_080A057C: .4byte gUnknown_3000F38\n\t"
         "_080A0580: .4byte gUnknown_3000F44\n\t"
-        "_080A0584: .4byte 0x080A0905\n\t"
+        "_080A0584: .4byte TilesetAnim_Rustboro + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -557,7 +557,7 @@ __attribute__((naked)) void InitTilesetAnim_BattleFrontierOutsideWest()
         "_080A05A4: .4byte gUnknown_3000F3C\n\t"
         "_080A05A8: .4byte gUnknown_3000F38\n\t"
         "_080A05AC: .4byte gUnknown_3000F44\n\t"
-        "_080A05B0: .4byte 0x080A0981\n\t"
+        "_080A05B0: .4byte TilesetAnim_Dewford + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -582,7 +582,7 @@ __attribute__((naked)) void InitTilesetAnim_BattlePyramid()
         "_080A05D0: .4byte gUnknown_3000F3C\n\t"
         "_080A05D4: .4byte gUnknown_3000F38\n\t"
         "_080A05D8: .4byte gUnknown_3000F44\n\t"
-        "_080A05DC: .4byte 0x080A0999\n\t"
+        "_080A05DC: .4byte TilesetAnim_Slateport + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -609,7 +609,7 @@ __attribute__((naked)) void InitTilesetAnim_Mauville()
         "_080A0600: .4byte gUnknown_3000F3C\n\t"
         "_080A0604: .4byte gUnknown_3000F38\n\t"
         "_080A0608: .4byte gUnknown_3000F44\n\t"
-        "_080A060C: .4byte 0x080A09B1\n\t"
+        "_080A060C: .4byte TilesetAnim_Mauville + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -634,7 +634,7 @@ __attribute__((naked)) void InitTilesetAnim_BikeShop()
         "_080A062C: .4byte gUnknown_3000F3C\n\t"
         "_080A0630: .4byte gUnknown_3000F38\n\t"
         "_080A0634: .4byte gUnknown_3000F44\n\t"
-        "_080A0638: .4byte 0x080A0A25\n\t"
+        "_080A0638: .4byte TilesetAnim_Lavaridge + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -755,7 +755,7 @@ __attribute__((naked)) void InitTilesetAnim_Cave()
         "_080A06F8: .4byte gUnknown_3000F3C\n\t"
         "_080A06FC: .4byte gUnknown_3000F38\n\t"
         "_080A0700: .4byte gUnknown_3000F44\n\t"
-        "_080A0704: .4byte 0x080A0A51\n\t"
+        "_080A0704: .4byte TilesetAnim_EverGrande + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -782,7 +782,7 @@ __attribute__((naked)) void InitTilesetAnim_Pacifidlog()
         "_080A0728: .4byte gUnknown_3000F3C\n\t"
         "_080A072C: .4byte gUnknown_3000F38\n\t"
         "_080A0730: .4byte gUnknown_3000F44\n\t"
-        "_080A0734: .4byte 0x080A0AC5\n\t"
+        "_080A0734: .4byte TilesetAnim_Pacifidlog + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -807,7 +807,7 @@ __attribute__((naked)) void InitTilesetAnim_Dewford()
         "_080A0754: .4byte gUnknown_3000F3C\n\t"
         "_080A0758: .4byte gUnknown_3000F38\n\t"
         "_080A075C: .4byte gUnknown_3000F44\n\t"
-        "_080A0760: .4byte 0x080A0AF5\n\t"
+        "_080A0760: .4byte TilesetAnim_Sootopolis + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -832,7 +832,7 @@ __attribute__((naked)) void InitTilesetAnim_EverGrande()
         "_080A0780: .4byte gUnknown_3000F3C\n\t"
         "_080A0784: .4byte gUnknown_3000F38\n\t"
         "_080A0788: .4byte gUnknown_3000F44\n\t"
-        "_080A078C: .4byte 0x080A0B45\n\t"
+        "_080A078C: .4byte TilesetAnim_BattleFrontierOutsideWest + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -857,7 +857,7 @@ __attribute__((naked)) void InitTilesetAnim_Lavaridge()
         "_080A07AC: .4byte gUnknown_3000F3C\n\t"
         "_080A07B0: .4byte gUnknown_3000F38\n\t"
         "_080A07B4: .4byte gUnknown_3000F44\n\t"
-        "_080A07B8: .4byte 0x080A0B5D\n\t"
+        "_080A07B8: .4byte TilesetAnim_BattleFrontierOutsideEast + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -880,7 +880,7 @@ __attribute__((naked)) void InitTilesetAnim_EliteFour()
         "_080A07D0: .4byte gUnknown_3000F3A\n\t"
         "_080A07D4: .4byte gUnknown_3000F3C\n\t"
         "_080A07D8: .4byte gUnknown_3000F44\n\t"
-        "_080A07DC: .4byte 0x080A0B0D\n\t"
+        "_080A07DC: .4byte TilesetAnim_Underwater + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -903,7 +903,7 @@ __attribute__((naked)) void InitTilesetAnim_SootopolisGym()
         "_080A07F4: .4byte gUnknown_3000F3A\n\t"
         "_080A07F8: .4byte gUnknown_3000F3C\n\t"
         "_080A07FC: .4byte gUnknown_3000F44\n\t"
-        "_080A0800: .4byte 0x080A0EA1\n\t"
+        "_080A0800: .4byte TilesetAnim_SootopolisGym + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -928,7 +928,7 @@ __attribute__((naked)) void InitTilesetAnim_MauvilleGym()
         "_080A0820: .4byte gUnknown_3000F3C\n\t"
         "_080A0824: .4byte gUnknown_3000F38\n\t"
         "_080A0828: .4byte gUnknown_3000F44\n\t"
-        "_080A082C: .4byte 0x080A0B29\n\t"
+        "_080A082C: .4byte TilesetAnim_Cave + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -951,7 +951,7 @@ __attribute__((naked)) void InitTilesetAnim_Underwater()
         "_080A0844: .4byte gUnknown_3000F3A\n\t"
         "_080A0848: .4byte gUnknown_3000F3C\n\t"
         "_080A084C: .4byte gUnknown_3000F44\n\t"
-        "_080A0850: .4byte 0x080A0EB9\n\t"
+        "_080A0850: .4byte TilesetAnim_EliteFour + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -976,7 +976,7 @@ __attribute__((naked)) void InitTilesetAnim_Rustboro()
         "_080A0870: .4byte gUnknown_3000F3C\n\t"
         "_080A0874: .4byte gUnknown_3000F38\n\t"
         "_080A0878: .4byte gUnknown_3000F44\n\t"
-        "_080A087C: .4byte 0x080A0E89\n\t"
+        "_080A087C: .4byte TilesetAnim_MauvilleGym + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1001,7 +1001,7 @@ __attribute__((naked)) void InitTilesetAnim_Slateport()
         "_080A089C: .4byte gUnknown_3000F3C\n\t"
         "_080A08A0: .4byte gUnknown_3000F38\n\t"
         "_080A08A4: .4byte gUnknown_3000F44\n\t"
-        "_080A08A8: .4byte 0x080A0EE5\n\t"
+        "_080A08A8: .4byte TilesetAnim_BikeShop + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1026,7 +1026,7 @@ __attribute__((naked)) void InitTilesetAnim_Sootopolis()
         "_080A08C8: .4byte gUnknown_3000F3C\n\t"
         "_080A08CC: .4byte gUnknown_3000F38\n\t"
         "_080A08D0: .4byte gUnknown_3000F44\n\t"
-        "_080A08D4: .4byte 0x080A0EFD\n\t"
+        "_080A08D4: .4byte TilesetAnim_BattlePyramid + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1051,7 +1051,7 @@ __attribute__((naked)) void InitTilesetAnim_BattleDome()
         "_080A08F4: .4byte gUnknown_3000F3C\n\t"
         "_080A08F8: .4byte gUnknown_3000F38\n\t"
         "_080A08FC: .4byte gUnknown_3000F44\n\t"
-        "_080A0900: .4byte 0x080A0F21\n\t"
+        "_080A0900: .4byte TilesetAnim_BattleDome + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2372,9 +2372,9 @@ __attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLights(void)
         "_080A1130: .4byte 0x084FCF88\n\t"
         "_080A1134: .4byte gUnknown_20374B4\n\t"
         "_080A1138: .4byte gPaletteFade\n\t"
-        "_080A113C: .4byte 0x08149EBD\n\t"
+        "_080A113C: .4byte Phase2Task_Magma + 1\n\t"
         "_080A1140: .4byte gUnknown_3000F44\n\t"
-        "_080A1144: .4byte 0x080A0F39\n\t"
+        "_080A1144: .4byte TilesetAnim_BattleDome2 + 1\n\t"
         "_080A1148: .4byte gUnknown_3000F3C\n\t"
         ".syntax divided\n\t"
     );
@@ -2428,7 +2428,7 @@ __attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLightsNoBlend(void)
         "	.align 2, 0\n\t"
         "_080A11A4: .4byte 0x084FCF88\n\t"
         "_080A11A8: .4byte gUnknown_20374B4\n\t"
-        "_080A11AC: .4byte 0x08149EBD\n\t"
+        "_080A11AC: .4byte Phase2Task_Magma + 1\n\t"
         "_080A11B0: .4byte gPaletteFade\n\t"
         "_080A11B4: .4byte gUnknown_3000F3C\n\t"
         "_080A11B8: .4byte gUnknown_3000F44\n\t"

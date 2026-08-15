@@ -50,9 +50,9 @@ __attribute__((naked)) void DoEasyChatScreen(u8 type, u16 *words, MainCallback e
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811AABC: .4byte 0x0811AB11\n\t"
+        "_0811AABC: .4byte Task_InitEasyChatScreen + 1\n\t"
         "_0811AAC0: .4byte gTasks\n\t"
-        "_0811AAC4: .4byte 0x0811AAC9\n\t"
+        "_0811AAC4: .4byte MainCallback_EasyChatScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -142,7 +142,7 @@ __attribute__((naked)) void Task_InitEasyChatScreen(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811AB48: .4byte 0x0811AB4D\n\t"
+        "_0811AB48: .4byte Task_EasyChatScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -200,7 +200,7 @@ __attribute__((naked)) void Task_EasyChatScreen(u8 taskId)
         "	movs r0, #5\n\t"
         "	b _0811AC6A\n\t"
         "	.align 2, 0\n\t"
-        "_0811ABBC: .4byte 0x0811AAE1\n\t"
+        "_0811ABBC: .4byte VBlankCB_EasyChatScreen + 1\n\t"
         "_0811ABC0:\n\t"
         "	bl sub_0811B2EC\n\t"
         "	lsls r0, r0, #0x10\n\t"
@@ -731,7 +731,7 @@ __attribute__((naked)) void ShowEasyChatScreen(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0811B02C: .4byte gSpecialVar_0x8004\n\t"
-        "_0811B030: .4byte 0x08085B19\n\t"
+        "_0811B030: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -807,7 +807,7 @@ __attribute__((naked)) void QuizLadyShowQuizQuestion(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811B0B4: .4byte 0x0811B035\n\t"
+        "_0811B0B4: .4byte CB2_QuizLadyQuestion + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -902,7 +902,7 @@ __attribute__((naked)) void DoQuizAnswerEasyChatScreen(void)
         "	.align 2, 0\n\t"
         "_0811B134: .4byte gSaveBlock1Ptr\n\t"
         "_0811B138: .4byte 0x00003B6E\n\t"
-        "_0811B13C: .4byte 0x08085B19\n\t"
+        "_0811B13C: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -925,7 +925,7 @@ __attribute__((naked)) void DoQuizQuestionEasyChatScreen(void)
         "	.align 2, 0\n\t"
         "_0811B158: .4byte gSaveBlock1Ptr\n\t"
         "_0811B15C: .4byte 0x00003B5A\n\t"
-        "_0811B160: .4byte 0x08085B19\n\t"
+        "_0811B160: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -948,7 +948,7 @@ __attribute__((naked)) void DoQuizSetAnswerEasyChatScreen(void)
         "	.align 2, 0\n\t"
         "_0811B17C: .4byte gSaveBlock1Ptr\n\t"
         "_0811B180: .4byte 0x00003B6C\n\t"
-        "_0811B184: .4byte 0x08085B19\n\t"
+        "_0811B184: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -971,7 +971,7 @@ __attribute__((naked)) void DoQuizSetQuestionEasyChatScreen(void)
         "	.align 2, 0\n\t"
         "_0811B1A0: .4byte gSaveBlock1Ptr\n\t"
         "_0811B1A4: .4byte 0x00003B5A\n\t"
-        "_0811B1A8: .4byte 0x08085B19\n\t"
+        "_0811B1A8: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9308,7 +9308,7 @@ __attribute__((naked)) void CreateWordSelectCursorSprite(void)
         "_0811EA14: .4byte 0x0857443C\n\t"
         "_0811EA18: .4byte gUnknown_2039DE8\n\t"
         "_0811EA1C: .4byte gSprites\n\t"
-        "_0811EA20: .4byte 0x0811EA25\n\t"
+        "_0811EA20: .4byte SpriteCB_WordSelectCursor + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10228,7 +10228,7 @@ __attribute__((naked)) void sub_0811EF74(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811F038: .4byte 0x08007141\n\t"
+        "_0811F038: .4byte SpriteCallbackDummy + 1\n\t"
         "_0811F03C: .4byte gSprites\n\t"
         "_0811F040: .4byte gSaveBlock2Ptr\n\t"
         ".syntax divided\n\t"

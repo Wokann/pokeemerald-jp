@@ -34,7 +34,7 @@ __attribute__((naked)) void sub_080B1C58(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B1C94: .4byte 0x080B1F11\n\t"
+        "_080B1C94: .4byte sub_080B1F10 + 1\n\t"
         "_080B1C98: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -246,7 +246,7 @@ __attribute__((naked)) void sub_080B1DD4(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B1E00: .4byte gTasks\n\t"
-        "_080B1E04: .4byte 0x080B2609\n\t"
+        "_080B1E04: .4byte sub_080B2608 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -284,7 +284,7 @@ __attribute__((naked)) void sub_080B1E08(void)
         "_080B1E3C: .4byte gMain\n\t"
         "_080B1E40: .4byte gLinkType\n\t"
         "_080B1E44: .4byte gTasks\n\t"
-        "_080B1E48: .4byte 0x080B25C9\n\t"
+        "_080B1E48: .4byte sub_080B25C8 + 1\n\t"
         "_080B1E4C:\n\t"
         "	movs r0, #0\n\t"
         "_080B1E4E:\n\t"
@@ -338,7 +338,7 @@ __attribute__((naked)) void sub_080B1E54(void)
         "	.align 2, 0\n\t"
         "_080B1E9C: .4byte gLinkType\n\t"
         "_080B1EA0: .4byte gTasks\n\t"
-        "_080B1EA4: .4byte 0x080B25C9\n\t"
+        "_080B1EA4: .4byte sub_080B25C8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -372,7 +372,7 @@ __attribute__((naked)) void sub_080B1EA8(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B1ED4: .4byte gTasks\n\t"
-        "_080B1ED8: .4byte 0x080B2609\n\t"
+        "_080B1ED8: .4byte sub_080B2608 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -451,7 +451,7 @@ __attribute__((naked)) void sub_080B1F10(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B1F60: .4byte 0x080B1F65\n\t"
+        "_080B1F60: .4byte sub_080B1F64 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -499,7 +499,7 @@ __attribute__((naked)) void sub_080B1F64(void)
         "	.align 2, 0\n\t"
         "_080B1FBC: .4byte gTasks\n\t"
         "_080B1FC0: .4byte 0x08247C97\n\t"
-        "_080B1FC4: .4byte 0x080B1FE9\n\t"
+        "_080B1FC4: .4byte sub_080B1FE8 + 1\n\t"
         "_080B1FC8:\n\t"
         "	movs r0, #0x16\n\t"
         "	bl PlaySE\n\t"
@@ -514,7 +514,7 @@ __attribute__((naked)) void sub_080B1F64(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B1FE0: .4byte 0x08247CDA\n\t"
-        "_080B1FE4: .4byte 0x080B21F5\n\t"
+        "_080B1FE4: .4byte sub_080B21F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -557,7 +557,7 @@ __attribute__((naked)) void sub_080B1FE8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B2030: .4byte gTasks\n\t"
-        "_080B2034: .4byte 0x080B2039\n\t"
+        "_080B2034: .4byte sub_080B2038 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -637,7 +637,7 @@ __attribute__((naked)) void sub_080B2038(void)
         "_080B20D0: .4byte gMain\n\t"
         "_080B20D4: .4byte gStringVar1\n\t"
         "_080B20D8: .4byte 0x08247CB5\n\t"
-        "_080B20DC: .4byte 0x080B20E1\n\t"
+        "_080B20DC: .4byte sub_080B20E0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -694,7 +694,7 @@ __attribute__((naked)) void sub_080B20E0(void)
         "_080B2144: .4byte gMain\n\t"
         "_080B2148: .4byte 0x08247C97\n\t"
         "_080B214C: .4byte gTasks\n\t"
-        "_080B2150: .4byte 0x080B1FE9\n\t"
+        "_080B2150: .4byte sub_080B1FE8 + 1\n\t"
         "_080B2154:\n\t"
         "	movs r0, #1\n\t"
         "	ands r0, r1\n\t"
@@ -716,7 +716,7 @@ __attribute__((naked)) void sub_080B20E0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B217C: .4byte gTasks\n\t"
-        "_080B2180: .4byte 0x080B2185\n\t"
+        "_080B2180: .4byte sub_080B2184 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -756,7 +756,7 @@ __attribute__((naked)) void sub_080B2184(void)
         "	b _080B21E4\n\t"
         "	.align 2, 0\n\t"
         "_080B21C8: .4byte gTasks\n\t"
-        "_080B21CC: .4byte 0x080B2609\n\t"
+        "_080B21CC: .4byte sub_080B2608 + 1\n\t"
         "_080B21D0:\n\t"
         "	ldr r4, _080B21EC\n\t"
         "	adds r0, r7, #0\n\t"
@@ -775,7 +775,7 @@ __attribute__((naked)) void sub_080B2184(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B21EC: .4byte gSpecialVar_Result\n\t"
-        "_080B21F0: .4byte 0x080B22E5\n\t"
+        "_080B21F0: .4byte sub_080B22E4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -826,7 +826,7 @@ __attribute__((naked)) void sub_080B21F4(void)
         "	.align 2, 0\n\t"
         "_080B224C: .4byte gTasks\n\t"
         "_080B2250: .4byte gSpecialVar_Result\n\t"
-        "_080B2254: .4byte 0x080B258D\n\t"
+        "_080B2254: .4byte sub_080B258C + 1\n\t"
         "_080B2258:\n\t"
         "	cmp r2, #7\n\t"
         "	beq _080B2260\n\t"
@@ -838,7 +838,7 @@ __attribute__((naked)) void sub_080B21F4(void)
         "	ldr r0, _080B226C\n\t"
         "	b _080B22C0\n\t"
         "	.align 2, 0\n\t"
-        "_080B226C: .4byte 0x080B258D\n\t"
+        "_080B226C: .4byte sub_080B258C + 1\n\t"
         "_080B2270:\n\t"
         "	bl GetLinkPlayerCount_2\n\t"
         "	ldr r4, _080B22CC\n\t"
@@ -888,7 +888,7 @@ __attribute__((naked)) void sub_080B21F4(void)
         "_080B22D4: .4byte gBlockSendBuffer\n\t"
         "_080B22D8: .4byte gSelectedOrderFromParty\n\t"
         "_080B22DC: .4byte gUnknown_202412C\n\t"
-        "_080B22E0: .4byte 0x080B250D\n\t"
+        "_080B22E0: .4byte sub_080B250C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -941,7 +941,7 @@ __attribute__((naked)) void sub_080B22E4(void)
         "	b _080B23AA\n\t"
         "	.align 2, 0\n\t"
         "_080B2340: .4byte gTasks\n\t"
-        "_080B2344: .4byte 0x080B258D\n\t"
+        "_080B2344: .4byte sub_080B258C + 1\n\t"
         "_080B2348:\n\t"
         "	bl GetLinkPlayerCount_2\n\t"
         "	ldr r4, _080B23B4\n\t"
@@ -998,7 +998,7 @@ __attribute__((naked)) void sub_080B22E4(void)
         "_080B23C0: .4byte gSelectedOrderFromParty\n\t"
         "_080B23C4: .4byte gUnknown_202412C\n\t"
         "_080B23C8: .4byte gTasks\n\t"
-        "_080B23CC: .4byte 0x080B250D\n\t"
+        "_080B23CC: .4byte sub_080B250C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1132,7 +1132,7 @@ __attribute__((naked)) void task_map_chg_seq_0807EC34(void)
         "_080B24B8: .4byte gLinkType\n\t"
         "_080B24BC: .4byte 0x00002266\n\t"
         "_080B24C0: .4byte gTasks\n\t"
-        "_080B24C4: .4byte 0x080B258D\n\t"
+        "_080B24C4: .4byte sub_080B258C + 1\n\t"
         "_080B24C8:\n\t"
         "	ldr r1, _080B24E8\n\t"
         "	lsls r0, r4, #2\n\t"
@@ -1163,7 +1163,7 @@ __attribute__((naked)) void task_map_chg_seq_0807EC34(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B2504: .4byte gTasks\n\t"
-        "_080B2508: .4byte 0x080B258D\n\t"
+        "_080B2508: .4byte sub_080B258C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1366,7 +1366,7 @@ __attribute__((naked)) void sub_080B2648(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080B267C: .4byte 0x080B2609\n\t"
+        "_080B267C: .4byte sub_080B2608 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1601,7 +1601,7 @@ __attribute__((naked)) u8 CreateTask_ReestablishCableClubLink()
         "	movs r0, #0xff\n\t"
         "	b _080B28E0\n\t"
         "	.align 2, 0\n\t"
-        "_080B2810: .4byte 0x080B28F1\n\t"
+        "_080B2810: .4byte sub_080B28F0 + 1\n\t"
         "_080B2814:\n\t"
         "	ldr r0, _080B2828\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -1697,7 +1697,7 @@ __attribute__((naked)) u8 CreateTask_ReestablishCableClubLink()
         "	.align 2, 0\n\t"
         "_080B28E4: .4byte gLinkType\n\t"
         "_080B28E8: .4byte 0x00003322\n\t"
-        "_080B28EC: .4byte 0x080B28F1\n\t"
+        "_080B28EC: .4byte sub_080B28F0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1726,7 +1726,7 @@ __attribute__((naked)) void sub_080B28F0(void)
         "	b _080B2930\n\t"
         "	.align 2, 0\n\t"
         "_080B291C: .4byte gUnknown_3005B68\n\t"
-        "_080B2920: .4byte 0x080B3189\n\t"
+        "_080B2920: .4byte Task_WaitForLinkPlayerConnection + 1\n\t"
         "_080B2924:\n\t"
         "	cmp r2, #9\n\t"
         "	ble _080B2930\n\t"
@@ -1742,7 +1742,7 @@ __attribute__((naked)) void sub_080B28F0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B293C: .4byte 0x080B2941\n\t"
+        "_080B293C: .4byte sub_080B2940 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1774,7 +1774,7 @@ __attribute__((naked)) void sub_080B2940(void)
         "	b _080B2984\n\t"
         "	.align 2, 0\n\t"
         "_080B2970: .4byte gTasks\n\t"
-        "_080B2974: .4byte 0x080B2995\n\t"
+        "_080B2974: .4byte sub_080B2994 + 1\n\t"
         "_080B2978:\n\t"
         "	ldr r0, _080B298C\n\t"
         "	lsls r1, r5, #2\n\t"
@@ -1790,7 +1790,7 @@ __attribute__((naked)) void sub_080B2940(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B298C: .4byte gTasks\n\t"
-        "_080B2990: .4byte 0x080B29CD\n\t"
+        "_080B2990: .4byte sub_080B29CC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1823,7 +1823,7 @@ __attribute__((naked)) void sub_080B2994(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B29C4: .4byte gTasks\n\t"
-        "_080B29C8: .4byte 0x080B29CD\n\t"
+        "_080B29C8: .4byte sub_080B29CC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2041,9 +2041,9 @@ __attribute__((naked)) void sub_080B2A60(void)
         "	.align 2, 0\n\t"
         "_080B2B54: .4byte gSpecialVar_0x8004\n\t"
         "_080B2B58: .4byte gTrainerBattleOpponent_A\n\t"
-        "_080B2B5C: .4byte 0x080365B5\n\t"
+        "_080B2B5C: .4byte CB2_InitBattle + 1\n\t"
         "_080B2B60: .4byte gMain\n\t"
-        "_080B2B64: .4byte 0x080B2D69\n\t"
+        "_080B2B64: .4byte CB2_ReturnFromCableClubBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2232,9 +2232,9 @@ __attribute__((naked)) void sub_080B2B68(void)
         "_080B2CE4: .4byte 0x00002211\n\t"
         "_080B2CE8: .4byte gSpecialVar_0x8004\n\t"
         "_080B2CEC: .4byte gTrainerBattleOpponent_A\n\t"
-        "_080B2CF0: .4byte 0x080365B5\n\t"
+        "_080B2CF0: .4byte CB2_InitBattle + 1\n\t"
         "_080B2CF4: .4byte gMain\n\t"
-        "_080B2CF8: .4byte 0x080B2D69\n\t"
+        "_080B2CF8: .4byte CB2_ReturnFromCableClubBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2284,7 +2284,7 @@ __attribute__((naked)) void sub_080B2CFC(void)
         "	b _080B2D5A\n\t"
         "	.align 2, 0\n\t"
         "_080B2D4C: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B2D50: .4byte 0x08085A31\n\t"
+        "_080B2D50: .4byte CB2_ReturnToField + 1\n\t"
         "_080B2D54:\n\t"
         "	ldr r0, _080B2D64\n\t"
         "	bl SetMainCallback2\n\t"
@@ -2294,7 +2294,7 @@ __attribute__((naked)) void sub_080B2CFC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B2D64: .4byte 0x08085A31\n\t"
+        "_080B2D64: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2384,7 +2384,7 @@ __attribute__((naked)) void sub_080B2D68(void)
         "	.align 2, 0\n\t"
         "_080B2E1C: .4byte gLinkPlayers\n\t"
         "_080B2E20: .4byte gMain\n\t"
-        "_080B2E24: .4byte 0x080B2CFD\n\t"
+        "_080B2E24: .4byte sub_080B2CFC + 1\n\t"
         "_080B2E28:\n\t"
         "	ldr r1, _080B2E3C\n\t"
         "	ldr r0, _080B2E40\n\t"
@@ -2397,8 +2397,8 @@ __attribute__((naked)) void sub_080B2D68(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B2E3C: .4byte gMain\n\t"
-        "_080B2E40: .4byte 0x08085AA9\n\t"
-        "_080B2E44: .4byte 0x0809FDED\n\t"
+        "_080B2E40: .4byte CB2_ReturnToFieldFromMultiplayer + 1\n\t"
+        "_080B2E44: .4byte sub_0809FDEC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2555,7 +2555,7 @@ __attribute__((naked)) void sub_080B2F30(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B2F54: .4byte 0x080B2E85\n\t"
+        "_080B2F54: .4byte sub_080B2E84 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2635,7 +2635,7 @@ __attribute__((naked)) void sub_080B2F58(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B2FE8: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080B2FEC: .4byte 0x08076DB5\n\t"
+        "_080B2FEC: .4byte CB2_StartCreateTradeMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2731,7 +2731,7 @@ __attribute__((naked)) void PlayerEnteredTradeSeat(void)
         "	b _080B30A2\n\t"
         "	.align 2, 0\n\t"
         "_080B3094: .4byte gUnknown_300319C\n\t"
-        "_080B3098: .4byte 0x080B2FF1\n\t"
+        "_080B3098: .4byte sub_080B2FF0 + 1\n\t"
         "_080B309C:\n\t"
         "	ldr r0, _080B30A8\n\t"
         "	bl sub_080B2F30\n\t"
@@ -2739,7 +2739,7 @@ __attribute__((naked)) void PlayerEnteredTradeSeat(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B30A8: .4byte 0x080B2F59\n\t"
+        "_080B30A8: .4byte sub_080B2F58 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2755,7 +2755,7 @@ __attribute__((naked)) void sub_080B30AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B30BC: .4byte 0x080B2F59\n\t"
+        "_080B30BC: .4byte sub_080B2F58 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2790,7 +2790,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "_080B30E0: .4byte gLinkType\n\t"
         "_080B30E4: .4byte 0x00002211\n\t"
         "_080B30E8: .4byte gUnknown_300319C\n\t"
-        "_080B30EC: .4byte 0x080B2B69\n\t"
+        "_080B30EC: .4byte sub_080B2B68 + 1\n\t"
         "_080B30F0:\n\t"
         "	ldr r0, _080B30FC\n\t"
         "	bl sub_080B2F30\n\t"
@@ -2798,7 +2798,7 @@ __attribute__((naked)) void ColosseumPlayerSpotTriggered(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B30FC: .4byte 0x080B2A61\n\t"
+        "_080B30FC: .4byte sub_080B2A60 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2815,7 +2815,7 @@ __attribute__((naked)) void sub_080B3100(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B3114: .4byte 0x080B2E85\n\t"
+        "_080B3114: .4byte sub_080B2E84 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2833,7 +2833,7 @@ __attribute__((naked)) void sp02A_crash_sound(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B3128: .4byte gSpecialVar_0x8006\n\t"
-        "_080B312C: .4byte 0x08085B35\n\t"
+        "_080B312C: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2933,7 +2933,7 @@ __attribute__((naked)) void task00_08081A90(void)
         "	b _080B31FE\n\t"
         "	.align 2, 0\n\t"
         "_080B31E8: .4byte gTasks\n\t"
-        "_080B31EC: .4byte 0x0800AA0D\n\t"
+        "_080B31EC: .4byte CB2_LinkError + 1\n\t"
         "_080B31F0: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_080B31F4: .4byte gUnknown_300319C\n\t"
         "_080B31F8:\n\t"
@@ -2992,7 +2992,7 @@ __attribute__((naked)) void sub_080B3228(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B3248: .4byte gTasks\n\t"
-        "_080B324C: .4byte 0x080B3205\n\t"
+        "_080B324C: .4byte sub_080B3204 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3043,7 +3043,7 @@ __attribute__((naked)) void sub_080B3250(void)
         "	bl CreateTask\n\t"
         "	b _080B32EE\n\t"
         "	.align 2, 0\n\t"
-        "_080B32A8: .4byte 0x080B3189\n\t"
+        "_080B32A8: .4byte Task_WaitForLinkPlayerConnection + 1\n\t"
         "_080B32AC:\n\t"
         "	ldrh r0, [r5, #2]\n\t"
         "	adds r0, #1\n\t"

@@ -26,7 +26,7 @@ __attribute__((naked)) void SetControllerToSafari(void)
         "	.align 2, 0\n\t"
         "_081592B8: .4byte gBattlerControllerFuncs\n\t"
         "_081592BC: .4byte gActiveBattler\n\t"
-        "_081592C0: .4byte 0x081592C5\n\t"
+        "_081592C0: .4byte SafariBufferRunCommand + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -296,7 +296,7 @@ __attribute__((naked)) void CompleteOnHealthboxSpriteCallbackDummy(void)
         "_081594C0: .4byte gSprites\n\t"
         "_081594C4: .4byte gBattlerSpriteIds\n\t"
         "_081594C8: .4byte gActiveBattler\n\t"
-        "_081594CC: .4byte 0x08007141\n\t"
+        "_081594CC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -348,7 +348,7 @@ __attribute__((naked)) void CompleteWhenChosePokeblock(void)
         "_08159510: .4byte gSprites\n\t"
         "_08159514: .4byte gHealthboxSpriteIds\n\t"
         "_08159518: .4byte gActiveBattler\n\t"
-        "_0815951C: .4byte 0x08007141\n\t"
+        "_0815951C: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -452,7 +452,7 @@ __attribute__((naked)) void SafariOpenPokeblockCase(void)
         "_081595C4: .4byte gPaletteFade\n\t"
         "_081595C8: .4byte gBattlerControllerFuncs\n\t"
         "_081595CC: .4byte gActiveBattler\n\t"
-        "_081595D0: .4byte 0x081595D5\n\t"
+        "_081595D0: .4byte sub_081595D4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -483,7 +483,7 @@ __attribute__((naked)) void sub_081595D4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08159600: .4byte gMain\n\t"
-        "_08159604: .4byte 0x080380FD\n\t"
+        "_08159604: .4byte BattleMainCB2 + 1\n\t"
         "_08159608: .4byte gPaletteFade\n\t"
         "_0815960C: .4byte gSpecialVar_ItemId\n\t"
         ".syntax divided\n\t"
@@ -556,7 +556,7 @@ __attribute__((naked)) void SafariBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_08159680: .4byte gBattlerControllerFuncs\n\t"
         "_08159684: .4byte gActiveBattler\n\t"
-        "_08159688: .4byte 0x081592C5\n\t"
+        "_08159688: .4byte SafariBufferRunCommand + 1\n\t"
         "_0815968C: .4byte gBattleTypeFlags\n\t"
         "_08159690: .4byte gBattleBufferA\n\t"
         "_08159694:\n\t"
@@ -802,9 +802,9 @@ __attribute__((naked)) void SafariHandleDrawTrainerPic(void)
         "_08159804: .4byte gBattlerSpriteIds\n\t"
         "_08159808: .4byte gSprites\n\t"
         "_0815980C: .4byte 0x0000FFFE\n\t"
-        "_08159810: .4byte 0x0805D3C9\n\t"
+        "_08159810: .4byte sub_0805D3C8 + 1\n\t"
         "_08159814: .4byte gBattlerControllerFuncs\n\t"
-        "_08159818: .4byte 0x08159499\n\t"
+        "_08159818: .4byte CompleteOnHealthboxSpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -899,7 +899,7 @@ __attribute__((naked)) void sub_0815984C(void)
         "_08159890: .4byte gUnknown_202415D\n\t"
         "_08159894: .4byte gActiveBattler\n\t"
         "_08159898: .4byte gBattlerControllerFuncs\n\t"
-        "_0815989C: .4byte 0x08159561\n\t"
+        "_0815989C: .4byte CompleteOnSpecialAnimDone + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -948,7 +948,7 @@ __attribute__((naked)) void sub_081598A0(void)
         "_081598F0: .4byte gBattleSpritesDataPtr\n\t"
         "_081598F4: .4byte gUnknown_202415D\n\t"
         "_081598F8: .4byte gBattlerControllerFuncs\n\t"
-        "_081598FC: .4byte 0x08159561\n\t"
+        "_081598FC: .4byte CompleteOnSpecialAnimDone + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1015,7 +1015,7 @@ __attribute__((naked)) void SafariHandlePrintString(void)
         "_0815995C: .4byte gUnknown_2022D0A\n\t"
         "_08159960: .4byte gDisplayedStringBattle\n\t"
         "_08159964: .4byte gBattlerControllerFuncs\n\t"
-        "_08159968: .4byte 0x081594D1\n\t"
+        "_08159968: .4byte SafariHandlePrintSelectionString + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1074,7 +1074,7 @@ __attribute__((naked)) void sub_08159990(void)
         "_081599C0: .4byte gBattle_BG0_Y\n\t"
         "_081599C4: .4byte gBattlerControllerFuncs\n\t"
         "_081599C8: .4byte gActiveBattler\n\t"
-        "_081599CC: .4byte 0x08159315\n\t"
+        "_081599CC: .4byte HandleInputChooseAction + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1120,7 +1120,7 @@ __attribute__((naked)) void SafariHandleChooseAction(void)
         "	.align 2, 0\n\t"
         "_08159A1C: .4byte gBattlerControllerFuncs\n\t"
         "_08159A20: .4byte gActiveBattler\n\t"
-        "_08159A24: .4byte 0x08159991\n\t"
+        "_08159A24: .4byte sub_08159990 + 1\n\t"
         "_08159A28: .4byte 0x085ABB86\n\t"
         "_08159A2C: .4byte gActionSelectionCursor\n\t"
         "_08159A30: .4byte 0x085ABB4D\n\t"
@@ -1184,7 +1184,7 @@ __attribute__((naked)) void SafariHandleChooseItem(void)
         "	.align 2, 0\n\t"
         "_08159A80: .4byte gBattlerControllerFuncs\n\t"
         "_08159A84: .4byte gActiveBattler\n\t"
-        "_08159A88: .4byte 0x0815959D\n\t"
+        "_08159A88: .4byte SafariOpenPokeblockCase + 1\n\t"
         "_08159A8C: .4byte gBattlerInMenuId\n\t"
         ".syntax divided\n\t"
     );
@@ -1673,7 +1673,7 @@ __attribute__((naked)) void SafariHandleIntroTrainerBallThrow(void)
         "_08159D18: .4byte gBattlerPartyIndexes\n\t"
         "_08159D1C: .4byte gPlayerParty\n\t"
         "_08159D20: .4byte gBattlerControllerFuncs\n\t"
-        "_08159D24: .4byte 0x081594E9\n\t"
+        "_08159D24: .4byte CompleteWhenChosePokeblock + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1777,7 +1777,7 @@ __attribute__((naked)) void SafariHandleBattleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08159DAC: .4byte gBattlerControllerFuncs\n\t"
-        "_08159DB0: .4byte 0x08159611\n\t"
+        "_08159DB0: .4byte SafariHandleSuccessBallThrowAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1849,7 +1849,7 @@ __attribute__((naked)) void SafariHandleCmd55(void)
         "_08159E18: .4byte gActiveBattler\n\t"
         "_08159E1C: .4byte gBattleTypeFlags\n\t"
         "_08159E20: .4byte gBattlerControllerFuncs\n\t"
-        "_08159E24: .4byte 0x08159521\n\t"
+        "_08159E24: .4byte sub_08159520 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

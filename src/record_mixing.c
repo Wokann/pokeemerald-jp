@@ -11,7 +11,7 @@ __attribute__((naked)) void RecordMixingPlayerSpotTriggered()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E63D0: .4byte 0x080E6935\n\t"
+        "_080E63D0: .4byte Task_RecordMixing_Main + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -696,8 +696,8 @@ __attribute__((naked)) void Task_RecordMixing_Main(void)
         "_080E69DC: .4byte 0x00005110\n\t"
         "_080E69E0: .4byte gSpecialVar_0x8005\n\t"
         "_080E69E4: .4byte gUnknown_3001130\n\t"
-        "_080E69E8: .4byte 0x080E6AFD\n\t"
-        "_080E69EC: .4byte 0x080E6901\n\t"
+        "_080E69E8: .4byte Task_MixingRecordsRecv + 1\n\t"
+        "_080E69EC: .4byte Task_RecordMixing_SoundEffect + 1\n\t"
         "_080E69F0:\n\t"
         "	ldr r2, _080E6A1C\n\t"
         "	movs r0, #0x14\n\t"
@@ -733,7 +733,7 @@ __attribute__((naked)) void Task_RecordMixing_Main(void)
         "	bl PlaySE\n\t"
         "	b _080E6AE2\n\t"
         "	.align 2, 0\n\t"
-        "_080E6A40: .4byte 0x080E77E1\n\t"
+        "_080E6A40: .4byte Task_DoRecordMixing + 1\n\t"
         "_080E6A44:\n\t"
         "	ldr r2, _080E6A78\n\t"
         "	movs r0, #0x14\n\t"
@@ -816,7 +816,7 @@ __attribute__((naked)) void Task_RecordMixing_Main(void)
         "_080E6AEC: .4byte gUnknown_2039CB4\n\t"
         "_080E6AF0: .4byte gUnknown_2039CB8\n\t"
         "_080E6AF4: .4byte gUnknown_300319C\n\t"
-        "_080E6AF8: .4byte 0x080AEBB1\n\t"
+        "_080E6AF8: .4byte Task_ReturnToFieldRecordMixing + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1053,9 +1053,9 @@ __attribute__((naked)) void Task_MixingRecordsRecv(void)
         "	str r0, [r1]\n\t"
         "	b _080E6D3E\n\t"
         "	.align 2, 0\n\t"
-        "_080E6CC4: .4byte 0x080E6D45\n\t"
+        "_080E6CC4: .4byte Task_SendPacket + 1\n\t"
         "_080E6CC8: .4byte gUnknown_2039CB8\n\t"
-        "_080E6CCC: .4byte 0x080E6E09\n\t"
+        "_080E6CCC: .4byte Task_CopyReceiveBuffer + 1\n\t"
         "_080E6CD0: .4byte gUnknown_2039CB4\n\t"
         "_080E6CD4: .4byte gUnknown_300115C\n\t"
         "_080E6CD8: .4byte 0x00001230\n\t"
@@ -1087,7 +1087,7 @@ __attribute__((naked)) void Task_MixingRecordsRecv(void)
         "	b _080E6D3E\n\t"
         "	.align 2, 0\n\t"
         "_080E6D14: .4byte gUnknown_2039CB8\n\t"
-        "_080E6D18: .4byte 0x080E6E09\n\t"
+        "_080E6D18: .4byte Task_CopyReceiveBuffer + 1\n\t"
         "_080E6D1C: .4byte gUnknown_2039CB4\n\t"
         "_080E6D20: .4byte gUnknown_300115C\n\t"
         "_080E6D24: .4byte 0x00001444\n\t"
@@ -1208,7 +1208,7 @@ __attribute__((naked)) void Task_SendPacket(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E6E04: .4byte 0x080E6FAD\n\t"
+        "_080E6E04: .4byte Task_SendPacket_SwitchToReceive + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1431,7 +1431,7 @@ __attribute__((naked)) void Task_ReceivePacket(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E6FA0: .4byte gTasks\n\t"
-        "_080E6FA4: .4byte 0x080E6F45\n\t"
+        "_080E6FA4: .4byte sub_080E6F44 + 1\n\t"
         "_080E6FA8: .4byte gUnknown_3001130\n\t"
         ".syntax divided\n\t"
     );
@@ -1456,7 +1456,7 @@ __attribute__((naked)) void Task_SendPacket_SwitchToReceive(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_080E6FC8: .4byte gTasks\n\t"
-        "_080E6FCC: .4byte 0x080E6F79\n\t"
+        "_080E6FCC: .4byte Task_ReceivePacket + 1\n\t"
         "_080E6FD0: .4byte gUnknown_3001130\n\t"
         ".syntax divided\n\t"
     );
@@ -2678,7 +2678,7 @@ __attribute__((naked)) void Task_DoRecordMixing(void)
         "	bl CreateTask\n\t"
         "	b _080E78DA\n\t"
         "	.align 2, 0\n\t"
-        "_080E78A4: .4byte 0x081535C5\n\t"
+        "_080E78A4: .4byte Task_LinkFullSave + 1\n\t"
         "_080E78A8:\n\t"
         "	ldr r0, _080E78C8\n\t"
         "	bl FuncIsActiveTask\n\t"
@@ -2695,7 +2695,7 @@ __attribute__((naked)) void Task_DoRecordMixing(void)
         "	strh r0, [r4, #8]\n\t"
         "	b _080E78F2\n\t"
         "	.align 2, 0\n\t"
-        "_080E78C8: .4byte 0x081535C5\n\t"
+        "_080E78C8: .4byte Task_LinkFullSave + 1\n\t"
         "_080E78CC: .4byte gUnknown_300319C\n\t"
         "_080E78D0:\n\t"
         "	movs r0, #4\n\t"
@@ -4285,9 +4285,9 @@ __attribute__((naked)) void sub_080E8320(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E8488: .4byte 0x00001111\n\t"
-        "_080E848C: .4byte 0x080E82F5\n\t"
-        "_080E8490: .4byte 0x080E82DD\n\t"
-        "_080E8494: .4byte 0x080E84A5\n\t"
+        "_080E848C: .4byte sub_080E82F4 + 1\n\t"
+        "_080E8490: .4byte SanitizeRubyBattleTowerRecord + 1\n\t"
+        "_080E8494: .4byte SanitizeDayCareMailForRuby + 1\n\t"
         "_080E8498: .4byte gTasks\n\t"
         "_080E849C: .4byte gUnknown_2039CBC\n\t"
         "_080E84A0: .4byte gMain\n\t"
@@ -4439,7 +4439,7 @@ __attribute__((naked)) void SanitizeDayCareMailForRuby(void)
         "_080E85E4: .4byte 0x08566D56\n\t"
         "_080E85E8: .4byte gPaletteFade\n\t"
         "_080E85EC: .4byte gTasks\n\t"
-        "_080E85F0: .4byte 0x080E85F5\n\t"
+        "_080E85F0: .4byte sub_080E85F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4511,7 +4511,7 @@ __attribute__((naked)) void sub_080E85F4(void)
         "_080E8678: .4byte SPECIAL_sub_080EBD4C\n\t"
         "_080E867C: .4byte 0x08568730\n\t"
         "_080E8680: .4byte 0x085682F8\n\t"
-        "_080E8684: .4byte 0x080E8879\n\t"
+        "_080E8684: .4byte sub_080E8878 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4549,7 +4549,7 @@ __attribute__((naked)) void sub_080E8688(void)
         "	.align 2, 0\n\t"
         "_080E86BC: .4byte gTasks\n\t"
         "_080E86C0: .4byte gMain\n\t"
-        "_080E86C4: .4byte 0x080E89ED\n\t"
+        "_080E86C4: .4byte sub_080E89EC + 1\n\t"
         "_080E86C8:\n\t"
         "	movs r0, #0x80\n\t"
         "	lsls r0, r0, #2\n\t"
@@ -4668,7 +4668,7 @@ __attribute__((naked)) void sub_080E8688(void)
         "	str r0, [r5]\n\t"
         "	b _080E8868\n\t"
         "	.align 2, 0\n\t"
-        "_080E87B0: .4byte 0x080E88A9\n\t"
+        "_080E87B0: .4byte sub_080E88A8 + 1\n\t"
         "_080E87B4:\n\t"
         "	ldrh r1, [r6, #0x30]\n\t"
         "	movs r0, #0xc0\n\t"
@@ -4809,7 +4809,7 @@ __attribute__((naked)) void sub_080E8878(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E88A0: .4byte gTasks\n\t"
-        "_080E88A4: .4byte 0x080E85F5\n\t"
+        "_080E88A4: .4byte sub_080E85F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4846,7 +4846,7 @@ __attribute__((naked)) void sub_080E88A8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E88E0: .4byte gPaletteFade\n\t"
-        "_080E88E4: .4byte 0x080AA06D\n\t"
+        "_080E88E4: .4byte CB2_InitTitleScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5080,7 +5080,7 @@ __attribute__((naked)) void sub_080E89EC(void)
         "	ldr r0, _080E8A8C\n\t"
         "	b _080E8A92\n\t"
         "	.align 2, 0\n\t"
-        "_080E8A8C: .4byte 0x080E91E5\n\t"
+        "_080E8A8C: .4byte sub_080E91E4 + 1\n\t"
         "_080E8A90:\n\t"
         "	ldr r0, _080E8A9C\n\t"
         "_080E8A92:\n\t"
@@ -5090,7 +5090,7 @@ __attribute__((naked)) void sub_080E89EC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E8A9C: .4byte 0x080E8AA1\n\t"
+        "_080E8A9C: .4byte sub_080E8AA0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5399,7 +5399,7 @@ __attribute__((naked)) void sub_080E8AA0(void)
         "_080E8D58: .4byte gUnknown_2039CE5\n\t"
         "_080E8D5C: .4byte gUnknown_2039CC0\n\t"
         "_080E8D60: .4byte gTasks\n\t"
-        "_080E8D64: .4byte 0x080E8D69\n\t"
+        "_080E8D64: .4byte sub_080E8D68 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5430,7 +5430,7 @@ __attribute__((naked)) void sub_080E8D68(void)
         "	.align 2, 0\n\t"
         "_080E8D90: .4byte gMain\n\t"
         "_080E8D94: .4byte gTasks\n\t"
-        "_080E8D98: .4byte 0x080E9411\n\t"
+        "_080E8D98: .4byte sub_080E9410 + 1\n\t"
         "_080E8D9C:\n\t"
         "	ldrh r1, [r1, #0x30]\n\t"
         "	movs r0, #0x40\n\t"
@@ -6058,7 +6058,7 @@ __attribute__((naked)) void sub_080E91E4(void)
         "_080E9274: .4byte 0x08566E60\n\t"
         "_080E9278: .4byte gUnknown_2039CC0\n\t"
         "_080E927C: .4byte gTasks\n\t"
-        "_080E9280: .4byte 0x080E9285\n\t"
+        "_080E9280: .4byte sub_080E9284 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6139,7 +6139,7 @@ __attribute__((naked)) void sub_080E9284(void)
         "	.align 2, 0\n\t"
         "_080E9310: .4byte gMain\n\t"
         "_080E9314: .4byte gTasks\n\t"
-        "_080E9318: .4byte 0x080E9411\n\t"
+        "_080E9318: .4byte sub_080E9410 + 1\n\t"
         "_080E931C:\n\t"
         "	movs r6, #1\n\t"
         "	adds r2, r6, #0\n\t"
@@ -6344,7 +6344,7 @@ __attribute__((naked)) void sub_080E9410(void)
         "_080E94A8: .4byte 0x00007140\n\t"
         "_080E94AC: .4byte 0x000011DF\n\t"
         "_080E94B0: .4byte SPECIAL_FoundAbandonedShipRoom1Key\n\t"
-        "_080E94B4: .4byte 0x080E84A5\n\t"
+        "_080E94B4: .4byte SanitizeDayCareMailForRuby + 1\n\t"
         ".syntax divided\n\t"
     );
 }

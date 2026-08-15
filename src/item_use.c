@@ -92,7 +92,7 @@ __attribute__((naked)) void SetUpItemUseOnFieldCallback(void)
         "	.align 2, 0\n\t"
         "_080FD958: .4byte gTasks\n\t"
         "_080FD95C: .4byte gFieldCallback\n\t"
-        "_080FD960: .4byte 0x080FD979\n\t"
+        "_080FD960: .4byte MapPostLoadHook_UseItem + 1\n\t"
         "_080FD964:\n\t"
         "	ldr r0, _080FD974\n\t"
         "	ldr r1, [r0]\n\t"
@@ -119,7 +119,7 @@ __attribute__((naked)) void MapPostLoadHook_UseItem(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FD98C: .4byte 0x080FD991\n\t"
+        "_080FD98C: .4byte Task_CallItemUseOnFieldCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -178,7 +178,7 @@ __attribute__((naked)) void DisplayCannotUseItemMessage(void)
         "	b _080FDA12\n\t"
         "	.align 2, 0\n\t"
         "_080FD9EC: .4byte gStringVar4\n\t"
-        "_080FD9F0: .4byte 0x081AB969\n\t"
+        "_080FD9F0: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FD9F4:\n\t"
         "	ldr r1, _080FDA00\n\t"
         "	ldr r2, _080FDA04\n\t"
@@ -187,7 +187,7 @@ __attribute__((naked)) void DisplayCannotUseItemMessage(void)
         "	b _080FDA12\n\t"
         "	.align 2, 0\n\t"
         "_080FDA00: .4byte 0x085C9556\n\t"
-        "_080FDA04: .4byte 0x081C5F25\n\t"
+        "_080FDA04: .4byte sub_081C5F24 + 1\n\t"
         "_080FDA08:\n\t"
         "	ldr r2, _080FDA18\n\t"
         "	adds r0, r5, #0\n\t"
@@ -198,7 +198,7 @@ __attribute__((naked)) void DisplayCannotUseItemMessage(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FDA18: .4byte 0x080FDA4D\n\t"
+        "_080FDA18: .4byte CleanUpAfterFailingToUseRegisteredKeyItemOnField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -278,7 +278,7 @@ __attribute__((naked)) u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
         "	movs r0, #1\n\t"
         "	b _080FDAA2\n\t"
         "	.align 2, 0\n\t"
-        "_080FDA88: .4byte 0x080FE79D\n\t"
+        "_080FDA88: .4byte ItemUseOutOfBattle_TMHM + 1\n\t"
         "_080FDA8C:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl sub_080D6DF8\n\t"
@@ -288,7 +288,7 @@ __attribute__((naked)) u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId)
         "	movs r0, #0\n\t"
         "	b _080FDAA2\n\t"
         "	.align 2, 0\n\t"
-        "_080FDA9C: .4byte 0x080FEBC9\n\t"
+        "_080FDA9C: .4byte ItemUseOutOfBattle_EvolutionStone + 1\n\t"
         "_080FDAA0:\n\t"
         "	movs r0, #2\n\t"
         "_080FDAA2:\n\t"
@@ -318,7 +318,7 @@ __attribute__((naked)) void sub_080FDAA8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FDAC4: .4byte gSpecialVar_ItemId\n\t"
-        "_080FDAC8: .4byte 0x081AD205\n\t"
+        "_080FDAC8: .4byte bag_menu_mail_related + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -339,7 +339,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Mail(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FDAE4: .4byte gUnknown_203CB20\n\t"
-        "_080FDAE8: .4byte 0x080FDAA9\n\t"
+        "_080FDAE8: .4byte sub_080FDAA8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -424,7 +424,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Bike(u8 taskId)
         "	b _080FDBA4\n\t"
         "	.align 2, 0\n\t"
         "_080FDB94: .4byte gUnknown_2039DC0\n\t"
-        "_080FDB98: .4byte 0x080FDBAD\n\t"
+        "_080FDB98: .4byte ItemUseOnFieldCB_Bike + 1\n\t"
         "_080FDB9C:\n\t"
         "	ldrb r1, [r6, #6]\n\t"
         "	adds r0, r5, #0\n\t"
@@ -568,7 +568,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Rod(u8 taskId)
         "	b _080FDCB2\n\t"
         "	.align 2, 0\n\t"
         "_080FDC98: .4byte gUnknown_2039DC0\n\t"
-        "_080FDC9C: .4byte 0x080FDCBD\n\t"
+        "_080FDC9C: .4byte ItemUseOnFieldCB_Rod + 1\n\t"
         "_080FDCA0:\n\t"
         "	ldr r0, _080FDCB8\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -633,7 +633,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Itemfinder(u8 var)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FDD04: .4byte gUnknown_2039DC0\n\t"
-        "_080FDD08: .4byte 0x080FDD0D\n\t"
+        "_080FDD08: .4byte ItemUseOnFieldCB_Itemfinder + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -664,7 +664,7 @@ __attribute__((naked)) void ItemUseOnFieldCB_Itemfinder(void)
         "	.align 2, 0\n\t"
         "_080FDD34: .4byte gMapHeader\n\t"
         "_080FDD38: .4byte gTasks\n\t"
-        "_080FDD3C: .4byte 0x080FDD59\n\t"
+        "_080FDD3C: .4byte sub_080FDD58 + 1\n\t"
         "_080FDD40:\n\t"
         "	ldr r1, _080FDD50\n\t"
         "	ldr r2, _080FDD54\n\t"
@@ -676,7 +676,7 @@ __attribute__((naked)) void ItemUseOnFieldCB_Itemfinder(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FDD50: .4byte 0x085C95D3\n\t"
-        "_080FDD54: .4byte 0x080FDE21\n\t"
+        "_080FDD54: .4byte sub_080FDE20 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -727,7 +727,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	.align 2, 0\n\t"
         "_080FDDAC: .4byte gUnknown_3005B68\n\t"
         "_080FDDB0: .4byte 0x0856DCC8\n\t"
-        "_080FDDB4: .4byte 0x080FE2E9\n\t"
+        "_080FDDB4: .4byte sub_080FE2E8 + 1\n\t"
         "_080FDDB8:\n\t"
         "	bl GetPlayerFacingDirection\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -763,7 +763,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	.align 2, 0\n\t"
         "_080FDDF4: .4byte 0x0856DCC8\n\t"
         "_080FDDF8: .4byte gTasks\n\t"
-        "_080FDDFC: .4byte 0x080FE331\n\t"
+        "_080FDDFC: .4byte sub_080FE330 + 1\n\t"
         "_080FDE00:\n\t"
         "	movs r0, #0x48\n\t"
         "	bl PlaySE\n\t"
@@ -1523,7 +1523,7 @@ __attribute__((naked)) void sub_080FE2E8(void)
         "	.align 2, 0\n\t"
         "_080FE324: .4byte gObjectEvents\n\t"
         "_080FE328: .4byte 0x085C958E\n\t"
-        "_080FE32C: .4byte 0x080FDE21\n\t"
+        "_080FE32C: .4byte sub_080FDE20 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1596,7 +1596,7 @@ __attribute__((naked)) void sub_080FE330(void)
         "_080FE3B0: .4byte gObjectEvents\n\t"
         "_080FE3B4: .4byte 0x0856DCC8\n\t"
         "_080FE3B8: .4byte 0x085C95B6\n\t"
-        "_080FE3BC: .4byte 0x080FDE21\n\t"
+        "_080FE3BC: .4byte sub_080FDE20 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1644,7 +1644,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
         "	.align 2, 0\n\t"
         "_080FE410: .4byte gTasks\n\t"
         "_080FE414: .4byte gUnknown_203CB20\n\t"
-        "_080FE418: .4byte 0x080FE441\n\t"
+        "_080FE418: .4byte sub_080FE440 + 1\n\t"
         "_080FE41C:\n\t"
         "	ldr r0, _080FE434\n\t"
         "	ldr r1, _080FE438\n\t"
@@ -1660,8 +1660,8 @@ __attribute__((naked)) void ItemUseOutOfBattle_PokeblockCase(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE434: .4byte gFieldCallback\n\t"
-        "_080FE438: .4byte 0x080AEFD1\n\t"
-        "_080FE43C: .4byte 0x080FE455\n\t"
+        "_080FE438: .4byte FieldCB_ReturnToFieldNoScript + 1\n\t"
+        "_080FE43C: .4byte sub_080FE454 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1677,7 +1677,7 @@ __attribute__((naked)) void sub_080FE440(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE450: .4byte 0x081AD205\n\t"
+        "_080FE450: .4byte bag_menu_mail_related + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1707,7 +1707,7 @@ __attribute__((naked)) void sub_080FE454(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE480: .4byte gPaletteFade\n\t"
-        "_080FE484: .4byte 0x08085A31\n\t"
+        "_080FE484: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1752,7 +1752,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_CoinCase(u8 taskId)
         "_080FE4D4: .4byte gStringVar4\n\t"
         "_080FE4D8: .4byte 0x085C95F0\n\t"
         "_080FE4DC: .4byte gTasks\n\t"
-        "_080FE4E0: .4byte 0x081AB969\n\t"
+        "_080FE4E0: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FE4E4:\n\t"
         "	ldr r2, _080FE4F4\n\t"
         "	adds r0, r5, #0\n\t"
@@ -1763,7 +1763,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_CoinCase(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE4F4: .4byte 0x080FDA4D\n\t"
+        "_080FE4F4: .4byte CleanUpAfterFailingToUseRegisteredKeyItemOnField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1806,7 +1806,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PowderJar(u8 taskId)
         "_080FE540: .4byte gStringVar4\n\t"
         "_080FE544: .4byte 0x085C96CE\n\t"
         "_080FE548: .4byte gTasks\n\t"
-        "_080FE54C: .4byte 0x081AB969\n\t"
+        "_080FE54C: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FE550:\n\t"
         "	ldr r2, _080FE560\n\t"
         "	adds r0, r5, #0\n\t"
@@ -1817,7 +1817,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PowderJar(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE560: .4byte 0x080FDA4D\n\t"
+        "_080FE560: .4byte CleanUpAfterFailingToUseRegisteredKeyItemOnField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1849,11 +1849,11 @@ __attribute__((naked)) void sub_080FE564(void)
         "	b _080FE5BC\n\t"
         "	.align 2, 0\n\t"
         "_080FE594: .4byte gUnknown_2039DC0\n\t"
-        "_080FE598: .4byte 0x080FE5C9\n\t"
+        "_080FE598: .4byte sub_080FE5C8 + 1\n\t"
         "_080FE59C: .4byte gFieldCallback\n\t"
-        "_080FE5A0: .4byte 0x080FD979\n\t"
+        "_080FE5A0: .4byte MapPostLoadHook_UseItem + 1\n\t"
         "_080FE5A4: .4byte gUnknown_203CB20\n\t"
-        "_080FE5A8: .4byte 0x08085A31\n\t"
+        "_080FE5A8: .4byte CB2_ReturnToField + 1\n\t"
         "_080FE5AC:\n\t"
         "	ldr r0, _080FE5C4\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -1916,7 +1916,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_WailmerPail(u8 taskId)
         "	b _080FE62C\n\t"
         "	.align 2, 0\n\t"
         "_080FE614: .4byte gUnknown_2039DC0\n\t"
-        "_080FE618: .4byte 0x080FE6D1\n\t"
+        "_080FE618: .4byte sub_080FE6D0 + 1\n\t"
         "_080FE61C:\n\t"
         "	bl TryToWaterBerryTree\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1932,7 +1932,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_WailmerPail(u8 taskId)
         "	b _080FE652\n\t"
         "	.align 2, 0\n\t"
         "_080FE638: .4byte gUnknown_2039DC0\n\t"
-        "_080FE63C: .4byte 0x080FE65D\n\t"
+        "_080FE63C: .4byte sub_080FE65C + 1\n\t"
         "_080FE640:\n\t"
         "	ldr r0, _080FE658\n\t"
         "	lsls r1, r5, #2\n\t"
@@ -2059,7 +2059,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Medicine(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE708: .4byte gUnknown_3006068\n\t"
-        "_080FE70C: .4byte 0x081B6229\n\t"
+        "_080FE70C: .4byte ItemUseCB_Medicine + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2079,7 +2079,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_ReduceEV(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE724: .4byte gUnknown_3006068\n\t"
-        "_080FE728: .4byte 0x081B6469\n\t"
+        "_080FE728: .4byte sub_081B6468 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2099,7 +2099,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_SacredAsh(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE740: .4byte gUnknown_3006068\n\t"
-        "_080FE744: .4byte 0x081B768D\n\t"
+        "_080FE744: .4byte sub_081B768C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2119,7 +2119,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPRecovery(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE75C: .4byte gUnknown_3006068\n\t"
-        "_080FE760: .4byte 0x081B67C5\n\t"
+        "_080FE760: .4byte dp05_ether + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2139,7 +2139,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_PPUp(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE778: .4byte gUnknown_3006068\n\t"
-        "_080FE77C: .4byte 0x081B6979\n\t"
+        "_080FE77C: .4byte dp05_pp_up + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2159,7 +2159,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_RareCandy(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE794: .4byte gUnknown_3006068\n\t"
-        "_080FE798: .4byte 0x081B70B1\n\t"
+        "_080FE798: .4byte dp05_rare_candy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2186,7 +2186,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_TMHM(u8 taskId)
         "	.align 2, 0\n\t"
         "_080FE7BC: .4byte gSpecialVar_ItemId\n\t"
         "_080FE7C0: .4byte 0x085C960E\n\t"
-        "_080FE7C4: .4byte 0x080FE7E5\n\t"
+        "_080FE7C4: .4byte sub_080FE7E4 + 1\n\t"
         "_080FE7C8:\n\t"
         "	ldr r2, _080FE7DC\n\t"
         "	ldr r3, _080FE7E0\n\t"
@@ -2199,7 +2199,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_TMHM(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE7DC: .4byte 0x085C9600\n\t"
-        "_080FE7E0: .4byte 0x080FE7E5\n\t"
+        "_080FE7E0: .4byte sub_080FE7E4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2226,7 +2226,7 @@ __attribute__((naked)) void sub_080FE7E4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE808: .4byte gTasks\n\t"
-        "_080FE80C: .4byte 0x080FE811\n\t"
+        "_080FE80C: .4byte task08_0809AD8C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2275,7 +2275,7 @@ __attribute__((naked)) void task08_0809AD8C(void)
         "_080FE864: .4byte gMoveNamesJP\n\t"
         "_080FE868: .4byte gStringVar4\n\t"
         "_080FE86C: .4byte 0x085C961D\n\t"
-        "_080FE870: .4byte 0x080FE875\n\t"
+        "_080FE870: .4byte sub_080FE874 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2313,7 +2313,7 @@ __attribute__((naked)) void sub_080FE88C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE8A0: .4byte gUnknown_3006068\n\t"
-        "_080FE8A4: .4byte 0x081B6A7D\n\t"
+        "_080FE8A4: .4byte sub_081B6A7C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2389,7 +2389,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Repel(u8 taskId)
         "	.align 2, 0\n\t"
         "_080FE930: .4byte 0x00004021\n\t"
         "_080FE934: .4byte gTasks\n\t"
-        "_080FE938: .4byte 0x080FE975\n\t"
+        "_080FE938: .4byte sub_080FE974 + 1\n\t"
         "_080FE93C:\n\t"
         "	bl CurrentBattlePyramidLocation\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2403,7 +2403,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Repel(u8 taskId)
         "	b _080FE966\n\t"
         "	.align 2, 0\n\t"
         "_080FE954: .4byte 0x085C9654\n\t"
-        "_080FE958: .4byte 0x081AB969\n\t"
+        "_080FE958: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FE95C:\n\t"
         "	ldr r1, _080FE96C\n\t"
         "	ldr r2, _080FE970\n\t"
@@ -2415,7 +2415,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_Repel(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE96C: .4byte 0x085C9654\n\t"
-        "_080FE970: .4byte 0x081C5F25\n\t"
+        "_080FE970: .4byte sub_081C5F24 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2454,7 +2454,7 @@ __attribute__((naked)) void sub_080FE974(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FE9AC: .4byte gUnknown_3005B68\n\t"
-        "_080FE9B0: .4byte 0x080FE9B5\n\t"
+        "_080FE9B0: .4byte sub_080FE9B4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2495,7 +2495,7 @@ __attribute__((naked)) void sub_080FE9B4(void)
         "_080FE9F8: .4byte 0x00004021\n\t"
         "_080FE9FC: .4byte gSpecialVar_ItemId\n\t"
         "_080FEA00: .4byte gStringVar4\n\t"
-        "_080FEA04: .4byte 0x081AB969\n\t"
+        "_080FEA04: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FEA08:\n\t"
         "	ldr r1, _080FEA18\n\t"
         "	ldr r2, _080FEA1C\n\t"
@@ -2507,7 +2507,7 @@ __attribute__((naked)) void sub_080FE9B4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEA18: .4byte gStringVar4\n\t"
-        "_080FEA1C: .4byte 0x081C5F25\n\t"
+        "_080FEA1C: .4byte sub_081C5F24 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2547,7 +2547,7 @@ __attribute__((naked)) void sub_080FEA20(void)
         "	.align 2, 0\n\t"
         "_080FEA60: .4byte gTasks\n\t"
         "_080FEA64: .4byte gStringVar4\n\t"
-        "_080FEA68: .4byte 0x081AB969\n\t"
+        "_080FEA68: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FEA6C:\n\t"
         "	ldr r1, _080FEA7C\n\t"
         "	ldr r2, _080FEA80\n\t"
@@ -2559,7 +2559,7 @@ __attribute__((naked)) void sub_080FEA20(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEA7C: .4byte gStringVar4\n\t"
-        "_080FEA80: .4byte 0x081C5F25\n\t"
+        "_080FEA80: .4byte sub_081C5F24 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2620,7 +2620,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_BlackWhiteFlute(u8 taskId)
         "_080FEAFC: .4byte gStringVar4\n\t"
         "_080FEB00: .4byte 0x085C9699\n\t"
         "_080FEB04: .4byte gTasks\n\t"
-        "_080FEB08: .4byte 0x080FEA21\n\t"
+        "_080FEB08: .4byte sub_080FEA20 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2671,7 +2671,7 @@ __attribute__((naked)) void re_escape_rope(void)
         "	.align 2, 0\n\t"
         "_080FEB58: .4byte gTasks\n\t"
         "_080FEB5C: .4byte gStringVar4\n\t"
-        "_080FEB60: .4byte 0x080FEB0D\n\t"
+        "_080FEB60: .4byte Task_UseDigEscapeRopeOnField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2721,7 +2721,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_EscapeRope(u8 taskId)
         "	b _080FEBBE\n\t"
         "	.align 2, 0\n\t"
         "_080FEBA4: .4byte gUnknown_2039DC0\n\t"
-        "_080FEBA8: .4byte 0x080FEB29\n\t"
+        "_080FEBA8: .4byte re_escape_rope + 1\n\t"
         "_080FEBAC:\n\t"
         "	ldr r0, _080FEBC4\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -2756,7 +2756,7 @@ __attribute__((naked)) void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEBDC: .4byte gUnknown_3006068\n\t"
-        "_080FEBE0: .4byte 0x081B7919\n\t"
+        "_080FEBE0: .4byte sub_081B7918 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2803,7 +2803,7 @@ __attribute__((naked)) void ItemUseInBattle_PokeBall(u8 taskId)
         "	b _080FEC4A\n\t"
         "	.align 2, 0\n\t"
         "_080FEC38: .4byte 0x085C96BD\n\t"
-        "_080FEC3C: .4byte 0x081AB969\n\t"
+        "_080FEC3C: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FEC40:\n\t"
         "	ldr r1, _080FEC50\n\t"
         "	ldr r2, _080FEC54\n\t"
@@ -2815,7 +2815,7 @@ __attribute__((naked)) void ItemUseInBattle_PokeBall(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEC50: .4byte 0x085C96BD\n\t"
-        "_080FEC54: .4byte 0x081C5F25\n\t"
+        "_080FEC54: .4byte sub_081C5F24 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2895,7 +2895,7 @@ __attribute__((naked)) void sub_080FEC90(void)
         "	.align 2, 0\n\t"
         "_080FECE0: .4byte gTasks\n\t"
         "_080FECE4: .4byte gSpecialVar_ItemId\n\t"
-        "_080FECE8: .4byte 0x080FEC59\n\t"
+        "_080FECE8: .4byte sub_080FEC58 + 1\n\t"
         "_080FECEC:\n\t"
         "	ldrh r0, [r4]\n\t"
         "	bl sub_0806CA3C\n\t"
@@ -2908,7 +2908,7 @@ __attribute__((naked)) void sub_080FEC90(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FED04: .4byte 0x080FEC59\n\t"
+        "_080FED04: .4byte sub_080FEC58 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2956,7 +2956,7 @@ __attribute__((naked)) void ItemUseInBattle_StatIncrease(u8 taskId)
         "_080FED58: .4byte gPlayerParty\n\t"
         "_080FED5C: .4byte gSpecialVar_ItemId\n\t"
         "_080FED60: .4byte 0x085C9AF7\n\t"
-        "_080FED64: .4byte 0x081AB969\n\t"
+        "_080FED64: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_080FED68:\n\t"
         "	ldr r1, _080FED74\n\t"
         "	ldr r2, _080FED78\n\t"
@@ -2965,7 +2965,7 @@ __attribute__((naked)) void ItemUseInBattle_StatIncrease(u8 taskId)
         "	b _080FED8C\n\t"
         "	.align 2, 0\n\t"
         "_080FED74: .4byte 0x085C9AF7\n\t"
-        "_080FED78: .4byte 0x081C5F25\n\t"
+        "_080FED78: .4byte sub_081C5F24 + 1\n\t"
         "_080FED7C:\n\t"
         "	ldr r0, _080FED94\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -2981,7 +2981,7 @@ __attribute__((naked)) void ItemUseInBattle_StatIncrease(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FED94: .4byte gTasks\n\t"
-        "_080FED98: .4byte 0x080FEC91\n\t"
+        "_080FED98: .4byte sub_080FEC90 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3006,7 +3006,7 @@ __attribute__((naked)) void sub_080FED9C(void)
         "	b _080FEDD2\n\t"
         "	.align 2, 0\n\t"
         "_080FEDBC: .4byte gUnknown_203CB20\n\t"
-        "_080FEDC0: .4byte 0x081B8691\n\t"
+        "_080FEDC0: .4byte sub_081B8690 + 1\n\t"
         "_080FEDC4:\n\t"
         "	ldr r0, _080FEDD8\n\t"
         "	ldr r1, [r0]\n\t"
@@ -3020,7 +3020,7 @@ __attribute__((naked)) void sub_080FED9C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEDD8: .4byte gUnknown_203CBF8\n\t"
-        "_080FEDDC: .4byte 0x081B8691\n\t"
+        "_080FEDDC: .4byte sub_081B8690 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3040,7 +3040,7 @@ __attribute__((naked)) void ItemUseInBattle_Medicine(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEDF4: .4byte gUnknown_3006068\n\t"
-        "_080FEDF8: .4byte 0x081B6229\n\t"
+        "_080FEDF8: .4byte ItemUseCB_Medicine + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3060,7 +3060,7 @@ __attribute__((naked)) void sub_080FEDFC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEE10: .4byte gUnknown_3006068\n\t"
-        "_080FEE14: .4byte 0x081B768D\n\t"
+        "_080FEE14: .4byte sub_081B768C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3080,7 +3080,7 @@ __attribute__((naked)) void ItemUseInBattle_PPRecovery(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FEE2C: .4byte gUnknown_3006068\n\t"
-        "_080FEE30: .4byte 0x081B67C5\n\t"
+        "_080FEE30: .4byte dp05_ether + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3112,7 +3112,7 @@ __attribute__((naked)) void ItemUseInBattle_Escape(u8 taskId)
         "	.align 2, 0\n\t"
         "_080FEE64: .4byte gBattleTypeFlags\n\t"
         "_080FEE68: .4byte gStringVar4\n\t"
-        "_080FEE6C: .4byte 0x081AB6A5\n\t"
+        "_080FEE6C: .4byte unknown_ItemMenu_Confirm + 1\n\t"
         "_080FEE70:\n\t"
         "	ldr r1, _080FEE7C\n\t"
         "	ldr r2, _080FEE80\n\t"
@@ -3121,7 +3121,7 @@ __attribute__((naked)) void ItemUseInBattle_Escape(u8 taskId)
         "	b _080FEE96\n\t"
         "	.align 2, 0\n\t"
         "_080FEE7C: .4byte gStringVar4\n\t"
-        "_080FEE80: .4byte 0x081C5311\n\t"
+        "_080FEE80: .4byte sub_081C5310 + 1\n\t"
         "_080FEE84:\n\t"
         "	ldr r0, _080FEE9C\n\t"
         "	lsls r1, r4, #2\n\t"

@@ -97,7 +97,7 @@ __attribute__((naked)) void StartWeather()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080AA964: .4byte 0x080AAAAD\n\t"
+        "_080AA964: .4byte Task_WeatherMain + 1\n\t"
         "_080AA968: .4byte gFogPalette\n\t"
         "_080AA96C: .4byte gUnknown_20375B4\n\t"
         "_080AA970: .4byte 0x04000008\n\t"
@@ -107,7 +107,7 @@ __attribute__((naked)) void StartWeather()
         "_080AA980: .4byte 0x000006D4\n\t"
         "_080AA984: .4byte 0x000006DA\n\t"
         "_080AA988: .4byte 0x000006C6\n\t"
-        "_080AA98C: .4byte 0x080AAA5D\n\t"
+        "_080AA98C: .4byte Task_WeatherInit + 1\n\t"
         "_080AA990: .4byte 0x000006C9\n\t"
         ".syntax divided\n\t"
     );
@@ -267,7 +267,7 @@ __attribute__((naked)) void Task_WeatherInit(void)
         "_080AAA9C: .4byte gUnknown_20380F4\n\t"
         "_080AAAA0: .4byte 0x08526DEC\n\t"
         "_080AAAA4: .4byte gTasks\n\t"
-        "_080AAAA8: .4byte 0x080AAAAD\n\t"
+        "_080AAAA8: .4byte Task_WeatherMain + 1\n\t"
         ".syntax divided\n\t"
     );
 }

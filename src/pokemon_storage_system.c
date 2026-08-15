@@ -706,7 +706,7 @@ __attribute__((naked)) void ShowPokemonStorageSystemPC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C6E2C: .4byte 0x080C6AF5\n\t"
+        "_080C6E2C: .4byte Task_PokemonStorageSystemPC + 1\n\t"
         "_080C6E30: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -746,7 +746,7 @@ __attribute__((naked)) void FieldCb_ReturnToPcMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C6E78: .4byte gMain\n\t"
-        "_080C6E7C: .4byte 0x080C6AF5\n\t"
+        "_080C6E7C: .4byte Task_PokemonStorageSystemPC + 1\n\t"
         "_080C6E80: .4byte gTasks\n\t"
         "_080C6E84: .4byte gUnknown_20399A0\n\t"
         ".syntax divided\n\t"
@@ -840,8 +840,8 @@ __attribute__((naked)) void Cb2_ExitPSS(void)
         "	.align 2, 0\n\t"
         "_080C6F2C: .4byte gUnknown_20399A0\n\t"
         "_080C6F30: .4byte gFieldCallback\n\t"
-        "_080C6F34: .4byte 0x080C6E35\n\t"
-        "_080C6F38: .4byte 0x08085A31\n\t"
+        "_080C6F34: .4byte FieldCb_ReturnToPcMenu + 1\n\t"
+        "_080C6F38: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1464,14 +1464,14 @@ __attribute__((naked)) void sub_080C71F0(void)
         "_080C73A4: .4byte 0xFFFF0FFF\n\t"
         "_080C73A8: .4byte gDummySpriteAnimTable\n\t"
         "_080C73AC: .4byte gDummySpriteAffineAnimTable\n\t"
-        "_080C73B0: .4byte 0x08007141\n\t"
+        "_080C73B0: .4byte SpriteCallbackDummy + 1\n\t"
         "_080C73B4: .4byte 0x0854B258\n\t"
         "_080C73B8: .4byte gUnknown_20399A4\n\t"
         "_080C73BC: .4byte 0x00000242\n\t"
         "_080C73C0: .4byte gSprites\n\t"
         "_080C73C4: .4byte 0x0854B234\n\t"
         "_080C73C8: .4byte 0x00000246\n\t"
-        "_080C73CC: .4byte 0x080C7591\n\t"
+        "_080C73CC: .4byte sub_080C7590 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1832,7 +1832,7 @@ __attribute__((naked)) void Cb2_EnterPSS(void)
         "_080C7634: .4byte gUnknown_20399AD\n\t"
         "_080C7638: .4byte gUnknown_20399A8\n\t"
         "_080C763C: .4byte 0x000062C4\n\t"
-        "_080C7640: .4byte 0x080C6F11\n\t"
+        "_080C7640: .4byte Cb2_ExitPSS + 1\n\t"
         "_080C7644:\n\t"
         "	movs r2, #0\n\t"
         "	strb r5, [r0, #1]\n\t"
@@ -1859,9 +1859,9 @@ __attribute__((naked)) void Cb2_EnterPSS(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C7678: .4byte gUnknown_20399B2\n\t"
-        "_080C767C: .4byte 0x080C7845\n\t"
+        "_080C767C: .4byte Cb_InitPSS + 1\n\t"
         "_080C7680: .4byte gUnknown_20399B0\n\t"
-        "_080C7684: .4byte 0x080C75F1\n\t"
+        "_080C7684: .4byte Cb2_PSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1885,7 +1885,7 @@ __attribute__((naked)) void Cb2_ReturnToPSS(void)
         "	.align 2, 0\n\t"
         "_080C76A8: .4byte gUnknown_20399A8\n\t"
         "_080C76AC: .4byte 0x000062C4\n\t"
-        "_080C76B0: .4byte 0x080C6F11\n\t"
+        "_080C76B0: .4byte Cb2_ExitPSS + 1\n\t"
         "_080C76B4:\n\t"
         "	ldr r0, _080C76E0\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -1909,8 +1909,8 @@ __attribute__((naked)) void Cb2_ReturnToPSS(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C76E0: .4byte gUnknown_20399AD\n\t"
-        "_080C76E4: .4byte 0x080C7845\n\t"
-        "_080C76E8: .4byte 0x080C75F1\n\t"
+        "_080C76E4: .4byte Cb_InitPSS + 1\n\t"
+        "_080C76E8: .4byte Cb2_PSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2233,7 +2233,7 @@ __attribute__((naked)) void Cb_InitPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C7A3E\n\t"
         "	.align 2, 0\n\t"
-        "_080C7974: .4byte 0x080C96ED\n\t"
+        "_080C7974: .4byte Cb_ChangeScreen + 1\n\t"
         "_080C7978:\n\t"
         "	bl SetScrollingBackground\n\t"
         "	bl sub_080CA480\n\t"
@@ -2297,7 +2297,7 @@ __attribute__((naked)) void Cb_InitPSS(void)
         "	b _080C7A22\n\t"
         "	.align 2, 0\n\t"
         "_080C7A08: .4byte gUnknown_20399A8\n\t"
-        "_080C7A0C: .4byte 0x080C7A49\n\t"
+        "_080C7A0C: .4byte Cb_ShowPSS + 1\n\t"
         "_080C7A10:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -2311,8 +2311,8 @@ __attribute__((naked)) void Cb_InitPSS(void)
         "	bl SetVBlankCallback\n\t"
         "	b _080C7A3E\n\t"
         "	.align 2, 0\n\t"
-        "_080C7A2C: .4byte 0x080C7A95\n\t"
-        "_080C7A30: .4byte 0x080C75C5\n\t"
+        "_080C7A2C: .4byte Cb_ReshowPSS + 1\n\t"
+        "_080C7A30: .4byte VblankCb_PSS + 1\n\t"
         "_080C7A34:\n\t"
         "	ldr r0, _080C7A44\n\t"
         "	ldr r1, [r0]\n\t"
@@ -2368,7 +2368,7 @@ __attribute__((naked)) void Cb_ShowPSS(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C7A90: .4byte 0x080C7B49\n\t"
+        "_080C7A90: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2430,7 +2430,7 @@ __attribute__((naked)) void Cb_ReshowPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C7B3C\n\t"
         "	.align 2, 0\n\t"
-        "_080C7B00: .4byte 0x080C7B49\n\t"
+        "_080C7B00: .4byte Cb_MainPSS + 1\n\t"
         "_080C7B04:\n\t"
         "	bl IsDma3ManagerBusyWithBgCopy\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2464,7 +2464,7 @@ __attribute__((naked)) void Cb_ReshowPSS(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C7B44: .4byte 0x080C7B49\n\t"
+        "_080C7B44: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2578,7 +2578,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7C64: .4byte 0x080C8045\n\t"
+        "_080C7C64: .4byte Cb_ShowPartyPokemon + 1\n\t"
         "_080C7C68:\n\t"
         "	ldr r4, _080C7C94\n\t"
         "	ldr r0, [r4]\n\t"
@@ -2612,19 +2612,19 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7CAC: .4byte 0x080C8085\n\t"
+        "_080C7CAC: .4byte Cb_HidePartyPokemon + 1\n\t"
         "_080C7CB0:\n\t"
         "	ldr r0, _080C7CB8\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7CB8: .4byte 0x080C9485\n\t"
+        "_080C7CB8: .4byte Cb_OnCloseBoxPressed + 1\n\t"
         "_080C7CBC:\n\t"
         "	ldr r0, _080C7CC4\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7CC4: .4byte 0x080C95B9\n\t"
+        "_080C7CC4: .4byte Cb_OnBPressed + 1\n\t"
         "_080C7CC8:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2632,13 +2632,13 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7CD8: .4byte 0x080C8FC9\n\t"
+        "_080C7CD8: .4byte Cb_HandleBoxOptions + 1\n\t"
         "_080C7CDC:\n\t"
         "	ldr r0, _080C7CE4\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7CE4: .4byte 0x080C8101\n\t"
+        "_080C7CE4: .4byte Cb_OnSelectedMon + 1\n\t"
         "_080C7CE8:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2726,7 +2726,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7DA4: .4byte 0x080C8615\n\t"
+        "_080C7DA4: .4byte Cb_DepositMenu + 1\n\t"
         "_080C7DA8:\n\t"
         "	bl CanMovePartyMon\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2755,7 +2755,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7DE4: .4byte 0x080C84E5\n\t"
+        "_080C7DE4: .4byte Cb_ShiftMon + 1\n\t"
         "_080C7DE8:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2763,7 +2763,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7DF8: .4byte 0x080C852D\n\t"
+        "_080C7DF8: .4byte Cb_WithdrawMon + 1\n\t"
         "_080C7DFC:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2771,7 +2771,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7E0C: .4byte 0x080C8489\n\t"
+        "_080C7E0C: .4byte Cb_PlaceMon + 1\n\t"
         "_080C7E10:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2779,7 +2779,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7E20: .4byte 0x080C89C5\n\t"
+        "_080C7E20: .4byte Cb_TakeItemForMoving + 1\n\t"
         "_080C7E24:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2787,7 +2787,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7E34: .4byte 0x080C8A79\n\t"
+        "_080C7E34: .4byte Cb_GiveMovingItemToMon + 1\n\t"
         "_080C7E38:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2795,7 +2795,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7E48: .4byte 0x080C8C4D\n\t"
+        "_080C7E48: .4byte Cb_SwitchSelectedItem + 1\n\t"
         "_080C7E4C:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2965,7 +2965,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
         "_080C7FB0: .4byte gMain\n\t"
-        "_080C7FB4: .4byte 0x080C7B49\n\t"
+        "_080C7FB4: .4byte Cb_MainPSS + 1\n\t"
         "_080C7FB8:\n\t"
         "	bl sub_080CFA84\n\t"
         "	b _080C802C\n\t"
@@ -2979,7 +2979,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C803A\n\t"
         "	.align 2, 0\n\t"
-        "_080C7FD0: .4byte 0x080C842D\n\t"
+        "_080C7FD0: .4byte Cb_MoveMon + 1\n\t"
         "_080C7FD4:\n\t"
         "	bl sub_080CFA84\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3074,7 +3074,7 @@ __attribute__((naked)) void Cb_ShowPartyPokemon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8080: .4byte 0x080C7B49\n\t"
+        "_080C8080: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3141,7 +3141,7 @@ __attribute__((naked)) void Cb_HidePartyPokemon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C80F8: .4byte 0x00000CEA\n\t"
-        "_080C80FC: .4byte 0x080C7B49\n\t"
+        "_080C80FC: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3278,7 +3278,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8234: .4byte 0x080C7B49\n\t"
+        "_080C8234: .4byte Cb_MainPSS + 1\n\t"
         "_080C8238:\n\t"
         "	bl CanMovePartyMon\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3291,7 +3291,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8254: .4byte 0x080C842D\n\t"
+        "_080C8254: .4byte Cb_MoveMon + 1\n\t"
         "_080C8258:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3300,7 +3300,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C826C: .4byte 0x080C8489\n\t"
+        "_080C826C: .4byte Cb_PlaceMon + 1\n\t"
         "_080C8270:\n\t"
         "	bl CanShiftMon\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3313,7 +3313,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C828C: .4byte 0x080C84E5\n\t"
+        "_080C828C: .4byte Cb_ShiftMon + 1\n\t"
         "_080C8290:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3322,7 +3322,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C82A4: .4byte 0x080C852D\n\t"
+        "_080C82A4: .4byte Cb_WithdrawMon + 1\n\t"
         "_080C82A8:\n\t"
         "	bl CanMovePartyMon\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3346,7 +3346,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	.align 2, 0\n\t"
         "_080C82D8: .4byte gUnknown_20399A8\n\t"
         "_080C82DC: .4byte 0x00000CE6\n\t"
-        "_080C82E0: .4byte 0x080C8615\n\t"
+        "_080C82E0: .4byte Cb_DepositMenu + 1\n\t"
         "_080C82E4:\n\t"
         "	bl CanMovePartyMon\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3396,7 +3396,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8344: .4byte 0x080C8751\n\t"
+        "_080C8344: .4byte Cb_ReleaseMon + 1\n\t"
         "_080C8348:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3404,7 +3404,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8358: .4byte 0x080C93C5\n\t"
+        "_080C8358: .4byte Cb_ShowMonSummary + 1\n\t"
         "_080C835C:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3412,7 +3412,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C836C: .4byte 0x080C8941\n\t"
+        "_080C836C: .4byte Cb_ShowMarkMenu + 1\n\t"
         "_080C8370:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3420,7 +3420,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8380: .4byte 0x080C89C5\n\t"
+        "_080C8380: .4byte Cb_TakeItemForMoving + 1\n\t"
         "_080C8384:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3428,13 +3428,13 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8394: .4byte 0x080C8A79\n\t"
+        "_080C8394: .4byte Cb_GiveMovingItemToMon + 1\n\t"
         "_080C8398:\n\t"
         "	ldr r0, _080C83A0\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C83A0: .4byte 0x080C8B35\n\t"
+        "_080C83A0: .4byte Cb_ItemToBag + 1\n\t"
         "_080C83A4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3442,7 +3442,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C83B4: .4byte 0x080C8C4D\n\t"
+        "_080C83B4: .4byte Cb_SwitchSelectedItem + 1\n\t"
         "_080C83B8:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -3450,13 +3450,13 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C83C8: .4byte 0x080C9425\n\t"
+        "_080C83C8: .4byte Cb_GiveItemFromBag + 1\n\t"
         "_080C83CC:\n\t"
         "	ldr r0, _080C83D4\n\t"
         "	bl SetPSSCallback\n\t"
         "	b _080C841E\n\t"
         "	.align 2, 0\n\t"
-        "_080C83D4: .4byte 0x080C8D35\n\t"
+        "_080C83D4: .4byte Cb_ShowItemInfo + 1\n\t"
         "_080C83D8:\n\t"
         "	movs r0, #0x20\n\t"
         "	bl PlaySE\n\t"
@@ -3496,7 +3496,7 @@ __attribute__((naked)) void Cb_OnSelectedMon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C8424: .4byte gMain\n\t"
-        "_080C8428: .4byte 0x080C7B49\n\t"
+        "_080C8428: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3538,7 +3538,7 @@ __attribute__((naked)) void Cb_MoveMon(void)
         "	b _080C847E\n\t"
         "	.align 2, 0\n\t"
         "_080C8470: .4byte gUnknown_20399AC\n\t"
-        "_080C8474: .4byte 0x080C8F0D\n\t"
+        "_080C8474: .4byte sub_080C8F0C + 1\n\t"
         "_080C8478:\n\t"
         "	ldr r0, _080C8484\n\t"
         "	bl SetPSSCallback\n\t"
@@ -3547,7 +3547,7 @@ __attribute__((naked)) void Cb_MoveMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8484: .4byte 0x080C7B49\n\t"
+        "_080C8484: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3589,7 +3589,7 @@ __attribute__((naked)) void Cb_PlaceMon(void)
         "	b _080C84DA\n\t"
         "	.align 2, 0\n\t"
         "_080C84CC: .4byte gUnknown_20399AC\n\t"
-        "_080C84D0: .4byte 0x080C8F0D\n\t"
+        "_080C84D0: .4byte sub_080C8F0C + 1\n\t"
         "_080C84D4:\n\t"
         "	ldr r0, _080C84E0\n\t"
         "	bl SetPSSCallback\n\t"
@@ -3598,7 +3598,7 @@ __attribute__((naked)) void Cb_PlaceMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C84E0: .4byte 0x080C7B49\n\t"
+        "_080C84E0: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3639,7 +3639,7 @@ __attribute__((naked)) void Cb_ShiftMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8528: .4byte 0x080C7B49\n\t"
+        "_080C8528: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3709,7 +3709,7 @@ __attribute__((naked)) void Cb_WithdrawMon(void)
         "	b _080C860A\n\t"
         "	.align 2, 0\n\t"
         "_080C85B4: .4byte gMain\n\t"
-        "_080C85B8: .4byte 0x080C7B49\n\t"
+        "_080C85B8: .4byte Cb_MainPSS + 1\n\t"
         "_080C85BC:\n\t"
         "	bl DoMonPlaceChange\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -3749,7 +3749,7 @@ __attribute__((naked)) void Cb_WithdrawMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8610: .4byte 0x080C8085\n\t"
+        "_080C8610: .4byte Cb_HidePartyPokemon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3869,7 +3869,7 @@ __attribute__((naked)) void Cb_DepositMenu(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C873E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8720: .4byte 0x080C7B49\n\t"
+        "_080C8720: .4byte Cb_MainPSS + 1\n\t"
         "_080C8724:\n\t"
         "	ldr r0, _080C8748\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -4046,7 +4046,7 @@ __attribute__((naked)) void Cb_ReleaseMon(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C8932\n\t"
         "	.align 2, 0\n\t"
-        "_080C889C: .4byte 0x080C7B49\n\t"
+        "_080C889C: .4byte Cb_MainPSS + 1\n\t"
         "_080C88A0:\n\t"
         "	movs r0, #0xa\n\t"
         "	b _080C88F4\n\t"
@@ -4124,7 +4124,7 @@ __attribute__((naked)) void Cb_ReleaseMon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C8938: .4byte gMain\n\t"
-        "_080C893C: .4byte 0x080C7B49\n\t"
+        "_080C893C: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4189,7 +4189,7 @@ __attribute__((naked)) void Cb_ShowMarkMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C89BC: .4byte 0x00000DA8\n\t"
-        "_080C89C0: .4byte 0x080C7B49\n\t"
+        "_080C89C0: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4234,7 +4234,7 @@ __attribute__((naked)) void Cb_TakeItemForMoving(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C8A6E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8A0C: .4byte 0x080C8F55\n\t"
+        "_080C8A0C: .4byte Cb_PrintCantStoreMail + 1\n\t"
         "_080C8A10:\n\t"
         "	movs r0, #2\n\t"
         "	bl sub_080CF6D0\n\t"
@@ -4280,7 +4280,7 @@ __attribute__((naked)) void Cb_TakeItemForMoving(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8A74: .4byte 0x080C7B49\n\t"
+        "_080C8A74: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4369,7 +4369,7 @@ __attribute__((naked)) void Cb_GiveMovingItemToMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8B30: .4byte 0x080C7B49\n\t"
+        "_080C8B30: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4482,7 +4482,7 @@ __attribute__((naked)) void Cb_ItemToBag(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C8C3E\n\t"
         "	.align 2, 0\n\t"
-        "_080C8C24: .4byte 0x080C7B49\n\t"
+        "_080C8C24: .4byte Cb_MainPSS + 1\n\t"
         "_080C8C28:\n\t"
         "	ldr r0, _080C8C44\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -4499,7 +4499,7 @@ __attribute__((naked)) void Cb_ItemToBag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C8C44: .4byte gMain\n\t"
-        "_080C8C48: .4byte 0x080C7B49\n\t"
+        "_080C8C48: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4548,7 +4548,7 @@ __attribute__((naked)) void Cb_SwitchSelectedItem(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C8D28\n\t"
         "	.align 2, 0\n\t"
-        "_080C8CA8: .4byte 0x080C8F55\n\t"
+        "_080C8CA8: .4byte Cb_PrintCantStoreMail + 1\n\t"
         "_080C8CAC:\n\t"
         "	movs r0, #2\n\t"
         "	bl sub_080CF6D0\n\t"
@@ -4609,7 +4609,7 @@ __attribute__((naked)) void Cb_SwitchSelectedItem(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8D30: .4byte 0x080C7B49\n\t"
+        "_080C8D30: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4697,7 +4697,7 @@ __attribute__((naked)) void Cb_ShowItemInfo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8DE4: .4byte 0x080C7B49\n\t"
+        "_080C8DE4: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4826,7 +4826,7 @@ __attribute__((naked)) void Cb_CloseBoxWhileHoldingItem(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C8F00\n\t"
         "	.align 2, 0\n\t"
-        "_080C8EEC: .4byte 0x080C7B49\n\t"
+        "_080C8EEC: .4byte Cb_MainPSS + 1\n\t"
         "_080C8EF0:\n\t"
         "	bl IsDma3ManagerBusyWithBgCopy\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -4839,7 +4839,7 @@ __attribute__((naked)) void Cb_CloseBoxWhileHoldingItem(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8F08: .4byte 0x080C7B49\n\t"
+        "_080C8F08: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4880,7 +4880,7 @@ __attribute__((naked)) void sub_080C8F0C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8F50: .4byte 0x080C7B49\n\t"
+        "_080C8F50: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4946,7 +4946,7 @@ __attribute__((naked)) void Cb_PrintCantStoreMail(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C8FC4: .4byte 0x080C7B49\n\t"
+        "_080C8FC4: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5026,7 +5026,7 @@ __attribute__((naked)) void Cb_HandleBoxOptions(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C90B4\n\t"
         "	.align 2, 0\n\t"
-        "_080C9074: .4byte 0x080C7B49\n\t"
+        "_080C9074: .4byte Cb_MainPSS + 1\n\t"
         "_080C9078:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -5034,7 +5034,7 @@ __attribute__((naked)) void Cb_HandleBoxOptions(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C90B4\n\t"
         "	.align 2, 0\n\t"
-        "_080C9088: .4byte 0x080C9365\n\t"
+        "_080C9088: .4byte Cb_NameBox + 1\n\t"
         "_080C908C:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -5043,7 +5043,7 @@ __attribute__((naked)) void Cb_HandleBoxOptions(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C90B4\n\t"
         "	.align 2, 0\n\t"
-        "_080C90A0: .4byte 0x080C90C1\n\t"
+        "_080C90A0: .4byte Cb_HandleWallpapers + 1\n\t"
         "_080C90A4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -5055,7 +5055,7 @@ __attribute__((naked)) void Cb_HandleBoxOptions(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C90BC: .4byte 0x080C9275\n\t"
+        "_080C90BC: .4byte Cb_JumpBox + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5240,7 +5240,7 @@ __attribute__((naked)) void Cb_HandleWallpapers(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C9268\n\t"
         "	.align 2, 0\n\t"
-        "_080C9244: .4byte 0x080C7B49\n\t"
+        "_080C9244: .4byte Cb_MainPSS + 1\n\t"
         "_080C9248:\n\t"
         "	bl IsDma3ManagerBusyWithBgCopy\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -5346,7 +5346,7 @@ __attribute__((naked)) void Cb_JumpBox(void)
         "	b _080C9354\n\t"
         "	.align 2, 0\n\t"
         "_080C9318: .4byte 0x000002CA\n\t"
-        "_080C931C: .4byte 0x080C7B49\n\t"
+        "_080C931C: .4byte Cb_MainPSS + 1\n\t"
         "_080C9320:\n\t"
         "	ldr r1, _080C9334\n\t"
         "	adds r0, r0, r1\n\t"
@@ -5379,7 +5379,7 @@ __attribute__((naked)) void Cb_JumpBox(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C935C: .4byte 0x000002CA\n\t"
-        "_080C9360: .4byte 0x080C7B49\n\t"
+        "_080C9360: .4byte Cb_MainPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5433,7 +5433,7 @@ __attribute__((naked)) void Cb_NameBox(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C93BC: .4byte gUnknown_20399AF\n\t"
-        "_080C93C0: .4byte 0x080C96ED\n\t"
+        "_080C93C0: .4byte Cb_ChangeScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5487,7 +5487,7 @@ __attribute__((naked)) void Cb_ShowMonSummary(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C941C: .4byte gUnknown_20399AF\n\t"
-        "_080C9420: .4byte 0x080C96ED\n\t"
+        "_080C9420: .4byte Cb_ChangeScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5541,7 +5541,7 @@ __attribute__((naked)) void Cb_GiveItemFromBag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C947C: .4byte gUnknown_20399AF\n\t"
-        "_080C9480: .4byte 0x080C96ED\n\t"
+        "_080C9480: .4byte Cb_ChangeScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5597,7 +5597,7 @@ __attribute__((naked)) void Cb_OnCloseBoxPressed(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C95A4\n\t"
         "	.align 2, 0\n\t"
-        "_080C94F0: .4byte 0x080C8DE9\n\t"
+        "_080C94F0: .4byte Cb_CloseBoxWhileHoldingItem + 1\n\t"
         "_080C94F4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -5644,7 +5644,7 @@ __attribute__((naked)) void Cb_OnCloseBoxPressed(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C95A4\n\t"
         "	.align 2, 0\n\t"
-        "_080C9554: .4byte 0x080C7B49\n\t"
+        "_080C9554: .4byte Cb_MainPSS + 1\n\t"
         "_080C9558:\n\t"
         "	movs r0, #3\n\t"
         "	bl PlaySE\n\t"
@@ -5686,7 +5686,7 @@ __attribute__((naked)) void Cb_OnCloseBoxPressed(void)
         "	.align 2, 0\n\t"
         "_080C95AC: .4byte gPlayerPartyCount\n\t"
         "_080C95B0: .4byte gUnknown_20399A8\n\t"
-        "_080C95B4: .4byte 0x080C96ED\n\t"
+        "_080C95B4: .4byte Cb_ChangeScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5742,7 +5742,7 @@ __attribute__((naked)) void Cb_OnBPressed(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C96D8\n\t"
         "	.align 2, 0\n\t"
-        "_080C9624: .4byte 0x080C8DE9\n\t"
+        "_080C9624: .4byte Cb_CloseBoxWhileHoldingItem + 1\n\t"
         "_080C9628:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -5790,7 +5790,7 @@ __attribute__((naked)) void Cb_OnBPressed(void)
         "	bl SetPSSCallback\n\t"
         "	b _080C96D8\n\t"
         "	.align 2, 0\n\t"
-        "_080C9688: .4byte 0x080C7B49\n\t"
+        "_080C9688: .4byte Cb_MainPSS + 1\n\t"
         "_080C968C:\n\t"
         "	movs r0, #3\n\t"
         "	bl PlaySE\n\t"
@@ -5832,7 +5832,7 @@ __attribute__((naked)) void Cb_OnBPressed(void)
         "	.align 2, 0\n\t"
         "_080C96E0: .4byte gPlayerPartyCount\n\t"
         "_080C96E4: .4byte gUnknown_20399A8\n\t"
-        "_080C96E8: .4byte 0x080C96ED\n\t"
+        "_080C96E8: .4byte Cb_ChangeScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5885,7 +5885,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	b _080C97CA\n\t"
         "	.align 2, 0\n\t"
         "_080C9744: .4byte gUnknown_20399B2\n\t"
-        "_080C9748: .4byte 0x080C6F11\n\t"
+        "_080C9748: .4byte Cb2_ExitPSS + 1\n\t"
         "_080C974C:\n\t"
         "	ldr r0, _080C9780\n\t"
         "	ldr r1, [r0]\n\t"
@@ -5915,7 +5915,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "_080C9780: .4byte gUnknown_20399A8\n\t"
         "_080C9784: .4byte 0x0000218C\n\t"
         "_080C9788: .4byte 0x00002188\n\t"
-        "_080C978C: .4byte 0x080C7689\n\t"
+        "_080C978C: .4byte Cb2_ReturnToPSS + 1\n\t"
         "_080C9790:\n\t"
         "	bl FreePSSData\n\t"
         "	bl StorageGetCurrentBox\n\t"
@@ -5933,7 +5933,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	bl DoNamingScreen\n\t"
         "	b _080C97CA\n\t"
         "	.align 2, 0\n\t"
-        "_080C97B8: .4byte 0x080C7689\n\t"
+        "_080C97B8: .4byte Cb2_ReturnToPSS + 1\n\t"
         "_080C97BC:\n\t"
         "	bl FreePSSData\n\t"
         "	ldr r2, _080C97DC\n\t"
@@ -5950,7 +5950,7 @@ __attribute__((naked)) void Cb_ChangeScreen(u8 a)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C97DC: .4byte 0x080C7689\n\t"
+        "_080C97DC: .4byte Cb2_ReturnToPSS + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6405,7 +6405,7 @@ __attribute__((naked)) void BoxSetMosaic(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C9B24: .4byte gUnknown_20399A8\n\t"
-        "_080C9B28: .4byte 0x080C9B45\n\t"
+        "_080C9B28: .4byte sub_080C9B44 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6470,7 +6470,7 @@ __attribute__((naked)) void sub_080C9B44(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C9B88: .4byte 0x08007141\n\t"
+        "_080C9B88: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8225,7 +8225,7 @@ __attribute__((naked)) void CreateMovingMonIcon(void)
         "_080CA88C: .4byte gUnknown_20399A8\n\t"
         "_080CA890: .4byte 0x000020A4\n\t"
         "_080CA894: .4byte 0x00000A6C\n\t"
-        "_080CA898: .4byte 0x080CB975\n\t"
+        "_080CA898: .4byte sub_080CB974 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8505,7 +8505,7 @@ __attribute__((naked)) void sub_080CAA64(void)
         "	.align 2, 0\n\t"
         "_080CAA9C: .4byte gUnknown_20399A8\n\t"
         "_080CAAA0: .4byte 0x00000A88\n\t"
-        "_080CAAA4: .4byte 0x080CAAED\n\t"
+        "_080CAAA4: .4byte sub_080CAAEC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8546,7 +8546,7 @@ __attribute__((naked)) void sub_080CAAA8(void)
         "	.align 2, 0\n\t"
         "_080CAAE0: .4byte gUnknown_20399A8\n\t"
         "_080CAAE4: .4byte 0x00000C66\n\t"
-        "_080CAAE8: .4byte 0x08007141\n\t"
+        "_080CAAE8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8584,7 +8584,7 @@ __attribute__((naked)) void sub_080CAAEC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080CAB20: .4byte 0x08007141\n\t"
+        "_080CAB20: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8756,7 +8756,7 @@ __attribute__((naked)) void sub_080CAB6C(void)
         "_080CAC54: .4byte 0x00000BA8\n\t"
         "_080CAC58: .4byte 0x00000BE4\n\t"
         "_080CAC5C: .4byte 0x00000A88\n\t"
-        "_080CAC60: .4byte 0x080CAAA9\n\t"
+        "_080CAC60: .4byte sub_080CAAA8 + 1\n\t"
         "_080CAC64:\n\t"
         "	mov sl, r1\n\t"
         "	movs r7, #4\n\t"
@@ -8864,7 +8864,7 @@ __attribute__((naked)) void sub_080CAB6C(void)
         "_080CAD2C: .4byte 0x00000BA8\n\t"
         "_080CAD30: .4byte 0x00000BE4\n\t"
         "_080CAD34: .4byte 0x00000A88\n\t"
-        "_080CAD38: .4byte 0x080CAAA9\n\t"
+        "_080CAD38: .4byte sub_080CAAA8 + 1\n\t"
         "_080CAD3C: .4byte 0x00000C5C\n\t"
         ".syntax divided\n\t"
     );
@@ -9618,7 +9618,7 @@ __attribute__((naked)) void sub_080CB244(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080CB2AC: .4byte 0x080CB2B1\n\t"
+        "_080CB2AC: .4byte sub_080CB2B0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -9694,7 +9694,7 @@ __attribute__((naked)) void sub_080CB2B0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080CB32C: .4byte 0x08007141\n\t"
+        "_080CB32C: .4byte SpriteCallbackDummy + 1\n\t"
         "_080CB330: .4byte gUnknown_20399A8\n\t"
         "_080CB334: .4byte 0x00000C5E\n\t"
         ".syntax divided\n\t"
@@ -9988,7 +9988,7 @@ __attribute__((naked)) void sub_080CB488(void)
         "_080CB510: .4byte gUnknown_20399A8\n\t"
         "_080CB514: .4byte 0x00000A6C\n\t"
         "_080CB518: .4byte 0x00000A88\n\t"
-        "_080CB51C: .4byte 0x080CB975\n\t"
+        "_080CB51C: .4byte sub_080CB974 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10079,7 +10079,7 @@ __attribute__((naked)) void sub_080CB520(void)
         "_080CB5C0: .4byte gUnknown_20399A8\n\t"
         "_080CB5C4: .4byte 0x00000A88\n\t"
         "_080CB5C8: .4byte 0x00000A6C\n\t"
-        "_080CB5CC: .4byte 0x08007141\n\t"
+        "_080CB5CC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10135,7 +10135,7 @@ __attribute__((naked)) void sub_080CB5D0(void)
         "_080CB624: .4byte gUnknown_20399A8\n\t"
         "_080CB628: .4byte 0x00000A88\n\t"
         "_080CB62C: .4byte 0x00000A6C\n\t"
-        "_080CB630: .4byte 0x08007141\n\t"
+        "_080CB630: .4byte SpriteCallbackDummy + 1\n\t"
         "_080CB634: .4byte 0x00000C5D\n\t"
         ".syntax divided\n\t"
     );
@@ -10312,8 +10312,8 @@ __attribute__((naked)) void sub_080CB638(void)
         "_080CB774: .4byte 0x00000C5D\n\t"
         "_080CB778: .4byte 0x00000A6C\n\t"
         "_080CB77C: .4byte gSineTable\n\t"
-        "_080CB780: .4byte 0x080CB975\n\t"
-        "_080CB784: .4byte 0x08007141\n\t"
+        "_080CB780: .4byte sub_080CB974 + 1\n\t"
+        "_080CB784: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10939,7 +10939,7 @@ __attribute__((naked)) void sub_080CBBA0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080CBBC8: .4byte 0x080CBBE5\n\t"
+        "_080CBBC8: .4byte sub_080CBBE4 + 1\n\t"
         "_080CBBCC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -10957,7 +10957,7 @@ __attribute__((naked)) void sub_080CBBD0(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080CBBE0: .4byte 0x080CBBE5\n\t"
+        "_080CBBE0: .4byte sub_080CBBE4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12416,8 +12416,8 @@ __attribute__((naked)) void sub_080CC57C(void)
         "_080CC758: .4byte 0x000021B8\n\t"
         "_080CC75C: .4byte 0x08551824\n\t"
         "_080CC760: .4byte gSprites\n\t"
-        "_080CC764: .4byte 0x080CC7BD\n\t"
-        "_080CC768: .4byte 0x080CC7F1\n\t"
+        "_080CC764: .4byte sub_080CC7BC + 1\n\t"
+        "_080CC768: .4byte sub_080CC7F0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -12499,7 +12499,7 @@ __attribute__((naked)) void sub_080CC7BC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080CC7EC: .4byte 0x08007141\n\t"
+        "_080CC7EC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13064,7 +13064,7 @@ __attribute__((naked)) void sub_080CCB64(void)
         "	.align 2, 0\n\t"
         "_080CCBD0: .4byte 0x08555BDC\n\t"
         "_080CCBD4: .4byte gSprites\n\t"
-        "_080CCBD8: .4byte 0x08007141\n\t"
+        "_080CCBD8: .4byte SpriteCallbackDummy + 1\n\t"
         "_080CCBDC:\n\t"
         "	movs r0, #0\n\t"
         "_080CCBDE:\n\t"
@@ -14298,7 +14298,7 @@ __attribute__((naked)) void sub_080CD4E0(void)
         "	.align 2, 0\n\t"
         "_080CD4F4: .4byte gUnknown_20399A8\n\t"
         "_080CD4F8: .4byte 0x00000D8C\n\t"
-        "_080CD4FC: .4byte 0x080CD731\n\t"
+        "_080CD4FC: .4byte sub_080CD730 + 1\n\t"
         "_080CD500:\n\t"
         "	ldr r0, _080CD51C\n\t"
         "	ldr r1, [r0]\n\t"
@@ -14318,7 +14318,7 @@ __attribute__((naked)) void sub_080CD4E0(void)
         "	.align 2, 0\n\t"
         "_080CD51C: .4byte gUnknown_20399A8\n\t"
         "_080CD520: .4byte 0x00000D8C\n\t"
-        "_080CD524: .4byte 0x080CD741\n\t"
+        "_080CD524: .4byte sub_080CD740 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -21692,8 +21692,8 @@ __attribute__((naked)) void sub_080D0AB8(void)
         "_080D0AF4: .4byte gUnknown_20399A8\n\t"
         "_080D0AF8: .4byte 0x00002204\n\t"
         "_080D0AFC: .4byte 0x00002210\n\t"
-        "_080D0B00: .4byte 0x08007141\n\t"
-        "_080D0B04: .4byte 0x080D1379\n\t"
+        "_080D0B00: .4byte SpriteCallbackDummy + 1\n\t"
+        "_080D0B04: .4byte sub_080D1378 + 1\n\t"
         "_080D0B08:\n\t"
         "	adds r4, #0x10\n\t"
         "	adds r3, #0x10\n\t"
@@ -22283,7 +22283,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0F08: .4byte gUnknown_20399A8\n\t"
         "_080D0F0C: .4byte 0x00002204\n\t"
-        "_080D0F10: .4byte 0x080D12E9\n\t"
+        "_080D0F10: .4byte sub_080D12E8 + 1\n\t"
         "_080D0F14:\n\t"
         "	ldr r0, _080D0F2C\n\t"
         "	ldr r0, [r0]\n\t"
@@ -22300,7 +22300,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0F2C: .4byte gUnknown_20399A8\n\t"
         "_080D0F30: .4byte 0x00002204\n\t"
-        "_080D0F34: .4byte 0x080D1315\n\t"
+        "_080D0F34: .4byte sub_080D1314 + 1\n\t"
         "_080D0F38:\n\t"
         "	ldr r0, _080D0F58\n\t"
         "	ldr r0, [r0]\n\t"
@@ -22321,7 +22321,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0F58: .4byte gUnknown_20399A8\n\t"
         "_080D0F5C: .4byte 0x00002204\n\t"
-        "_080D0F60: .4byte 0x080D13B5\n\t"
+        "_080D0F60: .4byte sub_080D13B4 + 1\n\t"
         "_080D0F64:\n\t"
         "	ldr r0, _080D0F84\n\t"
         "	ldr r0, [r0]\n\t"
@@ -22342,7 +22342,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0F84: .4byte gUnknown_20399A8\n\t"
         "_080D0F88: .4byte 0x00002204\n\t"
-        "_080D0F8C: .4byte 0x080D1435\n\t"
+        "_080D0F8C: .4byte sub_080D1434 + 1\n\t"
         "_080D0F90:\n\t"
         "	ldr r0, _080D0FB0\n\t"
         "	ldr r0, [r0]\n\t"
@@ -22363,7 +22363,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0FB0: .4byte gUnknown_20399A8\n\t"
         "_080D0FB4: .4byte 0x00002204\n\t"
-        "_080D0FB8: .4byte 0x080D14D1\n\t"
+        "_080D0FB8: .4byte sub_080D14D0 + 1\n\t"
         "_080D0FBC:\n\t"
         "	ldr r0, _080D0FD4\n\t"
         "	ldr r0, [r0]\n\t"
@@ -22382,7 +22382,7 @@ __attribute__((naked)) void sub_080D0EA4(void)
         "	.align 2, 0\n\t"
         "_080D0FD4: .4byte gUnknown_20399A8\n\t"
         "_080D0FD8: .4byte 0x00002204\n\t"
-        "_080D0FDC: .4byte 0x080D156D\n\t"
+        "_080D0FDC: .4byte sub_080D156C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -22836,7 +22836,7 @@ __attribute__((naked)) void sub_080D12E8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D1310: .4byte 0x08007141\n\t"
+        "_080D1310: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -22897,7 +22897,7 @@ __attribute__((naked)) void sub_080D1314(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D1374: .4byte 0x080D1379\n\t"
+        "_080D1374: .4byte sub_080D1378 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -23006,7 +23006,7 @@ __attribute__((naked)) void sub_080D13B4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D1430: .4byte 0x08007141\n\t"
+        "_080D1430: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -23091,7 +23091,7 @@ __attribute__((naked)) void sub_080D1434(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080D14C8: .4byte gSineTable\n\t"
-        "_080D14CC: .4byte 0x080D1379\n\t"
+        "_080D14CC: .4byte sub_080D1378 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -23177,7 +23177,7 @@ __attribute__((naked)) void sub_080D14D0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080D1564: .4byte gSineTable\n\t"
-        "_080D1568: .4byte 0x08007141\n\t"
+        "_080D1568: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -23212,7 +23212,7 @@ __attribute__((naked)) void sub_080D156C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D15A0: .4byte 0x08007141\n\t"
+        "_080D15A0: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -24888,7 +24888,7 @@ __attribute__((naked)) void sub_080D238C(void)
         "	b _080D2416\n\t"
         "	.align 2, 0\n\t"
         "_080D240C: .4byte gUnknown_2039A2C\n\t"
-        "_080D2410: .4byte 0x080D2429\n\t"
+        "_080D2410: .4byte sub_080D2428 + 1\n\t"
         "_080D2414:\n\t"
         "	movs r0, #0\n\t"
         "_080D2416:\n\t"
@@ -24985,7 +24985,7 @@ __attribute__((naked)) void sub_080D2460(void)
         "	b _080D24B6\n\t"
         "	.align 2, 0\n\t"
         "_080D24AC: .4byte gUnknown_2039A2C\n\t"
-        "_080D24B0: .4byte 0x080D24BD\n\t"
+        "_080D24B0: .4byte sub_080D24BC + 1\n\t"
         "_080D24B4:\n\t"
         "	movs r0, #0\n\t"
         "_080D24B6:\n\t"

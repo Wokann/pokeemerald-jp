@@ -478,7 +478,7 @@ __attribute__((naked)) void EggHatchCreateMonSprite(void)
         "	.align 2, 0\n\t"
         "_08071128: .4byte gMultiuseSpriteTemplate\n\t"
         "_0807112C: .4byte gSprites\n\t"
-        "_08071130: .4byte 0x08007141\n\t"
+        "_08071130: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -513,7 +513,7 @@ __attribute__((naked)) void EggHatch(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08071164: .4byte 0x08071169\n\t"
+        "_08071164: .4byte Task_EggHatch + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -545,9 +545,9 @@ __attribute__((naked)) void Task_EggHatch(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08071198: .4byte gPaletteFade\n\t"
-        "_0807119C: .4byte 0x080711A9\n\t"
+        "_0807119C: .4byte CB2_EggHatch_0 + 1\n\t"
         "_080711A0: .4byte gFieldCallback\n\t"
-        "_080711A4: .4byte 0x080AEA65\n\t"
+        "_080711A4: .4byte FieldCB_ContinueScriptHandleMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -656,7 +656,7 @@ __attribute__((naked)) void CB2_EggHatch_0(void)
         "	.align 2, 0\n\t"
         "_080712AC: .4byte gUnknown_3000DE0\n\t"
         "_080712B0: .4byte gSpecialVar_0x8004\n\t"
-        "_080712B4: .4byte 0x08071135\n\t"
+        "_080712B4: .4byte VBlankCB_EggHatch + 1\n\t"
         "_080712B8: .4byte gSpecialVar_0x8005\n\t"
         "_080712BC: .4byte 0x082FCA5C\n\t"
         "_080712C0:\n\t"
@@ -792,7 +792,7 @@ __attribute__((naked)) void CB2_EggHatch_0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080713F8: .4byte 0x08071499\n\t"
+        "_080713F8: .4byte CB2_EggHatch_1 + 1\n\t"
         "_080713FC: .4byte gUnknown_3000DE0\n\t"
         ".syntax divided\n\t"
     );
@@ -825,7 +825,7 @@ __attribute__((naked)) void EggHatchSetMonNickname(void)
         "_08071430: .4byte gPlayerParty\n\t"
         "_08071434: .4byte gStringVar3\n\t"
         "_08071438: .4byte gUnknown_3000DE0\n\t"
-        "_0807143C: .4byte 0x08085A31\n\t"
+        "_0807143C: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -949,7 +949,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	.align 2, 0\n\t"
         "_08071538: .4byte 0x082FC9F4\n\t"
         "_0807153C: .4byte gUnknown_3000DE0\n\t"
-        "_08071540: .4byte 0x08071441\n\t"
+        "_08071540: .4byte Task_EggHatchPlayBGM + 1\n\t"
         "_08071544:\n\t"
         "	ldr r0, _08071568\n\t"
         "	ldrb r1, [r0, #7]\n\t"
@@ -999,7 +999,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	b _08071816\n\t"
         "	.align 2, 0\n\t"
         "_0807159C: .4byte gSprites\n\t"
-        "_080715A0: .4byte 0x08071845\n\t"
+        "_080715A0: .4byte SpriteCB_Egg_0 + 1\n\t"
         "_080715A4:\n\t"
         "	ldr r4, _080715F0\n\t"
         "	ldr r2, [r5]\n\t"
@@ -1039,7 +1039,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	b _080717D8\n\t"
         "	.align 2, 0\n\t"
         "_080715F0: .4byte gSprites\n\t"
-        "_080715F4: .4byte 0x08007141\n\t"
+        "_080715F4: .4byte SpriteCallbackDummy + 1\n\t"
         "_080715F8: .4byte gPlayerParty\n\t"
         "_080715FC:\n\t"
         "	ldr r2, _08071620\n\t"
@@ -1062,7 +1062,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	b _08071816\n\t"
         "	.align 2, 0\n\t"
         "_08071620: .4byte gSprites\n\t"
-        "_08071624: .4byte 0x08007141\n\t"
+        "_08071624: .4byte SpriteCallbackDummy + 1\n\t"
         "_08071628:\n\t"
         "	ldr r0, [r5]\n\t"
         "	ldrb r1, [r0, #4]\n\t"
@@ -1246,7 +1246,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "_080717B4: .4byte gUnknown_3000DE0\n\t"
         "_080717B8: .4byte gPlayerParty\n\t"
         "_080717BC: .4byte gStringVar3\n\t"
-        "_080717C0: .4byte 0x08071401\n\t"
+        "_080717C0: .4byte EggHatchSetMonNickname + 1\n\t"
         "_080717C4:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -1301,7 +1301,7 @@ __attribute__((naked)) void CB2_EggHatch_1(void)
         "	.align 2, 0\n\t"
         "_08071838: .4byte gPaletteFade\n\t"
         "_0807183C: .4byte gUnknown_3000DE0\n\t"
-        "_08071840: .4byte 0x08085A31\n\t"
+        "_08071840: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1325,7 +1325,7 @@ __attribute__((naked)) void SpriteCB_Egg_0(void)
         "	strh r0, [r4, #0x2e]\n\t"
         "	b _08071894\n\t"
         "	.align 2, 0\n\t"
-        "_08071860: .4byte 0x0807189D\n\t"
+        "_08071860: .4byte SpriteCB_Egg_1 + 1\n\t"
         "_08071864:\n\t"
         "	ldrh r0, [r4, #0x30]\n\t"
         "	adds r0, #0x14\n\t"
@@ -1383,7 +1383,7 @@ __attribute__((naked)) void SpriteCB_Egg_1(void)
         "	strh r1, [r4, #0x32]\n\t"
         "	b _080718F8\n\t"
         "	.align 2, 0\n\t"
-        "_080718C8: .4byte 0x08071901\n\t"
+        "_080718C8: .4byte SpriteCB_Egg_2 + 1\n\t"
         "_080718CC:\n\t"
         "	ldrh r0, [r4, #0x30]\n\t"
         "	adds r0, #0x14\n\t"
@@ -1462,7 +1462,7 @@ __attribute__((naked)) void SpriteCB_Egg_2(void)
         "	strh r5, [r0, #0x26]\n\t"
         "	b _080719AE\n\t"
         "	.align 2, 0\n\t"
-        "_0807195C: .4byte 0x080719B5\n\t"
+        "_0807195C: .4byte SpriteCB_Egg_3 + 1\n\t"
         "_08071960: .4byte gUnknown_3000DE0\n\t"
         "_08071964: .4byte gPlayerParty\n\t"
         "_08071968: .4byte gSprites\n\t"
@@ -1524,7 +1524,7 @@ __attribute__((naked)) void SpriteCB_Egg_3(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080719D4: .4byte 0x080719D9\n\t"
+        "_080719D4: .4byte SpriteCB_Egg_4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1594,7 +1594,7 @@ __attribute__((naked)) void SpriteCB_Egg_4(void)
         "	.align 2, 0\n\t"
         "_08071A4C: .4byte 0x0000FFFF\n\t"
         "_08071A50: .4byte gPaletteFade\n\t"
-        "_08071A54: .4byte 0x08071A59\n\t"
+        "_08071A54: .4byte SpriteCB_Egg_5 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1680,7 +1680,7 @@ __attribute__((naked)) void SpriteCB_Egg_5(void)
         "_08071AE8: .4byte gSprites\n\t"
         "_08071AEC: .4byte gUnknown_3000DE0\n\t"
         "_08071AF0: .4byte 0x0000FFFF\n\t"
-        "_08071AF4: .4byte 0x08007141\n\t"
+        "_08071AF4: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }

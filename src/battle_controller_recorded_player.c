@@ -26,7 +26,7 @@ __attribute__((naked)) void SetControllerToRecordedPlayer(void)
         "	.align 2, 0\n\t"
         "_08189688: .4byte gBattlerControllerFuncs\n\t"
         "_0818968C: .4byte gActiveBattler\n\t"
-        "_08189690: .4byte 0x08189695\n\t"
+        "_08189690: .4byte RecordedPlayerBufferRunCommand + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -103,7 +103,7 @@ __attribute__((naked)) void sub_081896E4(void)
         "_0818970C: .4byte gSprites\n\t"
         "_08189710: .4byte gBattlerSpriteIds\n\t"
         "_08189714: .4byte gActiveBattler\n\t"
-        "_08189718: .4byte 0x08007141\n\t"
+        "_08189718: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -156,7 +156,7 @@ __attribute__((naked)) void sub_0818971C(void)
         "_08189774: .4byte gSprites\n\t"
         "_08189778: .4byte gBattlerSpriteIds\n\t"
         "_0818977C: .4byte gActiveBattler\n\t"
-        "_08189780: .4byte 0x08007141\n\t"
+        "_08189780: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -255,7 +255,7 @@ __attribute__((naked)) void sub_081897CC(void)
         "_08189828: .4byte gBattleTypeFlags\n\t"
         "_0818982C: .4byte gSprites\n\t"
         "_08189830: .4byte gHealthboxSpriteIds\n\t"
-        "_08189834: .4byte 0x08007141\n\t"
+        "_08189834: .4byte SpriteCallbackDummy + 1\n\t"
         "_08189838:\n\t"
         "	ldr r2, _08189968\n\t"
         "	ldr r5, _0818996C\n\t"
@@ -413,7 +413,7 @@ __attribute__((naked)) void sub_081897CC(void)
         "_08189968: .4byte gSprites\n\t"
         "_0818996C: .4byte gHealthboxSpriteIds\n\t"
         "_08189970: .4byte gActiveBattler\n\t"
-        "_08189974: .4byte 0x08007141\n\t"
+        "_08189974: .4byte SpriteCallbackDummy + 1\n\t"
         "_08189978: .4byte gBattleSpritesDataPtr\n\t"
         "_0818997C: .4byte 0x000027F9\n\t"
         "_08189980: .4byte gBattlerPartyIndexes\n\t"
@@ -454,7 +454,7 @@ __attribute__((naked)) void sub_081897CC(void)
         "_081899CC: .4byte gBattleTypeFlags\n\t"
         "_081899D0: .4byte gSprites\n\t"
         "_081899D4: .4byte gHealthboxSpriteIds\n\t"
-        "_081899D8: .4byte 0x08007141\n\t"
+        "_081899D8: .4byte SpriteCallbackDummy + 1\n\t"
         "_081899DC:\n\t"
         "	ldr r2, _08189A50\n\t"
         "	ldr r5, _08189A54\n\t"
@@ -522,10 +522,10 @@ __attribute__((naked)) void sub_081897CC(void)
         "_08189A50: .4byte gSprites\n\t"
         "_08189A54: .4byte gHealthboxSpriteIds\n\t"
         "_08189A58: .4byte gActiveBattler\n\t"
-        "_08189A5C: .4byte 0x08007141\n\t"
+        "_08189A5C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08189A60: .4byte gBattleSpritesDataPtr\n\t"
         "_08189A64: .4byte gBattlerControllerFuncs\n\t"
-        "_08189A68: .4byte 0x08189785\n\t"
+        "_08189A68: .4byte sub_08189784 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -907,11 +907,11 @@ __attribute__((naked)) void sub_08189A6C(void)
         "_08189D70: .4byte gActiveBattler\n\t"
         "_08189D74: .4byte gSprites\n\t"
         "_08189D78: .4byte gUnknown_3005ADC\n\t"
-        "_08189D7C: .4byte 0x08007141\n\t"
+        "_08189D7C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08189D80: .4byte gBattlerSpriteIds\n\t"
         "_08189D84: .4byte gBattleTypeFlags\n\t"
         "_08189D88: .4byte gBattlerControllerFuncs\n\t"
-        "_08189D8C: .4byte 0x081897CD\n\t"
+        "_08189D8C: .4byte sub_081897CC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1281,10 +1281,10 @@ __attribute__((naked)) void sub_08189FE0(void)
         "_0818A038: .4byte gSprites\n\t"
         "_0818A03C: .4byte gHealthboxSpriteIds\n\t"
         "_0818A040: .4byte gActiveBattler\n\t"
-        "_0818A044: .4byte 0x08007141\n\t"
+        "_0818A044: .4byte SpriteCallbackDummy + 1\n\t"
         "_0818A048: .4byte gBattleSpritesDataPtr\n\t"
         "_0818A04C: .4byte gBattlerControllerFuncs\n\t"
-        "_0818A050: .4byte 0x0818A055\n\t"
+        "_0818A050: .4byte sub_0818A054 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1330,7 +1330,7 @@ __attribute__((naked)) void sub_0818A054(void)
         "_0818A098: .4byte gActiveBattler\n\t"
         "_0818A09C: .4byte gSprites\n\t"
         "_0818A0A0: .4byte gBattlerSpriteIds\n\t"
-        "_0818A0A4: .4byte 0x08007141\n\t"
+        "_0818A0A4: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1435,14 +1435,14 @@ __attribute__((naked)) void sub_0818A0A8(void)
         "_0818A170: .4byte gBattleSpritesDataPtr\n\t"
         "_0818A174: .4byte gActiveBattler\n\t"
         "_0818A178: .4byte 0x000027F9\n\t"
-        "_0818A17C: .4byte 0x08058D11\n\t"
+        "_0818A17C: .4byte c3_0802FDF4 + 1\n\t"
         "_0818A180: .4byte gBattlerPartyIndexes\n\t"
         "_0818A184: .4byte gPlayerParty\n\t"
         "_0818A188: .4byte gBattlerSpriteIds\n\t"
         "_0818A18C: .4byte gSprites\n\t"
         "_0818A190: .4byte gHealthboxSpriteIds\n\t"
         "_0818A194: .4byte gBattlerControllerFuncs\n\t"
-        "_0818A198: .4byte 0x08189FE1\n\t"
+        "_0818A198: .4byte sub_08189FE0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1521,9 +1521,9 @@ __attribute__((naked)) void sub_0818A19C(void)
         "_0818A228: .4byte gPlayerParty\n\t"
         "_0818A22C: .4byte gSprites\n\t"
         "_0818A230: .4byte gUnknown_3005ADC\n\t"
-        "_0818A234: .4byte 0x08007141\n\t"
+        "_0818A234: .4byte SpriteCallbackDummy + 1\n\t"
         "_0818A238: .4byte gBattlerControllerFuncs\n\t"
-        "_0818A23C: .4byte 0x0818A0A9\n\t"
+        "_0818A23C: .4byte sub_0818A0A8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1564,7 +1564,7 @@ __attribute__((naked)) void RecordedPlayerBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_0818A280: .4byte gBattlerControllerFuncs\n\t"
         "_0818A284: .4byte gActiveBattler\n\t"
-        "_0818A288: .4byte 0x08189695\n\t"
+        "_0818A288: .4byte RecordedPlayerBufferRunCommand + 1\n\t"
         "_0818A28C: .4byte gBattleTypeFlags\n\t"
         "_0818A290: .4byte gBattleBufferA\n\t"
         "_0818A294:\n\t"
@@ -4041,7 +4041,7 @@ __attribute__((naked)) void RecordedPlayerHandleLoadMonSprite(void)
         "_0818B718: .4byte 0x0000FF10\n\t"
         "_0818B71C: .4byte gBattleMonForms\n\t"
         "_0818B720: .4byte gBattlerControllerFuncs\n\t"
-        "_0818B724: .4byte 0x08189D91\n\t"
+        "_0818B724: .4byte RecordedPlayerHandleBallThrowAnim + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4097,7 +4097,7 @@ __attribute__((naked)) void RecordedPlayerHandleSwitchInAnim(void)
         "_0818B788: .4byte gBattlerPartyIndexes\n\t"
         "_0818B78C: .4byte gPlayerParty\n\t"
         "_0818B790: .4byte gBattlerControllerFuncs\n\t"
-        "_0818B794: .4byte 0x0818A19D\n\t"
+        "_0818B794: .4byte sub_0818A19C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4268,13 +4268,13 @@ __attribute__((naked)) void sub_0818B798(void)
         "_0818B8EC: .4byte gBattlerPartyIndexes\n\t"
         "_0818B8F0: .4byte gBattleBufferA\n\t"
         "_0818B8F4: .4byte gPlayerParty\n\t"
-        "_0818B8F8: .4byte 0x0805D331\n\t"
+        "_0818B8F8: .4byte sub_0805D330 + 1\n\t"
         "_0818B8FC: .4byte gUnknown_3005ADC\n\t"
         "_0818B900: .4byte gMultiuseSpriteTemplate\n\t"
         "_0818B904: .4byte gBattlerSpriteIds\n\t"
         "_0818B908: .4byte gSprites\n\t"
         "_0818B90C: .4byte gBattleMonForms\n\t"
-        "_0818B910: .4byte 0x08007141\n\t"
+        "_0818B910: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4313,7 +4313,7 @@ __attribute__((naked)) void RecordedPlayerHandleReturnMonToBall(void)
         "_0818B94C: .4byte gActiveBattler\n\t"
         "_0818B950: .4byte gBattleSpritesDataPtr\n\t"
         "_0818B954: .4byte gBattlerControllerFuncs\n\t"
-        "_0818B958: .4byte 0x0818B9A5\n\t"
+        "_0818B958: .4byte sub_0818B9A4 + 1\n\t"
         "_0818B95C:\n\t"
         "	ldr r5, _0818B998\n\t"
         "	adds r0, r2, r5\n\t"
@@ -4423,7 +4423,7 @@ __attribute__((naked)) void sub_0818B9A4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0818BA28: .4byte gBattlerControllerFuncs\n\t"
-        "_0818BA2C: .4byte 0x08189EDD\n\t"
+        "_0818BA2C: .4byte sub_08189EDC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4654,7 +4654,7 @@ __attribute__((naked)) void RecordedPlayerHandleDrawTrainerPic(void)
         "_0818BBF8: .4byte gTrainerFrontPicPaletteTable\n\t"
         "_0818BBFC: .4byte gSprites\n\t"
         "_0818BC00: .4byte 0x0000FFFE\n\t"
-        "_0818BC04: .4byte 0x0805D3C9\n\t"
+        "_0818BC04: .4byte sub_0805D3C8 + 1\n\t"
         "_0818BC08:\n\t"
         "	ldr r5, _0818BCB8\n\t"
         "	ldrb r1, [r5]\n\t"
@@ -4746,9 +4746,9 @@ __attribute__((naked)) void RecordedPlayerHandleDrawTrainerPic(void)
         "_0818BCC0: .4byte gBattlerSpriteIds\n\t"
         "_0818BCC4: .4byte gSprites\n\t"
         "_0818BCC8: .4byte 0x0000FFFE\n\t"
-        "_0818BCCC: .4byte 0x0805D3C9\n\t"
+        "_0818BCCC: .4byte sub_0805D3C8 + 1\n\t"
         "_0818BCD0: .4byte gBattlerControllerFuncs\n\t"
-        "_0818BCD4: .4byte 0x081896E5\n\t"
+        "_0818BCD4: .4byte sub_081896E4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4843,10 +4843,10 @@ __attribute__((naked)) void RecordedPlayerHandleTrainerSlideBack(void)
         "_0818BD74: .4byte gActiveBattler\n\t"
         "_0818BD78: .4byte gSprites\n\t"
         "_0818BD7C: .4byte 0x0000FFD8\n\t"
-        "_0818BD80: .4byte 0x080A67B5\n\t"
-        "_0818BD84: .4byte 0x08007141\n\t"
+        "_0818BD80: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_0818BD84: .4byte SpriteCallbackDummy + 1\n\t"
         "_0818BD88: .4byte gBattlerControllerFuncs\n\t"
-        "_0818BD8C: .4byte 0x0818971D\n\t"
+        "_0818BD8C: .4byte sub_0818971C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4962,9 +4962,9 @@ __attribute__((naked)) void RecordedPlayerHandleFaintAnimation(void)
         "_0818BE64: .4byte gPlayerParty\n\t"
         "_0818BE68: .4byte gSprites\n\t"
         "_0818BE6C: .4byte gBattlerSpriteIds\n\t"
-        "_0818BE70: .4byte 0x08039845\n\t"
+        "_0818BE70: .4byte SpriteCB_FaintSlideAnim + 1\n\t"
         "_0818BE74: .4byte gBattlerControllerFuncs\n\t"
-        "_0818BE78: .4byte 0x08189E41\n\t"
+        "_0818BE78: .4byte sub_08189E40 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5169,7 +5169,7 @@ __attribute__((naked)) void RecordedPlayerHandleMoveAnimation(void)
         "	.align 2, 0\n\t"
         "_0818BFD8: .4byte gBattleSpritesDataPtr\n\t"
         "_0818BFDC: .4byte gBattlerControllerFuncs\n\t"
-        "_0818BFE0: .4byte 0x0818BFE5\n\t"
+        "_0818BFE0: .4byte RecordedPlayerDoMoveAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5406,7 +5406,7 @@ __attribute__((naked)) void RecordedPlayerHandlePrintString(void)
         "_0818C1AC: .4byte gUnknown_2022D0A\n\t"
         "_0818C1B0: .4byte gDisplayedStringBattle\n\t"
         "_0818C1B4: .4byte gBattlerControllerFuncs\n\t"
-        "_0818C1B8: .4byte 0x08189F4D\n\t"
+        "_0818C1B8: .4byte RecordedPlayerHandleChosenMonReturnValue + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5481,7 +5481,7 @@ __attribute__((naked)) void RecordedPlayerHandleChooseAction(void)
         "_0818C224: .4byte gBattleTypeFlags\n\t"
         "_0818C228: .4byte gBattlerControllerFuncs\n\t"
         "_0818C22C: .4byte gActiveBattler\n\t"
-        "_0818C230: .4byte 0x0818C1C9\n\t"
+        "_0818C230: .4byte ChooseActionInBattlePalace + 1\n\t"
         "_0818C234:\n\t"
         "	ldr r0, _0818C254\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -5737,7 +5737,7 @@ __attribute__((naked)) void RecordedPlayerHandleHealthBarUpdate(void)
         "_0818C404: .4byte gHealthboxSpriteIds\n\t"
         "_0818C408: .4byte gBattlerControllerFuncs\n\t"
         "_0818C40C: .4byte gActiveBattler\n\t"
-        "_0818C410: .4byte 0x08189DD1\n\t"
+        "_0818C410: .4byte sub_08189DD0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5810,7 +5810,7 @@ __attribute__((naked)) void RecordedPlayerHandleStatusIconUpdate(void)
         "_0818C488: .4byte gPlayerParty\n\t"
         "_0818C48C: .4byte gBattleSpritesDataPtr\n\t"
         "_0818C490: .4byte gBattlerControllerFuncs\n\t"
-        "_0818C494: .4byte 0x0818A2B9\n\t"
+        "_0818C494: .4byte RecordedPlayerHandleGetRawMonData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5865,7 +5865,7 @@ __attribute__((naked)) void RecordedPlayerHandleStatusAnimation(void)
         "_0818C4F0: .4byte gActiveBattler\n\t"
         "_0818C4F4: .4byte gBattleBufferA\n\t"
         "_0818C4F8: .4byte gBattlerControllerFuncs\n\t"
-        "_0818C4FC: .4byte 0x0818A2B9\n\t"
+        "_0818C4FC: .4byte RecordedPlayerHandleGetRawMonData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6138,7 +6138,7 @@ __attribute__((naked)) void sub_0818C600(void)
         "	.align 2, 0\n\t"
         "_0818C664: .4byte gUnknown_202415D\n\t"
         "_0818C668: .4byte gBattlerControllerFuncs\n\t"
-        "_0818C66C: .4byte 0x08189F65\n\t"
+        "_0818C66C: .4byte RecordedPlayerHandleHitAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6413,8 +6413,8 @@ __attribute__((naked)) void RecordedPlayerHandleIntroTrainerBallThrow(void)
         "_0818C860: .4byte gActiveBattler\n\t"
         "_0818C864: .4byte gSprites\n\t"
         "_0818C868: .4byte 0x0000FFD8\n\t"
-        "_0818C86C: .4byte 0x080A67B5\n\t"
-        "_0818C870: .4byte 0x0805C81D\n\t"
+        "_0818C86C: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_0818C870: .4byte sub_0805C81C + 1\n\t"
         "_0818C874: .4byte 0x0000D6F9\n\t"
         "_0818C878: .4byte gBattleTypeFlags\n\t"
         "_0818C87C: .4byte gLinkPlayers\n\t"
@@ -6504,11 +6504,11 @@ __attribute__((naked)) void RecordedPlayerHandleIntroTrainerBallThrow(void)
         "_0818C928: .4byte gSprites\n\t"
         "_0818C92C: .4byte gBattlerSpriteIds\n\t"
         "_0818C930: .4byte gActiveBattler\n\t"
-        "_0818C934: .4byte 0x0818C951\n\t"
+        "_0818C934: .4byte sub_0818C950 + 1\n\t"
         "_0818C938: .4byte gTasks\n\t"
         "_0818C93C: .4byte gBattleSpritesDataPtr\n\t"
         "_0818C940: .4byte gUnknown_2024158\n\t"
-        "_0818C944: .4byte 0x0807352D\n\t"
+        "_0818C944: .4byte Task_HidePartyStatusSummary + 1\n\t"
         "_0818C948: .4byte gBattlerControllerFuncs\n\t"
         "_0818C94C: .4byte 0x08189675\n\t"
         ".syntax divided\n\t"
@@ -6642,7 +6642,7 @@ __attribute__((naked)) void sub_0818C950(void)
         "_0818CA4C: .4byte gPlayerParty\n\t"
         "_0818CA50: .4byte gBattlerControllerFuncs\n\t"
         "_0818CA54: .4byte gActiveBattler\n\t"
-        "_0818CA58: .4byte 0x08189A6D\n\t"
+        "_0818CA58: .4byte sub_08189A6C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6740,7 +6740,7 @@ __attribute__((naked)) void RecordedPlayerHandleDrawPartyStatusSummary(void)
         "_0818CB10: .4byte gUnknown_2022D0C\n\t"
         "_0818CB14: .4byte gUnknown_2024158\n\t"
         "_0818CB18: .4byte gBattlerControllerFuncs\n\t"
-        "_0818CB1C: .4byte 0x0818CB21\n\t"
+        "_0818CB1C: .4byte sub_0818CB20 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6825,7 +6825,7 @@ __attribute__((naked)) void RecordedPlayerHandleHidePartyStatusSummary(void)
         "_0818CBA8: .4byte gActiveBattler\n\t"
         "_0818CBAC: .4byte gTasks\n\t"
         "_0818CBB0: .4byte gUnknown_2024158\n\t"
-        "_0818CBB4: .4byte 0x0807352D\n\t"
+        "_0818CBB4: .4byte Task_HidePartyStatusSummary + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6946,7 +6946,7 @@ __attribute__((naked)) void RecordedPlayerHandleBattleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0818CC84: .4byte gBattlerControllerFuncs\n\t"
-        "_0818CC88: .4byte 0x0818A2E9\n\t"
+        "_0818CC88: .4byte RecordedPlayerHandleOneReturnValue + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7010,7 +7010,7 @@ __attribute__((naked)) void RecordedPlayerHandleCmd55(void)
         "_0818CCE0: .4byte gBattleBufferA\n\t"
         "_0818CCE4: .4byte gActiveBattler\n\t"
         "_0818CCE8: .4byte gBattlerControllerFuncs\n\t"
-        "_0818CCEC: .4byte 0x080583C1\n\t"
+        "_0818CCEC: .4byte sub_080583C0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

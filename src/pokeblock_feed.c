@@ -237,7 +237,7 @@ __attribute__((naked)) void TransitionToPokeblockFeedScene(void)
         "	movs r0, #1\n\t"
         "	b _08179C1E\n\t"
         "	.align 2, 0\n\t"
-        "_08179C14: .4byte 0x08179A3D\n\t"
+        "_08179C14: .4byte VBlankCB_PokeblockFeed + 1\n\t"
         "_08179C18: .4byte 0x08179A21\n\t"
         "_08179C1C:\n\t"
         "	movs r0, #0\n\t"
@@ -687,7 +687,7 @@ __attribute__((naked)) void Task_HandlePokeblockFeed(void)
         "	str r0, [r1]\n\t"
         "	b _0817A00C\n\t"
         "	.align 2, 0\n\t"
-        "_08179FB8: .4byte 0x0817A07D\n\t"
+        "_08179FB8: .4byte Task_HandleMonAtePokeblock + 1\n\t"
         "_08179FBC:\n\t"
         "	ldr r0, _08179FD8\n\t"
         "	ldr r0, [r0]\n\t"
@@ -762,7 +762,7 @@ __attribute__((naked)) void LaunchPokeblockFeedTask(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817A044: .4byte 0x08179EE9\n\t"
+        "_0817A044: .4byte Task_HandlePokeblockFeed + 1\n\t"
         "_0817A048: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -794,7 +794,7 @@ __attribute__((naked)) void Task_WaitForAtePokeblockText(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817A074: .4byte gTasks\n\t"
-        "_0817A078: .4byte 0x0817A1D9\n\t"
+        "_0817A078: .4byte Task_PaletteFadeToReturn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -907,7 +907,7 @@ __attribute__((naked)) void Task_HandleMonAtePokeblock(void)
         "_0817A168: .4byte 0x085C98A9\n\t"
         "_0817A16C: .4byte gTextFlags\n\t"
         "_0817A170: .4byte gTasks\n\t"
-        "_0817A174: .4byte 0x0817A04D\n\t"
+        "_0817A174: .4byte Task_WaitForAtePokeblockText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -985,7 +985,7 @@ __attribute__((naked)) void Task_PaletteFadeToReturn(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817A208: .4byte gTasks\n\t"
-        "_0817A20C: .4byte 0x0817A179\n\t"
+        "_0817A20C: .4byte Task_ReturnAfterPaletteFade + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1089,7 +1089,7 @@ __attribute__((naked)) void CreateMonSprite(void)
         "_0817A2D4: .4byte 0x0000105B\n\t"
         "_0817A2D8: .4byte 0x0000105A\n\t"
         "_0817A2DC: .4byte gSprites\n\t"
-        "_0817A2E0: .4byte 0x08007141\n\t"
+        "_0817A2E0: .4byte SpriteCallbackDummy + 1\n\t"
         "_0817A2E4: .4byte 0x00001053\n\t"
         "_0817A2E8: .4byte 0x085CDA50\n\t"
         ".syntax divided\n\t"
@@ -1123,7 +1123,7 @@ __attribute__((naked)) void PrepareMonToMoveToPokeblock(void)
         "	.align 2, 0\n\t"
         "_0817A314: .4byte gSprites\n\t"
         "_0817A318: .4byte 0x0000FFF8\n\t"
-        "_0817A31C: .4byte 0x0817A321\n\t"
+        "_0817A31C: .4byte sub_0817A320 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1162,7 +1162,7 @@ __attribute__((naked)) void sub_0817A320(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817A358: .4byte 0x08007141\n\t"
+        "_0817A358: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1208,7 +1208,7 @@ __attribute__((naked)) void CreatePokeblockCaseSpriteForFeeding(void)
         "	.align 2, 0\n\t"
         "_0817A3A4: .4byte gSprites\n\t"
         "_0817A3A8: .4byte 0x085CDB04\n\t"
-        "_0817A3AC: .4byte 0x08007141\n\t"
+        "_0817A3AC: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }

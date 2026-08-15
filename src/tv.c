@@ -8581,7 +8581,7 @@ __attribute__((naked)) void ChangePokemonNickname(void)
         "_080F0954: .4byte gPlayerParty\n\t"
         "_080F0958: .4byte gStringVar3\n\t"
         "_080F095C: .4byte gStringVar2\n\t"
-        "_080F0960: .4byte 0x080F0965\n\t"
+        "_080F0960: .4byte ChangePokemonNickname_CB + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8669,7 +8669,7 @@ __attribute__((naked)) void ChangeBoxPokemonNickname(void)
         "_080F0A04: .4byte gUnknown_2037298\n\t"
         "_080F0A08: .4byte gStringVar3\n\t"
         "_080F0A0C: .4byte gStringVar2\n\t"
-        "_080F0A10: .4byte 0x080F0A15\n\t"
+        "_080F0A10: .4byte ChangeBoxPokemonNickname_CB + 1\n\t"
         ".syntax divided\n\t"
     );
 }

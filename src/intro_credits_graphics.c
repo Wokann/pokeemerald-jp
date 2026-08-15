@@ -429,7 +429,7 @@ __attribute__((naked)) void CreateBicycleAnimationTask(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817B310: .4byte 0x0817B319\n\t"
+        "_0817B310: .4byte sub_0817B318 + 1\n\t"
         "_0817B314: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1195,7 +1195,7 @@ __attribute__((naked)) void intro_create_flygon_sprite(void)
         "_0817B874: .4byte 0x085D275C\n\t"
         "_0817B878: .4byte 0xFFE00000\n\t"
         "_0817B87C: .4byte gSprites\n\t"
-        "_0817B880: .4byte 0x0817B7A9\n\t"
+        "_0817B880: .4byte sub_0817B7A8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1258,7 +1258,7 @@ __attribute__((naked)) void sub_0817B884(void)
         "_0817B8F0: .4byte 0x085D2774\n\t"
         "_0817B8F4: .4byte 0xFFE00000\n\t"
         "_0817B8F8: .4byte gSprites\n\t"
-        "_0817B8FC: .4byte 0x0817B7A9\n\t"
+        "_0817B8FC: .4byte sub_0817B7A8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

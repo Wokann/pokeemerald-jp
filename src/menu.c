@@ -329,7 +329,7 @@ __attribute__((naked)) void DrawDialogueFrame(u8 windowId, bool8 copyToVram)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196FEC: .4byte 0x081971E9\n\t"
+        "_08196FEC: .4byte WindowFunc_DrawDialogueFrame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -362,7 +362,7 @@ __attribute__((naked)) void DrawStdWindowFrame(u8 windowId, bool8 copyToVram)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197024: .4byte 0x08197099\n\t"
+        "_08197024: .4byte WindowFunc_DrawStandardFrame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -395,7 +395,7 @@ __attribute__((naked)) void ClearDialogWindowAndFrame(u8 windowId, bool8 copyToV
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0819705C: .4byte 0x081975E9\n\t"
+        "_0819705C: .4byte WindowFunc_ClearDialogWindowAndFrame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -428,7 +428,7 @@ __attribute__((naked)) void ClearStdWindowAndFrame(u8 windowId, bool8 copyToVram
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197094: .4byte 0x081975A1\n\t"
+        "_08197094: .4byte WindowFunc_ClearStdWindowAndFrame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1677,7 +1677,7 @@ __attribute__((naked)) void DrawDialogFrameWithCustomTileAndPalette(u8 windowId,
         "	.align 2, 0\n\t"
         "_08197960: .4byte gUnknown_203CA68\n\t"
         "_08197964: .4byte gUnknown_203CA6A\n\t"
-        "_08197968: .4byte 0x081979BD\n\t"
+        "_08197968: .4byte WindowFunc_DrawDialogFrameWithCustomTileAndPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1719,7 +1719,7 @@ __attribute__((naked)) void DrawDialogFrameWithCustomTile(void)
         "	.align 2, 0\n\t"
         "_081979B0: .4byte gUnknown_203CA68\n\t"
         "_081979B4: .4byte gUnknown_203CA6A\n\t"
-        "_081979B8: .4byte 0x081979BD\n\t"
+        "_081979B8: .4byte WindowFunc_DrawDialogFrameWithCustomTileAndPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2354,7 +2354,7 @@ __attribute__((naked)) void ClearDialogWindowAndFrameToTransparent(u8 windowId, 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197EF0: .4byte 0x08197EF5\n\t"
+        "_08197EF0: .4byte WindowFunc_ClearDialogWindowAndFrameNullPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2440,7 +2440,7 @@ __attribute__((naked)) void DrawStdFrameWithCustomTileAndPalette(u8 windowId, bo
         "	.align 2, 0\n\t"
         "_08197F80: .4byte gUnknown_203CA68\n\t"
         "_08197F84: .4byte gUnknown_203CA6A\n\t"
-        "_08197F88: .4byte 0x08197FDD\n\t"
+        "_08197F88: .4byte WindowFunc_DrawStdFrameWithCustomTileAndPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2482,7 +2482,7 @@ __attribute__((naked)) void DrawStdFrameWithCustomTile(void)
         "	.align 2, 0\n\t"
         "_08197FD0: .4byte gUnknown_203CA68\n\t"
         "_08197FD4: .4byte gUnknown_203CA6A\n\t"
-        "_08197FD8: .4byte 0x08197FDD\n\t"
+        "_08197FD8: .4byte WindowFunc_DrawStdFrameWithCustomTileAndPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2685,7 +2685,7 @@ __attribute__((naked)) void ClearStdWindowAndFrameToTransparent(u8 windowId, boo
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08198168: .4byte 0x0819816D\n\t"
+        "_08198168: .4byte WindowFunc_ClearStdWindowAndFrameToTransparent + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5935,7 +5935,7 @@ __attribute__((naked)) void DecompressAndLoadBgGfxUsingHeap(u8 bgId, const void 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199814: .4byte 0x0819981D\n\t"
+        "_08199814: .4byte task_free_buf_after_copying_tile_data_to_vram + 1\n\t"
         "_08199818: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );

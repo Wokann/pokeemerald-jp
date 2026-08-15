@@ -42,7 +42,7 @@ __attribute__((naked)) void MainCB2_Intro(void)
         "	.align 2, 0\n\t"
         "_0816CA40: .4byte gMain\n\t"
         "_0816CA44: .4byte gPaletteFade\n\t"
-        "_0816CA48: .4byte 0x0816CA65\n\t"
+        "_0816CA48: .4byte MainCB2_EndIntro + 1\n\t"
         "_0816CA4C:\n\t"
         "	ldr r2, _0816CA60\n\t"
         "	ldr r1, [r2]\n\t"
@@ -76,7 +76,7 @@ __attribute__((naked)) void MainCB2_EndIntro(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816CA7C: .4byte 0x080AA06D\n\t"
+        "_0816CA7C: .4byte CB2_InitTitleScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -262,7 +262,7 @@ __attribute__((naked)) void SetUpCopyrightScreen(void)
         "_0816CBF8: .4byte 0x010001FF\n\t"
         "_0816CBFC: .4byte 0x0000FFFF\n\t"
         "_0816CC00: .4byte 0x0816C9F9\n\t"
-        "_0816CC04: .4byte 0x0816CAC9\n\t"
+        "_0816CC04: .4byte SerialCB_CopyrightScreen + 1\n\t"
         "_0816CC08: .4byte gUnknown_3005FF0\n\t"
         "_0816CC0C: .4byte gMain\n\t"
         "_0816CC10:\n\t"
@@ -303,8 +303,8 @@ __attribute__((naked)) void SetUpCopyrightScreen(void)
         "	bl GameCubeMultiBoot_ExecuteProgram\n\t"
         "	b _0816CC7A\n\t"
         "	.align 2, 0\n\t"
-        "_0816CC64: .4byte 0x0816CCFD\n\t"
-        "_0816CC68: .4byte 0x0816CA11\n\t"
+        "_0816CC64: .4byte Task_IntroLoadPart1Graphics + 1\n\t"
+        "_0816CC68: .4byte MainCB2_Intro + 1\n\t"
         "_0816CC6C: .4byte gUnknown_3005FF0\n\t"
         "_0816CC70:\n\t"
         "	bl GameCubeMultiBoot_Quit\n\t"
@@ -314,7 +314,7 @@ __attribute__((naked)) void SetUpCopyrightScreen(void)
         "	movs r0, #0\n\t"
         "	b _0816CC86\n\t"
         "	.align 2, 0\n\t"
-        "_0816CC80: .4byte 0x0800B4F5\n\t"
+        "_0816CC80: .4byte SerialCB + 1\n\t"
         "_0816CC84:\n\t"
         "	movs r0, #1\n\t"
         "_0816CC86:\n\t"
@@ -597,7 +597,7 @@ __attribute__((naked)) void Task_IntroLoadPart1Graphics(void)
         "_0816CF00: .4byte 0x085C5B38\n\t"
         "_0816CF04: .4byte gUnknown_20375B4\n\t"
         "_0816CF08: .4byte gTasks\n\t"
-        "_0816CF0C: .4byte 0x0816CF11\n\t"
+        "_0816CF0C: .4byte Task_IntroFadeIn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -645,7 +645,7 @@ __attribute__((naked)) void Task_IntroFadeIn(void)
         "	.align 2, 0\n\t"
         "_0816CF64: .4byte 0x0816C9F9\n\t"
         "_0816CF68: .4byte gTasks\n\t"
-        "_0816CF6C: .4byte 0x0816CF75\n\t"
+        "_0816CF6C: .4byte Task_IntroWaterDrops + 1\n\t"
         "_0816CF70: .4byte gUnknown_3005FE0\n\t"
         ".syntax divided\n\t"
     );
@@ -783,10 +783,10 @@ __attribute__((naked)) void Task_IntroWaterDrops(void)
         "_0816D068: .4byte gUnknown_3005FE0\n\t"
         "_0816D06C: .4byte gSprites\n\t"
         "_0816D070: .4byte gTasks\n\t"
-        "_0816D074: .4byte 0x0816EF0D\n\t"
-        "_0816D078: .4byte 0x0816EFC5\n\t"
-        "_0816D07C: .4byte 0x0816D085\n\t"
-        "_0816D080: .4byte 0x0816D139\n\t"
+        "_0816D074: .4byte Task_IntroWaterDrops_1 + 1\n\t"
+        "_0816D078: .4byte Task_IntroWaterDrops_2 + 1\n\t"
+        "_0816D07C: .4byte Task_IntroWaterDrops_3 + 1\n\t"
+        "_0816D080: .4byte Task_IntroScrollDownAndShowFlygon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1016,7 +1016,7 @@ __attribute__((naked)) void Task_IntroScrollDownAndShowFlygon(void)
         "_0816D22C: .4byte 0x000003EF\n\t"
         "_0816D230: .4byte 0x0000FFFF\n\t"
         "_0816D234: .4byte gTasks\n\t"
-        "_0816D238: .4byte 0x0816D23D\n\t"
+        "_0816D238: .4byte Task_IntroWaitToSetupPart3 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1047,7 +1047,7 @@ __attribute__((naked)) void Task_IntroWaitToSetupPart3(void)
         "_0816D260: .4byte gUnknown_3005FE0\n\t"
         "_0816D264: .4byte 0x00000402\n\t"
         "_0816D268: .4byte gTasks\n\t"
-        "_0816D26C: .4byte 0x0816D271\n\t"
+        "_0816D26C: .4byte Task_IntroLoadPart2Graphics + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1089,7 +1089,7 @@ __attribute__((naked)) void Task_IntroLoadPart2Graphics(void)
         "_0816D2B8: .4byte gUnknown_203B9F2\n\t"
         "_0816D2BC: .4byte gUnknown_203B998\n\t"
         "_0816D2C0: .4byte gTasks\n\t"
-        "_0816D2C4: .4byte 0x0816D2C9\n\t"
+        "_0816D2C4: .4byte Task_IntroStartBikeRide + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1241,14 +1241,14 @@ __attribute__((naked)) void Task_IntroStartBikeRide(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816D410: .4byte gSprites\n\t"
-        "_0816D414: .4byte 0x0816F7B9\n\t"
+        "_0816D414: .4byte SpriteCB_IntroGraphicsBicycle + 1\n\t"
         "_0816D418: .4byte 0x085C5E78\n\t"
         "_0816D41C: .4byte gTasks\n\t"
         "_0816D420: .4byte 0x085C5BF4\n\t"
-        "_0816D424: .4byte 0x0816F895\n\t"
+        "_0816D424: .4byte SpriteCB_IntroGraphicsFlygon + 1\n\t"
         "_0816D428: .4byte 0x0000FFFF\n\t"
         "_0816D42C: .4byte 0x0816C9F9\n\t"
-        "_0816D430: .4byte 0x0816D435\n\t"
+        "_0816D430: .4byte Task_IntroHandleBikeAndFlygonMovement + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1443,7 +1443,7 @@ __attribute__((naked)) void Task_IntroHandleBikeAndFlygonMovement(void)
         "_0816D59C: .4byte gTasks\n\t"
         "_0816D5A0: .4byte 0x0000079A\n\t"
         "_0816D5A4: .4byte 0x0000FFFF\n\t"
-        "_0816D5A8: .4byte 0x0816D5CD\n\t"
+        "_0816D5A8: .4byte Task_IntroWaitToSetupPart2 + 1\n\t"
         "_0816D5AC: .4byte 0x00000455\n\t"
         "_0816D5B0: .4byte gSprites\n\t"
         "_0816D5B4: .4byte 0x000004BE\n\t"
@@ -1482,7 +1482,7 @@ __attribute__((naked)) void Task_IntroWaitToSetupPart2(void)
         "_0816D5F0: .4byte gUnknown_3005FE0\n\t"
         "_0816D5F4: .4byte 0x00000814\n\t"
         "_0816D5F8: .4byte gTasks\n\t"
-        "_0816D5FC: .4byte 0x0816D991\n\t"
+        "_0816D5FC: .4byte Task_IntroLoadPart3Graphics + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2050,7 +2050,7 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics(void)
         "_0816DA34: .4byte 0x0000FFFF\n\t"
         "_0816DA38: .4byte 0x00004883\n\t"
         "_0816DA3C: .4byte 0x00001441\n\t"
-        "_0816DA40: .4byte 0x0816DA49\n\t"
+        "_0816DA40: .4byte Task_IntroSpinAndZoomPokeball + 1\n\t"
         "_0816DA44: .4byte gUnknown_3005FE0\n\t"
         ".syntax divided\n\t"
     );
@@ -2128,7 +2128,7 @@ __attribute__((naked)) void Task_IntroSpinAndZoomPokeball(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816DAD4: .4byte 0x0816DAE1\n\t"
+        "_0816DAD4: .4byte Task_IntroWaitToSetupPart3LegendsFight + 1\n\t"
         "_0816DAD8: .4byte gUnknown_3005FE0\n\t"
         "_0816DADC: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
@@ -2159,7 +2159,7 @@ __attribute__((naked)) void Task_IntroWaitToSetupPart3LegendsFight(void)
         "	.align 2, 0\n\t"
         "_0816DB00: .4byte gUnknown_3005FE0\n\t"
         "_0816DB04: .4byte gTasks\n\t"
-        "_0816DB08: .4byte 0x0816DB0D\n\t"
+        "_0816DB08: .4byte Task_IntroLoadGroudonScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2231,7 +2231,7 @@ __attribute__((naked)) void Task_IntroLoadGroudonScene(void)
         "_0816DBAC: .4byte gUnknown_8D85CB4\n\t"
         "_0816DBB0: .4byte gPlttBufferUnfaded\n\t"
         "_0816DBB4: .4byte gTasks\n\t"
-        "_0816DBB8: .4byte 0x0816DBBD\n\t"
+        "_0816DBB8: .4byte Task_IntroLoadPart3Graphics1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2304,7 +2304,7 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics1(void)
         "_0816DC50: .4byte gTasks\n\t"
         "_0816DC54: .4byte 0x0000FFA0\n\t"
         "_0816DC58: .4byte 0x0000FF51\n\t"
-        "_0816DC5C: .4byte 0x0816DC61\n\t"
+        "_0816DC5C: .4byte Task_IntroLoadPart3Graphics2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2353,7 +2353,7 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816DCB0: .4byte 0x0816DCB5\n\t"
+        "_0816DCB0: .4byte Task_IntroLoadPart3Graphics3 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2374,7 +2374,7 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics3(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0816DCC8: .4byte gTasks\n\t"
-        "_0816DCCC: .4byte 0x0816DCD1\n\t"
+        "_0816DCCC: .4byte Task_IntroLoadPart3Graphics4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2411,7 +2411,7 @@ __attribute__((naked)) void Task_IntroLoadPart3Graphics4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816DD08: .4byte gTasks\n\t"
-        "_0816DD0C: .4byte 0x0816DD11\n\t"
+        "_0816DD0C: .4byte Task_IntroGroudonScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2717,7 +2717,7 @@ __attribute__((naked)) void Task_IntroGroudonScene(void)
         "	.align 2, 0\n\t"
         "_0816DF64: .4byte gPaletteFade\n\t"
         "_0816DF68: .4byte gTasks\n\t"
-        "_0816DF6C: .4byte 0x0816E085\n\t"
+        "_0816DF6C: .4byte Task_IntroLoadKyogreScene + 1\n\t"
         "_0816DF70: .4byte gScanlineEffect\n\t"
         ".syntax divided\n\t"
     );
@@ -2774,7 +2774,7 @@ __attribute__((naked)) void CreateGroudonRockSprites(void)
         "_0816DFCC: .4byte gSprites\n\t"
         "_0816DFD0: .4byte 0x085C5D18\n\t"
         "_0816DFD4: .4byte gAncientPowerRockSpriteTemplate\n\t"
-        "_0816DFD8: .4byte 0x0816DFDD\n\t"
+        "_0816DFD8: .4byte SpriteCB_IntroGroudonRocks + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2955,7 +2955,7 @@ __attribute__((naked)) void Task_IntroLoadKyogreScene(void)
         "_0816E12C: .4byte 0x085C5D4C\n\t"
         "_0816E130: .4byte 0x0000FFFF\n\t"
         "_0816E134: .4byte gTasks\n\t"
-        "_0816E138: .4byte 0x0816E13D\n\t"
+        "_0816E138: .4byte Task_IntroKyogreScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3395,7 +3395,7 @@ __attribute__((naked)) void Task_IntroKyogreScene(void)
         "	.align 2, 0\n\t"
         "_0816E4A8: .4byte gPaletteFade\n\t"
         "_0816E4AC: .4byte gTasks\n\t"
-        "_0816E4B0: .4byte 0x0816E66D\n\t"
+        "_0816E4B0: .4byte Task_IntroLoadClouds1 + 1\n\t"
         "_0816E4B4: .4byte gScanlineEffect\n\t"
         ".syntax divided\n\t"
     );
@@ -3723,7 +3723,7 @@ __attribute__((naked)) void Task_IntroLoadClouds1(void)
         "_0816E728: .4byte gUnknown_8D8B6CC\n\t"
         "_0816E72C: .4byte 0x0600E000\n\t"
         "_0816E730: .4byte gTasks\n\t"
-        "_0816E734: .4byte 0x0816E739\n\t"
+        "_0816E734: .4byte Task_IntroLoadClouds2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3758,7 +3758,7 @@ __attribute__((naked)) void Task_IntroLoadClouds2(void)
         "_0816E76C: .4byte gUnknown_8D8B424\n\t"
         "_0816E770: .4byte 0x0600D000\n\t"
         "_0816E774: .4byte gTasks\n\t"
-        "_0816E778: .4byte 0x0816E77D\n\t"
+        "_0816E778: .4byte Task_IntroLoadClouds3 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3796,7 +3796,7 @@ __attribute__((naked)) void Task_IntroLoadClouds3(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816E7B8: .4byte gTasks\n\t"
-        "_0816E7BC: .4byte 0x0816E7C1\n\t"
+        "_0816E7BC: .4byte Task_IntroCloudScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3909,7 +3909,7 @@ __attribute__((naked)) void Task_IntroCloudScene(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0816E894: .4byte gPaletteFade\n\t"
-        "_0816E898: .4byte 0x0816E89D\n\t"
+        "_0816E898: .4byte Task_IntroLoadRayquazaLightningScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3967,7 +3967,7 @@ __attribute__((naked)) void Task_IntroLoadRayquazaLightningScene(void)
         "_0816E910: .4byte 0x06004000\n\t"
         "_0816E914: .4byte gUnknown_8D8C81C\n\t"
         "_0816E918: .4byte gTasks\n\t"
-        "_0816E91C: .4byte 0x0816E929\n\t"
+        "_0816E91C: .4byte Task_IntroRayquazaLightningScene + 1\n\t"
         "_0816E920: .4byte 0x085C5CA8\n\t"
         "_0816E924: .4byte 0x085C5CB8\n\t"
         ".syntax divided\n\t"
@@ -4116,7 +4116,7 @@ __attribute__((naked)) void Task_IntroRayquazaLightningScene(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816EA4C: .4byte 0x0816EB05\n\t"
+        "_0816EA4C: .4byte Task_IntroLoadRayquazaGlowScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4279,12 +4279,12 @@ __attribute__((naked)) void Task_IntroLoadRayquazaGlowScene(void)
         "_0816EB74: .4byte 0x085C60FC\n\t"
         "_0816EB78: .4byte 0x085C610C\n\t"
         "_0816EB7C: .4byte gTasks\n\t"
-        "_0816EB80: .4byte 0x0816EB99\n\t"
+        "_0816EB80: .4byte Task_IntroRayquazaGlowScene_0 + 1\n\t"
         "_0816EB84: .4byte 0x0000FFDE\n\t"
         "_0816EB88: .4byte 0x00002949\n\t"
         "_0816EB8C: .4byte 0x0000FFF0\n\t"
         "_0816EB90: .4byte 0x0000FF78\n\t"
-        "_0816EB94: .4byte 0x0816EC8D\n\t"
+        "_0816EB94: .4byte Task_IntroRayquazaGlowScene_1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4408,7 +4408,7 @@ __attribute__((naked)) void Task_IntroRayquazaGlowScene_0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816EC70: .4byte 0x0816EC75\n\t"
+        "_0816EC70: .4byte Task_EndIntroMovie + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4426,7 +4426,7 @@ __attribute__((naked)) void Task_EndIntroMovie(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816EC88: .4byte 0x0816CA65\n\t"
+        "_0816EC88: .4byte MainCB2_EndIntro + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5138,7 +5138,7 @@ __attribute__((naked)) void sub_0816F188(void)
         "	b _0816F230\n\t"
         "	.align 2, 0\n\t"
         "_0816F1FC: .4byte gSprites\n\t"
-        "_0816F200: .4byte 0x0816F0FD\n\t"
+        "_0816F200: .4byte sub_0816F0FC + 1\n\t"
         "_0816F204:\n\t"
         "	ldrh r0, [r1, #0x24]\n\t"
         "	strh r0, [r4, #0x24]\n\t"
@@ -5187,7 +5187,7 @@ __attribute__((naked)) void sub_0816F238(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816F24C: .4byte 0x0816F251\n\t"
+        "_0816F24C: .4byte sub_0816F250 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5225,7 +5225,7 @@ __attribute__((naked)) void sub_0816F250(void)
         "	b _0816F382\n\t"
         "	.align 2, 0\n\t"
         "_0816F288: .4byte 0x0000FFFC\n\t"
-        "_0816F28C: .4byte 0x0816F399\n\t"
+        "_0816F28C: .4byte sub_0816F398 + 1\n\t"
         "_0816F290:\n\t"
         "	ldrh r1, [r7, #0x36]\n\t"
         "	ldr r5, _0816F394\n\t"
@@ -5457,7 +5457,7 @@ __attribute__((naked)) void sub_0816F398(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816F440: .4byte 0x0816F445\n\t"
+        "_0816F440: .4byte sub_0816F444 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5524,7 +5524,7 @@ __attribute__((naked)) void sub_0816F444(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816F4B0: .4byte 0x0816F4B5\n\t"
+        "_0816F4B0: .4byte SpriteCB_WaterDropFall_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5595,7 +5595,7 @@ __attribute__((naked)) void SpriteCB_WaterDropFall_2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816F530: .4byte 0x0816F0FD\n\t"
+        "_0816F530: .4byte sub_0816F0FC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5666,7 +5666,7 @@ __attribute__((naked)) void SpriteCB_WaterDropFall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816F5B0: .4byte 0x0816F0FD\n\t"
+        "_0816F5B0: .4byte sub_0816F0FC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5768,7 +5768,7 @@ __attribute__((naked)) void CreateWaterDrop(void)
         "	.align 2, 0\n\t"
         "_0816F670: .4byte 0x085C5E18\n\t"
         "_0816F674: .4byte gSprites\n\t"
-        "_0816F678: .4byte 0x0816F239\n\t"
+        "_0816F678: .4byte sub_0816F238 + 1\n\t"
         "_0816F67C:\n\t"
         "	mov r0, sb\n\t"
         "	adds r0, #0x1c\n\t"
@@ -5912,11 +5912,11 @@ __attribute__((naked)) void CreateWaterDrop(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0816F7A4: .4byte 0x0816F535\n\t"
+        "_0816F7A4: .4byte SpriteCB_WaterDropFall + 1\n\t"
         "_0816F7A8: .4byte 0x085C5E18\n\t"
         "_0816F7AC: .4byte gSprites\n\t"
         "_0816F7B0: .4byte gUnknown_20205C8\n\t"
-        "_0816F7B4: .4byte 0x0816F189\n\t"
+        "_0816F7B4: .4byte sub_0816F188 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

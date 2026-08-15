@@ -3507,7 +3507,7 @@ __attribute__((naked)) void ShowDaycareLevelMenu()
         "	.align 2, 0\n\t"
         "_08070D40: .4byte 0x082FC04C\n\t"
         "_08070D44: .4byte 0x082FC06C\n\t"
-        "_08070D48: .4byte 0x08070C25\n\t"
+        "_08070D48: .4byte Task_HandleDaycareLevelMenuInput + 1\n\t"
         "_08070D4C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3526,7 +3526,7 @@ __attribute__((naked)) void ChooseSendDaycareMon()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08070D60: .4byte gMain\n\t"
-        "_08070D64: .4byte 0x08085A31\n\t"
+        "_08070D64: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }

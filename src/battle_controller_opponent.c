@@ -26,7 +26,7 @@ __attribute__((naked)) void SetControllerToOpponent(void)
         "	.align 2, 0\n\t"
         "_0805ED90: .4byte gBattlerControllerFuncs\n\t"
         "_0805ED94: .4byte gActiveBattler\n\t"
-        "_0805ED98: .4byte 0x0805ED9D\n\t"
+        "_0805ED98: .4byte OpponentBufferRunCommand + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -103,7 +103,7 @@ __attribute__((naked)) void OpponentHandleIntroSlide(void)
         "_0805EE14: .4byte gSprites\n\t"
         "_0805EE18: .4byte gBattlerSpriteIds\n\t"
         "_0805EE1C: .4byte gActiveBattler\n\t"
-        "_0805EE20: .4byte 0x08007141\n\t"
+        "_0805EE20: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -136,7 +136,7 @@ __attribute__((naked)) void OpponentHandleChooseItem(void)
         "_0805EE4C: .4byte gSprites\n\t"
         "_0805EE50: .4byte gBattlerSpriteIds\n\t"
         "_0805EE54: .4byte gActiveBattler\n\t"
-        "_0805EE58: .4byte 0x08007141\n\t"
+        "_0805EE58: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -190,7 +190,7 @@ __attribute__((naked)) void sub_0805EE5C(void)
         "_0805EEB4: .4byte gSprites\n\t"
         "_0805EEB8: .4byte gBattlerSpriteIds\n\t"
         "_0805EEBC: .4byte gActiveBattler\n\t"
-        "_0805EEC0: .4byte 0x08007141\n\t"
+        "_0805EEC0: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -297,7 +297,7 @@ __attribute__((naked)) void sub_0805EF0C(void)
         "_0805EF74: .4byte gSprites\n\t"
         "_0805EF78: .4byte gHealthboxSpriteIds\n\t"
         "_0805EF7C: .4byte gActiveBattler\n\t"
-        "_0805EF80: .4byte 0x08007141\n\t"
+        "_0805EF80: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805EF84:\n\t"
         "	ldr r3, _0805F090\n\t"
         "	ldr r6, _0805F094\n\t"
@@ -440,7 +440,7 @@ __attribute__((naked)) void sub_0805EF0C(void)
         "_0805F090: .4byte gSprites\n\t"
         "_0805F094: .4byte gHealthboxSpriteIds\n\t"
         "_0805F098: .4byte gActiveBattler\n\t"
-        "_0805F09C: .4byte 0x08007141\n\t"
+        "_0805F09C: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F0A0: .4byte gUnknown_202417C\n\t"
         "_0805F0A4: .4byte gBattleSpritesDataPtr\n\t"
         "_0805F0A8: .4byte gUnknown_2024180\n\t"
@@ -518,7 +518,7 @@ __attribute__((naked)) void sub_0805EF0C(void)
         "_0805F13C: .4byte gBattleSpritesDataPtr\n\t"
         "_0805F140: .4byte gActiveBattler\n\t"
         "_0805F144: .4byte gBattlerControllerFuncs\n\t"
-        "_0805F148: .4byte 0x0805EEC5\n\t"
+        "_0805F148: .4byte sub_0805EEC4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -846,7 +846,7 @@ __attribute__((naked)) void sub_0805F14C(void)
         "_0805F3E8: .4byte gBattleTypeFlags\n\t"
         "_0805F3EC: .4byte gSprites\n\t"
         "_0805F3F0: .4byte gUnknown_3005ADC\n\t"
-        "_0805F3F4: .4byte 0x08007141\n\t"
+        "_0805F3F4: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F3F8: .4byte gBattlerSpriteIds\n\t"
         "_0805F3FC:\n\t"
         "	ldr r2, _0805F554\n\t"
@@ -1021,14 +1021,14 @@ __attribute__((naked)) void sub_0805F14C(void)
         "_0805F554: .4byte gSprites\n\t"
         "_0805F558: .4byte gUnknown_3005ADC\n\t"
         "_0805F55C: .4byte gActiveBattler\n\t"
-        "_0805F560: .4byte 0x08007141\n\t"
+        "_0805F560: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F564: .4byte gBattlerSpriteIds\n\t"
         "_0805F568: .4byte gBattleTypeFlags\n\t"
         "_0805F56C: .4byte gBattlerPartyIndexes\n\t"
         "_0805F570: .4byte gEnemyParty\n\t"
         "_0805F574: .4byte gBattleSpritesDataPtr\n\t"
         "_0805F578: .4byte gBattlerControllerFuncs\n\t"
-        "_0805F57C: .4byte 0x0805EF0D\n\t"
+        "_0805F57C: .4byte sub_0805EF0C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1135,7 +1135,7 @@ __attribute__((naked)) void sub_0805F580(void)
         "_0805F648: .4byte gBattleSpritesDataPtr\n\t"
         "_0805F64C: .4byte gBattlerPartyIndexes\n\t"
         "_0805F650: .4byte gEnemyParty\n\t"
-        "_0805F654: .4byte 0x08007141\n\t"
+        "_0805F654: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F658: .4byte 0x000027F9\n\t"
         ".syntax divided\n\t"
     );
@@ -1419,10 +1419,10 @@ __attribute__((naked)) void sub_0805F7FC(void)
         "_0805F850: .4byte gSprites\n\t"
         "_0805F854: .4byte gHealthboxSpriteIds\n\t"
         "_0805F858: .4byte gActiveBattler\n\t"
-        "_0805F85C: .4byte 0x08007141\n\t"
+        "_0805F85C: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F860: .4byte gBattleSpritesDataPtr\n\t"
         "_0805F864: .4byte gBattlerControllerFuncs\n\t"
-        "_0805F868: .4byte 0x0805F86D\n\t"
+        "_0805F868: .4byte sub_0805F86C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1483,8 +1483,8 @@ __attribute__((naked)) void sub_0805F86C(void)
         "_0805F8D0: .4byte gActiveBattler\n\t"
         "_0805F8D4: .4byte gSprites\n\t"
         "_0805F8D8: .4byte gBattlerSpriteIds\n\t"
-        "_0805F8DC: .4byte 0x08007141\n\t"
-        "_0805F8E0: .4byte 0x080394FD\n\t"
+        "_0805F8DC: .4byte SpriteCallbackDummy + 1\n\t"
+        "_0805F8E0: .4byte SpriteCallbackDummy_2 + 1\n\t"
         "_0805F8E4: .4byte gMPlayInfo_BGM\n\t"
         "_0805F8E8: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
@@ -1591,13 +1591,13 @@ __attribute__((naked)) void sub_0805F8EC(void)
         "_0805F9B4: .4byte gActiveBattler\n\t"
         "_0805F9B8: .4byte gSprites\n\t"
         "_0805F9BC: .4byte gBattlerSpriteIds\n\t"
-        "_0805F9C0: .4byte 0x08007141\n\t"
+        "_0805F9C0: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805F9C4: .4byte 0x000027F9\n\t"
         "_0805F9C8: .4byte gHealthboxSpriteIds\n\t"
         "_0805F9CC: .4byte gBattlerPartyIndexes\n\t"
         "_0805F9D0: .4byte gEnemyParty\n\t"
         "_0805F9D4: .4byte gBattlerControllerFuncs\n\t"
-        "_0805F9D8: .4byte 0x0805F7FD\n\t"
+        "_0805F9D8: .4byte sub_0805F7FC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1692,9 +1692,9 @@ __attribute__((naked)) void sub_0805F9DC(void)
         "_0805FA8C: .4byte gEnemyParty\n\t"
         "_0805FA90: .4byte gSprites\n\t"
         "_0805FA94: .4byte gUnknown_3005ADC\n\t"
-        "_0805FA98: .4byte 0x08007141\n\t"
+        "_0805FA98: .4byte SpriteCallbackDummy + 1\n\t"
         "_0805FA9C: .4byte gBattlerControllerFuncs\n\t"
-        "_0805FAA0: .4byte 0x0805F8ED\n\t"
+        "_0805FAA0: .4byte sub_0805F8EC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1795,7 +1795,7 @@ __attribute__((naked)) void OpponentBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_0805FB44: .4byte gBattlerControllerFuncs\n\t"
         "_0805FB48: .4byte gActiveBattler\n\t"
-        "_0805FB4C: .4byte 0x0805ED9D\n\t"
+        "_0805FB4C: .4byte OpponentBufferRunCommand + 1\n\t"
         "_0805FB50: .4byte gBattleTypeFlags\n\t"
         "_0805FB54: .4byte gBattleBufferA\n\t"
         "_0805FB58:\n\t"
@@ -4203,7 +4203,7 @@ __attribute__((naked)) void OpponentHandleLoadMonSprite(void)
         "_08060F58: .4byte 0x0000FF10\n\t"
         "_08060F5C: .4byte gBattleMonForms\n\t"
         "_08060F60: .4byte gBattlerControllerFuncs\n\t"
-        "_08060F64: .4byte 0x0805F581\n\t"
+        "_08060F64: .4byte sub_0805F580 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4252,7 +4252,7 @@ __attribute__((naked)) void OpponentHandleSwitchInAnim(void)
         "_08060FB8: .4byte gBattlerPartyIndexes\n\t"
         "_08060FBC: .4byte gBattleBufferA\n\t"
         "_08060FC0: .4byte gBattlerControllerFuncs\n\t"
-        "_08060FC4: .4byte 0x0805F9DD\n\t"
+        "_08060FC4: .4byte sub_0805F9DC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4433,13 +4433,13 @@ __attribute__((naked)) void sub_08060FC8(void)
         "_08061130: .4byte gBattlerPartyIndexes\n\t"
         "_08061134: .4byte gBattleBufferA\n\t"
         "_08061138: .4byte gEnemyParty\n\t"
-        "_0806113C: .4byte 0x0805D331\n\t"
+        "_0806113C: .4byte sub_0805D330 + 1\n\t"
         "_08061140: .4byte gUnknown_3005ADC\n\t"
         "_08061144: .4byte gMultiuseSpriteTemplate\n\t"
         "_08061148: .4byte gBattlerSpriteIds\n\t"
         "_0806114C: .4byte gSprites\n\t"
         "_08061150: .4byte gBattleMonForms\n\t"
-        "_08061154: .4byte 0x08007141\n\t"
+        "_08061154: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4478,7 +4478,7 @@ __attribute__((naked)) void OpponentHandleReturnMonToBall(void)
         "_08061190: .4byte gActiveBattler\n\t"
         "_08061194: .4byte gBattleSpritesDataPtr\n\t"
         "_08061198: .4byte gBattlerControllerFuncs\n\t"
-        "_0806119C: .4byte 0x080611F1\n\t"
+        "_0806119C: .4byte OpponentHandleHidePartyStatusSummary + 1\n\t"
         "_080611A0:\n\t"
         "	ldr r5, _080611E4\n\t"
         "	adds r0, r2, r5\n\t"
@@ -4590,7 +4590,7 @@ __attribute__((naked)) void OpponentHandleHidePartyStatusSummary(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08061274: .4byte gBattlerControllerFuncs\n\t"
-        "_08061278: .4byte 0x0805F6F5\n\t"
+        "_08061278: .4byte sub_0805F6F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4864,9 +4864,9 @@ __attribute__((naked)) void OpponentHandleDrawTrainerPic(void)
         "_080614A8: .4byte gSprites\n\t"
         "_080614AC: .4byte 0x0000FF10\n\t"
         "_080614B0: .4byte gTrainerFrontPicPaletteTable\n\t"
-        "_080614B4: .4byte 0x0805D3C9\n\t"
+        "_080614B4: .4byte sub_0805D3C8 + 1\n\t"
         "_080614B8: .4byte gBattlerControllerFuncs\n\t"
-        "_080614BC: .4byte 0x0805EDED\n\t"
+        "_080614BC: .4byte OpponentHandleIntroSlide + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5117,9 +5117,9 @@ __attribute__((naked)) void OpponentHandleTrainerSlide(void)
         "_080616BC: .4byte gSprites\n\t"
         "_080616C0: .4byte 0x0000FFFE\n\t"
         "_080616C4: .4byte gTrainerFrontPicPaletteTable\n\t"
-        "_080616C8: .4byte 0x0805D3C9\n\t"
+        "_080616C8: .4byte sub_0805D3C8 + 1\n\t"
         "_080616CC: .4byte gBattlerControllerFuncs\n\t"
-        "_080616D0: .4byte 0x0805EE25\n\t"
+        "_080616D0: .4byte OpponentHandleChooseItem + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5201,10 +5201,10 @@ __attribute__((naked)) void OpponentHandleTrainerSlideBack(void)
         "_08061764: .4byte gBattlerSpriteIds\n\t"
         "_08061768: .4byte gActiveBattler\n\t"
         "_0806176C: .4byte gSprites\n\t"
-        "_08061770: .4byte 0x080A67B5\n\t"
-        "_08061774: .4byte 0x08007141\n\t"
+        "_08061770: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_08061774: .4byte SpriteCallbackDummy + 1\n\t"
         "_08061778: .4byte gBattlerControllerFuncs\n\t"
-        "_0806177C: .4byte 0x0805EE5D\n\t"
+        "_0806177C: .4byte sub_0805EE5C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5290,9 +5290,9 @@ __attribute__((naked)) void OpponentHandleFaintAnimation(void)
         "	.align 2, 0\n\t"
         "_08061818: .4byte gSprites\n\t"
         "_0806181C: .4byte gBattlerSpriteIds\n\t"
-        "_08061820: .4byte 0x08039579\n\t"
+        "_08061820: .4byte SpriteCB_FaintOpponentMon + 1\n\t"
         "_08061824: .4byte gBattlerControllerFuncs\n\t"
-        "_08061828: .4byte 0x0805F6B1\n\t"
+        "_08061828: .4byte OpponentHandleCmd38 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5497,7 +5497,7 @@ __attribute__((naked)) void OpponentHandleMoveAnimation(void)
         "	.align 2, 0\n\t"
         "_08061988: .4byte gBattleSpritesDataPtr\n\t"
         "_0806198C: .4byte gBattlerControllerFuncs\n\t"
-        "_08061990: .4byte 0x08061995\n\t"
+        "_08061990: .4byte OpponentDoMoveAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5737,7 +5737,7 @@ __attribute__((naked)) void OpponentHandlePrintString(void)
         "_08061B64: .4byte gUnknown_2022D0A\n\t"
         "_08061B68: .4byte gDisplayedStringBattle\n\t"
         "_08061B6C: .4byte gBattlerControllerFuncs\n\t"
-        "_08061B70: .4byte 0x0805F769\n\t"
+        "_08061B70: .4byte OpponentHandleBallThrow + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6270,7 +6270,7 @@ __attribute__((naked)) void OpponentHandleHealthBarUpdate(void)
         "_08061F58: .4byte gHealthboxSpriteIds\n\t"
         "_08061F5C: .4byte gBattlerControllerFuncs\n\t"
         "_08061F60: .4byte gActiveBattler\n\t"
-        "_08061F64: .4byte 0x0805F65D\n\t"
+        "_08061F64: .4byte sub_0805F65C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6343,7 +6343,7 @@ __attribute__((naked)) void OpponentHandleStatusIconUpdate(void)
         "_08061FDC: .4byte gEnemyParty\n\t"
         "_08061FE0: .4byte gBattleSpritesDataPtr\n\t"
         "_08061FE4: .4byte gBattlerControllerFuncs\n\t"
-        "_08061FE8: .4byte 0x0805FAA5\n\t"
+        "_08061FE8: .4byte OpponentHandleCmd37 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6398,7 +6398,7 @@ __attribute__((naked)) void OpponentHandleStatusAnimation(void)
         "_08062044: .4byte gActiveBattler\n\t"
         "_08062048: .4byte gBattleBufferA\n\t"
         "_0806204C: .4byte gBattlerControllerFuncs\n\t"
-        "_08062050: .4byte 0x0805FAA5\n\t"
+        "_08062050: .4byte OpponentHandleCmd37 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6671,7 +6671,7 @@ __attribute__((naked)) void sub_08062154(void)
         "	.align 2, 0\n\t"
         "_080621B8: .4byte gUnknown_202415D\n\t"
         "_080621BC: .4byte gBattlerControllerFuncs\n\t"
-        "_080621C0: .4byte 0x0805F781\n\t"
+        "_080621C0: .4byte OpponentHandleHitAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6958,13 +6958,13 @@ __attribute__((naked)) void OpponentHandleIntroTrainerBallThrow(void)
         "_080623C0: .4byte gBattlerSpriteIds\n\t"
         "_080623C4: .4byte gActiveBattler\n\t"
         "_080623C8: .4byte gSprites\n\t"
-        "_080623CC: .4byte 0x080A67B5\n\t"
-        "_080623D0: .4byte 0x080623F1\n\t"
-        "_080623D4: .4byte 0x0806240D\n\t"
+        "_080623CC: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_080623D0: .4byte sub_080623F0 + 1\n\t"
+        "_080623D4: .4byte OpponentHandleDrawPartyStatusSummary + 1\n\t"
         "_080623D8: .4byte gTasks\n\t"
         "_080623DC: .4byte gBattleSpritesDataPtr\n\t"
         "_080623E0: .4byte gUnknown_2024158\n\t"
-        "_080623E4: .4byte 0x0807352D\n\t"
+        "_080623E4: .4byte Task_HidePartyStatusSummary + 1\n\t"
         "_080623E8: .4byte gBattlerControllerFuncs\n\t"
         "_080623EC: .4byte 0x0805ED7D\n\t"
         ".syntax divided\n\t"
@@ -7102,7 +7102,7 @@ __attribute__((naked)) void OpponentHandleDrawPartyStatusSummary(void)
         "_080624EC: .4byte gBattlerPartyIndexes\n\t"
         "_080624F0: .4byte gBattlerControllerFuncs\n\t"
         "_080624F4: .4byte gActiveBattler\n\t"
-        "_080624F8: .4byte 0x0805F14D\n\t"
+        "_080624F8: .4byte sub_0805F14C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7241,7 +7241,7 @@ __attribute__((naked)) void sub_080624FC(void)
         "_08062600: .4byte gUnknown_2024158\n\t"
         "_08062604: .4byte gBattleSpritesDataPtr\n\t"
         "_08062608: .4byte gBattlerControllerFuncs\n\t"
-        "_0806260C: .4byte 0x08062611\n\t"
+        "_0806260C: .4byte sub_08062610 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7326,7 +7326,7 @@ __attribute__((naked)) void sub_08062658(void)
         "_08062698: .4byte gActiveBattler\n\t"
         "_0806269C: .4byte gTasks\n\t"
         "_080626A0: .4byte gUnknown_2024158\n\t"
-        "_080626A4: .4byte 0x0807352D\n\t"
+        "_080626A4: .4byte Task_HidePartyStatusSummary + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7447,7 +7447,7 @@ __attribute__((naked)) void OpponentHandleBattleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08062774: .4byte gBattlerControllerFuncs\n\t"
-        "_08062778: .4byte 0x0805FAD5\n\t"
+        "_08062778: .4byte OpponentHandleCmd39 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

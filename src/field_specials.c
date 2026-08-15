@@ -32,8 +32,8 @@ __attribute__((naked)) void Special_ViewWallClock(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08137D50: .4byte gMain\n\t"
-        "_08137D54: .4byte 0x08085A31\n\t"
-        "_08137D58: .4byte 0x08134B8D\n\t"
+        "_08137D54: .4byte CB2_ReturnToField + 1\n\t"
+        "_08137D58: .4byte CB2_ViewWallClock + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1672,7 +1672,7 @@ __attribute__((naked)) void PetalburgGymSpecial1(void)
         "	.align 2, 0\n\t"
         "_08138974: .4byte gUnknown_203A828\n\t"
         "_08138978: .4byte gUnknown_203A829\n\t"
-        "_0813897C: .4byte 0x08138981\n\t"
+        "_0813897C: .4byte Task_PetalburgGym + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2263,7 +2263,7 @@ __attribute__((naked)) void DoLotteryCornerComputerEffect(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08138D50: .4byte 0x08138D59\n\t"
+        "_08138D50: .4byte Task_PCTurnOnEffect + 1\n\t"
         "_08138D54: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -2584,7 +2584,7 @@ __attribute__((naked)) void DoPCTurnOnEffect(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08138F6C: .4byte 0x08138F75\n\t"
+        "_08138F6C: .4byte Task_LotteryCornerComputerEffect + 1\n\t"
         "_08138F70: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3621,7 +3621,7 @@ __attribute__((naked)) void sub_081395D0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08139614: .4byte 0x0813962D\n\t"
+        "_08139614: .4byte sub_0813962C + 1\n\t"
         "_08139618: .4byte gTasks\n\t"
         "_0813961C: .4byte gSpecialVar_0x8005\n\t"
         "_08139620: .4byte gSpecialVar_0x8006\n\t"
@@ -4395,7 +4395,7 @@ __attribute__((naked)) void ShakeScreenInElevator(void)
         "	strh r6, [r4, #0xc]\n\t"
         "	b _08139B3C\n\t"
         "	.align 2, 0\n\t"
-        "_08139B24: .4byte 0x08139B69\n\t"
+        "_08139B24: .4byte sub_08139B68 + 1\n\t"
         "_08139B28: .4byte gUnknown_3005B68\n\t"
         "_08139B2C: .4byte gSpecialVar_0x8005\n\t"
         "_08139B30: .4byte gSpecialVar_0x8006\n\t"
@@ -4601,7 +4601,7 @@ __attribute__((naked)) void sub_08139C68(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08139CB0: .4byte 0x08139CBD\n\t"
+        "_08139CB0: .4byte MoveElevatorWindowLights + 1\n\t"
         "_08139CB4: .4byte gTasks\n\t"
         "_08139CB8: .4byte 0x0859267D\n\t"
         ".syntax divided\n\t"
@@ -5261,7 +5261,7 @@ __attribute__((naked)) void sub_0813A164(void)
         "	ldr r0, [r0]\n\t"
         "	mov pc, r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813A194: .4byte 0x0813A319\n\t"
+        "_0813A194: .4byte sub_0813A318 + 1\n\t"
         "_0813A198: .4byte gTasks\n\t"
         "_0813A19C: .4byte gSpecialVar_0x8004\n\t"
         "_0813A1A0: .4byte 0x0813A1A4\n\t"
@@ -5586,7 +5586,7 @@ __attribute__((naked)) void sub_0813A318(void)
         "_0813A424: .4byte 0x0859274C\n\t"
         "_0813A428: .4byte gSpecialVar_0x8004\n\t"
         "_0813A42C: .4byte gUnknown_3005F10\n\t"
-        "_0813A430: .4byte 0x0813A4F5\n\t"
+        "_0813A430: .4byte sub_0813A4F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5624,7 +5624,7 @@ __attribute__((naked)) void sub_0813A434(void)
         "	.align 2, 0\n\t"
         "_0813A468: .4byte gUnknown_3005F10\n\t"
         "_0813A46C: .4byte gUnknown_203A830\n\t"
-        "_0813A470: .4byte 0x0813A475\n\t"
+        "_0813A470: .4byte sub_0813A474 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5684,7 +5684,7 @@ __attribute__((naked)) void sub_0813A474(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813A4E4: .4byte 0x0813A4F5\n\t"
+        "_0813A4E4: .4byte sub_0813A4F4 + 1\n\t"
         "_0813A4E8: .4byte gTasks\n\t"
         "_0813A4EC: .4byte gUnknown_203A834\n\t"
         "_0813A4F0: .4byte gUnknown_203A836\n\t"
@@ -5759,7 +5759,7 @@ __attribute__((naked)) void sub_0813A4F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813A574: .4byte 0x0813A609\n\t"
+        "_0813A574: .4byte sub_0813A608 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5858,7 +5858,7 @@ __attribute__((naked)) void sub_0813A608(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813A630: .4byte gTasks\n\t"
-        "_0813A634: .4byte 0x0813A66D\n\t"
+        "_0813A634: .4byte sub_0813A66C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5877,7 +5877,7 @@ __attribute__((naked)) void sub_0813A638(void)
         "	bl ScriptContext_Enable\n\t"
         "	b _0813A664\n\t"
         "	.align 2, 0\n\t"
-        "_0813A650: .4byte 0x0813A609\n\t"
+        "_0813A650: .4byte sub_0813A608 + 1\n\t"
         "_0813A654:\n\t"
         "	ldr r0, _0813A668\n\t"
         "	lsls r1, r2, #2\n\t"
@@ -5919,7 +5919,7 @@ __attribute__((naked)) void sub_0813A66C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813A694: .4byte gTasks\n\t"
-        "_0813A698: .4byte 0x0813A4F5\n\t"
+        "_0813A698: .4byte sub_0813A4F4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7081,7 +7081,7 @@ __attribute__((naked)) void sub_0813AE0C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813AED8: .4byte 0x0813A609\n\t"
+        "_0813AED8: .4byte sub_0813A608 + 1\n\t"
         "_0813AEDC: .4byte gTasks\n\t"
         "_0813AEE0: .4byte 0x0859274C\n\t"
         "_0813AEE4: .4byte gSpecialVar_0x8004\n\t"
@@ -7223,7 +7223,7 @@ __attribute__((naked)) void sub_0813AF80(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813AFF4: .4byte 0x0813A609\n\t"
+        "_0813AFF4: .4byte sub_0813A608 + 1\n\t"
         "_0813AFF8: .4byte gTasks\n\t"
         "_0813AFFC: .4byte gUnknown_203A830\n\t"
         ".syntax divided\n\t"
@@ -7241,7 +7241,7 @@ __attribute__((naked)) void DoDeoxysRockInteraction(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B010: .4byte 0x0813B015\n\t"
+        "_0813B010: .4byte Task_DeoxysRockInteraction + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7408,7 +7408,7 @@ __attribute__((naked)) void ChangeDeoxysRockLevel(void)
         "	movs r0, #0x3c\n\t"
         "	b _0813B172\n\t"
         "	.align 2, 0\n\t"
-        "_0813B164: .4byte 0x0813B199\n\t"
+        "_0813B164: .4byte WaitForDeoxysRockMovement + 1\n\t"
         "_0813B168: .4byte gFieldEffectArguments\n\t"
         "_0813B16C: .4byte 0x08592E3C\n\t"
         "_0813B170:\n\t"
@@ -8026,7 +8026,7 @@ __attribute__((naked)) void sub_0813B56C(void)
         "_0813B590: .4byte gUnknown_203A83C\n\t"
         "_0813B594: .4byte gBattleTypeFlags\n\t"
         "_0813B598: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_0813B59C: .4byte 0x080B3251\n\t"
+        "_0813B59C: .4byte Task_ReconnectWithLinkPlayers + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8042,7 +8042,7 @@ __attribute__((naked)) void sub_0813B5A0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B5B0: .4byte 0x0813B5B5\n\t"
+        "_0813B5B0: .4byte sub_0813B5B4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8094,7 +8094,7 @@ __attribute__((naked)) void sub_0813B5B4(void)
         "_0813B616:\n\t"
         "	b _0813B7C8\n\t"
         "	.align 2, 0\n\t"
-        "_0813B618: .4byte 0x080B3251\n\t"
+        "_0813B618: .4byte Task_ReconnectWithLinkPlayers + 1\n\t"
         "_0813B61C:\n\t"
         "	bl IsLinkTaskFinished\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -8347,7 +8347,7 @@ __attribute__((naked)) void sub_0813B810(void)
         "	b _0813B83A\n\t"
         "	.align 2, 0\n\t"
         "_0813B828: .4byte gSpecialVar_0x8004\n\t"
-        "_0813B82C: .4byte 0x08085B35\n\t"
+        "_0813B82C: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         "_0813B830:\n\t"
         "	ldr r2, _0813B840\n\t"
         "	movs r0, #1\n\t"
@@ -8357,7 +8357,7 @@ __attribute__((naked)) void sub_0813B810(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B840: .4byte 0x08085B35\n\t"
+        "_0813B840: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8375,7 +8375,7 @@ __attribute__((naked)) void sub_0813B844(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B858: .4byte 0x0813B85D\n\t"
+        "_0813B858: .4byte sub_0813B85C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8455,7 +8455,7 @@ __attribute__((naked)) void sub_0813B8B8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0813B8E0: .4byte 0x0813B8E9\n\t"
+        "_0813B8E0: .4byte sub_0813B8E8 + 1\n\t"
         "_0813B8E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );

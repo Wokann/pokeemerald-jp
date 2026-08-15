@@ -19,7 +19,7 @@ __attribute__((naked)) void SpriteCB_FallingFossil(struct Sprite *sprite)
         "b _081BEF4C\n\t"
         ".align 2, 0\n\t"
         "_081BEEFC: .4byte gUnknown_203CBD8\n\t"
-        "_081BEF00: .4byte 0x08007141\n\t"
+        "_081BEF00: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BEF04:\n\t"
         "ldrh r1, [r5, #0x22]\n\t"
         "movs r2, #0x22\n\t"
@@ -232,9 +232,9 @@ __attribute__((naked)) void berry_fix_bg_hide(void)
         "_081BF098: .4byte 0x040000D4\n\t"
         "_081BF09C: .4byte 0x85006000\n\t"
         "_081BF0A0: .4byte 0x85000100\n\t"
-        "_081BF0A4: .4byte 0x081BF0BD\n\t"
+        "_081BF0A4: .4byte berry_fix_main + 1\n\t"
         "_081BF0A8: .4byte gTasks\n\t"
-        "_081BF0AC: .4byte 0x081BF0B1\n\t"
+        "_081BF0AC: .4byte berry_fix_text_print + 1\n\t"
         ".syntax divided\n\t"
     );
 }

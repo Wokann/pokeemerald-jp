@@ -199,7 +199,7 @@ __attribute__((naked)) void CreatePreEvoSparkleSet1(void)
         "	.align 2, 0\n\t"
         "_0817BA48: .4byte 0x085D2910\n\t"
         "_0817BA4C: .4byte gSprites\n\t"
-        "_0817BA50: .4byte 0x0817B93D\n\t"
+        "_0817BA50: .4byte SpriteCB_PreEvoSparkleSet1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -321,7 +321,7 @@ __attribute__((naked)) void CreatePreEvoSparkleSet2(void)
         "	.align 2, 0\n\t"
         "_0817BB24: .4byte 0x085D2910\n\t"
         "_0817BB28: .4byte gSprites\n\t"
-        "_0817BB2C: .4byte 0x0817BA55\n\t"
+        "_0817BB2C: .4byte SpriteCB_PreEvoSparkleSet2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -422,7 +422,7 @@ __attribute__((naked)) void CreatePostEvoSparkleSet1(void)
         "	.align 2, 0\n\t"
         "_0817BBD4: .4byte 0x085D2910\n\t"
         "_0817BBD8: .4byte gSprites\n\t"
-        "_0817BBDC: .4byte 0x0817BB31\n\t"
+        "_0817BBDC: .4byte SpriteCB_PostEvoSparkleSet1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -608,7 +608,7 @@ __attribute__((naked)) void CreatePostEvoSparkleSet2(void)
         "	.align 2, 0\n\t"
         "_0817BD2C: .4byte 0x085D2910\n\t"
         "_0817BD30: .4byte gSprites\n\t"
-        "_0817BD34: .4byte 0x0817BBE1\n\t"
+        "_0817BD34: .4byte SpriteCB_PostEvoSparkleSet2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -654,7 +654,7 @@ __attribute__((naked)) void LaunchTask_PreEvoSparklesSet1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817BD7C: .4byte 0x0817BD85\n\t"
+        "_0817BD7C: .4byte EvoTask_BeginPreSet1_FadeAndPlaySE + 1\n\t"
         "_0817BD80: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -698,7 +698,7 @@ __attribute__((naked)) void EvoTask_BeginPreSet1_FadeAndPlaySE(void)
         "	.align 2, 0\n\t"
         "_0817BDC8: .4byte gTasks\n\t"
         "_0817BDCC: .4byte 0x00007FFF\n\t"
-        "_0817BDD0: .4byte 0x0817BDD5\n\t"
+        "_0817BDD0: .4byte EvoTask_CreatePreEvoSparkleSet1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -763,7 +763,7 @@ __attribute__((naked)) void EvoTask_CreatePreEvoSparkleSet1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BE40: .4byte 0x0817BE45\n\t"
+        "_0817BE40: .4byte EvoTask_WaitForPre1SparklesToGoUp + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -814,7 +814,7 @@ __attribute__((naked)) void LaunchTask_PostEvoSparklesSet1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817BE88: .4byte 0x0817BE8D\n\t"
+        "_0817BE88: .4byte EvoTask_BeginPreSparklesSet2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -844,7 +844,7 @@ __attribute__((naked)) void EvoTask_BeginPreSparklesSet2(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817BEB8: .4byte gTasks\n\t"
-        "_0817BEBC: .4byte 0x0817BEC1\n\t"
+        "_0817BEBC: .4byte EvoTask_CreatePreEvoSparklesSet2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -897,7 +897,7 @@ __attribute__((naked)) void EvoTask_CreatePreEvoSparklesSet2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BF14: .4byte 0x0817BF19\n\t"
+        "_0817BF14: .4byte EvoTask_DestroyPreSet2Task + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -930,7 +930,7 @@ __attribute__((naked)) void LaunchTask_PreEvoSparklesSet2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817BF3C: .4byte 0x0817BF41\n\t"
+        "_0817BF3C: .4byte EvoTask_BeginPostSparklesSet1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -960,7 +960,7 @@ __attribute__((naked)) void EvoTask_BeginPostSparklesSet1(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817BF6C: .4byte gTasks\n\t"
-        "_0817BF70: .4byte 0x0817BF75\n\t"
+        "_0817BF70: .4byte EvoTask_CreatePostEvoSparklesSet1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1034,7 +1034,7 @@ __attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817BFF0: .4byte 0x0817BFF5\n\t"
+        "_0817BFF0: .4byte EvoTask_DestroyPostSet1Task + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1077,7 +1077,7 @@ __attribute__((naked)) void LaunchTask_PostEvoSparklesSet2AndFlash(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817C02C: .4byte 0x0817C035\n\t"
+        "_0817C02C: .4byte EvoTask_BeginPostSparklesSet2_AndFlash + 1\n\t"
         "_0817C030: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1125,7 +1125,7 @@ __attribute__((naked)) void EvoTask_BeginPostSparklesSet2_AndFlash(void)
         "_0817C084: .4byte gUnknown_20373F4\n\t"
         "_0817C088: .4byte 0xFFF9041C\n\t"
         "_0817C08C: .4byte 0x00007FFF\n\t"
-        "_0817C090: .4byte 0x0817C095\n\t"
+        "_0817C090: .4byte EvoTask_CreatePostEvoSparklesSet2_AndFlash + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1202,7 +1202,7 @@ __attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet2_AndFlash(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817C11C: .4byte 0x0817C121\n\t"
+        "_0817C11C: .4byte EvoTask_DestroyPostSet2AndFlashTask + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1254,7 +1254,7 @@ __attribute__((naked)) void LaunchTask_PostEvoSparklesSet2AndFlash_Trade(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817C168: .4byte 0x0817C171\n\t"
+        "_0817C168: .4byte EvoTask_BeginPostSparklesSet2_AndFlash_Trade + 1\n\t"
         "_0817C16C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1302,7 +1302,7 @@ __attribute__((naked)) void EvoTask_BeginPostSparklesSet2_AndFlash_Trade(void)
         "_0817C1C0: .4byte gUnknown_20373F4\n\t"
         "_0817C1C4: .4byte 0xFFF90400\n\t"
         "_0817C1C8: .4byte 0x00007FFF\n\t"
-        "_0817C1CC: .4byte 0x0817C1D1\n\t"
+        "_0817C1CC: .4byte EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1379,7 +1379,7 @@ __attribute__((naked)) void EvoTask_CreatePostEvoSparklesSet2_AndFlash_Trade(voi
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817C258: .4byte 0x0817C121\n\t"
+        "_0817C258: .4byte EvoTask_DestroyPostSet2AndFlashTask + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1548,11 +1548,11 @@ __attribute__((naked)) void sub_0817C260(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0817C394: .4byte 0x0817C3AD\n\t"
+        "_0817C394: .4byte sub_0817C3AC + 1\n\t"
         "_0817C398: .4byte 0x00007FFF\n\t"
         "_0817C39C: .4byte gTasks\n\t"
         "_0817C3A0: .4byte gSprites\n\t"
-        "_0817C3A4: .4byte 0x0817C25D\n\t"
+        "_0817C3A4: .4byte EvoSparkle_DummySpriteCb + 1\n\t"
         "_0817C3A8: .4byte gUnknown_20379B4\n\t"
         ".syntax divided\n\t"
     );
@@ -1578,7 +1578,7 @@ __attribute__((naked)) void sub_0817C3AC(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0817C3C8: .4byte gTasks\n\t"
-        "_0817C3CC: .4byte 0x0817C3D1\n\t"
+        "_0817C3CC: .4byte sub_0817C3D0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1627,7 +1627,7 @@ __attribute__((naked)) void sub_0817C3D0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817C41C: .4byte 0x0817C421\n\t"
+        "_0817C41C: .4byte sub_0817C420 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1655,7 +1655,7 @@ __attribute__((naked)) void sub_0817C420(void)
         "	b _0817C530\n\t"
         "	.align 2, 0\n\t"
         "_0817C444: .4byte gTasks\n\t"
-        "_0817C448: .4byte 0x0817C5ED\n\t"
+        "_0817C448: .4byte PreEvoVisible_PostEvoInvisible_KillTask + 1\n\t"
         "_0817C44C:\n\t"
         "	movs r6, #0\n\t"
         "	movs r7, #0x12\n\t"
@@ -1782,7 +1782,7 @@ __attribute__((naked)) void sub_0817C420(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817C538: .4byte 0x0817C3D1\n\t"
+        "_0817C538: .4byte sub_0817C3D0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -144,7 +144,7 @@ __attribute__((naked)) void sub_08124DF4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08124F0C: .4byte 0x081B5549\n\t"
+        "_08124F0C: .4byte sub_081B5548 + 1\n\t"
         "_08124F10: .4byte gUnknown_2039E14\n\t"
         ".syntax divided\n\t"
     );

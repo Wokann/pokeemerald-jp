@@ -2270,7 +2270,7 @@ __attribute__((naked)) void sub_0818E588(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0818E598: .4byte 0x08085A31\n\t"
+        "_0818E598: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }

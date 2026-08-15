@@ -75,7 +75,7 @@ __attribute__((naked)) void CB2_BuyMenu(void)
         "_080DF088: .4byte 0x085629C4\n\t"
         "_080DF08C: .4byte 0x085629AC\n\t"
         "_080DF090: .4byte gUnknown_2039C00\n\t"
-        "_080DF094: .4byte 0x080DF0D5\n\t"
+        "_080DF094: .4byte Task_ShopMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -196,8 +196,8 @@ __attribute__((naked)) void Task_HandleShopMenuBuy(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080DF14C: .4byte gUnknown_3005B68\n\t"
-        "_080DF150: .4byte 0x080DF2E1\n\t"
-        "_080DF154: .4byte 0x080DF1F1\n\t"
+        "_080DF150: .4byte CB2_InitBuyMenu + 1\n\t"
+        "_080DF154: .4byte Task_GoToBuyOrSellMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -230,8 +230,8 @@ __attribute__((naked)) void Task_HandleShopMenuSell(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080DF188: .4byte gUnknown_3005B68\n\t"
-        "_080DF18C: .4byte 0x081AA979\n\t"
-        "_080DF190: .4byte 0x080DF1F1\n\t"
+        "_080DF18C: .4byte CB2_GoToSellMenu + 1\n\t"
+        "_080DF190: .4byte Task_GoToBuyOrSellMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -250,8 +250,8 @@ __attribute__((naked)) void CB2_ExitSellMenu()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080DF1A8: .4byte gFieldCallback\n\t"
-        "_080DF1AC: .4byte 0x080DF22D\n\t"
-        "_080DF1B0: .4byte 0x08085A31\n\t"
+        "_080DF1AC: .4byte MapPostLoadHook_ReturnToShopMenu + 1\n\t"
+        "_080DF1B0: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -336,7 +336,7 @@ __attribute__((naked)) void MapPostLoadHook_ReturnToShopMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF240: .4byte 0x080DF245\n\t"
+        "_080DF240: .4byte Task_ReturnToShopMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -366,7 +366,7 @@ __attribute__((naked)) void Task_ReturnToShopMenu(void)
         "	.align 2, 0\n\t"
         "_080DF26C: .4byte gUnknown_2039C00\n\t"
         "_080DF270: .4byte 0x085C9A15\n\t"
-        "_080DF274: .4byte 0x080DF291\n\t"
+        "_080DF274: .4byte ShowShopMenuAfterExitingBuyOrSellMenu + 1\n\t"
         "_080DF278:\n\t"
         "	ldr r1, _080DF288\n\t"
         "	ldr r2, _080DF28C\n\t"
@@ -378,7 +378,7 @@ __attribute__((naked)) void Task_ReturnToShopMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080DF288: .4byte 0x085C99F5\n\t"
-        "_080DF28C: .4byte 0x080DF291\n\t"
+        "_080DF28C: .4byte ShowShopMenuAfterExitingBuyOrSellMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -494,11 +494,11 @@ __attribute__((naked)) void CB2_InitBuyMenu(void)
         "	b _080DF440\n\t"
         "	.align 2, 0\n\t"
         "_080DF354: .4byte gMain\n\t"
-        "_080DF358: .4byte 0x080E000D\n\t"
+        "_080DF358: .4byte Task_BuyMenu + 1\n\t"
         "_080DF35C: .4byte gMultiuseListMenuTemplate\n\t"
         "_080DF360: .4byte gTasks\n\t"
-        "_080DF364: .4byte 0x080DF2CD\n\t"
-        "_080DF368: .4byte 0x080DF2B1\n\t"
+        "_080DF364: .4byte VBlankCB_BuyMenu + 1\n\t"
+        "_080DF368: .4byte BuyMenuPrintPriceInList + 1\n\t"
         "_080DF36C:\n\t"
         "	bl SetVBlankHBlankCallbacksToNull\n\t"
         "	str r4, [sp, #8]\n\t"
@@ -2066,7 +2066,7 @@ __attribute__((naked)) void BuyMenuDrawEventObjects(void)
         "_080DFF44: .4byte 0x00002010\n\t"
         "_080DFF48: .4byte 0x00002012\n\t"
         "_080DFF4C: .4byte 0x00002014\n\t"
-        "_080DFF50: .4byte 0x08007141\n\t"
+        "_080DFF50: .4byte SpriteCallbackDummy + 1\n\t"
         "_080DFF54: .4byte 0x00002016\n\t"
         ".syntax divided\n\t"
     );
@@ -2311,7 +2311,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "_080E0108: .4byte gSaveBlock1Ptr\n\t"
         "_080E010C: .4byte gUnknown_2039C10\n\t"
         "_080E0110: .4byte 0x085C99B8\n\t"
-        "_080E0114: .4byte 0x080E05ED\n\t"
+        "_080E0114: .4byte BuyMenuReturnToItemList + 1\n\t"
         "_080E0118:\n\t"
         "	ldr r4, _080E0158\n\t"
         "	ldrb r0, [r4, #0xf]\n\t"
@@ -2356,7 +2356,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "	b _080E01DA\n\t"
         "	.align 2, 0\n\t"
         "_080E0178: .4byte 0x085C98EC\n\t"
-        "_080E017C: .4byte 0x080E01F1\n\t"
+        "_080E017C: .4byte Task_BuyHowManyDialogueInit + 1\n\t"
         "_080E0180:\n\t"
         "	ldr r0, _080E01B4\n\t"
         "	lsls r1, r5, #3\n\t"
@@ -2404,7 +2404,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "	.align 2, 0\n\t"
         "_080E01E4: .4byte gStringVar4\n\t"
         "_080E01E8: .4byte 0x085C994B\n\t"
-        "_080E01EC: .4byte 0x080E03F9\n\t"
+        "_080E01EC: .4byte BuyMenuConfirmPurchase + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2509,7 +2509,7 @@ __attribute__((naked)) void Task_BuyHowManyDialogueInit(void)
         "	.align 2, 0\n\t"
         "_080E02C8: .4byte 0x0000200A\n\t"
         "_080E02CC: .4byte gTasks\n\t"
-        "_080E02D0: .4byte 0x080E02D5\n\t"
+        "_080E02D0: .4byte Task_BuyHowManyDialogueHandleInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2613,7 +2613,7 @@ __attribute__((naked)) void Task_BuyHowManyDialogueHandleInput(void)
         "_080E03B0: .4byte gStringVar2\n\t"
         "_080E03B4: .4byte gStringVar3\n\t"
         "_080E03B8: .4byte 0x085C991F\n\t"
-        "_080E03BC: .4byte 0x080E03F9\n\t"
+        "_080E03BC: .4byte BuyMenuConfirmPurchase + 1\n\t"
         "_080E03C0:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r1\n\t"
@@ -2709,14 +2709,14 @@ __attribute__((naked)) void BuyMenuTryMakePurchase(void)
         "_080E046C: .4byte gUnknown_3005B68\n\t"
         "_080E0470: .4byte gUnknown_2039C00\n\t"
         "_080E0474: .4byte 0x085C9962\n\t"
-        "_080E0478: .4byte 0x080E04D5\n\t"
+        "_080E0478: .4byte BuyMenuSubtractMoney + 1\n\t"
         "_080E047C:\n\t"
         "	ldr r1, _080E0484\n\t"
         "	ldr r2, _080E0488\n\t"
         "	b _080E04AC\n\t"
         "	.align 2, 0\n\t"
         "_080E0484: .4byte 0x085C99C8\n\t"
-        "_080E0488: .4byte 0x080E05ED\n\t"
+        "_080E0488: .4byte BuyMenuReturnToItemList + 1\n\t"
         "_080E048C:\n\t"
         "	ldrb r0, [r4, #0xa]\n\t"
         "	bl DecorationAdd\n\t"
@@ -2740,7 +2740,7 @@ __attribute__((naked)) void BuyMenuTryMakePurchase(void)
         "	b _080E04C6\n\t"
         "	.align 2, 0\n\t"
         "_080E04B4: .4byte 0x085C9998\n\t"
-        "_080E04B8: .4byte 0x080E04D5\n\t"
+        "_080E04B8: .4byte BuyMenuSubtractMoney + 1\n\t"
         "_080E04BC:\n\t"
         "	ldr r1, _080E04CC\n\t"
         "	ldr r2, _080E04D0\n\t"
@@ -2752,7 +2752,7 @@ __attribute__((naked)) void BuyMenuTryMakePurchase(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E04CC: .4byte 0x085C99DE\n\t"
-        "_080E04D0: .4byte 0x080E05ED\n\t"
+        "_080E04D0: .4byte BuyMenuReturnToItemList + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2803,7 +2803,7 @@ __attribute__((naked)) void BuyMenuSubtractMoney(void)
         "_080E052C: .4byte gUnknown_2039C10\n\t"
         "_080E0530: .4byte gUnknown_2039C00\n\t"
         "_080E0534: .4byte gTasks\n\t"
-        "_080E0538: .4byte 0x080E0559\n\t"
+        "_080E0538: .4byte Task_ReturnToItemListAfterItemPurchase + 1\n\t"
         "_080E053C:\n\t"
         "	ldr r0, _080E0550\n\t"
         "	lsls r1, r6, #2\n\t"
@@ -2818,7 +2818,7 @@ __attribute__((naked)) void BuyMenuSubtractMoney(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E0550: .4byte gTasks\n\t"
-        "_080E0554: .4byte 0x080E05C5\n\t"
+        "_080E0554: .4byte Task_ReturnToItemListAfterDecorationPurchase + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2867,7 +2867,7 @@ __attribute__((naked)) void Task_ReturnToItemListAfterItemPurchase(void)
         "_080E05A8: .4byte gUnknown_3005B68\n\t"
         "_080E05AC: .4byte gMain\n\t"
         "_080E05B0: .4byte 0x085C9A2D\n\t"
-        "_080E05B4: .4byte 0x080E05ED\n\t"
+        "_080E05B4: .4byte BuyMenuReturnToItemList + 1\n\t"
         "_080E05B8:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl BuyMenuReturnToItemList\n\t"
@@ -2940,7 +2940,7 @@ __attribute__((naked)) void BuyMenuReturnToItemList(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E0630: .4byte gUnknown_3005B68\n\t"
-        "_080E0634: .4byte 0x080E000D\n\t"
+        "_080E0634: .4byte Task_BuyMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3037,9 +3037,9 @@ __attribute__((naked)) void ExitBuyMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E06EC: .4byte gFieldCallback\n\t"
-        "_080E06F0: .4byte 0x080DF22D\n\t"
+        "_080E06F0: .4byte MapPostLoadHook_ReturnToShopMenu + 1\n\t"
         "_080E06F4: .4byte gTasks\n\t"
-        "_080E06F8: .4byte 0x080E06FD\n\t"
+        "_080E06F8: .4byte Task_ExitBuyMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3069,7 +3069,7 @@ __attribute__((naked)) void Task_ExitBuyMenu(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E0728: .4byte gPaletteFade\n\t"
-        "_080E072C: .4byte 0x08085A31\n\t"
+        "_080E072C: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3187,7 +3187,7 @@ __attribute__((naked)) void CreatePokemartMenu(const u16 *itemsForSale)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E07F0: .4byte 0x080988C5\n\t"
+        "_080E07F0: .4byte ScriptContext_Enable + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3208,7 +3208,7 @@ __attribute__((naked)) void CreateDecorationShop1Menu(const u16 *itemsForSale)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0810: .4byte 0x080988C5\n\t"
+        "_080E0810: .4byte ScriptContext_Enable + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3229,7 +3229,7 @@ __attribute__((naked)) void CreateDecorationShop2Menu(const u16 *itemsForSale)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0830: .4byte 0x080988C5\n\t"
+        "_080E0830: .4byte ScriptContext_Enable + 1\n\t"
         ".syntax divided\n\t"
     );
 }

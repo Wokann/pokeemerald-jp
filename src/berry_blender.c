@@ -432,7 +432,7 @@ __attribute__((naked)) void DoBerryBlending()
         "_0807F4F0: .4byte gUnknown_2031F44\n\t"
         "_0807F4F4: .4byte 0x000011DC\n\t"
         "_0807F4F8: .4byte gSpecialVar_0x8004\n\t"
-        "_0807F4FC: .4byte 0x0807F501\n\t"
+        "_0807F4FC: .4byte sub_0807F500 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -597,7 +597,7 @@ __attribute__((naked)) void sub_0807F500(void)
         "_0807F660: .4byte gSprites\n\t"
         "_0807F664: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_0807F668: .4byte gUnknown_300319C\n\t"
-        "_0807F66C: .4byte 0x0807F19D\n\t"
+        "_0807F66C: .4byte VBlankCB0_BerryBlender + 1\n\t"
         "_0807F670:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -688,7 +688,7 @@ __attribute__((naked)) void sub_0807F500(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0807F734: .4byte gPaletteFade\n\t"
-        "_0807F738: .4byte 0x0807F9AD\n\t"
+        "_0807F738: .4byte sub_0807F9AC + 1\n\t"
         "_0807F73C: .4byte gUnknown_2031F44\n\t"
         ".syntax divided\n\t"
     );
@@ -773,7 +773,7 @@ __attribute__((naked)) void sub_0807F79C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0807F7C4: .4byte 0x0807F741\n\t"
+        "_0807F7C4: .4byte sub_0807F740 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1071,7 +1071,7 @@ __attribute__((naked)) void sub_0807F9AC(void)
         "_0807FA00: .4byte gUnknown_2031F44\n\t"
         "_0807FA04: .4byte 0x000011DC\n\t"
         "_0807FA08: .4byte gSpecialVar_0x8004\n\t"
-        "_0807FA0C: .4byte 0x0807FA21\n\t"
+        "_0807FA0C: .4byte sub_0807FA20 + 1\n\t"
         "_0807FA10:\n\t"
         "	ldr r0, _0807FA1C\n\t"
         "	bl SetMainCallback2\n\t"
@@ -1080,7 +1080,7 @@ __attribute__((naked)) void sub_0807F9AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0807FA1C: .4byte 0x080802F1\n\t"
+        "_0807FA1C: .4byte sub_080802F0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1732,7 +1732,7 @@ __attribute__((naked)) void sub_0807FA20(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0807FF84: .4byte gUnknown_2031F44\n\t"
-        "_0807FF88: .4byte 0x080812B5\n\t"
+        "_0807FF88: .4byte sub_080812B4 + 1\n\t"
         "_0807FF8C: .4byte SPECIAL_sub_0813B8B8\n\t"
         ".syntax divided\n\t"
     );
@@ -1800,7 +1800,7 @@ __attribute__((naked)) void sub_0807FF90(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808001C: .4byte 0x0807F19D\n\t"
+        "_0808001C: .4byte VBlankCB0_BerryBlender + 1\n\t"
         "_08080020: .4byte gUnknown_830F864\n\t"
         "_08080024: .4byte gUnknown_2031F44\n\t"
         "_08080028: .4byte 0x000009B4\n\t"
@@ -2707,9 +2707,9 @@ __attribute__((naked)) void sub_080802F0(void)
         "	.align 2, 0\n\t"
         "_08080738: .4byte gUnknown_2031F44\n\t"
         "_0808073C: .4byte SPECIAL_LeadMonHasEffortRibbon\n\t"
-        "_08080740: .4byte 0x080812B5\n\t"
+        "_08080740: .4byte sub_080812B4 + 1\n\t"
         "_08080744: .4byte gSpecialVar_0x8004\n\t"
-        "_08080748: .4byte 0x08080C41\n\t"
+        "_08080748: .4byte sub_08080C40 + 1\n\t"
         "_0808074C:\n\t"
         "	ldr r0, _08080804\n\t"
         "	ldr r0, [r0]\n\t"
@@ -2901,7 +2901,7 @@ __attribute__((naked)) void sub_08080888(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080808B8: .4byte 0x0808083D\n\t"
+        "_080808B8: .4byte sub_0808083C + 1\n\t"
         "_080808BC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3480,7 +3480,7 @@ __attribute__((naked)) void sub_08080CA4(void)
         "_08080D20: .4byte gUnknown_830F8B0\n\t"
         "_08080D24: .4byte 0x00004523\n\t"
         "_08080D28: .4byte gSprites\n\t"
-        "_08080D2C: .4byte 0x080829B9\n\t"
+        "_08080D2C: .4byte sub_080829B8 + 1\n\t"
         "_08080D30:\n\t"
         "	ldr r0, _08080D50\n\t"
         "	cmp r7, r0\n\t"
@@ -4278,7 +4278,7 @@ __attribute__((naked)) void sub_080812B4(void)
         "_0808136C: .4byte gUnknown_2031F44\n\t"
         "_08081370: .4byte 0x00057E03\n\t"
         "_08081374: .4byte 0x000003E7\n\t"
-        "_08081378: .4byte 0x080819E5\n\t"
+        "_08081378: .4byte CB2_HandleBlenderEndGame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5790,7 +5790,7 @@ __attribute__((naked)) void CB2_HandleBlenderEndGame(void)
         "	b _08081EB8\n\t"
         "	.align 2, 0\n\t"
         "_08081E68: .4byte gUnknown_3005AF8\n\t"
-        "_08081E6C: .4byte 0x08082341\n\t"
+        "_08081E6C: .4byte CB2_HandlePlayerPlayAgainChoice + 1\n\t"
         "_08081E70: .4byte gUnknown_2031F44\n\t"
         "_08081E74:\n\t"
         "	ldr r0, _08081E84\n\t"
@@ -5862,7 +5862,7 @@ __attribute__((naked)) void CB2_HandleBlenderEndGame(void)
         "_08081F08: .4byte gUnknown_2031F44\n\t"
         "_08081F0C: .4byte 0x000011B4\n\t"
         "_08081F10: .4byte gUnknown_830F78E\n\t"
-        "_08081F14: .4byte 0x08082061\n\t"
+        "_08081F14: .4byte CB2_HandlePlayerLinkPlayAgainChoice + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6307,7 +6307,7 @@ __attribute__((naked)) void CB2_HandlePlayerLinkPlayAgainChoice(void)
         "	.align 2, 0\n\t"
         "_080822A8: .4byte gPaletteFade\n\t"
         "_080822AC: .4byte 0x00002222\n\t"
-        "_080822B0: .4byte 0x0807F4B9\n\t"
+        "_080822B0: .4byte DoBerryBlending + 1\n\t"
         "_080822B4:\n\t"
         "	movs r1, #0x84\n\t"
         "	lsls r1, r1, #1\n\t"
@@ -6370,7 +6370,7 @@ __attribute__((naked)) void CB2_HandlePlayerLinkPlayAgainChoice(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08082334: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_08082338: .4byte 0x08085B35\n\t"
+        "_08082338: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         "_0808233C: .4byte gUnknown_2031F44\n\t"
         ".syntax divided\n\t"
     );
@@ -6528,7 +6528,7 @@ __attribute__((naked)) void CB2_HandlePlayerPlayAgainChoice(void)
         "	b _08082492\n\t"
         "	.align 2, 0\n\t"
         "_08082484: .4byte gPaletteFade\n\t"
-        "_08082488: .4byte 0x0807F4B9\n\t"
+        "_08082488: .4byte DoBerryBlending + 1\n\t"
         "_0808248C:\n\t"
         "	ldr r0, _080824E8\n\t"
         "	bl SetMainCallback2\n\t"
@@ -6567,7 +6567,7 @@ __attribute__((naked)) void CB2_HandlePlayerPlayAgainChoice(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080824E8: .4byte 0x08085B35\n\t"
+        "_080824E8: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         "_080824EC: .4byte gUnknown_2031F44\n\t"
         ".syntax divided\n\t"
     );
@@ -7187,7 +7187,7 @@ __attribute__((naked)) void sub_080828A0(void)
         "_08082974: .4byte gUnknown_2031F44\n\t"
         "_08082978: .4byte gUnknown_830FAD0\n\t"
         "_0808297C: .4byte gUnknown_20205C8\n\t"
-        "_08082980: .4byte 0x08082859\n\t"
+        "_08082980: .4byte sub_08082858 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8407,7 +8407,7 @@ __attribute__((naked)) void Blender_PrintBlendingResults(void)
         "	b _0808328C\n\t"
         "	.align 2, 0\n\t"
         "_08083250: .4byte gUnknown_2031F44\n\t"
-        "_08083254: .4byte 0x080838C5\n\t"
+        "_08083254: .4byte sub_080838C4 + 1\n\t"
         "_08083258: .4byte gSpecialVar_ItemId\n\t"
         "_0808325C: .4byte 0x000011B4\n\t"
         "_08083260:\n\t"
@@ -9053,7 +9053,7 @@ __attribute__((naked)) void Blender_PrintBlendingRanking(void)
         "_08083750: .4byte gUnknown_830FA30\n\t"
         "_08083754: .4byte gUnknown_2031F44\n\t"
         "_08083758: .4byte gSprites\n\t"
-        "_0808375C: .4byte 0x08007141\n\t"
+        "_0808375C: .4byte SpriteCallbackDummy + 1\n\t"
         "_08083760: .4byte gUnknown_830FC33\n\t"
         "_08083764: .4byte gUnknown_830F847\n\t"
         "_08083768: .4byte gUnknown_20226A8\n\t"

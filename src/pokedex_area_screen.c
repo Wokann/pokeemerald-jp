@@ -1498,7 +1498,7 @@ __attribute__((naked)) void ShowPokedexAreaScreen(u16 species, u8 *screenSwitchS
         "	.align 2, 0\n\t"
         "_0813D520: .4byte gUnknown_203A848\n\t"
         "_0813D524: .4byte 0x000015BC\n\t"
-        "_0813D528: .4byte 0x0813D531\n\t"
+        "_0813D528: .4byte Task_PokedexAreaScreen_0 + 1\n\t"
         "_0813D52C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1653,7 +1653,7 @@ __attribute__((naked)) void Task_PokedexAreaScreen_0(void)
         "	strh r1, [r0, #8]\n\t"
         "	b _0813D698\n\t"
         "	.align 2, 0\n\t"
-        "_0813D684: .4byte 0x0813D6A5\n\t"
+        "_0813D684: .4byte Task_PokedexAreaScreen_1 + 1\n\t"
         "_0813D688:\n\t"
         "	ldr r0, _0813D6A0\n\t"
         "	lsls r1, r4, #2\n\t"

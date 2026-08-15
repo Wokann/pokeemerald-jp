@@ -43,7 +43,7 @@ __attribute__((naked)) int sub_082952F4(u8 param)
         ".align 2, 0\n\t"
         "_0829533C: .4byte 0x04000200\n\t"
         "_08295340: .4byte gUnknown_3007608\n\t"
-        "_08295344: .4byte 0x08295511\n\t"
+        "_08295344: .4byte sub_08295510 + 1\n\t"
         "_08295348: .4byte 0x04000100\n\t"
         "_0829534C:\n\t"
         "strh r6, [r4, #2]\n\t"

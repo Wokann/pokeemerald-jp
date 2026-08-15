@@ -766,7 +766,7 @@ __attribute__((naked)) void StatusInflictionScreenFade(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A7310: .4byte 0x081A7C65\n\t"
+        "_081A7310: .4byte Task_DoStatusInflictionScreenFade + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1983,7 +1983,7 @@ __attribute__((naked)) void StatusInflictionFadeIn(void)
         "	b _081A7BD6\n\t"
         "	.align 2, 0\n\t"
         "_081A7BC8: .4byte 0x00002D6B\n\t"
-        "_081A7BCC: .4byte 0x081A7AD5\n\t"
+        "_081A7BCC: .4byte DoStatusInflictionScreenFade + 1\n\t"
         "_081A7BD0:\n\t"
         "	ldrh r0, [r4, #0xa]\n\t"
         "	strh r0, [r4, #0x14]\n\t"
@@ -2048,7 +2048,7 @@ __attribute__((naked)) void StartStatusInflictionScreenFade(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A7C3C: .4byte 0x081A7AD5\n\t"
+        "_081A7C3C: .4byte DoStatusInflictionScreenFade + 1\n\t"
         "_081A7C40: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -2068,7 +2068,7 @@ __attribute__((naked)) void IsStatusInflictionScreenFadeTaskFinished(void)
         "	movs r0, #0\n\t"
         "	b _081A7C5E\n\t"
         "	.align 2, 0\n\t"
-        "_081A7C58: .4byte 0x081A7AD5\n\t"
+        "_081A7C58: .4byte DoStatusInflictionScreenFade + 1\n\t"
         "_081A7C5C:\n\t"
         "	movs r0, #1\n\t"
         "_081A7C5E:\n\t"

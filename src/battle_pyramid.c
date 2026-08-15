@@ -1270,7 +1270,7 @@ __attribute__((naked)) void SetPyramidFloorPalette(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A9550: .4byte 0x081A9555\n\t"
+        "_081A9550: .4byte Task_SetPyramidFloorPalette + 1\n\t"
         ".syntax divided\n\t"
     );
 }

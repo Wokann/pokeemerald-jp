@@ -29,7 +29,7 @@ __attribute__((naked)) void DoBerryTagScreen(void)
         "_08177B2C: .4byte gUnknown_203B9C0\n\t"
         "_08177B30: .4byte 0x0000180C\n\t"
         "_08177B34: .4byte gSpecialVar_ItemId\n\t"
-        "_08177B38: .4byte 0x08177B6D\n\t"
+        "_08177B38: .4byte CB2_InitBerryTagScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -205,7 +205,7 @@ __attribute__((naked)) void InitBerryTagScreen(void)
         "	bl CreateTask\n\t"
         "	b _08177CC4\n\t"
         "	.align 2, 0\n\t"
-        "_08177C98: .4byte 0x0817850D\n\t"
+        "_08177C98: .4byte Task_HandleInput + 1\n\t"
         "_08177C9C:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -247,8 +247,8 @@ __attribute__((naked)) void InitBerryTagScreen(void)
         "	movs r0, #1\n\t"
         "	b _08177CF6\n\t"
         "	.align 2, 0\n\t"
-        "_08177CEC: .4byte 0x08177B59\n\t"
-        "_08177CF0: .4byte 0x08177B3D\n\t"
+        "_08177CEC: .4byte VblankCB + 1\n\t"
+        "_08177CF0: .4byte CB2_BerryTagScreen + 1\n\t"
         "_08177CF4:\n\t"
         "	movs r0, #0\n\t"
         "_08177CF6:\n\t"
@@ -1278,7 +1278,7 @@ __attribute__((naked)) void PrepareToCloseBerryTagScreen(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081784C0: .4byte gTasks\n\t"
-        "_081784C4: .4byte 0x081784C9\n\t"
+        "_081784C4: .4byte Task_CloseBerryTagScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1313,7 +1313,7 @@ __attribute__((naked)) void Task_CloseBerryTagScreen(void)
         "	.align 2, 0\n\t"
         "_08178500: .4byte gPaletteFade\n\t"
         "_08178504: .4byte gUnknown_203B9C0\n\t"
-        "_08178508: .4byte 0x081AD205\n\t"
+        "_08178508: .4byte bag_menu_mail_related + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1431,7 +1431,7 @@ __attribute__((naked)) void TryChangeDisplayedBerry(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081785D8: .4byte gTasks\n\t"
-        "_081785DC: .4byte 0x08178665\n\t"
+        "_081785DC: .4byte Task_DisplayAnotherBerry + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1727,7 +1727,7 @@ __attribute__((naked)) void Task_DisplayAnotherBerry(void)
         "_081787EC: .4byte 0x00001802\n\t"
         "_081787F0: .4byte 0x00001803\n\t"
         "_081787F4: .4byte gTasks\n\t"
-        "_081787F8: .4byte 0x0817850D\n\t"
+        "_081787F8: .4byte Task_HandleInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1844,11 +1844,11 @@ __attribute__((naked)) void CB2_InitMysteryEventMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081788E4: .4byte 0x081787FD\n\t"
+        "_081788E4: .4byte sub_081787FC + 1\n\t"
         "_081788E8: .4byte 0x085CD204\n\t"
         "_081788EC: .4byte 0x085CD208\n\t"
-        "_081788F0: .4byte 0x08008FA1\n\t"
-        "_081788F4: .4byte 0x08178931\n\t"
+        "_081788F0: .4byte Task_DestroySelf + 1\n\t"
+        "_081788F4: .4byte CB2_MysteryEventMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }

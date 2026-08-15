@@ -23,7 +23,7 @@ __attribute__((naked)) void sub_080FA43C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FA460: .4byte 0x080FA501\n\t"
+        "_080FA460: .4byte sub_080FA500 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -50,7 +50,7 @@ __attribute__((naked)) void sub_080FA464(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FA488: .4byte 0x080FA66D\n\t"
+        "_080FA488: .4byte sub_080FA66C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -67,7 +67,7 @@ __attribute__((naked)) void sub_080FA48C(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080FA49C: .4byte 0x080FA501\n\t"
+        "_080FA49C: .4byte sub_080FA500 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -84,7 +84,7 @@ __attribute__((naked)) bool32 FldEffPoison_IsActive()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080FA4B0: .4byte 0x080FA66D\n\t"
+        "_080FA4B0: .4byte sub_080FA66C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -654,7 +654,7 @@ __attribute__((naked)) bool8 SetUpFieldMove_SecretPower()
         "_080FA8D0: .4byte gFieldCallback2\n\t"
         "_080FA8D4: .4byte 0x081B53D9\n\t"
         "_080FA8D8: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA8DC: .4byte 0x080FA94D\n\t"
+        "_080FA8DC: .4byte FieldCallback_SecretBaseCave + 1\n\t"
         "_080FA8E0:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl MetatileBehavior_IsSecretBaseTree\n\t"
@@ -673,7 +673,7 @@ __attribute__((naked)) bool8 SetUpFieldMove_SecretPower()
         "_080FA900: .4byte gFieldCallback2\n\t"
         "_080FA904: .4byte 0x081B53D9\n\t"
         "_080FA908: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA90C: .4byte 0x080FAA59\n\t"
+        "_080FA90C: .4byte FieldCallback_SecretBaseShrub + 1\n\t"
         "_080FA910:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl MetatileBehavior_IsSecretBaseShrub\n\t"
@@ -702,7 +702,7 @@ __attribute__((naked)) bool8 SetUpFieldMove_SecretPower()
         "_080FA93C: .4byte gFieldCallback2\n\t"
         "_080FA940: .4byte 0x081B53D9\n\t"
         "_080FA944: .4byte gPostMenuFieldCallback\n\t"
-        "_080FA948: .4byte 0x080FABBD\n\t"
+        "_080FA948: .4byte FieldCallback_SecretBaseTree + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -750,7 +750,7 @@ __attribute__((naked)) bool8 FldEff_UseSecretPowerCave()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080FA990: .4byte gTasks\n\t"
-        "_080FA994: .4byte 0x080FA999\n\t"
+        "_080FA994: .4byte StartSecretBaseCaveFieldEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -829,7 +829,7 @@ __attribute__((naked)) void CaveEntranceSpriteCallback1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FAA14: .4byte 0x080FAA19\n\t"
+        "_080FAA14: .4byte ShrubEntranceSpriteCallback2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -862,7 +862,7 @@ __attribute__((naked)) void ShrubEntranceSpriteCallback2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FAA44: .4byte 0x080FAA49\n\t"
+        "_080FAA44: .4byte CaveEntranceSpriteCallbackEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -924,7 +924,7 @@ __attribute__((naked)) bool8 FldEff_UseSecretPowerShrub()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080FAA9C: .4byte gTasks\n\t"
-        "_080FAAA0: .4byte 0x080FAAA5\n\t"
+        "_080FAAA0: .4byte StartSecretBaseTreeFieldEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1041,7 +1041,7 @@ __attribute__((naked)) void TreeEntranceSpriteCallback1(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FAB6C: .4byte gFieldEffectArguments\n\t"
-        "_080FAB70: .4byte 0x080FAB75\n\t"
+        "_080FAB70: .4byte TreeEntranceSpriteCallback2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1078,7 +1078,7 @@ __attribute__((naked)) void TreeEntranceSpriteCallback2(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FABA4: .4byte gFieldEffectArguments\n\t"
-        "_080FABA8: .4byte 0x080FABAD\n\t"
+        "_080FABA8: .4byte TreeEntranceSpriteCallbackEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1140,7 +1140,7 @@ __attribute__((naked)) bool8 FldEff_UseSecretPowerTree()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080FAC00: .4byte gTasks\n\t"
-        "_080FAC04: .4byte 0x080FAC09\n\t"
+        "_080FAC04: .4byte StartSecretBaseShrubFieldEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1219,7 +1219,7 @@ __attribute__((naked)) void ShrubEntranceSpriteCallback1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FAC84: .4byte 0x080FAC89\n\t"
+        "_080FAC84: .4byte CaveEntranceSpriteCallback2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1252,7 +1252,7 @@ __attribute__((naked)) void CaveEntranceSpriteCallback2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FACB4: .4byte 0x080FACB9\n\t"
+        "_080FACB4: .4byte ShrubEntranceSpriteCallbackEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1305,7 +1305,7 @@ __attribute__((naked)) bool8 FldEff_SecretBasePCTurnOn()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080FAD08: .4byte 0x080FAD11\n\t"
+        "_080FAD08: .4byte Task_SecretBasePCTurnOn + 1\n\t"
         "_080FAD0C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1499,7 +1499,7 @@ __attribute__((naked)) void PopSecretBaseBalloon(s16 metatileId, s16 x, s16 y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FAE94: .4byte 0x080FAE9D\n\t"
+        "_080FAE94: .4byte Task_PopSecretBaseBalloon + 1\n\t"
         "_080FAE98: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1772,7 +1772,7 @@ __attribute__((naked)) void ShatterSecretBaseBreakableDoor(s16 x, s16 y)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FB054: .4byte 0x080FAFC5\n\t"
+        "_080FB054: .4byte Task_ShatterSecretBaseBreakableDoor + 1\n\t"
         "_080FB058: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1948,7 +1948,7 @@ __attribute__((naked)) void PlaySecretBaseMusicNoteMatSound(s16 metatileId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FB20C: .4byte 0x080FB05D\n\t"
+        "_080FB20C: .4byte Task_SecretBaseMusicNoteMatSound + 1\n\t"
         "_080FB210: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -2067,7 +2067,7 @@ __attribute__((naked)) void DoSecretBaseGlitterMatSparkle()
         "_080FB2DC: .4byte gPlayerAvatar\n\t"
         "_080FB2E0: .4byte gFieldEffectObjectTemplatePointers\n\t"
         "_080FB2E4: .4byte gSprites\n\t"
-        "_080FB2E8: .4byte 0x080FB215\n\t"
+        "_080FB2E8: .4byte SpriteCB_GlitterMatSparkle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2273,7 +2273,7 @@ __attribute__((naked)) void SpriteCB_SandPillar_0(void)
         "	.align 2, 0\n\t"
         "_080FB488: .4byte gFieldEffectArguments\n\t"
         "_080FB48C: .4byte SPECIAL_sub_08139C4C\n\t"
-        "_080FB490: .4byte 0x080FB495\n\t"
+        "_080FB490: .4byte SpriteCB_SandPillar_1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2312,7 +2312,7 @@ __attribute__((naked)) void SpriteCB_SandPillar_1(void)
         "	.align 2, 0\n\t"
         "_080FB4CC: .4byte gFieldEffectArguments\n\t"
         "_080FB4D0: .4byte 0x00000E8C\n\t"
-        "_080FB4D4: .4byte 0x080FB4D9\n\t"
+        "_080FB4D4: .4byte SpriteCB_SandPillar_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2628,7 +2628,7 @@ __attribute__((naked)) void FldEffPoison_Start()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FB72C: .4byte 0x080FB6A9\n\t"
+        "_080FB72C: .4byte Task_FieldPoisonEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2645,7 +2645,7 @@ __attribute__((naked)) void sub_080FB730(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080FB740: .4byte 0x080FB6A9\n\t"
+        "_080FB740: .4byte Task_FieldPoisonEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2666,7 +2666,7 @@ __attribute__((naked)) void Task_WateringBerryTreeAnim_0(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_080FB758: .4byte gTasks\n\t"
-        "_080FB75C: .4byte 0x080FB761\n\t"
+        "_080FB75C: .4byte Task_WateringBerryTreeAnim_1 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2724,7 +2724,7 @@ __attribute__((naked)) void Task_WateringBerryTreeAnim_1(void)
         "_080FB7C4: .4byte gPlayerAvatar\n\t"
         "_080FB7C8: .4byte gObjectEvents\n\t"
         "_080FB7CC: .4byte gTasks\n\t"
-        "_080FB7D0: .4byte 0x080FB7D5\n\t"
+        "_080FB7D0: .4byte Task_WateringBerryTreeAnim_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2782,7 +2782,7 @@ __attribute__((naked)) void Task_WateringBerryTreeAnim_2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FB840: .4byte 0x080FB845\n\t"
+        "_080FB840: .4byte Task_WateringBerryTreeAnim_3 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2820,7 +2820,7 @@ __attribute__((naked)) void DoWateringBerryTreeAnim()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FB878: .4byte 0x080FB745\n\t"
+        "_080FB878: .4byte Task_WateringBerryTreeAnim_0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

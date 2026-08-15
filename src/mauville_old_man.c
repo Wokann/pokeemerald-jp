@@ -890,7 +890,7 @@ __attribute__((naked)) void StartBardSong(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08120BC8: .4byte 0x08120C2D\n\t"
+        "_08120BC8: .4byte Task_BardSong + 1\n\t"
         "_08120BCC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -955,7 +955,7 @@ __attribute__((naked)) void ScrSpecial_StorytellerDisplayStory(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08120C24: .4byte 0x08120BDD\n\t"
+        "_08120C24: .4byte BardSong_TextSubPrinter + 1\n\t"
         "_08120C28: .4byte gDisableTextPrinters\n\t"
         ".syntax divided\n\t"
     );
@@ -2181,7 +2181,7 @@ __attribute__((naked)) void ScrSpecial_StorytellerStoryListMenu(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08121488: .4byte 0x081213ED\n\t"
+        "_08121488: .4byte Task_StoryListMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }

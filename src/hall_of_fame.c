@@ -148,7 +148,7 @@ __attribute__((naked)) void InitHallOfFameScreen(void)
         "	b _0817346E\n\t"
         "	.align 2, 0\n\t"
         "_08173464: .4byte gPaletteFade\n\t"
-        "_08173468: .4byte 0x08173345\n\t"
+        "_08173468: .4byte CB2_HallOfFame + 1\n\t"
         "_0817346C:\n\t"
         "	movs r0, #1\n\t"
         "_0817346E:\n\t"
@@ -191,7 +191,7 @@ __attribute__((naked)) void CB2_DoHallOfFameScreen(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081734B0: .4byte 0x08173501\n\t"
+        "_081734B0: .4byte Task_Hof_InitMonData + 1\n\t"
         "_081734B4: .4byte gTasks\n\t"
         "_081734B8: .4byte gUnknown_203B9A4\n\t"
         ".syntax divided\n\t"
@@ -228,7 +228,7 @@ __attribute__((naked)) void CB2_DoHallOfFameScreenDontSaveData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081734F4: .4byte 0x08173501\n\t"
+        "_081734F4: .4byte Task_Hof_InitMonData + 1\n\t"
         "_081734F8: .4byte gTasks\n\t"
         "_081734FC: .4byte gUnknown_203B9A4\n\t"
         ".syntax divided\n\t"
@@ -425,7 +425,7 @@ __attribute__((naked)) void Task_Hof_InitMonData(void)
         "_08173678: .4byte 0xFFFFFE00\n\t"
         "_0817367C: .4byte gUnknown_203B9A0\n\t"
         "_08173680: .4byte gTasks\n\t"
-        "_08173684: .4byte 0x08173871\n\t"
+        "_08173684: .4byte Task_Hof_SetMonDisplayTask + 1\n\t"
         "_08173688:\n\t"
         "	ldr r0, _0817369C\n\t"
         "_0817368A:\n\t"
@@ -438,7 +438,7 @@ __attribute__((naked)) void Task_Hof_InitMonData(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817369C: .4byte 0x081736A1\n\t"
+        "_0817369C: .4byte Task_Hof_InitTeamSaveData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -570,7 +570,7 @@ __attribute__((naked)) void Task_Hof_InitTeamSaveData(void)
         "_08173798: .4byte gUnknown_203B9A4\n\t"
         "_0817379C: .4byte gText_SavingDontTurnOffPower\n\t"
         "_081737A0: .4byte gTasks\n\t"
-        "_081737A4: .4byte 0x081737A9\n\t"
+        "_081737A4: .4byte Task_Hof_TrySaveData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -621,7 +621,7 @@ __attribute__((naked)) void Task_Hof_TrySaveData(void)
         "	b _08173830\n\t"
         "	.align 2, 0\n\t"
         "_08173804: .4byte gGameContinueCallback\n\t"
-        "_08173808: .4byte 0x081734BD\n\t"
+        "_08173808: .4byte CB2_DoHallOfFameScreenDontSaveData + 1\n\t"
         "_0817380C: .4byte gDamagedSaveSectors\n\t"
         "_08173810: .4byte gUnknown_203B9A8\n\t"
         "_08173814: .4byte gUnknown_203B9A4\n\t"
@@ -643,7 +643,7 @@ __attribute__((naked)) void Task_Hof_TrySaveData(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08173838: .4byte gTasks\n\t"
-        "_0817383C: .4byte 0x08173841\n\t"
+        "_0817383C: .4byte Task_Hof_WaitForFrames + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -677,7 +677,7 @@ __attribute__((naked)) void Task_Hof_WaitForFrames(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817386C: .4byte 0x08173871\n\t"
+        "_0817386C: .4byte Task_Hof_SetMonDisplayTask + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -698,7 +698,7 @@ __attribute__((naked)) void Task_Hof_SetMonDisplayTask(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_08173884: .4byte gTasks\n\t"
-        "_08173888: .4byte 0x0817388D\n\t"
+        "_08173888: .4byte Task_Hof_DisplayMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -836,9 +836,9 @@ __attribute__((naked)) void Task_Hof_DisplayMon(void)
         "_0817398C: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_08173990: .4byte 0x0000FFFF\n\t"
         "_08173994: .4byte gSprites\n\t"
-        "_08173998: .4byte 0x08175025\n\t"
+        "_08173998: .4byte SpriteCB_GetOnScreenAndAnimate + 1\n\t"
         "_0817399C: .4byte gTasks\n\t"
-        "_081739A0: .4byte 0x081739A5\n\t"
+        "_081739A0: .4byte Task_Hof_PrintMonInfoAfterAnimating + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -899,8 +899,8 @@ __attribute__((naked)) void Task_Hof_PrintMonInfoAfterAnimating(void)
         "_08173A04: .4byte gTasks\n\t"
         "_08173A08: .4byte gUnknown_203B9A4\n\t"
         "_08173A0C: .4byte gSprites\n\t"
-        "_08173A10: .4byte 0x08007141\n\t"
-        "_08173A14: .4byte 0x08173A19\n\t"
+        "_08173A10: .4byte SpriteCallbackDummy + 1\n\t"
+        "_08173A14: .4byte Task_Hof_TryDisplayAnotherMon + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1006,7 +1006,7 @@ __attribute__((naked)) void Task_Hof_TryDisplayAnotherMon(void)
         "_08173AD8: .4byte gSprites\n\t"
         "_08173ADC: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
         "_08173AE0: .4byte 0x000063B0\n\t"
-        "_08173AE4: .4byte 0x0817388D\n\t"
+        "_08173AE4: .4byte Task_Hof_DisplayMon + 1\n\t"
         "_08173AE8:\n\t"
         "	lsls r0, r5, #2\n\t"
         "	adds r0, r0, r5\n\t"
@@ -1023,7 +1023,7 @@ __attribute__((naked)) void Task_Hof_TryDisplayAnotherMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08173B04: .4byte 0x08173B09\n\t"
+        "_08173B04: .4byte Task_Hof_PaletteFadeAndPrintWelcomeText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1104,7 +1104,7 @@ __attribute__((naked)) void Task_Hof_PaletteFadeAndPrintWelcomeText(void)
         "_08173B94: .4byte gUnknown_3005B68\n\t"
         "_08173B98: .4byte gSprites\n\t"
         "_08173B9C: .4byte gTasks\n\t"
-        "_08173BA0: .4byte 0x08173BA5\n\t"
+        "_08173BA0: .4byte sub_08173BA4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1220,7 +1220,7 @@ __attribute__((naked)) void sub_08173BA4(void)
         "_08173C78: .4byte gSprites\n\t"
         "_08173C7C: .4byte 0x000063B0\n\t"
         "_08173C80: .4byte gTasks\n\t"
-        "_08173C84: .4byte 0x08173C89\n\t"
+        "_08173C84: .4byte sub_08173C88 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1247,7 +1247,7 @@ __attribute__((naked)) void sub_08173C88(void)
         "	b _08173CC2\n\t"
         "	.align 2, 0\n\t"
         "_08173CA8: .4byte gTasks\n\t"
-        "_08173CAC: .4byte 0x08173CC9\n\t"
+        "_08173CAC: .4byte sub_08173CC8 + 1\n\t"
         "_08173CB0:\n\t"
         "	adds r0, r2, #1\n\t"
         "	strh r0, [r1, #0xe]\n\t"
@@ -1333,7 +1333,7 @@ __attribute__((naked)) void sub_08173CC8(void)
         "_08173D58: .4byte gTasks\n\t"
         "_08173D5C: .4byte 0x085C643C\n\t"
         "_08173D60: .4byte 0x0000021D\n\t"
-        "_08173D64: .4byte 0x08173D69\n\t"
+        "_08173D64: .4byte Task_Hof_WaitAndPrintPlayerInfo + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1418,7 +1418,7 @@ __attribute__((naked)) void Task_Hof_WaitAndPrintPlayerInfo(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08173E04: .4byte 0x085C9337\n\t"
-        "_08173E08: .4byte 0x08173E0D\n\t"
+        "_08173E08: .4byte Task_Hof_ExitOnKeyPressed + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1452,7 +1452,7 @@ __attribute__((naked)) void Task_Hof_ExitOnKeyPressed(void)
         "	.align 2, 0\n\t"
         "_08173E38: .4byte gMain\n\t"
         "_08173E3C: .4byte gTasks\n\t"
-        "_08173E40: .4byte 0x08173E45\n\t"
+        "_08173E40: .4byte Task_Hof_HandlePaletteOnExit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1494,7 +1494,7 @@ __attribute__((naked)) void Task_Hof_HandlePaletteOnExit(void)
         "_08173E84: .4byte gPlttBufferFaded\n\t"
         "_08173E88: .4byte gPlttBufferUnfaded\n\t"
         "_08173E8C: .4byte gTasks\n\t"
-        "_08173E90: .4byte 0x08173E95\n\t"
+        "_08173E90: .4byte Task_Hof_HandleExit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1610,7 +1610,7 @@ __attribute__((naked)) void SetCallback2AfterHallOfFameDisplay(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08173F74: .4byte 0x0817553D\n\t"
+        "_08173F74: .4byte CB2_StartCreditsSequence + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1781,10 +1781,10 @@ __attribute__((naked)) void CB2_DoHallOfFamePC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081740F4: .4byte 0x00003F42\n\t"
-        "_081740F8: .4byte 0x08174109\n\t"
+        "_081740F8: .4byte Task_HofPC_CopySaveData + 1\n\t"
         "_081740FC: .4byte gUnknown_3005B68\n\t"
         "_08174100: .4byte gUnknown_203B9A4\n\t"
-        "_08174104: .4byte 0x08173345\n\t"
+        "_08174104: .4byte CB2_HallOfFame + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1820,7 +1820,7 @@ __attribute__((naked)) void Task_HofPC_CopySaveData(void)
         "	.align 2, 0\n\t"
         "_0817413C: .4byte 0x00000226\n\t"
         "_08174140: .4byte gTasks\n\t"
-        "_08174144: .4byte 0x08174785\n\t"
+        "_08174144: .4byte Task_HofPC_PrintDataIsCorrupted + 1\n\t"
         "_08174148:\n\t"
         "	ldr r0, _08174190\n\t"
         "	ldr r4, _08174194\n\t"
@@ -1887,7 +1887,7 @@ __attribute__((naked)) void Task_HofPC_CopySaveData(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081741C8: .4byte gTasks\n\t"
-        "_081741CC: .4byte 0x081741D1\n\t"
+        "_081741CC: .4byte Task_HofPC_DrawSpritesPrintText + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2146,7 +2146,7 @@ __attribute__((naked)) void Task_HofPC_DrawSpritesPrintText(void)
         "	.align 2, 0\n\t"
         "_081743D4: .4byte 0x085C8E68\n\t"
         "_081743D8: .4byte gTasks\n\t"
-        "_081743DC: .4byte 0x081743E1\n\t"
+        "_081743DC: .4byte Task_HofPC_PrintMonInfo + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2296,7 +2296,7 @@ __attribute__((naked)) void Task_HofPC_PrintMonInfo(void)
         "_081744FC: .4byte gUnknown_203B9A0\n\t"
         "_08174500: .4byte 0x000063B0\n\t"
         "_08174504: .4byte SPECIAL_TryGetWallpaperWithWaldaPhrase\n\t"
-        "_08174508: .4byte 0x0817450D\n\t"
+        "_08174508: .4byte Task_HofPC_HandleInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2375,7 +2375,7 @@ __attribute__((naked)) void Task_HofPC_HandleInput(void)
         "	.align 2, 0\n\t"
         "_08174590: .4byte gMain\n\t"
         "_08174594: .4byte gTasks\n\t"
-        "_08174598: .4byte 0x081741D1\n\t"
+        "_08174598: .4byte Task_HofPC_DrawSpritesPrintText + 1\n\t"
         "_0817459C:\n\t"
         "	bl IsCryPlayingOrClearCrySongs\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -2394,7 +2394,7 @@ __attribute__((naked)) void Task_HofPC_HandleInput(void)
         "	.align 2, 0\n\t"
         "_081745BC: .4byte gMPlayInfo_BGM\n\t"
         "_081745C0: .4byte 0x0000FFFF\n\t"
-        "_081745C4: .4byte 0x0817467D\n\t"
+        "_081745C4: .4byte Task_HofPC_HandlePaletteOnExit + 1\n\t"
         "_081745C8:\n\t"
         "	movs r0, #2\n\t"
         "	ands r0, r2\n\t"
@@ -2423,7 +2423,7 @@ __attribute__((naked)) void Task_HofPC_HandleInput(void)
         "_081745FC: .4byte gMPlayInfo_BGM\n\t"
         "_08174600: .4byte 0x0000FFFF\n\t"
         "_08174604: .4byte gTasks\n\t"
-        "_08174608: .4byte 0x0817467D\n\t"
+        "_08174608: .4byte Task_HofPC_HandlePaletteOnExit + 1\n\t"
         "_0817460C:\n\t"
         "	movs r0, #0x40\n\t"
         "	ands r0, r2\n\t"
@@ -2446,7 +2446,7 @@ __attribute__((naked)) void Task_HofPC_HandleInput(void)
         "	b _08174668\n\t"
         "	.align 2, 0\n\t"
         "_08174634: .4byte gTasks\n\t"
-        "_08174638: .4byte 0x081743E1\n\t"
+        "_08174638: .4byte Task_HofPC_PrintMonInfo + 1\n\t"
         "_0817463C:\n\t"
         "	ldrh r1, [r3, #0x2e]\n\t"
         "	movs r0, #0x80\n\t"
@@ -2479,7 +2479,7 @@ __attribute__((naked)) void Task_HofPC_HandleInput(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08174674: .4byte gTasks\n\t"
-        "_08174678: .4byte 0x081743E1\n\t"
+        "_08174678: .4byte Task_HofPC_PrintMonInfo + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2523,7 +2523,7 @@ __attribute__((naked)) void Task_HofPC_HandlePaletteOnExit(void)
         "_081746C4: .4byte gDecompressionBuffer\n\t"
         "_081746C8: .4byte 0x085C6790\n\t"
         "_081746CC: .4byte gTasks\n\t"
-        "_081746D0: .4byte 0x081746D5\n\t"
+        "_081746D0: .4byte Task_HofPC_HandleExit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2659,7 +2659,7 @@ __attribute__((naked)) void Task_HofPC_PrintDataIsCorrupted(void)
         "_081747DC: .4byte 0x085C8E8C\n\t"
         "_081747E0: .4byte 0x085C9311\n\t"
         "_081747E4: .4byte gTasks\n\t"
-        "_081747E8: .4byte 0x081747ED\n\t"
+        "_081747E8: .4byte Task_HofPC_ExitOnButtonPress + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2690,7 +2690,7 @@ __attribute__((naked)) void Task_HofPC_ExitOnButtonPress(void)
         "	.align 2, 0\n\t"
         "_08174810: .4byte gMain\n\t"
         "_08174814: .4byte gTasks\n\t"
-        "_08174818: .4byte 0x0817467D\n\t"
+        "_08174818: .4byte Task_HofPC_HandlePaletteOnExit + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3910,7 +3910,7 @@ __attribute__((naked)) void sub_08175184(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081751B4: .4byte gSpecialVar_0x8004\n\t"
-        "_081751B8: .4byte 0x08175269\n\t"
+        "_081751B8: .4byte sub_08175268 + 1\n\t"
         "_081751BC: .4byte gTasks\n\t"
         "_081751C0: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
@@ -3940,7 +3940,7 @@ __attribute__((naked)) void sub_081751C4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081751F0: .4byte 0x08175269\n\t"
+        "_081751F0: .4byte sub_08175268 + 1\n\t"
         "_081751F4: .4byte 0x000003E9\n\t"
         ".syntax divided\n\t"
     );
@@ -4148,7 +4148,7 @@ __attribute__((naked)) void sub_08175268(void)
         "	.align 2, 0\n\t"
         "_0817538C: .4byte 0x085C64B8\n\t"
         "_08175390: .4byte 0x000003E9\n\t"
-        "_08175394: .4byte 0x081751F9\n\t"
+        "_08175394: .4byte sub_081751F8 + 1\n\t"
         "_08175398:\n\t"
         "	ldrh r0, [r6, #0x1e]\n\t"
         "	cmp r0, #0\n\t"

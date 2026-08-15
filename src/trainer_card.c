@@ -1754,7 +1754,7 @@ __attribute__((naked)) void SetTrainerCardCb2(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2A40: .4byte 0x080C1D3D\n\t"
+        "_080C2A40: .4byte CB2_TrainerCard + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1774,7 +1774,7 @@ __attribute__((naked)) void sub_080C2A44(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C2A64: .4byte 0x080C1D8D\n\t"
+        "_080C2A64: .4byte sub_080C1D8C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4854,8 +4854,8 @@ __attribute__((naked)) void sub_080C424C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C426C: .4byte 0x080C4295\n\t"
-        "_080C4270: .4byte 0x080C1D01\n\t"
+        "_080C426C: .4byte sub_080C4294 + 1\n\t"
+        "_080C4270: .4byte HblankCb_TrainerCard + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4874,7 +4874,7 @@ __attribute__((naked)) void sub_080C4274(void)
         "	movs r0, #0\n\t"
         "	b _080C428E\n\t"
         "	.align 2, 0\n\t"
-        "_080C4288: .4byte 0x080C4295\n\t"
+        "_080C4288: .4byte sub_080C4294 + 1\n\t"
         "_080C428C:\n\t"
         "	movs r0, #1\n\t"
         "_080C428E:\n\t"
@@ -5489,7 +5489,7 @@ __attribute__((naked)) void sub_080C46E4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080C470C: .4byte 0x080C4295\n\t"
+        "_080C470C: .4byte sub_080C4294 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5520,7 +5520,7 @@ __attribute__((naked)) void ShowPlayerTrainerCard(void (*callback)(void))
         "_080C4738: .4byte gUnknown_2039988\n\t"
         "_080C473C: .4byte 0x00007C98\n\t"
         "_080C4740: .4byte 0x0000051C\n\t"
-        "_080C4744: .4byte 0x080C5165\n\t"
+        "_080C4744: .4byte CB2_ReshowFrontierPass + 1\n\t"
         "_080C4748: .4byte 0x00007FFF\n\t"
         "_080C474C:\n\t"
         "	movs r2, #0xa3\n\t"
@@ -5558,7 +5558,7 @@ __attribute__((naked)) void ShowPlayerTrainerCard(void (*callback)(void))
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C4790: .4byte gUnknown_2039988\n\t"
-        "_080C4794: .4byte 0x080C22B5\n\t"
+        "_080C4794: .4byte CB2_InitTrainerCard + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5601,7 +5601,7 @@ __attribute__((naked)) void ShowTrainerCardInLink(u8 cardId, void (*callback)(vo
         "_080C47DC: .4byte 0x00007C98\n\t"
         "_080C47E0: .4byte 0x0000051C\n\t"
         "_080C47E4: .4byte gTrainerCards\n\t"
-        "_080C47E8: .4byte 0x080C22B5\n\t"
+        "_080C47E8: .4byte CB2_InitTrainerCard + 1\n\t"
         ".syntax divided\n\t"
     );
 }

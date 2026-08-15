@@ -468,12 +468,12 @@ __attribute__((naked)) void sub_080F6318(void)
         "	.align 2, 0\n\t"
         "_080F63D8: .4byte gPaletteFade\n\t"
         "_080F63DC: .4byte gUnknown_2039D00\n\t"
-        "_080F63E0: .4byte 0x080F64FD\n\t"
-        "_080F63E4: .4byte 0x080F6419\n\t"
+        "_080F63E0: .4byte sub_080F64FC + 1\n\t"
+        "_080F63E4: .4byte sub_080F6418 + 1\n\t"
         "_080F63E8: .4byte gBattle_WIN1H\n\t"
         "_080F63EC: .4byte gBattle_WIN1V\n\t"
         "_080F63F0: .4byte 0x000080A0\n\t"
-        "_080F63F4: .4byte 0x080F70D9\n\t"
+        "_080F63F4: .4byte sub_080F70D8 + 1\n\t"
         "_080F63F8: .4byte gLinkContestFlags\n\t"
         "_080F63FC:\n\t"
         "	movs r0, #0xdf\n\t"
@@ -487,7 +487,7 @@ __attribute__((naked)) void sub_080F6318(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F6414: .4byte 0x080F643D\n\t"
+        "_080F6414: .4byte sub_080F643C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -767,7 +767,7 @@ __attribute__((naked)) void sub_080F64FC(void)
         "_080F6680: .4byte gTasks\n\t"
         "_080F6684: .4byte gLinkContestFlags\n\t"
         "_080F6688: .4byte 0x085CC4D5\n\t"
-        "_080F668C: .4byte 0x080F66F1\n\t"
+        "_080F668C: .4byte sub_080F66F0 + 1\n\t"
         "_080F6690:\n\t"
         "	movs r0, #0x24\n\t"
         "	bl IncrementGameStat\n\t"
@@ -808,7 +808,7 @@ __attribute__((naked)) void sub_080F64FC(void)
         "_080F66E0: .4byte gUnknown_2039BCE\n\t"
         "_080F66E4: .4byte gUnknown_2039BFC\n\t"
         "_080F66E8: .4byte gUnknown_2039BFD\n\t"
-        "_080F66EC: .4byte 0x080F678D\n\t"
+        "_080F66EC: .4byte sub_080F678C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -840,9 +840,9 @@ __attribute__((naked)) void sub_080F66F0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F671C: .4byte gReceivedRemoteLinkPlayers\n\t"
-        "_080F6720: .4byte 0x080F672D\n\t"
+        "_080F6720: .4byte sub_080F672C + 1\n\t"
         "_080F6724: .4byte gTasks\n\t"
-        "_080F6728: .4byte 0x080A8A41\n\t"
+        "_080F6728: .4byte TaskDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -860,8 +860,8 @@ __attribute__((naked)) void sub_080F672C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F6740: .4byte 0x080FD1ED\n\t"
-        "_080F6744: .4byte 0x080F6749\n\t"
+        "_080F6740: .4byte Task_LinkContest_CommunicateMonIdxs + 1\n\t"
+        "_080F6744: .4byte sub_080F6748 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -898,7 +898,7 @@ __attribute__((naked)) void sub_080F6748(void)
         "	.align 2, 0\n\t"
         "_080F6780: .4byte gTasks\n\t"
         "_080F6784: .4byte gUnknown_2039D00\n\t"
-        "_080F6788: .4byte 0x080F678D\n\t"
+        "_080F6788: .4byte sub_080F678C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -941,7 +941,7 @@ __attribute__((naked)) void sub_080F678C(void)
         "	b _080F683E\n\t"
         "	.align 2, 0\n\t"
         "_080F67D4: .4byte gTasks\n\t"
-        "_080F67D8: .4byte 0x080F7115\n\t"
+        "_080F67D8: .4byte sub_080F7114 + 1\n\t"
         "_080F67DC: .4byte 0x085CC4A3\n\t"
         "_080F67E0: .4byte gUnknown_2039D00\n\t"
         "_080F67E4:\n\t"
@@ -1019,7 +1019,7 @@ __attribute__((naked)) void sub_080F678C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F6878: .4byte gUnknown_2039D00\n\t"
-        "_080F687C: .4byte 0x080F6881\n\t"
+        "_080F687C: .4byte sub_080F6880 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1105,7 +1105,7 @@ __attribute__((naked)) void sub_080F6880(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F6914: .4byte 0x080F6919\n\t"
+        "_080F6914: .4byte sub_080F6918 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1173,7 +1173,7 @@ __attribute__((naked)) void sub_080F6918(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F6994: .4byte gTasks\n\t"
-        "_080F6998: .4byte 0x080F699D\n\t"
+        "_080F6998: .4byte sub_080F699C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1258,7 +1258,7 @@ __attribute__((naked)) void sub_080F699C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F6A30: .4byte 0x080F6A35\n\t"
+        "_080F6A30: .4byte sub_080F6A34 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1359,7 +1359,7 @@ __attribute__((naked)) void sub_080F6A34(void)
         "	b _080F6BDC\n\t"
         "	.align 2, 0\n\t"
         "_080F6AEC: .4byte gTasks\n\t"
-        "_080F6AF0: .4byte 0x080F7C6D\n\t"
+        "_080F6AF0: .4byte sub_080F7C6C + 1\n\t"
         "_080F6AF4: .4byte gContestFinalStandings\n\t"
         "_080F6AF8:\n\t"
         "	ldr r0, _080F6B54\n\t"
@@ -1412,7 +1412,7 @@ __attribute__((naked)) void sub_080F6A34(void)
         "	b _080F6C1C\n\t"
         "	.align 2, 0\n\t"
         "_080F6B54: .4byte gUnknown_2039D00\n\t"
-        "_080F6B58: .4byte 0x080F7D4D\n\t"
+        "_080F6B58: .4byte sub_080F7D4C + 1\n\t"
         "_080F6B5C: .4byte gContestFinalStandings\n\t"
         "_080F6B60:\n\t"
         "	lsls r1, r5, #2\n\t"
@@ -1507,7 +1507,7 @@ __attribute__((naked)) void sub_080F6A34(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F6C24: .4byte 0x080F6C29\n\t"
+        "_080F6C24: .4byte sub_080F6C28 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1681,11 +1681,11 @@ __attribute__((naked)) void sub_080F6C28(void)
         "	.align 2, 0\n\t"
         "_080F6D90: .4byte gMultiuseSpriteTemplate\n\t"
         "_080F6D94: .4byte gSprites\n\t"
-        "_080F6D98: .4byte 0x080F7E39\n\t"
+        "_080F6D98: .4byte sub_080F7E38 + 1\n\t"
         "_080F6D9C: .4byte gUnknown_2039D00\n\t"
         "_080F6DA0: .4byte 0x08569324\n\t"
         "_080F6DA4: .4byte 0x0856932C\n\t"
-        "_080F6DA8: .4byte 0x080F7F01\n\t"
+        "_080F6DA8: .4byte sub_080F7F00 + 1\n\t"
         "_080F6DAC: .4byte gTasks\n\t"
         "_080F6DB0:\n\t"
         "	lsls r0, r7, #2\n\t"
@@ -1773,7 +1773,7 @@ __attribute__((naked)) void sub_080F6C28(void)
         "	.align 2, 0\n\t"
         "_080F6E50: .4byte gSprites\n\t"
         "_080F6E54: .4byte gUnknown_2039D00\n\t"
-        "_080F6E58: .4byte 0x080F7EB1\n\t"
+        "_080F6E58: .4byte sub_080F7EB0 + 1\n\t"
         "_080F6E5C:\n\t"
         "	ldr r0, _080F6E98\n\t"
         "	ldr r0, [r0]\n\t"
@@ -1837,7 +1837,7 @@ __attribute__((naked)) void sub_080F6C28(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F6ED0: .4byte gUnknown_2039D00\n\t"
-        "_080F6ED4: .4byte 0x080F6ED9\n\t"
+        "_080F6ED4: .4byte sub_080F6ED8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1894,7 +1894,7 @@ __attribute__((naked)) void sub_080F6ED8(void)
         "_080F6F30: .4byte gLinkContestFlags\n\t"
         "_080F6F34: .4byte gContestMons\n\t"
         "_080F6F38: .4byte gTasks\n\t"
-        "_080F6F3C: .4byte 0x080F6F41\n\t"
+        "_080F6F3C: .4byte sub_080F6F40 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1931,7 +1931,7 @@ __attribute__((naked)) void sub_080F6F40(void)
         "_080F6F74: .4byte gLinkContestFlags\n\t"
         "_080F6F78: .4byte gTasks\n\t"
         "_080F6F7C: .4byte 0x085CC4D5\n\t"
-        "_080F6F80: .4byte 0x080F6FA1\n\t"
+        "_080F6F80: .4byte sub_080F6FA0 + 1\n\t"
         "_080F6F84:\n\t"
         "	ldr r0, _080F6F98\n\t"
         "	lsls r1, r2, #2\n\t"
@@ -1946,7 +1946,7 @@ __attribute__((naked)) void sub_080F6F40(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F6F98: .4byte gTasks\n\t"
-        "_080F6F9C: .4byte 0x080F6FE9\n\t"
+        "_080F6F9C: .4byte sub_080F6FE8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1986,7 +1986,7 @@ __attribute__((naked)) void sub_080F6FA0(void)
         "_080F6FD8: .4byte gReceivedRemoteLinkPlayers\n\t"
         "_080F6FDC: .4byte gLinkContestFlags\n\t"
         "_080F6FE0: .4byte gTasks\n\t"
-        "_080F6FE4: .4byte 0x080F6FE9\n\t"
+        "_080F6FE4: .4byte sub_080F6FE8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2035,7 +2035,7 @@ __attribute__((naked)) void sub_080F6FE8(void)
         "_080F7034: .4byte gContestFinalStandings\n\t"
         "_080F7038: .4byte gContestPlayerMonIndex\n\t"
         "_080F703C: .4byte gTasks\n\t"
-        "_080F7040: .4byte 0x080F7045\n\t"
+        "_080F7040: .4byte sub_080F7044 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2107,7 +2107,7 @@ __attribute__((naked)) void sub_080F7044(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F70D4: .4byte 0x08085B35\n\t"
+        "_080F70D4: .4byte CB2_ReturnToFieldContinueScriptPlayMapMusic + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2983,7 +2983,7 @@ __attribute__((naked)) void sub_080F7708(void)
         "	.align 2, 0\n\t"
         "_080F7754: .4byte gUnknown_2039D00\n\t"
         "_080F7758: .4byte gSprites\n\t"
-        "_080F775C: .4byte 0x080F77D5\n\t"
+        "_080F775C: .4byte sub_080F77D4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3026,7 +3026,7 @@ __attribute__((naked)) void sub_080F7760(void)
         "	.align 2, 0\n\t"
         "_080F77A0: .4byte gUnknown_2039D00\n\t"
         "_080F77A4: .4byte gSprites\n\t"
-        "_080F77A8: .4byte 0x080F7881\n\t"
+        "_080F77A8: .4byte sub_080F7880 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3052,7 +3052,7 @@ __attribute__((naked)) void sub_080F77AC(void)
         "	strb r3, [r0, #4]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_080F77CC: .4byte 0x08007141\n\t"
+        "_080F77CC: .4byte SpriteCallbackDummy + 1\n\t"
         "_080F77D0: .4byte gUnknown_2039D00\n\t"
         ".syntax divided\n\t"
     );
@@ -3120,7 +3120,7 @@ __attribute__((naked)) void sub_080F77D4(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F7840: .4byte gSprites\n\t"
-        "_080F7844: .4byte 0x080F7849\n\t"
+        "_080F7844: .4byte sub_080F7848 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3877,7 +3877,7 @@ __attribute__((naked)) void sub_080F7D4C(void)
         "_080F7DBC: .4byte gContestFinalStandings\n\t"
         "_080F7DC0: .4byte gUnknown_2039D00\n\t"
         "_080F7DC4: .4byte gTasks\n\t"
-        "_080F7DC8: .4byte 0x080F7DCD\n\t"
+        "_080F7DC8: .4byte sub_080F7DCC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4006,7 +4006,7 @@ __attribute__((naked)) void sub_080F7E38(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F7EA8: .4byte 0x08007141\n\t"
+        "_080F7EA8: .4byte SpriteCallbackDummy + 1\n\t"
         "_080F7EAC: .4byte gUnknown_2039D00\n\t"
         ".syntax divided\n\t"
     );
@@ -4054,7 +4054,7 @@ __attribute__((naked)) void sub_080F7EB0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F7EF8: .4byte 0x08007141\n\t"
+        "_080F7EF8: .4byte SpriteCallbackDummy + 1\n\t"
         "_080F7EFC: .4byte gUnknown_2039D00\n\t"
         ".syntax divided\n\t"
     );
@@ -4279,7 +4279,7 @@ __attribute__((naked)) void sub_080F8070(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F80A8: .4byte 0x080F80B5\n\t"
+        "_080F80A8: .4byte sub_080F80B4 + 1\n\t"
         "_080F80AC: .4byte gTasks\n\t"
         "_080F80B0: .4byte gContestMons\n\t"
         ".syntax divided\n\t"
@@ -4711,7 +4711,7 @@ __attribute__((naked)) void sub_080F8310(void)
         "	.align 2, 0\n\t"
         "_080F83D4: .4byte gUnknown_2039D00\n\t"
         "_080F83D8: .4byte 0x000060B3\n\t"
-        "_080F83DC: .4byte 0x080F8539\n\t"
+        "_080F83DC: .4byte sub_080F8538 + 1\n\t"
         "_080F83E0: .4byte 0x0000FFFF\n\t"
         "_080F83E4: .4byte 0x00007FFF\n\t"
         "_080F83E8: .4byte gTasks\n\t"
@@ -4802,7 +4802,7 @@ __attribute__((naked)) void sub_080F8310(void)
         "	.align 2, 0\n\t"
         "_080F8494: .4byte gUnknown_2039D00\n\t"
         "_080F8498: .4byte 0x000060A3\n\t"
-        "_080F849C: .4byte 0x080F8539\n\t"
+        "_080F849C: .4byte sub_080F8538 + 1\n\t"
         "_080F84A0: .4byte 0x0000FFFF\n\t"
         "_080F84A4: .4byte 0x00007FFF\n\t"
         "_080F84A8: .4byte gTasks\n\t"
@@ -5857,7 +5857,7 @@ __attribute__((naked)) void sub_080F8C54(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8C60: .4byte 0x080D7351\n\t"
+        "_080F8C60: .4byte CB2_StartContest + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5884,7 +5884,7 @@ __attribute__((naked)) void sub_080F8C64(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F8C88: .4byte gPaletteFade\n\t"
-        "_080F8C8C: .4byte 0x080F8C55\n\t"
+        "_080F8C8C: .4byte sub_080F8C54 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5910,7 +5910,7 @@ __attribute__((naked)) void sub_080F8C90(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8CB8: .4byte 0x080F8C65\n\t"
+        "_080F8CB8: .4byte sub_080F8C64 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5958,7 +5958,7 @@ __attribute__((naked)) void sub_080F8CDC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F8D00: .4byte gPaletteFade\n\t"
-        "_080F8D04: .4byte 0x080F6319\n\t"
+        "_080F8D04: .4byte sub_080F6318 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5984,7 +5984,7 @@ __attribute__((naked)) void sub_080F8D08(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8D30: .4byte 0x080F8CDD\n\t"
+        "_080F8D30: .4byte sub_080F8CDC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6035,8 +6035,8 @@ __attribute__((naked)) void sub_080F8D48(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8D80: .4byte 0x080FCDF1\n\t"
-        "_080F8D84: .4byte 0x080F8D8D\n\t"
+        "_080F8D80: .4byte Task_LinkContest_Init + 1\n\t"
+        "_080F8D84: .4byte sub_080F8D8C + 1\n\t"
         "_080F8D88: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6066,8 +6066,8 @@ __attribute__((naked)) void sub_080F8D8C(void)
         "	.align 2, 0\n\t"
         "_080F8DB4: .4byte gLinkContestFlags\n\t"
         "_080F8DB8: .4byte gContestMonPartyIndex\n\t"
-        "_080F8DBC: .4byte 0x080FCF2D\n\t"
-        "_080F8DC0: .4byte 0x080F8DED\n\t"
+        "_080F8DBC: .4byte Task_LinkContest_CommunicateMonsRS + 1\n\t"
+        "_080F8DC0: .4byte sub_080F8DEC + 1\n\t"
         "_080F8DC4:\n\t"
         "	ldr r0, _080F8DE0\n\t"
         "	ldrb r0, [r0]\n\t"
@@ -6086,7 +6086,7 @@ __attribute__((naked)) void sub_080F8D8C(void)
         "	.align 2, 0\n\t"
         "_080F8DE0: .4byte gContestMonPartyIndex\n\t"
         "_080F8DE4: .4byte gTasks\n\t"
-        "_080F8DE8: .4byte 0x081D9691\n\t"
+        "_080F8DE8: .4byte Task_LinkContest_StartCommunicationEm + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6104,8 +6104,8 @@ __attribute__((naked)) void sub_080F8DEC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8E00: .4byte 0x080FD059\n\t"
-        "_080F8E04: .4byte 0x080F8E09\n\t"
+        "_080F8E00: .4byte Task_LinkContest_CommunicateRngRS + 1\n\t"
+        "_080F8E04: .4byte sub_080F8E08 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6123,8 +6123,8 @@ __attribute__((naked)) void sub_080F8E08(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8E1C: .4byte 0x080FD69D\n\t"
-        "_080F8E20: .4byte 0x080F8E25\n\t"
+        "_080F8E1C: .4byte Task_LinkContest_CommunicateLeaderIdsRS + 1\n\t"
+        "_080F8E20: .4byte sub_080F8E24 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6142,8 +6142,8 @@ __attribute__((naked)) void sub_080F8E24(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8E38: .4byte 0x080FD0E9\n\t"
-        "_080F8E3C: .4byte 0x080F8E41\n\t"
+        "_080F8E38: .4byte Task_LinkContest_CommunicateCategoryRS + 1\n\t"
+        "_080F8E3C: .4byte sub_080F8E40 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6273,8 +6273,8 @@ __attribute__((naked)) void sub_080F8E40(void)
         "_080F8F28: .4byte gUnknown_3005B68\n\t"
         "_080F8F2C: .4byte gContestLinkLeaderIndex\n\t"
         "_080F8F30: .4byte gSpecialVar_ContestCategory\n\t"
-        "_080F8F34: .4byte 0x080FD795\n\t"
-        "_080F8F38: .4byte 0x080F8F3D\n\t"
+        "_080F8F34: .4byte Task_LinkContest_CommunicateRound1Points + 1\n\t"
+        "_080F8F38: .4byte sub_080F8F3C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6297,8 +6297,8 @@ __attribute__((naked)) void sub_080F8F3C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080F8F5C: .4byte 0x080FD825\n\t"
-        "_080F8F60: .4byte 0x080F8F99\n\t"
+        "_080F8F5C: .4byte Task_LinkContest_CommunicateTurnOrder + 1\n\t"
+        "_080F8F60: .4byte Task_LinkContest_FinalizeConnection + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6366,7 +6366,7 @@ __attribute__((naked)) void sub_080F8F98(void)
         "	.align 2, 0\n\t"
         "_080F8FC0: .4byte gSpecialVar_0x8004\n\t"
         "_080F8FC4: .4byte gTasks\n\t"
-        "_080F8FC8: .4byte 0x080F901D\n\t"
+        "_080F8FC8: .4byte sub_080F901C + 1\n\t"
         "_080F8FCC:\n\t"
         "	ldr r0, _080F9014\n\t"
         "	adds r4, r0, #2\n\t"
@@ -6428,7 +6428,7 @@ __attribute__((naked)) void sub_080F901C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080F903C: .4byte gTasks\n\t"
-        "_080F9040: .4byte 0x080F9045\n\t"
+        "_080F9040: .4byte sub_080F9044 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

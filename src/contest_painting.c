@@ -262,9 +262,9 @@ __attribute__((naked)) void ShowContestPainting(void)
         "_0812FFE8: .4byte 0x0858F648\n\t"
         "_0812FFEC: .4byte 0x040000D4\n\t"
         "_0812FFF0: .4byte 0x85000100\n\t"
-        "_0812FFF4: .4byte 0x08130329\n\t"
+        "_0812FFF4: .4byte VBlankCB_ContestPainting + 1\n\t"
         "_0812FFF8: .4byte gUnknown_30011F0\n\t"
-        "_0812FFFC: .4byte 0x0812FE31\n\t"
+        "_0812FFFC: .4byte CB2_HoldContestPainting + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -372,7 +372,7 @@ __attribute__((naked)) void HoldContestPainting(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081300C0: .4byte gPaletteFade\n\t"
-        "_081300C4: .4byte 0x0812FE45\n\t"
+        "_081300C4: .4byte CB2_QuitContestPainting + 1\n\t"
         "_081300C8: .4byte gUnknown_30011F6\n\t"
         "_081300CC: .4byte gUnknown_30011F4\n\t"
         ".syntax divided\n\t"

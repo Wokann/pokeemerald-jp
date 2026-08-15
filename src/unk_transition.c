@@ -167,7 +167,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA090: .4byte gSprites\n\t"
-        "_081DA094: .4byte 0x081DA099\n\t"
+        "_081DA094: .4byte sub_081DA098 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -196,7 +196,7 @@ __attribute__((naked)) void sub_081DA098(void)
         "	str r0, [r3, #0x1c]\n\t"
         "	b _081DA104\n\t"
         "	.align 2, 0\n\t"
-        "_081DA0C0: .4byte 0x08007141\n\t"
+        "_081DA0C0: .4byte SpriteCallbackDummy + 1\n\t"
         "_081DA0C4:\n\t"
         "	ldrh r4, [r2, #8]\n\t"
         "	movs r5, #8\n\t"
@@ -374,7 +374,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA204: .4byte gSprites\n\t"
-        "_081DA208: .4byte 0x081DA20D\n\t"
+        "_081DA208: .4byte sub_081DA20C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -431,7 +431,7 @@ __attribute__((naked)) void sub_081DA20C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA26C: .4byte 0x08007141\n\t"
+        "_081DA26C: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -520,7 +520,7 @@ __attribute__((naked)) void sub_081DA2C4(void)
         "	b _081DA316\n\t"
         "	.align 2, 0\n\t"
         "_081DA30C: .4byte gSprites\n\t"
-        "_081DA310: .4byte 0x08007141\n\t"
+        "_081DA310: .4byte SpriteCallbackDummy + 1\n\t"
         "_081DA314:\n\t"
         "	movs r0, #0\n\t"
         "_081DA316:\n\t"
@@ -803,7 +803,7 @@ __attribute__((naked)) void sub_081DA4D0(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA4FC: .4byte gPaletteFade\n\t"
-        "_081DA500: .4byte 0x081DA42D\n\t"
+        "_081DA500: .4byte Phase2Task_34 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -926,7 +926,7 @@ __attribute__((naked)) void sub_081DA5A8(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA5D4: .4byte gPaletteFade\n\t"
-        "_081DA5D8: .4byte 0x081DA505\n\t"
+        "_081DA5D8: .4byte Phase2Task_35 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1059,7 +1059,7 @@ __attribute__((naked)) void sub_081DA694(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA6C0: .4byte gPaletteFade\n\t"
-        "_081DA6C4: .4byte 0x081DA5DD\n\t"
+        "_081DA6C4: .4byte Phase2Task_36 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1194,7 +1194,7 @@ __attribute__((naked)) void sub_081DA784(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA7B0: .4byte gPaletteFade\n\t"
-        "_081DA7B4: .4byte 0x081DA6C9\n\t"
+        "_081DA7B4: .4byte Phase2Task_37 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1336,7 +1336,7 @@ __attribute__((naked)) void sub_081DA87C(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA8A8: .4byte gPaletteFade\n\t"
-        "_081DA8AC: .4byte 0x081DA7B9\n\t"
+        "_081DA8AC: .4byte Phase2Task_38 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1478,7 +1478,7 @@ __attribute__((naked)) void sub_081DA974(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DA9A0: .4byte gPaletteFade\n\t"
-        "_081DA9A4: .4byte 0x081DA8B1\n\t"
+        "_081DA9A4: .4byte Phase2Task_39 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1624,7 +1624,7 @@ __attribute__((naked)) void sub_081DAA74(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DAAA0: .4byte gPaletteFade\n\t"
-        "_081DAAA4: .4byte 0x081DA9A9\n\t"
+        "_081DAAA4: .4byte Phase2Task_40 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1772,7 +1772,7 @@ __attribute__((naked)) void sub_081DAB78(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081DABA4: .4byte gPaletteFade\n\t"
-        "_081DABA8: .4byte 0x081DAAA9\n\t"
+        "_081DABA8: .4byte Phase2Task_41 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

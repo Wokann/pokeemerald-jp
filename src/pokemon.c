@@ -14262,7 +14262,7 @@ __attribute__((naked)) s8 GetMonFlavorRelation(struct Pokemon *mon, u8 flavor)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806E150: .4byte 0x0806E159\n\t"
+        "_0806E150: .4byte sub_0806E158 + 1\n\t"
         "_0806E154: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -15262,7 +15262,7 @@ __attribute__((naked)) void DoMonFrontSpriteAnimation(struct Sprite *sprite, u16
         "	ldr r0, _0806E80C\n\t"
         "	b _0806E886\n\t"
         "	.align 2, 0\n\t"
-        "_0806E80C: .4byte 0x08007141\n\t"
+        "_0806E80C: .4byte SpriteCallbackDummy + 1\n\t"
         "_0806E810:\n\t"
         "	cmp r2, #0\n\t"
         "	bne _0806E832\n\t"
@@ -15307,7 +15307,7 @@ __attribute__((naked)) void DoMonFrontSpriteAnimation(struct Sprite *sprite, u16
         "	b _0806E884\n\t"
         "	.align 2, 0\n\t"
         "_0806E868: .4byte 0x082FA50F\n\t"
-        "_0806E86C: .4byte 0x0806E6FD\n\t"
+        "_0806E86C: .4byte Task_AnimateAfterDelay + 1\n\t"
         "_0806E870: .4byte gTasks\n\t"
         "_0806E874: .4byte 0x082FA374\n\t"
         "_0806E878:\n\t"
@@ -15325,7 +15325,7 @@ __attribute__((naked)) void DoMonFrontSpriteAnimation(struct Sprite *sprite, u16
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0806E890: .4byte 0x082FA374\n\t"
-        "_0806E894: .4byte 0x080394FD\n\t"
+        "_0806E894: .4byte SpriteCallbackDummy_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15381,7 +15381,7 @@ __attribute__((naked)) void PokemonSummaryDoMonAnimation(struct Sprite *sprite, 
         "	b _0806E918\n\t"
         "	.align 2, 0\n\t"
         "_0806E8FC: .4byte 0x082FA50F\n\t"
-        "_0806E900: .4byte 0x0806E739\n\t"
+        "_0806E900: .4byte Task_PokemonSummaryAnimateAfterDelay + 1\n\t"
         "_0806E904: .4byte gTasks\n\t"
         "_0806E908: .4byte 0x082FA374\n\t"
         "_0806E90C:\n\t"
@@ -15416,7 +15416,7 @@ __attribute__((naked)) void StopPokemonAnimationDelayTask()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806E93C: .4byte 0x0806E739\n\t"
+        "_0806E93C: .4byte Task_PokemonSummaryAnimateAfterDelay + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -15447,7 +15447,7 @@ __attribute__((naked)) void BattleAnimateBackSprite(struct Sprite *sprite, u16 s
         "_0806E964: .4byte gHitMarker\n\t"
         "_0806E968: .4byte gBattleTypeFlags\n\t"
         "_0806E96C: .4byte gUnknown_2000002\n\t"
-        "_0806E970: .4byte 0x08007141\n\t"
+        "_0806E970: .4byte SpriteCallbackDummy + 1\n\t"
         "_0806E974:\n\t"
         "	adds r0, r2, #0\n\t"
         "	bl GetSpeciesBackAnimSet\n\t"
@@ -15463,7 +15463,7 @@ __attribute__((naked)) void BattleAnimateBackSprite(struct Sprite *sprite, u16 s
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0806E990: .4byte 0x080394FD\n\t"
+        "_0806E990: .4byte SpriteCallbackDummy_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

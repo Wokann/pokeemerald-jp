@@ -60,7 +60,7 @@ __attribute__((naked)) void CB2_Credits(void)
         "_08175438: .4byte gHasHallOfFameRecords\n\t"
         "_0817543C: .4byte gTasks\n\t"
         "_08175440: .4byte gUnknown_203B9AE\n\t"
-        "_08175444: .4byte 0x0817567D\n\t"
+        "_08175444: .4byte Task_CreditsMain + 1\n\t"
         "_08175448: .4byte gUnknown_203B9B1\n\t"
         ".syntax divided\n\t"
     );
@@ -302,13 +302,13 @@ __attribute__((naked)) void CB2_StartCreditsSequence(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08175620: .4byte 0x02000000\n\t"
-        "_08175624: .4byte 0x0817564D\n\t"
+        "_08175624: .4byte Task_WaitPaletteFade + 1\n\t"
         "_08175628: .4byte gTasks\n\t"
         "_0817562C: .4byte 0x0000FFFC\n\t"
-        "_08175630: .4byte 0x08175CAD\n\t"
+        "_08175630: .4byte Task_UpdatePage + 1\n\t"
         "_08175634: .4byte 0x081753CD\n\t"
         "_08175638: .4byte SPECIAL_sub_0813AA1C\n\t"
-        "_0817563C: .4byte 0x081753E1\n\t"
+        "_0817563C: .4byte CB2_Credits + 1\n\t"
         "_08175640: .4byte gUnknown_203B9B1\n\t"
         "_08175644: .4byte gUnknown_203B9B4\n\t"
         "_08175648: .4byte gUnknown_203B9AE\n\t"
@@ -342,7 +342,7 @@ __attribute__((naked)) void Task_WaitPaletteFade(void)
         "	.align 2, 0\n\t"
         "_08175670: .4byte gPaletteFade\n\t"
         "_08175674: .4byte gTasks\n\t"
-        "_08175678: .4byte 0x0817567D\n\t"
+        "_08175678: .4byte Task_CreditsMain + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -379,7 +379,7 @@ __attribute__((naked)) void Task_CreditsMain(void)
         "	b _08175702\n\t"
         "	.align 2, 0\n\t"
         "_081756B0: .4byte gTasks\n\t"
-        "_081756B4: .4byte 0x081759A5\n\t"
+        "_081756B4: .4byte Task_CreditsTheEnd1 + 1\n\t"
         "_081756B8:\n\t"
         "	ldr r0, _081756E0\n\t"
         "	strh r1, [r0]\n\t"
@@ -401,7 +401,7 @@ __attribute__((naked)) void Task_CreditsMain(void)
         "	b _08175702\n\t"
         "	.align 2, 0\n\t"
         "_081756E0: .4byte gUnknown_203B9AC\n\t"
-        "_081756E4: .4byte 0x08175711\n\t"
+        "_081756E4: .4byte Task_ReadyBikeScene + 1\n\t"
         "_081756E8:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _08175704\n\t"
@@ -423,7 +423,7 @@ __attribute__((naked)) void Task_CreditsMain(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817570C: .4byte 0x081757AD\n\t"
+        "_0817570C: .4byte Task_ReadyShowMons + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -460,7 +460,7 @@ __attribute__((naked)) void Task_ReadyBikeScene(void)
         "	.align 2, 0\n\t"
         "_08175744: .4byte gPaletteFade\n\t"
         "_08175748: .4byte gTasks\n\t"
-        "_0817574C: .4byte 0x08175751\n\t"
+        "_0817574C: .4byte Task_SetBikeScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -508,7 +508,7 @@ __attribute__((naked)) void Task_SetBikeScene(void)
         "	.align 2, 0\n\t"
         "_081757A0: .4byte gTasks\n\t"
         "_081757A4: .4byte 0x081753CD\n\t"
-        "_081757A8: .4byte 0x0817564D\n\t"
+        "_081757A8: .4byte Task_WaitPaletteFade + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -545,7 +545,7 @@ __attribute__((naked)) void Task_ReadyShowMons(void)
         "	.align 2, 0\n\t"
         "_081757E0: .4byte gPaletteFade\n\t"
         "_081757E4: .4byte gTasks\n\t"
-        "_081757E8: .4byte 0x081757ED\n\t"
+        "_081757E8: .4byte Task_LoadShowMons + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -741,11 +741,11 @@ __attribute__((naked)) void Task_LoadShowMons(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08175990: .4byte 0x08176025\n\t"
+        "_08175990: .4byte Task_ShowMons + 1\n\t"
         "_08175994: .4byte gTasks\n\t"
         "_08175998: .4byte 0x00000703\n\t"
         "_0817599C: .4byte gUnknown_203B9F4\n\t"
-        "_081759A0: .4byte 0x0817564D\n\t"
+        "_081759A0: .4byte Task_WaitPaletteFade + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -789,7 +789,7 @@ __attribute__((naked)) void Task_CreditsTheEnd1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081759E8: .4byte 0x081759ED\n\t"
+        "_081759E8: .4byte Task_CreditsTheEnd2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -823,7 +823,7 @@ __attribute__((naked)) void Task_CreditsTheEnd2(void)
         "	.align 2, 0\n\t"
         "_08175A18: .4byte gPaletteFade\n\t"
         "_08175A1C: .4byte gTasks\n\t"
-        "_08175A20: .4byte 0x08175A25\n\t"
+        "_08175A20: .4byte Task_CreditsTheEnd3 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -880,7 +880,7 @@ __attribute__((naked)) void Task_CreditsTheEnd3(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08175A94: .4byte gTasks\n\t"
-        "_08175A98: .4byte 0x08175A9D\n\t"
+        "_08175A98: .4byte Task_CreditsTheEnd4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -924,7 +924,7 @@ __attribute__((naked)) void Task_CreditsTheEnd4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08175AE0: .4byte 0x08175AE5\n\t"
+        "_08175AE0: .4byte Task_CreditsTheEnd5 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -974,7 +974,7 @@ __attribute__((naked)) void Task_CreditsTheEnd5(void)
         "	.align 2, 0\n\t"
         "_08175B34: .4byte gPaletteFade\n\t"
         "_08175B38: .4byte gTasks\n\t"
-        "_08175B3C: .4byte 0x08175B41\n\t"
+        "_08175B3C: .4byte Task_CreditsTheEnd6 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1025,7 +1025,7 @@ __attribute__((naked)) void Task_CreditsTheEnd6(void)
         "_08175B90: .4byte gTasks\n\t"
         "_08175B94: .4byte gMain\n\t"
         "_08175B98: .4byte 0x0000FFFF\n\t"
-        "_08175B9C: .4byte 0x08175BD5\n\t"
+        "_08175B9C: .4byte Task_CreditsSoftReset + 1\n\t"
         "_08175BA0:\n\t"
         "	ldr r0, _08175BCC\n\t"
         "	cmp r1, r0\n\t"
@@ -1319,7 +1319,7 @@ __attribute__((naked)) void Task_UpdatePage(void)
         "	ldr r1, _08175DF4\n\t"
         "	b _08175DFE\n\t"
         "	.align 2, 0\n\t"
-        "_08175DE8: .4byte 0x0817567D\n\t"
+        "_08175DE8: .4byte Task_CreditsMain + 1\n\t"
         "_08175DEC: .4byte 0x085C7590\n\t"
         "_08175DF0: .4byte gTasks\n\t"
         "_08175DF4: .4byte 0x0000328D\n\t"
@@ -1731,7 +1731,7 @@ __attribute__((naked)) void Task_ShowMons(void)
         "	b _0817610A\n\t"
         "	.align 2, 0\n\t"
         "_081760E8: .4byte gUnknown_203B9B4\n\t"
-        "_081760EC: .4byte 0x0817567D\n\t"
+        "_081760EC: .4byte Task_CreditsMain + 1\n\t"
         "_081760F0: .4byte 0x085C7928\n\t"
         "_081760F4: .4byte gSprites\n\t"
         "_081760F8:\n\t"
@@ -2697,8 +2697,8 @@ __attribute__((naked)) void SetBikeScene(void)
         "	.align 2, 0\n\t"
         "_081768A8: .4byte gSprites\n\t"
         "_081768AC: .4byte gTasks\n\t"
-        "_081768B0: .4byte 0x0817642D\n\t"
-        "_081768B4: .4byte 0x0817615D\n\t"
+        "_081768B0: .4byte Task_CycleSceneryPalette + 1\n\t"
+        "_081768B4: .4byte Task_BikeScene + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2828,7 +2828,7 @@ __attribute__((naked)) void LoadBikeScene(void)
         "_081769CC: .4byte 0x085D2854\n\t"
         "_081769D0: .4byte gTasks\n\t"
         "_081769D4: .4byte gSprites\n\t"
-        "_081769D8: .4byte 0x08176D75\n\t"
+        "_081769D8: .4byte SpriteCB_Player + 1\n\t"
         "_081769DC: .4byte 0x085C797C\n\t"
         "_081769E0:\n\t"
         "	ldr r0, _08176A5C\n\t"
@@ -2895,9 +2895,9 @@ __attribute__((naked)) void LoadBikeScene(void)
         "_08176A68: .4byte 0x085D2854\n\t"
         "_08176A6C: .4byte gTasks\n\t"
         "_08176A70: .4byte gSprites\n\t"
-        "_08176A74: .4byte 0x08176D75\n\t"
+        "_08176A74: .4byte SpriteCB_Player + 1\n\t"
         "_08176A78: .4byte 0x085C797C\n\t"
-        "_08176A7C: .4byte 0x08176E1D\n\t"
+        "_08176A7C: .4byte SpriteCB_Rival + 1\n\t"
         "_08176A80: .4byte 0x085C79BC\n\t"
         "_08176A84: .4byte gMain\n\t"
         "_08176A88:\n\t"
@@ -3813,7 +3813,7 @@ __attribute__((naked)) void CreateCreditsMonSprite(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08177138: .4byte gSprites\n\t"
-        "_0817713C: .4byte 0x08176EDD\n\t"
+        "_0817713C: .4byte SpriteCB_CreditsMon + 1\n\t"
         "_08177140: .4byte 0x085C7A14\n\t"
         ".syntax divided\n\t"
     );

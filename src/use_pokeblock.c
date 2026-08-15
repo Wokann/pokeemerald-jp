@@ -29,8 +29,8 @@ __attribute__((naked)) void ChooseMonToGivePokeblock(void)
         "_08166044: .4byte 0x00008058\n\t"
         "_08166048: .4byte gUnknown_203B95C\n\t"
         "_0816604C: .4byte 0x00007FD0\n\t"
-        "_08166050: .4byte 0x0816618D\n\t"
-        "_08166054: .4byte 0x08166129\n\t"
+        "_08166050: .4byte sub_0816618C + 1\n\t"
+        "_08166054: .4byte sub_08166128 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -84,8 +84,8 @@ __attribute__((naked)) void CB2_ReturnAndChooseMonToGivePokeblock(void)
         "_081660B8: .4byte gUnknown_203B964\n\t"
         "_081660BC: .4byte gUnknown_203B960\n\t"
         "_081660C0: .4byte gUnknown_203B968\n\t"
-        "_081660C4: .4byte 0x0816618D\n\t"
-        "_081660C8: .4byte 0x081660CD\n\t"
+        "_081660C4: .4byte sub_0816618C + 1\n\t"
+        "_081660C8: .4byte sub_081660CC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -127,8 +127,8 @@ __attribute__((naked)) void sub_081660DC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08166104: .4byte gUnknown_203B95C\n\t"
-        "_08166108: .4byte 0x08166371\n\t"
-        "_0816610C: .4byte 0x08166111\n\t"
+        "_08166108: .4byte sub_08166370 + 1\n\t"
+        "_0816610C: .4byte sub_08166110 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -427,7 +427,7 @@ __attribute__((naked)) void sub_0816618C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816636C: .4byte 0x08166371\n\t"
+        "_0816636C: .4byte sub_08166370 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -474,7 +474,7 @@ __attribute__((naked)) void sub_08166370(void)
         "	strb r0, [r1]\n\t"
         "	b _0816641C\n\t"
         "	.align 2, 0\n\t"
-        "_081663C8: .4byte 0x0816614D\n\t"
+        "_081663C8: .4byte sub_0816614C + 1\n\t"
         "_081663CC:\n\t"
         "	ldr r0, _08166424\n\t"
         "	ldrb r1, [r0, #7]\n\t"
@@ -526,7 +526,7 @@ __attribute__((naked)) void sub_08166370(void)
         "_08166430: .4byte 0x00008041\n\t"
         "_08166434: .4byte 0x00008040\n\t"
         "_08166438: .4byte 0x00007FB3\n\t"
-        "_0816643C: .4byte 0x08166441\n\t"
+        "_0816643C: .4byte sub_08166440 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -686,7 +686,7 @@ __attribute__((naked)) void sub_08166440(void)
         "	bl sub_08166178\n\t"
         "	b _0816661A\n\t"
         "	.align 2, 0\n\t"
-        "_0816659C: .4byte 0x081669F9\n\t"
+        "_0816659C: .4byte sub_081669F8 + 1\n\t"
         "_081665A0:\n\t"
         "	bl sub_08166B50\n\t"
         "	ldr r0, _081665B4\n\t"
@@ -733,7 +733,7 @@ __attribute__((naked)) void sub_08166440(void)
         "	bl sub_08166178\n\t"
         "	b _0816661A\n\t"
         "	.align 2, 0\n\t"
-        "_081665FC: .4byte 0x08166629\n\t"
+        "_081665FC: .4byte sub_08166628 + 1\n\t"
         "_08166600:\n\t"
         "	ldr r0, _08166620\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -855,7 +855,7 @@ __attribute__((naked)) void sub_08166628(void)
         "_081666F4: .4byte gUnknown_203B974\n\t"
         "_081666F8: .4byte gUnknown_203B978\n\t"
         "_081666FC: .4byte gMain\n\t"
-        "_08166700: .4byte 0x08166059\n\t"
+        "_08166700: .4byte CB2_ReturnAndChooseMonToGivePokeblock + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -974,7 +974,7 @@ __attribute__((naked)) void sub_08166704(void)
         "	strb r0, [r1]\n\t"
         "	b _08166824\n\t"
         "	.align 2, 0\n\t"
-        "_081667F8: .4byte 0x0816614D\n\t"
+        "_081667F8: .4byte sub_0816614C + 1\n\t"
         "_081667FC: .4byte gUnknown_203B95C\n\t"
         "_08166800:\n\t"
         "	ldr r0, _0816682C\n\t"
@@ -1001,8 +1001,8 @@ __attribute__((naked)) void sub_08166704(void)
         "_0816682C: .4byte gPaletteFade\n\t"
         "_08166830: .4byte gUnknown_203B978\n\t"
         "_08166834: .4byte 0x00007B1C\n\t"
-        "_08166838: .4byte 0x08166841\n\t"
-        "_0816683C: .4byte 0x08166129\n\t"
+        "_08166838: .4byte sub_08166840 + 1\n\t"
+        "_0816683C: .4byte sub_08166128 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1207,7 +1207,7 @@ __attribute__((naked)) void sub_08166840(void)
         "	.align 2, 0\n\t"
         "_081669EC: .4byte gMain\n\t"
         "_081669F0: .4byte gSpecialVar_ItemId\n\t"
-        "_081669F4: .4byte 0x081669F9\n\t"
+        "_081669F4: .4byte sub_081669F8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2296,7 +2296,7 @@ __attribute__((naked)) void sub_0816713C(void)
         "_081671D0: .4byte 0x085C0A0C\n\t"
         "_081671D4: .4byte gUnknown_20205C8\n\t"
         "_081671D8: .4byte 0x085C0A40\n\t"
-        "_081671DC: .4byte 0x081671E1\n\t"
+        "_081671DC: .4byte sub_081671E0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2714,7 +2714,7 @@ __attribute__((naked)) void sub_0816740C(void)
         "	b _08167546\n\t"
         "	.align 2, 0\n\t"
         "_08167504: .4byte gSprites\n\t"
-        "_08167508: .4byte 0x08167F71\n\t"
+        "_08167508: .4byte sub_08167F70 + 1\n\t"
         "_0816750C: .4byte 0x00007B18\n\t"
         "_08167510: .4byte 0x06010000\n\t"
         "_08167514: .4byte 0x00007B12\n\t"
@@ -2831,7 +2831,7 @@ __attribute__((naked)) void sub_08167564(void)
         "_081675F0: .4byte 0x00008040\n\t"
         "_081675F4: .4byte gSprites\n\t"
         "_081675F8: .4byte 0x00007B06\n\t"
-        "_081675FC: .4byte 0x08167F89\n\t"
+        "_081675FC: .4byte sub_08167F88 + 1\n\t"
         "_08167600:\n\t"
         "	ldr r0, [r5]\n\t"
         "	ldr r1, _08167668\n\t"
@@ -2951,7 +2951,7 @@ __attribute__((naked)) void sub_08167564(void)
         "	b _08167706\n\t"
         "	.align 2, 0\n\t"
         "_081676E8: .4byte 0x00007B06\n\t"
-        "_081676EC: .4byte 0x08167FBD\n\t"
+        "_081676EC: .4byte sub_08167FBC + 1\n\t"
         "_081676F0: .4byte gUnknown_203B978\n\t"
         "_081676F4: .4byte gSprites\n\t"
         "_081676F8:\n\t"
@@ -3595,7 +3595,7 @@ __attribute__((naked)) void sub_08167AA8(void)
         "_08167C68: .4byte 0x00008040\n\t"
         "_08167C6C: .4byte 0x00007B1C\n\t"
         "_08167C70: .4byte 0x00008044\n\t"
-        "_08167C74: .4byte 0x08167CAD\n\t"
+        "_08167C74: .4byte sub_08167CAC + 1\n\t"
         "_08167C78:\n\t"
         "	cmp r4, #0\n\t"
         "	bne _08167C90\n\t"
@@ -3606,7 +3606,7 @@ __attribute__((naked)) void sub_08167AA8(void)
         "	b _08167C98\n\t"
         "	.align 2, 0\n\t"
         "_08167C88: .4byte 0x00008044\n\t"
-        "_08167C8C: .4byte 0x08167DAD\n\t"
+        "_08167C8C: .4byte sub_08167DAC + 1\n\t"
         "_08167C90:\n\t"
         "	ldr r0, [r6]\n\t"
         "	ldr r1, _08167CA4\n\t"
@@ -3621,7 +3621,7 @@ __attribute__((naked)) void sub_08167AA8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08167CA4: .4byte 0x00008044\n\t"
-        "_08167CA8: .4byte 0x08167E51\n\t"
+        "_08167CA8: .4byte sub_08167E50 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4328,7 +4328,7 @@ __attribute__((naked)) void sub_0816817C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081681B8: .4byte 0x08007141\n\t"
+        "_081681B8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }

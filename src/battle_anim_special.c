@@ -209,14 +209,14 @@ __attribute__((naked)) void unref_sub_8170478(void)
         "_08170418: .4byte 0x00003F42\n\t"
         "_0817041C: .4byte gHealthboxSpriteIds\n\t"
         "_08170420: .4byte gSprites\n\t"
-        "_08170424: .4byte 0x08007141\n\t"
+        "_08170424: .4byte SpriteCallbackDummy + 1\n\t"
         "_08170428: .4byte gUnknown_8C2EB40\n\t"
         "_0817042C: .4byte gUnknown_8C2EAF4\n\t"
         "_08170430: .4byte gCureBubblesPal\n\t"
         "_08170434: .4byte gBattle_BG1_X\n\t"
         "_08170438: .4byte gBattle_BG1_Y\n\t"
         "_0817043C: .4byte gTasks\n\t"
-        "_08170440: .4byte 0x08170445\n\t"
+        "_08170440: .4byte sub_08170444 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -718,7 +718,7 @@ __attribute__((naked)) void sub_081707F0(void)
         "	.align 2, 0\n\t"
         "_08170810: .4byte gTasks\n\t"
         "_08170814: .4byte gBattleAnimArgs\n\t"
-        "_08170818: .4byte 0x0817081D\n\t"
+        "_08170818: .4byte sub_0817081C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1346,11 +1346,11 @@ __attribute__((naked)) void sub_08170BE8(void)
         "_08170CB4: .4byte 0x082FCF94\n\t"
         "_08170CB8: .4byte gSprites\n\t"
         "_08170CBC: .4byte gBattleAnimTarget\n\t"
-        "_08170CC0: .4byte 0x08170EE9\n\t"
+        "_08170CC0: .4byte sub_08170EE8 + 1\n\t"
         "_08170CC4: .4byte gBattleSpritesDataPtr\n\t"
         "_08170CC8: .4byte gBattlerSpriteIds\n\t"
         "_08170CCC: .4byte gTasks\n\t"
-        "_08170CD0: .4byte 0x08170CD5\n\t"
+        "_08170CD0: .4byte sub_08170CD4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1506,11 +1506,11 @@ __attribute__((naked)) void sub_08170D10(void)
         "_08170DF4: .4byte 0x082FCF94\n\t"
         "_08170DF8: .4byte gSprites\n\t"
         "_08170DFC: .4byte gBattleAnimTarget\n\t"
-        "_08170E00: .4byte 0x08007141\n\t"
+        "_08170E00: .4byte SpriteCallbackDummy + 1\n\t"
         "_08170E04: .4byte gBattlerSpriteIds\n\t"
-        "_08170E08: .4byte 0x08039AC9\n\t"
+        "_08170E08: .4byte SpriteCB_TrainerThrowObject + 1\n\t"
         "_08170E0C: .4byte gTasks\n\t"
-        "_08170E10: .4byte 0x08170E15\n\t"
+        "_08170E10: .4byte sub_08170E14 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1569,9 +1569,9 @@ __attribute__((naked)) void sub_08170E14(void)
         "_08170E74: .4byte gSprites\n\t"
         "_08170E78: .4byte gBattlerSpriteIds\n\t"
         "_08170E7C: .4byte gTasks\n\t"
-        "_08170E80: .4byte 0x08170EE9\n\t"
-        "_08170E84: .4byte 0x08170E8D\n\t"
-        "_08170E88: .4byte 0x08170CD5\n\t"
+        "_08170E80: .4byte sub_08170EE8 + 1\n\t"
+        "_08170E84: .4byte sub_08170E8C + 1\n\t"
+        "_08170E88: .4byte sub_08170CD4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1650,7 +1650,7 @@ __attribute__((naked)) void sub_08170EE8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08170F10: .4byte 0x0000FFD8\n\t"
-        "_08170F14: .4byte 0x08170F19\n\t"
+        "_08170F14: .4byte sub_08170F18 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1677,7 +1677,7 @@ __attribute__((naked)) void sub_08170F18(void)
         "	b _08170FB6\n\t"
         "	.align 2, 0\n\t"
         "_08170F3C: .4byte gBattleSpritesDataPtr\n\t"
-        "_08170F40: .4byte 0x08171A91\n\t"
+        "_08170F40: .4byte sub_08171A90 + 1\n\t"
         "_08170F44:\n\t"
         "	adds r0, r4, #0\n\t"
         "	movs r1, #1\n\t"
@@ -1739,7 +1739,7 @@ __attribute__((naked)) void sub_08170F18(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08170FC0: .4byte 0x08170FCD\n\t"
+        "_08170FC0: .4byte sub_08170FCC + 1\n\t"
         "_08170FC4: .4byte gLastUsedItem\n\t"
         "_08170FC8: .4byte gBattleAnimTarget\n\t"
         ".syntax divided\n\t"
@@ -1784,8 +1784,8 @@ __attribute__((naked)) void sub_08170FCC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08171010: .4byte 0x080A8A41\n\t"
-        "_08171014: .4byte 0x08171025\n\t"
+        "_08171010: .4byte TaskDummy + 1\n\t"
+        "_08171014: .4byte sub_08171024 + 1\n\t"
         "_08171018: .4byte gSprites\n\t"
         "_0817101C: .4byte gBattlerSpriteIds\n\t"
         "_08171020: .4byte gBattleAnimTarget\n\t"
@@ -1954,7 +1954,7 @@ __attribute__((naked)) void sub_08171024(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08171168: .4byte gTasks\n\t"
-        "_0817116C: .4byte 0x08171171\n\t"
+        "_0817116C: .4byte sub_08171170 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1995,7 +1995,7 @@ __attribute__((naked)) void sub_08171170(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081711B0: .4byte 0x081711B5\n\t"
+        "_081711B0: .4byte sub_081711B4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2122,7 +2122,7 @@ __attribute__((naked)) void sub_081711B4(void)
         "	.align 2, 0\n\t"
         "_08171298: .4byte 0xFFFFFF00\n\t"
         "_0817129C: .4byte gBattleSpritesDataPtr\n\t"
-        "_081712A0: .4byte 0x08171599\n\t"
+        "_081712A0: .4byte sub_08171598 + 1\n\t"
         "_081712A4:\n\t"
         "	ldr r0, _081712B4\n\t"
         "	str r0, [r4, #0x1c]\n\t"
@@ -2134,7 +2134,7 @@ __attribute__((naked)) void sub_081711B4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081712B4: .4byte 0x081712B9\n\t"
+        "_081712B4: .4byte sub_081712B8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2177,7 +2177,7 @@ __attribute__((naked)) void sub_081712B8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081712FC: .4byte gBattleSpritesDataPtr\n\t"
-        "_08171300: .4byte 0x08171305\n\t"
+        "_08171300: .4byte sub_08171304 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2460,7 +2460,7 @@ __attribute__((naked)) void sub_08171304(void)
         "	b _08171592\n\t"
         "	.align 2, 0\n\t"
         "_0817151C: .4byte gBattleSpritesDataPtr\n\t"
-        "_08171520: .4byte 0x08171599\n\t"
+        "_08171520: .4byte sub_08171598 + 1\n\t"
         "_08171524:\n\t"
         "	cmp r0, #4\n\t"
         "	bne _08171538\n\t"
@@ -2470,7 +2470,7 @@ __attribute__((naked)) void sub_08171304(void)
         "	str r0, [r4, #0x1c]\n\t"
         "	b _0817153E\n\t"
         "	.align 2, 0\n\t"
-        "_08171534: .4byte 0x081715BD\n\t"
+        "_08171534: .4byte sub_081715BC + 1\n\t"
         "_08171538:\n\t"
         "	ldrh r0, [r4, #0x34]\n\t"
         "	adds r0, #1\n\t"
@@ -2546,7 +2546,7 @@ __attribute__((naked)) void sub_08171598(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081715B8: .4byte 0x081718C9\n\t"
+        "_081715B8: .4byte sub_081718C8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2569,7 +2569,7 @@ __attribute__((naked)) void sub_081715BC(void)
         "	strh r1, [r0, #0x38]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_081715D8: .4byte 0x081715DD\n\t"
+        "_081715D8: .4byte sub_081715DC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2678,7 +2678,7 @@ __attribute__((naked)) void sub_081715DC(void)
         "_081716AC: .4byte SPECIAL_FoundBlackGlasses\n\t"
         "_081716B0: .4byte gSprites\n\t"
         "_081716B4: .4byte gBattlerSpriteIds\n\t"
-        "_081716B8: .4byte 0x081716BD\n\t"
+        "_081716B8: .4byte sub_081716BC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2800,7 +2800,7 @@ __attribute__((naked)) void sub_081716BC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0817179C: .4byte gPaletteFade\n\t"
-        "_081717A0: .4byte 0x081717A5\n\t"
+        "_081717A0: .4byte sub_081717A4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2928,7 +2928,7 @@ __attribute__((naked)) void sub_081717D0(void)
         "_0817187C: .4byte gSprites\n\t"
         "_08171880: .4byte 0x085C630C\n\t"
         "_08171884: .4byte 0x085C6144\n\t"
-        "_08171888: .4byte 0x08171891\n\t"
+        "_08171888: .4byte sub_08171890 + 1\n\t"
         "_0817188C: .4byte 0x085C6270\n\t"
         ".syntax divided\n\t"
     );
@@ -3058,7 +3058,7 @@ __attribute__((naked)) void sub_081718C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0817197C: .4byte 0x08171991\n\t"
+        "_0817197C: .4byte sub_08171990 + 1\n\t"
         "_08171980: .4byte gLastUsedItem\n\t"
         "_08171984: .4byte gBattleAnimTarget\n\t"
         "_08171988: .4byte gSprites\n\t"
@@ -3190,7 +3190,7 @@ __attribute__((naked)) void sub_08171990(void)
         "_08171A7C: .4byte gBattlerSpriteIds\n\t"
         "_08171A80: .4byte gBattleAnimTarget\n\t"
         "_08171A84: .4byte gBattleSpritesDataPtr\n\t"
-        "_08171A88: .4byte 0x081717A5\n\t"
+        "_08171A88: .4byte sub_081717A4 + 1\n\t"
         "_08171A8C: .4byte gUnknown_202415D\n\t"
         ".syntax divided\n\t"
     );
@@ -3229,7 +3229,7 @@ __attribute__((naked)) void sub_08171A90(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08171AC8: .4byte 0x08171ACD\n\t"
+        "_08171AC8: .4byte sub_08171ACC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3296,7 +3296,7 @@ __attribute__((naked)) void sub_08171ACC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08171B3C: .4byte 0x081717A5\n\t"
+        "_08171B3C: .4byte sub_081717A4 + 1\n\t"
         "_08171B40: .4byte gUnknown_202415D\n\t"
         ".syntax divided\n\t"
     );
@@ -3552,7 +3552,7 @@ __attribute__((naked)) void PokeBallOpenParticleAnimation(void)
         "_08171D14: .4byte 0x085C62AC\n\t"
         "_08171D18: .4byte gSprites\n\t"
         "_08171D1C: .4byte 0x085C6270\n\t"
-        "_08171D20: .4byte 0x08171D4D\n\t"
+        "_08171D20: .4byte PokeBallOpenParticleAnimation_Step1 + 1\n\t"
         "_08171D24: .4byte gMain\n\t"
         "_08171D28: .4byte 0x00000439\n\t"
         "_08171D2C:\n\t"
@@ -3592,7 +3592,7 @@ __attribute__((naked)) void PokeBallOpenParticleAnimation_Step1(void)
         "	str r0, [r1, #0x1c]\n\t"
         "	b _08171D68\n\t"
         "	.align 2, 0\n\t"
-        "_08171D60: .4byte 0x08171D6D\n\t"
+        "_08171D60: .4byte PokeBallOpenParticleAnimation_Step2 + 1\n\t"
         "_08171D64:\n\t"
         "	subs r0, r2, #1\n\t"
         "	strh r0, [r1, #0x30]\n\t"
@@ -3762,7 +3762,7 @@ __attribute__((naked)) void TimerBallOpenParticleAnimation(void)
         "_08171E94: .4byte 0x085C62AC\n\t"
         "_08171E98: .4byte 0x085C6270\n\t"
         "_08171E9C: .4byte gUnknown_20205C8\n\t"
-        "_08171EA0: .4byte 0x081722ED\n\t"
+        "_08171EA0: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_08171EA4: .4byte gMain\n\t"
         "_08171EA8: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -3892,7 +3892,7 @@ __attribute__((naked)) void DiveBallOpenParticleAnimation(void)
         "_08171F98: .4byte 0x085C62AC\n\t"
         "_08171F9C: .4byte 0x085C6270\n\t"
         "_08171FA0: .4byte gUnknown_20205C8\n\t"
-        "_08171FA4: .4byte 0x081722ED\n\t"
+        "_08171FA4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_08171FA8: .4byte gMain\n\t"
         "_08171FAC: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -4020,7 +4020,7 @@ __attribute__((naked)) void SafariBallOpenParticleAnimation(void)
         "_08172098: .4byte 0x085C6270\n\t"
         "_0817209C: .4byte 0x085C62AC\n\t"
         "_081720A0: .4byte gUnknown_20205C8\n\t"
-        "_081720A4: .4byte 0x081722ED\n\t"
+        "_081720A4: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081720A8: .4byte gMain\n\t"
         "_081720AC: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -4152,7 +4152,7 @@ __attribute__((naked)) void UltraBallOpenParticleAnimation(void)
         "_081721A0: .4byte 0x085C62AC\n\t"
         "_081721A4: .4byte 0x085C6270\n\t"
         "_081721A8: .4byte gUnknown_20205C8\n\t"
-        "_081721AC: .4byte 0x081722ED\n\t"
+        "_081721AC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081721B0: .4byte gMain\n\t"
         "_081721B4: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -4306,7 +4306,7 @@ __attribute__((naked)) void GreatBallOpenParticleAnimation(void)
         "_081722D0: .4byte 0x085C6270\n\t"
         "_081722D4: .4byte 0x085C62AC\n\t"
         "_081722D8: .4byte gUnknown_20205C8\n\t"
-        "_081722DC: .4byte 0x081722ED\n\t"
+        "_081722DC: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_081722E0: .4byte gTasks\n\t"
         "_081722E4: .4byte gMain\n\t"
         "_081722E8: .4byte 0x00000439\n\t"
@@ -4483,7 +4483,7 @@ __attribute__((naked)) void RepeatBallOpenParticleAnimation(void)
         "_08172428: .4byte 0x085C6270\n\t"
         "_0817242C: .4byte 0x085C62AC\n\t"
         "_08172430: .4byte gUnknown_20205C8\n\t"
-        "_08172434: .4byte 0x08172441\n\t"
+        "_08172434: .4byte RepeatBallOpenParticleAnimation_Step1 + 1\n\t"
         "_08172438: .4byte gMain\n\t"
         "_0817243C: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -4641,7 +4641,7 @@ __attribute__((naked)) void MasterBallOpenParticleAnimation(void)
         "_0817255C: .4byte gSprites\n\t"
         "_08172560: .4byte 0x085C6270\n\t"
         "_08172564: .4byte gUnknown_20205C8\n\t"
-        "_08172568: .4byte 0x081722ED\n\t"
+        "_08172568: .4byte FanOutBallOpenParticles_Step1 + 1\n\t"
         "_0817256C:\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r5, #0x38]\n\t"
@@ -4810,7 +4810,7 @@ __attribute__((naked)) void PremierBallOpenParticleAnimation(void)
         "_081726AC: .4byte 0x085C6270\n\t"
         "_081726B0: .4byte 0x085C62AC\n\t"
         "_081726B4: .4byte gUnknown_20205C8\n\t"
-        "_081726B8: .4byte 0x081726C5\n\t"
+        "_081726B8: .4byte PremierBallOpenParticleAnimation_Step1 + 1\n\t"
         "_081726BC: .4byte gMain\n\t"
         "_081726C0: .4byte 0x00000439\n\t"
         ".syntax divided\n\t"
@@ -5013,7 +5013,7 @@ __attribute__((naked)) u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalN
         "	strh r0, [r5, #0xa]\n\t"
         "	b _08172862\n\t"
         "	.align 2, 0\n\t"
-        "_08172830: .4byte 0x08172895\n\t"
+        "_08172830: .4byte sub_08172894 + 1\n\t"
         "_08172834: .4byte gTasks\n\t"
         "_08172838: .4byte 0x085C63CC\n\t"
         "_0817283C:\n\t"
@@ -5054,7 +5054,7 @@ __attribute__((naked)) u8 LaunchBallFadeMonTask(bool8 unfadeLater, u8 spritePalN
         "	.align 2, 0\n\t"
         "_08172884: .4byte 0x085C63CC\n\t"
         "_08172888: .4byte 0x0000FFFF\n\t"
-        "_0817288C: .4byte 0x08172925\n\t"
+        "_0817288C: .4byte sub_08172924 + 1\n\t"
         "_08172890: .4byte 0x00007FFF\n\t"
         ".syntax divided\n\t"
     );
@@ -5177,7 +5177,7 @@ __attribute__((naked)) void sub_08172924(void)
         "_08172964: .4byte gPaletteFade\n\t"
         "_08172968: .4byte gTasks\n\t"
         "_0817296C: .4byte 0x00007FFF\n\t"
-        "_08172970: .4byte 0x08172975\n\t"
+        "_08172970: .4byte sub_08172974 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5734,7 +5734,7 @@ __attribute__((naked)) void sub_08172CD4(void)
         "_08172D98: .4byte 0x000027F9\n\t"
         "_08172D9C: .4byte 0x084FD998\n\t"
         "_08172DA0: .4byte 0x084FE2A0\n\t"
-        "_08172DA4: .4byte 0x08172DD1\n\t"
+        "_08172DA4: .4byte sub_08172DD0 + 1\n\t"
         "_08172DA8: .4byte gTasks\n\t"
         "_08172DAC:\n\t"
         "	ldr r0, _08172DCC\n\t"
@@ -5905,7 +5905,7 @@ __attribute__((naked)) void sub_08172DD0(void)
         "_08172EEC: .4byte 0x000003FF\n\t"
         "_08172EF0: .4byte 0xFFFFFC00\n\t"
         "_08172EF4: .4byte gTasks\n\t"
-        "_08172EF8: .4byte 0x08172FE1\n\t"
+        "_08172EF8: .4byte sub_08172FE0 + 1\n\t"
         "_08172EFC:\n\t"
         "	ldr r3, _08172F80\n\t"
         "	lsls r4, r5, #4\n\t"
@@ -5977,10 +5977,10 @@ __attribute__((naked)) void sub_08172DD0(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08172F80: .4byte gSprites\n\t"
-        "_08172F84: .4byte 0x08173035\n\t"
+        "_08172F84: .4byte sub_08173034 + 1\n\t"
         "_08172F88: .4byte 0x0000FFE0\n\t"
         "_08172F8C: .4byte gTasks\n\t"
-        "_08172F90: .4byte 0x08172F95\n\t"
+        "_08172F90: .4byte sub_08172F94 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6246,8 +6246,8 @@ __attribute__((naked)) void sub_081730F0(void)
         "_0817316C: .4byte gSprites\n\t"
         "_08173170: .4byte gBattlerSpriteIds\n\t"
         "_08173174: .4byte gBattleAnimAttacker\n\t"
-        "_08173178: .4byte 0x08039AC9\n\t"
-        "_0817317C: .4byte 0x08173181\n\t"
+        "_08173178: .4byte SpriteCB_TrainerThrowObject + 1\n\t"
+        "_0817317C: .4byte sub_08173180 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6281,7 +6281,7 @@ __attribute__((naked)) void sub_08173180(void)
         "_081731A8: .4byte gSprites\n\t"
         "_081731AC: .4byte gBattlerSpriteIds\n\t"
         "_081731B0: .4byte gBattleAnimAttacker\n\t"
-        "_081731B4: .4byte 0x081731B9\n\t"
+        "_081731B4: .4byte sub_081731B8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6311,7 +6311,7 @@ __attribute__((naked)) void sub_081731B8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081731E0: .4byte 0x081731E5\n\t"
+        "_081731E0: .4byte sub_081731E4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

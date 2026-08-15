@@ -151,7 +151,7 @@ __attribute__((naked)) u16 rfu_initializeAPI(u32 *APIBuffer, u16 buffByteSize, I
         "_08292550: .4byte gUnknown_3007638\n\t"
         "_08292554: .4byte gRfuSlotStatusNI\n\t"
         "_08292558: .4byte gRfuSlotStatusUNI\n\t"
-        "_0829255C: .4byte 0x0829397D\n\t"
+        "_0829255C: .4byte sub_0829397C + 1\n\t"
         "_08292560: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -238,7 +238,7 @@ __attribute__((naked)) void rfu_REQ_PARENT_resumeRetransmitAndChange()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082925FC: .4byte 0x082926C1\n\t"
+        "_082925FC: .4byte rfu_STC_REQ_callback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -420,7 +420,7 @@ __attribute__((naked)) void rfu_STC_REQ_callback(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082926F4: .4byte 0x08292701\n\t"
+        "_082926F4: .4byte rfu_CB_defaultCallback + 1\n\t"
         "_082926F8: .4byte gUnknown_3007634\n\t"
         "_082926FC: .4byte gUnknown_3007638\n\t"
         ".syntax divided\n\t"
@@ -518,7 +518,7 @@ __attribute__((naked)) void rfu_REQ_RFUStatus()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292794: .4byte 0x082926C1\n\t"
+        "_08292794: .4byte rfu_STC_REQ_callback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -694,7 +694,7 @@ __attribute__((naked)) void rfu_REQ_stopMode()
         "_082928C8: .4byte gUnknown_3007608\n\t"
         "_082928CC: .4byte 0x04000100\n\t"
         "_082928D0: .4byte 0x0105FFFF\n\t"
-        "_082928D4: .4byte 0x082928F5\n\t"
+        "_082928D4: .4byte rfu_CB_stopMode + 1\n\t"
         "_082928D8:\n\t"
         "	ldr r1, _082928F0\n\t"
         "	movs r2, #0x80\n\t"
@@ -792,7 +792,7 @@ __attribute__((naked)) void rfu_REQ_reset()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829296C: .4byte 0x08292971\n\t"
+        "_0829296C: .4byte rfu_CB_reset + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -853,7 +853,7 @@ __attribute__((naked)) void rfu_REQ_configSystem(u16 availSlotFlag, u8 maxMFrame
         "	strh r0, [r1, #0x1a]\n\t"
         "	b _082929EE\n\t"
         "	.align 2, 0\n\t"
-        "_082929CC: .4byte 0x082926C1\n\t"
+        "_082929CC: .4byte rfu_STC_REQ_callback + 1\n\t"
         "_082929D0: .4byte gUnknown_3007634\n\t"
         "_082929D4:\n\t"
         "	ldr r5, _082929F4\n\t"
@@ -954,7 +954,7 @@ __attribute__((naked)) void rfu_REQ_configGameData(u8 mbootFlag, u16 serialNo, c
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292A84: .4byte 0x08292A89\n\t"
+        "_08292A84: .4byte rfu_CB_configGameData + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1086,7 +1086,7 @@ __attribute__((naked)) void rfu_REQ_startSearchChild()
         "	bl rfu_STC_clearLinkStatus\n\t"
         "	b _08292B7E\n\t"
         "	.align 2, 0\n\t"
-        "_08292B6C: .4byte 0x08292701\n\t"
+        "_08292B6C: .4byte rfu_CB_defaultCallback + 1\n\t"
         "_08292B70: .4byte gUnknown_3007634\n\t"
         "_08292B74: .4byte gUnknown_3007638\n\t"
         "_08292B78:\n\t"
@@ -1100,7 +1100,7 @@ __attribute__((naked)) void rfu_REQ_startSearchChild()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292B90: .4byte 0x08292B95\n\t"
+        "_08292B90: .4byte rfu_CB_startSearchChild + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1201,7 +1201,7 @@ __attribute__((naked)) void rfu_REQ_pollSearchChild()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292C30: .4byte 0x08292C49\n\t"
+        "_08292C30: .4byte rfu_CB_pollAndEndSearchChild + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1217,7 +1217,7 @@ __attribute__((naked)) void rfu_REQ_endSearchChild()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292C44: .4byte 0x08292C49\n\t"
+        "_08292C44: .4byte rfu_CB_pollAndEndSearchChild + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1261,7 +1261,7 @@ __attribute__((naked)) void rfu_CB_pollAndEndSearchChild(void)
         "	b _08292CB8\n\t"
         "	.align 2, 0\n\t"
         "_08292C90: .4byte gRfuLinkStatus\n\t"
-        "_08292C94: .4byte 0x08292701\n\t"
+        "_08292C94: .4byte rfu_CB_defaultCallback + 1\n\t"
         "_08292C98: .4byte gUnknown_3007638\n\t"
         "_08292C9C:\n\t"
         "	cmp r4, #0x1b\n\t"
@@ -1407,7 +1407,7 @@ __attribute__((naked)) void rfu_REQ_startSearchParent()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292D9C: .4byte 0x08292DA1\n\t"
+        "_08292D9C: .4byte rfu_CB_startSearchParent + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1448,7 +1448,7 @@ __attribute__((naked)) void rfu_REQ_pollSearchParent()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292DD4: .4byte 0x08292DD9\n\t"
+        "_08292DD4: .4byte sub_08292DD8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1489,7 +1489,7 @@ __attribute__((naked)) void rfu_REQ_endSearchParent()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292E0C: .4byte 0x082926C1\n\t"
+        "_08292E0C: .4byte rfu_STC_REQ_callback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1688,7 +1688,7 @@ __attribute__((naked)) void rfu_REQ_startConnectParent(u16 pid)
         "	.align 2, 0\n\t"
         "_08292F6C: .4byte gRfuLinkStatus\n\t"
         "_08292F70: .4byte gUnknown_3007634\n\t"
-        "_08292F74: .4byte 0x082926C1\n\t"
+        "_08292F74: .4byte rfu_STC_REQ_callback + 1\n\t"
         "_08292F78:\n\t"
         "	movs r0, #0x1f\n\t"
         "	adds r1, r3, #0\n\t"
@@ -1713,7 +1713,7 @@ __attribute__((naked)) void rfu_REQ_pollConnectParent()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08292F98: .4byte 0x08292F9D\n\t"
+        "_08292F98: .4byte rfu_CB_pollConnectParent + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1929,7 +1929,7 @@ __attribute__((naked)) void rfu_REQ_endConnectParent()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829311C: .4byte 0x08292F9D\n\t"
+        "_0829311C: .4byte rfu_CB_pollConnectParent + 1\n\t"
         "_08293120: .4byte gUnknown_3007638\n\t"
         "_08293124: .4byte gUnknown_3007634\n\t"
         ".syntax divided\n\t"
@@ -2242,7 +2242,7 @@ __attribute__((naked)) u16 rfu_REQBN_watchLink(u16 reqCommandId, u8 *bmLinkLossS
         "	.align 2, 0\n\t"
         "_08293364: .4byte gUnknown_3007638\n\t"
         "_08293368: .4byte gRfuLinkStatus\n\t"
-        "_0829336C: .4byte 0x08292701\n\t"
+        "_0829336C: .4byte rfu_CB_defaultCallback + 1\n\t"
         "_08293370:\n\t"
         "	movs r0, #0x11\n\t"
         "	ldr r1, [sp, #0xc]\n\t"
@@ -2732,7 +2732,7 @@ __attribute__((naked)) void rfu_REQ_disconnect(u8 bmDisconnectSlot)
         "	bl rfu_STC_REQ_callback\n\t"
         "	b _08293738\n\t"
         "	.align 2, 0\n\t"
-        "_08293728: .4byte 0x08292701\n\t"
+        "_08293728: .4byte rfu_CB_defaultCallback + 1\n\t"
         "_0829372C:\n\t"
         "	ldr r0, _08293740\n\t"
         "	bl STWI_set_Callback_M\n\t"

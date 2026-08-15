@@ -66,7 +66,7 @@ __attribute__((naked)) void Task_FadeToSlotMachine(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812A548: .4byte gPaletteFade\n\t"
-        "_0812A54C: .4byte 0x0812A599\n\t"
+        "_0812A54C: .4byte CB2_SlotMachineSetup + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -104,7 +104,7 @@ __attribute__((naked)) void PlaySlotMachine(u8 machineId, MainCallback exitCallb
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812A58C: .4byte gUnknown_203A800\n\t"
-        "_0812A590: .4byte 0x0812A4ED\n\t"
+        "_0812A590: .4byte Task_FadeToSlotMachine + 1\n\t"
         "_0812A594: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -212,7 +212,7 @@ __attribute__((naked)) void CB2_SlotMachineSetup(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A67C: .4byte 0x0812A681\n\t"
+        "_0812A67C: .4byte CB2_SlotMachineLoop + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -299,7 +299,7 @@ __attribute__((naked)) void PlaySlotMachine_Internal(u8 machineId, MainCallback 
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A718: .4byte 0x0812A75D\n\t"
+        "_0812A718: .4byte SlotMachineDummyTask + 1\n\t"
         "_0812A71C: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -331,7 +331,7 @@ __attribute__((naked)) void sub_0812A720(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A750: .4byte 0x0812A75D\n\t"
+        "_0812A750: .4byte SlotMachineDummyTask + 1\n\t"
         "_0812A754: .4byte gTasks\n\t"
         "_0812A758: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
@@ -401,7 +401,7 @@ __attribute__((naked)) void SlotMachineSetup_6_0(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A7C8: .4byte 0x0812A699\n\t"
+        "_0812A7C8: .4byte SlotMachine_VBlankCallback + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -811,7 +811,7 @@ __attribute__((naked)) void GameplayTasks_Slots(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812AAD4: .4byte 0x0812AAD9\n\t"
+        "_0812AAD4: .4byte RunSlotActions + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3106,7 +3106,7 @@ __attribute__((naked)) void AwardPayout(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BAE8: .4byte 0x0812BB0D\n\t"
+        "_0812BAE8: .4byte RunAwardPayoutActions + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3125,7 +3125,7 @@ __attribute__((naked)) void IsFinalTask_RunAwardPayoutActions(u8 taskId)
         "	movs r0, #0\n\t"
         "	b _0812BB06\n\t"
         "	.align 2, 0\n\t"
-        "_0812BB00: .4byte 0x0812BB0D\n\t"
+        "_0812BB00: .4byte RunAwardPayoutActions + 1\n\t"
         "_0812BB04:\n\t"
         "	movs r0, #1\n\t"
         "_0812BB06:\n\t"
@@ -3323,7 +3323,7 @@ __attribute__((naked)) void AwardPayoutAction_FreeTask(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812BC50: .4byte 0x0812BB0D\n\t"
+        "_0812BC50: .4byte RunAwardPayoutActions + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3673,7 +3673,7 @@ __attribute__((naked)) void GameplayTask_StopSlotReel(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812BEA8: .4byte 0x0812BF3D\n\t"
+        "_0812BEA8: .4byte RunSlotReelActions + 1\n\t"
         "_0812BEAC: .4byte gTasks\n\t"
         "_0812BEB0: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
@@ -5856,7 +5856,7 @@ __attribute__((naked)) void sub_0812CD50(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812CD7C: .4byte 0x0812CD85\n\t"
+        "_0812CD7C: .4byte sub_0812CD84 + 1\n\t"
         "_0812CD80: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6140,7 +6140,7 @@ __attribute__((naked)) void CreateInvisibleFlashMatchLineSprites(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812CF38: .4byte gSprites\n\t"
-        "_0812CF3C: .4byte 0x0812D035\n\t"
+        "_0812CF3C: .4byte SpriteCB_FlashMatchingLines + 1\n\t"
         "_0812CF40: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -6407,7 +6407,7 @@ __attribute__((naked)) void FlashSlotMachineLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D0E8: .4byte 0x0812D139\n\t"
+        "_0812D0E8: .4byte Task_FlashSlotMachineLights + 1\n\t"
         "_0812D0EC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6434,7 +6434,7 @@ __attribute__((naked)) bool8 TryStopSlotMachineLights(void)
         "	movs r0, #0\n\t"
         "	b _0812D130\n\t"
         "	.align 2, 0\n\t"
-        "_0812D114: .4byte 0x0812D139\n\t"
+        "_0812D114: .4byte Task_FlashSlotMachineLights + 1\n\t"
         "_0812D118: .4byte gTasks\n\t"
         "_0812D11C:\n\t"
         "	adds r0, r2, #0\n\t"
@@ -6524,7 +6524,7 @@ __attribute__((naked)) void GameplayTask_PikaPower(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D1B0: .4byte 0x0812D241\n\t"
+        "_0812D1B0: .4byte Task_CreatePikaPowerBolt + 1\n\t"
         "_0812D1B4: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -7006,7 +7006,7 @@ __attribute__((naked)) void BeginReelTime(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D4D8: .4byte 0x0812D4FD\n\t"
+        "_0812D4D8: .4byte Task_ReelTime + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7025,7 +7025,7 @@ __attribute__((naked)) bool8 IsReelTimeTaskDone(void)
         "	movs r0, #0\n\t"
         "	b _0812D4F6\n\t"
         "	.align 2, 0\n\t"
-        "_0812D4F0: .4byte 0x0812D4FD\n\t"
+        "_0812D4F0: .4byte Task_ReelTime + 1\n\t"
         "_0812D4F4:\n\t"
         "	movs r0, #1\n\t"
         "_0812D4F6:\n\t"
@@ -7734,7 +7734,7 @@ __attribute__((naked)) void ReelTime_DestroySprites(struct Task *task)
         "	.align 2, 0\n\t"
         "_0812DA08: .4byte gUnknown_203A800\n\t"
         "_0812DA0C: .4byte gSpriteCoordOffsetX\n\t"
-        "_0812DA10: .4byte 0x0812D4FD\n\t"
+        "_0812DA10: .4byte Task_ReelTime + 1\n\t"
         "_0812DA14:\n\t"
         "	movs r0, #4\n\t"
         "	bl sub_0812DEF4\n\t"
@@ -7818,7 +7818,7 @@ __attribute__((naked)) void ReelTime_EndSuccess(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DA9C: .4byte 0x0812D4FD\n\t"
+        "_0812DA9C: .4byte Task_ReelTime + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8011,7 +8011,7 @@ __attribute__((naked)) void ReelTime_EndFailure(struct Task *task)
         "	.align 2, 0\n\t"
         "_0812DC0C: .4byte gSpriteCoordOffsetX\n\t"
         "_0812DC10: .4byte gUnknown_203A800\n\t"
-        "_0812DC14: .4byte 0x0812D4FD\n\t"
+        "_0812DC14: .4byte Task_ReelTime + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8115,7 +8115,7 @@ __attribute__((naked)) void OpenInfoBox(u8 digDisplayId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DCBC: .4byte 0x0812DCE5\n\t"
+        "_0812DCBC: .4byte Task_DigitalDisplay + 1\n\t"
         "_0812DCC0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8135,7 +8135,7 @@ __attribute__((naked)) bool8 IsInfoBoxClosed(void)
         "	movs r0, #0\n\t"
         "	b _0812DCDE\n\t"
         "	.align 2, 0\n\t"
-        "_0812DCD8: .4byte 0x0812DCE5\n\t"
+        "_0812DCD8: .4byte Task_DigitalDisplay + 1\n\t"
         "_0812DCDC:\n\t"
         "	movs r0, #1\n\t"
         "_0812DCDE:\n\t"
@@ -8421,7 +8421,7 @@ __attribute__((naked)) void InfoBox_FreeTask(struct Task *task)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DEA0: .4byte 0x0812DCE5\n\t"
+        "_0812DEA0: .4byte Task_DigitalDisplay + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8463,7 +8463,7 @@ __attribute__((naked)) void CreateDigitalDisplayTask(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DEE4: .4byte 0x0812E0C1\n\t"
+        "_0812DEE4: .4byte sub_0812E0C0 + 1\n\t"
         "_0812DEE8: .4byte gUnknown_203A800\n\t"
         "_0812DEEC: .4byte gTasks\n\t"
         "_0812DEF0: .4byte 0x0000FFFF\n\t"
@@ -12001,7 +12001,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812F784: .4byte gUnknown_203A800\n\t"
-        "_0812F788: .4byte 0x08007141\n\t"
+        "_0812F788: .4byte SpriteCallbackDummy + 1\n\t"
         "_0812F78C: .4byte 0x0000C0E0\n\t"
         ".syntax divided\n\t"
     );

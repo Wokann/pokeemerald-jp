@@ -115,7 +115,7 @@ __attribute__((naked)) void SetBagVisualPocketId(void)
         "_080D45F8: .4byte 0x00000804\n\t"
         "_080D45FC: .4byte gSprites\n\t"
         "_080D4600: .4byte 0x0000FFFB\n\t"
-        "_080D4604: .4byte 0x080D4619\n\t"
+        "_080D4604: .4byte SpriteCB_BagVisualSwitchingPockets + 1\n\t"
         "_080D4608:\n\t"
         "	adds r1, r3, #1\n\t"
         "	lsls r1, r1, #0x18\n\t"
@@ -156,7 +156,7 @@ __attribute__((naked)) void SpriteCB_BagVisualSwitchingPockets(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4644: .4byte 0x08007141\n\t"
+        "_080D4644: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -196,7 +196,7 @@ __attribute__((naked)) void ShakeBagVisual(void)
         "_080D4680: .4byte gUnknown_203CB20\n\t"
         "_080D4684: .4byte 0x00000804\n\t"
         "_080D4688: .4byte gSprites\n\t"
-        "_080D468C: .4byte 0x080D4691\n\t"
+        "_080D468C: .4byte SpriteCB_ShakeBagVisual + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -223,7 +223,7 @@ __attribute__((naked)) void SpriteCB_ShakeBagVisual(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D46B4: .4byte 0x08007141\n\t"
+        "_080D46B4: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -347,7 +347,7 @@ __attribute__((naked)) void SpriteCB_SwitchPocketRotatingBallInit(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080D4790: .4byte 0x0855A6CC\n\t"
-        "_080D4794: .4byte 0x080D4799\n\t"
+        "_080D4794: .4byte SpriteCB_SwitchPocketRotatingBallContinue + 1\n\t"
         ".syntax divided\n\t"
     );
 }

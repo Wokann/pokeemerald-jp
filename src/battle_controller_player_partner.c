@@ -26,7 +26,7 @@ __attribute__((naked)) void SetControllerToPlayerPartner(void)
         "	.align 2, 0\n\t"
         "_081BAAA0: .4byte gBattlerControllerFuncs\n\t"
         "_081BAAA4: .4byte gActiveBattler\n\t"
-        "_081BAAA8: .4byte 0x081BAAAD\n\t"
+        "_081BAAA8: .4byte PlayerPartnerBufferRunCommand + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -103,7 +103,7 @@ __attribute__((naked)) void CompleteOnBattlerSpriteCallbackDummy(void)
         "_081BAB24: .4byte gSprites\n\t"
         "_081BAB28: .4byte gBattlerSpriteIds\n\t"
         "_081BAB2C: .4byte gActiveBattler\n\t"
-        "_081BAB30: .4byte 0x08007141\n\t"
+        "_081BAB30: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -156,7 +156,7 @@ __attribute__((naked)) void sub_081BAB34(void)
         "_081BAB8C: .4byte gSprites\n\t"
         "_081BAB90: .4byte gBattlerSpriteIds\n\t"
         "_081BAB94: .4byte gActiveBattler\n\t"
-        "_081BAB98: .4byte 0x08007141\n\t"
+        "_081BAB98: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -245,7 +245,7 @@ __attribute__((naked)) void sub_081BABE4(void)
         "_081BAC2C: .4byte gSprites\n\t"
         "_081BAC30: .4byte gHealthboxSpriteIds\n\t"
         "_081BAC34: .4byte gActiveBattler\n\t"
-        "_081BAC38: .4byte 0x08007141\n\t"
+        "_081BAC38: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BAC3C:\n\t"
         "	ldr r2, _081BACAC\n\t"
         "	ldr r5, _081BACB0\n\t"
@@ -310,10 +310,10 @@ __attribute__((naked)) void sub_081BABE4(void)
         "_081BACAC: .4byte gSprites\n\t"
         "_081BACB0: .4byte gHealthboxSpriteIds\n\t"
         "_081BACB4: .4byte gActiveBattler\n\t"
-        "_081BACB8: .4byte 0x08007141\n\t"
+        "_081BACB8: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BACBC: .4byte gBattleSpritesDataPtr\n\t"
         "_081BACC0: .4byte gBattlerControllerFuncs\n\t"
-        "_081BACC4: .4byte 0x081BAB9D\n\t"
+        "_081BACC4: .4byte sub_081BAB9C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -510,14 +510,14 @@ __attribute__((naked)) void sub_081BACC8(void)
         "_081BAE44: .4byte gActiveBattler\n\t"
         "_081BAE48: .4byte gSprites\n\t"
         "_081BAE4C: .4byte gUnknown_3005ADC\n\t"
-        "_081BAE50: .4byte 0x08007141\n\t"
+        "_081BAE50: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BAE54: .4byte gBattlerSpriteIds\n\t"
         "_081BAE58: .4byte gBattleTypeFlags\n\t"
         "_081BAE5C: .4byte gHealthboxSpriteIds\n\t"
         "_081BAE60: .4byte gBattlerPartyIndexes\n\t"
         "_081BAE64: .4byte gPlayerParty\n\t"
         "_081BAE68: .4byte gBattlerControllerFuncs\n\t"
-        "_081BAE6C: .4byte 0x081BABE5\n\t"
+        "_081BAE6C: .4byte sub_081BABE4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -768,7 +768,7 @@ __attribute__((naked)) void Task_GiveExpToMon(void)
         "_081BB044: .4byte gExperienceTables\n\t"
         "_081BB048: .4byte gSpeciesInfo\n\t"
         "_081BB04C: .4byte gActiveBattler\n\t"
-        "_081BB050: .4byte 0x081BB2C5\n\t"
+        "_081BB050: .4byte sub_081BB2C4 + 1\n\t"
         "_081BB054:\n\t"
         "	ldr r0, _081BB064\n\t"
         "	mov r2, sb\n\t"
@@ -780,7 +780,7 @@ __attribute__((naked)) void Task_GiveExpToMon(void)
         "	b _081BB098\n\t"
         "	.align 2, 0\n\t"
         "_081BB064: .4byte gTasks\n\t"
-        "_081BB068: .4byte 0x081BB3DD\n\t"
+        "_081BB068: .4byte DestroyExpTaskAndCompleteOnInactiveTextPrinter + 1\n\t"
         "_081BB06C:\n\t"
         "	str r0, [sp, #4]\n\t"
         "	add r2, sp, #4\n\t"
@@ -798,7 +798,7 @@ __attribute__((naked)) void Task_GiveExpToMon(void)
         "	b _081BB09A\n\t"
         "	.align 2, 0\n\t"
         "_081BB08C: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB090: .4byte 0x081BAF21\n\t"
+        "_081BB090: .4byte CompleteOnInactiveTextPrinter + 1\n\t"
         "_081BB094:\n\t"
         "	ldr r0, _081BB0AC\n\t"
         "_081BB096:\n\t"
@@ -815,7 +815,7 @@ __attribute__((naked)) void Task_GiveExpToMon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081BB0AC: .4byte 0x081BB0B1\n\t"
+        "_081BB0AC: .4byte Task_PrepareToGiveExpWithExpBar + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -917,7 +917,7 @@ __attribute__((naked)) void Task_PrepareToGiveExpWithExpBar(void)
         "_081BB170: .4byte gExperienceTables\n\t"
         "_081BB174: .4byte gSpeciesInfo\n\t"
         "_081BB178: .4byte gHealthboxSpriteIds\n\t"
-        "_081BB17C: .4byte 0x081BB181\n\t"
+        "_081BB17C: .4byte sub_081BB180 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1048,7 +1048,7 @@ __attribute__((naked)) void sub_081BB180(void)
         "_081BB280: .4byte gExperienceTables\n\t"
         "_081BB284: .4byte gSpeciesInfo\n\t"
         "_081BB288: .4byte gActiveBattler\n\t"
-        "_081BB28C: .4byte 0x081BB2C5\n\t"
+        "_081BB28C: .4byte sub_081BB2C4 + 1\n\t"
         "_081BB290:\n\t"
         "	str r0, [sp, #4]\n\t"
         "	add r2, sp, #4\n\t"
@@ -1073,7 +1073,7 @@ __attribute__((naked)) void sub_081BB180(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081BB2BC: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB2C0: .4byte 0x081BAF21\n\t"
+        "_081BB2C0: .4byte CompleteOnInactiveTextPrinter + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1126,7 +1126,7 @@ __attribute__((naked)) void sub_081BB2C4(void)
         "	.align 2, 0\n\t"
         "_081BB318: .4byte gTasks\n\t"
         "_081BB31C: .4byte gBattlerPartyIndexes\n\t"
-        "_081BB320: .4byte 0x081BB325\n\t"
+        "_081BB320: .4byte sub_081BB324 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1218,7 +1218,7 @@ __attribute__((naked)) void sub_081BB324(void)
         "_081BB3CC: .4byte gHealthboxSpriteIds\n\t"
         "_081BB3D0: .4byte gPlayerParty\n\t"
         "_081BB3D4: .4byte gTasks\n\t"
-        "_081BB3D8: .4byte 0x081BB3DD\n\t"
+        "_081BB3D8: .4byte DestroyExpTaskAndCompleteOnInactiveTextPrinter + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1258,7 +1258,7 @@ __attribute__((naked)) void DestroyExpTaskAndCompleteOnInactiveTextPrinter(void)
         "_081BB418: .4byte gTasks\n\t"
         "_081BB41C: .4byte gPlayerParty\n\t"
         "_081BB420: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB424: .4byte 0x081BAF21\n\t"
+        "_081BB424: .4byte CompleteOnInactiveTextPrinter + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1533,10 +1533,10 @@ __attribute__((naked)) void sub_081BB5C8(void)
         "_081BB620: .4byte gSprites\n\t"
         "_081BB624: .4byte gHealthboxSpriteIds\n\t"
         "_081BB628: .4byte gActiveBattler\n\t"
-        "_081BB62C: .4byte 0x08007141\n\t"
+        "_081BB62C: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BB630: .4byte gBattleSpritesDataPtr\n\t"
         "_081BB634: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB638: .4byte 0x081BB63D\n\t"
+        "_081BB638: .4byte sub_081BB63C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1582,7 +1582,7 @@ __attribute__((naked)) void sub_081BB63C(void)
         "_081BB680: .4byte gActiveBattler\n\t"
         "_081BB684: .4byte gSprites\n\t"
         "_081BB688: .4byte gBattlerSpriteIds\n\t"
-        "_081BB68C: .4byte 0x08007141\n\t"
+        "_081BB68C: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1687,14 +1687,14 @@ __attribute__((naked)) void sub_081BB690(void)
         "_081BB758: .4byte gBattleSpritesDataPtr\n\t"
         "_081BB75C: .4byte gActiveBattler\n\t"
         "_081BB760: .4byte 0x000027F9\n\t"
-        "_081BB764: .4byte 0x08058D11\n\t"
+        "_081BB764: .4byte c3_0802FDF4 + 1\n\t"
         "_081BB768: .4byte gBattlerPartyIndexes\n\t"
         "_081BB76C: .4byte gPlayerParty\n\t"
         "_081BB770: .4byte gBattlerSpriteIds\n\t"
         "_081BB774: .4byte gSprites\n\t"
         "_081BB778: .4byte gHealthboxSpriteIds\n\t"
         "_081BB77C: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB780: .4byte 0x081BB5C9\n\t"
+        "_081BB780: .4byte sub_081BB5C8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1773,9 +1773,9 @@ __attribute__((naked)) void sub_081BB784(void)
         "_081BB810: .4byte gPlayerParty\n\t"
         "_081BB814: .4byte gSprites\n\t"
         "_081BB818: .4byte gUnknown_3005ADC\n\t"
-        "_081BB81C: .4byte 0x08007141\n\t"
+        "_081BB81C: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BB820: .4byte gBattlerControllerFuncs\n\t"
-        "_081BB824: .4byte 0x081BB691\n\t"
+        "_081BB824: .4byte sub_081BB690 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1816,7 +1816,7 @@ __attribute__((naked)) void PlayerPartnerBufferExecCompleted(void)
         "	.align 2, 0\n\t"
         "_081BB868: .4byte gBattlerControllerFuncs\n\t"
         "_081BB86C: .4byte gActiveBattler\n\t"
-        "_081BB870: .4byte 0x081BAAAD\n\t"
+        "_081BB870: .4byte PlayerPartnerBufferRunCommand + 1\n\t"
         "_081BB874: .4byte gBattleTypeFlags\n\t"
         "_081BB878: .4byte gBattleBufferA\n\t"
         "_081BB87C:\n\t"
@@ -4293,7 +4293,7 @@ __attribute__((naked)) void PlayerPartnerHandleLoadMonSprite(void)
         "_081BCD00: .4byte 0x0000FF10\n\t"
         "_081BCD04: .4byte gBattleMonForms\n\t"
         "_081BCD08: .4byte gBattlerControllerFuncs\n\t"
-        "_081BCD0C: .4byte 0x081BAE71\n\t"
+        "_081BCD0C: .4byte sub_081BAE70 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4349,7 +4349,7 @@ __attribute__((naked)) void PlayerPartnerHandleSwitchInAnim(void)
         "_081BCD70: .4byte gBattlerPartyIndexes\n\t"
         "_081BCD74: .4byte gPlayerParty\n\t"
         "_081BCD78: .4byte gBattlerControllerFuncs\n\t"
-        "_081BCD7C: .4byte 0x081BB785\n\t"
+        "_081BCD7C: .4byte sub_081BB784 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4520,13 +4520,13 @@ __attribute__((naked)) void sub_081BCD80(void)
         "_081BCED4: .4byte gBattlerPartyIndexes\n\t"
         "_081BCED8: .4byte gBattleBufferA\n\t"
         "_081BCEDC: .4byte gPlayerParty\n\t"
-        "_081BCEE0: .4byte 0x0805D331\n\t"
+        "_081BCEE0: .4byte sub_0805D330 + 1\n\t"
         "_081BCEE4: .4byte gUnknown_3005ADC\n\t"
         "_081BCEE8: .4byte gMultiuseSpriteTemplate\n\t"
         "_081BCEEC: .4byte gBattlerSpriteIds\n\t"
         "_081BCEF0: .4byte gSprites\n\t"
         "_081BCEF4: .4byte gBattleMonForms\n\t"
-        "_081BCEF8: .4byte 0x08007141\n\t"
+        "_081BCEF8: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4565,7 +4565,7 @@ __attribute__((naked)) void PlayerPartnerHandleReturnMonToBall(void)
         "_081BCF34: .4byte gActiveBattler\n\t"
         "_081BCF38: .4byte gBattleSpritesDataPtr\n\t"
         "_081BCF3C: .4byte gBattlerControllerFuncs\n\t"
-        "_081BCF40: .4byte 0x081BCF8D\n\t"
+        "_081BCF40: .4byte DoSwitchOutAnimation + 1\n\t"
         "_081BCF44:\n\t"
         "	ldr r5, _081BCF80\n\t"
         "	adds r0, r2, r5\n\t"
@@ -4675,7 +4675,7 @@ __attribute__((naked)) void DoSwitchOutAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081BD010: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD014: .4byte 0x081BB4C5\n\t"
+        "_081BD014: .4byte sub_081BB4C4 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4807,7 +4807,7 @@ __attribute__((naked)) void PlayerPartnerHandleDrawTrainerPic(void)
         "_081BD120: .4byte gBattlerSpriteIds\n\t"
         "_081BD124: .4byte gSprites\n\t"
         "_081BD128: .4byte 0x0000FFFE\n\t"
-        "_081BD12C: .4byte 0x0805D3C9\n\t"
+        "_081BD12C: .4byte sub_0805D3C8 + 1\n\t"
         "_081BD130:\n\t"
         "	adds r5, r4, #0\n\t"
         "	ldr r6, _081BD234\n\t"
@@ -4940,9 +4940,9 @@ __attribute__((naked)) void PlayerPartnerHandleDrawTrainerPic(void)
         "_081BD240: .4byte gTrainerFrontPicPaletteTable\n\t"
         "_081BD244: .4byte gSprites\n\t"
         "_081BD248: .4byte 0x0000FFFE\n\t"
-        "_081BD24C: .4byte 0x0805D3C9\n\t"
+        "_081BD24C: .4byte sub_0805D3C8 + 1\n\t"
         "_081BD250: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD254: .4byte 0x081BAAFD\n\t"
+        "_081BD254: .4byte CompleteOnBattlerSpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5037,10 +5037,10 @@ __attribute__((naked)) void PlayerPartnerHandleTrainerSlideBack(void)
         "_081BD2F4: .4byte gActiveBattler\n\t"
         "_081BD2F8: .4byte gSprites\n\t"
         "_081BD2FC: .4byte 0x0000FFD8\n\t"
-        "_081BD300: .4byte 0x080A67B5\n\t"
-        "_081BD304: .4byte 0x08007141\n\t"
+        "_081BD300: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_081BD304: .4byte SpriteCallbackDummy + 1\n\t"
         "_081BD308: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD30C: .4byte 0x081BAB35\n\t"
+        "_081BD30C: .4byte sub_081BAB34 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5156,9 +5156,9 @@ __attribute__((naked)) void PlayerPartnerHandleFaintAnimation(void)
         "_081BD3E4: .4byte gPlayerParty\n\t"
         "_081BD3E8: .4byte gSprites\n\t"
         "_081BD3EC: .4byte gBattlerSpriteIds\n\t"
-        "_081BD3F0: .4byte 0x08039845\n\t"
+        "_081BD3F0: .4byte SpriteCB_FaintSlideAnim + 1\n\t"
         "_081BD3F4: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD3F8: .4byte 0x081BB429\n\t"
+        "_081BD3F8: .4byte sub_081BB428 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5363,7 +5363,7 @@ __attribute__((naked)) void PlayerPartnerHandleMoveAnimation(void)
         "	.align 2, 0\n\t"
         "_081BD558: .4byte gBattleSpritesDataPtr\n\t"
         "_081BD55C: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD560: .4byte 0x081BD565\n\t"
+        "_081BD560: .4byte PlayerPartnerDoMoveAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5600,7 +5600,7 @@ __attribute__((naked)) void PlayerPartnerHandlePrintString(void)
         "_081BD72C: .4byte gUnknown_2022D0A\n\t"
         "_081BD730: .4byte gDisplayedStringBattle\n\t"
         "_081BD734: .4byte gBattlerControllerFuncs\n\t"
-        "_081BD738: .4byte 0x081BB535\n\t"
+        "_081BD738: .4byte CompleteOnInactiveTextPrinter2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5930,7 +5930,7 @@ __attribute__((naked)) void PlayerPartnerHandleHealthBarUpdate(void)
         "_081BD98C: .4byte gHealthboxSpriteIds\n\t"
         "_081BD990: .4byte gBattlerControllerFuncs\n\t"
         "_081BD994: .4byte gActiveBattler\n\t"
-        "_081BD998: .4byte 0x081BAEB1\n\t"
+        "_081BD998: .4byte CompleteOnHealthbarDone + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6004,7 +6004,7 @@ __attribute__((naked)) void PlayerPartnerHandleExpUpdate(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081BDA28: .4byte 0x081BAF39\n\t"
+        "_081BDA28: .4byte Task_GiveExpToMon + 1\n\t"
         "_081BDA2C: .4byte gTasks\n\t"
         "_081BDA30: .4byte gBattlerControllerFuncs\n\t"
         "_081BDA34: .4byte 0x08057069\n\t"
@@ -6067,7 +6067,7 @@ __attribute__((naked)) void PlayerPartnerHandleStatusIconUpdate(void)
         "_081BDAA0: .4byte gPlayerParty\n\t"
         "_081BDAA4: .4byte gBattleSpritesDataPtr\n\t"
         "_081BDAA8: .4byte gBattlerControllerFuncs\n\t"
-        "_081BDAAC: .4byte 0x081BB8A1\n\t"
+        "_081BDAAC: .4byte CompleteOnFinishedStatusAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6122,7 +6122,7 @@ __attribute__((naked)) void PlayerPartnerHandleStatusAnimation(void)
         "_081BDB08: .4byte gActiveBattler\n\t"
         "_081BDB0C: .4byte gBattleBufferA\n\t"
         "_081BDB10: .4byte gBattlerControllerFuncs\n\t"
-        "_081BDB14: .4byte 0x081BB8A1\n\t"
+        "_081BDB14: .4byte CompleteOnFinishedStatusAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6395,7 +6395,7 @@ __attribute__((naked)) void PlayerPartnerHandleHitAnimation(void)
         "	.align 2, 0\n\t"
         "_081BDC7C: .4byte gUnknown_202415D\n\t"
         "_081BDC80: .4byte gBattlerControllerFuncs\n\t"
-        "_081BDC84: .4byte 0x081BB54D\n\t"
+        "_081BDC84: .4byte DoHitAnimBlinkSpriteEffect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6668,8 +6668,8 @@ __attribute__((naked)) void PlayerPartnerHandleIntroTrainerBallThrow(void)
         "_081BDE74: .4byte gActiveBattler\n\t"
         "_081BDE78: .4byte gSprites\n\t"
         "_081BDE7C: .4byte 0x0000FFD8\n\t"
-        "_081BDE80: .4byte 0x080A67B5\n\t"
-        "_081BDE84: .4byte 0x0805C81D\n\t"
+        "_081BDE80: .4byte InitAndRunAnimFastLinearTranslation + 1\n\t"
+        "_081BDE84: .4byte sub_0805C81C + 1\n\t"
         "_081BDE88: .4byte 0x0000D6F9\n\t"
         "_081BDE8C: .4byte gPartnerTrainerId\n\t"
         "_081BDE90: .4byte 0x00000C03\n\t"
@@ -6759,11 +6759,11 @@ __attribute__((naked)) void PlayerPartnerHandleIntroTrainerBallThrow(void)
         "_081BDF3C: .4byte gSprites\n\t"
         "_081BDF40: .4byte gBattlerSpriteIds\n\t"
         "_081BDF44: .4byte gActiveBattler\n\t"
-        "_081BDF48: .4byte 0x081BDF65\n\t"
+        "_081BDF48: .4byte sub_081BDF64 + 1\n\t"
         "_081BDF4C: .4byte gTasks\n\t"
         "_081BDF50: .4byte gBattleSpritesDataPtr\n\t"
         "_081BDF54: .4byte gUnknown_2024158\n\t"
-        "_081BDF58: .4byte 0x0807352D\n\t"
+        "_081BDF58: .4byte Task_HidePartyStatusSummary + 1\n\t"
         "_081BDF5C: .4byte gBattlerControllerFuncs\n\t"
         "_081BDF60: .4byte 0x081BAA8D\n\t"
         ".syntax divided\n\t"
@@ -6897,7 +6897,7 @@ __attribute__((naked)) void sub_081BDF64(void)
         "_081BE060: .4byte gPlayerParty\n\t"
         "_081BE064: .4byte gBattlerControllerFuncs\n\t"
         "_081BE068: .4byte gActiveBattler\n\t"
-        "_081BE06C: .4byte 0x081BACC9\n\t"
+        "_081BE06C: .4byte sub_081BACC8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6995,7 +6995,7 @@ __attribute__((naked)) void PlayerPartnerHandleDrawPartyStatusSummary(void)
         "_081BE124: .4byte gUnknown_2022D0C\n\t"
         "_081BE128: .4byte gUnknown_2024158\n\t"
         "_081BE12C: .4byte gBattlerControllerFuncs\n\t"
-        "_081BE130: .4byte 0x081BE135\n\t"
+        "_081BE130: .4byte sub_081BE134 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7080,7 +7080,7 @@ __attribute__((naked)) void PlayerPartnerHandleHidePartyStatusSummary(void)
         "_081BE1BC: .4byte gActiveBattler\n\t"
         "_081BE1C0: .4byte gTasks\n\t"
         "_081BE1C4: .4byte gUnknown_2024158\n\t"
-        "_081BE1C8: .4byte 0x0807352D\n\t"
+        "_081BE1C8: .4byte Task_HidePartyStatusSummary + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7201,7 +7201,7 @@ __attribute__((naked)) void PlayerPartnerHandleBattleAnimation(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081BE298: .4byte gBattlerControllerFuncs\n\t"
-        "_081BE29C: .4byte 0x081BB8D1\n\t"
+        "_081BE29C: .4byte CompleteOnFinishedBattleAnimation + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7265,7 +7265,7 @@ __attribute__((naked)) void PlayerPartnerHandleCmd55(void)
         "_081BE2F4: .4byte gBattleBufferA\n\t"
         "_081BE2F8: .4byte gActiveBattler\n\t"
         "_081BE2FC: .4byte gBattlerControllerFuncs\n\t"
-        "_081BE300: .4byte 0x080583C1\n\t"
+        "_081BE300: .4byte sub_080583C0 + 1\n\t"
         ".syntax divided\n\t"
     );
 }

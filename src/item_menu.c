@@ -40,7 +40,7 @@ __attribute__((naked)) void CB2_BagMenuFromStartMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA924: .4byte 0x08085AFD\n\t"
+        "_081AA924: .4byte CB2_ReturnToFieldWithOpenMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -60,7 +60,7 @@ __attribute__((naked)) void sub_081AA928(void)
         "	bl GoToBagMenu\n\t"
         "	b _081AA94C\n\t"
         "	.align 2, 0\n\t"
-        "_081AA940: .4byte 0x0805996D\n\t"
+        "_081AA940: .4byte sub_0805996C + 1\n\t"
         "_081AA944:\n\t"
         "	ldr r1, _081AA950\n\t"
         "	movs r0, #1\n\t"
@@ -69,7 +69,7 @@ __attribute__((naked)) void sub_081AA928(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA950: .4byte 0x0805996D\n\t"
+        "_081AA950: .4byte sub_0805996C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -86,7 +86,7 @@ __attribute__((naked)) void CB2_ChooseBerry()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA964: .4byte 0x08085B19\n\t"
+        "_081AA964: .4byte CB2_ReturnToFieldContinueScript + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -118,7 +118,7 @@ __attribute__((naked)) void CB2_GoToSellMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA988: .4byte 0x080DF195\n\t"
+        "_081AA988: .4byte CB2_ExitSellMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -135,7 +135,7 @@ __attribute__((naked)) void sub_081AA98C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA99C: .4byte 0x0816B141\n\t"
+        "_081AA99C: .4byte sub_0816B140 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -157,7 +157,7 @@ __attribute__((naked)) void sub_081AA9A0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA9BC: .4byte 0x081ADC79\n\t"
+        "_081AA9BC: .4byte bag_menu_leave_maybe_3 + 1\n\t"
         "_081AA9C0: .4byte gSpecialVar_0x8005\n\t"
         "_081AA9C4: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
@@ -179,7 +179,7 @@ __attribute__((naked)) void sub_081AA9C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AA9E0: .4byte 0x081ADCC9\n\t"
+        "_081AA9E0: .4byte sub_081ADCC8 + 1\n\t"
         "_081AA9E4: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
     );
@@ -200,7 +200,7 @@ __attribute__((naked)) void sub_081AA9E8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081AAA00: .4byte 0x081ADD0D\n\t"
+        "_081AAA00: .4byte sub_081ADD0C + 1\n\t"
         "_081AAA04: .4byte gSpecialVar_Result\n\t"
         ".syntax divided\n\t"
     );
@@ -304,7 +304,7 @@ __attribute__((naked)) void GoToBagMenu(u8 location, u8 pocket, MainCallback exi
         "_081AAAC4: .4byte 0x0000081E\n\t"
         "_081AAAC8: .4byte 0x0000081F\n\t"
         "_081AAACC: .4byte 0x00000804\n\t"
-        "_081AAAD0: .4byte 0x081AAB05\n\t"
+        "_081AAAD0: .4byte CB2_Bag + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -654,8 +654,8 @@ __attribute__((naked)) void SetupBagMenu(void)
         "	movs r0, #1\n\t"
         "	b _081AADB6\n\t"
         "	.align 2, 0\n\t"
-        "_081AADAC: .4byte 0x081AAAF1\n\t"
-        "_081AADB0: .4byte 0x081AAAD5\n\t"
+        "_081AADAC: .4byte vblank_cb_bag_menu + 1\n\t"
+        "_081AADB0: .4byte c2_bag_3 + 1\n\t"
         "_081AADB4:\n\t"
         "	movs r0, #0\n\t"
         "_081AADB6:\n\t"
@@ -878,7 +878,7 @@ __attribute__((naked)) void sub_081AAF60(void)
         "	ldr r0, _081AAF70\n\t"
         "	b _081AAF76\n\t"
         "	.align 2, 0\n\t"
-        "_081AAF70: .4byte 0x081ADBA5\n\t"
+        "_081AAF70: .4byte Task_WallyTutorialBagMenu + 1\n\t"
         "_081AAF74:\n\t"
         "	ldr r0, _081AAF84\n\t"
         "_081AAF76:\n\t"
@@ -889,7 +889,7 @@ __attribute__((naked)) void sub_081AAF60(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081AAF84: .4byte 0x081ABAB5\n\t"
+        "_081AAF84: .4byte Task_BagMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1857,7 +1857,7 @@ __attribute__((naked)) void unknown_ItemMenu_Confirm(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081AB6D4: .4byte gTasks\n\t"
-        "_081AB6D8: .4byte 0x081AB6DD\n\t"
+        "_081AB6D8: .4byte TaskCloseBagMenu_2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2556,7 +2556,7 @@ __attribute__((naked)) void Task_BagMenu(void)
         "	.align 2, 0\n\t"
         "_081ABBE8: .4byte gSpecialVar_ItemId\n\t"
         "_081ABBEC: .4byte gUnknown_3005B68\n\t"
-        "_081ABBF0: .4byte 0x081AB6A5\n\t"
+        "_081ABBF0: .4byte unknown_ItemMenu_Confirm + 1\n\t"
         "_081ABBF4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2635,7 +2635,7 @@ __attribute__((naked)) void set_callback3_to_bag(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081ABC94: .4byte gTasks\n\t"
-        "_081ABC98: .4byte 0x081ABAB5\n\t"
+        "_081ABC98: .4byte Task_BagMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2906,7 +2906,7 @@ __attribute__((naked)) void SwitchBagPocket(void)
         "_081ABEAC: .4byte gStringVar4\n\t"
         "_081ABEB0: .4byte 0x085C9742\n\t"
         "_081ABEB4: .4byte gUnknown_203CB24\n\t"
-        "_081ABEB8: .4byte 0x081ABEC1\n\t"
+        "_081ABEB8: .4byte sub_081ABEC0 + 1\n\t"
         "_081ABEBC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3266,7 +3266,7 @@ __attribute__((naked)) void BagMenu_SwapItems(void)
         "_081AC174: .4byte gStringVar1\n\t"
         "_081AC178: .4byte gStringVar4\n\t"
         "_081AC17C: .4byte 0x085C947F\n\t"
-        "_081AC180: .4byte 0x081AC185\n\t"
+        "_081AC180: .4byte sub_081AC184 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3493,7 +3493,7 @@ __attribute__((naked)) void sub_081AC25C(void)
         "_081AC344: .4byte gUnknown_203CB2C\n\t"
         "_081AC348: .4byte gMultiuseListMenuTemplate\n\t"
         "_081AC34C: .4byte gUnknown_3005B68\n\t"
-        "_081AC350: .4byte 0x081ABAB5\n\t"
+        "_081AC350: .4byte Task_BagMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3581,7 +3581,7 @@ __attribute__((naked)) void sub_081AC354(void)
         "_081AC3F8: .4byte gUnknown_203CB20\n\t"
         "_081AC3FC: .4byte 0x0000081A\n\t"
         "_081AC400: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081AC404: .4byte 0x081ABAB5\n\t"
+        "_081AC404: .4byte Task_BagMenu + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4274,7 +4274,7 @@ __attribute__((naked)) void unknown_item_menu_type(void)
         "_081AC9D0: .4byte gUnknown_203CB20\n\t"
         "_081AC9D4: .4byte 0x00000828\n\t"
         "_081AC9D8: .4byte gTasks\n\t"
-        "_081AC9DC: .4byte 0x081AC9FD\n\t"
+        "_081AC9DC: .4byte Task_HandleInBattleItemMenuInput + 1\n\t"
         "_081AC9E0:\n\t"
         "	ldr r0, _081AC9F4\n\t"
         "	lsls r1, r4, #2\n\t"
@@ -4289,7 +4289,7 @@ __attribute__((naked)) void unknown_item_menu_type(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081AC9F4: .4byte gTasks\n\t"
-        "_081AC9F8: .4byte 0x081ACA71\n\t"
+        "_081AC9F8: .4byte Task_HandleOutOfBattleItemMenuInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4751,7 +4751,7 @@ __attribute__((naked)) void ItemMenu_Toss(void)
         "_081ACD70: .4byte gStringVar1\n\t"
         "_081ACD74: .4byte gStringVar4\n\t"
         "_081ACD78: .4byte 0x085C9523\n\t"
-        "_081ACD7C: .4byte 0x081ACE3D\n\t"
+        "_081ACD7C: .4byte Task_ChooseHowManyToToss + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4975,7 +4975,7 @@ __attribute__((naked)) void BagMenu_ConfirmToss(void)
         "_081ACF38: .4byte gStringVar2\n\t"
         "_081ACF3C: .4byte gStringVar4\n\t"
         "_081ACF40: .4byte 0x085C9532\n\t"
-        "_081ACF44: .4byte 0x081ACF49\n\t"
+        "_081ACF44: .4byte Task_ActuallyToss + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5147,7 +5147,7 @@ __attribute__((naked)) void ItemMenu_Give(void)
         "	.align 2, 0\n\t"
         "_081AD098: .4byte gSpecialVar_ItemId\n\t"
         "_081AD09C: .4byte 0x085C945C\n\t"
-        "_081AD0A0: .4byte 0x081AD149\n\t"
+        "_081AD0A0: .4byte sub_081AD148 + 1\n\t"
         "_081AD0A4:\n\t"
         "	ldrh r0, [r5]\n\t"
         "	bl ItemId_GetHoldEffectParam\n\t"
@@ -5171,7 +5171,7 @@ __attribute__((naked)) void ItemMenu_Give(void)
         "	b _081AD0E2\n\t"
         "	.align 2, 0\n\t"
         "_081AD0D4: .4byte gUnknown_203CB20\n\t"
-        "_081AD0D8: .4byte 0x081B7C01\n\t"
+        "_081AD0D8: .4byte sub_081B7C00 + 1\n\t"
         "_081AD0DC:\n\t"
         "	adds r0, r6, #0\n\t"
         "	bl BagMenu_PrintItemCantBeHeld\n\t"
@@ -5198,7 +5198,7 @@ __attribute__((naked)) void BagMenu_PrintThereIsNoPokemon(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081AD0FC: .4byte 0x085C9472\n\t"
-        "_081AD100: .4byte 0x081AD149\n\t"
+        "_081AD100: .4byte sub_081AD148 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5232,7 +5232,7 @@ __attribute__((naked)) void BagMenu_PrintItemCantBeHeld(void)
         "_081AD138: .4byte gStringVar1\n\t"
         "_081AD13C: .4byte gStringVar4\n\t"
         "_081AD140: .4byte 0x085C948E\n\t"
-        "_081AD144: .4byte 0x081AD149\n\t"
+        "_081AD144: .4byte sub_081AD148 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5385,7 +5385,7 @@ __attribute__((naked)) void item_menu_type_2(void)
         "	.align 2, 0\n\t"
         "_081AD238: .4byte gSpecialVar_ItemId\n\t"
         "_081AD23C: .4byte 0x085C945C\n\t"
-        "_081AD240: .4byte 0x081AD149\n\t"
+        "_081AD240: .4byte sub_081AD148 + 1\n\t"
         "_081AD244:\n\t"
         "	ldrh r0, [r4]\n\t"
         "	bl sub_08122154\n\t"
@@ -5409,7 +5409,7 @@ __attribute__((naked)) void item_menu_type_2(void)
         "_081AD270: .4byte gStringVar1\n\t"
         "_081AD274: .4byte gStringVar4\n\t"
         "_081AD278: .4byte 0x085C94A1\n\t"
-        "_081AD27C: .4byte 0x081AD149\n\t"
+        "_081AD27C: .4byte sub_081AD148 + 1\n\t"
         "_081AD280:\n\t"
         "	ldr r0, _081AD29C\n\t"
         "	ldrb r0, [r0, #5]\n\t"
@@ -5459,7 +5459,7 @@ __attribute__((naked)) void item_menu_type_b(void)
         "	.align 2, 0\n\t"
         "_081AD2D0: .4byte gSpecialVar_ItemId\n\t"
         "_081AD2D4: .4byte 0x085C945C\n\t"
-        "_081AD2D8: .4byte 0x081AD149\n\t"
+        "_081AD2D8: .4byte sub_081AD148 + 1\n\t"
         "_081AD2DC:\n\t"
         "	ldr r0, _081AD300\n\t"
         "	ldrb r0, [r0, #5]\n\t"
@@ -5481,7 +5481,7 @@ __attribute__((naked)) void item_menu_type_b(void)
         "	.align 2, 0\n\t"
         "_081AD300: .4byte gUnknown_203CB24\n\t"
         "_081AD304: .4byte gTasks\n\t"
-        "_081AD308: .4byte 0x081AB6A5\n\t"
+        "_081AD308: .4byte unknown_ItemMenu_Confirm + 1\n\t"
         "_081AD30C:\n\t"
         "	adds r0, r4, #0\n\t"
         "	bl BagMenu_PrintItemCantBeHeld\n\t"
@@ -5621,7 +5621,7 @@ __attribute__((naked)) void DisplaySellItemAskString(void)
         "_081AD41C: .4byte gStringVar2\n\t"
         "_081AD420: .4byte gStringVar4\n\t"
         "_081AD424: .4byte 0x085C9A47\n\t"
-        "_081AD428: .4byte 0x081AB969\n\t"
+        "_081AD428: .4byte BagMenu_InitListsMenu + 1\n\t"
         "_081AD42C:\n\t"
         "	movs r0, #1\n\t"
         "	strh r0, [r4, #0x10]\n\t"
@@ -5654,7 +5654,7 @@ __attribute__((naked)) void DisplaySellItemAskString(void)
         "_081AD468: .4byte gStringVar2\n\t"
         "_081AD46C: .4byte gStringVar4\n\t"
         "_081AD470: .4byte 0x085C9A5D\n\t"
-        "_081AD474: .4byte 0x081AD529\n\t"
+        "_081AD474: .4byte sub_081AD528 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5703,7 +5703,7 @@ __attribute__((naked)) void sub_081AD478(void)
         "_081AD4CC: .4byte gSpecialVar_ItemId\n\t"
         "_081AD4D0: .4byte gStringVar4\n\t"
         "_081AD4D4: .4byte 0x085C9A6C\n\t"
-        "_081AD4D8: .4byte 0x081AD4DD\n\t"
+        "_081AD4D8: .4byte sub_081AD4DC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5794,7 +5794,7 @@ __attribute__((naked)) void sub_081AD528(void)
         "	.align 2, 0\n\t"
         "_081AD570: .4byte gUnknown_3005B68\n\t"
         "_081AD574: .4byte gSpecialVar_ItemId\n\t"
-        "_081AD578: .4byte 0x081AD5A9\n\t"
+        "_081AD578: .4byte sub_081AD5A8 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5965,7 +5965,7 @@ __attribute__((naked)) void BagMenu_ConfirmSell(void)
         "_081AD6CC: .4byte gStringVar1\n\t"
         "_081AD6D0: .4byte gStringVar4\n\t"
         "_081AD6D4: .4byte 0x085C9A88\n\t"
-        "_081AD6D8: .4byte 0x081AD6DD\n\t"
+        "_081AD6D8: .4byte sub_081AD6DC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6078,7 +6078,7 @@ __attribute__((naked)) void sub_081AD6DC(void)
         "_081AD7C4: .4byte gMultiuseListMenuTemplate\n\t"
         "_081AD7C8: .4byte gUnknown_203CB20\n\t"
         "_081AD7CC: .4byte 0x00000819\n\t"
-        "_081AD7D0: .4byte 0x081AD7D5\n\t"
+        "_081AD7D0: .4byte unknown_ItemMenu_Show + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6176,7 +6176,7 @@ __attribute__((naked)) void DisplayDepositItemAskString(void)
         "_081AD880: .4byte gStringVar1\n\t"
         "_081AD884: .4byte gStringVar4\n\t"
         "_081AD888: .4byte 0x085C94B9\n\t"
-        "_081AD88C: .4byte 0x081AD891\n\t"
+        "_081AD88C: .4byte sub_081AD890 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6337,7 +6337,7 @@ __attribute__((naked)) void sub_081AD928(void)
         "_081AD9D0: .4byte gStringVar2\n\t"
         "_081AD9D4: .4byte gStringVar4\n\t"
         "_081AD9D8: .4byte 0x085C94CA\n\t"
-        "_081AD9DC: .4byte 0x081ACF49\n\t"
+        "_081AD9DC: .4byte Task_ActuallyToss + 1\n\t"
         "_081AD9E0:\n\t"
         "	ldr r2, _081ADA10\n\t"
         "	movs r0, #2\n\t"
@@ -6365,7 +6365,7 @@ __attribute__((naked)) void sub_081AD928(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081ADA10: .4byte 0x085C94DA\n\t"
-        "_081ADA14: .4byte 0x081ADA19\n\t"
+        "_081ADA14: .4byte sub_081ADA18 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6584,7 +6584,7 @@ __attribute__((naked)) void DoWallyTutorialBagMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081ADBA0: .4byte 0x0805996D\n\t"
+        "_081ADBA0: .4byte sub_0805996C + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6714,8 +6714,8 @@ __attribute__((naked)) void bag_menu_leave_maybe_3(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081ADC8C: .4byte gFieldCallback\n\t"
-        "_081ADC90: .4byte 0x0819F929\n\t"
-        "_081ADC94: .4byte 0x08085A31\n\t"
+        "_081ADC90: .4byte Apprentice_EnableBothScriptContexts + 1\n\t"
+        "_081ADC94: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6762,8 +6762,8 @@ __attribute__((naked)) void sub_081ADCC8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081ADCDC: .4byte gFieldCallback\n\t"
-        "_081ADCE0: .4byte 0x0818DC01\n\t"
-        "_081ADCE4: .4byte 0x08085A31\n\t"
+        "_081ADCE0: .4byte sub_0818DC00 + 1\n\t"
+        "_081ADCE4: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6805,8 +6805,8 @@ __attribute__((naked)) void sub_081ADD0C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081ADD20: .4byte gFieldCallback\n\t"
-        "_081ADD24: .4byte 0x0818E1C1\n\t"
-        "_081ADD28: .4byte 0x08085A31\n\t"
+        "_081ADD24: .4byte sub_0818E1C0 + 1\n\t"
+        "_081ADD28: .4byte CB2_ReturnToField + 1\n\t"
         ".syntax divided\n\t"
     );
 }

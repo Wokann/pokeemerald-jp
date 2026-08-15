@@ -2884,7 +2884,7 @@ __attribute__((naked)) void BattleIntroOpponent2SendsOutMonAnimation(void)
         "_0803AE90: .4byte gActiveBattler\n\t"
         "_0803AE94: .4byte gBattlersCount\n\t"
         "_0803AE98: .4byte gBattleMainFunc\n\t"
-        "_0803AE9C: .4byte 0x0803AF59\n\t"
+        "_0803AE9C: .4byte BattleIntroRecordMonsToDex + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2924,7 +2924,7 @@ __attribute__((naked)) void BattleIntroOpponent1SendsOutMonAnimation(void)
         "b _0803AF34\n\t"
         ".align 2, 0\n\t"
         "_0803AED4: .4byte gBattleMainFunc\n\t"
-        "_0803AED8: .4byte 0x0803AE21\n\t"
+        "_0803AED8: .4byte BattleIntroOpponent2SendsOutMonAnimation + 1\n\t"
         "_0803AEDC:\n\t"
         "movs r5, #1\n\t"
         "_0803AEDE:\n\t"
@@ -2984,7 +2984,7 @@ __attribute__((naked)) void BattleIntroOpponent1SendsOutMonAnimation(void)
         "_0803AF48: .4byte gBattleTypeFlags\n\t"
         "_0803AF4C: .4byte 0x00008040\n\t"
         "_0803AF50: .4byte gBattleMainFunc\n\t"
-        "_0803AF54: .4byte 0x0803AF59\n\t"
+        "_0803AF54: .4byte BattleIntroRecordMonsToDex + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3150,7 +3150,7 @@ __attribute__((naked)) void BattleIntroPlayer2SendsOutMonAnimation(void)
         "_0803B0FC: .4byte gBattlersCount\n\t"
         "_0803B100: .4byte gBattleStruct\n\t"
         "_0803B104: .4byte gBattleMainFunc\n\t"
-        "_0803B108: .4byte 0x0803B26D\n\t"
+        "_0803B108: .4byte TryDoEventsBeforeFirstTurn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3187,7 +3187,7 @@ __attribute__((naked)) void BattleIntroPlayer1SendsOutMonAnimation(void)
         "b _0803B1B6\n\t"
         ".align 2, 0\n\t"
         "_0803B13C: .4byte gBattleMainFunc\n\t"
-        "_0803B140: .4byte 0x0803B071\n\t"
+        "_0803B140: .4byte BattleIntroPlayer2SendsOutMonAnimation + 1\n\t"
         "_0803B144:\n\t"
         "movs r6, #0\n\t"
         "_0803B146:\n\t"
@@ -3260,7 +3260,7 @@ __attribute__((naked)) void BattleIntroPlayer1SendsOutMonAnimation(void)
         "_0803B1CC: .4byte gBattleTypeFlags\n\t"
         "_0803B1D0: .4byte gBattleStruct\n\t"
         "_0803B1D4: .4byte gBattleMainFunc\n\t"
-        "_0803B1D8: .4byte 0x0803B26D\n\t"
+        "_0803B1D8: .4byte TryDoEventsBeforeFirstTurn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3338,7 +3338,7 @@ __attribute__((naked)) void BattleIntroSwitchInPlayerMons(void)
         "_0803B25C: .4byte gBattlerPartyIndexes\n\t"
         "_0803B260: .4byte gBattleStruct\n\t"
         "_0803B264: .4byte gBattleMainFunc\n\t"
-        "_0803B268: .4byte 0x0803B26D\n\t"
+        "_0803B268: .4byte TryDoEventsBeforeFirstTurn + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3444,7 +3444,7 @@ __attribute__((naked)) void BattleTurnPassed(void)
         "_0803B6CC: .4byte gBattleCommunication\n\t"
         "_0803B6D0: .4byte gCurrentActionFuncId\n\t"
         "_0803B6D4: .4byte gBattleMainFunc\n\t"
-        "_0803B6D8: .4byte 0x0803D45D\n\t"
+        "_0803B6D8: .4byte RunBattleScriptCommands + 1\n\t"
         "_0803B6DC:\n\t"
         "ldr r1, _0803B770\n\t"
         "ldrb r0, [r1, #0x13]\n\t"
@@ -3530,7 +3530,7 @@ __attribute__((naked)) void BattleTurnPassed(void)
         "_0803B784: .4byte gChosenActionByBattler\n\t"
         "_0803B788: .4byte gChosenMoveByBattler\n\t"
         "_0803B78C: .4byte gBattleMainFunc\n\t"
-        "_0803B790: .4byte 0x0803BAB9\n\t"
+        "_0803B790: .4byte HandleAction_TryFinish + 1\n\t"
         "_0803B794: .4byte gRandomTurnNumber\n\t"
         "_0803B798: .4byte gBattleTypeFlags\n\t"
         "_0803B79C: .4byte BattleScript_PalacePrintFlavorText\n\t"
@@ -3701,7 +3701,7 @@ __attribute__((naked)) void BattleIntroDrawPartySummaryScreens(void)
         "	.align 2, 0\n\t"
         "_0803ACE4: .4byte gActiveBattler\n\t"
         "_0803ACE8: .4byte gBattleMainFunc\n\t"
-        "_0803ACEC: .4byte 0x0803AD65\n\t"
+        "_0803ACEC: .4byte BattleIntroPrintTrainerWantsToBattle + 1\n\t"
         "_0803ACF0:\n\t"
         "	movs r7, #0\n\t"
         "	add r6, sp, #4\n\t"
@@ -4029,7 +4029,7 @@ __attribute__((naked)) void HandleEndTurn_FinishBattle(void)
         "_0803DA40: .4byte gBattleMainFunc\n\t"
         "_0803DA44: .4byte 0x0803DA81\n\t"
         "_0803DA48: .4byte gCB2_AfterEvolution\n\t"
-        "_0803DA4C: .4byte 0x080380FD\n\t"
+        "_0803DA4C: .4byte BattleMainCB2 + 1\n\t"
         "_0803DA50:\n\t"
         "	ldr r0, _0803DA74\n\t"
         "	ldr r0, [r0]\n\t"
@@ -4249,7 +4249,7 @@ __attribute__((naked)) void HandleEndTurn_BattleWon(void)
         "_0803D6F0: .4byte gBattlescriptCurrInstr\n\t"
         "_0803D6F4: .4byte BattleScript_PayDayMoneyAndPickUpItems\n\t"
         "_0803D6F8: .4byte gBattleMainFunc\n\t"
-        "_0803D6FC: .4byte 0x0803D919\n\t"
+        "_0803D6FC: .4byte HandleEndTurn_FinishBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4352,7 +4352,7 @@ __attribute__((naked)) void HandleEndTurn_BattleLost(void)
         "_0803D7D0: .4byte gBattlescriptCurrInstr\n\t"
         "_0803D7D4: .4byte BattleScript_LocalBattleLost\n\t"
         "_0803D7D8: .4byte gBattleMainFunc\n\t"
-        "_0803D7DC: .4byte 0x0803D919\n\t"
+        "_0803D7DC: .4byte HandleEndTurn_FinishBattle + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4903,7 +4903,7 @@ __attribute__((naked)) void TryDoEventsBeforeFirstTurn(void)
         "_0803B51C: .4byte gAbsentBattlerFlags\n\t"
         "_0803B520: .4byte gText_EmptyString3\n\t"
         "_0803B524: .4byte gBattleMainFunc\n\t"
-        "_0803B528: .4byte 0x0803BAB9\n\t"
+        "_0803B528: .4byte HandleAction_TryFinish + 1\n\t"
         "_0803B52C: .4byte gBattleCommunication\n\t"
         "_0803B530: .4byte gBattleScripting\n\t"
         "_0803B534: .4byte gMoveResultFlags\n\t"
@@ -5273,7 +5273,7 @@ __attribute__((naked)) void BattleIntroDrawTrainersOrMonsSprites(void)
         "_0803ABB4: .4byte gActiveBattler\n\t"
         "_0803ABB8: .4byte gBattlersCount\n\t"
         "_0803ABBC: .4byte gBattleMainFunc\n\t"
-        "_0803ABC0: .4byte 0x0803ABC5\n\t"
+        "_0803ABC0: .4byte BattleIntroDrawPartySummaryScreens + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8770,7 +8770,7 @@ __attribute__((naked)) void CB2_PreInitMultiBattle(void)
         "_080379A4: .4byte gBattleCommunication\n\t"
         "_080379A8: .4byte gMain\n\t"
         "_080379AC: .4byte gBattleTypeFlags\n\t"
-        "_080379B0: .4byte 0x0803782D\n\t"
+        "_080379B0: .4byte CB2_PreInitMultiBattle + 1\n\t"
         "_080379B4:\n\t"
         "	bl IsLinkTaskFinished\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -9575,7 +9575,7 @@ __attribute__((naked)) void BattleIntroPrepareBackgroundSlide(void)
         "_0803A8B4: .4byte gActiveBattler\n\t"
         "_0803A8B8: .4byte gBattleEnvironment\n\t"
         "_0803A8BC: .4byte gBattleMainFunc\n\t"
-        "_0803A8C0: .4byte 0x0803A8C9\n\t"
+        "_0803A8C0: .4byte BattleIntroDrawTrainersOrMonsSprites + 1\n\t"
         "_0803A8C4: .4byte gBattleCommunication\n\t"
         ".syntax divided\n\t"
     );

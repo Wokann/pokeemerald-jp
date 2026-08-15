@@ -159,7 +159,7 @@ __attribute__((naked)) void ShowPokemonSummaryScreen(u8 mode, void *mons, u8 mon
         "_081BF3BC: .4byte 0x000040C1\n\t"
         "_081BF3C0: .4byte 0x000040C2\n\t"
         "_081BF3C4: .4byte gMonSpritesGfxPtr\n\t"
-        "_081BF3C8: .4byte 0x081BF445\n\t"
+        "_081BF3C8: .4byte SummaryScreen_LoadingCB2 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -553,14 +553,14 @@ __attribute__((naked)) void SummaryScreen_LoadGraphics(void)
         "	.align 2, 0\n\t"
         "_081BF6F4: .4byte gUnknown_203CBE8\n\t"
         "_081BF6F8: .4byte 0x000040BC\n\t"
-        "_081BF6FC: .4byte 0x081BFE45\n\t"
+        "_081BF6FC: .4byte HandleInput + 1\n\t"
         "_081BF700:\n\t"
         "	ldr r0, _081BF70C\n\t"
         "	movs r1, #0\n\t"
         "	bl CreateTask\n\t"
         "	b _081BF746\n\t"
         "	.align 2, 0\n\t"
-        "_081BF70C: .4byte 0x081C1051\n\t"
+        "_081BF70C: .4byte sub_081C1050 + 1\n\t"
         "_081BF710:\n\t"
         "	movs r0, #1\n\t"
         "	rsbs r0, r0, #0\n\t"
@@ -609,8 +609,8 @@ __attribute__((naked)) void SummaryScreen_LoadGraphics(void)
         "	movs r0, #1\n\t"
         "	b _081BF77A\n\t"
         "	.align 2, 0\n\t"
-        "_081BF770: .4byte 0x081BF431\n\t"
-        "_081BF774: .4byte 0x081BF415\n\t"
+        "_081BF770: .4byte FreeSummaryScreen + 1\n\t"
+        "_081BF774: .4byte SummaryScreen_VBlank + 1\n\t"
         "_081BF778:\n\t"
         "	movs r0, #0\n\t"
         "_081BF77A:\n\t"
@@ -1366,7 +1366,7 @@ __attribute__((naked)) void BeginCloseSummaryScreen(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081BFDB0: .4byte gTasks\n\t"
-        "_081BFDB4: .4byte 0x081BFDB9\n\t"
+        "_081BFDB4: .4byte CloseSummaryScreen + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1679,7 +1679,7 @@ __attribute__((naked)) void ChangeSummaryPokemon(void)
         "_081C0028: .4byte gUnknown_203CBE8\n\t"
         "_081C002C: .4byte 0x000040BE\n\t"
         "_081C0030: .4byte gTasks\n\t"
-        "_081C0034: .4byte 0x081C0039\n\t"
+        "_081C0034: .4byte sub_081C0038 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1903,8 +1903,8 @@ __attribute__((naked)) void sub_081C0038(void)
         "	str r1, [r0]\n\t"
         "	b _081C0226\n\t"
         "	.align 2, 0\n\t"
-        "_081C0218: .4byte 0x081C1A25\n\t"
-        "_081C021C: .4byte 0x081BFE45\n\t"
+        "_081C0218: .4byte sub_081C1A24 + 1\n\t"
+        "_081C021C: .4byte HandleInput + 1\n\t"
         "_081C0220:\n\t"
         "	ldrh r0, [r5]\n\t"
         "	adds r0, #1\n\t"
@@ -2237,7 +2237,7 @@ __attribute__((naked)) void ChangePage(void)
         "_081C0470: .4byte 0x000040C0\n\t"
         "_081C0474: .4byte 0x000040C1\n\t"
         "_081C0478: .4byte 0x000040C2\n\t"
-        "_081C047C: .4byte 0x081C04C1\n\t"
+        "_081C047C: .4byte PssScrollRight + 1\n\t"
         "_081C0480:\n\t"
         "	ldr r1, _081C04B4\n\t"
         "	mov r0, sb\n\t"
@@ -2264,7 +2264,7 @@ __attribute__((naked)) void ChangePage(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C04B4: .4byte 0x081C05F9\n\t"
+        "_081C04B4: .4byte PssScrollLeft + 1\n\t"
         "_081C04B8: .4byte gUnknown_203CBE8\n\t"
         "_081C04BC: .4byte 0x000040C0\n\t"
         ".syntax divided\n\t"
@@ -2371,7 +2371,7 @@ __attribute__((naked)) void PssScrollRight(void)
         "_081C058C: .4byte gUnknown_203CBE8\n\t"
         "_081C0590: .4byte 0x000040C0\n\t"
         "_081C0594: .4byte gTasks\n\t"
-        "_081C0598: .4byte 0x081C059D\n\t"
+        "_081C0598: .4byte PssScrollRightEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2486,7 +2486,7 @@ __attribute__((naked)) void PssScrollLeft(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C0670: .4byte gTasks\n\t"
-        "_081C0674: .4byte 0x081C0679\n\t"
+        "_081C0674: .4byte PssScrollLeftEnd + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2724,7 +2724,7 @@ __attribute__((naked)) void sub_081C077C(void)
         "_081C0868: .4byte 0x000020BC\n\t"
         "_081C086C: .4byte 0x000030BC\n\t"
         "_081C0870: .4byte gTasks\n\t"
-        "_081C0874: .4byte 0x081C0879\n\t"
+        "_081C0874: .4byte HandleInput_MoveSelect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3146,7 +3146,7 @@ __attribute__((naked)) void sub_081C0B28(void)
         "_081C0BC0: .4byte 0x000030BC\n\t"
         "_081C0BC4: .4byte 0x000040C6\n\t"
         "_081C0BC8: .4byte gTasks\n\t"
-        "_081C0BCC: .4byte 0x081BFE45\n\t"
+        "_081C0BCC: .4byte HandleInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3185,7 +3185,7 @@ __attribute__((naked)) void sub_081C0BD0(void)
         "_081C0C08: .4byte gUnknown_203CBE8\n\t"
         "_081C0C0C: .4byte 0x000040C6\n\t"
         "_081C0C10: .4byte gTasks\n\t"
-        "_081C0C14: .4byte 0x081C0C19\n\t"
+        "_081C0C14: .4byte sub_081C0C18 + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3410,7 +3410,7 @@ __attribute__((naked)) void sub_081C0CE4(void)
         "_081C0DE0: .4byte gUnknown_203CBE8\n\t"
         "_081C0DE4: .4byte 0x000040C7\n\t"
         "_081C0DE8: .4byte gTasks\n\t"
-        "_081C0DEC: .4byte 0x081C0879\n\t"
+        "_081C0DEC: .4byte HandleInput_MoveSelect + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3746,7 +3746,7 @@ __attribute__((naked)) void sub_081C1050(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C1078: .4byte gTasks\n\t"
-        "_081C107C: .4byte 0x081C1081\n\t"
+        "_081C107C: .4byte HandleReplaceMoveInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3996,7 +3996,7 @@ __attribute__((naked)) void ShowHMMovesCantBeForgottenWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C126C: .4byte gTasks\n\t"
-        "_081C1270: .4byte 0x081C1275\n\t"
+        "_081C1270: .4byte HandleHMMovesCantBeForgottenInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4052,7 +4052,7 @@ __attribute__((naked)) void HandleHMMovesCantBeForgottenInput(void)
         "	b _081C149E\n\t"
         "	.align 2, 0\n\t"
         "_081C12D0: .4byte gUnknown_3005B68\n\t"
-        "_081C12D4: .4byte 0x081C1755\n\t"
+        "_081C12D4: .4byte sub_081C1754 + 1\n\t"
         "_081C12D8: .4byte gMain\n\t"
         "_081C12DC: .4byte gUnknown_203CBE8\n\t"
         "_081C12E0: .4byte 0x000040C6\n\t"
@@ -4139,7 +4139,7 @@ __attribute__((naked)) void HandleHMMovesCantBeForgottenInput(void)
         "_081C1388: .4byte gSprites\n\t"
         "_081C138C: .4byte 0x000040D5\n\t"
         "_081C1390: .4byte 0x000040C6\n\t"
-        "_081C1394: .4byte 0x081C1081\n\t"
+        "_081C1394: .4byte HandleReplaceMoveInput + 1\n\t"
         "_081C1398:\n\t"
         "	ldrh r1, [r6, #0x2e]\n\t"
         "	movs r0, #0x10\n\t"
@@ -4211,7 +4211,7 @@ __attribute__((naked)) void HandleHMMovesCantBeForgottenInput(void)
         "_081C1428: .4byte gSprites\n\t"
         "_081C142C: .4byte 0x000040D5\n\t"
         "_081C1430: .4byte 0x000040C6\n\t"
-        "_081C1434: .4byte 0x081C1081\n\t"
+        "_081C1434: .4byte HandleReplaceMoveInput + 1\n\t"
         "_081C1438:\n\t"
         "	ldrh r1, [r6, #0x2e]\n\t"
         "	movs r0, #3\n\t"
@@ -4277,7 +4277,7 @@ __attribute__((naked)) void HandleHMMovesCantBeForgottenInput(void)
         "_081C14B8: .4byte gUnknown_203CBE8\n\t"
         "_081C14BC: .4byte 0x000040D5\n\t"
         "_081C14C0: .4byte 0x000040C6\n\t"
-        "_081C14C4: .4byte 0x081C1081\n\t"
+        "_081C14C4: .4byte HandleReplaceMoveInput + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4635,7 +4635,7 @@ __attribute__((naked)) void sub_081C16D8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C174C: .4byte 0x081C1755\n\t"
+        "_081C174C: .4byte sub_081C1754 + 1\n\t"
         "_081C1750: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4817,7 +4817,7 @@ __attribute__((naked)) void sub_081C1830(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C18AC: .4byte 0x081C18B5\n\t"
+        "_081C18AC: .4byte sub_081C18B4 + 1\n\t"
         "_081C18B0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4901,7 +4901,7 @@ __attribute__((naked)) void sub_081C18B4(void)
         "_081C1948: .4byte gUnknown_203CBE8\n\t"
         "_081C194C: .4byte 0x000030BC\n\t"
         "_081C1950: .4byte 0x000040C0\n\t"
-        "_081C1954: .4byte 0x081C04C1\n\t"
+        "_081C1954: .4byte PssScrollRight + 1\n\t"
         "_081C1958:\n\t"
         "	ldr r2, _081C19A0\n\t"
         "	ldr r0, [r5]\n\t"
@@ -5003,7 +5003,7 @@ __attribute__((naked)) void sub_081C19A8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C1A1C: .4byte 0x081C1A25\n\t"
+        "_081C1A1C: .4byte sub_081C1A24 + 1\n\t"
         "_081C1A20: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -10023,7 +10023,7 @@ __attribute__((naked)) void sub_081C3FBC(void)
         "_081C4020: .4byte gUnknown_203CBE8\n\t"
         "_081C4024: .4byte gMultiuseSpriteTemplate\n\t"
         "_081C4028: .4byte gSprites\n\t"
-        "_081C402C: .4byte 0x081C404D\n\t"
+        "_081C402C: .4byte SpriteCB_Pokemon + 1\n\t"
         "_081C4030:\n\t"
         "	adds r2, r7, #0\n\t"
         "	adds r2, #0x3f\n\t"
@@ -10146,7 +10146,7 @@ __attribute__((naked)) void SummaryScreen_DoesSpriteHaveCallback(void)
         "_081C40E0: .4byte gSprites\n\t"
         "_081C40E4: .4byte gUnknown_203CBE8\n\t"
         "_081C40E8: .4byte 0x000040D3\n\t"
-        "_081C40EC: .4byte 0x08007141\n\t"
+        "_081C40EC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081C40F0:\n\t"
         "	movs r0, #0\n\t"
         "_081C40F2:\n\t"
@@ -10226,7 +10226,7 @@ __attribute__((naked)) void StopPokemonAnimations(void)
         "_081C4174: .4byte gSprites\n\t"
         "_081C4178: .4byte gUnknown_203CBE8\n\t"
         "_081C417C: .4byte 0x000040D3\n\t"
-        "_081C4180: .4byte 0x08007141\n\t"
+        "_081C4180: .4byte SpriteCallbackDummy + 1\n\t"
         "_081C4184: .4byte gPlttBufferUnfaded\n\t"
         "_081C4188: .4byte gPlttBufferFaded\n\t"
         ".syntax divided\n\t"
@@ -10365,7 +10365,7 @@ __attribute__((naked)) void CreateCaughtBallSprite(void)
         "_081C4280: .4byte gUnknown_203CBE8\n\t"
         "_081C4284: .4byte 0x000040D4\n\t"
         "_081C4288: .4byte gSprites\n\t"
-        "_081C428C: .4byte 0x08007141\n\t"
+        "_081C428C: .4byte SpriteCallbackDummy + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10547,7 +10547,7 @@ __attribute__((naked)) void sub_081C4300(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C43E8: .4byte 0x081C43ED\n\t"
+        "_081C43E8: .4byte sub_081C43EC + 1\n\t"
         ".syntax divided\n\t"
     );
 }
