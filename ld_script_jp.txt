@@ -9393,6 +9393,16 @@ SECTIONS {
         data/data_b2d_mid90.o(.rodata);
         src/data/text/region_texts102.o(.rodata);
         data/data_b2d_mid91.o(.rodata);
+        src/data/text/region_texts103.o(.rodata);
+        data/data_b2d_mid92.o(.rodata);
+        src/data/text/region_texts108.o(.rodata);
+        data/data_b2d_mid93.o(.rodata);
+        src/data/text/region_texts104.o(.rodata);
+        data/data_b2d_mid94.o(.rodata);
+        src/data/text/region_texts105.o(.rodata);
+        src/data/text/region_texts106.o(.rodata);
+        src/data/text/region_texts107.o(.rodata);
+        data/data_b2d_mid95.o(.rodata);
         src/data/text/nature_names.o(.rodata);
         data/data_b2c.o(.rodata);
         data/multiboot_ereader.o(.rodata);
