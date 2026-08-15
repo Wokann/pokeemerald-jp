@@ -2,6 +2,7 @@
 #include "berry_tag_screen.h"
 #include "berry.h"
 #include "item_menu.h"
+#include "item_menu_icons.h"
 #include "main.h"
 #include "malloc.h"
 #include "menu_helpers.h"
@@ -886,35 +887,9 @@ __attribute__((naked)) void PrintBerryDescription2(void)
     );
 }
 
-__attribute__((naked)) void CreateBerrySprite(void)
+void CreateBerrySprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0817821C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #5\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x38\n\t"
-        "	movs r2, #0x40\n\t"
-        "	bl CreateBerryTagSprite\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldr r2, _08178220\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0817821C: .4byte gUnknown_203B9C0\n\t"
-        "_08178220: .4byte 0x00001802\n\t"
-        ".syntax divided\n\t"
-    );
+    sBerryTag->berrySpriteId = CreateBerryTagSprite(sBerryTag->berryId - 1, 56, 64);
 }
 
 void DestroyBerrySprite(void)
