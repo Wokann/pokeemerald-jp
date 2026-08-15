@@ -46,8 +46,7 @@ UNPORTED_SRCS := \
 	src/frontier_util.c src/intro.c \
 	src/menu.c \
 	src/pokemon.c \
-	src/record_mixing.c src/recorded_battle.c \
-	src/start_menu.c
+	src/record_mixing.c src/recorded_battle.c
 C_SRCS := $(filter-out $(UNPORTED_SRCS),$(wildcard src/*.c src/*/*.c))
 C_BUILDDIR := $(OBJ_DIR)/src
 C_OBJECTS := $(patsubst src/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
@@ -96,6 +95,7 @@ $(C_BUILDDIR)/field_weather.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/item.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_anim.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/fldeff_misc.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
+$(C_BUILDDIR)/start_menu.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/tileset_anims.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm
 $(C_BUILDDIR)/battle_transition.o: CFLAGS := -mthumb-interwork -O2 -fhex-asm -ffunction-sections
 
