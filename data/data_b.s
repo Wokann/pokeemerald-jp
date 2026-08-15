@@ -6565,9 +6565,14 @@ gBattleScriptingCommandsTable: @ 0x82EC694
 gUnknown_82ECA78: @ 0x82ECA78
 	.incbin "baserom_jp.gba", 0x2eca78, 0x34
 
-	.globl gUnknown_82ECAAC
-gUnknown_82ECAAC: @ 0x82ECAAC
-	.incbin "baserom_jp.gba", 0x2ecaac, 0xc
+	.globl sCriticalHitChance
+sCriticalHitChance: @ 0x82ECAAC
+	.hword 16 @ 1/16 chance, stage 0
+	.hword 8 @ 1/8 chance, stage 1
+	.hword 4 @ 1/4 chance, stage 2
+	.hword 3 @ 1/3 chance, stage 3
+	.hword 2 @ 1/2 chance, stage 4
+	.hword 0 @ JP trailing entry
 
 	.globl sStatusFlagsForMoveEffects
 sStatusFlagsForMoveEffects: @ 0x82ECAB8
@@ -6735,13 +6740,27 @@ sMovesForbiddenToCopy: @ 0x82ECD64
 	.hword MOVE_TRICK @ 0x010F
 	.hword MOVE_FOCUS_PUNCH @ 0x0108
 	.hword 0xFFFF @ METRONOME_FORBIDDEN_END
-	.globl gUnknown_82ECD8C
-gUnknown_82ECD8C: @ 0x82ECD8C
-	.incbin "baserom_jp.gba", 0x2ecd8c, 0xc
+	.globl sFlailHpScaleToPowerTable
+sFlailHpScaleToPowerTable: @ 0x82ECD8C
+	.byte 1, 200 @ hp<= 1% -> power 200
+	.byte 4, 150 @ hp<= 4% -> power 150
+	.byte 9, 100 @ hp<= 9% -> power 100
+	.byte 16, 80 @ hp<= 16% -> power 80
+	.byte 32, 40 @ hp<= 32% -> power 40
+	.byte 48, 20 @ hp<= 48% -> power 20
 
-	.globl gUnknown_82ECD98
-gUnknown_82ECD98: @ 0x82ECD98
-	.incbin "baserom_jp.gba", 0x2ecd98, 0x14
+	.globl sNaturePowerMoves
+sNaturePowerMoves: @ 0x82ECD98
+	.hword MOVE_STUN_SPORE @ BATTLE_ENVIRONMENT_GRASS
+	.hword MOVE_RAZOR_LEAF @ BATTLE_ENVIRONMENT_LONG_GRASS
+	.hword MOVE_EARTHQUAKE @ BATTLE_ENVIRONMENT_SAND
+	.hword MOVE_HYDRO_PUMP @ BATTLE_ENVIRONMENT_UNDERWATER
+	.hword MOVE_SURF @ BATTLE_ENVIRONMENT_WATER
+	.hword MOVE_BUBBLE_BEAM @ BATTLE_ENVIRONMENT_POND
+	.hword MOVE_ROCK_SLIDE @ BATTLE_ENVIRONMENT_MOUNTAIN
+	.hword MOVE_SHADOW_BALL @ BATTLE_ENVIRONMENT_CAVE
+	.hword MOVE_SWIFT @ BATTLE_ENVIRONMENT_BUILDING
+	.hword MOVE_SWIFT @ BATTLE_ENVIRONMENT_PLAIN
 
 	.globl gUnknown_82ECDAC
 gUnknown_82ECDAC: @ 0x82ECDAC
