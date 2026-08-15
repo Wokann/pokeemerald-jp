@@ -8,6 +8,8 @@ gMoonSpriteTemplate = ABSOLUTE(0x0856EAA0);
 gMoonlightSparkleSpriteTemplate = ABSOLUTE(0x0856EAD0);
 gPaletteFade = ABSOLUTE(0x02037C74);
 sub_080A5DB4 = ConvertPosDataToTranslateLinearData;
+SetSavedWeather = SetSav1Weather;
+SetSavedWeatherFromCurrMapHeader = DoCurrentWeather;
 sub_08076320 = StartHealthboxSlideIn;
 sub_08076124 = CreateTradePokeballSprite;
 CreateVirtualObject = sprite_new;
@@ -6595,7 +6597,7 @@ SECTIONS {
         src/title_screen.o(.text.CB2_GoToBerryFixScreen);
         src/title_screen.o(.text.UpdateLegendaryMarkingColor);
         asm/field_weather.o(.text);
-        asm/field_weather_effect.o(.text);
+        src/field_weather_effect.o(.text);
         src/field_screen_effect.o(.text);
         src/battle_setup.o(.text.Task_BattleStart);
         src/battle_setup.o(.text.CreateBattleStartTask);
