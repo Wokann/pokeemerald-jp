@@ -41,7 +41,7 @@ AS_OBJS := $(patsubst asm/%.s,$(OBJ_DIR)/asm/%.o,$(ASFILE))
 # still live in asm/, so exclude them from the build until converted.
 UNPORTED_SRCS := \
 	src/battle_tower.c \
-	src/berry.c src/cable_club.c src/contest_painting.c \
+	src/berry.c src/cable_club.c \
 	src/field_specials.c src/field_weather.c \
 	src/frontier_util.c src/intro.c src/item.c src/item_menu_icons.c \
 	src/menu.c \
