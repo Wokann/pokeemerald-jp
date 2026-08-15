@@ -10127,7 +10127,7 @@ SECTIONS {
         src/rotating_tile_puzzle.o(.text.TurnRotatingTileObjects);
         src/rotating_tile_puzzle.o(.text.SaveRotatingTileObject);
         src/rotating_tile_puzzle.o(.text.TurnUnsavedRotatingTileObject);
-        asm/battle_pyramid.o(.text);
+        src/battle_pyramid.o(.text);
         asm/item_menu.o(.text);
         asm/list_menu.o(.text);
         src/dynamic_placeholder_text_util.o(.text);
