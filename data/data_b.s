@@ -3848,9 +3848,23 @@ sBirchBgTemplate: @ 0x82D2980
 	.hword 0x01EC @ bg=0 charBaseIndex=3 mapBaseIndex=30 screenSize=0 paletteMode=0 priority=0
 	.hword 0x0000 @ baseTile
 
-	.globl gUnknown_82D2984
-gUnknown_82D2984: @ 0x82D2984
-	.incbin "baserom_jp.gba", 0x2d2984, 0x20
+	.globl sScrollArrowsTemplate_MainMenu
+sScrollArrowsTemplate_MainMenu: @ 0x82D2984
+	.byte 2 @ firstArrowType
+	.byte 0x78 @ firstX
+	.byte 8 @ firstY
+	.byte 3 @ secondArrowType
+	.byte 0x78 @ secondX
+	.byte 0x98 @ secondY
+	.hword 3 @ fullyUpThreshold
+	.hword 4 @ fullyDownThreshold
+	.hword 1 @ tileTag
+	.hword 1 @ palTag
+	.byte 0 @ palNum
+	.byte 0 @ padding
+	.globl gUnknown_82D2994
+gUnknown_82D2994: @ 0x82D2994
+	.incbin "baserom_jp.gba", 0x2d2994, 0x10
 
 	.globl gUnknown_82D29A4
 gUnknown_82D29A4: @ 0x82D29A4
