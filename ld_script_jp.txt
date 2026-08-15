@@ -726,7 +726,6 @@ BattleScript_LeechSeedFree = gUnknown_828955E;
 BattleScript_SpikesFree = gUnknown_8289565;
 sPickupItems = gUnknown_82ECDC4;
 sRarePickupItems = gUnknown_82ECDE8;
-sBallCatchBonuses = gUnknown_82ECE11;
 sText_SpaceIs = gUnknown_85ABC96;
 sText_ApostropheS = gUnknown_85ABC98;
 sText_ExclamationMark = gUnknown_85AB03C;

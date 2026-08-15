@@ -6810,9 +6810,15 @@ sEnvironmentToType: @ 0x82ECE07
 	.byte 0 @ BATTLE_ENVIRONMENT_BUILDING -> TYPE_NORMAL
 	.byte 0 @ BATTLE_ENVIRONMENT_PLAIN -> TYPE_NORMAL
 
-	.globl gUnknown_82ECE11
-gUnknown_82ECE11: @ 0x82ECE11
-	.incbin "baserom_jp.gba", 0x2ece11, 0x7
+	.globl sBallCatchBonuses
+sBallCatchBonuses: @ 0x82ECE11
+	.byte 20 @ ITEM_ULTRA_BALL
+	.byte 15 @ ITEM_GREAT_BALL
+	.byte 10 @ ITEM_POKE_BALL
+	.byte 15 @ ITEM_SAFARI_BALL
+	.byte 0 @ JP trailing entry 4
+	.byte 0 @ JP trailing entry 5
+	.byte 0 @ JP trailing entry 6
 
 	.globl gUnknown_82ECE18
 gUnknown_82ECE18: @ 0x82ECE18
