@@ -329,7 +329,12 @@ extern void ResetGame(struct BerryCrushGame *);
 extern void SetPrintMessageArgs(u8 *, u8, u8, u16, u8);
 extern void PrintResultsText(struct BerryCrushGame *, u8, u8, u8);
 extern void PrintCrushingResults(struct BerryCrushGame *);
-extern const struct WindowTemplate sWindowTemplates_Results[];
+// JP layout: the results window templates are embedded in
+// sWindowTemplates_PlayerNames at indices 6..8, and the ROM code reaches
+// them through an overlapping symbol at sBgTemplates + 4
+// (STATE_RESULTS_* = 11..13).  Express that overlap as a constant offset so
+// the compiled address computation stays byte-identical.
+#define sWindowTemplates_Results ((const struct WindowTemplate *)((const u8 *)sWindowTemplates_PlayerNames - 40))
 extern const u8 sResultsWindowHeights[2][MAX_RFU_PLAYERS - 1];
 extern const u8 *const sResultsTexts[];
 void PrintTextCentered(u8 windowId, u8 left, u8 colorId, const u8 *string);
