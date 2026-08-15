@@ -3628,17 +3628,68 @@ sVenusaurStates: @ 0x82D1A6B
 gUnknown_82D1A78: @ 0x82D1A78
 	.incbin "baserom_jp.gba", 0x2d1a78, 0x8
 
-	.globl gUnknown_82D1A80
-gUnknown_82D1A80: @ 0x82D1A80
-	.incbin "baserom_jp.gba", 0x2d1a80, 0x40
+	.globl sSpritePalette_Digits
+sSpritePalette_Digits: @ 0x82D1A80
+	.4byte 0x082D2A68 @ gMinigameDigits_Pal
+	.4byte 0x0320 @ TAG_DIGITS
+	.globl sPlayerNameWindowCoords_2Players
+sPlayerNameWindowCoords_2Players: @ 0x82D1A88
+	.hword 6, 8 @ player 0 x, y
+	.hword 16, 8 @ player 1 x, y
+	.globl sPlayerNameWindowCoords_3Players
+sPlayerNameWindowCoords_3Players: @ 0x82D1A90
+	.hword 6, 8 @ player 0 x, y
+	.hword 11, 6 @ player 1 x, y
+	.hword 16, 8 @ player 2 x, y
+	.globl sPlayerNameWindowCoords_4Players
+sPlayerNameWindowCoords_4Players: @ 0x82D1A9C
+	.hword 2, 6 @ player 0 x, y
+	.hword 6, 8 @ player 1 x, y
+	.hword 16, 8 @ player 2 x, y
+	.hword 20, 6 @ player 3 x, y
+	.globl sPlayerNameWindowCoords_5Players
+sPlayerNameWindowCoords_5Players: @ 0x82D1AAC
+	.hword 2, 6 @ player 0 x, y
+	.hword 6, 8 @ player 1 x, y
+	.hword 11, 6 @ player 2 x, y
+	.hword 16, 8 @ player 3 x, y
+	.hword 20, 6 @ player 4 x, y
 
-	.globl gUnknown_82D1AC0
-gUnknown_82D1AC0: @ 0x82D1AC0
-	.incbin "baserom_jp.gba", 0x2d1ac0, 0x2c
+	.globl sPlayerNameWindowCoords
+sPlayerNameWindowCoords: @ 0x82D1AC0
+	.4byte sPlayerNameWindowCoords_2Players @ 0x082D1A88
+	.4byte sPlayerNameWindowCoords_3Players @ 0x082D1A90
+	.4byte sPlayerNameWindowCoords_4Players @ 0x082D1A9C
+	.4byte sPlayerNameWindowCoords_5Players @ 0x082D1AAC
+	.globl sMonXCoords_2Players
+sMonXCoords_2Players: @ 0x82D1AD0
+	.hword 88 @ player 0 x
+	.hword 152 @ player 1 x
+	.globl sMonXCoords_3Players
+sMonXCoords_3Players: @ 0x82D1AD4
+	.hword 88 @ player 0 x
+	.hword 120 @ player 1 x
+	.hword 152 @ player 2 x
+	.globl sMonXCoords_4Players
+sMonXCoords_4Players: @ 0x82D1ADA
+	.hword 56 @ player 0 x
+	.hword 88 @ player 1 x
+	.hword 152 @ player 2 x
+	.hword 184 @ player 3 x
+	.globl sMonXCoords_5Players
+sMonXCoords_5Players: @ 0x82D1AE2
+	.hword 56 @ player 0 x
+	.hword 88 @ player 1 x
+	.hword 120 @ player 2 x
+	.hword 152 @ player 3 x
+	.hword 184 @ player 4 x
 
-	.globl gUnknown_82D1AEC
-gUnknown_82D1AEC: @ 0x82D1AEC
-	.incbin "baserom_jp.gba", 0x2d1aec, 0x10
+	.globl sMonXCoords
+sMonXCoords: @ 0x82D1AEC
+	.4byte sMonXCoords_2Players @ 0x082D1AD0
+	.4byte sMonXCoords_3Players @ 0x082D1AD4
+	.4byte sMonXCoords_4Players @ 0x082D1ADA
+	.4byte sMonXCoords_5Players @ 0x082D1AE2
 
 	.globl gUnknown_82D1AFC
 gUnknown_82D1AFC: @ 0x82D1AFC
