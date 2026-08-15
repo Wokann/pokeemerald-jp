@@ -325,6 +325,14 @@ $(AS_OBJS): $(OBJ_DIR)/asm/%.o: asm/%.s
 	@mkdir -p $(dir $@)
 	$(AS) $(ASFLAGS) -o $@ $<
 
+# Text data tables are written as _("...") charmap strings (US style);
+# run them through preproc so the kana/control bytes are encoded.
+$(C_BUILDDIR)/data/text/%.o: src/data/text/%.c src/data/text/%.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/$*.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/$*.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/$*.gen.s
+
 $(C_BUILDDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/$*.gen.s
