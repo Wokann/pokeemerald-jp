@@ -79,7 +79,8 @@ extern u8 sUnusedBattlersArray[];
 void TurnValuesCleanUp(bool8 var0);
 extern void RunTurnActionsFunctions(void); // JP asm 0x0803D488 (US: same name)
 extern void RunBattleScriptCommands(void); // JP asm 0x0803D45C (register-sensitive, kept in asm)
-extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
+extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC600 (14 B_ACTION_* entries)
+extern void (*const gBattleScriptingCommandsTable[])(void); // JP data 0x082EC694 (249 B_SCR_OP_* entries)
 extern void (*gCB2_AfterEvolution)(void); // JP IWRAM 0x03005F28
 extern const u8 *const gBattlescriptsForBallThrow[];
 extern const u8 *const gBattlescriptsForRunningByItem[];
@@ -2075,7 +2076,7 @@ static void BattleIntroPrintOpponentSendsOut(void)
     gBattleMainFunc = BattleIntroOpponent1SendsOutMonAnimation;
 }
 
-static void HandleEndTurn_ContinueBattle(void)
+void HandleEndTurn_ContinueBattle(void)
 {
     s32 i;
 
@@ -2333,7 +2334,7 @@ void SpecialStatusesClear(void)
     }
 }
 
-static void HandleEndTurn_RanFromBattle(void)
+void HandleEndTurn_RanFromBattle(void)
 {
     gCurrentActionFuncId = 0;
 
@@ -2367,7 +2368,7 @@ static void HandleEndTurn_RanFromBattle(void)
     gBattleMainFunc = HandleEndTurn_FinishBattle;
 }
 
-static void HandleEndTurn_MonFled(void)
+void HandleEndTurn_MonFled(void)
 {
     gCurrentActionFuncId = 0;
 
@@ -2445,7 +2446,7 @@ void RunBattleScriptCommands_PopCallbacksStack(void)
     else
     {
         if (gBattleControllerExecFlags == 0)
-            sTurnActionsFuncsTable[gBattlescriptCurrInstr[0]](); // JP: sTurnActionsFuncsTable (US: gBattleScriptingCommandsTable)
+            gBattleScriptingCommandsTable[gBattlescriptCurrInstr[0]]();
     }
 }
 
@@ -12291,4 +12292,3 @@ __attribute__((naked)) void HandleTurnActionSelectionState(void)
         ".syntax divided\n\t"
     );
 }
-

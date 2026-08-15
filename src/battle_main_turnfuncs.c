@@ -6,6 +6,11 @@
 // pools interleaved inside the combined body, so the whole 0xA8-byte
 // region is one naked asm function and RunTurnActionsFunctions is an
 // ld alias to RunBattleScriptCommands + 0x2C.
+//
+// RunBattleScriptCommands dispatches through sTurnActionsFuncsTable
+// (0x082EC600, indexed by gCurrentActionFuncId), and
+// RunTurnActionsFunctions selects the next main func via
+// sEndTurnFuncsTable (0x082EC638, indexed by gBattleOutcome & 0x7F).
 
 __attribute__((naked)) void RunBattleScriptCommands(void)
 {
@@ -58,12 +63,12 @@ __attribute__((naked)) void RunBattleScriptCommands(void)
         "_0803D4B4: .4byte gCurrentActionFuncId\n\t"
         "_0803D4B8: .4byte gBattleStruct\n\t"
         "_0803D4BC: .4byte gCurrentTurnActionNumber\n\t"
-        "_0803D4C0: .4byte gBattleScriptingCommandsTable\n\t"
+        "_0803D4C0: .4byte sTurnActionsFuncsTable\n\t"
         "_0803D4C4: .4byte gBattlersCount\n\t"
         "_0803D4C8: .4byte gHitMarker\n\t"
         "_0803D4CC: .4byte 0xFFEFFFFF\n\t"
         "_0803D4D0: .4byte gBattleMainFunc\n\t"
-        "_0803D4D4: .4byte 0x082EC638\n\t"
+        "_0803D4D4: .4byte sEndTurnFuncsTable\n\t"
         "_0803D4D8:\n\t"
         "ldr r0, [r5]\n\t"
         "adds r0, #0x4b\n\t"

@@ -25,7 +25,7 @@
 #include "constants/weather.h"
 
 extern const u16 sSoundMovesTable[];
-extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC694
+extern void (*const sTurnActionsFuncsTable[])(void); // JP data 0x082EC600 (14 B_ACTION_* entries)
 void sub_0803DCCC(void);
 
 u8 GetBattlerForBattleScript(u8 caseId)
@@ -3140,7 +3140,7 @@ void ClearFuryCutterDestinyBondGrudge(u8 battler)
 void sub_080454F4(void)
 {
     if (gBattleControllerExecFlags == 0)
-        sTurnActionsFuncsTable[*gBattlescriptCurrInstr]();
+        gBattleScriptingCommandsTable[*gBattlescriptCurrInstr]();
 }
 
 u8 GetMoveTarget(u16 move, u8 setTarget)
