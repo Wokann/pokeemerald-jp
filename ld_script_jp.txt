@@ -507,7 +507,6 @@ sub_0818D590 = CreateTrainerCardMonIconSprite;
 sub_0818D630 = LoadTrainerPicInWindow;
 sub_0818D664 = CreateTrainerCardTrainerPicSprite;
 gAnims_MonPic = gUnknown_82D2F9C;
-gTrainerFrontAnimsPtrTable = gUnknown_82D8BFC;
 gMonFrontAnimsPtrTable = gUnknown_82DD33C;
 IsLargeBreakableDecoration = sub_080FB654;
 GenerateTrainerHillFloorLayout = sub_081D590C;
