@@ -13,59 +13,6 @@
 
 
 
-	.globl sTextColors_Header
-sTextColors_Header: @ 0x82C2B64
-	.incbin "baserom_jp.gba", 0x2c2b64, 0x8
-
-	.globl sMG_Ereader_TextColor_2
-sMG_Ereader_TextColor_2: @ 0x82C2B6C
-	.string "あいうテスト$むげんのチケット$"
-	.globl sUnionRoomObjGfxIds
-sUnionRoomObjGfxIds: @ 0x82C2B7C
-	.incbin "baserom_jp.gba", 0x2c2b7c, 0x14
-
-	.globl sUnionRoomPlayerCoords
-sUnionRoomPlayerCoords: @ 0x82C2B90
-	.hword 0x0004, 0x0006, 0x000D, 0x0008, 0x000A, 0x0006, 0x0001, 0x0008, 0x000D, 0x0004, 0x0007, 0x0004
-	.hword 0x0001, 0x0004, 0x0007, 0x0008
-
-	.globl sUnionRoomGroupOffsets
-sUnionRoomGroupOffsets: @ 0x82C2BB0
-	.byte 0x00, 0x00, 0x01, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x01
-
-	.globl sOppositeFacingDirection
-sOppositeFacingDirection: @ 0x82C2BBA
-	.byte 0x00, 0x02, 0x01, 0x04, 0x03
-
-	.globl sMemberFacingDirections
-sMemberFacingDirections: @ 0x82C2BBF
-	.byte 0x01, 0x03, 0x01, 0x04, 0x02
-
-	.globl sUnionRoomLocalIds
-sUnionRoomLocalIds: @ 0x82C2BC4
-	.byte 0x09, 0x08, 0x07, 0x02, 0x06, 0x05, 0x04, 0x03, 0xBF, 0x02, 0xC0, 0x02
-	.byte 0xC1, 0x02, 0xC2, 0x02, 0xC3, 0x02, 0xC4, 0x02, 0xC5, 0x02, 0xC6, 0x02
-
-	.globl gAssertFile_rfu_union_tool
-gAssertFile_rfu_union_tool: @ 0x82C2BDC
-	.incbin "baserom_jp.gba", 0x2c2bdc, 0x14
-
-	.globl gAssertCond_UnionObjWork
-gAssertCond_UnionObjWork: @ 0x82C2BF0
-	.incbin "baserom_jp.gba", 0x2c2bf0, 0x4
-
-	.globl gAssertCond_UnionObjWork2
-gAssertCond_UnionObjWork2: @ 0x82C2BF4
-	.incbin "baserom_jp.gba", 0x2c2bf4, 0x15
-
-	.globl sMovement_UnionPlayerExit
-sMovement_UnionPlayerExit: @ 0x82C2C09
-	.byte 0x9C, 0xFE
-
-	.globl sMovement_UnionPlayerEnter
-sMovement_UnionPlayerEnter: @ 0x82C2C0B
-	.byte 0x9D, 0xFE, 0x00, 0x00, 0x00
-
 	.globl sWirelessScreenPalettes
 sWirelessScreenPalettes: @ 0x82C2C10
 	.incbin "graphics/wireless/sWirelessScreenPalettes.bin"
