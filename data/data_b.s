@@ -3823,13 +3823,18 @@ gUnknown_82D2930: @ 0x82D2930
 gUnknown_82D2950: @ 0x82D2950
 	.incbin "baserom_jp.gba", 0x2d2950, 0x20
 
-	.globl gUnknown_82D2970
-gUnknown_82D2970: @ 0x82D2970
-	.incbin "baserom_jp.gba", 0x2d2970, 0x3
+	.globl sTextColor_Headers
+sTextColor_Headers: @ 0x82D2970
+	.byte 0xA @ TEXT_DYNAMIC_COLOR_1
+	.byte 0xB @ TEXT_DYNAMIC_COLOR_2
+	.byte 0xC @ TEXT_DYNAMIC_COLOR_3
 
-	.globl gUnknown_82D2973
-gUnknown_82D2973: @ 0x82D2973
-	.incbin "baserom_jp.gba", 0x2d2973, 0x5
+	.globl sTextColor_Savegame
+sTextColor_Savegame: @ 0x82D2973
+	.byte 0xA @ TEXT_DYNAMIC_COLOR_1
+	.byte 0x1 @ TEXT_COLOR_WHITE
+	.byte 0xC @ TEXT_DYNAMIC_COLOR_3
+	.byte 0, 0 @ JP trailing entries
 
 	.globl sMainMenuBgTemplates
 sMainMenuBgTemplates: @ 0x82D2978
