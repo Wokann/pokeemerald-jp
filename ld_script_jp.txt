@@ -6382,7 +6382,7 @@ SECTIONS {
         src/reset_rtc_screen.o(.text.Task_ShowResetRtcPrompt);
         src/reset_rtc_screen.o(.text.Task_ResetRtcScreen);
         asm/start_menu.o(.text);
-        asm/tileset_anims.o(.text);
+        src/tileset_anims.o(.text);
         src/palette.o(.text);
         src/sound.o(.text.InitMapMusic);
         src/sound.o(.text.MapMusicMain);
