@@ -211,16 +211,10 @@ __attribute__((naked)) void Sunny_InitAll()
 }
 
 void Sunny_Main() {}
-__attribute__((naked)) bool8 Shade_Finish()
+bool8 Shade_Finish(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) void CreateCloudSprites(void)
 {
     __asm__(".syntax unified\n\t"
@@ -564,16 +558,10 @@ __attribute__((naked)) void Drought_Main()
     );
 }
 
-__attribute__((naked)) bool8 Sunny_Finish()
+bool8 Sunny_Finish(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) void StartDroughtWeatherBlend(void)
 {
     __asm__(".syntax unified\n\t"
@@ -5265,16 +5253,10 @@ __attribute__((naked)) void Shade_InitAll()
 }
 
 void Shade_Main() {}
-__attribute__((naked)) bool8 Drought_Finish()
+bool8 Drought_Finish(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) void Bubbles_InitVars()
 {
     __asm__(".syntax unified\n\t"
