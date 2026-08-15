@@ -10614,6 +10614,7 @@ SECTIONS {
     {
 		asm/libgcnmultiboot.o(.text);
 		asm/m4a.o(.text);
+		src/m4a_tail2.o(.text);
 		src/m4a.o(.text);
         src/agb_flash.o(.text);
         src/agb_flash_1m.o(.text);
