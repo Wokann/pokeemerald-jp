@@ -29,7 +29,7 @@ __attribute__((naked)) void STWI_init_all(struct RfuIntrStruct *interruptStruct,
         "_08290FC8: .4byte 0x040000D4\n\t"
         "_08290FCC: .4byte IntrSIO32\n\t"
         "_08290FD0: .4byte 0x800004B0\n\t"
-        "_08290FD4: .4byte gUnknown_3007608\n\t"
+        "_08290FD4: .4byte gSTWIStatus\n\t"
         "_08290FD8: .4byte 0x00000A48\n\t"
         "_08290FDC:\n\t"
         "	ldr r0, _08291060\n\t"
@@ -98,7 +98,7 @@ __attribute__((naked)) void STWI_init_all(struct RfuIntrStruct *interruptStruct,
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08291060: .4byte IntrSIO32\n\t"
-        "_08291064: .4byte gUnknown_3007608\n\t"
+        "_08291064: .4byte gSTWIStatus\n\t"
         "_08291068: .4byte 0x04000134\n\t"
         "_0829106C: .4byte 0x00005003\n\t"
         "_08291070: .4byte 0x04000208\n\t"
@@ -135,7 +135,7 @@ __attribute__((naked)) void STWI_init_timer(IntrFunc *interrupt, s32 timerSelect
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_082910A4: .4byte STWI_intr_timer\n\t"
-        "_082910A8: .4byte gUnknown_3007608\n\t"
+        "_082910A8: .4byte gSTWIStatus\n\t"
         "_082910AC: .4byte 0x04000208\n\t"
         "_082910B0: .4byte 0x04000200\n\t"
         ".syntax divided\n\t"
@@ -227,7 +227,7 @@ __attribute__((naked)) void AgbRFU_SoftReset()
         "	.align 2, 0\n\t"
         "_0829114C: .4byte 0x04000134\n\t"
         "_08291150: .4byte 0x000080A0\n\t"
-        "_08291154: .4byte gUnknown_3007608\n\t"
+        "_08291154: .4byte gSTWIStatus\n\t"
         "_08291158: .4byte 0x04000100\n\t"
         "_0829115C: .4byte 0x04000102\n\t"
         "_08291160: .4byte 0x000080A2\n\t"
@@ -248,7 +248,7 @@ __attribute__((naked)) void STWI_set_MS_mode(u8 mode)
         "	strb r0, [r1, #0x14]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08291178: .4byte gUnknown_3007608\n\t"
+        "_08291178: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -280,14 +280,14 @@ __attribute__((naked)) u16 STWI_read_status(u8 index)
         "	ldrh r0, [r0, #0x12]\n\t"
         "	b _082911D2\n\t"
         "	.align 2, 0\n\t"
-        "_082911A4: .4byte gUnknown_3007608\n\t"
+        "_082911A4: .4byte gSTWIStatus\n\t"
         "_082911A8:\n\t"
         "	ldr r0, _082911B0\n\t"
         "	ldr r0, [r0]\n\t"
         "	ldrb r0, [r0, #0x14]\n\t"
         "	b _082911D2\n\t"
         "	.align 2, 0\n\t"
-        "_082911B0: .4byte gUnknown_3007608\n\t"
+        "_082911B0: .4byte gSTWIStatus\n\t"
         "_082911B4:\n\t"
         "	ldr r0, _082911C0\n\t"
         "	ldr r0, [r0]\n\t"
@@ -296,14 +296,14 @@ __attribute__((naked)) u16 STWI_read_status(u8 index)
         "	lsrs r0, r0, #0x10\n\t"
         "	b _082911D2\n\t"
         "	.align 2, 0\n\t"
-        "_082911C0: .4byte gUnknown_3007608\n\t"
+        "_082911C0: .4byte gSTWIStatus\n\t"
         "_082911C4:\n\t"
         "	ldr r0, _082911CC\n\t"
         "	ldr r0, [r0]\n\t"
         "	ldrb r0, [r0, #6]\n\t"
         "	b _082911D2\n\t"
         "	.align 2, 0\n\t"
-        "_082911CC: .4byte gUnknown_3007608\n\t"
+        "_082911CC: .4byte gSTWIStatus\n\t"
         "_082911D0:\n\t"
         "	ldr r0, _082911D8\n\t"
         "_082911D2:\n\t"
@@ -350,7 +350,7 @@ __attribute__((naked)) void STWI_set_Callback_M(void *callbackM)
         "	str r0, [r1, #0x18]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_082911FC: .4byte gUnknown_3007608\n\t"
+        "_082911FC: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -364,7 +364,7 @@ __attribute__((naked)) void STWI_set_Callback_S(void (*callbackS)(u16))
         "	str r0, [r1, #0x1c]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08291208: .4byte gUnknown_3007608\n\t"
+        "_08291208: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -378,7 +378,7 @@ __attribute__((naked)) void STWI_set_Callback_ID(void (*func)(void))
         "	str r0, [r1, #0x20]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08291214: .4byte gUnknown_3007608\n\t"
+        "_08291214: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -407,7 +407,7 @@ __attribute__((naked)) u16 STWI_poll_CommandEnd()
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0829123C: .4byte gUnknown_3007608\n\t"
+        "_0829123C: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -431,7 +431,7 @@ __attribute__((naked)) void STWI_send_ResetREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291260: .4byte gUnknown_3007608\n\t"
+        "_08291260: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -455,7 +455,7 @@ __attribute__((naked)) void STWI_send_LinkStatusREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291284: .4byte gUnknown_3007608\n\t"
+        "_08291284: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -479,7 +479,7 @@ __attribute__((naked)) void STWI_send_VersionStatusREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082912A8: .4byte gUnknown_3007608\n\t"
+        "_082912A8: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -503,7 +503,7 @@ __attribute__((naked)) void STWI_send_SystemStatusREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082912CC: .4byte gUnknown_3007608\n\t"
+        "_082912CC: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -527,7 +527,7 @@ __attribute__((naked)) void STWI_send_SlotStatusREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082912F0: .4byte gUnknown_3007608\n\t"
+        "_082912F0: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -551,7 +551,7 @@ __attribute__((naked)) void STWI_send_ConfigStatusREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291314: .4byte gUnknown_3007608\n\t"
+        "_08291314: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -603,7 +603,7 @@ __attribute__((naked)) void STWI_send_GameConfigREQ(const u8 *serial_gname, cons
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829136C: .4byte gUnknown_3007608\n\t"
+        "_0829136C: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -642,7 +642,7 @@ __attribute__((naked)) void STWI_send_SystemConfigREQ(u16 availSlotFlag, u8 maxM
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082913AC: .4byte gUnknown_3007608\n\t"
+        "_082913AC: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -666,7 +666,7 @@ __attribute__((naked)) void STWI_send_SC_StartREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082913D0: .4byte gUnknown_3007608\n\t"
+        "_082913D0: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -690,7 +690,7 @@ __attribute__((naked)) void STWI_send_SC_PollingREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082913F4: .4byte gUnknown_3007608\n\t"
+        "_082913F4: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -714,7 +714,7 @@ __attribute__((naked)) void STWI_send_SC_EndREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291418: .4byte gUnknown_3007608\n\t"
+        "_08291418: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -738,7 +738,7 @@ __attribute__((naked)) void STWI_send_SP_StartREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829143C: .4byte gUnknown_3007608\n\t"
+        "_0829143C: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -762,7 +762,7 @@ __attribute__((naked)) void STWI_send_SP_PollingREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291460: .4byte gUnknown_3007608\n\t"
+        "_08291460: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -786,7 +786,7 @@ __attribute__((naked)) void STWI_send_SP_EndREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291484: .4byte gUnknown_3007608\n\t"
+        "_08291484: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -816,7 +816,7 @@ __attribute__((naked)) void STWI_send_CP_StartREQ(u16 unk1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082914B4: .4byte gUnknown_3007608\n\t"
+        "_082914B4: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -840,7 +840,7 @@ __attribute__((naked)) void STWI_send_CP_PollingREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082914D8: .4byte gUnknown_3007608\n\t"
+        "_082914D8: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -864,7 +864,7 @@ __attribute__((naked)) void STWI_send_CP_EndREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082914FC: .4byte gUnknown_3007608\n\t"
+        "_082914FC: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -907,7 +907,7 @@ __attribute__((naked)) void STWI_send_DataTxREQ(const void *in, u8 size)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291544: .4byte gUnknown_3007608\n\t"
+        "_08291544: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -950,7 +950,7 @@ __attribute__((naked)) void STWI_send_DataTxAndChangeREQ(const void *in, u8 size
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829158C: .4byte gUnknown_3007608\n\t"
+        "_0829158C: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -974,7 +974,7 @@ __attribute__((naked)) void STWI_send_DataRxREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082915B0: .4byte gUnknown_3007608\n\t"
+        "_082915B0: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -998,7 +998,7 @@ __attribute__((naked)) void STWI_send_MS_ChangeREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082915D4: .4byte gUnknown_3007608\n\t"
+        "_082915D4: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1024,7 +1024,7 @@ __attribute__((naked)) void STWI_send_DataReadyAndChangeREQ(u8 unk)
         "	strb r3, [r0, #4]\n\t"
         "	b _0829161A\n\t"
         "	.align 2, 0\n\t"
-        "_082915FC: .4byte gUnknown_3007608\n\t"
+        "_082915FC: .4byte gSTWIStatus\n\t"
         "_08291600:\n\t"
         "	ldr r2, _08291624\n\t"
         "	ldr r1, [r2]\n\t"
@@ -1046,7 +1046,7 @@ __attribute__((naked)) void STWI_send_DataReadyAndChangeREQ(u8 unk)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291624: .4byte gUnknown_3007608\n\t"
+        "_08291624: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1085,7 +1085,7 @@ __attribute__((naked)) void STWI_send_DisconnectedAndChangeREQ(u8 unk0, u8 unk1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291664: .4byte gUnknown_3007608\n\t"
+        "_08291664: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1109,7 +1109,7 @@ __attribute__((naked)) void STWI_send_ResumeRetransmitAndChangeREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291688: .4byte gUnknown_3007608\n\t"
+        "_08291688: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1139,7 +1139,7 @@ __attribute__((naked)) void STWI_send_DisconnectREQ(u8 unk)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082916B8: .4byte gUnknown_3007608\n\t"
+        "_082916B8: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1173,7 +1173,7 @@ __attribute__((naked)) void STWI_send_TestModeREQ(u8 unk0, u8 unk1)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_082916F0: .4byte gUnknown_3007608\n\t"
+        "_082916F0: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1210,7 +1210,7 @@ __attribute__((naked)) void STWI_send_CPR_StartREQ(u16 unk0, u16 unk1, u8 unk2)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0829172C: .4byte gUnknown_3007608\n\t"
+        "_0829172C: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1234,7 +1234,7 @@ __attribute__((naked)) void STWI_send_CPR_PollingREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291750: .4byte gUnknown_3007608\n\t"
+        "_08291750: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1258,7 +1258,7 @@ __attribute__((naked)) void STWI_send_CPR_EndREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291774: .4byte gUnknown_3007608\n\t"
+        "_08291774: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1282,7 +1282,7 @@ __attribute__((naked)) void STWI_send_StopModeREQ()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08291798: .4byte gUnknown_3007608\n\t"
+        "_08291798: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1303,7 +1303,7 @@ __attribute__((naked)) void STWI_intr_timer(void)
         "	beq _082917D0\n\t"
         "	b _082917F8\n\t"
         "	.align 2, 0\n\t"
-        "_082917B4: .4byte gUnknown_3007608\n\t"
+        "_082917B4: .4byte gSTWIStatus\n\t"
         "_082917B8:\n\t"
         "	cmp r0, #3\n\t"
         "	beq _082917DA\n\t"
@@ -1371,7 +1371,7 @@ __attribute__((naked)) void STWI_set_timer(void)
         "	beq _08291846\n\t"
         "	b _08291884\n\t"
         "	.align 2, 0\n\t"
-        "_08291830: .4byte gUnknown_3007608\n\t"
+        "_08291830: .4byte gSTWIStatus\n\t"
         "_08291834: .4byte 0x04000100\n\t"
         "_08291838: .4byte 0x04000208\n\t"
         "_0829183C:\n\t"
@@ -1459,7 +1459,7 @@ __attribute__((naked)) void STWI_stop_timer(void)
         "	strh r1, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_082918CC: .4byte gUnknown_3007608\n\t"
+        "_082918CC: .4byte gSTWIStatus\n\t"
         "_082918D0: .4byte 0x04000100\n\t"
         "_082918D4: .4byte 0x04000102\n\t"
         ".syntax divided\n\t"
@@ -1492,7 +1492,7 @@ __attribute__((naked)) void STWI_init(void)
         "	b _08291956\n\t"
         "	.align 2, 0\n\t"
         "_08291904: .4byte 0x04000208\n\t"
-        "_08291908: .4byte gUnknown_3007608\n\t"
+        "_08291908: .4byte gSTWIStatus\n\t"
         "_0829190C:\n\t"
         "	ldr r4, _08291938\n\t"
         "	ldr r2, [r4]\n\t"
@@ -1516,7 +1516,7 @@ __attribute__((naked)) void STWI_init(void)
         "	bl _call_via_r2\n\t"
         "	b _08291956\n\t"
         "	.align 2, 0\n\t"
-        "_08291938: .4byte gUnknown_3007608\n\t"
+        "_08291938: .4byte gSTWIStatus\n\t"
         "_0829193C:\n\t"
         "	ldrb r0, [r2, #0x14]\n\t"
         "	cmp r0, #0\n\t"
@@ -1630,7 +1630,7 @@ __attribute__((naked)) void STWI_start_Command(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08291A08: .4byte gUnknown_3007608\n\t"
+        "_08291A08: .4byte gSTWIStatus\n\t"
         "_08291A0C: .4byte 0x99660000\n\t"
         "_08291A10: .4byte 0x04000120\n\t"
         "_08291A14: .4byte 0x04000208\n\t"
@@ -1657,7 +1657,7 @@ __attribute__((naked)) void STWI_restart_Command(void)
         "	bl STWI_start_Command\n\t"
         "	b _08291A9A\n\t"
         "	.align 2, 0\n\t"
-        "_08291A3C: .4byte gUnknown_3007608\n\t"
+        "_08291A3C: .4byte gSTWIStatus\n\t"
         "_08291A40:\n\t"
         "	ldrb r0, [r2, #6]\n\t"
         "	cmp r0, #0x27\n\t"
@@ -1742,10 +1742,9 @@ __attribute__((naked)) void STWI_reset_ClockCounter(void)
         "	movs r0, #0\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_08291AD0: .4byte gUnknown_3007608\n\t"
+        "_08291AD0: .4byte gSTWIStatus\n\t"
         "_08291AD4: .4byte 0x04000120\n\t"
         "_08291AD8: .4byte 0x00005003\n\t"
         ".syntax divided\n\t"
     );
 }
-

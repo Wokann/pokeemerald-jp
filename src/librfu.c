@@ -42,7 +42,7 @@ __attribute__((naked)) int sub_082952F4(u8 param)
         "b _0829535E\n\t"
         ".align 2, 0\n\t"
         "_0829533C: .4byte 0x04000200\n\t"
-        "_08295340: .4byte gUnknown_3007608\n\t"
+        "_08295340: .4byte gSTWIStatus\n\t"
         "_08295344: .4byte sub_08295510 + 1\n\t"
         "_08295348: .4byte 0x04000100\n\t"
         "_0829534C:\n\t"
@@ -90,7 +90,7 @@ __attribute__((naked)) int sub_082952F4(u8 param)
         ".align 2, 0\n\t"
         "_0829539C: .4byte 0x04000208\n\t"
         "_082953A0: .4byte 0x04000200\n\t"
-        "_082953A4: .4byte gUnknown_3007608\n\t"
+        "_082953A4: .4byte gSTWIStatus\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -145,7 +145,7 @@ __attribute__((naked)) int sub_082953A8(void)
         ".align 2, 0\n\t"
         "_08295400: .4byte 0x04000208\n\t"
         "_08295404: .4byte 0x04000200\n\t"
-        "_08295408: .4byte gUnknown_3007608\n\t"
+        "_08295408: .4byte gSTWIStatus\n\t"
         "_0829540C: .4byte 0x04000134\n\t"
         "_08295410: .4byte gUnknown_3007640\n\t"
         "_08295414: .4byte 0x05000003\n\t"
