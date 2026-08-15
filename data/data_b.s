@@ -21415,9 +21415,38 @@ gBattlePyramidWildMonHeaders: @ 0x852E540
 gUnknown_852E5E0: @ 0x852E5E0
 	.incbin "baserom_jp.gba", 0x52e5e0, 0xe0
 
-	.globl gUnknown_852E6C0
-gUnknown_852E6C0: @ 0x852E6C0
-	.incbin "baserom_jp.gba", 0x52e6c0, 0x64
+	.globl gBattlePikeWildMonHeaders
+gBattlePikeWildMonHeaders: @ 0x852E6C0
+	.byte 0, 1 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E610 @ landMonsInfo (gBattlePike_1_LandMonsInfo)
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
+	.byte 0, 2 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E648 @ landMonsInfo (gBattlePike_2_LandMonsInfo)
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
+	.byte 0, 3 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E680 @ landMonsInfo (gBattlePike_3_LandMonsInfo)
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
+	.byte 0, 4 @ mapGroup, mapNum
+	.hword 0
+	.4byte 0x0852E6B8 @ landMonsInfo (gBattlePike_4_LandMonsInfo)
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
+	.byte 255, 255
+	.hword 0
+	.4byte 0 @ landMonsInfo NULL
+	.4byte 0 @ waterMonsInfo NULL
+	.4byte 0 @ rockSmashMonsInfo NULL
+	.4byte 0 @ fishingMonsInfo NULL
 
 	.globl gUnknown_852E724
 gUnknown_852E724: @ 0x852E724
