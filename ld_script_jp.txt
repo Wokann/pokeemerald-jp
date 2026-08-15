@@ -8972,7 +8972,7 @@ SECTIONS {
         src/dewford_trend.o(.text);
         src/heal_location.o(.text);
         asm/region_map.o(.text);
-        asm/contest_painting_effects.o(.text);
+        src/contest_painting_effects.o(.text);
         asm/decoration.o(.text);
         src/slot_machine.o(.text.Task_FadeToSlotMachine);
         src/slot_machine.o(.text.PlaySlotMachine);
