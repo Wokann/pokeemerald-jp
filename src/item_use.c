@@ -2272,7 +2272,7 @@ __attribute__((naked)) void task08_0809AD8C(void)
         "_080FE858: .4byte gMain\n\t"
         "_080FE85C: .4byte gStringVar1\n\t"
         "_080FE860: .4byte gSpecialVar_ItemId\n\t"
-        "_080FE864: .4byte gMoveNamesJP\n\t"
+        "_080FE864: .4byte gMoveNames\n\t"
         "_080FE868: .4byte gStringVar4\n\t"
         "_080FE86C: .4byte 0x085C961D\n\t"
         "_080FE870: .4byte sub_080FE874 + 1\n\t"

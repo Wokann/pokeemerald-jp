@@ -10417,7 +10417,7 @@ __attribute__((naked)) const u8 *GetEasyChatWord(u8 groupId, u16 index)
         "	adds r0, r0, r1\n\t"
         "	b _0811F176\n\t"
         "	.align 2, 0\n\t"
-        "_0811F160: .4byte gMoveNamesJP\n\t"
+        "_0811F160: .4byte gMoveNames\n\t"
         "_0811F164:\n\t"
         "	ldr r1, _0811F17C\n\t"
         "	lsls r0, r0, #3\n\t"

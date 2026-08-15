@@ -2344,7 +2344,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "_080E0158: .4byte gUnknown_2039C00\n\t"
         "_080E015C: .4byte gStringVar1\n\t"
         "_080E0160: .4byte gStringVar2\n\t"
-        "_080E0164: .4byte gMoveNamesJP\n\t"
+        "_080E0164: .4byte gMoveNames\n\t"
         "_080E0168: .4byte 0x085C9903\n\t"
         "_080E016C:\n\t"
         "	ldr r1, _080E0178\n\t"

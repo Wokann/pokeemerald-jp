@@ -5438,7 +5438,7 @@ __attribute__((naked)) void sub_08079564(void)
         "	b _0807962C\n\t"
         "	.align 2, 0\n\t"
         "_08079610: .4byte gUnknown_8300A8A\n\t"
-        "_08079614: .4byte gMoveNamesJP\n\t"
+        "_08079614: .4byte gMoveNames\n\t"
         "_08079618: .4byte gUnknown_8300A9E\n\t"
         "_0807961C:\n\t"
         "	ldr r1, _0807963C\n\t"

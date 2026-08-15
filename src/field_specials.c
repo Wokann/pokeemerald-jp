@@ -4129,7 +4129,7 @@ __attribute__((naked)) void sub_08139938(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08139978: .4byte gStringVar2\n\t"
-        "_0813997C: .4byte gMoveNamesJP\n\t"
+        "_0813997C: .4byte gMoveNames\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6810,7 +6810,7 @@ __attribute__((naked)) void sub_0813ACC8(void)
         "_0813ACF0: .4byte gStringVar1\n\t"
         "_0813ACF4: .4byte 0x08592C68\n\t"
         "_0813ACF8: .4byte gSpecialVar_0x8004\n\t"
-        "_0813ACFC: .4byte gMoveNamesJP\n\t"
+        "_0813ACFC: .4byte gMoveNames\n\t"
         "_0813AD00:\n\t"
         "	ldr r0, _0813AD1C\n\t"
         "	ldr r2, _0813AD20\n\t"
@@ -6830,7 +6830,7 @@ __attribute__((naked)) void sub_0813ACC8(void)
         "_0813AD1C: .4byte gStringVar1\n\t"
         "_0813AD20: .4byte 0x08592C54\n\t"
         "_0813AD24: .4byte gSpecialVar_0x8004\n\t"
-        "_0813AD28: .4byte gMoveNamesJP\n\t"
+        "_0813AD28: .4byte gMoveNames\n\t"
         ".syntax divided\n\t"
     );
 }

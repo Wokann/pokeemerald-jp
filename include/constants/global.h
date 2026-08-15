@@ -101,7 +101,7 @@
 #define PLAYER_NAME_LENGTH 7
 #define MAIL_WORDS_COUNT 9
 #define EASY_CHAT_BATTLE_WORDS_COUNT 6
-#define MOVE_NAME_LENGTH 12
+#define MOVE_NAME_LENGTH 7 // JP move names are 7 kana + EOS (8 bytes); US is 12 + EOS.
 #define NUM_QUESTIONNAIRE_WORDS 4
 #define QUIZ_QUESTION_LEN 9
 #define WONDER_CARD_TITLE_LENGTH 18 // JP text lengths differ per card field

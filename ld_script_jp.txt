@@ -9210,6 +9210,7 @@ SECTIONS {
         src/link.o(.rodata);
         data/data_b.o(.rodata);
         src/data/text/species_names.o(.rodata);
+        src/data/text/move_names.o(.rodata);
         data/data_b2.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);

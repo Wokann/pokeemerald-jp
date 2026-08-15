@@ -9027,7 +9027,7 @@ __attribute__((naked)) void sub_08192B3C(void)
         "_08192CD8: .4byte gSaveBlock2Ptr\n\t"
         "_08192CDC: .4byte 0x00000D25\n\t"
         "_08192CE0: .4byte 0x085D5E30\n\t"
-        "_08192CE4: .4byte gMoveNamesJP\n\t"
+        "_08192CE4: .4byte gMoveNames\n\t"
         "_08192CE8: .4byte gStringVar2\n\t"
         "_08192CEC:\n\t"
         "	ldr r5, _08192D04\n\t"

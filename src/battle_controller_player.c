@@ -4912,7 +4912,7 @@ __attribute__((naked)) void MoveSelectionDisplayMoveNames(void)
         "_08059724: .4byte gUnknown_2022D0C\n\t"
         "_08059728: .4byte gUnknown_3005AD8\n\t"
         "_0805972C: .4byte gDisplayedStringBattle\n\t"
-        "_08059730: .4byte gMoveNamesJP\n\t"
+        "_08059730: .4byte gMoveNames\n\t"
         ".syntax divided\n\t"
     );
 }

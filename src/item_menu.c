@@ -1135,7 +1135,7 @@ __attribute__((naked)) const u8 *GetItemName(u16 itemId)
         "	b _081AB1A8\n\t"
         "	.align 2, 0\n\t"
         "_081AB164: .4byte gStringVar2\n\t"
-        "_081AB168: .4byte gMoveNamesJP\n\t"
+        "_081AB168: .4byte gMoveNames\n\t"
         "_081AB16C: .4byte gStringVar1\n\t"
         "_081AB170: .4byte 0xFFFFFEAE\n\t"
         "_081AB174: .4byte 0x085C9776\n\t"

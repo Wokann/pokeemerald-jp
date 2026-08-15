@@ -5240,7 +5240,7 @@ __attribute__((naked)) void sub_081645E4(void)
         "_08164700: .4byte 0xFFFFFE70\n\t"
         "_08164704: .4byte gStringVar3\n\t"
         "_08164708: .4byte gStringVar1\n\t"
-        "_0816470C: .4byte gMoveNamesJP\n\t"
+        "_0816470C: .4byte gMoveNames\n\t"
         "_08164710: .4byte gStringVar2\n\t"
         "_08164714: .4byte gSpeciesNames\n\t"
         ".syntax divided\n\t"
