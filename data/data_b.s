@@ -3494,9 +3494,14 @@ sJumpOffsets: @ 0x82CEEE8
 	.byte 253, 250, 247, 245, 243, 241, 239, 237, 235, 233, 231, 229, 228, 227, 226, 226, 226, 226, 227, 227, 228, 228, 229, 229, 230, 231, 232, 234, 236, 238, 240, 242, 244, 245, 247, 250, 252, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0  @ row 2 (NORMAL=0 FAST=1 SLOW=2)
 
 
-	.globl gUnknown_82CEF78
-gUnknown_82CEF78: @ 0x82CEF78
-	.incbin "baserom_jp.gba", 0x2cef78, 0x18
+	.globl sScoreBonuses
+sScoreBonuses: @ 0x82CEF78
+	.4byte 0 @ 0 players
+	.4byte 0 @ 1 players
+	.4byte 50 @ 2 players
+	.4byte 100 @ 3 players
+	.4byte 200 @ 4 players
+	.4byte 500 @ 5 players
 
 	.globl sPrizeItems
 sPrizeItems: @ 0x82CEF90
@@ -3603,9 +3608,21 @@ gUnknown_82D1A18: @ 0x82D1A18
 gUnknown_82D1A68: @ 0x82D1A68
 	.byte 0x00, 0x02, 0x03
 
-	.globl gUnknown_82D1A6B
-gUnknown_82D1A6B: @ 0x82D1A6B
-	.incbin "baserom_jp.gba", 0x2d1a6b, 0xd
+	.globl sVenusaurStates
+sVenusaurStates: @ 0x82D1A6B
+	.byte 2 @ VINE_HIGHEST -> VENUSAUR_UP
+	.byte 2 @ VINE_DOWNSWING_HIGHER -> VENUSAUR_UP
+	.byte 0 @ VINE_DOWNSWING_HIGH -> VENUSAUR_NEUTRAL
+	.byte 0 @ VINE_DOWNSWING_LOW -> VENUSAUR_NEUTRAL
+	.byte 1 @ VINE_DOWNSWING_LOWER -> VENUSAUR_DOWN
+	.byte 1 @ VINE_LOWEST -> VENUSAUR_DOWN
+	.byte 1 @ VINE_UPSWING_LOWER -> VENUSAUR_DOWN
+	.byte 0 @ VINE_UPSWING_LOW -> VENUSAUR_NEUTRAL
+	.byte 0 @ VINE_UPSWING_HIGH -> VENUSAUR_NEUTRAL
+	.byte 2 @ VINE_UPSWING_HIGHER -> VENUSAUR_UP
+	.byte 0 @ JP trailing entry 10
+	.byte 0 @ JP trailing entry 11
+	.byte 0 @ JP trailing entry 12
 
 	.globl gUnknown_82D1A78
 gUnknown_82D1A78: @ 0x82D1A78
