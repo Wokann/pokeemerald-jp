@@ -140,6 +140,32 @@ SYMBOLS6 = [
 
 END_ADDR6 = 0x082C0DEC  # sText_ShowTrainerCard (next region)
 
+# Seventh batch: invitation/chat texts and their tables.
+SYMBOLS7 = [
+    ("sText_ShowTrainerCard", 0x082C0DEC, "text", None),
+    ("sText_BattleChallenge", 0x082C0E1C, "text", None),
+    ("sText_ChatInvitation", 0x082C0E40, "text", None),
+    ("sText_OfferToTradeMon", 0x082C0E68, "text", None),
+    ("sText_OfferToTradeEgg", 0x082C0EA8, "text", None),
+    ("sText_ChatDropped", 0x082C0ED4, "text", None),
+    ("sText_OfferDeclined1", 0x082C0EE0, "text", None),
+    ("sText_OfferDeclined2", 0x082C0EF4, "text", None),
+    ("sText_ChatEnded", 0x082C0F04, "text", None),
+    ("sInvitationTexts", 0x082C0F10, "table",
+        ["sText_ShowTrainerCard", "sText_BattleChallenge",
+         "sText_ChatInvitation", "sText_OfferToTradeMon"]),
+    ("sText_JoinChatMale", 0x082C0F20, "text", None),
+    ("sText_JoinChatFemale", 0x082C0F4C, "text", None),
+    ("sText_PlayerJoinChatMale", 0x082C0F78, "text", None),
+    ("sText_PlayerJoinChatFemale", 0x082C0FA4, "text", None),
+    ("sJoinChatTexts", 0x082C0FD0, "table",
+        ["sText_JoinChatMale", "sText_PlayerJoinChatMale",
+         "sText_JoinChatFemale", "sText_PlayerJoinChatFemale"]),
+    ("sText_TrainerAppearsBusy", 0x082C0FE0, "text_fixed", None),
+]
+
+END_ADDR7 = 0x082C0FF8  # gUnknown_82C0FF8 (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -216,6 +242,14 @@ def decode_preproc(data):
         if b == 0xFE:
             out.append("\\n")
             i += 1
+            continue
+        if b == 0xF7:  # DYNAMIC placeholder, one argument byte
+            if i + 1 < len(data):
+                out.append("{DYNAMIC %d}" % data[i + 1])
+                i += 2
+            else:
+                out.append("[F7]")
+                i += 1
             continue
         if b not in single:
             matched = False
@@ -341,6 +375,8 @@ def main():
           "// Trade-request and communicating texts")
     build(SYMBOLS6, END_ADDR6, "src/data/union_room6.h", "src/data/union_room6.c",
           "// Hi/do-something and contacted/awaiting texts")
+    build(SYMBOLS7, END_ADDR7, "src/data/union_room7.h", "src/data/union_room7.c",
+          "// Invitation and chat texts")
 
 
 if __name__ == "__main__":
