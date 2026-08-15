@@ -9,13 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-
-	.globl gUnknown_82F53E6
-gUnknown_82F53E6: @ 0x82F53E6
-	.incbin "baserom_jp.gba", 0x2f53e6, 0x1c
-	.globl gUnknown_82F5402
-gUnknown_82F5402: @ 0x82F5402
-	.incbin "baserom_jp.gba", 0x2f5402, 0x18
-	.globl gUnknown_82F541A
-gUnknown_82F541A: @ 0x82F541A
-	.incbin "baserom_jp.gba", 0x2f541a, 0x1e
+	.globl gUnknown_82F5684
+gUnknown_82F5684: @ 0x82F5684
+	.incbin "baserom_jp.gba", 0x2f5684, 0x16
