@@ -117,16 +117,10 @@ __attribute__((naked)) bool8 FieldEffectCmd_callnative(u8 **script, u32 *val)
     );
 }
 
-__attribute__((naked)) bool8 FieldEffectCmd_end(u8 **script, u32 *val)
+bool8 FieldEffectCmd_end(u8 **script, u32 *val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) bool8 FieldEffectCmd_loadgfx_callnative(u8 **script, u32 *val)
 {
     __asm__(".syntax unified\n\t"

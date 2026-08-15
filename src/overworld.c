@@ -6330,16 +6330,10 @@ __attribute__((naked)) u16 KeyInterCB_SetReady(u32 key)
     );
 }
 
-__attribute__((naked)) u16 KeyInterCB_SendNothing_2(u32 key)
+u16 KeyInterCB_SendNothing_2(u32 key)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0x11;
 }
-
 __attribute__((naked)) u16 KeyInterCB_WaitForPlayersToExit(u32 keyOrPlayerId)
 {
     __asm__(".syntax unified\n\t"
@@ -6388,16 +6382,10 @@ __attribute__((naked)) u16 KeyInterCB_SendExitRoomKey(u32 key)
     );
 }
 
-__attribute__((naked)) u16 KeyInterCB_SendNothing(u32 key)
+u16 KeyInterCB_SendNothing(u32 key)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0x11\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0x11;
 }
-
 __attribute__((naked)) u32 GetCableClubPartnersReady(void)
 {
     __asm__(".syntax unified\n\t"
@@ -7667,16 +7655,10 @@ __attribute__((naked)) u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEven
     );
 }
 
-__attribute__((naked)) u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
+u8 MovementEventModeCB_Ignored(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 1;
 }
-
 __attribute__((naked)) u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
 {
     __asm__(".syntax unified\n\t"
@@ -7700,16 +7682,10 @@ __attribute__((naked)) u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEv
     );
 }
 
-__attribute__((naked)) u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
+u8 FacingHandler_DoNothing(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) u8 FacingHandler_DpadMovement(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1, u8 a2)
 {
     __asm__(".syntax unified\n\t"

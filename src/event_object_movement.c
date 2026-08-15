@@ -11873,16 +11873,10 @@ __attribute__((naked)) bool8 MovementType_CopyPlayer_Step2(struct ObjectEvent *o
     );
 }
 
-__attribute__((naked)) bool8 CopyablePlayerMovement_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_None(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) bool8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
     __asm__(".syntax unified\n\t"
@@ -23560,16 +23554,10 @@ __attribute__((naked)) bool8 MovementAction_DestroyExtraTaskIfAtTop_Step0(struct
     );
 }
 
-__attribute__((naked)) bool8 sub_08095E28(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 sub_08095E28(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 1;
 }
-
 __attribute__((naked)) bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -28080,13 +28068,7 @@ __attribute__((naked)) u8 MovementAction_FlyDown_Step1(struct ObjectEvent *objec
     );
 }
 
-__attribute__((naked)) u8 MovementAction_Finish(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementAction_Finish(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 1;
 }
-

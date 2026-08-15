@@ -1390,16 +1390,10 @@ __attribute__((naked)) void Task_ClearBitWhenSpecialAnimDone(void)
     );
 }
 
-__attribute__((naked)) bool8 IsMoveWithoutAnimation(u16 move, u8 animationTurn)
+bool8 IsMoveWithoutAnimation(u16 move, u8 animationTurn)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
-
 __attribute__((naked)) void mplay_80342A4(void)
 {
     __asm__(".syntax unified\n\t"

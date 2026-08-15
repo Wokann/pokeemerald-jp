@@ -610,16 +610,10 @@ __attribute__((naked)) int _kill(int pid, int sig)
     );
 }
 
-__attribute__((naked)) int _getpid(void)
+int _getpid(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "movs r0, #1\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 1;
 }
-
 __attribute__((naked)) void *_sbrk(int incr)
 {
     __asm__(".syntax unified\n\t"
@@ -928,16 +922,10 @@ __attribute__((naked)) void abort(void)
     );
 }
 
-__attribute__((naked)) int isatty(int fd)
+int isatty(int fd)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "movs r0, #1\n\t"
-        "bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 1;
 }
-
 __attribute__((naked)) int alarm(int sec)
 {
     __asm__(".syntax unified\n\t"
