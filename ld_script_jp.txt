@@ -10533,7 +10533,7 @@ SECTIONS {
         src/berry_fix_program.o(.text.berry_fix_bg_hide);
         src/berry_fix_program.o(.text.berry_fix_text_print);
         src/berry_fix_program.o(.text.berry_fix_main);
-        asm/pokemon_summary_screen.o(.text);
+        src/pokemon_summary_screen.o(.text);
         src/pokedex_area_region_map.o(.text.LoadPokedexAreaMapGfx);
         src/pokedex_area_region_map.o(.text.TryShowPokedexAreaMap);
         src/pokedex_area_region_map.o(.text.FreePokedexAreaMapBgNum);
