@@ -396,6 +396,58 @@ SYMBOLS8L = [
 
 END_ADDR8L = 0x082C1FC4  # sWindowTemplate_BButtonCancel (next region)
 
+# Eighth batch part 13: mystery-gift JP texts (0x82C26C4..0x82C2B64).
+SYMBOLS8P = [
+    ("sJPText_MgDontHaveCard", 0x082C26C4, "text", None),
+    ("sJPText_MgDontHaveNews", 0x082C26E8, "text", None),
+    ("sJPText_MgWhereCard", 0x082C2710, "text", None),
+    ("sJPText_MgWhereNews", 0x082C272C, "text", None),
+    ("sJPText_MgCommunicating", 0x082C276C, "text", None),
+    ("sJPText_MgCommCompleted", 0x082C277C, "text", None),
+    ("sJPText_MeventMsg11", 0x082C2790, "text", None),
+    ("sJPText_MeventMsg9", 0x082C27A0, "text", None),
+    ("sJPText_MgThrowAwayCard", 0x082C27B4, "text", None),
+    ("sJPText_MgHaventReceived", 0x082C27DC, "text", None),
+    ("sJPText_MeventMsg2a", 0x082C2804, "text", None),
+    ("sJPText_MeventMsg3a", 0x082C2820, "text", None),
+    ("sJPText_MeventMsg2b", 0x082C2838, "text", None),
+    ("sJPText_MeventMsg3b", 0x082C2854, "text", None),
+    ("sJPText_MeventMsg4", 0x082C286C, "text", None),
+    ("sJPText_MeventMsg12", 0x082C2884, "text", None),
+    ("sJPText_MeventMsg5", 0x082C28A0, "text", None),
+    ("sJPText_MeventMsg7", 0x082C28B8, "text", None),
+    ("sJPText_MeventMsg6", 0x082C28D0, "text", None),
+    ("sJPText_MeventMsg8", 0x082C28E8, "text", None),
+    ("sJPText_MeventMsg1", 0x082C2904, "text", None),
+    ("sJPText_MeventMsg10b", 0x082C2924, "text", None),
+    ("sJPText_MeventMsg10a", 0x082C2944, "text", None),
+    ("sJPText_MeventMsg0", 0x082C2960, "text", None),
+    ("gText_WhatToDoWithCards", 0x082C2974, "text", None),
+    ("gText_WhatToDoWithNews", 0x082C2984, "text", None),
+    ("sJPText_MgSendingCard", 0x082C2994, "text", None),
+    ("sJPText_MgSendingNews", 0x082C29AC, "text", None),
+    ("sJPText_StampMsg2", 0x082C29C0, "text", None),
+    ("sJPText_StampMsg3", 0x082C29D8, "text", None),
+    ("sJPText_StampMsg4", 0x082C29EC, "text", None),
+    ("sJPText_StampMsg12", 0x082C2A00, "text", None),
+    ("sJPText_StampMsg5", 0x082C2A14, "text", None),
+    ("sJPText_StampMsg7", 0x082C2A30, "text", None),
+    ("sJPText_StampMsg6", 0x082C2A48, "text", None),
+    ("sJPText_StampMsg9", 0x082C2A60, "text", None),
+    ("sJPText_StampMsg14", 0x082C2A78, "text", None),
+    ("sText_DiscardWonderCard", 0x082C2A94, "text", None),
+    ("sText_DiscardWonderNews", 0x082C2AB4, "text", None),
+    ("sJPText_MgDiscardConfirm", 0x082C2ACC, "text", None),
+    ("sText_SavingGame1", 0x082C2AEC, "text", None),
+    ("sText_SavingGame2", 0x082C2B08, "text", None),
+    ("sText_WasThrownAwayWonderCard", 0x082C2B28, "text", None),
+    ("sText_WasThrownAwayWonderNews", 0x082C2B38, "text", None),
+    ("gText_MysteryGift", 0x082C2B44, "text", None),
+    ("gText_PickOKExit", 0x082C2B50, "text", None),
+]
+
+END_ADDR8P = 0x082C2B64  # sTextColors_Header (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -826,6 +878,8 @@ def main():
            "sText_ToughContest", "sText_BattleTowerLv50"])
     build(SYMBOLS8L, END_ADDR8L, "src/data/union_room8l.h", "src/data/union_room8l.c",
           "// Trainer-card info texts and glad-to-meet table")
+    build(SYMBOLS8P, END_ADDR8P, "src/data/union_room8p.h", "src/data/union_room8p.c",
+          "// Mystery-gift JP texts (Mg/Mevent/Stamp messages)")
 
 
 if __name__ == "__main__":
