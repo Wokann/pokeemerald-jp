@@ -3818,17 +3818,27 @@ gUnknown_82D25C8: @ 0x82D25C8
 gUnknown_82D277C: @ 0x82D277C
 	.incbin "baserom_jp.gba", 0x2d277c, 0x12a
 
-	.globl gUnknown_82D28A6
-gUnknown_82D28A6: @ 0x82D28A6
-	.incbin "baserom_jp.gba", 0x2d28a6, 0x2
-
-	.globl gUnknown_82D28A8
-gUnknown_82D28A8: @ 0x82D28A8
-	.incbin "baserom_jp.gba", 0x2d28a8, 0xe
-
-	.globl gUnknown_82D28B6
-gUnknown_82D28B6: @ 0x82D28B6
-	.incbin "baserom_jp.gba", 0x2d28b6, 0x12
+	.globl sBirchSpeechBgGradientPal
+sBirchSpeechBgGradientPal: @ 0x82D28A6
+	.hword 0x53FF @ color 0
+	.hword 0x37FF @ color 1
+	.hword 0x2F7B @ color 2
+	.hword 0x26F7 @ color 3
+	.hword 0x1E73 @ color 4
+	.hword 0x19EF @ color 5
+	.hword 0x116B @ color 6
+	.hword 0x08E7 @ color 7
+	.hword 0x0000 @ color 8
+	.hword 0x0000 @ color 9
+	.hword 0x0000 @ color 10
+	.hword 0x0000 @ color 11
+	.hword 0x0000 @ color 12
+	.hword 0x0000 @ color 13
+	.hword 0x0000 @ color 14
+	.hword 0x0000 @ color 15
+	.globl gUnknown_82D28C6
+gUnknown_82D28C6: @ 0x82D28C6
+	.incbin "baserom_jp.gba", 0x2d28c6, 0x2
 
 	.globl gUnknown_82D28C8
 gUnknown_82D28C8: @ 0x82D28C8
