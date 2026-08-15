@@ -15560,9 +15560,20 @@ gUnknown_84FE5A4: @ 0x84FE5A4
 sBattlerCoords: @ 0x84FE664
 	.incbin "baserom_jp.gba", 0x4fe664, 0x20
 
-	.globl gUnknown_84FE684
-gUnknown_84FE684: @ 0x84FE684
-	.incbin "baserom_jp.gba", 0x4fe684, 0x10
+	.globl gCastformFrontSpriteCoords
+gCastformFrontSpriteCoords: @ 0x84FE684
+	.byte 68 @ entry 0 size
+	.byte 17 @ entry 0 y_offset
+	.hword 0
+	.byte 102 @ entry 1 size
+	.byte 9 @ entry 1 y_offset
+	.hword 0
+	.byte 70 @ entry 2 size
+	.byte 9 @ entry 2 y_offset
+	.hword 0
+	.byte 134 @ entry 3 size
+	.byte 8 @ entry 3 y_offset
+	.hword 0
 
 	.globl sCastformElevations
 sCastformElevations: @ 0x84FE694
