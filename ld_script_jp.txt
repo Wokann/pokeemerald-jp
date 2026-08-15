@@ -2306,7 +2306,6 @@ SECTIONS {
         src/dodrio_berry_picking.o(.text.Debug_SetPlayerNamesAndResults);
         src/dodrio_berry_picking.o(.text.SendRfuPacket);
         src/dodrio_berry_picking.o(.text.RecvPacket_ReadyToStart);
-        asm/dodrio_berry_picking6.o(.text);
         src/dodrio_berry_picking.o(.text.SendPacket_GameState);
         src/dodrio_berry_picking.o(.text.RecvPacket_GameState);
         src/dodrio_berry_picking.o(.text.SendPacket_PickState);
@@ -2484,7 +2483,6 @@ SECTIONS {
         src/pokemon_jump.o(.text.StartPokeJumpCountdown);
         src/pokemon_jump.o(.text.IsPokeJumpCountdownRunning);
         src/pokemon_jump.o(.text.StartPokeJumpGfx);
-        asm/pokemon_jump_1b.o(.text);
         src/pokemon_jump.o(.text.FreeWindowsAndDigitObj);
         src/pokemon_jump.o(.text.InitPokeJumpGfx);
         src/pokemon_jump.o(.text.SetUpPokeJumpGfxFuncById);
@@ -2842,7 +2840,6 @@ SECTIONS {
         src/battle_main.o(.text.sub_0803EEE4);
         src/battle_main.o(.text.HandleAction_NothingIsFainted);
         src/battle_main.o(.text.HandleAction_ActionFinished);
-        asm/battle_main.o(.text);
         src/battle_util.o(.text.GetBattlerForBattleScript);
         src/battle_util.o(.text.PressurePPLose);
         src/battle_util.o(.text.PressurePPLoseOnUsingImprison);
@@ -2880,7 +2877,6 @@ SECTIONS {
         src/battle_util.o(.text.GetMoveTarget);
         src/battle_util.o(.text.IsBattlerModernFatefulEncounter);
         src/battle_util.o(.text.IsMonDisobedient);
-        asm/battle_util.o(.text);
         src/battle_script_commands.o(.text.Cmd_attackcanceler);
         src/battle_script_commands.o(.text.JumpIfMoveFailed);
         src/battle_script_commands.o(.text.Cmd_jumpifaffectedbyprotect);
@@ -3166,7 +3162,6 @@ SECTIONS {
         src/battle_script_commands.o(.text.Cmd_finishaction);
         src/battle_script_commands.o(.text.Cmd_finishturn);
         src/battle_script_commands.o(.text.Cmd_trainerslideout);
-        asm/battle_script_commands.o(.text.atkF4_battle_rest);
         src/battle_util2.o(.text);
         src/battle_controller_player.o(.text);
         src/battle_gfx_sfx_util.o(.text);
@@ -6502,7 +6497,6 @@ SECTIONS {
         src/battle_anim_effects_1.o(.text.AnimTauntFinger);
         src/battle_anim_effects_1.o(.text.AnimTauntFinger_Step1);
         src/battle_anim_effects_1.o(.text.AnimTauntFinger_Step2);
-        asm/battle_anim_effects_1.o(.text.battle_anim_effects_1_rest);
         src/battle_anim_effects_2.o(.text.AnimCirclingFinger);
         src/battle_anim_effects_2.o(.text.AnimBouncingMusicNote);
         src/battle_anim_effects_2.o(.text.AnimBouncingMusicNote_Step);
