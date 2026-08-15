@@ -11775,7 +11775,8 @@ gUnknown_85ABBC9: @ 0x85ABBC9
 	.string "いいえ$"
 	.globl gUnknown_85ABBD8
 gUnknown_85ABBD8: @ 0x85ABBD8
-	.incbin "baserom_jp.gba", 0x5abbd8, 0x60
+	.string "{PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}いれかえる　わざを\n"
+	.string "えらんで　ください${PALETTE 5}{COLOR_HIGHLIGHT_SHADOW 13 14 15}${ESCAPE 3}${ESCAPE 4}$ー$HP　　$こうげき$ぼうぎょ$とくこう$とくぼう$きBコくにBコくしBコくひBコくちBコくヘ⋯コく"
 
 	.globl gText_SafariBalls
 gText_SafariBalls: @ 0x85ABC38
@@ -11859,7 +11860,7 @@ gUnknown_85ABC9A: @ 0x85ABC9A
 	.string "ノーマルわざ$かくとうわざ$ひこうわざ$$どくわざ$$$じめんわざ$$いわわざ$$$むしわざ$$$ゴーストわざ$はがねわざ$$はてなわざ$$ほのおわざ$$みずわざ$$$くさわざ$$$でんきわざ$$エスパーわざ$こおりわざ$$ドラゴンわざ$あくわざ$$$"
 	.globl gUnknown_85ABD18
 gUnknown_85ABD18: @ 0x85ABD18
-	.incbin "baserom_jp.gba", 0x5abd18, 0x24
+	.string "バトルトーナメント$1かい$2かい$じゅんけっしょう$けっしょう$　　　"
 
 	.globl gUnknown_85ABD3C
 gUnknown_85ABD3C: @ 0x85ABD3C
@@ -17002,10 +17003,14 @@ gUnknown_85ED2CB: @ 0x85ED2CB
 	.string "{COLOR 1}{SHADOW 2}$"
 	.globl gUnknown_85ED2D2
 gUnknown_85ED2D2: @ 0x85ED2D2
-	.incbin "baserom_jp.gba", 0x5ed2d2, 0xc
+	.string "{DYNAMIC 0}/{DYNAMIC 1}\n"
+	.string "{DYNAMIC 2}\n"
+	.string "{DYNAMIC 3}$"
 	.globl gUnknown_85ED2DE
 gUnknown_85ED2DE: @ 0x85ED2DE
-	.incbin "baserom_jp.gba", 0x5ed2de, 0x9
+	.string "{DYNAMIC 0}\n"
+	.string "{DYNAMIC 1}\n"
+	.string "{DYNAMIC 2}$"
 	.globl gUnknown_85ED2E7
 gUnknown_85ED2E7: @ 0x85ED2E7
 	.incbin "baserom_jp.gba", 0x5ed2e7, 0x125
@@ -17944,7 +17949,7 @@ gUnknown_85FB8EA: @ 0x85FB8EA
 
 	.globl gUnknown_85FB8F1
 gUnknown_85FB8F1: @ 0x85FB8F1
-	.incbin "baserom_jp.gba", 0x5fb8f1, 0x1b
+	.string "{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}$1F$2F$3F$4F$　"
 
 	.globl gUnknown_85FB90C
 gUnknown_85FB90C: @ 0x85FB90C
