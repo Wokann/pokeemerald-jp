@@ -559,9 +559,8 @@ extern const u8 *const sBirchDexRatingTexts[];        // 0x085D7AB0
 extern const u8 gBirchDexRatingText_AreYouCurious[];
 extern const u8 gBirchDexRatingText_SoYouveSeenAndCaught[];
 extern const u8 gBirchDexRatingText_OnANationwideBasis[];
-// JP species-name table entries are 6 bytes (kana names).
-extern const u8 gSpeciesNamesJP[];
-#define JP_GSPECIES_NAME(species) (gSpeciesNamesJP + ((species) * 6))
+// JP species-name table entries are POKEMON_NAME_LENGTH + 1 bytes (kana names).
+#define JP_GSPECIES_NAME(species) gSpeciesNames[species]
 
 static bool32 TrainerIsEligibleForRematch(int matchCallId)
 {
@@ -1145,7 +1144,7 @@ static void Task_SpinPokenavIcon(u8 taskId)
 #undef tTileNum
 
 // JP byte-exact: JP party layout stores species names as 6-byte JP entries
-// (gSpeciesNamesJP); partyFlags selection differs from US pokeemerald
+// (gSpeciesNames); partyFlags selection differs from US pokeemerald
 // (JP: flags 1/2 use 8-byte entries, 0/3 use 16-byte entries).
 __attribute__((naked)) void PopulateSpeciesFromTrainerParty(int matchCallId, u8 *destStr)
 {

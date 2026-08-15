@@ -243,16 +243,16 @@ struct BattleResults
     u8 caughtMonBall:4;       // 0x5
     u8 shinyWildMon:1;        // 0x5
     u16 playerMon1Species;    // 0x6
-    u8 playerMon1Name[POKEMON_NAME_LENGTH + 1];    // 0x8
+    u8 playerMon1Name[POKEMON_NAME_STORAGE_LENGTH + 1];    // 0x8
     u8 battleTurnCounter;     // 0x13
-    u8 playerMon2Name[POKEMON_NAME_LENGTH + 1];    // 0x14
+    u8 playerMon2Name[POKEMON_NAME_STORAGE_LENGTH + 1];    // 0x14
     u8 pokeblockThrows;       // 0x1F
     u16 lastOpponentSpecies;  // 0x20
     u16 lastUsedMovePlayer;   // 0x22
     u16 lastUsedMoveOpponent; // 0x24
     u16 playerMon2Species;    // 0x26
     u16 caughtMonSpecies;     // 0x28
-    u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];     // 0x2A
+    u8 caughtMonNick[POKEMON_NAME_STORAGE_LENGTH + 1];     // 0x2A
     u8 filler35;           // 0x35
     u8 catchAttempts[POKEBALL_COUNT - 1];     // 0x36 Doesn't include Master ball
 };
@@ -380,7 +380,7 @@ struct BattleStruct
     u8 monToSwitchIntoId[MAX_BATTLERS_COUNT];
     u8 battlerPartyOrders[MAX_BATTLERS_COUNT][PARTY_SIZE / 2];
     u8 runTries;
-    u8 caughtMonNick[POKEMON_NAME_LENGTH + 1];
+    u8 caughtMonNick[POKEMON_NAME_STORAGE_LENGTH + 1];
     u8 unused_2;
     u8 safariGoNearCounter;
     u8 safariPkblThrowCounter;

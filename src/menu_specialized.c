@@ -1194,7 +1194,7 @@ __attribute__((naked)) static u8 *GetConditionMenuMonString(u8 *dst, u16 boxId, 
             "movs r2, #0\n\t"
             "b _081D23D8\n\t"
             ".align 2, 0\n\t"
-            "_081D23CC: .4byte gSpeciesNamesJP\n\t"
+            "_081D23CC: .4byte gSpeciesNames\n\t"
             "_081D23D0:\n\t"
             "adds r3, #1\n\t"
             "adds r0, r2, #1\n\t"
@@ -1357,7 +1357,7 @@ void GetConditionMenuMonNameAndLocString(u8 *locationDst, u8 *nameDst, u16 boxId
     }
     else
     {
-        for (i = 0; i < POKEMON_NAME_LENGTH + 2; i++)
+        for (i = 0; i < POKEMON_NAME_STORAGE_LENGTH + 2; i++)
             nameDst[i] = CHAR_SPACE;
         nameDst[i] = EOS;
         for (i = 0; i < BOX_NAME_LENGTH; i++)

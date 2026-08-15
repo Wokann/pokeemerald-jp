@@ -23,7 +23,7 @@ extern const struct UnknownStruct sBigMonSizeTable[];
 extern const u8 gText_DecimalPoint[];
 extern const u8 gText_Marco[];
 // JP species-name table uses 5 kana + EOS per entry (6 bytes), unlike US
-extern const u8 gSpeciesNamesJP[][6];
+extern const u8 gSpeciesNames[][6];
 
 #define CM_PER_INCH 2.54
 
@@ -126,7 +126,7 @@ static void GetMonSizeRecordInfo(u16 species, u16 *sizeRecord)
     u32 size = GetMonSize(species, *sizeRecord);
 
     FormatMonSizeRecord(gStringVar3, size);
-    StringCopy(gStringVar1, gSpeciesNamesJP[species]);
+    StringCopy(gStringVar1, gSpeciesNames[species]);
     if (*sizeRecord == DEFAULT_MAX_SIZE)
         StringCopy(gStringVar2, gText_Marco);
     else

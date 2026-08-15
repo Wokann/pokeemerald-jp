@@ -587,7 +587,7 @@ __attribute__((naked)) void sub_081CCD64(u8 *dest, u16 boxId, u8 unused)
             "movs r4, #0\n\t"
             "b _081CCE70\n\t"
             ".align 2, 0\n\t"
-            "_081CCE64: .4byte gSpeciesNamesJP\n\t"
+            "_081CCE64: .4byte gSpeciesNames\n\t"
             "_081CCE68:\n\t"
             "adds r3, #1\n\t"
             "adds r0, r4, #1\n\t"

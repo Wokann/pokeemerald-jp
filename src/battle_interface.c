@@ -26,7 +26,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 extern const u8 gText_SafariBallsLeft2[];
-extern const u8 gSpeciesNamesJP[][6];
+extern const u8 gSpeciesNames[][6];
 
 struct TestingBar
 {
@@ -2197,4 +2197,3 @@ __attribute__((naked)) void UpdateNickInHealthbox(u8 healthboxSpriteId, struct P
         ".syntax divided\n\t"
     );
 }
-

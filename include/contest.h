@@ -87,7 +87,7 @@ enum {
 struct ContestPokemon
 {
     u16 species;
-    u8 nickname[POKEMON_NAME_LENGTH + 1];
+    u8 nickname[POKEMON_NAME_STORAGE_LENGTH + 1];
     u8 trainerName[PLAYER_NAME_LENGTH + 1];
     u8 trainerGfxId;
     u32 aiFlags;

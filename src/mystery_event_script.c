@@ -325,9 +325,9 @@ bool8 MEScrCmd_givepokemon(struct ScriptContext *ctx)
     species = GetMonData(&pokemon, MON_DATA_SPECIES_OR_EGG);
 
     if (species == SPECIES_EGG)
-        StringCopyN(gStringVar1, gText_EggNickname, POKEMON_NAME_LENGTH + 1);
+        StringCopyN(gStringVar1, gText_EggNickname, POKEMON_NAME_STORAGE_LENGTH + 1);
     else
-        StringCopyN(gStringVar1, gText_Pokemon, POKEMON_NAME_LENGTH + 1);
+        StringCopyN(gStringVar1, gText_Pokemon, POKEMON_NAME_STORAGE_LENGTH + 1);
 
     if (gPlayerPartyCount == PARTY_SIZE)
     {
