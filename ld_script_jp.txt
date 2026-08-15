@@ -10604,7 +10604,7 @@ SECTIONS {
 		src/siirtc.o(.text.DisableGpioPortRead);
 		src/librfu_stwi.o(.text);
 		asm/librfu_intr.o(.text);
-		asm/librfu_rfu.o(.text);
+		src/librfu_rfu.o(.text);
 		src/librfu.o(.text.sub_082952F4);
 		src/librfu.o(.text.sub_082953A8);
 		src/librfu.o(.text.sub_0829541C);
