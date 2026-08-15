@@ -1501,7 +1501,6 @@ SetControllerToRecordedOpponent = sub_08186218;
 sSoundMovesTable = gUnknown_82EC67C;
 sAccuracyStageRatios = gUnknown_82ECA78;
 sCriticalHitChance = gUnknown_82ECAAC;
-gTypeEffectiveness = gUnknown_82EBB38;
 BattleScriptPop = DoBattlerEndTurnEffects;
 sub_080416AC = AtkCanceler_UnableToUseMove;
 sub_08043F18 = AbilityBattleEffects;
