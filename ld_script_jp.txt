@@ -7618,7 +7618,7 @@ SECTIONS {
         src/contest.o(.text.ContestDebugPrintBitStrings);
         src/shop.o(.text);
         src/fldeff_escalator.o(.text);
-        asm/berry.o(.text);
+        src/berry.o(.text);
         src/script_menu.o(.text);
         asm/naming_screen.o(.text);
         src/money.o(.text);
