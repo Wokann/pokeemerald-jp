@@ -21360,49 +21360,266 @@ sSpriteTemplate_HeartIcon: @ 0x852B478
 
 	.globl gUnknown_852D9F4
 gUnknown_852D9F4: @ 0x852D9F4
-	.incbin "baserom_jp.gba", 0x52d9f4, 0xb4c
+	.incbin "baserom_jp.gba", 0x52d9f4, 0x9c4
+	.globl gBattlePyramid_1_LandMons
+gBattlePyramid_1_LandMons: @ 0x852E3B8
+	.byte 5, 5
+	.hword SPECIES_BULBASAUR
+	.byte 5, 5
+	.hword SPECIES_BULBASAUR
+	.byte 5, 5
+	.hword SPECIES_BULBASAUR
+	.byte 5, 5
+	.hword SPECIES_BULBASAUR
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.globl gBattlePyramid_1_LandMonsInfo
+gBattlePyramid_1_LandMonsInfo: @ 0x852E3E8
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_1_LandMons
+	.globl gBattlePyramid_2_LandMons
+gBattlePyramid_2_LandMons: @ 0x852E3F0
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_IVYSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.globl gBattlePyramid_2_LandMonsInfo
+gBattlePyramid_2_LandMonsInfo: @ 0x852E420
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_2_LandMons
+	.globl gBattlePyramid_3_LandMons
+gBattlePyramid_3_LandMons: @ 0x852E428
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_VENUSAUR
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.globl gBattlePyramid_3_LandMonsInfo
+gBattlePyramid_3_LandMonsInfo: @ 0x852E458
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_3_LandMons
+	.globl gBattlePyramid_4_LandMons
+gBattlePyramid_4_LandMons: @ 0x852E460
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMANDER
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.globl gBattlePyramid_4_LandMonsInfo
+gBattlePyramid_4_LandMonsInfo: @ 0x852E490
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_4_LandMons
+	.globl gBattlePyramid_5_LandMons
+gBattlePyramid_5_LandMons: @ 0x852E498
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.globl gBattlePyramid_5_LandMonsInfo
+gBattlePyramid_5_LandMonsInfo: @ 0x852E4C8
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_5_LandMons
+	.globl gBattlePyramid_6_LandMons
+gBattlePyramid_6_LandMons: @ 0x852E4D0
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.globl gBattlePyramid_6_LandMonsInfo
+gBattlePyramid_6_LandMonsInfo: @ 0x852E500
+	.byte 4
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_6_LandMons
+	.globl gBattlePyramid_7_LandMons
+gBattlePyramid_7_LandMons: @ 0x852E508
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_WARTORTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_SQUIRTLE
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARIZARD
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.byte 5, 5
+	.hword SPECIES_CHARMELEON
+	.globl gBattlePyramid_7_LandMonsInfo
+gBattlePyramid_7_LandMonsInfo: @ 0x852E538
+	.byte 8
+	.byte 0, 0, 0
+	.4byte gBattlePyramid_7_LandMons
 
 	.globl gBattlePyramidWildMonHeaders
 gBattlePyramidWildMonHeaders: @ 0x852E540
 	.byte 0, 1 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E3E8 @ landMonsInfo (gBattlePyramid_1_LandMonsInfo)
+	.4byte gBattlePyramid_1_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 2 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E420 @ landMonsInfo (gBattlePyramid_2_LandMonsInfo)
+	.4byte gBattlePyramid_2_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 3 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E458 @ landMonsInfo (gBattlePyramid_3_LandMonsInfo)
+	.4byte gBattlePyramid_3_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 4 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E490 @ landMonsInfo (gBattlePyramid_4_LandMonsInfo)
+	.4byte gBattlePyramid_4_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 5 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E4C8 @ landMonsInfo (gBattlePyramid_5_LandMonsInfo)
+	.4byte gBattlePyramid_5_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 6 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E500 @ landMonsInfo (gBattlePyramid_6_LandMonsInfo)
+	.4byte gBattlePyramid_6_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
 	.byte 0, 7 @ mapGroup, mapNum
 	.hword 0
-	.4byte 0x0852E538 @ landMonsInfo (gBattlePyramid_7_LandMonsInfo)
+	.4byte gBattlePyramid_7_LandMonsInfo
 	.4byte 0x00000000 @ waterMonsInfo
 	.4byte 0x00000000 @ rockSmashMonsInfo
 	.4byte 0x00000000 @ fishingMonsInfo
