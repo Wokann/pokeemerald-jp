@@ -166,6 +166,19 @@ SYMBOLS7 = [
 
 END_ADDR7 = 0x082C0FF8  # gUnknown_82C0FF8 (next region)
 
+# Eighth batch: wait-for-battle/chat and show-card texts.
+SYMBOLS8 = [
+    ("sText_WaitForBattleMale", 0x082C0FF8, "text", None),
+    ("sText_WaitForChatMale", 0x082C1010, "text", None),
+    ("sText_ShowTrainerCardMale", 0x082C1028, "text", None),
+    ("sText_WaitForBattleFemale", 0x082C1050, "text", None),
+    ("sText_WaitForChatFemale", 0x082C1068, "text", None),
+    ("sText_ShowTrainerCardFemale", 0x082C1080, "text", None),
+    ("sText_WaitOrShowCardTexts", 0x082C10A4, "table_2x4", None),
+]
+
+END_ADDR8 = 0x082C10C4  # gUnknown_82C10C4 (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -316,6 +329,18 @@ def emit_table_link(name):
     return "\n".join(out)
 
 
+def emit_table_2x4(name):
+    rows = [
+        ["sText_WaitForBattleMale", "sText_WaitForChatMale", "NULL", "sText_ShowTrainerCardMale"],
+        ["sText_WaitForBattleFemale", "sText_WaitForChatFemale", "NULL", "sText_ShowTrainerCardFemale"],
+    ]
+    out = [f"const u8 *const {name}[][4] = {{"]
+    for row in rows:
+        out.append("    { %s }," % ", ".join(row))
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
@@ -346,6 +371,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table_rfu(name))
         elif kind == "table_link":
             out.append(emit_table_link(name))
+        elif kind == "table_2x4":
+            out.append(emit_table_2x4(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -377,6 +404,8 @@ def main():
           "// Hi/do-something and contacted/awaiting texts")
     build(SYMBOLS7, END_ADDR7, "src/data/union_room7.h", "src/data/union_room7.c",
           "// Invitation and chat texts")
+    build(SYMBOLS8, END_ADDR8, "src/data/union_room8.h", "src/data/union_room8.c",
+          "// Wait-for-activity and show-card texts")
 
 
 if __name__ == "__main__":

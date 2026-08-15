@@ -11,27 +11,6 @@
 
 
 
-	.globl gUnknown_82C0FF8
-gUnknown_82C0FF8: @ 0x082C0FF8
-	.string "たいせんだね！\nよーし　ちょっと　まってて！$　"
-	.globl gUnknown_82C1010
-gUnknown_82C1010: @ 0x082C1010
-	.string "チャットだね！\nわかった　ちょっと　まってて！$"
-	.globl gUnknown_82C1028
-gUnknown_82C1028: @ 0x082C1028
-	.string "わかった！　じゃあ　あいさつがわりに\nトレーナーカードを　みせてあげるよ$　　　"
-	.globl gUnknown_82C1050
-gUnknown_82C1050: @ 0x082C1050
-	.string "たいせんね！\nよーし　ちょっと　まってて！$　　"
-	.globl gUnknown_82C1068
-gUnknown_82C1068: @ 0x082C1068
-	.string "チャットね！\nわかったわ　ちょっと　まってて！$"
-	.globl gUnknown_82C1080
-gUnknown_82C1080: @ 0x082C1080
-	.string "じゃあ　あいさつの　かわりに\nトレーナーカードを　みせてあげるね$　　　"
-	.globl sText_WaitOrShowCardTexts
-sText_WaitOrShowCardTexts: @ 0x82C10A4
-	.4byte gUnknown_82C0FF8, gUnknown_82C1010, 0x00000000, gUnknown_82C1028, gUnknown_82C1050, gUnknown_82C1068, 0x00000000, gUnknown_82C1080
 	.globl gUnknown_82C10C4
 gUnknown_82C10C4: @ 0x082C10C4
 	.incbin "baserom_jp.gba", 0x2c10c4, 0xc4
