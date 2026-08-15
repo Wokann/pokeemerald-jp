@@ -819,6 +819,7 @@ void GetIsDoomDesireHitTurn(u8 taskId)
     DestroyAnimVisualTask(taskId);
 }
 
+#ifndef NONMATCHING
 __attribute__((naked)) void AnimUnusedBagSteal_Step(struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
@@ -896,4 +897,34 @@ __attribute__((naked)) void AnimUnusedBagSteal_Step(struct Sprite *sprite)
         ".syntax divided\n\t"
     );
 }
+#else
+void AnimUnusedBagSteal_Step(struct Sprite *sprite)
+{
+    sprite->data[3] += sprite->data[1];
+    sprite->data[4] += sprite->data[2];
+    sprite->x2 = sprite->data[3] >> 8;
+    sprite->y2 = sprite->data[4] >> 8;
+    if (sprite->data[7] == 0)
+    {
+        sprite->data[3] += sprite->data[1];
+        sprite->data[4] += sprite->data[2];
+        sprite->x2 = sprite->data[3] >> 8;
+        sprite->y2 = sprite->data[4] >> 8;
+        sprite->data[0]--;
+    }
+
+    sprite->y2 += Sin(sprite->data[5], sprite->data[6]);
+    sprite->data[5] = (sprite->data[5] + 3) & 0xFF;
+    if (sprite->data[5] > 0x7F)
+    {
+        sprite->data[5] = 0;
+        sprite->data[6] += 20;
+        sprite->data[7]++;
+    }
+
+    if (--sprite->data[0] == 0)
+        DestroyAnimSprite(sprite);
+}
+#endif
+
 
