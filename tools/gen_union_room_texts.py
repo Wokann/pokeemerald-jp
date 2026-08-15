@@ -316,6 +316,15 @@ SYMBOLS8G = [
 
 END_ADDR8G = 0x082C1C3C  # sText_SearchingForWirelessSystemWait (next region)
 
+# Eighth batch part 8: wireless-system waiting texts.
+SYMBOLS8H = [
+    ("sText_SearchingForWirelessSystemWait", 0x082C1C3C, "text", None),
+    ("sText_AwaitingPlayersResponse", 0x082C1C80, "text", None),
+    ("sText_PlayerHasBeenAskedToRegisterYouPleaseWait", 0x082C1C94, "text_fixed", None),
+]
+
+END_ADDR8H = 0x082C1CB8  # sText_AwaitingResponseFromWirelessSystem (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -662,6 +671,8 @@ def main():
           "// Trade-requirement texts and ChooseTrainer")
     build(SYMBOLS8G, END_ADDR8G, "src/data/union_room8g.h", "src/data/union_room8g.c",
           "// ChooseTrainer sub-texts and table")
+    build(SYMBOLS8H, END_ADDR8H, "src/data/union_room8h.h", "src/data/union_room8h.c",
+          "// Wireless-system waiting texts")
 
 
 if __name__ == "__main__":

@@ -13,23 +13,6 @@
 
 
 
-	.globl sText_SearchingForWirelessSystemWait
-sText_SearchingForWirelessSystemWait: @ 0x82C1C3C
-	.string "ジョイスポットを　さがしています\n"
-	.string "しばらく　おまちください$　　ダブルバトルでは　2ひき　いじょうの\n"
-	.string "ポケモンが　ひつようです\p"
-	.string "$　　　"
-
-	.globl sText_AwaitingPlayersResponse
-sText_AwaitingPlayersResponse: @ 0x82C1C80
-	.string "{B_COPY_VAR_1}からの\n"
-	.string "へんじを　まっています$　　"
-
-	.globl sText_PlayerHasBeenAskedToRegisterYouPleaseWait
-sText_PlayerHasBeenAskedToRegisterYouPleaseWait: @ 0x82C1C94
-	.string "{B_COPY_VAR_1}に　メンバー　とうろくを\n"
-	.string "おねがいしています！　おまちください$　　"
-
 	.globl sText_AwaitingResponseFromWirelessSystem
 sText_AwaitingResponseFromWirelessSystem: @ 0x82C1CB8
 	.string "ジョイスポットからの\n"
