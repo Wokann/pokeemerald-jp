@@ -3906,13 +3906,34 @@ sTilesPerImage: @ 0x82D2A58 (JP: digit_obj_util.c sTilesPerImage[4][4])
 gUnknown_82D2A68: @ 0x82D2A68
 	.incbin "baserom_jp.gba", 0x2d2a68, 0x440
 
-	.globl gUnknown_82D2EA8
-gUnknown_82D2EA8: @ 0x82D2EA8
-	.incbin "baserom_jp.gba", 0x2d2ea8, 0x7c
+	.globl gAffineAnims_BattleSpritePlayerSide
+gAffineAnims_BattleSpritePlayerSide: @ 0x82D2EA8
+	.4byte 0x082D2DD8 @ BATTLER_AFFINE_NORMAL
+	.4byte 0x082D2DF8 @ BATTLER_AFFINE_EMERGE
+	.4byte 0x082D2E10 @ BATTLER_AFFINE_RETURN
+	.4byte 0x082D2E28 @ sAffineAnim_Battler_HorizontalSquishLoop
+	.4byte 0x082D2E48 @ sAffineAnim_Battler_Grow
+	.4byte 0x082D2E58 @ sAffineAnim_Battler_Shrink
+	.4byte 0x082D2E80 @ sAffineAnim_Battler_GrowLarge
+	.4byte 0x082D2E90 @ sAffineAnim_Battler_TipRight
+	.4byte 0x082D2E68 @ sAffineAnim_Battler_BigToSmall
+	.globl gUnknown_82D2ECC
+gUnknown_82D2ECC: @ 0x82D2ECC
+	.incbin "baserom_jp.gba", 0x2d2ecc, 0x58
 
-	.globl gUnknown_82D2F24
-gUnknown_82D2F24: @ 0x82D2F24
-	.incbin "baserom_jp.gba", 0x2d2f24, 0x2c
+	.globl gAffineAnims_BattleSpriteOpponentSide
+gAffineAnims_BattleSpriteOpponentSide: @ 0x82D2F24
+	.4byte 0x082D2DD8 @ BATTLER_AFFINE_NORMAL
+	.4byte 0x082D2DF8 @ BATTLER_AFFINE_EMERGE
+	.4byte 0x082D2E10 @ BATTLER_AFFINE_RETURN
+	.4byte 0x082D2E28 @ sAffineAnim_Battler_HorizontalSquishLoop
+	.4byte 0x082D2E48 @ sAffineAnim_Battler_Grow
+	.4byte 0x082D2E58 @ sAffineAnim_Battler_Shrink
+	.4byte 0x082D2ECC @ sAffineAnim_Battler_SpinShrink
+	.4byte 0x082D2EDC @ sAffineAnim_Battler_TipLeft
+	.4byte 0x082D2EF4 @ sAffineAnim_Battler_RotateUpAndBack
+	.4byte 0x082D2E68 @ sAffineAnim_Battler_BigToSmall
+	.4byte 0x082D2F14 @ sAffineAnim_Battler_Spin
 
 	.globl gAffineAnims_BattleSpriteContest
 gAffineAnims_BattleSpriteContest: @ 0x82D2F50
