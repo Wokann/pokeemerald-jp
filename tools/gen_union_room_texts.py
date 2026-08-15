@@ -206,6 +206,32 @@ SYMBOLS8B = [
 
 END_ADDR8B = 0x082C12C4  # sText_TrainerBattleBusy (next region)
 
+# Eighth batch part 3: battle-busy, level-requirement and reaction texts.
+SYMBOLS8C = [
+    ("sText_TrainerBattleBusy", 0x082C12C4, "text", None),
+    ("sText_NeedTwoMonsOfLevel30OrLower1", 0x082C12E4, "text", None),
+    ("sText_NeedTwoMonsOfLevel30OrLower2", 0x082C1310, "text", None),
+    ("sText_DeclineChatMale", 0x082C133C, "text", None),
+    ("stext_DeclineChatFemale", 0x082C1350, "text", None),
+    ("sDeclineChatTexts", 0x082C1364, "table",
+        ["sText_DeclineChatMale", "stext_DeclineChatFemale"]),
+    ("sText_ChatDeclinedMale", 0x082C136C, "text", None),
+    ("sText_ChatDeclinedFemale", 0x082C1398, "text", None),
+    ("sChatDeclinedTexts", 0x082C13C4, "table",
+        ["sText_ChatDeclinedMale", "sText_ChatDeclinedFemale"]),
+    ("sText_YoureToughMale", 0x082C13CC, "text", None),
+    ("sText_UsedGoodMoveMale", 0x082C13E0, "text", None),
+    ("sText_BattleSurpriseMale", 0x082C13FC, "text", None),
+    ("sText_SwitchedMonsMale", 0x082C1418, "text", None),
+    ("sText_YoureToughFemale", 0x082C1434, "text", None),
+    ("sText_UsedGoodMoveFemale", 0x082C1450, "text", None),
+    ("sText_BattleSurpriseFemale", 0x082C1464, "text", None),
+    ("sText_SwitchedMonsFemale", 0x082C147C, "text", None),
+    ("sBattleReactionTexts", 0x082C1498, "table_2x4_battle", None),
+]
+
+END_ADDR8C = 0x082C14B8  # chat reaction texts (next region)
+
 
 def next_addr(addr, symbols, end_addr):
     for sym in symbols:
@@ -381,6 +407,18 @@ def emit_table_start_activity(name):
     return "\n".join(out)
 
 
+def emit_table_2x4_battle(name):
+    rows = [
+        ["sText_YoureToughMale", "sText_UsedGoodMoveMale", "sText_BattleSurpriseMale", "sText_SwitchedMonsMale"],
+        ["sText_YoureToughFemale", "sText_UsedGoodMoveFemale", "sText_BattleSurpriseFemale", "sText_SwitchedMonsFemale"],
+    ]
+    out = [f"const u8 *const {name}[][4] = {{"]
+    for row in rows:
+        out.append("    { %s }," % ", ".join(row))
+    out.append("};")
+    return "\n".join(out)
+
+
 def build(symbols, end_addr, out_h, out_c, comment):
     single, multi = d.build_maps()
     sounds = d.build_sound_map()
@@ -415,6 +453,8 @@ def build(symbols, end_addr, out_h, out_c, comment):
             out.append(emit_table_2x4(name))
         elif kind == "table_start_activity":
             out.append(emit_table_start_activity(name))
+        elif kind == "table_2x4_battle":
+            out.append(emit_table_2x4_battle(name))
         elif kind == "clock_cmds":
             out.append('const char sASCII_ClockCmds[][12] = {')
             for row in ["           ", "CLOCK DRIFT", "BUSY SEND  ", "CMD REJECT ", "CLOCK SLAVE"]:
@@ -450,6 +490,8 @@ def main():
           "// Wait-for-activity and show-card texts")
     build(SYMBOLS8B, END_ADDR8B, "src/data/union_room8b.h", "src/data/union_room8b.c",
           "// Start-activity and battle-declined texts")
+    build(SYMBOLS8C, END_ADDR8C, "src/data/union_room8c.h", "src/data/union_room8c.c",
+          "// Battle-busy, level-requirement and reaction texts")
 
 
 if __name__ == "__main__":

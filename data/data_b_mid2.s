@@ -11,40 +11,10 @@
 
 
 
-	.globl sText_TrainerBattleBusy
-sText_TrainerBattleBusy: @ 0x82C12C4
-	.string "あ！　ごめん\n"
-	.string "ほかに　ようじが　あるから\l"
-	.string "またこんどね\p"
-	.string "$　　　"
 
-	.globl sText_NeedTwoMonsOfLevel30OrLower1
-sText_NeedTwoMonsOfLevel30OrLower1: @ 0x82C12E4
-	.string "たいせんを　するためには\n"
-	.string "レベル30より　ひくい　ポケモンが\l"
-	.string "2ひき　ひつよう　だよ\p$"
-	.globl sText_NeedTwoMonsOfLevel30OrLower2
-sText_NeedTwoMonsOfLevel30OrLower2: @ 0x82C1310
-	.string "たいせんを　するためには\n"
-	.string "レベル30　よりひくい　ポケモンが\l"
-	.string "2ひき　ひつようです\p"
-	.string "$　そうか\n"
-	.string "また　いつでも　おいでよ！\p"
-	.string "$　そう⋯⋯\n"
-	.string "また　いつでも　きてね！\p"
-	.string "$　"
-
-	.globl sDeclineChatTexts
-sDeclineChatTexts: @ 0x82C1364
-	.incbin "baserom_jp.gba", 0x2c1364, 0x60
-
-	.globl sChatDeclinedTexts
-sChatDeclinedTexts: @ 0x82C13C4
-	.incbin "baserom_jp.gba", 0x2c13c4, 0xd4
-
-	.globl sBattleReactionTexts
-sBattleReactionTexts: @ 0x82C1498
-	.incbin "baserom_jp.gba", 0x2c1498, 0xcc
+	.globl gUnknown_82C14B8
+gUnknown_82C14B8: @ 0x82C14B8
+	.incbin "baserom_jp.gba", 0x2c14b8, 0xac
 
 	.globl sChatReactionTexts
 sChatReactionTexts: @ 0x82C1564
