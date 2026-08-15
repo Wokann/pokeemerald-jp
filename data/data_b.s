@@ -3842,13 +3842,43 @@ sNewGameBirchSpeechTextWindows: @ 0x82D2910
 	.byte 0 @ [3] paletteNum
 	.hword 0x0000 @ [3] baseBlock
 
-	.globl gUnknown_82D2930
-gUnknown_82D2930: @ 0x82D2930
-	.incbin "baserom_jp.gba", 0x2d2930, 0x20
+	.globl sMainMenuBgPal
+sMainMenuBgPal: @ 0x82D2930
+	.hword 0x7E51 @ color 0
+	.hword 0x7FFF @ color 1
+	.hword 0x28E6 @ color 2
+	.hword 0x398B @ color 3
+	.hword 0x0821 @ color 4
+	.hword 0x5672 @ color 5
+	.hword 0x7779 @ color 6
+	.hword 0x5ED6 @ color 7
+	.hword 0x6F37 @ color 8
+	.hword 0x1884 @ color 9
+	.hword 0x460F @ color 10
+	.hword 0x3D46 @ color 11
+	.hword 0x61E5 @ color 12
+	.hword 0x6A27 @ color 13
+	.hword 0x728B @ color 14
+	.hword 0x7B11 @ color 15
 
-	.globl gUnknown_82D2950
-gUnknown_82D2950: @ 0x82D2950
-	.incbin "baserom_jp.gba", 0x2d2950, 0x20
+	.globl sMainMenuTextPal
+sMainMenuTextPal: @ 0x82D2950
+	.hword 0x7FFF @ color 0
+	.hword 0x7FFF @ color 1
+	.hword 0x318C @ color 2
+	.hword 0x675A @ color 3
+	.hword 0x043C @ color 4
+	.hword 0x3AFF @ color 5
+	.hword 0x0664 @ color 6
+	.hword 0x4BD2 @ color 7
+	.hword 0x6546 @ color 8
+	.hword 0x7B14 @ color 9
+	.hword 0x0000 @ color 10
+	.hword 0x0000 @ color 11
+	.hword 0x0000 @ color 12
+	.hword 0x0000 @ color 13
+	.hword 0x0000 @ color 14
+	.hword 0x0000 @ color 15
 
 	.globl sTextColor_Headers
 sTextColor_Headers: @ 0x82D2970
