@@ -280,3 +280,137 @@ const struct ScrollArrowsTemplate sScrollArrowsTemplate_MainMenu =
 {
     2, 0x78, 8, 3, 0x78, 0x98, 3, 4, 1, 1, 0,
 };
+// JP preset-name texts are defined in data/data_b2d_mid72.s.
+extern const u8 gText_DefaultName_Itsuo[];
+extern const u8 gText_DefaultName_Gyoku[];
+extern const u8 gText_DefaultName_Kei[];
+extern const u8 gText_DefaultName_Shuusaku[];
+extern const u8 gText_DefaultName_Seigo[];
+extern const u8 gText_DefaultName_Daisaku[];
+extern const u8 gText_DefaultName_Takahito[];
+extern const u8 gText_DefaultName_Tatsuya[];
+extern const u8 gText_DefaultName_Daniel[];
+extern const u8 gText_DefaultName_Teruki[];
+extern const u8 gText_DefaultName_Tom[];
+extern const u8 gText_DefaultName_Tomoya[];
+extern const u8 gText_DefaultName_Hitoshi[];
+extern const u8 gText_DefaultName_Hiroaki[];
+extern const u8 gText_DefaultName_Yukihiko[];
+extern const u8 gText_DefaultName_Raldo[];
+extern const u8 gText_DefaultName_Rikuya[];
+extern const u8 gText_DefaultName_Richard[];
+extern const u8 gText_DefaultName_Ryuu[];
+extern const u8 gText_DefaultName_Ryouta[];
+extern const u8 gText_DefaultName_Aiko[];
+extern const u8 gText_DefaultName_Ayana[];
+extern const u8 gText_DefaultName_Ann[];
+extern const u8 gText_DefaultName_Emii[];
+extern const u8 gText_DefaultName_Kaori[];
+extern const u8 gText_DefaultName_Karen[];
+extern const u8 gText_DefaultName_Kyouko[];
+extern const u8 gText_DefaultName_Sae[];
+extern const u8 gText_DefaultName_Sui[];
+extern const u8 gText_DefaultName_Juri[];
+extern const u8 gText_DefaultName_Chiemi[];
+extern const u8 gText_DefaultName_Chiyoko[];
+extern const u8 gText_DefaultName_Teruko[];
+extern const u8 gText_DefaultName_Nanae[];
+extern const u8 gText_DefaultName_Hina[];
+extern const u8 gText_DefaultName_Makiko[];
+extern const u8 gText_DefaultName_Misako[];
+extern const u8 gText_DefaultName_Mutsumi[];
+extern const u8 gText_DefaultName_Monica[];
+extern const u8 gText_DefaultName_Yuume[];
+
+// 0x82D2994
+const union AffineAnimCmd sSpriteAffineAnim_PlayerShrink[] =
+{
+    AFFINEANIMCMD_FRAME(-2, -2, 0, 0x30),
+    AFFINEANIMCMD_END
+};
+
+// 0x82D29A4
+const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[] =
+{
+    sSpriteAffineAnim_PlayerShrink,
+};
+
+// 0x82D29A8
+const struct MenuAction sMenuActions_Gender[] =
+{
+    {gText_BirchBoy, {NULL}},
+    {gText_BirchGirl, {NULL}}
+};
+
+// 0x82D29B8
+const u8 *const sMalePresetNames[] =
+{
+    gText_DefaultName_Itsuo,
+    gText_DefaultName_Gyoku,
+    gText_DefaultName_Kei,
+    gText_DefaultName_Shuusaku,
+    gText_DefaultName_Seigo,
+    gText_DefaultName_Daisaku,
+    gText_DefaultName_Takahito,
+    gText_DefaultName_Tatsuya,
+    gText_DefaultName_Daniel,
+    gText_DefaultName_Teruki,
+    gText_DefaultName_Tom,
+    gText_DefaultName_Tomoya,
+    gText_DefaultName_Hitoshi,
+    gText_DefaultName_Hiroaki,
+    gText_DefaultName_Yukihiko,
+    gText_DefaultName_Raldo,
+    gText_DefaultName_Rikuya,
+    gText_DefaultName_Richard,
+    gText_DefaultName_Ryuu,
+    gText_DefaultName_Ryouta,
+};
+
+// 0x82D2A08
+const u8 *const sFemalePresetNames[] =
+{
+    gText_DefaultName_Aiko,
+    gText_DefaultName_Ayana,
+    gText_DefaultName_Ann,
+    gText_DefaultName_Emii,
+    gText_DefaultName_Kaori,
+    gText_DefaultName_Karen,
+    gText_DefaultName_Kyouko,
+    gText_DefaultName_Sae,
+    gText_DefaultName_Sui,
+    gText_DefaultName_Juri,
+    gText_DefaultName_Chiemi,
+    gText_DefaultName_Chiyoko,
+    gText_DefaultName_Teruko,
+    gText_DefaultName_Nanae,
+    gText_DefaultName_Hina,
+    gText_DefaultName_Makiko,
+    gText_DefaultName_Misako,
+    gText_DefaultName_Mutsumi,
+    gText_DefaultName_Monica,
+    gText_DefaultName_Yuume,
+};
+
+// 0x82D2A58 - used by src/digit_obj_util.c (values match pokeemerald).
+const u8 sTilesPerImage[4][4] =
+{
+    [ST_OAM_SQUARE]      = {
+        [ST_OAM_SIZE_0] = 0x01,
+        [ST_OAM_SIZE_1] = 0x04,
+        [ST_OAM_SIZE_2] = 0x10,
+        [ST_OAM_SIZE_3] = 0x40
+    },
+    [ST_OAM_H_RECTANGLE] = {
+        [ST_OAM_SIZE_0] = 0x02,
+        [ST_OAM_SIZE_1] = 0x04,
+        [ST_OAM_SIZE_2] = 0x08,
+        [ST_OAM_SIZE_3] = 0x20
+    },
+    [ST_OAM_V_RECTANGLE] = {
+        [ST_OAM_SIZE_0] = 0x02,
+        [ST_OAM_SIZE_1] = 0x04,
+        [ST_OAM_SIZE_2] = 0x08,
+        [ST_OAM_SIZE_3] = 0x20
+    },
+};

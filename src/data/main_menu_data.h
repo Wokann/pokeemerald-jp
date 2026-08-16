@@ -5,6 +5,8 @@
 #include "bg.h"
 #include "constants/characters.h"
 #include "list_menu.h"
+#include "menu.h"
+#include "strings.h"
 #include "window.h"
 
 // Main-menu const data (0x82D2588..)
@@ -40,5 +42,18 @@ extern const struct BgTemplate sMainMenuBgTemplates[];
 extern const struct BgTemplate sBirchBgTemplate;
 // 0x82D2984
 extern const struct ScrollArrowsTemplate sScrollArrowsTemplate_MainMenu;
+
+
+// 0x82D2994 - player-shrink affine anim (main menu gender select).
+extern const union AffineAnimCmd sSpriteAffineAnim_PlayerShrink[];
+extern const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[];
+// 0x82D29A8
+extern const struct MenuAction sMenuActions_Gender[];
+// 0x82D29B8
+extern const u8 *const sMalePresetNames[];
+// 0x82D2A08
+extern const u8 *const sFemalePresetNames[];
+// 0x82D2A58 - digit_obj_util.c tile counts per oam shape/size.
+extern const u8 sTilesPerImage[4][4];
 
 #endif // POKEEMERALD_JP_MAIN_MENU_DATA_H
