@@ -123,11 +123,29 @@ sConditionSparkleSheetDescriptor: @ 0x85FA910
 
 	.globl sConditionSparklePalDescriptor
 sConditionSparklePalDescriptor: @ 0x85FA918
-	.incbin "baserom_jp.gba", 0x5fa918, 0x4c
+	.4byte sConditionSparkle_Gfx
+	.hword 0x0068, 0x0000
+
+	.globl sOam_ConditionSparkle
+sOam_ConditionSparkle: @ 0x85FA920
+	.incbin "baserom_jp.gba", 0x5fa920, 0x8
+
+	.globl sAnim_ConditionSparkle
+sAnim_ConditionSparkle: @ 0x85FA928
+	.incbin "baserom_jp.gba", 0x5fa928, 0x20
+
+	.globl sAnims_ConditionSparkle
+sAnims_ConditionSparkle: @ 0x85FA948
+	.incbin "baserom_jp.gba", 0x5fa948, 0x1c
 
 	.globl sSpriteTemplate_ConditionSparkle
 sSpriteTemplate_ConditionSparkle: @ 0x85FA964
-	.incbin "baserom_jp.gba", 0x5fa964, 0x18
+	.hword 0x0068, 0x0068
+	.4byte sOam_ConditionSparkle
+	.4byte sAnims_ConditionSparkle
+	.4byte 0
+	.4byte gDummySpriteAffineAnimTable
+	.4byte 0x081D2B95  @ JP sparkle callback (function not yet decompiled)
 
 	.globl sConditionSparkleCoords
 sConditionSparkleCoords: @ 0x85FA97C
