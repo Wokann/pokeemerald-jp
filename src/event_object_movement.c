@@ -721,37 +721,15 @@ __attribute__((naked)) void RemoveEventObjectInternal(struct ObjectEvent *object
     );
 }
 
-__attribute__((naked)) void RemoveAllEventObjectsExceptPlayer(void)
+void RemoveAllEventObjectsExceptPlayer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_0808D2CC:\n\t"
-        "	ldr r0, _0808D2F4\n\t"
-        "	ldrb r0, [r0, #5]\n\t"
-        "	cmp r4, r0\n\t"
-        "	beq _0808D2E2\n\t"
-        "	lsls r0, r4, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808D2F8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl RemoveObjectEvent\n\t"
-        "_0808D2E2:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0xf\n\t"
-        "	bls _0808D2CC\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808D2F4: .4byte gPlayerAvatar\n\t"
-        "_0808D2F8: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < OBJECT_EVENTS_COUNT; i++)
+    {
+        if (i != gPlayerAvatar.objectEventId)
+            RemoveObjectEvent(&gObjectEvents[i]);
+    }
 }
 
 __attribute__((naked)) void TrySetupEventObjectSprite(void)
