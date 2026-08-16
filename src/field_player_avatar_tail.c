@@ -2128,13 +2128,13 @@ __attribute__((naked)) void Task_Fishing(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808C254: .4byte gUnknown_846F97C\n\t"
+        "_0808C254: .4byte sFishingStateFuncs\n\t"
         "_0808C258: .4byte 0x03005B60\n\t"
         ".syntax divided\n\t"
     );
 }
 
-__attribute__((naked)) void Fishing1(void)
+__attribute__((naked)) void Fishing_Init(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2157,7 +2157,7 @@ __attribute__((naked)) void Fishing1(void)
     );
 }
 
-__attribute__((naked)) void Fishing2(void)
+__attribute__((naked)) void Fishing_GetRodOut(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2231,7 +2231,7 @@ __attribute__((naked)) void Fishing2(void)
     );
 }
 
-__attribute__((naked)) void Fishing3(void)
+__attribute__((naked)) void Fishing_WaitBeforeDots(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2257,7 +2257,7 @@ __attribute__((naked)) void Fishing3(void)
     );
 }
 
-__attribute__((naked)) void Fishing4(void)
+__attribute__((naked)) void Fishing_InitDots(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2302,7 +2302,7 @@ __attribute__((naked)) void Fishing4(void)
     );
 }
 
-__attribute__((naked)) void Fishing5(void)
+__attribute__((naked)) void Fishing_ShowDots(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2391,7 +2391,7 @@ __attribute__((naked)) void Fishing5(void)
     );
 }
 
-__attribute__((naked)) void Fishing6(void)
+__attribute__((naked)) void Fishing_CheckForBite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2481,7 +2481,7 @@ __attribute__((naked)) void Fishing6(void)
     );
 }
 
-__attribute__((naked)) void Fishing7(void)
+__attribute__((naked)) void Fishing_GotBite(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2518,7 +2518,7 @@ __attribute__((naked)) void Fishing7(void)
     );
 }
 
-__attribute__((naked)) void Fishing8(void)
+__attribute__((naked)) void Fishing_WaitForA(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2570,7 +2570,7 @@ __attribute__((naked)) void Fishing8(void)
     );
 }
 
-__attribute__((naked)) void Fishing9(void)
+__attribute__((naked)) void Fishing_CheckMoreDots(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2628,7 +2628,7 @@ __attribute__((naked)) void Fishing9(void)
     );
 }
 
-__attribute__((naked)) void Fishing10(void)
+__attribute__((naked)) void Fishing_MonOnHook(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2667,7 +2667,7 @@ __attribute__((naked)) void Fishing10(void)
     );
 }
 
-__attribute__((naked)) void Fishing11(void)
+__attribute__((naked)) void Fishing_StartEncounter(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2783,7 +2783,7 @@ __attribute__((naked)) void Fishing11(void)
     );
 }
 
-__attribute__((naked)) void Fishing12(void)
+__attribute__((naked)) void Fishing_NotEvenNibble(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2838,7 +2838,7 @@ __attribute__((naked)) void Fishing12(void)
     );
 }
 
-__attribute__((naked)) void Fishing13(void)
+__attribute__((naked)) void Fishing_GotAway(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2894,7 +2894,7 @@ __attribute__((naked)) void Fishing13(void)
     );
 }
 
-__attribute__((naked)) void Fishing14(void)
+__attribute__((naked)) void Fishing_NoMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2913,7 +2913,7 @@ __attribute__((naked)) void Fishing14(void)
     );
 }
 
-__attribute__((naked)) void Fishing15(void)
+__attribute__((naked)) void Fishing_PutRodAway(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2996,7 +2996,7 @@ __attribute__((naked)) void Fishing15(void)
     );
 }
 
-__attribute__((naked)) void Fishing16(void)
+__attribute__((naked)) void Fishing_EndNoMon(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

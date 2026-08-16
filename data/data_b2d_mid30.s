@@ -7093,9 +7093,10 @@ gUnknown_846F970: @ 0x846F970
 gUnknown_846F974: @ 0x846F974
 	.incbin "baserom_jp.gba", 0x46f974, 0x8
 
-	.globl gUnknown_846F97C
-gUnknown_846F97C: @ 0x846F97C
-	.incbin "baserom_jp.gba", 0x46f97c, 0x40
+	.globl sFishingStateFuncs
+sFishingStateFuncs: @ 0x846F97C
+	.4byte Fishing_Init + 1, Fishing_GetRodOut + 1, Fishing_WaitBeforeDots + 1, Fishing_InitDots + 1, Fishing_ShowDots + 1, Fishing_CheckForBite + 1, Fishing_GotBite + 1, Fishing_WaitForA + 1
+	.4byte Fishing_CheckMoreDots + 1, Fishing_MonOnHook + 1, Fishing_StartEncounter + 1, Fishing_NotEvenNibble + 1, Fishing_GotAway + 1, Fishing_NoMon + 1, Fishing_PutRodAway + 1, Fishing_EndNoMon + 1
 
 	.globl gUnknown_846F9BC
 gUnknown_846F9BC: @ 0x846F9BC
