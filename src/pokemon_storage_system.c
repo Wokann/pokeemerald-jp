@@ -4381,13 +4381,13 @@ __attribute__((naked)) void Cb_TakeItemForMoving(void)
         "_080C8A0C: .4byte Cb_PrintCantStoreMail + 1\n\t"
         "_080C8A10:\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	ldr r0, _080C8A34\n\t"
         "	ldrb r0, [r0]\n\t"
         "	rsbs r4, r0, #0\n\t"
         "	orrs r4, r0\n\t"
         "	lsrs r4, r4, #0x1f\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -4402,7 +4402,7 @@ __attribute__((naked)) void Cb_TakeItemForMoving(void)
         "	cmp r0, #0\n\t"
         "	bne _080C8A6E\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	bl ClearBottomWindow\n\t"
         "	bl sub_080CD888\n\t"
         "	bl PrintCursorMonInfo\n\t"
@@ -4455,13 +4455,13 @@ __attribute__((naked)) void Cb_GiveMovingItemToMon(void)
         "	.4byte _080C8B18 @ case 4\n\t"
         "_080C8AAC:\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	ldr r0, _080C8AD0\n\t"
         "	ldrb r0, [r0]\n\t"
         "	rsbs r4, r0, #0\n\t"
         "	orrs r4, r0\n\t"
         "	lsrs r4, r4, #0x1f\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -4476,7 +4476,7 @@ __attribute__((naked)) void Cb_GiveMovingItemToMon(void)
         "	cmp r0, #0\n\t"
         "	bne _080C8B28\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	bl sub_080CD888\n\t"
         "	bl PrintCursorMonInfo\n\t"
         "	movs r0, #0x1c\n\t"
@@ -4573,7 +4573,7 @@ __attribute__((naked)) void Cb_ItemToBag(void)
         "	rsbs r4, r0, #0\n\t"
         "	orrs r4, r0\n\t"
         "	lsrs r4, r4, #0x1f\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -4695,13 +4695,13 @@ __attribute__((naked)) void Cb_SwitchSelectedItem(void)
         "_080C8CA8: .4byte Cb_PrintCantStoreMail + 1\n\t"
         "_080C8CAC:\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	ldr r0, _080C8CD0\n\t"
         "	ldrb r0, [r0]\n\t"
         "	rsbs r4, r0, #0\n\t"
         "	orrs r4, r0\n\t"
         "	lsrs r4, r4, #0x1f\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -4716,7 +4716,7 @@ __attribute__((naked)) void Cb_SwitchSelectedItem(void)
         "	cmp r0, #0\n\t"
         "	bne _080C8D28\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	bl sub_080CD888\n\t"
         "	bl PrintCursorMonInfo\n\t"
         "	movs r0, #0x1d\n\t"
@@ -4964,7 +4964,7 @@ __attribute__((naked)) void Cb_CloseBoxWhileHoldingItem(void)
         "	cmp r0, #0\n\t"
         "	bne _080C8F00\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "_080C8EE4:\n\t"
         "	ldr r0, _080C8EEC\n\t"
         "	bl SetPSSCallback\n\t"
@@ -6111,7 +6111,7 @@ __attribute__((naked)) void GiveChosenBagItem(void)
         "	strh r1, [r0]\n\t"
         "	cmp r1, #0\n\t"
         "	beq _080C9834\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r1, r0, #0x18\n\t"
         "	ldr r0, _080C9818\n\t"
@@ -8091,7 +8091,7 @@ __attribute__((naked)) void sub_080CA720(void)
         "	ldrb r0, [r0]\n\t"
         "	cmp r0, #0\n\t"
         "	beq _080CA74C\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -8101,7 +8101,7 @@ __attribute__((naked)) void sub_080CA720(void)
         "	.align 2, 0\n\t"
         "_080CA748: .4byte gUnknown_20399AC\n\t"
         "_080CA74C:\n\t"
-        "	bl sub_080CF684\n\t"
+        "	bl GetCursorPosition\n\t"
         "	adds r1, r0, #0\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r1, r1, #0x18\n\t"
@@ -8114,7 +8114,7 @@ __attribute__((naked)) void sub_080CA720(void)
         "	beq _080CA76E\n\t"
         "	bl sub_080D07D8\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "_080CA76E:\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -8214,24 +8214,11 @@ __attribute__((naked)) void sub_080CA778(void)
     );
 }
 
-__attribute__((naked)) void sub_080CA820(void)
+u8 GetMonIconPriorityByCursorPos(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsCursorInBox\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	movs r1, #1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080CA830\n\t"
-        "	movs r1, #2\n\t"
-        "_080CA830:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 inBox = IsCursorInBox();
+
+    return (inBox ? 2 : 1);
 }
 
 __attribute__((naked)) void CreateMovingMonIcon(void)
@@ -8254,7 +8241,7 @@ __attribute__((naked)) void CreateMovingMonIcon(void)
         "	adds r4, r0, #0\n\t"
         "	lsls r4, r4, #0x10\n\t"
         "	lsrs r4, r4, #0x10\n\t"
-        "	bl sub_080CA820\n\t"
+        "	bl GetMonIconPriorityByCursorPos\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	str r0, [sp]\n\t"
@@ -10003,7 +9990,7 @@ __attribute__((naked)) void sub_080CB488(void)
         "	ldr r1, [r0]\n\t"
         "	ldr r0, _080CB51C\n\t"
         "	str r0, [r1, #0x1c]\n\t"
-        "	bl sub_080CA820\n\t"
+        "	bl GetMonIconPriorityByCursorPos\n\t"
         "	ldr r1, [r5]\n\t"
         "	adds r1, r1, r4\n\t"
         "	ldr r3, [r1]\n\t"
@@ -10296,7 +10283,7 @@ __attribute__((naked)) void sub_080CB638(void)
         "	ldrb r0, [r0]\n\t"
         "	adds r1, #0x43\n\t"
         "	strb r0, [r1]\n\t"
-        "	bl sub_080CA820\n\t"
+        "	bl GetMonIconPriorityByCursorPos\n\t"
         "	ldr r1, [r6]\n\t"
         "	adds r1, r1, r7\n\t"
         "	ldr r1, [r1]\n\t"
@@ -18592,17 +18579,9 @@ __attribute__((naked)) void sub_080CF640(void)
     );
 }
 
-__attribute__((naked)) void sub_080CF684(void)
+u8 GetCursorPosition(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080CF68C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF68C: .4byte gUnknown_2039A19\n\t"
-        ".syntax divided\n\t"
-    );
+    return sCursorPosition;
 }
 
 
@@ -18645,27 +18624,9 @@ __attribute__((naked)) void sub_080CF690(void)
     );
 }
 
-__attribute__((naked)) void sub_080CF6D0(void)
+void StartCursorAnim(u8 anim)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r0, _080CF6EC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r2, _080CF6F0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CF6EC: .4byte gUnknown_20399A8\n\t"
-        "_080CF6F0: .4byte 0x00000CB4\n\t"
-        ".syntax divided\n\t"
-    );
+    StartSpriteAnim(sStorage->cursorSprite, anim);
 }
 
 __attribute__((naked)) void sub_080CF6F4(void)
@@ -19326,7 +19287,7 @@ __attribute__((naked)) void sub_080CFAEC(void)
         "	movs r1, #8\n\t"
         "	bl BlendPalettes\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	movs r0, #8\n\t"
         "	movs r1, #0x80\n\t"
         "	bl SetGpuRegBits\n\t"
@@ -19389,7 +19350,7 @@ __attribute__((naked)) void sub_080CFBE4(void)
         "_080CFC0E:\n\t"
         "	bl sub_080D03FC\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "_080CFC18:\n\t"
         "	ldr r1, [r4]\n\t"
         "	ldrb r0, [r1, #1]\n\t"
@@ -19516,7 +19477,7 @@ __attribute__((naked)) void sub_080CFCC0(void)
         "	cmp r0, #0\n\t"
         "	bne _080CFD38\n\t"
         "	movs r0, #3\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	movs r1, #0x80\n\t"
         "	lsls r1, r1, #1\n\t"
         "	movs r0, #0\n\t"
@@ -19626,7 +19587,7 @@ __attribute__((naked)) void sub_080CFD68(void)
         "	bne _080CFE16\n\t"
         "	bl sub_080D02BC\n\t"
         "	movs r0, #2\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	movs r0, #1\n\t"
         "	bl InitMultiMonPlaceChange\n\t"
         "	movs r0, #0\n\t"
@@ -19638,7 +19599,7 @@ __attribute__((naked)) void sub_080CFD68(void)
         "	cmp r0, #0\n\t"
         "	bne _080CFE16\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080CF6D0\n\t"
+        "	bl StartCursorAnim\n\t"
         "	bl sub_080D03FC\n\t"
         "_080CFDE6:\n\t"
         "	ldr r1, [r4]\n\t"
