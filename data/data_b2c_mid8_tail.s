@@ -141,7 +141,47 @@ gUnknown_85FB994: @ 0x85FB994
 
 	.globl gUnknown_85FB99C
 gUnknown_85FB99C: @ 0x85FB99C
-	.incbin "baserom_jp.gba", 0x5fb99c, 0x8c
+	.4byte Task_DuoFightAnim, Task_DuoFightAnim, Task_RayTakesFlightAnim, Task_RayDescendsAnim
+	.4byte Task_RayChargesAnim, Task_RayChasesAwayAnim, Task_EndAfterFadeScreen
+
+	.globl sOam_TrainerHillRayquaza
+sOam_TrainerHillRayquaza: @ 0x85FB9B8
+	.4byte 0xC0000000
+	.hword 0x0800, 0x0000
+	.4byte 0x80000000
+	.hword 0x0800, 0x0000
+	.4byte 0xC0004000
+	.hword 0x0800, 0x0000
+	.4byte 0x80004000
+	.hword 0x0800, 0x0000
+	.4byte 0x00004000
+	.hword 0x0800, 0x0000
+	.4byte 0x80008000
+	.hword 0x0800, 0x0000
+	.4byte 0x40000000
+	.hword 0x0800, 0x0000
+	.4byte 0x40004000
+	.hword 0x0800, 0x0000
+
+	.globl sAnim_TrainerHillRayquaza
+sAnim_TrainerHillRayquaza: @ 0x85FB9F8
+	.hword 0x0000, 0x001E
+	.hword 0x0040, 0x001E
+	.hword 0x0080, 0x001E
+	.hword 0x0040, 0x001E
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnim_TrainerHillRayquaza_1
+sAnim_TrainerHillRayquaza_1: @ 0x85FBA0C
+	.hword 0x00C0, 0x001E
+	.hword 0x0100, 0x001E
+	.hword 0x0140, 0x001E
+	.hword 0x0100, 0x001E
+	.hword 0xFFFE, 0x0000
+
+	.globl sAnims_TrainerHillRayquaza
+sAnims_TrainerHillRayquaza: @ 0x85FBA20
+	.4byte sAnim_TrainerHillRayquaza, sAnim_TrainerHillRayquaza_1
 
 	.globl gUnknown_85FBA28
 gUnknown_85FBA28: @ 0x85FBA28
