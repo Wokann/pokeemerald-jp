@@ -7606,10 +7606,10 @@ SECTIONS {
         src/slot_machine.o(.text.LoadReelBackground);
         src/slot_machine.o(.text.LoadMenuGfx);
         src/slot_machine.o(.text.LoadMenuAndReelOverlayTilemaps);
-        src/slot_machine.o(.text.sub_0812F978);
+        src/slot_machine.o(.text.LoadSlotMachineMenuTilemap);
         src/slot_machine.o(.text.LoadSlotMachineReelOverlay);
         src/slot_machine.o(.text.SetReelButtonTilemap);
-        src/slot_machine.o(.text.sub_0812FB18);
+        src/slot_machine.o(.text.LoadInfoBoxTilemap);
         src/slot_machine.o(.text.SetDigitalDisplayImagePtrs);
         src/slot_machine.o(.text.AllocDigitalDisplayGfx);
         src/contest_painting.o(.text);
@@ -9335,6 +9335,8 @@ SECTIONS {
         data/data_b2d_mid61.o(.rodata);
         src/data/region_map_tables.o(.rodata);
         data/data_b2d_mid61.o(.rodata.857D49C);
+        src/slot_machine.o(.rodata.sWindowTemplate_InfoBox);
+        data/data_b2d_mid61.o(.rodata.85843D0);
         src/slot_machine.o(.rodata.sSlotTasks);
         src/slot_machine.o(.rodata.sPayoutTasks);
         src/slot_machine.o(.rodata.sReelTasks);

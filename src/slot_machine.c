@@ -1166,6 +1166,8 @@ void CreateReelTimeNumberSprites(void);
 void CreateReelTimeShadowSprites(void);
 void CreateReelTimeNumberGapSprite(void);
 void GetReeltimeDraw(void);
+void LoadInfoBoxTilemap(void);
+void LoadSlotMachineMenuTilemap(void);
 static bool8 ShouldReelTimeMachineExplode(u16 check);
 void ClearReelTimeWindowTilemap(s16 a0);
 void DestroyReelTimePikachuSprite(void);
@@ -4527,31 +4529,29 @@ static void InfoBox_WaitFade(struct Task *task)
 
 #undef tState
 
-__attribute__((naked)) void InfoBox_DrawWindow(struct Task *task)
+#define tState data[0]
+
+// JP window layout differs from the US ROM (left/top/width/height).
+__attribute__((section(".rodata.sWindowTemplate_InfoBox")))
+static const struct WindowTemplate sWindowTemplate_InfoBox =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0812DFEC\n\t"
-        "	bl sub_0812FB18\n\t"
-        "	ldr r0, _0812DD84\n\t"
-        "	bl AddWindow\n\t"
-        "	movs r0, #1\n\t"
-        "	bl PutWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DD84: .4byte gUnknown_85843C8\n\t"
-        ".syntax divided\n\t"
-    );
+    .bg = 0,
+    .tilemapLeft = 2,
+    .tilemapTop = 4,
+    .width = 18,
+    .height = 12,
+    .paletteNum = 13,
+    .baseBlock = 1
+};
+
+static void InfoBox_DrawWindow(struct Task *task)
+{
+    DestroyDigitalDisplayScene();
+    LoadInfoBoxTilemap();
+    AddWindow(&sWindowTemplate_InfoBox);
+    PutWindowTilemap(WIN_INFO);
+    FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+    task->tState++;
 }
 
 __attribute__((naked)) void InfoBox_AddText(struct Task *task)
@@ -4596,138 +4596,46 @@ __attribute__((naked)) void InfoBox_AddText(struct Task *task)
     );
 }
 
-__attribute__((naked)) void InfoBox_WaitInput(struct Task *task)
+static void InfoBox_WaitInput(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _0812DE20\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #6\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812DE18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	bl FillWindowPixelBuffer\n\t"
-        "	movs r0, #1\n\t"
-        "	bl ClearWindowTilemap\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #1\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	movs r0, #1\n\t"
-        "	bl RemoveWindow\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #0x10\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "_0812DE18:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DE20: .4byte gMain\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(B_BUTTON | SELECT_BUTTON))
+    {
+        FillWindowPixelBuffer(WIN_INFO, PIXEL_FILL(0));
+        ClearWindowTilemap(WIN_INFO);
+        CopyWindowToVram(WIN_INFO, COPYWIN_MAP);
+        RemoveWindow(WIN_INFO);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        task->tState++;
+    }
 }
 
-__attribute__((naked)) void InfoBox_LoadSlotMachineTilemap(struct Task *task)
+static void InfoBox_LoadSlotMachineTilemap(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_0812F978\n\t"
-        "	movs r0, #3\n\t"
-        "	bl ShowBg\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSlotMachineMenuTilemap();
+    ShowBg(3);
+    task->tState++;
 }
 
-__attribute__((naked)) void InfoBox_CreateDigitalDisplay(struct Task *task)
+static void InfoBox_CreateDigitalDisplay(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldrb r0, [r4, #0xa]\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateDigitalDisplayScene(task->data[1]);
+    task->tState++;
 }
 
 
-__attribute__((naked)) void InfoBox_LoadPikaPowerMeter(struct Task *task)
+static void InfoBox_LoadPikaPowerMeter(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r0, _0812DE88\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #2]\n\t"
-        "	bl sub_0812D3C4\n\t"
-        "	movs r0, #1\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	str r1, [sp]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	movs r3, #0\n\t"
-        "	bl BeginNormalPaletteFade\n\t"
-        "	ldrh r0, [r4, #8]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r4, #8]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DE88: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadPikaPowerMeter(sSlotMachine->pikaPowerBolts);
+    BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+    task->tState++;
 }
 
-__attribute__((naked)) void InfoBox_FreeTask(struct Task *task)
+static void InfoBox_FreeTask(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812DEA0\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl DestroyTask\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DEA0: .4byte Task_InfoBox + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    DestroyTask(FindTaskIdByFunc(Task_InfoBox));
 }
+
+#undef tState
 
 __attribute__((naked)) void CreateDigitalDisplayTask(void)
 {
@@ -8560,7 +8468,7 @@ __attribute__((naked)) void LoadMenuAndReelOverlayTilemaps(void)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0812F978\n\t"
+        "	bl LoadSlotMachineMenuTilemap\n\t"
         "	bl LoadSlotMachineWheelOverlay\n\t"
         "	pop {r0}\n\t"
         "	bx r0\n\t"
@@ -8569,7 +8477,7 @@ __attribute__((naked)) void LoadMenuAndReelOverlayTilemaps(void)
     );
 }
 
-__attribute__((naked)) void sub_0812F978(void)
+__attribute__((naked)) void LoadSlotMachineMenuTilemap(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -8791,7 +8699,7 @@ __attribute__((naked)) void SetReelButtonTilemap(s16 a0, u16 a1, u16 a2, u16 a3,
     );
 }
 
-__attribute__((naked)) void sub_0812FB18(void)
+__attribute__((naked)) void LoadInfoBoxTilemap(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
