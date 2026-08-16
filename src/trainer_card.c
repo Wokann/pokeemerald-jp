@@ -1274,7 +1274,7 @@ __attribute__((naked)) void TrainerCard_GenerateCardForLinkPlayer(struct Trainer
         "	.align 2, 0\n\t"
         "_080C26A8: .4byte gSaveBlock2Ptr\n\t"
         "_080C26AC: .4byte 0x00000EBA\n\t"
-        "_080C26B0: .4byte gUnknown_82FA6E2\n\t"
+        "_080C26B0: .4byte gUnionRoomFacilityClasses\n\t"
         "_080C26B4:\n\t"
         "	ldr r2, _080C26D0\n\t"
         "	ldrh r0, [r4, #0xe]\n\t"
@@ -1291,7 +1291,7 @@ __attribute__((naked)) void TrainerCard_GenerateCardForLinkPlayer(struct Trainer
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C26D0: .4byte gUnknown_82FA6E2\n\t"
+        "_080C26D0: .4byte gUnionRoomFacilityClasses\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1340,7 +1340,7 @@ __attribute__((naked)) void TrainerCard_GenerateCardForPlayer(void)
         "	.align 2, 0\n\t"
         "_080C2724: .4byte gSaveBlock2Ptr\n\t"
         "_080C2728: .4byte 0x00000EBA\n\t"
-        "_080C272C: .4byte gUnknown_82FA6E2\n\t"
+        "_080C272C: .4byte gUnionRoomFacilityClasses\n\t"
         "_080C2730:\n\t"
         "	ldr r2, _080C274C\n\t"
         "	ldrh r0, [r4, #0xe]\n\t"
@@ -1357,7 +1357,7 @@ __attribute__((naked)) void TrainerCard_GenerateCardForPlayer(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080C274C: .4byte gUnknown_82FA6E2\n\t"
+        "_080C274C: .4byte gUnionRoomFacilityClasses\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5867,4 +5867,3 @@ __attribute__((naked)) void sub_080C48F4(void)
         ".syntax divided\n\t"
     );
 }
-

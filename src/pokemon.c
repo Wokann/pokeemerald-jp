@@ -2123,7 +2123,7 @@ __attribute__((naked)) void sub_08068688(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080686E8: .4byte gLinkPlayers\n\t"
-        "_080686EC: .4byte gUnknown_82FA6E2\n\t"
+        "_080686EC: .4byte gUnionRoomFacilityClasses\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2180,7 +2180,7 @@ __attribute__((naked)) void sub_080686F0(void)
         "	.align 2, 0\n\t"
         "_0806874C: .4byte gLinkPlayers\n\t"
         "_08068750: .4byte gUnknown_82EFF52\n\t"
-        "_08068754: .4byte gUnknown_82FA6E2\n\t"
+        "_08068754: .4byte gUnionRoomFacilityClasses\n\t"
         ".syntax divided\n\t"
     );
 }

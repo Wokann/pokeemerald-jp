@@ -620,9 +620,10 @@ gUnknown_85C5E78: @ 0x85C5E78
 gUnknown_85C5F48: @ 0x85C5F48
 	.incbin "baserom_jp.gba", 0x5c5f48, 0xb4
 
-	.globl gUnknown_85C5FFC
-gUnknown_85C5FFC: @ 0x85C5FFC
-	.incbin "baserom_jp.gba", 0x5c5ffc, 0x14
+	.globl sGameFreakLettersMoveSpeed
+sGameFreakLettersMoveSpeed: @ 0x85C5FFC
+	.hword 0x0100, 0x00C0, 0x0080, 0x0040, 0x0000, 0x0040, 0x0080, 0x00C0
+	.hword 0x0100, 0x0000
 
 	.globl gUnknown_85C6010
 gUnknown_85C6010: @ 0x85C6010

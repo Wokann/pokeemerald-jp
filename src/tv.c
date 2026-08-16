@@ -18201,7 +18201,7 @@ __attribute__((naked)) void SecretBaseSecrets_GetStateForFlagNumber(void)
         "	ldrb r0, [r0]\n\t"
         "	b _080F5A0A\n\t"
         "	.align 2, 0\n\t"
-        "_080F59F4: .4byte gUnknown_856913C\n\t"
+        "_080F59F4: .4byte sTVSecretBaseSecretsActions\n\t"
         "_080F59F8:\n\t"
         "	adds r0, r3, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -18903,4 +18903,3 @@ __attribute__((naked)) void ResetTVShowState(void)
         ".syntax divided\n\t"
     );
 }
-

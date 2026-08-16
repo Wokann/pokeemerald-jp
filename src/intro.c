@@ -6383,7 +6383,7 @@ __attribute__((naked)) void sub_0816F91C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0816FB38: .4byte gUnknown_85C5FFC\n\t"
+        "_0816FB38: .4byte sGameFreakLettersMoveSpeed\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6890,4 +6890,3 @@ __attribute__((naked)) void SpriteCB_IntroRayquazaHyperbeam(void)
         ".syntax divided\n\t"
     );
 }
-

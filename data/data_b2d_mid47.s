@@ -459,9 +459,10 @@ gUnknown_82FA6B6: @ 0x82FA6B6
 gUnknown_82FA6D6: @ 0x82FA6D6
 	.incbin "baserom_jp.gba", 0x2fa6d6, 0xc
 
-	.globl gUnknown_82FA6E2
-gUnknown_82FA6E2: @ 0x82FA6E2
-	.incbin "baserom_jp.gba", 0x2fa6e2, 0x20
+	.globl gUnionRoomFacilityClasses
+gUnionRoomFacilityClasses: @ 0x82FA6E2
+	.hword 0x0003, 0x000A, 0x001B, 0x002B, 0x001E, 0x0043, 0x0042, 0x0019
+	.hword 0x0012, 0x000C, 0x001C, 0x0047, 0x001F, 0x0036, 0x0002, 0x0014
 
 	.globl gUnknown_82FA702
 gUnknown_82FA702: @ 0x82FA702
