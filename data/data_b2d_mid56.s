@@ -9,6 +9,7 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
+.globl gUnknown_85467C1
 gUnknown_85467C1: @ 0x85467C1
 	.incbin "baserom_jp.gba", 0x5467c1, 0x3
 

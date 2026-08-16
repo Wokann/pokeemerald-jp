@@ -24,8 +24,8 @@ __attribute__((naked)) void CB2_BuyMenu(void)
         "	b _080DF032\n\t"
         "	.align 2, 0\n\t"
         "_080DF018: .4byte gUnknown_2039C00\n\t"
-        "_080DF01C: .4byte 0x085629BC\n\t"
-        "_080DF020: .4byte 0x08562994\n\t"
+        "_080DF01C: .4byte gUnknown_85629BC\n\t"
+        "_080DF020: .4byte gUnknown_8562994\n\t"
         "_080DF024:\n\t"
         "	ldr r0, _080DF088\n\t"
         "	bl AddWindow\n\t"
@@ -72,8 +72,8 @@ __attribute__((naked)) void CB2_BuyMenu(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080DF088: .4byte 0x085629C4\n\t"
-        "_080DF08C: .4byte 0x085629AC\n\t"
+        "_080DF088: .4byte gUnknown_85629C4\n\t"
+        "_080DF08C: .4byte gUnknown_85629AC\n\t"
         "_080DF090: .4byte gUnknown_2039C00\n\t"
         "_080DF094: .4byte Task_ShopMenu + 1\n\t"
         ".syntax divided\n\t"
@@ -706,7 +706,7 @@ __attribute__((naked)) void BuyMenuBuildListMenuTemplate(void)
         "_080DF520: .4byte gUnknown_2039C18\n\t"
         "_080DF524: .4byte gText_Exit\n\t"
         "_080DF528: .4byte gMultiuseListMenuTemplate\n\t"
-        "_080DF52C: .4byte 0x085629CC\n\t"
+        "_080DF52C: .4byte gUnknown_85629CC\n\t"
         "_080DF530:\n\t"
         "	strh r1, [r3, #0xe]\n\t"
         "_080DF532:\n\t"
@@ -762,7 +762,7 @@ __attribute__((naked)) void BuyMenuSetListEntry(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF590: .4byte 0x08580CD1\n\t"
+        "_080DF590: .4byte gUnknown_8580CD1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1264,7 +1264,7 @@ __attribute__((naked)) void BuyMenuInitBgs(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF960: .4byte 0x085629E4\n\t"
+        "_080DF960: .4byte gUnknown_85629E4\n\t"
         "_080DF964: .4byte gUnknown_2039C10\n\t"
         ".syntax divided\n\t"
     );
@@ -1330,7 +1330,7 @@ __attribute__((naked)) void BuyMenuInitWindows(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DF9E4: .4byte 0x085629F4\n\t"
+        "_080DF9E4: .4byte gUnknown_85629F4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1370,7 +1370,7 @@ __attribute__((naked)) void BuyMenuPrint(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080DFA28: .4byte 0x08562A34\n\t"
+        "_080DFA28: .4byte gUnknown_8562A34\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2382,7 +2382,7 @@ __attribute__((naked)) void Task_BuyMenu(void)
         "	b _080E01D0\n\t"
         "	.align 2, 0\n\t"
         "_080E01B4: .4byte gStringVar1\n\t"
-        "_080E01B8: .4byte 0x08580CD1\n\t"
+        "_080E01B8: .4byte gUnknown_8580CD1\n\t"
         "_080E01BC: .4byte gStringVar2\n\t"
         "_080E01C0: .4byte gStringVar4\n\t"
         "_080E01C4: .4byte 0x085C9936\n\t"
@@ -2666,8 +2666,8 @@ __attribute__((naked)) void BuyMenuConfirmPurchase(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0420: .4byte 0x08562A2C\n\t"
-        "_080E0424: .4byte 0x0856298C\n\t"
+        "_080E0420: .4byte gUnknown_8562A2C\n\t"
+        "_080E0424: .4byte gUnknown_856298C\n\t"
         ".syntax divided\n\t"
     );
 }

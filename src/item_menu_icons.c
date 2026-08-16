@@ -75,7 +75,7 @@ __attribute__((naked)) void AddBagVisualSprite(void)
         "	.align 2, 0\n\t"
         "_080D45B0: .4byte gUnknown_203CB20\n\t"
         "_080D45B4: .4byte 0x00000804\n\t"
-        "_080D45B8: .4byte 0x0855A67C\n\t"
+        "_080D45B8: .4byte gUnknown_855A67C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -263,9 +263,9 @@ __attribute__((naked)) void AddSwitchPocketRotatingBallSprite(void)
         "	.align 2, 0\n\t"
         "_080D46F8: .4byte gUnknown_203CB20\n\t"
         "_080D46FC: .4byte 0x00000805\n\t"
-        "_080D4700: .4byte 0x0855A6D0\n\t"
-        "_080D4704: .4byte 0x0855A6D8\n\t"
-        "_080D4708: .4byte 0x0855A6E0\n\t"
+        "_080D4700: .4byte gUnknown_855A6D0\n\t"
+        "_080D4704: .4byte gUnknown_855A6D8\n\t"
+        "_080D4708: .4byte gUnknown_855A6E0\n\t"
         "_080D470C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -319,7 +319,7 @@ __attribute__((naked)) void SpriteCB_SwitchPocketRotatingBallInit(void)
         "	ldr r0, _080D4758\n\t"
         "	b _080D475E\n\t"
         "	.align 2, 0\n\t"
-        "_080D4758: .4byte 0x0855A6C8\n\t"
+        "_080D4758: .4byte gUnknown_855A6C8\n\t"
         "_080D475C:\n\t"
         "	ldr r0, _080D4790\n\t"
         "_080D475E:\n\t"
@@ -346,7 +346,7 @@ __attribute__((naked)) void SpriteCB_SwitchPocketRotatingBallInit(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4790: .4byte 0x0855A6CC\n\t"
+        "_080D4790: .4byte gUnknown_855A6CC\n\t"
         "_080D4794: .4byte SpriteCB_SwitchPocketRotatingBallContinue + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -611,7 +611,7 @@ __attribute__((naked)) void LoadBerryGfx(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080D4944: .4byte 0x0855A7C4\n\t"
+        "_080D4944: .4byte gUnknown_855A7C4\n\t"
         "_080D4948: .4byte 0xFFFF0000\n\t"
         "_080D494C: .4byte 0x00007544\n\t"
         "_080D4950: .4byte gUnknown_201D000\n\t"
@@ -649,7 +649,7 @@ __attribute__((naked)) void CreateBerryTagSprite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D498C: .4byte 0x0855A71C\n\t"
+        "_080D498C: .4byte gUnknown_855A71C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -721,7 +721,7 @@ __attribute__((naked)) void LoadSpinningBerryPicGfx(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080D4A04: .4byte 0x00007544\n\t"
-        "_080D4A08: .4byte 0x0855A7AC\n\t"
+        "_080D4A08: .4byte gUnknown_855A7AC\n\t"
         "_080D4A0C: .4byte gSprites\n\t"
         ".syntax divided\n\t"
     );
@@ -744,7 +744,7 @@ __attribute__((naked)) void CreateBerryFlavorCircleSprite(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080D4A2C: .4byte 0x0855A940\n\t"
+        "_080D4A2C: .4byte gUnknown_855A940\n\t"
         ".syntax divided\n\t"
     );
 }

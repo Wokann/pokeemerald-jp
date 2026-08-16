@@ -86,7 +86,7 @@ __attribute__((naked)) void sub_081269BC(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081269F0: .4byte gUnknown_2039E54\n\t"
-        "_081269F4: .4byte 0x08581A74\n\t"
+        "_081269F4: .4byte gUnknown_8581A74\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -161,7 +161,7 @@ __attribute__((naked)) void AddDecorationActionsWindow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126A7C: .4byte 0x08581A2C\n\t"
+        "_08126A7C: .4byte gUnknown_8581A2C\n\t"
         "_08126A80: .4byte gUnknown_2039E1C\n\t"
         ".syntax divided\n\t"
     );
@@ -312,7 +312,7 @@ __attribute__((naked)) void HandleDecorationActionsMenuInput(void)
         "	b _08126BC8\n\t"
         "	.align 2, 0\n\t"
         "_08126B94: .4byte gPaletteFade\n\t"
-        "_08126B98: .4byte 0x08581A2C\n\t"
+        "_08126B98: .4byte gUnknown_8581A2C\n\t"
         "_08126B9C: .4byte gUnknown_2039E1C\n\t"
         "_08126BA0:\n\t"
         "	bl Menu_GetCursorPos\n\t"
@@ -372,7 +372,7 @@ __attribute__((naked)) void PrintCurMainMenuDescription(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126C08: .4byte 0x08581A4C\n\t"
+        "_08126C08: .4byte gUnknown_8581A4C\n\t"
         "_08126C0C: .4byte gUnknown_2039E1C\n\t"
         ".syntax divided\n\t"
     );
@@ -400,7 +400,7 @@ __attribute__((naked)) void DecorationMenuAction_Decorate(void)
         "	b _08126C5E\n\t"
         "	.align 2, 0\n\t"
         "_08126C38: .4byte gStringVar4\n\t"
-        "_08126C3C: .4byte 0x085CA70B\n\t"
+        "_08126C3C: .4byte gUnknown_85CA70B\n\t"
         "_08126C40: .4byte ReturnToDecorationActionsAfterInvalidSelection + 1\n\t"
         "_08126C44:\n\t"
         "	ldr r1, _08126C64\n\t"
@@ -502,7 +502,7 @@ __attribute__((naked)) void DecorationMenuAction_Toss(void)
         "	b _08126D26\n\t"
         "	.align 2, 0\n\t"
         "_08126D00: .4byte gStringVar4\n\t"
-        "_08126D04: .4byte 0x085CA70B\n\t"
+        "_08126D04: .4byte gUnknown_85CA70B\n\t"
         "_08126D08: .4byte ReturnToDecorationActionsAfterInvalidSelection + 1\n\t"
         "_08126D0C:\n\t"
         "	ldr r1, _08126D2C\n\t"
@@ -609,7 +609,7 @@ __attribute__((naked)) void SecretBasePC_PrepMenuForSelectingStoredDecors(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08126DC0: .4byte 0x08581A94\n\t"
+        "_08126DC0: .4byte gUnknown_8581A94\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -900,11 +900,11 @@ __attribute__((naked)) void PrintDecorationCategoryMenuItem(void)
         "	.align 2, 0\n\t"
         "_08126FF4: .4byte gStringVar3\n\t"
         "_08126FF8: .4byte gStringVar4\n\t"
-        "_08126FFC: .4byte 0x08581A0C\n\t"
+        "_08126FFC: .4byte gUnknown_8581A0C\n\t"
         "_08127000: .4byte gStringVar1\n\t"
         "_08127004: .4byte gStringVar2\n\t"
         "_08127008: .4byte gDecorationInventories\n\t"
-        "_0812700C: .4byte 0x085CA6A4\n\t"
+        "_0812700C: .4byte gUnknown_85CA6A4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -926,7 +926,7 @@ __attribute__((naked)) void ColorMenuItemString(void)
         "	movs r0, #5\n\t"
         "	b _08127036\n\t"
         "	.align 2, 0\n\t"
-        "_0812702C: .4byte 0x085CA6C6\n\t"
+        "_0812702C: .4byte gUnknown_85CA6C6\n\t"
         "_08127030:\n\t"
         "	movs r0, #2\n\t"
         "	strb r0, [r5, #2]\n\t"
@@ -1061,7 +1061,7 @@ __attribute__((naked)) void SelectDecorationCategory(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0812712C: .4byte gStringVar4\n\t"
-        "_08127130: .4byte 0x085CA70B\n\t"
+        "_08127130: .4byte gUnknown_85CA70B\n\t"
         "_08127134: .4byte ReturnToDecorationCategoriesAfterInvalidSelection + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -1182,7 +1182,7 @@ __attribute__((naked)) void ShowDecorationCategoriesWindow(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081271FC: .4byte 0x08581A94\n\t"
+        "_081271FC: .4byte gUnknown_8581A94\n\t"
         "_08127200: .4byte gTasks\n\t"
         "_08127204: .4byte gUnknown_2039E3F\n\t"
         ".syntax divided\n\t"
@@ -1203,7 +1203,7 @@ __attribute__((naked)) void CopyDecorationCategoryName(u8 *dest, u8 category)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812721C: .4byte 0x08581A0C\n\t"
+        "_0812721C: .4byte gUnknown_8581A0C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1461,7 +1461,7 @@ __attribute__((naked)) void PrintDecorationItemMenuItems(void)
         "_081273EC: .4byte gCurDecorationItems\n\t"
         "_081273F0: .4byte gText_Cancel\n\t"
         "_081273F4: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081273F8: .4byte 0x08581AB4\n\t"
+        "_081273F8: .4byte gUnknown_8581AB4\n\t"
         "_081273FC: .4byte gUnknown_2039E54\n\t"
         "_08127400: .4byte 0x000003D9\n\t"
         ".syntax divided\n\t"
@@ -1490,7 +1490,7 @@ __attribute__((naked)) void CopyDecorationMenuItemName(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08127428: .4byte gStringVar1\n\t"
-        "_0812742C: .4byte 0x08580CD1\n\t"
+        "_0812742C: .4byte gUnknown_8580CD1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1810,7 +1810,7 @@ __attribute__((naked)) void HandleDecorationItemsMenuInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081276AC\n\t"
         "	.align 2, 0\n\t"
-        "_0812766C: .4byte 0x08581A5C\n\t"
+        "_0812766C: .4byte gUnknown_8581A5C\n\t"
         "_08127670:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -1844,7 +1844,7 @@ __attribute__((naked)) void HandleDecorationItemsMenuInput(void)
         "	.align 2, 0\n\t"
         "_081276B8: .4byte gCurDecorationIndex\n\t"
         "_081276BC: .4byte gUnknown_2039E58\n\t"
-        "_081276C0: .4byte 0x08581A5C\n\t"
+        "_081276C0: .4byte gUnknown_8581A5C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1898,7 +1898,7 @@ __attribute__((naked)) void PrintDecorationItemDescription(void)
         "	.align 2, 0\n\t"
         "_08127710: .4byte gUnknown_2039E54\n\t"
         "_08127714: .4byte gUnknown_2039E1D\n\t"
-        "_08127718: .4byte 0x085C9423\n\t"
+        "_08127718: .4byte gUnknown_85C9423\n\t"
         "_0812771C:\n\t"
         "	ldr r2, _08127750\n\t"
         "	ldr r0, _08127754\n\t"
@@ -2499,7 +2499,7 @@ __attribute__((naked)) void GetDecorationElevation(void)
         "	b _08127B36\n\t"
         "	.align 2, 0\n\t"
         "_08127B24: .4byte 0x0000FFFF\n\t"
-        "_08127B28: .4byte 0x085821C8\n\t"
+        "_08127B28: .4byte gUnknown_85821C8\n\t"
         "_08127B2C:\n\t"
         "	ldr r0, _08127B3C\n\t"
         "	adds r0, r1, r0\n\t"
@@ -2510,7 +2510,7 @@ __attribute__((naked)) void GetDecorationElevation(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08127B3C: .4byte 0x085821D0\n\t"
+        "_08127B3C: .4byte gUnknown_85821D0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2627,7 +2627,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	b _08127C1C\n\t"
         "	.align 2, 0\n\t"
         "_08127C10: .4byte gDecorations\n\t"
-        "_08127C14: .4byte 0x08580CE8\n\t"
+        "_08127C14: .4byte gUnknown_8580CE8\n\t"
         "_08127C18:\n\t"
         "	movs r3, #0\n\t"
         "	mov sl, r3\n\t"
@@ -2696,7 +2696,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	.align 2, 0\n\t"
         "_08127C9C: .4byte gDecorations\n\t"
         "_08127CA0: .4byte 0x0000FFFF\n\t"
-        "_08127CA4: .4byte 0x08580CE8\n\t"
+        "_08127CA4: .4byte gUnknown_8580CE8\n\t"
         "_08127CA8:\n\t"
         "	mov r1, r8\n\t"
         "	asrs r0, r1, #0x10\n\t"
@@ -2747,7 +2747,7 @@ __attribute__((naked)) void ShowDecorationOnMap_(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08127D04: .4byte 0x08580CE8\n\t"
+        "_08127D04: .4byte gUnknown_8580CE8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3324,7 +3324,7 @@ __attribute__((naked)) void ConfigureCameraObjectForPlacingDecoration(void)
         "_0812816C: .4byte gSprites\n\t"
         "_08128170: .4byte gFieldCamera\n\t"
         "_08128174: .4byte sub_081292B0 + 1\n\t"
-        "_08128178: .4byte 0x08582134\n\t"
+        "_08128178: .4byte gUnknown_8582134\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3379,7 +3379,7 @@ __attribute__((naked)) void SetUpPlacingDecorationPlayerAvatar(void)
         "	b _081281E8\n\t"
         "	.align 2, 0\n\t"
         "_081281D0: .4byte gTasks\n\t"
-        "_081281D4: .4byte 0x08582134\n\t"
+        "_081281D4: .4byte gUnknown_8582134\n\t"
         "_081281D8: .4byte gSaveBlock2Ptr\n\t"
         "_081281DC: .4byte SpriteCallbackDummy + 1\n\t"
         "_081281E0:\n\t"
@@ -4435,7 +4435,7 @@ __attribute__((naked)) void sub_081289AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081289C8: .4byte 0x085821A8\n\t"
+        "_081289C8: .4byte gUnknown_85821A8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4664,7 +4664,7 @@ __attribute__((naked)) void sub_08128B60(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08128B7C: .4byte 0x085821B0\n\t"
+        "_08128B7C: .4byte gUnknown_85821B0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5079,7 +5079,7 @@ __attribute__((naked)) void sub_08128DF8(void)
         "_08128E38: .4byte gUnknown_3005B68\n\t"
         "_08128E3C: .4byte gSprites\n\t"
         "_08128E40: .4byte gUnknown_203A704\n\t"
-        "_08128E44: .4byte 0x085821B8\n\t"
+        "_08128E44: .4byte gUnknown_85821B8\n\t"
         "_08128E48:\n\t"
         "	cmp r0, #2\n\t"
         "	bne _08128E68\n\t"
@@ -5095,7 +5095,7 @@ __attribute__((naked)) void sub_08128DF8(void)
         "	bl _call_via_r1\n\t"
         "	b _08128F9A\n\t"
         "	.align 2, 0\n\t"
-        "_08128E64: .4byte 0x085821B8\n\t"
+        "_08128E64: .4byte gUnknown_85821B8\n\t"
         "_08128E68:\n\t"
         "	ldr r2, _08128FA4\n\t"
         "	ldrh r1, [r2, #0x2c]\n\t"
@@ -5651,7 +5651,7 @@ __attribute__((naked)) void sub_081291C8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08129238: .4byte 0x08582094\n\t"
+        "_08129238: .4byte gUnknown_8582094\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5712,7 +5712,7 @@ __attribute__((naked)) void SetDecorSelectionBoxOamAttributes(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081292A0: .4byte gUnknown_203A708\n\t"
-        "_081292A4: .4byte 0x08582134\n\t"
+        "_081292A4: .4byte gUnknown_8582134\n\t"
         "_081292A8: .4byte 0xFFFFFE00\n\t"
         "_081292AC: .4byte 0xFFFFFC00\n\t"
         ".syntax divided\n\t"
@@ -5843,8 +5843,8 @@ __attribute__((naked)) void gpu_pal_decompress_alloc_tag_and_upload(void)
         "_08129384: .4byte 0x00000BE5\n\t"
         "_08129388: .4byte 0x00000884\n\t"
         "_0812938C: .4byte gUnknown_83B8098\n\t"
-        "_08129390: .4byte 0x085821A0\n\t"
-        "_08129394: .4byte 0x08582170\n\t"
+        "_08129390: .4byte gUnknown_85821A0\n\t"
+        "_08129394: .4byte gUnknown_8582170\n\t"
         "_08129398:\n\t"
         "	ldr r0, [r1, #0x18]\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -5982,7 +5982,7 @@ __attribute__((naked)) void GetDecorationIconPicOrPalette(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081294A0: .4byte 0x08581ACC\n\t"
+        "_081294A0: .4byte gUnknown_8581ACC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6088,9 +6088,9 @@ __attribute__((naked)) void AddDecorationIconObjectFromEventObject(void)
         "_08129574: .4byte gDecorations\n\t"
         "_08129578: .4byte 0x00000884\n\t"
         "_0812957C: .4byte gUnknown_83B8098\n\t"
-        "_08129580: .4byte 0x085821D8\n\t"
+        "_08129580: .4byte gUnknown_85821D8\n\t"
         "_08129584: .4byte 0xFFFF0000\n\t"
-        "_08129588: .4byte 0x08582188\n\t"
+        "_08129588: .4byte gUnknown_8582188\n\t"
         "_0812958C:\n\t"
         "	ldr r0, [r1, #0x18]\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -6205,7 +6205,7 @@ __attribute__((naked)) u8 AddDecorationIconObject(u8 decor, s16 x, s16 y, u8 pri
         "	strh r0, [r5, #0x26]\n\t"
         "	b _081296A4\n\t"
         "	.align 2, 0\n\t"
-        "_08129660: .4byte 0x08581ACC\n\t"
+        "_08129660: .4byte gUnknown_8581ACC\n\t"
         "_08129664: .4byte gSprites\n\t"
         "_08129668:\n\t"
         "	strh r7, [r5, #0x26]\n\t"
@@ -6611,7 +6611,7 @@ __attribute__((naked)) void sub_081298DC(void)
         "	b _08129984\n\t"
         "	.align 2, 0\n\t"
         "_0812993C: .4byte gPaletteFade\n\t"
-        "_08129940: .4byte 0x08245DDD\n\t"
+        "_08129940: .4byte gUnknown_8245DDD\n\t"
         "_08129944:\n\t"
         "	bl LockPlayerFieldControls\n\t"
         "	adds r0, r5, #0\n\t"
@@ -6728,7 +6728,7 @@ __attribute__((naked)) void SetUpPuttingAwayDecorationPlayerAvatar(void)
         "_08129A14: .4byte gUnknown_203A704\n\t"
         "_08129A18: .4byte gSprites\n\t"
         "_08129A1C: .4byte gFieldCamera\n\t"
-        "_08129A20: .4byte 0x085822E8\n\t"
+        "_08129A20: .4byte gUnknown_85822E8\n\t"
         "_08129A24: .4byte gSaveBlock2Ptr\n\t"
         "_08129A28: .4byte SpriteCallbackDummy + 1\n\t"
         "_08129A2C:\n\t"
@@ -7762,7 +7762,7 @@ __attribute__((naked)) void sub_0812A1AC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A1C8: .4byte 0x0858222C\n\t"
+        "_0812A1C8: .4byte gUnknown_858222C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7813,7 +7813,7 @@ __attribute__((naked)) void sub_0812A1FC(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A218: .4byte 0x08582234\n\t"
+        "_0812A218: .4byte gUnknown_8582234\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8070,7 +8070,7 @@ __attribute__((naked)) void sub_0812A3A8(void)
         "	b _0812A3CA\n\t"
         "	.align 2, 0\n\t"
         "_0812A3BC: .4byte gSaveBlock2Ptr\n\t"
-        "_0812A3C0: .4byte 0x085822BC\n\t"
+        "_0812A3C0: .4byte gUnknown_85822BC\n\t"
         "_0812A3C4:\n\t"
         "	ldr r0, _0812A3D0\n\t"
         "	bl LoadSpritePalette\n\t"
@@ -8078,7 +8078,7 @@ __attribute__((naked)) void sub_0812A3A8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A3D0: .4byte 0x085822C4\n\t"
+        "_0812A3D0: .4byte gUnknown_85822C4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8134,7 +8134,7 @@ __attribute__((naked)) void sub_0812A3E0(void)
         "_0812A424: .4byte gStringVar1\n\t"
         "_0812A428: .4byte gCurDecorationIndex\n\t"
         "_0812A42C: .4byte gCurDecorationItems\n\t"
-        "_0812A430: .4byte 0x08580CD1\n\t"
+        "_0812A430: .4byte gUnknown_8580CD1\n\t"
         "_0812A434: .4byte gStringVar4\n\t"
         "_0812A438: .4byte 0x085CA812\n\t"
         "_0812A43C: .4byte sub_0812A468 + 1\n\t"
@@ -8175,7 +8175,7 @@ __attribute__((naked)) void sub_0812A468(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812A484: .4byte 0x08582300\n\t"
+        "_0812A484: .4byte gUnknown_8582300\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -446,7 +446,7 @@ __attribute__((naked)) void sub_081C49E4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4A38: .4byte 0x085EF704\n\t"
+        "_081C4A38: .4byte gUnknown_85EF704\n\t"
         "_081C4A3C: .4byte gUnknown_203CBF8\n\t"
         ".syntax divided\n\t"
     );
@@ -522,7 +522,7 @@ __attribute__((naked)) void sub_081C4A40(void)
         "	bl LoadCompressedSpriteSheet\n\t"
         "	b _081C4AE0\n\t"
         "	.align 2, 0\n\t"
-        "_081C4AD8: .4byte 0x085EF81C\n\t"
+        "_081C4AD8: .4byte gUnknown_85EF81C\n\t"
         "_081C4ADC:\n\t"
         "	bl sub_081C6658\n\t"
         "_081C4AE0:\n\t"
@@ -676,7 +676,7 @@ __attribute__((naked)) void SetBagItemsListTemplate(void)
         "_081C4C00: .4byte 0x00000828\n\t"
         "_081C4C04: .4byte 0x085C9448\n\t"
         "_081C4C08: .4byte gMultiuseListMenuTemplate\n\t"
-        "_081C4C0C: .4byte 0x085EF710\n\t"
+        "_081C4C0C: .4byte gUnknown_85EF710\n\t"
         "_081C4C10: .4byte 0x00000822\n\t"
         ".syntax divided\n\t"
     );
@@ -971,10 +971,10 @@ __attribute__((naked)) void PrintItemDescription(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C4E5C: .4byte gStringVar1\n\t"
-        "_081C4E60: .4byte 0x085C9728\n\t"
+        "_081C4E60: .4byte gUnknown_85C9728\n\t"
         "_081C4E64: .4byte gUnknown_203CBFC\n\t"
         "_081C4E68: .4byte gStringVar4\n\t"
-        "_081C4E6C: .4byte 0x085C9738\n\t"
+        "_081C4E6C: .4byte gUnknown_85C9738\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1939,7 +1939,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "_081C5560: .4byte gUnknown_203CBFC\n\t"
         "_081C5564: .4byte gUnknown_203CBF8\n\t"
         "_081C5568: .4byte 0x00000818\n\t"
-        "_081C556C: .4byte 0x085EF758\n\t"
+        "_081C556C: .4byte gUnknown_85EF758\n\t"
         "_081C5570:\n\t"
         "	ldr r0, _081C558C\n\t"
         "	ldrh r0, [r0]\n\t"
@@ -1957,7 +1957,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "_081C558C: .4byte gSpecialVar_ItemId\n\t"
         "_081C5590: .4byte gUnknown_203CBF8\n\t"
         "_081C5594: .4byte 0x00000818\n\t"
-        "_081C5598: .4byte 0x085EF75E\n\t"
+        "_081C5598: .4byte gUnknown_85EF75E\n\t"
         "_081C559C:\n\t"
         "	ldr r0, _081C55B4\n\t"
         "	ldr r0, [r0]\n\t"
@@ -1973,7 +1973,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	.align 2, 0\n\t"
         "_081C55B4: .4byte gUnknown_203CBF8\n\t"
         "_081C55B8: .4byte 0x00000818\n\t"
-        "_081C55BC: .4byte 0x085EF760\n\t"
+        "_081C55BC: .4byte gUnknown_85EF760\n\t"
         "_081C55C0:\n\t"
         "	ldr r0, _081C561C\n\t"
         "	ldr r1, [r0]\n\t"
@@ -2023,7 +2023,7 @@ __attribute__((naked)) void sub_081C551C(void)
         "	.align 2, 0\n\t"
         "_081C561C: .4byte gUnknown_203CBF8\n\t"
         "_081C5620: .4byte 0x00000818\n\t"
-        "_081C5624: .4byte 0x085EF75C\n\t"
+        "_081C5624: .4byte gUnknown_85EF75C\n\t"
         "_081C5628: .4byte gSpecialVar_ItemId\n\t"
         "_081C562C: .4byte gStringVar1\n\t"
         "_081C5630: .4byte gStringVar4\n\t"
@@ -2145,7 +2145,7 @@ __attribute__((naked)) void sub_081C56A8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081C5718: .4byte gUnknown_203CBF8\n\t"
-        "_081C571C: .4byte 0x085EF728\n\t"
+        "_081C571C: .4byte gUnknown_85EF728\n\t"
         "_081C5720: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
     );
@@ -2204,7 +2204,7 @@ __attribute__((naked)) void sub_081C5724(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5788: .4byte 0x085EF728\n\t"
+        "_081C5788: .4byte gUnknown_85EF728\n\t"
         "_081C578C: .4byte gUnknown_203CBF8\n\t"
         "_081C5790: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
@@ -2242,7 +2242,7 @@ __attribute__((naked)) void HandleFewMenuActionsInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081C57FC\n\t"
         "	.align 2, 0\n\t"
-        "_081C57D0: .4byte 0x085EF728\n\t"
+        "_081C57D0: .4byte gUnknown_85EF728\n\t"
         "_081C57D4:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
@@ -2267,7 +2267,7 @@ __attribute__((naked)) void HandleFewMenuActionsInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5804: .4byte 0x085EF728\n\t"
+        "_081C5804: .4byte gUnknown_85EF728\n\t"
         "_081C5808: .4byte gUnknown_203CBF8\n\t"
         "_081C580C: .4byte 0x00000818\n\t"
         ".syntax divided\n\t"
@@ -2443,7 +2443,7 @@ __attribute__((naked)) void HandleMenuActionInput(void)
         "	bl _call_via_r1\n\t"
         "	b _081C598C\n\t"
         "	.align 2, 0\n\t"
-        "_081C5968: .4byte 0x085EF728\n\t"
+        "_081C5968: .4byte gUnknown_85EF728\n\t"
         "_081C596C: .4byte gUnknown_203CBF8\n\t"
         "_081C5970: .4byte 0x00000818\n\t"
         "_081C5974:\n\t"
@@ -2462,7 +2462,7 @@ __attribute__((naked)) void HandleMenuActionInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C5994: .4byte 0x085EF728\n\t"
+        "_081C5994: .4byte gUnknown_85EF728\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2784,7 +2784,7 @@ __attribute__((naked)) void sub_081C5B7C(void)
         "_081C5BEC: .4byte gStringVar2\n\t"
         "_081C5BF0: .4byte gStringVar4\n\t"
         "_081C5BF4: .4byte 0x085C9540\n\t"
-        "_081C5BF8: .4byte 0x085EF764\n\t"
+        "_081C5BF8: .4byte gUnknown_85EF764\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3848,7 +3848,7 @@ __attribute__((naked)) void sub_081C63F0(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C644C: .4byte 0x085EF778\n\t"
+        "_081C644C: .4byte gUnknown_85EF778\n\t"
         "_081C6450: .4byte gStandardMenuPalette\n\t"
         ".syntax divided\n\t"
     );
@@ -3900,7 +3900,7 @@ __attribute__((naked)) void PrintOnWindow_Font1(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C64A8: .4byte 0x085EF76C\n\t"
+        "_081C64A8: .4byte gUnknown_85EF76C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3980,7 +3980,7 @@ __attribute__((naked)) void sub_081C64E4(void)
         "	.align 2, 0\n\t"
         "_081C6520: .4byte gUnknown_203CBF8\n\t"
         "_081C6524: .4byte 0x0000080F\n\t"
-        "_081C6528: .4byte 0x085EF7A0\n\t"
+        "_081C6528: .4byte gUnknown_85EF7A0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4045,7 +4045,7 @@ __attribute__((naked)) void sub_081C656C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C6594: .4byte 0x085EF7C0\n\t"
+        "_081C6594: .4byte gUnknown_85EF7C0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4222,7 +4222,7 @@ __attribute__((naked)) void sub_081C66B4(void)
         "	.align 2, 0\n\t"
         "_081C66D4: .4byte gUnknown_203CBF8\n\t"
         "_081C66D8: .4byte 0x00000804\n\t"
-        "_081C66DC: .4byte 0x085EF824\n\t"
+        "_081C66DC: .4byte gUnknown_85EF824\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -56,7 +56,7 @@ __attribute__((naked)) void LinkOpponentBufferRunCommand(void)
         "_08063FCC: .4byte gBitTable\n\t"
         "_08063FD0: .4byte gActiveBattler\n\t"
         "_08063FD4: .4byte gBattleBufferA\n\t"
-        "_08063FD8: .4byte 0x082ED13C\n\t"
+        "_08063FD8: .4byte gUnknown_82ED13C\n\t"
         "_08063FDC:\n\t"
         "	bl LinkOpponentBufferExecCompleted\n\t"
         "_08063FE0:\n\t"

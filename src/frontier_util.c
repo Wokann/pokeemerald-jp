@@ -24,7 +24,7 @@ __attribute__((naked)) void sub_081A163C(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A1640: .4byte 0x085DD244\n\t"
+        "_081A1640: .4byte gUnknown_85DD244\n\t"
         "_081A1644: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );
@@ -247,7 +247,7 @@ __attribute__((naked)) void sub_081A16D8(void)
         "	.align 2, 0\n\t"
         "_081A1804: .4byte gSpecialVar_Result\n\t"
         "_081A1808: .4byte gSaveBlock2Ptr\n\t"
-        "_081A180C: .4byte 0x085DD228\n\t"
+        "_081A180C: .4byte gUnknown_85DD228\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -421,7 +421,7 @@ __attribute__((naked)) void sub_081A1810(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A1974: .4byte gSaveBlock2Ptr\n\t"
-        "_081A1978: .4byte 0x085DD228\n\t"
+        "_081A1978: .4byte gUnknown_85DD228\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -489,7 +489,7 @@ __attribute__((naked)) void sub_081A19D0(void)
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_081A19D8: .4byte gFacilityTrainers\n\t"
-        "_081A19DC: .4byte 0x085B4A10\n\t"
+        "_081A19DC: .4byte gUnknown_85B4A10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -909,7 +909,7 @@ __attribute__((naked)) void ShowTowerResultsWindow(void)
         "	b _081A1D14\n\t"
         "	.align 2, 0\n\t"
         "_081A1CCC: .4byte gRecordsWindowId\n\t"
-        "_081A1CD0: .4byte 0x085DD2A0\n\t"
+        "_081A1CD0: .4byte gUnknown_85DD2A0\n\t"
         "_081A1CD4: .4byte gStringVar4\n\t"
         "_081A1CD8: .4byte 0x085DD2EC\n\t"
         "_081A1CDC:\n\t"
@@ -1243,7 +1243,7 @@ __attribute__((naked)) void ShowDomeResultsWindow(void)
         "	b _081A1F80\n\t"
         "	.align 2, 0\n\t"
         "_081A1F68: .4byte gRecordsWindowId\n\t"
-        "_081A1F6C: .4byte 0x085DD2A8\n\t"
+        "_081A1F6C: .4byte gUnknown_85DD2A8\n\t"
         "_081A1F70: .4byte gStringVar4\n\t"
         "_081A1F74: .4byte 0x085DD34A\n\t"
         "_081A1F78:\n\t"
@@ -1637,7 +1637,7 @@ __attribute__((naked)) void ShowPalaceResultsWindow(void)
         "	b _081A2298\n\t"
         "	.align 2, 0\n\t"
         "_081A2280: .4byte gRecordsWindowId\n\t"
-        "_081A2284: .4byte 0x085DD2B0\n\t"
+        "_081A2284: .4byte gUnknown_85DD2B0\n\t"
         "_081A2288: .4byte gStringVar4\n\t"
         "_081A228C: .4byte 0x085DD37B\n\t"
         "_081A2290:\n\t"
@@ -2037,7 +2037,7 @@ __attribute__((naked)) void ShowPikeResultsWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A25BC: .4byte gRecordsWindowId\n\t"
-        "_081A25C0: .4byte 0x085DD2B8\n\t"
+        "_081A25C0: .4byte gUnknown_85DD2B8\n\t"
         "_081A25C4: .4byte gStringVar4\n\t"
         "_081A25C8: .4byte 0x085DD3A6\n\t"
         "_081A25CC: .4byte 0x085DD40E\n\t"
@@ -2343,7 +2343,7 @@ __attribute__((naked)) void ShowArenaResultsWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A2828: .4byte gRecordsWindowId\n\t"
-        "_081A282C: .4byte 0x085DD2C0\n\t"
+        "_081A282C: .4byte gUnknown_85DD2C0\n\t"
         "_081A2830: .4byte 0x085DD2E8\n\t"
         "_081A2834: .4byte gStringVar4\n\t"
         "_081A2838: .4byte 0x085DD3B7\n\t"
@@ -2683,7 +2683,7 @@ __attribute__((naked)) void ShowFactoryResultsWindow(void)
         "	b _081A2AC0\n\t"
         "	.align 2, 0\n\t"
         "_081A2AA8: .4byte gRecordsWindowId\n\t"
-        "_081A2AAC: .4byte 0x085DD2C8\n\t"
+        "_081A2AAC: .4byte gUnknown_85DD2C8\n\t"
         "_081A2AB0: .4byte gStringVar4\n\t"
         "_081A2AB4: .4byte 0x085DD3CC\n\t"
         "_081A2AB8:\n\t"
@@ -3077,7 +3077,7 @@ __attribute__((naked)) void ShowPyramidResultsWindow(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A2DC8: .4byte gRecordsWindowId\n\t"
-        "_081A2DCC: .4byte 0x085DD2D0\n\t"
+        "_081A2DCC: .4byte gUnknown_85DD2D0\n\t"
         "_081A2DD0: .4byte gStringVar4\n\t"
         "_081A2DD4: .4byte 0x085DD3F9\n\t"
         "_081A2DD8: .4byte 0x085DD40E\n\t"
@@ -3260,7 +3260,7 @@ __attribute__((naked)) void PrintHallRecords(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A2F54: .4byte gRecordsWindowId\n\t"
-        "_081A2F58: .4byte 0x085DD2D8\n\t"
+        "_081A2F58: .4byte gUnknown_85DD2D8\n\t"
         "_081A2F5C: .4byte gStringVar4\n\t"
         "_081A2F60: .4byte 0x085CCEA5\n\t"
         "_081A2F64: .4byte 0x085CCEB9\n\t"
@@ -3821,7 +3821,7 @@ __attribute__((naked)) void sub_081A33A0(void)
         "	.align 2, 0\n\t"
         "_081A33E0: .4byte 0x000040CF\n\t"
         "_081A33E4: .4byte 0x000040CE\n\t"
-        "_081A33E8: .4byte 0x085DCB7C\n\t"
+        "_081A33E8: .4byte gUnknown_85DCB7C\n\t"
         "_081A33EC:\n\t"
         "	lsls r0, r6, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -3850,7 +3850,7 @@ __attribute__((naked)) void sub_081A33A0(void)
         "	movs r0, #3\n\t"
         "	b _081A344A\n\t"
         "	.align 2, 0\n\t"
-        "_081A3420: .4byte 0x085DCB7C\n\t"
+        "_081A3420: .4byte gUnknown_85DCB7C\n\t"
         "_081A3424:\n\t"
         "	adds r0, r1, #1\n\t"
         "	adds r0, r2, r0\n\t"
@@ -4134,7 +4134,7 @@ __attribute__((naked)) void CopyFrontierTrainerText(u8 whichText, u16 trainerId)
         "	b _081A368E\n\t"
         "	.align 2, 0\n\t"
         "_081A3660: .4byte gBattleTypeFlags\n\t"
-        "_081A3664: .4byte 0x085DC23E\n\t"
+        "_081A3664: .4byte gUnknown_85DC23E\n\t"
         "_081A3668:\n\t"
         "	ldr r0, _081A3694\n\t"
         "	ldr r1, [r0]\n\t"
@@ -4160,7 +4160,7 @@ __attribute__((naked)) void CopyFrontierTrainerText(u8 whichText, u16 trainerId)
         "	.align 2, 0\n\t"
         "_081A3694: .4byte gSaveBlock2Ptr\n\t"
         "_081A3698: .4byte 0xFFFFFE70\n\t"
-        "_081A369C: .4byte 0x085DC23E\n\t"
+        "_081A369C: .4byte gUnknown_85DC23E\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4692,7 +4692,7 @@ __attribute__((naked)) void sub_081A38FC(void)
         "	.align 2, 0\n\t"
         "_081A3AA0: .4byte gSaveBlock2Ptr\n\t"
         "_081A3AA4: .4byte 0x00000E1A\n\t"
-        "_081A3AA8: .4byte 0x085DCEE0\n\t"
+        "_081A3AA8: .4byte gUnknown_85DCEE0\n\t"
         "_081A3AAC: .4byte gTrainerBattleOpponent_A\n\t"
         "_081A3AB0: .4byte 0x000003FE\n\t"
         "_081A3AB4: .4byte 0x00000EB8\n\t"
@@ -5008,7 +5008,7 @@ __attribute__((naked)) void AppendIfValid(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081A3CE8: .4byte 0x085DD48E\n\t"
+        "_081A3CE8: .4byte gUnknown_85DD48E\n\t"
         "_081A3CEC: .4byte 0x0000FFFF\n\t"
         ".syntax divided\n\t"
     );
@@ -5189,7 +5189,7 @@ __attribute__((naked)) void sub_081A3CF0(void)
         "_081A3E44: .4byte gSpecialVar_Result\n\t"
         "_081A3E48: .4byte gStringVar1\n\t"
         "_081A3E4C: .4byte gSpecialVar_0x8004\n\t"
-        "_081A3E50: .4byte 0x085DD48E\n\t"
+        "_081A3E50: .4byte gUnknown_85DD48E\n\t"
         "_081A3E54: .4byte 0x0000FFFF\n\t"
         "_081A3E58: .4byte 0x085ABC72\n\t"
         "_081A3E5C:\n\t"
@@ -5800,11 +5800,11 @@ __attribute__((naked)) void Print1PRecord(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A42DC: .4byte gRecordsWindowId\n\t"
-        "_081A42E0: .4byte 0x085DD564\n\t"
+        "_081A42E0: .4byte gUnknown_85DD564\n\t"
         "_081A42E4: .4byte 0x0000270F\n\t"
         "_081A42E8: .4byte gStringVar2\n\t"
         "_081A42EC: .4byte gStringVar4\n\t"
-        "_081A42F0: .4byte 0x085DD53C\n\t"
+        "_081A42F0: .4byte gUnknown_85DD53C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5929,11 +5929,11 @@ __attribute__((naked)) void FactoryPrintPrevOrCurrentStreak(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A43E0: .4byte gRecordsWindowId\n\t"
-        "_081A43E4: .4byte 0x085DD564\n\t"
+        "_081A43E4: .4byte gUnknown_85DD564\n\t"
         "_081A43E8: .4byte 0x0000270F\n\t"
         "_081A43EC: .4byte gStringVar2\n\t"
         "_081A43F0: .4byte gStringVar4\n\t"
-        "_081A43F4: .4byte 0x085DD53C\n\t"
+        "_081A43F4: .4byte gUnknown_85DD53C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6255,10 +6255,10 @@ __attribute__((naked)) void DomePrintPrevOrCurrentStreak(void)
         "	b _081A468C\n\t"
         "	.align 2, 0\n\t"
         "_081A464C: .4byte gStringVar1\n\t"
-        "_081A4650: .4byte 0x085DD4A4\n\t"
+        "_081A4650: .4byte gUnknown_85DD4A4\n\t"
         "_081A4654: .4byte gStringVar4\n\t"
         "_081A4658: .4byte gRecordsWindowId\n\t"
-        "_081A465C: .4byte 0x085DD504\n\t"
+        "_081A465C: .4byte gUnknown_85DD504\n\t"
         "_081A4660: .4byte gSaveBlock2Ptr\n\t"
         "_081A4664: .4byte 0x00000EE8\n\t"
         "_081A4668:\n\t"
@@ -6321,7 +6321,7 @@ __attribute__((naked)) void ShowRankingHallRecordsWindow()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A46D8: .4byte gRecordsWindowId\n\t"
-        "_081A46DC: .4byte 0x085DD2E0\n\t"
+        "_081A46DC: .4byte gUnknown_85DD2E0\n\t"
         "_081A46E0: .4byte gSpecialVar_0x8005\n\t"
         ".syntax divided\n\t"
     );
@@ -6601,7 +6601,7 @@ __attribute__((naked)) void PrintHyphens(void)
         "	.align 2, 0\n\t"
         "_081A48EC: .4byte 0x000040CF\n\t"
         "_081A48F0: .4byte gTrainers\n\t"
-        "_081A48F4: .4byte 0x085DD56A\n\t"
+        "_081A48F4: .4byte gUnknown_85DD56A\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6643,7 +6643,7 @@ __attribute__((naked)) void sub_081A48F8(void)
         "	.align 2, 0\n\t"
         "_081A4938: .4byte 0x000040CF\n\t"
         "_081A493C: .4byte gTrainers\n\t"
-        "_081A4940: .4byte 0x085DD56A\n\t"
+        "_081A4940: .4byte gUnknown_85DD56A\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6699,7 +6699,7 @@ __attribute__((naked)) void CopyFrontierBrainTrainerName(u8 *dst)
         "	.align 2, 0\n\t"
         "_081A499C: .4byte 0x000040CF\n\t"
         "_081A49A0: .4byte gTrainers\n\t"
-        "_081A49A4: .4byte 0x085DD56A\n\t"
+        "_081A49A4: .4byte gUnknown_85DD56A\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6721,7 +6721,7 @@ __attribute__((naked)) bool8 IsFrontierBrainFemale()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A49C0: .4byte 0x000040CF\n\t"
-        "_081A49C4: .4byte 0x085DD47F\n\t"
+        "_081A49C4: .4byte gUnknown_85DD47F\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6746,7 +6746,7 @@ __attribute__((naked)) void SetFrontierBrainEventObjGfx_2(void)
         "	.align 2, 0\n\t"
         "_081A49E8: .4byte 0x000040CF\n\t"
         "_081A49EC: .4byte 0x00004010\n\t"
-        "_081A49F0: .4byte 0x085DD47F\n\t"
+        "_081A49F0: .4byte gUnknown_85DD47F\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -6987,9 +6987,9 @@ __attribute__((naked)) void CreateFrontierBrainPokemon()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A4BD0: .4byte 0x0000EF2A\n\t"
-        "_081A4BD4: .4byte 0x085DCB98\n\t"
+        "_081A4BD4: .4byte gUnknown_85DCB98\n\t"
         "_081A4BD8: .4byte gEnemyParty\n\t"
-        "_081A4BDC: .4byte 0x085DCBA4\n\t"
+        "_081A4BDC: .4byte gUnknown_85DCBA4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7026,7 +7026,7 @@ __attribute__((naked)) u16 GetFrontierBrainMonSpecies(u8 monId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A4C18: .4byte 0x000040CF\n\t"
-        "_081A4C1C: .4byte 0x085DCB98\n\t"
+        "_081A4C1C: .4byte gUnknown_85DCB98\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7054,7 +7054,7 @@ __attribute__((naked)) void SetFrontierBrainEventObjGfx(void)
         "_081A4C40: .4byte gTrainerBattleOpponent_A\n\t"
         "_081A4C44: .4byte 0x000003FE\n\t"
         "_081A4C48: .4byte 0x00004010\n\t"
-        "_081A4C4C: .4byte 0x085DD47F\n\t"
+        "_081A4C4C: .4byte gUnknown_85DD47F\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7098,7 +7098,7 @@ __attribute__((naked)) u16 GetFrontierBrainMonMove(u8 monId, u8 moveSlotId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A4C98: .4byte 0x000040CF\n\t"
-        "_081A4C9C: .4byte 0x085DCB98\n\t"
+        "_081A4C9C: .4byte gUnknown_85DCB98\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7135,7 +7135,7 @@ __attribute__((naked)) u8 GetFrontierBrainMonNature(u8 monId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A4CD8: .4byte 0x000040CF\n\t"
-        "_081A4CDC: .4byte 0x085DCB98\n\t"
+        "_081A4CDC: .4byte gUnknown_85DCB98\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7178,7 +7178,7 @@ __attribute__((naked)) u8 GetFrontierBrainMonEvs(u8 monId, u8 evStatId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081A4D24: .4byte 0x000040CF\n\t"
-        "_081A4D28: .4byte 0x085DCB98\n\t"
+        "_081A4D28: .4byte gUnknown_85DCB98\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7216,7 +7216,7 @@ __attribute__((naked)) s32 GetFronterBrainSymbol()
         "	b _081A4D90\n\t"
         "	.align 2, 0\n\t"
         "_081A4D68: .4byte 0x000040CF\n\t"
-        "_081A4D6C: .4byte 0x085DCB7C\n\t"
+        "_081A4D6C: .4byte gUnknown_85DCB7C\n\t"
         "_081A4D70:\n\t"
         "	adds r0, r3, #1\n\t"
         "	adds r0, r2, r0\n\t"
@@ -7294,7 +7294,7 @@ __attribute__((naked)) void CopyFrontierBrainText(void)
         "	b _081A4E18\n\t"
         "	.align 2, 0\n\t"
         "_081A4DFC: .4byte gStringVar4\n\t"
-        "_081A4E00: .4byte 0x085DD5E8\n\t"
+        "_081A4E00: .4byte gUnknown_85DD5E8\n\t"
         "_081A4E04:\n\t"
         "	ldr r0, _081A4E20\n\t"
         "	ldr r2, _081A4E24\n\t"
@@ -7311,7 +7311,7 @@ __attribute__((naked)) void CopyFrontierBrainText(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081A4E20: .4byte gStringVar4\n\t"
-        "_081A4E24: .4byte 0x085DD5F0\n\t"
+        "_081A4E24: .4byte gUnknown_85DD5F0\n\t"
         ".syntax divided\n\t"
     );
 }

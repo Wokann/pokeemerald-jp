@@ -428,7 +428,7 @@ __attribute__((naked)) void GetPlayerAvatarGraphicsIdByStateIdAndGender(void)
         "	ldrb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6B4: .4byte 0x0846F908\n\t"
+        "_0808B6B4: .4byte gUnknown_846F908\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -447,7 +447,7 @@ __attribute__((naked)) void sub_0808B6B8(void)
         "	ldrb r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6CC: .4byte 0x0846F918\n\t"
+        "_0808B6CC: .4byte gUnknown_846F918\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -463,7 +463,7 @@ __attribute__((naked)) void sub_0808B6D0(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6DC: .4byte 0x0846F928\n\t"
+        "_0808B6DC: .4byte gUnknown_846F928\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -479,7 +479,7 @@ __attribute__((naked)) void GetFRLGAvatarGraphicsIdByGender(void)
         "	ldrb r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808B6EC: .4byte 0x0846F92A\n\t"
+        "_0808B6EC: .4byte gUnknown_846F92A\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -784,7 +784,7 @@ __attribute__((naked)) void GetPlayerAvatarStateTransitionByGraphicsId(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0808B8C8\n\t"
         "	.align 2, 0\n\t"
-        "_0808B8B8: .4byte 0x0846F92C\n\t"
+        "_0808B8B8: .4byte gUnknown_846F92C\n\t"
         "_0808B8BC:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -828,7 +828,7 @@ __attribute__((naked)) void GetPlayerAvatarGraphicsIdByCurrentState(void)
         "	b _0808B90C\n\t"
         "	.align 2, 0\n\t"
         "_0808B8F8: .4byte 0x02037230\n\t"
-        "_0808B8FC: .4byte 0x0846F92C\n\t"
+        "_0808B8FC: .4byte gUnknown_846F92C\n\t"
         "_0808B900:\n\t"
         "	adds r0, r2, #1\n\t"
         "	lsls r0, r0, #0x18\n\t"
@@ -1275,7 +1275,7 @@ __attribute__((naked)) void sub_0808BBE4(void)
         "	bl ShowWarpArrowSprite\n\t"
         "	b _0808BC66\n\t"
         "	.align 2, 0\n\t"
-        "_0808BC48: .4byte 0x0846F940\n\t"
+        "_0808BC48: .4byte gUnknown_846F940\n\t"
         "_0808BC4C:\n\t"
         "	ldrh r1, [r4]\n\t"
         "	adds r1, #1\n\t"
@@ -1377,7 +1377,7 @@ __attribute__((naked)) void Task_BumpBoulder(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BCF8: .4byte 0x0846F950\n\t"
+        "_0808BCF8: .4byte gUnknown_846F950\n\t"
         "_0808BCFC: .4byte 0x03005B60\n\t"
         "_0808BD00: .4byte 0x02036FF0\n\t"
         "_0808BD04: .4byte 0x02037230\n\t"
@@ -1605,7 +1605,7 @@ __attribute__((naked)) void sub_0808BE8C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BE98: .4byte 0x0846F95C\n\t"
+        "_0808BE98: .4byte gUnknown_846F95C\n\t"
         "_0808BE9C: .4byte 0x03005B60\n\t"
         "_0808BEA0: .4byte 0x02037230\n\t"
         "_0808BEA4: .4byte 0x02036FF0\n\t"
@@ -1733,7 +1733,7 @@ __attribute__((naked)) void sub_0808BF64(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808BF70: .4byte 0x0846F960\n\t"
+        "_0808BF70: .4byte gUnknown_846F960\n\t"
         "_0808BF74: .4byte 0x03005B60\n\t"
         "_0808BF78: .4byte 0x02037230\n\t"
         "_0808BF7C: .4byte 0x02036FF0\n\t"
@@ -1826,7 +1826,7 @@ __attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep1(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C01C: .4byte 0x0846F970\n\t"
+        "_0808C01C: .4byte gUnknown_846F970\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1863,7 +1863,7 @@ __attribute__((naked)) void PlayerAvatar_SecretBaseMatSpinStep2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C05C: .4byte 0x0846F974\n\t"
+        "_0808C05C: .4byte gUnknown_846F974\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2128,7 +2128,7 @@ __attribute__((naked)) void Task_Fishing(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0808C254: .4byte 0x0846F97C\n\t"
+        "_0808C254: .4byte gUnknown_846F97C\n\t"
         "_0808C258: .4byte 0x03005B60\n\t"
         ".syntax divided\n\t"
     );
@@ -2223,8 +2223,8 @@ __attribute__((naked)) void Fishing2(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C304: .4byte 0x0846F9BC\n\t"
-        "_0808C308: .4byte 0x0846F9C2\n\t"
+        "_0808C304: .4byte gUnknown_846F9BC\n\t"
+        "_0808C308: .4byte gUnknown_846F9C2\n\t"
         "_0808C30C: .4byte 0x02036FF0\n\t"
         "_0808C310: .4byte 0x02037230\n\t"
         ".syntax divided\n\t"
@@ -2546,7 +2546,7 @@ __attribute__((naked)) void Fishing8(void)
         "	movs r0, #0xc\n\t"
         "	b _0808C55C\n\t"
         "	.align 2, 0\n\t"
-        "_0808C548: .4byte 0x0846F9D6\n\t"
+        "_0808C548: .4byte gUnknown_846F9D6\n\t"
         "_0808C54C:\n\t"
         "	ldr r0, _0808C568\n\t"
         "	ldrh r1, [r0, #0x2e]\n\t"
@@ -2623,7 +2623,7 @@ __attribute__((naked)) void Fishing9(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C5D0: .4byte 0x0846F9DC\n\t"
+        "_0808C5D0: .4byte gUnknown_846F9DC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3549,7 +3549,7 @@ __attribute__((naked)) void Task_DoPlayerSpinEntrance(void)
         "	strh r0, [r5, #0x10]\n\t"
         "	b _0808CCA2\n\t"
         "	.align 2, 0\n\t"
-        "_0808CC88: .4byte 0x0846FA13\n\t"
+        "_0808CC88: .4byte gUnknown_846FA13\n\t"
         "_0808CC8C:\n\t"
         "	adds r1, r5, #2\n\t"
         "	adds r0, r4, #0\n\t"
@@ -3655,7 +3655,7 @@ __attribute__((naked)) void sub_0808CCFC(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0808CD5A\n\t"
         "	.align 2, 0\n\t"
-        "_0808CD50: .4byte 0x0846FA13\n\t"
+        "_0808CD50: .4byte gUnknown_846FA13\n\t"
         "_0808CD54:\n\t"
         "	ldrb r0, [r5, #0x18]\n\t"
         "	lsls r0, r0, #0x1c\n\t"

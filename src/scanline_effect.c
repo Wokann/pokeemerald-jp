@@ -758,8 +758,8 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	.align 2, 0\n\t"
         "_080B9DE4: .4byte 0x040000D4\n\t"
         "_080B9DE8: .4byte 0x81000800\n\t"
-        "_080B9DEC: .4byte 0x08537414\n\t"
-        "_080B9DF0: .4byte 0x085373FC\n\t"
+        "_080B9DEC: .4byte gUnknown_8537414\n\t"
+        "_080B9DF0: .4byte gUnknown_85373FC\n\t"
         "_080B9DF4:\n\t"
         "	bl ResetPaletteFade\n\t"
         "	bl ScanlineEffect_Stop\n\t"
@@ -808,7 +808,7 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	adds r1, r1, r0\n\t"
         "	b _080B9F4C\n\t"
         "	.align 2, 0\n\t"
-        "_080B9E64: .4byte 0x0853741C\n\t"
+        "_080B9E64: .4byte gUnknown_853741C\n\t"
         "_080B9E68: .4byte gSaveBlock2Ptr\n\t"
         "_080B9E6C: .4byte gMain\n\t"
         "_080B9E70:\n\t"
@@ -818,7 +818,7 @@ __attribute__((naked)) void CB2_InitOptionMenu(void)
         "	bl LoadPalette\n\t"
         "	b _080B9F44\n\t"
         "	.align 2, 0\n\t"
-        "_080B9E7C: .4byte 0x085372B0\n\t"
+        "_080B9E7C: .4byte gUnknown_85372B0\n\t"
         "_080B9E80:\n\t"
         "	movs r0, #0\n\t"
         "	bl PutWindowTilemap\n\t"
@@ -2118,7 +2118,7 @@ __attribute__((naked)) void sub_080BA780(void)
         "	.align 2, 0\n\t"
         "_080BA7F4: .4byte 0x085373DA\n\t"
         "_080BA7F8: .4byte 0x085373E5\n\t"
-        "_080BA7FC: .4byte 0x085373EE\n\t"
+        "_080BA7FC: .4byte gUnknown_85373EE\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2149,7 +2149,7 @@ __attribute__((naked)) void DrawTextOption(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA830: .4byte 0x08537310\n\t"
+        "_080BA830: .4byte gUnknown_8537310\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2199,7 +2199,7 @@ __attribute__((naked)) void sub_080BA834(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA88C: .4byte 0x08537350\n\t"
+        "_080BA88C: .4byte gUnknown_8537350\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -3381,7 +3381,7 @@ __attribute__((naked)) void sub_0803DCCC(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0803DCEC: .4byte gBattleControllerExecFlags\n\t"
-        "_0803DCF0: .4byte 0x082EC694\n\t"
+        "_0803DCF0: .4byte gBattleScriptingCommandsTable\n\t"
         "_0803DCF4: .4byte gBattlescriptCurrInstr\n\t"
         ".syntax divided\n\t"
     );

@@ -9,6 +9,7 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
+.globl gUnknown_85C8D44
 gUnknown_85C8D44: @ 0x85C8D44
 	.string "レポートが　せいかくに　かかれていないので\n"
 	.string "そのまえのレポートを　よみます！$"

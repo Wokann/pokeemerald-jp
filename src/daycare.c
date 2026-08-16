@@ -879,7 +879,7 @@ __attribute__((naked)) void GetEggSpecies(void)
         "	lsrs r2, r4, #0x10\n\t"
         "	b _0806FAB8\n\t"
         "	.align 2, 0\n\t"
-        "_0806FA88: .4byte 0x082F5CA4\n\t"
+        "_0806FA88: .4byte gUnknown_82F5CA4\n\t"
         "_0806FA8C:\n\t"
         "	adds r1, #1\n\t"
         "	cmp r1, #4\n\t"
@@ -1408,7 +1408,7 @@ __attribute__((naked)) void GetEggMoves(void)
         "	movs r4, #1\n\t"
         "	b _0806FE72\n\t"
         "	.align 2, 0\n\t"
-        "_0806FE48: .4byte 0x082FB764\n\t"
+        "_0806FE48: .4byte gUnknown_82FB764\n\t"
         "_0806FE4C: .4byte 0x00004E20\n\t"
         "_0806FE50:\n\t"
         "	adds r0, r2, #1\n\t"
@@ -1470,7 +1470,7 @@ __attribute__((naked)) void GetEggMoves(void)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_0806FEBC: .4byte 0x00000471\n\t"
-        "_0806FEC0: .4byte 0x082FB764\n\t"
+        "_0806FEC0: .4byte gUnknown_82FB764\n\t"
         "_0806FEC4: .4byte 0x00004E20\n\t"
         ".syntax divided\n\t"
     );
@@ -2217,7 +2217,7 @@ __attribute__((naked)) void CreateEgg(struct Pokemon *mon, u16 species, bool8 se
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08070444: .4byte gText_EggNickname\n\t"
-        "_08070448: .4byte 0x082F0D65\n\t"
+        "_08070448: .4byte gUnknown_82F0D65\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2284,7 +2284,7 @@ __attribute__((naked)) void SetInitialEggData(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080704C8: .4byte gText_EggNickname\n\t"
-        "_080704CC: .4byte 0x082F0D65\n\t"
+        "_080704CC: .4byte gUnknown_82F0D65\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2900,7 +2900,7 @@ __attribute__((naked)) void SetDaycareCompatibilityString()
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080708EC: .4byte gStringVar4\n\t"
-        "_080708F0: .4byte 0x082FC0E8\n\t"
+        "_080708F0: .4byte gUnknown_82FC0E8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3163,7 +3163,7 @@ __attribute__((naked)) void GetDaycareLevelMenuLevelText(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070ABC: .4byte 0x082FC0FE\n\t"
+        "_08070ABC: .4byte gUnknown_82FC0FE\n\t"
         "_08070AC0: .4byte 0x082FC0F8\n\t"
         ".syntax divided\n\t"
     );
@@ -3317,7 +3317,7 @@ __attribute__((naked)) void DaycarePrintMonLvl(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070BD4: .4byte 0x082FC0FE\n\t"
+        "_08070BD4: .4byte gUnknown_82FC0FE\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3505,8 +3505,8 @@ __attribute__((naked)) void ShowDaycareLevelMenu()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08070D40: .4byte 0x082FC04C\n\t"
-        "_08070D44: .4byte 0x082FC06C\n\t"
+        "_08070D40: .4byte gUnknown_82FC04C\n\t"
+        "_08070D44: .4byte gUnknown_82FC06C\n\t"
         "_08070D48: .4byte Task_HandleDaycareLevelMenuInput + 1\n\t"
         "_08070D4C: .4byte gTasks\n\t"
         ".syntax divided\n\t"

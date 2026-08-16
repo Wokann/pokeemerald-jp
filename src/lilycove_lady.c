@@ -53,11 +53,11 @@ __attribute__((naked)) void sub_0818D6EC(void)
         "	b _0818D750\n\t"
         "	.align 2, 0\n\t"
         "_0818D730: .4byte 0x00004010\n\t"
-        "_0818D734: .4byte 0x085D3ADE\n\t"
+        "_0818D734: .4byte gUnknown_85D3ADE\n\t"
         "_0818D738: .4byte gSaveBlock1Ptr\n\t"
         "_0818D73C: .4byte 0x00003B58\n\t"
         "_0818D740: .4byte 0x00004011\n\t"
-        "_0818D744: .4byte 0x085D3AD4\n\t"
+        "_0818D744: .4byte gUnknown_85D3AD4\n\t"
         "_0818D748: .4byte gSpecialVar_Result\n\t"
         "_0818D74C:\n\t"
         "	ldr r1, _0818D758\n\t"
@@ -279,7 +279,7 @@ __attribute__((naked)) void sub_0818D84C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0818D8A0: .4byte gUnknown_203CA30\n\t"
-        "_0818D8A4: .4byte 0x085D3D6C\n\t"
+        "_0818D8A4: .4byte gUnknown_85D3D6C\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -394,7 +394,7 @@ __attribute__((naked)) void sub_0818D948(void)
         "	ldr r0, [r0]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0818D954: .4byte 0x085D3CA4\n\t"
+        "_0818D954: .4byte gUnknown_85D3CA4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -667,7 +667,7 @@ __attribute__((naked)) void sub_0818DA90(void)
         "_0818DB18: .4byte gUnknown_203CA30\n\t"
         "_0818DB1C: .4byte gSaveBlock1Ptr\n\t"
         "_0818DB20: .4byte 0x00003B58\n\t"
-        "_0818DB24: .4byte 0x085D3D6C\n\t"
+        "_0818DB24: .4byte gUnknown_85D3D6C\n\t"
         "_0818DB28: .4byte gStringVar2\n\t"
         "_0818DB2C: .4byte gSaveBlock2Ptr\n\t"
         "_0818DB30: .4byte gGameLanguage\n\t"
@@ -784,7 +784,7 @@ __attribute__((naked)) void sub_0818DBAC(void)
         "_0818DBD8: .4byte gUnknown_203CA30\n\t"
         "_0818DBDC: .4byte gSaveBlock1Ptr\n\t"
         "_0818DBE0: .4byte 0x00003B58\n\t"
-        "_0818DBE4: .4byte 0x085D3D84\n\t"
+        "_0818DBE4: .4byte gUnknown_85D3D84\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -870,9 +870,9 @@ __attribute__((naked)) void sub_0818DC0C(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0818DC64: .4byte gUnknown_203CA34\n\t"
-        "_0818DC68: .4byte 0x085D3C04\n\t"
-        "_0818DC6C: .4byte 0x085D3C44\n\t"
-        "_0818DC70: .4byte 0x085D3C64\n\t"
+        "_0818DC68: .4byte gUnknown_85D3C04\n\t"
+        "_0818DC6C: .4byte gUnknown_85D3C44\n\t"
+        "_0818DC70: .4byte gUnknown_85D3C64\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1081,7 +1081,7 @@ __attribute__((naked)) void sub_0818DDA4(void)
         "_0818DDCC: .4byte gSaveBlock1Ptr\n\t"
         "_0818DDD0: .4byte 0x00003B58\n\t"
         "_0818DDD4: .4byte gStringVar1\n\t"
-        "_0818DDD8: .4byte 0x085D3D90\n\t"
+        "_0818DDD8: .4byte gUnknown_85D3D90\n\t"
         "_0818DDDC:\n\t"
         "	ldr r0, _0818DE40\n\t"
         "	ldr r2, _0818DE44\n\t"
@@ -2039,8 +2039,8 @@ __attribute__((naked)) void sub_0818E3F0(void)
         "_0818E428: .4byte gUnknown_203CA38\n\t"
         "_0818E42C: .4byte gSaveBlock1Ptr\n\t"
         "_0818E430: .4byte 0x00003B58\n\t"
-        "_0818E434: .4byte 0x085D3DDC\n\t"
-        "_0818E438: .4byte 0x085D3DB0\n\t"
+        "_0818E434: .4byte gUnknown_85D3DDC\n\t"
+        "_0818E438: .4byte gUnknown_85D3DB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2073,7 +2073,7 @@ __attribute__((naked)) void sub_0818E43C(void)
         "_0818E468: .4byte gUnknown_203CA38\n\t"
         "_0818E46C: .4byte gSaveBlock1Ptr\n\t"
         "_0818E470: .4byte 0x00003B58\n\t"
-        "_0818E474: .4byte 0x085D3DB0\n\t"
+        "_0818E474: .4byte gUnknown_85D3DB0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2139,7 +2139,7 @@ __attribute__((naked)) void sub_0818E4C4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0818E4D8: .4byte 0x085D3DDC\n\t"
+        "_0818E4D8: .4byte gUnknown_85D3DDC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2319,7 +2319,7 @@ __attribute__((naked)) void sub_0818E5BC(void)
         "_0818E5DC: .4byte gSaveBlock1Ptr\n\t"
         "_0818E5E0: .4byte 0x00003B58\n\t"
         "_0818E5E4: .4byte gSpecialVar_0x8005\n\t"
-        "_0818E5E8: .4byte 0x085D3DF0\n\t"
+        "_0818E5E8: .4byte gUnknown_85D3DF0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2367,7 +2367,7 @@ __attribute__((naked)) void sub_0818E61C(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0818E620: .4byte 0x085D5B0C\n\t"
+        "_0818E620: .4byte gUnknown_85D5B0C\n\t"
         "_0818E624: .4byte gSpecialVar_0x8004\n\t"
         ".syntax divided\n\t"
     );

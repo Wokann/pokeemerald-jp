@@ -353,7 +353,7 @@ __attribute__((naked)) void SampleFreqSet(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828EBDC: .4byte 0x03007FF0\n\t"
-        "_0828EBE0: .4byte 0x085FD684\n\t"
+        "_0828EBE0: .4byte gUnknown_85FD684\n\t"
         "_0828EBE4: .4byte 0x00091D1B\n\t"
         "_0828EBE8: .4byte 0x00001388\n\t"
         "_0828EBEC: .4byte 0x00002710\n\t"

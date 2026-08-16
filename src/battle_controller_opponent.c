@@ -56,7 +56,7 @@ __attribute__((naked)) void OpponentBufferRunCommand(void)
         "_0805EDD4: .4byte gBitTable\n\t"
         "_0805EDD8: .4byte gActiveBattler\n\t"
         "_0805EDDC: .4byte gBattleBufferA\n\t"
-        "_0805EDE0: .4byte 0x082ED050\n\t"
+        "_0805EDE0: .4byte gUnknown_82ED050\n\t"
         "_0805EDE4:\n\t"
         "	bl OpponentBufferExecCompleted\n\t"
         "_0805EDE8:\n\t"

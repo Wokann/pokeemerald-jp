@@ -32,7 +32,7 @@ __attribute__((naked)) void AcroBikeTransition_FaceDirection(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08119A18: .4byte 0x08573030\n\t"
+        "_08119A18: .4byte sMachBikeTransitions\n\t"
         ".syntax divided\n\t"
     );
 }

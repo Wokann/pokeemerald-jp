@@ -45,7 +45,7 @@ __attribute__((naked)) void SetUpItemUseCallback(void)
         "	b _080FD920\n\t"
         "	.align 2, 0\n\t"
         "_080FD904: .4byte gUnknown_203CB20\n\t"
-        "_080FD908: .4byte 0x0856DCBC\n\t"
+        "_080FD908: .4byte gUnknown_856DCBC\n\t"
         "_080FD90C:\n\t"
         "	ldr r0, _080FD928\n\t"
         "	ldr r2, [r0]\n\t"
@@ -62,7 +62,7 @@ __attribute__((naked)) void SetUpItemUseCallback(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080FD928: .4byte gUnknown_203CBF8\n\t"
-        "_080FD92C: .4byte 0x0856DCBC\n\t"
+        "_080FD92C: .4byte gUnknown_856DCBC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -726,7 +726,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	b _080FDE16\n\t"
         "	.align 2, 0\n\t"
         "_080FDDAC: .4byte gUnknown_3005B68\n\t"
-        "_080FDDB0: .4byte 0x0856DCC8\n\t"
+        "_080FDDB0: .4byte gUnknown_856DCC8\n\t"
         "_080FDDB4: .4byte sub_080FE2E8 + 1\n\t"
         "_080FDDB8:\n\t"
         "	bl GetPlayerFacingDirection\n\t"
@@ -761,7 +761,7 @@ __attribute__((naked)) void sub_080FDD58(void)
         "	strh r0, [r4, #4]\n\t"
         "	b _080FDE16\n\t"
         "	.align 2, 0\n\t"
-        "_080FDDF4: .4byte 0x0856DCC8\n\t"
+        "_080FDDF4: .4byte gUnknown_856DCC8\n\t"
         "_080FDDF8: .4byte gTasks\n\t"
         "_080FDDFC: .4byte sub_080FE330 + 1\n\t"
         "_080FDE00:\n\t"
@@ -1594,7 +1594,7 @@ __attribute__((naked)) void sub_080FE330(void)
         "	.align 2, 0\n\t"
         "_080FE3AC: .4byte gUnknown_3005B68\n\t"
         "_080FE3B0: .4byte gObjectEvents\n\t"
-        "_080FE3B4: .4byte 0x0856DCC8\n\t"
+        "_080FE3B4: .4byte gUnknown_856DCC8\n\t"
         "_080FE3B8: .4byte 0x085C95B6\n\t"
         "_080FE3BC: .4byte sub_080FDE20 + 1\n\t"
         ".syntax divided\n\t"
@@ -1969,7 +1969,7 @@ __attribute__((naked)) void sub_080FE65C(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE67C: .4byte 0x08244ED8\n\t"
+        "_080FE67C: .4byte gUnknown_8244ED8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2293,7 +2293,7 @@ __attribute__((naked)) void sub_080FE874(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080FE888: .4byte 0x0856DCCC\n\t"
+        "_080FE888: .4byte gUnknown_856DCCC\n\t"
         ".syntax divided\n\t"
     );
 }

@@ -587,7 +587,7 @@ __attribute__((naked)) void ply_xcmd(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0828FA64: .4byte 0x085FD7EC\n\t"
+        "_0828FA64: .4byte gUnknown_85FD7EC\n\t"
         ".syntax divided\n\t"
     );
 }

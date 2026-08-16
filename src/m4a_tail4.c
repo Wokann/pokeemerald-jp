@@ -32,7 +32,7 @@ __attribute__((naked)) void MidiKeyToCgbFreq(void)
         "	ldrb r0, [r0]\n\t"
         "	b _0828F156\n\t"
         "	.align 2, 0\n\t"
-        "_0828F0F0: .4byte 0x085FD738\n\t"
+        "_0828F0F0: .4byte gUnknown_85FD738\n\t"
         "_0828F0F4:\n\t"
         "	cmp r5, #0x23\n\t"
         "	bhi _0828F100\n\t"
@@ -90,8 +90,8 @@ __attribute__((naked)) void MidiKeyToCgbFreq(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0828F15C: .4byte 0x085FD69C\n\t"
-        "_0828F160: .4byte 0x085FD720\n\t"
+        "_0828F15C: .4byte gUnknown_85FD69C\n\t"
+        "_0828F160: .4byte gUnknown_85FD720\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -762,7 +762,7 @@ __attribute__((naked)) void CgbSound(void)
         "	b _0828F65C\n\t"
         "	.align 2, 0\n\t"
         "_0828F620: .4byte 0x04000081\n\t"
-        "_0828F624: .4byte 0x085FD774\n\t"
+        "_0828F624: .4byte gUnknown_85FD774\n\t"
         "_0828F628:\n\t"
         "	movs r0, #0xf\n\t"
         "	mov r1, r8\n\t"

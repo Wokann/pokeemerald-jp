@@ -23,7 +23,7 @@ __attribute__((naked)) void sub_08195574(void)
         ".code 16\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08195578: .4byte 0x085D68CC\n\t"
+        "_08195578: .4byte sBattlePalaceFunctions\n\t"
         "_0819557C: .4byte 0x02037280\n\t"
         ".syntax divided\n\t"
     );

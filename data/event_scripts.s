@@ -427,6 +427,7 @@ EventScript_TryGetTrainerScript: @ 0x8244D10
 	.globl BerryTreeScript
 	.globl BerryTree_EventScript_CheckBerryTree
 	.include "data/scripts/berry_tree.inc"
+.globl gUnknown_8244ED8
 gUnknown_8244ED8: @ 0x8244ED8
 	.include "data/scripts/gUnknown_8244ED8.inc"
 
@@ -479,6 +480,7 @@ gUnknown_8245A06: @ 0x8245A06
 	.globl SecretBase_EventScript_InitDecorations
 	.globl SecretBase_EventScript_EnterSecretBase
 	.include "data/scripts/secret_base.inc"
+.globl gUnknown_8245DDD
 gUnknown_8245DDD: @ 0x8245DDD
 	.include "data/scripts/gUnknown_8245DDD.inc"
 
@@ -512,6 +514,7 @@ EventScript_TradeCenter_Chair0: @ 0x82470D4
 	.globl EventScript_TradeCenter_Chair1
 EventScript_TradeCenter_Chair1: @ 0x82470DE
 	.include "data/scripts/EventScript_TradeCenter_Chair1.inc"
+.globl gUnknown_824715D
 
 	.include "data/scripts/record_mix.inc"
 gUnknown_824715D: @ 0x824715D

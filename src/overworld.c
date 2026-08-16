@@ -29,7 +29,7 @@ __attribute__((naked)) void DoWhiteOut(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08083FE0: .4byte 0x082428F1\n\t"
+        "_08083FE0: .4byte gUnknown_82428F1\n\t"
         "_08083FE4: .4byte gSaveBlock1Ptr\n\t"
         ".syntax divided\n\t"
     );
@@ -537,7 +537,7 @@ __attribute__((naked)) const struct MapLayout *GetMapLayout(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08084354: .4byte 0x0845A1F4\n\t"
+        "_08084354: .4byte gUnknown_845A1F4\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -659,7 +659,7 @@ __attribute__((naked)) struct MapHeader const *const Overworld_GetMapHeaderByGro
         "	ldr r0, [r1]\n\t"
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
-        "_0808440C: .4byte 0x0845E998\n\t"
+        "_0808440C: .4byte gUnknown_845E998\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5098,7 +5098,7 @@ __attribute__((naked)) void InitOverworldGraphicsRegisters(void)
         "_080862D4: .4byte 0x00001F1F\n\t"
         "_080862D8: .4byte SPECIAL_RetrieveLotteryNumber\n\t"
         "_080862DC: .4byte 0x0000FFFF\n\t"
-        "_080862E0: .4byte 0x082BF42C\n\t"
+        "_080862E0: .4byte gUnknown_82BF42C\n\t"
         "_080862E4: .4byte 0x0000070D\n\t"
         "_080862E8: .4byte 0x00007060\n\t"
         ".syntax divided\n\t"
@@ -6360,7 +6360,7 @@ __attribute__((naked)) u16 KeyInterCB_WaitForPlayersToExit(u32 keyOrPlayerId)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_08086B54: .4byte gUnknown_3000E10\n\t"
-        "_08086B58: .4byte 0x082471F2\n\t"
+        "_08086B58: .4byte gUnknown_82471F2\n\t"
         "_08086B5C: .4byte KeyInterCB_SendNothing_2 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -6756,7 +6756,7 @@ __attribute__((naked)) const u8 *TryInteractWithPlayer(struct CableClubPlayer *a
         "_08086DA4: .4byte 0x0000FFFF\n\t"
         "_08086DA8: .4byte 0xFFFFFF00\n\t"
         "_08086DAC: .4byte gUnknown_3000E10\n\t"
-        "_08086DB0: .4byte 0x0824717B\n\t"
+        "_08086DB0: .4byte gUnknown_824717B\n\t"
         "_08086DB4:\n\t"
         "	adds r0, r2, #0\n\t"
         "	bl GetLinkTrainerCardColor\n\t"
@@ -6765,12 +6765,12 @@ __attribute__((naked)) const u8 *TryInteractWithPlayer(struct CableClubPlayer *a
         "	ldr r0, _08086DC4\n\t"
         "	b _08086DDA\n\t"
         "	.align 2, 0\n\t"
-        "_08086DC4: .4byte 0x0824715D\n\t"
+        "_08086DC4: .4byte gUnknown_824715D\n\t"
         "_08086DC8:\n\t"
         "	ldr r0, _08086DCC\n\t"
         "	b _08086DDA\n\t"
         "	.align 2, 0\n\t"
-        "_08086DCC: .4byte 0x0824716C\n\t"
+        "_08086DCC: .4byte gUnknown_824716C\n\t"
         "_08086DD0:\n\t"
         "	ldrb r1, [r4, #0xc]\n\t"
         "	ldrb r2, [r4, #3]\n\t"
@@ -6918,7 +6918,7 @@ __attribute__((naked)) void RunConfirmLeaveCableClubScript(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08086EC8: .4byte 0x082471CE\n\t"
+        "_08086EC8: .4byte gUnknown_82471CE\n\t"
         ".syntax divided\n\t"
     );
 }

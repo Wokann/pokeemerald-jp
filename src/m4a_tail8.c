@@ -676,7 +676,7 @@ __attribute__((naked)) void sub_0828E23C(void)
         ".code 16\n\t"
         "	bx r3\n\t"
         "	.align 2, 0\n\t"
-        "_0828E240: .4byte 0x085FD784\n\t"
+        "_0828E240: .4byte gUnknown_85FD784\n\t"
         "_0828E244: .4byte 0x03007FF0\n\t"
         "_0828E248: .4byte 0x68736D53\n\t"
         ".syntax divided\n\t"
@@ -1043,7 +1043,7 @@ __attribute__((naked)) void ply_note(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0828E4BC: .4byte 0x03007FF0\n\t"
-        "_0828E4C0: .4byte 0x085FD784\n\t"
+        "_0828E4C0: .4byte gUnknown_85FD784\n\t"
         ".syntax divided\n\t"
     );
 }

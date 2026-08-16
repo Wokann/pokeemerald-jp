@@ -9,6 +9,7 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
+.globl gUnknown_85C9299
 gUnknown_85C9299: @ 0x85C9299
 	.string "▶$　$"
 	.globl gUnknown_85C929D

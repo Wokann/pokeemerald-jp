@@ -332,7 +332,7 @@ __attribute__((naked)) void ClearBerryTrees()
         "	.align 2, 0\n\t"
         "_080E0D08: .4byte gSaveBlock1Ptr\n\t"
         "_080E0D0C: .4byte 0x0000169C\n\t"
-        "_080E0D10: .4byte 0x085636B0\n\t"
+        "_080E0D10: .4byte gUnknown_85636B0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -425,7 +425,7 @@ __attribute__((naked)) void BerryTreeGrow(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E0DB8: .4byte 0x085636B0\n\t"
+        "_080E0DB8: .4byte gUnknown_85636B0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -476,7 +476,7 @@ __attribute__((naked)) void BerryTreeTimeUpdate(s32 minutes)
         "	.align 2, 0\n\t"
         "_080E0E0C: .4byte gSaveBlock1Ptr\n\t"
         "_080E0E10: .4byte 0x0000169C\n\t"
-        "_080E0E14: .4byte 0x085636B0\n\t"
+        "_080E0E14: .4byte gUnknown_85636B0\n\t"
         "_080E0E18:\n\t"
         "	adds r5, r6, #0\n\t"
         "	cmp r5, #0\n\t"
@@ -578,7 +578,7 @@ __attribute__((naked)) void PlantBerryTree(u8 id, u8 berry, u8 stage, bool8 allo
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E0ECC: .4byte 0x085636B0\n\t"
+        "_080E0ECC: .4byte gUnknown_85636B0\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -603,7 +603,7 @@ __attribute__((naked)) void RemoveBerryTree(u8 id)
         "	.align 2, 0\n\t"
         "_080E0EEC: .4byte gSaveBlock1Ptr\n\t"
         "_080E0EF0: .4byte 0x0000169C\n\t"
-        "_080E0EF4: .4byte 0x085636B0\n\t"
+        "_080E0EF4: .4byte gUnknown_85636B0\n\t"
         ".syntax divided\n\t"
     );
 }

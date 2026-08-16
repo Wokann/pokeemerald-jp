@@ -514,7 +514,7 @@ __attribute__((naked)) void LoadBerryFixGraphics(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081BAA7C: .4byte 0x04000010\n\t"
-        "_081BAA80: .4byte 0x085E72E4\n\t"
+        "_081BAA80: .4byte gUnknown_85E72E4\n\t"
         "_081BAA84: .4byte 0x0600F800\n\t"
         "_081BAA88: .4byte 0x04000008\n\t"
         ".syntax divided\n\t"

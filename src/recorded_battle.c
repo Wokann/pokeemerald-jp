@@ -3036,7 +3036,7 @@ __attribute__((naked)) void sub_08186234(void)
         "_0818626C: .4byte gBitTable\n\t"
         "_08186270: .4byte gActiveBattler\n\t"
         "_08186274: .4byte gBattleBufferA\n\t"
-        "_08186278: .4byte 0x085D38F0\n\t"
+        "_08186278: .4byte gUnknown_85D38F0\n\t"
         "_0818627C:\n\t"
         "	bl RecordedOpponentBufferExecCompleted\n\t"
         "_08186280:\n\t"

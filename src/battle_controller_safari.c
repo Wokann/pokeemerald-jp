@@ -56,7 +56,7 @@ __attribute__((naked)) void SafariBufferRunCommand(void)
         "_081592FC: .4byte gBitTable\n\t"
         "_08159300: .4byte gActiveBattler\n\t"
         "_08159304: .4byte gBattleBufferA\n\t"
-        "_08159308: .4byte 0x085ACD28\n\t"
+        "_08159308: .4byte gUnknown_85ACD28\n\t"
         "_0815930C:\n\t"
         "	bl SafariBufferExecCompleted\n\t"
         "_08159310:\n\t"

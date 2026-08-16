@@ -36,7 +36,7 @@ __attribute__((naked)) void sub_08119C44(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08119C4C: .4byte 0x0857304C\n\t"
+        "_08119C4C: .4byte sAcroBikeTransitions\n\t"
         ".syntax divided\n\t"
     );
 }

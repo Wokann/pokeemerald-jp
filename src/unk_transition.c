@@ -27,11 +27,11 @@ __attribute__((naked)) void sub_081D9F50(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081D9F88: .4byte 0x085FC03C\n\t"
-        "_081D9F8C: .4byte 0x085FC218\n\t"
-        "_081D9F90: .4byte 0x085FC824\n\t"
-        "_081D9F94: .4byte 0x085FCA0C\n\t"
-        "_081D9F98: .4byte 0x085FCA14\n\t"
+        "_081D9F88: .4byte gUnknown_85FC03C\n\t"
+        "_081D9F8C: .4byte gUnknown_85FC218\n\t"
+        "_081D9F90: .4byte gUnknown_85FC824\n\t"
+        "_081D9F94: .4byte gUnknown_85FCA0C\n\t"
+        "_081D9F98: .4byte gUnknown_85FCA14\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -84,7 +84,7 @@ __attribute__((naked)) void sub_081D9F9C(void)
         "	beq _081DA008\n\t"
         "	b _081D9FFC\n\t"
         "	.align 2, 0\n\t"
-        "_081D9FF4: .4byte 0x085FCA40\n\t"
+        "_081D9FF4: .4byte gUnknown_85FCA40\n\t"
         "_081D9FF8:\n\t"
         "	cmp r7, #2\n\t"
         "	beq _081DA034\n\t"
@@ -295,7 +295,7 @@ __attribute__((naked)) void sub_081DA10C(void)
         "	beq _081DA184\n\t"
         "	b _081DA178\n\t"
         "	.align 2, 0\n\t"
-        "_081DA170: .4byte 0x085FCA40\n\t"
+        "_081DA170: .4byte gUnknown_85FCA40\n\t"
         "_081DA174:\n\t"
         "	cmp r5, #2\n\t"
         "	beq _081DA1B0\n\t"
@@ -713,7 +713,7 @@ __attribute__((naked)) void Phase2Task_34(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA45C: .4byte 0x085FCA58\n\t"
+        "_081DA45C: .4byte gUnknown_85FCA58\n\t"
         "_081DA460: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -836,7 +836,7 @@ __attribute__((naked)) void Phase2Task_35(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA534: .4byte 0x085FCA6C\n\t"
+        "_081DA534: .4byte gUnknown_85FCA6C\n\t"
         "_081DA538: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -959,7 +959,7 @@ __attribute__((naked)) void Phase2Task_36(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA60C: .4byte 0x085FCA80\n\t"
+        "_081DA60C: .4byte gUnknown_85FCA80\n\t"
         "_081DA610: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1092,7 +1092,7 @@ __attribute__((naked)) void Phase2Task_37(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA6F8: .4byte 0x085FCA94\n\t"
+        "_081DA6F8: .4byte gUnknown_85FCA94\n\t"
         "_081DA6FC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1227,7 +1227,7 @@ __attribute__((naked)) void Phase2Task_38(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA7E8: .4byte 0x085FCAA8\n\t"
+        "_081DA7E8: .4byte gUnknown_85FCAA8\n\t"
         "_081DA7EC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1369,7 +1369,7 @@ __attribute__((naked)) void Phase2Task_39(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA8E0: .4byte 0x085FCABC\n\t"
+        "_081DA8E0: .4byte gUnknown_85FCABC\n\t"
         "_081DA8E4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1511,7 +1511,7 @@ __attribute__((naked)) void Phase2Task_40(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DA9D8: .4byte 0x085FCAD0\n\t"
+        "_081DA9D8: .4byte gUnknown_85FCAD0\n\t"
         "_081DA9DC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -1657,7 +1657,7 @@ __attribute__((naked)) void Phase2Task_41(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081DAAD8: .4byte 0x085FCAE4\n\t"
+        "_081DAAD8: .4byte gUnknown_85FCAE4\n\t"
         "_081DAADC: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );

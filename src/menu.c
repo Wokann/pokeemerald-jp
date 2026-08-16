@@ -16,7 +16,7 @@ __attribute__((naked)) void InitStandardTextBoxWindows()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08196DDC: .4byte 0x085D7B28\n\t"
+        "_08196DDC: .4byte gUnknown_85D7B28\n\t"
         "_08196DE0: .4byte sStartMenuWindowId\n\t"
         "_08196DE4: .4byte sMapNamePopupWindowId\n\t"
         ".syntax divided\n\t"
@@ -1297,7 +1297,7 @@ __attribute__((naked)) void DisplayYesNoMenuDefaultYes()
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197738: .4byte 0x085D7B38\n\t"
+        "_08197738: .4byte gUnknown_85D7B38\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1326,7 +1326,7 @@ __attribute__((naked)) void DisplayYesNoMenuWithDefault(u8 initialCursorPos)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08197764: .4byte 0x085D7B38\n\t"
+        "_08197764: .4byte gUnknown_85D7B38\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1388,7 +1388,7 @@ __attribute__((naked)) u8 GetPlayerTextSpeedDelay()
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_081977C0: .4byte gSaveBlock2Ptr\n\t"
-        "_081977C4: .4byte 0x085D7B24\n\t"
+        "_081977C4: .4byte gUnknown_85D7B24\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2805,7 +2805,7 @@ __attribute__((naked)) void sub_081981B4(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0819823C: .4byte 0x085D7B48\n\t"
+        "_0819823C: .4byte gUnknown_85D7B48\n\t"
         "_08198240: .4byte gUnknown_203CA6C\n\t"
         ".syntax divided\n\t"
     );
@@ -2893,7 +2893,7 @@ __attribute__((naked)) void sub_08198244(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_081982E0: .4byte gUnknown_203CA6C\n\t"
-        "_081982E4: .4byte 0x085D7B68\n\t"
+        "_081982E4: .4byte gUnknown_85D7B68\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3324,7 +3324,7 @@ __attribute__((naked)) void RedrawMenuCursor(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081985E0: .4byte 0x085D7B6C\n\t"
+        "_081985E0: .4byte gUnknown_85D7B6C\n\t"
         "_081985E4: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
@@ -4374,7 +4374,7 @@ __attribute__((naked)) void CreateYesNoMenuAtPos(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08198D3C: .4byte gUnknown_203CA6B\n\t"
-        "_08198D40: .4byte 0x085D7B40\n\t"
+        "_08198D40: .4byte gUnknown_85D7B40\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -5077,7 +5077,7 @@ __attribute__((naked)) void sub_08199170(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199248: .4byte 0x085D7B6C\n\t"
+        "_08199248: .4byte gUnknown_85D7B6C\n\t"
         "_0819924C: .4byte gUnknown_203CA5C\n\t"
         ".syntax divided\n\t"
     );
@@ -6998,12 +6998,12 @@ __attribute__((naked)) void sub_08199F54(void)
         "	ldr r0, _08199F70\n\t"
         "	b _08199F7E\n\t"
         "	.align 2, 0\n\t"
-        "_08199F70: .4byte 0x085D7BD8\n\t"
+        "_08199F70: .4byte gUnknown_85D7BD8\n\t"
         "_08199F74:\n\t"
         "	ldr r0, _08199F78\n\t"
         "	b _08199F7E\n\t"
         "	.align 2, 0\n\t"
-        "_08199F78: .4byte 0x085D7BF8\n\t"
+        "_08199F78: .4byte gUnknown_85D7BF8\n\t"
         "_08199F7C:\n\t"
         "	ldr r0, _08199F8C\n\t"
         "_08199F7E:\n\t"
@@ -7013,7 +7013,7 @@ __attribute__((naked)) void sub_08199F54(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199F8C: .4byte 0x085D7C18\n\t"
+        "_08199F8C: .4byte gUnknown_85D7C18\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7056,8 +7056,8 @@ __attribute__((naked)) void blit_move_info_icon(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08199FD4: .4byte 0x085D7B70\n\t"
-        "_08199FD8: .4byte 0x085D7C38\n\t"
+        "_08199FD4: .4byte gUnknown_85D7B70\n\t"
+        "_08199FD8: .4byte gUnknown_85D7C38\n\t"
         ".syntax divided\n\t"
     );
 }

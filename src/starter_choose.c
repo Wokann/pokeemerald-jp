@@ -581,13 +581,13 @@ __attribute__((naked)) void CreateStarterPokemonLabel(u8 selection)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_0813462C: .4byte gSpeciesNames\n\t"
-        "_08134630: .4byte 0x08590BF4\n\t"
+        "_08134630: .4byte sStarterWindowTemplate_StarterLabel\n\t"
         "_08134634: .4byte gStarterCategorySuffix\n\t"
-        "_08134638: .4byte 0x08590C02\n\t"
+        "_08134638: .4byte sStarterLabelCoords\n\t"
         "_0813463C: .4byte 0xFFFF00FF\n\t"
         "_08134640: .4byte 0xFF00FFFF\n\t"
         "_08134644: .4byte sStarterLabelWindowId\n\t"
-        "_08134648: .4byte 0x08590C1C\n\t"
+        "_08134648: .4byte sStarterTextColors\n\t"
         ".syntax divided\n\t"
     );
 }

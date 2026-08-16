@@ -1189,7 +1189,7 @@ __attribute__((naked)) void PopulateSpeciesFromTrainerParty(int matchCallId, u8 
         "lsls r0, r0, #3\n\t"
         "b _081968CA\n\t"
         ".align 2, 0\n\t"
-        "_081968BC: .4byte 0x085D6934\n\t"
+        "_081968BC: .4byte gUnknown_85D6934\n\t"
         "_081968C0: .4byte gTrainers\n\t"
         "_081968C4:\n\t"
         "lsls r0, r0, #3\n\t"

@@ -405,7 +405,7 @@ __attribute__((naked)) void QueueAnimTiles_General_Flower(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A04B4: .4byte 0x084E8E70\n\t"
+        "_080A04B4: .4byte gUnknown_84E8E70\n\t"
         "_080A04B8: .4byte 0x06003F80\n\t"
         ".syntax divided\n\t"
     );
@@ -431,7 +431,7 @@ __attribute__((naked)) void QueueAnimTiles_General_Water(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A04DC: .4byte 0x084EAC80\n\t"
+        "_080A04DC: .4byte gUnknown_84EAC80\n\t"
         "_080A04E0: .4byte 0x06003600\n\t"
         ".syntax divided\n\t"
     );
@@ -457,7 +457,7 @@ __attribute__((naked)) void QueueAnimTiles_General_SandWaterEdge(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0504: .4byte 0x084EB560\n\t"
+        "_080A0504: .4byte gUnknown_84EB560\n\t"
         "_080A0508: .4byte 0x06003A00\n\t"
         ".syntax divided\n\t"
     );
@@ -482,7 +482,7 @@ __attribute__((naked)) void QueueAnimTiles_General_Waterfall(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A052C: .4byte 0x084EB880\n\t"
+        "_080A052C: .4byte gUnknown_84EB880\n\t"
         "_080A0530: .4byte 0x06003E00\n\t"
         ".syntax divided\n\t"
     );
@@ -1483,7 +1483,7 @@ __attribute__((naked)) void QueueAnimTiles_General_LandWaterEdge(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0B94: .4byte 0x084EBD90\n\t"
+        "_080A0B94: .4byte gUnknown_84EBD90\n\t"
         "_080A0B98: .4byte 0x06003C00\n\t"
         ".syntax divided\n\t"
     );
@@ -1521,7 +1521,7 @@ __attribute__((naked)) void QueueAnimTiles_Lavaridge_Steam(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0BD8: .4byte 0x084EBFA0\n\t"
+        "_080A0BD8: .4byte gUnknown_84EBFA0\n\t"
         "_080A0BDC: .4byte 0x06006400\n\t"
         "_080A0BE0: .4byte 0x06006480\n\t"
         ".syntax divided\n\t"
@@ -1548,7 +1548,7 @@ __attribute__((naked)) void QueueAnimTiles_Pacifidlog_LogBridges(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0C04: .4byte 0x084ECAF0\n\t"
+        "_080A0C04: .4byte gUnknown_84ECAF0\n\t"
         "_080A0C08: .4byte 0x06007A00\n\t"
         ".syntax divided\n\t"
     );
@@ -1573,7 +1573,7 @@ __attribute__((naked)) void QueueAnimTiles_Underwater_Seaweed(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0C2C: .4byte 0x084ECD00\n\t"
+        "_080A0C2C: .4byte gUnknown_84ECD00\n\t"
         "_080A0C30: .4byte 0x06007E00\n\t"
         ".syntax divided\n\t"
     );
@@ -1599,7 +1599,7 @@ __attribute__((naked)) void QueueAnimTiles_Pacifidlog_WaterCurrents(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0C54: .4byte 0x084ED510\n\t"
+        "_080A0C54: .4byte gUnknown_84ED510\n\t"
         "_080A0C58: .4byte 0x06007E00\n\t"
         ".syntax divided\n\t"
     );
@@ -1644,10 +1644,10 @@ __attribute__((naked)) void QueueAnimTiles_Mauville_Flowers(void)
         "	bl AppendTilesetAnimToBuffer\n\t"
         "	b _080A0CE4\n\t"
         "	.align 2, 0\n\t"
-        "_080A0CA8: .4byte 0x084EDA90\n\t"
-        "_080A0CAC: .4byte 0x084EDA50\n\t"
-        "_080A0CB0: .4byte 0x084EDAC0\n\t"
-        "_080A0CB4: .4byte 0x084EDA70\n\t"
+        "_080A0CA8: .4byte gUnknown_84EDA90\n\t"
+        "_080A0CAC: .4byte gUnknown_84EDA50\n\t"
+        "_080A0CB0: .4byte gUnknown_84EDAC0\n\t"
+        "_080A0CB4: .4byte gUnknown_84EDA70\n\t"
         "_080A0CB8:\n\t"
         "	movs r0, #3\n\t"
         "	ands r5, r0\n\t"
@@ -1674,10 +1674,10 @@ __attribute__((naked)) void QueueAnimTiles_Mauville_Flowers(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0CEC: .4byte 0x084EDAF0\n\t"
-        "_080A0CF0: .4byte 0x084EDA50\n\t"
-        "_080A0CF4: .4byte 0x084EDB00\n\t"
-        "_080A0CF8: .4byte 0x084EDA70\n\t"
+        "_080A0CEC: .4byte gUnknown_84EDAF0\n\t"
+        "_080A0CF0: .4byte gUnknown_84EDA50\n\t"
+        "_080A0CF4: .4byte gUnknown_84EDB00\n\t"
+        "_080A0CF8: .4byte gUnknown_84EDA70\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1713,8 +1713,8 @@ __attribute__((naked)) void QueueAnimTiles_Rustboro_WindyWater(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0D30: .4byte 0x084EDF30\n\t"
-        "_080A0D34: .4byte 0x084EDF10\n\t"
+        "_080A0D30: .4byte gUnknown_84EDF30\n\t"
+        "_080A0D34: .4byte gUnknown_84EDF10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1738,7 +1738,7 @@ __attribute__((naked)) void QueueAnimTiles_Rustboro_Fountain(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0D58: .4byte 0x084EE070\n\t"
+        "_080A0D58: .4byte gUnknown_84EE070\n\t"
         "_080A0D5C: .4byte 0x06007800\n\t"
         ".syntax divided\n\t"
     );
@@ -1763,7 +1763,7 @@ __attribute__((naked)) void QueueAnimTiles_Lavaridge_Lava(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0D80: .4byte 0x084EE498\n\t"
+        "_080A0D80: .4byte gUnknown_84EE498\n\t"
         "_080A0D84: .4byte 0x06005400\n\t"
         ".syntax divided\n\t"
     );
@@ -1796,8 +1796,8 @@ __attribute__((naked)) void QueueAnimTiles_EverGrande_Flowers(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0DB8: .4byte 0x084EE8E8\n\t"
-        "_080A0DBC: .4byte 0x084EE8C8\n\t"
+        "_080A0DB8: .4byte gUnknown_84EE8E8\n\t"
+        "_080A0DBC: .4byte gUnknown_84EE8C8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1821,7 +1821,7 @@ __attribute__((naked)) void QueueAnimTiles_Cave_Lava(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0DE0: .4byte 0x084EE498\n\t"
+        "_080A0DE0: .4byte gUnknown_84EE498\n\t"
         "_080A0DE4: .4byte 0x06007400\n\t"
         ".syntax divided\n\t"
     );
@@ -1846,7 +1846,7 @@ __attribute__((naked)) void QueueAnimTiles_Dewford_Flag(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0E08: .4byte 0x084EEC08\n\t"
+        "_080A0E08: .4byte gUnknown_84EEC08\n\t"
         "_080A0E0C: .4byte 0x06005540\n\t"
         ".syntax divided\n\t"
     );
@@ -1871,7 +1871,7 @@ __attribute__((naked)) void QueueAnimTiles_BattleFrontierOutsideWest_Flag(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0E30: .4byte 0x084EEF18\n\t"
+        "_080A0E30: .4byte gUnknown_84EEF18\n\t"
         "_080A0E34: .4byte 0x06005B40\n\t"
         ".syntax divided\n\t"
     );
@@ -1896,7 +1896,7 @@ __attribute__((naked)) void QueueAnimTiles_BattleFrontierOutsideEast_Flag(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0E58: .4byte 0x084EF228\n\t"
+        "_080A0E58: .4byte gUnknown_84EF228\n\t"
         "_080A0E5C: .4byte 0x06005B40\n\t"
         ".syntax divided\n\t"
     );
@@ -1921,7 +1921,7 @@ __attribute__((naked)) void QueueAnimTiles_Slateport_Balloons(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0E80: .4byte 0x084EF438\n\t"
+        "_080A0E80: .4byte gUnknown_84EF438\n\t"
         "_080A0E84: .4byte 0x06005C00\n\t"
         ".syntax divided\n\t"
     );
@@ -2101,7 +2101,7 @@ __attribute__((naked)) void QueueAnimTiles_Building_TVTurnedOn(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0F70: .4byte 0x084EF548\n\t"
+        "_080A0F70: .4byte gUnknown_84EF548\n\t"
         "_080A0F74: .4byte 0x06003E00\n\t"
         ".syntax divided\n\t"
     );
@@ -2137,9 +2137,9 @@ __attribute__((naked)) void QueueAnimTiles_SootopolisGym_Waterfalls(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0FB0: .4byte 0x084F0150\n\t"
+        "_080A0FB0: .4byte gUnknown_84F0150\n\t"
         "_080A0FB4: .4byte 0x06007E00\n\t"
-        "_080A0FB8: .4byte 0x084F015C\n\t"
+        "_080A0FB8: .4byte gUnknown_84F015C\n\t"
         "_080A0FBC: .4byte 0x06007A00\n\t"
         ".syntax divided\n\t"
     );
@@ -2164,7 +2164,7 @@ __attribute__((naked)) void QueueAnimTiles_EliteFour_WallLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A0FE0: .4byte 0x084F0308\n\t"
+        "_080A0FE0: .4byte gUnknown_84F0308\n\t"
         "_080A0FE4: .4byte 0x06007F00\n\t"
         ".syntax divided\n\t"
     );
@@ -2189,7 +2189,7 @@ __attribute__((naked)) void QueueAnimTiles_EliteFour_GroundLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A1008: .4byte 0x084F0318\n\t"
+        "_080A1008: .4byte gUnknown_84F0318\n\t"
         "_080A100C: .4byte 0x06007C00\n\t"
         ".syntax divided\n\t"
     );
@@ -2215,7 +2215,7 @@ __attribute__((naked)) void QueueAnimTiles_MauvilleGym_ElectricGates(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A1030: .4byte 0x084F0740\n\t"
+        "_080A1030: .4byte gUnknown_84F0740\n\t"
         "_080A1034: .4byte 0x06005200\n\t"
         ".syntax divided\n\t"
     );
@@ -2241,7 +2241,7 @@ __attribute__((naked)) void QueueAnimTiles_BikeShop_BlinkingLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A1058: .4byte 0x084F09A8\n\t"
+        "_080A1058: .4byte gUnknown_84F09A8\n\t"
         "_080A105C: .4byte 0x06007E00\n\t"
         ".syntax divided\n\t"
     );
@@ -2267,7 +2267,7 @@ __attribute__((naked)) void QueueAnimTiles_Sootopolis_StormyWater(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A1080: .4byte 0x084F89D0\n\t"
+        "_080A1080: .4byte gUnknown_84F89D0\n\t"
         "_080A1084: .4byte 0x06005E00\n\t"
         ".syntax divided\n\t"
     );
@@ -2294,7 +2294,7 @@ __attribute__((naked)) void QueueAnimTiles_BattlePyramid_Torch(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A10AC: .4byte 0x084FCF70\n\t"
+        "_080A10AC: .4byte gUnknown_84FCF70\n\t"
         "_080A10B0: .4byte 0x060052E0\n\t"
         ".syntax divided\n\t"
     );
@@ -2321,7 +2321,7 @@ __attribute__((naked)) void QueueAnimTiles_BattlePyramid_StatueShadow(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A10D8: .4byte 0x084FCF7C\n\t"
+        "_080A10D8: .4byte gUnknown_84FCF7C\n\t"
         "_080A10DC: .4byte 0x060050E0\n\t"
         ".syntax divided\n\t"
     );
@@ -2369,7 +2369,7 @@ __attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLights(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A1130: .4byte 0x084FCF88\n\t"
+        "_080A1130: .4byte gUnknown_84FCF88\n\t"
         "_080A1134: .4byte gUnknown_20374B4\n\t"
         "_080A1138: .4byte gPaletteFade\n\t"
         "_080A113C: .4byte Phase2Task_Magma + 1\n\t"
@@ -2426,7 +2426,7 @@ __attribute__((naked)) void BlendAnimPalette_BattleDome_FloorLightsNoBlend(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080A11A4: .4byte 0x084FCF88\n\t"
+        "_080A11A4: .4byte gUnknown_84FCF88\n\t"
         "_080A11A8: .4byte gUnknown_20374B4\n\t"
         "_080A11AC: .4byte Phase2Task_Magma + 1\n\t"
         "_080A11B0: .4byte gPaletteFade\n\t"
