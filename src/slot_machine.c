@@ -1088,6 +1088,7 @@ void LightenBetTiles(u8 betLevel);
 void CheckMatch(void);
 void AwardPayout(void);
 void FlashSlotMachineLights(void);
+static void Task_FlashSlotMachineLights(u8 taskId);
 void AddPikaPowerBolt(u8 bolts);
 void FlashMatchLine(u8 spriteId);
 void CreateInvisibleFlashMatchLineSprites(void);
@@ -3687,130 +3688,66 @@ static void SpriteCB_FlashMatchingLines(struct Sprite *sprite)
 #undef sColorIncr
 #undef sAtOriginalColor
 
-__attribute__((naked)) void FlashSlotMachineLights(void)
+// The flashing lights palettes stay packed in data_b2d_mid62.s
+// (gUnknown_8585542); these pointers select the inside/middle/outside
+// 16-color palettes within it.
+extern const u8 gUnknown_8585542[];
+__attribute__((section(".rodata.sFlashingLightsPalTable")))
+static const u16 *const sFlashingLightsPalTable[] =
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812D0E8\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #6\n\t"
-        "	bl CreateTask\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0812D0EC\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #1\n\t"
-        "	strh r2, [r1, #0xe]\n\t"
-        "	bl _call_via_r4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D0E8: .4byte Task_FlashSlotMachineLights + 1\n\t"
-        "_0812D0EC: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    (const u16 *)&gUnknown_8585542[0x00],
+    (const u16 *)&gUnknown_8585542[0x20],
+    (const u16 *)&gUnknown_8585542[0x40],
+};
+
+// Menu palette slice used to restore the machine lights after flashing.
+extern const u8 gUnknown_858544C[];
+__attribute__((section(".rodata.sSlotMachineMenu_Pal")))
+// Mutable pointer on purpose: agbcc folds a const pointer initialised with a
+// constant address into the call site (dropping the memory load), which would
+// make TryStopSlotMachineLights 2 bytes short. The section attribute keeps it
+// in .rodata at 0x85855B0.
+static const u16 *sSlotMachineMenu_Pal = (const u16 *)&gUnknown_858544C[0x20];
+
+#define sDelayTimer data[1]
+#define sFlashState data[2]
+#define sFlashDir   data[3]
+
+void FlashSlotMachineLights(void)
+{
+    u8 taskId = CreateTask(Task_FlashSlotMachineLights, 6);
+    gTasks[taskId].sFlashDir = 1;
+    Task_FlashSlotMachineLights(taskId);
 }
 
-__attribute__((naked)) bool8 TryStopSlotMachineLights(void)
+bool8 TryStopSlotMachineLights(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812D114\n\t"
-        "	bl FindTaskIdByFunc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	ldr r1, _0812D118\n\t"
-        "	lsls r0, r2, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xc\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D11C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812D130\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D114: .4byte Task_FlashSlotMachineLights + 1\n\t"
-        "_0812D118: .4byte gTasks\n\t"
-        "_0812D11C:\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	bl DestroyTask\n\t"
-        "	ldr r0, _0812D134\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	movs r0, #1\n\t"
-        "_0812D130:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D134: .4byte gUnknown_85855B0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 taskId = FindTaskIdByFunc(Task_FlashSlotMachineLights);
+    if (gTasks[taskId].sFlashState == 0)
+    {
+        DestroyTask(taskId);
+        LoadPalette(sSlotMachineMenu_Pal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void Task_FlashSlotMachineLights(u8 taskId)
+static void Task_FlashSlotMachineLights(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	ldr r0, _0812D190\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldrh r0, [r2, #0xa]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	movs r1, #1\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0812D176\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r2, #0xa]\n\t"
-        "	ldrh r1, [r2, #0xe]\n\t"
-        "	ldrh r3, [r2, #0xc]\n\t"
-        "	adds r0, r1, r3\n\t"
-        "	strh r0, [r2, #0xc]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812D172\n\t"
-        "	cmp r0, #2\n\t"
-        "	bne _0812D176\n\t"
-        "_0812D172:\n\t"
-        "	rsbs r0, r1, #0\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "_0812D176:\n\t"
-        "	ldr r0, _0812D194\n\t"
-        "	movs r3, #0xc\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	movs r1, #0x10\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812D190: .4byte gTasks\n\t"
-        "_0812D194: .4byte gUnknown_85855A4\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Task *task = &gTasks[taskId];
+    if (!task->sDelayTimer--)
+    {
+        task->sDelayTimer = 4;
+        task->sFlashState += task->sFlashDir;
+        if (task->sFlashState == 0 || task->sFlashState == 2)
+            task->sFlashDir = -task->sFlashDir;
+    }
+    LoadPalette(sFlashingLightsPalTable[task->sFlashState], BG_PLTT_ID(1), PLTT_SIZE_4BPP);
 }
+
+#undef sDelayTimer
+#undef sFlashState
+#undef sFlashDir
 
 __attribute__((naked)) void GameplayTask_PikaPower(void)
 {

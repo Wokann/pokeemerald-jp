@@ -9369,6 +9369,9 @@ SECTIONS {
         src/slot_machine.o(.rodata.sBetToMatchLineIds);
         src/slot_machine.o(.rodata.sMatchLinesPerBet);
         data/data_b2d_mid62.o(.rodata.8585542);
+        src/slot_machine.o(.rodata.sFlashingLightsPalTable);
+        src/slot_machine.o(.rodata.sSlotMachineMenu_Pal);
+        data/data_b2d_mid62.o(.rodata.85855B4);
         src/data/text/region_texts38.o(.rodata);
         data/data_b2d_mid38.o(.rodata);
         src/data/text/region_texts33.o(.rodata);
