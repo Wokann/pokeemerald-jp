@@ -1,5 +1,6 @@
 #include "global.h"
 #include "constants/event_object_movement.h"
+#include "constants/field_effects.h"
 
 // Movement action tables (defined in data/data_b2d_mid28.s).
 extern const u8 gJumpInPlaceMovementActions[];
@@ -48,6 +49,7 @@ enum
 #define FIGURE_8_LENGTH 72
 
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
+extern u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -24762,48 +24764,20 @@ __attribute__((naked)) void GroundEffect_StepOnLongGrass(struct ObjectEvent *obj
     );
 }
 
-__attribute__((naked)) void GroundEffect_WaterReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_WaterReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/event_object_movement.c\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetUpReflection\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetUpReflection(objEvent, sprite, FALSE);
 }
 
-__attribute__((naked)) void GroundEffect_IceReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_IceReflection(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/event_object_movement.c\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetUpReflection\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetUpReflection(objEvent, sprite, TRUE);
 }
 
 
-__attribute__((naked)) void GroundEffect_FlowingWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_FlowingWater(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x22\n\t"
-        "	bl sub_08097758\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFieldEffectForObjectEvent(FLDEFF_FEET_IN_FLOWING_WATER, objEvent);
 }
 
 __attribute__((naked)) void GroundEffect_SandTracks(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -24965,34 +24939,14 @@ __attribute__((naked)) void sub_08096A54(void)
     );
 }
 
-__attribute__((naked)) void GroundEffect_StepOnPuddle(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_StepOnPuddle(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0xf\n\t"
-        "	bl sub_08097758\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFieldEffectForObjectEvent(FLDEFF_SPLASH, objEvent);
 }
 
-__attribute__((naked)) void GroundEffect_SandHeap(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_SandHeap(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x27\n\t"
-        "	bl sub_08097758\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFieldEffectForObjectEvent(FLDEFF_SAND_PILE, objEvent);
 }
 
 __attribute__((naked)) void GroundEffect_JumpOnTallGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
@@ -25161,34 +25115,14 @@ __attribute__((naked)) void GroundEffect_JumpLandingDust(struct ObjectEvent *obj
     );
 }
 
-__attribute__((naked)) void GroundEffect_ShortGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_ShortGrass(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x29\n\t"
-        "	bl sub_08097758\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFieldEffectForObjectEvent(FLDEFF_SHORT_GRASS, objEvent);
 }
 
-__attribute__((naked)) void GroundEffect_HotSprings(struct ObjectEvent *objEvent, struct Sprite *sprite)
+void GroundEffect_HotSprings(struct ObjectEvent *objEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2a\n\t"
-        "	bl sub_08097758\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    StartFieldEffectForObjectEvent(FLDEFF_HOT_SPRINGS_WATER, objEvent);
 }
 
 __attribute__((naked)) void GroundEffect_Seaweed(struct ObjectEvent *objEvent, struct Sprite *sprite)
