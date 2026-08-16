@@ -16,21 +16,25 @@
 #include "data/text/ribbon_descriptions.h"
 #include "data/text/gift_ribbon_descriptions.h"
 
+// Ribbons summary screen graphics (JP uses extracted bins).
+static const u16 gPokenavRibbonsSummaryBg_Pal[] = INCBIN_U16("graphics/pokenav/gPokenavRibbonsSummaryBg_Pal.bin");
+static const u32 gPokenavRibbonsSummaryBg_Gfx[] = INCBIN_U32("graphics/pokenav/gPokenavRibbonsSummaryBg_Gfx.bin");
+static const u32 gPokenavRibbonsSummaryBg_Tilemap[] = INCBIN_U32("graphics/pokenav/gPokenavRibbonsSummaryBg_Tilemap.bin");
+static const u16 sRibbonIcons1_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons1_Pal.bin");
+static const u16 sRibbonIcons2_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons2_Pal.bin");
+static const u16 sRibbonIcons3_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons3_Pal.bin");
+static const u16 sRibbonIcons4_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons4_Pal.bin");
+static const u16 sRibbonIcons5_Pal[] = INCBIN_U16("graphics/ribbons/sRibbonIcons5_Pal.bin");
+static const u16 sMonInfo_Pal[] = INCBIN_U16("graphics/pokemon_summary/sMonInfo_Pal.bin");
+static const u32 sRibbonIconsSmall_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonIconsSmall_Gfx.bin");
+static const u32 sRibbonIconsBig_Gfx[] = INCBIN_U32("graphics/ribbons/sRibbonIconsBig_Gfx.bin");
+
 struct RibbonGfxData { u16 tileNumOffset; u16 palNumOffset; };
 extern const struct RibbonGfxData sRibbonGfxData[];
 struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; };
 extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
-extern const u16 sRibbonIcons1_Pal[];
-extern const u16 sRibbonIcons2_Pal[];
-extern const u16 sRibbonIcons3_Pal[];
-extern const u16 sRibbonIcons4_Pal[];
-extern const u16 sRibbonIcons5_Pal[];
-extern const u16 sMonInfo_Pal[16]; // ROM 0x085F6714, 16 colors
-extern const u32 sRibbonIconsSmall_Gfx[];
-extern const u32 sRibbonIconsBig_Gfx[];
-extern const struct BgTemplate sPokenavRibbonsBgTemplates[2]; // ROM 0x085F7210
 extern const struct BgTemplate sRibbonsSummaryBgTemplates[2]; // ROM 0x085F7214
 extern const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[];
 extern const struct WindowTemplate sRibbonCountWindowTemplate;

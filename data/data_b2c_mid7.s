@@ -9,60 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gPokenavRibbonsSummaryBg_Pal
-gPokenavRibbonsSummaryBg_Pal: @ 0x85F648C
-	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Pal.bin"
-
-	.globl gPokenavRibbonsSummaryBg_Gfx
-	.globl gPokenavRibbonsSummaryBg_Gfx
-gPokenavRibbonsSummaryBg_Gfx: @ 0x5F64AC
-	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Gfx.bin"
-
-	.globl sRibbonIcons2_Pal
-sRibbonIcons2_Pal: @ 0x5F64B0
-	.incbin "graphics/ribbons/sRibbonIcons2_Pal.bin"
-
-	.globl sRibbonIcons3_Pal
-sRibbonIcons3_Pal: @ 0x5F64C0
-	.incbin "graphics/ribbons/sRibbonIcons3_Pal.bin"
-
-	.globl sRibbonIcons4_Pal
-sRibbonIcons4_Pal: @ 0x5F64D0
-	.incbin "graphics/ribbons/sRibbonIcons4_Pal.bin"
-
-	.globl sRibbonIcons5_Pal
-sRibbonIcons5_Pal: @ 0x5F64E0
-	.incbin "graphics/ribbons/sRibbonIcons5_Pal.bin"
-
-
-	.globl gPokenavRibbonsSummaryBg_Tilemap
-gPokenavRibbonsSummaryBg_Tilemap: @ 0x85F65A8
-	.incbin "graphics/pokenav/gPokenavRibbonsSummaryBg_Tilemap.bin"
-
-	.globl sRibbonIcons1_Pal
-sRibbonIcons1_Pal: @ 0x85F6674
-	.incbin "graphics/ribbons/sRibbonIcons1_Pal.bin"
-
-	.globl sMonInfo_Pal
-	.globl sMonInfo_Pal
-sMonInfo_Pal: @ 0x5F6714
-	.incbin "graphics/pokemon_summary/sMonInfo_Pal.bin"
-
-	.globl sRibbonIconsBig_Gfx
-sRibbonIconsBig_Gfx: @ 0x5F6730
-	.incbin "graphics/ribbons/sRibbonIconsBig_Gfx.bin"
-
-
-	.globl sRibbonIconsSmall_Gfx
-	.globl sRibbonIconsSmall_Gfx
-sRibbonIconsSmall_Gfx: @ 0x5F6734
-	.incbin "graphics/ribbons/sRibbonIconsSmall_Gfx.bin"
-
-	.globl sPokenavRibbonsBgTemplates
-sPokenavRibbonsBgTemplates: @ 0x5F7210
-	.incbin "baserom_jp.gba", 0x5f7210, 0x4
-
-
 	.globl sRibbonsSummaryBgTemplates
 sRibbonsSummaryBgTemplates: @ 0x85F7214
 	.incbin "baserom_jp.gba", 0x5f7214, 0x8
