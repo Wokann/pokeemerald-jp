@@ -267,13 +267,33 @@ struct PokemonStorageSystemData
     u8 displayMenuTilemapBuffer[0x800];
 };
 
+struct MultiMove
+{
+    u8 funcId;
+    u8 state;
+    u8 fromColumn;
+    u8 fromRow;
+    u8 toColumn;
+    u8 toRow;
+    u8 cursorColumn;
+    u8 cursorRow;
+    u8 minColumn;
+    u8 minRow;
+    u8 columnsTotal;
+    u8 rowsTotal;
+    u16 bgX;
+    u16 bgY;
+    u16 bgMoveSteps;
+    struct BoxPokemon boxMons[IN_BOX_COUNT];
+};
+
 extern struct PokemonStorageSystemData *sStorage;
 
 extern bool8 (*const sPlaceChangeFuncs[])(void);
 extern const u8 *ItemId_GetName(u16 itemId);
 extern void TilemapUtil_Free(void);
 extern void MultiMove_Free(void);
-extern void *sMultiMove;
+extern struct MultiMove *sMultiMove;
 extern void *sTilemapUtil;
 extern struct Pokemon sSavedMovingMon;
 extern s8 sCursorArea;
@@ -2947,7 +2967,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	b _080C7E9C\n\t"
         "_080C7E56:\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_080CFA70\n\t"
+        "	bl MultiMove_SetFunction\n\t"
         "	ldr r0, _080C7E68\n\t"
         "	ldr r1, [r0]\n\t"
         "	movs r0, #8\n\t"
@@ -2968,7 +2988,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl PlaySE\n\t"
         "	movs r0, #4\n\t"
         "_080C7E82:\n\t"
-        "	bl sub_080CFA70\n\t"
+        "	bl MultiMove_SetFunction\n\t"
         "	ldr r0, _080C7E90\n\t"
         "	ldr r1, [r0]\n\t"
         "	movs r0, #9\n\t"
@@ -2981,7 +3001,7 @@ __attribute__((naked)) void Cb_MainPSS(void)
         "	bl PlaySE\n\t"
         "	movs r0, #5\n\t"
         "_080C7E9C:\n\t"
-        "	bl sub_080CFA70\n\t"
+        "	bl MultiMove_SetFunction\n\t"
         "	ldr r0, _080C7EAC\n\t"
         "	ldr r1, [r0]\n\t"
         "	movs r0, #7\n\t"
@@ -19128,21 +19148,10 @@ void MultiMove_Free(void)
         Free(sMultiMove);
 }
 
-__attribute__((naked)) void sub_080CFA70(void)
+void MultiMove_SetFunction(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080CFA80\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	strb r3, [r0, #1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFA80: .4byte gUnknown_2039A20\n\t"
-        ".syntax divided\n\t"
-    );
+    sMultiMove->funcId = id;
+    sMultiMove->state = 0;
 }
 
 __attribute__((naked)) void sub_080CFA84(void)
