@@ -1,5 +1,6 @@
 #include "global.h"
 #include "event_object_movement.h"
+#include "field_effect.h"
 #include "overworld.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
@@ -22413,29 +22414,10 @@ bool32 IsVirtualObjectAnimating(u8 virtualObjId)
     return FALSE;
 }
 
-__attribute__((naked)) u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent)
+u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r1, _0809777C\n\t"
-        "	adds r2, r1, #4\n\t"
-        "	adds r3, r1, #0\n\t"
-        "	adds r3, #8\n\t"
-        "	bl ObjectEventGetLocalIdAndMap\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0809777C: .4byte gFieldEffectArguments\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    return FieldEffectStart(fieldEffectId);
 }
 
 void DoShadowFieldEffect(struct ObjectEvent *objectEvent)
