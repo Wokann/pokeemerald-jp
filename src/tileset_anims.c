@@ -1,5 +1,33 @@
 #include "global.h"
 #include "tileset_anims.h"
+// Tileset animation state (JP EWRAM, aliased in ld_script_jp.txt).
+extern u16 sPrimaryTilesetAnimCounter;
+extern u16 sPrimaryTilesetAnimCounterMax;
+extern void (*sPrimaryTilesetAnimCallback)(u16);
+extern u16 sSecondaryTilesetAnimCounter;
+extern u16 sSecondaryTilesetAnimCounterMax;
+extern void (*sSecondaryTilesetAnimCallback)(u16);
+
+extern void TilesetAnim_BattleDome(u16 timer);
+extern void TilesetAnim_BattleFrontierOutsideEast(u16 timer);
+extern void TilesetAnim_BattleFrontierOutsideWest(u16 timer);
+extern void TilesetAnim_BattlePyramid(void);
+extern void TilesetAnim_BikeShop(u16 timer);
+extern void TilesetAnim_Building(u16 timer);
+extern void TilesetAnim_Cave(void);
+extern void TilesetAnim_Dewford(u16 timer);
+extern void TilesetAnim_EliteFour(void);
+extern void TilesetAnim_EverGrande(void);
+extern void TilesetAnim_General(void);
+extern void TilesetAnim_Lavaridge(void);
+extern void TilesetAnim_Mauville(void);
+extern void TilesetAnim_MauvilleGym(u16 timer);
+extern void TilesetAnim_Pacifidlog(void);
+extern void TilesetAnim_Rustboro(void);
+extern void TilesetAnim_Slateport(u16 timer);
+extern void TilesetAnim_Sootopolis(u16 timer);
+extern void TilesetAnim_SootopolisGym(u16 timer);
+extern void TilesetAnim_Underwater(void);
 
 __attribute__((naked)) void ResetTilesetAnimBuffer(void)
 {
@@ -262,54 +290,18 @@ __attribute__((naked)) void _InitSecondaryTilesetAnimation(void)
     );
 }
 
-__attribute__((naked)) void InitTilesetAnim_General()
+void InitTilesetAnim_General(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0400\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0404\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0408\n\t"
-        "	ldr r0, _080A040C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0400: .4byte gUnknown_3000F36\n\t"
-        "_080A0404: .4byte gUnknown_3000F38\n\t"
-        "_080A0408: .4byte gUnknown_3000F40\n\t"
-        "_080A040C: .4byte TilesetAnim_General + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sPrimaryTilesetAnimCounter = 0;
+    sPrimaryTilesetAnimCounterMax = 256;
+    sPrimaryTilesetAnimCallback = TilesetAnim_General;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Building()
+void InitTilesetAnim_Building(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0428\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A042C\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0430\n\t"
-        "	ldr r0, _080A0434\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0428: .4byte gUnknown_3000F36\n\t"
-        "_080A042C: .4byte gUnknown_3000F38\n\t"
-        "_080A0430: .4byte gUnknown_3000F40\n\t"
-        "_080A0434: .4byte TilesetAnim_Building + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sPrimaryTilesetAnimCounter = 0;
+    sPrimaryTilesetAnimCounterMax = 256;
+    sPrimaryTilesetAnimCallback = TilesetAnim_Building;
 }
 
 __attribute__((naked)) void TilesetAnim_General(void)
@@ -463,572 +455,165 @@ __attribute__((naked)) void QueueAnimTiles_General_Waterfall(void)
     );
 }
 
-__attribute__((naked)) void InitTilesetAnim_Fallarbor()
+void InitTilesetAnim_Fallarbor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A054C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0550\n\t"
-        "	ldr r0, _080A0554\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0558\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A054C: .4byte gUnknown_3000F3A\n\t"
-        "_080A0550: .4byte gUnknown_3000F3C\n\t"
-        "_080A0554: .4byte gUnknown_3000F38\n\t"
-        "_080A0558: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = 0;
 }
 
-__attribute__((naked)) void InitTilesetAnim_BattleFrontierOutsideEast()
+void InitTilesetAnim_BattleFrontierOutsideEast(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0574\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0578\n\t"
-        "	ldr r0, _080A057C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0580\n\t"
-        "	ldr r0, _080A0584\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0574: .4byte gUnknown_3000F3A\n\t"
-        "_080A0578: .4byte gUnknown_3000F3C\n\t"
-        "_080A057C: .4byte gUnknown_3000F38\n\t"
-        "_080A0580: .4byte gUnknown_3000F44\n\t"
-        "_080A0584: .4byte TilesetAnim_Rustboro + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Rustboro;
 }
 
-__attribute__((naked)) void InitTilesetAnim_BattleFrontierOutsideWest()
+void InitTilesetAnim_BattleFrontierOutsideWest(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A05A0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A05A4\n\t"
-        "	ldr r0, _080A05A8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A05AC\n\t"
-        "	ldr r0, _080A05B0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A05A0: .4byte gUnknown_3000F3A\n\t"
-        "_080A05A4: .4byte gUnknown_3000F3C\n\t"
-        "_080A05A8: .4byte gUnknown_3000F38\n\t"
-        "_080A05AC: .4byte gUnknown_3000F44\n\t"
-        "_080A05B0: .4byte TilesetAnim_Dewford + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Dewford;
 }
 
-__attribute__((naked)) void InitTilesetAnim_BattlePyramid()
+void InitTilesetAnim_BattlePyramid(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A05CC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A05D0\n\t"
-        "	ldr r0, _080A05D4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A05D8\n\t"
-        "	ldr r0, _080A05DC\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A05CC: .4byte gUnknown_3000F3A\n\t"
-        "_080A05D0: .4byte gUnknown_3000F3C\n\t"
-        "_080A05D4: .4byte gUnknown_3000F38\n\t"
-        "_080A05D8: .4byte gUnknown_3000F44\n\t"
-        "_080A05DC: .4byte TilesetAnim_Slateport + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Slateport;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Mauville()
+void InitTilesetAnim_Mauville(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A05F8\n\t"
-        "	ldr r0, _080A05FC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0600\n\t"
-        "	ldr r0, _080A0604\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0608\n\t"
-        "	ldr r0, _080A060C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A05F8: .4byte gUnknown_3000F3A\n\t"
-        "_080A05FC: .4byte gUnknown_3000F36\n\t"
-        "_080A0600: .4byte gUnknown_3000F3C\n\t"
-        "_080A0604: .4byte gUnknown_3000F38\n\t"
-        "_080A0608: .4byte gUnknown_3000F44\n\t"
-        "_080A060C: .4byte TilesetAnim_Mauville + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = sPrimaryTilesetAnimCounter;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Mauville;
 }
 
-__attribute__((naked)) void InitTilesetAnim_BikeShop()
+void InitTilesetAnim_BikeShop(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0628\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A062C\n\t"
-        "	ldr r0, _080A0630\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0634\n\t"
-        "	ldr r0, _080A0638\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0628: .4byte gUnknown_3000F3A\n\t"
-        "_080A062C: .4byte gUnknown_3000F3C\n\t"
-        "_080A0630: .4byte gUnknown_3000F38\n\t"
-        "_080A0634: .4byte gUnknown_3000F44\n\t"
-        "_080A0638: .4byte TilesetAnim_Lavaridge + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Lavaridge;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Fortree()
+void InitTilesetAnim_Fortree(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0654\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0658\n\t"
-        "	ldr r0, _080A065C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0660\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0654: .4byte gUnknown_3000F3A\n\t"
-        "_080A0658: .4byte gUnknown_3000F3C\n\t"
-        "_080A065C: .4byte gUnknown_3000F38\n\t"
-        "_080A0660: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = 0;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Lilycove()
+void InitTilesetAnim_Lilycove(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A067C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0680\n\t"
-        "	ldr r0, _080A0684\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0688\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A067C: .4byte gUnknown_3000F3A\n\t"
-        "_080A0680: .4byte gUnknown_3000F3C\n\t"
-        "_080A0684: .4byte gUnknown_3000F38\n\t"
-        "_080A0688: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = 0;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Mossdeep()
+void InitTilesetAnim_Mossdeep(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A06A4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A06A8\n\t"
-        "	ldr r0, _080A06AC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A06B0\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A06A4: .4byte gUnknown_3000F3A\n\t"
-        "_080A06A8: .4byte gUnknown_3000F3C\n\t"
-        "_080A06AC: .4byte gUnknown_3000F38\n\t"
-        "_080A06B0: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = 0;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Petalburg()
+void InitTilesetAnim_Petalburg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A06CC\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A06D0\n\t"
-        "	ldr r0, _080A06D4\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A06D8\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A06CC: .4byte gUnknown_3000F3A\n\t"
-        "_080A06D0: .4byte gUnknown_3000F3C\n\t"
-        "_080A06D4: .4byte gUnknown_3000F38\n\t"
-        "_080A06D8: .4byte gUnknown_3000F44\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = 0;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Cave()
+void InitTilesetAnim_Cave(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A06F4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A06F8\n\t"
-        "	ldr r0, _080A06FC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0700\n\t"
-        "	ldr r0, _080A0704\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A06F4: .4byte gUnknown_3000F3A\n\t"
-        "_080A06F8: .4byte gUnknown_3000F3C\n\t"
-        "_080A06FC: .4byte gUnknown_3000F38\n\t"
-        "_080A0700: .4byte gUnknown_3000F44\n\t"
-        "_080A0704: .4byte TilesetAnim_EverGrande + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_EverGrande;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Pacifidlog()
+void InitTilesetAnim_Pacifidlog(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0720\n\t"
-        "	ldr r0, _080A0724\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0728\n\t"
-        "	ldr r0, _080A072C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0730\n\t"
-        "	ldr r0, _080A0734\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0720: .4byte gUnknown_3000F3A\n\t"
-        "_080A0724: .4byte gUnknown_3000F36\n\t"
-        "_080A0728: .4byte gUnknown_3000F3C\n\t"
-        "_080A072C: .4byte gUnknown_3000F38\n\t"
-        "_080A0730: .4byte gUnknown_3000F44\n\t"
-        "_080A0734: .4byte TilesetAnim_Pacifidlog + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = sPrimaryTilesetAnimCounter;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Pacifidlog;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Dewford()
+void InitTilesetAnim_Dewford(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0750\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0754\n\t"
-        "	ldr r0, _080A0758\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A075C\n\t"
-        "	ldr r0, _080A0760\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0750: .4byte gUnknown_3000F3A\n\t"
-        "_080A0754: .4byte gUnknown_3000F3C\n\t"
-        "_080A0758: .4byte gUnknown_3000F38\n\t"
-        "_080A075C: .4byte gUnknown_3000F44\n\t"
-        "_080A0760: .4byte TilesetAnim_Sootopolis + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Sootopolis;
 }
 
-__attribute__((naked)) void InitTilesetAnim_EverGrande()
+void InitTilesetAnim_EverGrande(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A077C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0780\n\t"
-        "	ldr r0, _080A0784\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0788\n\t"
-        "	ldr r0, _080A078C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A077C: .4byte gUnknown_3000F3A\n\t"
-        "_080A0780: .4byte gUnknown_3000F3C\n\t"
-        "_080A0784: .4byte gUnknown_3000F38\n\t"
-        "_080A0788: .4byte gUnknown_3000F44\n\t"
-        "_080A078C: .4byte TilesetAnim_BattleFrontierOutsideWest + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_BattleFrontierOutsideWest;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Lavaridge()
+void InitTilesetAnim_Lavaridge(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A07A8\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07AC\n\t"
-        "	ldr r0, _080A07B0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07B4\n\t"
-        "	ldr r0, _080A07B8\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A07A8: .4byte gUnknown_3000F3A\n\t"
-        "_080A07AC: .4byte gUnknown_3000F3C\n\t"
-        "_080A07B0: .4byte gUnknown_3000F38\n\t"
-        "_080A07B4: .4byte gUnknown_3000F44\n\t"
-        "_080A07B8: .4byte TilesetAnim_BattleFrontierOutsideEast + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_BattleFrontierOutsideEast;
 }
 
-__attribute__((naked)) void InitTilesetAnim_EliteFour()
+void InitTilesetAnim_EliteFour(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A07D0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07D4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07D8\n\t"
-        "	ldr r0, _080A07DC\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A07D0: .4byte gUnknown_3000F3A\n\t"
-        "_080A07D4: .4byte gUnknown_3000F3C\n\t"
-        "_080A07D8: .4byte gUnknown_3000F44\n\t"
-        "_080A07DC: .4byte TilesetAnim_Underwater + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 128;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Underwater;
 }
 
-__attribute__((naked)) void InitTilesetAnim_SootopolisGym()
+void InitTilesetAnim_SootopolisGym(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A07F4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07F8\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A07FC\n\t"
-        "	ldr r0, _080A0800\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A07F4: .4byte gUnknown_3000F3A\n\t"
-        "_080A07F8: .4byte gUnknown_3000F3C\n\t"
-        "_080A07FC: .4byte gUnknown_3000F44\n\t"
-        "_080A0800: .4byte TilesetAnim_SootopolisGym + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 240;
+    sSecondaryTilesetAnimCallback = TilesetAnim_SootopolisGym;
 }
 
-__attribute__((naked)) void InitTilesetAnim_MauvilleGym()
+void InitTilesetAnim_MauvilleGym(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A081C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0820\n\t"
-        "	ldr r0, _080A0824\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0828\n\t"
-        "	ldr r0, _080A082C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A081C: .4byte gUnknown_3000F3A\n\t"
-        "_080A0820: .4byte gUnknown_3000F3C\n\t"
-        "_080A0824: .4byte gUnknown_3000F38\n\t"
-        "_080A0828: .4byte gUnknown_3000F44\n\t"
-        "_080A082C: .4byte TilesetAnim_Cave + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Cave;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Underwater()
+void InitTilesetAnim_Underwater(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0844\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0848\n\t"
-        "	movs r0, #0x80\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A084C\n\t"
-        "	ldr r0, _080A0850\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0844: .4byte gUnknown_3000F3A\n\t"
-        "_080A0848: .4byte gUnknown_3000F3C\n\t"
-        "_080A084C: .4byte gUnknown_3000F44\n\t"
-        "_080A0850: .4byte TilesetAnim_EliteFour + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 128;
+    sSecondaryTilesetAnimCallback = TilesetAnim_EliteFour;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Rustboro()
+void InitTilesetAnim_Rustboro(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A086C\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0870\n\t"
-        "	ldr r0, _080A0874\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A0878\n\t"
-        "	ldr r0, _080A087C\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A086C: .4byte gUnknown_3000F3A\n\t"
-        "_080A0870: .4byte gUnknown_3000F3C\n\t"
-        "_080A0874: .4byte gUnknown_3000F38\n\t"
-        "_080A0878: .4byte gUnknown_3000F44\n\t"
-        "_080A087C: .4byte TilesetAnim_MauvilleGym + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_MauvilleGym;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Slateport()
+void InitTilesetAnim_Slateport(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A0898\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A089C\n\t"
-        "	ldr r0, _080A08A0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A08A4\n\t"
-        "	ldr r0, _080A08A8\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A0898: .4byte gUnknown_3000F3A\n\t"
-        "_080A089C: .4byte gUnknown_3000F3C\n\t"
-        "_080A08A0: .4byte gUnknown_3000F38\n\t"
-        "_080A08A4: .4byte gUnknown_3000F44\n\t"
-        "_080A08A8: .4byte TilesetAnim_BikeShop + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_BikeShop;
 }
 
-__attribute__((naked)) void InitTilesetAnim_Sootopolis()
+void InitTilesetAnim_Sootopolis(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A08C4\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A08C8\n\t"
-        "	ldr r0, _080A08CC\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A08D0\n\t"
-        "	ldr r0, _080A08D4\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A08C4: .4byte gUnknown_3000F3A\n\t"
-        "_080A08C8: .4byte gUnknown_3000F3C\n\t"
-        "_080A08CC: .4byte gUnknown_3000F38\n\t"
-        "_080A08D0: .4byte gUnknown_3000F44\n\t"
-        "_080A08D4: .4byte TilesetAnim_BattlePyramid + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_BattlePyramid;
 }
 
-__attribute__((naked)) void InitTilesetAnim_BattleDome()
+void InitTilesetAnim_BattleDome(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080A08F0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A08F4\n\t"
-        "	ldr r0, _080A08F8\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	strh r0, [r1]\n\t"
-        "	ldr r1, _080A08FC\n\t"
-        "	ldr r0, _080A0900\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080A08F0: .4byte gUnknown_3000F3A\n\t"
-        "_080A08F4: .4byte gUnknown_3000F3C\n\t"
-        "_080A08F8: .4byte gUnknown_3000F38\n\t"
-        "_080A08FC: .4byte gUnknown_3000F44\n\t"
-        "_080A0900: .4byte TilesetAnim_BattleDome + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = sPrimaryTilesetAnimCounterMax;
+    sSecondaryTilesetAnimCallback = TilesetAnim_BattleDome;
 }
 
 __attribute__((naked)) void TilesetAnim_Rustboro(void)

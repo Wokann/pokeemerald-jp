@@ -1,4 +1,10 @@
 gTypeNamesJP = gTypeNames;
+sPrimaryTilesetAnimCounter = gUnknown_3000F36;
+sPrimaryTilesetAnimCounterMax = gUnknown_3000F38;
+sPrimaryTilesetAnimCallback = gUnknown_3000F40;
+sSecondaryTilesetAnimCounter = gUnknown_3000F3A;
+sSecondaryTilesetAnimCounterMax = gUnknown_3000F3C;
+sSecondaryTilesetAnimCallback = gUnknown_3000F44;
 gBerryCheck_Gfx = gUnknown_8D9BD90;
 
 gBerryTag_Gfx = gUnknown_8D9C254;
