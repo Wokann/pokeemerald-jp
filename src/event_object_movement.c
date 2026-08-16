@@ -19052,7 +19052,7 @@ __attribute__((naked)) bool8 MovementAction_UnusedAcroActionRight_Step0(struct O
     );
 }
 
-__attribute__((naked)) bool8 sub_08095460(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 InitFigure8Anim(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -19112,26 +19112,11 @@ __attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struc
 
 
 
-__attribute__((naked)) bool8 MovementAction_Figure8_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Figure8_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl sub_08095460\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl sub_080954D4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitFigure8Anim(objectEvent, sprite);
+    sprite->sActionFuncId = 1;
+    return sub_080954D4(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite)

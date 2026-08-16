@@ -4497,7 +4497,7 @@ SECTIONS {
         src/event_object_movement.o(.text.MovementAction_UnusedAcroActionUp_Step0);
         src/event_object_movement.o(.text.MovementAction_UnusedAcroActionLeft_Step0);
         src/event_object_movement.o(.text.MovementAction_UnusedAcroActionRight_Step0);
-        src/event_object_movement.o(.text.sub_08095460);
+        src/event_object_movement.o(.text.InitFigure8Anim);
         src/event_object_movement.o(.text.sub_0809547C);
         src/event_object_movement.o(.text.MovementAction_Figure8_Step0);
         src/event_object_movement.o(.text.sub_080954D4);
