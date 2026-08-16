@@ -183,3 +183,82 @@ const struct WindowTemplate sSearchResultListMenuWindowTemplate =
     .paletteNum = 1,
     .baseBlock = 20
 };
+
+// Ribbons mon list.
+u32 BuildPartyMonRibbonList(s32);
+u32 InitBoxMonRibbonList(s32);
+u32 BuildBoxMonRibbonList(s32);
+
+const LoopedTask sMonRibbonListLoopTaskFuncs[] =
+{
+    BuildPartyMonRibbonList,
+    InitBoxMonRibbonList,
+    BuildBoxMonRibbonList
+};
+
+const u16 sMonRibbonListFramePal[] = INCBIN_U16("graphics/pokemon_summary/sMonRibbonListFramePal.bin");
+const u32 sMonRibbonListFrameTiles[] = INCBIN_U32("graphics/pokemon_summary/sMonRibbonListFrameTiles.bin");
+const u32 sMonRibbonListFrameTilemap[] = INCBIN_U32("graphics/pokemon_summary/sMonRibbonListFrameTilemap.bin");
+const u16 sMonRibbonListUi_Pal[] = INCBIN_U16("graphics/pokemon_summary/sMonRibbonListUi_Pal.bin");
+
+const struct BgTemplate sMonRibbonListBgTemplates[] =
+{
+    {
+        .bg = 1,
+        .charBaseIndex = 1,
+        .mapBaseIndex = 0x06,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 2,
+        .baseTile = 0
+    }, {
+        .bg = 2,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 0x07,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    }
+};
+
+u32 LoopedTask_RibbonsListMoveCursorUp(s32);
+u32 LoopedTask_RibbonsListMoveCursorDown(s32);
+u32 LoopedTask_RibbonsListMovePageUp(s32);
+u32 LoopedTask_RibbonsListMovePageDown(s32);
+u32 LoopedTask_RibbonsListReturnToMainMenu(s32);
+u32 LoopedTask_RibbonsListOpenSummary(s32);
+
+// Indices into sRibbonsMonMenuLoopTaskFuncs, matching JP conditions_tail.c.
+enum
+{
+    RIBBONS_MON_LIST_FUNC_NONE,
+    RIBBONS_MON_LIST_FUNC_MOVE_UP,
+    RIBBONS_MON_LIST_FUNC_MOVE_DOWN,
+    RIBBONS_MON_LIST_FUNC_PAGE_UP,
+    RIBBONS_MON_LIST_FUNC_PAGE_DOWN,
+    RIBBONS_MON_LIST_FUNC_EXIT,
+    RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY
+};
+
+const LoopedTask sRibbonsMonMenuLoopTaskFuncs[] =
+{
+    [RIBBONS_MON_LIST_FUNC_NONE]                 = NULL,
+    [RIBBONS_MON_LIST_FUNC_MOVE_UP]              = LoopedTask_RibbonsListMoveCursorUp,
+    [RIBBONS_MON_LIST_FUNC_MOVE_DOWN]            = LoopedTask_RibbonsListMoveCursorDown,
+    [RIBBONS_MON_LIST_FUNC_PAGE_UP]              = LoopedTask_RibbonsListMovePageUp,
+    [RIBBONS_MON_LIST_FUNC_PAGE_DOWN]            = LoopedTask_RibbonsListMovePageDown,
+    [RIBBONS_MON_LIST_FUNC_EXIT]                 = LoopedTask_RibbonsListReturnToMainMenu,
+    [RIBBONS_MON_LIST_FUNC_OPEN_RIBBONS_SUMMARY] = LoopedTask_RibbonsListOpenSummary
+};
+
+const struct WindowTemplate sRibbonsMonListWindowTemplate =
+{
+    .bg = 1,
+    .tilemapLeft = 1,
+    .tilemapTop = 6,
+    .width = 7,
+    .height = 2,
+    .paletteNum = 1,
+    .baseBlock = 20
+};

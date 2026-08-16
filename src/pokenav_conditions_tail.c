@@ -113,7 +113,6 @@ enum
 
 extern u8 sInitialLoadId; // JP IWRAM, bound in ld_script_jp.txt
 extern const u8 gText_SearchResultRank[]; // JP 0x085CB81B, bound in ld_script_jp.txt
-extern const struct BgTemplate sRibbonsMonListBgTemplates[]; // JP 0x085F5DA4
 
 // JP sign-extends the u8 load id at call sites (pokeemerald gfx.c declared it s8).
 extern s8 GetConditionGraphMenuCurrentLoadIndex(void);
@@ -140,10 +139,10 @@ u32 LoopedTask_MoveSearchListCursorUp(s32 state);
 u32 LoopedTask_MoveSearchListCursorDown(s32 state);
 u32 LoopedTask_MoveSearchListPageUp(s32 state);
 u32 LoopedTask_MoveSearchListPageDown(s32 state);
-static u32 LoopedTask_RibbonsListMoveCursorUp(s32 state);
-static u32 LoopedTask_RibbonsListMoveCursorDown(s32 state);
-static u32 LoopedTask_RibbonsListMovePageUp(s32 state);
-static u32 LoopedTask_RibbonsListMovePageDown(s32 state);
+u32 LoopedTask_RibbonsListMoveCursorUp(s32 state);
+u32 LoopedTask_RibbonsListMoveCursorDown(s32 state);
+u32 LoopedTask_RibbonsListMovePageUp(s32 state);
+u32 LoopedTask_RibbonsListMovePageDown(s32 state);
 static void UpdateIndexNumberDisplay(u8 windowId, u16 index);
 
 u32 LoopedTask_TransitionMons(s32 state);
@@ -205,16 +204,16 @@ static u32 UpdateMonListBgs(void);
 static s32 GetRibbonsMonListCount(void);
 static s32 GetRibbonListMenuCurrIndex(void);
 static u32 GetConditionSearchLoopedTask(s32 state);
-static u32 BuildPartyMonRibbonList(s32 state);
-static u32 InitBoxMonRibbonList(s32 state);
-static u32 BuildBoxMonRibbonList(s32 state);
+u32 BuildPartyMonRibbonList(s32 state);
+u32 InitBoxMonRibbonList(s32 state);
+u32 BuildBoxMonRibbonList(s32 state);
 bool32 OpenRibbonsMonList(void);
 bool32 OpenRibbonsMonListFromRibbonsSummary(void);
 void CreateRibbonsMonListLoopedTask(s32 idx);
 static bool32 GetRibbonsMonCurrentLoopedTaskActive(void);
 void FreeRibbonsMonMenu(void);
-static u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state);
-static u32 LoopedTask_RibbonsListOpenSummary(s32 state);
+u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state);
+u32 LoopedTask_RibbonsListOpenSummary(s32 state);
 
 // JP ROM data tables (defined at fixed addresses in ld_script_jp.txt).
 extern const struct BgTemplate sMenuBgTemplates[3];
@@ -1517,7 +1516,7 @@ static u32 GetMonRibbonListLoopTaskFunc(s32 state)
     return sMonRibbonListLoopTaskFuncs[state](state);
 }
 
-static u32 BuildPartyMonRibbonList(s32 state)
+u32 BuildPartyMonRibbonList(s32 state)
 {
     s32 i;
     struct PokenavMonListItem item;
@@ -1546,7 +1545,7 @@ static u32 BuildPartyMonRibbonList(s32 state)
     return LT_INC_AND_CONTINUE;
 }
 
-static u32 InitBoxMonRibbonList(s32 state)
+u32 InitBoxMonRibbonList(s32 state)
 {
     struct Pokenav_RibbonsMonList *list = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_LIST);
     list->monId = 0;
@@ -1554,7 +1553,7 @@ static u32 InitBoxMonRibbonList(s32 state)
     return LT_INC_AND_CONTINUE;
 }
 
-static u32 BuildBoxMonRibbonList(s32 state)
+u32 BuildBoxMonRibbonList(s32 state)
 {
     struct Pokenav_RibbonsMonList *list = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_LIST);
     s32 boxId = list->boxId;
@@ -1748,7 +1747,7 @@ static u32 LoopedTask_OpenRibbonsMonList(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
+u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
 {
     struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
     switch (state)
@@ -1780,7 +1779,7 @@ static u32 LoopedTask_RibbonsListMoveCursorUp(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListMoveCursorDown(s32 state)
+u32 LoopedTask_RibbonsListMoveCursorDown(s32 state)
 {
     struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
     switch (state)
@@ -1812,7 +1811,7 @@ static u32 LoopedTask_RibbonsListMoveCursorDown(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListMovePageUp(s32 state)
+u32 LoopedTask_RibbonsListMovePageUp(s32 state)
 {
     struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
     switch (state)
@@ -1844,7 +1843,7 @@ static u32 LoopedTask_RibbonsListMovePageUp(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListMovePageDown(s32 state)
+u32 LoopedTask_RibbonsListMovePageDown(s32 state)
 {
     struct Pokenav_RibbonsMonMenu *ptr = GetSubstructPtr(POKENAV_SUBSTRUCT_RIBBONS_MON_MENU);
     switch (state)
@@ -1876,7 +1875,7 @@ static u32 LoopedTask_RibbonsListMovePageDown(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state)
+u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state)
 {
     switch (state)
     {
@@ -1896,7 +1895,7 @@ static u32 LoopedTask_RibbonsListReturnToMainMenu(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_RibbonsListOpenSummary(s32 state)
+u32 LoopedTask_RibbonsListOpenSummary(s32 state)
 {
     switch (state)
     {
@@ -1953,7 +1952,7 @@ void CreateRibbonMonsList(void)
     template.fillValue = 2;
     template.bufferItemFunc = BufferRibbonMonInfoText;
     template.iconDrawFunc = NULL;
-    CreatePokenavList(sRibbonsMonListBgTemplates, &template, 0);
+    CreatePokenavList(&sMonRibbonListBgTemplates[1], &template, 0);
 }
 
 

@@ -9,43 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl sMonRibbonListLoopTaskFuncs
-sMonRibbonListLoopTaskFuncs: @ 0x85F5BC8
-	.incbin "baserom_jp.gba", 0x5f5bc8, 0xc
-
-	.globl sMonRibbonListFramePal
-sMonRibbonListFramePal: @ 0x85F5BD4
-	.hword 0x0300, 0x367F, 0x7FFF, 0x3DCD, 0x0000, 0x21B7, 0x2506, 0x4F7F, 0x2A16, 0x3637, 0x6318, 0x7FFF
-	.hword 0x0000, 0x0000, 0x0000, 0x0000
-
-	.globl sMonRibbonListFrameTiles
-sMonRibbonListFrameTiles: @ 0x85F5BF4
-	.incbin "graphics/pokemon_summary/sMonRibbonListFrameTiles.bin"
-
-	.globl sMonRibbonListFrameTilemap
-sMonRibbonListFrameTilemap: @ 0x85F5CBC
-	.incbin "graphics/pokemon_summary/sMonRibbonListFrameTilemap.bin"
-
-	.globl sMonRibbonListUi_Pal
-sMonRibbonListUi_Pal: @ 0x85F5D80
-	.incbin "graphics/pokemon_summary/sMonRibbonListUi_Pal.bin"
-
-	.globl sMonRibbonListBgTemplates
-sMonRibbonListBgTemplates: @ 0x85F5DA0
-	.incbin "baserom_jp.gba", 0x5f5da0, 0x4
-
-	.globl sRibbonsMonListBgTemplates
-sRibbonsMonListBgTemplates: @ 0x85F5DA4
-	.incbin "baserom_jp.gba", 0x5f5da4, 0x4
-
-	.globl sRibbonsMonMenuLoopTaskFuncs
-sRibbonsMonMenuLoopTaskFuncs: @ 0x85F5DA8
-	.incbin "baserom_jp.gba", 0x5f5da8, 0x1c
-
-	.globl sRibbonsMonListWindowTemplate
-sRibbonsMonListWindowTemplate: @ 0x85F5DC4
-	.incbin "baserom_jp.gba", 0x5f5dc4, 0x8
-
 	.globl gText_RibbonsMonListCount
 gText_RibbonsMonListCount: @ 0x85F5DCC
 	.string "　　　/{DYNAMIC 0}$"
