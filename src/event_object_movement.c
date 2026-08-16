@@ -180,6 +180,45 @@ extern bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEvent *objectEvent, 
 extern bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 GetFaceDirectionMovementAction(u32 direction);
+extern u8 MovementType_CopyPlayerInGrass_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_CopyPlayer_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDirection_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownAndUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownRightAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownUpAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceDownUpAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceUpAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceUpAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceUpLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_FaceUpRightAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_Invisible_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_JogInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_LookAround_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_RotateClockwise_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_RotateCounterclockwise_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_RunInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkBackAndForth_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceDownLeftRightUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceDownLeftUpRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceDownRightLeftUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceDownRightUpLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceDownUpLeftRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceLeftDownRightUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceLeftRightDownUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceLeftUpDownRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceRightDownLeftUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceRightLeftDownUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceRightUpDownLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceUpDownLeftRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceUpLeftDownRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSequenceUpRightDownLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WalkSlowlyInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 MovementType_WanderLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 sub_08092CF8(u8 direction);
 extern u8 sub_08092F34(u8 direction);
 extern u8 sub_08092F08(u8 direction);
@@ -3600,28 +3639,9 @@ __attribute__((naked)) u16 GetObjectPaletteTag(u8 palSlot)
     );
 }
 
-__attribute__((naked)) void MovementType_None(struct Sprite *sprite)
+void MovementType_None(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808ED6C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808ED70\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ED6C: .4byte gObjectEvents\n\t"
-        "_0808ED70: .4byte MovementType_None_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_None_callback);
 }
 
 
@@ -3630,31 +3650,12 @@ u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Sprite *sp
     return FALSE;
 }
 
-__attribute__((naked)) void MovementType_WanderAround(struct Sprite *sprite)
+void MovementType_WanderAround(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808ED94\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808ED98\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808ED94: .4byte gObjectEvents\n\t"
-        "_0808ED98: .4byte MovementType_CopyPlayerInGrass_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_CopyPlayerInGrass_callback);
 }
 
-__attribute__((naked)) void MovementType_CopyPlayerInGrass_callback(void)
+__attribute__((naked)) u8 MovementType_CopyPlayerInGrass_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4057,31 +4058,12 @@ u8 TryGetTrainerEncounterDirection(struct ObjectEvent *objectEvent, u8 movementT
     return gGetVectorDirectionFuncs[movementType](dx, dy, absdx, absdy);
 }
 
-__attribute__((naked)) void MovementType_LookAround(struct Sprite *sprite)
+void MovementType_LookAround(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808F2D0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808F2D4\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F2D0: .4byte gObjectEvents\n\t"
-        "_0808F2D4: .4byte MovementType_CopyPlayer_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_CopyPlayer_callback);
 }
 
-__attribute__((naked)) void MovementType_CopyPlayer_callback(void)
+__attribute__((naked)) u8 MovementType_CopyPlayer_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4207,31 +4189,12 @@ __attribute__((naked)) bool8 MovementType_LookAround_Step4(struct ObjectEvent *o
     );
 }
 
-__attribute__((naked)) void MovementType_WanderUpAndDown(struct Sprite *sprite)
+void MovementType_WanderUpAndDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808F410\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808F414\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F410: .4byte gObjectEvents\n\t"
-        "_0808F414: .4byte MovementType_FaceDirection_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDirection_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDirection_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDirection_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4378,31 +4341,12 @@ bool8 MovementType_WanderUpAndDown_Step6(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) void MovementType_WanderLeftAndRight(struct Sprite *sprite)
+void MovementType_WanderLeftAndRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808F594\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808F598\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F594: .4byte gObjectEvents\n\t"
-        "_0808F598: .4byte MovementType_FaceDownAndLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDownAndLeft_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndLeft_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4548,31 +4492,12 @@ bool8 MovementType_WanderLeftAndRight_Step6(struct ObjectEvent *objectEvent, str
     return FALSE;
 }
 
-__attribute__((naked)) void MovementType_FaceDirection(struct Sprite *sprite)
+void MovementType_FaceDirection(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808F718\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808F71C\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F718: .4byte gObjectEvents\n\t"
-        "_0808F71C: .4byte MovementType_FaceDownAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDownAndRight_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndRight_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4623,45 +4548,80 @@ bool8 MovementType_Invisible_Step2(struct ObjectEvent *objectEvent, struct Sprit
 
 __attribute__((naked)) void MovementType_BerryTreeGrowth(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r1, [r4, r0]\n\t"
-        "	lsls r0, r1, #3\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0808F7D8\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F7C8\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl get_berry_tree_graphics\n\t"
-        "	ldrh r1, [r4, #0x3c]\n\t"
-        "	movs r0, #1\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r4, #0x3c]\n\t"
-        "_0808F7C8:\n\t"
-        "	ldr r2, _0808F7DC\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F7D8: .4byte gObjectEvents\n\t"
-        "_0808F7DC: .4byte MovementType_FaceDownAndUp_callback + 1\n\t"
-        ".syntax divided\n\t"
+    __asm__(".syntax unified
+	"
+        ".code 16
+	"
+        "	push {r4, r5, lr}
+	"
+        "	adds r4, r0, #0
+	"
+        "	movs r0, #0x2e
+	"
+        "	ldrsh r1, [r4, r0]
+	"
+        "	lsls r0, r1, #3
+	"
+        "	adds r0, r0, r1
+	"
+        "	lsls r0, r0, #2
+	"
+        "	ldr r1, _0808F7D8
+	"
+        "	adds r5, r0, r1
+	"
+        "	ldrh r1, [r4, #0x3c]
+	"
+        "	movs r0, #1
+	"
+        "	ands r0, r1
+	"
+        "	cmp r0, #0
+	"
+        "	bne _0808F7C8
+	"
+        "	adds r0, r5, #0
+	"
+        "	adds r1, r4, #0
+	"
+        "	bl get_berry_tree_graphics
+	"
+        "	ldrh r1, [r4, #0x3c]
+	"
+        "	movs r0, #1
+	"
+        "	orrs r0, r1
+	"
+        "	strh r0, [r4, #0x3c]
+	"
+        "_0808F7C8:
+	"
+        "	ldr r2, _0808F7DC
+	"
+        "	adds r0, r5, #0
+	"
+        "	adds r1, r4, #0
+	"
+        "	bl UpdateEventObjectCurrentMovement
+	"
+        "	pop {r4, r5}
+	"
+        "	pop {r0}
+	"
+        "	bx r0
+	"
+        "	.align 2, 0
+	"
+        "_0808F7D8: .4byte gObjectEvents
+	"
+        "_0808F7DC: .4byte MovementType_FaceDownAndUp_callback + 1
+	"
+        ".syntax divided
+	"
     );
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndUp_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownAndUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4777,31 +4737,12 @@ bool8 MovementType_BerryTreeGrowth_Step4(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndUp(struct Sprite *sprite)
+void MovementType_FaceDownAndUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808F9DC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808F9E0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F9DC: .4byte gObjectEvents\n\t"
-        "_0808F9E0: .4byte MovementType_FaceDownRightAndLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDownRightAndLeft_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDownRightAndLeft_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownRightAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4927,31 +4868,12 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step4(struct ObjectEvent
     );
 }
 
-__attribute__((naked)) void MovementType_FaceLeftAndRight(struct Sprite *sprite)
+void MovementType_FaceLeftAndRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808FB1C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808FB20\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FB1C: .4byte gObjectEvents\n\t"
-        "_0808FB20: .4byte MovementType_FaceDownUpAndLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDownUpAndLeft_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDownUpAndLeft_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownUpAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5078,31 +5000,12 @@ __attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step4(struct ObjectEv
     );
 }
 
-__attribute__((naked)) void MovementType_FaceUpAndLeft(struct Sprite *sprite)
+void MovementType_FaceUpAndLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808FC5C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808FC60\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FC5C: .4byte gObjectEvents\n\t"
-        "_0808FC60: .4byte MovementType_FaceDownUpAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceDownUpAndRight_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceDownUpAndRight_callback(void)
+__attribute__((naked)) u8 MovementType_FaceDownUpAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5228,31 +5131,12 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step4(struct ObjectEvent
     );
 }
 
-__attribute__((naked)) void MovementType_FaceUpAndRight(struct Sprite *sprite)
+void MovementType_FaceUpAndRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808FD9C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808FDA0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FD9C: .4byte gObjectEvents\n\t"
-        "_0808FDA0: .4byte MovementType_FaceLeftAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceLeftAndRight_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceLeftAndRight_callback(void)
+__attribute__((naked)) u8 MovementType_FaceLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5378,31 +5262,12 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step4(struct ObjectEven
     );
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndLeft(struct Sprite *sprite)
+void MovementType_FaceDownAndLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0808FEDC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0808FEE0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808FEDC: .4byte gObjectEvents\n\t"
-        "_0808FEE0: .4byte MovementType_FaceUpAndLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceUpAndLeft_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceUpAndLeft_callback(void)
+__attribute__((naked)) u8 MovementType_FaceUpAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5529,31 +5394,12 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step4(struct ObjectEve
     );
 }
 
-__attribute__((naked)) void MovementType_FaceDownAndRight(struct Sprite *sprite)
+void MovementType_FaceDownAndRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809001C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090020\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809001C: .4byte gObjectEvents\n\t"
-        "_08090020: .4byte MovementType_FaceUpAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceUpAndRight_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceUpAndRight_callback(void)
+__attribute__((naked)) u8 MovementType_FaceUpAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5679,31 +5525,12 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step4(struct ObjectEv
     );
 }
 
-__attribute__((naked)) void MovementType_FaceDownUpAndLeft(struct Sprite *sprite)
+void MovementType_FaceDownUpAndLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809015C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090160\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809015C: .4byte gObjectEvents\n\t"
-        "_08090160: .4byte MovementType_FaceUpRightAndLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceUpRightAndLeft_callback);
 }
 
-__attribute__((naked)) void MovementType_FaceUpRightAndLeft_callback(void)
+__attribute__((naked)) u8 MovementType_FaceUpRightAndLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -5980,28 +5807,9 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step4(struct Object
     );
 }
 
-__attribute__((naked)) void MovementType_FaceUpRightAndLeft(struct Sprite *sprite)
+void MovementType_FaceUpRightAndLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080903DC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080903E0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080903DC: .4byte gObjectEvents\n\t"
-        "_080903E0: .4byte MovementType_FaceUpLeftAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_FaceUpLeftAndRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_FaceUpLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6130,28 +5938,9 @@ __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step4(struct Object
     );
 }
 
-__attribute__((naked)) void MovementType_FaceDownRightAndLeft(struct Sprite *sprite)
+void MovementType_FaceDownRightAndLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809051C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090520\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809051C: .4byte gObjectEvents\n\t"
-        "_08090520: .4byte MovementType_JogInPlace_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_JogInPlace_callback);
 }
 
 __attribute__((naked)) u8 MovementType_JogInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6281,28 +6070,9 @@ __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step4(struct Obje
     );
 }
 
-__attribute__((naked)) void MovementType_RotateCounterclockwise(struct Sprite *sprite)
+void MovementType_RotateCounterclockwise(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809065C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090660\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809065C: .4byte gObjectEvents\n\t"
-        "_08090660: .4byte MovementType_LookAround_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_LookAround_callback);
 }
 
 __attribute__((naked)) u8 MovementType_LookAround_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6416,28 +6186,9 @@ __attribute__((naked)) bool8 MovementType_RotateCounterclockwise_Step3(struct Ob
     );
 }
 
-__attribute__((naked)) void MovementType_RotateClockwise(struct Sprite *sprite)
+void MovementType_RotateClockwise(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090760\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090764\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090760: .4byte gObjectEvents\n\t"
-        "_08090764: .4byte MovementType_RotateClockwise_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_RotateClockwise_callback);
 }
 
 __attribute__((naked)) u8 MovementType_RotateClockwise_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6551,28 +6302,9 @@ __attribute__((naked)) bool8 MovementType_RotateClockwise_Step3(struct ObjectEve
     );
 }
 
-__attribute__((naked)) void MovementType_WalkBackAndForth(struct Sprite *sprite)
+void MovementType_WalkBackAndForth(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090864\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090868\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090864: .4byte gObjectEvents\n\t"
-        "_08090868: .4byte MovementType_RotateCounterclockwise_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_RotateCounterclockwise_callback);
 }
 
 
@@ -6939,28 +6671,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpRightLeftDown_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceRightLeftDownUp(struct Sprite *sprite)
+void MovementType_WalkSequenceRightLeftDownUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090B50\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090B54\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090B50: .4byte gObjectEvents\n\t"
-        "_08090B54: .4byte MovementType_RunInPlace_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_RunInPlace_callback);
 }
 
 __attribute__((naked)) u8 MovementType_RunInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7028,28 +6741,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightLeftDownUp_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceDownUpRightLeft(struct Sprite *sprite)
+void MovementType_WalkSequenceDownUpRightLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090BDC\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090BE0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090BDC: .4byte gObjectEvents\n\t"
-        "_08090BE0: .4byte MovementType_WalkBackAndForth_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkBackAndForth_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkBackAndForth_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7118,28 +6812,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownUpRightLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceLeftDownUpRight(struct Sprite *sprite)
+void MovementType_WalkSequenceLeftDownUpRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090C68\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090C6C\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090C68: .4byte gObjectEvents\n\t"
-        "_08090C6C: .4byte MovementType_WalkInPlace_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkInPlace_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7207,28 +6882,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftDownUpRight_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceUpLeftRightDown(struct Sprite *sprite)
+void MovementType_WalkSequenceUpLeftRightDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090CF4\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090CF8\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090CF4: .4byte gObjectEvents\n\t"
-        "_08090CF8: .4byte MovementType_WalkSequenceDownLeftRightUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceDownLeftRightUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftRightUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7296,28 +6952,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpLeftRightDown_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceLeftRightDownUp(struct Sprite *sprite)
+void MovementType_WalkSequenceLeftRightDownUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090D80\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090D84\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090D80: .4byte gObjectEvents\n\t"
-        "_08090D84: .4byte MovementType_WalkSequenceDownLeftUpRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceDownLeftUpRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftUpRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7385,28 +7022,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftRightDownUp_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceDownUpLeftRight(struct Sprite *sprite)
+void MovementType_WalkSequenceDownUpLeftRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090E0C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090E10\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090E0C: .4byte gObjectEvents\n\t"
-        "_08090E10: .4byte MovementType_WalkSequenceDownRightLeftUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceDownRightLeftUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceDownRightLeftUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7474,28 +7092,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownUpLeftRight_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceRightDownUpLeft(struct Sprite *sprite)
+void MovementType_WalkSequenceRightDownUpLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090E98\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090E9C\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090E98: .4byte gObjectEvents\n\t"
-        "_08090E9C: .4byte MovementType_WalkSequenceDownRightUpLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceDownRightUpLeft_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceDownRightUpLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7564,28 +7163,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightDownUpLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceLeftUpDownRight(struct Sprite *sprite)
+void MovementType_WalkSequenceLeftUpDownRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090F24\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090F28\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090F24: .4byte gObjectEvents\n\t"
-        "_08090F28: .4byte MovementType_WalkSequenceDownUpLeftRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceDownUpLeftRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceDownUpLeftRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7653,28 +7233,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftUpDownRight_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceUpDownRightLeft(struct Sprite *sprite)
+void MovementType_WalkSequenceUpDownRightLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08090FB0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08090FB4\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08090FB0: .4byte gObjectEvents\n\t"
-        "_08090FB4: .4byte MovementType_WalkSequenceLeftDownRightUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceLeftDownRightUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceLeftDownRightUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7742,28 +7303,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpDownRightLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceRightLeftUpDown(struct Sprite *sprite)
+void MovementType_WalkSequenceRightLeftUpDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809103C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08091040\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809103C: .4byte gObjectEvents\n\t"
-        "_08091040: .4byte MovementType_WalkSequenceLeftRightDownUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceLeftRightDownUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceLeftRightDownUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7831,28 +7373,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightLeftUpDown_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceDownRightLeftUp(struct Sprite *sprite)
+void MovementType_WalkSequenceDownRightLeftUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080910C8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080910CC\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080910C8: .4byte gObjectEvents\n\t"
-        "_080910CC: .4byte MovementType_WalkSequenceLeftUpDownRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceLeftUpDownRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceLeftUpDownRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7920,28 +7443,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightLeftUp_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceRightUpDownLeft(struct Sprite *sprite)
+void MovementType_WalkSequenceRightUpDownLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08091154\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08091158\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091154: .4byte gObjectEvents\n\t"
-        "_08091158: .4byte MovementType_WalkSequenceRightDownLeftUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceRightDownLeftUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceRightDownLeftUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8010,28 +7514,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceRightUpDownLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceUpDownLeftRight(struct Sprite *sprite)
+void MovementType_WalkSequenceUpDownLeftRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080911E0\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080911E4\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080911E0: .4byte gObjectEvents\n\t"
-        "_080911E4: .4byte MovementType_WalkSequenceRightLeftDownUp_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceRightLeftDownUp_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceRightLeftDownUp_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8099,28 +7584,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpDownLeftRight_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceLeftRightUpDown(struct Sprite *sprite)
+void MovementType_WalkSequenceLeftRightUpDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809126C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08091270\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809126C: .4byte gObjectEvents\n\t"
-        "_08091270: .4byte MovementType_WalkSequenceRightUpDownLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceRightUpDownLeft_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceRightUpDownLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8188,28 +7654,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftRightUpDown_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceDownLeftRightUp(struct Sprite *sprite)
+void MovementType_WalkSequenceDownLeftRightUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _080912F8\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080912FC\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080912F8: .4byte gObjectEvents\n\t"
-        "_080912FC: .4byte MovementType_WalkSequenceUpDownLeftRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceUpDownLeftRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceUpDownLeftRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8277,28 +7724,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownLeftRightUp_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceUpLeftDownRight(struct Sprite *sprite)
+void MovementType_WalkSequenceUpLeftDownRight(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08091384\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08091388\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091384: .4byte gObjectEvents\n\t"
-        "_08091388: .4byte MovementType_WalkSequenceUpLeftDownRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceUpLeftDownRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceUpLeftDownRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8366,28 +7794,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceUpLeftDownRight_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceDownRightUpLeft(struct Sprite *sprite)
+void MovementType_WalkSequenceDownRightUpLeft(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08091410\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08091414\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091410: .4byte gObjectEvents\n\t"
-        "_08091414: .4byte MovementType_WalkSequenceUpRightDownLeft_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSequenceUpRightDownLeft_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSequenceUpRightDownLeft_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8456,28 +7865,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceDownRightUpLeft_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceLeftDownRightUp(struct Sprite *sprite)
+void MovementType_WalkSequenceLeftDownRightUp(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _0809149C\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _080914A0\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809149C: .4byte gObjectEvents\n\t"
-        "_080914A0: .4byte MovementType_WalkSlowlyInPlace_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WalkSlowlyInPlace_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WalkSlowlyInPlace_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8545,28 +7935,9 @@ __attribute__((naked)) u8 MovementType_WalkSequenceLeftDownRightUp_Step1(struct 
     );
 }
 
-__attribute__((naked)) void MovementType_WalkSequenceRightUpLeftDown(struct Sprite *sprite)
+void MovementType_WalkSequenceRightUpLeftDown(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08091528\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _0809152C\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08091528: .4byte gObjectEvents\n\t"
-        "_0809152C: .4byte MovementType_WanderLeftAndRight_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_WanderLeftAndRight_callback);
 }
 
 __attribute__((naked)) u8 MovementType_WanderLeftAndRight_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -10364,28 +9735,9 @@ bool8 MovementType_RunInPlace_Step0(struct ObjectEvent *objectEvent, struct Spri
     return TRUE;
 }
 
-__attribute__((naked)) void MovementType_Invisible(struct Sprite *sprite)
+void MovementType_Invisible(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	movs r0, #0x2e\n\t"
-        "	ldrsh r2, [r1, r0]\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r2, _08092220\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r2, _08092224\n\t"
-        "	bl UpdateEventObjectCurrentMovement\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08092220: .4byte gObjectEvents\n\t"
-        "_08092224: .4byte MovementType_Invisible_callback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    UpdateEventObjectCurrentMovement(&gObjectEvents[sprite->sObjEventId], sprite, MovementType_Invisible_callback);
 }
 
 __attribute__((naked)) u8 MovementType_Invisible_callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
