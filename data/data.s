@@ -13,32 +13,30 @@ gIntrTableTemplate: @ 0x829BDBC
 
 	.globl sMallocAssertFile
 sMallocAssertFile: @ 0x829BDF4
-	.incbin "baserom_jp.gba", 0x29bdf4, 0x14
-
+	.asciz "../gflib/malloc.c"
+	.byte 0x00, 0x00
 	.globl sMallocAssertAlloc
 sMallocAssertAlloc: @ 0x829BE08
-	.incbin "baserom_jp.gba", 0x29be08, 0x4
-
+	.asciz "0"
+	.byte 0x00, 0x00
 	.globl sMallocAssertPNull
 sMallocAssertPNull: @ 0x829BE0C
-	.incbin "baserom_jp.gba", 0x29be0c, 0xc
-
+	.asciz "p != NULL"
+	.byte 0x00, 0x00
 	.globl sMallocAssertMagic
 sMallocAssertMagic: @ 0x829BE18
-	.incbin "baserom_jp.gba", 0x29be18, 0x28
-
+	.asciz "pos->magic_number == MALLOC_SYSTEM_ID"
+	.byte 0x00, 0x00
 	.globl sMallocAssertFlag
 sMallocAssertFlag: @ 0x829BE40
-	.incbin "baserom_jp.gba", 0x29be40, 0x14
-
+	.asciz "pos->flag == TRUE"
+	.byte 0x00, 0x00
 	.globl sMallocAssertNextMagic
 sMallocAssertNextMagic: @ 0x829BE54
-	.incbin "baserom_jp.gba", 0x29be54, 0x2c
-
+	.asciz "pos->next->magic_number == MALLOC_SYSTEM_ID"
 	.globl sMallocAssertPrevMagic
 sMallocAssertPrevMagic: @ 0x829BE80
-	.incbin "baserom_jp.gba", 0x29be80, 0x2c
-
+	.asciz "pos->prev->magic_number == MALLOC_SYSTEM_ID"
 	.globl gUnknown_829BEAC
 gUnknown_829BEAC: @ 0x829BEAC
 	.incbin "baserom_jp.gba", 0x29beac, 0x4
@@ -225,7 +223,9 @@ sDummySprite: @ 0x82BF2B4
 	.string "ッ　ぃあ　し　　えÜろく　　　　たÜろくとÜろく　　　　だム　くぃあッ　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　$"
 	.globl gDummyOamData
 gDummyOamData: @ 0x82BF2F8
-	.incbin "baserom_jp.gba", 0x2bf2f8, 0xc
+	.4byte 0x013000A0
+	.4byte 0x00000C00
+	.hword 0xFFFF, 0x0000
 
 	.globl gUnknown_82BF304
 gUnknown_82BF304: @ 0x82BF304
@@ -233,11 +233,12 @@ gUnknown_82BF304: @ 0x82BF304
 
 	.globl gDummySpriteAffineAnimTable
 gDummySpriteAffineAnimTable: @ 0x82BF310
-	.incbin "baserom_jp.gba", 0x2bf310, 0x4
+	.4byte 0x082BF308
 
 	.globl gDummySpriteTemplate
 gDummySpriteTemplate: @ 0x82BF314
-	.incbin "baserom_jp.gba", 0x2bf314, 0x18
+	.hword 0x0000, 0xFFFF
+	.4byte gDummyOamData, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl sAnimFuncs
 sAnimFuncs: @ 0x82BF32C
