@@ -673,6 +673,12 @@ $(C_BUILDDIR)/data/pokejump4.o: src/data/pokejump4.c src/data/pokejump4.h
 	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/pokejump4.gen.s | $(AS) $(ASFLAGS) -o $@ -
 	@rm -f $(C_BUILDDIR)/data/pokejump4.gen.s
 
+$(C_BUILDDIR)/data/minigame_countdown.o: src/data/minigame_countdown.c src/data/minigame_countdown.h
+	@mkdir -p $(dir $@)
+	@set -o pipefail; { $(CPP) $(CPPFLAGS) -P -x c $< | $(PREPROC) -i $< charmap.txt | $(CC) $(CFLAGS) -o - -; } > $(C_BUILDDIR)/data/minigame_countdown.gen.s
+	@awk '/^\.Lfe[0-9]+:/{print "\t.align\t2, 0"} {print}' $(C_BUILDDIR)/data/minigame_countdown.gen.s | $(AS) $(ASFLAGS) -o $@ -
+	@rm -f $(C_BUILDDIR)/data/minigame_countdown.gen.s
+
 $(OBJ_DIR)/data/data_b2.o: data/data_b2.s baserom_jp.gba
 	@mkdir -p $(dir $@)
 	@set -o pipefail; $(PREPROC) $< charmap.txt | $(AS) $(ASFLAGS) -o $@ -
