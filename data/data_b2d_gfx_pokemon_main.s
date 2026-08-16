@@ -7394,4 +7394,28 @@ gTrainerFrontPic_RubySapphireMay: @ 0x8D661FC
 	.globl gTrainerPalette_RubySapphireMay
 gTrainerPalette_RubySapphireMay: @ 0x8D664FC
 	.incbin "graphics/trainers/front_pics/RubySapphireMay.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xD66524, 0x11470
+	.globl gTrainerBackPic_Brendan
+gTrainerBackPic_Brendan: @ 0x8D66524
+	.incbin "graphics/trainers/back_pics/Brendan.4bpp"
+	.globl gTrainerBackPic_May
+gTrainerBackPic_May: @ 0x8D68524
+	.incbin "graphics/trainers/back_pics/May.4bpp"
+	.globl gTrainerBackPic_Red
+gTrainerBackPic_Red: @ 0x8D6A524
+	.incbin "graphics/trainers/back_pics/Red.4bpp"
+	.globl gTrainerBackPic_Leaf
+gTrainerBackPic_Leaf: @ 0x8D6CD24
+	.incbin "graphics/trainers/back_pics/Leaf.4bpp"
+	.globl gTrainerBackPic_RubySapphireBrendan
+gTrainerBackPic_RubySapphireBrendan: @ 0x8D6F524
+	.incbin "graphics/trainers/back_pics/RubySapphireBrendan.4bpp"
+	.globl gTrainerBackPic_RubySapphireMay
+gTrainerBackPic_RubySapphireMay: @ 0x8D71524
+	.incbin "graphics/trainers/back_pics/RubySapphireMay.4bpp"
+	.globl gTrainerBackPic_Wally
+gTrainerBackPic_Wally: @ 0x8D73524
+	.incbin "graphics/trainers/back_pics/Wally.4bpp"
+	.globl gTrainerBackPic_Steven
+gTrainerBackPic_Steven: @ 0x8D75524
+	.incbin "graphics/trainers/back_pics/Steven.4bpp"
+	.incbin "baserom_jp.gba", 0xD77524, 0x470

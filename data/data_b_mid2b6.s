@@ -10,7 +10,30 @@
 	.include "constants/ribbon_constants.inc"
 	.globl gTrainerBackPicTable
 gTrainerBackPicTable: @ 0x82D95DC
-	.incbin "baserom_jp.gba", 0x2d95dc, 0x40
+	.4byte gTrainerBackPic_Brendan
+	.hword 0x2000
+	.hword 0
+	.4byte gTrainerBackPic_May
+	.hword 0x2000
+	.hword 1
+	.4byte gTrainerBackPic_Red
+	.hword 0x2800
+	.hword 2
+	.4byte gTrainerBackPic_Leaf
+	.hword 0x2800
+	.hword 3
+	.4byte gTrainerBackPic_RubySapphireBrendan
+	.hword 0x2000
+	.hword 4
+	.4byte gTrainerBackPic_RubySapphireMay
+	.hword 0x2000
+	.hword 5
+	.4byte gTrainerBackPic_Wally
+	.hword 0x2000
+	.hword 6
+	.4byte gTrainerBackPic_Steven
+	.hword 0x2000
+	.hword 7
 
 	.globl gUnknown_82D961C
 gUnknown_82D961C: @ 0x82D961C
