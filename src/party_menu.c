@@ -1,5 +1,7 @@
 #include "global.h"
 #include "party_menu.h"
+
+extern const u16 sTMHMMoves[];
 #include "constants/items.h"
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
@@ -4879,20 +4881,9 @@ __attribute__((naked)) bool8 CanMonLearnTMTutor(struct Pokemon *mon)
     );
 }
 
-__attribute__((naked)) u16 GetTutorMove(u8 a)
+u16 GetTutorMove(u8 tutor)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _081B203C\n\t"
-        "	lsrs r0, r0, #0x17\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081B203C: .4byte gUnknown_85E08C4\n\t"
-        ".syntax divided\n\t"
-    );
+    return gTutorMoves[tutor];
 }
 
 
@@ -14622,23 +14613,10 @@ __attribute__((naked)) void dp05_pp_up(void)
     );
 }
 
-__attribute__((naked)) u16 ItemIdToBattleMoveId(u16 item)
+u16 ItemIdToBattleMoveId(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	ldr r1, _081B69C4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r1, _081B69C8\n\t"
-        "	lsrs r0, r0, #0xf\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_081B69C4: .4byte 0xFEDF0000\n\t"
-        "_081B69C8: .4byte gUnknown_85E18F8\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 tmNumber = item - ITEM_TM01;
+    return sTMHMMoves[tmNumber];
 }
 
 __attribute__((naked)) bool8 IsMoveHm(u16 move)

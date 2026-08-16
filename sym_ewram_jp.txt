@@ -981,6 +981,7 @@ gHighestRibbonRank = .;
 gContestResources = .;
 . += 0x4;
 gUnknown_2039BD8 = .;
+sContestBgCopyFlags = .;
 . += 0x4;
 gUnknown_2039BDC = .;
 . += 0x20;

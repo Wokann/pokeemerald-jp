@@ -1,4 +1,7 @@
 #include "global.h"
+
+extern bool32 sIsSummaryAnim;
+extern void (*const sMonAnimFunctions[])(struct Sprite *sprite);
 #include "pokemon_animation.h"
 #include "sprite.h"
 #include "task.h"
@@ -227,25 +230,10 @@ __attribute__((naked)) void LaunchAnimationTaskForFrontSprite(struct Sprite *spr
     );
 }
 
-__attribute__((naked)) void StartMonSummaryAnimation(struct Sprite *sprite, u8 frontAnimId)
+void StartMonSummaryAnimation(struct Sprite *sprite, u8 frontAnimId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	ldr r3, _0817F438\n\t"
-        "	movs r2, #1\n\t"
-        "	str r2, [r3]\n\t"
-        "	ldr r2, _0817F43C\n\t"
-        "	lsrs r1, r1, #0x16\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F438: .4byte gUnknown_3001274\n\t"
-        "_0817F43C: .4byte sMonAnimFunctions\n\t"
-        ".syntax divided\n\t"
-    );
+    sIsSummaryAnim = TRUE;
+    sprite->callback = sMonAnimFunctions[frontAnimId];
 }
 
 __attribute__((naked)) void LaunchAnimationTaskForBackSprite(struct Sprite *sprite, u8 backAnimSet)
@@ -308,17 +296,9 @@ __attribute__((naked)) void LaunchAnimationTaskForBackSprite(struct Sprite *spri
     );
 }
 
-__attribute__((naked)) void SetSpriteCB_MonAnimDummy(struct Sprite *sprite)
+void SetSpriteCB_MonAnimDummy(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0817F4C0\n\t"
-        "	str r1, [r0, #0x1c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0817F4C0: .4byte MonAnimDummySpriteCallback + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->callback = MonAnimDummySpriteCallback;
 }
 
 __attribute__((naked)) void SetAffineData(struct Sprite *sprite, s16 xScale, s16 yScale, u16 rotation)

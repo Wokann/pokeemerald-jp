@@ -588,6 +588,8 @@ gItemIconSpriteTemplate: @ 0x85E08AC
 	.globl gUnknown_85E08C4
 gUnknown_85E08C4: @ 0x85E08C4
 	.incbin "baserom_jp.gba", 0x5e08c4, 0x3c
+	.globl gTutorMoves
+	.set gTutorMoves, gUnknown_85E08C4
 
 	.globl gUnknown_85E0900
 gUnknown_85E0900: @ 0x85E0900
@@ -884,6 +886,8 @@ gUnknown_85E18D8: @ 0x85E18D8
 	.globl gUnknown_85E18F8
 gUnknown_85E18F8: @ 0x85E18F8
 	.incbin "baserom_jp.gba", 0x5e18f8, 0x74
+	.globl sTMHMMoves
+	.set sTMHMMoves, gUnknown_85E18F8
 
 	.globl sVerdanturfTentFuncs
 sVerdanturfTentFuncs: @ 0x85E196C

@@ -277,6 +277,7 @@ gUnknown_3001240 = .;
 gUnknown_3001270 = .;
 . += 0x4;
 gUnknown_3001274 = .;
+sIsSummaryAnim = .;
 . += 0x4;
 gUnknown_3001278 = .;
 . += 0x4;

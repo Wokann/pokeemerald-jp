@@ -2,23 +2,16 @@
 #include "contest.h"
 #include "constants/moves.h"
 
+extern u8 sContestBgCopyFlags;
+
 // An index into a palette where the text color for each contestant is stored.
 // Contestant 0 will use palette color 10, contestant 1 will use color 11, etc.
 #define CONTESTANT_TEXT_COLOR_START 10
 
 void TaskDummy1(void) {}
-__attribute__((naked)) void ResetLinkContestBoolean(void)
+void ResetLinkContestBoolean(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080D6EA0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D6EA0: .4byte gLinkContestFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    gLinkContestFlags = 0;
 }
 
 __attribute__((naked)) void SetupContestGpuRegs(void)
@@ -12247,47 +12240,15 @@ __attribute__((naked)) void sub_080DC7E4(void)
     );
 }
 
-__attribute__((naked)) void SetContestantEffectStringID(u8 contestant, u8 effectStringId)
+void SetContestantEffectStringID(u8 contestant, u8 effectStringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080DCB50\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldr r3, [r2, #4]\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strb r1, [r2, #0x13]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080DCB50: .4byte gContestResources\n\t"
-        ".syntax divided\n\t"
-    );
+    eContestantStatus[contestant].effectStringId = effectStringId;
 }
 
 
-__attribute__((naked)) void SetContestantEffectStringID2(u8 contestant, u8 effectStringId)
+void SetContestantEffectStringID2(u8 contestant, u8 effectStringId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080DCB6C\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldr r3, [r2, #4]\n\t"
-        "	lsls r2, r0, #3\n\t"
-        "	subs r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strb r1, [r2, #0x14]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080DCB6C: .4byte gContestResources\n\t"
-        ".syntax divided\n\t"
-    );
+    eContestantStatus[contestant].effectStringId2 = effectStringId;
 }
 
 __attribute__((naked)) void SetStartledString(u8 contestant, u8 jam)
@@ -15690,21 +15651,9 @@ __attribute__((naked)) void Contest_RunTextPrinters(void)
     );
 }
 
-__attribute__((naked)) void Contest_SetBgCopyFlags(void)
+void Contest_SetBgCopyFlags(u32 flagIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080DE478\n\t"
-        "	movs r1, #1\n\t"
-        "	lsls r1, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	orrs r1, r0\n\t"
-        "	strb r1, [r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080DE478: .4byte gUnknown_2039BD8\n\t"
-        ".syntax divided\n\t"
-    );
+    sContestBgCopyFlags |= 1 << flagIndex;
 }
 
 __attribute__((naked)) void ResetContestLinkResults(void)

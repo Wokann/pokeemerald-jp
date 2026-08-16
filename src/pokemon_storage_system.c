@@ -23776,21 +23776,9 @@ __attribute__((naked)) void ResetWaldaWallpaper(void)
     );
 }
 
-__attribute__((naked)) void SetWaldaWallpaperLockedOrUnlocked(bool32 unlocked)
+void SetWaldaWallpaperLockedOrUnlocked(bool32 unlocked)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080D1D2C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldr r2, _080D1D30\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D2C: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D30: .4byte 0x00003D86\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->waldaPhrase.patternUnlocked = unlocked;
 }
 
 __attribute__((naked)) bool32 IsWaldaWallpaperUnlocked(void)
