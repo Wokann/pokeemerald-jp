@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/rgb.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -23732,48 +23733,14 @@ __attribute__((naked)) bool32 AnyStorageMonWithMove(u16 move)
     );
 }
 
-__attribute__((naked)) void ResetWaldaWallpaper(void)
+void ResetWaldaWallpaper(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080D1D04\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r1, _080D1D08\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldr r3, _080D1D0C\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	adds r3, #1\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	ldr r0, _080D1D10\n\t"
-        "	adds r2, r1, r0\n\t"
-        "	ldr r0, _080D1D14\n\t"
-        "	strh r0, [r2]\n\t"
-        "	subs r3, #0x14\n\t"
-        "	adds r2, r1, r3\n\t"
-        "	ldr r0, _080D1D18\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, _080D1D1C\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	strb r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D04: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D08: .4byte 0x00003D84\n\t"
-        "_080D1D0C: .4byte 0x00003D85\n\t"
-        "_080D1D10: .4byte 0x00003D70\n\t"
-        "_080D1D14: .4byte 0x00007B35\n\t"
-        "_080D1D18: .4byte 0x00006186\n\t"
-        "_080D1D1C: .4byte 0x00003D74\n\t"
-        ".syntax divided\n\t"
-    );
+    gSaveBlock1Ptr->waldaPhrase.iconId = 0;
+    gSaveBlock1Ptr->waldaPhrase.patternId = 0;
+    gSaveBlock1Ptr->waldaPhrase.patternUnlocked = FALSE;
+    gSaveBlock1Ptr->waldaPhrase.colors[0] = RGB(21, 25, 30);
+    gSaveBlock1Ptr->waldaPhrase.colors[1] = RGB(6, 12, 24);
+    gSaveBlock1Ptr->waldaPhrase.text[0] = EOS;
 }
 
 void SetWaldaWallpaperLockedOrUnlocked(bool32 unlocked)
@@ -23781,21 +23748,9 @@ void SetWaldaWallpaperLockedOrUnlocked(bool32 unlocked)
     gSaveBlock1Ptr->waldaPhrase.patternUnlocked = unlocked;
 }
 
-__attribute__((naked)) bool32 IsWaldaWallpaperUnlocked(void)
+bool32 IsWaldaWallpaperUnlocked(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D1D40\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1D44\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1D40: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1D44: .4byte 0x00003D86\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.patternUnlocked;
 }
 
 __attribute__((naked)) void sub_080D1D48(void)
