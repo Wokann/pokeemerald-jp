@@ -3,6 +3,7 @@
 #include "field_player_avatar.h"
 #include "event_data.h"
 #include "tv.h"
+#include "battle.h"
 #include "field_specials.h"
 
 __attribute__((naked)) void Special_ShowDiploma(void)
@@ -2018,19 +2019,9 @@ __attribute__((naked)) void GetRivalSonDaughterString(void)
     );
 }
 
-__attribute__((naked)) void GetBattleOutcome(void)
+u8 GetBattleOutcome(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr	r0, .L3\n\t"
-        "	ldrb	r0, [r0]\n\t"
-        "	bx	lr\n\t"
-        ".L4:\n\t"
-        "	.align	2, 0\n\t"
-        ".L3:\n\t"
-        "	.word	gBattleOutcome\n\t"
-        ".syntax divided\n\t"
-    );
+    return gBattleOutcome;
 }
 
 __attribute__((naked)) void CableCarWarp(void)
