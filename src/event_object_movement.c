@@ -13198,28 +13198,12 @@ bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
+bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _08092B2A\n\t"
-        "	ldrb r0, [r1, #0x1c]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _08092B2A\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08092B2C\n\t"
-        "_08092B2A:\n\t"
-        "	movs r0, #0\n\t"
-        "_08092B2C:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->heldMovementActive && objectEvent->movementActionId != MOVEMENT_ACTION_NONE)
+        return TRUE;
+
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 ObjectEventSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId)
@@ -22769,31 +22753,11 @@ bool8 WaitForMovementDelay(struct Sprite *sprite)
         return FALSE;
 }
 
-__attribute__((naked)) void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 a)
+void SetAndStartSpriteAnim(struct Sprite *sprite, u8 animNum, u8 animCmdIndex)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r3, #0x2a\n\t"
-        "	strb r1, [r3]\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r4, #0x2c\n\t"
-        "	ldrb r3, [r4]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r3\n\t"
-        "	strb r1, [r4]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl SeekSpriteAnim\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->animNum = animNum;
+    sprite->animPaused = FALSE;
+    SeekSpriteAnim(sprite, animCmdIndex);
 }
 
 bool8 SpriteAnimEnded(struct Sprite *sprite)
