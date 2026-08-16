@@ -287,7 +287,9 @@ gUnknown_85AD190: @ 0x85AD190
 
 	.globl gMiniTwinklingStarSpriteTemplate
 gMiniTwinklingStarSpriteTemplate: @ 0x85AD1A8
-	.incbin "baserom_jp.gba", 0x5ad1a8, 0x18
+	.hword 0x27F9, 0x27F9
+	.4byte 0x084FD010, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x0815B4AD
 
 	.globl gStockpileDeformMonAffineAnimCmds
 gStockpileDeformMonAffineAnimCmds: @ 0x85AD1C0
@@ -307,23 +309,26 @@ gMorningSunLightBeamCoordsTable: @ 0x85AD268
 
 	.globl gGreenStarAnimCmds1
 gGreenStarAnimCmds1: @ 0x85AD26C
-	.incbin "baserom_jp.gba", 0x5ad26c, 0xc
+	.hword 0x0000, 0x0006, 0x0004, 0x0006
+	.hword 0xFFFE, 0x0000
 
 	.globl gGreenStarAnimCmds2
 gGreenStarAnimCmds2: @ 0x85AD278
-	.incbin "baserom_jp.gba", 0x5ad278, 0x8
+	.hword 0x0008, 0x0006, 0xFFFF, 0x0000
 
 	.globl gGreenStarAnimCmds3
 gGreenStarAnimCmds3: @ 0x85AD280
-	.incbin "baserom_jp.gba", 0x5ad280, 0x8
+	.hword 0x000C, 0x0006, 0xFFFF, 0x0000
 
 	.globl gGreenStarAnimTable
 gGreenStarAnimTable: @ 0x85AD288
-	.incbin "baserom_jp.gba", 0x5ad288, 0xc
+	.4byte gGreenStarAnimCmds1, gGreenStarAnimCmds2, gGreenStarAnimCmds3
 
 	.globl gGreenStarSpriteTemplate
 gGreenStarSpriteTemplate: @ 0x85AD294
-	.incbin "baserom_jp.gba", 0x5ad294, 0x18
+	.hword 0x2801, 0x2801
+	.4byte 0x084FD018, gGreenStarAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x0815BD41
 
 	.globl gDoomDesireLightBeamCoordTable
 gDoomDesireLightBeamCoordTable: @ 0x85AD2AC
@@ -339,7 +344,10 @@ gUnknown_85AD2B5: @ 0x85AD2B5
 
 	.globl gStrongFrustrationAffineAnimCmds
 gStrongFrustrationAffineAnimCmds: @ 0x85AD2B8
-	.incbin "baserom_jp.gba", 0x5ad2b8, 0x20
+	.hword 0x0000, 0xFFF1, 0x0700, 0x0000
+	.hword 0x0000, 0x000F, 0x0700, 0x0000
+	.hword 0x7FFD, 0x0002, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
 
 	.globl gUnknown_85AD2D8
 gUnknown_85AD2D8: @ 0x85AD2D8
@@ -355,11 +363,16 @@ gUnknown_85AD428: @ 0x85AD428
 
 	.globl gFacadeSquishAffineAnimCmds
 gFacadeSquishAffineAnimCmds: @ 0x85AD554
-	.incbin "baserom_jp.gba", 0x5ad554, 0x20
+	.hword 0xFFF0, 0x0010, 0x0600, 0x0000
+	.hword 0x0010, 0xFFF0, 0x0C00, 0x0000
+	.hword 0xFFF0, 0x0010, 0x0600, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
 
 	.globl gFacadeSweatDropSpriteTemplate
 gFacadeSweatDropSpriteTemplate: @ 0x85AD574
-	.incbin "baserom_jp.gba", 0x5ad574, 0x18
+	.hword 0x2803, 0x2803
+	.4byte 0x084FD010, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x0815DDF9
 
 	.globl gFacadeBlendColors
 gFacadeBlendColors: @ 0x85AD58C
@@ -373,7 +386,9 @@ gUnknown_85AD5C0: @ 0x85AD5C0
 
 	.globl gGlareEyeDotSpriteTemplate
 gGlareEyeDotSpriteTemplate: @ 0x85AD5F4
-	.incbin "baserom_jp.gba", 0x5ad5f4, 0x18
+	.hword 0x2808, 0x2808
+	.4byte 0x084FD010, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x0815E33D
 
 	.globl gUnknown_85AD60C
 gUnknown_85AD60C: @ 0x85AD60C
@@ -381,7 +396,9 @@ gUnknown_85AD60C: @ 0x85AD60C
 
 	.globl gBarrageBallSpriteTemplate
 gBarrageBallSpriteTemplate: @ 0x85AD654
-	.incbin "baserom_jp.gba", 0x5ad654, 0x18
+	.hword 0x280E, 0x280E
+	.4byte 0x084FD080, gDummySpriteAnimTable
+	.4byte 0, 0x085AD64C, 0x08007141
 
 	.globl gUnknown_85AD66C
 gUnknown_85AD66C: @ 0x85AD66C
@@ -389,7 +406,9 @@ gUnknown_85AD66C: @ 0x85AD66C
 
 	.globl gSmellingSaltsSquishAffineAnimCmds
 gSmellingSaltsSquishAffineAnimCmds: @ 0x85AD684
-	.incbin "baserom_jp.gba", 0x5ad684, 0x18
+	.hword 0x0000, 0xFFF0, 0x0600, 0x0000
+	.hword 0x0000, 0x0010, 0x0600, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
 
 	.globl gUnknown_85AD69C
 gUnknown_85AD69C: @ 0x85AD69C
