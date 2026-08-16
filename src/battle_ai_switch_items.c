@@ -27,264 +27,12 @@ bool8 ShouldSwitchIfPerishSong(void)
     return FALSE;
 }
 
-#ifndef NONMATCHING
-__attribute__((naked)) bool8 ShouldSwitchIfWonderGuard(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	sub sp, #4\n\t"
-        "	ldr r0, _080628F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062856\n\t"
-        "	b _08062A10\n\t"
-        "_08062856:\n\t"
-        "	ldr r0, _080628F8\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl GetBattlerPosition\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r0, r1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sl, r0\n\t"
-        "	ldr r4, _080628FC\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x58\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	adds r0, #0x20\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0x19\n\t"
-        "	beq _08062882\n\t"
-        "	b _08062A10\n\t"
-        "_08062882:\n\t"
-        "	mov r0, sl\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r6, #0\n\t"
-        "	mov r8, r4\n\t"
-        "	movs r7, #0x58\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r4, r0, r4\n\t"
-        "	movs r0, #0x20\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	mov sb, r0\n\t"
-        "_0806289E:\n\t"
-        "	lsls r1, r6, #1\n\t"
-        "	ldr r5, _080628F8\n\t"
-        "	ldrb r0, [r5]\n\t"
-        "	muls r0, r7, r0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r0, #0xc\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080628CC\n\t"
-        "	ldrh r1, [r4]\n\t"
-        "	mov r3, sb\n\t"
-        "	ldrb r2, [r3]\n\t"
-        "	bl AI_TypeCalc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _080628CC\n\t"
-        "	b _08062A10\n\t"
-        "_080628CC:\n\t"
-        "	adds r6, #1\n\t"
-        "	cmp r6, #3\n\t"
-        "	ble _0806289E\n\t"
-        "	ldr r0, _080628F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _08062900\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062934\n\t"
-        "	ldrb r1, [r5]\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r0, r1\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062904\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r0, #3\n\t"
-        "	str r0, [sp]\n\t"
-        "	b _0806293C\n\t"
-        "	.align 2, 0\n\t"
-        "_080628F4: .4byte gBattleTypeFlags\n\t"
-        "_080628F8: .4byte gActiveBattler\n\t"
-        "_080628FC: .4byte gBattleMons\n\t"
-        "_08062900: .4byte 0x00808000\n\t"
-        "_08062904:\n\t"
-        "	movs r4, #3\n\t"
-        "	movs r3, #6\n\t"
-        "	str r3, [sp]\n\t"
-        "	b _0806293C\n\t"
-        "_0806290C:\n\t"
-        "	ldr r0, _0806292C\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	ldr r1, _08062930\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0xa5\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strb r6, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	movs r2, #0\n\t"
-        "	bl BtlController_EmitTwoReturnValues\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08062A12\n\t"
-        "	.align 2, 0\n\t"
-        "_0806292C: .4byte gActiveBattler\n\t"
-        "_08062930: .4byte gBattleStruct\n\t"
-        "_08062934:\n\t"
-        "	movs r4, #0\n\t"
-        "	movs r3, #6\n\t"
-        "	str r3, [sp]\n\t"
-        "	adds r1, r5, #0\n\t"
-        "_0806293C:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	bl GetBattlerSide\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _08062A24\n\t"
-        "	mov sb, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08062950\n\t"
-        "	ldr r3, _08062A28\n\t"
-        "	mov sb, r3\n\t"
-        "_08062950:\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	ldr r0, [sp]\n\t"
-        "	cmp r6, r0\n\t"
-        "	bge _08062A10\n\t"
-        "_08062958:\n\t"
-        "	movs r0, #0x64\n\t"
-        "	adds r5, r6, #0\n\t"
-        "	muls r5, r0, r5\n\t"
-        "	mov r1, sb\n\t"
-        "	adds r4, r1, r5\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x39\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062A08\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062A08\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x41\n\t"
-        "	bl GetMonData3\n\t"
-        "	movs r1, #0xce\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	cmp r0, r1\n\t"
-        "	beq _08062A08\n\t"
-        "	ldr r1, _08062A2C\n\t"
-        "	ldr r0, _08062A30\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	cmp r6, r0\n\t"
-        "	beq _08062A08\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0xb\n\t"
-        "	bl GetMonData3\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	bl GetMonData3\n\t"
-        "	mov r0, sl\n\t"
-        "	bl GetBattlerAtPosition\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	movs r4, #0\n\t"
-        "	mov r8, r5\n\t"
-        "	ldr r1, _08062A34\n\t"
-        "	movs r0, #0x58\n\t"
-        "	muls r0, r2, r0\n\t"
-        "	adds r5, r0, r1\n\t"
-        "	adds r7, r5, #0\n\t"
-        "	adds r7, #0x20\n\t"
-        "_080629C4:\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0xd\n\t"
-        "	mov r0, sb\n\t"
-        "	add r0, r8\n\t"
-        "	bl GetMonData3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08062A02\n\t"
-        "	ldrh r1, [r5]\n\t"
-        "	ldrb r2, [r7]\n\t"
-        "	bl AI_TypeCalc\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	ands r1, r0\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _08062A02\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #3\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #1\n\t"
-        "	bls _0806290C\n\t"
-        "_08062A02:\n\t"
-        "	adds r4, #1\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _080629C4\n\t"
-        "_08062A08:\n\t"
-        "	adds r6, #1\n\t"
-        "	ldr r3, [sp]\n\t"
-        "	cmp r6, r3\n\t"
-        "	blt _08062958\n\t"
-        "_08062A10:\n\t"
-        "	movs r0, #0\n\t"
-        "_08062A12:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08062A24: .4byte gEnemyParty\n\t"
-        "_08062A28: .4byte gPlayerParty\n\t"
-        "_08062A2C: .4byte gBattlerPartyIndexes\n\t"
-        "_08062A30: .4byte gActiveBattler\n\t"
-        "_08062A34: .4byte gBattleMons\n\t"
-        ".syntax divided\n\t"
-    );
-}
-#else
-// 可读的 C 版本（NONMATCHING）：语义与汇编版相同，但不保证逐字节一致。
 bool8 ShouldSwitchIfWonderGuard(void)
 {
     u8 opposingPosition;
     u8 opposingBattler;
     u8 moveFlags;
+    u8 battlerSide;
     s32 i, j;
     s32 firstId;
     s32 lastId; // + 1
@@ -294,9 +42,9 @@ bool8 ShouldSwitchIfWonderGuard(void)
     if (gBattleTypeFlags & BATTLE_TYPE_DOUBLE)
         return FALSE;
 
-    opposingPosition = BATTLE_OPPOSITE(GetBattlerPosition(gActiveBattler));
+    opposingPosition = BATTLE_OPPOSITE((u8)GetBattlerPosition(gActiveBattler));
 
-    if (gBattleMons[GetBattlerAtPosition(opposingPosition)].ability != ABILITY_WONDER_GUARD)
+    if (gBattleMons[(u8)GetBattlerAtPosition(opposingPosition)].ability != ABILITY_WONDER_GUARD)
         return FALSE;
 
     // Check if the active Pokémon has a super effective move.
@@ -324,7 +72,8 @@ bool8 ShouldSwitchIfWonderGuard(void)
         firstId = 0, lastId = PARTY_SIZE;
     }
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
@@ -362,7 +111,6 @@ bool8 ShouldSwitchIfWonderGuard(void)
 
     return FALSE;
 }
-#endif
 
 #ifndef NONMATCHING
 __attribute__((naked)) bool8 FindMonThatAbsorbsOpponentsMove(void)
@@ -733,7 +481,8 @@ bool8 FindMonThatAbsorbsOpponentsMove(void)
         firstId = 0, lastId = PARTY_SIZE;
     }
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
@@ -827,7 +576,7 @@ bool8 HasSuperEffectiveMoveAgainstOpponents(bool8 noRng)
     u8 moveFlags;
     u16 move;
 
-    opposingPosition = BATTLE_OPPOSITE(GetBattlerPosition(gActiveBattler));
+    opposingPosition = BATTLE_OPPOSITE((u8)GetBattlerPosition(gActiveBattler));
     opposingBattler = GetBattlerAtPosition(opposingPosition);
 
     if (!(gAbsentBattlerFlags & gBitTable[opposingBattler]))
@@ -1276,7 +1025,8 @@ bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
         firstId = 0, lastId = PARTY_SIZE;
     }
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
@@ -1693,7 +1443,8 @@ bool8 ShouldSwitch(void)
         firstId = 0, lastId = PARTY_SIZE;
     }
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
@@ -2399,7 +2150,8 @@ u8 GetMostSuitableMonToSwitchInto(void)
         firstId = 0, lastId = PARTY_SIZE;
     }
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
@@ -3148,7 +2900,8 @@ bool8 ShouldUseItem(void)
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && GetBattlerPosition(gActiveBattler) == B_POSITION_PLAYER_RIGHT)
         return FALSE;
 
-    if (GetBattlerSide(gActiveBattler) == B_SIDE_PLAYER)
+    battlerSide = GetBattlerSide(gActiveBattler);
+    if (battlerSide == B_SIDE_PLAYER)
         party = gPlayerParty;
     else
         party = gEnemyParty;
