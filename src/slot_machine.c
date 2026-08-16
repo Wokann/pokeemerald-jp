@@ -7,6 +7,7 @@
 #include "task.h"
 #include "slot_machine.h"
 #include "constants/rgb.h"
+#include "constants/coins.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -1016,6 +1017,7 @@ __attribute__((naked)) void Task_SlotMachine(u8 taskId)
 
 void LoadPikaPowerMeter(u8 bolts);
 void CreateDigitalDisplayScene(u8 id);
+bool8 IsDigitalDisplayAnimFinished(void);
 
 static bool8 SlotTask_UnfadeScreen(struct Task *task)
 {
@@ -1051,57 +1053,20 @@ static bool8 SlotTask_ReadyNewSpin(struct Task *task)
     return TRUE;
 }
 
-__attribute__((naked)) void SlotAction3(u8 taskId)
+static bool8 SlotTask_ReadyNewReelTimeSpin(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl sub_0812E064\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812ABCC\n\t"
-        "	ldr r0, _0812ABD4\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #4\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812ABCC:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812ABD4: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsDigitalDisplayAnimFinished())
+        sSlotMachine->state = SLOTTASK_ASK_INSERT_BET;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction4(u8 taskId)
+static bool8 SlotTask_AskInsertBet(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r2, _0812AC00\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	movs r0, #0xc\n\t"
-        "	ldrsh r1, [r2, r0]\n\t"
-        "	ldr r0, _0812AC04\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0812ABF8\n\t"
-        "	movs r0, #0x17\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0812ABF8:\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812AC00: .4byte sSlotMachine\n\t"
-        "_0812AC04: .4byte 0x0000270E\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateDigitalDisplayScene(DIG_DISPLAY_INSERT_BET);
+    sSlotMachine->state = SLOTTASK_BET_INPUT;
+    if (sSlotMachine->coins >= MAX_COINS)
+        sSlotMachine->state = SLOTTASK_MSG_MAX_COINS;
+    return TRUE;
 }
 
 __attribute__((naked)) void SlotAction_AwaitPlayerInput(u8 taskId)
@@ -1813,7 +1778,7 @@ __attribute__((naked)) void SlotAction18(u8 taskId)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0812E064\n\t"
+        "	bl IsDigitalDisplayAnimFinished\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812B10C\n\t"
@@ -7556,7 +7521,7 @@ __attribute__((naked)) void ReelTime_EndSuccess(struct Task *task)
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_0812E064\n\t"
+        "	bl IsDigitalDisplayAnimFinished\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0812DA96\n\t"
@@ -8425,7 +8390,7 @@ __attribute__((naked)) void DestroyDigitalDisplayScene(void)
     );
 }
 
-__attribute__((naked)) void sub_0812E064(void)
+__attribute__((naked)) bool8 IsDigitalDisplayAnimFinished(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

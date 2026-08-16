@@ -7382,8 +7382,8 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_UnfadeScreen);
         src/slot_machine.o(.text.SlotTask_WaitUnfade);
         src/slot_machine.o(.text.SlotTask_ReadyNewSpin);
-        src/slot_machine.o(.text.SlotAction3);
-        src/slot_machine.o(.text.SlotAction4);
+        src/slot_machine.o(.text.SlotTask_ReadyNewReelTimeSpin);
+        src/slot_machine.o(.text.SlotTask_AskInsertBet);
         src/slot_machine.o(.text.SlotAction_AwaitPlayerInput);
         src/slot_machine.o(.text.SlotAction_PrintYouDontHaveThreeCoins);
         src/slot_machine.o(.text.SlotAction_ExitMessage_9999Coins);
@@ -7539,7 +7539,7 @@ SECTIONS {
         src/slot_machine.o(.text.CreateDigitalDisplayScene);
         src/slot_machine.o(.text.AddDigitalDisplaySprite);
         src/slot_machine.o(.text.DestroyDigitalDisplayScene);
-        src/slot_machine.o(.text.sub_0812E064);
+        src/slot_machine.o(.text.IsDigitalDisplayAnimFinished);
         src/slot_machine.o(.text.sub_0812E0C0);
         src/slot_machine.o(.text.sub_0812E0F0);
         src/slot_machine.o(.text.CreateReelSymbolSprites);

@@ -10214,7 +10214,7 @@ slot_machine.s
 0812def4 CreateDigitalDisplayScene CreateDigitalDisplayScene
 0812df78 sub_0812DF78_jp AddDigitalDisplaySprite
 0812dfec DestroyDigitalDisplayScene DestroyDigitalDisplayScene
-0812e064 slot_machine.s sub_0812E064_jp
+0812e064 IsDigitalDisplayAnimFinished IsDigitalDisplayAnimFinished
 0812e0c0 sub_0812E0C0_jp sub_0812E0C0
 0812e0f0 slot_machine.s sub_0812E0F0_jp
 0812e0f4 CreateReelSymbolSprites CreateReelSymbolSprites
