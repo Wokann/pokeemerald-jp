@@ -7598,7 +7598,7 @@ SECTIONS {
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_RegBonus);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_BigBonus);
         src/slot_machine.o(.text.SpriteCB_DigitalDisplay_AButtonStart);
-        src/slot_machine.o(.text.sub_0812F790);
+        src/slot_machine.o(.text.EndDigitalDisplayScene_Dummy);
         src/slot_machine.o(.text.EndDigitalDisplayScene_StopReel);
         src/slot_machine.o(.text.EndDigitalDisplayScene_Win);
         src/slot_machine.o(.text.EndDigitalDisplayScene_InsertBet);
@@ -9372,6 +9372,10 @@ SECTIONS {
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);
         data/data_b2d_mid62.o(.rodata.85847BE);
+        src/slot_machine.o(.rodata.sDigitalDisplayScenesData);
+        src/slot_machine.o(.rodata.sDigitalDisplayScenes);
+        src/slot_machine.o(.rodata.sDigitalDisplaySceneExitCallbacks);
+        data/data_b2d_mid62.o(.rodata.85849C0);
         src/slot_machine.o(.rodata.sDarkMatchLinePaletteColors);
         data/data_b2d_mid62.o(.rodata.85854EC);
         src/slot_machine.o(.rodata.sLitMatchLinePaletteColors);

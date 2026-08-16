@@ -899,6 +899,85 @@ enum {
     DIG_DISPLAY_BONUS_BIG,
 };
 
+struct DigitalDisplaySprite
+{
+    /*0x00*/ u8 spriteTemplateId;
+    /*0x01*/ u8 dispInfoId;
+    /*0x02*/ s16 spriteId;
+};
+
+// Sprite template IDs for the digital display in the right panel
+enum {
+    DIG_SPRITE_REEL,
+    DIG_SPRITE_TIME,
+    DIG_SPRITE_INSERT,
+    DIG_SPRITE_WIN,
+    DIG_SPRITE_LOSE,
+    DIG_SPRITE_A_BUTTON,
+    DIG_SPRITE_SMOKE,
+    DIG_SPRITE_NUMBER,
+    DIG_SPRITE_POKE_BALL,
+    DIG_SPRITE_D_PAD,
+    DIG_SPRITE_STOP_S,
+    DIG_SPRITE_STOP_T,
+    DIG_SPRITE_STOP_O,
+    DIG_SPRITE_STOP_P,
+    DIG_SPRITE_BONUS_B,
+    DIG_SPRITE_BONUS_O,
+    DIG_SPRITE_BONUS_N,
+    DIG_SPRITE_BONUS_U,
+    DIG_SPRITE_BONUS_S,
+    DIG_SPRITE_BIG_B,
+    DIG_SPRITE_BIG_I,
+    DIG_SPRITE_BIG_G,
+    DIG_SPRITE_REG_R,
+    DIG_SPRITE_REG_E,
+    DIG_SPRITE_REG_G,
+    DIG_SPRITE_EMPTY,
+    NUM_DIG_DISPLAY_SPRITES
+};
+
+// IDs used by the digital display to set coords and callbacks for its sprites
+enum {
+    DIG_DISPINFO_INSERT,
+    DIG_DISPINFO_STOP_S,
+    DIG_DISPINFO_STOP_T,
+    DIG_DISPINFO_STOP_O,
+    DIG_DISPINFO_STOP_P,
+    DIG_DISPINFO_A_BUTTON_STOP,
+    DIG_DISPINFO_POKE_BALL_ROCKING,
+    DIG_DISPINFO_WIN,
+    DIG_DISPINFO_LOSE,
+    DIG_DISPINFO_SMOKE_NW,
+    DIG_DISPINFO_SMOKE_NE,
+    DIG_DISPINFO_SMOKE_SW,
+    DIG_DISPINFO_SMOKE_SE,
+    DIG_DISPINFO_REEL,
+    DIG_DISPINFO_TIME,
+    DIG_DISPINFO_NUMBER,
+    DIG_DISPINFO_DPAD,
+    DIG_DISPINFO_POKE_BALL_SHINING,
+    DIG_DISPINFO_REG_R,
+    DIG_DISPINFO_REG_E,
+    DIG_DISPINFO_REG_G,
+    DIG_DISPINFO_REG_BONUS_B,
+    DIG_DISPINFO_REG_BONUS_O,
+    DIG_DISPINFO_REG_BONUS_N,
+    DIG_DISPINFO_REG_BONUS_U,
+    DIG_DISPINFO_REG_BONUS_S,
+    DIG_DISPINFO_BIG_B,
+    DIG_DISPINFO_BIG_I,
+    DIG_DISPINFO_BIG_G,
+    DIG_DISPINFO_BIG_BONUS_B,
+    DIG_DISPINFO_BIG_BONUS_O,
+    DIG_DISPINFO_BIG_BONUS_N,
+    DIG_DISPINFO_BIG_BONUS_U,
+    DIG_DISPINFO_BIG_BONUS_S,
+    DIG_DISPINFO_A_BUTTON_START
+};
+
+#define DIG_SPRITE_DUMMY {255, 0, 0}
+
 // IDs for the text windows
 enum {
     WIN_MSG,
@@ -1110,6 +1189,11 @@ extern const u8 gText_YouveRunOutOfCoins[];
 extern const u8 gText_QuitTheGame[];
 void DrawMachineBias(void);
 void DestroyDigitalDisplayScene(void);
+static void EndDigitalDisplayScene_StopReel(void);
+static void EndDigitalDisplayScene_Win(void);
+static void EndDigitalDisplayScene_InsertBet(void);
+static void EndDigitalDisplayScene_Dummy(void);
+u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId);
 void IncrementDailySlotsUses(void);
 void BeginReelTime(void);
 u16 ReelTimeSpeed(void);
@@ -4593,76 +4677,124 @@ void CreateDigitalDisplayTask(void)
         task->data[i] = MAX_SPRITES;
 }
 
-__attribute__((naked)) void CreateDigitalDisplayScene(u8 id)
+// JP stores the scene arrays in this address order (BonusBig before
+// BonusRegular).
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_InsertBet[] = {
+    {DIG_SPRITE_EMPTY, DIG_DISPINFO_A_BUTTON_START, 0}, // Sprite replaced with DIG_SPRITE_A_BUTTON after first bet
+    {DIG_SPRITE_INSERT, DIG_DISPINFO_INSERT, 0},
+    {DIG_SPRITE_D_PAD, DIG_DISPINFO_DPAD, 0},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_StopReel[] = {
+    {DIG_SPRITE_STOP_S, DIG_DISPINFO_STOP_S, 0},
+    {DIG_SPRITE_STOP_T, DIG_DISPINFO_STOP_T, 0},
+    {DIG_SPRITE_STOP_O, DIG_DISPINFO_STOP_O, 0},
+    {DIG_SPRITE_STOP_P, DIG_DISPINFO_STOP_P, 0},
+    {DIG_SPRITE_A_BUTTON, DIG_DISPINFO_A_BUTTON_STOP, 0},
+    {DIG_SPRITE_POKE_BALL, DIG_DISPINFO_POKE_BALL_ROCKING, 0},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_Win[] = {
+    {DIG_SPRITE_WIN, DIG_DISPINFO_WIN, 0},
+    {DIG_SPRITE_POKE_BALL, DIG_DISPINFO_POKE_BALL_SHINING, 0},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_Lose[] = {
+    {DIG_SPRITE_LOSE, DIG_DISPINFO_LOSE, 0},
+    {DIG_SPRITE_SMOKE, DIG_DISPINFO_SMOKE_NW, 0},
+    {DIG_SPRITE_SMOKE, DIG_DISPINFO_SMOKE_NE, 1},
+    {DIG_SPRITE_SMOKE, DIG_DISPINFO_SMOKE_SW, 2},
+    {DIG_SPRITE_SMOKE, DIG_DISPINFO_SMOKE_SE, 3},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_ReelTime[] = {
+    {DIG_SPRITE_REEL, DIG_DISPINFO_REEL, 0},
+    {DIG_SPRITE_TIME, DIG_DISPINFO_TIME, 0},
+    {DIG_SPRITE_NUMBER, DIG_DISPINFO_NUMBER, 0}, // Number of reel time spins left
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusBig[] = {
+    {DIG_SPRITE_BIG_B, DIG_DISPINFO_BIG_B, 0},
+    {DIG_SPRITE_BIG_I, DIG_DISPINFO_BIG_I, 1},
+    {DIG_SPRITE_BIG_G, DIG_DISPINFO_BIG_G, 2},
+    {DIG_SPRITE_BONUS_B, DIG_DISPINFO_BIG_BONUS_B, 3},
+    {DIG_SPRITE_BONUS_O, DIG_DISPINFO_BIG_BONUS_O, 4},
+    {DIG_SPRITE_BONUS_N, DIG_DISPINFO_BIG_BONUS_N, 5},
+    {DIG_SPRITE_BONUS_U, DIG_DISPINFO_BIG_BONUS_U, 6},
+    {DIG_SPRITE_BONUS_S, DIG_DISPINFO_BIG_BONUS_S, 7},
+    {DIG_SPRITE_POKE_BALL, DIG_DISPINFO_POKE_BALL_SHINING, 0},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenesData")))
+static const struct DigitalDisplaySprite sDigitalDisplay_BonusRegular[] = {
+    {DIG_SPRITE_REG_R, DIG_DISPINFO_REG_R, 0},
+    {DIG_SPRITE_REG_E, DIG_DISPINFO_REG_E, 1},
+    {DIG_SPRITE_REG_G, DIG_DISPINFO_REG_G, 2},
+    {DIG_SPRITE_BONUS_B, DIG_DISPINFO_REG_BONUS_B, 3},
+    {DIG_SPRITE_BONUS_O, DIG_DISPINFO_REG_BONUS_O, 4},
+    {DIG_SPRITE_BONUS_N, DIG_DISPINFO_REG_BONUS_N, 5},
+    {DIG_SPRITE_BONUS_U, DIG_DISPINFO_REG_BONUS_U, 6},
+    {DIG_SPRITE_BONUS_S, DIG_DISPINFO_REG_BONUS_S, 7},
+    {DIG_SPRITE_POKE_BALL, DIG_DISPINFO_POKE_BALL_SHINING, 0},
+    DIG_SPRITE_DUMMY
+};
+
+__attribute__((section(".rodata.sDigitalDisplayScenes")))
+static const struct DigitalDisplaySprite *const sDigitalDisplayScenes[] = {
+    [DIG_DISPLAY_INSERT_BET] = sDigitalDisplay_InsertBet,
+    [DIG_DISPLAY_STOP_REEL]  = sDigitalDisplay_StopReel,
+    [DIG_DISPLAY_WIN]        = sDigitalDisplay_Win,
+    [DIG_DISPLAY_LOSE]       = sDigitalDisplay_Lose,
+    [DIG_DISPLAY_REEL_TIME]  = sDigitalDisplay_ReelTime,
+    [DIG_DISPLAY_BONUS_REG]  = sDigitalDisplay_BonusRegular,
+    [DIG_DISPLAY_BONUS_BIG]  = sDigitalDisplay_BonusBig
+};
+
+// JP reuses EndDigitalDisplayScene_Win for the Bonus scenes (US uses Dummy).
+__attribute__((section(".rodata.sDigitalDisplaySceneExitCallbacks")))
+static void (*const sDigitalDisplaySceneExitCallbacks[])(void) = {
+    [DIG_DISPLAY_INSERT_BET] = EndDigitalDisplayScene_InsertBet,
+    [DIG_DISPLAY_STOP_REEL]  = EndDigitalDisplayScene_StopReel,
+    [DIG_DISPLAY_WIN]        = EndDigitalDisplayScene_Win,
+    [DIG_DISPLAY_LOSE]       = EndDigitalDisplayScene_Dummy,
+    [DIG_DISPLAY_REEL_TIME]  = EndDigitalDisplayScene_Dummy,
+    [DIG_DISPLAY_BONUS_REG]  = EndDigitalDisplayScene_Win,
+    [DIG_DISPLAY_BONUS_BIG]  = EndDigitalDisplayScene_Win
+};
+
+// For the panel on the right side of the slot screen
+void CreateDigitalDisplayScene(u8 id)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl sub_0812DFEC\n\t"
-        "	ldr r0, _0812DF6C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3d\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812DF70\n\t"
-        "	adds r7, r0, r1\n\t"
-        "	strh r4, [r7, #0xa]\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r1, _0812DF74\n\t"
-        "	lsls r5, r4, #2\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	beq _0812DF62\n\t"
-        "	mov r8, r1\n\t"
-        "_0812DF2A:\n\t"
-        "	mov r0, r8\n\t"
-        "	adds r4, r5, r0\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	lsls r2, r6, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	ldrb r1, [r2, #1]\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsh r2, [r2, r3]\n\t"
-        "	bl sub_0812EFA8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r2, r6, #4\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r6, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	lsls r0, r6, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0xff\n\t"
-        "	bne _0812DF2A\n\t"
-        "_0812DF62:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812DF6C: .4byte sSlotMachine\n\t"
-        "_0812DF70: .4byte gTasks\n\t"
-        "_0812DF74: .4byte gUnknown_8584988\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Task *task;
+
+    DestroyDigitalDisplayScene();
+
+    task = &gTasks[sSlotMachine->digDisplayTaskId];
+    task->data[1] = id;
+
+    for (i = 0; sDigitalDisplayScenes[id][i].spriteTemplateId != 255; i++)
+    {
+        u8 spriteId;
+        spriteId = CreateStdDigitalDisplaySprite(
+                sDigitalDisplayScenes[id][i].spriteTemplateId,
+                sDigitalDisplayScenes[id][i].dispInfoId,
+                sDigitalDisplayScenes[id][i].spriteId
+        );
+        task->data[4 + i] = spriteId;
+    }
 }
 
 void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId)
@@ -4679,68 +4811,22 @@ void AddDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16
     }
 }
 
-__attribute__((naked)) void DestroyDigitalDisplayScene(void)
+void DestroyDigitalDisplayScene(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _0812E050\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x3d\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #3\n\t"
-        "	ldr r1, _0812E054\n\t"
-        "	adds r4, r0, r1\n\t"
-        "	ldrh r1, [r4, #0xa]\n\t"
-        "	ldr r0, _0812E058\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0812E018\n\t"
-        "	ldr r0, _0812E05C\n\t"
-        "	movs r2, #0xa\n\t"
-        "	ldrsh r1, [r4, r2]\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bl _call_via_r0\n\t"
-        "_0812E018:\n\t"
-        "	movs r5, #4\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r6, #8\n\t"
-        "_0812E01E:\n\t"
-        "	lsls r0, r5, #1\n\t"
-        "	adds r4, r6, r0\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r4, r1]\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0812E03E\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812E060\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bl DestroySprite\n\t"
-        "	movs r0, #0x40\n\t"
-        "	strh r0, [r4]\n\t"
-        "_0812E03E:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0xf\n\t"
-        "	bls _0812E01E\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812E050: .4byte sSlotMachine\n\t"
-        "_0812E054: .4byte gTasks\n\t"
-        "_0812E058: .4byte 0x0000FFFF\n\t"
-        "_0812E05C: .4byte gUnknown_85849A4\n\t"
-        "_0812E060: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    struct Task *task = &gTasks[sSlotMachine->digDisplayTaskId];
+
+    if ((u16)task->data[1] != 0xFFFF)
+        sDigitalDisplaySceneExitCallbacks[task->data[1]]();
+
+    for (i = 4; i < NUM_TASK_DATA; i++)
+    {
+        if (task->data[i] != MAX_SPRITES)
+        {
+            DestroySprite(&gSprites[task->data[i]]);
+            task->data[i] = MAX_SPRITES;
+        }
+    }
 }
 
 static bool8 IsDigitalDisplayAnimFinished(void)
@@ -8007,7 +8093,9 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_AButtonStart(struct Sprite *
     );
 }
 
-void sub_0812F790(void) {}
+static void EndDigitalDisplayScene_Dummy(void)
+{
+}
 __attribute__((naked)) void EndDigitalDisplayScene_StopReel(void)
 {
     __asm__(".syntax unified\n\t"
