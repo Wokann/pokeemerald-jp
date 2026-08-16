@@ -7447,9 +7447,9 @@ SECTIONS {
         src/slot_machine.o(.text.ReelTask_MoveToStop);
         src/slot_machine.o(.text.ReelTask_ShakingStop);
         src/slot_machine.o(.text.DecideStop_Bias_Reel1);
-        src/slot_machine.o(.text.AreTagsAtPosition_Reel1);
+        src/slot_machine.o(.text.EitherSymbolAtPos_Reel1);
         src/slot_machine.o(.text.AreCherriesOnScreen_Reel1);
-        src/slot_machine.o(.text.IsBiasTowardsCherryOr7s);
+        src/slot_machine.o(.text.BiasedTowardCherryOr7s);
         src/slot_machine.o(.text.DecideStop_Bias_Reel1_Bet1);
         src/slot_machine.o(.text.DecideStop_Bias_Reel1_Bet2or3);
         src/slot_machine.o(.text.DecideStop_Bias_Reel2);

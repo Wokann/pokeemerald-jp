@@ -878,6 +878,7 @@ enum {
 
 #define MAX_BET 3
 #define REEL_NORMAL_SPEED 8
+#define MAX_EXTRA_TURNS 4
 
 #define BIAS_REPLAY     (1 << 0)
 #define BIAS_CHERRY     (1 << 1)
@@ -1092,6 +1093,8 @@ bool8 IsMatchLineDoneFlashingBeforePayout(void);
 bool8 TryStopMatchLinesFlashing(void);
 static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2);
 static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2);
+bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2);
+static bool8 BiasedTowardCherryOr7s(void);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -2570,7 +2573,7 @@ bool8 DecideStop_Bias_Reel1(void)
 
 
 
-__attribute__((naked)) bool8 AreTagsAtPosition_Reel1(u8 a, u8 b)
+__attribute__((naked)) bool8 EitherSymbolAtPos_Reel1(s16 pos, u8 sym1, u8 sym2)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -2611,283 +2614,115 @@ __attribute__((naked)) bool8 AreTagsAtPosition_Reel1(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) bool8 AreCherriesOnScreen_Reel1(u8 a)
+
+static bool8 AreCherriesOnScreen_Reel1(s16 turns)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r1, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _0812C21C\n\t"
-        "	movs r1, #2\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	beq _0812C21C\n\t"
-        "	movs r1, #3\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetSymbol\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0812C220\n\t"
-        "_0812C21C:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C222\n\t"
-        "_0812C220:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C222:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetSymbol(LEFT_REEL, 1 - turns) == SYMBOL_CHERRY
+        || GetSymbol(LEFT_REEL, 2 - turns) == SYMBOL_CHERRY
+        || GetSymbol(LEFT_REEL, 3 - turns) == SYMBOL_CHERRY)
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 IsBiasTowardsCherryOr7s(void)
+static bool8 BiasedTowardCherryOr7s(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812C23C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r1, [r0, #4]\n\t"
-        "	movs r0, #0xc2\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C240\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812C242\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C23C: .4byte sSlotMachine\n\t"
-        "_0812C240:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812C242:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sSlotMachine->machineBias & (BIAS_STRAIGHT_7 | BIAS_MIXED_7 | BIAS_CHERRY))
+        return TRUE;
+    else
+        return FALSE;
 }
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel1_Bet1(u8 a, u8 b)
+// If a bias symbol appears in the center of reel 1 within the next 4 turns,
+// stop there. That symbol becomes the biasSymbol for the subsequent reels.
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r6, r1, #0x18\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	mov r8, r0\n\t"
-        "_0812C25C:\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	subs r0, r1, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	adds r1, r7, #0\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	bl AreTagsAtPosition_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C288\n\t"
-        "	ldr r0, _0812C284\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	strh r5, [r1, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C296\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C284: .4byte sSlotMachine\n\t"
-        "_0812C288:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C25C\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C296:\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+
+    for (i = 0; i <= MAX_EXTRA_TURNS; i++)
+    {
+        if (EitherSymbolAtPos_Reel1(2 - i, sym1, sym2))
+        {
+            sSlotMachine->winnerRows[LEFT_REEL] = 2;
+            sSlotMachine->reelExtraTurns[LEFT_REEL] = i;
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel1_Bet2or3(u8 a, u8 b)
+// There is slightly different behavior depending on the machine's bias.
+//
+// Bias toward cherry or 7s:
+//  - Check if a cherry or 7 is currently on screen. If so, stop immediately.
+//  - Roll up to 4 extra turns to see if a cherry or 7 enters the screen:
+//     - If it enters after 1 turn, stop the reel when it gets the bottom row.
+//     - Otherwise, if it enters before the 4th turn, stop the reel when it gets
+//       to the middle row.
+//     - If it enters on the 4th turn, stop here. It will be in the top row.
+//
+// Other bias:
+//  - This is very similar, except the game is checking for the bias symbol
+//    rather than cherries / 7s.
+//
+//    However, the game adds an additional constraint: it will not stop if there
+//    will be any cherries on screen. Presumably, this ensures that you will not
+//    get any matches if you fail to line up the bias symbol in the remaining
+//    reels.
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sl\n\t"
-        "	mov r6, sb\n\t"
-        "	mov r5, r8\n\t"
-        "	push {r5, r6, r7}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	mov sb, r0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	mov r8, r1\n\t"
-        "	bl IsBiasTowardsCherryOr7s\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0\n\t"
-        "	bne _0812C2CE\n\t"
-        "	movs r0, #0\n\t"
-        "	bl AreCherriesOnScreen_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C304\n\t"
-        "_0812C2CE:\n\t"
-        "	movs r7, #1\n\t"
-        "	movs r6, #0\n\t"
-        "_0812C2D2:\n\t"
-        "	lsls r0, r7, #0x10\n\t"
-        "	asrs r4, r0, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	mov r1, sb\n\t"
-        "	mov r2, r8\n\t"
-        "	bl AreTagsAtPosition_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C2F8\n\t"
-        "	ldr r0, _0812C2F4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strh r7, [r0, #0x34]\n\t"
-        "	strh r6, [r0, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C3A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C2F4: .4byte sSlotMachine\n\t"
-        "_0812C2F8:\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	ble _0812C2D2\n\t"
-        "_0812C304:\n\t"
-        "	movs r7, #1\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	ldr r0, _0812C358\n\t"
-        "	mov sl, r0\n\t"
-        "_0812C30C:\n\t"
-        "	lsls r5, r7, #0x10\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0812C31E\n\t"
-        "	asrs r0, r5, #0x10\n\t"
-        "	bl AreCherriesOnScreen_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C390\n\t"
-        "_0812C31E:\n\t"
-        "	movs r0, #1\n\t"
-        "	asrs r4, r5, #0x10\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	mov r1, sb\n\t"
-        "	mov r2, r8\n\t"
-        "	bl AreTagsAtPosition_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C390\n\t"
-        "	cmp r4, #1\n\t"
-        "	bne _0812C35C\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0812C34A\n\t"
-        "	movs r0, #3\n\t"
-        "	bl AreCherriesOnScreen_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C35C\n\t"
-        "_0812C34A:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C3A0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C358: .4byte sSlotMachine\n\t"
-        "_0812C35C:\n\t"
-        "	asrs r0, r5, #0x10\n\t"
-        "	cmp r0, #3\n\t"
-        "	bgt _0812C384\n\t"
-        "	adds r4, r0, #1\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _0812C376\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	bl AreCherriesOnScreen_Reel1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812C384\n\t"
-        "_0812C376:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	strh r4, [r1, #0x2e]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0812C3A0\n\t"
-        "_0812C384:\n\t"
-        "	mov r0, sl\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	strh r7, [r1, #0x2e]\n\t"
-        "	b _0812C3A0\n\t"
-        "_0812C390:\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #9\n\t"
-        "	adds r0, r5, r1\n\t"
-        "	lsrs r7, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812C30C\n\t"
-        "	movs r0, #0\n\t"
-        "_0812C3A0:\n\t"
-        "	pop {r3, r4, r5}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	mov sl, r5\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 i;
+    bool8 cherry7Bias = BiasedTowardCherryOr7s();
+    if (cherry7Bias || !AreCherriesOnScreen_Reel1(0))
+    {
+        // Check the current screen
+        for (i = 1; i <= 3; i++)
+        {
+            if (EitherSymbolAtPos_Reel1(i, sym1, sym2))
+            {
+                sSlotMachine->winnerRows[0] = i;
+                sSlotMachine->reelExtraTurns[0] = 0;
+                return TRUE;
+            }
+        }
+    }
+
+    // Check the next 4 turns
+    for (i = 1; i <= MAX_EXTRA_TURNS; i++)
+    {
+        bool8 cherry7BiasCopy = cherry7Bias; // redundant
+        if (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(i))
+        {
+            if (EitherSymbolAtPos_Reel1(1 - i, sym1, sym2))
+            {
+                if (i == 1 && (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(3)))
+                {
+                    sSlotMachine->winnerRows[0] = 3;
+                    sSlotMachine->reelExtraTurns[0] = 3;
+                    return TRUE;
+                }
+                if (i <= 3 && (cherry7BiasCopy || !AreCherriesOnScreen_Reel1(i + 1)))
+                {
+                    sSlotMachine->winnerRows[0] = 2;
+                    sSlotMachine->reelExtraTurns[0] = i + 1;
+                    return TRUE;
+                }
+                sSlotMachine->winnerRows[0] = 1;
+                sSlotMachine->reelExtraTurns[0] = i;
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
 }
+
+
+
+
+
+
+
+
 
 __attribute__((naked)) bool8 DecideStop_Bias_Reel2(void)
 {
