@@ -1476,17 +1476,13 @@ __attribute__((naked)) void LoadPtrFromTaskData(void)
     );
 }
 
-__attribute__((naked)) void StorePtrInTaskData(void)
+
+void StorePtrInTaskData(void *records, u16 *asShort)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	strh r0, [r1]\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	strh r0, [r1, #2]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    asShort[0] = (u32)records;
+    asShort[1] = ((u32)records >> 16);
 }
+
 
 __attribute__((naked)) void GetMultiplayerId_(void)
 {

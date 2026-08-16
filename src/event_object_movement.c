@@ -3,6 +3,12 @@
 struct ObjectEvent;
 struct Sprite;
 
+// Sprite data used throughout
+#define sObjEventId   data[0]
+#define sTypeFuncId   data[1] // Index into corresponding gMovementTypeFuncs_* table
+#define sActionFuncId data[2] // Index into corresponding gMovementActionFuncs_* table
+#define sDirection    data[3]
+
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 
 __attribute__((naked)) void ClearEventObject(void)
@@ -15979,17 +15985,13 @@ __attribute__((naked)) u8 sub_08093234(struct ObjectEvent *objectEvent, struct S
     );
 }
 
-__attribute__((naked)) void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementAction)
+
+void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 animId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r3, #0\n\t"
-        "	strb r2, [r0, #0x1c]\n\t"
-        "	strh r3, [r1, #0x32]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->movementActionId = animId;
+    sprite->sActionFuncId = 0;
 }
+
 
 __attribute__((naked)) void FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
@@ -26822,15 +26824,12 @@ __attribute__((naked)) void sub_08097254(struct ObjectEvent *objectEvent)
     );
 }
 
-__attribute__((naked)) void SetMovementDelay(struct Sprite *sprite, s16 delay)
+
+void SetMovementDelay(struct Sprite *sprite, s16 timer)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	strh r1, [r0, #0x34]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->data[3] = timer;
 }
+
 
 __attribute__((naked)) bool8 WaitForMovementDelay(struct Sprite *sprite)
 {

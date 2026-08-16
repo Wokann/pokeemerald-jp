@@ -43,25 +43,19 @@ __attribute__((naked)) void SetBagItemQuantity(void)
     );
 }
 
-__attribute__((naked)) void GetPCItemQuantity(void)
+
+u16 GetPCItemQuantity(u16 *quantity)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return *quantity;
 }
 
-__attribute__((naked)) void SetPCItemQuantity(void)
+
+
+void SetPCItemQuantity(u16 *quantity, u16 newValue)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    *quantity = newValue;
 }
+
 
 __attribute__((naked)) void ApplyNewEncryptionKeyToBagItems(u32 newKey)
 {
@@ -1429,19 +1423,13 @@ __attribute__((naked)) u16 BagGetQuantityByPocketPosition(u8 pocketId, u16 pocke
     );
 }
 
-__attribute__((naked)) void SwapItemSlots(void)
+
+void SwapItemSlots(struct ItemSlot *a, struct ItemSlot *b)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r3, [r0]\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	str r2, [r0]\n\t"
-        "	str r3, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ItemSlot temp;
+    SWAP(*a, *b, temp);
 }
+
 
 __attribute__((naked)) void CompactItemsInBagPocket(struct BagPocket *bagPocket)
 {

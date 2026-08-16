@@ -1,6 +1,15 @@
 #include "global.h"
 #include "battle_factory_screen.h"
 
+// Return states for the Select Actions
+enum
+{
+    SELECT_SUMMARY,
+    SELECT_CONTINUE_CHOOSING,
+    SELECT_CONFIRM_MONS,
+    SELECT_INVALID_MON,
+};
+
 __attribute__((naked)) void sub_0819A0EC(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3141,15 +3150,12 @@ __attribute__((naked)) void sub_0819B940(void)
     );
 }
 
-__attribute__((naked)) void Select_OptionSummary(void)
+
+u8 Select_OptionSummary(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return SELECT_SUMMARY;
 }
+
 
 __attribute__((naked)) void Select_OptionOthers(void)
 {

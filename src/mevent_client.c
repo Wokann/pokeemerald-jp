@@ -1,4 +1,17 @@
 #include "global.h"
+#include "mystery_gift_client.h"
+
+enum
+{
+    FUNC_INIT,
+    FUNC_DONE,
+    FUNC_RECV,
+    FUNC_SEND,
+    FUNC_RUN,
+    FUNC_WAIT,
+    FUNC_RUN_MEVENT,
+    FUNC_RUN_BUFFER,
+};
 
 // JP byte-exact mystery-gift client state machines (kept as naked asm).
 
@@ -226,25 +239,14 @@ __attribute__((naked)) u32 mainseq_4(void *data)
     );
 }
 
-__attribute__((naked)) u32 Client_Wait(void *data)
+u32 Client_Wait(struct MysteryGiftClient *client)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "push {lr}\n\t"
-        "adds r1, r0, #0\n\t"
-        "ldr r0, [r1, #0xc]\n\t"
-        "cmp r0, #0\n\t"
-        "beq _0801D632\n\t"
-        "movs r0, #4\n\t"
-        "str r0, [r1, #8]\n\t"
-        "movs r0, #0\n\t"
-        "str r0, [r1, #0xc]\n\t"
-        "_0801D632:\n\t"
-        "movs r0, #1\n\t"
-        "pop {r1}\n\t"
-        "bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (client->funcState)
+    {
+        client->funcId = FUNC_RUN;
+        client->funcState = 0;
+    }
+    return CLI_RET_ACTIVE;
 }
 
 __attribute__((naked)) u32 mainseq_6(void *data)

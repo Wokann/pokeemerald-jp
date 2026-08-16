@@ -2285,30 +2285,14 @@ __attribute__((naked)) void sub_08077D50(void)
 }
 
 
-__attribute__((naked)) void Trade_Memcpy(void)
+void Trade_Memcpy(void *dest, const void *src, u32 size)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r3, #0\n\t"
-        "	cmp r3, r2\n\t"
-        "	bhs _08077E1A\n\t"
-        "_08077E0C:\n\t"
-        "	adds r0, r5, r3\n\t"
-        "	adds r1, r4, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r3, r2\n\t"
-        "	blo _08077E0C\n\t"
-        "_08077E1A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *_dest = dest;
+    const u8 *_src = src;
+    u32 i;
+
+    for (i = 0; i < size; i++)
+        _dest[i] = _src[i];
 }
 
 __attribute__((naked)) void shedinja_maker_maybe(void)
@@ -16412,4 +16396,3 @@ __attribute__((naked)) void sub_0807EE9C(void)
         ".syntax divided\n\t"
     );
 }
-

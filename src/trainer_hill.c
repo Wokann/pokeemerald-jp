@@ -1578,25 +1578,18 @@ __attribute__((naked)) void PrintOnTrainerHillRecordsWindow()
     );
 }
 
-__attribute__((naked)) void GetTimerValue(void)
+u32 GetTimerValue(u32 *src)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return *src;
 }
 
-__attribute__((naked)) void SetTimerValue(void)
+
+
+void SetTimerValue(u32 *dst, u32 val)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	str r1, [r0]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    *dst = val;
 }
+
 
 __attribute__((naked)) void sub_081D56F0(void)
 {

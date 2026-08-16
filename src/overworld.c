@@ -7762,18 +7762,11 @@ __attribute__((naked)) u8 FacingHandler_ForcedFacingChange(struct LinkPlayerObje
     );
 }
 
-__attribute__((naked)) void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1)
+void MovementStatusHandler_EnterFreeMode(struct LinkPlayerObjectEvent *linkPlayerObjEvent, struct ObjectEvent *objEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	@ From src/overworld.c\n\t"
-        "	movs r1, #0\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    linkPlayerObjEvent->movementMode = MOVEMENT_MODE_FREE;
 }
+
 
 __attribute__((naked)) void MovementStatusHandler_TryAdvanceScript(struct LinkPlayerObjectEvent *a0, struct ObjectEvent *a1)
 {

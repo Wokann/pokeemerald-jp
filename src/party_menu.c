@@ -1,5 +1,6 @@
 #include "global.h"
 #include "party_menu.h"
+#include "constants/items.h"
 
 __attribute__((naked)) void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCursorPos, u8 messageId)
 {
@@ -13588,29 +13589,11 @@ __attribute__((naked)) void UsingHPEVItemOnShedinja(void)
     );
 }
 
-__attribute__((naked)) bool8 IsItemFlute(u16 itemId)
+bool8 IsItemFlute(u16 item)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x27\n\t"
-        "	beq _081B61B6\n\t"
-        "	cmp r0, #0x29\n\t"
-        "	beq _081B61B6\n\t"
-        "	cmp r0, #0x28\n\t"
-        "	bne _081B61BA\n\t"
-        "_081B61B6:\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081B61BC\n\t"
-        "_081B61BA:\n\t"
-        "	movs r0, #0\n\t"
-        "_081B61BC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (item == ITEM_BLUE_FLUTE || item == ITEM_RED_FLUTE || item == ITEM_YELLOW_FLUTE)
+        return TRUE;
+    return FALSE;
 }
 
 __attribute__((naked)) void ExecuteTableBasedItemEffect__(void)
@@ -20789,4 +20772,3 @@ __attribute__((naked)) void sub_081B95B8(void)
         ".syntax divided\n\t"
     );
 }
-

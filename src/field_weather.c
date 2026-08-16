@@ -395,15 +395,12 @@ __attribute__((naked)) void None_Init(void)
 }
 
 void sub_080AAB88(void) {}
-__attribute__((naked)) void None_Finish(void)
+
+u8 None_Finish(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return 0;
 }
+
 
 __attribute__((naked)) void BuildGammaShiftTables(void)
 {
@@ -2191,17 +2188,13 @@ __attribute__((naked)) void LoadCustomWeatherSpritePalette(const u16 *palette)
     );
 }
 
-__attribute__((naked)) void LoadDroughtWeatherPalette(void)
+
+void LoadDroughtWeatherPalette(u8 *palsIndex, u8 *palsOffset)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	movs r2, #0x20\n\t"
-        "	strb r2, [r0]\n\t"
-        "	strb r2, [r1]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    *palsIndex = 0x20;
+    *palsOffset = 0x20;
 }
+
 
 __attribute__((naked)) void ResetDroughtWeatherPaletteLoading()
 {
