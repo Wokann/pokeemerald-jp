@@ -6147,7 +6147,9 @@ sFrozenIceCubeSpriteTemplate: @ 0x85176A4
 
 	.globl sFlashingCircleImpactSpriteTemplate
 sFlashingCircleImpactSpriteTemplate: @ 0x85176BC
-	.incbin "baserom_jp.gba", 0x5176bc, 0x3e4
+	.hword 0x2798, 0x2798
+	.4byte 0x084FD010, gDummySpriteAnimTable, 0, gDummySpriteAffineAnimTable, 0x080A970D
+	.incbin "baserom_jp.gba", 0x5176d4, 0x3cc
 
 	.globl gTitleScreenPokemonLogoTilemap
 gTitleScreenPokemonLogoTilemap: @ 0x8517AA0
