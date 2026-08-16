@@ -97,6 +97,13 @@ extern void EventObjectClearHeldMovement(struct ObjectEvent *objectEvent);
 extern bool8 ObjectEventSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId);
 extern void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent);
 extern void ObjectEventSetSingleMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 movementActionId);
+extern bool8 SpriteAnimEnded(struct Sprite *sprite);
+extern bool8 WaitForMovementDelay(struct Sprite *sprite);
+extern bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent);
+extern void SetMovementDelay(struct Sprite *sprite, s16 timer);
+extern bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent);
+extern u8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern u8 GetFaceDirectionMovementAction(u32 direction);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -4945,7 +4952,7 @@ __attribute__((naked)) bool8 MovementType_WanderAround_Step6(struct ObjectEvent 
     );
 }
 
-__attribute__((naked)) void EventObjectIsTrainerAndCloseToPlayer(void)
+__attribute__((naked)) bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -6647,37 +6654,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step2(struct ObjectEvent
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndUp_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808FAA6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FAAE\n\t"
-        "_0808FAA6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808FAB0\n\t"
-        "_0808FAAE:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808FAB0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndUp_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -6820,37 +6804,14 @@ __attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step2(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808FBE6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FBEE\n\t"
-        "_0808FBE6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808FBF0\n\t"
-        "_0808FBEE:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808FBF0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -6994,37 +6955,14 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step2(struct ObjectEvent
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808FD26\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FD2E\n\t"
-        "_0808FD26:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808FD30\n\t"
-        "_0808FD2E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808FD30:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpAndLeft_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7167,37 +7105,14 @@ __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step2(struct ObjectEven
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808FE66\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FE6E\n\t"
-        "_0808FE66:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808FE70\n\t"
-        "_0808FE6E:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808FE70:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7341,37 +7256,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step2(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808FFA6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808FFAE\n\t"
-        "_0808FFA6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808FFB0\n\t"
-        "_0808FFAE:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808FFB0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndLeft_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7514,37 +7406,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step2(struct ObjectEv
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080900E6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080900EE\n\t"
-        "_080900E6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080900F0\n\t"
-        "_080900EE:\n\t"
-        "	movs r0, #0\n\t"
-        "_080900F0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -7687,37 +7556,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step2(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndLeft_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08090226\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809022E\n\t"
-        "_08090226:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08090230\n\t"
-        "_0809022E:\n\t"
-        "	movs r0, #0\n\t"
-        "_08090230:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -7861,37 +7707,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step2(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownUpAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08090366\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0809036E\n\t"
-        "_08090366:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08090370\n\t"
-        "_0809036E:\n\t"
-        "	movs r0, #0\n\t"
-        "_08090370:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownUpAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8034,37 +7857,14 @@ __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step2(struct Object
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceUpLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080904A6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080904AE\n\t"
-        "_080904A6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080904B0\n\t"
-        "_080904AE:\n\t"
-        "	movs r0, #0\n\t"
-        "_080904B0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceUpLeftAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -8208,37 +8008,14 @@ __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step2(struct Obje
     );
 }
 
-__attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_FaceDownLeftAndRight_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080905E6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080905EE\n\t"
-        "_080905E6:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _080905F0\n\t"
-        "_080905EE:\n\t"
-        "	movs r0, #0\n\t"
-        "_080905F0:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_FaceDownLeftAndRight_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
