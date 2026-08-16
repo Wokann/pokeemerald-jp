@@ -3921,7 +3921,7 @@ SECTIONS {
         src/event_object_movement.o(.text.EventObjectGetBerryTreeId);
         src/event_object_movement.o(.text.GetEventObjectTemplateByLocalIdAndMap);
         src/event_object_movement.o(.text.FindEventObjectTemplateByLocalId);
-        src/event_object_movement.o(.text.GetBaseTemplateForEventObject);
+        src/event_object_movement.o(.text.GetBaseTemplateForObjectEvent);
         src/event_object_movement.o(.text.OverrideTemplateCoordsForObjectEvent);
         src/event_object_movement.o(.text.OverrideObjectEventTemplateScript);
         src/event_object_movement.o(.text.TryOverrideTemplateCoordsForObjectEvent);

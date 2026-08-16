@@ -4459,59 +4459,22 @@ __attribute__((naked)) void FindEventObjectTemplateByLocalId(void)
     );
 }
 
-__attribute__((naked)) void GetBaseTemplateForEventObject(void)
+struct ObjectEventTemplate *GetBaseTemplateForObjectEvent(const struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrb r0, [r3, #9]\n\t"
-        "	ldr r1, _0808EB44\n\t"
-        "	ldr r2, [r1]\n\t"
-        "	movs r1, #5\n\t"
-        "	ldrsb r1, [r2, r1]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0808EB70\n\t"
-        "	ldrb r1, [r3, #0xa]\n\t"
-        "	movs r0, #4\n\t"
-        "	ldrsb r0, [r2, r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _0808EB52\n\t"
-        "	b _0808EB70\n\t"
-        "	.align 2, 0\n\t"
-        "_0808EB44: .4byte gSaveBlock1Ptr\n\t"
-        "_0808EB48:\n\t"
-        "	movs r1, #0xc7\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	adds r0, r4, r0\n\t"
-        "	b _0808EB72\n\t"
-        "_0808EB52:\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	ldrb r3, [r3, #8]\n\t"
-        "	movs r5, #0xc7\n\t"
-        "	lsls r5, r5, #4\n\t"
-        "	adds r2, r4, r5\n\t"
-        "	movs r0, #0\n\t"
-        "_0808EB60:\n\t"
-        "	ldrb r5, [r2]\n\t"
-        "	cmp r3, r5\n\t"
-        "	beq _0808EB48\n\t"
-        "	adds r2, #0x18\n\t"
-        "	adds r0, #0x18\n\t"
-        "	adds r1, #1\n\t"
-        "	cmp r1, #0x3f\n\t"
-        "	ble _0808EB60\n\t"
-        "_0808EB70:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808EB72:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    int i;
+
+    if (objectEvent->mapNum != gSaveBlock1Ptr->location.mapNum
+     || objectEvent->mapGroup != gSaveBlock1Ptr->location.mapGroup)
+        return NULL;
+
+    for (i = 0; i < OBJECT_EVENT_TEMPLATES_COUNT; i++)
+    {
+        if (objectEvent->localId == gSaveBlock1Ptr->objectEventTemplates[i].localId)
+            return &gSaveBlock1Ptr->objectEventTemplates[i];
+    }
+    return NULL;
 }
+
 
 __attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
 {
@@ -4519,7 +4482,7 @@ __attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
         ".code 16\n\t"
         "	push {r4, lr}\n\t"
         "	adds r4, r0, #0\n\t"
-        "	bl GetBaseTemplateForEventObject\n\t"
+        "	bl GetBaseTemplateForObjectEvent\n\t"
         "	adds r1, r0, #0\n\t"
         "	cmp r1, #0\n\t"
         "	beq _0808EB92\n\t"
@@ -4536,23 +4499,15 @@ __attribute__((naked)) void OverrideTemplateCoordsForObjectEvent(void)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) void OverrideObjectEventTemplateScript(void)
+void OverrideObjectEventTemplateScript(const struct ObjectEvent *objectEvent, const u8 *script)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl GetBaseTemplateForEventObject\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808EBA6\n\t"
-        "	str r4, [r0, #0x10]\n\t"
-        "_0808EBA6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    struct ObjectEventTemplate *objectEventTemplate;
+
+    objectEventTemplate = GetBaseTemplateForObjectEvent(objectEvent);
+    if (objectEventTemplate)
+        objectEventTemplate->script = script;
 }
+
 
 
 
@@ -4563,7 +4518,7 @@ __attribute__((naked)) void TryOverrideTemplateCoordsForObjectEvent(void)
         "	push {r4, lr}\n\t"
         "	lsls r1, r1, #0x18\n\t"
         "	lsrs r4, r1, #0x18\n\t"
-        "	bl GetBaseTemplateForEventObject\n\t"
+        "	bl GetBaseTemplateForObjectEvent\n\t"
         "	cmp r0, #0\n\t"
         "	beq _0808EBBC\n\t"
         "	strb r4, [r0, #9]\n\t"
