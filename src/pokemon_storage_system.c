@@ -269,8 +269,12 @@ extern void sub_080CFA58(void);
 extern s8 sCursorArea;
 extern s8 sCursorPosition;
 extern bool8 sIsMonBeingMoved;
+extern u8 sLastUsedBox;
+extern u16 sMovingItemId;
 extern void UpdateCloseBoxButtonFlash(void);
 extern void UnkUtil_Run(void);
+extern void ScrollBackground(void);
+extern void Task_InitPokeStorage(void);
 extern const struct WindowTemplate sPSSWindowTemplates[];
 extern const struct SpritePalette sWaveformSpritePalette;
 
@@ -904,7 +908,7 @@ __attribute__((naked)) void Task_PokemonStorageSystemPC(u8 taskId)
         "	bne _080C6DF6\n\t"
         "	bl CleanupOverworldWindowsAndTilemaps\n\t"
         "	ldrb r0, [r5, #0xc]\n\t"
-        "	bl Cb2_EnterPSS\n\t"
+        "	bl EnterPokeStorage\n\t"
         "	ldrh r0, [r5, #0x26]\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
@@ -2023,61 +2027,25 @@ void CB2_PokeStorage(void)
     BuildOamBuffer();
 }
 
-__attribute__((naked)) void Cb2_EnterPSS(void)
+void EnterPokeStorage(u8 boxOption)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	bl ResetTasks\n\t"
-        "	ldr r0, _080C7634\n\t"
-        "	strb r5, [r0]\n\t"
-        "	ldr r4, _080C7638\n\t"
-        "	ldr r0, _080C763C\n\t"
-        "	bl Alloc\n\t"
-        "	str r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080C7644\n\t"
-        "	ldr r0, _080C7640\n\t"
-        "	bl SetMainCallback2\n\t"
-        "	b _080C7670\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7634: .4byte sCurrentBoxOption\n\t"
-        "_080C7638: .4byte gUnknown_20399A8\n\t"
-        "_080C763C: .4byte 0x000062C4\n\t"
-        "_080C7640: .4byte CB2_ExitPokeStorage + 1\n\t"
-        "_080C7644:\n\t"
-        "	movs r2, #0\n\t"
-        "	strb r5, [r0, #1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	strb r2, [r0, #3]\n\t"
-        "	ldr r0, _080C7678\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r2, [r0]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	strb r1, [r0]\n\t"
-        "	ldr r0, _080C767C\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CreateTask\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	strb r0, [r1, #4]\n\t"
-        "	bl StorageGetCurrentBox\n\t"
-        "	ldr r1, _080C7680\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, _080C7684\n\t"
-        "	bl SetMainCallback2\n\t"
-        "_080C7670:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C7678: .4byte gUnknown_20399B2\n\t"
-        "_080C767C: .4byte Cb_InitPSS + 1\n\t"
-        "_080C7680: .4byte gUnknown_20399B0\n\t"
-        "_080C7684: .4byte CB2_PokeStorage + 1\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetTasks();
+    sCurrentBoxOption = boxOption;
+    sStorage = Alloc(sizeof(*sStorage));
+    if (sStorage == NULL)
+    {
+        SetMainCallback2(CB2_ExitPokeStorage);
+    }
+    else
+    {
+        sStorage->boxOption = boxOption;
+        sStorage->isReopening = FALSE;
+        sMovingItemId = ITEM_NONE;
+        sStorage->state = 0;
+        sStorage->taskId = CreateTask(Task_InitPokeStorage, 3);
+        sLastUsedBox = StorageGetCurrentBox();
+        SetMainCallback2(CB2_PokeStorage);
+    }
 }
 
 __attribute__((naked)) void Cb2_ReturnToPSS(void)
@@ -2123,7 +2091,7 @@ __attribute__((naked)) void Cb2_ReturnToPSS(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080C76E0: .4byte sCurrentBoxOption\n\t"
-        "_080C76E4: .4byte Cb_InitPSS + 1\n\t"
+        "_080C76E4: .4byte Task_InitPokeStorage + 1\n\t"
         "_080C76E8: .4byte CB2_PokeStorage + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2290,7 +2258,7 @@ void SetPSSCallback(void (*func)(void))
     sStorage->state = 0;
 }
 
-__attribute__((naked)) void Cb_InitPSS(void)
+__attribute__((naked)) void Task_InitPokeStorage(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
