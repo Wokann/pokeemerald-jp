@@ -14464,26 +14464,9 @@ __attribute__((naked)) void sub_080CD4E0(void)
     );
 }
 
-__attribute__((naked)) void DoMonPlaceChange(void)
+bool8 DoMonPlaceChange(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080CD540\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080CD544\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	bl _call_via_r0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_080CD540: .4byte gUnknown_20399A8\n\t"
-        "_080CD544: .4byte 0x00000D8C\n\t"
-        ".syntax divided\n\t"
-    );
+    return sStorage->monPlaceChangeFunc();
 }
 
 __attribute__((naked)) void MonPlaceChange_Grab(void)
