@@ -7410,7 +7410,7 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_FreeDataStructures);
         src/slot_machine.o(.text.DrawMachineBias);
         src/slot_machine.o(.text.ResetBiasFailure);
-        src/slot_machine.o(.text.GetBiasTag);
+        src/slot_machine.o(.text.GetBiasSymbol);
         src/slot_machine.o(.text.IsThisRoundLucky);
         src/slot_machine.o(.text.AttemptsAtLuckyFlags_Top3);
         src/slot_machine.o(.text.AttemptsAtLuckyFlags_NotTop3);
@@ -9341,12 +9341,15 @@ SECTIONS {
         src/slot_machine.o(.rodata.sDecideStop_Bias);
         src/slot_machine.o(.rodata.sDecideStop_NoBias);
         src/slot_machine.o(.rodata.sReelStopShocks);
-        data/data_b2d_mid61.o(.rodata.858448C);
+        src/slot_machine.o(.rodata.sDecideStop_Bias_Reel1_Bets);
+        data/data_b2d_mid61.o(.rodata.8584498);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
         src/slot_machine.o(.rodata.sReelSymbols);
         src/slot_machine.o(.rodata.sReelTimeSymbols);
         data/data_b2d_mid62.o(.rodata.8584638);
+        src/slot_machine.o(.rodata.sBiasSymbols);
+        data/data_b2d_mid62.o(.rodata.8584782);
         src/slot_machine.o(.rodata.sSymbolToMatch);
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);

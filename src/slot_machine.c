@@ -1090,6 +1090,8 @@ u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3);
 void Task_Payout(u8 taskId);
 bool8 IsMatchLineDoneFlashingBeforePayout(void);
 bool8 TryStopMatchLinesFlashing(void);
+static bool8 DecideStop_Bias_Reel1_Bet1(u8 sym1, u8 sym2);
+static bool8 DecideStop_Bias_Reel1_Bet2or3(u8 sym1, u8 sym2);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -1645,41 +1647,7 @@ __attribute__((naked)) void ResetBiasFailure(void)
     );
 }
 
-__attribute__((naked)) u8 GetBiasTag(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #1\n\t"
-        "	ldr r4, _0812B5A8\n\t"
-        "_0812B598:\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	ands r0, r3\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B5AC\n\t"
-        "	adds r0, r2, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0812B5BA\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B5A8: .4byte gUnknown_858477A\n\t"
-        "_0812B5AC:\n\t"
-        "	lsrs r1, r1, #1\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #7\n\t"
-        "	bls _0812B598\n\t"
-        "	movs r0, #0\n\t"
-        "_0812B5BA:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
+
 
 __attribute__((naked)) bool8 IsThisRoundLucky(void)
 {
@@ -2554,48 +2522,53 @@ static bool8 ReelTask_ShakingStop(struct Task *task)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 DecideStop_Bias_Reel1(void)
+
+__attribute__((section(".rodata.sBiasSymbols")))
+static const u8 sBiasSymbols[] = {
+    SYMBOL_REPLAY,  // BIAS_REPLAY
+    SYMBOL_CHERRY,  // BIAS_CHERRY
+    SYMBOL_LOTAD,   // BIAS_LOTAD
+    SYMBOL_AZURILL, // BIAS_AZURILL
+    SYMBOL_POWER,   // BIAS_POWER
+    SYMBOL_7_RED,   // BIAS_REELTIME
+    SYMBOL_7_RED,   // BIAS_MIXED_7
+    SYMBOL_7_RED    // BIAS_STRAIGHT_7
+};
+
+static u8 GetBiasSymbol(u8 machineBias)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r4, _0812C18C\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #4]\n\t"
-        "	bl GetBiasTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	ldr r4, [r4]\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812C16A\n\t"
-        "	movs r5, #0\n\t"
-        "	movs r3, #1\n\t"
-        "_0812C16A:\n\t"
-        "	ldr r1, _0812C190\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	subs r0, #1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	bl _call_via_r2\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812C18C: .4byte sSlotMachine\n\t"
-        "_0812C190: .4byte gUnknown_858448C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i < 8; i++)
+    {
+        if (machineBias & 1)
+            return sBiasSymbols[i];
+        machineBias >>= 1;
+    }
+    return 0;
 }
+
+__attribute__((section(".rodata.sDecideStop_Bias_Reel1_Bets")))
+static bool8 (*const sDecideStop_Bias_Reel1_Bets[MAX_BET])(u8 sym1, u8 sym2) =
+{
+    DecideStop_Bias_Reel1_Bet1,
+    DecideStop_Bias_Reel1_Bet2or3,
+    DecideStop_Bias_Reel1_Bet2or3,
+};
+
+bool8 DecideStop_Bias_Reel1(void)
+{
+    u8 sym2 = GetBiasSymbol(sSlotMachine->machineBias);
+    u8 sym1 = sym2;
+    if (sSlotMachine->machineBias & (BIAS_STRAIGHT_7 | BIAS_MIXED_7))
+    {
+        sym1 = SYMBOL_7_RED;
+        sym2 = SYMBOL_7_BLUE;
+    }
+    return sDecideStop_Bias_Reel1_Bets[sSlotMachine->bet - 1](sym1, sym2);
+}
+
+
 
 __attribute__((naked)) bool8 AreTagsAtPosition_Reel1(u8 a, u8 b)
 {
