@@ -3399,7 +3399,7 @@ __attribute__((naked)) u8 AnimateBallOpenParticles(u8 x, u8 y, u8 priority, u8 s
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08171BFC: .4byte gUnknown_85C627C\n\t"
+        "_08171BFC: .4byte sBallParticleAnimationFuncs\n\t"
         "_08171C00: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4913,7 +4913,7 @@ __attribute__((naked)) void DestroyBallOpenAnimationParticle(void)
         "	b _0817277C\n\t"
         "	.align 2, 0\n\t"
         "_08172770: .4byte gBattleSpritesDataPtr\n\t"
-        "_08172774: .4byte gUnknown_85C627C\n\t"
+        "_08172774: .4byte sBallParticleAnimationFuncs\n\t"
         "_08172778:\n\t"
         "	adds r5, #4\n\t"
         "	adds r4, #1\n\t"

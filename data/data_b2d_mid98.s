@@ -436,9 +436,27 @@ gUnknown_85D34C4: @ 0x85D34C4
 gUnknown_85D34E0: @ 0x85D34E0
 	.incbin "baserom_jp.gba", 0x5d34e0, 0x8
 
-	.globl gUnknown_85D34E8
-gUnknown_85D34E8: @ 0x85D34E8
-	.incbin "baserom_jp.gba", 0x5d34e8, 0x25c
+	.globl sMonAnimFunctions
+sMonAnimFunctions: @ 0x85D34E8
+	.4byte Anim_VerticalSquishBounce + 1, Anim_CircularStretchTwice + 1, Anim_HorizontalVibrate + 1, Anim_HorizontalSlide + 1, Anim_VerticalSlide + 1, Anim_BounceRotateToSides + 1, Anim_VerticalJumpsHorizontalJumps + 1, Anim_RotateToSides + 1
+	.4byte Anim_RotateToSides_Twice + 1, Anim_GrowVibrate + 1, Anim_ZigzagFast + 1, Anim_SwingConcave + 1, Anim_SwingConcave_Fast + 1, Anim_SwingConvex + 1, Anim_SwingConvex_Fast + 1, Anim_HorizontalShake + 1
+	.4byte Anim_VerticalShake + 1, Anim_CircularVibrate + 1, Anim_Twist + 1, Anim_ShrinkGrow + 1, Anim_CircleCounterclockwise + 1, Anim_GlowBlack + 1, Anim_HorizontalStretch + 1, Anim_VerticalStretch + 1
+	.4byte Anim_RisingWobble + 1, Anim_VerticalShakeTwice + 1, Anim_TipMoveForward + 1, Anim_HorizontalPivot + 1, Anim_VerticalSlideWobble + 1, Anim_HorizontalSlideWobble + 1, Anim_VerticalJumps_Big + 1, Anim_Spin_Long + 1
+	.4byte Anim_GlowOrange + 1, Anim_GlowRed + 1, Anim_GlowBlue + 1, Anim_GlowYellow + 1, Anim_GlowPurple + 1, Anim_BackAndLunge + 1, Anim_BackFlip + 1, Anim_Flicker + 1
+	.4byte Anim_BackFlipBig + 1, Anim_FrontFlip + 1, Anim_TumblingFrontFlip + 1, Anim_Figure8 + 1, Anim_FlashYellow + 1, Anim_SwingConcave_FastShort + 1, Anim_SwingConvex_FastShort + 1, Anim_RotateUpSlamDown + 1
+	.4byte Anim_DeepVerticalSquishBounce + 1, Anim_HorizontalJumps + 1, Anim_HorizontalJumpsVerticalStretch + 1, Anim_RotateToSides_Fast + 1, Anim_RotateUpToSides + 1, Anim_FlickerIncreasing + 1, Anim_TipHopForward + 1, Anim_PivotShake + 1
+	.4byte Anim_TipAndShake + 1, Anim_VibrateToCorners + 1, Anim_GrowInStages + 1, Anim_VerticalSpring + 1, Anim_VerticalRepeatedSpring + 1, Anim_SpringRising + 1, Anim_HorizontalSpring + 1, Anim_HorizontalRepeatedSpring_Slow + 1
+	.4byte Anim_HorizontalSlideShrink + 1, Anim_LungeGrow + 1, Anim_CircleIntoBackground + 1, Anim_RapidHorizontalHops + 1, Anim_FourPetal + 1, Anim_VerticalSquishBounce_Slow + 1, Anim_HorizontalSlide_Slow + 1, Anim_VerticalSlide_Slow + 1
+	.4byte Anim_BounceRotateToSides_Small + 1, Anim_BounceRotateToSides_Slow + 1, Anim_BounceRotateToSides_SmallSlow + 1, Anim_ZigzagSlow + 1, Anim_HorizontalShake_Slow + 1, Anim_VertialShake_Slow + 1, Anim_Twist_Twice + 1, Anim_CircleCounterclockwise_Slow + 1
+	.4byte Anim_VerticalShakeTwice_Slow + 1, Anim_VerticalSlideWobble_Small + 1, Anim_VerticalJumps_Small + 1, Anim_Spin + 1, Anim_TumblingFrontFlip_Twice + 1, Anim_DeepVerticalSquishBounce_Twice + 1, Anim_HorizontalJumpsVerticalStretch_Twice + 1, Anim_VerticalShakeBack + 1
+	.4byte Anim_VerticalShakeBack_Slow + 1, Anim_VerticalShakeHorizontalSlide_Slow + 1, Anim_VerticalStretchBothEnds_Slow + 1, Anim_HorizontalStretchFar_Slow + 1, Anim_VerticalShakeLowTwice + 1, Anim_HorizontalShake_Fast + 1, Anim_HorizontalSlide_Fast + 1, Anim_HorizontalVibrate_Fast + 1
+	.4byte Anim_HorizontalVibrate_Fastest + 1, Anim_VerticalShakeBack_Fast + 1, Anim_VerticalShakeLowTwice_Slow + 1, Anim_VerticalShakeLowTwice_Fast + 1, Anim_CircleCounterclockwise_Long + 1, Anim_GrowStutter_Slow + 1, Anim_VerticalShakeHorizontalSlide + 1, Anim_VerticalShakeHorizontalSlide_Fast + 1
+	.4byte Anim_TriangleDown_Slow + 1, Anim_TriangleDown + 1, Anim_TriangleDown_Fast + 1, Anim_Grow + 1, Anim_Grow_Twice + 1, Anim_HorizontalSpring_Fast + 1, Anim_HorizontalSpring_Slow + 1, Anim_HorizontalRepeatedSpring_Fast + 1
+	.4byte Anim_HorizontalRepeatedSpring + 1, Anim_ShrinkGrow_Fast + 1, Anim_ShrinkGrow_Slow + 1, Anim_VerticalStretchBothEnds + 1, Anim_VerticalStretchBothEnds_Twice + 1, Anim_HorizontalStretchFar_Twice + 1, Anim_HorizontalStretchFar + 1, Anim_GrowStutter_Twice + 1
+	.4byte Anim_GrowStutter + 1, Anim_ConcaveArcLarge_Slow + 1, Anim_ConcaveArcLarge + 1, Anim_ConcaveArcLarge_Twice + 1, Anim_ConvexDoubleArc_Slow + 1, Anim_ConvexDoubleArc + 1, Anim_ConvexDoubleArc_Twice + 1, Anim_ConcaveArcSmall_Slow + 1
+	.4byte Anim_ConcaveArcSmall + 1, Anim_ConcaveArcSmall_Twice + 1, Anim_HorizontalDip + 1, Anim_HorizontalDip_Fast + 1, Anim_HorizontalDip_Twice + 1, Anim_ShrinkGrowVibrate_Fast + 1, Anim_ShrinkGrowVibrate + 1, Anim_ShrinkGrowVibrate_Slow + 1
+	.4byte Anim_JoltRight_Fast + 1, Anim_JoltRight + 1, Anim_JoltRight_Slow + 1, Anim_ShakeFlashYellow_Fast + 1, Anim_ShakeFlashYellow + 1, Anim_ShakeFlashYellow_Slow + 1, Anim_ShakeGlowRed_Fast + 1, Anim_ShakeGlowRed + 1
+	.4byte Anim_ShakeGlowRed_Slow + 1, Anim_ShakeGlowGreen_Fast + 1, Anim_ShakeGlowGreen + 1, Anim_ShakeGlowGreen_Slow + 1, Anim_ShakeGlowBlue_Fast + 1, Anim_ShakeGlowBlue + 1, Anim_ShakeGlowBlue_Slow + 1
 
 	.globl gUnknown_85D3744
 gUnknown_85D3744: @ 0x85D3744

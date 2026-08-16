@@ -603,9 +603,11 @@ gUnknown_85844EC: @ 0x85844EC
 gUnknown_85844EE: @ 0x85844EE
 	.incbin "baserom_jp.gba", 0x5844ee, 0xa
 
-	.globl gUnknown_85844F8
-gUnknown_85844F8: @ 0x85844F8
-	.incbin "baserom_jp.gba", 0x5844f8, 0x4c
+	.globl sReelTimeTasks
+sReelTimeTasks: @ 0x85844F8
+	.4byte ReelTime_Init + 1, ReelTime_WindowEnter + 1, ReelTime_WaitStartPikachu + 1, ReelTime_PikachuSpeedUp1 + 1, ReelTime_PikachuSpeedUp2 + 1, ReelTime_WaitReel + 1, ReelTime_CheckExplode + 1, ReelTime_LandOnOutcome + 1
+	.4byte ReelTime_PikachuReact + 1, ReelTime_WaitClearPikaPower + 1, ReelTime_CloseWindow + 1, ReelTime_DestroySprites + 1, ReelTime_SetReelSpeed + 1, ReelTime_EndSuccess + 1, ReelTime_ExplodeMachine + 1, ReelTime_WaitExplode + 1
+	.4byte ReelTime_WaitSmoke + 1, ReelTime_CloseWindow + 1, ReelTime_EndFailure + 1
 
 	.globl gUnknown_8584544
 gUnknown_8584544: @ 0x8584544
@@ -619,9 +621,10 @@ gUnknown_8584548: @ 0x8584548
 gUnknown_8584550: @ 0x8584550
 	.incbin "baserom_jp.gba", 0x584550, 0x8
 
-	.globl gUnknown_8584558
-gUnknown_8584558: @ 0x8584558
-	.incbin "baserom_jp.gba", 0x584558, 0x3c
+	.globl sDigitalDisplayTasks
+sDigitalDisplayTasks: @ 0x8584558
+	.4byte InfoBox_FadeIn + 1, InfoBox_WaitFade + 1, InfoBox_DrawWindow + 1, InfoBox_WaitFade + 1, InfoBox_AddText + 1, InfoBox_WaitFade + 1, InfoBox_WaitInput + 1, InfoBox_WaitFade + 1
+	.4byte InfoBox_LoadSlotMachineTilemap + 1, InfoBox_WaitFade + 1, InfoBox_CreateDigitalDisplay + 1, InfoBox_WaitFade + 1, InfoBox_LoadPikaPowerMeter + 1, InfoBox_WaitFade + 1, InfoBox_FreeTask + 1
 
 	.globl gUnknown_8584594
 gUnknown_8584594: @ 0x8584594

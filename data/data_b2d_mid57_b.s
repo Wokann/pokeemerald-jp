@@ -137,9 +137,9 @@ gUnknown_8562910: @ 0x8562910
 gUnknown_8562970: @ 0x8562970
 	.incbin "baserom_jp.gba", 0x562970, 0x1c
 
-	.globl gUnknown_856298C
-gUnknown_856298C: @ 0x856298C
-	.incbin "baserom_jp.gba", 0x56298c, 0x8
+	.globl sShopPurchaseYesNoFuncs
+sShopPurchaseYesNoFuncs: @ 0x856298C
+	.4byte BuyMenuTryMakePurchase + 1, BuyMenuReturnToItemList + 1
 
 	.globl gUnknown_8562994
 gUnknown_8562994: @ 0x8562994

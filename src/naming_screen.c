@@ -1335,7 +1335,7 @@ __attribute__((naked)) void Task_HandlePageSwapAnim(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080E2CBC: .4byte gUnknown_8565A50\n\t"
+        "_080E2CBC: .4byte sPageSwapAnimStateFuncs\n\t"
         "_080E2CC0: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -3223,7 +3223,7 @@ __attribute__((naked)) void HandleKeyboardEvent(void)
         "	lsrs r0, r0, #0x18\n\t"
         "	b _080E39DE\n\t"
         "	.align 2, 0\n\t"
-        "_080E39D4: .4byte gUnknown_8565AA4\n\t"
+        "_080E39D4: .4byte sKeyboardKeyHandlers\n\t"
         "_080E39D8:\n\t"
         "	bl sub_080E3310\n\t"
         "_080E39DC:\n\t"
@@ -5480,4 +5480,3 @@ __attribute__((naked)) void sub_080E48E0(void)
         ".syntax divided\n\t"
     );
 }
-

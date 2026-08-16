@@ -2667,7 +2667,7 @@ __attribute__((naked)) void BuyMenuConfirmPurchase(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080E0420: .4byte gUnknown_8562A2C\n\t"
-        "_080E0424: .4byte gUnknown_856298C\n\t"
+        "_080E0424: .4byte sShopPurchaseYesNoFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3233,4 +3233,3 @@ __attribute__((naked)) void CreateDecorationShop2Menu(const u16 *itemsForSale)
         ".syntax divided\n\t"
     );
 }
-

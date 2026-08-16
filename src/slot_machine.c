@@ -7041,7 +7041,7 @@ __attribute__((naked)) void Task_ReelTime(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812D524: .4byte gUnknown_85844F8\n\t"
+        "_0812D524: .4byte sReelTimeTasks\n\t"
         "_0812D528: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8151,7 +8151,7 @@ __attribute__((naked)) void Task_DigitalDisplay(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0812DD0C: .4byte gUnknown_8584558\n\t"
+        "_0812DD0C: .4byte sDigitalDisplayTasks\n\t"
         "_0812DD10: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -12804,4 +12804,3 @@ __attribute__((naked)) void AllocDigitalDisplayGfx(void)
         ".syntax divided\n\t"
     );
 }
-

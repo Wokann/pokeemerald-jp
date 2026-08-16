@@ -698,9 +698,10 @@ gUnknown_85C61B0: @ 0x85C61B0
 gUnknown_85C6270: @ 0x85C6270
 	.incbin "baserom_jp.gba", 0x5c6270, 0xc
 
-	.globl gUnknown_85C627C
-gUnknown_85C627C: @ 0x85C627C
-	.incbin "baserom_jp.gba", 0x5c627c, 0x30
+	.globl sBallParticleAnimationFuncs
+sBallParticleAnimationFuncs: @ 0x85C627C
+	.4byte PokeBallOpenParticleAnimation + 1, GreatBallOpenParticleAnimation + 1, SafariBallOpenParticleAnimation + 1, UltraBallOpenParticleAnimation + 1, MasterBallOpenParticleAnimation + 1, SafariBallOpenParticleAnimation + 1, DiveBallOpenParticleAnimation + 1, UltraBallOpenParticleAnimation + 1
+	.4byte RepeatBallOpenParticleAnimation + 1, TimerBallOpenParticleAnimation + 1, GreatBallOpenParticleAnimation + 1, PremierBallOpenParticleAnimation + 1
 
 	.globl gUnknown_85C62AC
 gUnknown_85C62AC: @ 0x85C62AC

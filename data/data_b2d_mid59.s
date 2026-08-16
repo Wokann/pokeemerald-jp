@@ -37,9 +37,9 @@ gUnknown_8565A42: @ 0x8565A42
 gUnknown_8565A48: @ 0x8565A48
 	.incbin "baserom_jp.gba", 0x565a48, 0x8
 
-	.globl gUnknown_8565A50
-gUnknown_8565A50: @ 0x8565A50
-	.incbin "baserom_jp.gba", 0x565a50, 0x10
+	.globl sPageSwapAnimStateFuncs
+sPageSwapAnimStateFuncs: @ 0x8565A50
+	.4byte PageSwapAnimState_Init + 1, PageSwapAnimState_1 + 1, PageSwapAnimState_2 + 1, PageSwapAnimState_Done + 1
 
 	.globl gUnknown_8565A60
 gUnknown_8565A60: @ 0x8565A60
@@ -69,9 +69,9 @@ gUnknown_8565A8A: @ 0x8565A8A
 gUnknown_8565A90: @ 0x8565A90
 	.incbin "baserom_jp.gba", 0x565a90, 0x14
 
-	.globl gUnknown_8565AA4
-gUnknown_8565AA4: @ 0x8565AA4
-	.incbin "baserom_jp.gba", 0x565aa4, 0x10
+	.globl sKeyboardKeyHandlers
+sKeyboardKeyHandlers: @ 0x8565AA4
+	.4byte KeyboardKeyHandler_Character + 1, KeyboardKeyHandler_Page + 1, KeyboardKeyHandler_Backspace + 1, KeyboardKeyHandler_OK + 1
 
 	.globl gUnknown_8565AB4
 gUnknown_8565AB4: @ 0x8565AB4

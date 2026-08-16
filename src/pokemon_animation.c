@@ -189,7 +189,7 @@ __attribute__((naked)) void Task_HandleMonAnimation(u8 taskId)
         "	.align 2, 0\n\t"
         "_0817F3E0: .4byte gTasks\n\t"
         "_0817F3E4: .4byte SpriteCallbackDummy + 1\n\t"
-        "_0817F3E8: .4byte gUnknown_85D34E8\n\t"
+        "_0817F3E8: .4byte sMonAnimFunctions\n\t"
         "_0817F3EC: .4byte gUnknown_3001274\n\t"
         ".syntax divided\n\t"
     );
@@ -243,7 +243,7 @@ __attribute__((naked)) void StartMonSummaryAnimation(struct Sprite *sprite, u8 f
         "	bx lr\n\t"
         "	.align 2, 0\n\t"
         "_0817F438: .4byte gUnknown_3001274\n\t"
-        "_0817F43C: .4byte gUnknown_85D34E8\n\t"
+        "_0817F43C: .4byte sMonAnimFunctions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -13100,4 +13100,3 @@ __attribute__((naked)) void SpriteCB_SetDummyOnAnimEnd(struct Sprite *sprite)
         ".syntax divided\n\t"
     );
 }
-
