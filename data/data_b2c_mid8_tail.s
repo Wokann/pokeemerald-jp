@@ -45,16 +45,16 @@ gUnknown_85FB8C0: @ 0x85FB8C0
 gUnknown_85FB8E0: @ 0x85FB8E0
 	.incbin "baserom_jp.gba", 0x5fb8e0, 0x3
 
-	.globl gUnknown_85FB8E3
-gUnknown_85FB8E3: @ 0x85FB8E3
+	.globl gText_TimeBoard
+gText_TimeBoard: @ 0x85FB8E3
 	.string "タイムボード$"
 
-	.globl gUnknown_85FB8EA
-gUnknown_85FB8EA: @ 0x85FB8EA
+	.globl gText_ClearTime
+gText_ClearTime: @ 0x85FB8EA
 	.string "クリアタイム$"
 
-	.globl gUnknown_85FB8F1
-gUnknown_85FB8F1: @ 0x85FB8F1
+	.globl sText_TimeRecordFormat
+sText_TimeRecordFormat: @ 0x85FB8F1
 	.string "{B_COPY_VAR_1}ふん　{B_COPY_VAR_2}びょう　{B_COPY_VAR_3}$1F$2F$3F$4F$　"
 
 	.globl gUnknown_85FB90C
@@ -65,8 +65,8 @@ gUnknown_85FB90C: @ 0x85FB90C
 gUnknown_85FB91C: @ 0x85FB91C
 	.incbin "baserom_jp.gba", 0x5fb91c, 0x44
 
-	.globl gUnknown_85FB960
-gUnknown_85FB960: @ 0x85FB960
+	.globl sText_TimeRecordEmpty
+sText_TimeRecordEmpty: @ 0x85FB960
 	.string "ーーーーーーーーー$　　"
 
 	.globl gUnknown_85FB96C
