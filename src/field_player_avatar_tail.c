@@ -2335,7 +2335,7 @@ __attribute__((naked)) void Fishing5(void)
         "	movs r0, #1\n\t"
         "	b _0808C41A\n\t"
         "	.align 2, 0\n\t"
-        "_0808C3C0: .4byte 0x0846F9C8\n\t"
+        "_0808C3C0: .4byte gUnknown_846F9C2 + 0x6\n\t"
         "_0808C3C4: .4byte 0x03002360\n\t"
         "_0808C3C8:\n\t"
         "	lsls r0, r1, #0x10\n\t"
@@ -2513,7 +2513,7 @@ __attribute__((naked)) void Fishing7(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C510: .4byte 0x0846F9CA\n\t"
+        "_0808C510: .4byte gUnknown_846F9C2 + 0x8\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2662,7 +2662,7 @@ __attribute__((naked)) void Fishing10(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808C614: .4byte 0x0846F9E8\n\t"
+        "_0808C614: .4byte gUnknown_846F9DC + 0xC\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2833,7 +2833,7 @@ __attribute__((naked)) void Fishing12(void)
         "	.align 2, 0\n\t"
         "_0808C768: .4byte 0x02037230\n\t"
         "_0808C76C: .4byte 0x020205AC\n\t"
-        "_0808C770: .4byte 0x0846F9F7\n\t"
+        "_0808C770: .4byte gUnknown_846F9DC + 0x1B\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2889,7 +2889,7 @@ __attribute__((naked)) void Fishing13(void)
         "	.align 2, 0\n\t"
         "_0808C7D8: .4byte 0x02037230\n\t"
         "_0808C7DC: .4byte 0x020205AC\n\t"
-        "_0808C7E0: .4byte 0x0846FA03\n\t"
+        "_0808C7E0: .4byte gUnknown_846F9DC + 0x27\n\t"
         ".syntax divided\n\t"
     );
 }

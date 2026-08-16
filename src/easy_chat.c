@@ -4309,8 +4309,8 @@ __attribute__((naked)) void sub_0811C5F4(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811C63C: .4byte 0x085CBC85\n\t"
-        "_0811C640: .4byte 0x085CBC7B\n\t"
+        "_0811C63C: .4byte gUnknown_85CBB4E + 0x137\n\t"
+        "_0811C640: .4byte gUnknown_85CBB4E + 0x12D\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7129,8 +7129,8 @@ __attribute__((naked)) void sub_0811D9D8(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_0811DADC: .4byte 0x085CBC62\n\t"
-        "_0811DAE0: .4byte 0x085CBC6D\n\t"
+        "_0811DADC: .4byte gUnknown_85CBB4E + 0x114\n\t"
+        "_0811DAE0: .4byte gUnknown_85CBB4E + 0x11F\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10453,7 +10453,7 @@ __attribute__((naked)) u8 *CopyEasyChatWord(u8 *dest, u16 easyChatWord)
         "	ldr r1, _0811F198\n\t"
         "	b _0811F1AE\n\t"
         "	.align 2, 0\n\t"
-        "_0811F198: .4byte 0x08579F30\n\t"
+        "_0811F198: .4byte gUnknown_8579ED8 + 0x58\n\t"
         "_0811F19C:\n\t"
         "	ldr r0, _0811F1B8\n\t"
         "	cmp r4, r0\n\t"
@@ -10602,7 +10602,7 @@ __attribute__((naked)) u16 GetEasyChatWordStringLength(u16 easyChatWord)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0811F2A0: .4byte 0x08579F30\n\t"
+        "_0811F2A0: .4byte gUnknown_8579ED8 + 0x58\n\t"
         ".syntax divided\n\t"
     );
 }

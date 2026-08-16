@@ -1167,7 +1167,7 @@ __attribute__((naked)) void SlotAction_PrintYouDontHaveThreeCoins(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812AD3C: .4byte 0x08588641\n\t"
+        "_0812AD3C: .4byte gUnknown_8588604 + 0x3D\n\t"
         "_0812AD40: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -1830,7 +1830,7 @@ __attribute__((naked)) void SlotAction_PrintQuitTheGame(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B1B8: .4byte 0x08588606\n\t"
+        "_0812B1B8: .4byte gUnknown_8588604 + 0x2\n\t"
         "_0812B1BC: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -1921,7 +1921,7 @@ __attribute__((naked)) void SlotAction_PrintMessage_9999Coins(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B25C: .4byte 0x08588612\n\t"
+        "_0812B25C: .4byte gUnknown_8588604 + 0xE\n\t"
         "_0812B260: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -1986,7 +1986,7 @@ __attribute__((naked)) void SlotAction_PrintMessage_NoMoreCoins(u8 taskId)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0812B2C8: .4byte 0x08588627\n\t"
+        "_0812B2C8: .4byte gUnknown_8588604 + 0x23\n\t"
         "_0812B2CC: .4byte gUnknown_203A800\n\t"
         ".syntax divided\n\t"
     );
@@ -11666,7 +11666,7 @@ __attribute__((naked)) void SpriteCB_DigitalDisplay_RegBonus(struct Sprite *spri
         "	b _0812F5E8\n\t"
         "	.align 2, 0\n\t"
         "_0812F560: .4byte gUnknown_85845B2\n\t"
-        "_0812F564: .4byte 0x085845C2\n\t"
+        "_0812F564: .4byte gUnknown_85845B2 + 0x10\n\t"
         "_0812F568: .4byte gUnknown_85845D2\n\t"
         "_0812F56C:\n\t"
         "	cmp r0, #2\n\t"

@@ -1265,7 +1265,7 @@ __attribute__((naked)) void StorytellerDisplayStory(void)
         "	ble _08120E3E\n\t"
         "	b _08120E86\n\t"
         "	.align 2, 0\n\t"
-        "_08120E60: .4byte 0x085CCEC5\n\t"
+        "_08120E60: .4byte gUnknown_85CCA7C + 0x449\n\t"
         "_08120E64:\n\t"
         "	adds r4, r0, #0\n\t"
         "	adds r4, #8\n\t"
@@ -1289,7 +1289,7 @@ __attribute__((naked)) void StorytellerDisplayStory(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08120E8C: .4byte 0x085CCEC5\n\t"
+        "_08120E8C: .4byte gUnknown_85CCA7C + 0x449\n\t"
         ".syntax divided\n\t"
     );
 }

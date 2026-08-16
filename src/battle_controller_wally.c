@@ -4166,9 +4166,9 @@ __attribute__((naked)) void WallyHandleChooseAction(void)
         "_0816A2C4: .4byte gBattlerControllerFuncs\n\t"
         "_0816A2C8: .4byte gActiveBattler\n\t"
         "_0816A2CC: .4byte HandleChooseActionAfterDma3 + 1\n\t"
-        "_0816A2D0: .4byte 0x085ABB72\n\t"
+        "_0816A2D0: .4byte gUnknown_85ABAEE + 0x84\n\t"
         "_0816A2D4: .4byte gActionSelectionCursor\n\t"
-        "_0816A2D8: .4byte 0x085ABB57\n\t"
+        "_0816A2D8: .4byte gUnknown_85ABAEE + 0x69\n\t"
         "_0816A2DC: .4byte gDisplayedStringBattle\n\t"
         ".syntax divided\n\t"
     );

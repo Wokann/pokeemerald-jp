@@ -1167,7 +1167,7 @@ __attribute__((naked)) void DisplaySentToPCMessage(void)
         "_080E2B84: .4byte gStringVar3\n\t"
         "_080E2B88: .4byte 0x000008AB\n\t"
         "_080E2B8C: .4byte gStringVar4\n\t"
-        "_080E2B90: .4byte 0x08565858\n\t"
+        "_080E2B90: .4byte gUnknown_85656C8 + 0x190\n\t"
         "_080E2B94: .4byte gTextFlags\n\t"
         ".syntax divided\n\t"
     );

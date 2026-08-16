@@ -161,7 +161,7 @@ __attribute__((naked)) const struct Berry *GetBerryInfo(u8 berry)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_080E0C08: .4byte 0x08563134\n\t"
+        "_080E0C08: .4byte sEscalatorMetatiles_2F_2 + 0x6D2\n\t"
         ".syntax divided\n\t"
     );
 }

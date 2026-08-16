@@ -355,7 +355,7 @@ __attribute__((naked)) void ShowSafariBallsWindow(void)
         "_0809EF90: .4byte gStringVar1\n\t"
         "_0809EF94: .4byte gNumSafariBalls\n\t"
         "_0809EF98: .4byte gStringVar4\n\t"
-        "_0809EF9C: .4byte 0x084E8B84\n\t"
+        "_0809EF9C: .4byte gUnknown_84E8B5C + 0x28\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2847,9 +2847,9 @@ __attribute__((naked)) void ShowSaveInfoWindow(void)
         "_080A0100: .4byte gUnknown_20372C2\n\t"
         "_080A0104: .4byte gSaveBlock2Ptr\n\t"
         "_080A0108: .4byte gStringVar4\n\t"
-        "_080A010C: .4byte 0x084E8CB0\n\t"
-        "_080A0110: .4byte 0x084E8CB7\n\t"
-        "_080A0114: .4byte 0x084E8CC0\n\t"
+        "_080A010C: .4byte gUnknown_84E8CA8 + 0x8\n\t"
+        "_080A0110: .4byte gUnknown_84E8CA8 + 0xF\n\t"
+        "_080A0114: .4byte gUnknown_84E8CA8 + 0x18\n\t"
         "_080A0118: .4byte gUnknown_84E8CC8\n\t"
         "_080A011C:\n\t"
         "	ldrb r0, [r6]\n\t"

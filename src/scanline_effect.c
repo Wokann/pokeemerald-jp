@@ -1543,9 +1543,9 @@ __attribute__((naked)) void BattleScene_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA3D8: .4byte 0x0853736C\n\t"
-        "_080BA3DC: .4byte 0x08537376\n\t"
-        "_080BA3E0: .4byte 0x08537380\n\t"
+        "_080BA3D8: .4byte gUnknown_8537350 + 0x1C\n\t"
+        "_080BA3DC: .4byte gUnknown_8537350 + 0x26\n\t"
+        "_080BA3E0: .4byte gUnknown_8537350 + 0x30\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1621,8 +1621,8 @@ __attribute__((naked)) void Sound_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA460: .4byte 0x0853738A\n\t"
-        "_080BA464: .4byte 0x08537393\n\t"
+        "_080BA460: .4byte gUnknown_8537350 + 0x3A\n\t"
+        "_080BA464: .4byte gUnknown_8537350 + 0x43\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1698,8 +1698,8 @@ __attribute__((naked)) void TextSpeed_ProcessInput(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA4E4: .4byte 0x0853739D\n\t"
-        "_080BA4E8: .4byte 0x085373A8\n\t"
+        "_080BA4E4: .4byte gUnknown_8537350 + 0x4D\n\t"
+        "_080BA4E8: .4byte gUnknown_8537350 + 0x58\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1784,8 +1784,8 @@ __attribute__((naked)) void TextSpeed_DrawChoices(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA57C: .4byte 0x085373B3\n\t"
-        "_080BA580: .4byte 0x085373BE\n\t"
+        "_080BA57C: .4byte gUnknown_8537350 + 0x63\n\t"
+        "_080BA580: .4byte gUnknown_8537350 + 0x6E\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -1942,8 +1942,8 @@ __attribute__((naked)) void FrameType_DrawChoices(void)
         "	strb r0, [r4]\n\t"
         "	b _080BA6CC\n\t"
         "	.align 2, 0\n\t"
-        "_080BA6A8: .4byte 0x085373D3\n\t"
-        "_080BA6AC: .4byte 0x085373C9\n\t"
+        "_080BA6A8: .4byte gUnknown_8537350 + 0x83\n\t"
+        "_080BA6AC: .4byte gUnknown_8537350 + 0x79\n\t"
         "_080BA6B0:\n\t"
         "	mov r2, sp\n\t"
         "	adds r4, r2, r5\n\t"
@@ -2116,8 +2116,8 @@ __attribute__((naked)) void sub_080BA780(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080BA7F4: .4byte 0x085373DA\n\t"
-        "_080BA7F8: .4byte 0x085373E5\n\t"
+        "_080BA7F4: .4byte gUnknown_8537350 + 0x8A\n\t"
+        "_080BA7F8: .4byte gUnknown_8537350 + 0x95\n\t"
         "_080BA7FC: .4byte gUnknown_85373EE\n\t"
         ".syntax divided\n\t"
     );

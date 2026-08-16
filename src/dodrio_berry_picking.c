@@ -4066,7 +4066,7 @@ __attribute__((naked)) void sub_0802792C(u8 windowId)
         "_08027A28: .4byte gSaveBlock2Ptr\n\t"
         "_08027A2C: .4byte 0x00000212\n\t"
         "_08027A30: .4byte 0x0000021D\n\t"
-        "_08027A34: .4byte 0x085CCCF5\n\t"
+        "_08027A34: .4byte gUnknown_85CCA7C + 0x279\n\t"
         "_08027A38: .4byte gStringVar1\n\t"
         "_08027A3C: .4byte sRecordDigitCounts\n\t"
         "_08027A40: .4byte sRecordsLabels\n\t"

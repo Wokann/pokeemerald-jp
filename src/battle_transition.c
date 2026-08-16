@@ -5288,7 +5288,7 @@ __attribute__((naked)) bool8 MugshotTrainerPic_Init(struct Sprite *sprite)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_081484B0: .4byte 0x085A86F0\n\t"
+        "_081484B0: .4byte gUnknown_85A86D4 + 0x1C\n\t"
         "_081484B4: .4byte gUnknown_85A86F4\n\t"
         ".syntax divided\n\t"
     );

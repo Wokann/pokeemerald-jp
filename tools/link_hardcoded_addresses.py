@@ -11,6 +11,7 @@ Usage:
 """
 
 import argparse
+import bisect
 import glob
 import re
 import sys
@@ -56,6 +57,21 @@ def main():
     exact = [(a, f) for a, f in hard if a in labels]
     print(f"hardcoded: {len(hard)}, exact label matches: {len(exact)}")
 
+    # Inexact matches in the data region (>= 0x08300000): label + offset.
+    laddrs = [l[0] for l in sorted(labels.items())]
+    lnames = [l[1] for l in sorted(labels.items())]
+    inexact = []
+    for a, f in hard:
+        if a < 0x08300000 or a in labels:
+            continue
+        idx = bisect.bisect_right(laddrs, a) - 1
+        if idx < 0:
+            continue
+        if laddrs[idx] == a:
+            continue
+        inexact.append((a, f, lnames[idx], a - laddrs[idx]))
+    print(f"inexact data offsets: {len(inexact)}")
+
     # Add missing .globl (exact-match labels without .globl).
     need_globl = {}
     for a, _ in exact:
@@ -83,8 +99,20 @@ def main():
                 text = text.replace(f".4byte 0x{a:08X}", f".4byte {labels[a]}")
             Path(f).write_text(text, encoding="utf-8")
 
-    print(f"{'Check' if args.check else 'Replaced'}: {len(exact)} pointers "
-          f"with label references")
+        # Replace inexact data-region pointers with label + offset.
+        by_file2 = {}
+        for a, f, name, off in inexact:
+            by_file2.setdefault(f, []).append((a, name, off))
+        for f, entries in by_file2.items():
+            text = Path(f).read_text(encoding="utf-8", errors="replace")
+            for a, name, off in entries:
+                text = text.replace(
+                    f".4byte 0x{a:08X}", f".4byte {name} + 0x{off:X}"
+                )
+            Path(f).write_text(text, encoding="utf-8")
+
+    print(f"{'Check' if args.check else 'Replaced'}: {len(exact)} exact + "
+          f"{len(inexact)} offset pointers with label references")
 
 
 if __name__ == "__main__":

@@ -756,11 +756,11 @@ __attribute__((naked)) void sub_08135DF8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08135E48: .4byte SPECIAL_ShakeScreenInElevator\n\t"
-        "_08135E4C: .4byte 0x085C983E\n\t"
-        "_08135E50: .4byte 0x085C9842\n\t"
-        "_08135E54: .4byte 0x085C9846\n\t"
-        "_08135E58: .4byte 0x085C984A\n\t"
-        "_08135E5C: .4byte 0x085C984E\n\t"
+        "_08135E4C: .4byte gUnknown_85C97BD + 0x81\n\t"
+        "_08135E50: .4byte gUnknown_85C97BD + 0x85\n\t"
+        "_08135E54: .4byte gUnknown_85C97BD + 0x89\n\t"
+        "_08135E58: .4byte gUnknown_85C97BD + 0x8D\n\t"
+        "_08135E5C: .4byte gUnknown_85C97BD + 0x91\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -862,7 +862,7 @@ __attribute__((naked)) void sub_08135E60(void)
         "_08135F14: .4byte 0x0000080A\n\t"
         "_08135F18: .4byte 0x00000954\n\t"
         "_08135F1C: .4byte 0x0000080C\n\t"
-        "_08135F20: .4byte 0x085C985C\n\t"
+        "_08135F20: .4byte gUnknown_85C97BD + 0x9F\n\t"
         "_08135F24: .4byte gMultiuseListMenuTemplate\n\t"
         "_08135F28: .4byte gUnknown_85921FC\n\t"
         "_08135F2C: .4byte 0x0000080B\n\t"
@@ -929,7 +929,7 @@ __attribute__((naked)) void sub_08135F30(void)
         "_08135FA4: .4byte gSaveBlock1Ptr\n\t"
         "_08135FA8: .4byte 0x00000848\n\t"
         "_08135FAC: .4byte gStringVar1\n\t"
-        "_08135FB0: .4byte 0x085C9864\n\t"
+        "_08135FB0: .4byte gUnknown_85C97BD + 0xA7\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2540,7 +2540,7 @@ __attribute__((naked)) void sub_08136B24(void)
         "_08136BA4: .4byte gSpecialVar_ItemId\n\t"
         "_08136BA8: .4byte 0x00000848\n\t"
         "_08136BAC: .4byte gStringVar4\n\t"
-        "_08136BB0: .4byte 0x085C9869\n\t"
+        "_08136BB0: .4byte gUnknown_85C97BD + 0xAC\n\t"
         "_08136BB4: .4byte sub_08136BB8 + 1\n\t"
         ".syntax divided\n\t"
     );
@@ -2609,7 +2609,7 @@ __attribute__((naked)) void sub_08136BE8(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_08136C24: .4byte gStringVar4\n\t"
-        "_08136C28: .4byte 0x085C987B\n\t"
+        "_08136C28: .4byte gUnknown_85C97BD + 0xBE\n\t"
         "_08136C2C: .4byte sub_08136C30 + 1\n\t"
         ".syntax divided\n\t"
     );

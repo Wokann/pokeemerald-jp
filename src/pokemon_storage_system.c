@@ -1465,7 +1465,7 @@ __attribute__((naked)) void sub_080C71F0(void)
         "_080C73A8: .4byte gDummySpriteAnimTable\n\t"
         "_080C73AC: .4byte gDummySpriteAffineAnimTable\n\t"
         "_080C73B0: .4byte SpriteCallbackDummy + 1\n\t"
-        "_080C73B4: .4byte 0x0854B258\n\t"
+        "_080C73B4: .4byte gUnknown_854B234 + 0x24\n\t"
         "_080C73B8: .4byte gUnknown_20399A4\n\t"
         "_080C73BC: .4byte 0x00000242\n\t"
         "_080C73C0: .4byte gSprites\n\t"

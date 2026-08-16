@@ -198,7 +198,7 @@ __attribute__((naked)) void CopyItemName(u16 itemId, u8 *dst)
         "	bl StringAppend\n\t"
         "	b _080D5EFC\n\t"
         "	.align 2, 0\n\t"
-        "_080D5EEC: .4byte 0x085C9440\n\t"
+        "_080D5EEC: .4byte gUnknown_85C942E + 0x12\n\t"
         "_080D5EF0:\n\t"
         "	bl ItemId_GetName\n\t"
         "	adds r1, r0, #0\n\t"

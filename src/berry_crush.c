@@ -2624,7 +2624,7 @@ __attribute__((naked)) void sub_08021FC0(void)
         "_080221B8: .4byte gUnknown_85CCA7C\n\t"
         "_080221BC: .4byte gStringVar1\n\t"
         "_080221C0: .4byte gStringVar4\n\t"
-        "_080221C4: .4byte 0x085CCA8C\n\t"
+        "_080221C4: .4byte gUnknown_85CCA7C + 0x10\n\t"
         "_080221C8: .4byte sTextColorTable\n\t"
         "_080221CC: .4byte gUnknown_85CCA20\n\t"
         "_080221D0: .4byte sPressingSpeedConversionTable\n\t"

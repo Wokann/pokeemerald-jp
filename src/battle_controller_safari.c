@@ -1112,9 +1112,9 @@ __attribute__((naked)) void SafariHandleChooseAction(void)
         "_08159A1C: .4byte gBattlerControllerFuncs\n\t"
         "_08159A20: .4byte gActiveBattler\n\t"
         "_08159A24: .4byte sub_08159990 + 1\n\t"
-        "_08159A28: .4byte 0x085ABB86\n\t"
+        "_08159A28: .4byte gUnknown_85ABAEE + 0x98\n\t"
         "_08159A2C: .4byte gActionSelectionCursor\n\t"
-        "_08159A30: .4byte 0x085ABB4D\n\t"
+        "_08159A30: .4byte gUnknown_85ABAEE + 0x5F\n\t"
         "_08159A34: .4byte gDisplayedStringBattle\n\t"
         ".syntax divided\n\t"
     );

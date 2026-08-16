@@ -82,7 +82,7 @@ __attribute__((naked)) void sub_080B1C9C(void)
         "	.align 2, 0\n\t"
         "_080B1CEC: .4byte gStringVar1\n\t"
         "_080B1CF0: .4byte gStringVar4\n\t"
-        "_080B1CF4: .4byte 0x0852B230\n\t"
+        "_080B1CF4: .4byte sBadgeFlagsJp + 0x10\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -435,7 +435,7 @@ __attribute__((naked)) void sub_080B1F10(void)
         "	b _080B1F54\n\t"
         "	.align 2, 0\n\t"
         "_080B1F40: .4byte gUnknown_3005B68\n\t"
-        "_080B1F44: .4byte 0x0852B23C\n\t"
+        "_080B1F44: .4byte sBadgeFlagsJp + 0x1C\n\t"
         "_080B1F48:\n\t"
         "	cmp r2, #9\n\t"
         "	ble _080B1F54\n\t"
@@ -2865,7 +2865,7 @@ __attribute__((naked)) bool32 GetLinkTrainerCardColor(u8 linkPlayerIndex)
         "_080B3170: .4byte gStringVar1\n\t"
         "_080B3174: .4byte gUnknown_20226A8\n\t"
         "_080B3178: .4byte gStringVar2\n\t"
-        "_080B317C: .4byte 0x0852B23F\n\t"
+        "_080B317C: .4byte sBadgeFlagsJp + 0x1F\n\t"
         "_080B3180:\n\t"
         "	movs r0, #0\n\t"
         "_080B3182:\n\t"

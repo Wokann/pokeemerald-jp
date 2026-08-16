@@ -2226,7 +2226,7 @@ __attribute__((naked)) void Task_IntroLoadGroudonScene(void)
         "_0816DB98: .4byte 0x06004000\n\t"
         "_0816DB9C: .4byte gUnknown_8D8A7FC\n\t"
         "_0816DBA0: .4byte 0x0600E000\n\t"
-        "_0816DBA4: .4byte 0x084FD420\n\t"
+        "_0816DBA4: .4byte sOam_MoveEffectMons + 0x3E0\n\t"
         "_0816DBA8: .4byte gUnknown_84FDD28\n\t"
         "_0816DBAC: .4byte gUnknown_8D85CB4\n\t"
         "_0816DBB0: .4byte gPlttBufferUnfaded\n\t"
