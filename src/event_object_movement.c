@@ -17571,33 +17571,17 @@ bool8 MovementAction_JumpSpecialDown_Step0(struct ObjectEvent *objectEvent, stru
     return MovementAction_JumpSpecialDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpSpecialAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080947BC\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080947CA\n\t"
-        "_080947BC:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r0, #0x23\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "_080947CA:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 result = DoJumpSpecialAnim(objectEvent, sprite);
+
+    if (result)
+    {
+        sprite->sActionFuncId = 2;
+        objectEvent->landingJump = FALSE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_JumpSpecialUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17606,33 +17590,17 @@ bool8 MovementAction_JumpSpecialUp_Step0(struct ObjectEvent *objectEvent, struct
     return MovementAction_JumpSpecialUp_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpSpecialAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094804\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094812\n\t"
-        "_08094804:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r0, #0x23\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094812:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 result = DoJumpSpecialAnim(objectEvent, sprite);
+
+    if (result)
+    {
+        sprite->sActionFuncId = 2;
+        objectEvent->landingJump = FALSE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_JumpSpecialLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17641,33 +17609,17 @@ bool8 MovementAction_JumpSpecialLeft_Step0(struct ObjectEvent *objectEvent, stru
     return MovementAction_JumpSpecialLeft_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpSpecialAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0809484C\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0809485A\n\t"
-        "_0809484C:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r0, #0x23\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "_0809485A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 result = DoJumpSpecialAnim(objectEvent, sprite);
+
+    if (result)
+    {
+        sprite->sActionFuncId = 2;
+        objectEvent->landingJump = FALSE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_JumpSpecialRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -17676,33 +17628,17 @@ bool8 MovementAction_JumpSpecialRight_Step0(struct ObjectEvent *objectEvent, str
     return MovementAction_JumpSpecialRight_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpSpecialRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpSpecialRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpSpecialAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094894\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080948A2\n\t"
-        "_08094894:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	ldrb r1, [r4]\n\t"
-        "	subs r0, #0x23\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #1\n\t"
-        "_080948A2:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 result = DoJumpSpecialAnim(objectEvent, sprite);
+
+    if (result)
+    {
+        sprite->sActionFuncId = 2;
+        objectEvent->landingJump = FALSE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_FacePlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
