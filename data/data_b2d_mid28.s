@@ -75,6 +75,9 @@ gUnknown_84E1900: @ 0x84E1900
 gUnknown_84E401C: @ 0x84E401C
 	.incbin "baserom_jp.gba", 0x4e401c, 0x138
 
+	.globl sObjectEventSpritePalettes
+	.set sObjectEventSpritePalettes, gUnknown_84E401C
+
 	.globl gUnknown_84E4154
 gUnknown_84E4154: @ 0x84E4154
 	.incbin "baserom_jp.gba", 0x4e4154, 0x78

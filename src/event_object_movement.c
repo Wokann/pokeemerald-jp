@@ -2,6 +2,7 @@
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "overworld.h"
+#include "palette.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
@@ -26,6 +27,7 @@ extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
 extern const s16 sMovementDelaysMedium[];
 extern const s16 sMovementDelaysLong[];
+extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);
@@ -57,6 +59,7 @@ struct Sprite;
 #define sBerryTreeFlags data[7]
 #define BERRY_FLAG_SPARKLING   (1 << 1)
 #define BERRY_FLAG_JUST_PICKED (1 << 2)
+#define OBJ_EVENT_PAL_TAG_NONE 0x11FF
 
 enum {
     CAMERA_STATE_INIT,
@@ -2533,114 +2536,32 @@ __attribute__((naked)) void sub_0808E264(void)
     );
 }
 
-__attribute__((naked)) void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
+void PatchObjectPalette(u16 paletteTag, u8 paletteSlot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	bl FindEventObjectPaletteIndexByTag\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r1, _0808E2C0\n\t"
-        "	lsrs r0, r0, #0x15\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsls r4, r4, #0x14\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #0x11\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E2C0: .4byte gUnknown_84E401C\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 paletteIndex = FindEventObjectPaletteIndexByTag(paletteTag);
+    LoadPalette(sObjectEventSpritePalettes[paletteIndex].data, OBJ_PLTT_ID(paletteSlot), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void PatchObjectPaletteRange(void)
+void PatchObjectPaletteRange(const u16 *paletteTags, u8 minSlot, u8 maxSlot)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r6, r2, #0x18\n\t"
-        "	cmp r4, r6\n\t"
-        "	bhs _0808E2E8\n\t"
-        "_0808E2D4:\n\t"
-        "	ldrh r0, [r5]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl PatchObjectPalette\n\t"
-        "	adds r5, #2\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, r6\n\t"
-        "	blo _0808E2D4\n\t"
-        "_0808E2E8:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    while (minSlot < maxSlot)
+    {
+        PatchObjectPalette(*paletteTags, minSlot);
+        paletteTags++;
+        minSlot++;
+    }
 }
 
-__attribute__((naked)) void FindEventObjectPaletteIndexByTag(void)
+u8 FindEventObjectPaletteIndexByTag(u16 tag)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r0, _0808E318\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	ldr r3, _0808E31C\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r1, r3\n\t"
-        "	beq _0808E330\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "_0808E308:\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r6\n\t"
-        "	ldrh r0, [r0, #4]\n\t"
-        "	cmp r0, r5\n\t"
-        "	bne _0808E320\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	b _0808E332\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E318: .4byte gUnknown_84E401C\n\t"
-        "_0808E31C: .4byte 0x000011FF\n\t"
-        "_0808E320:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrh r0, [r0, #4]\n\t"
-        "	cmp r0, r1\n\t"
-        "	bne _0808E308\n\t"
-        "_0808E330:\n\t"
-        "	movs r0, #0xff\n\t"
-        "_0808E332:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; sObjectEventSpritePalettes[i].tag != OBJ_EVENT_PAL_TAG_NONE; i++)
+    {
+        if (sObjectEventSpritePalettes[i].tag == tag)
+            return i;
+    }
+    return 0xFF;
 }
 
 __attribute__((naked)) void LoadPlayerObjectReflectionPalette(u16 tag, u8 slot)
