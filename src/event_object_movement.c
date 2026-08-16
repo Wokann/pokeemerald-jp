@@ -51,6 +51,9 @@ struct Sprite;
 #define sAnimState     data[4]
 #define sVirtualObjId   data[0]
 #define sVirtualObjElev data[1]
+#define sBerryTreeFlags data[7]
+#define BERRY_FLAG_SPARKLING   (1 << 1)
+#define BERRY_FLAG_JUST_PICKED (1 << 2)
 
 enum {
     CAMERA_STATE_INIT,
@@ -5078,102 +5081,38 @@ __attribute__((naked)) void MovementType_FaceDownAndUp_callback(void)
 }
 
 
-__attribute__((naked)) void MovementType_BerryTreeGrowth_Step0(void)
+bool8 MovementType_BerryTreeGrowth_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	adds r6, r5, #0\n\t"
-        "	adds r6, #0x3e\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	ldrb r0, [r4, #0x1d]\n\t"
-        "	bl GetStageByBerryTreeId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	cmp r7, #0\n\t"
-        "	bne _0808F870\n\t"
-        "	ldrh r1, [r5, #0x3c]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F866\n\t"
-        "	subs r6, #0x14\n\t"
-        "	ldrb r0, [r6]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0808F866\n\t"
-        "	ldr r1, _0808F86C\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r0, [r4, r2]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	subs r0, #1\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldrb r0, [r5, #5]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1e\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	movs r0, #0x17\n\t"
-        "	bl FieldEffectStart\n\t"
-        "	strb r7, [r6]\n\t"
-        "_0808F866:\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0808F8B2\n\t"
-        "	.align 2, 0\n\t"
-        "_0808F86C: .4byte gFieldEffectArguments\n\t"
-        "_0808F870:\n\t"
-        "	ldrb r1, [r4, #1]\n\t"
-        "	movs r0, #0x21\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4, #1]\n\t"
-        "	ldrb r1, [r6]\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r6]\n\t"
-        "	subs r0, r7, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r7, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r0, #0x2a\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, r7\n\t"
-        "	bne _0808F8AC\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl get_berry_tree_graphics\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #0x39\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	b _0808F8B2\n\t"
-        "_0808F8AC:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "_0808F8B2:\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 berryStage;
+    ClearEventObjectMovement(objectEvent, sprite);
+    objectEvent->invisible = TRUE;
+    sprite->invisible = TRUE;
+    berryStage = GetStageByBerryTreeId(objectEvent->trainerRange_berryTreeId);
+    if (berryStage == BERRY_STAGE_NO_BERRY)
+    {
+        if (!(sprite->sBerryTreeFlags & BERRY_FLAG_JUST_PICKED) && sprite->animNum == BERRY_STAGE_FLOWERING)
+        {
+            gFieldEffectArguments[0] = objectEvent->currentCoords.x;
+            gFieldEffectArguments[1] = objectEvent->currentCoords.y;
+            gFieldEffectArguments[2] = sprite->subpriority - 1;
+            gFieldEffectArguments[3] = sprite->oam.priority;
+            FieldEffectStart(FLDEFF_BERRY_TREE_GROWTH_SPARKLE);
+            sprite->animNum = berryStage;
+        }
+        return FALSE;
+    }
+    objectEvent->invisible = FALSE;
+    sprite->invisible = FALSE;
+    berryStage--;
+    if (sprite->animNum != berryStage)
+    {
+        sprite->sTypeFuncId = BERRYTREEFUNC_SPARKLE_START;
+        return TRUE;
+    }
+    get_berry_tree_graphics(objectEvent, sprite);
+    ObjectEventSetSingleMovement(objectEvent, sprite, MOVEMENT_ACTION_START_ANIM_IN_DIRECTION);
+    sprite->sTypeFuncId = BERRYTREEFUNC_MOVE;
+    return TRUE;
 }
 
 __attribute__((naked)) void MovementType_BerryTreeGrowth_Step1(void)
@@ -5248,6 +5187,8 @@ __attribute__((naked)) void MovementType_BerryTreeGrowth_Step2(void)
 
 #define sTimer          data[2]
 #define sBerryTreeFlags data[7]
+#define BERRY_FLAG_SPARKLING   (1 << 1)
+#define BERRY_FLAG_JUST_PICKED (1 << 2)
 
 bool8 MovementType_BerryTreeGrowth_Sparkle(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
