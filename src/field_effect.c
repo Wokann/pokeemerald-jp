@@ -4,6 +4,11 @@
 #include "main.h"
 #include "task.h"
 
+
+// Sprite/task data aliases matching the US field_effect.c field names.
+#define sState      data[0]
+#define sPlayerSpriteId data[6]
+#define tEnding     data[7]
 __attribute__((naked)) u32 FieldEffectStart(u8 id)
 {
     __asm__(".syntax unified\n\t"
@@ -1890,16 +1895,9 @@ __attribute__((naked)) void PokeballGlowEffect_4(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) void PokeballGlowEffect_Dummy(struct Sprite *sprite)
+void PokeballGlowEffect_Dummy(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #0x2e]\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->sState++;
 }
 
 __attribute__((naked)) void PokeballGlowEffect_6(struct Sprite *sprite)
@@ -8390,25 +8388,9 @@ __attribute__((naked)) void StartFlyBirdSwoopDown(u8 a0)
     );
 }
 
-__attribute__((naked)) void SetFlyBirdPlayerSpriteId(u8 a0, u8 a1)
+void SetFlyBirdPlayerSpriteId(u8 birdSpriteId, u8 playerSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldr r3, _080B8CD0\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r1, [r2, #0x3a]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B8CD0: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[birdSpriteId].sPlayerSpriteId = playerSpriteId;
 }
 
 __attribute__((naked)) void SpriteCB_FlyBirdLeaveBall(struct Sprite *sprite)
@@ -9292,24 +9274,9 @@ __attribute__((naked)) void Task_DeoxysRockCameraShake(u8 taskId)
     );
 }
 
-__attribute__((naked)) void StartEndingDeoxysRockCameraShake(u8 taskId)
+void StartEndingDeoxysRockCameraShake(u8 taskId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _080B933C\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x16]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B933C: .4byte gTasks\n\t"
-        ".syntax divided\n\t"
-    );
+    gTasks[taskId].tEnding = TRUE;
 }
 
 __attribute__((naked)) void sub_080B9340(u8 a0)

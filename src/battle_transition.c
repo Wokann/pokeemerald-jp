@@ -4,6 +4,11 @@
 #include "task.h"
 #include "sprite.h"
 
+
+// Sprite data aliases matching the US battle_transition.c field names.
+#define sState       data[0]
+#define sDone        data[6]
+#define sSlideDir    data[7]
 struct RectangularSpiralLine
 {
     u8 state;
@@ -5384,64 +5389,19 @@ __attribute__((naked)) void sub_08148518(void)
     );
 }
 
-__attribute__((naked)) void SetTrainerPicSlideDirection(s16 a0, s16 a1)
+void SetTrainerPicSlideDirection(s16 spriteId, s16 dirId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r3, _08148558\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r2, r0, #4\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r3\n\t"
-        "	strh r1, [r2, #0x3c]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08148558: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[spriteId].sSlideDir = dirId;
 }
 
-__attribute__((naked)) void IncrementTrainerPicState(s16 a0)
+void IncrementTrainerPicState(s16 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _08148574\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	ldrh r0, [r1, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x2e]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08148574: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    gSprites[spriteId].sState++;
 }
 
-__attribute__((naked)) s16 IsTrainerPicSlideDone(s16 a0)
+s16 IsTrainerPicSlideDone(s16 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0814858C\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r1, r2]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0814858C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSprites[spriteId].sDone;
 }
 
 __attribute__((naked)) void Task_Slice(u8 taskId)
