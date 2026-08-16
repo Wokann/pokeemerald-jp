@@ -1381,7 +1381,58 @@ sAffineAnims_StretchBattlerUp: @ 0x856F56C
 
 	.globl sAffineAnims_UproarDistortion
 sAffineAnims_UproarDistortion: @ 0x856F77C
-	.incbin "baserom_jp.gba", 0x56f77c, 0x1488
+	.globl sAffineAnims_UproarDistortion
+sAffineAnims_UproarDistortion: @ 0x856F77C
+	.hword 0xFFF4, 0x0008, 0x0400, 0x0000
+	.hword 0x0014, 0xFFEC, 0x0400, 0x0000
+	.hword 0xFFF8, 0x000C, 0x0400, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+
+gJaggedMusicNoteSpriteTemplate: @ 0x856F79C
+	.hword 0x27F1, 0x27F1
+	.4byte 0x084FD020, gDummySpriteAnimTable
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08107651
+
+gPerishSongMusicNoteAffineAnimCmds1: @ 0x856F7B4
+	.hword 0x0000, 0x0000, 0x0500, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+gPerishSongMusicNoteAffineAnimCmds2: @ 0x856F7C4
+	.hword 0x0000, 0x0000, 0x10F8, 0x0000
+	.hword 0x7FFF, 0x0001, 0x0000, 0x0000
+gPerishSongMusicNoteAffineAnimCmds3: @ 0x856F7D4
+	.hword 0x0000, 0x0000, 0x1008, 0x0000
+	.hword 0x7FFF, 0x0001, 0x0000, 0x0000
+
+gPerishSongMusicNoteAffineAnimTable: @ 0x856F7E4
+	.4byte gPerishSongMusicNoteAffineAnimCmds1, gPerishSongMusicNoteAffineAnimCmds2, gPerishSongMusicNoteAffineAnimCmds3
+
+gPerishSongMusicNoteSpriteTemplate: @ 0x856F7F0
+	.hword 0x27DE, 0x27DE
+	.4byte 0x084FD078, gMusicNotesAnimTable
+	.4byte 0, gPerishSongMusicNoteAffineAnimTable, 0x081077B1
+
+gPerishSongMusicNote2SpriteTemplate: @ 0x856F808
+	.hword 0x27DE, 0x27DE
+	.4byte 0x084FD078, gMusicNotesAnimTable
+	.4byte 0, gPerishSongMusicNoteAffineAnimTable, 0x08107751
+
+gGuardRingAffineAnimCmds1: @ 0x856F820
+	.hword 0x0100, 0x0100, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+gGuardRingAffineAnimCmds2: @ 0x856F830
+	.hword 0x0200, 0x0100, 0x0000, 0x0000
+	.hword 0x7FFF, 0x0000, 0x0000, 0x0000
+
+gGuardRingAffineAnimTable: @ 0x856F840
+	.4byte gGuardRingAffineAnimCmds1, gGuardRingAffineAnimCmds2
+
+gGuardRingSpriteTemplate: @ 0x856F848
+	.hword 0x2804, 0x2804
+	.4byte 0x084FD228, gDummySpriteAnimTable
+	.4byte 0, gGuardRingAffineAnimTable, 0x081078FD
+
+gUnknown_856F860: @ 0x856F860
+	.incbin "baserom_jp.gba", 0x56f860, 0x13a4
 
 	.globl gRainDropSpriteTemplate
 	.globl gRainDropSpriteTemplate
