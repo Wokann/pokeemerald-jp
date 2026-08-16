@@ -81,355 +81,1477 @@ gUnknown_830FD20: @ 0x830FD20
 gUnknown_830FD4C: @ 0x830FD4C
 	.globl gUnknown_830FD4C
 gUnknown_830FD4C: @ 0x0830FD4C
-	.incbin "baserom_jp.gba", 0x30FD4C, 0xA7DD8
+	.incbin "baserom_jp.gba", 0x30FD4C, 0x8
+gTileset_PETALBURG_CITY_PRIMARY_Tiles:
+	.incbin "data/tilesets/primary/general/tiles.4bpp.lz"
+gTileset_PETALBURG_CITY_PRIMARY_Palettes:
+	.incbin "data/tilesets/primary/general/palettes/00.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/01.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/02.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/03.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/04.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/05.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/06.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/07.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/08.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/09.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/10.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/11.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/12.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/13.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/14.gbapal"
+	.incbin "data/tilesets/primary/general/palettes/15.gbapal"
+gTileset_PETALBURG_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/petalburg/tiles.4bpp.lz"
+gTileset_PETALBURG_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/petalburg/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/petalburg/palettes/15.gbapal"
+gTileset_RUSTBORO_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/rustboro/tiles.4bpp.lz"
+gTileset_RUSTBORO_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/rustboro/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/rustboro/palettes/15.gbapal"
+gTileset_DEWFORD_TOWN_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/dewford/tiles.4bpp.lz"
+gTileset_DEWFORD_TOWN_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/dewford/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/dewford/palettes/15.gbapal"
+gTileset_SLATEPORT_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/slateport/tiles.4bpp.lz"
+gTileset_SLATEPORT_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/slateport/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/slateport/palettes/15.gbapal"
+gTileset_MAUVILLE_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mauville/tiles.4bpp.lz"
+gTileset_MAUVILLE_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mauville/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mauville/palettes/15.gbapal"
+gTileset_LAVARIDGE_TOWN_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/lavaridge/tiles.4bpp.lz"
+gTileset_LAVARIDGE_TOWN_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/lavaridge/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge/palettes/15.gbapal"
+gTileset_FALLARBOR_TOWN_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/fallarbor/tiles.4bpp.lz"
+gTileset_FALLARBOR_TOWN_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/fallarbor/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/fallarbor/palettes/15.gbapal"
+gTileset_FORTREE_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/fortree/tiles.4bpp.lz"
+gTileset_FORTREE_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/fortree/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/fortree/palettes/15.gbapal"
+gTileset_LILYCOVE_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/lilycove/tiles.4bpp.lz"
+gTileset_LILYCOVE_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/lilycove/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/lilycove/palettes/15.gbapal"
+gTileset_MOSSDEEP_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mossdeep/tiles.4bpp.lz"
+gTileset_MOSSDEEP_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mossdeep/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep/palettes/15.gbapal"
+gTileset_EVER_GRANDE_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/ever_grande/tiles.4bpp.lz"
+gTileset_EVER_GRANDE_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/ever_grande/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/ever_grande/palettes/15.gbapal"
+gTileset_PACIFIDLOG_TOWN_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pacifidlog/tiles.4bpp.lz"
+gTileset_PACIFIDLOG_TOWN_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pacifidlog/palettes/15.gbapal"
+gTileset_SOOTOPOLIS_CITY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/sootopolis/tiles.4bpp.lz"
+gTileset_SOOTOPOLIS_CITY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/sootopolis/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x324CD4, 0x32D0
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Tiles:
+	.incbin "data/tilesets/primary/building/tiles.4bpp.lz"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Palettes:
+	.incbin "data/tilesets/primary/building/palettes/00.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/01.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/02.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/03.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/04.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/05.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/06.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/07.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/08.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/09.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/10.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/11.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/12.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/13.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/14.gbapal"
+	.incbin "data/tilesets/primary/building/palettes/15.gbapal"
+gTileset_OLDALE_TOWN_MART_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/shop/tiles.4bpp.lz"
+gTileset_OLDALE_TOWN_MART_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/shop/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/shop/palettes/15.gbapal"
+gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pokemon_center/tiles.4bpp.lz"
+gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_center/palettes/15.gbapal"
+gTileset_DESERT_RUINS_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/cave/tiles.4bpp.lz"
+gTileset_DESERT_RUINS_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/cave/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/cave/palettes/15.gbapal"
+gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pokemon_school/tiles.4bpp.lz"
+gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_school/palettes/15.gbapal"
+gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pokemon_fan_club/tiles.4bpp.lz"
+gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_fan_club/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x32ECF4, 0x24C
+gTileset_METEOR_FALLS_1F_1R_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/meteor_falls/tiles.4bpp.lz"
+gTileset_METEOR_FALLS_1F_1R_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/meteor_falls/palettes/15.gbapal"
+gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/oceanic_museum/tiles.4bpp.lz"
+gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/oceanic_museum/palettes/15.gbapal"
+gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/cable_club/tiles.4bpp.lz"
+gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/cable_club/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/cable_club/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x3370EC, 0xADC
+gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/tiles.4bpp.lz"
+gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/palettes/15.gbapal"
+gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/pokemon_day_care/tiles.4bpp.lz"
+gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/pokemon_day_care/palettes/15.gbapal"
+gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/facility/tiles.4bpp.lz"
+gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/facility/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/facility/palettes/15.gbapal"
+gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/bike_shop/tiles.4bpp.lz"
+gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/bike_shop/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/bike_shop/palettes/15.gbapal"
+gTileset_RUSTURF_TUNNEL_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/rusturf_tunnel/tiles.4bpp.lz"
+gTileset_RUSTURF_TUNNEL_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/rusturf_tunnel/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x33D628, 0x6C34
+gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/contest/tiles.4bpp.lz"
+gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/contest/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/contest/palettes/15.gbapal"
+gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/lilycove_museum/tiles.4bpp.lz"
+gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/lilycove_museum/palettes/15.gbapal"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/brendans_mays_house/tiles.4bpp.lz"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/brendans_mays_house/palettes/15.gbapal"
+gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/lab/tiles.4bpp.lz"
+gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/lab/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/lab/palettes/15.gbapal"
+gTileset_UNDERWATER_ROUTE126_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/underwater/tiles.4bpp.lz"
+gTileset_UNDERWATER_ROUTE126_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/underwater/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/underwater/palettes/15.gbapal"
+gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/generic_building/tiles.4bpp.lz"
+gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/generic_building/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/generic_building/palettes/15.gbapal"
+gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mauville_game_corner/tiles.4bpp.lz"
+gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mauville_game_corner/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x34C8A8, 0x728
+gTileset_RUSTBORO_CITY_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/rustboro_gym/tiles.4bpp.lz"
+gTileset_RUSTBORO_CITY_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/rustboro_gym/palettes/15.gbapal"
+gTileset_DEWFORD_TOWN_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/dewford_gym/tiles.4bpp.lz"
+gTileset_DEWFORD_TOWN_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/dewford_gym/palettes/15.gbapal"
+gTileset_MAUVILLE_CITY_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mauville_gym/tiles.4bpp.lz"
+gTileset_MAUVILLE_CITY_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mauville_gym/palettes/15.gbapal"
+gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/lavaridge_gym/tiles.4bpp.lz"
+gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/lavaridge_gym/palettes/15.gbapal"
+gTileset_PETALBURG_CITY_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/petalburg_gym/tiles.4bpp.lz"
+gTileset_PETALBURG_CITY_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/petalburg_gym/palettes/15.gbapal"
+gTileset_FORTREE_CITY_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/fortree_gym/tiles.4bpp.lz"
+gTileset_FORTREE_CITY_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/fortree_gym/palettes/15.gbapal"
+gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mossdeep_gym/tiles.4bpp.lz"
+gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_gym/palettes/15.gbapal"
+gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/sootopolis_gym/tiles.4bpp.lz"
+gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/sootopolis_gym/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x3510E4, 0x9F84
+gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/elite_four/tiles.4bpp.lz"
+gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/elite_four/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/elite_four/palettes/15.gbapal"
+gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/battle_frontier/tiles.4bpp.lz"
+gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/battle_frontier/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x35D1E8, 0x841C
+gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/tiles.4bpp.lz"
+gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x365C24, 0x56A8
+gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/battle_tent/tiles.4bpp.lz"
+gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/battle_tent/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/battle_tent/palettes/15.gbapal"
+gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Tiles:
+	.incbin "data/tilesets/secondary/mystery_events_house/tiles.4bpp.lz"
+gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Palettes:
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/00.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/01.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/02.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/03.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/04.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/05.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/06.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/07.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/08.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/09.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/10.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/11.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/12.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/13.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/14.gbapal"
+	.incbin "data/tilesets/secondary/mystery_events_house/palettes/15.gbapal"
+	.incbin "baserom_jp.gba", 0x36DA98, 0xA78
+gTileset_PETALBURG_CITY_PRIMARY_Metatiles:
+	.incbin "data/tilesets/primary/general/metatiles.bin"
+gTileset_PETALBURG_CITY_PRIMARY_MetatileAttributes:
+	.incbin "data/tilesets/primary/general/metatile_attributes.bin"
+gTileset_PETALBURG_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/petalburg/metatiles.bin"
+gTileset_PETALBURG_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/petalburg/metatile_attributes.bin"
+gTileset_RUSTBORO_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/rustboro/metatiles.bin"
+gTileset_RUSTBORO_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/rustboro/metatile_attributes.bin"
+gTileset_DEWFORD_TOWN_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/dewford/metatiles.bin"
+gTileset_DEWFORD_TOWN_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/dewford/metatile_attributes.bin"
+gTileset_SLATEPORT_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/slateport/metatiles.bin"
+gTileset_SLATEPORT_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/slateport/metatile_attributes.bin"
+gTileset_MAUVILLE_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mauville/metatiles.bin"
+gTileset_MAUVILLE_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mauville/metatile_attributes.bin"
+gTileset_LAVARIDGE_TOWN_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/lavaridge/metatiles.bin"
+gTileset_LAVARIDGE_TOWN_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/lavaridge/metatile_attributes.bin"
+gTileset_FALLARBOR_TOWN_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/fallarbor/metatiles.bin"
+gTileset_FALLARBOR_TOWN_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/fallarbor/metatile_attributes.bin"
+gTileset_FORTREE_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/fortree/metatiles.bin"
+gTileset_FORTREE_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/fortree/metatile_attributes.bin"
+gTileset_LILYCOVE_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/lilycove/metatiles.bin"
+gTileset_LILYCOVE_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/lilycove/metatile_attributes.bin"
+gTileset_MOSSDEEP_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mossdeep/metatiles.bin"
+gTileset_MOSSDEEP_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mossdeep/metatile_attributes.bin"
+gTileset_EVER_GRANDE_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/ever_grande/metatiles.bin"
+gTileset_EVER_GRANDE_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/ever_grande/metatile_attributes.bin"
+gTileset_PACIFIDLOG_TOWN_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pacifidlog/metatiles.bin"
+gTileset_PACIFIDLOG_TOWN_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pacifidlog/metatile_attributes.bin"
+gTileset_SOOTOPOLIS_CITY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/sootopolis/metatiles.bin"
+gTileset_SOOTOPOLIS_CITY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/sootopolis/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x3837E6, 0x47B8
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Metatiles:
+	.incbin "data/tilesets/primary/building/metatiles.bin"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_MetatileAttributes:
+	.incbin "data/tilesets/primary/building/metatile_attributes.bin"
+gTileset_OLDALE_TOWN_MART_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/shop/metatiles.bin"
+gTileset_OLDALE_TOWN_MART_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/shop/metatile_attributes.bin"
+gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pokemon_center/metatiles.bin"
+gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pokemon_center/metatile_attributes.bin"
+gTileset_DESERT_RUINS_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/cave/metatiles.bin"
+gTileset_DESERT_RUINS_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/cave/metatile_attributes.bin"
+gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pokemon_school/metatiles.bin"
+gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pokemon_school/metatile_attributes.bin"
+gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pokemon_fan_club/metatiles.bin"
+gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pokemon_fan_club/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x38CD50, 0x24
+gTileset_METEOR_FALLS_1F_1R_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/meteor_falls/metatiles.bin"
+gTileset_METEOR_FALLS_1F_1R_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/meteor_falls/metatile_attributes.bin"
+gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/oceanic_museum/metatiles.bin"
+gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/oceanic_museum/metatile_attributes.bin"
+gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/cable_club/metatiles.bin"
+gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/cable_club/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x38F336, 0x3F0
+gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/metatiles.bin"
+gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pretty_petal_flower_shop/metatile_attributes.bin"
+gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/pokemon_day_care/metatiles.bin"
+gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/pokemon_day_care/metatile_attributes.bin"
+gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/facility/metatiles.bin"
+gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/facility/metatile_attributes.bin"
+gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/bike_shop/metatiles.bin"
+gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/bike_shop/metatile_attributes.bin"
+gTileset_RUSTURF_TUNNEL_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/rusturf_tunnel/metatiles.bin"
+gTileset_RUSTURF_TUNNEL_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/rusturf_tunnel/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x393C32, 0x1974
+gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/contest/metatiles.bin"
+gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/contest/metatile_attributes.bin"
+gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/lilycove_museum/metatiles.bin"
+gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/lilycove_museum/metatile_attributes.bin"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/brendans_mays_house/metatiles.bin"
+gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/brendans_mays_house/metatile_attributes.bin"
+gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/lab/metatiles.bin"
+gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/lab/metatile_attributes.bin"
+gTileset_UNDERWATER_ROUTE126_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/underwater/metatiles.bin"
+gTileset_UNDERWATER_ROUTE126_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/underwater/metatile_attributes.bin"
+gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/generic_building/metatiles.bin"
+gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/generic_building/metatile_attributes.bin"
+gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mauville_game_corner/metatiles.bin"
+gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mauville_game_corner/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x39C452, 0x414
+gTileset_RUSTBORO_CITY_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/rustboro_gym/metatiles.bin"
+gTileset_RUSTBORO_CITY_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/rustboro_gym/metatile_attributes.bin"
+gTileset_DEWFORD_TOWN_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/dewford_gym/metatiles.bin"
+gTileset_DEWFORD_TOWN_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/dewford_gym/metatile_attributes.bin"
+gTileset_MAUVILLE_CITY_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mauville_gym/metatiles.bin"
+gTileset_MAUVILLE_CITY_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mauville_gym/metatile_attributes.bin"
+gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/lavaridge_gym/metatiles.bin"
+gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/lavaridge_gym/metatile_attributes.bin"
+gTileset_PETALBURG_CITY_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/petalburg_gym/metatiles.bin"
+gTileset_PETALBURG_CITY_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/petalburg_gym/metatile_attributes.bin"
+gTileset_FORTREE_CITY_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/fortree_gym/metatiles.bin"
+gTileset_FORTREE_CITY_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/fortree_gym/metatile_attributes.bin"
+gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mossdeep_gym/metatiles.bin"
+gTileset_MOSSDEEP_CITY_GYM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mossdeep_gym/metatile_attributes.bin"
+gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/sootopolis_gym/metatiles.bin"
+gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/sootopolis_gym/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x3A03E2, 0x1F26
+gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/elite_four/metatiles.bin"
+gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/elite_four/metatile_attributes.bin"
+gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/battle_frontier/metatiles.bin"
+gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/battle_frontier/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x3A5E2A, 0x94A4
+gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/metatiles.bin"
+gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mossdeep_game_corner/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x3AF688, 0x698A
+gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/battle_tent/metatiles.bin"
+gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/battle_tent/metatile_attributes.bin"
+gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Metatiles:
+	.incbin "data/tilesets/secondary/mystery_events_house/metatiles.bin"
+gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_MetatileAttributes:
+	.incbin "data/tilesets/secondary/mystery_events_house/metatile_attributes.bin"
+	.incbin "baserom_jp.gba", 0x3B77B2, 0x372
 	.globl gTileset_PETALBURG_CITY_PRIMARY
 gTileset_PETALBURG_CITY_PRIMARY: @ 0x083B7B24
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0830FD54  @ tiles
-	.4byte 0x08312028  @ palettes
-	.4byte 0x0836E510  @ metatiles
-	.4byte 0x08370510  @ metatileAttributes
+	.4byte gTileset_PETALBURG_CITY_PRIMARY_Tiles  @ tiles
+	.4byte gTileset_PETALBURG_CITY_PRIMARY_Palettes  @ palettes
+	.4byte gTileset_PETALBURG_CITY_PRIMARY_Metatiles  @ metatiles
+	.4byte gTileset_PETALBURG_CITY_PRIMARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A03E9  @ callback
 	.globl gTileset_PETALBURG_CITY_SECONDARY
 gTileset_PETALBURG_CITY_SECONDARY: @ 0x083B7B3C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08312228  @ tiles
-	.4byte 0x08312B24  @ palettes
-	.4byte 0x08370910  @ metatiles
-	.4byte 0x08371210  @ metatileAttributes
+	.4byte gTileset_PETALBURG_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_PETALBURG_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_PETALBURG_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_PETALBURG_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0535  @ callback
 	.globl gTileset_RUSTBORO_CITY_SECONDARY
 gTileset_RUSTBORO_CITY_SECONDARY: @ 0x083B7B54
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08312D24  @ tiles
-	.4byte 0x083142E0  @ palettes
-	.4byte 0x08371330  @ metatiles
-	.4byte 0x08372910  @ metatileAttributes
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_RUSTBORO_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A055D  @ callback
 	.globl gTileset_DEWFORD_TOWN_SECONDARY
 gTileset_DEWFORD_TOWN_SECONDARY: @ 0x083B7B6C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x083144E0  @ tiles
-	.4byte 0x08315960  @ palettes
-	.4byte 0x08372BCC  @ metatiles
-	.4byte 0x0837437C  @ metatileAttributes
+	.4byte gTileset_DEWFORD_TOWN_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_DEWFORD_TOWN_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_DEWFORD_TOWN_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_DEWFORD_TOWN_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0589  @ callback
 	.globl gTileset_SLATEPORT_CITY_SECONDARY
 gTileset_SLATEPORT_CITY_SECONDARY: @ 0x083B7B84
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08315B60  @ tiles
-	.4byte 0x08317B28  @ palettes
-	.4byte 0x08374672  @ metatiles
-	.4byte 0x08375FD2  @ metatileAttributes
+	.4byte gTileset_SLATEPORT_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SLATEPORT_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SLATEPORT_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SLATEPORT_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A05B5  @ callback
 	.globl gTileset_MAUVILLE_CITY_SECONDARY
 gTileset_MAUVILLE_CITY_SECONDARY: @ 0x083B7B9C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08317D28  @ tiles
-	.4byte 0x08319B4C  @ palettes
-	.4byte 0x083762FE  @ metatiles
-	.4byte 0x083782DE  @ metatileAttributes
+	.4byte gTileset_MAUVILLE_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MAUVILLE_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MAUVILLE_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MAUVILLE_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A05E1  @ callback
 	.globl gTileset_LAVARIDGE_TOWN_SECONDARY
 gTileset_LAVARIDGE_TOWN_SECONDARY: @ 0x083B7BB4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08319D4C  @ tiles
-	.4byte 0x0831B248  @ palettes
-	.4byte 0x083786DA  @ metatiles
-	.4byte 0x0837A26A  @ metatileAttributes
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LAVARIDGE_TOWN_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0611  @ callback
 	.globl gTileset_FALLARBOR_TOWN_SECONDARY
 gTileset_FALLARBOR_TOWN_SECONDARY: @ 0x083B7BCC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0831B448  @ tiles
-	.4byte 0x0831CBC0  @ palettes
-	.4byte 0x0837A5DC  @ metatiles
-	.4byte 0x0837BCCC  @ metatileAttributes
+	.4byte gTileset_FALLARBOR_TOWN_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_FALLARBOR_TOWN_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_FALLARBOR_TOWN_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_FALLARBOR_TOWN_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A063D  @ callback
 	.globl gTileset_FORTREE_CITY_SECONDARY
 gTileset_FORTREE_CITY_SECONDARY: @ 0x083B7BE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0831CDC0  @ tiles
-	.4byte 0x0831E440  @ palettes
-	.4byte 0x0837BFAA  @ metatiles
-	.4byte 0x0837D12A  @ metatileAttributes
+	.4byte gTileset_FORTREE_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_FORTREE_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_FORTREE_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_FORTREE_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0665  @ callback
 	.globl gTileset_LILYCOVE_CITY_SECONDARY
 gTileset_LILYCOVE_CITY_SECONDARY: @ 0x083B7BFC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0831E640  @ tiles
-	.4byte 0x0831F9E0  @ palettes
-	.4byte 0x0837D35A  @ metatiles
-	.4byte 0x0837E94A  @ metatileAttributes
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LILYCOVE_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A068D  @ callback
 	.globl gTileset_MOSSDEEP_CITY_SECONDARY
 gTileset_MOSSDEEP_CITY_SECONDARY: @ 0x083B7C14
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0831FBE0  @ tiles
-	.4byte 0x08321230  @ palettes
-	.4byte 0x0837EC08  @ metatiles
-	.4byte 0x08380868  @ metatileAttributes
+	.4byte gTileset_MOSSDEEP_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MOSSDEEP_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MOSSDEEP_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MOSSDEEP_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A06B5  @ callback
 	.globl gTileset_EVER_GRANDE_CITY_SECONDARY
 gTileset_EVER_GRANDE_CITY_SECONDARY: @ 0x083B7C2C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08321430  @ tiles
-	.4byte 0x08322048  @ palettes
-	.4byte 0x08380BF4  @ metatiles
-	.4byte 0x08381674  @ metatileAttributes
+	.4byte gTileset_EVER_GRANDE_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_EVER_GRANDE_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_EVER_GRANDE_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_EVER_GRANDE_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A06DD  @ callback
 	.globl gTileset_PACIFIDLOG_TOWN_SECONDARY
 gTileset_PACIFIDLOG_TOWN_SECONDARY: @ 0x083B7C44
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08322248  @ tiles
-	.4byte 0x083239D4  @ palettes
-	.4byte 0x083817C4  @ metatiles
-	.4byte 0x08382474  @ metatileAttributes
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_PACIFIDLOG_TOWN_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0709  @ callback
 	.globl gTileset_SOOTOPOLIS_CITY_SECONDARY
 gTileset_SOOTOPOLIS_CITY_SECONDARY: @ 0x083B7C5C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08323BD4  @ tiles
-	.4byte 0x08324AD4  @ palettes
-	.4byte 0x0838260A  @ metatiles
-	.4byte 0x083835EA  @ metatileAttributes
+	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SOOTOPOLIS_CITY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0739  @ callback
 	.incbin "baserom_jp.gba", 0x3B7C74, 0x30
 	.globl gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY
 gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY: @ 0x083B7CA4
 	.byte 0x01, 0x00, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08327FA4  @ tiles
-	.4byte 0x08328CDC  @ palettes
-	.4byte 0x08387F9E  @ metatiles
-	.4byte 0x0838801E  @ metatileAttributes
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Tiles  @ tiles
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Palettes  @ palettes
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_Metatiles  @ metatiles
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_PRIMARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0411  @ callback
 	.globl gTileset_OLDALE_TOWN_MART_SECONDARY
 gTileset_OLDALE_TOWN_MART_SECONDARY: @ 0x083B7CBC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08328EDC  @ tiles
-	.4byte 0x0832A4FC  @ palettes
-	.4byte 0x0838802E  @ metatiles
-	.4byte 0x0838923E  @ metatileAttributes
+	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_OLDALE_TOWN_MART_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY
 gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY: @ 0x083B7CD4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0832A6FC  @ tiles
-	.4byte 0x0832B994  @ palettes
-	.4byte 0x08389480  @ metatiles
-	.4byte 0x0838A300  @ metatileAttributes
+	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_OLDALE_TOWN_POKEMON_CENTER_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_DESERT_RUINS_SECONDARY
 gTileset_DESERT_RUINS_SECONDARY: @ 0x083B7CEC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0832BB94  @ tiles
-	.4byte 0x0832D680  @ palettes
-	.4byte 0x0838A4D0  @ metatiles
-	.4byte 0x0838BEB0  @ metatileAttributes
+	.4byte gTileset_DESERT_RUINS_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_DESERT_RUINS_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_DESERT_RUINS_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_DESERT_RUINS_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0805  @ callback
 	.globl gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY
 gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY: @ 0x083B7D04
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0832D880  @ tiles
-	.4byte 0x0832DFC8  @ palettes
-	.4byte 0x0838C1EC  @ metatiles
-	.4byte 0x0838C58C  @ metatileAttributes
+	.4byte gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_RUSTBORO_CITY_POKEMON_SCHOOL_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY
 gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY: @ 0x083B7D1C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0832E1C8  @ tiles
-	.4byte 0x0832EAF4  @ palettes
-	.4byte 0x0838C600  @ metatiles
-	.4byte 0x0838CC80  @ metatileAttributes
+	.4byte gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SLATEPORT_CITY_POKEMON_FAN_CLUB_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B7D34, 0x18
 	.globl gTileset_METEOR_FALLS_1F_1R_SECONDARY
 gTileset_METEOR_FALLS_1F_1R_SECONDARY: @ 0x083B7D4C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0832EF40  @ tiles
-	.4byte 0x08330C60  @ palettes
-	.4byte 0x0838CD74  @ metatiles
-	.4byte 0x0838D764  @ metatileAttributes
+	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_METEOR_FALLS_1F_1R_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY
 gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY: @ 0x083B7D64
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08330E60  @ tiles
-	.4byte 0x08331DEC  @ palettes
-	.4byte 0x0838D8A2  @ metatiles
-	.4byte 0x0838E042  @ metatileAttributes
+	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SLATEPORT_CITY_OCEANIC_MUSEUM_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY
 gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY: @ 0x083B7D7C
 	.byte 0x00, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08331FEC  @ tiles
-	.4byte 0x08336EEC  @ palettes
-	.4byte 0x0838E136  @ metatiles
-	.4byte 0x0838F136  @ metatileAttributes
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_EVER_GRANDE_CITY_HALL_OF_FAME_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B7D94, 0x18
 	.globl gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY
 gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY: @ 0x083B7DAC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08337BC8  @ tiles
-	.4byte 0x083387C0  @ palettes
-	.4byte 0x0838F726  @ metatiles
-	.4byte 0x0838FBA6  @ metatileAttributes
+	.4byte gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_ROUTE104_PRETTY_PETAL_FLOWER_SHOP_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY
 gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY: @ 0x083B7DC4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x083389C0  @ tiles
-	.4byte 0x083393FC  @ palettes
-	.4byte 0x0838FC36  @ metatiles
-	.4byte 0x08390076  @ metatileAttributes
+	.4byte gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_ROUTE117_POKEMON_DAY_CARE_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY
 gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY: @ 0x083B7DDC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x083395FC  @ tiles
-	.4byte 0x0833B2B0  @ palettes
-	.4byte 0x083900FE  @ metatiles
-	.4byte 0x083920EE  @ metatileAttributes
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SLATEPORT_CITY_STERNS_SHIPYARD_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY
 gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY: @ 0x083B7DF4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0833B4B0  @ tiles
-	.4byte 0x0833C7E0  @ palettes
-	.4byte 0x083924EC  @ metatiles
-	.4byte 0x0839346C  @ metatileAttributes
+	.4byte gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MAUVILLE_CITY_BIKE_SHOP_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0881  @ callback
 	.globl gTileset_RUSTURF_TUNNEL_SECONDARY
 gTileset_RUSTURF_TUNNEL_SECONDARY: @ 0x083B7E0C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0833C9E0  @ tiles
-	.4byte 0x0833D428  @ palettes
-	.4byte 0x0839365C  @ metatiles
-	.4byte 0x08393B8C  @ metatileAttributes
+	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_RUSTURF_TUNNEL_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B7E24, 0xC0
 	.globl gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY
 gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY: @ 0x083B7EE4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834425C  @ tiles
-	.4byte 0x08344DB0  @ palettes
-	.4byte 0x083955A6  @ metatiles
-	.4byte 0x08396436  @ metatileAttributes
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LILYCOVE_CITY_CONTEST_LOBBY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY
 gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY: @ 0x083B7EFC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08344FB0  @ tiles
-	.4byte 0x083462CC  @ palettes
-	.4byte 0x08396608  @ metatiles
-	.4byte 0x08396EF8  @ metatileAttributes
+	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LILYCOVE_CITY_LILYCOVE_MUSEUM_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY
 gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY: @ 0x083B7F14
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x083464CC  @ tiles
-	.4byte 0x08347598  @ palettes
-	.4byte 0x08397016  @ metatiles
-	.4byte 0x08397C56  @ metatileAttributes
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY
 gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY: @ 0x083B7F2C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08347798  @ tiles
-	.4byte 0x083487FC  @ palettes
-	.4byte 0x08397DDE  @ metatiles
-	.4byte 0x083987BE  @ metatileAttributes
+	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_UNDERWATER_ROUTE126_SECONDARY
 gTileset_UNDERWATER_ROUTE126_SECONDARY: @ 0x083B7F44
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x083489FC  @ tiles
-	.4byte 0x08349BB8  @ palettes
-	.4byte 0x083988FA  @ metatiles
-	.4byte 0x083997BA  @ metatileAttributes
+	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_UNDERWATER_ROUTE126_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A07BD  @ callback
 	.globl gTileset_PETALBURG_CITY_GYM_SECONDARY
 gTileset_PETALBURG_CITY_GYM_SECONDARY: @ 0x083B7F5C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834E8CC  @ tiles
-	.4byte 0x0834EF70  @ palettes
-	.4byte 0x0839DDB4  @ metatiles
-	.4byte 0x0839EBB4  @ metatileAttributes
+	.4byte gTileset_PETALBURG_CITY_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_PETALBURG_CITY_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_PETALBURG_CITY_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_PETALBURG_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY
 gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY: @ 0x083B7F74
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834FD50  @ tiles
-	.4byte 0x08350EE4  @ palettes
-	.4byte 0x0839FB4E  @ metatiles
-	.4byte 0x083A02EE  @ metatileAttributes
+	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SOOTOPOLIS_CITY_GYM_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A07E1  @ callback
 	.globl gTileset_OLDALE_TOWN_HOUSE1_SECONDARY
 gTileset_OLDALE_TOWN_HOUSE1_SECONDARY: @ 0x083B7F8C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08349DB8  @ tiles
-	.4byte 0x0834B7E4  @ palettes
-	.4byte 0x08399992  @ metatiles
-	.4byte 0x0839B992  @ metatileAttributes
+	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_OLDALE_TOWN_HOUSE1_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY
 gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY: @ 0x083B7FA4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834B9E4  @ tiles
-	.4byte 0x0834C6A8  @ palettes
-	.4byte 0x0839BD92  @ metatiles
-	.4byte 0x0839C392  @ metatileAttributes
+	.4byte gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MAUVILLE_CITY_GAME_CORNER_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_RUSTBORO_CITY_GYM_SECONDARY
 gTileset_RUSTBORO_CITY_GYM_SECONDARY: @ 0x083B7FBC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834CFD0  @ tiles
-	.4byte 0x0834D354  @ palettes
-	.4byte 0x0839C866  @ metatiles
-	.4byte 0x0839CBE6  @ metatileAttributes
+	.4byte gTileset_RUSTBORO_CITY_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_RUSTBORO_CITY_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_RUSTBORO_CITY_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_RUSTBORO_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_DEWFORD_TOWN_GYM_SECONDARY
 gTileset_DEWFORD_TOWN_GYM_SECONDARY: @ 0x083B7FD4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834D554  @ tiles
-	.4byte 0x0834D820  @ palettes
-	.4byte 0x0839CC56  @ metatiles
-	.4byte 0x0839D0A6  @ metatileAttributes
+	.4byte gTileset_DEWFORD_TOWN_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_DEWFORD_TOWN_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_DEWFORD_TOWN_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_DEWFORD_TOWN_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_MAUVILLE_CITY_GYM_SECONDARY
 gTileset_MAUVILLE_CITY_GYM_SECONDARY: @ 0x083B7FEC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834DA20  @ tiles
-	.4byte 0x0834E1A4  @ palettes
-	.4byte 0x0839D130  @ metatiles
-	.4byte 0x0839D880  @ metatileAttributes
+	.4byte gTileset_MAUVILLE_CITY_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MAUVILLE_CITY_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MAUVILLE_CITY_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MAUVILLE_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0855  @ callback
 	.globl gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY
 gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY: @ 0x083B8004
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834E3A4  @ tiles
-	.4byte 0x0834E6CC  @ palettes
-	.4byte 0x0839D96A  @ metatiles
-	.4byte 0x0839DD3A  @ metatileAttributes
+	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LAVARIDGE_TOWN_GYM_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B801C, 0x18
 	.globl gTileset_FORTREE_CITY_GYM_SECONDARY
 gTileset_FORTREE_CITY_GYM_SECONDARY: @ 0x083B8034
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834F170  @ tiles
-	.4byte 0x0834F4E4  @ palettes
-	.4byte 0x0839ED74  @ metatiles
-	.4byte 0x0839F274  @ metatileAttributes
+	.4byte gTileset_FORTREE_CITY_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_FORTREE_CITY_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_FORTREE_CITY_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_FORTREE_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_MOSSDEEP_CITY_GYM_SECONDARY
 gTileset_MOSSDEEP_CITY_GYM_SECONDARY: @ 0x083B804C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0834F6E4  @ tiles
-	.4byte 0x0834FB50  @ palettes
-	.4byte 0x0839F314  @ metatiles
-	.4byte 0x0839FA64  @ metatileAttributes
+	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MOSSDEEP_CITY_GYM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B8064, 0x30
 
@@ -445,44 +1567,44 @@ gUnknown_83B8098: @ 0x083B8098
 	.globl gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY
 gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY: @ 0x083B809C
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0835B068  @ tiles
-	.4byte 0x0835C0E4  @ palettes
-	.4byte 0x083A2308  @ metatiles
-	.4byte 0x083A37C8  @ metatileAttributes
+	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_EVER_GRANDE_CITY_SIDNEYS_ROOM_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x080A0831  @ callback
 	.globl gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY
 gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY: @ 0x083B80B4
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0835C2E4  @ tiles
-	.4byte 0x0835CFE8  @ palettes
-	.4byte 0x083A3A60  @ metatiles
-	.4byte 0x083A5A30  @ metatileAttributes
+	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_LILYCOVE_CITY_DEPARTMENT_STORE_ELEVATOR_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B80CC, 0xA8
 	.globl gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY
 gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY: @ 0x083B8174
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x08365604  @ tiles
-	.4byte 0x08365A24  @ palettes
-	.4byte 0x083AF2CE  @ metatiles
-	.4byte 0x083AF61E  @ metatileAttributes
+	.4byte gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_MOSSDEEP_CITY_GAME_CORNER_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B818C, 0x60
 	.globl gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY
 gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY: @ 0x083B81EC
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0836B2CC  @ tiles
-	.4byte 0x0836BD30  @ palettes
-	.4byte 0x083B6012  @ metatiles
-	.4byte 0x083B70E2  @ metatileAttributes
+	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_FALLARBOR_TOWN_BATTLE_TENT_LOBBY_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.globl gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY
 gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY: @ 0x083B8204
 	.byte 0x01, 0x01, 0x00, 0x00  @ isCompressed, isSecondary
-	.4byte 0x0836BF30  @ tiles
-	.4byte 0x0836D898  @ palettes
-	.4byte 0x083B72FC  @ metatiles
-	.4byte 0x083B772C  @ metatileAttributes
+	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Tiles  @ tiles
+	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Palettes  @ palettes
+	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_Metatiles  @ metatiles
+	.4byte gTileset_SOOTOPOLIS_CITY_MYSTERY_EVENTS_HOUSE_1F_SECONDARY_MetatileAttributes  @ metatileAttributes
 	.4byte 0x00000000  @ callback
 	.incbin "baserom_jp.gba", 0x3B821C, 0x18
 gMapLayout_PETALBURG_CITY_Border:
