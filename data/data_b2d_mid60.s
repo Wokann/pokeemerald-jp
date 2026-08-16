@@ -2197,17 +2197,36 @@ gFireSpinSpriteTemplate: @ 0x57276C
 gFlyingSandCrescentSpriteTemplate: @ 0x572784
 	.hword 0x2815, 0x2815
 	.4byte 0x084FD040, 0x082BF304, 0, gDummySpriteAffineAnimTable, 0x0811169D
-	.incbin "baserom_jp.gba", 0x57279c, 0x8
-
+sFlyingSandSubsprites: @ 0x857279C
+	.byte 0xF0, 0x00, 0x09, 0x40
+	.byte 0x10, 0x00, 0x89, 0x40
 
 	.globl sFlyingSandSubspriteTable
 sFlyingSandSubspriteTable: @ 0x85727A4
-	.incbin "baserom_jp.gba", 0x5727a4, 0x50
+	.byte 0x02, 0x00, 0x00, 0x00
+	.4byte sFlyingSandSubsprites
+
+sAnim_Rock_Biggest: @ 0x85727AC
+	.hword 0x0000, 0x0001, 0xFFFF, 0x0000
+sAnim_Rock_Bigger: @ 0x85727B4
+	.hword 0x0010, 0x0001, 0xFFFF, 0x0000
+sAnim_Rock_Big: @ 0x85727BC
+	.hword 0x0020, 0x0001, 0xFFFF, 0x0000
+sAnim_Rock_Small: @ 0x85727C4
+	.hword 0x0030, 0x0001, 0xFFFF, 0x0000
+sAnim_Rock_Smaller: @ 0x85727CC
+	.hword 0x0040, 0x0001, 0xFFFF, 0x0000
+sAnim_Rock_Smallest: @ 0x85727D4
+	.hword 0x0050, 0x0001, 0xFFFF, 0x0000
+
+sAnims_BasicRock: @ 0x85727DC
+	.4byte sAnim_Rock_Biggest, sAnim_Rock_Bigger, sAnim_Rock_Big, sAnim_Rock_Small
+	.4byte sAnim_Rock_Smaller, sAnim_Rock_Smallest
 
 	.globl gAncientPowerRockSpriteTemplate
 gAncientPowerRockSpriteTemplate: @ 0x85727F4
 	.hword 0x274A, 0x274A
-	.4byte 0x084FD020, 0x085727DC, 0, gDummySpriteAffineAnimTable, 0x08111781
+	.4byte 0x084FD020, sAnims_BasicRock, 0, gDummySpriteAffineAnimTable, 0x08111781
 
 	.globl gRolloutMudSpriteTemplate
 gRolloutMudSpriteTemplate: @ 0x857280C
