@@ -35,7 +35,18 @@ sDisplayModeArrowsTemplate: @ 0x85ADB04
 
 	.globl sMoveListScrollArrowsTemplate
 sMoveListScrollArrowsTemplate: @ 0x85ADB14
-	.incbin "baserom_jp.gba", 0x5adb14, 0x40
+	.byte 0x02  @ firstArrowType (SCROLL_ARROW_UP)
+	.byte 0xC8  @ firstX
+	.byte 0x08  @ firstY
+	.byte 0x03  @ secondArrowType (SCROLL_ARROW_DOWN)
+	.byte 0xC8  @ secondX
+	.byte 0x68  @ secondY
+	.hword 0x00  @ fullyUpThreshold
+	.hword 0x00  @ fullyDownThreshold
+	.hword 0x1531  @ tileTag
+	.hword 0x1531  @ palTag
+	.byte 0x00  @ palNum
+	.incbin "baserom_jp.gba", 0x5ADB23, 0x31
 
 	.globl sConstestMoveHeartSprite
 sConstestMoveHeartSprite: @ 0x85ADB54
