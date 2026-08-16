@@ -22,6 +22,8 @@ baserom_jp.gba
 *.hwjpnfont
 *.fwjpnfont
 sound/**/*.bin
+!sound/tone_data/*.bin
+!sound/direct_sound_samples/*.bin
 sound/songs/midi/*.s
 tools/agbcc
 tools/agbcc-src

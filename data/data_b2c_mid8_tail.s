@@ -1455,7 +1455,7 @@ gToneData_085FD824: @ 0x085FD824
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FD830, 0x2DC
+	.incbin "sound/tone_data/gToneData_085FD824_voice.bin"
 	.globl gVoicegroup_085FDB0C
 gVoicegroup_085FDB0C: @ 0x085FDB0C
 	.byte 0x01, 0x3C, 0x00, 0x00  @ voice 0
@@ -2151,697 +2151,697 @@ gToneData_085FEC58: @ 0x085FEC58
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08604358  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FEC64, 0x3E4
+	.incbin "sound/tone_data/gToneData_085FEC58_voice.bin"
 	.globl gToneData_085FF048
 gToneData_085FF048: @ 0x085FF048
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08601F58  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FF054, 0x5F4
+	.incbin "sound/tone_data/gToneData_085FF048_voice.bin"
 	.globl gToneData_085FF648
 gToneData_085FF648: @ 0x085FF648
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FF654, 0x4BC
+	.incbin "sound/tone_data/gToneData_085FF648_voice.bin"
 	.globl gToneData_085FFB10
 gToneData_085FFB10: @ 0x085FFB10
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FFB1C, 0x42C
+	.incbin "sound/tone_data/gToneData_085FFB10_voice.bin"
 	.globl gToneData_085FFF48
 gToneData_085FFF48: @ 0x085FFF48
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x5FFF54, 0x3F0
+	.incbin "sound/tone_data/gToneData_085FFF48_voice.bin"
 	.globl gToneData_08600344
 gToneData_08600344: @ 0x08600344
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08600794  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x600350, 0x750
+	.incbin "sound/tone_data/gToneData_08600344_voice.bin"
 	.globl gToneData_08600AA0
 gToneData_08600AA0: @ 0x08600AA0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x600AAC, 0x438
+	.incbin "sound/tone_data/gToneData_08600AA0_voice.bin"
 	.globl gToneData_08600EE4
 gToneData_08600EE4: @ 0x08600EE4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x600EF0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08600EE4_voice.bin"
 	.globl gToneData_086014E4
 gToneData_086014E4: @ 0x086014E4
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6014F0, 0x3F0
+	.incbin "sound/tone_data/gToneData_086014E4_voice.bin"
 	.globl gToneData_086018E0
 gToneData_086018E0: @ 0x086018E0
 	.byte 0x40, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x085FE5B0  @ wav
 	.byte 0x54, 0xBF, 0x63, 0x08  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6018EC, 0x408
+	.incbin "sound/tone_data/gToneData_086018E0_voice.bin"
 	.globl gToneData_08601CF4
 gToneData_08601CF4: @ 0x08601CF4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x601D00, 0x564
+	.incbin "sound/tone_data/gToneData_08601CF4_voice.bin"
 	.globl gToneData_08602264
 gToneData_08602264: @ 0x08602264
 	.byte 0x40, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x085FE5B0  @ wav
 	.byte 0x54, 0xBF, 0x63, 0x08  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x602270, 0x420
+	.incbin "sound/tone_data/gToneData_08602264_voice.bin"
 	.globl gToneData_08602690
 gToneData_08602690: @ 0x08602690
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60269C, 0x438
+	.incbin "sound/tone_data/gToneData_08602690_voice.bin"
 	.globl gToneData_08602AD4
 gToneData_08602AD4: @ 0x08602AD4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x602AE0, 0x3E4
+	.incbin "sound/tone_data/gToneData_08602AD4_voice.bin"
 	.globl gToneData_08602EC4
 gToneData_08602EC4: @ 0x08602EC4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x602ED0, 0x3F0
+	.incbin "sound/tone_data/gToneData_08602EC4_voice.bin"
 	.globl gToneData_086032C0
 gToneData_086032C0: @ 0x086032C0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6032CC, 0x5F4
+	.incbin "sound/tone_data/gToneData_086032C0_voice.bin"
 	.globl gToneData_086038C0
 gToneData_086038C0: @ 0x086038C0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6038CC, 0x3D8
+	.incbin "sound/tone_data/gToneData_086038C0_voice.bin"
 	.globl gToneData_08603CA4
 gToneData_08603CA4: @ 0x08603CA4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x603CB0, 0x414
+	.incbin "sound/tone_data/gToneData_08603CA4_voice.bin"
 	.globl gToneData_086040C4
 gToneData_086040C4: @ 0x086040C4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08604358  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6040D0, 0x594
+	.incbin "sound/tone_data/gToneData_086040C4_voice.bin"
 	.globl gToneData_08604664
 gToneData_08604664: @ 0x08604664
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08600794  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x604670, 0x5F4
+	.incbin "sound/tone_data/gToneData_08604664_voice.bin"
 	.globl gToneData_08604C64
 gToneData_08604C64: @ 0x08604C64
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x604C70, 0x3D8
+	.incbin "sound/tone_data/gToneData_08604C64_voice.bin"
 	.globl gToneData_08605048
 gToneData_08605048: @ 0x08605048
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x605054, 0x3E4
+	.incbin "sound/tone_data/gToneData_08605048_voice.bin"
 	.globl gToneData_08605438
 gToneData_08605438: @ 0x08605438
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08604358  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x605444, 0x3F0
+	.incbin "sound/tone_data/gToneData_08605438_voice.bin"
 	.globl gToneData_08605834
 gToneData_08605834: @ 0x08605834
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x605840, 0x5F4
+	.incbin "sound/tone_data/gToneData_08605834_voice.bin"
 	.globl gToneData_08605E34
 gToneData_08605E34: @ 0x08605E34
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08604358  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x605E40, 0x420
+	.incbin "sound/tone_data/gToneData_08605E34_voice.bin"
 	.globl gToneData_08606260
 gToneData_08606260: @ 0x08606260
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60626C, 0x3CC
+	.incbin "sound/tone_data/gToneData_08606260_voice.bin"
 	.globl gToneData_08606638
 gToneData_08606638: @ 0x08606638
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x606644, 0x5F4
+	.incbin "sound/tone_data/gToneData_08606638_voice.bin"
 	.globl gToneData_08606C38
 gToneData_08606C38: @ 0x08606C38
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x606C44, 0x5F4
+	.incbin "sound/tone_data/gToneData_08606C38_voice.bin"
 	.globl gToneData_08607238
 gToneData_08607238: @ 0x08607238
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x607244, 0x5F4
+	.incbin "sound/tone_data/gToneData_08607238_voice.bin"
 	.globl gToneData_08607838
 gToneData_08607838: @ 0x08607838
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x607844, 0x5F4
+	.incbin "sound/tone_data/gToneData_08607838_voice.bin"
 	.globl gToneData_08607E38
 gToneData_08607E38: @ 0x08607E38
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x607E44, 0x3C0
+	.incbin "sound/tone_data/gToneData_08607E38_voice.bin"
 	.globl gToneData_08608204
 gToneData_08608204: @ 0x08608204
 	.byte 0x40, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x085FE5B0  @ wav
 	.byte 0x54, 0xBF, 0x63, 0x08  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x608210, 0x3C0
+	.incbin "sound/tone_data/gToneData_08608204_voice.bin"
 	.globl gToneData_086085D0
 gToneData_086085D0: @ 0x086085D0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6085DC, 0x5F4
+	.incbin "sound/tone_data/gToneData_086085D0_voice.bin"
 	.globl gToneData_08608BD0
 gToneData_08608BD0: @ 0x08608BD0
 	.byte 0x40, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x085FE5B0  @ wav
 	.byte 0x54, 0xBF, 0x63, 0x08  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x608BDC, 0x5F4
+	.incbin "sound/tone_data/gToneData_08608BD0_voice.bin"
 	.globl gToneData_086091D0
 gToneData_086091D0: @ 0x086091D0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6091DC, 0x5F4
+	.incbin "sound/tone_data/gToneData_086091D0_voice.bin"
 	.globl gToneData_086097D0
 gToneData_086097D0: @ 0x086097D0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6097DC, 0x414
+	.incbin "sound/tone_data/gToneData_086097D0_voice.bin"
 	.globl gToneData_08609BF0
 gToneData_08609BF0: @ 0x08609BF0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x609BFC, 0x5F4
+	.incbin "sound/tone_data/gToneData_08609BF0_voice.bin"
 	.globl gToneData_0860A1F0
 gToneData_0860A1F0: @ 0x0860A1F0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60A1FC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860A1F0_voice.bin"
 	.globl gToneData_0860A7F0
 gToneData_0860A7F0: @ 0x0860A7F0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60A7FC, 0x36C
+	.incbin "sound/tone_data/gToneData_0860A7F0_voice.bin"
 	.globl gToneData_0860AB68
 gToneData_0860AB68: @ 0x0860AB68
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60AB74, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860AB68_voice.bin"
 	.globl gToneData_0860B168
 gToneData_0860B168: @ 0x0860B168
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60B174, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860B168_voice.bin"
 	.globl gToneData_0860B768
 gToneData_0860B768: @ 0x0860B768
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60B774, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860B768_voice.bin"
 	.globl gToneData_0860BD68
 gToneData_0860BD68: @ 0x0860BD68
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60BD74, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860BD68_voice.bin"
 	.globl gToneData_0860C368
 gToneData_0860C368: @ 0x0860C368
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60C374, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860C368_voice.bin"
 	.globl gToneData_0860C968
 gToneData_0860C968: @ 0x0860C968
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60C974, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860C968_voice.bin"
 	.globl gToneData_0860CF68
 gToneData_0860CF68: @ 0x0860CF68
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60CF74, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860CF68_voice.bin"
 	.globl gToneData_0860D568
 gToneData_0860D568: @ 0x0860D568
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60D574, 0x420
+	.incbin "sound/tone_data/gToneData_0860D568_voice.bin"
 	.globl gToneData_0860D994
 gToneData_0860D994: @ 0x0860D994
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60D9A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860D994_voice.bin"
 	.globl gToneData_0860DF94
 gToneData_0860DF94: @ 0x0860DF94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60DFA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860DF94_voice.bin"
 	.globl gToneData_0860E594
 gToneData_0860E594: @ 0x0860E594
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60E5A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860E594_voice.bin"
 	.globl gToneData_0860EB94
 gToneData_0860EB94: @ 0x0860EB94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60EBA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860EB94_voice.bin"
 	.globl gToneData_0860F194
 gToneData_0860F194: @ 0x0860F194
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60F1A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860F194_voice.bin"
 	.globl gToneData_0860F794
 gToneData_0860F794: @ 0x0860F794
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60F7A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860F794_voice.bin"
 	.globl gToneData_0860FD94
 gToneData_0860FD94: @ 0x0860FD94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x60FDA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_0860FD94_voice.bin"
 	.globl gToneData_08610394
 gToneData_08610394: @ 0x08610394
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6103A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08610394_voice.bin"
 	.globl gToneData_08610994
 gToneData_08610994: @ 0x08610994
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6109A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08610994_voice.bin"
 	.globl gToneData_08610F94
 gToneData_08610F94: @ 0x08610F94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x610FA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08610F94_voice.bin"
 	.globl gToneData_08611594
 gToneData_08611594: @ 0x08611594
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6115A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08611594_voice.bin"
 	.globl gToneData_08611B94
 gToneData_08611B94: @ 0x08611B94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x611BA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08611B94_voice.bin"
 	.globl gToneData_08612194
 gToneData_08612194: @ 0x08612194
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6121A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08612194_voice.bin"
 	.globl gToneData_08612794
 gToneData_08612794: @ 0x08612794
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6127A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08612794_voice.bin"
 	.globl gToneData_08612D94
 gToneData_08612D94: @ 0x08612D94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x612DA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08612D94_voice.bin"
 	.globl gToneData_08613394
 gToneData_08613394: @ 0x08613394
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6133A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08613394_voice.bin"
 	.globl gToneData_08613994
 gToneData_08613994: @ 0x08613994
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6139A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08613994_voice.bin"
 	.globl gToneData_08613F94
 gToneData_08613F94: @ 0x08613F94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x613FA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08613F94_voice.bin"
 	.globl gToneData_08614594
 gToneData_08614594: @ 0x08614594
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6145A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08614594_voice.bin"
 	.globl gToneData_08614B94
 gToneData_08614B94: @ 0x08614B94
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x614BA0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08614B94_voice.bin"
 	.globl gToneData_08615194
 gToneData_08615194: @ 0x08615194
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6151A0, 0x5F4
+	.incbin "sound/tone_data/gToneData_08615194_voice.bin"
 	.globl gToneData_08615794
 gToneData_08615794: @ 0x08615794
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6157A0, 0xC
+	.incbin "sound/tone_data/gToneData_08615794_voice.bin"
 	.globl gToneData_086157AC
 gToneData_086157AC: @ 0x086157AC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6157B8, 0x5F4
+	.incbin "sound/tone_data/gToneData_086157AC_voice.bin"
 	.globl gToneData_08615DAC
 gToneData_08615DAC: @ 0x08615DAC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x615DB8, 0x3E4
+	.incbin "sound/tone_data/gToneData_08615DAC_voice.bin"
 	.globl gToneData_0861619C
 gToneData_0861619C: @ 0x0861619C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6161A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861619C_voice.bin"
 	.globl gToneData_0861679C
 gToneData_0861679C: @ 0x0861679C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6167A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861679C_voice.bin"
 	.globl gToneData_08616D9C
 gToneData_08616D9C: @ 0x08616D9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x616DA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_08616D9C_voice.bin"
 	.globl gToneData_0861739C
 gToneData_0861739C: @ 0x0861739C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6173A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861739C_voice.bin"
 	.globl gToneData_0861799C
 gToneData_0861799C: @ 0x0861799C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6179A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861799C_voice.bin"
 	.globl gToneData_08617F9C
 gToneData_08617F9C: @ 0x08617F9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x617FA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_08617F9C_voice.bin"
 	.globl gToneData_0861859C
 gToneData_0861859C: @ 0x0861859C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6185A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861859C_voice.bin"
 	.globl gToneData_08618B9C
 gToneData_08618B9C: @ 0x08618B9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x618BA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_08618B9C_voice.bin"
 	.globl gToneData_0861919C
 gToneData_0861919C: @ 0x0861919C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6191A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861919C_voice.bin"
 	.globl gToneData_0861979C
 gToneData_0861979C: @ 0x0861979C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6197A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861979C_voice.bin"
 	.globl gToneData_08619D9C
 gToneData_08619D9C: @ 0x08619D9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x619DA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_08619D9C_voice.bin"
 	.globl gToneData_0861A39C
 gToneData_0861A39C: @ 0x0861A39C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61A3A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861A39C_voice.bin"
 	.globl gToneData_0861A99C
 gToneData_0861A99C: @ 0x0861A99C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61A9A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861A99C_voice.bin"
 	.globl gToneData_0861AF9C
 gToneData_0861AF9C: @ 0x0861AF9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61AFA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861AF9C_voice.bin"
 	.globl gToneData_0861B59C
 gToneData_0861B59C: @ 0x0861B59C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61B5A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861B59C_voice.bin"
 	.globl gToneData_0861BB9C
 gToneData_0861BB9C: @ 0x0861BB9C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61BBA8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861BB9C_voice.bin"
 	.globl gToneData_0861C19C
 gToneData_0861C19C: @ 0x0861C19C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61C1A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861C19C_voice.bin"
 	.globl gToneData_0861C79C
 gToneData_0861C79C: @ 0x0861C79C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61C7A8, 0x51C
+	.incbin "sound/tone_data/gToneData_0861C79C_voice.bin"
 	.globl gToneData_0861CCC4
 gToneData_0861CCC4: @ 0x0861CCC4
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61CCD0, 0x3CC
+	.incbin "sound/tone_data/gToneData_0861CCC4_voice.bin"
 	.globl gToneData_0861D09C
 gToneData_0861D09C: @ 0x0861D09C
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61D0A8, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861D09C_voice.bin"
 	.globl gToneData_0861D69C
 gToneData_0861D69C: @ 0x0861D69C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDEF0  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61D6A8, 0x504
+	.incbin "sound/tone_data/gToneData_0861D69C_voice.bin"
 	.globl gToneData_0861DBAC
 gToneData_0861DBAC: @ 0x0861DBAC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61DBB8, 0x3D8
+	.incbin "sound/tone_data/gToneData_0861DBAC_voice.bin"
 	.globl gToneData_0861DF90
 gToneData_0861DF90: @ 0x0861DF90
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61DF9C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861DF90_voice.bin"
 	.globl gToneData_0861E590
 gToneData_0861E590: @ 0x0861E590
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61E59C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861E590_voice.bin"
 	.globl gToneData_0861EB90
 gToneData_0861EB90: @ 0x0861EB90
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FE178  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61EB9C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861EB90_voice.bin"
 	.globl gToneData_0861F190
 gToneData_0861F190: @ 0x0861F190
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FE178  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61F19C, 0x3D8
+	.incbin "sound/tone_data/gToneData_0861F190_voice.bin"
 	.globl gToneData_0861F574
 gToneData_0861F574: @ 0x0861F574
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61F580, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861F574_voice.bin"
 	.globl gToneData_0861FB74
 gToneData_0861FB74: @ 0x0861FB74
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x61FB80, 0x5F4
+	.incbin "sound/tone_data/gToneData_0861FB74_voice.bin"
 	.globl gToneData_08620174
 gToneData_08620174: @ 0x08620174
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDEF0  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x620180, 0x5F4
+	.incbin "sound/tone_data/gToneData_08620174_voice.bin"
 	.globl gToneData_08620774
 gToneData_08620774: @ 0x08620774
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x620780, 0x5F4
+	.incbin "sound/tone_data/gToneData_08620774_voice.bin"
 	.globl gToneData_08620D74
 gToneData_08620D74: @ 0x08620D74
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x620D80, 0x5F4
+	.incbin "sound/tone_data/gToneData_08620D74_voice.bin"
 	.globl gToneData_08621374
 gToneData_08621374: @ 0x08621374
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x621380, 0x5F4
+	.incbin "sound/tone_data/gToneData_08621374_voice.bin"
 	.globl gToneData_08621974
 gToneData_08621974: @ 0x08621974
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x621980, 0x5F4
+	.incbin "sound/tone_data/gToneData_08621974_voice.bin"
 	.globl gToneData_08621F74
 gToneData_08621F74: @ 0x08621F74
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x621F80, 0x3CC
+	.incbin "sound/tone_data/gToneData_08621F74_voice.bin"
 	.globl gToneData_0862234C
 gToneData_0862234C: @ 0x0862234C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x622358, 0x438
+	.incbin "sound/tone_data/gToneData_0862234C_voice.bin"
 	.globl gToneData_08622790
 gToneData_08622790: @ 0x08622790
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62279C, 0x438
+	.incbin "sound/tone_data/gToneData_08622790_voice.bin"
 	.globl gToneData_08622BD4
 gToneData_08622BD4: @ 0x08622BD4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x622BE0, 0x438
+	.incbin "sound/tone_data/gToneData_08622BD4_voice.bin"
 	.globl gToneData_08623018
 gToneData_08623018: @ 0x08623018
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x623024, 0x3FC
+	.incbin "sound/tone_data/gToneData_08623018_voice.bin"
 	.globl gToneData_08623420
 gToneData_08623420: @ 0x08623420
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62342C, 0x3E4
+	.incbin "sound/tone_data/gToneData_08623420_voice.bin"
 	.globl gToneData_08623810
 gToneData_08623810: @ 0x08623810
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62381C, 0x5F4
+	.incbin "sound/tone_data/gToneData_08623810_voice.bin"
 	.globl gToneData_08623E10
 gToneData_08623E10: @ 0x08623E10
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x623E1C, 0x408
+	.incbin "sound/tone_data/gToneData_08623E10_voice.bin"
 	.globl gToneData_08624224
 gToneData_08624224: @ 0x08624224
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x624230, 0x3E4
+	.incbin "sound/tone_data/gToneData_08624224_voice.bin"
 	.globl gToneData_08624614
 gToneData_08624614: @ 0x08624614
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x624620, 0x5F4
+	.incbin "sound/tone_data/gToneData_08624614_voice.bin"
 	.globl gToneData_08624C14
 gToneData_08624C14: @ 0x08624C14
 	.byte 0x00, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte DirectSoundWaveData_unknown_synth_snare  @ wav
 	.byte 0xFF, 0xF9, 0x67, 0xA5  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x624C20, 0x5F4
+	.incbin "sound/tone_data/gToneData_08624C14_voice.bin"
 	.globl gToneData_08625214
 gToneData_08625214: @ 0x08625214
 	.byte 0x08, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x086AB7F0  @ wav
 	.byte 0xFF, 0xF9, 0x00, 0xA5  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x625220, 0x5F4
+	.incbin "sound/tone_data/gToneData_08625214_voice.bin"
 
 	.globl gJP_CryTable_Normal_0
 gJP_CryTable_Normal_0: @ 0x08625814
@@ -5575,343 +5575,343 @@ gToneData_08628874: @ 0x08628874
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x628880, 0x5F4
+	.incbin "sound/tone_data/gToneData_08628874_voice.bin"
 	.globl gToneData_08628E74
 gToneData_08628E74: @ 0x08628E74
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x628E80, 0x5F4
+	.incbin "sound/tone_data/gToneData_08628E74_voice.bin"
 	.globl gToneData_08629474
 gToneData_08629474: @ 0x08629474
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x629480, 0x5F4
+	.incbin "sound/tone_data/gToneData_08629474_voice.bin"
 	.globl gToneData_08629A74
 gToneData_08629A74: @ 0x08629A74
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x629A80, 0x42C
+	.incbin "sound/tone_data/gToneData_08629A74_voice.bin"
 	.globl gToneData_08629EAC
 gToneData_08629EAC: @ 0x08629EAC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x629EB8, 0x3D8
+	.incbin "sound/tone_data/gToneData_08629EAC_voice.bin"
 	.globl gToneData_0862A290
 gToneData_0862A290: @ 0x0862A290
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62A29C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862A290_voice.bin"
 	.globl gToneData_0862A890
 gToneData_0862A890: @ 0x0862A890
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62A89C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862A890_voice.bin"
 	.globl gToneData_0862AE90
 gToneData_0862AE90: @ 0x0862AE90
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62AE9C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862AE90_voice.bin"
 	.globl gToneData_0862B490
 gToneData_0862B490: @ 0x0862B490
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62B49C, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862B490_voice.bin"
 	.globl gToneData_0862BA90
 gToneData_0862BA90: @ 0x0862BA90
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62BA9C, 0x24
+	.incbin "sound/tone_data/gToneData_0862BA90_voice.bin"
 	.globl gToneData_0862BAC0
 gToneData_0862BAC0: @ 0x0862BAC0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62BACC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862BAC0_voice.bin"
 	.globl gToneData_0862C0C0
 gToneData_0862C0C0: @ 0x0862C0C0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62C0CC, 0x3E4
+	.incbin "sound/tone_data/gToneData_0862C0C0_voice.bin"
 	.globl gToneData_0862C4B0
 gToneData_0862C4B0: @ 0x0862C4B0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62C4BC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862C4B0_voice.bin"
 	.globl gToneData_0862CAB0
 gToneData_0862CAB0: @ 0x0862CAB0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62CABC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862CAB0_voice.bin"
 	.globl gToneData_0862D0B0
 gToneData_0862D0B0: @ 0x0862D0B0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62D0BC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862D0B0_voice.bin"
 	.globl gToneData_0862D6B0
 gToneData_0862D6B0: @ 0x0862D6B0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62D6BC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862D6B0_voice.bin"
 	.globl gToneData_0862DCB0
 gToneData_0862DCB0: @ 0x0862DCB0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62DCBC, 0x3E4
+	.incbin "sound/tone_data/gToneData_0862DCB0_voice.bin"
 	.globl gToneData_0862E0A0
 gToneData_0862E0A0: @ 0x0862E0A0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62E0AC, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862E0A0_voice.bin"
 	.globl gToneData_0862E6A0
 gToneData_0862E6A0: @ 0x0862E6A0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x0863BB58  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62E6AC, 0x450
+	.incbin "sound/tone_data/gToneData_0862E6A0_voice.bin"
 	.globl gToneData_0862EAFC
 gToneData_0862EAFC: @ 0x0862EAFC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62EB08, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862EAFC_voice.bin"
 	.globl gToneData_0862F0FC
 gToneData_0862F0FC: @ 0x0862F0FC
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62F108, 0x414
+	.incbin "sound/tone_data/gToneData_0862F0FC_voice.bin"
 	.globl gToneData_0862F51C
 gToneData_0862F51C: @ 0x0862F51C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62F528, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862F51C_voice.bin"
 	.globl gToneData_0862FB1C
 gToneData_0862FB1C: @ 0x0862FB1C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x62FB28, 0x5F4
+	.incbin "sound/tone_data/gToneData_0862FB1C_voice.bin"
 	.globl gToneData_0863011C
 gToneData_0863011C: @ 0x0863011C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x630128, 0x450
+	.incbin "sound/tone_data/gToneData_0863011C_voice.bin"
 	.globl gToneData_08630578
 gToneData_08630578: @ 0x08630578
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x630584, 0x5F4
+	.incbin "sound/tone_data/gToneData_08630578_voice.bin"
 	.globl gToneData_08630B78
 gToneData_08630B78: @ 0x08630B78
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x630B84, 0x5F4
+	.incbin "sound/tone_data/gToneData_08630B78_voice.bin"
 	.globl gToneData_08631178
 gToneData_08631178: @ 0x08631178
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x631184, 0x5F4
+	.incbin "sound/tone_data/gToneData_08631178_voice.bin"
 	.globl gToneData_08631778
 gToneData_08631778: @ 0x08631778
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x631784, 0x5F4
+	.incbin "sound/tone_data/gToneData_08631778_voice.bin"
 	.globl gToneData_08631D78
 gToneData_08631D78: @ 0x08631D78
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x631D84, 0x5F4
+	.incbin "sound/tone_data/gToneData_08631D78_voice.bin"
 	.globl gToneData_08632378
 gToneData_08632378: @ 0x08632378
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x632384, 0x414
+	.incbin "sound/tone_data/gToneData_08632378_voice.bin"
 	.globl gToneData_08632798
 gToneData_08632798: @ 0x08632798
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6327A4, 0x5F4
+	.incbin "sound/tone_data/gToneData_08632798_voice.bin"
 	.globl gToneData_08632D98
 gToneData_08632D98: @ 0x08632D98
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x632DA4, 0x450
+	.incbin "sound/tone_data/gToneData_08632D98_voice.bin"
 	.globl gToneData_086331F4
 gToneData_086331F4: @ 0x086331F4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x633200, 0x5F4
+	.incbin "sound/tone_data/gToneData_086331F4_voice.bin"
 	.globl gToneData_086337F4
 gToneData_086337F4: @ 0x086337F4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x633800, 0x5F4
+	.incbin "sound/tone_data/gToneData_086337F4_voice.bin"
 	.globl gToneData_08633DF4
 gToneData_08633DF4: @ 0x08633DF4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x633E00, 0x5F4
+	.incbin "sound/tone_data/gToneData_08633DF4_voice.bin"
 	.globl gToneData_086343F4
 gToneData_086343F4: @ 0x086343F4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x634400, 0x5F4
+	.incbin "sound/tone_data/gToneData_086343F4_voice.bin"
 	.globl gToneData_086349F4
 gToneData_086349F4: @ 0x086349F4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x634A00, 0x5F4
+	.incbin "sound/tone_data/gToneData_086349F4_voice.bin"
 	.globl gToneData_08634FF4
 gToneData_08634FF4: @ 0x08634FF4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x635000, 0x5F4
+	.incbin "sound/tone_data/gToneData_08634FF4_voice.bin"
 	.globl gToneData_086355F4
 gToneData_086355F4: @ 0x086355F4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x635600, 0x5F4
+	.incbin "sound/tone_data/gToneData_086355F4_voice.bin"
 	.globl gToneData_08635BF4
 gToneData_08635BF4: @ 0x08635BF4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x635C00, 0x3E4
+	.incbin "sound/tone_data/gToneData_08635BF4_voice.bin"
 	.globl gToneData_08635FE4
 gToneData_08635FE4: @ 0x08635FE4
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDB0C  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x635FF0, 0x438
+	.incbin "sound/tone_data/gToneData_08635FE4_voice.bin"
 	.globl gToneData_08636428
 gToneData_08636428: @ 0x08636428
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x636434, 0x5F4
+	.incbin "sound/tone_data/gToneData_08636428_voice.bin"
 	.globl gToneData_08636A28
 gToneData_08636A28: @ 0x08636A28
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x636A34, 0x5F4
+	.incbin "sound/tone_data/gToneData_08636A28_voice.bin"
 	.globl gToneData_08637028
 gToneData_08637028: @ 0x08637028
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x637034, 0x750
+	.incbin "sound/tone_data/gToneData_08637028_voice.bin"
 	.globl gToneData_08637784
 gToneData_08637784: @ 0x08637784
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08637C34  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x637790, 0x8DC
+	.incbin "sound/tone_data/gToneData_08637784_voice.bin"
 	.globl gToneData_0863806C
 gToneData_0863806C: @ 0x0863806C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08637C34  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x638078, 0x414
+	.incbin "sound/tone_data/gToneData_0863806C_voice.bin"
 	.globl gToneData_0863848C
 gToneData_0863848C: @ 0x0863848C
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x08637C34  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x638498, 0x414
+	.incbin "sound/tone_data/gToneData_0863848C_voice.bin"
 	.globl gToneData_086388AC
 gToneData_086388AC: @ 0x086388AC
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6388B8, 0x5F4
+	.incbin "sound/tone_data/gToneData_086388AC_voice.bin"
 	.globl gToneData_08638EAC
 gToneData_08638EAC: @ 0x08638EAC
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x638EB8, 0x228
+	.incbin "sound/tone_data/gToneData_08638EAC_voice.bin"
 	.globl gToneData_086390E0
 gToneData_086390E0: @ 0x086390E0
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x6390EC, 0x414
+	.incbin "sound/tone_data/gToneData_086390E0_voice.bin"
 	.globl gToneData_08639500
 gToneData_08639500: @ 0x08639500
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x63950C, 0x5F4
+	.incbin "sound/tone_data/gToneData_08639500_voice.bin"
 	.globl gToneData_08639B00
 gToneData_08639B00: @ 0x08639B00
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x639B0C, 0x3FC
+	.incbin "sound/tone_data/gToneData_08639B00_voice.bin"
 	.globl gToneData_08639F08
 gToneData_08639F08: @ 0x08639F08
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x639F14, 0x5F4
+	.incbin "sound/tone_data/gToneData_08639F08_voice.bin"
 	.globl gToneData_0863A508
 gToneData_0863A508: @ 0x0863A508
 	.byte 0x01, 0x3C, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte 0x00000002  @ wav
 	.byte 0x00, 0x00, 0x0F, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x63A514, 0x5F4
+	.incbin "sound/tone_data/gToneData_0863A508_voice.bin"
 	.globl gToneData_0863AB08
 gToneData_0863AB08: @ 0x0863AB08
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x63AB14, 0x5F4
+	.incbin "sound/tone_data/gToneData_0863AB08_voice.bin"
 	.globl gToneData_0863B108
 gToneData_0863B108: @ 0x0863B108
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x63B114, 0x5F4
+	.incbin "sound/tone_data/gToneData_0863B108_voice.bin"
 	.globl gToneData_0863B708
 gToneData_0863B708: @ 0x0863B708
 	.byte 0x80, 0x00, 0x00, 0x00  @ type, key, length, pan_sweep
 	.4byte gVoicegroup_085FDC68  @ wav
 	.byte 0x00, 0x00, 0x00, 0x00  @ attack, decay, sustain, release
-	.incbin "baserom_jp.gba", 0x63B714, 0xB68
+	.incbin "sound/tone_data/gToneData_0863B708_voice.bin"
 	.globl gUnknown_863C27C
 gUnknown_863C27C: @ 0x863C27C
 	.incbin "baserom_jp.gba", 0x63c27c, 0x30
