@@ -11,15 +11,16 @@
 
 	.globl gUnknown_85FAEF4
 gUnknown_85FAEF4: @ 0x85FAEF4
-	.incbin "baserom_jp.gba", 0x5faef4, 0x10
+	.asciz "cereader_tool.c"
 
 	.globl gUnknown_85FAF04
 gUnknown_85FAF04: @ 0x85FAF04
-	.incbin "baserom_jp.gba", 0x5faf04, 0x14
+	.asciz "ttdata->dummy == 0"
+	.byte 0
 
 	.globl gUnknown_85FAF18
 gUnknown_85FAF18: @ 0x85FAF18
-	.incbin "baserom_jp.gba", 0x5faf18, 0x10
+	.asciz "ttdata->id == 0"
 
 	.globl sFarawayIslandRockCoords
 sFarawayIslandRockCoords: @ 0x85FAF28
