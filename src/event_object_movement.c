@@ -70,6 +70,7 @@ extern const struct PairedPalettes sSpecialObjectReflectionPaletteSets[];
 extern u8 gUnknown_2037254; // sCurrentReflectionType
 extern u16 gUnknown_2037256; // sCurrentSpecialObjectPaletteTag
 static u8 GetCollisionInDirection(struct ObjectEvent *, u8);
+extern u32 state_to_direction(u8, u8, u8);
 extern u8 (*const gMovementTypeFuncs_CopyPlayer[])(struct ObjectEvent *, struct Sprite *);
 extern u8 (*const gMovementTypeFuncs_CopyPlayerInGrass[])(struct ObjectEvent *, struct Sprite *);
 extern u8 (*const gMovementTypeFuncs_FaceDownUpAndRight[])(struct ObjectEvent *, struct Sprite *);
@@ -6331,44 +6332,12 @@ bool8 CopyablePlayerMovement_None(struct ObjectEvent *objectEvent, struct Sprite
 {
     return 0;
 }
-__attribute__((naked)) bool8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
+bool8 CopyablePlayerMovement_FaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	ldr r1, _08091900\n\t"
-        "	ldrb r0, [r4, #6]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	adds r1, #0x21\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	bl state_to_direction\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl ObjectEventSetSingleMovement\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #2\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08091900: .4byte gUnknown_84DDA21\n\t"
-        ".syntax divided\n\t"
-    );
+    ObjectEventSetSingleMovement(objectEvent, sprite, GetFaceDirectionMovementAction(state_to_direction(gInitialMovementTypeFacingDirections[objectEvent->movementType], objectEvent->directionSequenceIndex, playerDirection)));
+    objectEvent->singleMovementActive = TRUE;
+    sprite->sTypeFuncId = 2;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 CopyablePlayerMovement_GoSpeed0(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 playerDirection, bool8 tileCallback(u8))
@@ -9550,7 +9519,7 @@ __attribute__((naked)) u8 zffu_offset_calc(u8 a, u8 b)
     );
 }
 
-__attribute__((naked)) u8 state_to_direction(u8 a, u8 b, u8 c)
+__attribute__((naked)) u32 state_to_direction(u8 a, u8 b, u8 c)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
