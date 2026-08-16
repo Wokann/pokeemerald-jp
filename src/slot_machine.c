@@ -3,6 +3,7 @@
 #include "field_effect.h"
 #include "random.h"
 #include "gpu_regs.h"
+#include "bg.h"
 #include "sound.h"
 #include "main.h"
 #include "task.h"
@@ -987,6 +988,12 @@ enum {
 
 // JP tag scheme for the coin number sprites (differs from the US GFXTAG enum).
 #define GFXTAG_NUM_0 0x70000
+// JP tag scheme for the machine/reel sprites (values match the US GFXTAG enum).
+#define GFXTAG_REEL_BG 17
+#define GFXTAG_STOP 18
+#define GFXTAG_BONUS 19
+#define GFXTAG_BIG 20
+#define GFXTAG_REG 21
 
 // Palette tags match the US pokeemerald enum order (JP ROM uses the same tag ids).
 enum {
@@ -1240,6 +1247,15 @@ extern const s16 sDigitalDisplayRegBonusYOffsets[];
 extern const s16 sDigitalDisplayRegBonusDelays[];
 extern const s16 sDigitalDisplayBigBonusOffsets[];
 extern const u16 *const sDigitalDisplay_Pal;
+extern const u32 gSlotMachineDigitalDisplay_Gfx[];
+extern const u32 sReelTimeGfx[];
+extern const struct SpriteSheet sSlotMachineSpriteSheets[22];
+extern const struct SpritePalette sSlotMachineSpritePalettes[];
+extern const u8 *const sReelBackground_Tilemap;
+extern const u32 gSlotMachineMenu_Gfx[];
+extern const u16 sUnkPalette[];
+extern const u16 gSlotMachineMenu_Tilemap[];
+extern const u16 gSlotMachineInfoBox_Tilemap[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -1310,7 +1326,15 @@ void GetReeltimeDraw(void);
 static void Task_DigitalDisplay(u8 taskId);
 static void DigitalDisplay_Idle(struct Task *task);
 u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId);
-void LoadInfoBoxTilemap(void);
+void LoadSlotMachineGfx(void);
+void LoadReelBackground(void);
+void LoadMenuGfx(void);
+void LoadMenuAndReelOverlayTilemaps(void);
+static void LoadSlotMachineMenuTilemap(void);
+void LoadSlotMachineReelOverlay(void);
+static void LoadInfoBoxTilemap(void);
+void SetDigitalDisplayImagePtrs(void);
+void AllocDigitalDisplayGfx(void);
 void LoadSlotMachineMenuTilemap(void);
 static bool8 ShouldReelTimeMachineExplode(u16 check);
 void ClearReelTimeWindowTilemap(s16 a0);
@@ -3928,13 +3952,13 @@ static const u16 *const sFlashingLightsPalTable[] =
 };
 
 // Menu palette slice used to restore the machine lights after flashing.
-extern const u8 gUnknown_858544C[];
+extern const u16 gSlotMachineMenu_Pal[];
 __attribute__((section(".rodata.sSlotMachineMenu_Pal")))
 // Mutable pointer on purpose: agbcc folds a const pointer initialised with a
 // constant address into the call site (dropping the memory load), which would
 // make TryStopSlotMachineLights 2 bytes short. The section attribute keeps it
 // in .rodata at 0x85855B0.
-static const u16 *sSlotMachineMenu_Pal = (const u16 *)&gUnknown_858544C[0x20];
+static const u16 *sSlotMachineMenu_Pal = (const u16 *)&gSlotMachineMenu_Pal[0x10];
 
 #define sDelayTimer data[1]
 #define sFlashState data[2]
@@ -5871,757 +5895,217 @@ static void EndDigitalDisplayScene_InsertBet(void)
     sSlotMachine->winOut = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR;
 }
 
-__attribute__((naked)) void LoadSlotMachineGfx(void)
+void LoadSlotMachineGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	bl sub_0812F8B0\n\t"
-        "	ldr r4, _0812F894\n\t"
-        "	movs r0, #0xc8\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r1, [r4]\n\t"
-        "	ldr r0, _0812F898\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r4, _0812F89C\n\t"
-        "	movs r0, #0xd8\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r1, [r4]\n\t"
-        "	ldr r0, _0812F8A0\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r4, _0812F8A4\n\t"
-        "	movs r0, #0xb0\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	movs r3, #0\n\t"
-        "	ldr r5, _0812F8A8\n\t"
-        "	adds r6, r4, #0\n\t"
-        "_0812F832:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	lsls r1, r3, #3\n\t"
-        "	adds r2, r1, r2\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	str r0, [r2]\n\t"
-        "	ldrh r0, [r1, #4]\n\t"
-        "	strh r0, [r2, #4]\n\t"
-        "	ldrh r0, [r1, #6]\n\t"
-        "	strh r0, [r2, #6]\n\t"
-        "	adds r0, r3, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #0x15\n\t"
-        "	bls _0812F832\n\t"
-        "	ldr r3, [r6]\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x88\n\t"
-        "	ldr r0, _0812F894\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r4, #0xa0\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	str r0, [r2]\n\t"
-        "	adds r2, #8\n\t"
-        "	movs r4, #0xa0\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	str r0, [r2]\n\t"
-        "	adds r2, #8\n\t"
-        "	movs r4, #0xb0\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	str r0, [r2]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0xa0\n\t"
-        "	movs r2, #0xc8\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	bl LoadSpriteSheets\n\t"
-        "	ldr r0, _0812F8AC\n\t"
-        "	bl LoadSpritePalettes\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F894: .4byte sDigitalDisplayGfxPtr\n\t"
-        "_0812F898: .4byte gUnknown_8585690\n\t"
-        "_0812F89C: .4byte sReelTimeGfxPtr\n\t"
-        "_0812F8A0: .4byte gUnknown_8585DF8\n\t"
-        "_0812F8A4: .4byte sSlotMachineSpritesheetsPtr\n\t"
-        "_0812F8A8: .4byte gUnknown_85852B8\n\t"
-        "_0812F8AC: .4byte gUnknown_8585648\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    LoadReelBackground();
+    sDigitalDisplayGfxPtr = Alloc(0x3200);
+    LZDecompressVram(gSlotMachineDigitalDisplay_Gfx, sDigitalDisplayGfxPtr);
+    sReelTimeGfxPtr = Alloc(0x3600);
+    LZDecompressVram(sReelTimeGfx, sReelTimeGfxPtr);
+    sSlotMachineSpritesheetsPtr = AllocZeroed(sizeof(struct SpriteSheet) * ARRAY_COUNT(sSlotMachineSpriteSheets));
+    for (i = 0; i < ARRAY_COUNT(sSlotMachineSpriteSheets); i++)
+    {
+        sSlotMachineSpritesheetsPtr[i].data = sSlotMachineSpriteSheets[i].data;
+        sSlotMachineSpritesheetsPtr[i].size = sSlotMachineSpriteSheets[i].size;
+        sSlotMachineSpritesheetsPtr[i].tag = sSlotMachineSpriteSheets[i].tag;
+    }
+    sSlotMachineSpritesheetsPtr[GFXTAG_STOP - 1].data = sDigitalDisplayGfxPtr + 0xA00;
+    sSlotMachineSpritesheetsPtr[GFXTAG_BONUS - 1].data = sDigitalDisplayGfxPtr + 0x1400;
+    sSlotMachineSpritesheetsPtr[GFXTAG_BIG - 1].data = sDigitalDisplayGfxPtr + 0x1600;
+    sSlotMachineSpritesheetsPtr[GFXTAG_REG - 1].data = sDigitalDisplayGfxPtr + 0x1900;
+    LoadSpriteSheets(sSlotMachineSpritesheetsPtr);
+    LoadSpritePalettes(sSlotMachineSpritePalettes);
 }
 
-__attribute__((naked)) void LoadReelBackground(void)
+void LoadReelBackground(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r5, _0812F90C\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r5]\n\t"
-        "	ldr r4, _0812F910\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r6, r4, #0\n\t"
-        "	ldr r0, _0812F914\n\t"
-        "	ldr r4, [r0]\n\t"
-        "_0812F8D2:\n\t"
-        "	movs r2, #0\n\t"
-        "	adds r1, #1\n\t"
-        "_0812F8D6:\n\t"
-        "	adds r0, r4, r2\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	strb r0, [r3]\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r3, #1\n\t"
-        "	cmp r2, #0x1f\n\t"
-        "	bls _0812F8D6\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x3f\n\t"
-        "	bls _0812F8D2\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	movs r1, #0x11\n\t"
-        "	strh r1, [r0, #6]\n\t"
-        "	bl LoadSpriteSheet\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F90C: .4byte sReelBackgroundSpriteSheet\n\t"
-        "_0812F910: .4byte sReelBackground_Gfx\n\t"
-        "_0812F914: .4byte gUnknown_8585368\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 *dest;
+    u8 i, j;
+
+    sReelBackgroundSpriteSheet = AllocZeroed(sizeof(struct SpriteSheet));
+    sReelBackground_Gfx = AllocZeroed(0x2000); // Background is plain white
+    dest = sReelBackground_Gfx;
+    for (i = 0; i < 0x40; i++)
+    {
+        for (j = 0; j < 0x20; j++, dest++)
+            *dest = sReelBackground_Tilemap[j];
+    }
+    sReelBackgroundSpriteSheet->data = sReelBackground_Gfx;
+    sReelBackgroundSpriteSheet->size = 0x800;
+    sReelBackgroundSpriteSheet->tag  = GFXTAG_REEL_BG;
+    LoadSpriteSheet(sReelBackgroundSpriteSheet);
 }
 
-__attribute__((naked)) void LoadMenuGfx(void)
+void LoadMenuGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812F958\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #6\n\t"
-        "	bl Alloc\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	str r1, [r4]\n\t"
-        "	ldr r0, _0812F95C\n\t"
-        "	bl LZDecompressVram\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r2, #0xe9\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r3, #0\n\t"
-        "	bl LoadBgTiles\n\t"
-        "	ldr r0, _0812F960\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	bl LoadPalette\n\t"
-        "	ldr r0, _0812F964\n\t"
-        "	movs r1, #0xd0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F958: .4byte sMenuGfx\n\t"
-        "_0812F95C: .4byte gUnknown_8586F4C\n\t"
-        "_0812F960: .4byte gUnknown_858544C\n\t"
-        "_0812F964: .4byte gUnknown_8585628\n\t"
-        ".syntax divided\n\t"
-    );
+    sMenuGfx = Alloc(0x2000);
+    LZDecompressVram(gSlotMachineMenu_Gfx, sMenuGfx);
+    LoadBgTiles(2, sMenuGfx, 0x1D20, 0);
+    LoadPalette(gSlotMachineMenu_Pal, BG_PLTT_ID(0), 5 * PLTT_SIZE_4BPP);
+    LoadPalette(sUnkPalette, BG_PLTT_ID(13), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void LoadMenuAndReelOverlayTilemaps(void)
+void LoadMenuAndReelOverlayTilemaps(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl LoadSlotMachineMenuTilemap\n\t"
-        "	bl LoadSlotMachineWheelOverlay\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSlotMachineMenuTilemap();
+    LoadSlotMachineReelOverlay();
 }
 
-__attribute__((naked)) void LoadSlotMachineMenuTilemap(void)
+static void LoadSlotMachineMenuTilemap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_0812F97C:\n\t"
-        "	lsls r1, r4, #4\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0812F9A0\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r3, r4, #5\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x13\n\t"
-        "	bls _0812F97C\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F9A0: .4byte gUnknown_8587AEC\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i <= 0x13; i++)
+        LoadBgTilemap(2, (const u8 *)gSlotMachineMenu_Tilemap + i * 60, 0x3c, i * 32);
 }
 
-__attribute__((naked)) void LoadSlotMachineReelOverlay(void)
+void LoadSlotMachineReelOverlay(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, sb\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6, r7}\n\t"
-        "	movs r1, #4\n\t"
-        "	ldr r0, _0812FA98\n\t"
-        "	mov r8, r0\n\t"
-        "_0812F9B2:\n\t"
-        "	movs r0, #0\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	mov sb, r1\n\t"
-        "_0812F9B8:\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	mov r2, sb\n\t"
-        "	asrs r6, r2, #0x10\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r5, r6, r4\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	adds r3, #0xa0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r2, #0xd0\n\t"
-        "	lsls r2, r2, #1\n\t"
-        "	adds r3, r5, r2\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #4\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	adds r3, #0xc0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #6\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	adds r7, r0, #0\n\t"
-        "	adds r3, r5, r7\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	adds r4, #1\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r0, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	cmp r4, #3\n\t"
-        "	ble _0812F9B8\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #8\n\t"
-        "	adds r3, r6, #0\n\t"
-        "	adds r3, #0xc0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	mov r0, r8\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	adds r1, #0xa\n\t"
-        "	adds r3, r6, r7\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	movs r0, #7\n\t"
-        "_0812FA56:\n\t"
-        "	mov r2, r8\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	adds r1, #0xc\n\t"
-        "	lsls r4, r0, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	lsls r3, r4, #5\n\t"
-        "	mov r0, sb\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	adds r3, r5, r3\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #3\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	adds r4, #1\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r0, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	cmp r4, #0xb\n\t"
-        "	ble _0812FA56\n\t"
-        "	adds r0, r5, #5\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x11\n\t"
-        "	ble _0812F9B2\n\t"
-        "	pop {r3, r4}\n\t"
-        "	mov r8, r3\n\t"
-        "	mov sb, r4\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FA98: .4byte sReelOverlay_Tilemap\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 x, y, dx;
+
+    for (x = 4; x < 18; x += 5)
+    {
+        for (dx = 0; dx < 4; dx++)
+        {
+            LoadBgTilemap(3, sReelOverlay_Tilemap,     2, x + dx + 5  * 32);
+            LoadBgTilemap(3, sReelOverlay_Tilemap + 1, 2, x + dx + 13 * 32);
+            LoadBgTilemap(3, sReelOverlay_Tilemap + 2, 2, x + dx + 6  * 32);
+            LoadBgTilemap(3, sReelOverlay_Tilemap + 3, 2, x + dx + 12 * 32);
+        }
+
+        LoadBgTilemap(3, sReelOverlay_Tilemap + 4, 2, x + 6 * 32);
+        LoadBgTilemap(3, sReelOverlay_Tilemap + 5, 2, x + 12 * 32);
+
+        for (y = 7; y <= 11; y++)
+            LoadBgTilemap(3, sReelOverlay_Tilemap + 6, 2, x + y * 32);
+    }
 }
 
-__attribute__((naked)) void SetReelButtonTilemap(s16 a0, u16 a1, u16 a2, u16 a3, u16 a4)
+// For (un)shading the gray button at the bottom of a reel when A is pressed. The button is colored in quadrants
+void SetReelButtonTilemap(s16 offset, u16 topLeft, u16 topRight, u16 bottomLeft, u16 bottomRight)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	ldr r5, [sp, #0x10]\n\t"
-        "	ldr r6, _0812FB0C\n\t"
-        "	ldr r0, [r6]\n\t"
-        "	strh r1, [r0]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	strh r2, [r1, #2]\n\t"
-        "	strh r3, [r1, #4]\n\t"
-        "	strh r5, [r1, #6]\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r5, r4, #0x10\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	adds r3, r4, #0\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #2\n\t"
-        "	ldr r0, _0812FB10\n\t"
-        "	adds r3, r5, r0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r5, r0\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	lsrs r3, r3, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, #6\n\t"
-        "	ldr r0, _0812FB14\n\t"
-        "	adds r5, r5, r0\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #2\n\t"
-        "	adds r3, r5, #0\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FB0C: .4byte sReelButtonPress_Tilemap\n\t"
-        "_0812FB10: .4byte SPECIAL_StartMirageTowerFossilFallAndSink\n\t"
-        "_0812FB14: .4byte SPECIAL_sub_0813B9A0\n\t"
-        ".syntax divided\n\t"
-    );
+    sReelButtonPress_Tilemap[0] = topLeft;
+    sReelButtonPress_Tilemap[1] = topRight;
+    sReelButtonPress_Tilemap[2] = bottomLeft;
+    sReelButtonPress_Tilemap[3] = bottomRight;
+
+    LoadBgTilemap(2, sReelButtonPress_Tilemap,     2, 15 * 32 + offset);     // Top left
+    LoadBgTilemap(2, sReelButtonPress_Tilemap + 1, 2, 15 * 32 + 1 + offset); // Top right
+    LoadBgTilemap(2, sReelButtonPress_Tilemap + 2, 2, 16 * 32 + offset);     // Bottom left
+    LoadBgTilemap(2, sReelButtonPress_Tilemap + 3, 2, 16 * 32 + 1 + offset); // Bottom Right
 }
 
-__attribute__((naked)) void LoadInfoBoxTilemap(void)
+static void LoadInfoBoxTilemap(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "_0812FB1C:\n\t"
-        "	lsls r1, r4, #4\n\t"
-        "	subs r1, r1, r4\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	ldr r0, _0812FB48\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r3, r4, #5\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	bl LoadBgTilemap\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	cmp r4, #0x13\n\t"
-        "	bls _0812FB1C\n\t"
-        "	movs r0, #3\n\t"
-        "	bl HideBg\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FB48: .4byte gUnknown_8588154\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    for (i = 0; i <= 0x13; i++)
+        LoadBgTilemap(2, (const u8 *)gSlotMachineInfoBox_Tilemap + i * 60, 0x3c, i * 32);
+    HideBg(3);
 }
 
-__attribute__((naked)) void SetDigitalDisplayImagePtrs(void)
+void SetDigitalDisplayImagePtrs(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _0812FBC0\n\t"
-        "	ldr r0, _0812FBC4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1]\n\t"
-        "	ldr r0, _0812FBC8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #4]\n\t"
-        "	ldr r0, _0812FBCC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #8]\n\t"
-        "	ldr r0, _0812FBD0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0xc]\n\t"
-        "	ldr r0, _0812FBD4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x10]\n\t"
-        "	ldr r0, _0812FBD8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x14]\n\t"
-        "	ldr r0, _0812FBDC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x18]\n\t"
-        "	ldr r0, _0812FBE0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x1c]\n\t"
-        "	ldr r0, _0812FBE4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x20]\n\t"
-        "	ldr r0, _0812FBE8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x24]\n\t"
-        "	ldr r0, _0812FBEC\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x28]\n\t"
-        "	str r0, [r1, #0x2c]\n\t"
-        "	str r0, [r1, #0x30]\n\t"
-        "	str r0, [r1, #0x34]\n\t"
-        "	ldr r0, _0812FBF0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x38]\n\t"
-        "	str r0, [r1, #0x3c]\n\t"
-        "	str r0, [r1, #0x40]\n\t"
-        "	str r0, [r1, #0x44]\n\t"
-        "	str r0, [r1, #0x48]\n\t"
-        "	ldr r0, _0812FBF4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x4c]\n\t"
-        "	str r0, [r1, #0x50]\n\t"
-        "	str r0, [r1, #0x54]\n\t"
-        "	ldr r0, _0812FBF8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	str r0, [r1, #0x58]\n\t"
-        "	str r0, [r1, #0x5c]\n\t"
-        "	str r0, [r1, #0x60]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [r1, #0x64]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FBC0: .4byte sImageTables_DigitalDisplay\n\t"
-        "_0812FBC4: .4byte sImageTable_DigitalDisplay_Reel\n\t"
-        "_0812FBC8: .4byte sImageTable_DigitalDisplay_Time\n\t"
-        "_0812FBCC: .4byte sImageTable_DigitalDisplay_Insert\n\t"
-        "_0812FBD0: .4byte sImageTable_DigitalDisplay_Win\n\t"
-        "_0812FBD4: .4byte sImageTable_DigitalDisplay_Lose\n\t"
-        "_0812FBD8: .4byte sImageTable_DigitalDisplay_AButton\n\t"
-        "_0812FBDC: .4byte sImageTable_DigitalDisplay_Smoke\n\t"
-        "_0812FBE0: .4byte sImageTable_DigitalDisplay_Number\n\t"
-        "_0812FBE4: .4byte sImageTable_DigitalDisplay_Pokeball\n\t"
-        "_0812FBE8: .4byte sImageTable_DigitalDisplay_DPad\n\t"
-        "_0812FBEC: .4byte sImageTable_DigitalDisplay_Stop\n\t"
-        "_0812FBF0: .4byte sImageTable_DigitalDisplay_Bonus\n\t"
-        "_0812FBF4: .4byte sImageTable_DigitalDisplay_Big\n\t"
-        "_0812FBF8: .4byte sImageTable_DigitalDisplay_Reg\n\t"
-        ".syntax divided\n\t"
-    );
+    sImageTables_DigitalDisplay[DIG_SPRITE_REEL]      = sImageTable_DigitalDisplay_Reel;
+    sImageTables_DigitalDisplay[DIG_SPRITE_TIME]      = sImageTable_DigitalDisplay_Time;
+    sImageTables_DigitalDisplay[DIG_SPRITE_INSERT]    = sImageTable_DigitalDisplay_Insert;
+    sImageTables_DigitalDisplay[DIG_SPRITE_WIN]       = sImageTable_DigitalDisplay_Win;
+    sImageTables_DigitalDisplay[DIG_SPRITE_LOSE]      = sImageTable_DigitalDisplay_Lose;
+    sImageTables_DigitalDisplay[DIG_SPRITE_A_BUTTON]  = sImageTable_DigitalDisplay_AButton;
+    sImageTables_DigitalDisplay[DIG_SPRITE_SMOKE]     = sImageTable_DigitalDisplay_Smoke;
+    sImageTables_DigitalDisplay[DIG_SPRITE_NUMBER]    = sImageTable_DigitalDisplay_Number;
+    sImageTables_DigitalDisplay[DIG_SPRITE_POKE_BALL] = sImageTable_DigitalDisplay_Pokeball;
+    sImageTables_DigitalDisplay[DIG_SPRITE_D_PAD]     = sImageTable_DigitalDisplay_DPad;
+    sImageTables_DigitalDisplay[DIG_SPRITE_STOP_S]    = sImageTable_DigitalDisplay_Stop;
+    sImageTables_DigitalDisplay[DIG_SPRITE_STOP_T]    = sImageTable_DigitalDisplay_Stop;
+    sImageTables_DigitalDisplay[DIG_SPRITE_STOP_O]    = sImageTable_DigitalDisplay_Stop;
+    sImageTables_DigitalDisplay[DIG_SPRITE_STOP_P]    = sImageTable_DigitalDisplay_Stop;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BONUS_B]   = sImageTable_DigitalDisplay_Bonus;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BONUS_O]   = sImageTable_DigitalDisplay_Bonus;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BONUS_N]   = sImageTable_DigitalDisplay_Bonus;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BONUS_U]   = sImageTable_DigitalDisplay_Bonus;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BONUS_S]   = sImageTable_DigitalDisplay_Bonus;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BIG_B]     = sImageTable_DigitalDisplay_Big;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BIG_I]     = sImageTable_DigitalDisplay_Big;
+    sImageTables_DigitalDisplay[DIG_SPRITE_BIG_G]     = sImageTable_DigitalDisplay_Big;
+    sImageTables_DigitalDisplay[DIG_SPRITE_REG_R]     = sImageTable_DigitalDisplay_Reg;
+    sImageTables_DigitalDisplay[DIG_SPRITE_REG_E]     = sImageTable_DigitalDisplay_Reg;
+    sImageTables_DigitalDisplay[DIG_SPRITE_REG_G]     = sImageTable_DigitalDisplay_Reg;
+    sImageTables_DigitalDisplay[DIG_SPRITE_EMPTY]     = NULL;
 }
 
-__attribute__((naked)) void AllocDigitalDisplayGfx(void)
+void AllocDigitalDisplayGfx(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	ldr r4, _0812FDA4\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r6, _0812FDA8\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #3\n\t"
-        "	strh r5, [r0, #4]\n\t"
-        "	ldr r4, _0812FDAC\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	adds r1, r1, r5\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	mov r8, r1\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r0, #4]\n\t"
-        "	ldr r4, _0812FDB0\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	mov r4, r8\n\t"
-        "	strh r4, [r0, #4]\n\t"
-        "	ldr r4, _0812FDB4\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r2, #0xa0\n\t"
-        "	lsls r2, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0]\n\t"
-        "	mov r3, r8\n\t"
-        "	strh r3, [r0, #4]\n\t"
-        "	ldr r4, _0812FDB8\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r4, #0xc0\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r5, #0xc0\n\t"
-        "	lsls r5, r5, #2\n\t"
-        "	strh r5, [r0, #4]\n\t"
-        "	ldr r4, _0812FDBC\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	ldr r4, _0812FDC0\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r3, #0xa0\n\t"
-        "	lsls r3, r3, #5\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	mov r4, r8\n\t"
-        "	strh r4, [r0, #4]\n\t"
-        "	ldr r4, _0812FDC4\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r2, #0xb0\n\t"
-        "	lsls r2, r2, #5\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	str r1, [r0]\n\t"
-        "	strh r5, [r0, #4]\n\t"
-        "	ldr r4, _0812FDC8\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r3, #0xc8\n\t"
-        "	lsls r3, r3, #5\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	strh r5, [r0, #4]\n\t"
-        "	ldr r4, _0812FDCC\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r4, #0xe0\n\t"
-        "	lsls r4, r4, #5\n\t"
-        "	adds r2, r1, r4\n\t"
-        "	str r2, [r0]\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r2, [r0, #4]\n\t"
-        "	movs r3, #0xf0\n\t"
-        "	lsls r3, r3, #5\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	strh r2, [r0, #0xc]\n\t"
-        "	ldr r4, _0812FDD0\n\t"
-        "	movs r0, #8\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r1, [r6]\n\t"
-        "	movs r4, #0x80\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0xa0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	ldr r4, _0812FDD4\n\t"
-        "	movs r0, #0x28\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	movs r3, #0x8a\n\t"
-        "	lsls r3, r3, #6\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r3, #0x80\n\t"
-        "	strh r3, [r0, #4]\n\t"
-        "	movs r4, #0x8c\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	str r1, [r0, #8]\n\t"
-        "	strh r3, [r0, #0xc]\n\t"
-        "	adds r4, #0x80\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	str r1, [r0, #0x10]\n\t"
-        "	strh r3, [r0, #0x14]\n\t"
-        "	adds r4, #0x80\n\t"
-        "	adds r1, r2, r4\n\t"
-        "	str r1, [r0, #0x18]\n\t"
-        "	strh r3, [r0, #0x1c]\n\t"
-        "	movs r1, #0x92\n\t"
-        "	lsls r1, r1, #6\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	str r2, [r0, #0x20]\n\t"
-        "	strh r3, [r0, #0x24]\n\t"
-        "	ldr r4, _0812FDD8\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	movs r3, #0x98\n\t"
-        "	lsls r3, r3, #6\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0x90\n\t"
-        "	lsls r1, r1, #3\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	movs r4, #0xaa\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	str r2, [r0, #8]\n\t"
-        "	strh r1, [r0, #0xc]\n\t"
-        "	ldr r4, _0812FDDC\n\t"
-        "	movs r0, #0x10\n\t"
-        "	bl AllocZeroed\n\t"
-        "	str r0, [r4]\n\t"
-        "	ldr r2, [r6]\n\t"
-        "	movs r3, #0xbc\n\t"
-        "	lsls r3, r3, #6\n\t"
-        "	adds r1, r2, r3\n\t"
-        "	str r1, [r0]\n\t"
-        "	movs r1, #0xc0\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	strh r1, [r0, #4]\n\t"
-        "	movs r4, #0xc2\n\t"
-        "	lsls r4, r4, #6\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	str r2, [r0, #8]\n\t"
-        "	strh r1, [r0, #0xc]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812FDA4: .4byte sImageTable_DigitalDisplay_Reel\n\t"
-        "_0812FDA8: .4byte sDigitalDisplayGfxPtr\n\t"
-        "_0812FDAC: .4byte sImageTable_DigitalDisplay_Time\n\t"
-        "_0812FDB0: .4byte sImageTable_DigitalDisplay_Insert\n\t"
-        "_0812FDB4: .4byte sImageTable_DigitalDisplay_Stop\n\t"
-        "_0812FDB8: .4byte sImageTable_DigitalDisplay_Win\n\t"
-        "_0812FDBC: .4byte sImageTable_DigitalDisplay_Lose\n\t"
-        "_0812FDC0: .4byte sImageTable_DigitalDisplay_Bonus\n\t"
-        "_0812FDC4: .4byte sImageTable_DigitalDisplay_Big\n\t"
-        "_0812FDC8: .4byte sImageTable_DigitalDisplay_Reg\n\t"
-        "_0812FDCC: .4byte sImageTable_DigitalDisplay_AButton\n\t"
-        "_0812FDD0: .4byte sImageTable_DigitalDisplay_Smoke\n\t"
-        "_0812FDD4: .4byte sImageTable_DigitalDisplay_Number\n\t"
-        "_0812FDD8: .4byte sImageTable_DigitalDisplay_Pokeball\n\t"
-        "_0812FDDC: .4byte sImageTable_DigitalDisplay_DPad\n\t"
-        ".syntax divided\n\t"
-    );
+    sImageTable_DigitalDisplay_Reel = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Reel[0].data = sDigitalDisplayGfxPtr;
+    sImageTable_DigitalDisplay_Reel[0].size = 0x600;
+
+    sImageTable_DigitalDisplay_Time = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Time[0].data = sDigitalDisplayGfxPtr + 0x600;
+    sImageTable_DigitalDisplay_Time[0].size = 0x200;
+
+    sImageTable_DigitalDisplay_Insert = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Insert[0].data = sDigitalDisplayGfxPtr + 0x800;
+    sImageTable_DigitalDisplay_Insert[0].size = 0x200;
+
+    sImageTable_DigitalDisplay_Stop = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Stop[0].data = sDigitalDisplayGfxPtr + 0xA00;
+    sImageTable_DigitalDisplay_Stop[0].size = 0x200;
+
+    sImageTable_DigitalDisplay_Win = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Win[0].data = sDigitalDisplayGfxPtr + 0xC00;
+    sImageTable_DigitalDisplay_Win[0].size = 0x300;
+
+    sImageTable_DigitalDisplay_Lose = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Lose[0].data = sDigitalDisplayGfxPtr + 0x1000;
+    sImageTable_DigitalDisplay_Lose[0].size = 0x400;
+
+    sImageTable_DigitalDisplay_Bonus = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Bonus[0].data = sDigitalDisplayGfxPtr + 0x1400;
+    sImageTable_DigitalDisplay_Bonus[0].size = 0x200;
+
+    sImageTable_DigitalDisplay_Big = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Big[0].data = sDigitalDisplayGfxPtr + 0x1600;
+    sImageTable_DigitalDisplay_Big[0].size = 0x300;
+
+    sImageTable_DigitalDisplay_Reg = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Reg[0].data = sDigitalDisplayGfxPtr + 0x1900;
+    sImageTable_DigitalDisplay_Reg[0].size = 0x300;
+
+    sImageTable_DigitalDisplay_AButton = AllocZeroed(sizeof(struct SpriteFrameImage) * 2);
+    sImageTable_DigitalDisplay_AButton[0].data = sDigitalDisplayGfxPtr + 0x1C00;
+    sImageTable_DigitalDisplay_AButton[0].size = 0x200;
+    sImageTable_DigitalDisplay_AButton[1].data = sDigitalDisplayGfxPtr + 0x1E00;
+    sImageTable_DigitalDisplay_AButton[1].size = 0x200;
+
+    sImageTable_DigitalDisplay_Smoke = AllocZeroed(sizeof(struct SpriteFrameImage) * 1);
+    sImageTable_DigitalDisplay_Smoke[0].data = sDigitalDisplayGfxPtr + 0x2000;
+    sImageTable_DigitalDisplay_Smoke[0].size = 640;
+
+    sImageTable_DigitalDisplay_Number = AllocZeroed(sizeof(struct SpriteFrameImage) * 5);
+    sImageTable_DigitalDisplay_Number[0].data = sDigitalDisplayGfxPtr + 0x2280;
+    sImageTable_DigitalDisplay_Number[0].size = 0x80;
+    sImageTable_DigitalDisplay_Number[1].data = sDigitalDisplayGfxPtr + 0x2300;
+    sImageTable_DigitalDisplay_Number[1].size = 0x80;
+    sImageTable_DigitalDisplay_Number[2].data = sDigitalDisplayGfxPtr + 0x2380;
+    sImageTable_DigitalDisplay_Number[2].size = 0x80;
+    sImageTable_DigitalDisplay_Number[3].data = sDigitalDisplayGfxPtr + 0x2400;
+    sImageTable_DigitalDisplay_Number[3].size = 0x80;
+    sImageTable_DigitalDisplay_Number[4].data = sDigitalDisplayGfxPtr + 0x2480;
+    sImageTable_DigitalDisplay_Number[4].size = 0x80;
+
+    sImageTable_DigitalDisplay_Pokeball = AllocZeroed(sizeof(struct SpriteFrameImage) * 2);
+    sImageTable_DigitalDisplay_Pokeball[0].data = sDigitalDisplayGfxPtr + 0x2600;
+    sImageTable_DigitalDisplay_Pokeball[0].size = 0x480;
+    sImageTable_DigitalDisplay_Pokeball[1].data = sDigitalDisplayGfxPtr + 10880;
+    sImageTable_DigitalDisplay_Pokeball[1].size = 0x480;
+
+    sImageTable_DigitalDisplay_DPad = AllocZeroed(sizeof(struct SpriteFrameImage) * 2);
+    sImageTable_DigitalDisplay_DPad[0].data = sDigitalDisplayGfxPtr + 0x2F00;
+    sImageTable_DigitalDisplay_DPad[0].size = 0x180;
+    sImageTable_DigitalDisplay_DPad[1].data = sDigitalDisplayGfxPtr + 0x3080;
+    sImageTable_DigitalDisplay_DPad[1].size = 0x180;
 }
+

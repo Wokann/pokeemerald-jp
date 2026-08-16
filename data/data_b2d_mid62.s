@@ -170,16 +170,16 @@ sSpriteTemplates_DigitalDisplay: @ 0x85851E8
 sSubspriteTables_DigitalDisplay: @ 0x8585250
 	.incbin "baserom_jp.gba", 0x585250, 0x68
 
-	.globl gUnknown_85852B8
-gUnknown_85852B8: @ 0x85852B8
+	.globl sSlotMachineSpriteSheets
+sSlotMachineSpriteSheets: @ 0x85852B8
 	.incbin "baserom_jp.gba", 0x5852b8, 0xb0
 
-	.globl gUnknown_8585368
-gUnknown_8585368: @ 0x8585368
+	.globl sReelBackground_Tilemap
+sReelBackground_Tilemap: @ 0x8585368
 	.incbin "baserom_jp.gba", 0x585368, 0xe4
 
-	.globl gUnknown_858544C
-gUnknown_858544C: @ 0x858544C
+	.globl gSlotMachineMenu_Pal
+gSlotMachineMenu_Pal: @ 0x858544C
 	.incbin "baserom_jp.gba", 0x58544c, 0x94
 
 	.section .rodata.85854EC
@@ -205,31 +205,31 @@ sPokeballShiningPalTable: @ 0x8585614
 sDigitalDisplay_Pal: @ 0x8585624
 	.incbin "baserom_jp.gba", 0x585624, 0x4
 
-	.globl gUnknown_8585628
-gUnknown_8585628: @ 0x8585628
+	.globl sUnkPalette
+sUnkPalette: @ 0x8585628
 	.incbin "baserom_jp.gba", 0x585628, 0x20
 
-	.globl gUnknown_8585648
-gUnknown_8585648: @ 0x8585648
+	.globl sSlotMachineSpritePalettes
+sSlotMachineSpritePalettes: @ 0x8585648
 	.incbin "baserom_jp.gba", 0x585648, 0x48
 
-	.globl gUnknown_8585690
-gUnknown_8585690: @ 0x8585690
+	.globl gSlotMachineDigitalDisplay_Gfx
+gSlotMachineDigitalDisplay_Gfx: @ 0x8585690
 	.incbin "baserom_jp.gba", 0x585690, 0x768
 
-	.globl gUnknown_8585DF8
-gUnknown_8585DF8: @ 0x8585DF8
+	.globl sReelTimeGfx
+sReelTimeGfx: @ 0x8585DF8
 	.incbin "baserom_jp.gba", 0x585df8, 0x1154
 
-	.globl gUnknown_8586F4C
-gUnknown_8586F4C: @ 0x8586F4C
+	.globl gSlotMachineMenu_Gfx
+gSlotMachineMenu_Gfx: @ 0x8586F4C
 	.incbin "baserom_jp.gba", 0x586f4c, 0xba0
 
-	.globl gUnknown_8587AEC
-gUnknown_8587AEC: @ 0x8587AEC
+	.globl gSlotMachineMenu_Tilemap
+gSlotMachineMenu_Tilemap: @ 0x8587AEC
 	.incbin "baserom_jp.gba", 0x587aec, 0x4b0
 
 	.section .rodata.8588154
-	.globl gUnknown_8588154
-gUnknown_8588154: @ 0x8588154
+	.globl gSlotMachineInfoBox_Tilemap
+gSlotMachineInfoBox_Tilemap: @ 0x8588154
 	.incbin "baserom_jp.gba", 0x588154, 0x4b0
