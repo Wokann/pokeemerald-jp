@@ -27,6 +27,7 @@ extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
 extern const s16 sMovementDelaysMedium[];
 extern const u8 gStandardDirections[];
+extern const u8 sOppositeDirections[];
 extern const u8 gUpAndDownDirections[];
 extern const u8 gLeftAndRightDirections[];
 extern const u8 gUpAndLeftDirections[];
@@ -8069,30 +8070,10 @@ __attribute__((naked)) void sub_08092860(u8 localId, u8 mapNum, u8 mapGroup)
     );
 }
 
-__attribute__((naked)) void MoveCoords(u8 direction, s16 *x, s16 *y)
+void MoveCoords(u8 direction, s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	ldr r3, _080928CC\n\t"
-        "	lsrs r0, r0, #0x16\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	ldrh r3, [r0]\n\t"
-        "	ldrh r4, [r1]\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	strh r3, [r1]\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	ldrh r1, [r2]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080928CC: .4byte gUnknown_84E5FD0\n\t"
-        ".syntax divided\n\t"
-    );
+    *x += sDirectionToVectors[direction].x;
+    *y += sDirectionToVectors[direction].y;
 }
 
 __attribute__((naked)) void sub_080928D0(u8 direction, s16 *destX, s16 *destY)
@@ -9081,31 +9062,9 @@ __attribute__((naked)) u8 sub_08092F60(u8 direction)
     );
 }
 
-__attribute__((naked)) bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
+bool8 ObjectEventFaceOppositeDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetOppositeDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetFaceDirectionMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl ObjectEventSetHeldMovement\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    return ObjectEventSetHeldMovement(objectEvent, GetFaceDirectionMovementAction(GetOppositeDirection(direction)));
 }
 
 
@@ -9399,39 +9358,14 @@ __attribute__((naked)) u8 sub_08093144(u32 direction)
     );
 }
 
-__attribute__((naked)) u8 GetOppositeDirection(u8 direction)
+u8 GetOppositeDirection(u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	ldr r1, _08093194\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #8\n\t"
-        "	bl memcpy\n\t"
-        "	subs r1, r4, #1\n\t"
-        "	lsls r0, r1, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #7\n\t"
-        "	bhi _08093198\n\t"
-        "	mov r2, sp\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0809319A\n\t"
-        "	.align 2, 0\n\t"
-        "_08093194: .4byte gUnknown_84E607B\n\t"
-        "_08093198:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_0809319A:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 directions[8];
+    memcpy(directions, sOppositeDirections, sizeof directions);
+    if (direction <= DIR_NONE || direction > 8)
+        return direction;
+
+    return directions[direction - 1];
 }
 
 __attribute__((naked)) u8 zffu_offset_calc(u8 a, u8 b)
@@ -11119,32 +11053,11 @@ bool8 MovementAction_PlayerRunRight_Step1(struct ObjectEvent *objectEvent, struc
     return FALSE;
 }
 
-__attribute__((naked)) void StartSpriteAnimInDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum)
+void StartSpriteAnimInDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	bl SetAndStartSpriteAnim\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetAndStartSpriteAnim(sprite, animNum, 0);
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sActionFuncId = 1;
 }
 
 bool8 MovementAction_StartAnimInDirection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)

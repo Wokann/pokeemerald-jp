@@ -867,7 +867,10 @@ gUnknown_84E6076: @ 0x84E6076
 
 	.globl gUnknown_84E607B
 gUnknown_84E607B: @ 0x84E607B
-	.incbin "baserom_jp.gba", 0x4e607b, 0x8
+
+	.globl sOppositeDirections
+	.set sOppositeDirections, gUnknown_84E607B
+.incbin "baserom_jp.gba", 0x4e607b, 0x8
 
 	.globl gUnknown_84E6083
 gUnknown_84E6083: @ 0x84E6083
