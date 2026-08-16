@@ -4570,37 +4570,14 @@ __attribute__((naked)) bool8 MovementType_LookAround_Step2(struct ObjectEvent *o
     );
 }
 
-__attribute__((naked)) bool8 MovementType_LookAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_LookAround_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0808F39A\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0808F3A2\n\t"
-        "_0808F39A:\n\t"
-        "	movs r0, #4\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	b _0808F3A4\n\t"
-        "_0808F3A2:\n\t"
-        "	movs r0, #0\n\t"
-        "_0808F3A4:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+    {
+        sprite->sTypeFuncId = 4;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementType_LookAround_Step4(struct ObjectEvent *objectEvent, struct Sprite *sprite)
