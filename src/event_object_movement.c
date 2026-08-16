@@ -3509,7 +3509,7 @@ __attribute__((naked)) void TryMoveEventObjectToMapCoords(void)
     );
 }
 
-__attribute__((naked)) void ShiftStillEventObjectCoords(void)
+__attribute__((naked)) void ShiftStillEventObjectCoords(struct ObjectEvent *objectEvent)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -4124,7 +4124,7 @@ __attribute__((naked)) u8 CreateCopySpriteAt(struct Sprite *sprite, s16 x, s16 y
 }
 
 
-__attribute__((naked)) void SetEventObjectDirection(void)
+__attribute__((naked)) void SetEventObjectDirection(struct ObjectEvent *objectEvent, u8 direction)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -21340,97 +21340,43 @@ __attribute__((naked)) bool8 MovementAction_WalkRightAffine_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 sub_08095230(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a)
+void AcroWheelieFaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	lsls r4, r2, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl ShiftStillEventObjectCoords\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetWalkInPlaceFastestMovementAction\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl obj_npc_animation_step\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetEventObjectDirection(objectEvent, direction);
+    ShiftStillEventObjectCoords(objectEvent);
+    obj_npc_animation_step(objectEvent, sprite, GetWalkInPlaceFastestMovementAction(direction));
+    sprite->animPaused = TRUE;
+    sprite->sActionFuncId = 1;
 }
-__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_AcroWheelieFaceDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_08095230\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_SOUTH);
+    return TRUE;
 }
-__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_AcroWheelieFaceUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #2\n\t"
-        "	bl sub_08095230\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_NORTH);
+    return TRUE;
 }
-__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_AcroWheelieFaceLeft_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #3\n\t"
-        "	bl sub_08095230\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_WEST);
+    return TRUE;
 }
-__attribute__((naked)) bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+
+
+bool8 MovementAction_AcroWheelieFaceRight_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r2, #4\n\t"
-        "	bl sub_08095230\n\t"
-        "	movs r0, #1\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    AcroWheelieFaceDirection(objectEvent, sprite, DIR_EAST);
+    return TRUE;
 }
+
 
 
 
