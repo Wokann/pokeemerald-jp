@@ -1023,7 +1023,7 @@ bool32 ResetGame_Member(void)
     return TRUE;
 }
 
-bool32 ExitGame(void)
+bool32 sub_0802B358(void)
 {
     switch (sPokemonJump->mainState)
     {
@@ -1118,7 +1118,7 @@ bool32 SavePokeJump(void)
     return TRUE;
 }
 
-bool32 DoGameIntro(void)
+bool32 sub_0802B4D4(void)
 {
     switch (sPokemonJump->helperState)
     {

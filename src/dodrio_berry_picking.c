@@ -55,21 +55,6 @@ enum {
 };
 
 enum {
-    FUNC_INTRO,
-    FUNC_INIT_COUNTDOWN,
-    FUNC_COUNTDOWN,
-    FUNC_WAIT_START,
-    FUNC_PLAY_GAME,
-    FUNC_INIT_RESULTS,
-    FUNC_RESULTS,
-    FUNC_ASK_PLAY_AGAIN,
-    FUNC_END_LINK,
-    FUNC_EXIT,
-    FUNC_RESET_GAME,
-    FUNC_WAIT_END_GAME,
-};
-
-enum {
     GFXFUNC_LOAD,
     GFXFUNC_SHOW_NAMES,
     GFXFUNC_SHOW_RESULTS,
@@ -472,7 +457,7 @@ void InitDodrioGame(struct DodrioGame *game);
 void Task_StartDodrioGame(u8 taskId);
 void Task_DodrioGame_Leader(u8 taskId);
 void Task_DodrioGame_Member(u8 taskId);
-static void DoGameIntro(void);
+void DoGameIntro(void);
 void InitCountdown(void);
 void DoCountdown(void);
 void WaitGameStart(void);
@@ -545,7 +530,7 @@ void InitResults_Member(void);
 void DoResults(void);
 void AskPlayAgain(void);
 void EndLink(void);
-static void ExitGame(void);
+void ExitGame(void);
 void ResetGame_Dodrio(void);
 void Task_NewGameIntro(u8 taskId);
 void Task_CommunicateMonInfo(u8 taskId);
@@ -705,7 +690,7 @@ void Task_DodrioGame_Member(u8 taskId)
     SendLinkData_Member();
 }
 
-static void DoGameIntro(void)
+void DoGameIntro(void)
 {
     switch (sGame->state)
     {
@@ -3085,7 +3070,7 @@ void EndLink(void)
     }
 }
 
-static void ExitGame(void)
+void ExitGame(void)
 {
     switch (sGame->state)
     {
@@ -5239,4 +5224,3 @@ __attribute__((naked)) void sub_080295A4(void)
         ".syntax divided\n\t"
     );
 }
-
