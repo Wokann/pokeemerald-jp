@@ -83,7 +83,7 @@ gUnknown_85FB8C0: @ 0x85FB8C0
 
 	.globl gUnknown_85FB8E0
 gUnknown_85FB8E0: @ 0x85FB8E0
-	.incbin "baserom_jp.gba", 0x5fb8e0, 0x3
+	.byte 0x00, 0x02, 0x03
 
 	.globl gText_TimeBoard
 gText_TimeBoard: @ 0x85FB8E3
