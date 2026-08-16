@@ -89,8 +89,8 @@ sPSSWindowTemplates: @ 0x854C9C4
 gUnknown_854C9E4: @ 0x854C9E4
 	.incbin "baserom_jp.gba", 0x54c9e4, 0x10
 
-	.globl gUnknown_854C9F4
-gUnknown_854C9F4: @ 0x854C9F4
+	.globl sWaveformSpritePalette
+sWaveformSpritePalette: @ 0x854C9F4
 	.incbin "baserom_jp.gba", 0x54c9f4, 0x8
 
 	.globl gUnknown_854C9FC

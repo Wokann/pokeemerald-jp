@@ -272,6 +272,7 @@ extern bool8 sIsMonBeingMoved;
 extern void UpdateCloseBoxButtonFlash(void);
 extern void UnkUtil_Run(void);
 extern const struct WindowTemplate sPSSWindowTemplates[];
+extern const struct SpritePalette sWaveformSpritePalette;
 
 u8 CountMonsInBox(u8 boxId)
 {
@@ -6297,19 +6298,9 @@ bool8 InitPokeStorageWindows(void)
     return TRUE;
 }
 
-__attribute__((naked)) void LoadWaveformSpritePalette(void)
+void LoadWaveformSpritePalette(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080C9948\n\t"
-        "	bl LoadSpritePalette\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080C9948: .4byte gUnknown_854C9F4\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadSpritePalette(&sWaveformSpritePalette);
 }
 
 __attribute__((naked)) void sub_080C994C(void)
