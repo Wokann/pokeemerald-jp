@@ -10,6 +10,7 @@ extern void *sUnusedOverworldCallback;
 #define linkDirection(obj) ((u8 *)obj)[offsetof(typeof(*obj), range)] // -> rangeX
 
 extern struct InitialPlayerAvatarState sInitialPlayerAvatarState;
+extern struct MapHeader *const *const gMapGroups[];
 extern u8 sObjectEventLoadFlag;
 
 __attribute__((naked)) void DoWhiteOut(void)
@@ -627,24 +628,9 @@ __attribute__((naked)) bool32 IsDummyWarp(struct WarpData *warp)
 }
 
 
-__attribute__((naked)) struct MapHeader const *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum)
+struct MapHeader const *const Overworld_GetMapHeaderByGroupAndId(u16 mapGroup, u16 mapNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	ldr r2, _0808440C\n\t"
-        "	lsrs r0, r0, #0xe\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	lsrs r1, r1, #0xe\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldr r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0808440C: .4byte gUnknown_845E998\n\t"
-        ".syntax divided\n\t"
-    );
+    return gMapGroups[mapGroup][mapNum];
 }
 
 __attribute__((naked)) struct MapHeader const *const GetDestinationWarpMapHeader(void)

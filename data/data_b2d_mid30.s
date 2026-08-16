@@ -6092,6 +6092,8 @@ gUnknown_845E998: @ 0x845E998
 	.globl gUnknown_845E998
 gUnknown_845E998: @ 0x0845E998
 	.incbin "baserom_jp.gba", 0x45E998, 0x88
+	.globl gMapGroups
+	.set gMapGroups, gUnknown_845E998
 	.globl LITTLEROOT_TOWN_MapConnections
 LITTLEROOT_TOWN_MapConnections: @ 0x0845EA20
 	.byte 0x02, 0x00, 0x00, 0x00  @ direction
