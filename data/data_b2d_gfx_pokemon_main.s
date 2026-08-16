@@ -23,7 +23,10 @@ gMonBackPic_Bulbasaur: @ 0x8C2FD6C
 	.globl gMonShinyPalette_Bulbasaur
 gMonShinyPalette_Bulbasaur: @ 0x8C3001C
 	.incbin "graphics/pokemon/bulbasaur/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc30044, 0x420
+	.globl gMonIcon_Bulbasaur
+gMonIcon_Bulbasaur: @ 0x8C30044
+	.incbin "graphics/pokemon/bulbasaur/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC30444, 0x20
 
 	.globl gMonStillFrontPic_Ivysaur
 gMonStillFrontPic_Ivysaur: @ 0x8C30464
@@ -40,7 +43,10 @@ gMonBackPic_Ivysaur: @ 0x8C30800
 	.globl gMonShinyPalette_Ivysaur
 gMonShinyPalette_Ivysaur: @ 0x8C30B8C
 	.incbin "graphics/pokemon/ivysaur/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc30bb4, 0x420
+	.globl gMonIcon_Ivysaur
+gMonIcon_Ivysaur: @ 0x8C30BB4
+	.incbin "graphics/pokemon/ivysaur/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC30FB4, 0x20
 
 	.globl gMonStillFrontPic_Venusaur
 gMonStillFrontPic_Venusaur: @ 0x8C30FD4
@@ -57,7 +63,10 @@ gMonBackPic_Venusaur: @ 0x8C31588
 	.globl gMonShinyPalette_Venusaur
 gMonShinyPalette_Venusaur: @ 0x8C31A58
 	.incbin "graphics/pokemon/venusaur/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc31a80, 0x420
+	.globl gMonIcon_Venusaur
+gMonIcon_Venusaur: @ 0x8C31A80
+	.incbin "graphics/pokemon/venusaur/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC31E80, 0x20
 
 	.globl gMonStillFrontPic_Charmander
 gMonStillFrontPic_Charmander: @ 0x8C31EA0
@@ -74,7 +83,10 @@ gMonBackPic_Charmander: @ 0x8C32178
 	.globl gMonShinyPalette_Charmander
 gMonShinyPalette_Charmander: @ 0x8C3240C
 	.incbin "graphics/pokemon/charmander/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc32434, 0x420
+	.globl gMonIcon_Charmander
+gMonIcon_Charmander: @ 0x8C32434
+	.incbin "graphics/pokemon/charmander/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC32834, 0x20
 
 	.globl gMonStillFrontPic_Charmeleon
 gMonStillFrontPic_Charmeleon: @ 0x8C32854
@@ -91,7 +103,10 @@ gMonBackPic_Charmeleon: @ 0x8C32C24
 	.globl gMonShinyPalette_Charmeleon
 gMonShinyPalette_Charmeleon: @ 0x8C32F04
 	.incbin "graphics/pokemon/charmeleon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc32f2c, 0x420
+	.globl gMonIcon_Charmeleon
+gMonIcon_Charmeleon: @ 0x8C32F2C
+	.incbin "graphics/pokemon/charmeleon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3332C, 0x20
 
 	.globl gMonStillFrontPic_Charizard
 gMonStillFrontPic_Charizard: @ 0x8C3334C
@@ -108,7 +123,10 @@ gMonBackPic_Charizard: @ 0x8C338C4
 	.globl gMonShinyPalette_Charizard
 gMonShinyPalette_Charizard: @ 0x8C33CE0
 	.incbin "graphics/pokemon/charizard/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc33d08, 0x420
+	.globl gMonIcon_Charizard
+gMonIcon_Charizard: @ 0x8C33D08
+	.incbin "graphics/pokemon/charizard/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC34108, 0x20
 
 	.globl gMonStillFrontPic_Squirtle
 gMonStillFrontPic_Squirtle: @ 0x8C34128
@@ -125,7 +143,10 @@ gMonBackPic_Squirtle: @ 0x8C3442C
 	.globl gMonShinyPalette_Squirtle
 gMonShinyPalette_Squirtle: @ 0x8C346AC
 	.incbin "graphics/pokemon/squirtle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc346d4, 0x420
+	.globl gMonIcon_Squirtle
+gMonIcon_Squirtle: @ 0x8C346D4
+	.incbin "graphics/pokemon/squirtle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC34AD4, 0x20
 
 	.globl gMonStillFrontPic_Wartortle
 gMonStillFrontPic_Wartortle: @ 0x8C34AF4
@@ -142,7 +163,10 @@ gMonBackPic_Wartortle: @ 0x8C34E98
 	.globl gMonShinyPalette_Wartortle
 gMonShinyPalette_Wartortle: @ 0x8C351CC
 	.incbin "graphics/pokemon/wartortle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc351f4, 0x420
+	.globl gMonIcon_Wartortle
+gMonIcon_Wartortle: @ 0x8C351F4
+	.incbin "graphics/pokemon/wartortle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC355F4, 0x20
 
 	.globl gMonStillFrontPic_Blastoise
 gMonStillFrontPic_Blastoise: @ 0x8C35614
@@ -159,7 +183,10 @@ gMonBackPic_Blastoise: @ 0x8C35B40
 	.globl gMonShinyPalette_Blastoise
 gMonShinyPalette_Blastoise: @ 0x8C35F5C
 	.incbin "graphics/pokemon/blastoise/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc35f84, 0x420
+	.globl gMonIcon_Blastoise
+gMonIcon_Blastoise: @ 0x8C35F84
+	.incbin "graphics/pokemon/blastoise/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC36384, 0x20
 
 	.globl gMonStillFrontPic_Caterpie
 gMonStillFrontPic_Caterpie: @ 0x8C363A4
@@ -176,7 +203,10 @@ gMonBackPic_Caterpie: @ 0x8C3662C
 	.globl gMonShinyPalette_Caterpie
 gMonShinyPalette_Caterpie: @ 0x8C368B4
 	.incbin "graphics/pokemon/caterpie/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc368dc, 0x420
+	.globl gMonIcon_Caterpie
+gMonIcon_Caterpie: @ 0x8C368DC
+	.incbin "graphics/pokemon/caterpie/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC36CDC, 0x20
 
 	.globl gMonStillFrontPic_Metapod
 gMonStillFrontPic_Metapod: @ 0x8C36CFC
@@ -193,7 +223,11 @@ gMonBackPic_Metapod: @ 0x8C36F34
 	.globl gMonShinyPalette_Metapod
 gMonShinyPalette_Metapod: @ 0x8C37174
 	.incbin "graphics/pokemon/metapod/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc37193, 0x421
+	.incbin "baserom_jp.gba", 0xC37193, 0x1
+	.globl gMonIcon_Metapod
+gMonIcon_Metapod: @ 0x8C37194
+	.incbin "graphics/pokemon/metapod/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC37594, 0x20
 
 	.globl gMonStillFrontPic_Butterfree
 gMonStillFrontPic_Butterfree: @ 0x8C375B4
@@ -210,7 +244,10 @@ gMonBackPic_Butterfree: @ 0x8C3793C
 	.globl gMonShinyPalette_Butterfree
 gMonShinyPalette_Butterfree: @ 0x8C37D4C
 	.incbin "graphics/pokemon/butterfree/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc37d74, 0x420
+	.globl gMonIcon_Butterfree
+gMonIcon_Butterfree: @ 0x8C37D74
+	.incbin "graphics/pokemon/butterfree/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC38174, 0x20
 
 	.globl gMonStillFrontPic_Weedle
 gMonStillFrontPic_Weedle: @ 0x8C38194
@@ -227,7 +264,10 @@ gMonBackPic_Weedle: @ 0x8C383FC
 	.globl gMonShinyPalette_Weedle
 gMonShinyPalette_Weedle: @ 0x8C38664
 	.incbin "graphics/pokemon/weedle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3868c, 0x420
+	.globl gMonIcon_Weedle
+gMonIcon_Weedle: @ 0x8C3868C
+	.incbin "graphics/pokemon/weedle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC38A8C, 0x20
 
 	.globl gMonStillFrontPic_Kakuna
 gMonStillFrontPic_Kakuna: @ 0x8C38AAC
@@ -244,7 +284,11 @@ gMonBackPic_Kakuna: @ 0x8C38D1C
 	.globl gMonShinyPalette_Kakuna
 gMonShinyPalette_Kakuna: @ 0x8C38FA0
 	.incbin "graphics/pokemon/kakuna/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc38fc1, 0x423
+	.incbin "baserom_jp.gba", 0xC38FC1, 0x3
+	.globl gMonIcon_Kakuna
+gMonIcon_Kakuna: @ 0x8C38FC4
+	.incbin "graphics/pokemon/kakuna/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC393C4, 0x20
 
 	.globl gMonStillFrontPic_Beedrill
 gMonStillFrontPic_Beedrill: @ 0x8C393E4
@@ -261,7 +305,10 @@ gMonBackPic_Beedrill: @ 0x8C3981C
 	.globl gMonShinyPalette_Beedrill
 gMonShinyPalette_Beedrill: @ 0x8C39B90
 	.incbin "graphics/pokemon/beedrill/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc39bb8, 0x420
+	.globl gMonIcon_Beedrill
+gMonIcon_Beedrill: @ 0x8C39BB8
+	.incbin "graphics/pokemon/beedrill/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC39FB8, 0x20
 
 	.globl gMonStillFrontPic_Pidgey
 gMonStillFrontPic_Pidgey: @ 0x8C39FD8
@@ -278,7 +325,10 @@ gMonBackPic_Pidgey: @ 0x8C3A2EC
 	.globl gMonShinyPalette_Pidgey
 gMonShinyPalette_Pidgey: @ 0x8C3A640
 	.incbin "graphics/pokemon/pidgey/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3a668, 0x420
+	.globl gMonIcon_Pidgey
+gMonIcon_Pidgey: @ 0x8C3A668
+	.incbin "graphics/pokemon/pidgey/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3AA68, 0x20
 
 	.globl gMonStillFrontPic_Pidgeotto
 gMonStillFrontPic_Pidgeotto: @ 0x8C3AA88
@@ -295,7 +345,10 @@ gMonBackPic_Pidgeotto: @ 0x8C3AE24
 	.globl gMonShinyPalette_Pidgeotto
 gMonShinyPalette_Pidgeotto: @ 0x8C3B170
 	.incbin "graphics/pokemon/pidgeotto/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3b198, 0x420
+	.globl gMonIcon_Pidgeotto
+gMonIcon_Pidgeotto: @ 0x8C3B198
+	.incbin "graphics/pokemon/pidgeotto/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3B598, 0x20
 
 	.globl gMonStillFrontPic_Pidgeot
 gMonStillFrontPic_Pidgeot: @ 0x8C3B5B8
@@ -312,7 +365,10 @@ gMonBackPic_Pidgeot: @ 0x8C3BADC
 	.globl gMonShinyPalette_Pidgeot
 gMonShinyPalette_Pidgeot: @ 0x8C3BE64
 	.incbin "graphics/pokemon/pidgeot/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3be8c, 0x420
+	.globl gMonIcon_Pidgeot
+gMonIcon_Pidgeot: @ 0x8C3BE8C
+	.incbin "graphics/pokemon/pidgeot/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3C28C, 0x20
 
 	.globl gMonStillFrontPic_Rattata
 gMonStillFrontPic_Rattata: @ 0x8C3C2AC
@@ -329,7 +385,10 @@ gMonBackPic_Rattata: @ 0x8C3C520
 	.globl gMonShinyPalette_Rattata
 gMonShinyPalette_Rattata: @ 0x8C3C7FC
 	.incbin "graphics/pokemon/rattata/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3c824, 0x420
+	.globl gMonIcon_Rattata
+gMonIcon_Rattata: @ 0x8C3C824
+	.incbin "graphics/pokemon/rattata/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3CC24, 0x20
 
 	.globl gMonStillFrontPic_Raticate
 gMonStillFrontPic_Raticate: @ 0x8C3CC44
@@ -346,7 +405,10 @@ gMonBackPic_Raticate: @ 0x8C3CFF4
 	.globl gMonShinyPalette_Raticate
 gMonShinyPalette_Raticate: @ 0x8C3D324
 	.incbin "graphics/pokemon/raticate/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3d34c, 0x420
+	.globl gMonIcon_Raticate
+gMonIcon_Raticate: @ 0x8C3D34C
+	.incbin "graphics/pokemon/raticate/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3D74C, 0x20
 
 	.globl gMonStillFrontPic_Spearow
 gMonStillFrontPic_Spearow: @ 0x8C3D76C
@@ -363,7 +425,10 @@ gMonBackPic_Spearow: @ 0x8C3DA1C
 	.globl gMonShinyPalette_Spearow
 gMonShinyPalette_Spearow: @ 0x8C3DCF8
 	.incbin "graphics/pokemon/spearow/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3dd20, 0x420
+	.globl gMonIcon_Spearow
+gMonIcon_Spearow: @ 0x8C3DD20
+	.incbin "graphics/pokemon/spearow/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3E120, 0x20
 
 	.globl gMonStillFrontPic_Fearow
 gMonStillFrontPic_Fearow: @ 0x8C3E140
@@ -380,7 +445,10 @@ gMonBackPic_Fearow: @ 0x8C3E5FC
 	.globl gMonShinyPalette_Fearow
 gMonShinyPalette_Fearow: @ 0x8C3E8F4
 	.incbin "graphics/pokemon/fearow/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3e91c, 0x420
+	.globl gMonIcon_Fearow
+gMonIcon_Fearow: @ 0x8C3E91C
+	.incbin "graphics/pokemon/fearow/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3ED1C, 0x20
 
 	.globl gMonStillFrontPic_Ekans
 gMonStillFrontPic_Ekans: @ 0x8C3ED3C
@@ -397,7 +465,10 @@ gMonBackPic_Ekans: @ 0x8C3F064
 	.globl gMonShinyPalette_Ekans
 gMonShinyPalette_Ekans: @ 0x8C3F354
 	.incbin "graphics/pokemon/ekans/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3f37c, 0x420
+	.globl gMonIcon_Ekans
+gMonIcon_Ekans: @ 0x8C3F37C
+	.incbin "graphics/pokemon/ekans/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC3F77C, 0x20
 
 	.globl gMonStillFrontPic_Arbok
 gMonStillFrontPic_Arbok: @ 0x8C3F79C
@@ -414,7 +485,10 @@ gMonBackPic_Arbok: @ 0x8C3FC10
 	.globl gMonShinyPalette_Arbok
 gMonShinyPalette_Arbok: @ 0x8C3FEB0
 	.incbin "graphics/pokemon/arbok/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc3fed8, 0x420
+	.globl gMonIcon_Arbok
+gMonIcon_Arbok: @ 0x8C3FED8
+	.incbin "graphics/pokemon/arbok/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC402D8, 0x20
 
 	.globl gMonStillFrontPic_Pikachu
 gMonStillFrontPic_Pikachu: @ 0x8C402F8
@@ -431,7 +505,11 @@ gMonBackPic_Pikachu: @ 0x8C405F0
 	.globl gMonShinyPalette_Pikachu
 gMonShinyPalette_Pikachu: @ 0x8C408C8
 	.incbin "graphics/pokemon/pikachu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc408ee, 0x422
+	.incbin "baserom_jp.gba", 0xC408EE, 0x2
+	.globl gMonIcon_Pikachu
+gMonIcon_Pikachu: @ 0x8C408F0
+	.incbin "graphics/pokemon/pikachu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC40CF0, 0x20
 
 	.globl gMonStillFrontPic_Raichu
 gMonStillFrontPic_Raichu: @ 0x8C40D10
@@ -448,7 +526,10 @@ gMonBackPic_Raichu: @ 0x8C410E4
 	.globl gMonShinyPalette_Raichu
 gMonShinyPalette_Raichu: @ 0x8C41404
 	.incbin "graphics/pokemon/raichu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4142c, 0x420
+	.globl gMonIcon_Raichu
+gMonIcon_Raichu: @ 0x8C4142C
+	.incbin "graphics/pokemon/raichu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4182C, 0x20
 
 	.globl gMonStillFrontPic_Sandshrew
 gMonStillFrontPic_Sandshrew: @ 0x8C4184C
@@ -465,7 +546,11 @@ gMonBackPic_Sandshrew: @ 0x8C41B34
 	.globl gMonShinyPalette_Sandshrew
 gMonShinyPalette_Sandshrew: @ 0x8C41E5C
 	.incbin "graphics/pokemon/sandshrew/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc41e82, 0x422
+	.incbin "baserom_jp.gba", 0xC41E82, 0x2
+	.globl gMonIcon_Sandshrew
+gMonIcon_Sandshrew: @ 0x8C41E84
+	.incbin "graphics/pokemon/sandshrew/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC42284, 0x20
 
 	.globl gMonStillFrontPic_Sandslash
 gMonStillFrontPic_Sandslash: @ 0x8C422A4
@@ -482,7 +567,10 @@ gMonBackPic_Sandslash: @ 0x8C426B8
 	.globl gMonShinyPalette_Sandslash
 gMonShinyPalette_Sandslash: @ 0x8C42AD4
 	.incbin "graphics/pokemon/sandslash/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc42afc, 0x420
+	.globl gMonIcon_Sandslash
+gMonIcon_Sandslash: @ 0x8C42AFC
+	.incbin "graphics/pokemon/sandslash/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC42EFC, 0x20
 
 	.globl gMonStillFrontPic_NidoranF
 gMonStillFrontPic_NidoranF: @ 0x8C42F1C
@@ -499,7 +587,11 @@ gMonBackPic_NidoranF: @ 0x8C431BC
 	.globl gMonShinyPalette_NidoranF
 gMonShinyPalette_NidoranF: @ 0x8C43494
 	.incbin "graphics/pokemon/nidoran_f/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc434ba, 0x422
+	.incbin "baserom_jp.gba", 0xC434BA, 0x2
+	.globl gMonIcon_NidoranF
+gMonIcon_NidoranF: @ 0x8C434BC
+	.incbin "graphics/pokemon/nidoranf/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC438BC, 0x20
 
 	.globl gMonStillFrontPic_Nidorina
 gMonStillFrontPic_Nidorina: @ 0x8C438DC
@@ -516,7 +608,10 @@ gMonBackPic_Nidorina: @ 0x8C43C30
 	.globl gMonShinyPalette_Nidorina
 gMonShinyPalette_Nidorina: @ 0x8C43FC4
 	.incbin "graphics/pokemon/nidorina/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc43fec, 0x420
+	.globl gMonIcon_Nidorina
+gMonIcon_Nidorina: @ 0x8C43FEC
+	.incbin "graphics/pokemon/nidorina/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC443EC, 0x20
 
 	.globl gMonStillFrontPic_Nidoqueen
 gMonStillFrontPic_Nidoqueen: @ 0x8C4440C
@@ -533,7 +628,10 @@ gMonBackPic_Nidoqueen: @ 0x8C448C0
 	.globl gMonShinyPalette_Nidoqueen
 gMonShinyPalette_Nidoqueen: @ 0x8C44C84
 	.incbin "graphics/pokemon/nidoqueen/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc44cac, 0x420
+	.globl gMonIcon_Nidoqueen
+gMonIcon_Nidoqueen: @ 0x8C44CAC
+	.incbin "graphics/pokemon/nidoqueen/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC450AC, 0x20
 
 	.globl gMonStillFrontPic_NidoranM
 gMonStillFrontPic_NidoranM: @ 0x8C450CC
@@ -550,7 +648,10 @@ gMonBackPic_NidoranM: @ 0x8C453C4
 	.globl gMonShinyPalette_NidoranM
 gMonShinyPalette_NidoranM: @ 0x8C456F8
 	.incbin "graphics/pokemon/nidoran_m/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc45720, 0x420
+	.globl gMonIcon_NidoranM
+gMonIcon_NidoranM: @ 0x8C45720
+	.incbin "graphics/pokemon/nidoranm/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC45B20, 0x20
 
 	.globl gMonStillFrontPic_Nidorino
 gMonStillFrontPic_Nidorino: @ 0x8C45B40
@@ -567,7 +668,10 @@ gMonBackPic_Nidorino: @ 0x8C45EFC
 	.globl gMonShinyPalette_Nidorino
 gMonShinyPalette_Nidorino: @ 0x8C462B8
 	.incbin "graphics/pokemon/nidorino/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc462e0, 0x420
+	.globl gMonIcon_Nidorino
+gMonIcon_Nidorino: @ 0x8C462E0
+	.incbin "graphics/pokemon/nidorino/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC466E0, 0x20
 
 	.globl gMonStillFrontPic_Nidoking
 gMonStillFrontPic_Nidoking: @ 0x8C46700
@@ -584,7 +688,11 @@ gMonBackPic_Nidoking: @ 0x8C46C20
 	.globl gMonShinyPalette_Nidoking
 gMonShinyPalette_Nidoking: @ 0x8C4705C
 	.incbin "graphics/pokemon/nidoking/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc47082, 0x422
+	.incbin "baserom_jp.gba", 0xC47082, 0x2
+	.globl gMonIcon_Nidoking
+gMonIcon_Nidoking: @ 0x8C47084
+	.incbin "graphics/pokemon/nidoking/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC47484, 0x20
 
 	.globl gMonStillFrontPic_Clefairy
 gMonStillFrontPic_Clefairy: @ 0x8C474A4
@@ -601,7 +709,10 @@ gMonBackPic_Clefairy: @ 0x8C47754
 	.globl gMonShinyPalette_Clefairy
 gMonShinyPalette_Clefairy: @ 0x8C47A24
 	.incbin "graphics/pokemon/clefairy/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc47a4c, 0x420
+	.globl gMonIcon_Clefairy
+gMonIcon_Clefairy: @ 0x8C47A4C
+	.incbin "graphics/pokemon/clefairy/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC47E4C, 0x20
 
 	.globl gMonStillFrontPic_Clefable
 gMonStillFrontPic_Clefable: @ 0x8C47E6C
@@ -618,7 +729,10 @@ gMonBackPic_Clefable: @ 0x8C481D0
 	.globl gMonShinyPalette_Clefable
 gMonShinyPalette_Clefable: @ 0x8C48508
 	.incbin "graphics/pokemon/clefable/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc48530, 0x420
+	.globl gMonIcon_Clefable
+gMonIcon_Clefable: @ 0x8C48530
+	.incbin "graphics/pokemon/clefable/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC48930, 0x20
 
 	.globl gMonStillFrontPic_Vulpix
 gMonStillFrontPic_Vulpix: @ 0x8C48950
@@ -635,7 +749,10 @@ gMonBackPic_Vulpix: @ 0x8C48CB4
 	.globl gMonShinyPalette_Vulpix
 gMonShinyPalette_Vulpix: @ 0x8C48FB0
 	.incbin "graphics/pokemon/vulpix/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc48fd8, 0x420
+	.globl gMonIcon_Vulpix
+gMonIcon_Vulpix: @ 0x8C48FD8
+	.incbin "graphics/pokemon/vulpix/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC493D8, 0x20
 
 	.globl gMonStillFrontPic_Ninetales
 gMonStillFrontPic_Ninetales: @ 0x8C493F8
@@ -652,7 +769,11 @@ gMonBackPic_Ninetales: @ 0x8C49854
 	.globl gMonShinyPalette_Ninetales
 gMonShinyPalette_Ninetales: @ 0x8C49BD4
 	.incbin "graphics/pokemon/ninetales/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc49bf3, 0x421
+	.incbin "baserom_jp.gba", 0xC49BF3, 0x1
+	.globl gMonIcon_Ninetales
+gMonIcon_Ninetales: @ 0x8C49BF4
+	.incbin "graphics/pokemon/ninetales/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC49FF4, 0x20
 
 	.globl gMonStillFrontPic_Jigglypuff
 gMonStillFrontPic_Jigglypuff: @ 0x8C4A014
@@ -669,7 +790,10 @@ gMonBackPic_Jigglypuff: @ 0x8C4A2B4
 	.globl gMonShinyPalette_Jigglypuff
 gMonShinyPalette_Jigglypuff: @ 0x8C4A510
 	.incbin "graphics/pokemon/jigglypuff/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4a538, 0x420
+	.globl gMonIcon_Jigglypuff
+gMonIcon_Jigglypuff: @ 0x8C4A538
+	.incbin "graphics/pokemon/jigglypuff/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4A938, 0x20
 
 	.globl gMonStillFrontPic_Wigglytuff
 gMonStillFrontPic_Wigglytuff: @ 0x8C4A958
@@ -686,7 +810,10 @@ gMonBackPic_Wigglytuff: @ 0x8C4ACD4
 	.globl gMonShinyPalette_Wigglytuff
 gMonShinyPalette_Wigglytuff: @ 0x8C4AF7C
 	.incbin "graphics/pokemon/wigglytuff/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4afa4, 0x420
+	.globl gMonIcon_Wigglytuff
+gMonIcon_Wigglytuff: @ 0x8C4AFA4
+	.incbin "graphics/pokemon/wigglytuff/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4B3A4, 0x20
 
 	.globl gMonStillFrontPic_Zubat
 gMonStillFrontPic_Zubat: @ 0x8C4B3C4
@@ -703,7 +830,10 @@ gMonBackPic_Zubat: @ 0x8C4B6C4
 	.globl gMonShinyPalette_Zubat
 gMonShinyPalette_Zubat: @ 0x8C4B980
 	.incbin "graphics/pokemon/zubat/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4b9a8, 0x420
+	.globl gMonIcon_Zubat
+gMonIcon_Zubat: @ 0x8C4B9A8
+	.incbin "graphics/pokemon/zubat/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4BDA8, 0x20
 
 	.globl gMonStillFrontPic_Golbat
 gMonStillFrontPic_Golbat: @ 0x8C4BDC8
@@ -720,7 +850,11 @@ gMonBackPic_Golbat: @ 0x8C4C18C
 	.globl gMonShinyPalette_Golbat
 gMonShinyPalette_Golbat: @ 0x8C4C448
 	.incbin "graphics/pokemon/golbat/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4c46e, 0x422
+	.incbin "baserom_jp.gba", 0xC4C46E, 0x2
+	.globl gMonIcon_Golbat
+gMonIcon_Golbat: @ 0x8C4C470
+	.incbin "graphics/pokemon/golbat/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4C870, 0x20
 
 	.globl gMonStillFrontPic_Oddish
 gMonStillFrontPic_Oddish: @ 0x8C4C890
@@ -737,7 +871,11 @@ gMonBackPic_Oddish: @ 0x8C4CAEC
 	.globl gMonShinyPalette_Oddish
 gMonShinyPalette_Oddish: @ 0x8C4CD64
 	.incbin "graphics/pokemon/oddish/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4cd8a, 0x422
+	.incbin "baserom_jp.gba", 0xC4CD8A, 0x2
+	.globl gMonIcon_Oddish
+gMonIcon_Oddish: @ 0x8C4CD8C
+	.incbin "graphics/pokemon/oddish/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4D18C, 0x20
 
 	.globl gMonStillFrontPic_Gloom
 gMonStillFrontPic_Gloom: @ 0x8C4D1AC
@@ -754,7 +892,10 @@ gMonBackPic_Gloom: @ 0x8C4D54C
 	.globl gMonShinyPalette_Gloom
 gMonShinyPalette_Gloom: @ 0x8C4D8B4
 	.incbin "graphics/pokemon/gloom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4d8dc, 0x420
+	.globl gMonIcon_Gloom
+gMonIcon_Gloom: @ 0x8C4D8DC
+	.incbin "graphics/pokemon/gloom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4DCDC, 0x20
 
 	.globl gMonStillFrontPic_Vileplume
 gMonStillFrontPic_Vileplume: @ 0x8C4DCFC
@@ -771,7 +912,10 @@ gMonBackPic_Vileplume: @ 0x8C4E0A0
 	.globl gMonShinyPalette_Vileplume
 gMonShinyPalette_Vileplume: @ 0x8C4E4B8
 	.incbin "graphics/pokemon/vileplume/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4e4e0, 0x420
+	.globl gMonIcon_Vileplume
+gMonIcon_Vileplume: @ 0x8C4E4E0
+	.incbin "graphics/pokemon/vileplume/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4E8E0, 0x20
 
 	.globl gMonStillFrontPic_Paras
 gMonStillFrontPic_Paras: @ 0x8C4E900
@@ -788,7 +932,10 @@ gMonBackPic_Paras: @ 0x8C4EB94
 	.globl gMonShinyPalette_Paras
 gMonShinyPalette_Paras: @ 0x8C4EE34
 	.incbin "graphics/pokemon/paras/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4ee5c, 0x420
+	.globl gMonIcon_Paras
+gMonIcon_Paras: @ 0x8C4EE5C
+	.incbin "graphics/pokemon/paras/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4F25C, 0x20
 
 	.globl gMonStillFrontPic_Parasect
 gMonStillFrontPic_Parasect: @ 0x8C4F27C
@@ -805,7 +952,10 @@ gMonBackPic_Parasect: @ 0x8C4F668
 	.globl gMonShinyPalette_Parasect
 gMonShinyPalette_Parasect: @ 0x8C4F964
 	.incbin "graphics/pokemon/parasect/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc4f98c, 0x420
+	.globl gMonIcon_Parasect
+gMonIcon_Parasect: @ 0x8C4F98C
+	.incbin "graphics/pokemon/parasect/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC4FD8C, 0x20
 
 	.globl gMonStillFrontPic_Venonat
 gMonStillFrontPic_Venonat: @ 0x8C4FDAC
@@ -822,7 +972,10 @@ gMonBackPic_Venonat: @ 0x8C5014C
 	.globl gMonShinyPalette_Venonat
 gMonShinyPalette_Venonat: @ 0x8C5047C
 	.incbin "graphics/pokemon/venonat/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc504a4, 0x420
+	.globl gMonIcon_Venonat
+gMonIcon_Venonat: @ 0x8C504A4
+	.incbin "graphics/pokemon/venonat/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC508A4, 0x20
 
 	.globl gMonStillFrontPic_Venomoth
 gMonStillFrontPic_Venomoth: @ 0x8C508C4
@@ -839,7 +992,10 @@ gMonBackPic_Venomoth: @ 0x8C50D90
 	.globl gMonShinyPalette_Venomoth
 gMonShinyPalette_Venomoth: @ 0x8C51154
 	.incbin "graphics/pokemon/venomoth/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5117c, 0x420
+	.globl gMonIcon_Venomoth
+gMonIcon_Venomoth: @ 0x8C5117C
+	.incbin "graphics/pokemon/venomoth/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5157C, 0x20
 
 	.globl gMonStillFrontPic_Diglett
 gMonStillFrontPic_Diglett: @ 0x8C5159C
@@ -856,7 +1012,10 @@ gMonBackPic_Diglett: @ 0x8C517D0
 	.globl gMonShinyPalette_Diglett
 gMonShinyPalette_Diglett: @ 0x8C519DC
 	.incbin "graphics/pokemon/diglett/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc51a04, 0x420
+	.globl gMonIcon_Diglett
+gMonIcon_Diglett: @ 0x8C51A04
+	.incbin "graphics/pokemon/diglett/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC51E04, 0x20
 
 	.globl gMonStillFrontPic_Dugtrio
 gMonStillFrontPic_Dugtrio: @ 0x8C51E24
@@ -873,7 +1032,10 @@ gMonBackPic_Dugtrio: @ 0x8C52170
 	.globl gMonShinyPalette_Dugtrio
 gMonShinyPalette_Dugtrio: @ 0x8C5241C
 	.incbin "graphics/pokemon/dugtrio/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc52444, 0x420
+	.globl gMonIcon_Dugtrio
+gMonIcon_Dugtrio: @ 0x8C52444
+	.incbin "graphics/pokemon/dugtrio/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC52844, 0x20
 
 	.globl gMonStillFrontPic_Meowth
 gMonStillFrontPic_Meowth: @ 0x8C52864
@@ -890,7 +1052,10 @@ gMonBackPic_Meowth: @ 0x8C52B78
 	.globl gMonShinyPalette_Meowth
 gMonShinyPalette_Meowth: @ 0x8C52E5C
 	.incbin "graphics/pokemon/meowth/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc52e84, 0x420
+	.globl gMonIcon_Meowth
+gMonIcon_Meowth: @ 0x8C52E84
+	.incbin "graphics/pokemon/meowth/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC53284, 0x20
 
 	.globl gMonStillFrontPic_Persian
 gMonStillFrontPic_Persian: @ 0x8C532A4
@@ -907,7 +1072,10 @@ gMonBackPic_Persian: @ 0x8C53680
 	.globl gMonShinyPalette_Persian
 gMonShinyPalette_Persian: @ 0x8C539E4
 	.incbin "graphics/pokemon/persian/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc53a0c, 0x420
+	.globl gMonIcon_Persian
+gMonIcon_Persian: @ 0x8C53A0C
+	.incbin "graphics/pokemon/persian/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC53E0C, 0x20
 
 	.globl gMonStillFrontPic_Psyduck
 gMonStillFrontPic_Psyduck: @ 0x8C53E2C
@@ -924,7 +1092,11 @@ gMonBackPic_Psyduck: @ 0x8C5412C
 	.globl gMonShinyPalette_Psyduck
 gMonShinyPalette_Psyduck: @ 0x8C543C8
 	.incbin "graphics/pokemon/psyduck/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc543ee, 0x422
+	.incbin "baserom_jp.gba", 0xC543EE, 0x2
+	.globl gMonIcon_Psyduck
+gMonIcon_Psyduck: @ 0x8C543F0
+	.incbin "graphics/pokemon/psyduck/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC547F0, 0x20
 
 	.globl gMonStillFrontPic_Golduck
 gMonStillFrontPic_Golduck: @ 0x8C54810
@@ -941,7 +1113,10 @@ gMonBackPic_Golduck: @ 0x8C54C10
 	.globl gMonShinyPalette_Golduck
 gMonShinyPalette_Golduck: @ 0x8C54F3C
 	.incbin "graphics/pokemon/golduck/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc54f64, 0x420
+	.globl gMonIcon_Golduck
+gMonIcon_Golduck: @ 0x8C54F64
+	.incbin "graphics/pokemon/golduck/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC55364, 0x20
 
 	.globl gMonStillFrontPic_Mankey
 gMonStillFrontPic_Mankey: @ 0x8C55384
@@ -958,7 +1133,10 @@ gMonBackPic_Mankey: @ 0x8C556C4
 	.globl gMonShinyPalette_Mankey
 gMonShinyPalette_Mankey: @ 0x8C55A2C
 	.incbin "graphics/pokemon/mankey/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc55a54, 0x420
+	.globl gMonIcon_Mankey
+gMonIcon_Mankey: @ 0x8C55A54
+	.incbin "graphics/pokemon/mankey/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC55E54, 0x20
 
 	.globl gMonStillFrontPic_Primeape
 gMonStillFrontPic_Primeape: @ 0x8C55E74
@@ -975,7 +1153,10 @@ gMonBackPic_Primeape: @ 0x8C5624C
 	.globl gMonShinyPalette_Primeape
 gMonShinyPalette_Primeape: @ 0x8C565BC
 	.incbin "graphics/pokemon/primeape/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc565e4, 0x420
+	.globl gMonIcon_Primeape
+gMonIcon_Primeape: @ 0x8C565E4
+	.incbin "graphics/pokemon/primeape/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC569E4, 0x20
 
 	.globl gMonStillFrontPic_Growlithe
 gMonStillFrontPic_Growlithe: @ 0x8C56A04
@@ -992,7 +1173,11 @@ gMonBackPic_Growlithe: @ 0x8C56D84
 	.globl gMonShinyPalette_Growlithe
 gMonShinyPalette_Growlithe: @ 0x8C570C0
 	.incbin "graphics/pokemon/growlithe/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc570e6, 0x422
+	.incbin "baserom_jp.gba", 0xC570E6, 0x2
+	.globl gMonIcon_Growlithe
+gMonIcon_Growlithe: @ 0x8C570E8
+	.incbin "graphics/pokemon/growlithe/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC574E8, 0x20
 
 	.globl gMonStillFrontPic_Arcanine
 gMonStillFrontPic_Arcanine: @ 0x8C57508
@@ -1009,7 +1194,10 @@ gMonBackPic_Arcanine: @ 0x8C57A64
 	.globl gMonShinyPalette_Arcanine
 gMonShinyPalette_Arcanine: @ 0x8C57E44
 	.incbin "graphics/pokemon/arcanine/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc57e6c, 0x420
+	.globl gMonIcon_Arcanine
+gMonIcon_Arcanine: @ 0x8C57E6C
+	.incbin "graphics/pokemon/arcanine/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5826C, 0x20
 
 	.globl gMonStillFrontPic_Poliwag
 gMonStillFrontPic_Poliwag: @ 0x8C5828C
@@ -1026,7 +1214,11 @@ gMonBackPic_Poliwag: @ 0x8C5853C
 	.globl gMonShinyPalette_Poliwag
 gMonShinyPalette_Poliwag: @ 0x8C587AC
 	.incbin "graphics/pokemon/poliwag/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc587d2, 0x422
+	.incbin "baserom_jp.gba", 0xC587D2, 0x2
+	.globl gMonIcon_Poliwag
+gMonIcon_Poliwag: @ 0x8C587D4
+	.incbin "graphics/pokemon/poliwag/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC58BD4, 0x20
 
 	.globl gMonStillFrontPic_Poliwhirl
 gMonStillFrontPic_Poliwhirl: @ 0x8C58BF4
@@ -1043,7 +1235,11 @@ gMonBackPic_Poliwhirl: @ 0x8C58FE0
 	.globl gMonShinyPalette_Poliwhirl
 gMonShinyPalette_Poliwhirl: @ 0x8C592A0
 	.incbin "graphics/pokemon/poliwhirl/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc592c6, 0x422
+	.incbin "baserom_jp.gba", 0xC592C6, 0x2
+	.globl gMonIcon_Poliwhirl
+gMonIcon_Poliwhirl: @ 0x8C592C8
+	.incbin "graphics/pokemon/poliwhirl/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC596C8, 0x20
 
 	.globl gMonStillFrontPic_Poliwrath
 gMonStillFrontPic_Poliwrath: @ 0x8C596E8
@@ -1060,7 +1256,11 @@ gMonBackPic_Poliwrath: @ 0x8C59AD8
 	.globl gMonShinyPalette_Poliwrath
 gMonShinyPalette_Poliwrath: @ 0x8C59DF8
 	.incbin "graphics/pokemon/poliwrath/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc59e1e, 0x422
+	.incbin "baserom_jp.gba", 0xC59E1E, 0x2
+	.globl gMonIcon_Poliwrath
+gMonIcon_Poliwrath: @ 0x8C59E20
+	.incbin "graphics/pokemon/poliwrath/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5A220, 0x20
 
 	.globl gMonStillFrontPic_Abra
 gMonStillFrontPic_Abra: @ 0x8C5A240
@@ -1077,7 +1277,11 @@ gMonBackPic_Abra: @ 0x8C5A548
 	.globl gMonShinyPalette_Abra
 gMonShinyPalette_Abra: @ 0x8C5A85C
 	.incbin "graphics/pokemon/abra/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5a87d, 0x423
+	.incbin "baserom_jp.gba", 0xC5A87D, 0x3
+	.globl gMonIcon_Abra
+gMonIcon_Abra: @ 0x8C5A880
+	.incbin "graphics/pokemon/abra/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5AC80, 0x20
 
 	.globl gMonStillFrontPic_Kadabra
 gMonStillFrontPic_Kadabra: @ 0x8C5ACA0
@@ -1094,7 +1298,10 @@ gMonBackPic_Kadabra: @ 0x8C5B12C
 	.globl gMonShinyPalette_Kadabra
 gMonShinyPalette_Kadabra: @ 0x8C5B508
 	.incbin "graphics/pokemon/kadabra/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5b530, 0x420
+	.globl gMonIcon_Kadabra
+gMonIcon_Kadabra: @ 0x8C5B530
+	.incbin "graphics/pokemon/kadabra/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5B930, 0x20
 
 	.globl gMonStillFrontPic_Alakazam
 gMonStillFrontPic_Alakazam: @ 0x8C5B950
@@ -1111,7 +1318,10 @@ gMonBackPic_Alakazam: @ 0x8C5BD74
 	.globl gMonShinyPalette_Alakazam
 gMonShinyPalette_Alakazam: @ 0x8C5C1B8
 	.incbin "graphics/pokemon/alakazam/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5c1e0, 0x420
+	.globl gMonIcon_Alakazam
+gMonIcon_Alakazam: @ 0x8C5C1E0
+	.incbin "graphics/pokemon/alakazam/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5C5E0, 0x20
 
 	.globl gMonStillFrontPic_Machop
 gMonStillFrontPic_Machop: @ 0x8C5C600
@@ -1128,7 +1338,10 @@ gMonBackPic_Machop: @ 0x8C5C8CC
 	.globl gMonShinyPalette_Machop
 gMonShinyPalette_Machop: @ 0x8C5CBAC
 	.incbin "graphics/pokemon/machop/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5cbd4, 0x420
+	.globl gMonIcon_Machop
+gMonIcon_Machop: @ 0x8C5CBD4
+	.incbin "graphics/pokemon/machop/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5CFD4, 0x20
 
 	.globl gMonStillFrontPic_Machoke
 gMonStillFrontPic_Machoke: @ 0x8C5CFF4
@@ -1145,7 +1358,10 @@ gMonBackPic_Machoke: @ 0x8C5D3CC
 	.globl gMonShinyPalette_Machoke
 gMonShinyPalette_Machoke: @ 0x8C5D71C
 	.incbin "graphics/pokemon/machoke/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5d744, 0x420
+	.globl gMonIcon_Machoke
+gMonIcon_Machoke: @ 0x8C5D744
+	.incbin "graphics/pokemon/machoke/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5DB44, 0x20
 
 	.globl gMonStillFrontPic_Machamp
 gMonStillFrontPic_Machamp: @ 0x8C5DB64
@@ -1162,7 +1378,10 @@ gMonBackPic_Machamp: @ 0x8C5E0DC
 	.globl gMonShinyPalette_Machamp
 gMonShinyPalette_Machamp: @ 0x8C5E538
 	.incbin "graphics/pokemon/machamp/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5e560, 0x420
+	.globl gMonIcon_Machamp
+gMonIcon_Machamp: @ 0x8C5E560
+	.incbin "graphics/pokemon/machamp/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5E960, 0x20
 
 	.globl gMonStillFrontPic_Bellsprout
 gMonStillFrontPic_Bellsprout: @ 0x8C5E980
@@ -1179,7 +1398,10 @@ gMonBackPic_Bellsprout: @ 0x8C5EC28
 	.globl gMonShinyPalette_Bellsprout
 gMonShinyPalette_Bellsprout: @ 0x8C5EEC4
 	.incbin "graphics/pokemon/bellsprout/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5eeec, 0x420
+	.globl gMonIcon_Bellsprout
+gMonIcon_Bellsprout: @ 0x8C5EEEC
+	.incbin "graphics/pokemon/bellsprout/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5F2EC, 0x20
 
 	.globl gMonStillFrontPic_Weepinbell
 gMonStillFrontPic_Weepinbell: @ 0x8C5F30C
@@ -1196,7 +1418,10 @@ gMonBackPic_Weepinbell: @ 0x8C5F658
 	.globl gMonShinyPalette_Weepinbell
 gMonShinyPalette_Weepinbell: @ 0x8C5F954
 	.incbin "graphics/pokemon/weepinbell/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc5f97c, 0x420
+	.globl gMonIcon_Weepinbell
+gMonIcon_Weepinbell: @ 0x8C5F97C
+	.incbin "graphics/pokemon/weepinbell/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC5FD7C, 0x20
 
 	.globl gMonStillFrontPic_Victreebel
 gMonStillFrontPic_Victreebel: @ 0x8C5FD9C
@@ -1213,7 +1438,10 @@ gMonBackPic_Victreebel: @ 0x8C601F0
 	.globl gMonShinyPalette_Victreebel
 gMonShinyPalette_Victreebel: @ 0x8C60588
 	.incbin "graphics/pokemon/victreebel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc605b0, 0x420
+	.globl gMonIcon_Victreebel
+gMonIcon_Victreebel: @ 0x8C605B0
+	.incbin "graphics/pokemon/victreebel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC609B0, 0x20
 
 	.globl gMonStillFrontPic_Tentacool
 gMonStillFrontPic_Tentacool: @ 0x8C609D0
@@ -1230,7 +1458,10 @@ gMonBackPic_Tentacool: @ 0x8C60C98
 	.globl gMonShinyPalette_Tentacool
 gMonShinyPalette_Tentacool: @ 0x8C60F64
 	.incbin "graphics/pokemon/tentacool/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc60f8c, 0x420
+	.globl gMonIcon_Tentacool
+gMonIcon_Tentacool: @ 0x8C60F8C
+	.incbin "graphics/pokemon/tentacool/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6138C, 0x20
 
 	.globl gMonStillFrontPic_Tentacruel
 gMonStillFrontPic_Tentacruel: @ 0x8C613AC
@@ -1247,7 +1478,10 @@ gMonBackPic_Tentacruel: @ 0x8C61870
 	.globl gMonShinyPalette_Tentacruel
 gMonShinyPalette_Tentacruel: @ 0x8C61C0C
 	.incbin "graphics/pokemon/tentacruel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc61c34, 0x420
+	.globl gMonIcon_Tentacruel
+gMonIcon_Tentacruel: @ 0x8C61C34
+	.incbin "graphics/pokemon/tentacruel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC62034, 0x20
 
 	.globl gMonStillFrontPic_Geodude
 gMonStillFrontPic_Geodude: @ 0x8C62054
@@ -1264,7 +1498,11 @@ gMonBackPic_Geodude: @ 0x8C622DC
 	.globl gMonShinyPalette_Geodude
 gMonShinyPalette_Geodude: @ 0x8C62570
 	.incbin "graphics/pokemon/geodude/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6258b, 0x421
+	.incbin "baserom_jp.gba", 0xC6258B, 0x1
+	.globl gMonIcon_Geodude
+gMonIcon_Geodude: @ 0x8C6258C
+	.incbin "graphics/pokemon/geodude/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6298C, 0x20
 
 	.globl gMonStillFrontPic_Graveler
 gMonStillFrontPic_Graveler: @ 0x8C629AC
@@ -1281,7 +1519,11 @@ gMonBackPic_Graveler: @ 0x8C62DD4
 	.globl gMonShinyPalette_Graveler
 gMonShinyPalette_Graveler: @ 0x8C63050
 	.incbin "graphics/pokemon/graveler/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6306d, 0x423
+	.incbin "baserom_jp.gba", 0xC6306D, 0x3
+	.globl gMonIcon_Graveler
+gMonIcon_Graveler: @ 0x8C63070
+	.incbin "graphics/pokemon/graveler/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC63470, 0x20
 
 	.globl gMonStillFrontPic_Golem
 gMonStillFrontPic_Golem: @ 0x8C63490
@@ -1298,7 +1540,10 @@ gMonBackPic_Golem: @ 0x8C63934
 	.globl gMonShinyPalette_Golem
 gMonShinyPalette_Golem: @ 0x8C63BF4
 	.incbin "graphics/pokemon/golem/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc63c1c, 0x420
+	.globl gMonIcon_Golem
+gMonIcon_Golem: @ 0x8C63C1C
+	.incbin "graphics/pokemon/golem/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6401C, 0x20
 
 	.globl gMonStillFrontPic_Ponyta
 gMonStillFrontPic_Ponyta: @ 0x8C6403C
@@ -1315,7 +1560,11 @@ gMonBackPic_Ponyta: @ 0x8C6440C
 	.globl gMonShinyPalette_Ponyta
 gMonShinyPalette_Ponyta: @ 0x8C64748
 	.incbin "graphics/pokemon/ponyta/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6476e, 0x422
+	.incbin "baserom_jp.gba", 0xC6476E, 0x2
+	.globl gMonIcon_Ponyta
+gMonIcon_Ponyta: @ 0x8C64770
+	.incbin "graphics/pokemon/ponyta/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC64B70, 0x20
 
 	.globl gMonStillFrontPic_Rapidash
 gMonStillFrontPic_Rapidash: @ 0x8C64B90
@@ -1332,7 +1581,10 @@ gMonBackPic_Rapidash: @ 0x8C65088
 	.globl gMonShinyPalette_Rapidash
 gMonShinyPalette_Rapidash: @ 0x8C65498
 	.incbin "graphics/pokemon/rapidash/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc654c0, 0x420
+	.globl gMonIcon_Rapidash
+gMonIcon_Rapidash: @ 0x8C654C0
+	.incbin "graphics/pokemon/rapidash/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC658C0, 0x20
 
 	.globl gMonStillFrontPic_Slowpoke
 gMonStillFrontPic_Slowpoke: @ 0x8C658E0
@@ -1349,7 +1601,10 @@ gMonBackPic_Slowpoke: @ 0x8C65C14
 	.globl gMonShinyPalette_Slowpoke
 gMonShinyPalette_Slowpoke: @ 0x8C65E78
 	.incbin "graphics/pokemon/slowpoke/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc65ea0, 0x420
+	.globl gMonIcon_Slowpoke
+gMonIcon_Slowpoke: @ 0x8C65EA0
+	.incbin "graphics/pokemon/slowpoke/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC662A0, 0x20
 
 	.globl gMonStillFrontPic_Slowbro
 gMonStillFrontPic_Slowbro: @ 0x8C662C0
@@ -1366,7 +1621,10 @@ gMonBackPic_Slowbro: @ 0x8C667A8
 	.globl gMonShinyPalette_Slowbro
 gMonShinyPalette_Slowbro: @ 0x8C66B44
 	.incbin "graphics/pokemon/slowbro/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc66b6c, 0x420
+	.globl gMonIcon_Slowbro
+gMonIcon_Slowbro: @ 0x8C66B6C
+	.incbin "graphics/pokemon/slowbro/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC66F6C, 0x20
 
 	.globl gMonStillFrontPic_Magnemite
 gMonStillFrontPic_Magnemite: @ 0x8C66F8C
@@ -1383,7 +1641,10 @@ gMonBackPic_Magnemite: @ 0x8C6718C
 	.globl gMonShinyPalette_Magnemite
 gMonShinyPalette_Magnemite: @ 0x8C67374
 	.incbin "graphics/pokemon/magnemite/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc67398, 0x420
+	.globl gMonIcon_Magnemite
+gMonIcon_Magnemite: @ 0x8C67398
+	.incbin "graphics/pokemon/magnemite/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC67798, 0x20
 
 	.globl gMonStillFrontPic_Magneton
 gMonStillFrontPic_Magneton: @ 0x8C677B8
@@ -1400,7 +1661,11 @@ gMonBackPic_Magneton: @ 0x8C67BE4
 	.globl gMonShinyPalette_Magneton
 gMonShinyPalette_Magneton: @ 0x8C67F64
 	.incbin "graphics/pokemon/magneton/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc67f8a, 0x422
+	.incbin "baserom_jp.gba", 0xC67F8A, 0x2
+	.globl gMonIcon_Magneton
+gMonIcon_Magneton: @ 0x8C67F8C
+	.incbin "graphics/pokemon/magneton/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6838C, 0x20
 
 	.globl gMonStillFrontPic_Farfetchd
 gMonStillFrontPic_Farfetchd: @ 0x8C683AC
@@ -1417,7 +1682,10 @@ gMonBackPic_Farfetchd: @ 0x8C68750
 	.globl gMonShinyPalette_Farfetchd
 gMonShinyPalette_Farfetchd: @ 0x8C68ABC
 	.incbin "graphics/pokemon/farfetchd/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc68ae4, 0x420
+	.globl gMonIcon_Farfetchd
+gMonIcon_Farfetchd: @ 0x8C68AE4
+	.incbin "graphics/pokemon/farfetchd/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC68EE4, 0x20
 
 	.globl gMonStillFrontPic_Doduo
 gMonStillFrontPic_Doduo: @ 0x8C68F04
@@ -1434,7 +1702,10 @@ gMonBackPic_Doduo: @ 0x8C6927C
 	.globl gMonShinyPalette_Doduo
 gMonShinyPalette_Doduo: @ 0x8C69594
 	.incbin "graphics/pokemon/doduo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc695b8, 0x420
+	.globl gMonIcon_Doduo
+gMonIcon_Doduo: @ 0x8C695B8
+	.incbin "graphics/pokemon/doduo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC699B8, 0x20
 
 	.globl gMonStillFrontPic_Dodrio
 gMonStillFrontPic_Dodrio: @ 0x8C699D8
@@ -1451,7 +1722,10 @@ gMonBackPic_Dodrio: @ 0x8C69EDC
 	.globl gMonShinyPalette_Dodrio
 gMonShinyPalette_Dodrio: @ 0x8C6A340
 	.incbin "graphics/pokemon/dodrio/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6a368, 0x420
+	.globl gMonIcon_Dodrio
+gMonIcon_Dodrio: @ 0x8C6A368
+	.incbin "graphics/pokemon/dodrio/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6A768, 0x20
 
 	.globl gMonStillFrontPic_Seel
 gMonStillFrontPic_Seel: @ 0x8C6A788
@@ -1468,7 +1742,11 @@ gMonBackPic_Seel: @ 0x8C6AAB8
 	.globl gMonShinyPalette_Seel
 gMonShinyPalette_Seel: @ 0x8C6ADA4
 	.incbin "graphics/pokemon/seel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6adca, 0x422
+	.incbin "baserom_jp.gba", 0xC6ADCA, 0x2
+	.globl gMonIcon_Seel
+gMonIcon_Seel: @ 0x8C6ADCC
+	.incbin "graphics/pokemon/seel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6B1CC, 0x20
 
 	.globl gMonStillFrontPic_Dewgong
 gMonStillFrontPic_Dewgong: @ 0x8C6B1EC
@@ -1485,7 +1763,11 @@ gMonBackPic_Dewgong: @ 0x8C6B5D4
 	.globl gMonShinyPalette_Dewgong
 gMonShinyPalette_Dewgong: @ 0x8C6B868
 	.incbin "graphics/pokemon/dewgong/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6b885, 0x423
+	.incbin "baserom_jp.gba", 0xC6B885, 0x3
+	.globl gMonIcon_Dewgong
+gMonIcon_Dewgong: @ 0x8C6B888
+	.incbin "graphics/pokemon/dewgong/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6BC88, 0x20
 
 	.globl gMonStillFrontPic_Grimer
 gMonStillFrontPic_Grimer: @ 0x8C6BCA8
@@ -1502,7 +1784,10 @@ gMonBackPic_Grimer: @ 0x8C6BFE8
 	.globl gMonShinyPalette_Grimer
 gMonShinyPalette_Grimer: @ 0x8C6C2CC
 	.incbin "graphics/pokemon/grimer/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6c2f0, 0x420
+	.globl gMonIcon_Grimer
+gMonIcon_Grimer: @ 0x8C6C2F0
+	.incbin "graphics/pokemon/grimer/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6C6F0, 0x20
 
 	.globl gMonStillFrontPic_Muk
 gMonStillFrontPic_Muk: @ 0x8C6C710
@@ -1519,7 +1804,10 @@ gMonBackPic_Muk: @ 0x8C6CB80
 	.globl gMonShinyPalette_Muk
 gMonShinyPalette_Muk: @ 0x8C6CED8
 	.incbin "graphics/pokemon/muk/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6cefc, 0x420
+	.globl gMonIcon_Muk
+gMonIcon_Muk: @ 0x8C6CEFC
+	.incbin "graphics/pokemon/muk/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6D2FC, 0x20
 
 	.globl gMonStillFrontPic_Shellder
 gMonStillFrontPic_Shellder: @ 0x8C6D31C
@@ -1536,7 +1824,10 @@ gMonBackPic_Shellder: @ 0x8C6D5A8
 	.globl gMonShinyPalette_Shellder
 gMonShinyPalette_Shellder: @ 0x8C6D8BC
 	.incbin "graphics/pokemon/shellder/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6d8e0, 0x420
+	.globl gMonIcon_Shellder
+gMonIcon_Shellder: @ 0x8C6D8E0
+	.incbin "graphics/pokemon/shellder/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6DCE0, 0x20
 
 	.globl gMonStillFrontPic_Cloyster
 gMonStillFrontPic_Cloyster: @ 0x8C6DD00
@@ -1553,7 +1844,10 @@ gMonBackPic_Cloyster: @ 0x8C6E15C
 	.globl gMonShinyPalette_Cloyster
 gMonShinyPalette_Cloyster: @ 0x8C6E568
 	.incbin "graphics/pokemon/cloyster/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6e58c, 0x420
+	.globl gMonIcon_Cloyster
+gMonIcon_Cloyster: @ 0x8C6E58C
+	.incbin "graphics/pokemon/cloyster/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6E98C, 0x20
 
 	.globl gMonStillFrontPic_Gastly
 gMonStillFrontPic_Gastly: @ 0x8C6E9AC
@@ -1570,7 +1864,10 @@ gMonBackPic_Gastly: @ 0x8C6ED8C
 	.globl gMonShinyPalette_Gastly
 gMonShinyPalette_Gastly: @ 0x8C6F0B0
 	.incbin "graphics/pokemon/gastly/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6f0d8, 0x420
+	.globl gMonIcon_Gastly
+gMonIcon_Gastly: @ 0x8C6F0D8
+	.incbin "graphics/pokemon/gastly/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC6F4D8, 0x20
 
 	.globl gMonStillFrontPic_Haunter
 gMonStillFrontPic_Haunter: @ 0x8C6F4F8
@@ -1587,7 +1884,10 @@ gMonBackPic_Haunter: @ 0x8C6F91C
 	.globl gMonShinyPalette_Haunter
 gMonShinyPalette_Haunter: @ 0x8C6FC44
 	.incbin "graphics/pokemon/haunter/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc6fc68, 0x420
+	.globl gMonIcon_Haunter
+gMonIcon_Haunter: @ 0x8C6FC68
+	.incbin "graphics/pokemon/haunter/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC70068, 0x20
 
 	.globl gMonStillFrontPic_Gengar
 gMonStillFrontPic_Gengar: @ 0x8C70088
@@ -1604,7 +1904,10 @@ gMonBackPic_Gengar: @ 0x8C70448
 	.globl gMonShinyPalette_Gengar
 gMonShinyPalette_Gengar: @ 0x8C70730
 	.incbin "graphics/pokemon/gengar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc70754, 0x420
+	.globl gMonIcon_Gengar
+gMonIcon_Gengar: @ 0x8C70754
+	.incbin "graphics/pokemon/gengar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC70B54, 0x20
 
 	.globl gMonStillFrontPic_Onix
 gMonStillFrontPic_Onix: @ 0x8C70B74
@@ -1621,7 +1924,11 @@ gMonBackPic_Onix: @ 0x8C71008
 	.globl gMonShinyPalette_Onix
 gMonShinyPalette_Onix: @ 0x8C71384
 	.incbin "graphics/pokemon/onix/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7139f, 0x421
+	.incbin "baserom_jp.gba", 0xC7139F, 0x1
+	.globl gMonIcon_Onix
+gMonIcon_Onix: @ 0x8C713A0
+	.incbin "graphics/pokemon/onix/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC717A0, 0x20
 
 	.globl gMonStillFrontPic_Drowzee
 gMonStillFrontPic_Drowzee: @ 0x8C717C0
@@ -1638,7 +1945,11 @@ gMonBackPic_Drowzee: @ 0x8C71B5C
 	.globl gMonShinyPalette_Drowzee
 gMonShinyPalette_Drowzee: @ 0x8C71DB8
 	.incbin "graphics/pokemon/drowzee/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc71dda, 0x422
+	.incbin "baserom_jp.gba", 0xC71DDA, 0x2
+	.globl gMonIcon_Drowzee
+gMonIcon_Drowzee: @ 0x8C71DDC
+	.incbin "graphics/pokemon/drowzee/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC721DC, 0x20
 
 	.globl gMonStillFrontPic_Hypno
 gMonStillFrontPic_Hypno: @ 0x8C721FC
@@ -1655,7 +1966,10 @@ gMonBackPic_Hypno: @ 0x8C7260C
 	.globl gMonShinyPalette_Hypno
 gMonShinyPalette_Hypno: @ 0x8C7293C
 	.incbin "graphics/pokemon/hypno/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc72960, 0x420
+	.globl gMonIcon_Hypno
+gMonIcon_Hypno: @ 0x8C72960
+	.incbin "graphics/pokemon/hypno/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC72D60, 0x20
 
 	.globl gMonStillFrontPic_Krabby
 gMonStillFrontPic_Krabby: @ 0x8C72D80
@@ -1672,7 +1986,11 @@ gMonBackPic_Krabby: @ 0x8C73060
 	.globl gMonShinyPalette_Krabby
 gMonShinyPalette_Krabby: @ 0x8C733EC
 	.incbin "graphics/pokemon/krabby/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc73412, 0x422
+	.incbin "baserom_jp.gba", 0xC73412, 0x2
+	.globl gMonIcon_Krabby
+gMonIcon_Krabby: @ 0x8C73414
+	.incbin "graphics/pokemon/krabby/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC73814, 0x20
 
 	.globl gMonStillFrontPic_Kingler
 gMonStillFrontPic_Kingler: @ 0x8C73834
@@ -1689,7 +2007,10 @@ gMonBackPic_Kingler: @ 0x8C73D8C
 	.globl gMonShinyPalette_Kingler
 gMonShinyPalette_Kingler: @ 0x8C74110
 	.incbin "graphics/pokemon/kingler/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc74134, 0x420
+	.globl gMonIcon_Kingler
+gMonIcon_Kingler: @ 0x8C74134
+	.incbin "graphics/pokemon/kingler/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC74534, 0x20
 
 	.globl gMonStillFrontPic_Voltorb
 gMonStillFrontPic_Voltorb: @ 0x8C74554
@@ -1706,7 +2027,11 @@ gMonBackPic_Voltorb: @ 0x8C74780
 	.globl gMonShinyPalette_Voltorb
 gMonShinyPalette_Voltorb: @ 0x8C749F4
 	.incbin "graphics/pokemon/voltorb/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc74a16, 0x422
+	.incbin "baserom_jp.gba", 0xC74A16, 0x2
+	.globl gMonIcon_Voltorb
+gMonIcon_Voltorb: @ 0x8C74A18
+	.incbin "graphics/pokemon/voltorb/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC74E18, 0x20
 
 	.globl gMonStillFrontPic_Electrode
 gMonStillFrontPic_Electrode: @ 0x8C74E38
@@ -1723,7 +2048,10 @@ gMonBackPic_Electrode: @ 0x8C750C8
 	.globl gMonShinyPalette_Electrode
 gMonShinyPalette_Electrode: @ 0x8C75338
 	.incbin "graphics/pokemon/electrode/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7535c, 0x420
+	.globl gMonIcon_Electrode
+gMonIcon_Electrode: @ 0x8C7535C
+	.incbin "graphics/pokemon/electrode/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7575C, 0x20
 
 	.globl gMonStillFrontPic_Exeggcute
 gMonStillFrontPic_Exeggcute: @ 0x8C7577C
@@ -1740,7 +2068,11 @@ gMonBackPic_Exeggcute: @ 0x8C75BA4
 	.globl gMonShinyPalette_Exeggcute
 gMonShinyPalette_Exeggcute: @ 0x8C75EAC
 	.incbin "graphics/pokemon/exeggcute/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc75ece, 0x422
+	.incbin "baserom_jp.gba", 0xC75ECE, 0x2
+	.globl gMonIcon_Exeggcute
+gMonIcon_Exeggcute: @ 0x8C75ED0
+	.incbin "graphics/pokemon/exeggcute/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC762D0, 0x20
 
 	.globl gMonStillFrontPic_Exeggutor
 gMonStillFrontPic_Exeggutor: @ 0x8C762F0
@@ -1757,7 +2089,10 @@ gMonBackPic_Exeggutor: @ 0x8C76818
 	.globl gMonShinyPalette_Exeggutor
 gMonShinyPalette_Exeggutor: @ 0x8C76CB8
 	.incbin "graphics/pokemon/exeggutor/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc76ce0, 0x420
+	.globl gMonIcon_Exeggutor
+gMonIcon_Exeggutor: @ 0x8C76CE0
+	.incbin "graphics/pokemon/exeggutor/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC770E0, 0x20
 
 	.globl gMonStillFrontPic_Cubone
 gMonStillFrontPic_Cubone: @ 0x8C77100
@@ -1774,7 +2109,10 @@ gMonBackPic_Cubone: @ 0x8C773F8
 	.globl gMonShinyPalette_Cubone
 gMonShinyPalette_Cubone: @ 0x8C77738
 	.incbin "graphics/pokemon/cubone/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc77760, 0x420
+	.globl gMonIcon_Cubone
+gMonIcon_Cubone: @ 0x8C77760
+	.incbin "graphics/pokemon/cubone/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC77B60, 0x20
 
 	.globl gMonStillFrontPic_Marowak
 gMonStillFrontPic_Marowak: @ 0x8C77B80
@@ -1791,7 +2129,10 @@ gMonBackPic_Marowak: @ 0x8C77F30
 	.globl gMonShinyPalette_Marowak
 gMonShinyPalette_Marowak: @ 0x8C78278
 	.incbin "graphics/pokemon/marowak/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc782a0, 0x420
+	.globl gMonIcon_Marowak
+gMonIcon_Marowak: @ 0x8C782A0
+	.incbin "graphics/pokemon/marowak/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC786A0, 0x20
 
 	.globl gMonStillFrontPic_Hitmonlee
 gMonStillFrontPic_Hitmonlee: @ 0x8C786C0
@@ -1808,7 +2149,10 @@ gMonBackPic_Hitmonlee: @ 0x8C78AE8
 	.globl gMonShinyPalette_Hitmonlee
 gMonShinyPalette_Hitmonlee: @ 0x8C78D8C
 	.incbin "graphics/pokemon/hitmonlee/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc78db4, 0x420
+	.globl gMonIcon_Hitmonlee
+gMonIcon_Hitmonlee: @ 0x8C78DB4
+	.incbin "graphics/pokemon/hitmonlee/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC791B4, 0x20
 
 	.globl gMonStillFrontPic_Hitmonchan
 gMonStillFrontPic_Hitmonchan: @ 0x8C791D4
@@ -1825,7 +2169,10 @@ gMonBackPic_Hitmonchan: @ 0x8C7953C
 	.globl gMonShinyPalette_Hitmonchan
 gMonShinyPalette_Hitmonchan: @ 0x8C79880
 	.incbin "graphics/pokemon/hitmonchan/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc798a8, 0x420
+	.globl gMonIcon_Hitmonchan
+gMonIcon_Hitmonchan: @ 0x8C798A8
+	.incbin "graphics/pokemon/hitmonchan/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC79CA8, 0x20
 
 	.globl gMonStillFrontPic_Lickitung
 gMonStillFrontPic_Lickitung: @ 0x8C79CC8
@@ -1842,7 +2189,10 @@ gMonBackPic_Lickitung: @ 0x8C7A0A8
 	.globl gMonShinyPalette_Lickitung
 gMonShinyPalette_Lickitung: @ 0x8C7A368
 	.incbin "graphics/pokemon/lickitung/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7a390, 0x420
+	.globl gMonIcon_Lickitung
+gMonIcon_Lickitung: @ 0x8C7A390
+	.incbin "graphics/pokemon/lickitung/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7A790, 0x20
 
 	.globl gMonStillFrontPic_Koffing
 gMonStillFrontPic_Koffing: @ 0x8C7A7B0
@@ -1859,7 +2209,10 @@ gMonBackPic_Koffing: @ 0x8C7AB34
 	.globl gMonShinyPalette_Koffing
 gMonShinyPalette_Koffing: @ 0x8C7AE34
 	.incbin "graphics/pokemon/koffing/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7ae5c, 0x420
+	.globl gMonIcon_Koffing
+gMonIcon_Koffing: @ 0x8C7AE5C
+	.incbin "graphics/pokemon/koffing/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7B25C, 0x20
 
 	.globl gMonStillFrontPic_Weezing
 gMonStillFrontPic_Weezing: @ 0x8C7B27C
@@ -1876,7 +2229,10 @@ gMonBackPic_Weezing: @ 0x8C7B72C
 	.globl gMonShinyPalette_Weezing
 gMonShinyPalette_Weezing: @ 0x8C7BA5C
 	.incbin "graphics/pokemon/weezing/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7ba84, 0x420
+	.globl gMonIcon_Weezing
+gMonIcon_Weezing: @ 0x8C7BA84
+	.incbin "graphics/pokemon/weezing/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7BE84, 0x20
 
 	.globl gMonStillFrontPic_Rhyhorn
 gMonStillFrontPic_Rhyhorn: @ 0x8C7BEA4
@@ -1893,7 +2249,11 @@ gMonBackPic_Rhyhorn: @ 0x8C7C2C8
 	.globl gMonShinyPalette_Rhyhorn
 gMonShinyPalette_Rhyhorn: @ 0x8C7C610
 	.incbin "graphics/pokemon/rhyhorn/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7c62f, 0x421
+	.incbin "baserom_jp.gba", 0xC7C62F, 0x1
+	.globl gMonIcon_Rhyhorn
+gMonIcon_Rhyhorn: @ 0x8C7C630
+	.incbin "graphics/pokemon/rhyhorn/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7CA30, 0x20
 
 	.globl gMonStillFrontPic_Rhydon
 gMonStillFrontPic_Rhydon: @ 0x8C7CA50
@@ -1910,7 +2270,10 @@ gMonBackPic_Rhydon: @ 0x8C7CF80
 	.globl gMonShinyPalette_Rhydon
 gMonShinyPalette_Rhydon: @ 0x8C7D3D0
 	.incbin "graphics/pokemon/rhydon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7d3f8, 0x420
+	.globl gMonIcon_Rhydon
+gMonIcon_Rhydon: @ 0x8C7D3F8
+	.incbin "graphics/pokemon/rhydon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7D7F8, 0x20
 
 	.globl gMonStillFrontPic_Chansey
 gMonStillFrontPic_Chansey: @ 0x8C7D818
@@ -1927,7 +2290,10 @@ gMonBackPic_Chansey: @ 0x8C7DB90
 	.globl gMonShinyPalette_Chansey
 gMonShinyPalette_Chansey: @ 0x8C7DE64
 	.incbin "graphics/pokemon/chansey/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7de88, 0x420
+	.globl gMonIcon_Chansey
+gMonIcon_Chansey: @ 0x8C7DE88
+	.incbin "graphics/pokemon/chansey/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7E288, 0x20
 
 	.globl gMonStillFrontPic_Tangela
 gMonStillFrontPic_Tangela: @ 0x8C7E2A8
@@ -1944,7 +2310,10 @@ gMonBackPic_Tangela: @ 0x8C7E6A0
 	.globl gMonShinyPalette_Tangela
 gMonShinyPalette_Tangela: @ 0x8C7EA4C
 	.incbin "graphics/pokemon/tangela/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7ea70, 0x420
+	.globl gMonIcon_Tangela
+gMonIcon_Tangela: @ 0x8C7EA70
+	.incbin "graphics/pokemon/tangela/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7EE70, 0x20
 
 	.globl gMonStillFrontPic_Kangaskhan
 gMonStillFrontPic_Kangaskhan: @ 0x8C7EE90
@@ -1961,7 +2330,11 @@ gMonBackPic_Kangaskhan: @ 0x8C7F3B0
 	.globl gMonShinyPalette_Kangaskhan
 gMonShinyPalette_Kangaskhan: @ 0x8C7F7E0
 	.incbin "graphics/pokemon/kangaskhan/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc7f807, 0x421
+	.incbin "baserom_jp.gba", 0xC7F807, 0x1
+	.globl gMonIcon_Kangaskhan
+gMonIcon_Kangaskhan: @ 0x8C7F808
+	.incbin "graphics/pokemon/kangaskhan/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC7FC08, 0x20
 
 	.globl gMonStillFrontPic_Horsea
 gMonStillFrontPic_Horsea: @ 0x8C7FC28
@@ -1978,7 +2351,11 @@ gMonBackPic_Horsea: @ 0x8C7FEC8
 	.globl gMonShinyPalette_Horsea
 gMonShinyPalette_Horsea: @ 0x8C801A8
 	.incbin "graphics/pokemon/horsea/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc801ce, 0x422
+	.incbin "baserom_jp.gba", 0xC801CE, 0x2
+	.globl gMonIcon_Horsea
+gMonIcon_Horsea: @ 0x8C801D0
+	.incbin "graphics/pokemon/horsea/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC805D0, 0x20
 
 	.globl gMonStillFrontPic_Seadra
 gMonStillFrontPic_Seadra: @ 0x8C805F0
@@ -1995,7 +2372,10 @@ gMonBackPic_Seadra: @ 0x8C809D8
 	.globl gMonShinyPalette_Seadra
 gMonShinyPalette_Seadra: @ 0x8C80D78
 	.incbin "graphics/pokemon/seadra/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc80da0, 0x420
+	.globl gMonIcon_Seadra
+gMonIcon_Seadra: @ 0x8C80DA0
+	.incbin "graphics/pokemon/seadra/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC811A0, 0x20
 
 	.globl gMonStillFrontPic_Goldeen
 gMonStillFrontPic_Goldeen: @ 0x8C811C0
@@ -2012,7 +2392,10 @@ gMonBackPic_Goldeen: @ 0x8C81550
 	.globl gMonShinyPalette_Goldeen
 gMonShinyPalette_Goldeen: @ 0x8C818C0
 	.incbin "graphics/pokemon/goldeen/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc818e8, 0x420
+	.globl gMonIcon_Goldeen
+gMonIcon_Goldeen: @ 0x8C818E8
+	.incbin "graphics/pokemon/goldeen/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC81CE8, 0x20
 
 	.globl gMonStillFrontPic_Seaking
 gMonStillFrontPic_Seaking: @ 0x8C81D08
@@ -2029,7 +2412,10 @@ gMonBackPic_Seaking: @ 0x8C821A4
 	.globl gMonShinyPalette_Seaking
 gMonShinyPalette_Seaking: @ 0x8C824F4
 	.incbin "graphics/pokemon/seaking/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8251c, 0x420
+	.globl gMonIcon_Seaking
+gMonIcon_Seaking: @ 0x8C8251C
+	.incbin "graphics/pokemon/seaking/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8291C, 0x20
 
 	.globl gMonStillFrontPic_Staryu
 gMonStillFrontPic_Staryu: @ 0x8C8293C
@@ -2046,7 +2432,10 @@ gMonBackPic_Staryu: @ 0x8C82C48
 	.globl gMonShinyPalette_Staryu
 gMonShinyPalette_Staryu: @ 0x8C82ED4
 	.incbin "graphics/pokemon/staryu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc82efc, 0x420
+	.globl gMonIcon_Staryu
+gMonIcon_Staryu: @ 0x8C82EFC
+	.incbin "graphics/pokemon/staryu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC832FC, 0x20
 
 	.globl gMonStillFrontPic_Starmie
 gMonStillFrontPic_Starmie: @ 0x8C8331C
@@ -2063,7 +2452,10 @@ gMonBackPic_Starmie: @ 0x8C8376C
 	.globl gMonShinyPalette_Starmie
 gMonShinyPalette_Starmie: @ 0x8C83A10
 	.incbin "graphics/pokemon/starmie/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc83a38, 0x420
+	.globl gMonIcon_Starmie
+gMonIcon_Starmie: @ 0x8C83A38
+	.incbin "graphics/pokemon/starmie/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC83E38, 0x20
 
 	.globl gMonStillFrontPic_MrMime
 gMonStillFrontPic_MrMime: @ 0x8C83E58
@@ -2080,7 +2472,10 @@ gMonBackPic_MrMime: @ 0x8C84230
 	.globl gMonShinyPalette_MrMime
 gMonShinyPalette_MrMime: @ 0x8C84564
 	.incbin "graphics/pokemon/mr_mime/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8458c, 0x420
+	.globl gMonIcon_MrMime
+gMonIcon_MrMime: @ 0x8C8458C
+	.incbin "graphics/pokemon/mrmime/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8498C, 0x20
 
 	.globl gMonStillFrontPic_Scyther
 gMonStillFrontPic_Scyther: @ 0x8C849AC
@@ -2097,7 +2492,10 @@ gMonBackPic_Scyther: @ 0x8C84E80
 	.globl gMonShinyPalette_Scyther
 gMonShinyPalette_Scyther: @ 0x8C85228
 	.incbin "graphics/pokemon/scyther/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc85250, 0x420
+	.globl gMonIcon_Scyther
+gMonIcon_Scyther: @ 0x8C85250
+	.incbin "graphics/pokemon/scyther/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC85650, 0x20
 
 	.globl gMonStillFrontPic_Jynx
 gMonStillFrontPic_Jynx: @ 0x8C85670
@@ -2114,7 +2512,10 @@ gMonBackPic_Jynx: @ 0x8C85B34
 	.globl gMonShinyPalette_Jynx
 gMonShinyPalette_Jynx: @ 0x8C85E2C
 	.incbin "graphics/pokemon/jynx/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc85e54, 0x420
+	.globl gMonIcon_Jynx
+gMonIcon_Jynx: @ 0x8C85E54
+	.incbin "graphics/pokemon/jynx/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC86254, 0x20
 
 	.globl gMonStillFrontPic_Electabuzz
 gMonStillFrontPic_Electabuzz: @ 0x8C86274
@@ -2131,7 +2532,10 @@ gMonBackPic_Electabuzz: @ 0x8C86718
 	.globl gMonShinyPalette_Electabuzz
 gMonShinyPalette_Electabuzz: @ 0x8C86A28
 	.incbin "graphics/pokemon/electabuzz/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc86a50, 0x420
+	.globl gMonIcon_Electabuzz
+gMonIcon_Electabuzz: @ 0x8C86A50
+	.incbin "graphics/pokemon/electabuzz/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC86E50, 0x20
 
 	.globl gMonStillFrontPic_Magmar
 gMonStillFrontPic_Magmar: @ 0x8C86E70
@@ -2148,7 +2552,10 @@ gMonBackPic_Magmar: @ 0x8C87340
 	.globl gMonShinyPalette_Magmar
 gMonShinyPalette_Magmar: @ 0x8C87688
 	.incbin "graphics/pokemon/magmar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc876b0, 0x420
+	.globl gMonIcon_Magmar
+gMonIcon_Magmar: @ 0x8C876B0
+	.incbin "graphics/pokemon/magmar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC87AB0, 0x20
 
 	.globl gMonStillFrontPic_Pinsir
 gMonStillFrontPic_Pinsir: @ 0x8C87AD0
@@ -2165,7 +2572,11 @@ gMonBackPic_Pinsir: @ 0x8C87F1C
 	.globl gMonShinyPalette_Pinsir
 gMonShinyPalette_Pinsir: @ 0x8C88270
 	.incbin "graphics/pokemon/pinsir/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc88292, 0x422
+	.incbin "baserom_jp.gba", 0xC88292, 0x2
+	.globl gMonIcon_Pinsir
+gMonIcon_Pinsir: @ 0x8C88294
+	.incbin "graphics/pokemon/pinsir/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC88694, 0x20
 
 	.globl gMonStillFrontPic_Tauros
 gMonStillFrontPic_Tauros: @ 0x8C886B4
@@ -2182,7 +2593,10 @@ gMonBackPic_Tauros: @ 0x8C88BAC
 	.globl gMonShinyPalette_Tauros
 gMonShinyPalette_Tauros: @ 0x8C88E60
 	.incbin "graphics/pokemon/tauros/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc88e88, 0x420
+	.globl gMonIcon_Tauros
+gMonIcon_Tauros: @ 0x8C88E88
+	.incbin "graphics/pokemon/tauros/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC89288, 0x20
 
 	.globl gMonStillFrontPic_Magikarp
 gMonStillFrontPic_Magikarp: @ 0x8C892A8
@@ -2199,7 +2613,10 @@ gMonBackPic_Magikarp: @ 0x8C89620
 	.globl gMonShinyPalette_Magikarp
 gMonShinyPalette_Magikarp: @ 0x8C89950
 	.incbin "graphics/pokemon/magikarp/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc89978, 0x420
+	.globl gMonIcon_Magikarp
+gMonIcon_Magikarp: @ 0x8C89978
+	.incbin "graphics/pokemon/magikarp/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC89D78, 0x20
 
 	.globl gMonStillFrontPic_Gyarados
 gMonStillFrontPic_Gyarados: @ 0x8C89D98
@@ -2216,7 +2633,10 @@ gMonBackPic_Gyarados: @ 0x8C8A328
 	.globl gMonShinyPalette_Gyarados
 gMonShinyPalette_Gyarados: @ 0x8C8A7FC
 	.incbin "graphics/pokemon/gyarados/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8a824, 0x420
+	.globl gMonIcon_Gyarados
+gMonIcon_Gyarados: @ 0x8C8A824
+	.incbin "graphics/pokemon/gyarados/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8AC24, 0x20
 
 	.globl gMonStillFrontPic_Lapras
 gMonStillFrontPic_Lapras: @ 0x8C8AC44
@@ -2233,7 +2653,10 @@ gMonBackPic_Lapras: @ 0x8C8B02C
 	.globl gMonShinyPalette_Lapras
 gMonShinyPalette_Lapras: @ 0x8C8B370
 	.incbin "graphics/pokemon/lapras/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8b398, 0x420
+	.globl gMonIcon_Lapras
+gMonIcon_Lapras: @ 0x8C8B398
+	.incbin "graphics/pokemon/lapras/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8B798, 0x20
 
 	.globl gMonStillFrontPic_Ditto
 gMonStillFrontPic_Ditto: @ 0x8C8B7B8
@@ -2250,7 +2673,11 @@ gMonBackPic_Ditto: @ 0x8C8B9C8
 	.globl gMonShinyPalette_Ditto
 gMonShinyPalette_Ditto: @ 0x8C8BBC8
 	.incbin "graphics/pokemon/ditto/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8bbe5, 0x423
+	.incbin "baserom_jp.gba", 0xC8BBE5, 0x3
+	.globl gMonIcon_Ditto
+gMonIcon_Ditto: @ 0x8C8BBE8
+	.incbin "graphics/pokemon/ditto/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8BFE8, 0x20
 
 	.globl gMonStillFrontPic_Eevee
 gMonStillFrontPic_Eevee: @ 0x8C8C008
@@ -2267,7 +2694,10 @@ gMonBackPic_Eevee: @ 0x8C8C2D0
 	.globl gMonShinyPalette_Eevee
 gMonShinyPalette_Eevee: @ 0x8C8C5F8
 	.incbin "graphics/pokemon/eevee/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8c61c, 0x420
+	.globl gMonIcon_Eevee
+gMonIcon_Eevee: @ 0x8C8C61C
+	.incbin "graphics/pokemon/eevee/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8CA1C, 0x20
 
 	.globl gMonStillFrontPic_Vaporeon
 gMonStillFrontPic_Vaporeon: @ 0x8C8CA3C
@@ -2284,7 +2714,10 @@ gMonBackPic_Vaporeon: @ 0x8C8CDF8
 	.globl gMonShinyPalette_Vaporeon
 gMonShinyPalette_Vaporeon: @ 0x8C8D0C0
 	.incbin "graphics/pokemon/vaporeon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8d0e8, 0x420
+	.globl gMonIcon_Vaporeon
+gMonIcon_Vaporeon: @ 0x8C8D0E8
+	.incbin "graphics/pokemon/vaporeon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8D4E8, 0x20
 
 	.globl gMonStillFrontPic_Jolteon
 gMonStillFrontPic_Jolteon: @ 0x8C8D508
@@ -2301,7 +2734,10 @@ gMonBackPic_Jolteon: @ 0x8C8D8D0
 	.globl gMonShinyPalette_Jolteon
 gMonShinyPalette_Jolteon: @ 0x8C8DC60
 	.incbin "graphics/pokemon/jolteon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8dc88, 0x420
+	.globl gMonIcon_Jolteon
+gMonIcon_Jolteon: @ 0x8C8DC88
+	.incbin "graphics/pokemon/jolteon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8E088, 0x20
 
 	.globl gMonStillFrontPic_Flareon
 gMonStillFrontPic_Flareon: @ 0x8C8E0A8
@@ -2318,7 +2754,11 @@ gMonBackPic_Flareon: @ 0x8C8E44C
 	.globl gMonShinyPalette_Flareon
 gMonShinyPalette_Flareon: @ 0x8C8E7DC
 	.incbin "graphics/pokemon/flareon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8e802, 0x422
+	.incbin "baserom_jp.gba", 0xC8E802, 0x2
+	.globl gMonIcon_Flareon
+gMonIcon_Flareon: @ 0x8C8E804
+	.incbin "graphics/pokemon/flareon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8EC04, 0x20
 
 	.globl gMonStillFrontPic_Porygon
 gMonStillFrontPic_Porygon: @ 0x8C8EC24
@@ -2335,7 +2775,10 @@ gMonBackPic_Porygon: @ 0x8C8EF04
 	.globl gMonShinyPalette_Porygon
 gMonShinyPalette_Porygon: @ 0x8C8F1BC
 	.incbin "graphics/pokemon/porygon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8f1e0, 0x420
+	.globl gMonIcon_Porygon
+gMonIcon_Porygon: @ 0x8C8F1E0
+	.incbin "graphics/pokemon/porygon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC8F5E0, 0x20
 
 	.globl gMonStillFrontPic_Omanyte
 gMonStillFrontPic_Omanyte: @ 0x8C8F600
@@ -2352,7 +2795,10 @@ gMonBackPic_Omanyte: @ 0x8C8F8D0
 	.globl gMonShinyPalette_Omanyte
 gMonShinyPalette_Omanyte: @ 0x8C8FC1C
 	.incbin "graphics/pokemon/omanyte/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc8fc44, 0x420
+	.globl gMonIcon_Omanyte
+gMonIcon_Omanyte: @ 0x8C8FC44
+	.incbin "graphics/pokemon/omanyte/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC90044, 0x20
 
 	.globl gMonStillFrontPic_Omastar
 gMonStillFrontPic_Omastar: @ 0x8C90064
@@ -2369,7 +2815,10 @@ gMonBackPic_Omastar: @ 0x8C9044C
 	.globl gMonShinyPalette_Omastar
 gMonShinyPalette_Omastar: @ 0x8C9078C
 	.incbin "graphics/pokemon/omastar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc907b4, 0x420
+	.globl gMonIcon_Omastar
+gMonIcon_Omastar: @ 0x8C907B4
+	.incbin "graphics/pokemon/omastar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC90BB4, 0x20
 
 	.globl gMonStillFrontPic_Kabuto
 gMonStillFrontPic_Kabuto: @ 0x8C90BD4
@@ -2386,7 +2835,10 @@ gMonBackPic_Kabuto: @ 0x8C90E6C
 	.globl gMonShinyPalette_Kabuto
 gMonShinyPalette_Kabuto: @ 0x8C91104
 	.incbin "graphics/pokemon/kabuto/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9112c, 0x420
+	.globl gMonIcon_Kabuto
+gMonIcon_Kabuto: @ 0x8C9112C
+	.incbin "graphics/pokemon/kabuto/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9152C, 0x20
 
 	.globl gMonStillFrontPic_Kabutops
 gMonStillFrontPic_Kabutops: @ 0x8C9154C
@@ -2403,7 +2855,11 @@ gMonBackPic_Kabutops: @ 0x8C91970
 	.globl gMonShinyPalette_Kabutops
 gMonShinyPalette_Kabutops: @ 0x8C91D14
 	.incbin "graphics/pokemon/kabutops/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc91d36, 0x422
+	.incbin "baserom_jp.gba", 0xC91D36, 0x2
+	.globl gMonIcon_Kabutops
+gMonIcon_Kabutops: @ 0x8C91D38
+	.incbin "graphics/pokemon/kabutops/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC92138, 0x20
 
 	.globl gMonStillFrontPic_Aerodactyl
 gMonStillFrontPic_Aerodactyl: @ 0x8C92158
@@ -2420,7 +2876,11 @@ gMonBackPic_Aerodactyl: @ 0x8C92600
 	.globl gMonShinyPalette_Aerodactyl
 gMonShinyPalette_Aerodactyl: @ 0x8C92904
 	.incbin "graphics/pokemon/aerodactyl/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9292a, 0x422
+	.incbin "baserom_jp.gba", 0xC9292A, 0x2
+	.globl gMonIcon_Aerodactyl
+gMonIcon_Aerodactyl: @ 0x8C9292C
+	.incbin "graphics/pokemon/aerodactyl/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC92D2C, 0x20
 
 	.globl gMonStillFrontPic_Snorlax
 gMonStillFrontPic_Snorlax: @ 0x8C92D4C
@@ -2437,7 +2897,10 @@ gMonBackPic_Snorlax: @ 0x8C931B8
 	.globl gMonShinyPalette_Snorlax
 gMonShinyPalette_Snorlax: @ 0x8C933D4
 	.incbin "graphics/pokemon/snorlax/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc933fc, 0x420
+	.globl gMonIcon_Snorlax
+gMonIcon_Snorlax: @ 0x8C933FC
+	.incbin "graphics/pokemon/snorlax/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC937FC, 0x20
 
 	.globl gMonStillFrontPic_Articuno
 gMonStillFrontPic_Articuno: @ 0x8C9381C
@@ -2454,7 +2917,10 @@ gMonBackPic_Articuno: @ 0x8C93D3C
 	.globl gMonShinyPalette_Articuno
 gMonShinyPalette_Articuno: @ 0x8C93F98
 	.incbin "graphics/pokemon/articuno/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc93fc0, 0x420
+	.globl gMonIcon_Articuno
+gMonIcon_Articuno: @ 0x8C93FC0
+	.incbin "graphics/pokemon/articuno/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC943C0, 0x20
 
 	.globl gMonStillFrontPic_Zapdos
 gMonStillFrontPic_Zapdos: @ 0x8C943E0
@@ -2471,7 +2937,10 @@ gMonBackPic_Zapdos: @ 0x8C9487C
 	.globl gMonShinyPalette_Zapdos
 gMonShinyPalette_Zapdos: @ 0x8C94BB8
 	.incbin "graphics/pokemon/zapdos/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc94be0, 0x420
+	.globl gMonIcon_Zapdos
+gMonIcon_Zapdos: @ 0x8C94BE0
+	.incbin "graphics/pokemon/zapdos/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC94FE0, 0x20
 
 	.globl gMonStillFrontPic_Moltres
 gMonStillFrontPic_Moltres: @ 0x8C95000
@@ -2488,7 +2957,10 @@ gMonBackPic_Moltres: @ 0x8C955D8
 	.globl gMonShinyPalette_Moltres
 gMonShinyPalette_Moltres: @ 0x8C95914
 	.incbin "graphics/pokemon/moltres/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9593c, 0x420
+	.globl gMonIcon_Moltres
+gMonIcon_Moltres: @ 0x8C9593C
+	.incbin "graphics/pokemon/moltres/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC95D3C, 0x20
 
 	.globl gMonStillFrontPic_Dratini
 gMonStillFrontPic_Dratini: @ 0x8C95D5C
@@ -2505,7 +2977,11 @@ gMonBackPic_Dratini: @ 0x8C96038
 	.globl gMonShinyPalette_Dratini
 gMonShinyPalette_Dratini: @ 0x8C962C8
 	.incbin "graphics/pokemon/dratini/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc962ea, 0x422
+	.incbin "baserom_jp.gba", 0xC962EA, 0x2
+	.globl gMonIcon_Dratini
+gMonIcon_Dratini: @ 0x8C962EC
+	.incbin "graphics/pokemon/dratini/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC966EC, 0x20
 
 	.globl gMonStillFrontPic_Dragonair
 gMonStillFrontPic_Dragonair: @ 0x8C9670C
@@ -2522,7 +2998,10 @@ gMonBackPic_Dragonair: @ 0x8C96A94
 	.globl gMonShinyPalette_Dragonair
 gMonShinyPalette_Dragonair: @ 0x8C96DA4
 	.incbin "graphics/pokemon/dragonair/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc96dcc, 0x420
+	.globl gMonIcon_Dragonair
+gMonIcon_Dragonair: @ 0x8C96DCC
+	.incbin "graphics/pokemon/dragonair/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC971CC, 0x20
 
 	.globl gMonStillFrontPic_Dragonite
 gMonStillFrontPic_Dragonite: @ 0x8C971EC
@@ -2539,7 +3018,10 @@ gMonBackPic_Dragonite: @ 0x8C97784
 	.globl gMonShinyPalette_Dragonite
 gMonShinyPalette_Dragonite: @ 0x8C97A80
 	.incbin "graphics/pokemon/dragonite/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc97aa8, 0x420
+	.globl gMonIcon_Dragonite
+gMonIcon_Dragonite: @ 0x8C97AA8
+	.incbin "graphics/pokemon/dragonite/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC97EA8, 0x20
 
 	.globl gMonStillFrontPic_Mewtwo
 gMonStillFrontPic_Mewtwo: @ 0x8C97EC8
@@ -2556,7 +3038,11 @@ gMonBackPic_Mewtwo: @ 0x8C98328
 	.globl gMonShinyPalette_Mewtwo
 gMonShinyPalette_Mewtwo: @ 0x8C986F4
 	.incbin "graphics/pokemon/mewtwo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc98716, 0x422
+	.incbin "baserom_jp.gba", 0xC98716, 0x2
+	.globl gMonIcon_Mewtwo
+gMonIcon_Mewtwo: @ 0x8C98718
+	.incbin "graphics/pokemon/mewtwo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC98B18, 0x20
 
 	.globl gMonStillFrontPic_Mew
 gMonStillFrontPic_Mew: @ 0x8C98B38
@@ -2573,7 +3059,11 @@ gMonBackPic_Mew: @ 0x8C98DDC
 	.globl gMonShinyPalette_Mew
 gMonShinyPalette_Mew: @ 0x8C990A8
 	.incbin "graphics/pokemon/mew/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc990ca, 0x422
+	.incbin "baserom_jp.gba", 0xC990CA, 0x2
+	.globl gMonIcon_Mew
+gMonIcon_Mew: @ 0x8C990CC
+	.incbin "graphics/pokemon/mew/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC994CC, 0x20
 
 	.globl gMonStillFrontPic_Chikorita
 gMonStillFrontPic_Chikorita: @ 0x8C994EC
@@ -2590,7 +3080,10 @@ gMonBackPic_Chikorita: @ 0x8C9977C
 	.globl gMonShinyPalette_Chikorita
 gMonShinyPalette_Chikorita: @ 0x8C99A40
 	.incbin "graphics/pokemon/chikorita/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc99a68, 0x420
+	.globl gMonIcon_Chikorita
+gMonIcon_Chikorita: @ 0x8C99A68
+	.incbin "graphics/pokemon/chikorita/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC99E68, 0x20
 
 	.globl gMonStillFrontPic_Bayleef
 gMonStillFrontPic_Bayleef: @ 0x8C99E88
@@ -2607,7 +3100,10 @@ gMonBackPic_Bayleef: @ 0x8C9A284
 	.globl gMonShinyPalette_Bayleef
 gMonShinyPalette_Bayleef: @ 0x8C9A614
 	.incbin "graphics/pokemon/bayleef/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9a63c, 0x420
+	.globl gMonIcon_Bayleef
+gMonIcon_Bayleef: @ 0x8C9A63C
+	.incbin "graphics/pokemon/bayleef/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9AA3C, 0x20
 
 	.globl gMonStillFrontPic_Meganium
 gMonStillFrontPic_Meganium: @ 0x8C9AA5C
@@ -2624,7 +3120,10 @@ gMonBackPic_Meganium: @ 0x8C9AFE0
 	.globl gMonShinyPalette_Meganium
 gMonShinyPalette_Meganium: @ 0x8C9B330
 	.incbin "graphics/pokemon/meganium/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9b358, 0x420
+	.globl gMonIcon_Meganium
+gMonIcon_Meganium: @ 0x8C9B358
+	.incbin "graphics/pokemon/meganium/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9B758, 0x20
 
 	.globl gMonStillFrontPic_Cyndaquil
 gMonStillFrontPic_Cyndaquil: @ 0x8C9B778
@@ -2641,7 +3140,10 @@ gMonBackPic_Cyndaquil: @ 0x8C9BA2C
 	.globl gMonShinyPalette_Cyndaquil
 gMonShinyPalette_Cyndaquil: @ 0x8C9BD58
 	.incbin "graphics/pokemon/cyndaquil/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9bd80, 0x420
+	.globl gMonIcon_Cyndaquil
+gMonIcon_Cyndaquil: @ 0x8C9BD80
+	.incbin "graphics/pokemon/cyndaquil/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9C180, 0x20
 
 	.globl gMonStillFrontPic_Quilava
 gMonStillFrontPic_Quilava: @ 0x8C9C1A0
@@ -2658,7 +3160,10 @@ gMonBackPic_Quilava: @ 0x8C9C4E4
 	.globl gMonShinyPalette_Quilava
 gMonShinyPalette_Quilava: @ 0x8C9C858
 	.incbin "graphics/pokemon/quilava/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9c880, 0x420
+	.globl gMonIcon_Quilava
+gMonIcon_Quilava: @ 0x8C9C880
+	.incbin "graphics/pokemon/quilava/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9CC80, 0x20
 
 	.globl gMonStillFrontPic_Typhlosion
 gMonStillFrontPic_Typhlosion: @ 0x8C9CCA0
@@ -2675,7 +3180,10 @@ gMonBackPic_Typhlosion: @ 0x8C9D0F0
 	.globl gMonShinyPalette_Typhlosion
 gMonShinyPalette_Typhlosion: @ 0x8C9D4F4
 	.incbin "graphics/pokemon/typhlosion/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9d51c, 0x420
+	.globl gMonIcon_Typhlosion
+gMonIcon_Typhlosion: @ 0x8C9D51C
+	.incbin "graphics/pokemon/typhlosion/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9D91C, 0x20
 
 	.globl gMonStillFrontPic_Totodile
 gMonStillFrontPic_Totodile: @ 0x8C9D93C
@@ -2692,7 +3200,10 @@ gMonBackPic_Totodile: @ 0x8C9DC08
 	.globl gMonShinyPalette_Totodile
 gMonShinyPalette_Totodile: @ 0x8C9DEE8
 	.incbin "graphics/pokemon/totodile/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9df10, 0x420
+	.globl gMonIcon_Totodile
+gMonIcon_Totodile: @ 0x8C9DF10
+	.incbin "graphics/pokemon/totodile/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9E310, 0x20
 
 	.globl gMonStillFrontPic_Croconaw
 gMonStillFrontPic_Croconaw: @ 0x8C9E330
@@ -2709,7 +3220,10 @@ gMonBackPic_Croconaw: @ 0x8C9E6C0
 	.globl gMonShinyPalette_Croconaw
 gMonShinyPalette_Croconaw: @ 0x8C9EA10
 	.incbin "graphics/pokemon/croconaw/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9ea38, 0x420
+	.globl gMonIcon_Croconaw
+gMonIcon_Croconaw: @ 0x8C9EA38
+	.incbin "graphics/pokemon/croconaw/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9EE38, 0x20
 
 	.globl gMonStillFrontPic_Feraligatr
 gMonStillFrontPic_Feraligatr: @ 0x8C9EE58
@@ -2726,7 +3240,10 @@ gMonBackPic_Feraligatr: @ 0x8C9F3EC
 	.globl gMonShinyPalette_Feraligatr
 gMonShinyPalette_Feraligatr: @ 0x8C9F8B8
 	.incbin "graphics/pokemon/feraligatr/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xc9f8e0, 0x420
+	.globl gMonIcon_Feraligatr
+gMonIcon_Feraligatr: @ 0x8C9F8E0
+	.incbin "graphics/pokemon/feraligatr/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xC9FCE0, 0x20
 
 	.globl gMonStillFrontPic_Sentret
 gMonStillFrontPic_Sentret: @ 0x8C9FD00
@@ -2743,7 +3260,10 @@ gMonBackPic_Sentret: @ 0x8CA0004
 	.globl gMonShinyPalette_Sentret
 gMonShinyPalette_Sentret: @ 0x8CA02A8
 	.incbin "graphics/pokemon/sentret/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca02d0, 0x420
+	.globl gMonIcon_Sentret
+gMonIcon_Sentret: @ 0x8CA02D0
+	.incbin "graphics/pokemon/sentret/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA06D0, 0x20
 
 	.globl gMonStillFrontPic_Furret
 gMonStillFrontPic_Furret: @ 0x8CA06F0
@@ -2760,7 +3280,10 @@ gMonBackPic_Furret: @ 0x8CA0A4C
 	.globl gMonShinyPalette_Furret
 gMonShinyPalette_Furret: @ 0x8CA0D74
 	.incbin "graphics/pokemon/furret/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca0d9c, 0x420
+	.globl gMonIcon_Furret
+gMonIcon_Furret: @ 0x8CA0D9C
+	.incbin "graphics/pokemon/furret/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA119C, 0x20
 
 	.globl gMonStillFrontPic_Hoothoot
 gMonStillFrontPic_Hoothoot: @ 0x8CA11BC
@@ -2777,7 +3300,10 @@ gMonBackPic_Hoothoot: @ 0x8CA1468
 	.globl gMonShinyPalette_Hoothoot
 gMonShinyPalette_Hoothoot: @ 0x8CA1770
 	.incbin "graphics/pokemon/hoothoot/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca1798, 0x420
+	.globl gMonIcon_Hoothoot
+gMonIcon_Hoothoot: @ 0x8CA1798
+	.incbin "graphics/pokemon/hoothoot/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA1B98, 0x20
 
 	.globl gMonStillFrontPic_Noctowl
 gMonStillFrontPic_Noctowl: @ 0x8CA1BB8
@@ -2794,7 +3320,10 @@ gMonBackPic_Noctowl: @ 0x8CA1F34
 	.globl gMonShinyPalette_Noctowl
 gMonShinyPalette_Noctowl: @ 0x8CA2290
 	.incbin "graphics/pokemon/noctowl/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca22b8, 0x420
+	.globl gMonIcon_Noctowl
+gMonIcon_Noctowl: @ 0x8CA22B8
+	.incbin "graphics/pokemon/noctowl/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA26B8, 0x20
 
 	.globl gMonStillFrontPic_Ledyba
 gMonStillFrontPic_Ledyba: @ 0x8CA26D8
@@ -2811,7 +3340,10 @@ gMonBackPic_Ledyba: @ 0x8CA29F4
 	.globl gMonShinyPalette_Ledyba
 gMonShinyPalette_Ledyba: @ 0x8CA2D24
 	.incbin "graphics/pokemon/ledyba/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca2d4c, 0x420
+	.globl gMonIcon_Ledyba
+gMonIcon_Ledyba: @ 0x8CA2D4C
+	.incbin "graphics/pokemon/ledyba/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA314C, 0x20
 
 	.globl gMonStillFrontPic_Ledian
 gMonStillFrontPic_Ledian: @ 0x8CA316C
@@ -2828,7 +3360,10 @@ gMonBackPic_Ledian: @ 0x8CA351C
 	.globl gMonShinyPalette_Ledian
 gMonShinyPalette_Ledian: @ 0x8CA3874
 	.incbin "graphics/pokemon/ledian/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca389c, 0x420
+	.globl gMonIcon_Ledian
+gMonIcon_Ledian: @ 0x8CA389C
+	.incbin "graphics/pokemon/ledian/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA3C9C, 0x20
 
 	.globl gMonStillFrontPic_Spinarak
 gMonStillFrontPic_Spinarak: @ 0x8CA3CBC
@@ -2845,7 +3380,10 @@ gMonBackPic_Spinarak: @ 0x8CA3F58
 	.globl gMonShinyPalette_Spinarak
 gMonShinyPalette_Spinarak: @ 0x8CA41BC
 	.incbin "graphics/pokemon/spinarak/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca41e4, 0x420
+	.globl gMonIcon_Spinarak
+gMonIcon_Spinarak: @ 0x8CA41E4
+	.incbin "graphics/pokemon/spinarak/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA45E4, 0x20
 
 	.globl gMonStillFrontPic_Ariados
 gMonStillFrontPic_Ariados: @ 0x8CA4604
@@ -2862,7 +3400,10 @@ gMonBackPic_Ariados: @ 0x8CA49EC
 	.globl gMonShinyPalette_Ariados
 gMonShinyPalette_Ariados: @ 0x8CA4D64
 	.incbin "graphics/pokemon/ariados/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca4d8c, 0x420
+	.globl gMonIcon_Ariados
+gMonIcon_Ariados: @ 0x8CA4D8C
+	.incbin "graphics/pokemon/ariados/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA518C, 0x20
 
 	.globl gMonStillFrontPic_Crobat
 gMonStillFrontPic_Crobat: @ 0x8CA51AC
@@ -2879,7 +3420,10 @@ gMonBackPic_Crobat: @ 0x8CA5584
 	.globl gMonShinyPalette_Crobat
 gMonShinyPalette_Crobat: @ 0x8CA588C
 	.incbin "graphics/pokemon/crobat/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca58b4, 0x420
+	.globl gMonIcon_Crobat
+gMonIcon_Crobat: @ 0x8CA58B4
+	.incbin "graphics/pokemon/crobat/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA5CB4, 0x20
 
 	.globl gMonStillFrontPic_Chinchou
 gMonStillFrontPic_Chinchou: @ 0x8CA5CD4
@@ -2896,7 +3440,10 @@ gMonBackPic_Chinchou: @ 0x8CA5FD4
 	.globl gMonShinyPalette_Chinchou
 gMonShinyPalette_Chinchou: @ 0x8CA62CC
 	.incbin "graphics/pokemon/chinchou/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca62f4, 0x420
+	.globl gMonIcon_Chinchou
+gMonIcon_Chinchou: @ 0x8CA62F4
+	.incbin "graphics/pokemon/chinchou/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA66F4, 0x20
 
 	.globl gMonStillFrontPic_Lanturn
 gMonStillFrontPic_Lanturn: @ 0x8CA6714
@@ -2913,7 +3460,10 @@ gMonBackPic_Lanturn: @ 0x8CA6AAC
 	.globl gMonShinyPalette_Lanturn
 gMonShinyPalette_Lanturn: @ 0x8CA6DAC
 	.incbin "graphics/pokemon/lanturn/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca6dd4, 0x420
+	.globl gMonIcon_Lanturn
+gMonIcon_Lanturn: @ 0x8CA6DD4
+	.incbin "graphics/pokemon/lanturn/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA71D4, 0x20
 
 	.globl gMonStillFrontPic_Pichu
 gMonStillFrontPic_Pichu: @ 0x8CA71F4
@@ -2930,7 +3480,10 @@ gMonBackPic_Pichu: @ 0x8CA7438
 	.globl gMonShinyPalette_Pichu
 gMonShinyPalette_Pichu: @ 0x8CA7694
 	.incbin "graphics/pokemon/pichu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca76bc, 0x420
+	.globl gMonIcon_Pichu
+gMonIcon_Pichu: @ 0x8CA76BC
+	.incbin "graphics/pokemon/pichu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA7ABC, 0x20
 
 	.globl gMonStillFrontPic_Cleffa
 gMonStillFrontPic_Cleffa: @ 0x8CA7ADC
@@ -2947,7 +3500,10 @@ gMonBackPic_Cleffa: @ 0x8CA7CE4
 	.globl gMonShinyPalette_Cleffa
 gMonShinyPalette_Cleffa: @ 0x8CA7F20
 	.incbin "graphics/pokemon/cleffa/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca7f48, 0x420
+	.globl gMonIcon_Cleffa
+gMonIcon_Cleffa: @ 0x8CA7F48
+	.incbin "graphics/pokemon/cleffa/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA8348, 0x20
 
 	.globl gMonStillFrontPic_Igglybuff
 gMonStillFrontPic_Igglybuff: @ 0x8CA8368
@@ -2964,7 +3520,10 @@ gMonBackPic_Igglybuff: @ 0x8CA8578
 	.globl gMonShinyPalette_Igglybuff
 gMonShinyPalette_Igglybuff: @ 0x8CA87B4
 	.incbin "graphics/pokemon/igglybuff/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca87dc, 0x420
+	.globl gMonIcon_Igglybuff
+gMonIcon_Igglybuff: @ 0x8CA87DC
+	.incbin "graphics/pokemon/igglybuff/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA8BDC, 0x20
 
 	.globl gMonStillFrontPic_Togepi
 gMonStillFrontPic_Togepi: @ 0x8CA8BFC
@@ -2981,7 +3540,10 @@ gMonBackPic_Togepi: @ 0x8CA8DF8
 	.globl gMonShinyPalette_Togepi
 gMonShinyPalette_Togepi: @ 0x8CA906C
 	.incbin "graphics/pokemon/togepi/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca9094, 0x420
+	.globl gMonIcon_Togepi
+gMonIcon_Togepi: @ 0x8CA9094
+	.incbin "graphics/pokemon/togepi/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA9494, 0x20
 
 	.globl gMonStillFrontPic_Togetic
 gMonStillFrontPic_Togetic: @ 0x8CA94B4
@@ -2998,7 +3560,11 @@ gMonBackPic_Togetic: @ 0x8CA9750
 	.globl gMonShinyPalette_Togetic
 gMonShinyPalette_Togetic: @ 0x8CA9A7C
 	.incbin "graphics/pokemon/togetic/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xca9aa2, 0x422
+	.incbin "baserom_jp.gba", 0xCA9AA2, 0x2
+	.globl gMonIcon_Togetic
+gMonIcon_Togetic: @ 0x8CA9AA4
+	.incbin "graphics/pokemon/togetic/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCA9EA4, 0x20
 
 	.globl gMonStillFrontPic_Natu
 gMonStillFrontPic_Natu: @ 0x8CA9EC4
@@ -3015,7 +3581,10 @@ gMonBackPic_Natu: @ 0x8CAA0B8
 	.globl gMonShinyPalette_Natu
 gMonShinyPalette_Natu: @ 0x8CAA2CC
 	.incbin "graphics/pokemon/natu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcaa2f4, 0x420
+	.globl gMonIcon_Natu
+gMonIcon_Natu: @ 0x8CAA2F4
+	.incbin "graphics/pokemon/natu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAA6F4, 0x20
 
 	.globl gMonStillFrontPic_Xatu
 gMonStillFrontPic_Xatu: @ 0x8CAA714
@@ -3032,7 +3601,10 @@ gMonBackPic_Xatu: @ 0x8CAAA18
 	.globl gMonShinyPalette_Xatu
 gMonShinyPalette_Xatu: @ 0x8CAAD90
 	.incbin "graphics/pokemon/xatu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcaadb8, 0x420
+	.globl gMonIcon_Xatu
+gMonIcon_Xatu: @ 0x8CAADB8
+	.incbin "graphics/pokemon/xatu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAB1B8, 0x20
 
 	.globl gMonStillFrontPic_Mareep
 gMonStillFrontPic_Mareep: @ 0x8CAB1D8
@@ -3049,7 +3621,10 @@ gMonBackPic_Mareep: @ 0x8CAB4B4
 	.globl gMonShinyPalette_Mareep
 gMonShinyPalette_Mareep: @ 0x8CAB7A8
 	.incbin "graphics/pokemon/mareep/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcab7d0, 0x420
+	.globl gMonIcon_Mareep
+gMonIcon_Mareep: @ 0x8CAB7D0
+	.incbin "graphics/pokemon/mareep/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCABBD0, 0x20
 
 	.globl gMonStillFrontPic_Flaaffy
 gMonStillFrontPic_Flaaffy: @ 0x8CABBF0
@@ -3066,7 +3641,10 @@ gMonBackPic_Flaaffy: @ 0x8CABF18
 	.globl gMonShinyPalette_Flaaffy
 gMonShinyPalette_Flaaffy: @ 0x8CAC234
 	.incbin "graphics/pokemon/flaaffy/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcac25c, 0x420
+	.globl gMonIcon_Flaaffy
+gMonIcon_Flaaffy: @ 0x8CAC25C
+	.incbin "graphics/pokemon/flaaffy/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAC65C, 0x20
 
 	.globl gMonStillFrontPic_Ampharos
 gMonStillFrontPic_Ampharos: @ 0x8CAC67C
@@ -3083,7 +3661,10 @@ gMonBackPic_Ampharos: @ 0x8CACA00
 	.globl gMonShinyPalette_Ampharos
 gMonShinyPalette_Ampharos: @ 0x8CACD78
 	.incbin "graphics/pokemon/ampharos/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcacda0, 0x420
+	.globl gMonIcon_Ampharos
+gMonIcon_Ampharos: @ 0x8CACDA0
+	.incbin "graphics/pokemon/ampharos/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAD1A0, 0x20
 
 	.globl gMonStillFrontPic_Bellossom
 gMonStillFrontPic_Bellossom: @ 0x8CAD1C0
@@ -3100,7 +3681,10 @@ gMonBackPic_Bellossom: @ 0x8CAD458
 	.globl gMonShinyPalette_Bellossom
 gMonShinyPalette_Bellossom: @ 0x8CAD77C
 	.incbin "graphics/pokemon/bellossom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcad7a4, 0x420
+	.globl gMonIcon_Bellossom
+gMonIcon_Bellossom: @ 0x8CAD7A4
+	.incbin "graphics/pokemon/bellossom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCADBA4, 0x20
 
 	.globl gMonStillFrontPic_Marill
 gMonStillFrontPic_Marill: @ 0x8CADBC4
@@ -3117,7 +3701,10 @@ gMonBackPic_Marill: @ 0x8CADEB0
 	.globl gMonShinyPalette_Marill
 gMonShinyPalette_Marill: @ 0x8CAE15C
 	.incbin "graphics/pokemon/marill/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcae184, 0x420
+	.globl gMonIcon_Marill
+gMonIcon_Marill: @ 0x8CAE184
+	.incbin "graphics/pokemon/marill/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAE584, 0x20
 
 	.globl gMonStillFrontPic_Azumarill
 gMonStillFrontPic_Azumarill: @ 0x8CAE5A4
@@ -3134,7 +3721,10 @@ gMonBackPic_Azumarill: @ 0x8CAE8CC
 	.globl gMonShinyPalette_Azumarill
 gMonShinyPalette_Azumarill: @ 0x8CAEB88
 	.incbin "graphics/pokemon/azumarill/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcaebb0, 0x420
+	.globl gMonIcon_Azumarill
+gMonIcon_Azumarill: @ 0x8CAEBB0
+	.incbin "graphics/pokemon/azumarill/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAEFB0, 0x20
 
 	.globl gMonStillFrontPic_Sudowoodo
 gMonStillFrontPic_Sudowoodo: @ 0x8CAEFD0
@@ -3151,7 +3741,10 @@ gMonBackPic_Sudowoodo: @ 0x8CAF310
 	.globl gMonShinyPalette_Sudowoodo
 gMonShinyPalette_Sudowoodo: @ 0x8CAF66C
 	.incbin "graphics/pokemon/sudowoodo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcaf694, 0x420
+	.globl gMonIcon_Sudowoodo
+gMonIcon_Sudowoodo: @ 0x8CAF694
+	.incbin "graphics/pokemon/sudowoodo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCAFA94, 0x20
 
 	.globl gMonStillFrontPic_Politoed
 gMonStillFrontPic_Politoed: @ 0x8CAFAB4
@@ -3168,7 +3761,10 @@ gMonBackPic_Politoed: @ 0x8CAFE18
 	.globl gMonShinyPalette_Politoed
 gMonShinyPalette_Politoed: @ 0x8CB00D4
 	.incbin "graphics/pokemon/politoed/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb00fc, 0x420
+	.globl gMonIcon_Politoed
+gMonIcon_Politoed: @ 0x8CB00FC
+	.incbin "graphics/pokemon/politoed/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB04FC, 0x20
 
 	.globl gMonStillFrontPic_Hoppip
 gMonStillFrontPic_Hoppip: @ 0x8CB051C
@@ -3185,7 +3781,11 @@ gMonBackPic_Hoppip: @ 0x8CB07F8
 	.globl gMonShinyPalette_Hoppip
 gMonShinyPalette_Hoppip: @ 0x8CB0AD8
 	.incbin "graphics/pokemon/hoppip/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb0aff, 0x421
+	.incbin "baserom_jp.gba", 0xCB0AFF, 0x1
+	.globl gMonIcon_Hoppip
+gMonIcon_Hoppip: @ 0x8CB0B00
+	.incbin "graphics/pokemon/hoppip/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB0F00, 0x20
 
 	.globl gMonStillFrontPic_Skiploom
 gMonStillFrontPic_Skiploom: @ 0x8CB0F20
@@ -3202,7 +3802,10 @@ gMonBackPic_Skiploom: @ 0x8CB11D0
 	.globl gMonShinyPalette_Skiploom
 gMonShinyPalette_Skiploom: @ 0x8CB14B0
 	.incbin "graphics/pokemon/skiploom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb14d8, 0x420
+	.globl gMonIcon_Skiploom
+gMonIcon_Skiploom: @ 0x8CB14D8
+	.incbin "graphics/pokemon/skiploom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB18D8, 0x20
 
 	.globl gMonStillFrontPic_Jumpluff
 gMonStillFrontPic_Jumpluff: @ 0x8CB18F8
@@ -3219,7 +3822,10 @@ gMonBackPic_Jumpluff: @ 0x8CB1C8C
 	.globl gMonShinyPalette_Jumpluff
 gMonShinyPalette_Jumpluff: @ 0x8CB2084
 	.incbin "graphics/pokemon/jumpluff/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb20ac, 0x420
+	.globl gMonIcon_Jumpluff
+gMonIcon_Jumpluff: @ 0x8CB20AC
+	.incbin "graphics/pokemon/jumpluff/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB24AC, 0x20
 
 	.globl gMonStillFrontPic_Aipom
 gMonStillFrontPic_Aipom: @ 0x8CB24CC
@@ -3236,7 +3842,10 @@ gMonBackPic_Aipom: @ 0x8CB27F0
 	.globl gMonShinyPalette_Aipom
 gMonShinyPalette_Aipom: @ 0x8CB2AE4
 	.incbin "graphics/pokemon/aipom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb2b0c, 0x420
+	.globl gMonIcon_Aipom
+gMonIcon_Aipom: @ 0x8CB2B0C
+	.incbin "graphics/pokemon/aipom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB2F0C, 0x20
 
 	.globl gMonStillFrontPic_Sunkern
 gMonStillFrontPic_Sunkern: @ 0x8CB2F2C
@@ -3253,7 +3862,10 @@ gMonBackPic_Sunkern: @ 0x8CB318C
 	.globl gMonShinyPalette_Sunkern
 gMonShinyPalette_Sunkern: @ 0x8CB3450
 	.incbin "graphics/pokemon/sunkern/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb3478, 0x420
+	.globl gMonIcon_Sunkern
+gMonIcon_Sunkern: @ 0x8CB3478
+	.incbin "graphics/pokemon/sunkern/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB3878, 0x20
 
 	.globl gMonStillFrontPic_Sunflora
 gMonStillFrontPic_Sunflora: @ 0x8CB3898
@@ -3270,7 +3882,10 @@ gMonBackPic_Sunflora: @ 0x8CB3C18
 	.globl gMonShinyPalette_Sunflora
 gMonShinyPalette_Sunflora: @ 0x8CB3FB8
 	.incbin "graphics/pokemon/sunflora/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb3fe0, 0x420
+	.globl gMonIcon_Sunflora
+gMonIcon_Sunflora: @ 0x8CB3FE0
+	.incbin "graphics/pokemon/sunflora/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB43E0, 0x20
 
 	.globl gMonStillFrontPic_Yanma
 gMonStillFrontPic_Yanma: @ 0x8CB4400
@@ -3287,7 +3902,10 @@ gMonBackPic_Yanma: @ 0x8CB47AC
 	.globl gMonShinyPalette_Yanma
 gMonShinyPalette_Yanma: @ 0x8CB4B60
 	.incbin "graphics/pokemon/yanma/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb4b88, 0x420
+	.globl gMonIcon_Yanma
+gMonIcon_Yanma: @ 0x8CB4B88
+	.incbin "graphics/pokemon/yanma/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB4F88, 0x20
 
 	.globl gMonStillFrontPic_Wooper
 gMonStillFrontPic_Wooper: @ 0x8CB4FA8
@@ -3304,7 +3922,11 @@ gMonBackPic_Wooper: @ 0x8CB5210
 	.globl gMonShinyPalette_Wooper
 gMonShinyPalette_Wooper: @ 0x8CB549C
 	.incbin "graphics/pokemon/wooper/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb54c2, 0x422
+	.incbin "baserom_jp.gba", 0xCB54C2, 0x2
+	.globl gMonIcon_Wooper
+gMonIcon_Wooper: @ 0x8CB54C4
+	.incbin "graphics/pokemon/wooper/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB58C4, 0x20
 
 	.globl gMonStillFrontPic_Quagsire
 gMonStillFrontPic_Quagsire: @ 0x8CB58E4
@@ -3321,7 +3943,10 @@ gMonBackPic_Quagsire: @ 0x8CB5C80
 	.globl gMonShinyPalette_Quagsire
 gMonShinyPalette_Quagsire: @ 0x8CB5F7C
 	.incbin "graphics/pokemon/quagsire/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb5fa4, 0x420
+	.globl gMonIcon_Quagsire
+gMonIcon_Quagsire: @ 0x8CB5FA4
+	.incbin "graphics/pokemon/quagsire/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB63A4, 0x20
 
 	.globl gMonStillFrontPic_Espeon
 gMonStillFrontPic_Espeon: @ 0x8CB63C4
@@ -3338,7 +3963,10 @@ gMonBackPic_Espeon: @ 0x8CB6728
 	.globl gMonShinyPalette_Espeon
 gMonShinyPalette_Espeon: @ 0x8CB6A04
 	.incbin "graphics/pokemon/espeon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb6a28, 0x420
+	.globl gMonIcon_Espeon
+gMonIcon_Espeon: @ 0x8CB6A28
+	.incbin "graphics/pokemon/espeon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB6E28, 0x20
 
 	.globl gMonStillFrontPic_Umbreon
 gMonStillFrontPic_Umbreon: @ 0x8CB6E48
@@ -3355,7 +3983,10 @@ gMonBackPic_Umbreon: @ 0x8CB7184
 	.globl gMonShinyPalette_Umbreon
 gMonShinyPalette_Umbreon: @ 0x8CB7498
 	.incbin "graphics/pokemon/umbreon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb74c0, 0x420
+	.globl gMonIcon_Umbreon
+gMonIcon_Umbreon: @ 0x8CB74C0
+	.incbin "graphics/pokemon/umbreon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB78C0, 0x20
 
 	.globl gMonStillFrontPic_Murkrow
 gMonStillFrontPic_Murkrow: @ 0x8CB78E0
@@ -3372,7 +4003,10 @@ gMonBackPic_Murkrow: @ 0x8CB7BE8
 	.globl gMonShinyPalette_Murkrow
 gMonShinyPalette_Murkrow: @ 0x8CB7F00
 	.incbin "graphics/pokemon/murkrow/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb7f28, 0x420
+	.globl gMonIcon_Murkrow
+gMonIcon_Murkrow: @ 0x8CB7F28
+	.incbin "graphics/pokemon/murkrow/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB8328, 0x20
 
 	.globl gMonStillFrontPic_Slowking
 gMonStillFrontPic_Slowking: @ 0x8CB8348
@@ -3389,7 +4023,10 @@ gMonBackPic_Slowking: @ 0x8CB8724
 	.globl gMonShinyPalette_Slowking
 gMonShinyPalette_Slowking: @ 0x8CB8AB0
 	.incbin "graphics/pokemon/slowking/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb8ad8, 0x420
+	.globl gMonIcon_Slowking
+gMonIcon_Slowking: @ 0x8CB8AD8
+	.incbin "graphics/pokemon/slowking/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB8ED8, 0x20
 
 	.globl gMonStillFrontPic_Misdreavus
 gMonStillFrontPic_Misdreavus: @ 0x8CB8EF8
@@ -3406,7 +4043,10 @@ gMonBackPic_Misdreavus: @ 0x8CB91E0
 	.globl gMonShinyPalette_Misdreavus
 gMonShinyPalette_Misdreavus: @ 0x8CB9504
 	.incbin "graphics/pokemon/misdreavus/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb952c, 0x420
+	.globl gMonIcon_Misdreavus
+gMonIcon_Misdreavus: @ 0x8CB952C
+	.incbin "graphics/pokemon/misdreavus/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCB992C, 0x20
 
 	.globl gMonStillFrontPic_UnownA
 gMonStillFrontPic_UnownA: @ 0x8CB994C
@@ -3423,7 +4063,11 @@ gMonBackPic_UnownA: @ 0x8CB9B40
 	.globl gMonShinyPalette_Unown
 gMonShinyPalette_Unown: @ 0x8CB9D40
 	.incbin "graphics/pokemon/unown/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcb9d5d, 0x423
+	.incbin "baserom_jp.gba", 0xCB9D5D, 0x3
+	.globl gMonIcon_UnownA
+gMonIcon_UnownA: @ 0x8CB9D60
+	.incbin "graphics/pokemon/unowna/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBA160, 0x20
 
 	.globl gMonStillFrontPic_Wobbuffet
 gMonStillFrontPic_Wobbuffet: @ 0x8CBA180
@@ -3440,7 +4084,10 @@ gMonBackPic_Wobbuffet: @ 0x8CBA4F8
 	.globl gMonShinyPalette_Wobbuffet
 gMonShinyPalette_Wobbuffet: @ 0x8CBA73C
 	.incbin "graphics/pokemon/wobbuffet/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcba764, 0x420
+	.globl gMonIcon_Wobbuffet
+gMonIcon_Wobbuffet: @ 0x8CBA764
+	.incbin "graphics/pokemon/wobbuffet/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBAB64, 0x20
 
 	.globl gMonStillFrontPic_Girafarig
 gMonStillFrontPic_Girafarig: @ 0x8CBAB84
@@ -3457,7 +4104,10 @@ gMonBackPic_Girafarig: @ 0x8CBAFB0
 	.globl gMonShinyPalette_Girafarig
 gMonShinyPalette_Girafarig: @ 0x8CBB35C
 	.incbin "graphics/pokemon/girafarig/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbb384, 0x420
+	.globl gMonIcon_Girafarig
+gMonIcon_Girafarig: @ 0x8CBB384
+	.incbin "graphics/pokemon/girafarig/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBB784, 0x20
 
 	.globl gMonStillFrontPic_Pineco
 gMonStillFrontPic_Pineco: @ 0x8CBB7A4
@@ -3474,7 +4124,11 @@ gMonBackPic_Pineco: @ 0x8CBBB08
 	.globl gMonShinyPalette_Pineco
 gMonShinyPalette_Pineco: @ 0x8CBBDE0
 	.incbin "graphics/pokemon/pineco/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbbe01, 0x423
+	.incbin "baserom_jp.gba", 0xCBBE01, 0x3
+	.globl gMonIcon_Pineco
+gMonIcon_Pineco: @ 0x8CBBE04
+	.incbin "graphics/pokemon/pineco/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBC204, 0x20
 
 	.globl gMonStillFrontPic_Forretress
 gMonStillFrontPic_Forretress: @ 0x8CBC224
@@ -3491,7 +4145,10 @@ gMonBackPic_Forretress: @ 0x8CBC668
 	.globl gMonShinyPalette_Forretress
 gMonShinyPalette_Forretress: @ 0x8CBC928
 	.incbin "graphics/pokemon/forretress/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbc950, 0x420
+	.globl gMonIcon_Forretress
+gMonIcon_Forretress: @ 0x8CBC950
+	.incbin "graphics/pokemon/forretress/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBCD50, 0x20
 
 	.globl gMonStillFrontPic_Dunsparce
 gMonStillFrontPic_Dunsparce: @ 0x8CBCD70
@@ -3508,7 +4165,10 @@ gMonBackPic_Dunsparce: @ 0x8CBD0A8
 	.globl gMonShinyPalette_Dunsparce
 gMonShinyPalette_Dunsparce: @ 0x8CBD3A4
 	.incbin "graphics/pokemon/dunsparce/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbd3cc, 0x420
+	.globl gMonIcon_Dunsparce
+gMonIcon_Dunsparce: @ 0x8CBD3CC
+	.incbin "graphics/pokemon/dunsparce/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBD7CC, 0x20
 
 	.globl gMonStillFrontPic_Gligar
 gMonStillFrontPic_Gligar: @ 0x8CBD7EC
@@ -3525,7 +4185,10 @@ gMonBackPic_Gligar: @ 0x8CBDC3C
 	.globl gMonShinyPalette_Gligar
 gMonShinyPalette_Gligar: @ 0x8CBE014
 	.incbin "graphics/pokemon/gligar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbe03c, 0x420
+	.globl gMonIcon_Gligar
+gMonIcon_Gligar: @ 0x8CBE03C
+	.incbin "graphics/pokemon/gligar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBE43C, 0x20
 
 	.globl gMonStillFrontPic_Steelix
 gMonStillFrontPic_Steelix: @ 0x8CBE45C
@@ -3542,7 +4205,11 @@ gMonBackPic_Steelix: @ 0x8CBE948
 	.globl gMonShinyPalette_Steelix
 gMonShinyPalette_Steelix: @ 0x8CBED54
 	.incbin "graphics/pokemon/steelix/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbed75, 0x423
+	.incbin "baserom_jp.gba", 0xCBED75, 0x3
+	.globl gMonIcon_Steelix
+gMonIcon_Steelix: @ 0x8CBED78
+	.incbin "graphics/pokemon/steelix/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBF178, 0x20
 
 	.globl gMonStillFrontPic_Snubbull
 gMonStillFrontPic_Snubbull: @ 0x8CBF198
@@ -3559,7 +4226,10 @@ gMonBackPic_Snubbull: @ 0x8CBF494
 	.globl gMonShinyPalette_Snubbull
 gMonShinyPalette_Snubbull: @ 0x8CBF7BC
 	.incbin "graphics/pokemon/snubbull/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcbf7e4, 0x420
+	.globl gMonIcon_Snubbull
+gMonIcon_Snubbull: @ 0x8CBF7E4
+	.incbin "graphics/pokemon/snubbull/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCBFBE4, 0x20
 
 	.globl gMonStillFrontPic_Granbull
 gMonStillFrontPic_Granbull: @ 0x8CBFC04
@@ -3576,7 +4246,10 @@ gMonBackPic_Granbull: @ 0x8CBFFB8
 	.globl gMonShinyPalette_Granbull
 gMonShinyPalette_Granbull: @ 0x8CC02DC
 	.incbin "graphics/pokemon/granbull/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc0304, 0x420
+	.globl gMonIcon_Granbull
+gMonIcon_Granbull: @ 0x8CC0304
+	.incbin "graphics/pokemon/granbull/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC0704, 0x20
 
 	.globl gMonStillFrontPic_Qwilfish
 gMonStillFrontPic_Qwilfish: @ 0x8CC0724
@@ -3593,7 +4266,10 @@ gMonBackPic_Qwilfish: @ 0x8CC0A0C
 	.globl gMonShinyPalette_Qwilfish
 gMonShinyPalette_Qwilfish: @ 0x8CC0CEC
 	.incbin "graphics/pokemon/qwilfish/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc0d14, 0x420
+	.globl gMonIcon_Qwilfish
+gMonIcon_Qwilfish: @ 0x8CC0D14
+	.incbin "graphics/pokemon/qwilfish/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC1114, 0x20
 
 	.globl gMonStillFrontPic_Scizor
 gMonStillFrontPic_Scizor: @ 0x8CC1134
@@ -3610,7 +4286,10 @@ gMonBackPic_Scizor: @ 0x8CC1644
 	.globl gMonShinyPalette_Scizor
 gMonShinyPalette_Scizor: @ 0x8CC19C4
 	.incbin "graphics/pokemon/scizor/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc19ec, 0x420
+	.globl gMonIcon_Scizor
+gMonIcon_Scizor: @ 0x8CC19EC
+	.incbin "graphics/pokemon/scizor/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC1DEC, 0x20
 
 	.globl gMonStillFrontPic_Shuckle
 gMonStillFrontPic_Shuckle: @ 0x8CC1E0C
@@ -3627,7 +4306,10 @@ gMonBackPic_Shuckle: @ 0x8CC20FC
 	.globl gMonShinyPalette_Shuckle
 gMonShinyPalette_Shuckle: @ 0x8CC2354
 	.incbin "graphics/pokemon/shuckle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc237c, 0x420
+	.globl gMonIcon_Shuckle
+gMonIcon_Shuckle: @ 0x8CC237C
+	.incbin "graphics/pokemon/shuckle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC277C, 0x20
 
 	.globl gMonStillFrontPic_Heracross
 gMonStillFrontPic_Heracross: @ 0x8CC279C
@@ -3644,7 +4326,10 @@ gMonBackPic_Heracross: @ 0x8CC2BB4
 	.globl gMonShinyPalette_Heracross
 gMonShinyPalette_Heracross: @ 0x8CC2F24
 	.incbin "graphics/pokemon/heracross/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc2f4c, 0x420
+	.globl gMonIcon_Heracross
+gMonIcon_Heracross: @ 0x8CC2F4C
+	.incbin "graphics/pokemon/heracross/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC334C, 0x20
 
 	.globl gMonStillFrontPic_Sneasel
 gMonStillFrontPic_Sneasel: @ 0x8CC336C
@@ -3661,7 +4346,10 @@ gMonBackPic_Sneasel: @ 0x8CC36D8
 	.globl gMonShinyPalette_Sneasel
 gMonShinyPalette_Sneasel: @ 0x8CC39FC
 	.incbin "graphics/pokemon/sneasel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc3a24, 0x420
+	.globl gMonIcon_Sneasel
+gMonIcon_Sneasel: @ 0x8CC3A24
+	.incbin "graphics/pokemon/sneasel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC3E24, 0x20
 
 	.globl gMonStillFrontPic_Teddiursa
 gMonStillFrontPic_Teddiursa: @ 0x8CC3E44
@@ -3678,7 +4366,10 @@ gMonBackPic_Teddiursa: @ 0x8CC40D8
 	.globl gMonShinyPalette_Teddiursa
 gMonShinyPalette_Teddiursa: @ 0x8CC4350
 	.incbin "graphics/pokemon/teddiursa/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc4378, 0x420
+	.globl gMonIcon_Teddiursa
+gMonIcon_Teddiursa: @ 0x8CC4378
+	.incbin "graphics/pokemon/teddiursa/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC4778, 0x20
 
 	.globl gMonStillFrontPic_Ursaring
 gMonStillFrontPic_Ursaring: @ 0x8CC4798
@@ -3695,7 +4386,10 @@ gMonBackPic_Ursaring: @ 0x8CC4BF8
 	.globl gMonShinyPalette_Ursaring
 gMonShinyPalette_Ursaring: @ 0x8CC4F80
 	.incbin "graphics/pokemon/ursaring/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc4fa8, 0x420
+	.globl gMonIcon_Ursaring
+gMonIcon_Ursaring: @ 0x8CC4FA8
+	.incbin "graphics/pokemon/ursaring/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC53A8, 0x20
 
 	.globl gMonStillFrontPic_Slugma
 gMonStillFrontPic_Slugma: @ 0x8CC53C8
@@ -3712,7 +4406,10 @@ gMonBackPic_Slugma: @ 0x8CC5660
 	.globl gMonShinyPalette_Slugma
 gMonShinyPalette_Slugma: @ 0x8CC5948
 	.incbin "graphics/pokemon/slugma/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc596c, 0x420
+	.globl gMonIcon_Slugma
+gMonIcon_Slugma: @ 0x8CC596C
+	.incbin "graphics/pokemon/slugma/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC5D6C, 0x20
 
 	.globl gMonStillFrontPic_Magcargo
 gMonStillFrontPic_Magcargo: @ 0x8CC5D8C
@@ -3729,7 +4426,10 @@ gMonBackPic_Magcargo: @ 0x8CC60FC
 	.globl gMonShinyPalette_Magcargo
 gMonShinyPalette_Magcargo: @ 0x8CC6514
 	.incbin "graphics/pokemon/magcargo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc653c, 0x420
+	.globl gMonIcon_Magcargo
+gMonIcon_Magcargo: @ 0x8CC653C
+	.incbin "graphics/pokemon/magcargo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC693C, 0x20
 
 	.globl gMonStillFrontPic_Swinub
 gMonStillFrontPic_Swinub: @ 0x8CC695C
@@ -3746,7 +4446,10 @@ gMonBackPic_Swinub: @ 0x8CC6B80
 	.globl gMonShinyPalette_Swinub
 gMonShinyPalette_Swinub: @ 0x8CC6DBC
 	.incbin "graphics/pokemon/swinub/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc6de4, 0x420
+	.globl gMonIcon_Swinub
+gMonIcon_Swinub: @ 0x8CC6DE4
+	.incbin "graphics/pokemon/swinub/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC71E4, 0x20
 
 	.globl gMonStillFrontPic_Piloswine
 gMonStillFrontPic_Piloswine: @ 0x8CC7204
@@ -3763,7 +4466,10 @@ gMonBackPic_Piloswine: @ 0x8CC7554
 	.globl gMonShinyPalette_Piloswine
 gMonShinyPalette_Piloswine: @ 0x8CC77A0
 	.incbin "graphics/pokemon/piloswine/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc77c8, 0x420
+	.globl gMonIcon_Piloswine
+gMonIcon_Piloswine: @ 0x8CC77C8
+	.incbin "graphics/pokemon/piloswine/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC7BC8, 0x20
 
 	.globl gMonStillFrontPic_Corsola
 gMonStillFrontPic_Corsola: @ 0x8CC7BE8
@@ -3780,7 +4486,11 @@ gMonBackPic_Corsola: @ 0x8CC7EF8
 	.globl gMonShinyPalette_Corsola
 gMonShinyPalette_Corsola: @ 0x8CC81B8
 	.incbin "graphics/pokemon/corsola/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc81de, 0x422
+	.incbin "baserom_jp.gba", 0xCC81DE, 0x2
+	.globl gMonIcon_Corsola
+gMonIcon_Corsola: @ 0x8CC81E0
+	.incbin "graphics/pokemon/corsola/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC85E0, 0x20
 
 	.globl gMonStillFrontPic_Remoraid
 gMonStillFrontPic_Remoraid: @ 0x8CC8600
@@ -3797,7 +4507,11 @@ gMonBackPic_Remoraid: @ 0x8CC8890
 	.globl gMonShinyPalette_Remoraid
 gMonShinyPalette_Remoraid: @ 0x8CC8BA4
 	.incbin "graphics/pokemon/remoraid/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc8bca, 0x422
+	.incbin "baserom_jp.gba", 0xCC8BCA, 0x2
+	.globl gMonIcon_Remoraid
+gMonIcon_Remoraid: @ 0x8CC8BCC
+	.incbin "graphics/pokemon/remoraid/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC8FCC, 0x20
 
 	.globl gMonStillFrontPic_Octillery
 gMonStillFrontPic_Octillery: @ 0x8CC8FEC
@@ -3814,7 +4528,10 @@ gMonBackPic_Octillery: @ 0x8CC9348
 	.globl gMonShinyPalette_Octillery
 gMonShinyPalette_Octillery: @ 0x8CC9600
 	.incbin "graphics/pokemon/octillery/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcc9628, 0x420
+	.globl gMonIcon_Octillery
+gMonIcon_Octillery: @ 0x8CC9628
+	.incbin "graphics/pokemon/octillery/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCC9A28, 0x20
 
 	.globl gMonStillFrontPic_Delibird
 gMonStillFrontPic_Delibird: @ 0x8CC9A48
@@ -3831,7 +4548,10 @@ gMonBackPic_Delibird: @ 0x8CC9DE0
 	.globl gMonShinyPalette_Delibird
 gMonShinyPalette_Delibird: @ 0x8CCA1A0
 	.incbin "graphics/pokemon/delibird/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcca1c8, 0x420
+	.globl gMonIcon_Delibird
+gMonIcon_Delibird: @ 0x8CCA1C8
+	.incbin "graphics/pokemon/delibird/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCA5C8, 0x20
 
 	.globl gMonStillFrontPic_Mantine
 gMonStillFrontPic_Mantine: @ 0x8CCA5E8
@@ -3848,7 +4568,10 @@ gMonBackPic_Mantine: @ 0x8CCAAAC
 	.globl gMonShinyPalette_Mantine
 gMonShinyPalette_Mantine: @ 0x8CCAD4C
 	.incbin "graphics/pokemon/mantine/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccad74, 0x420
+	.globl gMonIcon_Mantine
+gMonIcon_Mantine: @ 0x8CCAD74
+	.incbin "graphics/pokemon/mantine/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCB174, 0x20
 
 	.globl gMonStillFrontPic_Skarmory
 gMonStillFrontPic_Skarmory: @ 0x8CCB194
@@ -3865,7 +4588,10 @@ gMonBackPic_Skarmory: @ 0x8CCB69C
 	.globl gMonShinyPalette_Skarmory
 gMonShinyPalette_Skarmory: @ 0x8CCB9A0
 	.incbin "graphics/pokemon/skarmory/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccb9c8, 0x420
+	.globl gMonIcon_Skarmory
+gMonIcon_Skarmory: @ 0x8CCB9C8
+	.incbin "graphics/pokemon/skarmory/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCBDC8, 0x20
 
 	.globl gMonStillFrontPic_Houndour
 gMonStillFrontPic_Houndour: @ 0x8CCBDE8
@@ -3882,7 +4608,10 @@ gMonBackPic_Houndour: @ 0x8CCC0C8
 	.globl gMonShinyPalette_Houndour
 gMonShinyPalette_Houndour: @ 0x8CCC348
 	.incbin "graphics/pokemon/houndour/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccc370, 0x420
+	.globl gMonIcon_Houndour
+gMonIcon_Houndour: @ 0x8CCC370
+	.incbin "graphics/pokemon/houndour/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCC770, 0x20
 
 	.globl gMonStillFrontPic_Houndoom
 gMonStillFrontPic_Houndoom: @ 0x8CCC790
@@ -3899,7 +4628,10 @@ gMonBackPic_Houndoom: @ 0x8CCCBB8
 	.globl gMonShinyPalette_Houndoom
 gMonShinyPalette_Houndoom: @ 0x8CCCEDC
 	.incbin "graphics/pokemon/houndoom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcccf04, 0x420
+	.globl gMonIcon_Houndoom
+gMonIcon_Houndoom: @ 0x8CCCF04
+	.incbin "graphics/pokemon/houndoom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCD304, 0x20
 
 	.globl gMonStillFrontPic_Kingdra
 gMonStillFrontPic_Kingdra: @ 0x8CCD324
@@ -3916,7 +4648,10 @@ gMonBackPic_Kingdra: @ 0x8CCD76C
 	.globl gMonShinyPalette_Kingdra
 gMonShinyPalette_Kingdra: @ 0x8CCDB20
 	.incbin "graphics/pokemon/kingdra/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccdb48, 0x420
+	.globl gMonIcon_Kingdra
+gMonIcon_Kingdra: @ 0x8CCDB48
+	.incbin "graphics/pokemon/kingdra/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCDF48, 0x20
 
 	.globl gMonStillFrontPic_Phanpy
 gMonStillFrontPic_Phanpy: @ 0x8CCDF68
@@ -3933,7 +4668,10 @@ gMonBackPic_Phanpy: @ 0x8CCE1EC
 	.globl gMonShinyPalette_Phanpy
 gMonShinyPalette_Phanpy: @ 0x8CCE4B0
 	.incbin "graphics/pokemon/phanpy/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcce4d8, 0x420
+	.globl gMonIcon_Phanpy
+gMonIcon_Phanpy: @ 0x8CCE4D8
+	.incbin "graphics/pokemon/phanpy/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCE8D8, 0x20
 
 	.globl gMonStillFrontPic_Donphan
 gMonStillFrontPic_Donphan: @ 0x8CCE8F8
@@ -3950,7 +4688,10 @@ gMonBackPic_Donphan: @ 0x8CCED94
 	.globl gMonShinyPalette_Donphan
 gMonShinyPalette_Donphan: @ 0x8CCF090
 	.incbin "graphics/pokemon/donphan/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccf0b8, 0x420
+	.globl gMonIcon_Donphan
+gMonIcon_Donphan: @ 0x8CCF0B8
+	.incbin "graphics/pokemon/donphan/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCF4B8, 0x20
 
 	.globl gMonStillFrontPic_Porygon2
 gMonStillFrontPic_Porygon2: @ 0x8CCF4D8
@@ -3967,7 +4708,10 @@ gMonBackPic_Porygon2: @ 0x8CCF788
 	.globl gMonShinyPalette_Porygon2
 gMonShinyPalette_Porygon2: @ 0x8CCFAA4
 	.incbin "graphics/pokemon/porygon2/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xccfacc, 0x420
+	.globl gMonIcon_Porygon2
+gMonIcon_Porygon2: @ 0x8CCFACC
+	.incbin "graphics/pokemon/porygon2/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCCFECC, 0x20
 
 	.globl gMonStillFrontPic_Stantler
 gMonStillFrontPic_Stantler: @ 0x8CCFEEC
@@ -3984,7 +4728,10 @@ gMonBackPic_Stantler: @ 0x8CD0328
 	.globl gMonShinyPalette_Stantler
 gMonShinyPalette_Stantler: @ 0x8CD0674
 	.incbin "graphics/pokemon/stantler/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd069c, 0x420
+	.globl gMonIcon_Stantler
+gMonIcon_Stantler: @ 0x8CD069C
+	.incbin "graphics/pokemon/stantler/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD0A9C, 0x20
 
 	.globl gMonStillFrontPic_Smeargle
 gMonStillFrontPic_Smeargle: @ 0x8CD0ABC
@@ -4001,7 +4748,10 @@ gMonBackPic_Smeargle: @ 0x8CD0E78
 	.globl gMonShinyPalette_Smeargle
 gMonShinyPalette_Smeargle: @ 0x8CD119C
 	.incbin "graphics/pokemon/smeargle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd11c4, 0x420
+	.globl gMonIcon_Smeargle
+gMonIcon_Smeargle: @ 0x8CD11C4
+	.incbin "graphics/pokemon/smeargle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD15C4, 0x20
 
 	.globl gMonStillFrontPic_Tyrogue
 gMonStillFrontPic_Tyrogue: @ 0x8CD15E4
@@ -4018,7 +4768,10 @@ gMonBackPic_Tyrogue: @ 0x8CD1898
 	.globl gMonShinyPalette_Tyrogue
 gMonShinyPalette_Tyrogue: @ 0x8CD1BB4
 	.incbin "graphics/pokemon/tyrogue/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd1bdc, 0x420
+	.globl gMonIcon_Tyrogue
+gMonIcon_Tyrogue: @ 0x8CD1BDC
+	.incbin "graphics/pokemon/tyrogue/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD1FDC, 0x20
 
 	.globl gMonStillFrontPic_Hitmontop
 gMonStillFrontPic_Hitmontop: @ 0x8CD1FFC
@@ -4035,7 +4788,10 @@ gMonBackPic_Hitmontop: @ 0x8CD23B0
 	.globl gMonShinyPalette_Hitmontop
 gMonShinyPalette_Hitmontop: @ 0x8CD27D8
 	.incbin "graphics/pokemon/hitmontop/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd2800, 0x420
+	.globl gMonIcon_Hitmontop
+gMonIcon_Hitmontop: @ 0x8CD2800
+	.incbin "graphics/pokemon/hitmontop/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD2C00, 0x20
 
 	.globl gMonStillFrontPic_Smoochum
 gMonStillFrontPic_Smoochum: @ 0x8CD2C20
@@ -4052,7 +4808,10 @@ gMonBackPic_Smoochum: @ 0x8CD2EA0
 	.globl gMonShinyPalette_Smoochum
 gMonShinyPalette_Smoochum: @ 0x8CD3118
 	.incbin "graphics/pokemon/smoochum/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd3140, 0x420
+	.globl gMonIcon_Smoochum
+gMonIcon_Smoochum: @ 0x8CD3140
+	.incbin "graphics/pokemon/smoochum/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD3540, 0x20
 
 	.globl gMonStillFrontPic_Elekid
 gMonStillFrontPic_Elekid: @ 0x8CD3560
@@ -4069,7 +4828,10 @@ gMonBackPic_Elekid: @ 0x8CD3890
 	.globl gMonShinyPalette_Elekid
 gMonShinyPalette_Elekid: @ 0x8CD3BE8
 	.incbin "graphics/pokemon/elekid/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd3c10, 0x420
+	.globl gMonIcon_Elekid
+gMonIcon_Elekid: @ 0x8CD3C10
+	.incbin "graphics/pokemon/elekid/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD4010, 0x20
 
 	.globl gMonStillFrontPic_Magby
 gMonStillFrontPic_Magby: @ 0x8CD4030
@@ -4086,7 +4848,10 @@ gMonBackPic_Magby: @ 0x8CD42DC
 	.globl gMonShinyPalette_Magby
 gMonShinyPalette_Magby: @ 0x8CD4588
 	.incbin "graphics/pokemon/magby/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd45b0, 0x420
+	.globl gMonIcon_Magby
+gMonIcon_Magby: @ 0x8CD45B0
+	.incbin "graphics/pokemon/magby/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD49B0, 0x20
 
 	.globl gMonStillFrontPic_Miltank
 gMonStillFrontPic_Miltank: @ 0x8CD49D0
@@ -4103,7 +4868,10 @@ gMonBackPic_Miltank: @ 0x8CD4DA8
 	.globl gMonShinyPalette_Miltank
 gMonShinyPalette_Miltank: @ 0x8CD5144
 	.incbin "graphics/pokemon/miltank/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd516c, 0x420
+	.globl gMonIcon_Miltank
+gMonIcon_Miltank: @ 0x8CD516C
+	.incbin "graphics/pokemon/miltank/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD556C, 0x20
 
 	.globl gMonStillFrontPic_Blissey
 gMonStillFrontPic_Blissey: @ 0x8CD558C
@@ -4120,7 +4888,10 @@ gMonBackPic_Blissey: @ 0x8CD599C
 	.globl gMonShinyPalette_Blissey
 gMonShinyPalette_Blissey: @ 0x8CD5C68
 	.incbin "graphics/pokemon/blissey/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd5c90, 0x420
+	.globl gMonIcon_Blissey
+gMonIcon_Blissey: @ 0x8CD5C90
+	.incbin "graphics/pokemon/blissey/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD6090, 0x20
 
 	.globl gMonStillFrontPic_Raikou
 gMonStillFrontPic_Raikou: @ 0x8CD60B0
@@ -4137,7 +4908,10 @@ gMonBackPic_Raikou: @ 0x8CD6654
 	.globl gMonShinyPalette_Raikou
 gMonShinyPalette_Raikou: @ 0x8CD69FC
 	.incbin "graphics/pokemon/raikou/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd6a24, 0x420
+	.globl gMonIcon_Raikou
+gMonIcon_Raikou: @ 0x8CD6A24
+	.incbin "graphics/pokemon/raikou/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD6E24, 0x20
 
 	.globl gMonStillFrontPic_Entei
 gMonStillFrontPic_Entei: @ 0x8CD6E44
@@ -4154,7 +4928,10 @@ gMonBackPic_Entei: @ 0x8CD7468
 	.globl gMonShinyPalette_Entei
 gMonShinyPalette_Entei: @ 0x8CD788C
 	.incbin "graphics/pokemon/entei/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd78b4, 0x420
+	.globl gMonIcon_Entei
+gMonIcon_Entei: @ 0x8CD78B4
+	.incbin "graphics/pokemon/entei/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD7CB4, 0x20
 
 	.globl gMonStillFrontPic_Suicune
 gMonStillFrontPic_Suicune: @ 0x8CD7CD4
@@ -4171,7 +4948,10 @@ gMonBackPic_Suicune: @ 0x8CD8280
 	.globl gMonShinyPalette_Suicune
 gMonShinyPalette_Suicune: @ 0x8CD875C
 	.incbin "graphics/pokemon/suicune/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd8784, 0x420
+	.globl gMonIcon_Suicune
+gMonIcon_Suicune: @ 0x8CD8784
+	.incbin "graphics/pokemon/suicune/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD8B84, 0x20
 
 	.globl gMonStillFrontPic_Larvitar
 gMonStillFrontPic_Larvitar: @ 0x8CD8BA4
@@ -4188,7 +4968,10 @@ gMonBackPic_Larvitar: @ 0x8CD8E28
 	.globl gMonShinyPalette_Larvitar
 gMonShinyPalette_Larvitar: @ 0x8CD90D4
 	.incbin "graphics/pokemon/larvitar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd90fc, 0x420
+	.globl gMonIcon_Larvitar
+gMonIcon_Larvitar: @ 0x8CD90FC
+	.incbin "graphics/pokemon/larvitar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD94FC, 0x20
 
 	.globl gMonStillFrontPic_Pupitar
 gMonStillFrontPic_Pupitar: @ 0x8CD951C
@@ -4205,7 +4988,11 @@ gMonBackPic_Pupitar: @ 0x8CD9834
 	.globl gMonShinyPalette_Pupitar
 gMonShinyPalette_Pupitar: @ 0x8CD9B6C
 	.incbin "graphics/pokemon/pupitar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcd9b92, 0x422
+	.incbin "baserom_jp.gba", 0xCD9B92, 0x2
+	.globl gMonIcon_Pupitar
+gMonIcon_Pupitar: @ 0x8CD9B94
+	.incbin "graphics/pokemon/pupitar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCD9F94, 0x20
 
 	.globl gMonStillFrontPic_Tyranitar
 gMonStillFrontPic_Tyranitar: @ 0x8CD9FB4
@@ -4222,7 +5009,10 @@ gMonBackPic_Tyranitar: @ 0x8CDA518
 	.globl gMonShinyPalette_Tyranitar
 gMonShinyPalette_Tyranitar: @ 0x8CDA904
 	.incbin "graphics/pokemon/tyranitar/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcda92c, 0x420
+	.globl gMonIcon_Tyranitar
+gMonIcon_Tyranitar: @ 0x8CDA92C
+	.incbin "graphics/pokemon/tyranitar/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDAD2C, 0x20
 
 	.globl gMonStillFrontPic_Lugia
 gMonStillFrontPic_Lugia: @ 0x8CDAD4C
@@ -4239,7 +5029,10 @@ gMonBackPic_Lugia: @ 0x8CDB238
 	.globl gMonShinyPalette_Lugia
 gMonShinyPalette_Lugia: @ 0x8CDB60C
 	.incbin "graphics/pokemon/lugia/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcdb634, 0x420
+	.globl gMonIcon_Lugia
+gMonIcon_Lugia: @ 0x8CDB634
+	.incbin "graphics/pokemon/lugia/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDBA34, 0x20
 
 	.globl gMonStillFrontPic_HoOh
 gMonStillFrontPic_HoOh: @ 0x8CDBA54
@@ -4256,7 +5049,10 @@ gMonBackPic_HoOh: @ 0x8CDC0D0
 	.globl gMonShinyPalette_HoOh
 gMonShinyPalette_HoOh: @ 0x8CDC4E0
 	.incbin "graphics/pokemon/ho_oh/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcdc508, 0x420
+	.globl gMonIcon_HoOh
+gMonIcon_HoOh: @ 0x8CDC508
+	.incbin "graphics/pokemon/hooh/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDC908, 0x20
 
 	.globl gMonStillFrontPic_Celebi
 gMonStillFrontPic_Celebi: @ 0x8CDC928
@@ -4273,7 +5069,10 @@ gMonBackPic_Celebi: @ 0x8CDCBC8
 	.globl gMonShinyPalette_Celebi
 gMonShinyPalette_Celebi: @ 0x8CDCF74
 	.incbin "graphics/pokemon/celebi/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcdcf9c, 0x420
+	.globl gMonIcon_Celebi
+gMonIcon_Celebi: @ 0x8CDCF9C
+	.incbin "graphics/pokemon/celebi/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDD39C, 0x20
 
 	.globl gMonStillFrontPic_DoubleQuestionMark
 gMonStillFrontPic_DoubleQuestionMark: @ 0x8CDD3BC
@@ -4306,7 +5105,10 @@ gMonBackPic_Treecko: @ 0x8CDDA18
 	.globl gMonShinyPalette_Treecko
 gMonShinyPalette_Treecko: @ 0x8CDDD18
 	.incbin "graphics/pokemon/treecko/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcddd40, 0x420
+	.globl gMonIcon_Treecko
+gMonIcon_Treecko: @ 0x8CDDD40
+	.incbin "graphics/pokemon/treecko/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDE140, 0x20
 
 	.globl gMonStillFrontPic_Grovyle
 gMonStillFrontPic_Grovyle: @ 0x8CDE160
@@ -4323,7 +5125,10 @@ gMonBackPic_Grovyle: @ 0x8CDE614
 	.globl gMonShinyPalette_Grovyle
 gMonShinyPalette_Grovyle: @ 0x8CDE950
 	.incbin "graphics/pokemon/grovyle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcde978, 0x420
+	.globl gMonIcon_Grovyle
+gMonIcon_Grovyle: @ 0x8CDE978
+	.incbin "graphics/pokemon/grovyle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDED78, 0x20
 
 	.globl gMonStillFrontPic_Sceptile
 gMonStillFrontPic_Sceptile: @ 0x8CDED98
@@ -4340,7 +5145,10 @@ gMonBackPic_Sceptile: @ 0x8CDF2C4
 	.globl gMonShinyPalette_Sceptile
 gMonShinyPalette_Sceptile: @ 0x8CDF6C0
 	.incbin "graphics/pokemon/sceptile/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcdf6e8, 0x420
+	.globl gMonIcon_Sceptile
+gMonIcon_Sceptile: @ 0x8CDF6E8
+	.incbin "graphics/pokemon/sceptile/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCDFAE8, 0x20
 
 	.globl gMonStillFrontPic_Torchic
 gMonStillFrontPic_Torchic: @ 0x8CDFB08
@@ -4357,7 +5165,10 @@ gMonBackPic_Torchic: @ 0x8CDFDCC
 	.globl gMonShinyPalette_Torchic
 gMonShinyPalette_Torchic: @ 0x8CE00A4
 	.incbin "graphics/pokemon/torchic/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce00cc, 0x420
+	.globl gMonIcon_Torchic
+gMonIcon_Torchic: @ 0x8CE00CC
+	.incbin "graphics/pokemon/torchic/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE04CC, 0x20
 
 	.globl gMonStillFrontPic_Combusken
 gMonStillFrontPic_Combusken: @ 0x8CE04EC
@@ -4374,7 +5185,10 @@ gMonBackPic_Combusken: @ 0x8CE0900
 	.globl gMonShinyPalette_Combusken
 gMonShinyPalette_Combusken: @ 0x8CE0CD0
 	.incbin "graphics/pokemon/combusken/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce0cf8, 0x420
+	.globl gMonIcon_Combusken
+gMonIcon_Combusken: @ 0x8CE0CF8
+	.incbin "graphics/pokemon/combusken/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE10F8, 0x20
 
 	.globl gMonStillFrontPic_Blaziken
 gMonStillFrontPic_Blaziken: @ 0x8CE1118
@@ -4391,7 +5205,10 @@ gMonBackPic_Blaziken: @ 0x8CE1890
 	.globl gMonShinyPalette_Blaziken
 gMonShinyPalette_Blaziken: @ 0x8CE1C6C
 	.incbin "graphics/pokemon/blaziken/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce1c94, 0x420
+	.globl gMonIcon_Blaziken
+gMonIcon_Blaziken: @ 0x8CE1C94
+	.incbin "graphics/pokemon/blaziken/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE2094, 0x20
 
 	.globl gMonStillFrontPic_Mudkip
 gMonStillFrontPic_Mudkip: @ 0x8CE20B4
@@ -4408,7 +5225,10 @@ gMonBackPic_Mudkip: @ 0x8CE2394
 	.globl gMonShinyPalette_Mudkip
 gMonShinyPalette_Mudkip: @ 0x8CE2674
 	.incbin "graphics/pokemon/mudkip/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce269c, 0x420
+	.globl gMonIcon_Mudkip
+gMonIcon_Mudkip: @ 0x8CE269C
+	.incbin "graphics/pokemon/mudkip/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE2A9C, 0x20
 
 	.globl gMonStillFrontPic_Marshtomp
 gMonStillFrontPic_Marshtomp: @ 0x8CE2ABC
@@ -4425,7 +5245,10 @@ gMonBackPic_Marshtomp: @ 0x8CE3144
 	.globl gMonShinyPalette_Marshtomp
 gMonShinyPalette_Marshtomp: @ 0x8CE34F4
 	.incbin "graphics/pokemon/marshtomp/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce351c, 0x420
+	.globl gMonIcon_Marshtomp
+gMonIcon_Marshtomp: @ 0x8CE351C
+	.incbin "graphics/pokemon/marshtomp/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE391C, 0x20
 
 	.globl gMonStillFrontPic_Swampert
 gMonStillFrontPic_Swampert: @ 0x8CE393C
@@ -4442,7 +5265,10 @@ gMonBackPic_Swampert: @ 0x8CE3EE0
 	.globl gMonShinyPalette_Swampert
 gMonShinyPalette_Swampert: @ 0x8CE4294
 	.incbin "graphics/pokemon/swampert/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce42bc, 0x420
+	.globl gMonIcon_Swampert
+gMonIcon_Swampert: @ 0x8CE42BC
+	.incbin "graphics/pokemon/swampert/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE46BC, 0x20
 
 	.globl gMonStillFrontPic_Poochyena
 gMonStillFrontPic_Poochyena: @ 0x8CE46DC
@@ -4459,7 +5285,10 @@ gMonBackPic_Poochyena: @ 0x8CE4CA8
 	.globl gMonShinyPalette_Poochyena
 gMonShinyPalette_Poochyena: @ 0x8CE4FD4
 	.incbin "graphics/pokemon/poochyena/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce4ffc, 0x420
+	.globl gMonIcon_Poochyena
+gMonIcon_Poochyena: @ 0x8CE4FFC
+	.incbin "graphics/pokemon/poochyena/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE53FC, 0x20
 
 	.globl gMonStillFrontPic_Mightyena
 gMonStillFrontPic_Mightyena: @ 0x8CE541C
@@ -4476,7 +5305,10 @@ gMonBackPic_Mightyena: @ 0x8CE587C
 	.globl gMonShinyPalette_Mightyena
 gMonShinyPalette_Mightyena: @ 0x8CE5BF4
 	.incbin "graphics/pokemon/mightyena/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce5c1c, 0x420
+	.globl gMonIcon_Mightyena
+gMonIcon_Mightyena: @ 0x8CE5C1C
+	.incbin "graphics/pokemon/mightyena/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE601C, 0x20
 
 	.globl gMonStillFrontPic_Zigzagoon
 gMonStillFrontPic_Zigzagoon: @ 0x8CE603C
@@ -4493,7 +5325,10 @@ gMonBackPic_Zigzagoon: @ 0x8CE6434
 	.globl gMonShinyPalette_Zigzagoon
 gMonShinyPalette_Zigzagoon: @ 0x8CE6774
 	.incbin "graphics/pokemon/zigzagoon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce679c, 0x420
+	.globl gMonIcon_Zigzagoon
+gMonIcon_Zigzagoon: @ 0x8CE679C
+	.incbin "graphics/pokemon/zigzagoon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE6B9C, 0x20
 
 	.globl gMonStillFrontPic_Linoone
 gMonStillFrontPic_Linoone: @ 0x8CE6BBC
@@ -4510,7 +5345,10 @@ gMonBackPic_Linoone: @ 0x8CE6F54
 	.globl gMonShinyPalette_Linoone
 gMonShinyPalette_Linoone: @ 0x8CE7228
 	.incbin "graphics/pokemon/linoone/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce7250, 0x420
+	.globl gMonIcon_Linoone
+gMonIcon_Linoone: @ 0x8CE7250
+	.incbin "graphics/pokemon/linoone/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE7650, 0x20
 
 	.globl gMonStillFrontPic_Wurmple
 gMonStillFrontPic_Wurmple: @ 0x8CE7670
@@ -4527,7 +5365,10 @@ gMonBackPic_Wurmple: @ 0x8CE7920
 	.globl gMonShinyPalette_Wurmple
 gMonShinyPalette_Wurmple: @ 0x8CE7B6C
 	.incbin "graphics/pokemon/wurmple/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce7b94, 0x420
+	.globl gMonIcon_Wurmple
+gMonIcon_Wurmple: @ 0x8CE7B94
+	.incbin "graphics/pokemon/wurmple/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE7F94, 0x20
 
 	.globl gMonStillFrontPic_Silcoon
 gMonStillFrontPic_Silcoon: @ 0x8CE7FB4
@@ -4544,7 +5385,10 @@ gMonBackPic_Silcoon: @ 0x8CE825C
 	.globl gMonShinyPalette_Silcoon
 gMonShinyPalette_Silcoon: @ 0x8CE8478
 	.incbin "graphics/pokemon/silcoon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce84a0, 0x420
+	.globl gMonIcon_Silcoon
+gMonIcon_Silcoon: @ 0x8CE84A0
+	.incbin "graphics/pokemon/silcoon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE88A0, 0x20
 
 	.globl gMonStillFrontPic_Beautifly
 gMonStillFrontPic_Beautifly: @ 0x8CE88C0
@@ -4561,7 +5405,10 @@ gMonBackPic_Beautifly: @ 0x8CE8C40
 	.globl gMonShinyPalette_Beautifly
 gMonShinyPalette_Beautifly: @ 0x8CE8FF0
 	.incbin "graphics/pokemon/beautifly/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce9018, 0x420
+	.globl gMonIcon_Beautifly
+gMonIcon_Beautifly: @ 0x8CE9018
+	.incbin "graphics/pokemon/beautifly/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE9418, 0x20
 
 	.globl gMonStillFrontPic_Cascoon
 gMonStillFrontPic_Cascoon: @ 0x8CE9438
@@ -4578,7 +5425,10 @@ gMonBackPic_Cascoon: @ 0x8CE96CC
 	.globl gMonShinyPalette_Cascoon
 gMonShinyPalette_Cascoon: @ 0x8CE98DC
 	.incbin "graphics/pokemon/cascoon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xce9904, 0x420
+	.globl gMonIcon_Cascoon
+gMonIcon_Cascoon: @ 0x8CE9904
+	.incbin "graphics/pokemon/cascoon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCE9D04, 0x20
 
 	.globl gMonStillFrontPic_Dustox
 gMonStillFrontPic_Dustox: @ 0x8CE9D24
@@ -4595,7 +5445,10 @@ gMonBackPic_Dustox: @ 0x8CEA0B4
 	.globl gMonShinyPalette_Dustox
 gMonShinyPalette_Dustox: @ 0x8CEA30C
 	.incbin "graphics/pokemon/dustox/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcea334, 0x420
+	.globl gMonIcon_Dustox
+gMonIcon_Dustox: @ 0x8CEA334
+	.incbin "graphics/pokemon/dustox/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEA734, 0x20
 
 	.globl gMonStillFrontPic_Lotad
 gMonStillFrontPic_Lotad: @ 0x8CEA754
@@ -4612,7 +5465,10 @@ gMonBackPic_Lotad: @ 0x8CEA9DC
 	.globl gMonShinyPalette_Lotad
 gMonShinyPalette_Lotad: @ 0x8CEACC4
 	.incbin "graphics/pokemon/lotad/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xceacec, 0x420
+	.globl gMonIcon_Lotad
+gMonIcon_Lotad: @ 0x8CEACEC
+	.incbin "graphics/pokemon/lotad/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEB0EC, 0x20
 
 	.globl gMonStillFrontPic_Lombre
 gMonStillFrontPic_Lombre: @ 0x8CEB10C
@@ -4629,7 +5485,10 @@ gMonBackPic_Lombre: @ 0x8CEB44C
 	.globl gMonShinyPalette_Lombre
 gMonShinyPalette_Lombre: @ 0x8CEB748
 	.incbin "graphics/pokemon/lombre/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xceb770, 0x420
+	.globl gMonIcon_Lombre
+gMonIcon_Lombre: @ 0x8CEB770
+	.incbin "graphics/pokemon/lombre/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEBB70, 0x20
 
 	.globl gMonStillFrontPic_Ludicolo
 gMonStillFrontPic_Ludicolo: @ 0x8CEBB90
@@ -4646,7 +5505,10 @@ gMonBackPic_Ludicolo: @ 0x8CEC09C
 	.globl gMonShinyPalette_Ludicolo
 gMonShinyPalette_Ludicolo: @ 0x8CEC398
 	.incbin "graphics/pokemon/ludicolo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcec3c0, 0x420
+	.globl gMonIcon_Ludicolo
+gMonIcon_Ludicolo: @ 0x8CEC3C0
+	.incbin "graphics/pokemon/ludicolo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEC7C0, 0x20
 
 	.globl gMonStillFrontPic_Seedot
 gMonStillFrontPic_Seedot: @ 0x8CEC7E0
@@ -4663,7 +5525,11 @@ gMonBackPic_Seedot: @ 0x8CECA9C
 	.globl gMonShinyPalette_Seedot
 gMonShinyPalette_Seedot: @ 0x8CECD7C
 	.incbin "graphics/pokemon/seedot/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcecda2, 0x422
+	.incbin "baserom_jp.gba", 0xCECDA2, 0x2
+	.globl gMonIcon_Seedot
+gMonIcon_Seedot: @ 0x8CECDA4
+	.incbin "graphics/pokemon/seedot/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCED1A4, 0x20
 
 	.globl gMonStillFrontPic_Nuzleaf
 gMonStillFrontPic_Nuzleaf: @ 0x8CED1C4
@@ -4680,7 +5546,10 @@ gMonBackPic_Nuzleaf: @ 0x8CED4D8
 	.globl gMonShinyPalette_Nuzleaf
 gMonShinyPalette_Nuzleaf: @ 0x8CED7A0
 	.incbin "graphics/pokemon/nuzleaf/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xced7c8, 0x420
+	.globl gMonIcon_Nuzleaf
+gMonIcon_Nuzleaf: @ 0x8CED7C8
+	.incbin "graphics/pokemon/nuzleaf/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEDBC8, 0x20
 
 	.globl gMonStillFrontPic_Shiftry
 gMonStillFrontPic_Shiftry: @ 0x8CEDBE8
@@ -4697,7 +5566,10 @@ gMonBackPic_Shiftry: @ 0x8CEE0CC
 	.globl gMonShinyPalette_Shiftry
 gMonShinyPalette_Shiftry: @ 0x8CEE390
 	.incbin "graphics/pokemon/shiftry/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcee3b8, 0x420
+	.globl gMonIcon_Shiftry
+gMonIcon_Shiftry: @ 0x8CEE3B8
+	.incbin "graphics/pokemon/shiftry/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEE7B8, 0x20
 
 	.globl gMonStillFrontPic_Nincada
 gMonStillFrontPic_Nincada: @ 0x8CEE7D8
@@ -4714,7 +5586,10 @@ gMonBackPic_Nincada: @ 0x8CEEAA0
 	.globl gMonShinyPalette_Nincada
 gMonShinyPalette_Nincada: @ 0x8CEED58
 	.incbin "graphics/pokemon/nincada/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xceed80, 0x420
+	.globl gMonIcon_Nincada
+gMonIcon_Nincada: @ 0x8CEED80
+	.incbin "graphics/pokemon/nincada/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEF180, 0x20
 
 	.globl gMonStillFrontPic_Ninjask
 gMonStillFrontPic_Ninjask: @ 0x8CEF1A0
@@ -4731,7 +5606,10 @@ gMonBackPic_Ninjask: @ 0x8CEF538
 	.globl gMonShinyPalette_Ninjask
 gMonShinyPalette_Ninjask: @ 0x8CEF904
 	.incbin "graphics/pokemon/ninjask/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcef92c, 0x420
+	.globl gMonIcon_Ninjask
+gMonIcon_Ninjask: @ 0x8CEF92C
+	.incbin "graphics/pokemon/ninjask/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCEFD2C, 0x20
 
 	.globl gMonStillFrontPic_Shedinja
 gMonStillFrontPic_Shedinja: @ 0x8CEFD4C
@@ -4748,7 +5626,10 @@ gMonBackPic_Shedinja: @ 0x8CF0094
 	.globl gMonShinyPalette_Shedinja
 gMonShinyPalette_Shedinja: @ 0x8CF0434
 	.incbin "graphics/pokemon/shedinja/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf045c, 0x420
+	.globl gMonIcon_Shedinja
+gMonIcon_Shedinja: @ 0x8CF045C
+	.incbin "graphics/pokemon/shedinja/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF085C, 0x20
 
 	.globl gMonStillFrontPic_Taillow
 gMonStillFrontPic_Taillow: @ 0x8CF087C
@@ -4765,7 +5646,10 @@ gMonBackPic_Taillow: @ 0x8CF0AFC
 	.globl gMonShinyPalette_Taillow
 gMonShinyPalette_Taillow: @ 0x8CF0D1C
 	.incbin "graphics/pokemon/taillow/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf0d44, 0x420
+	.globl gMonIcon_Taillow
+gMonIcon_Taillow: @ 0x8CF0D44
+	.incbin "graphics/pokemon/taillow/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF1144, 0x20
 
 	.globl gMonStillFrontPic_Swellow
 gMonStillFrontPic_Swellow: @ 0x8CF1164
@@ -4782,7 +5666,10 @@ gMonBackPic_Swellow: @ 0x8CF1550
 	.globl gMonShinyPalette_Swellow
 gMonShinyPalette_Swellow: @ 0x8CF1888
 	.incbin "graphics/pokemon/swellow/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf18b0, 0x420
+	.globl gMonIcon_Swellow
+gMonIcon_Swellow: @ 0x8CF18B0
+	.incbin "graphics/pokemon/swellow/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF1CB0, 0x20
 
 	.globl gMonStillFrontPic_Shroomish
 gMonStillFrontPic_Shroomish: @ 0x8CF1CD0
@@ -4799,7 +5686,10 @@ gMonBackPic_Shroomish: @ 0x8CF1F60
 	.globl gMonShinyPalette_Shroomish
 gMonShinyPalette_Shroomish: @ 0x8CF2240
 	.incbin "graphics/pokemon/shroomish/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf2268, 0x420
+	.globl gMonIcon_Shroomish
+gMonIcon_Shroomish: @ 0x8CF2268
+	.incbin "graphics/pokemon/shroomish/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF2668, 0x20
 
 	.globl gMonStillFrontPic_Breloom
 gMonStillFrontPic_Breloom: @ 0x8CF2688
@@ -4816,7 +5706,10 @@ gMonBackPic_Breloom: @ 0x8CF2A98
 	.globl gMonShinyPalette_Breloom
 gMonShinyPalette_Breloom: @ 0x8CF2E78
 	.incbin "graphics/pokemon/breloom/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf2ea0, 0x420
+	.globl gMonIcon_Breloom
+gMonIcon_Breloom: @ 0x8CF2EA0
+	.incbin "graphics/pokemon/breloom/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF32A0, 0x20
 
 	.globl gMonStillFrontPic_Spinda
 gMonStillFrontPic_Spinda: @ 0x8CF32C0
@@ -4833,7 +5726,10 @@ gMonBackPic_Spinda: @ 0x8CF35DC
 	.globl gMonShinyPalette_Spinda
 gMonShinyPalette_Spinda: @ 0x8CF3918
 	.incbin "graphics/pokemon/spinda/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf3940, 0x420
+	.globl gMonIcon_Spinda
+gMonIcon_Spinda: @ 0x8CF3940
+	.incbin "graphics/pokemon/spinda/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF3D40, 0x20
 
 	.globl gMonStillFrontPic_Wingull
 gMonStillFrontPic_Wingull: @ 0x8CF3D60
@@ -4850,7 +5746,10 @@ gMonBackPic_Wingull: @ 0x8CF3FC4
 	.globl gMonShinyPalette_Wingull
 gMonShinyPalette_Wingull: @ 0x8CF4314
 	.incbin "graphics/pokemon/wingull/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf433c, 0x420
+	.globl gMonIcon_Wingull
+gMonIcon_Wingull: @ 0x8CF433C
+	.incbin "graphics/pokemon/wingull/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF473C, 0x20
 
 	.globl gMonStillFrontPic_Pelipper
 gMonStillFrontPic_Pelipper: @ 0x8CF475C
@@ -4867,7 +5766,10 @@ gMonBackPic_Pelipper: @ 0x8CF4B1C
 	.globl gMonShinyPalette_Pelipper
 gMonShinyPalette_Pelipper: @ 0x8CF4E9C
 	.incbin "graphics/pokemon/pelipper/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf4ec4, 0x420
+	.globl gMonIcon_Pelipper
+gMonIcon_Pelipper: @ 0x8CF4EC4
+	.incbin "graphics/pokemon/pelipper/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF52C4, 0x20
 
 	.globl gMonStillFrontPic_Surskit
 gMonStillFrontPic_Surskit: @ 0x8CF52E4
@@ -4884,7 +5786,10 @@ gMonBackPic_Surskit: @ 0x8CF5518
 	.globl gMonShinyPalette_Surskit
 gMonShinyPalette_Surskit: @ 0x8CF5750
 	.incbin "graphics/pokemon/surskit/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf5778, 0x420
+	.globl gMonIcon_Surskit
+gMonIcon_Surskit: @ 0x8CF5778
+	.incbin "graphics/pokemon/surskit/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF5B78, 0x20
 
 	.globl gMonStillFrontPic_Masquerain
 gMonStillFrontPic_Masquerain: @ 0x8CF5B98
@@ -4901,7 +5806,10 @@ gMonBackPic_Masquerain: @ 0x8CF5F5C
 	.globl gMonShinyPalette_Masquerain
 gMonShinyPalette_Masquerain: @ 0x8CF62B4
 	.incbin "graphics/pokemon/masquerain/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf62dc, 0x420
+	.globl gMonIcon_Masquerain
+gMonIcon_Masquerain: @ 0x8CF62DC
+	.incbin "graphics/pokemon/masquerain/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF66DC, 0x20
 
 	.globl gMonStillFrontPic_Wailmer
 gMonStillFrontPic_Wailmer: @ 0x8CF66FC
@@ -4918,7 +5826,10 @@ gMonBackPic_Wailmer: @ 0x8CF6A04
 	.globl gMonShinyPalette_Wailmer
 gMonShinyPalette_Wailmer: @ 0x8CF6BE8
 	.incbin "graphics/pokemon/wailmer/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf6c10, 0x420
+	.globl gMonIcon_Wailmer
+gMonIcon_Wailmer: @ 0x8CF6C10
+	.incbin "graphics/pokemon/wailmer/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF7010, 0x20
 
 	.globl gMonStillFrontPic_Wailord
 gMonStillFrontPic_Wailord: @ 0x8CF7030
@@ -4935,7 +5846,10 @@ gMonBackPic_Wailord: @ 0x8CF741C
 	.globl gMonShinyPalette_Wailord
 gMonShinyPalette_Wailord: @ 0x8CF7634
 	.incbin "graphics/pokemon/wailord/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf765c, 0x420
+	.globl gMonIcon_Wailord
+gMonIcon_Wailord: @ 0x8CF765C
+	.incbin "graphics/pokemon/wailord/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF7A5C, 0x20
 
 	.globl gMonStillFrontPic_Skitty
 gMonStillFrontPic_Skitty: @ 0x8CF7A7C
@@ -4952,7 +5866,10 @@ gMonBackPic_Skitty: @ 0x8CF7DA4
 	.globl gMonShinyPalette_Skitty
 gMonShinyPalette_Skitty: @ 0x8CF80EC
 	.incbin "graphics/pokemon/skitty/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf8114, 0x420
+	.globl gMonIcon_Skitty
+gMonIcon_Skitty: @ 0x8CF8114
+	.incbin "graphics/pokemon/skitty/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF8514, 0x20
 
 	.globl gMonStillFrontPic_Delcatty
 gMonStillFrontPic_Delcatty: @ 0x8CF8534
@@ -4969,7 +5886,10 @@ gMonBackPic_Delcatty: @ 0x8CF88E8
 	.globl gMonShinyPalette_Delcatty
 gMonShinyPalette_Delcatty: @ 0x8CF8C84
 	.incbin "graphics/pokemon/delcatty/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf8cac, 0x420
+	.globl gMonIcon_Delcatty
+gMonIcon_Delcatty: @ 0x8CF8CAC
+	.incbin "graphics/pokemon/delcatty/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF90AC, 0x20
 
 	.globl gMonStillFrontPic_Kecleon
 gMonStillFrontPic_Kecleon: @ 0x8CF90CC
@@ -4986,7 +5906,10 @@ gMonBackPic_Kecleon: @ 0x8CF9474
 	.globl gMonShinyPalette_Kecleon
 gMonShinyPalette_Kecleon: @ 0x8CF984C
 	.incbin "graphics/pokemon/kecleon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcf9874, 0x420
+	.globl gMonIcon_Kecleon
+gMonIcon_Kecleon: @ 0x8CF9874
+	.incbin "graphics/pokemon/kecleon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCF9C74, 0x20
 
 	.globl gMonStillFrontPic_Baltoy
 gMonStillFrontPic_Baltoy: @ 0x8CF9C94
@@ -5003,7 +5926,11 @@ gMonBackPic_Baltoy: @ 0x8CF9ED8
 	.globl gMonShinyPalette_Baltoy
 gMonShinyPalette_Baltoy: @ 0x8CFA180
 	.incbin "graphics/pokemon/baltoy/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfa19f, 0x421
+	.incbin "baserom_jp.gba", 0xCFA19F, 0x1
+	.globl gMonIcon_Baltoy
+gMonIcon_Baltoy: @ 0x8CFA1A0
+	.incbin "graphics/pokemon/baltoy/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFA5A0, 0x20
 
 	.globl gMonStillFrontPic_Claydol
 gMonStillFrontPic_Claydol: @ 0x8CFA5C0
@@ -5020,7 +5947,10 @@ gMonBackPic_Claydol: @ 0x8CFA9A0
 	.globl gMonShinyPalette_Claydol
 gMonShinyPalette_Claydol: @ 0x8CFAD74
 	.incbin "graphics/pokemon/claydol/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfad9c, 0x420
+	.globl gMonIcon_Claydol
+gMonIcon_Claydol: @ 0x8CFAD9C
+	.incbin "graphics/pokemon/claydol/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFB19C, 0x20
 
 	.globl gMonStillFrontPic_Nosepass
 gMonStillFrontPic_Nosepass: @ 0x8CFB1BC
@@ -5037,7 +5967,10 @@ gMonBackPic_Nosepass: @ 0x8CFB4B0
 	.globl gMonShinyPalette_Nosepass
 gMonShinyPalette_Nosepass: @ 0x8CFB750
 	.incbin "graphics/pokemon/nosepass/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfb778, 0x420
+	.globl gMonIcon_Nosepass
+gMonIcon_Nosepass: @ 0x8CFB778
+	.incbin "graphics/pokemon/nosepass/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFBB78, 0x20
 
 	.globl gMonStillFrontPic_Torkoal
 gMonStillFrontPic_Torkoal: @ 0x8CFBB98
@@ -5054,7 +5987,10 @@ gMonBackPic_Torkoal: @ 0x8CFC06C
 	.globl gMonShinyPalette_Torkoal
 gMonShinyPalette_Torkoal: @ 0x8CFC334
 	.incbin "graphics/pokemon/torkoal/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfc35c, 0x420
+	.globl gMonIcon_Torkoal
+gMonIcon_Torkoal: @ 0x8CFC35C
+	.incbin "graphics/pokemon/torkoal/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFC75C, 0x20
 
 	.globl gMonStillFrontPic_Sableye
 gMonStillFrontPic_Sableye: @ 0x8CFC77C
@@ -5071,7 +6007,10 @@ gMonBackPic_Sableye: @ 0x8CFCA78
 	.globl gMonShinyPalette_Sableye
 gMonShinyPalette_Sableye: @ 0x8CFCDA0
 	.incbin "graphics/pokemon/sableye/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfcdc8, 0x420
+	.globl gMonIcon_Sableye
+gMonIcon_Sableye: @ 0x8CFCDC8
+	.incbin "graphics/pokemon/sableye/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFD1C8, 0x20
 
 	.globl gMonStillFrontPic_Barboach
 gMonStillFrontPic_Barboach: @ 0x8CFD1E8
@@ -5088,7 +6027,10 @@ gMonBackPic_Barboach: @ 0x8CFD4A0
 	.globl gMonShinyPalette_Barboach
 gMonShinyPalette_Barboach: @ 0x8CFD730
 	.incbin "graphics/pokemon/barboach/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfd758, 0x420
+	.globl gMonIcon_Barboach
+gMonIcon_Barboach: @ 0x8CFD758
+	.incbin "graphics/pokemon/barboach/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFDB58, 0x20
 
 	.globl gMonStillFrontPic_Whiscash
 gMonStillFrontPic_Whiscash: @ 0x8CFDB78
@@ -5105,7 +6047,10 @@ gMonBackPic_Whiscash: @ 0x8CFDF18
 	.globl gMonShinyPalette_Whiscash
 gMonShinyPalette_Whiscash: @ 0x8CFE264
 	.incbin "graphics/pokemon/whiscash/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfe28c, 0x420
+	.globl gMonIcon_Whiscash
+gMonIcon_Whiscash: @ 0x8CFE28C
+	.incbin "graphics/pokemon/whiscash/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFE68C, 0x20
 
 	.globl gMonStillFrontPic_Luvdisc
 gMonStillFrontPic_Luvdisc: @ 0x8CFE6AC
@@ -5122,7 +6067,10 @@ gMonBackPic_Luvdisc: @ 0x8CFE890
 	.globl gMonShinyPalette_Luvdisc
 gMonShinyPalette_Luvdisc: @ 0x8CFEA64
 	.incbin "graphics/pokemon/luvdisc/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcfea88, 0x420
+	.globl gMonIcon_Luvdisc
+gMonIcon_Luvdisc: @ 0x8CFEA88
+	.incbin "graphics/pokemon/luvdisc/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFEE88, 0x20
 
 	.globl gMonStillFrontPic_Corphish
 gMonStillFrontPic_Corphish: @ 0x8CFEEA8
@@ -5139,7 +6087,10 @@ gMonBackPic_Corphish: @ 0x8CFF22C
 	.globl gMonShinyPalette_Corphish
 gMonShinyPalette_Corphish: @ 0x8CFF548
 	.incbin "graphics/pokemon/corphish/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xcff570, 0x420
+	.globl gMonIcon_Corphish
+gMonIcon_Corphish: @ 0x8CFF570
+	.incbin "graphics/pokemon/corphish/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xCFF970, 0x20
 
 	.globl gMonStillFrontPic_Crawdaunt
 gMonStillFrontPic_Crawdaunt: @ 0x8CFF990
@@ -5156,7 +6107,10 @@ gMonBackPic_Crawdaunt: @ 0x8CFFE48
 	.globl gMonShinyPalette_Crawdaunt
 gMonShinyPalette_Crawdaunt: @ 0x8D0022C
 	.incbin "graphics/pokemon/crawdaunt/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd00254, 0x420
+	.globl gMonIcon_Crawdaunt
+gMonIcon_Crawdaunt: @ 0x8D00254
+	.incbin "graphics/pokemon/crawdaunt/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD00654, 0x20
 
 	.globl gMonStillFrontPic_Feebas
 gMonStillFrontPic_Feebas: @ 0x8D00674
@@ -5173,7 +6127,10 @@ gMonBackPic_Feebas: @ 0x8D00928
 	.globl gMonShinyPalette_Feebas
 gMonShinyPalette_Feebas: @ 0x8D00C60
 	.incbin "graphics/pokemon/feebas/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd00c88, 0x420
+	.globl gMonIcon_Feebas
+gMonIcon_Feebas: @ 0x8D00C88
+	.incbin "graphics/pokemon/feebas/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD01088, 0x20
 
 	.globl gMonStillFrontPic_Milotic
 gMonStillFrontPic_Milotic: @ 0x8D010A8
@@ -5190,7 +6147,10 @@ gMonBackPic_Milotic: @ 0x8D01560
 	.globl gMonShinyPalette_Milotic
 gMonShinyPalette_Milotic: @ 0x8D01854
 	.incbin "graphics/pokemon/milotic/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0187c, 0x420
+	.globl gMonIcon_Milotic
+gMonIcon_Milotic: @ 0x8D0187C
+	.incbin "graphics/pokemon/milotic/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD01C7C, 0x20
 
 	.globl gMonStillFrontPic_Carvanha
 gMonStillFrontPic_Carvanha: @ 0x8D01C9C
@@ -5207,7 +6167,10 @@ gMonBackPic_Carvanha: @ 0x8D01FF0
 	.globl gMonShinyPalette_Carvanha
 gMonShinyPalette_Carvanha: @ 0x8D02300
 	.incbin "graphics/pokemon/carvanha/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd02328, 0x420
+	.globl gMonIcon_Carvanha
+gMonIcon_Carvanha: @ 0x8D02328
+	.incbin "graphics/pokemon/carvanha/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD02728, 0x20
 
 	.globl gMonStillFrontPic_Sharpedo
 gMonStillFrontPic_Sharpedo: @ 0x8D02748
@@ -5224,7 +6187,10 @@ gMonBackPic_Sharpedo: @ 0x8D02B00
 	.globl gMonShinyPalette_Sharpedo
 gMonShinyPalette_Sharpedo: @ 0x8D02E58
 	.incbin "graphics/pokemon/sharpedo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd02e80, 0x420
+	.globl gMonIcon_Sharpedo
+gMonIcon_Sharpedo: @ 0x8D02E80
+	.incbin "graphics/pokemon/sharpedo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD03280, 0x20
 
 	.globl gMonStillFrontPic_Trapinch
 gMonStillFrontPic_Trapinch: @ 0x8D032A0
@@ -5241,7 +6207,11 @@ gMonBackPic_Trapinch: @ 0x8D034E4
 	.globl gMonShinyPalette_Trapinch
 gMonShinyPalette_Trapinch: @ 0x8D03704
 	.incbin "graphics/pokemon/trapinch/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0372a, 0x422
+	.incbin "baserom_jp.gba", 0xD0372A, 0x2
+	.globl gMonIcon_Trapinch
+gMonIcon_Trapinch: @ 0x8D0372C
+	.incbin "graphics/pokemon/trapinch/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD03B2C, 0x20
 
 	.globl gMonStillFrontPic_Vibrava
 gMonStillFrontPic_Vibrava: @ 0x8D03B4C
@@ -5258,7 +6228,10 @@ gMonBackPic_Vibrava: @ 0x8D03EE4
 	.globl gMonShinyPalette_Vibrava
 gMonShinyPalette_Vibrava: @ 0x8D0415C
 	.incbin "graphics/pokemon/vibrava/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd04184, 0x420
+	.globl gMonIcon_Vibrava
+gMonIcon_Vibrava: @ 0x8D04184
+	.incbin "graphics/pokemon/vibrava/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD04584, 0x20
 
 	.globl gMonStillFrontPic_Flygon
 gMonStillFrontPic_Flygon: @ 0x8D045A4
@@ -5275,7 +6248,10 @@ gMonBackPic_Flygon: @ 0x8D04ABC
 	.globl gMonShinyPalette_Flygon
 gMonShinyPalette_Flygon: @ 0x8D04EF8
 	.incbin "graphics/pokemon/flygon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd04f20, 0x420
+	.globl gMonIcon_Flygon
+gMonIcon_Flygon: @ 0x8D04F20
+	.incbin "graphics/pokemon/flygon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD05320, 0x20
 
 	.globl gMonStillFrontPic_Makuhita
 gMonStillFrontPic_Makuhita: @ 0x8D05340
@@ -5292,7 +6268,10 @@ gMonBackPic_Makuhita: @ 0x8D05680
 	.globl gMonShinyPalette_Makuhita
 gMonShinyPalette_Makuhita: @ 0x8D05970
 	.incbin "graphics/pokemon/makuhita/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd05994, 0x420
+	.globl gMonIcon_Makuhita
+gMonIcon_Makuhita: @ 0x8D05994
+	.incbin "graphics/pokemon/makuhita/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD05D94, 0x20
 
 	.globl gMonStillFrontPic_Hariyama
 gMonStillFrontPic_Hariyama: @ 0x8D05DB4
@@ -5309,7 +6288,10 @@ gMonBackPic_Hariyama: @ 0x8D0628C
 	.globl gMonShinyPalette_Hariyama
 gMonShinyPalette_Hariyama: @ 0x8D0666C
 	.incbin "graphics/pokemon/hariyama/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd06694, 0x420
+	.globl gMonIcon_Hariyama
+gMonIcon_Hariyama: @ 0x8D06694
+	.incbin "graphics/pokemon/hariyama/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD06A94, 0x20
 
 	.globl gMonStillFrontPic_Electrike
 gMonStillFrontPic_Electrike: @ 0x8D06AB4
@@ -5326,7 +6308,11 @@ gMonBackPic_Electrike: @ 0x8D06D6C
 	.globl gMonShinyPalette_Electrike
 gMonShinyPalette_Electrike: @ 0x8D06FF8
 	.incbin "graphics/pokemon/electrike/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0701e, 0x422
+	.incbin "baserom_jp.gba", 0xD0701E, 0x2
+	.globl gMonIcon_Electrike
+gMonIcon_Electrike: @ 0x8D07020
+	.incbin "graphics/pokemon/electrike/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD07420, 0x20
 
 	.globl gMonStillFrontPic_Manectric
 gMonStillFrontPic_Manectric: @ 0x8D07440
@@ -5343,7 +6329,10 @@ gMonBackPic_Manectric: @ 0x8D07798
 	.globl gMonShinyPalette_Manectric
 gMonShinyPalette_Manectric: @ 0x8D079C4
 	.incbin "graphics/pokemon/manectric/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd079ec, 0x420
+	.globl gMonIcon_Manectric
+gMonIcon_Manectric: @ 0x8D079EC
+	.incbin "graphics/pokemon/manectric/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD07DEC, 0x20
 
 	.globl gMonStillFrontPic_Numel
 gMonStillFrontPic_Numel: @ 0x8D07E0C
@@ -5360,7 +6349,10 @@ gMonBackPic_Numel: @ 0x8D08104
 	.globl gMonShinyPalette_Numel
 gMonShinyPalette_Numel: @ 0x8D083C0
 	.incbin "graphics/pokemon/numel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd083e8, 0x420
+	.globl gMonIcon_Numel
+gMonIcon_Numel: @ 0x8D083E8
+	.incbin "graphics/pokemon/numel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD087E8, 0x20
 
 	.globl gMonStillFrontPic_Camerupt
 gMonStillFrontPic_Camerupt: @ 0x8D08808
@@ -5377,7 +6369,10 @@ gMonBackPic_Camerupt: @ 0x8D08C48
 	.globl gMonShinyPalette_Camerupt
 gMonShinyPalette_Camerupt: @ 0x8D08F0C
 	.incbin "graphics/pokemon/camerupt/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd08f34, 0x420
+	.globl gMonIcon_Camerupt
+gMonIcon_Camerupt: @ 0x8D08F34
+	.incbin "graphics/pokemon/camerupt/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD09334, 0x20
 
 	.globl gMonStillFrontPic_Spheal
 gMonStillFrontPic_Spheal: @ 0x8D09354
@@ -5394,7 +6389,11 @@ gMonBackPic_Spheal: @ 0x8D095F0
 	.globl gMonShinyPalette_Spheal
 gMonShinyPalette_Spheal: @ 0x8D097EC
 	.incbin "graphics/pokemon/spheal/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd09812, 0x422
+	.incbin "baserom_jp.gba", 0xD09812, 0x2
+	.globl gMonIcon_Spheal
+gMonIcon_Spheal: @ 0x8D09814
+	.incbin "graphics/pokemon/spheal/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD09C14, 0x20
 
 	.globl gMonStillFrontPic_Sealeo
 gMonStillFrontPic_Sealeo: @ 0x8D09C34
@@ -5411,7 +6410,10 @@ gMonBackPic_Sealeo: @ 0x8D09FDC
 	.globl gMonShinyPalette_Sealeo
 gMonShinyPalette_Sealeo: @ 0x8D0A258
 	.incbin "graphics/pokemon/sealeo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0a280, 0x420
+	.globl gMonIcon_Sealeo
+gMonIcon_Sealeo: @ 0x8D0A280
+	.incbin "graphics/pokemon/sealeo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0A680, 0x20
 
 	.globl gMonStillFrontPic_Walrein
 gMonStillFrontPic_Walrein: @ 0x8D0A6A0
@@ -5428,7 +6430,10 @@ gMonBackPic_Walrein: @ 0x8D0AE3C
 	.globl gMonShinyPalette_Walrein
 gMonShinyPalette_Walrein: @ 0x8D0B1C4
 	.incbin "graphics/pokemon/walrein/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0b1ec, 0x420
+	.globl gMonIcon_Walrein
+gMonIcon_Walrein: @ 0x8D0B1EC
+	.incbin "graphics/pokemon/walrein/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0B5EC, 0x20
 
 	.globl gMonStillFrontPic_Cacnea
 gMonStillFrontPic_Cacnea: @ 0x8D0B60C
@@ -5445,7 +6450,10 @@ gMonBackPic_Cacnea: @ 0x8D0B944
 	.globl gMonShinyPalette_Cacnea
 gMonShinyPalette_Cacnea: @ 0x8D0BCA4
 	.incbin "graphics/pokemon/cacnea/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0bccc, 0x420
+	.globl gMonIcon_Cacnea
+gMonIcon_Cacnea: @ 0x8D0BCCC
+	.incbin "graphics/pokemon/cacnea/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0C0CC, 0x20
 
 	.globl gMonStillFrontPic_Cacturne
 gMonStillFrontPic_Cacturne: @ 0x8D0C0EC
@@ -5462,7 +6470,10 @@ gMonBackPic_Cacturne: @ 0x8D0C54C
 	.globl gMonShinyPalette_Cacturne
 gMonShinyPalette_Cacturne: @ 0x8D0C84C
 	.incbin "graphics/pokemon/cacturne/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0c874, 0x420
+	.globl gMonIcon_Cacturne
+gMonIcon_Cacturne: @ 0x8D0C874
+	.incbin "graphics/pokemon/cacturne/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0CC74, 0x20
 
 	.globl gMonStillFrontPic_Snorunt
 gMonStillFrontPic_Snorunt: @ 0x8D0CC94
@@ -5479,7 +6490,10 @@ gMonBackPic_Snorunt: @ 0x8D0CF80
 	.globl gMonShinyPalette_Snorunt
 gMonShinyPalette_Snorunt: @ 0x8D0D264
 	.incbin "graphics/pokemon/snorunt/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0d28c, 0x420
+	.globl gMonIcon_Snorunt
+gMonIcon_Snorunt: @ 0x8D0D28C
+	.incbin "graphics/pokemon/snorunt/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0D68C, 0x20
 
 	.globl gMonStillFrontPic_Glalie
 gMonStillFrontPic_Glalie: @ 0x8D0D6AC
@@ -5496,7 +6510,10 @@ gMonBackPic_Glalie: @ 0x8D0DA9C
 	.globl gMonShinyPalette_Glalie
 gMonShinyPalette_Glalie: @ 0x8D0DE4C
 	.incbin "graphics/pokemon/glalie/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0de74, 0x420
+	.globl gMonIcon_Glalie
+gMonIcon_Glalie: @ 0x8D0DE74
+	.incbin "graphics/pokemon/glalie/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0E274, 0x20
 
 	.globl gMonStillFrontPic_Lunatone
 gMonStillFrontPic_Lunatone: @ 0x8D0E294
@@ -5513,7 +6530,10 @@ gMonBackPic_Lunatone: @ 0x8D0E5E4
 	.globl gMonShinyPalette_Lunatone
 gMonShinyPalette_Lunatone: @ 0x8D0E93C
 	.incbin "graphics/pokemon/lunatone/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0e964, 0x420
+	.globl gMonIcon_Lunatone
+gMonIcon_Lunatone: @ 0x8D0E964
+	.incbin "graphics/pokemon/lunatone/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0ED64, 0x20
 
 	.globl gMonStillFrontPic_Solrock
 gMonStillFrontPic_Solrock: @ 0x8D0ED84
@@ -5530,7 +6550,10 @@ gMonBackPic_Solrock: @ 0x8D0F1F8
 	.globl gMonShinyPalette_Solrock
 gMonShinyPalette_Solrock: @ 0x8D0F5E4
 	.incbin "graphics/pokemon/solrock/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd0f60c, 0x420
+	.globl gMonIcon_Solrock
+gMonIcon_Solrock: @ 0x8D0F60C
+	.incbin "graphics/pokemon/solrock/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD0FA0C, 0x20
 
 	.globl gMonStillFrontPic_Azurill
 gMonStillFrontPic_Azurill: @ 0x8D0FA2C
@@ -5547,7 +6570,10 @@ gMonBackPic_Azurill: @ 0x8D0FD1C
 	.globl gMonShinyPalette_Azurill
 gMonShinyPalette_Azurill: @ 0x8D10034
 	.incbin "graphics/pokemon/azurill/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1005c, 0x420
+	.globl gMonIcon_Azurill
+gMonIcon_Azurill: @ 0x8D1005C
+	.incbin "graphics/pokemon/azurill/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1045C, 0x20
 
 	.globl gMonStillFrontPic_Spoink
 gMonStillFrontPic_Spoink: @ 0x8D1047C
@@ -5564,7 +6590,10 @@ gMonBackPic_Spoink: @ 0x8D10710
 	.globl gMonShinyPalette_Spoink
 gMonShinyPalette_Spoink: @ 0x8D10950
 	.incbin "graphics/pokemon/spoink/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd10978, 0x420
+	.globl gMonIcon_Spoink
+gMonIcon_Spoink: @ 0x8D10978
+	.incbin "graphics/pokemon/spoink/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD10D78, 0x20
 
 	.globl gMonStillFrontPic_Grumpig
 gMonStillFrontPic_Grumpig: @ 0x8D10D98
@@ -5581,7 +6610,10 @@ gMonBackPic_Grumpig: @ 0x8D1117C
 	.globl gMonShinyPalette_Grumpig
 gMonShinyPalette_Grumpig: @ 0x8D114DC
 	.incbin "graphics/pokemon/grumpig/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd11504, 0x420
+	.globl gMonIcon_Grumpig
+gMonIcon_Grumpig: @ 0x8D11504
+	.incbin "graphics/pokemon/grumpig/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD11904, 0x20
 
 	.globl gMonStillFrontPic_Plusle
 gMonStillFrontPic_Plusle: @ 0x8D11924
@@ -5598,7 +6630,10 @@ gMonBackPic_Plusle: @ 0x8D11BD8
 	.globl gMonShinyPalette_Plusle
 gMonShinyPalette_Plusle: @ 0x8D11E90
 	.incbin "graphics/pokemon/plusle/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd11eb8, 0x420
+	.globl gMonIcon_Plusle
+gMonIcon_Plusle: @ 0x8D11EB8
+	.incbin "graphics/pokemon/plusle/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD122B8, 0x20
 
 	.globl gMonStillFrontPic_Minun
 gMonStillFrontPic_Minun: @ 0x8D122D8
@@ -5615,7 +6650,10 @@ gMonBackPic_Minun: @ 0x8D12568
 	.globl gMonShinyPalette_Minun
 gMonShinyPalette_Minun: @ 0x8D12830
 	.incbin "graphics/pokemon/minun/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd12858, 0x420
+	.globl gMonIcon_Minun
+gMonIcon_Minun: @ 0x8D12858
+	.incbin "graphics/pokemon/minun/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD12C58, 0x20
 
 	.globl gMonStillFrontPic_Mawile
 gMonStillFrontPic_Mawile: @ 0x8D12C78
@@ -5632,7 +6670,10 @@ gMonBackPic_Mawile: @ 0x8D1305C
 	.globl gMonShinyPalette_Mawile
 gMonShinyPalette_Mawile: @ 0x8D1345C
 	.incbin "graphics/pokemon/mawile/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd13484, 0x420
+	.globl gMonIcon_Mawile
+gMonIcon_Mawile: @ 0x8D13484
+	.incbin "graphics/pokemon/mawile/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD13884, 0x20
 
 	.globl gMonStillFrontPic_Meditite
 gMonStillFrontPic_Meditite: @ 0x8D138A4
@@ -5649,7 +6690,10 @@ gMonBackPic_Meditite: @ 0x8D13B84
 	.globl gMonShinyPalette_Meditite
 gMonShinyPalette_Meditite: @ 0x8D13E4C
 	.incbin "graphics/pokemon/meditite/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd13e70, 0x420
+	.globl gMonIcon_Meditite
+gMonIcon_Meditite: @ 0x8D13E70
+	.incbin "graphics/pokemon/meditite/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD14270, 0x20
 
 	.globl gMonStillFrontPic_Medicham
 gMonStillFrontPic_Medicham: @ 0x8D14290
@@ -5666,7 +6710,10 @@ gMonBackPic_Medicham: @ 0x8D145E8
 	.globl gMonShinyPalette_Medicham
 gMonShinyPalette_Medicham: @ 0x8D14920
 	.incbin "graphics/pokemon/medicham/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd14948, 0x420
+	.globl gMonIcon_Medicham
+gMonIcon_Medicham: @ 0x8D14948
+	.incbin "graphics/pokemon/medicham/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD14D48, 0x20
 
 	.globl gMonStillFrontPic_Swablu
 gMonStillFrontPic_Swablu: @ 0x8D14D68
@@ -5683,7 +6730,10 @@ gMonBackPic_Swablu: @ 0x8D15340
 	.globl gMonShinyPalette_Swablu
 gMonShinyPalette_Swablu: @ 0x8D156F8
 	.incbin "graphics/pokemon/swablu/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd15720, 0x420
+	.globl gMonIcon_Swablu
+gMonIcon_Swablu: @ 0x8D15720
+	.incbin "graphics/pokemon/swablu/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD15B20, 0x20
 
 	.globl gMonStillFrontPic_Altaria
 gMonStillFrontPic_Altaria: @ 0x8D15B40
@@ -5700,7 +6750,10 @@ gMonBackPic_Altaria: @ 0x8D15F44
 	.globl gMonShinyPalette_Altaria
 gMonShinyPalette_Altaria: @ 0x8D162BC
 	.incbin "graphics/pokemon/altaria/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd162e4, 0x420
+	.globl gMonIcon_Altaria
+gMonIcon_Altaria: @ 0x8D162E4
+	.incbin "graphics/pokemon/altaria/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD166E4, 0x20
 
 	.globl gMonStillFrontPic_Wynaut
 gMonStillFrontPic_Wynaut: @ 0x8D16704
@@ -5717,7 +6770,10 @@ gMonBackPic_Wynaut: @ 0x8D169C4
 	.globl gMonShinyPalette_Wynaut
 gMonShinyPalette_Wynaut: @ 0x8D16C54
 	.incbin "graphics/pokemon/wynaut/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd16c7c, 0x420
+	.globl gMonIcon_Wynaut
+gMonIcon_Wynaut: @ 0x8D16C7C
+	.incbin "graphics/pokemon/wynaut/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1707C, 0x20
 
 	.globl gMonStillFrontPic_Duskull
 gMonStillFrontPic_Duskull: @ 0x8D1709C
@@ -5734,7 +6790,10 @@ gMonBackPic_Duskull: @ 0x8D173B4
 	.globl gMonShinyPalette_Duskull
 gMonShinyPalette_Duskull: @ 0x8D17664
 	.incbin "graphics/pokemon/duskull/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1768c, 0x420
+	.globl gMonIcon_Duskull
+gMonIcon_Duskull: @ 0x8D1768C
+	.incbin "graphics/pokemon/duskull/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD17A8C, 0x20
 
 	.globl gMonStillFrontPic_Dusclops
 gMonStillFrontPic_Dusclops: @ 0x8D17AAC
@@ -5751,7 +6810,11 @@ gMonBackPic_Dusclops: @ 0x8D17E74
 	.globl gMonShinyPalette_Dusclops
 gMonShinyPalette_Dusclops: @ 0x8D18160
 	.incbin "graphics/pokemon/dusclops/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd18186, 0x422
+	.incbin "baserom_jp.gba", 0xD18186, 0x2
+	.globl gMonIcon_Dusclops
+gMonIcon_Dusclops: @ 0x8D18188
+	.incbin "graphics/pokemon/dusclops/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD18588, 0x20
 
 	.globl gMonStillFrontPic_Roselia
 gMonStillFrontPic_Roselia: @ 0x8D185A8
@@ -5768,7 +6831,10 @@ gMonBackPic_Roselia: @ 0x8D1893C
 	.globl gMonShinyPalette_Roselia
 gMonShinyPalette_Roselia: @ 0x8D18D04
 	.incbin "graphics/pokemon/roselia/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd18d2c, 0x420
+	.globl gMonIcon_Roselia
+gMonIcon_Roselia: @ 0x8D18D2C
+	.incbin "graphics/pokemon/roselia/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1912C, 0x20
 
 	.globl gMonStillFrontPic_Slakoth
 gMonStillFrontPic_Slakoth: @ 0x8D1914C
@@ -5785,7 +6851,10 @@ gMonBackPic_Slakoth: @ 0x8D1945C
 	.globl gMonShinyPalette_Slakoth
 gMonShinyPalette_Slakoth: @ 0x8D19744
 	.incbin "graphics/pokemon/slakoth/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1976c, 0x420
+	.globl gMonIcon_Slakoth
+gMonIcon_Slakoth: @ 0x8D1976C
+	.incbin "graphics/pokemon/slakoth/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD19B6C, 0x20
 
 	.globl gMonStillFrontPic_Vigoroth
 gMonStillFrontPic_Vigoroth: @ 0x8D19B8C
@@ -5802,7 +6871,10 @@ gMonBackPic_Vigoroth: @ 0x8D19FB0
 	.globl gMonShinyPalette_Vigoroth
 gMonShinyPalette_Vigoroth: @ 0x8D1A278
 	.incbin "graphics/pokemon/vigoroth/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1a2a0, 0x420
+	.globl gMonIcon_Vigoroth
+gMonIcon_Vigoroth: @ 0x8D1A2A0
+	.incbin "graphics/pokemon/vigoroth/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1A6A0, 0x20
 
 	.globl gMonStillFrontPic_Slaking
 gMonStillFrontPic_Slaking: @ 0x8D1A6C0
@@ -5819,7 +6891,10 @@ gMonBackPic_Slaking: @ 0x8D1ABBC
 	.globl gMonShinyPalette_Slaking
 gMonShinyPalette_Slaking: @ 0x8D1AF80
 	.incbin "graphics/pokemon/slaking/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1afa8, 0x420
+	.globl gMonIcon_Slaking
+gMonIcon_Slaking: @ 0x8D1AFA8
+	.incbin "graphics/pokemon/slaking/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1B3A8, 0x20
 
 	.globl gMonStillFrontPic_Gulpin
 gMonStillFrontPic_Gulpin: @ 0x8D1B3C8
@@ -5836,7 +6911,10 @@ gMonBackPic_Gulpin: @ 0x8D1B608
 	.globl gMonShinyPalette_Gulpin
 gMonShinyPalette_Gulpin: @ 0x8D1B88C
 	.incbin "graphics/pokemon/gulpin/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1b8b4, 0x420
+	.globl gMonIcon_Gulpin
+gMonIcon_Gulpin: @ 0x8D1B8B4
+	.incbin "graphics/pokemon/gulpin/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1BCB4, 0x20
 
 	.globl gMonStillFrontPic_Swalot
 gMonStillFrontPic_Swalot: @ 0x8D1BCD4
@@ -5853,7 +6931,10 @@ gMonBackPic_Swalot: @ 0x8D1C040
 	.globl gMonShinyPalette_Swalot
 gMonShinyPalette_Swalot: @ 0x8D1C388
 	.incbin "graphics/pokemon/swalot/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1c3b0, 0x420
+	.globl gMonIcon_Swalot
+gMonIcon_Swalot: @ 0x8D1C3B0
+	.incbin "graphics/pokemon/swalot/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1C7B0, 0x20
 
 	.globl gMonStillFrontPic_Tropius
 gMonStillFrontPic_Tropius: @ 0x8D1C7D0
@@ -5870,7 +6951,10 @@ gMonBackPic_Tropius: @ 0x8D1CD70
 	.globl gMonShinyPalette_Tropius
 gMonShinyPalette_Tropius: @ 0x8D1D094
 	.incbin "graphics/pokemon/tropius/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1d0bc, 0x420
+	.globl gMonIcon_Tropius
+gMonIcon_Tropius: @ 0x8D1D0BC
+	.incbin "graphics/pokemon/tropius/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1D4BC, 0x20
 
 	.globl gMonStillFrontPic_Whismur
 gMonStillFrontPic_Whismur: @ 0x8D1D4DC
@@ -5887,7 +6971,10 @@ gMonBackPic_Whismur: @ 0x8D1D798
 	.globl gMonShinyPalette_Whismur
 gMonShinyPalette_Whismur: @ 0x8D1DA08
 	.incbin "graphics/pokemon/whismur/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1da30, 0x420
+	.globl gMonIcon_Whismur
+gMonIcon_Whismur: @ 0x8D1DA30
+	.incbin "graphics/pokemon/whismur/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1DE30, 0x20
 
 	.globl gMonStillFrontPic_Loudred
 gMonStillFrontPic_Loudred: @ 0x8D1DE50
@@ -5904,7 +6991,10 @@ gMonBackPic_Loudred: @ 0x8D1E2F0
 	.globl gMonShinyPalette_Loudred
 gMonShinyPalette_Loudred: @ 0x8D1E660
 	.incbin "graphics/pokemon/loudred/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1e688, 0x420
+	.globl gMonIcon_Loudred
+gMonIcon_Loudred: @ 0x8D1E688
+	.incbin "graphics/pokemon/loudred/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1EA88, 0x20
 
 	.globl gMonStillFrontPic_Exploud
 gMonStillFrontPic_Exploud: @ 0x8D1EAA8
@@ -5921,7 +7011,10 @@ gMonBackPic_Exploud: @ 0x8D1F038
 	.globl gMonShinyPalette_Exploud
 gMonShinyPalette_Exploud: @ 0x8D1F444
 	.incbin "graphics/pokemon/exploud/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1f46c, 0x420
+	.globl gMonIcon_Exploud
+gMonIcon_Exploud: @ 0x8D1F46C
+	.incbin "graphics/pokemon/exploud/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD1F86C, 0x20
 
 	.globl gMonStillFrontPic_Clamperl
 gMonStillFrontPic_Clamperl: @ 0x8D1F88C
@@ -5938,7 +7031,10 @@ gMonBackPic_Clamperl: @ 0x8D1FB8C
 	.globl gMonShinyPalette_Clamperl
 gMonShinyPalette_Clamperl: @ 0x8D1FE20
 	.incbin "graphics/pokemon/clamperl/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd1fe48, 0x420
+	.globl gMonIcon_Clamperl
+gMonIcon_Clamperl: @ 0x8D1FE48
+	.incbin "graphics/pokemon/clamperl/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD20248, 0x20
 
 	.globl gMonStillFrontPic_Huntail
 gMonStillFrontPic_Huntail: @ 0x8D20268
@@ -5955,7 +7051,10 @@ gMonBackPic_Huntail: @ 0x8D2065C
 	.globl gMonShinyPalette_Huntail
 gMonShinyPalette_Huntail: @ 0x8D209B0
 	.incbin "graphics/pokemon/huntail/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd209d8, 0x420
+	.globl gMonIcon_Huntail
+gMonIcon_Huntail: @ 0x8D209D8
+	.incbin "graphics/pokemon/huntail/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD20DD8, 0x20
 
 	.globl gMonStillFrontPic_Gorebyss
 gMonStillFrontPic_Gorebyss: @ 0x8D20DF8
@@ -5972,7 +7071,10 @@ gMonBackPic_Gorebyss: @ 0x8D21130
 	.globl gMonShinyPalette_Gorebyss
 gMonShinyPalette_Gorebyss: @ 0x8D21418
 	.incbin "graphics/pokemon/gorebyss/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd21440, 0x420
+	.globl gMonIcon_Gorebyss
+gMonIcon_Gorebyss: @ 0x8D21440
+	.incbin "graphics/pokemon/gorebyss/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD21840, 0x20
 
 	.globl gMonStillFrontPic_Absol
 gMonStillFrontPic_Absol: @ 0x8D21860
@@ -5989,7 +7091,10 @@ gMonBackPic_Absol: @ 0x8D21CB8
 	.globl gMonShinyPalette_Absol
 gMonShinyPalette_Absol: @ 0x8D22018
 	.incbin "graphics/pokemon/absol/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd22040, 0x420
+	.globl gMonIcon_Absol
+gMonIcon_Absol: @ 0x8D22040
+	.incbin "graphics/pokemon/absol/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD22440, 0x20
 
 	.globl gMonStillFrontPic_Shuppet
 gMonStillFrontPic_Shuppet: @ 0x8D22460
@@ -6006,7 +7111,11 @@ gMonBackPic_Shuppet: @ 0x8D226C0
 	.globl gMonShinyPalette_Shuppet
 gMonShinyPalette_Shuppet: @ 0x8D22958
 	.incbin "graphics/pokemon/shuppet/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2297e, 0x422
+	.incbin "baserom_jp.gba", 0xD2297E, 0x2
+	.globl gMonIcon_Shuppet
+gMonIcon_Shuppet: @ 0x8D22980
+	.incbin "graphics/pokemon/shuppet/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD22D80, 0x20
 
 	.globl gMonStillFrontPic_Banette
 gMonStillFrontPic_Banette: @ 0x8D22DA0
@@ -6023,7 +7132,10 @@ gMonBackPic_Banette: @ 0x8D2307C
 	.globl gMonShinyPalette_Banette
 gMonShinyPalette_Banette: @ 0x8D232F8
 	.incbin "graphics/pokemon/banette/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd23320, 0x420
+	.globl gMonIcon_Banette
+gMonIcon_Banette: @ 0x8D23320
+	.incbin "graphics/pokemon/banette/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD23720, 0x20
 
 	.globl gMonStillFrontPic_Seviper
 gMonStillFrontPic_Seviper: @ 0x8D23740
@@ -6040,7 +7152,10 @@ gMonBackPic_Seviper: @ 0x8D23B88
 	.globl gMonShinyPalette_Seviper
 gMonShinyPalette_Seviper: @ 0x8D24014
 	.incbin "graphics/pokemon/seviper/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2403c, 0x420
+	.globl gMonIcon_Seviper
+gMonIcon_Seviper: @ 0x8D2403C
+	.incbin "graphics/pokemon/seviper/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2443C, 0x20
 
 	.globl gMonStillFrontPic_Zangoose
 gMonStillFrontPic_Zangoose: @ 0x8D2445C
@@ -6057,7 +7172,10 @@ gMonBackPic_Zangoose: @ 0x8D24850
 	.globl gMonShinyPalette_Zangoose
 gMonShinyPalette_Zangoose: @ 0x8D24BC4
 	.incbin "graphics/pokemon/zangoose/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd24bec, 0x420
+	.globl gMonIcon_Zangoose
+gMonIcon_Zangoose: @ 0x8D24BEC
+	.incbin "graphics/pokemon/zangoose/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD24FEC, 0x20
 
 	.globl gMonStillFrontPic_Relicanth
 gMonStillFrontPic_Relicanth: @ 0x8D2500C
@@ -6074,7 +7192,10 @@ gMonBackPic_Relicanth: @ 0x8D253C8
 	.globl gMonShinyPalette_Relicanth
 gMonShinyPalette_Relicanth: @ 0x8D25720
 	.incbin "graphics/pokemon/relicanth/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd25748, 0x420
+	.globl gMonIcon_Relicanth
+gMonIcon_Relicanth: @ 0x8D25748
+	.incbin "graphics/pokemon/relicanth/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD25B48, 0x20
 
 	.globl gMonStillFrontPic_Aron
 gMonStillFrontPic_Aron: @ 0x8D25B68
@@ -6091,7 +7212,10 @@ gMonBackPic_Aron: @ 0x8D25D78
 	.globl gMonShinyPalette_Aron
 gMonShinyPalette_Aron: @ 0x8D25FA0
 	.incbin "graphics/pokemon/aron/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd25fc8, 0x420
+	.globl gMonIcon_Aron
+gMonIcon_Aron: @ 0x8D25FC8
+	.incbin "graphics/pokemon/aron/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD263C8, 0x20
 
 	.globl gMonStillFrontPic_Lairon
 gMonStillFrontPic_Lairon: @ 0x8D263E8
@@ -6108,7 +7232,10 @@ gMonBackPic_Lairon: @ 0x8D267DC
 	.globl gMonShinyPalette_Lairon
 gMonShinyPalette_Lairon: @ 0x8D26AC8
 	.incbin "graphics/pokemon/lairon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd26af0, 0x420
+	.globl gMonIcon_Lairon
+gMonIcon_Lairon: @ 0x8D26AF0
+	.incbin "graphics/pokemon/lairon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD26EF0, 0x20
 
 	.globl gMonStillFrontPic_Aggron
 gMonStillFrontPic_Aggron: @ 0x8D26F10
@@ -6125,7 +7252,10 @@ gMonBackPic_Aggron: @ 0x8D274B4
 	.globl gMonShinyPalette_Aggron
 gMonShinyPalette_Aggron: @ 0x8D278DC
 	.incbin "graphics/pokemon/aggron/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd27904, 0x420
+	.globl gMonIcon_Aggron
+gMonIcon_Aggron: @ 0x8D27904
+	.incbin "graphics/pokemon/aggron/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD27D04, 0x20
 
 	.globl gMonStillFrontPic_Castform
 gMonStillFrontPic_Castform: @ 0x8D27D24
@@ -6142,7 +7272,10 @@ gMonBackPic_Castform: @ 0x8D2882C
 	.globl gMonShinyPalette_Castform
 gMonShinyPalette_Castform: @ 0x8D291E8
 	.incbin "graphics/pokemon/castform/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd29264, 0x420
+	.globl gMonIcon_Castform
+gMonIcon_Castform: @ 0x8D29264
+	.incbin "graphics/pokemon/castform/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD29664, 0x20
 
 	.globl gMonStillFrontPic_Volbeat
 gMonStillFrontPic_Volbeat: @ 0x8D29684
@@ -6159,7 +7292,10 @@ gMonBackPic_Volbeat: @ 0x8D29A3C
 	.globl gMonShinyPalette_Volbeat
 gMonShinyPalette_Volbeat: @ 0x8D29D9C
 	.incbin "graphics/pokemon/volbeat/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd29dc4, 0x420
+	.globl gMonIcon_Volbeat
+gMonIcon_Volbeat: @ 0x8D29DC4
+	.incbin "graphics/pokemon/volbeat/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2A1C4, 0x20
 
 	.globl gMonStillFrontPic_Illumise
 gMonStillFrontPic_Illumise: @ 0x8D2A1E4
@@ -6176,7 +7312,10 @@ gMonBackPic_Illumise: @ 0x8D2A580
 	.globl gMonShinyPalette_Illumise
 gMonShinyPalette_Illumise: @ 0x8D2A89C
 	.incbin "graphics/pokemon/illumise/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2a8c4, 0x420
+	.globl gMonIcon_Illumise
+gMonIcon_Illumise: @ 0x8D2A8C4
+	.incbin "graphics/pokemon/illumise/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2ACC4, 0x20
 
 	.globl gMonStillFrontPic_Lileep
 gMonStillFrontPic_Lileep: @ 0x8D2ACE4
@@ -6193,7 +7332,10 @@ gMonBackPic_Lileep: @ 0x8D2B050
 	.globl gMonShinyPalette_Lileep
 gMonShinyPalette_Lileep: @ 0x8D2B394
 	.incbin "graphics/pokemon/lileep/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2b3bc, 0x420
+	.globl gMonIcon_Lileep
+gMonIcon_Lileep: @ 0x8D2B3BC
+	.incbin "graphics/pokemon/lileep/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2B7BC, 0x20
 
 	.globl gMonStillFrontPic_Cradily
 gMonStillFrontPic_Cradily: @ 0x8D2B7DC
@@ -6210,7 +7352,10 @@ gMonBackPic_Cradily: @ 0x8D2BC20
 	.globl gMonShinyPalette_Cradily
 gMonShinyPalette_Cradily: @ 0x8D2C01C
 	.incbin "graphics/pokemon/cradily/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2c044, 0x420
+	.globl gMonIcon_Cradily
+gMonIcon_Cradily: @ 0x8D2C044
+	.incbin "graphics/pokemon/cradily/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2C444, 0x20
 
 	.globl gMonStillFrontPic_Anorith
 gMonStillFrontPic_Anorith: @ 0x8D2C464
@@ -6227,7 +7372,10 @@ gMonBackPic_Anorith: @ 0x8D2C7B0
 	.globl gMonShinyPalette_Anorith
 gMonShinyPalette_Anorith: @ 0x8D2C9F8
 	.incbin "graphics/pokemon/anorith/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2ca20, 0x420
+	.globl gMonIcon_Anorith
+gMonIcon_Anorith: @ 0x8D2CA20
+	.incbin "graphics/pokemon/anorith/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2CE20, 0x20
 
 	.globl gMonStillFrontPic_Armaldo
 gMonStillFrontPic_Armaldo: @ 0x8D2CE40
@@ -6244,7 +7392,10 @@ gMonBackPic_Armaldo: @ 0x8D2D3E8
 	.globl gMonShinyPalette_Armaldo
 gMonShinyPalette_Armaldo: @ 0x8D2D820
 	.incbin "graphics/pokemon/armaldo/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2d848, 0x420
+	.globl gMonIcon_Armaldo
+gMonIcon_Armaldo: @ 0x8D2D848
+	.incbin "graphics/pokemon/armaldo/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2DC48, 0x20
 
 	.globl gMonStillFrontPic_Ralts
 gMonStillFrontPic_Ralts: @ 0x8D2DC68
@@ -6261,7 +7412,10 @@ gMonBackPic_Ralts: @ 0x8D2DEC0
 	.globl gMonShinyPalette_Ralts
 gMonShinyPalette_Ralts: @ 0x8D2E0FC
 	.incbin "graphics/pokemon/ralts/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2e124, 0x420
+	.globl gMonIcon_Ralts
+gMonIcon_Ralts: @ 0x8D2E124
+	.incbin "graphics/pokemon/ralts/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2E524, 0x20
 
 	.globl gMonStillFrontPic_Kirlia
 gMonStillFrontPic_Kirlia: @ 0x8D2E544
@@ -6278,7 +7432,10 @@ gMonBackPic_Kirlia: @ 0x8D2E868
 	.globl gMonShinyPalette_Kirlia
 gMonShinyPalette_Kirlia: @ 0x8D2EBDC
 	.incbin "graphics/pokemon/kirlia/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2ec04, 0x420
+	.globl gMonIcon_Kirlia
+gMonIcon_Kirlia: @ 0x8D2EC04
+	.incbin "graphics/pokemon/kirlia/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2F004, 0x20
 
 	.globl gMonStillFrontPic_Gardevoir
 gMonStillFrontPic_Gardevoir: @ 0x8D2F024
@@ -6295,7 +7452,10 @@ gMonBackPic_Gardevoir: @ 0x8D2F3C8
 	.globl gMonShinyPalette_Gardevoir
 gMonShinyPalette_Gardevoir: @ 0x8D2F6FC
 	.incbin "graphics/pokemon/gardevoir/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd2f724, 0x420
+	.globl gMonIcon_Gardevoir
+gMonIcon_Gardevoir: @ 0x8D2F724
+	.incbin "graphics/pokemon/gardevoir/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD2FB24, 0x20
 
 	.globl gMonStillFrontPic_Bagon
 gMonStillFrontPic_Bagon: @ 0x8D2FB44
@@ -6312,7 +7472,11 @@ gMonBackPic_Bagon: @ 0x8D2FDE4
 	.globl gMonShinyPalette_Bagon
 gMonShinyPalette_Bagon: @ 0x8D300CC
 	.incbin "graphics/pokemon/bagon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd300f3, 0x421
+	.incbin "baserom_jp.gba", 0xD300F3, 0x1
+	.globl gMonIcon_Bagon
+gMonIcon_Bagon: @ 0x8D300F4
+	.incbin "graphics/pokemon/bagon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD304F4, 0x20
 
 	.globl gMonStillFrontPic_Shelgon
 gMonStillFrontPic_Shelgon: @ 0x8D30514
@@ -6329,7 +7493,10 @@ gMonBackPic_Shelgon: @ 0x8D30840
 	.globl gMonShinyPalette_Shelgon
 gMonShinyPalette_Shelgon: @ 0x8D30B28
 	.incbin "graphics/pokemon/shelgon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd30b50, 0x420
+	.globl gMonIcon_Shelgon
+gMonIcon_Shelgon: @ 0x8D30B50
+	.incbin "graphics/pokemon/shelgon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD30F50, 0x20
 
 	.globl gMonStillFrontPic_Salamence
 gMonStillFrontPic_Salamence: @ 0x8D30F70
@@ -6346,7 +7513,10 @@ gMonBackPic_Salamence: @ 0x8D313FC
 	.globl gMonShinyPalette_Salamence
 gMonShinyPalette_Salamence: @ 0x8D316E0
 	.incbin "graphics/pokemon/salamence/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd31708, 0x420
+	.globl gMonIcon_Salamence
+gMonIcon_Salamence: @ 0x8D31708
+	.incbin "graphics/pokemon/salamence/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD31B08, 0x20
 
 	.globl gMonStillFrontPic_Beldum
 gMonStillFrontPic_Beldum: @ 0x8D31B28
@@ -6363,7 +7533,10 @@ gMonBackPic_Beldum: @ 0x8D31DC0
 	.globl gMonShinyPalette_Beldum
 gMonShinyPalette_Beldum: @ 0x8D320B0
 	.incbin "graphics/pokemon/beldum/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd320d8, 0x420
+	.globl gMonIcon_Beldum
+gMonIcon_Beldum: @ 0x8D320D8
+	.incbin "graphics/pokemon/beldum/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD324D8, 0x20
 
 	.globl gMonStillFrontPic_Metang
 gMonStillFrontPic_Metang: @ 0x8D324F8
@@ -6380,7 +7553,10 @@ gMonBackPic_Metang: @ 0x8D3297C
 	.globl gMonShinyPalette_Metang
 gMonShinyPalette_Metang: @ 0x8D32CA0
 	.incbin "graphics/pokemon/metang/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd32cc8, 0x420
+	.globl gMonIcon_Metang
+gMonIcon_Metang: @ 0x8D32CC8
+	.incbin "graphics/pokemon/metang/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD330C8, 0x20
 
 	.globl gMonStillFrontPic_Metagross
 gMonStillFrontPic_Metagross: @ 0x8D330E8
@@ -6397,7 +7573,10 @@ gMonBackPic_Metagross: @ 0x8D33574
 	.globl gMonShinyPalette_Metagross
 gMonShinyPalette_Metagross: @ 0x8D33840
 	.incbin "graphics/pokemon/metagross/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd33868, 0x420
+	.globl gMonIcon_Metagross
+gMonIcon_Metagross: @ 0x8D33868
+	.incbin "graphics/pokemon/metagross/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD33C68, 0x20
 
 	.globl gMonStillFrontPic_Regirock
 gMonStillFrontPic_Regirock: @ 0x8D33C88
@@ -6414,7 +7593,10 @@ gMonBackPic_Regirock: @ 0x8D3416C
 	.globl gMonShinyPalette_Regirock
 gMonShinyPalette_Regirock: @ 0x8D345B8
 	.incbin "graphics/pokemon/regirock/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd345e0, 0x420
+	.globl gMonIcon_Regirock
+gMonIcon_Regirock: @ 0x8D345E0
+	.incbin "graphics/pokemon/regirock/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD349E0, 0x20
 
 	.globl gMonStillFrontPic_Regice
 gMonStillFrontPic_Regice: @ 0x8D34A00
@@ -6431,7 +7613,11 @@ gMonBackPic_Regice: @ 0x8D34E70
 	.globl gMonShinyPalette_Regice
 gMonShinyPalette_Regice: @ 0x8D35160
 	.incbin "graphics/pokemon/regice/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd35186, 0x422
+	.incbin "baserom_jp.gba", 0xD35186, 0x2
+	.globl gMonIcon_Regice
+gMonIcon_Regice: @ 0x8D35188
+	.incbin "graphics/pokemon/regice/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD35588, 0x20
 
 	.globl gMonStillFrontPic_Registeel
 gMonStillFrontPic_Registeel: @ 0x8D355A8
@@ -6448,7 +7634,10 @@ gMonBackPic_Registeel: @ 0x8D35A58
 	.globl gMonShinyPalette_Registeel
 gMonShinyPalette_Registeel: @ 0x8D35D90
 	.incbin "graphics/pokemon/registeel/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd35db8, 0x420
+	.globl gMonIcon_Registeel
+gMonIcon_Registeel: @ 0x8D35DB8
+	.incbin "graphics/pokemon/registeel/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD361B8, 0x20
 
 	.globl gMonStillFrontPic_Kyogre
 gMonStillFrontPic_Kyogre: @ 0x8D361D8
@@ -6465,7 +7654,10 @@ gMonBackPic_Kyogre: @ 0x8D36670
 	.globl gMonShinyPalette_Kyogre
 gMonShinyPalette_Kyogre: @ 0x8D368E8
 	.incbin "graphics/pokemon/kyogre/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd36910, 0x420
+	.globl gMonIcon_Kyogre
+gMonIcon_Kyogre: @ 0x8D36910
+	.incbin "graphics/pokemon/kyogre/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD36D10, 0x20
 
 	.globl gMonStillFrontPic_Groudon
 gMonStillFrontPic_Groudon: @ 0x8D36D30
@@ -6482,7 +7674,10 @@ gMonBackPic_Groudon: @ 0x8D372EC
 	.globl gMonShinyPalette_Groudon
 gMonShinyPalette_Groudon: @ 0x8D37754
 	.incbin "graphics/pokemon/groudon/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd3777c, 0x420
+	.globl gMonIcon_Groudon
+gMonIcon_Groudon: @ 0x8D3777C
+	.incbin "graphics/pokemon/groudon/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD37B7C, 0x20
 
 	.globl gMonStillFrontPic_Rayquaza
 gMonStillFrontPic_Rayquaza: @ 0x8D37B9C
@@ -6499,7 +7694,10 @@ gMonBackPic_Rayquaza: @ 0x8D383B0
 	.globl gMonShinyPalette_Rayquaza
 gMonShinyPalette_Rayquaza: @ 0x8D386E8
 	.incbin "graphics/pokemon/rayquaza/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd38710, 0x420
+	.globl gMonIcon_Rayquaza
+gMonIcon_Rayquaza: @ 0x8D38710
+	.incbin "graphics/pokemon/rayquaza/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD38B10, 0x20
 
 	.globl gMonStillFrontPic_Latias
 gMonStillFrontPic_Latias: @ 0x8D38B30
@@ -6516,7 +7714,10 @@ gMonBackPic_Latias: @ 0x8D38F7C
 	.globl gMonShinyPalette_Latias
 gMonShinyPalette_Latias: @ 0x8D39278
 	.incbin "graphics/pokemon/latias/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd392a0, 0x420
+	.globl gMonIcon_Latias
+gMonIcon_Latias: @ 0x8D392A0
+	.incbin "graphics/pokemon/latias/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD396A0, 0x20
 
 	.globl gMonStillFrontPic_Latios
 gMonStillFrontPic_Latios: @ 0x8D396C0
@@ -6533,7 +7734,10 @@ gMonBackPic_Latios: @ 0x8D39B3C
 	.globl gMonShinyPalette_Latios
 gMonShinyPalette_Latios: @ 0x8D39E9C
 	.incbin "graphics/pokemon/latios/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd39ec4, 0x420
+	.globl gMonIcon_Latios
+gMonIcon_Latios: @ 0x8D39EC4
+	.incbin "graphics/pokemon/latios/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD3A2C4, 0x20
 
 	.globl gMonStillFrontPic_Jirachi
 gMonStillFrontPic_Jirachi: @ 0x8D3A2E4
@@ -6550,7 +7754,10 @@ gMonBackPic_Jirachi: @ 0x8D3A618
 	.globl gMonShinyPalette_Jirachi
 gMonShinyPalette_Jirachi: @ 0x8D3A9B8
 	.incbin "graphics/pokemon/jirachi/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd3a9e0, 0x420
+	.globl gMonIcon_Jirachi
+gMonIcon_Jirachi: @ 0x8D3A9E0
+	.incbin "graphics/pokemon/jirachi/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD3ADE0, 0x20
 
 	.globl gMonStillFrontPic_Deoxys
 gMonStillFrontPic_Deoxys: @ 0x8D3AE00
@@ -6567,7 +7774,10 @@ gMonBackPic_Deoxys: @ 0x8D3B204
 	.globl gMonShinyPalette_Deoxys
 gMonShinyPalette_Deoxys: @ 0x8D3B874
 	.incbin "graphics/pokemon/deoxys/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd3b89c, 0x8420
+	.globl gMonIcon_Deoxys
+gMonIcon_Deoxys: @ 0x8D3B89C
+	.incbin "graphics/pokemon/deoxys/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD3BC9C, 0x8020
 
 	.globl gMonStillFrontPic_Chimecho
 gMonStillFrontPic_Chimecho: @ 0x8D43CBC
@@ -6584,7 +7794,10 @@ gMonBackPic_Chimecho: @ 0x8D43F30
 	.globl gMonShinyPalette_Chimecho
 gMonShinyPalette_Chimecho: @ 0x8D441A4
 	.incbin "graphics/pokemon/chimecho/shiny.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xd441cc, 0x420
+	.globl gMonIcon_Chimecho
+gMonIcon_Chimecho: @ 0x8D441CC
+	.incbin "graphics/pokemon/chimecho/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD445CC, 0x20
 
 	.globl gMonStillFrontPic_Egg
 gMonStillFrontPic_Egg: @ 0x8D445EC
@@ -6601,7 +7814,10 @@ gMonStillFrontPic_UnownB: @ 0x8D447C0
 	.globl gMonBackPic_UnownB
 gMonBackPic_UnownB: @ 0x8D44998
 	.incbin "graphics/pokemon/unown/b/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd44b9b, 0x401
+	.incbin "baserom_jp.gba", 0xD44B9B, 0x1
+	.globl gMonIcon_UnownB
+gMonIcon_UnownB: @ 0x8D44B9C
+	.incbin "graphics/pokemon/unownb/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownC
 gMonStillFrontPic_UnownC: @ 0x8D44F9C
@@ -6610,7 +7826,9 @@ gMonStillFrontPic_UnownC: @ 0x8D44F9C
 	.globl gMonBackPic_UnownC
 gMonBackPic_UnownC: @ 0x8D451B0
 	.incbin "graphics/pokemon/unown/c/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4545c, 0x400
+	.globl gMonIcon_UnownC
+gMonIcon_UnownC: @ 0x8D4545C
+	.incbin "graphics/pokemon/unownc/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownD
 gMonStillFrontPic_UnownD: @ 0x8D4585C
@@ -6619,7 +7837,10 @@ gMonStillFrontPic_UnownD: @ 0x8D4585C
 	.globl gMonBackPic_UnownD
 gMonBackPic_UnownD: @ 0x8D45A54
 	.incbin "graphics/pokemon/unown/d/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd45ca9, 0x403
+	.incbin "baserom_jp.gba", 0xD45CA9, 0x3
+	.globl gMonIcon_UnownD
+gMonIcon_UnownD: @ 0x8D45CAC
+	.incbin "graphics/pokemon/unownd/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownE
 gMonStillFrontPic_UnownE: @ 0x8D460AC
@@ -6628,7 +7849,9 @@ gMonStillFrontPic_UnownE: @ 0x8D460AC
 	.globl gMonBackPic_UnownE
 gMonBackPic_UnownE: @ 0x8D46264
 	.incbin "graphics/pokemon/unown/e/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd46464, 0x400
+	.globl gMonIcon_UnownE
+gMonIcon_UnownE: @ 0x8D46464
+	.incbin "graphics/pokemon/unowne/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownF
 gMonStillFrontPic_UnownF: @ 0x8D46864
@@ -6637,7 +7860,10 @@ gMonStillFrontPic_UnownF: @ 0x8D46864
 	.globl gMonBackPic_UnownF
 gMonBackPic_UnownF: @ 0x8D46A58
 	.incbin "graphics/pokemon/unown/f/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd46c73, 0x401
+	.incbin "baserom_jp.gba", 0xD46C73, 0x1
+	.globl gMonIcon_UnownF
+gMonIcon_UnownF: @ 0x8D46C74
+	.incbin "graphics/pokemon/unownf/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownG
 gMonStillFrontPic_UnownG: @ 0x8D47074
@@ -6646,7 +7872,9 @@ gMonStillFrontPic_UnownG: @ 0x8D47074
 	.globl gMonBackPic_UnownG
 gMonBackPic_UnownG: @ 0x8D47250
 	.incbin "graphics/pokemon/unown/g/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4749c, 0x400
+	.globl gMonIcon_UnownG
+gMonIcon_UnownG: @ 0x8D4749C
+	.incbin "graphics/pokemon/unowng/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownH
 gMonStillFrontPic_UnownH: @ 0x8D4789C
@@ -6655,7 +7883,10 @@ gMonStillFrontPic_UnownH: @ 0x8D4789C
 	.globl gMonBackPic_UnownH
 gMonBackPic_UnownH: @ 0x8D47AE0
 	.incbin "graphics/pokemon/unown/h/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd47da3, 0x401
+	.incbin "baserom_jp.gba", 0xD47DA3, 0x1
+	.globl gMonIcon_UnownH
+gMonIcon_UnownH: @ 0x8D47DA4
+	.incbin "graphics/pokemon/unownh/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownI
 gMonStillFrontPic_UnownI: @ 0x8D481A4
@@ -6664,7 +7895,10 @@ gMonStillFrontPic_UnownI: @ 0x8D481A4
 	.globl gMonBackPic_UnownI
 gMonBackPic_UnownI: @ 0x8D4833C
 	.incbin "graphics/pokemon/unown/i/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd484e3, 0x401
+	.incbin "baserom_jp.gba", 0xD484E3, 0x1
+	.globl gMonIcon_UnownI
+gMonIcon_UnownI: @ 0x8D484E4
+	.incbin "graphics/pokemon/unowni/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownJ
 gMonStillFrontPic_UnownJ: @ 0x8D488E4
@@ -6673,7 +7907,10 @@ gMonStillFrontPic_UnownJ: @ 0x8D488E4
 	.globl gMonBackPic_UnownJ
 gMonBackPic_UnownJ: @ 0x8D48AA8
 	.incbin "graphics/pokemon/unown/j/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd48c8d, 0x403
+	.incbin "baserom_jp.gba", 0xD48C8D, 0x3
+	.globl gMonIcon_UnownJ
+gMonIcon_UnownJ: @ 0x8D48C90
+	.incbin "graphics/pokemon/unownj/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownK
 gMonStillFrontPic_UnownK: @ 0x8D49090
@@ -6682,7 +7919,10 @@ gMonStillFrontPic_UnownK: @ 0x8D49090
 	.globl gMonBackPic_UnownK
 gMonBackPic_UnownK: @ 0x8D49260
 	.incbin "graphics/pokemon/unown/k/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd49455, 0x403
+	.incbin "baserom_jp.gba", 0xD49455, 0x3
+	.globl gMonIcon_UnownK
+gMonIcon_UnownK: @ 0x8D49458
+	.incbin "graphics/pokemon/unownk/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownL
 gMonStillFrontPic_UnownL: @ 0x8D49858
@@ -6691,7 +7931,10 @@ gMonStillFrontPic_UnownL: @ 0x8D49858
 	.globl gMonBackPic_UnownL
 gMonBackPic_UnownL: @ 0x8D49A08
 	.incbin "graphics/pokemon/unown/l/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd49bdb, 0x401
+	.incbin "baserom_jp.gba", 0xD49BDB, 0x1
+	.globl gMonIcon_UnownL
+gMonIcon_UnownL: @ 0x8D49BDC
+	.incbin "graphics/pokemon/unownl/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownM
 gMonStillFrontPic_UnownM: @ 0x8D49FDC
@@ -6700,7 +7943,10 @@ gMonStillFrontPic_UnownM: @ 0x8D49FDC
 	.globl gMonBackPic_UnownM
 gMonBackPic_UnownM: @ 0x8D4A200
 	.incbin "graphics/pokemon/unown/m/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4a4a7, 0x401
+	.incbin "baserom_jp.gba", 0xD4A4A7, 0x1
+	.globl gMonIcon_UnownM
+gMonIcon_UnownM: @ 0x8D4A4A8
+	.incbin "graphics/pokemon/unownm/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownN
 gMonStillFrontPic_UnownN: @ 0x8D4A8A8
@@ -6709,7 +7955,9 @@ gMonStillFrontPic_UnownN: @ 0x8D4A8A8
 	.globl gMonBackPic_UnownN
 gMonBackPic_UnownN: @ 0x8D4AAA0
 	.incbin "graphics/pokemon/unown/n/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4ad0c, 0x400
+	.globl gMonIcon_UnownN
+gMonIcon_UnownN: @ 0x8D4AD0C
+	.incbin "graphics/pokemon/unownn/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownO
 gMonStillFrontPic_UnownO: @ 0x8D4B10C
@@ -6718,7 +7966,9 @@ gMonStillFrontPic_UnownO: @ 0x8D4B10C
 	.globl gMonBackPic_UnownO
 gMonBackPic_UnownO: @ 0x8D4B344
 	.incbin "graphics/pokemon/unown/o/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4b604, 0x400
+	.globl gMonIcon_UnownO
+gMonIcon_UnownO: @ 0x8D4B604
+	.incbin "graphics/pokemon/unowno/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownP
 gMonStillFrontPic_UnownP: @ 0x8D4BA04
@@ -6727,7 +7977,9 @@ gMonStillFrontPic_UnownP: @ 0x8D4BA04
 	.globl gMonBackPic_UnownP
 gMonBackPic_UnownP: @ 0x8D4BBA4
 	.incbin "graphics/pokemon/unown/p/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4bd68, 0x400
+	.globl gMonIcon_UnownP
+gMonIcon_UnownP: @ 0x8D4BD68
+	.incbin "graphics/pokemon/unownp/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownQ
 gMonStillFrontPic_UnownQ: @ 0x8D4C168
@@ -6736,7 +7988,10 @@ gMonStillFrontPic_UnownQ: @ 0x8D4C168
 	.globl gMonBackPic_UnownQ
 gMonBackPic_UnownQ: @ 0x8D4C31C
 	.incbin "graphics/pokemon/unown/q/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4c4e7, 0x401
+	.incbin "baserom_jp.gba", 0xD4C4E7, 0x1
+	.globl gMonIcon_UnownQ
+gMonIcon_UnownQ: @ 0x8D4C4E8
+	.incbin "graphics/pokemon/unownq/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownR
 gMonStillFrontPic_UnownR: @ 0x8D4C8E8
@@ -6745,7 +8000,10 @@ gMonStillFrontPic_UnownR: @ 0x8D4C8E8
 	.globl gMonBackPic_UnownR
 gMonBackPic_UnownR: @ 0x8D4CA8C
 	.incbin "graphics/pokemon/unown/r/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4cc51, 0x403
+	.incbin "baserom_jp.gba", 0xD4CC51, 0x3
+	.globl gMonIcon_UnownR
+gMonIcon_UnownR: @ 0x8D4CC54
+	.incbin "graphics/pokemon/unownr/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownS
 gMonStillFrontPic_UnownS: @ 0x8D4D054
@@ -6754,7 +8012,10 @@ gMonStillFrontPic_UnownS: @ 0x8D4D054
 	.globl gMonBackPic_UnownS
 gMonBackPic_UnownS: @ 0x8D4D23C
 	.incbin "graphics/pokemon/unown/s/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4d48d, 0x403
+	.incbin "baserom_jp.gba", 0xD4D48D, 0x3
+	.globl gMonIcon_UnownS
+gMonIcon_UnownS: @ 0x8D4D490
+	.incbin "graphics/pokemon/unowns/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownT
 gMonStillFrontPic_UnownT: @ 0x8D4D890
@@ -6763,7 +8024,9 @@ gMonStillFrontPic_UnownT: @ 0x8D4D890
 	.globl gMonBackPic_UnownT
 gMonBackPic_UnownT: @ 0x8D4DA40
 	.incbin "graphics/pokemon/unown/t/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4dbf4, 0x400
+	.globl gMonIcon_UnownT
+gMonIcon_UnownT: @ 0x8D4DBF4
+	.incbin "graphics/pokemon/unownt/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownU
 gMonStillFrontPic_UnownU: @ 0x8D4DFF4
@@ -6772,7 +8035,10 @@ gMonStillFrontPic_UnownU: @ 0x8D4DFF4
 	.globl gMonBackPic_UnownU
 gMonBackPic_UnownU: @ 0x8D4E20C
 	.incbin "graphics/pokemon/unown/u/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4e45e, 0x402
+	.incbin "baserom_jp.gba", 0xD4E45E, 0x2
+	.globl gMonIcon_UnownU
+gMonIcon_UnownU: @ 0x8D4E460
+	.incbin "graphics/pokemon/unownu/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownV
 gMonStillFrontPic_UnownV: @ 0x8D4E860
@@ -6781,7 +8047,10 @@ gMonStillFrontPic_UnownV: @ 0x8D4E860
 	.globl gMonBackPic_UnownV
 gMonBackPic_UnownV: @ 0x8D4EA44
 	.incbin "graphics/pokemon/unown/v/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4ec71, 0x403
+	.incbin "baserom_jp.gba", 0xD4EC71, 0x3
+	.globl gMonIcon_UnownV
+gMonIcon_UnownV: @ 0x8D4EC74
+	.incbin "graphics/pokemon/unownv/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownW
 gMonStillFrontPic_UnownW: @ 0x8D4F074
@@ -6790,7 +8059,10 @@ gMonStillFrontPic_UnownW: @ 0x8D4F074
 	.globl gMonBackPic_UnownW
 gMonBackPic_UnownW: @ 0x8D4F248
 	.incbin "graphics/pokemon/unown/w/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4f44a, 0x402
+	.incbin "baserom_jp.gba", 0xD4F44A, 0x2
+	.globl gMonIcon_UnownW
+gMonIcon_UnownW: @ 0x8D4F44C
+	.incbin "graphics/pokemon/unownw/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownX
 gMonStillFrontPic_UnownX: @ 0x8D4F84C
@@ -6799,7 +8071,9 @@ gMonStillFrontPic_UnownX: @ 0x8D4F84C
 	.globl gMonBackPic_UnownX
 gMonBackPic_UnownX: @ 0x8D4FA10
 	.incbin "graphics/pokemon/unown/x/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd4fc00, 0x400
+	.globl gMonIcon_UnownX
+gMonIcon_UnownX: @ 0x8D4FC00
+	.incbin "graphics/pokemon/unownx/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownY
 gMonStillFrontPic_UnownY: @ 0x8D50000
@@ -6808,7 +8082,10 @@ gMonStillFrontPic_UnownY: @ 0x8D50000
 	.globl gMonBackPic_UnownY
 gMonBackPic_UnownY: @ 0x8D501D8
 	.incbin "graphics/pokemon/unown/y/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd503cb, 0x401
+	.incbin "baserom_jp.gba", 0xD503CB, 0x1
+	.globl gMonIcon_UnownY
+gMonIcon_UnownY: @ 0x8D503CC
+	.incbin "graphics/pokemon/unowny/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownZ
 gMonStillFrontPic_UnownZ: @ 0x8D507CC
@@ -6817,7 +8094,9 @@ gMonStillFrontPic_UnownZ: @ 0x8D507CC
 	.globl gMonBackPic_UnownZ
 gMonBackPic_UnownZ: @ 0x8D5097C
 	.incbin "graphics/pokemon/unown/z/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd50b58, 0x400
+	.globl gMonIcon_UnownZ
+gMonIcon_UnownZ: @ 0x8D50B58
+	.incbin "graphics/pokemon/unownz/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownExclamationMark
 gMonStillFrontPic_UnownExclamationMark: @ 0x8D50F58
@@ -6826,7 +8105,10 @@ gMonStillFrontPic_UnownExclamationMark: @ 0x8D50F58
 	.globl gMonBackPic_UnownExclamationMark
 gMonBackPic_UnownExclamationMark: @ 0x8D510E8
 	.incbin "graphics/pokemon/unown/exclamation_mark/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xd512af, 0x401
+	.incbin "baserom_jp.gba", 0xD512AF, 0x1
+	.globl gMonIcon_UnownExclamationMark
+gMonIcon_UnownExclamationMark: @ 0x8D512B0
+	.incbin "graphics/pokemon/unownexclamationmark/icon.4bpp"
 
 	.globl gMonStillFrontPic_UnownQuestionMark
 gMonStillFrontPic_UnownQuestionMark: @ 0x8D516B0
@@ -6835,7 +8117,10 @@ gMonStillFrontPic_UnownQuestionMark: @ 0x8D516B0
 	.globl gMonBackPic_UnownQuestionMark
 gMonBackPic_UnownQuestionMark: @ 0x8D5186C
 	.incbin "graphics/pokemon/unown/question_mark/back.4bpp.lz"
-	.incbin "baserom_jp.gba", 0xD51A6B, 0x401
+	.incbin "baserom_jp.gba", 0xD51A6B, 0x1
+	.globl gMonIcon_UnownQuestionMark
+gMonIcon_UnownQuestionMark: @ 0x8D51A6C
+	.incbin "graphics/pokemon/unownquestionmark/icon.4bpp"
 	.globl gTrainerFrontPic_Hiker
 gTrainerFrontPic_Hiker: @ 0x8D51E6C
 	.incbin "graphics/trainers/front_pics/Hiker.4bpp.lz"
@@ -7424,4 +8709,7 @@ gUnknown_82D961C_2_Pal: @ 0x8D77524
 	.globl gUnknown_82D961C_3_Pal
 gUnknown_82D961C_3_Pal: @ 0x8D7754C
 	.incbin "graphics/trainers/palettes/gUnknown_82D961C_3.gbapal.lz"
-	.incbin "baserom_jp.gba", 0xD77574, 0x420
+	.globl gMonIcon_QuestionMark
+gMonIcon_QuestionMark: @ 0x8D77574
+	.incbin "graphics/pokemon/questionmark/icon.4bpp"
+	.incbin "baserom_jp.gba", 0xD77974, 0x20

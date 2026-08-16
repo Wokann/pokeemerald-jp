@@ -202,118 +202,446 @@ gUnknown_85567A4: @ 0x85567A4
 
 	.globl gMonIconTable
 gMonIconTable: @ 0x8556804
-gMonIconTable: @ 0x8556804
-	.4byte 0x08C30044, 0x08C30044, 0x08C30BB4, 0x08C31A80
-	.4byte 0x08C32434, 0x08C32F2C, 0x08C33D08, 0x08C346D4
-	.4byte 0x08C351F4, 0x08C35F84, 0x08C368DC, 0x08C37194
-	.4byte 0x08C37D74, 0x08C3868C, 0x08C38FC4, 0x08C39BB8
-	.4byte 0x08C3A668, 0x08C3B198, 0x08C3BE8C, 0x08C3C824
-	.4byte 0x08C3D34C, 0x08C3DD20, 0x08C3E91C, 0x08C3F37C
-	.4byte 0x08C3FED8, 0x08C408F0, 0x08C4142C, 0x08C41E84
-	.4byte 0x08C42AFC, 0x08C434BC, 0x08C43FEC, 0x08C44CAC
-	.4byte 0x08C45720, 0x08C462E0, 0x08C47084, 0x08C47A4C
-	.4byte 0x08C48530, 0x08C48FD8, 0x08C49BF4, 0x08C4A538
-	.4byte 0x08C4AFA4, 0x08C4B9A8, 0x08C4C470, 0x08C4CD8C
-	.4byte 0x08C4D8DC, 0x08C4E4E0, 0x08C4EE5C, 0x08C4F98C
-	.4byte 0x08C504A4, 0x08C5117C, 0x08C51A04, 0x08C52444
-	.4byte 0x08C52E84, 0x08C53A0C, 0x08C543F0, 0x08C54F64
-	.4byte 0x08C55A54, 0x08C565E4, 0x08C570E8, 0x08C57E6C
-	.4byte 0x08C587D4, 0x08C592C8, 0x08C59E20, 0x08C5A880
-	.4byte 0x08C5B530, 0x08C5C1E0, 0x08C5CBD4, 0x08C5D744
-	.4byte 0x08C5E560, 0x08C5EEEC, 0x08C5F97C, 0x08C605B0
-	.4byte 0x08C60F8C, 0x08C61C34, 0x08C6258C, 0x08C63070
-	.4byte 0x08C63C1C, 0x08C64770, 0x08C654C0, 0x08C65EA0
-	.4byte 0x08C66B6C, 0x08C67398, 0x08C67F8C, 0x08C68AE4
-	.4byte 0x08C695B8, 0x08C6A368, 0x08C6ADCC, 0x08C6B888
-	.4byte 0x08C6C2F0, 0x08C6CEFC, 0x08C6D8E0, 0x08C6E58C
-	.4byte 0x08C6F0D8, 0x08C6FC68, 0x08C70754, 0x08C713A0
-	.4byte 0x08C71DDC, 0x08C72960, 0x08C73414, 0x08C74134
-	.4byte 0x08C74A18, 0x08C7535C, 0x08C75ED0, 0x08C76CE0
-	.4byte 0x08C77760, 0x08C782A0, 0x08C78DB4, 0x08C798A8
-	.4byte 0x08C7A390, 0x08C7AE5C, 0x08C7BA84, 0x08C7C630
-	.4byte 0x08C7D3F8, 0x08C7DE88, 0x08C7EA70, 0x08C7F808
-	.4byte 0x08C801D0, 0x08C80DA0, 0x08C818E8, 0x08C8251C
-	.4byte 0x08C82EFC, 0x08C83A38, 0x08C8458C, 0x08C85250
-	.4byte 0x08C85E54, 0x08C86A50, 0x08C876B0, 0x08C88294
-	.4byte 0x08C88E88, 0x08C89978, 0x08C8A824, 0x08C8B398
-	.4byte 0x08C8BBE8, 0x08C8C61C, 0x08C8D0E8, 0x08C8DC88
-	.4byte 0x08C8E804, 0x08C8F1E0, 0x08C8FC44, 0x08C907B4
-	.4byte 0x08C9112C, 0x08C91D38, 0x08C9292C, 0x08C933FC
-	.4byte 0x08C93FC0, 0x08C94BE0, 0x08C9593C, 0x08C962EC
-	.4byte 0x08C96DCC, 0x08C97AA8, 0x08C98718, 0x08C990CC
-	.4byte 0x08C99A68, 0x08C9A63C, 0x08C9B358, 0x08C9BD80
-	.4byte 0x08C9C880, 0x08C9D51C, 0x08C9DF10, 0x08C9EA38
-	.4byte 0x08C9F8E0, 0x08CA02D0, 0x08CA0D9C, 0x08CA1798
-	.4byte 0x08CA22B8, 0x08CA2D4C, 0x08CA389C, 0x08CA41E4
-	.4byte 0x08CA4D8C, 0x08CA58B4, 0x08CA62F4, 0x08CA6DD4
-	.4byte 0x08CA76BC, 0x08CA7F48, 0x08CA87DC, 0x08CA9094
-	.4byte 0x08CA9AA4, 0x08CAA2F4, 0x08CAADB8, 0x08CAB7D0
-	.4byte 0x08CAC25C, 0x08CACDA0, 0x08CAD7A4, 0x08CAE184
-	.4byte 0x08CAEBB0, 0x08CAF694, 0x08CB00FC, 0x08CB0B00
-	.4byte 0x08CB14D8, 0x08CB20AC, 0x08CB2B0C, 0x08CB3478
-	.4byte 0x08CB3FE0, 0x08CB4B88, 0x08CB54C4, 0x08CB5FA4
-	.4byte 0x08CB6A28, 0x08CB74C0, 0x08CB7F28, 0x08CB8AD8
-	.4byte 0x08CB952C, 0x08CB9D60, 0x08CBA764, 0x08CBB384
-	.4byte 0x08CBBE04, 0x08CBC950, 0x08CBD3CC, 0x08CBE03C
-	.4byte 0x08CBED78, 0x08CBF7E4, 0x08CC0304, 0x08CC0D14
-	.4byte 0x08CC19EC, 0x08CC237C, 0x08CC2F4C, 0x08CC3A24
-	.4byte 0x08CC4378, 0x08CC4FA8, 0x08CC596C, 0x08CC653C
-	.4byte 0x08CC6DE4, 0x08CC77C8, 0x08CC81E0, 0x08CC8BCC
-	.4byte 0x08CC9628, 0x08CCA1C8, 0x08CCAD74, 0x08CCB9C8
-	.4byte 0x08CCC370, 0x08CCCF04, 0x08CCDB48, 0x08CCE4D8
-	.4byte 0x08CCF0B8, 0x08CCFACC, 0x08CD069C, 0x08CD11C4
-	.4byte 0x08CD1BDC, 0x08CD2800, 0x08CD3140, 0x08CD3C10
-	.4byte 0x08CD45B0, 0x08CD516C, 0x08CD5C90, 0x08CD6A24
-	.4byte 0x08CD78B4, 0x08CD8784, 0x08CD90FC, 0x08CD9B94
-	.4byte 0x08CDA92C, 0x08CDB634, 0x08CDC508, 0x08CDCF9C
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08D77574, 0x08D77574, 0x08D77574
-	.4byte 0x08D77574, 0x08CDDD40, 0x08CDE978, 0x08CDF6E8
-	.4byte 0x08CE00CC, 0x08CE0CF8, 0x08CE1C94, 0x08CE269C
-	.4byte 0x08CE351C, 0x08CE42BC, 0x08CE4FFC, 0x08CE5C1C
-	.4byte 0x08CE679C, 0x08CE7250, 0x08CE7B94, 0x08CE84A0
-	.4byte 0x08CE9018, 0x08CE9904, 0x08CEA334, 0x08CEACEC
-	.4byte 0x08CEB770, 0x08CEC3C0, 0x08CECDA4, 0x08CED7C8
-	.4byte 0x08CEE3B8, 0x08CEED80, 0x08CEF92C, 0x08CF045C
-	.4byte 0x08CF0D44, 0x08CF18B0, 0x08CF2268, 0x08CF2EA0
-	.4byte 0x08CF3940, 0x08CF433C, 0x08CF4EC4, 0x08CF5778
-	.4byte 0x08CF62DC, 0x08CF6C10, 0x08CF765C, 0x08CF8114
-	.4byte 0x08CF8CAC, 0x08CF9874, 0x08CFA1A0, 0x08CFAD9C
-	.4byte 0x08CFB778, 0x08CFC35C, 0x08CFCDC8, 0x08CFD758
-	.4byte 0x08CFE28C, 0x08CFEA88, 0x08CFF570, 0x08D00254
-	.4byte 0x08D00C88, 0x08D0187C, 0x08D02328, 0x08D02E80
-	.4byte 0x08D0372C, 0x08D04184, 0x08D04F20, 0x08D05994
-	.4byte 0x08D06694, 0x08D07020, 0x08D079EC, 0x08D083E8
-	.4byte 0x08D08F34, 0x08D09814, 0x08D0A280, 0x08D0B1EC
-	.4byte 0x08D0BCCC, 0x08D0C874, 0x08D0D28C, 0x08D0DE74
-	.4byte 0x08D0E964, 0x08D0F60C, 0x08D1005C, 0x08D10978
-	.4byte 0x08D11504, 0x08D11EB8, 0x08D12858, 0x08D13484
-	.4byte 0x08D13E70, 0x08D14948, 0x08D15720, 0x08D162E4
-	.4byte 0x08D16C7C, 0x08D1768C, 0x08D18188, 0x08D18D2C
-	.4byte 0x08D1976C, 0x08D1A2A0, 0x08D1AFA8, 0x08D1B8B4
-	.4byte 0x08D1C3B0, 0x08D1D0BC, 0x08D1DA30, 0x08D1E688
-	.4byte 0x08D1F46C, 0x08D1FE48, 0x08D209D8, 0x08D21440
-	.4byte 0x08D22040, 0x08D22980, 0x08D23320, 0x08D2403C
-	.4byte 0x08D24BEC, 0x08D25748, 0x08D25FC8, 0x08D26AF0
-	.4byte 0x08D27904, 0x08D29264, 0x08D29DC4, 0x08D2A8C4
-	.4byte 0x08D2B3BC, 0x08D2C044, 0x08D2CA20, 0x08D2D848
-	.4byte 0x08D2E124, 0x08D2EC04, 0x08D2F724, 0x08D300F4
-	.4byte 0x08D30B50, 0x08D31708, 0x08D320D8, 0x08D32CC8
-	.4byte 0x08D33868, 0x08D345E0, 0x08D35188, 0x08D35DB8
-	.4byte 0x08D36910, 0x08D3777C, 0x08D38710, 0x08D392A0
-	.4byte 0x08D39EC4, 0x08D3A9E0, 0x08D3B89C, 0x08D441CC
-	.4byte 0x08D8FC28, 0x08D44B9C, 0x08D4545C, 0x08D45CAC
-	.4byte 0x08D46464, 0x08D46C74, 0x08D4749C, 0x08D47DA4
-	.4byte 0x08D484E4, 0x08D48C90, 0x08D49458, 0x08D49BDC
-	.4byte 0x08D4A4A8, 0x08D4AD0C, 0x08D4B604, 0x08D4BD68
-	.4byte 0x08D4C4E8, 0x08D4CC54, 0x08D4D490, 0x08D4DBF4
-	.4byte 0x08D4E460, 0x08D4EC74, 0x08D4F44C, 0x08D4FC00
-	.4byte 0x08D503CC, 0x08D50B58, 0x08D512B0, 0x08D51A6C
-
+	.4byte gMonIcon_Bulbasaur
+	.4byte gMonIcon_Bulbasaur
+	.4byte gMonIcon_Ivysaur
+	.4byte gMonIcon_Venusaur
+	.4byte gMonIcon_Charmander
+	.4byte gMonIcon_Charmeleon
+	.4byte gMonIcon_Charizard
+	.4byte gMonIcon_Squirtle
+	.4byte gMonIcon_Wartortle
+	.4byte gMonIcon_Blastoise
+	.4byte gMonIcon_Caterpie
+	.4byte gMonIcon_Metapod
+	.4byte gMonIcon_Butterfree
+	.4byte gMonIcon_Weedle
+	.4byte gMonIcon_Kakuna
+	.4byte gMonIcon_Beedrill
+	.4byte gMonIcon_Pidgey
+	.4byte gMonIcon_Pidgeotto
+	.4byte gMonIcon_Pidgeot
+	.4byte gMonIcon_Rattata
+	.4byte gMonIcon_Raticate
+	.4byte gMonIcon_Spearow
+	.4byte gMonIcon_Fearow
+	.4byte gMonIcon_Ekans
+	.4byte gMonIcon_Arbok
+	.4byte gMonIcon_Pikachu
+	.4byte gMonIcon_Raichu
+	.4byte gMonIcon_Sandshrew
+	.4byte gMonIcon_Sandslash
+	.4byte gMonIcon_NidoranF
+	.4byte gMonIcon_Nidorina
+	.4byte gMonIcon_Nidoqueen
+	.4byte gMonIcon_NidoranM
+	.4byte gMonIcon_Nidorino
+	.4byte gMonIcon_Nidoking
+	.4byte gMonIcon_Clefairy
+	.4byte gMonIcon_Clefable
+	.4byte gMonIcon_Vulpix
+	.4byte gMonIcon_Ninetales
+	.4byte gMonIcon_Jigglypuff
+	.4byte gMonIcon_Wigglytuff
+	.4byte gMonIcon_Zubat
+	.4byte gMonIcon_Golbat
+	.4byte gMonIcon_Oddish
+	.4byte gMonIcon_Gloom
+	.4byte gMonIcon_Vileplume
+	.4byte gMonIcon_Paras
+	.4byte gMonIcon_Parasect
+	.4byte gMonIcon_Venonat
+	.4byte gMonIcon_Venomoth
+	.4byte gMonIcon_Diglett
+	.4byte gMonIcon_Dugtrio
+	.4byte gMonIcon_Meowth
+	.4byte gMonIcon_Persian
+	.4byte gMonIcon_Psyduck
+	.4byte gMonIcon_Golduck
+	.4byte gMonIcon_Mankey
+	.4byte gMonIcon_Primeape
+	.4byte gMonIcon_Growlithe
+	.4byte gMonIcon_Arcanine
+	.4byte gMonIcon_Poliwag
+	.4byte gMonIcon_Poliwhirl
+	.4byte gMonIcon_Poliwrath
+	.4byte gMonIcon_Abra
+	.4byte gMonIcon_Kadabra
+	.4byte gMonIcon_Alakazam
+	.4byte gMonIcon_Machop
+	.4byte gMonIcon_Machoke
+	.4byte gMonIcon_Machamp
+	.4byte gMonIcon_Bellsprout
+	.4byte gMonIcon_Weepinbell
+	.4byte gMonIcon_Victreebel
+	.4byte gMonIcon_Tentacool
+	.4byte gMonIcon_Tentacruel
+	.4byte gMonIcon_Geodude
+	.4byte gMonIcon_Graveler
+	.4byte gMonIcon_Golem
+	.4byte gMonIcon_Ponyta
+	.4byte gMonIcon_Rapidash
+	.4byte gMonIcon_Slowpoke
+	.4byte gMonIcon_Slowbro
+	.4byte gMonIcon_Magnemite
+	.4byte gMonIcon_Magneton
+	.4byte gMonIcon_Farfetchd
+	.4byte gMonIcon_Doduo
+	.4byte gMonIcon_Dodrio
+	.4byte gMonIcon_Seel
+	.4byte gMonIcon_Dewgong
+	.4byte gMonIcon_Grimer
+	.4byte gMonIcon_Muk
+	.4byte gMonIcon_Shellder
+	.4byte gMonIcon_Cloyster
+	.4byte gMonIcon_Gastly
+	.4byte gMonIcon_Haunter
+	.4byte gMonIcon_Gengar
+	.4byte gMonIcon_Onix
+	.4byte gMonIcon_Drowzee
+	.4byte gMonIcon_Hypno
+	.4byte gMonIcon_Krabby
+	.4byte gMonIcon_Kingler
+	.4byte gMonIcon_Voltorb
+	.4byte gMonIcon_Electrode
+	.4byte gMonIcon_Exeggcute
+	.4byte gMonIcon_Exeggutor
+	.4byte gMonIcon_Cubone
+	.4byte gMonIcon_Marowak
+	.4byte gMonIcon_Hitmonlee
+	.4byte gMonIcon_Hitmonchan
+	.4byte gMonIcon_Lickitung
+	.4byte gMonIcon_Koffing
+	.4byte gMonIcon_Weezing
+	.4byte gMonIcon_Rhyhorn
+	.4byte gMonIcon_Rhydon
+	.4byte gMonIcon_Chansey
+	.4byte gMonIcon_Tangela
+	.4byte gMonIcon_Kangaskhan
+	.4byte gMonIcon_Horsea
+	.4byte gMonIcon_Seadra
+	.4byte gMonIcon_Goldeen
+	.4byte gMonIcon_Seaking
+	.4byte gMonIcon_Staryu
+	.4byte gMonIcon_Starmie
+	.4byte gMonIcon_MrMime
+	.4byte gMonIcon_Scyther
+	.4byte gMonIcon_Jynx
+	.4byte gMonIcon_Electabuzz
+	.4byte gMonIcon_Magmar
+	.4byte gMonIcon_Pinsir
+	.4byte gMonIcon_Tauros
+	.4byte gMonIcon_Magikarp
+	.4byte gMonIcon_Gyarados
+	.4byte gMonIcon_Lapras
+	.4byte gMonIcon_Ditto
+	.4byte gMonIcon_Eevee
+	.4byte gMonIcon_Vaporeon
+	.4byte gMonIcon_Jolteon
+	.4byte gMonIcon_Flareon
+	.4byte gMonIcon_Porygon
+	.4byte gMonIcon_Omanyte
+	.4byte gMonIcon_Omastar
+	.4byte gMonIcon_Kabuto
+	.4byte gMonIcon_Kabutops
+	.4byte gMonIcon_Aerodactyl
+	.4byte gMonIcon_Snorlax
+	.4byte gMonIcon_Articuno
+	.4byte gMonIcon_Zapdos
+	.4byte gMonIcon_Moltres
+	.4byte gMonIcon_Dratini
+	.4byte gMonIcon_Dragonair
+	.4byte gMonIcon_Dragonite
+	.4byte gMonIcon_Mewtwo
+	.4byte gMonIcon_Mew
+	.4byte gMonIcon_Chikorita
+	.4byte gMonIcon_Bayleef
+	.4byte gMonIcon_Meganium
+	.4byte gMonIcon_Cyndaquil
+	.4byte gMonIcon_Quilava
+	.4byte gMonIcon_Typhlosion
+	.4byte gMonIcon_Totodile
+	.4byte gMonIcon_Croconaw
+	.4byte gMonIcon_Feraligatr
+	.4byte gMonIcon_Sentret
+	.4byte gMonIcon_Furret
+	.4byte gMonIcon_Hoothoot
+	.4byte gMonIcon_Noctowl
+	.4byte gMonIcon_Ledyba
+	.4byte gMonIcon_Ledian
+	.4byte gMonIcon_Spinarak
+	.4byte gMonIcon_Ariados
+	.4byte gMonIcon_Crobat
+	.4byte gMonIcon_Chinchou
+	.4byte gMonIcon_Lanturn
+	.4byte gMonIcon_Pichu
+	.4byte gMonIcon_Cleffa
+	.4byte gMonIcon_Igglybuff
+	.4byte gMonIcon_Togepi
+	.4byte gMonIcon_Togetic
+	.4byte gMonIcon_Natu
+	.4byte gMonIcon_Xatu
+	.4byte gMonIcon_Mareep
+	.4byte gMonIcon_Flaaffy
+	.4byte gMonIcon_Ampharos
+	.4byte gMonIcon_Bellossom
+	.4byte gMonIcon_Marill
+	.4byte gMonIcon_Azumarill
+	.4byte gMonIcon_Sudowoodo
+	.4byte gMonIcon_Politoed
+	.4byte gMonIcon_Hoppip
+	.4byte gMonIcon_Skiploom
+	.4byte gMonIcon_Jumpluff
+	.4byte gMonIcon_Aipom
+	.4byte gMonIcon_Sunkern
+	.4byte gMonIcon_Sunflora
+	.4byte gMonIcon_Yanma
+	.4byte gMonIcon_Wooper
+	.4byte gMonIcon_Quagsire
+	.4byte gMonIcon_Espeon
+	.4byte gMonIcon_Umbreon
+	.4byte gMonIcon_Murkrow
+	.4byte gMonIcon_Slowking
+	.4byte gMonIcon_Misdreavus
+	.4byte gMonIcon_UnownA
+	.4byte gMonIcon_Wobbuffet
+	.4byte gMonIcon_Girafarig
+	.4byte gMonIcon_Pineco
+	.4byte gMonIcon_Forretress
+	.4byte gMonIcon_Dunsparce
+	.4byte gMonIcon_Gligar
+	.4byte gMonIcon_Steelix
+	.4byte gMonIcon_Snubbull
+	.4byte gMonIcon_Granbull
+	.4byte gMonIcon_Qwilfish
+	.4byte gMonIcon_Scizor
+	.4byte gMonIcon_Shuckle
+	.4byte gMonIcon_Heracross
+	.4byte gMonIcon_Sneasel
+	.4byte gMonIcon_Teddiursa
+	.4byte gMonIcon_Ursaring
+	.4byte gMonIcon_Slugma
+	.4byte gMonIcon_Magcargo
+	.4byte gMonIcon_Swinub
+	.4byte gMonIcon_Piloswine
+	.4byte gMonIcon_Corsola
+	.4byte gMonIcon_Remoraid
+	.4byte gMonIcon_Octillery
+	.4byte gMonIcon_Delibird
+	.4byte gMonIcon_Mantine
+	.4byte gMonIcon_Skarmory
+	.4byte gMonIcon_Houndour
+	.4byte gMonIcon_Houndoom
+	.4byte gMonIcon_Kingdra
+	.4byte gMonIcon_Phanpy
+	.4byte gMonIcon_Donphan
+	.4byte gMonIcon_Porygon2
+	.4byte gMonIcon_Stantler
+	.4byte gMonIcon_Smeargle
+	.4byte gMonIcon_Tyrogue
+	.4byte gMonIcon_Hitmontop
+	.4byte gMonIcon_Smoochum
+	.4byte gMonIcon_Elekid
+	.4byte gMonIcon_Magby
+	.4byte gMonIcon_Miltank
+	.4byte gMonIcon_Blissey
+	.4byte gMonIcon_Raikou
+	.4byte gMonIcon_Entei
+	.4byte gMonIcon_Suicune
+	.4byte gMonIcon_Larvitar
+	.4byte gMonIcon_Pupitar
+	.4byte gMonIcon_Tyranitar
+	.4byte gMonIcon_Lugia
+	.4byte gMonIcon_HoOh
+	.4byte gMonIcon_Celebi
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_QuestionMark
+	.4byte gMonIcon_Treecko
+	.4byte gMonIcon_Grovyle
+	.4byte gMonIcon_Sceptile
+	.4byte gMonIcon_Torchic
+	.4byte gMonIcon_Combusken
+	.4byte gMonIcon_Blaziken
+	.4byte gMonIcon_Mudkip
+	.4byte gMonIcon_Marshtomp
+	.4byte gMonIcon_Swampert
+	.4byte gMonIcon_Poochyena
+	.4byte gMonIcon_Mightyena
+	.4byte gMonIcon_Zigzagoon
+	.4byte gMonIcon_Linoone
+	.4byte gMonIcon_Wurmple
+	.4byte gMonIcon_Silcoon
+	.4byte gMonIcon_Beautifly
+	.4byte gMonIcon_Cascoon
+	.4byte gMonIcon_Dustox
+	.4byte gMonIcon_Lotad
+	.4byte gMonIcon_Lombre
+	.4byte gMonIcon_Ludicolo
+	.4byte gMonIcon_Seedot
+	.4byte gMonIcon_Nuzleaf
+	.4byte gMonIcon_Shiftry
+	.4byte gMonIcon_Nincada
+	.4byte gMonIcon_Ninjask
+	.4byte gMonIcon_Shedinja
+	.4byte gMonIcon_Taillow
+	.4byte gMonIcon_Swellow
+	.4byte gMonIcon_Shroomish
+	.4byte gMonIcon_Breloom
+	.4byte gMonIcon_Spinda
+	.4byte gMonIcon_Wingull
+	.4byte gMonIcon_Pelipper
+	.4byte gMonIcon_Surskit
+	.4byte gMonIcon_Masquerain
+	.4byte gMonIcon_Wailmer
+	.4byte gMonIcon_Wailord
+	.4byte gMonIcon_Skitty
+	.4byte gMonIcon_Delcatty
+	.4byte gMonIcon_Kecleon
+	.4byte gMonIcon_Baltoy
+	.4byte gMonIcon_Claydol
+	.4byte gMonIcon_Nosepass
+	.4byte gMonIcon_Torkoal
+	.4byte gMonIcon_Sableye
+	.4byte gMonIcon_Barboach
+	.4byte gMonIcon_Whiscash
+	.4byte gMonIcon_Luvdisc
+	.4byte gMonIcon_Corphish
+	.4byte gMonIcon_Crawdaunt
+	.4byte gMonIcon_Feebas
+	.4byte gMonIcon_Milotic
+	.4byte gMonIcon_Carvanha
+	.4byte gMonIcon_Sharpedo
+	.4byte gMonIcon_Trapinch
+	.4byte gMonIcon_Vibrava
+	.4byte gMonIcon_Flygon
+	.4byte gMonIcon_Makuhita
+	.4byte gMonIcon_Hariyama
+	.4byte gMonIcon_Electrike
+	.4byte gMonIcon_Manectric
+	.4byte gMonIcon_Numel
+	.4byte gMonIcon_Camerupt
+	.4byte gMonIcon_Spheal
+	.4byte gMonIcon_Sealeo
+	.4byte gMonIcon_Walrein
+	.4byte gMonIcon_Cacnea
+	.4byte gMonIcon_Cacturne
+	.4byte gMonIcon_Snorunt
+	.4byte gMonIcon_Glalie
+	.4byte gMonIcon_Lunatone
+	.4byte gMonIcon_Solrock
+	.4byte gMonIcon_Azurill
+	.4byte gMonIcon_Spoink
+	.4byte gMonIcon_Grumpig
+	.4byte gMonIcon_Plusle
+	.4byte gMonIcon_Minun
+	.4byte gMonIcon_Mawile
+	.4byte gMonIcon_Meditite
+	.4byte gMonIcon_Medicham
+	.4byte gMonIcon_Swablu
+	.4byte gMonIcon_Altaria
+	.4byte gMonIcon_Wynaut
+	.4byte gMonIcon_Duskull
+	.4byte gMonIcon_Dusclops
+	.4byte gMonIcon_Roselia
+	.4byte gMonIcon_Slakoth
+	.4byte gMonIcon_Vigoroth
+	.4byte gMonIcon_Slaking
+	.4byte gMonIcon_Gulpin
+	.4byte gMonIcon_Swalot
+	.4byte gMonIcon_Tropius
+	.4byte gMonIcon_Whismur
+	.4byte gMonIcon_Loudred
+	.4byte gMonIcon_Exploud
+	.4byte gMonIcon_Clamperl
+	.4byte gMonIcon_Huntail
+	.4byte gMonIcon_Gorebyss
+	.4byte gMonIcon_Absol
+	.4byte gMonIcon_Shuppet
+	.4byte gMonIcon_Banette
+	.4byte gMonIcon_Seviper
+	.4byte gMonIcon_Zangoose
+	.4byte gMonIcon_Relicanth
+	.4byte gMonIcon_Aron
+	.4byte gMonIcon_Lairon
+	.4byte gMonIcon_Aggron
+	.4byte gMonIcon_Castform
+	.4byte gMonIcon_Volbeat
+	.4byte gMonIcon_Illumise
+	.4byte gMonIcon_Lileep
+	.4byte gMonIcon_Cradily
+	.4byte gMonIcon_Anorith
+	.4byte gMonIcon_Armaldo
+	.4byte gMonIcon_Ralts
+	.4byte gMonIcon_Kirlia
+	.4byte gMonIcon_Gardevoir
+	.4byte gMonIcon_Bagon
+	.4byte gMonIcon_Shelgon
+	.4byte gMonIcon_Salamence
+	.4byte gMonIcon_Beldum
+	.4byte gMonIcon_Metang
+	.4byte gMonIcon_Metagross
+	.4byte gMonIcon_Regirock
+	.4byte gMonIcon_Regice
+	.4byte gMonIcon_Registeel
+	.4byte gMonIcon_Kyogre
+	.4byte gMonIcon_Groudon
+	.4byte gMonIcon_Rayquaza
+	.4byte gMonIcon_Latias
+	.4byte gMonIcon_Latios
+	.4byte gMonIcon_Jirachi
+	.4byte gMonIcon_Deoxys
+	.4byte gMonIcon_Chimecho
+	.4byte gMonIcon_Egg
+	.4byte gMonIcon_UnownB
+	.4byte gMonIcon_UnownC
+	.4byte gMonIcon_UnownD
+	.4byte gMonIcon_UnownE
+	.4byte gMonIcon_UnownF
+	.4byte gMonIcon_UnownG
+	.4byte gMonIcon_UnownH
+	.4byte gMonIcon_UnownI
+	.4byte gMonIcon_UnownJ
+	.4byte gMonIcon_UnownK
+	.4byte gMonIcon_UnownL
+	.4byte gMonIcon_UnownM
+	.4byte gMonIcon_UnownN
+	.4byte gMonIcon_UnownO
+	.4byte gMonIcon_UnownP
+	.4byte gMonIcon_UnownQ
+	.4byte gMonIcon_UnownR
+	.4byte gMonIcon_UnownS
+	.4byte gMonIcon_UnownT
+	.4byte gMonIcon_UnownU
+	.4byte gMonIcon_UnownV
+	.4byte gMonIcon_UnownW
+	.4byte gMonIcon_UnownX
+	.4byte gMonIcon_UnownY
+	.4byte gMonIcon_UnownZ
+	.4byte gMonIcon_UnownExclamationMark
+	.4byte gMonIcon_UnownQuestionMark
 	.globl gMonIconPaletteIndices
 gMonIconPaletteIndices: @ 0x8556EE4
 	.byte 0, 1, 1, 1, 0, 0, 0, 0  @ indices 0x00-0x07  @ SPECIES_NONE, SPECIES_BULBASAUR, SPECIES_IVYSAUR, SPECIES_VENUSAUR, SPECIES_CHARMANDER, SPECIES_CHARMELEON, SPECIES_CHARIZARD, SPECIES_SQUIRTLE

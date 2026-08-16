@@ -643,7 +643,11 @@ gUnknown_8D8EBD8: @ 0x8D8EBD8
 
 	.globl gBattleAnimBackgroundImageMuddyWater_Pal
 gBattleAnimBackgroundImageMuddyWater_Pal: @ 0x8D8FB50
-	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin"
+	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0, 0xD8
+	.globl gMonIcon_Egg
+gMonIcon_Egg: @ 0x8D8FC28
+	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0xD8, 0x400
+	.incbin "graphics/battle_anims/gBattleAnimBackgroundImageMuddyWater_Pal.bin", 0x4D8, 0x1524
 
 
 	.globl gUnknown_8D9154C
