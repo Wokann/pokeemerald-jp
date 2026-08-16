@@ -16639,28 +16639,14 @@ void InitMovementDelay(struct Sprite *sprite, u16 delay)
     sprite->data[3] = delay;
 }
 
-__attribute__((naked)) bool8 MovementAction_Delay_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Delay_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r0, [r1, #0x34]\n\t"
-        "	subs r0, #1\n\t"
-        "	strh r0, [r1, #0x34]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08093D1A\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08093D20\n\t"
-        "_08093D1A:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08093D20:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (--sprite->data[3] == 0)
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -19048,29 +19034,16 @@ __attribute__((naked)) bool8 MovementAction_RevealTrainer_Step0(struct ObjectEve
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_RevealTrainer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateRevealDisguise\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08094F0E\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08094F14\n\t"
-        "_08094F0E:\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08094F14:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 revealed = UpdateRevealDisguise(objectEvent);
+
+    if (revealed)
+    {
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 bool8 MovementAction_RockSmashBreak_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -19151,29 +19124,16 @@ bool8 MovementAction_CutTree_Step0(struct ObjectEvent *objectEvent, struct Sprit
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_CutTree_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_CutTree_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SpriteAnimEnded\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08094FD0\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl SetMovementDelay\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "_08094FD0:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 animEnded = SpriteAnimEnded(sprite);
+
+    if (animEnded)
+    {
+        SetMovementDelay(sprite, 32);
+        sprite->sActionFuncId = 2;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_CutTree_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
@@ -25419,27 +25379,13 @@ u8 MovementAction_FlyDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *
 }
 
 
-__attribute__((naked)) u8 MovementAction_FlyDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+u8 MovementAction_FlyDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldrh r0, [r1, #0x26]\n\t"
-        "	adds r0, #8\n\t"
-        "	strh r0, [r1, #0x26]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08097AA4\n\t"
-        "	ldrh r0, [r1, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "_08097AA4:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sprite->y2 += 8;
+
+    if (!sprite->y2)
+        sprite->sActionFuncId++;
+    return FALSE;
 }
 
 u8 MovementAction_Finish(struct ObjectEvent *objectEvent, struct Sprite *sprite)
