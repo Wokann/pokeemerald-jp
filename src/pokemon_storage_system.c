@@ -23920,20 +23920,9 @@ __attribute__((naked)) void SetWaldaWallpaperColors(u16 color1, u16 color2)
     );
 }
 
-__attribute__((naked)) u8 *GetWaldaPhrasePtr(void)
+u8 *GetWaldaPhrasePtr(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _080D1DF4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldr r1, _080D1DF8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080D1DF4: .4byte gSaveBlock1Ptr\n\t"
-        "_080D1DF8: .4byte 0x00003D74\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSaveBlock1Ptr->waldaPhrase.text;
 }
 
 __attribute__((naked)) void SetWaldaPhrase(const u8 *src)

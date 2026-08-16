@@ -17,6 +17,7 @@ extern u16 sFindThatGamerCoinsSpent;
 extern u8 sFindThatGamerWhichGame;
 extern u16 sPokemonAnglerSpecies;
 extern u8 sTVShowState;
+extern u16 gSpecialVar_Result;
 extern void SetTVMetatilesOnMap(int width, int height, u16 metatileId);
 extern void ClearPokeNews(void);
 
@@ -7512,18 +7513,9 @@ __attribute__((naked)) void InterviewBefore_PkmnFanClubOpinions(void)
     );
 }
 
-__attribute__((naked)) void InterviewBefore_Dummy(void)
+static void InterviewBefore_Dummy(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _080F02A8\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080F02A8: .4byte gSpecialVar_Result\n\t"
-        ".syntax divided\n\t"
-    );
+    gSpecialVar_Result = TRUE;
 }
 
 __attribute__((naked)) void InterviewBefore_NameRater(void)
