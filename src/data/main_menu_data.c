@@ -183,3 +183,100 @@ const struct WindowTemplate sWindowTemplates_MainMenu[] =
     },
     DUMMY_WIN_TEMPLATE
 };
+// 0x82D2910 - new-game birch speech text windows (JP values).
+const struct WindowTemplate sNewGameBirchSpeechTextWindows[] =
+{
+    {
+        .bg = 0,
+        .tilemapLeft = 4,
+        .tilemapTop = 15,
+        .width = 22,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 1
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 5,
+        .width = 5,
+        .height = 4,
+        .paletteNum = 15,
+        .baseBlock = 0x59
+    },
+    {
+        .bg = 0,
+        .tilemapLeft = 3,
+        .tilemapTop = 2,
+        .width = 9,
+        .height = 10,
+        .paletteNum = 15,
+        .baseBlock = 0x6D
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
+// 0x82D2930
+const u16 sMainMenuBgPal[] =
+{
+    0x7E51, 0x7FFF, 0x28E6, 0x398B, 0x0821, 0x5672, 0x7779, 0x5ED6, 0x6F37, 0x1884, 0x460F, 0x3D46, 0x61E5, 0x6A27, 0x728B, 0x7B11,
+};
+
+// 0x82D2950
+const u16 sMainMenuTextPal[] =
+{
+    0x7FFF, 0x7FFF, 0x318C, 0x675A, 0x043C, 0x3AFF, 0x0664, 0x4BD2, 0x6546, 0x7B14, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+};
+
+// 0x82D2970 - declared as struct TextColor by src/main_menu.c.
+const u8 sTextColor_Headers[3] =
+{
+    TEXT_DYNAMIC_COLOR_1, TEXT_DYNAMIC_COLOR_2, TEXT_DYNAMIC_COLOR_3,
+};
+
+// 0x82D2973 - JP variant of US sTextColor_MenuInfo with 2 trailing pad bytes.
+const u8 sTextColor_Savegame[5] =
+{
+    TEXT_DYNAMIC_COLOR_1, TEXT_COLOR_WHITE, TEXT_DYNAMIC_COLOR_3, 0, 0,
+};
+
+// 0x82D2978
+const struct BgTemplate sMainMenuBgTemplates[] =
+{
+    {
+        .bg = 0,
+        .charBaseIndex = 2,
+        .mapBaseIndex = 30,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 0,
+        .baseTile = 0
+    },
+    {
+        .bg = 1,
+        .charBaseIndex = 0,
+        .mapBaseIndex = 7,
+        .screenSize = 0,
+        .paletteMode = 0,
+        .priority = 3,
+        .baseTile = 0
+    },
+};
+
+// 0x82D2980
+const struct BgTemplate sBirchBgTemplate =
+{
+    .bg = 0,
+    .charBaseIndex = 3,
+    .mapBaseIndex = 30,
+    .screenSize = 0,
+    .paletteMode = 0,
+    .priority = 0,
+    .baseTile = 0
+};
+
+// 0x82D2984
+const struct ScrollArrowsTemplate sScrollArrowsTemplate_MainMenu =
+{
+    2, 0x78, 8, 3, 0x78, 0x98, 3, 4, 1, 1, 0,
+};

@@ -2,6 +2,9 @@
 #define POKEEMERALD_JP_MAIN_MENU_DATA_H
 
 #include "global.h"
+#include "bg.h"
+#include "constants/characters.h"
+#include "list_menu.h"
 #include "window.h"
 
 // Main-menu const data (0x82D2588..)
@@ -19,5 +22,23 @@ extern const u16 sBirchSpeechBgGradientPal[];
 extern const u16 gUnknown_82D28C6;
 // 0x82D28C8
 extern const struct WindowTemplate sWindowTemplates_MainMenu[];
+
+
+// 0x82D2910 - new-game birch speech text windows (JP layout differs from US).
+extern const struct WindowTemplate sNewGameBirchSpeechTextWindows[];
+// 0x82D2930
+extern const u16 sMainMenuBgPal[];
+// 0x82D2950
+extern const u16 sMainMenuTextPal[];
+// 0x82D2970
+extern const u8 sTextColor_Headers[3];
+// 0x82D2973 - JP 5-byte variant of US sTextColor_MenuInfo (2 trailing pad bytes).
+extern const u8 sTextColor_Savegame[5];
+// 0x82D2978
+extern const struct BgTemplate sMainMenuBgTemplates[];
+// 0x82D2980
+extern const struct BgTemplate sBirchBgTemplate;
+// 0x82D2984
+extern const struct ScrollArrowsTemplate sScrollArrowsTemplate_MainMenu;
 
 #endif // POKEEMERALD_JP_MAIN_MENU_DATA_H
