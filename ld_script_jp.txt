@@ -7402,9 +7402,9 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_NoMatches);
         src/slot_machine.o(.text.SlotAction_PrintQuitTheGame);
         src/slot_machine.o(.text.SlotAction_SeeIfPlayerQuits);
-        src/slot_machine.o(.text.SlotAction_PrintMessage_9999Coins);
-        src/slot_machine.o(.text.SlotAction_ExitYouDontHaveThreeCoinsMessage);
-        src/slot_machine.o(.text.SlotAction_PrintMessage_NoMoreCoins);
+        src/slot_machine.o(.text.SlotTask_PrintMsg_MaxCoins);
+        src/slot_machine.o(.text.SlotTask_WaitMsg_MaxCoins);
+        src/slot_machine.o(.text.SlotTask_PrintMsg_NoMoreCoins);
         src/slot_machine.o(.text.SlotTask_WaitMsg_NoMoreCoins);
         src/slot_machine.o(.text.SlotTask_EndGame);
         src/slot_machine.o(.text.SlotAction_FreeDataStructures);

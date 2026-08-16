@@ -1047,6 +1047,8 @@ void CreateDigitalDisplayScene(u8 id);
 bool8 IsDigitalDisplayAnimFinished(void);
 bool8 IsInfoBoxClosed(void);
 extern const u8 gText_YouDontHaveThreeCoins[];
+extern const u8 gText_YouveGot9999Coins[];
+extern const u8 gText_YouveRunOutOfCoins[];
 void DrawMachineBias(void);
 void DestroyDigitalDisplayScene(void);
 void IncrementDailySlotsUses(void);
@@ -1728,105 +1730,32 @@ __attribute__((naked)) void SlotAction_SeeIfPlayerQuits(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_PrintMessage_9999Coins(u8 taskId)
+static bool8 SlotTask_PrintMsg_MaxCoins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawDialogueFrame\n\t"
-        "	ldr r2, _0812B25C\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, _0812B260\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x18\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B25C: .4byte gUnknown_8588604 + 0xE\n\t"
-        "_0812B260: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawDialogueFrame(WIN_MSG, FALSE);
+    AddTextPrinterParameterized(WIN_MSG, FONT_NORMAL, gText_YouveGot9999Coins, 0, 2, 0, 0); // JP text x offset = 2
+    CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+    sSlotMachine->state = SLOTTASK_WAIT_MSG_MAX_COINS;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_ExitYouDontHaveThreeCoinsMessage(u8 taskId)
+static bool8 SlotTask_WaitMsg_MaxCoins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _0812B288\n\t"
-        "	ldrh r1, [r0, #0x2e]\n\t"
-        "	movs r0, #3\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B282\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearDialogWindowAndFrame\n\t"
-        "	ldr r0, _0812B28C\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #5\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B282:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B288: .4byte gMain\n\t"
-        "_0812B28C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        ClearDialogWindowAndFrame(WIN_MSG, TRUE);
+        sSlotMachine->state = SLOTTASK_BET_INPUT;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_PrintMessage_NoMoreCoins(u8 taskId)
+static bool8 SlotTask_PrintMsg_NoMoreCoins(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	sub sp, #0xc\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl DrawDialogueFrame\n\t"
-        "	ldr r2, _0812B2C8\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	movs r0, #0\n\t"
-        "	str r0, [sp, #4]\n\t"
-        "	str r0, [sp, #8]\n\t"
-        "	movs r1, #1\n\t"
-        "	movs r3, #0\n\t"
-        "	bl AddTextPrinterParameterized\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl CopyWindowToVram\n\t"
-        "	ldr r0, _0812B2CC\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x1a\n\t"
-        "	strb r0, [r1]\n\t"
-        "	movs r0, #0\n\t"
-        "	add sp, #0xc\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B2C8: .4byte gUnknown_8588604 + 0x23\n\t"
-        "_0812B2CC: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    DrawDialogueFrame(WIN_MSG, FALSE);
+    AddTextPrinterParameterized(WIN_MSG, FONT_NORMAL, gText_YouveRunOutOfCoins, 0, 2, 0, 0); // JP text x offset = 2
+    CopyWindowToVram(WIN_MSG, COPYWIN_FULL);
+    sSlotMachine->state = SLOTTASK_WAIT_MSG_NO_MORE_COINS;
+    return FALSE;
 }
 
 static bool8 SlotTask_WaitMsg_NoMoreCoins(struct Task *task)
