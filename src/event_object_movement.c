@@ -13133,47 +13133,17 @@ bool8 ObjectEventIsHeldMovementActive(struct ObjectEvent *objectEvent)
     return FALSE;
 }
 
-__attribute__((naked)) bool8 ObjectEventSetHeldMovement(struct ObjectEvent *objectEvent, u8 specialAnimId)
+bool8 ObjectEventSetHeldMovement(struct ObjectEvent *objectEvent, u8 movementActionId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	bl ObjectEventIsMovementOverridden\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r6, r0, #0x18\n\t"
-        "	cmp r6, #0\n\t"
-        "	bne _08092B70\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UnfreezeEventObject\n\t"
-        "	strb r5, [r4, #0x1c]\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	movs r1, #0x40\n\t"
-        "	orrs r0, r1\n\t"
-        "	movs r1, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r4]\n\t"
-        "	ldr r2, _08092B6C\n\t"
-        "	ldrb r1, [r4, #4]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r6, [r0, #0x32]\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08092B72\n\t"
-        "	.align 2, 0\n\t"
-        "_08092B6C: .4byte gSprites\n\t"
-        "_08092B70:\n\t"
-        "	movs r0, #1\n\t"
-        "_08092B72:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (ObjectEventIsMovementOverridden(objectEvent))
+        return TRUE;
+
+    UnfreezeEventObject(objectEvent);
+    objectEvent->movementActionId = movementActionId;
+    objectEvent->heldMovementActive = TRUE;
+    objectEvent->heldMovementFinished = FALSE;
+    gSprites[objectEvent->spriteId].sActionFuncId = 0;
+    return FALSE;
 }
 
 void ObjectEventForceSetHeldMovement(struct ObjectEvent *objectEvent, u8 movementActionId)
