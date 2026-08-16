@@ -1241,23 +1241,9 @@ void MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(u16 graphics
     CopyObjectGraphicsInfoToSpriteTemplate(graphicsId, gUnknown_84DD88C[callbackIndex], spriteTemplate, subspriteTables);
 }
 
-__attribute__((naked)) void sub_0808D6C0(void)
+void sub_0808D6C0(struct ObjectEventTemplate *template, struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	ldrb r0, [r4, #1]\n\t"
-        "	ldrb r1, [r4, #9]\n\t"
-        "	adds r2, r5, #0\n\t"
-        "	bl MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(template->graphicsId, template->movementType, spriteTemplate, subspriteTables);
 }
 
 __attribute__((naked)) void AddPseudoEventObject(void)
@@ -2022,35 +2008,12 @@ __attribute__((naked)) void sub_0808DCFC(void)
     );
 }
 
-__attribute__((naked)) void SetPlayerAvatarEventObjectIdAndObjectId(void)
+void SetPlayerAvatarEventObjectIdAndObjectId(u8 objectEventId, u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r5, _0808DD60\n\t"
-        "	strb r0, [r5, #5]\n\t"
-        "	strb r1, [r5, #4]\n\t"
-        "	ldr r1, _0808DD64\n\t"
-        "	lsls r4, r0, #3\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r4, r4, r1\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	bl GetPlayerAvatarGenderByGraphicsId\n\t"
-        "	strb r0, [r5, #7]\n\t"
-        "	ldrb r0, [r4, #5]\n\t"
-        "	movs r1, #0x20\n\t"
-        "	bl SetPlayerAvatarExtraStateTransition\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0808DD60: .4byte gPlayerAvatar\n\t"
-        "_0808DD64: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.objectEventId = objectEventId;
+    gPlayerAvatar.spriteId = spriteId;
+    gPlayerAvatar.gender = GetPlayerAvatarGenderByGraphicsId(gObjectEvents[objectEventId].graphicsId);
+    SetPlayerAvatarExtraStateTransition(gObjectEvents[objectEventId].graphicsId, PLAYER_AVATAR_FLAG_CONTROLLABLE);
 }
 
 void ObjectEventSetGraphicsId(struct ObjectEvent *objectEvent, u8 graphicsId)
