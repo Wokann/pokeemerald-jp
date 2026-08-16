@@ -4,6 +4,7 @@
 #include "task.h"
 #include "link.h"
 #include "event_data.h"
+#include "heal_location.h"
 #include "constants/map_types.h"
 #include "constants/songs.h"
 #include "field_screen_effect.h"
@@ -799,39 +800,11 @@ void SetWarpDestinationToDynamicWarp(u8 unusedWarpId)
     sWarpDestination = gSaveBlock1Ptr->dynamicWarp;
 }
 
-__attribute__((naked)) void SetWarpDestinationToHealLocation(u8 healLocationId)
+void SetWarpDestinationToHealLocation(u8 healLocationId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetHealLocation\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _08084662\n\t"
-        "	movs r0, #0\n\t"
-        "	ldrsb r0, [r4, r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	ldrsb r1, [r4, r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	rsbs r2, r2, #0\n\t"
-        "	movs r3, #2\n\t"
-        "	ldrsb r3, [r4, r3]\n\t"
-        "	ldrb r4, [r4, #4]\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	asrs r4, r4, #0x18\n\t"
-        "	str r4, [sp]\n\t"
-        "	bl SetWarpDestination\n\t"
-        "_08084662:\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
+    if (healLocation)
+        SetWarpDestination(healLocation->mapGroup, healLocation->mapNum, WARP_ID_NONE, healLocation->x, healLocation->y);
 }
 
 void SetWarpDestinationToLastHealLocation(void)
@@ -839,43 +812,11 @@ void SetWarpDestinationToLastHealLocation(void)
     sWarpDestination = gSaveBlock1Ptr->lastHealLocation;
 }
 
-__attribute__((naked)) void SetLastHealLocationWarp(u8 healLocationId)
+void SetLastHealLocationWarp(u8 healLocationId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetHealLocation\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	cmp r5, #0\n\t"
-        "	beq _080846B8\n\t"
-        "	ldr r0, _080846C0\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x1c\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsb r1, [r5, r1]\n\t"
-        "	movs r2, #1\n\t"
-        "	ldrsb r2, [r5, r2]\n\t"
-        "	movs r3, #1\n\t"
-        "	rsbs r3, r3, #0\n\t"
-        "	movs r4, #2\n\t"
-        "	ldrsb r4, [r5, r4]\n\t"
-        "	str r4, [sp]\n\t"
-        "	movs r4, #4\n\t"
-        "	ldrsb r4, [r5, r4]\n\t"
-        "	str r4, [sp, #4]\n\t"
-        "	bl SetWarpData\n\t"
-        "_080846B8:\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080846C0: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct HealLocation *healLocation = GetHealLocation(healLocationId);
+    if (healLocation)
+        SetWarpData(&gSaveBlock1Ptr->lastHealLocation, healLocation->mapGroup, healLocation->mapNum, WARP_ID_NONE, healLocation->x, healLocation->y);
 }
 
 __attribute__((naked)) void UpdateEscapeWarp(s16 x, s16 y)
@@ -2174,56 +2115,26 @@ __attribute__((naked)) u16 GetCurrLocationDefaultMusic(void)
     );
 }
 
-__attribute__((naked)) u16 GetWarpDestinationMusic(void)
+u16 GetWarpDestinationMusic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _080850B8\n\t"
-        "	bl GetLocationMusic\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r1, r0, #0x10\n\t"
-        "	ldr r0, _080850BC\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080850C0\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	b _080850DC\n\t"
-        "	.align 2, 0\n\t"
-        "_080850B8: .4byte gUnknown_2031F84\n\t"
-        "_080850BC: .4byte 0x00007FFF\n\t"
-        "_080850C0:\n\t"
-        "	ldr r0, _080850D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrh r1, [r0, #4]\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	cmp r1, r0\n\t"
-        "	beq _080850D8\n\t"
-        "	subs r0, #0x6e\n\t"
-        "	b _080850DC\n\t"
-        "	.align 2, 0\n\t"
-        "_080850D4: .4byte gSaveBlock1Ptr\n\t"
-        "_080850D8:\n\t"
-        "	movs r0, #0xb4\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "_080850DC:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 music = GetLocationMusic(&sWarpDestination);
+    if (music != MUS_ROUTE118)
+    {
+        return music;
+    }
+    else
+    {
+        if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MAUVILLE_CITY)
+         && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MAUVILLE_CITY))
+            return MUS_ROUTE110;
+        else
+            return MUS_ROUTE119;
+    }
 }
 
-__attribute__((naked)) void Overworld_ResetMapMusic(void)
+void Overworld_ResetMapMusic(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ResetMapMusic\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ResetMapMusic();
 }
 
 __attribute__((naked)) void Overworld_PlaySpecialMapMusic(void)
