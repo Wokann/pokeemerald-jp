@@ -665,51 +665,69 @@ gUnknown_85FC218: @ 0x85FC218
 
 	.globl gUnknown_85FC824
 gUnknown_85FC824: @ 0x85FC824
-	.incbin "baserom_jp.gba", 0x5fc824, 0x1e8
+	.incbin "baserom_jp.gba", 0x5fc824, 0x1e0
+
+	.globl sOam_MysteryEventMon
+sOam_MysteryEventMon: @ 0x85FCA04
+	.4byte 0xC0000000
+	.hword 0x0400, 0x0000
 
 	.globl gUnknown_85FCA0C
 gUnknown_85FCA0C: @ 0x85FCA0C
-	.incbin "baserom_jp.gba", 0x5fca0c, 0x8
+	.4byte gUnknown_85FC218 + 0x1AC
+	.hword 0x1800, 0x2E90
 
 	.globl gUnknown_85FCA14
 gUnknown_85FCA14: @ 0x85FCA14
-	.incbin "baserom_jp.gba", 0x5fca14, 0x2c
+	.4byte gUnknown_85FC824
+	.hword 0x2E90, 0x0000
+	.hword 0x0000, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0040, 0x0001
+	.hword 0xFFFF, 0x0000
+	.hword 0x0080, 0x0001
+	.hword 0xFFFF, 0x0000
+sAnims_MysteryEventMon: @ 0x85FCA34
+	.4byte gUnknown_85FCA14 + 0x8
+	.4byte gUnknown_85FCA14 + 0x10
+	.4byte gUnknown_85FCA14 + 0x18
 
 	.globl gUnknown_85FCA40
 gUnknown_85FCA40: @ 0x85FCA40
-	.incbin "baserom_jp.gba", 0x5fca40, 0x18
+	.hword 0x2E90, 0x2E90
+	.4byte sOam_MysteryEventMon, sAnims_MysteryEventMon, 0, gDummySpriteAffineAnimTable, SpriteCallbackDummy
 
 	.globl gUnknown_85FCA58
-gUnknown_85FCA58: @ 0x85FCA58
-	.incbin "baserom_jp.gba", 0x5fca58, 0x14
+gUnknown_85FCA58: @ 0x085FCA58
+	.4byte 0x081DA31D, 0x081DA465, 0x081DA40D, 0x081DA39D, 0x081DA4D1
 
 	.globl gUnknown_85FCA6C
-gUnknown_85FCA6C: @ 0x85FCA6C
-	.incbin "baserom_jp.gba", 0x5fca6c, 0x14
+gUnknown_85FCA6C: @ 0x085FCA6C
+	.4byte 0x081DA31D, 0x081DA53D, 0x081DA40D, 0x081DA39D, 0x081DA5A9
 
 	.globl gUnknown_85FCA80
-gUnknown_85FCA80: @ 0x85FCA80
-	.incbin "baserom_jp.gba", 0x5fca80, 0x14
+gUnknown_85FCA80: @ 0x085FCA80
+	.4byte 0x081DA31D, 0x081DA615, 0x081DA40D, 0x081DA39D, 0x081DA695
 
 	.globl gUnknown_85FCA94
-gUnknown_85FCA94: @ 0x85FCA94
-	.incbin "baserom_jp.gba", 0x5fca94, 0x14
+gUnknown_85FCA94: @ 0x085FCA94
+	.4byte 0x081DA31D, 0x081DA701, 0x081DA40D, 0x081DA39D, 0x081DA785
 
 	.globl gUnknown_85FCAA8
-gUnknown_85FCAA8: @ 0x85FCAA8
-	.incbin "baserom_jp.gba", 0x5fcaa8, 0x14
+gUnknown_85FCAA8: @ 0x085FCAA8
+	.4byte 0x081DA31D, 0x081DA7F1, 0x081DA40D, 0x081DA39D, 0x081DA87D
 
 	.globl gUnknown_85FCABC
-gUnknown_85FCABC: @ 0x85FCABC
-	.incbin "baserom_jp.gba", 0x5fcabc, 0x14
+gUnknown_85FCABC: @ 0x085FCABC
+	.4byte 0x081DA31D, 0x081DA8E9, 0x081DA40D, 0x081DA39D, 0x081DA975
 
 	.globl gUnknown_85FCAD0
-gUnknown_85FCAD0: @ 0x85FCAD0
-	.incbin "baserom_jp.gba", 0x5fcad0, 0x14
+gUnknown_85FCAD0: @ 0x085FCAD0
+	.4byte 0x081DA31D, 0x081DA9E1, 0x081DA40D, 0x081DA39D, 0x081DAA75
 
 	.globl gUnknown_85FCAE4
-gUnknown_85FCAE4: @ 0x85FCAE4
-	.incbin "baserom_jp.gba", 0x5fcae4, 0x14
+gUnknown_85FCAE4: @ 0x085FCAE4
+	.4byte 0x081DA31D, 0x081DAAE1, 0x081DA40D, 0x081DA39D, 0x081DAB79
 
 	.globl gText_MysteryEventBerry
 gText_MysteryEventBerry: @ 0x85FCAF8
