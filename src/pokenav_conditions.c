@@ -115,7 +115,7 @@ struct Pokenav_SearchResultsGfx
 
 static u32 LoopedTask_OpenConditionGraphMenu(s32);
 static u32 GetConditionGraphMenuLoopedTaskActive(void);
-static u32 LoopedTask_ExitConditionGraphMenu(s32);
+u32 LoopedTask_ExitConditionGraphMenu(s32);
 bool32 IsSearchResultLoopedTaskActive(void);
 
 bool32 PokenavCallback_Init_ConditionGraph_Party(void)
@@ -1263,7 +1263,7 @@ static u32 LoopedTask_OpenConditionGraphMenu(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_ExitConditionGraphMenu(s32 state)
+u32 LoopedTask_ExitConditionGraphMenu(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
 

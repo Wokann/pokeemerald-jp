@@ -9464,6 +9464,8 @@ SECTIONS {
         data/data_b2c_mid5.o(.rodata);
         src/pokenav_region_map.o(.rodata);
         data/data_b2c_mid6.o(.rodata);
+        src/pokenav_conditions_gfx.o(.rodata);
+        data/data_b2c_mid7.o(.rodata);
         data/multiboot_ereader.o(.rodata);
         data/multiboot_berry_glitch_fix.o(.rodata);
         data/data_rest.o(.rodata);

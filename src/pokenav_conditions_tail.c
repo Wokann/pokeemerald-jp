@@ -147,11 +147,11 @@ static u32 LoopedTask_RibbonsListMovePageUp(s32 state);
 static u32 LoopedTask_RibbonsListMovePageDown(s32 state);
 static void UpdateIndexNumberDisplay(u8 windowId, u16 index);
 
-static u32 LoopedTask_TransitionMons(s32 state);
-static u32 LoopedTask_MoveCursorNoTransition(s32 state);
-static u32 LoopedTask_SlideMonOut(s32 state);
-static u32 LoopedTask_OpenMonMarkingsWindow(s32 state);
-static u32 LoopedTask_CloseMonMarkingsWindow(s32 state);
+u32 LoopedTask_TransitionMons(s32 state);
+u32 LoopedTask_MoveCursorNoTransition(s32 state);
+u32 LoopedTask_SlideMonOut(s32 state);
+u32 LoopedTask_OpenMonMarkingsWindow(s32 state);
+u32 LoopedTask_CloseMonMarkingsWindow(s32 state);
 void CopyUnusedConditionWindowsToVram(void);
 static void SpriteCB_PartyPokeball(struct Sprite *sprite);
 static void HighlightCurrentPartyIndexPokeball(struct Sprite *sprite);
@@ -264,7 +264,7 @@ extern const struct SpriteSheet sConditionSelectionSpriteSheets[];
 extern const struct SpriteTemplate sConditionSelectionSpriteTemplate;
 extern const struct SpritePalette sConditionSelectionSpritePalettes[];
 
-static u32 LoopedTask_TransitionMons(s32 state)
+u32 LoopedTask_TransitionMons(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
     struct ConditionGraph *graph = GetConditionGraphPtr();
@@ -321,7 +321,7 @@ static u32 LoopedTask_TransitionMons(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_MoveCursorNoTransition(s32 state)
+u32 LoopedTask_MoveCursorNoTransition(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
 
@@ -365,7 +365,7 @@ static u32 LoopedTask_MoveCursorNoTransition(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_SlideMonOut(s32 state)
+u32 LoopedTask_SlideMonOut(s32 state)
 {
     struct Pokenav_ConditionMenuGfx *menu = GetSubstructPtr(POKENAV_SUBSTRUCT_CONDITION_GRAPH_MENU_GFX);
 
@@ -403,7 +403,7 @@ static u32 LoopedTask_SlideMonOut(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_OpenMonMarkingsWindow(s32 state)
+u32 LoopedTask_OpenMonMarkingsWindow(s32 state)
 {
     switch (state)
     {
@@ -422,7 +422,7 @@ static u32 LoopedTask_OpenMonMarkingsWindow(s32 state)
     return LT_FINISH;
 }
 
-static u32 LoopedTask_CloseMonMarkingsWindow(s32 state)
+u32 LoopedTask_CloseMonMarkingsWindow(s32 state)
 {
     switch (state)
     {
