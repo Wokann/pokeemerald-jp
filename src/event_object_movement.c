@@ -55,6 +55,7 @@ extern u8 MovementType_None_callback(struct ObjectEvent *objectEvent, struct Spr
 extern void RemoveEventObjectInternal(struct ObjectEvent *objectEvent);
 extern void UpdateObjectEventOffscreen(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern void UpdateEventObjSpriteVisibility(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern void CreateLevitateMovementTask(struct ObjectEvent *objectEvent);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -12430,17 +12431,10 @@ __attribute__((naked)) void MovementType_TreeDisguise(struct Sprite *sprite)
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_Disguise_Callback(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    return FALSE;
 }
 
 
@@ -22784,21 +22778,11 @@ __attribute__((naked)) bool8 MovementAction_AcroEndWheelieMoveRight_Step1(struct
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_Levitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_Levitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl CreateLevitateMovementTask\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    CreateLevitateMovementTask(objectEvent);
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementAction_StopLevitate_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
