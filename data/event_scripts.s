@@ -1364,7 +1364,7 @@ gUnknown_82778AC: @ 0x82778AC
 
 	.globl gUnknown_8277908
 gUnknown_8277908: @ 0x8277908
-	.incbin "baserom_jp.gba", 0x277908, 0x1c
+	.4byte 0x08286B6A, 0x08286B8B, 0x08286B9C, 0x08286BAD, 0x08286C01, 0x08286C1A, 0x08286C24
 gUnknown_8277924: @ 0x8277924
 	.include "data/scripts/gUnknown_8277924.inc"
 gUnknown_8277955: @ 0x8277955
@@ -1566,7 +1566,7 @@ gUnknown_827B8AC: @ 0x827B8AC
 gUnknown_827B8C1: @ 0x827B8C1
 	.include "data/scripts/gUnknown_827B8C1.inc"
 gUnknown_827B8DA: @ 0x827B8DA
-	.incbin "baserom_jp.gba", 0x27b8da, 0xc
+	.4byte 0x0227C900, 0x0856E9C8, 0x08050002
 gUnknown_827B8E6: @ 0x827B8E6
 	.include "data/scripts/gUnknown_827B8E6.inc"
 gUnknown_827B967: @ 0x827B967
@@ -1774,7 +1774,8 @@ gUnknown_827EBEF: @ 0x827EBEF
 gUnknown_827EC4C: @ 0x827EC4C
 	.include "data/scripts/gUnknown_827EC4C.inc"
 gUnknown_827ED83: @ 0x827ED83
-	.incbin "baserom_jp.gba", 0x27ed83, 0xd
+	.4byte 0xC000A219, 0x103EF103, 0x05000508
+	.byte 0x08
 gUnknown_827ED90: @ 0x827ED90
 	.include "data/scripts/gUnknown_827ED90.inc"
 gUnknown_827EE64: @ 0x827EE64
@@ -2112,9 +2113,9 @@ gUnknown_82867DF: @ 0x82867DF
 gUnknown_828682C: @ 0x828682C
 	.include "data/scripts/gUnknown_828682C.inc"
 gUnknown_8286875: @ 0x8286875
-	.incbin "baserom_jp.gba", 0x286875, 0x5
+	.byte 0x13, 0x8E, 0x0C, 0x28, 0x08
 gUnknown_828687A: @ 0x828687A
-	.incbin "baserom_jp.gba", 0x28687a, 0x5
+	.byte 0x13, 0x02, 0x04, 0x28, 0x08
 gUnknown_828687F: @ 0x828687F
 	.include "data/scripts/gUnknown_828687F.inc"
 gUnknown_8286884: @ 0x8286884
