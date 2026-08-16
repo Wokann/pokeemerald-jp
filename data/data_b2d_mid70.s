@@ -63,7 +63,70 @@ sRoamerLocations: @ 0x85ADB74
 
 	.globl gBattleFrontierHeldItems
 gBattleFrontierHeldItems: @ 0x85ADBF4
-	.incbin "baserom_jp.gba", 0x5adbf4, 0x6e1c
+	.hword 0x00  @ ITEM_NONE
+	.hword 0xBB  @ ITEM_KINGS_ROCK
+	.hword 0x8E  @ ITEM_SITRUS_BERRY
+	.hword 0x8B  @ ITEM_ORAN_BERRY
+	.hword 0x86  @ ITEM_CHESTO_BERRY
+	.hword 0xCC  @ ITEM_HARD_STONE
+	.hword 0xC4  @ ITEM_FOCUS_BAND
+	.hword 0x8C  @ ITEM_PERSIM_BERRY
+	.hword 0xCD  @ ITEM_MIRACLE_SEED
+	.hword 0x2C  @ ITEM_BERRY_JUICE
+	.hword 0xB5  @ ITEM_MACHO_BRACE
+	.hword 0xBC  @ ITEM_SILVER_POWDER
+	.hword 0x85  @ ITEM_CHERI_BERRY
+	.hword 0xCE  @ ITEM_BLACK_GLASSES
+	.hword 0xCF  @ ITEM_BLACK_BELT
+	.hword 0xBF  @ ITEM_SOUL_DEW
+	.hword 0xBA  @ ITEM_CHOICE_BAND
+	.hword 0xD0  @ ITEM_MAGNET
+	.hword 0xD9  @ ITEM_SILK_SCARF
+	.hword 0xB4  @ ITEM_WHITE_HERB
+	.hword 0xC1  @ ITEM_DEEP_SEA_SCALE
+	.hword 0xC0  @ ITEM_DEEP_SEA_TOOTH
+	.hword 0xD1  @ ITEM_MYSTIC_WATER
+	.hword 0xD2  @ ITEM_SHARP_BEAK
+	.hword 0xB7  @ ITEM_QUICK_CLAW
+	.hword 0xC8  @ ITEM_LEFTOVERS
+	.hword 0x88  @ ITEM_RAWST_BERRY
+	.hword 0xCA  @ ITEM_LIGHT_BALL
+	.hword 0xD3  @ ITEM_POISON_BARB
+	.hword 0xD4  @ ITEM_NEVER_MELT_ICE
+	.hword 0x89  @ ITEM_ASPEAR_BERRY
+	.hword 0xD5  @ ITEM_SPELL_TAG
+	.hword 0xB3  @ ITEM_BRIGHT_POWDER
+	.hword 0x8A  @ ITEM_LEPPA_BERRY
+	.hword 0xC6  @ ITEM_SCOPE_LENS
+	.hword 0xD6  @ ITEM_TWISTED_SPOON
+	.hword 0xC7  @ ITEM_METAL_COAT
+	.hword 0xB9  @ ITEM_MENTAL_HERB
+	.hword 0xD7  @ ITEM_CHARCOAL
+	.hword 0x87  @ ITEM_PECHA_BERRY
+	.hword 0xCB  @ ITEM_SOFT_SAND
+	.hword 0x8D  @ ITEM_LUM_BERRY
+	.hword 0xC9  @ ITEM_DRAGON_SCALE
+	.hword 0xD8  @ ITEM_DRAGON_FANG
+	.hword 0x93  @ ITEM_IAPAPA_BERRY
+	.hword 0x90  @ ITEM_WIKI_BERRY
+	.hword 0xDC  @ ITEM_SEA_INCENSE
+	.hword 0xDB  @ ITEM_SHELL_BELL
+	.hword 0xAA  @ ITEM_SALAC_BERRY
+	.hword 0xAD  @ ITEM_LANSAT_BERRY
+	.hword 0xAC  @ ITEM_APICOT_BERRY
+	.hword 0xAE  @ ITEM_STARF_BERRY
+	.hword 0xA8  @ ITEM_LIECHI_BERRY
+	.hword 0xE1  @ ITEM_STICK
+	.hword 0xDD  @ ITEM_LAX_INCENSE
+	.hword 0x92  @ ITEM_AGUAV_BERRY
+	.hword 0x8F  @ ITEM_FIGY_BERRY
+	.hword 0xE0  @ ITEM_THICK_CLUB
+	.hword 0x91  @ ITEM_MAGO_BERRY
+	.hword 0xDF  @ ITEM_METAL_POWDER
+	.hword 0xAB  @ ITEM_PETAYA_BERRY
+	.hword 0xDE  @ ITEM_LUCKY_PUNCH
+	.hword 0xA9  @ ITEM_GANLON_BERRY
+	.incbin "baserom_jp.gba", 0x5ADC72, 0x6D9E
 
 	.globl gUnknown_85B4A10
 gUnknown_85B4A10: @ 0x85B4A10
