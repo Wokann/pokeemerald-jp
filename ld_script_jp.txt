@@ -731,6 +731,7 @@ TryPutBreakingNewsOnAir = sub_080EECA4;
 GetItemHoldEffect = sub_080D6CF8;
 GetItemHoldEffectParam = sub_080D6D1C;
 GetPartyIdFromBattlePartyId = pokemon_order_func;
+ShiftStillObjectEventCoords = ShiftStillEventObjectCoords;
 SwitchPartyMonSlots = sub_081B8C50;
 sub_0811980C = DrawBattlerOnBg;
 nullsub_35 = ReshowBattleScreenDummy;
@@ -4638,7 +4639,7 @@ SECTIONS {
         src/event_object_movement.o(.text.GetFigure8YOffset);
         src/event_object_movement.o(.text.GetFigure8XOffset);
         src/event_object_movement.o(.text.sub_080970C0);
-        src/event_object_movement.o(.text.sub_080970C8);
+        src/event_object_movement.o(.text.AnimateSpriteInFigure8);
         src/event_object_movement.o(.text.sub_08097190);
         src/event_object_movement.o(.text.sub_080971AC);
         src/event_object_movement.o(.text.sub_080971CC);

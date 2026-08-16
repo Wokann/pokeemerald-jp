@@ -23,6 +23,8 @@ enum
     JUMP_TYPE_NORMAL,
 };
 
+#define FIGURE_8_LENGTH 72
+
 extern void SetUpReflection(struct ObjectEvent *objEvent, struct Sprite *sprite, u8 mode);
 
 __attribute__((naked)) void ClearEventObject(void)
@@ -21696,7 +21698,7 @@ __attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struc
         "	adds r4, r0, #0\n\t"
         "	adds r5, r1, #0\n\t"
         "	adds r0, r5, #0\n\t"
-        "	bl sub_080970C8\n\t"
+        "	bl AnimateSpriteInFigure8\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _08095492\n\t"
@@ -21723,6 +21725,8 @@ __attribute__((naked)) bool8 sub_0809547C(struct ObjectEvent *objectEvent, struc
         ".syntax divided\n\t"
     );
 }
+
+
 
 
 
@@ -26310,117 +26314,43 @@ __attribute__((naked)) void sub_080970C0(struct Sprite *sprite)
     );
 }
 
-__attribute__((naked)) bool8 sub_080970C8(struct Sprite *sprite)
+bool8 AnimateSpriteInFigure8(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	movs r6, #0\n\t"
-        "	movs r1, #0x3c\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	cmp r0, #1\n\t"
-        "	beq _080970FE\n\t"
-        "	cmp r0, #1\n\t"
-        "	bgt _080970E0\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080970EA\n\t"
-        "	b _08097162\n\t"
-        "_080970E0:\n\t"
-        "	cmp r0, #2\n\t"
-        "	beq _08097126\n\t"
-        "	cmp r0, #3\n\t"
-        "	beq _0809713A\n\t"
-        "	b _08097162\n\t"
-        "_080970EA:\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	bl GetFigure8XOffset\n\t"
-        "	ldrh r1, [r5, #0x24]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	b _08097158\n\t"
-        "_080970FE:\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	movs r4, #0x47\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	bl GetFigure8XOffset\n\t"
-        "	ldrh r1, [r5, #0x24]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r5, #0x24]\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl GetFigure8YOffset\n\t"
-        "	ldrh r2, [r5, #0x26]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	b _08097160\n\t"
-        "_08097126:\n\t"
-        "	movs r1, #0x3a\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	bl GetFigure8XOffset\n\t"
-        "	ldrh r1, [r5, #0x24]\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	strh r1, [r5, #0x24]\n\t"
-        "	movs r2, #0x3a\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	b _08097158\n\t"
-        "_0809713A:\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	movs r4, #0x47\n\t"
-        "	subs r0, r4, r0\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	bl GetFigure8XOffset\n\t"
-        "	ldrh r2, [r5, #0x24]\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	strh r0, [r5, #0x24]\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	subs r4, r4, r0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "_08097158:\n\t"
-        "	bl GetFigure8YOffset\n\t"
-        "	ldrh r1, [r5, #0x26]\n\t"
-        "	adds r0, r0, r1\n\t"
-        "_08097160:\n\t"
-        "	strh r0, [r5, #0x26]\n\t"
-        "_08097162:\n\t"
-        "	ldrh r0, [r5, #0x3a]\n\t"
-        "	adds r0, #1\n\t"
-        "	movs r1, #0\n\t"
-        "	strh r0, [r5, #0x3a]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x48\n\t"
-        "	bne _0809717A\n\t"
-        "	strh r1, [r5, #0x3a]\n\t"
-        "	ldrh r0, [r5, #0x3c]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r5, #0x3c]\n\t"
-        "_0809717A:\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	ldrsh r0, [r5, r2]\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _08097188\n\t"
-        "	strh r1, [r5, #0x26]\n\t"
-        "	strh r1, [r5, #0x24]\n\t"
-        "	movs r6, #1\n\t"
-        "_08097188:\n\t"
-        "	adds r0, r6, #0\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    bool8 finished = FALSE;
+
+    switch(sprite->data[7])
+    {
+    case 0:
+        sprite->x2 += GetFigure8XOffset(sprite->data[6]);
+        sprite->y2 += GetFigure8YOffset(sprite->data[6]);
+        break;
+    case 1:
+        sprite->x2 -= GetFigure8XOffset((FIGURE_8_LENGTH - 1) - sprite->data[6]);
+        sprite->y2 += GetFigure8YOffset((FIGURE_8_LENGTH - 1) - sprite->data[6]);
+        break;
+    case 2:
+        sprite->x2 -= GetFigure8XOffset(sprite->data[6]);
+        sprite->y2 += GetFigure8YOffset(sprite->data[6]);
+        break;
+    case 3:
+        sprite->x2 += GetFigure8XOffset((FIGURE_8_LENGTH - 1) - sprite->data[6]);
+        sprite->y2 += GetFigure8YOffset((FIGURE_8_LENGTH - 1) - sprite->data[6]);
+        break;
+    }
+    if (++sprite->data[6] == FIGURE_8_LENGTH)
+    {
+        sprite->data[6] = 0;
+        sprite->data[7]++;
+    }
+    if (sprite->data[7] == 4)
+    {
+        sprite->y2 = 0;
+        sprite->x2 = 0;
+        finished = TRUE;
+    }
+    return finished;
 }
+
 
 __attribute__((naked)) s16 sub_08097190(s16 a, u8 b)
 {
