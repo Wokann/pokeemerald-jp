@@ -51,18 +51,38 @@ sSpriteTemplate_ConditionSparkle: @ 0x85FA964
 
 	.globl sConditionSparkleCoords
 sConditionSparkleCoords: @ 0x85FA97C
-	.string "　　i$と　p$む　ü$む　こ　と　ふ　　　も　x$ふ　k$こ　k$ü$x$p$さいだいHP$こうげき$ぼうぎょ$すばやさ$とくこう$とくぼう$"
+	.hword 0, -35, 20, -28, 33, -10, 33, 10, 20, 28, 0, 35, -20, 28, -33, 10, -33, -10, -20, -28
+
+	.globl gText_MaxHP
+gText_MaxHP: @ 0x85FA9A4
+	.string "さいだいHP$"
+	.globl gText_Attack
+gText_Attack: @ 0x85FA9AB
+	.string "こうげき$"
+	.globl gText_Defense
+gText_Defense: @ 0x85FA9B0
+	.string "ぼうぎょ$"
+	.globl gText_Speed
+gText_Speed: @ 0x85FA9B5
+	.string "すばやさ$"
+	.globl gText_SpAtk
+gText_SpAtk: @ 0x85FA9BA
+	.string "とくこう$"
+	.globl gText_SpDef
+gText_SpDef: @ 0x85FA9BF
+	.string "とくぼう$"
 	.globl gText_Plus
 gText_Plus: @ 0x85FA9C4
 	.string "{PLUS}$"
 
 	.globl gText_Dash
 gText_Dash: @ 0x85FA9C7
-	.string "ー$　　　"
+	.string "ー$"
+	.byte 0, 0, 0
 
 	.globl sLvlUpStatStrings
 sLvlUpStatStrings: @ 0x85FA9CC
-	.incbin "baserom_jp.gba", 0x5fa9cc, 0x18
+	.4byte gText_MaxHP, gText_Attack, gText_Defense, gText_SpAtk, gText_SpDef, gText_Speed
 
 	.globl sTrainerHillTrainerTemplates_JP
 sTrainerHillTrainerTemplates_JP: @ 0x85FA9E4
