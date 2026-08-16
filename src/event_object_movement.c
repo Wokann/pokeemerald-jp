@@ -22,6 +22,7 @@ extern const u8 gWalkNormalMovementActions[];
 extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
+extern const struct SpriteTemplate gUnknown_846FA28;
 
 // Figure-8 animation offsets (defined in field_effect_helpers_rest.c).
 extern const s8 sFigure8XOffsets[];
@@ -3252,43 +3253,14 @@ __attribute__((naked)) void UpdateObjectEventsForCameraUpdate(s16 x, s16 y)
     );
 }
 
-__attribute__((naked)) u8 AddCameraObject(u8 linkedSpriteId)
+u8 AddCameraObject(u8 followSpriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	ldr r0, _0808E6E0\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	movs r3, #4\n\t"
-        "	bl CreateSprite\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r2, _0808E6E4\n\t"
-        "	lsls r1, r0, #4\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	movs r2, #0x3e\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	mov ip, r2\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	movs r3, #4\n\t"
-        "	orrs r2, r3\n\t"
-        "	mov r3, ip\n\t"
-        "	strb r2, [r3]\n\t"
-        "	strh r4, [r1, #0x2e]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0808E6E0: .4byte gUnknown_846FA28\n\t"
-        "_0808E6E4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId;
+
+    spriteId = CreateSprite(&gUnknown_846FA28, 0, 0, 4);
+    gSprites[spriteId].invisible = TRUE;
+    gSprites[spriteId].sCamera_FollowSpriteId = followSpriteId;
+    return spriteId;
 }
 
 __attribute__((naked)) void ObjectCB_CameraObject(void)
