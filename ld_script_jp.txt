@@ -4291,7 +4291,7 @@ SECTIONS {
         src/event_object_movement.o(.text.StartRunningAnim);
         src/event_object_movement.o(.text.UpdateMovementNormal);
         src/event_object_movement.o(.text.sub_08093460);
-        src/event_object_movement.o(.text.sub_080934D0);
+        src/event_object_movement.o(.text.InitWalkSlow);
         src/event_object_movement.o(.text.UpdateWalkSlow);
         src/event_object_movement.o(.text.MovementAction_WalkSlowDiagonalUpLeft_Step0);
         src/event_object_movement.o(.text.sub_08093554);
