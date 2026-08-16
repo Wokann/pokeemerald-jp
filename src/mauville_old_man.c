@@ -1,6 +1,17 @@
 #include "global.h"
 #include "mauville_old_man.h"
 
+struct Story
+{
+    u8 stat;
+    u8 minVal;
+    const u8 *title;
+    const u8 *action;
+    const u8 *fullText;
+};
+
+extern const struct Story gUnknown_857AC6C[36];
+
 __attribute__((naked)) void SetupBard(void)
 {
     __asm__(".syntax unified\n\t"
@@ -1496,75 +1507,35 @@ __attribute__((naked)) void StorytellerGetGameStat(void)
     );
 }
 
-__attribute__((naked)) void GetStoryByStat(void)
+static const struct Story *GetStoryByStat(u32 stat)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	ldr r1, _08120FE8\n\t"
-        "_08120FDC:\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	cmp r0, r3\n\t"
-        "	bne _08120FEC\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	b _08120FF6\n\t"
-        "	.align 2, 0\n\t"
-        "_08120FE8: .4byte gUnknown_857AC6C\n\t"
-        "_08120FEC:\n\t"
-        "	adds r1, #0x10\n\t"
-        "	adds r2, #1\n\t"
-        "	cmp r2, #0x23\n\t"
-        "	ble _08120FDC\n\t"
-        "	ldr r0, _08120FFC\n\t"
-        "_08120FF6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08120FFC: .4byte gUnknown_857AE9C\n\t"
-        ".syntax divided\n\t"
-    );
+    s32 i;
+
+    for (i = 0; i < 36; i++)
+    {
+        if (gUnknown_857AC6C[i].stat == stat)
+            return &gUnknown_857AC6C[i];
+    }
+    return &gUnknown_857AC6C[35];
 }
 
-__attribute__((naked)) void GetStoryTitleByStat(void)
+const u8 *GetStoryTitleByStat(u32 stat)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetStoryByStat\n\t"
-        "	ldr r0, [r0, #4]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetStoryByStat(stat)->title;
 }
 
-__attribute__((naked)) void GetStoryTextByStat(void)
+
+const u8 *GetStoryTextByStat(u32 stat)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetStoryByStat\n\t"
-        "	ldr r0, [r0, #0xc]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetStoryByStat(stat)->fullText;
 }
 
-__attribute__((naked)) void GetStoryActionByStat(void)
+
+const u8 *GetStoryActionByStat(u32 stat)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetStoryByStat\n\t"
-        "	ldr r0, [r0, #8]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetStoryByStat(stat)->action;
 }
+
 
 __attribute__((naked)) void GetFreeStorySlot(void)
 {
@@ -2320,4 +2291,3 @@ __attribute__((naked)) void SanitizeReceivedEmeraldOldMan(union OldMan *oldMan, 
         ".syntax divided\n\t"
     );
 }
-
