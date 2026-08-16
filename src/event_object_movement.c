@@ -164,6 +164,7 @@ extern u8 sub_08092F34(u8 direction);
 extern u8 sub_08092F08(u8 direction);
 extern u8 sub_08092EDC(u8 direction);
 extern u8 sub_08092F60(u8 direction);
+extern bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay);
 extern bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
@@ -14611,7 +14612,7 @@ bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 a, u8 b)
+__attribute__((naked)) bool8 sub_08093EC4(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 animNum, u16 delay)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14702,37 +14703,10 @@ __attribute__((naked)) bool8 MovementAction_WalkInPlaceSlow_Step1(struct ObjectE
     );
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkInPlaceSlowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkInPlaceSlowDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #1\n\t"
-        "	bl GetJumpInPlaceTurnAroundMovementAction\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	lsls r3, r3, #0x18\n\t"
-        "	lsrs r3, r3, #0x18\n\t"
-        "	movs r0, #0x20\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl sub_08093EC4\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_WalkInPlaceSlow_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_08093EC4(objectEvent, sprite, DIR_SOUTH, GetJumpInPlaceTurnAroundMovementAction(DIR_SOUTH), 32);
+    return MovementAction_WalkInPlaceSlow_Step1(objectEvent, sprite);
 }
 
 __attribute__((naked)) bool8 MovementAction_WalkInPlaceSlowUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
