@@ -1361,7 +1361,9 @@ sMapSectionToThemeId: @ 0x8559FC0
 	.byte 0x70, 0xA0, 0x95, 0xFF
 	.globl sBattlePyramid_MapHeaderStrings
 sBattlePyramid_MapHeaderStrings: @ 0x855A074
-	.incbin "baserom_jp.gba", 0x55a074, 0x5f0
+	.4byte 0x0855A028, 0x0855A032, 0x0855A03C, 0x0855A046
+	.4byte 0x0855A050, 0x0855A05A, 0x0855A064, 0x0855A06E
+	.incbin "baserom_jp.gba", 0x55a094, 0x5d0
 
 	.globl gUnknown_855A664
 gUnknown_855A664: @ 0x855A664
