@@ -7411,11 +7411,11 @@ SECTIONS {
         src/slot_machine.o(.text.DrawMachineBias);
         src/slot_machine.o(.text.ResetBiasFailure);
         src/slot_machine.o(.text.GetBiasSymbol);
-        src/slot_machine.o(.text.IsThisRoundLucky);
-        src/slot_machine.o(.text.AttemptsAtLuckyFlags_Top3);
-        src/slot_machine.o(.text.AttemptsAtLuckyFlags_NotTop3);
-        src/slot_machine.o(.text.GetReelTimeProbability);
-        src/slot_machine.o(.text.GetReeltimeDraw);
+        src/slot_machine.o(.text.ShouldTrySpecialBias);
+        src/slot_machine.o(.text.TrySelectBias_Special);
+        src/slot_machine.o(.text.TrySelectBias_Regular);
+        src/slot_machine.o(.text.GetReelTimeSpinProbability);
+        src/slot_machine.o(.text.GetReelTimeDraw);
         src/slot_machine.o(.text.ShouldReelTimeMachineExplode);
         src/slot_machine.o(.text.ReelTimeSpeed);
         src/slot_machine.o(.text.CheckMatch);

@@ -22,42 +22,42 @@ sDigitalDisplayBigBonusOffsets: @ 0x85845E2
 gUnknown_8584638: @ 0x8584638
 	.incbin "baserom_jp.gba", 0x584638, 0xc
 
-	.globl gUnknown_8584644
-gUnknown_8584644: @ 0x8584644
+	.globl sSpecialDrawOdds
+sSpecialDrawOdds: @ 0x8584644
 	.incbin "baserom_jp.gba", 0x584644, 0x12
 
-	.globl gUnknown_8584656
-gUnknown_8584656: @ 0x8584656
+	.globl sBiasProbabilities_Special
+sBiasProbabilities_Special: @ 0x8584656
 	.incbin "baserom_jp.gba", 0x584656, 0x12
 
-	.globl gUnknown_8584668
-gUnknown_8584668: @ 0x8584668
+	.globl sBiasProbabilities_Regular
+sBiasProbabilities_Regular: @ 0x8584668
 	.incbin "baserom_jp.gba", 0x584668, 0x1e
 
-	.globl gUnknown_8584686
-gUnknown_8584686: @ 0x8584686
+	.globl sReelTimeProbabilities_NormalGame
+sReelTimeProbabilities_NormalGame: @ 0x8584686
 	.incbin "baserom_jp.gba", 0x584686, 0x66
 
-	.globl gUnknown_85846EC
-gUnknown_85846EC: @ 0x85846EC
+	.globl sReelTimeProbabilities_LuckyGame
+sReelTimeProbabilities_LuckyGame: @ 0x85846EC
 	.incbin "baserom_jp.gba", 0x5846ec, 0x66
 
 	.section .rodata.858475C
-	.globl gUnknown_858475C
-gUnknown_858475C: @ 0x858475C
+	.globl sReelTimeSpeed_Probabilities
+sReelTimeSpeed_Probabilities: @ 0x858475C
 	.incbin "baserom_jp.gba", 0x58475c, 0x14
 
-	.globl gUnknown_8584770
-gUnknown_8584770: @ 0x8584770
+	.globl sQuarterSpeed_ProbabilityBoost
+sQuarterSpeed_ProbabilityBoost: @ 0x8584770
 	.incbin "baserom_jp.gba", 0x584770, 0xa
 
 	.section .rodata.8584782
-	.globl gUnknown_8584782
-gUnknown_8584782: @ 0x8584782
+	.globl sBiasesSpecial
+sBiasesSpecial: @ 0x8584782
 	.incbin "baserom_jp.gba", 0x584782, 0x6
 
-	.globl gUnknown_8584788
-gUnknown_8584788: @ 0x8584788
+	.globl sBiasesRegular
+sBiasesRegular: @ 0x8584788
 	.incbin "baserom_jp.gba", 0x584788, 0xa
 
 	.section .rodata.85847BE

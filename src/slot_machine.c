@@ -1009,6 +1009,8 @@ enum {
 
 #define MAX_BET 3
 #define REEL_NORMAL_SPEED 8
+#define REEL_HALF_SPEED 4
+#define REEL_QUARTER_SPEED 2
 #define MAX_EXTRA_TURNS 4
 
 #define BIAS_REPLAY     (1 << 0)
@@ -1210,7 +1212,13 @@ extern const u8 gText_ReelTimeHelp[];
 extern const u8 gText_YouveGot9999Coins[];
 extern const u8 gText_YouveRunOutOfCoins[];
 extern const u8 gText_QuitTheGame[];
-void DrawMachineBias(void);
+static void DrawMachineBias(void);
+static void ResetBiasFailure(void);
+static bool8 ShouldTrySpecialBias(void);
+static u8 TrySelectBias_Special(void);
+static u8 TrySelectBias_Regular(void);
+static u8 GetReelTimeSpinProbability(u8 spins);
+static void GetReelTimeDraw(void);
 void DestroyDigitalDisplayScene(void);
 void CreateCoinNumberSprite(s16 x, s16 y, bool8 isPayout, s16 digitMult);
 extern const struct SpriteTemplate sSpriteTemplate_ReelSymbol;
@@ -1256,6 +1264,15 @@ extern const u32 gSlotMachineMenu_Gfx[];
 extern const u16 sUnkPalette[];
 extern const u16 gSlotMachineMenu_Tilemap[];
 extern const u16 gSlotMachineInfoBox_Tilemap[];
+extern const u8 sSpecialDrawOdds[][MAX_BET];
+extern const u8 sBiasProbabilities_Special[][6];
+extern const u8 sBiasProbabilities_Regular[][6];
+extern const u8 sReelTimeProbabilities_NormalGame[][17];
+extern const u8 sReelTimeProbabilities_LuckyGame[][17];
+extern const u16 sReelTimeSpeed_Probabilities[][2];
+extern const u16 sQuarterSpeed_ProbabilityBoost[];
+extern const u16 sBiasesSpecial[3];
+extern const u16 sBiasesRegular[5];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -1268,9 +1285,8 @@ static void EndDigitalDisplayScene_Dummy(void);
 u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId);
 void IncrementDailySlotsUses(void);
 void BeginReelTime(void);
-u16 ReelTimeSpeed(void);
+static u16 ReelTimeSpeed(void);
 bool8 IsReelTimeTaskDone(void);
-void ResetBiasFailure(void);
 static void PressStopReelButton(u8 reelIndex);
 void Task_PressStopReelButton(u8 taskId);
 static void StopReelButton_Press(struct Task *task, u8 taskId);
@@ -1322,7 +1338,7 @@ void CreateReelTimePikachuSprite(void);
 void CreateReelTimeNumberSprites(void);
 void CreateReelTimeShadowSprites(void);
 void CreateReelTimeNumberGapSprite(void);
-void GetReeltimeDraw(void);
+static void GetReelTimeDraw(void);
 static void Task_DigitalDisplay(u8 taskId);
 static void DigitalDisplay_Idle(struct Task *task);
 u8 CreateDigitalDisplaySprite(u8 templateIdx, SpriteCallback callback, s16 x, s16 y, s16 spriteId);
@@ -1854,346 +1870,6 @@ static bool8 SlotTask_FreeDataStructures(struct Task *task)
 }
 
 
-__attribute__((naked)) void DrawMachineBias(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r4, _0812B560\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812B55A\n\t"
-        "	ldrb r1, [r1, #4]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812B55A\n\t"
-        "	bl IsThisRoundLucky\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B53C\n\t"
-        "	bl AttemptsAtLuckyFlags_Top3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #3\n\t"
-        "	beq _0812B53C\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldr r1, _0812B564\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "	cmp r3, #1\n\t"
-        "	bne _0812B55A\n\t"
-        "_0812B53C:\n\t"
-        "	bl AttemptsAtLuckyFlags_NotTop3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	cmp r3, #5\n\t"
-        "	beq _0812B55A\n\t"
-        "	ldr r0, _0812B560\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r1, _0812B568\n\t"
-        "	lsls r0, r3, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2, #4]\n\t"
-        "_0812B55A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B560: .4byte sSlotMachine\n\t"
-        "_0812B564: .4byte gUnknown_8584782\n\t"
-        "_0812B568: .4byte gUnknown_8584788\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void ResetBiasFailure(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r2, _0812B588\n\t"
-        "	ldr r1, [r2]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #6]\n\t"
-        "	ldr r2, [r2]\n\t"
-        "	ldrb r0, [r2, #4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B582\n\t"
-        "	movs r0, #1\n\t"
-        "	strb r0, [r2, #6]\n\t"
-        "_0812B582:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B588: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
-
-__attribute__((naked)) bool8 IsThisRoundLucky(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	ldr r4, _0812B5EC\n\t"
-        "	ldr r1, _0812B5F0\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	movs r3, #0x12\n\t"
-        "	ldrsh r2, [r1, r3]\n\t"
-        "	ldrb r3, [r1, #1]\n\t"
-        "	lsls r1, r3, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	subs r1, #1\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhi _0812B5F4\n\t"
-        "	movs r0, #0\n\t"
-        "	b _0812B5F6\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B5EC: .4byte gUnknown_8584644\n\t"
-        "_0812B5F0: .4byte sSlotMachine\n\t"
-        "_0812B5F4:\n\t"
-        "	movs r0, #1\n\t"
-        "_0812B5F6:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void AttemptsAtLuckyFlags_Top3(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	movs r5, #0\n\t"
-        "	ldr r6, _0812B63C\n\t"
-        "_0812B602:\n\t"
-        "	bl Random\n\t"
-        "	movs r2, #0xff\n\t"
-        "	ldr r1, _0812B640\n\t"
-        "	ldr r3, [r1]\n\t"
-        "	lsls r1, r5, #0x10\n\t"
-        "	asrs r4, r1, #0x10\n\t"
-        "	lsls r1, r4, #1\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	ldrb r3, [r3, #1]\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	adds r1, r1, r6\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ands r2, r0\n\t"
-        "	cmp r1, r2\n\t"
-        "	bgt _0812B630\n\t"
-        "	adds r0, r4, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #2\n\t"
-        "	ble _0812B602\n\t"
-        "_0812B630:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B63C: .4byte gUnknown_8584656\n\t"
-        "_0812B640: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void AttemptsAtLuckyFlags_NotTop3(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	mov r7, r8\n\t"
-        "	push {r7}\n\t"
-        "	movs r6, #0\n\t"
-        "	ldr r0, _0812B688\n\t"
-        "	mov r8, r0\n\t"
-        "	movs r7, #0x80\n\t"
-        "	lsls r7, r7, #0x11\n\t"
-        "_0812B654:\n\t"
-        "	bl Random\n\t"
-        "	movs r5, #0xff\n\t"
-        "	ands r5, r0\n\t"
-        "	ldr r0, _0812B68C\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	lsls r2, r6, #0x10\n\t"
-        "	asrs r1, r2, #0x10\n\t"
-        "	lsls r0, r1, #1\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ldrb r3, [r4, #1]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	add r0, r8\n\t"
-        "	ldrb r3, [r0]\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812B690\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812B690\n\t"
-        "	adds r3, #0xa\n\t"
-        "	asrs r0, r7, #0x10\n\t"
-        "	cmp r3, r0\n\t"
-        "	ble _0812B6AE\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	b _0812B6AE\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B688: .4byte gUnknown_8584668\n\t"
-        "_0812B68C: .4byte sSlotMachine\n\t"
-        "_0812B690:\n\t"
-        "	asrs r0, r2, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	bne _0812B6AE\n\t"
-        "	ldr r0, _0812B6D4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	ldrb r0, [r0, #3]\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812B6AE\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	ldr r1, _0812B6D8\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	cmp r0, #0\n\t"
-        "	bge _0812B6AE\n\t"
-        "	movs r3, #0\n\t"
-        "_0812B6AE:\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, r5\n\t"
-        "	bgt _0812B6C4\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #9\n\t"
-        "	adds r0, r2, r3\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #4\n\t"
-        "	ble _0812B654\n\t"
-        "_0812B6C4:\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B6D4: .4byte sSlotMachine\n\t"
-        "_0812B6D8: .4byte 0xFFF60000\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) u8 GetReelTimeProbability(u8 a)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	ldr r0, _0812B6F0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldrb r0, [r2, #3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B6F8\n\t"
-        "	ldr r0, _0812B6F4\n\t"
-        "	b _0812B6FA\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B6F0: .4byte sSlotMachine\n\t"
-        "_0812B6F4: .4byte gUnknown_85846EC\n\t"
-        "_0812B6F8:\n\t"
-        "	ldr r0, _0812B70C\n\t"
-        "_0812B6FA:\n\t"
-        "	lsls r1, r3, #4\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r2, [r2, #2]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B70C: .4byte gUnknown_8584686\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-__attribute__((naked)) void GetReeltimeDraw(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	ldr r0, _0812B734\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r1, #5]\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #0\n\t"
-        "	bl GetReelTimeProbability\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	blo _0812B764\n\t"
-        "	movs r6, #5\n\t"
-        "	b _0812B73E\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B734: .4byte sSlotMachine\n\t"
-        "_0812B738:\n\t"
-        "	subs r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r6, r0, #0x10\n\t"
-        "_0812B73E:\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r5, r0, #0x10\n\t"
-        "	cmp r5, #0\n\t"
-        "	ble _0812B75E\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	lsls r0, r6, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetReelTimeProbability\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r4, r0\n\t"
-        "	bhs _0812B738\n\t"
-        "_0812B75E:\n\t"
-        "	ldr r0, _0812B76C\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	strb r6, [r0, #5]\n\t"
-        "_0812B764:\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B76C: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
 __attribute__((section(".rodata.sReelTimeExplodeProbability")))
 static const u16 sReelTimeExplodeProbability[] = {
     128, 175, 200, 225, 256
@@ -2209,94 +1885,6 @@ static bool8 ShouldReelTimeMachineExplode(u16 check)
     else
         return FALSE;
 }
-
-__attribute__((naked)) u16 ReelTimeSpeed(void)
-{
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r4, #0\n\t"
-        "	ldr r0, _0812B7B4\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	movs r2, #0x10\n\t"
-        "	ldrsh r1, [r0, r2]\n\t"
-        "	ldr r0, _0812B7B8\n\t"
-        "	cmp r1, r0\n\t"
-        "	ble _0812B7BC\n\t"
-        "	movs r4, #4\n\t"
-        "	b _0812B7D2\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B7B4: .4byte sSlotMachine\n\t"
-        "_0812B7B8: .4byte SPECIAL_DoContestHallWarp\n\t"
-        "_0812B7BC:\n\t"
-        "	cmp r1, #0xf9\n\t"
-        "	ble _0812B7C4\n\t"
-        "	movs r4, #3\n\t"
-        "	b _0812B7D2\n\t"
-        "_0812B7C4:\n\t"
-        "	cmp r1, #0xc7\n\t"
-        "	ble _0812B7CC\n\t"
-        "	movs r4, #2\n\t"
-        "	b _0812B7D2\n\t"
-        "_0812B7CC:\n\t"
-        "	cmp r1, #0x95\n\t"
-        "	ble _0812B7D2\n\t"
-        "	movs r4, #1\n\t"
-        "_0812B7D2:\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	ldr r5, _0812B7F4\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	adds r0, r4, r5\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r1, r0\n\t"
-        "	bhs _0812B7F8\n\t"
-        "	movs r0, #4\n\t"
-        "	b _0812B832\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B7F4: .4byte gUnknown_858475C\n\t"
-        "_0812B7F8:\n\t"
-        "	bl Random\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	movs r1, #0x64\n\t"
-        "	bl __umodsi3\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	adds r2, r5, #2\n\t"
-        "	adds r2, r4, r2\n\t"
-        "	ldr r3, _0812B828\n\t"
-        "	ldr r1, _0812B82C\n\t"
-        "	ldr r1, [r1]\n\t"
-        "	ldrb r1, [r1, #0xb]\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	ldrb r1, [r1]\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	cmp r0, r1\n\t"
-        "	blo _0812B830\n\t"
-        "	movs r0, #8\n\t"
-        "	b _0812B832\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B828: .4byte gUnknown_8584770\n\t"
-        "_0812B82C: .4byte sSlotMachine\n\t"
-        "_0812B830:\n\t"
-        "	movs r0, #2\n\t"
-        "_0812B832:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
-}
-
-
 
 __attribute__((section(".rodata.sSlotMatchFlags")))
 static const u16 sSlotMatchFlags[] = {
@@ -4221,7 +3809,7 @@ static void ReelTime_Init(struct Task *task)
     CreateReelTimeNumberSprites();
     CreateReelTimeShadowSprites();
     CreateReelTimeNumberGapSprite();
-    GetReeltimeDraw();
+    GetReelTimeDraw();
     StopMapMusic();
     PlayNewMapMusic(MUS_ROULETTE);
 }
@@ -6107,5 +5695,159 @@ void AllocDigitalDisplayGfx(void)
     sImageTable_DigitalDisplay_DPad[0].size = 0x180;
     sImageTable_DigitalDisplay_DPad[1].data = sDigitalDisplayGfxPtr + 0x3080;
     sImageTable_DigitalDisplay_DPad[1].size = 0x180;
+}
+
+// NOTE: these functions are placed at the end of the file on purpose: agbcc's
+// register allocation for LoadReelBackground changes if C code precedes it
+// (the ROM only matches when the ReelTime bias/draw helpers come after it).
+static void DrawMachineBias(void)
+{
+    u8 whichBias;
+
+    if (sSlotMachine->reelTimeSpinsLeft == 0)
+    {
+        if (!(sSlotMachine->machineBias & (BIAS_STRAIGHT_7 | BIAS_MIXED_7)))
+        {
+            if (ShouldTrySpecialBias())
+            {
+                whichBias = TrySelectBias_Special();
+                if (whichBias != ARRAY_COUNT(sBiasesSpecial)) // A bias was selected
+                {
+                    sSlotMachine->machineBias |= sBiasesSpecial[whichBias];
+
+                    // ReelTime was not selected; don't add other biases
+                    if (whichBias != 1) return;
+                }
+            }
+
+            whichBias = TrySelectBias_Regular();
+            if (whichBias != ARRAY_COUNT(sBiasesRegular)) // A bias was selected
+                sSlotMachine->machineBias |= sBiasesRegular[whichBias];
+        }
+    }
+}
+
+// Reset `didNotFailBias` to match `machineBias`.
+static void ResetBiasFailure(void)
+{
+    sSlotMachine->didNotFailBias = FALSE;
+    if (sSlotMachine->machineBias)
+        sSlotMachine->didNotFailBias = TRUE;
+}
+
+// JP-specific: decides whether this round is lucky. JP indexes the odds table
+// as a flat array (bet + machineId * 3 - 1); US uses [machineId][bet - 1].
+static bool8 ShouldTrySpecialBias(void)
+{
+    u8 rval = Random();
+    if (sSpecialDrawOdds[sSlotMachine->machineId][sSlotMachine->bet - 1] > rval)
+        return TRUE;
+    return FALSE;
+}
+
+// Draws for a Special bias. Note that even when you're given the opportunity to
+// draw a Special bias, you can still miss.
+static u8 TrySelectBias_Special(void)
+{
+    s16 whichBias;
+
+    for (whichBias = 0; whichBias < (int)ARRAY_COUNT(sBiasesSpecial); whichBias++)
+    {
+        s16 rval = Random() & 0xff;
+        s16 value = sBiasProbabilities_Special[whichBias][sSlotMachine->machineId];
+        if (value > rval)
+            break;
+    }
+    return whichBias;
+}
+
+static u8 TrySelectBias_Regular(void)
+{
+    s16 whichBias;
+
+    for (whichBias = 0; whichBias < (int)ARRAY_COUNT(sBiasesRegular); whichBias++)
+    {
+        s16 rval = Random() & 0xff;
+        s16 value = sBiasProbabilities_Regular[whichBias][sSlotMachine->machineId];
+
+        // Boost odds of BIAS_POWER if it's a lucky game.
+        if (whichBias == 0 && sSlotMachine->luckyGame == TRUE)
+        {
+            value += 10;
+            if (value > 0x100)
+                value = 0x100;
+        }
+        // Reduce odds of BIAS_REPLAY if it's a lucky game
+        else if (whichBias == 4 && sSlotMachine->luckyGame == TRUE)
+        {
+            value -= 10;
+            if (value < 0)
+                value = 0;
+        }
+        if (value > rval)
+            break;
+    }
+    return whichBias;
+}
+
+// Return the probability of drawing the given number of ReelTime spins.
+//
+// This depends on whether it is a lucky game and the number of Power bolts you
+// have collected.
+static u8 GetReelTimeSpinProbability(u8 spins)
+{
+    if (sSlotMachine->luckyGame == FALSE)
+        return sReelTimeProbabilities_NormalGame[spins][sSlotMachine->pikaPowerBolts];
+    else
+        return sReelTimeProbabilities_LuckyGame[spins][sSlotMachine->pikaPowerBolts];
+}
+
+// The way this is computed skews the odds much more toward drawing a 0 than
+// intended. It initially checks whether you draw a 0 (using the intended
+// probability). It then tries to draw positive values, but if these draws all
+// miss, you'll still draw a 0.
+static void GetReelTimeDraw(void)
+{
+    u8 rval;
+    s16 spins;
+
+    sSlotMachine->reelTimeDraw = 0;
+    rval = Random();
+    if (rval < GetReelTimeSpinProbability(0))
+        return;
+    for (spins = 5; spins > 0; spins--)
+    {
+        rval = Random();
+        if (rval < GetReelTimeSpinProbability(spins))
+            break;
+    }
+    sSlotMachine->reelTimeDraw = spins;
+}
+
+static u16 ReelTimeSpeed(void)
+{
+    u8 i = 0;
+    u8 rval;
+    u8 value;
+    if (sSlotMachine->netCoinLoss > 299) // JP threshold uses SPECIAL_DoContestHallWarp (299)
+        i = 4;
+    else if (sSlotMachine->netCoinLoss > 249)
+        i = 3;
+    else if (sSlotMachine->netCoinLoss > 199)
+        i = 2;
+    else if (sSlotMachine->netCoinLoss > 149)
+        i = 1;
+
+    rval = Random() % 100;
+    value = sReelTimeSpeed_Probabilities[i][0];
+    if (rval < value)
+        return REEL_HALF_SPEED;
+
+    rval = Random() % 100;
+    value = sReelTimeSpeed_Probabilities[i][1] + sQuarterSpeed_ProbabilityBoost[sSlotMachine->reelTimeSpinsUsed];
+    if (rval < value)
+        return REEL_QUARTER_SPEED;
+
+    return REEL_NORMAL_SPEED;
 }
 
