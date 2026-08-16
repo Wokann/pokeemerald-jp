@@ -2784,7 +2784,7 @@ __attribute__((naked)) void sub_081C5B7C(void)
         "_081C5BEC: .4byte gStringVar2\n\t"
         "_081C5BF0: .4byte gStringVar4\n\t"
         "_081C5BF4: .4byte gUnknown_85C942E + 0x112\n\t"
-        "_081C5BF8: .4byte gUnknown_85EF764\n\t"
+        "_081C5BF8: .4byte sYesNoTossFuncions\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -4435,4 +4435,3 @@ __attribute__((naked)) void sub_081C680C(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -178,9 +178,9 @@ gUnknown_85EF75E: @ 0x85EF75E
 gUnknown_85EF760: @ 0x85EF760
 	.incbin "baserom_jp.gba", 0x5ef760, 0x4
 
-	.globl gUnknown_85EF764
-gUnknown_85EF764: @ 0x85EF764
-	.incbin "baserom_jp.gba", 0x5ef764, 0x8
+	.globl sYesNoTossFuncions
+sYesNoTossFuncions: @ 0x85EF764
+	.4byte TossItem + 1, DontTossItem + 1
 
 	.globl gUnknown_85EF76C
 gUnknown_85EF76C: @ 0x85EF76C

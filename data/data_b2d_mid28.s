@@ -730,17 +730,17 @@ gUnknown_84E6416: @ 0x84E6416
 gUnknown_84E6A30: @ 0x84E6A30
 	.incbin "baserom_jp.gba", 0x4e6a30, 0x8
 
-	.globl gUnknown_84E6A38
-gUnknown_84E6A38: @ 0x84E6A38
-	.incbin "baserom_jp.gba", 0x4e6a38, 0x18
+	.globl metatileFuncs
+metatileFuncs: @ 0x84E6A38
+	.4byte MetatileBehavior_IsTallGrass + 1, MetatileBehavior_IsLongGrass + 1, MetatileBehavior_IsPuddle + 1, MetatileBehavior_IsSurfableWaterOrUnderwater + 1, MetatileBehavior_IsShallowFlowingWater + 1, MetatileBehavior_IsATile + 1
 
 	.globl gUnknown_84E6A50
 gUnknown_84E6A50: @ 0x84E6A50
 	.incbin "baserom_jp.gba", 0x4e6a50, 0x18
 
-	.globl gUnknown_84E6A68
-gUnknown_84E6A68: @ 0x84E6A68
-	.incbin "baserom_jp.gba", 0x4e6a68, 0x10
+	.globl ledgeBehaviorFuncs
+ledgeBehaviorFuncs: @ 0x84E6A68
+	.4byte MetatileBehavior_IsJumpSouth + 1, MetatileBehavior_IsJumpNorth + 1, MetatileBehavior_IsJumpWest + 1, MetatileBehavior_IsJumpEast + 1
 
 	.globl gUnknown_84E6A78
 gUnknown_84E6A78: @ 0x84E6A78
