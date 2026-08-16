@@ -34,12 +34,6 @@ struct RibbonData { u8 numBits; u8 numRibbons; u8 ribbonId; bool8 isGiftRibbon; 
 extern const struct RibbonData sRibbonData[16]; // ROM 0x085F5E14, 17 entries (loop runs i<=16)
 extern u32 sRibbonDraw_Total;
 extern u32 sRibbonDraw_Current;
-extern const struct OamData sOamData_RibbonIconBig;
-extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[];
-extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[];
-extern const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[];
-extern const union AffineAnimCmd *const sAffineAnims_RibbonIconBig;
-extern const struct SpriteTemplate sSpriteTemplate_RibbonIconBig;
 extern const u8 sText_MaleSymbol[];
 extern const u8 sText_ConditionSearchMonMale[];    // JP 0x085CB7D6
 extern const u8 sText_ConditionSearchMonFemale[];  // JP 0x085CB7EA
@@ -80,12 +74,6 @@ enum
     RIBBONS_SUMMARY_FUNC_EXIT,
 };
 
-u32 LoopedTask_SwitchRibbonsSummaryMon(s32);
-u32 LoopedTask_ExpandSelectedRibbon(s32);
-u32 LoopedTask_MoveRibbonsCursorExpanded(s32);
-u32 LoopedTask_ShrinkExpandedRibbon(s32);
-u32 LoopedTask_ExitRibbonsSummaryMenu(s32);
-
 const struct BgTemplate sRibbonsSummaryBgTemplates[] =
 {
     {
@@ -107,6 +95,12 @@ const struct BgTemplate sRibbonsSummaryBgTemplates[] =
         .baseTile = 0
     },
 };
+
+static u32 LoopedTask_SwitchRibbonsSummaryMon(s32);
+static u32 LoopedTask_ExpandSelectedRibbon(s32);
+static u32 LoopedTask_MoveRibbonsCursorExpanded(s32);
+static u32 LoopedTask_ShrinkExpandedRibbon(s32);
+static u32 LoopedTask_ExitRibbonsSummaryMenu(s32);
 
 const LoopedTask sRibbonsSummaryMenuLoopTaskFuncs[] =
 {
@@ -223,6 +217,61 @@ const struct SpritePalette sSpritePalettes_RibbonIcons[] =
     {sRibbonIcons4_Pal, PALTAG_RIBBON_ICONS_4},
     {sRibbonIcons5_Pal, PALTAG_RIBBON_ICONS_5},
     {},
+};
+
+const struct OamData sOamData_RibbonIconBig =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_NORMAL,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+const union AffineAnimCmd sAffineAnim_RibbonIconBig_Normal[] =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_END
+};
+
+const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomIn[] =
+{
+    AFFINEANIMCMD_FRAME(128, 128, 0, 0),
+    AFFINEANIMCMD_FRAME(32, 32, 0, 4),
+    AFFINEANIMCMD_END
+};
+
+const union AffineAnimCmd sAffineAnim_RibbonIconBig_ZoomOut[] =
+{
+    AFFINEANIMCMD_FRAME(256, 256, 0, 0),
+    AFFINEANIMCMD_FRAME(-32, -32, 0, 4),
+    AFFINEANIMCMD_END
+};
+
+const union AffineAnimCmd *const sAffineAnims_RibbonIconBig[] =
+{
+    sAffineAnim_RibbonIconBig_Normal,
+    sAffineAnim_RibbonIconBig_ZoomIn,
+    sAffineAnim_RibbonIconBig_ZoomOut
+};
+
+const struct SpriteTemplate sSpriteTemplate_RibbonIconBig =
+{
+    .tileTag = GFXTAG_RIBBON_ICONS_BIG,
+    .paletteTag = PALTAG_RIBBON_ICONS_1,
+    .oam = &sOamData_RibbonIconBig,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = sAffineAnims_RibbonIconBig,
+    .callback = SpriteCallbackDummy,
 };
 
 #define RIBBONS_PER_ROW 9
