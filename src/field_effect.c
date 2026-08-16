@@ -3853,22 +3853,11 @@ __attribute__((naked)) void Task_UseDive(u8 taskId)
     );
 }
 
-__attribute__((naked)) bool8 DiveFieldEffect_Init(struct Task *task)
+bool8 DiveFieldEffect_Init(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _080B6CAC\n\t"
-        "	movs r1, #1\n\t"
-        "	strb r1, [r2, #6]\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	adds r1, #1\n\t"
-        "	strh r1, [r0, #8]\n\t"
-        "	movs r0, #0\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_080B6CAC: .4byte gPlayerAvatar\n\t"
-        ".syntax divided\n\t"
-    );
+    gPlayerAvatar.preventStep = TRUE;
+    task->data[0]++;
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 DiveFieldEffect_ShowMon(struct Task *task)

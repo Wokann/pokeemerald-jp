@@ -20780,18 +20780,10 @@ __attribute__((naked)) bool8 MovementAction_ClearAffineAnim_Step0(struct ObjectE
         ".syntax divided\n\t"
     );
 }
-__attribute__((naked)) bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_HideReflection_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldrb r1, [r0, #3]\n\t"
-        "	movs r2, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #3]\n\t"
-        "	movs r0, #1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->hideReflection = TRUE;
+    return TRUE;
 }
 
 
