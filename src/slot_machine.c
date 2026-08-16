@@ -1223,6 +1223,8 @@ extern const struct SpriteTemplate sSpriteTemplate_ReelTimeBolt;
 extern const struct SpriteTemplate sSpriteTemplate_ReelTimePikachuAura;
 extern const struct SpriteTemplate sSpriteTemplate_ReelTimeExplosion;
 extern const struct SpriteTemplate sSpriteTemplate_ReelTimeDuck;
+extern const struct SpriteTemplate sSpriteTemplate_ReelTimeSmoke;
+extern const struct SpriteTemplate sSpriteTemplate_PikaPowerBolt;
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -5353,282 +5355,86 @@ void DestroyReelTimeDuckSprites(void)
     }
 }
 
-__attribute__((naked)) void CreateReelTimeSmokeSprite(void)
+#define sState        data[0]
+#define sMoveY        data[1]
+#define sTimer        data[2]
+#define sAnimFinished data[7]
+
+void CreateReelTimeSmokeSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812EE18\n\t"
-        "	movs r1, #0xa8\n\t"
-        "	movs r2, #0x3c\n\t"
-        "	movs r3, #8\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812EE1C\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #4\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	ldr r0, _0812EE20\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	strb r4, [r0]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EE18: .4byte gUnknown_8584DB4\n\t"
-        "_0812EE1C: .4byte gSprites\n\t"
-        "_0812EE20: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_ReelTimeSmoke, 168, 60, 8);
+    struct Sprite *sprite = &gSprites[spriteId];
+    sprite->oam.priority = 1;
+    sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    InitSpriteAffineAnim(sprite);
+    sSlotMachine->reelTimeSmokeSpriteId = spriteId;
 }
 
-__attribute__((naked)) void sub_0812EE24(void)
+static void SpriteCB_ReelTimeSmoke(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	ldrh r2, [r3, #0x2e]\n\t"
-        "	movs r1, #0x2e\n\t"
-        "	ldrsh r0, [r3, r1]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812EE46\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812EEA0\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	b _0812EEA0\n\t"
-        "_0812EE46:\n\t"
-        "	cmp r0, #1\n\t"
-        "	bne _0812EE82\n\t"
-        "	movs r0, #0x3e\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	mov ip, r0\n\t"
-        "	ldrb r2, [r0]\n\t"
-        "	lsls r0, r2, #0x1d\n\t"
-        "	lsrs r0, r0, #0x1f\n\t"
-        "	movs r1, #1\n\t"
-        "	eors r1, r0\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	movs r0, #5\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ands r0, r2\n\t"
-        "	orrs r0, r1\n\t"
-        "	mov r1, ip\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0x17\n\t"
-        "	ble _0812EEA0\n\t"
-        "	ldrh r0, [r3, #0x2e]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x2e]\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	b _0812EEA0\n\t"
-        "_0812EE82:\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	adds r2, #0x3e\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #4\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldrh r0, [r3, #0x32]\n\t"
-        "	adds r0, #1\n\t"
-        "	strh r0, [r3, #0x32]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	cmp r0, #0xf\n\t"
-        "	ble _0812EEA0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r3, #0x3c]\n\t"
-        "_0812EEA0:\n\t"
-        "	ldrh r0, [r3, #0x30]\n\t"
-        "	movs r1, #0xff\n\t"
-        "	ands r1, r0\n\t"
-        "	adds r1, #0x10\n\t"
-        "	strh r1, [r3, #0x30]\n\t"
-        "	lsrs r1, r1, #8\n\t"
-        "	ldrh r0, [r3, #0x26]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r3, #0x26]\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->sState == 0)
+    {
+        if (sprite->affineAnimEnded)
+            sprite->sState++;
+    }
+    else if (sprite->sState == 1)
+    {
+        sprite->invisible ^= 1;
+        if (++sprite->sTimer >= 24)
+        {
+            sprite->sState++;
+            sprite->sTimer = 0;
+        }
+    }
+    else
+    {
+        sprite->invisible = TRUE;
+        if (++sprite->sTimer >= 16)
+            sprite->sAnimFinished = TRUE;
+    }
+    sprite->sMoveY &= 0xff;
+    sprite->sMoveY += 16;
+    sprite->y2 -= (sprite->sMoveY >> 8);
 }
 
-__attribute__((naked)) bool8 IsReelTimeSmokeAnimFinished(void)
+bool8 IsReelTimeSmokeAnimFinished(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r2, _0812EED4\n\t"
-        "	ldr r0, _0812EED8\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	lsls r0, r1, #4\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	ldrh r0, [r0, #0x3c]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EED4: .4byte gSprites\n\t"
-        "_0812EED8: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    return gSprites[sSlotMachine->reelTimeSmokeSpriteId].sAnimFinished;
 }
 
-__attribute__((naked)) void DestroyReelTimeSmokeSprite(void)
+void DestroyReelTimeSmokeSprite(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812EF08\n\t"
-        "	ldr r0, [r0]\n\t"
-        "	adds r0, #0x43\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0812EF0C\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EF08: .4byte sSlotMachine\n\t"
-        "_0812EF0C: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[sSlotMachine->reelTimeSmokeSpriteId];
+    FreeOamMatrix(sprite->oam.matrixNum);
+    DestroySprite(sprite);
 }
 
-__attribute__((naked)) u8 CreatePikaPowerBoltSprite(s16 x, s16 y)
+#undef sState
+#undef sMoveY
+#undef sTimer
+#undef sAnimFinished
+
+u8 CreatePikaPowerBoltSprite(s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r3, r0, #0\n\t"
-        "	adds r2, r1, #0\n\t"
-        "	ldr r0, _0812EF5C\n\t"
-        "	lsls r3, r3, #0x10\n\t"
-        "	asrs r3, r3, #0x10\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r1, r3, #0\n\t"
-        "	movs r3, #0xc\n\t"
-        "	bl CreateSprite\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	lsls r4, r4, #0x18\n\t"
-        "	lsrs r4, r4, #0x18\n\t"
-        "	lsls r0, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	ldr r1, _0812EF60\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	ldrb r2, [r0, #5]\n\t"
-        "	movs r1, #0xd\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r2\n\t"
-        "	movs r2, #8\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #5]\n\t"
-        "	ldrb r1, [r0, #1]\n\t"
-        "	movs r2, #3\n\t"
-        "	orrs r1, r2\n\t"
-        "	strb r1, [r0, #1]\n\t"
-        "	bl InitSpriteAffineAnim\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EF5C: .4byte gUnknown_8584F1C\n\t"
-        "_0812EF60: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = CreateSprite(&sSpriteTemplate_PikaPowerBolt, x, y, 12);
+    struct Sprite *sprite = &gSprites[spriteId];
+    sprite->oam.priority = 2;
+    sprite->oam.affineMode = ST_OAM_AFFINE_DOUBLE;
+    InitSpriteAffineAnim(sprite);
+    return spriteId;
 }
 
-__attribute__((naked)) void SpriteCB_PikaPowerBolt(struct Sprite *sprite)
+static void SpriteCB_PikaPowerBolt(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	adds r0, #0x3f\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812EF78\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r2, #0x3c]\n\t"
-        "_0812EF78:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sprite->affineAnimEnded)
+        sprite->data[7] = TRUE;
 }
 
-__attribute__((naked)) void DestroyPikaPowerBoltSprite(u8 spriteId)
+void DestroyPikaPowerBoltSprite(u8 spriteId)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _0812EFA4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	ldrb r0, [r4, #3]\n\t"
-        "	lsls r0, r0, #0x1a\n\t"
-        "	lsrs r0, r0, #0x1b\n\t"
-        "	bl FreeOamMatrix\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl DestroySprite\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812EFA4: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    struct Sprite *sprite = &gSprites[spriteId];
+    FreeOamMatrix(sprite->oam.matrixNum);
+    DestroySprite(sprite);
 }
 
 __attribute__((naked)) u8 CreateStdDigitalDisplaySprite(u8 templateIdx, u8 dispInfoId, s16 spriteId)

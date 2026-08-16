@@ -130,12 +130,12 @@ sSpriteTemplate_ReelTimeExplosion: @ 0x8584D84
 sSpriteTemplate_ReelTimeDuck: @ 0x8584D9C
 	.incbin "baserom_jp.gba", 0x584d9c, 0x18
 
-	.globl gUnknown_8584DB4
-gUnknown_8584DB4: @ 0x8584DB4
+	.globl sSpriteTemplate_ReelTimeSmoke
+sSpriteTemplate_ReelTimeSmoke: @ 0x8584DB4
 	.incbin "baserom_jp.gba", 0x584db4, 0x168
 
-	.globl gUnknown_8584F1C
-gUnknown_8584F1C: @ 0x8584F1C
+	.globl sSpriteTemplate_PikaPowerBolt
+sSpriteTemplate_PikaPowerBolt: @ 0x8584F1C
 	.incbin "baserom_jp.gba", 0x584f1c, 0x28
 
 	.globl sSubspriteTable_ReelBackground

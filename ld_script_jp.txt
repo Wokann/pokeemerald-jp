@@ -7575,7 +7575,7 @@ SECTIONS {
         src/slot_machine.o(.text.SpriteCB_ReelTimeDuck);
         src/slot_machine.o(.text.DestroyReelTimeDuckSprites);
         src/slot_machine.o(.text.CreateReelTimeSmokeSprite);
-        src/slot_machine.o(.text.sub_0812EE24);
+        src/slot_machine.o(.text.SpriteCB_ReelTimeSmoke);
         src/slot_machine.o(.text.IsReelTimeSmokeAnimFinished);
         src/slot_machine.o(.text.DestroyReelTimeSmokeSprite);
         src/slot_machine.o(.text.CreatePikaPowerBoltSprite);
