@@ -1062,18 +1062,11 @@ __attribute__((naked)) void CopyRecordedOpponentMonData(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleGetRawMonData(void)
+void RecordedOpponentHandleGetRawMonData(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleSetMonData(void)
 {
@@ -2972,18 +2965,11 @@ __attribute__((naked)) void RecordedOpponentHandleDrawTrainerPic(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleTrainerSlide(void)
+void RecordedOpponentHandleTrainerSlide(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleTrainerSlideBack(void)
 {
@@ -3158,57 +3144,29 @@ __attribute__((naked)) void RecordedOpponentHandleFaintAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandlePaletteFade(void)
+void RecordedOpponentHandlePaletteFade(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleSuccessBallThrowAnim(void)
+
+void RecordedOpponentHandleSuccessBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleBallThrowAnim(void)
+
+void RecordedOpponentHandleBallThrowAnim(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandlePause(void)
+
+void RecordedOpponentHandlePause(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleMoveAnimation(void)
 {
@@ -3600,18 +3558,11 @@ __attribute__((naked)) void RecordedOpponentHandlePrintString(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandlePrintSelectionString(void)
+void RecordedOpponentHandlePrintSelectionString(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleChooseAction(void)
 {
@@ -3698,18 +3649,11 @@ __attribute__((naked)) void RecordedOpponentHandleChooseMove(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleChooseItem(void)
+void RecordedOpponentHandleChooseItem(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleChoosePokemon(void)
 {
@@ -3744,18 +3688,11 @@ __attribute__((naked)) void RecordedOpponentHandleChoosePokemon(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd23(void)
+void RecordedOpponentHandleCmd23(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleHealthBarUpdate(void)
 {
@@ -3869,18 +3806,11 @@ __attribute__((naked)) void RecordedOpponentHandleHealthBarUpdate(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleExpUpdate(void)
+void RecordedOpponentHandleExpUpdate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleStatusIconUpdate(void)
 {
@@ -3997,122 +3927,59 @@ __attribute__((naked)) void RecordedOpponentHandleStatusAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleStatusXor(void)
+void RecordedOpponentHandleStatusXor(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleDataTransfer(void)
+
+void RecordedOpponentHandleDataTransfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleDMA3Transfer(void)
+
+void RecordedOpponentHandleDMA3Transfer(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandlePlayBGM(void)
+
+void RecordedOpponentHandlePlayBGM(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleCmd32(void)
+
+void RecordedOpponentHandleCmd32(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleTwoReturnValues(void)
+
+void RecordedOpponentHandleTwoReturnValues(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleChosenMonReturnValue(void)
+
+void RecordedOpponentHandleChosenMonReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleOneReturnValue(void)
+
+void RecordedOpponentHandleOneReturnValue(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleOneReturnValue_Duplicate(void)
+
+void RecordedOpponentHandleOneReturnValue_Duplicate(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleCmd37(void)
 {
@@ -4920,18 +4787,11 @@ __attribute__((naked)) void RecordedOpponentHandleHidePartyStatusSummary(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleEndBounceEffect(void)
+void RecordedOpponentHandleEndBounceEffect(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleSpriteInvisibility(void)
 {
@@ -5041,31 +4901,17 @@ __attribute__((naked)) void RecordedOpponentHandleBattleAnimation(void)
     );
 }
 
-__attribute__((naked)) void RecordedOpponentHandleLinkStandbyMsg(void)
+void RecordedOpponentHandleLinkStandbyMsg(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
 
-__attribute__((naked)) void RecordedOpponentHandleResetActionMoveSelection(void)
+
+void RecordedOpponentHandleResetActionMoveSelection(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl RecordedOpponentBufferExecCompleted\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    RecordedOpponentBufferExecCompleted();
 }
+
 
 __attribute__((naked)) void RecordedOpponentHandleCmd55(void)
 {

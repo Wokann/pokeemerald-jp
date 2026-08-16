@@ -1462,19 +1462,11 @@ __attribute__((naked)) void Task_SendPacket_SwitchToReceive(void)
     );
 }
 
-__attribute__((naked)) void LoadPtrFromTaskData(void)
+void *LoadPtrFromTaskData(const u16 *asShort)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrh r0, [r1]\n\t"
-        "	ldrh r1, [r1, #2]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	orrs r0, r1\n\t"
-        "	bx lr\n\t"
-        ".syntax divided\n\t"
-    );
+    return (void *)(asShort[0] | (asShort[1] << 16));
 }
+
 
 
 void StorePtrInTaskData(void *records, u16 *asShort)

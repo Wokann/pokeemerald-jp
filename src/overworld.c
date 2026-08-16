@@ -3,6 +3,8 @@
 #include "main.h"
 #include "task.h"
 
+extern void *sUnusedOverworldCallback;
+
 __attribute__((naked)) void DoWhiteOut(void)
 {
     __asm__(".syntax unified\n\t"
@@ -3707,18 +3709,11 @@ __attribute__((naked)) void SetMainCallback1(MainCallback cb)
     );
 }
 
-__attribute__((naked)) void SetUnusedCallback(void *func)
+void SetUnusedCallback(void *func)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r1, _08085804\n\t"
-        "	str r0, [r1]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_08085804: .4byte gUnknown_3000E0C\n\t"
-        ".syntax divided\n\t"
-    );
+    sUnusedOverworldCallback = func;
 }
+
 
 __attribute__((naked)) bool8 RunFieldCallback(void)
 {
