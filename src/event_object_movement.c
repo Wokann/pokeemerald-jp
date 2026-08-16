@@ -37,6 +37,8 @@ extern const u8 gDownUpAndLeftDirections[];
 extern const u8 gDownUpAndRightDirections[];
 extern const u8 gUpLeftAndRightDirections[];
 extern const u8 gDownLeftAndRightDirections[];
+extern const u8 gCounterclockwiseDirections[];
+extern const u8 gClockwiseDirections[];
 extern const s16 sMovementDelaysLong[];
 extern const struct SpritePalette sObjectEventSpritePalettes[];
 extern void (*const gUnknown_84DD88C[])(struct Sprite *);
@@ -5709,74 +5711,24 @@ bool8 MovementType_RotateCounterclockwise_Step1(struct ObjectEvent *objectEvent,
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_RotateCounterclockwise_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_RotateCounterclockwise_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080906F2\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080906F6\n\t"
-        "_080906F2:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_080906F6:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+        sprite->sTypeFuncId = 3;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_RotateCounterclockwise_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_RotateCounterclockwise_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090740\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TryGetTrainerEncounterDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0809072C\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "_0809072C:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090740: .4byte gUnknown_84E5D00\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+    u8 directions[5];
+    memcpy(directions, gCounterclockwiseDirections, sizeof directions);
+    direction = TryGetTrainerEncounterDirection(objectEvent, RUNFOLLOW_ANY);
+    if (direction == DIR_NONE)
+        direction = directions[objectEvent->facingDirection];
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sTypeFuncId = 0;
+    return TRUE;
 }
 
 void MovementType_RotateClockwise(struct Sprite *sprite)
@@ -5825,74 +5777,24 @@ bool8 MovementType_RotateClockwise_Step1(struct ObjectEvent *objectEvent, struct
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_RotateClockwise_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_RotateClockwise_Step2(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl WaitForMovementDelay\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080907F6\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl EventObjectIsTrainerAndCloseToPlayer\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080907FA\n\t"
-        "_080907F6:\n\t"
-        "	movs r0, #3\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "_080907FA:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (WaitForMovementDelay(sprite) || EventObjectIsTrainerAndCloseToPlayer(objectEvent))
+        sprite->sTypeFuncId = 3;
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementType_RotateClockwise_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_RotateClockwise_Step3(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #8\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	ldr r1, _08090844\n\t"
-        "	mov r0, sp\n\t"
-        "	movs r2, #5\n\t"
-        "	bl memcpy\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #0\n\t"
-        "	bl TryGetTrainerEncounterDirection\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _08090830\n\t"
-        "	ldrb r0, [r4, #0x18]\n\t"
-        "	lsls r0, r0, #0x1c\n\t"
-        "	lsrs r0, r0, #0x1c\n\t"
-        "	add r0, sp\n\t"
-        "	ldrb r1, [r0]\n\t"
-        "_08090830:\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl SetEventObjectDirection\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	movs r0, #1\n\t"
-        "	add sp, #8\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08090844: .4byte gUnknown_84E5D18\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 direction;
+    u8 directions[5];
+    memcpy(directions, gClockwiseDirections, sizeof directions);
+    direction = TryGetTrainerEncounterDirection(objectEvent, RUNFOLLOW_ANY);
+    if (direction == DIR_NONE)
+        direction = directions[objectEvent->facingDirection];
+    SetEventObjectDirection(objectEvent, direction);
+    sprite->sTypeFuncId = 0;
+    return TRUE;
 }
 
 void MovementType_WalkBackAndForth(struct Sprite *sprite)

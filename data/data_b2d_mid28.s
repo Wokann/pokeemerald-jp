@@ -285,6 +285,8 @@ gMovementTypeFuncs_RotateCounterclockwise: @ 0x84E5CF0
 gUnknown_84E5D00: @ 0x84E5D00
 	.incbin "baserom_jp.gba", 0x4e5d00, 0x8
 
+	.globl gCounterclockwiseDirections
+	.set gCounterclockwiseDirections, gUnknown_84E5D00
 	.globl gMovementTypeFuncs_RotateClockwise
 gMovementTypeFuncs_RotateClockwise: @ 0x84E5D08
 	.4byte MovementType_RotateClockwise_Step0 + 1, MovementType_RotateClockwise_Step1 + 1, MovementType_RotateClockwise_Step2 + 1, MovementType_RotateClockwise_Step3 + 1
@@ -294,6 +296,8 @@ gMovementTypeFuncs_RotateClockwise: @ 0x84E5D08
 gUnknown_84E5D18: @ 0x84E5D18
 	.incbin "baserom_jp.gba", 0x4e5d18, 0x8
 
+	.globl gClockwiseDirections
+	.set gClockwiseDirections, gUnknown_84E5D18
 	.globl gMovementTypeFuncs_WalkBackAndForth
 gMovementTypeFuncs_WalkBackAndForth: @ 0x84E5D20
 	.4byte MovementType_WalkBackAndForth_Step0 + 1, MovementType_WalkBackAndForth_Step1 + 1, MovementType_WalkBackAndForth_Step2 + 1, MovementType_WalkBackAndForth_Step3 + 1
