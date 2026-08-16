@@ -10,6 +10,7 @@
 #include "constants/coins.h"
 #include "constants/songs.h"
 #include "coins.h"
+#include "constants/game_stat.h"
 #include "string_util.h"
 #include "decompress.h"
 #include "trig.h"
@@ -805,6 +806,19 @@ enum {
 };
 
 enum {
+    MATCH_CHERRY,        // Cherry in center of first reel
+    MATCH_TOPBOT_CHERRY, // Cherry in top/bottom of first reel
+    MATCH_REPLAY,
+    MATCH_LOTAD,
+    MATCH_AZURILL,
+    MATCH_POWER,
+    MATCH_MIXED_7,       // First two 7's are same color; last is other color
+    MATCH_RED_7,
+    MATCH_BLUE_7,
+    MATCH_NONE,
+};
+
+enum {
     SLOTTASK_UNFADE,
     SLOTTASK_WAIT_FADE,
     SLOTTASK_READY_NEW_SPIN,
@@ -1042,6 +1056,9 @@ bool8 IsReelTimeTaskDone(void);
 void ResetBiasFailure(void);
 void PressStopReelButton(u8 reelIndex);
 void TryPutFindThatGamerOnAir(u16 nCoinsPaidOut);
+bool8 IsFinalTask_Task_Payout(void);
+bool8 TryStopSlotMachineLights(void);
+bool8 IsPikaPowerBoltAnimating(void);
 
 #define tTimer data[0]
 #define tTimer2 data[1]
@@ -1491,137 +1508,56 @@ __attribute__((naked)) void SlotAction_CheckMatches(u8 taskId)
     );
 }
 
-__attribute__((naked)) void SlotAction_WaitForPayoutToBeAwarded(u8 taskId)
+static bool8 SlotTask_WaitPayout(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl IsFinalTask_RunAwardPayoutActions\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B020\n\t"
-        "	ldr r0, _0812B028\n\t"
-        "	ldr r1, [r0]\n\t"
-        "	movs r0, #0x10\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B020:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B028: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (IsFinalTask_Task_Payout())
+        sSlotMachine->state = SLOTTASK_END_PAYOUT;
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_EndOfRoll(u8 taskId)
+static bool8 SlotTask_EndPayout(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl sub_0812D0F0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B098\n\t"
-        "	ldr r4, _0812B0A0\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrh r1, [r0, #8]\n\t"
-        "	movs r0, #0xc0\n\t"
-        "	lsls r0, r0, #1\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B054\n\t"
-        "	movs r0, #0x1c\n\t"
-        "	bl IncrementGameStat\n\t"
-        "_0812B054:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrh r1, [r2, #8]\n\t"
-        "	movs r3, #4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B06A\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r0, [r2, #0x18]\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0812B06A:\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrh r1, [r2, #8]\n\t"
-        "	movs r0, #0x20\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B07A\n\t"
-        "	movs r0, #0x11\n\t"
-        "	strb r0, [r2]\n\t"
-        "_0812B07A:\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	ldrb r0, [r1, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B098\n\t"
-        "	ldrh r1, [r1, #8]\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B098\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B098:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B0A0: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (TryStopSlotMachineLights())
+    {
+        sSlotMachine->state = SLOTTASK_RESET_BET_TILES;
+
+        if (sSlotMachine->matches & ((1 << MATCH_RED_7) | (1 << MATCH_BLUE_7)))
+            IncrementGameStat(GAME_STAT_SLOT_JACKPOTS);
+
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
+        {
+            sSlotMachine->currentReel = LEFT_REEL;
+            sSlotMachine->state = SLOTTASK_START_SPIN;
+        }
+
+        if (sSlotMachine->matches & (1 << MATCH_POWER))
+            sSlotMachine->state = SLOTTASK_MATCHED_POWER;
+
+        if (sSlotMachine->reelTimeSpinsLeft && sSlotMachine->matches & (1 << MATCH_REPLAY))
+        {
+            CreateDigitalDisplayScene(DIG_DISPLAY_REEL_TIME);
+            sSlotMachine->state = SLOTTASK_WAIT_RT_ANIM;
+        }
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) void SlotAction_MatchedPower(u8 taskId)
+static bool8 SlotTask_MatchedPower(struct Task *task)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	bl sub_0812D21C\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _0812B0DC\n\t"
-        "	ldr r4, _0812B0E4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x13\n\t"
-        "	strb r0, [r1]\n\t"
-        "	ldr r2, [r4]\n\t"
-        "	ldrh r1, [r2, #8]\n\t"
-        "	movs r0, #4\n\t"
-        "	ands r0, r1\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B0DC\n\t"
-        "	movs r0, #9\n\t"
-        "	strb r0, [r2]\n\t"
-        "	ldr r0, [r4]\n\t"
-        "	ldrb r0, [r0, #0xa]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _0812B0DC\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_0812DEF4\n\t"
-        "	ldr r1, [r4]\n\t"
-        "	movs r0, #0x12\n\t"
-        "	strb r0, [r1]\n\t"
-        "_0812B0DC:\n\t"
-        "	movs r0, #0\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_0812B0E4: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!IsPikaPowerBoltAnimating())
+    {
+        sSlotMachine->state = SLOTTASK_RESET_BET_TILES;
+        if (sSlotMachine->matches & (1 << MATCH_REPLAY))
+        {
+            sSlotMachine->state = SLOTTASK_START_SPIN;
+            if (sSlotMachine->reelTimeSpinsLeft)
+            {
+                CreateDigitalDisplayScene(DIG_DISPLAY_REEL_TIME);
+                sSlotMachine->state = SLOTTASK_WAIT_RT_ANIM;
+            }
+        }
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) void SlotAction18(u8 taskId)
@@ -2957,7 +2893,7 @@ __attribute__((naked)) void AwardPayout(u8 taskId)
     );
 }
 
-__attribute__((naked)) void IsFinalTask_RunAwardPayoutActions(u8 taskId)
+__attribute__((naked)) bool8 IsFinalTask_Task_Payout(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"

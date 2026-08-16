@@ -7394,9 +7394,9 @@ SECTIONS {
         src/slot_machine.o(.text.SlotTask_WaitReelStop);
         src/slot_machine.o(.text.SlotTask_WaitAllReelsStop);
         src/slot_machine.o(.text.SlotAction_CheckMatches);
-        src/slot_machine.o(.text.SlotAction_WaitForPayoutToBeAwarded);
-        src/slot_machine.o(.text.SlotAction_EndOfRoll);
-        src/slot_machine.o(.text.SlotAction_MatchedPower);
+        src/slot_machine.o(.text.SlotTask_WaitPayout);
+        src/slot_machine.o(.text.SlotTask_EndPayout);
+        src/slot_machine.o(.text.SlotTask_MatchedPower);
         src/slot_machine.o(.text.SlotAction18);
         src/slot_machine.o(.text.SlotAction_Loop);
         src/slot_machine.o(.text.SlotTask_NoMatches);
@@ -7424,7 +7424,7 @@ SECTIONS {
         src/slot_machine.o(.text.CheckMatch_Diagonals);
         src/slot_machine.o(.text.GetMatchFromSymbolsInRow);
         src/slot_machine.o(.text.AwardPayout);
-        src/slot_machine.o(.text.IsFinalTask_RunAwardPayoutActions);
+        src/slot_machine.o(.text.IsFinalTask_Task_Payout);
         src/slot_machine.o(.text.RunAwardPayoutActions);
         src/slot_machine.o(.text.AwardPayoutAction0);
         src/slot_machine.o(.text.AwardPayoutAction_GivePayoutToPlayer);
