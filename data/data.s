@@ -1,15 +1,20 @@
 	.section .rodata
 	.globl gGameVersion
 gGameVersion: @ 0x829BDA4
-	.incbin "baserom_jp.gba", 0x29bda4, 0x1
+	.byte 0x03
 
 	.globl gGameLanguage
 gGameLanguage: @ 0x829BDA5
-	.incbin "baserom_jp.gba", 0x29bda5, 0x17
+	.byte 0x01, 0x00, 0x00
+	.asciz "2004 06 30 18:43"
+	.byte 0x00, 0x00, 0x00
 
 	.globl gIntrTableTemplate
 gIntrTableTemplate: @ 0x829BDBC
-	.incbin "baserom_jp.gba", 0x29bdbc, 0x38
+	.4byte 0x08000845, 0x08000879, 0x0800B4E5, 0x08000815
+	.4byte 0x08000739, 0x080008A9, 0x080008A9, 0x080008A9
+	.4byte 0x080008A9, 0x080008A9, 0x080008A9, 0x080008A9
+	.4byte 0x080008A9, 0x080008A9
 
 	.globl sMallocAssertFile
 sMallocAssertFile: @ 0x829BDF4
@@ -88,7 +93,12 @@ sWindowVerticalScrollSpeeds: @ 0x829C63C
 
 	.globl sGlyphWidthFuncs
 sGlyphWidthFuncs: @ 0x829C640
-	.incbin "baserom_jp.gba", 0x29c640, 0x30
+	.4byte 0x00000000, 0x08006301
+	.4byte 0x00000001, 0x08006351
+	.4byte 0x00000002, 0x080063F9
+	.4byte 0x00000003, 0x080064B5
+	.4byte 0x00000004, 0x0800655D
+	.4byte 0x00000005, 0x08006621
 
 	.globl sKeypadIcons
 sKeypadIcons: @ 0x829C670
