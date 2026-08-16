@@ -201,8 +201,8 @@ gUnknown_85855B4: @ 0x85855B4
 sPokeballShiningPalTable: @ 0x8585614
 	.incbin "baserom_jp.gba", 0x585614, 0x10
 
-	.globl gUnknown_8585624
-gUnknown_8585624: @ 0x8585624
+	.globl sDigitalDisplay_Pal
+sDigitalDisplay_Pal: @ 0x8585624
 	.incbin "baserom_jp.gba", 0x585624, 0x4
 
 	.globl gUnknown_8585628

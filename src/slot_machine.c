@@ -1239,6 +1239,7 @@ extern const s16 sDigitalDisplayRegBonusXOffsets[];
 extern const s16 sDigitalDisplayRegBonusYOffsets[];
 extern const s16 sDigitalDisplayRegBonusDelays[];
 extern const s16 sDigitalDisplayBigBonusOffsets[];
+extern const u16 *const sDigitalDisplay_Pal;
 extern const struct SubspriteTable sSubspriteTable_ReelTimeShadow[];
 extern const struct SubspriteTable sSubspriteTable_ReelTimeNumberGap[];
 // JP ROM keeps the aura flash colors / duck offsets as data symbols (US has them inline).
@@ -5852,73 +5853,22 @@ static void EndDigitalDisplayScene_Dummy(void)
 {
 }
 
-__attribute__((naked)) void EndDigitalDisplayScene_StopReel(void)
+static void EndDigitalDisplayScene_StopReel(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #0x4c\n\t"
-        "	movs r1, #0\n\t"
-        "	bl SetGpuReg\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetGpuReg(REG_OFFSET_MOSAIC, 0);
 }
 
-__attribute__((naked)) void EndDigitalDisplayScene_Win(void)
+static void EndDigitalDisplayScene_Win(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldr r0, _0812F7CC\n\t"
-        "	ldr r4, [r0]\n\t"
-        "	movs r0, #6\n\t"
-        "	bl IndexOfSpritePaletteTag\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #4\n\t"
-        "	movs r0, #0x80\n\t"
-        "	lsls r0, r0, #0x11\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	lsrs r1, r1, #0x10\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #0x20\n\t"
-        "	bl LoadPalette\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F7CC: .4byte gUnknown_8585624\n\t"
-        ".syntax divided\n\t"
-    );
+    LoadPalette(sDigitalDisplay_Pal, OBJ_PLTT_ID(IndexOfSpritePaletteTag(PALTAG_DIG_DISPLAY)), PLTT_SIZE_4BPP);
 }
 
-__attribute__((naked)) void EndDigitalDisplayScene_InsertBet(void)
+static void EndDigitalDisplayScene_InsertBet(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	ldr r0, _0812F7F0\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r1, #0x58\n\t"
-        "	movs r0, #0xf0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r1, #2\n\t"
-        "	movs r0, #0xa0\n\t"
-        "	strh r0, [r1]\n\t"
-        "	adds r0, r2, #0\n\t"
-        "	adds r0, #0x5c\n\t"
-        "	movs r1, #0x3f\n\t"
-        "	strh r1, [r0]\n\t"
-        "	adds r0, #2\n\t"
-        "	strh r1, [r0]\n\t"
-        "	bx lr\n\t"
-        "	.align 2, 0\n\t"
-        "_0812F7F0: .4byte sSlotMachine\n\t"
-        ".syntax divided\n\t"
-    );
+    sSlotMachine->win0h = DISPLAY_WIDTH;
+    sSlotMachine->win0v = DISPLAY_HEIGHT;
+    sSlotMachine->winIn = WININ_WIN0_BG_ALL | WININ_WIN0_OBJ | WININ_WIN0_CLR;
+    sSlotMachine->winOut = WINOUT_WIN01_BG_ALL | WINOUT_WIN01_OBJ | WINOUT_WIN01_CLR;
 }
 
 __attribute__((naked)) void LoadSlotMachineGfx(void)
