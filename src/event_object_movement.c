@@ -15197,128 +15197,42 @@ bool8 MovementAction_WalkDownAffine_Step1(struct ObjectEvent *objectEvent, struc
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkLeftAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkLeftAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r2, #3\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitMovementNormal\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #2\n\t"
-        "	bl ChangeSpriteAffineAnimIfDifferent\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MovementAction_WalkLeftAffine_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_WEST, MOVE_SPEED_FAST_1);
+    sprite->affineAnimPaused = FALSE;
+    ChangeSpriteAffineAnimIfDifferent(sprite, 2);
+    return MovementAction_WalkLeftAffine_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkLeftAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkLeftAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080951B6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080951C8\n\t"
-        "_080951B6:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080951C8:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->affineAnimPaused = TRUE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkRightAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkRightAffine_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	movs r2, #4\n\t"
-        "	movs r3, #1\n\t"
-        "	bl InitMovementNormal\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r1, [r2]\n\t"
-        "	movs r0, #0x7f\n\t"
-        "	ands r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl ChangeSpriteAffineAnimIfDifferent\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl MovementAction_WalkRightAffine_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    InitMovementNormal(objectEvent, sprite, DIR_EAST, MOVE_SPEED_FAST_1);
+    sprite->affineAnimPaused = FALSE;
+    ChangeSpriteAffineAnimIfDifferent(sprite, 3);
+    return MovementAction_WalkRightAffine_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_WalkRightAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_WalkRightAffine_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	bl UpdateMovementNormal\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08095216\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08095228\n\t"
-        "_08095216:\n\t"
-        "	adds r2, r4, #0\n\t"
-        "	adds r2, #0x2c\n\t"
-        "	ldrb r0, [r2]\n\t"
-        "	movs r1, #0x80\n\t"
-        "	orrs r0, r1\n\t"
-        "	strb r0, [r2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r4, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_08095228:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (UpdateMovementNormal(objectEvent, sprite))
+    {
+        sprite->affineAnimPaused = TRUE;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 void AcroWheelieFaceDirection(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction)
