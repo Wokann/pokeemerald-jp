@@ -2133,160 +2133,71 @@ static void CheckMatch_TopAndBottom(void)
 
 
 
-__attribute__((naked)) void CheckMatch_Diagonals(void)
+
+__attribute__((section(".rodata.sSymbolToMatch")))
+static const u8 sSymbolToMatch[] = {
+    [SYMBOL_7_RED]   = MATCH_RED_7,
+    [SYMBOL_7_BLUE]  = MATCH_BLUE_7,
+    [SYMBOL_AZURILL] = MATCH_AZURILL,
+    [SYMBOL_LOTAD]   = MATCH_LOTAD,
+    [SYMBOL_CHERRY]  = MATCH_CHERRY,
+    [SYMBOL_POWER]   = MATCH_POWER,
+    [SYMBOL_REPLAY]  = MATCH_REPLAY,
+    [SYMBOL_REPLAY + 1] = 0, // JP ROM trailing padding byte
+};
+
+static void CheckMatch_Diagonals(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbols\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	beq _0812BA0E\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812BA08\n\t"
-        "	ldr r0, _0812BA70\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0812BA74\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0xe]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _0812BA78\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "_0812BA08:\n\t"
-        "	movs r0, #3\n\t"
-        "	bl sub_0812CF44\n\t"
-        "_0812BA0E:\n\t"
-        "	movs r0, #0\n\t"
-        "	movs r1, #3\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	movs r0, #1\n\t"
-        "	movs r1, #2\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r4, r0, #0x18\n\t"
-        "	movs r0, #2\n\t"
-        "	movs r1, #1\n\t"
-        "	bl GetSymbolAtRest\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	bl GetMatchFromSymbols\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #9\n\t"
-        "	beq _0812BA6A\n\t"
-        "	cmp r1, #0\n\t"
-        "	beq _0812BA64\n\t"
-        "	ldr r0, _0812BA70\n\t"
-        "	ldr r2, [r0]\n\t"
-        "	ldr r0, _0812BA74\n\t"
-        "	lsls r1, r1, #1\n\t"
-        "	adds r0, r1, r0\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	ldrh r3, [r2, #0xe]\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	strh r0, [r2, #0xe]\n\t"
-        "	ldr r0, _0812BA78\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	ldrh r0, [r2, #8]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	orrs r0, r1\n\t"
-        "	strh r0, [r2, #8]\n\t"
-        "_0812BA64:\n\t"
-        "	movs r0, #4\n\t"
-        "	bl sub_0812CF44\n\t"
-        "_0812BA6A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BA70: .4byte sSlotMachine\n\t"
-        "_0812BA74: .4byte sSlotPayouts\n\t"
-        "_0812BA78: .4byte sSlotMatchFlags\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 sym1, sym2, sym3, match;
+
+    sym1 = GetSymbolAtRest(LEFT_REEL, 1);
+    sym2 = GetSymbolAtRest(MIDDLE_REEL, 2);
+    sym3 = GetSymbolAtRest(RIGHT_REEL, 3);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
+    {
+        // Don't add payout for cherry, since it's already counted in
+        // CheckMatch_TopAndBottom().
+        if (match != MATCH_CHERRY)
+        {
+            sSlotMachine->payout += sSlotPayouts[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
+        }
+        FlashMatchLine(MATCH_NWSE_DIAG);
+    }
+    sym1 = GetSymbolAtRest(LEFT_REEL, 3);
+    sym2 = GetSymbolAtRest(MIDDLE_REEL, 2);
+    sym3 = GetSymbolAtRest(RIGHT_REEL, 1);
+    match = GetMatchFromSymbols(sym1, sym2, sym3);
+    if (match != MATCH_NONE)
+    {
+        // Don't add payout for cherry, since it's already counted in
+        // CheckMatch_TopAndBottom().
+        if (match != MATCH_CHERRY)
+        {
+            sSlotMachine->payout += sSlotPayouts[match];
+            sSlotMachine->matches |= sSlotMatchFlags[match];
+        }
+        FlashMatchLine(MATCH_NESW_DIAG);
+    }
 }
 
-__attribute__((naked)) u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
+static u8 GetMatchFromSymbols(u8 sym1, u8 sym2, u8 sym3)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r3, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	cmp r3, r1\n\t"
-        "	bne _0812BAA0\n\t"
-        "	cmp r3, r2\n\t"
-        "	bne _0812BAA0\n\t"
-        "	ldr r0, _0812BA9C\n\t"
-        "	adds r0, r3, r0\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	b _0812BAC6\n\t"
-        "	.align 2, 0\n\t"
-        "_0812BA9C: .4byte gUnknown_8584792\n\t"
-        "_0812BAA0:\n\t"
-        "	cmp r3, #0\n\t"
-        "	bne _0812BAAC\n\t"
-        "	cmp r1, #0\n\t"
-        "	bne _0812BAAC\n\t"
-        "	cmp r2, #1\n\t"
-        "	beq _0812BAB8\n\t"
-        "_0812BAAC:\n\t"
-        "	cmp r3, #1\n\t"
-        "	bne _0812BABC\n\t"
-        "	cmp r1, #1\n\t"
-        "	bne _0812BABC\n\t"
-        "	cmp r2, #0\n\t"
-        "	bne _0812BABC\n\t"
-        "_0812BAB8:\n\t"
-        "	movs r0, #6\n\t"
-        "	b _0812BAC6\n\t"
-        "_0812BABC:\n\t"
-        "	cmp r3, #4\n\t"
-        "	beq _0812BAC4\n\t"
-        "	movs r0, #9\n\t"
-        "	b _0812BAC6\n\t"
-        "_0812BAC4:\n\t"
-        "	movs r0, #0\n\t"
-        "_0812BAC6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (sym1 == sym2 && sym1 == sym3)
+        return sSymbolToMatch[sym1];
+    if (sym1 == SYMBOL_7_RED && sym2 == SYMBOL_7_RED && sym3 == SYMBOL_7_BLUE)
+        return MATCH_MIXED_7;
+    if (sym1 == SYMBOL_7_BLUE && sym2 == SYMBOL_7_BLUE && sym3 == SYMBOL_7_RED)
+        return MATCH_MIXED_7;
+    if (sym1 == SYMBOL_CHERRY)
+        return MATCH_CHERRY;
+    return MATCH_NONE;
 }
+
+
+
+
 
 __attribute__((naked)) void AwardPayout(void)
 {

@@ -9344,6 +9344,7 @@ SECTIONS {
         data/data_b2d_mid61.o(.rodata.858448C);
         src/data/text/region_texts62.o(.rodata);
         data/data_b2d_mid62.o(.rodata);
+        src/slot_machine.o(.rodata.sSymbolToMatch);
         src/slot_machine.o(.rodata.sSlotMatchFlags);
         src/slot_machine.o(.rodata.sSlotPayouts);
         data/data_b2d_mid62.o(.rodata.85847BE);
