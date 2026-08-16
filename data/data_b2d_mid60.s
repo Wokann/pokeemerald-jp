@@ -1014,12 +1014,26 @@ sAffineAnims_FlashingSpark: @ 0x571370
 gZapCannonSparkSpriteTemplate: @ 0x571374
 	.hword 0x271B, 0x271B
 	.4byte 0x084FD078, 0x082BF304, 0, 0x08571370, 0x0810ACBD
-	.incbin "baserom_jp.gba", 0x57138c, 0x38
+sAnim_ThunderboltOrb: @ 0x57138C
+	.hword 0x0000, 0x0006, 0x0010, 0x0006
+	.hword 0x0020, 0x0006, 0xFFFE, 0x0000
+
+sAnims_ThunderboltOrb: @ 0x57139C
+	.4byte sAnim_ThunderboltOrb
+
+sAffineAnim_ThunderboltOrb: @ 0x5713A0
+	.hword 0x00E8, 0x00E8, 0x0000, 0x0000
+	.hword 0xFFF8, 0xFFF8, 0x0A00, 0x0000
+	.hword 0x0008, 0x0008, 0x0A00, 0x0000
+	.hword 0x7FFE, 0x0001, 0x0000, 0x0000
+
+sAffineAnims_ThunderboltOrb: @ 0x5713C0
+	.4byte sAffineAnim_ThunderboltOrb
 
 	.globl gThunderboltOrbSpriteTemplate
 gThunderboltOrbSpriteTemplate: @ 0x5713C4
 	.hword 0x282A, 0x282A
-	.4byte 0x084FD080, 0x0857139C, 0, 0x085713C0, 0x0810AE0D
+	.4byte 0x084FD080, sAnims_ThunderboltOrb, 0, sAffineAnims_ThunderboltOrb, 0x0810AE0D
 
 	.globl gSparkElectricityFlashingSpriteTemplate
 gSparkElectricityFlashingSpriteTemplate: @ 0x5713DC
