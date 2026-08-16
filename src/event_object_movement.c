@@ -14082,7 +14082,7 @@ __attribute__((naked)) bool8 sub_08093934(struct ObjectEvent *objectEvent, struc
     );
 }
 
-__attribute__((naked)) bool8 maybe_shadow_1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+__attribute__((naked)) bool8 maybe_shadow_1(struct ObjectEvent *objectEvent, struct Sprite *sprite, u8 direction, u8 distance, u8 type)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -15348,63 +15348,21 @@ bool8 MovementAction_UnlockFacingDirection_Step0(struct ObjectEvent *objectEvent
 
 
 
-__attribute__((naked)) bool8 MovementAction_JumpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpDown_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	movs r0, #2\n\t"
-        "	str r0, [sp]\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	movs r3, #1\n\t"
-        "	bl maybe_shadow_1\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r5, #0\n\t"
-        "	bl MovementAction_JumpDown_Step1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    maybe_shadow_1(objectEvent, sprite, DIR_SOUTH, 1, JUMP_TYPE_NORMAL);
+    return MovementAction_JumpDown_Step1(objectEvent, sprite);
 }
 
-__attribute__((naked)) bool8 MovementAction_JumpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_JumpDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl DoJumpAnim\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080949C8\n\t"
-        "	movs r0, #0\n\t"
-        "	b _080949D8\n\t"
-        "_080949C8:\n\t"
-        "	ldrb r0, [r4, #2]\n\t"
-        "	movs r1, #0x41\n\t"
-        "	rsbs r1, r1, #0\n\t"
-        "	ands r1, r0\n\t"
-        "	strb r1, [r4, #2]\n\t"
-        "	movs r0, #2\n\t"
-        "	strh r0, [r5, #0x32]\n\t"
-        "	movs r0, #1\n\t"
-        "_080949D8:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (DoJumpAnim(objectEvent, sprite))
+    {
+        objectEvent->hasShadow = 0;
+        sprite->sActionFuncId = 2;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 __attribute__((naked)) bool8 MovementAction_JumpUp_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
