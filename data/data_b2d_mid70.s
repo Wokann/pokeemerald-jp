@@ -633,9 +633,13 @@ gUnknown_85C6010: @ 0x85C6010
 gUnknown_85C6040: @ 0x85C6040
 	.incbin "baserom_jp.gba", 0x5c6040, 0x18
 
-	.globl gUnknown_85C6058
-gUnknown_85C6058: @ 0x85C6058
-	.incbin "baserom_jp.gba", 0x5c6058, 0x20
+	.globl sGameFreakLetterStartDelays
+sGameFreakLetterStartDelays: @ 0x85C6058
+	.byte 0x00, 0x17, 0x17, 0x31, 0x3E, 0x24, 0x24, 0x0A, 0x0A
+
+	.globl gUnknown_85C6061
+gUnknown_85C6061: @ 0x85C6061
+	.incbin "baserom_jp.gba", 0x5c6061, 0x17
 
 	.globl gUnknown_85C6078
 gUnknown_85C6078: @ 0x85C6078

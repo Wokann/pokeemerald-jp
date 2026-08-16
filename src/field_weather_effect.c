@@ -6035,7 +6035,7 @@ __attribute__((naked)) void TranslateWeatherNum(void)
         "	ldr r1, _080AE894\n\t"
         "	b _080AE89A\n\t"
         "	.align 2, 0\n\t"
-        "_080AE894: .4byte gUnknown_852AAF8\n\t"
+        "_080AE894: .4byte sWeatherCycleRoute119\n\t"
         "_080AE898:\n\t"
         "	ldr r1, _080AE8A8\n\t"
         "_080AE89A:\n\t"
@@ -6047,7 +6047,7 @@ __attribute__((naked)) void TranslateWeatherNum(void)
         "	ldrb r0, [r0]\n\t"
         "	b _080AE8B2\n\t"
         "	.align 2, 0\n\t"
-        "_080AE8A8: .4byte gUnknown_852AAFC\n\t"
+        "_080AE8A8: .4byte sWeatherCycleRoute123\n\t"
         "_080AE8AC: .4byte gSaveBlock1Ptr\n\t"
         "_080AE8B0:\n\t"
         "	movs r0, #0\n\t"
@@ -6107,4 +6107,3 @@ __attribute__((naked)) void UpdateRainCounter(void)
         ".syntax divided\n\t"
     );
 }
-

@@ -1550,7 +1550,7 @@ __attribute__((naked)) void SetSecretBaseOwnerGfxId(void)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080EA29C: .4byte 0x0000401F\n\t"
-        "_080EA2A0: .4byte gUnknown_8568B0C\n\t"
+        "_080EA2A0: .4byte sSecretBaseOwnerGfxIds\n\t"
         "_080EA2A4: .4byte 0x00004054\n\t"
         ".syntax divided\n\t"
     );

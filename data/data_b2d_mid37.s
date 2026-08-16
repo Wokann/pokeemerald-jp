@@ -37,9 +37,13 @@ gUnknown_8568AF4: @ 0x8568AF4
 gUnknown_8568B04: @ 0x8568B04
 	.incbin "baserom_jp.gba", 0x568b04, 0x8
 
-	.globl gUnknown_8568B0C
-gUnknown_8568B0C: @ 0x8568B0C
-	.incbin "baserom_jp.gba", 0x568b0c, 0xc
+	.globl sSecretBaseOwnerGfxIds
+sSecretBaseOwnerGfxIds: @ 0x8568B0C
+	.byte 0x23, 0x24, 0x0F, 0x1F, 0x21, 0x2F, 0x0E, 0x14, 0x20, 0x22
+
+	.globl gUnknown_8568B16
+gUnknown_8568B16: @ 0x8568B16
+	.byte 0x00, 0x00
 
 	.globl gUnknown_8568B18
 gUnknown_8568B18: @ 0x8568B18

@@ -6596,7 +6596,7 @@ __attribute__((naked)) void CreatePart1Animations(void)
         "_0816FCC0: .4byte 0xFFFC0000\n\t"
         "_0816FCC4: .4byte gUnknown_85C6010\n\t"
         "_0816FCC8: .4byte gSprites\n\t"
-        "_0816FCCC: .4byte gUnknown_85C6058\n\t"
+        "_0816FCCC: .4byte sGameFreakLetterStartDelays\n\t"
         "_0816FCD0: .4byte gUnknown_85C6040\n\t"
         ".syntax divided\n\t"
     );

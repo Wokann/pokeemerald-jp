@@ -6428,13 +6428,13 @@ gUnknown_852AA9C: @ 0x852AA9C
 gUnknown_852AAE0: @ 0x852AAE0
 	.incbin "baserom_jp.gba", 0x52aae0, 0x18
 
-	.globl gUnknown_852AAF8
-gUnknown_852AAF8: @ 0x852AAF8
-	.incbin "baserom_jp.gba", 0x52aaf8, 0x4
+	.globl sWeatherCycleRoute119
+sWeatherCycleRoute119: @ 0x852AAF8
+	.byte 0x02, 0x03, 0x05, 0x03
 
-	.globl gUnknown_852AAFC
-gUnknown_852AAFC: @ 0x852AAFC
-	.incbin "baserom_jp.gba", 0x52aafc, 0x4
+	.globl sWeatherCycleRoute123
+sWeatherCycleRoute123: @ 0x852AAFC
+	.byte 0x02, 0x02, 0x03, 0x02
 
 	.globl sFlashLevelToRadius
 sFlashLevelToRadius: @ 0x852AB00
