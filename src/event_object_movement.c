@@ -24,6 +24,8 @@ extern const u8 gWalkInPlaceSlowMovementActions[];
 extern const u8 gWalkNormalMovementActions[];
 extern const u8 gWalkSlowMovementActions[];
 extern const u8 sElevationToPriority[];
+extern const s16 sMovementDelaysMedium[];
+extern const s16 sMovementDelaysLong[];
 extern u8 (*const gGetVectorDirectionFuncs[])(s16, s16, s16, s16);
 extern const struct SpriteTemplate gUnknown_846FA28;
 extern void (*const gUnknown_846FA40[])(struct Sprite *);

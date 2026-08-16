@@ -107,6 +107,11 @@ gSpritePalette_GeneralFieldEffect1: @ 0x84E4E1C
 gUnknown_84E5B30: @ 0x84E5B30
 	.incbin "baserom_jp.gba", 0x4e5b30, 0x10
 
+	.globl sMovementDelaysMedium
+	.set sMovementDelaysMedium, gUnknown_84E5B30
+	.globl sMovementDelaysLong
+	.set sMovementDelaysLong, gUnknown_84E5B30 + 8
+
 	.globl gUnknown_84E5B40
 gUnknown_84E5B40: @ 0x84E5B40
 	.incbin "baserom_jp.gba", 0x4e5b40, 0x8
