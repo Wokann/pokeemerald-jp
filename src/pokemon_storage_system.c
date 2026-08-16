@@ -14255,7 +14255,7 @@ void InitMonPlaceChange(u8 type)
     sStorage->monPlaceChangeState = 0;
 }
 
-__attribute__((naked)) void sub_080CD4E0(void)
+__attribute__((naked)) void InitMultiMonPlaceChange(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14272,7 +14272,7 @@ __attribute__((naked)) void sub_080CD4E0(void)
         "	.align 2, 0\n\t"
         "_080CD4F4: .4byte gUnknown_20399A8\n\t"
         "_080CD4F8: .4byte 0x00000D8C\n\t"
-        "_080CD4FC: .4byte sub_080CD730 + 1\n\t"
+        "_080CD4FC: .4byte MultiMonPlaceChange_Down + 1\n\t"
         "_080CD500:\n\t"
         "	ldr r0, _080CD51C\n\t"
         "	ldr r1, [r0]\n\t"
@@ -14292,7 +14292,7 @@ __attribute__((naked)) void sub_080CD4E0(void)
         "	.align 2, 0\n\t"
         "_080CD51C: .4byte gUnknown_20399A8\n\t"
         "_080CD520: .4byte 0x00000D8C\n\t"
-        "_080CD524: .4byte sub_080CD740 + 1\n\t"
+        "_080CD524: .4byte MultiMonPlaceChange_Up + 1\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14348,7 +14348,7 @@ __attribute__((naked)) void MonPlaceChange_Grab(void)
         "	.align 2, 0\n\t"
         "_080CD594: .4byte 0x00000CB4\n\t"
         "_080CD598:\n\t"
-        "	bl sub_080CD750\n\t"
+        "	bl MonPlaceChange_CursorDown\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CD5D0\n\t"
@@ -14363,7 +14363,7 @@ __attribute__((naked)) void MonPlaceChange_Grab(void)
         "	.align 2, 0\n\t"
         "_080CD5B8: .4byte 0x00000CB4\n\t"
         "_080CD5BC:\n\t"
-        "	bl sub_080CD784\n\t"
+        "	bl MonPlaceChange_CursorUp\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CD5D0\n\t"
@@ -14408,7 +14408,7 @@ __attribute__((naked)) void MonPlaceChange_Place(void)
         "	beq _080CD648\n\t"
         "	b _080CD64C\n\t"
         "_080CD5FE:\n\t"
-        "	bl sub_080CD750\n\t"
+        "	bl MonPlaceChange_CursorDown\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CD64C\n\t"
@@ -14423,7 +14423,7 @@ __attribute__((naked)) void MonPlaceChange_Place(void)
         "	.align 2, 0\n\t"
         "_080CD61C: .4byte 0x00000CB4\n\t"
         "_080CD620:\n\t"
-        "	bl sub_080CD784\n\t"
+        "	bl MonPlaceChange_CursorUp\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	cmp r0, #0\n\t"
         "	bne _080CD64C\n\t"
@@ -14568,12 +14568,12 @@ __attribute__((naked)) void MonPlaceChange_Shift(void)
     );
 }
 
-__attribute__((naked)) void sub_080CD730(void)
+__attribute__((naked)) void MultiMonPlaceChange_Down(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_080CD750\n\t"
+        "	bl MonPlaceChange_CursorDown\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r1}\n\t"
@@ -14583,12 +14583,12 @@ __attribute__((naked)) void sub_080CD730(void)
     );
 }
 
-__attribute__((naked)) void sub_080CD740(void)
+__attribute__((naked)) void MultiMonPlaceChange_Up(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
         "	push {lr}\n\t"
-        "	bl sub_080CD784\n\t"
+        "	bl MonPlaceChange_CursorUp\n\t"
         "	lsls r0, r0, #0x18\n\t"
         "	lsrs r0, r0, #0x18\n\t"
         "	pop {r1}\n\t"
@@ -14598,7 +14598,7 @@ __attribute__((naked)) void sub_080CD740(void)
     );
 }
 
-__attribute__((naked)) void sub_080CD750(void)
+__attribute__((naked)) void MonPlaceChange_CursorDown(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -14635,7 +14635,7 @@ __attribute__((naked)) void sub_080CD750(void)
     );
 }
 
-__attribute__((naked)) void sub_080CD784(void)
+__attribute__((naked)) void MonPlaceChange_CursorUp(void)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -19623,7 +19623,7 @@ __attribute__((naked)) void sub_080CFCC0(void)
         "	bl sub_080D0124\n\t"
         "	movs r0, #1\n\t"
         "_080CFD0C:\n\t"
-        "	bl sub_080CD4E0\n\t"
+        "	bl InitMultiMonPlaceChange\n\t"
         "	ldr r1, [r4]\n\t"
         "	ldrb r0, [r1, #1]\n\t"
         "	adds r0, #1\n\t"
@@ -19712,7 +19712,7 @@ __attribute__((naked)) void sub_080CFD68(void)
         "	movs r2, #8\n\t"
         "	bl sub_080D0124\n\t"
         "	movs r0, #0\n\t"
-        "	bl sub_080CD4E0\n\t"
+        "	bl InitMultiMonPlaceChange\n\t"
         "	b _080CFDE6\n\t"
         "_080CFDA6:\n\t"
         "	bl DoMonPlaceChange\n\t"
@@ -19727,7 +19727,7 @@ __attribute__((naked)) void sub_080CFD68(void)
         "	movs r0, #2\n\t"
         "	bl sub_080CF6D0\n\t"
         "	movs r0, #1\n\t"
-        "	bl sub_080CD4E0\n\t"
+        "	bl InitMultiMonPlaceChange\n\t"
         "	movs r0, #0\n\t"
         "	bl HideBg\n\t"
         "	b _080CFDE6\n\t"
