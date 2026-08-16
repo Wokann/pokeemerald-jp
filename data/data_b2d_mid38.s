@@ -185,15 +185,21 @@ sStarterCursorCoords: @ 0x8590C38
 
 	.globl sStarterAffineAnims_StarterPokemon
 sStarterAffineAnims_StarterPokemon: @ 0x8590CE0
-	.incbin "baserom_jp.gba", 0x590ce0, 0x8
+	.4byte 0x08590CB0, 0x08590CC8
 
 	.globl sStarterSpriteSheet_PokeballSelect
 sStarterSpriteSheet_PokeballSelect: @ 0x8590CE8
-	.incbin "baserom_jp.gba", 0x590ce8, 0x10
+	.4byte 0x085906BC
+	.hword 0x0800, 0x1000
+	.4byte 0
+	.hword 0, 0
 
 	.globl sStarterSpriteSheet_StarterCircle
 sStarterSpriteSheet_StarterCircle: @ 0x8590CF8
-	.incbin "baserom_jp.gba", 0x590cf8, 0x10
+	.4byte 0x085909DC
+	.hword 0x0800, 0x1001
+	.4byte 0
+	.hword 0, 0
 
 	.globl sStarterSpritePalettes
 sStarterSpritePalettes: @ 0x8590D08
@@ -201,15 +207,21 @@ sStarterSpritePalettes: @ 0x8590D08
 
 	.globl sStarterSpriteTemplate_Hand
 sStarterSpriteTemplate_Hand: @ 0x8590D20
-	.incbin "baserom_jp.gba", 0x590d20, 0x18
+	.hword 0x1000, 0x1000
+	.4byte 0x08590C20, 0x08590CA0
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08134725
 
 	.globl sStarterSpriteTemplate_Pokeball
 sStarterSpriteTemplate_Pokeball: @ 0x8590D38
-	.incbin "baserom_jp.gba", 0x590d38, 0x18
+	.hword 0x1000, 0x1000
+	.4byte 0x08590C28, 0x08590CA4
+	.4byte 0, gDummySpriteAffineAnimTable, 0x08134785
 
 	.globl sStarterSpriteTemplate_StarterCircle
 sStarterSpriteTemplate_StarterCircle: @ 0x8590D50
-	.incbin "baserom_jp.gba", 0x590d50, 0x18
+	.hword 0x1001, 0x1001
+	.4byte 0x08590C30, 0x08590CAC
+	.4byte 0, 0x08590CE4, 0x081347BD
 
 	.globl gWallClockMale_Pal
 gWallClockMale_Pal: @ 0x8590D68
