@@ -92,7 +92,7 @@
 #define CONTEST_CATEGORIES_COUNT  5
 
 // string lengths
-#define ITEM_NAME_LENGTH 14
+#define ITEM_NAME_LENGTH 9
 #define POKEMON_NAME_LENGTH 5 // JP kana names are 5 chars + EOS (6 bytes); US is 10 + EOS.
 // Struct fields (nickname slots etc.) keep the US 11-byte layout in the JP ROM;
 // only the in-game name tables use POKEMON_NAME_LENGTH.

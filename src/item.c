@@ -1,5 +1,8 @@
 #include "global.h"
 #include "item.h"
+#include "item_use.h"
+#include "data/text/item_descriptions.h"
+#include "data/items.h"
 
 __attribute__((naked)) void GetBagItemQuantity(void)
 {
@@ -2524,4 +2527,3 @@ __attribute__((naked)) void sub_080D6E6C(void)
         ".syntax divided\n\t"
     );
 }
-
