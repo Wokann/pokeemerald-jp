@@ -16,6 +16,7 @@ baserom_jp.gba
 *.lz
 !graphics/pokemon/**/*.lz
 !graphics/misc/*.lz
+!graphics/trainers/**/*.lz
 !data/tilesets/**/*.lz
 !data/tilesets/**/*.gbapal
 *.rl
