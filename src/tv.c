@@ -3413,7 +3413,7 @@ __attribute__((naked)) void sub_080EF330(void)
         "	bl DeleteTVShowInArrayByIdx\n\t"
         "	ldr r0, [r5]\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl sub_080F0428\n\t"
+        "	bl CompactTVShowArray\n\t"
         "	movs r0, #1\n\t"
         "	b _080EF3DA\n\t"
         "	.align 2, 0\n\t"
@@ -7173,7 +7173,7 @@ __attribute__((naked)) void HasMixableShowAlreadyBeenSpawnedWithPlayerID(void)
         "	bl DeleteTVShowInArrayByIdx\n\t"
         "	ldr r0, [r5]\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl sub_080F0428\n\t"
+        "	bl CompactTVShowArray\n\t"
         "_080EFFDC:\n\t"
         "	movs r0, #1\n\t"
         "	b _080EFFF4\n\t"
@@ -7289,7 +7289,7 @@ __attribute__((naked)) void FindActiveBroadcastByShowType_SetScriptResult(void)
         "	bl DeleteTVShowInArrayByIdx\n\t"
         "	ldr r0, [r5]\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl sub_080F0428\n\t"
+        "	bl CompactTVShowArray\n\t"
         "	bl sub_080F0578\n\t"
         "	b _080F00B6\n\t"
         "_080F00A8:\n\t"
@@ -7769,137 +7769,56 @@ __attribute__((naked)) void sub_080F03E4(void)
     );
 }
 
-__attribute__((naked)) void DeleteTVShowInArrayByIdx(void)
+void DeleteTVShowInArrayByIdx(TVShow *shows, u8 idx)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r1, #3\n\t"
-        "	adds r2, r2, r1\n\t"
-        "	lsls r2, r2, #2\n\t"
-        "	adds r2, r2, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strb r0, [r2]\n\t"
-        "	strb r0, [r2, #1]\n\t"
-        "	movs r1, #0\n\t"
-        "	adds r2, #2\n\t"
-        "	movs r3, #0\n\t"
-        "_080F0416:\n\t"
-        "	adds r0, r2, r1\n\t"
-        "	strb r3, [r0]\n\t"
-        "	adds r0, r1, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r1, r0, #0x18\n\t"
-        "	cmp r1, #0x21\n\t"
-        "	bls _080F0416\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+
+    shows[idx].commonInit.kind = TVSHOW_OFF_AIR;
+    shows[idx].commonInit.active = FALSE;
+    for (i = 0; i < ARRAY_COUNT(shows[idx].commonInit.data); i++)
+        shows[idx].commonInit.data[i] = 0;
 }
-__attribute__((naked)) void sub_080F0428(void)
+
+void CompactTVShowArray(TVShow *shows)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	movs r5, #0\n\t"
-        "_080F042E:\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F0472\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	b _080F046A\n\t"
-        "_080F0440:\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r4\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F0468\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl DeleteTVShowInArrayByIdx\n\t"
-        "	b _080F0472\n\t"
-        "_080F0468:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "_080F046A:\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #4\n\t"
-        "	bls _080F0440\n\t"
-        "_080F0472:\n\t"
-        "	adds r0, r5, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #3\n\t"
-        "	bls _080F042E\n\t"
-        "	movs r5, #5\n\t"
-        "_080F047E:\n\t"
-        "	lsls r0, r5, #3\n\t"
-        "	adds r0, r0, r5\n\t"
-        "	lsls r1, r0, #2\n\t"
-        "	adds r0, r1, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	adds r5, #1\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080F04C4\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	b _080F04BE\n\t"
-        "_080F0492:\n\t"
-        "	lsls r0, r2, #3\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r3, r0, r4\n\t"
-        "	ldrb r0, [r3]\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _080F04BA\n\t"
-        "	adds r1, r1, r4\n\t"
-        "	adds r0, r3, #0\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	ldm r0!, {r3, r6, r7}\n\t"
-        "	stm r1!, {r3, r6, r7}\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	bl DeleteTVShowInArrayByIdx\n\t"
-        "	b _080F04C4\n\t"
-        "_080F04BA:\n\t"
-        "	adds r0, r2, #1\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "_080F04BE:\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x17\n\t"
-        "	bls _080F0492\n\t"
-        "_080F04C4:\n\t"
-        "	lsls r0, r5, #0x18\n\t"
-        "	lsrs r5, r0, #0x18\n\t"
-        "	cmp r5, #0x17\n\t"
-        "	bls _080F047E\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 i;
+    u8 j;
+
+    // Compact normal TV shows
+    for (i = 0; i < NUM_NORMAL_TVSHOW_SLOTS - 1; i++)
+    {
+        if (shows[i].common.kind == TVSHOW_OFF_AIR)
+        {
+            for (j = i + 1; j < NUM_NORMAL_TVSHOW_SLOTS; j++)
+            {
+                if (shows[j].common.kind != TVSHOW_OFF_AIR)
+                {
+                    shows[i] = shows[j];
+                    DeleteTVShowInArrayByIdx(shows, j);
+                    break;
+                }
+            }
+        }
+    }
+
+    // Compact Record Mix TV shows
+    for (i = NUM_NORMAL_TVSHOW_SLOTS; i < LAST_TVSHOW_IDX; i++)
+    {
+        if (shows[i].common.kind == TVSHOW_OFF_AIR)
+        {
+            for (j = i + 1; j < LAST_TVSHOW_IDX; j++)
+            {
+                if (shows[j].common.kind != TVSHOW_OFF_AIR)
+                {
+                    shows[i] = shows[j];
+                    DeleteTVShowInArrayByIdx(shows, j);
+                    break;
+                }
+            }
+        }
+    }
 }
+
 
 
 
@@ -9205,11 +9124,11 @@ __attribute__((naked)) void ReceiveTvShowsData(void *src, u32 size, u8 playersLi
         "	ldr r0, [r5]\n\t"
         "	ldr r4, _080F0E30\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl sub_080F0428\n\t"
+        "	bl CompactTVShowArray\n\t"
         "	bl sub_080F16E0\n\t"
         "	ldr r0, [r5]\n\t"
         "	adds r0, r0, r4\n\t"
-        "	bl sub_080F0428\n\t"
+        "	bl CompactTVShowArray\n\t"
         "	bl sub_080F11E4\n\t"
         "	bl sub_080F1640\n\t"
         "	mov r0, sb\n\t"

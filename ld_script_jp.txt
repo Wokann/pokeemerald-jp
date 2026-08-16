@@ -6171,7 +6171,7 @@ SECTIONS {
         src/tv.o(.text.sub_080F0390);
         src/tv.o(.text.sub_080F03E4);
         src/tv.o(.text.DeleteTVShowInArrayByIdx);
-        src/tv.o(.text.sub_080F0428);
+        src/tv.o(.text.CompactTVShowArray);
         src/tv.o(.text.TV_GetSomeOtherSpeciesAlreadySeenByPlayer_AndPrintName);
         src/tv.o(.text.TV_GetSomeOtherSpeciesAlreadySeenByPlayer);
         src/tv.o(.text.sub_080F0578);
