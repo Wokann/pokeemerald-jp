@@ -142,15 +142,15 @@ sMenuCursorDimensions: @ 0x829CF04
 
 	.globl sFontGlyphData_9CF14
 sFontGlyphData_9CF14: @ 0x829CF14
-	.incbin "baserom_jp.gba", 0x29cf14, 0x4000
+	.incbin "graphics/fonts/jp_font_glyph_9CF14.bin"
 
 	.globl sFontGlyphData_A0F14
 sFontGlyphData_A0F14: @ 0x82A0F14
-	.incbin "baserom_jp.gba", 0x2a0f14, 0x4000
+	.incbin "graphics/fonts/jp_font_glyph_A0F14.bin"
 
 	.globl sFontGlyphData_A4F14
 sFontGlyphData_A4F14: @ 0x82A4F14
-	.incbin "baserom_jp.gba", 0x2a4f14, 0x8000
+	.incbin "graphics/fonts/jp_font_glyph_A4F14.bin"
 
 	.globl sGlyphWidthTable_ACF14
 sGlyphWidthTable_ACF14: @ 0x82ACF14
@@ -181,7 +181,7 @@ sGlyphWidthTable_ACF14: @ 0x82ACF14
 
 	.globl sFontGlyphData_AD02C
 sFontGlyphData_AD02C: @ 0x82AD02C
-	.incbin "baserom_jp.gba", 0x2ad02c, 0x8000
+	.incbin "graphics/fonts/jp_font_glyph_AD02C.bin"
 
 	.globl sGlyphWidthTable_B502C
 sGlyphWidthTable_B502C: @ 0x82B502C
@@ -212,7 +212,7 @@ sGlyphWidthTable_B502C: @ 0x82B502C
 
 	.globl sFontGlyphData_B5144
 sFontGlyphData_B5144: @ 0x82B5144
-	.incbin "baserom_jp.gba", 0x2b5144, 0x8000
+	.incbin "graphics/fonts/jp_font_glyph_B5144.bin"
 
 	.globl sGlyphWidthTable_BD144
 sGlyphWidthTable_BD144: @ 0x82BD144
@@ -243,7 +243,7 @@ sGlyphWidthTable_BD144: @ 0x82BD144
 
 	.globl sFontGlyphData_BD25C
 sFontGlyphData_BD25C: @ 0x82BD25C
-	.incbin "baserom_jp.gba", 0x2bd25c, 0x203d
+	.incbin "graphics/fonts/jp_font_glyph_BD25C.bin"
 
 	.globl sCenterToCornerVecTable
 sCenterToCornerVecTable: @ 0x82BF299
