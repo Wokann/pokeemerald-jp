@@ -491148,23 +491148,30 @@ sSetupInfos: @ 0x890ED54
 
 	.globl gUnknown_890EEA4
 gUnknown_890EEA4: @ 0x890EEA4
-	.incbin "baserom_jp.gba", 0x90eea4, 0x2c
+	.byte 0x02, 0x0E, 0x00, 0x0A, 0x09, 0x05, 0x07, 0x02, 0x00, 0x0F, 0x01, 0x03, 0x03, 0x00, 0x1F, 0x00, 0x03, 0x16, 0x12, 0x0E, 0x0D, 0x09, 0x0B, 0x03, 0x0F, 0x0F, 0x01, 0x03, 0x03, 0x00, 0x7F, 0x00
+	.asciz "RFU_V1026"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890EED0
 gUnknown_890EED0: @ 0x890EED0
-	.incbin "baserom_jp.gba", 0x90eed0, 0xc
+	.asciz "RFU-MBOOT"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890EEDC
 gUnknown_890EEDC: @ 0x890EEDC
-	.incbin "baserom_jp.gba", 0x90eedc, 0x18
+	.asciz "NINTENDOSio32ID_030820"
+	.byte 0x00
 
 	.globl gUnknown_890EEF4
 gUnknown_890EEF4: @ 0x890EEF4
-	.incbin "baserom_jp.gba", 0x90eef4, 0x34
+	.asciz "ASSERTION FAILED  FILE=[%s] LINE=[%d]  EXP=[%s] \n"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890EF28
 gUnknown_890EF28: @ 0x890EF28
-	.incbin "baserom_jp.gba", 0x90ef28, 0x30
+	.asciz "WARING FILE=[%s] LINE=[%d]  EXP=[%s] \n"
+	.byte 0x00
+	.4byte gUnknown_890EEF4, gUnknown_890EF28
 
 	.globl gUnknown_890EF58
 gUnknown_890EF58: @ 0x890EF58
@@ -491176,59 +491183,71 @@ gUnknown_890F058: @ 0x890F058
 
 	.globl gUnknown_890F15C
 gUnknown_890F15C: @ 0x890F15C
-	.incbin "baserom_jp.gba", 0x90f15c, 0x10
+	.byte 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20
 
 	.globl gUnknown_890F16C
 gUnknown_890F16C: @ 0x890F16C
-	.incbin "baserom_jp.gba", 0x90f16c, 0x10
+	.byte 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30
 
 	.globl gUnknown_890F17C
 gUnknown_890F17C: @ 0x890F17C
-	.incbin "baserom_jp.gba", 0x90f17c, 0x4
+	.asciz "Inf"
 
 	.globl gUnknown_890F180
 gUnknown_890F180: @ 0x890F180
-	.incbin "baserom_jp.gba", 0x90f180, 0x4
+	.asciz "NaN"
 
 	.globl gUnknown_890F184
 gUnknown_890F184: @ 0x890F184
-	.incbin "baserom_jp.gba", 0x90f184, 0x14
+	.asciz "0123456789abcdef"
+	.byte 0x00, 0x00, 0x00
 
 	.globl gUnknown_890F198
 gUnknown_890F198: @ 0x890F198
-	.incbin "baserom_jp.gba", 0x90f198, 0x8
+	.asciz "(null)"
+	.byte 0x00
 
 	.globl gUnknown_890F1A0
 gUnknown_890F1A0: @ 0x890F1A0
-	.incbin "baserom_jp.gba", 0x90f1a0, 0x14
+	.asciz "0123456789ABCDEF"
+	.byte 0x00, 0x00, 0x00
 
 	.globl gUnknown_890F1B4
 gUnknown_890F1B4: @ 0x890F1B4
-	.incbin "baserom_jp.gba", 0x90f1b4, 0x1c
+	.asciz "bug in vfprintf: bad base"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890F1D0
 gUnknown_890F1D0: @ 0x890F1D0
-	.incbin "baserom_jp.gba", 0x90f1d0, 0x4
+	.asciz "0"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890F1D4
 gUnknown_890F1D4: @ 0x890F1D4
-	.incbin "baserom_jp.gba", 0x90f1d4, 0x4
+	.asciz "."
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890F1D8
 gUnknown_890F1D8: @ 0x890F1D8
-	.incbin "baserom_jp.gba", 0x90f1d8, 0xc
+	.asciz "Infinity"
+	.byte 0x00, 0x00, 0x00
 
 	.globl gUnknown_890F1E4
 gUnknown_890F1E4: @ 0x890F1E4
-	.incbin "baserom_jp.gba", 0x90f1e4, 0x4
+	.asciz "NaN"
 
 	.globl gUnknown_890F1E8
 gUnknown_890F1E8: @ 0x890F1E8
-	.incbin "baserom_jp.gba", 0x90f1e8, 0x4
+	.asciz "0"
+	.byte 0x00, 0x00
 
 	.globl gUnknown_890F1EC
 gUnknown_890F1EC: @ 0x890F1EC
-	.incbin "baserom_jp.gba", 0x90F1EC, 0x30
+	.4byte gUnknown_890F21C + 4, gUnknown_890F21C, gUnknown_890F21C, gUnknown_890F21C
+	.4byte gUnknown_890F21C, gUnknown_890F21C, gUnknown_890F21C, gUnknown_890F21C
+	.4byte gUnknown_890F21C, gUnknown_890F21C
+	.4byte 0xFFFFFFFF, 0xFFFFFFFF
+
 	.globl gUnknown_890F21C
 gUnknown_890F21C: @ 0x890F21C
 	.incbin "baserom_jp.gba", 0x90f21c, 0x8
