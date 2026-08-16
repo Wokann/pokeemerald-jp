@@ -2,6 +2,7 @@
 #include "event_object_movement.h"
 #include "field_effect.h"
 #include "overworld.h"
+#include "field_camera.h"
 #include "palette.h"
 #include "constants/event_object_movement.h"
 #include "constants/event_objects.h"
@@ -8131,181 +8132,39 @@ __attribute__((naked)) void MoveCoordsInDirection(u32 direction, s16 *x, s16 *y,
     );
 }
 
-__attribute__((naked)) void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, s16 *destY)
+void GetMapCoordsFromSpritePos(s16 x, s16 y, s16 *destX, s16 *destY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _0809299C\n\t"
-        "	ldr r4, [r5]\n\t"
-        "	ldrh r4, [r4]\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, r0, r4\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	ldrh r0, [r0, #2]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	subs r1, r1, r0\n\t"
-        "	lsls r1, r1, #4\n\t"
-        "	strh r1, [r3]\n\t"
-        "	ldr r1, _080929A0\n\t"
-        "	ldrh r0, [r2]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r2]\n\t"
-        "	ldr r1, _080929A4\n\t"
-        "	ldrh r0, [r3]\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	strh r0, [r3]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_0809299C: .4byte gSaveBlock1Ptr\n\t"
-        "_080929A0: .4byte gTotalCameraPixelOffsetX\n\t"
-        "_080929A4: .4byte gTotalCameraPixelOffsetY\n\t"
-        ".syntax divided\n\t"
-    );
+    *destX = (x - gSaveBlock1Ptr->pos.x) << 4;
+    *destY = (y - gSaveBlock1Ptr->pos.y) << 4;
+    *destX -= gTotalCameraPixelOffsetX;
+    *destY -= gTotalCameraPixelOffsetY;
 }
 
-__attribute__((naked)) void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *destX, s16 *destY)
+void SetSpritePosToMapCoords(s16 mapX, s16 mapY, s16 *destX, s16 *destY)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, r7, lr}\n\t"
-        "	adds r7, r2, #0\n\t"
-        "	mov ip, r3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r5, r0, #0x10\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	lsrs r6, r1, #0x10\n\t"
-        "	ldr r0, _08092A3C\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ldr r1, _08092A40\n\t"
-        "	ldr r2, [r1, #0x10]\n\t"
-        "	subs r0, r0, r2\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "	ldr r0, _08092A44\n\t"
-        "	ldrh r0, [r0]\n\t"
-        "	rsbs r0, r0, #0\n\t"
-        "	ldr r1, [r1, #0x14]\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "	cmp r2, #0\n\t"
-        "	ble _080929E2\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	movs r3, #0x80\n\t"
-        "	lsls r3, r3, #0xd\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "_080929E2:\n\t"
-        "	cmp r2, #0\n\t"
-        "	bge _080929EE\n\t"
-        "	lsls r0, r3, #0x10\n\t"
-        "	ldr r2, _08092A48\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r3, r0, #0x10\n\t"
-        "_080929EE:\n\t"
-        "	cmp r1, #0\n\t"
-        "	ble _080929FC\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	movs r2, #0x80\n\t"
-        "	lsls r2, r2, #0xd\n\t"
-        "	adds r0, r0, r2\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "_080929FC:\n\t"
-        "	cmp r1, #0\n\t"
-        "	bge _08092A08\n\t"
-        "	lsls r0, r4, #0x10\n\t"
-        "	ldr r1, _08092A48\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	lsrs r4, r0, #0x10\n\t"
-        "_08092A08:\n\t"
-        "	ldr r2, _08092A4C\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	lsls r0, r5, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	lsls r1, r3, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	strh r1, [r7]\n\t"
-        "	ldr r0, [r2]\n\t"
-        "	ldrh r1, [r0, #2]\n\t"
-        "	lsls r0, r6, #0x10\n\t"
-        "	asrs r0, r0, #0x10\n\t"
-        "	subs r0, r0, r1\n\t"
-        "	lsls r0, r0, #4\n\t"
-        "	lsls r1, r4, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	mov r2, ip\n\t"
-        "	strh r1, [r2]\n\t"
-        "	pop {r4, r5, r6, r7}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08092A3C: .4byte gTotalCameraPixelOffsetX\n\t"
-        "_08092A40: .4byte gFieldCamera\n\t"
-        "_08092A44: .4byte gTotalCameraPixelOffsetY\n\t"
-        "_08092A48: .4byte 0xFFF00000\n\t"
-        "_08092A4C: .4byte gSaveBlock1Ptr\n\t"
-        ".syntax divided\n\t"
-    );
+    s16 dx = -gTotalCameraPixelOffsetX - gFieldCamera.x;
+    s16 dy = -gTotalCameraPixelOffsetY - gFieldCamera.y;
+    if (gFieldCamera.x > 0)
+        dx += 16;
+
+    if (gFieldCamera.x < 0)
+        dx -= 16;
+
+    if (gFieldCamera.y > 0)
+        dy += 16;
+
+    if (gFieldCamera.y < 0)
+        dy -= 16;
+
+    *destX = ((mapX - gSaveBlock1Ptr->pos.x) << 4) + dx;
+    *destY = ((mapY - gSaveBlock1Ptr->pos.y) << 4) + dy;
 }
 
-__attribute__((naked)) void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy)
+void SetSpritePosToOffsetMapCoords(s16 *x, s16 *y, s16 dx, s16 dy)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	mov r6, r8\n\t"
-        "	push {r6}\n\t"
-        "	adds r6, r0, #0\n\t"
-        "	mov r8, r1\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r5, r3, #0\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	lsrs r4, r4, #0x10\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	lsrs r5, r5, #0x10\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r6, r1]\n\t"
-        "	mov r2, r8\n\t"
-        "	movs r3, #0\n\t"
-        "	ldrsh r1, [r2, r3]\n\t"
-        "	adds r2, r6, #0\n\t"
-        "	mov r3, r8\n\t"
-        "	bl SetSpritePosToMapCoords\n\t"
-        "	lsls r4, r4, #0x10\n\t"
-        "	asrs r4, r4, #0x10\n\t"
-        "	ldrh r0, [r6]\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	strh r4, [r6]\n\t"
-        "	lsls r5, r5, #0x10\n\t"
-        "	asrs r5, r5, #0x10\n\t"
-        "	mov r1, r8\n\t"
-        "	ldrh r1, [r1]\n\t"
-        "	adds r5, r5, r1\n\t"
-        "	mov r2, r8\n\t"
-        "	strh r5, [r2]\n\t"
-        "	pop {r3}\n\t"
-        "	mov r8, r3\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    SetSpritePosToMapCoords(*x, *y, x, y);
+    *x += dx;
+    *y += dy;
 }
 
 __attribute__((naked)) void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
