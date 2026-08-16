@@ -45,6 +45,8 @@ struct Sprite;
 #define sInvisible     data[2]
 #define sAnimNum       data[3]
 #define sAnimState     data[4]
+#define sVirtualObjId   data[0]
+#define sVirtualObjElev data[1]
 
 enum {
     CAMERA_STATE_INIT,
@@ -22156,29 +22158,11 @@ void UpdateObjectEventSpriteInvisibility(struct Sprite *sprite, bool8 invisible)
         sprite->invisible = TRUE;
 }
 
-__attribute__((naked)) void SpriteCB_VirtualObject(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+void SpriteCB_VirtualObject(struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	bl sub_080976D8\n\t"
-        "	ldrh r0, [r4, #0x30]\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	adds r1, r4, #0\n\t"
-        "	movs r2, #1\n\t"
-        "	bl SetObjectSubpriorityByElevation\n\t"
-        "	ldrh r1, [r4, #0x32]\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl UpdateObjectEventSpriteInvisibility\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    sub_080976D8(sprite);
+    SetObjectSubpriorityByElevation(sprite->sVirtualObjElev, sprite, 1);
+    UpdateObjectEventSpriteInvisibility(sprite, sprite->sInvisible);
 }
 
 __attribute__((naked)) void sub_08097460(void)
