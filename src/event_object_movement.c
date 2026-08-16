@@ -42,6 +42,9 @@ struct Sprite;
 #define sCamera_State         data[1]
 #define sCamera_MoveX         data[2]
 #define sCamera_MoveY         data[3]
+#define sInvisible     data[2]
+#define sAnimNum       data[3]
+#define sAnimState     data[4]
 
 enum {
     CAMERA_STATE_INIT,
@@ -22263,40 +22266,12 @@ __attribute__((naked)) int GetVirtualObjectSpriteId(u8 virtualObjId)
     );
 }
 
-__attribute__((naked)) void TurnVirtualObject(u8 virtualObjId, u8 direction)
+void TurnVirtualObject(u8 virtualObjId, u8 direction)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r5, r1, #0x18\n\t"
-        "	bl GetVirtualObjectSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	cmp r0, #0x40\n\t"
-        "	beq _0809751A\n\t"
-        "	lsls r4, r0, #4\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	lsls r4, r4, #2\n\t"
-        "	ldr r0, _08097520\n\t"
-        "	adds r4, r4, r0\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	bl GetJumpInPlaceMovementAction\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	adds r0, r4, #0\n\t"
-        "	bl StartSpriteAnim\n\t"
-        "_0809751A:\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097520: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId != MAX_SPRITES)
+        StartSpriteAnim(&gSprites[spriteId], GetJumpInPlaceMovementAction(direction));
 }
 
 __attribute__((naked)) void SetVirtualObjectGraphics(u8 virtualObjId, u8 graphicsId)
@@ -22376,47 +22351,17 @@ __attribute__((naked)) void SetVirtualObjectGraphics(u8 virtualObjId, u8 graphic
     );
 }
 
-__attribute__((naked)) void SetVirtualObjectInvisibility(u8 virtualObjId, bool32 invisible)
+void SetVirtualObjectInvisibility(u8 virtualObjId, bool32 invisible)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	adds r4, r1, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetVirtualObjectSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	adds r3, r2, #0\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	beq _080975F0\n\t"
-        "	cmp r4, #0\n\t"
-        "	beq _080975E4\n\t"
-        "	ldr r0, _080975E0\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r1, #0x32]\n\t"
-        "	b _080975F0\n\t"
-        "	.align 2, 0\n\t"
-        "_080975E0: .4byte gSprites\n\t"
-        "_080975E4:\n\t"
-        "	ldr r1, _080975F8\n\t"
-        "	lsls r0, r3, #4\n\t"
-        "	adds r0, r0, r3\n\t"
-        "	lsls r0, r0, #2\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	strh r4, [r0, #0x32]\n\t"
-        "_080975F0:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080975F8: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId == MAX_SPRITES)
+        return;
+
+    if (invisible)
+        gSprites[spriteId].sInvisible = TRUE;
+    else
+        gSprites[spriteId].sInvisible = FALSE;
 }
 
 __attribute__((naked)) bool32 IsVirtualObjectInvisible(u8 virtualObjId)
@@ -22456,36 +22401,15 @@ __attribute__((naked)) bool32 IsVirtualObjectInvisible(u8 virtualObjId)
     );
 }
 
-__attribute__((naked)) void SetVirtualObjectSpriteAnim(u8 virtualObjId, u8 animNum)
+void SetVirtualObjectSpriteAnim(u8 virtualObjId, u8 animNum)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r4, r1, #0x18\n\t"
-        "	bl GetVirtualObjectSpriteId\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r2, r0, #0x18\n\t"
-        "	cmp r2, #0x40\n\t"
-        "	beq _0809765A\n\t"
-        "	ldr r0, _08097660\n\t"
-        "	lsls r1, r2, #4\n\t"
-        "	adds r1, r1, r2\n\t"
-        "	lsls r1, r1, #2\n\t"
-        "	adds r1, r1, r0\n\t"
-        "	movs r0, #0\n\t"
-        "	strh r4, [r1, #0x34]\n\t"
-        "	strh r0, [r1, #0x36]\n\t"
-        "_0809765A:\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_08097660: .4byte gSprites\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 spriteId = GetVirtualObjectSpriteId(virtualObjId);
+
+    if (spriteId != MAX_SPRITES)
+    {
+        gSprites[spriteId].sAnimNum = animNum;
+        gSprites[spriteId].sAnimState = 0;
+    }
 }
 
 __attribute__((naked)) void MoveUnionRoomObjectUp(struct Sprite *sprite)
