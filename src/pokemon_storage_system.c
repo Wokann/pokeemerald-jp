@@ -5312,7 +5312,7 @@ __attribute__((naked)) void Cb_HandleWallpapers(void)
         "_080C916E:\n\t"
         "	movs r0, #5\n\t"
         "	bl PlaySE\n\t"
-        "	bl sub_080CF9DC\n\t"
+        "	bl RemoveMenu\n\t"
         "	ldr r1, [r4]\n\t"
         "	adds r2, r1, r5\n\t"
         "	ldrh r0, [r2]\n\t"
@@ -5330,7 +5330,7 @@ __attribute__((naked)) void Cb_HandleWallpapers(void)
         "	adds r0, r0, r1\n\t"
         "	movs r1, #0x10\n\t"
         "	strh r1, [r0]\n\t"
-        "	bl sub_080CF9DC\n\t"
+        "	bl RemoveMenu\n\t"
         "	bl ClearBottomWindow\n\t"
         "	ldr r1, [r4]\n\t"
         "	movs r0, #6\n\t"
@@ -18978,7 +18978,7 @@ __attribute__((naked)) void sub_080CF94C(void)
         "	rsbs r0, r0, #0\n\t"
         "	cmp r5, r0\n\t"
         "	beq _080CF9B6\n\t"
-        "	bl sub_080CF9DC\n\t"
+        "	bl RemoveMenu\n\t"
         "_080CF9B6:\n\t"
         "	cmp r5, #0\n\t"
         "	blt _080CF9C8\n\t"
@@ -19002,30 +19002,10 @@ __attribute__((naked)) void sub_080CF94C(void)
     );
 }
 
-__attribute__((naked)) void sub_080CF9DC(void)
+void RemoveMenu(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	ldr r5, _080CFA00\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	movs r4, #0xcb\n\t"
-        "	lsls r4, r4, #4\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	movs r1, #1\n\t"
-        "	bl ClearStdWindowAndFrameToTransparent\n\t"
-        "	ldr r0, [r5]\n\t"
-        "	adds r0, r0, r4\n\t"
-        "	ldrb r0, [r0]\n\t"
-        "	bl RemoveWindow\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        "_080CFA00: .4byte gUnknown_20399A8\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearStdWindowAndFrameToTransparent(sStorage->menuWindowId, TRUE);
+    RemoveWindow(sStorage->menuWindowId);
 }
 
 __attribute__((naked)) void sub_080CFA04(void)
