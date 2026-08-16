@@ -1221,37 +1221,18 @@ __attribute__((naked)) u8 TrySpawnObjectEvent(u8 localId, u8 mapNum, u8 mapGroup
     );
 }
 
-__attribute__((naked)) void CopyObjectGraphicsInfoToSpriteTemplate(void)
+void CopyObjectGraphicsInfoToSpriteTemplate(u8 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	adds r4, r2, #0\n\t"
-        "	adds r6, r3, #0\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	bl GetObjectEventGraphicsInfo\n\t"
-        "	ldrh r1, [r0]\n\t"
-        "	strh r1, [r4]\n\t"
-        "	ldrh r1, [r0, #2]\n\t"
-        "	strh r1, [r4, #2]\n\t"
-        "	ldr r1, [r0, #0x10]\n\t"
-        "	str r1, [r4, #4]\n\t"
-        "	ldr r1, [r0, #0x18]\n\t"
-        "	str r1, [r4, #8]\n\t"
-        "	ldr r1, [r0, #0x1c]\n\t"
-        "	str r1, [r4, #0xc]\n\t"
-        "	ldr r1, [r0, #0x20]\n\t"
-        "	str r1, [r4, #0x10]\n\t"
-        "	str r5, [r4, #0x14]\n\t"
-        "	ldr r0, [r0, #0x14]\n\t"
-        "	str r0, [r6]\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(graphicsId);
+
+    spriteTemplate->tileTag = graphicsInfo->tileTag;
+    spriteTemplate->paletteTag = graphicsInfo->paletteTag;
+    spriteTemplate->oam = graphicsInfo->oam;
+    spriteTemplate->anims = graphicsInfo->anims;
+    spriteTemplate->images = graphicsInfo->images;
+    spriteTemplate->affineAnims = graphicsInfo->affineAnims;
+    spriteTemplate->callback = callback;
+    *subspriteTables = graphicsInfo->subspriteTables;
 }
 
 __attribute__((naked)) void MakeObjectTemplateFromEventObjectGraphicsInfoWithCallbackIndex(void)
@@ -2747,28 +2728,12 @@ void _PatchObjectPalette(u16 tag, u8 slot)
 }
 
 
-__attribute__((naked)) void IncrementObjectEventCoords(void)
+void IncrementObjectEventCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	ldrh r3, [r0, #0x10]\n\t"
-        "	strh r3, [r0, #0x14]\n\t"
-        "	ldrh r4, [r0, #0x12]\n\t"
-        "	strh r4, [r0, #0x16]\n\t"
-        "	lsls r1, r1, #0x10\n\t"
-        "	asrs r1, r1, #0x10\n\t"
-        "	adds r1, r1, r3\n\t"
-        "	strh r1, [r0, #0x10]\n\t"
-        "	lsls r2, r2, #0x10\n\t"
-        "	asrs r2, r2, #0x10\n\t"
-        "	adds r2, r2, r4\n\t"
-        "	strh r2, [r0, #0x12]\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    objectEvent->previousCoords.x = objectEvent->currentCoords.x;
+    objectEvent->previousCoords.y = objectEvent->currentCoords.y;
+    objectEvent->currentCoords.x += x;
+    objectEvent->currentCoords.y += y;
 }
 
 void ShiftEventObjectCoords(struct ObjectEvent *objectEvent, s16 x, s16 y)
