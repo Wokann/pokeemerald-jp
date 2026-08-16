@@ -128,7 +128,7 @@ sConditionSparklePalDescriptor: @ 0x85FA918
 
 	.globl sOam_ConditionSparkle
 sOam_ConditionSparkle: @ 0x85FA920
-	.incbin "baserom_jp.gba", 0x5fa920, 0x8
+	.byte 0x00, 0x00, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00
 
 	.globl sAnim_ConditionSparkle
 sAnim_ConditionSparkle: @ 0x85FA928

@@ -36,11 +36,13 @@ sHelpBarWindowTemplate: @ 0x85F13CC
 
 	.globl sHelpBarTexts
 sHelpBarTexts: @ 0x85F13DC
-	.incbin "baserom_jp.gba", 0x5f13dc, 0x30
+	.4byte 0x085CB703, 0x085CB714, 0x085CB721, 0x085CB72E
+	.4byte 0x085CB741, 0x085CB74F, 0x085CB75F, 0x085CB76C
+	.4byte 0x085CB779, 0x085CB77F, 0x085CB78E, 0x085CB79C
 
 	.globl sHelpBarTextColors
 sHelpBarTextColors: @ 0x85F140C
-	.incbin "baserom_jp.gba", 0x5f140c, 0x4
+	.byte 0x04, 0x01, 0x02, 0x00
 
 	.globl sSpinningPokenavSpriteSheet
 sSpinningPokenavSpriteSheet: @ 0x85F1410
@@ -105,7 +107,8 @@ lineOffsets: @ 0x85F15BB
 
 	.globl sListArrowSpriteSheets
 sListArrowSpriteSheets: @ 0x85F15C0
-	.incbin "baserom_jp.gba", 0x5f15c0, 0x8
+	.4byte 0x085F1540
+	.hword 0x00C0, 0x000A
 
 	.globl sListArrowPalettes
 sListArrowPalettes: @ 0x85F15C8
