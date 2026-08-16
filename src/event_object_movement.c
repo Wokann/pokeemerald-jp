@@ -103,7 +103,36 @@ extern bool8 EventObjectIsTrainerAndCloseToPlayer(struct ObjectEvent *objectEven
 extern void SetMovementDelay(struct Sprite *sprite, s16 timer);
 extern bool8 UpdateRevealDisguise(struct ObjectEvent *objectEvent);
 extern u8 ObjectEventExecSingleMovementAction(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFastDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFastLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFastRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFastUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFasterDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFasterLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFasterRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkFasterUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalDiagonalDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalDiagonalDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalDiagonalUpLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalDiagonalUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkNormalUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowDiagonalDownLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowDiagonalDownRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowDiagonalUpRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowRight_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_WalkSlowUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
 extern u8 GetFaceDirectionMovementAction(u32 direction);
+extern bool8 MovementAction_AcroPopWheelieMoveDown_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroPopWheelieMoveUp_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 MovementAction_AcroPopWheelieMoveLeft_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 sub_080954D4(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern bool8 sub_08093554(struct ObjectEvent *objectEvent, struct Sprite *sprite);
+extern struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);
 
 __attribute__((naked)) void ClearEventObject(void)
 {
@@ -4143,23 +4172,9 @@ __attribute__((naked)) void SetEventObjectDirection(struct ObjectEvent *objectEv
     );
 }
 
-__attribute__((naked)) void GetObjectEventScriptPointerByLocalIdAndMap(void)
+const u8 *GetObjectEventScriptPointerByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl GetEventObjectTemplateByLocalIdAndMap\n\t"
-        "	ldr r0, [r0, #0x10]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetEventObjectTemplateByLocalIdAndMap(localId, mapNum, mapGroup)->script;
 }
 
 __attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
@@ -4186,23 +4201,9 @@ __attribute__((naked)) void GetEventObjectScriptPointerByEventObjectId(void)
     );
 }
 
-__attribute__((naked)) void GetObjectEventFlagIdByLocalIdAndMap(void)
+u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	bl GetEventObjectTemplateByLocalIdAndMap\n\t"
-        "	ldrh r0, [r0, #0x14]\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    return GetEventObjectTemplateByLocalIdAndMap(localId, mapNum, mapGroup)->flagId;
 }
 
 __attribute__((naked)) void GetEventObjectFlagIdByEventObjectId(void)
@@ -4317,7 +4318,7 @@ u8 GetObjectEventBerryTreeId(u8 objectEventId)
     return gObjectEvents[objectEventId].trainerRange_berryTreeId;
 }
 
-__attribute__((naked)) void GetEventObjectTemplateByLocalIdAndMap(void)
+__attribute__((naked)) struct ObjectEventTemplate *GetEventObjectTemplateByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup)
 {
     __asm__(".syntax unified\n\t"
         ".code 16\n\t"
@@ -13658,27 +13659,12 @@ __attribute__((naked)) void GetEventObjectMovingCameraOffset(s16 *x, s16 *y)
     );
 }
 
-__attribute__((naked)) void ObjectEventMoveDestCoords(struct ObjectEvent *objectEvent, u8 direction, s16 *x, s16 *y)
+void ObjectEventMoveDestCoords(struct ObjectEvent *objectEvent, u32 direction, s16 *x, s16 *y)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, lr}\n\t"
-        "	lsls r1, r1, #0x18\n\t"
-        "	lsrs r1, r1, #0x18\n\t"
-        "	ldrh r4, [r0, #0x10]\n\t"
-        "	strh r4, [r2]\n\t"
-        "	ldrh r0, [r0, #0x12]\n\t"
-        "	strh r0, [r3]\n\t"
-        "	adds r0, r1, #0\n\t"
-        "	adds r1, r2, #0\n\t"
-        "	adds r2, r3, #0\n\t"
-        "	bl MoveCoords\n\t"
-        "	pop {r4}\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 newDirn = direction;
+    *x = objectEvent->currentCoords.x;
+    *y = objectEvent->currentCoords.y;
+    MoveCoords(newDirn, x, y);
 }
 
 __attribute__((naked)) bool8 ObjectEventIsMovementOverridden(struct ObjectEvent *objectEvent)
@@ -13850,26 +13836,11 @@ __attribute__((naked)) u8 ObjectEventClearHeldMovementIfFinished(struct ObjectEv
 }
 
 
-__attribute__((naked)) u8 EventObjectGetHeldMovementActionId(struct ObjectEvent *objectEvent)
+u8 EventObjectGetHeldMovementActionId(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r0, [r1]\n\t"
-        "	lsls r0, r0, #0x19\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08092C28\n\t"
-        "	movs r0, #0xff\n\t"
-        "	b _08092C2A\n\t"
-        "_08092C28:\n\t"
-        "	ldrb r0, [r1, #0x1c]\n\t"
-        "_08092C2A:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (objectEvent->heldMovementActive)
+        return objectEvent->movementActionId;
+    return MOVEMENT_ACTION_NONE;
 }
 
 __attribute__((naked)) void UpdateEventObjectCurrentMovement(struct ObjectEvent *objectEvent, struct Sprite *sprite, bool8 (*callback)(struct ObjectEvent *, struct Sprite *))
@@ -24055,26 +24026,13 @@ __attribute__((naked)) u32 StartFieldEffectForObjectEvent(u8 fieldEffectId, stru
     );
 }
 
-__attribute__((naked)) void DoShadowFieldEffect(struct ObjectEvent *objectEvent)
+void DoShadowFieldEffect(struct ObjectEvent *objectEvent)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	adds r1, r0, #0\n\t"
-        "	ldrb r2, [r1, #2]\n\t"
-        "	lsls r0, r2, #0x19\n\t"
-        "	cmp r0, #0\n\t"
-        "	blt _08097798\n\t"
-        "	movs r0, #0x40\n\t"
-        "	orrs r0, r2\n\t"
-        "	strb r0, [r1, #2]\n\t"
-        "	movs r0, #3\n\t"
-        "	bl StartFieldEffectForObjectEvent\n\t"
-        "_08097798:\n\t"
-        "	pop {r0}\n\t"
-        "	bx r0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (!objectEvent->hasShadow)
+    {
+        objectEvent->hasShadow = TRUE;
+        StartFieldEffectForObjectEvent(FLDEFF_SHADOW, objectEvent);
+    }
 }
 
 __attribute__((naked)) void DoRippleFieldEffect(struct ObjectEvent *objEvent, struct Sprite *sprite)
