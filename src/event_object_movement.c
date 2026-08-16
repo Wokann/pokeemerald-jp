@@ -9561,29 +9561,13 @@ __attribute__((naked)) u8 MovementAction_AcroPopWheelieMoveRight_Step0(struct Ob
     );
 }
 
-__attribute__((naked)) bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementType_CopyPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, lr}\n\t"
-        "	adds r4, r0, #0\n\t"
-        "	adds r5, r1, #0\n\t"
-        "	bl ClearEventObjectMovement\n\t"
-        "	adds r4, #0x21\n\t"
-        "	ldrb r0, [r4]\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08091824\n\t"
-        "	bl GetPlayerFacingDirection\n\t"
-        "	strb r0, [r4]\n\t"
-        "_08091824:\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r5, #0x30]\n\t"
-        "	pop {r4, r5}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    ClearEventObjectMovement(objectEvent, sprite);
+    if (objectEvent->directionSequenceIndex == 0)
+        objectEvent->directionSequenceIndex = GetPlayerFacingDirection();
+    sprite->sTypeFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementType_CopyPlayer_Step1(struct ObjectEvent *objectEvent, struct Sprite *sprite)
