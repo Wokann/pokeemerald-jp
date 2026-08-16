@@ -14557,55 +14557,17 @@ bool8 MovementAction_JumpSpecialRight_Step1(struct ObjectEvent *objectEvent, str
     return FALSE;
 }
 
-__attribute__((naked)) bool8 MovementAction_FacePlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+bool8 MovementAction_FacePlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {r4, r5, r6, lr}\n\t"
-        "	sub sp, #4\n\t"
-        "	adds r5, r0, #0\n\t"
-        "	adds r6, r1, #0\n\t"
-        "	movs r0, #0xff\n\t"
-        "	movs r1, #0\n\t"
-        "	movs r2, #0\n\t"
-        "	mov r3, sp\n\t"
-        "	bl TryGetObjectEventIdByLocalIdAndMap\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _080948F2\n\t"
-        "	movs r1, #0x10\n\t"
-        "	ldrsh r0, [r5, r1]\n\t"
-        "	movs r2, #0x12\n\t"
-        "	ldrsh r1, [r5, r2]\n\t"
-        "	ldr r4, _08094900\n\t"
-        "	mov r2, sp\n\t"
-        "	ldrb r2, [r2]\n\t"
-        "	lsls r3, r2, #3\n\t"
-        "	adds r3, r3, r2\n\t"
-        "	lsls r3, r3, #2\n\t"
-        "	adds r3, r3, r4\n\t"
-        "	movs r4, #0x10\n\t"
-        "	ldrsh r2, [r3, r4]\n\t"
-        "	movs r4, #0x12\n\t"
-        "	ldrsh r3, [r3, r4]\n\t"
-        "	bl GetDirectionToFace\n\t"
-        "	adds r2, r0, #0\n\t"
-        "	lsls r2, r2, #0x18\n\t"
-        "	lsrs r2, r2, #0x18\n\t"
-        "	adds r0, r5, #0\n\t"
-        "	adds r1, r6, #0\n\t"
-        "	bl FaceDirection\n\t"
-        "_080948F2:\n\t"
-        "	movs r0, #1\n\t"
-        "	strh r0, [r6, #0x32]\n\t"
-        "	add sp, #4\n\t"
-        "	pop {r4, r5, r6}\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08094900: .4byte gObjectEvents\n\t"
-        ".syntax divided\n\t"
-    );
+    u8 playerObjectId;
+
+    if (!TryGetObjectEventIdByLocalIdAndMap(LOCALID_PLAYER, 0, 0, &playerObjectId))
+        FaceDirection(objectEvent, sprite, GetDirectionToFace(objectEvent->currentCoords.x,
+                                                             objectEvent->currentCoords.y,
+                                                             gObjectEvents[playerObjectId].currentCoords.x,
+                                                             gObjectEvents[playerObjectId].currentCoords.y));
+    sprite->sActionFuncId = 1;
+    return TRUE;
 }
 
 __attribute__((naked)) bool8 MovementAction_FaceAwayPlayer_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
