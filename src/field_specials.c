@@ -1,4 +1,6 @@
 #include "global.h"
+#include "rtc.h"
+#include "field_player_avatar.h"
 #include "field_specials.h"
 
 __attribute__((naked)) void Special_ShowDiploma(void)
@@ -83,33 +85,13 @@ __attribute__((naked)) void Special_BeginCyclingRoadChallenge(void)
     );
 }
 
-__attribute__((naked)) void GetPlayerAvatarBike(void)
+u16 GetPlayerAvatarBike(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	movs r0, #4\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	beq _08137DB6\n\t"
-        "	movs r0, #1\n\t"
-        "	b _08137DC8\n\t"
-        "_08137DB6:\n\t"
-        "	movs r0, #2\n\t"
-        "	bl TestPlayerAvatarFlags\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	cmp r0, #0\n\t"
-        "	bne _08137DC6\n\t"
-        "	movs r0, #0\n\t"
-        "	b _08137DC8\n\t"
-        "_08137DC6:\n\t"
-        "	movs r0, #2\n\t"
-        "_08137DC8:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        ".syntax divided\n\t"
-    );
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ACRO_BIKE))
+        return 1;
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_MACH_BIKE))
+        return 2;
+    return 0;
 }
 
 __attribute__((naked)) void DetermineCyclingRoadResults(void)
@@ -2103,30 +2085,13 @@ __attribute__((naked)) void SetFlagInVar(void)
     );
 }
 
-__attribute__((naked)) void GetWeekCount(void)
+u16 GetWeekCount(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	ldr r0, _08138C6C\n\t"
-        "	movs r1, #0\n\t"
-        "	ldrsh r0, [r0, r1]\n\t"
-        "	movs r1, #7\n\t"
-        "	bl __divsi3\n\t"
-        "	lsls r0, r0, #0x10\n\t"
-        "	lsrs r0, r0, #0x10\n\t"
-        "	ldr r1, _08138C70\n\t"
-        "	cmp r0, r1\n\t"
-        "	bls _08138C66\n\t"
-        "	adds r0, r1, #0\n\t"
-        "_08138C66:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        "_08138C6C: .4byte gLocalTime\n\t"
-        "_08138C70: .4byte 0x0000270F\n\t"
-        ".syntax divided\n\t"
-    );
+    u16 weekCount = gLocalTime.days / 7;
+    if (weekCount > 9999)
+        weekCount = 9999;
+
+    return weekCount;
 }
 
 __attribute__((naked)) void GetLeadMonFriendshipScore(void)
@@ -2765,34 +2730,12 @@ __attribute__((naked)) void CheckLeadMonCool(void)
     );
 }
 
-__attribute__((naked)) void CheckLeadMonBeauty(void)
+bool8 CheckLeadMonBeauty(void)
 {
-    __asm__(".syntax unified\n\t"
-        ".code 16\n\t"
-        "	push {lr}\n\t"
-        "	bl GetLeadMonIndex\n\t"
-        "	lsls r0, r0, #0x18\n\t"
-        "	lsrs r0, r0, #0x18\n\t"
-        "	movs r1, #0x64\n\t"
-        "	muls r0, r1, r0\n\t"
-        "	ldr r1, _081390C0\n\t"
-        "	adds r0, r0, r1\n\t"
-        "	movs r1, #0x17\n\t"
-        "	bl GetMonData3\n\t"
-        "	cmp r0, #0xc7\n\t"
-        "	bls _081390C4\n\t"
-        "	movs r0, #1\n\t"
-        "	b _081390C6\n\t"
-        "	.align 2, 0\n\t"
-        "_081390C0: .4byte gPlayerParty\n\t"
-        "_081390C4:\n\t"
-        "	movs r0, #0\n\t"
-        "_081390C6:\n\t"
-        "	pop {r1}\n\t"
-        "	bx r1\n\t"
-        "	.align 2, 0\n\t"
-        ".syntax divided\n\t"
-    );
+    if (GetMonData3(&gPlayerParty[GetLeadMonIndex()], MON_DATA_BEAUTY) < 200)
+        return FALSE;
+
+    return TRUE;
 }
 
 __attribute__((naked)) void CheckLeadMonCute(void)
