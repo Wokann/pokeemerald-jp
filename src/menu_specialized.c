@@ -152,16 +152,20 @@ const struct WindowTemplate sMoveRelearnerYesNoMenuTemplate =
     .paletteNum = 15,
     .baseBlock = 0x272
 };
+
+// Move-relearner labels. JP strings carry an explicit '$' terminator (0xFF in
+// the ROM), so __() is used to avoid preproc appending a second 0xFF.
+const u8 gText_MoveRelearnerBattleMoves[] = __("たたかうわざ$");
+const u8 gText_MoveRelearnerContestMovesTitle[] = __("コンテストわざ$");
+const u8 gText_MoveRelearnerType[] = __("タイプ/$");
+const u8 gText_MoveRelearnerPP[] = __("PP/$");
+const u8 gText_MoveRelearnerPower[] = __("いりょく/$");
+const u8 gText_MoveRelearnerAccuracy[] = __("めいちゅう/$");
+const u8 gText_MoveRelearnerAppeal[] = __("アピール$");
+// 0x00 keeps the following sMoveRelearnerMovesListTemplate 2-byte aligned.
+const u8 gText_MoveRelearnerJam[] = {0x4A, 0x03, 0x37, 0x02, 0xFF, 0x00};
 extern void sub_08198D44(const struct WindowTemplate *template, u8 arg1, u8 arg2, u8 arg3);
 extern const struct ListMenuTemplate sMoveRelearnerMovesListTemplate;
-extern const u8 gText_MoveRelearnerBattleMoves[];
-extern const u8 gText_MoveRelearnerContestMovesTitle[];
-extern const u8 gText_MoveRelearnerType[];
-extern const u8 gText_MoveRelearnerPP[];
-extern const u8 gText_MoveRelearnerPower[];
-extern const u8 gText_MoveRelearnerAccuracy[];
-extern const u8 gText_MoveRelearnerAppeal[];
-extern const u8 gText_MoveRelearnerJam[];
 extern const u8 gUnknown_85E7FFC[]; // JP inline move-description table (0x38-byte entries)
 extern const struct SpriteTemplate sSpriteTemplate_ConditionSparkle;
 extern const struct SpriteSheet sConditionMonPicSheetDescriptor;     // JP 0x085FA898

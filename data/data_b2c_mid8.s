@@ -9,35 +9,6 @@
 	.include "constants/songs.inc"
 	.include "constants/ribbon_constants.inc"
 
-	.globl gText_MoveRelearnerBattleMoves
-gText_MoveRelearnerBattleMoves: @ 0x85F7C50
-	.string "たたかうわざ$"
-	.globl gText_MoveRelearnerContestMovesTitle
-gText_MoveRelearnerContestMovesTitle: @ 0x85F7C57
-	.string "コンテストわざ$"
-
-	.globl gText_MoveRelearnerType
-gText_MoveRelearnerType: @ 0x85F7C5F
-	.string "タイプ/$"
-
-	.globl gText_MoveRelearnerPP
-gText_MoveRelearnerPP: @ 0x85F7C64
-	.string "PP/$"
-
-	.globl gText_MoveRelearnerPower
-gText_MoveRelearnerPower: @ 0x85F7C68
-	.string "いりょく/$"
-	.globl gText_MoveRelearnerAccuracy
-gText_MoveRelearnerAccuracy: @ 0x85F7C6E
-	.string "めいちゅう/$"
-	.globl gText_MoveRelearnerAppeal
-gText_MoveRelearnerAppeal: @ 0x85F7C75
-	.string "アピール$"
-
-	.globl gText_MoveRelearnerJam
-gText_MoveRelearnerJam: @ 0x85F7C7A
-	.string "ぼうがい$　"
-
 	.globl sMoveRelearnerMovesListTemplate
 sMoveRelearnerMovesListTemplate: @ 0x85F7C80
 	.incbin "baserom_jp.gba", 0x5f7c80, 0x2c18
