@@ -7191,9 +7191,9 @@ gUnknown_85362BC: @ 0x85362BC
 gUnknown_85362DC: @ 0x85362DC
 	.incbin "baserom_jp.gba", 0x5362dc, 0xbc0
 
-	.globl gUnknown_8536E9C
-gUnknown_8536E9C: @ 0x8536E9C
-	.incbin "baserom_jp.gba", 0x536e9c, 0x20
+	.globl gFieldEffectScriptFuncs
+gFieldEffectScriptFuncs: @ 0x8536E9C
+	.4byte FieldEffectCmd_loadtiles + 1, FieldEffectCmd_loadfadedpal + 1, FieldEffectCmd_loadpal + 1, FieldEffectCmd_callnative + 1, FieldEffectCmd_end + 1, FieldEffectCmd_loadgfx_callnative + 1, FieldEffectCmd_loadtiles_callnative + 1, FieldEffectCmd_loadfadedpal_callnative + 1
 
 	.globl gUnknown_8536EBC
 gUnknown_8536EBC: @ 0x8536EBC
@@ -7231,17 +7231,17 @@ gUnknown_8536FE0: @ 0x8536FE0
 gUnknown_8536FF8: @ 0x8536FF8
 	.incbin "baserom_jp.gba", 0x536ff8, 0x18
 
-	.globl gUnknown_8537010
-gUnknown_8537010: @ 0x8537010
-	.incbin "baserom_jp.gba", 0x537010, 0x10
+	.globl sPokecenterHealEffectFuncs
+sPokecenterHealEffectFuncs: @ 0x8537010
+	.4byte PokecenterHealEffect_Init + 1, PokecenterHealEffect_WaitForBallPlacement + 1, PokecenterHealEffect_2 + 1, PokecenterHealEffect_WaitForSoundAndEnd + 1
 
-	.globl gUnknown_8537020
-gUnknown_8537020: @ 0x8537020
-	.incbin "baserom_jp.gba", 0x537020, 0x10
+	.globl sHallOfFameRecordEffectFuncs
+sHallOfFameRecordEffectFuncs: @ 0x8537020
+	.4byte HallOfFameRecordEffect_Init + 1, HallOfFameRecordEffect_WaitForBallPlacement + 1, HallOfFameRecordEffect_2 + 1, HallOfFameRecordEffect_WaitForSoundAndEnd + 1
 
-	.globl gUnknown_8537030
-gUnknown_8537030: @ 0x8537030
-	.incbin "baserom_jp.gba", 0x537030, 0x20
+	.globl sPokeballGlowEffectFuncs
+sPokeballGlowEffectFuncs: @ 0x8537030
+	.4byte PokeballGlowEffect_PlaceBalls + 1, PokeballGlowEffect_TryPlaySe + 1, PokeballGlowEffect_Flash1 + 1, PokeballGlowEffect_Flash2 + 1, PokeballGlowEffect_4 + 1, PokeballGlowEffect_Dummy + 1, PokeballGlowEffect_6 + 1, PokeballGlowEffect_7 + 1
 
 	.globl gUnknown_8537050
 gUnknown_8537050: @ 0x8537050
@@ -7259,69 +7259,69 @@ gUnknown_853706C: @ 0x853706C
 gUnknown_8537070: @ 0x8537070
 	.incbin "baserom_jp.gba", 0x537070, 0x4
 
-	.globl gUnknown_8537074
-gUnknown_8537074: @ 0x8537074
-	.incbin "baserom_jp.gba", 0x537074, 0x1c
+	.globl sFallWarpFieldEffectFuncs
+sFallWarpFieldEffectFuncs: @ 0x8537074
+	.4byte FallWarpEffect_Init + 1, FallWarpEffect_WaitWeather + 1, FallWarpEffect_StartFall + 1, FallWarpEffect_Fall + 1, FallWarpEffect_Land + 1, FallWarpEffect_CameraShake + 1, FallWarpEffect_End + 1
 
-	.globl gUnknown_8537090
-gUnknown_8537090: @ 0x8537090
-	.incbin "baserom_jp.gba", 0x537090, 0x18
+	.globl sEscalatorWarpOutFieldEffectFuncs
+sEscalatorWarpOutFieldEffectFuncs: @ 0x8537090
+	.4byte EscalatorWarpOut_Init + 1, EscalatorWarpOut_WaitForPlayer + 1, EscalatorWarpOut_Up_Ride + 1, EscalatorWarpOut_Up_End + 1, EscalatorWarpOut_Down_Ride + 1, EscalatorWarpOut_Down_End + 1
 
-	.globl gUnknown_85370A8
-gUnknown_85370A8: @ 0x85370A8
-	.incbin "baserom_jp.gba", 0x5370a8, 0x1c
+	.globl sEscalatorWarpInFieldEffectFuncs
+sEscalatorWarpInFieldEffectFuncs: @ 0x85370A8
+	.4byte EscalatorWarpIn_Init + 1, EscalatorWarpIn_Down_Init + 1, EscalatorWarpIn_Down_Ride + 1, EscalatorWarpIn_Up_Init + 1, EscalatorWarpIn_Up_Ride + 1, EscalatorWarpIn_WaitForMovement + 1, EscalatorWarpIn_End + 1
 
 	.globl gUnknown_85370C4
 gUnknown_85370C4: @ 0x85370C4
 	.incbin "baserom_jp.gba", 0x5370c4, 0x14
 
-	.globl gUnknown_85370D8
-gUnknown_85370D8: @ 0x85370D8
-	.incbin "baserom_jp.gba", 0x5370d8, 0xc
+	.globl sDiveFieldEffectFuncs
+sDiveFieldEffectFuncs: @ 0x85370D8
+	.4byte DiveFieldEffect_Init + 1, DiveFieldEffect_ShowMon + 1, DiveFieldEffect_TryWarp + 1
 
-	.globl gUnknown_85370E4
-gUnknown_85370E4: @ 0x85370E4
-	.incbin "baserom_jp.gba", 0x5370e4, 0x18
+	.globl sLavaridgeGymB1FWarpEffectFuncs
+sLavaridgeGymB1FWarpEffectFuncs: @ 0x85370E4
+	.4byte LavaridgeGymB1FWarpEffect_Init + 1, LavaridgeGymB1FWarpEffect_CameraShake + 1, LavaridgeGymB1FWarpEffect_Launch + 1, LavaridgeGymB1FWarpEffect_Rise + 1, LavaridgeGymB1FWarpEffect_FadeOut + 1, LavaridgeGymB1FWarpEffect_Warp + 1
 
-	.globl gUnknown_85370FC
-gUnknown_85370FC: @ 0x85370FC
-	.incbin "baserom_jp.gba", 0x5370fc, 0x10
+	.globl sLavaridgeGymB1FWarpExitEffectFuncs
+sLavaridgeGymB1FWarpExitEffectFuncs: @ 0x85370FC
+	.4byte LavaridgeGymB1FWarpExitEffect_Init + 1, LavaridgeGymB1FWarpExitEffect_StartPopOut + 1, LavaridgeGymB1FWarpExitEffect_PopOut + 1, LavaridgeGymB1FWarpExitEffect_End + 1
 
-	.globl gUnknown_853710C
-gUnknown_853710C: @ 0x853710C
-	.incbin "baserom_jp.gba", 0x53710c, 0x14
+	.globl sLavaridgeGym1FWarpEffectFuncs
+sLavaridgeGym1FWarpEffectFuncs: @ 0x853710C
+	.4byte LavaridgeGym1FWarpEffect_Init + 1, LavaridgeGym1FWarpEffect_AshPuff + 1, LavaridgeGym1FWarpEffect_Disappear + 1, LavaridgeGym1FWarpEffect_FadeOut + 1, LavaridgeGym1FWarpEffect_Warp + 1
 
-	.globl gUnknown_8537120
-gUnknown_8537120: @ 0x8537120
-	.incbin "baserom_jp.gba", 0x537120, 0x8
+	.globl sEscapeRopeWarpOutEffectFuncs
+sEscapeRopeWarpOutEffectFuncs: @ 0x8537120
+	.4byte EscapeRopeWarpOutEffect_Init + 1, EscapeRopeWarpOutEffect_Spin + 1
 
 	.globl gUnknown_8537128
 gUnknown_8537128: @ 0x8537128
 	.incbin "baserom_jp.gba", 0x537128, 0x8
 
-	.globl gUnknown_8537130
-gUnknown_8537130: @ 0x8537130
-	.incbin "baserom_jp.gba", 0x537130, 0x8
+	.globl sEscapeRopeWarpInEffectFuncs
+sEscapeRopeWarpInEffectFuncs: @ 0x8537130
+	.4byte EscapeRopeWarpInEffect_Init + 1, EscapeRopeWarpInEffect_Spin + 1
 
-	.globl gUnknown_8537138
-gUnknown_8537138: @ 0x8537138
-	.incbin "baserom_jp.gba", 0x537138, 0x10
+	.globl sTeleportWarpOutFieldEffectFuncs
+sTeleportWarpOutFieldEffectFuncs: @ 0x8537138
+	.4byte TeleportWarpOutFieldEffect_Init + 1, TeleportWarpOutFieldEffect_SpinGround + 1, TeleportWarpOutFieldEffect_SpinExit + 1, TeleportWarpOutFieldEffect_End + 1
 
-	.globl gUnknown_8537148
-gUnknown_8537148: @ 0x8537148
-	.incbin "baserom_jp.gba", 0x537148, 0xc
+	.globl sTeleportWarpInFieldEffectFuncs
+sTeleportWarpInFieldEffectFuncs: @ 0x8537148
+	.4byte TeleportWarpInFieldEffect_Init + 1, TeleportWarpInFieldEffect_SpinEnter + 1, TeleportWarpInFieldEffect_SpinGround + 1
 
-	.globl gUnknown_8537154
-gUnknown_8537154: @ 0x8537154
-	.incbin "baserom_jp.gba", 0x537154, 0x1c
+	.globl sFieldMoveShowMonOutdoorsEffectFuncs
+sFieldMoveShowMonOutdoorsEffectFuncs: @ 0x8537154
+	.4byte FieldMoveShowMonOutdoorsEffect_Init + 1, FieldMoveShowMonOutdoorsEffect_LoadGfx + 1, FieldMoveShowMonOutdoorsEffect_CreateBanner + 1, FieldMoveShowMonOutdoorsEffect_WaitForMon + 1, FieldMoveShowMonOutdoorsEffect_ShrinkBanner + 1, FieldMoveShowMonOutdoorsEffect_RestoreBg + 1, FieldMoveShowMonOutdoorsEffect_End + 1
 
-	.globl gUnknown_8537170
-gUnknown_8537170: @ 0x8537170
-	.incbin "baserom_jp.gba", 0x537170, 0x1c
+	.globl sFieldMoveShowMonIndoorsEffectFuncs
+sFieldMoveShowMonIndoorsEffectFuncs: @ 0x8537170
+	.4byte FieldMoveShowMonIndoorsEffect_Init + 1, FieldMoveShowMonIndoorsEffect_LoadGfx + 1, FieldMoveShowMonIndoorsEffect_SlideBannerOn + 1, FieldMoveShowMonIndoorsEffect_WaitForMon + 1, FieldMoveShowMonIndoorsEffect_RestoreBg + 1, FieldMoveShowMonIndoorsEffect_SlideBannerOff + 1, FieldMoveShowMonIndoorsEffect_End + 1
 
-	.globl gUnknown_853718C
-gUnknown_853718C: @ 0x853718C
-	.incbin "baserom_jp.gba", 0x53718c, 0x14
+	.globl sSurfFieldEffectFuncs
+sSurfFieldEffectFuncs: @ 0x853718C
+	.4byte SurfFieldEffect_Init + 1, SurfFieldEffect_FieldMovePose + 1, SurfFieldEffect_ShowMon + 1, SurfFieldEffect_JumpOnSurfBlob + 1, SurfFieldEffect_End + 1
 
 	.globl gUnknown_85371A0
 gUnknown_85371A0: @ 0x85371A0
@@ -7331,9 +7331,9 @@ gUnknown_85371A0: @ 0x85371A0
 gUnknown_85371F4: @ 0x85371F4
 	.incbin "baserom_jp.gba", 0x5371f4, 0x8
 
-	.globl gUnknown_85371FC
-gUnknown_85371FC: @ 0x85371FC
-	.incbin "baserom_jp.gba", 0x5371fc, 0x1c
+	.globl sFlyInFieldEffectFuncs
+sFlyInFieldEffectFuncs: @ 0x85371FC
+	.4byte FlyInFieldEffect_BirdSwoopDown + 1, FlyInFieldEffect_FlyInWithBird + 1, FlyInFieldEffect_JumpOffBird + 1, FlyInFieldEffect_FieldMovePose + 1, FlyInFieldEffect_BirdReturnToBall + 1, FlyInFieldEffect_WaitBirdReturn + 1, FlyInFieldEffect_End + 1
 
 	.globl gUnknown_8537218
 gUnknown_8537218: @ 0x8537218

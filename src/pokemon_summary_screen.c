@@ -6670,7 +6670,7 @@ __attribute__((naked)) void CreateTextPrinterTask(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_081C26F0: .4byte gUnknown_85ED2B4\n\t"
+        "_081C26F0: .4byte sTextPrinterTasks\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -10783,4 +10783,3 @@ __attribute__((naked)) void sub_081C4520(void)
         ".syntax divided\n\t"
     );
 }
-

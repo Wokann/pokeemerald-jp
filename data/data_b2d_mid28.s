@@ -117,9 +117,10 @@ gUnknown_84E5B48: @ 0x84E5B48
 gUnknown_84E5B64: @ 0x84E5B64
 	.incbin "baserom_jp.gba", 0x4e5b64, 0x4
 
-	.globl gUnknown_84E5B68
-gUnknown_84E5B68: @ 0x84E5B68
-	.incbin "baserom_jp.gba", 0x4e5b68, 0x2c
+	.globl gGetVectorDirectionFuncs
+gGetVectorDirectionFuncs: @ 0x84E5B68
+	.4byte GetVectorDirection + 1, GetLimitedVectorDirection_SouthNorth + 1, GetLimitedVectorDirection_WestEast + 1, GetLimitedVectorDirection_WestNorth + 1, GetLimitedVectorDirection_EastNorth + 1, GetLimitedVectorDirection_WestSouth + 1, GetLimitedVectorDirection_EastSouth + 1, GetLimitedVectorDirection_SouthNorthWest + 1
+	.4byte GetLimitedVectorDirection_SouthNorthEast + 1, GetLimitedVectorDirection_NorthWestEast + 1, GetLimitedVectorDirection_SouthWestEast + 1
 
 	.globl gUnknown_84E5B94
 gUnknown_84E5B94: @ 0x84E5B94
@@ -529,13 +530,13 @@ gUnknown_84E5F9E: @ 0x84E5F9E
 gUnknown_84E5FA7: @ 0x84E5FA7
 	.incbin "baserom_jp.gba", 0x4e5fa7, 0x9
 
-	.globl gUnknown_84E5FB0
-gUnknown_84E5FB0: @ 0x84E5FB0
-	.incbin "baserom_jp.gba", 0x4e5fb0, 0x10
+	.globl gDirectionBlockedMetatileFuncs
+gDirectionBlockedMetatileFuncs: @ 0x84E5FB0
+	.4byte MetatileBehavior_IsSouthBlocked + 1, MetatileBehavior_IsNorthBlocked + 1, MetatileBehavior_IsWestBlocked + 1, MetatileBehavior_IsEastBlocked + 1
 
-	.globl gUnknown_84E5FC0
-gUnknown_84E5FC0: @ 0x84E5FC0
-	.incbin "baserom_jp.gba", 0x4e5fc0, 0x10
+	.globl gOppositeDirectionBlockedMetatileFuncs
+gOppositeDirectionBlockedMetatileFuncs: @ 0x84E5FC0
+	.4byte MetatileBehavior_IsNorthBlocked + 1, MetatileBehavior_IsSouthBlocked + 1, MetatileBehavior_IsEastBlocked + 1, MetatileBehavior_IsWestBlocked + 1
 
 	.globl gUnknown_84E5FD0
 gUnknown_84E5FD0: @ 0x84E5FD0
@@ -704,9 +705,9 @@ gUnknown_84E6A88: @ 0x84E6A88
 gUnknown_84E6A98: @ 0x84E6A98
 	.incbin "baserom_jp.gba", 0x4e6a98, 0x10
 
-	.globl gUnknown_84E6AA8
-gUnknown_84E6AA8: @ 0x84E6AA8
-	.incbin "baserom_jp.gba", 0x4e6aa8, 0xc
+	.globl sGroundEffectTracksFuncs
+sGroundEffectTracksFuncs: @ 0x84E6AA8
+	.4byte DoTracksGroundEffect_None + 1, DoTracksGroundEffect_Footprints + 1, DoTracksGroundEffect_BikeTireTracks + 1
 
 	.globl gUnknown_84E6AB4
 gUnknown_84E6AB4: @ 0x84E6AB4

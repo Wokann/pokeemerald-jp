@@ -33,8 +33,8 @@ gUnknown_8568A94: @ 0x8568A94
 gUnknown_8568AF4: @ 0x8568AF4
 	.incbin "baserom_jp.gba", 0x568af4, 0x10
 
-	.globl gUnknown_8568B04
-gUnknown_8568B04: @ 0x8568B04
+	.globl sDeleteRegistryYesNoFuncs
+sDeleteRegistryYesNoFuncs: @ 0x8568B04
 	.incbin "baserom_jp.gba", 0x568b04, 0x8
 
 	.globl sSecretBaseOwnerGfxIds

@@ -41,7 +41,7 @@ __attribute__((naked)) u32 FieldEffectStart(u8 id)
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
         "_080B52B0: .4byte gUnknown_8289F5C\n\t"
-        "_080B52B4: .4byte gUnknown_8536E9C\n\t"
+        "_080B52B4: .4byte gFieldEffectScriptFuncs\n\t"
 
         ".syntax divided\n\t"
 
@@ -1094,7 +1094,7 @@ __attribute__((naked)) void Task_HallOfFameRecord(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5964: .4byte gTasks\n\t"
-        "_080B5968: .4byte gUnknown_8537010\n\t"
+        "_080B5968: .4byte sPokecenterHealEffectFuncs\n\t"
 
         ".syntax divided\n\t"
 
@@ -1301,7 +1301,7 @@ __attribute__((naked)) void Task_PokecenterHeal(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B5AB0: .4byte gTasks\n\t"
-        "_080B5AB4: .4byte gUnknown_8537020\n\t"
+        "_080B5AB4: .4byte sHallOfFameRecordEffectFuncs\n\t"
 
         ".syntax divided\n\t"
 
@@ -1526,7 +1526,7 @@ __attribute__((naked)) void SpriteCB_PokeballGlowEffect(struct Sprite *sprite)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B5C30: .4byte gUnknown_8537030\n\t"
+        "_080B5C30: .4byte sPokeballGlowEffectFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2493,7 +2493,7 @@ __attribute__((naked)) void Task_FallWarpFieldEffect(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B631C: .4byte gTasks\n\t"
-        "_080B6320: .4byte gUnknown_8537074\n\t"
+        "_080B6320: .4byte sFallWarpFieldEffectFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -2920,7 +2920,7 @@ __attribute__((naked)) void Task_EscalatorWarpOut(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6610: .4byte gTasks\n\t"
-        "_080B6614: .4byte gUnknown_8537090\n\t"
+        "_080B6614: .4byte sEscalatorWarpOutFieldEffectFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3279,7 +3279,7 @@ __attribute__((naked)) void Task_EscalatorWarpIn(u8 taskId)
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
         "_080B6864: .4byte gTasks\n\t"
-        "_080B6868: .4byte gUnknown_85370A8\n\t"
+        "_080B6868: .4byte sEscalatorWarpInFieldEffectFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -3901,7 +3901,7 @@ __attribute__((naked)) void Task_UseDive(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6C94: .4byte gUnknown_85370D8\n\t"
+        "_080B6C94: .4byte sDiveFieldEffectFuncs\n\t"
         "_080B6C98: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -4055,7 +4055,7 @@ __attribute__((naked)) void Task_LavaridgeGymB1FWarp(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B6D90: .4byte gUnknown_85370E4\n\t"
+        "_080B6D90: .4byte sLavaridgeGymB1FWarpEffectFuncs\n\t"
         "_080B6D94: .4byte gTasks\n\t"
         "_080B6D98: .4byte gPlayerAvatar\n\t"
         "_080B6D9C: .4byte gObjectEvents\n\t"
@@ -4433,7 +4433,7 @@ __attribute__((naked)) void Task_LavaridgeGymB1FWarpExit(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7030: .4byte gUnknown_85370FC\n\t"
+        "_080B7030: .4byte sLavaridgeGymB1FWarpExitEffectFuncs\n\t"
         "_080B7034: .4byte gTasks\n\t"
         "_080B7038: .4byte gPlayerAvatar\n\t"
         "_080B703C: .4byte gObjectEvents\n\t"
@@ -4729,7 +4729,7 @@ __attribute__((naked)) void Task_LavaridgeGym1FWarp(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B722C: .4byte gUnknown_853710C\n\t"
+        "_080B722C: .4byte sLavaridgeGym1FWarpEffectFuncs\n\t"
         "_080B7230: .4byte gTasks\n\t"
         "_080B7234: .4byte gPlayerAvatar\n\t"
         "_080B7238: .4byte gObjectEvents\n\t"
@@ -5052,7 +5052,7 @@ __attribute__((naked)) void Task_EscapeRopeWarpOut(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7464: .4byte gUnknown_8537120\n\t"
+        "_080B7464: .4byte sEscapeRopeWarpOutEffectFuncs\n\t"
         "_080B7468: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5271,7 +5271,7 @@ __attribute__((naked)) void Task_EscapeRopeWarpIn(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7614: .4byte gUnknown_8537130\n\t"
+        "_080B7614: .4byte sEscapeRopeWarpInEffectFuncs\n\t"
         "_080B7618: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5455,7 +5455,7 @@ __attribute__((naked)) void Task_TeleportWarpOut(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B775C: .4byte gUnknown_8537138\n\t"
+        "_080B775C: .4byte sTeleportWarpOutFieldEffectFuncs\n\t"
         "_080B7760: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -5784,7 +5784,7 @@ __attribute__((naked)) void Task_TeleportWarpIn(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B79D0: .4byte gUnknown_8537148\n\t"
+        "_080B79D0: .4byte sTeleportWarpInFieldEffectFuncs\n\t"
         "_080B79D4: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6189,7 +6189,7 @@ __attribute__((naked)) void Task_FieldMoveShowMonOutdoors(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B7CD4: .4byte gUnknown_8537154\n\t"
+        "_080B7CD4: .4byte sFieldMoveShowMonOutdoorsEffectFuncs\n\t"
         "_080B7CD8: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -6666,7 +6666,7 @@ __attribute__((naked)) void Task_FieldMoveShowMonIndoors(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8034: .4byte gUnknown_8537170\n\t"
+        "_080B8034: .4byte sFieldMoveShowMonIndoorsEffectFuncs\n\t"
         "_080B8038: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -7376,7 +7376,7 @@ __attribute__((naked)) void Task_SurfFieldEffect(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8504: .4byte gUnknown_853718C\n\t"
+        "_080B8504: .4byte sSurfFieldEffectFuncs\n\t"
         "_080B8508: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -8815,7 +8815,7 @@ __attribute__((naked)) void Task_FlyIn(u8 taskId)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080B8F54: .4byte gUnknown_85371FC\n\t"
+        "_080B8F54: .4byte sFlyInFieldEffectFuncs\n\t"
         "_080B8F58: .4byte gTasks\n\t"
         ".syntax divided\n\t"
     );
@@ -9893,4 +9893,3 @@ __attribute__((naked)) void Task_MoveDeoxysRock(u8 taskId)
         ".syntax divided\n\t"
     );
 }
-

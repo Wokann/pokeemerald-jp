@@ -7650,7 +7650,7 @@ __attribute__((naked)) u8 MovementEventModeCB_Normal(struct LinkPlayerObjectEven
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_08087358: .4byte gUnknown_830FD20\n\t"
+        "_08087358: .4byte sLinkPlayerFacingHandlers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -7677,7 +7677,7 @@ __attribute__((naked)) u8 MovementEventModeCB_Scripted(struct LinkPlayerObjectEv
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808737C: .4byte gUnknown_830FD20\n\t"
+        "_0808737C: .4byte sLinkPlayerFacingHandlers\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -8134,4 +8134,3 @@ __attribute__((naked)) void SpriteCB_LinkPlayer(struct Sprite *sprite)
         ".syntax divided\n\t"
     );
 }
-

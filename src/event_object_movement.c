@@ -5675,7 +5675,7 @@ __attribute__((naked)) void TryGetTrainerEncounterDirection(void)
         "	pop {r1}\n\t"
         "	bx r1\n\t"
         "	.align 2, 0\n\t"
-        "_0808F2B0: .4byte gUnknown_84E5B68\n\t"
+        "_0808F2B0: .4byte gGetVectorDirectionFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -14166,8 +14166,8 @@ __attribute__((naked)) bool8 IsMetatileDirectionallyImpassable(struct ObjectEven
         "	movs r0, #1\n\t"
         "	b _0809278A\n\t"
         "	.align 2, 0\n\t"
-        "_08092780: .4byte gUnknown_84E5FB0\n\t"
-        "_08092784: .4byte gUnknown_84E5FC0\n\t"
+        "_08092780: .4byte gDirectionBlockedMetatileFuncs\n\t"
+        "_08092784: .4byte gOppositeDirectionBlockedMetatileFuncs\n\t"
         "_08092788:\n\t"
         "	movs r0, #0\n\t"
         "_0809278A:\n\t"
@@ -25319,7 +25319,7 @@ __attribute__((naked)) void GroundEffect_SandTracks(struct ObjectEvent *objEvent
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_08096980: .4byte gUnknown_84E6AA8\n\t"
+        "_08096980: .4byte sGroundEffectTracksFuncs\n\t"
         ".syntax divided\n\t"
     );
 }
@@ -25346,7 +25346,7 @@ __attribute__((naked)) void sub_08096984(struct ObjectEvent *objectEvent, struct
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080969AC: .4byte gUnknown_84E6AA8\n\t"
+        "_080969AC: .4byte sGroundEffectTracksFuncs\n\t"
         ".syntax divided\n\t"
     );
 }

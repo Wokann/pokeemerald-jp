@@ -2976,7 +2976,7 @@ __attribute__((naked)) void ShowRegistryMenuDeleteYesNo(void)
         "	pop {r0}\n\t"
         "	bx r0\n\t"
         "	.align 2, 0\n\t"
-        "_080EACD0: .4byte gUnknown_8568B04\n\t"
+        "_080EACD0: .4byte sDeleteRegistryYesNoFuncs\n\t"
         ".syntax divided\n\t"
     );
 }

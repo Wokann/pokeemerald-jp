@@ -73,9 +73,10 @@ gUnknown_830FD08: @ 0x830FD08
 gUnknown_830FD14: @ 0x830FD14
 	.incbin "baserom_jp.gba", 0x30fd14, 0xc
 
-	.globl gUnknown_830FD20
-gUnknown_830FD20: @ 0x830FD20
-	.incbin "baserom_jp.gba", 0x30fd20, 0x2c
+	.globl sLinkPlayerFacingHandlers
+sLinkPlayerFacingHandlers: @ 0x830FD20
+	.4byte FacingHandler_DoNothing + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DpadMovement + 1, FacingHandler_DoNothing + 1, FacingHandler_DoNothing + 1, FacingHandler_ForcedFacingChange + 1
+	.4byte FacingHandler_ForcedFacingChange + 1, FacingHandler_ForcedFacingChange + 1, FacingHandler_ForcedFacingChange + 1
 
 	.globl gUnknown_830FD4C
 gUnknown_830FD4C: @ 0x830FD4C
